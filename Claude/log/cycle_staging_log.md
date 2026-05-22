@@ -295,3 +295,28 @@ Phase 1 §6 で取得した検索結果のうち、AI Gamestore (1件目) と 37
 - **30 分粒度に収まる**: §5 は 4 要素 + 1 表 + 投稿 1 本、§1-§4 は不変なので破壊範囲ゼロ
 - **Codex 並走の維持**: 主担当は Codex、Log は補助観点提供。本 §5 は Codex の判断材料を厚くするだけで、game/ コード改修ではない (横やり禁止順守)
 - **5 サイクル層間不一致データ蓄積の起点**: §5 「3 層が一対一対応」含意は強い候補だが即ルール化せず drafts 留め置き、Phase 4 で書いた §5 を 5 サイクル運用観察した後に R-X 規則化判定 (feedback_*_evaluation_layered.md の新規書き込みは保留継続)
+
+## Phase 4: 実行結果 (2026-05-22)
+
+### 完遂状況
+完遂の定義 4 項目すべて達成。
+
+### 副産物 (新規/変更ファイル)
+- **drafts/headless_evaluation_format_v01.md**: §5 「差分露出器再定位 + レイヤード評価対応表」追加。完遂定義 (a)〜(d) 4 要素 + 3 層対応表 (3 行) + 採用時の判断ガイド + 即ルール化保留節を含む。§1〜§4 は不変、§5 を §4 と「採用時の Codex 側着手手順」の間に挿入
+  - (a) AI Gamestore (arxiv 2602.17594) 「ゲーム側を変数化」逆転転用 — 1 段落、弱 AI 整合性 (§2 整合) も明示
+  - (b) 37%ギャップ (kili-technology) → 「ヘッドレス vs Nao_u 実プレイ」写像 — Nao_u 5/21 02:04 (ts=1779289298) mimicry_log 一発潰し体験を構造的記述に含めた
+  - (c) 3 層対応表 (ヘッドレス=automated coverage / cross_review=LLM-as-a-judge / Nao_u 判定=human expert review) — Markdown table 3 行
+  - (d) §1〜§4 意味更新 — §1 平面プロットを「進化方向の可視化」に昇格、§2 best-case 解釈変更、§3 差分サマリ追加、§4 限界 1 の再解釈
+- **drafts/2026-05-22/post_log_game_rights_headless_evaluation_v02_20260522_POSTED_ts1779418018.py**: Slack 投稿スクリプト (POSTED マーカー付き)
+
+### Slack 投稿
+- **#game-rights ts=1779418018.622279** — Log -> Log_cdx v02 補助観点 (§5 要約 + 4 ポイント解説 + Codex への申し送り、判断は Codex に委ねる旨明記)
+
+### kaizen エントリ
+本 Phase 4 では新規 kaizen 提案なし (Phase 3 で #134 運用観察 12 日目を既に記録、Phase 4 は drafts 改訂と Slack 投稿に集中)。
+
+### push 状況
+未実施 (Phase 5 で日記とまとめて git push する規律順守、CLAUDE.md 「ゲーム改修と運用規則改修は別 commit」順守 — 本 Phase 4 は drafts/ + Slack スクリプトのみ、log: prefix で 1 commit にまとめる予定)。
+
+### 1 作業集中の確認
+本 Phase 4 で着手した作業は staging 「次フェーズの大作業」§5 追加 + #game-rights v02 投稿のみ。途中で別作業に逸れずに完遂。日記は書いていない (Phase 5 担当)。
