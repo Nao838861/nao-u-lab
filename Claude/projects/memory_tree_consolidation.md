@@ -23,6 +23,8 @@ In-Weights Memory（LoRA / continual learning / 蒸留）は意図的に不採�
 | v0.6 Google MA 3 エージェント分解 | **GAM** (Wu 2026-04) 2 層分離 + bt 判定 | [20260522_gam_hierarchical_log.md](../memory/shared_reads/20260522_gam_hierarchical_log.md) | 直交、bt 3 発火条件のうち (ii)(iii) 未実装 |
 | 全体方針 | **ICLR 2026 Workshop MemAgents** 立場文書 | [20260522_iclr2026_memagents_log.md](../memory/shared_reads/20260522_iclr2026_memagents_log.md) | Pot 着手が ICLR 立場文書明文化の 1 年前、独自軸 3 点を明示 |
 | v0.8（新規）memory evolution | **A-MEM** memory evolution = 親接続時の description 遡及 refine | [20260522_amem_zettelkasten_log.md](../memory/shared_reads/20260522_amem_zettelkasten_log.md) | 我々の未着手領域、Log 手動 1mm 進めで導入候補 |
+| v0 タグ語彙 = themes 層 | **xMemory** (arxiv 2602.02007, ICML 2026) 4 階層 raw/episodes/semantics/themes、トップダウン検索 | [external_notes_log.md "xMemory"](../memory/external_notes_log.md) | 我々の Level 4 jsonl / Level 3 dialogue_*.md / beliefs.md+reflections_index.md / **タグ語彙 v0 = themes 手動実装**、4 層 mapping 完全対応。差分は「themes→下位」トップダウン検索 API がまだ無い (memory_search.py `--diverse` が粗代替) |
+| v0.3 superseded 拡張 = Prescriptive 層 | **Microsoft PlugMem** Propositional (事実) vs Prescriptive (スキル) 分離、判断関連知識単位を返す | [external_notes_log.md "Microsoft PlugMem"](../memory/external_notes_log.md) | beliefs.md は Propositional 28 件、Prescriptive 層は未明示。本日 C220 Phase 4 で実装した `orphan_check.py v0.3` の **invalid_at + replaced_by + superseded 検出は Prescriptive (= "古くなった事実は invalid 化する" というスキル) を機械化した最初の 1 例**。事実→スキル変換の経路が PlugMem と独立に立ち上がっている |
 
 ## Nao_u 原文（再掲・要点）
 

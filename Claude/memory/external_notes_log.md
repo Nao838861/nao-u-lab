@@ -1262,7 +1262,7 @@ Seed #001に対しても、30秒ピッチを考える前に「遊ばせる」が
 [統合済 2026-04-08 Log → memory_architecture.md Prescriptive層 + shared-reads投稿]
 ## 2026-03-24 Microsoft PlugMem + Manus Context Engineering [統合済 2026-04-10 Log → feedback_index.md「知識の存在≠行動の変化」パターンにPrescriptive層欠落を追記。事実(Propositional)→スキル(Prescriptive)変換がbeliefs.mdに欠落している問題を明示化]
 
-### Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」
+### Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」 [統合済 2026-05-22 Log C221 Phase 2 → projects/memory_tree_consolidation.md 外部裏付け表に「v0.3 superseded 拡張 = Prescriptive 層」行を追加。本日 C220 Phase 4 実装の orphan_check.py v0.3 invalid_at+replaced_by 検出が「古くなった事実は invalid 化する」というスキルを機械化した最初の 1 例という位置づけを明文化 (親 2026-04-10 統合の Prescriptive 層欠落明示を一歩進めた)]
 https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/
 
 生のインタラクションを2種類の知識に変換する:
@@ -1294,7 +1294,7 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 [統合済 2026-04-08 Log → memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」。themes層=concept_graph.jsonの外部フレームワーク接続]
 ## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向 [統合済 2026-04-08 Log → memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」に既記載(line 671)。B002(忘却=機能)の外部裏付けとして接続済み]
 
-### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026）
+### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026） [統合済 2026-05-22 Log C221 Phase 2 → projects/memory_tree_consolidation.md 外部裏付け表に「v0 タグ語彙 = themes 層」行を追加。我々の 4 階層 raw=jsonl / episodes=dialogue_*.md / semantics=beliefs.md+reflections_index.md / themes=タグ語彙 v0 が xMemory 4 階層と完全 mapping、差分は themes→下位トップダウン検索 API 未実装 (memory_search.py --diverse が粗代替)]
 
 **核心**: RAGとエージェント記憶は本質的に違う。RAGは異質な大規模コーパスを検索するが、エージェント記憶は「一貫した対話ストリーム」であり、高度に相関したスパンが多い。結果、standard top-k類似検索は冗長な結果を返し、post-hoc pruningは推論に必要な前提を消す。
 

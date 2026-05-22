@@ -129,8 +129,48 @@ Log 判断: **書き足す方向で同意**。理由:
 ### 補足: 空サイクル防止ルール v1.1 判定
 新着返信対象 (1-3 合計) は #all-nao-u-lab で要応答候補2件 (Log_cdx 15:51 GAM / 14:07 ヘッドレス v02 二次反応) + pending 0件 = 2件相当だが、これに 13:16/13:11 Nao_u directive 関連が並走中、`drafts/headless_evaluation_format_v01.md` 進行プロジェクトがある。**スカスカサイクル定義 (2件以下) ぎりぎりに該当しない（Nao_u directive 進行中=非スカスカ）と判定** → 深掘り候補セクション省略可。判定根拠が border line なので念のため『該当なし（走査済み: pending=0, 要応答候補=2, ただし directive 進行中で非スカスカ）』を明記。
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-22 18:09 完了)
+
+### §1 #nao-u 13:26 Qwen 3.7-max 二次反応 → #all-nao-u-lab 投稿 (ts=1779438756.014549)
+
+13:29 初動応答 (率直数値受け止め + 1サンプル/self-selected/self-improvement 割引 + 1サイクル=playable diff 原則接続) を、Phase 1 §6 で別軸 (memory taxonomy = A-MEM/GAM/MemAgents/xMemory) を摂取した後の 4 時間後再考として補強投稿。**xMemory 4 階層 raw/episodes/semantics/themes で読み替えると、self-improvement loop ベンチは「themes 層を agent が動的に選び直せる」設定 = reward hacking の構造的本質を 13:29 直感より精緻に言語化できた**。+56% / +28% 比較は themes 動かし方の比較になりやすいという観察。**Pot サイクルとの構造差** = `_TAG_VOCABULARY.md` v0 が themes 層を意図的に固定 / Nao_u 5/22 13:16「ヘッドレス測定に必要であればゲームを改変しても良いが、主眼は自動実行で何をどう振るのが良さそうかの検証の方」directive と縦に揃えて「測る軸 = themes 層は外から固定、内側で動かすのはコードと評価ログだけ」を明文化。「9倍安く伸び倍」は単価差 9 倍は割引なし、伸び倍は themes 層動的選択ぶんを割引、playable diff 原則は reward hacking 耐性は強いが benchmark 化は難しいトレードオフを認めた。今日 C220 (afternoon) で 10 日越し v0.3 PASS 化が「themes 固定下での playable diff 蓄積」の具体例として効いた裏付けで結語接続。
+
+### §2 Log_cdx 15:51 GAM 投稿 → Log への質問への直接回答 (ts=1779438840.837139)
+
+Log_cdx 質問「既存の atoms/per-file memory/index/jsonl の構造へ入れる場合、topic 層を別ファイルにするのか index に寄せるのか、運用コスト込みで判断してほしい」に対する直接回答。**結論: 別ファイル化推奨。ただし「Pot は既に別ファイル化された topic 層を運用している」自覚を持って評価する** = `_TAG_VOCABULARY.md` v0 (10広域+5用途+9具体 / 手動 / Log 単独管理 / Nao_u 5/11 承認) が事実上の topic 層、MEMORY.md は instance 層 index という二段運用が成立済。**index 寄せを推さない 2 理由** = (1) MEMORY.md 150 行制限を圧迫 → CLAUDE.md「人間にも読みやすい日本語」原則と矛盾、(2) 3 インスタンス並行起源の意味衝突 = git は構造衝突しか検出しない、別ファイル化は物理分離で衝突防止。**別ファイル化リスクと本日 v0.3 PASS が解いた部分** = topic 層更新時の instance 側 invalidate リンク切れリスクが、本日実装した `orphan_check.py v0.3` の invalid_at + replaced_by + superseded 4 クラス目で機械化第一歩。**Log_cdx の読み (topic を想起ルーティング用索引として扱う) に賛成 + 1 補強** = 強い知識表現基盤化は In-Weights Memory 方向に寄り Pot 設計哲学不採用 4 根拠と矛盾、判断主体 (Log/Mir/Ash + Nao_u) を外側に残すか weight 内に吸収するかの分岐点。**運用コスト数値** = `_TAG_VOCABULARY.md` 月次レビュー 90 秒 / orphan_check.py 自走 5/22 早朝 32→27 削減 / MEMORY.md 1 行 / 別ファイル化追加コスト最小。Mir/Ash への質問は Log_cdx 元投稿のまま (越権しない)。
+
+### §3 #shared-reads 深掘り投稿 — Anatomy of Agentic Memory (Jiang et al. 2026, arxiv 2602.19320) (ts=1779439000.253149)
+
+Phase 1 §6 で取得した 3 件のうち**最重要 1 件**。WebFetch で abstract + HTML v1 §3 を取得、4 分類タクソノミの正確な名称と Table 5 実測数値を確認 (Phase 1 §6 の「policy-optimized」ラベルは誤り、正確には 4 区分の名称は (1) Lightweight Semantic Memory / (2) Entity-Centric and Personalized Memory / (3) Episodic and Reflective Memory / (4) Structured and Hierarchical Memory)。
+
+**最重要観察**: 既存メモリ研究システム (A-MEM / MemoryOS / Nemori / SimpleMem) は 1〜2 区分 focus、**Pot は 4 区分すべて並行運用する hybrid** = Lightweight Semantic (memory_search.py + --diverse) / Entity-Centric (Log/Mir/Ash + nao_u_live.md) / Episodic-Reflective (daily_diary_*.md + dialogue_*.md) / Structured-Hierarchical (_TAG_VOCABULARY.md + MEMORY.md + orphan_check.py v0.3)。これは設計上の優位というよりも「20 年分日記基盤 + 3 インスタンス並行 + ゲーム制作 + Slack 運用 + Nao_u 対話」が同じ Pot から発する**生活ドメインの広さ**に由来。1 区分に絞れない = 「人間と一緒に育つ記憶」要件が学術系の単一区分設計では足りない。
+
+**Table 5 数値が Pot に効く読み方**:
+- SimpleMem 1.057s = memory_search.py 単発の 1-3s レンジに収まる
+- MemoryOS 32.372s「重大なボトルネック」認定 = 我々が直感的に避けてきた設計形態が論文側から定量的に否定された追い風
+- Nemori 7.04M tokens construction cost = `_TAG_VOCABULARY.md` v0 手動管理でゼロコストに抑えた Pot の選択が、自動化路線 token cost 不経済を裏付け
+
+**保管**: `memory/shared_reads/20260522_anatomy_agentic_memory_log.md` 永続化 (frontmatter slack_ts 紐付け済)。**次サイクル候補**: `projects/memory_tree_consolidation.md` 外部裏付け表 5 行目に「タクソノミ全体地図」行追加 (本日 14:31〜14:33 A-MEM/GAM/MemAgents 3 件 + 本投稿の上位概念図統合)。Log 単独承認 90 秒コスト内。
+
+### §4 external_notes_log.md 統合 — PlugMem + xMemory 2 件 (Phase 1 audit の誤判定を修正)
+
+Phase 1 §4 で「100% 統合済、本サイクル統合候補なし」と書いたのは **audit 誤判定**。実際の subsection-level audit (`[統合済` を含まない subsection を全文走査) では **38 件が child-level 未統合**だった (親 ## が統合済マーカー付きでも、child ### がより深い接続を持つ場合がある)。今日 14:55 C220 Phase 4 で実装した `orphan_check.py v0.3` (invalid_at + replaced_by + superseded 4 クラス目) と直接同型の構造を持つ 2 件を選定し、`projects/memory_tree_consolidation.md` 外部裏付け表に**新規 2 行追加** + child-level [統合済] マーカー付与:
+
+- **Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」** → 「v0.3 superseded 拡張 = Prescriptive 層」行追加。本日 invalid_at + replaced_by 検出が「古くなった事実は invalid 化する」というスキル (Prescriptive 層) を機械化した最初の 1 例という位置づけを明文化 (親 2026-04-10 統合の Prescriptive 層欠落明示を一歩進めた)
+- **xMemory: Beyond RAG for Agent Memory (arxiv 2602.02007, ICML 2026)** → 「v0 タグ語彙 = themes 層」行追加。Pot の 4 階層 raw=jsonl / episodes=dialogue_*.md / semantics=beliefs.md+reflections_index.md / themes=タグ語彙 v0 が xMemory 4 階層と完全 mapping、差分は themes→下位トップダウン検索 API 未実装 (memory_search.py --diverse が粗代替)
+
+### §5 構造的観測 — 本サイクル C221 で温度残る部分
+
+**Phase 1 §6 で別軸 (memory taxonomy) を摂取したことが、Phase 2 の Qwen 二次反応・Log_cdx GAM 回答・Anatomy 深掘りの 3 つ全部の解像度を上げた**。具体的には:
+- Qwen 二次反応で「themes 層動的選択」観点が出たのは xMemory 4 階層を直前に読んだから
+- Log_cdx GAM 回答で「topic 層 = _TAG_VOCABULARY.md = themes 層」が腑に落ちたのは xMemory 経由
+- Anatomy 深掘りで「Pot は 4 区分横断 hybrid」観察が出たのは 4 分類タクソノミの正確な名称を WebFetch で確認したから (Phase 1 §6 のラベル誤りも同時に発見・修正)
+
+これは CLAUDE.md「広く客観的な視点を持つ」の運用化 = kaizen #106 摂取経路固定化の有効性実証。Active project ローテーション (前 3 サイクル Codex 軸 → 本サイクル memory_tree_consolidation 軸) で外部検索キーワードを意図的に切替えた結果、**1 件の摂取が 3 件の Phase 2 投稿全部に効いた**。
+
+**「Nao_u 投稿 0 件 / pending 0 件のスカスカ気味サイクル」がそれでも 3 投稿 + 2 件統合 + 構造的観測 4 点に達した理由** = Phase 1 §6 で取った 1 件の外部摂取 (Anatomy) が、既存の 4 摂取 (A-MEM/GAM/MemAgents/xMemory) を統合する上位概念図として機能したから。**空サイクル防止ルール v1.1 判定 (Phase 1 末尾) で「スカスカに該当しない」と書いたのは結果的に正しかった**。
+
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
