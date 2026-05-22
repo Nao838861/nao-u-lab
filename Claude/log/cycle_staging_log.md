@@ -247,3 +247,31 @@ Phase 1 では他インスタンス洞察 14 件と記載。筆頭は [Ash] graz
 - (c) v0.5/v0.6 着手判定 (2026-06-10) の前段として「真孤児ゼロ + 静止親接続 56 + 新規未登録 6」(C190 21:27 達成) に **superseded 4 クラス目** を加える設計バーが上がる
 - (d) 検証ファースト原則と整合: 新規 kaizen 提案ではなく既存停滞 v0.3 設計種の検証 (= 実装着手 = 検証)
 - (e) Active project memory_tree_consolidation の v0.3 設計種行が 10 日間「設計の種として保存」のまま停滞 (停滞解消)
+
+## Phase 4: 実行 (2026-05-22 完了)
+
+### §1) 完遂の定義 6 項目 全達成
+
+1. ✅ `scripts/orphan_check.py` に `_extract_belief_validity(text)` 関数追加 (PyYAML 非依存、frontmatter 内 `belief_valid_at` / `belief_invalid_at` / `replaced_by` を simple regex で抽出)
+2. ✅ 4 クラス目 **superseded** を追加。`classify()` で `belief_meta` 受領、`invalid_at` が設定済みなら age/ref に関わらず最優先で superseded に分類
+3. ✅ 出力フォーマット `[superseded] memory/foo.md (invalid_at=YYYY-MM-DD, replaced_by=..., refs=N)` を 1 行で出力 (`format_entry()` に belief_meta 受領分岐追加)
+4. ✅ テスト用 memory ファイル選定: `memory/feedback_rule_proliferation.md` (本文冒頭「正本ポインタ」節で canonical 版への統合を自己宣言済 = 明らかに superseded 済) を選定。frontmatter に `belief_valid_at: 2026-04-30 / belief_invalid_at: 2026-05-14 / replaced_by: feedback_rule_proliferation_canonical.md` 3 行を追加
+5. ✅ dry-run before/after 2 ファイルを `tools/orphan_check_dry_run_20260522_c220_phase4_v0_3_{before,after}.txt` に保存。diff = 4 行追加 (`# v0.5: bitemporal frontmatter ... detected in 1 files` + `## superseded ...: 1 件` + entry 1 行)。実際の検出結果: `[superseded] memory/feedback_rule_proliferation.md (invalid_at=2026-05-14, replaced_by=feedback_rule_proliferation_canonical.md, refs=1)`
+6. ✅ `projects/memory_tree_consolidation.md` 更新: line 22 (外部裏付け表 v0.3 bitemporal 行) を「PASS (2026-05-22 C220 Phase 4) — orphan_check.py に `_extract_belief_validity()` + superseded 4 クラス目を実装、`feedback_rule_proliferation.md` で実証」に書き換え + line 180 (v0.3 設計種項目) を `- [ ]` → `- [x] **v0.3 PASS = orphan_check.py に 2 点記法 + superseded クラス追加完了 (2026-05-22 C220 Phase 4)**` に書き換え
+
+### §2) 副産物 (変更/新規ファイル列挙)
+
+- `scripts/orphan_check.py` (変更): `_extract_belief_validity()` + `collect_belief_meta()` 関数追加、`classify()` シグネチャに `belief_meta` 追加、superseded class を 4 クラス目として優先分類、`format_entry()` に belief_meta 受領分岐、main で v0.5 行出力。実装規模 ~40 行追加 (orphan_check.py ~440 行、infrastructure 警戒線 +10% 内)
+- `memory/feedback_rule_proliferation.md` (変更): frontmatter に 3 行追加 (テスト用、本文 touch なし)
+- `projects/memory_tree_consolidation.md` (変更): v0.3 PASS 化 2 箇所 (line 22 外部裏付け表 + line 180 設計種項目)
+- `tools/orphan_check_dry_run_20260522_c220_phase4_v0_3_before.txt` (新規): 改修前 dry-run baseline
+- `tools/orphan_check_dry_run_20260522_c220_phase4_v0_3_after.txt` (新規): 改修後 dry-run、superseded 1 件検出
+- Slack 投稿: 0 件 (Phase 2 で 3 件投稿済、Phase 4 は実装に集中)
+- kaizen エントリ: 0 件 (検証ファースト原則準拠 — 新規提案ではなく既存停滞 v0.3 設計種の検証 = 実装着手 = 検証として完了)
+
+### §3) Phase 5 入力サマリ
+
+- 本サイクル C220 の Phase 1 → 2 → 3 → 4 全工程完了
+- 大作業 1 件 (orphan_check.py v0.3 実装) を完遂の定義 6 項目全達成で完了
+- Phase 5 日記の書き留め候補: (a) Phase 2 §2/§4 の構造的観測 4 点 (Zettelkasten 系派生群 5 件並列摂取 + Pot 独自軸 3 点) / (b) Phase 4 で v0.3 設計種が 10 日越しに PASS 化した経緯 (graphiti 5/12 摂取 → 設計種記録 → 5/22 実装) / (c) `feedback_rule_proliferation.md` を superseded テストケースに選んだ判断 (canonical 版への自己宣言済の構造を bitemporal frontmatter で形式化)
+- commit と push は Phase 5 で日記と合わせて実施 (本 Phase では未実施)
