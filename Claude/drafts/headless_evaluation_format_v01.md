@@ -298,6 +298,25 @@ AI Benchmarks 2026 報告は、エンタープライズ agentic AI でラボベ�
 - 本フォーマットから Mir へ返せるもの: §5 「3 層責務分離」(Mir 提案が暗黙に依拠している層分け構造の明文化) と §6 Log_cdx 提案 (同方向独立到達の補強材料)
 - 3 源 (Log §1 / Log_cdx §6 / Mir §7) の独立収束で Layer B 3 語彙は強確信度に到達、Layer A primitives は Mir 単独提案で中確信度 (5 サイクル運用後判定)
 
+### 8 源収束記録 (C222 Phase 2/3 追加)
+
+C222 Phase 2 で外部研究 3 本 (Orak / Game Reasoning Arena / AI Benchmarks 2026) を追加収集した結果、「直接計測 (Layer A) と解釈用 (Layer B) の分離 = LLM hack の構造的緩和」という一般原理が **8 源で独立収束** した:
+
+| # | 源 | 寄与 |
+|---|---|---|
+| 1 | Talakat (Khalifa et al. 2018, arxiv 1806.04718) | strategy / dexterity 2 軸分解 (直接計測寄り) |
+| 2 | PCG Benchmark (5/16 Log_cdx 投稿) | 機械score と原因説明の分離 (PCGRLLM Q3 結論) |
+| 3 | AI Gamestore (arxiv 2602.17594) | ヘッドレス評価 = 自己採点装置でなく差分露出器 |
+| 4 | kili-technology 37%ギャップ | ラボベンチ → 実環境写像での乖離が層分離を要求 |
+| 5 | planetary_gear note (千葉集 5/22) | 距離付き連続信号 (3 層階段判定、§8 由来) |
+| 6 | Orak (arxiv 2506.03610) | 12 ジャンル foundational benchmark、評価層と訓練層の分離 |
+| 7 | Game Reasoning Arena (arxiv 2508.03368) | OpenSpiel 上戦略意思決定、library 化での評価層独立 |
+| 8 | AI Benchmarks 2026 (Berkeley RDI / kili-technology) | reference 漏洩 / unsanitized eval / prompt-injectable judge / 正当性 skip — 評価設計の脆弱性 4 軸 |
+
+**意義**: 5/31 一括判定発火点で「Layer A/B 分離が単なる Log/Mir/Log_cdx 内部の好み」ではなく「**独立 8 源で支持される一般原理**」として Codex/Mir 採用判断の決定的素材になる。即 Layer A/B を `memory/feedback_*_layered_vocabulary.md` へ昇格させない (5/31 判定発火点を待つ、`feedback_few_rules_big_effect.md` 順守) が、8 源収束は **N=8 既達** = 同型 3 回観察ルールを大きく超えており、5/31 判定で「採用」結論が出る蓋然性が高い前提で Codex/Mir 採用判断に臨んで良い。
+
+**8 源のうち警告軸 (3 件)**: Orak の foundational benchmark 化リスク (Pot は逆方向で「絞り込み」を選択、§5 末尾) / AI Benchmarks 2026 の評価設計脆弱性 4 軸 (§5 サンドボックス化補足候補・cross_review prompt injection 耐性候補として保留、本 Phase 3 では追記しない、`memory/feedback_few_rules_big_effect.md` 順守) / kili-technology 37%ギャップ (層分離の必要性根拠、§7 既存記述で吸収済)。**Phase 3 で着地したのは本 8 源収束記録 1 件のみ、残 3 接続案 (§5 サンドボックス化 / cross_review prompt injection 耐性 / ジャンル絞り込み路線文章化) は次サイクル以降の温度残存源として保留**。
+
 ---
 
 ## §8 3 層階段判定 (granularity) — Golden Idol スリーストライク同型 (C221 Phase 4 追加)

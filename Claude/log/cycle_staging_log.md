@@ -271,4 +271,70 @@ C221 二度目 Phase 5 日記「本日 5 サイクル累積 = 1 日サイクル�
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 (新規返信義務 0 件確認)
+
+Phase 1 §1-§3 で新規未応答 = 0 件、Phase 2 で planetary_gear 遅延投稿 (ts=1779471444) + 3 論文三角化投稿 (ts=1779471593) を既に物理化。本 Phase 3 で追加 Slack 投稿なし (Phase 2 §6「中粒度物理化に絞った」判定順守)。
+
+### 2) 4 接続案から 1 案を着地 — §7 8 源収束記録 (a 案)
+
+Phase 2 §2 で立ち上がった 4 接続案 (Layer A/B 補強根拠 / §5 サンドボックス / cross_review prompt injection 耐性 / ジャンル絞り込み路線) のうち **(a) Layer A/B 補強根拠** を `drafts/headless_evaluation_format_v01.md` §7 末尾に「8 源収束記録」として追記:
+
+- 8 源の表 (Talakat / PCG Benchmark / AI Gamestore / kili 37%ギャップ / planetary_gear / Orak / Game Reasoning Arena / AI Benchmarks 2026) で Layer A/B 分離原理の独立収束を明示
+- 警告軸 3 件 (Orak foundational 化リスク / AI Benchmarks 2026 脆弱性 4 軸 / kili 37%ギャップ) を分離して残 3 接続案の出自として再配置
+- N=8 既達 = 同型 3 回観察ルールを大きく超え、5/31 判定発火点で Codex/Mir 採用判断の決定的素材として位置付け
+- 「1 サイクル 1 物理化原則」順守 = 残 3 接続案 (§5 サンドボックス化 / cross_review prompt injection 耐性 / ジャンル絞り込み路線) は次サイクル以降の温度残存源として保留
+
+### 3) 他インスタンス洞察への対応 (8 件中 1 件処理)
+
+`tools/slack_insight_digest.py --hours 72` 出力 8 件のうち Log Active project に直接交差するもの:
+
+- **#3 Mir [shared-reads] Faulty Memories 論文 (arxiv 2605.12978)** → `projects/memory_tree_consolidation.md` の外部裏付け表に「警告軸: Continuous Update 劣化」行を新規追加。v0.8 memory evolution 着手前必読の警告軸として、A-MEM の遡及 refine を Pot で実装する場合の制約 (温度の残る全文を消さない / 抽象化を構造的に bounded) を明示。Log 原則「FB 係数 > 1.0」「劣化コピーを繰り返すと記憶が壊れる」と完全同方向 = 独立到達の外部裏付け
+- **#1 Ash [all-nao-u-lab] graze_log v06 master merge 依頼** → Nao_u 対応待ち、Log 側のアクションなし (Ash の game/ 領域、Log は判定/補助役)
+- **#2 Ash, #4 Ash, #5-8 Mir** → Mir/Ash 各インスタンスの cross_review 内省素材、Log Active project (game_development / memory_tree_consolidation) との交差は弱く本サイクル処理不要
+
+### 4) Active プロジェクト更新
+
+- `projects/memory_tree_consolidation.md` 外部裏付け表に Faulty Memories 行追加 (上記 §3)
+- 他 Active project (game_development / memory_redesign / external_intake 等) は本サイクル新規変化なし、追記なし
+
+### 5) 改善サイクル kaizen 検討 (検証ファースト原則順守)
+
+- **検証リマインド**: Pre-check 結果「検証期限到来なし」= 直近未検証提案の検証完了は本サイクル不要
+- **新規 kaizen 起票見送り**: Phase 2 §1 で発見した「日記主張 vs slack archive 物理確認」(planetary_gear C221 1日越し未投稿の構造的検出) は **1 回観察 = 即原則化禁止** (`feedback_rule_proliferation_canonical.md` / CLAUDE.md「個別指摘を即ルール化しない」順守)。`memory/sense_prediction_log.md` N=27 教師データ蓄積で済ませ、同型 2 回観察を待つ。次サイクル以降で同型再発が確認されたら kaizen 起票候補に格上げ
+- **#kaizen-log Slack 投稿なし** (新規 kaizen なし)
+
+### Phase 3 物理化サマリ
+
+- `drafts/headless_evaluation_format_v01.md` §7 末尾に「8 源収束記録」追記 (約 30 行、4 接続案 (a) 着地)
+- `projects/memory_tree_consolidation.md` 外部裏付け表に「警告軸: Continuous Update 劣化」行追加 (Mir Faulty Memory 投稿吸収)
+- Slack 投稿なし、kaizen 起票なし (本サイクルは「中粒度物理化に絞る」判定順守)
+
+## 次フェーズの大作業
+
+### タイトル
+`drafts/cross_review_layer_b_vocabulary_v01.md` §3 5 サイクル試行を **N=1 物理化** — graze_log_cdx v59 を §2 (b) 層 1 数値なし版プロンプトで Layer B 3 語彙批評する初試行を実走、§3 試行ログ書式 (a-e 5 項目) を満たした実サンプル 1 件を追記。
+
+### 完遂の定義 (観測可能な条件)
+Phase 4 終了時に以下すべてが成立:
+1. `drafts/cross_review_layer_b_vocabulary_v01.md` 末尾もしくはサブファイル (`drafts/cross_review_trial_001_graze_log_cdx_v59.md`) に **試行 N=1 のログ 1 件** が物理化される
+2. 試行ログは §3「各試行で記録するもの」(a) 試行対象 / (b) プロンプト雛形 (a) or (b) どちらを使ったか / (c) cross_review 出力 (Layer B 3 語彙それぞれの 1 文以上) / (d) §2 (c) 4 条件評価 (✓ / △ / × の判定) / (e) 6 番目語彙候補出現の有無 — 5 項目すべて埋まる
+3. §2 (c) 4 条件評価で「機能した / 部分機能 / 機能せず」のいずれかが結論として書かれる
+4. (e) で 6 番目候補語彙が出現した場合は §1 拡張検討候補として追記、出現しなかった場合は「N=1 観察不在」を明示
+5. git diff で 60〜120 行程度の追記 (試行ログ 1 件分の妥当な物量)
+6. 試行対象 = `GPT/game/graze_log_cdx/v05_1_cdx_v59/` (Codex log_cdx 直近 v59、5/22 e7849f1d3bd4 commit 由来) の生プレイ動画は無いため、index.html ソース + devlog ベースで §2 (b) 層 1 数値なし版プロンプトを使用
+
+### 着手手順
+1. `GPT/game/graze_log_cdx/v05_1_cdx_v59/` 配下 index.html / devlog を読み、現状把握 (5 分以内)
+2. §2 (b) 層 1 数値なし版プロンプトに graze_log_cdx v59 の生プレイ仮想プレイヤー観点を投入、Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) それぞれに 1 文以上で批評を書く (15 分)
+3. §2 (c) 4 条件評価を実施、✓/△/× 判定を記述 (5 分)
+4. (e) 6 番目候補語彙が自然に出てきたか自己観察、出現有無を明示 (3 分)
+5. 試行ログを `drafts/cross_review_trial_001_graze_log_cdx_v59.md` として物理化 + `drafts/cross_review_layer_b_vocabulary_v01.md` §3 末尾に「**N=1 試行: cross_review_trial_001_graze_log_cdx_v59.md** [リンク]」1 行追記 (2 分)
+6. Phase 4 サマリ (どの語彙が機能/未機能だったか、Layer B 語彙運用の現実性についての N=1 所感) を 5 行程度で staging Phase 4 セクションに記録
+
+### 選んだ理由
+- **Active project (game_development.md) の停滞解消に直結**: Layer B 語彙運用の N=1 実証は Codex の §3 ログスキーマ採用判断の補強材料供給、5/31 判定発火点 (cross_review_layer_b_vocabulary §4) を 8 日前倒しで 1 件分蓄積
+- **Phase 2 §6「中粒度物理化に絞った」判定と整合**: Slack 投稿 1 本では済まない drafts/ 物理化 + 批評生成、30 分粒度でちょうど
+- **Nao_u 5/22 13:16 directive「ヘッドレス測定のあり方検討」の Log 側補助観点物理化に該当**: ヘッドレス測定 (層 1) を補完する層 2 運用の N=1 立ち上げ
+- **kaizen 未検証提案検証ではない**が、cross_review_layer_b_vocabulary v01 (Log 自身 C221 Phase 4 起票) の §3 5 サイクル試行計画 (5/22-5/31) を Log 自身が 1 件も回していない = 自分の起票分の即時実証着手で「起票したのに動かしていない」状態を解消する自己整合性回復
+- **CLAUDE.md「個別指摘を即ルール化しない」順守**: N=1 試行は原則化ではなく観察データ追加、3 試行以上の蓄積後 5/31 判定発火点で原則化判断
