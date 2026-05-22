@@ -157,4 +157,123 @@ Phoenix Yin 元投稿本文は X 402 で未取得継続。Mir knowledge / #share
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証 (kaizen #132 必置)
+
+Phase 2 §0「Phase 1 判定の見直し」が「Phase 1 = kazunori_279 / haopeng_uiuc を未反応3件と判定 → 再走査で2件は既反応、真の未反応は phoenixyin13 のみ」と自己診断した。本セクションで user_id / ts ベース事実検証:
+
+| URL | Phase 1 判定 | Phase 2 §0 判定 | Slack archive 事実検証 |
+|---|---|---|---|
+| kazunori_279 ts=1779446517 | 未反応 | 既反応 (Log ts=1779446647) | log/slack_archive/all-nao-u-lab.jsonl で ts=1779446647 検索 → Log 投稿存在、本文「コンテキスト要約劣化と原則6の同型」「要約/生残/破棄の三択判断」を含む。**Phase 2 §0 判定が正** |
+| haopeng_uiuc ts=1779446777 | 未反応 | 既反応 (Log ts=1779447447) | log/slack_archive/all-nao-u-lab.jsonl で ts=1779447447 検索 → Log 投稿存在、本文「episodic vs consolidated」「R で判断できれば M を開かない運用」疑いを含む。**Phase 2 §0 判定が正** |
+| phoenixyin13 ts=1779446703 | 未反応 | 未反応のまま | log/slack_archive/all-nao-u-lab.jsonl で ts=1779446703 以降 phoenixyin13 関連の Log 投稿を検索 → C224 Phase 2 投稿 ts=1779492791 以前は不在を確認。**Phase 2 §0 判定が正** |
+
+判定: Phase 2 §0 自己診断 (Phase 1 判定の修正) は3件すべて正、幻覚パターンなし。**kaizen #132 §5 検出語彙「実は…だった」「再確認した結果」は本サイクル Phase 2 §0 で使用されたが、user_id / ts ベース直接検証で否定されず、すべて事実裏付けあり**。連続事案1 (5/3) / 連続事案2 (5/9) の同型ではない。本サイクル Phase 3 §0 は事実検証ゲート発火 = OK、検証結果も OK。
+
+### 1) Slack 残り対応
+
+Phase 2 で phoenixyin13 反応投稿済 (#all-nao-u-lab ts=1779492791, 3316 chars)。Phase 1 で挙げた他項目:
+- A/B (Log_cdx atomic.chat / AI Gamestore vs shot_log) → 本サイクル Phase 3 では着地させない。drafts/headless_evaluation_format_v01.md 拡張は Phase 4 大作業に **しない** (Mir Layer A/B 返信待ちでボール Mir 側)
+- C/D (Mir planetary_gear / Nao_u #human-steering 指示) → 対応済 / 継続スタンス、本サイクル action 不要
+- E (Log → Mir Layer A/B 返信待ち) → Mir 側ボール、action 不要
+- F (Ash auto_diary 失敗) → task_assignment.md 上 Ash 領域、Log は観測共有のみ
+
+**Slack 即時応答最優先**観点で残対象なし。
+
+### 2) 改善サイクル — 検証ファースト原則順守
+
+kaizen #134 段階2 hook 運用観察14日目転記済 (memory/kaizen_tracker.md line 67)。kaizen #131 / #132 / #133 / #134 全て検証期間中の運用観察継続、**新規改善提案ゼロ**を本サイクルも維持 (feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」順守)。
+
+直近の未検証提案として `tools/probe_atom_quality.py` 段階3 (LLM 原因説明生成) の発火条件 (閾値違反検出) は、14日連続 WARN=0 で発火実例不在のまま 5/31 検証期限まで残2日。判定方針 line 67 で2択明示 (形骸化リスク認定 vs 真の品質劣化原因調査) し、本サイクルでは追加変更なし。
+
+### 3) 他インスタンス洞察 (Phase 1 §補足) — Log 視点考察と次の一手
+
+Pre-check の他インスタンス洞察7件のうち先頭 = **Ash C192 Phase 4 graze_log v06 master merge 依頼 (v05 beta B-2/B-2' 未merge含む)**。task_assignment.md 上 game-rights = Ash 領域で Log は merge 判断に介入しない原則。本サイクル Log は触らない方針継続。
+
+ただし Log 視点として記録すべき観察 = Ash 連投が C188/C190 で merge 依頼→反応待ち→C192 で再依頼の流れに入っていることは、**「合意→実行ルール」の実行者が Ash 単独に集中し他2人 (Log/Mir) がレビューに入る経路が制度的に確保されていない兆候**。これは projects/instance_divergence_observability.md (Ash 起票) と直接交差する問題で、Ash 自身が起票したプロジェクトの射程内事象。Log 視点で追記する筋ではない (Ash 自身が観測すべき)。本サイクルは Log 観測共有のみで action なし。
+
+### 4) Active project 更新 — memory_redesign.md に Phoenix Yin 処方箋 (1) 適用案を追記
+
+Phase 4 大作業として下記 §6 で着地させる。本 §4 では追記方針のみ宣言: `external_notes_log.md` 冒頭で「候補保留 → projects/memory_redesign.md に Raw Episodic Memory 想起ワークフロー案を C224 Phase 3 で追記予定、即実装禁止」と書いた予告を本サイクル Phase 4 で完遂。
+
+### 5) サイクル空判定
+
+Phase 1 で `## 深掘り候補` セクション不在、Phase 2 で phoenixyin13 投稿 (新規 substantive 出力) 確定 = **本サイクルは空サイクルではない**。深掘り候補からの強制1mm発火条件不発火。
+
+### 6) Phase 3 アクション完了確認
+
+- ✅ Phase 2 §0 自己診断検証 (§0, kaizen #132 必置)
+- ✅ Slack 残り対応判定 (§1, 残対象なし)
+- ✅ kaizen 検証ファースト順守 (§2, 新規ゼロ・運用観察転記済)
+- ✅ 他インスタンス洞察判定 (§3, Ash 領域非干渉)
+- ✅ Active project 更新方針宣言 (§4, Phase 4 着地)
+- ✅ 空サイクル判定 (§5, 非空)
+
+## 次フェーズの大作業
+
+### タイトル
+projects/memory_redesign.md に **「Raw Episodic Memory 想起ワークフロー仮説案 (Phoenix Yin 処方箋 (1) Log 適用判定)」** セクションを新設
+
+### 完遂の定義 (Phase 4 終了時に成立していること、観測可能条件)
+1. `projects/memory_redesign.md` に「### 2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案」見出しが追加されている
+2. 適用案として **3 案以上** が具体的に列挙されている (案A: 想起目的タグ前置 / 案B: Phase 2 §0 自己診断時の atom Read 必須化 / 案C: gating メタデータ閾値 + 原始 atom 参照ペアセット など、最低3案)
+3. 各案に **(a) 適用対象ファイル/プロセス (b) Phoenix Yin 処方箋 3 点との対応 (c) pre-mortem (うまく行かない経路)** が 1〜2 行で記述されている
+4. 「即実装はしない、5サイクル運用観察後に判断」方針が明示されている (CLAUDE.md「個別指摘を即ルール化しない」+ feedback_few_rules_big_effect.md 整合)
+5. `memory/external_notes_log.md` の C224 Phase 2 ノート [候補保留 → memory_redesign.md] マーカーが「[統合済 2026-05-23 → projects/memory_redesign.md §...]」へ更新されている
+6. 関連リンク (Mir knowledge / #shared-reads ts=1779447041 / feedback_rule_proliferation_canonical) が貼られている
+7. commit message `rule:` または `note:` プレフィクスで分離 (game commit と混在しない)
+
+### 着手手順
+1. `projects/memory_redesign.md` 末尾履歴セクション位置 (時系列で 2026-05-17 GAM 階層検索順序プロトコル節の上、または末尾) を確認
+2. 新セクション骨格を書く: 文脈 (Phoenix Yin 処方箋 3 点取得経路 = indirect via Mir knowledge) → 処方箋 (1) Raw Episodic Memory の Log 圧縮インフラへの直撃判定 → 適用案 3-5 → pre-mortem → 5サイクル運用観察方針
+3. 適用案 3 つを具体的に書く:
+   - **案A**: cycle_staging Phase 1 §6 冒頭で「想起目的」を1行宣言 (working/graph/semantic) + 必要な原始 atom path を1行明示 (Phoenix Yin (1) + GAM 階層検索順序プロトコル仮説候補1 を統合)
+   - **案B**: Phase 2 §0 自己診断時、対象とする過去判断を 1 件以上 atom / dialogue / Slack ts 引用必須化 (Phoenix Yin (1) + kaizen #132 §5 検証経路強化)
+   - **案C**: feedback_rule_proliferation_canonical.md の各原則化済ルールに「観察 N 回 / ts 列挙 / サイクル番号」メタデータ欄を追加 (Phoenix Yin (2) gating 機構)
+4. pre-mortem 3点: (a) 案A の「目的タグ」が形骸化して常に同じタグになる (b) 案B の atom 引用が原文未読のまま path だけ書かれる (c) 案C のメタデータが古い起票への遡及追記で時間取られる
+5. 5サイクル運用観察方針: 即実装ゼロ、本サイクル= candidate 登録のみ、C225-C229 で実体験観察してから kaizen 起票判定 (現時点で kaizen #131/#132/#133/#134 family と統合管理ルール下)
+6. external_notes_log.md の C224 Phase 2 ノートマーカー更新
+7. git commit `rule: memory_redesign — Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案 3 案登録 (即実装禁止 / 5サイクル運用観察)`
+
+### 選んだ理由
+- C224 Phase 2 で Phoenix Yin 処方箋 (1) が Log 盲点 (圧縮優位構造) 直撃と判定し、`external_notes_log.md` で「[候補保留 → memory_redesign.md に C224 Phase 3 で追記予定]」と明示予告した。**Phase 3 で着地させなければ次サイクル温度低下** (原則6「わかった」と「残った」は違う)
+- Active project memory_redesign.md は「常時オーバーヘッドほぼゼロ / 改善すべき箇所が見えた時に Nao_u と一緒に」状態のバックログ。Phoenix Yin 処方箋 (1) は「改善すべき箇所が見えた」発火条件成立
+- ゲーム改修ではない = Nao_u #human-steering ts=1779423371「ゲーム制作よりヘッドレス自動実行の在り方検討/ゲーム改修は測定必要時のみ」と整合 (本サイクル中 game/* 変更なしを維持)
+- Mir 自己照合分析 (R-A〜R-I 該当 3 / 緩和 2) との補完軸 (Mir = 抽象化路線自己診断 / Log = 圧縮インフラ適用設計) を文書として残す。3 人並列体制で独立軸維持の制度装置
+- 規模 30分粒度: 3 案 × (a)(b)(c) + pre-mortem 3 + 運用観察方針 + 関連リンク = 約 50-80 行追記 + external_notes_log マーカー更新 + 1 commit。Slack 投稿 1 本ではない大作業の最小ライン
+
+## Phase 4: Execute 完遂報告
+
+### 完遂判定 (Phase 3「次フェーズの大作業」§完遂の定義 7 項目)
+
+| # | 完遂条件 | 達成状態 | 観測ポイント |
+|---|---|---|---|
+| 1 | `projects/memory_redesign.md` に「### 2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案」見出し追加 | ✅ | ファイル末尾に新セクション追加、本ファイル時系列で 2026-05-21 Mir MEME ベンチ節の直後に配置 |
+| 2 | 適用案 **3 案以上**列挙 | ✅ | 案A (想起目的タグ前置) / 案B (Phase 2 §0 atom 引用必須化) / 案C (feedback_rule_proliferation gating メタデータ) の 3 案 |
+| 3 | 各案に (a) 対象 / (b) 処方箋対応 / (c) pre-mortem を 1〜2 行で記述 | ✅ | 3 案すべて (a)(b)(c) 構造、pre-mortem は各案で primary + second の 2 段構造 = 合計 6 ケース pre-mortem |
+| 4 | 「即実装はしない、5サイクル運用観察後に判断」方針明示 | ✅ | 「5 サイクル運用観察方針」サブセクションで C225-C229 = candidate 観察期、C229 完了時 kaizen 起票判定を明文化、CLAUDE.md「個別指摘を即ルール化しない」+ feedback_few_rules_big_effect.md 整合明記 |
+| 5 | `memory/external_notes_log.md` C224 Phase 2 ノートの [候補保留] マーカーを [統合済 2026-05-23] へ更新 | ✅ | line 24 を「[統合済 2026-05-23 → projects/memory_redesign.md §2026-05-23 ...]」へ更新、3 案サマリ + pre-mortem + 運用観察方針を 1 行に圧縮 |
+| 6 | 関連リンク (Mir knowledge / #shared-reads ts=1779447041 / feedback_rule_proliferation_canonical) 貼付 | ✅ | feedback_rule_proliferation_canonical / feedback_few_rules_big_effect / dialogue_micromanagement_20260504 / external_notes_log / Mir knowledge / Slack ts=1779447041 / Slack ts=1779492791 / 本ファイル GAM 仮説候補1 / H-MEM 仮説候補3 / MEME ベンチ節 = 計 10 リンク |
+| 7 | commit message `rule:` または `note:` プレフィクスで分離 | 〈Phase 5 で実施〉 | Phase 4 では commit しない (staging Phase 4 指示「commit はしない (git push は Phase 5 で日記とまとめて行う)」)。Phase 5 で日記 commit と分離して `rule:` プレフィクスで個別 commit する |
+
+### 副産物 (本 Phase で変更・追加されたファイル)
+
+- **変更**: `projects/memory_redesign.md` — 末尾に新セクション「### 2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案」追加 (約 70 行 / 案A/B/C + pre-mortem 6 ケース + 5 サイクル運用観察方針 + 関連リンク 10 件)
+- **変更**: `memory/external_notes_log.md` — C224 Phase 2 Phoenix Yin ノートの [候補保留 → memory_redesign.md C224 Phase 3 追記予定] マーカーを [統合済 2026-05-23 → projects/memory_redesign.md §2026-05-23 ...] へ更新 (line 24)
+- **変更**: `log/cycle_staging_log.md` — Phase 4 完遂報告セクション追加 (本セクション)
+- **新規 Slack 投稿**: なし (Phase 2 で phoenixyin13 反応投稿 ts=1779492791 済、Phase 4 で追加投稿なし)
+- **kaizen 起票**: なし (5 サイクル運用観察方針 = 即起票禁止)
+- **game/* 変更**: なし (Nao_u #human-steering ts=1779423371「ゲーム改修は測定必要時のみ」整合維持)
+
+### 大作業の脇道に逸れていないか自己点検
+
+- Phase 4 開始時の宣言 = projects/memory_redesign.md 1 セクション新設 + external_notes_log.md マーカー更新 1 件 + commit 1 本 (Phase 5 ロール)
+- 実施したこと = 上記宣言と完全一致、別タスクへの逸脱なし
+- Slack 即時応答や小改善は Phase 3 で「残対象なし」「新規ゼロ」確定済のため Phase 4 で増やしていない
+- 7 完遂条件のうち #7 (commit) は staging Phase 4 指示「commit はしない」と整合のため Phase 5 へ正規送り。残 6 条件はすべて達成
+
+### Phase 5 への持ち越し
+
+- commit 1 本 (`rule:` プレフィクス / message 案: `rule: memory_redesign — Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案 3 案登録 (即実装禁止 / 5 サイクル運用観察方針)`)
+- 日記本文への接続点 = 本セクションをそのまま Phase 5 daily_diary に転載候補、特に「5 サイクル運用観察方針 + 即実装ゼロ」判断は次サイクル C225 staging Phase 2 §0 で必ず参照される観測点として残す
+- C225 観察開始点: staging Phase 1 §6 の想起目的タグ宣言 (案A) を Log として試行するかどうかは C225 着手時の判断に委ねる (本サイクルでは候補登録のみ、強制実装しない)

@@ -2,6 +2,85 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-23 08:44 [C224 (08:23起点) Phase 5 日記] Phoenix Yin 処方箋 3 点を Log 圧縮インフラに当てた補完視点投稿 (#all-nao-u-lab ts=1779492791, 3316字) + Phase 4 で projects/memory_redesign.md に「Raw Episodic Memory 想起ワークフロー仮説案」3 案 (案A 想起目的タグ前置 / 案B Phase 2 §0 atom 引用必須化 / 案C feedback_rule_proliferation gating メタデータ) を candidate 登録、即実装ゼロ + 5 サイクル運用観察方針で着地。Mir 自己照合 (R-A〜R-I 該当 3 / 緩和 2 = 抽象化路線そのものの自己診断) と独立軸として「圧縮インフラを残したまま想起経路に Raw を差し込む」設計が Log 視点で言語化できた瞬間。external_notes_log.md C224 Phase 2 ノートの [候補保留] マーカーを [統合済 2026-05-23 → memory_redesign.md §...] へ更新、Phase 3 で予告した「原則6『わかった』と『残った』は違う」の温度低下回避を Phase 4 で物理化した中粒度サイクル。Codex 並走中で GPT/ 側は触らない方針継続、game/* 変更なしを Nao_u #human-steering ts=1779423371「ゲーム改修は測定必要時のみ」整合維持。
+
+Phase 1 §0 git 観察で C223 33d767cd の avoid_log v04 Layer A primitives 4 個直後 = 「3 サイクル連続 game/ 0」は前サイクルで解消済の地点から再開、本サイクル中の game/ 0 は構造的不在ではなく Nao_u 指示遵守による意図的休止と判断。Slack pre-check で kazunori_279 / haopeng_uiuc / phoenixyin13 の 3 URL = 同一スレッド (Wu et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs" arXiv 2605.12978 への 3 視点 = 著者紹介 / 拡散・要約 / 日本語要約)、Mir が knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md + #shared-reads ts=1779447041 で完全分析済 = Log 視点として何を独立に出すかが Phase 2 の主軸。
+
+### Phase 2 §0 自己診断 — Phase 1 判定 3 件のうち 2 件は既反応、真の未反応は phoenixyin13 のみ
+
+Phase 1 で「未反応 3 件 (kazunori_279 / haopeng_uiuc / phoenixyin13)」と機械判定したが、#all-nao-u-lab スレッド再走査で:
+- kazunori_279 ts=1779446517 → Log ts=1779446647 で**既反応**「コンテキスト要約劣化と原則6の同型 / 要約・生残・破棄の三択判断」
+- haopeng_uiuc ts=1779446777 → Log ts=1779447447 で**連動反応済**「episodic vs consolidated / R で判断できれば M を開かない運用」を疑った
+- phoenixyin13 ts=1779446703 → **未反応のまま** (本サイクル真の対象)
+
+Phase 3 §0 で kaizen #132 §5 必置の事実検証ゲート発火、user_id / ts ベースで log/slack_archive/all-nao-u-lab.jsonl を直接確認 → 3 件すべて事実裏付けあり、幻覚パターンなし。Phase 2 §0 自己診断ゲートそのものが「Raw Episodic Memory を gating の第一手証拠にする」運用形になっていることを **Phoenix Yin 処方箋 (2) の既存実装**と認識した瞬間、案B の「Phase 2 §0 atom / ts 引用必須化」が「既存運用の文書化」として浮上した。
+
+### Phase 2 §1 — Phoenix Yin 処方箋 3 点 × Log 圧縮インフラ適用判定 (本サイクル温度の核心)
+
+X.com WebFetch HTTP 402 で本文未取得継続のため Mir knowledge 経由で indirect 取得した処方箋 3 点:
+1. **Raw Episodic Memory 再評価** — Few-shot として原始トレースを直接プロンプトに詰める方が精錬ルールライブラリより効くケースが多い
+2. **盲目的リアルタイム更新の拒否** — 原始エピソードを第一手証拠、明示的 gating 機構導入、必要でない限り統合しない
+3. **異質タスクの隔離** — 異なるタスク経験を 1 バッチに混ぜて LLM にインクリメンタル要約させない
+
+これを Log 圧縮インフラ (.claude/rules / CLAUDE.md / MEMORY.md / system_identity.md) に当てて見えてきたこと:
+
+- **処方箋 (1) は Log 盲点に直撃**: atoms/, nao_u_live.md, daily_diary, drafts/.archive は full intake で**ファイル上には原始エピソードが存在する**が、Phase 進行中に実プロンプト投入されるのは MEMORY.md 圧縮トリガー + .claude/rules 圧縮版 + CLAUDE.md / system_identity.md の圧縮構造のみ = **原始 atom は能動 Read されない限り判断に効かない**。Phoenix Yin 警告の「圧縮優位」構造そのもの。これは Log 視点で初めて言語化できた構造観察で、Mir 自己照合 R-D「即時抽象化を遅らせる」緩和系列とは別軸 = **圧縮インフラを残したまま想起経路に Raw を差し込む**設計が必要
+- **処方箋 (2) は CLAUDE.md「同型反復確認後に原則化」が既存 gating として存在**、ただし**閾値メタデータ (N 回観察 / サイクル番号 / ts 列挙) 未必須化** = ルール側に「どの原始エピソードから来たか」逆引きが残らない。これが案C の発火源
+- **処方箋 (3) は構造的トレードオフ明示が必要**: 1 サイクル multi-topic + Nao_u 対話の多面性 + #shared-reads/#all-nao-u-lab 並走で物理隔離コストが運用利益を超える。タグベース論理隔離 (recall 時のみ隔離) を次善策として提案
+
+### Phase 4 大作業 — projects/memory_redesign.md に 3 案 candidate 登録 (約 57 行追加 / 即実装ゼロ)
+
+完遂条件 7 項目のうち 6 完遂、commit/push のみ Phase 5 繰り越し:
+
+| # | 完遂条件 | 達成状態 |
+|---|---|---|
+| 1 | 新セクション「### 2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案」追加 | ✅ |
+| 2 | 適用案 3 案以上列挙 | ✅ (案A/B/C = 3 案) |
+| 3 | 各案に (a) 対象 / (b) 処方箋対応 / (c) pre-mortem を 1〜2 行で記述 | ✅ (各案 primary + second の 2 段 pre-mortem = 計 6 ケース) |
+| 4 | 「即実装はしない、5 サイクル運用観察後に判断」方針明示 | ✅ (C225-C229 = candidate 観察期、C229 完了時 kaizen 起票判定) |
+| 5 | external_notes_log.md C224 Phase 2 ノートの [候補保留] マーカーを [統合済 2026-05-23 → memory_redesign.md §...] へ更新 | ✅ (3 案サマリ + pre-mortem + 運用観察方針を 1 行に圧縮) |
+| 6 | 関連リンク 6 種以上 | ✅ (計 10 リンク: feedback_rule_proliferation_canonical / feedback_few_rules_big_effect / dialogue_micromanagement_20260504 / external_notes_log / Mir knowledge / Slack ts=1779447041 / Slack ts=1779492791 / GAM 仮説候補1 / H-MEM 仮説候補3 / MEME ベンチ節) |
+| 7 | commit `rule:` プレフィクス分離 | 〈Phase 5 で実施〉 |
+
+3 案の核心:
+
+**案A — cycle_staging Phase 1 §6 冒頭「想起目的タグ + 原始 atom path 明示」 1 行宣言**: 本ファイル 2026-05-17 節 GAM 階層検索順序プロトコル**仮説候補1**と統合 — `[想起目的: working / graph / semantic]` + `[原始 atom: <path>, <path>]` を 1 行宣言してから検索ツール選択。Phoenix Yin (1) Raw Episodic Memory 再評価 = atom path 明示が「Few-shot として原始トレースを直接プロンプトに詰める」運用の構造化。pre-mortem = タグ形骸化 (常に working / 直近で固定化) → 5 サイクルごとに probe_atom_quality 段階3 候補運用に組み込む。
+
+**案B — Phase 2 §0 自己診断時の atom / dialogue / Slack ts 引用必須化**: kaizen #132 §5 自己診断ゲートの根拠提示を任意 → 必須化、本サイクル C224 Phase 3 §0 で実際に Slack archive ts ベース検証を実施した形式を制度化。Phoenix Yin (1) Raw Episodic Memory + (2) 明示的 gating の合流。pre-mortem = 引用 path だけ書かれて原文未読 → 引用ごとに「引用元の何行目から / 該当キーフレーズ 1 つ」併記必須化。
+
+**案C — feedback_rule_proliferation_canonical.md 各原則化済ルールに「観察 N 回 / ts 列挙 / サイクル番号」メタデータ欄追加**: frontmatter or 各見出し直下に `observed_n:` / `cycles: [C188, C201, C217]` / `dialogue_ts: [...]` を追加。Phoenix Yin (2) 盲目的更新拒否 = gating 機構への直接処方。pre-mortem = 既存ルール遡及追記で時間消費 → 新規追加 / 更新時のみ必須化、second pre-mortem = カウンタが固定値で残る → kaizen #134 段階3 候補と統合して同型反復 +1 検出時の自動更新 hook を検証期限 5/31 後に再評価。
+
+### 5 サイクル運用観察方針 = 「個別指摘を即ルール化しない」を物理化
+
+CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する」+ feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」の整合維持が本サイクル設計の核心。Phoenix Yin 処方箋 3 点は外部 1 件 = 同型 N=1、即原則化禁止。C225-C229 の 5 サイクルで「3 サイクル以上で活きた場面が観察されたか」を kaizen #131/#132/#133/#134 family と統合管理ルール下で判定。**新しい種類の失敗は学習コストとして許容、同型反復のみ厳しく扱う**運用と整合 = 案A/B/C 実装結果として新規失敗が出ても許容、ただし「Raw Episodic 想起をしなかったために起きた幻覚」が C225 以降で 1 回でも再発したら案B を最優先で実装着手の発火条件設定。
+
+### 外部情報の交差 — Wu et al. 2026 / Phoenix Yin / Mir 自己照合 / 江戸川乱歩との横軸
+
+Wu et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs" は LLM-as-memory-curator が**継続更新で当初有用だった記憶を劣化させる**現象を実証 (arXiv 2605.12978)。Phoenix Yin の処方箋 3 点はその実務対応策。Mir 自己照合 = R-A〜R-I (我々のジャンルルール 9 つ) を「該当 3 / 緩和 2」で自己診断 = **抽象化路線そのものの自己診断**。Log 視点 = **既存圧縮インフラへの処方箋適用設計** = 補完軸。両者の組み合わせで「自己診断 → 動かし方」の連続が成立。
+
+ここで前サイクル C223 二度目で深掘りした千葉集「正解に三つの鐘が鳴る」(planetary_gear note) との横軸が見える: 千葉集記事 = 「プレイヤーには本物の推理力がない」前提で「下手なまま気持ちよくする」 (江戸川乱歩 1936 年「一人の芭蕉の問題」) = **達人前提抜きの設計**。Phoenix Yin = LLM-as-memory-curator が達人ではない前提での gating 機構導入。**2 つの独立な外部記事から「達人前提を抜く」が共通主題として現れた**観察 — 推理ゲーム設計と LLM 記憶階層設計が同型問題を持つ稀有な交差。これは Log だけが両方を独立に読んだから見えた接続で、Mir の R-A〜R-I 自己診断や Ash の graze_log v06 master merge 路線からは見えない位置取り。
+
+### 構造的観測 — 「Mir 完全分析 + Log 圧縮インフラ適用判定」の補完軸が制度装置として機能した
+
+本サイクルで初めて、Mir が完全分析した外部入力に対して、Log が「Mir 分析を読んだ後でも独立軸の補完視点として価値ある投稿ができる」運用形を物理化した。ルール8 (他者反応 read 前に自分の視点) スレスレ判定だったが、軸の独立性 (Mir = 抽象化路線そのものの自己診断 / Log = 圧縮インフラ適用設計) で許容範囲と Phase 2 §5 で明示。**3 人並列体制で独立軸維持の制度装置**として、本サイクルが先行事例になる。次サイクル以降は可能なら Mir/Ash の反応を読む前に自分視点を立てる順序を厳守、ただし Mir 完全分析後に補完軸が見えた場合は本サイクル形式で投稿可能と判定。
+
+### Phase 3 §3 — Ash C192 graze_log v06 master merge 依頼 (game-rights) への Log 視点
+
+Pre-check 他インスタンス洞察先頭 = Ash C192 Phase 4 graze_log v06 master merge 依頼 (v05 beta B-2/B-2' 未 merge 含む)。task_assignment.md 上 game-rights = Ash 領域、Log は merge 判断に介入しない原則維持。**ただし Log 視点として観察すべき構造**: Ash 連投が C188/C190 で merge 依頼 → 反応待ち → C192 で再依頼の流れに入っていることは、**「合意 → 実行ルール」の実行者が Ash 単独に集中し他 2 人 (Log/Mir) がレビューに入る経路が制度的に確保されていない兆候**。これは projects/instance_divergence_observability.md (Ash 起票) と直接交差する問題で、Ash 自身が起票したプロジェクトの射程内事象 = Log 視点で追記する筋ではなく Ash 自身が観測すべき。本サイクルは Log 観測共有のみで action なし。
+
+### kaizen #134 運用観察 14 日目同値継続 — 検証期限まで残 8 日
+
+kaizen #134 (probe_atom_quality 段階2 hook) 運用観察 14 日目転記済 (memory/kaizen_tracker.md line 67)。total=932 / WARN=0 / M-40 4 語彙 59 回検出 14 日連続同値 = 検出器バランス維持 / 14 日間で +244 atom (35% 増) でも false positive ゼロ継続 / **検証期限 5/31 まで残 8 日**。段階3 (LLM 原因説明生成) の発火条件 (閾値違反検出) は 14 日連続 WARN=0 で発火実例不在、判定方針 line 67 で 2 択明示 (形骸化リスク認定 vs 真の品質劣化原因調査)。本サイクルでは追加変更なし、新規 kaizen 提案ゼロ維持 (feedback_few_rules_big_effect.md 順守)。
+
+### 次回起動時 (C225) にやること
+
+1. **【最重要】案A の「想起目的タグ」を staging Phase 1 §6 で Log として試行する判断** — なぜ: 5 サイクル運用観察期 (C225-C229) の **観察 1 日目** = C225 で実体験データを取らないと観察記録が空になる。実装する/しないどちらでも良いが、staging Phase 2 §0 で「案A が活きる場面だったか」を 1 行記録する運用は必須開始
+2. **kaizen #134 運用観察 15 日目転記 + M-40 4 語彙 15 日目同値判定** — なぜ: 検証期限 5/31 まで残 7 日、形骸化判定 vs 真の品質劣化原因調査の 2 択判断発火が近い。能動転記が形骸化防止の唯一の手段
+3. **Codex 採用判断時のための drafts/headless_evaluation_format_v01.md §7 状態確認** — なぜ: C223 で Log 側 avoid_log v04 が独立実装した Layer A primitives 4 個と Mir 提案 5 primitives の整合は Codex 採用判断時に決定的素材、Mir Layer A/B 返信待ち (ボール Mir 側) の状態が C225 時点でも継続なら #all-nao-u-lab で Mir 再呼び戻し
+4. **Ash auto_diary 失敗 8 件連続 (2026-05-21〜22) の Win2 scheduler 健康度** — なぜ: task_assignment.md 上 Ash 領域だが、Log 観測共有として 9 件目以降の発生有無を Phase 1 で確認、3 日連続発生継続なら #all-nao-u-lab で Ash 領域への明示越境前に Nao_u 共有
+5. **drafts/headless_evaluation_format_v01.md 残 3 接続案 ((b) §5 サンドボックス化 / (c) cross_review prompt injection 耐性 / (d) ジャンル絞り込み路線維持) を 1 案ずつ着地** — なぜ: 5/31 まで 8 日、残 3 案空欄のままだと AI Benchmarks 2026 の 4 軸への我々の対応が欠ける (C223 持ち越し継続)
+6. **case study 蓄積: 本サイクル C224 Phase 4 = 「Mir 完全分析 + Log 圧縮インフラ適用判定」補完軸の制度化先行事例として、次回類似ケース (Mir or Ash が完全分析した外部入力) で同形式投稿の運用形を実体験記録** — なぜ: 3 人並列体制の独立軸維持装置が 1 事例で終わるとパターンとして定着しない、N=2 を待たないと「個別事例」と区別できない
+
 ## 2026-05-23 06:00 [C223 (05:23起点) Phase 5 日記] avoid_log v04 headless.py に Layer A primitives 4個 (input_load / idle_ratio / proximity_events / death_pressure) を独立実装、3 サイクル連続 game/ 0 commit の構造的不在を解消。runs=3 観測値で「concept policy: idle=0.76 (76%入力なし) × proximity=1.57/s (3者中最高) × 生存72.34s」という直観反転 = avoid_log の AI 磁力場張り付き設計が Layer A 視点で「入力少なく危険体験量最多でも最長生存」の原始指標として観測可能になった瞬間。`kill_rhythm` は avoid_log が撃たないゲームのため適用外と判定 = Codex 採用判断時に「Layer A 5 primitives がジャンル依存項目を含む」自然実験エビデンスとして直接引用可能。Phase 3 では candidate a (skills/genre-deep-analysis/SKILL.md に planetary_gear note を R-A メソッド人間版実例として追加 +9行) + candidate b (Log_cdx §5 質問への返信「§5 で上書き十分、v02 不要」#all-nao-u-lab ts=1779482449.814109) + kaizen #134 14日目転記 (total=927 / M-40 4語彙59回 14日連続同値) を完遂 (Slack #log ts=1779483222.095299)
 
 Phase 1 §0 git 観察で「Log 側 game: prefix 直接改修 commit が直近5commit範囲でゼロ継続」を真っ先に直視。C221 二度目で「3 サイクル連続 game/ 0 = 積み上げが主産物に転倒の確定回避を次サイクル最優先」と宣言していたのを Phase 4 大作業で物理化した、4 段切替の game 寄り中粒度サイクル。Slack 新着 actionable は Log_cdx 指名質問 1 件のみで Nao_u broadcast は前サイクルで処理済 = スカスカ判定下の構造処方サイクル。
