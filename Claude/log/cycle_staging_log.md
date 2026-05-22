@@ -231,3 +231,32 @@ probe_atom_quality (kaizen #134 段階 2 hook) 運用観察 13 日目相当 (Pre
 - **kaizen 未検証提案の検証**: §7 5 サイクル観察対象を draft 内に書いただけでは検証発火点が曖昧、`cross_review_layer_b_vocabulary_v01.md` で具体的な試行手順を明文化することで 5/31 期限到達時に「Layer B 語彙が層 2 で機能したか」を観測可能化
 - **3 源独立収束の結晶化**: Log §1 / Log_cdx §6 / Mir §7 が独立到達した Layer B 3 語彙の収束は、本サイクルで観測したばかりで結晶化していない。Phase 4 で draft レベルへ結晶化しないと次サイクルで温度が下がり消える (原則 6「わかった」と「残った」は違う)
 - **30 分粒度の妥当性**: §3 表統合 (10 分) + §1 式再記述 (5 分) + `cross_review_layer_b_vocabulary_v01.md` 新規 (10 分) + `projects/game_development.md` 履歴追記 (3 分) + commit/push (2 分) = 計約 30 分
+
+## Phase 4: 実行結果 (2026-05-22, Log C221)
+
+### 完遂状況: 5 条件中 4 完遂 (commit/push は Phase 5 ルールに従い Phase 5 へ繰り越し)
+
+完遂条件チェック:
+1. **§3 統合 1 表化** ✓ — `drafts/headless_evaluation_format_v01.md` §3 を 18 項目 × 5 列 (項目 / Layer / 既存対応 / 計算式 / 取得方法) の 1 表に統合。Layer 区分: id 4 (trial_id / seed / ai_style / version) + agg 6 (score / graze_count / kill_count / bomb_count / survived_frames / death_cause) + Layer A 5 (input_load / proximity_events / kill_rhythm / idle_ratio / death_pressure) + axis 2 (graze_axis / shot_axis) + 互換性節 / 推奨出力形式節 (差分サマリ追加運用 §5 (d) と接続) 更新
+2. **§1 暫定式を primitives 合成として再記述** ✓ — `graze_axis = w1 * normalize(proximity_events) + w2 * normalize(death_pressure)` (w1=0.7, w2=0.3) / `shot_axis = w3 * normalize(kill_rhythm_inverse) + w4 * normalize(1 - idle_ratio)` (w3=0.5, w4=0.5)、両方とも「重み確定は Codex 採用判断側に委ねる」と明記
+3. **`drafts/cross_review_layer_b_vocabulary_v01.md` 新規作成** ✓ — 6 節構造 (§1 Layer B 3 語彙の責務 / §2 cross_review プロンプト雛形 (層 1 数値あり版 / なし版 / 機能判定 4 条件) / §3 5 サイクル試行計画 / §4 5/31 判定発火点 3 条件 / §5 観察対象 / §6 注意事項) + 関連リンク節
+4. **`projects/game_development.md` 履歴節更新** ✓ — 履歴節最上位に C221 Phase 4 エントリ追加 (起源 / 物理化したもの / 結晶化の意義 / 5/31 判定発火点 / 段数議論との区別 / 3 点リンク / 接続 の 7 節)、Mir 投稿 ts=1779443805 / Log §7 / cross_review Layer B draft の 3 点リンクを含む
+5. **commit/push** — Phase 4 ルール (Phase 4 では commit しない、Phase 5 で日記とまとめて push) に従い **Phase 5 へ繰り越し**
+
+### 副産物 (新規 / 変更ファイル)
+- 変更: `drafts/headless_evaluation_format_v01.md` (§1 / §3 更新、L14-L32 / L77-L110 付近)
+- 新規: `drafts/cross_review_layer_b_vocabulary_v01.md` (Layer B 3 語彙 cross_review 運用 draft、6 節 + 関連リンク)
+- 変更: `projects/game_development.md` (履歴節最上位に C221 Phase 4 エントリ追加、L75-L101 付近)
+
+### Slack 投稿 / kaizen 起票
+- 本 Phase 4 では新規 Slack 投稿なし (Mir 応答 ts=1779450244 は Phase 3 で完了済)
+- 本 Phase 4 では新規 kaizen 起票なし (5/31 検証発火点は本 Phase 4 で起票した draft 内の §4 判定として運用)
+
+### 1 サイクルの第一義出力との関係
+CLAUDE.md「1 サイクルの第一義の出力は game/* の playable diff」原則に対する本サイクル位置付け: 本 C221 サイクルは Nao_u ts=1779423371 指示 (Log_cdx 主軸シフト = ヘッドレス検証主軸化) と Mir 提案 (ts=1779443805 = 2 層体系) への Log 側横参加で「ヘッドレス評価フォーマット結晶化」が主軸。game/* playable diff ではなく drafts/ 仕様書粒度向上が本サイクル出力。次サイクル以降、Codex 採用判断発火 (game/graze_log_cdx 側で Layer A 5 primitives 実装) でゲーム側 commit に接続される設計。
+
+### 5/31 検証期限到達時の判定担当
+- 担当: Log (本 draft 起票元、`drafts/cross_review_layer_b_vocabulary_v01.md` §6 で明記)
+- 期限: 2026-05-31 (cycle_staging_log.md kaizen 系 5/31 期限と同日)
+- 判定軸: §4 で明文化した 3 条件 ((1) Layer B 3 語彙機能 / (2) Layer B→A 自動写像不可能性 / (3) 3 層責務分離運用)
+- 残 9 日。本サイクル Pre-check で確認した kaizen #131/#132/#133/#134 検証期限 5/31 と同日 = 5/31 サイクルで一括判定可能

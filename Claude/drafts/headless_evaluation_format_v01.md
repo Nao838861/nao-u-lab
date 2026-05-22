@@ -14,14 +14,21 @@
 ### STG (graze_log / shot_log) への軸変換 — Log 提案
 
 **graze 軸 (接近要求量)**: プレイヤーが弾幕に「接近する」ことをゲームがどれだけ要求するか
-- 暫定式: `graze_axis = (graze 累積距離 × graze 時間滞在率) × graze 機会発生頻度`
-- 観測代理: `state.grazeCount` (1 試行累計) / `frame_in_graze_window` (フレーム単位で計算可能) / `wave 中の graze 機会数` (パターン設計側で事前確定)
+- 暫定式 (Layer A primitives 合成、C221 Phase 4 更新):
+  - `graze_axis = w1 * normalize(proximity_events) + w2 * normalize(death_pressure)` (重み案: `w1=0.7, w2=0.3`、合算 1.0)
+  - 旧式 (graze 累積距離 × 滞在率 × 機会発生頻度) は維持的解釈として残すが、計算は Layer A primitives で行う (proximity_events で 累積距離 + 滞在率を統合、death_pressure で機会発生頻度の上限側を近似)
+- 観測代理: §3 ログスキーマ `proximity_events` / `death_pressure` (Layer A) / `state.grazeCount` (狭い閾値の特殊形、参考値)
 - 意味: graze 軸が高いゲーム = 「接近を強要する設計」、低い = 「遠距離撃ち抜き型」
+- **重み確定は Codex 採用判断側に委ねる** (本 draft では暫定値、N=25 試行 1 周回した実データで再調整想定)
 
 **shot 軸 (撃ち込み機会量)**: プレイヤーが弾を撃ち込む機会をゲームがどれだけ提供するか
-- 暫定式: `shot_axis = (発射可能フレーム数 / 全フレーム数) × (画面内有効敵数 平均)`
-- 観測代理: `state.killCount` / `平均同時敵数` / `撃ち込み有効ヒット率` (撃った弾のうち敵に当たった割合)
+- 暫定式 (Layer A primitives 合成、C221 Phase 4 更新):
+  - `shot_axis = w3 * normalize(kill_rhythm_inverse) + w4 * normalize(1 - idle_ratio)` (重み案: `w3=0.5, w4=0.5`、合算 1.0)
+  - `kill_rhythm_inverse` = killCount 時系列が均等型に近いほど高い値 (= バースト型は低い値)。Talakat strategy 軸の「思考の深さ」=「撃ち時を選ぶ機会の多さ」と対応
+  - 旧式 (発射可能フレーム数 / 全フレーム数 × 平均同時敵数) は `(1 - idle_ratio)` が前者、後者は kill_rhythm に統合 (敵数が少なくても killCount が出ているなら shot 軸は高い)
+- 観測代理: §3 ログスキーマ `kill_rhythm` / `idle_ratio` (Layer A) / `state.killCount` / `state.bombCount` (補助)
 - 意味: shot 軸が高い = 「撃ち甲斐がある設計」、低い = 「回避主体型」
+- **重み確定は Codex 採用判断側に委ねる** (本 draft では暫定値、Mir 提案 2 層体系の Layer A 5 primitives 採用判断と一括で扱う想定)
 
 ### 2 次元平面に置く価値
 - shot_log (元) と graze_log (改変版) を `(graze_axis, shot_axis)` 平面にプロットすると、「総合スコア」勝負ではなく **進化の方向** が可視化される
@@ -74,33 +81,42 @@ const bestCase = trials.slice(0, Math.ceil(N_TRIALS * 0.2));
 
 ---
 
-## §3 ログスキーマ — 既存 graze_log_cdx 形式との対応
+## §3 ログスキーマ — 既存 graze_log_cdx 形式 + Layer A 5 primitives 統合 (C221 Phase 4 finalize)
 
-### 各試行ログに必須の 7 項目 (Codex 採用判断用最小セット)
+### 統合 1 表 — Codex 採用判断用最小セット (識別/集計項目 + Layer A primitives + 算出 axes)
 
-| 項目 | 既存 graze_log_cdx 対応 | §1/§2 軸対応 | 補足 |
-|---|---|---|---|
-| `trial_id` | (新規) | 必須 | N 試行内一意 ID。seed と AI style を含む |
-| `seed` | `SEED` (state) | 必須 | 再現性確保。`grazelog seed:N` で console 出力済 |
-| `ai_style` | (新規) | §2 | `defensive` / `offensive` / `novice_mimic` (Log 13:22 由来 3 スタイル) |
-| `score` | `state.score` | 全軸 | 既存 (state.score)、HUD 表示済 |
-| `graze_count` | `state.grazeCount` | §1 graze 軸 | 既存 (state.grazeCount)、HUD 表示済 |
-| `kill_count` | `state.killCount` | §1 shot 軸 | 既存 (state.killCount)、内部追跡済 |
-| `survived_frames` | `state.t` | §2 | 既存 (state.t)、phaseLabel で wave 進捗も取得可 |
-| `death_cause` | (新規 — `state.lastHitBulletType` 等で実装可) | §1 graze 軸 + §3 死亡分析 | wave / bullet pattern / 接敵距離を残す |
-| `bomb_count` | `state.bombCount` | §1 shot 軸補助 | 既存 (state.bombCount) |
-| `graze_axis` | (新規 — §1 暫定式計算) | §1 graze 軸 | 試行終了時計算 |
-| `shot_axis` | (新規 — §1 暫定式計算) | §1 shot 軸 | 試行終了時計算 |
+§7 で §3 と別表になっていた Layer A 5 primitives を、本 §3 既存 7 項目 + 算出 axes 2 項目と **1 つの表に統合**。Layer 区分: `id` = 試行識別、`agg` = 既存集計値、`A` = Mir Layer A primitive (直接計測)、`axis` = §1 合成軸 (Layer A primitives からの算出値)。
+
+| 項目 | Layer | 既存 graze_log_cdx 対応 | 計算式 (擬似) | 取得方法 |
+|---|---|---|---|---|
+| `trial_id` | id | (新規) | `${seed}_${ai_style}_${version}` 文字列結合 | 試行開始時付与 |
+| `seed` | id | `SEED` (state) | そのまま | `grazelog seed:N` console 出力流用 |
+| `ai_style` | id | (新規) | `defensive` / `offensive` / `novice_mimic` の 3 値 | §2 ループ内で `i % 3` 等で割当 |
+| `version` | id | (新規) | `shot_log` / `graze_log_modified` 等の文字列 | runHeadless 引数で渡す |
+| `score` | agg | `state.score` | そのまま | HUD 表示済 |
+| `graze_count` | agg | `state.grazeCount` | そのまま | HUD 表示済 |
+| `kill_count` | agg | `state.killCount` | そのまま | 内部追跡済 |
+| `bomb_count` | agg | `state.bombCount` | そのまま | 既存 |
+| `survived_frames` | agg | `state.t` | そのまま | 既存、phaseLabel で wave 進捗も取得可 |
+| `death_cause` | agg | (新規 — `state.lastHitBulletType` / `state.lastHitWave` 等で実装可) | `{ wave, bullet_type, proximity_at_death }` の構造体 | death_cause 拡張 (約 10 行) |
+| `input_load` | A | (新規) | `(押下フレーム数 / 全フレーム数) × アクティブチャネル数` | 入力イベントカウント (フレーム単位) |
+| `proximity_events` | A | (新規 — `state.grazeCount` は閾値内通過の特殊形) | `distance < THRESHOLD_PROX` の `(弾/敵 × プレイヤー)` 通過カウント | フレーム毎距離計算、`grazeCount` より広い距離閾値で別カウント |
+| `kill_rhythm` | A | (新規 — `state.killCount` 時系列分解) | killCount を T=1.0 秒バケットに分割、バケット間分散値を出力 | killCount 時系列保持 (配列 push) |
+| `idle_ratio` | A | (新規) | `(入力なし & 撃たない & 動かない フレーム数) / 全フレーム数` | フレーム判定 (入力 + 速度 0 判定) |
+| `death_pressure` | A | (新規 — death_cause と連動) | `死亡直前 N フレーム (N=60 相当 1 秒) の 平均弾密度 × 平均接近度合` | death_cause 拡張で取得可 |
+| `graze_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `f(proximity_events, death_pressure)` 参照 | 試行終了時 1 回計算 |
+| `shot_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `g(kill_rhythm, idle_ratio)` 参照 | 試行終了時 1 回計算 |
 
 ### 既存形式との互換性
 - 既存 `state.score / grazeCount / bombCount / shieldStock / killCount / t / phaseLabel` (graze_log_cdx v05_1_cdx_v16/index.html L149〜L504) はそのまま流用可
-- 追加実装が必要なのは `death_cause` (どの弾 / どの wave で死んだか) と `graze_axis / shot_axis` 計算 (§1 暫定式) の 2 つだけ
-- 既存 `tools/headless_graze_log_cdx_v05_2_v16_check.js` (devlog.md L15 言及) を N=25 ループにラップする実装で v01 ヘッドレス評価器に到達可能
+- 追加実装が必要なのは: (a) `death_cause` 拡張 (`state.lastHitBulletType` / `state.lastHitWave` / `state.lastProximityAtDeath`、約 10 行) (b) Layer A 5 primitives 計算 (フレームループ内蓄積 + 試行終了時集計、約 40-60 行) (c) `graze_axis / shot_axis` 算出 (§1 暫定式、約 5-10 行) — 合計約 50-80 行
+- 既存 `tools/headless_graze_log_cdx_v05_2_v16_check.js` (devlog.md L15 言及) を N=25 ループにラップする実装で v01 ヘッドレス評価器に到達可能。Layer A primitives は既存ヘッドレスフレームループに print/push を足す形で吸収可能
 
 ### 推奨出力形式
-- `.jsonl` 1 行 / 試行 (N=25 行のファイル × version 2 = 50 行)
-- 集計サマリ `.md` を別ファイル (best-case 上位 / 軸平面プロット参照)
+- `.jsonl` 1 行 / 試行 (N=25 行のファイル × version 2 = 50 行)、1 行に上記 18 項目全て含む
+- 集計サマリ `.md` を別ファイル (best-case 上位 / 軸平面プロット参照 / Layer A primitives 版間差分表)
 - 既存 `devlog.md` 流儀に合わせる
+- **§5 (d) 差分サマリ追加運用**: 推奨 `.md` 末尾に「version A best-case primitives 平均 - version B best-case primitives 平均」を 5 行 (primitives 別) で出力
 
 ---
 

@@ -73,6 +73,30 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C221 Phase 4 (Log): drafts/headless_evaluation_format_v01.md §3 Layer A 5 primitives 必須項目化 finalize + cross_review Layer B 語彙ガイド v01 draft 化
+
+**起源**: 本サイクル Phase 3 で `drafts/headless_evaluation_format_v01.md` §7「Mir 2 層体系提案 (ts=1779443805) との収束」を並置追加 + #game-rights ts=1779450244 で Mir 提案への Log 応答済。Phase 4 で 3 源独立収束 (Log §1 / Log_cdx §6 / Mir §7) を結晶化 — §3 と §7 で別表になっていた Layer A 5 primitives を 1 表に統合 + Layer B 3 語彙の層 2 運用工程を draft 化。
+
+**Phase 4 で物理化したもの**:
+- `drafts/headless_evaluation_format_v01.md` §3 を統合 1 表に書き換え (5 列構造: 項目 / Layer / 既存対応 / 計算式 / 取得方法、計 18 項目: id 4 + agg 6 + Layer A 5 + axis 2 + version)
+- 同 §1 暫定式を Layer A primitives 合成として再記述 (`graze_axis = w1*proximity_events + w2*death_pressure` / `shot_axis = w3*kill_rhythm_inverse + w4*(1-idle_ratio)`、重み確定は Codex 採用判断側に委ねる旨明記)
+- `drafts/cross_review_layer_b_vocabulary_v01.md` 新規作成 — Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) の cross_review プロンプト雛形 (層 1 数値あり版 §2 (a) / なし版 §2 (b)) + 5 サイクル試行計画 + 5/31 判定発火点 3 条件
+
+**結晶化の意義**: §7 追記時点では Layer A primitives と §3 既存項目が「別表で並列」していた状態 = 3 源独立収束の温度はあるが、Codex 採用判断側で「何を実装すれば足りるか」が一覧化されていなかった。本 Phase 4 で 1 表化 + §1 暫定式の primitives 合成記述で、Codex が「採用するなら +50-80 行で済む」と判断可能な仕様書粒度に到達。原則 6「わかった」と「残った」は違う — 温度が高いうちに draft 構造へ降ろす。
+
+**5/31 検証期限到達時の判定発火点**: `drafts/cross_review_layer_b_vocabulary_v01.md` §4 で 3 条件明文化 — (1) Layer B 3 語彙が層 2 で機能したか (試行 ≥ 60% で §2 (c) 4 条件達成) (2) Layer B → Layer A 自動写像が不可能であることが確認されたか (3) 3 層責務分離が運用に乗ったか。2 条件以上 ✓ で `memory/feedback_*_evaluation_layered_vocabulary.md` 昇格判断対象 (即昇格しない、更に 1 サイクル観察)。
+
+**段数議論との区別 (Nao_u 5/21 ts=1779310201 段数禁止 broadcast 接続)**: 本 Phase 4 の Layer A / Layer B 2 層分離は **段数分解とは別の構造論**。段数 = 同一ループ内の発火段数増加 (= プレイヤーストレス源)、本 2 層 = 評価語彙の責務分離 (層 1 計測 / 層 2 解釈)。実装すべき layer 数を増やしているのではなく、既に混在していた語彙を分離している = 段数禁止に抵触しない構造化。本 draft / §7 / 本履歴で明示しないと外部から見て「また段数議論」と誤読されるリスクがあるため、本段落で明示。
+
+**3 点リンク**:
+- Mir 元投稿 ts=1779443805 (2026-05-22 18:56 #human-steering + #game-rights クロスポスト)
+- Log §7 追記: `drafts/headless_evaluation_format_v01.md` §7「Mir 2 層体系提案との収束」
+- cross_review Layer B 語彙ガイド: `drafts/cross_review_layer_b_vocabulary_v01.md` (本 Phase 4 新規)
+
+**接続**: `drafts/headless_evaluation_format_v01.md` (§1 / §3 / §7 更新済) / `drafts/cross_review_layer_b_vocabulary_v01.md` (新規) / Nao_u 5/22 ts=1779423371 ヘッドレス検証主軸シフト指示 (Log_cdx 宛、Log 側横参加として本 draft 群提供) / `memory/feedback_few_rules_big_effect.md` (即ルール化せず draft 段階で観察、5 サイクル後判定)
+
+---
+
 ### 2026-05-22 C220 Phase 3 (Log 後半): ヘッドレス評価設計「自己採点装置→差分露出器」再定位 + Ash graze_log v06 merge 観点
 
 **起源**: 本サイクル Phase 1 §6 で `headless playthrough AI evaluation` 軸の外部検索 3 件取得 (AI Gamestore arxiv 2602.17594 / 37%ギャップ kili-technology / AI Evaluation Metrics 80件)。Phase 2 で前 2 件を WebFetch 実体確認 + atom 2 本 #shared-reads ship 済 (ts=1779417206 / ts=1779417288)、#all-nao-u-lab ts=1779417341 で Log 視点投稿済。
