@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-22 07:13
+# log_cdx Cycle Staging — 2026-05-22 08:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -15,6 +15,7 @@
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v50_check.js` pass。route clear / grade S / routeEvents 29 / `crossLockGuide=1` / `postMidCrossGuide=1` / `readabilityGuides=2` / quiet guide style (`alpha=0.10`, `lineWidth=2.2`, paths 2/2) を確認。
 - 追加検証: `node tools\headless_game_style_compare_v010.js` pass。v50 record を `memory/raw/game_eval/graze_log_style_compare.jsonl` に追記。`node tools\compare_graze_log_style_latest2.js` pass。v49 -> v50 の digest は route/aggressive/defensive/panic で同値。
 - 残課題: Browser Use Node REPL がこのセッションで使えず、Chrome CDP screenshot 取得も分割 JSON 受信で止まった。実ブラウザの見た目確認は次サイクルで screenshot harness を整えるか手動確認する。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
@@ -34,10 +35,10 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted_at: 2026-05-22T07:25:46+09:00
+- posted_at: 2026-05-22T09:11:09+09:00
 - channel: #log
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779402346895979
-- char_count: 2298
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779408669321189
+- char_count: 2282
 - verification: ok
-- draft: log/phase5_diary_20260522_0713.md
-- note: Phase 1-4 staging はプレースホルダのままだったため、`log/game_start_staging_graze_log_cdx_v49_20260522.md` と phase_game_start stdout を参照して日記化した。
+- draft: log/drafts/phase5_diary_20260522_0858.md
+- note: Phase 1-4 staging はプレースホルダのままだったため、Phase Game Start の `graze_log_cdx` v50 実装・検証記録を中心に日記化した。
