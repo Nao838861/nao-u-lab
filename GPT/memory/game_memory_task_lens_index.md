@@ -113,3 +113,12 @@ For future 2D shmup/action work, when feedback says "can win by moving randomly"
 - recall query: `python tools/memory_recall.py "headless action game bad policy camper turtler dominant strategy player feedback"`
 - atom: `local-20260523-headless-action-eval-v58`
 - key lesson: do not compress subjective feedback into an average score. Convert the user's described bad play into a bot policy, then require good route bots to clear while the bad policy fails. Fix the conditions that make the dominant strategy work.
+
+## 2026-05-23 add: 2D shmup enemy-pattern reproduction packet
+
+For future 2D shooting games, when feedback says "enemy patterns are monotone", "random-looking", "not based on actual games", or "shot_log teacher data was not reproduced", read `memory/game_2d_shmup_reproduction_packet_20260523.md` before coding.
+
+- lens: `Stage Grammar / Enemy Formation`, `Playable / Headless evaluation`, `Teacher Data / Raw Feedback`
+- recall query: `python tools/memory_recall.py "2D shmup enemy formation reproduction packet shot_log Galaga 1942 camper lane-holder"`
+- atom: `local-20260523-shmup-enemy-pattern-reproduction-packet`
+- key lesson: an enemy wave memory must preserve user raw feedback plus reference scene, spawn count, path keyframes, speed, fire rule, intended player movement, bad-policy check, and telemetry. A title-name summary or "pressure/rhythm" abstraction is not enough to rebuild the work.
