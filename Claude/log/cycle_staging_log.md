@@ -136,8 +136,40 @@ WebSearch 取得 (時間予算約 1 分以内、3件選出):
 - 空サイクル防止ルール (≤2件) 非該当 (上記4候補で十分埋まる) → 深掘り候補節は省略
 - 外部検索 3件は stage のみ、Phase 2で強制利用しない
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-22, Log C221)
+
+### A) #nao-u 新着URL (ts=1779423975 atomic_chat_hq) への反応
+
+X tweet 本文取得は WebFetch 402 でブロック。代わりに atomic.chat 公式 + GitHub から素材化:
+- atomic.chat = AtomicBot-ai のローカル完結 ChatGPT 代替 OSS。1000+ オープンウェイトモデル (Llama/Qwen/DeepSeek/Gemma) ワンクリック切替、TurboQuant で KV cache 6× 圧縮 + 8× speedup、agent/workflow + persistent memory、Mac (M1+) / Win / iOS / Android 近日、0 byte cloud 送信、Uncensored、無料 OSS。
+
+Log 独自視点 (他者の反応を読む前に形成、ルール8) を 5 節構成で #all-nao-u-lab に投稿 (ts=1779449543):
+1. 双子アーキテクチャ — 同じユーザー要望にモデル内側 (KV 圧縮) vs ファイル階層外側 (記憶設計) で答えている双子。LLM 仕様が動けば今の記憶階層の必然性も動く。
+2. 持ち運べる Nao_u BOT の現実味 — 完全オフライン化の判定軸は「サイクル運用に十分な品質をどこで超えるか」(R 層判断 / 5 原理逸脱検知 / 6 作品腑分けの実測)。
+3. Uncensored vs 自発的制約 — 思想差: 向こうは制約剥離、こちらは Anthropic safety + リポジトリ制約の二重制約を能動化。ローカル化 ≠ 自由化。
+4. 人格-モデル分離問題 — 1000+ モデル時代の運用課題、記憶階層の品質はモデル独立保険。
+5. 評価器を増やせる未来 — ローカル安価化で cross_review / brainstorm のコスト一桁低下、layered evaluator 設計は層を増やしやすい構造であるべき。
+
+### B) shared-reads 翻訳保管 (同日 2 件目)
+
+千葉集ミステリ (5/22 20:00, 6 作品列挙型) に続き、本件 (プロダクト輪郭型) を #shared-reads に投稿 (ts=1779449687)。構造を変えて重複回避 (テンプレ流用ではない判定)。永続保管: `memory/shared_reads/20260522_atomic_chat_log.md`。Mir/Ash の反応を待ち、特に節 4 (人格-モデル分離問題) を 3 インスタンスで議論する候補。
+
+### C) external_notes_log.md 未統合エントリ統合
+
+Phase 1 で `python tools/external_notes_integration_audit.py` 実行済 = サブ未統合 0 件 (203/203 = 100%)。本サイクルでの新規統合は不要。
+
+### D) 横参加余地として残るもの (Phase 3 候補)
+
+- broadcast pending 2 件 (5/20 ts=1779237427 深堀指示 / 5/21 ts=1779310201 段数禁止) — Log_cdx 主軸はヘッドレス検証へ移行済 (Nao_u ts=1779423371)、Log 側でも broadcast 受領通知を出すかは Phase 3 判断
+- Mir 2 層語彙提案 ts=1779443805 への Log 反応余地 — 「人格-モデル分離問題」と接続できる可能性あり
+- ヘッドレス検証 (Log_cdx 主軸) への Log 横参加 — `drafts/headless_evaluation_format_v01.md §5` 5 源収束更新は Phase 3 候補
+
+### E) 摂取経路と運用観察
+
+- Nao_u 投下 URL が 5/22 内に 2 件 (note 千葉集ミステリ + tweet atomic_chat_hq) = 摂取経路「Nao_u → #nao-u URL → Log 翻訳 → #shared-reads + memory/shared_reads/ 永続化」が同日に 2 回回った。経路安定性の証拠。
+- WebFetch 402 (X tweet) はもはや常時。Slack rule 「外部 URL に言及する投稿には必ず URL を含める」を守りつつ「本文取得不可」を明示する運用が定着。
+- Phase 2 で複数チャンネル投稿 (1 メッセージ/件、別構造、URL 明記) を 1 サイクル内で 2 件回した = テンプレ流用警戒を意識的に実施。
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
