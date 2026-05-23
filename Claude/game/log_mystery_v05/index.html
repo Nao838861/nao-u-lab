@@ -137,6 +137,13 @@
   .bell-label { color: #a0a098; font-size: 11px; letter-spacing: 0.1em; }
   .bell-value { color: #e0e0d8; }
   .bell-mark { font-weight: bold; font-size: 16px; }
+  .bell-state-text {
+    font-weight: normal;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    margin-left: 2px;
+  }
   .bell-final {
     margin-top: 8px;
     padding: 6px;
@@ -423,7 +430,7 @@ function bellRow(labelText, valueText, isHit, locked, pending) {
     return '<div class="bell-row bell-locked">'
       + '<span class="bell-label">' + labelText + '</span>'
       + '<span class="bell-value">(章 2 アンロック前)</span>'
-      + '<span class="bell-mark">—</span>'
+      + '<span class="bell-mark">— <span class="bell-state-text">[未推理]</span></span>'
       + '</div>';
   }
   if (pending) {
@@ -431,15 +438,16 @@ function bellRow(labelText, valueText, isHit, locked, pending) {
       + '<span class="bell-label">' + labelText + '</span>'
       + '<span class="bell-value">' + valueText
       + '<span class="bell-pending-hint">追加手がかりで再判定</span></span>'
-      + '<span class="bell-mark">⏸</span>'
+      + '<span class="bell-mark">⏸ <span class="bell-state-text">[保留]</span></span>'
       + '</div>';
   }
   const mark = isHit ? "♪ ✓" : "✗";
+  const stateText = isHit ? "[鳴った]" : "[鳴らない]";
   const cls = isHit ? "bell-on" : "bell-off";
   return '<div class="bell-row ' + cls + '">'
     + '<span class="bell-label">' + labelText + '</span>'
     + '<span class="bell-value">' + valueText + '</span>'
-    + '<span class="bell-mark">' + mark + '</span>'
+    + '<span class="bell-mark">' + mark + ' <span class="bell-state-text">' + stateText + '</span></span>'
     + '</div>';
 }
 
@@ -476,7 +484,7 @@ function renderBellGroup(keys, label) {
         html += '<div class="bell-row bell-locked">'
           + '<span class="bell-label">' + BELL_LABELS[k] + '</span>'
           + '<span class="bell-value">(未推理)</span>'
-          + '<span class="bell-mark">—</span>'
+          + '<span class="bell-mark">— <span class="bell-state-text">[未推理]</span></span>'
           + '</div>';
       }
     } else {
