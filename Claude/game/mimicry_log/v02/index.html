@@ -347,6 +347,9 @@ function triggerFocusBurst(){
 
 function spawnWave1(){
   // wave 1-3: normal 推奨のみ (focus 機構の存在を player に気づかせる前段) — small 主体
+  // C225 Phase 4: Mir 4 分類診断 (探索障壁強度「高」) を受け、SHIFT 発見の動的 hint を 3 秒表示
+  // (詳細は mir_barrier_diagnosis.md §3-A / §4-A)
+  state.popups.push({x:W/2,y:H-60,text:'HOLD SHIFT = FOCUS (narrow shot)',life:180,c:'#80c0ff'});
   spawnEnemy('small',W*0.30);
   spawnEnemy('small',W*0.50);
   spawnEnemy('small',W*0.70);
