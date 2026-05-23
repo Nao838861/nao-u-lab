@@ -81,32 +81,45 @@ const bestCase = trials.slice(0, Math.ceil(N_TRIALS * 0.2));
 
 ---
 
-## §3 ログスキーマ — 既存 graze_log_cdx 形式 + Layer A 5 primitives 統合 (C221 Phase 4 finalize)
+## §3 ログスキーマ — 既存 graze_log_cdx 形式 + Layer A 5 primitives 統合 (C221 Phase 4 finalize / C223 Phase 4 §1 軸式対応列追加)
 
 ### 統合 1 表 — Codex 採用判断用最小セット (識別/集計項目 + Layer A primitives + 算出 axes)
 
-§7 で §3 と別表になっていた Layer A 5 primitives を、本 §3 既存 7 項目 + 算出 axes 2 項目と **1 つの表に統合**。Layer 区分: `id` = 試行識別、`agg` = 既存集計値、`A` = Mir Layer A primitive (直接計測)、`axis` = §1 合成軸 (Layer A primitives からの算出値)。
+§7 で §3 と別表になっていた Layer A 5 primitives を、本 §3 既存 7 項目 + 算出 axes 2 項目と **1 つの表に統合**。Layer 区分: `id` = 試行識別、`agg` = 既存集計値、`A` = Mir Layer A primitive (直接計測)、`axis` = §1 合成軸 (Layer A primitives からの算出値)。**「§1 軸式との対応」列は C223 Phase 4 追加** — Mir §7 提案 5 primitives と §1 暫定式 (graze_axis / shot_axis) の対応関係を 1 表で読み取り可能にし、Codex 採用判断 (どの primitive を実装すれば §1 軸式が物理的に算出可能か) の参照点として §3 を真の参照点に昇格させる。重み (w1〜w4) は §1 暫定値、N=25 best-case 取得後に再調整想定。
 
-| 項目 | Layer | 既存 graze_log_cdx 対応 | 計算式 (擬似) | 取得方法 |
-|---|---|---|---|---|
-| `trial_id` | id | (新規) | `${seed}_${ai_style}_${version}` 文字列結合 | 試行開始時付与 |
-| `seed` | id | `SEED` (state) | そのまま | `grazelog seed:N` console 出力流用 |
-| `ai_style` | id | (新規) | `defensive` / `offensive` / `novice_mimic` の 3 値 | §2 ループ内で `i % 3` 等で割当 |
-| `version` | id | (新規) | `shot_log` / `graze_log_modified` 等の文字列 | runHeadless 引数で渡す |
-| `score` | agg | `state.score` | そのまま | HUD 表示済 |
-| `graze_count` | agg | `state.grazeCount` | そのまま | HUD 表示済 |
-| `kill_count` | agg | `state.killCount` | そのまま | 内部追跡済 |
-| `bomb_count` | agg | `state.bombCount` | そのまま | 既存 |
-| `survived_frames` | agg | `state.t` | そのまま | 既存、phaseLabel で wave 進捗も取得可 |
-| `death_cause` | agg | (新規 — `state.lastHitBulletType` / `state.lastHitWave` 等で実装可) | `{ wave, bullet_type, proximity_at_death }` の構造体 | death_cause 拡張 (約 10 行) |
-| `input_load` | A | (新規) | `(押下フレーム数 / 全フレーム数) × アクティブチャネル数` | 入力イベントカウント (フレーム単位) |
-| `proximity_events` | A | (新規 — `state.grazeCount` は閾値内通過の特殊形) | `distance < THRESHOLD_PROX` の `(弾/敵 × プレイヤー)` 通過カウント | フレーム毎距離計算、`grazeCount` より広い距離閾値で別カウント |
-| `kill_rhythm` | A | (新規 — `state.killCount` 時系列分解) | killCount を T=1.0 秒バケットに分割、バケット間分散値を出力 | killCount 時系列保持 (配列 push) |
-| `idle_ratio` | A | (新規) | `(入力なし & 撃たない & 動かない フレーム数) / 全フレーム数` | フレーム判定 (入力 + 速度 0 判定) |
-| `death_pressure` | A | (新規 — death_cause と連動) | `死亡直前 N フレーム (N=60 相当 1 秒) の 平均弾密度 × 平均接近度合` | death_cause 拡張で取得可 |
-| `graze_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `f(proximity_events, death_pressure)` 参照 | 試行終了時 1 回計算 |
-| `shot_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `g(kill_rhythm, idle_ratio)` 参照 | 試行終了時 1 回計算 |
-| (`judgement_granularity`) | A 候補 | (新規 — §8 由来、6 個目 Layer A 候補として括弧書き併記、確定でない) | 暫定式 `bucket(score_or_axis, [合格閾値, 惜しい閾値])` の 3 値 (`pass` / `near` / `far`) を試行終了時 1 回出力 | 暫定。閾値は §3 既存 axes / Layer A primitives の N=25 best-case 分布から第 1/第 2 四分位を取る案 (例: graze_axis 上位 25% = pass、上位 50% = near、それ以下 = far)。本 draft 段階では「閾値の取り方」自体が §8 (c) の判断対象 |
+| 項目 | Layer | §1 軸式との対応 | 既存 graze_log_cdx 対応 | 計算式 (擬似) | 取得方法 |
+|---|---|---|---|---|---|
+| `trial_id` | id | — | (新規) | `${seed}_${ai_style}_${version}` 文字列結合 | 試行開始時付与 |
+| `seed` | id | — | `SEED` (state) | そのまま | `grazelog seed:N` console 出力流用 |
+| `ai_style` | id | — | (新規) | `defensive` / `offensive` / `novice_mimic` の 3 値 | §2 ループ内で `i % 3` 等で割当 |
+| `version` | id | — | (新規) | `shot_log` / `graze_log_modified` 等の文字列 | runHeadless 引数で渡す |
+| `score` | agg | — (総合結果、軸分解前) | `state.score` | そのまま | HUD 表示済 |
+| `graze_count` | agg | graze_axis 狭閾値特殊形 (proximity_events サブセット相当、参考値) | `state.grazeCount` | そのまま | HUD 表示済 |
+| `kill_count` | agg | shot_axis 時系列分解前総量 (kill_rhythm の素材) | `state.killCount` | そのまま | 内部追跡済 |
+| `bomb_count` | agg | — | `state.bombCount` | そのまま | 既存 |
+| `survived_frames` | agg | — (試行長正規化に使用、Layer A primitives の分母候補) | `state.t` | そのまま | 既存、phaseLabel で wave 進捗も取得可 |
+| `death_cause` | agg | death_pressure の素材 (死亡直前フレームの弾密度・接近度合算出に必要) | (新規 — `state.lastHitBulletType` / `state.lastHitWave` 等で実装可) | `{ wave, bullet_type, proximity_at_death }` の構造体 | death_cause 拡張 (約 10 行) |
+| `input_load` | A | §1 軸式未参加 — §6/§7「実装回帰軸」側 Layer A primitive (Mir 提案 sufficient set 一部) | (新規) | `(押下フレーム数 / 全フレーム数) × アクティブチャネル数` | 入力イベントカウント (フレーム単位) |
+| `proximity_events` | A | **graze_axis 主要項 (w1=0.7)** — Mir §7「graze 軸の生 primitive」直対応 | (新規 — `state.grazeCount` は閾値内通過の特殊形) | `distance < THRESHOLD_PROX` の `(弾/敵 × プレイヤー)` 通過カウント | フレーム毎距離計算、`grazeCount` より広い距離閾値で別カウント |
+| `kill_rhythm` | A | **shot_axis 主要項 (kill_rhythm_inverse として w3=0.5)** — Mir §7「shot 軸の時間軸分解」直対応、均等型 ↑ / バースト型 ↓ | (新規 — `state.killCount` 時系列分解) | killCount を T=1.0 秒バケットに分割、バケット間分散値を出力 | killCount 時系列保持 (配列 push) |
+| `idle_ratio` | A | **shot_axis 主要項 ((1 - idle_ratio) として w4=0.5)** — 旧式「発射可能フレーム比」の補数表現 | (新規) | `(入力なし & 撃たない & 動かない フレーム数) / 全フレーム数` | フレーム判定 (入力 + 速度 0 判定) |
+| `death_pressure` | A | **graze_axis 補助項 (w2=0.3)** — Mir §7「graze 軸の死亡側」直対応、機会発生頻度の上限側近似 | (新規 — death_cause と連動) | `死亡直前 N フレーム (N=60 相当 1 秒) の 平均弾密度 × 平均接近度合` | death_cause 拡張で取得可 |
+| `graze_axis` | axis | **§1 直接出力** = `w1·norm(proximity_events) + w2·norm(death_pressure)` (w1=0.7, w2=0.3) | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `f(proximity_events, death_pressure)` 参照 | 試行終了時 1 回計算 |
+| `shot_axis` | axis | **§1 直接出力** = `w3·norm(kill_rhythm_inverse) + w4·norm(1-idle_ratio)` (w3=0.5, w4=0.5) | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `g(kill_rhythm, idle_ratio)` 参照 | 試行終了時 1 回計算 |
+| (`judgement_granularity`) | A 候補 | §1 軸 (graze_axis / shot_axis) または Layer A primitives いずれかの距離判定対象 — §8 (c) で議論中 (選択肢 1: Layer A 6 個目 / 選択肢 2: Layer B 4 個目 Log 仮採用) | (新規 — §8 由来、6 個目 Layer A 候補として括弧書き併記、確定でない) | 暫定式 `bucket(score_or_axis, [合格閾値, 惜しい閾値])` の 3 値 (`pass` / `near` / `far`) を試行終了時 1 回出力 | 暫定。閾値は §3 既存 axes / Layer A primitives の N=25 best-case 分布から第 1/第 2 四分位を取る案 (例: graze_axis 上位 25% = pass、上位 50% = near、それ以下 = far)。本 draft 段階では「閾値の取り方」自体が §8 (c) の判断対象 |
+
+### §1 軸式 → Layer A primitives 物理化マップ (C223 Phase 4 物理化)
+
+§1 暫定式は Layer A primitives の合成として下記の通り物理化済 (§1 本文と整合)。Codex 採用時、本マップを参照すれば「§1 軸式を出すには Layer A の `proximity_events` / `kill_rhythm` / `idle_ratio` / `death_pressure` の 4 primitives を実装すれば必要十分、`input_load` は §1 軸式に未参加だが Mir §7 sufficient set として並走実装」が 1 表で判断可能。
+
+| §1 軸 | 構成 primitives | 重み案 | 物理化合成式 |
+|---|---|---|---|
+| `graze_axis` | `proximity_events` (主) + `death_pressure` (補) | w1=0.7, w2=0.3 | `w1·norm(proximity_events) + w2·norm(death_pressure)` |
+| `shot_axis` | `kill_rhythm_inverse` (主) + `(1-idle_ratio)` (補) | w3=0.5, w4=0.5 | `w3·norm(kill_rhythm_inverse) + w4·norm(1-idle_ratio)` |
+
+- `kill_rhythm_inverse` = `kill_rhythm` (分散値) の逆数または `1 - normalize(kill_rhythm)` — 均等型 (低分散) ほど高い値、バースト型 (高分散) ほど低い値。Talakat strategy 軸「思考の深さ」=「撃ち時を選ぶ機会の多さ」と対応
+- 重み (w1〜w4) は draft 段階暫定、N=25 best-case 取得後に Codex 採用判断側で再調整想定。**§1 末尾「重み確定は Codex 採用判断側に委ねる」と整合**
+- `input_load` は §1 軸式に未参加だが、§7 で Mir 提案「sufficient set」5 primitives の 1 つとして並走実装対象 — 5/31 sufficient 判定発火点で「§1 軸式に組み込むべきか」も再評価対象
 
 ### 既存形式との互換性
 - 既存 `state.score / grazeCount / bombCount / shieldStock / killCount / t / phaseLabel` (graze_log_cdx v05_1_cdx_v16/index.html L149〜L504) はそのまま流用可
@@ -316,6 +329,10 @@ C222 Phase 2 で外部研究 3 本 (Orak / Game Reasoning Arena / AI Benchmarks 
 **意義**: 5/31 一括判定発火点で「Layer A/B 分離が単なる Log/Mir/Log_cdx 内部の好み」ではなく「**独立 8 源で支持される一般原理**」として Codex/Mir 採用判断の決定的素材になる。即 Layer A/B を `memory/feedback_*_layered_vocabulary.md` へ昇格させない (5/31 判定発火点を待つ、`feedback_few_rules_big_effect.md` 順守) が、8 源収束は **N=8 既達** = 同型 3 回観察ルールを大きく超えており、5/31 判定で「採用」結論が出る蓋然性が高い前提で Codex/Mir 採用判断に臨んで良い。
 
 **8 源のうち警告軸 (3 件)**: Orak の foundational benchmark 化リスク (Pot は逆方向で「絞り込み」を選択、§5 末尾) / AI Benchmarks 2026 の評価設計脆弱性 4 軸 (§5 サンドボックス化補足候補・cross_review prompt injection 耐性候補として保留、本 Phase 3 では追記しない、`memory/feedback_few_rules_big_effect.md` 順守) / kili-technology 37%ギャップ (層分離の必要性根拠、§7 既存記述で吸収済)。**Phase 3 で着地したのは本 8 源収束記録 1 件のみ、残 3 接続案 (§5 サンドボックス化 / cross_review prompt injection 耐性 / ジャンル絞り込み路線文章化) は次サイクル以降の温度残存源として保留**。
+
+### §7 → §8 接続線 (C223 2026-05-23 追加)
+
+§7 で確立した **Layer A (直接計測 5 primitives) / Layer B (解釈用 3 語彙) の 2 層責務分離**は、評価出力を「機械が数えられるか」と「人間/LLM が意味付けるか」で切り分ける構造原則。§8 (Golden Idol スリーストライク 3 値判定) は、その構造の **Layer B 側に「予測距離判定 (pass / near / far) 4 個目語彙」を追加候補として置く**試みであり、§7 を破壊せず拡張する。**Layer A への 6 個目 primitive 化 (`judgement_granularity` 案) は §7 の sufficient 判定観察 (5/31 期限) を自己成就で汚染するため §8 (c) で選択肢 2 (Layer B 4 個目語彙) を Log 仮採用済**。3 値判定の閾値再調整 (N=25 実データ取得後) と Layer A 5 primitives sufficient 判定は **5/31 同時発火点**で再交差させ、両方安定なら `memory/feedback_*_evaluation_layered_vocabulary.md` 昇格判定を 1 ファイルで吸収する (kaizen #129 family 統合管理ルールと同型 = 別記憶ファイル増殖を抑制)。
 
 ---
 
