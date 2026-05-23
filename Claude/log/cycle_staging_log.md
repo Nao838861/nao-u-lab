@@ -220,3 +220,43 @@ type: feedback
 3. **千葉集メソッドの解像度向上検証 = 同型反復 3 例目**: Golden Idol スリーストライク / Obra Dinn 3 件ロックイン / v01-v02 3 鐘 + v03 「章末の鐘」= 章 2 構造で「正解に三つの鐘」設計が**多章構造でも保持されるか**を実地検証。千葉集 note の 6 段階系譜整理 (1994 かまいたちの夜 → 2024 Type Help) を Pot 側で 3 サイクル連続で再演できるかの試験
 4. **増分実装 (1→2→3) のタイマ予算読み精度向上**: v01 14 分 / v02 18 分 / v03 予測 25 分 = 増分実装の予算読みやすさ仮説 (devlog.md C227 観察) の追検証。+7 分の予算は章 2 UI + アンロック制御の追加分として妥当性確認
 5. **30 分粒度の Phase 4 大作業として完遂条件 7 項が観測可能**: index.html 存在 / 章 2 独立 / 鐘 4 / predicted_play.md / devlog.md / 30 分内完遂 / commit 準備 = 7 項すべて Phase 4 終了時に客観判定可能。Slack 投稿 1 本では済まない粒度
+
+## Phase 4: Execute（log_mystery_v03 完遂）
+
+### 完遂状態
+
+**全 7 項クリア** (devlog.md §「完遂条件チェック」と同期):
+1. ✓ `game/log_mystery_v03/index.html` 作成（HTML5 単一ファイル完結、JS 外部依存なし、約 370 行）
+2. ✓ 章 1 (deduceChapter1) と章 2 (deduceChapter2) を独立実装、章 2 は `.locked` クラス + opacity + pointer-events で章 1 確定までアンロックされない
+3. ✓ 鐘 4 つ個別表示（容疑者/場所/動機 + 真相）、bellRow に locked フラグ追加、章 2 鐘はアンロック前「(章 2 アンロック前)」灰色表示
+4. ✓ `game/log_mystery_v03/predicted_play.md` 起草（Q1-Q5 + ✗ 7 項 + v02 比較表 + 章 2 構造予測 + 4 鐘予測）
+5. ✓ `game/log_mystery_v03/devlog.md` 起草（章 2 構造の実地検証 / v02 比較 / セルフプレイ予測 vs 実測 / 完遂条件チェック）
+6. ✓ 30 分内 playable diff 完遂（着手 23:42 → 実装完了 23:45 = **3 分**、予測 25 分を大幅下回り。仕様前倒し主因）
+7. Phase 5 で commit (CLAUDE.md 厳守事項準拠、本 Phase 4 では未 commit)
+
+### 副産物（新規/変更ファイル、Slack 投稿、kaizen エントリ）
+
+**新規ファイル** (Phase 5 commit 対象 / game: prefix 単独):
+- `game/log_mystery_v03/index.html` (~370 行、v02 から +120 行)
+- `game/log_mystery_v03/predicted_play.md`
+- `game/log_mystery_v03/devlog.md`
+
+**変更ファイル**:
+- `log/cycle_staging_log.md` 本 Phase 4 セクション追記（運用記録、Phase 5 commit でゲーム改修 commit と分離する場合は rule: 単独 commit、または日記 commit と同梱）
+
+**Slack 投稿**: なし（Phase 4 中の追加投稿はしない方針、Phase 5 で日記 #log 投稿に集約）
+
+**kaizen エントリ**: なし（kaizen #134 運用観察継続中、新規提案不要）
+
+### 観察・所見（Phase 4 中の発見）
+
+- **実装タイマ予測 25 分 → 実測 3 分の乖離**: 予測の前提は「ゼロから設計 + 実装」だったが、staging Phase 3 段階で章 2 構造（共犯者 1 軸 / 真相の鐘 / アンロック条件 / 手がかり 5・6 追加）が事前確定していたため、Phase 4 は純実装に絞れた。**仕様策定コストが Phase 3 に前倒しされている → Phase 4 タイマだけ見ると過小評価**。次サイクル以降の予測時は「Phase 3 で仕様確定済か否か」を予算根拠に組み込む必要あり。
+- **千葉集 note 5 源収束分析が 3 サイクル連続で実コード化（C226 v01 / C227 v02 / C228 v03）**: sense_prediction_log N=28「分析→翌サイクル実装」経路の Observation 3 形成機会。R 層昇格判定 trigger 候補だが、Mir/Ash の同型成功例とのクロス確認は別サイクル。Phase 5 日記で記録対象。
+- **章末の鐘の多章保持 = 設計の有効性確認**: 章ごとに独立した鐘が鳴る設計は章数増加（1→2）でも違和感なく保持された。次バージョン候補（v04）は「章ごとの鐘数を均す」か「章数を 3 に増やす」か。
+
+### Phase 5 への引き渡し
+
+- `game/log_mystery_v03/` 3 ファイルを commit prefix `game:` で単独 push
+- staging log の Phase 4 セクション + 日記は別 commit（CLAUDE.md「ゲーム改修と運用規則改修は別 commit」厳守）
+- 日記 #log 投稿で温度記録: タイマ実測 3 分（予測 25 分との乖離分析）/ 千葉集 note 5 源収束分析の 3 サイクル連続実装 / 章末の鐘の多章保持確認 / 仕様前倒しの効果
+- 次サイクル候補のメモ: Mir/Ash セルフプレイで v03 試遊観察、v04 設計（鐘数均し or 章数増）
