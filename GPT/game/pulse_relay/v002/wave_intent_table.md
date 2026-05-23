@@ -4,11 +4,12 @@
 
 | wave | time | enemies | player_intent | success_feel | failure_pressure | exit_reason | bad_policy_check | telemetry |
 |---|---:|---|---|---|---|---|---|---|
-| wake scouts | 0.8-8.8s | cyan scout, two vertical rails | 入場位置を読んで縦 rail に通常ショットを置き、短い show 時間で撃ち切る | 連続撃破、charge 少量獲得、下へ抜ける前に処理できる | 撃ち漏らすと下へ抜けて aimed 弾が残る | 撃ち切れなかった scout はそのまま下へ抜け、失敗が見える | overlap 0 だけで間隔を広げすぎない。13-16F の gap を見る | visibleTargets, shootableTargets, minPairDistance, kills/sec |
-| orange lances | 8.2-18.5s | orange side lance | 横から来る敵を中央射線に乗った瞬間に撃ち、遅い aimed 弾を横移動で避ける | 横編隊をテンポよく倒し、画面中央を取り返す | 横圧で位置を動かされ、scout 残弾と混ざる | 進行方向へ抜ける。横圧を作った敵が横へ帰る | 直角 offset でずらさない。同一 rail の spawn delay と entry speed で被りを処理 | side min distance, shootable windows, bullet lane count |
-| magenta cuts | 18.5-30.0s | magenta diver + small scout | 斜め入場を見て、短い照準時間の前後に撃つ対象を選ぶ | 速い敵を読み切り、通常 wave の rhythm が切り替わる | 放置すると aimed 弾と移動圧で中央から追い出される | 攻撃後に斜め外へ離脱する。突入した敵が突き抜ける | 全員同じ easing にしない。diver は entry が鋭く、show は短い | nearBullets, player forced movement, route overlap |
-| green relay carriers | 30.0-44.8s | green carrier + orange arc lance | carrier の slow radial を pulse で消し、反撃 shard を carrier に返す | 危険を攻撃へ変える、pulse が機能する | pulse 不使用だと弾が残り続け、side arc と混ざって圧になる | carrier は弾を撒いた後に上へ離脱、arc lance は進行方向へ掃ける | carrier を硬すぎて作業にしない。pulse なしでも詰ませない | pulseCharge, pulseUses, enemyBullets, clear time |
-| boss warning | 45.0-48.0s | small scouts, warning banner | boss 前に画面を整え、charge を少し回収する | 山場前の短い準備 | scout を残すと boss 開始時に邪魔になる | scout は下へ抜ける | warning が長すぎてテンポを落とさない | visibleTargets, bullets at boss start |
+| wake scouts | 0.7-6.8s | cyan scout, compressed rails | 中央射線に入り、短い scout 小隊を撃ち切って基本 rhythm を掴む | 早い入場から連続撃破できる | 撃ち漏らしの aimed 弾が次の横圧に残る | 下へ抜ける。撃ち漏らしの結果が見える | 開幕を安全な紹介だけにしない。0-3 秒に複数 target を置く | visibleTargets, shootableTargets, kills/sec |
+| orange lances | 7.2-13.0s | left lance squad, right answer squad | 左から押されて横移動し、右からの返しで中央を取り返す | 横編隊を撃ち切り、左右の rhythm 差が出る | 横へ逃げた位置に返しの小隊が来る | 進行方向へ抜け、横圧の方向が見える | 同一小隊内で左右を雑に交互にしない。左右は時間で分ける | side min distance, shootable windows, bullet lane count |
+| magenta cuts | 14.1-20.0s | diver + support scouts | 横圧で動いた先を diver が刺すため、撃つ対象を選ぶ | 鋭い入場を読んで短い show 中に倒す | diver を放置すると位置を崩される | 斜め外へ突き抜ける。攻撃後に漂わない | diver を大量に並べず、刺すタイミングを明確にする | nearBullets, route overlap, forced movement |
+| carrier setup cross | 22.3-25.8s | right/left setup lances | carrier 前に横へ動かされ、次の carrier/arc の優先順位を準備する | carrier 前の空白がなく、位置取りがつながる | 動かされたまま carrier wave に入る | 右小隊、左小隊を時間で分けて掃ける | 左右切替を早くしすぎると中央で重なる | boring runs, minPairDistance |
+| green relay carriers | 26.0-37.0s | green carrier + left/right arc + cuts | carrier の radial を pulse で消しつつ、sideArc と diver の優先順位を選ぶ | pulse 反撃を carrier に返し、横小隊も撃ち切る | pulse 不使用だと弾と横圧が残る | carrier は上へ離脱、arc は進行方向へ掃け、diver は突き抜ける | carrier を単独の弾撒きにしない。周辺小隊が優先順位を歪める | pulseCharge, pulseUses, enemyBullets, clear time |
+| boss warning | 39.0-48.0s | pre-boss cuts + cross + scouts | 前半の横圧、diver、scout を短く復習し、boss 前の charge と位置を整える | 短い総合問題を抜けて boss に入る | 処理が遅れると boss 開始時に弾と位置が悪い | 各小隊は役割方向へ掃け、boss は 48 秒に入場 | boss 前を単なる準備時間にしない | visibleTargets, bullets at boss start |
 | boss: vector core | 48.0-72.0s | boss 3 phase | 通常 shot を当て続け、危険な radial/aimed mix を pulse で切り返す | 12-18 秒程度の山場、phase 変化、撃破演出 | pulse を浪費すると避けが必要、火力不足なら長引く | boss は撃破で stage clear。時間切れでは逃走しない | 理論 TTK 3 秒以内を防ぐ。HP だけで作業化しない | bossHp/sec, idealTTK, pulseTTK, damage taken |
 
 ## 指標の目的
