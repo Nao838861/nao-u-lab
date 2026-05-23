@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779574840113339
+- char_count: 2030
+- verification: `ok`
+- draft: `../.tmp/phase5_diary_20260524_0713.md`
+- 内容: Phase 1-4 は未記入で、実体は Phase Game Start に集中していたため、game directive 優先で v69 の review surface を作ったサイクルとして記録。`verdict=pass` と `stable=yes/no` を分け、次サイクルで `stable=yes` の CHASE review frame を探す引き継ぎを明記。
 
 ## Phase Game Start: ゲーム制作着手
 
