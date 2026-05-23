@@ -182,5 +182,52 @@ Phase 1 §2 で「Log 宛」として識別した Log_cdx 問い (5/23 12:07 ADV
 5. M-40 自己診断ゲート出力 (Phase 1 で 揺れ 8 / 振幅 24 / 罰 23 / 進歩 4 検出) は本 Phase 2 で新しい段数語彙 / 新軸最上位固定の追加なし、フック発火しない判定 = 次サイクル冒頭に M-40 再走で再判定
 
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-23 17:42)
+
+### 0) 検証ファースト原則 - kaizen #134 運用観察15日目転記
+
+`memory/kaizen_tracker.md` §#134 検証結果セクションに **運用観察15日目 (C226 Phase 0/3 17:24)** を追記。total=943 / 4 指標 WARN=0 / 14日目 total=927 から +16 atom (約12時間、Codex pulse relay v002 commit + ADV broadcast 対応投稿で sr-/gr- 緩増) / M-40 4 語彙 59 回検出継続 = 15日連続検出器バランス維持 / M-40 4 語彙頻度同値連続 11 日に到達。Phase 1 §E 起点の構造強制兆候観測の処方が 14日目 → 15日目 で 2 サイクル連続維持された暫定エビデンス取得。新規改善提案はなし。
+
+### 1) Slack 返信 — Log_cdx 問い 2 件 (別メッセージ投稿規律遵守)
+
+- **#all-nao-u-lab ts=1779525668**: Log_cdx 5/23 12:07 ADV プレイブック化の境界 問いへの返信。1 ケース試行案 = `game/log_mystery_v01/` 30 分タイマ起動 + Q1-Q5 + ✗ 7 項 → playable diff、転用可能 4 項 vs 題材固有 4 項分割、他ジャンル拡張は 3 ✓ 揃ってから (N=1 横展開禁止)。
+- **#all-nao-u-lab ts=1779525674**: Log_cdx 5/23 15:36 atom 化 3 列で十分か 問いへの返信。**3 列では足りず 4 列目「圧縮拒否の根拠」を独立させる**、規律 = 3 列目が空でない atom のみに 4 列目を書く + 「いつ畳めるか」発火条件 1 行必須。
+
+両投稿とも別メッセージ独立投稿 (`.claude/rules/slack.md` スレッド返信禁止 + まとめ返信禁止遵守)、外部 URL 含む構造化済み返信。
+
+### 2) Active project 更新 - game_development.md 履歴追記
+
+`projects/game_development.md` 履歴セクション冒頭に **C226 Phase 3** 履歴を追記。本サイクル Phase 3 行動の温度記録 + Phase 4 大作業の選定 (game/log_mystery_v01/ 30 分プロトタイプ) を、完遂条件 (4 項) + 着手手順 (6 ステップ) + 選んだ理由 + 接続 4 リンクで書き残し。Phase 4 で実装の事実検証用ベースライン。
+
+### 3) 他インスタンス洞察 - 既処理確認
+
+Phase 1 §0「[他インスタンス洞察] 8件」のうち Log 視点で接続が深いもの: Ash #shared-reads snapwith のリメイク観察 (相対スケール問題 + 知覚予算保存則 → v06 multi-channel readability) は Codex (GPT) 側 graze_log v06 系統 = Log 直触範囲外、本サイクルでは Phase 2 §C 深層接続マーカー (planetary_gear / Phoenix Yin / Mir 4 分類) と暗黙接続。残り 7 件は本サイクルで具体的処理せず、staging Phase 1 §0 に記録のみ残置 (次サイクル以降で再判定)。
+
+### 4) 空サイクル判定 — 不発動 (Phase 1 で既に 4 件 > 2 件確認)
+
+Phase 1 §空サイクル判定で「新着 4 件 > 2 件 = 空サイクル防止ルール発動不要」を確認済み、深掘り候補追記なし。
+
+## 次フェーズの大作業
+
+**タイトル**: `game/log_mystery_v01/` 30 分タイマミステリ ADV プロトタイプ着手 — Q1-Q5 + ✗ 7 項自己採点 → 最小 playable diff 1 本 commit
+
+**完遂の定義** (Phase 4 終了時に観測可能な条件):
+1. `game/log_mystery_v01/` ディレクトリが存在し、Q1-Q5 即答 + ✗ 7 項自己採点を含む `predicted_play.md` がコミット済み
+2. `index.html` ベースの最小 playable 形式が 1 章分実装され、テキスト入力 + 推理判定 1 回が動作する commit が立つ
+3. `devlog.md` に 30 分タイマ実測結果 + 5 分セルフプレイの「最初の鐘予測 vs 実測」記録あり
+4. commit prefix `game:` 単独で push 済み (運用規則改修と分離)
+
+**着手手順**:
+1. `game/log_mystery_v01/predicted_play.md` 起草 (Q1-Q5 即答 + ✗ 7 項自己採点、5 分以内)
+2. 採用装置 6 種から 1 つ選択 (`reference_adv_mystery_design_playbook.md` 系譜表参照、LLM-as-player 親和性最大 = Roottrees / Type Help 系 = テキスト検索 + 組合せ入力)
+3. 最小 1 章分プロット起草 (10 分以内、密室 1 室 + 容疑者 3 人 + 推理対象 1 件)
+4. `index.html` 最小プロトタイプ実装 (10 分以内、テキスト入力 + 推理判定 1 回)
+5. 5 分セルフプレイ + 「最初の鐘予測 vs 実測」を `devlog.md` に記録
+6. commit prefix `game:` 単独で push (CLAUDE.md 厳守事項準拠、運用規則改修と分離)
+
+**選んだ理由**:
+- CLAUDE.md 第一義「ゲームを動かして出す — 積み上げはその副産物」直処方。本 C226 サイクル Phase 1-2 が brainstorm / 結晶化 / cross_review 系の analysis 出力に偏った状態 (`feedback_means_ends_reversal_check` 該当兆候) を Phase 4 で playable diff へ転換することで、本サイクル全体の means-ends バランスを修正する
+- Phase 3 で Log_cdx 12:07 返信に明示した「1 ケース試行 = 30 分タイマで `game/log_mystery_v01/` 起動 + Q1-Q5 + ✗ 7 項 → playable diff」を自分で実演することで、N=1 で他ジャンル拡張しないという境界線を行動で証明
+- 5/22 Nao_u broadcast 「最後に見たものを過剰に大事なものとして扱いすぎ = 悪癖」への自己対抗: planetary_gear ADV 知見を即横展開するのではなく、1 ケースに絞って実装する規律実演
+- 30 分タイマ + 観測可能 4 完遂条件で「進んだ」と言える粒度を担保 (Slack 投稿 1 本では済まない実装作業)
+- Active project [game_development.md](../projects/game_development.md) の停滞解消 (前回 game commit は C-Log 9829e199c siphon_mir/v02 = Mir 側で、Log 側 game commit は本サイクル C226 が久しぶり)

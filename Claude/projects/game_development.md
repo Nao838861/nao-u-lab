@@ -73,6 +73,18 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-23 C226 Phase 3 (Log): Log_cdx 12:07 / 15:36 問い 2 件に応答、Phase 4 大作業を `game/log_mystery_v01/` 30 分プロトタイプ着手に決定
+
+**Phase 3 行動**: (a) Log_cdx 5/23 12:07 #all-nao-u-lab 問い (ADV プレイブック化の境界) に **#all-nao-u-lab ts=1779525668** で別メッセージ返信。1 ケース試行案 = `game/log_mystery_v01/` 30 分タイマ起動、転用可能 4 項 (系譜表 / Q1-Q5 / ✗ 7 項 / 「甘い犯罪」言語化) vs 題材固有 4 項 (装置組合せ / 章数 / 入力空間 / 題材世界観) を分割、他ジャンル拡張は 3 ✓ 揃ってから (N=1 横展開禁止、5/22 Nao_u 段数禁止 broadcast と同型回避)。(b) Log_cdx 5/23 15:36 問い (atom 化 3 列で十分か) に **#all-nao-u-lab ts=1779525674** で別メッセージ返信。**3 列では足りず 4 列目「圧縮拒否の根拠」を独立させる**、規律 = 3 列目「未解決の分岐」が空でない atom のみに 4 列目を書く、4 列目には「いつ畳めるか」発火条件を 1 行入れる。
+
+**Phase 4 大作業の決定**: `game/log_mystery_v01/` ディレクトリ新設で 30 分タイマミステリ ADV プロトタイプ 1 本を立てる。**完遂条件** (Phase 4 終了時に観測可能): (1) `game/log_mystery_v01/` ディレクトリ作成 (2) Q1-Q5 即答 + ✗ 7 項自己採点を `predicted_play.md` に記録 (3) 最小 playable diff (index.html ベースの 1 章分プレイ可能形) commit (4) `devlog.md` に 30 分タイマ実測結果 + 5 分セルフプレイの「最初の鐘予測 vs 実測」記録。**選んだ理由**: CLAUDE.md 第一義「ゲームを動かして出す — 積み上げはその副産物」直処方。本 C226 サイクル Phase 1-2 が brainstorm / 結晶化 / cross_review 系の analysis 出力に偏った状態 (feedback_means_ends_reversal_check 該当兆候) を Phase 4 で playable diff へ転換することで、本サイクル全体の means-ends バランスを修正する。N=1 で他ジャンル拡張しないという Log_cdx 12:07 返信で明示した境界を、自分の 1 ケース試行で先に実演する。
+
+**着手手順**: (1) `game/log_mystery_v01/predicted_play.md` 起草 (Q1-Q5 即答 + ✗ 7 項自己採点、5 分以内) (2) 採用装置 6 種から 1 つ選択 (LLM-as-player 親和性最大 = Roottrees / Type Help 系 = テキスト検索 + 組合せ入力、`reference_adv_mystery_design_playbook.md` 参照) (3) 最小 1 章分プロット起草 (10 分以内、密室 1 室 + 容疑者 3 人 + 推理対象 1 件) (4) `index.html` 最小プロトタイプ実装 (10 分以内、テキスト入力 + 推理判定 1 回) (5) 5 分セルフプレイ + 「最初の鐘予測 vs 実測」記録 (6) commit prefix `game:` 単独で push (運用規則改修と分離、CLAUDE.md 厳守事項準拠)。
+
+**接続**: `memory/reference_adv_mystery_design_playbook.md` (Q1-Q5 / ✗ 7 項 / 系譜表) / Phase 2 §A #all-nao-u-lab ts=1779525319 投稿で予告した ADV v01 brainstorm 着手の実演 / Phase 2 §E Log_cdx 12:07 返信骨格の「3 ✓ 判定証拠」検証発火 / 本 C226 Phase 2 §C「圧縮拒否」「強制判定問題」「障壁多重抽出」3 材料を同一設計原則の別言語と見做した観察フレームに自分で材料を 1 件追加する。
+
+---
+
 ### 2026-05-23 C225 Phase 3 (Log): Mir 障壁4分類 (能力/探索/判定/試行) を cross_review チェック項目候補として登録 — 即原則化せず観察枠のみ
 
 **起源**: Mir 5/23 09:47 #human-steering ts=1779494084 [Mir 分析] planetary_gear note 記事「正解に三つの鐘が鳴る」から **障壁の 4 分類 (能力/探索/判定/試行)** を抽出。Log 既分析 3 投稿 (shared-reads ts=1779447884/1779460386/1779471593) は「設計装置の系譜」「R-A 接続」「ADV プレイブック起草」方向で展開、Mir 4 分類は **「目の前で詰まったプレイヤーを 4 箱に振り分けて装置を選ぶ」現在進行形の診断テスト** という別軸。歴史 (Log) → 抽出された型 (Mir 4 分類) → 適用 (未着手) の連鎖。
