@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>log_mystery_v01 — 図書館の鍵</title>
+<style>
+  body {
+    font-family: "MS Gothic", monospace;
+    background: #1a1a20;
+    color: #e0e0d8;
+    margin: 0;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  h1 { color: #f0c060; margin: 0 0 8px; font-size: 20px; }
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; }
+  .panel {
+    background: #25252c;
+    border: 1px solid #404048;
+    padding: 12px;
+    border-radius: 4px;
+  }
+  .panel h2 { margin: 0 0 8px; font-size: 14px; color: #80c0d0; letter-spacing: 0.1em; }
+  .clue {
+    padding: 6px 8px;
+    margin: 4px 0;
+    border-left: 3px solid #404048;
+    background: #2c2c34;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+  }
+  .clue.read { border-left-color: #60a060; opacity: 0.7; }
+  .clue.unread { border-left-color: #c08040; }
+  .clue:hover { background: #303038; }
+  .counter {
+    font-size: 12px;
+    color: #a0a098;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .deduce-area {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .deduce-area label { font-size: 13px; color: #c0c0b8; }
+  select {
+    background: #1a1a20;
+    color: #e0e0d8;
+    border: 1px solid #606068;
+    padding: 4px 8px;
+    font-family: inherit;
+    font-size: 13px;
+    width: 100%;
+  }
+  button {
+    margin-top: 12px;
+    background: #604020;
+    color: #f0d090;
+    border: 1px solid #806040;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%;
+  }
+  button:hover { background: #806040; }
+  #result {
+    margin-top: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    min-height: 1.5em;
+  }
+  .result-correct { background: #2c4a2c; border: 1px solid #60a060; color: #c0f0c0; }
+  .result-partial { background: #4a3c2c; border: 1px solid #c08040; color: #f0d0a0; }
+  .result-wrong { background: #4a2c2c; border: 1px solid #a06060; color: #f0c0c0; }
+  .meta { font-size: 11px; color: #707068; margin-top: 16px; }
+  .opening { font-size: 13px; color: #d0d0c8; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<h1>図書館の鍵 — log_mystery_v01</h1>
+
+<div class="layout">
+  <div class="panel">
+    <h2>事件 — 一章「閉じた書架」</h2>
+    <p class="opening">
+    深夜の私設図書館。施錠された貴重書室から、館主・坂田が倒れて発見された。<br>
+    凶器は鈍器、現場のドアは内側から鍵がかかっていた。<br>
+    鍵を持つ三人のうち、誰が、どの場所から、なぜ館主を狙ったのか。
+    </p>
+
+    <h2 style="margin-top:16px;">容疑者</h2>
+    <div class="clue">A: 司書・<b>七尾</b> — 館主と十年の不仲。最近、解雇通告を受けた。</div>
+    <div class="clue">B: 古書商・<b>蔵元</b> — 館主に商談を断られた直後。多額の負債あり。</div>
+    <div class="clue">C: 館主の娘・<b>坂田 茜</b> — 相続を急ぐ理由が囁かれている。</div>
+  </div>
+
+  <div class="panel">
+    <h2>手がかり <span class="counter" id="counter" style="display:inline;"></span></h2>
+    <div id="clues"></div>
+
+    <h2 style="margin-top:16px;">推理を入力</h2>
+    <div class="deduce-area">
+      <label>容疑者</label>
+      <select id="who">
+        <option value="">-- 選択 --</option>
+        <option value="A">A: 七尾（司書）</option>
+        <option value="B">B: 蔵元（古書商）</option>
+        <option value="C">C: 坂田 茜（娘）</option>
+      </select>
+      <label>場所</label>
+      <select id="where">
+        <option value="">-- 選択 --</option>
+        <option value="X">X: 貴重書室の中</option>
+        <option value="Y">Y: 隣の閲覧室</option>
+        <option value="Z">Z: 二階の書庫</option>
+      </select>
+      <label>動機</label>
+      <select id="why">
+        <option value="">-- 選択 --</option>
+        <option value="P">P: 怨恨</option>
+        <option value="Q">Q: 金銭</option>
+        <option value="R">R: 相続</option>
+      </select>
+    </div>
+    <button onclick="deduce()">推理する</button>
+    <div id="result"></div>
+  </div>
+</div>
+
+<p class="meta">log_mystery_v01 — Roottrees / Type Help 系（LLM-as-player 用）。30 分タイマ Phase 4 プロトタイプ。</p>
+
+<script>
+const ANSWER = { who: "A", where: "Y", why: "P" };
+
+const CLUES = [
+  {
+    id: 1,
+    text: "貴重書室の鍵は3本：館主・司書・娘が1本ずつ所持。古書商の蔵元は鍵を持っていない。",
+    read: false
+  },
+  {
+    id: 2,
+    text: "貴重書室の扉は内側から施錠されていた。しかし隣の閲覧室との間に高所換気窓があり、約30cm四方の穴が開いている。",
+    read: false
+  },
+  {
+    id: 3,
+    text: "司書・七尾は事件直前、館主から「来月で辞めてもらう」と書面で通告されていた。十年の積年が金銭よりも怨恨に転じている。",
+    read: false
+  },
+  {
+    id: 4,
+    text: "事件当夜、娘・茜は別棟でアリバイあり（来客と長時間の会話）。蔵元は商談に来ていたが、貴重書室の構造を知らない（換気窓の存在を知らない）。",
+    read: false
+  }
+];
+
+function renderClues() {
+  const el = document.getElementById("clues");
+  el.innerHTML = "";
+  let readCount = 0;
+  CLUES.forEach((c) => {
+    if (c.read) readCount++;
+    const div = document.createElement("div");
+    div.className = "clue " + (c.read ? "read" : "unread");
+    div.textContent = "[" + (c.read ? "既読" : "未読") + "] " + c.text;
+    div.onclick = () => { c.read = !c.read; renderClues(); };
+    el.appendChild(div);
+  });
+  const unread = CLUES.length - readCount;
+  document.getElementById("counter").textContent = "(未読 " + unread + " / " + CLUES.length + ")";
+}
+
+function deduce() {
+  const w = document.getElementById("who").value;
+  const wh = document.getElementById("where").value;
+  const wy = document.getElementById("why").value;
+  const res = document.getElementById("result");
+
+  if (!w || !wh || !wy) {
+    res.className = "result-partial";
+    res.textContent = "3つすべてを選択してください。";
+    return;
+  }
+
+  let hits = 0;
+  if (w === ANSWER.who) hits++;
+  if (wh === ANSWER.where) hits++;
+  if (wy === ANSWER.why) hits++;
+
+  if (hits === 3) {
+    res.className = "result-correct";
+    res.innerHTML = "<b>♪ 正解 — 章末の鐘が鳴る ♪</b><br>"
+      + "司書・七尾は、自分の鍵で施錠した貴重書室から、隣室との換気窓を経由して退出した。"
+      + "館主から解雇通告を受けた怨恨が動機。隣の閲覧室から実行された<b>偽装密室</b>。";
+  } else if (hits >= 1) {
+    res.className = "result-partial";
+    res.textContent = "♪ " + hits + " / 3 一致 — 部分的に当たっています。もう一度手がかりを読み直してみてください。";
+  } else {
+    res.className = "result-wrong";
+    res.textContent = "✗ 0 / 3 — どれも当たっていません。手がかりを最初から読み直してください。";
+  }
+}
+
+renderClues();
+</script>
+
+</body>
+</html>
