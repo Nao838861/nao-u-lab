@@ -36,4 +36,5 @@ Pulse Relay v001 での具体的な失敗:
 - 実装前の wave table に `path keyframes / interpolation / speed / dwell / exit reason / player_intent / bad_policy_check / telemetry` を省略せず書く。
 - shot_log など teacher 実装を見る時は、座標や duration だけでなく「なぜその敵はそこで退場するのか」を抽出する。
 - 重なり修正はランダム offset や隊列内 phase 差ではなく、同じ rail のまま `target spacing`、`spawn delay`、`path progress`、`enemy radius` を合わせて直す。
+- 重なり修正後は、画面内の同一 block / route について「中心距離 < 半径合計 + 余白」のペアが残っていないかを機械的に検査する。特に smooth の低速立ち上がりは spawn 直後の重なりを作りやすいので、入口速度と spawn delay をセットで見る。
 - 評価は平均スコアだけで終えない。route / boss-rush / camper / lane-holder など複数 policy の差分と、秒ごとの visibleTargets / shootableTargets / enemyBullets / damage / bossHp を見て、修正が意図通りの緊張を作ったか確認する。

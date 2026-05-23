@@ -184,8 +184,11 @@ function summarizePulseRelay() {
     maxSpawnGap: Math.max(...gaps),
     routePrimitiveFrames: {
       lineEntry: 140,
+      lineEntryEase: "linear",
+      minLineSpawnGap: 18,
       lineExit: 160,
       sideEntry: 110,
+      minSideSpawnGap: 16,
       sideExit: 110,
       vEntry: 150,
       vExit: 140,
@@ -210,7 +213,7 @@ const report = {
   pulseRelay: summarizePulseRelay(),
   deltas: {
     enemyCountRatio: Number((summarizeShotLog().count / summarizePulseRelay().count).toFixed(2)),
-    mainFinding: "shot_log is not just smoother or faster; it uses dense subformations with explicit entry/stay/exit path segments and spawn-delay separation. Pulse Relay follows that style at a smaller scale: formations stay on clean shared rails, overlap is handled by spawn delay and route progress instead of ugly intra-formation offsets, and line, side, V, dive, large-deadline, and boss-fuel primitives keep distinct entry/exit reasons.",
+    mainFinding: "shot_log is not just smoother or faster; it uses dense subformations with explicit entry/stay/exit path segments and spawn-delay separation. Pulse Relay follows that style at a smaller scale: formations stay on clean shared rails, overlap is handled by spawn delay and route progress instead of ugly perpendicular offsets or intra-formation phase shifts, and line, side, V, dive, large-deadline, and boss-fuel primitives keep distinct entry/exit reasons.",
     pulseRisks: [
       "Pulse Relay still has fewer enemies than shot_log, so density should be protected if new mechanics increase enemy HP",
       "route policy still reports a few shootable_gap seconds, so future tuning should add overlap instead of slowing enemies",

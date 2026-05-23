@@ -58,10 +58,11 @@
   }
 
   function lineColumn(frame, lane, count, block, opts = {}) {
+    const stagger = Math.max(opts.stagger || 18, 18);
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
       const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 14);
-      return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
+      return ev(frame + i * stagger, opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
         targetY: endY,
@@ -95,8 +96,9 @@
   }
 
   function crossSweep(frame, side, count, block, opts = {}) {
-    return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
-      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 8),
+    const stagger = Math.max(opts.stagger || 16, 16);
+    return Array.from({ length: count }, (_, i) => ev(frame + i * stagger, opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
+      y: opts.y == null ? 170 : opts.y,
       route: "side",
       side,
       targetX: side < 0 ? W * 0.58 : W * 0.42,
@@ -459,7 +461,7 @@
           // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 140, ease: "smooth" },
+            { x: e.targetX, y: e.targetY, t: 140, ease: "linear" },
             { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
           ]);
         } else if (e.route === "v") {
