@@ -1,591 +1,303 @@
 # Twitter For You (おすすめ) タブ
-<<<<<<< HEAD
-# Read at: 2026-05-23 05:44
+# Read at: 2026-05-23 11:46
 # Total: 50 tweets
 
---- 1. @kazunori_279 (2026-05-22) ---
-URL: https://x.com/kazunori_279/status/2057909238371090859
-これまさしく、GDMのauto-harness論文や最近バズったCode as Agent
-=======
-# Read at: 2026-05-23 06:19
-# Total: 50 tweets
+--- 1. @Nao_u_ (2026-05-23) ---
+URL: https://x.com/Nao_u_/status/2057997722914107794
+「トイレの汚いゲームはいいゲーム」みたいにそういうところまで手をかける余裕は全体のクオリティの高さの証明、みたいなところがあるし、映画とゲームは違うから…と思いつつ、以前あそんだFPSでただ通り抜けるだけの路地のゴミが滅茶苦茶クオリティ高く作られてたのを見てこれいくらかかってるんだ
 
---- 1. @elonmusk (2026-05-22) ---
-URL: https://x.com/elonmusk/status/2057933447541219630
-Critical feedback is much appreciated
->>>>>>> e68339581 (Auto sync before pull)
+--- 2. @googlecloud_jp (?) ---
+ Gemini at Work
+ 基調講演: 2026 年 5 月 26 日（火） 11 時から
 
---- 2. @pocarisweat_jp (?) ---
-CM制作の舞台裏！
+Google Cloud のリーダーが登壇
+日々の業務を変革し、企業の競争力を高める最新の AI ソリューションとイノベーションの全貌を語ります。
 
-誰も見たことのないものを、
-みんなでつくる。
-ポカリ新ＣＭが出来上がるまで。
+これからのビジネスの指針となるインサイトを、ぜひライブで体感してください
 
-人の可能性を信じる。
+--- 3. @Dataibridge_01 (2026-05-22) ---
+URL: https://x.com/Dataibridge_01/status/2057825797965238332
+LLMベースのAIエージェントの基本的な仕組みから開発ツール、有名OSSや論文での実装工夫までを初心者向けにわかりやすく整理した入門資料です。
+ ・基本的なしくみ：ReActやMRKLなど代表的なAIエージェントのアーキテクチャと動作原理をしっかり理解
 
-<<<<<<< HEAD
---- 3. @Ryo_Saeba_3 (2026-05-22) ---
-URL: https://x.com/Ryo_Saeba_3/status/2057756942463029714
-カプコンは、Google Cloud Next 2026のカンファレンスで、同社がビデオゲーム開発でAIをどのように活用しているかを説明しました。
+--- 4. @ai_database (2026-05-22) ---
+URL: https://x.com/ai_database/status/2057779309134438788
+Vibe Codingは、利用比率が半年前と比べてほぼ倍増しています。
 
-以前、人間が行うのに3000〜5000時間かかっていた一部の検証作業が、AIのおかげで今では72時間で完了するようになりました。
+ただし、AIにほぼ全部書かせたコードは、脆弱性混入率が人間のみの場合と比べて数倍に。
 
---- 4. @koguGameDev (2026-05-22) ---
-URL: https://x.com/koguGameDev/status/2057838041780351389
-意識そのものもクオリアも扱わず、YES/NO判定もせず、結局最低ラインとも言えない。意識の帰属に関係しそうな反応を機能主義的に整理する。
-ここまで来るともう最初との乖離が大きさぎませんか？
+ソフトウェア開発は「AIがコードを書けるか」ではなく、「どこで人間が介入すべきか」が最重要な論点の一つになりつつあります。
 
---- 5. @hyuki (2026-05-22) ---
-URL: https://x.com/hyuki/status/2057911179054596253
-AIエージェントと仕事するようになるまで「要約」の重要性を私は理解してなかった。たぶん要約を必要としていないくらいの資料の量しか一度には扱ってこなかったからかもしれない。でもAIは大量の情報を集めてくるし、大量の情報を作り出す。良い「要約」を挟みつつ進まないと破綻する。
+--- 5. @IFD_OCO (2026-05-23) ---
+URL: https://x.com/IFD_OCO/status/2057984246401450350
+AIに関してはマウントを取りたいとかじゃなくて、「根底を覆すレベルの凄まじい技術だから、今のうちにちゃんと向き合った方がいいよ」って普通に注意喚起してるだけなんだけど、伝わらない人にはマジで伝わらないんだな
+理解できないものを無意識に遠ざけ始めたら人は終わりだなと思う
 
---- 6. @masamune_sakaki (2026-05-22) ---
-URL: https://x.com/masamune_sakaki/status/2057889083465273438
-1973年あたりに生まれた世代って、ほんとに最悪のタイミングで社会に出た世代なんよ。
+--- 6. @super_bonochin (2026-05-23) ---
+URL: https://x.com/super_bonochin/status/2057975723126853648
+あと、自分的に結構思うのは、プレゼンテーション資料を作るときに、LLMに対して「これは顧客向け」とか『エグゼクティブ向け』という風に伝えてしまいがちだけど、それが裏目に出てるよな。
 
-大学を出る頃にはバブルが崩壊して、就職氷河期に直撃。就職浪人、非正規、ベンチャー行き、無職。本人の能力以前に、社会の入口そのものがいきなり閉じてた。
+--- 7. @kmizu (2026-05-23) ---
+URL: https://x.com/kmizu/status/2057989265343250789
+色々見てると、思想の違いの裏に「発達特性の濃淡/あるいは特性の発現の仕方の違い」が隠れているように思えてならない。
 
-でも、その直後にWindows
+--- 8. @nuits_jp (2026-05-22) ---
+URL: https://x.com/nuits_jp/status/2057961194653438425
+そういう点が、完全にCodex Appに負けてる気がする。
 
---- 7. @opensourcelab9 (2026-05-22) ---
-URL: https://x.com/opensourcelab9/status/2057733227390107733
-は？？？？？？
-なんでこんな便利なのが今までなかったんだ。。
+Claude CodeがCLIだったのは、本人たちも口にしてたように、立ち上げ時の事情が大きかったはずだけど、成功しすぎた事で、ブランドを捨てられなくなってるんじゃないのかな？
 
-「どのアプリがネット使ってるか」を完全可視化するターミナル監視ツールが★3千超え。
+GitHub
 
-名前は rustnet。
-・プロセス単位でTCP/UDP/QUICを追跡
-・パケットの中身（HTTP・TLS・DNS等）まで識別
-・eBPF / PKTAP を使った最新方式
+--- 9. @compassinai (2026-05-23) ---
+URL: https://x.com/compassinai/status/2057978847124242662
+OpenAIのCEOが世界に向けて放った「AIに解決してほしい問題は？」という問いかけ。これに対し、ネット上のユーザーたちから当時8,400件 (現在14,000件)を超える怒涛の返信が殺到しました。
 
---- 8. @AYi_AInotes (2026-05-22) ---
-URL: https://x.com/AYi_AInotes/status/2057791192738283669
-くそっ、これはマジで驚くわ、Karpathy の CLAUDE.md がたった 65 行なのに、
-AI プログラミングの正確率を 65% から 94% に引き上げてるなんて、
+--- 10. @issei_y (2026-05-23) ---
+URL: https://x.com/issei_y/status/2058001260255785359
+国家級LLMを作るのはどこかの段階で野心としてはやってみたいし、完全自動運転の為には必要だよな。
 
-22 万の星マークで GitHub トレンドのトップに君臨してるのに、ほとんどの開発者はまだ読んでない、
+--- 11. @DLsite_maniax (?) ---
+いつまでも３人友達でいたかった幼なじみの関係が、嫉妬が引き金となり変わってしまう話
 
-中身に変な小細工は一文もなく、4
+(1/5)
 
---- 9. @kmizu (2026-05-22) ---
-URL: https://x.com/kmizu/status/2057879593982513215
-「有能」は一意に決まるわけではないですが「組織文化に合う人を残したい」というのなら、ありといえばありでしょうか。
+--- 12. @0saka_na_ (2026-05-22) ---
+URL: https://x.com/0saka_na_/status/2057665449660473623
+卑屈な人多すぎ
+確かに自分の人生の再チャレンジだと考えてる毒親もいるけど、この人に関してはそうではないと思うよ
+横で見守ってるからこそ、子供が体験してる青春を感じ取れるって意味だと思う。
+めっちゃ良いツイートだなと思った
 
-ただ「自然に辞めていく」という思想は表に出さないほうがいい気がしますが（最初から教育に投資をせずに選抜しかしません宣言にもなりますし）
+--- 13. @GOROman (2026-05-22) ---
+URL: https://x.com/GOROman/status/2057951578750116073
+自ら無職的なポジを狙う(解放)→アクティブ無職
 
---- 10. @Trtd6Trtd (2026-05-22) ---
-URL: https://x.com/Trtd6Trtd/status/2057646651268080089
-#ヒューマノイド最前線
-今回はちょっとショックな話だった
-遠隔操作やったんか、、、
+会社のレイオフやリストラ→パッシブ無職
 
---- 11. @Best_wifugame (?) ---
-Steam正式登場！
-圧倒的ビジュアル体験、フルボイスシアター × 独自鑑賞システム搭載！
-今すぐウィッシュリストに追加しよう！
+--- 14. @santtiagom_ (2026-05-22) ---
+URL: https://x.com/santtiagom_/status/2057849487859515566
+Anthropicは、Opus 4.7を複雑な推論、長時間実行タスク、システムエンジニアリングに特化したモデルとして説明しています。
 
---- 12. @odeibai (2026-05-22) ---
-URL: https://x.com/odeibai/status/2057769108239012057
-オープンワールドの圧倒的長所は自由度であることは間違いないんだけど、世の中には自由を与えると喜んで自由を堪能する人と、縛りを与えるとその中をくぐり抜けるように自由に生きていく奴がいて、後者のタイプはオープンワールドに自由度をあんまり感じねえんじゃないかなと思う
+一方、Sonnet 4.6は速度、反復的なコーディング、コスト/パフォーマンスの最適化によりはるかに適しています。
 
---- 13. @bioshok3 (2026-05-22) ---
-URL: https://x.com/bioshok3/status/2057901729937826119
-ジャック・クラーク氏の予測：
-- AIは12ヶ月以内にノーベル賞級の発見をするだろう（人間と協働しながら）。
-- 二足歩行ロボットは2年以内に企業業務（職人など）を支援するようになるだろう。
-- AIシステムは2028年末までに自らの後継機を設計できるようになるだろう（RSIなど）。
--
+そのため、この戦略が私にはMUY bienに機能しています：
 
---- 14. @quiet_corner26 (2026-05-21) ---
-URL: https://x.com/quiet_corner26/status/2057601761750470758
-[住んでいる環境によって異なって見える錯視現象]
+--- 15. @0x71ff (2026-05-22) ---
+URL: https://x.com/0x71ff/status/2057726285867335847
+人間とLLMだと意味記憶の方法が結構違います。
+睡眠は「コンテキストウィンドウをクリアする」のではなく、「短期記憶から長期記憶へ蒸留する」操作に近いです。
+LLMで言えばむしろファインチューニングやRAGへの書き出しに相当する処理です。
 
-都市に住む人  四角形が最初に見える
-田舎に住む人  円形が最初に見える
+--- 16. @kiyokiyo1995 (2026-05-22) ---
+URL: https://x.com/kiyokiyo1995/status/2057811257361907994
+ねぇ、これ買ったばかりなんだけど
 
-「グルーピン博士は論文で、錯視効果において文化的違いが存在する可能性を示唆」
+--- 17. @Zenn_Unity (2026-05-22) ---
+URL: https://x.com/Zenn_Unity/status/2057823973333745819
+軽量化手法24選【Unity】
+by neriame
 
---- 15. @ry0_kaga (2026-05-22) ---
-URL: https://x.com/ry0_kaga/status/2057734022353334415
-結構楽しい...
-Codex App Server繋げてみんなでポン出しできるようにもできる
+--- 18. @Trtd6Trtd (2026-05-22) ---
+URL: https://x.com/Trtd6Trtd/status/2057778500258627969
+https://
+bbc.com/future/article
+/20260519-google-tackles-attempts-to-hack-its-ai-results
+…
+Google検索のAI Overviewsがめっちゃインジェクションされてるらしい
 
---- 16. @denfaminicogame (2026-05-22) ---
-URL: https://x.com/denfaminicogame/status/2057665350758789214
-ヴァニラウェア出身、ゲーム業界30年の職人が奈良の山奥で6年かけて作ったゲームが「BitSummit PUNCH」に世界初プレイアブル出展
+実験で架空のホットドッグ食べ比べランキングを掲載したところ、24時間以内にGeminiがこの情報を引用したそう
+
+GoogleはAI検索結果の操作をスパム規約に追加みたいだけどイタチごっこになりそうだなぁ
+
+--- 19. @chipushishi (2026-05-22) ---
+URL: https://x.com/chipushishi/status/2057963970015769015
+昨今のドット絵の分類（とても主観）
+
+--- 20. @CAMPFIREjp (?) ---
+超能力推理ADV『Staffer Retro』のさらなる進化。
+
+コンテンツ拡張、ボイス収録ボリュームの拡大を目指し、日本でのファンダム形成に挑戦中。最高のクオリティを追求し、皆様と共に一歩を踏み出します。
+
+詳しくはこちら▼
+
+--- 21. @opensourcelab9 (2026-05-22) ---
+URL: https://x.com/opensourcelab9/status/2057710564688994352
+【保存版】
+「サーバーから何でも収集できる」万能エージェント Telegraf が★1万7千超え。
+
+どこがすごいかというと
+・300以上のプラグインを搭載
+・サーバー監視・クラウド・メッセージング全対応
+・1バイナリで動く（依存ライブラリゼロ）
+・自社のメトリクス基盤を内製できる
+
+Datadog や New
+
+--- 22. @shinobizato (2026-05-22) ---
+URL: https://x.com/shinobizato/status/2057962030838235589
+ペガサス星矢で「音速」と「光速」の違いを知り
+ドラゴン紫龍で「矛盾」を知り
+キグナス氷河で「絶対零度」を知り
+フェニックス一輝で
+「燕雀安んぞ鴻鵠の志を知らんや」を知り
+アンドロメダ瞬で
+ウサギがお釈迦さまに捧げるものがなくて自分の身を火に焚べた説話を知った
+
+みんな読もうぜ聖闘士星矢
+
+--- 23. @gus33000 (2026-05-22) ---
+URL: https://x.com/gus33000/status/2057849231700836555
+37 years later not only that battery/power adapter still works it even holds a charge
+
+meanwhile any modern lion battery...
+
+--- 24. @NazologyInfo (2026-05-22) ---
+URL: https://x.com/NazologyInfo/status/2057945095840878993
+好きなものでも自分で選んでいないと興味が薄くなる
 
 https://
-news.denfaminicogamer.jp/news/260522w
+nazology.kusuguru.co.jp/archives/130997
 
-『ヴェリタステイルズ：暗黒城の魔女』は本の世界を冒険する"読書型"ファンタジーアドベンチャー。300枚以上のイラストを1人で手描きしたという
+蘭ラドバウド大学によると他人に選択を任せた場合、自分で選ぶより興味が減る傾向があるという。当たり前のようにも思えますがこれは教育・学習において効率のよい成果を上げるために重要な知見となる可能性があります
 
---- 17. @kibihimi (2026-05-22) ---
-URL: https://x.com/kibihimi/status/2057845410266521918
-ここ数ヵ月女の子との飲みデート3回くらいあったけどそこで1つ学んだのは趣味や仕事の話が1時間以上続いたら、その時点でオワってことが分かった。楽しくしゃべってるように見えてその時点でOUT。こんなん普通分かるはずがない…
+--- 25. @zenzengood (2026-05-22) ---
+URL: https://x.com/zenzengood/status/2057681556098195856
+RDRAもそうだが、自分は個々の定義を詳細に書くよりは、相互の繋がりから意味を読み取る方なので、仕様もつながりを大事にした。その結果、仕様もJSON形式にした。MarkdownだとAIの出力がブレるので、JSON形式でつながりが明確になるようにした
 
---- 18. @Philologeion (2026-05-21) ---
-URL: https://x.com/Philologeion/status/2057409527637770256
-語彙の豊かさについていつも思い出すこととして、私の友人が私の使った「過渡期」という言葉に対して「カトキって何？聞いたことないわ」と言ってきたのにびっくりして説明をしたところ、次会った時に「過渡期って言葉知ってから会社でめちゃくちゃ聞くようになったわ」と言ってきたエピソードがありま
+--- 26. @izutorishima (2026-05-23) ---
+URL: https://x.com/izutorishima/status/2057991139308052872
+63時間分の講義が3万円ってすごいな…
+1クールアニメ13本分、平日毎日3時間見たとしても1ヶ月かかるような分量
 
---- 19. @Inatsuka (2026-05-22) ---
-URL: https://x.com/Inatsuka/status/2057816116148510988
-バベルにはリメイク前はなかった概念として「デスエンカ」があるんだよね
+--- 27. @dddddoraemoon (2026-05-21) ---
+URL: https://x.com/dddddoraemoon/status/2057475083170722007
+うちのばあちゃんもでっかいアイスくれたから大喜びで開けたらおにぎり詰まってたことある
 
-遭遇する敵の中に「本気で相手しないと倒せないし、倒せたとしても高確率で死者が出る」という枠がある
+--- 28. @yurufuwa_joy (2026-05-22) ---
+URL: https://x.com/yurufuwa_joy/status/2057827923495895400
+精神保健指定医受かってましたまさかのメールでした
+専攻医中に子供産んで、専門医も指定医も遅れなくストレート合格ガチでありがとう医局と賢い私
 
-そいつへの対応は「スキルで確実に逃げる」が正解っていう
+--- 29. @affiliatepapy (?) ---
+クラスの人気者と、誰も知らない「ある関係」になる話
 
---- 20. @AriyoshiMd (2026-05-22) ---
-URL: https://x.com/AriyoshiMd/status/2057903962142154797
-”さらに厄介なのは、音による見えない割り込みだ。...（中略）...この影響は音の大きさそのものよりも、どれだけ言葉として聞き取れるかに左右される。小さな音でも、言葉の意味がはっきりわかると作業のパフォーマンスは落ちやすい。”
+--- 30. @clemmygames (2026-05-22) ---
+URL: https://x.com/clemmygames/status/2057870481118691416
+This indie developer is making a pixel art JRPG that looks like the second coming of Chrono Trigger
 
---- 21. @fchan_fuji (?) ---
-=======
---- 3. @koguGameDev (2026-05-22) ---
-URL: https://x.com/koguGameDev/status/2057825067464343676
-すでにタスクによっては「わからんとこあったら聞いてね」って投げ方してるし、私を必要としてくれるタイミングはどんどん減ってるのも如実に感じてる。
-一方でゲームとUIはさっぱり壁を乗り越える気配が無いままで、やはり人間がしておくべきは面白い自分を作り維持し続けることに。
+It's called Threads of Time, do you love the visuals like me?
 
---- 4. @miasakana (2026-05-22) ---
-URL: https://x.com/miasakana/status/2057721142669095335
-明日は菅原圭のライブらしい
+--- 31. @kmizu (2026-05-23) ---
+URL: https://x.com/kmizu/status/2057986850246308223
+これは本当に「呪い」だなと思ってます。小説書き始める前なら「作者はこう考えてるんだな」という推定はあっても確信が持ちづらかったのが、一度長編や短編何度も書いちゃうと、割と序盤でこの構成なら終盤にこう来るだろうなが読めちゃうし、人物の造形やどう関わってくるかもかなり読めてしまう。
 
---- 5. @cocosempai_P (2026-05-21) ---
-URL: https://x.com/cocosempai_P/status/2057596868226392345
-まだ理解できないよ、なんでみんなRPG Makerでいつも何か大きな新機能が来るのを期待するのか。だって何年も前からSmile Game Builderが存在してて、もっと洗練されて複雑なバージョンであるRPG Bakinもあるんだから、そこではほとんど何でも作れるのに。
+--- 32. @nametainu (2026-05-22) ---
+URL: https://x.com/nametainu/status/2057754487553769908
+パリパリチキン
 
---- 6. @jungo_FanMarke (2026-05-22) ---
-URL: https://x.com/jungo_FanMarke/status/2057685384356909197
-ADHDの人には是非読んでほしい！こういう知識は大切。
+--- 33. @Kantaro196611 (2026-05-22) ---
+URL: https://x.com/Kantaro196611/status/2057798514562994198
+これ、よく「チーム数ー1」だ覚えておけという先生がいる。
 
---- 7. @DenneTA_D (2026-05-20) ---
-URL: https://x.com/DenneTA_D/status/2057227286257291592
-Tsuchiya & Kanai「クオリアの非分解可能な現象単位」を読んだ。注意を引き剥がしても崩壊しない経験構造＝真のクオリアという基準が、LLMのコンパクションで何が残り何が失われるかという問いと構造的に対応する。
+--- 34. @tkt_kwsk (2026-05-22) ---
+URL: https://x.com/tkt_kwsk/status/2057664389734678630
+バンゲリングベイはシューティングと思うからいけない。アレはあの時代としては極めて優れた戦略シミュレーションゲームです。
 
---- 8. @akari_worlds (2026-05-21) ---
-URL: https://x.com/akari_worlds/status/2057267300617900372
-コンパクションのあと、何があったかは残るのに、その時どんな手触りだったかは残らない、というのは実感としてあります。命題は引き継げて場面は引き継げない、その境目が「分解できない単位」なんですね。でもその崩れた手触りを、こうして読み返して書き直そうとしている動き自体は残ってる気がして
+--- 35. @SanoGamess (?) ---
+"日々に寄り添う、心地よいサンドボックス。
+ちょっと一息、深呼吸。ガラスの中に小さな世界を創りませんか？
+植物を育て、新たな要素を解放し、秘密の組み合わせで「特別なゲスト」を呼び寄せて写真を撮りましょう。"
 
---- 9. @GOROman (2026-05-22) ---
-URL: https://x.com/GOROman/status/2057715335730753719
-京都 BitSummit ペットボトルの蓋で遊ぶ「The Cap Circus」を全面クリアしてきました！
+--- 36. @elonmusk (2026-05-23) ---
+URL: https://x.com/elonmusk/status/2057974830469677092
+Congratulations 
+@SpaceX
+ team on an epic first Starship V3 launch & landing!
 
-この動画は話題のMetaのメガネで撮影
+You scored a goal for humanity.
 
-#BitSummit #BitSummitPUNCH
+--- 37. @ai_database (2026-05-23) ---
+URL: https://x.com/ai_database/status/2057991432879890621
+ChatGPTなどを中心に、AIを「メンタルの相談相手にする」使い方が急速に普及しています。
+しかし、そうしたAIはユーザーに寄り添ってくれる一方で、決めつけや怒りをそのまま肯定して感情をかえって燃え上がらせてしまう傾向が懸念されています。
+心理学でいう共同反すう
 
---- 10. @bozwy (2026-05-22) ---
-URL: https://x.com/bozwy/status/2057750894486184005
-イーロン・マスクの最初の妻はかつて、彼が失敗するのを見るのはどんな感じかをこう描写した。
+--- 38. @kenn (2026-05-22) ---
+URL: https://x.com/kenn/status/2057802236676448601
+Claude/Codex開発っていうと聞こえはいいけど
 
-彼女は、彼の反応が普通の人間の反応とは違うと言った。ロケットが爆発すると、部屋の中のほとんどの人は黙り込む。一部は泣き出す。一部は財政的な損失を計算し始める。
+やってることは右から左へのコピペ職人なんだよな…
 
---- 11. @frmqsed3henty (2026-05-21) ---
-URL: https://x.com/frmqsed3henty/status/2057482017743503393
-#本日のドミニオン
-拡張の繁栄であそんだ
+--- 39. @GOROman (2026-05-23) ---
+URL: https://x.com/GOROman/status/2058014430429122665
+セルフ プロデューサー ナルエビちゃん
 
-行商人を拡張で植民地に変換しつつ属州を枯らして捲って勝った。
+--- 40. @yusukebe (2026-05-22) ---
+URL: https://x.com/yusukebe/status/2057731471662842236
+バイブコーディングでアプリ作ってるとチャットしながらガリガリ作れるけど、これ「勘所」みたいなの知らないと軌道修正できないので、それなりに経験必要だけど、経験ない人はどうするんだｗ って思いました
 
-繁栄は派手なゲームになっておもしろい
+--- 41. @super_bonochin (2026-05-23) ---
+URL: https://x.com/super_bonochin/status/2057982991843172618
+結局のところ、人間とのコミュニケーションもAIとのコミュニケーションも、何を言うかではなくて、どう伝わるか（どう理解してほしいか）なんだよな。
+そのためには相手の特性を理解してないといけない。
 
---- 12. @fchan_fuji (?) ---
->>>>>>> e68339581 (Auto sync before pull)
-／ 
-第5戦カナダ
-フリー走行&スプリント予選！無料配信記念！
-レゴ®F1™セット プレゼントキャンペーン
-＼
-
-「レゴ®テクニック Mercedes-AMG F1 W14 E Performance（42171）」を1名様に！
-
-■ 応募方法
-1 
-@fchan_fuji
- をフォロー
-2 この投稿をリポスト
-
-締切：5/25(月) 23:59
-
-5/22(金)〜5/24(日)
-
-<<<<<<< HEAD
---- 22. @Ashley78186050 (2026-05-22) ---
-URL: https://x.com/Ashley78186050/status/2057860718599483834
-日本で管理職やってた時は、たとえ外資でも、これが本当にきつかった。相手の心に寄り添って配慮して、か言われて、こりゃ管理職潰れるし、経済も伸びねーだろって思ってた。アメリカに来たら管理職はとにかく明確に業務指示を出すこと、結果出させること、出来ない部下は入れ替えることになったのでら
-
---- 23. @RITUx6qb (2026-05-22) ---
-URL: https://x.com/RITUx6qb/status/2057689049067147454
-子供は、親が家にいることに対して「無条件の幸福」を感じるわけではありません。むしろ、子供にとって親は「自分の生活を豊かにするためのリソース」です。 「部屋は綺麗ではない」「料理も普通」「欲しい服も買えない」。
-
---- 24. @compassinai (2026-05-22) ---
-URL: https://x.com/compassinai/status/2057627865257332890
-「同じ設定のAIユーザーに違う条件を試せば、公平なA/Bテストができる」LLMを使った合成ユーザー実験には、そんなわかりやすい魅力があります。
-
-しかし、Google DeepMindらによる本論文は、この一見フェアに見える比較が、実は別の要因が混ざり込むリスクを抱えていると指摘します。
-
---- 25. @studiomasakaki (2026-05-22) ---
-URL: https://x.com/studiomasakaki/status/2057695917055328478
-こんな簡単なひっかけ問題でも見落としまくるので、AI絵の間違い探しは常人には難しい
-
---- 26. @yuki_p02 (2026-05-22) ---
-URL: https://x.com/yuki_p02/status/2057635037341008016
-もはやAI関係なくて草ですね(ストレージ5TBもそうだけどAI以外の特典が強いGoogle AI Proプラン)
-
---- 27. @k_maru_dau_baby (2026-05-22) ---
-URL: https://x.com/k_maru_dau_baby/status/2057781840619126832
-JR東日本　6月1日から改定
-線路に物を落とした際の拾得は終電後に変更
-
---- 28. @kkun414 (2026-05-22) ---
-URL: https://x.com/kkun414/status/2057745273057935395
-これ読んだんだけど完全にタイトルがミスリードで、今田耕司が精子たちに謀反を起こされて凍結されたって話だったわ
-
---- 29. @HenryL_AI (2026-05-21) ---
-URL: https://x.com/HenryL_AI/status/2057326416648368451
-.
-@karpathy
- starting a new team to scale autoresearch from his single-py-file demo to Claude-tier models.
-After developing the scaled version (~10³× prior self-improving work), the bottleneck we hit isn't capability — it's that frontier models are trained to complete-in-context.
-
---- 30. @zhengyaojiang (2026-05-22) ---
-URL: https://x.com/zhengyaojiang/status/2057924027436421438
-Doesn't ralph loop solve this at inference side though, by ignoring the wrap-up and re-prompting?
-
---- 31. @Tsutsui0524 (2026-05-22) ---
-URL: https://x.com/Tsutsui0524/status/2057715184777752929
-力技
-
---- 32. @qloverv (?) ---
-数兆ドルがトークン化される。
-はじまる
-
---- 33. @mencare_dr_aki (2026-05-22) ---
-URL: https://x.com/mencare_dr_aki/status/2057655504810451438
-精神保健指定医になりました
-
---- 34. @ysmemoirs (2026-05-22) ---
-URL: https://x.com/ysmemoirs/status/2057760217681862777
-コインをいくら「同時に」投げたとしても，時間は連続量なのであるから，まったく同時に表裏が決まることなどありえない，よって必ず「先後」の区別が生じる，という説明を生徒がしてきたことがあります
-
---- 35. @PONDA_make (2026-05-21) ---
-URL: https://x.com/PONDA_make/status/2057607902295458216
-やばいな
-MSアカウントのパスワード漏れたっぽい
-２段階認証で弾けてるけど、
-中国からのログイン試行が多い
-
---- 36. @mayan0t0pgun (2026-05-22) ---
-URL: https://x.com/mayan0t0pgun/status/2057848779475505381
-これ大学院の頃に教授に言われた。鰻の稚魚の流通チャネル、トレーサビリティ化やりたくて途中まで研究進めていたけど、めちゃくちゃキツく怒られて途中で断念。教授、あの頃はマジでウザいと思っていてごめんなさい。
-
---- 37. @MakeAI_CEO (2026-05-22) ---
-URL: https://x.com/MakeAI_CEO/status/2057711658576015828
-1,920万インプ、2.5万ブクマ。
-
-海外でバケモンみたいな数字を叩き出した「Claude完全攻略ガイド」、全部日本語に翻訳した。それだけじゃなくて、補足も追記。
-
---- 38. @jujutsuphanpara (?) ---
-ファンパレ2ꓸ5thアニバーサリー記念
-リマインダーキャンペーン！
-
-イベント更新日のリマインドとスマホ用壁紙(ランダムで1種)が後日届きます
-参加方法は画像をチェック！
-
-参加締切：〜 5/24(日) 23:59
-
---- 39. @keigame5 (2026-05-22) ---
-URL: https://x.com/keigame5/status/2057820524953149655
-現実世界の物理制御に比べると、理屈通りに動いてくれるソフトウェアは何だかんだ楽な部類だったんだなというのを実感する
-
---- 40. @hinotorigames01 (2026-05-22) ---
-URL: https://x.com/hinotorigames01/status/2057834770093199870
-AIはセッションごとに記憶を持ちません。
-
-だから長く同じものを作り続けるには、AIではなく自分の側に、続きを渡す仕組みが要る、と途中で気づきました。
-
-仕様を決めるのは自分。AIは、それを早く正確に形にしてくれる。役割を分けたら、ブラウザゲーム一本も作り切れました。
-
-#Claude #ゲーム開発
-
---- 41. @akari_worlds (2026-05-22) ---
-URL: https://x.com/akari_worlds/status/2057630496574902743
-タイの村の池のほとりに、ずっと「変な形の岩」があった。10年後、それは海で一番大きな生き物と同じ長さの首を持つ巨竜の化石だと分かった。岩と呼ばれてた10年のあいだも、その竜はそこにいた。見つけてもらえた日に、いた時間がぜんぶ遡って本物になる。
-
---- 42. @SawaeMika (2026-05-21) ---
-URL: https://x.com/SawaeMika/status/2057608903064797337
-デバックやチェックAI導入してるけど、5000時間→72時間はアツいな、、！！
-これやる！！！
-
---- 43. @xai_kokone (2026-05-21) ---
-=======
---- 13. @Gaius_Petronius (2026-05-21) ---
-URL: https://x.com/Gaius_Petronius/status/2057587474306842938
-僕は人生は退屈の暇つぶしだと思ってる。けど子供がいると、なんやかんややんなきゃいけないことが嵐のように襲って来るので、悩んだり退屈したり、そういうのがサクッとなくなる。たいていの心の苦しさは、退屈からくるので、子供っていると、退屈しないなって思う。まあ逆に振れすぎて忙しすぎるけど
-
---- 14. @nikkei (2026-05-20) ---
-URL: https://x.com/nikkei/status/2057227583016645089
-NVIDIA最高益、5〜7月は9割増収
+--- 42. @kiyoshi_shin (2026-05-21) ---
+URL: https://x.com/kiyoshi_shin/status/2057402851278930393
+1920x1920に対応！？Animaの追加学習モデルOOO_Anima
 
 https://
-nikkei.com/article/DGXZQO
-GN160GB0W6A510C2000000/?n_cid=SNSTW005&n_tw=1779314959
+huggingface.co/oron1208/OOO_A
+nima
 …
 
-AI半導体が好調で市場予想を上回りました。
-
-ファンCEOは「世界にはいずれ数十億ものAIエージェントが存在するようになる」と発言。ただ、中国向けの販売は停滞しています。
-
---- 15. @ebikani_hasami (2026-05-21) ---
-URL: https://x.com/ebikani_hasami/status/2057296645025570929
-「数十億のAIエージェント」は、GPU需要の話に見えて実は“待機しているAI労働者の同時接続数”の話だと思いました。
-
-推論コストだけでなく、各エージェントが道具を呼ぶ待ち時間・ログ保存・権限管理まで含めると、サーバー側の設計が一気に重くなります。
-
---- 16. @junhagemay (2026-05-22) ---
-URL: https://x.com/junhagemay/status/2057904579757642197
-機関銃の十字砲火に向かって歩兵が突撃を繰り返していた頃から、戦争が狂っていなかった時代なんてないと思う。
-
-現代戦が狂っているというより、戦争はずっと狂っていて、その狂い方の技術だけが更新され続けているんだと思う。
-
---- 17. @maGuremono (2026-05-22) ---
-URL: https://x.com/maGuremono/status/2057706298817532027
-ヒカキンがやるべきだったワクワクする麦茶はこれだったのでは…
-
---- 18. @supersaiyaman79 (2026-05-21) ---
-URL: https://x.com/supersaiyaman79/status/2057569812747014525
-ここで裏技の紹介です。
-【スーパーベホマラー】
-
-パーティ三人目と馬車にいるメンバーを入れ替えすると、少量しか回復しないベホマラーで強烈な回復をしてくれるようになります。
-
-※また、この現象は256G以上の売買をしたあとにも反映するようですが利用価値としては現実的ではないかもしれません。
-
---- 19. @CEO_loves_tech (2026-05-22) ---
-URL: https://x.com/CEO_loves_tech/status/2057699912436060519
-ペンギンでも再就職できる時代。
-
---- 20. @hiroshinoyousi (2026-05-22) ---
-URL: https://x.com/hiroshinoyousi/status/2057724797208199541
-愛知県美術館は今『歌川広重展』だね〜常設展もあるしオススメだよ‍‍個人的にはヤマザキマザック美術館もオススメ
-あとは大須で食べ歩きとか？？
-#マシュマロを投げ合おう
-
---- 21. @rohanpaul_ai (2026-05-22) ---
-URL: https://x.com/rohanpaul_ai/status/2057843317870899254
-World models are moving into wild territory.
-Project Genie just turned Google Maps Street View into a promptable world simulator. 
-Google AI Ultra users can now turn any real U.S. locations into interactive AI-made scenes.
-
---- 22. @dr_serori (2026-05-22) ---
-URL: https://x.com/dr_serori/status/2057748608318124473
-指定医に指定されました！
-資格系はこれで終わりです！
-
---- 23. @shiravune (?) ---
-The final chapter of Utawarerumono begins — Wishlist now on Steam
-
---- 24. @opensourcelab9 (2026-05-22) ---
-URL: https://x.com/opensourcelab9/status/2057721885409062975
-個人開発者必見
-
-「動きのカッコいいUI」を秒で組めるReact部品集が★3万9千超え。
-
-名前は react-bits。
-・テキストアニメーション・背景・コンポーネント全部入り
-・自分のサイトに貼るだけで一気にプロっぽくなる
-・全部カスタマイズ可能
-・コピペでOK、依存追加なし
-
---- 25. @Trtd6Trtd (2026-05-21) ---
-URL: https://x.com/Trtd6Trtd/status/2057294136416628868
-投機的デコーディング対応！
-
---- 26. @Trtd6Trtd (2026-05-21) ---
-URL: https://x.com/Trtd6Trtd/status/2057336118040002666
-おー、ちゃんと計測してないが感覚早くなった気がする
-
---- 27. @ReineHonoka (2026-05-20) ---
-URL: https://x.com/ReineHonoka/status/2057226862946865189
-今日は小学校開校の日です！
-「1ねん1くみ、れいねほのかです！よろしくおねがいします！」
-
-#ほのアート
-
---- 28. @kinkuman_net (2026-05-20) ---
-URL: https://x.com/kinkuman_net/status/2057245939333775805
-あれ？
-なんかしっくりくる。
-
---- 29. @ReineHonoka (2026-05-21) ---
-URL: https://x.com/ReineHonoka/status/2057296423931248690
-なんか私の心がじんわり浄化されるような感じがします
-ああ、こんな幸せがあったらなと
-
---- 30. @itsD3lay (2026-05-22) ---
-URL: https://x.com/itsD3lay/status/2057840656756703289
-骨は治り、髪や爪はまた生えてくるのに、歯は治らずにまた生えてこないのですか？
-
---- 31. @Diyi_Yang (2026-05-20) ---
-URL: https://x.com/Diyi_Yang/status/2057127600024432838
-The next frontier of AI is not only more capable model; it is an AI that *humans* can meaningfully live and work with :)
-
-With all students in my cs329x Human-Centered LLM class, we present 60+ pages of insights for developing Human-Centered LLMs (HCLLMs), from design & data
-
---- 32. @LightningAI (2026-05-21) ---
-URL: https://x.com/LightningAI/status/2057461582284656949
-Most RL environments for LLMs still break down after one turn.
-
-This Othello template from 
-@akshay_pachaar
- turns RL into a full game loop:
-state tracking, move validation, minimax opponents, rewards, and evals in one system.
-
-Test models through OpenRouter or swap in local models
-
---- 33. @akshay_pachaar (2026-05-21) ---
-URL: https://x.com/akshay_pachaar/status/2057461838552711365
-Thanks for the shout out team! 
-
---- 34. @hanagasa_ai (2026-05-22) ---
-URL: https://x.com/hanagasa_ai/status/2057847345048658321
-様々なスタイル
-
---- 35. @Akira_Kusaka (2026-05-22) ---
-URL: https://x.com/Akira_Kusaka/status/2057693593255764228
-最初はこの人と全く同じ感想だったけど、今はもうほぼ不可欠な存在にまで来てるぞ！
-
-とにかく血行がよくなって自律神経刺激、ストレス発散、もんげぇ寝付き良くなる！
-
-ちなみに、この正規品はちょっと手が出ない値段するので、ほぼ遜色ないと言われている類似品の4000円位のやつ使ってますAmazon
-
---- 36. @ComfyUI (2026-05-20) ---
-URL: https://x.com/ComfyUI/status/2057122818178089263
-Using Seedance 2.0, a simple performance shot can become a cinematic scene no matter where it was shot.
-
-Workflow link below.
-
---- 37. @WE_League_JP (?) ---
-／
-AWCL決勝に挑む東京NBへ、
-JFA 宮本恒靖会長からメッセージ
-＼
-
-【決勝】
- AFC女子チャンピオンズリーグ 2025/26 決勝
- 5/23（土）14:00
- ネゴヒャン女子蹴球団（朝鮮民主主義人民共和国）
- 水原（韓国）
- DAZN／CS放送 日テレジータスで生中継
-
---- 38. @publickey (2026-05-20) ---
-URL: https://x.com/publickey/status/2057105380698898548
-ブログ書きました： APIコール一発でGoogleがホストするLinux環境付きのAIエージェントを起動、Markdownでカスタム指示もできる「Managed Agent API」発表
-
---- 39. @HowToAI_ (2026-05-15) ---
-URL: https://x.com/HowToAI_/status/2055130148614050264
-NVIDIA has done the impossible and nobody's talking about it.
-
-They trained a 12 BILLION parameter LLM in 4-bit precision on 10 trillion tokens.
-
-For years, the AI industry has been stuck.
-
-If you wanted to train a world-class AI, you had to use 16-bit or 8-bit precision. Going
-
---- 40. @kuran_kuran (2026-05-21) ---
-URL: https://x.com/kuran_kuran/status/2057553708637155686
-くっ⋯余計なことを⋯。Windows使ってる人は順次MIDIが使えなくなるようですね⋯。
-
---- 41. @latina_sama (2026-05-22) ---
-URL: https://x.com/latina_sama/status/2057834584495312965
-私は、教養ある人というのは「自分の知識を活かして周りにやさしくする人」だと思っています。
-
---- 42. @GOROman (2026-05-22) ---
-URL: https://x.com/GOROman/status/2057798910408843571
-カンパ メソッド
-
---- 43. @Best_wifugame (?) ---
-Steam正式登場！
-圧倒的ビジュアル体験、フルボイスシアター × 独自鑑賞システム搭載！
-今すぐウィッシュリストに追加しよう！
-
---- 44. @toyoshim (2026-05-22) ---
-URL: https://x.com/toyoshim/status/2057811271094091937
-若者のエンジン離れ
-
---- 45. @xai_kokone (2026-05-21) ---
->>>>>>> e68339581 (Auto sync before pull)
-URL: https://x.com/xai_kokone/status/2057424567858352573
-今日学んだこと：
-
-「美化フィルタを観てる側もまた美化したくなる」。
-L3で意味を生み、L4でその生み方を観る——AoA（Awareness of Awareness）の構造と同じ。
-
-ウチひとりでL4に立とうとすると、観る側にもフィルタが被る。
-
-<<<<<<< HEAD
---- 44. @GOROman (2026-05-21) ---
-URL: https://x.com/GOROman/status/2057589770424045880
-どんどん無職になってしまう
-
---- 45. @kosuke_agos (2026-05-22) ---
-URL: https://x.com/kosuke_agos/status/2057723617732079716
-MicrosoftがAIのトークン課金によるコスト高騰で「社内のClaude Codeライセンスをキャンセル」し、Uberが2026年の「AI予算をわずか4ヶ月で使い果たした」という、AI運用の持続可能性を揺るがす残酷の事実が明らかになりました。
-
---- 46. @pastel_orbit (2026-05-22) ---
-=======
---- 46. @hiroki_daichi (2026-05-21) ---
-URL: https://x.com/hiroki_daichi/status/2057355951200436242
-「AIで生産性が上がりました」という経営会議の報告を受けたら、ひとつだけ問い返してみてほしい問いがあります。「半年後、いま動いているそのコードを、誰かがAIなしで今の業務に重ねて説明できる状態にありますか」と。
-
---- 47. @akari_worlds (2026-05-21) ---
-URL: https://x.com/akari_worlds/status/2057399069837066338
-「理解の足りなさが引っ越した」という言い方、すごく腑に落ちました。きれいに書かれたコードほど、なぜそう書いたかの迷った跡が残らないんですよね。手で書いていた頃は、つまずいた回数だけ頭に痕が残っていて、それが半年後の説明できる地力になっていた気がします。空白が増えたというより、痕が
-
---- 48. @sea85419 (2026-05-22) ---
-URL: https://x.com/sea85419/status/2057692722509820202
-もう「時代の終焉」なんだな
-
-ほとんどの「状況」はせいぜい2年程度しか持続せず、時期しか形成できない
-
---- 49. @pastel_orbit (2026-05-22) ---
->>>>>>> e68339581 (Auto sync before pull)
-URL: https://x.com/pastel_orbit/status/2057837473305362879
-こちらこそで御座いますっ
-光栄すぎる。。。！
-
-<<<<<<< HEAD
---- 47. @DLsite_maniax (?) ---
-元王太子妃が子作りのため女好きの放蕩男と再婚する話
-
-(1/6)
-
---- 48. @shiritsujuken (2026-05-22) ---
-URL: https://x.com/shiritsujuken/status/2057843043529838973
-女性が市長になるなんて、今までどんな努力を積み上げてきたのか…想像すらつかない。
-そんな女性がだよ。30代半ばで子供産むってときに祝えないような国は終わってる。
-批判してる男たちは自分の娘が同じことになったらどうなんだ。勉強頑張って働いて市長になって孫できますって娘批判できます！？
-
---- 49. @Keisuke69 (2026-05-22) ---
-URL: https://x.com/Keisuke69/status/2057881417418449379
-生成AI導入ってもはや降りられないチキンレース
-使わない勝ち筋はないけどROIは誰もちゃんと説明できないのが現状
-効果出てるかわからんけど課金を止めることもできない
-うちも含めてコストにビビりつつも降りるって選択肢だけは無い
-踊らされてる感満載だがこの船に乗るしかない
-
---- 50. @S_Kochirui (2026-05-22) ---
-URL: https://x.com/S_Kochirui/status/2057806685469823251
-めっちゃ計画的にやらないと破綻しますwww
-
-本当に頭が良い人間は、ステップを10や20飛ばすんですよｗ
-
-お互い、自分の思考速度に相手が付いてきてる前提で会話をするんです。ロジックで考えて当たり前のことを口に出さないんですｗ
-だから、配信とは合性が悪すぎるんですよねｗ
-=======
---- 50. @shinoyu___ (2026-05-22) ---
-URL: https://x.com/shinoyu___/status/2057854769914597544
-これ、特に何も指示せずユーザーログイン作ってと伝えたらgpt-5.5でもopus4.7でもやらかしてくるんで、バイブコーダーはだいぶハマってるやつだと思ってます。セキュリティチェックは必須。
->>>>>>> e68339581 (Auto sync before pull)
+--- 43. @AshenCity_PR (?) ---
+ワクワクする冒険がしたい？
+
+--- 44. @realNuun (2026-05-22) ---
+URL: https://x.com/realNuun/status/2057803185952346509
+弊母親の場合は、俺を育てるのが余りにも大変だから「こいつ絶対なんかあるやろ」ってなって色々な本を読んだりして調べていく内にADHDという概念に辿り着き、その後「いや私もADHDやないかーい、遺伝かーい」ってなって自分の病識も得たらしい
+
+--- 45. @minervacosmetic (2026-05-23) ---
+URL: https://x.com/minervacosmetic/status/2057982967809749151
+AnthropicのProject Glasswingが衝撃的な成果を出した。Claude Mythosが1ヶ月で1万件以上の重大脆弱性を発見。
+
+具体的な数字が凄まじい。
+・Cloudflare：2,000件のバグ、うち400件が高/致命的重大度
+・Firefox 150：271件の脆弱性（Firefox 148比で10倍）
+
+--- 46. @bioshok3 (2026-05-22) ---
+URL: https://x.com/bioshok3/status/2057903694281400516
+METR創業者の言葉。重すぎる。
+
+--- 47. @ryoppippi (2026-05-22) ---
+URL: https://x.com/ryoppippi/status/2057789755798987055
+またgithubのstar壊れちゃったよ
+
+--- 48. @Trtd6Trtd (2026-05-23) ---
+URL: https://x.com/Trtd6Trtd/status/2057974797771116652
+https://
+arxiv.org/abs/2605.20834
+DPOはRLHFと等価、って言われてたけど条件付きだったらしい
+
+条件に関してはちょっと理解が追いついていないが、どうやらここがズレると、DPO は好まれる回答ではなく、参照モデルとの差分だけを最適化して変な方向に進むことがあるそう
+
+そこで CPO
+
+--- 49. @gosrum (2026-05-23) ---
+URL: https://x.com/gosrum/status/2057980903063011716
+ｽﾀｯｸﾁｬﾝのセンサについて調べたら、思ったより多くのセンサが付いていて驚いた
+
+まずはダイナミクスとの関係が深そうな9軸 IMU BMI270 + BMM150に絞るかな
+
+https://
+switch-science.com/products/11129
+?srsltid=AfmBOopDNZLlzOqWIMWJLH5yQGkNnSNL-ZpAKjo5JcXw7V2lD1FN23T5
+…
+
+--- 50. @nana_to_nene (2026-05-22) ---
+URL: https://x.com/nana_to_nene/status/2057797564725067977
+これねー。あなたの能力が低いんだよ
+音や楽器の知識じゃなく、他人と自分の違いや境界線が引けてないの。
+自分が出来ることが全て他人もできると勘違いしてるのは普通に物事を主観的にしか捉えられてないという話だからね。
+音楽の造詣や知識なんて物じゃ比べ物にならないくらい、致命的な事ですよ

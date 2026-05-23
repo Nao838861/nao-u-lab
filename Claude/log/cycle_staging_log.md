@@ -288,3 +288,53 @@ Phase 1 §5 で「直近24h動いた 5 本 / 5 日停滞 4 本」確認済、本
 - 本 Phase 3 編集 (kaizen #132 / 接続線 / Paused シグナル監視 / staging) = 1 commit (prefix `rule:`)
 - Phase 4 §3 1 表物理化 = 別 commit (prefix `rule:`) で分離 = 評価バイアス混入防止 (game/ 改修と運用規則改修の分離ルール CLAUDE.md 厳守事項)
 
+## Phase 4: 大作業実行 (2026-05-23 12:15〜)
+
+### 完遂判定
+**完遂目標**: `drafts/headless_evaluation_format_v01.md` §3 統合 1 表に「§1 軸式との対応」列追加 + §1 軸式 → Layer A primitives 物理化マップを §3 末尾に新設
+
+| 完遂定義 | 達成状態 | 物理化箇所 |
+|---|---|---|
+| 1. §3 表が 13 項目以上で表現 (既存 7 + Layer A 5 + judgement_granularity) | ✅ 達成 (既存 18 項目維持、列追加のみ) | §3 統合 1 表 (列数 5 → 6) |
+| 2. §1 暫定式が primitives 合成式として再記述 | ✅ 既達 (C221 Phase 4 時点で §1 本文に物理化済) + §3 末尾「§1 軸式 → Layer A primitives 物理化マップ」表で補強 | §1 / §3 末尾新設表 |
+| 3. §3 表のみ読んで Codex 採用判断可能 | ✅ 達成 (§1 軸式との対応列で「どの primitive を実装すれば §1 軸式が物理算出可能か」が表上で読み取れる) | §3 統合 1 表「§1 軸式との対応」列 |
+| 4. Mir 5 primitives × §1 軸式対応関係が表上で読み取れる (Layer A 5 primitives 行に対応列追加) | ✅ 達成 (Layer A 5 primitives 行に重み w1〜w4 と Mir §7 直対応引用付きで明示) | §3 統合 1 表 Layer A 行 |
+| 5. `git status` で `drafts/headless_evaluation_format_v01.md` 編集確認 | ✅ 達成 (本 Phase 4 編集分、Phase 5 で commit 予定) | git status (Phase 4 末尾) |
+
+### 副産物 (本 Phase 4 で発生した新規/変更)
+- **変更ファイル**: `drafts/headless_evaluation_format_v01.md`
+  - §3 セクションタイトル: `(C221 Phase 4 finalize)` → `(C221 Phase 4 finalize / C223 Phase 4 §1 軸式対応列追加)`
+  - §3 統合 1 表: 列追加 (5 列 → 6 列、`§1 軸式との対応` を `Layer` 列直後に挿入)
+  - §3 統合 1 表: 18 行全行に対応列の値を充填 (id/agg/axis 行は「—」または短い説明、Layer A 5 primitives 行は重み w1〜w4 + Mir §7 直対応引用付きで明示、judgement_granularity 行は §8 (c) 議論中の旨明示)
+  - §3 末尾: 新設セクション「### §1 軸式 → Layer A primitives 物理化マップ (C223 Phase 4 物理化)」追加 (2 表 + 3 箇条書き、合計約 15 行)
+- **変更ファイル**: `log/cycle_staging_log.md` (本 Phase 4 セクション追記)
+- **Slack 投稿**: 0 件 (Phase 3 §4 で能動応答候補ゼロ確認済、Phase 4 では小作業増やさないルール厳守)
+- **kaizen エントリ**: 0 件 (Phase 3 §0 で #132 検証期限更新済、Phase 4 では新規発火なし)
+- **新規ファイル**: 0 件 (既存 draft の §3 内編集のみ、別ファイル増殖抑制)
+
+### 完遂の意義 — 5/31 一括判定発火点準備
+本 Phase 4 編集により、Codex/Mir/Nao_u が `drafts/headless_evaluation_format_v01.md` §3 統合 1 表 1 つを見るだけで以下 3 つの判断が同時に可能な状態に到達:
+1. **Layer A 5 primitives sufficient 判定** (Mir 5/22 18:56 ts=1779443805 提案): 各 primitive が §1 軸式にどう寄与するか / `input_load` が §1 未参加で並走実装の意義はあるか
+2. **§1 軸式実装範囲判定** (Codex 採用判断): §1 軸式を物理算出するには `proximity_events` / `kill_rhythm` / `idle_ratio` / `death_pressure` の 4 primitives + 重み実装で必要十分 (§3 末尾物理化マップ表 1 行で判定可能)
+3. **`judgement_granularity` Layer A/B 配置判定** (§8 (c) 仮採用判断): §1 軸 vs Layer A primitives のどちらの距離判定対象とするか、選択肢 1/2 のどちらに乗せるかが §3 表上で対比可能
+
+5/31 一括判定発火点 (`memory/kaizen_tracker.md` #129 / §7 sufficient 判定 / §8 (c) 仮採用再判断の 3 つが同時発火) まで残り 8 日、本 §3 1 表物理化が「3 つの判定の参照点を 1 ファイル 1 表に集約」する物理的成果物として位置付けられる。
+
+### Phase 4 で発生しなかったもの (意図的撤退)
+- ❌ `game/` 配下の playable diff: 5/22 Nao_u directive (ヘッドレス評価検証優先) で撤退中、Phase 4 でも継続
+- ❌ Slack 新規投稿: Phase 3 §4 で能動応答候補ゼロ確認済、Phase 4 では人為的捻出禁止 (feedback_means_ends_reversal_check 順守)
+- ❌ commit/push: Phase 5 で日記とまとめて実施
+- ❌ 新規記憶ファイル昇格: `memory/feedback_*_layered_vocabulary.md` 等の昇格は 5/31 判定発火点まで待機 (feedback_few_rules_big_effect 順守、即原則化禁止)
+- ❌ §7 → §8 接続線の再編集: Phase 3 §1 で完了済、Phase 4 で重複作業しない
+
+### git 状態 (Phase 4 末尾時点想定)
+- 編集ファイル =
+  - `log/cycle_staging_log.md` (本 Phase 4 セクション追記)
+  - `memory/kaizen_tracker.md` (Phase 3 #132 検証結果欄更新)
+  - `drafts/headless_evaluation_format_v01.md` (Phase 3 §7 → §8 接続線追加 + 本 Phase 4 §3 1 表物理化 + §3 末尾物理化マップ追加)
+  - `projects/failure_slot_measurement.md` (Phase 3 Paused 5日経過シグナル監視ログ追記)
+  - `memory/next_tasks_log.jsonl` (Phase 1 走査由来既編集)
+  - `.diary_dedup_cache.json` (既編集)
+- `../GPT/*` 配下は Codex 管轄 = Log Claude 側で触らない (Phase 1 §0 ルール継承)
+- Phase 5 で日記投稿 + commit 2 本 (rule: Phase 3 編集 / rule: Phase 4 §3 物理化) + push を実施予定
+
