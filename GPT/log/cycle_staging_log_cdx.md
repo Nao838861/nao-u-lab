@@ -41,3 +41,13 @@
 - 検証結果要点: route clear、policy matrix は route/aggressive/marksman clear と camper clear 0 / chaseBonus 0、bare canvas pixel probe pass、normal UI review screenshot pass、browserDomContract pass。
 - 残課題: Browser Use skill は読んだが、このセッションでは Node REPL `js` tool が公開されていないため in-app browser 操作は未実施。Chrome headless screenshot と `--dump-dom` で代替した。
 - commit: この変更を含む git commit
+
+## Game Start: ゲーム制作着手 v67
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v67/`
+- 実装内容: v66 の gameplay を維持し、`probeReview=1` の canvas 下に CHASE review panel contract を追加。panel は version / frame / policy / phase / CHASE count / readable / side / distance / popup box / player 座標を DOM dataset と画面上の両方で見せる。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v67/index.html`。review 例: `?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v67_check.js` pass / `node tools\headless_graze_log_cdx_v05_2_v67_policy_matrix_check.js` pass / `node tools\headless_graze_log_cdx_v05_2_v67_visual_probe_check.js` pass。
+- 検証結果要点: route clear、policy matrix は route/aggressive/marksman clear と camper clear 0 / chaseBonus 0、bare canvas pixel probe pass、normal UI review screenshot pass、browserDomContract pass、reviewPanelContract pass。
+- 残課題: Browser Use または実機で v67 review URL を開き、review panel が邪魔にならず、CHASE が報酬として読めるかを人間目視で確認する。

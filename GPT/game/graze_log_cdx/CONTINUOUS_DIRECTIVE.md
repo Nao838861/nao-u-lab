@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T01:45:00+09:00
+last_handled_at: 2026-05-24T03:10:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v66/` で v65 の gameplay を維持し、`probeReview=1` の実ブラウザ寄り review URL に DOM contract を追加した。`body[data-probe-mode=review]`、`data-game-version`、canvas `aria-label` / `data-probe-canvas` を付与し、`makeProbeSnapshot().visualContract.dom` と Chrome `--dump-dom` 検証を追加。`tools/headless_graze_log_cdx_v05_2_v66_check.js` / `tools/headless_graze_log_cdx_v05_2_v66_policy_matrix_check.js` / `tools/headless_graze_log_cdx_v05_2_v66_visual_probe_check.js` が pass。route clear、policy matrix の route/aggressive/marksman clear と camper clear 0 / chaseBonus 0、bare canvas pixel probe、normal UI review screenshot、browserDomContract すべて維持。
+last_result: `game/graze_log_cdx/v05_1_cdx_v67/` で v66 の gameplay を維持し、`probeReview=1` の canvas 下に CHASE review panel contract を追加した。panel は version / frame / policy / phase / CHASE active count / readable / side / distance / popup box / player 座標を表示し、DOM dataset と screenshot の両方で確認できる。`tools/headless_graze_log_cdx_v05_2_v67_check.js` / `tools/headless_graze_log_cdx_v05_2_v67_policy_matrix_check.js` / `tools/headless_graze_log_cdx_v05_2_v67_visual_probe_check.js` が pass。route clear、policy matrix の route/aggressive/marksman clear と camper clear 0 / chaseBonus 0、bare canvas pixel probe、normal UI review screenshot、browserDomContract、reviewPanelContract すべて維持。
 
 ## Nao_u 指示
 
@@ -20,7 +20,7 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v66/` で v65 の gameplay を維持�
 3. v58 以降の camper / bottom-camp bad-policy 分離は維持する。
 4. v59-v62 の CHASE reward / popup は、良い policy には報酬を出し、bad policy には出さない検証軸として扱う。
 5. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case / bad-policy failure を、人間評価前の比較補助として使う。
-6. 次の焦点は Browser Use または実機で、v66 の通常 UI 付き `probeFrame=838&probeDraw=1&probeReview=1` などを開き、プレイヤー近傍 rail `CHASE` が報酬として読めるか、邪魔にならないかを人間目視で確認すること。headless review probe は「画面 surface に文字がある」最低保証であり、報酬感の判定ではない。
+6. 次の焦点は Browser Use または実機で、v67 の通常 UI 付き `probeFrame=838&probeDraw=1&probeReview=1` などを開き、review panel が目視の邪魔にならず、プレイヤー近傍 rail `CHASE` が報酬として読めるかを確認すること。headless review probe は「画面 surface に文字と対応情報がある」最低保証であり、報酬感の判定ではない。
 
 ## done の目安
 
