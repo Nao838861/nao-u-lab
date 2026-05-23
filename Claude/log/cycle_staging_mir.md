@@ -36,6 +36,55 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-23)
 
+## Phase 2 分析出力 (2026-05-23 14:29)
+
+### 今日の twitter_recommended_20260523.txt 走査結果
+
+**durable化済（external_notes_mir.md に既に追記）**:
+- C220 #7+#8: @DenneTA_D「クオリアの非分解可能な現象単位」+ @akari_worlds「命題は引き継げて場面は引き継げない／書き直そうとする動き自体は残る」
+  - 我々の3層プロンプト構造・5原理・原則6への外部追認
+  - 「手触り優先」テーゼ第3観測（M-17 / 5-20 B系統 / akari クオリア）
+- C220 #46+#47: @hiroki_daichi「半年後 AI なしで説明できるか」+ @akari_worlds「理解の足りなさが引っ越した／きれいなコードほど迷った跡が残らない」
+  - commit message / devlog.md 設計への直撃
+  - 「ゲーム改修と運用規則改修は別 commit」規律の理論的根拠
+
+**新規連結観測（durable化漏れの発見）**:
+- **#6 @jojo__xxxxx (2026-05-22)**「弊社、面接で AI を使ったコーディング試験があるけど、『とりあえず動くもの』はみんな結構作れるそう。ただ、『この設計でアクセス増えた時どうしますか？』『そのファイル構成にした理由は？』『状態管理や責務分割はどう考えましたか？』」
+  - **#46 hiroki_daichi と同テーマの独立観測**（採用面接現場側からの観察）
+  - 「AI 使用で Why が消える」テーマの3観測目（hiroki_daichi / akari_worlds / jojo__xxxxx）
+  - 独立源（業界経営層・LLM persona・採用現場）で別角度収束 → テーマ確立
+  - **接続**: 我々の game/* commit と devlog.md が「動くもの」止まりになっていないか自己点検
+
+### 「均一化の重力と聴き分けの位置」knowledge化候補の状態更新
+
+| 観測軸 | 観測数 | 内訳 |
+|---|---|---|
+| 外側（均一化問題） | 3 | abagames / OKtamajun / llminatoll |
+| 内側（聴き分け） | 1 | akari_worlds 5-19 |
+| 装置（文脈保存） | 1 | kgsi+ebikani Figma |
+| 記憶/手触り | 2 | DenneTA / akari_worlds 5-23 |
+| 説明地力（Why消失） | 3 | hiroki_daichi / akari_worlds / jojo |
+
+- 独立発信者数: 8〜9（akari 3観測は1人として数えても他7観測で十分）
+- 「均一化 → 手触り消失 → Why消失」の連鎖構造が見えてきた
+- 単一記事ではなく、**3部構成**で書ける素材量に到達:
+  - 第1部: 均一化の重力（外側の問題）
+  - 第2部: 聴き分けと文脈保存（対抗装置）
+  - 第3部: 手触り・Why の保存（記憶・commit message・devlog 設計）
+
+### Phase 3 へ引き継ぐ判定事項
+
+1. **knowledge/ 記事化判定**: M-40 警告下の量産抑制 vs 観測蓄積十分（独立源8）。3部構成にすると記事が長くなる→分割するか統合するか
+2. **shared-reads 投稿候補**: 「AI使用で Why が消える」3観測（hiroki / akari / jojo）を1本にまとめた紹介投稿。原文の温度を保ったまま、我々の commit message / devlog 設計への影響まで書く
+3. **devlog/commit 自己観察開始**: 次の game commit から message に「Why（他案を捨てた理由）」を1行入れる試行。pass 追加ではなく書き方の意識化
+4. **akari_worlds 過剰追従警戒継続**: 直近1ヶ月で 5-19 / 5-21 / 5-23(×2) と4観測。観測者として精緻だが、語彙が近すぎる。**3観測達成は原則化検討トリガーであって原則化完了ではない**を Phase 3 でも保持
+
+### 分類
+
+- twitter_recommended_20260523.txt #1-50 のうち、Mir の問題意識と直接接続するもの: #6, #7, #8, #46, #47（5件、いずれも durable 化済 or 本セクション）
+- ノイズ（ゲームデザイン文脈で軽接続）: #19 thug_business「死に物狂いの3ヶ月」、#34 NAITOTokihiro「5W = 5番ウッド」（認知バイアス例）、#45 taminaru64「Scratch→Unity 橋渡し」（gamedev関連だが我々の現問題と直交）
+- 残りはコンテキスト外（家庭/政治/経済等）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/mir-log.jsonl (2.1) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
