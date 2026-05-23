@@ -63,6 +63,13 @@
     return Math.atan2(by - ay, bx - ax);
   }
 
+  function angleDelta(to, from) {
+    let d = to - from;
+    while (d > Math.PI) d -= Math.PI * 2;
+    while (d < -Math.PI) d += Math.PI * 2;
+    return d;
+  }
+
   function fromAngle(x, y, speed, angle, extra) {
     return Object.assign({
       x,
@@ -303,10 +310,10 @@
         intent: "left orange escort center bait",
       });
     }
-    for (let i = 0; i < 5; i++) {
-      add(12 * FPS + 8 + i * 13, "scout", "scoutRail", {
-        lane: [80, 112, 144, 176, 208][i],
-        side: i % 2 === 0 ? -1 : 1,
+    for (let i = 0; i < 6; i++) {
+      add(11 * FPS + 40 + i * 12, "scout", "scoutRail", {
+        lane: [80, 112, 144, 176, 208, 240][i],
+        side: -1,
         hp: 12,
         radius: 12,
         score: 80,
@@ -379,9 +386,9 @@
         intent: "relief harvest ribbon",
       });
     }
-    for (let i = 0; i < 5; i++) {
-      add(23 * FPS + 42 + i * 13, "scout", "softDrop", {
-        lane: [54, 86, 118, 426, 458][i],
+    for (let i = 0; i < 6; i++) {
+      add(23 * FPS + 36 + i * 12, "scout", "softDrop", {
+        lane: [54, 86, 118, 402, 434, 466][i],
         side: i < 3 ? -1 : 1,
         hp: 10,
         radius: 12,
@@ -395,7 +402,7 @@
     add(24 * FPS + 20, "carrier", "carrierWake", {
       lane: 240,
       side: 1,
-      hp: 72,
+      hp: 96,
       radius: 18,
       score: 320,
       charge: 18,
@@ -404,7 +411,7 @@
     add(28 * FPS + 40, "carrier", "carrierWake", {
       lane: 96,
       side: -1,
-      hp: 102,
+      hp: 138,
       radius: 18,
       score: 330,
       charge: 16,
@@ -413,7 +420,7 @@
     add(32 * FPS + 12, "carrier", "carrierWake", {
       lane: 384,
       side: 1,
-      hp: 102,
+      hp: 138,
       radius: 18,
       score: 330,
       charge: 16,
@@ -432,8 +439,8 @@
       });
     }
     for (let i = 0; i < 7; i++) {
-      add(28 * FPS + 32 + i * 14, "scout", "scoutRail", {
-        lane: [168, 200, 232, 264, 296, 120, 152][i],
+      add(28 * FPS + 28 + i * 13, "scout", "scoutRail", {
+        lane: [168, 200, 232, 264, 296, 328, 360][i],
         side: -1,
         hp: 11,
         radius: 12,
@@ -445,7 +452,7 @@
       });
     }
     for (let i = 0; i < 4; i++) {
-      add(31 * FPS + 4 + i * 24, "lance", "sideLance", {
+      add(31 * FPS + 56 + i * 24, "lance", "sideLance", {
         side: 1,
         lane: [298, 270, 242, 214][i],
         hp: 14,
@@ -456,10 +463,10 @@
         intent: "carrier setup cross",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(30 * FPS + 4 + i * 16, "scout", "softDrop", {
-        lane: [72, 112, 308, 448][i],
-        side: i < 2 ? -1 : 1,
+    for (let i = 0; i < 6; i++) {
+      add(30 * FPS + 4 + i * 12, "scout", "softDrop", {
+        lane: [72, 104, 136, 296, 328, 456][i],
+        side: i < 3 ? -1 : 1,
         hp: 10,
         radius: 12,
         score: 80,
@@ -482,9 +489,9 @@
         intent: "carrier setup harvest connector",
       });
     }
-    for (let i = 0; i < 5; i++) {
-      add(35 * FPS + 58 + i * 15, "scout", "softDrop", {
-        lane: [228, 268, 308, 428, 468][i],
+    for (let i = 0; i < 6; i++) {
+      add(35 * FPS + 52 + i * 13, "scout", "softDrop", {
+        lane: [216, 248, 280, 400, 432, 464][i],
         side: 1,
         hp: 10,
         radius: 12,
@@ -499,7 +506,7 @@
       add(36 * FPS + i * 116, "carrier", "carrierWake", {
         lane: [120, 360, 240][i],
         side: i % 2 === 0 ? -1 : 1,
-        hp: 78,
+        hp: 118,
         radius: 18,
         score: 360,
         charge: 16,
@@ -723,6 +730,7 @@
       p.invuln = Math.max(0, p.invuln - 1);
       p.shotCd = Math.max(0, p.shotCd - 1);
       p.pulseCd = Math.max(0, p.pulseCd - 1);
+      p.charge = clamp(p.charge + 0.1, 0, 100);
 
       if (p.shotCd <= 0) {
         p.shotCd = 5;
@@ -731,15 +739,17 @@
         this.stats.shotsFired += 2;
       }
 
-      if (input.pulse && p.charge >= 65 && p.pulseCd <= 0) {
-        p.charge -= 65;
+      if (input.pulse && p.charge >= 58 && p.pulseCd <= 0) {
+        p.charge -= 58;
         p.pulseCd = 28;
         this.pulseUses += 1;
         let cleared = 0;
         const kept = [];
+        const converted = [];
         for (const b of this.enemyBullets) {
           if (Math.hypot(b.x - p.x, b.y - p.y) <= 104) {
             cleared += 1;
+            converted.push(b);
             this.effects.push({ x: b.x, y: b.y, life: 18, max: 18, kind: "spark", color: COLORS.pulse });
           } else {
             kept.push(b);
@@ -747,12 +757,22 @@
         }
         this.enemyBullets = kept;
         this.stats.pulsesCleared += cleared;
-        const shards = clamp(6 + cleared * 2, 8, 26);
-        for (let i = 0; i < shards; i++) {
-          const target = this.nearestEnemy(p.x, p.y);
-          const base = target ? angleTo(p.x, p.y, target.x, target.y) : -Math.PI / 2;
-          const spread = (i - (shards - 1) / 2) * 0.035;
-          this.playerShots.push(fromAngle(p.x, p.y, 8.2, base + spread, { r: 3.5, damage: 12, kind: "pulse" }));
+        const missiles = converted.length ? converted.slice(0, 28) : [{ x: p.x, y: p.y - 26 }];
+        for (let i = 0; i < missiles.length; i++) {
+          const source = missiles[i];
+          const target = this.nearestEnemy(source.x, source.y);
+          const base = target ? angleTo(source.x, source.y, target.x, target.y) : -Math.PI / 2;
+          const spread = (i - (missiles.length - 1) / 2) * 0.055;
+          const shot = fromAngle(source.x, source.y, 5.8, base + spread, {
+            r: 4.2,
+            damage: 18,
+            kind: "pulse",
+            life: 130,
+            turn: 0.085,
+            accel: 0.055,
+            maxSpeed: 8.4,
+          });
+          this.playerShots.push(shot);
         }
         this.effects.push({ x: p.x, y: p.y, life: 22, max: 22, kind: "ring", color: COLORS.pulse });
       }
@@ -797,18 +817,18 @@
       e.fireCd -= 1;
       if (e.fireSkip && e.fireSkip > 1 && e.id % e.fireSkip !== 0) return;
       if (e.type === "scout" && e.fireCd <= 0) {
-        e.fireCd = 96;
+        e.fireCd = 90;
         this.enemyFire(e, false, 2.2);
       } else if (e.type === "lance" && e.fireCd <= 0) {
-        e.fireCd = e.route === "sideArc" ? 86 : 92;
+        e.fireCd = e.route === "sideArc" ? 78 : 84;
         this.enemyFire(e, false, 2.25);
       } else if (e.type === "diver" && e.fireCd <= 0) {
-        e.fireCd = 112;
+        e.fireCd = 96;
         this.enemyFire(e, false, 2.55);
       } else if (e.type === "carrier" && e.fireCd <= 0) {
-        e.fireCd = 72;
-        for (let i = 0; i < 5; i++) {
-          const a = -Math.PI * 0.85 + i * (Math.PI * 0.7 / 4);
+        e.fireCd = 58;
+        for (let i = 0; i < 7; i++) {
+          const a = -Math.PI * 0.9 + i * (Math.PI * 0.8 / 6);
           this.enemyBullets.push(fromAngle(e.x, e.y + 8, 1.95, a, { r: 4, life: 260, color: COLORS.enemyBullet2 }));
         }
       } else if (e.type === "boss" && e.fireCd <= 0) {
@@ -849,11 +869,35 @@
     updateShots() {
       const kept = [];
       for (const s of this.playerShots) {
+        if (s.kind === "pulse") this.steerPulseShot(s);
         s.x += s.vx;
         s.y += s.vy;
-        if (s.x > -20 && s.x < W + 20 && s.y > -30 && s.y < H + 30) kept.push(s);
+        if (s.life != null) s.life -= 1;
+        if ((s.life == null || s.life > 0) && s.x > -30 && s.x < W + 30 && s.y > -60 && s.y < H + 40) kept.push(s);
       }
       this.playerShots = kept;
+    }
+
+    steerPulseShot(s) {
+      const target = this.nearestEnemy(s.x, s.y);
+      if (!target) return;
+      const speed = Math.hypot(s.vx, s.vy) || 1;
+      const leadFrames = clamp(Math.hypot(target.x - s.x, target.y - s.y) / Math.max(1, speed), 4, 28) * 0.45;
+      let tx = target.x;
+      let ty = target.y;
+      if (target.type !== "boss") {
+        const future = routePosition(target, this.frame + leadFrames);
+        if (future.active) {
+          tx = future.x;
+          ty = future.y;
+        }
+      }
+      const desired = angleTo(s.x, s.y, tx, ty);
+      const current = Math.atan2(s.vy, s.vx);
+      const next = current + clamp(angleDelta(desired, current), -(s.turn || 0.08), s.turn || 0.08);
+      const nextSpeed = clamp(speed + (s.accel || 0), 4.8, s.maxSpeed || 8.2);
+      s.vx = Math.cos(next) * nextSpeed;
+      s.vy = Math.sin(next) * nextSpeed;
     }
 
     updateBullets() {
@@ -868,7 +912,7 @@
           const key = Math.floor(this.frame / 10) + ":" + Math.floor(b.x / 12) + ":" + Math.floor(b.y / 12);
           if (!this.grazed.has(key)) {
             this.grazed.add(key);
-            p.charge = clamp(p.charge + 1.2, 0, 100);
+            p.charge = clamp(p.charge + 0.15, 0, 100);
           }
         }
         if (b.life > 0 && b.x > -40 && b.x < W + 40 && b.y > -50 && b.y < H + 50) kept.push(b);
