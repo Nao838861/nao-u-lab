@@ -28,7 +28,7 @@ const maxDamage = Math.max(...results.map((r) => r.damageTaken));
 console.log(JSON.stringify({ results, idealTTK: ttk }, null, 2));
 
 const failures = [];
-if (clearCount < 2) failures.push(`expected at least 2 policies to clear, got ${clearCount}`);
+if (clearCount < policies.length) failures.push(`expected all policies to clear, got ${clearCount}/${policies.length}`);
 if (ttk.normal < 12 || ttk.normal > 22) failures.push(`normal ideal boss TTK out of target: ${ttk.normal.toFixed(2)}s`);
 if (ttk.pulseBurst < 9 || ttk.pulseBurst > 16) failures.push(`pulse burst boss TTK out of target: ${ttk.pulseBurst.toFixed(2)}s`);
 if (minBossDuration && minBossDuration < 8) failures.push(`headless boss duration too short: ${minBossDuration.toFixed(2)}s`);

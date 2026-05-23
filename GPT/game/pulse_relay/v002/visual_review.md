@@ -49,4 +49,20 @@ headless の数値では拾いにくい、敵の意図、射線、掃け方、�
 
 - 音がないため、撃破や pulse の手応えは視覚だけに依存する。
 - route sample と headless の確認であり、人間の実ブラウザ長時間プレイとは別軸の確認が残る。
-- `minGap: 0.08` は攻めた密度なので、実画面では一部の敵が窮屈に見える可能性がある。ここは「重ならない」を過剰適用して間延びさせないため、次に目視で最初に見る。
+- formation/speed 修正後の `minGap: 3.49` は、重なりなしと編隊密度の中間にある。過剰に離して間延びさせてはいないが、実画面で小隊として読めるかは目視で見る。
+
+## formation/speed correction review
+
+検証日時: 2026-05-23
+
+ユーザー指摘後に、編隊のまとまりと速度帯を別軸で見直した。
+
+- 速度帯: `route_motion_check.js` を追加。前回は scout exit max 43.95px/frame、diver exit max 47.18px/frame と、明らかに異常な出入りがあった。修正後は scout exit max 9.65、sideLance exit max 7.41、sideArc exit max 7.33、diverCut exit max 12.37、carrierWake exit max 4.41。
+- 補間: 短い duration に三次 `easeIn/easeOut` を使うと終端速度が跳ねるため、route 用に `easeSoft` を使った。
+- 編隊: lane 列を散ったパターンから、同じ方向、同じ spawn gap、上昇/下降の読みやすい lane progression を持つ小隊へ修正した。
+- 空白: 21-23 秒の boring run は、carrier setup bridge の scout 小隊で埋めた。
+- 安定性: `verify.js` を全 policy clear 必須に強化し、balanced/aggressive/conservative/pulse-heavy がすべて clear することを確認した。
+
+まだ疑う点:
+
+- route sample と headless での確認であり、実ブラウザ上で「まとまった小隊として気持ちよく撃てるか」は別途目視する余地がある。

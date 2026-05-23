@@ -304,3 +304,30 @@ v002 では、v001 の教訓を読んで、`wave_intent_table.md`、`timeline_ev
 3. 代表 wave ごとに、少なくとも 1 つの敵同士のシナジーが `A がずらす / B が要求する` の形で書かれているか。
 4. `timeline_eval` と `overlap_check` 合格後に、敵配置をプレイヤー行動の流れで再設計する pass を実施したか。
 5. 完成時の `self_judgment.md` に、「指標は通ったが、敵設計の質としてまだ疑う点」が残っているか。ここが空なら、また指標を完成の代替にしている可能性が高い。
+
+## Pulse Relay v002 で追加確認された失敗: 速度帯と編隊まとまりを検査していなかった
+
+v002 の enemy/wave redesign 後、ユーザーから「編隊としてまとまりがない敵しか出てこないうえに、出入りが異常な速度になっている。敵アルゴリズムなどもいろいろ適切でないし、速度帯もチェックして」と指摘された。これは、overlap と timeline を通しても、route の速度ピークと formation coherence を見ていなければ、見た目の質が壊れるという失敗だった。
+
+原因:
+
+- 速度を平均移動距離や感覚で見ており、phase ごとの max speed を測っていなかった。
+- `easeIn/easeOut` の三次補間を短い entry/exit に使ったため、終端速度が極端に跳ねた。実測では scout exit max 43.95px/frame、diver exit max 47.18px/frame が出ていた。
+- lane 列を「重ならない」「退屈 run を消す」目的で散らし、同じ方向、同じ間隔、読みやすい progression を持つ小隊として見えるかを確認していなかった。
+- `verify.js` の合格条件が弱く、4 policy 中一部が失敗しても通る状態だった。
+
+防止策:
+
+- 2D シューティングでは、overlap/timeline に加えて `route_motion_check` を最初から作る。
+- `route_motion_check` は route ごとに `entry / show / exit` の avg/max speed を出す。平均だけでなく max speed を見る。
+- 補間を変更したら必ず速度監査を回す。特に三次 ease は短い duration でピーク速度が跳ねるため、見た目の異常速度を作りやすい。
+- wave 表には formation coherence を入れる。各小隊が `同じ方向 / 同じ spawn gap / lane progression / 何を撃たせるまとまりか` を持っているかを確認する。
+- `verify.js` は原則として全 policy clear を要求する。例外を許す場合は、なぜその policy が失敗してよいかを `known_failures.md` に書く。
+
+次回の強制チェック:
+
+1. route ごとの速度表があるか。`entry / show / exit` の max speed が異常値になっていないか。
+2. 小隊ごとの lane progression が、ランダムな散らしではなく編隊として読めるか。
+3. overlap を避けるために、小隊を不格好にずらしていないか。
+4. timeline の空白を埋めるために、関係の薄い敵を足して編隊のまとまりを壊していないか。
+5. 全 headless policy が clear するか。失敗 policy を合格条件の弱さで隠していないか。

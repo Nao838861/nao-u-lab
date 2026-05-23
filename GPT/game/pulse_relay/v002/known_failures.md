@@ -21,14 +21,15 @@
 
 ## 完成前に必ず埋める
 
-- overlap check の結果: redesign 後は `pairOverlaps: 0`, `minGap: 0.08`。過剰に離さず、かなり密な最近接を残した。
-- timeline eval の結果: redesign 後は balanced clear 68.82 秒。boring runs なし、visible-but-not-shootable runs なし、heavy pressure なし。
-- headless の結果: redesign 後は balanced clear 68.82 秒、aggressive clear 66.22 秒、conservative clear 69.88 秒、pulse-heavy clear 68.95 秒。
+- overlap check の結果: formation/speed 修正後は `pairOverlaps: 0`, `minGap: 3.49`。密度は残しつつ、見た目で窮屈すぎる最近接は避けた。
+- route motion check の結果: `scoutRail.exit max 9.65`, `sideLance.exit max 7.41`, `sideArc.exit max 7.33`, `diverCut.exit max 12.37`, `carrierWake.exit max 4.41`。前回の 40px/frame 台の異常速度は解消した。
+- timeline eval の結果: formation/speed 修正後は balanced clear 71.50 秒。boring runs なし、visible-but-not-shootable runs なし、heavy pressure なし。
+- headless の結果: formation/speed 修正後は balanced clear 71.50 秒、aggressive clear 66.65 秒、conservative clear 73.23 秒、pulse-heavy clear 72.95 秒。`verify.js` は全 policy clear 必須へ強化した。
 - boss ideal TTK と pulse burst TTK: normal 15.97 秒、pulse burst 11.77 秒。
 - visual review の秒数付きメモ: `visual_review.md` に記録済み。
 - self judgment の分類: `self_judgment.md` に記録済み。
 
 ## 残す未達
 
-- `minGap: 0.08` はかなり攻めた密度で、数値上は overlap 0 だが、見た目上は窮屈に見える可能性がある。
+- formation/speed 修正は headless と route sample で確認したが、実ブラウザ上で「編隊としてまとまって見えるか」はまだ目視確認の余地がある。
 - 音と実プレイ動画レビューは未実施。canvas primitive の視覚 feedback のみで手応えを作っている。

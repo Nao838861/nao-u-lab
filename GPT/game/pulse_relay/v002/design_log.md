@@ -62,3 +62,39 @@
 
 - `minGap: 0.08` は意図的に密度を残した結果だが、見た目上は窮屈に見える可能性がある。
 - 実ブラウザの長時間プレイや動画ベースの motion review はまだ不足している。headless で通ったことを完成の同義にしない。
+
+## formation/speed correction pass
+
+ユーザー指摘:
+
+> 編隊としてまとまりがない敵しか出てこないうえに、出入りが異常な速度になっている。敵アルゴリズムなどもいろいろ適切でないし、速度帯もチェックして。
+
+原因分析:
+
+- 前回の redesign は `boringRuns: []` と `pairOverlaps: 0` を満たすことへ寄りすぎ、編隊としての同方向性、同じ spawn gap、読みやすい lane progression を壊していた。
+- route の `entry / exit` に三次の `easeIn/easeOut` を短い duration で使ったため、平均速度は許容に見えても終端速度が跳ねた。実測では scout exit max 43.95px/frame、diver exit max 47.18px/frame まで出ていた。
+- 検証に速度帯がなく、異常な出入りを数値で検出できなかった。
+- `verify.js` は 4 policy 中 2 policy clear で通る弱い条件だったため、conservative policy の失敗を完成判定が見逃す危険があった。
+
+対処:
+
+- `route_motion_check.js` を追加し、route/phase ごとの avg/max speed を検査するようにした。
+- route 用に `easeSoft` を追加し、短い三次 exit ではなく、速度ピークが跳ねにくい補間へ変更した。
+- scout / sideLance / sideArc / diverCut / carrierWake の duration、退場距離、show 中の動き幅を再調整した。
+- wave の lane 列を、散ったパターンから「同じ方向、同じ gap、読みやすい上昇/下降 lane」を持つ小隊へ変更した。
+- 21-23 秒の空白 run は carrier setup bridge を追加して埋めた。
+- boss phase2/phase3 の弾数と cadence を調整し、全 headless policy が clear するようにした。
+- `verify.js` は全 policy clear 必須へ強化した。
+
+再検証:
+
+- `node route_motion_check.js`: OK。scoutRail exit max 9.65、sideLance exit max 7.41、sideArc exit max 7.33、diverCut exit max 12.37、carrierWake exit max 4.41。
+- `node enemy_overlap_check.js`: OK。`pairOverlaps: 0`, `minGap: 3.49`。
+- `node timeline_eval.js`: OK。balanced clear 71.50 秒、boring runs なし、visible-but-not-shootable runs なし、heavy pressure なし。
+- `node verify.js`: OK。balanced 71.50 秒、aggressive 66.65 秒、conservative 73.23 秒、pulse-heavy 72.95 秒で全 clear。
+
+教訓:
+
+- overlap/timeline 合格後でも、speed gate と formation coherence gate がなければ、見た目の質は壊れる。
+- 敵の速さは「平均移動距離 / duration」だけでは足りない。補間のピーク速度を測る必要がある。
+- lane 列は数値上ばらけていればよいわけではない。編隊として同じ意図を持つ方向、間隔、順序に見える必要がある。

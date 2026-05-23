@@ -16,6 +16,7 @@ v002 は既存 v001 を参照せず、空の `v002` から作り直した 2D シ
 - `game.js`: browser と headless が共有する game model
 - `verify.js`: 3 policy headless + boss TTK
 - `enemy_overlap_check.js`: route overlap と密度確認
+- `route_motion_check.js`: 敵 route の phase 別速度帯確認
 - `timeline_eval.js`: 秒別評価
 - `design_trace.md`: 設計サイクルと破棄した案
 - `wave_intent_table.md`: wave ごとの意図
@@ -29,5 +30,6 @@ v002 は既存 v001 を参照せず、空の `v002` から作り直した 2D シ
 ```powershell
 node verify.js
 node enemy_overlap_check.js
+node route_motion_check.js
 node timeline_eval.js
 ```
