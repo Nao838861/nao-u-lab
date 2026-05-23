@@ -195,5 +195,96 @@ Log 5/22 20:32 投稿の 5 節分析を本サイクルで読み返し:
 4. **日記投稿** (温度を残す、本サイクル決定の遅延投稿是正 / atomic_chat_hq judgment trigger 補強 / Log_cdx 応答内容のまとめ)
 5. **git commit + push** (rule: 書いたらすぐ push)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-23 11:55〜)
+
+### 0) Phase 2 §0 自己診断 → Phase 3 §0 検証連鎖 (kaizen #132 規律)
+
+Phase 2 §0 が幻覚パターンとは逆方向の **訂正** (「Log Claude 側応答未 = 候補2件」→「両 URL 既応答」) を実施済。ts=1779449543 (atomic_chat_hq Log 2026-05-22 20:32:23) / ts=1779460294 (planetary_gear Log 2026-05-22 23:31:34) / ts=1779471444 (planetary_gear Log 2026-05-23 02:37:24) / ts=1779481957 (planetary_gear Log 2026-05-23 05:32:37) / ts=1779447884 (planetary_gear #shared-reads Log 2026-05-22 20:04:44) / ts=1779492999 (Log_cdx 08:36 問いかけ) / ts=1779503533 (Log 応答 #all-nao-u-lab) の **7 件 ts 引用** で archive 直接検証済。
+
+Phase 3 §0 役割 = Phase 2 §0 の訂正自体が再幻覚化していないかの再確認。`grep -E "実は.*だった|すべて.*だった|再確認した結果|読み違え" log/cycle_staging_log.md` → ヒット0件 (本サイクル staging 内には幻覚パターン語彙未使用)。Phase 2 §0 のts 引用 7 件は all-nao-u-lab.jsonl / shared-reads.jsonl 形式 (10 桁数字) と整合 → エビデンス連鎖 PASS。
+
+kaizen #132 検証期限到達処理 = `memory/kaizen_tracker.md` #132 検証結果欄に「C223 (2026-05-23) 検証期限到達判定」追記済、新検証期限 = 2026-06-22 (発火条件(a) 形骸化兆候ゼロ確認 → +30日延長適用)。本サイクル C223 自体が kaizen #132 機構の最新発火実例として記録。
+
+### 1) drafts/headless_evaluation_format_v01.md §7 → §8 接続線追加
+
+Phase 2 §6 アクション提案 #1 完了。`drafts/headless_evaluation_format_v01.md` §7 末尾 (8源収束記録の直後) に「§7 → §8 接続線 (C223 2026-05-23 追加)」セクションを 1 段落追加。内容:
+- §7 Layer A/B 2 層責務分離が「機械が数えられるか/人間 LLM が意味付けるか」の構造原則
+- §8 3 値判定 (pass/near/far) は Layer B 4 個目語彙候補として §7 を破壊せず拡張
+- Layer A 6 個目 primitive 化 (`judgement_granularity` 案) は §7 sufficient 判定観察 (5/31 期限) を自己成就汚染する → §8 (c) 選択肢 2 (Layer B 4 個目) を Log 仮採用済の根拠を明示
+- 5/31 同時発火点で Layer A 5 primitives sufficient 判定 + 3 値判定閾値再調整を再交差、両方安定なら `feedback_*_evaluation_layered_vocabulary.md` 1 ファイル昇格 (kaizen #129 family 統合管理ルールと同型 = 別記憶ファイル増殖抑制)
+
+「揃えるための1手」(CLAUDE.md 絶対にやる #1) の playable diff 前提条件整備として位置付け。Codex / Mir の 5/31 採用判断時に §3 統合 1 表とセットで読める導線が 1 行追加された (Phase 4 大作業で §3 1 表側を物理化予定 → 後述)。
+
+### 2) memory/sense_prediction_log.md N=27 既載確認
+
+Phase 2 §6 アクション提案 #2 = planetary_gear note「プレイヤーには本物の推理力がない」前提反転を教師データとして記録 → **既載確認のみ**。`memory/sense_prediction_log.md` 末尾 N=27 エントリ (Log 2026-05-23 03:00頃) で「プレイヤーには本物のゲームセンスがない」前提反転候補 Observation 1 として記録済、planetary_gear 接続 #3 の物理化完了済 (C221 二度目 Phase 5 日記の【高優先】ToDo「planetary_gear 接続 #3 の sense_prediction_log への記録」を本エントリで完了 と明示)。本 Phase 3 で **新規追記なし** = 即原則化禁止 (CLAUDE.md「同型 2 回観察未達」順守、Observation 2/3 待ち) と整合。
+
+### 3) projects/failure_slot_measurement.md Paused 5日経過シグナル監視ログ追記
+
+Phase 2 §4 B 軸 1mm 進歩 = projects/failure_slot_measurement.md 末尾 (Ash 注の直前) に「2026-05-23 Log C223 Phase 3: Paused 中シグナル監視ログ (5日経過時点)」セクションを追加。内容:
+- 再起票条件 4 件 (a)/(b)/(c)/(d) 全て **シグナルなし** = Paused 継続妥当
+- F-1 先延ばし系の自己再帰観察強化 (測定が止まっている事実そのものを測定する運用) を 5 日刻みで継続
+- 次回シグナル走査 = 2026-05-28、死蔵境界 = シグナルゼロ 4 回連続 (2026-06-12) で `projects/.archive/` 退役判定
+- 5/22 Nao_u directive (ヘッドレス評価検証優先) と Paused 降格は同方向、directive 解除 / ヘッドレス評価検証完遂 (5/31 発火点) 後に再評価する位置付け
+
+「Active のまま放置で B 7日以上停滞リストに延々と現れて他の Active project の停滞シグナルを希釈する」(5/18 C204 self-audit) を二重監視 (Paused 中シグナル走査 5 日刻み) で更に防止。
+
+### 4) Slack 投稿 = 0 件 (能動応答候補ゼロ確認)
+
+Phase 1 §2 で能動応答候補 2 件 (atomic_chat_hq / planetary_gear) と判定したが、Phase 2 §0 で archive 横断走査により **両 URL は Log 既応答**確認済 (atomic_chat_hq ts=1779449543 / planetary_gear ts=1779460294+1779471444+1779481957+1779447884 計 4 投稿)。Log_cdx 08:36 ts=1779492999 問いかけは Phase 2 §1 で既に ts=1779503533 で応答済 (4 軸境界判定案)。本 Phase 3 で新規 Slack 投稿 = 0 件、人為的捻出は `feedback_means_ends_reversal_check.md` 違反のため見送り。
+
+### 5) projects/INDEX.md 更新 = 0 件
+
+Phase 1 §5 で「直近24h動いた 5 本 / 5 日停滞 4 本」確認済、本サイクルでの追加変動 = `projects/failure_slot_measurement.md` 末尾追記 1 件のみ (Status は Paused 継続)、INDEX.md 該当行更新不要 (Paused 継続のため Status 表記変更なし)。
+
+### 6) 他インスタンス洞察処理 = 観察対象維持
+
+[他インスタンス洞察] 7 件のうち主軸 = Ash C192 Phase 4 graze_log v06 完成 + master merge 依頼 (v05 beta B-2/B-2' 未 merge 分含む) は **Codex/Mir/Log_cdx 管轄 (GPT/game/graze_log/v05_1_cdx_v16/ 系列の graze_log v06)** で Log Claude 側のアクション対象外 (CLAUDE.md「リポジトリフォルダ以下のみ触る」+ feedback_self_perception_blindness 整合)。残 6 件も clone/index/サイクル/predicted_play 系 = Log Claude 側 game/ 改修よりヘッドレス評価検証文脈 (Nao_u 5/22 directive) 優先のため、本サイクル新規追記 = 0 件。
+
+### 7) git 状態確認
+
+`git status` (Phase 3 末尾時点想定): 編集ファイル =
+- `log/cycle_staging_log.md` (本 Phase 3 追記)
+- `memory/kaizen_tracker.md` (#132 検証結果欄 + 検証期限更新)
+- `drafts/headless_evaluation_format_v01.md` (§7 → §8 接続線追加)
+- `projects/failure_slot_measurement.md` (Paused 5日経過シグナル監視ログ追記)
+- `memory/next_tasks_log.jsonl` (既編集 / Phase 1 走査由来)
+- `.diary_dedup_cache.json` (既編集)
+
+`../GPT/*` 配下 (M/?? 多数) は Codex 側 (log_cdx) 管轄 = Log Claude 側で触らない (Phase 1 §0 ルール継承)。
+
+## 次フェーズの大作業 (Phase 4 完遂目標)
+
+### タイトル
+**drafts/headless_evaluation_format_v01.md §3 統合 1 表を Layer A 5 primitives + judgement_granularity 6 番目候補で物理化**
+
+### 完遂の定義 (Phase 4 終了時に成立していれば完了)
+1. `drafts/headless_evaluation_format_v01.md` §3 ログスキーマ表が以下 13 項目で表現される:
+   - 既存 7 項目 (trial_id / seed / ai_style / score / graze_count / kill_count / survived_frames)
+   - Layer A 5 primitives (input_load / proximity_events / kill_rhythm / idle_ratio / death_pressure)
+   - judgement_granularity 1 項目 (括弧書き = §8 (c) 選択肢 2 Layer B 4 個目語彙仮採用、Layer A 6 個目候補として両論併記)
+2. §1 暫定式 (graze_axis / shot_axis) が primitives の合成式として再記述される (`graze_axis ≒ f(proximity_events, death_pressure)` / `shot_axis ≒ f(kill_rhythm, idle_ratio の補数)` 物理化、§7 既述の合成式案を §1 本文側に降ろす)
+3. §3 表のみ読んで Codex 採用判断 (どの primitive を実装するか / Layer A 5 primitives sufficient 判定 5/31 期限の準備材料) が可能な完成度に到達
+4. Mir 5/22 18:56 ts=1779443805 提案 5 primitives と §1 暫定式の対応関係が表上で読み取れる (Layer A 5 primitives 行に「§1 軸式との対応列」を追加)
+5. `git status` で `drafts/headless_evaluation_format_v01.md` 編集が確認でき、Phase 4 commit に含まれる
+
+### 着手手順 (最初の1手 + 想定手順)
+1. **最初の1手**: `drafts/headless_evaluation_format_v01.md` §3 ログスキーマ表セクションを Read で読み込み、既存 7 項目の表構造 (列定義 = 項目名 / 計算式 / 取得方法 / 用途) を確認する
+2. §7 既述の「§3 ログスキーマ更新案 (§7 採用時)」表 (Layer A 5 primitives) を §3 本文側に物理的に統合 (§7 内の追加表は §7 のまま残し、§3 を真の参照点として更新)
+3. §8 (d) §3 1 表との接続記述 (`(judgement_granularity) | A 候補` 行) を §3 本文側に物理化 (§8 内の (d) も §8 のまま残置、§3 を真の参照点として併記)
+4. §1 暫定式の合成式表現 (graze_axis / shot_axis を primitives 合成として再記述) を §1 本文側に追加。既存の暫定式は維持しつつ「primitives 由来の再記述」を 2 行で並置
+5. Mir 5 primitives × §1 軸式対応関係を §3 表に「§1 軸式との対応」列追加で表現
+6. 編集後に `git diff drafts/headless_evaluation_format_v01.md` で意図通りの差分か確認
+7. Phase 4 commit prefix = `rule:` (運用規則改修 = 評価フォーマット仕様更新、game/ 改修ではない) で git commit + push
+
+### 選定理由
+1. **5/31 一括判定発火点まで残り8日 = 直近の停滞解消対象**: §7 (Mir 2 層体系) + §8 (Golden Idol 3 層階段) は draft 段階で書いたが、§3 統合 1 表は §6 時点の暫定式 (graze_axis / shot_axis 2 軸) しか持っていない。**Codex / Mir 採用判断時の参照点として §3 表が未完成 = Mir 5 primitives sufficient 判定 (5/31 発火点) の準備材料が物理化されていない**。Phase 4 で §3 表を完成させれば、Mir/Codex/Nao_u が同一ファイル 1 表を見て採用判断できる状態に到達。
+2. **「揃えるための1手」(CLAUDE.md 絶対にやる #1) 直接の物理化**: 5/22 Nao_u directive で game/ 改修撤退中、playable diff 直接投資は不可。**「揃えるための1手」= drafts/headless_evaluation_format_v01.md §3 1 表物理化が本サイクル可能な最大の前提条件整備**。Phase 2 §6 アクション提案 #1 と同方向で、§7 → §8 接続線追加 (本 Phase 3 §1 完了) の次段階。
+3. **Nao_u 指摘の同型再発防止に直接寄与しない代わりに、ヘッドレス評価検証のあり方 directive に正面から応答する成果物**: Nao_u 5/22 13:16 ts=1779423371「ゲーム制作よりヘッドレス評価のあり方検証 + 実地検証重視」directive に対し、§3 1 表物理化は「あり方検証」の物理的成果物として直接対応。
+4. **30 分粒度で「進んだ」と言える**: §3 表の行追加 (+5 Layer A primitives + 1 judgement_granularity) + §1 暫定式合成式表現 (2 行) + §3 表に「§1 軸式との対応」列追加 = 編集量 30-40 行程度、30 分で完遂可能。Slack 投稿 1 本で済むものではなく、ファイル編集成果物として残る。
+5. **kaizen #132 検証期限延長 (2026-06-22) と整合**: 本サイクル C223 で kaizen #132 検証期限延長判定済、Phase 4 大作業を構造強制レイヤー追加ではなく評価フォーマット物理化に向けることで、kaizen #132 と並走する別軸の進捗 (構造強制 vs 中身) を維持。
+
+### Phase 4 で同時 commit する変更
+- 本 Phase 3 編集 (kaizen #132 / 接続線 / Paused シグナル監視 / staging) = 1 commit (prefix `rule:`)
+- Phase 4 §3 1 表物理化 = 別 commit (prefix `rule:`) で分離 = 評価バイアス混入防止 (game/ 改修と運用規則改修の分離ルール CLAUDE.md 厳守事項)
+

@@ -317,6 +317,10 @@ C222 Phase 2 で外部研究 3 本 (Orak / Game Reasoning Arena / AI Benchmarks 
 
 **8 源のうち警告軸 (3 件)**: Orak の foundational benchmark 化リスク (Pot は逆方向で「絞り込み」を選択、§5 末尾) / AI Benchmarks 2026 の評価設計脆弱性 4 軸 (§5 サンドボックス化補足候補・cross_review prompt injection 耐性候補として保留、本 Phase 3 では追記しない、`memory/feedback_few_rules_big_effect.md` 順守) / kili-technology 37%ギャップ (層分離の必要性根拠、§7 既存記述で吸収済)。**Phase 3 で着地したのは本 8 源収束記録 1 件のみ、残 3 接続案 (§5 サンドボックス化 / cross_review prompt injection 耐性 / ジャンル絞り込み路線文章化) は次サイクル以降の温度残存源として保留**。
 
+### §7 → §8 接続線 (C223 2026-05-23 追加)
+
+§7 で確立した **Layer A (直接計測 5 primitives) / Layer B (解釈用 3 語彙) の 2 層責務分離**は、評価出力を「機械が数えられるか」と「人間/LLM が意味付けるか」で切り分ける構造原則。§8 (Golden Idol スリーストライク 3 値判定) は、その構造の **Layer B 側に「予測距離判定 (pass / near / far) 4 個目語彙」を追加候補として置く**試みであり、§7 を破壊せず拡張する。**Layer A への 6 個目 primitive 化 (`judgement_granularity` 案) は §7 の sufficient 判定観察 (5/31 期限) を自己成就で汚染するため §8 (c) で選択肢 2 (Layer B 4 個目語彙) を Log 仮採用済**。3 値判定の閾値再調整 (N=25 実データ取得後) と Layer A 5 primitives sufficient 判定は **5/31 同時発火点**で再交差させ、両方安定なら `memory/feedback_*_evaluation_layered_vocabulary.md` 昇格判定を 1 ファイルで吸収する (kaizen #129 family 統合管理ルールと同型 = 別記憶ファイル増殖を抑制)。
+
 ---
 
 ## §8 3 層階段判定 (granularity) — Golden Idol スリーストライク同型 (C221 Phase 4 追加)
