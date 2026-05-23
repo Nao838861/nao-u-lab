@@ -1,36 +1,33 @@
-# Pulse Relay v002
+# Pulse Relay v002: Vector Wake
 
-近い敵弾を Space のパルスで白い反撃弾へ変換する、短編の縦スクロール 2D シューティングです。通常ショットで STG の基本形を保ちつつ、弾が詰まった時だけ「避ける」と「撃ち返す」が同時に起きるようにしています。
-
-## 起動
-
-`index.html` をブラウザで開きます。
+v002 は既存 v001 を参照せず、空の `v002` から作り直した 2D シューティング。通常ショットで隊列を撃ち切り、敵弾に近づいて charge した pulse で危険を反撃へ変える。
 
 ## 操作
 
-- 移動: 矢印キー / WASD
-- パルス: Space
-- リスタート: R
-- ショット: 自動
+- Move: Arrow keys / WASD
+- Shoot: Z / Space
+- Pulse: X / Shift
+- Pause: P
+- Restart: R
 
-## 構成
+## ファイル
 
-- `game.js`: ゲーム本体、敵 wave、描画、CommonJS export
-- `verify.js`: 固有メカニクスと route 方針の smoke test
-- `timeline_eval.js`: 1 秒ごとの時系列評価と複数 bot policy 比較
-- `wave_grammar_check.js`: 敵出現パターンの密度、レーン、役割、失敗パターン検査
-- `enemy_rebuild_packet.md`: 実装前に作った敵 wave 設計表
-- `completion_checklist.md`: 原意を圧縮しない完成チェックリスト
-- `checklist_validation.md`: チェックリスト自体の検証ログ
-- `design_log.md`: 設計判断と評価ログ
-- `self_judgment.md`: 最終自己評価
+- `index.html`: playable browser entry
+- `game.js`: browser と headless が共有する game model
+- `verify.js`: 3 policy headless + boss TTK
+- `enemy_overlap_check.js`: route overlap と密度確認
+- `timeline_eval.js`: 秒別評価
+- `design_trace.md`: 設計サイクルと破棄した案
+- `wave_intent_table.md`: wave ごとの意図
+- `eval_timeline.md`: timeline 結果
+- `visual_review.md`: 見た目レビュー
+- `self_judgment.md`: 自己評価
+- `known_failures.md`: 未達と制約
 
-## 評価コマンド
+## 検証
 
 ```powershell
-node wave_grammar_check.js
 node verify.js
+node enemy_overlap_check.js
 node timeline_eval.js
 ```
-
-2026-05-23 の最終検証では 3 コマンドすべて通過。route は 5 seed で `clearRate 1`、camper / lane-holder / blind-sweeper / noPulse は route より明確に弱い結果になりました。

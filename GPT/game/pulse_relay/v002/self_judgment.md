@@ -1,54 +1,34 @@
-# Pulse Relay v001 自己評価
+# self judgment
 
-## 判定
+完成時に、問題を「自分で未然に見つけたか」と「人間指摘がないと見落としそうか」で分ける。
 
-v001 として完成扱い。`shot_log` 相当の長期作り込みにはまだ届かないが、今回の要求である「敵配置をゼロから作り直す」「チェックリストを原意ごと保持する」「一秒ごとの時系列評価で展開を見る」「雑な勝ち方を bot policy として潰す」は実行した。
+## self_detected_before_user
 
-## 最終検証
+- v002 作業開始前に、v001 参照なしで作る制約と、記憶から持ち込む blocker を `design_trace.md` に具体化した。
+- 実装前に `wave_intent_table.md` を作り、各 wave に `player_intent / failure_pressure / exit_reason / bad_policy_check / telemetry` を持たせた。
+- 初期 draft をそのまま採用せず、`delete-and-redesign pass` で wave の完全分離を破棄し、重なりのある構成へ変えた。
 
-`node wave_grammar_check.js`
+## found_by_metrics
 
-- hard issue なし。
-- 9 blocks: `opening_curve_train`, `mirror_answer`, `center_lane_bait`, `side_feeder_cover`, `armored_gate`, `relief_harvest`, `midboss_setup`, `boss_approach_final_braid`, `boss_relay_exam`
-- event count: 75
+- 初回 verify で全 policy が boss 前後で落ち、boss phase3 と HP/危険度を調整した。
+- 初回 overlap check で sideArc の exit/entry overlap を検出した。直角 offset ではなく、spawn order と side 切替が原因だと見て修正した。
+- 二回目 overlap check で、bridge lance と diver の交差を検出した。原因は lane と入退場先だったため、bridge lance の rail を変更した。
+- timeline で 38-44 秒の空白を検出し、pre-boss cuts と boss warning bridge を追加した。
+- boss ideal TTK を計算し、3 秒瞬殺ではない HP にした。最終値は normal 15.97 秒、pulse burst 11.77 秒。
 
-`node verify.js`
+## found_by_visual_review
 
-- mechanic: `converted 5`, `conversionHits 3`
-- route 3 run: すべて `state clear`
-- 代表値: `time 63.22`, `score 16100`, `lives 3`, `converted 27`, `conversionHits 19`, `damageTaken 1`
+- sideArc の左右交互出現は、数値上の出現間隔だけでなく、退出先と入場側が同じ画面端になると不自然に重なると判断した。
+- bridge lance と diver は、同時に見える route sample で左側の軌跡が近すぎると判断し、offset ではなく rail の役割を変えた。
+- isolated boring seconds と連続 boring runs を分けた。目的は単発の息継ぎを消すことではなく、退屈な連続区間を防ぐことだと整理した。
 
-`node timeline_eval.js`
+## found_after_user_feedback
 
-- route: `clearRate 1`, `bossReachRate 1`, `meanRouteCoverage 1`, `meanBottomCampPct 0`, `meanTime 63.22`, `meanScore 16100`, `meanConverted 27`, `meanRelayHits 19`, `meanDamage 1`
-- marksman: `clearRate 1`, `bossReachRate 1`, `meanScore 15550`
-- camper: `clearRate 0`, `bossReachRate 0`, `meanScore 1688`
-- lane-holder: `clearRate 0`, `bossReachRate 0`, `meanRouteCoverage 0.44`
-- blind-sweeper: `clearRate 0`, `bossReachRate 0`, `meanRouteCoverage 0.78`
-- noPulse: `clearRate 0`, `bossReachRate 1`, `meanScore 3570`, `meanConverted 0`
-- pulseHeavy: `clearRate 1`, `meanScore 12640`, `meanRelayHits 12`
+この v002 作業中はまだなし。
 
-## 時系列から見た展開
+## still_suspect
 
-序盤は左からの curve train と右からの mirror answer で横移動を作る。10 秒台の center lane bait で最初の硬い target を見せ、17 秒台の side feeder cover で横から来る敵と中央目標を同時に処理させる。
-
-25-34 秒の armored gate は、通常ショットの射線が途切れる秒が残る。これは完全な理想ではないが、route はこの区間で `converted` と `relayHits` を伸ばしており、Pulse Relay が敵処理へ接続している。射線警告を消すために route を硬い敵へ寄せすぎると noPulse が強くなることを確認したので、v001 では Pulse を使う山として残した。
-
-41-55 秒は midboss setup から boss approach へつなぐ区間。初回検証では route がここで落ちたため、終盤 armored の shield / fireCd、boss 出現時刻、boss HP / fireRate を調整した。最終的に route は 5 seed で boss に到達し、boss 戦中も relay hit が発生する。
-
-## 良い点
-
-- 敵 wave は 9 block 構成になり、単発の敵数変更ではなく、前 wave が作った位置を次 wave が利用する形になった。
-- 下端待ち camper は clearRate 0 まで落ち、下端撃破の score penalty と追加弾圧により雑な勝ち方が成立しない。
-- noPulse は boss には到達するが clearRate 0 で、Pulse Relay が攻略と score の両方に関係している。
-- `wave_grammar_check.js` と `timeline_eval.js` が、次回も同じ粒度で再利用できる検査になった。
-
-## v002 に残す弱点
-
-- route の `shootable_gap` と `bullets_without_targets` はまだ多い。Pulse 山場として許容したが、次回は「撃てないが避けるだけ」の時間を、もっと短い relay fuel の連鎖に置き換える。
-- aggressive も clear するため、前に出る遊び方のリスクと報酬はまだ弱い。前に出ると危ないが高得点、雑に前へ出ると落ちる、という差を作る余地がある。
-- ブラウザ目視プレイは未実施。headless では通ったが、人間が Space を押したくなる感触は追加確認が必要。
-
-## blocker
-
-v001 blocker は 0。上記の弱点は v002 の改善項目として残す。
+- v001 を参照しないため、v001 との直接比較はできない。
+- 音なしのため、テンションは視覚だけに依存する。
+- conservative policy は boss で落ちる。全 policy clear を必須にはしていないが、避け重視で火力不足/被弾が出る余地がある。
+- headless と route sample は通ったが、人間が遊んだ時の「あと少しメリハリが足りない」感は残る可能性がある。
