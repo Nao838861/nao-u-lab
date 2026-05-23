@@ -42,3 +42,13 @@
 - 検証結果: 3 本とも pass。focused route は `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupVisualProbe true`。policy matrix は route/aggressive/marksman が CHASE bonus を得て、camper は clear 0 / chaseBonus 0。Chrome visual probe は `.tmp/graze_log_cdx_v63_chase_probe/` に 4 screenshot を生成し bytes check pass。
 - 制約: Browser Use skill は読んだが、このセッションには Node REPL `js` tool がなく、in-app browser 操作はできなかった。Chrome headless screenshot と `window.__probe` 座標 snapshot で代替。
 - 残課題: in-app browser または実機で `probeFrame=906&probeDraw=1` を開き、CHASE popup が報酬として読めるかを人間目視で確認する。
+### 2026-05-23 v64 CHASE popup pixel probe
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は今回なし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v64/`。v63 の gameplay は維持し、`probeBare=1` と `window.__probe.visualContract` を追加。Chrome screenshot の PNG を直接読んで、CHASE popup box 内の緑系 pixel 数と背景輝度差を検査する visual probe に更新した。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v64/index.html`。通常目視 probe は `?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1`、pixel probe は `&probeBare=1` を追加。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v64_check.js` pass。route clear、`chaseBonus 19157`、`chasePopupCount 28`、`chasePopupMeanSpawnPlayerDist 148.3`、`chasePopupMeanActivePlayerDist 157`、`chasePopupTooFarPct 0`。
+  - `node tools\headless_graze_log_cdx_v05_2_v64_policy_matrix_check.js` pass。route/aggressive/marksman は clear + CHASE bonus、camper は clear 0 / chaseBonus 0。
+  - `node tools\headless_graze_log_cdx_v05_2_v64_visual_probe_check.js` pass。Chrome screenshot 4 枚 420x620、各 CHASE popup box で `chasePixels 27`、`lumaGap 86.1-86.8`、`pixelProbePass true`。
+- 残課題: pixel probe は「画像内に文字がある」最低保証であり、報酬として自然に読めるかは判断しない。次は Browser Use または実機で通常 UI 付き probe を目視確認する。
