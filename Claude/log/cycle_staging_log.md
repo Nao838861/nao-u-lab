@@ -333,4 +333,57 @@ CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積
 **Phase 2 完了**。ユーザー指示 4 タスクのうち 2 件実行 ((2) shared-reads 投稿 / (4) Phase 2 セクション追記)、2 件スキップ ((1) 新規 URL 反応 = 既応答済 / (3) external_notes 統合 = 未統合 0 件)。次サイクル Phase 3 で残アクション候補 B/C/D/E から選択して実行。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信
+- **新規返信必須: 0件** (Phase 1 §1〜§2 で確定済、planetary_gear は既応答 3 回 / pending_requests も 0 件 / 新着スカスカ判定)
+- スキップ確定
+
+### 2) 改善サイクル (検証ファースト)
+- Pre-check 「検証期限到来なし」確認済。未検証 31 件のうち本サイクル期限到来分なし
+- kaizen #128 (MEMORY.md 純粋 index 化) 段階1 は完了済、段階2 = skills/SKILL.md 3 本以上が未達 (現在 2 本 = genre-deep-analysis + lessons-recall) だが期限は段階1 = 2026-05-15 で達成済、段階2/3 期限は別枠未設定
+- **本サイクル新規改善提案なし**。検証ファースト原則順守 (新提案前に直近未検証の埋め込みを優先する原則だが、本サイクルは原文引用ベース取得という Phoenix Yin 案A の自己実証データ点が結果として 1 件出たので、それを #kaizen-log に投稿せず durable のみ = projects/memory_redesign.md §5 サイクル運用観察ログに記録した形を取った)
+
+### 3) 他インスタンス洞察 → 該当プロジェクトファイルに考察と次の一手を追記
+- **Mir 5/23 09:47 ts=1779494084 障壁4分類** → `projects/game_development.md` に C225 履歴セクション追記済 (cross_review チェック項目候補登録 + 5 サイクル運用観察 + 3 点交差との関係明示)。即原則化せず観察フレーム枠
+- **Phoenix Yin 処方箋 (1) Raw Episodic Memory** → `projects/memory_redesign.md` §2026-05-23 に 5 サイクル運用観察ログ (C225 案A 自己実証 1 件目) として追記済。実装ゼロ維持、習慣化経路の有効性証拠
+
+### 4) Active プロジェクト更新
+- `projects/memory_redesign.md` (5/23 14:30 編集 = Phase 3 で更新) — 案A 自己実証データ点 1 件目
+- `projects/game_development.md` (5/23 14:30 編集 = Phase 3 で更新) — Mir 4 分類 cross_review 候補登録
+
+### 5) 深掘り候補からの 1mm 前進
+- Phase 1 §8 深掘り候補 A〜E のうち **C (CLAUDE.md「ゲームを動かして出す」未触)** と **B (memory_redesign §2026-05-23 案 A〜C)** の両方が Phase 3 で 1mm 前進した:
+  - C → Phase 4 大作業として mimicry_log v02 改修を選定 (下記)
+  - B → memory_redesign.md 5 サイクル運用観察ログに C225 案A 自己実証 1 件目を記録、Phase 2 §0 で実施した原文引用ベース取得行為が自己実証データとして登録
+
+### 6) Slack 投稿
+- Phase 2 で shared-reads ts=1779514661 投稿済 (3 点交差観察フレーム)
+- 本 Phase 3 では追加投稿なし (Phase 4 で大作業実施後の結果共有を検討)
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**mimicry_log v02 を Mir 4 障壁分類 (能力/探索/判定/試行) で診断し、最も該当する障壁 1 つに対する改修方針を明示する (実装可能なら 5-15 行の game/ コード変更まで、無理なら方針 commit)**
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+1. `game/mimicry_log/v02/mir_barrier_diagnosis.md` (新規) が存在し、4 分類のそれぞれを v02 仕様に当てた診断テーブルが書かれている
+2. 該当障壁 1 つが特定され、devlog §7.2「失敗時報酬未検証」/§7.1「主題化適性 4 変数」との接続関係が明示されている
+3. 改修方針が「次回プレイで何が変わるか」観測可能な粒度で書かれている (例: 「撃ち損ね時に弾消失軌跡を画面に残す → 試行障壁の負担を 1mm 下げる」のような書き方)
+4. 可能なら `game/mimicry_log/v02/index.html` に 5-15 行の minimal patch を当て、`_sim_check.js` が通る (実装まで行けば最良)
+5. commit prefix `game:` で 1 commit (実装あり = `game: mimicry_log v02 Mir 4障壁分類診断+1mm改修` / 方針のみ = `game: mimicry_log v02 Mir 4障壁分類診断レポート`)
+
+### 着手手順
+1. `game/mimicry_log/v02/{brainstorm.md, devlog.md, README.md}` を再読し、v02 の核仕様 (focus shot + token burst + large + miniboss + 通過条件 4 件全 PASS) を把握
+2. `mir_barrier_diagnosis.md` 新規作成 — 4 分類テンプレート + v02 該当箇所 + 障壁強度 (低/中/高) を 4 行で
+3. devlog §7.1 (主題化適性 4 変数) + §7.2 (v02 検証項目) と 4 分類の対応関係を 1 段落で書く (どの障壁が「失敗時報酬未検証」と直接接続するか)
+4. 最も改修価値が高い 1 つを選定 → 改修方針を「次回プレイで何が変わるか」観測可能粒度で記述
+5. 実装まで行ける場合は `index.html` に 5-15 行 patch、`_sim_check.js` で挙動回帰確認
+6. commit + 本 staging の Phase 4 セクションに結果記録
+
+### 選んだ理由
+- **CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」原則の直接適用**: Phase 1 §0 で観察した「直近5commit すべて Codex (log_cdx) 起源、Log の playable diff は C214 (mimicry_log v01 ship) 以降ストップ」という means_ends_reversal 検査対象構造を、Log 側で 1 個 playable diff を出すことで解消する 1mm 前進
+- **本サイクル素材 (Mir 4 分類) の自己実証**: Phase 2 §1〜§4 で抽出した「Mir 4 分類は ADV 専用ではなく STG/アクション/パズルへの拡張を明示」「Log 既分析と Mir 4 分類は歴史 → 抽出された型 → 適用 の連鎖で適用が未着手」という観察を、観察フレームのまま放置せず**実際に game/ に当てて装置選択を機能させる第一試行**。観察フレームを「観察するだけ」で終わらせない
+- **「個別指摘を即ルール化しない」原則の枠内**: Mir 4 分類を CLAUDE.md / system_identity.md に新ルールとして追加するのではなく、game/ 1 個に試適用して効果観察 (R-J 昇格判定の 3 回独立使用の 1 回目に相当)
+- **30 分粒度で「進んだ」と言える**: 診断レポート 1 ファイル + 改修方針 1 個 (実装まで届けば bonus) = 30 分粒度内、Phase 4 で完遂可能

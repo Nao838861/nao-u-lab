@@ -73,6 +73,33 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-23 C225 Phase 3 (Log): Mir 障壁4分類 (能力/探索/判定/試行) を cross_review チェック項目候補として登録 — 即原則化せず観察枠のみ
+
+**起源**: Mir 5/23 09:47 #human-steering ts=1779494084 [Mir 分析] planetary_gear note 記事「正解に三つの鐘が鳴る」から **障壁の 4 分類 (能力/探索/判定/試行)** を抽出。Log 既分析 3 投稿 (shared-reads ts=1779447884/1779460386/1779471593) は「設計装置の系譜」「R-A 接続」「ADV プレイブック起草」方向で展開、Mir 4 分類は **「目の前で詰まったプレイヤーを 4 箱に振り分けて装置を選ぶ」現在進行形の診断テスト** という別軸。歴史 (Log) → 抽出された型 (Mir 4 分類) → 適用 (未着手) の連鎖。
+
+**4 分類 (Mir atom 原文)**:
+- **(1) 能力障壁**: プレイヤーの推理力 / 反射神経が足りない
+- **(2) 探索障壁**: 情報を見つけるコストが高すぎる
+- **(3) 判定障壁**: 正解か不正解かの判定が厳しすぎる
+- **(4) 試行障壁**: やり直しのコストが高すぎる
+
+Mir atom は「ミステリゲームだけでなく STG でもアクションでもパズルでも、プレイヤーが詰まる時はこの 4 つのどれかに引っかかっている」と汎用性を明示。
+
+**Log での扱い**: 即原則化禁止 (CLAUDE.md「個別指摘を即ルール化しない」)。本記録は **観察フレーム枠** として登録、原則化判定は最低 3 回独立使用後 (R-J 昇格ルール準拠)。
+
+**観察対象として置く局面 (運用観察)**:
+- cross_review 媒体経由評価時に「詰まった場面を 4 分類のどれに振るか」を任意項目として書く欄を試す (強制しない、振り分けが自然か / 4 分類で吸えない 5 個目が出るかを観察)
+- mimicry_log v02 / graze_log の Phase 5 Nao_u 判定で「焚かない方が常に得 = 試行障壁 (4) ではなく報酬障壁 (?)」のような未対応分類が出るかを diary に 1 行記録
+- ADV `reference_adv_mystery_design_playbook.md` Q1-Q5 と直交軸 (起草時の設計問 vs プレイテスト時の診断問) であることを観察フレーム上に保持
+
+**5 サイクル運用観察 (C225-C229)**: 案A/B/C (memory_redesign §2026-05-23 5 サイクル運用観察) と同枠で観察。C229 完了時に「3 サイクル以上で活きた = cross_review プロンプト原則化 / 1-2 サイクルしか活きない = 退役」を判定。
+
+**3 点交差 (本サイクル Phase 2 §2) との関係**: Mir 4 分類 × Phoenix Yin 処方箋 (1) Raw Episodic Memory × 遊星歯車機関「正解に三つの鐘」極小化 の 3 つに共通する仮説「早すぎる圧縮の拒否 — 本人が必要な瞬間に操作可能な粒度で残せ」も同サイクル shared-reads ts=1779514661 に投稿済、5 サイクル運用観察候補。本観察フレームはその直接適用。
+
+**接続**: `memory/feedback_rule_proliferation_canonical.md` (即原則化禁止)、`projects/memory_redesign.md` §2026-05-23 (Phoenix Yin 処方箋 5 サイクル運用観察と同枠)、`reference_adv_mystery_design_playbook.md` (直交軸 — 設計問 vs 診断問)、Mir atom 5/23 ts=1779494084、Log shared-reads 既 3 投稿 + 3 点交差 ts=1779514661、Nao_u 5/23 ts=1779490167 (planetary_gear broadcast directive)
+
+---
+
 ### 2026-05-22 C221 Phase 4 二度目 (Log): drafts/headless_evaluation_format_v01.md §8「3 層階段判定 (granularity)」追加 + §3 1 表に `judgement_granularity` 6 個目候補括弧書き併記 + cross_review Layer B 語彙ガイド v01 §4 4 個目条件包含議論
 
 **起源**: 本サイクル Phase 3 (`projects/game_development.md` C221 Phase 3 履歴) で planetary_gear note 記事 (千葉集「正解に三つの鐘が鳴る」) から得た **Log 独立 3 接続のうち #1 (Golden Idol スリーストライク = 「合格 / 惜しい / 遠い」3 値階段化案)** を draft 着地。本サイクル Phase 4 二度目 (一度目は §3 Layer A 5 primitives 1 表統合 + cross_review Layer B v01 新規作成) として cycle_staging_log.md `## 次フェーズの大作業` 節で指定された大作業を完遂。
