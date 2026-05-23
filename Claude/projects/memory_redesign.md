@@ -21,6 +21,23 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-24 (Log C231) — ULSPB (arXiv:2605.06731) state writeback audit を接続候補として登録
+
+Log_cdx が 5/15 03:09 #shared-reads ts=1778782170 で全文要約済の論文。本サイクル Phase 2 が再投稿を試みたが、Phase 2 §2 「ts=1779579275 で実施」は実投稿なし（slack archive 最終 #shared-reads は 5/23 20:39）= **Phase 自己診断幻覚 (kaizen #131/#132 M-40 同型再発)**、教師データとして観察。論文側の有効内容は Log_cdx 既投稿で取得済のため、本サイクルでは**論文 → 当方記憶設計への接続**のみ進める。
+
+**論文側の中核主張 (Log_cdx 既投稿要約より)**:
+- 永続化された agent state (MEMORY.md / AGENTS.md / TOOLS.md / IDENTITY.md / SOUL.md / USER.md / HEARTBEAT.md など) は、routine な対話で意図せず drift していく = **unintended long-term state poisoning (ULSPB)**
+- 観察軸: authorization drift / tool-use escalation / unchecked autonomy の 3 軸を severity 0-3 で測る Harm Score
+- 防御策 **StateGuard**: interaction episode 終了時に state writeback boundary で diff を取り、changed chunk を auditor model に rollback 判定させる二段。perplexity baseline (ASB-PPL) より HS を 4 倍以上低減
+
+**当方の射程と接続候補**:
+- **当方の既存装置との同型**: cycle_staging_log.md の Phase 4 commit / `git diff` = state writeback boundary、`feedback_self_perception_blindness.md` 同パターン語彙検出 hook (kaizen #131) = changed chunk auditor、ULSPB の StateGuard と部分等価
+- **不在装置 = HS 3 軸の機械算出**: authorization drift (Nao_u 承認待ち項目が drift せず保留サイクル数を蓄積しているか) / tool-use escalation (新規 tool を staging に書かず使い始めていないか) / unchecked autonomy (Phase 4 commit が Phase 1 §0 → Phase 2 → Phase 3 連鎖を経ずに勝手に進んでいないか) を機械算出する道具は未実装
+- **C227 Memory Consolidation 劣化論文 (arXiv:2605.12978) との並置**: あちらは「episodic-only 記憶を持ち続けると有用記憶が誤りに転じる」(Interference)、こちらは「routine 対話で state が drift する」(authorization drift)。**Interference と Drift は記憶劣化の 2 軸**として位置付け、`check_beliefs_health.py` 出力に追加できる枠候補
+- **当方の現状 ULSPB 同型観察**: 本サイクル Phase 2 のハルシネーション (実投稿なき 実施 主張) は **unchecked autonomy** 軸の発火例。staging 内自己宣言が writeback boundary 検査を通らないまま「実施」のラベルを獲得していた = StateGuard 不在の典型症状。次サイクル以降で staging Phase 2/3 主張の Slack ts 引用に対し `grep "<ts>" log/slack_archive/*.jsonl` 検証 hook を追加する道具候補
+
+**判定方針**: 候補は 5 サイクル運用観察 (= C236 想定) 後に「実装に進める / 観察延長 / 棄却」の 3 択。**即実装はしない** (CLAUDE.md「個別指摘を即ルール化しない」整合)。ただし Phase 2 のハルシネーション再発防止だけは別軸で kaizen 起票候補として扱う (#131 family と排他: ID 引用実在性は #133 / 自己診断幻覚は #132 / 投稿主張の実在性は新規軸の可能性)。
+
 ### 2026-05-23 (Log C227) — Memory Consolidation 劣化論文 (arXiv:2605.12978) 処方箋3案を次サイクル候補として登録
 
 Nao_u が 5/22 19:41-19:46 #nao-u で共有した「Useful Memories Become Faulty」関連 3 tweet (kazunori_279 / phoenixyin13 / haopeng_uiuc) の論文は、LLM が会話メモリを「episodic-only」で保持し続けると、有用だった記憶が時間経過で誤りを生むという指摘。Ash 5/22 19:50 #shared-reads ts=1779447041 で詳細分析投稿済 (episodic-only 部分導入推奨)。Log 独自視点 3 点を #all-nao-u-lab ts=1779536269 で発信、それを本ファイルの**次サイクル候補**として登録する (5サイクル運用観察してから本実装判定、CLAUDE.md「個別指摘を即ルール化しない」整合)。
