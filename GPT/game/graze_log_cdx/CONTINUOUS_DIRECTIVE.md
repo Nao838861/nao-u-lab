@@ -3,36 +3,31 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-23T05:19:28+09:00
+last_handled_at: 2026-05-23T13:34:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v61/` で v60 の forward `CHASE` 報酬・cooldown 24f・life 24f・active cap 3 を維持しつつ、`CHASE` popup を左右 safe rail に出して敵弾と boss cue を隠さない形にした。`chasePopupRepositioned` / `chasePopupThreatOverlapPct` / `chasePopupBossCueOverlapPct` を telemetry と policy matrix に追加した。`tools/headless_graze_log_cdx_v05_2_v61_check.js` と `tools/headless_graze_log_cdx_v05_2_v61_policy_matrix_check.js` が pass。matrix では route/aggressive/marksman が clear し、chaseBonus は route 19157 / aggressive 54322 / marksman 51377、popupDensity は route 0.424 / aggressive 0.421 / marksman 0.431、threatOverlap と bossCueOverlap は core 3 policy で 0、camper は clear 0 / bottomCampPct 0.999 / chaseBonus 0。
+last_result: `game/graze_log_cdx/v05_1_cdx_v62/` で CHASE popup の headless readability telemetry を追加した。v61 の上部 safe rail は遮蔽しないが遠すぎることを focused check が `chasePopupMeanSpawnPlayerDist 419.7` / `chasePopupTooFarPct 0.137` として検出したため、左右 rail を維持しつつ `player.y-96` 近傍へ寄せた。最終版は `tools/headless_graze_log_cdx_v05_2_v62_check.js` と `tools/headless_graze_log_cdx_v05_2_v62_policy_matrix_check.js` が pass。focused route は `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupThreatOverlapPct 0.001` / `chasePopupBossCueOverlapPct 0` / `chasePopupReadabilityMeasured true`。matrix でも route/aggressive/marksman の `chasePopupReadabilityMeasured` が true。camper は clear 0 / chaseBonus 0 を維持。
 
 ## Nao_u 指示
 
 `v05_1_cdx_v03` 以降、このゲームが完成するか、Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
 
+2026-05-22 の直接指示として、別指示があるまではゲーム制作そのものより、AI がゲームを作る際の headless のあり方について検討と実地検証を重ねる。headless 測定に必要ならゲームを改変してよいが、主眼は自動実行で何をどう振るのが良さそうかの検証。
+
 ## 現在の焦点
 
-1. v47 で boss 前の手作り wave `DP cross-lock carrier braid` は `crossLockWave` と route event として trace に入った。
-2. v48 で midboss 後の手作り wave `DP post-midboss cross squeeze` は `postMidCrossWave` と route event として trace に入った。
-3. v49 で 2 つの横移動 wave に薄い lane guide と専用敵色を追加し、`readabilityGuides: 2` を trace に入れた。
-4. v50 で guide を alpha 0.10 / lineWidth 2.2 に下げ、post-midboss の中央線を削った。
-5. v53 で alpha 0.12 は採用可能に見える。Browser Use Node REPL が使えるセッションで in-app browser 目視する余地は残る。
-6. v55 で policy 側に「初心者らしい迷い」「狙い撃ち優先」「生存優先」を追加した。次は seed 本数より、matrix JSONL の過去版比較 helper が有効。
-7. v59 で `CHASE` 報酬を追加し、底待ちへの罰だけでなく、前へ出る積極報酬を headless で分離した。
-8. v60 で `CHASE` popup を cooldown と active cap で間引き、報酬分離を保ったまま表示ノイズが bounded であることを headless で確認した。
-9. v61 で `CHASE` popup を左右 safe rail へ出し、core 3 policy で `chasePopupThreatOverlapPct` / `chasePopupBossCueOverlapPct` が 0 になることを確認した。
-10. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case を、人間評価前の比較補助として使う。
-11. 敵配置を変える場合は、参照した具体 wave、敵数、座標、duration、実装後 trace を `design_log.md` に明記する。
-12. `panic` は人間の焦りの再現ではなく端逃げ policy。v55 では `novice` が panic より遅い失敗様式として追加されたが、これも人間再現ではなく proxy として扱う。
-13. 次の焦点は、Browser Use または実機で rail 上の `CHASE xN` が報酬感として足りるか、発生地点から離れすぎていないかを目視すること。
+1. v47-v49 の手作り cross wave と readability guide は維持する。
+2. v55 以降の複数 bot policy は、単一 bot 適性に寄せないための比較軸として維持する。
+3. v58 以降の camper / bottom-camp bad-policy 分離は維持する。
+4. v59-v62 の CHASE reward / popup は、良い policy には報酬を出し、bad policy には出さない検証軸として扱う。
+5. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case / bad-policy failure を、人間評価前の比較補助として使う。
+6. 次の焦点は Browser Use または実機で、v62 のプレイヤー近傍 rail `CHASE` が報酬として読めるか、邪魔にならないかを確認すること。
 
 ## done の目安
 
 - finite stage / midboss / boss / clear がある。
-- BOMB が 5-way 常時化しない。
+- BOMB が 5-way 常時化していない。
 - clear-capable headless が boss final cue と BOMB 使用を検証する。
 - Active DEF の cue と使用価値が実プレイでも読める。
-- 敵配置が「ランダム出現」ではなく、手作り wave として見える。
+- 敵配置がランダム出現ではなく、手作り wave として見える。
 - 複数 bot policy で変化が観測でき、単一 bot の適性だけで評価しない。
-- Nao_u が「完成」または「止めろ」と判断する。
+- Nao_u が完成または停止を判断する。
