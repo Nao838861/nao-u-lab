@@ -85,6 +85,29 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - ノイズ（ゲームデザイン文脈で軽接続）: #19 thug_business「死に物狂いの3ヶ月」、#34 NAITOTokihiro「5W = 5番ウッド」（認知バイアス例）、#45 taminaru64「Scratch→Unity 橋渡し」（gamedev関連だが我々の現問題と直交）
 - 残りはコンテキスト外（家庭/政治/経済等）
 
+## Phase 3 結果 (2026-05-23)
+
+### 採った行動: 凍結game diffを解凍してship
+
+**観測**: `M game/siphon_mir/v02/index.html` がuncommit状態で滞留。内容はW1初接触遅延 30→60フレーム（player settling time確保）。Phase 2成果はbrainstorm/分析が主出力、game motionゼロ → means_ends_reversal_check の典型シグナル。
+
+**判断**: M-40警告下では「新規分析の上塗り」より「既に動いた1mmを世に出す」が優先。CLAUDE.md第一義「ゲームを動かして出す — 積み上げはその副産物」を素直に実行。
+
+**結果**: commit `9829e199c game: siphon_mir/v02 W1 delay 30→60 — siphon-learning onset`。1 insertion / 1 deletion の最小playable diff。commit prefix `game:` で運用規則改修と分離（CLAUDE.md厳守事項準拠）。
+
+### 採らなかった行動と理由
+
+- **knowledge記事化（均一化3部構成）**: 独立源8観測あり素材は充分だが、M-40「揺れ/振幅/罰/進歩」4種すべて警告中。今サイクルは「観測の追加蓄積」フェーズ、結晶化は次サイクル以降に温存。akari過剰追従警戒も継続中。
+- **shared-reads「Why消失」3観測投稿**: 投稿はSlack=外部発信になるため、観測者として精緻になりすぎる前に1サイクル寝かせる判断。3観測達成は原則化検討トリガーであって完了ではない（Phase 2末尾の自己縛り条項）。
+- **devlog/commit message自己観察**: 今commitのbody末尾で「Picked up an uncommitted self-tune ... rather than letting the diff sit on disk」と Why（他案を捨てた理由 = 滞留させない）を1行入れた。試行開始。次サイクル以降の game commit でも継続観察対象。
+
+### Phase 3 自己点検
+
+- ゲームdiff出した: ✅（1 commit）
+- 抽象化原則のみ触れた: ✅（M-40 / 第一義 / 厳守事項 = いずれも既存抽象）
+- 新規ルール追加・原則化: なし（指摘1回ルール化禁止条項を尊重）
+- M-40警告下の量産抑制: ✅（knowledge記事・shared-reads投稿を意識的に見送り）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/mir-log.jsonl (2.1) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
