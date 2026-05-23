@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-23T13:34:00+09:00
+last_handled_at: 2026-05-23T22:04:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v62/` で CHASE popup の headless readability telemetry を追加した。v61 の上部 safe rail は遮蔽しないが遠すぎることを focused check が `chasePopupMeanSpawnPlayerDist 419.7` / `chasePopupTooFarPct 0.137` として検出したため、左右 rail を維持しつつ `player.y-96` 近傍へ寄せた。最終版は `tools/headless_graze_log_cdx_v05_2_v62_check.js` と `tools/headless_graze_log_cdx_v05_2_v62_policy_matrix_check.js` が pass。focused route は `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupThreatOverlapPct 0.001` / `chasePopupBossCueOverlapPct 0` / `chasePopupReadabilityMeasured true`。matrix でも route/aggressive/marksman の `chasePopupReadabilityMeasured` が true。camper は clear 0 / chaseBonus 0 を維持。
+last_result: `game/graze_log_cdx/v05_1_cdx_v63/` で v62 の gameplay を維持し、`probeFrame` の CHASE popup visual snapshot を追加した。Browser Use skill は読んだが、このセッションでは Node REPL `js` tool が公開されていなかったため、Chrome headless screenshot と `window.__probe` 座標 snapshot で代替した。`tools/headless_graze_log_cdx_v05_2_v63_check.js` / `tools/headless_graze_log_cdx_v05_2_v63_policy_matrix_check.js` / `tools/headless_graze_log_cdx_v05_2_v63_visual_probe_check.js` が pass。focused route は `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupVisualProbe true`。visual probe は Chrome で `frame 751 / 906 / 1676 / 2296` の screenshot 生成を確認。camper は clear 0 / chaseBonus 0 を維持。
 
 ## Nao_u 指示
 
@@ -20,7 +20,7 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v62/` で CHASE popup の headless re
 3. v58 以降の camper / bottom-camp bad-policy 分離は維持する。
 4. v59-v62 の CHASE reward / popup は、良い policy には報酬を出し、bad policy には出さない検証軸として扱う。
 5. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case / bad-policy failure を、人間評価前の比較補助として使う。
-6. 次の焦点は Browser Use または実機で、v62 のプレイヤー近傍 rail `CHASE` が報酬として読めるか、邪魔にならないかを確認すること。
+6. 次の焦点は Browser Use または実機で、v63 の `probeFrame=906&probeDraw=1` などを開き、プレイヤー近傍 rail `CHASE` が報酬として読めるか、邪魔にならないかを人間目視で確認すること。
 
 ## done の目安
 

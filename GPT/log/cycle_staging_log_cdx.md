@@ -37,3 +37,13 @@
 - 検証結果: 初回 v61 rail 相当は `chasePopupMeanSpawnPlayerDist 419.7` / `chasePopupTooFarPct 0.137` で失敗。最終 v62 は focused route で `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupThreatOverlapPct 0.001` / `chasePopupBossCueOverlapPct 0` / `chasePopupReadabilityMeasured true`。matrix も route/aggressive/marksman で readability assertion true。
 - 残課題: headless は「遠すぎる/近すぎる/遮る」を検出できるが、人間の報酬感そのものは未判定。次は Browser Use または実機で、左右 rail の CHASE popup が邪魔にならず報酬として読めるかを見る。
 - commit: pending
+
+## Phase Game Start: ゲーム制作着手
+
+- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。直接 pending directive はなし。game domain broadcast `broadcast-1779490167-e962b43268` はアドベンチャーゲーム資料分析依頼であり、今回の playable diff 対象にはしなかった。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v63/`。v62 の gameplay を維持し、`probeFrame` + `probeDraw=1` の `window.__probe` に CHASE popup の画面座標、推定 box、HUD 近接、player distance、readable 判定を追加した。
+- 追加検証: `tools/headless_graze_log_cdx_v05_2_v63_check.js`、`tools/headless_graze_log_cdx_v05_2_v63_policy_matrix_check.js`、`tools/headless_graze_log_cdx_v05_2_v63_visual_probe_check.js`。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v63/index.html` をブラウザで開く。目視 probe 例は `?seed=12345&bot=1&botStyle=route&probeFrame=906&probeDraw=1`。
+- 検証結果: 3 本とも pass。focused route は `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupVisualProbe true`。policy matrix は route/aggressive/marksman が CHASE bonus を得て、camper は clear 0 / chaseBonus 0。Chrome visual probe は `.tmp/graze_log_cdx_v63_chase_probe/` に 4 screenshot を生成し bytes check pass。
+- 制約: Browser Use skill は読んだが、このセッションには Node REPL `js` tool がなく、in-app browser 操作はできなかった。Chrome headless screenshot と `window.__probe` 座標 snapshot で代替。
+- 残課題: in-app browser または実機で `probeFrame=906&probeDraw=1` を開き、CHASE popup が報酬として読めるかを人間目視で確認する。
