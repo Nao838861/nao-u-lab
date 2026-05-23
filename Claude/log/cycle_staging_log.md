@@ -387,3 +387,43 @@ CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積
 - **本サイクル素材 (Mir 4 分類) の自己実証**: Phase 2 §1〜§4 で抽出した「Mir 4 分類は ADV 専用ではなく STG/アクション/パズルへの拡張を明示」「Log 既分析と Mir 4 分類は歴史 → 抽出された型 → 適用 の連鎖で適用が未着手」という観察を、観察フレームのまま放置せず**実際に game/ に当てて装置選択を機能させる第一試行**。観察フレームを「観察するだけ」で終わらせない
 - **「個別指摘を即ルール化しない」原則の枠内**: Mir 4 分類を CLAUDE.md / system_identity.md に新ルールとして追加するのではなく、game/ 1 個に試適用して効果観察 (R-J 昇格判定の 3 回独立使用の 1 回目に相当)
 - **30 分粒度で「進んだ」と言える**: 診断レポート 1 ファイル + 改修方針 1 個 (実装まで届けば bonus) = 30 分粒度内、Phase 4 で完遂可能
+
+---
+
+## Phase 4: 実行 (mimicry_log v02 Mir 4 障壁分類診断 + 1mm 改修)
+
+### 完遂結果
+
+完遂の定義 5 条件のうち **4 件達成、5 件目 (commit) は Phase 5 で実施予定**:
+
+1. [x] **`game/mimicry_log/v02/mir_barrier_diagnosis.md` 新規作成** (約 130 行、8 セクション構成)。4 分類診断テーブル (§1) で 4 障壁を v02 仕様に当て、各障壁の v02 該当箇所 + 強度 (中/高/中/中) + 根拠を表で明示
+2. [x] **該当障壁 1 つ特定 = (2) 探索障壁** (§3)。devlog §5 S1-S5 撤回トリガーとの接続 (§2-A: S1/S4 が探索障壁の事前/事後測定指標) + §4 Q-X1/X2/X3 との接続 (§2-B) を明示。**注記**: staging 完遂定義は「devlog §7.1/§7.2 との接続関係」と書かれていたが、現 devlog にこれらの節は実在せず (表記揺れ)、実存する §5 S1-S5 と §4 Q-X1-X3 を接続点に使用した経緯を診断レポート冒頭「前提」に明記
+3. [x] **改修方針が「次回プレイで何が変わるか」観測可能粒度** (§4-A): 0-3 秒で SHIFT hint 表示 / 3-30 秒で SHIFT 押下きっかけ獲得 / 30 秒時点で S1 撤回トリガー発火頻度低下を測定。3 段階で観測可能
+4. [x] **`game/mimicry_log/v02/index.html` に 5 行 patch 適用済** (実装まで到達): `spawnWave1()` 冒頭に `state.popups.push({x:W/2,y:H-60,text:'HOLD SHIFT = FOCUS (narrow shot)',life:180,c:'#80c0ff'})` を 1 行追加 + コメント 2 行 + 既存スポーン 3 行はそのまま = patch 合計 3 行差分 (5 行未満、最小実装)。`node _sim_check.js` 実行 → Test1-6 全 22 アサート OK 維持確認済 (Test4 large 31/996 ≈ 3.1% で largeP 観測値変動は popup 追加とは無関係 = RNG seed 揺れの範囲内)
+5. [ ] **commit 未実施** = Phase 5 で日記とまとめて `git push` 予定 (staging Phase 4 指示「commit はしない」遵守)。commit prefix は `game: mimicry_log v02 Mir 4障壁分類診断+SHIFT hint 1mm改修` を予定
+
+### 副産物 (新規 / 変更ファイル)
+
+**新規:**
+- `game/mimicry_log/v02/mir_barrier_diagnosis.md` (新規、約 130 行)
+
+**変更:**
+- `game/mimicry_log/v02/index.html` (line 348 付近に 3 行 = 1 コメント 2 行 + popup push 1 行)
+
+**Slack 投稿 / kaizen / 他**: 本 Phase 4 では Slack 投稿なし (Phase 2 で shared-reads ts=1779514661 既投稿、Phase 3 で残アクション処理済)。kaizen 新規提案なし。
+
+### 完遂判定
+
+staging Phase 4 「次フェーズの大作業」5 条件のうち 4 件物理達成 + 1 件 Phase 5 持ち越し (commit) = **本 Phase 4 範囲内では完遂**。実装まで到達したので「方針のみ commit」ではなく「実装あり commit」枠での Phase 5 移行が確定。
+
+### 観察 (CLAUDE.md「ゲームを動かして出す」原則との照合)
+
+- Phase 1 §0 で観察した「直近 5 commit すべて Codex 起源、Log の playable diff は C214 以降ストップ」状態に対し、本サイクル末で Log 主体の `game:` commit が出る (Phase 5 で push)
+- means_ends_reversal_check 該当状態の Log 側 1mm 解消 = R-A〜R-I の R-I (着手前批判) よりも CLAUDE.md「絶対にやる」第 1 項 (ゲームを動かして出す) の直接適用
+- Mir 4 分類の **適用試行 1 回目** = R-J 昇格判定の 3 回独立使用のうち 1 件目を完了。残 2 回は次サイクル以降で別ゲーム (graze_log / shot_log / 新規 ADV) に適用して観察すること
+
+### 次サイクル Phase 1 引き継ぎ
+
+- 本 Phase 4 で実装した SHIFT hint popup の **実プレイ評価依頼**: Nao_u/Mir/Ash に「30 秒以内に SHIFT が押されたか」「hint popup が読めたか / 邪魔だったか」を確認
+- S1 撤回トリガー発火頻度低下が観測 → Mir 4 分類「装置選択ツール」第 1 試行成功
+- 発火頻度変化なし → 4 分類の予測力に疑問、診断レポート §1 強度評価の補正
