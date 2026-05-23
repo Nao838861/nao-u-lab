@@ -144,6 +144,7 @@ function inputToward(game, tx, ty, pulse) {
 
 const POLICIES = {
   route(game) {
+    if (game.enemies.some(e => e.boss)) return POLICIES["boss-rush"](game);
     const n = countNearBullets(game, 96);
     const hard = game.enemies.some(e => (e.kind === "armored" || e.kind === "anchor" || e.kind === "boss") && e.y > -20 && e.y < H * 0.82);
     const m = routeMove(game, authoredRouteY(game), "route");

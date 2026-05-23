@@ -15,6 +15,14 @@
     return dx * dx + dy * dy;
   }
 
+  function easeMotion(t, mode = "smooth") {
+    if (mode === "linear") return t;
+    if (mode === "outCubic") return 1 - Math.pow(1 - t, 3);
+    if (mode === "inCubic") return t * t * t;
+    if (mode === "snapOut") return 1 - Math.pow(1 - t, 2);
+    return t * t * (3 - 2 * t);
+  }
+
   function makeRng(seed) {
     let s = seed >>> 0;
     return function rand() {
@@ -52,7 +60,7 @@
   function lineColumn(frame, lane, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
-      const endY = (opts.endY == null ? 235 : opts.endY) - i * 13;
+      const endY = (opts.endY == null ? 235 : opts.endY) - i * 16;
       return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
@@ -73,7 +81,7 @@
       return ev(frame + Math.abs(offset) * (opts.stagger || 8), opts.kind || "curve", x, block, {
         route: "v",
         targetX: x,
-        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 12,
+        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 13,
         exitX: x + (offset < 0 ? -92 : 92),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: offset < 0 ? -1 : 1,
@@ -86,7 +94,7 @@
 
   function crossSweep(frame, side, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
-      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 8),
+      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 13),
       route: "side",
       side,
       targetX: side < 0 ? W * 0.58 : W * 0.42,
@@ -105,7 +113,7 @@
       return ev(frame + i * (opts.stagger || 9), opts.kind || "curve", x, block, {
         route: "dive",
         targetX: x,
-        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 10,
+        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 12,
         exitX: x + (x < W / 2 ? -118 : 118),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: x < W / 2 ? -1 : 1,
@@ -445,34 +453,35 @@
         } else if (e.route === "line") {
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 118 },
-            { x: e.targetX, y: H + 62, t: 150 },
+            { x: e.targetX, y: e.targetY, t: 118, ease: "outCubic" },
+            { x: e.targetX, y: H + 62, t: 150, ease: "snapOut" },
           ]);
         } else if (e.route === "v") {
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112 },
-            { x: e.exitX, y: -58, t: 108 },
+            { x: e.targetX, y: e.targetY, t: 112, ease: "outCubic" },
+            { x: e.exitX, y: -58, t: 108, ease: "snapOut" },
           ]);
         } else if (e.route === "dive") {
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 86 },
-            { x: e.targetX, y: e.targetY - 34, t: 34 },
-            { x: e.exitX, y: -58, t: 94 },
+            { x: e.targetX, y: e.targetY, t: 86, ease: "outCubic" },
+            { x: e.targetX + e.side * 12, y: e.targetY - 34, t: 34, ease: "linear" },
+            { x: e.exitX, y: -58, t: 94, ease: "snapOut" },
           ]);
         } else if (e.route === "side") {
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 88 },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 20, t: 104 },
+            { x: e.targetX, y: e.spawnY, t: 88, ease: "outCubic" },
+            { x: e.targetX + e.side * 34, y: e.spawnY + 6, t: 24, ease: "linear" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 20, t: 104, ease: "snapOut" },
           ]);
         } else if (e.route === "large") {
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112 },
-            { x: e.targetX, y: e.targetY, t: 72 },
-            { x: e.targetX + e.side * 34, y: -58, t: 126 },
+            { x: e.targetX, y: e.targetY, t: 112, ease: "outCubic" },
+            { x: e.targetX, y: e.targetY, t: 72, ease: "linear" },
+            { x: e.targetX + e.side * 34, y: -58, t: 126, ease: "snapOut" },
           ]);
         } else {
           e.y += e.speed * DT;
@@ -557,7 +566,7 @@
       e.pathT += 1;
       const dur = p1.t || 1;
       const frac = clamp(e.pathT / dur, 0, 1);
-      const sf = frac * frac * (3 - 2 * frac);
+      const sf = easeMotion(frac, p1.ease || "smooth");
       e.x = p0.x + (p1.x - p0.x) * sf;
       e.y = p0.y + (p1.y - p0.y) * sf;
       if (e.pathT >= dur) {
