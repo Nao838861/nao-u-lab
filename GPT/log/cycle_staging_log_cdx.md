@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-24 03:43
+# log_cdx Cycle Staging — 2026-05-24 05:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -7,11 +7,12 @@
 
 ## Phase Game Start: ゲーム制作着手
 
-- 対象: Slack pending game directive はなし。`game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` の `status: active` を対象にした。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v67/`。v66 gameplay を維持し、`probeReview=1` の canvas 下に CHASE review panel contract を追加した。panel は version / frame / policy / phase / CHASE count / readable / side / distance / popup box / player 座標を DOM dataset と画面上の両方で見せる。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v67/index.html?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1` をブラウザで開く。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v67_check.js`、`node tools\headless_graze_log_cdx_v05_2_v67_policy_matrix_check.js`、`node tools\headless_graze_log_cdx_v05_2_v67_visual_probe_check.js` が pass。focused check は最初に source note assertion の更新漏れで落ちたが、v66/v67 継承関係へ直して pass。
-- 残課題: Browser Use または実機で v67 review URL を開き、review panel が邪魔にならず、CHASE が報酬として読めるかを人間目視で確認する。
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Nao_u の「完成または停止まで継続改善」と、2026-05-22 の「当面は headless のあり方の検討と実地検証を主眼にする」指示を対象にした。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v68/`。v67 の gameplay を維持し、`probeReview=1` の CHASE review panel に `verdict` / `band` / `occlusion` を追加した。`verdict=pass` / `band=readable` / `occlusion=clear` により、人間目視へ渡す前の最低条件を DOM と screenshot で確認できる。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v68/index.html`。review URL は `game/graze_log_cdx/v05_1_cdx_v68/index.html?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v68_check.js` pass、`node tools\headless_graze_log_cdx_v05_2_v68_policy_matrix_check.js` pass、`node tools\headless_graze_log_cdx_v05_2_v68_visual_probe_check.js` pass。
+- 検証要点: route clear / boss cue / BOMB / Active DEF / CHASE reward telemetry 維持。policy matrix は route/aggressive/marksman clear と CHASE bonus を維持し、camper は bottomCampPct 0.999 のまま over、CHASE bonus 0。visual probe は bare canvas pixel、review screenshot、browser DOM contract、review verdict contract、panel-below-canvas contract を確認。
+- 残課題: v68 の `verdict=pass` は「目視に回せる frame」の最低保証であり、報酬感の判定ではない。次は実ブラウザで review URL を開き、panel が邪魔にならず CHASE が報酬として読めるかを見る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
