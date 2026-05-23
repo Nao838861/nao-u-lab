@@ -122,3 +122,13 @@ For future 2D shooting games, when feedback says "enemy patterns are monotone", 
 - recall query: `python tools/memory_recall.py "2D shmup enemy formation reproduction packet shot_log Galaga 1942 camper lane-holder"`
 - atom: `local-20260523-shmup-enemy-pattern-reproduction-packet`
 - key lesson: an enemy wave memory must preserve user raw feedback plus reference scene, spawn count, path keyframes, speed, fire rule, intended player movement, bad-policy check, and telemetry. A title-name summary or "pressure/rhythm" abstraction is not enough to rebuild the work.
+
+## 2026-05-23 add: checklist / enemy-design non-compression gate
+
+For future 2D shooting games, do not create a short checklist from a summarized memory. Read these two files first and copy their structure into the target game's `design_log.md`, `completion_checklist.md`, and enemy/wave plan.
+
+- `memory/checklist_noncompression_protocol_20260523.md`
+- `memory/game_shmup_enemy_design_noncompression_protocol_20260523.md`
+- lens: `Stage Grammar / Enemy Formation`, `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`
+- recall query: `python tools/memory_recall.py "2D shooting checklist non-compression enemy design shot_log wave telemetry bad policy"`
+- key lesson: preserve raw user feedback, source lesson IDs, required artifacts, failure signs, and evidence. Do not compress "enemy patterns are monotone / player movement is not considered / shot_log teacher data was not reproduced" into "improve enemy placement".
