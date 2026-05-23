@@ -258,7 +258,7 @@
         armored: { hp: 46, r: 23, speed: 64, score: 520, fireRate: 1.45 },
         harvest: { hp: 6, r: 12, speed: 104, score: 110, fireRate: 99 },
         escort: { hp: 16, r: 16, speed: 86, score: 240, fireRate: 1.8 },
-        boss: { hp: 210, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
+        boss: { hp: 270, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
       }[kind];
       this.enemies.push({
         kind,
@@ -400,10 +400,37 @@
       this.particles.push({ x: p.x, y: p.y, life: 0.18, max: 0.18, kind: "ring", count: converted });
     }
 
-    fireAtPlayer(e, speed, offset = 0) {
+    fireAtPlayer(e, speed, offset = 0, opts = {}) {
       const p = this.player;
       const a = Math.atan2(p.y - e.y, p.x - e.x) + offset;
-      this.enemyBullets.push({ x: e.x, y: e.y + 12, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, r: 5 });
+      this.enemyBullets.push({
+        x: e.x,
+        y: e.y + (opts.yOffset == null ? 12 : opts.yOffset),
+        vx: Math.cos(a) * speed,
+        vy: Math.sin(a) * speed,
+        r: opts.r || 5,
+        role: opts.role || "aim",
+      });
+    }
+
+    fireFan(e, count, speed, spread, role) {
+      const mid = (count - 1) / 2;
+      for (let i = 0; i < count; i++) this.fireAtPlayer(e, speed, (i - mid) * spread, { role });
+    }
+
+    fireGate(e, vx, vy, role, opts = {}) {
+      this.enemyBullets.push({
+        x: e.x + (opts.xOffset || 0),
+        y: e.y + (opts.yOffset == null ? 14 : opts.yOffset),
+        vx,
+        vy,
+        r: opts.r || 5,
+        role,
+      });
+    }
+
+    fireLaneGate(e, offsets, vy, role) {
+      for (const xOffset of offsets) this.fireGate(e, xOffset * 0.22, vy, role, { xOffset });
     }
 
     updateEnemies() {
@@ -451,39 +478,68 @@
         }
         e.fireCd -= DT;
         e.shield = Math.max(0, e.shield - DT);
-        if (e.fireCd <= 0 && this.enemyBullets.length < 180 && e.y > 10) {
+        if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
           const bottomCamp = this.player.y > H - 96;
+          let nextFireRate = e.fireRate;
           if (e.kind === "boss") {
-            const pattern = Math.floor(e.age * 2) % 2;
-            if (pattern === 0) {
-              for (let i = -3; i <= 3; i++) this.fireAtPlayer(e, 76, i * 0.15);
+            const hpRatio = e.hp / e.maxHp;
+            const pattern = Math.floor(Math.max(0, e.age - 3) * 2.5) % 2;
+            if (hpRatio > 0.66) {
+              if (pattern === 0) {
+                this.fireFan(e, 5, 92, 0.14, "boss-open-aim");
+              } else {
+                this.fireLaneGate(e, [-48, 0, 48], 100, "boss-open-lane");
+              }
+              nextFireRate = e.fireRate * 0.92;
+            } else if (hpRatio > 0.33) {
+              if (pattern === 0) {
+                this.fireFan(e, 7, 106, 0.13, "boss-mid-aim");
+              } else {
+                this.fireLaneGate(e, [-66, -22, 22, 66], 112, "boss-mid-lane");
+                this.fireGate(e, -52, 104, "boss-mid-cross");
+                this.fireGate(e, 52, 104, "boss-mid-cross");
+              }
+              nextFireRate = e.fireRate * 0.72;
             } else {
-              for (let i = -2; i <= 2; i++) this.enemyBullets.push({ x: e.x + i * 18, y: e.y + 26, vx: i * 16, vy: 86, r: 5 });
+              this.fireFan(e, 9, 118, 0.12, "boss-final-aim");
+              this.fireLaneGate(e, [-76, -38, 38, 76], 126, "boss-final-lane");
+              if (pattern === 1) {
+                this.fireGate(e, -66, 116, "boss-final-cross");
+                this.fireGate(e, 66, 116, "boss-final-cross");
+              }
+              nextFireRate = e.fireRate * 0.58;
             }
             if (bottomCamp) {
-              this.fireAtPlayer(e, 188, -0.18);
-              this.fireAtPlayer(e, 188, 0.18);
+              this.fireAtPlayer(e, 196, -0.18, { role: "boss-bottom-punish" });
+              this.fireAtPlayer(e, 196, 0.18, { role: "boss-bottom-punish" });
             }
           } else if (e.kind === "armored" || e.kind === "anchor") {
-            this.fireAtPlayer(e, 108, -0.16);
-            this.fireAtPlayer(e, 108, 0.16);
-            this.enemyBullets.push({ x: e.x, y: e.y + 14, vx: 0, vy: 84, r: 5 });
+            const deadline = e.route === "large" && e.age > 2.65;
+            this.fireFan(e, deadline ? 3 : 2, deadline ? 126 : 112, deadline ? 0.13 : 0.16, "hard-target-aim");
+            this.fireGate(e, 0, deadline ? 122 : 90, "hard-target-lane");
+            if (deadline) {
+              this.fireGate(e, -44, 106, "hard-target-side");
+              this.fireGate(e, 44, 106, "hard-target-side");
+              nextFireRate = e.fireRate * 0.78;
+            }
             if (bottomCamp) {
-              this.fireAtPlayer(e, 178, -0.05);
-              this.fireAtPlayer(e, 178, 0.05);
+              this.fireAtPlayer(e, 184, -0.05, { role: "hard-target-bottom-punish" });
+              this.fireAtPlayer(e, 184, 0.05, { role: "hard-target-bottom-punish" });
             }
           } else if (e.kind === "feeder") {
             const bottomBias = this.player.y > H - 96 ? 48 * e.side : 0;
-            this.fireAtPlayer(e, bottomCamp ? 176 : 128, bottomBias * 0.01);
+            this.fireAtPlayer(e, bottomCamp ? 184 : 136, e.side * 0.08 + bottomBias * 0.01, { role: "feeder-aim" });
+            if (e.route === "side") this.fireGate(e, -e.side * 36, 118, "feeder-cross");
           } else if (e.kind === "escort") {
-            this.fireAtPlayer(e, 116, e.side * 0.18);
-            if (bottomCamp) this.fireAtPlayer(e, 170, -e.side * 0.1);
+            this.fireAtPlayer(e, 124, e.side * 0.2, { role: "escort-aim" });
+            this.fireGate(e, e.side * 42, 106, "escort-gate");
+            if (bottomCamp) this.fireAtPlayer(e, 176, -e.side * 0.1, { role: "escort-bottom-punish" });
           } else if (e.kind === "harvest") {
-            if (e.age > 2.2) this.fireAtPlayer(e, 96);
+            if (e.age > 2.2) this.fireAtPlayer(e, 102, 0, { role: "harvest-timeout" });
           } else {
-            if (e.age > 1.5) this.fireAtPlayer(e, 104);
+            if (e.age > 1.5) this.fireAtPlayer(e, 112, 0, { role: "curve-timeout" });
           }
-          e.fireCd = bottomCamp && ["feeder", "anchor", "armored", "escort", "boss"].includes(e.kind) ? e.fireRate * 0.48 : e.fireRate;
+          e.fireCd = bottomCamp && ["feeder", "anchor", "armored", "escort", "boss"].includes(e.kind) ? nextFireRate * 0.48 : nextFireRate;
         }
       }
       this.enemies = this.enemies.filter(e => !e.done && e.y < H + 70 && e.hp > 0);

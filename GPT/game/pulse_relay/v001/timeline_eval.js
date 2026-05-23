@@ -19,6 +19,13 @@ const METRIC_PURPOSES = {
   bossHp: "ボス山場が進行しているかを見る。",
 };
 
+Object.assign(METRIC_PURPOSES, {
+  pressure: "Targets and bullets overlap in the same second. This checks whether the player shoots while reading danger, not just dodges empty space.",
+  pulseOpportunity: "Near bullets during active play. This checks whether Pulse Relay is naturally invited by pressure instead of being an abstract score button.",
+  deadlinePressure: "Hard targets with bullets on screen. This checks whether durable enemies create a kill deadline rather than waiting passively.",
+  bossPressure: "Boss-phase bullets near or around the player. This checks whether the finale escalates after the boss appears.",
+});
+
 function clamp(v, lo, hi) {
   return Math.max(lo, Math.min(hi, v));
 }
@@ -189,6 +196,10 @@ function secondMetrics(game, prev, routeState) {
   const hardTargets = game.enemies.filter(e => (e.kind === "armored" || e.kind === "boss") && e.y > -20 && e.y < H * 0.82).length;
   const nearBullets = countNearBullets(game, 110);
   const boss = game.enemies.find(e => e.boss);
+  const pressure = visibleTargets > 0 && (nearBullets >= 2 || game.enemyBullets.length >= 14) ? 1 : 0;
+  const pulseOpportunity = visibleTargets > 0 && nearBullets >= 1 ? 1 : 0;
+  const deadlinePressure = hardTargets > 0 && game.enemyBullets.length >= 8 ? 1 : 0;
+  const bossPressure = boss && (nearBullets >= 1 || game.enemyBullets.length >= 12) ? 1 : 0;
   const blockNames = new Set(game.enemies.map(e => e.block).filter(Boolean));
   for (const name of blockNames) routeState.seenBlocks.add(name);
   if (game.player.y > H - 86) routeState.bottomFrames += 60;
@@ -196,6 +207,11 @@ function secondMetrics(game, prev, routeState) {
   if (routeState.lastLane != null && Math.abs(lane - routeState.lastLane) >= 2) routeState.laneSwitches++;
   routeState.lastLane = lane;
   routeState.seconds++;
+  routeState.pressureSeconds += pressure;
+  routeState.pulseOpportunitySeconds += pulseOpportunity;
+  routeState.deadlinePressureSeconds += deadlinePressure;
+  routeState.bossPressureSeconds += bossPressure;
+  if (boss) routeState.bossSeconds++;
   return {
     sec: Math.floor(game.t),
     visibleTargets,
@@ -203,6 +219,10 @@ function secondMetrics(game, prev, routeState) {
     hardTargets,
     enemyBullets: game.enemyBullets.length,
     nearBullets,
+    pressure,
+    pulseOpportunity,
+    deadlinePressure,
+    bossPressure,
     emptyGapSec: routeState.emptyRun,
     routeCoverage: round(routeState.seenBlocks.size / requiredBlocks().length),
     bottomCampPct: round(routeState.bottomFrames / Math.max(1, routeState.seconds * 60)),
@@ -222,7 +242,19 @@ function run(policyName, seed) {
   const timeline = [];
   let nextSecondFrame = 60;
   let prev = { converted: 0, relayHits: 0, damage: 0 };
-  const routeState = { seenBlocks: new Set(), emptyRun: 0, bottomFrames: 0, seconds: 0, lastLane: null, laneSwitches: 0 };
+  const routeState = {
+    seenBlocks: new Set(),
+    emptyRun: 0,
+    bottomFrames: 0,
+    seconds: 0,
+    bossSeconds: 0,
+    lastLane: null,
+    laneSwitches: 0,
+    pressureSeconds: 0,
+    pulseOpportunitySeconds: 0,
+    deadlinePressureSeconds: 0,
+    bossPressureSeconds: 0,
+  };
   for (let frame = 0; frame < MAX_FRAMES; frame++) {
     game.update(policy(game));
     if (game.enemies.some(e => e.block)) {
@@ -246,6 +278,10 @@ function run(policyName, seed) {
   summary.routeCoverage = round(routeState.seenBlocks.size / requiredBlocks().length);
   summary.bottomCampPct = round(routeState.bottomFrames / Math.max(1, routeState.seconds * 60));
   summary.laneSwitches = routeState.laneSwitches;
+  summary.pressurePct = round(routeState.pressureSeconds / Math.max(1, routeState.seconds));
+  summary.pulseOpportunityPct = round(routeState.pulseOpportunitySeconds / Math.max(1, routeState.seconds));
+  summary.deadlinePressurePct = round(routeState.deadlinePressureSeconds / Math.max(1, routeState.seconds));
+  summary.bossPressurePct = round(routeState.bossPressureSeconds / Math.max(1, routeState.bossSeconds));
   return { policy: policyName, seed, summary, timeline, issues: detectIssues(timeline, summary, policyName) };
 }
 
@@ -260,6 +296,7 @@ function detectIssues(timeline, summary, policyName) {
     if (bulletOnly === 3) issues.push({ sec: row.sec, type: "bullets_without_targets", purpose: METRIC_PURPOSES.enemyBullets });
     if (row.damage > 0 && row.sec < 10 && policyName === "route") issues.push({ sec: row.sec, type: "early_route_damage", purpose: METRIC_PURPOSES.enemyBullets });
     if (row.hardTargets > 2) issues.push({ sec: row.sec, type: "hard_target_stack", purpose: METRIC_PURPOSES.hardTargets });
+    if (row.bossHp != null && row.bossPressure === 0 && row.sec > 50) issues.push({ sec: row.sec, type: "boss_lull", purpose: METRIC_PURPOSES.bossPressure });
   }
   if (["route", "marksman"].includes(policyName) && summary.routeCoverage < 0.85) {
     issues.push({ sec: Math.floor(summary.time), type: "low_route_coverage", purpose: METRIC_PURPOSES.routeCoverage });
@@ -280,6 +317,10 @@ function aggregate(runs) {
       bossReachRate: avg(group.map(r => r.summary.bossReached ? 1 : 0)),
       meanRouteCoverage: avg(group.map(r => r.summary.routeCoverage)),
       meanBottomCampPct: avg(group.map(r => r.summary.bottomCampPct)),
+      meanPressurePct: avg(group.map(r => r.summary.pressurePct)),
+      meanPulseOpportunityPct: avg(group.map(r => r.summary.pulseOpportunityPct)),
+      meanDeadlinePressurePct: avg(group.map(r => r.summary.deadlinePressurePct)),
+      meanBossPressurePct: avg(group.map(r => r.summary.bossPressurePct)),
       meanLaneSwitches: avg(group.map(r => r.summary.laneSwitches)),
       meanTime: avg(group.map(r => r.summary.time)),
       meanScore: avg(group.map(r => r.summary.score)),
@@ -336,6 +377,10 @@ function main() {
   if (report.byPolicy.route.clearRate < 0.6) hardIssues.push("route clear rate too low");
   if (report.byPolicy.marksman.bossReachRate < 0.8) hardIssues.push("marksman does not reach authored boss");
   if (report.byPolicy.route.meanConverted <= 0 || report.byPolicy.route.meanRelayHits < 3) hardIssues.push("route does not exercise Pulse Relay");
+  if (report.byPolicy.route.meanPressurePct < 0.25) hardIssues.push("route pressure is still too sparse");
+  if (report.byPolicy.route.meanPulseOpportunityPct < 0.12) hardIssues.push("route does not create enough pulse opportunities");
+  if (report.byPolicy.route.meanDeadlinePressurePct < 0.08) hardIssues.push("hard targets do not create enough deadline pressure");
+  if (report.byPolicy.route.meanBossPressurePct < 0.45) hardIssues.push("boss phase pressure is too low");
   if (report.byPolicy.noPulse.meanScore >= report.byPolicy.route.meanScore) hardIssues.push("noPulse score is not weaker than route");
   if (report.byPolicy.camper.clearRate >= report.byPolicy.route.clearRate && report.byPolicy.camper.meanScore >= report.byPolicy.route.meanScore * 0.85) hardIssues.push("camper remains a dominant policy");
   if (report.byPolicy["lane-holder"].clearRate >= report.byPolicy.route.clearRate && report.byPolicy["lane-holder"].meanScore >= report.byPolicy.route.meanScore * 0.9) hardIssues.push("lane-holder covers too much authored content");
