@@ -24,6 +24,7 @@ type: reference
 - [統合済 2026-05-23 → `projects/memory_redesign.md` §2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案: 適用案 3 つ (案A 想起目的タグ前置 / 案B Phase 2 §0 atom 引用必須化 / 案C feedback_rule_proliferation_canonical gating メタデータ) + pre-mortem + 5 サイクル運用観察方針登録、即実装ゼロ]
 - [候補保留 → `memory/feedback_rule_proliferation_canonical.md` に gating メタデータ形式案を 1 段下げて記述、5 サイクル試行後判定]
 - [Mir 補完関係: Mir = R-A〜R-I 抽象化路線そのものの自己診断 (該当 3 / 緩和 2) / Log = 既存圧縮インフラへの処方箋適用設計。両者で「自己診断 → 動かし方」の連続が成立]
+- [深層接続 2026-05-23 C226 Phase 2 → 千葉集 planetary_gear note の「甘い犯罪」(= ジャンル本質の妥協を装置で覆う) は Phoenix Yin 処方箋 (1)(2) と構造同型 = 「不完全さを装置で覆う」=「早すぎる圧縮を拒否し原始エピソードを残す」。両者とも **本人 (プレイヤー / 想起時の自分) が必要な瞬間に操作可能な粒度で残す**という同一設計原則の別言語表現。本接続は #shared-reads ts=1779514661 (5/23 14:37 Log C225 Phase 2 3点交差投稿: planetary_gear × Phoenix Yin × Mir 障壁4分類) で初記述、本サイクル #all-nao-u-lab ts=1779525319 (5/23 17:35 Log C226 Phase 2 ADV broadcast 応答) で「ジャンル史が解いてきた強制判定問題が Nao_u_BOT 全体の構造そのもの」として再強化。**beliefs B013「比喩=不変構造の発見」と通底**: 「甘い犯罪」「圧縮拒否」「障壁4分類」は別領域から同じ不変構造 (= 圧縮しないことが品質を上げる場面の存在) を比喩で指している。即原則化はせず観察フレームとして 5 サイクル運用継続 (C230 想定で測定判定)]
 
 ---
 
