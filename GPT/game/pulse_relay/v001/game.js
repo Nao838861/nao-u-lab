@@ -23,10 +23,6 @@
     return t * t * (3 - 2 * t);
   }
 
-  function routeBeat(e, span = 3) {
-    return Math.abs(Math.floor(e.phase || 0)) % span;
-  }
-
   function makeRng(seed) {
     let s = seed >>> 0;
     return function rand() {
@@ -64,7 +60,7 @@
   function lineColumn(frame, lane, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
-      const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 25);
+      const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 14);
       return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
@@ -86,7 +82,7 @@
       return ev(frame + Math.abs(offset) * (opts.stagger || 8), opts.kind || "curve", x, block, {
         route: "v",
         targetX: x,
-        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 18,
+        targetY: opts.endY == null ? 245 : opts.endY,
         exitX: x + (offset < 0 ? -92 : 92),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: offset < 0 ? -1 : 1,
@@ -100,7 +96,7 @@
 
   function crossSweep(frame, side, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
-      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 22),
+      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 8),
       route: "side",
       side,
       targetX: side < 0 ? W * 0.58 : W * 0.42,
@@ -119,7 +115,7 @@
       return ev(frame + i * (opts.stagger || 9), opts.kind || "curve", x, block, {
         route: "dive",
         targetX: x,
-        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 4) * 18,
+        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 8,
         exitX: x + (x < W / 2 ? -118 : 118),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: x < W / 2 ? -1 : 1,
@@ -273,7 +269,7 @@
         armored: { hp: 46, r: 23, speed: 64, score: 520, fireRate: 1.45 },
         harvest: { hp: 6, r: 12, speed: 104, score: 110, fireRate: 99 },
         escort: { hp: 16, r: 16, speed: 86, score: 240, fireRate: 1.8 },
-        boss: { hp: 720, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
+        boss: { hp: 620, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
       }[kind];
       this.enemies.push({
         kind,
@@ -461,40 +457,32 @@
           e.y = -52 + (116 + 52) * ease + Math.sin(Math.max(0, e.age - 3.0) * 0.9) * 10;
         } else if (e.route === "line") {
           // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
-          const beat = routeBeat(e);
-          const entry = 132 + beat * 5;
-          const exit = 156 - beat * 7;
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: entry, ease: "smooth" },
-            { x: e.targetX, y: H + 62, t: exit, ease: beat === 1 ? "linear" : "smooth" },
+            { x: e.targetX, y: e.targetY, t: 140, ease: "smooth" },
+            { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
           ]);
         } else if (e.route === "v") {
           // V bursts are a fold-out cue: enter as a readable shape, then peel back upward.
-          const beat = routeBeat(e, 4);
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 116 + beat * 4, ease: "smooth" },
-            { x: e.exitX, y: -58, t: 106 + beat * 7, ease: beat % 2 === 0 ? "outCubic" : "smooth" },
+            { x: e.targetX, y: e.targetY, t: 150, ease: "smooth" },
+            { x: e.exitX, y: -58, t: 140, ease: "smooth" },
           ]);
         } else if (e.route === "dive") {
           // Dive slashes make a fast accent, kick once near the lane, then flee upward.
-          const beat = routeBeat(e, 4);
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 78 + beat * 4, ease: "outCubic" },
-            { x: e.targetX + e.side * (15 + beat * 4), y: e.targetY - (30 + beat * 5), t: 24 + beat * 4, ease: "linear" },
-            { x: e.exitX, y: -58, t: 84 + beat * 6, ease: "snapOut" },
+            { x: e.targetX, y: e.targetY, t: 100, ease: "outCubic" },
+            { x: e.targetX, y: e.targetY - 30, t: 40, ease: "linear" },
+            { x: e.exitX, y: -58, t: 110, ease: "outCubic" },
           ]);
         } else if (e.route === "side") {
           // Side enemies are crossing pressure: keep their travel direction and clear the lane.
-          const beat = routeBeat(e, 4);
-          const travel = e.side < 0 ? 1 : -1;
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 92 + beat * 5, ease: "linear" },
-            { x: e.targetX + travel * (28 + beat * 8), y: e.spawnY + (beat % 2 === 0 ? 4 : 10), t: 16 + beat * 3, ease: "linear" },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 18, t: 100 + beat * 5, ease: "linear" },
+            { x: e.targetX, y: e.spawnY, t: 110, ease: "linear" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: 110, ease: "linear" },
           ]);
         } else if (e.route === "large") {
           // Large enemies are deadlines: descend, hold long enough to demand focus, then retreat.
@@ -525,21 +513,21 @@
               nextFireRate = e.fireRate * 0.92;
             } else if (hpRatio > 0.33) {
               if (pattern === 0) {
-                this.fireFan(e, 7, 106, 0.13, "boss-mid-aim");
+                this.fireFan(e, 5, 100, 0.14, "boss-mid-aim");
               } else {
                 this.fireLaneGate(e, [-66, -22, 22, 66], 112, "boss-mid-lane");
                 this.fireGate(e, -52, 104, "boss-mid-cross");
                 this.fireGate(e, 52, 104, "boss-mid-cross");
               }
-              nextFireRate = e.fireRate * 0.72;
+              nextFireRate = e.fireRate * 0.82;
             } else {
-              this.fireFan(e, 9, 118, 0.12, "boss-final-aim");
-              this.fireLaneGate(e, [-76, -38, 38, 76], 126, "boss-final-lane");
+              this.fireFan(e, 7, 112, 0.13, "boss-final-aim");
+              this.fireLaneGate(e, [-66, 0, 66], 118, "boss-final-lane");
               if (pattern === 1) {
-                this.fireGate(e, -66, 116, "boss-final-cross");
-                this.fireGate(e, 66, 116, "boss-final-cross");
+                this.fireGate(e, -54, 108, "boss-final-cross");
+                this.fireGate(e, 54, 108, "boss-final-cross");
               }
-              nextFireRate = e.fireRate * 0.68;
+              nextFireRate = e.fireRate * 0.78;
             }
             if (bottomCamp) {
               this.fireAtPlayer(e, 196, -0.18, { role: "boss-bottom-punish" });
@@ -561,10 +549,16 @@
           } else if (e.kind === "feeder") {
             const bottomBias = this.player.y > H - 96 ? 48 * e.side : 0;
             this.fireAtPlayer(e, bottomCamp ? 184 : 136, e.side * 0.08 + bottomBias * 0.01, { role: "feeder-aim" });
-            if (e.route === "side") this.fireGate(e, -e.side * 36, 118, "feeder-cross");
+            if (e.route === "side" && e.age < 2.7) {
+              this.fireGate(e, -e.side * 36, 118, "feeder-cross");
+              nextFireRate = e.fireRate * 1.35;
+            }
           } else if (e.kind === "escort") {
             this.fireAtPlayer(e, 124, e.side * 0.2, { role: "escort-aim" });
-            this.fireGate(e, e.side * 42, 106, "escort-gate");
+            if (e.route === "side" && e.age < 2.8) {
+              this.fireGate(e, e.side * 42, 106, "escort-gate");
+              nextFireRate = e.fireRate * 1.3;
+            }
             if (bottomCamp) this.fireAtPlayer(e, 176, -e.side * 0.1, { role: "escort-bottom-punish" });
           } else if (e.kind === "harvest") {
             if (e.age > 2.2) this.fireAtPlayer(e, 102, 0, { role: "harvest-timeout" });
@@ -602,7 +596,7 @@
       const locks = [
         { minAge: 6.8, hpFloor: e.maxHp * 0.67 },
         { minAge: 11.2, hpFloor: e.maxHp * 0.34 },
-        { minAge: 16.2, hpFloor: 1 },
+        { minAge: 14.2, hpFloor: 1 },
       ];
       for (const lock of locks) {
         if (e.age < lock.minAge && e.hp < lock.hpFloor) {
