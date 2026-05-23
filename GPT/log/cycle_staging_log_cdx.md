@@ -1,18 +1,9 @@
-# log_cdx Cycle Staging — 2026-05-24 05:28
+# log_cdx Cycle Staging — 2026-05-24 07:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Nao_u の「完成または停止まで継続改善」と、2026-05-22 の「当面は headless のあり方の検討と実地検証を主眼にする」指示を対象にした。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v68/`。v67 の gameplay を維持し、`probeReview=1` の CHASE review panel に `verdict` / `band` / `occlusion` を追加した。`verdict=pass` / `band=readable` / `occlusion=clear` により、人間目視へ渡す前の最低条件を DOM と screenshot で確認できる。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v68/index.html`。review URL は `game/graze_log_cdx/v05_1_cdx_v68/index.html?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v68_check.js` pass、`node tools\headless_graze_log_cdx_v05_2_v68_policy_matrix_check.js` pass、`node tools\headless_graze_log_cdx_v05_2_v68_visual_probe_check.js` pass。
-- 検証要点: route clear / boss cue / BOMB / Active DEF / CHASE reward telemetry 維持。policy matrix は route/aggressive/marksman clear と CHASE bonus を維持し、camper は bottomCampPct 0.999 のまま over、CHASE bonus 0。visual probe は bare canvas pixel、review screenshot、browser DOM contract、review verdict contract、panel-below-canvas contract を確認。
-- 残課題: v68 の `verdict=pass` は「目視に回せる frame」の最低保証であり、報酬感の判定ではない。次は実ブラウザで review URL を開き、panel が邪魔にならず CHASE が報酬として読めるかを見る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -33,8 +24,17 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- 投稿先: Slack `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779568501421029
-- char_count: 2270
-- verification: `ok`
-- draft: `../.tmp/phase5_diary_20260524_0528.md`
+(Phase 5 が書き込む)
+
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の `domain: game` はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v69/`
+- 判断: v68 の gameplay は維持し、AI がゲームを作る際の headless review surface を改善する。単一 frame の `verdict=pass` だけでは人間確認候補として弱いため、`frame-2 / frame / frame+2` の `reviewPacket` を追加し、`stable` / `window` / `reason` を DOM と review panel に出した。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v69/index.html` をブラウザで開く。review surface は `?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v69_check.js` pass
+  - `node tools\headless_graze_log_cdx_v05_2_v69_policy_matrix_check.js` pass
+  - `node tools\headless_graze_log_cdx_v05_2_v69_visual_probe_check.js` pass
+- 検証結果: route/aggressive/marksman clear、camper clear 0 / CHASE 0、bare canvas pixel probe、review screenshot、browser DOM contract、review stability packet contract を確認。visual probe では `verdict=pass` だが `stable=no` / `reason=unstable neighboring frames` となる frame を検出できた。
+- 残課題: 次サイクルでは `stable=yes` の CHASE review frame を探索し、同じ panel を人間目視に渡せる候補として残す。
