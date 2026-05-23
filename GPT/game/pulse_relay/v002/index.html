@@ -35,8 +35,8 @@
         right: keys.has("ArrowRight") || keys.has("KeyD"),
         up: keys.has("ArrowUp") || keys.has("KeyW"),
         down: keys.has("ArrowDown") || keys.has("KeyS"),
-        shoot: keys.has("KeyZ") || keys.has("Space"),
-        pulse: keys.has("KeyX") || keys.has("ShiftLeft") || keys.has("ShiftRight"),
+        shoot: true,
+        pulse: keys.has("Space") || keys.has("KeyX") || keys.has("ShiftLeft") || keys.has("ShiftRight"),
         restart: keys.has("KeyR"),
         pausePressed,
       };
@@ -162,7 +162,7 @@
       }
       ctx.fillStyle = "rgba(233,246,255,0.74)";
       ctx.font = "11px system-ui, sans-serif";
-      ctx.fillText("Move WASD/Arrows  Shoot Z/Space  Pulse X/Shift  Restart R", 12, H - 12);
+      ctx.fillText("Move WASD/Arrows  Auto Shot  Pulse Space/X/Shift  Restart R", 12, H - 12);
     }
 
     function drawMessage() {

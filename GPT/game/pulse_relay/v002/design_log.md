@@ -129,3 +129,36 @@
 
 - 敵数は増えたが、20-28 秒付近は意図的に息継ぎを作ったため、実ブラウザで薄く感じるなら carrier setup bridge を増やすより、次の波の予告弾や視覚演出でつなぐ方がよい。
 - `minGap: 1.06` は近接した編隊密度としてはよいが、見た目でまだ窮屈なら、敵数を減らすのではなく同一 route 内の lane 幅を少し広げる。
+## 2026-05-23 auto-shot / density / stage-flow correction pass
+
+ユーザー指摘:
+
+> 弾は撃ちっぱなしにして、spaceは違うことに使う方が良い。敵出現で何もない時間や敵の数が少ない時間が長い。過去作と比較してみて。横から出る敵が無意味に硬くて撃破できない。敵の展開が、縦→横→なにか→縦→横・・・・と同じ展開が二回繰り返して単調。二回目は中型敵と絡めるなど、ステージの展開が存在してない。これも記憶ログにある問題なのに解決できてない
+
+過去作比較:
+
+- shot_log v01 の記録値は target uptime 0.960、midgame shootable 16.31、midgame bullets 30.37、max empty 0.33s。これはかなり高密度なショット系の基準。
+- graze_log_cdx v57 のゲーム相応な目標値は meanMidgameShootable 5.27、meanMidgameBullets 4.23、meanMaxNoShootableGapSec 1、meanMaxEmptyScreenGapSec 1。
+- 今回の Pulse Relay v002 は、直前の測定で meanMidgameShootable 3.60-4.24 付近に落ち、13s/29s/36s/49s などに低 shootable の谷が出ていた。つまり「空白 run はない」と言えても、過去作の dense flow には届いていなかった。
+
+対処:
+
+- 通常ショットは常時 auto-fire に変更し、Space/X/Shift は pulse 用にした。`index.html` の入力表示も `Auto Shot / Pulse Space/X/Shift` に変更。
+- 横から出る lance/sideArc の HP を下げ、横圧は「硬さ」ではなく出現間隔、横移動、弾圧、他 wave との絡みで成立させる方針に戻した。
+- 13 秒付近の空白は `orange cleanup pickup` で埋めた。右からの返しが入る前に拾える小型を置き、単なる待ち時間にしない。
+- 18-23 秒は `magenta recovery pickup` を追加し、diver の切り込み後に中央へ戻って拾える小型を置いた。diver と同じ出口を使って重ならないよう、lane を中央寄りに再調整した。
+- 29-36 秒は二回目の縦横反復ではなく、`second phrase left/right anchor` という中型 carrier を入れ、`carrier setup bridge/cross/harvest connector` をその前後に置いた。二回目の展開は「中型を撃たせつつ周囲の小型と横圧を処理する」構造に変えた。
+- 45 秒以降は relay tail と priority lead-in の lane を分けた。前座と切り込みが同じレーンを踏んで重なる失敗を、右端/左端の役割分離で修正した。
+
+再検証:
+
+- `node game\pulse_relay\v002\enemy_overlap_check.js`: OK。`pairOverlaps: 0`, `minGap: 0.58`。
+- `node game\pulse_relay\v002\route_motion_check.js`: OK。route/phase ごとの速度ゲート通過。
+- `node game\pulse_relay\v002\timeline_eval.js`: OK。balanced clear 84.53s、boring runs なし、low-shootable runs なし、visible-but-not-shootable runs なし、heavy pressure なし、meanMidgameShootable 4.71。
+- `node game\pulse_relay\v002\verify.js`: OK。balanced/aggressive/conservative/pulse-heavy 全 clear。boss duration は 19.08-24.53s。
+
+今回の教訓:
+
+- 「空白 run がない」だけでは足りない。過去作比較の密度指標、特に meanMidgameShootable と low-shootable 秒を同時に見る必要がある。
+- 敵を増やす時は、数値だけ増やすと exit 中の敵と次 wave の entry/show が重なる。必ず `intent -> lane -> spawn gap -> overlap check -> timeline` の順で直す。
+- 二回目の同型展開は、そのまま繰り返さず、中型、回収小型、横圧、pulse 判断など、前回になかったプレイヤー判断を追加する。

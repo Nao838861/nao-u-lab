@@ -57,3 +57,20 @@
 - 敵数を増やす時は、先に wave ごとの「プレイヤーに何をさせるか」を固定し、その意図を壊さない範囲で数を増やす。
 - overlap が出たら、検証を緩める前に「同じ route の退場と次 wave の入場が同じ画面位置を使っていないか」を見る。
 - headless が通っても、敵同士の連携感は別評価にする。visibleTargets の密度だけでなく、前の敵が次の敵の狙いを作っているかを見る。
+## 2026-05-23 auto-shot / density / repeated-flow feedback
+
+自分でできていると思っていたが、できていなかった点:
+
+- Space を通常ショットに割り当てたままにしていた。STG としては撃ちっぱなしを基本にし、Space は pulse など判断のある行動へ使うべきだった。
+- `boringRuns: []` を見て安心し、敵が少ない秒や shootableTargets が低い秒を過去作と比較していなかった。shot_log v01 の midgame shootable 16.31、graze_log_cdx v57 の meanMidgameShootable 5.27 に対し、Pulse Relay は 3.60-4.24 付近まで落ちていた。
+- 横から出る敵の硬さを、役割のある横圧ではなく単なる撃破不能感にしていた。横敵は HP で止めるのではなく、間隔、出現側、弾、他敵との組み合わせで圧を作る。
+- ステージ展開が「縦 -> 横 -> なにか -> 縦 -> 横」の繰り返しに戻っていた。二回目の展開に中型アンカー、回収小型、横圧、pulse 判断を入れるという記憶ログ上の教訓が実装に落ちていなかった。
+- 敵を足した直後、exit 中の既存敵と次 wave の entry/show が重なる問題を何度も出した。重なりは lane offset ではなく、spawn gap、route phase、役割別の画面領域で解く必要がある。
+
+次回の防止策:
+
+- 新規 STG では最初から auto-fire を既定にし、主ボタンは pulse/shift/charge/lock など判断のある行動に使う。
+- timeline_eval には `meanMidgameShootable` と `lowShootableRuns` を入れ、「空白 run なし」だけで合格にしない。
+- 過去作比較は毎回、shot_log の高密度基準と graze_log のゲーム相応基準の両方を見る。完全コピーではなく、現在のゲームの狙いに対して密度が足りているかを判断する。
+- 二回目の同型 wave を作る時は、必ず「一回目と何が違う判断になったか」を wave_intent_table に書いてから実装する。
+- 敵追加後は `enemy_overlap_check -> timeline_eval -> verify -> route_motion_check` を一巡し、失敗したら指標を緩めず、意図と route phase を見直す。

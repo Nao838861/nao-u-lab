@@ -40,3 +40,15 @@
 - `boss`: 60.0 秒開始。HP 1950。verify で 18.22-22.67 秒の boss duration に収まる。
 
 この表は、次回調整時に「敵数を減らして楽にする」のではなく、各 wave の意図を保ったまま lane / spawn gap / route phase を調整するための基準にする。
+## 2026-05-23 auto-shot / density pass 後の読み替え
+
+- `orange cleanup pickup`: 12.1-15.7 秒。左の orange escort が掃けた後、右の answer が shootable になるまでの空白を埋める。目的は敵数稼ぎではなく、左から右への切り返し前に中央へ戻る撃破対象を置くこと。
+- `magenta recovery pickup`: 19.3-23.0 秒。diver の短い show を追った後、中央へ戻って小型を拾う時間を作る。diver と同じ出口を踏まないよう、lane は中央寄りで重なり検査済み。
+- `second phrase left/right anchor`: 28.7 秒と 32.2 秒。二回目の縦横反復をそのまま繰り返さず、中型 carrier を撃たせる。周辺の `carrier setup bridge/cross/harvest connector` は、アンカーを撃つか小型を先に処理するかを分岐させる。
+- `carrier priority lead-in`: 47.1-51.9 秒。次の diver cut と同じ中央レーンを使わず、左端の前座として置く。前座が切り込み役の着地点を踏まないことを `enemy_overlap_check` で確認する。
+
+この pass の telemetry 合格値:
+
+- `enemy_overlap_check`: pairOverlaps 0 / minGap 0.58。
+- `timeline_eval`: meanMidgameShootable 4.71 / boringRuns none / lowShootableRuns none / visible-but-not-shootable runs none。
+- 過去作比較: shot_log v01 の midgame shootable 16.31 は高密度基準、graze_log_cdx v57 の meanMidgameShootable 5.27 はゲーム相応基準。Pulse Relay v002 は 4.71 で、完全な shot_log 密度ではないが、以前の 3.60-4.24 から回復した。

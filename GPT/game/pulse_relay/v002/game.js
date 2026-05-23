@@ -260,7 +260,7 @@
       add(7 * FPS + 8 + i * 22, "lance", "sideLance", {
         side: -1,
         lane: [132, 158, 184, 210, 236, 262, 288][i],
-        hp: 28,
+        hp: 18,
         radius: 13,
         score: 120,
         charge: 8,
@@ -281,11 +281,24 @@
         intent: "left orange escort center bait",
       });
     }
+    for (let i = 0; i < 5; i++) {
+      add(12 * FPS + 8 + i * 13, "scout", "scoutRail", {
+        lane: [80, 112, 144, 176, 208][i],
+        side: i % 2 === 0 ? -1 : 1,
+        hp: 12,
+        radius: 12,
+        score: 80,
+        charge: 6,
+        yBias: -58,
+        fireSkip: 5,
+        intent: "orange cleanup pickup",
+      });
+    }
     for (let i = 0; i < 7; i++) {
       add(13 * FPS + 18 + i * 22, "lance", "sideLance", {
         side: 1,
         lane: [296, 270, 244, 218, 192, 166, 140][i],
-        hp: 28,
+        hp: 18,
         radius: 13,
         score: 120,
         charge: 8,
@@ -307,7 +320,7 @@
       });
     }
     for (let i = 0; i < 6; i++) {
-      add(18 * FPS + i * 54, "diver", "diverCut", {
+      add(18 * FPS + i * 44, "diver", "diverCut", {
         side: [1, -1, 1, -1, 1, -1][i],
         lane: [132, 172, 212, 252, 292, 332][i],
         hp: 26,
@@ -318,24 +331,76 @@
         intent: "magenta paired cuts",
       });
     }
-    for (let i = 0; i < 8; i++) {
-      add(25 * FPS + 20 + i * 17, "scout", "scoutRail", {
-        lane: [66, 98, 130, 358, 390, 422, 390, 358][i],
+    for (let i = 0; i < 5; i++) {
+      add(19 * FPS + 18 + i * 14, "scout", "scoutRail", {
+        lane: [188, 220, 252, 284, 352][i],
         side: 1,
-        hp: 18,
+        hp: 12,
+        radius: 12,
+        score: 80,
+        charge: 6,
+        yBias: -64,
+        fireSkip: 5,
+        intent: "magenta recovery pickup",
+      });
+    }
+    for (let i = 0; i < 9; i++) {
+      add(22 * FPS + 6 + i * 15, "scout", "scoutRail", {
+        lane: [150, 178, 206, 234, 262, 290, 318, 346, 374][i],
+        side: i < 4 ? -1 : 1,
+        hp: 14,
         radius: 12,
         score: 85,
         charge: 6,
-        yBias: -48,
+        yBias: -42,
         fireSkip: 4,
-        intent: "magenta cut support ribbon",
+        intent: "relief harvest ribbon",
+      });
+    }
+    add(24 * FPS + 20, "carrier", "carrierWake", {
+      lane: 240,
+      side: 1,
+      hp: 88,
+      radius: 18,
+      score: 320,
+      charge: 18,
+      intent: "mid anchor gate",
+    });
+    add(28 * FPS + 40, "carrier", "carrierWake", {
+      lane: 96,
+      side: -1,
+      hp: 132,
+      radius: 18,
+      score: 330,
+      charge: 16,
+      intent: "second phrase left anchor",
+    });
+    add(32 * FPS + 12, "carrier", "carrierWake", {
+      lane: 384,
+      side: 1,
+      hp: 132,
+      radius: 18,
+      score: 330,
+      charge: 16,
+      intent: "second phrase right anchor",
+    });
+    for (let i = 0; i < 6; i++) {
+      add(25 * FPS + 4 + i * 22, "lance", "sideArc", {
+        side: i < 3 ? -1 : 1,
+        lane: [184, 214, 244, 274, 304, 334][i],
+        hp: 20,
+        radius: 13,
+        score: 118,
+        charge: 8,
+        fireSkip: 3,
+        intent: "mid anchor side feeders",
       });
     }
     for (let i = 0; i < 7; i++) {
-      add(28 * FPS + 10 + i * 17, "scout", "scoutRail", {
-        lane: [184, 216, 248, 280, 248, 216, 184][i],
+      add(28 * FPS + 32 + i * 14, "scout", "scoutRail", {
+        lane: [168, 200, 232, 264, 296, 120, 152][i],
         side: -1,
-        hp: 18,
+        hp: 14,
         radius: 12,
         score: 85,
         charge: 6,
@@ -344,11 +409,11 @@
         intent: "carrier setup bridge",
       });
     }
-    for (let i = 0; i < 8; i++) {
-      add(i < 4 ? 30 * FPS + 8 + i * 28 : 35 * FPS + (i - 4) * 28, "lance", "sideLance", {
-        side: i < 4 ? 1 : -1,
-        lane: [298, 270, 242, 214, 134, 162, 190, 218][i],
-        hp: 26,
+    for (let i = 0; i < 4; i++) {
+      add(31 * FPS + 4 + i * 24, "lance", "sideLance", {
+        side: 1,
+        lane: [298, 270, 242, 214][i],
+        hp: 18,
         radius: 13,
         score: 115,
         charge: 8,
@@ -356,11 +421,24 @@
         intent: "carrier setup cross",
       });
     }
+    for (let i = 0; i < 8; i++) {
+      add(34 * FPS + 24 + i * 14, "scout", "scoutRail", {
+        lane: [120, 152, 184, 216, 248, 280, 312, 344][i],
+        side: i % 2 === 0 ? -1 : 1,
+        hp: 14,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -52,
+        fireSkip: 4,
+        intent: "carrier setup harvest connector",
+      });
+    }
     for (let i = 0; i < 3; i++) {
-      add(36 * FPS + i * 130, "carrier", "carrierWake", {
+      add(36 * FPS + i * 116, "carrier", "carrierWake", {
         lane: [120, 360, 240][i],
         side: i % 2 === 0 ? -1 : 1,
-        hp: 120,
+        hp: 96,
         radius: 18,
         score: 360,
         charge: 16,
@@ -368,10 +446,10 @@
       });
     }
     for (let i = 0; i < 8; i++) {
-      add(37 * FPS + 12 + i * 22, "lance", "sideArc", {
+      add(37 * FPS + 12 + i * 20, "lance", "sideArc", {
         side: -1,
         lane: [190, 216, 242, 268, 294, 320, 346, 372][i],
-        hp: 28,
+        hp: 20,
         radius: 13,
         score: 120,
         charge: 8,
@@ -380,10 +458,10 @@
       });
     }
     for (let i = 0; i < 8; i++) {
-      add(44 * FPS + i * 22, "lance", "sideArc", {
+      add(43 * FPS + 20 + i * 20, "lance", "sideArc", {
         side: 1,
         lane: [372, 346, 320, 294, 268, 242, 216, 190][i],
-        hp: 28,
+        hp: 20,
         radius: 13,
         score: 120,
         charge: 8,
@@ -391,11 +469,37 @@
         intent: "green relay answer arc",
       });
     }
+    for (let i = 0; i < 7; i++) {
+      add(45 * FPS + 8 + i * 16, "scout", "scoutRail", {
+        lane: [388, 420, 452, 420, 388, 420, 452][i],
+        side: 1,
+        hp: 14,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -54,
+        fireSkip: 4,
+        intent: "relay tail cover",
+      });
+    }
+    for (let i = 0; i < 5; i++) {
+      add(47 * FPS + 8 + i * 15, "scout", "scoutRail", {
+        lane: [38, 70, 102, 134, 410][i],
+        side: -1,
+        hp: 14,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -58,
+        fireSkip: 4,
+        intent: "carrier priority lead-in",
+      });
+    }
     for (let i = 0; i < 6; i++) {
       add(49 * FPS + i * 34, "diver", "diverCut", {
         side: i % 2 === 0 ? -1 : 1,
         lane: [148, 184, 220, 256, 292, 328][i],
-        hp: 26,
+        hp: 22,
         radius: 12,
         score: 135,
         charge: 8,
@@ -407,7 +511,7 @@
       add(53 * FPS + i * 30, "diver", "diverCut", {
         side: [1, -1, 1, -1, 1, -1, 1][i],
         lane: [132, 162, 192, 222, 252, 282, 312][i],
-        hp: 26,
+        hp: 22,
         radius: 12,
         score: 135,
         charge: 8,
@@ -419,7 +523,7 @@
       add(56 * FPS + 12 + i * 24, "lance", "sideLance", {
         side: -1,
         lane: [136, 164, 192, 220, 248, 276][i],
-        hp: 26,
+        hp: 18,
         radius: 13,
         score: 115,
         charge: 8,
@@ -431,7 +535,7 @@
       add(58 * FPS + 2 + i * 15, "scout", "scoutRail", {
         lane: [168, 196, 224, 252, 280, 308, 280, 252][i],
         side: 1,
-        hp: 18,
+        hp: 14,
         radius: 12,
         score: 85,
         charge: 6,
@@ -533,7 +637,7 @@
       p.shotCd = Math.max(0, p.shotCd - 1);
       p.pulseCd = Math.max(0, p.pulseCd - 1);
 
-      if (input.shoot && p.shotCd <= 0) {
+      if (p.shotCd <= 0) {
         p.shotCd = 5;
         this.playerShots.push({ x: p.x - 5, y: p.y - 12, vx: -0.25, vy: -9.5, r: 3, damage: 6, kind: "shot" });
         this.playerShots.push({ x: p.x + 5, y: p.y - 12, vx: 0.25, vy: -9.5, r: 3, damage: 6, kind: "shot" });

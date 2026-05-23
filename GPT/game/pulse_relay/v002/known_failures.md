@@ -44,3 +44,17 @@
 
 - 実ブラウザの目視では、20-28 秒の息継ぎが薄く感じる可能性がある。増やすなら敵数追加より、次 wave の予告や画面奥の演出でつなぐ。
 - 音がないため、敵数と展開を増やしてもテンションの上限は視覚だけに依存している。
+## 2026-05-23 auto-shot / density pass 後の未解決リスク
+
+解消したもの:
+
+- 通常ショットを auto-fire に変更し、Space/X/Shift を pulse にした。
+- 13 秒付近の空白、29-36 秒の低 shootable run、横敵の無意味な硬さ、二回目の縦横反復の単調さを修正した。
+- 過去作比較を timeline に戻した。最終値は meanMidgameShootable 4.71。shot_log v01 の 16.31 には届かないが、graze_log_cdx v57 の 5.27 に近いゲーム相応の範囲まで戻した。
+- `enemy_overlap_check` は `pairOverlaps: 0`, `minGap: 0.58`。重なり対策で不格好な直角 offset を使わず、spawn gap / lane progression / 左右ブロック分離で解いた。
+
+まだ残るリスク:
+
+- 実ブラウザでの手触りは、headless の meanMidgameShootable だけでは保証できない。特に 40-45 秒と 53 秒付近は、秒単位では run になっていないが、プレイ感として谷に見える可能性がある。
+- boss duration は verify 上 19.08-24.53s。瞬殺ではないが、balanced で 24 秒台に寄る場合があり、単調に感じるなら boss phase の変化や中間召喚を増やす方が HP 調整より先。
+- 音がないため、auto-fire / pulse / boss phase のテンションは視覚だけに依存している。

@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { runHeadless, sampleRoutes } = require("./game.js");
+const { runHeadless, sampleRoutes, BOSS_START, FPS } = require("./game.js");
 
 const run = runHeadless("balanced");
 const rows = run.timeline.map((s) => ({
@@ -15,10 +15,14 @@ const rows = run.timeline.map((s) => ({
   damageTaken: s.damageTaken,
 }));
 
-const boring = rows.filter((r) => r.sec < 48 && r.visibleTargets === 0 && r.enemyBullets < 3).map((r) => r.sec);
+const bossStartSec = Math.round(BOSS_START / FPS);
+const preBossRows = rows.filter((r) => r.sec < bossStartSec);
+const midgameRows = rows.filter((r) => r.sec >= 18 && r.sec < bossStartSec);
+const boring = preBossRows.filter((r) => r.visibleTargets === 0 && r.enemyBullets < 3).map((r) => r.sec);
+const lowShootable = preBossRows.filter((r) => r.shootableTargets < 2 && r.enemyBullets < 8).map((r) => r.sec);
 const notShootable = rows.filter((r) => r.visibleTargets > 0 && r.shootableTargets === 0).map((r) => r.sec);
 const heavy = rows.filter((r) => r.enemyBullets > 42 || r.nearBullets > 7).map((r) => r.sec);
-const bossRows = rows.filter((r) => r.sec >= 48 && r.bossHp > 0);
+const bossRows = rows.filter((r) => r.sec >= bossStartSec && r.bossHp > 0);
 const bossStart = bossRows[0];
 const bossEnd = bossRows[bossRows.length - 1];
 
@@ -37,15 +41,20 @@ function runs(values) {
 }
 
 const boringRuns = runs(boring).filter((r) => r.length >= 2);
+const lowShootableRuns = runs(lowShootable).filter((r) => r.length >= 2);
 const notShootableRuns = runs(notShootable).filter((r) => r.length >= 2);
+const meanMidgameShootable = midgameRows.reduce((sum, r) => sum + r.shootableTargets, 0) / Math.max(1, midgameRows.length);
 
 const summary = {
   final: run.final,
   boring,
   boringRuns,
+  lowShootable,
+  lowShootableRuns,
   notShootable,
   notShootableRuns,
   heavy,
+  meanMidgameShootable: Number(meanMidgameShootable.toFixed(2)),
   bossStart,
   bossEnd,
   routeSamples: sampleRoutes().filter((r) => [1, 2, 9, 16, 25, 28].includes(r.id)),
@@ -66,6 +75,9 @@ const md = [
   `- pulseUses: ${run.final.pulseUses}`,
   `- isolated boring seconds before boss: ${boring.length ? boring.join(", ") : "none"}`,
   `- boring runs before boss: ${boringRuns.length ? boringRuns.map((r) => r.join("-")).join(", ") : "none"}`,
+  `- isolated low-shootable seconds before boss: ${lowShootable.length ? lowShootable.join(", ") : "none"}`,
+  `- low-shootable runs before boss: ${lowShootableRuns.length ? lowShootableRuns.map((r) => r.join("-")).join(", ") : "none"}`,
+  `- mean midgame shootable: ${meanMidgameShootable.toFixed(2)}`,
   `- isolated visible-but-not-shootable seconds: ${notShootable.length ? notShootable.join(", ") : "none"}`,
   `- visible-but-not-shootable runs: ${notShootableRuns.length ? notShootableRuns.map((r) => r.join("-")).join(", ") : "none"}`,
   `- heavy pressure seconds: ${heavy.length ? heavy.join(", ") : "none"}`,
@@ -80,9 +92,10 @@ const md = [
   "",
   "## 読み",
   "",
-  "- 0-10 秒は scout と side の重なりで visible/shootable が維持されるかを見る。",
-  "- 30-45 秒は carrier と side arc で pulse の必要性があるかを見る。",
-  "- boss は 3 秒以内に hp が消えていないかを見る。",
+  "- 0-10 秒は scout と side の重なりではなく、visible/shootable が継続するかを見る。",
+  "- 18 秒以降は、単発の敵紹介ではなく、切り込み、回収、小型、アンカー、中型の絡みが維持されるかを見る。",
+  "- 30-45 秒は carrier と side arc で pulse の必要性があるか、かつ敵数の谷が長く残らないかを見る。",
+  "- boss は 3 秒以内に HP が消えていないか、逆に撃ち込みが単調に長すぎないかを見る。",
   "",
 ].join("\n");
 
@@ -90,6 +103,8 @@ fs.writeFileSync("eval_timeline.md", md, "utf8");
 
 const failures = [];
 if (boringRuns.length > 0) failures.push(`boring run before boss: ${boringRuns.map((r) => r.join("-")).join(",")}`);
+if (lowShootableRuns.some((r) => r.length >= 2)) failures.push(`low-shootable run before boss: ${lowShootableRuns.map((r) => r.join("-")).join(",")}`);
+if (meanMidgameShootable < 4.5) failures.push(`mean midgame shootable too low: ${meanMidgameShootable.toFixed(2)}`);
 if (notShootableRuns.length > 0) failures.push(`visible-but-not-shootable run: ${notShootableRuns.map((r) => r.join("-")).join(",")}`);
 if (heavy.length > 8) failures.push(`too many heavy pressure seconds: ${heavy.join(",")}`);
 if (!bossStart) failures.push("boss was not reached");
