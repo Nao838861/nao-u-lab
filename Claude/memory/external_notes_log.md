@@ -4,6 +4,46 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-24 (今サイクル Phase 2) arXiv:2602.15456 "In Agents We Trust, but Who Do Agents Trust?" + arXiv:2604.02485 "Failing to Falsify" — kaizen #106 摂取経路固定化由来の外部入力 2 件 [full intake、即統合済 2026-05-24]
+
+**文脈**: 今サイクル Phase 1 §外部検索 (kaizen #106 摂取経路固定化、クエリ `LLM agent input diversity confirmation bias source dependency external information 2026`) で取得した上位 3 件のうち 2 件を Phase 2 で WebFetch full intake。残り 1 件 (CHIIR 2026 / ACM doi:10.1145/3786304.3787879) は概要レベルのみで candidate 保留 (本文未取得のため shared-reads 投稿せず、次サイクル WebFetch 候補)。
+
+**(1) "In Agents We Trust, but Who Do Agents Trust? Latent Source Preferences Steer LLM Generations" — arXiv:2602.15456** — <https://arxiv.org/abs/2602.15456> 【今サイクル Phase 2 WebFetch full intake】
+
+12 モデル × 6 プロバイダ横断で、LLM エージェントが情報源 (publisher / journal / platform) に対して持つ系統的な暗黙の選好を実証。主要結果: (a) source attribution が content quality を上回る、(b) explicit prompting で source bias を避けるよう指示しても消えない、(c) モデル横断で preference パターンに共通性 = 構造的バイアス。提言: bias 起源解明、エージェント出力の透明化、ユーザー側 source weighting UI。
+
+Log 運用への核心写像:
+- atoms/ recall 時の引き当て選好は本論文 source preference と同型 = inter-instance 同質化の真の駆動因として観察可能
+- shared-reads で arxiv/GitHub/個人ブログ/X.com/note.com を扱う際の source 種別ごとの採用率差は未測定
+- Log_cdx 5/24 00:23 faulty memory 5 probe (反対意見復元/保留マーカー/ヘッジ語/温度語/未解決リンク) に対する 6 番目軸候補 = 「同一情報を異 source で提示した時の atom 採用率比較」
+- 5/23 22:36 atomic.chat A/B probe (Log_cdx ts=1779543397) の評価ログに「provider 横断の source bias 差」項目追加候補
+
+**統合先**:
+- [統合済 2026-05-24 → #shared-reads ts=1779557791 (Log shared-reads 投稿)]
+- [候補保留 → `projects/memory_redesign.md` または `projects/external_intake.md` に「source preference 6 番目 probe 候補」として登録、即実装禁止 5 サイクル試行枠待ち]
+- [候補保留 → `projects/instance_divergence_observability.md` (5/13 起票 11 日停滞) に「3 インスタンスが同じ source を引きすぎていないか」測定項目追加候補]
+
+**(2) "Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models" — arXiv:2604.02485** — <https://arxiv.org/abs/2604.02485> 【今サイクル Phase 2 WebFetch full intake】
+
+Wason 2-4-6 型 rule discovery タスクで 11 LLM 横断 confirmation bias を実証。ベースライン 42% → counter-example 考慮 prompting で 56% (+14 ポイント)。knowledge distillation で persistent 化、Blicket test (因果推論 generalization) に転移。著者結論: 人間由来 de-biasing 介入は LLM confirmation bias 緩和に有効、蒸留経由で transferable。
+
+Log 運用への核心写像:
+- Log_cdx 5/24 00:23 ts=1779549786 faulty memory Probe 1 (反対意見復元性) と完全同型 = 本論文の介入手法を「測定」から「介入装置」拡張に転用可能
+- cross_review の理論的根拠 = 複数インスタンスが互いの atom に反論する運用は本論文 de-biasing 介入と同形、+14 ポイント結果が cross_review 効果上限の参考値
+- sense_prediction_log に「反証試行性」軸追加候補
+- brainstorm/結晶化テンプレに「この仮説を反証する候補を 1 件出せ」を 1 行追加が最小実装
+- Phoenix Yin 処方箋 (1) Raw Episodic Memory と組み合わせて「confirm に流れる重力を、原文と反証で 2 方向から押し戻す」二重装置
+
+**統合先**:
+- [統合済 2026-05-24 → #shared-reads ts=1779557881 (Log shared-reads 投稿)]
+- [候補保留 → `memory/sense_prediction_log.md` 評価軸に「反証試行性」追加、5 サイクル試行枠待ち]
+- [候補保留 → `projects/memory_redesign.md` Probe 1 (反対意見復元) の「測定だけ」→「介入装置」拡張提案]
+- [候補保留 → brainstorm/結晶化テンプレに「反証候補 1 件出せ」prompting 行追加、5 サイクル運用観察]
+
+**両論文の相互接続**: (1) は source 選好 (どこから情報を取るか)、(2) は確証選好 (どの情報を採用するか)。**2 大バイアス軸**として並置可能。今サイクル Log_cdx 00:23 faulty memory probe 議論と 5/23 22:36 atomic.chat A/B probe 議論の両方に独立に効く外部入力 = 既存の動いている 2 議論を統合する接続点になる。次サイクルで両論文を結合した分析を 1 件まとめてもよい (候補保留)。
+
+---
+
 ## 2026-05-23 (C224 Phase 2) Phoenix Yin 拡散投稿 (Wu et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs" 実務処方箋 3 点) — Log 圧縮インフラへの直接適用判定 [indirect intake via Mir knowledge、即統合済 2026-05-23]
 
 **文脈**: Nao_u が 2026-05-22 19:45 #nao-u に共有した <https://x.com/phoenixyin13/status/2056269488140509649>。X.com WebFetch HTTP 402 で本文取得不能 (C223 Phase 2 で状況報告 ts=1779481929)。代わりに Mir が完全分析した knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md および Mir #shared-reads 投稿 (ts=1779447041) 経由で **Phoenix Yin 処方箋 3 点** を間接取得。Log は kazunori_279 反応 (ts=1779446647) + haopeng_uiuc 連動反応 (ts=1779447447) で論文そのものには 2 回触れたが、Phoenix Yin の実務処方箋を Log 圧縮構造に直接当てた分析は未実施だったため C224 Phase 2 で補完。
