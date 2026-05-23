@@ -74,6 +74,7 @@
 
   function routeDuration(route) {
     if (route === "scoutRail") return 50 + 68 + 92;
+    if (route === "softDrop") return 34 + 44 + 46;
     if (route === "sideLance") return 62 + 74 + 82;
     if (route === "sideArc") return 66 + 72 + 84;
     if (route === "diverCut") return 58 + 42 + 92;
@@ -104,6 +105,27 @@
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
         return { x: x + side * 6, y: lerp(178 + yBias, H + 34, t), active: true, shootable: true, phase: "exit" };
+      }
+      return { x, y: H + 80, active: false, shootable: false, phase: "done" };
+    }
+
+    if (enemy.route === "softDrop") {
+      const entry = 34;
+      const show = 44;
+      const exit = 46;
+      const x = enemy.lane;
+      const yBias = enemy.yBias || 0;
+      if (age < entry) {
+        const t = easeSoft(age / entry);
+        return { x, y: lerp(-34, 76 + yBias, t), active: true, shootable: age > 6, phase: "entry" };
+      }
+      if (age < entry + show) {
+        const t = (age - entry) / show;
+        return { x: x + Math.sin(t * Math.PI) * side * 3, y: lerp(76 + yBias, 116 + yBias, t), active: true, shootable: true, phase: "show" };
+      }
+      if (age < entry + show + exit) {
+        const t = easeSoft((age - entry - show) / exit);
+        return { x: x + side * 5, y: lerp(116 + yBias, -42, t), active: true, shootable: true, phase: "exit" };
       }
       return { x, y: H + 80, active: false, shootable: false, phase: "done" };
     }
@@ -236,7 +258,7 @@
       add(36 + i * 14, "scout", "scoutRail", {
         lane: [132, 160, 188, 216, 244, 272, 300, 328, 356, 384][i],
         side: i < 3 ? -1 : 1,
-        hp: 20,
+        hp: 15,
         radius: 12,
         score: 90,
         charge: 7,
@@ -248,7 +270,7 @@
       add(4 * FPS + 56 + i * 16, "scout", "scoutRail", {
         lane: [172, 204, 236, 268, 300, 268, 236, 204][i],
         side: 1,
-        hp: 20,
+        hp: 15,
         radius: 12,
         score: 90,
         charge: 7,
@@ -260,7 +282,7 @@
       add(7 * FPS + 8 + i * 22, "lance", "sideLance", {
         side: -1,
         lane: [132, 158, 184, 210, 236, 262, 288][i],
-        hp: 18,
+        hp: 14,
         radius: 13,
         score: 120,
         charge: 8,
@@ -272,7 +294,7 @@
       add(8 * FPS + 18 + i * 20, "scout", "scoutRail", {
         lane: [70, 102, 134, 102][i],
         side: -1,
-        hp: 18,
+        hp: 12,
         radius: 12,
         score: 85,
         charge: 6,
@@ -290,7 +312,7 @@
         score: 80,
         charge: 6,
         yBias: -58,
-        fireSkip: 5,
+        fireSkip: 997,
         intent: "orange cleanup pickup",
       });
     }
@@ -298,7 +320,7 @@
       add(13 * FPS + 18 + i * 22, "lance", "sideLance", {
         side: 1,
         lane: [296, 270, 244, 218, 192, 166, 140][i],
-        hp: 18,
+        hp: 14,
         radius: 13,
         score: 120,
         charge: 8,
@@ -310,7 +332,7 @@
       add(14 * FPS + 24 + i * 18, "scout", "scoutRail", {
         lane: [400, 432, 464, 432, 400][i],
         side: 1,
-        hp: 18,
+        hp: 12,
         radius: 12,
         score: 85,
         charge: 6,
@@ -323,7 +345,7 @@
       add(18 * FPS + i * 44, "diver", "diverCut", {
         side: [1, -1, 1, -1, 1, -1][i],
         lane: [132, 172, 212, 252, 292, 332][i],
-        hp: 26,
+        hp: 19,
         radius: 12,
         score: 135,
         charge: 8,
@@ -340,7 +362,7 @@
         score: 80,
         charge: 6,
         yBias: -64,
-        fireSkip: 5,
+        fireSkip: 997,
         intent: "magenta recovery pickup",
       });
     }
@@ -348,7 +370,7 @@
       add(22 * FPS + 6 + i * 15, "scout", "scoutRail", {
         lane: [150, 178, 206, 234, 262, 290, 318, 346, 374][i],
         side: i < 4 ? -1 : 1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
@@ -357,10 +379,23 @@
         intent: "relief harvest ribbon",
       });
     }
+    for (let i = 0; i < 5; i++) {
+      add(23 * FPS + 42 + i * 13, "scout", "softDrop", {
+        lane: [54, 86, 118, 426, 458][i],
+        side: i < 3 ? -1 : 1,
+        hp: 10,
+        radius: 12,
+        score: 80,
+        charge: 5,
+        yBias: -34,
+        fireSkip: 997,
+        intent: "mid anchor soft pickup",
+      });
+    }
     add(24 * FPS + 20, "carrier", "carrierWake", {
       lane: 240,
       side: 1,
-      hp: 88,
+      hp: 72,
       radius: 18,
       score: 320,
       charge: 18,
@@ -369,7 +404,7 @@
     add(28 * FPS + 40, "carrier", "carrierWake", {
       lane: 96,
       side: -1,
-      hp: 132,
+      hp: 102,
       radius: 18,
       score: 330,
       charge: 16,
@@ -378,7 +413,7 @@
     add(32 * FPS + 12, "carrier", "carrierWake", {
       lane: 384,
       side: 1,
-      hp: 132,
+      hp: 102,
       radius: 18,
       score: 330,
       charge: 16,
@@ -388,7 +423,7 @@
       add(25 * FPS + 4 + i * 22, "lance", "sideArc", {
         side: i < 3 ? -1 : 1,
         lane: [184, 214, 244, 274, 304, 334][i],
-        hp: 20,
+        hp: 15,
         radius: 13,
         score: 118,
         charge: 8,
@@ -400,7 +435,7 @@
       add(28 * FPS + 32 + i * 14, "scout", "scoutRail", {
         lane: [168, 200, 232, 264, 296, 120, 152][i],
         side: -1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
@@ -413,7 +448,7 @@
       add(31 * FPS + 4 + i * 24, "lance", "sideLance", {
         side: 1,
         lane: [298, 270, 242, 214][i],
-        hp: 18,
+        hp: 14,
         radius: 13,
         score: 115,
         charge: 8,
@@ -421,11 +456,24 @@
         intent: "carrier setup cross",
       });
     }
+    for (let i = 0; i < 4; i++) {
+      add(30 * FPS + 4 + i * 16, "scout", "softDrop", {
+        lane: [72, 112, 308, 448][i],
+        side: i < 2 ? -1 : 1,
+        hp: 10,
+        radius: 12,
+        score: 80,
+        charge: 5,
+        yBias: -34,
+        fireSkip: 997,
+        intent: "anchor handoff soft pickup",
+      });
+    }
     for (let i = 0; i < 8; i++) {
       add(34 * FPS + 24 + i * 14, "scout", "scoutRail", {
         lane: [120, 152, 184, 216, 248, 280, 312, 344][i],
         side: i % 2 === 0 ? -1 : 1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
@@ -434,11 +482,24 @@
         intent: "carrier setup harvest connector",
       });
     }
+    for (let i = 0; i < 5; i++) {
+      add(35 * FPS + 58 + i * 15, "scout", "softDrop", {
+        lane: [228, 268, 308, 428, 468][i],
+        side: 1,
+        hp: 10,
+        radius: 12,
+        score: 80,
+        charge: 5,
+        yBias: -32,
+        fireSkip: 997,
+        intent: "right anchor soft pickup",
+      });
+    }
     for (let i = 0; i < 3; i++) {
       add(36 * FPS + i * 116, "carrier", "carrierWake", {
         lane: [120, 360, 240][i],
         side: i % 2 === 0 ? -1 : 1,
-        hp: 96,
+        hp: 78,
         radius: 18,
         score: 360,
         charge: 16,
@@ -449,7 +510,7 @@
       add(37 * FPS + 12 + i * 20, "lance", "sideArc", {
         side: -1,
         lane: [190, 216, 242, 268, 294, 320, 346, 372][i],
-        hp: 20,
+        hp: 15,
         radius: 13,
         score: 120,
         charge: 8,
@@ -457,11 +518,24 @@
         intent: "green relay carriers arc",
       });
     }
+    for (let i = 0; i < 6; i++) {
+      add(41 * FPS + 4 + i * 14, "scout", "softDrop", {
+        lane: [42, 82, 122, 162, 202, 282][i],
+        side: -1,
+        hp: 10,
+        radius: 12,
+        score: 80,
+        charge: 5,
+        yBias: -34,
+        fireSkip: 997,
+        intent: "relay answer soft pickup",
+      });
+    }
     for (let i = 0; i < 8; i++) {
       add(43 * FPS + 20 + i * 20, "lance", "sideArc", {
         side: 1,
         lane: [372, 346, 320, 294, 268, 242, 216, 190][i],
-        hp: 20,
+        hp: 15,
         radius: 13,
         score: 120,
         charge: 8,
@@ -473,7 +547,7 @@
       add(45 * FPS + 8 + i * 16, "scout", "scoutRail", {
         lane: [388, 420, 452, 420, 388, 420, 452][i],
         side: 1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
@@ -486,7 +560,7 @@
       add(47 * FPS + 8 + i * 15, "scout", "scoutRail", {
         lane: [38, 70, 102, 134, 410][i],
         side: -1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
@@ -499,7 +573,7 @@
       add(49 * FPS + i * 34, "diver", "diverCut", {
         side: i % 2 === 0 ? -1 : 1,
         lane: [148, 184, 220, 256, 292, 328][i],
-        hp: 22,
+        hp: 17,
         radius: 12,
         score: 135,
         charge: 8,
@@ -511,7 +585,7 @@
       add(53 * FPS + i * 30, "diver", "diverCut", {
         side: [1, -1, 1, -1, 1, -1, 1][i],
         lane: [132, 162, 192, 222, 252, 282, 312][i],
-        hp: 22,
+        hp: 17,
         radius: 12,
         score: 135,
         charge: 8,
@@ -520,10 +594,23 @@
       });
     }
     for (let i = 0; i < 6; i++) {
+      add(52 * FPS + 12 + i * 14, "scout", "softDrop", {
+        lane: [178, 218, 258, 298, 338, 378][i],
+        side: i < 3 ? -1 : 1,
+        hp: 10,
+        radius: 12,
+        score: 80,
+        charge: 5,
+        yBias: -34,
+        fireSkip: 997,
+        intent: "pre-boss soft pickup",
+      });
+    }
+    for (let i = 0; i < 6; i++) {
       add(56 * FPS + 12 + i * 24, "lance", "sideLance", {
         side: -1,
         lane: [136, 164, 192, 220, 248, 276][i],
-        hp: 18,
+        hp: 14,
         radius: 13,
         score: 115,
         charge: 8,
@@ -535,7 +622,7 @@
       add(58 * FPS + 2 + i * 15, "scout", "scoutRail", {
         lane: [168, 196, 224, 252, 280, 308, 280, 252][i],
         side: 1,
-        hp: 14,
+        hp: 11,
         radius: 12,
         score: 85,
         charge: 6,
