@@ -1,6 +1,7 @@
 "use strict";
 
 const { Game, W, H } = require("./game.js");
+const { POLICIES } = require("./timeline_eval.js");
 
 function makeInput(game) {
   const p = game.player;
@@ -48,7 +49,7 @@ function clamp(v, lo, hi) {
 function run(seed) {
   const game = new Game(seed);
   for (let i = 0; i < 60 * 100; i++) {
-    game.update(makeInput(game));
+    game.update(POLICIES.route(game));
     if (game.state !== "play") break;
   }
   return game.snapshot();

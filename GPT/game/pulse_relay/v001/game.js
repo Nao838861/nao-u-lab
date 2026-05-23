@@ -23,6 +23,45 @@
     };
   }
 
+  function line(kind, frame, xs, opts = {}) {
+    return xs.map((x, i) => ({
+      frame: frame + Math.round((opts.stagger || 0) * i),
+      kind,
+      x,
+      y: opts.y == null ? -34 - i * 10 : opts.y - i * 10,
+      fireCd: (opts.fireCd || 0.7) + i * (opts.fireStep || 0.06),
+      phase: (opts.phase || 0) + i * 0.55,
+      label: opts.label || kind,
+    }));
+  }
+
+  function buildWaveEvents() {
+    const events = [
+      ...line("scout", 40, [120, 240, 360], { stagger: 18, label: "W1 lanes" }),
+      ...line("scout", 210, [80, 160, 320, 400], { stagger: 12, label: "W1 side fill" }),
+      ...line("weaver", 420, [70, 170, 310, 410], { stagger: 20, label: "W2 weave lanes" }),
+      ...line("scout", 620, [110, 190, 290, 370], { stagger: 14, label: "W2 shot fuel" }),
+      ...line("bruiser", 860, [240], { stagger: 36, fireCd: 0.95, label: "W3 relay drill" }),
+      ...line("scout", 940, [105, 170, 310, 375], { stagger: 14, label: "W3 relay targets" }),
+      ...line("weaver", 1180, [90, 175, 305, 390], { stagger: 20, label: "W4 cross weave" }),
+      ...line("bruiser", 1480, [160, 320], { stagger: 42, fireCd: 0.9, label: "W5 heavy lanes" }),
+      ...line("scout", 1620, [82, 150, 220, 300, 370], { stagger: 12, label: "W5 small overlap" }),
+      ...line("weaver", 1900, [110, 200, 280, 370], { stagger: 24, label: "W6 preboss weave" }),
+      ...line("scout", 2100, [80, 145, 210, 270, 335, 400], { stagger: 10, label: "W6 preboss fuel" }),
+      ...line("bruiser", 2320, [180, 300], { stagger: 48, fireCd: 0.85, label: "W7 gate pair" }),
+      ...line("scout", 2520, [92, 154, 216, 278, 340, 402], { stagger: 9, label: "W7 gate fuel" }),
+      { frame: 2760, kind: "boss", x: W / 2, y: 92, fireCd: 1.15, label: "BOSS" },
+      ...line("scout", 3000, [105, 180, 300, 375], { stagger: 10, label: "B1 boss fuel" }),
+      ...line("weaver", 3300, [95, 240, 385], { stagger: 18, label: "B2 boss weave" }),
+      ...line("scout", 3600, [90, 160, 320, 390], { stagger: 10, label: "B3 boss fuel" }),
+      ...line("bruiser", 3900, [240], { stagger: 40, fireCd: 0.85, label: "B4 boss heavy" }),
+      ...line("scout", 4200, [105, 180, 300, 375], { stagger: 10, label: "B5 late fuel" }),
+    ];
+    return events.sort((a, b) => a.frame - b.frame);
+  }
+
+  const WAVE_EVENTS = buildWaveEvents();
+
   class Game {
     constructor(seed = 1779) {
       this.seed = seed;
@@ -55,8 +94,9 @@
         s: 28 + this.rand() * 70,
         a: 0.28 + this.rand() * 0.55,
       }));
-      this.waveIndex = 0;
+      this.waveEventIndex = 0;
       this.bossSpawned = false;
+      this.spawnLog = [];
       this.metrics = {
         pulses: 0,
         converted: 0,
@@ -70,10 +110,10 @@
 
     spawnEnemy(kind, x, y, opts = {}) {
       const base = {
-        scout: { hp: 16, r: 14, speed: 72, score: 120, fireRate: 1.45 },
-        weaver: { hp: 22, r: 15, speed: 58, score: 160, fireRate: 1.25 },
-        bruiser: { hp: 58, r: 22, speed: 36, score: 400, fireRate: 0.92 },
-        boss: { hp: 340, r: 42, speed: 0, score: 3000, fireRate: 0.72 },
+        scout: { hp: 13, r: 14, speed: 68, score: 120, fireRate: 2.35 },
+        weaver: { hp: 18, r: 15, speed: 54, score: 160, fireRate: 2.1 },
+        bruiser: { hp: 46, r: 22, speed: 34, score: 400, fireRate: 1.7 },
+        boss: { hp: 80, r: 42, speed: 0, score: 3000, fireRate: 1.45 },
       }[kind];
       this.enemies.push({
         kind,
@@ -90,28 +130,20 @@
         age: 0,
         boss: kind === "boss",
         phase: opts.phase || 0,
+        label: opts.label || kind,
       });
-      if (kind === "boss") this.metrics.bossReached = true;
+      this.spawnLog.push({ frame: this.frame, time: this.t, kind, x, y, label: opts.label || kind });
+      if (kind === "boss") {
+        this.metrics.bossReached = true;
+        this.bossSpawned = true;
+      }
     }
 
     schedule() {
-      const f = this.frame;
-      if (this.waveIndex === 0 && f === 40) {
-        for (let i = 0; i < 5; i++) this.spawnEnemy("scout", 80 + i * 80, -30 - i * 18, { fireCd: 0.6 + i * 0.16 });
-        this.waveIndex++;
-      }
-      if (this.waveIndex === 1 && f === 560) {
-        for (let i = 0; i < 6; i++) this.spawnEnemy("weaver", 58 + i * 72, -40 - i * 28, { phase: i * 0.6, fireCd: 0.5 + i * 0.12 });
-        this.waveIndex++;
-      }
-      if (this.waveIndex === 2 && f === 1180) {
-        this.spawnEnemy("bruiser", 160, -48, { fireCd: 0.4 });
-        this.spawnEnemy("bruiser", 320, -96, { fireCd: 0.8 });
-        this.waveIndex++;
-      }
-      if (!this.bossSpawned && f === 2700) {
-        this.spawnEnemy("boss", W / 2, 92, { fireCd: 0.9 });
-        this.bossSpawned = true;
+      while (this.waveEventIndex < WAVE_EVENTS.length && WAVE_EVENTS[this.waveEventIndex].frame <= this.frame) {
+        const e = WAVE_EVENTS[this.waveEventIndex];
+        this.spawnEnemy(e.kind, e.x, e.y, e);
+        this.waveEventIndex++;
       }
     }
 
@@ -157,24 +189,45 @@
       const radius = 92;
       let converted = 0;
       const next = [];
+      const convertedBullets = [];
       for (const b of this.enemyBullets) {
         if (dist2(p, b) <= radius * radius) {
-          converted++;
-          const spread = (converted - 1) * 0.1;
-          this.playerBullets.push({
-            x: b.x,
-            y: b.y,
-            vx: Math.sin(spread) * 72,
-            vy: -610 - Math.min(120, converted * 4),
-            r: 5,
-            dmg: 26,
-            friendly: true,
-            relay: true,
-          });
+          convertedBullets.push(b);
           this.particles.push({ x: b.x, y: b.y, life: 0.22, max: 0.22, kind: "convert" });
         } else {
           next.push(b);
         }
+      }
+      converted = convertedBullets.length;
+      for (let i = 0; i < convertedBullets.length; i++) {
+        const b = convertedBullets[i];
+        const spread = (i - (convertedBullets.length - 1) / 2) * 0.12;
+        const target = this.enemies
+          .filter(e => e.y > -20 && e.y < H * 0.82)
+          .sort((a, c) => {
+            const da = (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+            const dc = (c.x - b.x) * (c.x - b.x) + (c.y - b.y) * (c.y - b.y);
+            return da - dc;
+          })[0];
+        let vx = Math.sin(spread) * 96;
+        let vy = -640 - Math.min(130, convertedBullets.length * 5);
+        if (target) {
+          const dx = target.x - b.x;
+          const dy = target.y - b.y;
+          const len = Math.hypot(dx, dy) || 1;
+          vx = (dx / len) * 690 + Math.sin(spread) * 48;
+          vy = (dy / len) * 690;
+        }
+        this.playerBullets.push({
+          x: b.x,
+          y: b.y,
+          vx,
+          vy,
+          r: 5,
+          dmg: 28,
+          friendly: true,
+          relay: true,
+        });
       }
       this.enemyBullets = next;
       p.pulseCd = 1.8;
@@ -209,15 +262,15 @@
           if (e.kind === "boss") {
             const pattern = Math.floor(e.age * 2) % 2;
             if (pattern === 0) {
-              for (let i = -3; i <= 3; i++) this.fireAtPlayer(e, 112, i * 0.16);
+              for (let i = -3; i <= 3; i++) this.fireAtPlayer(e, 88, i * 0.16);
             } else {
-              for (let i = -2; i <= 2; i++) this.enemyBullets.push({ x: e.x + i * 18, y: e.y + 26, vx: i * 24, vy: 128, r: 5 });
+              for (let i = -2; i <= 2; i++) this.enemyBullets.push({ x: e.x + i * 18, y: e.y + 26, vx: i * 18, vy: 100, r: 5 });
             }
           } else if (e.kind === "bruiser") {
-            this.fireAtPlayer(e, 155, -0.18);
-            this.fireAtPlayer(e, 155, 0.18);
+            this.fireAtPlayer(e, 128, -0.18);
+            this.fireAtPlayer(e, 128, 0.18);
           } else {
-            this.fireAtPlayer(e, 142);
+            this.fireAtPlayer(e, e.kind === "weaver" ? 124 : 116);
           }
           e.fireCd = e.fireRate;
         }
@@ -308,7 +361,11 @@
         conversionHits: this.metrics.conversionHits,
         bossReached: this.metrics.bossReached,
         bossKilled: this.metrics.bossKilled,
+        damageTaken: this.metrics.damageTaken,
         bossHp: boss ? boss.hp : 0,
+        enemies: this.enemies.length,
+        enemyBullets: this.enemyBullets.length,
+        playerBullets: this.playerBullets.length,
       };
     }
   }
@@ -490,7 +547,7 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { Game, W, H, DT };
+    module.exports = { Game, W, H, DT, WAVE_EVENTS };
   } else {
     root.PulseRelay = { Game };
     browserMain();
