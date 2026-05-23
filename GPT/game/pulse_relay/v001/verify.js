@@ -62,7 +62,7 @@ function mechanicCheck() {
   game.playerBullets = [];
   game.player.x = W / 2;
   game.player.y = H - 120;
-  game.spawnEnemy("bruiser", W / 2, H - 360, { fireCd: 99 });
+  game.spawnEnemy("armored", W / 2, H - 360, { fireCd: 99, route: "dwell", block: "mechanic_check" });
   for (let i = -2; i <= 2; i++) {
     game.enemyBullets.push({ x: game.player.x + i * 12, y: game.player.y - 34, vx: 0, vy: 100, r: 5 });
   }

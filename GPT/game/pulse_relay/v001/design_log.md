@@ -1,73 +1,86 @@
 # Pulse Relay v001 設計ログ
 
-## 狙い
+## 読んだ正本
 
-`shot_log` 系で得た「撃つ対象を絶やさない」「単発 wave で空白を作らない」「ボスを孤立させない」という反省を入口に、短編の縦スクロール STG を作る。今回の固有メカは、近付いた敵弾を Space のパルスで白い反撃弾へ変換する `Pulse Relay`。
+- `memory/checklist_noncompression_protocol_20260523.md`
+- `memory/game_shmup_enemy_design_noncompression_protocol_20260523.md`
+- `memory/game_2d_shmup_reproduction_packet_20260523.md`
+- `memory/2d_stg_autonomous_eval_checklist_20260523.md`
+- M-44 Boghog 4 規則
+- M-45「要素設計と登場順設計は別」
+- M-30/M-31 no-risk 連打と経済反転の検査
+- M-37 固有メカを画面上の出来事へ接続する規則
 
-既存ゲームのソースは見ず、記憶と LLM の一般知識だけを使った。参照したのは記憶上の教訓、設計ルール、検証プロセス。
+## 保持した原文と反映先
 
-## 指標運用ルール
+- 「敵の出現パターンが単調」
+  - 対応: `enemy_rebuild_packet.md` で 9 block の stage 構成を作り、`game.js` の `WAVE_EVENTS` を全面的に作り直した。
+- 「散発的に敵が適当に出てくる」
+  - 対応: 各 wave に `block`, `playerIntent`, `badPolicy` を持たせ、前 wave の位置を次 wave が利用するようにした。
+- 「プレイヤーをどう動かすかが全然意識できていない」
+  - 対応: opening は左から中央、mirror は右への切り返し、side feeder は横圧、armored gate は Pulse Relay、boss は変換弾の接続を要求する。
+- 「縦シューなのに縦一列の敵が横から出てくる」
+  - 対応: 5-7 lane の離散配置と左右反対側 spawn を `wave_grammar_check.js` の検査対象にした。
+- 「shot_log は気持ちのいい敵編隊を実現できた」
+  - 対応: 単体敵の強弱ではなく、curve train、mirror answer、harvest、boss fuel の編隊単位で作った。
 
-ユーザー指摘を受け、指標は合否をハックするためではなく、プレイ体験のどこを疑うかを決めるために使う。閾値を満たしたら完成ではなく、指標が示した現象を「何のために見ているのか」へ戻して解釈する。
+## 敵種と登場順
 
-- `visibleEnemies`: 撃つ対象が画面に存在するか。空白や退屈の疑いを見る。
-- `shootableEnemies`: 自機の射線に乗る対象があるか。敵はいるのに撃てない時間を探す。
-- `enemyBullets`: 外発の緊張量。多さ自体は正義ではなく、反撃先なしに増えた時は悪い。
-- `nearBullets`: パルス判断が自然に発生するか。自発カスリを強要していないかを見る。
-- `conversions`: 固有メカが実際に使われているか。多ければ良い指標ではない。
-- `relayHits`: 変換が攻撃快感へ接続したか。低い時は敵配置か反撃角度を疑う。
-- `damage`: 難度スパイクの場所。被弾ゼロを目指す指標ではなく、学習前の急死検出。
-- `bossHp`: 山場が進むか。ボス到達後に削れない時は燃料、攻撃接続、HPを疑う。
+- `curve`
+  - 初登場: opening curve train。横移動しながら通常ショットを当てる基本練習。
+  - 応用: mirror answer / boss approach。前 wave の反対側から来て切り返しを要求する。
+  - Pulse との関係: 直接の Pulse 対象ではなく、硬い敵の前後に置く rhythm fuel。
+- `feeder`
+  - 初登場: side feeder cover。横から入り、中央目標を撃つ間の横圧を作る。
+  - 応用: boss 右側 pressure。下端待ちへの追加圧力にも使う。
+  - Pulse との関係: 弾密度を作り、変換の燃料になる。
+- `anchor`
+  - 初登場: center lane bait。中央に居座り、最初の Pulse drill を作る。
+  - 応用: side feeder cover と重ねて、単独の硬い敵ではなく周囲の弾圧とセットにする。
+- `armored`
+  - 初登場: armored gate。盾と HP で通常ショットだけでは時間がかかる対象。
+  - 応用: midboss setup / boss approach / boss late target。毎回、周囲の fuel と一緒に置く。
+  - Pulse との関係: relay hit が処理速度と score に直結する。
+- `harvest`
+  - 初登場: armored gate 後。硬い敵の後に rhythm を戻す低 HP 編隊。
+  - 応用: boss fuel。ボスを孤立させず、変換弾を作る燃料になる。
+- `escort`
+  - 初登場: midboss setup。左右から入って縦位置を調整させる。
+  - Pulse との関係: 自体は主役でなく、armored へ入る前の外発緊張を作る。
+- `boss`
+  - 初登場: boss relay exam。単独で居座らせず、harvest / feeder / armored を周囲に置く。
+  - Pulse との関係: route の最終検証で `converted 27`, `relayHits 19` が出るように、ボス直前とボス中に燃料を残す。
+
+## 指標の使い方
+
+指標は合格のために曲げない。各指標は次の疑いを見るために使う。
+
+- `visibleTargets`: 画面に処理対象があるか。
+- `shootableTargets`: 敵がいても撃てない時間が続いていないか。
+- `hardTargets`: 硬い敵が複数残って処理待ちになっていないか。
+- `enemyBullets`: 反撃対象なしに弾圧だけが増えていないか。
+- `nearBullets`: Pulse を押したくなる外発緊張があるか。
+- `routeCoverage`: clear しただけでなく authored blocks を通ったか。
+- `bottomCampPct`: 下端待ちが成立していないか。
+- `relayHits`: 変換が敵処理へ接続しているか。
+- `bossHp`: ボス山場が進行しているか。
 
 ## 実装サイクル
 
-### 初期実装
+1. 初回の checklist を再検証し、原文保持、8 wave schema、M-44/M-45、bad policy、時系列評価を落とさない形に再構築した。
+2. 敵 wave をゼロから作り直し、9 block / 75 events にした。
+3. `wave_grammar_check.js` を hard issue 検査へ作り直した。
+4. `timeline_eval.js` を 9 policy と per-second telemetry へ拡張した。
+5. 初回検証で route が中盤に落ち、camper が強かったため、下端撃破 score penalty と下端追加弾圧を入れた。
+6. 次の検証で route がボス前に潰れたため、終盤 armored と boss 出現時刻、boss HP / fireRate を調整した。
+7. 射線警告を減らすため hard target へ寄せる調整を試したが、noPulse が強くなり Pulse Relay の意義が落ちたため戻した。
 
-通常ショット、敵弾、ライフ、ボス、パルス変換、固定 wave、Node で回せる `verify.js` を入れた。初期評価では旧式の route AI が 20 秒前後で落ち、ボスに到達しなかった。
+## 最終結果
 
-### 時系列評価の導入
+- `node wave_grammar_check.js`: hard issue なし。
+- `node verify.js`: route 3 run すべて clear。mechanic は `converted 5`, `conversionHits 3`。
+- `node timeline_eval.js`: route と marksman は 5 seed で clear。camper / lane-holder / blind-sweeper / noPulse は route より明確に弱い。
 
-`timeline_eval.js` を追加し、1 秒ごとに `visibleEnemies / shootableEnemies / enemyBullets / nearBullets / conversions / relayHits / damage / bossHp` を記録した。複数方針として `route / aggressive / defensive / camper / noPulse / pulseHeavy` を比較した。
+## 残す課題
 
-最初の時系列では、13-20 秒付近に「敵は多いが射線に乗らず、弾だけ増える」時間が出ていた。これは `shootableEnemies` と `enemyBullets` の数字を満たしていないからではなく、プレイヤーが撃てないまま圧だけ受ける体験になっているため問題と判断した。
-
-### Wave 修正
-
-`shot_log` の教訓に合わせ、単発ではなく小集団を維持しつつ、硬い敵の重ね過ぎを削った。中盤の bruiser を減らし、weaver と scout のレーンを左右に散らし、ボス前後に燃料を残した。`wave_grammar_check.js` では wave 数、レーン分散、HP負荷、ボス中の燃料数を見るようにした。
-
-### 反撃弾の修正
-
-変換数は出るが `relayHits` が低い時期があった。これは「パルスが防御ボタンに見え、攻撃快感へ接続していない」問題と解釈した。点数補正ではなく、変換弾の初速を近い敵へ軽く向ける形へ変更した。ホーミングではなく、撃ち返しが目で追える程度の誘導に留めた。
-
-### ボス調整
-
-route はボス到達後に長く粘るが、ボスを倒し切れない状態だった。これは到達率では見逃すべきではないので、短編プロトタイプとしてボスHPとボス中の燃料密度を下げた。最終的に route は 5 seed で 64 秒前後クリアする。
-
-## 2026-05-23 評価結果
-
-`node verify.js`
-
-- mechanic: `converted 5`, `conversionHits 2`
-- route 3 run: すべて `state clear`
-- 代表値: `time 64.08`, `score 12800`, `lives 2`, `converted 18`, `conversionHits 5`, `damageTaken 2`
-
-`node timeline_eval.js`
-
-- route: `clearRate 1`, `bossReachRate 1`, `meanTime 64.08`, `meanScore 12800`, `meanConverted 18`, `meanRelayHits 5`, `meanDamage 2`
-- noPulse: `clearRate 1`, `meanTime 56.75`, `meanScore 12200`, `meanConverted 0`
-- aggressive / pulseHeavy: 19 秒前後で落ちる。これは「突っ込み過ぎる方針は死ぬ」というチェックとして残す。
-- camper: 20 秒前後で落ちる。画面下に留まるだけでは解けない。
-
-noPulse もクリアするため、パルスは必須攻略ではない。これは弱点でもあり、初心者向けの逃げ道でもある。今回は v001 として「使うとスコアと演出接続が増え、被弾しても route が立て直せる」位置付けで完成扱いにした。
-
-`node wave_grammar_check.js`
-
-- severe warning なし。
-- warning は `dense_pacing_gap` 1 件。W3 drill から targets まで 1.3 秒で、意図したチュートリアル的重ねとして許容した。
-
-## 残る弱点
-
-- noPulse がクリアできるため、固有メカの必須性は弱い。
-- `shootable_gap` と `bullets_without_targets` はまだ残る。ボス前後で回避優先の route が射線を外す秒が多い。
-- ヘッドレス AI は人間の楽しさを代表しない。route がクリアしたことは最低限の到達性であり、面白さの証明ではない。
-- ブラウザでの目視プレイは今後さらに必要。今回はヘッドレスと設計ログでの自己評価が中心。
+`shootable_gap` と `bullets_without_targets` はまだ route に残る。v001 では Pulse Relay の山場として許容したが、次回はこの区間を「撃てない避け時間」ではなく「短い fuel 編隊の連鎖」に置き換える。
