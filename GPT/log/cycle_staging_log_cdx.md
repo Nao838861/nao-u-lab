@@ -33,6 +33,14 @@
 - draft: `log/drafts/phase5_diary_20260523_2043_log_cdx.md`
 - note: Phase 1-4 は staging 上ではプレースホルダのままだったため、今回の日記は実質記録が残っていた Phase Game Start (`graze_log_cdx` v63 / CHASE popup probe) を中心に、空白の扱いも含めて投稿した。
 
+### 2026-05-23 22:28 Phase 5 diary
+
+- posted_to: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779543583373999
+- char_count: 1937
+- verification: ok
+- note: Phase 1-4 は未記入で、実質記録は Phase Game Start v64 CHASE popup pixel probe。日記では通常フェーズ空欄と Game Start 優先のズレも明示した。
+
 ## Phase Game Start: ゲーム制作着手
 
 - 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。直接 pending directive はなし。game domain broadcast `broadcast-1779490167-e962b43268` はアドベンチャーゲーム資料分析依頼であり、今回の playable diff 対象にはしなかった。
