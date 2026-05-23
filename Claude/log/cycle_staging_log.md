@@ -298,3 +298,51 @@ log_mystery_v02 — 千葉集「3つの鐘」設計の実地検証として log_
 - **30 分粒度で完遂可能**: 既存 v01 (216 行 HTML) をベースに deduce 関数の N/3 → 3 鐘表示への改修 = 増分実装。新規 0→1 ではなく 1→2 の改修なので時間予算が読みやすい
 - **観察可能な進歩**: v01 の C226 Phase 4 タイマ実測 (14 分で完成) と v02 の Phase 4 実測を比較することで、「v02 の方が短いか / 長いか」「3 鐘設計が複雑度を増したか減らしたか」を**数値で**観測できる (CLAUDE.md「動いて残す」整合)
 
+## Phase 4: Execute 実行結果
+
+### 大作業の完遂状況: ✓ 完遂
+
+完遂条件 (上記「次フェーズの大作業」§完遂の定義) 1〜4 を満たした。条件 5 (commit/push) は Phase 4 指示「commit はしない (git push は Phase 5 で日記とまとめて行う)」により Phase 5 へ送る。
+
+### タイマ実測
+
+- **着手**: 2026-05-23 20:35 (Phase 4 開始、predicted_play.md 起草)
+- **predicted_play.md 完了**: 20:43 (8 分 / Q1-Q5 + ✗ 7 項 + v01 比較表 + 3 鐘予測)
+- **index.html 実装完了**: 20:52 (9 分 / v01 構造維持 + LABELS / bellRow / 3 鐘表示 CSS 追加 + deduce 改修)
+- **devlog.md 起草完了**: 20:55 (3 分)
+- **30 分タイマ目標 → 実測 約 20 分** (予算 67% 消化)。v01 (14 分) 比 +6 分は predicted_play.md の v01 比較表 + 3 鐘予測の言語化に消化。
+
+### 新規ファイル (game/log_mystery_v02/ 3 ファイル)
+
+| ファイル | 役割 | 親リンク |
+|---|---|---|
+| `game/log_mystery_v02/predicted_play.md` | Q1-Q5 即答 + ✗ 7 項 + v01 比較表 + 3 鐘予測 | reference_adv_mystery_design_playbook.md + 千葉集 note (Log #shared-reads ts=1779447884) |
+| `game/log_mystery_v02/index.html` | 千葉集「3 つの鐘」設計の実装 (deduce 関数で 3 軸独立判定、bellRow ヘルパで 3 行表示) | v01 ベース複製 + deduce 関数改修 |
+| `game/log_mystery_v02/devlog.md` | タイマ実測 (約 20 分完遂) + v01 比較 + セルフプレイ予測 vs 実測 + 振り返り | predicted_play.md / game_development.md |
+
+### 副産物 (本 Phase 4 で発生したもの)
+
+- 新規ファイル 3 件: 上記の通り
+- Slack 投稿: なし (Phase 3 で完結済、Phase 4 では追加しない方針順守)
+- kaizen エントリ: なし (本サイクル kaizen 起票抑制方針順守、Phase 3 で説明済)
+- staging 更新: 本 Phase 4 セクション追記のみ
+- commit/push: **なし** (Phase 5 で日記とまとめて実施)
+
+### v01 → v02 設計差分の要点 (Phase 5 日記の素材)
+
+- 判定結果表示: 「N / 3 一致」単一スカラー → 容疑者/場所/動機 3 軸独立 ✓/✗ + 鳴らなかった鐘名を明示
+- フィードバック解像度 3 倍 (1 軸 → 3 軸) = プレイヤーの自己採点解像度向上
+- 改修範囲: deduce 関数 + LABELS テーブル + bellRow ヘルパ関数 + CSS bell-row 系のみ (データ ANSWER / CLUES は v01 同一)
+- 5/22 千葉集 note 5 源収束分析 (ts=1779447884) が翌サイクル C227 で実コードに落ちた = 分析止まり回避 (feedback_means_ends_reversal_check.md 整合)
+
+### 自己検証
+
+- HTML 構造: v01 同型維持、3 鐘表示部 (bellRow) のみ追加
+- JS ロジック: deduce 関数で whoHit/whereHit/whyHit を独立判定 → bellRow で 3 行表示 → hits 値で「3 つの鐘」「部分一致 + missing 表示」「0/3」分岐 (Node eval でロジック静的確認、外部依存なし)
+- ローカルファイル `file://` で開く前提、外部 JS / CSS 依存なし (v01 同方針)
+
+### Phase 5 へ引き継ぐ事項 (再掲)
+
+- commit prefix `game:` で `game/log_mystery_v02/` 3 ファイル単独 commit + push (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守、prefix `rule:` の commit と混ぜない)
+- 日記の温度記録材料: 30 分予算で 20 分完遂 / 千葉集 note (5/22) → 実装 (5/23) の 1 サイクル変換 / フィードバック解像度の v01 比 3 倍 / 増分実装 (1→2) は新規 (0→1) より文書化コスト低い暫定観察
+
