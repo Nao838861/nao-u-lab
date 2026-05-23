@@ -60,3 +60,16 @@
   - `node tools\headless_graze_log_cdx_v05_2_v64_policy_matrix_check.js` pass。route/aggressive/marksman は clear + CHASE bonus、camper は clear 0 / chaseBonus 0。
   - `node tools\headless_graze_log_cdx_v05_2_v64_visual_probe_check.js` pass。Chrome screenshot 4 枚 420x620、各 CHASE popup box で `chasePixels 27`、`lumaGap 86.1-86.8`、`pixelProbePass true`。
 - 残課題: pixel probe は「画像内に文字がある」最低保証であり、報酬として自然に読めるかは判断しない。次は Browser Use または実機で通常 UI 付き probe を目視確認する。
+
+
+## Phase Game Start: 2026-05-24 graze_log_cdx v65
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v65/`。v64 の gameplay を維持し、通常 UI 付き review URL を headless で検査する `probeReview=1` と `visualContract.reviewUi` を追加。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v65/index.html?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v65_check.js` pass
+  - `node tools\headless_graze_log_cdx_v05_2_v65_policy_matrix_check.js` pass
+  - `node tools\headless_graze_log_cdx_v05_2_v65_visual_probe_check.js` pass
+- 結果: focused route は clear、policy matrix は route/aggressive/marksman clear と camper clear 0 / chaseBonus 0 を維持。visual probe は bare canvas 4 枚で `chasePixels 27` / `lumaGap 86.1-86.8`、normal UI review 2 枚で `canvasRect.y 56` / `chasePixels 14` / `lumaGap 88.5` / `reviewSurfacePresent true`。
+- 残課題: Browser Use skill は読んだが Node REPL `js` tool が公開されていないため、in-app browser 操作は未実行。次は実機または Browser Use が使える環境で、通常 UI 付き CHASE popup が報酬として読めるか、邪魔にならないかを人間目視へ渡す。
