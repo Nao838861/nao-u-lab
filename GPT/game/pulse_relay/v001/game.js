@@ -51,6 +51,8 @@
       targetX: opts.targetX,
       targetY: opts.targetY,
       exitX: opts.exitX,
+      entryT: opts.entryT,
+      exitT: opts.exitT,
       playerIntent: opts.playerIntent || "",
       badPolicy: opts.badPolicy || [],
       label: block,
@@ -58,7 +60,7 @@
   }
 
   function lineColumn(frame, lane, count, block, opts = {}) {
-    const stagger = Math.max(opts.stagger || 18, 18);
+    const stagger = Math.max(opts.stagger || 18, opts.minStagger || 18);
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
       const endY = (opts.endY == null ? 255 : opts.endY) - i * (opts.stepY || 24);
@@ -71,6 +73,8 @@
         role: opts.role || "line-column",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
+        entryT: opts.entryT,
+        exitT: opts.exitT,
       });
     });
   }
@@ -96,7 +100,7 @@
   }
 
   function crossSweep(frame, side, count, block, opts = {}) {
-    const stagger = Math.max(opts.stagger || 28, 28);
+    const stagger = Math.max(opts.stagger || 28, opts.minStagger || 28);
     return Array.from({ length: count }, (_, i) => ev(frame + i * stagger, opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
       y: opts.y == null ? 170 : opts.y,
       route: "side",
@@ -108,6 +112,8 @@
       role: opts.role || "cross-sweep",
       playerIntent: opts.playerIntent,
       badPolicy: opts.badPolicy,
+      entryT: opts.entryT,
+      exitT: opts.exitT,
     }));
   }
 
@@ -147,22 +153,35 @@
     const events = [
       ...lineColumn(36, 3, 7, "opening_curve_train", {
         kind: "harvest",
+        stagger: 16,
+        minStagger: 16,
+        entryT: 130,
         playerIntent: "center column to start immediate shooting",
         badPolicy: ["blind-sweeper", "lane-holder"],
       }),
       ...lineColumn(68, 1, 8, "opening_curve_train", {
         kind: "harvest",
+        stagger: 16,
+        minStagger: 16,
+        entryT: 130,
         playerIntent: "left column after center",
         badPolicy: ["blind-sweeper", "lane-holder"],
       }),
       ...lineColumn(74, 5, 5, "opening_curve_train", {
         kind: "harvest",
+        stagger: 16,
+        minStagger: 16,
+        entryT: 130,
         playerIntent: "right column after center",
         badPolicy: ["blind-sweeper", "lane-holder"],
       }),
       ...crossSweep(260, 1, 10, "mirror_answer", {
         kind: "feeder",
         y: 165,
+        stagger: 24,
+        minStagger: 24,
+        entryT: 80,
+        exitT: 80,
         playerIntent: "right-to-left crossing targets",
         badPolicy: ["lane-holder", "camper"],
       }),
@@ -461,8 +480,8 @@
           // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 140, ease: "smooth" },
-            { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
+            { x: e.targetX, y: e.targetY, t: e.entryT || 140, ease: "smooth" },
+            { x: e.targetX, y: H + 62, t: e.exitT || 160, ease: "smooth" },
           ]);
         } else if (e.route === "v") {
           // V bursts are a fold-out cue: enter as a readable shape, then peel back upward.
@@ -483,8 +502,8 @@
           // Side enemies are crossing pressure: keep their travel direction and clear the lane.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 90, ease: "smooth" },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: 90, ease: "smooth" },
+            { x: e.targetX, y: e.spawnY, t: e.entryT || 90, ease: "smooth" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: e.exitT || 90, ease: "smooth" },
           ]);
         } else if (e.route === "large") {
           // Large enemies are deadlines: descend, hold long enough to demand focus, then retreat.
