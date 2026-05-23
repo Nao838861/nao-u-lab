@@ -33,3 +33,14 @@
 
 - formation/speed 修正は headless と route sample で確認したが、実ブラウザ上で「編隊としてまとまって見えるか」はまだ目視確認の余地がある。
 - 音と実プレイ動画レビューは未実施。canvas primitive の視覚 feedback のみで手応えを作っている。
+## 2026-05-23 時点で解消したもの
+
+- 敵数不足: 総出現数を 117 体に増やし、headless の balanced kills は 75。以前より敵量は増えたが、単なる詰め込みではなく 60 秒ボス開始までの段階構成にした。
+- 狙いにくい速さ: route duration と boss 弾幕を調整し、`route_motion_check` が全 route OK。
+- 敵同士の重なり: `enemy_overlap_check` が `pairOverlaps: 0`。offset ではなく、spawn gap と lane progression で解消。
+- headless 方針の不安定さ: `verify.js` で balanced / aggressive / conservative / pulse-heavy が全 clear。
+
+## まだ残るリスク
+
+- 実ブラウザの目視では、20-28 秒の息継ぎが薄く感じる可能性がある。増やすなら敵数追加より、次 wave の予告や画面奥の演出でつなぐ。
+- 音がないため、敵数と展開を増やしてもテンションの上限は視覚だけに依存している。

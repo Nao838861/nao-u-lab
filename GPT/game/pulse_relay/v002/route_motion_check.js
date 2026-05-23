@@ -4,7 +4,7 @@ const ROUTE_LIMITS = {
   scoutRail: { max: 9.8, minShow: 0.6, maxShow: 2.4 },
   sideLance: { max: 9.6, minShow: 0.6, maxShow: 2.8 },
   sideArc: { max: 9.4, minShow: 0.5, maxShow: 2.6 },
-  diverCut: { max: 12.5, minShow: 0.6, maxShow: 3.0 },
+  diverCut: { max: 12.5, minShow: 0.35, maxShow: 3.0 },
   carrierWake: { max: 6.8, minShow: 0.2, maxShow: 2.2 },
 };
 

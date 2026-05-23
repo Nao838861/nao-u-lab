@@ -10,8 +10,8 @@
   const W = 480;
   const H = 640;
   const FPS = 60;
-  const STAGE_END = 72 * FPS;
-  const BOSS_START = 48 * FPS;
+  const STAGE_END = 86 * FPS;
+  const BOSS_START = 60 * FPS;
 
   const COLORS = {
     scout: "#48d7ff",
@@ -73,11 +73,11 @@
   }
 
   function routeDuration(route) {
-    if (route === "scoutRail") return 42 + 48 + 78;
-    if (route === "sideLance") return 48 + 50 + 62;
-    if (route === "sideArc") return 52 + 54 + 66;
-    if (route === "diverCut") return 44 + 26 + 76;
-    if (route === "carrierWake") return 50 + 132 + 58;
+    if (route === "scoutRail") return 50 + 68 + 92;
+    if (route === "sideLance") return 62 + 74 + 82;
+    if (route === "sideArc") return 66 + 72 + 84;
+    if (route === "diverCut") return 58 + 42 + 92;
+    if (route === "carrierWake") return 62 + 150 + 70;
     if (route === "bossCore") return 99999;
     return 160;
   }
@@ -88,29 +88,30 @@
     if (age < 0) return { x: enemy.x0 || W / 2, y: -80, active: false, shootable: false, phase: "pre" };
 
     if (enemy.route === "scoutRail") {
-      const entry = 42;
-      const show = 48;
-      const exit = 78;
+      const entry = 50;
+      const show = 68;
+      const exit = 92;
       const x = enemy.lane;
+      const yBias = enemy.yBias || 0;
       if (age < entry) {
         const t = easeSoft(age / entry);
-        return { x, y: lerp(-36, 126, t), active: true, shootable: age > 6, phase: "entry" };
+        return { x, y: lerp(-36, 128 + yBias, t), active: true, shootable: age > 8, phase: "entry" };
       }
       if (age < entry + show) {
         const t = (age - entry) / show;
-        return { x: x + Math.sin(t * Math.PI) * side * 6, y: lerp(126, 172, t), active: true, shootable: true, phase: "show" };
+        return { x: x + Math.sin(t * Math.PI) * side * 4, y: lerp(128 + yBias, 178 + yBias, t), active: true, shootable: true, phase: "show" };
       }
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
-        return { x: x + side * 8, y: lerp(172, H + 34, t), active: true, shootable: true, phase: "exit" };
+        return { x: x + side * 6, y: lerp(178 + yBias, H + 34, t), active: true, shootable: true, phase: "exit" };
       }
       return { x, y: H + 80, active: false, shootable: false, phase: "done" };
     }
 
     if (enemy.route === "sideLance") {
-      const entry = 48;
-      const show = 50;
-      const exit = 62;
+      const entry = 62;
+      const show = 74;
+      const exit = 82;
       const startX = side < 0 ? -34 : W + 34;
       const holdX = side < 0 ? 144 : 336;
       const crossX = side < 0 ? 222 : 258;
@@ -118,23 +119,23 @@
       const y = enemy.lane;
       if (age < entry) {
         const t = easeSoft(age / entry);
-        return { x: lerp(startX, holdX, t), y: y - Math.sin(t * Math.PI) * 7, active: true, shootable: age > 6, phase: "entry" };
+        return { x: lerp(startX, holdX, t), y: y - Math.sin(t * Math.PI) * 5, active: true, shootable: age > 8, phase: "entry" };
       }
       if (age < entry + show) {
         const t = easeInOut((age - entry) / show);
-        return { x: lerp(holdX, crossX, t), y: y + Math.sin(t * Math.PI) * 10, active: true, shootable: true, phase: "show" };
+        return { x: lerp(holdX, crossX, t), y: y + Math.sin(t * Math.PI) * 7, active: true, shootable: true, phase: "show" };
       }
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
-        return { x: lerp(crossX, endX, t), y: y + side * 5 + t * 14, active: true, shootable: true, phase: "exit" };
+        return { x: lerp(crossX, endX, t), y: y + side * 4 + t * 10, active: true, shootable: true, phase: "exit" };
       }
       return { x: endX, y, active: false, shootable: false, phase: "done" };
     }
 
     if (enemy.route === "sideArc") {
-      const entry = 52;
-      const show = 54;
-      const exit = 66;
+      const entry = 66;
+      const show = 72;
+      const exit = 84;
       const startX = side < 0 ? -40 : W + 40;
       const midX = side < 0 ? 150 : 330;
       const showX = side < 0 ? 212 : 268;
@@ -142,23 +143,23 @@
       const baseY = enemy.lane;
       if (age < entry) {
         const t = easeSoft(age / entry);
-        return { x: lerp(startX, midX, t), y: baseY - Math.sin(t * Math.PI) * 26, active: true, shootable: age > 6, phase: "entry" };
+        return { x: lerp(startX, midX, t), y: baseY - Math.sin(t * Math.PI) * 18, active: true, shootable: age > 8, phase: "entry" };
       }
       if (age < entry + show) {
         const t = (age - entry) / show;
-        return { x: lerp(midX, showX, t), y: baseY + Math.sin(t * Math.PI) * 14, active: true, shootable: true, phase: "show" };
+        return { x: lerp(midX, showX, t), y: baseY + Math.sin(t * Math.PI) * 10, active: true, shootable: true, phase: "show" };
       }
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
-        return { x: lerp(showX, endX, t), y: baseY + 18 * t, active: true, shootable: true, phase: "exit" };
+        return { x: lerp(showX, endX, t), y: baseY + 14 * t, active: true, shootable: true, phase: "exit" };
       }
       return { x: endX, y: baseY, active: false, shootable: false, phase: "done" };
     }
 
     if (enemy.route === "diverCut") {
-      const entry = 44;
-      const show = 26;
-      const exit = 76;
+      const entry = 58;
+      const show = 42;
+      const exit = 92;
       const startX = side < 0 ? -28 : W + 28;
       const aimX = side < 0 ? 170 : 310;
       const endX = side < 0 ? W + 40 : -40;
@@ -166,11 +167,11 @@
       const aimY = enemy.lane;
       if (age < entry) {
         const t = easeSoft(age / entry);
-        return { x: lerp(startX, aimX, t), y: lerp(startY, aimY, t), active: true, shootable: age > 6, phase: "entry" };
+        return { x: lerp(startX, aimX, t), y: lerp(startY, aimY, t), active: true, shootable: age > 8, phase: "entry" };
       }
       if (age < entry + show) {
         const t = (age - entry) / show;
-        return { x: aimX + side * Math.sin(t * Math.PI) * 8, y: aimY + t * 14, active: true, shootable: true, phase: "show" };
+        return { x: aimX + side * Math.sin(t * Math.PI) * 5, y: aimY + t * 16, active: true, shootable: true, phase: "show" };
       }
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
@@ -180,21 +181,21 @@
     }
 
     if (enemy.route === "carrierWake") {
-      const entry = 50;
-      const show = 132;
-      const exit = 58;
+      const entry = 62;
+      const show = 150;
+      const exit = 70;
       const x = enemy.lane;
       if (age < entry) {
         const t = easeSoft(age / entry);
-        return { x, y: lerp(-54, 108, t), active: true, shootable: age > 8, phase: "entry" };
+        return { x, y: lerp(-54, 110, t), active: true, shootable: age > 10, phase: "entry" };
       }
       if (age < entry + show) {
         const t = (age - entry) / show;
-        return { x: x + Math.sin(t * Math.PI * 2) * 24, y: 108 + Math.sin(t * Math.PI) * 16, active: true, shootable: true, phase: "show" };
+        return { x: x + Math.sin(t * Math.PI * 2) * 18, y: 110 + Math.sin(t * Math.PI) * 12, active: true, shootable: true, phase: "show" };
       }
       if (age < entry + show + exit) {
         const t = easeSoft((age - entry - show) / exit);
-        return { x: x + side * 14 * t, y: lerp(108, -62, t), active: true, shootable: true, phase: "exit" };
+        return { x: x + side * 10 * t, y: lerp(110, -62, t), active: true, shootable: true, phase: "exit" };
       }
       return { x, y: -90, active: false, shootable: false, phase: "done" };
     }
@@ -231,178 +232,216 @@
       }, opts || {}));
     }
 
-    for (let i = 0; i < 6; i++) {
-      add(42 + i * 16, "scout", "scoutRail", {
-        lane: [176, 208, 240, 272, 304, 240][i],
+    for (let i = 0; i < 10; i++) {
+      add(36 + i * 14, "scout", "scoutRail", {
+        lane: [132, 160, 188, 216, 244, 272, 300, 328, 356, 384][i],
         side: i < 3 ? -1 : 1,
-        hp: 26,
+        hp: 20,
         radius: 12,
-        intent: "wake scouts",
+        score: 90,
+        charge: 7,
+        fireSkip: 3,
+        intent: "wake scouts broad line",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(5 * FPS + 24 + i * 18, "scout", "scoutRail", {
-        lane: [190, 222, 254, 286][i],
+    for (let i = 0; i < 8; i++) {
+      add(4 * FPS + 56 + i * 16, "scout", "scoutRail", {
+        lane: [172, 204, 236, 268, 300, 268, 236, 204][i],
         side: 1,
-        hp: 24,
+        hp: 20,
         radius: 12,
-        intent: "wake scouts bridge",
+        score: 90,
+        charge: 7,
+        fireSkip: 3,
+        intent: "wake scouts second line",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(7 * FPS + 18 + i * 19, "lance", "sideLance", {
+    for (let i = 0; i < 7; i++) {
+      add(7 * FPS + 8 + i * 22, "lance", "sideLance", {
         side: -1,
-        lane: [148, 174, 200, 226][i],
-        hp: 34,
-        radius: 13,
-        score: 130,
-        charge: 9,
-        intent: "orange lances",
-      });
-    }
-    for (let i = 0; i < 4; i++) {
-      add(10 * FPS + 48 + i * 19, "lance", "sideLance", {
-        side: 1,
-        lane: [226, 200, 174, 148][i],
-        hp: 30,
+        lane: [132, 158, 184, 210, 236, 262, 288][i],
+        hp: 28,
         radius: 13,
         score: 120,
         charge: 8,
-        intent: "orange lances answer",
-      });
-    }
-    for (let i = 0; i < 3; i++) {
-      add(13 * FPS + 20 + i * 20, "scout", "scoutRail", {
-        lane: [204, 240, 276][i],
-        side: -1,
-        hp: 24,
-        radius: 12,
-        score: 100,
-        charge: 8,
-        intent: "cross pressure scouts",
-      });
-    }
-    for (let i = 0; i < 3; i++) {
-      add(15 * FPS + 4 + i * 34, "diver", "diverCut", {
-        side: [1, -1, 1][i],
-        lane: [170, 218, 194][i],
-        hp: 32,
-        radius: 12,
-        score: 160,
-        charge: 10,
-        intent: "magenta cuts",
+        fireSkip: 3,
+        intent: "left orange escort",
       });
     }
     for (let i = 0; i < 4; i++) {
-      add(18 * FPS + 28 + i * 18, "scout", "scoutRail", {
-        lane: [188, 220, 252, 284][i],
-        side: 1,
-        hp: 26,
+      add(8 * FPS + 18 + i * 20, "scout", "scoutRail", {
+        lane: [70, 102, 134, 102][i],
+        side: -1,
+        hp: 18,
         radius: 12,
-        intent: "magenta cuts support",
+        score: 85,
+        charge: 6,
+        yBias: -78,
+        fireSkip: 4,
+        intent: "left orange escort center bait",
       });
     }
-    for (let i = 0; i < 3; i++) {
-      add(21 * FPS + 8 + i * 18, "scout", "scoutRail", {
-        lane: [204, 240, 276][i],
-        side: -1,
-        hp: 24,
-        radius: 12,
-        score: 100,
+    for (let i = 0; i < 7; i++) {
+      add(13 * FPS + 18 + i * 22, "lance", "sideLance", {
+        side: 1,
+        lane: [296, 270, 244, 218, 192, 166, 140][i],
+        hp: 28,
+        radius: 13,
+        score: 120,
         charge: 8,
+        fireSkip: 3,
+        intent: "right orange answer",
+      });
+    }
+    for (let i = 0; i < 5; i++) {
+      add(14 * FPS + 24 + i * 18, "scout", "scoutRail", {
+        lane: [400, 432, 464, 432, 400][i],
+        side: 1,
+        hp: 18,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -78,
+        fireSkip: 4,
+        intent: "right orange answer center bait",
+      });
+    }
+    for (let i = 0; i < 6; i++) {
+      add(18 * FPS + i * 54, "diver", "diverCut", {
+        side: [1, -1, 1, -1, 1, -1][i],
+        lane: [132, 172, 212, 252, 292, 332][i],
+        hp: 26,
+        radius: 12,
+        score: 135,
+        charge: 8,
+        fireSkip: 3,
+        intent: "magenta paired cuts",
+      });
+    }
+    for (let i = 0; i < 8; i++) {
+      add(25 * FPS + 20 + i * 17, "scout", "scoutRail", {
+        lane: [66, 98, 130, 358, 390, 422, 390, 358][i],
+        side: 1,
+        hp: 18,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -48,
+        fireSkip: 4,
+        intent: "magenta cut support ribbon",
+      });
+    }
+    for (let i = 0; i < 7; i++) {
+      add(28 * FPS + 10 + i * 17, "scout", "scoutRail", {
+        lane: [184, 216, 248, 280, 248, 216, 184][i],
+        side: -1,
+        hp: 18,
+        radius: 12,
+        score: 85,
+        charge: 6,
+        yBias: -50,
+        fireSkip: 4,
         intent: "carrier setup bridge",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(i < 2 ? 23 * FPS + 6 + i * 22 : 24 * FPS + 34 + (i - 2) * 22, "lance", "sideLance", {
-        side: i < 2 ? 1 : -1,
-        lane: [214, 188, 150, 176][i],
-        hp: 30,
+    for (let i = 0; i < 8; i++) {
+      add(i < 4 ? 30 * FPS + 8 + i * 28 : 35 * FPS + (i - 4) * 28, "lance", "sideLance", {
+        side: i < 4 ? 1 : -1,
+        lane: [298, 270, 242, 214, 134, 162, 190, 218][i],
+        hp: 26,
         radius: 13,
-        score: 125,
+        score: 115,
         charge: 8,
+        fireSkip: 3,
         intent: "carrier setup cross",
       });
     }
-    for (let i = 0; i < 2; i++) {
-      add(27 * FPS + i * 118, "carrier", "carrierWake", {
-        lane: i === 0 ? 182 : 298,
-        side: i === 0 ? -1 : 1,
-        hp: 150,
+    for (let i = 0; i < 3; i++) {
+      add(36 * FPS + i * 130, "carrier", "carrierWake", {
+        lane: [120, 360, 240][i],
+        side: i % 2 === 0 ? -1 : 1,
+        hp: 120,
         radius: 18,
-        score: 420,
-        charge: 18,
+        score: 360,
+        charge: 16,
         intent: "green relay carriers",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(28 * FPS + 10 + i * 23, "lance", "sideArc", {
+    for (let i = 0; i < 8; i++) {
+      add(37 * FPS + 12 + i * 22, "lance", "sideArc", {
         side: -1,
-        lane: [166, 190, 214, 238][i],
-        hp: 36,
-        radius: 13,
-        score: 140,
-        charge: 9,
-        intent: "green relay carriers arc",
-      });
-    }
-    for (let i = 0; i < 4; i++) {
-      add(33 * FPS + 6 + i * 23, "lance", "sideArc", {
-        side: 1,
-        lane: [238, 214, 190, 166][i],
-        hp: 34,
-        radius: 13,
-        score: 135,
-        charge: 9,
-        intent: "green relay answer arc",
-      });
-    }
-    for (let i = 0; i < 3; i++) {
-      add(36 * FPS + 10 + i * 32, "diver", "diverCut", {
-        side: i % 2 === 0 ? -1 : 1,
-        lane: [176, 220, 198][i],
-        hp: 30,
-        radius: 12,
-        score: 150,
-        charge: 10,
-        intent: "carrier priority cuts",
-      });
-    }
-    for (let i = 0; i < 4; i++) {
-      add(40 * FPS + i * 30, "diver", "diverCut", {
-        side: [1, -1, 1, -1][i],
-        lane: [162, 214, 188, 240][i],
-        hp: 30,
-        radius: 12,
-        score: 150,
-        charge: 10,
-        intent: "pre-boss cuts",
-      });
-    }
-    for (let i = 0; i < 3; i++) {
-      add(42 * FPS + 18 + i * 22, "lance", "sideLance", {
-        side: -1,
-        lane: [150, 178, 206][i],
-        hp: 30,
+        lane: [190, 216, 242, 268, 294, 320, 346, 372][i],
+        hp: 28,
         radius: 13,
         score: 120,
         charge: 8,
+        fireSkip: 3,
+        intent: "green relay carriers arc",
+      });
+    }
+    for (let i = 0; i < 8; i++) {
+      add(44 * FPS + i * 22, "lance", "sideArc", {
+        side: 1,
+        lane: [372, 346, 320, 294, 268, 242, 216, 190][i],
+        hp: 28,
+        radius: 13,
+        score: 120,
+        charge: 8,
+        fireSkip: 3,
+        intent: "green relay answer arc",
+      });
+    }
+    for (let i = 0; i < 6; i++) {
+      add(49 * FPS + i * 34, "diver", "diverCut", {
+        side: i % 2 === 0 ? -1 : 1,
+        lane: [148, 184, 220, 256, 292, 328][i],
+        hp: 26,
+        radius: 12,
+        score: 135,
+        charge: 8,
+        fireSkip: 3,
+        intent: "carrier priority cuts",
+      });
+    }
+    for (let i = 0; i < 7; i++) {
+      add(53 * FPS + i * 30, "diver", "diverCut", {
+        side: [1, -1, 1, -1, 1, -1, 1][i],
+        lane: [132, 162, 192, 222, 252, 282, 312][i],
+        hp: 26,
+        radius: 12,
+        score: 135,
+        charge: 8,
+        fireSkip: 3,
+        intent: "pre-boss cuts",
+      });
+    }
+    for (let i = 0; i < 6; i++) {
+      add(56 * FPS + 12 + i * 24, "lance", "sideLance", {
+        side: -1,
+        lane: [136, 164, 192, 220, 248, 276][i],
+        hp: 26,
+        radius: 13,
+        score: 115,
+        charge: 8,
+        fireSkip: 3,
         intent: "boss warning cross",
       });
     }
-    for (let i = 0; i < 4; i++) {
-      add(45 * FPS + i * 18, "scout", "scoutRail", {
-        lane: [190, 222, 254, 286][i],
+    for (let i = 0; i < 8; i++) {
+      add(58 * FPS + 2 + i * 15, "scout", "scoutRail", {
+        lane: [168, 196, 224, 252, 280, 308, 280, 252][i],
         side: 1,
-        hp: 24,
+        hp: 18,
         radius: 12,
-        score: 100,
-        charge: 8,
+        score: 85,
+        charge: 6,
+        yBias: -48,
+        fireSkip: 4,
         intent: "boss warning",
       });
     }
     add(BOSS_START, "boss", "bossCore", {
-      hp: 2300,
+      hp: 1950,
       radius: 36,
       score: 5000,
       charge: 40,
@@ -421,7 +460,7 @@
       this.height = H;
       this.frame = 0;
       this.spawnIndex = 0;
-      this.player = { x: W / 2, y: H - 72, r: 4, spriteR: 11, hp: 4, invuln: 0, shotCd: 0, pulseCd: 0, charge: 28 };
+      this.player = { x: W / 2, y: H - 72, r: 4, spriteR: 11, hp: 6, invuln: 0, shotCd: 0, pulseCd: 0, charge: 28 };
       this.enemies = [];
       this.playerShots = [];
       this.enemyBullets = [];
@@ -565,20 +604,21 @@
     enemyThink(e) {
       if (!e.shootable) return;
       e.fireCd -= 1;
+      if (e.fireSkip && e.fireSkip > 1 && e.id % e.fireSkip !== 0) return;
       if (e.type === "scout" && e.fireCd <= 0) {
-        e.fireCd = 72;
-        this.enemyFire(e, false, 2.45);
+        e.fireCd = 96;
+        this.enemyFire(e, false, 2.2);
       } else if (e.type === "lance" && e.fireCd <= 0) {
-        e.fireCd = e.route === "sideArc" ? 62 : 70;
-        this.enemyFire(e, false, 2.55);
+        e.fireCd = e.route === "sideArc" ? 86 : 92;
+        this.enemyFire(e, false, 2.25);
       } else if (e.type === "diver" && e.fireCd <= 0) {
-        e.fireCd = 86;
-        this.enemyFire(e, false, 3.05);
+        e.fireCd = 112;
+        this.enemyFire(e, false, 2.55);
       } else if (e.type === "carrier" && e.fireCd <= 0) {
-        e.fireCd = 58;
-        for (let i = 0; i < 6; i++) {
-          const a = -Math.PI * 0.9 + i * (Math.PI * 0.8 / 5);
-          this.enemyBullets.push(fromAngle(e.x, e.y + 8, 2.15, a, { r: 4, life: 260, color: COLORS.enemyBullet2 }));
+        e.fireCd = 72;
+        for (let i = 0; i < 5; i++) {
+          const a = -Math.PI * 0.85 + i * (Math.PI * 0.7 / 4);
+          this.enemyBullets.push(fromAngle(e.x, e.y + 8, 1.95, a, { r: 4, life: 260, color: COLORS.enemyBullet2 }));
         }
       } else if (e.type === "boss" && e.fireCd <= 0) {
         this.bossFire(e);
@@ -595,22 +635,22 @@
       const p = this.player;
       const phase = e.phase;
       if (phase === "phase1") {
-        e.fireCd = 38;
+        e.fireCd = 42;
         const a = angleTo(e.x, e.y, p.x, p.y);
         for (let i = -1; i <= 1; i++) {
-          this.enemyBullets.push(fromAngle(e.x, e.y + 24, 2.75, a + i * 0.16, { r: 4.3, life: 280, color: COLORS.enemyBullet }));
+          this.enemyBullets.push(fromAngle(e.x, e.y + 24, 2.45, a + i * 0.15, { r: 4.1, life: 280, color: COLORS.enemyBullet }));
         }
       } else if (phase === "phase2") {
-        e.fireCd = 38;
+        e.fireCd = 50;
         const base = this.frame / 37;
-        for (let i = 0; i < 7; i++) {
-          this.enemyBullets.push(fromAngle(e.x, e.y + 18, 2.05, base + i * Math.PI / 3.5, { r: 3.8, life: 300, color: i % 2 ? COLORS.enemyBullet : COLORS.enemyBullet2 }));
+        for (let i = 0; i < 5; i++) {
+          this.enemyBullets.push(fromAngle(e.x, e.y + 18, 1.75, base + i * Math.PI * 2 / 5, { r: 3.4, life: 300, color: i % 2 ? COLORS.enemyBullet : COLORS.enemyBullet2 }));
         }
       } else {
-        e.fireCd = 36;
+        e.fireCd = 50;
         const a = angleTo(e.x, e.y, p.x, p.y);
         for (let i = -1; i <= 1; i++) {
-          this.enemyBullets.push(fromAngle(e.x, e.y + 26, 2.35 + Math.abs(i) * 0.14, a + i * 0.11, { r: 4, life: 300, color: COLORS.enemyBullet }));
+          this.enemyBullets.push(fromAngle(e.x, e.y + 26, 1.95 + Math.abs(i) * 0.08, a + i * 0.1, { r: 3.6, life: 300, color: COLORS.enemyBullet }));
         }
       }
     }
@@ -748,7 +788,7 @@
 
   function idealBossTTK(options) {
     options = options || {};
-    const hp = options.hp || 2300;
+    const hp = options.hp || 1950;
     const shotDamagePerSecond = 2 * 6 * (FPS / 5);
     const pulseDamagePerUse = 12 * 18;
     const normal = hp / shotDamagePerSecond;

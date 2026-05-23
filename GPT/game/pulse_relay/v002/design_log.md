@@ -98,3 +98,34 @@
 - overlap/timeline 合格後でも、speed gate と formation coherence gate がなければ、見た目の質は壊れる。
 - 敵の速さは「平均移動距離 / duration」だけでは足りない。補間のピーク速度を測る必要がある。
 - lane 列は数値上ばらけていればよいわけではない。編隊として同じ意図を持つ方向、間隔、順序に見える必要がある。
+## enemy-count/stage-flow correction pass
+
+ユーザー指摘:
+
+> 敵の出現数は倍くらいほしい。プレイヤーの移動速度に比べて、動きがひょこひょこ早すぎて狙って倒すのが困難。敵と敵の連携や組み合わせ感が薄くて、適当なパターンが繰り返し出てる感覚になり、ステージの展開がない。
+
+原因分析:
+
+- 敵数を増やす前の配置は、各敵種の紹介が中心で、同じ役割の波が短く出て終わるため、ステージ全体の「前振り -> 横圧 -> 優先目標 -> ボス前圧」の流れが弱かった。
+- 速度調整は route 単体では通っていたが、プレイヤー速度との相対で見ると、entry/exit のピークが高く、狙って倒す時間が不足していた。
+- 敵数を単純に増やすと、同一軌跡上で退場中の敵と次の敵が重なり、編隊ではなく交通渋滞に見えた。これは offset ではなく、時間軸・lane progression・左右ブロック分割で解く必要があった。
+
+対処:
+
+- 総出現数を 117 体に拡張した。内訳は scout 50 / lance 44 / diver 19 / carrier 3 / boss 1。
+- `BOSS_START` を 60 秒、`STAGE_END` を 86 秒へ伸ばし、敵数増加を同一時間帯への詰め込みで処理しないようにした。
+- opening scouts は広い rail で早い撃破 rhythm、orange lances は左右の返し、magenta cuts は短い show の優先撃破、carrier setup は横圧から carrier へつなぐ、green relay は carrier + arc + cut、boss warning はボス前の照準戻し、という段階に再整理した。
+- route duration と boss 弾幕を再調整し、敵の「ひょこひょこ速い」印象を抑えつつ、show 中に狙える時間を残した。
+- overlap は検証を緩めず、lane の直角方向 offset ではなく、出現間隔・左右ブロックの開始秒・lane の単調な進行で解消した。
+
+再検証:
+
+- `node game\pulse_relay\v002\enemy_overlap_check.js`: OK。`pairOverlaps: 0`, `minGap: 1.06`。
+- `node game\pulse_relay\v002\route_motion_check.js`: OK。route/phase ごとの速度ゲート内。
+- `node game\pulse_relay\v002\timeline_eval.js`: OK。balanced clear 81.45 秒、boring / notShootable / heavy runs なし。boss は 60 秒開始、balanced では約 21.45 秒。
+- `node game\pulse_relay\v002\verify.js`: OK。balanced / aggressive / conservative / pulse-heavy が全 clear。boss duration は 18.22-22.67 秒。
+
+残る注意:
+
+- 敵数は増えたが、20-28 秒付近は意図的に息継ぎを作ったため、実ブラウザで薄く感じるなら carrier setup bridge を増やすより、次の波の予告弾や視覚演出でつなぐ方がよい。
+- `minGap: 1.06` は近接した編隊密度としてはよいが、見た目でまだ窮屈なら、敵数を減らすのではなく同一 route 内の lane 幅を少し広げる。

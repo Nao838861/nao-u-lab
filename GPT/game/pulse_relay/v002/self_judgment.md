@@ -37,3 +37,23 @@
 - v001 を参照しないため、v001 との直接比較はできない。
 - 音なしのため、テンションは視覚だけに依存する。
 - headless と route sample は通ったが、人間が遊んだ時の「あと少しメリハリが足りない」感は残る可能性がある。
+## 2026-05-23 enemy-count/stage-flow pass
+
+自分で見落としていた点:
+
+- 敵数不足は単に総数ではなく、同じ役割の敵が「編隊」としてまとまって出る時間が短いことだった。117 体まで増やしただけでは不十分で、左右の返し、carrier 前後、boss warning の順序を作る必要があった。
+- overlap を避ける時に lane を直角方向へずらすと、見た目は不格好になり、撃ちにくさだけが残る。今回の修正では、同一 route 内の lane progression と spawn gap、左右ブロックの開始秒で解いた。
+- 速度の問題は route 単体の平均速度ではなく、プレイヤー速度に対して show が読めるか、entry/exit のピークが瞬間移動に見えないかで判断する必要があった。
+
+今回のチェック結果:
+
+- `enemy_overlap_check`: pairOverlaps 0 / minGap 1.06。
+- `route_motion_check`: 全 route が速度ゲート通過。
+- `timeline_eval`: balanced clear 81.45 秒、boring / notShootable / heavy runs なし。
+- `verify`: 4 policy 全 clear、boss duration 18.22-22.67 秒。
+
+次回への判断基準:
+
+- 敵数を増やす時は、先に wave ごとの「プレイヤーに何をさせるか」を固定し、その意図を壊さない範囲で数を増やす。
+- overlap が出たら、検証を緩める前に「同じ route の退場と次 wave の入場が同じ画面位置を使っていないか」を見る。
+- headless が通っても、敵同士の連携感は別評価にする。visibleTargets の密度だけでなく、前の敵が次の敵の狙いを作っているかを見る。

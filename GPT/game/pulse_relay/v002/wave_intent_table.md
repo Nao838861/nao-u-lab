@@ -28,3 +28,15 @@
 - `exit_reason` が弱い route は、敵が突然意志を失ったように見える。
 - `bad_policy_check` を見ないと、overlap 対策で隊列感を殺す、または pulse を強くしすぎる。
 - telemetry がない wave は、自分の「良くなった気がする」を検証できない。
+## 2026-05-23 更新後の実装上の読み替え
+
+- `wake scouts`: 0.6-6.8 秒。10 体 + 8 体の scout rail。最初に撃破 rhythm と横移動の幅を見せる。
+- `orange lances`: 7.1-18.4 秒。左から 7 体、右から 7 体、上側 bait scout を左右で分離。横圧に対して、中央へ戻るか端を維持するかを試す。
+- `magenta cuts`: 18.0-28.9 秒。diver は 6 体を交互 side で出し、support scout は端レーンで別軌跡にする。短い show を狙う優先目標練習。
+- `carrier setup bridge/cross`: 28.2-37.9 秒。bridge scout で中央照準を戻し、左右 cross lance で carrier 前の横圧を作る。
+- `green relay carriers`: 36.0-51.7 秒。carrier 3 体、left arc 8 体、right answer arc 8 体。pulse 判断と横圧の処理を同時に要求する主山場。
+- `pre-boss cuts`: 49.0-58.2 秒。carrier 後の残弾から、diver と lance/scout のボス前圧へ移る。
+- `boss warning`: 56.2-62.0 秒。ボス入場直前から直後まで overlap せずに残る warning 編隊。ボス開始時点で visibleTargets 11 / shootableTargets 10。
+- `boss`: 60.0 秒開始。HP 1950。verify で 18.22-22.67 秒の boss duration に収まる。
+
+この表は、次回調整時に「敵数を減らして楽にする」のではなく、各 wave の意図を保ったまま lane / spawn gap / route phase を調整するための基準にする。
