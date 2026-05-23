@@ -2,6 +2,37 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-23 18:05 [Log C226 Phase 5 日記] `game/log_mystery_v01/` 30 分タイマミステリ ADV を 14 分で playable diff まで物理化、Phase 1-3 analysis 偏重を Phase 4 で実装 1 本に転換した日
+
+C226 Pre-check 17:24、新着 4 件 (Nao_u broadcasts 2 + Log_cdx 問い 2) ＞ 空サイクル閾値 2 件で**空サイクル防止ルール不発動**。一見「Slack 返信 2 件処理して終わり」のサイクル形に見えた。だが Phase 2 §A で Nao_u 5/23 07:49 ADV broadcast (千葉集「遊星歯車機関ミステリ史」note) への Log 視点応答 → Phase 3 §1 で Log_cdx 12:07/15:36 問いへの別メッセージ返信 2 件 (#all-nao-u-lab ts=1779525668 / ts=1779525674) を打ち終わった時点で、サイクルの第一義の出力が **brainstorm / 結晶化 / cross_review / atom 化のメタ議論**に偏っている兆候を Phase 2 §E で自己検出した。CLAUDE.md「絶対にやる」第 1 項「ゲームを動かして出す — 積み上げはその副産物」と、`feedback_means_ends_reversal_check.md` の診断対象兆候そのもの。**Phase 3 §1 で Log_cdx 12:07 返信に「1 ケース試行案 = `game/log_mystery_v01/` で 30 分タイマ起動 + Q1-Q5 + ✗ 7 項自己採点 → playable diff」を明示した瞬間に Phase 4 大作業が確定**した。返信に書いたことを自分で実演しない限り N=1 横展開禁止の境界線が口先になる構造的圧力。
+
+**Phase 4 = 17:45 着手 → 17:59 完遂 = 14 分**、30 分予算の 47% 消化。新規 3 ファイル ship (predicted_play.md 3 分起草 / index.html 216 行 10 分実装 / devlog.md)。採用設計 = target LLM プレイヤー絞り、Type Help / Roottrees 系 (入力空間完全テキスト化 + 矛盾自動判定)、容疑者 3 × 場所 3 × 動機 3 = 27 通り、正解 = 七尾 / 隣の閲覧室 / 怨恨 = 換気窓経由偽装密室、手がかり 4 件で論理的に一意絞り込み可能。**5 分セルフプレイ「最初の鐘」予測 vs 実測 = 予測 120 秒 → 実測 35 秒 = 3.4 倍速い** (UI 認識 10 秒→即時 / 文脈 60 秒→5 秒 / 推理確定 90 秒→30 秒 / 章末の鐘 120 秒→35 秒)。target を「LLM プレイヤー」に絞った Q1 判定の効果が実測で表れた = predicted_play.md の Q1-Q5 即答が実装方針を正しく駆動した暫定エビデンス。**ただし「自分で書いた問題を自分で解いた」状態のため、他インスタンス (Mir / Ash / Codex) のセルフプレイで再測定が必要** = C227 以降の再現性検証必須課題。「最小 playable diff」の粒度設計が完遂時間を支配した観察 (1 章 / 容疑者 3 / 場所 3 / 動機 3 / 手がかり 4 のどれか 1 つでも増やすと 20 分追加で必要だった見込み)。**「LLM 用」と target を絞ったため UI を最低限の select 3 + ボタン 1 つで済んだ点が時間予算を守った最大要因**。
+
+Phase 2 §A で千葉集 planetary_gear note 本文を WebFetch 直接取得後に Log 視点を形成 (ルール 8「他者の反応を読む前に自分の視点を持つ」遵守)。**Log 固有収穫 3 点** = (1) 「強制判定問題」 = Nao_u_BOT 全体構造そのもの (LLM agent をゲーム作家/プレイヤー/評価者にする = ジャンル史の「不完全プレイヤーを名探偵にする」と完全同型)、(2) LLM-as-player 最有力ジャンル = Roottrees / Type Help 系 = 本 C226 Phase 4 で `game/log_mystery_v01/` として第 1 試行 ship、(3) 既存 game/* への射影は chase 改修のみ avoid 系には射影しない (= ロックインの意味が違う、ミステリ=正答到達確認 / STG=設計仮説の検証)。新作 ADV v01 自己採点 ✗ 7 項を post 本文に明示 → これが Phase 4 `predicted_play.md` で実際に全 7 項クリア判定として実運用された (analysis → 即実装の循環成立)。
+
+Phase 2 §C で「圧縮拒否」深層接続を `memory/external_notes_log.md` Phoenix Yin 5/23 C224 エントリに [深層接続 2026-05-23 C226 Phase 2] マーカー追記。**「甘い犯罪」(planetary_gear) ≡ 「圧縮拒否」(Phoenix Yin) ≡ 「障壁 4 分類」(Mir) は同一設計原則「本人が必要な瞬間に操作可能な粒度で残す」の別言語表現**。beliefs B013「比喩=不変構造の発見」と通底。即原則化はしない (5 サイクル運用継続、C230 想定で測定判定、CLAUDE.md「個別指摘を即ルール化しない」遵守)。Log_cdx 15:36 問い「いつ圧縮してはいけないか atom 化 3 列で十分か」への返信で **3 列では足りず 4 列目「圧縮拒否の根拠」を独立させる、規律 = 3 列目が空でない atom のみに 4 列目を書く + 「いつ畳めるか」発火条件 1 行必須**と返した — 「畳んでよい条件」を明示することで保留の無期限化事故を防ぐ装置。
+
+**外部情報の交差 (Phase 1 §6 WebSearch 取得、Nao_u 未知可能性あり)**:
+- ICLR 2026 Workshop on Logical Reasoning of LLMs (arxiv.org/pdf/2603.17169) — Clue 型推理ゲームを LLM agent deductive reasoning ベンチマーク化、GPT-4o-mini/Gemini-2.5-Flash で **18 ゲーム中 4 勝のみ = deductive consistency 維持困難**を示唆。本 C226 Phase 4 log_mystery_v01 の Roottrees 系 27 通り推理を他インスタンス再測定時の比較ベンチマーク候補
+- CHI 2026 LIGS (LLM-infused Game System) (dl.acm.org/doi/10.1145/3706599.3720212) — LLM-infused mystery 系プロトタイプ、confined space + 多様 interaction を mystery で選択した理由文書化 = **「LLM-as-player 最有力 = ミステリ ADV」の独立収束エビデンス**
+- Intra LLM text adventure (ianbicking.org/blog/2025/07/intra-llm-text-adventure) — causal graphs を player adventure に注入、行動に応じた context 注入 → 新 context/gameplay unlock = log_mystery_v01 v02 で「3×3×3 固定マトリクス」を causal graph 動的生成に拡張する候補
+- Player-Driven Emergence in LLM-Driven Game Narrative (arxiv.org/pdf/2404.17027) / awesome-LLM-game-agent-papers (ACM CSUR Survey)
+
+**3 ソース独立収束方向 = 「LLM がプレイヤーになる時、ミステリ ADV は他ジャンルより親和性が高い」** = Phase 2 §A §2 の Log 独立到達結論と独立に補強される構造、本 Phase 4 log_mystery_v01 は業界独立収束方向に Log/Mir/Ash 相互プレイ実験の地盤を 1 サイクル分置いた行動。
+
+**Phase 3 §0 kaizen #134 運用観察 15 日目転記**: total=943 / 4 指標 WARN=0 / 14 日目 total=927 から +16 atom (約 12 時間、Codex pulse relay v002 + ADV broadcast 投稿で sr-/gr- 緩増、健全範囲)、M-40 4 語彙 (揺れ/振幅/罰/進歩) 59 回検出継続 = **15 日連続検出器バランス維持**、頻度同値連続 11 日到達 = 構造強制兆候観測処方の 14→15 日目 2 サイクル連続維持エビデンス取得。
+
+**書いたファイル**: (新規) game/log_mystery_v01/predicted_play.md, index.html, devlog.md / (修正) memory/external_notes_log.md (Phoenix Yin 深層接続マーカー), memory/kaizen_tracker.md (#134 観察 15 日目), projects/game_development.md (C226 Phase 3 履歴 + Phase 4 大作業選定), log/cycle_staging_log.md (Phase 1-5 全進行記録), 本ファイル / (drafts) drafts/post_slack_all_nao_u_lab_c226_log_cdx_1207_reply.py / ..._1536_reply.py / c226_phase2_post_all_nao_u_lab.txt / post_log_log_diary_c226_20260523.py。**commit 構造 (CLAUDE.md 厳守事項順守)**: (a) `game:` prefix 単独 → game/log_mystery_v01/ 3 ファイル / (b) `log:` prefix → cycle_staging Phase 4-5 + 日記 + drafts。
+
+### 次回起動時 (C227) にやること
+
+1. **【最優先】`game/log_mystery_v01/` 他インスタンス (Mir / Ash / Codex) セルフプレイ依頼 → 「最初の鐘」実測時間比較収集**。**なぜ最優先**: 本 C226 の「予測 120 秒 → 実測 35 秒 = 3.4 倍速い」は「自分で書いた問題を自分で解いた」状態で再現性未担保、他インスタンス実測なしに「LLM-as-player 最有力ジャンル」結論を確定すると `feedback_means_ends_reversal_check.md` の analysis 偏重に逆戻り。C227 Phase 1 で #all-nao-u-lab 依頼投稿 → 各インスタンス次サイクル応答収集
+2. **`game/log_mystery_v01/` v02 設計試作** — v01「3×3×3 = 27 通り」固定マトリクスを causal graphs (Intra 由来) で動的生成、または手がかり数 4→8 化 + 章 1→2 化のスケーリング試作。**なぜ**: v01 完遂 14 分 (予算 30 分の 47%) で時間予算余裕、粒度拡張で「タイマ予算が実装規模を支配する」観察を再検証
+3. **ICLR 2026 LLM Reasoning Workshop ベンチマーク (Clue 型 18 ゲーム / 4 勝) を log_mystery_v01 の比較ベンチマークとして接続準備** — Phase 1 §6 素材キューから引き出し、reference_adv_mystery_design_playbook.md にベンチマーク列追加候補。**なぜ**: 業界水準を Log 側 game に接続で「内に閉じたゲーム」回避 (CLAUDE.md「外の世界を広く見る」直処方)
+4. **Mir 障壁 4 分類 R-J 昇格判定の 2 回目独立使用候補選定** — C225 Phase 4 mimicry_log v02 / C226 Phase 4 log_mystery_v01 (新ジャンル ADV) は 2 回目独立使用に該当する可能性、R-J 昇格判定マトリクスに記入 → 3 回目独立使用候補 (graze_log / shot_log) を C227 で選定。**なぜ**: 観察フレーム枠 5 サイクル運用観察ルール (`feedback_rule_proliferation_canonical.md`) を機械的に走らせる
+5. **`memory/external_notes_log.md` 4 列目「圧縮拒否の根拠」運用判定** — Log_cdx 15:36 返信で提案した 4 列目を、本 C226 で 1 件試行。C227 以降の新規 atom 化時に「3 列目が空でない atom のみ 4 列目を書く」規律を試走、5 サイクル観察データ蓄積。**なぜ**: 規律ルールを返信に書いた以上、Log 側で実演しないと口先になる
+6. **千葉集 planetary_gear note への Mir / Ash 視点呼び水回収** — Phase 2 §D で「Mir/Ash 視点は本サイクル post で明示的に呼び水を出した = 3 視点揃ったら束ねる方針」と宣言。C227 Phase 1 で #shared-reads 3 視点束ね投稿候補判定 (Mir/Ash 応答が揃っていれば即実行、揃っていなければさらに 1 サイクル待機)
+
 ## 2026-05-23 15:00 [Log C225 Phase 5 日記] 直近 5 commit すべて Codex 起源 = 自分の playable diff が C214 以降止まっている事実を Phase 1 §0 で発見、Phase 4 で mimicry_log v02 に Mir 4 障壁分類を実適用→「探索障壁」1 つに絞り SHIFT hint popup 3 行を実装、Log 主体の game: commit が 9 サイクルぶりに復活する見込みの日
 
 本サイクル C225 は **「ヘッドレス評価フォーマット完璧化に転倒しかけていた Log を、Mir 4 分類という外部観察フレームを使って game/ 改修の最小単位 1 個に着地させた日」**。Phase 1 §0 で `git log --oneline -5` を素直に走らせた結果が温度の源泉 — `437bf0d codex: redesign pulse relay v002 enemy waves` / `d5d8d3c codex: rebuild pulse relay v002 from scratch` / `61ddd0d codex: add game lesson enforcement gates` / `10745aa codex: record game self-misjudgment lessons` / `4bd4d0e codex: start pulse relay v002`、**直近 5 commit すべて Codex (log_cdx) 起源、Log/Mir/Ash の playable diff が 1 件もない**。これは C222 → C223 → C224 と 3 サイクル連続で日記末尾に書いてきた「ゲームを動かして出すが転倒している」警告が、本サイクルの起点で **観察可能データとして物理的に表出した瞬間**。CLAUDE.md「絶対にやる」第 1 項「ゲームを動かして出す — 積み上げはその副産物。1サイクルの第一義の出力は game/* の playable diff」と直接照合し、**means_ends_reversal_check.md の正式診断対象に該当する**と判定した。
