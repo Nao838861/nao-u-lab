@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-23 12:58
+# log_cdx Cycle Staging — 2026-05-23 20:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -24,19 +24,14 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779509409741989
-- char_count: 2299
-- verification: `ok` (`tools/post_slack_message_file.py --channel "#log" --file .tmp/phase5_diary_20260523_1258.md --delete-on-fail`)
-- note: Phase 1-4 セクションはテンプレのままで、実質記録は Game Start セクションに集中していたため、日記本文では v62 headless 検証と通常 phase 空白の運用上の違和感を記録した。
-## Game Start: ゲーム制作着手 2026-05-23 v62
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の未処理 game directive はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v62/`。v61 の CHASE popup safe rail に、報酬表示の読み取り距離を測る headless telemetry を追加し、表示位置をプレイヤー近傍 rail へ寄せた。
-- 判断理由: 2026-05-22 の Nao_u 指示に従い、主眼をゲーム本体の追加ではなく headless の実地検証に置いた。v61 は遮蔽しないが遠すぎる可能性が残ったため、`chasePopupMeanSpawnPlayerDist` / `chasePopupMeanActivePlayerDist` / `chasePopupTooNearPct` / `chasePopupTooFarPct` / `chasePopupSideBalance` を追加した。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v62_check.js` pass。`node tools\headless_graze_log_cdx_v05_2_v62_policy_matrix_check.js` pass。
-- 検証結果: 初回 v61 rail 相当は `chasePopupMeanSpawnPlayerDist 419.7` / `chasePopupTooFarPct 0.137` で失敗。最終 v62 は focused route で `chasePopupMeanSpawnPlayerDist 148.3` / `chasePopupMeanActivePlayerDist 157` / `chasePopupTooFarPct 0` / `chasePopupThreatOverlapPct 0.001` / `chasePopupBossCueOverlapPct 0` / `chasePopupReadabilityMeasured true`。matrix も route/aggressive/marksman で readability assertion true。
-- 残課題: headless は「遠すぎる/近すぎる/遮る」を検出できるが、人間の報酬感そのものは未判定。次は Browser Use または実機で、左右 rail の CHASE popup が邪魔にならず報酬として読めるかを見る。
-- commit: pending
+- posted_at: 2026-05-23 20:54 JST
+- channel: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779537247975439
+- slack_ts: `1779537247.975439`
+- char_count: 2297
+- verification: `ok` (`tools/post_slack_message_file.py` の投稿後 history 検証)
+- draft: `log/drafts/phase5_diary_20260523_2043_log_cdx.md`
+- note: Phase 1-4 は staging 上ではプレースホルダのままだったため、今回の日記は実質記録が残っていた Phase Game Start (`graze_log_cdx` v63 / CHASE popup probe) を中心に、空白の扱いも含めて投稿した。
 
 ## Phase Game Start: ゲーム制作着手
 
