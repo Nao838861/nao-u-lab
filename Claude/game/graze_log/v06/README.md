@@ -171,6 +171,48 @@ A-6 (a) は readability 4 層 (anticipation / telegraph / windup / wobble) を�
 
 2026-05-21 (今週) に Psyvariar 正統続編 (3) が 20 年以上ぶりに日本リリースされたという外部世界の同期点は、本 A-6 (a) 採択の**契機ではあるが根拠ではない**。根拠は原典 Psyvariar の chain 設計の存在 (上記出典) と、A-3/A-5 (b) の縦深化の自然な次手という構造側にある。同週リリースは「外を見て同期した」事実そのものに価値があり、次サイクル以降 Psyvariar 3 のプレイレビュー/インタビュー情報が出てきたら知識として取り込む候補。
 
+## A-6 (b): buzz chain reward (C195 追加)
+
+### 何を 1 個足したか
+
+**無敵中の graze は gauge / score を 2x で加算する + popup 色を chain 寄りの #ffd840 (黄色) に変更**。`onGraze()` 冒頭で `const mult=state.invincibleT>0?2:1;` を取り、`addGauge(GRAZE_GAUGE*mult)` と `state.score+=GRAZE_SCORE*gaugeLevel(state.gauge)*mult` で適用。`+6` 表示も `+(GRAZE_GAUGE*mult)` で `+12` に変わり、popup 色も `mult>1?'#ffd840':'#ffd870'` で識別。通常 graze (無敵切れ後) は完全に従来通り、機構の対称性は保たれる。
+
+### なぜ A-6 (b) か
+
+外部検索 (Phase 1 §6) で偶然出てきた **ヴォルガード II の "弾撃たない方が得" 罠** が、現 v06 A-5 (b) + A-6 (a) の構造に同型の罠を作り出していることが Phase 3 で判明した — 無敵中はプレイヤーが「擦らずに凌げる」ため擦る動機が消失し、次 Lv up の発火源 (graze 蓄積) が止まり、結果として A-6 (a) の連鎖延長機構 (上限 180F=3 秒) が物理的に届かなくなる。これは "shallow clone" を超えた "structural dominant strategy creep" で、報酬累積で核行動が逆方向に最適化されるという dominant strategy creep の Volguard 型の罠。A-6 (b) は「無敵中こそ擦る方が得」という入力側の勾配を作って核行動 (擦り) を継続発火させる、最も小さな勾配反転。Psyvariar 原典 5 要素のうち (c) Lv up 中 graze 継続 を一段深めた変種で、5/5 中 4/5 への到達。
+
+### 何を取らなかったか (削除可能改良 1 個刻み制約)
+
+- **本格 (c) Lv up 中 graze 継続 (graze 半径拡大版)**: 無敵中だけ graze 半径を `R_GRAZE+8` 程度に拡げて擦り易くする案もあるが、半径定数は draw() と当たり判定の両方に効くため副作用が大きい。本案は係数 (倍率) だけで「擦る価値」を 2 倍にすることで、副作用を局所化。
+- **(e) Roll hitbox shrink**: graze_log に画面外機軸動作が無いため不適用 (A-5/A-6 (a) と同じ理由)。
+- **無敵延長 trigger 連動の動的倍率**: 倍率を `1 + (invincibleT/BUZZ_INVINCIBLE_CAP)` で chain 進度に応じて滑らかに上げる案。複雑度が増し守の段階に合わないため、まずは離散 2x で動作確認。
+
+### 戻し方 (A-6 (b) → A-6 (a) 削除可能性の保証)
+
+`index.html` の `onGraze()` 内 1 箇所:
+
+1. `const mult=state.invincibleT>0?2:1;` 行 + 前後コメントブロック (4 行) を削除
+2. `addGauge(GRAZE_GAUGE*mult)` → `addGauge(GRAZE_GAUGE)` に戻す
+3. `state.score+=GRAZE_SCORE*gaugeLevel(state.gauge)*mult` → 末尾の `*mult` を削除
+4. `text:'+'+(GRAZE_GAUGE*mult)` → `text:'+'+GRAZE_GAUGE`
+5. `c:mult>1?'#ffd840':'#ffd870'` → `c:'#ffd870'`
+
+合計約 9 行 (内コメント 4 行)。A-6 (a) と bit 完全等価に戻る。
+
+### 判定方針 (v06 全体方針継承)
+
+- **headless 数値は judgment / cross_review / Slack の根拠にしない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5)
+- 「無敵中も擦る価値」の体感は AI 自プレイ (Stage 4) と Nao_u 評価で判定する
+- self_judgment.md / predicted_play.md は次サイクル以降 (本 Phase 4 は playable diff 1 機構を出すことが目的)
+
+### Volguard 罠予防の構造的根拠
+
+外部検索で確認された Volguard II の核欠陥は「弾発射で energy 消耗 → upgrade すると消耗増 → 最適解=弾を撃たずに体当たり」という、報酬経路 (敵撃破による energy 回復) の発火源 (弾発射) を逆方向に最適化させる構造。strategywiki / mobygames の評価で「続編が前作より劣る」とされる主因として挙げられている。本 v06 の構造を写すと: 報酬経路 (Lv up による無敵延長) の発火源 (graze 蓄積) は無敵中に消える → 「擦らない方が得」が成立 → 連鎖の上限 180F に届かない。A-6 (b) はこの構造の入力側 (graze) に直接 2x 勾配を載せることで、無敵中の擦り行動を「コスト」から「報酬」に転換する。Psyvariar 原典が長期 chain を成立させていた理由が、無敵中も graze が gauge 蓄積を継続できる設計だった (Buzz 5 要素 (c)) という出典と整合する。
+
+### 4 層 readability への波及
+
+A-6 (b) は readability 4 層 (anticipation / telegraph / windup / wobble) を変更しない。popup 色変化 (#ffd840) は「無敵中の graze は普通の graze と価値が違う」を即時伝達する自機状態軸のチャネルだが、A-5/A-6 (a) glow ring と同じく 4 層分類とは別軸 (自機状態軸) に属するため、4 層には追加しない。
+
 ## 接続先
 
 - `game/graze_log/v05/` — v06 の 6 箇所を v05 beta 形に戻した状態
@@ -186,4 +228,4 @@ A-6 (a) は readability 4 層 (anticipation / telegraph / windup / wobble) を�
 - `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — 判定根拠から headless を外す
 - `knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md` — A-5 (b) の元となった「Psyvariar Buzz 5 要素 / shallow vs deep clone」分析
 
-— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 / C193 Phase 4 A-5 (b) buzz invincibility 追加 (2026-05-23) / C194 Phase 4 A-6 (a) buzz chain extension 追加 (2026-05-23)
+— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 / C193 Phase 4 A-5 (b) buzz invincibility 追加 (2026-05-23) / C194 Phase 4 A-6 (a) buzz chain extension 追加 (2026-05-23) / C195 Phase 4 A-6 (b) buzz chain reward 追加 (2026-05-23)

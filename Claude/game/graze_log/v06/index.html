@@ -584,10 +584,15 @@ function onGraze(bx,by){
   state.grazeCount++;
   // v03: grazeStreak インクリメント
   state.grazeStreak++;
-  addGauge(GRAZE_GAUGE);
-  state.score+=GRAZE_SCORE*gaugeLevel(state.gauge);
+  // v06 A-6 (b): 無敵中 graze 倍率 2x (gauge / score) + popup 色 chain 寄り (#ffd840) で識別。
+  // Volguard II dominant strategy creep 罠予防 — 報酬累積 (無敵) で核行動 (擦り) が消失する逆方向
+  // 最適化を、入力側に勾配を与えて反転 (無敵中こそ擦る方が得 → 連鎖 Lv up が継続発火)。
+  // 削除手順 (A-6 (b) → A-6 (a)): mult 変数 + addGauge/score の *mult + popup 色三項 を削除。
+  const mult=state.invincibleT>0?2:1;
+  addGauge(GRAZE_GAUGE*mult);
+  state.score+=GRAZE_SCORE*gaugeLevel(state.gauge)*mult;
   state.rings.push({x:state.player.x,y:state.player.y,t:0,life:18,c:'#ffd870',r0:R_GRAZE-2,r1:R_GRAZE+18});
-  state.popups.push({x:bx+(state.rng()-0.5)*8,y:by-6,text:'+'+GRAZE_GAUGE,life:30,c:'#ffd870'});
+  state.popups.push({x:bx+(state.rng()-0.5)*8,y:by-6,text:'+'+(GRAZE_GAUGE*mult),life:30,c:mult>1?'#ffd840':'#ffd870'});
   // v03: streak が閾値到達した瞬間に小さい告知
   if(state.grazeStreak===GRAZE_STREAK_TH){
     state.popups.push({x:state.player.x,y:state.player.y-30,text:'DEF READY',life:40,c:'#80ffd0'});
