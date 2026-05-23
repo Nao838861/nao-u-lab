@@ -24,6 +24,7 @@ Object.assign(METRIC_PURPOSES, {
   pulseOpportunity: "Near bullets during active play. This checks whether Pulse Relay is naturally invited by pressure instead of being an abstract score button.",
   deadlinePressure: "Hard targets with bullets on screen. This checks whether durable enemies create a kill deadline rather than waiting passively.",
   bossPressure: "Boss-phase bullets near or around the player. This checks whether the finale escalates after the boss appears.",
+  bossSeconds: "Seconds with a live boss. This catches boss HP or phase gates that are too low for focused human fire.",
 });
 
 function clamp(v, lo, hi) {
@@ -188,6 +189,14 @@ const POLICIES = {
     const m = routeMove(game, authoredRouteY(game) - 10, "route");
     return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 1);
   },
+  "boss-rush"(game) {
+    const boss = game.enemies.find(e => e.boss);
+    if (!boss) return POLICIES.route(game);
+    const n = countNearBullets(game, 96);
+    const tx = clamp(boss.x, 34, W - 34);
+    const ty = H - 150;
+    return inputToward(game, tx, ty, game.player.pulseCd <= 0 && n >= 2);
+  },
 };
 
 function secondMetrics(game, prev, routeState) {
@@ -282,6 +291,7 @@ function run(policyName, seed) {
   summary.pulseOpportunityPct = round(routeState.pulseOpportunitySeconds / Math.max(1, routeState.seconds));
   summary.deadlinePressurePct = round(routeState.deadlinePressureSeconds / Math.max(1, routeState.seconds));
   summary.bossPressurePct = round(routeState.bossPressureSeconds / Math.max(1, routeState.bossSeconds));
+  summary.bossSeconds = routeState.bossSeconds;
   return { policy: policyName, seed, summary, timeline, issues: detectIssues(timeline, summary, policyName) };
 }
 
@@ -321,6 +331,7 @@ function aggregate(runs) {
       meanPulseOpportunityPct: avg(group.map(r => r.summary.pulseOpportunityPct)),
       meanDeadlinePressurePct: avg(group.map(r => r.summary.deadlinePressurePct)),
       meanBossPressurePct: avg(group.map(r => r.summary.bossPressurePct)),
+      meanBossSeconds: avg(group.map(r => r.summary.bossSeconds || 0)),
       meanLaneSwitches: avg(group.map(r => r.summary.laneSwitches)),
       meanTime: avg(group.map(r => r.summary.time)),
       meanScore: avg(group.map(r => r.summary.score)),
@@ -381,6 +392,7 @@ function main() {
   if (report.byPolicy.route.meanPulseOpportunityPct < 0.12) hardIssues.push("route does not create enough pulse opportunities");
   if (report.byPolicy.route.meanDeadlinePressurePct < 0.08) hardIssues.push("hard targets do not create enough deadline pressure");
   if (report.byPolicy.route.meanBossPressurePct < 0.45) hardIssues.push("boss phase pressure is too low");
+  if (report.byPolicy["boss-rush"].clearRate > 0 && report.byPolicy["boss-rush"].meanBossSeconds < 15) hardIssues.push("focused boss-rush can end boss too quickly");
   if (report.byPolicy.noPulse.meanScore >= report.byPolicy.route.meanScore) hardIssues.push("noPulse score is not weaker than route");
   if (report.byPolicy.camper.clearRate >= report.byPolicy.route.clearRate && report.byPolicy.camper.meanScore >= report.byPolicy.route.meanScore * 0.85) hardIssues.push("camper remains a dominant policy");
   if (report.byPolicy["lane-holder"].clearRate >= report.byPolicy.route.clearRate && report.byPolicy["lane-holder"].meanScore >= report.byPolicy.route.meanScore * 0.9) hardIssues.push("lane-holder covers too much authored content");

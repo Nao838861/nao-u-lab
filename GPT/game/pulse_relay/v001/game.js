@@ -258,7 +258,7 @@
         armored: { hp: 46, r: 23, speed: 64, score: 520, fireRate: 1.45 },
         harvest: { hp: 6, r: 12, speed: 104, score: 110, fireRate: 99 },
         escort: { hp: 16, r: 16, speed: 86, score: 240, fireRate: 1.8 },
-        boss: { hp: 270, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
+        boss: { hp: 720, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
       }[kind];
       this.enemies.push({
         kind,
@@ -275,6 +275,7 @@
         age: 0,
         boss: kind === "boss",
         phase: opts.phase || 0,
+        phaseLockFlash: 0,
         route: opts.route || "down",
         side: opts.side || 0,
         lane: opts.lane,
@@ -478,6 +479,7 @@
         }
         e.fireCd -= DT;
         e.shield = Math.max(0, e.shield - DT);
+        e.phaseLockFlash = Math.max(0, e.phaseLockFlash - DT);
         if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
           const bottomCamp = this.player.y > H - 96;
           let nextFireRate = e.fireRate;
@@ -507,7 +509,7 @@
                 this.fireGate(e, -66, 116, "boss-final-cross");
                 this.fireGate(e, 66, 116, "boss-final-cross");
               }
-              nextFireRate = e.fireRate * 0.58;
+              nextFireRate = e.fireRate * 0.68;
             }
             if (bottomCamp) {
               this.fireAtPlayer(e, 196, -0.18, { role: "boss-bottom-punish" });
@@ -565,6 +567,22 @@
       }
     }
 
+    applyBossPhaseLock(e) {
+      if (!e.boss) return;
+      const locks = [
+        { minAge: 6.8, hpFloor: e.maxHp * 0.67 },
+        { minAge: 11.2, hpFloor: e.maxHp * 0.34 },
+        { minAge: 16.2, hpFloor: 1 },
+      ];
+      for (const lock of locks) {
+        if (e.age < lock.minAge && e.hp < lock.hpFloor) {
+          e.hp = lock.hpFloor;
+          e.phaseLockFlash = 0.16;
+          return;
+        }
+      }
+    }
+
     updateBullets() {
       for (const b of this.enemyBullets) {
         b.x += b.vx * DT;
@@ -615,6 +633,7 @@
             }
             if (b.relay && e.shield > 0) e.shield = 0;
             e.hp -= b.dmg;
+            this.applyBossPhaseLock(e);
             b.hit = true;
             if (b.relay) this.metrics.conversionHits++;
             this.particles.push({ x: b.x, y: b.y, life: b.relay ? 0.24 : 0.12, max: b.relay ? 0.24 : 0.12, kind: b.relay ? "relayHit" : "hit" });
