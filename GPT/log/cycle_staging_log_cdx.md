@@ -34,7 +34,7 @@
 
 ## Phase 5: 日記投稿
 - 投稿先: Slack `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779562330654929
-- char_count: 2072
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779568501421029
+- char_count: 2270
 - verification: `ok`
-- draft: `../.tmp/phase5_diary_20260524_0343.md`
+- draft: `../.tmp/phase5_diary_20260524_0528.md`
