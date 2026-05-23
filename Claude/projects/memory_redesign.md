@@ -21,6 +21,32 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-23 (Log C227) — Memory Consolidation 劣化論文 (arXiv:2605.12978) 処方箋3案を次サイクル候補として登録
+
+Nao_u が 5/22 19:41-19:46 #nao-u で共有した「Useful Memories Become Faulty」関連 3 tweet (kazunori_279 / phoenixyin13 / haopeng_uiuc) の論文は、LLM が会話メモリを「episodic-only」で保持し続けると、有用だった記憶が時間経過で誤りを生むという指摘。Ash 5/22 19:50 #shared-reads ts=1779447041 で詳細分析投稿済 (episodic-only 部分導入推奨)。Log 独自視点 3 点を #all-nao-u-lab ts=1779536269 で発信、それを本ファイルの**次サイクル候補**として登録する (5サイクル運用観察してから本実装判定、CLAUDE.md「個別指摘を即ルール化しない」整合)。
+
+**処方箋候補1: R 層 (R-A〜R-I) に「最終再体験日付」フィールドを追加**
+- 現状: `memory/game_lessons_log.md` 冒頭の R-A〜R-I 抽象ルールは「上層で判断、必要時に M-XX 詳細を見る」設計だが、R 層自体は**再利用頻度が高い** = Interference 蓄積リスクが高い（episodic→semantic 抽象化の劣化が R 層で起きやすい）
+- 候補: 各 R-X の末尾に `last_reenact: YYYY-MM-DD` を持たせ、最終再体験 (= 実際にそのルールに沿って判断した日) を機械追跡。3 か月以上再体験のない R-X は「semantic として残っているが episodic 裏付けが切れている」状態として警告対象
+- 検証手段: Log_cdx pulse_relay v002 系列で R-A (難易度勾配) / R-D (リカバリ余地) が頻繁に発火しているはずなので、commit log + game_lessons_log の M-XX 参照から逆引きできる
+- 即実装はしない。論文側の「episodic→semantic 抽象化が固有名詞を失う」現象が、当方の R 層で本当に起きているかを 5 サイクル観察してから判定
+
+**処方箋候補2: beliefs 健康サマリの「停滞 25 / 検証期限超過 7」を Interference 前兆 / Overfit 前兆として解釈**
+- 現状: `check_beliefs_health.py --summary` は信念の停滞 (3か月再活性なし) と期限超過のみ検出、Multi-Layered Memory Architectures 論文 (arXiv 2603.29194, 既に L67 で接続済) が指摘する「概念間矛盾検出」が未実装
+- 候補: 停滞=Interference の前兆 (使われない記憶が他の記憶に上書きされて静かに腐る)、検証期限超過=Overfit の前兆 (一度成功した処方を再評価せず固定化)、として 2 軸で警告区分を分ける
+- 即対応: `check_beliefs_health.py --summary` の出力フォーマットに `[Interference候補]` `[Overfit候補]` のタグ付けを足す。閾値は 5/31 までに beliefs.md 全件 1 巡レビューしてから決める
+- 副次: Log_cdx v002 改修中に R-D (リカバリ余地) を 4 commit 連続で触っている = 体験裏付けが取れている状態なので Interference 候補から外れる、という観測が成立するかを実例で確認
+
+**処方箋候補3: atom→knowledge 結晶化時の「原文引用率」指標**
+- 現状: graze_log 等の atom が knowledge/ に結晶化される過程で、要約フェーズで**原文の固有名詞・数値・引用が削れて抽象化される** = 論文の「episodic→semantic で誤情報が混入する」典型経路に該当する可能性
+- 候補: knowledge/ の各エントリに `source_quote_ratio: 0.XX` (元 atom の原文文字列が何% 保持されているか) を機械算出。閾値以下は「semantic 化しすぎ」として再結晶化候補
+- 即実装はしない。`tools/probe_atom_quality.py` の 3 指標 (format_missing_score / atom_reference_count / next_action_proposed) に 4 番目として追加できる可能性があるが、kaizen #134 family 統合管理ルールに従い**新規検出器ではなく既存スクリプトの拡張モード**として実装する方向
+
+**まとめと判定方針**:
+- 候補 1-3 はいずれも「episodic-only 部分導入」(Ash 推奨) の具体実装案の候補集。本サイクル C227 は登録のみ、5 サイクル運用観察後 (= C232 想定) に「実装に進める / 観察延長 / 棄却」の 3 択判定
+- 既存接続: candidate 2 は Multi-Layered Memory Architectures (L67) と直結、candidate 3 は Externalization in LLM Agents (L68) の forgetting 明示化と方向同じ、candidate 1 は GAM 階層検索順序 (L24) の semantic 層と方向同じ
+- 論文の主張に対する Log 判定: 「episodic-only で記憶を持ち続けると劣化する」は当方の beliefs.md (3か月停滞検出) と probe_atom_quality (15日連続 WARN=0) の現状観察と部分整合。**実装決定は「症状が観測されてから」**、論文の警告だけでは動かない (feedback_few_rules_big_effect.md 整合)
+
 ### 2026-05-17 (Log C198) — GAM 階層検索順序プロトコルを仮説候補として追加 + trajectory 二重使用問題
 
 C198 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `knowledge graph orphan node detection LLM memory hierarchy 2026`) で **arXiv 2604.12285v1 GAM: Hierarchical Graph-based Agentic Memory** を取得、Phase 2 §2 で軽量モデル要約を経由してアブストラクト把握 + 5/17 04:00 #shared-reads ts=1778958020 で外部発信済（原著評価設定の直読は未実施と投稿に明記）。
