@@ -39,6 +39,8 @@ INDEX_TARGETS = [
 CHUNK_SIZE = 500  # characters per chunk (with overlap)
 CHUNK_OVERLAP = 100
 
+STALE_THRESHOLD_DAYS = 7  # Warn if index older than this
+
 # Date extraction patterns
 _DATE_YYYYMMDD = re.compile(r'(\d{4})(\d{2})(\d{2})')  # 20260314
 _DATE_YYYY_MM_DD = re.compile(r'(\d{4})-(\d{2})-(\d{2})')  # 2026-03-14
@@ -661,6 +663,47 @@ def search_temporal(when=None, period=None, query=None, limit=10):
     conn.close()
 
 
+def _get_index_age_days():
+    """Return (last_build_iso, age_days) or (None, None) if unavailable."""
+    if not DB_PATH.exists():
+        return None, None
+    try:
+        conn = sqlite3.connect(str(DB_PATH))
+        row = conn.execute(
+            "SELECT value FROM meta WHERE key = 'last_build'"
+        ).fetchone()
+        conn.close()
+        if not row or not row[0]:
+            return None, None
+        last_build = datetime.fromisoformat(row[0])
+        age = (datetime.now() - last_build).total_seconds() / 86400.0
+        return row[0], age
+    except (sqlite3.OperationalError, ValueError):
+        return None, None
+
+
+def _warn_if_stale():
+    """Emit stderr warning if index is older than STALE_THRESHOLD_DAYS.
+
+    Why: rebuild was missed for 39 days before C197, masking new knowledge/
+    files from search and breaking the R-A〜R-I retrieval flow. A stderr
+    warning makes the rot visible at every search, not only at --stats.
+    """
+    last_build, age = _get_index_age_days()
+    if age is None:
+        sys.stderr.write(
+            "[memory_search] WARNING: index has no build timestamp. "
+            "Run --build.\n"
+        )
+        return
+    if age >= STALE_THRESHOLD_DAYS:
+        sys.stderr.write(
+            f"[memory_search] WARNING: index is {age:.1f} days old "
+            f"(last build: {last_build[:19]}, threshold: "
+            f"{STALE_THRESHOLD_DAYS}d). Run --build to refresh.\n"
+        )
+
+
 def show_stats():
     """Show index statistics."""
     if not DB_PATH.exists():
@@ -701,9 +744,21 @@ def show_stats():
 
     conn.close()
 
+    last_build_iso, age_days = _get_index_age_days()
+    if age_days is not None:
+        staleness = ""
+        if age_days >= STALE_THRESHOLD_DAYS:
+            staleness = f"  [STALE — threshold {STALE_THRESHOLD_DAYS}d]"
+        build_line = (
+            f"Last build: {last_build_iso[:19]} "
+            f"({age_days:.1f} days ago){staleness}"
+        )
+    else:
+        build_line = f"Last build: {meta.get('last_build', 'unknown')}"
+
     print(f"Total chunks: {count}")
     print(f"Dated chunks: {dated_count} ({date_range[0]} ~ {date_range[1]})")
-    print(f"Last build: {meta.get('last_build', 'unknown')}")
+    print(build_line)
     print(f"Files indexed: {meta.get('total_files', 'unknown')}")
     print(f"\nTop sources:")
     for source, cnt in sources:
@@ -784,11 +839,14 @@ def main():
     if args.build:
         build_index()
     elif args.when or args.period:
+        _warn_if_stale()
         search_temporal(when=args.when, period=args.period,
                         query=args.search, limit=args.limit)
     elif args.search and args.context:
+        _warn_if_stale()
         search_context(args.search, args.limit)
     elif args.search:
+        _warn_if_stale()
         search(args.search, args.limit, diverse=args.diverse)
     elif args.stats:
         show_stats()
