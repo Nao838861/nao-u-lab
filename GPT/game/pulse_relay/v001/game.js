@@ -15,6 +15,14 @@
     return dx * dx + dy * dy;
   }
 
+  function easeMotion(t, mode = "smooth") {
+    if (mode === "linear") return t;
+    if (mode === "outCubic") return 1 - Math.pow(1 - t, 3);
+    if (mode === "inCubic") return t * t * t;
+    if (mode === "snapOut") return 1 - Math.pow(1 - t, 2);
+    return t * t * (3 - 2 * t);
+  }
+
   function makeRng(seed) {
     let s = seed >>> 0;
     return function rand() {
@@ -50,14 +58,16 @@
   }
 
   function lineColumn(frame, lane, count, block, opts = {}) {
+    const stagger = Math.max(opts.stagger || 18, 18);
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
-      const endY = (opts.endY == null ? 235 : opts.endY) - i * 13;
-      return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
+      const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 14);
+      return ev(frame + i * stagger, opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
         targetY: endY,
         fireCd: opts.fireCd == null ? 99 : opts.fireCd + i * 0.04,
+        phase: i,
         role: opts.role || "line-column",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -73,10 +83,11 @@
       return ev(frame + Math.abs(offset) * (opts.stagger || 8), opts.kind || "curve", x, block, {
         route: "v",
         targetX: x,
-        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 12,
+        targetY: opts.endY == null ? 245 : opts.endY,
         exitX: x + (offset < 0 ? -92 : 92),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: offset < 0 ? -1 : 1,
+        phase: Math.abs(offset) * 2 + (offset < 0 ? 1 : 0),
         role: opts.role || "v-burst",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -85,14 +96,15 @@
   }
 
   function crossSweep(frame, side, count, block, opts = {}) {
-    return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
-      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 8),
+    const stagger = Math.max(opts.stagger || 16, 16);
+    return Array.from({ length: count }, (_, i) => ev(frame + i * stagger, opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
+      y: opts.y == null ? 170 : opts.y,
       route: "side",
       side,
       targetX: side < 0 ? W * 0.58 : W * 0.42,
       exitX: side < 0 ? W + 34 : -34,
       fireCd: opts.fireCd == null ? 1.35 : opts.fireCd + i * 0.06,
-      phase: i * 0.5,
+      phase: i,
       role: opts.role || "cross-sweep",
       playerIntent: opts.playerIntent,
       badPolicy: opts.badPolicy,
@@ -105,10 +117,11 @@
       return ev(frame + i * (opts.stagger || 9), opts.kind || "curve", x, block, {
         route: "dive",
         targetX: x,
-        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 10,
+        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 8,
         exitX: x + (x < W / 2 ? -118 : 118),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: x < W / 2 ? -1 : 1,
+        phase: i,
         role: opts.role || "dive-slash",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -221,7 +234,7 @@
         y: H - 76,
         r: 5,
         speed: 260,
-        lives: 3,
+        lives: 4,
         invuln: 0,
         pulseCd: 0,
         shotCd: 0,
@@ -258,7 +271,7 @@
         armored: { hp: 46, r: 23, speed: 64, score: 520, fireRate: 1.45 },
         harvest: { hp: 6, r: 12, speed: 104, score: 110, fireRate: 99 },
         escort: { hp: 16, r: 16, speed: 86, score: 240, fireRate: 1.8 },
-        boss: { hp: 720, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
+        boss: { hp: 620, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
       }[kind];
       this.enemies.push({
         kind,
@@ -281,6 +294,8 @@
         lane: opts.lane,
         block: opts.block || opts.label || kind,
         role: opts.role || kind,
+        playerIntent: opts.playerIntent || "",
+        badPolicy: opts.badPolicy || [],
         shield: opts.shield || 0,
         spawnX: x,
         spawnY: y,
@@ -409,7 +424,7 @@
         y: e.y + (opts.yOffset == null ? 12 : opts.yOffset),
         vx: Math.cos(a) * speed,
         vy: Math.sin(a) * speed,
-        r: opts.r || 5,
+        r: opts.r || 4,
         role: opts.role || "aim",
       });
     }
@@ -425,7 +440,7 @@
         y: e.y + (opts.yOffset == null ? 14 : opts.yOffset),
         vx,
         vy,
-        r: opts.r || 5,
+        r: opts.r || 4,
         role,
       });
     }
@@ -443,36 +458,41 @@
           e.x = W / 2 + Math.sin(Math.max(0, e.age - 3.0) * 1.05) * 104;
           e.y = -52 + (116 + 52) * ease + Math.sin(Math.max(0, e.age - 3.0) * 0.9) * 10;
         } else if (e.route === "line") {
+          // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 118 },
-            { x: e.targetX, y: H + 62, t: 150 },
+            { x: e.targetX, y: e.targetY, t: 140, ease: "linear" },
+            { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
           ]);
         } else if (e.route === "v") {
+          // V bursts are a fold-out cue: enter as a readable shape, then peel back upward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112 },
-            { x: e.exitX, y: -58, t: 108 },
+            { x: e.targetX, y: e.targetY, t: 150, ease: "smooth" },
+            { x: e.exitX, y: -58, t: 140, ease: "smooth" },
           ]);
         } else if (e.route === "dive") {
+          // Dive slashes make a fast accent, kick once near the lane, then flee upward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 86 },
-            { x: e.targetX, y: e.targetY - 34, t: 34 },
-            { x: e.exitX, y: -58, t: 94 },
+            { x: e.targetX, y: e.targetY, t: 100, ease: "outCubic" },
+            { x: e.targetX, y: e.targetY - 30, t: 40, ease: "linear" },
+            { x: e.exitX, y: -58, t: 110, ease: "outCubic" },
           ]);
         } else if (e.route === "side") {
+          // Side enemies are crossing pressure: keep their travel direction and clear the lane.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 88 },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 20, t: 104 },
+            { x: e.targetX, y: e.spawnY, t: 110, ease: "linear" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: 110, ease: "linear" },
           ]);
         } else if (e.route === "large") {
+          // Large enemies are deadlines: descend, hold long enough to demand focus, then retreat.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112 },
-            { x: e.targetX, y: e.targetY, t: 72 },
-            { x: e.targetX + e.side * 34, y: -58, t: 126 },
+            { x: e.targetX, y: e.targetY, t: 136, ease: "smooth" },
+            { x: e.targetX, y: e.targetY, t: 84, ease: "linear" },
+            { x: e.targetX, y: -58, t: 138, ease: "inCubic" },
           ]);
         } else {
           e.y += e.speed * DT;
@@ -495,21 +515,21 @@
               nextFireRate = e.fireRate * 0.92;
             } else if (hpRatio > 0.33) {
               if (pattern === 0) {
-                this.fireFan(e, 7, 106, 0.13, "boss-mid-aim");
+                this.fireFan(e, 5, 100, 0.14, "boss-mid-aim");
               } else {
                 this.fireLaneGate(e, [-66, -22, 22, 66], 112, "boss-mid-lane");
                 this.fireGate(e, -52, 104, "boss-mid-cross");
                 this.fireGate(e, 52, 104, "boss-mid-cross");
               }
-              nextFireRate = e.fireRate * 0.72;
+              nextFireRate = e.fireRate * 0.82;
             } else {
-              this.fireFan(e, 9, 118, 0.12, "boss-final-aim");
-              this.fireLaneGate(e, [-76, -38, 38, 76], 126, "boss-final-lane");
+              this.fireFan(e, 7, 112, 0.13, "boss-final-aim");
+              this.fireLaneGate(e, [-66, 0, 66], 118, "boss-final-lane");
               if (pattern === 1) {
-                this.fireGate(e, -66, 116, "boss-final-cross");
-                this.fireGate(e, 66, 116, "boss-final-cross");
+                this.fireGate(e, -54, 108, "boss-final-cross");
+                this.fireGate(e, 54, 108, "boss-final-cross");
               }
-              nextFireRate = e.fireRate * 0.68;
+              nextFireRate = e.fireRate * 0.78;
             }
             if (bottomCamp) {
               this.fireAtPlayer(e, 196, -0.18, { role: "boss-bottom-punish" });
@@ -531,10 +551,16 @@
           } else if (e.kind === "feeder") {
             const bottomBias = this.player.y > H - 96 ? 48 * e.side : 0;
             this.fireAtPlayer(e, bottomCamp ? 184 : 136, e.side * 0.08 + bottomBias * 0.01, { role: "feeder-aim" });
-            if (e.route === "side") this.fireGate(e, -e.side * 36, 118, "feeder-cross");
+            if (e.route === "side" && e.age < 2.7) {
+              this.fireGate(e, -e.side * 36, 118, "feeder-cross");
+              nextFireRate = e.fireRate * 1.35;
+            }
           } else if (e.kind === "escort") {
             this.fireAtPlayer(e, 124, e.side * 0.2, { role: "escort-aim" });
-            this.fireGate(e, e.side * 42, 106, "escort-gate");
+            if (e.route === "side" && e.age < 2.8) {
+              this.fireGate(e, e.side * 42, 106, "escort-gate");
+              nextFireRate = e.fireRate * 1.3;
+            }
             if (bottomCamp) this.fireAtPlayer(e, 176, -e.side * 0.1, { role: "escort-bottom-punish" });
           } else if (e.kind === "harvest") {
             if (e.age > 2.2) this.fireAtPlayer(e, 102, 0, { role: "harvest-timeout" });
@@ -557,7 +583,7 @@
       e.pathT += 1;
       const dur = p1.t || 1;
       const frac = clamp(e.pathT / dur, 0, 1);
-      const sf = frac * frac * (3 - 2 * frac);
+      const sf = easeMotion(frac, p1.ease || "smooth");
       e.x = p0.x + (p1.x - p0.x) * sf;
       e.y = p0.y + (p1.y - p0.y) * sf;
       if (e.pathT >= dur) {
@@ -572,7 +598,7 @@
       const locks = [
         { minAge: 6.8, hpFloor: e.maxHp * 0.67 },
         { minAge: 11.2, hpFloor: e.maxHp * 0.34 },
-        { minAge: 16.2, hpFloor: 1 },
+        { minAge: 14.2, hpFloor: 1 },
       ];
       for (const lock of locks) {
         if (e.age < lock.minAge && e.hp < lock.hpFloor) {
