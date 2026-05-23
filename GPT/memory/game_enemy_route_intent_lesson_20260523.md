@@ -37,4 +37,5 @@ Pulse Relay v001 での具体的な失敗:
 - shot_log など teacher 実装を見る時は、座標や duration だけでなく「なぜその敵はそこで退場するのか」を抽出する。
 - 重なり修正はランダム offset や隊列内 phase 差ではなく、同じ rail のまま `target spacing`、`spawn delay`、`path progress`、`enemy radius` を合わせて直す。
 - 重なり修正後は、画面内の同一 block / route について「中心距離 < 半径合計 + 余白」のペアが残っていないかを機械的に検査する。特に smooth の低速立ち上がりは spawn 直後の重なりを作りやすいので、入口速度と spawn delay をセットで見る。
+- ただし、重なりを消すために敵の動きを一律の等速直線へ潰してはいけない。shot_log の良さは「重ならないこと」だけではなく、smoothstep の速い入り・短い見せ場・掃けによるリズムにある。重なり対策は、経路の直角方向へ不格好にずらす、同一カーブ上の位相を曖昧にずらす、緩急を消して等速化する、の順に逃げてはいけない。同じレール上の spawn delay、経路方向の終端間隔、画面内で見える時間の設計で解決し、最後に overlap checker と headless timeline で副作用を見る。
 - 評価は平均スコアだけで終えない。route / boss-rush / camper / lane-holder など複数 policy の差分と、秒ごとの visibleTargets / shootableTargets / enemyBullets / damage / bossHp を見て、修正が意図通りの緊張を作ったか確認する。

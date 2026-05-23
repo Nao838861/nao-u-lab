@@ -28,7 +28,7 @@ function pathFor(e) {
   if (e.route === "line") {
     return [
       { x: e.x, y: -42, t: 0 },
-      { x: e.targetX, y: e.targetY, t: 140, ease: "linear" },
+      { x: e.targetX, y: e.targetY, t: 140, ease: "smooth" },
       { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
     ];
   }
@@ -50,8 +50,8 @@ function pathFor(e) {
   if (e.route === "side") {
     return [
       { x: e.x, y: e.y - 26, t: 0 },
-      { x: e.targetX, y: e.y, t: 110, ease: "linear" },
-      { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.y - 26, t: 110, ease: "linear" },
+      { x: e.targetX, y: e.y, t: 90, ease: "smooth" },
+      { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.y - 26, t: 90, ease: "smooth" },
     ];
   }
   if (e.route === "large") {

@@ -61,7 +61,7 @@
     const stagger = Math.max(opts.stagger || 18, 18);
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
-      const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 14);
+      const endY = (opts.endY == null ? 255 : opts.endY) - i * (opts.stepY || 24);
       return ev(frame + i * stagger, opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
@@ -96,7 +96,7 @@
   }
 
   function crossSweep(frame, side, count, block, opts = {}) {
-    const stagger = Math.max(opts.stagger || 16, 16);
+    const stagger = Math.max(opts.stagger || 28, 28);
     return Array.from({ length: count }, (_, i) => ev(frame + i * stagger, opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
       y: opts.y == null ? 170 : opts.y,
       route: "side",
@@ -461,7 +461,7 @@
           // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 140, ease: "linear" },
+            { x: e.targetX, y: e.targetY, t: 140, ease: "smooth" },
             { x: e.targetX, y: H + 62, t: 160, ease: "smooth" },
           ]);
         } else if (e.route === "v") {
@@ -483,8 +483,8 @@
           // Side enemies are crossing pressure: keep their travel direction and clear the lane.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 110, ease: "linear" },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: 110, ease: "linear" },
+            { x: e.targetX, y: e.spawnY, t: 90, ease: "smooth" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 26, t: 90, ease: "smooth" },
           ]);
         } else if (e.route === "large") {
           // Large enemies are deadlines: descend, hold long enough to demand focus, then retreat.
