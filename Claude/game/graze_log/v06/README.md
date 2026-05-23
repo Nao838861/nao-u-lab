@@ -1,4 +1,4 @@
-# graze_log v06 — A-1 anticipation telegraph + A-4 wobble (readability 4 層 = CAVE 級 visual identity)
+# graze_log v06 — A-1 anticipation telegraph + A-4 wobble + A-5 buzz invincibility
 
 **status**: v05 beta B-2' (C189 = `90adecd15 ash: graze_log v05 beta B-2'`) からの **削除可能改良 1 個刻み**。C190 brainstorm 18 案中、群A (経路A 完成度向上) の最小案 A-1 を採択し実装。
 
@@ -95,6 +95,45 @@ v05 では `state.spawnT<=0 && state.enemies.length<3` で次 wave 発火。v06 
 
 Phase 4 の目的は **playable diff 1 機構** を出すこと。Stage 3 (実装後の予測) / Stage 4 (AI 自プレイで「良い」と確信) は次サイクル以降。
 
+## A-5 (b): Psyvariar buzz chain invincibility 第一手 (C193 追加)
+
+### 何を 1 個足したか
+
+**Lv up 発火点で自機 60F (1 秒) 無敵化 + 視覚 glow ring (橙色 #ffa040 pulse) 描画**。`state.invincibleT` 状態を新設、`onGraze()` 内 `playerLv++` と同時に `invincibleT = BUZZ_INVINCIBLE_FRAMES` をセットし、`update()` で tick、hit 判定 2 箇所 (ebullet 接触 / 敵本体接触) に `&& state.invincibleT <= 0` gate を追加、`draw()` で残時間に応じた橙色 ring を自機周囲に描く。
+
+### なぜ A-5 (b) か
+
+`knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md` が明示する Psyvariar Buzz の 5 要素 ((a) graze=gauge / (b) Lv up invincibility / (c) Lv up 中 graze 継続 / (d) 連鎖 Lv up / (e) Roll hitbox shrink) のうち、A-3 は (a) のみ採用していた。「Psyvariar Lv up を取り入れた」と書面化したまま (b) を欠いた状態で v06 を閉じると、後で「Psyvariar 型は効かなかった」という誤判定リスク (knowledge §A) が立つ。A-5 (b) は **5/5 中 2/5 への到達** であり、Psyvariar 経路 (経路A) の縦深化の最小一歩。
+
+### 何を取らなかったか (削除可能改良 1 個刻み制約)
+
+- **(c) Lv up 中 graze 継続**: 60F 無敵中に弾接触で gauge が貯まり続ける機構は未実装。本サイクルでは「無敵中の graze は通常通り発火するが、Lv up cooldown は LV_GRAZE_TH ベースで一度に複数 Lv up しないため、自然に (d) 連鎖が抑制される」という副作用に依存する形。
+- **(d) 連鎖 Lv up**: 仕組み上、無敵中の graze 30 回累積で次の Lv up は発火し得るが、現実的には 1 秒で 30 graze は届かないため、(d) は事実上 dormant。
+- **(e) Roll hitbox shrink**: graze_log に画面外機軸動作が無いため不適用。
+
+### 戻し方 (A-5 → A-3 削除可能性の保証)
+
+`index.html` に 7 箇所:
+1. `BUZZ_INVINCIBLE_FRAMES=60` 定数 + 前後コメントブロック削除 (~8 行)
+2. `state.invincibleT:0,` 削除 (1 行 + コメント)
+3. `startGame()` の `state.invincibleT=0;` 削除 (1 行 + コメント)
+4. `update()` の `if(state.invincibleT>0)state.invincibleT--;` 削除 (1 行 + コメント)
+5. hit gate 2 箇所の `&&state.invincibleT<=0` を削除 (2 行 + コメント)
+6. `onGraze()` Lv up ブロック内の `state.invincibleT=BUZZ_INVINCIBLE_FRAMES;` + `state.rings.push(...)` 削除 (2 行 + コメント)
+7. `draw()` 内 buzz glow ring ブロック削除 (~7 行)
+
+合計約 27 行。A-3 と bit 完全等価に戻る。
+
+### 判定方針 (v06 全体方針継承)
+
+- **headless 数値は judgment / cross_review / Slack の根拠にしない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5)
+- 連鎖無敵の「気持ちよさ」は AI 自プレイ (Stage 4) と Nao_u 評価で判定する
+- self_judgment.md / predicted_play.md は次サイクル以降 (本 Phase 4 は playable diff 1 機構を出すことが目的)
+
+### 4 層 readability への波及
+
+A-5 は readability 4 層 (anticipation / telegraph / windup / wobble) を変更しない。**Lv up 中の橙色 glow ring が「視覚的に弾を無視できる」を即時伝達する追加の readability チャネル**として副次効果を持つが、これは A-4 wobble の identity チャンネルとは独立した「自機状態」のチャンネルなので 4 層分類に追加せず別軸として扱う。
+
 ## 接続先
 
 - `game/graze_log/v05/` — v06 の 6 箇所を v05 beta 形に戻した状態
@@ -108,5 +147,6 @@ Phase 4 の目的は **playable diff 1 機構** を出すこと。Stage 3 (実�
 - `memory/feedback_means_ends_reversal_check.md` t:5 — playable diff 第一義原則
 - `memory/feedback_prior_art_citation_must_verify.md` t:5 — M-41 引用検証
 - `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — 判定根拠から headless を外す
+- `knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md` — A-5 (b) の元となった「Psyvariar Buzz 5 要素 / shallow vs deep clone」分析
 
-— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 (2026-05-23)
+— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 / C193 Phase 4 A-5 (b) buzz invincibility 追加 (2026-05-23)

@@ -118,6 +118,14 @@ const ANTICIPATION_FRAMES=30;
 const LV_GRAZE_TH=30;
 const PLAYER_LV_MAX=4;
 
+// === v06 A-5 (b): Psyvariar buzz chain invincibility 第一手 — Lv up 時 60F (1秒) 自機無敵 ===
+// knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md
+// の (b) のみ採用。(c) Lv up 中 graze 継続 / (d) 連鎖 Lv up は別案件として後送り。
+// 削除手順 (A-5 → A-3): BUZZ_INVINCIBLE_FRAMES 定数 / state.invincibleT / startGame reset /
+// update tick / hit gate 2箇所の `||state.invincibleT>0` / onGraze Lv up 時 invincibleT セット /
+// draw() の buzz glow ring ブロックを削除。
+const BUZZ_INVINCIBLE_FRAMES=60;
+
 const state={
   mode:'title',
   t:0,
@@ -150,6 +158,8 @@ const state={
   activeDefCount:0,
   // v06 A-3
   playerLv:0,
+  // v06 A-5 (b)
+  invincibleT:0,
 };
 
 function initStars(){
@@ -256,6 +266,8 @@ function startGame(){
   state.activeDefCount=0;
   // v06 A-3 reset
   state.playerLv=0;
+  // v06 A-5 (b) reset
+  state.invincibleT=0;
   // 注: state.rng は再シード**しない**。1セッション通しで一系列。
   // 再現したければ ?seed=N で同一 SEED 起動。
 }
@@ -410,6 +422,8 @@ function update(){
   if(state.player.iframe>0)state.player.iframe--;
   // v03: active def 残時間
   if(state.activeDefT>0)state.activeDefT--;
+  // v06 A-5 (b): buzz chain invincibility 残時間
+  if(state.invincibleT>0)state.invincibleT--;
 
   if(state.shotCooldown>0)state.shotCooldown--;
   else{
@@ -508,7 +522,8 @@ function update(){
     const dx=b.x-state.player.x,dy=b.y-state.player.y;
     const d2=dx*dx+dy*dy;
     if(d2<R_HIT*R_HIT){
-      if(state.player.iframe<=0){
+      // v06 A-5 (b): invincibleT>0 でも被弾を skip (Psyvariar Lv up 後 1秒無敵)
+      if(state.player.iframe<=0&&state.invincibleT<=0){
         onHit();
         b.y=H+99;
       }
@@ -520,7 +535,8 @@ function update(){
   }
   state.ebullets=state.ebullets.filter(b=>b.x>-20&&b.x<W+20&&b.y>-20&&b.y<H+20);
 
-  if(state.player.iframe<=0){
+  // v06 A-5 (b): invincibleT>0 でも敵接触 skip
+  if(state.player.iframe<=0&&state.invincibleT<=0){
     for(const e of state.enemies){
       const dx=state.player.x-e.x,dy=state.player.y-e.y;
       if(dx*dx+dy*dy<(e.r+state.player.r)*(e.r+state.player.r)){
@@ -571,6 +587,9 @@ function onGraze(bx,by){
   if(state.playerLv<PLAYER_LV_MAX && state.grazeCount%LV_GRAZE_TH===0){
     state.playerLv++;
     state.popups.push({x:state.player.x,y:state.player.y-44,text:'LV UP '+state.playerLv,life:50,c:'#ffa040'});
+    // v06 A-5 (b): Lv up 発火と同時に 60F 無敵を起動 (Psyvariar buzz chain の核)
+    state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
+    state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
   }
 }
 
@@ -736,6 +755,14 @@ function draw(){
         ctx.strokeStyle=`rgba(128,255,208,${0.35+0.45*ad})`;
         ctx.lineWidth=2;
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
+      }
+      // v06 A-5 (b): buzz chain invincibility 中の橙色 glow ring (Lv up popup と同色 #ffa040)
+      if(state.invincibleT>0){
+        const iv=state.invincibleT/BUZZ_INVINCIBLE_FRAMES;
+        const pulse=0.5+0.5*Math.sin(state.t*0.35);
+        ctx.strokeStyle=`rgba(255,160,64,${0.35+0.55*iv*pulse})`;
+        ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,20,0,Math.PI*2);ctx.stroke();
       }
       // v03: streak 閾値到達中はプレイヤー周囲に小さい cyan-green マーカー
       if(state.grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0){
