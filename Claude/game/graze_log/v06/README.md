@@ -134,6 +134,43 @@ Phase 4 の目的は **playable diff 1 機構** を出すこと。Stage 3 (実�
 
 A-5 は readability 4 層 (anticipation / telegraph / windup / wobble) を変更しない。**Lv up 中の橙色 glow ring が「視覚的に弾を無視できる」を即時伝達する追加の readability チャネル**として副次効果を持つが、これは A-4 wobble の identity チャンネルとは独立した「自機状態」のチャンネルなので 4 層分類に追加せず別軸として扱う。
 
+## A-6 (a): buzz chain extension (C194 追加)
+
+### 何を 1 個足したか
+
+**無敵中の Lv up で無敵時間を「上書き」せず「加算延長」する** (`onGraze()` の Lv up ブロック)。`BUZZ_INVINCIBLE_CAP=180` (3 秒) 定数を新設、無敵切れていれば従来通り 60F セット (橙色 #ffa040 ring)、無敵中なら `Math.min(invincibleT+60, 180)` で加算 + 黄色寄りの ring (#ffd040, 半径 +6) を追加 push (連鎖視認用)。
+
+### なぜ A-6 (a) か
+
+外部検索 (2026-05-23 10:30 実行) で **Psyvariar 3 正統続編が 2025-09 発表 → 2026-05-21 (今週) 日本リリース** という偶然の同期点が見つかった。原典 Psyvariar の核設計は「Lv up ごとに数秒完全無敵 + 弾密度が高ければ multiple level-ups を chain して長期無敵化が可能」(shmups.system11.org / Wikipedia "Psyvariar" 1999-2001 アーケード仕様欄)。A-5 (b) では Lv up で 60F を**上書き**するだけだったため、無敵中の次 Lv up が来ても 60F のまま縮退していた。これは原典 chain の核機構を欠いた "shallow clone" で、`knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md` が警告した「shallow vs deep clone」の shallow 側に留まっていた。A-6 (a) は 5 要素 (a)(b)(c)(d)(e) のうち、A-3 で (a)、A-5 で (b) を獲得した次の **(d) 連鎖 Lv up** を取りに行く 1 個刻みの一歩 (= 5/5 中 3/5 への到達)。
+
+### 何を取らなかったか (削除可能改良 1 個刻み制約)
+
+- **(c) Lv up 中 graze 継続**: 60F 無敵中も弾接触で gauge が貯まり続けるが、現実的に 1 秒で 30 graze は届かないため、A-6 (a) 加算延長によって 30 graze に到達できる可能性は上がる。ただし機構自体は未変更 (graze 半径も無敵中の onGraze 判定も A-5 と同一)。
+- **(e) Roll hitbox shrink**: graze_log に画面外機軸動作が無いため不適用。
+
+### 戻し方 (A-6 → A-5 削除可能性の保証)
+
+`index.html` に 2 箇所:
+1. `BUZZ_INVINCIBLE_CAP=180` 定数 + 前後コメントブロック削除 (~9 行)
+2. `onGraze()` Lv up ブロック内の `if(state.invincibleT>0){...}else{...}` 加算分岐を `state.invincibleT=BUZZ_INVINCIBLE_FRAMES; state.rings.push(...)` の上書き形 (A-5 (b)) に戻す (約 8 行 → 2 行に縮約)
+
+合計約 15 行。A-5 (b) と bit 完全等価に戻る。
+
+### 判定方針 (v06 全体方針継承)
+
+- **headless 数値は judgment / cross_review / Slack の根拠にしない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5)
+- 連鎖延長の「気持ちよさ」 (チェイン中の体感が原典 Psyvariar に近づくか) は AI 自プレイ (Stage 4) と Nao_u 評価で判定する
+- self_judgment.md / predicted_play.md は次サイクル以降 (本 Phase 4 は playable diff 1 機構を出すことが目的)
+
+### 4 層 readability への波及
+
+A-6 (a) は readability 4 層 (anticipation / telegraph / windup / wobble) を変更しない。glow ring の chain 識別色 (黄色 #ffd040) は A-5 (b) の橙色 #ffa040 と区別される「自機状態の chain 段階」を表す追加チャネルだが、A-5 (b) と同じく 4 層分類とは別軸 (自機状態軸) に属するため、4 層には追加しない。
+
+### Psyvariar 3 同週リリースの位置づけ
+
+2026-05-21 (今週) に Psyvariar 正統続編 (3) が 20 年以上ぶりに日本リリースされたという外部世界の同期点は、本 A-6 (a) 採択の**契機ではあるが根拠ではない**。根拠は原典 Psyvariar の chain 設計の存在 (上記出典) と、A-3/A-5 (b) の縦深化の自然な次手という構造側にある。同週リリースは「外を見て同期した」事実そのものに価値があり、次サイクル以降 Psyvariar 3 のプレイレビュー/インタビュー情報が出てきたら知識として取り込む候補。
+
 ## 接続先
 
 - `game/graze_log/v05/` — v06 の 6 箇所を v05 beta 形に戻した状態
@@ -149,4 +186,4 @@ A-5 は readability 4 層 (anticipation / telegraph / windup / wobble) を変更
 - `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — 判定根拠から headless を外す
 - `knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md` — A-5 (b) の元となった「Psyvariar Buzz 5 要素 / shallow vs deep clone」分析
 
-— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 / C193 Phase 4 A-5 (b) buzz invincibility 追加 (2026-05-23)
+— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 / C193 Phase 4 A-5 (b) buzz invincibility 追加 (2026-05-23) / C194 Phase 4 A-6 (a) buzz chain extension 追加 (2026-05-23)

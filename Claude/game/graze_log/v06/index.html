@@ -126,6 +126,15 @@ const PLAYER_LV_MAX=4;
 // draw() の buzz glow ring ブロックを削除。
 const BUZZ_INVINCIBLE_FRAMES=60;
 
+// === v06 A-6 (a): Psyvariar buzz chain extension — 無敵中の Lv up で無敵時間加算 (cap 180F) ===
+// Psyvariar 原典「Lv up ごとに数秒完全無敵 + 高密度なら multiple level-ups chain で長期無敵化」(2025-09 発表
+// Psyvariar 3 正統続編が 2026-05-21 日本リリース。原典 chain の核機構 = 連鎖 Lv up で無敵を延長)。
+// A-5 (b) では Lv up で無敵時間を「上書き」していたため、無敵中の次 Lv up が来ても 60F のまま。
+// A-6 (a) は無敵中の Lv up で BUZZ_INVINCIBLE_FRAMES (60F) を加算、ただし BUZZ_INVINCIBLE_CAP (180F=3秒) で頭打ち。
+// 削除手順 (A-6 → A-5): BUZZ_INVINCIBLE_CAP 定数 / onGraze Lv up ブロックの加算分岐 を削除し
+// `state.invincibleT=BUZZ_INVINCIBLE_FRAMES;` の上書き形に戻す。glow ring の chain 識別 (色変化) も削除。
+const BUZZ_INVINCIBLE_CAP=180;
+
 const state={
   mode:'title',
   t:0,
@@ -587,9 +596,16 @@ function onGraze(bx,by){
   if(state.playerLv<PLAYER_LV_MAX && state.grazeCount%LV_GRAZE_TH===0){
     state.playerLv++;
     state.popups.push({x:state.player.x,y:state.player.y-44,text:'LV UP '+state.playerLv,life:50,c:'#ffa040'});
-    // v06 A-5 (b): Lv up 発火と同時に 60F 無敵を起動 (Psyvariar buzz chain の核)
-    state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
-    state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
+    // v06 A-6 (a): 無敵中なら 60F 加算 (cap 180F = 3秒) / 無敵切れていれば 60F 上書き
+    // Psyvariar 原典 chain 無敵の核 — 連鎖 Lv up で長期無敵化
+    if(state.invincibleT>0){
+      state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES,BUZZ_INVINCIBLE_CAP);
+      // chain 延長は黄色寄り (#ffd040) の ring で識別、初回 (橙 #ffa040) と区別
+      state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffd040',r0:R_GRAZE,r1:R_GRAZE+28});
+    }else{
+      state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
+      state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
+    }
   }
 }
 
