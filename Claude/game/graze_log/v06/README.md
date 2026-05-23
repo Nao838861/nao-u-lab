@@ -171,6 +171,14 @@ A-6 (a) は readability 4 層 (anticipation / telegraph / windup / wobble) を�
 
 2026-05-21 (今週) に Psyvariar 正統続編 (3) が 20 年以上ぶりに日本リリースされたという外部世界の同期点は、本 A-6 (a) 採択の**契機ではあるが根拠ではない**。根拠は原典 Psyvariar の chain 設計の存在 (上記出典) と、A-3/A-5 (b) の縦深化の自然な次手という構造側にある。同週リリースは「外を見て同期した」事実そのものに価値があり、次サイクル以降 Psyvariar 3 のプレイレビュー/インタビュー情報が出てきたら知識として取り込む候補。
 
+### 現在進行形の競合との差分明示 (C197 追記)
+
+C197 Phase 1 外部検索で **a4at.com Psyvariar 3 Switch 2 Review (2026-05-22)** が捕捉でき、A-3 → A-5 (b) → A-6 (a) → A-6 (b) と同型のコアサイクル ("経験ゲージ満タンで Lv up + 一時無敵 + 連鎖無敵スパイラル") が **2026 年現在の商業作として再投入されている**ことが確認された。同型観察は `knowledge/20260523_psyvariar3_2026_release_prior_art_axis_shift_live_commercial_competitor.md` に書面化済 — `feedback_prior_art_citation_must_verify.md` (t:5) M-41 の射程を「過去の参考事例」から「現在進行形の商業競合 (active competitor)」へ拡張する事件として扱う。
+
+`feedback_difference_first.md` (t:5) 「外部情報→違う点・見落としを先に書く」に従い、同型観察と対の **純粋指差し相違点 8 点** (倍率の離散性 / cap 設計 / Lv の永続性 / 視覚チャネル数 / graze 半径動的性 / graze 発火条件 / 被弾構造 / ステージ構成) を `knowledge/20260523_psyvariar_3_switch2_review_v06_a6_pure_pointing_diff.md` に列挙した。守破離の守の達成度を「相違点 5 点以上指差せる状態」で測る初期素材で、現役商業作との shallow clone リスクを self_judgment 段階に持ち越さない目的で設けた。
+
+最終的に shallow か deep かの判定は `feedback_headless_unfit_for_unfinished_eval.md` (t:5) に従い Stage 4 AI 自プレイ + Nao_u 評価まで保留する。本節は判定保留の根拠 (相違点 8 点が指差せる) を v06 README 側にも紐づけておく目的の追記。
+
 ## A-6 (b): buzz chain reward (C195 追加)
 
 ### 何を 1 個足したか
