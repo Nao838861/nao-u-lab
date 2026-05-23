@@ -13,7 +13,7 @@
 
 `shot_log` は 14 wave / 約 526 敵の規模で、1 wave の中に複数の小隊を遅延付きで重ねている。Pulse Relay は 9 block / 75 event で、敵数が少ないうえ、block 内の小隊文法が薄い。したがって、1 体ごとのパラメータを少し速くしても、`shot_log` 的な密度・切り返し・撃つリズムには戻らない。
 
-`shot_log_motion_compare.js` の現在値では、`shot_log` は平均 spawn gap 7.17f、最大同時 active target 100、平均 active target 31.11。Pulse Relay は平均 spawn gap 66.92f、最大 gap 388f、route 内訳は `curve` 51 / `side` 18 / `dwell` 5 / `boss` 1。さらに `dwell` の y=150 到達は 304-360f かかる。ここから見ても、Pulse Relay の問題は「敵の速度を少し上げる」ではなく、「小隊単位の重なり、短い役割時間、退出 deadline を実装する」ことにある。
+修正後の `shot_log_motion_compare.js` の現在値では、`shot_log` は平均 spawn gap 7.17f、最大 spawn gap 190f、最大同時 active target 100。Pulse Relay は 205 event、平均 spawn gap 19.61f、最大 spawn gap 200f、route 内訳は `line` 89 / `side` 71 / `v` 15 / `dive` 22 / `large` 7 / `boss` 1。旧実装の `dwell` は消え、304-360f の crawl は残っていない。まだ `shot_log` より密度は低いが、問題の中心だった「汎用 route に敵を流し込むだけ」の構造からは抜けた。
 
 ## shot_log の移動プリミティブ
 
@@ -34,6 +34,17 @@
 | `side` | 93f で横から入場し、その後は sine drift と低速下降。 | `shot_log` の side sweep は反対側へ抜け切る横断運動だが、Pulse は入ったあと滞留する。横圧のメリハリが消える。 |
 | `dwell` | y=150 まで速度 32-38 で降り、以後 sine drift。開始 y=-42 の場合、目標位置まで約 303-360f かかる。 | 硬い敵に狙う時間を作る意図はあるが、入場が長すぎて「狙わせる」前にテンポを落としている。`pLarge` の 160f 入場 + 80f 停止 + 140f 退出とは違う。 |
 | `boss` | y=92 に最初から出現し、横 sine sway。 | 入場 cue、フェーズ感、周辺 fuel wave の同期が薄い。boss が stage 上に置かれているだけに見える。 |
+
+## 修正後の Pulse Relay primitive
+
+| primitive | 実装上の動き | 目的 |
+|---|---|---|
+| `line` | 118f で射線上の `targetY` に入り、150f で下へ抜ける。 | `pLineDown` 相当の撃ち続ける列を作る。 |
+| `side` | 88f で画面中央寄りへ入り、104f で反対側へ抜ける。 | 旧 `side` の漂いをやめ、横断する撃破列にする。 |
+| `v` | 112f で V 字到達点へ入り、108f で左右上方へ抜ける。 | 形の読み取りと視線移動を作る。 |
+| `dive` | 86f で深い位置へ刺さり、34f 戻り、94f で斜め上へ抜ける。 | 旧 curve のぬるさを急降下アクセントに置き換える。 |
+| `large` | 112f 入場、72f 停止、126f 退出。 | 硬敵に狙う時間と期限を作り、長い crawl を避ける。 |
+| `boss` | 180f の入場 cue 後に横 sway。周囲に line / side / dive / large fuel を重ねる。 | boss を孤立させず、boss 中も撃つ対象を供給する。 |
 
 ## wave 構造の差分
 

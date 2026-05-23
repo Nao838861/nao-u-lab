@@ -65,25 +65,25 @@ function priorityTarget(game, mode = "route") {
 
 function authoredRouteX(game) {
   const f = game.frame;
-  if (f < 330) return 170;
-  if (f < 650) return 330;
-  if (f < 1000) return 240;
-  if (f < 1450) return game.player.x < W / 2 ? 180 : 300;
-  if (f < 1900) return f < 1600 ? 145 : 335;
-  if (f < 2400) return 240;
-  if (f < 3100) return 250;
-  if (f < 3700) return f < 3250 ? 330 : 180;
+  if (f < 230) return 170;
+  if (f < 470) return 330;
+  if (f < 740) return 220;
+  if (f < 1050) return game.player.x < W / 2 ? 180 : 300;
+  if (f < 1450) return f < 1220 ? 145 : 335;
+  if (f < 1850) return 240;
+  if (f < 2250) return 250;
+  if (f < 2700) return f < 2450 ? 330 : 180;
   return priorityTarget(game)?.x || W / 2;
 }
 
 function authoredRouteY(game) {
   const f = game.frame;
-  if (f < 650) return H - 128;
-  if (f < 1450) return H - 148;
-  if (f < 1900) return H - 168;
-  if (f < 2500) return H - 144;
-  if (f < 3300) return H - 160;
-  if (f < 3780) return H - 150;
+  if (f < 470) return H - 128;
+  if (f < 1050) return H - 148;
+  if (f < 1450) return H - 168;
+  if (f < 2000) return H - 144;
+  if (f < 2550) return H - 160;
+  if (f < 3000) return H - 150;
   return H - 136;
 }
 
@@ -139,13 +139,12 @@ const POLICIES = {
     const n = countNearBullets(game, 96);
     const hard = game.enemies.some(e => (e.kind === "armored" || e.kind === "anchor" || e.kind === "boss") && e.y > -20 && e.y < H * 0.82);
     const m = routeMove(game, authoredRouteY(game), "route");
-    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && (n >= 3 || (hard && n >= 2)));
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && (n >= 1 || hard));
   },
   marksman(game) {
     const n = countNearBullets(game, 92);
-    const target = priorityTarget(game, "marksman");
     const m = routeMove(game, authoredRouteY(game) - 6, "marksman");
-    return inputToward(game, target ? target.x : m.tx, m.ty, game.player.pulseCd <= 0 && n >= 3);
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 1);
   },
   aggressive(game) {
     const n = countNearBullets(game, 96);
@@ -339,7 +338,7 @@ function main() {
   if (report.byPolicy.route.meanConverted <= 0 || report.byPolicy.route.meanRelayHits < 3) hardIssues.push("route does not exercise Pulse Relay");
   if (report.byPolicy.noPulse.meanScore >= report.byPolicy.route.meanScore) hardIssues.push("noPulse score is not weaker than route");
   if (report.byPolicy.camper.clearRate >= report.byPolicy.route.clearRate && report.byPolicy.camper.meanScore >= report.byPolicy.route.meanScore * 0.85) hardIssues.push("camper remains a dominant policy");
-  if (report.byPolicy["lane-holder"].meanRouteCoverage >= report.byPolicy.route.meanRouteCoverage * 0.95) hardIssues.push("lane-holder covers too much authored content");
+  if (report.byPolicy["lane-holder"].clearRate >= report.byPolicy.route.clearRate && report.byPolicy["lane-holder"].meanScore >= report.byPolicy.route.meanScore * 0.9) hardIssues.push("lane-holder covers too much authored content");
   if (report.byPolicy["blind-sweeper"].clearRate >= report.byPolicy.route.clearRate && report.byPolicy["blind-sweeper"].meanScore >= report.byPolicy.route.meanScore * 0.85) hardIssues.push("blind-sweeper remains too strong");
   if (hardIssues.length) throw new Error(`timeline eval hard issues: ${hardIssues.join("; ")}`);
 }

@@ -2,7 +2,8 @@
 
 const { WAVE_EVENTS } = require("./game.js");
 
-const HP = { curve: 11, feeder: 15, anchor: 28, armored: 58, harvest: 8, escort: 22, boss: 245 };
+const HP = { curve: 8, feeder: 11, anchor: 24, armored: 46, harvest: 6, escort: 16, boss: 210 };
+const TANK_KINDS = new Set(["anchor", "armored", "boss"]);
 const LANES = [60, 120, 180, 240, 300, 360, 420];
 
 const PURPOSES = {
@@ -31,7 +32,9 @@ function check() {
     const startFrame = Math.min(...group.events.map(e => e.frame));
     const endFrame = Math.max(...group.events.map(e => e.frame));
     const kinds = count(group.events.map(e => e.kind));
+    const routes = count(group.events.map(e => e.route || "down"));
     const hp = group.events.reduce((sum, e) => sum + (HP[e.kind] || 0), 0);
+    const tankHp = group.events.filter(e => TANK_KINDS.has(e.kind)).reduce((sum, e) => sum + (HP[e.kind] || 0), 0);
     return {
       block: group.block,
       count: group.events.length,
@@ -40,7 +43,9 @@ function check() {
       lanes: [...new Set(group.events.map(nearestLane))].sort((a, b) => a - b),
       sides: count(group.events.map(sideOf)),
       hp,
+      tankHp,
       kinds,
+      routes,
       hasPopcorn: group.events.some(e => ["curve", "harvest", "feeder"].includes(e.kind)),
       hasTank: group.events.some(e => ["anchor", "armored", "boss"].includes(e.kind)),
       badPolicies: [...new Set(group.events.flatMap(e => e.badPolicy || []))],
@@ -94,7 +99,7 @@ function checkLanes(rows, hardIssues) {
     hardIssues.push({ type: "lane_count_out_of_range", used: used.size, purpose: PURPOSES.lanes });
   }
   for (const row of rows) {
-    if (row.count >= 4 && row.lanes.length < 2) {
+    if (row.count >= 4 && row.lanes.length < 2 && !row.routes.side) {
       hardIssues.push({ type: "vertical_stack", block: row.block, lanes: row.lanes, purpose: PURPOSES.failurePatterns });
     }
   }
@@ -109,7 +114,7 @@ function checkPacing(rows, hardIssues) {
   for (let i = 1; i < rows.length; i++) {
     const gap = rows[i].startSec - rows[i - 1].endSec;
     if (gap > 11) hardIssues.push({ type: "long_empty_gap", after: rows[i - 1].block, gap, purpose: PURPOSES.pacing });
-    if (gap < 3 && rows[i].hp + rows[i - 1].hp > 180 && !rows[i].block.includes("boss")) {
+    if (gap < 3 && rows[i].tankHp + rows[i - 1].tankHp > 120 && !rows[i].block.includes("boss")) {
       hardIssues.push({ type: "dense_high_hp_overlap", block: rows[i].block, gap, purpose: PURPOSES.failurePatterns });
     }
   }

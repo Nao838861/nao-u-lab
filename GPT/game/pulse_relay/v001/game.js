@@ -39,74 +39,165 @@
       fireCd: opts.fireCd == null ? 1.0 : opts.fireCd,
       phase: opts.phase || 0,
       shield: opts.shield || 0,
+      path: opts.path || null,
+      targetX: opts.targetX,
+      targetY: opts.targetY,
+      exitX: opts.exitX,
       playerIntent: opts.playerIntent || "",
       badPolicy: opts.badPolicy || [],
       label: block,
     };
   }
 
-  function curveTrain(frame, side, lanes, block, opts = {}) {
-    return lanes.map((lane, i) => ev(frame + i * (opts.stagger || 7), opts.kind || "curve", lane, block, {
-      route: "curve",
+  function lineColumn(frame, lane, count, block, opts = {}) {
+    return Array.from({ length: count }, (_, i) => {
+      const x = LANES[lane] == null ? lane : LANES[lane];
+      const endY = (opts.endY == null ? 235 : opts.endY) - i * 13;
+      return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
+        route: "line",
+        targetX: x,
+        targetY: endY,
+        fireCd: opts.fireCd == null ? 99 : opts.fireCd + i * 0.04,
+        role: opts.role || "line-column",
+        playerIntent: opts.playerIntent,
+        badPolicy: opts.badPolicy,
+      });
+    });
+  }
+
+  function vBurst(frame, centerLane, count, block, opts = {}) {
+    const half = (count - 1) / 2;
+    return Array.from({ length: count }, (_, i) => {
+      const offset = i - half;
+      const x = LANES[centerLane] + offset * (opts.spacing || 31);
+      return ev(frame + Math.abs(offset) * (opts.stagger || 8), opts.kind || "curve", x, block, {
+        route: "v",
+        targetX: x,
+        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 12,
+        exitX: x + (offset < 0 ? -92 : 92),
+        fireCd: opts.fireCd == null ? 99 : opts.fireCd,
+        side: offset < 0 ? -1 : 1,
+        role: opts.role || "v-burst",
+        playerIntent: opts.playerIntent,
+        badPolicy: opts.badPolicy,
+      });
+    });
+  }
+
+  function crossSweep(frame, side, count, block, opts = {}) {
+    return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
+      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 8),
+      route: "side",
       side,
-      fireCd: opts.fireCd == null ? 99 : opts.fireCd + i * 0.1,
-      phase: i * 0.45,
-      role: "popcorn",
+      targetX: side < 0 ? W * 0.58 : W * 0.42,
+      exitX: side < 0 ? W + 34 : -34,
+      fireCd: opts.fireCd == null ? 1.35 : opts.fireCd + i * 0.06,
+      phase: i * 0.5,
+      role: opts.role || "cross-sweep",
       playerIntent: opts.playerIntent,
       badPolicy: opts.badPolicy,
     }));
   }
 
-  function sideFeed(frame, side, count, block, opts = {}) {
-    return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 16), opts.kind || "feeder", side < 0 ? -28 : W + 28, block, {
-      y: 130 + i * 18,
-      route: "side",
-      side,
-      fireCd: opts.fireCd == null ? 1.3 : opts.fireCd + i * 0.08,
-      phase: i * 0.5,
-      role: "side-pressure",
+  function diveSlash(frame, startLane, count, block, opts = {}) {
+    return Array.from({ length: count }, (_, i) => {
+      const x = (LANES[startLane] == null ? startLane : LANES[startLane]) + i * (opts.dx || 22);
+      return ev(frame + i * (opts.stagger || 9), opts.kind || "curve", x, block, {
+        route: "dive",
+        targetX: x,
+        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 10,
+        exitX: x + (x < W / 2 ? -118 : 118),
+        fireCd: opts.fireCd == null ? 99 : opts.fireCd,
+        side: x < W / 2 ? -1 : 1,
+        role: opts.role || "dive-slash",
+        playerIntent: opts.playerIntent,
+        badPolicy: opts.badPolicy,
+      });
+    });
+  }
+
+  function largeDeadline(frame, lane, block, opts = {}) {
+    const x = LANES[lane] == null ? lane : LANES[lane];
+    return ev(frame, opts.kind || "armored", x, block, {
+      route: "large",
+      targetX: x,
+      targetY: opts.targetY == null ? 178 : opts.targetY,
+      shield: opts.shield == null ? 0.45 : opts.shield,
+      fireCd: opts.fireCd == null ? 0.85 : opts.fireCd,
+      role: opts.role || "deadline",
       playerIntent: opts.playerIntent,
       badPolicy: opts.badPolicy,
-    }));
+    });
   }
 
   function buildWaveEvents() {
     const events = [
-      ...curveTrain(36, -1, [1, 2, 3, 3, 2, 1], "opening_curve_train", {
-        playerIntent: "left-to-center shooting lane",
+      ...lineColumn(36, 3, 7, "opening_curve_train", {
+        kind: "harvest",
+        playerIntent: "center column to start immediate shooting",
         badPolicy: ["blind-sweeper", "lane-holder"],
       }),
-      ...curveTrain(350, 1, [5, 4, 3, 3, 4, 5], "mirror_answer", {
-        fireCd: 1.7,
-        playerIntent: "switch from left to right",
+      ...lineColumn(68, 1, 8, "opening_curve_train", {
+        kind: "harvest",
+        playerIntent: "left column after center",
+        badPolicy: ["blind-sweeper", "lane-holder"],
+      }),
+      ...lineColumn(74, 5, 5, "opening_curve_train", {
+        kind: "harvest",
+        playerIntent: "right column after center",
+        badPolicy: ["blind-sweeper", "lane-holder"],
+      }),
+      ...crossSweep(260, 1, 10, "mirror_answer", {
+        kind: "feeder",
+        y: 165,
+        playerIntent: "right-to-left crossing targets",
+        badPolicy: ["lane-holder", "camper"],
+      }),
+      ...lineColumn(300, 2, 4, "mirror_answer", {
+        kind: "harvest",
+        playerIntent: "center-left recovery line",
         badPolicy: ["lane-holder"],
       }),
-      ...curveTrain(650, -1, [2, 3, 4, 3], "center_lane_bait", {
+      ...lineColumn(312, 4, 4, "mirror_answer", {
+        kind: "harvest",
+        playerIntent: "center-right recovery line",
+        badPolicy: ["lane-holder"],
+      }),
+      ...vBurst(520, 3, 5, "center_lane_bait", {
         kind: "curve",
-        playerIntent: "enter center then leave",
+        playerIntent: "readable V burst before relay target",
         badPolicy: ["camper"],
       }),
-      ev(720, "anchor", 3, "center_lane_bait", { route: "dwell", fireCd: 0.9, playerIntent: "first pulse drill", badPolicy: ["noPulse", "camper"] }),
-      ...sideFeed(1020, -1, 3, "side_feeder_cover", { playerIntent: "watch side pressure while shooting center", badPolicy: ["camper", "blind-sweeper"] }),
-      ...sideFeed(1080, 1, 3, "side_feeder_cover", { playerIntent: "watch side pressure while shooting center", badPolicy: ["camper", "blind-sweeper"] }),
-      ev(1100, "anchor", 3, "side_feeder_cover", { route: "dwell", fireCd: 1.1, playerIntent: "keep center target while dodging side shots", badPolicy: ["camper"] }),
-      ev(1500, "armored", 1, "armored_gate", { route: "side", side: -1, y: 155, shield: 0.75, fireCd: 1.1, playerIntent: "move to left gate and relay hard target", badPolicy: ["lane-holder", "pulseHeavy"] }),
-      ev(1630, "armored", 5, "armored_gate", { route: "side", side: 1, y: 190, shield: 0.75, fireCd: 1.15, playerIntent: "switch to right gate", badPolicy: ["lane-holder", "pulseHeavy"] }),
-      ...curveTrain(1760, 1, [4, 3, 2, 3], "armored_gate", { kind: "harvest", playerIntent: "recover rhythm after hard target" }),
-      ...curveTrain(2040, -1, [1, 2, 3, 4, 5, 4, 3, 2], "relief_harvest", { kind: "harvest", playerIntent: "harvest readable formation", badPolicy: ["aggressive"] }),
-      ...sideFeed(2460, -1, 2, "midboss_setup", { kind: "escort", playerIntent: "use vertical space before boss", badPolicy: ["survival"] }),
-      ...sideFeed(2510, 1, 2, "midboss_setup", { kind: "escort", playerIntent: "use vertical space before boss", badPolicy: ["survival"] }),
-      ev(2560, "armored", 3, "midboss_setup", { route: "dwell", shield: 0.6, fireCd: 0.9, playerIntent: "relay slow cluster under escort pressure", badPolicy: ["noPulse", "survival"] }),
-      ...curveTrain(2860, -1, [1, 2, 3, 4, 5], "midboss_setup", { kind: "harvest", playerIntent: "short harvest after midboss setup", badPolicy: ["aggressive"] }),
-      ...curveTrain(3140, 1, [5, 4, 3, 2], "boss_approach_final_braid", { playerIntent: "fast right-to-left integration", badPolicy: ["blind-sweeper"] }),
-      ...sideFeed(3210, -1, 3, "boss_approach_final_braid", { playerIntent: "avoid side pressure before boss", badPolicy: ["camper"] }),
-      ev(3300, "armored", 4, "boss_approach_final_braid", { route: "dwell", shield: 0.3, fireCd: 1.05, playerIntent: "final relay hard target", badPolicy: ["noPulse"] }),
-      { frame: 3560, kind: "boss", x: W / 2, y: 92, route: "boss", block: "boss_relay_exam", role: "boss", fireCd: 1.05, playerIntent: "relay slow clusters into boss hp", badPolicy: ["noPulse", "pulseHeavy", "camper"], label: "boss_relay_exam" },
-      ...curveTrain(3830, -1, [1, 2, 3, 4], "boss_relay_exam", { kind: "harvest", playerIntent: "boss fuel left", badPolicy: ["noPulse"] }),
-      ...sideFeed(4100, 1, 3, "boss_relay_exam", { kind: "feeder", fireCd: 1.55, playerIntent: "boss side pressure right", badPolicy: ["camper"] }),
-      ...curveTrain(4380, 1, [5, 4, 3, 2, 1], "boss_relay_exam", { kind: "harvest", playerIntent: "boss fuel right-to-left" }),
-      ev(4680, "armored", 3, "boss_relay_exam", { route: "dwell", shield: 0.25, fireCd: 0.95, playerIntent: "late boss relay target", badPolicy: ["noPulse"] }),
-      ...curveTrain(4960, -1, [1, 2, 3, 4, 5], "boss_relay_exam", { kind: "harvest", playerIntent: "late boss harvest" }),
+      largeDeadline(600, 3, "center_lane_bait", { kind: "anchor", targetY: 170, fireCd: 0.9, playerIntent: "first pulse drill with a fixed deadline", badPolicy: ["noPulse", "camper"] }),
+      ...diveSlash(655, 0, 7, "center_lane_bait", { kind: "curve", dx: 52, playerIntent: "sharp dive accents around anchor", badPolicy: ["camper"] }),
+      ...lineColumn(690, 1, 4, "center_lane_bait", { kind: "harvest", playerIntent: "left-side reward line after anchor", badPolicy: ["camper"] }),
+      ...crossSweep(760, -1, 8, "side_feeder_cover", { kind: "feeder", y: 150, playerIntent: "left crossing pressure while shooting center", badPolicy: ["camper", "blind-sweeper"] }),
+      ...crossSweep(810, 1, 8, "side_feeder_cover", { kind: "feeder", y: 225, playerIntent: "right crossing answer", badPolicy: ["camper", "blind-sweeper"] }),
+      largeDeadline(880, 3, "side_feeder_cover", { kind: "anchor", targetY: 182, fireCd: 1.0, playerIntent: "center relay target under crossing side pressure", badPolicy: ["camper"] }),
+      largeDeadline(1080, 1, "armored_gate", { kind: "armored", targetY: 170, shield: 0.45, fireCd: 0.92, playerIntent: "left hard target deadline", badPolicy: ["lane-holder", "pulseHeavy"] }),
+      ...crossSweep(1130, -1, 7, "armored_gate", { kind: "escort", y: 190, playerIntent: "left hard target cover", badPolicy: ["lane-holder", "pulseHeavy"] }),
+      largeDeadline(1270, 5, "armored_gate", { kind: "armored", targetY: 190, shield: 0.45, fireCd: 0.96, playerIntent: "right hard target deadline", badPolicy: ["lane-holder", "pulseHeavy"] }),
+      ...lineColumn(1340, 4, 7, "armored_gate", { kind: "harvest", playerIntent: "post-hard-target reward line" }),
+      ...lineColumn(1500, 1, 7, "relief_harvest", { kind: "harvest", playerIntent: "left relief harvest", badPolicy: ["aggressive"] }),
+      ...lineColumn(1520, 3, 8, "relief_harvest", { kind: "harvest", playerIntent: "center relief harvest", badPolicy: ["aggressive"] }),
+      ...lineColumn(1540, 5, 7, "relief_harvest", { kind: "harvest", playerIntent: "right relief harvest", badPolicy: ["aggressive"] }),
+      ...vBurst(1710, 3, 5, "relief_harvest", { kind: "curve", playerIntent: "short shape change after harvest", badPolicy: ["aggressive"] }),
+      ...crossSweep(1880, -1, 7, "midboss_setup", { kind: "escort", y: 160, playerIntent: "left escort before midboss", badPolicy: ["survival"] }),
+      ...crossSweep(1930, 1, 7, "midboss_setup", { kind: "escort", y: 250, playerIntent: "right escort before midboss", badPolicy: ["survival"] }),
+      largeDeadline(1990, 3, "midboss_setup", { kind: "armored", targetY: 178, shield: 0.35, fireCd: 0.82, playerIntent: "relay hard target under escort pressure", badPolicy: ["noPulse", "survival"] }),
+      ...diveSlash(2090, 1, 7, "midboss_setup", { kind: "harvest", targetY: 370, dx: 42, playerIntent: "short harvest after midboss setup", badPolicy: ["aggressive"] }),
+      ...vBurst(2280, 4, 5, "boss_approach_final_braid", { kind: "curve", playerIntent: "right-to-left V integration", badPolicy: ["blind-sweeper"] }),
+      ...crossSweep(2340, -1, 8, "boss_approach_final_braid", { kind: "feeder", y: 190, playerIntent: "crossing pressure before boss", badPolicy: ["camper"] }),
+      largeDeadline(2420, 4, "boss_approach_final_braid", { kind: "armored", targetY: 185, shield: 0.25, fireCd: 0.9, playerIntent: "final hard target deadline", badPolicy: ["noPulse"] }),
+      ...lineColumn(2510, 2, 6, "boss_approach_final_braid", { kind: "harvest", playerIntent: "last clean shooting line before boss" }),
+      { frame: 2700, kind: "boss", x: W / 2, y: -52, route: "boss", block: "boss_relay_exam", role: "boss", fireCd: 1.05, playerIntent: "boss entry with fuel waves", badPolicy: ["noPulse", "pulseHeavy", "camper"], label: "boss_relay_exam" },
+      ...lineColumn(2860, 1, 7, "boss_relay_exam", { kind: "harvest", playerIntent: "boss fuel left", badPolicy: ["noPulse"] }),
+      ...crossSweep(3000, 1, 8, "boss_relay_exam", { kind: "feeder", fireCd: 1.45, y: 180, playerIntent: "boss side pressure right", badPolicy: ["camper"] }),
+      ...lineColumn(3180, 5, 7, "boss_relay_exam", { kind: "harvest", playerIntent: "boss fuel right", badPolicy: ["noPulse"] }),
+      largeDeadline(3400, 3, "boss_relay_exam", { kind: "armored", targetY: 185, shield: 0.2, fireCd: 0.88, playerIntent: "late boss relay target", badPolicy: ["noPulse"] }),
+      ...diveSlash(3540, 0, 8, "boss_relay_exam", { kind: "harvest", targetY: 380, dx: 54, playerIntent: "late boss dive fuel" }),
+      ...crossSweep(3780, -1, 8, "boss_relay_exam", { kind: "feeder", y: 240, playerIntent: "final crossing fuel", badPolicy: ["camper"] }),
+      ...lineColumn(3980, 3, 8, "boss_relay_exam", { kind: "harvest", playerIntent: "final center boss fuel" }),
     ];
     return events.sort((a, b) => a.frame - b.frame);
   }
@@ -130,7 +221,7 @@
         y: H - 76,
         r: 5,
         speed: 260,
-        lives: 4,
+        lives: 3,
         invuln: 0,
         pulseCd: 0,
         shotCd: 0,
@@ -161,13 +252,13 @@
 
     spawnEnemy(kind, x, y, opts = {}) {
       const base = {
-        curve: { hp: 11, r: 13, speed: 76, score: 130, fireRate: 2.6 },
-        feeder: { hp: 15, r: 14, speed: 72, score: 180, fireRate: 2.1 },
-        anchor: { hp: 28, r: 18, speed: 32, score: 320, fireRate: 1.8 },
-        armored: { hp: 58, r: 23, speed: 38, score: 520, fireRate: 1.55 },
-        harvest: { hp: 8, r: 12, speed: 84, score: 110, fireRate: 99 },
-        escort: { hp: 22, r: 16, speed: 66, score: 240, fireRate: 1.9 },
-        boss: { hp: 190, r: 42, speed: 0, score: 4000, fireRate: 1.45 },
+        curve: { hp: 8, r: 13, speed: 92, score: 130, fireRate: 2.6 },
+        feeder: { hp: 11, r: 14, speed: 86, score: 180, fireRate: 2.0 },
+        anchor: { hp: 24, r: 18, speed: 72, score: 320, fireRate: 1.6 },
+        armored: { hp: 46, r: 23, speed: 64, score: 520, fireRate: 1.45 },
+        harvest: { hp: 6, r: 12, speed: 104, score: 110, fireRate: 99 },
+        escort: { hp: 16, r: 16, speed: 86, score: 240, fireRate: 1.8 },
+        boss: { hp: 210, r: 42, speed: 0, score: 4000, fireRate: 1.35 },
       }[kind];
       this.enemies.push({
         kind,
@@ -192,10 +283,17 @@
         shield: opts.shield || 0,
         spawnX: x,
         spawnY: y,
-        targetX: opts.route === "side"
-          ? (opts.side < 0 ? LANES[4] : LANES[2])
-          : (typeof opts.lane === "number" ? (opts.lane >= 0 && opts.lane < LANES.length ? LANES[opts.lane] : opts.lane) : x),
-        targetY: opts.route === "side" ? y : 155,
+        targetX: opts.targetX == null
+          ? (opts.route === "side"
+            ? (opts.side < 0 ? W * 0.58 : W * 0.42)
+            : (typeof opts.lane === "number" ? (opts.lane >= 0 && opts.lane < LANES.length ? LANES[opts.lane] : opts.lane) : x))
+          : opts.targetX,
+        targetY: opts.targetY == null ? (opts.route === "side" ? y : 155) : opts.targetY,
+        exitX: opts.exitX,
+        path: opts.path || null,
+        pathIdx: 0,
+        pathT: 0,
+        done: false,
         label: opts.label || kind,
       });
       this.spawnLog.push({ frame: this.frame, time: this.t, kind, x, y, label: opts.label || kind });
@@ -289,8 +387,8 @@
           y: b.y,
           vx,
           vy,
-          r: 5,
-          dmg: 28,
+          r: 8,
+          dmg: 34,
           friendly: true,
           relay: true,
         });
@@ -312,30 +410,42 @@
       for (const e of this.enemies) {
         e.age += DT;
         if (e.kind === "boss") {
-          e.x = W / 2 + Math.sin(e.age * 1.15) * 118;
-          e.y = 86 + Math.sin(e.age * 0.9) * 12;
-        } else if (e.route === "curve") {
-          const t = clamp(e.age / 2.45, 0, 1);
-          const startX = e.side < 0 ? -38 : W + 38;
-          const control = e.side < 0 ? e.targetX + 92 : e.targetX - 92;
-          e.x = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * control + t * t * e.targetX;
-          e.y = -42 + t * 245 + Math.sin(t * Math.PI) * 42;
-          if (e.age > 2.45) e.y += (e.age - 2.45) * e.speed;
+          const entry = clamp(e.age / 3.0, 0, 1);
+          const ease = entry * entry * (3 - 2 * entry);
+          e.x = W / 2 + Math.sin(Math.max(0, e.age - 3.0) * 1.05) * 104;
+          e.y = -52 + (116 + 52) * ease + Math.sin(Math.max(0, e.age - 3.0) * 0.9) * 10;
+        } else if (e.route === "line") {
+          this.movePathEnemy(e, [
+            { x: e.spawnX, y: -42, t: 0 },
+            { x: e.targetX, y: e.targetY, t: 118 },
+            { x: e.targetX, y: H + 62, t: 150 },
+          ]);
+        } else if (e.route === "v") {
+          this.movePathEnemy(e, [
+            { x: e.spawnX, y: -42, t: 0 },
+            { x: e.targetX, y: e.targetY, t: 112 },
+            { x: e.exitX, y: -58, t: 108 },
+          ]);
+        } else if (e.route === "dive") {
+          this.movePathEnemy(e, [
+            { x: e.spawnX, y: -42, t: 0 },
+            { x: e.targetX, y: e.targetY, t: 86 },
+            { x: e.targetX, y: e.targetY - 34, t: 34 },
+            { x: e.exitX, y: -58, t: 94 },
+          ]);
         } else if (e.route === "side") {
-          const t = clamp(e.age / 1.55, 0, 1);
-          const ease = t * t * (3 - 2 * t);
-          e.x = e.spawnX + (e.targetX - e.spawnX) * ease;
-          e.y = e.spawnY + Math.sin(t * Math.PI) * 36;
-          if (e.age > 1.55) {
-            e.y += (e.age - 1.55) * (e.kind === "armored" ? 34 : 62);
-            e.x += Math.sin((e.age - 1.55) * 1.6 + e.phase) * (e.kind === "armored" ? 18 : 28);
-          }
-        } else if (e.route === "dwell") {
-          if (e.y < 150) e.y += e.speed * DT;
-          else {
-            e.y += 5 * DT;
-            e.x = e.baseX + Math.sin(e.age * 1.45 + e.phase) * (e.kind === "armored" ? 44 : 24);
-          }
+          this.movePathEnemy(e, [
+            { x: e.spawnX, y: e.spawnY - 26, t: 0 },
+            { x: e.targetX, y: e.spawnY, t: 88 },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 20, t: 104 },
+          ]);
+        } else if (e.route === "large") {
+          this.movePathEnemy(e, [
+            { x: e.spawnX, y: -42, t: 0 },
+            { x: e.targetX, y: e.targetY, t: 112 },
+            { x: e.targetX, y: e.targetY, t: 72 },
+            { x: e.targetX + e.side * 34, y: -58, t: 126 },
+          ]);
         } else {
           e.y += e.speed * DT;
         }
@@ -376,7 +486,27 @@
           e.fireCd = bottomCamp && ["feeder", "anchor", "armored", "escort", "boss"].includes(e.kind) ? e.fireRate * 0.48 : e.fireRate;
         }
       }
-      this.enemies = this.enemies.filter(e => e.y < H + 70 && e.hp > 0);
+      this.enemies = this.enemies.filter(e => !e.done && e.y < H + 70 && e.hp > 0);
+    }
+
+    movePathEnemy(e, path) {
+      if (e.pathIdx >= path.length - 1) {
+        e.done = true;
+        return;
+      }
+      const p0 = path[e.pathIdx];
+      const p1 = path[e.pathIdx + 1];
+      e.pathT += 1;
+      const dur = p1.t || 1;
+      const frac = clamp(e.pathT / dur, 0, 1);
+      const sf = frac * frac * (3 - 2 * frac);
+      e.x = p0.x + (p1.x - p0.x) * sf;
+      e.y = p0.y + (p1.y - p0.y) * sf;
+      if (e.pathT >= dur) {
+        e.pathIdx++;
+        e.pathT = 0;
+        if (e.pathIdx >= path.length - 1) e.done = true;
+      }
     }
 
     updateBullets() {
@@ -385,6 +515,23 @@
         b.y += b.vy * DT;
       }
       for (const b of this.playerBullets) {
+        if (b.relay) {
+          const target = this.enemies
+            .filter(e => e.y > -35 && e.y < H * 0.86)
+            .sort((a, c) => {
+              const da = (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+              const dc = (c.x - b.x) * (c.x - b.x) + (c.y - b.y) * (c.y - b.y);
+              return da - dc;
+            })[0];
+          if (target) {
+            const dx = target.x - b.x;
+            const dy = target.y - b.y;
+            const len = Math.hypot(dx, dy) || 1;
+            const speed = Math.hypot(b.vx, b.vy) || 720;
+            b.vx = b.vx * 0.74 + (dx / len) * speed * 0.26;
+            b.vy = b.vy * 0.74 + (dy / len) * speed * 0.26;
+          }
+        }
         b.x += b.vx * DT;
         b.y += b.vy * DT;
       }
@@ -405,11 +552,12 @@
         if (b.hit) continue;
         for (const e of this.enemies) {
           if (dist2(b, e) <= (b.r + e.r) * (b.r + e.r)) {
-            if (e.shield > 0) {
+            if (e.shield > 0 && !b.relay) {
               b.hit = true;
               this.particles.push({ x: b.x, y: b.y, life: 0.12, max: 0.12, kind: "shield" });
               break;
             }
+            if (b.relay && e.shield > 0) e.shield = 0;
             e.hp -= b.dmg;
             b.hit = true;
             if (b.relay) this.metrics.conversionHits++;

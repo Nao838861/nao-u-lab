@@ -183,10 +183,15 @@ function summarizePulseRelay() {
     avgSpawnGap: Number((gaps.reduce((a, b) => a + b, 0) / Math.max(1, gaps.length)).toFixed(2)),
     maxSpawnGap: Math.max(...gaps),
     routePrimitiveFrames: {
-      curveEntry: 147,
-      sideEntry: 93,
+      lineEntry: 118,
+      sideCrossing: 192,
+      vEntry: 112,
+      diveEntry: 86,
+      largeEntry: 112,
+      largeHold: 72,
+      largeExit: 126,
       dwellCrawlToY150: dwellCrawlFrames,
-      bossEntryCue: 0,
+      bossEntryCue: 180,
     },
   };
 }
@@ -200,12 +205,11 @@ const report = {
   pulseRelay: summarizePulseRelay(),
   deltas: {
     enemyCountRatio: Number((summarizeShotLog().count / summarizePulseRelay().count).toFixed(2)),
-    mainFinding: "shot_log is not just smoother or faster; it uses dense overlapping subformations with explicit entry/stay/exit path segments, while Pulse Relay mostly reuses a few generic routes with lower density.",
+    mainFinding: "shot_log is not just smoother or faster; it uses dense overlapping subformations with explicit entry/stay/exit path segments. Pulse Relay now follows the same style with line, side, V, dive, large-deadline, and boss-fuel primitives at a smaller scale.",
     pulseRisks: [
-      "route='dwell' can spend hundreds of frames crawling before it becomes a readable target",
-      "route='side' enters quickly but then becomes slow sine drift instead of a crossing sweep",
-      "boss starts already on stage and lacks shot_log-like entry cue plus late fuel layering",
-      "blocks are named like set pieces but contain too few subformations compared with shot_log waves",
+      "Pulse Relay still has fewer enemies than shot_log, so density should be protected if new mechanics increase enemy HP",
+      "route policy still reports a few shootable_gap seconds, so future tuning should add overlap instead of slowing enemies",
+      "boss fuel is present, but boss phase variety is still simpler than shot_log's late-wave layering",
     ],
   },
 };
