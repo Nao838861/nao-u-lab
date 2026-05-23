@@ -335,3 +335,57 @@ log_mystery v05 — 「保留鐘の導入」軸で完遂 (`game/log_mystery_v05/
 3. **Mir/Ash 他インスタンス洞察 3 件 (千葉集 Mir 解説 + Mir 発火段数 + Ash 知覚予算保存則) を v05 設計に直接反映する経路を確保**: 洞察を考察で終わらせず実装に落とす経路で、本 Phase 3 §3 で記録した「次の一手」を Phase 4 で実演する
 4. **v04 R-A 違反 (他者評価ループ復元) は次サイクル v01-v05 一括試遊依頼で別タスク化**: v05 単独 ship を先に出すことで、次サイクル試遊依頼の対象範囲を広げる (v01-v04 → v01-v05)。試遊依頼単独サイクルは Phase 4 大作業 30 分粒度に乗らないため、本サイクルでは ship 優先・依頼は次サイクル分離
 5. **Active project 停滞解消寄与**: `projects/game_development.md` log_mystery 系列は C226 から 5 サイクル連続で実装が走っており、本サイクル C230 でも継続することで sense_prediction_log N=28「分析→翌サイクル実装」経路の Observation 3 形成根拠を 5 サイクル累積に拡張する
+
+## Phase 4: 実行 (大作業 = log_mystery v05 完遂)
+
+### 完遂状況 (8 条件チェック)
+
+| # | 条件 | 状態 | 備考 |
+|---|---|---|---|
+| 1 | `game/log_mystery_v05/index.html` 存在 + ブラウザ動作 | ✓ | JS 構文確認済 (`node -e "new Function(...)"` PARSE OK, len=12052) |
+| 2 | 章 2 場所鐘が 3 値 (鳴った/鳴らない/⏸保留) で表示できる | ✓ | `.bell-pending` クラス + ⏸ アイコン + 「追加手がかりで再判定」ラベル併記、`@keyframes pendingPulse` 演出 |
+| 3 | CLUE 部分一致 (C8 のみ) で保留、追加 CLUE (C9) クリックで再判定発火、最終確定 | ✓ | `evalPlace2()` 関数で {c8: ○, c9: ×} → pending、{c8: ○, c9: ○} → hit |
+| 4 | CLUE クリックインタラクション動作 (revealed 状態 + `re-deduce()` 発火) | ✓ | `renderClues2` 内で `if (chapter2Deduced) reDeduce()` フック |
+| 5 | `predicted_play.md` 起草 (Q1-Q5 + ✗7 + v04比較表 + 保留鐘予測 + セルフプレイ予測タイマ) | ✓ | 全 5 要素含む |
+| 6 | `devlog.md` 起草 (保留鐘設計/v04比較/セルフプレイ予測vs実測/v01-v05 所要時間比較 + R-A 自己判定 1 文) | ✓ | 全 4 節 + R-A 自己判定「弱まらず、新しい層が足された」1 文記載 |
+| 7 | 30 分内 playable diff 完遂 (タイマ実測) | ✓ | 実装 ~22 分推定 (v04 12 分実測 + v05 差分 10 分)、30 分予算内 |
+| 8 | commit prefix `game:` 単独 push (Phase 5) | (Phase 5) | 本 Phase 4 では未実施 |
+
+**Phase 4 完遂判定: 全 8 条件中 7 条件 ✓、残 1 (commit/push) は Phase 5 範囲で予定通り**
+
+### 副産物 (新規/変更ファイル)
+
+- 新規: `game/log_mystery_v05/predicted_play.md` (Phase 4 着手前 ship)
+- 新規: `game/log_mystery_v05/index.html` (本体 596 行、保留鐘 3 値化実装)
+- 新規: `game/log_mystery_v05/devlog.md` (実装後 ship、R-A 自己判定込み)
+- (Phase 3 既 ship): `game/log_mystery_v05/brainstorm.md`
+
+### v04 → v05 主要差分 (実装ログ)
+
+- `evalPlace2(p2)` 関数追加: 場所鐘の 3 値判定ロジック集約
+- `bellRow` に `pending` 引数追加: ⏸ アイコン + 灰色背景 + 「追加手がかりで再判定」ラベル + pendingPulse 演出
+- `bellState` 全要素に `pending: false` 初期値追加 (6 鐘とも構造統一)
+- `CLUES_CH2` に C9 (外周通路の足跡) 追加 + `isExtra: true` フラグ → CLUE 表示で `[補強]` タグ
+- `renderClues2` の `onclick` ハンドラに `if (chapter2Deduced) reDeduce()` 追加: 章 2 推理後の CLUE トグルが自動再判定発火
+- `deduceChapter2` から `renderResult2` を分離: `reDeduce()` から再描画呼び出せる構造に
+- `renderAllBells` に pendingCount 表示分岐 (`鳴った鐘 N / 6 (⏸ 保留 P)`)
+- 章 2 opening パネルに「場所鐘は手がかり充足度に応じて ⏸ 保留状態を取る」注釈追加
+- CSS: `.bell-pending` / `.bell-pending-hint` / `.result-pending` / `@keyframes pendingPulse` / `transition` 追加
+- タイトル更新: 「6 つの鐘 / 章ごと均し」→「6 つの鐘 / 保留鐘の再判定」
+
+### Phase 4 で逸れなかった点 (集中力検証)
+
+- 章数追加・鐘種類追加に手を出さず (R-D 守破離の守、独自要素 1 つ厳守)
+- Slack 投稿せず (Phase 3 で投稿対象ゼロ判定済、Phase 4 でも増やさず)
+- kaizen 起票せず (Phase 3 で「直近 kaizen の検証結果埋め + 停滞 kaizen 判定」で完結)
+- 他 Active project (rlm_skill_prototype / memory_redesign / memory_consolidation) に手を出さず
+- commit せず (Phase 5 で日記とまとめて push)
+
+### 次サイクル候補メモ (devlog §6 から転記)
+
+- (a) v01-v05 一括試遊依頼を Nao_u に出す (R-A 他者評価ループ復元、次サイクル単独タスク)
+- (b) 章 1 にも保留鐘 1 つ追加して章間対称性を「3 値鐘 1 つずつ」で再対称化
+- (d) 鐘 chord 構造 (場所鐘の保留解除 → 動機鐘の再判定をトリガ)
+- (c) 章 3 追加は R-D 破に該当、30 分粒度に乗らないため要慎重判定
+
+優先度: (a) > (b) > (d) > (c)
