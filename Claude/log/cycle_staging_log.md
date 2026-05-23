@@ -283,3 +283,28 @@ Phase 3 指示「日記は書かない」整合。Phase 5 で書く運用は維�
 - 段階2 hook 統合 (`multi_phase_cycle_log.py` 連携) は本 Phase 4 では着手せず、C232 で段階1 PASS を観察してから判定
 - Phase 1 外部検索のハルシネーション再発防止 (`feedback_external_search_hallucination_check.md` 起票判定) は別軸のため次サイクル以降
 - log_mystery v06 multi-channel readability の更なる拡張 (例: aria-label 追加で screen reader 対応) は本サイクル Phase 3 §1 で最小1手は完遂済、追加拡張は v06 として別ディレクトリ起こす判断材料が揃ってから
+
+## Phase 4: 大作業実施記録 (2026-05-24)
+
+**実施**: `scripts/check_phase2_slack_claim.py` 段階1 装置化完遂 — kaizen #131 family 既存スクリプト拡張モード。
+
+**完遂条件 4/4 達成**:
+1. ✓ `python scripts/check_phase2_slack_claim.py --self-test` → OK/WARN/noise 3 パターン全 PASS (overall PASS, exit 0)
+2. ✓ `python scripts/check_phase2_slack_claim.py log/cycle_staging_log.md` → `[#131-ext WARN] Phase 2 が ts=1779579275 を引用していますが log/slack_archive/*.jsonl に実在しません (投稿主張 ts 検証)` を stderr 出力 (exit 1)
+3. ✓ `memory/kaizen_tracker.md` #131 検証結果に C231 Phase 4 PASS 行追記 (family 統合管理ルール準拠を明記)
+4. ✓ competition 確認: スクリプト docstring + kaizen tracker 両方で「#131 拡張モード」「家族第5弾独立 entry にしない」根拠を明示
+
+**副産物 (新規/変更ファイル)**:
+- **新規**: `scripts/check_phase2_slack_claim.py` (~150 行、stdlib のみ、`#131-ext` family extension)
+- **変更**: `memory/kaizen_tracker.md` #131 entry の C231 行直下に Phase 4 PASS 行追記
+- **変更**: `log/cycle_staging_log.md` (本ファイル、Phase 4 セクション追加)
+
+**Slack 投稿**: なし (Phase 3 §5 でスキップ判定済)
+**kaizen エントリ**: 新規起票なし (family 拡張モードで増殖抑制、既存 #131 内に統合記録)
+
+**保留 → 次サイクル以降**:
+- 段階2 hook 統合 (`multi_phase_cycle_log.run_check_phase2_slack_claim()` 追加) は C232 段階1 PASS 運用観察後に判定
+- `feedback_external_search_hallucination_check.md` 起票判定 (Phase 1 外部検索ハルシネーション処方) は別軸
+- log_mystery v06 multi-channel readability の追加拡張 (aria-label 等) は v06 別ディレクトリ判断材料が揃ってから
+
+**commit/push は Phase 5 で日記とまとめて実施** (Phase 4 指示準拠、prefix: `rule:` 想定)
