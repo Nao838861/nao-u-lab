@@ -34,8 +34,16 @@ v05の設計に入る前に:
 
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
+## 直交2軸 staging (C222 gozahand × oktamajun モデル, siphon_mir/v02)
+
+- **ごっこ軸の差分**: なし。ロール/演出/世界観の変更を含まない。siphon → 弾吸収 → 自機強化のごっこ構造は既存維持。
+- **快感軸の差分**: absorb dot 初期半径 3 → 4 (line 612 `const r=3*alpha;` → `4*alpha`)。siphon パルスで敵弾が吸い込まれた瞬間、プレイヤーに向かって飛ぶ金色ドットが 33% 拡大。siphon の核心ループ「弾源を奪って自分の糧にする」の視覚的"得した感"を直撃する1mm改修。alpha フェード形は不変、開始サイズだけ増幅。
+
+### Why (commit body 用 — hiroki_daichi/jojo「Why 消失」対策)
+他案（弾速 spd=2.2 微調整／pulse alpha 0.6→0.7／HUD色／star密度）は周辺要素。今回は siphon の核心フィードバックループの中心点を狙う — 周辺ポリッシュより中心1mmを優先する判断。
+
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-24)
+# mir pending: なし (cycle=2026-05-24, C226)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
