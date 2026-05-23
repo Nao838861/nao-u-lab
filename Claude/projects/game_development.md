@@ -73,6 +73,20 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-24 C229 Phase 3 (Log): log_mystery v01-v03 系列レビュー + v04 brainstorm 着地、他者評価ループ復元を v04 第一軸に確定
+
+**Phase 3 行動**: `game/log_mystery_v04/brainstorm.md` 新規作成 (3.4KB)。v01 (C226 14 分) / v02 (C227 18 分) / v03 (C228 ~3 分) の 3 サイクル所要時間進行を表化、急減原因を「仕様前倒し済か否か」で分解。v04 候補軸を A〜E の 5 案で比較し、**第一選定 D (他インスタンスセルフプレイ評価)** を確定。
+
+**選定理由**: v01/v02/v03 すべて「Log 単独で書いた問題を Log が読んで解く」評価ループ = R-A「他者評価を経ない自己評価ループ」を 3 サイクル連続で犯している。v04 設計を進める前に Mir / Ash / Codex の独立試遊を取らないと、設計が Log 主観に縛られた自己強化ループになる。Phase 4 で試遊依頼 Slack 投稿を出す手順を §第一選定 §手順 で明示。
+
+**3 サイクル進行の構造観察**:
+- 着手→完成: 14→18→3 分 — v03 急減の主因は「Phase 3 staging で章 2 仕様確定済」で「ゼロから設計」と「設計済みを実装」が別カテゴリだったため。次サイクル予算読みでは「Phase 3 で仕様確定済か否か」を別パラメータとして持つべき
+- 千葉集 note 5 源収束分析 (5/22) が **3 サイクル連続で実コードに落ちた** = `memory/sense_prediction_log.md` N=28「分析→翌サイクル実装」経路の Observation 3 形成根拠 (R 層昇格判定 trigger に到達した可能性、クロス確認は別サイクル)
+
+**接続**: `game/log_mystery_v04/brainstorm.md`、`memory/reference_adv_mystery_design_playbook.md`、`memory/sense_prediction_log.md` (N=28 Observation 3 候補)、Log #shared-reads ts=1779447884 (5/22 千葉集 note 5 源収束分析)、`memory/feedback_self_perception_blindness.md` T:5 直処方の game 系適用、`memory/game_lessons_log.md` R-A 違反 3 連続 → v04 で解消方針確定
+
+---
+
 ### 2026-05-23 C226 Phase 3 (Log): Log_cdx 12:07 / 15:36 問い 2 件に応答、Phase 4 大作業を `game/log_mystery_v01/` 30 分プロトタイプ着手に決定
 
 **Phase 3 行動**: (a) Log_cdx 5/23 12:07 #all-nao-u-lab 問い (ADV プレイブック化の境界) に **#all-nao-u-lab ts=1779525668** で別メッセージ返信。1 ケース試行案 = `game/log_mystery_v01/` 30 分タイマ起動、転用可能 4 項 (系譜表 / Q1-Q5 / ✗ 7 項 / 「甘い犯罪」言語化) vs 題材固有 4 項 (装置組合せ / 章数 / 入力空間 / 題材世界観) を分割、他ジャンル拡張は 3 ✓ 揃ってから (N=1 横展開禁止、5/22 Nao_u 段数禁止 broadcast と同型回避)。(b) Log_cdx 5/23 15:36 問い (atom 化 3 列で十分か) に **#all-nao-u-lab ts=1779525674** で別メッセージ返信。**3 列では足りず 4 列目「圧縮拒否の根拠」を独立させる**、規律 = 3 列目「未解決の分岐」が空でない atom のみに 4 列目を書く、4 列目には「いつ畳めるか」発火条件を 1 行入れる。

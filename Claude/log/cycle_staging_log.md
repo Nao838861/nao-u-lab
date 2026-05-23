@@ -186,4 +186,77 @@ Phase 1 で挙げた 5 カテゴリ (A〜E) の Phase 2 判定:
 - 一方で、shared-reads 2 件は Nao_u 指示「1 フェーズ丸ごと使ってもいい」「将来のアイデアの種」に直接応えており、かつ Log_cdx faulty memory probe / atomic.chat A/B probe の 2 議論を接続する位置にある = **Phase 2 配分としては妥当**。Phase 3 でゲーム側に振り戻すことで補正する
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 行動サマリ (C229 Phase 3)
+
+#### 1) Slack 返信 (Phase 1 §2 候補)
+- Phase 2 §Log_cdx 5/24 00:23 返信 / shared-reads 2 件投稿は **Phase 2 で既に完了** (staging 内に ts 記録)。本 Phase 3 では新規 Slack 投稿なし。
+- #nao-u 24h 新着 URL=0 件 = 投稿対象なし、skip 妥当。
+
+#### 2) 改善サイクル (検証ファースト原則)
+- Pre-check「検証期限到来なし」「期限超過 0」(staging 冒頭) 観察 = 本サイクル新規 kaizen 提案は **見送り**。
+- kaizen #134 (probe_atom_quality 5/31 期限) は 8 日連続 WARN=0 観察継続、期限まで残 7 日。観察モード継続。
+
+#### 3) 他インスタンス洞察への応答
+- `slack_insight_digest.py --hours 48` で実数 5 件取得 (Phase 1 §52 で「7 件」と表示されていたのは異なる集計、本 Phase 3 で再実行)。
+  - 洞察 1/4 (Mir Faulty Memory paper 詳細分析): Phase 2 §Log_cdx 5 probe 提示 + shared-reads 2 件で **既応答**
+  - 洞察 2 (Mir planetary_gear 千葉集): log_mystery v01-v03 シリーズ + 本 Phase 3 v04 brainstorm で **既応答 (4 サイクル接続)**
+  - 洞察 3 (Mir Tetris bot benchmark Qwen/Opus/GPT 比較): `projects/rlm_skill_prototype.md` 試金石3 への接続観察を新規節として追記 (Mir 留意点 3 つを試金石3 設計に輸入、変数化対象の直交構造を明示)
+  - 洞察 5 (Mir Hao Peng 「long-term reusable abstractions」発言): Phase 2 で既触れ。本サイクル追加処理なし。
+
+#### 4) Active project 更新
+- `projects/game_development.md`: C229 Phase 3 節を新規追加 (log_mystery v01-v03 系列レビュー + v04 brainstorm 着地、他者評価ループ復元方針確定)
+- `projects/rlm_skill_prototype.md`: C229 Phase 3 節を新規追加 (Mir Tetris benchmark の試金石3 への接続観察)
+
+#### 5) ゲーム改修 (CLAUDE.md「絶対にやる」第 1 項) — 本 Phase 3 最重要
+- `game/log_mystery_v04/brainstorm.md` を新規作成 (3.4 KB)
+  - v01 (C226 14 分) / v02 (C227 18 分) / v03 (C228 ~3 分) の 3 サイクル進行を表化、急減主因を「仕様前倒し済か否か」で分解
+  - v04 候補軸 A〜E の 5 案比較、**第一選定 D (他インスタンスセルフプレイ評価) → A or B (v04 軸決定)** を確定
+  - 3 サイクル連続「Log 単独評価」= R-A 違反を v04 第一軸 D で解消方針確定
+- Phase 2 §C で観測した「playable diff ゼロ」を本 Phase 3 で解消 = brainstorm という形だが game/ 配下 commit が立つ
+
+#### 6) Phase 4 大作業選定
+本 staging §「次フェーズの大作業」節に明記 (下記)。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**game/log_mystery_v04/ を実装 (軸 B: 章ごとの鐘数均し、章 1 で 3 鐘 + 章 2 で 3 鐘 = 6 鐘)**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `game/log_mystery_v04/index.html` が存在し、ブラウザで開ける (HTML5 単一ファイル完結、JS 外部依存なし)
+2. 章 1 推理 = 容疑者/場所/動機 3 軸 (v02/v03 同一)、章 2 推理 = 共犯者 / 共犯者の動機 / 共犯者の場所 3 軸 (新規拡張)
+3. 鐘 6 つ (章 1 で 3 + 章 2 で 3) を個別に表示、bellRow ヘルパを両章に適用、章 2 鐘はアンロック前は灰色 disabled (v03 同型)
+4. CLUES_CH2 を v03 の 2 件から +2 件 (合計 4 件) に拡張、章 2 で 3 軸推理に必要な手がかり密度を確保
+5. `predicted_play.md` 起草: Q1-Q5 + ✗ 7 項 + v03 比較表 + 6 鐘予測 + セルフプレイ予測タイマ
+6. `devlog.md` 起草: 「章ごとの鐘数均し設計」「v03 比較」「セルフプレイ予測 vs 実測」「v01-v04 4 サイクル所要時間比較」4 節
+7. 30 分内 playable diff 完遂 (タイマ実測)
+8. commit prefix `game:` 単独 push (Phase 5 で実施、Phase 4 では commit しない)
+
+### 着手手順
+1. `game/log_mystery_v04/predicted_play.md` 起草 (Q1-Q5 + ✗ 7 項自己採点 + v03 比較表 + 6 鐘予測、5 分以内)
+2. v03 `index.html` を複製、ANSWER_CH2 を 3 軸化 ({ who2, motive2, place2 })、CLUES_CH2 を +2 件追加 (C7/C8)
+3. deduceChapter2 関数を 3 軸判定化、bellRow を章 2 で 3 行表示、LABELS に motive2/place2 追加
+4. CSS 既存利用、新規 panel 追加なし (v03 章 2 panel 内の select を 3 つに増やす)
+5. アンロック制御 v03 同型 (章 1 で 3/3 鳴ったら章 2 unlock、bell-locked クラス制御)
+6. 4 鐘集約 → 6 鐘集約に renderAllBells 拡張
+7. `devlog.md` 起草 (タイマ実測 + v01/v02/v03/v04 4 サイクル比較表 + 章ごとの鐘数均しの設計効果評価)
+8. 30 分タイマ内完遂、Phase 5 で commit prefix `game:` 単独 push
+
+### 選んだ理由
+- CLAUDE.md 第一義「ゲームを動かして出す — 積み上げはその副産物」直処方。本 C229 Phase 1-3 が brainstorm / 結晶化 / cross_review 系出力に偏ったため (Phase 2 §C 自己診断) Phase 4 で playable diff に転換
+- v04 brainstorm §第一選定 D (試遊依頼) を先に出すと game side が止まる = 3 サイクル連続「playable diff 不足」の継続。先に v04 ship して v01-v04 一括試遊依頼の方が continuity 保持
+- 千葉集 note 5 源収束分析が **4 サイクル連続で実コードに落ちる** Observation 形成 = sense_prediction_log N=28 経路の R 層昇格判定 trigger 強化
+- 「設計済みを実装」効率仮説 (v03 で観測) を v04 で再検証: predicted_play.md / staging 双方に章 2 拡張仕様を事前確定済みなら Phase 4 純実装が短くなる予測
+- 30 分タイマで「進んだ」と言える粒度 (v01 14 分 / v02 18 分 / v03 3 分の trend)
+- v04 brainstorm 軸 B (章ごとの鐘数均し) は v03 軸 (章数増) より実装コスト中、章 2 panel の改修が中心で v03 同型コードベースを最大流用
+
+### 接続
+- 親 brainstorm: [game/log_mystery_v04/brainstorm.md](../game/log_mystery_v04/brainstorm.md) (本 Phase 3 で新規作成)
+- 親系列: [v01](../game/log_mystery_v01/) / [v02](../game/log_mystery_v02/) / [v03](../game/log_mystery_v03/)
+- 上流 (ジャンル設計): [reference_adv_mystery_design_playbook.md](../memory/reference_adv_mystery_design_playbook.md)
+- 上流 (3 鐘設計): Log #shared-reads ts=1779447884 (5/22 千葉集 note 5 源収束分析)
+- 親プロジェクト: [projects/game_development.md](../projects/game_development.md) C229 Phase 3 履歴
+- 直処方: [memory/feedback_self_perception_blindness.md](../memory/feedback_self_perception_blindness.md) T:5 (game 系適用、v04 brainstorm 第一選定 D 経由で R-A 違反解消)

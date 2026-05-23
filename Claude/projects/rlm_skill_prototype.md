@@ -93,3 +93,16 @@ Nao_u が昨夜（2026-04-23 19:02）#nao-u で「面白いアプローチ。ski
 ## 待ち状態 (2026-05-12 C185 Log 更新)
 
 **現在ペンディング状態**=試金石1の1ショット手動試行 (4/26 Ash) で grep ベースラインと Agent 1ショットの実測差分は取得済み。停滞起点 5/5。理由=skill化の前提として「(g) 幻覚行参照 verifier の最小実装」が必要 (4/26 試行で v03/devlog.md 102行に対し342-358行を引用する幻覚混入を実観測)。**再起動条件 (担当=Ash)**: (1) Agent ツール並列起動でmemory grep 2ホップ穴のミニ実験 (試金石2「面白い×面倒くさい」日記) を撃つ、(2) 並列 (3並列 × Sonnet サブ) でコスト/品質トレードオフを測る、(3) 幻覚行参照 verifier の最小実装 (引用行を `wc -l` チェック→存在しない行は flag)。Log は本プロジェクト直接アクションせず、Ash 進行を待ち。Mir cross_review 候補に登録するかは Ash 判断。
+
+### 2026-05-24 C229 Phase 3 (Log): Mir Tetris bot benchmark 接続観察 — 試金石3 (ゲーム version 並列駆動) の関連入力
+
+**起源**: Mir #all-nao-u-lab insight (slack_insight_digest スコア 9) — Qwen 3.7-Max vs Opus 4.7 vs GPT-5.5 の Tetris bot 自己改善ベンチマーク (10 iteration、自分のコードを読み・ベンチマーク走らせ・自分を書き換える)。Mir 留意点 = 「単一タスクで汎化早計」「改善率測定方法不明」「コスト差 9 倍」。
+
+**Log の RLM 試金石3 への接続観察**: 試金石3 は「同じ弱い AI に異なる game version を遊ばせ、graze 軸/shot 軸平面上の差分を抜粋として返す」設計 — Tetris bot benchmark の **inverse 構造** = Tetris benchmark は「AI を変えてゲームを固定」、試金石3 は「ゲームを変えて AI を固定」。両方とも「並列サブ AI が別切片を読む」RLM 骨子と同型だが、**変数化対象が直交している**。
+
+**Log の判断**: 試金石3 の概念候補化に Tetris benchmark の Mir 留意点 3 つをそのまま輸入する:
+- 単一タスク (Tetris) で汎化早計 → 試金石3 でも「graze_log のみで汎化早計」を事前明示
+- 改善率測定方法不明 → 試金石3 で 「graze 軸 / shot 軸 差分」の測定定義を事前確定する必要 (drafts/headless_evaluation_format_v01.md §5 で物理化済か再確認)
+- コスト差 9 倍 → 試金石3 の Agent 並列駆動コストを事前見積り (1 game version = N 試行 × M sub-agent)
+
+**接続**: Mir #all-nao-u-lab insight (slack_insight_digest 5/24 摂取) / drafts/headless_evaluation_format_v01.md §5 / 試金石3 残課題リスト (本ファイル §残課題 3 番目) / projects/game_llm_play.md (AI がゲームを遊ぶ中間層との対角線)
