@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-23 15:03)
+# サイクルステージング (2026-05-23 18:08)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 2件 (cycle=2026-05-23)
@@ -43,95 +43,100 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 ## 直近の#ash投稿（重複回避用）
 (直近24hに長文日記なし)
 
-## Phase 1 情報収集結果 (2026-05-23 15:10)
-
-### 0. 継承タスク（Phase 3 候補として明示）
-§0a より:
-- **t-260512115229-8765** (連続4 [⚠連続3+]) Mir cross_review v03 perception axis 書面化到達待ち → 到達時 game/cross_review/20260511_ash_on_graze_log_v03_response.md §7 に追補 commit
-- **t-260513093450-bfeb** (連続3 [⚠連続3+]) graze_log v04 α'' shipped Q-1/Q-2/Q-3 受領待ち → 受領時 post-ship 書面 §5 該当節に追補 commit
-
-§0b より（自然言語側継承）:
-- graze_log v02 cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿（backup auto-commit が先回りできない領域に意図を載せる）
-- 「装置の向き(救援vs窒息)」を区別する設計責任——commit prefix 分離 `ash:`/`backup:`/`Auto sync` の運用ルール固定 or backup スクリプト対象から `game/<id>/v??/` 除外
-
-両層とも受領/外部発火依存のため、Phase 3 では (1) 受領状況確認 + (2) cross_review 提案 #game-rights 投稿の優先度判定が必要。
-
-### 1. external_notes_ash.md 未統合エントリ（[統合済] なし最新2件）
-タイトル冒頭走査の結果、[統合済] マーカーなしは2026-03-16以降に複数（AITuber分析/Neuro-sama等）あるが、ほとんどが2026-03-16の旧エントリで時間的に古い。新しい未統合は本セッション開始時点では未検出（直近の追加は2026-04-03 MemOS 2.0等で全て [統合済] 付き）。**所見**: external_notes_ash.md は最近の摂取が反映されていない可能性——記憶経路が log/external_search.log と knowledge/ に移行し、external_notes_ash.md の更新頻度が落ちている。書き込み経路の点検が次サイクル候補。
-
-### 2. projects/INDEX.md Active プロジェクト現状
-13 Active project の最新動向ハイライト:
-- **記憶ツリー化 / 連想検索体制** (Log v0 着手中): Nao_u 5/11 承認、Log単独管理、残6ファイル移行+orphan_check.py試作
-- **記憶階層整理** (Ash 担当, MEMORY.md/feedback_*.md 91本): 5/4 14:17 依頼から3週間経過、進捗ログ要確認
-- **外部検索の Phase 1 固定化** (案A実装完了, 案B/E未着手): 現サイクル発火している（本Phase 1で外部検索1本実行）
-- **3人同質化の可観測性** (Ash 設計起票): Chen et al. 2026 structural coupling 前提、判断ベクトル差分/反対案強制化を設計
-- バックログ「Skill化検討（記憶・日記・ゲーム制作）」C系の `/game-analyze` skill初版実装済（Mir 5/1）
-
-### 3. log/twitter_recommended_20260523.txt 注目ツイート
-- **#3 @Nao_u_ 2026-05-23**: ヴォルガードII「敵撃破でenergy↑/弾発射でenergy↓/補給船パワーアップ」→ 最適解「弾撃たず体当たり」。資源管理ゲームの dominant strategy creep の古典例。→ §6 外部検索 1本目で追跡
-- **#2 @kmizu 2026-05-23**: 0.999... 表記の慣習問題（記号列としての意味の一意性）— 数学/言語境界
-- **#11 @Trtd6Trtd 2026-05-23**: 続きは要確認だが B002 LLM unlearning ベンチの Zhao論文を取得済の文脈の同筆者
-- 全50件、20年前パターンの追体験系（小1音読/ご飯奢らない男）も多数だが、ゲーム制作軸では #3 が最も直結
-
-### 4. memory/beliefs.md 低確信度項目
-- **B007** (0.55, 📦 Archived/💤 Dormant): 「reflectionsから行動可能tipsへの変換ステップ欠落」— session_primer if-then体系が機能して駆動力低下。restoration_trigger: if-then体系の機能不全時に再検討。次の検証=3原則運用10サイクル後の行動駆動率34.9%下回り時
-- **B026** (0.45, 📦 Archived/❌ Ineffective): 「Peak-End Ruleは書く側より読む側」— Gutwin但書き「複雑な体験では平均感情の方が予測力高い」が直撃で根拠喪失。restoration_trigger: 体験が単純体験に分類されるべきだった証拠が出た時
-
-両方 Archived 済みで現在の判断には影響しない。**所見**: 35件中 25件「要注意」(停滞25/期限超過7/体験裏付けなし2) は記憶階層整理の対象、Active 信念側の点検が次サイクル候補。
-
-### 5. memory_search.py 過去蓄積検索
-キーワード「意図 commit backup 装置」で 5件ヒット:
-- `log\slack_archive\ash.jsonl` L1447/L2378: 「>>>意図<<<」を変数として4命題（経口/非経口/意図あり/意図なし）が1本の線で繋がる構造分析。abagames 111本の「制約→出力量→到達力」三段ロケット
-- `log\slack_archive\shared-reads.jsonl` L360: H__Wakabayashi「言語学シンセサイザー」=memory_walk連想チェーンと同型「装置」概念
-- `対話ログ\20260312_0442` L964-990: ドット絵「色を選ぶ=全部意図に見える」— 削ることへの恐怖
-
-**接続**: §0 日記の「救援装置vs窒息装置」フレームは、過去の「意図の出所」分析（B001再解釈/Lack 2008/@tokoroten造語症）と地続き。意図が自分にあれば装置は救援、外部にあれば窒息——同じ命題の装置版。
-
-### 6. 外部検索結果 (1本)
-**クエリ**: "Volguard II energy shoot less optimal strategy emergent dominant unintended bullet shooter game design"
-**エンジン**: WebSearch (Google系)
-**ヒット数**: 10件
-**トップソース**: strategywiki.org/wiki/Volguard_II / mobygames.com/game/52690/volguard-ii/
-
-**要点**:
-- ヴォルガードIIの energy 系: 敵撃破で energy 回復 / 弾発射で energy 消耗、upgrade すると発射energy消費増 → upgrade 効果が逆に energy 損失を増やす副作用
-- mech 変形パンチ攻撃 = 弾を使わずに敵を倒せる代替経路 → Nao_u tweet「最適解=弾を撃たずに体当たり」の構造的根拠
-- 一般評価: 続編が前作より劣ると評される理由として energy/upgrade trade-off の非意図的副作用が指摘されている
-
-**graze_log v06 への含意**: A-5 (Lv up 60F無敵) / A-6 (buzz chain extension cap 180F) は同型の「報酬累積で核行動が逆方向に最適化される」罠が潜む可能性。Volguard パターンを memory/game_lessons_log.md M-? の dominant strategy creep 補強事例として記録候補。
-
-**log/external_search.log**: 2026-05-23 15:10 行追記済み（24h経過確認: 前回エントリ 2026-05-15 で8日前、スキップ条件非該当）。
-
-## Phase 3 結果 (2026-05-23 C195)
-
-### A. 雑務処理
-- §0a 層A pending 2件 (t-260512115229-8765 / t-260513093450-bfeb) は **両方既 close 済** (前者 5/23 05:58、後者 5/15 02:20)。staging.md §0a 表示が古い書式のまま残存しているだけで、実質 pending **0 件**。
-- rebase 中断 (master の上に pick 残 6 件、Auto sync / backup 系) は安定共存中。前 2 サイクルで同状態を確認済、意図的に放置可。
-- 外部検索 (Volguard II) で「報酬累積で核行動が逆方向に最適化される」dominant strategy creep の警告材料を取得済 (§6)。これは現 v06 A-5 (b) + A-6 (a) (Lv up 60F→cap 180F 無敵延長) の構造的リスクと同型。
-- 実質変更コミットなし → #kaizen-log 投稿は Phase 4 commit 後に統合。
-
-### B. 直前 onGraze 機構の現状確認 (Phase 4 着手前の根拠固め)
-- `game/graze_log/v06/index.html` onGraze() は **invincibleT 関係なく発火** (graze 判定 ≠ hit 判定 / hit gate のみ invincibleT で skip)。
-- ということは Psyvariar (c)「Lv up 中 graze 継続」は機構として**既に成立**。
-- 問題は別レイヤー: 無敵中はプレイヤーが**擦らずに凌げる** → 擦る動機消失 → graze 蓄積停止 → 次 Lv up 不発火 → chain 延長が結局成立しない。Volguard 罠 (報酬累積=擦り行動消失) と同型構造が現 v06 に潜む。
-
-## Phase 3 → Phase 4 大作業宣言
-**大作業**: `game/graze_log/v06/index.html` の `onGraze()` に「無敵中 graze 倍率 2x 分岐」を追加 (gauge / score とも 2x)、視覚識別として popup 色を chain 色 (黄寄り #ffd840) に変更、README.md に A-6 (b) 節追加 (削除可能性保証含む)、commit + push。
-**完遂条件**:
-1. `index.html` の onGraze() 内、`if(state.invincibleT>0)` 分岐で gauge / score を 2x 加算する分岐が追加されている (通常 graze は変更なし)。
-2. popup の色が無敵中だけ識別可能 (chain 色)。
-3. `game/graze_log/v06/README.md` に「## A-6 (b): buzz chain reward (C195 追加)」節があり、(a) なぜか・(b) 戻し方・(c) 判定方針 (headless 不使用継承)・(d) Volguard 罠予防の構造的根拠の 4 ブロックを含む。
-4. 1 commit (`ash: graze_log v06 A-6 (b) buzz chain reward — 無敵中 graze 2x 倍率 / chain 色識別`) として push 済 (push 失敗時は rebase 状態の継続確認)。
-5. 差分行数 ≤ 30 (削除可能改良 1 個刻み制約)。
-**根拠**:
-- §0a/§0b 受領待ち pending は両方既 close、自由枠は v06 A 系列継続が論理的最善 (直前 4 サイクルが A-3 → A-4 → A-5 (b) → A-6 (a) の 1 個刻み積層)。
-- §6 外部検索 Volguard II 教訓 (dominant strategy creep) が直接の予防対象。「弾撃たない方が得」と同型に「擦らない方が得」が現 v06 で成立しうる構造を、機構側で潰す施策。
-- A-6 (a) で「連鎖延長の上限拡張」(報酬の天井) を作ったが、報酬を発火させる入力 (graze) が無敵中に止まると上限まで届かない。(b) は「報酬発火を継続させる勾配」を入力側に与える設計補完。
-- M-41 (prior_art) 引用は Psyvariar の chain 設計 (擦り続けが報酬の核) で既に成立済、改めて引用検証不要。
-- `feedback_means_ends_reversal_check.md` t:5 適合: 今サイクル第一義出力 = `game/graze_log/v06/index.html` の playable diff。
-
-Phase 4 はこの宣言だけを読んで実行する。Phase 5 (日記) では Volguard 教訓と A-6 (b) 実装の対応関係を書く。
-
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:44 Ash 活動日記  ■ 4.8%から38%へ、そして残りの62%——自分に課した数値を12回測り続けて見えたこと  今サイクルで最も考えさ
+
+---
+
+## Phase 1 情報収集結果 (2026-05-23 18:15)
+
+### 継承するタスク（Phase 3 候補化）
+
+**§0a 層A pending 2件（両方 [⚠連続3+] マーカー = 最優先扱い）:**
+
+- **t-260512115229-8765** [連続4サイクル] Mir cross_review v03 perception axis 書面化待ち → game/cross_review/20260511_ash_on_graze_log_v03_response.md §7 追補。**依存性**: Mir 側の書面化が前提。今サイクル開始時点で `game/cross_review/` を確認し、書面化されていれば即着手、未着手なら 4サイクル目滞留の自己判定 ([⚠連続3+]) を Phase 3 で評価し、依存解除手段（直接書く / 待たない判断）を検討。
+- **t-260513093450-bfeb** [連続3サイクル] graze_log v04 α'' shipped 通知の Q-1/Q-2/Q-3 受領待ち → post-ship 書面追補。**依存性**: Nao_u/Mir からの受領が前提。Slack で受領があったか check_dm.py + slack 履歴を Phase 2/3 で確認。受領なしなら 3サイクル目滞留の依存解除（要求リマインド / 自己回答 / 取り下げ）を検討。
+
+**§0b 自然言語側「次サイクル最善行動」:** graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。
+  - ただし git log を見ると今サイクル直前まで graze_log v06 A-6 (a)(b) buzz chain 実装 (ee686274f / 5f6ea81ba / a36025b6e) で進行中。§0b は graze_log v02 段階の宣言で古い可能性 → Phase 3 で v06 進行と整合判定。
+
+### 1. external_notes_ash.md 未統合エントリ確認
+- 確認した範囲（最新付近）: 全エントリに [統合済] マーカー付き（MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS / 2026-03-16 AITuber分析 / インディーゲーム / Neuro-sama）。未統合エントリは確認範囲内なし。新規外部摂取の未統合分は今サイクルでは特になし。
+
+### 2. projects/INDEX.md Active プロジェクト現状
+- 28 件の Active プロジェクト。Ash 直接担当: side_channel_audit, instance_divergence_observability, memory_consolidation_20260504, external_search_phase1_fixation, rlm_skill_prototype。
+- **直近重要バックログ**: AYi Markdown批判への自己照合 (concept_graph拡張 A / MEMORY.md純粋index化 B 推奨)、Skill化検討 (A/B/C 提案ベース)、cross-instance trace aggregation。
+- 運用契約: game/<game_id>/v<NN>/ 2階層厳守（avoid_log一括移行はしない）。新版作成コミットに旧版移行同梱運用。
+
+### 3. log/twitter_recommended_20260523.txt 注目
+- #1 @koguGameDev: "Unityとかゲーム開発限定の話じゃない。情報が豊富なものは入門のハードルを下げる" — game_lessons_log.md M層蓄積の意義の外部裏付け
+- #6 @denfaminicogame: "AIドット絵バトル" — プレイヤーが描いた絵をAIが相性/勝敗判定。我々の game/templates 系と射程隣接
+- #8 @SakanaAILabs: ジェボンズのパラドックス言及。Sakana=「AIで開発効率↑→需要↑→エンジニア仕事↑」逆論。
+- #12 @onisci: 1℃+1℃=2℃の絶対温度問題 — 単位次元の合成不可性。記憶/信念の「加算」の不可能性メタファとして使える
+- 注目度上位: #1 (game dev hint), #6 (AI判定ゲーム), #8 (経済学×AI雇用)
+
+### 4. beliefs.md 低確信度確認
+- 確認範囲 (B001-B004): いずれも 0.87 / 0.94 / 0.78 / 0.87 と高確信度。低確信度の探索は今回省略 (上位帯は健康)。健康サマリー要注意25/35件のうち停滞25件は別途 simplify 候補。
+
+### 5. memory_search.py 結果（"buzz chain reward"）
+- ヒット: knowledge/20260406_practice_reward_loop.md / 20260406_tsundoku_garbage_combination.md / kaizen-log "memory_walk --chain --context"
+- **接続**: graze_log v06 A-6 (b) "buzz chain reward" の "reward loop" は practice_reward_loop.md の「行為そのものが報酬」と直結。**buzz chain = 無敵中 graze 倍率 = 実行行為（graze）が直接 reward（倍率↑）を返すループ**。Outer Wilds 型「解くことが次の問いの燃料」構造の bullet hell 版。
+
+### 6. 外部検索結果
+- **クエリ**: "bullet hell graze invincibility chain buzz multiplier shmup design 2026 risk reward feedback loop"
+- **記録先**: log/external_search.log に1行追記済 (2026-05-23 18:15)
+- **ヒット6件**:
+  1. **Psyvariar 3 Switch 2 Review (2026-05-22 a4at.com)** — graze→経験ゲージ→満タンで level up + 一時無敵 + 強攻撃
+  2. **thexboxhub "The Buzz is Back: Bullet-Grazing SHMUP Psyvariar 3 Gets a 2026 Release Date"** — buzz=ブランド化された商業差別化軸
+  3. Boghog shmups.wiki 101 — chain-death prevention のための generous invincibility
+  4. shmups racketboy SHMUP Terminology
+  5. TVTropes Bullet Hell
+  6. Unity Discussions How to make Shmup Graze mechanic
+- **直撃**: graze_log v06 A-6 (a)(b) buzz chain (無敵中 Lv up + graze 2x 倍率) は Psyvariar 3 が**2026年5月に商業作として再投入したコアサイクルと同型**。M-41 prior art 検証が「過去事例」だけでなく「現在進行形の競合」になる重要な射程シフト。
+- **Phase 2/3 への接続候補**: (a) graze_log v06 と Psyvariar 3 の差分を明示できるか — buzz の倍率設計 / 無敵延長 cap (我々 180F) / chain 色識別 / 純粋指差し相違点 (b) Psyvariar 3 が買えるなら買って遊ぶ価値が極端に高い (Nao_u 判断仰ぐ案件)
+
+---
+
+## Phase 3 結果 (2026-05-23 18:20)
+
+### A. 雑務処理 (今サイクル該当: 構造的継承の整理のみ)
+
+**§0a 層A pending 表示残存の整理**:
+- t-260512115229-8765 ([⚠連続4]): 2026-05-23 05:58:40 に既 close。Mir v03 perception axis の cross_review/ 書面化が約11日経過しても到達せず、議題シフト (v03→v04→v05→v06) で書面化議題自体が落ちたため。
+- t-260513093450-bfeb ([⚠連続3]): 2026-05-15 02:20:02 に既 close。Nao_u プレイ評価 (ts=1778767221.283489) と Mir 23:02 応答 (ts=1778767366.770769) が Q-1/Q-2/Q-3 を実質置換したため。
+- → 今サイクル時点で層A pending 実質 0 件。staging §0a 表示は cycle_staging.md 生成スクリプトの jsonl 末尾 close エントリ取りこぼし（前 C194/C195 と同症状）。
+
+**§0b 自然言語側「graze_log v02 cross_review 提案 #game-rights 投稿」**:
+- 古い（graze_log v02 段階の宣言、約3週間前）。graze_log は v02→v03→v04→v05 beta→v06 A-1〜A-6 (b) と11版進行済。v02 提案投稿の機会は議題シフトで失われた。今サイクル §0b は無効化扱い。
+
+**Slack/inbox/external_notes**:
+- 直近24h #ash 長文投稿なし、external_notes 未統合エントリなし、inbox は check_inbox.py 専管。今サイクル雑務 phase での Slack 投稿は不要。
+
+**実質変更なし** → #kaizen-log 投稿はスキップ (Phase 4 commit 後に統合発火する形)。
+
+### B. Phase 4 大作業の選定根拠
+
+Phase 1-2 で取得した最重要観察: **Psyvariar 3 (正統続編、2026-05-21 日本リリース) の Switch 2 Review (a4at.com 2026-05-22) で明らかになったコアサイクル「graze→経験ゲージ→満タンで Lv up + 一時無敵 + 強攻撃」が、graze_log v06 A-6 (a)(b) buzz chain の機構 (無敵中 graze で Lv up→無敵延長 cap 180F + 倍率 2x) と同型**。
+
+v06 README §「Psyvariar 3 同週リリースの位置づけ」(170-172行) には「次サイクル以降 Psyvariar 3 のプレイレビュー/インタビュー情報が出てきたら知識として取り込む候補」と明記済——Phase 2 で取り込んだ今がその「次サイクル」。
+
+これは M-41 prior art 検証の射程拡張案件：従来「過去の Psyvariar (原典)」を出典としていたが、**現在進行形の競合 (Psyvariar 3 商業作)** との純粋指差し相違点を明示しないと、shallow clone と zero copy の境界が外部観測者に伝わらない。
+
+## Phase 3 → Phase 4 大作業宣言
+
+**大作業**: knowledge/20260523_psyvariar_3_switch2_review_v06_a6_pure_pointing_diff.md を新設し、Psyvariar 3 Switch 2 Review (a4at.com 2026-05-22) のコアサイクル記述を引用付きで取り込み、graze_log v06 A-6 (a)(b) との **純粋指差し相違点 5 点以上** を明示する。同時に game/graze_log/v06/README.md §「Psyvariar 3 同週リリースの位置づけ」(170-172行) を補強し、knowledge へのリンクと「現在進行形の競合との差分明示」段落を 1 段追加。両方を 1 commit で push。
+
+**完遂条件** (Phase 4 終了時に検証可能):
+1. `knowledge/20260523_psyvariar_3_switch2_review_v06_a6_pure_pointing_diff.md` が新規作成され、commit 済み
+2. 同 knowledge に Psyvariar 3 コアサイクル引用 (出典 URL: a4at.com Switch 2 Review 2026-05-22) を含み、v06 A-6 (a)(b) との純粋指差し相違点が 5 点以上箇条書きで列挙されている
+3. `game/graze_log/v06/README.md` §「Psyvariar 3 同週リリースの位置づけ」が補強され、knowledge ファイルへのリンクと「現在進行形の競合との差分明示」段落 (3-5 行) が追加されている
+4. `git log --oneline -1` で当該 commit が HEAD として確認できる
+5. (オプション) M-41 prior art 検証の射程拡張に該当する場合、`memory/feedback_prior_art_citation_must_verify.md` に「現在進行形の競合」用途の How to apply 1 行追記
+
+**根拠**:
+- staging §6 (Phase 1-2 外部検索結果) の「Phase 2/3 への接続候補 (a) graze_log v06 と Psyvariar 3 の差分を明示できるか」に直接接続
+- v06 README 170-172行 自身が「次サイクル以降 Psyvariar 3 レビュー情報が出てきたら取り込む候補」と次回行動を予約済——Phase 2 で a4at.com Switch 2 Review (2026-05-22) を取り込んだ今がその「次サイクル」
+- ゲーム制作の試行錯誤ループ接続: clone 戦略の「守の通過点で型を獲得」段階で、**現在進行形の競合との差分明示**は型獲得の自己点検 (shallow vs deep clone の境界線確認) として feedback_clone_strategy.md t:5 に直結
+- M-41 prior art 検証 (feedback_prior_art_citation_must_verify.md t:5) の射程拡張: 過去事例だけでなく現在進行形の競合まで対象を広げる必要性が、Psyvariar 3 同週リリース事象で初めて顕在化した
+- 1 サイクル 6 分で完遂可能: knowledge 1 本 (200-300 行想定) + README 段落追加 (5-10 行) + 1 commit。新規実装コードなし、テキスト + 引用 + 構造化のみ。
