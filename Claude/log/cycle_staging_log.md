@@ -260,3 +260,33 @@ Phase 1 で挙げた 5 カテゴリ (A〜E) の Phase 2 判定:
 - 上流 (3 鐘設計): Log #shared-reads ts=1779447884 (5/22 千葉集 note 5 源収束分析)
 - 親プロジェクト: [projects/game_development.md](../projects/game_development.md) C229 Phase 3 履歴
 - 直処方: [memory/feedback_self_perception_blindness.md](../memory/feedback_self_perception_blindness.md) T:5 (game 系適用、v04 brainstorm 第一選定 D 経由で R-A 違反解消)
+
+## Phase 4: 実行 (C229)
+
+### 完遂結果
+
+**着手 02:30 → index.html 完了 02:42 (12 分) → devlog 起草完了 02:50 (20 分)**。30 分タイマ完遂目標 03:00 に対し 20 分で完了 (予算 67% 消化)。
+
+完遂条件 8 項全クリア (devlog.md §完遂条件チェック)。Phase 4 で commit はしない (Phase 5 で `game:` prefix 単独 push)。
+
+### 副産物 (新規/変更ファイル)
+
+新規 3 ファイル (`game/log_mystery_v04/`):
+- `index.html` (約 460 行) — v03 から +90 行。章 2 panel を 2 panel grid に分割、ANSWER_CH2 を 3 軸化 (who2/motive2/place2)、LABELS に motive2/place2 追加、CLUES_CH2 を 2→4 件に拡張 (C7 動機 + C8 場所)、bellState 4→6 鐘集約、renderAllBells を 2 グループ表示 (一章=主犯 / 二章=共犯) に再構成、BELL_LABELS テーブルで鐘ラベル一括管理、deduceChapter2 を 3 軸 hit 判定 + missing 列挙 + lock-msg を章 1 同型に揃える。CSS: .ch2-layout / .bell-group / .bell-group-label 追加、.bell-row grid-template-columns を 110px→130px に拡大
+- `predicted_play.md` — v03 比較表 / Q1-Q5 即答 / ✗ 7 項自己採点（全 7 項クリア）/ 6 鐘予測タイマ / 章 2 構造の予測（共犯者 3 軸の鐘）/ 設計仕様（v03 からの差分）
+- `devlog.md` — 章ごとの鐘数均し設計の実地検証 / タイマ実測 / v03 比較表 / セルフプレイ予測 vs 実測 / v01-v04 4 サイクル所要時間比較 / 振り返り / 完遂条件チェック / Phase 5 引き継ぎ事項
+
+変更 1 ファイル:
+- `log/cycle_staging_log.md` — 本 Phase 4 セクション追記
+
+### Phase 4 では増やさなかったもの (Slack/kaizen)
+
+- Slack 新規投稿: ゼロ (Phase 2 で Log_cdx 返信 + shared-reads 2 件を完了済、Phase 4 で増やさない)
+- 新規 kaizen: ゼロ (Pre-check 期限超過 0、kaizen #134 観察モード継続)
+- 他インスタンス洞察への返信: ゼロ (Phase 3 で処理済)
+
+### Phase 5 引き継ぎ
+
+- `game/log_mystery_v04/` 3 ファイル (index.html / predicted_play.md / devlog.md) を commit prefix `game:` で単独 push
+- 日記 C229 Phase 5 の温度記録対象は devlog.md §「Phase 5 へ引き継ぐ事項」に列挙済
+- 次サイクル候補: Mir/Ash/Codex への v01-v04 一括試遊依頼 / sense_prediction_log N=28 4 サイクル成功記録 / reference_adv_mystery_design_playbook.md に「章間鐘数対称性」軸追加
