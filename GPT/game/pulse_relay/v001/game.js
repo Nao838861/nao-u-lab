@@ -23,6 +23,10 @@
     return t * t * (3 - 2 * t);
   }
 
+  function routeBeat(e, span = 3) {
+    return Math.abs(Math.floor(e.phase || 0)) % span;
+  }
+
   function makeRng(seed) {
     let s = seed >>> 0;
     return function rand() {
@@ -60,12 +64,13 @@
   function lineColumn(frame, lane, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => {
       const x = LANES[lane] == null ? lane : LANES[lane];
-      const endY = (opts.endY == null ? 235 : opts.endY) - i * 16;
+      const endY = (opts.endY == null ? 235 : opts.endY) - i * (opts.stepY || 25);
       return ev(frame + i * (opts.stagger || 8), opts.kind || "harvest", x, block, {
         route: "line",
         targetX: x,
         targetY: endY,
         fireCd: opts.fireCd == null ? 99 : opts.fireCd + i * 0.04,
+        phase: i,
         role: opts.role || "line-column",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -81,10 +86,11 @@
       return ev(frame + Math.abs(offset) * (opts.stagger || 8), opts.kind || "curve", x, block, {
         route: "v",
         targetX: x,
-        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 13,
+        targetY: (opts.endY == null ? 245 : opts.endY) + Math.abs(offset) * 18,
         exitX: x + (offset < 0 ? -92 : 92),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: offset < 0 ? -1 : 1,
+        phase: Math.abs(offset) * 2 + (offset < 0 ? 1 : 0),
         role: opts.role || "v-burst",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -94,13 +100,13 @@
 
   function crossSweep(frame, side, count, block, opts = {}) {
     return Array.from({ length: count }, (_, i) => ev(frame + i * (opts.stagger || 10), opts.kind || "feeder", side < 0 ? -30 : W + 30, block, {
-      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 13),
+      y: (opts.y == null ? 170 : opts.y) + i * (opts.dy || 22),
       route: "side",
       side,
       targetX: side < 0 ? W * 0.58 : W * 0.42,
       exitX: side < 0 ? W + 34 : -34,
       fireCd: opts.fireCd == null ? 1.35 : opts.fireCd + i * 0.06,
-      phase: i * 0.5,
+      phase: i,
       role: opts.role || "cross-sweep",
       playerIntent: opts.playerIntent,
       badPolicy: opts.badPolicy,
@@ -113,10 +119,11 @@
       return ev(frame + i * (opts.stagger || 9), opts.kind || "curve", x, block, {
         route: "dive",
         targetX: x,
-        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 3) * 12,
+        targetY: (opts.targetY == null ? 360 : opts.targetY) + (i % 4) * 18,
         exitX: x + (x < W / 2 ? -118 : 118),
         fireCd: opts.fireCd == null ? 99 : opts.fireCd,
         side: x < W / 2 ? -1 : 1,
+        phase: i,
         role: opts.role || "dive-slash",
         playerIntent: opts.playerIntent,
         badPolicy: opts.badPolicy,
@@ -229,7 +236,7 @@
         y: H - 76,
         r: 5,
         speed: 260,
-        lives: 3,
+        lives: 4,
         invuln: 0,
         pulseCd: 0,
         shotCd: 0,
@@ -289,6 +296,8 @@
         lane: opts.lane,
         block: opts.block || opts.label || kind,
         role: opts.role || kind,
+        playerIntent: opts.playerIntent || "",
+        badPolicy: opts.badPolicy || [],
         shield: opts.shield || 0,
         spawnX: x,
         spawnY: y,
@@ -417,7 +426,7 @@
         y: e.y + (opts.yOffset == null ? 12 : opts.yOffset),
         vx: Math.cos(a) * speed,
         vy: Math.sin(a) * speed,
-        r: opts.r || 5,
+        r: opts.r || 4,
         role: opts.role || "aim",
       });
     }
@@ -433,7 +442,7 @@
         y: e.y + (opts.yOffset == null ? 14 : opts.yOffset),
         vx,
         vy,
-        r: opts.r || 5,
+        r: opts.r || 4,
         role,
       });
     }
@@ -451,37 +460,49 @@
           e.x = W / 2 + Math.sin(Math.max(0, e.age - 3.0) * 1.05) * 104;
           e.y = -52 + (116 + 52) * ease + Math.sin(Math.max(0, e.age - 3.0) * 0.9) * 10;
         } else if (e.route === "line") {
+          // Shot_log pTopDown style: readable harvest train, no hover, misses exit downward.
+          const beat = routeBeat(e);
+          const entry = 132 + beat * 5;
+          const exit = 156 - beat * 7;
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 118, ease: "outCubic" },
-            { x: e.targetX, y: H + 62, t: 150, ease: "snapOut" },
+            { x: e.targetX, y: e.targetY, t: entry, ease: "smooth" },
+            { x: e.targetX, y: H + 62, t: exit, ease: beat === 1 ? "linear" : "smooth" },
           ]);
         } else if (e.route === "v") {
+          // V bursts are a fold-out cue: enter as a readable shape, then peel back upward.
+          const beat = routeBeat(e, 4);
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112, ease: "outCubic" },
-            { x: e.exitX, y: -58, t: 108, ease: "snapOut" },
+            { x: e.targetX, y: e.targetY, t: 116 + beat * 4, ease: "smooth" },
+            { x: e.exitX, y: -58, t: 106 + beat * 7, ease: beat % 2 === 0 ? "outCubic" : "smooth" },
           ]);
         } else if (e.route === "dive") {
+          // Dive slashes make a fast accent, kick once near the lane, then flee upward.
+          const beat = routeBeat(e, 4);
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 86, ease: "outCubic" },
-            { x: e.targetX + e.side * 12, y: e.targetY - 34, t: 34, ease: "linear" },
-            { x: e.exitX, y: -58, t: 94, ease: "snapOut" },
+            { x: e.targetX, y: e.targetY, t: 78 + beat * 4, ease: "outCubic" },
+            { x: e.targetX + e.side * (15 + beat * 4), y: e.targetY - (30 + beat * 5), t: 24 + beat * 4, ease: "linear" },
+            { x: e.exitX, y: -58, t: 84 + beat * 6, ease: "snapOut" },
           ]);
         } else if (e.route === "side") {
+          // Side enemies are crossing pressure: keep their travel direction and clear the lane.
+          const beat = routeBeat(e, 4);
+          const travel = e.side < 0 ? 1 : -1;
           this.movePathEnemy(e, [
             { x: e.spawnX, y: e.spawnY - 26, t: 0 },
-            { x: e.targetX, y: e.spawnY, t: 88, ease: "outCubic" },
-            { x: e.targetX + e.side * 34, y: e.spawnY + 6, t: 24, ease: "linear" },
-            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 20, t: 104, ease: "snapOut" },
+            { x: e.targetX, y: e.spawnY, t: 92 + beat * 5, ease: "linear" },
+            { x: e.targetX + travel * (28 + beat * 8), y: e.spawnY + (beat % 2 === 0 ? 4 : 10), t: 16 + beat * 3, ease: "linear" },
+            { x: e.exitX == null ? (e.side < 0 ? W + 34 : -34) : e.exitX, y: e.spawnY - 18, t: 100 + beat * 5, ease: "linear" },
           ]);
         } else if (e.route === "large") {
+          // Large enemies are deadlines: descend, hold long enough to demand focus, then retreat.
           this.movePathEnemy(e, [
             { x: e.spawnX, y: -42, t: 0 },
-            { x: e.targetX, y: e.targetY, t: 112, ease: "outCubic" },
-            { x: e.targetX, y: e.targetY, t: 72, ease: "linear" },
-            { x: e.targetX + e.side * 34, y: -58, t: 126, ease: "snapOut" },
+            { x: e.targetX, y: e.targetY, t: 136, ease: "smooth" },
+            { x: e.targetX, y: e.targetY, t: 84, ease: "linear" },
+            { x: e.targetX, y: -58, t: 138, ease: "inCubic" },
           ]);
         } else {
           e.y += e.speed * DT;

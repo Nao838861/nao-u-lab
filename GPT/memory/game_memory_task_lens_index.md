@@ -140,3 +140,11 @@ For future 2D shooting or action games, when a good route policy fails after cha
 - lens: `Playable / Headless evaluation`, `Repair / Iterative Improvement`, `Stage Grammar / Enemy Formation`
 - recall query: `python tools/memory_recall.py "headless eval causality route boss-rush enemy motion overlap formation offset"`
 - key lesson: compare policies before assigning cause. If route fails but boss-rush or aggressive clears, inspect death logs and suspect route-policy behavior. Do not solve formation overlap with meaningless offsets; preserve the same rail and separate by timing, vertical spacing, and path progress.
+
+## 2026-05-23 add: enemy route intent / overlap lesson
+
+For future 2D shooting games, when feedback says "enemies overlap", "all enemies move in the same rhythm", "movement has no intent", or "exit motion feels like enemies lose will", read `memory/game_enemy_route_intent_lesson_20260523.md` before changing enemy paths.
+
+- lens: `Stage Grammar / Enemy Formation`, `Repair / Iterative Improvement`, `Playable / Headless evaluation`
+- recall query: `python tools/memory_recall.py "enemy route intent overlap shot_log path keyframes speed dwell exit reason"`
+- key lesson: each enemy routine must preserve why the path exists, where it asks the player to shoot/move, how fast it enters, why it exits, and what that exit speed means. Fix overlap with target spacing, spawn delay, path progress, and radius; do not add meaningless offsets or apply the same easing rhythm to every enemy.
