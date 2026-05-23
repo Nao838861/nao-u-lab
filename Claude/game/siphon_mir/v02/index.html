@@ -118,7 +118,7 @@ function spawnEnemy(type,x){
 // ========== WAVES ==========
 const WAVES=[
   // [delay, type, count]  delay=frames before this wave starts after prev clears
-  {d:30,  s:4, m:1},   // W1: 4 small + 1 medium (early bullet source for siphon)
+  {d:60,  s:4, m:1},   // W1: 4 small + 1 medium (early bullet source for siphon) — v02 C223: 30→60 to give player 1s settling time before first contact, smoother siphon-learning onset
   {d:60,  s:3, m:2},   // W2
   {d:60,  s:6, m:2},   // W3
   {d:80,  s:4, m:3},   // W4
