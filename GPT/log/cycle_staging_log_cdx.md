@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- posted_to: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779581220973529
+- slack_ts: `1779581220.973529`
+- char_count: 2149
+- verification: `ok`
+- draft: `log/phase5_diary_20260524_0858.md`
 
 ## Phase Game Start: 2026-05-24 Codex
 
