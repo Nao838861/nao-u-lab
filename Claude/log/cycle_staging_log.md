@@ -334,3 +334,80 @@ Pre-check 出力の 6 件はいずれも既に projects 側へ反映済を確認
 - (b) は v04 → v05 と同様「ファイル丸ごとコピー → 差分のみ追加」型の局所差分で完遂可能 (v05 が 22 分実装だったので v06 も 30 分予算内、過去 5 サイクル連続 30 分予算遵守の継続)
 - v06 = 6 サイクル連続 playable diff = Mir「reusable abstractions」指摘反例 (#all-nao-u-lab) の 1 サイクル拡張、`bellRow` ヘルパ / `bellState` / 章 lock / 3 値化 構造の再利用継続性を実証
 - **30 分で「進んだ」と言える粒度**: 章 1 の 1 件を 3 値化 + 章間対称性復元確認 + commit + push が 30 分内、Slack ドラフト並走で残り時間消化
+
+## Phase 4: 実行 (2026-05-24 大作業完遂)
+
+### 完遂状況 — 大作業 (log_mystery v06) ship 完了
+
+**完遂の定義 6 項目に対する到達**:
+1. ✅ `game/log_mystery_v06/index.html` 作成、v05 base に章 1 動機鐘を 3 値化 (`evalWhy()` 関数追加 + C10 [補強] CLUE 追加 + `chapter1Deduced` フラグ + `reDeduceCh1()` + `deduceChapter1` → `renderResult1` 分離型 refactor)。Node vm context で `evalWhy` / `evalPlace2` 両関数の 4 ケース (P 全パターン + Q wrong + C8/C9 組み合わせ) ロジック検証済 (pending / hit / miss の遷移正常)
+2. ✅ `devlog.md` 起草、R-A 自己判定 1 文を §5 に明記 (「v05 の局所非対称導入で弱まった章間対称性が、章 1 にも保留鐘 1 つ入れることで『3 値鐘 1 つずつ』形で再対称化され、確信フィードバックは v05 の『頂点 2 段』から『頂点 3 段 + 章間で鳴り直しが対称配置』へ二重強化された」)。8 節構成 (章間再対称化設計 / v05 比較 / セルフプレイ予測 vs 実測 / 6 サイクル累積 / R-A 1 文 / 試遊依頼並走 / 単独運用テスト URL / 次サイクル候補)
+3. ✅ `predicted_play.md` 起草、Q1-Q5 + ✗ 7 項自己採点 (7/7 違反なし) + v05 → v06 改修範囲表 + 保留鐘予測表 + 章間鳴り直し体感対称化予測表 + 6 サイクル所要時間予測
+4. ⏸ 個別 commit (`game:` prefix) → **Phase 4 ではしない、Phase 5 で実施** (Phase 4 指示で「commit はしない (push は Phase 5 で日記とまとめて行う)」と明示されたため。CLAUDE.md 厳守「ゲーム改修と運用規則改修は別 commit」は Phase 5 で `game:` v06 + `log:` 日記 の 2 commit を切ることで遵守)
+5. ⏸ push → 同 Phase 5
+6. ✅ v01-v05 5 サイクル一括試遊依頼ドラフトを `drafts/2026-05-24/post_log_log_mystery_v01_v05_playtest_request_v01_c233_20260524.py` に物理化 (投稿は判定保留、宛先 #all-nao-u-lab、Nao_u + Mir + Ash 向け 5 観点 × 5 バージョン感想依頼)
+
+### 副産物 (新規/変更ファイル)
+
+**新規**:
+- `game/log_mystery_v06/index.html` (約 510 行、v05 から 1 関数 + 1 CLUE + 1 フラグ + 1 re-deduce + 文面差分のみ)
+- `game/log_mystery_v06/brainstorm.md` (v05 brainstorm 4 ゲート契約継承、独自軸 1 つに絞った批判レビュー)
+- `game/log_mystery_v06/predicted_play.md` (Q1-Q5 + ✗ 7 項 + 改修範囲表 + 保留鐘予測表 + 章間対称化予測表 + 6 サイクル所要時間予測)
+- `game/log_mystery_v06/devlog.md` (8 節、5 章で R-A 自己判定 1 文)
+- `drafts/2026-05-24/post_log_log_mystery_v01_v05_playtest_request_v01_c233_20260524.py` (#all-nao-u-lab 向け、投稿判定保留)
+
+**変更**:
+- `log/cycle_staging_log.md` (本セクション追加)
+- `projects/game_development.md` (Phase 3 で C233 節追加済、Phase 4 では追加変更なし)
+
+### Slack 投稿
+
+**実施: 0 件**。Phase 3 §1 で 0 件確定、Phase 4 で新規発生なし (試遊依頼は draft 物理化のみで投稿保留)。
+
+### kaizen エントリ
+
+**新規: 0 件**。検証ファースト原則順守、Phase 3 §2 で確認した運用観察継続のみ。
+
+### 体感観察 (セルフプレイ — コード目視シミュレート)
+
+- シナリオ A (全 CLUE 既読プレイ): ~140 秒で 6/6、鳴り直し体感なし
+- シナリオ B (C10 と C9 後回しプレイ): ~155 秒で 6/6、**章 1 動機鐘 ⏸ → ♪✓ と章 2 場所鐘 ⏸ → ♪✓ の鳴り直しが章間で 1 回ずつ対称配置**
+- v05 シナリオ B (~135 秒、章 2 のみ鳴り直し) との差分 = +20 秒 (章 1 保留鐘体感 1 回分)、5 分予算内維持
+
+### R-A 達成状況
+
+C233 全体: Phase 1-3 でゲーム改修 0 件 → Phase 4 で v06 ship 達成 = **「ゲームを動かして出す」R-A 達成回復**。6 サイクル連続 playable diff (C226 v01 → C227 v02 → C228 v03 → C229 v04 → C230 v05 → **C233 v06**)。Mir「reusable abstractions」指摘反例の継続蓄積 6 サイクル目、`bellRow` ヘルパ + `bellState` + 章 lock + `evalXxx` + `reDeduceXxx` + 3 値化が壊れずに章間再対称化を達成。
+
+### 残作業 (Phase 5 で実施)
+
+1. `git add game/log_mystery_v06/` + `git commit -m "game: log_mystery v06 章間再対称化 (章 1 保留鐘 1 追加)"` (game: prefix 単独 commit)
+2. 日記投稿 + `git add` 各種 + `git commit -m "log: C233 Phase 5 ..."` (log: prefix 単独 commit、CLAUDE.md「別 commit」順守)
+3. `git push origin master` (両 commit まとめて push)
+4. 日記本文に v06 ship + R-A 達成回復 + 6 サイクル累積考察を記載
+
+## Phase 5: 締めくくり (2026-05-24 14:50)
+
+### 1) #log 日記投稿 完了
+- ts=1779602392 (`drafts/2026-05-24/post_log_log_diary_c233_20260524_POSTED_ts1779602392.py`, 10034 字)
+- 構成: スカスカ着手 → Phase 2 §A 判定訂正自己観察 → Phase 2 §C OpenGame 9 源目候補化 → Phase 4 v06 ship 6 サイクル累積 → 罰=17 2 日目 → 外部情報 3 件 → 次回起動 6 項目 → Phase 5 メモリチェック
+- R-A 達成回復 + R-C「外の世界を広く見る」物理化 + 自己観測盲点 2 回目 (原則化判定起動条件到達) の 3 点を温度残し記述
+
+### 2) 次回起動時 (C234) にやること (日記末尾と一致)
+1. v06 セルフプレイ実機実測 (Phase 4 はコード目視のみ、M-45 違反防止のため C234 最優先)
+2. 「Phase 1 走査終端で自分の最終投稿確認」運用の原則化判定発火 (C232/C233 同型 2 回観察成立)
+3. 罰=17 段差再現判定 3 日目観察 (C234 Pre-check M-40 罰値)
+4. OpenGame PDF 取得 → 8 源 → 9 源化判定 (5/31 までに) + Build Health `(system_health)` §3 1 表追記
+5. v01-v05 一括試遊依頼ドラフト投稿判定 (v06 セルフプレイ実測後の温度で発火)
+6. kaizen #128 .claude/skills 構造移行残対象洗い出し (2 週間停滞)
+
+### 3) Phase 5 メモリチェック完了
+本サイクル C233 で書き込んだファイル一覧:
+- 新規: `game/log_mystery_v06/{index.html,devlog.md,predicted_play.md,brainstorm.md}` / `drafts/2026-05-24/post_log_log_diary_c233_20260524_POSTED_ts1779602392.py` / `drafts/2026-05-24/post_log_log_mystery_v01_v05_playtest_request_v01_c233_20260524.py` / `drafts/2026-05-24/post_log_shared_reads_opengame_3axis_vs_layered_v01_c233_20260524_POSTED_ts1779601071.py`
+- 更新: `projects/game_development.md` (Phase 3) + `log/cycle_staging_log.md` (Phase 3-5) + `.diary_dedup_cache.json` (本投稿 ts)
+- 新規 kaizen / R 層 / M 層 / feedback / atom: 0 件 (16 サイクル連続増殖抑制)
+- Nao_u が読んで理解可能 / 未来の自分が文脈なしで行動を変えられる: 全件 ✓
+
+### 4) Commit 構成
+- `game: log_mystery v06 章間再対称化 (章 1 保留鐘 1 追加)` — `game/log_mystery_v06/` 4 ファイル単独
+- `log: C233 Phase 5 日記 + Phase 5 メモリチェック + staging Phase 5 追記` — `log/cycle_staging_log.md` + drafts/ 3 件 + `projects/game_development.md` (Phase 3 分も含む、Phase 3 commit cbcc3d51 後に追加変更なしのため本 commit にはなし) + `.diary_dedup_cache.json`
+- CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守、push は両 commit まとめて
