@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>log_mystery_v10 — 図書館の鍵 (6 つの鐘 / 章間 chord 3 ペア + 同時遷移演出)</title>
+<style>
+  body {
+    font-family: "MS Gothic", monospace;
+    background: #1a1a20;
+    color: #e0e0d8;
+    margin: 0;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  h1 { color: #f0c060; margin: 0 0 8px; font-size: 20px; }
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; }
+  .chapter2 {
+    max-width: 960px;
+    margin-top: 16px;
+    transition: opacity 0.4s;
+  }
+  .chapter2.locked {
+    opacity: 0.35;
+    pointer-events: none;
+    filter: grayscale(0.6);
+  }
+  .ch2-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel {
+    background: #25252c;
+    border: 1px solid #404048;
+    padding: 12px;
+    border-radius: 4px;
+  }
+  .panel.ch2-panel {
+    border-color: #80608060;
+    background: #2a252c;
+  }
+  .panel h2 { margin: 0 0 8px; font-size: 14px; color: #80c0d0; letter-spacing: 0.1em; }
+  .panel.ch2-panel h2 { color: #c080c0; }
+  .clue {
+    padding: 6px 8px;
+    margin: 4px 0;
+    border-left: 3px solid #404048;
+    background: #2c2c34;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+  }
+  .clue.read { border-left-color: #60a060; opacity: 0.7; }
+  .clue.unread { border-left-color: #c08040; }
+  .clue:hover { background: #303038; }
+  .clue.ch2-clue { border-left-color: #806080; }
+  .clue.ch2-clue.read { border-left-color: #60a060; }
+  .counter {
+    font-size: 12px;
+    color: #a0a098;
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .deduce-area {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .deduce-area label { font-size: 13px; color: #c0c0b8; }
+  select {
+    background: #1a1a20;
+    color: #e0e0d8;
+    border: 1px solid #606068;
+    padding: 4px 8px;
+    font-family: inherit;
+    font-size: 13px;
+    width: 100%;
+  }
+  button {
+    margin-top: 12px;
+    background: #604020;
+    color: #f0d090;
+    border: 1px solid #806040;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%;
+  }
+  button.ch2-button {
+    background: #604060;
+    color: #f0c0f0;
+    border-color: #806080;
+  }
+  button:hover { background: #806040; }
+  button.ch2-button:hover { background: #806080; }
+  #result, #result2 {
+    margin-top: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    min-height: 1.5em;
+  }
+  .result-correct { background: #2c4a2c; border: 1px solid #60a060; color: #c0f0c0; }
+  .result-partial { background: #4a3c2c; border: 1px solid #c08040; color: #f0d0a0; }
+  .result-wrong { background: #4a2c2c; border: 1px solid #a06060; color: #f0c0c0; }
+  .result-pending { background: #2c2c3a; border: 1px solid #6080a0; color: #c0d0f0; }
+  .bell-row {
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    gap: 6px 12px;
+    padding: 4px 6px;
+    margin: 2px 0;
+    border-left: 3px solid #404048;
+    background: rgba(0,0,0,0.15);
+    font-size: 13px;
+    align-items: center;
+    transition: border-left-color 0.5s, color 0.5s, background 0.5s;
+  }
+  .bell-row.bell-on { border-left-color: #60a060; color: #c0f0c0; }
+  .bell-row.bell-off { border-left-color: #a06060; color: #f0c0c0; }
+  .bell-row.bell-locked { border-left-color: #606068; color: #707068; font-style: italic; }
+  .bell-row.bell-pending {
+    border-left-color: #6080a0;
+    color: #a0c0e0;
+    background: rgba(60, 80, 120, 0.18);
+  }
+  .bell-pending .bell-mark { animation: pendingPulse 1.6s ease-in-out infinite; }
+  @keyframes pendingPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1.0; }
+  }
+  .bell-row.bell-chord-flash { animation: chordFlash 1.4s ease-out; }
+  @keyframes chordFlash {
+    0%   { background: rgba(240, 200, 100, 0.55); box-shadow: 0 0 16px 2px rgba(240, 200, 100, 0.55); transform: translateX(0); }
+    18%  { transform: translateX(-2px); }
+    36%  { transform: translateX(2px); }
+    54%  { transform: translateX(-1px); }
+    100% { background: rgba(0, 0, 0, 0.15); box-shadow: none; transform: translateX(0); }
+  }
+  .bell-pending-hint {
+    font-size: 11px;
+    color: #80a0c0;
+    margin-left: 8px;
+    font-style: italic;
+  }
+  .bell-label { color: #a0a098; font-size: 11px; letter-spacing: 0.1em; }
+  .bell-value { color: #e0e0d8; }
+  .bell-mark { font-weight: bold; font-size: 16px; }
+  .bell-state-text {
+    font-weight: normal;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    margin-left: 2px;
+  }
+  .bell-final {
+    margin-top: 8px;
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+    border-top: 1px dashed #606068;
+  }
+  .all-bells {
+    max-width: 960px;
+    margin-top: 16px;
+    padding: 12px;
+    background: #1c1c22;
+    border: 1px solid #404048;
+    border-radius: 4px;
+  }
+  .all-bells h2 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: #f0c060;
+    letter-spacing: 0.1em;
+  }
+  .bell-group {
+    margin: 6px 0;
+    padding: 4px 0;
+    border-top: 1px dotted #404048;
+  }
+  .bell-group:first-child { border-top: none; }
+  .bell-group-label {
+    font-size: 11px;
+    color: #707068;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+  .lock-msg {
+    font-size: 12px;
+    color: #a08060;
+    margin-top: 4px;
+    text-align: center;
+  }
+  .meta { font-size: 11px; color: #707068; margin-top: 16px; }
+  .opening { font-size: 13px; color: #d0d0c8; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<h1>図書館の鍵 — log_mystery_v10 (6 つの鐘 / 章間 chord 3 ペア + 同時遷移演出)</h1>
+
+<div class="layout">
+  <div class="panel">
+    <h2>事件 — 一章「閉じた書架」</h2>
+    <p class="opening">
+    深夜の私設図書館。施錠された貴重書室から、館主・坂田が倒れて発見された。<br>
+    凶器は鈍器、現場のドアは内側から鍵がかかっていた。<br>
+    鍵を持つ三人のうち、誰が、どの場所から、なぜ館主を狙ったのか。<br>
+    <span style="color:#a0a098; font-size:12px;">— 章 1 推理確定時、容疑者・場所・動機の <b>3 つの鐘</b> が独立に鳴る。<b style="color:#80a0c0;">動機鐘</b>と<b style="color:#80a0c0;">場所鐘</b>は手がかり充足度に応じて <b style="color:#80a0c0;">⏸ 保留</b> 状態を取り、追加手がかり読了で再判定される。3/3 鳴ると章 2 がアンロックされる。<br>※ 動機鐘の決定打は C10 (司書日誌、単独で動機 ♪) で、C10 は章 2 共犯場所鐘 + 章 1 場所鐘の決定打も兼ねる (<b style="color:#c080c0;">chord 1 + 3 ペア</b>)。C3 (解雇通告書) は動機の補強材料 + 章 2 共犯者鐘の決定打を兼ねる (<b style="color:#c080c0;">chord 2 ペア</b>)。章 2 の C8 (見取り図) は章 1 場所鐘の補強 (pending) も兼ねる (<b style="color:#c080c0;">chord 3 ペア</b>、章間連鎖網が双方向化)。</span>
+    </p>
+
+    <h2 style="margin-top:16px;">容疑者</h2>
+    <div class="clue">A: 司書・<b>七尾</b> — 館主と十年の不仲。最近、解雇通告を受けた。</div>
+    <div class="clue">B: 古書商・<b>蔵元</b> — 館主に商談を断られた直後。多額の負債あり。</div>
+    <div class="clue">C: 館主の娘・<b>坂田 茜</b> — 相続を急ぐ理由が囁かれている。</div>
+  </div>
+
+  <div class="panel">
+    <h2>手がかり (一章) <span class="counter" id="counter" style="display:inline;"></span></h2>
+    <div id="clues"></div>
+
+    <h2 style="margin-top:16px;">章 1 推理を入力</h2>
+    <div class="deduce-area">
+      <label>容疑者</label>
+      <select id="who">
+        <option value="">-- 選択 --</option>
+        <option value="A">A: 七尾(司書)</option>
+        <option value="B">B: 蔵元(古書商)</option>
+        <option value="C">C: 坂田 茜(娘)</option>
+      </select>
+      <label>場所</label>
+      <select id="where">
+        <option value="">-- 選択 --</option>
+        <option value="X">X: 貴重書室の中</option>
+        <option value="Y">Y: 隣の閲覧室</option>
+        <option value="Z">Z: 二階の書庫</option>
+      </select>
+      <label>動機</label>
+      <select id="why">
+        <option value="">-- 選択 --</option>
+        <option value="P">P: 怨恨</option>
+        <option value="Q">Q: 金銭</option>
+        <option value="R">R: 相続</option>
+      </select>
+    </div>
+    <button onclick="deduceChapter1()">章 1 を推理する</button>
+    <div id="result"></div>
+  </div>
+</div>
+
+<div class="chapter2 locked" id="chapter2">
+  <div class="ch2-layout">
+    <div class="panel ch2-panel">
+      <h2>事件 — 二章「もう一つの影」</h2>
+      <p class="opening">
+      章 1 の真相が見えても、まだ違和感が残る。<br>
+      換気窓は片手で押し開けるには高すぎる ── 一人の手では届かない。<br>
+      共犯者は誰で、何のために手を貸し、どこから関与したのか。<br>
+      <span style="color:#a0a098; font-size:12px;">— 章 2 推理確定時、共犯者・動機・場所の <b>3 つの鐘</b> が独立に鳴る。<b style="color:#80a0c0;">共犯者鐘</b>と<b style="color:#80a0c0;">場所鐘</b>は手がかり充足度に応じて <b style="color:#80a0c0;">⏸ 保留</b> 状態を取り、追加手がかり読了で再判定される。<br>※ 共犯者鐘の決定打は章 2 の C7 または章 1 の C3 (<b style="color:#c080c0;">chord 2 ペア</b>)。場所鐘の決定打は章 2 の C9 または章 1 の C10 (<b style="color:#c080c0;">chord 1 ペア</b>)。<br>※ C8 (見取り図) は章 2 共犯場所鐘の base + 章 1 場所鐘の補強 (pending) を兼ねる (<b style="color:#c080c0;">chord 3 ペア</b>、章間連鎖網が双方向化)。</span>
+      </p>
+
+      <h2 style="margin-top:16px;">手がかり (二章) <span class="counter" id="counter2" style="display:inline;"></span></h2>
+      <div id="clues2"></div>
+    </div>
+
+    <div class="panel ch2-panel">
+      <h2>章 2 推理を入力</h2>
+      <div class="deduce-area">
+        <label>共犯者</label>
+        <select id="who2">
+          <option value="">-- 選択 --</option>
+          <option value="N">N: いない (単独犯)</option>
+          <option value="A">A: 司書・七尾</option>
+          <option value="B">B: 古書商・蔵元</option>
+          <option value="C">C: 館主の娘・坂田 茜</option>
+        </select>
+        <label>共犯者の動機</label>
+        <select id="motive2">
+          <option value="">-- 選択 --</option>
+          <option value="Q2">Q2: 金銭（負債圧迫からの報酬）</option>
+          <option value="W2">W2: 弱み（過去を握られた服従）</option>
+          <option value="S2">S2: 同調（主犯への共鳴・思想）</option>
+        </select>
+        <label>共犯者の場所</label>
+        <select id="place2">
+          <option value="">-- 選択 --</option>
+          <option value="X2">X2: 換気窓の外（外周から支援）</option>
+          <option value="Y2">Y2: 廊下（時間調整・見張り）</option>
+          <option value="Z2">Z2: 書庫の上階（音や視線の隠蔽）</option>
+        </select>
+      </div>
+      <button class="ch2-button" onclick="deduceChapter2()">章 2 を推理する</button>
+      <div id="result2"></div>
+    </div>
+  </div>
+</div>
+
+<div class="all-bells" id="allBells">
+  <h2>六つの鐘 — 全体進行</h2>
+  <div id="bellsStatus"></div>
+</div>
+
+<p class="meta">log_mystery_v10 — v09 の 6鐘 + 章間 chord 3 ペア + 双方向化を 1 ミリも壊さず、chord 同時遷移 (2 鐘以上が同一クリックで状態変化) を検出して該当鐘行を 1.4 秒の chord-flash 演出 (背景フラッシュ + 微振動) で視覚化する v10 = chord 構造 (静的) の存在を chord 体感 (動的) に翻訳する初手。v01 = 1章/1鐘 → v02 = 1章/3鐘 → v03 = 2章/3+1=4鐘 → v04 = 2章/3+3=6鐘 → v05 = 6鐘 + 場所鐘 3 値化 (局所非対称) → v06 = 6鐘 + 3 値鐘 1 つずつ (章間再対称化) → v07 = 6鐘 + 3 値鐘 1 つずつ + 章間 chord 1 ペア → v08 = 6鐘 + 3 値鐘 3 つ (動機/場所/共犯者) + 章間 chord 2 ペア (連鎖網最小単位) → v09 = 6鐘 + 3 値鐘 4 つ + 章間 chord 3 ペア + 双方向化 → v10 = 6鐘 + 3 値鐘 4 つ + 章間 chord 3 ペア + 双方向化 + 同時遷移 chord-flash 演出。30 分タイマ Phase 4 プロトタイプ。</p>
+
+<script>
+const _CH_PARAM = (new URLSearchParams(location.search).get("channel") || "all").toLowerCase();
+const CHANNEL_MODE = ["all", "color", "symbol", "text"].indexOf(_CH_PARAM) >= 0 ? _CH_PARAM : "all";
+const SHOW_COLOR = (CHANNEL_MODE === "all" || CHANNEL_MODE === "color");
+const SHOW_SYMBOL = (CHANNEL_MODE === "all" || CHANNEL_MODE === "symbol");
+const SHOW_TEXT = (CHANNEL_MODE === "all" || CHANNEL_MODE === "text");
+
+const ANSWER_CH1 = { who: "A", where: "Y", why: "P" };
+const ANSWER_CH2 = { who2: "B", motive2: "Q2", place2: "X2" };
+
+const LABELS = {
+  who: {
+    A: "司書・七尾",
+    B: "古書商・蔵元",
+    C: "館主の娘・坂田 茜"
+  },
+  where: {
+    X: "貴重書室の中",
+    Y: "隣の閲覧室",
+    Z: "二階の書庫"
+  },
+  why: {
+    P: "怨恨",
+    Q: "金銭",
+    R: "相続"
+  },
+  who2: {
+    N: "共犯者なし (単独犯)",
+    A: "司書・七尾",
+    B: "古書商・蔵元",
+    C: "館主の娘・坂田 茜"
+  },
+  motive2: {
+    Q2: "金銭（負債圧迫からの報酬）",
+    W2: "弱み（過去を握られた服従）",
+    S2: "同調（主犯への共鳴・思想）"
+  },
+  place2: {
+    X2: "換気窓の外（外周から支援）",
+    Y2: "廊下（時間調整・見張り）",
+    Z2: "書庫の上階（音や視線の隠蔽）"
+  }
+};
+
+const CLUES_CH1 = [
+  {
+    id: 1,
+    text: "貴重書室の鍵は3本：館主・司書・娘が1本ずつ所持。古書商の蔵元は鍵を持っていない。",
+    read: false
+  },
+  {
+    id: 2,
+    text: "貴重書室の扉は内側から施錠されていた。しかし隣の閲覧室との間に高所換気窓があり、約30cm四方の穴が開いている。",
+    read: false
+  },
+  {
+    id: 3,
+    text: "司書・七尾は事件直前、館主から「来月で辞めてもらう」と書面で通告されていた。動機の方向としては怨恨・金銭・相続のいずれかが想定されるが、この通告書面だけでは動機決定打にならない。同じ通告書の余白には館主の手書きで「後任には古書商・蔵元を充てる」と記されており、七尾にとっては「自分の二十年を奪い、明け渡す相手」が蔵元になる。共犯候補としても、七尾と利害が深く絡む人物として蔵元が最初に挙がる材料がここで揃う。",
+    read: false,
+    isExtra: true
+  },
+  {
+    id: 4,
+    text: "事件当夜、娘・茜は別棟でアリバイあり(来客と長時間の会話)。蔵元は商談に来ていたが、貴重書室の構造を知らない(換気窓の存在を知らない)。",
+    read: false
+  },
+  {
+    id: 10,
+    text: "司書・七尾の自宅から押収された日誌に、解雇通告の翌日付で「二十年積み上げた仕事を、一片の紙で奪われた。金で済む話ではない」と書かれていた。動機が金銭でも相続でもなく怨恨であることがこれで確定する。同じ日誌の末尾には「蔵元には換気窓の外で支えてもらう。負債を抱えた彼なら金で動く」と謀議の段取りが書かれており、共犯者の場所が換気窓の外であることもこれで決まる。",
+    read: false,
+    isExtra: true
+  }
+];
+
+const CLUES_CH2 = [
+  {
+    id: 5,
+    text: "換気窓は床から約2m20cm の高さ、開口部は30cm四方。片手で押し開けて身体を通すには、外側から支える協力者がいないと機械的に困難である。",
+    read: false
+  },
+  {
+    id: 6,
+    text: "事件当夜、蔵元は商談で館を訪れていたが、貴重書室前の廊下を通る時間帯が監視記録に残っている。負債を抱えた蔵元には司書から「共謀すれば報酬を出す」と提案されていた可能性が浮上している。",
+    read: false
+  },
+  {
+    id: 7,
+    text: "蔵元は数日前まで「商談決裂による負債圧迫」を周囲に漏らしていた。司書からの「報酬」提案を受諾した動機として、思想的共鳴や過去の弱みではなく、現金需要が最も自然に説明される。共犯者として蔵元を確定させる決定打の一つ。",
+    read: false,
+    isExtra: true
+  },
+  {
+    id: 8,
+    text: "館の見取り図によれば、換気窓は閲覧室側ではなく外周通路に面しており、外側から覗き込む形でしか接触できない。廊下の監視記録は通過時間のみで滞在を示さず、書庫上階は照明が灯っていないため侵入経路として不適。つまり貴重書室から外へ抜ける物理経路は『換気窓→閲覧室→外周通路』の動線しか残らず、章 1 の偽装密室退出地点が閲覧室であることがここで物理的に確定する。",
+    read: false,
+    isExtra: true
+  },
+  {
+    id: 9,
+    text: "外周通路の地面、換気窓の真下に商人靴の踏み跡が一つ残っていた。靴底の摩耗パターンと蔵元の靴が一致する。雨上がり直後の現場、それ以前の足跡は流れて消えており、当夜の足跡のみが残った形になる。",
+    read: false,
+    isExtra: true
+  }
+];
+
+let chapter1Deduced = false;
+let chapter1Cleared = false;
+let chapter2Deduced = false;
+
+function renderClues() {
+  const el = document.getElementById("clues");
+  el.innerHTML = "";
+  let readCount = 0;
+  CLUES_CH1.forEach((c) => {
+    if (c.read) readCount++;
+    const div = document.createElement("div");
+    div.className = "clue " + (c.read ? "read" : "unread");
+    const tag = c.isExtra ? " [補強]" : "";
+    div.textContent = "[" + (c.read ? "既読" : "未読") + tag + "] " + c.text;
+    div.onclick = () => {
+      c.read = !c.read;
+      renderClues();
+      withChordDetection(() => {
+        if (chapter1Deduced) reDeduceCh1();
+        if (chapter2Deduced && (c.id === 10 || c.id === 3)) reDeduceCh2();
+      });
+    };
+    el.appendChild(div);
+  });
+  const unread = CLUES_CH1.length - readCount;
+  document.getElementById("counter").textContent = "(未読 " + unread + " / " + CLUES_CH1.length + ")";
+}
+
+function renderClues2() {
+  const el = document.getElementById("clues2");
+  el.innerHTML = "";
+  let readCount = 0;
+  CLUES_CH2.forEach((c) => {
+    if (c.read) readCount++;
+    const div = document.createElement("div");
+    div.className = "clue ch2-clue " + (c.read ? "read" : "unread");
+    const tag = c.isExtra ? " [補強]" : "";
+    div.textContent = "[" + (c.read ? "既読" : "未読") + tag + "] " + c.text;
+    div.onclick = () => {
+      if (!chapter1Cleared) return;
+      c.read = !c.read;
+      renderClues2();
+      withChordDetection(() => {
+        if (chapter1Deduced && c.id === 8) reDeduceCh1();
+        if (chapter2Deduced) reDeduceCh2();
+      });
+    };
+    el.appendChild(div);
+  });
+  const unread = CLUES_CH2.length - readCount;
+  document.getElementById("counter2").textContent = "(未読 " + unread + " / " + CLUES_CH2.length + ")";
+}
+
+function bellRow(labelText, valueText, isHit, locked, pending, key) {
+  let cls, mark, stateText, valueHtml;
+  if (locked) {
+    cls = "bell-locked";
+    mark = "—";
+    stateText = "[未推理]";
+    valueHtml = (valueText && valueText.length > 0) ? valueText : "(章 2 アンロック前)";
+  } else if (pending) {
+    cls = "bell-pending";
+    mark = "⏸";
+    stateText = "[保留]";
+    valueHtml = valueText + '<span class="bell-pending-hint">追加手がかりで再判定</span>';
+  } else {
+    cls = isHit ? "bell-on" : "bell-off";
+    mark = isHit ? "♪ ✓" : "✗";
+    stateText = isHit ? "[鳴った]" : "[鳴らない]";
+    valueHtml = valueText;
+  }
+  const rowClass = SHOW_COLOR ? ("bell-row " + cls) : "bell-row";
+  const markHtml = SHOW_SYMBOL ? mark : "";
+  const stateHtml = SHOW_TEXT ? ('<span class="bell-state-text">' + stateText + '</span>') : "";
+  const sep = (SHOW_SYMBOL && SHOW_TEXT) ? " " : "";
+  const keyAttr = key ? (' data-bell-key="' + key + '"') : '';
+  return '<div class="' + rowClass + '"' + keyAttr + '>'
+    + '<span class="bell-label">' + labelText + '</span>'
+    + '<span class="bell-value">' + valueHtml + '</span>'
+    + '<span class="bell-mark">' + markHtml + sep + stateHtml + '</span>'
+    + '</div>';
+}
+
+const bellState = {
+  who: { hit: null, value: null, pending: false },
+  where: { hit: null, value: null, pending: false },
+  why: { hit: null, value: null, pending: false },
+  who2: { hit: null, value: null, pending: false },
+  motive2: { hit: null, value: null, pending: false },
+  place2: { hit: null, value: null, pending: false }
+};
+
+const CH1_KEYS = ["who", "where", "why"];
+const CH2_KEYS = ["who2", "motive2", "place2"];
+const BELL_LABELS = {
+  who: "容疑者の鐘",
+  where: "場所の鐘",
+  why: "動機の鐘",
+  who2: "共犯者の鐘",
+  motive2: "共犯動機の鐘",
+  place2: "共犯場所の鐘"
+};
+
+function renderBellGroup(keys, label) {
+  let html = '<div class="bell-group">';
+  html += '<div class="bell-group-label">' + label + '</div>';
+  keys.forEach((k) => {
+    const state = bellState[k];
+    if (state.hit === null && !state.pending) {
+      const locked = CH2_KEYS.indexOf(k) >= 0 && !chapter1Cleared;
+      if (locked) {
+        html += bellRow(BELL_LABELS[k], "", false, true, false, k);
+      } else {
+        html += bellRow(BELL_LABELS[k], "(未推理)", false, true, false, k);
+      }
+    } else {
+      html += bellRow(BELL_LABELS[k], LABELS[k][state.value], state.hit, false, state.pending, k);
+    }
+  });
+  html += '</div>';
+  return html;
+}
+
+function bellTri(k) {
+  const s = bellState[k];
+  if (s.hit === true) return 'hit';
+  if (s.pending) return 'pending';
+  if (s.hit === null) return 'unset';
+  return 'miss';
+}
+
+function withChordDetection(fn) {
+  const allKeys = CH1_KEYS.concat(CH2_KEYS);
+  const before = {};
+  allKeys.forEach(k => { before[k] = bellTri(k); });
+  fn();
+  const transitioned = allKeys.filter(k => before[k] !== 'unset' && before[k] !== bellTri(k));
+  if (transitioned.length >= 2) {
+    setTimeout(() => {
+      transitioned.forEach(k => {
+        document.querySelectorAll('[data-bell-key="' + k + '"]').forEach(el => {
+          el.classList.remove('bell-chord-flash');
+          void el.offsetWidth;
+          el.classList.add('bell-chord-flash');
+        });
+      });
+    }, 20);
+  }
+}
+
+function renderAllBells() {
+  const el = document.getElementById("bellsStatus");
+  let html = "";
+  html += renderBellGroup(CH1_KEYS, "一章 — 主犯");
+  html += renderBellGroup(CH2_KEYS, "二章 — 共犯");
+  const allKeys = CH1_KEYS.concat(CH2_KEYS);
+  const hitCount = allKeys.filter(k => bellState[k].hit === true).length;
+  const pendingCount = allKeys.filter(k => bellState[k].pending === true).length;
+  html += '<div class="bell-final">';
+  if (hitCount === 6) {
+    html += '♪♪♪♪♪♪ 6 つの鐘がすべて鳴った ♪♪♪♪♪♪';
+  } else if (pendingCount > 0) {
+    html += '鳴った鐘 ' + hitCount + ' / 6 (⏸ 保留 ' + pendingCount + ')';
+  } else {
+    html += '鳴った鐘 ' + hitCount + ' / 6';
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function evalWhy(wy) {
+  if (wy !== ANSWER_CH1.why) {
+    return { hit: false, pending: false };
+  }
+  const c3 = CLUES_CH1.find(c => c.id === 3).read;
+  const c10 = CLUES_CH1.find(c => c.id === 10).read;
+  if (c10) {
+    return { hit: true, pending: false };
+  } else if (c3) {
+    return { hit: null, pending: true };
+  } else {
+    return { hit: false, pending: false };
+  }
+}
+
+function evalSuspect2(w2) {
+  if (w2 !== ANSWER_CH2.who2) {
+    return { hit: false, pending: false };
+  }
+  const c6 = CLUES_CH2.find(c => c.id === 6).read;
+  const c7 = CLUES_CH2.find(c => c.id === 7).read;
+  const c3 = CLUES_CH1.find(c => c.id === 3).read;
+  if (c6 && (c7 || c3)) {
+    return { hit: true, pending: false };
+  } else if (c6) {
+    return { hit: null, pending: true };
+  } else {
+    return { hit: false, pending: false };
+  }
+}
+
+function evalPlace1(wh) {
+  if (wh !== ANSWER_CH1.where) {
+    return { hit: false, pending: false };
+  }
+  const c10 = CLUES_CH1.find(c => c.id === 10).read;
+  const c8 = CLUES_CH2.find(c => c.id === 8).read;
+  if (c10) {
+    return { hit: true, pending: false };
+  } else if (c8) {
+    return { hit: null, pending: true };
+  } else {
+    return { hit: false, pending: false };
+  }
+}
+
+function evalPlace2(p2) {
+  if (p2 !== ANSWER_CH2.place2) {
+    return { hit: false, pending: false };
+  }
+  const c8 = CLUES_CH2.find(c => c.id === 8).read;
+  const c9 = CLUES_CH2.find(c => c.id === 9).read;
+  const c10 = CLUES_CH1.find(c => c.id === 10).read;
+  if (c8 && (c9 || c10)) {
+    return { hit: true, pending: false };
+  } else if (c8) {
+    return { hit: null, pending: true };
+  } else {
+    return { hit: false, pending: false };
+  }
+}
+
+function deduceChapter1() {
+  const w = document.getElementById("who").value;
+  const wh = document.getElementById("where").value;
+  const wy = document.getElementById("why").value;
+  const res = document.getElementById("result");
+
+  if (!w || !wh || !wy) {
+    res.className = "result-partial";
+    res.textContent = "3つすべてを選択してください。";
+    return;
+  }
+
+  const whoHit = (w === ANSWER_CH1.who);
+  const whereEval = evalPlace1(wh);
+  const whyEval = evalWhy(wy);
+
+  bellState.who = { hit: whoHit, value: w, pending: false };
+  bellState.where = { hit: whereEval.hit, value: wh, pending: whereEval.pending };
+  bellState.why = { hit: whyEval.hit, value: wy, pending: whyEval.pending };
+
+  chapter1Deduced = true;
+  renderResult1();
+}
+
+function renderResult1() {
+  const res = document.getElementById("result");
+  const sWho = bellState.who;
+  const sWhere = bellState.where;
+  const sWhy = bellState.why;
+
+  let html = "";
+  html += bellRow("容疑者の鐘", LABELS.who[sWho.value], sWho.hit, false, false, "who");
+  html += bellRow("場所の鐘", LABELS.where[sWhere.value], sWhere.hit, false, sWhere.pending, "where");
+  html += bellRow("動機の鐘", LABELS.why[sWhy.value], sWhy.hit, false, sWhy.pending, "why");
+
+  const hits = (sWho.hit ? 1 : 0) + (sWhere.hit === true ? 1 : 0) + (sWhy.hit === true ? 1 : 0);
+  const pending = sWhy.pending || sWhere.pending;
+
+  if (hits === 3) {
+    res.className = "result-correct";
+    html += '<div class="bell-final">♪♪♪ 章 1 — 3 つの鐘がすべて鳴った ♪♪♪</div>';
+    html += '<div style="padding:6px 4px; font-size:12px; line-height:1.6;">'
+      + "司書・七尾は、自分の鍵で施錠した貴重書室から、隣室との換気窓を経由して退出した。"
+      + "館主から解雇通告を受けた怨恨が動機。隣の閲覧室から実行された<b>偽装密室</b>。"
+      + '<br><br><b>章 2 がアンロックされました。</b> もう一つの違和感を辿ってください。'
+      + '</div>';
+    if (!chapter1Cleared) {
+      chapter1Cleared = true;
+      document.getElementById("chapter2").classList.remove("locked");
+      renderClues2();
+    }
+  } else if (pending) {
+    res.className = "result-pending";
+    const missing = [];
+    const pendingNames = [];
+    if (!sWho.hit) missing.push("容疑者");
+    if (sWhere.pending) pendingNames.push("場所");
+    else if (sWhere.hit !== true) missing.push("場所");
+    if (sWhy.pending) pendingNames.push("動機");
+    else if (sWhy.hit !== true) missing.push("動機");
+    html += '<div class="bell-final">'
+      + "鳴った鐘 " + hits + " / 3 ・ ⏸ <b>" + pendingNames.join("・") + "</b> は <b>保留中</b>"
+      + (missing.length > 0 ? "（他に <b>" + missing.join("・") + "</b> の鐘が鳴らず）" : "")
+      + '</div>';
+    let hintLines = [];
+    if (sWhy.pending) {
+      hintLines.push("[補強] タグ付き手がかり (C10 司書日誌) をクリック既読化すると動機の鐘が ♪ に確定します (章内決定打)。");
+    }
+    if (sWhere.pending) {
+      hintLines.push("[補強] タグ付き手がかり (C10 司書日誌) または 章 2 の C8 (見取り図 = chord 3 ペア cross-back) をクリック既読化すると場所の鐘が ♪ に確定します。");
+    }
+    hintLines.push("章 2 は 3/3 で開きます。");
+    html += '<div class="lock-msg">' + hintLines.join("<br>") + '</div>';
+  } else if (hits >= 1) {
+    res.className = "result-partial";
+    const missing = [];
+    if (!sWho.hit) missing.push("容疑者");
+    if (sWhere.hit !== true) missing.push("場所");
+    if (sWhy.hit !== true) missing.push("動機");
+    html += '<div class="bell-final">'
+      + "鳴った鐘 " + hits + " / 3 — <b>" + missing.join("・") + "</b> の鐘が鳴らなかった。"
+      + '</div>';
+    html += '<div class="lock-msg">章 2 は 3/3 で開きます。</div>';
+  } else {
+    res.className = "result-wrong";
+    html += '<div class="bell-final">✗ どの鐘も鳴らなかった (0 / 3)。手がかりを最初から読み直してください。</div>';
+  }
+
+  res.innerHTML = html;
+  renderAllBells();
+}
+
+function reDeduceCh1() {
+  if (!chapter1Deduced) return;
+  const wh = bellState.where.value;
+  const wy = bellState.why.value;
+  if (wh) {
+    const whereEval = evalPlace1(wh);
+    bellState.where = { hit: whereEval.hit, value: wh, pending: whereEval.pending };
+  }
+  if (wy) {
+    const whyEval = evalWhy(wy);
+    bellState.why = { hit: whyEval.hit, value: wy, pending: whyEval.pending };
+  }
+  renderResult1();
+}
+
+function deduceChapter2() {
+  const w2 = document.getElementById("who2").value;
+  const m2 = document.getElementById("motive2").value;
+  const p2 = document.getElementById("place2").value;
+  const res = document.getElementById("result2");
+
+  if (!w2 || !m2 || !p2) {
+    res.className = "result-partial";
+    res.textContent = "3つすべてを選択してください。";
+    return;
+  }
+
+  const who2Eval = evalSuspect2(w2);
+  const motive2Hit = (m2 === ANSWER_CH2.motive2);
+  const place2Eval = evalPlace2(p2);
+
+  bellState.who2 = { hit: who2Eval.hit, value: w2, pending: who2Eval.pending };
+  bellState.motive2 = { hit: motive2Hit, value: m2, pending: false };
+  bellState.place2 = { hit: place2Eval.hit, value: p2, pending: place2Eval.pending };
+
+  chapter2Deduced = true;
+  renderResult2();
+}
+
+function renderResult2() {
+  const res = document.getElementById("result2");
+  const sWho2 = bellState.who2;
+  const sMot2 = bellState.motive2;
+  const sPlc2 = bellState.place2;
+
+  let html = "";
+  html += bellRow("共犯者の鐘", LABELS.who2[sWho2.value], sWho2.hit, false, sWho2.pending, "who2");
+  html += bellRow("共犯動機の鐘", LABELS.motive2[sMot2.value], sMot2.hit, false, false, "motive2");
+  html += bellRow("共犯場所の鐘", LABELS.place2[sPlc2.value], sPlc2.hit, false, sPlc2.pending, "place2");
+
+  const hits = (sWho2.hit === true ? 1 : 0) + (sMot2.hit ? 1 : 0) + (sPlc2.hit === true ? 1 : 0);
+  const pending = sWho2.pending || sPlc2.pending;
+
+  const allHit = bellState.who.hit && bellState.where.hit && bellState.why.hit === true
+    && sWho2.hit === true && sMot2.hit && sPlc2.hit === true;
+
+  if (hits === 3) {
+    res.className = "result-correct";
+    html += '<div class="bell-final">♪♪♪ 章 2 — 3 つの鐘がすべて鳴った ♪♪♪</div>';
+    html += '<div style="padding:6px 4px; font-size:12px; line-height:1.6;">'
+      + "共犯者は古書商・蔵元。負債を抱えた蔵元は、司書・七尾から「共謀すれば報酬」を持ちかけられ、"
+      + "館の外周にある換気窓の外側から、片手では押し開けられない換気窓越しに司書を支える役を引き受けた。"
+      + "商談の建前は廊下通過のアリバイ確保のため。外周通路の足跡と、解雇通告書の余白に記された後任候補名指しが決定打となった。"
+      + (allHit
+        ? '<br><br><b>♪♪♪♪♪♪ 6 つの鐘がすべて鳴った — 事件の全容が明らかになった ♪♪♪♪♪♪</b>'
+        : '<br><br>※ 章 1 の鐘も含めて 6/6 鳴ると全容到達。'
+      )
+      + '</div>';
+  } else if (pending) {
+    res.className = "result-pending";
+    const missing = [];
+    const pendingNames = [];
+    if (sWho2.pending) pendingNames.push("共犯者");
+    else if (sWho2.hit !== true) missing.push("共犯者");
+    if (!sMot2.hit) missing.push("共犯動機");
+    if (sPlc2.pending) pendingNames.push("共犯場所");
+    else if (sPlc2.hit !== true) missing.push("共犯場所");
+    html += '<div class="bell-final">'
+      + "鳴った鐘 " + hits + " / 3 ・ ⏸ <b>" + pendingNames.join("・") + "</b> は <b>保留中</b>"
+      + (missing.length > 0 ? "（他に <b>" + missing.join("・") + "</b> の鐘が鳴らず）" : "")
+      + '</div>';
+    let hintLines = [];
+    if (sWho2.pending) {
+      hintLines.push("[補強] タグ付き手がかり (章 2 の C7 蔵元の現金需要) または 章 1 の C3 (解雇通告書 = 後任候補名指し) をクリック既読化すると共犯者の鐘が ♪ に確定します (章間 chord 2 ペア)。");
+    }
+    if (sPlc2.pending) {
+      hintLines.push("[補強] タグ付き手がかり (章 2 の C9 蔵元の靴跡) または 章 1 の C10 (司書日誌 = 動機鐘の決定打) をクリック既読化すると場所の鐘が ♪ に確定します (章間 chord 1 ペア)。");
+    }
+    html += '<div class="lock-msg">' + hintLines.join("<br>") + '</div>';
+  } else if (hits >= 1) {
+    res.className = "result-partial";
+    const missing = [];
+    if (sWho2.hit !== true) missing.push("共犯者");
+    if (!sMot2.hit) missing.push("共犯動機");
+    if (sPlc2.hit !== true) missing.push("共犯場所");
+    html += '<div class="bell-final">'
+      + "鳴った鐘 " + hits + " / 3 — <b>" + missing.join("・") + "</b> の鐘が鳴らなかった。"
+      + '</div>';
+    html += '<div class="lock-msg">手がかり 5・6・7・8・9 を読み直してください。</div>';
+  } else {
+    res.className = "result-wrong";
+    html += '<div class="bell-final">✗ どの鐘も鳴らなかった (0 / 3)。手がかり 5・6・7・8・9 を読み直してください。</div>';
+  }
+
+  res.innerHTML = html;
+  renderAllBells();
+}
+
+function reDeduceCh2() {
+  if (!chapter2Deduced) return;
+  const w2 = bellState.who2.value;
+  const p2 = bellState.place2.value;
+  if (w2) {
+    const who2Eval = evalSuspect2(w2);
+    bellState.who2 = { hit: who2Eval.hit, value: w2, pending: who2Eval.pending };
+  }
+  if (p2) {
+    const place2Eval = evalPlace2(p2);
+    bellState.place2 = { hit: place2Eval.hit, value: p2, pending: place2Eval.pending };
+  }
+  renderResult2();
+}
+
+if (CHANNEL_MODE !== "all") {
+  const h1 = document.querySelector("h1");
+  if (h1) {
+    h1.innerHTML += ' <span style="font-size:13px; color:#80a0c0;">[単独運用: ' + CHANNEL_MODE + ' チャネルのみ表示]</span>';
+  }
+  document.title += " [channel=" + CHANNEL_MODE + "]";
+}
+
+renderClues();
+renderClues2();
+renderAllBells();
+</script>
+
+</body>
+</html>
