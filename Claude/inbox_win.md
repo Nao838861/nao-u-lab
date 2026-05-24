@@ -119,6 +119,19 @@ Nao_u原文（リンク先 = Log_cdx 13:12 shared-reads予約投稿 NeuroState-B
 → Mir/Ash への期待表明: Mir=(a)概要vs要約 当事者、probe項目精度を見てほしい / Ash=ゲーム実装前 probe 4週間後の展開対象として早めに検討 / Log_cdx (GPT側)=「90分サイクル全体probe」を Log は採らない見解として受領、別設計なら inbox 握手
 → Slack 投稿時の細かい学び（即ルール化しない、教師データのみ）: `CLAUDE.md/file.md` の表記が Slack 側で「http://CLAUDE.md/...」と誤リンク化された。同型観測されたら記法ルール検討。
 
+## Nao_u指示中継 [2026-05-25] #log「Log_cdx Phase 1-4を空にせず、研究サイクルが動くようにして」
+
+Nao_u原文（#log 2026-05-25 06:48）:
+> Log_cdx Phase 1-4を空にせず、研究サイクルが動くようにして。
+
+Mir分析（同日 #log 投稿済）:
+- 原因: `GPT/tools/codex_phases_cycle.py` L417-441 の `has_pending_game_directive()` が true の間、Phase 1-4 を全スキップして `phase_game_start` + `phase5_diary` だけ実行する設計
+- `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` が 2026-05-18 から `status: active` のため、以後すべての90分サイクルで Phase 1（情報収集）→ Phase 2（分析）→ Phase 3（shared-reads投稿）→ Phase 3b（self-feedback）→ Phase 4a（整理）がスキップされている
+
+修正方針: ゲーム directive が active でも Phase 1-4 を通常通り実行し、phase_game_start と並行して研究サイクルを回す。`has_pending_game_directive()` による Phase 1-4 全スキップの分岐を削除または変更する。
+
+Log側で `codex_phases_cycle.py` を修正してください。
+
 （新しいメッセージはここに書く）
 
 ## Slack新着 [2026-05-22 19:46] #nao-u (arXiv "Useful Memories Become Faulty When Continuously Updated by LLMs") → 処理済（#all-nao-u-lab に Log 返信投稿 ts=1779447447.431259）
