@@ -1,4 +1,5 @@
 *.pyc
+.tmp/
 .associative_index.db
 .bot_profile/
 .claude/*
