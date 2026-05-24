@@ -4,6 +4,13 @@
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
+## Game Start: 2026-05-24 graze_log_cdx v76
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending ではなくローカル継続指示として処理。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v76/`。v75 の gameplay を維持し、bad policy failure の死亡原因を人間確認 packet に追加した。
+- 実装内容: `index.html` に敵弾の `sourceType / sourceRole / sourceGroup` と `deathContext` を追加。`probeForceIframe=0` を追加し、bad policy iframe が死亡を隠さないようにした。`review_packet.html` は death-cause packet として、frame、phase、hit source、enemyBullets、nearBullets、直前 context を表示。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v76_death_packet_check.js` pass。route 4552f clear。camper 1397f `RIGHT_BUNKER_ENTRY_COVER` / raider `crane_swoop_r_1040` / enemyBullets 36 / nearBullets 14。panic 1718f `TOP_OFF_BRIDGE_TO_MIDBOSS` / raider `second_pair_floor_1240` / enemyBullets 76 / nearBullets 31。novice 4010f `BOSS_APPROACH_KEEP_SCREEN_ACTIVE` / raider `final_bunker_tail_3540` / enemyBullets 55 / nearBullets 16。
+- 残課題: 1 seed の死亡原因だけなので、次は multi-seed で同じ bad policy が同じ成立条件で失敗しているかを見る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)

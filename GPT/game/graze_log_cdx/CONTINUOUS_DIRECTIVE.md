@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T21:05:00+09:00
+last_handled_at: 2026-05-24T22:10:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v75/` で v74 の gameplay を維持し、forced iframe で bad policy failure を隠さない `review_packet.html` を追加した。`tools/headless_graze_log_cdx_v05_2_v75_bad_policy_packet_check.js` は route clear と camper / panic / novice の game over frame、DOM contract、screenshot contract を検証し、既存 check と合わせて 8 本 pass。
+last_result: `game/graze_log_cdx/v05_1_cdx_v76/` で v75 の gameplay を維持し、bad policy failure の死亡原因を `review_packet.html` に追加した。`tools/headless_graze_log_cdx_v05_2_v76_death_packet_check.js` は route clear と camper / panic / novice の deathContext、packet frame、DOM contract、screenshot contract を検証して pass。
 
 ## Nao_u 指示
 
