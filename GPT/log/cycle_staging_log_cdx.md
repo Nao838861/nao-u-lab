@@ -3,7 +3,20 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+
+### 2026-05-25T07:06+09:00 log_cdx
+
+- Slack pending 確認:
+  - directives: `log-cdx-1779644882-54fc6c7843` (2026-05-25 02:48, operations, "Phase 1-4はずっと空なの？その原因は？") が pending。Phase 1 では対応せず、後フェーズへ残す。
+  - broadcasts: `broadcast-1779310201-24a490e4a6`, `broadcast-1779237427-15d6f5af92`, `broadcast-1779657780-322e0406bd` が pending。Phase 1 では対応せず、存在確認のみ。
+- 既存確認:
+  - `memory/raw/web_research/` は 2026-05-18 以降の phase3 投稿素材と `results.jsonl` / `errors.jsonl` が最新。
+  - `memory/shared_reads_candidates/` の直近追加は 2026-05-19 の 3 件だったため、今回は 2026-05-25 分として新規候補を追加。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260525_clockheart_jam_panic_timer.md` — jam 終盤に足した timer が雰囲気探索と衝突した postmortem。panic decision と core movement の分離メモ。
+  - `memory/shared_reads_candidates/20260525_bpm_signal_pivot.md` — Signal theme を feedback から core loop へ移すため、移動/方向/real-time 判断を削った 72h jam pivot 記録。
+  - `memory/shared_reads_candidates/20260525_gameplayqa_decision_dense_eval.md` — 3D gameplay video を Self / Other Agents / World で密 annotation し、MLLM の temporal/role grounding 失敗を測る benchmark。
+  - `memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md` — 独自 control mechanic が camera/UI/tutorial と噛み合わず、players が demo の主要部に到達できなかった postmortem/議論。
 
 ## Game Start: 2026-05-25 graze_log_cdx v82
 
