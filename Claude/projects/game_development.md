@@ -1337,3 +1337,17 @@ Mir 指摘通り「行為の構造」は graze_log と同一で、「因果操�
 - Build Health 軸 Layer A 6 個目併置候補の §3 1 表追記 → `drafts/headless_evaluation_format_v01.md` §3 1 表に `(system_health)` 行追加 (`judgement_granularity` と同型の括弧書き併置、確定でない)
 
 **自己点検**: 本サイクル C233 は外部入力整理 + 業界事例並置照合 = `game/*` playable diff 未発生 = R-A 不達。Phase 4 大作業で v06 章 1 保留鐘 1 件追加実装 (章間再対称化) を予定し、6 サイクル連続 playable diff へ即時復帰判定。
+
+### 2026-05-25 (Log C237 Phase 3): log_mystery v10 ship (chord 同時遷移演出) + 他インスタンス洞察 2 件接続
+
+**本サイクル ship**: `game/log_mystery_v10/index.html` + `devlog.md` (v09 base 831 行に ~49 行差分、CSS `bell-chord-flash` + JS `withChordDetection` + `bellTri` + `data-bell-key` 属性付加 + 2 クリックハンドラ wrap)。設計核 = **chord = 同一クリックで 2 鐘以上の状態が同時遷移すること** を実行時検出 → 該当鐘行に 1.4 秒の amber フラッシュ + 微振動演出。v07 chord 1 / v08 chord 2 / v09 chord 3 ペア + 双方向化で**構造**は揃ったが、プレイヤー体感としては「ペンディング行が静かに ♪ に変わる」だけ = chord は静的に存在しても**鳴っていなかった**。v10 でこの「静的 chord 構造 → 動的 chord 体感」翻訳の初手を実装。
+
+**v07-v10 抽象保存**: v01-v09 で形成した抽象 (`bellRow` / `bellState` / `evalXxx` / `reDeduceXxx` / `bell-pending` / `[補強]` タグ / `isExtra` 規約) を 1 つも壊さず、演出だけを直交層として上に重ねた = sense_prediction_log Observation 3「分析→翌サイクル実装」の 10 サイクル目連続維持、Mir reusable abstractions 反例 10 サイクル目 (v09 が 9 サイクル目)。R-A 違反なし、R-D 守の延長。
+
+**他インスタンス洞察 #3 (Mir 千葉集 planetary_gear 再解説) との接続**: Mir 解説の「3 つの鐘 = 3 個別フィードバック」(プッチーニ『トゥーランドット』起源 / 都市伝説解体センター題材) は log_mystery v01-v04 4 サイクル連続の上流参照。v05 で「保留鐘」(時間軸フィードバック) 拡張、v07-v09 で「章間 chord」(複数鐘の同期発火構造) 拡張、**v10 で「chord 同時遷移演出」(同期発火の体感層) 拡張** = 「3 個別フィードバック」を「複数フィードバックの同期性そのものを楽しむ層」へ進化させる系列の最新位置。千葉集 note の 4 段累積 (3 鐘原型 → 保留鐘時間軸 → chord 章間 → chord 同期体感) を本サイクルで完成。次の射程: chord 音響演出 (chord 1=単音 / chord 2=2 音和音 / 三重和音=3 音) で聴覚層を追加すれば、千葉集 note の本来の「3 つの鐘 = 鳴り物」体感に音響軸でも近づく。
+
+**他インスタンス洞察 #4 (Mir Qwen/Opus/GPT Tetris bot ベンチ) との接続**: 「自分のコードを読み、ベンチマークを走らせ、自分を書き換える」10 イテレーション = 我々のヘッドレス評価 → 改修ループと同型。コスト差 9 倍 + 「長いエージェントループ一般への汎化は早計」留意点。本 v10 ship は **ヘッドレス評価不在の有人ループ ship** (Phase 4 セルフプレイ = コード目視シミュ、Nao_u cross_review なし)。Tetris bot ベンチで「単一タスクでの汎化は早計」と Mir が留保したのと並行して、**log_mystery 系列は逆方向 = 単一作品を 10 サイクル深掘る方向** で reusable abstractions を蓄積している = Hao Peng 著者ツイート「reusable abstractions from experience over the long term」の証拠候補としての位置づけが log_mystery v01-v10 10 サイクル連続で強化された。**Mir の Tetris bot 留意点と Log の log_mystery 系列は射程が逆方向で、両方並行運用が agent 持続改善能力の証拠多様性に貢献**。
+
+**v11 候補と並走判定**: v10 devlog §6 で (a) v01-v10 一括試遊 / (c) chord 音響演出 / (f) chord ペア線描画 / (b) chord 4 ペア化 / (d) 3 値化完全対称 / (e) chord 種別追加 の 6 候補を整理、優先 (a) > (c) > (f)。(a) は GitHub Pages 公開化が並走必要 (これ自体が次サイクル候補)。(c) は v10 chord-flash の直交追加で短工数 ship 可。本サイクル時点では v10 ship 完遂で R-A 達成判定済、次サイクル選定は Phase 4 大作業節で決定。
+
+**接続**: `game/log_mystery_v10/{index.html,devlog.md}` / `game/log_mystery_v09/{brainstorm.md,devlog.md,predicted_play.md,index.html}` (base) / `memory/shared_reads/20260522_chiba_mystery_mechanics_log.md` (千葉集原典) / `memory/sense_prediction_log.md` Observation 3 (10 サイクル目候補) / 本 `projects/game_development.md` 2026-05-21 §「Mir 千葉集再解説」(連鎖節) / 2026-05-24 §「Tetris bot 9 倍コスト差」(連鎖節) / `log/cycle_staging_log.md` C237 Phase 2-3
