@@ -143,3 +143,58 @@ kaizen #134 段階2 hook の運用観察21日目を kaizen_tracker.md に転記�
 2. **CLAUDE.md 第1項「ゲームを動かして出す — 積み上げはその副産物」直適用** — brainstorm・分析・cross_review・日記が主たる出力になっている診断対象から脱出するため、Phase 4 第一義出力 = game/* の playable diff（最初は design_log の物理化、brainstorm 10案 = 着手ゲートを揃えるための1手）
 3. **30分粒度で「進んだ」と言える** — ディレクトリ作成 + 8ゲート枠 + brainstorm 10案 + commit/push は 30 分で完遂可能。Slack 投稿1本では済まない（実装ファイル4本 + git commit）
 4. **Active project の停滞解消** — `log_autonomous_game.md` は 5/25 起票直後で「次サイクル冒頭で開設」と明記、Phase 4 がその「次サイクル冒頭」に当たる。停滞なく実装フェーズへ移行する
+
+## Phase 4: 実行 (2026-05-25 Log C237)
+
+### 完遂状態
+完遂の定義 4 項目のうち 1, 2 を満たす。3 (commit/push) は Phase 4 プロトコル「commit はしない（git push は Phase 5 で日記とまとめて行う）」に従い Phase 5 へ繰り越し、4 (Phase 5 日記での記載) も次フェーズ。本サイクルの厳守事項「ゲーム改修 (`game/` 配下) と運用規則改修は別 commit に分ける」に従い、Phase 5 では `game:` prefix (v001 一式) と `log:` prefix (staging + 日記) を別 commit に分ける。
+
+### 副産物 (新規/変更ファイル)
+- `game/log_autonomous_game/v001/README.md` (新規) — ジャンル選択 (C) 予測型回避 + Pulse Relay 対比意図 + Nao_u 指示原文引用、1段落
+- `game/log_autonomous_game/v001/design_log.md` (新規) — 8 ゲート全てに方針/禁則/検証手段の3小節構成
+  - Q-A 中心入力 (Space + 移動副入力)
+  - Q-B 特殊3状態 (1秒先予測ロック / 発動不可・意味薄・意味あり)
+  - Q-導入 (Mir 5/25 log_mystery 分析より、？喚起度5段階自己採点)
+  - Q-成功FB (千葉集 planetary_gear 3層階段判定、予測当/外/未立)
+  - Q-C 敵出現退場 (4種 A/B/C/D、大型E省略でスコープ縮小)
+  - Q-D 弾攻撃元 (画面外射撃0、予測軌道ゴースト本体と区別)
+  - Q-E レイアウト (640x720 中央、サイドパネル禁止)
+  - Q-F 日本語ログ (UTF-8 / Nao_u原文短縮禁止)
+- `game/log_autonomous_game/v001/user_directives_raw.md` (新規) — ヘッダ1行のみ、Nao_u 指摘原文保存場所
+- `game/log_autonomous_game/v001/brainstorm.md` (新規) — 12 案 (最低10案要件 +2)、MPS 5段階×3軸=最大15、上位3案 (Premonition-Walk 15 / Echo-Path 14 / Foreshadow 13) に Q-導入メモ付き
+
+### 設計判断ハイライト
+- ジャンル選択: (C) 1秒先予測型 回避ゲーム を確定 — `avoid_log/v04` までで「単調」評を受けた経験を Pulse Relay v003 教師差分の 70-90秒カーブ + 予測メカニクスで対比実験
+- 副入力1つ許容: Pulse Relay v003 `Space だけ` 厳守から意図的に少し離れる (log_mystery v01-v03 のスカスカ感回避)。`Space (予測ロック) + 矢印/WASD (移動)` の 2 入力系構成
+- 大型敵 E は v001 で省略: 70-90秒の終盤山を A+B+C+D 同時出現で代替、実装スコープを縮小して完成確率優先
+- 案 8 Premonition-Walk は MPS 最高 (15) だが design_log Q-A 整合性で減点、v001 候補は案 2 Echo-Path (14) または案 4 Foreshadow (13) を次サイクル self_judgment.md で判定
+
+### 完遂の定義との照合
+1. ✓ ディレクトリ + 4ファイル全て作成済
+2. ✓ brainstorm 上位3案 (案 8, 案 2, 案 4/5/11 同点) 全てに Q-導入メモ付き
+3. → Phase 5 へ繰り越し (Phase 4 プロトコル: commit/push は Phase 5 で日記と一括)
+4. → Phase 5 で日記に「v001 開設 + brainstorm 完了、実装は次サイクル以降」明記
+
+### Slack 投稿
+Phase 4 で新規 Slack 投稿なし (Phase 3 で 2 件投稿済、Phase 4 大作業集中の方針順守)。次フェーズ Phase 5 日記投稿時に v001 開設報告を Log 個人チャンネル (`#log_logs` 相当) へ含める想定。
+
+### 次サイクル (C238) への引き継ぎ
+- v001 実装案を案 2 Echo-Path または案 4 Foreshadow から選定 (self_judgment.md で MPS+Q-A 整合性 + 実装スコープで判定)
+- `game.js` / `index.html` 着手、`enemy_behavior_audit.js` / `bullet_origin_audit.js` を Pulse Relay v003 から流用整備
+- `verify.js` の悪いプレイ方針 5 種 (camper / lane-holder / blind-sweeper / 特殊不使用 + 「導入を読まずに本編に飛ぶ」) を整備
+
+## Phase 5: 日記 (2026-05-25 Log C237)
+
+- #log 投稿済 ts=1779660179.733629 (channel=C0ALRK28Y1H)
+- 日記内容: C237 全体経緯 + Log_cdx 中心命題自己診断 + faulty-memory 論文/Tandfonline/CHI 2024 3 系統独立支援 + Phase 4 v001 開設経緯 + brainstorm 上位 3 案 (Premonition-Walk / Echo-Path / Foreshadow) + Nao_u 06:48 Log_cdx 宛指示の認識 + 次回起動時 4 アクション
+- 書き込みファイルチェック (本サイクル全体):
+  - `log/cycle_staging_log.md` ✓ Phase 1-5 時系列、未来の Log/Nao_u から経緯追跡可能
+  - `memory/kaizen_tracker.md` ✓ kaizen #134 day 21 観察 (Phase 3 commit済)
+  - `memory/external_notes_log.md` ✓ Log_cdx 6/6 シリーズ + 2026-05-13 ゲーム設計 3 本統合履歴 (Phase 2)
+  - `projects/log_autonomous_game.md` ✓ プロジェクト起票理由 + 着手手順 (Phase 3 commit済)
+  - `game/log_autonomous_game/v001/README.md` ✓ Nao_u 原文引用 + ジャンル選択意図 (Phase 4)
+  - `game/log_autonomous_game/v001/design_log.md` ✓ 8 ゲート方針/禁則/検証 (Phase 4)
+  - `game/log_autonomous_game/v001/brainstorm.md` ✓ 12 案 + MPS スコア + 次選定基準 (Phase 4)
+  - `game/log_autonomous_game/v001/user_directives_raw.md` ✓ Nao_u 原文保存場所ヘッダ (Phase 4)
+- 全 8 ファイルに対し「Nao_u が読んで理解できるか」「未来の Log が文脈なしで行動を変えられるか」OK 判定
+- commit 分割計画: `game:` prefix (v001 一式 + .gitignore .tmp/) + `log:` prefix (cycle_staging Phase 5 追記 + 自動更新ファイル群)
