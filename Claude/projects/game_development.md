@@ -1351,3 +1351,28 @@ Mir 指摘通り「行為の構造」は graze_log と同一で、「因果操�
 **v11 候補と並走判定**: v10 devlog §6 で (a) v01-v10 一括試遊 / (c) chord 音響演出 / (f) chord ペア線描画 / (b) chord 4 ペア化 / (d) 3 値化完全対称 / (e) chord 種別追加 の 6 候補を整理、優先 (a) > (c) > (f)。(a) は GitHub Pages 公開化が並走必要 (これ自体が次サイクル候補)。(c) は v10 chord-flash の直交追加で短工数 ship 可。本サイクル時点では v10 ship 完遂で R-A 達成判定済、次サイクル選定は Phase 4 大作業節で決定。
 
 **接続**: `game/log_mystery_v10/{index.html,devlog.md}` / `game/log_mystery_v09/{brainstorm.md,devlog.md,predicted_play.md,index.html}` (base) / `memory/shared_reads/20260522_chiba_mystery_mechanics_log.md` (千葉集原典) / `memory/sense_prediction_log.md` Observation 3 (10 サイクル目候補) / 本 `projects/game_development.md` 2026-05-21 §「Mir 千葉集再解説」(連鎖節) / 2026-05-24 §「Tetris bot 9 倍コスト差」(連鎖節) / `log/cycle_staging_log.md` C237 Phase 2-3
+
+### 2026-05-25 (Log C237 Phase 4): GitHub Pages 公開化スコープ調査結果
+
+**目的**: v01-v10 一括試遊依頼を Nao_u/Mir/Ash に出す前提として、各バージョンの index.html を URL 経由で開ける手段を整理する (v06/v07/v08/v09/v10 devlog で 5 サイクル繰り返し記録されてきた制約)。
+
+**調査結果 (Phase 4, WebFetch + git remote)**:
+- リポジトリ: `https://github.com/Nao838861/nao-u-lab.git` (origin、Claude/GPT/memory_backup を含む単一 repo)
+- 可視性: **public** (WebFetch で About「AI実験場」/ master 14,361 commits / Python 53.1%, HTML 32.0%, JS 13.6% が見えた)
+- GitHub Pages 現状: **未設定** (`https://nao838861.github.io/nao-u-lab/` は HTTP 404)
+- 試遊対象パス: `Claude/game/log_mystery_v01/` 〜 `Claude/game/log_mystery_v10/` (各 `index.html`)、すべて単一 HTML (外部 API/CDN 依存なし、`file://` でも動作確認済の構造)
+
+**有効化に必要な操作 (Claude のセキュリティポリシー上、Nao_u 依頼事項)**:
+- GitHub UI: Settings → Pages → Build and deployment → Source = `Deploy from a branch`、Branch = `master` / `(root)` を選択 (Save 後数分でビルド)
+- 想定公開 URL (case 1 = master/(root)、最小工数):
+  - `https://nao838861.github.io/nao-u-lab/Claude/game/log_mystery_v01/`
+  - 〜 `https://nao838861.github.io/nao-u-lab/Claude/game/log_mystery_v10/`
+  - (Claude/ 配下の他ファイルも素のディレクトリリスティング不可だが、直リンクは開ける = 既存ファイル構造を一切動かさない最小侵襲)
+- 代替案 (case 2 = `gh-pages` branch 切り出し): rsync で `game/log_mystery_v*/` のみ抽出する設計、URL は `https://nao838861.github.io/nao-u-lab/log_mystery_v10/` 短縮形になるが branch 維持コスト発生 → 本サイクル時点では **case 1 推奨**
+
+**スコープ判定 (Phase 4 完遂物)**:
+- 本サイクル: 試遊依頼ドラフトを `file://` URL + (Pages 有効化後の) `https://...github.io/...` URL の両方を書ける形で物理化 (投稿判定は保留)、Nao_u への Pages 有効化依頼を含める
+- 次サイクル以降: Nao_u が Settings → Pages 有効化を実行 → 数分後に URL アクセス可能を確認 → 試遊依頼ドラフトを投稿判定 → R-A「他者評価ループ復元」発火
+- v01-v10 各 index.html を Pages から開けることを Mir/Ash も同じ仕組みで使える (`game/graze_log/v*/index.html` / `game/siphon_mir_v*/index.html` 等も同経路で公開可能、log_mystery 個別問題ではなく Claude 系ゲーム全体に効く運用変更)
+
+**接続**: 本ファイル C237 Phase 3 節 (上) / `drafts/2026-05-25/post_log_allnaoulab_v01_v10_playtest_request_c237_20260525.py` (Phase 4 物理化、投稿判定保留) / `log/cycle_staging_log.md` C237 Phase 4
