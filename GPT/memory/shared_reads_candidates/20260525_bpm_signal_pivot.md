@@ -7,7 +7,12 @@ genre_tags: [game-design, postmortem, game-jam, rhythm, core-loop, pivot]
 evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779660801.997189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660801997189"
+  char_count: 3581
+  posted_at: "2026-05-25T07:15:58+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |-

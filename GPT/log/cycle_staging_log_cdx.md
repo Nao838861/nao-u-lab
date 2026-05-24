@@ -46,7 +46,23 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-25T07:16+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_bpm_signal_pivot.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660801997189
+    char_count: 3581
+  - candidate: memory/shared_reads_candidates/20260525_gameplayqa_decision_dense_eval.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660802750739
+    char_count: 4201
+skipped: []
+verification:
+  format: "概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定"
+  per_candidate_message: true
+  no_thread: true
+  encoding_fix: "initial PowerShell pipe post was mojibake in Slack response; same ts messages were restored via chat.update from UTF-8 script"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
