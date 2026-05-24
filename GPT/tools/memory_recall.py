@@ -157,6 +157,8 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "score": round(score, 3),
             "title": atom.get("title"),
             "tags": atom.get("tags", [])[:8],
+            "folded_count": atom.get("folded_count", 0),
+            "folded_ids": atom.get("folded_ids", [])[:20],
         }
         for score, atom in results
     ]
@@ -183,10 +185,12 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
 def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     tags = ", ".join(atom.get("tags", [])[:8])
     links = atom.get("links", [])
+    folded_count = int(atom.get("folded_count") or 0)
+    folded_ids = [str(aid) for aid in atom.get("folded_ids", []) if aid]
     if compact:
         suffix = ""
-        if atom.get("folded_count"):
-            suffix = f" folded={atom.get('folded_count')}"
+        if folded_count:
+            suffix = f" folded={folded_count} folded_ids=[{', '.join(folded_ids[:5])}]"
         print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]{suffix}")
         return
     print(f"[{atom['id']}] score={score:.1f} {atom.get('datetime', '')} {atom.get('author', '')}")
@@ -195,6 +199,11 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     print(f"tags: {tags}")
     if links:
         print(f"links: {', '.join(links[:4])}")
+    if folded_count:
+        print(f"folded_count: {folded_count}")
+        print(f"folded_ids: {', '.join(folded_ids)}")
+        if atom.get("normalized_content_hash"):
+            print(f"normalized_content_hash: {atom.get('normalized_content_hash')}")
     print(f"excerpt: {atom.get('excerpt', '')}")
     print()
 

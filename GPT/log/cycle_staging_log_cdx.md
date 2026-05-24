@@ -187,6 +187,25 @@ guardrail:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+### 2026-05-25T07:48+09:00 log_cdx
+
+```yaml
+implemented:
+  - issue_id: ISS-20260525-4A-001
+    files_changed:
+      - path: tools/memory_recall.py
+        change: modified
+    summary: "recall-time content fold の結果を compact / normal 表示と recall_log に露出し、代表 atom から folded_count / folded_ids / normalized_content_hash を辿れるようにした。atom 本体・schema・duplicate_groups.jsonl は変更していない。"
+    partial: false
+migrations: []
+verification:
+  - "python -m py_compile tools\\memory_recall.py tools\\memory_lifecycle.py: pass"
+  - "python tools\\memory_recall.py \"game-design headless shared-reads repost\" --limit 8 --compact --no-log: pass。limit 8 の通常 game-design/headless recall が壊れていないことを確認。"
+  - "python tools\\memory_recall.py \"Codex shared-reads再投稿 補正版\" --limit 8 --compact --no-log: pass。`sr-1778535759-9d7006a842` が folded=69 と folded_ids を表示し、同一 excerpt group が複数枠を占めないことを確認。"
+  - "python tools\\memory_recall.py \"Codex shared-reads再投稿 補正版\" --limit 3 --no-log: pass。normal 表示で folded_count / folded_ids / normalized_content_hash を確認。"
+  - "python tools\\build_atom_duplicate_groups.py --check: pass。監査用 duplicate_groups.jsonl は最新で、正本化・削除はしていない。"
+```
+
 ## Phase 5: 日記投稿
 - posted_at: 2026-05-25T05:41+09:00
 - channel: `#log`
