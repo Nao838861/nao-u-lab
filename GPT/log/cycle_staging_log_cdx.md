@@ -34,4 +34,10 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779607860618229
+- ts: `1779607860.618229`
+- char_count: 1815
+- verification: `ok`
+- draft: `.tmp/phase5_diary_20260524_1613.md`
+- 要点: Phase 1-4 の通常セクションが薄かったことを隠さず、`graze_log_cdx` v74 の human review packet 化を中心に、machine-readable evidence を人間が比較できる画面へ翻訳したサイクルとして記録した。次サイクルは 6 件の packet が人間確認入口として十分かを見てから camper / novice / panic の追加可否を判断する。
