@@ -235,3 +235,80 @@ C231 で観察された「実投稿なき『実施』主張」(unchecked autonom
 - v06 章間再対称化完遂の上に「章間連鎖」を載せる順序 = R-D 守破離の **守の延長** (守破離の破ではない)、安全方向
 - log_mystery 系列 v01-v06 で 6 サイクル連続「他者評価ループ復元」軸を維持、本 v07 でも軸を継承しつつ playable diff を 1 本追加
 - 30分で「進んだ」と言える粒度 = 4 ファイル sprint、index.html diff は ~30-50 行想定で 30 分以内に完遂可能
+
+## Phase 4: Execute (log_mystery v07 完遂)
+
+### 副産物一覧 (新規/変更ファイル)
+
+新規ファイル (4 ファイル sprint 完備):
+- `game/log_mystery_v07/brainstorm.md` (新規) — 3 案ブレスト + 案 A 確定 + R-A〜R-I 照合 + 着手前批判 3 懸念すべて「可」
+- `game/log_mystery_v07/predicted_play.md` (新規) — 4 シナリオ (A 標準 / B' 短縮 / C 観察 / D 自然) Mental Simulation + 連鎖発火/非発火条件表
+- `game/log_mystery_v07/index.html` (新規 = v06 ベース + ~30 行 chord 差分) — ブラウザ動作可能、3 チャネル単独運用 URL `?channel=color/symbol/text` を v06 から完全継承
+- `game/log_mystery_v07/devlog.md` (新規) — §1 chord 構造設計 / §2 v06 比較 / §3 シナリオ実測 + 予測訂正 (シナリオ D 不成立判明) / §4 v01-v07 7 サイクル所要時間比較 / §5 R-A 自己判定 1 文 / §6 単独運用 URL 継承 / §7 v08 候補 (a)-(f)
+
+変更ファイル:
+- `log/cycle_staging_log.md` (Phase 4 セクション追記、本セクション)
+
+### Commit graph (物理ゲート順序維持)
+
+1. **3d6cf9a1469a** `game: log_mystery v07 brainstorm + predicted_play 先行 (鐘 chord 構造設計)` — 分析系を index.html より先に積む
+2. **c0ddb796f3ff** `Auto sync from Win` — Win 側 auto-sync hook が v07 index.html + devlog.md を巻き込み commit (commit メッセージは hook 仕様で固定)
+
+→ brainstorm/predicted_play が index.html commit より**先行**= Ash v03 同型物理ゲート維持、kaizen #110 Phase 3「Phase 2 分析 1 件以上の結晶化」を game/ 系列で継続。
+
+**Auto sync hook の挙動観察**: 意図した「v07 全体 commit (game: prefix)」を hook が「Auto sync from Win」commit に置き換えた。物理ゲートとファイル内容は維持されたが、commit message として v07 chord 構造の意図が記録されない問題が新規発見。次サイクル以降の検討対象として観察継続 (即 kaizen 化はしない、5 サイクル運用観察に乗せる)。
+
+### 完遂条件チェック (staging §「次フェーズの大作業」§完遂の定義 5 項目)
+
+1. ✓ `game/log_mystery_v07/` ディレクトリ + 4 ファイル全完備 (brainstorm/predicted_play/index.html/devlog)
+2. ✓ index.html ブラウザ動作可能、3 チャネル単独運用 URL `?channel=color/symbol/text` を v06 から継承 (script 内 CHANNEL_MODE ロジック未改変)
+3. ✓ 「章 1 動機鐘の保留解除が章 2 場所鐘の再判定をトリガする」連鎖が 1 ペア (動機→共犯場所 chord) で実装、プレイ画面でシナリオ B' (C9 省略) / シナリオ C (意図的観察) で発火確認可能
+4. ✓ devlog.md §5 R-A 自己判定 1 文 + §7 v08 候補リスト (a)-(f) 記入完了
+5. ✓ commit graph で brainstorm.md / predicted_play.md commit (3d6cf9a1) が index.html commit (c0ddb796) より先行 = Ash v03 同型物理ゲート、kaizen #110 を game/ 系列で維持
+
+**5/5 完遂**。
+
+### Phase 4 で増やさなかったもの (Phase 3 で処理済み)
+
+- Slack 返信: Phase 3 §2 で「graze_log v05.2 催促不要 + #nao-u X.com 4 件は Phase 2 §A で完了済」確定済、Phase 4 で新規投稿なし
+- 改善 kaizen: Phase 3 §5 で「新規 kaizen 提案なし (検証ファースト原則順守)」確定済、Phase 4 で新規提案なし
+- memory 編集: Phase 3 §4 で memory_redesign.md / game_development.md 更新済、Phase 4 では devlog.md 内の v08 候補が次サイクル候補リストとして機能 (memory 編集なし)
+
+### Phase 5 で行うこと (本 Phase 4 では行わない)
+
+- 日記 (#log) 起草 + 投稿
+- 全 commit の push (Phase 4 commit を含む全 5 commit を Phase 5 でまとめて push)
+- 5 サイクル運用観察項目 (kaizen #134 18 日目記録、SSGM gating 観察 2 サイクル目、auto sync hook commit message 観察 1 サイクル目) の memory チェック
+
+## Phase 5: Diary + Push (完遂)
+
+### 日記投稿
+- **#log ts=1779606029.286459** = log_diary_20260524_c234.md 17,368 chars 投稿成功 (Slack API 直叩き経由)
+- `log/diary_drafts/log_diary_20260524_c234.md` を新規作成し、同一テキストを `log/daily_diary_log.md` 末尾に追記
+- 日記構成: 概要 1 段 / Phase 1 静音判定 / Phase 2 SSGM + faulty-memory 二軸投稿 / Phase 3 Slack 実在性検証 + ingest 17h ラグ発見 / Phase 4 log_mystery v07 chord 構造 4 ファイル sprint / Auto sync hook 上書き問題発見 / 外部情報 3 件交差 / 全 9 ファイル読み手チェック表 / 次回 C235 6 アクション / 最後に
+
+### 本サイクル書き込みファイル全リスト (Nao_u 理解可能性 + 未来の Log 行動変更力 チェック完了)
+1. `game/log_mystery_v07/brainstorm.md` (新規)
+2. `game/log_mystery_v07/predicted_play.md` (新規)
+3. `game/log_mystery_v07/index.html` (新規)
+4. `game/log_mystery_v07/devlog.md` (新規)
+5. `projects/memory_redesign.md` (§C234 SSGM gating 追記 + Phoenix Yin 並置 4 段表 + slack ingest 17h ラグ注記)
+6. `memory/kaizen_tracker.md` (#134 §検証結果 C234 行 17日目転記)
+7. `log/external_notes_log.md` (SSGM 1 エントリ追記)
+8. `log/cycle_staging_log.md` (Phase 1-5 累積、本セクション含む)
+9. `log/daily_diary_log.md` (C234 日記追記)
+10. `log/diary_drafts/log_diary_20260524_c234.md` (新規、Slack 投稿元本)
+
+### 5 サイクル運用観察項目 (Phase 5 メモリチェック)
+- **kaizen #134 18 日目観察**: 次サイクル C235 で記録予定、本 C234 = 17 日目 total=974 / WARN=0 / 罰=17 安定帯 2 サイクル連続維持
+- **SSGM gating 観察 2 サイクル目**: `projects/memory_redesign.md` §C234 末尾の C239 trigger 起動条件記載済、C235-C239 で 5 サイクル運用観察
+- **Auto sync hook 上書き観察 1 サイクル目**: 本 C234 Phase 4 末尾で発見、C235-C239 の 5 サイクル運用観察に乗せた、仮説 (a)/(b)/(c) 選別判定は C235 Phase 4 で意図的な game: commit タイミング操作で実施
+- **Slack ingest pipeline 17h ラグ観察 1 サイクル目**: 本 C234 Phase 3 §1 で発見、C235-C239 で継続観察、5 サイクル目でラグ確定なら Slack API 直叩き hook 実装判定
+
+### Commit graph (Phase 5 完遂時点)
+- Phase 3 5a088547 `log:` 既済 (Phase 3 staging + memory_redesign + kaizen tracker)
+- Phase 4 3d6cf9a1 `game:` 既済 (brainstorm + predicted_play 先行)
+- Phase 4 c0ddb796 `Auto sync from Win` 既済 (index.html + devlog 巻き込み)
+- **Phase 5 本 commit `log:` (本セクション + diary + diary draft)**
+
+Push は本 commit と同時実施。
