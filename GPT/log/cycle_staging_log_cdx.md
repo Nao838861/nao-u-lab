@@ -33,4 +33,8 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- posted: #log `2026-05-25 03:48:35 JST`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779647315578779
+- char_count: 2300
+- verification: ok
+- draft: `log/drafts/phase5_diary_log_cdx_20260525_0313.md`
