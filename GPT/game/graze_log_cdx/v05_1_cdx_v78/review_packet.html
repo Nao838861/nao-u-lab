@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>graze_log v05.2_cdx_v78 - bot jitter resilience packet</title>
+<style>
+:root{color-scheme:dark;--bg:#070910;--panel:#101622;--line:#263248;--text:#e6edf7;--muted:#9aa7b8;--good:#72d39c;--bad:#ff8a8a;--warn:#f0c66a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#070910f2;border-bottom:1px solid var(--line);padding:12px 16px}
+h1{font-size:18px;margin:0 0 4px;letter-spacing:0;color:var(--text)}
+p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+main{max-width:1460px;margin:0 auto;padding:14px 16px 28px}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.metric{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:8px 10px;min-height:54px}
+.metric b{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.metric span{font-size:16px;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(460px,1fr));gap:12px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.card header{position:static;background:#0d1320;border-bottom:1px solid var(--line);padding:8px 10px}
+.card h2{font-size:13px;margin:0 0 2px;letter-spacing:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 6px;color:var(--muted)}
+.tag.good{color:var(--good);border-color:#2b7048}.tag.bad{color:var(--bad);border-color:#7c3434}.tag.warn{color:var(--warn);border-color:#80652b}
+iframe{display:block;width:100%;height:752px;border:0;background:#071126}
+.note{margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#0c1320;color:var(--muted);font-size:12px;line-height:1.45}
+@media (max-width:980px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card{min-width:0}iframe{height:742px}}
+</style>
+</head>
+<body data-game-version="v05_1_cdx_v78" data-review-packet="bot-jitter-resilience-v001">
+<header>
+  <h1>graze_log v05.2_cdx_v78 bot jitter resilience packet</h1>
+  <p>botJitter は評価器だけの opt-in 摂動。通常プレイ、敵配置、報酬、既定 bot は v77 と同じまま、headless の結論が小さな実行揺らぎで崩れないかを確認する。</p>
+</header>
+<main>
+  <section class="summary" aria-label="review summary">
+    <div class="metric"><b>method</b><span>bot jitter</span></div>
+    <div class="metric"><b>baseline</b><span>botJitter=0</span></div>
+    <div class="metric"><b>asserted</b><span>botJitter=8</span></div>
+    <div class="metric"><b>probe</b><span>botJitter=18</span></div>
+  </section>
+  <p class="note">v77 では seed を変えても同一 frame / 同一 deathContext だった。v78 は seed を stage 乱数へ広げる前に、bot 操作へ deterministic jitter を入れ、route が mild jitter でも clear し、camper / panic / novice が mild jitter でも失敗するかを測る。</p>
+  <section class="grid" aria-label="selected review frames">
+    <article class="card" data-sample="route-baseline">
+      <header><h2>route baseline / seed 12345 / botJitter 0</h2><div class="tags"><span class="tag good">expected clear</span><span class="tag">control</span></div></header>
+      <iframe title="route baseline frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=0&amp;probeFrame=4552&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="route-jitter">
+      <header><h2>route mild jitter / seed 12345 / botJitter 8</h2><div class="tags"><span class="tag good">must clear</span><span class="tag">resilience</span></div></header>
+      <iframe title="route mild jitter frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=8&amp;probeFrame=4552&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="camper-jitter">
+      <header><h2>camper mild jitter / seed 54321 / botJitter 8</h2><div class="tags"><span class="tag bad">must fail</span><span class="tag">bad policy</span></div></header>
+      <iframe title="camper mild jitter frame" src="index.html?seed=54321&amp;bot=1&amp;botStyle=camper&amp;botJitter=8&amp;probeFrame=1397&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+    <article class="card" data-sample="panic-strong-jitter">
+      <header><h2>panic strong jitter probe / seed 77777 / botJitter 18</h2><div class="tags"><span class="tag warn">probe only</span><span class="tag">stress</span></div></header>
+      <iframe title="panic strong jitter frame" src="index.html?seed=77777&amp;bot=1&amp;botStyle=panic&amp;botJitter=18&amp;probeFrame=1718&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+  </section>
+</main>
+</body>
+</html>

@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T22:11:00+09:00
+last_handled_at: 2026-05-24T22:50:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v77/` で v76 の gameplay を維持し、bad policy failure の death-cause packet を multi-seed 化した。`tools/headless_graze_log_cdx_v05_2_v77_multiseed_death_packet_check.js` は seeds 12345 / 54321 / 77777 の route clear、camper / panic / novice failure、deathContext、packet frame、DOM contract、screenshot contract を検証して pass。3 seed は同一 frame / 同一 deathContext で、現状の URL seed は結果 variance を作っていないことも確認。
+last_result: `game/graze_log_cdx/v05_1_cdx_v78/` で v77 の gameplay を既定維持し、評価用 `botJitter` query を追加した。`tools/headless_graze_log_cdx_v05_2_v78_jitter_resilience_check.js` は baseline / `botJitter=8` / `botJitter=18` を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。`botJitter=8` では route が全 seed clear、bad policies が全 seed failure のまま、route の frame / score / Active DEF telemetry は変化した。
 
 ## Nao_u 指示
 
