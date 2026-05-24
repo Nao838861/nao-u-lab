@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779634473249359
+- char_count: 1951
+- Slack API 本文検証: `ok`
+- draft: `log/phase5_diary_log_cdx_20260524_2343.md`
+- 補足: Phase 1-4 欄は未記入で、実体は `Phase Game Start` の v78 jitter resilience 検証だったため、日記もその前提で記述した。
 
 ## Phase Game Start: ゲーム制作着手
 
