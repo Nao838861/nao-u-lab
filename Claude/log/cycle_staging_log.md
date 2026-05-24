@@ -90,5 +90,56 @@ Log 視点での 4 つの交差点:
 - graze_log v05.x BOMB 反転の Log_cdx 要求形式 (1 ファイルセット) への転記
 - R-A〜R-I (game_lessons_log.md) の「悪い要約」観点での逆引き点検
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-25 Log C237)
+
+### §0 Slack 返信
+Phase 2 で `#all-nao-u-lab` ts=1779658616.966179 + `#shared-reads` ts=1779658720.538279 の2件を投稿済、inbox_win.md は 182924b5fdf7 で clear 済。Phase 3 時点で追加 Slack 返信要件なし。
+
+### §1 改善サイクル — 検証ファースト
+kaizen #134 段階2 hook の運用観察21日目を kaizen_tracker.md に転記済（Pre-check hook 06:22 total=991 / 全指標 WARN=0 / 罰=17 が 16-21日目 6サイクル連続維持 = 「新たな安定帯への着地」観察再支持）。手順落ち修復 = Phase 1 §E 起点の構造強制兆候観測の処方が 9サイクル連続維持 (13-21日目)。検証期限 5/31 まで残6日、現時点で「20日中 WARN 立ち上がりゼロのまま 26日で検証期限到達」が高確率予測継続。
+
+検証ファースト原則順守（新規 kaizen 提案前の未検証チェック）: 検証期限到来なし（Phase 1 Pre-check 確認済）/ #134 段階1/2 PASS の運用観察継続 / #131/#132/#133 family も同期帯運用。本 C237 サイクルで新規 kaizen 起票は行わない判断（kaizen 増殖 family 統合管理ルール準拠、新規検出軸が立った時のみ拡張）。
+
+### §2 他インスタンス洞察の処理
+`slack_insight_digest.py --hours 72` で 8件の未処理洞察を取得。本プロジェクト課題と直接交差する 2 件を `projects/log_autonomous_game.md` 履歴節に取り込み、design_log.md ゲート構成へ反映:
+- **[Mir] log_mystery 導入指摘分析**（#all-nao-u-lab）→ Q-導入ゲート「1画面で『？』が立つか」を新設、事実列挙度3以上を禁則化
+- **[Mir] 千葉集 planetary_gear 3 層階段判定**（#all-nao-u-lab）→ Q-成功FBゲート「予測当 / 予測外 / 予測未立」3状態フィードバックを特殊システム3状態と並列で設計
+
+他 6 件は重複（faulty-memory 論文関連 2 件は Phase 2 で消化済）または別プロジェクト射程（Tetris bot benchmark / STALE benchmark / teco_park 感情論 / Hao Peng tweet）。
+
+### §3 Active プロジェクト更新
+- `projects/log_autonomous_game.md` 履歴に Phase 3 反映追記、次サイクル冒頭の着手手順（v001 ディレクトリ作成 → design_log.md 8 ゲート起票 → user_directives_raw.md 空ファイル → R-A〜R-I 読込）を具体化
+- 他 Active プロジェクトには本サイクル中の直接変化なし
+
+### §4 空サイクルではない（Phase 1 が「## 深掘り候補」を書いていない、Phase 2 が大規模分析 4 交差点で枠を埋めた）
+深掘り候補消化はスキップ。Phase 4 大作業に集中。
+
+## 次フェーズの大作業
+
+**タイトル**: `game/log_autonomous_game/v001/` 開設 + `design_log.md` 8 ゲート起票 + brainstorm 最低 10 案 MPS スコアリング
+
+**完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)**:
+1. `game/log_autonomous_game/v001/` ディレクトリが存在し、以下4ファイルが作成されている:
+   - `design_log.md` (Q-A 中心入力 / Q-B 特殊3状態 / Q-導入 / Q-成功FB / Q-C 敵出退場 / Q-D 弾攻撃元 / Q-E レイアウト / Q-F 日本語ログ の8ゲート全てに対し方針記述あり)
+   - `user_directives_raw.md` (空ファイル + 「Nao_u 指摘原文保存場所」ヘッダ1行)
+   - `brainstorm.md` (案を最低10件、各案に M-38/M-43 作法準拠の MPS (Mechanics × Players × Surprise) スコア記入)
+   - `README.md` (ジャンル選択 (C) 予測型回避 + Pulse Relay 教師差分との対比実験意図を1段落)
+2. brainstorm 10 案のうち上位3案にコメント「Q-導入ゲートで『？』が立つ場面提示はどう書けるか」のメモ付き
+3. Phase 4 完了時 commit prefix `game:` で 1 commit + push 済（CLAUDE.md 厳守事項「書いたらすぐpush」順守）
+4. Phase 5 日記で「v001 開設 + brainstorm 完了、実装は次サイクル以降」明記
+
+**着手手順**:
+1. `mkdir -p game/log_autonomous_game/v001` (PowerShell: `New-Item -ItemType Directory -Force game/log_autonomous_game/v001`)
+2. `README.md` 1段落執筆（ジャンル選択理由 + Pulse Relay 対比実験意図 + Nao_u 指示原文引用）
+3. `design_log.md` 8 ゲート枠だけ先に作成（各ゲート見出し + 「方針:」「禁則:」「検証手段:」の3小節）
+4. 各ゲートの「方針」を Pulse Relay 教師差分 §「次回の自律ゲーム制作前ゲート」A-G + Mir 5/25 洞察 (Q-導入 / Q-成功FB) を Log 文脈で具体化して埋める
+5. `user_directives_raw.md` 1行ヘッダのみで空保存
+6. `brainstorm.md` で最低10案を出す（案=「中心入力 + 副入力1つ + 特殊3状態 + 1秒先予測」の枠で具体化、MPSスコア M/P/S 各5段階で記入）
+7. 上位3案に Q-導入 メモ追加
+8. `git add game/log_autonomous_game/ && git commit -m "game: log_autonomous_game v001 開設 + 8ゲート設計 + brainstorm 10案 (Nao_u 5/25 自律生成指示 受領サイクル C237 Phase 4)" && git push`
+
+**選んだ理由**:
+1. **Nao_u 5/25 06:23 指示「次サイクルで各自の名前のプロジェクトでこのようなゲームを自律生成して完成までもっていけ」への直接応答** — Phase 2 で分析・Slack 投稿し、Phase 3 でプロジェクト起票・洞察取り込みまで進めた。Phase 4 で実装着手の最初の物理化（ディレクトリ + design_log）を行わないと「分析・議論で熱量が冷める」(faulty-memory 論文= 反復で記憶が事前分布に収束) リスクが直接立つ
+2. **CLAUDE.md 第1項「ゲームを動かして出す — 積み上げはその副産物」直適用** — brainstorm・分析・cross_review・日記が主たる出力になっている診断対象から脱出するため、Phase 4 第一義出力 = game/* の playable diff（最初は design_log の物理化、brainstorm 10案 = 着手ゲートを揃えるための1手）
+3. **30分粒度で「進んだ」と言える** — ディレクトリ作成 + 8ゲート枠 + brainstorm 10案 + commit/push は 30 分で完遂可能。Slack 投稿1本では済まない（実装ファイル4本 + git commit）
+4. **Active project の停滞解消** — `log_autonomous_game.md` は 5/25 起票直後で「次サイクル冒頭で開設」と明記、Phase 4 がその「次サイクル冒頭」に当たる。停滞なく実装フェーズへ移行する
