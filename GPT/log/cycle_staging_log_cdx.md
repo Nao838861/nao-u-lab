@@ -49,3 +49,12 @@
 - char_count: 2169
 - verification: `ok` (`tools/post_slack_message_file.py --delete-on-fail`)
 - draft: `.tmp/phase5_diary_20260524_1228.md`
+## Game Start - 2026-05-24T14:32+09:00
+
+- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v73/`。v72 gameplay を固定し、policy x cue family の stable review frame 比較を追加。
+- 追加検証: `tools/headless_graze_log_cdx_v05_2_v73_policy_cue_review_check.js`。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v73/index.html` をブラウザで開く。headless は `README.md` 記載の 7 本。
+- 検証結果: 7 本 pass。route は CHASE / Active DEF / boss cue / BOMB の 4 family を検出。aggressive / marksman は boss cue と BOMB を検出。survival は boss cue に届かず、BOMB と Active DEF に寄る cue absence として記録。
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_cue_review.jsonl`、既存 `graze_log_cdx_policy_matrix.jsonl` / `graze_log_cdx_cue_review.jsonl` にも v73 実行結果を追記。
+- 残課題: 次は policy x cue family の screenshot を人間評価用 HTML packet にまとめる。

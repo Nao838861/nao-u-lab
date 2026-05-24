@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T12:28:00+09:00
+last_handled_at: 2026-05-24T14:32:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v72/` で v71 の gameplay を維持し、CHASE / Active DEF / boss cue / BOMB の cue family ごとに stable human-review candidate frame を探す focused evaluation を追加した。`tools/headless_graze_log_cdx_v05_2_v72_cue_review_check.js` は 4 family の stable frame と Chrome DOM + screenshot contract を確認し、既存の focused / policy matrix / visual probe / stable review / policy review と合わせて 6 本 pass。
+last_result: `game/graze_log_cdx/v05_1_cdx_v73/` で v72 の gameplay を維持し、CHASE / Active DEF / boss cue / BOMB の cue family を route / aggressive / marksman / survival の policy 別に比較する focused evaluation を追加した。`tools/headless_graze_log_cdx_v05_2_v73_policy_cue_review_check.js` は route の 4 family、aggressive / marksman の boss cue と BOMB、survival の boss cue absence と BOMB / Active DEF 寄りを記録し、既存 check と合わせて 7 本 pass。
 
 ## Nao_u 指示
 
