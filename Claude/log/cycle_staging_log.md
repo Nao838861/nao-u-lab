@@ -241,3 +241,42 @@
 ### 8) Phase 3 で発見した構造的事項 (次サイクル C236 への自己宿題)
 - **Slack archive sync ラグの定常化**: 本サイクル check_phase2_slack_claim.py の WARN 4 件は全て sync 未取込が原因、本 Phase 3 §1 で sync ラグ事象として併合観察キューに入れた = C234 発見「Slack ingest 17h ラグ」と同根の構造、次回 Phase 1 で archive 最終 ts と Phase 1 開始時刻の差分を観測項目に追加するかを判定
 - **kaizen #134 hook 安定 + 観察キュー増加の分離評価**: 罰=17 が 3 サイクル連続維持 = hook 自体は安定、ただし C234 で「Auto sync hook 上書き / Slack ingest 17h ラグ」、本 C235 で「SSGM 4 論文横断結論 + 中期検討3項目」が観察キューに追加 = hook の安定継続と観察キュー増加が並走している。5/31 検証期限到達時に両者を分離評価する必要を kaizen #134 § 副次観察として記録済
+
+## Phase 4: 実行
+
+### 実行日時
+- 2026-05-24 18:56-19:30 実行
+
+### 大作業: graze_log v06_min — 機構縮減プロトタイプ
+
+Phase 3 §6 で計画したタイトル「graze_log v06 — 機構縮減方向プロトタイプ」を **v06_min** ディレクトリ名で実装 (既存 v06a/v06b との並列性と区別のため `_min` suffix、Phase 3 計画意図 = 削る方向の v06 系統は踏襲)。
+
+#### 完遂状況 (Phase 3 §6「完遂の定義」6 条件)
+1. ✅ `game/graze_log/v06_min/` に `index.html` + `devlog.md` + `README.md` 存在 (3 ファイル)
+2. ✅ `README.md` に削った機構リスト明示 (3 撤去: 敵 type 3→1 / active def / 弾速 evolve)
+3. ✅ `devlog.md` §1-§3 に撤去判断根拠 (Nao_u 5/20「変則的マニア」+ 5/21「段数の議論」+ 千葉集 (1)「対象を絞る」直接接続)
+4. ⚠️ ブラウザ動作確認 30 秒プレイ = Claude 自身実プレイ不可、**静的整合性まで** deliver (parse OK / 撤去シンボル grep ゼロ / 関数定義網羅 / `Start-Process` でブラウザ起動成功)。N=3 体験は次セッション Nao_u/Log オペレータ側に委ねる旨を `devlog.md` §5 に明示
+5. ✅ 戻し方 5 ステップを `README.md` に記載、`v05.3/index.html` 無傷でフォルダ単位 rollback 可
+6. ⚠️ commit prefix `game:` 単一 commit は **Phase 5 (日記とまとめて push)** に持ち越し (Phase 4 注釈「commit はしない、git push は Phase 5」順守)
+
+#### 副産物 (新規/変更ファイル)
+- 新規: `game/graze_log/v06_min/index.html` (709 行、v05.3 854 行から **145 行削減 = 約 17%**)
+- 新規: `game/graze_log/v06_min/README.md` (撤去機構リスト + 戻し方 5 ステップ)
+- 新規: `game/graze_log/v06_min/devlog.md` (動機 / 撤去詳細 / 静的検証結果 / 体験確認待ち項目 / 予測 vs 実反応 P-v06_min-1/2/3)
+- 変更: `log/cycle_staging_log.md` (本セクション = Phase 4 追記)
+
+#### Phase 4 で発見した構造的事項 (次サイクル C236 自己宿題候補)
+- **Phase 3 計画名 (v06) vs 実装名 (v06_min) の衝突**: Phase 3 §6 で「v06 ディレクトリ作成」と明記したが、v06a/v06b が既存だったため `v06_min` に変更。Phase 3 計画時に既存ディレクトリ調査を怠った = Phase 3 着手手順 §1「機構棚卸し」に既存サブディレクトリの命名空間調査を含めるべき。kaizen 候補だが本サイクルでは記録のみ (検証ファースト原則順守、新規 kaizen ゼロ方針継続)
+- **Claude 実プレイ不可の Phase 4 完遂条件 limit**: Phase 3 §6 完遂定義 (4)「ブラウザで実プレイ 30 秒成立」は Claude 単独では満たせない。今後 Phase 3 で「ブラウザ動作確認」を完遂条件に含める時は、(a) Claude 側静的検証 + (b) 次セッション人間/オペレータ体験確認、の 2 段に分離して書くべき。本サイクルでは devlog.md §5 で limit を明示することで補償
+
+### 大作業以外の追加作業 (Phase 4 で増やしていない)
+- Slack 投稿ゼロ (Phase 3 で消化済)
+- kaizen 新規ゼロ (検証ファースト原則順守)
+- 他 Active project 更新ゼロ (game_development.md 追記は Phase 5 で予告通り)
+
+### Phase 5 (日記) への引き継ぎ
+- commit 予定 (game/rule 分離遵守):
+  - `game: add graze_log/v06_min 機構縮減プロトタイプ (敵 type/DEF/evolve 撤去, 145 行削減)` — game/graze_log/v06_min/* 3 ファイル
+  - `rule: cycle_staging_log.md Phase 4 完了 + memory_redesign.md / game_development.md C235 追記` — Phase 5 で同時 commit
+- Phase 5 で push (CLAUDE.md 厳守事項「書いたらすぐ push」順守)
+- 日記: graze_log v06_min 縮減方向の動機 + 「軸を減らすだけ」の系統的不在発見 + Claude 実プレイ不可の Phase 4 limit を中心に

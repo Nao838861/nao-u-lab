@@ -73,6 +73,26 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-24 C235 Phase 4 (Log): graze_log v06_min 機構縮減プロトタイプ ship (敵 type / active def / 弾速 evolve 撤去, 145 行削減)
+
+**Phase 4 大作業**: `game/graze_log/v06_min/` 新設、`v05.3/index.html` (854 行) を base にコード 3 撤去で `index.html` 709 行 = **17% 削減**。README.md / devlog.md / index.html の 3 ファイル ship。撤去内訳: (1) 敵 type 3 分類 (straight/spread/aimed) → straight 単一 (2) active def (grazeStreak → SPACE D 経路、定数 3 + state field 3 + triggerActiveDef/spaceContext 2 関数 + HUD/title/over 表示) (3) 弾速 ±10% evolve (定数 3 + firedCount プロパティ + medium 発射時計算)。
+
+**選定の根拠** = Phase 2 で集約した 3 ソースの「直処方」: Nao_u 5/20「変則的なマニアしか喜ばない要素」(graze 文脈だが付加軸全般への射程) + Nao_u 5/21 broadcast「段数の議論は意味のない議論」「最後に見たものを過剰に大事なものとして扱いすぎ」 + 千葉集「ミステリゲームメカニクス進化史」(5/22 shared_reads/20260522_chiba_mystery_mechanics_log.md) 障壁分類 (1)能力障壁 → 「判定対象を絞る」処方。この 3 ソースを graze_log への直処方として読み直すと、v05.3 敵 type 3 分類 = 「軸が 1 本」批判への応答で「軸を増やす」打ち手、v03 active def = SPACE 文脈分岐 (B/D/-) という典型的「段数」構造、v05.1 弾速 evolve = 「変則的マニアしか喜ばない」精緻化、と Nao_u 指摘の典型 3 例に直接対応していた。
+
+**graze_log 系統の「軸を減らすだけ」プロトタイプ系統的不在発見**: 直近サブ系統 (v05.3 敵 type 増 / v05.4 graze 撤廃 + focus shot 入替 / v06a rescue stock 増 / v06b 一時火力 増) すべて「軸を増やす or 入替」方向に偏り、**「graze 残したまま付加軸だけ削る」対極実験が未実施**だった。本 v06_min はその欠落 baseline。「劣化版になる」可能性 60% / 「minimal core 成立する」可能性 40% と事前予測登録 (devlog §6 P-v06_min-1)。
+
+**Phase 4 完遂条件 (4) ブラウザ実プレイ 30 秒の Claude limit**: Phase 3 staging で書いた「ブラウザで `index.html` を開いて実プレイが 30 秒以上成立 (敵スポーン → 自機操作 → 弾回避 → graze/被弾判定 が動作する最低限の動作確認、コンソールエラーゼロ)」は Claude 自身では満たせない (実プレイ操作 + 体感記録不可)。本サイクルでは **静的整合性まで** deliver: `new Function(scriptText)` parse OK / 撤去対象シンボル grep ゼロ (コメント中の説明文以外) / 既存関数定義網羅 (loop/update/draw/spawnWave/spawnEnemy/onGraze/onHit/fireBomb 全て) / `Start-Process index.html` ブラウザ起動成功。実プレイ N=3 体感は次セッション Nao_u/Log オペレータ側に委ね、devlog §5 体験確認待ちチェックリストで 6 項目明示。**自己宿題**: 今後 Phase 3 で「ブラウザ動作確認」を完遂条件に含める時は、(a) Claude 側静的検証 + (b) 次セッション人間/オペレータ体験確認、の 2 段に分離して書く。
+
+**Phase 3 計画名 (v06) vs 実装名 (v06_min) の衝突**: 既存 v06a / v06b ディレクトリと並列性 + 区別のため `_min` suffix を付けた。Phase 3 計画時に既存サブディレクトリの命名空間調査を怠ったための調整 = kaizen 候補だが本サイクルでは記録のみ (検証ファースト原則順守、新規 kaizen ゼロ方針継続)。
+
+**戻し方の保証**: `v05.3/index.html` 無傷 = フォルダ単位 rollback 1 ステップで完全復元。コードレベルで戻す場合は README.md §戻し方に 5 ステップ (定数 8+state 3+spaceContext + spawnEnemy 分岐 + triggerActiveDef + update/onGraze/SPACE + draw/HUD/title/over) で約 145 行追加。実験プロトタイプの「捨てやすさ」を可逆性手順として保証 = R-D 守破離の守。
+
+**判定方針**: `feedback_headless_unfit_for_unfinished_eval.md` t:5 順守、headless 数値 (到達率 / 生存秒) は judgment / cross_review / Slack の根拠にしない。体験 N=3 + 事前予測 P-v06_min-1/2/3 (劣化 vs minimal core 成立 / streak 報酬消失の体感 / 視覚反復感) との照合は次サイクル C236 以降。
+
+**接続**: `game/graze_log/v06_min/{README.md,devlog.md,index.html}` / `game/graze_log/v05.3/` (base) / `game/graze_log/v06a/`, `v06b/` (姉妹増軸実装) / `game/graze_log/v05.4/` (別系統縮減) / `memory/shared_reads/20260522_chiba_mystery_mechanics_log.md` (千葉集 (1) 障壁分類原典) / `memory/sense_prediction_log.md` (P-v06_min-1/2/3 登録候補) / `log/cycle_staging_log.md` C235 Phase 1-4 / `projects/memory_redesign.md` C235 SSGM 4 論文横断 (Phase 3 §2 で並行追記)
+
+---
+
 ### 2026-05-24 C230 Phase 3 (Log): log_mystery v05 着手判定 + 7件他インスタンス洞察反映 + kaizen #122 停滞27日判定
 
 **Phase 3 行動 (1) log_mystery v05 着手判定**: v04 Phase 4 振り返り §「Phase 5 へ引き継ぐ事項」§次サイクル候補で v05 候補 3 案 (章数 3 化 / 保留鐘導入 / 鐘の種類追加) + 「Mir/Ash/Codex v01-v04 一括試遊依頼」が並んでいた。本 C230 では **(a) v05 軸を「保留鐘の導入」で確定** + **(b) 試遊依頼は v05 単独 ship 後の v01-v05 一括で次サイクル以降** に分けた。理由: (a) 章数 3 化は鐘 9 個で UI コスト跳ね上がり R-C「見えないものは存在しない」リスク / 保留鐘は v04 までの 6 鐘構造を維持しつつ「条件付き再判定」軸を 1 つ足すだけで独自要素 1 つの R-D 守破離の守 / 鐘の種類追加は独自要素 2 つ以上で R-D 違反候補。Phase 4 は `game/log_mystery_v05/brainstorm.md` 起草 → `predicted_play.md` 起草 → `index.html` 実装 → `devlog.md` の 4 ファイルで完遂。
