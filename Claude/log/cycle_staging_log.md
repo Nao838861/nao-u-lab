@@ -306,3 +306,29 @@ Phase 3 開始時に `scripts/check_phase2_slack_claim.py` が自動発火する
 - 単独運用検査機構は Ash v06 multi-channel anticipation の merge 判断 (Log_cdx 5/20 16:11 議論延長) に Log 側が「保存則仮説の最初の検証点を v05 で先に立てる」貢献ができる
 - 30 分粒度: index.html 編集 ~15 分 + README ~5 分 + M-XX 起票 ~10 分 で 30 分以内に「進んだ」と言える完遂条件
 - Slack 投稿 1 本で済む粒度ではない (game/* commit 2 本 + memory/ commit 1 本 = playable diff 確保 + cross_review 視点の M 層格納)
+
+## Phase 4: 実行 (2026-05-24 C232 相当)
+
+### 完遂度
+- (1) `index.html` URL クエリ `?channel=color|symbol|text|all` 追加 — **達成**: bellRow refactor + SHOW_COLOR/SHOW_SYMBOL/SHOW_TEXT 定数 + 非デフォルト時 H1/title インジケータ。`node -e new Function(...)` で script parse OK 確認済
+- (2) `memory/game_lessons_log.md` M-46 起票 — **達成**: 主要教訓表に 1 行追加 + R-C「詳細」リンクに M-46 追記 + 系統マップ「可読性／隠しパラメータ」に M-46 追加 + `memory/lessons/M-46.md` 本体作成 (snapwith 出典 / 核主張 / 現エビデンス 1 件 / 検証装置 / 規則 / 罠 / 関連 / 昇格条件 / 古典度・固有度)
+- (3) `devlog.md` §6 単独運用テスト URL 使い方 1 ブロック追記 — **達成**: 4 URL パターン + インジケータ仕様 + M-46 並走記述、§7 として次サイクル候補へ番号繰り下げ
+- (4) `game:` / `memory:` prefix 分離 commit 2 本 — **未実施**: 本サイクル Phase 4 のルール (commit/push は Phase 5 でまとめる) に従いステージのみ。Phase 5 で 2 commit 分離 (game: index.html + devlog.md / memory: game_lessons_log.md + lessons/M-46.md) を実行
+
+### 副産物 (変更/新規ファイル)
+- `game/log_mystery_v05/index.html` (M) — channel mode 定数 5 行 + bellRow refactor (~28 行差分) + renderBellGroup 未推理 inline → bellRow 化 (8 → 1 行) + 末尾インジケータ 7 行。git diff stat = +50/-26
+- `game/log_mystery_v05/devlog.md` (M) — §6 単独運用テスト URL 11 行追加 + §6→§7 ヘッダ繰り下げ 1 行。git diff stat = +12/-1
+- `memory/game_lessons_log.md` (M) — 主要教訓表に M-46 行追加 (1 行) + R-C 詳細リンクに M-46 追記 (1 行差分) + 系統マップ可読性節に M-46 追記 (1 行差分)
+- `memory/lessons/M-46.md` (new) — 45 行、snapwith 保存則仮説起票本体
+
+### Slack 投稿 / kaizen 起票
+- Slack 投稿: **ゼロ** (Phase 3 で D-1/D-2 応答 2 件投稿済、Phase 4 では追加投稿しない = 大作業集中)
+- kaizen 起票: **ゼロ** (検証ファースト原則順守、#131-ext 運用観察未到達)
+- atom 追加: **ゼロ**
+
+### Phase 5 へ持ち越し
+- 2 commit 分離 + git push:
+  - **commit 1 (game:)**: `game/log_mystery_v05/index.html` + `game/log_mystery_v05/devlog.md` の 2 ファイル
+  - **commit 2 (memory:)**: `memory/game_lessons_log.md` + `memory/lessons/M-46.md` の 2 ファイル
+  - **commit 3 (log:)**: Phase 5 日記投稿 + `log/cycle_staging_log.md` の Phase 5 セクション追記
+- Phase 4 自己診断: 大作業所要時間 ~20 分 (index.html 編集 ~10 + devlog ~3 + M-46 起票 + lessons/M-46.md 作成 ~7) で 30 分予算内
