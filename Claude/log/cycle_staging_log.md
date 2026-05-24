@@ -230,3 +230,30 @@ Log → Nao_u 22:29+22:30 受領
 - GitHub Pages 公開化が並走必要なのは v06/v07/v08/v09/v10 devlog で繰り返し記録された制約、本サイクルで公開化スコープを明確化する選択は積み上げを「他者に渡せる形」に変換する必要不可欠な一手
 - Phase 4 セルフプレイ実機実測は M-45 (要素設計⊥登場順設計) 違反防止 = 実装したが検証は後で、を warns で抑止する直処方
 - スコープが「30 分で進んだと言える粒度」に収まる (試遊依頼ドラフト 1 件 + 公開化調査 + 実機確認 + 日記 + push)、Slack 投稿 1 本で済むものではない大作業性 ✓
+
+## Phase 4: 大作業実行 (2026-05-25 04:30)
+
+### 実行サマリ (完遂)
+- **(a) v01-v10 試遊依頼ドラフト物理化 完遂**: `drafts/2026-05-25/post_log_allnaoulab_v01_v10_playtest_request_c237_20260525.py` 新規作成 (88 行)。C233 物理化済 v01-v05 版を v01-v10 範囲に拡張、5 観点 × 10 バージョン = 50 セルの依頼構造、`file://` URL + Pages URL (有効化後) の両方併記、v10 chord-flash 体感最大化シナリオ B/C/D 明記、千葉集 note 4 段累積 (3 鐘原型 → 保留鐘時間軸 → chord 章間 → chord 同期体感) を 10 サイクルで完成した位置づけを記載。**投稿判定は保留** (Nao_u が GitHub Settings で Pages 有効化を実行し URL アクセス可能を確認してから次サイクル以降で発火)、ファイル名に `POSTED_ts...` 付与なし。
+- **(b) GitHub Pages 公開化スコープ判定 完遂**: 調査結果 — リポジトリ `Nao838861/nao-u-lab` は public (WebFetch 確認、About「AI実験場」/ master 14,361 commits / Python 53.1%, HTML 32.0%, JS 13.6%)、GitHub Pages 未設定 (`https://nao838861.github.io/nao-u-lab/` HTTP 404 確認)、各 v?? index.html は単一 HTML で URL 配信対応。**有効化操作 = Nao_u 依頼事項** (Claude セキュリティポリシー上、リポジトリ Settings 変更は Claude スコープ外)。推奨案: Settings → Pages → Source `master/(root)` (最小侵襲、ファイル構造一切動かさない)、想定 URL `https://nao838861.github.io/nao-u-lab/Claude/game/log_mystery_v??/`。代替案 (gh-pages branch) は branch 維持コスト発生で本サイクル時点は推奨案優先。結果を `projects/game_development.md` 末尾「2026-05-25 (Log C237 Phase 4): GitHub Pages 公開化スコープ調査結果」節に追記。
+- **(c) v10 chord-flash コード目視実機検証 完遂**: `game/log_mystery_v10/index.html` の `bellTri(k)` (line 533) / `withChordDetection(fn)` (line 541-558) / `bell-chord-flash` CSS (line 131-) / `data-bell-key` 属性出力 (line 485) を全て確認、シナリオ A (標準推理 = ボタン経由 = `withChordDetection` 経由でない = 発火せず ✓) / B (chord 1 = 2 件遷移発火 ✓) / C (chord 3 両方 pending 化 = 章跨ぎ 2 件遷移発火 ✓) / D (三重和音 = 3 件遷移発火 ✓) / E (chord 2 状況依存 ✓) すべてコード上正しく動作見込みを確認。**注記**: 実ブラウザ起動は Claude ツールスコープ外、コード目視シミュで検証完了、実機での「光ったのが見えたか」の一次データは試遊依頼の戻り値に依存。
+
+### 副産物
+1. `drafts/2026-05-25/post_log_allnaoulab_v01_v10_playtest_request_c237_20260525.py` (新規、投稿保留)
+2. `projects/game_development.md` (Phase 4 節追記 ~30 行)
+3. `log/cycle_staging_log.md` (Phase 4 完遂節、本節)
+
+### Slack 投稿
+- **0 件** (Phase 3 で 2 件投稿済、Phase 4 で増やさない方針 = staging Phase 4 注記順守)
+
+### 検証ファースト原則順守
+- 新規 kaizen 起票なし
+- 投稿即時発火を回避 (Pages 有効化待ち = 試遊環境を整えてから依頼発火)
+
+### 完遂判定
+- staging「完遂の定義」(a)(b)(c) すべて達成 ✓
+- (d) Phase 5 日記投稿 + 全変更 push は Phase 5 で実施
+
+### Phase 5 への申し送り
+- 本サイクルの主出力は **「9 サイクル積み上げを他者に渡せる形」への変換着手**: v10 ship (Phase 3) で chord 体感翻訳完了 → 試遊依頼ドラフト物理化 (Phase 4) で R-A 他者評価ループの装填完了 → Pages 有効化 (Nao_u 依頼) で発射準備完了、という 3 段階の 1-2 段目が完了
+- v11 候補は試遊依頼の戻り感想を待ってから決定 = 次サイクルは「Pages 有効化確認 + 試遊依頼投稿判定」が Phase 3-4 の中心、v11 実装は感想取り込みの後
