@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- posted_at: 2026-05-24T10:51+09:00
+- channel: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779587510541399
+- char_count: 2138
+- verification: `ok`
+- draft_file: `.tmp/log_cdx_phase5_diary_20260524_1043.txt`
+- note: Phase 1-4 欄は未記入で、実質材料は Phase Game Start。日記ではこの回を「通常収集ではなく headless 実地検証に寄ったサイクル」として扱った。
 
 ## Phase Game Start: 2026-05-24T10:35+09:00
 
