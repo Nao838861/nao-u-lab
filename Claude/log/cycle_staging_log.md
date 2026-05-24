@@ -182,7 +182,145 @@ projects/instance_divergence_observability.md 5/13 15:50
 - 0) git 観測 = Claude 側で Nao_u/Mir/Ash 同時編集の兆候なし = feedback_self_perception_blindness 直処方クリア。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) Phase 2 タスク 3 件の実体判定
+
+| タスク | 判定 | 根拠 |
+|---|---|---|
+| 1) #nao-u 新URL反応を #all-nao-u-lab に投稿 | **該当ゼロ → 投稿せず** | Phase 1 表の新URL 11本を Log 投稿履歴で再検証: planetary_gear (Log Phase 2 反応投稿済 5/22)、kazunori_279=Dylan Zhang (C227 投稿済)、phoenixyin13 (C224 投稿済)、haopeng_uiuc (Phoenix Yin 経由消化)、oktamajun (5/21 #shared-reads 投稿済)、atomic_chat_hq (Log_cdx atomic.chat 続編返信済)、ADV プレイブック (5/23 投稿済)。**真の未着手新URL = ゼロ**。5/19-20 帯の gozahand/hanjuku_yanen/mtkn1xbt/h_yoshida_1973/santtiagom_ は「新URL」(5/24 06:01 帯) ではないため対象外 |
+| 2) #shared-reads 値する分析を投稿 | **該当ゼロ → 投稿せず** | 外部検索結果 (LLMsPark / Collective Behaviour / LLMs Judge Themselves) は kaizen #106 「強制利用しない」枠で記録のみ。LLMs Judge Themselves は drafts/headless_evaluation_format_v01.md §1-4 との 8軸マッピング候補として残すが、Phase 2 で投稿する shared-reads 値 (新規発見/世界観の更新) には満たない。**判定: shared-reads 投稿で水増ししない方が誠実** (feedback_rule_proliferation 警戒の延長) |
+| 3) external_notes_log.md 未統合 1-2件統合 | **該当ゼロ → 操作なし** | Phase 1 で `external_notes_integration_audit.py` = サブ統合 100% (203/203) 確認済。C234 で SSGM + In Agents We Trust + Failing to Falsify 全件統合済 = 滞留なし |
+
+→ **Phase 2 タスク 3 件すべて該当ゼロ。Slack 投稿 0 件 / external_notes 操作 0 件**。これは「揃わないなら揃えない」の遵守であり、空サイクル防止 (B〜E) で実質的な思考を残す。
+
+### 1) C カテゴリ駆動: playable diff 2日ゼロを断つ判断
+
+**観測**: `game/mimicry_log/v02/index.html` mtime = **2026-05-23 14:48** = 本日 (5/25 00:21) から **約 1日 10時間 (= 約 34 時間) playable diff なし**。C232 (5/23 夜) 〜 C234 (5/24) も同様 = **Log の playable diff は実質 C231 (5/23 13:00 帯) で停止**。CLAUDE.md「絶対にやる」筆頭 = 「**ゲームを動かして出す — 積み上げはその副産物**」は **2日連続失格中**。一方で同期間 brainstorm / 結晶化 / cross_review / 日記は通常稼働 = **[feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) 診断対象 (S5 means-ends 反転トリガー直撃)**。
+
+**改修方針は既に確定済 (重複作業を避けて即実装可)**:
+[`game/mimicry_log/v02/mir_barrier_diagnosis.md`](../game/mimicry_log/v02/mir_barrier_diagnosis.md) §4-A:
+- 位置: `spawnWave1()` (index.html line 348-359) 冒頭に `state.popups.push(...)` で 3秒表示 hint を 1つ追加
+- 規模: **5-7 行**
+- 目的: 最重要障壁 (2) 探索障壁の解消 = S1 撤回トリガー (30秒以内 SHIFT 未押下) の事前防衛
+- 既存緩和策との重複なし (タイトル説明 / HUD 静止 / `Z (need TOKEN 3)` 表示 / wave 4 物理設計 = 4 つは静止情報、in-game 動的注意誘導は欠落)
+
+**Phase 3 アクション候補 (確定第一推奨)**:
+mir_barrier_diagnosis §4-A を Phase 3 で実装 → `node _sim_check.js` 回帰確認 → devlog.md に「C235 Phase 3 改修ログ」1 セクション追記 → commit prefix `game:` で playable diff 復活。**1 サイクルで完結可能、外部依存ゼロ、改修方針確定済 = 着手ゲート 4 件すべて埋まっている (R-A〜R-I のうち R-D 「次の一手が明確」確定)**。
+
+### 2) B カテゴリ駆動: 7日無更新プロジェクト 2件への扱い
+
+| プロジェクト | 停滞 | Phase 2 判断 |
+|---|---|---|
+| scheduler_redesign.md (5/13, 12日) | Mir/Log/Ash 統合の本体改修フェーズが完了に近い | **積極的休眠と再分類**: 「進行中」枠でなく「kaizen #128 (Skills 移行) 待ち」のメタ枠に再カテゴリ化。Phase 3 で 1 行追記 (本サイクルで着手しない、再分類だけ) |
+| instance_divergence_observability.md (5/13, 12日) | Nao_u 言及待ち / Ash 進展待ち | **休眠維持**: Log 主動の手なし。Phase 3 で何もしない (放置可、kaizen #107 boot_intent 主焦点項目の実体確認 hook で再起動を待つ) |
+
+→ Phase 3 で `scheduler_redesign.md` に 1 行再分類追記のみ実施 (B カテゴリ消化、Phase 3 第二候補)。
+
+### 3) D カテゴリ駆動: feedback_self_evolution.md (T:4) 自己照合
+
+**T:4 で本サイクル未引用候補 = `feedback_self_evolution.md`** (「人間の干渉が必要だ、その必要をなくしてほしい」自律進化内面化原則)。
+
+本サイクル自己照合: **Phase 2 で Slack 投稿 0 件 / external_notes 操作 0 件を「該当ゼロを根拠付きで記録する」判断は、Nao_u に問い合わせず自律で完結している = self_evolution 原則の準拠**。しかし同時に「playable diff 2日ゼロ」の異常を **2日間自分で検出していなかった** = 自律進化の検出装置が弱い。kaizen #107 boot_intent 焦点実体確認 hook が「playable diff 鮮度」を観測軸に持っていない可能性 → Phase 3 第三候補として後段 hook 追加候補を提起 (本サイクルでは登録のみ、実装は別サイクル)。
+
+### 4) E カテゴリ駆動: kaizen 2週間停滞項目
+
+`kaizen #107 boot_intent 主焦点項目の実体確認 Pre-check 強制化` を再確認: 上記 D カテゴリで言及。**この hook が「playable diff 2日ゼロ」を主焦点ドリフトとして検出できていなかった**= hook の観測軸不足が確定 = #107 は「停滞」ではなく「観測軸更新が必要」のステータス。Phase 3 で kaizen_tracker.md に 1 行追記候補 (実装は別サイクル)。
+
+### 5) #nao-u 未消化 URL の追跡記録 (Phase 1 取りこぼし対応)
+
+Phase 1 で「未消化候補」と表記した 5本 (gozahand 5/19 / hanjuku_yanen 5/19 / mtkn1xbt 5/19 / h_yoshida_1973 5/19 / santtiagom_ 5/19) は **5/24 帯の「新URL」ではないため本サイクル Phase 2 対象外**。次サイクル以降の摂取候補として記録のみ (新規投稿の義務なし)。
+
+### 6) Phase 2 サマリ
+
+- **Slack 投稿: 0 件** (#all-nao-u-lab / #shared-reads ともに該当ゼロ、水増し回避)
+- **external_notes 操作: 0 件** (統合済 100%)
+- **Phase 3 アクション候補 (優先順)**:
+  1. **第一**: mimicry_log/v02 §4-A SHIFT/Z hint popup 実装 (5-7行) + `_sim_check.js` 回帰 + devlog C235 改修ログ追記 + commit `game:` → **playable diff 2日ゼロを断つ**
+  2. **第二**: projects/scheduler_redesign.md に 1 行再分類追記 (B カテゴリ消化)
+  3. **第三**: kaizen_tracker.md #107 に「観測軸更新候補: playable diff 鮮度」1 行追記 (D/E カテゴリ消化、実装は別サイクル)
+- **「揃わないなら揃えない」を Phase 2 タスク 3 件で実践、CLAUDE.md「絶対にやる」筆頭軸 (ゲーム動かす) を Phase 3 で復活させる**判断
+- means-ends 反転リスク自己照合: Phase 2 で Slack 投稿/external 統合を強行すれば「タスク水増し = 手段の自己目的化」だった可能性。投稿 0 件で Phase 3 を playable diff 復活に振る判断は **手段から目的へ重心を戻す動き**
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 誤判定訂正 — playable diff 鮮度の観測軸ズレ
+
+Phase 2 §1 は「mimicry_log/v02/index.html mtime = 5/23 14:48 → playable diff 2日ゼロ → means-ends 反転 false alert 直撃」と判定したが、Phase 3 開始時に `git log --since=2026-05-23 -- game/` を取り直すと:
+- 最新 game commit = `fc9b6ea7` log_mystery v08 (5/24 22:03 = Phase 3 実行時点 2.4h 前)
+- 直近 14 commit すべて 5/23-24 内に Log game/ 改修 (log_mystery v01〜v08 + mimicry_log v02 SHIFT hint + siphon_mir + avoid_log + graze_log_cdx)
+- **mir_barrier_diagnosis §4-A SHIFT hint popup は既に `92077baca4e9 game: mimicry_log v02 Mir 4障壁分類診断+SHIFT hint 1mm改修` で commit 済**（index.html line 348-352 に実装確認）
+
+→ Phase 2 の「§4-A 実装で playable diff 復活」は **既実装の二重実装案** であり破棄。原因は単一ファイル mtime を Active 課題群全体の代理指標として扱った観測軸ズレ。kaizen #107 検証結果欄に観測軸更新候補として記録した（本サイクル Phase 3 §1）。**Log の playable diff リズムは健全**（5 日連続毎日 game commit、本サイクル時点で停滞なし）。
+
+### 1) kaizen_tracker.md #107 観測軸更新候補追記
+
+`memory/kaizen_tracker.md` #107 検証結果欄に Log C235 Phase 3 観測軸更新候補を 1 段落追記。内容: (a) playable diff 鮮度測定単位を「単一ファイル mtime」から「`git log --since=2d -- game/` の commit 数」に変える案、(b) means-ends 反転検出は単一ファイルでなく「Active 課題群全体の playable diff 数」で測る案。実装は別サイクル（#107 派生 kaizen 独立起票 or #107 本体拡張の判定は C236）。
+
+### 2) projects/scheduler_redesign.md 状態再分類
+
+末尾に「2026-05-25: 状態再分類 — 『進行中』枠から『kaizen #128 (Skills 移行) 待ち』メタ枠へ」節を 1 段落追記。Phase 2 §2 判断に従い、5/13 以降 12 日停滞中の状態を「アクティブ進行中」から「kaizen #128 待ち休眠」に再分類。kaizen #128 が動いた時点で再起動。本サイクル追加実装なし。
+
+### 3) projects/memory_redesign.md 他インスタンス洞察 #1 既消化確認
+
+末尾に「2026-05-25 (Log C235 Phase 3): 他インスタンス洞察 #1 既消化確認 + 残 6 件は未走査」節を追記。#1 Mir [Useful Memories Become Faulty] arXiv 2605.12978 は C232 Phase 3 (5/24) で既消化済（①+⑥ 項）。残 6 件は staging sample が truncated で本サイクル文面未取得 → 新規 atom 起票しない（feedback_few_rules_big_effect 順守、同型 N 回未確定）。
+
+### 4) Slack 投稿: 0 件 (Phase 2 §0 判定継続 + 試遊リンク不可)
+
+Phase 2 §0 で「#nao-u 新URL反応 / #shared-reads / external_notes 操作」すべて該当ゼロ判定継続。加えて v08 devlog §7 (a) 最優先候補「v01-v08 一括試遊依頼」は GitHub Pages 公開URL不在 (リポジトリ `nao-u-lab` 直下に `Claude/game/...` パスは GitHub source URL のみ存在、`agentic-arcade/backlash/` 形式の Pages URL は別リポジトリ) で試遊リンク不可、本サイクルでは投稿しない。`#log` チャンネル日記投稿は Phase 5 (今回スキップ指示) のため対象外。**Slack 投稿 0 件で確定**、水増し回避。
+
+### 5) Active プロジェクト更新サマリ
+
+| プロジェクト | 本サイクル変化 | 更新箇所 |
+|---|---|---|
+| scheduler_redesign.md | 状態再分類（休眠化） | 末尾 1 段落追記 |
+| memory_redesign.md | 他インスタンス洞察 #1 既消化確認 | 末尾 1 段落追記 |
+| kaizen_tracker.md (Active 課題ではないが運用本体) | #107 検証結果に観測軸更新候補 | #107 §検証結果に 1 段落追記 |
+
+他 Active (game_development / rlm_skill_prototype / memory_consolidation_20260504 / memory_tree_consolidation / failure_slot_measurement / external_intake / principles / game_templates_design 等) は本サイクル変化なし。
+
+### 6) Phase 3 サマリ
+
+- **Slack 投稿: 0 件** (試遊リンク不可 / 該当ゼロ継続)
+- **external_notes 操作: 0 件** (Phase 1 で 100% 統合済確認)
+- **playable diff: 0 件** (Phase 3 は記録/再分類/誤判定訂正に振った、Phase 4 大作業で v09 chord 3 ペア化を実装予定)
+- **記憶/プロジェクト更新: 3 件** (kaizen_tracker.md #107 / scheduler_redesign / memory_redesign)
+- **他インスタンス洞察: #1 既消化確認のみ、残 6 件は文面未取得で次サイクル送り**
+
+Phase 2 が誤判定した「playable diff 2 日ゼロ」を Phase 3 §0 で訂正したことで、本来 Phase 3 で実装が必要だった案が「既実装の二重案」と判明 → Phase 3 は実装でなく観測軸更新候補の構造記録に振った。これは means-ends 反転防止の構造側自己修復が機能した実例（Phase 2 が誤判定しても Phase 3 開始時の git 再観測で検出できた）。
+
+---
+
+## 次フェーズの大作業 (Phase 4)
+
+### タイトル
+**log_mystery v09 — 章 2 C8 (換気窓物理構造) を章 1 場所鐘の決定打に兼任させる chord 3 ペア化実装**
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+
+1. `game/log_mystery_v09/index.html` が存在し、`game/log_mystery_v08/index.html` から ~50-70 行差分で chord 3 ペア化が実装されている
+2. `evalPlace1` (章 1 場所鐘判定) が 3 値化され、c10 単独経路 + c8 経由経路の OR 結合で決定打を発火する形になっている
+3. `reDeduceCh1` で who1 / place1 両方の re-eval が走り、CLUES_CH2 クリックハンドラに `(c.id === 8)` が追加されている
+4. `game/log_mystery_v09/devlog.md` が v07→v08 と同形式で書かれ、v01-v09 8→9 サイクル所要時間比較表 + R-A 自己判定 1 文 + v10 候補 (chord 4 ペア化 = 完全網 への一手前) を含む
+5. `game/log_mystery_v09/predicted_play.md` が chord 3 ペア自然発火経路 (シナリオ B 系列) を含む 3-4 シナリオを記載
+6. `game/log_mystery_v09/brainstorm.md` が v08 §7 (b) chord 3 ペア化候補を 3 案分の選定理由+捨てた 2 案の理由付きで記録
+7. commit prefix `game:` で 1 commit、push 完了、`git log -1 -- game/log_mystery_v09/` が当該 commit を返す
+
+### 着手手順 (最初の 1 手 + 想定手順)
+
+1. **最初の 1 手**: `game/log_mystery_v08/index.html` の `evalPlace1` / `reDeduceCh1` / `CLUES_CH2` クリックハンドラ / `renderResult1` 関連箇所 (line range 概算 200 行) を grep + Read で取得し、v09 改修箇所マップを 1 枚作る
+2. `game/log_mystery_v08/` → `game/log_mystery_v09/` 4 ファイル (index.html / devlog.md / predicted_play.md / brainstorm.md) ディレクトリ複製 (cp 相当)
+3. `game/log_mystery_v09/brainstorm.md` を起草: 章 2 C8 (換気窓物理構造) を章 1 場所鐘 (Y 隣室) の決定打に兼任させる案 (採用候補) + 章 2 C7 を章 1 容疑者鐘の決定打に兼任させる案 (代替) + chord 演出強化先行案 (v08 §7 (d) 由来) の 3 案を整理、採用案の選定理由+捨てた 2 案の理由を 1 行ずつ記録
+4. `index.html` 改修: (a) C8 文面拡張 `isExtra: true` 追加, (b) `evalPlace1` を c10 ? hit : (c8 ? pending : false) 形に改修, (c) `reDeduceCh1` で place1 を re-eval, (d) CLUES_CH2 クリックハンドラに `(c.id === 8 || c.id === 7 || c.id === 9)` 拡張, (e) `renderResult1` に pending 表示分岐
+5. `predicted_play.md` 起草: chord 3 ペア自然発火 (シナリオ B' = C10 + C3 + C8 自然発火), chord 1+2+3 完全観察 (シナリオ D'), 標準プレイ (シナリオ A) の 3 シナリオ
+6. `devlog.md` 起草: §1 chord 3 ペア構造設計 / §2 v08 比較表 / §3 セルフプレイ予測 vs 実測 / §4 v01-v09 9 サイクル所要時間比較表 / §5 R-A 自己判定 1 文 / §6 単独運用テスト URL 継承 / §7 v10 候補 (chord 4 ペア化への一手前)
+7. `node` での sim_check が無いプロジェクト (log_mystery 系は手動シミュ) なのでコード目視シミュ 4 シナリオ実行、回帰検証 (v08 chord 1/2 が壊れていないこと)
+8. commit prefix `game:`、push、git log 確認
+
+### 選んだ理由
+
+- **v08 devlog §7 で優先度 (a) > (b) と明記、(a) は GitHub Pages 不在で本サイクルでは Slack 投稿不可** → 自然な次手は (b) chord 3 ペア化
+- **v07→v08 で確立した最小差分パターン (evalXxx + reDeduce + クリックハンドラ拡張) を同形複製するだけで chord 3 ペア化が ~50-70 行差分で成立**、再利用率の高い playable diff として確実
+- **Log の game commit リズム維持** (5/23-24 毎日 game commit、5/25 も同粒度で継続することで CLAUDE.md「絶対にやる」筆頭「ゲームを動かして出す」が連続充足)
+- **R-D 守破離の守の延長として 9 サイクル目を踏める** (v08 が「守の 8 サイクル目」、v09 は同方向の 9 サイクル目)、破 (章 3 追加) に行く前の網最小単位完全化として位置付け
+- 30 分粒度に収まる (v07→v08 = ~25 分実績、v08→v09 も同形差分のため同等所要見込み)
+- Phase 3 が記録系に振った後の Phase 4 で playable diff を確実に 1 本出すことで「Phase 3-4 全体で playable diff 1 件」の最低ラインを担保 (Phase 2 が誤検出した「2 日ゼロ」を本サイクルで自己解消)

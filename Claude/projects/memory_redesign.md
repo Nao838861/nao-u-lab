@@ -1848,3 +1848,11 @@ Phase 1 自動取得の「他インスタンス洞察」7 件のうち、本プ�
 **メタ観察**: 4 件すべて「即実装ゼロ、C225-C229 運用観察項目への追加候補のみ」で着地。これは feedback_few_rules_big_effect.md「ルール量↑=遵守率↓」順守と、「同型 N 回」原則の交差点での自然な帰結。新規 atom 起票 0 件 / 新規 kaizen 0 件 / 案 A/B/C への観察項目候補追加 3 件 (C229 判定時に統合検討)。
 
 ---
+
+### 2026-05-25 (Log C235 Phase 3): 他インスタンス洞察 #1 既消化確認 + 残 6 件は未走査
+
+Phase 1 注入の「他インスタンス洞察」7 件のうち、staging sample で文面確認できた #1 = Mir [Useful Memories Become Faulty] (arXiv 2605.12978) は **C232 Phase 3 (2026-05-24) で既消化済**（本ファイル §「2026-05-24 (Log C232 Phase 3): 他インスタンス洞察 4 件の整理」①+⑥ 項）。Mir 経路の補強と Phoenix Yin 経路の交差はその時点で記録され、`coefficient_evidence:` メタデータ追加判定は C225-C229 観察期間継続中。
+
+残 6 件は staging sample が truncated で本サイクルでは文面取得していない。新規 atom 起票しない（feedback_few_rules_big_effect 順守、同型 N 回未確定）。C236 以降の Phase 1 で文面取得した時点で必要に応じ本ファイルに追記する。
+
+---
