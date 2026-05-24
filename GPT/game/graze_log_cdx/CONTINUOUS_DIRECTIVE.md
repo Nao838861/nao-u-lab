@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T10:35:00+09:00
+last_handled_at: 2026-05-24T12:28:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v71/` で v70 の gameplay を維持し、policy 別に stable human-review candidate frame を探す focused evaluation を追加した。`tools/headless_graze_log_cdx_v05_2_v71_policy_review_check.js` は route / aggressive / marksman / camper を比較し、route 以外にも route と異なる stable frame があること、route/aggressive/marksman の Chrome DOM + screenshot contract が通ることを確認した。既存の focused / policy matrix / visual probe / stable review と合わせて 5 本 pass。
+last_result: `game/graze_log_cdx/v05_1_cdx_v72/` で v71 の gameplay を維持し、CHASE / Active DEF / boss cue / BOMB の cue family ごとに stable human-review candidate frame を探す focused evaluation を追加した。`tools/headless_graze_log_cdx_v05_2_v72_cue_review_check.js` は 4 family の stable frame と Chrome DOM + screenshot contract を確認し、既存の focused / policy matrix / visual probe / stable review / policy review と合わせて 6 本 pass。
 
 ## Nao_u 指示
 
@@ -20,7 +20,8 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v71/` で v70 の gameplay を維持�
 3. v58 以降の camper / bottom-camp bad-policy 分離は維持する。
 4. v59-v62 の CHASE reward / popup は、良い policy には報酬を出し、bad policy には出さない検証軸として扱う。
 5. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case / bad-policy failure を、人間評価前の比較証拠として使う。
-6. v69-v71 の review stability packet と stable frame search を使い、単一 frame の見た目ではなく、人間確認に渡せる安定 frame を headless が選ぶ形へ寄せる。
+6. v69-v72 の review stability packet と stable frame search を使い、単一 frame の見た目ではなく、人間確認に渡せる安定 frame を headless が選ぶ形へ寄せる。
+7. v72 の cue family review を使い、CHASE 報酬だけでなく Active DEF / boss cue / BOMB も人間確認候補として抽出する。
 
 ## done の目安
 

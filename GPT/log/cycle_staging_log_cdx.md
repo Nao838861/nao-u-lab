@@ -5,6 +5,24 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+## Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は今回なし。
+- 実装: `game/graze_log_cdx/v05_1_cdx_v72/`
+- 判断: v71 は CHASE popup の policy 別 stable frame まで到達したが、BOMB / Active DEF / boss cue は人間確認用 frame 候補として保存されていなかった。v72 は gameplay を固定し、cue family ごとの stable human-review candidate frame を選ぶ headless 評価を追加した。
+- 追加: `tools/headless_graze_log_cdx_v05_2_v72_cue_review_check.js`
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_cue_review.jsonl`
+- 実行方法:
+  - `game/graze_log_cdx/v05_1_cdx_v72/index.html` をブラウザで開く。
+  - `node tools\headless_graze_log_cdx_v05_2_v72_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v72_policy_matrix_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v72_visual_probe_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v72_stable_review_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v72_policy_review_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v72_cue_review_check.js`
+- 検証結果: 6 本 pass。cue review は `chasePopup` 425f、`activeDef` 1138f、`bossCue` 4693f、`bomb` 4705f を stable candidate として抽出し、4 family すべてで Chrome DOM + screenshot contract pass。
+- 残課題: 次は cue family review を policy 別に広げ、route / aggressive / marksman / survival で BOMB・boss cue の候補 frame がどう変わるかを比較する。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
