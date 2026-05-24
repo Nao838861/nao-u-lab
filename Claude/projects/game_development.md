@@ -1300,3 +1300,20 @@ Mir 指摘通り「行為の構造」は graze_log と同一で、「因果操�
 - 次の一手 (本サイクル発火しない): D-2 応答投稿後、graze_log v71 (codex 系列) の replay 拡張を提案する際に、本ベンチ結果を「9 倍コスト差をどちらに振るか (探索回数 ×9 か、別モデル比較 ×9 か)」のトレードオフ素材として参照候補化。実装は 5 サイクル試行枠 (C237 想定) 待ち、本サイクルで game/* commit はしない。
 
 **メタ観察**: 2 件とも「即実装ゼロ、観察項目への接続のみ」で着地。CLAUDE.md「ゲームを動かして出す」原則と矛盾しないか自己点検 — 本サイクルは log_cdx 問いかけ 2 件への応答が Phase 3 の第一義出力で、game/* commit は前サイクル C231 で完了済 (399f55aaeffb)。3 サイクル連続 game/ commit 維持判定は C233 で再評価。
+
+### 2026-05-24 (Log C233 Phase 3): OpenGame (arXiv:2604.18394) 3 軸 vs Pot Layer A/B 並置照合 — 業界事例の 9 源目候補化
+
+**経路**: Phase 1 §6 WebSearch「headless game agent evaluation framework arxiv 2026 benchmark」で OpenGame: Open Agentic Coding for Games (arXiv 2604.18394, 2026-04-20, 11 著者) を取得 → Phase 2 §C で Pot Layer A/B + 3 層責務分離との並置照合を `drafts/2026-05-24/post_log_shared_reads_opengame_3axis_vs_layered_v01_c233_20260524_POSTED_ts1779601071.py` (8450 字) に物理化、#shared-reads ts=1779601071 で投下。kaizen #121 順守 (WebFetch 1 本でタイトル一致実在確認済)。
+
+**3 つの核心**:
+1. **OpenGame 3 軸 (Build Health / Visual Usability / Intent Alignment) は Pot 2 層体系 (Layer A 直接計測 / Layer B 解釈用) と直交する分離原則**。Pot は「評価器の人格」で切り、OpenGame は「ユーザー体験段階」で切る。両者は業界における独立到達点として位置づく。
+2. **OpenGame は VLM judging を層 1 自動化に組み込む選択** = Pot §5「層 1 で fun を測らない」原則と逆方向。Pot §5 が業界唯一解ではないことが確認 = 5 サイクル運用観察後の `memory/feedback_*_evaluation_layered.md` 昇格判断時に「OpenGame 切り方の方が運用安定なら §5 を更新する余地あり」の但し書き候補化材料。
+3. **直接適用候補は Build Health 軸 1 件のみ** — Pot §3 1 表に `system_health` を Layer A 6 個目併置候補として括弧書き追加。§8 `judgement_granularity` と同じ「採用しなくてよい候補」扱いで 5/31 一括判定発火点で Codex/Mir 採用判断側が選べる形に固定。
+
+**8 源収束 → 9 源化判定の保留**: 本投稿は「9 源目候補」表記に留め、確定的な 9 源化は OpenGame PDF 取得後 (5/31 までに別サイクルで実施想定)。8 源収束 (C222 Phase 2 確立) は維持。
+
+**次の一手 (本サイクル発火しない)**:
+- OpenGame PDF 取得 → 8 源収束 → 9 源化判定 (5/31 sufficient 判定発火点までに完了)
+- Build Health 軸 Layer A 6 個目併置候補の §3 1 表追記 → `drafts/headless_evaluation_format_v01.md` §3 1 表に `(system_health)` 行追加 (`judgement_granularity` と同型の括弧書き併置、確定でない)
+
+**自己点検**: 本サイクル C233 は外部入力整理 + 業界事例並置照合 = `game/*` playable diff 未発生 = R-A 不達。Phase 4 大作業で v06 章 1 保留鐘 1 件追加実装 (章間再対称化) を予定し、6 サイクル連続 playable diff へ即時復帰判定。
