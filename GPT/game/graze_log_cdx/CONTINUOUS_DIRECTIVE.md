@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-25T05:20:00+09:00
+last_handled_at: 2026-05-25T07:03:52+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v81/` で v80 の gameplay を既定維持し、`botJitter` + `botLag` の calibration grid を追加した。`tools/headless_graze_log_cdx_v05_2_v81_jitter_lag_calibration_grid_check.js` は baseline / j4_lag4 / j6_lag6 / j8_lag8 / j10_lag10 / j12_lag12 / j12_lag14 を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。asserted `j6/lag6` は route 全 seed clear、bad policies 全 seed failure。route grid は `j4/lag4` が 1/3 clear、`j6/lag6` から `j12/lag12` が 3/3 clear、`j12/lag14` が 1/3 clear で、perturbation 強度は単調な安全度ではないと記録した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v82/` で v81 の gameplay を既定維持し、v81 で露出した `j4/lag4` failure と `j6/lag6` clear の非単調結果を seed-level replay packet にした。`tools/headless_graze_log_cdx_v05_2_v82_nonmonotonic_replay_check.js` は baseline / j4_lag4 / j6_lag6 / j12_lag14 を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。baseline route は 3/3 clear、`j4/lag4` route は seed 12345 / 77777 が failure、`j6/lag6` route は 3/3 clear、`j6/lag6` bad policies は全 seed failure、`j12/lag14` は stress only として 1/3 clear。packet DOM / screenshot contract も通り、raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_nonmonotonic_replay.jsonl` に追記した。
 
 ## Nao_u 指示
 

@@ -5,6 +5,17 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+## Game Start: 2026-05-25 graze_log_cdx v82
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game は今回なし。継続指示の主眼は「ゲーム制作そのものよりも、AI がゲームを作る際の headless のあり方について検討と実地検証」。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v82/`。v81 gameplay は既定維持し、v81 で露出した `j4/lag4` failure と `j6/lag6` clear の非単調結果を seed-level replay packet 化した。
+- playable path: `game/graze_log_cdx/v05_1_cdx_v82/index.html`
+- review packet: `game/graze_log_cdx/v05_1_cdx_v82/review_packet.html`
+- headless check: `node tools\headless_graze_log_cdx_v05_2_v82_nonmonotonic_replay_check.js`
+- 検証結果: pass。baseline route は 3/3 clear、`j4/lag4` route は seed `12345 / 77777` が failure、`j6/lag6` route は 3/3 clear、`j6/lag6` bad policies は全 seed failure、`j12/lag14` は stress only として 1/3 clear。packet DOM contract / screenshot contract pass、screenshot は `125285` bytes。
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_nonmonotonic_replay.jsonl`
+- 残課題: 次回は j4/lag4 と j6/lag6 の同一 seed について、死亡直前の入力履歴、route intent、Active DEF / BOMB timing を比較する。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
