@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>graze_log v05.2_cdx_v77 - multi-seed death-cause packet</title>
+<style>
+:root{color-scheme:dark;--bg:#070910;--panel:#101622;--line:#263248;--text:#e6edf7;--muted:#9aa7b8;--good:#72d39c;--bad:#ff8a8a;--warn:#f0c66a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#070910f2;border-bottom:1px solid var(--line);padding:12px 16px}
+h1{font-size:18px;margin:0 0 4px;letter-spacing:0;color:var(--text)}
+p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+main{max-width:1460px;margin:0 auto;padding:14px 16px 28px}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.metric{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:8px 10px;min-height:54px}
+.metric b{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.metric span{font-size:16px;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(460px,1fr));gap:12px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.card header{position:static;background:#0d1320;border-bottom:1px solid var(--line);padding:8px 10px}
+.card h2{font-size:13px;margin:0 0 2px;letter-spacing:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 6px;color:var(--muted)}
+.tag.good{color:var(--good);border-color:#2b7048}.tag.bad{color:var(--bad);border-color:#7c3434}.tag.warn{color:var(--warn);border-color:#80652b}
+iframe{display:block;width:100%;height:752px;border:0;background:#071126}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;background:var(--panel);border:1px solid var(--line)}
+th,td{font-size:11px;text-align:left;border-bottom:1px solid var(--line);padding:7px 8px;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:#0d1320}
+td.ok{color:var(--good)}td.bad{color:var(--bad)}td.warn{color:var(--warn)}
+.note{margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#0c1320;color:var(--muted);font-size:12px;line-height:1.45}
+@media (max-width:980px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card{min-width:0}iframe{height:742px}}
+</style>
+</head>
+<body data-game-version="v05_1_cdx_v77" data-review-packet="bad-policy-multiseed-death-cause-v001">
+<header>
+  <h1>graze_log v05.2_cdx_v77 multi-seed death-cause packet</h1>
+  <p>seeds 12345 / 54321 / 77777. Gameplay is fixed from v76. Bad-policy samples use probeForceIframe=0, and the matrix checks whether death context remains readable across seeds.</p>
+</header>
+<main>
+  <section class="summary" aria-label="review summary">
+    <div class="metric"><b>method</b><span>multi-seed packet</span></div>
+    <div class="metric"><b>route</b><span>3 / 3 clear</span></div>
+    <div class="metric"><b>bad policies</b><span>9 / 9 over</span></div>
+    <div class="metric"><b>guard</b><span>probeForceIframe=0</span></div>
+  </section>
+  <p class="note">The three seeds currently produce the same route and death timings. That is useful evidence too: this stage/bot setup is deterministic under these inputs, so future seed variance work needs a source of variation beyond the URL seed.</p>
+  <table aria-label="multi-seed bad policy death matrix">
+    <thead><tr><th>seed</th><th>policy</th><th>result</th><th>frame</th><th>coverage</th><th>bottom</th><th>phase</th><th>source</th><th>role</th><th>bullets / near</th></tr></thead>
+    <tbody>
+      <tr data-seed="12345" data-policy="route"><td>12345</td><td>route</td><td class="ok">clear</td><td class="ok">4552f</td><td>1.000</td><td>0.323</td><td>PART_BOSS</td><td>none</td><td>none</td><td>15 / n/a</td></tr>
+      <tr data-seed="54321" data-policy="route"><td>54321</td><td>route</td><td class="ok">clear</td><td class="ok">4552f</td><td>1.000</td><td>0.323</td><td>PART_BOSS</td><td>none</td><td>none</td><td>15 / n/a</td></tr>
+      <tr data-seed="77777" data-policy="route"><td>77777</td><td>route</td><td class="ok">clear</td><td class="ok">4552f</td><td>1.000</td><td>0.323</td><td>PART_BOSS</td><td>none</td><td>none</td><td>15 / n/a</td></tr>
+      <tr data-seed="12345" data-policy="camper"><td>12345</td><td>camper</td><td class="bad">over</td><td class="bad">1397f</td><td>0.313</td><td>0.999</td><td>RIGHT_BUNKER_ENTRY_COVER</td><td>raider / crane_swoop_r_1040</td><td>none</td><td>36 / 14</td></tr>
+      <tr data-seed="54321" data-policy="camper"><td>54321</td><td>camper</td><td class="bad">over</td><td class="bad">1397f</td><td>0.313</td><td>0.999</td><td>RIGHT_BUNKER_ENTRY_COVER</td><td>raider / crane_swoop_r_1040</td><td>none</td><td>36 / 14</td></tr>
+      <tr data-seed="77777" data-policy="camper"><td>77777</td><td>camper</td><td class="bad">over</td><td class="bad">1397f</td><td>0.313</td><td>0.999</td><td>RIGHT_BUNKER_ENTRY_COVER</td><td>raider / crane_swoop_r_1040</td><td>none</td><td>36 / 14</td></tr>
+      <tr data-seed="12345" data-policy="panic"><td>12345</td><td>panic</td><td class="bad">over</td><td class="bad">1718f</td><td>0.406</td><td>0.973</td><td>TOP_OFF_BRIDGE_TO_MIDBOSS</td><td>raider / second_pair_floor_1240</td><td>none</td><td>76 / 31</td></tr>
+      <tr data-seed="54321" data-policy="panic"><td>54321</td><td>panic</td><td class="bad">over</td><td class="bad">1718f</td><td>0.406</td><td>0.973</td><td>TOP_OFF_BRIDGE_TO_MIDBOSS</td><td>raider / second_pair_floor_1240</td><td>none</td><td>76 / 31</td></tr>
+      <tr data-seed="77777" data-policy="panic"><td>77777</td><td>panic</td><td class="bad">over</td><td class="bad">1718f</td><td>0.406</td><td>0.973</td><td>TOP_OFF_BRIDGE_TO_MIDBOSS</td><td>raider / second_pair_floor_1240</td><td>none</td><td>76 / 31</td></tr>
+      <tr data-seed="12345" data-policy="novice"><td>12345</td><td>novice</td><td class="bad">over</td><td class="bad">4010f</td><td>0.969</td><td>0.942</td><td>BOSS_APPROACH_KEEP_SCREEN_ACTIVE</td><td>raider / final_bunker_tail_3540</td><td>none</td><td>55 / 16</td></tr>
+      <tr data-seed="54321" data-policy="novice"><td>54321</td><td>novice</td><td class="bad">over</td><td class="bad">4010f</td><td>0.969</td><td>0.942</td><td>BOSS_APPROACH_KEEP_SCREEN_ACTIVE</td><td>raider / final_bunker_tail_3540</td><td>none</td><td>55 / 16</td></tr>
+      <tr data-seed="77777" data-policy="novice"><td>77777</td><td>novice</td><td class="bad">over</td><td class="bad">4010f</td><td>0.969</td><td>0.942</td><td>BOSS_APPROACH_KEEP_SCREEN_ACTIVE</td><td>raider / final_bunker_tail_3540</td><td>none</td><td>55 / 16</td></tr>
+    </tbody>
+  </table>
+  <section class="grid" aria-label="selected review frames">
+    <article class="card" data-sample="route-clear">
+      <header><h2>seed 12345 / route / clear / 4552f</h2><div class="tags"><span class="tag good">good policy</span><span class="tag">clear baseline</span></div></header>
+      <iframe title="route clear frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;probeFrame=4552&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="camper-gameOver">
+      <header><h2>seed 12345 / camper / raider death / 1397f</h2><div class="tags"><span class="tag bad">source raider</span><span class="tag">36 bullets</span><span class="tag">near 14</span><span class="tag">role none</span></div></header>
+      <iframe title="camper game over frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=camper&amp;probeFrame=1397&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+    <article class="card" data-sample="panic-gameOver">
+      <header><h2>seed 54321 / panic / raider death / 1718f</h2><div class="tags"><span class="tag bad">source raider</span><span class="tag">76 bullets</span><span class="tag">near 31</span><span class="tag">role none</span></div></header>
+      <iframe title="panic game over frame" src="index.html?seed=54321&amp;bot=1&amp;botStyle=panic&amp;probeFrame=1718&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+    <article class="card" data-sample="novice-gameOver">
+      <header><h2>seed 77777 / novice / raider death / 4010f</h2><div class="tags"><span class="tag warn">late failure</span><span class="tag">source raider</span><span class="tag">near 16</span><span class="tag">role none</span></div></header>
+      <iframe title="novice game over frame" src="index.html?seed=77777&amp;bot=1&amp;botStyle=novice&amp;probeFrame=4010&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+  </section>
+</main>
+</body>
+</html>

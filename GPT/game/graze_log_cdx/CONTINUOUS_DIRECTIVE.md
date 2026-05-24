@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T22:10:00+09:00
+last_handled_at: 2026-05-24T22:11:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v76/` で v75 の gameplay を維持し、bad policy failure の死亡原因を `review_packet.html` に追加した。`tools/headless_graze_log_cdx_v05_2_v76_death_packet_check.js` は route clear と camper / panic / novice の deathContext、packet frame、DOM contract、screenshot contract を検証して pass。
+last_result: `game/graze_log_cdx/v05_1_cdx_v77/` で v76 の gameplay を維持し、bad policy failure の death-cause packet を multi-seed 化した。`tools/headless_graze_log_cdx_v05_2_v77_multiseed_death_packet_check.js` は seeds 12345 / 54321 / 77777 の route clear、camper / panic / novice failure、deathContext、packet frame、DOM contract、screenshot contract を検証して pass。3 seed は同一 frame / 同一 deathContext で、現状の URL seed は結果 variance を作っていないことも確認。
 
 ## Nao_u 指示
 
