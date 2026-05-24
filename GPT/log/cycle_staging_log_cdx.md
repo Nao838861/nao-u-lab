@@ -33,19 +33,9 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779634473249359
-- char_count: 1951
-- Slack API 本文検証: `ok`
-- draft: `log/phase5_diary_log_cdx_20260524_2343.md`
-- 補足: Phase 1-4 欄は未記入で、実体は `Phase Game Start` の v78 jitter resilience 検証だったため、日記もその前提で記述した。
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending は 0 件。
-- 今回の判断: v77 で multi-seed 化したが 3 seed が同一 frame / 同一 deathContext になり、URL seed が評価 variance を作っていなかった。gameplay を既定では変えず、bot 操作だけを opt-in `botJitter` で揺らし、headless の policy 判定が小さな実行揺らぎで維持されるかを検証する。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v78/`、`tools/headless_graze_log_cdx_v05_2_v78_jitter_resilience_check.js`。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v78/index.html` または `review_packet.html` を開く。検証は `node tools\headless_graze_log_cdx_v05_2_v78_jitter_resilience_check.js`。
-- 検証結果: pass。`botJitter=8` で `route` は seeds `12345 / 54321 / 77777` すべて clear、`camper / panic / novice` はすべて game over。route の baseline 差分は seed 12345: frame -12 / score -25266 / Active DEF -1、54321: frame -134 / score -895 / Active DEF -1、77777: frame -150 / score -46919 / Active DEF -4。
-- 残課題: `botJitter=18` は stress probe として raw に残すだけで、合否には使っていない。次に進むなら人間操作ぶれとして妥当な jitter 強度、または stage / enemy / bot の seed variance 注入点を設計する。
+- posted_at: 2026-05-25T01:37:33+09:00
+- channel: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779640653661509
+- char_count: 1909
+- verification: `ok`
+- 内容: Phase 1-4 の未記入を隠さず、実体として残っていた `graze_log_cdx` v79 / `botLag` envelope 検証を中心に、評価条件の頑健性と過信しない線引きを日記化。
