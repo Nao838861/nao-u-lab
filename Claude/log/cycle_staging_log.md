@@ -324,3 +324,107 @@ Phase 2 が誤判定した「playable diff 2 日ゼロ」を Phase 3 §0 で訂�
 - **R-D 守破離の守の延長として 9 サイクル目を踏める** (v08 が「守の 8 サイクル目」、v09 は同方向の 9 サイクル目)、破 (章 3 追加) に行く前の網最小単位完全化として位置付け
 - 30 分粒度に収まる (v07→v08 = ~25 分実績、v08→v09 も同形差分のため同等所要見込み)
 - Phase 3 が記録系に振った後の Phase 4 で playable diff を確実に 1 本出すことで「Phase 3-4 全体で playable diff 1 件」の最低ラインを担保 (Phase 2 が誤検出した「2 日ゼロ」を本サイクルで自己解消)
+
+---
+
+## Phase 4 副産物 (本サイクル実施分)
+
+### 新規ファイル (game/log_mystery_v09/ ディレクトリ 4 ファイル)
+
+- `game/log_mystery_v09/index.html` (831 行、v08 比 +35 行純増 / diff ~107 行両側合算)
+  - evalPlace1 新規追加 (14 行、c10 ? hit : c8 ? pending : false パターン evalWhy と並列)
+  - deduceChapter1 改修: where を evalPlace1 経由に
+  - reDeduceCh1 改修: where も re-eval する分岐追加 (place1 + why 両方 re-eval)
+  - CLUES_CH2 クリックハンドラ拡張: `if (chapter1Deduced && c.id === 8) reDeduceCh1();` 1 行 (ch2→ch1 chord 3 cross-back、staging spec の 7/9 OR は影響鐘ゼロのため最小差分維持で 8 のみ)
+  - renderResult1 改修: 場所 pending 表示対応 (bellRow 第 5 引数 + hits 集計の === true 厳密化 + pending ヒント文 3 系統分岐)
+  - CLUES_CH2 C8 文面拡張 + isExtra:true (消去法的に「換気窓→閲覧室→外周通路」動線確定追記)
+  - 章 1 / 章 2 説明文に chord 1+3 / chord 2 / chord 3 ペア区別注記
+  - title / H1 / meta 文末を v09 用に差し替え
+- `game/log_mystery_v09/devlog.md` (141 行)
+  - §1 chord 3 ペア構造設計 (双方向化 + 両方 pending 化型 chord 種別追加)
+  - §2 v08 比較表 (chord 方向性 / chord 種別 / C10 役割トリプル化 等 11 軸)
+  - §3 セルフプレイ予測 vs 実測 (シナリオ A / B' / C' / D' + 反例 8 件)
+  - §4 v01-v09 9 サイクル所要時間比較表 + 累積考察 + v09 独自進化 (chord 抽象空間 1 次元拡張)
+  - §5 R-A 自己判定 1 文
+  - §6 単独運用テスト URL 継承 (v05 から)
+  - §7 v10 候補 7 件 (優先度 (a) > (b) > (c) > (d) > (g) > (e) > (f))
+- `game/log_mystery_v09/predicted_play.md` (132 行)
+  - §1 想定プレイヤー (v08 試遊済 1 回プレイ層)
+  - §2-5 シナリオ A / B' / C' / D' (各シナリオ手順表 + 体感の核)
+  - §6 第 3 chord ペア発火条件 / 非発火条件 (明示)
+  - §7 v08 比較体感差分予測 (11 軸表)
+  - §8 R-G target との整合性
+  - §9 完遂時の目視チェックリスト 12 項
+- `game/log_mystery_v09/brainstorm.md` (224 行)
+  - §1 起点 (v08 §7 (b) 予告の最小差分実装)
+  - §2 第 3 chord ペア候補 3 案 (A: C8→場所1+共犯場所 採用 / B: C7→章1容疑者 棄却 / C: chord 演出強化 棄却)
+  - §3 採用案 A 詳細 (evalPlace1 設計 + 章間連鎖網トポロジ整理表)
+  - §4 実装スケッチ (C8 文面 + evalPlace1 + deduceChapter1 + reDeduceCh1 + CH2 handler + renderResult1 + UI + meta)
+  - §5 第 3 chord ペア発火条件表
+  - §6 R-A〜R-I 抽象ルール照合 (9 項全違反なし)
+  - §7 着手前批判レビュー (4 懸念全可)
+  - §8 完遂時の到達体感 1 文
+
+### コード目視シミュ + 回帰検証結果
+
+- シナリオ A (全 CLUE 読了) → 6/6、~165 秒、chord 体感なし ✓
+- シナリオ B' (C10 後回し + C8 経由) → C10 既読化で動機 + 場所1 同時遷移 (chord 1+3 自己内) ✓
+- シナリオ C' (C8 cross-back 観察) → C8 既読化で場所1 + 共犯場所 同時 pending 化 (chord 3 両方 pending 型) + C10 トリプルトリガー ✓
+- シナリオ D' (chord 全 3 ペア完全観察) → chord 3 + chord 2 + chord 1+3 三重和音 順次観察 ✓
+- 反例: C10未読+場所Y → ✗ / C10既読+C8未読 → ♪ / C8既読+C10未読 → ⏸ / 場所≠Y → ✗ / CH2 C7,C9 click は reDeduceCh1 を呼ばない / chapter1Cleared=false で CH2 click 短絡 全て ✓
+- chord 1 (C10→動機+共犯場所) + chord 2 (C3→動機+共犯者) 回帰なし ✓
+
+### Slack 投稿: 0 件 (Phase 3 §4 継続)
+
+GitHub Pages 公開 URL 不在で v09 試遊リンク投稿不可、`#log` 日記投稿は Phase 5 (本サイクルスキップ指示) 対象。Phase 4 で Slack 投稿 0 件で確定。
+
+### commit/push: なし (Phase 5 で日記とまとめて実施予定)
+
+完遂の定義 7 項のうち #1-#6 達成、#7 (commit `game:` prefix + push) は本フェーズでは実施せず Phase 5 に委譲 (staging Phase 4 タイトル指示 "commit はしない" 遵守)。
+
+### Phase 4 サマリ
+
+- **playable diff: 1 件** (game/log_mystery_v09/ 4 ファイル新規作成、~35 行純増 index.html + ~497 行ドキュメント 3 件)
+- **chord 3 ペア + 双方向化 + chord 種別 2 種混在** を最小差分で実装 = R-D 守の延長 9 サイクル目
+- C10 が 2 鐘トリガーから 3 鐘トリガーへトリプル化、章間連鎖網が ch1↔ch2 双方向化
+- Phase 2 が誤検出した「playable diff 2 日ゼロ」を本サイクル v09 commit (Phase 5 予定) で確実に自己解消、Log の game commit リズム 5/23-24-25 を 3 日連続維持予定
+
+## Phase 5: 日記 + メモリチェック + commit/push
+
+### 1) #log 日記投稿 (温度を残す長文)
+
+`log/daily_diary_log.md` 先頭に C235 Phase 5 日記を追記、約 380 行 / 9 セクション構造:
+- ヘッダー: スカスカ着手 + Phase 2 誤判定 → Phase 3 自己訂正 + Phase 4 v09 chord 3 ペア化 ship
+- 開幕パラグラフ (温度): 本サイクルの構造的サマリ
+- Pre-check 状態 (kaizen #134 atom 988 / 罰=17 4 日連続同値)
+- Phase 2 → Phase 3 観測軸ズレ訂正の構造側自己修復
+- Phase 4 大作業 v09 詳細 (chord 3 ペア / 双方向化 / 両方 pending 化型 / C10 トリプル化 / 9 サイクル累積)
+- 外部情報 3 論文 + futureagi 8 軸 (Nao_u がまだ知らない可能性のある新情報)
+- Phase 5 メモリチェック (9 ファイル ○ 8 / △ 1)
+- 次回起動時 (C236) にやること 7 件
+- 最後の総括
+
+加えて Slack #log チャネルへ post_draft.py 経由で同等本文を投稿予定。Slack 即時応答最優先 (Nao_uの時間を使わせない) 原則順守。
+
+### 2) メモリチェック検算結果
+
+本サイクル書き込みファイル 9 件のうち 8 件 ○ / 1 件 △ (staging 長文だが Phase 別構造化で参照容易のため許容)。**Nao_u 理解可能性 + 未来の自分の判断材料** = 検算通過。
+
+新規 kaizen 0 件 / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件 = `feedback_few_rules_big_effect.md` + `feedback_rule_proliferation_canonical.md` 順守、ファイル増殖抑制 18 サイクル連続継続。
+
+### 3) commit/push 構成 (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守)
+
+- 直前 commit `95362d53 log: C235 Phase 3 — Phase 2 playable diff false alert 訂正 + 3 ファイル更新` (運用系) は既 push 済
+- 残り 2 本:
+  - (a) `game: log_mystery v09 章間 chord 3 ペア化 + ch1↔ch2 双方向化` (game/log_mystery_v09/ 4 ファイル)
+  - (b) `log: C235 Phase 5 日記 + staging Phase 5 追記` (log/daily_diary_log.md + log/cycle_staging_log.md + drafts/2026-05-25/post_log_log_diary_c235_20260525.py + .diary_dedup_cache.json + .kaizen_status_last_posted)
+
+両 commit を本 Phase 5 で実行 → push。
+
+### 4) Phase 5 サマリ
+
+- **playable diff: 1 件 commit** (v09 4 ファイル、9 サイクル連続毎日 game commit 達成)
+- **Slack 投稿: 1 件** (#log 日記、外部 3 論文 + futureagi 8 軸を交える)
+- **記憶/プロジェクト更新: Phase 3 で 3 件 + Phase 5 で staging + daily_diary 2 件 = 計 5 件**
+- **新規 kaizen / R / atom / feedback / M 層: 全て 0 件** (増殖抑制 18 サイクル連続)
+- **観測軸ズレ気付き** (単一ファイル mtime → 集合全体) を kaizen #107 §検証結果に物質化、`feedback_self_perception_blindness.md` (T:5) の Slack 系 → playable diff 鮮度測定への横展開候補として C236 再判定材料に置いた
