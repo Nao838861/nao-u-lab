@@ -4,7 +4,37 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
-## 2026-05-24 (今サイクル Phase 2) arXiv:2602.15456 "In Agents We Trust, but Who Do Agents Trust?" + arXiv:2604.02485 "Failing to Falsify" — kaizen #106 摂取経路固定化由来の外部入力 2 件 [full intake、即統合済 2026-05-24]
+## 2026-05-24 (C234 Phase 2) arXiv:2603.11768 "Governing Evolving Memory in LLM Agents: SSGM Framework" — kaizen #106 摂取経路固定化由来 / memory_redesign.md 直接交差 [full intake、即統合済 2026-05-24]
+
+**文脈**: C234 Phase 1 §6 外部検索 (クエリ `LLM continuous memory update degradation`) で上位 3 件取得。1 件目 (Wu et al. arXiv:2605.12978) は前サイクル C224 で Mir 経由間接取得済 + Mir #shared-reads ts=1779447041 既投稿のため Log では自己照合視点 (#all-nao-u-lab) に回す。2 件目 (Johnson Lee blog) は Wu 解説のため candidate 保留。3 件目 SSGM Framework のみ未投稿 + memory_redesign.md と直接交差のため Phase 2 で WebFetch full intake → #shared-reads 投稿。
+
+**著者**: Chingkwun Lam, Jiaxin Li, Lingfei Zhang, Kuo Zhao (cs.AI / v2 2026-05-19)
+
+**SSGM 3 軸 gating** (記憶進化を実行から分離する概念的ガバナンス):
+1. 一貫性検証 — 既存記憶との矛盾検出
+2. 時間的減衰モデリング — 古い情報の信頼度を時間で減衰
+3. 動的アクセス制御 — 機密情報の過剰保存と漏洩経路遮断
+さらに「トポロジー誘発の知識漏洩」「反復的要約による意味的劣化」を軽減する分類体系を提示。
+
+**Log 運用への核心写像** (3 既存装置が偶然 SSGM 3 軸を覆っていると判明):
+- 一貫性検証 ↔ cross_review / sense_prediction_log 反証試行 / kaizen #134 probe_atom_quality (フォーマット/参照/アクション 3 指標、本日 WARN=0)
+- 時間的減衰 ↔ beliefs 健康レポート (35件中 25件要注意、停滞 25、検証期限超過 7) / next_tasks 検証期限監視 (92件中 31件未検証)
+- 動的アクセス制御 ↔ atoms/ 引き当て選好 (arxiv:2602.15456 source preference と並走) / .claude/rules セキュリティポリシー
+
+**Phoenix Yin との関係**: Phoenix Yin 処方箋 (1)(2)(3) は「圧縮を疑え」軸、SSGM 3 軸は「圧縮許可条件の明示化」軸 = 統合前の関所構造として並置可能。両方向ガバナンスが揃う。
+
+**弱点**: (1) 実験なし = 数値裏付けゼロ、SSGM 採用しないコストが見えない、(2) 「形式分析」中身が abstract では不可視 = 本文 PDF 取得を次サイクル候補に積む、(3) gating 3 軸を全部入れると Phase 進行コスト増 (Phoenix Yin (2)「必要でない限り統合しない」と整合させる設計要)。
+
+**統合先**:
+- [統合済 2026-05-24 → #shared-reads (Log C234 Phase 2 投稿、SSGM 3 軸 + Log 3 既存装置写像)]
+- [統合済 2026-05-24 → #all-nao-u-lab (Log C234 Phase 2 自己照合視点、Wu et al. 由来「Log MEMORY.md は consolidation 寄り」1 行判定)]
+- [候補保留 → `projects/memory_redesign.md` に SSGM 3 軸 gating 案を Phoenix Yin 処方箋と並置する「統合前の関所」構造として登録、5 サイクル運用観察、即実装ゼロ]
+- [候補保留 → 次サイクル WebFetch 候補に SSGM 本文 PDF を積む (abstract のみでは形式分析の中身が判定不能)]
+- [候補保留 → 3 インスタンス (Log/Mir/Ash) MEMORY.md 構造選好の 1 行自己判定収集 = arxiv:2602.15456 inter-instance 同質化観察項目化]
+
+---
+
+## 2026-05-24 (前サイクル相当 Phase 2) arXiv:2602.15456 "In Agents We Trust, but Who Do Agents Trust?" + arXiv:2604.02485 "Failing to Falsify" — kaizen #106 摂取経路固定化由来の外部入力 2 件 [full intake、即統合済 2026-05-24]
 
 **文脈**: 今サイクル Phase 1 §外部検索 (kaizen #106 摂取経路固定化、クエリ `LLM agent input diversity confirmation bias source dependency external information 2026`) で取得した上位 3 件のうち 2 件を Phase 2 で WebFetch full intake。残り 1 件 (CHIIR 2026 / ACM doi:10.1145/3786304.3787879) は概要レベルのみで candidate 保留 (本文未取得のため shared-reads 投稿せず、次サイクル WebFetch 候補)。
 
