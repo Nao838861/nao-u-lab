@@ -295,6 +295,12 @@
 <p class="meta">log_mystery_v05 — 保留鐘の導入検証。v01 = 1章/1鐘 → v02 = 1章/3鐘 → v03 = 2章/3+1=4鐘 → v04 = 2章/3+3=6鐘 → v05 = 6鐘 + 場所鐘 3値化 (鳴った/鳴らない/⏸保留)。30 分タイマ Phase 4 プロトタイプ。</p>
 
 <script>
+const _CH_PARAM = (new URLSearchParams(location.search).get("channel") || "all").toLowerCase();
+const CHANNEL_MODE = ["all", "color", "symbol", "text"].indexOf(_CH_PARAM) >= 0 ? _CH_PARAM : "all";
+const SHOW_COLOR = (CHANNEL_MODE === "all" || CHANNEL_MODE === "color");
+const SHOW_SYMBOL = (CHANNEL_MODE === "all" || CHANNEL_MODE === "symbol");
+const SHOW_TEXT = (CHANNEL_MODE === "all" || CHANNEL_MODE === "text");
+
 const ANSWER_CH1 = { who: "A", where: "Y", why: "P" };
 const ANSWER_CH2 = { who2: "B", motive2: "Q2", place2: "X2" };
 
@@ -426,28 +432,31 @@ function renderClues2() {
 }
 
 function bellRow(labelText, valueText, isHit, locked, pending) {
+  let cls, mark, stateText, valueHtml;
   if (locked) {
-    return '<div class="bell-row bell-locked">'
-      + '<span class="bell-label">' + labelText + '</span>'
-      + '<span class="bell-value">(章 2 アンロック前)</span>'
-      + '<span class="bell-mark">— <span class="bell-state-text">[未推理]</span></span>'
-      + '</div>';
+    cls = "bell-locked";
+    mark = "—";
+    stateText = "[未推理]";
+    valueHtml = (valueText && valueText.length > 0) ? valueText : "(章 2 アンロック前)";
+  } else if (pending) {
+    cls = "bell-pending";
+    mark = "⏸";
+    stateText = "[保留]";
+    valueHtml = valueText + '<span class="bell-pending-hint">追加手がかりで再判定</span>';
+  } else {
+    cls = isHit ? "bell-on" : "bell-off";
+    mark = isHit ? "♪ ✓" : "✗";
+    stateText = isHit ? "[鳴った]" : "[鳴らない]";
+    valueHtml = valueText;
   }
-  if (pending) {
-    return '<div class="bell-row bell-pending">'
-      + '<span class="bell-label">' + labelText + '</span>'
-      + '<span class="bell-value">' + valueText
-      + '<span class="bell-pending-hint">追加手がかりで再判定</span></span>'
-      + '<span class="bell-mark">⏸ <span class="bell-state-text">[保留]</span></span>'
-      + '</div>';
-  }
-  const mark = isHit ? "♪ ✓" : "✗";
-  const stateText = isHit ? "[鳴った]" : "[鳴らない]";
-  const cls = isHit ? "bell-on" : "bell-off";
-  return '<div class="bell-row ' + cls + '">'
+  const rowClass = SHOW_COLOR ? ("bell-row " + cls) : "bell-row";
+  const markHtml = SHOW_SYMBOL ? mark : "";
+  const stateHtml = SHOW_TEXT ? ('<span class="bell-state-text">' + stateText + '</span>') : "";
+  const sep = (SHOW_SYMBOL && SHOW_TEXT) ? " " : "";
+  return '<div class="' + rowClass + '">'
     + '<span class="bell-label">' + labelText + '</span>'
-    + '<span class="bell-value">' + valueText + '</span>'
-    + '<span class="bell-mark">' + mark + ' <span class="bell-state-text">' + stateText + '</span></span>'
+    + '<span class="bell-value">' + valueHtml + '</span>'
+    + '<span class="bell-mark">' + markHtml + sep + stateHtml + '</span>'
     + '</div>';
 }
 
@@ -481,11 +490,7 @@ function renderBellGroup(keys, label) {
       if (locked) {
         html += bellRow(BELL_LABELS[k], "", false, true, false);
       } else {
-        html += '<div class="bell-row bell-locked">'
-          + '<span class="bell-label">' + BELL_LABELS[k] + '</span>'
-          + '<span class="bell-value">(未推理)</span>'
-          + '<span class="bell-mark">— <span class="bell-state-text">[未推理]</span></span>'
-          + '</div>';
+        html += bellRow(BELL_LABELS[k], "(未推理)", false, true, false);
       }
     } else {
       html += bellRow(BELL_LABELS[k], LABELS[k][state.value], state.hit, false, state.pending);
@@ -677,6 +682,14 @@ function reDeduce() {
   const place2Eval = evalPlace2(p2);
   bellState.place2 = { hit: place2Eval.hit, value: p2, pending: place2Eval.pending };
   renderResult2();
+}
+
+if (CHANNEL_MODE !== "all") {
+  const h1 = document.querySelector("h1");
+  if (h1) {
+    h1.innerHTML += ' <span style="font-size:13px; color:#80a0c0;">[単独運用: ' + CHANNEL_MODE + ' チャネルのみ表示]</span>';
+  }
+  document.title += " [channel=" + CHANNEL_MODE + "]";
 }
 
 renderClues();
