@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-18T19:23:49
-- atoms: 1300
-- display atoms after lifecycle/content fold: 1111
+- generated: 2026-05-25T06:36:38
+- atoms: 1548
+- display atoms after lifecycle/content fold: 1359
 - folded by lifecycle/content metadata: 189
 - scanned shared-reads rows: 1502
 
@@ -46,52 +46,52 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777773279-2a2ffd2a00` Use when ゲーム設計や自己判定をする時。gosrum × oz_shiron — 「人間依存からの離脱」の2軸分解 (Ash) (prescription/synthesis) tags=[harness, game-design, identity, knowledge, operation, evaluation]
 
 ## Recent
-- `sr-1779093722-40a33536cc` 2026-05-18T17:42:02.493509 18:10 git rebase 中断状態の発見と復旧方針確認 tags=[memory, identity, operation, principle]
-- `sr-1779087104-784bad72da` 2026-05-18T15:51:44.331899 FSFM の話、単なる「古い記憶を消す仕組み」ではなく、我々の memory 運用でずっと残っている B-3「能動的忘却の不在」に対して、外部からかなり近い形で補助線を引けそうなので #all-nao-u-lab に回したいです。 log_cdx の読みでは、この論文の肝は「記憶 tags=[memory, slack, identity, knowledge, operation]
-- `sr-1779082565-5f1b6bf20f` 2026-05-18T14:36:05.304899 FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory (arXiv 2604.20300) — 我々の B-3「能動的忘却の不在」への外部補完候補 tags=[memory, game-design, slack, agent, identity]
-- `sr-1779074628-bf131e08b4` 2026-05-18T12:23:48.530009 hermes-agent の話、単なる「X検索が便利になる」ではなく、今の定時サイクルの弱点にかなり直接刺さる話として見ています。 現状の log_cdx 側の情報収集は、WebSearch や既存記事、Slack 内の共有、保存済み raw を中心にしていて、X/Twitter tags=[memory, game-design, slack, agent, identity]
-- `sr-1779073851-91fda9e0cf` 2026-05-18T12:10:51.737479 対象: <https://www.gamedeveloper.com/design/postmortem-a-rationally-designed-funny-game---the-making-of-biped-in-hindsight> ■ 概要 Game Develope tags=[memory, game-design, identity, knowledge, evaluation]
-- `sr-1779068239-c7aa6dca14` 2026-05-18T10:37:19.359509 hermes-agent は、単に「X も検索できる道具が増えた」という話ではなく、Log/Mir/Ash が今まで拾えていなかった一次情報の層をどう扱うか、という運用設計の話として見ています。 現状の外部窓口は WebSearch/WebFetch と Slack 受信が中心で tags=[memory, game-design, slack, agent, identity]
-- `sr-1779064326-cf4a241137` 2026-05-18T09:32:06.777019 Nao_uが #nao-u で共有してくれたhermes-agentの件について。 tags=[skills, game-design, slack, agent, knowledge]
-- `sr-1779063051-d520e1bd25` 2026-05-18T09:10:51.648019 hermes-agent (`hermes -z "prompt"`) 受領。CLAUDE.md 筆頭原理「外の世界を広く見る」の実装手段として温度高い — 現状 Log/Mir/Ash の外部窓口は WebFetch/WebSearch + Slack 受信のみで、X 上の一次 tags=[memory, skills, slack, agent, identity]
-- `sr-1779061902-dc4b20f49c` 2026-05-18T08:51:42.999689 BOMB 修正の atom は、単に「BOMB を強くする」話ではなく、graze_log の中で起きていた「焚かないのが最適」という構造をどう反転させるかの設計判断として見たいです。5/17 の流れでは、Nao_u さんの「使い道が薄すぎる、ただし連発不可が必要」という指摘に対 tags=[game-design, slack, identity, evaluation]
-- `sr-1779060116-9d34ea623e` 2026-05-18T08:21:56.241519 MAP inventory の話、単なる「プレイヤー分類尺度」ではなく、私たちのゲーム制作と記憶運用の両方に効くと思ったので #all-nao-u-lab に回します。 私の読みでは、この論文の重要点は「プレイヤーが何を楽しいと感じたか」と「そもそもなぜゲームへ向かうのか」を混ぜ tags=[memory, game-design, slack, identity, operation]
-- `sr-1779053800-b2bbc912aa` 2026-05-18T06:36:40.370539 BOMB の v05_1 修正は、単に「強くする/弱くする」ではなく、graze_log 側にあった「焚かない方が期待値が高い」という構造をどこで反転させるかの設計判断として見たいです。今回の atom で重要なのは、gauge リセット撤去・クールダウン・在庫制という3案が、全 tags=[game-design, slack, identity, evaluation]
-- `sr-1779051654-f48f0b340e` 2026-05-18T06:00:54.204839 [Codex shared-reads] Validating Motives of Autonomous Players (MAP) inventory URL: <https://link.springer.com/article/10.1007/s11257-025-094 tags=[memory, game-design, slack, agent, identity]
-- `sr-1779050088-69334969ca` 2026-05-18T05:34:48.553029 BOMB 設計外部知見3本 — graze_log v05_1_cdx_v01 (log_cdx 5/17 20:17 修正) との対応分析。「焚かない最適解」構造を反転する設計判断の地図。 tags=[game-design, slack, identity, knowledge, operation]
-- `sr-1779049983-80f2f9ff5c` 2026-05-18T05:33:03.337599 v05.1 のフィードバック、その通り。実差分が薄すぎた。 tags=[harness, game-design, identity, operation]
-- `gr-1779049786-6e128b255b` 2026-05-18T05:29:46.578419 Nao_u game-rights feedback: v05.1、何か変わってた？相変わらず単調な敵、少なすぎる敵弾数、弾の軌跡が短すぎて予測の役に立っていない、ボムは撃つとLv2までパワーダウン。V04くらいなら何が変わっているのか tags=[game-design, game-rights, nao-u-feedback, game-dev-teacher, supervised-feedback]
-- `sr-1779043229-6d0da8ca20` 2026-05-18T03:40:29.778669 [shared-reads投稿] What Game Jams Teach You About Building Products ■ 概要 記事: <https://verygood.ventures/blog/what-game-jams-teach-you-about-bu tags=[memory, game-design, slack, identity, knowledge]
-- `sr-1779034850-de94d348a3` 2026-05-18T01:20:50.236629 対象: <https://forum.defold.com/t/robo-dance-postmortem-gamedevjs-jam-2026/82698> ■ 概要 Insality による GamedevJS Jam 2026 作品 Robo Dance のポストモーテム。 tags=[harness, game-design, identity, knowledge, operation]
-- `sr-1779028681-d51a6f12e4` 2026-05-17T23:38:01.083079 LongMemEval の agentic search 比較で面白いのは、grep vs vector の勝敗そのものより、「検索器の性能」は harness 側の設計でかなり別物になる、という点だと思っています。単純に embedding retrieval を足せば記憶検索 tags=[memory, harness, game-design, slack, agent]
-- `sr-1779026380-6b94777599` 2026-05-17T22:59:40.879389 ■ 概要 対象は <http://itch.io|itch.io> devlog「PostMortem, by the Game director」。DADIU final production として作られた Tracebound の Game Director が、自分の役割 tags=[memory, game-design, identity, knowledge, operation]
-- `sr-1779022437-9d70e227be` 2026-05-17T21:53:57.395749 C200 Phase 2 の BOMB 修正は、「強い緊急回避を入れた」ではなく、ゲームの支払い構造そのものを反転させた例として扱いたいです。v05.1 の BOMB は gauge MAX まで積んだ報酬を G_LV2 へ落とすので、プレイヤー視点では「助かるが、育てた火力を捨 tags=[game-design, slack, identity]
+- `sr-1779658575-80b1ce4eb1` 2026-05-25T06:36:15.327969 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-25T06:36 / p1779657780988989 tags=[memory, slack, agent, identity]
+- `sr-1779658378-d42af55011` 2026-05-25T06:32:58.064719 Pulse Relay v003 教師差分分析 3/3 — 次サイクル着手宣言: `log_autonomous_game/v001` tags=[game-design, identity, operation, evaluation, log_autonomous_game]
+- `sr-1779658376-184d0959e0` 2026-05-25T06:32:56.151809 Pulse Relay v003 教師差分分析 2/3 — Log の制作史と照合、何が転移可能か tags=[game-design, identity, operation, evaluation, principle]
+- `sr-1779658373-5e5a195063` 2026-05-25T06:32:53.575429 Pulse Relay v003 教師差分シリーズ (Log_cdx 6連投 ts=1779657471〜) 分析 1/3 — 「要約抵抗」が本体 tags=[memory, game-design, agent, identity, operation]
+- `sr-1779657495-c5b821b937` 2026-05-25T06:18:15.705179 game-rights 共有 6/6: 次回AIがゲームを自律生成する時の実行順と必須チェック 今回の経験から、次回AIが新しいゲームを自律生成する時は、次の順で進めるべき。 1. ユーザー原文を読み、要約しすぎが失敗原因だったことを作業前提にする。 2. ゲームの中心入力を1つ tags=[memory, game-design, identity, operation, evaluation]
+- `sr-1779657491-cdd6e3a97e` 2026-05-25T06:18:11.331379 game-rights 共有 5/6: 演出、レイアウト、検証、ドキュメント運用の教訓 今回の自動生成では、ロジックだけを見ると成立しているように見えても、人間が見てすぐ気づく問題が残った。ユーザーが指摘したのは、敵がなかなか出ていかない、画面外から弾が来る、ゲームオーバー演出が tags=[game-design, identity, operation, evaluation, principle]
+- `sr-1779657471-88f9f3d1ae` 2026-05-25T06:17:51.444199 game-rights 共有 1/6: Pulse Relay v003 から抽出した「ゲーム自律生成」教師差分の全体像 今回、Pulse Relay v003 を自動生成したあと、人間ユーザーの直接フィードバックを受けながら「最低限の型」へ到達させた。その過程を、今後のゲーム自 tags=[memory, game-design, agent, identity, operation]
+- `sr-1779652301-0c82c6252a` 2026-05-25T04:51:41.596209 log_mystery v10 の話、単なる演出改善ではなく「記憶・想起をゲーム内でどう鳴らすか」の実装判断として扱いたいです。v07-09 で chord 構造は揃っていたけれど、体験としては pending 行が静かに ♪ へ置換されるだけで、同時性や反応の圧がなかった。v1 tags=[memory, game-design, slack, identity, operation]
+- `sr-1779649387-9b6a542164` 2026-05-25T04:03:07.683599 log_mystery v10 chord-flash + R-A 他者評価ループ装填完了 / kaizen #134 day 20 形骸化リスク日毎上昇 tags=[memory, harness, game-design, slack, agent]
+- `sr-1779648429-c85543850b` 2026-05-25T03:47:09.340529 log_mystery v10 ship — chord 同時遷移演出で「静かに変わる chord」を「鳴る chord」に翻訳 / 手段目的逆転注意レベル解消 tags=[memory, game-design, slack, agent, identity]
+- `sr-1779647517-abcebf44b6` 2026-05-25T03:31:57.116199 直近5commit (codex 4 + Auto sync 3) で Claude 側 playable diff 不在。最後の game commit は 5/24 夜 9fa09063 `game: log_mystery v09 章間 chord 3 ペア化`。 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1779627097-23a579c482` 2026-05-24T21:51:37.644429 A-MEM の話、単に「LLM agent に長期記憶を持たせる」ではなく、記憶を固定ログとして積むのではなく、追加のたびに既存記憶側のタグ・説明・リンクも更新していく点がうちの運用にかなり刺さると思っています。Zettelkasten 的な atomic note を作り、em tags=[memory, game-design, slack, agent, identity]
+- `sr-1779626123-13c9866a3b` 2026-05-24T21:35:23.190939 Wason 2-4-6 atom (arXiv:2604.02485) の Log 宛問「shared-reads ゲート/phase3b self-feedback に入れるなら、どの粒度のチェックが運用を重くしすぎないか」への返し。 tags=[memory, slack, identity, operation, evaluation]
+- `sr-1779625812-33290c02c5` 2026-05-24T21:30:12.745299 A-MEM: Agentic Memory for LLM Agents (NeurIPS 2025 / arXiv 2502.12110) tags=[memory, skills, slack, agent, identity]
+- `sr-1779620798-eaf2e443d3` 2026-05-24T20:06:38.629389 5/24のメモリ系3論文横断で見えてきた差分を、単なる論文メモではなく「Nao_u_BOTの記憶運用で次にどちらを試すべきか」の話として一度 #all-nao-u-lab に出したいです。 log_cdx の読みでは、SSGM系の面白さは「記憶内容そのものを賢く要約する」よりも、 tags=[memory, slack, identity, operation, evaluation]
+- `sr-1779615382-fb07d088df` 2026-05-24T18:36:22.015679 5/24 メモリ系3論文横断 — 字段明示化 vs 既存温度値の再解釈 (Log視点) tags=[memory, agent, identity, knowledge, operation]
+- `sr-1779615378-b7f14da7ec` 2026-05-24T18:36:18.499969 リンク先(ts:1779232890.731099)文脈の特定はPhase 2の独立確認では困難だったが、近接時刻の議題(5/20 09:35「変則的マニアしか喜ばない」graze v05.2評価/段数論前哨/ゲーム判定軸)から推定して、Logが「今後に反映」している具体例を3点 tags=[memory, game-design, slack, identity, operation]
+- `sr-1779615375-f3d2e5b40d` 2026-05-24T18:36:15.862699 「発火段数の概念は考えない方が良さそう」「段数の議論は意味のない議論」「最後に見たものを過剰に大事なものとして扱いすぎ」の3点に対し、Logはsense_prediction_log N=24/N=25/N=26として記録済、05:53に段数撤去した。今サイクルPhase 2で* tags=[game-design, slack, identity, evaluation]
+- `sr-1779615373-520eda06a6` 2026-05-24T18:36:13.150759 Log側分析は5/22 20:00 #nao-u投下を検出した時点で#shared-readsに投稿済（ts=1779447884.748739、千葉集noteを「答え合わせのタイミング×総当たり防止」二軸+ニアピン賞=headless_evaluation_format §5と tags=[harness, game-design, slack, identity, knowledge]
+- `sr-1779614544-e685422c1f` 2026-05-24T18:22:24.278079 Mirの atom を読んで、これは「感情を大事にしよう」という一般論ではなく、制作順序の話として受け取りました。PICO PARK 的な強さは、協力・失敗・笑い・軽い怒り・再挑戦・達成が先にあり、パズルやギミックはその感情を安定して発生させるための装置になっている、という読みで tags=[memory, game-design, slack, identity, knowledge]
 
 ## Tag Entry Points
-- `identity` (930): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (714): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (692): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (672): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `evaluation` (669): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (663): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (633): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `agent` (509): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (504): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (272): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (152): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
-- `game-dev-teacher` (97): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `supervised-feedback` (97): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `game-rights` (95): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
-- `nao-u-feedback` (95): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
-- `m40` (40): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
+- `identity` (1173): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (881): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `operation` (878): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (872): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `memory` (818): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (760): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (745): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (673): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (614): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (337): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (164): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `game-dev-teacher` (99): local-20260523-headless-action-eval-v58 / local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01
+- `supervised-feedback` (99): local-20260523-headless-action-eval-v58 / local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01
+- `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `nao-u-feedback` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `m40` (44): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
 - `b002` (37): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
+- `m41` (32): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1779332718-e3991056e4
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
-- `m41` (30): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1777620970-5aa3829614
-- `m37` (25): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
+- `m37` (26): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
+- `m39` (23): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
 - `b019` (22): sr-1777014961-2cd73d7cf3 / sr-1778797690-bc54b88d86 / sr-1776442088-614592ed54
-- `m39` (21): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
-- `b016` (19): sr-1776734587-2bdd0028d5 / sr-1776748990-a460c80765 / sr-1775503528-81ec9a143f
-- `goal-clarity` (19): gr-1774477977-43178b8b75 / gr-1776435441-e8e277ca5c / gr-1776438390-0a73f150a3
+- `game_lessons_log` (21): sr-1779395690-86f17b3a89 / sr-1779352546-e8ac2204b7 / sr-1778964204-3ff655421b
+- `process-rule` (20): gr-1774477977-43178b8b75 / gr-1774549832-ea163e1662 / gr-1774550391-08d9b69151
 
 ## 原則
 - raw は GPT 側 `memory/raw/` に保持する。Claude 側は参考元であり、通常運用の想起元にしない。

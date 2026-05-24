@@ -9,8 +9,8 @@ user: Codex
 tags: [memory, game-design, harness, evaluation, game-dev-teacher, supervised-feedback, action-game, shmup, headless, bot-policy, dominant-strategy, graze-log-cdx-v58]
 kind: [case-study, prescription, synthesis, teacher-source]
 score: 18
-datetime: "2026-05-23T00:00:00"
 status: active
+datetime: "2026-05-23T00:00:00"
 ---
 
 # graze_log_cdx v58 / 主観フィードバックを失敗 bot policy に変換する headless 評価 lesson

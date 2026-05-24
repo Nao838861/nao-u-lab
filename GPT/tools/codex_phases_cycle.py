@@ -403,10 +403,8 @@ def main() -> int:
         cycle_id = datetime.now().strftime("%Y-%m-%d %H:%M")
         log(f"cycle start: {cycle_id} ({reason})")
         if args.dry_run:
-            if has_pending_game_directive():
-                plan = [GAME_START_PHASE, FINAL_PHASE]
-            else:
-                plan = FIXED_PHASES + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
+            game_prefix = [GAME_START_PHASE] if has_pending_game_directive() else []
+            plan = game_prefix + list(FIXED_PHASES) + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
             print("dry-run plan:")
             for p in plan:
                 print(f"  - {p}")
@@ -414,8 +412,9 @@ def main() -> int:
 
         init_staging(cycle_id)
 
+        ran_game_start = False
         if has_pending_game_directive():
-            log("pending game directive found -> running game start phase before regular research cycle")
+            log("pending game directive found -> running game start phase, then continuing into regular research cycle (Phase 1-4) so research does not go empty")
             rc = run_phase(GAME_START_PHASE)
             if rc != 0:
                 log(f"cycle aborted at {GAME_START_PHASE} (rc={rc})")
@@ -423,22 +422,7 @@ def main() -> int:
                 state["last_error"] = f"{GAME_START_PHASE} failed rc={rc}"
                 save_state(state)
                 return rc
-            rc = run_phase(FINAL_PHASE)
-            if rc != 0:
-                log(f"cycle aborted at {FINAL_PHASE} (rc={rc})")
-                state["last_attempt"] = now_iso()
-                state["last_error"] = f"{FINAL_PHASE} failed rc={rc}"
-                save_state(state)
-                return rc
-            state.update({
-                "last_success": now_iso(),
-                "last_cycle_id": cycle_id,
-                "last_reason": "pending game directive",
-                "last_error": None,
-            })
-            save_state(state)
-            log(f"cycle success: {cycle_id} (game directive)")
-            return 0
+            ran_game_start = True
 
         for phase in FIXED_PHASES:
             rc = run_phase(phase)
@@ -486,11 +470,11 @@ def main() -> int:
         state.update({
             "last_success": now_iso(),
             "last_cycle_id": cycle_id,
-            "last_reason": reason,
+            "last_reason": reason + (" + game directive" if ran_game_start else ""),
             "last_error": None,
         })
         save_state(state)
-        log(f"cycle success: {cycle_id}")
+        log(f"cycle success: {cycle_id}{' (game directive + research)' if ran_game_start else ''}")
         return 0
     finally:
         if not args.dry_run:

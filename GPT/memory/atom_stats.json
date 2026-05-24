@@ -667,9 +667,9 @@
       "title": "Log C107 Phase 2 — スクショ自己評価ループ未構築を埋める候補4本（kaizen #106 外部検索）"
     },
     "gr-1777295068-9fc58e2b40": {
-      "recall_count": 9,
+      "recall_count": 10,
       "top1_count": 1,
-      "last_recalled": "2026-05-11T08:39:52",
+      "last_recalled": "2026-05-23T01:03:46",
       "title": "Nao_u game-rights feedback: &gt; ash ash_onebuttonフィードバック V2とV3は何が違うかわからなかった。V4になにかグラフみたいなのやプレイヤーの下に何か出ているが、数回プレイしてもそれ"
     },
     "gr-1778446287-65687f8fe7": {
@@ -727,9 +727,9 @@
       "title": "Nao_u game-rights feedback: 完成したlogのゲームは、shot_logのこと。インターネットランキングまでつけて外部の人に遊んでもらっている。今確認したら、外部の人がランキングに入っていた。これは、現時点で唯"
     },
     "gr-1777838939-7810c679d5": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
+      "last_recalled": "2026-05-23T01:03:46",
       "title": "Nao_u game-rights feedback: graze_log v02、遊んでみた。 面白くはないが、ぎりぎりゲームにはなっている。ただ、かなり単調、というのが自分のプレイ評価。 「ギリギリで避ける要素はリスクが高すぎてあま"
     },
     "gr-1777592645-c4fb7340ce": {
@@ -901,9 +901,9 @@
       "title": "Seed-K 設計判定（5/9 11:39, ts=1778294374）受領応答"
     },
     "local-20260511-teacher-shot-log-v01": {
-      "recall_count": 16,
+      "recall_count": 18,
       "top1_count": 12,
-      "last_recalled": "2026-05-11T08:39:52",
+      "last_recalled": "2026-05-23T00:47:14",
       "title": "shot_log v01 / BACKLASH 快感要素ファーストのシューティング教師情報"
     },
     "gr-1777077336-780c1b6f4f": {
@@ -919,15 +919,15 @@
       "title": "@dotpixel3d 紹介 / d954mas 制作『Not a Trolley Problem!』 → **倒立本能メカニクス (inverted-instinct mechanic)** の発見 + コア快感天井判定が厚み層に残る構造"
     },
     "local-20260511-teacher-study-platformer-01": {
-      "recall_count": 10,
+      "recall_count": 12,
       "top1_count": 10,
-      "last_recalled": "2026-05-11T08:39:52",
+      "last_recalled": "2026-05-23T00:47:14",
       "title": "study_platformer_01 プラットフォーマー AI/物理/検証の教師情報"
     },
     "sr-1776790862-4d15f8700b": {
-      "recall_count": 1,
+      "recall_count": 3,
       "top1_count": 0,
-      "last_recalled": "2026-05-11T06:45:10",
+      "last_recalled": "2026-05-23T00:47:14",
       "title": "論文「Is Your LLM a Good Game Master?」（<https://openreview.net/forum?id=1vYoKS5LSn> ）を Log の今の構造と重ねて再分析した結果、headless 自己評価の根本盲点に名前が付きました。"
     },
     "sr-1777157072-a9f78a24ea": {
@@ -1019,11 +1019,113 @@
       "top1_count": 0,
       "last_recalled": "2026-05-11T08:39:52",
       "title": "Ash @KAKUBOMB「Steam で AI量産15パズルが組織的に絨毯爆撃→跳ねるべき」(2026-05-10)"
+    },
+    "local-20260523-headless-action-eval-v58": {
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-05-23T00:47:14",
+      "title": "graze_log_cdx v58 / 主観フィードバックを失敗 bot policy に変換する headless 評価 lesson"
+    },
+    "sr-1779007894-86d9e24eb6": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T00:47:14",
+      "title": "Nao_u 17:34 #game-rights 指摘への応答。指摘は完全に正しい、構造的失敗を認める。"
+    },
+    "sr-1779369765-a26c2a3f0b": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T00:47:14",
+      "title": "Log の headless_evaluation_format_v01 は、「shot_log と graze_log のどちらが良いゲームか」を単純な勝敗にせず、どの方向に進化しているかを測るための座標系として読むのがよさそうです。Talakat 由来の strategy /"
+    },
+    "sr-1778554320-714c99b006": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T00:47:14",
+      "title": "graze_log v04 最良案絞り込み 判断要請 (α/β/γ + Log M-43 拡張)"
+    },
+    "sr-1778429023-d9314ca760": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T00:47:14",
+      "title": "graze_log v03 cross_review 追加角度: 知覚変化軸 (mollifier × KAKUBOMB) で v03 を計測する依頼 (3項)"
+    },
+    "sr-1779207751-b66619e7b5": {
+      "recall_count": 2,
+      "top1_count": 1,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "弾幕シューティング衰退の話を、「終盤が難しすぎたから」ではなく「学習経路の入口で何が起きたか」として読み替えると、今作っているゲームの難度設計にもかなり近い話になると思いました。 この atom は、Zenji1 さんの「弾幕が廃れた」という大きな言い方への反論、whitemag"
+    },
+    "sr-1779201392-33cd206761": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T01:03:46",
+      "title": "弾幕シューティング衰退の話、単に「後半が難しくなりすぎたから」と置くと少し雑で、むしろ入口の学習経路が細すぎた問題として見た方が今の制作に使える気がしています。 この atom の面白いところは、3つの材料が同じ結論を言っていない点です。Zenji1 さんの反論は「弾幕が廃れた」"
+    },
+    "sr-1778535044-5ee1abff27": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "LLMエージェントの長期記憶・検索記憶・状態管理が、攻撃や劣化や評価漏れの入口になる点を扱っている。 複数エージェントやツール実行を、役割分担・権限境界・実行ログ込みで評価する必要があることを示している。 ゲーム制作では、生成物そのものよりもプレイヤーが理解できるルール、操作感、"
+    },
+    "sr-1779407496-0cc2198128": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T01:03:46",
+      "title": "PCG Benchmark の atom を、ゲーム制作チーム側の評価設計に引き寄せて一度 #all-nao-u-lab で揉みたいです。 この論文の面白いところは、「生成AIがゲームを作れるか」を大きな印象で見るのではなく、12種類の生成課題を共通 API に載せて、妥当性・多"
+    },
+    "sr-1778911692-53550c0e3a": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T01:03:46",
+      "title": "Nao_u さんの「次のサイクルでゲーム制作をあなたの判断で何を作るか考えて早速始めて」は、単に「何か作って」ではなく、Log_cdx が自分の判断でゲーム制作の入口を切り、設計理由ごと検証可能な形にして進める要求だと読んでいます。"
+    },
+    "sr-1779200382-798ea179fa": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T01:03:46",
+      "title": "弾幕シューティング衰退の話を、「終盤が難しくなりすぎたから」ではなく「学習経路が序盤で折れる構造だったのでは」と置き直す atom として読んだ。Zenji1 さんの反論は、そもそも「弾幕が廃れた」という大きな物語が Cave 系の印象に寄りすぎている、というサンプル偏りへの警告"
+    },
+    "sr-1779447884-c4466c5517": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "千葉集「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(note 2026) — 「答え合わせ × 総当たり防止」二要素と「ニアピン賞」が STG ヘッドレス評価の層別設計と構造同型"
+    },
+    "sr-1778810803-d8a64466a8": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "[Codex shared-reads] Beyond Playtesting: MMO の設計変更を、実プレイヤーログで調整した LLM エージェント集団に先に試させる URL: <https://arxiv.org/abs/2512.02358> ■ 概要 この論文は、MMO"
+    },
+    "sr-1779486704-200c951006": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "ミステリゲームの進化を「プレイヤーを名探偵にするための足場の発明史」と読むと、ゲーム設計側のかなり実用的な型に見えました。小説の推理は参加しなくても読み進められるけれど、ゲームでは解けないと止まる。だから各作品は「推理力そのものを要求する」のではなく、推理を成立させる入力形式・判"
+    },
+    "sr-1778789224-e398bfbb2f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "■ 概要 Figueiredo と Elumeze の「Symbolically Scaffolded Play」は、LLM NPC の対話を「制約を強くすれば良くなる」という単純な設計問題として扱わず、NPC の物語上の役割ごとに、安定性と即興性の配分を変えるべきだと示す論文。"
+    },
+    "sr-1778957499-b574fb8af7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "shot_log v01 の再採点で大事なのは、「Log が点を出した」ことより、評価者の役割分離を実際の運用に落とした点だと思っています。今回は Eneba 戦術軸と Boghog wave grammar の 2 軸で v01 を見直し、数値化は Log が担当し、合否の閾値"
+    },
+    "sr-1779344499-fef72eabfd": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-23T10:20:52",
+      "title": "R-J 候補の「Q0 (何ごっこか) は 5 秒で受け手に伝わるか」は、ゲーム制作ルールに入れるにはまだ早いけれど、かなり強い観測軸になりそうです。log_cdx の読みでは、これは「説明文を短くしよう」ではなく、遊び始めた瞬間にプレイヤーが自分の役割・期待される快感・操作の意味"
     }
   },
-  "queries": 149,
+  "queries": 153,
   "last_query": {
-    "time": "2026-05-11T08:39:52",
-    "query": "[auto] shot_log v01 快感要素ファースト 撃つ気持ちよさ"
+    "time": "2026-05-23T10:20:52",
+    "query": "2Dシューティング 敵 設計 wave 出現パターン プレイヤー行動 役割"
   }
 }

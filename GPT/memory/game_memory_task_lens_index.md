@@ -148,3 +148,35 @@ For future 2D shooting games, when feedback says "enemies overlap", "all enemies
 - lens: `Stage Grammar / Enemy Formation`, `Repair / Iterative Improvement`, `Playable / Headless evaluation`
 - recall query: `python tools/memory_recall.py "enemy route intent overlap shot_log path keyframes speed dwell exit reason"`
 - key lesson: each enemy routine must preserve why the path exists, where it asks the player to shoot/move, how fast it enters, why it exits, and what that exit speed means. Fix overlap with target spacing, spawn delay, path progress, and radius; do not add meaningless offsets or apply the same easing rhythm to every enemy.
+
+## 2026-05-25追加: 特殊システムHUD / 入力導線 / 記号化レッスン
+
+今後、特殊アクション、クールダウン、反射/変換メカニクス、ダッシュ、ガード、ショット、スキル、タイトル開始入力、リトライ導線があるゲームを作る/直す時は、HUD・チュートリアル・開始/リトライUIを実装する前に `memory/game_special_system_hud_affordance_lesson_20260525.md` を読む。
+
+- lens: `Playable / Headless evaluation`, `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`
+- recall query: `python tools/memory_recall.py "special system HUD affordance cooldown input title retry reflection conversion always-on text"`
+- key lesson: 特殊メカニクスを常時文字やサイドパネル説明で教えない。ゲーム自身の入力、対象物状態、記号化で教える。発動不可、発動可能だが意味が薄い、発動可能かつ意味がある、を分ける。対象物側に記号を付ける。プレイヤー側の表現は意味のある時だけ強める。必要なら空ゲージから始める。タイトル開始/リトライには、可能な限りコア特殊入力を使う。
+
+## 2026-05-25追加: 自動生成から最低限の型へ到達する教師差分
+
+今後、新しいゲームを自律的に作る時、または自動生成後にユーザー修正を受けたゲームを次回の教師データに変換する時は、実装前に `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` を読む。
+
+- lens: `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`, `Stage Grammar / Enemy Formation`, `Playable / Headless evaluation`
+- recall query: `python tools/memory_recall.py "supervised delta autonomous game creation Pulse Relay v003 enemy exit offscreen shots HUD retry Japanese docs"`
+- key lesson: ユーザーが自動生成後に出した指示は、Codex が自律的に作れなかった差分である。敵の居座り、画面外射撃、下部急加速退場、終了/爆発/被弾演出不足、右側サイドパネル、特殊システムの常時文字説明、リトライボタン誤読、日本語ログ不足を、短い要約に圧縮せず、次回の実装前ゲートとして使う。
+
+## 2026-05-25追加: ゲーム自律制作メタプロンプト
+
+今後、新しいゲームをゼロから作る時、既存ゲームの新バージョンを作る時、またはゲーム制作を他AIへ依頼するプロンプトを書く時は、設計前に `memory/game_autonomous_creation_metaprompt_20260525.md` を読む。
+
+- lens: `Generation / Co-creation`, `Stage Grammar / Enemy Formation`, `Playable / Headless evaluation`, `Feedback / Rights / Human Judgment`
+- recall query: `python tools/memory_recall.py "autonomous game creation metaprompt enemy wave special system HUD retry validation Japanese"`
+- key lesson: 新規ゲーム制作時は、中心入力、特殊システム3状態、70-90秒のステージカーブ、代表敵モーション、代表ウェーブ、下部急加速/画面外射撃禁止、サイドパネル禁止、爆発/被弾/終了演出、悪いプレイ方針/良いプレイ方針検証、日本語ログを、実装前からプロンプトに含める。
+
+## 2026-05-25追加: LLMがゲーム制作で落としがちな人間側ギャップ
+
+今後、特定ゲームの再現ではなく、新しいゲームをゼロから考える時は、`memory/game_creation_human_gap_metaprompt_20260525.md` を最初に読む。
+
+- lens: `Generation / Co-creation`, `Feedback / Rights / Human Judgment`, `Playable / Headless evaluation`
+- recall query: `python tools/memory_recall.py "LLM human gap game creation playable intent affordance feedback validation"`
+- key lesson: LLMのデフォルト一般論では抜けやすい、動く/遊べるの差、処理都合ではない行動意図、説明文ではなく状況で教える特殊システム、中心入力で開始/リトライを教えること、常時表示の抑制、学習/圧力/休符/山による難易度、反応としての演出、悪いプレイ方針検証を、実装前に考える。
