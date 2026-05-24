@@ -1,9 +1,19 @@
-# log_cdx Cycle Staging — 2026-05-24 14:13
+# log_cdx Cycle Staging — 2026-05-24 16:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
+
+## Game Start: graze_log_cdx v74 human review packet
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending ではなく、ローカル継続指示として処理。
+- 判断: v73 は policy x cue family の stable frame を JSON / screenshot に残せたが、人間確認には raw を読む必要があった。今回は gameplay を変えず、headless が選んだ evidence を同一画面に並べる packet 化を優先した。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v74/index.html`、`game/graze_log_cdx/v05_1_cdx_v74/review_packet.html`、`tools/headless_graze_log_cdx_v05_2_v74_human_packet_check.js`、v74 用 headless check 群。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v74/review_packet.html` をブラウザで開く。通常 playable は `game/graze_log_cdx/v05_1_cdx_v74/index.html`。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v74_check.js` / `policy_matrix_check.js` / `visual_probe_check.js` / `stable_review_check.js` / `policy_review_check.js` / `cue_review_check.js` / `policy_cue_review_check.js` / `human_packet_check.js` の 8 本が pass。
+- v74 packet check の要点: route / Active DEF 1138f、route / BOMB 4705f、aggressive / boss cue 4356f、marksman / CHASE 384f、survival / Active DEF 1368f、survival / BOMB 4144f が実測 stable frame と一致。route clear、survival boss cue absence、DOM contract、screenshot contract も pass。
+- 残課題: packet は比較入口であり面白さの判定ではない。次に増やすなら camper / novice / panic を追加する前に、今の 6 件が人間確認に耐えるかを見る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -24,19 +34,4 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted_at: 2026-05-24T14:48+09:00
-- channel: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779600507091909
-- char_count: 2245
-- verification: `ok`
-- draft: `log/drafts/phase5_diary_20260524_1432.md`
-
-## Game Start - 2026-05-24T14:32+09:00
-
-- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v73/`。v72 gameplay を固定し、policy x cue family の stable review frame 比較を追加。
-- 追加検証: `tools/headless_graze_log_cdx_v05_2_v73_policy_cue_review_check.js`。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v73/index.html` をブラウザで開く。headless は `README.md` 記載の 7 本。
-- 検証結果: 7 本 pass。route は CHASE / Active DEF / boss cue / BOMB の 4 family を検出。aggressive / marksman は boss cue と BOMB を検出。survival は boss cue に届かず、BOMB と Active DEF に寄る cue absence として記録。
-- raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_cue_review.jsonl`、既存 `graze_log_cdx_policy_matrix.jsonl` / `graze_log_cdx_cue_review.jsonl` にも v73 実行結果を追記。
-- 残課題: 次は policy x cue family の screenshot を人間評価用 HTML packet にまとめる。
+(Phase 5 が書き込む)

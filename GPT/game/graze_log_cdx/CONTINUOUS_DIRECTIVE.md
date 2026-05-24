@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-24T14:32:00+09:00
+last_handled_at: 2026-05-24T16:45:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v73/` で v72 の gameplay を維持し、CHASE / Active DEF / boss cue / BOMB の cue family を route / aggressive / marksman / survival の policy 別に比較する focused evaluation を追加した。`tools/headless_graze_log_cdx_v05_2_v73_policy_cue_review_check.js` は route の 4 family、aggressive / marksman の boss cue と BOMB、survival の boss cue absence と BOMB / Active DEF 寄りを記録し、既存 check と合わせて 7 本 pass。
+last_result: `game/graze_log_cdx/v05_1_cdx_v74/` で v73 の gameplay を維持し、policy x cue family の evidence frame を `review_packet.html` に並べる human review packet を追加した。`tools/headless_graze_log_cdx_v05_2_v74_human_packet_check.js` は packet 内の 6 frame が実測 stable frame と一致すること、DOM contract、screenshot contract を検証し、既存 check と合わせて 8 本 pass。
 
 ## Nao_u 指示
 
@@ -22,6 +22,7 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v73/` で v72 の gameplay を維持�
 5. headless は「楽しい」を直接判定しない。coverage / pressure / movement / event trace / policy split / best-case / worst-case / bad-policy failure を、人間評価前の比較証拠として使う。
 6. v69-v72 の review stability packet と stable frame search を使い、単一 frame の見た目ではなく、人間確認に渡せる安定 frame を headless が選ぶ形へ寄せる。
 7. v72 の cue family review を使い、CHASE 報酬だけでなく Active DEF / boss cue / BOMB も人間確認候補として抽出する。
+8. v74 の human review packet を使い、raw JSON だけではなく、人間が policy 差分を同じ画面で確認できる evidence へ変換する。
 
 ## done の目安
 

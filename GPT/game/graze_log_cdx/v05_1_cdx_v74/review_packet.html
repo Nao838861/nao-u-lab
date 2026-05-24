@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>graze_log v05.2_cdx_v74 - human review packet</title>
+<style>
+:root{color-scheme:dark;--bg:#070910;--panel:#101622;--line:#263248;--text:#e6edf7;--muted:#9aa7b8;--good:#72d39c;--warn:#f0c66a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#070910f2;border-bottom:1px solid var(--line);padding:12px 16px}
+h1{font-size:18px;margin:0 0 4px;letter-spacing:0;color:var(--text)}
+p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+main{max-width:1420px;margin:0 auto;padding:14px 16px 28px}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.metric{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:8px 10px;min-height:54px}
+.metric b{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.metric span{font-size:16px;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(460px,1fr));gap:12px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.card header{position:static;background:#0d1320;border-bottom:1px solid var(--line);padding:8px 10px}
+.card h2{font-size:13px;margin:0 0 2px;letter-spacing:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 6px;color:var(--muted)}
+.tag.good{color:var(--good);border-color:#2b7048}
+.tag.warn{color:var(--warn);border-color:#80652b}
+iframe{display:block;width:100%;height:752px;border:0;background:#071126}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;background:var(--panel);border:1px solid var(--line)}
+th,td{font-size:11px;text-align:left;border-bottom:1px solid var(--line);padding:7px 8px;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:#0d1320}
+td.ok{color:var(--good)}
+td.miss{color:var(--warn)}
+@media (max-width:980px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card{min-width:0}iframe{height:742px}}
+</style>
+</head>
+<body data-game-version="v05_1_cdx_v74" data-review-packet="policy-cue-human-v001">
+<header>
+  <h1>graze_log v05.2_cdx_v74 human review packet</h1>
+  <p>seed 12345 / gameplay fixed from v73. Headless-selected cue frames are grouped by policy so a human can compare evidence without reading raw JSON.</p>
+</header>
+<main>
+  <section class="summary" aria-label="review summary">
+    <div class="metric"><b>method</b><span>policy-cue packet</span></div>
+    <div class="metric"><b>route</b><span>4 cue families</span></div>
+    <div class="metric"><b>skilled</b><span>boss cue + BOMB</span></div>
+    <div class="metric"><b>survival</b><span>cue absence</span></div>
+  </section>
+  <table aria-label="policy cue matrix">
+    <thead><tr><th>policy</th><th>result</th><th>CHASE</th><th>Active DEF</th><th>boss cue</th><th>BOMB</th><th>review note</th></tr></thead>
+    <tbody>
+      <tr data-policy="route"><td>route</td><td class="ok">clear</td><td class="ok">384f</td><td class="ok">1138f</td><td class="ok">4331f</td><td class="ok">4705f</td><td>full route evidence</td></tr>
+      <tr data-policy="aggressive"><td>aggressive</td><td class="ok">clear</td><td class="miss">not selected</td><td class="miss">absent</td><td class="ok">4356f</td><td class="ok">4706f</td><td>fast policy skips Active DEF</td></tr>
+      <tr data-policy="marksman"><td>marksman</td><td class="ok">clear</td><td class="ok">384f</td><td class="miss">absent</td><td class="ok">4328f</td><td class="ok">4704f</td><td>precision policy keeps CHASE readable</td></tr>
+      <tr data-policy="survival"><td>survival</td><td class="miss">play</td><td class="miss">not selected</td><td class="ok">1368f</td><td class="miss">absent</td><td class="ok">4144f</td><td>early defense and no boss cue</td></tr>
+    </tbody>
+  </table>
+  <section class="grid" aria-label="selected review frames">
+    <article class="card" data-sample="route-activeDef">
+      <header><h2>route / Active DEF / 1138f</h2><div class="tags"><span class="tag good">clear route</span><span class="tag">defensive cue</span></div></header>
+      <iframe title="route Active DEF frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;probeFrame=1138&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="route-bomb">
+      <header><h2>route / BOMB / 4705f</h2><div class="tags"><span class="tag good">clear route</span><span class="tag">final bomb cue</span></div></header>
+      <iframe title="route BOMB frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;probeFrame=4705&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="aggressive-bossCue">
+      <header><h2>aggressive / boss cue / 4356f</h2><div class="tags"><span class="tag good">clear</span><span class="tag">boss gap</span></div></header>
+      <iframe title="aggressive boss cue frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=aggressive&amp;probeFrame=4356&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="marksman-chasePopup">
+      <header><h2>marksman / CHASE / 384f</h2><div class="tags"><span class="tag good">clear</span><span class="tag">popup readability</span></div></header>
+      <iframe title="marksman CHASE frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=marksman&amp;probeFrame=384&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="survival-activeDef">
+      <header><h2>survival / Active DEF / 1368f</h2><div class="tags"><span class="tag warn">no boss cue</span><span class="tag">defense-heavy</span></div></header>
+      <iframe title="survival Active DEF frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=survival&amp;probeFrame=1368&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="survival-bomb">
+      <header><h2>survival / BOMB / 4144f</h2><div class="tags"><span class="tag warn">late resource</span><span class="tag">cue absence</span></div></header>
+      <iframe title="survival BOMB frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=survival&amp;probeFrame=4144&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+  </section>
+</main>
+</body>
+</html>
