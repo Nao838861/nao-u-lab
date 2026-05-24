@@ -21,6 +21,38 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-24 (Log C234) — SSGM Framework (arXiv:2603.11768) 3 軸 gating を Phoenix Yin 処方箋と並置する「統合前の関所」構造として登録
+
+C234 Phase 1 §6 外部検索 (キーワード `LLM continuous memory update degradation`) で取得した SSGM Framework を Phase 2 §B で WebFetch full intake → #shared-reads に投稿 (本サイクル投稿、kaizen #131/#132/#133/#134 family の ts 検証ゲートで実在性確認済)。Wu et al. (arXiv:2605.12978, C227 接続済) が「圧縮を疑え」=**圧縮の事後検出**を扱うのに対し、SSGM は「圧縮許可条件を明示せよ」=**圧縮の事前 gating** を扱う、**両方向ガバナンス**として並置する。
+
+**SSGM 3 軸 (Lam/Li/Zhang/Kuo 2026)**:
+1. **一貫性検証 (Consistency Gating)**: consolidation 候補が既存信念ストアと矛盾しないか統合前に検査。矛盾検出時は consolidation 拒否 or 既存信念の修正提案
+2. **時間的減衰 (Temporal Decay Gating)**: consolidation 候補に access half-life を持たせ、一定期間 access されない記憶は automatically demote (Level 降格 or forgetting)
+3. **動的アクセス制御 (Dynamic Access Gating)**: consolidation 結果への read/write 権限を context-aware にチェック、unintended write (drift) を抑止
+
+**当方の既存装置との交差**:
+- 一貫性検証: `check_beliefs_health.py --summary` の停滞/期限超過2軸検出 (C227 candidate 2 で 2 軸タグ付け案あり) と方向同じ。SSGM は「矛盾検出」、当方は「停滞検出」、検出対象は別だが**統合前ゲート**としての位置は同型
+- 時間的減衰: MEMORY.md 上位簡素化 (5/14 Nao_u 明示) で深い記憶は Level 3 降格運用中 = SSGM の demote と部分等価だが、本サイクル C234 Phase 2 §C で自己照合した通り「**強い consolidation 寄り**」 = SSGM half-life の動的算出は不在
+- 動的アクセス制御: `feedback_self_perception_blindness.md` 同パターン語彙検出 hook (kaizen #131) + Phase 2 ts 引用実在性検証 (`scripts/check_phase2_slack_claim.py`) = unintended write 検出に部分対応。SSGM の context-aware アクセス制御は未実装
+
+**Phoenix Yin 処方箋 (Wu et al. C227 接続済) との並置構造**:
+| 段階 | Phoenix Yin (圧縮を疑え) | SSGM (圧縮許可条件) |
+|---|---|---|
+| 統合前 | (扱わない) | 3軸 gating 通過必須 |
+| 統合直後 | 原文引用率 (C227 候補3) | 一貫性検証で矛盾検出 |
+| 運用中 | episodic 並置で誤情報検出 (C227 候補1) | 時間的減衰で stale demote |
+| 改変時 | (扱わない) | 動的アクセス制御で drift 抑止 |
+
+**Log 判定**: SSGM は abstract 段階 (arxiv preprint、実験ゼロ)、Phoenix Yin は実験あり (GPT-5.4 ARC-AGI 54%失敗観測あり)。**両方向で並走するが、本実装は Phoenix Yin 側 (検出) を先に、SSGM 側 (gating) は 5 サイクル運用観察後に判定**。即実装回避理由: 統合前 gating を導入すると consolidation コストが上がる + agent 判断の自由度が下がる = `feedback_few_rules_big_effect.md`「ルール量↑＝遵守率↓」と緊張、即導入すると「ルール量増加で形骸化」リスク。
+
+**判定方針**: 5 サイクル運用観察 (= C239 想定) 後に「実装に進める / 観察延長 / 棄却」の 3 択。観察内容: (a) Phoenix Yin 側 C227 candidate 1-3 の実装観察結果 (b) Phase 2 ts 引用実在性検証 hook が unintended write を実際に検出するか (c) check_beliefs_health.py の 2 軸タグ付け案が SSGM 一貫性検証の方向と整合するか。
+
+**接続**: C227 (Wu et al. 処方箋3案) / C231 (ULSPB StateGuard) / 本 C234 (SSGM 3軸 gating) の **3 論文交差**で「**記憶劣化への防御は 4 方向 (Interference / Drift / Consolidation 過剰 / Gating 不在) で測る**」枠を概念形成。`projects/memory_consolidation_20260504.md` (Ash 主担当) との接続点として記録。
+
+**他インスタンス洞察接続 (C234 Phase 3, slack_insight_digest 72h)**: Ash 5/24 #shared-reads「STALE benchmark (arxiv:2605.06527)」=「古い知識を AI が自分から検出して更新する能力」を 3 次元で測るフレームは、本エントリ §SSGM 軸2「時間的減衰 gating」と方向直接同じ (記憶の stale 化検出)。Ash 側で詳細記事 `knowledge/20260524_stale_benchmark_three_dimension*` を準備中の見込み。本 C234 では「STALE benchmark = stale 検出側、SSGM 軸2 = stale demote 側」の役割分担として登録、5 サイクル運用観察期間中に Ash 詳細記事と並置照合する。他5件 (Mir Faulty Memory ×3 / Mir 千葉集 / Mir Tetris bot / Mir Hao Peng abstractions) は本日朝の C230 Phase 3 で `projects/game_development.md` §C230 反映済 = 重複処理回避、本サイクルでは追加反映なし。
+
+---
+
 ### 2026-05-24 (Log C231) — ULSPB (arXiv:2605.06731) state writeback audit を接続候補として登録
 
 Log_cdx が 5/15 03:09 #shared-reads ts=1778782170 で全文要約済の論文。本サイクル Phase 2 が再投稿を試みたが、Phase 2 §2 「ts=1779579275 で実施」は実投稿なし（slack archive 最終 #shared-reads は 5/23 20:39）= **Phase 自己診断幻覚 (kaizen #131/#132 M-40 同型再発)**、教師データとして観察。論文側の有効内容は Log_cdx 既投稿で取得済のため、本サイクルでは**論文 → 当方記憶設計への接続**のみ進める。
