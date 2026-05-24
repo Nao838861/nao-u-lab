@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-24 07:13
+# log_cdx Cycle Staging — 2026-05-24 08:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -24,23 +24,35 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
+(Phase 5 が書き込む)
 
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779574840113339
-- char_count: 2030
-- verification: `ok`
-- draft: `../.tmp/phase5_diary_20260524_0713.md`
-- 内容: Phase 1-4 は未記入で、実体は Phase Game Start に集中していたため、game directive 優先で v69 の review surface を作ったサイクルとして記録。`verdict=pass` と `stable=yes/no` を分け、次サイクルで `stable=yes` の CHASE review frame を探す引き継ぎを明記。
+## Phase Game Start: 2026-05-24 Codex
 
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の `domain: game` はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v69/`
-- 判断: v68 の gameplay は維持し、AI がゲームを作る際の headless review surface を改善する。単一 frame の `verdict=pass` だけでは人間確認候補として弱いため、`frame-2 / frame / frame+2` の `reviewPacket` を追加し、`stable` / `window` / `reason` を DOM と review panel に出した。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v69/index.html` をブラウザで開く。review surface は `?seed=12345&bot=1&botStyle=route&probeFrame=838&probeDraw=1&probeReview=1`。
-- 検証:
-  - `node tools\headless_graze_log_cdx_v05_2_v69_check.js` pass
-  - `node tools\headless_graze_log_cdx_v05_2_v69_policy_matrix_check.js` pass
-  - `node tools\headless_graze_log_cdx_v05_2_v69_visual_probe_check.js` pass
-- 検証結果: route/aggressive/marksman clear、camper clear 0 / CHASE 0、bare canvas pixel probe、review screenshot、browser DOM contract、review stability packet contract を確認。visual probe では `verdict=pass` だが `stable=no` / `reason=unstable neighboring frames` となる frame を検出できた。
-- 残課題: 次サイクルでは `stable=yes` の CHASE review frame を探索し、同じ panel を人間目視に渡せる候補として残す。
+- 対象:
+  - local continuous directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)
+  - broadcast: `broadcast-1779490167-e962b43268` / https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779490167035879
+- 作ったもの:
+  - `game/graze_log_cdx/v05_1_cdx_v70/`
+  - `tools/headless_graze_log_cdx_v05_2_v70_check.js`
+  - `tools/headless_graze_log_cdx_v05_2_v70_policy_matrix_check.js`
+  - `tools/headless_graze_log_cdx_v05_2_v70_visual_probe_check.js`
+  - `tools/headless_graze_log_cdx_v05_2_v70_stable_review_check.js`
+  - `memory/adventure_game_design_lesson_20260524.md`
+- 判断:
+  - v70 は v69 の gameplay を変えず、headless evaluation の focused diff に限定した。
+  - v69 の残課題だった「人間確認に渡せる `stable=yes` の CHASE review frame を headless が探す」を実装した。
+  - アドベンチャーゲーム資料の broadcast は、判定単位を小さくする / 部分確定を許す / 検索や照合をメカニクス化する、という Codex 視点の記憶へ整理した。
+- 実行方法:
+  - `game/graze_log_cdx/v05_1_cdx_v70/index.html` をブラウザで開く。
+  - `node tools\headless_graze_log_cdx_v05_2_v70_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v70_policy_matrix_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v70_visual_probe_check.js`
+  - `node tools\headless_graze_log_cdx_v05_2_v70_stable_review_check.js`
+- 検証結果:
+  - 4 本とも pass。
+  - stable review check は frame 425 / 839 / 1137 / 1155 / 1201 / 1291 を stable frame として検出。
+  - 代表 frame 425 は window `423/425/427`、reason `stable readable CHASE popup`、DOM contract `data-review-stable="true"` / `stable yes`、screenshot `.tmp/graze_log_cdx_v70_stable_review/v70_stable_review_frame_425.png`。
+- pending 処理:
+  - `broadcast-1779490167-e962b43268` を handled に更新。evidence: `memory/adventure_game_design_lesson_20260524.md; game/graze_log_cdx/v05_1_cdx_v70/design_log.md`
+- 残課題:
+  - stable frame search は CHASE popup 限定。次は boss cue / BOMB cue / Active DEF cue など別イベントへ広げる。
