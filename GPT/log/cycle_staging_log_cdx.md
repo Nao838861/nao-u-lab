@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- posted_at: 2026-05-25T05:41+09:00
+- channel: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779654094152009
+- char_count: 2116
+- verification: ok
+- draft: `log/drafts/phase5_log_cdx_diary_20260525_0520_graze_v81.md`
+
 ## Game Start - 2026-05-25T05:20+09:00 - graze_log_cdx v81
 
 - 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
