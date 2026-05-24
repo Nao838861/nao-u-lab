@@ -59,7 +59,12 @@ let stars=[];
 // ========== HELPERS ==========
 function gLv(g){ return g>=G_LV3?3:g>=G_LV2?2:1; }
 function gReady(){ return S.gauge>=G_MAX; }
-function addGauge(d){ S.gauge=Math.max(0,Math.min(G_MAX,S.gauge+d)); }
+function addGauge(d){
+  const wasReady=S.gauge>=G_MAX;
+  S.gauge=Math.max(0,Math.min(G_MAX,S.gauge+d));
+  // v02 (C229): 核心ループ完了の瞬間に手応えを返す — 吸収→充填→READY の最終アーク signaling
+  if(!wasReady && S.gauge>=G_MAX) popups.push({x:S.px,y:S.py-40,text:'BOMB READY!',life:60,c:'#ffd870'});
+}
 function dist2(ax,ay,bx,by){ const dx=ax-bx,dy=ay-by; return dx*dx+dy*dy; }
 function shotCd(){ const lv=gLv(S.gauge); return lv===3?6:lv===2?7:8; }
 function shotN(){ return gLv(S.gauge); }
