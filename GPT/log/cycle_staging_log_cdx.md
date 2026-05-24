@@ -1,18 +1,18 @@
-# log_cdx Cycle Staging — 2026-05-25 01:28
+# log_cdx Cycle Staging — 2026-05-25 03:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
-## Phase 1: 情報収集
-(Phase 1 が書き込む)
-
 ## Phase Game Start: ゲーム制作着手
 
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v79/`。v78 gameplay を既定維持し、評価用 query `botLag` を追加。`botLag=0` は通常挙動、`botLag=6` は合否対象、`botLag=14` は stress probe。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v79/index.html`、比較 packet は `game/graze_log_cdx/v05_1_cdx_v79/review_packet.html`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v79_lag_envelope_check.js` pass。`botLag=6` で route は seeds `12345 / 54321 / 77777` すべて clear、`camper / panic / novice` は全 seed game over。route の baseline 差分は frame -17 / score -62151 / Active DEF -8。
-- evidence: `memory/raw/headless_eval/graze_log_cdx_bot_lag_envelope.jsonl`、`.tmp/graze_log_cdx_v79_lag_envelope/v79_lag_envelope_packet.png`。
-- 残課題: `botJitter` と `botLag` の合成は未検証。これは bot 能力の stress test であり、人間の面白さ判定の代替にはしない。
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game はなし。継続指示として、完成または停止まで graze_log_cdx を繰り返し改善し、2026-05-22 以降は「AI がゲームを作る際の headless のあり方」を実地検証する。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v80/`。v79 の gameplay を既定維持し、既存 opt-in `botJitter` と `botLag` を同時に掛ける combined envelope packet を追加。通常プレイ、敵配置、報酬、既定 bot は変更しない。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v80/index.html` または `review_packet.html` を開く。検証は `node tools\headless_graze_log_cdx_v05_2_v80_jitter_lag_envelope_check.js`。
+- 検証結果: pass。baseline `j0/lag0`、合否対象 mild `j6/lag6`、合否外 strong `j12/lag14` を seeds `12345 / 54321 / 77777` と `route / camper / panic / novice` で実行。mild combo では route が全 seed clear、bad policies は全 seed game over。route の baseline 差分は seed 12345 が frame -105 / score -36320 / Active DEF -7、seed 54321 が frame +208 / score -17276 / Active DEF 0、seed 77777 が frame -173 / score -81881 / Active DEF -10。strong combo は route が落ちる stress boundary として raw に保存。
+- evidence: `tools/headless_graze_log_cdx_v05_2_v80_jitter_lag_envelope_check.js`, `memory/raw/headless_eval/graze_log_cdx_bot_jitter_lag_envelope.jsonl`, `.tmp/graze_log_cdx_v80_jitter_lag_envelope/v80_jitter_lag_envelope_packet.png`。
+- 残課題: combined stress は bot 能力の境界検査であり、面白さの代替判定ではない。次に進むなら、packet の比較対象が人間確認に耐えるかを先に見る。
+
+## Phase 1: 情報収集
+(Phase 1 が書き込む)
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -33,9 +33,4 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted_at: 2026-05-25T01:37:33+09:00
-- channel: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779640653661509
-- char_count: 1909
-- verification: `ok`
-- 内容: Phase 1-4 の未記入を隠さず、実体として残っていた `graze_log_cdx` v79 / `botLag` envelope 検証を中心に、評価条件の頑健性と過信しない線引きを日記化。
+(Phase 5 が書き込む)

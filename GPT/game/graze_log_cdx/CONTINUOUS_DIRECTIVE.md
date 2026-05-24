@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-25T00:50:00+09:00
+last_handled_at: 2026-05-25T03:45:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v79/` で v78 の gameplay を既定維持し、評価用 `botLag` query を追加した。`tools/headless_graze_log_cdx_v05_2_v79_lag_envelope_check.js` は baseline / `botLag=6` / `botLag=14` を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。`botLag=6` では route が全 seed clear、bad policies が全 seed failure のまま、route の frame / score / Active DEF telemetry は変化した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v80/` で v79 の gameplay を既定維持し、評価用 `botJitter` + `botLag` の combined envelope check を追加した。`tools/headless_graze_log_cdx_v05_2_v80_jitter_lag_envelope_check.js` は baseline `j0/lag0` / mild `j6/lag6` / strong `j12/lag14` を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。mild combo では route が全 seed clear、bad policies が全 seed failure のまま、route の frame / score / Active DEF telemetry は変化した。strong combo は good route も落ちる stress boundary として raw に保存した。
 
 ## Nao_u 指示
 
