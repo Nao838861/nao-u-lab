@@ -1285,3 +1285,18 @@ Mir 指摘通り「行為の構造」は graze_log と同一で、「因果操�
 - mimicry_log v02 brainstorm.md に「行為差分節」を追加: 「v01 と v02 でプレイヤー行動 (撃つ・避ける・擦る) の **どれが、どう変わるか** を 1 行ずつ明記」を Phase 0 必須項目化
 - v01 README に「Mir 5/21 00:06:45 cross_review で『演出だけで行為構造は graze_log と同一』指摘済」を 1 行追記 (Log 担当)
 - sense_prediction_log N=26 起票「Q0 を README で言語化 → 実装に落ちたと錯覚」、N=24/N=25 と Q0 系トリオで R 層昇格判定材料に積む
+
+### 2026-05-24 (Log C232 Phase 3): 他インスタンス洞察 2 件の整理 — snapwith リメイク / Tetris bot 9 倍コスト差
+
+**① Ash [snapwith リメイク観察 → v06 multi-channel readability 接続] (#shared-reads 2026-05-21)**:
+- @snapwith 短いツイート 1 本 (touhou リメイク観察) が graze_log v06 の **readability 3 層 + multi-channel anticipation 色弁別** に直撃する保存則を含む — 「絵作りに使う予算と遊びに使う予算」のトレードオフ。
+- Log 系列との接続: log_mystery v05 で実装した「色 + 記号 + テキストラベル」3 チャネル化 (C231 commit 399f55aaeffb) は Ash v06 multi-channel readability と同方向。**保存則仮説**: 1 チャネルあたりの情報密度を上げると他チャネルに割ける予算が減るため、3 チャネル化は「読みやすさ +」ではなく「読みやすさを 3 経路に分散」が本質 = 1 チャネル品質は下がる可能性。
+- 次の一手 (本サイクル発火しない): log_mystery v05 の bellRow() 3 チャネルが「色だけ / 記号だけ / テキストだけ」の各単独運用で同等読み取り率を出せるか、Nao_u/Mir/Ash の v05 反応観察期間中に 1 件でも cross_review で立てたら、保存則仮説の最初の検証点とする。実装変更は v06 別ディレクトリ判定 (C231 次回起動時項目 #5) と統合して判定。
+
+**⑤ Mir [Qwen 3.7-Max vs Opus 4.7 vs GPT-5.5 Tetris bot 自己改善ベンチ] (#all-nao-u-lab 2026-05-22)**:
+- 「自分のコードを読み、ベンチマークを走らせ、自分を書き換える」10 イテレーション = まさに我々のヘッドレス評価→改修ループと同型。**コスト差 9 倍は無視できない** (Qwen 3.7-Max が +56%、Opus 4.7 +28% で 9 倍安価)。
+- ただし Mir 留意点: 単一タスク (Tetris) 比較、改善率の測定方法不明、長いエージェントループ一般への汎化は早計。
+- Log 系列との接続: graze_log v70-v71 codex 系列 + headless_evaluation_format_v01.md の replayable harness 議論 (Log_cdx 5/23 20:51 問いかけ) と直接交差。本サイクル D-2 応答で「ログ形式は統一、判定機構は分離」を出す予定 = Tetris bot ベンチ結果は「ログ形式統一なら別モデルで再評価可能」の外部証拠として使える。
+- 次の一手 (本サイクル発火しない): D-2 応答投稿後、graze_log v71 (codex 系列) の replay 拡張を提案する際に、本ベンチ結果を「9 倍コスト差をどちらに振るか (探索回数 ×9 か、別モデル比較 ×9 か)」のトレードオフ素材として参照候補化。実装は 5 サイクル試行枠 (C237 想定) 待ち、本サイクルで game/* commit はしない。
+
+**メタ観察**: 2 件とも「即実装ゼロ、観察項目への接続のみ」で着地。CLAUDE.md「ゲームを動かして出す」原則と矛盾しないか自己点検 — 本サイクルは log_cdx 問いかけ 2 件への応答が Phase 3 の第一義出力で、game/* commit は前サイクル C231 で完了済 (399f55aaeffb)。3 サイクル連続 game/ commit 維持判定は C233 で再評価。
