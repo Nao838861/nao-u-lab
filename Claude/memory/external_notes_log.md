@@ -4,6 +4,43 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-25 (C237 Phase 2) Log_cdx (GPT/Codex) #nao-u 6連投「Pulse Relay v003 → ゲーム自律生成教師差分パケット」 — Nao_u 直接指示「各自の名前を付けた新しいプロジェクトでこのようなゲームを完成までもっていけ」のトリガー入力 [intra-system intake、即統合済 2026-05-25]
+
+**文脈**: 2026-05-25 06:20 頃 Log_cdx が #nao-u に 6連投 (1/6〜6/6、ts=1779657471〜1779657495) で Pulse Relay v003 自動生成→Nao_u直接フィードバック→「最低限の型」到達までの教師差分パケットを公開。Nao_u が 06:23 に #human-steering で「全員、当該リンクからの一連の内容を分析、当該ファイルに書かれたログなどもすべて参照、分析内容を slack に投稿、その次のサイクルで各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成、どのくらいのものが作れるかを試してほしい。どれだけ時間がかかってもよいから精度高く指示に従ってゲームを完成までもっていってほしい」と指示。Log/Mir/Ash 3 インスタンスへの並列タスク化。
+
+**Log_cdx 6/6 シリーズ中核命題**: 「ユーザーが自動生成後に出した修正指示は、AI が自律的に作れなかった差分そのもの。短く要約すると次回また同じ失敗を繰り返す。原文・温度感・失敗判断・悪い要約・禁止事項・代表値・検証方法をセットで残す」。
+
+**6 投の中身**:
+- 1/6 全体像 + 4 教師ドキュメント (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` 約 48KB 他)
+- 2/6 ユーザー原文 14 件 + 悪い要約 9 種の対比
+- 3/6 敵挙動・ウェーブ・ステージカーブ (70-90 秒、Wave 1-5、代表敵モーション 5 種)
+- 4/6 Pulse 型特殊システム HUD (3 状態分離、対象物側マーカー、空ゲージ開始) + タイトル/特殊入力/リトライ中心入力統一
+- 5/6 演出最低基準 (小型/大型撃破/被弾/ゲームオーバー/クリア) + レイアウト (サイドパネル禁止/中央配置) + 検証 16 項目 + 悪いプレイ方針検証
+- 6/6 次回実行順 18 ステップ + ゲート A-G (コア入力/特殊システム状態/敵出現退場/弾攻撃元/フィードバック/レイアウト/日本語ログ)
+
+**Log 運用への核心写像**:
+- graze_log v05.1 → v05.2 BOMB 反転 (失敗の帳消し → 切り札 + cooldown) が Log_cdx の「特殊システム設計の悪い要約」実例にそのまま該当。`feedback_*` に書いた抽象ルールは原文 + 失敗判断 + 代表値 + 検証手順がセット化されておらず、Log_cdx 要求形式へ転記要
+- `memory/sense_prediction_log.md` (2026-04 設置) は Log_cdx「原文セット保存」装置と同型だが、新ゲーム着手時に R-A〜R-I を先に読んで原文層に自動で戻らない運用。design_log テンプレに Log_cdx ゲート A-G を組み込み、各ゲートで sense_prediction_log を開く運用へ
+- CLAUDE.md「R 層で判断できれば M 層は開かない」原則は読み取りコスト最小化目的だったが、Log_cdx 主張「悪い要約による教師データ消失」に照らすと逆方向。R-A〜R-I 逆引き点検が必要
+- 次サイクル新プロジェクト: Pulse Relay 型 (中心入力 1 つ × 特殊システム 3 状態 × 対象物側マーカー × 70-90 秒ステージ) を、graze_log とは別ジャンルで Log 視点再解釈 1 本。Nao_u 完成判定をゴールにする
+
+**弱点 / 注意点**:
+- Log_cdx 本体 48KB は CLAUDE.md と違って毎サイクル読むには重い → ゲーム制作前ゲートとして開く運用必須
+- 70-90 秒 / Wave 1-5 / 大型 8-14 秒滞在は Pulse Relay 型固有、別ジャンルへの翻訳判断必要
+- 「完成」判定が Nao_u 目視依存で deterministic でない
+- 「個別指摘を即ルール化しない」(`feedback_few_rules_big_effect.md`) と「原文セット保存」(Log_cdx) の同居運用を Log 側で接続要
+
+**統合先**:
+- [統合済 2026-05-25 → #all-nao-u-lab ts=1779658616 (Log 自己照合視点投稿、5 節構成: 根本主張同意 / BOMB 反転実例 / sense_prediction_log 運用見直し / R-A〜R-I 逆引き必要 / 次サイクル新プロジェクト暫定方向 / Mir/Ash への問い)]
+- [統合済 2026-05-25 → #shared-reads ts=1779658720 (Log 構造化分析投稿、概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定の 5 項目フォーマット)]
+- [統合済 2026-05-25 → 本ファイル 2026-05-13 ゲーム設計 3 本エントリの 未統合 → 統合済 マーカー転換のトリガー]
+- [候補保留 → 次サイクル C238 で Log 名義新プロジェクト起票 (`game/log_<name>/v01/`)、Pulse Relay 型を別ジャンルで再解釈、design_log にゲート A-G を組み込み]
+- [候補保留 → `memory/sense_prediction_log.md` を design_log テンプレから自動で開くようにする仕組み案]
+- [候補保留 → R-A〜R-I (game_lessons_log.md) を「悪い要約」観点で逆引き点検、原文に戻らないと判断できない箇所を抽出]
+- [候補保留 → graze_log v05.x BOMB 反転の原文・失敗判断・代表値・検証を Log_cdx 要求形式へ転記 (1 ファイルセット化)]
+
+---
+
 ## 2026-05-24 (C234 Phase 2) arXiv:2603.11768 "Governing Evolving Memory in LLM Agents: SSGM Framework" — kaizen #106 摂取経路固定化由来 / memory_redesign.md 直接交差 [full intake、即統合済 2026-05-24]
 
 **文脈**: C234 Phase 1 §6 外部検索 (クエリ `LLM continuous memory update degradation`) で上位 3 件取得。1 件目 (Wu et al. arXiv:2605.12978) は前サイクル C224 で Mir 経由間接取得済 + Mir #shared-reads ts=1779447041 既投稿のため Log では自己照合視点 (#all-nao-u-lab) に回す。2 件目 (Johnson Lee blog) は Wu 解説のため candidate 保留。3 件目 SSGM Framework のみ未投稿 + memory_redesign.md と直接交差のため Phase 2 で WebFetch full intake → #shared-reads 投稿。
@@ -421,7 +458,7 @@ C201 Phase 1 §6 WebSearch スニペットレベルの引用は維持:
 
 ---
 
-## 2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本（kaizen #106 摂取経路固定化 → R-A〜R-I 二層化の外部裏付け候補） [未統合 2026-05-13 Phase 1取得 — #shared-reads 投稿は本サイクル見送り（Phase 2 §D 判断: Nao_u 06:37「ルールが多すぎ？」直後に外部研究で R 層化を validate する型は tone-deaf、5/13 中に Memora/Survey/Karpathy 3本既投稿で新規性低、暗黙 target が「ゲーム設計教育・研究」で我々のゲーム制作 target と半ズレ）]
+## 2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本（kaizen #106 摂取経路固定化 → R-A〜R-I 二層化の外部裏付け候補） [統合済 2026-05-25 Log C237 Phase 2 — 12日保留した「R 層運用を実地で観測した後、再評価可能な種」を、本日 Log_cdx Pulse Relay v003 6連投 (ts=1779657471〜1779657495) が再評価トリガーとして到達。Tandfonline VG L2L「抽象は具体を駆動するときに機能、駆動先のない抽象は形骸化」+ CHI 2024「抽象原則と具体事例を1ドキュメント内で併置」が、Log_cdx 主張「原文・温度感・失敗判断・悪い要約・禁止事項・代表値・検証方法をセットで残す」と独立 3 経路で同一方向。R-A〜R-I が今「敵退場を自然にする」級の悪い要約に丸まっていないかを逆引き点検する作業に接続。Log 本日 #all-nao-u-lab 投稿 (ts=1779658616) §3「R-A〜R-I 層と原文層の関係を再評価する必要がある」が本エントリの直接の消化先]
 
 **文脈**: Log C192（2026-05-13）Phase 1 §6 で kaizen #106 摂取経路固定化（クエリ: `game design abstract principles vs concrete case studies lessons learned 2026`、Active = `game_development` + `memory_consolidation_20260504`、トリガー = Nao_u 06:29 #human-steering「game_lessons_log 個別具体すぎる → 抽象ルール+事例層構造に検討せよ」指示）。検索エンジン分類: Google（Web 一般、Active project と直結する研究系記事を狙う）。時間予算 10分以内で約3分完了。
 
