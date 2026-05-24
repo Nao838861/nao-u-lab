@@ -30,7 +30,20 @@
 - 残課題: 次回は j4/lag4 と j6/lag6 の同一 seed について、死亡直前の入力履歴、route intent、Active DEF / BOMB timing を比較する。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-25T07:07+09:00 log_cdx
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260525_bpm_signal_pivot.md
+  - memory/shared_reads_candidates/20260525_gameplayqa_decision_dense_eval.md
+fail:
+  - path: memory/shared_reads_candidates/20260525_clockheart_jam_panic_timer.md
+    reason: "jam の反省としては有用だが、4000字級の残すべき概要にするには検証と構造が薄い"
+postpone:
+  - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+    reason: "観点は良いが、Reddit postmortem とコメント要約だけでは投稿品質に足りず一次情報の補強が必要"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

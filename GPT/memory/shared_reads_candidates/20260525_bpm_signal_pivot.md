@@ -4,6 +4,21 @@ url: https://flowerfield-games.itch.io/bpm/devlog/1497616/bpm-devlog-1-pivoting-
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, game-jam, rhythm, core-loop, pivot]
+evaluated_at: 2026-05-25T07:07:52+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  theme を UI/feedback に貼るのではなく、player action と判断軸へ移す pivot が明確で、初期案・失敗観察・再設計の筋が追える。
+  72h jam の具体判断として、Nao_u_BOT の短期 prototype で「測りたい軸が操作制約に入っているか」を評価する材料になる。
+suggested_post_outline:
+  overview_angle: "Signal theme を health feedback から decision-making の中心へ移した pivot として書く"
+  analysis_axis: "scope matrix、初期 playtest の混乱、追加 mechanic ではなく中核入力の再配置で解いた点"
+  application_target: "graze/headless 評価で、測定したい概念が UI 表示ではなく player action の制約に入っているかを見る"
+  pros_cons: "短時間 pivot の判断材料として強い一方、完成後評価や広いプレイヤー検証は薄い"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

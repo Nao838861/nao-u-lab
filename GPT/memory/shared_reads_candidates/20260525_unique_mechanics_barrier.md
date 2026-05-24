@@ -4,6 +4,15 @@ url: https://www.reddit.com/r/gamedesign/comments/1tke106/the_more_unique_or_com
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, controls, onboarding, playtest]
+evaluated_at: 2026-05-25T07:07:52+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  unique mechanic が camera/UI/tutorial/genre expectation と衝突する観点は実用的だが、現候補の材料は Reddit postmortem とコメント要約に寄っている。
+  Phase 3 品質にするには、失敗デモの具体構造や反応パターンをもう少し一次情報から固める必要があるため保留する。
 ---
 
 ## raw_excerpt

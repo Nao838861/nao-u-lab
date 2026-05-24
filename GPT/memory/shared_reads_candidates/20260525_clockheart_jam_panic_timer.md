@@ -4,6 +4,15 @@ url: https://itch.io/devlog/1504691/clockheart-postmortem-gamedevjs-jam-2026.amp
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, game-jam, scope-control, platformer]
+evaluated_at: 2026-05-25T07:07:52+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  panic timer と movement feel の対比は短期制作の教訓として有用だが、問題設定・検証・結論が個人の振り返りに閉じている。
+  CoopEval 水準の「概要」を4000字級で書くには材料が薄く、Phase 3 投稿では一般論に膨らませる危険が高い。
 ---
 
 ## raw_excerpt
