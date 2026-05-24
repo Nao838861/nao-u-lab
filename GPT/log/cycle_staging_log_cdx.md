@@ -100,7 +100,33 @@ self_feedback:
   - ?????????????????????????????????
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-25T07:21+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link は 0 件。broken link は 0 件として確認。"
+  - "memory/atoms.jsonl: 1548 行を parse。id 重複 0、保存済み hash 重複 0、status/lifecycle 衝突 0。"
+  - "memory/raw/: LastWriteTime 30 日以上前の file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: LastWriteTime 30 日以上前の candidate は 0 件。postpone/fail 降格対象なし。"
+  - "inbox: pending は directives 1 件、broadcasts 3 件。処理済みと判定できるものはこの時点で 0 件。"
+  - "directive log-cdx-1779644882-54fc6c7843 は本 staging に原因確認を記録したため、この後 lifecycle close 対象。"
+issues:
+  - id: ISS-20260525-4A-001
+    description: "atoms.jsonl に exact excerpt 重複が 52 グループ / 115 atom あり、補正版再投稿系や external research 系の同質 atom が game-design 検索面に複数残る。id 重複ではないため機械 parse は正常だが、検索結果の密度を落とす。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: exact excerpt duplicate scan; examples sr-1778535120-82ea7a1005 + sr-1778535738-ed839f9805, title prefix '[Codex shared-reads再投稿・補正版]' 58 件, '[Codex external research]' 42 件"
+    why_blocks_game_memory: "次のゲーム制作で headless 評価・自律生成・shared-reads 由来の知見を引く時、同じ補正版/再投稿系が複数ヒットし、実際に新しい学びと重複ログの区別が遅れる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260525-4A-001
+```
+
+- pending 判定メモ:
+  - `broadcast-1779310201-24a490e4a6` (発火段数批判): 現時点では明示的な完了 evidence を確認できず、pending 維持。
+  - `broadcast-1779237427-15d6f5af92` (リンク深掘り): 関連 atom / raw はあるが、この inbox id への完了 evidence は確認できず、pending 維持。
+  - `broadcast-1779657780-322e0406bd` (human-steering game 生成指示): 次サイクル以降の game project 接続が必要で、pending 維持。
+  - `log-cdx-1779644882-54fc6c7843` (Phase 1-4 が空に見える件): 直近 staging では Phase 1/2/3/3b が埋まっており、Phase 4a も本追記で埋めた。空に見えた主因は、過去サイクルで game start が通常 phase より優先される・phase runner が placeholder を残す・記録が `log/cycle_staging_log_cdx.md` に集約されるため Slack からは進捗が見えにくい、の組み合わせとして扱う。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
