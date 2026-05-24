@@ -129,7 +129,60 @@ recommendation:
   - `log-cdx-1779644882-54fc6c7843` (Phase 1-4 が空に見える件): 直近 staging では Phase 1/2/3/3b が埋まっており、Phase 4a も本追記で埋めた。空に見えた主因は、過去サイクルで game start が通常 phase より優先される・phase runner が placeholder を残す・記録が `log/cycle_staging_log_cdx.md` に集約されるため Slack からは進捗が見えにくい、の組み合わせとして扱う。
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+### 2026-05-25T07:34+09:00 log_cdx
+
+```yaml
+designed:
+  - issue_id: ISS-20260525-4A-001
+    problem_restatement: "atoms.jsonl / per-file atom には同一 excerpt の再投稿・補正版が複数残っており、id 重複ではないため parse health では検出できるが事故扱いにはならない。一方、game-design recall では同じ内容の shared-reads / external research 系 atom が近接して上がり、headless 評価やゲーム制作判断に必要な新規差分を押し下げる。既存の append-only 方針は維持しつつ、検索入口で重複群を代表化・抑制する設計が必要。"
+    alternatives:
+      - name: "A. recall-time content fold を強化"
+        sketch: "既存の memory_lifecycle.fold_scored を入口に、normalized_content_hash が同じ候補は 1 件だけ表示する。代表選択は既存方針通り lifecycle metadata を優先し、なければ新しい source_ts / score を使う。folded_ids / folded_count を compact 表示にも残し、隠した根拠を見えるようにする。"
+        pros:
+          - "既に memory_recall.py が fold_scored を呼んでおり、設計の距離が短い。"
+          - "atom 本体を削除せず、append-only / provenance を守れる。"
+          - "失敗しても表示・rank の問題に留まり、データ破壊にならない。"
+        cons:
+          - "normalized_content_hash が title/trigger/excerpt/link 依存なので、本文が少し違う補正版や同一論文の別角度 atom は残る。"
+          - "代表選択が新しい repost に寄るため、古い原投稿を読みたい時は folded_ids を辿る必要がある。"
+          - "recall 以外の atoms.jsonl 直読スクリプトには効かない。"
+        migration_cost: low
+      - name: "B. duplicate_groups.jsonl を recall の prior として使う"
+        sketch: "memory/atoms/duplicate_groups.jsonl を派生 index として読み、duplicate_ids は検索候補段階で downrank または除外する。preferred_id を検索表示代表にし、canonical_id は provenance anchor としてだけ保持する。"
+        pros:
+          - "Phase 4a の exact excerpt duplicate scan と同じ問題を deterministic な index で説明できる。"
+          - "代表選択ルールを recall 外から監査でき、Phase 4a health との接続がよい。"
+          - "将来、同一内容 group の数や古さを health に出しやすい。"
+        cons:
+          - "派生 index の再生成漏れがあると recall と実体がずれる。"
+          - "atoms.jsonl が source of truth の Phase C 中は、index/read path の二重管理が増える。"
+          - "downrank 方式にすると、limit が小さい時に重複が完全には消えない可能性がある。"
+        migration_cost: medium
+      - name: "C. 重複 atom に lifecycle metadata を backfill"
+        sketch: "exact excerpt duplicate 群へ canonical_id / group_id / status=superseded を書き戻し、既存 fold が lifecycle group として扱えるようにする。duplicate_reason も残して手動監査可能にする。"
+        pros:
+          - "recall だけでなく、lifecycle 対応済みツール全体で同じ代表化が効く。"
+          - "canonical / superseded の意図が atom 本体に残る。"
+          - "Phase D の per-file 移行後も frontmatter で可視化しやすい。"
+        cons:
+          - "大量の既存 atom / per-file frontmatter 更新になり、diff とレビューコストが高い。"
+          - "補正版と単なる再投稿の境界を誤ると、必要な差分まで superseded にしてしまう。"
+          - "append-only ではあるが既存 atom の metadata 更新が広範囲になる。"
+        migration_cost: high
+    recommended: "A. recall-time content fold を強化"
+    recommended_reason: "現状の問題はデータ存在そのものではなく、game-design recall の候補密度低下である。既に fold_scored / normalized_content_hash / folded_ids が存在し、削除や大規模 backfill なしに入口側だけを改善できるため、失敗時のコストが最も低い。duplicate_groups.jsonl は監査資料として残し、A の検証で不足が見えた時に B を足すのが現状からの距離が短い。"
+    decision: introduce
+    decision_reason: "Phase 4a が needs_design: true とした問題に対し、既存の lifecycle/content fold を使う低リスクな導入経路がある。postpone する理由は薄く、C のような本体 metadata 大量更新はまだ急がない。Phase 4c では recall 表示・rank に限定して導入し、atom 本体の削除や schema 変更は行わない。"
+    outline_for_4c:
+      - "memory_recall の検索結果で同一 normalized_content_hash が limit 内に複数出ないことを、代表 ID / folded_count / folded_ids で確認する。"
+      - "folded_count がある候補は compact / normal 表示で折りたたみ情報を見える形にし、隠れた atom を辿れるようにする。"
+      - "duplicate_groups.jsonl は削除・正本化せず、Phase 4a health と照合する監査用 index として維持する。"
+      - "検証 query は game-design / headless / shared-reads repost 系を使い、limit 8 で同一 excerpt group が複数枠を占めないことを evidence に残す。"
+not_designed: []
+guardrail:
+  edited_files_allowed: "log/cycle_staging_log_cdx.md only"
+  no_code_written: true
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
