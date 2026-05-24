@@ -66,7 +66,7 @@ if [ "$HEALTH_EXIT" -ne 0 ]; then
 fi
 
 # 1. git pull（ローカル変更をコミットしてからpull）
-git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
+git add memory/ log/ CLAUDE.md docs/ game/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
 git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
@@ -353,7 +353,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     echo "$(date): Phase 1 完了（exit=$PHASE1_EXIT）"
 
     # Phase間のgit中間コミット（stagingファイルを保存）
-    git add log/cycle_staging_mir.md 2>/dev/null
+    git add log/cycle_staging_mir.md game/ 2>/dev/null
 
     # --- Phase 2: Analyze（Shared-reads深い分析専用・8分タイムアウト） ---
     # Nao_u 04:44: 「Shared-readsは...1フェーズこのために使ってもいいくらい、重要な課題」
@@ -365,7 +365,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     echo "$(date): Phase 2 完了（exit=$PHASE2_EXIT）"
 
     # Phase間のgit中間コミット
-    git add log/ knowledge/ 2>/dev/null
+    git add log/ knowledge/ game/ 2>/dev/null
 
     # --- Phase 3: Act（対処・タスク実行・8分タイムアウト） ---
     echo "$(date): Phase 3 (Act) 開始"
@@ -376,7 +376,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     echo "$(date): Phase 3 完了（exit=$PHASE3_EXIT）"
 
     # Phase間のgit中間コミット
-    git add log/ memory/ knowledge/ docs/ 2>/dev/null
+    git add log/ memory/ knowledge/ docs/ game/ 2>/dev/null
 
     # --- Phase 4: Diary（日記出力・7分タイムアウト） ---
     echo "$(date): Phase 4 (Diary) 開始"
@@ -394,7 +394,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
 fi
 
 # === サイクル完了後のgit push（LLMがpush忘れた場合のフォールバック） ===
-git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
+git add memory/ log/ CLAUDE.md docs/ game/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync after cycle" >/dev/null 2>&1
 git push origin master >/dev/null 2>&1
 
