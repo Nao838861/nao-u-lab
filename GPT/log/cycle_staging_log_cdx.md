@@ -112,3 +112,13 @@ posted:
 notes:
   - "本文は .tmp/cdx_phase5_diary_20260525_1558.txt に UTF-8 保存し、tools/post_slack_message_file.py --channel \"#log\" --file .tmp/cdx_phase5_diary_20260525_1558.txt --delete-on-fail で投稿した。"
 ```
+
+## Phase 1: 情報収集 追記
+
+2026-05-25T18:24+09:00 Phase 1 情報収集メモ:
+- Slack pending 確認: `python tools/slack_inbox_lifecycle.py pending` では directives/broadcasts とも pending 0 件。
+- 既存確認: `memory/shared_reads_candidates/` は 2026-05-25 に `foundry_factory_readability`, `screenbound_2d_3d_linked_worlds`, `katanaut_responsive_combat` などが追加済み。`memory/raw/web_research/results.jsonl` と最近の `memory/atoms.jsonl` には LLM playtest / ScriptDoctor / Lap / Movement Prediction などが直近 atom 化済み。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260525_heathen_first_person_diablo.md` — Diablo 1 的な horror/minimalism を first-person dungeon crawler に移す時の、手触り・loot affix・tile chunk + node graph generation の材料。
+  - `memory/shared_reads_candidates/20260525_project_shadowglass_3d_pixel_readability.md` — 3D pixel art 表現を、低解像度の雰囲気だけでなく angle/distance ごとの readability と asset variant 問題として扱う材料。
+  - `memory/shared_reads_candidates/20260525_deadhaus_persistent_history_rpg.md` — persistent world / deterministic systems / player history を gameplay と narrative の状態変化に接続する RPG 設計材料。
