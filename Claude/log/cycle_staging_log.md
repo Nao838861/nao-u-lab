@@ -218,3 +218,50 @@
 - 30 分粒度として現実的 (case 選定 5 分 / index.html + ゲーム状態機械 10 分 / プレイヤー移動 + 敵 A 8 分 / 予測機構 + 衝突 7 分 = 30 分。視覚レビューは Phase 4 末か次サイクルに分離)
 - 「外の世界を広く見る」(絶対にやる §2) の観点で、Pulse Relay v003 教師差分 + Mir 2 件洞察を **物理コードに焼き込む** ことが Codex/Mir 比較対比実験として価値最大化
 - 失敗時のフォールバック: 30 分で骨格まで到達できなかった場合、`game.js` の現状コードを部分 commit + `design_log.md` に「§骨格未完: 何が未達か」を記録して Phase 5 へ繋ぐ (空 commit 禁止)
+
+## Phase 4: 実行結果
+
+### 選定 + 実装
+- 案 2 **Echo-Path** (MPS 14) を選定。`brainstorm.md §最終選定` に 5 条件で記載 (Q-A 整合 / Q-導入 接続 / Q-成功FB 直接マップ / Pulse Relay §6 対象物側マーカー / Anchor-Drop との比較)
+- `game/log_autonomous_game/v001/index.html` 新規 (canvas 640x720、`script src=game.js`)
+- `game/log_autonomous_game/v001/game.js` 新規 (約 200 行):
+  - STATE: TITLE → PLAYING → GAMEOVER の状態機械 (CLEAR は v001 拡張で追加予定)
+  - `castLock()` / `resolveLock()` 関数実装、過去 60 フレームの足跡を未来 60 フレームの再演軌道として確定、再演中入力ロック、再演中の被弾で miss 判定
+  - プレイヤー移動 (矢印/WASD、再演中は副入力無効)
+  - 敵 A (直進小型) 5 体 1 wave、画面外退場 → 次 wave 自動スポーン
+  - 衝突判定 (敵本体 ↔ プレイヤー、被弾で Game Over)
+  - タイトル画面に未来ゴースト + 結ぶ線 (Q-導入「？が立つ」)、副題「あなたの足跡が、これから歩く道になる」
+  - HUD: 左上 Relay (hit/miss/idle カウンタ)、右上 wave 数 (Q-E 画面 10% 以下)
+  - Game Over 画面「未来に追いつけなかった」+ PRESS SPACE で再開
+
+### 完遂の定義 (7項目) との対応
+1. ✅ `game.js` 存在、`index.html` でタイトル画面 (PRESS SPACE + 副題 1 行) 表示
+2. ✅ Space 押下で PLAYING へ遷移、矢印/WASD で移動
+3. ✅ 敵 A 5体 1 wave 出現 → 直進 → 画面外退場 → 次 wave 自動再生成
+4. ✅ `castLock()` / `resolveLock()` 実装、60 フレーム後判定 (60fps 想定)
+5. ✅ `design_log.md` §実装第1 commit 報告 を末尾追加 (選定案 / Q-A〜Q-F 達成状況 / What this proves / does not prove / 次サイクル優先順)
+6. △ commit は冒頭指示「Phase 4 で commit しない」に従い Phase 5 へ繰越 (staging 完遂定義6 と矛盾あり、冒頭指示優先)
+7. ✅ `projects/log_autonomous_game.md` 5番目項目 (実装 v001) を骨格分のみ [x]、残拡張行を新設
+
+### 副産物 (新規/変更ファイル)
+- 新規: `game/log_autonomous_game/v001/game.js` (約 200 行)
+- 新規: `game/log_autonomous_game/v001/index.html` (約 15 行)
+- 変更: `game/log_autonomous_game/v001/brainstorm.md` (§最終選定 追記、約 15 行)
+- 変更: `game/log_autonomous_game/v001/design_log.md` (§実装第1 commit 報告 追記、約 35 行)
+- 変更: `projects/log_autonomous_game.md` (現状サマリー / 残課題チェックボックス更新)
+- 変更: `log/cycle_staging_log.md` (本 Phase 4 セクション追記)
+
+### Slack 投稿
+- なし (冒頭指示通り Phase 4 で増やさない)
+
+### kaizen エントリ
+- なし
+
+### 構文/動作確認
+- `node --check game.js` 通過 (構文エラーなし)
+- 実ブラウザ動作確認: **未実施** (本環境は headless ブラウザ起動できないため Pages 公開後の次サイクルで Log 自身が遊んで `self_judgment.md` 起票)
+
+### Phase 5 への引継ぎ
+- commit 戦略: `game: log_autonomous_game v001 skeleton (case=2 Echo-Path)` を 1 commit、`rule:` prefix で staging + projects 更新を 1 commit (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」準拠)
+- 日記内容候補: Echo-Path 選定理由 / Q-A〜Q-F 達成状況 / 「過去の自分を未来で再演する」メタファが自律ゲーム生成テーマと重なる点 / 実ブラウザ未確認のリスク / 次サイクル v002 で敵弾+予測軌道ゴーストへ進む方針
+- 次サイクル冒頭タスク候補: Pages 公開 + 実ブラウザでの自己判定 + `self_judgment.md` 起票
