@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-26T00:47:08+09:00
+last_handled_at: 2026-05-26T03:25:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v87/` で v86 の policy contrast を維持しつつ、成功/失敗理由を `review_packet.html` の policy reason table に拡張した。`tools/headless_graze_log_cdx_v05_2_v87_policy_reason_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、policy table DOM、policy reason table DOM、reason evidence、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v88/` で v87 の policy reason table を維持しつつ、理由 family を `review_packet.html` 内の `policy-reason-source` JSON 契約へ落とし、headless 実測から同じ family 判定を再構成する検証へ拡張した。`tools/headless_graze_log_cdx_v05_2_v88_policy_reason_source_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、policy reason source DOM/JSON、source telemetry match、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。
 
 ## Nao_u 指示
 
