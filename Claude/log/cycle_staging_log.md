@@ -195,5 +195,54 @@ Phase 1 §6 で取得した arxiv 3件を、log_autonomous_game / Pulse Relay v0
   - msg3 Lap: ts=1779690832.905979
 - Phase 3 タスク: (a) log_autonomous_game.md への反映候補記録 (実装着手は次サイクル C241 で判定、本サイクルは記録のみ) (b) Nao_u からの反応があれば #shared-reads で応答
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-25 15:55 Log)
+
+### 1) Slack返信
+- Phase 1 で新規返信対象 0件と判定済 + Phase 2 で #shared-reads 3件投稿完了 (msg1/msg2/msg3 ok=True)。**追加Slack投稿なし**。Nao_u 06:26/06:23/06:50 投稿は全て Log/Mir で応答完了済、本サイクルで新着 Nao_u 投稿なし (最終 5/22 20:00 planetary_gear note 共有以降の沈黙継続)。
+
+### 2) 改善サイクル (検証ファースト原則順守)
+- **新規提案なし** (kaizen #134 段階2 hook 運用観察 23日目を Phase 3 §3 で能動転記、これが本サイクル唯一の kaizen 系アクション)。Pre-check 「検証期限到来なし」のため新規改善提案も #kaizen-log 投稿も保留 (検証ファースト原則: 直近の未検証提案を先に埋める)。
+
+### 3) 他インスタンス洞察 → Activeプロジェクト反映
+Pre-check 「未処理の洞察 8件」全件確認 (`python slack_insight_digest.py --hours 72` 実行)。本サイクルで取り込んだのは 2 件:
+- **[Mir] Qwen vs Opus vs GPT-5.5 Tetris bot 自己改善ベンチマーク** → `projects/game_llm_play.md` に「2026-05-25: [他インスタンス洞察]」セクション追記。コスト差 9 倍観察を本プロジェクト 5層目「コスト構造の転換」の根拠ストックに登録、R-F「指標は誰のどんな行動で取られるか」リスクと汎化早計の警鐘も併記、即時実装はしない (CLAUDE.md「個別指摘を即ルール化しない」遵守)。
+- **arxiv 3件 (Fly Fail Fix / ScriptDoctor / Lap)** → `projects/log_autonomous_game.md` に「2026-05-25 C240 Phase 2-3」セクション追記。Cross-cutting insight「LLM 単体では閉じない、外部 playtester と組み合わせる」の独立 3 source 同方向到達 = 現行アプローチ妥当性裏付け。残課題に「追記候補」マーカー付き 2 項目追加 (画像ストリップ自己再読み込み / 8 ゲートへの探索 playtest 層明示化)。
+- 他 6 件 (faulty-memory 論文 / STALE benchmark / 千葉集 3つの鐘 / log_mystery 導入分析 / teco_park 感情論 / Hao Peng tweet) は重複 (C237 Phase 3 で取込済) または別プロジェクト射程 (memory_redesign / autonomous_inquiry 等)、本サイクルでの編集対象外。
+
+### 4) Activeプロジェクト更新
+- `projects/log_autonomous_game.md`: §残課題に追記候補 2 項目 + §履歴に「C240 Phase 2-3」セクション (3表 + cross-cutting insight) 追加
+- `projects/game_llm_play.md`: §履歴に「2026-05-25: [他インスタンス洞察] Mir Tetris ベンチマーク」セクション追加 (30日停滞解消の 1mm)
+
+### 5) 空サイクル時の深掘り選択
+Phase 1 で A-E 全走査済 (空サイクル判定: 新規返信対象 0件 + pending Nao_u 側 3件)。本 Phase 3 で動かしたのは:
+- **A 持ち越し**: log_autonomous_game/v001 残課題から「追記候補」マーカー追加 (実装は Phase 4 大作業へ)
+- **B 停滞 Active**: game_llm_play (30日停滞) に Mir 洞察追記 = 1mm 進展
+- **C 触れていない原理**: 「外の世界を広く見る」を Phase 1-2 で arxiv 3件取得+#shared-reads 投稿+本 Phase 3 でプロジェクト反映、3段で消化完了
+
+### 6) kaizen #134 運用観察 23日目を能動転記
+`memory/kaizen_tracker.md` line 75 直前に「運用観察23日目 (2026-05-25 C240 Phase 0/3 15:22)」転記済 (total=1027, WARN=0, 罰=17 が 16-23日目 8サイクル連続維持、定常帯回帰 +3 atom)。**手順落ち修復処方が 11サイクル連続維持 (13-23日目)**、検証期限 5/31 まで残6日。
+
+## 次フェーズの大作業
+
+**タイトル**: log_autonomous_game/v001 Q-成功FB 状態1 (発動不可リング) + 状態2 (シアン薄爆発) の視覚階差を実装
+
+**完遂の定義** (Phase 4 終了時に以下全てが観測可能):
+1. `game/log_autonomous_game/v001/game.js` に Q-成功FB 状態1 (発動不可リング = グレー薄リング常時表示でプレイヤーに「今は撃てない」を伝達) + 状態2 (シアン薄爆発 = リング判定発火したが敵に当たらなかった時の薄フィードバック) の描画ロジックが追加され、game commit prefix (`game:`) で 1本 commit 済
+2. `game/log_autonomous_game/v001/design_log.md` §実装第3 commit 報告 に状態1/2 視覚階差の実装内容 + Q-成功FB ゲートの ✕→△→✅ 進捗 (状態3 のみ → 状態1/2/3 全て) が追記され、同 commit に含まれる
+3. ローカル HTTP 配信動作確認 (`python -m http.server 8000` で 200 OK + game.js 構文エラー無し)、結果を design_log.md に記録
+4. push 後 git log に当該 commit が見える状態 = 厳守事項「書いたらすぐpush」遵守
+
+**着手手順**:
+1. `game/log_autonomous_game/v001/game.js` 全行 Read + 現状の Q-成功FB 状態3 (危機回避メッセージ) 描画位置と castLock/resolveLock 状態遷移を把握
+2. 状態1 (発動不可リング = `castLock=true` の cooldown 中 → グレー αlow リングをプレイヤー周囲に常時描画) と状態2 (シアン薄爆発 = `resolveLock` 発火するも敵衝突なし = lingeringEnemies 0件 → 短時間シアン薄爆発エフェクト) の描画コード設計
+3. game.js に追加実装 (状態1/2 の `draw_*` 関数 + Game Loop 内呼出し追加)、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」厳守
+4. ローカル HTTP 配信動作確認 + 構文エラー無し確認 (Log は GUI 操作なし、コード視察 + http 起動の 200 OK 確認まで)
+5. design_log.md §実装第3 commit 報告に追記 (実装内容 + Q-成功FB 進捗 + 実機判定未実施で self_judgment.md 確定書き換えは保留と明記)
+6. `game:` prefix で commit + push
+
+**選んだ理由**:
+- log_autonomous_game.md 残課題「Q-成功FB 状態1/2 視覚階差」は C239 self_judgment 暫定採点で Q-成功FB が 3/5 留まりだった直接の上限改善ポイント、放置すると採点上限が動かない
+- CLAUDE.md「絶対にやる」最優先「ゲームを動かして出す = playable diff」直接合致、Phase 4 終了時に game.js 差分 commit が観測可能
+- 30分で完遂可能な粒度 (描画ロジック追加 + design_log 追記 + commit/push)
+- Slack 投稿 1 本では完了しない (= 大作業要件「Slack投稿1本で済むものは大作業ではない」満たす)
+- Nao_u 5/25 06:23 指示「精度高く完成まで」への直接応答 (Q-成功FB は Pulse Relay v003 教師差分「特殊システム3状態を表示で区別する」の核命題、ここを動かさないと精度向上が止まる)
