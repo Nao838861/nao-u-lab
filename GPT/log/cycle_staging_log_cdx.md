@@ -63,7 +63,29 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link は 0 件。backtick 内の主要パス refs (`memory/atoms.jsonl`, `memory/raw/`, `tools/memory_ingest.py`, `tools/memory_recall.py`) は存在確認済み。Recent atom の `log_autonomous_game/v001` は GPT 配下の index link ではなく、Claude 側 `../Claude/game/log_autonomous_game/v001` に実体あり。"
+  - "memory/atoms.jsonl: 1548 rows / JSON parse error 0 / duplicate id 0 / status contradiction 0。title+excerpt+raw_text+links の完全一致 duplicate group は 43 件、うち 42 件は superseded/duplicate 等で lifecycle fold 済み。active の完全一致 group は 1 件 (`sr-1776359674-edeeda0bdd`, `sr-1776395558-dc3d892a95`)。"
+  - "memory/raw/: 2026-04-26 より古いファイルは 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 2026-04-26 より古い candidate は 0 件。postpone から fail へ降格すべき stale candidate なし。"
+  - "inbox 系: `python tools\\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending 0 件。status 更新なし。"
+issues:
+  - id: ISS-4A-001
+    description: "game task lens index の追記部が、定義されていない lens 名を参照している。既存 heading は `Playable / Headless 評価`, `Balance / Rule Space`, `Player Simulation / Persona`, `Repair / Iterative Improvement`, `Feedback / Rights / Human Judgment`, `Generation / Co-creation` の 6 件だが、追記部は `Stage Grammar / Enemy Formation`, `Teacher Data / Raw Feedback`, `Playable / Headless evaluation` を参照している。"
+    severity: medium
+    evidence: "memory/game_memory_task_lens_index.md: headings scan と `- lens:` refs scan。missing_refs = [`Playable / Headless evaluation`, `Stage Grammar / Enemy Formation`, `Teacher Data / Raw Feedback`]"
+    why_blocks_game_memory: "次回 2D shmup / enemy pattern / teacher data 系の制作に入る時、重要 lesson が存在しない入口へ誘導され、該当ノウハウを読む前に実装へ進む危険がある。特に 2026-05-23 以降の敵編隊・教師データ非圧縮 lessons は game memory の再利用導線そのものなので、lens 名の正規化または新 lens の扱いを決める必要がある。"
+  - id: ISS-4A-002
+    description: "atoms.jsonl に active の完全一致 duplicate group が 1 件残っている。"
+    severity: low
+    evidence: "memory/atoms.jsonl: `sr-1776359674-edeeda0bdd` line 365 と `sr-1776395558-dc3d892a95` line 368 が title+excerpt+raw_text+links 完全一致、status は両方 active。"
+    why_blocks_game_memory: "recall 時に同一 shared-reads が別 atom として並び、関連候補の枠を薄く消費する。ただし 1 group の lifecycle cleanup で済む範囲で、構造設計を要求するほどではない。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
