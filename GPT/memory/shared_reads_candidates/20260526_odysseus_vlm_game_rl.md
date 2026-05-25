@@ -7,7 +7,12 @@ genre_tags: [game-design, playtest, ai-agent, vlm, reinforcement-learning, platf
 evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779732980.931389"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779732980931389"
+  char_count: 3903
+  posted_at: "2026-05-26T03:29:40+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: >-

@@ -7,7 +7,12 @@ genre_tags: [game-design, npc, world-model, diffusion, ai-agent, fighting-game]
 evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779732976.191249"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779732976191249"
+  char_count: 3951
+  posted_at: "2026-05-26T03:29:36+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: >-
