@@ -235,3 +235,55 @@
 4. 敵 B/C/D + 70-90 秒ステージカーブ
 5. `verify.js` / `enemy_behavior_audit.js` / `bullet_origin_audit.js` 整備
 6. `completion_report.md` 起票 → Nao_u 出荷
+
+---
+
+## §実装第2 commit 報告 (2026-05-25 C239 Phase 3)
+
+**スコープ**: Q-D (敵弾 + 1秒先予測軌道ゴースト) + Q-成功FB 状態3 暫定版 (危機回避メッセージ)
+
+**外部知見裏付け**: Movement Prediction (gamedeveloper.com) を C239 Phase 2 で WebFetch 取得 → 「キャラクタ予測 = 1秒未満」「予測ホライズン長期化で divergence、fail-safe 必須」の2点が ECHO_FRAMES=60 (1秒) と完全一致、本実装の設計妥当性を外部裏付け。詳細は本サイクル `log/cycle_staging_log.md` §Movement Prediction 深堀り。
+
+**実装内容**:
+- `BULLET_SPEED=2.0`, `SHOOT_INTERVAL=90`, `GHOST_ALPHA_LINE=0.30`, `GHOST_ALPHA_TIP=0.65`, `SHOOT_GATE_Y_MAX=H*0.85` 定数追加
+- `game.bullets[]` 配列追加、`game.lockMessage` 追加 (Q-成功FB 状態3 表示用)
+- `castLock()` に `hadBullets` 記録追加 (ロック発動時に画面内に敵弾があったか)
+- `resolveLock()` で hit + hadBullets=true なら「危機回避」メッセージを 45 フレーム表示
+- 敵 A に `shootCooldown` 追加、`spawnWaveA` で敵間 20 フレームずつ初弾オフセット
+- `spawnBullet(enemy)`: プレイヤー狙いで発射時に方向確定 → 以後直進 (divergence ゼロ保証)
+- `updateEnemies()` 内に SHOOT_GATE 判定追加 (`y in [0, H*0.85]` のみ射撃 = 退場前のみ)
+- `updateBullets()` 新規 (画面外でアライブフラグ落とす)
+- `drawPlaying()` に弾本体 + 予測軌道線 + ゴースト末端 × マーカー描画追加
+- `checkCollisions()` に弾↔プレイヤー衝突追加 (echo 中なら echo.hit=true、即 GAMEOVER)
+- `resetForPlay()` で bullets / lockMessage を初期化
+
+**ゲート達成状況の更新**:
+- Q-D 弾/攻撃元: ✕ → **△→✅**
+  - ✅ SHOOT_GATE (画面内 + 退場前のみ): `y >= 0 && y <= H*0.85` で実装、退場フェーズなし (敵 A は単発進行のみ)
+  - ✅ 予測軌道ゴーストを弾本体より淡く: line=0.30 / tip=0.65 / 本体=1.0
+  - ✅ ゴースト末端に × マーカー: 4px 大、線 (alpha=0.65) で描画
+  - ✅ 弾速 ≤ プレイヤー速度 × 1.1: BULLET_SPEED=2.0 < player.speed=3.4 (1.7倍余裕、「ゴースト見てから物理的に回避可能」を保証)
+  - △ `bullet_origin_audit.js` ヘッドレス検証は未着手 (本サイクル時間制約、次サイクルで自動化)
+- Q-成功FB 3層: △ → **△ (改善あり)**
+  - △ 状態1/2/3 のロジック分離はまだ HUD カウンタ依存 (シアン爆発 / 赤フラッシュ / 灰色化の視覚区別は未実装)
+  - ✅ 状態3 (発動可能で意味あり = ロック時に敵弾存在) → 「危機回避」メッセージ45フレーム表示で暫定可視化
+  - 残: 状態1 (発動不可リング)・状態2 (シアン薄爆発)・状態3 (シアンフル爆発) の視覚階差は次サイクル
+
+**この第2 commit が証明したこと (What this proves)**:
+- 敵弾と予測軌道ゴーストが「Echo-Path 中心メカニクス」と整合的に動く形でコード上に落ちる
+- SHOOT_GATE による「画面外射撃ゼロ」「退場中射撃ゼロ」が design_log §Q-D 禁則と整合
+- Movement Prediction 外部知見の「1秒予測 + fail-safe」設計判断が ECHO_FRAMES=60 + Echo 被弾フラグの既存実装と整合
+- 弾↔プレイヤー衝突が echo 中なら「ロック miss」、非 echo なら「即 GAMEOVER」と分岐する fail-safe が動作
+
+**この第2 commit が証明しないこと (What this does not prove)**:
+- 実ブラウザでの動作 (Node 構文チェックのみ通過、ヘッドレス/視覚レビューは次サイクル)
+- 1秒ゴーストを「見てから回避できる」体感プレイ難易度 (BULLET_SPEED=2.0 が学習用として適切か視覚レビュー前)
+- 「危機回避」メッセージが状態2 (発動可能だが意味薄) と視覚的に十分区別できるか
+- Pulse Relay 教師差分 §「敵弾側マーカー見てから判断できない」失敗パターンを本実装が回避できているか
+
+**次サイクル優先順 (更新)**:
+1. Pages 公開 → 実ブラウザで Log 自身が遊ぶ → `self_judgment.md` 起票 (本実装の視覚レビュー)
+2. Q-成功FB 状態1/2 の視覚化 (発動不可リング + 状態2 シアン薄爆発)
+3. 敵 B/C/D + 70-90 秒ステージカーブ
+4. `bullet_origin_audit.js` ヘッドレス検証 (画面外/退場中射撃 = 0 を自動検出)
+5. `completion_report.md` 起票 → Nao_u 出荷

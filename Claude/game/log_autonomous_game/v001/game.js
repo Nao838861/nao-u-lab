@@ -10,6 +10,12 @@
   const H = canvas.height;
   const FPS = 60;
   const ECHO_FRAMES = 60; // 1 秒
+  // Q-D 弾パラメータ (design_log.md §Q-D 実装パラメータ準拠 / Movement Prediction 外部知見裏付け)
+  const BULLET_SPEED = 2.0;        // pixel/frame、120 px/s、1秒先=120px=画面短辺640pxの19%
+  const SHOOT_INTERVAL = 90;       // 1.5秒間隔
+  const GHOST_ALPHA_LINE = 0.30;   // ゴースト線 alpha (弾本体 1.0 比)
+  const GHOST_ALPHA_TIP = 0.65;    // ゴースト末端 × マーカー alpha
+  const SHOOT_GATE_Y_MAX = H * 0.85; // 退場フェーズ手前まで
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
@@ -20,13 +26,15 @@
     keys: new Set(),
     spaceEdge: false,
     trail: [], // 過去 ECHO_FRAMES フレーム分のプレイヤー座標
-    echo: null, // { startFrame, path: [{x,y}], result: null }
+    echo: null, // { startFrame, path: [{x,y}], result: null, hit: bool, hadBullets: bool }
     enemies: [],
+    bullets: [],
     waveSpawned: false,
     waveCount: 0,
     lockResults: { hit: 0, miss: 0, idle: 0 },
     idleSince: 0,
     introGhostPhase: 0,
+    lockMessage: null, // { text, frame } — Q-成功FB 状態3 (危機回避) 表示用
   };
 
   // --- 入力 ---
@@ -44,15 +52,24 @@
     if (game.echo) return;
     if (game.trail.length < ECHO_FRAMES) return;
     const path = game.trail.slice(-ECHO_FRAMES).map(p => ({ x: p.x, y: p.y }));
-    game.echo = { startFrame: game.frame, path, result: null, hit: false };
+    // hadBullets = ロック発動時に画面内に敵弾が存在したか (Q-成功FB 状態3 判定材料)
+    const hadBullets = game.bullets.length > 0;
+    game.echo = { startFrame: game.frame, path, result: null, hit: false, hadBullets };
     game.idleSince = game.frame;
   }
   function resolveLock() {
     if (!game.echo) return;
     const e = game.echo;
     e.result = e.hit ? 'miss' : 'hit'; // 再演中に被弾していなければ予測当
-    if (e.result === 'hit') game.lockResults.hit += 1;
-    else game.lockResults.miss += 1;
+    if (e.result === 'hit') {
+      game.lockResults.hit += 1;
+      // Q-成功FB 状態3: ロック発動時に敵弾があった = 「危機回避」した hit
+      if (e.hadBullets) {
+        game.lockMessage = { text: '危機回避', frame: game.frame };
+      }
+    } else {
+      game.lockResults.miss += 1;
+    }
     game.echo = null;
   }
 
@@ -97,18 +114,54 @@
         vy: 1.4,
         r: 10,
         alive: true,
+        // 射撃タイミングを敵間でずらす (画面内到達後 30フレーム + i*20 で初弾)
+        shootCooldown: 30 + i * 20,
       });
     }
     game.waveSpawned = true;
     game.waveCount += 1;
   }
+
+  // Q-D: 敵→プレイヤー狙いの単発射撃 (弾自体は発射時の角度で直進 = divergence ゼロ)
+  function spawnBullet(enemy) {
+    const dx = game.player.x - enemy.x;
+    const dy = game.player.y - enemy.y;
+    const d = Math.hypot(dx, dy) || 1;
+    game.bullets.push({
+      x: enemy.x,
+      y: enemy.y,
+      vx: (dx / d) * BULLET_SPEED,
+      vy: (dy / d) * BULLET_SPEED,
+      r: 4,
+      alive: true,
+      spawnFrame: game.frame,
+    });
+  }
+
   function updateEnemies() {
     for (const e of game.enemies) {
       if (!e.alive) continue;
       e.x += e.vx; e.y += e.vy;
-      if (e.y > H + 30) e.alive = false; // 退場
+      if (e.y > H + 30) { e.alive = false; continue; } // 退場
+      // SHOOT_GATE: 画面内 (y in [0, H*0.85]) かつ退場前のみ射撃
+      if (e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX) {
+        e.shootCooldown -= 1;
+        if (e.shootCooldown <= 0) {
+          spawnBullet(e);
+          e.shootCooldown = SHOOT_INTERVAL;
+        }
+      }
     }
     game.enemies = game.enemies.filter(e => e.alive);
+  }
+
+  function updateBullets() {
+    for (const b of game.bullets) {
+      if (!b.alive) continue;
+      b.x += b.vx; b.y += b.vy;
+      if (b.x < -20 || b.x > W + 20 || b.y < -20 || b.y > H + 20) b.alive = false;
+    }
+    game.bullets = game.bullets.filter(b => b.alive);
   }
 
   // --- 衝突 ---
@@ -118,6 +171,15 @@
       if (d < e.r + game.player.r) {
         if (game.echo) game.echo.hit = true; // 再演中の被弾フラグ
         game.state = STATE.GAMEOVER;
+        return;
+      }
+    }
+    for (const b of game.bullets) {
+      const d = Math.hypot(b.x - game.player.x, b.y - game.player.y);
+      if (d < b.r + game.player.r) {
+        if (game.echo) game.echo.hit = true;
+        game.state = STATE.GAMEOVER;
+        return;
       }
     }
   }
@@ -196,9 +258,42 @@
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill();
     }
 
+    // Q-D: 敵弾 + 1秒先予測軌道ゴースト
+    for (const b of game.bullets) {
+      const gx = b.x + b.vx * ECHO_FRAMES;
+      const gy = b.y + b.vy * ECHO_FRAMES;
+      // 予測軌道線 (弾本体より淡い半透明、divergence 警告 = 「予測 ≠ 確定」を視覚化)
+      ctx.strokeStyle = `rgba(255, 180, 120, ${GHOST_ALPHA_LINE})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(gx, gy);
+      ctx.stroke();
+      // ゴースト末端 × マーカー (軌道線と別記号で「ここに来る」を強調)
+      ctx.strokeStyle = `rgba(255, 180, 120, ${GHOST_ALPHA_TIP})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(gx - 4, gy - 4); ctx.lineTo(gx + 4, gy + 4);
+      ctx.moveTo(gx - 4, gy + 4); ctx.lineTo(gx + 4, gy - 4);
+      ctx.stroke();
+      // 弾本体 (alpha=1.0 で「確定」)
+      ctx.fillStyle = '#ffb878';
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+    }
+
     // プレイヤー
     ctx.fillStyle = '#dfe7f3';
     ctx.beginPath(); ctx.arc(game.player.x, game.player.y, game.player.r, 0, Math.PI * 2); ctx.fill();
+
+    // Q-成功FB 状態3: 危機回避メッセージ (resolveLock 後 45 フレーム = 0.75秒表示)
+    if (game.lockMessage && game.frame - game.lockMessage.frame < 45) {
+      const age = game.frame - game.lockMessage.frame;
+      const alpha = 1.0 - age / 45;
+      ctx.fillStyle = `rgba(140, 230, 255, ${alpha})`;
+      ctx.font = 'bold 22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(game.lockMessage.text, W * 0.5, H * 0.42);
+    }
 
     // HUD (最小): Relay (hit/miss/idle)
     ctx.fillStyle = '#9aa9c2';
@@ -230,10 +325,12 @@
     game.trail = [];
     game.echo = null;
     game.enemies = [];
+    game.bullets = [];
     game.waveSpawned = false;
     game.waveCount = 0;
     game.lockResults = { hit: 0, miss: 0, idle: 0 };
     game.idleSince = 0;
+    game.lockMessage = null;
   }
 
   function step() {
@@ -250,6 +347,7 @@
       // Wave が全て退場したら次 Wave (骨格段階ではループ)
       if (game.waveSpawned && game.enemies.length === 0) game.waveSpawned = false;
       updateEnemies();
+      updateBullets();
       checkCollisions();
       // idle (Q-成功FB 状態3 未立): 3 秒以上 lock なしで idle カウント
       if (!game.echo && game.frame - game.idleSince > FPS * 3) {

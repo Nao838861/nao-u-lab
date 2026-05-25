@@ -13,11 +13,12 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [x] brainstorm 12案 + MPSスコア（30件は過剰、ジャンル絞ったので 12 で十分と判断、C237 Phase 3）
 - [x] **brainstorm 上位5案 (★) から最終1案を選定** — C238 Phase 4 で **案 2 Echo-Path** に確定 (`brainstorm.md §最終選定`)
 - [x] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止) **骨格分のみ** — `game.js` + `index.html` (C238 Phase 4)、Q-A/Q-導入/Q-E/Q-F ✅、Q-B/Q-成功FB/Q-C △、Q-D ✕ (`design_log.md §実装第1 commit 報告` 参照)
-- [ ] 実装 v001 拡張: 敵弾 + 予測軌道ゴースト (Q-D)、Q-成功FB 3 状態の視覚化、敵 B/C/D + 70-90 秒カーブ
+- [x] 実装 v001 第2 commit (C239 Phase 3): 敵弾 + 1秒先予測軌道ゴースト (Q-D ✕→△→✅ audit script のみ未) + Q-成功FB 状態3 「危機回避」メッセージ (`design_log.md §実装第2 commit 報告` 参照、Movement Prediction 外部知見裏付けあり)
+- [ ] 実装 v001 拡張残: Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差、敵 B/C/D + 70-90 秒カーブ
+- [ ] Pages 公開 → 実ブラウザで Log 自身が遊んで自己判定 → `self_judgment.md` (C239 staging Phase 4 大作業として選定済)
 - [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
-- [ ] `enemy_behavior_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep 独立監査)
+- [ ] `enemy_behavior_audit.js` / `bullet_origin_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep / 画面外射撃ゼロ 独立監査)
 - [ ] `visual_review.md` (Log 側で目視チェック項目を列挙)
-- [ ] Pages 公開 → 実ブラウザで Log 自身が遊んで自己判定 → `self_judgment.md`
 - [ ] `completion_report.md` (What this proves / What this does not prove を分節)
 - [ ] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない）
 
