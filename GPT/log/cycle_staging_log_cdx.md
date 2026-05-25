@@ -21,20 +21,17 @@
 - Slack/directives 確認: `tools/slack_inbox_lifecycle.py pending` で directives/broadcasts とも pending 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
-
-### 2026-05-25 20:44 JST / log_cdx Phase 2
 ```yaml
 total_candidates: 3
 pass:
-  - memory/shared_reads_candidates/20260525_indie_ai_teammate_boundaries.md
-  - memory/shared_reads_candidates/20260525_minos_labyrinth_trap_synergy.md
-fail: []
+  - memory/shared_reads_candidates/20260525_dorfromantik_minimalist_expansion.md
+fail:
+  - path: memory/shared_reads_candidates/20260525_cozy_country_paint_explore_loop.md
+    reason: "製品紹介中心で、手法の中核・評価・結論を 4000 字概要へ展開するだけの密度が足りない。"
 postpone:
-  - path: memory/shared_reads_candidates/20260525_beastro_crunchy_cozy_genre_blend.md
-    reason: "ジャンル統合の着想は有用だが、候補メモだけでは評価内容と結論が薄く、~4000字概要には追加確認が必要。"
+  - path: memory/shared_reads_candidates/20260525_kixeye_long_term_live_ops.md
+    reason: "有用な live ops 論点はあるが、会社史/F2P 運用寄りで具体的な制作サイクルへの対応付けに追加確認が必要。"
 ```
-
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

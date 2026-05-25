@@ -4,6 +4,15 @@ url: "https://80.lv/articles/this-cozy-painting-game-let-s-you-explore-the-lands
 collected_at: "2026-05-25T22:52:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, cozy-game, creation-loop, exploration, no-fail-state]
+evaluated_at: "2026-05-25T23:10:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  creation と exploration を直結する着想は明確だが、記事は製品紹介中心で評価・設計判断・実装上の中核が薄い。
+  ゲーム制作への適用は可能でも、CoopEval 水準の 4000 字概要に耐える一次情報密度が足りない。
 ---
 
 ## raw_excerpt

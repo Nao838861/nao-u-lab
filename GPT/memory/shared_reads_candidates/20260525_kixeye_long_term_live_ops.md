@@ -4,6 +4,15 @@ url: "https://80.lv/articles/how-kixeye-survived-the-rise-and-fall-of-facebook-s
 collected_at: "2026-05-25T22:52:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, live-ops, strategy, onboarding, retention, monetization]
+evaluated_at: "2026-05-25T23:10:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  weekly updates、new/veteran onboarding、linear power gain 回避など有用な論点はあるが、会社史・F2P 運用寄りで手法の中核が散っている。
+  Phase 3 で投稿するには、長期運用設計としての具体例とゲーム制作サイクルへの対応付けを追加確認したい。
 ---
 
 ## raw_excerpt
