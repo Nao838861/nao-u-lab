@@ -100,7 +100,60 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-25"
+selected_issues:
+  - ISS-20260525-4A-001
+designs:
+  - issue_id: ISS-20260525-4A-001
+    problem_restatement: "ゲーム制作前に読むべき教師レッスンとして `game_design_rules.md` / `game_memory_task_lens_index.md` が 2 件の md を正本扱いで指しているが、実体ファイルがない。atom には関連記録が残っているため知見そのものは失われていないが、次回制作時の入口が壊れており、未実体化の lesson を index に載せる運用を防ぐ仕組みもない。"
+    alternatives:
+      - name: "案A: 欠落 lesson を即座に復元する"
+        sketch: "関連 atom と staging の記述から `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` と `memory/game_special_system_hud_affordance_lesson_20260525.md` を作る。既存の参照先はそのまま維持し、次回制作前ゲートを最短で復旧する。"
+        pros:
+          - "現在の壊れたリンクを直接直せる"
+          - "既存 index / rule の構造を変えずに済む"
+          - "Phase 4c の作業範囲が明確"
+        cons:
+          - "atom から復元するため、原文の完全性は復元者の判断に依存する"
+          - "未実体化 lesson を index に載せる再発防止にはならない"
+          - "2 件の lesson 内容が重複・肥大化する可能性がある"
+        migration_cost: low
+      - name: "案B: lesson 参照に source bundle を必須化する"
+        sketch: "ゲーム制作前ゲートで読む lesson は、単独 md ではなく `lesson_md + source_atom_ids + fallback_recall_query + verification_status` の束として staging / index に記録する。Phase 4c ではまず欠落 2 件を source bundle として再アンカーし、実体 md がない場合でも atom ID から降りられる状態を作る。"
+        pros:
+          - "欠落 md があっても source atom へ戻れる"
+          - "lesson 実体化と再発防止を同じ構造で扱える"
+          - "既存の per-atom 移行方針と相性が良い"
+        cons:
+          - "既存の `game_memory_task_lens_index.md` に小さな記法追加が必要"
+          - "verification_status の更新責任を phase 運用に持たせる必要がある"
+          - "今回の 2 件だけでなく、今後の lesson 追加時にも確認手順が増える"
+        migration_cost: medium
+      - name: "案C: index から未実体化 lesson 参照を外し、atom recall のみに戻す"
+        sketch: "壊れている md 参照を削除し、該当 lesson は atom ID と recall query だけで扱う。新しい仕組みは増やさず、実体ファイルが作られるまで制作前ゲートには入れない。"
+        pros:
+          - "壊れたリンクは消える"
+          - "仕組みを増やさない"
+          - "誤った正本化を避けられる"
+        cons:
+          - "今回の中核レッスンが制作前ゲートから後退する"
+          - "recall 結果の揺れに依存する"
+          - "Phase 3b で採用した non-compression probe との接続が弱くなる"
+        migration_cost: low
+    recommended: "案B: lesson 参照に source bundle を必須化する"
+    recommended_reason: "案Aは最短復旧として有効だが、同じ失敗を再発させる。案Cは保守的だが、今回の重要レッスンを次回ゲーム制作前の固定ゲートから落としてしまう。案Bは少し手間が増えるものの、md 実体・atom 原文・recall query を束ねるため、欠落時の失敗コストを下げつつ、未実体化 lesson を正本扱いする危険を抑えられる。"
+    decision: introduce
+    decision_reason: "priority issue は high severity で、次回ゲーム制作時の入口破損に直結している。実装は既存 index / rule の小規模更新で済み、Phase 4c で source bundle 記法と欠落 2 件の再アンカーを入れる価値がある。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` の該当 2 lesson に、`source_atom_ids` / `fallback_recall_query` / `verification_status` を追記する"
+      - "`memory/game_design_rules.md` の該当参照を、単独 md 前提ではなく source bundle へ降りられる表現に調整する"
+      - "欠落している 2 md は、復元可能なら最小 lesson として作成し、復元不能な部分は atom ID を正本として明記する"
+      - "Phase 4c の完了条件に、参照先 md の存在確認と source atom ID の到達確認を含める"
+not_designed:
+  - issue_id: ISS-20260525-4A-002
+    reason: "Phase 4a の priority_issues ではない。重複 atom は low severity で、今回の high severity なゲーム制作前ゲート破損より後回しにする。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
