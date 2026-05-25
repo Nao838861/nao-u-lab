@@ -8,6 +8,10 @@
   - `memory/shared_reads_candidates/20260525_apex_policy_exploration.md` - self-evolving LLM agent の exploration collapse と strategy map / fork discovery。
   - `memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md` - agent 行動から exploration error / exploitation error を分けて測る controllable 2D grid + task DAG benchmark。
   - `memory/shared_reads_candidates/20260525_textquests_llm_video_games.md` - Infocom 系 text adventure を使った、長期文脈・試行錯誤・single-session problem solving 評価。
+### 2026-05-25 11:41 Phase 1 収集
+- `memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md` - LLM-NPC と scripted NPC を比較し、自由会話が認知負荷・使いやすさ・信頼へ与える影響を測った arXiv 論文。
+- `memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md` - 生成 NPC の制約を役割ごとに配分する Symbolically Scaffolded Play の arXiv 論文。
+- `memory/shared_reads_candidates/20260525_shape_swarm_postmortem.md` - 小規模 survivor-like を商用出荷した Shape Swarm のスコープ管理・デモ運用・差別化 mechanic postmortem。
 
 ## Phase Game Start: ゲーム制作着手
 
