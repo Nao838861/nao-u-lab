@@ -192,6 +192,43 @@ graze_log v04 self_judgment.md §4 で提示された「AI 自プレイで『良
 
 ---
 
+## 7b. agent_difficulty_proxy 数値裏付け (C242 Phase 4 追記)
+
+C242 Phase 4 で 4 軸目 audit/runner `agent_difficulty_proxy.js` を新設、arXiv:2410.02829 (Wordle r=0.624 / Slay the Spire r=0.871) 命題のローカル翻訳実装。30 試行 (各 60秒=3600 frame) 素朴良手 agent 中央値計測の v001 baseline:
+
+| 指標 | 中央値 | レンジ | 意味 |
+|---|---|---|---|
+| clear_wave | 1 | 1 固定 | wave 2 到達ゼロ = 素朴良手でも wave 1 内で全滅 |
+| residual_hp_ratio | 0 | 0 固定 | 1-hit kill のため binary、生存試行ゼロで 0 確定 |
+| play_time_sec | 10.0 | 9.02-10.0 | seed 差で約 1 秒スプレッド = 微小ノイズで結果分散あり |
+| graze_count | 5.5 | 1-7 | seed 差で 6 ステップ = 弾外殻 30px 圏掠め頻度 |
+| survival_rate | 0/30 = 0% | — | 5 体同時発射時の認知負荷が真に高い |
+| death_cause | 全 bullet (30/30) | — | 敵接触ゼロ、弾で必ず死 |
+
+**§1 Q-D / Q-成功FB 採点への影響 (暫定昇格判断材料)**:
+- **Q-D 予測軌道ゴースト**: 3/5 → **3.5/5 (暫定)** — 失点 -2 のうち「-1.5 数値裏付けあり、-0.5 実機体感未確認」に再分配。理由: §1 Q-D-1「5 体同時発射時の情報密度未確認」失点に対し proxy で「素朴良手でも 10 秒前後死、5 体ウェーブが死因 30/30」と数値裏付けが付いた。失点理由が「未確認」から「実数値で確認、実機体感との乖離だけ残」に圧縮。3→4 確定昇格は実機判定依存のまま維持
+- **Q-成功FB 状態3**: 3/5 → **3/5 (据置)** — 本 proxy は castLock 機構の hit/miss も計測する (lock_hit=3 median、lock_miss=0 median) が、状態 1/2/3 の視覚体感階差は本 runner では測れない (描画ロジックの体感判定は実機依存)。proxy 数値を 3→4 暫定昇格根拠として使うのは Q-D のみ、Q-成功FB は実機判定後
+
+**Q-D 3 → 3.5 暫定昇格の判定責任 (M-37 Stage 4 整合)**:
+- 本 proxy 数値は M-37 Stage 4「AI 自プレイで『良い』と確信してから依頼」の Stage 4 単独責任モデルとは異なるが、「コードレビュー暫定 + mental simulation + 30 試行 headless 中央値」の三段重ねで「数値根拠ゼロ → 数値根拠あり」への遷移は構造的に判定責任の負担増を表す
+- arXiv:2410.02829 命題「LLM agent でも難易度ランキングは当てられる (Wordle r=0.624)」は本 v001 1 サイクルでは検証不能 (v001/v002 差分の Nao_u 体感ランキング合致を 3 サイクル運用で見るまで proxy 採用は暫定)
+- 不一致なら `feedback_*` に負の知見として書き戻し、本 runner は撤去 (judging proxy としては失敗、ただし design_log の lever としては保持の選択肢あり)
+
+**新合計 (暫定昇格反映)**:
+| ゲート | 旧 | 新 | 根拠分類 |
+|---|---|---|---|
+| Q-A 中心入力 | 5/5 | 5/5 | コード構造 ✅ (据置) |
+| Q-導入 | 4/5 | 4/5 | コード ✅ + mental simulation (据置) |
+| Q-成功FB 状態3 | 3/5 | 3/5 | コード ✅ + mental simulation (proxy では測れず据置) |
+| Q-D 予測軌道ゴースト | 3/5 | **3.5/5** | 数値保証 ✅ + proxy 30 試行 ✅ + 実機未確認残 |
+| Q-E レイアウト | 5/5 | 5/5 | コード構造 ✅ (据置) |
+
+**新合計: 20.5/25 (82%)** (旧 20/25 = 80%)
+
+**昇格は 0.5 ポイントに留まる** — proxy 単独で 3 → 4 まで一気に上げず、実機判定 + proxy 一致確認で 4 確定する 2 段階昇格の中継点として 3.5 を置く。一気に 4 昇格する誘惑を避けるのは `feedback_rule_proliferation_canonical.md`「個別指摘を即ルール化しない」と同精神の「個別 proxy で即昇格しない」処方。
+
+---
+
 ## 8. 接続先
 
 - [game/log_autonomous_game/v001/design_log.md](design_log.md) — §実装第2 commit 報告 が本採点の対象範囲
@@ -202,3 +239,4 @@ graze_log v04 self_judgment.md §4 で提示された「AI 自プレイで『良
 - [log/cycle_staging_log.md](../../../log/cycle_staging_log.md) C239 Phase 4 セクション — 本ファイルの起票文脈
 - [memory/feedback_headless_unfit_for_unfinished_eval.md](../../../memory/feedback_headless_unfit_for_unfinished_eval.md) t:5 — 判定方針 (ヘッドレス数値根拠ゼロを正直に明記)
 - [memory/feedback_prediction_responsibility.md](../../../memory/feedback_prediction_responsibility.md) t:5 — Stage 4、本ファイル §7 で「物理制約による不完全実施」を明記
+- [game/log_autonomous_game/v001/agent_difficulty_proxy.js](agent_difficulty_proxy.js) — 4 軸目 runner、本 §7b の 30 試行中央値 baseline 出力元

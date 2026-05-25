@@ -279,7 +279,7 @@ function runOne(seed) {
     nextBulletId: 1,
     frame: 0,
   };
-  const _rng = mulberry32(seed); // 良手 agent は決定論なので RNG 未使用、将来 RNG 行動入れる時用に保持
+  const rng = mulberry32(seed); // agent move noise 用 (seed 差を結果に反映)
 
   let deathFrame = null;
   let deathCause = null;
@@ -302,7 +302,7 @@ function runOne(seed) {
 
     // 2) 移動 (echo 中はスキップ、trail も push しない = game.js と同型)
     if (!state.echo) {
-      naiveGoodHandMove(state);
+      naiveGoodHandMove(state, rng);
       state.trail.push({ x: state.player.x, y: state.player.y });
       if (state.trail.length > ECHO_FRAMES * 2) state.trail.shift();
     }
@@ -390,7 +390,7 @@ function main() {
       '論文 (Wordle / Slay the Spire) はターン制、本 v001 はリアルタイム弾避け = 構造違いリスクあり',
       '本数値は self_judgment の 3→4 暫定昇格根拠まで。確定 5 採点は実機判定依存',
       'residual_hp_ratio は v001 が 1-hit kill のため binary (1.0/0.0)、HP system 導入時に連続値化',
-      '素朴良手 agent は決定論 (RNG 行動なし)、seed 差は wave 出現順や bullet 位相の決定論的差のみ',
+      '素朴良手 agent には MOVE_NOISE_SCALE=0.25 の方向微小ノイズあり (人間揺らぎ代理)、seed 差で結果分散が出る',
     ],
   };
 
