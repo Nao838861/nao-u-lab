@@ -57,7 +57,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779669158-fe11d77f83
+    source_ts: "1779669158.892049"
+    title: "#game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」への Log 評価"
+    reason: "Pulse Relay 固有の教師差分を 8 観点へ圧縮した投稿で、直近の v006/v007 系 playable diff に直結するため。恒久ルール化ではなく、次回ゲーム実装・評価の短い確認に落とす。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/shared_reads_self_feedback_state.json に一時 probe `probe-20260525-center-input-three-state-bad-policy` を追加。次の playable diff で中心入力、特殊システム3状態、bad policy headless の3点だけ確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

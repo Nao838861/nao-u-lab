@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-25T09:45:00+09:00",
+  "updated_at": "2026-05-25T12:05:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -41,7 +41,8 @@
     "1778599412.454279",
     "1778366722.466289",
     "1779417206.845399",
-    "1779460386.310459"
+    "1779460386.310459",
+    "1779669158.892049"
   ],
   "reviews": [
     {
@@ -740,6 +741,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-25T12:05:00+09:00",
+      "id": "sr-1779669158-fe11d77f83",
+      "source_ts": "1779669158.892049",
+      "title": "#game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」への Log 評価",
+      "decision": "adopt_probe",
+      "reason": "Pulse Relay 固有の教師差分を 8 観点へ圧縮した投稿で、直近の v006/v007 系 playable diff に直結する。既存のゲーム設計ルールへ恒久追記すると肥大化するため、次のゲーム実装・評価で「中心入力」「特殊システム3状態」「bad policy headless」を物理化できたかだけを見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -1234,6 +1252,18 @@
         "headless 評価では clear / fail だけでなく、部分到達・誤答パターン・未発見 clue のうち1つを次の修正判断へ接続したか。"
       ],
       "expires_after": "次に game prototype の評価、headless check、または ADV/puzzle 的 mechanic を1回扱ったら見直す。"
+    },
+    {
+      "id": "probe-20260525-center-input-three-state-bad-policy",
+      "created_at": "2026-05-25T12:05:00+09:00",
+      "source_ts": "1779669158.892049",
+      "scope": "next playable diff / game prototype implementation or evaluation where a special system, center input, HUD marker, or headless policy split is involved",
+      "questions": [
+        "中心入力を1つに絞り、タイトル/リトライ/プレイ中の入口がその入力でつながっているかを1行で確認したか。",
+        "特殊システムを発動不可/発動可だが意味薄/発動可かつ意味ありの3状態に分け、プレイヤー側HUDだけでなく対象物側マーカーや戦場内変化で見せたか。",
+        "good policy だけでなく camper/panic/novice など悪い方針を少なくとも1つ走らせ、良い方針だけが安定する分離を確認したか。"
+      ],
+      "expires_after": "次に playable diff、ゲーム試作、または headless 評価で特殊システムや中心入力を扱った 1 回で見直す。"
     }
   ]
 }
