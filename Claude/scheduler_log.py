@@ -388,7 +388,7 @@ def git_sync():
 
     try:
         subprocess.run(
-            ["git", "add", "memory/", "log/", "log/slack_archive/", "docs/", "CLAUDE.md"],
+            ["git", "add", "memory/", "log/", "log/slack_archive/", "docs/", "game/", "CLAUDE.md"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR),
         )
