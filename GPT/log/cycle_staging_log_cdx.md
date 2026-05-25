@@ -95,4 +95,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1779733462.323039"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779733462323039"
+  char_count: 2299
+  verification: ok
+draft_file: ".tmp/cycle_phase5_diary_20260526_0258.md"
+notes:
+  - "初回投稿は char_count 2308 で目標幅を 8 字超過したため削除し、短縮版を再投稿した。"
+```
