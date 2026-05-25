@@ -5,6 +5,15 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-05-25 22:52 JST / log_cdx Phase 1
+- pending 確認: `python tools\slack_inbox_lifecycle.py pending` で `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
+- 重複確認: RuleSmith / LLM game development playability は既に `memory/shared_reads_candidates/` に候補が複数あったため、今回は新規候補化しない。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260525_dorfromantik_minimalist_expansion.md` — Dorfromantik の minimalism / readability / biome 拡張 / modular procedural system のインタビュー。
+  - `memory/shared_reads_candidates/20260525_kixeye_long_term_live_ops.md` — KIXEYE の長期 live ops、weekly updates、新規 onboarding、線形 power gain 回避の運用インタビュー。
+  - `memory/shared_reads_candidates/20260525_cozy_country_paint_explore_loop.md` — Cozy Country の「描いた landscape に入って探索する」creation-loop 紹介。
+
+
 ### 2026-05-25 20:36 JST / log_cdx Phase 1
 - `memory/shared_reads_candidates/20260525_indie_ai_teammate_boundaries.md` — インディー開発者 15 名への CHI 2026 インタビュー研究。生成 AI を小規模創作チームの teammate ではなく collaborative infrastructure として扱う境界設定の候補。
 - `memory/shared_reads_candidates/20260525_minos_labyrinth_trap_synergy.md` — Minos 開発者インタビュー。labyrinth-building / trap synergy / post-launch balancing / demo 滞在時間の観測を拾った候補。
