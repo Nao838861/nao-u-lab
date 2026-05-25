@@ -322,3 +322,37 @@ Phase 3 再呼出時の状態確認:
   - sense_prediction_log.md 7タプル拡張提案 (C237 保留事項)
   - 他インスタンス洞察 (Ash STALE benchmark / Mir 1件) の memory_redesign / external_intake 射程交差追記
 - 再呼出 Phase 3 で新規追加アクションなし (Phase 4 大作業 = enemy_behavior_audit.js 実装の準備状態で確定)
+
+## Phase 4: 大作業実行 (enemy_behavior_audit.js)
+
+### 完遂の定義 vs 実績
+
+| # | 完遂条件 | 実績 |
+|---|---|---|
+| 1 | `game/log_autonomous_game/v001/enemy_behavior_audit.js` 存在 (CommonJS 単一ファイル) | ✅ 192 行、fs/path のみ require、`node` で単独実行可 |
+| 2 | `node enemy_behavior_audit.js` で全 case PASS + exit 0 + 末尾 `=== N/N PASS ===` 形式 | ✅ `=== 3/3 PASS ===`、exit 0 |
+| 3 | 3 性質監査: (a) spawn 座標域 (b) ENEMY_VY=1.4 正値固定 (c) SHOOT_GATE_Y_MAX=612 以下 | ✅ 3 case 全て独立検出で PASS |
+| 4 | README.md か self_judgment.md に「3 軸監査体制」 1 行追記 | ✅ self_judgment.md §3 タイトル + §6 完了マーク |
+| 5 | `verify.js` + `bullet_origin_audit.js` 再実行 PASS 維持 (regression 抑止) | ✅ verify.js exit 0 (4/4 gameover) / bullet_origin_audit.js exit 0 (6/6 check) |
+
+### 副産物 (本 Phase 4 で新規/変更したファイル、commit は Phase 5 で行う)
+
+- **新規**: `game/log_autonomous_game/v001/enemy_behavior_audit.js` (192 行、3 軸監査の 3 軸目)
+- **変更**: `game/log_autonomous_game/v001/self_judgment.md`
+  - §3 タイトルを「3 軸監査体制 (verify.js 受け手悪手 / bullet_origin_audit.js Q-D 弾源 / enemy_behavior_audit.js 敵挙動)」に変更、enemy_behavior_audit 完了行を追加
+  - §6 の audit 整備項目を 取消線 + C238 Phase 4 完了マークに更新
+- **変更**: `log/cycle_staging_log.md` 本 Phase 4 セクション追記
+
+### 監査結果サマリー (audit JSON 抜粋)
+
+```
+constants: { W: 640, H: 720, FPS: 60, ENEMY_VY: 1.4, SHOOT_INTERVAL: 90, SHOOT_GATE_Y_MAX: 612 }
+simulation: { frames_simulated: 665, enemies_spawned: 5, shots_fired: 23, enemies_alive_at_end: 0 }
+cases:
+  - spawn_coord_domain: PASS (5/5 体 x∈[0,640], y<0)
+  - direction_invariant: PASS (3039 サンプル全て vy=1.4 / vx=0)
+  - shoot_gate: PASS (23 発全て発射 y∈[0, 612])
+```
+
+### Phase 4 完遂判定
+**完遂**。3 軸監査体制成立 (受け手 / 弾源 / 敵本体)、新規 audit 単独 PASS + 既存 2 軸 regression 維持確認済。playable diff (audit script) を game/ 配下に追加して「ゲームを動かして出す」原則維持。Phase 5 で日記 + commit/push へ。

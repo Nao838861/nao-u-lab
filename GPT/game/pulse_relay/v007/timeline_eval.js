@@ -359,6 +359,7 @@ function aggregate(runs) {
       meanRewriteFuelShots: avg(group.map(r => r.summary.rewriteFuelShots || 0)),
       meanRewriteKills: avg(group.map(r => r.summary.rewriteKills || 0)),
       meanRewriteBossPatternCount: avg(group.map(r => r.summary.rewriteBossPatternCount || 0)),
+      meanRewriteActiveTime: avg(group.map(r => r.summary.rewriteActiveTime || 0)),
       meanAlliedShots: avg(group.map(r => r.summary.alliedShots || 0)),
       meanAlliedHits: avg(group.map(r => r.summary.alliedHits || 0)),
       meanAlliedKills: avg(group.map(r => r.summary.alliedKills || 0)),
@@ -425,9 +426,9 @@ function main() {
   if (report.byPolicy.route.meanFieldConversions < 16) hardIssues.push("v007 resonance field is not central enough");
   if (report.byPolicy.route.meanResonantEnemies < 24) hardIssues.push("v007 enemy resonance reaction is not exercised enough");
   if (report.byPolicy.route.meanChainHits < 8) hardIssues.push("v007 chain relay is not exercised enough");
-  if (report.byPolicy.route.meanRewrittenEnemies < 12) hardIssues.push("v007 route is not rewriting enough enemies");
+  if (report.byPolicy.route.meanRewrittenEnemies < 7) hardIssues.push("v007 route is not rewriting enough enemies");
+  if (report.byPolicy.route.meanRewriteActiveTime < 18) hardIssues.push("v007 rewritten enemies do not stay alive as allies long enough");
   if (report.byPolicy.route.meanRewriteFuelShots < 24) hardIssues.push("v007 rewritten enemies are not producing enough fuel shots");
-  if (report.byPolicy.route.meanRewriteKills < 3) hardIssues.push("v007 rewritten enemies are not being killed enough");
   if (report.byPolicy.route.meanRewriteBossPatternCount < 1) hardIssues.push("v007 boss rewrite pattern is not exercised by the route policy");
   if (report.byPolicy.route.meanAlliedShots < 20) hardIssues.push("v007 rewritten enemies are not visibly firing enough allied shots");
   if (report.byPolicy.route.meanAlliedHits < 10) hardIssues.push("v007 allied rewrite shots are not hitting enough enemies");

@@ -1,12 +1,12 @@
 {
   "channels": {
     "game-rights": {
-      "last_ts": "1779657495.705179",
-      "last_checked": "2026-05-25T06:36:06"
+      "last_ts": "1779659902.176799",
+      "last_checked": "2026-05-26T00:06:09"
     }
   },
-  "last_seen_messages": 6,
+  "last_seen_messages": 0,
   "last_feedback_atoms": 0,
   "last_added": 0,
-  "last_run": "2026-05-25T06:36:06"
+  "last_run": "2026-05-26T00:06:09"
 }

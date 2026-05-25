@@ -343,6 +343,8 @@ function aggregate(runs) {
       meanFieldConversions: avg(group.map(r => r.summary.fieldConversions || 0)),
       meanMaxShockwaveConversions: avg(group.map(r => r.summary.maxShockwaveConversions || 0)),
       meanMaxShockwaveHits: avg(group.map(r => r.summary.maxShockwaveHits || 0)),
+      meanStormCaptures: avg(group.map(r => r.summary.stormCaptures || 0)),
+      meanStormSalvos: avg(group.map(r => r.summary.stormSalvos || 0)),
       meanResonantEnemies: avg(group.map(r => r.summary.resonantEnemies || 0)),
       meanChainHits: avg(group.map(r => r.summary.chainHits || 0)),
       meanRelayKills: avg(group.map(r => r.summary.relayKills || 0)),
@@ -408,6 +410,8 @@ function main() {
   if (report.byPolicy.route.meanMaxPulseCount < 1) hardIssues.push("v006 route never reaches a max pulse");
   if (report.byPolicy.route.meanMaxShockwaveConversions < 80) hardIssues.push("v006 max pulse shockwave is not visually/mechanically central enough");
   if (report.byPolicy.route.meanMaxShockwaveHits < 12) hardIssues.push("v006 max pulse shockwave is not hitting enough enemies");
+  if (report.byPolicy.route.meanStormCaptures < 80) hardIssues.push("v006 storm capture is not central enough");
+  if (report.byPolicy.route.meanStormSalvos < 2) hardIssues.push("v006 delayed storm salvo is not happening enough");
   if (report.byPolicy.route.meanResonantEnemies < 24) hardIssues.push("v006 enemy resonance reaction is not exercised enough");
   if (report.byPolicy.route.meanChainHits < 8) hardIssues.push("v006 chain relay is not exercised enough");
   if (report.byPolicy.route.meanPulseWhiffs > 1) hardIssues.push("v006 pulse is still whiffing too often");

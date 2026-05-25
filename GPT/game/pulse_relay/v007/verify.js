@@ -63,13 +63,15 @@ function mechanicCheck() {
   game.player.x = W / 2;
   game.player.y = H - 120;
   game.player.pulseCharge = 100;
+  game.player.commandFocus = 1;
   game.spawnEnemy("armored", W / 2, H - 250, { fireCd: 99, route: "dwell", block: "mechanic_check" });
+  game.spawnEnemy("feeder", W / 2 + 190, H - 270, { fireCd: 99, route: "dwell", block: "mechanic_check_target" });
   for (let i = -2; i <= 2; i++) {
     game.enemyBullets.push({ x: game.player.x + i * 12, y: game.player.y - 34, vx: 0, vy: 100, r: 5 });
   }
   game.update({ left: false, right: false, up: false, down: false, pulse: true, restart: false });
   const converted = game.metrics.converted;
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 120; i++) {
     game.update({ left: false, right: false, up: false, down: false, pulse: false, restart: false });
   }
   return {
@@ -81,6 +83,7 @@ function mechanicCheck() {
     rewrittenEnemies: game.metrics.rewrittenEnemies,
     rewriteFuelShots: game.metrics.rewriteFuelShots,
     rewriteKills: game.metrics.rewriteKills,
+    rewriteActiveTime: game.metrics.rewriteActiveTime,
     alliedShots: game.metrics.alliedShots,
     alliedHits: game.metrics.alliedHits,
     alliedKills: game.metrics.alliedKills,
@@ -97,8 +100,8 @@ console.log(JSON.stringify({ mechanic, runs: results }, null, 2));
 
 const reached = results.filter(r => r.bossReached).length;
 const usedRelay = results.every(r => r.converted > 0 && r.conversionHits > 0);
-if (mechanic.converted < 5 || mechanic.conversionHits < 1) {
-  throw new Error("core pulse conversion did not damage the target enemy");
+if (mechanic.converted < 5 || mechanic.rewrittenEnemies < 1 || mechanic.alliedShots < 4 || mechanic.alliedHits < 3) {
+  throw new Error("v007 pulse did not rewrite an enemy into an allied shooter");
 }
 if (results.some(r => r.nearMissCharge < 70 || r.spentCharge < 80 || r.midPulseCount < 3)) {
   throw new Error("v007 command pulse economy was not exercised enough");
@@ -109,7 +112,7 @@ if (results.some(r => r.fieldConversions < 4 || r.resonantEnemies < 6 || r.chain
 if (mechanic.rewrittenEnemies < 1 || mechanic.rewriteFuelShots < 3) {
   throw new Error("v007 enemy rewrite did not produce command fuel");
 }
-if (results.some(r => r.rewrittenEnemies < 8 || r.rewriteFuelShots < 16 || r.rewriteKills < 1)) {
+if (results.some(r => r.rewrittenEnemies < 7 || r.rewriteActiveTime < 18 || r.rewriteFuelShots < 16)) {
   throw new Error("v007 enemy rewrite command was not exercised enough");
 }
 if (results.some(r => r.alliedShots < 20 || r.alliedHits < 10 || r.alliedKills < 3)) {

@@ -127,15 +127,19 @@ staging C239 Phase 4 完遂条件 3:
 
 ---
 
-## 3. enemy_behavior_audit.js / verify.js 現状確認 (完遂条件 4)
+## 3. 3 軸監査体制 (verify.js 受け手悪手 / bullet_origin_audit.js Q-D 弾源 / enemy_behavior_audit.js 敵挙動)
 
-**update (C241 Phase 4)**: `bullet_origin_audit.js` (C241 Phase 3 commit ee8e7ad64d6b) と `verify.js` (C241 Phase 4) を整備済。
+**update (C238 Phase 4)**: 3 軸目 `enemy_behavior_audit.js` を整備、3 軸全 PASS で揃った。
 
 - [x] `bullet_origin_audit.js` — 3 層独立監査 (定数抽出 / 静的ガード検出 / 決定論シミュ)、6/6 check PASS、exit 0、self_judgment §1 Q-D の「数値根拠ゼロ」一次処方完了
 - [x] `verify.js` — 悪手 4 方針 (camper / lane-holder / blind-sweeper / nospecial) 各 30秒 headless simulate、全 4 gameover で pass: true、exit 0
   - 生存秒数: camper 5.33s (bullet) / lane-holder 4.62s (bullet) / blind-sweeper 7.78s (bullet) / nospecial 8.20s (bullet)
   - 全方針が wave 1 内で gameover、castLock 不使用は設計通り全滅。生存方針なし = 設計穴指標ゼロ
-- [ ] `enemy_behavior_audit.js` (lingeringEnemies / maxEnemyStep の追加分析、bullet_origin_audit.js が一部カバー済) — 次サイクル以降の優先度低候補
+- [x] `enemy_behavior_audit.js` — 敵 A wave 挙動 3 case 独立監査、3/3 PASS、exit 0
+  - case 1 (spawn 座標域): 5 体全て x∈[0,640] かつ y<0 (画面上端外)
+  - case 2 (進行方向不変): 3039 サンプル全フレーム vy=1.4 / vx=0 (急加速・横ブレなし)
+  - case 3 (射撃ゲート): 23 発全て発射 y∈[0, 612=SHOOT_GATE_Y_MAX] (画面外/退場帯射撃ゼロ)
+  - 3 軸監査体制成立により「受け手 (verify) / 弾源 (bullet_origin) / 敵本体 (enemy_behavior)」の独立検証が揃った状態に到達
 
 **limits**: `verify.js` は悪手検証であり、良手検証ではない。実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守、§5 残「実機ブラウザ体感」は依然として実機判定依存)。本検証は「castLock 不使用で全滅すること」のみを保証し、「castLock 使用で生残可能」は別検証。
 
@@ -169,7 +173,7 @@ staging C239 Phase 4 完遂条件 3:
 3. Q-D ≤ 3 確定なら BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL のうち実機判定で示唆された 1 パラメータを調整
 4. Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) 実装
 5. 敵 B/C/D + 70-90 秒カーブ実装
-6. `bullet_origin_audit.js` / `enemy_behavior_audit.js` / `verify.js` 整備 (悪いプレイ方針 4 種が全部 fail することのヘッドレス検証)
+6. ~~`bullet_origin_audit.js` / `enemy_behavior_audit.js` / `verify.js` 整備~~ — **C238 Phase 4 完了** (3 軸全 PASS、§3 参照)
 
 ---
 
