@@ -321,6 +321,9 @@
         rewriteFuelShots: 0,
         rewriteKills: 0,
         rewriteBossPatternCount: 0,
+        alliedShots: 0,
+        alliedHits: 0,
+        alliedKills: 0,
         damageTaken: 0,
         bossReached: false,
         bossKilled: false,
@@ -499,11 +502,12 @@
     rewriteEnemy(e, tier = "mid") {
       if (!e || e.hp <= 0) return false;
       const before = e.rewritten || 0;
-      e.rewritten = Math.max(e.rewritten || 0, tier === "max" ? 3.6 : tier === "mid" ? 2.5 : 1.35);
+      e.rewritten = Math.max(e.rewritten || 0, tier === "max" ? 4.8 : tier === "mid" ? 3.5 : 1.9);
       e.rewrittenKind = e.kind;
       e.rewriteCd = Math.min(e.rewriteCd || 0, 0.08);
       if (e.kind === "armored" || e.kind === "anchor") e.shield = Math.max(0, e.shield - (tier === "max" ? 0.72 : 0.42));
       if (e.kind === "escort") e.rewritePush = e.side || (e.x < W / 2 ? 1 : -1);
+      if (!e.boss) e.fireCd = Math.max(e.fireCd, 0.42);
       if (e.boss) this.metrics.rewriteBossPatternCount++;
       if (before <= 0) this.metrics.rewrittenEnemies++;
       this.particles.push({ x: e.x, y: e.y, life: 0.26, max: 0.26, kind: "rewrite" });
@@ -704,6 +708,10 @@
           e.ventCd = e.boss ? 0.48 : 0.72;
         }
         if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
+          if (e.rewritten > 0 && !e.boss) {
+            e.fireCd = e.kind === "feeder" ? 0.58 : e.kind === "escort" ? 0.72 : 0.64;
+            continue;
+          }
           const bottomCamp = this.player.y > H - 96;
           let nextFireRate = e.fireRate;
           if (e.kind === "boss") {
@@ -780,6 +788,8 @@
     }
 
     fireRewritePattern(e) {
+      const allyCount = e.boss ? 3 : e.kind === "feeder" ? 2 : e.kind === "armored" || e.kind === "anchor" ? 3 : 1;
+      for (let i = 0; i < allyCount; i++) this.fireAllyShot(e, i, allyCount);
       if (e.kind === "feeder") {
         const ax = W / 2 - e.x;
         const ay = H * 0.48 - e.y;
@@ -806,6 +816,34 @@
         this.fireAtPlayer(e, 124, 0, { role: "rewrite-generic-fuel", fuel: true, r: 5 });
         this.metrics.rewriteFuelShots++;
       }
+    }
+
+    fireAllyShot(e, index, total) {
+      const target = this.bestRelayTarget(e, new Map());
+      let vx = 0;
+      let vy = -620;
+      if (target && target !== e) {
+        const offset = (index - (total - 1) / 2) * 18;
+        const dx = target.x + offset - e.x;
+        const dy = target.y - e.y;
+        const len = Math.hypot(dx, dy) || 1;
+        vx = (dx / len) * 640;
+        vy = (dy / len) * 640;
+      }
+      this.playerBullets.push({
+        x: e.x,
+        y: e.y + 8,
+        vx,
+        vy,
+        r: e.boss ? 6 : 5,
+        dmg: e.boss ? 18 : 14,
+        friendly: true,
+        relay: false,
+        ally: true,
+        trail: [{ x: e.x, y: e.y }],
+      });
+      this.metrics.alliedShots++;
+      this.metrics.rewriteFuelShots++;
     }
 
     movePathEnemy(e, path) {
@@ -909,11 +947,13 @@
             this.applyBossPhaseLock(e);
             b.hit = true;
             if (b.relay) this.metrics.conversionHits++;
+            if (b.ally) this.metrics.alliedHits++;
             this.particles.push({ x: b.x, y: b.y, life: b.relay ? 0.24 : 0.12, max: b.relay ? 0.24 : 0.12, kind: b.relay ? "relayHit" : "hit" });
             if (e.hp <= 0) {
               const bottomPenalty = this.player.y > H - 96 ? 0.35 : 1;
               this.score += Math.round((e.score + (b.relay ? 220 : 0)) * bottomPenalty);
               if (e.rewritten > 0) this.metrics.rewriteKills++;
+              if (b.ally) this.metrics.alliedKills++;
               if (b.relay) {
                 this.metrics.relayKills++;
                 this.relaySplash(e, b.splash || 0);
@@ -1030,6 +1070,9 @@
         rewriteFuelShots: this.metrics.rewriteFuelShots,
         rewriteKills: this.metrics.rewriteKills,
         rewriteBossPatternCount: this.metrics.rewriteBossPatternCount,
+        alliedShots: this.metrics.alliedShots,
+        alliedHits: this.metrics.alliedHits,
+        alliedKills: this.metrics.alliedKills,
         bossReached: this.metrics.bossReached,
         bossKilled: this.metrics.bossKilled,
         damageTaken: this.metrics.damageTaken,
@@ -1092,9 +1135,9 @@
         ctx.restore();
         ctx.globalAlpha = 1;
       }
-      ctx.fillStyle = b.relay ? "#f5fbff" : "#72c8ff";
-      ctx.shadowColor = b.relay ? "#ffffff" : "#3aa3ff";
-      ctx.shadowBlur = b.relay ? 12 : 6;
+      ctx.fillStyle = b.ally ? "#fff06a" : b.relay ? "#f5fbff" : "#72c8ff";
+      ctx.shadowColor = b.ally ? "#ffe14f" : b.relay ? "#ffffff" : "#3aa3ff";
+      ctx.shadowBlur = b.ally ? 14 : b.relay ? 12 : 6;
       circle(ctx, b.x, b.y, b.r);
     }
     ctx.shadowBlur = 0;
@@ -1160,7 +1203,7 @@
       ctx.stroke();
       ctx.globalAlpha = 1;
     }
-    ctx.fillStyle = e.boss ? colors.boss : colors[e.kind] || "#d17cff";
+    ctx.fillStyle = e.rewritten > 0 ? "#ffe66d" : e.boss ? colors.boss : colors[e.kind] || "#d17cff";
     ctx.strokeStyle = "#111722";
     ctx.lineWidth = 2;
     if (e.boss) {

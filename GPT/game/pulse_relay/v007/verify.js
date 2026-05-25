@@ -81,6 +81,9 @@ function mechanicCheck() {
     rewrittenEnemies: game.metrics.rewrittenEnemies,
     rewriteFuelShots: game.metrics.rewriteFuelShots,
     rewriteKills: game.metrics.rewriteKills,
+    alliedShots: game.metrics.alliedShots,
+    alliedHits: game.metrics.alliedHits,
+    alliedKills: game.metrics.alliedKills,
     nearMissCharge: game.metrics.nearMissCharge,
     spentCharge: game.metrics.spentCharge,
     maxPulseCount: game.metrics.maxPulseCount,
@@ -108,6 +111,9 @@ if (mechanic.rewrittenEnemies < 1 || mechanic.rewriteFuelShots < 3) {
 }
 if (results.some(r => r.rewrittenEnemies < 8 || r.rewriteFuelShots < 16 || r.rewriteKills < 1)) {
   throw new Error("v007 enemy rewrite command was not exercised enough");
+}
+if (results.some(r => r.alliedShots < 20 || r.alliedHits < 10 || r.alliedKills < 3)) {
+  throw new Error("v007 rewritten enemies did not visibly fight for the player enough");
 }
 if (reached < 2) {
   throw new Error(`boss reach regression: ${reached}/3`);

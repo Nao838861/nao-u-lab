@@ -359,6 +359,9 @@ function aggregate(runs) {
       meanRewriteFuelShots: avg(group.map(r => r.summary.rewriteFuelShots || 0)),
       meanRewriteKills: avg(group.map(r => r.summary.rewriteKills || 0)),
       meanRewriteBossPatternCount: avg(group.map(r => r.summary.rewriteBossPatternCount || 0)),
+      meanAlliedShots: avg(group.map(r => r.summary.alliedShots || 0)),
+      meanAlliedHits: avg(group.map(r => r.summary.alliedHits || 0)),
+      meanAlliedKills: avg(group.map(r => r.summary.alliedKills || 0)),
       meanNearMissCharge: avg(group.map(r => r.summary.nearMissCharge || 0)),
       meanSpentCharge: avg(group.map(r => r.summary.spentCharge || 0)),
       meanLowPulseCount: avg(group.map(r => r.summary.lowPulseCount || 0)),
@@ -426,6 +429,9 @@ function main() {
   if (report.byPolicy.route.meanRewriteFuelShots < 24) hardIssues.push("v007 rewritten enemies are not producing enough fuel shots");
   if (report.byPolicy.route.meanRewriteKills < 3) hardIssues.push("v007 rewritten enemies are not being killed enough");
   if (report.byPolicy.route.meanRewriteBossPatternCount < 1) hardIssues.push("v007 boss rewrite pattern is not exercised by the route policy");
+  if (report.byPolicy.route.meanAlliedShots < 20) hardIssues.push("v007 rewritten enemies are not visibly firing enough allied shots");
+  if (report.byPolicy.route.meanAlliedHits < 10) hardIssues.push("v007 allied rewrite shots are not hitting enough enemies");
+  if (report.byPolicy.route.meanAlliedKills < 3) hardIssues.push("v007 allied rewrite shots are not killing enough enemies");
   if (report.byPolicy.route.meanPulseWhiffs > 1) hardIssues.push("v007 pulse is still whiffing too often");
   if (report.byPolicy.route.meanPressurePct < 0.25) hardIssues.push("route pressure is still too sparse");
   if (report.byPolicy.route.meanPulseOpportunityPct < 0.12) hardIssues.push("route does not create enough pulse opportunities");

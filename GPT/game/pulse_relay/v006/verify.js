@@ -78,6 +78,8 @@ function mechanicCheck() {
     fieldConversions: game.metrics.fieldConversions,
     resonantEnemies: game.metrics.resonantEnemies,
     chainHits: game.metrics.chainHits,
+    maxShockwaveConversions: game.metrics.maxShockwaveConversions,
+    maxShockwaveHits: game.metrics.maxShockwaveHits,
     nearMissCharge: game.metrics.nearMissCharge,
     spentCharge: game.metrics.spentCharge,
     maxPulseCount: game.metrics.maxPulseCount,
@@ -97,8 +99,8 @@ if (mechanic.converted < 5 || mechanic.conversionHits < 1) {
 if (results.some(r => r.nearMissCharge < 70 || r.spentCharge < 80 || r.maxPulseCount < 1)) {
   throw new Error("v006 charge economy was not exercised enough");
 }
-if (results.some(r => r.fieldConversions < 4 || r.resonantEnemies < 6 || r.chainHits < 6)) {
-  throw new Error("v006 resonance field / enemy reaction / chain relay was not exercised enough");
+if (results.some(r => r.maxShockwaveConversions < 80 || r.maxShockwaveHits < 12 || r.resonantEnemies < 24 || r.chainHits < 6)) {
+  throw new Error("v006 max pulse shockwave / enemy reaction / chain relay was not exercised enough");
 }
 if (reached < 2) {
   throw new Error(`boss reach regression: ${reached}/3`);

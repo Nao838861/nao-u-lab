@@ -307,6 +307,8 @@
         lowPulseCount: 0,
         midPulseCount: 0,
         maxPulseCount: 0,
+        maxShockwaveConversions: 0,
+        maxShockwaveHits: 0,
         fieldConversions: 0,
         resonantEnemies: 0,
         chainHits: 0,
@@ -443,7 +445,10 @@
       const usedTargets = new Map();
       const sourceIds = new Set();
       for (const b of this.enemyBullets) {
-        if (dist2(p, b) <= radius * radius) {
+        const inPulse = tier === "max"
+          ? b.x > -20 && b.x < W + 20 && b.y > -24 && b.y < H + 24
+          : dist2(p, b) <= radius * radius;
+        if (inPulse) {
           convertedBullets.push(b);
           if (b.source != null) sourceIds.add(b.source);
           this.particles.push({ x: b.x, y: b.y, life: 0.22, max: 0.22, kind: "convert" });
@@ -459,6 +464,19 @@
         if (sourceIds.has(e.id) || dist2(p, e) <= (radius + e.r + 18) * (radius + e.r + 18)) {
           if (tier !== "low") this.activateResonance(e, converted > 0 ? "pulse" : "empty-pulse", tier);
         }
+        if (tier === "max" && e.y > -30 && e.y < H * 0.92) {
+          this.activateResonance(e, "max-shockwave", "max");
+          if (!e.boss) {
+            e.hp -= e.kind === "armored" || e.kind === "anchor" ? 18 : 12;
+            e.shield = 0;
+          } else {
+            e.hp -= 22;
+            this.applyBossPhaseLock(e);
+          }
+          this.metrics.maxShockwaveHits++;
+          this.spawnShockwaveBranches(e);
+          this.particles.push({ x: e.x, y: e.y, life: 0.32, max: 0.32, kind: "maxRing", count: converted });
+        }
       }
       this.enemyBullets = next;
       if (fieldScale > 0) {
@@ -473,7 +491,10 @@
       this.metrics.spentCharge += cost;
       if (tier === "low") this.metrics.lowPulseCount++;
       if (tier === "mid") this.metrics.midPulseCount++;
-      if (tier === "max") this.metrics.maxPulseCount++;
+      if (tier === "max") {
+        this.metrics.maxPulseCount++;
+        this.metrics.maxShockwaveConversions += converted;
+      }
       if (converted === 0) this.metrics.pulseWhiffs++;
       this.particles.push({ x: p.x, y: p.y, life: 0.18, max: 0.18, kind: tier === "max" ? "maxRing" : "ring", count: converted });
     }
@@ -529,6 +550,37 @@
         splash: total >= 4 ? 26 : 14,
         trail: [{ x: b.x, y: b.y }],
       });
+    }
+
+    spawnShockwaveBranches(source) {
+      const candidates = this.enemies
+        .filter(e => e !== source && e.hp > 0 && e.y > -20 && e.y < H * 0.92)
+        .map(e => ({ e, d2: dist2(source, e) }))
+        .filter(x => x.d2 <= 190 * 190)
+        .sort((a, b) => a.d2 - b.d2)
+        .slice(0, source.boss ? 2 : 1);
+      for (const item of candidates) {
+        const target = item.e;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const len = Math.hypot(dx, dy) || 1;
+        const speed = RELAY_SPEED * 0.88;
+        this.playerBullets.push({
+          x: source.x,
+          y: source.y,
+          vx: (dx / len) * speed,
+          vy: (dy / len) * speed,
+          r: 6,
+          dmg: 18,
+          friendly: true,
+          relay: true,
+          chain: true,
+          targetId: target.id,
+          splash: 10,
+          trail: [{ x: source.x, y: source.y }],
+        });
+        this.metrics.chainHits++;
+      }
     }
 
     activateResonance(e, reason, tier = "mid") {
@@ -653,7 +705,8 @@
         e.phaseLockFlash = Math.max(0, e.phaseLockFlash - DT);
         e.resonance = Math.max(0, e.resonance - DT);
         e.ventCd = Math.max(0, e.ventCd - DT);
-        if (e.resonance > 0 && e.ventCd <= 0 && this.enemyBullets.length < 220 && e.y > 10 && e.y < H * 0.78) {
+        const canFireFromVisibleBody = e.x > 8 && e.x < W - 8 && e.y > 10 && e.y < H * 0.78;
+        if (e.resonance > 0 && e.ventCd <= 0 && this.enemyBullets.length < 220 && canFireFromVisibleBody) {
           const towardField = this.pulseFields[0];
           if (towardField) {
             const a = Math.atan2(towardField.y - e.y, towardField.x - e.x);
@@ -665,7 +718,7 @@
           }
           e.ventCd = e.boss ? 0.48 : 0.72;
         }
-        if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
+        if (e.fireCd <= 0 && this.enemyBullets.length < 220 && canFireFromVisibleBody) {
           const bottomCamp = this.player.y > H - 96;
           let nextFireRate = e.fireRate;
           if (e.kind === "boss") {
@@ -954,6 +1007,8 @@
         lowPulseCount: this.metrics.lowPulseCount,
         midPulseCount: this.metrics.midPulseCount,
         maxPulseCount: this.metrics.maxPulseCount,
+        maxShockwaveConversions: this.metrics.maxShockwaveConversions,
+        maxShockwaveHits: this.metrics.maxShockwaveHits,
         fieldConversions: this.metrics.fieldConversions,
         resonantEnemies: this.metrics.resonantEnemies,
         chainHits: this.metrics.chainHits,
