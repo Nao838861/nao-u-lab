@@ -4,6 +4,15 @@ url: https://www.unrealengine.com/developer-interviews/timberlines-beastro-serve
 collected_at: 2026-05-25T20:36:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, genre-blend, cozy-game, deckbuilding, production, visual-design]
+evaluated_at: 2026-05-25T20:44:38+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  crunchy cozy / cooking / deckbuilding / puppet battle というジャンル統合の着想は有用だが、候補メモだけでは評価の中身と結論が薄い。
+  Nao_u_BOT への適用は可能だが、Phase 3 の ~4000字概要に耐えるには追加の一次情報確認が必要。
 ---
 
 ## raw_excerpt

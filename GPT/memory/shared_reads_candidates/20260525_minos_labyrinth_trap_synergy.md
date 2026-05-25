@@ -4,6 +4,21 @@ url: https://rogueliker.com/minos-interview/
 collected_at: 2026-05-25T20:36:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, roguelite, tower-defense, level-design, player-experimentation, post-launch]
+evaluated_at: 2026-05-25T20:44:38+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  labyrinth-building / trap placement / enemy routing を中心に、プレイヤー実験を成立させる設計判断と post-launch balancing の論点が抽出できる。
+  Nao_u_BOT の経路・装置・難度調整プロトタイプへ具体適用でき、demo 滞在時間という評価観点も使える。
+suggested_post_outline:
+  overview_angle: "tower defence roguelite を短い run ではなく、自作迷宮の読みと罠シナジーを味わうゲームとして設計した判断を軸にする。"
+  analysis_axis: "プレイヤーの組み合わせ創意を守りつつ、fun を削らずに balance する post-launch 運用を分析する。"
+  application_target: "罠・経路・敵誘導を持つ小規模プロトタイプで、探索導線、シナジー可視化、滞在時間評価、nerf 方針に使う。"
+  pros_cons: "メリットは設計と運用の両方に落とせる点。デメリットはインタビュー記事で、定量データは demo 滞在時間程度に限られる点。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
