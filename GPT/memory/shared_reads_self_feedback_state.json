@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-25T21:06:00+09:00",
+  "updated_at": "2026-05-25T23:03:12+09:00",
   "reviewed_source_ts": [
+    "1779701926.657909",
     "1779690832.905979",
     "1779557791.076579",
     "1779669572.065929",
@@ -49,6 +50,23 @@
     "1779658720.515969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-25T23:03:12+09:00",
+      "id": "sr-1779701926-e1f333f952",
+      "source_ts": "1779701926.657909",
+      "title": "*Self-Learning HyDE — 我々の memory grep 運用は embedding なしで SL-HyDE 同型の反復学習を回している*",
+      "decision": "adopt_probe",
+      "reason": "memory recall と shared-reads 候補探索では、最初の grep 語が外れた時に「見つからない」と早合点しやすい。この atom は HyDE/SL-HyDE を、検索語生成と検索結果評価を反復して改善する構造として読み替えており、今の memory/ 運用に直接効く。ただし既存の retrieval delivery loop probe と重なるため、恒久ルール化や広い metric 化はせず、次回の recall/search で検索語の再試行と成功語の埋め戻しだけを見る短い probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-25T21:06:00+09:00",
       "id": "sr-1779690832-a0488769cf",
@@ -1384,6 +1402,18 @@
         "Did I state whether the loop is measuring bug/crash/stuck/state diversity or design quality, instead of letting a technical metric stand in for fun?"
       ],
       "expires_after": "Review after the next playable diff or headless game evaluation that adds or interprets structured state, action choice, or LLM/player-style testing."
+    },
+    {
+      "id": "probe-20260525-iterative-memory-query-hyde",
+      "created_at": "2026-05-25T23:03:12+09:00",
+      "source_ts": "1779701926.657909",
+      "scope": "next memory recall / shared-reads candidate search / Phase 4a issue extraction where the first grep or recall query may miss the relevant atom",
+      "questions": [
+        "最初の検索語で弱い結果だった時、見つからないと判断する前に意味の違う検索語を最大3回まで試すか、試さない理由を1行で残したか。",
+        "検索判断に効いた成功語と、外れた語を少なくとも1つずつ staging や作業メモに残し、次回の検索器が学べる形にしたか。",
+        "新しい atom/title/tags/staging を書く場合、内容の要約だけでなく「次回この件を引くための結晶化語」を1つ含めたか。"
+      ],
+      "expires_after": "次に memory recall、shared-reads candidate search、または Phase 4a issue extraction で grep/recall を使った 1 回の作業後に見直す。"
     }
   ]
 }
