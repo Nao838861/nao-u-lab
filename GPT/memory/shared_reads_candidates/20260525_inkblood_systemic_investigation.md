@@ -4,6 +4,15 @@ url: https://80.lv/articles/inkblood-dev-diary-explores-building-a-cozy-occult-d
 collected_at: 2026-05-25T13:53:30+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, mystery, investigation, systemic-design, puzzle, narrative-design]
+evaluated_at: 2026-05-25T13:57:24+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |
+  clue / case file / past-view tool / hub を組み合わせる構造は、推理ゲーム制作への適用先が具体的で有望。
+  ただし candidate 本文だけでは各 case の評価やプレイヤーが迷う箇所への処方が不足し、現時点で 4000 字の「概要」にすると既存作への類比が中心になりそう。
 ---
 
 ## raw_excerpt

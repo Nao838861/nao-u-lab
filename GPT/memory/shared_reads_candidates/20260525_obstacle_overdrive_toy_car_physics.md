@@ -4,6 +4,21 @@ url: https://80.lv/articles/obstacle-overdrive-how-an-indie-studio-created-a-toy
 collected_at: 2026-05-25T13:53:30+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, physics, vehicle-game, prototyping, tactile-design, indie-dev]
+evaluated_at: 2026-05-25T13:57:24+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |
+  問題設定が「速さではなく慎重さを中核快感にする vehicle game」と明確で、実物 RC crawler 観察、素材実験、物理 custom、初見プレイヤーの誤期待という評価要素まで揃っている。
+  ゲーム制作では、ジャンル期待を意図的にずらす時のプロトタイプ手順と tutorial/feel 調整に直接使えるため、4000 字級の概要に耐える。
+suggested_post_outline:
+  overview_angle: "RC crawler の実物観察から、racing ではなく slow/careful driving を成立させる物理・素材・プレイヤー期待の設計として書く。"
+  analysis_axis: "実物参照、toy-scale physics の不一致、surface grip 実験、公開試遊で見えた genre expectation の補正を軸に分解する。"
+  application_target: "自分達の小規模ゲームで、操作快感を速度や派手さではなく手触り・慎重さ・失敗前兆に寄せる時の prototype/evaluation サイクル。"
+  pros_cons: "メリットは実物観察と展示試遊が設計判断に直結する点。デメリットは物理 custom のコストが高く、題材固有の触感を他ジャンルへ移すには抽象化が必要な点。"
+  verdict_pre: "部分採用。物理そのものより、実物参照 -> 小型実験 -> 初見誤解の観察 -> 入力/チュートリアル調整の流れを採用する。"
 ---
 
 ## raw_excerpt

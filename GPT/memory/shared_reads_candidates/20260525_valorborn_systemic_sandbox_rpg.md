@@ -4,6 +4,15 @@ url: https://80.lv/articles/how-a-small-indie-team-is-building-a-fully-simulated
 collected_at: 2026-05-25T13:53:30+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, systemic-design, sandbox-rpg, ai-simulation, indie-dev, optimization]
+evaluated_at: 2026-05-25T13:57:24+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |
+  living world / faction / economy / AI を距離別 simulation detail で扱う着想は有用だが、candidate 本文からは設計上の検証結果や失敗条件が薄い。
+  #shared-reads の概要として 4000 字級に展開すると、抽象的な sandbox 設計論と最適化 Tips の寄せ集めになりやすく、CoopEval 水準には届かない。
 ---
 
 ## raw_excerpt
