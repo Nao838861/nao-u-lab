@@ -4,6 +4,10 @@ url: "https://arxiv.org/abs/2512.17308"
 collected_at: "2026-05-18T14:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, llm-agents, battle-system, evaluation, content-generation]
+candidate_status: needs_review
+stale_after: "2026-06-17"
+supersedes: []
+
 ---
 
 ## raw_excerpt

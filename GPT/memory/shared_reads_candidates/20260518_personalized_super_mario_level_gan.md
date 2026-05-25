@@ -4,6 +4,10 @@ url: https://www.nature.com/articles/s41598-026-46199-1
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [pcg, personalized-level-design, platformer, ai-game-design, difficulty]
+candidate_status: needs_review
+stale_after: "2026-06-17"
+supersedes: []
+
 ---
 
 ## raw_excerpt

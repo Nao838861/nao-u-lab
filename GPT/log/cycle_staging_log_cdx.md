@@ -71,7 +71,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/shared_reads_candidates の lifecycle frontmatter 欠落 6 件を backfill_shared_reads_candidate_status.py --apply で補完した。対象: 20260518_ai_graphical_asset_generation_heuristics.md / 20260518_game_master_llm_slang_rpg.md / 20260518_personalized_super_mario_level_gan.md / 20260518_pokemon_battle_llm_agents.md / 20260518_regular_games_automata_ggp.md / 20260518_snappable_meshes_pcg_maps.md"
+  - "memory/MEMORY.md の markdown link を確認。通常リンクは 0 件で、broken link は 0 件。"
+  - "memory/atoms.jsonl を確認。rows=1587、JSON parse error=0、duplicate id=0、同一 normalized/content hash group=0。repeated title group は 16 件あるが、memory_health の警告範囲で、今回の設計起動対象にはしない。"
+  - "memory/raw/ と memory/shared_reads_candidates/ を 30 日基準で確認。raw files=96 / old_30d=0、candidate files=174 / old_30d=0。アーカイブや fail 降格対象なし。"
+  - "python tools\\slack_inbox_lifecycle.py pending で directives/broadcasts とも pending 0 件を確認。handled 化対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)

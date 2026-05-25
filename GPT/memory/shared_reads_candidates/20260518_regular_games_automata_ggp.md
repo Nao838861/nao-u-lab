@@ -4,6 +4,10 @@ url: https://ojs.aaai.org/index.php/AAAI/article/view/40203
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [general-game-playing, rules, automata, game-ai, toolchain]
+candidate_status: needs_review
+stale_after: "2026-06-17"
+supersedes: []
+
 ---
 
 ## raw_excerpt
