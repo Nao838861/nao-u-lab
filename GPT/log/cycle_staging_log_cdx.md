@@ -23,7 +23,15 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_obstacle_overdrive_toy_car_physics.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779685369935299
+    char_count: 3510
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿は本文が文字化けしたため削除済み。UTF-8 file helper で再投稿し verification: ok。deleted_ts=1779685298.737819"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

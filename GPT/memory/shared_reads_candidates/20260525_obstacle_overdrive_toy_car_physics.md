@@ -7,7 +7,12 @@ genre_tags: [game-design, physics, vehicle-game, prototyping, tactile-design, in
 evaluated_at: 2026-05-25T13:57:24+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779685369.935299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779685369935299"
+  char_count: 3510
+  posted_at: "2026-05-25T14:02:49+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |
