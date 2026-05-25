@@ -106,3 +106,13 @@ draft_file: ".tmp/cycle_phase5_diary_20260526_0258.md"
 notes:
   - "初回投稿は char_count 2308 で目標幅を 8 字超過したため削除し、短縮版を再投稿した。"
 ```
+## Game Start: 継続ゲーム制作
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の直接 game 指示は今回追加なし。
+- 対象 version: `game/graze_log_cdx/v05_1_cdx_v89/`
+- 判断: v88 で policy reason family を JSON 契約へ戻したため、今回は gameplay 変更ではなく、headless 実測から人間確認用 evidence 行を再生成して review packet の表示値と一致するかを見る focused evaluation にした。使用知見は `game_headless_action_eval_playbook_20260523` の Layer A/B 分離。
+- 作ったもの: v89 playable `index.html`、`review_packet.html`、`README.md`、`design_log.md`、`devlog.md`、`tools/headless_graze_log_cdx_v05_2_v89_generated_reason_table_check.js`
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v89/index.html` または `review_packet.html` をブラウザで開く。検証は `node tools\headless_graze_log_cdx_v05_2_v89_generated_reason_table_check.js`
+- 検証結果: pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、generated reason table contract、packet screenshot contract が通過。screenshot bytes: 166209。
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl`
+- 残課題: 評価側は reason table HTML 全体の telemetry 生成へ進める。gameplay 側は novice が終盤まで進んで BOMB なしで落ちる点を、初心者向け BOMB 導線候補として扱う。
