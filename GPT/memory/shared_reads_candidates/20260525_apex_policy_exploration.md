@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2605.21240"
 collected_at: "2026-05-25T09:27:51+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, evaluation, exploration, text-adventure, game-ai]
+evaluated_at: "2026-05-25T09:32:35+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  exploration collapse という問題設定、strategy map / fork discovery / policy selection の中核、Jericho と WebArena での評価軸が揃っている。
+  ゲーム制作では headless playtest agent が既知攻略に固着する問題へ直結し、探索ログを milestone DAG と未探索 fork に分ける運用へ落とせる。
+  CoopEval 水準の概要は「自己進化 agent の記憶が探索を狭める逆説」を軸に十分書ける。
+suggested_post_outline:
+  overview_angle: "自己改善で賢くなるはずの agent が、過去の高報酬ルートに固着して未探索の攻略空間を捨てる問題として書く。"
+  analysis_axis: "strategy map を明示構造にし、fork discovery で evidence-grounded な未探索方向を追加し、policy selection で探索/活用を制御する三段構え。"
+  application_target: "Nao_u 側の探索型ゲーム、text adventure、headless 攻略 bot 評価で、既知ルート反復と新規ルール発見を分離する harness。"
+  pros_cons: "利点は探索失敗を構造ログにできる点。弱点は strategy map 設計と evidence 判定が重く、小型ゲームでは過剰になり得る点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
