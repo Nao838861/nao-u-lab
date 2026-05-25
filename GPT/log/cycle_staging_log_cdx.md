@@ -85,7 +85,22 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を確認。コマンド例を除くと短縮ファイル名 1 件だけ GPT ワークスペース相対で解決不能。本文修正は未実施。"
+  - "memory/atoms.jsonl を 1573 行検査。JSON parse error、duplicate id、normalized/content hash 重複、粗い status 矛盾はいずれも 0 件。"
+  - "memory/raw/ と memory/shared_reads_candidates/ を 30 日超の古いファイルで確認。該当 0 件。candidate 最古は 2026-05-13 で降格対象外。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認。directives 19/19 handled、broadcasts 18/18 handled、更新対象 0 件。"
+issues:
+  - id: ISS-20260525-4A-001
+    description: "MEMORY.md Recent 内の `feedback_few_rules_big_effect.md` が短縮ファイル名だけで記録されており、GPT ワークスペース内の相対パスとしては解決できない。実体は Claude 側 `D:\\AI\\Nao_u_BOT\\Claude\\memory\\feedback_few_rules_big_effect.md` にある。"
+    severity: low
+    evidence: "memory/MEMORY.md line 66 / D:\\AI\\Nao_u_BOT\\Claude\\memory\\feedback_few_rules_big_effect.md"
+    why_blocks_game_memory: "ゲーム制作時に『個別指摘を即ルール化しない』系の判断基準へ戻る導線が、Codex 側 index だけを見ると途切れる。現状は Claude 側ファイル名を知っていれば回避できるため低 severity。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
