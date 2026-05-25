@@ -4,6 +4,21 @@ url: "https://80.lv/articles/channel-3-entertainment-on-creating-the-robot-facto
 collected_at: "2026-05-25T16:08:57+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, simulation, sandbox, systems-design, readability, factory-game]
+evaluated_at: "2026-05-25T16:13:12+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  問題設定、設計思想、手法、評価運用が候補本文内でつながっており、単なる制作談ではなく systems design の判断基準として読める。
+  小規模プロトタイプにも「simple rules x scale」「初期地点の学習設計」「feedback branch」の形で具体適用でき、4000字級の概要に耐える。
+suggested_post_outline:
+  overview_angle: "factory automation を「正解を教えるゲーム」ではなく、問題と解法の距離をプレイヤーが埋めるゲームとして整理する。"
+  analysis_axis: "first-person 化が生む存在感と操作摩擦、voxel/grid による認知負荷低減、procedural world の学習導線、simple rules が scale して深さを作る設計を軸に読む。"
+  application_target: "graze_log / Pulse Relay などで、複雑な部品を増やす前に、単純なルールの組み合わせ・初期条件・観測ログ付き feedback branch で深さと読解性を検証する場面に効く。"
+  pros_cons: "メリットはプレイヤー主導の発見と検証運用を両立できる点。デメリットは first-person や大規模化が精密操作・把握性の摩擦を生むため、補助ルールなしでは混乱しやすい点。"
+  verdict_pre: "部分採用。大規模 factory そのものではなく、readability を落とさず systemic depth を作る設計・検証手順として採用する。"
 ---
 
 ## raw_excerpt

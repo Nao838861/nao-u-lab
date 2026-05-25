@@ -4,6 +4,15 @@ url: "https://80.lv/articles/voidmaw-games-on-the-development-journey-behind-cyb
 collected_at: "2026-05-25T16:08:57+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, action-game, roguelite, combat-readability, solo-dev]
+evaluated_at: "2026-05-25T16:13:12+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  高速アクションの core feel / readability / scope 制御という論点は有用だが、候補本文から抽出できる手法は一般論に近い。
+  評価の中身や制作判断の具体的な検証材料が薄く、CoopEval 水準の概要を書くと既知の心得の水増しになりやすい。
 ---
 
 ## raw_excerpt
