@@ -4,18 +4,22 @@
 Active (起票 2026-05-25)
 
 ## 現状サマリー（3-5行）
-Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるかを試してほしい」を受領。Pulse Relay v003 教師差分シリーズ (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`) を分析した上で、Log単独で自律的に1本完成まで持っていく。第1サイクルはまだ実装に入っていない。次サイクルで `game/log_autonomous_game/v001/` を開設し、設計ログ → brainstorm → 実装 → ヘッドレス検証 → 視覚レビュー → 出荷 の順で進める。
+Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるかを試してほしい」を受領。Pulse Relay v003 教師差分シリーズ (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`) を分析した上で、Log単独で自律的に1本完成まで持っていく。**2026-05-25 C238 Phase 4 時点**: 案 2 Echo-Path (MPS 14) を選定、`game.js` + `index.html` の骨格 (state machine / castLock / resolveLock / プレイヤー移動 / 敵 A 1 wave / 衝突 / タイトル導入ゴースト) を実装、`design_log.md` §実装第1 commit 報告で達成状況を物理化。次は実ブラウザ動作確認 + 敵弾と予測軌道ゴースト (Q-D) + Q-成功FB 3 状態の視覚化。
 
 ## 残課題（未実装・未検討）
-- [ ] `game/log_autonomous_game/v001/` ディレクトリ開設
-- [ ] `design_log.md` 作成（中心入力ゲート / 特殊システム3状態ゲート / 敵出現退場ゲート / 弾攻撃元ゲート / フィードバックゲート / レイアウトゲート / 日本語ログゲート — Pulse Relay 教師差分 §「次回の自律ゲーム制作前ゲート」A-G を Log 文脈で具体化）
-- [ ] `user_directives_raw.md` の枠だけ先に作る（Nao_u 指摘が来た時に原文保存する場所）
-- [ ] brainstorm 30件 + MPSスコア (M-38/M-43 作法準拠)
-- [ ] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止、特殊システム3状態の対象側マーカー)
+- [x] `game/log_autonomous_game/v001/` ディレクトリ開設（C237 Phase 3 で実施）
+- [x] `design_log.md` 作成（Q-A中心入力 / Q-B特殊3状態 / Q-導入 / Q-成功FB / Q-C敵出現退場 / Q-D弾攻撃元 / Q-Eレイアウト / Q-F日本語ログ の 8 ゲート、C237 Phase 3）
+- [x] `user_directives_raw.md` の枠だけ先に作る（C237 Phase 3 で空ファイル作成）
+- [x] brainstorm 12案 + MPSスコア（30件は過剰、ジャンル絞ったので 12 で十分と判断、C237 Phase 3）
+- [x] **brainstorm 上位5案 (★) から最終1案を選定** — C238 Phase 4 で **案 2 Echo-Path** に確定 (`brainstorm.md §最終選定`)
+- [x] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止) **骨格分のみ** — `game.js` + `index.html` (C238 Phase 4)、Q-A/Q-導入/Q-E/Q-F ✅、Q-B/Q-成功FB/Q-C △、Q-D ✕ (`design_log.md §実装第1 commit 報告` 参照)
+- [x] 実装 v001 第2 commit (C239 Phase 3): 敵弾 + 1秒先予測軌道ゴースト (Q-D ✕→△→✅ audit script のみ未) + Q-成功FB 状態3 「危機回避」メッセージ (`design_log.md §実装第2 commit 報告` 参照、Movement Prediction 外部知見裏付けあり)
+- [ ] 実装 v001 拡張残: Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差、敵 B/C/D + 70-90 秒カーブ
+- [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断
+- [ ] Pages 公開 or Nao_u/Mir/Ash に実機プレイ依頼 → `self_judgment.md` Q-D / Q-成功FB の確定採点書き換え (C240 大作業候補)
 - [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
-- [ ] `enemy_behavior_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep 独立監査)
+- [ ] `enemy_behavior_audit.js` / `bullet_origin_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep / 画面外射撃ゼロ 独立監査)
 - [ ] `visual_review.md` (Log 側で目視チェック項目を列挙)
-- [ ] Pages 公開 → 実ブラウザで Log 自身が遊んで自己判定 → `self_judgment.md`
 - [ ] `completion_report.md` (What this proves / What this does not prove を分節)
 - [ ] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない）
 

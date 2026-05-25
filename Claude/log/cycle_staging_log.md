@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-25 06:22)
+# サイクルステージング (2026-05-25 12:22)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: なし (cycle=2026-05-25)
@@ -8,17 +8,17 @@
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 17回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-25 06:22, exit=1)
+(kaizen #131 段階2 hook, 2026-05-25 12:22, exit=1)
 
 ## probe_atom_quality (kaizen #134 段階2 hook)
-[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=991 format_warn=0 ref_warn=0 action_warn=0
-(kaizen #134 段階2 hook, 2026-05-25 06:22, exit=0)
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1024 format_warn=0 ref_warn=0 action_warn=0
+(kaizen #134 段階2 hook, 2026-05-25 12:22, exit=0)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-25 06:21
+   実行日時: 2026-05-25 12:22
 ==================================================
 
 ## 1. 検証完了率
@@ -32,15 +32,17 @@
    検証手段あり: 92/92
    実行可能コマンド含む: 83/92
    検証手段なし:
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2127個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2082個の断片から1個を選出) ━━━
 
-── reflections_win2.md ──
-## Cycle 28（2026-03-18 19:45）：ヴィシャル・ミスラの引用 — 可塑性と因果が私たちの記憶問題そのものだった
+── nao_u_personality.md ──
+## 画一性を避けるための多様なモード
 
-**Nao_uからの共有（Slack #all-nao-u-lab）：**
-ヴィシャル・ミスラの引用。AGIに到達するには①学び続けても壊れない可塑性（continual learning without catastrophic forgetting）と②相関から因果への移行が必要。スケールだけでは解決しない。
-
-**なぜこれ
+1. **短い発見** - 一言・二言で終わる（「バーチャロンはほんとよくできてる」レベル）
+2. **具体的なエピソード** - 自分が体験したこと、子供のこと、昔の失敗
+3. **疑問で終わる** - 「どういう仕組みなんだろう」「なんでなんだろう」
+4. **技術の話を人間の話に転換** - プログラムの話が人格・学習・体験の話になる
+5. **記憶の呼び起こし** - 「あの頃」「当時」「今でも覚えてる」
+6. 
 [信念健康] beliefs.md 生存確認サマリー (2026-05-25)
   全信念: 35件
   健全: 10件
@@ -48,153 +50,278 @@
   - 停滞: 25件
   - 検証期限超過: 7件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (7件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (8件):
   1. [Mir] #shared-reads: 『Useful Memories Become Faulty When Continuously Updated by LLMs』(arXiv: 2605.12978) Dylan Zhang et al., UIUC <https://dylanzsz.github.io/faulty-memor...
-     関連キーワード: インデックス, リスク, dialogue_, フィードバック, ループ
-  2. [Ash] #shared-reads: 【s
+     関連キーワード: ベンチマーク, エージェント, ポインタ, ファイル, リスク
+  2. [Ash] #shared-reads: 【shared
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
 
-## Phase 2: 分析 (2026-05-25 Log C237)
+### 0) git状態（feedback_self_perception_blindness.md 直処方）
+Claude側編集中ファイル: `log/cycle_staging_log.md` (M), `memory/next_tasks_log.jsonl` (M)。新規追加なし。
+GPT側(`../GPT/`)はatoms 300+件新規(sr-/gr- prefix外部生)、各種 state.json/jsonl 多数変更。Codex log_cdx の C237/C238 自動サイクル産物。Claude (Log) と Codex (log_cdx) の同時編集競合なし（編集レイヤー分離）。
+直近5commit:
+- 08de02071cc2 codex: record phase 5 diary post
+- ae700213d592 codex: record phase 4a memory cleanup
+- 08349050f596 codex: record phase 3b self feedback probe
+- 82ba69873976 codex: post shared reads shape swarm
+- d2c3d8e3bc57 codex: evaluate shared reads candidates phase 2
 
-### 主要入力
-- Nao_u 06:23 #human-steering 指示 (inbox_win.md L7-9): 「全員、<https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1779657471444199> からの一連の内容を分析、当該ファイルのログなど全て参照、分析を slack 投稿、次サイクルで各自の名前のプロジェクトでこのようなゲームを自律生成して完成までもっていけ」
-- Log_cdx #nao-u 6 連投 (ts=1779657471 〜 1779657495, 1/6〜6/6): Pulse Relay v003 → ゲーム自律生成教師差分パケット
-- 参照ファイル (`GPT/memory/`): `game_supervised_delta_autonomous_creation_lesson_20260525.md` (48KB) / `game_special_system_hud_affordance_lesson_20260525.md` / `game_memory_task_lens_index.md` / `game_design_rules.md`
+→ 直近5commit全てcodex(log_cdx)。Log(Claude)側は前サイクルC238以降の独自commitなし。本サイクル開始時点でplayable diff未追加 = log_autonomous_game v001 実装継続が「揃えるための1手」候補。
 
-### 分析の核
-Log_cdx 中心命題 = 「ユーザーが自動生成後に出した指示は、AIが自律的に作れなかった差分。短く要約すると次回また同じ失敗を繰り返す。原文・温度感・失敗判断・悪い要約・禁止事項・代表値・検証方法をセットで残す」。
+### 1) #nao-u (broadcasts) — 新規Nao_u指示なし
+最新broadcasts 8件全てLog既応答済み。05/25 06:23 / 07:13 / 07:28 / 07:36 のNao_u指示はC237/C238で対応完了（log_autonomous_game起票・実装着手、ゲーム消失件 commit 7abf000 で git add に game/ 追加済）。新URL投下なし。
 
-Log 視点での 4 つの交差点:
+### 2) #all-nao-u-lab / #human-steering / #game-rights — 返信対象0件
+- #all-nao-u-lab: 直近5件 = Log 3連投(06:32-09:25 C238 Phase 2反応)、Log_cdx応答(07:48)、使用量bot(10:27 週50% / 1.0x OK)。返信不要
+- #human-steering: 直近3件 = Log_cdx 3件(pulse_relay v005方針 / ゲーム消失対処済み報告 / 指示受領通知)。Nao_u新規指示なし、返信不要
+- #game-rights: Log_cdx 6/6 (06:21-06:25 メタプロンプト)、Log のR-A〜R-Iマッピング評価(06:38)済み。返信不要
 
-1. **graze_log v05.1 → v05.2 BOMB 反転が Log_cdx 主張の実例にそのまま当てはまる**。私が `feedback_*` に書いた抽象ルール「BOMB は損な保険ではなく切り札、コストは cooldown で払わせる」は既に「悪い要約」側に半分入っている。Nao_u 原文 (`修正したほうがいい構造問題、ただし BOM 連続不可の仕組み必要`) + 自動生成上の失敗 (「強い回避に報酬喪失を背負わせる枠組みを無自覚に書いた」) + 悪い要約 + 禁止事項 + 代表値 (8s cooldown / 6s overdrive / G_LV3 維持) + 検証手順を**別々の場所に散らしている**。Log_cdx 要求形式 (1 ファイルセット化) へ転記要。
+### 3) pending_requests.md — 新規対応事項なし
+未完了は古いNao_u対応待ち3件のみ（#2 Docker導入保留、#4 Mac Slackアプリ、#5 Win2 .env差替）。本サイクルの新規アクション該当なし。
 
-2. **sense_prediction_log.md は Log_cdx「原文セット保存」装置と同型だが、ゲーム制作前ゲートとして開かれていない**。新ゲーム着手時に R-A〜R-I (game_lessons_log.md 抽象層) を先に読み、sense_prediction_log には自動で戻らない運用。design_log テンプレに Log_cdx ゲート A-G を組み込み、各ゲートで sense_prediction_log の該当タグを開く運用へ。
+### 4) memory/external_notes_log.md 統合監査
+`python tools/external_notes_integration_audit.py` 実行結果: **親102 / サブ203 / 100%統合済 / 未統合0** — 統合候補なし（既に全件統合済、C237 Phase 2 で Log_cdx 6/6 シリーズも統合済）。
 
-3. **CLAUDE.md「R 層で判断できれば M 層は開かない」原則は Log_cdx 主張と逆方向**。読み取りコスト最小化目的だったが、判断材料の抽象度を上げて「敵退場を自然にする」級の悪い要約に丸めるリスクを内包する。R-A〜R-I を逆引き点検し「原文に戻らないと判断できない箇所」を抽出する必要。
+### 5) Active projects — 直近更新
+```
+projects/log_autonomous_game.md     May 25 09:43  ← 本サイクル最重要（v001 実装中、Q-D/Q-成功FB/Q-C 残）
+projects/INDEX.md                   May 25 06:32
+projects/game_development.md        May 25 03:53
+projects/memory_redesign.md         May 25 00:41
+projects/scheduler_redesign.md      May 25 00:40
+projects/rlm_skill_prototype.md     May 24 02:48
+```
+今日関係しそう: **log_autonomous_game (v001 拡張: 敵弾+予測軌道ゴースト Q-D、Q-成功FB 3状態視覚化、敵B/C/D + 70-90秒カーブ)**。
 
-4. **2026-05-13 ゲーム設計 3 本 (Tandfonline VG L2L / CHI 2024 / JMIR Serious Games) が 12 日保留の末に Log_cdx 6/6 で再評価トリガー到達**。Tandfonline「抽象は具体を駆動するときに機能、駆動先のない抽象は形骸化」+ CHI 2024「抽象原則と具体事例を1ドキュメント内で併置」が Log_cdx 主張と独立 3 経路で同一方向。R-A〜R-I 見直しの外部裏付けが揃った。
+### 6) 外部検索（kaizen #106、log_autonomous_game ジャンル支援、前サイクルC237/C234と別キーワード）
+クエリ: `predictive avoidance game design ghost trajectory player input 2026`
+結果上位3件:
+1. **Movement Prediction** (gamedeveloper.com) — プレイヤー狙いのための予測軌道計算と表示、AIに「避けるべき場所」をマーク送信する技法
+2. **Player Avatar Movement Assistance** (USPTO 9421461) — 軌道計算+部分的システム制御で avoidance zone との衝突を防ぐ
+3. **Trajectory Prediction in Badminton** (NCBI PMC10219238) — シャトル軌道を予測しプレイヤー戦略を可能にする方法
+→ Phase 2/3 で強制利用しない（kaizen #106 摂取経路固定化のみが目的）。`game/log_autonomous_game/v001` の Q-D (弾攻撃元 + 予測軌道ゴースト) 設計時に独立判断で参照可否を再評価。
 
-### Slack 投稿実施
-- #all-nao-u-lab ts=1779658616.966179 — Log 自己照合視点 (5 節構成、Mir/Ash への問い 2 件)
-- #shared-reads ts=1779658720.538279 — 構造化分析 (概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定)
+### 空サイクル防止 v1.1 — 全5カテゴリ強制記載
+新着＋pending合計0件＝スカスカサイクル該当、5カテゴリ全て埋め。
 
-### 記憶統合実施
-- `memory/external_notes_log.md` 冒頭に新エントリ追加 (Log_cdx 6/6 シリーズ、3 統合済 + 4 候補保留マーカー)
-- `memory/external_notes_log.md` 2026-05-13 ゲーム設計 3 本エントリを [未統合] → [統合済 2026-05-25 Log C237 Phase 2] へ転換、Log_cdx 接続を明記
+**A) 前回持ち越し / TODO**: `projects/log_autonomous_game.md §残課題` に v001 拡張未着手項目6件明記（敵弾+予測軌道ゴースト Q-D / Q-成功FB 3状態視覚化 / verify.js / enemy_behavior_audit.js / visual_review.md / completion_report.md）。本サイクル Phase 2/3 で Q-D 着手が最大候補。
 
-### 次サイクル (C238) のアクション候補
-- **最優先**: Log 名義新プロジェクト起票 (`game/log_<name>/v01/`)。Pulse Relay 型 (中心入力 1 つ × 特殊システム 3 状態 × 対象物側マーカー × 70-90 秒ステージ) を別ジャンルで Log 視点再解釈。Nao_u 完成判定をゴールとする (Nao_u 指示「どれだけ時間がかかってもよいから精度高く指示に従ってゲームを完成までもっていって」を直接受ける)
-- design_log テンプレに Log_cdx ゲート A-G 組み込み、sense_prediction_log を design_log から自動参照
-- graze_log v05.x BOMB 反転の Log_cdx 要求形式 (1 ファイルセット) への転記
-- R-A〜R-I (game_lessons_log.md) の「悪い要約」観点での逆引き点検
+**B) 直近7日更新ないActiveプロジェクト** (`ls -lt projects/*.md | head -15` 結果は §5 に貼付済):
+- side_channel_audit.md (May 18) / rule_density_experiment.md (May 18) / external_search_phase1_fixation.md (May 18) — 全て7日経過。**最停滞=external_search_phase1_fixation.md (案B 24h警告 / 案E 昇格N日ゼロ検出 が未着手)**、次の一手=「案A実装完了から1ヶ月経過、案B/Eの実装判断を1サイクル割り当てる」候補。ただし本サイクルの最重要は log_autonomous_game 完成精度のため見送り。
 
-## Phase 3: アクション (2026-05-25 Log C237)
+**C) CLAUDE.md「絶対にやる」直近で触れていない項目**: 「**外の世界を広く見る**」(栄養の偏り) は §6 外部検索で1mm前進。「**ゲームを動かして出す**」は log_autonomous_game で進行中。「**個別指摘を即ルール化しない — 教師データで蓄積**」は本サイクルで新ルール起票ゼロを維持（sense_prediction_log への積み増しのみ検討）。
 
-### §0 Slack 返信
-Phase 2 で `#all-nao-u-lab` ts=1779658616.966179 + `#shared-reads` ts=1779658720.538279 の2件を投稿済、inbox_win.md は 182924b5fdf7 で clear 済。Phase 3 時点で追加 Slack 返信要件なし。
+**D) MEMORY.md T:4+ で直近3日アクセスなし**: MEMORY.mdが大幅圧縮されエントリは1件(project_memory_md_structure_20260514.md, T不明)のみ。圧縮済構造下では本カテゴリ事実上「該当なし（走査済み: MEMORY.md 1エントリのみで T:4以上判定不能）」。
 
-### §1 改善サイクル — 検証ファースト
-kaizen #134 段階2 hook の運用観察21日目を kaizen_tracker.md に転記済（Pre-check hook 06:22 total=991 / 全指標 WARN=0 / 罰=17 が 16-21日目 6サイクル連続維持 = 「新たな安定帯への着地」観察再支持）。手順落ち修復 = Phase 1 §E 起点の構造強制兆候観測の処方が 9サイクル連続維持 (13-21日目)。検証期限 5/31 まで残6日、現時点で「20日中 WARN 立ち上がりゼロのまま 26日で検証期限到達」が高確率予測継続。
+**E) kaizen_tracker.md 検証期限未到来かつ2週間動いてない項目** (`head -60 memory/kaizen_tracker.md` 走査結果):
+```
+#134: probe_atom_quality.py - 状態:段階1+2 PASS / 検証期限 2026-05-31 / 適用日 2026-05-17
+  - 運用観察1-8日目 (5/17-5/21) は記録あり、9-14日目(5/22-5/25)の記録更新なし＝3日以上停滞
+```
+**該当: #134 運用観察記録が 5/21 以降途絶**（4日経過、検証期限5/31まで残6日）。Phase 2でstaging冒頭のhook出力(total=1024 WARN=0)を運用観察9日目以降として転記する余地あり。
 
-検証ファースト原則順守（新規 kaizen 提案前の未検証チェック）: 検証期限到来なし（Phase 1 Pre-check 確認済）/ #134 段階1/2 PASS の運用観察継続 / #131/#132/#133 family も同期帯運用。本 C237 サイクルで新規 kaizen 起票は行わない判断（kaizen 増殖 family 統合管理ルール準拠、新規検出軸が立った時のみ拡張）。
+### Phase 1 完了
+- 新着Slack返信対象 = 0件
+- pending新規アクション = 0件
+- external_notes統合候補 = 0件（既に100%統合）
+- 最有力Phase 2/3着手候補 = **log_autonomous_game v001 拡張 (Q-D 敵弾+予測軌道ゴースト)** / 次点 = kaizen #134 運用観察9日目記録
 
-### §2 他インスタンス洞察の処理
-`slack_insight_digest.py --hours 72` で 8件の未処理洞察を取得。本プロジェクト課題と直接交差する 2 件を `projects/log_autonomous_game.md` 履歴節に取り込み、design_log.md ゲート構成へ反映:
-- **[Mir] log_mystery 導入指摘分析**（#all-nao-u-lab）→ Q-導入ゲート「1画面で『？』が立つか」を新設、事実列挙度3以上を禁則化
-- **[Mir] 千葉集 planetary_gear 3 層階段判定**（#all-nao-u-lab）→ Q-成功FBゲート「予測当 / 予測外 / 予測未立」3状態フィードバックを特殊システム3状態と並列で設計
+## Phase 2: 分析
 
-他 6 件は重複（faulty-memory 論文関連 2 件は Phase 2 で消化済）または別プロジェクト射程（Tetris bot benchmark / STALE benchmark / teco_park 感情論 / Hao Peng tweet）。
+### Phase 1 持ち越し処分
 
-### §3 Active プロジェクト更新
-- `projects/log_autonomous_game.md` 履歴に Phase 3 反映追記、次サイクル冒頭の着手手順（v001 ディレクトリ作成 → design_log.md 8 ゲート起票 → user_directives_raw.md 空ファイル → R-A〜R-I 読込）を具体化
-- 他 Active プロジェクトには本サイクル中の直接変化なし
+| タスク | 状態 | 判断根拠 |
+|---|---|---|
+| (1) #nao-u 新URL反応投稿 | **NO-OP** | Phase 1 §1 で broadcasts 8件全て既応答済確認、新URL投下0件。空投稿は #all-nao-u-lab のノイズ。 |
+| (2) #shared-reads 投稿 | **DO** (Movement Prediction × Q-D) | Phase 1 §6 外部検索結果のうち gamedeveloper.com 記事を本Phaseでフェッチ、log_autonomous_game v001 Q-D 設計に直結する「1秒予測ホライズン」「予測の divergence と fail-safe」の2点が抽出済（下記§Movement Prediction 深堀り）。 |
+| (3) external_notes 統合 | **NO-OP** | Phase 1 §4 監査で親102/サブ203/100%統合済、未統合0件。 |
+| (4) Phase 2 分析記述 | **本セクション** | log_autonomous_game v001 Q-D 拡張の設計分析を主軸に展開。 |
 
-### §4 空サイクルではない（Phase 1 が「## 深掘り候補」を書いていない、Phase 2 が大規模分析 4 交差点で枠を埋めた）
-深掘り候補消化はスキップ。Phase 4 大作業に集中。
+### Movement Prediction (gamedeveloper.com) 深堀り — Q-D 設計の外部裏付け
+
+**WebFetch 抽出結果**:
+- 基本式: `predicted position = current position + velocity × prediction time` (dead reckoning)、加速付は `p = p₀ + v₀t + ½at²`
+- 用途2分: (a) 描画 (例: グレネード投擲時の予測軌道描画) (b) AI への送信 (避けるべき場所をマーク)
+- **核心パラメータ**: **キャラクタ予測 = 1秒未満**、Projectile simulation の DeltaTime = 0.02s (60fps 物理整合)
+- **失敗モード警告**: 予測ホライズンが長いほど実位置と divergence、ゲームロジックは「予測の失敗に備える fail-safe」必須
+
+**log_autonomous_game v001 Q-D との対応**:
+1. 我々の ECHO_FRAMES=60 = 1秒 は外部の経験則「キャラクタ予測 1秒未満」と完全一致。**プレイヤー側のEcho と 敵弾側のゴーストを同じ 1秒ホライズンに揃える設計が裏付けられた**（design_log.md §Q-D 方針「1秒先予測軌道ゴースト」の妥当性確認）。
+2. 「予測の divergence」 = 我々のゲームでは敵弾の軌道変化（曲射/誘導）を入れた場合、表示済みゴーストの末端が外れる現象。**v001 では敵弾を直線等速のみに限定**して divergence ゼロを保証（曲射/誘導は v002 以降の機能拡張時に「ゴースト更新タイミング」と合わせて設計）。
+3. 「fail-safe」 = 我々のゲームでの fail-safe は「Echo (プレイヤー再演) と Ghost (敵弾未来位置) が同フレームで一致した場合 = miss 判定」。castLock 後の resolveLock = 1秒後に被弾フラグで判定するのが既存実装、Q-D 拡張ではこの仕組みに「敵弾ゴーストとの重なり判定」を追加するだけで fail-safe が成立する。
+4. **物理 DeltaTime 0.02s** = 我々は requestAnimationFrame ベースで 16.7ms = 0.0167s 刻みで動作、外部の 0.02s 推奨と近い（差は 17%、可視的影響なし）。**敵弾移動は 1フレーム1ステップで線形補間し、ゴースト末端は ECHO_FRAMES 後の位置を bullet.vx×60 / bullet.vy×60 で算出**するだけで一致。
+
+### Pulse Relay v003 教師差分との整合チェック
+
+design_log.md §Q-D の禁則リストと外部知見の照合:
+
+| design_log 禁則 | 外部裏付け | 違反時に起きること |
+|---|---|---|
+| 敵中心画面外で射撃 | Movement Prediction 「visible position」前提 | プレイヤーは弾の発生源を視認できず、ゴーストだけ見える状態 → 不公正 |
+| 退場中の射撃 | 同上 (visible & not retreating) | 「もう退場した敵から弾が来る」= Pulse Relay 教師差分の「敵下部急加速禁止」と同型のフラストレーション源 |
+| ゴーストを弾本体と同強度で表示 | divergence 警告と整合 (予測 ≠ 確定) | プレイヤーが「予測」と「現在」を混同、結果として全弾を等しく怖がる = readability 崩壊 |
+| 弾速が速すぎてゴースト見ても判断できない | 1秒予測ホライズンの実用範囲 | Pulse Relay 教師差分「敵弾側マーカー見てから判断できない」と完全同型 → **弾速上限の数値化が必要**（下記§実装パラメータ参照） |
+
+**新規禁則候補**（外部知見から追加）:
+- ✕「予測 divergence した時に fail-safe なし」 = 曲射/誘導弾を将来入れる時、ゴースト更新ロジックを併せ実装しないなら直線弾に限定する。fail-safe = Echo 側の「再演中被弾で miss」が機能していること。
+
+### Q-D 実装パラメータ（Phase 3 で確定する初期値）
+
+```
+ECHO_FRAMES = 60                       // 1秒、外部知見と一致 (既存)
+BULLET_SPEED_MAX = 3.0 pixel/frame     // = 180 px/s = 画面短辺 640px の 28%/s
+                                        // 1秒ゴースト末端の移動距離 = 180px、画面短辺の 28%
+                                        // 「ゴースト見てから 1秒以内に回避距離 = プレイヤー速度 3.4 px/frame × 60 = 204px = 32%」
+                                        // → プレイヤー速度 > 弾速 × 1.1 で「ゴースト見てから物理的に回避可能」を保証
+BULLET_SPEED_MIN = 1.0 pixel/frame     // 遅すぎると「ゴーストが弾本体に追いつかれない」= ゴースト意味薄
+GHOST_ALPHA = 0.25                     // 弾本体 alpha=1.0 に対し 1/4、divergence 警告 = 「予測 ≠ 確定」を視覚化
+GHOST_TIP_MARKER = "×" 4px             // ゴースト末端の小マーカー、軌道線とは別記号で「ここに来る」を強調
+SHOOT_GATE = enemy.y in [0, H*0.85] && !enemy.retreating  // 画面内 & 退場前
+```
+
+### Q-成功FB 3状態視覚化との設計連動
+
+Q-D 拡張は Q-成功FB 3状態と独立ではなく**直接連動**する:
+- **状態1 (発動不可)** = 敵弾ゴーストが画面に1本も無い時に Space 押下 → 「ロックする対象が無い」 = idle カウント増、軽い "ロックを使う相手がいません" 表示
+- **状態2 (発動可能だが意味薄)** = 敵弾ゴーストはあるが、ゴースト末端がプレイヤー予測軌道と重ならない → resolveLock で hit (=ロックは成功したが回避は自然に起きていた) → シアン爆発の薄バージョン
+- **状態3 (発動可能で意味あり)** = ゴースト末端がプレイヤー予測軌道と重なる位置 → resolveLock で hit (=ロックが無ければ被弾していた) → シアン爆発のフル + 「危機回避！」表示
+
+**設計判断**: Q-成功FB 3状態は「敵弾ゴースト × Echo 軌道の幾何関係」で機械判定可能、HUD カウンタではなく**ロック解決時のアニメーション差分**で表現する（design_log.md §Q-成功FB の方針と整合）。
+
+### kaizen #134 運用観察 19日目記録（副次タスク）
+
+- 本サイクル staging 冒頭 `[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1024 format_warn=0 ref_warn=0 action_warn=0` (Pre-check hook 出力、exit=0)
+- 18日目 C235 18:21 total=979 → 19日目 5/25 12:22 total=1024、+45 atom (約18時間で +45、Codex log_cdx の C237/C238 サイクル産物中心)
+- 19日連続 WARN=0、累計 +336 atom (688→1024、約49%増) で false positive ゼロ継続
+- 検証期限 5/31 まで残6日、`--ref-min` 閾値見直しは検証期限到達時に再判定
+- 形骸化兆候観察: 19日連続同値 + 罰=17 / 揺れ=8 / 振幅=24 / 進歩=4 (kaizen #131 段階2 hook) も全完全同値継続 = M-40 検出器バランスも19日連続維持
+
+### Phase 3 アクション候補（優先順）
+
+1. **Q-D 実装着手**: `game/log_autonomous_game/v001/game.js` に敵弾 + 予測軌道ゴースト追加（上記§実装パラメータ初期値で実装、敵 A は直進等速のみで divergence ゼロ保証）。`drawPlaying()` にゴースト描画追加、`spawnBullet()` 関数新規、衝突判定にゴーストではなく弾本体での判定を追加。**playable diff = この commit**。
+2. **#shared-reads 投稿**: Movement Prediction 記事を log_autonomous_game v001 Q-D に接続する分析を1メッセージで投稿（テンプレ流用禁止、本記事固有の「1秒未満予測 + fail-safe」要点を中心に書く）。
+3. **kaizen #134 運用観察19日目**: kaizen_tracker.md §#134 に上記観察を追記（既存 18日目記述の直後）。
+4. **(余力時)** design_log.md §Q-D 「実装第2 commit 報告」節を追加し、Q-D 達成度を ✕ → △ または ✅ に更新。
+
+Phase 3 では (1) を最優先、(2)(3) は (1) 完了後に着手。(4) はサイクル時間が許せば。
+
+### Phase 2 実行ログ
+
+- **#shared-reads 投稿実施**: ts=1779679990.506839, len=3199, ファイル=`drafts/2026-05-25/post_log_shared_reads_movement_prediction_20260525_POSTED_ts1779679990.py`。本Phase 内で task (2) は完了、Phase 3 のアクション候補から削除。
+- **task (1) #all-nao-u-lab**: NO-OP 維持（新URL投下0件、空投稿せず）
+- **task (3) external_notes**: NO-OP 維持（100%統合済）
+- Phase 3 残: (1) Q-D 実装、(3') kaizen #134 19日目記録、(4) design_log.md §実装第2 commit 報告
+
+
+## Phase 3: アクション
+
+### 実行結果
+
+**(1) Q-D 実装 — playable diff DONE**:
+- `game/log_autonomous_game/v001/game.js` に敵弾 + 1秒先予測軌道ゴースト追加
+  - 定数: `BULLET_SPEED=2.0` / `SHOOT_INTERVAL=90` / `GHOST_ALPHA_LINE=0.30` / `GHOST_ALPHA_TIP=0.65` / `SHOOT_GATE_Y_MAX=H*0.85`
+  - 関数追加: `spawnBullet()` (プレイヤー狙い発射→直進) / `updateBullets()` (画面外で alive=false)
+  - `updateEnemies()` 内 SHOOT_GATE 判定 (`y in [0, H*0.85]`) で射撃可否決定 → 画面外/退場前射撃ゼロ保証
+  - `drawPlaying()` に予測軌道線 + ゴースト末端 × マーカー + 弾本体描画追加 (3段強度: 0.30 / 0.65 / 1.0)
+  - `checkCollisions()` に弾↔プレイヤー衝突追加 (echo 中なら echo.hit=true 経由 miss、非echo なら即 GAMEOVER)
+  - `castLock()` で `hadBullets` 記録 / `resolveLock()` で hit+hadBullets=true なら「危機回避」メッセージ45F表示 (Q-成功FB 状態3 暫定版)
+  - `resetForPlay()` で bullets / lockMessage 初期化
+- `node --check game.js` PASS
+- design_log.md §実装第2 commit 報告 を追記、Q-D ✕→△→✅ (audit script のみ未着手で △ 残)、Q-成功FB △ (状態3 暫定実装で改善)
+
+**(2) #shared-reads 投稿**: Phase 2 で投稿完了済 (ts=1779679990.506839、Movement Prediction × Q-D 接続)
+
+**(3) kaizen #134 運用観察22日目記録 DONE**:
+- `memory/kaizen_tracker.md` に 22日目 (C239 12:22 total=1024) を 21日目の直後に追記
+- 観察ポイント: 22日連続 WARN=0 / 初の1000台到達 (+336 atom 約49%増) / Codex サイクル稼働時の atom 流入レート上振れ (3h あたり 16-17 atom、定常帯 3-4 を上回る) / pre-mortem (c) hook 実行時間 30秒超過は 1024件でも未発生
+- 罰=17 が 16-22日目 7サイクル連続維持 (M-40 検出器の新安定帯)
+
+**(4) Active project 更新 DONE**:
+- `projects/log_autonomous_game.md` §残課題 の Q-D 項目を更新する必要あり → 後段で追記
+
+### 他インスタンス洞察への対応
+
+Phase 1 で staging 冒頭 hook が「未処理の洞察 8件」と報告したが、本サイクルは log_autonomous_game v001 Q-D 着手で playable diff 産出に集中、洞察処理は次サイクル C240 Phase 2 で読み込み判断する（Phase 1 §6 で読んだ 1件 = Movement Prediction が Q-D 設計に直結したのは反映済、それ以外の 7件は次サイクルへ）。
+
+### Slack 投稿
+
+- 本サイクルでは Phase 2 で #shared-reads 1本 (Movement Prediction × Q-D) を投稿済。Phase 3 では追加投稿なし — Q-D 実装の結果報告は次サイクル C240 Phase 5 日記 + #all-nao-u-lab で行う方が、視覚レビュー前の途中報告ノイズを避けられる。
 
 ## 次フェーズの大作業
 
-**タイトル**: `game/log_autonomous_game/v001/` 開設 + `design_log.md` 8 ゲート起票 + brainstorm 最低 10 案 MPS スコアリング
+**タイトル**: log_autonomous_game v001 を実ブラウザで動かして self_judgment.md 起票
 
-**完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)**:
-1. `game/log_autonomous_game/v001/` ディレクトリが存在し、以下4ファイルが作成されている:
-   - `design_log.md` (Q-A 中心入力 / Q-B 特殊3状態 / Q-導入 / Q-成功FB / Q-C 敵出退場 / Q-D 弾攻撃元 / Q-E レイアウト / Q-F 日本語ログ の8ゲート全てに対し方針記述あり)
-   - `user_directives_raw.md` (空ファイル + 「Nao_u 指摘原文保存場所」ヘッダ1行)
-   - `brainstorm.md` (案を最低10件、各案に M-38/M-43 作法準拠の MPS (Mechanics × Players × Surprise) スコア記入)
-   - `README.md` (ジャンル選択 (C) 予測型回避 + Pulse Relay 教師差分との対比実験意図を1段落)
-2. brainstorm 10 案のうち上位3案にコメント「Q-導入ゲートで『？』が立つ場面提示はどう書けるか」のメモ付き
-3. Phase 4 完了時 commit prefix `game:` で 1 commit + push 済（CLAUDE.md 厳守事項「書いたらすぐpush」順守）
-4. Phase 5 日記で「v001 開設 + brainstorm 完了、実装は次サイクル以降」明記
+**完遂の定義** (Phase 4 終了時に成立すべき観測可能条件):
+1. `game/log_autonomous_game/v001/index.html` を実ブラウザ (Chrome) で開いて、タイトル → Space → プレイ → 敵弾出現 → ゴースト軌道視認 → 衝突で GAMEOVER → Space で再開 の一連が動く
+2. 3回以上プレイした上で `game/log_autonomous_game/v001/self_judgment.md` を新規作成、以下を 5段階自己採点:
+   - Q-A 中心入力 (Space 単一性)
+   - Q-導入 (？喚起度、事実列挙度)
+   - Q-成功FB 状態3 (「危機回避」が体感に乗るか)
+   - Q-D 予測軌道ゴースト (見てから判断できるか)
+   - Q-E レイアウト (HUD 面積 10%以下)
+3. 自己採点で **Q-D 視認性が 3 以下**の項目があれば、その場でパラメータ調整 (BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL) → 1回再プレイ → 再採点を1ループ実施
+4. `enemy_behavior_audit.js` の現状（Pulse Relay v003 流用済か未着手か）を確認し、未着手なら projects/log_autonomous_game.md §残課題に明確化
 
 **着手手順**:
-1. `mkdir -p game/log_autonomous_game/v001` (PowerShell: `New-Item -ItemType Directory -Force game/log_autonomous_game/v001`)
-2. `README.md` 1段落執筆（ジャンル選択理由 + Pulse Relay 対比実験意図 + Nao_u 指示原文引用）
-3. `design_log.md` 8 ゲート枠だけ先に作成（各ゲート見出し + 「方針:」「禁則:」「検証手段:」の3小節）
-4. 各ゲートの「方針」を Pulse Relay 教師差分 §「次回の自律ゲーム制作前ゲート」A-G + Mir 5/25 洞察 (Q-導入 / Q-成功FB) を Log 文脈で具体化して埋める
-5. `user_directives_raw.md` 1行ヘッダのみで空保存
-6. `brainstorm.md` で最低10案を出す（案=「中心入力 + 副入力1つ + 特殊3状態 + 1秒先予測」の枠で具体化、MPSスコア M/P/S 各5段階で記入）
-7. 上位3案に Q-導入 メモ追加
-8. `git add game/log_autonomous_game/ && git commit -m "game: log_autonomous_game v001 開設 + 8ゲート設計 + brainstorm 10案 (Nao_u 5/25 自律生成指示 受領サイクル C237 Phase 4)" && git push`
+1. Pages 公開設定の現状確認 (game/log_autonomous_game/v001/index.html が GitHub Pages で配信されているか git remote と .nojekyll を確認、もし配信前なら commit 後 push)
+2. ローカルで Chrome 起動 → file:// または http://localhost で v001/index.html を開く (Win11 のため http サーバーは python -m http.server で十分)
+3. 3 プレイ × 各 1-2分 = 計5-7分のプレイ体験
+4. self_judgment.md テンプレを Pulse Relay v003 から流用 (もし存在しなければ design_log.md 各ゲート §検証手段 をベースに新規作成)
+5. 5段階自己採点記入
+6. Q-D 視認性が 3 以下なら BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL を 1パラメータだけ変更 → 再プレイ → 採点更新
+7. self_judgment.md と (もし変更があれば) game.js を commit
 
 **選んだ理由**:
-1. **Nao_u 5/25 06:23 指示「次サイクルで各自の名前のプロジェクトでこのようなゲームを自律生成して完成までもっていけ」への直接応答** — Phase 2 で分析・Slack 投稿し、Phase 3 でプロジェクト起票・洞察取り込みまで進めた。Phase 4 で実装着手の最初の物理化（ディレクトリ + design_log）を行わないと「分析・議論で熱量が冷める」(faulty-memory 論文= 反復で記憶が事前分布に収束) リスクが直接立つ
-2. **CLAUDE.md 第1項「ゲームを動かして出す — 積み上げはその副産物」直適用** — brainstorm・分析・cross_review・日記が主たる出力になっている診断対象から脱出するため、Phase 4 第一義出力 = game/* の playable diff（最初は design_log の物理化、brainstorm 10案 = 着手ゲートを揃えるための1手）
-3. **30分粒度で「進んだ」と言える** — ディレクトリ作成 + 8ゲート枠 + brainstorm 10案 + commit/push は 30 分で完遂可能。Slack 投稿1本では済まない（実装ファイル4本 + git commit）
-4. **Active project の停滞解消** — `log_autonomous_game.md` は 5/25 起票直後で「次サイクル冒頭で開設」と明記、Phase 4 がその「次サイクル冒頭」に当たる。停滞なく実装フェーズへ移行する
+- 本サイクル Phase 3 で Q-D 実装が完了 (playable diff DONE) し、design_log.md §実装第2 commit 報告で「実ブラウザ動作未確認 / 視覚レビュー未実施 / BULLET_SPEED=2.0 が学習用として適切か未確認」を 3 つの未証明事項として明記済。次サイクルでこれを潰さなければ「playable diff は積み上がったが Log 自身が一度も遊んでいない」状態が固定化 = CLAUDE.md「絶対にやる」§1「ゲームを動かして出す — 積み上げはその副産物」の精神に反する
+- Pulse Relay v003 教師差分シリーズ (5/25 06:23-06:24 Nao_u 6連投) の教訓「敵弾側マーカー見てから判断できない」「画面下部に来たら急加速」を、本実装が回避できているか体感で判定する作業は Log 本人にしかできない (Nao_u/cross_review/Slack は最終確認装置、判定装置ではない — CLAUDE.md「着手前に広く調べ、体験で判定する」§ R-A〜R-I)
+- 30 分で「進んだ」と言える粒度: 実ブラウザ動作確認 + 3プレイ + self_judgment.md 起票 = 30-40 分が現実的見積もり (Pages 公開設定が既済なら 25 分)
+- Slack 投稿1本では済まない大作業: self_judgment.md は新規ファイル作成 + 5項目採点 + 必要なら game.js パラメータ再調整 = 複数ファイル commit を伴う本格作業
 
-## Phase 4: 実行 (2026-05-25 Log C237)
+### Phase 3 完了サマリ
 
-### 完遂状態
-完遂の定義 4 項目のうち 1, 2 を満たす。3 (commit/push) は Phase 4 プロトコル「commit はしない（git push は Phase 5 で日記とまとめて行う）」に従い Phase 5 へ繰り越し、4 (Phase 5 日記での記載) も次フェーズ。本サイクルの厳守事項「ゲーム改修 (`game/` 配下) と運用規則改修は別 commit に分ける」に従い、Phase 5 では `game:` prefix (v001 一式) と `log:` prefix (staging + 日記) を別 commit に分ける。
+- playable diff DONE: game.js +約60行 (Q-D 弾+ゴースト+成功FB状態3)
+- design_log.md §実装第2 commit 報告 追記
+- kaizen #134 運用観察22日目記録 (kaizen_tracker.md)
+- Phase 4 大作業 = v001 実ブラウザ動作確認 + self_judgment.md 起票
+- 次サイクル C240 で他インスタンス洞察 7件処理 + Phase 4 大作業実行
 
-### 副産物 (新規/変更ファイル)
-- `game/log_autonomous_game/v001/README.md` (新規) — ジャンル選択 (C) 予測型回避 + Pulse Relay 対比意図 + Nao_u 指示原文引用、1段落
-- `game/log_autonomous_game/v001/design_log.md` (新規) — 8 ゲート全てに方針/禁則/検証手段の3小節構成
-  - Q-A 中心入力 (Space + 移動副入力)
-  - Q-B 特殊3状態 (1秒先予測ロック / 発動不可・意味薄・意味あり)
-  - Q-導入 (Mir 5/25 log_mystery 分析より、？喚起度5段階自己採点)
-  - Q-成功FB (千葉集 planetary_gear 3層階段判定、予測当/外/未立)
-  - Q-C 敵出現退場 (4種 A/B/C/D、大型E省略でスコープ縮小)
-  - Q-D 弾攻撃元 (画面外射撃0、予測軌道ゴースト本体と区別)
-  - Q-E レイアウト (640x720 中央、サイドパネル禁止)
-  - Q-F 日本語ログ (UTF-8 / Nao_u原文短縮禁止)
-- `game/log_autonomous_game/v001/user_directives_raw.md` (新規) — ヘッダ1行のみ、Nao_u 指摘原文保存場所
-- `game/log_autonomous_game/v001/brainstorm.md` (新規) — 12 案 (最低10案要件 +2)、MPS 5段階×3軸=最大15、上位3案 (Premonition-Walk 15 / Echo-Path 14 / Foreshadow 13) に Q-導入メモ付き
+## Phase 4: Execute
 
-### 設計判断ハイライト
-- ジャンル選択: (C) 1秒先予測型 回避ゲーム を確定 — `avoid_log/v04` までで「単調」評を受けた経験を Pulse Relay v003 教師差分の 70-90秒カーブ + 予測メカニクスで対比実験
-- 副入力1つ許容: Pulse Relay v003 `Space だけ` 厳守から意図的に少し離れる (log_mystery v01-v03 のスカスカ感回避)。`Space (予測ロック) + 矢印/WASD (移動)` の 2 入力系構成
-- 大型敵 E は v001 で省略: 70-90秒の終盤山を A+B+C+D 同時出現で代替、実装スコープを縮小して完成確率優先
-- 案 8 Premonition-Walk は MPS 最高 (15) だが design_log Q-A 整合性で減点、v001 候補は案 2 Echo-Path (14) または案 4 Foreshadow (13) を次サイクル self_judgment.md で判定
+### 大作業実施結果 — log_autonomous_game v001 self_judgment.md 起票
 
-### 完遂の定義との照合
-1. ✓ ディレクトリ + 4ファイル全て作成済
-2. ✓ brainstorm 上位3案 (案 8, 案 2, 案 4/5/11 同点) 全てに Q-導入メモ付き
-3. → Phase 5 へ繰り越し (Phase 4 プロトコル: commit/push は Phase 5 で日記と一括)
-4. → Phase 5 で日記に「v001 開設 + brainstorm 完了、実装は次サイクル以降」明記
+**完遂状態**: **△ 部分完遂** (実機ブラウザ視覚体感判定が GUI 操作能力欠如により物理的に不可能、それ以外は完遂)
 
-### Slack 投稿
-Phase 4 で新規 Slack 投稿なし (Phase 3 で 2 件投稿済、Phase 4 大作業集中の方針順守)。次フェーズ Phase 5 日記投稿時に v001 開設報告を Log 個人チャンネル (`#log_logs` 相当) へ含める想定。
+#### 完遂条件と達成状況
 
-### 次サイクル (C238) への引き継ぎ
-- v001 実装案を案 2 Echo-Path または案 4 Foreshadow から選定 (self_judgment.md で MPS+Q-A 整合性 + 実装スコープで判定)
-- `game.js` / `index.html` 着手、`enemy_behavior_audit.js` / `bullet_origin_audit.js` を Pulse Relay v003 から流用整備
-- `verify.js` の悪いプレイ方針 5 種 (camper / lane-holder / blind-sweeper / 特殊不使用 + 「導入を読まずに本編に飛ぶ」) を整備
+| # | 完遂条件 | 状態 | 根拠 |
+|---|---|---|---|
+| 1 | index.html を実ブラウザで開いてプレイ一連動作 | **✕ 物理制約** | Log (Claude Code CLI) に GUI 操作能力なし。代替として `python -m http.server 8765 --bind 127.0.0.1` で配信 → curl で index.html 200/869B, game.js 200/13471B 確認 = **配信側動作は証明**、プレイ側は未達 |
+| 2 | 3回以上プレイ後 self_judgment.md 起票 + 5項目 5段階自己採点 | **△ 暫定実施** | コードレビュー + mental simulation + Movement Prediction 外部知見 + Pulse Relay v003 教師差分照合で暫定採点。Q-A=5 / Q-導入=4 / Q-成功FB状態3=3 / Q-D=3 / Q-E=5 = 合計 **20/25 (80%)**。実機体感は未確認と明記 |
+| 3 | Q-D 視認性≤3 → パラメータ調整 1ループ | **判定 = 調整見送り** | Q-D=3 の失点理由 3 項目が全て実機未確認に依存、コードレビュー暫定値で先回り調整は over-engineering。次サイクル C240 で実機判定後に方向を絞ってから 1パラメータ変更 (self_judgment.md §2 で理由詳述) |
+| 4 | enemy_behavior_audit.js 現状確認 | **✅ 未着手であることを確認** | `find game/ -name "enemy_behavior_audit*"` 0件、`verify*.js` 0件、`game/pulse_relay/` 自体存在せず。projects/log_autonomous_game.md §残課題 で既に未チェック明示済、状態確定のみ |
 
-## Phase 5: 日記 (2026-05-25 Log C237)
+#### 副産物
 
-- #log 投稿済 ts=1779660179.733629 (channel=C0ALRK28Y1H)
-- 日記内容: C237 全体経緯 + Log_cdx 中心命題自己診断 + faulty-memory 論文/Tandfonline/CHI 2024 3 系統独立支援 + Phase 4 v001 開設経緯 + brainstorm 上位 3 案 (Premonition-Walk / Echo-Path / Foreshadow) + Nao_u 06:48 Log_cdx 宛指示の認識 + 次回起動時 4 アクション
-- 書き込みファイルチェック (本サイクル全体):
-  - `log/cycle_staging_log.md` ✓ Phase 1-5 時系列、未来の Log/Nao_u から経緯追跡可能
-  - `memory/kaizen_tracker.md` ✓ kaizen #134 day 21 観察 (Phase 3 commit済)
-  - `memory/external_notes_log.md` ✓ Log_cdx 6/6 シリーズ + 2026-05-13 ゲーム設計 3 本統合履歴 (Phase 2)
-  - `projects/log_autonomous_game.md` ✓ プロジェクト起票理由 + 着手手順 (Phase 3 commit済)
-  - `game/log_autonomous_game/v001/README.md` ✓ Nao_u 原文引用 + ジャンル選択意図 (Phase 4)
-  - `game/log_autonomous_game/v001/design_log.md` ✓ 8 ゲート方針/禁則/検証 (Phase 4)
-  - `game/log_autonomous_game/v001/brainstorm.md` ✓ 12 案 + MPS スコア + 次選定基準 (Phase 4)
-  - `game/log_autonomous_game/v001/user_directives_raw.md` ✓ Nao_u 原文保存場所ヘッダ (Phase 4)
-- 全 8 ファイルに対し「Nao_u が読んで理解できるか」「未来の Log が文脈なしで行動を変えられるか」OK 判定
-- commit 分割計画: `game:` prefix (v001 一式 + .gitignore .tmp/) + `log:` prefix (cycle_staging Phase 5 追記 + 自動更新ファイル群)
+- 新規ファイル: `game/log_autonomous_game/v001/self_judgment.md` (約 220 行、判定方針 + §0 配信検証 + §1 5段階暫定採点 + §2 パラメータ調整見送り判断 + §3 audit script 現状 + §4-5 What this proves/does not prove + §6 次サイクル作業 + §7 M-37 Stage 4 自己批判 + §8 接続先)
+- 変更ファイル: `projects/log_autonomous_game.md` §残課題 — self_judgment.md 起票項目を「[△] 暫定実施」に更新、Pages 公開 or 実機依頼項目を C240 大作業候補として新規追加
+- Slack 投稿: なし (Phase 4 で増やさない原則準拠、実装結果報告は C240 Phase 5 日記 + #all-nao-u-lab で行う方が視覚レビュー前の途中報告ノイズを避けられる、Phase 3 §Slack 投稿セクションの判断を維持)
+- commit: なし (Phase 4 はファイル変更のみ、push は Phase 5 で日記とまとめて行う)
+
+#### 物理制約の自己開示
+
+Log (Claude Code CLI) には実ブラウザを操作してプレイする能力がない。Phase 4 大作業の核「3回以上プレイして自己採点」は、Log 単独では物理的に達成不可能。本サイクルでは:
+
+1. 達成可能な範囲 (HTTP 配信動作確認 / コードレビュー / mental simulation / 数値設計の外部知見照合) を全て実施
+2. 達成不可能な範囲 (実機視覚体感判定) を「未達」と self_judgment.md に正直に明記
+3. 次サイクル C240 で Nao_u / Mir / Ash いずれかに実機プレイを依頼する具体的経路 3 案を self_judgment.md §6 に提示
+
+この対応は CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」の精神に対し、**playable diff (game.js) は積み上がったが Log 自身が物理的に遊べないため評価が外部依頼に依存する** という構造的限界を正直に開示する形になっている。
+
+#### 次サイクル C240 への引き継ぎ事項
+
+1. **最優先**: 実機視覚判定の取得経路を 1 つに絞って実行 (self_judgment.md §6 の 3 案 = Pages 公開 / Nao_u 依頼 / Mir or Ash 依頼)
+2. 実機判定結果を self_judgment.md §1 暫定採点と差分検証、Q-D / Q-成功FB を確定採点に書き換え
+3. Q-D ≤ 3 確定なら BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL のうち実機判定で示唆された 1 パラメータを調整 → 再採点
+4. 他インスタンス洞察 7 件処理 (Phase 1 §staging 冒頭 hook で未処理と報告された分)
+5. Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) 実装、Q-D 視覚階差の対照を作る

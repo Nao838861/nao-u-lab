@@ -36,7 +36,7 @@ Codex が新しいゲームプロトタイプを作る、または既存ゲー�
    - 日本語文書が化けて見えた時点で、ファイル内容が壊れていると断定してはいけない。
    - 修正前に、UTF-8明示読み、必要ならバイト列確認、既存エンコーディングの維持を行う。
 12. 自動生成後にユーザーが出した修正指示は、次回の自律制作で先回りするための教師差分として扱う。
-   - `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` を、新しいゲーム制作前と、自動生成後のプレイ修正を記録する時に読む。
+   - `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` を、新しいゲーム制作前と、自動生成後のプレイ修正を記録する時に読む。欠落・不足が疑われる場合は、同ファイルの `source_atom_ids` と `fallback_recall_query` から原 atom へ降りる。
    - ユーザー指示を「UI改善」「敵を自然にする」「説明を減らす」のような短い要約へ圧縮しない。
    - 指示原文、Codexが外した判断、悪い要約、次回の禁止事項、検証方法をセットで残す。
 13. 新しいゲームを自律的に作る時は、実装前に `memory/game_autonomous_creation_metaprompt_20260525.md` を読む。

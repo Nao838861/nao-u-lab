@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-25T07:18:32+09:00",
+  "updated_at": "2026-05-25T14:10:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -40,7 +40,10 @@
     "1779012072.223609",
     "1778599412.454279",
     "1778366722.466289",
-    "1779417206.845399"
+    "1779417206.845399",
+    "1779460386.310459",
+    "1779669158.892049",
+    "1779658720.515969"
   ],
   "reviews": [
     {
@@ -722,6 +725,57 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-25T09:45:00+09:00",
+      "id": "sr-1779460386-6dcbd59e17",
+      "source_ts": "1779460386.310459",
+      "title": "遊星歯車機関（千葉集）「正解に三つの鐘が鳴る ― プレイヤーを名探偵にするメカニクスについて」 (note, 2026-05-22 Nao_u 共有)",
+      "decision": "adopt_probe",
+      "reason": "Nao_u 共有の ADV/ミステリ設計資料で、答え合わせを即時二値にすると推理余地が消え、最後に一括すると総当たりになるという問題を、段階的確証・近さの表示・未発見手がかりでほどく知見。直近の playable diff と headless 評価は合否や到達率へ寄りやすいため、次回のゲーム評価で「部分的に正しい試行をどう見せ、総当たりをどう防ぐか」を1回だけ確認する probe にする。既存の headless 差分 probe と隣接するので恒久ルール化しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-25T12:05:00+09:00",
+      "id": "sr-1779669158-fe11d77f83",
+      "source_ts": "1779669158.892049",
+      "title": "#game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」への Log 評価",
+      "decision": "adopt_probe",
+      "reason": "Pulse Relay 固有の教師差分を 8 観点へ圧縮した投稿で、直近の v006/v007 系 playable diff に直結する。既存のゲーム設計ルールへ恒久追記すると肥大化するため、次のゲーム実装・評価で「中心入力」「特殊システム3状態」「bad policy headless」を物理化できたかだけを見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-25T14:10:00+09:00",
+      "id": "sr-1779658720-002236e014",
+      "source_ts": "1779658720.515969",
+      "title": "Shared-reads 6-post series: Pulse Relay v003 supervised delta packet for autonomous game creation (1/6-6/6)",
+      "decision": "adopt_probe",
+      "reason": "Unreviewed score-18 atom spanning memory, harness, game-design, agent, operation, and evaluation. Existing game_design_rules 12/13 and the center-input probe already cover the implementation gate, so this cycle adds only a reversible probe for the non-compression boundary: do not flatten user fixes or teacher deltas into short improvement labels before preserving raw signal, mismatch, failed judgment, and the next implementation gate. The referenced lesson files are missing in this worktree, so adoption is bounded to the atom excerpt and existing index/rule links.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -1204,6 +1258,42 @@
         "????????????????????????????????/???????/????????????????"
       ],
       "expires_after": "?? playable diff ? headless ?????????????? Phase 4a ??????????1??????????"
+    },
+    {
+      "id": "probe-20260525-partial-confirmation-not-binary-verdict",
+      "created_at": "2026-05-25T09:45:00+09:00",
+      "source_ts": "1779460386.310459",
+      "scope": "next game prototype evaluation / headless check / ADV or puzzle-like mechanic where success may be collapsed into pass/fail or brute-forceable feedback",
+      "questions": [
+        "正解/不正解の二値だけで閉じず、惜しい・近い・不足している手がかりのどれか1つを観測または記録できる形にしたか。",
+        "フィードバックを即時に返しすぎて、プレイヤー/agent が考える余地を消していないか。逆に最後まで返さず、総当たりや詰みを誘発していないか。",
+        "headless 評価では clear / fail だけでなく、部分到達・誤答パターン・未発見 clue のうち1つを次の修正判断へ接続したか。"
+      ],
+      "expires_after": "次に game prototype の評価、headless check、または ADV/puzzle 的 mechanic を1回扱ったら見直す。"
+    },
+    {
+      "id": "probe-20260525-center-input-three-state-bad-policy",
+      "created_at": "2026-05-25T12:05:00+09:00",
+      "source_ts": "1779669158.892049",
+      "scope": "next playable diff / game prototype implementation or evaluation where a special system, center input, HUD marker, or headless policy split is involved",
+      "questions": [
+        "中心入力を1つに絞り、タイトル/リトライ/プレイ中の入口がその入力でつながっているかを1行で確認したか。",
+        "特殊システムを発動不可/発動可だが意味薄/発動可かつ意味ありの3状態に分け、プレイヤー側HUDだけでなく対象物側マーカーや戦場内変化で見せたか。",
+        "good policy だけでなく camper/panic/novice など悪い方針を少なくとも1つ走らせ、良い方針だけが安定する分離を確認したか。"
+      ],
+      "expires_after": "次に playable diff、ゲーム試作、または headless 評価で特殊システムや中心入力を扱った 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260525-supervised-delta-noncompression",
+      "created_at": "2026-05-25T14:10:00+09:00",
+      "source_ts": "1779658720.515969",
+      "scope": "next game prototype implementation / repair / evaluation where user feedback, game-rights notes, or teacher deltas may be compressed into short improvement labels",
+      "questions": [
+        "Before reducing user fixes or teacher deltas to labels such as naturalize enemies, add explanation, or add retry button, did I preserve raw wording, observed mismatch, failed judgment, and next implementation gate?",
+        "If the referenced lesson file or raw feedback is missing, did I record that evidence boundary with atom id / Slack ts / missing path instead of turning the weak evidence into a permanent rule?",
+        "When applying the lesson, did I convert the feedback into a concrete screen state, input, object/enemy behavior, or verification log that prevents recurrence?"
+      ],
+      "expires_after": "Review after the next game prototype, user-fix ingestion, or game-rights teacher-delta conversion into an implementation gate."
     }
   ]
 }
