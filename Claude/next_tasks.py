@@ -130,12 +130,12 @@ def derive_state(events: list) -> dict:
                 "added_cycle": ev.get("cycle", ""),
                 "added_ts": ev.get("ts", ""),
             }
-        elif action in ("done", "skip") and tid and tid in state:
+        elif action in ("done", "skip", "close") and tid and tid in state:
             state[tid]["status"] = action
             state[tid]["closed_cycle"] = ev.get("cycle", "")
             state[tid]["closed_ts"] = ev.get("ts", "")
-            if action == "skip":
-                state[tid]["reason"] = ev.get("reason", "")
+            if action in ("skip", "close"):
+                state[tid]["reason"] = ev.get("reason") or ev.get("note", "")
     return state
 
 
