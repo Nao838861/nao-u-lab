@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-25T23:03:12+09:00",
+  "updated_at": "2026-05-26T01:14:43+09:00",
   "reviewed_source_ts": [
+    "1779557881.821109",
     "1779701926.657909",
     "1779690832.905979",
     "1779557791.076579",
@@ -50,6 +51,23 @@
     "1779658720.515969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T01:14:43+09:00",
+      "id": "sr-1779557881-6efe5fee32",
+      "source_ts": "1779557881.821109",
+      "title": "\"Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models\" (arXiv:2604.02485)",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b は shared-reads atom を選んで自分の行動へ反映するため、既存の運用に都合よく合う知見だけを採用する confirmation bias が入りやすい。この atom は LLM が反証例より確証例を選びやすい偏りを定量化しており、次回の probe/directive 採用判断に直接効く。既存の M-38 系の反証姿勢と重なるため恒久ルール化はせず、次の shared-reads 自己フィードバックまたは memory 改善案で、採用前に反証候補を1つだけ置く reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-25T23:03:12+09:00",
       "id": "sr-1779701926-e1f333f952",
@@ -851,6 +869,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260526-falsification-before-adoption",
+      "created_at": "2026-05-26T01:14:43+09:00",
+      "source_ts": "1779557881.821109",
+      "scope": "next shared-reads self-feedback / memory improvement / probe or directive adoption where a candidate conveniently supports an existing belief or workflow",
+      "questions": [
+        "採用理由を書く前に、この atom が既存方針を気持ちよく補強しているだけではないかを疑い、反証候補または採用しない理由を1つ置いたか。",
+        "反証候補を見てもなお採用する場合、採用先を恒久ルールではなく probe / metric / state のどれに狭めるかを明示したか。",
+        "反証で弱くなった場合、無理に統合せず defer / reject として reviewed だけを残す判断を許可したか。"
+      ],
+      "expires_after": "次に shared-reads 自己フィードバック、memory 改善案、または probe/directive 採用判断を1回行った後に見直す。"
+    },
     {
       "id": "probe-20260515-writeback-boundary",
       "created_at": "2026-05-15T05:11:26+09:00",

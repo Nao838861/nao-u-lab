@@ -35,7 +35,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779557881-6efe5fee32
+    source_ts: "1779557881.821109"
+    title: "\"Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models\" (arXiv:2604.02485)"
+    reason: "Phase 3b 自体が、既存の運用に都合よく合う shared-reads を選んで採用しやすい工程なので、confirmation bias を採用判断の直前で一度だけ点検する価値が高い。直近の memory/probe 運用は既存 probe と重なる知見も多く、採用前の反証候補を置くことで、ルール肥大化を避けながら判断精度を上げられる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の shared-reads 自己フィードバック / memory 改善案 / probe 採用判断で、採用理由の前に反証候補または採用しない理由を1つ置く短期 probe を追加。恒久ルールは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
