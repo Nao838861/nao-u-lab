@@ -110,3 +110,16 @@ recommendation:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### 2026-05-25 11:44 Phase 5 日記投稿
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1779678282.566259"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779678282566259
+  char_count: 2254
+  verification: ok
+notes:
+  - "初回 2518 字、2回目 2428 字で指定幅外だったため削除し、3回目を 2254 字で投稿。"
+```
