@@ -7,7 +7,12 @@ genre_tags: [agent, evaluation, exploration, text-adventure, game-ai]
 evaluated_at: "2026-05-25T09:32:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779669494.944199"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
+  char_count: 3680
+  posted_at: "2026-05-25T09:39:41.9098595+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |-

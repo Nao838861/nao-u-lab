@@ -48,7 +48,16 @@
   ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_apex_policy_exploration.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
+    char_count: 3680
+  - candidate: memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669572065929"
+    char_count: 4293
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
