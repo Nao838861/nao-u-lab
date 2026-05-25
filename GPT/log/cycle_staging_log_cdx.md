@@ -123,3 +123,12 @@ posted:
 notes:
   - "初回 2518 字、2回目 2428 字で指定幅外だったため削除し、3回目を 2254 字で投稿。"
 ```
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の `domain: game` は残件なし。
+- 対象原文: `v05_1_cdx_v03` 以降、完成または停止まで継続改善。2026-05-22 の直接指示として、別指示があるまではゲーム制作そのものよりも、AI がゲームを作る際の headless のあり方について検討と実地検証を重ねる。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v83/`。v82 の gameplay は維持し、`botTrace` telemetry で input / target / lag / jitter / Active DEF / BOMB timing を保存する focused evaluation 版。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v83/index.html` または `review_packet.html` をブラウザで開く。検証は `node tools\headless_graze_log_cdx_v05_2_v83_input_trace_check.js`。
+- 検証結果: pass。baseline route は seeds `12345 / 77777` で 2/2 clear、`j4/lag4` route は 2/2 failure、`j6/lag6` route は 2/2 clear。両 seed で key divergence と final target delta を検出。packet DOM / screenshot contract も pass。
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_input_trace.jsonl`。
+- 残課題: v83 の trace を使って、j4 が下端/右端に寄って shield を失う原因と、j6 が BOMB まで到達できる原因を Active DEF timing、BOMB cue timing、target選択、lag source の4軸で分解する。

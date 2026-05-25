@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-25T07:03:52+09:00
+last_handled_at: 2026-05-25T12:20:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v82/` で v81 の gameplay を既定維持し、v81 で露出した `j4/lag4` failure と `j6/lag6` clear の非単調結果を seed-level replay packet にした。`tools/headless_graze_log_cdx_v05_2_v82_nonmonotonic_replay_check.js` は baseline / j4_lag4 / j6_lag6 / j12_lag14 を seeds 12345 / 54321 / 77777 と route / camper / panic / novice で検証して pass。baseline route は 3/3 clear、`j4/lag4` route は seed 12345 / 77777 が failure、`j6/lag6` route は 3/3 clear、`j6/lag6` bad policies は全 seed failure、`j12/lag14` は stress only として 1/3 clear。packet DOM / screenshot contract も通り、raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_nonmonotonic_replay.jsonl` に追記した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v83/` で v82 の gameplay を既定維持し、`j4/lag4` failure と `j6/lag6` clear の同 seed 差を `botTrace` で比較できるようにした。`tools/headless_graze_log_cdx_v05_2_v83_input_trace_check.js` は seeds 12345 / 77777、variants baseline / j4_lag4 / j6_lag6 を route policy で検証して pass。baseline route は 2/2 clear、`j4/lag4` route は 2/2 failure、`j6/lag6` route は 2/2 clear。両 seed で key divergence と final target delta を検出し、packet DOM / screenshot contract も通った。raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_input_trace.jsonl` に追記した。
 
 ## Nao_u 指示
 

@@ -1,0 +1,225 @@
+const fs = require("fs");
+const path = require("path");
+const vm = require("vm");
+const { spawnSync } = require("child_process");
+
+const root = path.resolve(__dirname, "..");
+const version = "v05_1_cdx_v83";
+const gameDir = path.join(root, "game", "graze_log_cdx", version);
+const htmlPath = path.join(gameDir, "index.html");
+const packetPath = path.join(gameDir, "review_packet.html");
+const html = fs.readFileSync(htmlPath, "utf8");
+const packetHtml = fs.readFileSync(packetPath, "utf8");
+const match = html.match(/<script>([\s\S]*?)<\/script>/);
+if (!match) throw new Error("script block not found");
+const source = match[1].replace(
+  "loop();",
+  "window.__check={state,startGame,update,exportEvalLedger,summarizeEvalTelemetry};"
+);
+
+const seeds = [12345, 77777];
+const variants = [
+  { id: "baseline", jitter: 0, lag: 0 },
+  { id: "j4_lag4", jitter: 4, lag: 4 },
+  { id: "j6_lag6", jitter: 6, lag: 6 },
+];
+const chromeCandidates = [
+  process.env.CHROME_PATH,
+  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+  "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+].filter(Boolean);
+const chrome = chromeCandidates.find((p) => fs.existsSync(p));
+if (!chrome) throw new Error("Chrome or Edge executable not found");
+
+function fileUrl(p) {
+  return `file:///${p.replace(/\\/g, "/").replace(/ /g, "%20")}`;
+}
+
+function makeCtx() {
+  return {
+    fillStyle: "",
+    strokeStyle: "",
+    globalAlpha: 1,
+    lineWidth: 1,
+    font: "",
+    textAlign: "",
+    fillRect() {},
+    strokeRect() {},
+    beginPath() {},
+    arc() {},
+    ellipse() {},
+    fill() {},
+    stroke() {},
+    fillText() {},
+    moveTo() {},
+    lineTo() {},
+    closePath() {},
+  };
+}
+
+function makeVm(seed, variant) {
+  const context = vm.createContext({
+    console,
+    Math,
+    Number,
+    URLSearchParams,
+    location: {
+      search: `?seed=${seed}&bot=1&botStyle=route&botJitter=${variant.jitter}&botLag=${variant.lag}`,
+    },
+    document: {
+      body: { classList: { add() {} }, dataset: {} },
+      title: "",
+      getElementById(id) {
+        return id === "c"
+          ? { getContext: () => makeCtx(), setAttribute() {}, getAttribute() { return ""; } }
+          : { textContent: "", dataset: {}, setAttribute() {}, getAttribute() { return ""; } };
+      },
+    },
+    window: { addEventListener() {} },
+    requestAnimationFrame() {},
+  });
+  context.globalThis = context;
+  vm.runInContext(source, context, { filename: htmlPath });
+  const api = context.window.__check;
+  api.startGame();
+  return api;
+}
+
+function run(seed, variant) {
+  const api = makeVm(seed, variant);
+  while (api.state.t < 6500 && api.state.mode === "play") api.update();
+  const ledger = api.exportEvalLedger();
+  const summary = ledger.summary;
+  const deathT = summary.deathContext ? summary.deathContext.frame : summary.durationFrames;
+  const windowStart = Math.max(0, deathT - 180);
+  const nearDeathTrace = ledger.botTrace.filter((row) => row.t >= windowStart && row.t <= deathT + 5);
+  const actionTrace = ledger.botTrace.filter((row) => row.action);
+  return {
+    seed,
+    variant: variant.id,
+    jitter: variant.jitter,
+    lag: variant.lag,
+    result: summary.result,
+    durationFrames: summary.durationFrames,
+    routeCoveragePct: summary.routeCoveragePct,
+    score: summary.score,
+    activeDefCount: summary.activeDefCount,
+    bombCount: summary.bombCount,
+    deathContext: summary.deathContext,
+    traceCount: ledger.botTrace.length,
+    botTrace: ledger.botTrace,
+    nearDeathTrace: nearDeathTrace.slice(-16),
+    actionTrace: actionTrace.slice(-12),
+    eventTail: ledger.events.slice(-10),
+  };
+}
+
+function key(seed, variant) {
+  return `${seed}:${variant}`;
+}
+
+function summarizePair(seed, runsByKey) {
+  const baseline = runsByKey[key(seed, "baseline")];
+  const j4 = runsByKey[key(seed, "j4_lag4")];
+  const j6 = runsByKey[key(seed, "j6_lag6")];
+  const j4Tail = j4.nearDeathTrace.slice(-8);
+  const j6SameWindow = j6.botTrace.filter((row) => row.t >= Math.max(0, j4.durationFrames - 180) && row.t <= j4.durationFrames + 5);
+  const j4Actions = j4Tail.map((row) => row.keys);
+  const j6Actions = j6SameWindow.slice(-8).map((row) => row.keys);
+  const keyDivergence = JSON.stringify(j4Actions) !== JSON.stringify(j6Actions);
+  const finalTargetDelta = j4Tail.length && j6SameWindow.length
+    ? Math.round(Math.abs(j4Tail[j4Tail.length - 1].finalTx - j6SameWindow[j6SameWindow.length - 1].finalTx) +
+        Math.abs(j4Tail[j4Tail.length - 1].finalTy - j6SameWindow[j6SameWindow.length - 1].finalTy))
+    : null;
+  return {
+    seed,
+    baseline: { result: baseline.result, frames: baseline.durationFrames, coverage: baseline.routeCoveragePct },
+    j4: { result: j4.result, frames: j4.durationFrames, coverage: j4.routeCoveragePct, activeDefCount: j4.activeDefCount, bombCount: j4.bombCount },
+    j6: { result: j6.result, frames: j6.durationFrames, coverage: j6.routeCoveragePct, activeDefCount: j6.activeDefCount, bombCount: j6.bombCount },
+    keyDivergence,
+    finalTargetDelta,
+    j4NearDeathTail: j4Tail,
+    j6SameTimeTail: j6SameWindow.slice(-8),
+  };
+}
+
+function dumpDom(url) {
+  const result = spawnSync(chrome, ["--headless=new", "--disable-gpu", "--dump-dom", url], { encoding: "utf8" });
+  if (result.status !== 0) throw new Error(`Chrome DOM dump failed: ${result.stderr || result.stdout}`);
+  return result.stdout;
+}
+
+function screenshot(url, outPath) {
+  const result = spawnSync(
+    chrome,
+    ["--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,960", `--screenshot=${outPath}`, url],
+    { encoding: "utf8" }
+  );
+  if (result.status !== 0) throw new Error(`Chrome screenshot failed: ${result.stderr || result.stdout}`);
+  return fs.statSync(outPath).size;
+}
+
+const runs = [];
+for (const seed of seeds) {
+  for (const variant of variants) runs.push(run(seed, variant));
+}
+const runsByKey = Object.fromEntries(runs.map((row) => [key(row.seed, row.variant), row]));
+const pairSummaries = seeds.map((seed) => summarizePair(seed, runsByKey));
+const reportRuns = runs.map(({ botTrace, ...row }) => row);
+
+const packetUrl = fileUrl(packetPath);
+const dom = dumpDom(packetUrl);
+const outDir = path.join(root, ".tmp", "graze_log_cdx_v83_input_trace");
+fs.mkdirSync(outDir, { recursive: true });
+const screenshotBytes = screenshot(packetUrl, path.join(outDir, "v83_input_trace_packet.png"));
+
+const assertions = {
+  gameplayVersionMarked:
+    html.includes("v05_1_cdx_v83") &&
+    html.includes("botTrace") &&
+    html.includes("recordBotTrace") &&
+    html.includes("v83 - input trace comparator"),
+  botTraceRecorded: runs.every((row) => row.traceCount > 120 && row.nearDeathTrace.length >= 8),
+  baselineRouteClears: seeds.every((seed) => runsByKey[key(seed, "baseline")].result === "clear" && runsByKey[key(seed, "baseline")].routeCoveragePct === 1),
+  j4FailuresRetained: seeds.every((seed) => runsByKey[key(seed, "j4_lag4")].result === "over" && runsByKey[key(seed, "j4_lag4")].routeCoveragePct < 1),
+  j6ClearsRetained: seeds.every((seed) => runsByKey[key(seed, "j6_lag6")].result === "clear" && runsByKey[key(seed, "j6_lag6")].routeCoveragePct === 1),
+  inputDivergenceVisible: pairSummaries.every((pair) => pair.keyDivergence && pair.finalTargetDelta !== null && pair.finalTargetDelta > 0),
+  packetDomContract:
+    /data-game-version="v05_1_cdx_v83"/.test(dom) &&
+    /data-review-packet="bot-perturbation-input-trace-v001"/.test(dom) &&
+    packetHtml.includes("input trace"),
+  packetScreenshotContract: screenshotBytes > 50000,
+};
+
+const report = {
+  methodVersion: "graze-bot-perturbation-input-trace-v001",
+  game: "graze_log_cdx",
+  version,
+  fixedInputs: { seeds, variants },
+  pairSummaries,
+  runs: reportRuns,
+  assertions,
+  screenshotBytes,
+  pass: Object.values(assertions).every(Boolean),
+};
+
+const rawDir = path.join(root, "memory", "raw", "headless_eval");
+fs.mkdirSync(rawDir, { recursive: true });
+fs.appendFileSync(
+  path.join(rawDir, "graze_log_cdx_bot_perturbation_input_trace.jsonl"),
+  JSON.stringify({
+    recordedAt: new Date().toISOString(),
+    game: report.game,
+    version: report.version,
+    methodVersion: report.methodVersion,
+    fixedInputs: report.fixedInputs,
+    pairSummaries: report.pairSummaries,
+    assertions: report.assertions,
+  }) + "\n",
+  "utf8"
+);
+
+console.log(JSON.stringify(report, null, 2));
+if (!report.pass) process.exit(1);
