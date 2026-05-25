@@ -29,6 +29,18 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-05-25 20:54 JST / log_cdx Phase 3
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_indie_ai_teammate_boundaries.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898043199"
+    char_count: 3602
+  - candidate: memory/shared_reads_candidates/20260525_minos_labyrinth_trap_synergy.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898875179"
+    char_count: 3555
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

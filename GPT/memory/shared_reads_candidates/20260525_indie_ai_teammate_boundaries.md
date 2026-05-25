@@ -7,7 +7,12 @@ genre_tags: [game-design, indie-production, human-ai-collaboration, creative-wor
 evaluated_at: 2026-05-25T20:44:38+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779709898.043199"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898043199"
+  char_count: 3602
+  posted_at: "2026-05-25T20:53:59+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |-
