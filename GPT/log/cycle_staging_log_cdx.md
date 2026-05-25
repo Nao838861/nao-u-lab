@@ -60,7 +60,31 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779460386-6dcbd59e17
+    source_ts: "1779460386.310459"
+    title: "遊星歯車機関（千葉集）「正解に三つの鐘が鳴る ― プレイヤーを名探偵にするメカニクスについて」"
+    reason: "Nao_u 共有の ADV/ミステリ設計資料で、答え合わせを即時二値にすると推理余地が消え、最後に一括すると総当たりになる問題を扱っている。直近の playable diff / headless 評価が clear/fail に寄りやすいため、次回評価で部分的正解と総当たり防止を見る短期 probe に向く。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回ゲーム評価用に、二値 verdict へ潰さず「惜しい/近い/不足 clue」を1つ残す一時 probe を追加。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
