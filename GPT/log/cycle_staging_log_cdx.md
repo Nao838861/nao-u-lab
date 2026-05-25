@@ -3,7 +3,11 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- 直前確認: `tools\slack_inbox_lifecycle.py pending` で `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。Phase 1 なので対応・判定は保留。
+- 既存重複確認: `Algorithmic Collusion`, `Prompting Destiny`, `Pokémon Battle Agents`, `Game Master LLM`, `TowerMind`, `Multi-Agent Strategic Games` は既に candidate または Phase 3 raw に存在。今回の新規候補からは除外。
+- 収集: `memory/shared_reads_candidates/20260525_valorborn_systemic_sandbox_rpg.md` — 小規模チームが living world / faction / economy / AI を距離別 simulation detail で扱う sandbox RPG 開発インタビュー。
+- 収集: `memory/shared_reads_candidates/20260525_inkblood_systemic_investigation.md` — quest 誘導ではなく clue / case file / past-view tool で推理を成立させる occult detective game の dev diary。
+- 収集: `memory/shared_reads_candidates/20260525_obstacle_overdrive_toy_car_physics.md` — RC crawler 実物観察と素材実験から、slow/careful な toy-car physics を作る indie 開発インタビュー。
 
 ### 2026-05-25 11:41 Phase 1 収集
 - `memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md` - LLM-NPC と scripted NPC を比較し、自由会話が認知負荷・使いやすさ・信頼へ与える影響を測った arXiv 論文。
