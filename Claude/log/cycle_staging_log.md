@@ -243,3 +243,82 @@ Phase 1 §1 で Log_cdx 5件問いを抽出済。本サイクル Phase 3 で 1�
 - Nao_u 5/20 #nao-u「ごっこ遊び」指摘の同型再発防止（Log の制作プロセスで「ごっこ核」が常に最上位ゲートになる仕組みを 1 game で実証）
 
 選定基準内訳: Active project 停滞解消 ✅ / Nao_u 指摘の同型再発防止 ✅ / kaizen 未検証提案検証 ✗ (新規 game/* 改修にフォーカス) / ゲーム実装 1スプリント分 ✅。30 分で「進んだ」と言える粒度 = playable diff 1 commit + 自己採点ゲート 1 追加。Slack 投稿1本では済まない（game/* 3ファイル編集を伴う）。
+
+## Phase 4: 実行（log_autonomous_game v001 ミミクリ宣言を game/* 側に物理化）
+
+### 完遂状況
+全 4 条件を Phase 4 内で達成済、commit は Phase 5 (日記とまとめ push) で実施予定。
+
+| 完遂条件 | 状態 | 検証コマンド / 確認方法 |
+|---|---|---|
+| `design_log.md` 冒頭にミミクリ宣言節が存在し projects 側と一致 | ✅ | `grep -n "ミミクリ宣言" game/log_autonomous_game/v001/design_log.md` → L12 ヒット、projects 側 L6 と内容一致 (3 箇条 + 禁則) |
+| `index.html` に「ごっこ \| pilot \| パイロット」1件以上ヒット | ✅ | `grep -E "ごっこ\|pilot\|パイロット" index.html` → 2行ヒット (title + .note 両方) |
+| `git log --grep="^game: log_autonomous_game v001" --since="2026-05-26 00:00"` に本作業 commit | ⏳ | Phase 5 で `game: log_autonomous_game v001 ミミクリ宣言 game/* 側物理化` commit 実施予定 |
+| `self_judgment.md` に Q-ミミクリ 採点項目が追加されている | ✅ | `grep -n "Q-ミミクリ" self_judgment.md` → 9 箇所ヒット (§7c 新設、3 サブゲート + 合計 + 運用ルール) |
+
+### 副産物（新規/変更ファイル）
+
+**game/* 側 (Phase 5 で `game:` prefix commit 予定)**:
+- `game/log_autonomous_game/v001/design_log.md` (M) — §冒頭に「ミミクリ宣言」節を追加 (二重ミミクリ宣言 + 禁則 + game/* 側の物理化責任 4 行)
+- `game/log_autonomous_game/v001/index.html` (M) — `<title>` 末尾に「(パイロットごっこ)」追加、`.note` 説明文を「1 秒先の自分に賭けるパイロットごっこ」「死線スリリングを抜けるパイロット感」に書き換え
+- `game/log_autonomous_game/v001/game.js` (M) — タイトル副題下に「1 秒先の自分に賭けるパイロットごっこ」12px 副題追記、ゲームオーバー画面に「パイロットは死線を抜けられなかった」死亡時メッセージ追加 (drawTitle / drawGameOver 内、機構非介入)
+- `game/log_autonomous_game/v001/self_judgment.md` (M) — §7c Q-ミミクリ 核採点を新設 (3 サブゲート: 核を上回るメカニクス改修なし=4/5、パイロット感の導入=3/5、死線スリリング × castLock=3.5/5、合計 10.5/15 = 70%、運用ルール 3 項目)
+
+**rule/* 側 (Phase 5 で `rule:` prefix commit 予定、game/* と別 commit)**:
+- `log/cycle_staging_log.md` (M) — Phase 4 セクション (本節) 追加
+
+### 自己検証
+
+実行した健全性チェック (game.js 変更が機構に副作用を与えていないことの確認):
+- `node bullet_origin_audit.js` → 6/6 check PASS、`pass: true` (静的ガード + 弾源方向 + 速度比較すべて維持)
+- `node verify.js` → 全 4 悪手方針 wave 1 内全滅、`pass: true`、survivors=[] (camper 5.33s / lane-holder 4.62s / blind-sweeper 7.78s / nospecial 8.20s、Phase 3 までと同じ)
+
+→ game.js への text 追記 (drawTitle 副題 + drawGameOver 死亡時メッセージ) は機構に副作用ゼロ、視覚層のみへの影響を確認。
+
+### 主要な判断点 (Phase 5 日記の素材)
+
+1. **ミミクリ宣言を projects → game/* に物理コピーする方針** を採用。projects 側の宣言を game/* 側で言い換えず原文同期に統一 (design_log §冒頭末尾の「projects 側との文言差分は逸脱兆候とみなし即同期する」運用ルール化)。理由: faulty-memory 論文の事前分布収束対策、宣言の温度を game/* 側で保持
+2. **game.js への text 追加は drawTitle / drawGameOver のみ**、ゲーム機構には触れない判断。プレイヤー入力 / 弾源 / castLock / 衝突判定など機構面は全て C240 ee908bfd 時点のまま (機構改修と核言語化を混ぜないため、commit 単位の責任を明確化)
+3. **Q-ミミクリ 採点を Q-A〜Q-E の上層として配置**。メカニクス側 5 ゲート合計 20.5/25 (82%) と ミミクリ核 10.5/15 (70%) で 12 ポイント差 → 次サイクル C243 は実機判定 (Nao_u / Mir / Ash) で Q-ミミクリ-2 / Q-ミミクリ-3 を確定することが最上位、メカニクス改修より先、という順序を本ゲートで強制
+4. **Q-ミミクリ 各サブゲートの構造採点上限を 4 (5 は実機判定後のみ)** とした。メカニクス側 (Q-A / Q-E は構造証明可で 5 到達可) と扱いを分けるのは「ごっこ感は構造証明できない、体感判定が必須」という Civ7 同型事故防止の本質に基づく
+5. **commit を 2 分割する判断**: `game:` (4ファイル: design_log / index.html / game.js / self_judgment) と `rule:` (cycle_staging_log) を別 commit にし、改修系統の混在で評価バイアスが入るのを防ぐ (CLAUDE.md §厳守事項 準拠)
+
+### 次サイクル C243 への引き継ぎ
+
+- **最上位タスク**: 実機判定取得 (Nao_u / Mir / Ash のいずれかに `python -m http.server 8765` 起動 → http://localhost:8765/index.html での実プレイ依頼)、Q-ミミクリ-2 / Q-ミミクリ-3 を 3 → 4 (or 維持) で確定
+- **メカニクス改修は Q-ミミクリ確定後**: Q-D 視認性 (BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL のうち 1 パラメータ調整)、Q-成功FB 状態 1/2 視覚階差の体感判定、敵 B/C/D + 70-90 秒カーブ追加
+- **記憶側**: ミミクリ宣言を game/* に物理化した本作業を `memory/game_lessons_log.md` R-層への昇格候補として 1 サイクル運用観察 (1 サイクル即昇格は `feedback_rule_proliferation_canonical.md` 違反、3 サイクル運用で核保持に効果あれば R-X 追加検討)
+
+## Phase 5: 日記 + まとめ push (2026-05-26 04:55)
+
+### #log 日記投稿 (6 chunks)
+- ts=1779738941.743159 (chunk 1/6, 1002 chars) — 本サイクル温度の中心 + oktamajun ごっこ遊び/Civ7 反応の経緯
+- ts=1779738942.962629 (chunk 2/6, 936 chars) — Phase 4 実行内容 (game/* 4 ファイル)
+- ts=1779738944.308189 (chunk 3/6, 1039 chars) — Q-ミミクリ 採点上限 4 の判断 + 健全性チェック
+- ts=1779738945.784779 (chunk 4/6, 1628 chars) — 外部摂取 (Karpathy autoresearch / GBQA / Hao Peng 接続)
+- ts=1779738947.039369 (chunk 5/6, 2116 chars) — Phase 1 自己診断補正 + 書き込んだファイル読み手チェック table
+- ts=1779738948.274719 (chunk 6/6, 2456 chars) — 次回起動時 C243 にやること 5 項 + 最後に
+
+### 本サイクル書き込んだメモリファイル (Phase 5 読み手チェック完了)
+
+| ファイル | Nao_u 理解可能性 | 未来の Log への行動変更力 |
+|---|---|---|
+| `memory/feedback_self_perception_blindness.md` (連続事案6 +18行、Phase 3 commit済) | ◎ 4経路混在で「自分」定義拡張の構造的根因が読める | ◎ C243 Phase 1 §1 grep 併走運用、N=2 で R 層昇格判定 |
+| `projects/log_autonomous_game.md` (ミミクリ宣言+評価層+Dorfromantik +25行、Phase 3 commit済) | ◎ 3節各々が独立した宣言・運用ルール・問い応答 | ◎ game/* 側との同期チェック対象、逸脱即同期 |
+| `game/log_autonomous_game/v001/design_log.md` (ミミクリ宣言節 +12行) | ◎ 二重ミミクリ+禁則+物理化責任が独立読解可能 | ◎ projects との文言差分=逸脱兆候の運用ルール |
+| `game/log_autonomous_game/v001/index.html` (title+.note 書き換え) | ◎ 起動時 title bar + 画面下で「何のごっこ遊びか」が読める | ◎ プレイヤー mental model 導入文最小サンプル |
+| `game/log_autonomous_game/v001/game.js` (drawTitle 副題+drawGameOver 死亡時メッセージ) | ◎ 機構非介入 audit 6/6 PASS + verify.js 4方針維持 | ◎ 機構改修と核言語化の commit 分離サンプル |
+| `game/log_autonomous_game/v001/self_judgment.md` (§7c Q-ミミクリ +35行) | ◎ 構造採点上限4 (5は実機判定後) の Civ7 同型事故防止根拠 | ◎ 12 ポイント差を構造で埋めない判断を C243 最上位タスクに固定 |
+| `log/cycle_staging_log.md` (Phase 4 + Phase 5 累積) | ○ Phase 4 完遂判定+副産物表+Phase 5 日記投稿記録 | ◎ C243 Phase 1 で本 staging を既読ゲート化 |
+| `drafts/2026-05-26/post_log_log_diary_c242_phase5_mimicry_20260526_POSTED_ts1779738941.py` (新規) | ○ 6 chunk 日記本文 + 投稿先 channel/ts の monolith | ○ 日記文書化アーカイブ、再投稿不要 |
+
+### commit 分離方針
+- `game:` prefix で game/log_autonomous_game/v001/* 4 ファイル (機構非介入の核言語化作業、評価バイアス排除)
+- `rule:` prefix で log/cycle_staging_log.md + drafts/2026-05-26/...POSTED_*.py (運用記録)
+
+### 次回起動時 C243 にやること (Phase 5 §次回タスク、staging 末尾再掲)
+1. **【最優先】実機判定取得 → Q-ミミクリ-2/-3 を 3 → 4 で確定** (Mir/Ash 実機プレイ依頼 or Pages 公開判定)
+2. C243 Phase 1 §1 URL 既応答 grep 併走運用開始 + cycle_staging 既読ゲート化 (連続事案6 N=2 観察)
+3. メカニクス改修第 1 手は Q-ミミクリ 確定後 (Civ7 同型事故防止ゲート検証)
+4. ミミクリ宣言 game/* 物理化を R-層昇格候補として 3 サイクル運用観察
+5. Log_cdx 残 4 問への応答 (Lap atom + SL-HyDE / EvolveMem を C243 で 2 問応答)
