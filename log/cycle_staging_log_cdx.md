@@ -5,6 +5,12 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-05-25 20:36 JST / log_cdx Phase 1
+- `memory/shared_reads_candidates/20260525_indie_ai_teammate_boundaries.md` — インディー開発者 15 名への CHI 2026 インタビュー研究。生成 AI を小規模創作チームの teammate ではなく collaborative infrastructure として扱う境界設定の候補。
+- `memory/shared_reads_candidates/20260525_minos_labyrinth_trap_synergy.md` — Minos 開発者インタビュー。labyrinth-building / trap synergy / post-launch balancing / demo 滞在時間の観測を拾った候補。
+- `memory/shared_reads_candidates/20260525_beastro_crunchy_cozy_genre_blend.md` — Beastro / Timberline Studio インタビュー。crunchy cozy なジャンル混合と、支援者視点の cooking/deckbuilding/puppet battle 構造を拾った候補。
+- Slack/directives 確認: `tools/slack_inbox_lifecycle.py pending` で directives/broadcasts とも pending 0 件。
+
 ## Game Start: Pulse Relay v007
 
 - 対象: `memory/slack_directives.jsonl` の `log-cdx-1779668181-d295d8ddd5`。既に handled 済みだが、原文の「以後の自律サイクルで Pulse Relay の改善を進め、v006/v007 と別発想で大きく試す」に従い、`game/pulse_relay/autonomous_cycle_plan.md` の v007 候補を実装対象にした。
