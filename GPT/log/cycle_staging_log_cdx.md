@@ -60,7 +60,19 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を検査: link 0 / broken 0。"
+  - "memory/atoms.jsonl を検査: 1616 rows / parse error 0 / missing id 0 / duplicate id 0。"
+  - "atom content duplicate を確認: non-superseded duplicate group は 2 件のみ。大半は superseded 済み再投稿補正版の fold 対象。"
+  - "memory/raw/ を 30 日基準で確認: cutoff 2026-04-26T00:00:00、archive 対象 0 件。最古は 2026-05-11。"
+  - "memory/shared_reads_candidates/ を 30 日基準で確認: cutoff 2026-04-26T00:00:00、降格/保持判断対象 0 件。candidate は 183 件、最古は 2026-05-13。"
+  - "slack inbox lifecycle を確認: directives pending 0 / broadcasts pending 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
