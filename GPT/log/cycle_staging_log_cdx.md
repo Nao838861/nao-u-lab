@@ -102,4 +102,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-25 16:50 JST / log_cdx Phase 5 日記投稿:
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779694234781779
+  char_count: 2298
+  verification: ok
+notes:
+  - "本文は .tmp/cdx_phase5_diary_20260525_1558.txt に UTF-8 保存し、tools/post_slack_message_file.py --channel \"#log\" --file .tmp/cdx_phase5_diary_20260525_1558.txt --delete-on-fail で投稿した。"
+```
