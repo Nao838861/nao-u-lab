@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-25T12:20:00+09:00
+last_handled_at: 2026-05-25T16:20:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v83/` で v82 の gameplay を既定維持し、`j4/lag4` failure と `j6/lag6` clear の同 seed 差を `botTrace` で比較できるようにした。`tools/headless_graze_log_cdx_v05_2_v83_input_trace_check.js` は seeds 12345 / 77777、variants baseline / j4_lag4 / j6_lag6 を route policy で検証して pass。baseline route は 2/2 clear、`j4/lag4` route は 2/2 failure、`j6/lag6` route は 2/2 clear。両 seed で key divergence と final target delta を検出し、packet DOM / screenshot contract も通った。raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_input_trace.jsonl` に追記した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v84/` で v82/v83 の gameplay と `botTrace` を維持し、`j4/lag4` failure と `j6/lag6` clear の同 seed 差を causal slice に分解した。`tools/headless_graze_log_cdx_v05_2_v84_causal_slice_check.js` は seeds 12345 / 77777、variants baseline / j4_lag4 / j6_lag6 を route policy で検証して pass。baseline route は 2/2 clear、`j4/lag4` route は 2/2 failure、`j6/lag6` route は 2/2 clear。両 seed で input divergence、late survival gap、BOMB reach split、Active DEF split、packet DOM / screenshot contract を確認した。raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_causal_slice.jsonl` に追記した。
 
 ## Nao_u 指示
 
