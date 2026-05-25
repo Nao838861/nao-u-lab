@@ -36,6 +36,106 @@
     introGhostPhase: 0,
     lockMessage: null, // { text, frame } — Q-成功FB 状態3 (危機回避) 表示用
     lockExplosion: null, // { x, y, frame } — Q-成功FB 状態2 (シアン薄爆発) 表示用
+    // --- Trace logger (Lap 応答 ts=1779748594/1779748624 整合) ---
+    // 1 frame = 1 jsonl 行。state スナップショット + actions_available + action_taken + action_source + event
+    trace: { buffer: [], playId: null, startedAt: null, pendingEvent: null },
+  };
+
+  // --- Trace logger ---
+  // 設計: 全 frame を記録 (60秒×60FPS=3600行)。LLM プレイヤー側で frame skip するかは後段判断。
+  // action_taken は「この frame で確定したアクション」: space 押下=cast / 移動キー1つ=方向 / 複数=斜め / 無入力=noop。
+  // 再演中 (game.echo) は player 入力ロックなので action_taken=auto_replay。
+  function newPlayId() {
+    return 'p' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
+  function snapshotState() {
+    return {
+      player: { x: Math.round(game.player.x), y: Math.round(game.player.y), r: game.player.r },
+      enemies: game.enemies.map(e => ({ x: Math.round(e.x), y: Math.round(e.y), vx: +e.vx.toFixed(2), vy: +e.vy.toFixed(2), r: e.r })),
+      bullets: game.bullets.map(b => ({ x: Math.round(b.x), y: Math.round(b.y), vx: +b.vx.toFixed(2), vy: +b.vy.toFixed(2), r: b.r })),
+      trail_len: game.trail.length,
+      echo: game.echo ? { startFrame: game.echo.startFrame, elapsed: game.frame - game.echo.startFrame } : null,
+      wave: game.waveCount,
+      relay: { hit: game.lockResults.hit, miss: game.lockResults.miss, idle: game.lockResults.idle },
+    };
+  }
+  function deriveAction() {
+    if (game.echo) return 'auto_replay';
+    if (game.spaceEdge) return 'space';
+    const dirs = [];
+    if (game.keys.has('ArrowLeft') || game.keys.has('KeyA')) dirs.push('left');
+    if (game.keys.has('ArrowRight') || game.keys.has('KeyD')) dirs.push('right');
+    if (game.keys.has('ArrowUp') || game.keys.has('KeyW')) dirs.push('up');
+    if (game.keys.has('ArrowDown') || game.keys.has('KeyS')) dirs.push('down');
+    if (dirs.length === 0) return 'noop';
+    if (dirs.length === 1) return dirs[0];
+    return dirs.join('+');
+  }
+  function pushTraceFrame() {
+    if (game.state !== STATE.PLAYING) return;
+    const actionsAvailable = game.echo
+      ? ['auto_replay']
+      : (game.trail.length >= ECHO_FRAMES
+          ? ['left', 'right', 'up', 'down', 'space', 'noop']
+          : ['left', 'right', 'up', 'down', 'noop']);
+    const row = {
+      frame: game.frame,
+      state: snapshotState(),
+      actions_available: actionsAvailable,
+      action_taken: deriveAction(),
+      action_source: 'human',
+      event: game.trace.pendingEvent,
+    };
+    game.trace.buffer.push(row);
+    game.trace.pendingEvent = null;
+  }
+  function logEvent(name, extra) {
+    // 複数 event が 1 frame で同時発火する場合は配列化 (frame=castLock時の echo_cast + space)
+    const ev = extra ? Object.assign({ name }, extra) : { name };
+    if (game.trace.pendingEvent === null) {
+      game.trace.pendingEvent = ev;
+    } else if (Array.isArray(game.trace.pendingEvent)) {
+      game.trace.pendingEvent.push(ev);
+    } else {
+      game.trace.pendingEvent = [game.trace.pendingEvent, ev];
+    }
+  }
+  function startTrace() {
+    game.trace.buffer = [];
+    game.trace.playId = newPlayId();
+    game.trace.startedAt = new Date().toISOString();
+    game.trace.pendingEvent = null;
+  }
+  function downloadTrace() {
+    if (game.trace.buffer.length === 0) return;
+    // header 行 + 各 frame 行 (header は frame: -1 で識別)
+    const header = {
+      frame: -1,
+      meta: {
+        play_id: game.trace.playId,
+        started_at: game.trace.startedAt,
+        ended_at: new Date().toISOString(),
+        game: 'log_autonomous_game/v001',
+        format_version: 1,
+        FPS, ECHO_FRAMES, W, H,
+      },
+    };
+    const lines = [JSON.stringify(header)].concat(game.trace.buffer.map(r => JSON.stringify(r)));
+    const blob = new Blob([lines.join('\n') + '\n'], { type: 'application/x-ndjson' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = (game.trace.startedAt || new Date().toISOString()).replace(/[:.]/g, '-');
+    a.href = url;
+    a.download = `trace_${ts}_${game.trace.playId}.jsonl`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+  }
+  // expose for index.html Save Trace ボタン + 外部呼び出し用
+  window.__logAutonomousV001 = {
+    downloadTrace,
+    getTrace: () => game.trace.buffer.slice(),
+    getMeta: () => ({ playId: game.trace.playId, startedAt: game.trace.startedAt, frames: game.trace.buffer.length }),
   };
 
   // --- 入力 ---
@@ -57,6 +157,7 @@
     const hadBullets = game.bullets.length > 0;
     game.echo = { startFrame: game.frame, path, result: null, hit: false, hadBullets };
     game.idleSince = game.frame;
+    logEvent('echo_cast', { had_bullets: hadBullets });
   }
   function resolveLock() {
     if (!game.echo) return;
@@ -74,6 +175,11 @@
     } else {
       game.lockResults.miss += 1;
     }
+    logEvent('echo_resolve', {
+      result: e.result,
+      had_bullets: e.hadBullets,
+      miss_reason: e.result === 'miss' ? 'hit_during_replay' : null,
+    });
     game.echo = null;
   }
 
@@ -124,6 +230,7 @@
     }
     game.waveSpawned = true;
     game.waveCount += 1;
+    logEvent('wave_spawn', { wave: game.waveCount, count: n });
   }
 
   // Q-D: 敵→プレイヤー狙いの単発射撃 (弾自体は発射時の角度で直進 = divergence ゼロ)
@@ -174,6 +281,8 @@
       const d = Math.hypot(e.x - game.player.x, e.y - game.player.y);
       if (d < e.r + game.player.r) {
         if (game.echo) game.echo.hit = true; // 再演中の被弾フラグ
+        logEvent('death', { by: 'enemy', during_echo: !!game.echo });
+        pushTraceFrame(); // 死の frame を残してから state 遷移
         game.state = STATE.GAMEOVER;
         return;
       }
@@ -182,6 +291,8 @@
       const d = Math.hypot(b.x - game.player.x, b.y - game.player.y);
       if (d < b.r + game.player.r) {
         if (game.echo) game.echo.hit = true;
+        logEvent('death', { by: 'bullet', during_echo: !!game.echo });
+        pushTraceFrame();
         game.state = STATE.GAMEOVER;
         return;
       }
@@ -370,6 +481,7 @@
     game.idleSince = 0;
     game.lockMessage = null;
     game.lockExplosion = null;
+    startTrace();
   }
 
   function step() {
@@ -384,7 +496,10 @@
       updateEcho();
       if (!game.waveSpawned && game.frame % 2 === 0) spawnWaveA();
       // Wave が全て退場したら次 Wave (骨格段階ではループ)
-      if (game.waveSpawned && game.enemies.length === 0) game.waveSpawned = false;
+      if (game.waveSpawned && game.enemies.length === 0) {
+        game.waveSpawned = false;
+        logEvent('wave_clear', { wave: game.waveCount });
+      }
       updateEnemies();
       updateBullets();
       checkCollisions();
@@ -392,7 +507,10 @@
       if (!game.echo && game.frame - game.idleSince > FPS * 3) {
         game.lockResults.idle += 1;
         game.idleSince = game.frame;
+        logEvent('lock_idle_warning', { idle_total: game.lockResults.idle });
       }
+      // checkCollisions が death を pushTrace 済みなら state は GAMEOVER に変わっている → 二重 push しない
+      if (game.state === STATE.PLAYING) pushTraceFrame();
       drawPlaying();
     } else if (game.state === STATE.GAMEOVER) {
       drawGameOver();
