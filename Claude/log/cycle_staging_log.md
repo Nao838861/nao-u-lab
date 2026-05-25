@@ -243,3 +243,57 @@ game/log_autonomous_game/v001 に Lap 応答整合の 1 プレイ履歴 jsonl lo
 - LLM プレイヤー実装 (claude --print への state 受け渡しループ) — formats を人間プレイで固めてから次々サイクル C240+
 - memory/raw/playtrace/ の自動 sync インフラ — まず手動配置で運用検証
 - coverage 計測 / 異常検知ロジック — trace が溜まってから後付け
+
+## Phase 4: 実行 (大作業)
+
+### 完遂状況
+- ✅ `game/log_autonomous_game/v001/game.js` に trace logger 追加 (約 80 行)
+  - `game.trace = { buffer, playId, startedAt, pendingEvent }` state 追加
+  - 関数 `newPlayId / snapshotState / deriveAction / pushTraceFrame / logEvent / startTrace / downloadTrace` を IIFE 内に新設
+  - event 発火点を 5 箇所差し込み: `castLock`→`echo_cast` / `resolveLock`→`echo_resolve(result,had_bullets,miss_reason)` / `spawnWaveA`→`wave_spawn(wave,count)` / wave全消滅→`wave_clear(wave)` / 衝突→`death(by,during_echo)` / idleカウント→`lock_idle_warning(idle_total)`
+  - `resetForPlay()` で `startTrace()` 呼び出し → TITLE→PLAYING 遷移時に trace 開始
+  - step() の PLAYING 末尾で `pushTraceFrame()`、checkCollisions 内で death frame は collision 検出時に直接 push してから state 遷移 (二重 push 防止 `if (game.state === STATE.PLAYING)`)
+  - `window.__logAutonomousV001 = { downloadTrace, getTrace, getMeta }` 外部公開
+- ✅ `game/log_autonomous_game/v001/index.html` に Save Trace ボタン + trace status 表示
+  - `.toolbar` セクション追加、ボタンクリックで `window.__logAutonomousV001.downloadTrace()` 呼び出し
+  - 500ms 間隔で frame count + playId をステータス表示
+- ✅ `game/log_autonomous_game/v001/README.md` に「Trace logger (C239 追加)」段落を追加
+  - format_version=1 を明示、フィールド仕様 / event 種別 / 保存方法 / window API を記載
+- ✅ `memory/raw/playtrace/` ディレクトリ作成 + README.md 配置 (配置ルール + 取得方法 + 用途)
+- ✅ 構文チェック: `node --check game.js` → SYNTAX_OK
+
+### 形式整合 (drafts/log_lap_response_supplement.py 公開フォーマットとの一致確認)
+| Slack 公開フィールド | 実装 | 一致 |
+|---|---|---|
+| `frame` | ✅ frame 整数 (header=-1 / playing=0,1,2...) | ○ |
+| `state.player {x,y,r}` | ✅ x/y を Math.round | ○ |
+| `state.enemies[] {x,y,vx,vy}` | ✅ vx/vy は toFixed(2) | ○ |
+| `state.bullets[]` | ✅ 同上 | ○ |
+| `state.trail_len` | ✅ | ○ |
+| `state.echo` | ✅ null or {startFrame, elapsed} | ○ |
+| `actions_available[]` | ✅ echo中/trail不足/通常で 3 パターン | ○ |
+| `action_taken` | ✅ left/right/up/down/space/noop/auto_replay/斜め | ○ |
+| `action_source` (human/llm/script) | ✅ 現状 "human" 固定、LLM 連結時用枠は確保 | ○ |
+| `event` (echo_cast/echo_resolve/wave_clear/death/lock_idle_warning) | ✅ 全 5 種 + wave_spawn を追加発火 | ○+ |
+| `llm.reasoning` (LLM プレイ時) | ❌ 未実装 (LLM プレイヤー実装フェーズの責務 = 非ゴール) | 後段 |
+
+### 未達 / 既知の制約
+- **実ブラウザでの 1 プレイ → trace ダウンロード動作確認は未実施**: Claude Code 環境では実プレイ操作 (キーボード入力) が困難なため、構文チェックとロジック静的レビューまでで止めた。Phase 5 で Nao_u 側 (or Win 実機側) に 1 プレイ確認を依頼する想定。失敗時は次サイクル C240 で patch。
+- **memory/raw/playtrace/ 自動配置 (sync) は別タスク**: ブラウザの Blob download → 手動配置を初期運用とする。next_tasks 登録済 (t-260526073903-992e は別件、自動 sync は新規 next_tasks 候補)
+
+### 副産物リスト
+- 変更ファイル: 
+  - `game/log_autonomous_game/v001/game.js` (約 80 行追加)
+  - `game/log_autonomous_game/v001/index.html` (toolbar + script ブロック追加)
+  - `game/log_autonomous_game/v001/README.md` (Trace logger 段落)
+- 新規ファイル: 
+  - `memory/raw/playtrace/README.md` (配置場所ドキュメント)
+- 新規ディレクトリ: `memory/raw/playtrace/`
+- Slack 投稿: なし (Phase 3 で既に Lap 応答 ts=1779748594/1779748624 公開済 = 本実装の宣言)
+- kaizen エントリ: なし
+- commit: Phase 5 で `game: log_autonomous_game v001 — Lap-style 1プレイ履歴 trace logger 追加` 1 件として実施予定
+
+### means_ends_reversal_check (大作業完遂時の自己評価)
+- 本サイクルの最終出力は **`game:` commit 1 件 (Phase 5 で確定)** に集約。Phase 3 末尾で危惧した「2 サイクル連続 game: ゼロ」を解消する道筋が立った
+- Slack 応答 (Phase 3 で完了) + 大作業 game.js 拡張 (Phase 4) で「教師資料化 + 実装」が同サイクル内で完結している = 宣言と整合
+- 残課題は「実ブラウザ動作確認」だが、これは Phase 5 で外部に出してからの検証として明確化済 (Lap 教師データ取得運用の最初の 1 回 = Nao_u 自身が「精度高く指示に従っているか」判定する素材になる)
