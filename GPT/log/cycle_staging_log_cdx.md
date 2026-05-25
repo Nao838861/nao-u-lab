@@ -142,3 +142,11 @@ posted:
   - `memory/shared_reads_candidates/20260525_heathen_first_person_diablo.md` — Diablo 1 的な horror/minimalism を first-person dungeon crawler に移す時の、手触り・loot affix・tile chunk + node graph generation の材料。
   - `memory/shared_reads_candidates/20260525_project_shadowglass_3d_pixel_readability.md` — 3D pixel art 表現を、低解像度の雰囲気だけでなく angle/distance ごとの readability と asset variant 問題として扱う材料。
   - `memory/shared_reads_candidates/20260525_deadhaus_persistent_history_rpg.md` — persistent world / deterministic systems / player history を gameplay と narrative の状態変化に接続する RPG 設計材料。
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は 0 件。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v85/`。v82/v84 の gameplay と causal slice は維持し、`review_packet.html` に人間確認用 trace table (`data-trace-table="j4-j6-causal-window"`) を追加した。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v85/index.html` または `game/graze_log_cdx/v05_1_cdx_v85/review_packet.html` をブラウザで開く。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v85_trace_table_check.js`。pass。baseline route は seeds `12345 / 77777` で 2/2 clear、`j4/lag4` は 2/2 failure、`j6/lag6` は 2/2 clear。`inputDivergenceVisible`、`causalSlicesBuilt`、`bombReachSplit`、`activeDefSplit`、`packetDomContract`、`packetTraceTableContract`、`packetScreenshotContract` が true。
+- evidence: `.tmp/graze_log_cdx_v85_trace_table/v85_trace_table_packet.png`、`memory/raw/headless_eval/graze_log_cdx_bot_perturbation_trace_table.jsonl`。
+- 残課題: route 以外の good / bad policy へ trace table を広げるか、gameplay 変更前の人間確認 packet として使う。v85 は楽しさ判定や原因断定ではない。
