@@ -64,7 +64,40 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    checked_refs: 3
+    broken: 0
+  atoms_jsonl:
+    rows: 1576
+    bad_json: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 53
+    exact_title_excerpt_duplicate_groups: 44
+  stale_files:
+    raw_older_than_30d: 0
+    shared_reads_candidates_older_than_30d: 0
+  inbox:
+    pending_directives: 0
+    pending_broadcasts: 0
+issues:
+  - id: ISS-20260525-4A-001
+    description: "ゲーム自律生成の次回入口として `memory/game_design_rules.md` と `memory/game_memory_task_lens_index.md` に追加済みの教師ドキュメント 2 件が、現在の worktree に存在しない。複数 atom も同じ欠落リンクを持つため、recall で重要そうな入口を見つけても原文に降りられない。"
+    severity: high
+    evidence: "`memory/game_design_rules.md` line 39, `memory/game_memory_task_lens_index.md` lines 154/162, atoms `sr-1779657471-88f9f3d1ae` / `sr-1779658373-5e5a195063` / `sr-1779658588-0fae62cbf1` / `sr-1779658720-002236e014`; missing files: `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`, `memory/game_special_system_hud_affordance_lesson_20260525.md`."
+    why_blocks_game_memory: "Pulse Relay v003 のユーザー修正差分を、次のゲーム制作前に読む導線として固定した直後の知見であり、ここが切れていると「自動生成後の人間修正を教師差分として残す」という今回の中核レッスンを次制作で参照できない。"
+  - id: ISS-20260525-4A-002
+    description: "`atoms.jsonl` に exact title+excerpt 重複が 44 groups / 88 rows、content hash 重複が 53 groups ある。duplicate id や JSON 破損ではなく lifecycle/content fold で表示上は吸収されるが、raw atom 直読み系のツールでは同じ候補が複数回出る可能性が残る。"
+    severity: low
+    evidence: "`memory/atoms.jsonl` parse check: rows=1576, duplicate_ids=0, duplicate_content_hash_groups=53, exact_title_excerpt_duplicate_groups=44. 例: `sr-1778535120-82ea7a1005` / `sr-1778535738-ed839f9805`."
+    why_blocks_game_memory: "直接の破損ではないが、ゲーム制作中に過去の教訓を探す時、同一再投稿や補正版が raw recall の候補密度を上げ、どれが代表か判断する時間を増やす。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260525-4A-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
