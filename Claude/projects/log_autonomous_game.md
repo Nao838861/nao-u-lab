@@ -4,13 +4,14 @@
 Active (起票 2026-05-25)
 
 ## 現状サマリー（3-5行）
-Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるかを試してほしい」を受領。Pulse Relay v003 教師差分シリーズ (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`) を分析した上で、Log単独で自律的に1本完成まで持っていく。第1サイクルはまだ実装に入っていない。次サイクルで `game/log_autonomous_game/v001/` を開設し、設計ログ → brainstorm → 実装 → ヘッドレス検証 → 視覚レビュー → 出荷 の順で進める。
+Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるかを試してほしい」を受領。Pulse Relay v003 教師差分シリーズ (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`) を分析した上で、Log単独で自律的に1本完成まで持っていく。**2026-05-25 C238 時点**: `game/log_autonomous_game/v001/` 開設済、`design_log.md` (Q-A〜Q-F + Q-導入 + Q-成功FB の8ゲート)、`brainstorm.md` (12案 MPS スコア付き、上位5案 ★)、`user_directives_raw.md` (空枠) 作成済。次は brainstorm 上位案からの最終選定 + `game.js` 骨格実装。
 
 ## 残課題（未実装・未検討）
-- [ ] `game/log_autonomous_game/v001/` ディレクトリ開設
-- [ ] `design_log.md` 作成（中心入力ゲート / 特殊システム3状態ゲート / 敵出現退場ゲート / 弾攻撃元ゲート / フィードバックゲート / レイアウトゲート / 日本語ログゲート — Pulse Relay 教師差分 §「次回の自律ゲーム制作前ゲート」A-G を Log 文脈で具体化）
-- [ ] `user_directives_raw.md` の枠だけ先に作る（Nao_u 指摘が来た時に原文保存する場所）
-- [ ] brainstorm 30件 + MPSスコア (M-38/M-43 作法準拠)
+- [x] `game/log_autonomous_game/v001/` ディレクトリ開設（C237 Phase 3 で実施）
+- [x] `design_log.md` 作成（Q-A中心入力 / Q-B特殊3状態 / Q-導入 / Q-成功FB / Q-C敵出現退場 / Q-D弾攻撃元 / Q-Eレイアウト / Q-F日本語ログ の 8 ゲート、C237 Phase 3）
+- [x] `user_directives_raw.md` の枠だけ先に作る（C237 Phase 3 で空ファイル作成）
+- [x] brainstorm 12案 + MPSスコア（30件は過剰、ジャンル絞ったので 12 で十分と判断、C237 Phase 3）
+- [ ] **brainstorm 上位5案 (★) から最終1案を選定**（案8 Premonition-Walk 15点 vs 案2 Echo-Path 14点 vs 案4/5/11 13点）
 - [ ] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止、特殊システム3状態の対象側マーカー)
 - [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
 - [ ] `enemy_behavior_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep 独立監査)
