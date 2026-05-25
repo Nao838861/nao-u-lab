@@ -90,6 +90,36 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 - 敵弾が少ない秒でも Pulse が意味を持つかを見る。
 - Pulse を敵へ当てず、弾だけ拾う policy が route より弱いかを見る。
 
+## v007 実装結果
+
+`game/pulse_relay/v007/` で実装した。v006 の charge 経済と Relay / Chain Relay は残し、Pulse を画面内の射線コマンドとして扱い、敵種ごとに次行動を書き換える版にした。
+
+実装内容:
+
+- feeder は中央へ燃料弾を供給する。
+- armored / anchor は盾を失い、燃料バーストを出す。
+- escort は path を瞬間変更せず、押し出し燃料弾だけを出す。
+- boss は fuel lane pattern を出す。
+- `rewrittenEnemies`, `rewriteFuelShots`, `rewriteKills`, `rewriteBossPatternCount` を headless 指標へ追加した。
+
+検証結果:
+
+- `node verify.js`: pass
+- `node timeline_eval.js`: pass
+- `node enemy_behavior_audit.js`: pass
+- `node wave_grammar_check.js`: pass
+- `node enemy_overlap_check.js`: pass
+- route clearRate: 1
+- route meanRewrittenEnemies: 24
+- route meanRewriteFuelShots: 175
+- route meanRewriteKills: 19
+- route meanRewriteBossPatternCount: 6
+- noPulse / camper / lane-holder / blind-sweeper clearRate: 0
+- offscreenShots: 0
+- pairOverlaps: 0
+
+残課題: route は clear するが被弾と弾量が多い。v008 では人間確認向けに、rewrite の視覚記号、弾量、boss-rush policy を整理する。
+
 ## 自律サイクルで特に守ること
 
 - 小さな UI 改善を「大きなゲーム性の改善」と混同しない。
