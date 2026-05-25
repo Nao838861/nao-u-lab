@@ -29,6 +29,32 @@
 - raw evidence: `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_nonmonotonic_replay.jsonl`
 - 残課題: 次回は j4/lag4 と j6/lag6 の同一 seed について、死亡直前の入力履歴、route intent、Active DEF / BOMB timing を比較する。
 
+
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `broadcast-1779657780-322e0406bd`
+  - permalink: `https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779657780988989`
+  - 指示: Pulse Relay v003 教師差分を参照し、各自の名前を付けた新規プロジェクトとして自律的にこの種のゲームを生成する。
+- 関連 directive: `broadcast-1779661734-358652e58a`
+  - permalink: `https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779661734285809`
+  - 指示: 自動サイクルがローカルゲームを消した再発防止。
+- 作成物: `game/resonance_cdx/v001/`
+  - `index.html`: ブラウザで開ける playable。
+  - `game.js`: Space を中心入力にした ring 反射ゲーム。特殊システム 3 状態、対象物側 marker、70-88 秒 stage curve、敵の画面外射撃禁止 telemetry、bad-policy headless 用 policy を含む。
+  - `style.css`: 中央 canvas のみ。サイドパネルなし。
+  - `design_log.md`: 指示原文、判断理由、削除事故対策、設計サイクル、検証方法を記録。
+- 検証: `node tools/headless_resonance_cdx_v001_check.js`
+  - pass。
+  - route policy: 3/3 seed で boss 到達。meaningful ring 使用、3 状態 telemetry、対象物側 marker frame を確認。
+  - bad policy: noRing / emptyRinger は boss 未到達、camper は route より短命かつ低 score。route と bad policy の score/time split を確認。
+  - enemy audit: `offscreenShots=0`, `abruptExits=0`。
+- lifecycle:
+  - `broadcast-1779657780-322e0406bd` を handled に更新。
+  - `broadcast-1779661734-358652e58a` を handled に更新。
+- 残課題:
+  - v001 は playable skeleton。route は boss 到達するが clear までは安定していない。
+  - 次版では boss defeat までの良い policy と、目視 screenshot/review packet を追加する。
+
 ## Phase 2: 分析
 ### 2026-05-25T07:07+09:00 log_cdx
 

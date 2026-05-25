@@ -1,0 +1,33 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #0a0d10;
+  color: #edf3f2;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.shell {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+
+canvas {
+  width: min(92vw, 480px);
+  aspect-ratio: 2 / 3;
+  background: #101518;
+  border: 1px solid #2d3a3b;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 760px) {
+  .shell {
+    padding: 10px;
+  }
+}
