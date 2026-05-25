@@ -75,6 +75,30 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+### 2026-05-25 21:18 JST / log_cdx Phase 4a
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: 0件。broken link なし。"
+  - "memory/atoms.jsonl を確認: 1586 rows、JSON parse error 0、duplicate id 0、content hash duplicate 0。"
+  - "memory/raw/ を確認: 30日以上更新なしの raw file 0件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ を確認: 30日以上更新なしの candidate 0件。降格/保持判断対象なし。"
+  - "tools/slack_inbox_lifecycle.py pending を確認: directives 0件、broadcasts 0件。status 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "memory_health.py が repeated title group 未付与 8種を警告している。同一タイトルの atom が別 author / 別時刻で並び、group_id がないため、同一論点の比較導線が弱い。"
+    severity: low
+    evidence: "memory_health.py: ungrouped_repeated_title_groups=8。例: sr-1774415260-4300508ff9 / sr-1774419078-4a690de007 (duckbill「センスの欠如＝欲の欠如」), sr-1774954522-ad15e4f409 / sr-1774954534-81e349d3f1 (Harness Engineering Best Practices 2026)"
+    why_blocks_game_memory: "ゲーム設計・ハーネス設計の同一テーマが複数 atom に散ると、次の制作時に片側だけ recall され、反復した議論や差分評価を見落とす可能性がある。ただし件数は少なく、現時点では手作業 recall を阻害するほどではない。"
+  - id: ISS-002
+    description: "memory_health.py が mojibake suspect atoms 2件を警告している。うち1件は shared-reads 由来の title/trigger/excerpt に置換文字が混入している。"
+    severity: low
+    evidence: "sr-1776127289-4d9239b255 title/trigger/excerpt: 'AIエ��ジェント'。gr-1777083728-44d444ab7a は今回の目視範囲では本文破損を確認できず。"
+    why_blocks_game_memory: "検索語が文字化け箇所に当たる場合、agent / memory / skills 系の外部知見が recall で落ちる可能性がある。ゲーム制作フィードバック側の主要 atom には大きな破損は見えず、緊急度は低い。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
