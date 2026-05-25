@@ -44,6 +44,34 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-05-25 21:06 JST / log_cdx Phase 3b
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779690832-a0488769cf
+    source_ts: "1779690832.905979"
+    title: "Towards LLM-Based Automatic Playtest (arxiv 2507.09490) — 手法名 \"Lap\""
+    reason: "未レビューの score 15 atom のうち、memory/harness/evaluation/agent/operation/game-design に全て接続し、直近の playable diff / headless 評価で score や clear/fail を verdict にしがちな課題へ直接効くため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state abstraction + action execution loop を次回ゲーム評価で確認する一時 probe を追加。恒久ルール化はしない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

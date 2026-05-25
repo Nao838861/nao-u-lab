@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-25T18:57:00+09:00",
+  "updated_at": "2026-05-25T21:06:00+09:00",
   "reviewed_source_ts": [
+    "1779690832.905979",
     "1779557791.076579",
     "1779669572.065929",
     "1778856008.709709",
@@ -48,6 +49,23 @@
     "1779658720.515969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-25T21:06:00+09:00",
+      "id": "sr-1779690832-a0488769cf",
+      "source_ts": "1779690832.905979",
+      "title": "Towards LLM-Based Automatic Playtest (arxiv 2507.09490) — 手法名 \"Lap\"",
+      "decision": "adopt_probe",
+      "reason": "Lap は、LLM に画面を直接読ませる話ではなく、snapshot を構造化 state に落とし、action を実行し、次 state を観測する閉ループとして読める。直近の playable diff / headless 評価では score や clear/fail を verdict にしがちなので、次回のゲーム評価で state schema、action loop、目的レイヤーを 1 回だけ確認する probe にする。既存の headless 差分・部分確認 probe と重なるため、恒久ルールや大きな metric にはしない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-25T18:57:00+09:00",
       "id": "sr-1779557791-592e3281db",
@@ -1354,6 +1372,18 @@
         "自分が書いた atom や最近の Slack 投稿を優先した場合、それは内容の強さか取得しやすさかを明示し、恒久ルールではなく今回の判断境界として残したか。"
       ],
       "expires_after": "次に memory recall、shared-reads 候補比較、external intake、または Phase 4a 問題抽出で source 表記が判断に効きそうな 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260525-state-abstraction-action-loop",
+      "created_at": "2026-05-25T21:06:00+09:00",
+      "source_ts": "1779690832.905979",
+      "scope": "next playable diff / headless evaluation / game prototype check where screenshots, clear rates, or fixed-rule audits may be mistaken for a playtest loop",
+      "questions": [
+        "Before calling an evaluation a playtest, did I name the lightweight state schema: player, hazards, goals, timers, available actions, or another concrete extractor?",
+        "Did the check include an observe -> choose action -> execute -> observe-again loop, or was it only a one-shot screenshot / metric / fixed-rule audit?",
+        "Did I state whether the loop is measuring bug/crash/stuck/state diversity or design quality, instead of letting a technical metric stand in for fun?"
+      ],
+      "expires_after": "Review after the next playable diff or headless game evaluation that adds or interprets structured state, action choice, or LLM/player-style testing."
     }
   ]
 }
