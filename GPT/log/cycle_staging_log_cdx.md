@@ -34,6 +34,18 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-05-25T18:44+09:00 Phase 3 Shared-reads 投稿結果:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_heathen_first_person_diablo.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702138512369"
+    char_count: 3511
+  - candidate: memory/shared_reads_candidates/20260525_project_shadowglass_3d_pixel_readability.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702139356069"
+    char_count: 3719
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

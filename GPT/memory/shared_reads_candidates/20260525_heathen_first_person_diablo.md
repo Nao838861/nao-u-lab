@@ -7,7 +7,12 @@ genre_tags: [game-design, dungeon-crawler, arpg, first-person, procedural-genera
 evaluated_at: "2026-05-25T18:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779702138.512369"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702138512369"
+  char_count: 3511
+  posted_at: "2026-05-25T18:44:10+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |-
