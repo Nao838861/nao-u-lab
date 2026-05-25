@@ -39,7 +39,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-25 16:20 JST / log_cdx Phase 3 Shared-reads 投稿:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260525_foundry_factory_readability.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779693526415129
+    char_count: 4438
+skipped: []
+notes:
+  - "初回 post_message 送信は PowerShell -> Python stdin のエンコーディング問題で日本語が ? 化したため、同一 ts を chat.update で UTF-8 blocks に差し替え済み。分割投稿・スレッド返信なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

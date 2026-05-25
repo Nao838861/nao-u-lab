@@ -7,7 +7,12 @@ genre_tags: [game-design, simulation, sandbox, systems-design, readability, fact
 evaluated_at: "2026-05-25T16:13:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779693526.415129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779693526415129"
+  char_count: 4438
+  posted_at: "2026-05-25T16:20:57+09:00"
 stale_after: "2026-06-24"
 supersedes: []
 gate_reason: |-
