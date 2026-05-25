@@ -4,9 +4,9 @@ status: active
 created: 2026-05-25
 source_atom_ids:
   - sr-1779657471-88f9f3d1ae
+  - sr-1779657491-cdd6e3a97e
+  - sr-1779657495-c5b821b937
   - sr-1779658373-5e5a195063
-  - sr-1779658588-0fae62cbf1
-  - sr-1779658720-002236e014
 fallback_recall_query: 'python tools/memory_recall.py "supervised delta autonomous game creation Pulse Relay v003 enemy exit offscreen shots HUD retry Japanese docs"'
 verification_status: source_bundle_reanchored
 ---
@@ -59,9 +59,9 @@ verification_status: source_bundle_reanchored
 - 良い方針と悪い方針の headless 検証を分け、良い方針が中心システムで安定するか確認する。
 - ドキュメント、設計ログ、完了報告は日本語で書き、ユーザー原文を短い抽象語へ置き換えない。
 
-## 参照
+## 参照 atom
 
-- `memory/atoms/2026-05/sr-1779657471-88f9f3d1ae.md`
-- `memory/atoms/2026-05/sr-1779658373-5e5a195063.md`
-- `memory/atoms/2026-05/sr-1779658588-0fae62cbf1.md`
-- `memory/atoms/2026-05/sr-1779658720-002236e014.md`
+- `sr-1779657471-88f9f3d1ae`
+- `sr-1779657491-cdd6e3a97e`
+- `sr-1779657495-c5b821b937`
+- `sr-1779658373-5e5a195063`

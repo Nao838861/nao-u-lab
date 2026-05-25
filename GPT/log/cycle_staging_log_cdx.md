@@ -174,7 +174,8 @@ migrations:
   - what: "単独 md 参照を source bundle 付き参照へ補強"
     affected: "ゲーム制作前ゲートの 2 lesson (`game_supervised_delta...`, `game_special_system_hud...`) と `game_memory_task_lens_index.md` の該当 2 セクション"
 verification:
-  - "`Test-Path` で 2 lesson md と source atom md の存在を確認"
+  - "`Test-Path` で 2 lesson md の存在を確認"
+  - "`git grep` で source_atom_ids が tracked atoms.jsonl/index に存在することを確認"
   - "`rg` で source_atom_ids / fallback_recall_query / verification_status の追加を確認"
   - "`python tools/memory_recall.py \"supervised delta autonomous game creation Pulse Relay v003\"` が成功することを確認"
   - "`python tools/memory_recall.py \"special system HUD affordance cooldown input title retry reflection conversion always-on text\"` が成功することを確認"

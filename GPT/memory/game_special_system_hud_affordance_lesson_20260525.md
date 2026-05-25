@@ -4,9 +4,7 @@ status: active
 created: 2026-05-25
 source_atom_ids:
   - sr-1779657471-88f9f3d1ae
-  - sr-1779658588-0fae62cbf1
-  - sr-1779658720-002236e014
-  - sr-1779659902-3b62526bf8
+  - sr-1779657495-c5b821b937
 fallback_recall_query: 'python tools/memory_recall.py "special system HUD affordance cooldown input title retry reflection conversion always-on text"'
 verification_status: source_bundle_reanchored
 ---
@@ -58,9 +56,7 @@ verification_status: source_bundle_reanchored
 - 「押せるが意味がない」と「押す価値がある」を同じ表示にする。
 - デバッグ情報を通常プレイ画面に残す。
 
-## 参照
+## 参照 atom
 
-- `memory/atoms/2026-05/sr-1779657471-88f9f3d1ae.md`
-- `memory/atoms/2026-05/sr-1779658588-0fae62cbf1.md`
-- `memory/atoms/2026-05/sr-1779658720-002236e014.md`
-- `memory/atoms/2026-05/sr-1779659902-3b62526bf8.md`
+- `sr-1779657471-88f9f3d1ae`
+- `sr-1779657495-c5b821b937`
