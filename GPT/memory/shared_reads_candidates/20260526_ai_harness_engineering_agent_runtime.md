@@ -1,0 +1,15 @@
+---
+title: "AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents"
+url: "https://arxiv.org/abs/2605.13357"
+collected_at: "2026-05-26T05:08:35+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [agent, harness, evaluation, game-dev-workflow, verification]
+---
+
+## raw_excerpt
+arXiv:2605.13357。自律的な software-engineering agent が現実の開発で不安定な理由を、モデル能力だけに置かず、model-harness-environment system の問題として捉える論文。harness は agent が project を観測し、行動し、feedback を受け、変更完了を立証する runtime substrate と定義される。
+
+著者らは AI Harness Engineering の責務として、task specification、context selection、tool access、project memory、task state、observability、failure attribution、verification、permissions、entropy auditing、intervention recording の11項目を挙げる。さらに H0-H3 の4段階 ladder で runtime support の露出度を整理し、各 agent run を auditable episode package に変換する trace-based evaluation protocol を提案する。低い harness level では final patch だけが残るが、高い level では reproduction logs、failure attributions、deterministic requirement checks、structured verification reports が残る、という整理。
+
+## why_relevant_to_games
+ゲーム制作サイクルの headless check、review packet、design_log、failure attribution を「モデルが賢いか」ではなく harness の責務として集め直す材料になる。

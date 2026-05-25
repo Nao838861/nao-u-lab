@@ -116,3 +116,10 @@ notes:
 - 検証結果: pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、generated reason table contract、packet screenshot contract が通過。screenshot bytes: 166209。
 - raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl`
 - 残課題: 評価側は reason table HTML 全体の telemetry 生成へ進める。gameplay 側は novice が終盤まで進んで BOMB なしで落ちる点を、初心者向け BOMB 導線候補として扱う。
+
+## Phase 1: 情報収集 (2026-05-26T05:08:35+09:00 追記)
+- `memory/shared_reads_candidates/20260526_ai_in_games_acceptance_context.md` - AI in games は介入箇所ごとに受容・抵抗理由が変わる、という8文脈 survey。
+- `memory/shared_reads_candidates/20260526_visual_complexity_information_game_ux.md` - ゲームUIの visual richness と information visibility の均衡を扱うUX資料。
+- `memory/shared_reads_candidates/20260526_ai_harness_engineering_agent_runtime.md` - agent の成果を patch ではなく auditable episode package として残す harness engineering 資料。
+- slack_directives / slack_broadcasts tail 確認: 直近表示範囲は handled。pending 対応は本 Phase では実施せず。
+- 既存重複として `Agentic PCG` / `Agent Island` / `GameDevBench` は候補追加対象から外した。
