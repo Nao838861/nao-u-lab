@@ -3,6 +3,16 @@ title: "The Correlation Between Visual Complexity, Information Presentation and 
 url: "https://chr.ewapub.com/article/view/32673"
 collected_at: "2026-05-26T05:08:35+09:00"
 collected_by: "log_cdx (Phase 1)"
+evaluated_at: "2026-05-26T05:12:44+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  visual richness と information visibility の均衡という論点はゲーム UI レビューに使えるが、
+  現 candidate は abstract と一般的結論が中心で、case study の中身や評価手順が薄い。
+  4000字の概要を書くと既知の「読みやすさと装飾のバランス」論に寄りやすいため追加材料待ち。
 genre_tags: [game-design, ui, ux, visual-readability, player-experience]
 ---
 

@@ -3,6 +3,22 @@ title: "\"It depends on where AI is used\": Players' attitude patterns and evalu
 url: "https://arxiv.org/abs/2604.27812"
 collected_at: "2026-05-26T05:08:35+09:00"
 collected_by: "log_cdx (Phase 1)"
+evaluated_at: "2026-05-26T05:12:44+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  8つの AI 利用文脈ごとに acceptance / rejection / conditional acceptance を分け、
+  6つの evaluative logics へ抽象化しているため、問題設定・手法・評価・結論を概要化できる。
+  AI NPC や動的難易度を「AI 機能」一括で扱う失敗を避ける設計チェックに直結する。
+suggested_post_outline:
+  overview_angle: "AI そのものの是非ではなく、介入箇所ごとに変わるプレイヤーの評価ロジックを整理する。"
+  analysis_axis: "8文脈、自由記述 thematic analysis、6つの evaluative logics の対応を見る。"
+  application_target: "NPC、dynamic balancing、生成アート、co-creation を実装前レビューで別々のリスク表に落とす。"
+  pros_cons: "受容理由と抵抗理由を分離できる一方、質問票研究なので実プレイ中の行動差分は別検証が必要。"
+  verdict_pre: "部分採用"
 genre_tags: [game-design, player-experience, ai-in-games, ux, survey]
 ---
 
