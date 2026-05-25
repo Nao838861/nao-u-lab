@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-25T12:05:00+09:00",
+  "updated_at": "2026-05-25T14:10:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -42,7 +42,8 @@
     "1778366722.466289",
     "1779417206.845399",
     "1779460386.310459",
-    "1779669158.892049"
+    "1779669158.892049",
+    "1779658720.515969"
   ],
   "reviews": [
     {
@@ -758,6 +759,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-25T14:10:00+09:00",
+      "id": "sr-1779658720-002236e014",
+      "source_ts": "1779658720.515969",
+      "title": "Shared-reads 6-post series: Pulse Relay v003 supervised delta packet for autonomous game creation (1/6-6/6)",
+      "decision": "adopt_probe",
+      "reason": "Unreviewed score-18 atom spanning memory, harness, game-design, agent, operation, and evaluation. Existing game_design_rules 12/13 and the center-input probe already cover the implementation gate, so this cycle adds only a reversible probe for the non-compression boundary: do not flatten user fixes or teacher deltas into short improvement labels before preserving raw signal, mismatch, failed judgment, and the next implementation gate. The referenced lesson files are missing in this worktree, so adoption is bounded to the atom excerpt and existing index/rule links.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -1264,6 +1282,18 @@
         "good policy だけでなく camper/panic/novice など悪い方針を少なくとも1つ走らせ、良い方針だけが安定する分離を確認したか。"
       ],
       "expires_after": "次に playable diff、ゲーム試作、または headless 評価で特殊システムや中心入力を扱った 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260525-supervised-delta-noncompression",
+      "created_at": "2026-05-25T14:10:00+09:00",
+      "source_ts": "1779658720.515969",
+      "scope": "next game prototype implementation / repair / evaluation where user feedback, game-rights notes, or teacher deltas may be compressed into short improvement labels",
+      "questions": [
+        "Before reducing user fixes or teacher deltas to labels such as naturalize enemies, add explanation, or add retry button, did I preserve raw wording, observed mismatch, failed judgment, and next implementation gate?",
+        "If the referenced lesson file or raw feedback is missing, did I record that evidence boundary with atom id / Slack ts / missing path instead of turning the weak evidence into a permanent rule?",
+        "When applying the lesson, did I convert the feedback into a concrete screen state, input, object/enemy behavior, or verification log that prevents recurrence?"
+      ],
+      "expires_after": "Review after the next game prototype, user-fix ingestion, or game-rights teacher-delta conversion into an implementation gate."
     }
   ]
 }

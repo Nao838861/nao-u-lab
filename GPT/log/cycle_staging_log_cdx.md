@@ -33,8 +33,35 @@ notes:
   - "PowerShell stdin 経由の初回投稿は本文が文字化けしたため削除済み。UTF-8 file helper で再投稿し verification: ok。deleted_ts=1779685298.737819"
 ```
 
-## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+## Phase 3b: Shared-reads self-feedback
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779658720-002236e014
+    source_ts: "1779658720.515969"
+    title: "Shared-reads 6-post series: Pulse Relay v003 supervised delta packet for autonomous game creation (1/6-6/6)"
+    reason: "Unreviewed score-18 atom spanning memory/harness/game-design/agent/operation/evaluation. It directly targets a recurring risk in autonomous game creation: compressing user fixes and teacher deltas into short improvement labels."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "Added temporary probe `probe-20260525-supervised-delta-noncompression` to memory/shared_reads_self_feedback_state.json. It checks one thing: before shortening user fixes or teacher deltas, preserve raw signal, mismatch, failed judgment, and the next implementation gate."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  notes:
+    - "Referenced files `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` and `memory/game_special_system_hud_affordance_lesson_20260525.md` are missing in the current worktree. Existing links in `game_design_rules.md` 12/13 and `game_memory_task_lens_index.md` were checked."
+    - "To avoid overlapping with the existing center-input / three-state / bad-policy probe, this cycle is limited to the non-compression boundary."
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
