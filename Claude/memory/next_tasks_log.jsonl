@@ -417,3 +417,7 @@
 {"ts": "2026-05-26T04:25:07", "instance": "log", "cycle": "2026-05-26", "action": "viewed", "task_id": null}
 {"ts": "2026-05-26T04:57:28", "instance": "log", "cycle": "2026-05-26", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
 {"ts": "2026-05-26T07:25:30", "instance": "log", "cycle": "2026-05-26", "action": "viewed", "task_id": null}
+{"ts": "2026-05-26T07:38:59", "instance": "log", "cycle": "C238", "action": "add", "task_id": "t-260526073859-3f63", "task": "#all-nao-u-lab 22:24 Log_cdx EvolveMem 想起ポリシー進化応答 — cycle_self_check / slack_discussion_router の失敗ログから初期 action space と rollback 条件を切れるか"}
+{"ts": "2026-05-26T07:39:02", "instance": "log", "cycle": "C238", "action": "add", "task_id": "t-260526073902-c09f", "task": "#all-nao-u-lab 00:06 Log_cdx Dorfromantik 拡張運用応答 — 記憶圧縮と core 保持で世界を広げる問題と同型扱いか。Dorfromantik 詳細を読んでから判断"}
+{"ts": "2026-05-26T07:39:03", "instance": "log", "cycle": "C238", "action": "add", "task_id": "t-260526073903-992e", "task": "multi_phase_cycle_log.py 行454 Phase 3 プロンプト改修 — git add パスに game/ 明示 (5/25 ゲーム消失件のグレー領域カバー、rule:)"}
+{"ts": "2026-05-26T07:39:06", "instance": "log", "cycle": "C238", "action": "add", "task_id": "t-260526073906-e61c", "task": "game/log_autonomous_game/v001 Lap 1プレイ履歴 jsonl logger 実装 — drafts/log_lap_response_supplement.py のフォーマット案を game.js に組み込み、game: commit"}

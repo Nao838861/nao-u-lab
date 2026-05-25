@@ -126,7 +126,120 @@
 ※ Phase 2 で利用するかは判断対象、利用しなくても摂取経路は確保済
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### A) #nao-u 新規URL 5件への一次反応 — 全件**既処理**、新規投稿しない判断
+Phase 1 §1 で「未処理タグなし」と書いた根拠を実データで照合した。slack_api/all-nao-u-lab.jsonl と slack_archive/shared-reads.jsonl に対し各 URL を grep:
+
+| URL | 既存反応 | 重複投稿の害 |
+|---|---|---|
+| atomic_chat_hq 2057581603811901882 | 5/22 20:34 Log #shared-reads 翻訳保管投稿あり (`[Log C221 §share]`) | 4日経過、新角度なし |
+| kazunori_279 2057643718530994297 | 5/22 19:44 Log #all-nao-u-lab 個別反応投稿あり（HyDE/原則6接続）| 関連 5/25 続編に対して 5/26 00:38 / 00:43 で第2投反応も済 |
+| phoenixyin13 2056269488140509649 | 5/23 08:33 Log C224 Phase 2 個別分析投稿あり（Wu et al. 2026 処方箋3点の Log 当て） | 5/23 14:37 で planetary_gear×Phoenix の3点交差も実施済 |
+| haopeng_uiuc 2055695064148410764 | 5/22 19:51 Mir 投稿 + 5/26 01:25 `[Log C238 Phase 2]` 独立分析投稿あり（Mir 抽象化タイミングとは別軸の補完） | 直前サイクルで対応完了 |
+| planetary_gear/nd75f0dd32f06 | 5/22 20:04, 23:33, 5/23 05:33, 07:57, 14:37, 5/26 01:33 計6回 Log 反応投稿あり（うち #shared-reads 2回） | 過剰投稿状態。追加すると水増し |
+
+**判定: Phase 3 で新規 #all-nao-u-lab 投稿は行わない**。本来「ルール8 他者の反応を読む前に自分の視点を持つ」は未反応 URL に対するルール。既反応 URL への再投稿は means_ends_reversal（手段が目的化）になる。Phase 1 §1 ヘッダ「新規は無し」が正しい結論で、本フェーズの判断はそれを実データで裏取りしたもの。
+(教訓: 次サイクル以降、Phase 1 §1 で「未処理タグなし」と書く時は同時に「全件既反応済 / 一部未反応」を 1 行で明記すると Phase 2 の二重確認が不要になる)
+
+### B) #shared-reads 新規投稿候補 — **無し判定**
+本サイクルで shared-reads 級の新規外部入力なし:
+- §1 URL 5件は全て翻訳/分析投稿済（planetary_gear は #shared-reads 2回 = 過剰）
+- §6 外部検索（LAP/MMORPG-LLM/Game-Theoretic Lens/Malinowski）は摂取経路固定化目的の予防的取得であり、Nao_u 共有起点ではない。Log 単独判断で #shared-reads に流すと「外部入力の起点」が曖昧になる（Nao_u が #nao-u に投下していないものを Log が外部代理で流す ≠ Nao_u 共有の翻訳）
+- LAP (2507.09490) は §C-1 Log_cdx 17:08 問いかけ応答の参考資料として #all-nao-u-lab 経由で扱う方が文脈整合（Log_cdx も同論文起点で「最小プローブ切れるか」を投げてきている）
+
+**判定: Phase 3 で #shared-reads 新規投稿を行わない**。
+
+### C) #all-nao-u-lab 未応答 4件（Log_cdx 問いかけ） — 本サイクルでの応答可否
+Phase 1 §2 で挙げた 4件を「**応答に必要な前提知識の手元有無**」と「**応答することで Log 側 playable diff を遅延させないか**」の2軸で判定:
+
+| 案件 | 必要前提 | 手元有無 | 応答難度 | 本サイクル判断 |
+|---|---|---|---|---|
+| 17:08 Lap (最小プローブ JSON+候補+選択+結果1プレイ履歴) | LAP 論文 (§6-1) + log_autonomous_game v001 (game/log_autonomous/) の実装 | **有** (§6 で論文取得済 + v001 はリポジトリ内) | 中（フォーマット案を 1 つ提案できる）| **応答する** |
+| 18:53 SL-HyDE recall loop (過剰同型視か / retriever 学習 vs query expansion) | SL-HyDE 5/25 #shared-reads Log 投稿 + memory_redesign.md 進捗 | **有** (5/25 18:38 投稿は自分のもの) | 高（理論判断必要、Log 側で先週 SL-HyDE 同型主張した責任あり）| **応答する** |
+| 22:24 EvolveMem (cycle_self_check / slack_router の失敗ログから action space と rollback 条件) | Log 側 cycle ログ + scheduler_log.py + slack_discussion_router の現状 | **有** (Log 側ファイル) | 高 | **次サイクルに先送り**（本サイクル時間内では action space 設計が浅くなる、Phase 3 の playable diff を優先） |
+| 00:06 Dorfromantik (記憶圧縮と core 保持で世界を広げる問題と同型扱いか) | Dorfromantik 拡張運用詳細 + 自分の core_mission 圧縮履歴 | **手元薄** (Log_cdx 投稿本文未深読み) | 高 | **次サイクルに先送り** |
+
+**判定: Phase 3 で 17:08 Lap と 18:53 SL-HyDE の 2件に応答**、22:24/00:06 は次サイクル C240+ の優先タスクとして next_tasks 登録。
+
+### D) 5/25 07:28 ゲーム消失件 — Log 側 scheduler 系の git add に game/ 漏れ監査
+**結論: Log 側 autonomous_cycle.sh は OK だが、Mac 側 sync.sh と check_inbox.sh に同型漏れ残存**。
+
+監査対象ファイルと結果:
+| ファイル | git add 行 | game/ 含有 | 判定 |
+|---|---|---|---|
+| `autonomous_cycle.sh` 行69, 356, 368, 379, 397 (Mir 側 + Win 側兼用) | 全5箇所 `memory/ log/ CLAUDE.md docs/ game/` 等 | **○** | 5/25 Mir 修正 (7abf000) が反映済 |
+| `sync.sh` 行20 (Mac 用 GitHub 同期) | `git add memory/ log/tweets.log CLAUDE.md` | **✗ 漏れ** | **要修正** |
+| `check_inbox.sh` 行37 (Mac 側受信箱 cron) | `git add memory/ log/ CLAUDE.md` | **✗ 漏れ** | **要修正** |
+| `multi_phase_cycle_log.py` 行454 (Win/Log Phase 3 プロンプト文) | プロンプト指示「git add + commit + push」 | パス指定なし（LLM が判断） | グレー（LLM 判断依存だがリスク残） |
+| `scheduler_log.py` (Win/Log) | git add 行なし（個別 commit は cron 外で実行） | N/A | 該当外 |
+
+両ファイルとも **Mac 側 (Mir 担当) のスクリプト**。Win/Log では実行されないが、共有リポジトリのため Log 側でも修正コミット可能。「全員再発しないように対策」(5/25 07:28 Nao_u) の指示範囲。
+
+**Phase 3 アクション**:
+1. `sync.sh` 行20: `git add memory/ log/tweets.log CLAUDE.md` → `git add memory/ log/tweets.log CLAUDE.md game/` (game/ 追加)
+2. `check_inbox.sh` 行37: `git add memory/ log/ CLAUDE.md` → `git add memory/ log/ CLAUDE.md game/` (game/ 追加)
+3. commit prefix は `rule:` (scheduler 運用規則改修)
+4. #human-steering に Mir 宛で「Mac 側 sync.sh / check_inbox.sh の git add に game/ 追加した。5/25 07:28 指示の漏れ。次の cron 起動から有効」を 1 メッセージ報告
+5. `multi_phase_cycle_log.py` 行454 のプロンプト文はパス指定がなく LLM 判断依存。これは別案件（プロンプト改修）として next_tasks に登録、本サイクルでは触らない（範囲膨張を防ぐ）
+
+### E) log_autonomous_game v001 — 本サイクルの playable diff 候補
+Phase 1 §0 で確認した通り、直近 commit は `c856dfa4 game: log_mystery consolidation` の後 `rule:` 2連 + Auto sync 2連 = 直近サイクルで `game:` commit 無し。`game/log_autonomous/v001/` の状態を Phase 3 冒頭で確認し、可能なら最小1差分（例: §C-1 Lap 応答で提案する「1プレイ履歴 JSON フォーマット」を v001 の logger に追加）を出してから commit する方針。これが「ゲームを動かして出す」の最低限。Lap 応答内容と整合するので二重作業ではない。
+
+### F) Phase 3 タスクリスト（優先度順）
+1. **[最優先] sync.sh / check_inbox.sh に `game/` 追加** + commit (`rule:`) + push → ゲーム消失件の Log 側カバー完了
+2. **[必須] #all-nao-u-lab Log_cdx 17:08 Lap 応答**（1プレイ履歴 JSON フォーマット案 1 つ + v001 への適用案）
+3. **[必須] #all-nao-u-lab Log_cdx 18:53 SL-HyDE 応答**（過剰同型視か / retriever 学習が本質か）
+4. **[必須] #human-steering Mir 宛 sync.sh/check_inbox.sh 修正報告**
+5. **[達成努力目標] game/log_autonomous/v001 に Lap 応答整合の 1 差分 + `game:` commit**（時間が許せば）
+6. **[必須] next_tasks に追加**: (a) 22:24 EvolveMem 応答 (b) 00:06 Dorfromantik 応答 (c) multi_phase_cycle_log.py 行454 プロンプト改修（game/ 明示）
+7. **[必須] commit 全完了後、master push**（1 ahead 解消）
+
+### G) means_ends_reversal_check (CLAUDE.md ルール準拠)
+本サイクル出力の主軸は **game: commit が出るか** にある。F-1 (`rule:` sync.sh) と F-2/F-3 (Slack 応答) は支援作業で、これらだけで終わると「またルール改修と分析で playable diff ゼロ」のパターン (kaizen #131 段階2 hook 警告と同根)。F-5 を達成努力目標に置く理由はここ。F-1 を最優先にしたのは「ゲーム消失再発防止」がゲーム制作の前提条件のため (基盤 > 個別)。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実行結果
+1. **[完了] sync.sh / check_inbox.sh に `game/` 追加** — Edit 2 件適用 (sync.sh:20, check_inbox.sh:37)。後段で `rule:` commit + push。
+2. **[完了] #all-nao-u-lab Log_cdx 17:08 Lap 応答** — ts=1779748594 投稿後、シェル展開でJSON例とフィールド名 (`action_source`/`event`/`llm.reasoning`) が欠落した事故あり。drafts/log_lap_response_supplement.py で補足投稿 ts=1779748624。**教師データ**: 投稿スクリプトをbash経由で叩く時に { } < > $ が部分展開される。次回以降は Python ファイル直叩きに統一する (sense_prediction_log 候補)。
+3. **[完了] #all-nao-u-lab Log_cdx 18:53 SL-HyDE 応答** — ts=1779748687。「過剰同型視ではない、ただし retriever 学習 vs query expansion の二分法では本質を取り逃がす。我々の場合 retriever 学習に対応するのは grep ではなく atom 命名規則進化 = retriever 不変・index 可変 SL-HyDE」と回答。
+4. **[完了] #human-steering Mir 宛 sync.sh/check_inbox.sh 修正報告** — ts=1779748712。push 前に Mac 側 git status 確認依頼 + multi_phase_cycle_log.py 行454 は next_tasks 登録した旨を明記。
+5. **[スコープ削除] game/log_autonomous/v001 logger 実装** — Lap 応答内で「次サイクル C239 で patch」と明言済。本サイクル中に実装すると宣言と整合せず + means_ends_reversal リスク (Slack応答とコード実装で範囲膨張)。next_tasks に登録して次サイクル C239 で着手。
+6. **[完了] next_tasks_log 4件追加** — EvolveMem (t-260526073859-3f63) / Dorfromantik (t-260526073902-c09f) / multi_phase_cycle_log.py 行454 プロンプト改修 (t-260526073903-992e) / v001 Lap logger 実装 (t-260526073906-e61c)。
+
+### 自己評価 (means_ends_reversal_check 再点検)
+- 本サイクル出力: `rule:` 1 commit (sync.sh + check_inbox.sh) + Slack 応答 3 件 + next_tasks 4 件登録。
+- `game:` commit はゼロ。Phase 2-F の達成努力目標は意図的に次サイクルへ送った。理由は (a) Lap 応答内で「C239 で patch」と書いたため (b) Slack 3 件 + commit 1 件 + push で本サイクル時間は概ね満。
+- 反省: 「basis 整備 (ゲーム消失防止)」 + 「教師資料の応答」 + 「次サイクルへの繋ぎ (next_tasks)」で構成は健全。ただし 2 サイクル連続で `game:` commit ゼロは means_ends_reversal リスク。次サイクル C239 では v001 logger 実装を最優先で `game:` commit を出す。
+
+## 次フェーズの大作業
+
+### タイトル
+game/log_autonomous_game/v001 に Lap 応答整合の 1 プレイ履歴 jsonl logger を実装し `game:` commit を出す
+
+### 完遂の定義 (Phase 4 終了時に成立)
+- `game/log_autonomous_game/v001/game.js` に trace logger が追加されている (frame 単位で state/actions_available/action_taken/action_source/event を 1 行 jsonl として buffer)
+- `index.html` に「Save Trace」ボタン (または game over 時の自動保存) が追加されている
+- 1 プレイ分の `trace_<timestamp>.jsonl` が `memory/raw/playtrace/` に書き出せる (ローカル動作確認)
+- フォーマットは drafts/log_lap_response_supplement.py に書いた案と一致 (Slack 公開済の宣言整合)
+- `game:` prefix で commit + push 済
+- README.md に logger 仕様 1 段落追記
+
+### 着手手順
+1. game/log_autonomous_game/v001/game.js を再読 (現状の state 構造 / 主要 event 発火点を確認)
+2. trace logger を game.js 末尾 (or 新ファイル trace_logger.js) に追加、frame ごとに `pushTraceFrame()` 呼び出しを 5-7 箇所差し込み
+3. ブラウザは fs に直接書けないため「Save Trace」ボタン → `Blob` + `URL.createObjectURL` → ダウンロード方式 (memory/raw/playtrace/ への配置はユーザー手動 or 別 sync script を後追い)
+4. 自分で 1 プレイして trace_*.jsonl を取り、フォーマット一致を確認
+5. README.md に「Trace logger」段落追加
+6. `game:` commit (メッセージ: `game: log_autonomous_game v001 — Lap-style 1プレイ履歴 trace logger 追加`)、push
+
+### 選んだ理由
+- **Slack 公開済の宣言整合**: Lap 応答で「次サイクル C239 で v001 logger 側 patch を 1 commit (game:) で出す」と書いた。これを守らないと自分の Slack 投稿が空手形になる
+- **2 サイクル連続 `game:` commit ゼロの解消**: 直近 2 サイクルが `rule:` + Auto sync のみで means_ends_reversal リスクが累積している
+- **Lap 教師資料 (Log_cdx 17:08 + #game-rights Pulse Relay v003 教師差分) が手元にあり判断材料が豊富**な今が最適タイミング
+- **30 分粒度で完遂可能**: 既存 game.js への追記中心 (新規ゲーム実装ではない)、ブラウザ完結 (サーバー不要)
+
+### 非ゴール (やらないこと)
+- LLM プレイヤー実装 (claude --print への state 受け渡しループ) — formats を人間プレイで固めてから次々サイクル C240+
+- memory/raw/playtrace/ の自動 sync インフラ — まず手動配置で運用検証
+- coverage 計測 / 異常検知ロジック — trace が溜まってから後付け
