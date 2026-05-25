@@ -17,7 +17,7 @@ cp -r "$REPO_DIR/memory/"* "$CLAUDE_MEMORY_DIR/" 2>/dev/null
 cp -r "$CLAUDE_MEMORY_DIR/"* "$REPO_DIR/memory/" 2>/dev/null
 
 # git push
-git add memory/ log/tweets.log CLAUDE.md
+git add memory/ log/tweets.log CLAUDE.md game/
 if ! git diff --cached --quiet; then
     TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
     git commit -m "Auto sync: tweets and memory $TIMESTAMP"

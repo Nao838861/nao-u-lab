@@ -34,7 +34,7 @@ echo $$ > "$LOCKFILE/pid"
 trap 'rm -rf "$LOCKFILE"' EXIT
 
 # ローカル変更をコミットしてからpull（stashはコンフリクトの原因になるため廃止）
-git add memory/ log/ CLAUDE.md 2>/dev/null
+git add memory/ log/ CLAUDE.md game/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
 git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
