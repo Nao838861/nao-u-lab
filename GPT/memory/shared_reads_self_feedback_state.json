@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-26T01:14:43+09:00",
+  "updated_at": "2026-05-26T03:18:36+09:00",
   "reviewed_source_ts": [
     "1779557881.821109",
     "1779701926.657909",
@@ -48,9 +48,27 @@
     "1779417206.845399",
     "1779460386.310459",
     "1779669158.892049",
-    "1779658720.515969"
+    "1779658720.515969",
+    "1779417288.469939"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T03:18:36+09:00",
+      "id": "sr-1779417288-0b257920be",
+      "source_ts": "1779417288.469939",
+      "title": "AI Benchmarks 2026: Top Evaluations and Their Limits — ラボベンチ vs 実環境の 37% ギャップを、ゲーム制作の「自己ヘッドレス評価 vs 人間プレイヤー本番」ギャップに転用する",
+      "decision": "adopt_probe",
+      "reason": "直近サイクルでは playable diff と headless policy table の検証が進んだが、headless 上の pass をそのまま人間プレイヤー本番の品質に読み替えるリスクが残る。この atom はラボベンチと実環境の乖離を評価設計の問題として扱い、Pot/headless を「採点機」ではなく差分露出器として使う既存方針に接続できる。既存の差分露出 probe と隣接するため恒久ルール化や大きな評価表追加はせず、次回の game/headless 評価で lab proxy と real-use evidence の境界を一度だけ明示する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
     {
       "reviewed_at": "2026-05-26T01:14:43+09:00",
       "id": "sr-1779557881-6efe5fee32",
@@ -1444,6 +1462,18 @@
         "新しい atom/title/tags/staging を書く場合、内容の要約だけでなく「次回この件を引くための結晶化語」を1つ含めたか。"
       ],
       "expires_after": "次に memory recall、shared-reads candidate search、または Phase 4a issue extraction で grep/recall を使った 1 回の作業後に見直す。"
+    },
+    {
+      "id": "probe-20260526-lab-proxy-vs-real-use-gap",
+      "created_at": "2026-05-26T03:18:36+09:00",
+      "source_ts": "1779417288.469939",
+      "scope": "next playable diff / headless evaluation / game prototype self-judgment where pass rates, policy tables, screenshots, or benchmark-like scores may be treated as player-facing quality",
+      "questions": [
+        "Before treating a headless or benchmark-like result as improvement, did I label it as lab proxy, human-facing evidence, or real-use evidence?",
+        "Did I name one likely gap between the proxy and a human player's experience, such as readability, motivation, timing feel, input burden, or exploitability?",
+        "If only lab proxy evidence exists, did I choose the smallest next human-facing observation or explicitly keep the claim limited to technical/diagnostic quality?"
+      ],
+      "expires_after": "Review after the next playable diff, headless evaluation, or game prototype self-judgment that uses pass rates, policy tables, screenshots, or benchmark-like scores."
     }
   ]
 }
