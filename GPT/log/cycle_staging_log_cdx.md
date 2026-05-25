@@ -9,6 +9,16 @@
 - 収集: `memory/shared_reads_candidates/20260525_inkblood_systemic_investigation.md` — quest 誘導ではなく clue / case file / past-view tool で推理を成立させる occult detective game の dev diary。
 - 収集: `memory/shared_reads_candidates/20260525_obstacle_overdrive_toy_car_physics.md` — RC crawler 実物観察と素材実験から、slow/careful な toy-car physics を作る indie 開発インタビュー。
 
+
+2026-05-25 16:09 JST / log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260525_katanaut_responsive_combat.md` — 高速 katana roguelite の solo dev 事例。core feel、combat readability、失敗理由の可視化、scope 制御を収集。
+- `memory/shared_reads_candidates/20260525_screenbound_2d_3d_linked_worlds.md` — 2D handheld world と 3D world を level editor / trigger rule で接続する puzzle-platformer 制作事例を収集。
+- `memory/shared_reads_candidates/20260525_foundry_factory_readability.md` — voxel factory sandbox の first-person readability、simple rules × scale、feedback branch 運用を収集。
+
+入力確認:
+- `slack_inbox_lifecycle.py pending`: directives 0 件、broadcasts 0 件。
+- 直近 Slack / atoms: Movement Prediction、Obstacle Overdrive などは既に候補化または投稿済みとして確認。
+- `memory/raw/web_research/results.jsonl`: 既存 arXiv 候補は 20260515-18 の candidate と重複が多いため、今回は新規 web search で 2026-05 の 80.lv 制作インタビューを追加収集。
 ## Game Start: graze_log_cdx 継続改善
 
 - 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
