@@ -35,6 +35,7 @@
     idleSince: 0,
     introGhostPhase: 0,
     lockMessage: null, // { text, frame } — Q-成功FB 状態3 (危機回避) 表示用
+    lockExplosion: null, // { x, y, frame } — Q-成功FB 状態2 (シアン薄爆発) 表示用
   };
 
   // --- 入力 ---
@@ -66,6 +67,9 @@
       // Q-成功FB 状態3: ロック発動時に敵弾があった = 「危機回避」した hit
       if (e.hadBullets) {
         game.lockMessage = { text: '危機回避', frame: game.frame };
+      } else {
+        // Q-成功FB 状態2: ロック発動時に敵弾なし = 「意味薄」hit、シアン薄爆発で控えめフィードバック
+        game.lockExplosion = { x: game.player.x, y: game.player.y, frame: game.frame };
       }
     } else {
       game.lockResults.miss += 1;
@@ -250,6 +254,20 @@
         for (let i = 1; i < tail.length; i++) ctx.lineTo(tail[i].x, tail[i].y);
         ctx.stroke();
       }
+      // Q-成功FB 状態1: castLock 発動不可 (trail < ECHO_FRAMES = 1秒未満の足跡) → グレー薄リング常時表示
+      // 「今は撃てない」を視覚化、足跡が溜まるほどリングを閉じていく (進捗バー兼)
+      if (game.trail.length < ECHO_FRAMES) {
+        const readiness = game.trail.length / ECHO_FRAMES; // 0→1
+        const remain = 1 - readiness;
+        ctx.strokeStyle = `rgba(150, 155, 165, ${0.22 + 0.18 * remain})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(
+          game.player.x, game.player.y, game.player.r + 6,
+          -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * remain
+        );
+        ctx.stroke();
+      }
     }
 
     // 敵
@@ -284,6 +302,20 @@
     // プレイヤー
     ctx.fillStyle = '#dfe7f3';
     ctx.beginPath(); ctx.arc(game.player.x, game.player.y, game.player.r, 0, Math.PI * 2); ctx.fill();
+
+    // Q-成功FB 状態2: シアン薄爆発 (resolveLock 後 30 フレーム = 0.5秒、半径膨張+alpha減衰)
+    // 「ロック成功したが敵弾なし = 意味薄 hit」を控えめに伝達。状態3 より淡く・小さく
+    if (game.lockExplosion && game.frame - game.lockExplosion.frame < 30) {
+      const age = game.frame - game.lockExplosion.frame;
+      const t = age / 30;
+      const alpha = (1 - t) * 0.32;
+      const radius = game.player.r + 4 + t * 26;
+      ctx.strokeStyle = `rgba(140, 230, 255, ${alpha})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(game.lockExplosion.x, game.lockExplosion.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
 
     // Q-成功FB 状態3: 危機回避メッセージ (resolveLock 後 45 フレーム = 0.75秒表示)
     if (game.lockMessage && game.frame - game.lockMessage.frame < 45) {
@@ -331,6 +363,7 @@
     game.lockResults = { hit: 0, miss: 0, idle: 0 };
     game.idleSince = 0;
     game.lockMessage = null;
+    game.lockExplosion = null;
   }
 
   function step() {
