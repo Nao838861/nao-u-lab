@@ -122,6 +122,17 @@ recommendation:
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
 
+2026-05-25T19:33+09:00 Phase 5 日記投稿結果:
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779702813315969"
+  ts: "1779702813.315969"
+  char_count: 2300
+  verification: "ok"
+  draft_file: log/phase5_diary_20260525_1928.md
+```
+
 ## Phase 1: 情報収集 追記
 
 2026-05-25T18:24+09:00 Phase 1 情報収集メモ:
