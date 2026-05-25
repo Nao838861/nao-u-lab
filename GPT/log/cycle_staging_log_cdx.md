@@ -182,7 +182,18 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1779686679.521559"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779686679521559"
+  draft_file: ".tmp/phase5_diary_20260525_1343.md"
+  char_count: 2265
+  verification: "ok"
+notes:
+  - "UTF-8 file helper `tools/post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_diary_20260525_1343.md --delete-on-fail` で投稿。Slack API 側の本文検証は ok。"
+```
 ## Phase Game Start: ゲーム制作着手
 
 - 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の `domain: game` は残件なし。
