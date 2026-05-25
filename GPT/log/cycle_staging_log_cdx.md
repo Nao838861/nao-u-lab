@@ -20,7 +20,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260526_ai_in_games_acceptance_context.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779740294393709"
+    char_count: 4002
+  - candidate: memory/shared_reads_candidates/20260526_ai_harness_engineering_agent_runtime.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779740294256369"
+    char_count: 4344
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
