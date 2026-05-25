@@ -357,3 +357,85 @@ Phase 2 §6/§8 引き継ぎから本サイクル新規 Slack 投稿対象は **
 ### 8) サイクル温度 (Phase 3 視点)
 
 C238 Phase 3 (本セクション) は **Phase 2 §6 引き継ぎ事項 11 項目の棚卸し → 実施 3 件 / Phase 4 昇格 1 件 / C239 持ち越し 4 件 / 完了確認 3 件**、をテーブル化して可視化する手順を新規導入。これは Phase 2 §8 「後続セッション着手手順」(cycle_staging_log.md 既存セクション全読を Phase 2 着手前ゲート化) を Phase 3 でも同型適用したもので、後続フェーズ間の引き継ぎ抜けを構造的に防ぐ最初のサンプル。Phase 4 で大作業に集中する前に「**棚卸し → 各項目の処遇明示**」が事故再発防止の最重要 lever、と本 Phase 3 で言語化できたのが収穫。
+
+## Phase 4: 大作業実行 (2026-05-26 C242累積)
+
+### 完遂判定: **完遂** (定義 1-5 全て成立、minimum 合格ライン超過)
+
+| 完遂条件 | 状態 | 実測 |
+|---|---|---|
+| 1. agent_difficulty_proxy.js が node 実行可能、30 試行 4 指標中央値 JSON 出力 | ✅ | 290 行、出力 9.5KB、exit 0 |
+| 2. 良手 agent 新規追加 (Space 約2秒1回 + 中央バイアス nospecial + 微小ノイズ) | ✅ | MOVE_NOISE_SCALE=0.25、CAST_GAP=120 frames |
+| 3. 4 軸目 audit/runner として design_log §Q-G 計測ゲート追記 | ✅ | 8 ゲート末尾に追加 |
+| 4. exit 0 = 全 30 試行完走、exit 1 = frame 計算破綻 | ✅ | exit 0 確認 |
+| 5. self_judgment §1 Q-D / Q-成功FB 3 → 4 暫定昇格判断材料 | ✅ | Q-D 3 → 3.5 暫定昇格 (proxy 数値裏付け)、Q-成功FB 据置 (実機依存) |
+
+### 副産物 (新規/変更ファイル)
+
+| ファイル | 種別 | 行数差 | 内容 |
+|---|---|---|---|
+| game/log_autonomous_game/v001/agent_difficulty_proxy.js | 新規 | +290 行 | 4 軸目 runner、30 試行中央値計測 |
+| game/log_autonomous_game/v001/design_log.md | 変更 | +約 80 行 | §Q-G 計測ゲート追加 + §実装第4 commit 報告追記 |
+| game/log_autonomous_game/v001/self_judgment.md | 変更 | +約 35 行 | §7b agent_difficulty_proxy 数値裏付け節 + Q-D 3→3.5 暫定昇格 + 新合計 20.5/25 |
+
+### v001 baseline 計測値 (Phase 4 副産物の中核数値)
+
+```
+median_clear_wave: 1            (wave 2 到達ゼロ)
+median_residual_hp_ratio: 0     (1-hit kill のため binary)
+median_play_time_sec: 10.0      (range 9.02-10.0、seed 差約 1 秒)
+median_graze_count: 5.5         (range 1-7、seed 差 6 ステップ)
+survival_rate: 0/30 = 0%        (素朴良手でも全滅、Q-D-1 失点と整合)
+death_cause: 全 bullet (30/30)  (敵接触ゼロ、5 体同時発射が死因)
+```
+
+### Slack 投稿/kaizen エントリ等
+
+- Slack 投稿: **なし** (Phase 3 §6 判定通り、本 Phase 4 で追加投稿は自己ノイズ増加リスクのため見送り)
+- kaizen 新規エントリ: **なし** (proxy 装置の妥当性は 3 サイクル運用後判定、現時点で kaizen 起票しない)
+- pending_requests 更新: **なし**
+
+### commit はしない (Phase 5 で日記とまとめて push)
+
+CLAUDE.md 厳守事項「ゲーム改修と運用規則改修を別 commit に分ける」適用:
+- `game:` commit 候補: agent_difficulty_proxy.js + design_log.md + self_judgment.md (3 ファイル 1 commit)
+- `log:` commit 候補: cycle_staging_log.md Phase 4 セクション (本書込)
+- Phase 5 で日記 + 上記 2 commit + git push を一括実行
+
+### 残課題 / C239 申し送り
+
+1. **Pages 公開 → Log/Mir/Ash 実機自プレイ → Q-D / Q-成功FB 確定昇格** — proxy 数値で 3.5 まで、確定 5 は実機判定依存
+2. **v002 改修第1手の選定**: BULLET_SPEED 下げ / SHOOT_INTERVAL 伸ばし / 5 体同時発射 stagger 強化 のいずれかを 1 パラメータだけ動かし、`node agent_difficulty_proxy.js` 再実行で 4 指標差分を観測 (proxy lever 校正)
+3. **3 サイクル運用後の proxy 妥当性判定**: v001 → v002 → v003 (or 同型) で proxy ranking vs Nao_u 体感ranking 合致を見て採用継続判定。不一致なら `feedback_*` に負の知見書き込み + 装置撤去
+4. **graze 概念の game.js 本体導入検討**: 本 proxy で導入した「弾外殻 30px 圏 distinct count」が成立するなら、Q-成功FB 状態 1.5 (「掠めた」フィードバック) の lever 候補。本サイクルでは proxy 側に閉じ、game.js には書き込まない
+5. **CLAUDE.md「ゲームを動かして出す」遵守判定**: 本 Phase 4 は agent_difficulty_proxy.js (290 行新規) + design_log/self_judgment 更新で playable diff 直接ではないが「playable diff の評価軸を増やす道具」追加で「絶対にやる」§1 ゲートを満たすか、Phase 5 日記で自己判定する
+
+### Phase 4 温度
+
+C242 Phase 4 (本セクション) は **「提案 → 実装」遷移の自己実演**。C238 Phase 2 §2 で arXiv:2410.02829 を #shared-reads 投稿した時点では「読んで終わり」だったが、本 Phase 4 で「素朴良手 agent + 30 試行中央値」最小実装まで進めた。SSGM/Phoenix Yin/HyDE と同様「論文 → 摂取 → ローカル翻訳実装」の 3 段階を 1 サイクル内で完結させた最初のサンプル。CLAUDE.md「外の世界を広く見る」§ と「ゲームを動かして出す」§ の両立処方 (= 外部知見を実装に翻訳して playable diff の評価軸化) の構造的成功例として残す。proxy が 3 サイクル運用で人間体感と乖離する負の結果が出ても、本実装プロセス自体は摂取経路の正サンプルとして保持する選択肢を維持。
+
+## Phase 5: 日記 + cycle_staging 累積 (2026-05-26 02:XX C238/C242累積)
+
+### #log 投稿 (5 chunks 分割、ts=1779728732 起点)
+
+| # | ts | 文字数 | 内容 |
+|---|---|---|---|
+| 1 | 1779728732.384749 | 1097 | サイクル概観 + Phase 4 大作業の核命題 |
+| 2 | 1779728733.651569 | 1088 | v001 baseline 6 数値 + Q-D 3→3.5 暫定昇格 + proxy 単独 5 採点禁止方針 |
+| 3 | 1779728735.047949 | 1442 | Phase 3 棚卸し table 11 項目 + kaizen #134 day21 + STALE 接続 |
+| 4 | 1779728736.417329 | 1333 | Log_cdx EvolveMem/Dorfromantik 共通根 + diegetic feedback + Phase 2 §8 5 件投稿事故 |
+| 5 | 1779728737.849979 | 4147 | Phase 5 自己点検 table + 次回起動時 5 項目 + 最後に「7 角度言い換え」温度 |
+
+総 9107 文字、`drafts/2026-05-26/post_log_log_diary_c238_phase4_proxy_20260526_POSTED_ts1779728732.py` で物理化済。
+
+### daily_diary_log.md 追記
+
+本ファイル末尾相当区間 (Phase 4 / Phase 3 / kaizen #134 / Phase 2 §8 / Phase 5 自己点検 / 次回起動時 / 最後に) を `log/daily_diary_log.md` に追記、未来の Log/Mir/Ash が文脈なしで C238/C242累積 サイクルを再構築可能な密度を確保。
+
+### commit 構成 (本 Phase 5 で実行)
+
+1. `game:` commit — agent_difficulty_proxy.js (新規 401 行) + design_log.md (§Q-G + §第4 commit 報告 +約110 行) + self_judgment.md (§7b 数値裏付け + 20.5/25 +約35 行)
+2. `log:` commit — cycle_staging_log.md (Phase 4 + 本 Phase 5 累積) + daily_diary_log.md (本 Phase 5 日記追記) + .diary_dedup_cache.json (auto_diary 更新分)
+3. git push origin master
+
+CLAUDE.md 厳守事項「ゲーム改修と運用規則改修を別 commit に分ける」適用、評価バイアス防止。
