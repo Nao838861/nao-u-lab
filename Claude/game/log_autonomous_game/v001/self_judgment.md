@@ -129,13 +129,15 @@ staging C239 Phase 4 完遂条件 3:
 
 ## 3. enemy_behavior_audit.js / verify.js 現状確認 (完遂条件 4)
 
-`find game/ -name "enemy_behavior_audit*"` および `verify*.js` 検索結果: **どちらも全リポジトリ内に存在しない** (Pulse Relay v003 も `game/pulse_relay/` ディレクトリ自体が存在しない)。
+**update (C241 Phase 4)**: `bullet_origin_audit.js` (C241 Phase 3 commit ee8e7ad64d6b) と `verify.js` (C241 Phase 4) を整備済。
 
-projects/log_autonomous_game.md §残課題 でも未チェック (`[ ]`) として既に明示済:
-- [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
-- [ ] `enemy_behavior_audit.js` / `bullet_origin_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep / 画面外射撃ゼロ 独立監査)
+- [x] `bullet_origin_audit.js` — 3 層独立監査 (定数抽出 / 静的ガード検出 / 決定論シミュ)、6/6 check PASS、exit 0、self_judgment §1 Q-D の「数値根拠ゼロ」一次処方完了
+- [x] `verify.js` — 悪手 4 方針 (camper / lane-holder / blind-sweeper / nospecial) 各 30秒 headless simulate、全 4 gameover で pass: true、exit 0
+  - 生存秒数: camper 5.33s (bullet) / lane-holder 4.62s (bullet) / blind-sweeper 7.78s (bullet) / nospecial 8.20s (bullet)
+  - 全方針が wave 1 内で gameover、castLock 不使用は設計通り全滅。生存方針なし = 設計穴指標ゼロ
+- [ ] `enemy_behavior_audit.js` (lingeringEnemies / maxEnemyStep の追加分析、bullet_origin_audit.js が一部カバー済) — 次サイクル以降の優先度低候補
 
-→ 次サイクル C240 以降の課題として残課題リストに既存。本ファイルでは「未着手であることを確認した」という状態確定のみ。
+**limits**: `verify.js` は悪手検証であり、良手検証ではない。実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守、§5 残「実機ブラウザ体感」は依然として実機判定依存)。本検証は「castLock 不使用で全滅すること」のみを保証し、「castLock 使用で生残可能」は別検証。
 
 ---
 

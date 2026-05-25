@@ -19,7 +19,7 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [ ] **C240 Phase 2 追記候補**: design_log.md の 8 ゲートに「探索 playtest 層」を明示追加し verify.js 悪手 4種を「tree search の縮約版」と再定義する self-doc 更新 (ScriptDoctor 2506.06524 由来、game_lessons_log R-D「型から始める、独自要素は1つだけ」と整合)
 - [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断
 - [ ] Pages 公開 or Nao_u/Mir/Ash に実機プレイ依頼 → `self_judgment.md` Q-D / Q-成功FB の確定採点書き換え (C240 大作業候補)
-- [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
+- [x] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / nospecial で全部 fail することを判定) 完了 (C241 Phase 4): 各 30秒 (1800F) headless simulate、全 4 方針 wave 1 内で bullet 死亡 (camper 5.33s / lane-holder 4.62s / blind-sweeper 7.78s / nospecial 8.20s)、`pass: true`、exit 0。「castLock 不使用で必ず死ぬ」設計の自己批判検証成功、生存方針ゼロ = 設計穴指標ゼロ。limits: 良手検証ではない / 実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守)
 - [△] `bullet_origin_audit.js` 完了 (C241 Phase 3, commit 直後): 3層独立検証 (定数抽出 + 静的ガード regex + 決定論シミュレーション 15秒) で 6/6 check PASS、`{ offscreen_shots:0, lingering_shots:0, max_enemy_step:1.4 ≤ player.speed:3.4, SHOOT_GATE guard:true, bullet_dir_fixed_at_spawn:true, bullet_vel_not_reassigned:true }`。self_judgment §1 Q-D の数値根拠ゼロ問題への一次処方完了。残: `enemy_behavior_audit.js` (lingering / step / spawn 範囲の Wave 単位監査拡張) は別 audit として次サイクル以降
 - [ ] `visual_review.md` (Log 側で目視チェック項目を列挙)
 - [ ] `completion_report.md` (What this proves / What this does not prove を分節)
