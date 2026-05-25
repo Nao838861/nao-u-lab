@@ -80,7 +80,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-25 16:33 JST / log_cdx Phase 4a 整理 + 問題抽出:
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を簡易チェックし、broken link 0 件を確認した。"
+  - "memory/atoms.jsonl を検査し、1578 rows / parse error 0 / duplicate id 0 を確認した。"
+  - "memory/atoms/duplicate_groups.jsonl が stale だったため、tools/build_atom_duplicate_groups.py で 39 groups に再生成した。"
+  - "memory/raw/ は 2026-04-25 より古いファイル 0 件で、30 日超の archive 対象なし。"
+  - "memory/shared_reads_candidates/ は 2026-04-25 より古い候補 0 件で、30 日超の fail 降格/保持判断対象なし。"
+  - "slack_inbox_lifecycle.py pending で directives 0 件 / broadcasts 0 件を確認し、handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
