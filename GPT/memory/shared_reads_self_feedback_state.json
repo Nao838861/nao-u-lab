@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-25T14:10:00+09:00",
+  "updated_at": "2026-05-25T16:23:20+09:00",
   "reviewed_source_ts": [
+    "1779669572.065929",
     "1778856008.709709",
     "1778913399.208889",
     "1778782281.755979",
@@ -46,6 +47,23 @@
     "1779658720.515969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-25T16:23:20+09:00",
+      "id": "sr-1779669572-f7f36af5cb",
+      "source_ts": "1779669572.065929",
+      "title": "LM agent の失敗を、必要な知識を発見できなかった失敗と、発見済み知識を使えなかった失敗に分けて測る評価法",
+      "decision": "adopt_probe",
+      "reason": "直近の game/headless 評価と Phase 4a の問題抽出では、失敗を単なるスコア低下や実装不足として丸めると次の修正が外れやすい。この atom は探索失敗と活用失敗を外部行動から分ける観点を提供し、既存の runtime verification probe や retrieval loop probe と重なるが、失敗分類の入口として 1 cycle だけ使うなら軽い。恒久ルール化は過剰なので reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-18T03:43:56+09:00",
       "id": "sr-1779012072-6dfc94017c",
@@ -1294,6 +1312,18 @@
         "When applying the lesson, did I convert the feedback into a concrete screen state, input, object/enemy behavior, or verification log that prevents recurrence?"
       ],
       "expires_after": "Review after the next game prototype, user-fix ingestion, or game-rights teacher-delta conversion into an implementation gate."
+    },
+    {
+      "id": "probe-20260525-exploration-vs-utilization-failure",
+      "created_at": "2026-05-25T16:23:20+09:00",
+      "source_ts": "1779669572.065929",
+      "scope": "next game/headless evaluation, Phase 4a issue extraction, or agent/tool failure analysis where a failure may hide whether evidence was never found or found but unused",
+      "questions": [
+        "Before naming the fix, did I classify the failure as exploration failure, utilization failure, or mixed/unknown?",
+        "Did I point to one observable trace: missing search/read step, ignored evidence/log, wrong state transition, or unsupported assumption?",
+        "If the class is unknown, did I choose the next smallest probe that distinguishes discovery from use instead of adding a broad rule?"
+      ],
+      "expires_after": "Review after the next game/headless evaluation, Phase 4a issue extraction, or agent/tool failure analysis."
     }
   ]
 }

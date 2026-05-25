@@ -51,7 +51,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-25 16:23 JST / log_cdx Phase 3b self feedback:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779669572-f7f36af5cb
+    source_ts: "1779669572.065929"
+    title: "LM agent の失敗を、知識を発見できなかった失敗と発見済み知識を使えなかった失敗に分ける評価法"
+    reason: "次の game/headless 評価や Phase 4a 問題抽出で、失敗をスコア低下や実装不足に丸めず、探索失敗か活用失敗かに分ける入口として使えるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の game/headless 評価、Phase 4a、agent/tool failure analysis で探索失敗と活用失敗を分ける 3 問 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
