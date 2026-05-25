@@ -48,6 +48,23 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 - charge を溜めるために危険へ近づく意味があること。
 - `nearMissCharge`, `spentCharge`, `maxPulseCount`, `lowPulseCount` を測る。
 
+## v006 実装結果
+
+`game/pulse_relay/v006/` で実装した。v005 の敵リアクションと Chain Relay は維持し、Pulse を `CHARGE` 経済へ切り替えた。敵弾の近くを通ると charge が増え、LOW / MID / MAX Pulse の3段階で発動する。route は MAX Pulse を待つ policy として評価し、pulseHeavy は低 charge 連打の比較対象にした。
+
+検証結果:
+
+- `node verify.js`: pass
+- `node timeline_eval.js`: pass
+- `node enemy_behavior_audit.js`: pass
+- route clearRate: 1
+- route meanNearMissCharge: 676.55
+- route meanSpentCharge: 704
+- route meanMaxPulseCount: 8
+- noPulse / camper / lane-holder / blind-sweeper clearRate: 0
+
+残課題: MAX Pulse を待つ route が主役になり、低/MID Pulse の使い分けはまだ浅い。v007 では下の `Pulse Command / Enemy Rewrite` を実装候補にする。
+
 ## v007 候補: Pulse Command / Enemy Rewrite
 
 別発想として、v007 では Pulse を敵弾変換ではなく、敵の行動モードを書き換えるコマンドにする。
@@ -84,4 +101,3 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 - 画面外射撃、敵の長時間残留、不自然なワープ、下部急加速退場を再発させない。
 - 日本語文書は UTF-8 として扱い、PowerShell で読む時は `-Encoding UTF8` を使う。
 - 新しい版を作ったら、未追跡のまま放置せず git に固定する。
-
