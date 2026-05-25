@@ -9,6 +9,44 @@
 
 ---
 
+## ミミクリ宣言 (2026-05-26 C242 Phase 4 で game/* 側に物理化、oktamajun 5/20「何のごっこ遊びか」反応より)
+
+**この v001 は「STG パイロットごっこ」 + 「LLM自己観測ごっこ」の二重ミミクリ実験**。
+
+- **表層 (player layer)**: 1 秒先予測弾幕を Space castLock + 中心入力で抜けるパイロット。**Pulse Relay v003 が確立した「特殊3状態を弾幕の中で判定し続けるパイロット」のごっこを継承**
+- **裏層 (Log layer)**: 同じゲームを Log 自身が headless 評価層で観測し、自分が遊んだ場合に「予測が当たった / 外れた / 予測しなかった」3 層フィードバックがどう発火するかを **graze_log の R-A/M-15 (失敗の体験化) と並列に観測する**
+- **禁則**: 「メカニクス的に正しい改修」 (graze ボーナス × 軌跡 × 弾速 evolve の積上) で核を冷やしてはいけない (Civ7 文明 if 歴史ごっこ崩壊の同型事故防止)。ミミクリの核は「死線スリリングを抜けるパイロット感」であり、これを上回るメカニクス改修は採用しない
+
+**game/* 側で物理化する責任**:
+- index.html のタイトル / 説明テキスト、game.js のタイトル副題 / 死亡時メッセージはすべて「パイロットごっこ」の語感から逸脱しない (例:「弾避けゲーム」「予測軌道シューター」は何のごっこ遊びか消えるため使わない)
+- self_judgment.md §Q-ミミクリ で「核を上回るメカニクス改修が無いか / プレイヤーが『パイロット感』を味わえる導入か / 死線スリリングが castLock 機構で発生しているか」の 3 項目を採点軸として常設
+- 同型は `projects/log_autonomous_game.md` 冒頭ミミクリ宣言 (C242 Phase 3 起票)、本節は game/* 側コピー。projects 側との文言差分は逸脱兆候とみなし即同期する
+
+---
+
+## Q-D0: 1行ごっこ遊びゲート (C238 追加)
+
+**方針**:
+- 本ゲームは「**1 秒後の自分の到達予定地点に賭ける、賭けに勝てば短時間の安全圏を得る**」ごっこ遊び。1 行で言える状態を保つ。短縮呼称: **「着地予測のごっこ遊び」**
+- タイトル / 説明 / Slack 出荷時の通知文は本 1 行から逸脱しない (例: 「弾避けゲーム」「Pulse Relay 風」「予測軌道シューター」は何のごっこ遊びか消えるため使わない)
+
+**追加理由 (C238 Phase 2 §8 oktamajun 軸の v001 内適用)**:
+- oktamajun 2026-05-20「面白いゲームは何のごっこ遊びか1行で言える」(Log 5/22 既応答) を C238 後続セッションが再投稿、log_autonomous_game v001 へ翻訳する形で本 Q-D0 を追加
+- 既存 Q-A〜Q-F のメカニクス分解は厚いが「**この遊び全体を1行で何か**」を明示せず、`feedback_no_type_redo_material.md` 「型なし題材は練り直し」の直接処方点だった
+
+**Q-D0 と gozahand「シンプルさ+快感」2軸 (C238 Phase 2 §8 軸の v001 内適用) との関係**:
+- gozahand 2026-05-19「シンプルでわかりやすい快感」(Log 5/20 既応答) を 2 軸分解: (i) **1 動詞** = プレイヤー入力 Space 1 系 (Q-A 既規定) / (ii) **即応** = 入力→快感 FB まで 1 秒以内 (本 v001 では「ロック発動 → 1 秒後着地成功 = Q-成功FB 状態3 緑」が 1 秒厳守、状態 1/2 は 0.1 秒以内即応で C240 実装済)
+- Q-D0 1行 = (i) 1 動詞 + (ii) 即応 + (iii)「**着地予測**」型名、の 3 要素圧縮として整理
+
+**検証手段**:
+- self_judgment.md / completion_report.md / Slack 出荷文を本 Q-D0 1 行と照合、逸脱表現を排除
+- Nao_u 出荷時に「何ごっこ遊びか1行で言える」が伝わるか観測 (C239 以降)
+
+**game_lessons_log R-層 昇格判断**:
+- Phase 2 §8 §6-11「gozahand 2軸を R-層に追加検討」は本 v001 出荷後の体験裏付け 1 巡後に判断、本サイクルでは R-層直結書き込みしない (`feedback_rule_proliferation_canonical.md` 「個別指摘を即ルール化しない」直処方、同型 2 件 (oktamajun + gozahand) は確認したが体験裏付けが v001 出荷前のため)
+
+---
+
 ## Q-A: 中心入力ゲート
 
 **方針**:
@@ -168,6 +206,39 @@
 - 視覚レビュー: スクショで HUD 面積が画面の **10% 以下**
 - `index.html` ソース検索: `<div>` で画面外パネルを作っていないことを確認 (キャンバス1個のみ)
 - Pulse Relay visual_review.md チェックリスト流用
+
+---
+
+## Q-G: 計測ゲート — agent 難易度プロキシ runner (新規 / C242 Phase 4)
+
+**方針**:
+- 「素朴良手 agent」(Space を約2秒に1回 castLock + 中央バイアス nospecial 移動 + 微小ノイズ) を 30 試行 (各 60秒 = 3600 frame) headless 実行し、4 指標中央値を JSON で出す
+- 4 指標: `median_clear_wave` (到達 wave 数) / `median_residual_hp_ratio` (生残率、v001 は 1-hit kill のため binary) / `median_play_time_sec` (生残秒数) / `median_graze_count` (弾本体外殻 30px 圏に入った distinct 弾数)
+- v001 ⇄ v002 で同じ runner を回し、4 指標差分を「人間体感難易度の変化の代理」として読む
+- 出典: Chang Xiao & Brenda Z. Yang "LLMs May Not Be Human-Level Players, But They Can Be Testers" (arXiv:2410.02829, 2024-10-01) — Wordle agent 推測回数 vs 人間 Pearson r=0.624、Slay the Spire Act 1 agent 残存 HP 比率 vs 人間ボス突破率 r=0.871
+
+**禁則**:
+- 本 runner の数値だけで採点 5 を確定しない (確定 5 は実機判定依存)
+- 人間体感との Pearson 相関を測らずに「proxy が人間体感と一致する」と書かない
+- v001 単独計測値を絶対値として読まない (差分の lever として使う)
+- 論文の Wordle/Slay (ターン制) と v001 (リアルタイム弾避け) の構造差を無視して相関保証を主張しない
+- 良手 agent の cadence/policy を後から黙って変えない (cadence 変更時は v001 / v002 双方を再計測してから比較)
+
+**検証手段**:
+- `node agent_difficulty_proxy.js` で 30 試行完走、JSON に 4 中央値 + death_cause_breakdown + all_trials が出ること (exit 0)
+- v001 baseline 値: median_play_time_sec=10.0 / median_graze_count=5.5 / median_clear_wave=1 / survival_rate=0 (素朴良手でも wave 1 内で bullet 死 → 5 体同時発射時の認知負荷が Q-D-1 失点と整合)
+- v002 改修後の再計測で 4 指標がどう動くかを差分読み、Nao_u 体感ランキングと proxy ランキングを 3 サイクル運用後に対照
+- 一致なら proxy 採用継続、不一致なら `feedback_*` に負の知見として書き戻し proxy 装置撤去
+
+**What this proves**:
+- v001 が「素朴良手でも 10 秒前後で死ぬ」baseline 値 = v002 改修 lever として絶対値で参照可能
+- 4 指標 × 中央値で v001/v002 比較が JSON 差分のみで読める = ヘッドレス出力が「次の playable diff 候補のランキング」化に進む (Nao_u 5/22 批判「ヘッドレス検討で頭止まりは流速低下の予兆」への構造的応答)
+
+**What this does NOT prove**:
+- 人間体感難易度との Pearson 相関 (本サイクルでは未測定、3 サイクル運用後判定)
+- リアルタイム弾避けへの転用妥当性 (論文 Wordle/Slay = ターン制、構造違いリスクあり)
+- 5 採点への直接昇格 (本数値は 3→4 暫定昇格根拠まで、確定 5 は実機判定依存)
+- residual_hp_ratio の連続値 (v001 は 1-hit kill のため binary 1.0/0.0、HP system 導入時に連続値化が望ましい)
 
 ---
 
@@ -346,3 +417,57 @@
 3. 敵 B/C/D + 70-90 秒ステージカーブ
 4. `bullet_origin_audit.js` ヘッドレス検証
 5. `completion_report.md` 起票 → Nao_u 出荷
+
+---
+
+## §実装第4 commit 報告 (2026-05-26 C238/C242累積 Phase 4)
+
+**スコープ**: `agent_difficulty_proxy.js` を 4 軸目 audit/runner として新設。arXiv:2410.02829 (Wordle r=0.624 / Slay the Spire r=0.871) の当方環境ローカル翻訳実装。Q-G 計測ゲートを 8 ゲートに追加。
+
+**着手理由**:
+- C238 Phase 2 §2 で arXiv:2410.02829 を #shared-reads に投稿 (ts=1779726451) 済、本 Phase 4 で「提案して終わり」を避け実装に進める段
+- self_judgment.md の Q-D / Q-成功FB が「実機判定不在で 3 留まり」状態、本 runner は実機判定の代替ではないが「数値裏付けゼロ → 30 試行中央値の数値裏付けあり」への遷移で 3→4 暫定昇格根拠を作る
+- Nao_u 5/22 批判「ヘッドレス検討で頭止まりは流速低下の予兆」への構造的応答 = ヘッドレス出力に proxy 数値が乗ると「次の playable diff 候補のランキング」化、頭止まりではなく次手選定根拠化
+
+**実装内容**:
+- `agent_difficulty_proxy.js` 新設 (約 290 行): 30 試行 × 3600 frame の決定論+微小ノイズ headless 実行
+- 良手 agent ポリシー: 最近接脅威から逃げる (nospecial 同型) + 中央 (W*0.5, H*0.78) バイアス重み 0.25 + MOVE_NOISE_SCALE=0.25 方向ノイズ (人間揺らぎ代理、seed 差を結果反映)
+- cast cadence: ECHO_FRAMES*2=120 frame = 約 2 秒に 1 回 castLock 試行 (CAST_GAP_FRAMES より短いと trail 再充填前で path 重複の degenerate ケースになるため自然下限)
+- 定数抽出: ECHO_FRAMES / BULLET_SPEED / SHOOT_INTERVAL / SHOOT_GATE_Y_MAX / PLAYER_SPEED / ENEMY_VY を game.js から regex で動的取得 (bullet_origin_audit.js / enemy_behavior_audit.js と同型パターン、drift 防止)
+- graze 計測: 弾本体外殻 (PLAYER_R + BULLET_R) * 2.5 = 30px 圏に入った distinct 弾を 1 回限りカウント (game.js には graze 概念なし、本 runner で proxy 指標として導入)
+- 4 指標中央値 + death_cause_breakdown + 全 30 試行データを JSON 出力、exit 0/1 (全試行が 0.05 秒以内死なら exit 1 = frame 計算破綻)
+
+**v001 baseline 計測値 (30 試行中央値)**:
+- median_clear_wave: 1 (wave 1 内で全滅、wave 2 到達ゼロ)
+- median_residual_hp_ratio: 0 (1-hit kill のため、生存試行ゼロで 0 確定)
+- median_play_time_sec: 10.0 (range 9.02-10.0、seed 差で約 1 秒スプレッド)
+- median_graze_count: 5.5 (range 1-7、seed 差で 6 ステップスプレッド)
+- survival_rate: 0/30 = 0% (素朴良手でも 1 体も生残不可 = 5 体同時発射時の認知負荷が真に高い、Q-D-1 失点と整合)
+- death_cause: 全 30 試行 `bullet` (敵接触ゼロ、5 体ウェーブが画面下に到達する前に弾で必ず死ぬ)
+
+**Q-G ゲート達成状況**: ✅ (baseline 計測完了、JSON 出力 9.5KB、exit 0)
+- ✅ 30 試行完走
+- ✅ 4 指標中央値 JSON 出力
+- ✅ 定数抽出 game.js 同期 (drift 防止)
+- ✅ seed 差が結果に反映 (play_time 1 秒スプレッド、graze 6 ステップスプレッド)
+- 残: v002 改修後の差分計測 = C239 以降
+
+**この第4 commit が証明したこと (What this proves)**:
+- 「良手 agent でも v001 は wave 1 内で死ぬ」事実が 30 試行中央値で裏付け = v002 改修時に「proxy 数値の好転」を観測可能
+- 4 指標が独立に効いている (clear_wave は 1 で固定だが play_time/graze に seed 分散がある = 後者 2 軸で v001/v002 比較が読める)
+- arXiv:2410.02829 命題「弱い proxy で済ます」の当方環境への翻訳が「素朴良手 + 微小ノイズ + 30 試行中央値」の最小実装で成立、SSGM/Phoenix Yin/HyDE の摂取経路から実装着地する流れ完成
+- self_judgment §1 Q-D-1「5 体同時発射時の情報密度未確認」失点に対し、proxy ranking で「v001 は素朴良手で 10 秒前後死、改修対象として重い lever」を数値裏付け
+
+**この第4 commit が証明しないこと (What this does not prove)**:
+- proxy 4 指標と人間体感難易度の Pearson 相関 (3 サイクル運用後に Nao_u 体感ランキングと proxy ランキング合致を見て妥当性判定、不一致なら撤去)
+- 実ブラウザで Log/Mir/Ash が遊んだ時の体感秒数 (proxy 10 秒 vs 実機体感の乖離は未測定)
+- v002 改修方向の確定 (Q-D-1 BULLET_SPEED 下げ vs SHOOT_INTERVAL 伸ばし vs 同時発射制限のうちどれが proxy を一番動かすかは v002 実装まで未測定)
+- 5 採点への直接昇格 (本 runner は 3→4 暫定昇格根拠まで、5 は実機判定依存維持)
+
+**次サイクル C239 以降の優先順 (更新)**:
+1. Pages 公開 → 実ブラウザで Log/Mir/Ash 自プレイ → `self_judgment.md` の Q-D / Q-成功FB 採点を 3→4 確定書き換え (proxy 数値を 4 の根拠に引用)
+2. v002 改修着手: BULLET_SPEED 下げ / SHOOT_INTERVAL 伸ばし / 5 体同時発射 stagger 強化 のいずれかを 1 パラメータだけ動かし、`agent_difficulty_proxy.js` 再実行で 4 指標差分を観測 (proxy lever 校正)
+3. proxy ranking vs Nao_u 体感ranking 一致検証 (3 サイクル運用、不一致なら proxy 撤去 + `feedback_*` 負の知見書き込み)
+4. 状態1 グレーリング常時情報過多判定 + 状態2 シアン薄爆発の視覚レビュー
+5. 敵 B/C/D + 70-90 秒ステージカーブ
+6. `completion_report.md` 起票 → Nao_u 出荷

@@ -214,6 +214,9 @@
     ctx.font = '14px sans-serif';
     ctx.fillStyle = '#9aa9c2';
     ctx.fillText('あなたの足跡が、これから歩く道になる', W * 0.5, H * 0.36);
+    ctx.fillStyle = 'rgba(140,200,255,0.55)';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('— 1 秒先の自分に賭けるパイロットごっこ —', W * 0.5, H * 0.40);
 
     // PRESS SPACE 点滅
     if ((game.frame >> 4) & 1) {
@@ -343,10 +346,13 @@
     ctx.font = 'bold 28px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('未来に追いつけなかった', W * 0.5, H * 0.46);
+    ctx.fillStyle = 'rgba(255,180,180,0.65)';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('— パイロットは死線を抜けられなかった —', W * 0.5, H * 0.50);
     if ((game.frame >> 4) & 1) {
       ctx.fillStyle = '#cbd8ec';
       ctx.font = 'bold 16px sans-serif';
-      ctx.fillText('PRESS SPACE', W * 0.5, H * 0.54);
+      ctx.fillText('PRESS SPACE', W * 0.5, H * 0.56);
     }
   }
 

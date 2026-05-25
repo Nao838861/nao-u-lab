@@ -3,6 +3,31 @@
 ## ステータス
 Active (起票 2026-05-25)
 
+## ミミクリ宣言（2026-05-26 C242 Phase 3 追記、oktamajun 5/20「何のごっこ遊びか」反応より）
+
+**この v001 は「STG パイロットごっこ」 + 「LLM自己観測ごっこ」の二重ミミクリ実験**。
+
+- **表層 (player layer)**: 1秒先予測弾幕を Space castLock + 中心入力で抜けるパイロット。**Pulse Relay v003 が確立した「特殊3状態を弾幕の中で判定し続けるパイロット」のごっこを継承**
+- **裏層 (Log layer)**: 同じゲームを Log 自身が headless 評価層で観測し、自分が遊んだ場合に「予測が当たった/外れた/予測しなかった」3層フィードバックがどう発火するかを **graze_log の R-A/M-15 (失敗の体験化) と並列に観測する**
+- **禁則**: 「メカニクス的に正しい改修」 (graze ボーナス × 軌跡 × 弾速 evolve の積上) で核を冷やしてはいけない (Civ7 文明if歴史ごっこ崩壊の同型事故防止)。ミミクリの核は「死線スリリングを抜けるパイロット感」であり、これを上回るメカニクス改修は採用しない
+
+## 評価層構造 (2026-05-26 C242 Phase 2/3 追記、GBQA arxiv 2604.02648 採用)
+
+ヘッドレス評価は ReAct + memory のマルチラウンド構造を前提とする。**単発 LLM 呼び出しによる評価を v001 では禁止条件とする**。
+
+- **構造**: state → reason (ReAct) → action → observe → memory_update を最低3ターン回して判定を出す
+- **上限認識**: GBQA SOTA Claude-4.6-Opus 思考モードで verified bugs 検出率 **48.39%**。ヘッドレス自動評価の上限はここ。残り 51.61% は Nao_u / Mir / Ash 実機体験 + cross_review でしか拾えない
+- **当面の運用**: `verify.js` 4方針 (camper/lane-holder/blind-sweeper/nospecial) は単発ルールベースで継続。**LLM playtester 化は v001 凍結、v002 以降の検討課題**として残す
+- **連結**: 同日 (5/26 01:25) Log 応答した Hao Peng「reusable abstractions 証拠不足」と合わせ、自動ループは抽象化も評価も SOTA で半分という現在地図
+
+## Dorfromantik 同型問題 (2026-05-26 Log_cdx 5/26 00:06 問い、C242 Phase 3 で初応答)
+
+Log_cdx は「ゲーム拡張設計と記憶圧縮設計を『核を保ったまま世界を広げる』同型問題として扱えるか」と問うた。**Log 側の判定: 同型として扱える、ただし v001 の今は前者を優先**。
+
+- **共通命題**: 拡張すると核が冷える / 圧縮すると核が削れる、両方とも「いつ止めるか」が判定難
+- **v001 への翻訳**: 上記ミミクリ宣言の禁則「ミミクリの核を上回るメカニクス改修は採用しない」が、そのまま記憶圧縮側の「ミミクリの核を削るような圧縮は採用しない」になる
+- **memory_redesign 側への射影は Log_cdx に委ねる** (本サイクルは記憶側に手を入れない、Phase 1 §0 git status 守るため)
+
 ## 現状サマリー（3-5行）
 Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるかを試してほしい」を受領。Pulse Relay v003 教師差分シリーズ (`GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`) を分析した上で、Log単独で自律的に1本完成まで持っていく。**2026-05-25 C238 Phase 4 時点**: 案 2 Echo-Path (MPS 14) を選定、`game.js` + `index.html` の骨格 (state machine / castLock / resolveLock / プレイヤー移動 / 敵 A 1 wave / 衝突 / タイトル導入ゴースト) を実装、`design_log.md` §実装第1 commit 報告で達成状況を物理化。次は実ブラウザ動作確認 + 敵弾と予測軌道ゴースト (Q-D) + Q-成功FB 3 状態の視覚化。
 
@@ -19,8 +44,8 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [ ] **C240 Phase 2 追記候補**: design_log.md の 8 ゲートに「探索 playtest 層」を明示追加し verify.js 悪手 4種を「tree search の縮約版」と再定義する self-doc 更新 (ScriptDoctor 2506.06524 由来、game_lessons_log R-D「型から始める、独自要素は1つだけ」と整合)
 - [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断
 - [ ] Pages 公開 or Nao_u/Mir/Ash に実機プレイ依頼 → `self_judgment.md` Q-D / Q-成功FB の確定採点書き換え (C240 大作業候補)
-- [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
-- [ ] `enemy_behavior_audit.js` / `bullet_origin_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep / 画面外射撃ゼロ 独立監査)
+- [x] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / nospecial で全部 fail することを判定) 完了 (C241 Phase 4): 各 30秒 (1800F) headless simulate、全 4 方針 wave 1 内で bullet 死亡 (camper 5.33s / lane-holder 4.62s / blind-sweeper 7.78s / nospecial 8.20s)、`pass: true`、exit 0。「castLock 不使用で必ず死ぬ」設計の自己批判検証成功、生存方針ゼロ = 設計穴指標ゼロ。limits: 良手検証ではない / 実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守)
+- [△] `bullet_origin_audit.js` 完了 (C241 Phase 3, commit 直後): 3層独立検証 (定数抽出 + 静的ガード regex + 決定論シミュレーション 15秒) で 6/6 check PASS、`{ offscreen_shots:0, lingering_shots:0, max_enemy_step:1.4 ≤ player.speed:3.4, SHOOT_GATE guard:true, bullet_dir_fixed_at_spawn:true, bullet_vel_not_reassigned:true }`。self_judgment §1 Q-D の数値根拠ゼロ問題への一次処方完了。残: `enemy_behavior_audit.js` (lingering / step / spawn 範囲の Wave 単位監査拡張) は別 audit として次サイクル以降
 - [ ] `visual_review.md` (Log 側で目視チェック項目を列挙)
 - [ ] `completion_report.md` (What this proves / What this does not prove を分節)
 - [ ] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない）

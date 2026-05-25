@@ -4,6 +4,10 @@ url: https://www.tandfonline.com/doi/full/10.1080/10447318.2026.2632170
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-tools, asset-generation, pipeline, game-production, user-study]
+candidate_status: needs_review
+stale_after: "2026-06-17"
+supersedes: []
+
 ---
 
 ## raw_excerpt

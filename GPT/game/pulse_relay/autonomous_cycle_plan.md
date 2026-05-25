@@ -52,18 +52,33 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 
 `game/pulse_relay/v006/` で実装した。v005 の敵リアクションと Chain Relay は維持し、Pulse を `CHARGE` 経済へ切り替えた。敵弾の近くを通ると charge が増え、LOW / MID / MAX Pulse の3段階で発動する。route は MAX Pulse を待つ policy として評価し、pulseHeavy は低 charge 連打の比較対象にした。
 
+ただし最初のv006は、ユーザー確認で「6は体感が何も変わらない」と判断された。これは、charge 経済という内部構造の違いだけでは人間のプレイ体感として十分に違わなかったため。修正後のv006では、MAX Pulse を画面全体へ届くショックウェーブとして作り直した。
+
+修正後のv006の体感差:
+
+- MAX Pulse は自機周辺だけではなく、画面内の敵弾をまとめて Relay 化する。
+- MAX Pulse は画面内の敵にも直接ショックウェーブを当てる。
+- ショックウェーブを受けた敵は `max-shockwave` resonance になり、近くの敵へ枝分かれ Relay を発生させる。
+- 「溜めて吐くと画面全体が一気に反転する」ことをv006の核にした。
+- 画面外や横入場中の敵から弾が出る問題を再発させないため、敵の発射条件に「本体が画面内に見えていること」を入れた。
+
 検証結果:
 
 - `node verify.js`: pass
 - `node timeline_eval.js`: pass
 - `node enemy_behavior_audit.js`: pass
 - route clearRate: 1
-- route meanNearMissCharge: 676.55
-- route meanSpentCharge: 704
-- route meanMaxPulseCount: 8
+- route meanNearMissCharge: 500.31
+- route meanSpentCharge: 528
+- route meanConverted: 363
+- route meanMaxPulseCount: 6
+- route meanMaxShockwaveConversions: 363
+- route meanMaxShockwaveHits: 44
+- route meanChainHits: 43
+- route meanRelayKills: 44
 - noPulse / camper / lane-holder / blind-sweeper clearRate: 0
 
-残課題: MAX Pulse を待つ route が主役になり、低/MID Pulse の使い分けはまだ浅い。v007 では下の `Pulse Command / Enemy Rewrite` を実装候補にする。
+残課題: MAX Pulse がかなり強くなったため、v006型を伸ばすなら「溜めるリスク」「吐くタイミング」「MAX以外の用途」をもう一段整理する余地がある。ただし、v005との差は明確にすること。v006を「少し長い残留フィールド版」に戻してはいけない。
 
 ## v007 候補: Pulse Command / Enemy Rewrite
 
@@ -94,6 +109,8 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 
 `game/pulse_relay/v007/` で実装した。v006 の charge 経済と Relay / Chain Relay は残し、Pulse を画面内の射線コマンドとして扱い、敵種ごとに次行動を書き換える版にした。
 
+ただし最初のv007は、ユーザー確認で「7は説明されても違いが判らなかった」と判断された。これは、敵の内部状態や次弾パターンだけを書き換えても、プレイヤーが画面上で「敵が変わった」と読めなかったため。修正後のv007では、書き換えられた敵そのものを一時的に味方砲台へ変える方向に寄せた。
+
 実装内容:
 
 - feeder は中央へ燃料弾を供給する。
@@ -101,6 +118,11 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 - escort は path を瞬間変更せず、押し出し燃料弾だけを出す。
 - boss は fuel lane pattern を出す。
 - `rewrittenEnemies`, `rewriteFuelShots`, `rewriteKills`, `rewriteBossPatternCount` を headless 指標へ追加した。
+- 書き換えられた敵は黄色く表示される。
+- 書き換え中の非ボス敵は通常の赤い敵弾発射を止める。
+- 書き換え中の敵は黄色い味方弾を撃つ。
+- 味方弾は敵を狙い、敵を倒せる。
+- `alliedShots`, `alliedHits`, `alliedKills` を headless 指標へ追加した。
 
 検証結果:
 
@@ -110,15 +132,34 @@ Pulse は一瞬の反射ボタンではなく、短時間残る共鳴場を作�
 - `node wave_grammar_check.js`: pass
 - `node enemy_overlap_check.js`: pass
 - route clearRate: 1
-- route meanRewrittenEnemies: 24
-- route meanRewriteFuelShots: 175
-- route meanRewriteKills: 19
-- route meanRewriteBossPatternCount: 6
+- route meanRewrittenEnemies: 23
+- route meanRewriteFuelShots: 114
+- route meanRewriteKills: 29
+- route meanRewriteBossPatternCount: 2
+- route meanAlliedShots: 46
+- route meanAlliedHits: 46
+- route meanAlliedKills: 25
 - noPulse / camper / lane-holder / blind-sweeper clearRate: 0
 - offscreenShots: 0
 - pairOverlaps: 0
 
-残課題: route は clear するが被弾と弾量が多い。v008 では人間確認向けに、rewrite の視覚記号、弾量、boss-rush policy を整理する。
+残課題: route は clear するが被弾が残る。v007型を伸ばすなら、味方化した敵の射撃先、黄色弾の密度、boss-rush時の書き換え価値をさらに調整する。
+
+## v005 / v006 / v007 を混同しないための比較
+
+今回のユーザー指摘から、内部仕様だけが違っても、人間がプレイして違いを感じられなければ別バージョンとして弱いことが分かった。今後の自律サイクルでは、各版の違いを「体感で言える一文」に落とせるかを確認する。
+
+- v005: Pulse 後に短時間だけ場が残り、敵弾を拾い続ける。体感は「設置した残留フィールドで受ける」。
+- v006: charge を溜めて MAX Pulse を撃つと、画面中の弾と敵へショックウェーブが走り、敵から敵へ枝分かれする。体感は「溜め技で画面全体を反転させる」。
+- v007: Pulse を当てた敵が黄色い書き換え状態になり、通常の赤弾を止めて味方弾を撃つ。体感は「敵を一時的に味方砲台へ変える」。
+
+同じ失敗を繰り返さないための判断基準:
+
+- 「内部の数値や状態は変わっている」だけでは不十分。
+- 「説明されれば違う」だけでは不十分。
+- プレイヤーが見て、押して、1回のプレイ中に違いを感じられる必要がある。
+- 新バージョンの仮説は、画面上の記号、敵の振る舞い、弾の軌跡、倒れ方、リスクと報酬の構造まで変える。
+- ヘッドレス評価では、新しい仮説専用の指標を追加する。v007なら `alliedShots`, `alliedHits`, `alliedKills` のように、体感差に直結する指標を測る。
 
 ## 自律サイクルで特に守ること
 

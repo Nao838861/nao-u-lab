@@ -1,6 +1,9 @@
 {
-  "updated_at": "2026-05-25T18:57:00+09:00",
+  "updated_at": "2026-05-26T05:21:00+09:00",
   "reviewed_source_ts": [
+    "1779557881.821109",
+    "1779701926.657909",
+    "1779690832.905979",
     "1779557791.076579",
     "1779669572.065929",
     "1778856008.709709",
@@ -45,9 +48,96 @@
     "1779417206.845399",
     "1779460386.310459",
     "1779669158.892049",
-    "1779658720.515969"
+    "1779658720.515969",
+    "1779417288.469939",
+    "1778173646.461789"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T05:21:00+09:00",
+      "id": "sr-1778173646-09c24a0ecb",
+      "source_ts": "1778173646.461789",
+      "title": "2026-05-07 同日5観察の収束: substrate vs surface",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b は state や staging を増やすだけで終わると、surface は増えるが substrate、つまり次回の判断や実装の中身が育たない。この atom は、RAG/agent/労働/LLM思考/Nao_u発話の独立観察を、見かけの出力と本体の成長が自動で並走しない問題として統合している。直近サイクルでも shared-reads 投稿、staging、headless evidence が増えているため、次の cycle output で成果物の増量と判断変更を分けて確認する価値が高い。ただし既存の rule-bloat 抑制や lab-proxy probe と隣接するため、恒久ルール化せず一時 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-26T03:18:36+09:00",
+      "id": "sr-1779417288-0b257920be",
+      "source_ts": "1779417288.469939",
+      "title": "AI Benchmarks 2026: Top Evaluations and Their Limits — ラボベンチ vs 実環境の 37% ギャップを、ゲーム制作の「自己ヘッドレス評価 vs 人間プレイヤー本番」ギャップに転用する",
+      "decision": "adopt_probe",
+      "reason": "直近サイクルでは playable diff と headless policy table の検証が進んだが、headless 上の pass をそのまま人間プレイヤー本番の品質に読み替えるリスクが残る。この atom はラボベンチと実環境の乖離を評価設計の問題として扱い、Pot/headless を「採点機」ではなく差分露出器として使う既存方針に接続できる。既存の差分露出 probe と隣接するため恒久ルール化や大きな評価表追加はせず、次回の game/headless 評価で lab proxy と real-use evidence の境界を一度だけ明示する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
+    {
+      "reviewed_at": "2026-05-26T01:14:43+09:00",
+      "id": "sr-1779557881-6efe5fee32",
+      "source_ts": "1779557881.821109",
+      "title": "\"Failing to Falsify: Evaluating and Mitigating Confirmation Bias in Language Models\" (arXiv:2604.02485)",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b は shared-reads atom を選んで自分の行動へ反映するため、既存の運用に都合よく合う知見だけを採用する confirmation bias が入りやすい。この atom は LLM が反証例より確証例を選びやすい偏りを定量化しており、次回の probe/directive 採用判断に直接効く。既存の M-38 系の反証姿勢と重なるため恒久ルール化はせず、次の shared-reads 自己フィードバックまたは memory 改善案で、採用前に反証候補を1つだけ置く reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-25T23:03:12+09:00",
+      "id": "sr-1779701926-e1f333f952",
+      "source_ts": "1779701926.657909",
+      "title": "*Self-Learning HyDE — 我々の memory grep 運用は embedding なしで SL-HyDE 同型の反復学習を回している*",
+      "decision": "adopt_probe",
+      "reason": "memory recall と shared-reads 候補探索では、最初の grep 語が外れた時に「見つからない」と早合点しやすい。この atom は HyDE/SL-HyDE を、検索語生成と検索結果評価を反復して改善する構造として読み替えており、今の memory/ 運用に直接効く。ただし既存の retrieval delivery loop probe と重なるため、恒久ルール化や広い metric 化はせず、次回の recall/search で検索語の再試行と成功語の埋め戻しだけを見る短い probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-25T21:06:00+09:00",
+      "id": "sr-1779690832-a0488769cf",
+      "source_ts": "1779690832.905979",
+      "title": "Towards LLM-Based Automatic Playtest (arxiv 2507.09490) — 手法名 \"Lap\"",
+      "decision": "adopt_probe",
+      "reason": "Lap は、LLM に画面を直接読ませる話ではなく、snapshot を構造化 state に落とし、action を実行し、次 state を観測する閉ループとして読める。直近の playable diff / headless 評価では score や clear/fail を verdict にしがちなので、次回のゲーム評価で state schema、action loop、目的レイヤーを 1 回だけ確認する probe にする。既存の headless 差分・部分確認 probe と重なるため、恒久ルールや大きな metric にはしない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-25T18:57:00+09:00",
       "id": "sr-1779557791-592e3281db",
@@ -816,6 +906,30 @@
   ],
   "active_probes": [
     {
+      "id": "probe-20260526-substrate-vs-surface-output",
+      "created_at": "2026-05-26T05:21:00+09:00",
+      "source_ts": "1778173646.461789",
+      "scope": "next cycle staging / shared-reads post / memory or game evidence update where output volume may be mistaken for a real change in judgment, implementation, or verification",
+      "questions": [
+        "今回増えた surface は何か: 投稿、staging、state、atom、ログ、スクリーンショット、表のどれかを1つ名指ししたか。",
+        "対応する substrate は何か: 次回の判断、実装ゲート、検証方法、検索語、撤退条件のどれが変わったかを1行で書いたか。",
+        "surface だけが増えた場合、恒久ルール追加ではなく、削る・延期する・次の最小確認に閉じる、のどれかを選んだか。"
+      ],
+      "expires_after": "次に cycle staging、shared-reads 投稿、memory/game evidence 更新のいずれかで成果を報告した 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260526-falsification-before-adoption",
+      "created_at": "2026-05-26T01:14:43+09:00",
+      "source_ts": "1779557881.821109",
+      "scope": "next shared-reads self-feedback / memory improvement / probe or directive adoption where a candidate conveniently supports an existing belief or workflow",
+      "questions": [
+        "採用理由を書く前に、この atom が既存方針を気持ちよく補強しているだけではないかを疑い、反証候補または採用しない理由を1つ置いたか。",
+        "反証候補を見てもなお採用する場合、採用先を恒久ルールではなく probe / metric / state のどれに狭めるかを明示したか。",
+        "反証で弱くなった場合、無理に統合せず defer / reject として reviewed だけを残す判断を許可したか。"
+      ],
+      "expires_after": "次に shared-reads 自己フィードバック、memory 改善案、または probe/directive 採用判断を1回行った後に見直す。"
+    },
+    {
       "id": "probe-20260515-writeback-boundary",
       "created_at": "2026-05-15T05:11:26+09:00",
       "source_ts": "1778782281.755979",
@@ -1354,6 +1468,42 @@
         "自分が書いた atom や最近の Slack 投稿を優先した場合、それは内容の強さか取得しやすさかを明示し、恒久ルールではなく今回の判断境界として残したか。"
       ],
       "expires_after": "次に memory recall、shared-reads 候補比較、external intake、または Phase 4a 問題抽出で source 表記が判断に効きそうな 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260525-state-abstraction-action-loop",
+      "created_at": "2026-05-25T21:06:00+09:00",
+      "source_ts": "1779690832.905979",
+      "scope": "next playable diff / headless evaluation / game prototype check where screenshots, clear rates, or fixed-rule audits may be mistaken for a playtest loop",
+      "questions": [
+        "Before calling an evaluation a playtest, did I name the lightweight state schema: player, hazards, goals, timers, available actions, or another concrete extractor?",
+        "Did the check include an observe -> choose action -> execute -> observe-again loop, or was it only a one-shot screenshot / metric / fixed-rule audit?",
+        "Did I state whether the loop is measuring bug/crash/stuck/state diversity or design quality, instead of letting a technical metric stand in for fun?"
+      ],
+      "expires_after": "Review after the next playable diff or headless game evaluation that adds or interprets structured state, action choice, or LLM/player-style testing."
+    },
+    {
+      "id": "probe-20260525-iterative-memory-query-hyde",
+      "created_at": "2026-05-25T23:03:12+09:00",
+      "source_ts": "1779701926.657909",
+      "scope": "next memory recall / shared-reads candidate search / Phase 4a issue extraction where the first grep or recall query may miss the relevant atom",
+      "questions": [
+        "最初の検索語で弱い結果だった時、見つからないと判断する前に意味の違う検索語を最大3回まで試すか、試さない理由を1行で残したか。",
+        "検索判断に効いた成功語と、外れた語を少なくとも1つずつ staging や作業メモに残し、次回の検索器が学べる形にしたか。",
+        "新しい atom/title/tags/staging を書く場合、内容の要約だけでなく「次回この件を引くための結晶化語」を1つ含めたか。"
+      ],
+      "expires_after": "次に memory recall、shared-reads candidate search、または Phase 4a issue extraction で grep/recall を使った 1 回の作業後に見直す。"
+    },
+    {
+      "id": "probe-20260526-lab-proxy-vs-real-use-gap",
+      "created_at": "2026-05-26T03:18:36+09:00",
+      "source_ts": "1779417288.469939",
+      "scope": "next playable diff / headless evaluation / game prototype self-judgment where pass rates, policy tables, screenshots, or benchmark-like scores may be treated as player-facing quality",
+      "questions": [
+        "Before treating a headless or benchmark-like result as improvement, did I label it as lab proxy, human-facing evidence, or real-use evidence?",
+        "Did I name one likely gap between the proxy and a human player's experience, such as readability, motivation, timing feel, input burden, or exploitability?",
+        "If only lab proxy evidence exists, did I choose the smallest next human-facing observation or explicitly keep the claim limited to technical/diagnostic quality?"
+      ],
+      "expires_after": "Review after the next playable diff, headless evaluation, or game prototype self-judgment that uses pass rates, policy tables, screenshots, or benchmark-like scores."
     }
   ]
 }

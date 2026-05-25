@@ -4,6 +4,10 @@ url: "https://arxiv.org/abs/2108.00056"
 collected_at: "2026-05-18T14:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [procedural-generation, level-design, 3d-maps, designer-control, navigation]
+candidate_status: needs_review
+stale_after: "2026-06-17"
+supersedes: []
+
 ---
 
 ## raw_excerpt

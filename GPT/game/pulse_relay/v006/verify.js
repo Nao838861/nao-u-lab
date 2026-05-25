@@ -69,7 +69,7 @@ function mechanicCheck() {
   }
   game.update({ left: false, right: false, up: false, down: false, pulse: true, restart: false });
   const converted = game.metrics.converted;
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 190; i++) {
     game.update({ left: false, right: false, up: false, down: false, pulse: false, restart: false });
   }
   return {
@@ -78,6 +78,10 @@ function mechanicCheck() {
     fieldConversions: game.metrics.fieldConversions,
     resonantEnemies: game.metrics.resonantEnemies,
     chainHits: game.metrics.chainHits,
+    maxShockwaveConversions: game.metrics.maxShockwaveConversions,
+    maxShockwaveHits: game.metrics.maxShockwaveHits,
+    stormCaptures: game.metrics.stormCaptures,
+    stormSalvos: game.metrics.stormSalvos,
     nearMissCharge: game.metrics.nearMissCharge,
     spentCharge: game.metrics.spentCharge,
     maxPulseCount: game.metrics.maxPulseCount,
@@ -91,14 +95,14 @@ console.log(JSON.stringify({ mechanic, runs: results }, null, 2));
 
 const reached = results.filter(r => r.bossReached).length;
 const usedRelay = results.every(r => r.converted > 0 && r.conversionHits > 0);
-if (mechanic.converted < 5 || mechanic.conversionHits < 1) {
-  throw new Error("core pulse conversion did not damage the target enemy");
+if (mechanic.converted < 5 || mechanic.stormCaptures < 5 || mechanic.stormSalvos < 1 || mechanic.conversionHits < 1) {
+  throw new Error("v006 storm did not capture bullets and release a damaging salvo");
 }
 if (results.some(r => r.nearMissCharge < 70 || r.spentCharge < 80 || r.maxPulseCount < 1)) {
   throw new Error("v006 charge economy was not exercised enough");
 }
-if (results.some(r => r.fieldConversions < 4 || r.resonantEnemies < 6 || r.chainHits < 6)) {
-  throw new Error("v006 resonance field / enemy reaction / chain relay was not exercised enough");
+if (results.some(r => r.maxShockwaveConversions < 80 || r.maxShockwaveHits < 12 || r.stormCaptures < 80 || r.stormSalvos < 2 || r.resonantEnemies < 24 || r.chainHits < 6)) {
+  throw new Error("v006 storm capture / delayed salvo / enemy reaction was not exercised enough");
 }
 if (reached < 2) {
   throw new Error(`boss reach regression: ${reached}/3`);

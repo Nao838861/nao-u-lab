@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-25T16:20:00+09:00
+last_handled_at: 2026-05-26T05:27:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v84/` で v82/v83 の gameplay と `botTrace` を維持し、`j4/lag4` failure と `j6/lag6` clear の同 seed 差を causal slice に分解した。`tools/headless_graze_log_cdx_v05_2_v84_causal_slice_check.js` は seeds 12345 / 77777、variants baseline / j4_lag4 / j6_lag6 を route policy で検証して pass。baseline route は 2/2 clear、`j4/lag4` route は 2/2 failure、`j6/lag6` route は 2/2 clear。両 seed で input divergence、late survival gap、BOMB reach split、Active DEF split、packet DOM / screenshot contract を確認した。raw evidence を `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_causal_slice.jsonl` に追記した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v89/` で v88 の policy reason family 契約を維持しつつ、headless 実測から人間確認用の generated evidence 行を再生成し、`review_packet.html` の `data-generated-reason-row` 表示値と一致するかを検証する focused evaluation へ拡張した。`tools/headless_graze_log_cdx_v05_2_v89_generated_reason_table_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、generated reason table contract、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。
 
 ## Nao_u 指示
 

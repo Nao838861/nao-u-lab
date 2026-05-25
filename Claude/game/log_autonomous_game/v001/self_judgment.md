@@ -127,15 +127,21 @@ staging C239 Phase 4 完遂条件 3:
 
 ---
 
-## 3. enemy_behavior_audit.js / verify.js 現状確認 (完遂条件 4)
+## 3. 3 軸監査体制 (verify.js 受け手悪手 / bullet_origin_audit.js Q-D 弾源 / enemy_behavior_audit.js 敵挙動)
 
-`find game/ -name "enemy_behavior_audit*"` および `verify*.js` 検索結果: **どちらも全リポジトリ内に存在しない** (Pulse Relay v003 も `game/pulse_relay/` ディレクトリ自体が存在しない)。
+**update (C238 Phase 4)**: 3 軸目 `enemy_behavior_audit.js` を整備、3 軸全 PASS で揃った。
 
-projects/log_autonomous_game.md §残課題 でも未チェック (`[ ]`) として既に明示済:
-- [ ] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / 特殊不使用 で全部 fail することを判定)
-- [ ] `enemy_behavior_audit.js` / `bullet_origin_audit.js` (lingeringEnemies / offscreenShots / maxEnemyStep / 画面外射撃ゼロ 独立監査)
+- [x] `bullet_origin_audit.js` — 3 層独立監査 (定数抽出 / 静的ガード検出 / 決定論シミュ)、6/6 check PASS、exit 0、self_judgment §1 Q-D の「数値根拠ゼロ」一次処方完了
+- [x] `verify.js` — 悪手 4 方針 (camper / lane-holder / blind-sweeper / nospecial) 各 30秒 headless simulate、全 4 gameover で pass: true、exit 0
+  - 生存秒数: camper 5.33s (bullet) / lane-holder 4.62s (bullet) / blind-sweeper 7.78s (bullet) / nospecial 8.20s (bullet)
+  - 全方針が wave 1 内で gameover、castLock 不使用は設計通り全滅。生存方針なし = 設計穴指標ゼロ
+- [x] `enemy_behavior_audit.js` — 敵 A wave 挙動 3 case 独立監査、3/3 PASS、exit 0
+  - case 1 (spawn 座標域): 5 体全て x∈[0,640] かつ y<0 (画面上端外)
+  - case 2 (進行方向不変): 3039 サンプル全フレーム vy=1.4 / vx=0 (急加速・横ブレなし)
+  - case 3 (射撃ゲート): 23 発全て発射 y∈[0, 612=SHOOT_GATE_Y_MAX] (画面外/退場帯射撃ゼロ)
+  - 3 軸監査体制成立により「受け手 (verify) / 弾源 (bullet_origin) / 敵本体 (enemy_behavior)」の独立検証が揃った状態に到達
 
-→ 次サイクル C240 以降の課題として残課題リストに既存。本ファイルでは「未着手であることを確認した」という状態確定のみ。
+**limits**: `verify.js` は悪手検証であり、良手検証ではない。実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守、§5 残「実機ブラウザ体感」は依然として実機判定依存)。本検証は「castLock 不使用で全滅すること」のみを保証し、「castLock 使用で生残可能」は別検証。
 
 ---
 
@@ -167,7 +173,7 @@ projects/log_autonomous_game.md §残課題 でも未チェック (`[ ]`) とし
 3. Q-D ≤ 3 確定なら BULLET_SPEED / GHOST_ALPHA / SHOOT_INTERVAL のうち実機判定で示唆された 1 パラメータを調整
 4. Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) 実装
 5. 敵 B/C/D + 70-90 秒カーブ実装
-6. `bullet_origin_audit.js` / `enemy_behavior_audit.js` / `verify.js` 整備 (悪いプレイ方針 4 種が全部 fail することのヘッドレス検証)
+6. ~~`bullet_origin_audit.js` / `enemy_behavior_audit.js` / `verify.js` 整備~~ — **C238 Phase 4 完了** (3 軸全 PASS、§3 参照)
 
 ---
 
@@ -186,6 +192,94 @@ graze_log v04 self_judgment.md §4 で提示された「AI 自プレイで『良
 
 ---
 
+## 7b. agent_difficulty_proxy 数値裏付け (C242 Phase 4 追記)
+
+C242 Phase 4 で 4 軸目 audit/runner `agent_difficulty_proxy.js` を新設、arXiv:2410.02829 (Wordle r=0.624 / Slay the Spire r=0.871) 命題のローカル翻訳実装。30 試行 (各 60秒=3600 frame) 素朴良手 agent 中央値計測の v001 baseline:
+
+| 指標 | 中央値 | レンジ | 意味 |
+|---|---|---|---|
+| clear_wave | 1 | 1 固定 | wave 2 到達ゼロ = 素朴良手でも wave 1 内で全滅 |
+| residual_hp_ratio | 0 | 0 固定 | 1-hit kill のため binary、生存試行ゼロで 0 確定 |
+| play_time_sec | 10.0 | 9.02-10.0 | seed 差で約 1 秒スプレッド = 微小ノイズで結果分散あり |
+| graze_count | 5.5 | 1-7 | seed 差で 6 ステップ = 弾外殻 30px 圏掠め頻度 |
+| survival_rate | 0/30 = 0% | — | 5 体同時発射時の認知負荷が真に高い |
+| death_cause | 全 bullet (30/30) | — | 敵接触ゼロ、弾で必ず死 |
+
+**§1 Q-D / Q-成功FB 採点への影響 (暫定昇格判断材料)**:
+- **Q-D 予測軌道ゴースト**: 3/5 → **3.5/5 (暫定)** — 失点 -2 のうち「-1.5 数値裏付けあり、-0.5 実機体感未確認」に再分配。理由: §1 Q-D-1「5 体同時発射時の情報密度未確認」失点に対し proxy で「素朴良手でも 10 秒前後死、5 体ウェーブが死因 30/30」と数値裏付けが付いた。失点理由が「未確認」から「実数値で確認、実機体感との乖離だけ残」に圧縮。3→4 確定昇格は実機判定依存のまま維持
+- **Q-成功FB 状態3**: 3/5 → **3/5 (据置)** — 本 proxy は castLock 機構の hit/miss も計測する (lock_hit=3 median、lock_miss=0 median) が、状態 1/2/3 の視覚体感階差は本 runner では測れない (描画ロジックの体感判定は実機依存)。proxy 数値を 3→4 暫定昇格根拠として使うのは Q-D のみ、Q-成功FB は実機判定後
+
+**Q-D 3 → 3.5 暫定昇格の判定責任 (M-37 Stage 4 整合)**:
+- 本 proxy 数値は M-37 Stage 4「AI 自プレイで『良い』と確信してから依頼」の Stage 4 単独責任モデルとは異なるが、「コードレビュー暫定 + mental simulation + 30 試行 headless 中央値」の三段重ねで「数値根拠ゼロ → 数値根拠あり」への遷移は構造的に判定責任の負担増を表す
+- arXiv:2410.02829 命題「LLM agent でも難易度ランキングは当てられる (Wordle r=0.624)」は本 v001 1 サイクルでは検証不能 (v001/v002 差分の Nao_u 体感ランキング合致を 3 サイクル運用で見るまで proxy 採用は暫定)
+- 不一致なら `feedback_*` に負の知見として書き戻し、本 runner は撤去 (judging proxy としては失敗、ただし design_log の lever としては保持の選択肢あり)
+
+**新合計 (暫定昇格反映)**:
+| ゲート | 旧 | 新 | 根拠分類 |
+|---|---|---|---|
+| Q-A 中心入力 | 5/5 | 5/5 | コード構造 ✅ (据置) |
+| Q-導入 | 4/5 | 4/5 | コード ✅ + mental simulation (据置) |
+| Q-成功FB 状態3 | 3/5 | 3/5 | コード ✅ + mental simulation (proxy では測れず据置) |
+| Q-D 予測軌道ゴースト | 3/5 | **3.5/5** | 数値保証 ✅ + proxy 30 試行 ✅ + 実機未確認残 |
+| Q-E レイアウト | 5/5 | 5/5 | コード構造 ✅ (据置) |
+
+**新合計: 20.5/25 (82%)** (旧 20/25 = 80%)
+
+**昇格は 0.5 ポイントに留まる** — proxy 単独で 3 → 4 まで一気に上げず、実機判定 + proxy 一致確認で 4 確定する 2 段階昇格の中継点として 3.5 を置く。一気に 4 昇格する誘惑を避けるのは `feedback_rule_proliferation_canonical.md`「個別指摘を即ルール化しない」と同精神の「個別 proxy で即昇格しない」処方。
+
+---
+
+## 7c. Q-ミミクリ ミミクリ核採点 (C242 Phase 4 追記、design_log §ミミクリ宣言 直接対応)
+
+**status**: ミミクリ宣言は design_log §冒頭 / projects/log_autonomous_game.md §冒頭の二箇所で物理化済 (C242 Phase 4)。本ゲートは既存 Q-A〜Q-E の上層 (核ゲート) として運用、メカニクス採点が全 5/5 でも本ゲートが低い場合は「核を冷やす改修」サインとして優先処方する。
+
+採点 3 項目 (各 5 段階、合計 15 点を最上位ゲートとして別建て):
+
+### Q-ミミクリ-1: 核を上回るメカニクス改修が無いか — **4/5**
+
+根拠:
+- C242 Phase 4 までで game.js に追加された差分は (a) Q-成功FB 状態 1/2 視覚階差 (C240 ee908bfd) (b) 本サイクル C242 のタイトル副題「パイロットごっこ」追記 + 死亡時メッセージ「パイロットは死線を抜けられなかった」追記、の 2 系統のみ
+- どちらも「死線スリリングを抜けるパイロット感」を支持する方向 (状態 1/2 視覚階差は「危機回避」体感の対照を作る、ミミクリ宣言の言語化は核を text 層で明示) で、メカニクス積上の方向ではない
+- 失点 -1: agent_difficulty_proxy.js (§7b 4 軸目) は採点提供のための拡張だが、proxy 数値を 3 → 3.5 暫定昇格に使った行為自体は「メカニクス改修」ではなく「採点提供層」に留まる。境界線上のため -1。
+
+### Q-ミミクリ-2: プレイヤーが「パイロット感」を味わえる導入か — **3/5**
+
+根拠 (コードレビュー + mental simulation):
+- タイトル副題「あなたの足跡が、これから歩く道になる」(game.js:216) は導入メタファとして機能、その下に「— 1 秒先の自分に賭けるパイロットごっこ —」(C242 追記、game.js:218) を 12px で添えた。**1 行ごっこ宣言は満たすが、ロゴ「Echo-Path」とミミクリ宣言の語感がまだ並列で、プレイ前から「パイロット視点に入る」感は弱い**
+- index.html `.note` も「1 秒先の自分に賭けるパイロットごっこ」を明記、ただし canvas 外の説明文であり、ゲーム画面そのものから「パイロット感」が立つかは未確認
+- 失点 -2: (1) タイトル → Space → プレイ画面遷移で「パイロットになる」演出が不在 (機体グラフィックではなく抽象円のままで、視覚的「パイロット感」の物体化が無い)。(2) 実機判定未実施で「ごっこ感が成立しているか」は推測のまま
+
+実機未確認部分: 上記 2 点とも実機判定で 4/5 まで上がる可能性あり (副題追加分のみで構造的に 3 確定、実機で「パイロット感が伝わる」確認できれば 4、機体グラフィック追加なしで 5 は到達不能)。
+
+### Q-ミミクリ-3: 死線スリリングが castLock 機構で発生しているか — **3.5/5**
+
+根拠 (§7b proxy 数値 + コードレビュー):
+- §7b agent_difficulty_proxy.js 30 試行で素朴良手 agent (castLock 未使用) は中央値 10.0 秒・survival_rate 0/30、全試行 bullet death。verify.js は castLock 不使用 4 方針すべて wave 1 内全滅 (§3)。**castLock を使わなければ確実に死ぬ = 死線は存在する**、機構上保証
+- castLock 使用時の「死線を抜ける」体感は §7b で lock_hit=3 median 計測されており、castLock が hit する瞬間が試行内に存在することは数値裏付けあり
+- 失点 -1.5: (1) 「死線スリリング」の体感強度は実機判定なしで断定できない (castLock hit が発生していても「ヒヤッとした → 抜けた」体感が伴うかは別問題)。(2) §1 Q-成功FB 状態3 が 3/5 据置の理由 (テキスト出現の体感タイミング未確認) と同根 — 危機回避メッセージが castLock 機構の「死線抜け」体感に同期しているかは実機依存
+
+実機未確認部分: 「死線スリリング」の体感成立 (proxy 数値は機構の存在を保証するが、体感は未確認)。
+
+### Q-ミミクリ 合計
+
+| サブゲート | 点数 | 根拠分類 |
+|---|---|---|
+| Q-ミミクリ-1 核を上回るメカニクス改修なし | 4/5 | コード差分追跡 ✅ + proxy 拡張の境界判定 |
+| Q-ミミクリ-2 パイロット感の導入 | 3/5 | コード ✅ + mental simulation (機体グラフィック不在、実機未確認) |
+| Q-ミミクリ-3 死線スリリング × castLock | 3.5/5 | proxy 数値裏付け ✅ + 実機体感未確認 |
+
+**Q-ミミクリ 合計: 10.5/15 (70%)**
+
+メカニクス 5 ゲート合計 20.5/25 (82%) と比較して **ミミクリ核は 70% で 12 ポイント低い**。これは「メカニクス精度は上がっているが、核 (ごっこ感) はまだ実機判定なしで頭打ち」サインで、§6 次サイクル C243 優先作業は **実機判定 (Nao_u / Mir / Ash) で Q-ミミクリ-2 / Q-ミミクリ-3 を確定** することが最上位、その後にメカニクス改修判断する順序を本ゲートで強制する。
+
+### Q-ミミクリの運用ルール (本サイクル制定)
+
+- 本 Q-ミミクリは Q-A〜Q-E の上層 (核ゲート) として位置付ける。**Q-ミミクリ合計が 60% を切ったらメカニクス改修を一時停止し、ミミクリ宣言再点検 → 核を冷やしている改修の特定 → 該当改修の取消 or 補強を最優先**
+- メカニクス採点 (Q-A〜Q-E) が満点でも Q-ミミクリが低い場合、Civ7 同型事故 (メカニクス的に正しいが何のごっこ遊びか壊した) のサインとして警告扱い
+- Q-ミミクリ の各サブゲートは「実機判定なしで 4/5 を超えてはいけない」 (構造採点の上限を 4 で頭打ち、5 は実機判定後にのみ到達可能) — メカニクス側 (Q-A / Q-E は構造証明可で 5 到達可) と異なる扱い
+
+---
+
 ## 8. 接続先
 
 - [game/log_autonomous_game/v001/design_log.md](design_log.md) — §実装第2 commit 報告 が本採点の対象範囲
@@ -196,3 +290,4 @@ graze_log v04 self_judgment.md §4 で提示された「AI 自プレイで『良
 - [log/cycle_staging_log.md](../../../log/cycle_staging_log.md) C239 Phase 4 セクション — 本ファイルの起票文脈
 - [memory/feedback_headless_unfit_for_unfinished_eval.md](../../../memory/feedback_headless_unfit_for_unfinished_eval.md) t:5 — 判定方針 (ヘッドレス数値根拠ゼロを正直に明記)
 - [memory/feedback_prediction_responsibility.md](../../../memory/feedback_prediction_responsibility.md) t:5 — Stage 4、本ファイル §7 で「物理制約による不完全実施」を明記
+- [game/log_autonomous_game/v001/agent_difficulty_proxy.js](agent_difficulty_proxy.js) — 4 軸目 runner、本 §7b の 30 試行中央値 baseline 出力元

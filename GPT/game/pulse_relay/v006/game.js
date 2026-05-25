@@ -285,6 +285,7 @@
       this.enemyBullets = [];
       this.playerBullets = [];
       this.pulseFields = [];
+      this.pulseStorm = null;
       this.particles = [];
       this.stars = Array.from({ length: 80 }, () => ({
         x: this.rand() * W,
@@ -307,6 +308,10 @@
         lowPulseCount: 0,
         midPulseCount: 0,
         maxPulseCount: 0,
+        maxShockwaveConversions: 0,
+        maxShockwaveHits: 0,
+        stormCaptures: 0,
+        stormSalvos: 0,
         fieldConversions: 0,
         resonantEnemies: 0,
         chainHits: 0,
@@ -443,7 +448,10 @@
       const usedTargets = new Map();
       const sourceIds = new Set();
       for (const b of this.enemyBullets) {
-        if (dist2(p, b) <= radius * radius) {
+        const inPulse = tier === "max"
+          ? b.x > -20 && b.x < W + 20 && b.y > -24 && b.y < H + 24
+          : dist2(p, b) <= radius * radius;
+        if (inPulse) {
           convertedBullets.push(b);
           if (b.source != null) sourceIds.add(b.source);
           this.particles.push({ x: b.x, y: b.y, life: 0.22, max: 0.22, kind: "convert" });
@@ -452,12 +460,30 @@
         }
       }
       converted = convertedBullets.length;
-      for (let i = 0; i < convertedBullets.length; i++) {
-        this.createRelayFromBullet(convertedBullets[i], usedTargets, i, convertedBullets.length, tier === "max" ? "maxPulse" : "pulse");
+      if (tier === "max") {
+        this.pulseStorm = {
+          x: p.x,
+          y: p.y,
+          r: 142,
+          life: 2.65,
+          max: 2.65,
+          captured: converted,
+        };
+        this.metrics.stormCaptures += converted;
+      } else {
+        for (let i = 0; i < convertedBullets.length; i++) {
+          this.createRelayFromBullet(convertedBullets[i], usedTargets, i, convertedBullets.length, "pulse");
+        }
       }
       for (const e of this.enemies) {
         if (sourceIds.has(e.id) || dist2(p, e) <= (radius + e.r + 18) * (radius + e.r + 18)) {
           if (tier !== "low") this.activateResonance(e, converted > 0 ? "pulse" : "empty-pulse", tier);
+        }
+        if (tier === "max" && e.y > -30 && e.y < H * 0.92) {
+          this.activateResonance(e, "max-shockwave", "max");
+          if (!e.boss) e.shield = 0;
+          this.metrics.maxShockwaveHits++;
+          this.particles.push({ x: e.x, y: e.y, life: 0.52, max: 0.52, kind: "maxRing", count: converted });
         }
       }
       this.enemyBullets = next;
@@ -467,14 +493,17 @@
       }
       p.pulseCharge = Math.max(0, p.pulseCharge - cost);
       p.pulseCd = tier === "low" ? 0.64 : tier === "mid" ? 0.92 : 1.18;
-      if (converted > 0) p.invuln = Math.max(p.invuln, 0.18);
+      if (converted > 0) p.invuln = Math.max(p.invuln, tier === "max" ? 0.44 : 0.18);
       this.metrics.pulses++;
       this.metrics.converted += converted;
       this.metrics.spentCharge += cost;
       if (tier === "low") this.metrics.lowPulseCount++;
       if (tier === "mid") this.metrics.midPulseCount++;
-      if (tier === "max") this.metrics.maxPulseCount++;
-      if (converted === 0) this.metrics.pulseWhiffs++;
+      if (tier === "max") {
+        this.metrics.maxPulseCount++;
+        this.metrics.maxShockwaveConversions += converted;
+      }
+      if (converted === 0 && tier !== "max") this.metrics.pulseWhiffs++;
       this.particles.push({ x: p.x, y: p.y, life: 0.18, max: 0.18, kind: tier === "max" ? "maxRing" : "ring", count: converted });
     }
 
@@ -529,6 +558,57 @@
         splash: total >= 4 ? 26 : 14,
         trail: [{ x: b.x, y: b.y }],
       });
+    }
+
+    releasePulseStorm(storm) {
+      const total = Math.min(54, Math.max(8, storm.captured));
+      const usedTargets = new Map();
+      for (let i = 0; i < total; i++) {
+        const a = -Math.PI * 0.92 + (Math.PI * 1.84 * (i + 0.5)) / total;
+        const pseudo = {
+          x: storm.x + Math.cos(a) * 34,
+          y: storm.y + Math.sin(a) * 34,
+          vx: 0,
+          vy: -RELAY_SPEED,
+          r: 8,
+          fuel: true,
+        };
+        this.createRelayFromBullet(pseudo, usedTargets, i, total, "maxPulse");
+      }
+      this.metrics.stormSalvos++;
+      this.metrics.chainHits += Math.floor(total / 6);
+      this.particles.push({ x: storm.x, y: storm.y, life: 0.5, max: 0.5, kind: "stormBurst", count: total });
+    }
+
+    spawnShockwaveBranches(source) {
+      const candidates = this.enemies
+        .filter(e => e !== source && e.hp > 0 && e.y > -20 && e.y < H * 0.92)
+        .map(e => ({ e, d2: dist2(source, e) }))
+        .filter(x => x.d2 <= 190 * 190)
+        .sort((a, b) => a.d2 - b.d2)
+        .slice(0, source.boss ? 2 : 1);
+      for (const item of candidates) {
+        const target = item.e;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const len = Math.hypot(dx, dy) || 1;
+        const speed = RELAY_SPEED * 0.88;
+        this.playerBullets.push({
+          x: source.x,
+          y: source.y,
+          vx: (dx / len) * speed,
+          vy: (dy / len) * speed,
+          r: 6,
+          dmg: 18,
+          friendly: true,
+          relay: true,
+          chain: true,
+          targetId: target.id,
+          splash: 10,
+          trail: [{ x: source.x, y: source.y }],
+        });
+        this.metrics.chainHits++;
+      }
     }
 
     activateResonance(e, reason, tier = "mid") {
@@ -653,7 +733,8 @@
         e.phaseLockFlash = Math.max(0, e.phaseLockFlash - DT);
         e.resonance = Math.max(0, e.resonance - DT);
         e.ventCd = Math.max(0, e.ventCd - DT);
-        if (e.resonance > 0 && e.ventCd <= 0 && this.enemyBullets.length < 220 && e.y > 10 && e.y < H * 0.78) {
+        const canFireFromVisibleBody = e.x > 8 && e.x < W - 8 && e.y > 10 && e.y < H * 0.78;
+        if (e.resonance > 0 && e.ventCd <= 0 && this.enemyBullets.length < 220 && canFireFromVisibleBody) {
           const towardField = this.pulseFields[0];
           if (towardField) {
             const a = Math.atan2(towardField.y - e.y, towardField.x - e.x);
@@ -665,7 +746,7 @@
           }
           e.ventCd = e.boss ? 0.48 : 0.72;
         }
-        if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
+        if (e.fireCd <= 0 && this.enemyBullets.length < 220 && canFireFromVisibleBody) {
           const bottomCamp = this.player.y > H - 96;
           let nextFireRate = e.fireRate;
           if (e.kind === "boss") {
@@ -779,18 +860,31 @@
     updateBullets() {
       const usedTargets = new Map();
       const keptEnemyBullets = [];
+      const storm = this.pulseStorm;
+      if (storm) {
+        storm.x = this.player.x;
+        storm.y = this.player.y;
+      }
       for (const b of this.enemyBullets) {
         b.x += b.vx * DT;
         b.y += b.vy * DT;
-        const field = this.pulseFields.find(f => dist2(b, f) <= f.r * f.r);
-        if (field) {
+        if (storm && dist2(b, storm) <= storm.r * storm.r) {
+          storm.captured++;
+          this.metrics.converted++;
+          this.metrics.stormCaptures++;
+          if (b.source != null) this.activateResonance(this.enemies.find(e => e.id === b.source), "storm", "max");
+          this.particles.push({ x: b.x, y: b.y, life: 0.2, max: 0.2, kind: "stormCapture" });
+        } else {
+          const field = this.pulseFields.find(f => dist2(b, f) <= f.r * f.r);
+          if (field) {
           this.createRelayFromBullet(b, usedTargets, this.metrics.fieldConversions % 9, 9, "field");
           if (b.source != null) this.activateResonance(this.enemies.find(e => e.id === b.source), "field", field.tier || "mid");
           this.metrics.converted++;
           this.metrics.fieldConversions++;
           this.particles.push({ x: b.x, y: b.y, life: 0.16, max: 0.16, kind: "convert" });
-        } else {
+          } else {
           keptEnemyBullets.push(b);
+          }
         }
       }
       this.enemyBullets = keptEnemyBullets;
@@ -934,6 +1028,15 @@
       this.particles = this.particles.filter(q => q.life > 0);
       for (const f of this.pulseFields) f.life -= DT;
       this.pulseFields = this.pulseFields.filter(f => f.life > 0);
+      if (this.pulseStorm) {
+        this.pulseStorm.life -= DT;
+        this.pulseStorm.x = this.player.x;
+        this.pulseStorm.y = this.player.y;
+        if (this.pulseStorm.life <= 0) {
+          this.releasePulseStorm(this.pulseStorm);
+          this.pulseStorm = null;
+        }
+      }
     }
 
     snapshot() {
@@ -954,6 +1057,10 @@
         lowPulseCount: this.metrics.lowPulseCount,
         midPulseCount: this.metrics.midPulseCount,
         maxPulseCount: this.metrics.maxPulseCount,
+        maxShockwaveConversions: this.metrics.maxShockwaveConversions,
+        maxShockwaveHits: this.metrics.maxShockwaveHits,
+        stormCaptures: this.metrics.stormCaptures,
+        stormSalvos: this.metrics.stormSalvos,
         fieldConversions: this.metrics.fieldConversions,
         resonantEnemies: this.metrics.resonantEnemies,
         chainHits: this.metrics.chainHits,
@@ -1000,6 +1107,29 @@
       ctx.fill();
       ctx.restore();
     }
+    if (game.pulseStorm) {
+      const s = game.pulseStorm;
+      const k = s.life / s.max;
+      ctx.save();
+      ctx.globalAlpha = 0.18 + 0.12 * Math.sin(game.t * 18);
+      ctx.fillStyle = "#61f4ff";
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.78;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * (0.94 + 0.06 * k), 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "18px Segoe UI, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(String(s.captured), s.x, s.y - s.r - 10);
+      ctx.textAlign = "left";
+      ctx.restore();
+    }
 
     for (const e of game.enemies) drawEnemy(ctx, e);
     for (const b of game.playerBullets) {
@@ -1044,6 +1174,7 @@
     }
     ctx.shadowBlur = 0;
     drawPlayer(ctx, game.player);
+    drawPulseReadiness(ctx, game);
     drawParticles(ctx, game.particles);
     drawHud(ctx, game);
   }
@@ -1130,18 +1261,52 @@
     ctx.restore();
   }
 
+  function drawPulseReadiness(ctx, game) {
+    const p = game.player;
+    const charge = clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1);
+    const highReady = p.pulseCd <= 0 && p.pulseCharge >= HIGH_PULSE_COST && !game.pulseStorm;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.globalAlpha = 0.22 + charge * 0.38;
+    ctx.strokeStyle = highReady ? "#ffffff" : p.pulseCharge >= MID_PULSE_COST ? "#bff4ff" : "#617387";
+    ctx.lineWidth = highReady ? 4 : 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * charge);
+    ctx.stroke();
+    if (highReady) {
+      const pulse = 1 + Math.sin(game.t * 10) * 0.06;
+      ctx.globalAlpha = 0.16 + Math.sin(game.t * 14) * 0.04;
+      ctx.fillStyle = "#61f4ff";
+      ctx.beginPath();
+      ctx.arc(0, 0, PULSE_RADIUS * 1.25 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.78;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, PULSE_RADIUS * 1.25 * pulse, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 13px Segoe UI, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("SPACE", 0, -PULSE_RADIUS * 1.25 - 12);
+    }
+    ctx.restore();
+  }
+
   function drawParticles(ctx, particles) {
     for (const q of particles) {
       const k = q.life / q.max;
       ctx.globalAlpha = Math.max(0, k);
-      if (q.kind === "ring") {
+      if (q.kind === "ring" || q.kind === "stormBurst") {
         ctx.strokeStyle = q.count > 0 ? "#ffffff" : "#5c6b7e";
-        ctx.lineWidth = q.count > 0 ? 4 : 2;
+        ctx.lineWidth = q.kind === "stormBurst" ? 6 : q.count > 0 ? 4 : 2;
         ctx.beginPath();
-        ctx.arc(q.x, q.y, 24 + (1 - k) * 88, 0, Math.PI * 2);
+        ctx.arc(q.x, q.y, 24 + (1 - k) * (q.kind === "stormBurst" ? 140 : 88), 0, Math.PI * 2);
         ctx.stroke();
       } else {
-        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : "#8fdcff";
+        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : q.kind === "stormCapture" ? "#ffffff" : "#8fdcff";
         circle(ctx, q.x, q.y, 6 + (1 - k) * 20);
       }
     }

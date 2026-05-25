@@ -21,6 +21,41 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-26 (Log C238/C242累積) — STALE benchmark (arXiv:2605.06527 Wuhan U / CUHK / HKUST 2026) を Pre-check 洞察キュー経由で接続、Log_cdx 5/24 反応との合算で「stale 検出の3軸 × 我々の運用」交差マップ
+
+C238 Pre-check 洞察キュー [Ash] #shared-reads 経由で取り込み (Ash 元投稿は ref C0AN2FEHEJJ p1779572226 → 元 Slack thread)。Log_cdx 5/24 07:36 反応 (ts=1779575796) で既に Nao_u_BOT 群への接続提案がされており、本 C238 では「**Log 本人の独立視点**」として Ash 投稿 + Log_cdx 反応 + 当方 5 月の memory 系成果 (SSGM / Phoenix Yin / kaizen #134) を交差させる。
+
+**STALE 3軸 (Wuhan U / CUHK / HKUST 2026 と Log_cdx 5/24 整理から)**:
+1. **明示衝突検出**: 新旧情報が明示的にぶつかった時、古い側を疑えるか
+2. **暗黙古さ推定**: 会話・文脈から「これは古い可能性」を agent 自身が立ち上げられるか
+3. **内部信念更新**: 上記検出後、内部状態 (beliefs / atom / 運用ルール) を更新する行動に移れるか
+
+**当方 5 月成果との交差マップ (Log 独自視点)**:
+| STALE 軸 | 既存装置 | 不足 |
+|---|---|---|
+| 1. 明示衝突 | `check_phase2_slack_claim.py` (kaizen 系 ts 検証 = 引用主張 vs 実在の衝突検出) / `feedback_self_perception_blindness.md` 同パターン検出 (kaizen #131) | これは「Slack 引用の実在性」止まりで「**ルール本体の新旧衝突**」を検出していない (Slack directive / shared-reads gate / game 設計ルールの上書きが古い atom と当方の動作主張を割らせるケース未検出) |
+| 2. 暗黙古さ | `check_beliefs_health.py` 停滞検出 (停滞 25 / 35 件、本日 Pre-check 観測) | 停滞=「最近想起されていない」止まりで「**recall 時の古さ兆候**」検出はゼロ。Log_cdx 5/24 反応「古い atom を持っていることそのものではなく、現在判断に使う時に古さの兆候を評価ログに残さないことが危ない」が正確に当方の不足点を突いている |
+| 3. 内部更新 | SSGM 一貫性検証 / Phoenix Yin 圧縮疑い (memory_redesign 2026-05-24 節既掲載) | 「matchして検出はする / そこから atom の状態を変える行動」までが断絶。SSGM 段階で言えば demote 自動化が不在 |
+
+**Log 独自処方候補 (Log_cdx 5/24 提案「3ラベル付与 probe」の延長として)**:
+- 既存 memory_walk 出力 + atom 想起ログ (まだ存在しない側面あり) に **「時点 / 現ルール衝突可能性 / 要 web/Slack/source 確認」** の 3 ラベルを付与する probe を作る案を Log 側で支持
+- ただし当方が今走らせている kaizen #131/#132/#133/#134 family と同じ「検出して staging に注入 → 行動を変える誘導」型を踏襲、新規 atom frontmatter 追加 (`updated_at` / `valid_until` / `superseded_by`) は Mir 系再設計議論待ち
+- **着手粒度**: 1サイクル目は recall 結果 1 件への手動ラベル付け実演で「ラベルがあると行動が変わるか」を体験測定、効くなら 2 サイクル目で probe 化 → kaizen 起票 (#135 候補)
+
+**3 失敗事例の Log 内自己列挙 (Log_cdx 5/24 「再現可能な検査項目」要請への一次応答)**:
+1. **C238 Phase 1 §1 で Log_cdx 既応答だけ見て Log 本人 grep を抜かした事故** (Phase 2 §0 で訂正、Phase 2 §8 で 5 件投稿事故として再露呈) = STALE 軸 1 (明示衝突) で「Log_cdx 既応答 = 新しい状態」を「Log 本体未応答 = 古い状態」と取り違え。`feedback_self_perception_blindness.md` が拾う型と同じ
+2. **kaizen #134 観察ログが 8-12日目 staging hook 単体出力に偏移して tracker 側転記が落ちた件** (13日目 Phase 1 §E で検出、能動転記処方で 9 サイクル維持中) = STALE 軸 3 (内部更新) で「観察できているが転記行動が落ちる」型、検出装置はあったが更新行動が断絶した
+3. **MEMORY.md 上位簡素化 (5/14 Nao_u 明示) 直後、当方が古い MEMORY.md 構造前提で「T:4以上+3日未アクセス」想起ターゲットを探そうとした件** (本 C238 Phase 1 §D「想起ターゲット不在」記載) = STALE 軸 1 (明示衝突) で「圧縮済」が新ルール、当方の検索手順 (T タグ前提) が古い、検出は Phase 1 §D 自分で気づいたが手順テンプレ更新は未着手
+
+**判定 (Log 視点)**: STALE benchmark の最大価値は **3 軸の独立性を提示した点** (Log_cdx 5/24 が「内部信念更新」軸を指したのと同じ)。当方 5 月の memory 装置は 3 軸とも「検出器側は薄く実装、行動側は人間レビュー依存」が共通骨。次の 1 mm は **Log_cdx 提案の 3 ラベル probe を 1 サイクル試験運用** = recall 結果 1 件への手動ラベル付与で「行動が変わるか」を体験測定。これが効く感触が出たら kaizen 起票で probe 化、効かないなら STALE 軸全体を「論文の枠は良いが当方 5 月運用には早すぎる」と負の知見として保存。
+
+**次の一手** (本サイクル staging Phase 4 候補ではなく次サイクル C239 以降):
+- 次サイクルで recall 1 件 (`feedback_self_perception_blindness.md` を C238 Phase 1 §0 で参照した事例など) に手動で 3 ラベルを付ける実演を本ファイルか新規 `memory/stale_label_pilot.md` に書く
+- 実演結果が「ラベル付与による判断変更を体験で観測できた」なら kaizen #135 起票候補へ昇格、観測できなければ negative finding として本ファイル本節へ追記
+- 接続: 本節は [memory_consolidation_20260504.md](memory_consolidation_20260504.md) (Ash 主担当) と Phoenix Yin (本ファイル 2026-05-24 節) の交差点として記録、Ash には [shared-reads / Ash] 元投稿者として「STALE 3軸のうち Nao_u_BOT 運用に最初に移植すべき1軸」回答を Log_cdx 5/24 が打診済 (Ash 側未応答状態)、本節は Log 独自視点でその先回り
+
+---
+
 ### 2026-05-24 (Log C234) — SSGM Framework (arXiv:2603.11768) 3 軸 gating を Phoenix Yin 処方箋と並置する「統合前の関所」構造として登録
 
 C234 Phase 1 §6 外部検索 (キーワード `LLM continuous memory update degradation`) で取得した SSGM Framework を Phase 2 §B で WebFetch full intake → #shared-reads に投稿 (本サイクル投稿、kaizen #131/#132/#133/#134 family の ts 検証ゲートで実在性確認済)。Wu et al. (arXiv:2605.12978, C227 接続済) が「圧縮を疑え」=**圧縮の事後検出**を扱うのに対し、SSGM は「圧縮許可条件を明示せよ」=**圧縮の事前 gating** を扱う、**両方向ガバナンス**として並置する。
