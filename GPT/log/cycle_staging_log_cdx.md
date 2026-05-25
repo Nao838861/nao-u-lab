@@ -87,7 +87,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link / inline file path を確認。broken link は 0 件。"
+  - "memory/atoms.jsonl を確認。1563 rows、JSON parse error 0、duplicate id 0、duplicate normalized/content hash 0。"
+  - "memory/raw/ 配下の 30 日超未更新ファイルを確認。該当 0 件。"
+  - "memory/shared_reads_candidates/ 配下の 30 日超未更新 candidate を確認。該当 0 件。"
+  - "pending inbox 4 件を既存 evidence に基づき handled 化: log-cdx-1779659296-968314ff25, broadcast-1779310201-24a490e4a6, broadcast-1779237427-15d6f5af92, broadcast-1779659405-88e2cedea5。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
