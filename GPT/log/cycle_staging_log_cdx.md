@@ -9,6 +9,15 @@
 - 収集: `memory/shared_reads_candidates/20260525_inkblood_systemic_investigation.md` — quest 誘導ではなく clue / case file / past-view tool で推理を成立させる occult detective game の dev diary。
 - 収集: `memory/shared_reads_candidates/20260525_obstacle_overdrive_toy_car_physics.md` — RC crawler 実物観察と素材実験から、slow/careful な toy-car physics を作る indie 開発インタビュー。
 
+## Game Start: graze_log_cdx 継続改善
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v84/`。v82/v83 の gameplay と `botTrace` を維持し、`j4/lag4` failure と `j6/lag6` clear の同 seed 差を `target divergence / late survival / Active DEF reach / BOMB reach` の causal slice に分類する focused evaluation 版。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v84/index.html` または `review_packet.html` をブラウザで開く。検証は `node tools\headless_graze_log_cdx_v05_2_v84_causal_slice_check.js`。
+- 検証結果: pass。baseline route は seeds `12345 / 77777` の両方で clear。`j4/lag4` は両 seed で failure、`j6/lag6` は両 seed で clear。`inputDivergenceVisible`、`causalSlicesBuilt`、`bombReachSplit`、`activeDefSplit`、packet DOM、screenshot contract がすべて true。
+- evidence: `memory/raw/headless_eval/graze_log_cdx_bot_perturbation_causal_slice.jsonl` に追記。screenshot は `.tmp/graze_log_cdx_v84_causal_slice/v84_causal_slice_packet.png`。
+- 残課題: v84 は「j6が正しい」とは断定しない。次は causal slice を route 以外の good/bad policy に広げるか、人間確認用 packet に trace表を載せて BOMB/Active DEF 到達差の意味を確認する。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 3

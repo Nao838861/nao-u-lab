@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>graze_log v05.2_cdx_v84 causal slice packet</title>
+<style>
+:root{color-scheme:dark;--bg:#090d14;--panel:#111827;--line:#243244;--text:#dbe7f7;--muted:#8fa3bd;--good:#75d998;--bad:#ff8b8b;--warn:#ffd06b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header,main{max-width:1180px;margin:0 auto;padding:18px}
+h1{margin:0 0 8px;font-size:22px}
+p{margin:0;color:var(--muted)}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.metric{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:10px 12px;min-height:64px}
+.metric b{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.metric span{display:block;margin-top:4px;font-size:18px;color:var(--text)}
+.note{margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#0c1320;color:var(--muted);font-size:12px;line-height:1.45}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+caption{text-align:left;padding:10px 12px;color:var(--muted);font-size:12px}
+th,td{border-top:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px}
+.ok{color:var(--good)}.fail{color:var(--bad)}.probe{color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.card header{padding:10px 12px;border-bottom:1px solid var(--line)}
+.card h2{margin:0 0 6px;font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 6px;color:var(--muted)}
+.tag.good{color:var(--good);border-color:#2b7048}.tag.bad{color:var(--bad);border-color:#7c3434}.tag.warn{color:var(--warn);border-color:#80652b}
+iframe{display:block;width:100%;height:752px;border:0;background:#071126}
+@media (max-width:980px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card{min-width:0}iframe{height:742px}}
+</style>
+</head>
+<body data-game-version="v05_1_cdx_v84" data-review-packet="bot-perturbation-causal-slice-v001">
+<header>
+  <h1>graze_log v05.2_cdx_v84 causal slice packet</h1>
+  <p>通常 gameplay は v82 と同じ。v84 は v83 の botTrace を、target divergence / late survival / Active DEF / BOMB reach の4軸へ分けて比較する。</p>
+</header>
+<main>
+  <section class="summary" aria-label="review summary">
+    <div class="metric"><b>method</b><span>causal slice</span></div>
+    <div class="metric"><b>control</b><span>j0 / lag0</span></div>
+    <div class="metric"><b>anomaly</b><span>j4 fails</span></div>
+    <div class="metric"><b>reach split</b><span>j6 bomb</span></div>
+  </section>
+  <p class="note">この packet の目的は、j4/lag4 failure と j6/lag6 clear の差を「j6 が偶然スコア上で勝った」と扱わず、同 seed の死亡直前 window から、到達できた行動と到達できなかった行動へ分けて保存すること。見た目の代表 frame は補助で、主 evidence は headless check が raw JSONL に残す causal slice。</p>
+  <table aria-label="causal slice interpretation">
+    <caption>headless check が assert する causal slice</caption>
+    <thead><tr><th>axis</th><th>assertion</th><th>読み方</th></tr></thead>
+    <tbody>
+      <tr><td class="ok">baseline</td><td>route clear</td><td>seed 12345 / 77777 の control は clear し、比較の基準線になる。</td></tr>
+      <tr><td class="fail">j4/lag4</td><td>route failure</td><td>両 seed で死亡し、route coverage が 1.0 に届かない。</td></tr>
+      <tr><td class="ok">j6/lag6</td><td>late survival + BOMB</td><td>両 seed で j4 より 250 frame 以上長く生存し、j4 が到達しない BOMB を 1 回使って clear する。</td></tr>
+      <tr><td class="probe">target/input</td><td>divergence</td><td>同じ seed の同時刻 window で final target と入力列が分岐する。ここから先はゲーム改変ではなく評価器の原因分解として扱う。</td></tr>
+    </tbody>
+  </table>
+  <section class="grid" aria-label="selected replay frames">
+    <article class="card" data-sample="seed12345-baseline">
+      <header><h2>seed 12345 / route / baseline</h2><div class="tags"><span class="tag good">control clear</span></div></header>
+      <iframe title="seed 12345 baseline route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=0&amp;botLag=0&amp;probeFrame=4552&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-j4">
+      <header><h2>seed 12345 / route / j4 lag4</h2><div class="tags"><span class="tag bad">route failure</span><span class="tag warn">non-monotonic</span></div></header>
+      <iframe title="seed 12345 j4 lag4 route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=4&amp;botLag=4&amp;probeFrame=3499&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-j6">
+      <header><h2>seed 12345 / route / j6 lag6</h2><div class="tags"><span class="tag good">route clear</span><span class="tag">asserted</span></div></header>
+      <iframe title="seed 12345 j6 lag6 route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=6&amp;botLag=6&amp;probeFrame=4447&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed77777-j4-j6">
+      <header><h2>seed 77777 / route pair note</h2><div class="tags"><span class="tag bad">j4 fails</span><span class="tag good">j6 clears</span></div></header>
+      <iframe title="seed 77777 j6 lag6 route frame" src="index.html?seed=77777&amp;bot=1&amp;botStyle=route&amp;botJitter=6&amp;botLag=6&amp;probeFrame=4518&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+  </section>
+</main>
+</body>
+</html>
