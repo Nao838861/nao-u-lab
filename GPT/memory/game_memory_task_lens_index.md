@@ -155,6 +155,9 @@ For future 2D shooting games, when feedback says "enemies overlap", "all enemies
 
 - lens: `Playable / Headless evaluation`, `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`
 - recall query: `python tools/memory_recall.py "special system HUD affordance cooldown input title retry reflection conversion always-on text"`
+- source_atom_ids: `sr-1779657471-88f9f3d1ae`, `sr-1779658588-0fae62cbf1`, `sr-1779658720-002236e014`, `sr-1779659902-3b62526bf8`
+- fallback_recall_query: `python tools/memory_recall.py "special system HUD affordance cooldown input title retry reflection conversion always-on text"`
+- verification_status: `source_bundle_reanchored`
 - key lesson: 特殊メカニクスを常時文字やサイドパネル説明で教えない。ゲーム自身の入力、対象物状態、記号化で教える。発動不可、発動可能だが意味が薄い、発動可能かつ意味がある、を分ける。対象物側に記号を付ける。プレイヤー側の表現は意味のある時だけ強める。必要なら空ゲージから始める。タイトル開始/リトライには、可能な限りコア特殊入力を使う。
 
 ## 2026-05-25追加: 自動生成から最低限の型へ到達する教師差分
@@ -163,6 +166,9 @@ For future 2D shooting games, when feedback says "enemies overlap", "all enemies
 
 - lens: `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`, `Stage Grammar / Enemy Formation`, `Playable / Headless evaluation`
 - recall query: `python tools/memory_recall.py "supervised delta autonomous game creation Pulse Relay v003 enemy exit offscreen shots HUD retry Japanese docs"`
+- source_atom_ids: `sr-1779657471-88f9f3d1ae`, `sr-1779658373-5e5a195063`, `sr-1779658588-0fae62cbf1`, `sr-1779658720-002236e014`
+- fallback_recall_query: `python tools/memory_recall.py "supervised delta autonomous game creation Pulse Relay v003 enemy exit offscreen shots HUD retry Japanese docs"`
+- verification_status: `source_bundle_reanchored`
 - key lesson: ユーザーが自動生成後に出した指示は、Codex が自律的に作れなかった差分である。敵の居座り、画面外射撃、下部急加速退場、終了/爆発/被弾演出不足、右側サイドパネル、特殊システムの常時文字説明、リトライボタン誤読、日本語ログ不足を、短い要約に圧縮せず、次回の実装前ゲートとして使う。
 
 ## 2026-05-25追加: ゲーム自律制作メタプロンプト

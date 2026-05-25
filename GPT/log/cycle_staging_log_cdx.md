@@ -156,7 +156,29 @@ not_designed:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-20260525-4A-001
+    files_changed:
+      - path: memory/game_supervised_delta_autonomous_creation_lesson_20260525.md
+        change: created
+      - path: memory/game_special_system_hud_affordance_lesson_20260525.md
+        change: created
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+      - path: memory/game_design_rules.md
+        change: modified
+    summary: "欠落していた 2 lesson を最小 source bundle として再アンカーし、index/rule から source_atom_ids と fallback recall に降りられるようにした。"
+    partial: false
+migrations:
+  - what: "単独 md 参照を source bundle 付き参照へ補強"
+    affected: "ゲーム制作前ゲートの 2 lesson (`game_supervised_delta...`, `game_special_system_hud...`) と `game_memory_task_lens_index.md` の該当 2 セクション"
+verification:
+  - "`Test-Path` で 2 lesson md と source atom md の存在を確認"
+  - "`rg` で source_atom_ids / fallback_recall_query / verification_status の追加を確認"
+  - "`python tools/memory_recall.py \"supervised delta autonomous game creation Pulse Relay v003\"` が成功することを確認"
+  - "`python tools/memory_recall.py \"special system HUD affordance cooldown input title retry reflection conversion always-on text\"` が成功することを確認"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
