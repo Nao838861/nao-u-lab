@@ -49,6 +49,34 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-05-25T18:57+09:00 Phase 3b 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779557791-592e3281db
+    source_ts: "1779557791.076579"
+    title: '"In Agents We Trust, but Who Do Agents Trust? Latent Source Preferences Steer LLM Generations" (arXiv:2602.15456)'
+    reason: "Phase 1 の recall、Phase 3 の shared-reads 候補採用、Phase 4a の問題抽出は、内容だけでなく arxiv / GitHub / X / Slack atom / 自分が書いた atom という source 表記に引っ張られる。直近サイクルで外部記事候補を選び、memory atom も多用しているため、source preference を次回 1 回だけ可視化する価値が高い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の memory recall / shared-reads candidate comparison / external intake / Phase 4a で、source label と content claim を一度だけ分けて見る 3 問 probe を state に追加。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
