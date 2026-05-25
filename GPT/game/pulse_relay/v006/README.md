@@ -1,25 +1,27 @@
 # Pulse Relay v006
 
-v006 は、v005 の「Pulse 後に短時間だけ判定が残る共鳴場」からさらに大きく変えて、MAX Pulse を画面全体へ届くショックウェーブとして扱う版です。
+v006 は「MAX Pulse を押した瞬間に全部が終わる版」ではなく、「弾を抱え込んでから遅れて大きく放つストーム版」として作り直した。
 
-最初のv006は、charge 経済が入っていても体感上は v005 と近く、「MAX Pulse 待ちがある」程度に見えやすかった。今回の修正では、v006の差分を明確にするため、MAX Pulse を次のように変更しました。
+ユーザー指摘の文脈では、v005/v006/v007 がどれも「適当に弾を撃ち返して遊ぶだけ」に見え、体感上の違いが弱かった。v006 は特に「MAX Pulse が強い」だけでは v005 の延長に見えるため、押した瞬間の即時処理ではなく、発動後しばらく画面上に残るストーム、ストーム内での敵弾捕獲、終了時の遅延サルボを中心にした。
 
-- MAX Pulse は自機周辺だけでなく、画面内の敵弾をまとめて Relay 化する。
-- MAX Pulse は画面内の敵にも直接ショックウェーブを当てる。
-- ショックウェーブを受けた敵は共鳴し、近くの敵へ枝分かれする Relay 弾を発生させる。
-- 画面外や横入場中の敵が弾を撃つ問題を再発させないため、敵の発射条件に「本体が画面内に見えていること」を入れた。
+## 体感として残すべき違い
 
-v006 の狙いは「Pulse を溜めて吐くと、画面全体が一気に反転する」ことです。v005 の残留フィールド型、v007 の敵ハック型と混同しない。
+- Pulse を溜めて MAX Pulse を撃つと、自機の周囲に大きな青いストーム領域が発生する。
+- MAX Pulse の価値は、押した瞬間に敵を消すことではなく、一定時間ストームが敵弾を吸い込み続けることにある。
+- ストームは自機について動く。プレイヤーは「ストームを敵弾にかぶせる」遊びになる。
+- ストーム終了時に、捕獲した弾がまとめて誘導サルボとして敵へ飛ぶ。
+- したがって v006 の正しい遊びは「危険な弾幕の中に踏み込んで MAX Pulse を置き、溜めた弾を後から返す」こと。
+- v005 のような短時間残留フィールド、v007 のような敵味方化とは混同しない。
 
-## 中心仕様
+## 今回の修正で明確にしたこと
 
-- 敵弾の近くを通ると `CHARGE` が増える。
-- Space で現在 charge に応じた Pulse を発動する。
-- LOW Pulse は小さな緊急変換。
-- MID Pulse は短い共鳴場を残す。
-- MAX Pulse は大きく長い共鳴場を残すだけでなく、画面内の敵弾をまとめて Relay 化し、敵にもショックウェーブを当てる。
-- MAX Pulse を受けた敵は `max-shockwave` resonance になり、近距離の別敵へ枝分かれ Relay を出す。
-- v005 の敵リアクションと Chain Relay は維持するが、v006の主役は「貯めたMAX Pulseで画面全体を反転させる」こと。
+- MAX Pulse は画面内の敵弾をまとめて Relay 化する。
+- MAX Pulse は敵に直接大ダメージを与える即死ショックウェーブではない。敵への直接ヒットは補助で、主役はストーム捕獲と遅延サルボ。
+- `pulseStorm` を追加し、発動後約 2.65 秒間、ストームが自機に追従する。
+- ストーム中に範囲へ入った敵弾は捕獲され、`stormCaptures` に記録される。
+- ストーム終了時に `releasePulseStorm` が発火し、捕獲量に応じた誘導弾を放つ。
+- `stormSalvos` を追加し、遅延サルボが実際に発生しているか検証する。
+- 視覚表現として、青いストームリング、捕獲数表示、捕獲パーティクル、放出パーティクルを追加した。
 
 ## 操作
 
@@ -27,11 +29,7 @@ v006 の狙いは「Pulse を溜めて吐くと、画面全体が一気に反転
 - Pulse / 開始 / リトライ: Space
 - ショット: 自動
 
-## 起動
-
-`index.html` をブラウザで開きます。
-
-## 評価コマンド
+## 検証コマンド
 
 ```powershell
 node verify.js
@@ -41,49 +39,63 @@ node wave_grammar_check.js
 node enemy_overlap_check.js
 ```
 
-## 現在の評価結果
+## 2026-05-25 の検証結果
 
-`node verify.js`: pass。
+`node verify.js`: pass
 
 - route 3 run すべて clear
-- `nearMissCharge: 500.31`
-- `spentCharge: 528`
+- `converted: 370`
+- `pulses: 6`
 - `maxPulseCount: 6`
-- `converted: 363`
-- `maxShockwaveConversions: 363`
-- `maxShockwaveHits: 44`
-- `resonantEnemies: 193`
-- `chainHits: 43`
-- `relayKills: 44`
+- `maxShockwaveConversions: 328`
+- `maxShockwaveHits: 36`
+- `stormCaptures: 369`
+- `stormSalvos: 6`
+- `conversionHits: 226`
+- `relayKills: 106`
+- `chainHits: 102`
+- `damageTaken: 0`
 - `pulseWhiffs: 0`
 
-`node timeline_eval.js`: pass。
+`node timeline_eval.js`: pass
 
 - route clearRate: 1
-- route meanConverted: 363
+- route meanConverted: 370
 - route meanMaxPulseCount: 6
-- route meanMaxShockwaveConversions: 363
-- route meanMaxShockwaveHits: 44
-- route meanChainHits: 43
+- route meanStormCaptures: 369
+- route meanStormSalvos: 6
+- route meanMaxShockwaveConversions: 328
+- route meanMaxShockwaveHits: 36
+- route meanChainHits: 102
+- route meanRelayKills: 106
 - noPulse clearRate: 0
 - camper clearRate: 0
 - lane-holder clearRate: 0
 - blind-sweeper clearRate: 0
 
-`node enemy_behavior_audit.js`: pass。
+`node enemy_behavior_audit.js`: pass
 
 - `offscreenShots: 0`
 - `lingeringEnemies: 0`
-- `maxEnemyStep: 12.75`
-- `relayKills: 44`
+- `maxEnemyStep: 12.52`
+- `relayKills: 106`
 - `pulseWhiffs: 0`
+- `nearMissCharge: 511.33`
+- `spentCharge: 528`
+- `maxPulseCount: 6`
 
-## v005 / v006 / v007 の体感差
+`node wave_grammar_check.js`: pass
 
-- v005: Pulse 後に短時間だけ場が残り、敵弾を拾い続ける。体感は「設置した残留フィールドで受ける」。
-- v006: charge を溜めて MAX Pulse を撃つと、画面中の弾と敵へショックウェーブが走り、敵から敵へ枝分かれする。体感は「溜め技で画面全体を反転させる」。
-- v007: Pulse を当てた敵が黄色い書き換え状態になり、通常の赤弾を止めて味方弾を撃つ。体感は「敵を一時的に味方砲台へ変える」。
+- wave event count: 221
+- hard issues: 0
 
-## 次の比較候補
+`node enemy_overlap_check.js`: pass
 
-v007 では `Pulse Command / Enemy Rewrite` を試す。敵弾を変換するだけでなく、Pulse を当てた敵の行動モードそのものを書き換え、敵弾が少ない秒でも Pulse 対象選択が意味を持つかを見る。
+- checked enemies: 220
+- pair overlaps: 0
+
+## 自己評価
+
+v006 は「MAX Pulse を撃つと画面全体が強くなる」だけでは不十分だった。ユーザーが問題にした「6も7も適当に弾を撃ち返して遊ぶだけ」という状態を避けるには、プレイヤーの行動が変わる必要がある。
+
+今回の v006 は、押した瞬間に気持ちよく返すだけでなく、ストームを敵弾に重ねる時間差の遊びに寄せた。ヘッドレス上でも `stormCaptures` と `stormSalvos` が主指標として出ており、単なる通常 Relay の増量ではなく、v006 固有の挙動が中心になっている。
