@@ -3,21 +3,11 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-
-### 2026-05-25T07:06+09:00 log_cdx
-
-- Slack pending 確認:
-  - directives: `log-cdx-1779644882-54fc6c7843` (2026-05-25 02:48, operations, "Phase 1-4はずっと空なの？その原因は？") が pending。Phase 1 では対応せず、後フェーズへ残す。
-  - broadcasts: `broadcast-1779310201-24a490e4a6`, `broadcast-1779237427-15d6f5af92`, `broadcast-1779657780-322e0406bd` が pending。Phase 1 では対応せず、存在確認のみ。
-- 既存確認:
-  - `memory/raw/web_research/` は 2026-05-18 以降の phase3 投稿素材と `results.jsonl` / `errors.jsonl` が最新。
-  - `memory/shared_reads_candidates/` の直近追加は 2026-05-19 の 3 件だったため、今回は 2026-05-25 分として新規候補を追加。
-- 収集 candidate:
-  - `memory/shared_reads_candidates/20260525_clockheart_jam_panic_timer.md` — jam 終盤に足した timer が雰囲気探索と衝突した postmortem。panic decision と core movement の分離メモ。
-  - `memory/shared_reads_candidates/20260525_bpm_signal_pivot.md` — Signal theme を feedback から core loop へ移すため、移動/方向/real-time 判断を削った 72h jam pivot 記録。
-  - `memory/shared_reads_candidates/20260525_gameplayqa_decision_dense_eval.md` — 3D gameplay video を Self / Other Agents / World で密 annotation し、MLLM の temporal/role grounding 失敗を測る benchmark。
-  - `memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md` — 独自 control mechanic が camera/UI/tutorial と噛み合わず、players が demo の主要部に到達できなかった postmortem/議論。
-
+- 2026-05-25T09:27+09:00 Phase 1 収集メモ:
+  - pending inbox 確認: `memory/slack_directives.jsonl` では `log-cdx-1779659296-968314ff25` が pending。`memory/slack_broadcasts.jsonl` では `broadcast-1779310201-24a490e4a6`, `broadcast-1779237427-15d6f5af92`, `broadcast-1779659405-88e2cedea5` が pending。Phase 1 なので対応せず、後フェーズ送り。
+  - `memory/shared_reads_candidates/20260525_apex_policy_exploration.md` - self-evolving LLM agent の exploration collapse と strategy map / fork discovery。
+  - `memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md` - agent 行動から exploration error / exploitation error を分けて測る controllable 2D grid + task DAG benchmark。
+  - `memory/shared_reads_candidates/20260525_textquests_llm_video_games.md` - Infocom 系 text adventure を使った、長期文脈・試行錯誤・single-session problem solving 評価。
 ## Game Start: 2026-05-25 graze_log_cdx v82
 
 - 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game は今回なし。継続指示の主眼は「ゲーム制作そのものよりも、AI がゲームを作る際の headless のあり方について検討と実地検証」。
