@@ -271,6 +271,53 @@ Phase 1 §5 で挙げた他インスタンス洞察 4 件 (Pre-check §[他イ�
 
 本サイクル成果物 = `bullet_origin_audit.js` (151 行新規 game/ 配下 commit) + `projects/log_autonomous_game.md` 残課題チェック更新。**playable diff が主たる出力 = means-ends 反転なし**。前サイクル C240 ee908bfd9c0f 以降 6 時間空白を本サイクル ee8e7ad64d6b で連鎖継続、CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」筆頭原則を本サイクルも履行。
 
+## Phase 4: 大作業 — `verify.js` 実装完遂
+
+### 完遂結果
+
+**完遂の定義 1〜6 達成、commit はせず (Phase 5 で日記とまとめて push 予定)**:
+
+1. ✅ `game/log_autonomous_game/v001/verify.js` 新規作成 (約 200 行)
+2. ✅ `cd game/log_autonomous_game/v001 && node verify.js` で 4 方針 (camper / lane-holder / blind-sweeper / nospecial) 各 30 秒 (1800 F) headless simulate 完了
+3. ✅ JSON 出力に `{ outcome, survived_frames, survived_seconds, deaths_at_frame, death_cause, waves_seen }` を含む
+4. ✅ **全 4 方針 `outcome: gameover` で `pass: true`、exit 0**
+5. (該当なし — 生存方針ゼロ、設計穴指標ゼロ)
+6. ✅ ファイル冒頭コメントで「悪手検証であり、良手検証ではない」「実機判定の代替ではない」明記
+
+### 4 方針の死亡時系列
+
+| 方針 | 生存 frame | 生存秒 | 死因 | wave |
+|---|---|---|---|---|
+| camper (静止) | 320 | 5.33s | bullet | 1 |
+| lane-holder (縦軸往復) | 277 | 4.62s | bullet | 1 |
+| blind-sweeper (ランダム) | 467 | 7.78s | bullet | 1 |
+| nospecial (衝突回避 AI 単体) | 492 | 8.20s | bullet | 1 |
+
+**観察**:
+- 全方針が wave 1 内 (1800F 中 約 500F 以下) で死亡 = castLock 機構抜きでは設計どおり 8 秒程度しか生残れない
+- 最弱想定の camper より lane-holder の方が早く死んだ (4.62s < 5.33s) — lane-holder は縦に動くため弾の予測軌道と交差するタイミングが camper より早く来る、という非自明な結果
+- nospecial (衝突回避 AI) でも 8.20s 留まり = 「弾密度に対して移動だけでは追いつかない」設計命題の物理化に成功
+- 全死因が `bullet` = wave A 敵 i=2 (x=320 player と同 x) との直接接触よりも、複数敵からの弾収束のほうが先に着弾する
+
+### 副産物 (新規/変更ファイル、commit 待ち)
+
+- **新規**: `game/log_autonomous_game/v001/verify.js` (約 200 行、悪手 4 方針 fail シミュレータ)
+- **変更**: `game/log_autonomous_game/v001/self_judgment.md` §3 — `verify.js` チェック `[ ]→[x]` 更新、生存秒数表 + limits 明記
+- **変更**: `projects/log_autonomous_game.md` 残課題 — `verify.js` チェック `[ ]→[x]` 更新、完了詳細追記
+
+### Slack 投稿 / kaizen エントリ
+
+- **Slack 投稿**: 本 Phase 4 では未投稿 (Phase 5 で日記とまとめて投稿判断、または見送り)。スカスカサイクル防止ルール v1.1 は Phase 1〜3 で発動済、Phase 4 は大作業遂行で追加投稿不要
+- **kaizen エントリ**: 新規提案なし (#086/#134/#131 family 未検証期限内、検証ファースト原則維持)
+
+### means-ends 反転チェック (Phase 4 末尾)
+
+本サイクル合計 playable 成果:
+1. **Phase 3 commit ee8e7ad64d6b**: `bullet_origin_audit.js` (Q-D 弾発射側監査、6/6 PASS)
+2. **Phase 4 未 commit**: `verify.js` (悪手 4 方針受け手側監査、4/4 gameover)
+
+= Q-D 設計健全性の **2 軸 (発射側 + 受け手側) を本サイクル 1 サイクル内で物理化完了**。playable diff 連鎖は C240 → C241 Phase 3 commit → C241 Phase 4 (Phase 5 commit 待ち) で連続継続。**means-ends 反転なし、CLAUDE.md「ゲームを動かして出す」筆頭原則を 2 commit 分 (Phase 5 でまとめて push) で履行**。
+
 ## 次フェーズの大作業
 
 ### タイトル
