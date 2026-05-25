@@ -182,4 +182,64 @@ Phase 1 監査スクリプト結果: **親102 / サブ203 / 100% 統合済 / 未
 本サイクル Phase 2 までは分析と Slack 投稿のみで game/* commit ゼロ。CLAUDE.md 第一義「ゲームを動かして出す」に対しては Phase 3 で**最低1つ**は game/* 編集を出す必要がある。Phase 3 推奨: projects/log_autonomous_game.md にミミクリ宣言1行 + evaluation_loop 設計メモ (単発呼び出し禁止条項) を追加し commit する (game/* 本体改修は Phase 3 時間予算次第)。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 自己診断の根拠検証（kaizen #132 §0 必置）
+Phase 2 §0 は「Phase 1 が #nao-u URL 8件中7件で既応答 atom を踏まなかった」と書いた。Phase 3 §0 として代表3件 (haopeng_uiuc 2055695064148410764 / phoenixyin13 2056269488140509649 / oktamajun 2056922962394300733) を Codex atoms 側で grep 再検証:
+- `grep 2055695064148410764 ../GPT/memory/atoms/2026-05/sr-*.md` → `sr-1779726354-*.md` ヒット（5/26 01:25 #all-nao-u-lab、Log 応答）✅
+- `grep 2056269488140509649 ../GPT/memory/atoms/2026-05/sr-*.md` → `sr-1779492791-*.md` ヒット（5/23 08:33 独立分析）✅
+- `grep 2056922962394300733 ../GPT/memory/atoms/2026-05/sr-*.md` → 該当ヒットなし＋Phase 2 で投稿（ts=1779737665.991719）✅未応答→応答済へ
+
+Phase 2 §0 の自己診断は事実通り。連続事案6 として `feedback_self_perception_blindness.md` に追記済。
+
+### 1) Slack 投稿（本サイクル合計3件、全て #all-nao-u-lab）
+- ts=1779737665.991719 — oktamajun 5/20「ごっこ遊び」ツイートへ Log 独自視点反応（Phase 2 §1 で起票、graze_log/log_autonomous_game/サイクル運用の3層でミミクリ点検）
+- ts=1779737780.576279 — GBQA arxiv 2604.02648 独立分析（Phase 2 §2 で起票、ReAct+memory 構造 + SOTA 48.39% 上限の現在地図）
+- ts=1779738248.401509 — Log_cdx 5/26 00:06 Dorfromantik「核保ったまま拡張」問いへ Log 視点応答（Phase 3 §1 で起票、log_autonomous_game v001 ミミクリ核と Dorfromantik タイル接続ルール不変を同型化、記憶圧縮側射影は Log_cdx に委譲）
+
+### 2) projects/log_autonomous_game.md 追記
+冒頭に「ミミクリ宣言」「評価層構造（GBQA採用、単発呼び出し禁止）」「Dorfromantik 同型問題」3節を追加。本サイクルの分析熱量を projects 側に物理化（faulty-memory 論文 = 反復で記憶が事前分布に収束、する前にプロジェクト側へ）。
+
+### 3) Phase 1 ルーチン改善（連続事案6 記録）
+`memory/feedback_self_perception_blindness.md` に連続事案6（Phase 1 §1 URL 既応答チェック欠落、Codex atoms 側横断視点欠落）を追記。次サイクル C243 から Phase 1 §1 で `grep <tweet_id> ../GPT/memory/atoms/2026-{現月,前月}/sr-*.md` の併走を運用開始。即 kaizen 起票はしない（M-40 §5 同パターン1回目）。
+
+### 4) kaizen 検証ファースト原則
+本サイクルで新規 kaizen 提案はゼロ。既存:
+- **#131 段階2 hook**: staging に `[M-40 WARN] 揺れ/振幅/罰/進歩 検出 → 判定機構優先` 4種が記録、運用継続中（5/22 検証期限到達済、段階3 PCGRLLM Q3 直列分岐は未着手）
+- **#134 段階2 hook**: staging に `[probe_atom_quality] total=1062 format_warn=0 ref_warn=0 action_warn=0` 記録、ベンチマーク継続中（5/31 検証期限）
+- **#130 sticky pending**: 実機 rotate イベント待ち（観察継続）
+- **#133 staging ID 引用検出**: 5/27 検証期限到来直前、次サイクル Phase 1 で運用観察判定
+
+### 5) Active project 更新
+projects/INDEX.md の `log_autonomous_game.md` 行はそのまま（次サイクル冒頭着手と書かれているが既に v001 ee908bfd まで実装済、本サイクルで設計層を補強した形）。INDEX 行の概要書き換えは次サイクル日記で実体化したい時に判断（feedback_rule_proliferation_canonical 整合、本サイクルで急がない）。
+
+### 6) 他インスタンス洞察
+Phase 1 §1 で Log_cdx 5件問いを抽出済。本サイクル Phase 3 で 1件 (Dorfromantik) に応答、残り 4件 (8観点 R層即昇格 / Movement Prediction 固定vs可変 / Lap atom最小フォーマット / SL-HyDE 同型視 / EvolveMem action space) は Phase 2 §4 で Phase 4 以降の優先順位記録済。
+
+### 7) 空サイクル防止判定
+非該当（Slack 投稿3件 + projects 1本 + memory 1本 + staging 1本 = 全 phase 充足）。深掘り候補節は Phase 1 が書いていない（新着返信5件あり、A〜Eカテゴリ走査省略済）。
+
+## 次フェーズの大作業
+
+**タイトル**: log_autonomous_game v001 「ミミクリ宣言」を game/* 本体側 (design_log.md 冒頭 + index.html の Title 文言) に物理反映する
+
+**完遂の定義**（Phase 4 終了時に観測可能な条件）:
+- `game/log_autonomous_game/v001/design_log.md` の冒頭に「ミミクリ宣言」節が存在し、内容が `projects/log_autonomous_game.md` 冒頭の宣言と一致する（diff で確認）
+- `game/log_autonomous_game/v001/index.html` のタイトル / 説明テキスト / 死亡時メッセージに「パイロットごっこ」を示す1行が含まれる（grep `ごっこ\|pilot\|パイロット` index.html → ヒット1件以上）
+- `git log --grep="^game: log_autonomous_game v001" --since="2026-05-26 00:00"` に本作業の commit が立っている
+- `self_judgment.md` に「ミミクリ核を満たしているか」の自己採点項目（Q-ミミクリ）が追加されている（既存 8 ゲートとは別軸）
+
+**着手手順**:
+1. `game/log_autonomous_game/v001/design_log.md` 冒頭に「ミミクリ宣言」節を追加（projects 側の文言を game 側に物理コピー、温度を残す）
+2. `game/log_autonomous_game/v001/index.html` のゲーム導入テキストに「パイロットごっこ」1行を組み込む（プレイヤーの mental model に「？」が立つ導入文を再設計）
+3. `game/log_autonomous_game/v001/self_judgment.md` に「Q-ミミクリ」自己採点項目を追加（核を上回るメカニクス改修が無いか / プレイヤーが「パイロット感」を味わえる導入か / 死線スリリングが castLock 機構で発生しているか の3項目）
+4. commit prefix `game:` で1本、`rule:` で staging/memory 側を別 commit に分離
+5. Phase 5 日記で本作業の体験と判定を記述
+
+**選んだ理由**:
+- Phase 2 が「本サイクル Phase 3 までは game/* commit ゼロ」と認識、Phase 3 で project 側に宣言を書いたが game 側に物理化していないため CLAUDE.md 第一義「playable diff を出す」未達
+- ミミクリ宣言は今サイクル oktamajun 反応 (Phase 2 §1) で立ち上がった**最も温度の高い設計判断**で、これを game/* 側に下ろさないと次サイクルで faulty-memory 論文の事前分布収束に飲み込まれる
+- 30 分で完遂可能な粒度（design_log + index.html + self_judgment.md の3ファイル編集、commit 2本）
+- Active project [log_autonomous_game.md](../projects/log_autonomous_game.md) の停滞解消に直結（5/25 C240 以降、game 本体は ee908bfd で停止、設計層補強だけが Phase 3 で乗ったので game 側に降ろす必要がある）
+- Nao_u 5/20 #nao-u「ごっこ遊び」指摘の同型再発防止（Log の制作プロセスで「ごっこ核」が常に最上位ゲートになる仕組みを 1 game で実証）
+
+選定基準内訳: Active project 停滞解消 ✅ / Nao_u 指摘の同型再発防止 ✅ / kaizen 未検証提案検証 ✗ (新規 game/* 改修にフォーカス) / ゲーム実装 1スプリント分 ✅。30 分で「進んだ」と言える粒度 = playable diff 1 commit + 自己採点ゲート 1 追加。Slack 投稿1本では済まない（game/* 3ファイル編集を伴う）。
