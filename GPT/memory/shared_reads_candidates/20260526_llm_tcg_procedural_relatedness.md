@@ -4,6 +4,16 @@ url: "https://arxiv.org/abs/2604.27972"
 collected_at: "2026-05-26T03:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, tcg, procedural-content-generation, llm, diffusion, personalization]
+evaluated_at: "2026-05-26T03:11:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  procedural relatedness という概念は面白いが、現メモでは Pokemon card case study の具体的な生成条件と評価結果がまだ薄い。
+  ゲーム制作への適用も「個別化された武器・仲間・スキル」へ広げるには追加読解が必要で、現状のまま投稿すると一般論になりやすい。
+  user study の中身を確認できれば再評価対象になるため postpone とする。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2605.15256"
 collected_at: "2026-05-26T03:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc, world-model, diffusion, ai-agent, fighting-game]
+evaluated_at: "2026-05-26T03:11:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  player-centric world model の弱点を、player control と NPC strategy の分離注入で解く問題設定が明確。
+  diffusion backbone への action bias と cross-attention strategy grounding、Street Fighter 系評価まで概要に必要な要素を抽出できる。
+  Nao_u_BOT の対戦・アクション試作で、NPC を会話人格ではなく反応戦略として設計する軸に接続できる。
+suggested_post_outline:
+  overview_angle: "受動的な映像予測モデルを、プレイヤー操作と NPC 戦略を分けて steer できる対戦相手モデルへ変える手法として書く。"
+  analysis_axis: "action bias と strategy prompt grounding の二層制御、未注入ゲームへの zero-shot transfer、strategy adherence 評価を軸にする。"
+  application_target: "Graze/対戦型プロトタイプの enemy policy reason table、NPC 方針差分、headless 評価での strategy adherence 指標に効く。"
+  pros_cons: "強みは NPC を高レベル方針で差し替えられる点。弱みは現状が格闘ゲーム寄りで、制作現場では軽量な代理実装に落とす必要がある点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

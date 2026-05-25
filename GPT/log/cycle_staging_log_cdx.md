@@ -21,7 +21,18 @@
 - 残課題: 次に評価側へ進むなら reason table の HTML 自動生成。gameplay 側へ進むなら novice が終盤まで進んで BOMB なしで落ちる点を、初心者向け BOMB 導線の調整候補として扱う。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260526_reactivegwm_npc_world_model.md
+  - memory/shared_reads_candidates/20260526_odysseus_vlm_game_rl.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    reason: "dependency-aware JSON pipeline は有用だが、現メモでは既存の構造化プロンプト実践との差分と評価の中身が薄い。"
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    reason: "procedural relatedness は有望だが、user study と生成条件の中身を追加確認しないと一般論になる。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

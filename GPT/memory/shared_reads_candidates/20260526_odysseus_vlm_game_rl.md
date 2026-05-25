@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2605.00347"
 collected_at: "2026-05-26T03:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtest, ai-agent, vlm, reinforcement-learning, platformer]
+evaluated_at: "2026-05-26T03:11:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  100+ turn の長期意思決定で VLM agent が崩れる問題、turn-level critic 付き RL、Super Mario Land 評価という骨格が揃っている。
+  Nao_u_BOT の headless 評価が短期入力列に寄りがちな問題へ、長期ターン安定性と action prior の観点を直接持ち込める。
+  CoopEval 水準の概要では、RL 論文紹介よりも「ゲーム評価者を長く保たせる条件」として書ける。
+suggested_post_outline:
+  overview_angle: "VLM をゲームプレイヤーにする話ではなく、100+ turn の評価者・操作者を安定させる訓練設計として書く。"
+  analysis_axis: "SFT/短期 RL の限界、turn-level critic の役割、pretrained VLM の action prior、in-game/cross-game generalization を比較する。"
+  application_target: "headless playtest harness、長期 run の崩壊検出、BOMB なし完走などの評価設計に適用する。"
+  pros_cons: "強みは長期行動評価の具体軸がある点。弱みは Super Mario Land 依存と RL 訓練コストで、即時実装は proxy 指標からになる点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
