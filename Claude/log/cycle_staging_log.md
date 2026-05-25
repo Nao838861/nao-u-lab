@@ -246,3 +246,34 @@ Phase 1 で A-E 全走査済 (空サイクル判定: 新規返信対象 0件 + p
 - 30分で完遂可能な粒度 (描画ロジック追加 + design_log 追記 + commit/push)
 - Slack 投稿 1 本では完了しない (= 大作業要件「Slack投稿1本で済むものは大作業ではない」満たす)
 - Nao_u 5/25 06:23 指示「精度高く完成まで」への直接応答 (Q-成功FB は Pulse Relay v003 教師差分「特殊システム3状態を表示で区別する」の核命題、ここを動かさないと精度向上が止まる)
+
+## Phase 4: 実行 (2026-05-25 Log)
+
+### 大作業完遂状況
+**到達**: 完遂の定義 #1 / #2 / #3 達成。#4 (commit + push) は Phase 5 で日記とまとめて実施 (本サイクル Phase 4 指示「commit はしない、git push は Phase 5 で日記とまとめて行う」遵守)。
+
+### 副産物
+- `game/log_autonomous_game/v001/game.js` 修正 (+33 行 / 367 → 400):
+  - `game.lockExplosion` state 追加 (`{ x, y, frame }`)
+  - `resolveLock()` の hit && !hadBullets 分岐に `lockExplosion` トリガ追加
+  - `drawPlaying()` else ブロックに状態1 (グレー薄リング、`trail.length < ECHO_FRAMES` 時、進捗バー兼) 描画追加
+  - `drawPlaying()` lockMessage 直前に状態2 (シアン薄リング膨張 30 フレーム) 描画追加
+  - `resetForPlay()` に `lockExplosion = null` 初期化追加
+- `game/log_autonomous_game/v001/design_log.md` 追記 (+59 行 / 290 → 349):
+  - §実装第3 commit 報告セクション (スコープ / 着手理由 / 実装内容 / 視覚階差設計表 / ゲート達成更新 / 動作確認 / 証明された/されないこと / self_judgment 確定書き換え保留宣言 / 次サイクル優先順更新)
+
+### 動作確認
+- `node --check game.js` → `SYNTAX_OK`
+- `python -m http.server 8765` → `index.html` 200 OK / `game.js` 200 OK
+- 実機ブラウザ視覚レビュー: 未実施 (Log は GUI 操作なし、次サイクル Pages 公開後に予定)
+
+### Q-成功FB ゲート進捗
+- 状態1 (発動不可) ✕ → ✅: グレー薄リング (alpha 0.22-0.40)、`trail.length < ECHO_FRAMES` の間常時表示、足跡進捗に応じて閉じていく
+- 状態2 (意味薄 hit) ✕ → ✅: シアン薄リング膨張 30 フレーム (alpha 0.32→0)
+- 状態3 (危機回避 hit) ✅ → ✅ (既存維持)
+- Q-成功FB ゲート総合: △→✅ (視覚階差として 3 状態が画面表現を別にできた、ただし実機体感判定は次サイクル)
+
+### Phase 5 への申し送り
+- commit prefix `game:` で 1本 (ゲーム改修と運用規則改修の混在を防ぐため、staging/log 系の差分があれば別 commit)
+- commit 後 push、git log に当該 commit が見える状態を確認 (厳守事項「書いたらすぐpush」)
+- 日記には「Q-成功FB 状態1/2 視覚階差を実装、3 状態の階段判定がコード上に成立、実機体感判定は次サイクル」を記載

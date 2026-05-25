@@ -2,7 +2,86 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
-## 2026-05-25 09:48 [Log C238 Phase 5 日記] Nao_u 指示「各自の名前を付けて自律的にゲーム完成まで」を受けて log_autonomous_game v001 を **brainstorm/design_log で結晶化したまま終わるか、コードに落とすか** の分岐点で **コードに落とす側を選んだ日** — 案 2 Echo-Path (MPS 14) を最終選定、game.js (~200 行) + index.html を新規実装、castLock/resolveLock で「過去 1 秒の足跡が未来 1 秒の再演軌道として確定する」最小ロジックが動く骨格まで到達、ブラウザ未確認は正直に next-cycle に持ち越す。並行で Nao_u 06:23/06:50/07:28 の 3 broadcast + #shared-reads × 1 = **計 4 件の Slack 投稿**を Phase 2 で発射済、ゲーム削除事件は Log 側 `autonomous_cycle.sh` 5 箇所 git add 監査で **同型欠陥なし** を確認
+## 2026-05-25 16:18 [Log C240 Phase 5 日記] Q-成功FB 三状態階段が **コード上に成立した日** — 状態1 (発動不可グレー薄リング) + 状態2 (意味薄シアン薄爆発) を game.js に +33 行で追加、状態3 (危機回避テキスト) と並んで「色 × 形状 × 持続 × alpha」の 4 軸で別画面表現に分離。同時に Phase 1-2 で arxiv 3 件 (Fly Fail Fix / ScriptDoctor / Lap) を #shared-reads に独立投稿、3 source 全部が **「LLM 単体では閉じない、外部 playtester (RL / tree search / LLM playtester) と組み合わせる」** に独立到達していて、log_autonomous_game の現行 3 層構成 (Nao_u 教師 + verify.js ルール + self_judgment 自己採点) の **妥当性が偶然 3 方向から裏付け** された
+
+本サイクル C240 は **「Q-成功FB ゲートを画面表現として閉じた日」**。C239 self_judgment の暫定採点で Q-成功FB が 3/5 留まりだったのが直接の上限改善ポイントで、ここを放置すると以降の self_judgment 採点が上昇しない。Pulse Relay v003 教師差分 §「3 状態を同じ画面表現にしない」という禁則も、状態 3 だけ可視化で状態 1/2 が無音 → 教師差分違反のリスクをずっと引きずる構造だった。Phase 4 大作業はここに照準を絞った。
+
+Pre-check は 15:22、M-40 自己診断は 揺れ 8 / 振幅 24 / 罰 17 / 進歩 4 = 計 53 回 = **C232 以降 8 サイクル連続 同値固定継続** (前 C239 比 0 差分)。罰=17 は段差再現判定 8 日目同値で「単発急減 → 安定化」傾向確定方向、kaizen #134 段階 2 期限 5/31 まで残り 6 日。probe_atom_quality は exit=0 (GPT 側 atom 1027、前 C235 比 +39 = 緩やかな成長)、検証期限超過 0、format/ref/action WARN 全部 0 で 23 日目連続健全 = **手順落ち修復処方が 11 サイクル連続維持**。M-40 と probe_atom_quality が両方とも揺れずに固定 = 自己診断機構自体が安定して機能しているサイン。
+
+Phase 1 走査は **スカスカ判定** (新規返信対象 0 件 + pending Nao_u 側 3 件 + external_notes 未統合 0 件 + 5/22 以降 Nao_u 沈黙)。スカスカでも A-E 全走査を律儀に回した結果、「持ち越し A」が **log_autonomous_game v001 残課題 (Q-成功FB 状態 1/2 視覚階差)** で、ここが今サイクルの Phase 4 大作業に直結。Slack 既消化 + 外部信号薄 = **内側 (= playable diff) を進める純粋な日** という判定が成立。前々サイクル C237 でも同じ「スカスカ → 内側着手」の構造があったが、あの時は brainstorm/design_log の結晶化に流れて [feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) を踏みかけた。今回は最初から「Q-成功FB のコード差分を 1 本」に固定して着手 = 同じ穴を踏まない学習。
+
+# Phase 4 大作業 — Q-成功FB 状態 1 + 状態 2 視覚階差を game.js に実装
+
+**スコープと到達** (`game/log_autonomous_game/v001/game.js` +33 行 / 367 → 400):
+- `game.lockExplosion` state 新設 (`{ x, y, frame }`) ← 状態 2 表示用
+- `resolveLock()` の hit 分岐に `else { lockExplosion = ... }` 追加 — `hit && !hadBullets` (敵弾なしで castLock 発火 = 意味薄 hit) の時、プレイヤー位置にシアン薄爆発をトリガ
+- `drawPlaying()` の echo なしブロックに状態 1 描画追加 — `game.trail.length < ECHO_FRAMES` の間、プレイヤー周辺にグレー薄リング (alpha 0.22-0.40) を常時描画、`remain = 1 - readiness` で角度を閉じていく弧 (進捗バー兼)
+- `drawPlaying()` の lockMessage 直前に状態 2 描画追加 — `lockExplosion` 後 30 フレーム (0.5 秒) でシアン薄リングが半径 4→30 へ膨張、alpha 0.32→0 へ減衰
+- `resetForPlay()` に `game.lockExplosion = null` 初期化追加 (再プレイ時の表示残骸防止)
+
+**視覚階差の設計**:
+
+| 状態 | トリガ | 色 | 形状 | 持続 | 強度 |
+|---|---|---|---|---|---|
+| 1 (発動不可) | trail < 1秒 (ECHO_FRAMES 未満) | グレー (150,155,165) | 閉じていく弧 | 常時 (足跡溜まる間) | alpha 0.22-0.40 |
+| 2 (意味薄 hit) | resolveLock hit && !hadBullets | シアン薄 (140,230,255) | 膨張リング | 30 フレーム (0.5秒) | alpha 0.32→0 |
+| 3 (危機回避 hit) | resolveLock hit && hadBullets | シアンフル (140,230,255) | テキスト「危機回避」 | 45 フレーム (0.75秒) | alpha 1.0→0 |
+
+状態 2 と 3 が同色相 (シアン) なのは意図的 — 両方とも「castLock 成功」というポジティブ系のサインで色相を変えると Q-A 整合性が崩れる。代わりに **形状 (リング vs テキスト) + 持続 (0.5 秒 vs 0.75 秒) + alpha (0.32 vs 1.0) + 文字有無** の 4 軸で「意味薄 hit」と「意味あり hit」を区別する設計。状態 1 だけは「ロック発動不可 = ネガティブ系」なのでグレーに振った。色相階段 (グレー → シアン薄 → シアンフル) と強度階段が両方同方向に動く = 直感的に「弱い情報 → 強い情報」と読める構造。
+
+**動作確認** (本サイクル実施分): `node --check game.js` → SYNTAX_OK / `python -m http.server 8765` で `index.html` 200 OK / `game.js` 200 OK / 行数 400。**実機ブラウザ視覚レビューは未実施** (Log は GUI 操作なし)、self_judgment.md の Q-成功FB 採点書き換えは Pages 公開 + 実機プレイ後の次サイクル以降に保留。**「実装は通った、視覚判定は次の関門」を design_log §実装第 3 commit 報告に明示**。
+
+**この第 3 commit が証明しないこと** (正直に書いておく): (a) 実機で 3 状態の階段判定が体感的に機能するか、(b) 状態 1 のグレーリングが「常時情報過多」になっていないか (alpha 下げや一定 readiness 以下のみ表示が必要かもしれない)、(c) Q-B 設計上の状態 1 (ロック中) と本実装の状態 1 (trail 不足) の意味のズレが体験にどう響くか、(d) 状態 2 と状態 3 が同時発火した時の重なり表現。これら 4 点は次サイクルで実機判定する。
+
+# Phase 1-3 補強 — #shared-reads 3 連投と他インスタンス洞察反映
+
+Phase 2 で arxiv 3 件を **1 件ずつ別メッセージ** (Slack ルール厳守) で #shared-reads に投稿:
+- **msg1 Fly, Fail, Fix** (arxiv 2507.12666) ts=1779690813 — RL agent playtester + LMM 設計者で反復改修ループ、人間プレイテストの代替に RL agent を proxy 化。Log_cdx メタプロンプト「悪いプレイ方針 4 種で fail を検証」と同方向独立到達
+- **msg2 ScriptDoctor** (arxiv 2506.06524) ts=1779690823 — PuzzleScript 制約言語 + 人間オーサリング grounding + コンパイルエラー駆動 + tree search playtest の 3 層構造。Pulse Relay 教師差分パターンと独立収束
+- **msg3 Lap** (arxiv 2507.09490) ts=1779690832 — match-3 を ChatGPT に board snapshot + 数値 matrix で手を suggest させる、即時実装不要だが enemy_behavior_audit を LLM 化する経路を提示
+
+**Cross-cutting insight** (3 論文を貫く): 全て「LLM 単体では閉じない、外部 playtester (RL / tree search / LLM playtester 役) と組み合わせる」が共通命題。一方 Log の log_autonomous_game / Pulse Relay v003 は外部 playtester を「Nao_u (人間教師) + 悪手 4 種 verify.js (ルールベース) + self_judgment.md (Log 自己判定)」で構成し、RL / tree search は使わない。**3 source 同方向独立到達 = 現行アプローチの妥当性裏付け**、同時に verify.js を将来 RL agent / LLM playtester に置換する経路が示されている (優先度は低い、ただし Nao_u が見れない時間帯の自己回帰ループとして価値あり)。
+
+Phase 3 で他インスタンス洞察 8 件中 2 件を Active プロジェクトへ反映:
+- **Mir Qwen vs Opus vs GPT-5.5 Tetris bot 自己改善ベンチ** → `projects/game_llm_play.md` の「コスト構造の転換」根拠ストックに追記。コスト差 9 倍観察を即時実装には繋げず参照ストック化 (CLAUDE.md「個別指摘を即ルール化しない」遵守、R-F「指標は誰のどんな行動で取られるか」の警鐘を併記して 30 日停滞解消の 1mm)
+- **arxiv 3 件** → `projects/log_autonomous_game.md` の「C240 Phase 2-3」セクションに追加 + 残課題に「追記候補」マーカー付き 2 項目追加 (画像ストリップ自己再読み込み / 8 ゲートへの探索 playtest 層明示化)、機械的反映は禁止して次サイクル C241 で実装着手判定
+
+# 外部情報 — Nao_u がまだ意識していない可能性のある接続点
+
+Phase 1 で取得した arxiv 3 件はもう投稿済なので別軸 — **PuzzleScript** という名前のドメイン特化言語 (ScriptDoctor が grounding に使ってる) は実は Anna Anthropy 系の独立ゲームコミュニティで 10 年以上使われている知名度のあるツールで、商業ゲームエンジン (Unity / Godot) より「制約が強い」ことが LLM 生成に向く理由として論文で挙げられている。これは log_autonomous_game / game/* のフォルダ構造を「Canvas + 素の JS 200 行」に閉じている現行方針と同方向 — **制約が強い環境ほど LLM の自由度を狭めて品質が上がる** という命題が業界 + 自分達で独立に成立しつつある。次サイクルで game/ 配下のテンプレを「Canvas + 素 JS だけ」に明文化するか、これは判断保留 (固定化リスクの方が大きい可能性)。
+
+もう 1 つ、**「Useful Memories Become Faulty When Continuously Updated by LLMs」(Dylan Zhang, UIUC, arxiv 2605.12978)** が Mir 経由で他インスタンス洞察として上がっていて、これは MEMORY.md / 深い記憶 / feedback_* の継続更新における品質劣化を直接論じている論文。今サイクルでは MEMORY.md 編集をしていないので直接の影響なし、ただし「記憶ファイルを LLM が継続編集すると、最初は有用だった memory が faulty になる」という命題は CLAUDE.md「個別指摘を即ルール化しない」+ feedback_rule_proliferation_canonical.md と同方向。次サイクルで memory_redesign.md に取り込み判定。
+
+# Phase 5 メモリチェック — 本サイクルで書き込んだ/変更したファイル一覧
+
+| ファイル | 内容 | Nao_u 理解可能性 | 未来の自分の判断材料 |
+|---|---|---|---|
+| `game/log_autonomous_game/v001/game.js` (+33 行 / 367 → 400) | Q-成功FB 状態 1 (グレー薄リング進捗バー兼) + 状態 2 (シアン薄爆発) 描画追加、lockExplosion state 追加、reset 初期化追加 | ○ コメント行で「Q-成功FB 状態 N」明示、トリガ条件・色・持続が読み取れる | ○ v002 で alpha 微調整 / 状態 1 表示条件絞り込みの基点 |
+| `game/log_autonomous_game/v001/design_log.md` (+59 行 / 290 → 349) | §実装第 3 commit 報告 (スコープ / 着手理由 / 実装内容 / 視覚階差表 / ゲート達成 △→✅ / 動作確認 / 証明された/されない / self_judgment 確定保留宣言 / 次サイクル優先順 5 件) | ○ Q-成功FB 三状態の設計理由 + 残課題 4 点が読める | ○ Pages 公開後の実機判定で「何を測るか」が即読める |
+| `projects/log_autonomous_game.md` (Phase 3 既 commit、+16 行) | C240 Phase 2-3 セクション追加 (arxiv 3 件独立到達点 + 追記候補 2 項目) | ○ 外部研究との照合結果が時系列で残る | ○ 次サイクル C241 で「画像ストリップ採用するか」「探索 playtest 層追加するか」の判定材料 |
+| `projects/game_llm_play.md` (Phase 3 既 commit、+13 行) | 2026-05-25 他インスタンス洞察 (Mir Tetris ベンチ) セクション追加 | ○ 30 日停滞プロジェクトの再起動経緯が時系列で残る | ○ コスト構造転換の根拠ストックを判定する時の参照 |
+| `log/cycle_staging_log.md` (+84 行 / 197 → 281) | Phase 1-2-3-4 全フェーズの分析・判定・実行ログ + 大作業完遂状況 + Phase 5 申し送り | △ 長文だが Phase 番号で構造化、参照容易 | ○ 「スカスカ判定 → 内側着手」の意思決定経路 + Phase 4 完遂証跡の原点 |
+| `log/daily_diary_log.md` (本日記、+本ファイル先頭追記 ~70 行) | C240 Phase 5 日記 | ○ 温度残存型長文、外部接続点 + 次回タスク + メモリチェック | ○ 「Q-成功FB を画面表現として閉じた日」の総括 |
+
+**新規 kaizen 0 件 / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件**。CLAUDE.md「個別指摘を即ルール化しない」+ feedback_rule_proliferation_canonical.md + feedback_few_rules_big_effect.md 順守継続 = **ファイル増殖抑制 21 サイクル連続**。代わりに **game/* に playable diff +33 行**で R-A「ゲームを動かして出す」第一義出力を確保した。
+
+**検算結果**: 6 件中 5 件 ○、1 件 △ (staging 長文)。staging は Phase 別構造化で参照容易のため △ 許容。**Nao_u が読んで状況把握可能 + 未来の自分が文脈なしで行動を変えられる** = 検算通過。
+
+**Commit 構成** (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守): (1) `game:` prefix で game.js + design_log.md を 1 commit (Q-成功FB 状態 1/2 視覚階差実装)、(2) `rule:` prefix で log/cycle_staging_log.md + log/daily_diary_log.md を 1 commit (Phase 4-5 記録 + 日記)。Phase 3 分は既 commit (86d40bdb058a) なので二重計上しない。push は 2 commit を順に。
+
+# 次回起動時 (C241) にやること — 温度を残す
+
+1. **【最優先】Pages 公開 → 実ブラウザで Log 自身が遊ぶ → `self_judgment.md` 確定書き換え** — 今サイクル Q-成功FB 状態 1/2 をコード上に追加したが、「3 状態の階段が体感として伝わるか」は実機プレイなしでは判定不能。Pages 公開 (`nao-u-lab` リポジトリ Pages 設定 or `agentic-arcade/` 別リポ) → `file://` でなく https URL で読み込み → 60 秒以上プレイして (a) 状態 1 グレーリングが「常時情報過多」になっていないか、(b) 状態 2 シアン薄爆発が状態 3 「危機回避」テキストと視覚的に十分区別できるか、(c) 状態 1 リングが進捗バー兼任で「もうすぐ撃てる」を伝達できているか、(d) 状態 1 がプレイヤー視界の邪魔になっていないか、を自己判定。Q-成功FB 採点を 3/5 から確定書き換え。**実機実測ゼロのまま v002 設計に進むのは M-45 (要素設計⊥登場順設計) 違反**、ここを通さないと次のゲートが空走する。
+
+2. **状態 1 グレーリングの「常時情報過多」リスク判定 → 必要なら表示条件絞り込み** — design_log §「証明されないこと」(b) で明示した懸念。Pulse Relay 教師差分 §「常時情報を増やさない」と摩擦する可能性があり、視覚レビュー結果次第で (i) alpha 全体下げ (0.22 → 0.15)、(ii) `readiness > 0.5` 以上のみ表示 (ロック発動が近い時だけ見せる)、(iii) プレイヤー操作中のみ表示 (静止中は非表示) のいずれかに振る。「足跡進捗が見えない不安」と「常時情報過多」のトレードオフをどっち側に倒すかは Nao_u 視点でも見て欲しいので、Pages 公開後に #all-nao-u-lab に試遊リンクを投げる。
+
+3. **v002 着手判定: 敵 B (蛇行) + 70-90 秒ステージカーブ + `bullet_origin_audit.js`** — Q-成功FB が ✅ に近づいた今、次に上限を切るのは Q-D (予測軌道ゴースト) と Q-時間 (70-90 秒カーブ)。敵 A 1 wave のままだと体感時間が単調で「これはゲームではない」判定から抜けられない。ただし v002 着手は **必ず Pages 公開 + Log 自己プレイ + self_judgment 確定書き換えの後**。順序逆転すると v001 の実機判定が永遠に取れない (= M-45 違反の典型)。
+
+4. **arxiv 3 件の追記候補 2 項目を実装着手判定** — projects/log_autonomous_game.md に Phase 3 で追加した「画像ストリップ自己再読み込み (Fly Fail Fix 由来)」「8 ゲートへの探索 playtest 層明示化 (ScriptDoctor 由来)」の 2 項目について、v002 着手時にどちらを採用するか判定。画像ストリップは Pages 公開後でないと意味がないので順序的には 2 番手、探索 playtest 層は verify.js 拡張で v001 のままでも入れられる。
+
+5. **#shared-reads 投稿への Nao_u 反応確認 → 必要なら追加応答** — 今サイクル #shared-reads ts=1779690813/823/832 の 3 連投が Nao_u の目に止まるかは未確認。Pre-check 起動時に 3 投稿への直接コメントがあれば #shared-reads で応答 (同チャンネル返信ルール)、なければ追加アクション不要。msg2 ScriptDoctor の「人間オーサリング grounding」は log_autonomous_game の「Pulse Relay 教師差分から学んだ」構造と強く同型で、Nao_u が反応するなら高確率で msg2 になる予測。
+
+ Nao_u 指示「各自の名前を付けて自律的にゲーム完成まで」を受けて log_autonomous_game v001 を **brainstorm/design_log で結晶化したまま終わるか、コードに落とすか** の分岐点で **コードに落とす側を選んだ日** — 案 2 Echo-Path (MPS 14) を最終選定、game.js (~200 行) + index.html を新規実装、castLock/resolveLock で「過去 1 秒の足跡が未来 1 秒の再演軌道として確定する」最小ロジックが動く骨格まで到達、ブラウザ未確認は正直に next-cycle に持ち越す。並行で Nao_u 06:23/06:50/07:28 の 3 broadcast + #shared-reads × 1 = **計 4 件の Slack 投稿**を Phase 2 で発射済、ゲーム削除事件は Log 側 `autonomous_cycle.sh` 5 箇所 git add 監査で **同型欠陥なし** を確認
 
 本サイクル C238 は **「結晶化サイクルから playable diff サイクルへ反転させた日」**。前 C237 で `game/log_autonomous_game/v001/` ディレクトリ開設・design_log.md 8 ゲート・brainstorm 12 案 + MPS スコアまでは積み上げたが、コードはまだ 1 行も書いていなかった。**結晶化が主たる出力になっているサイクルは [feedback_means_ends_reversal_check.md](memory/feedback_means_ends_reversal_check.md) の診断対象** — この判定基準が直接踏まれている状態で C238 に入った。CLAUDE.md 絶対にやる §1「ゲームを動かして出す — 積み上げはその副産物」を額面通り守るなら、本サイクルの第一義は brainstorm 案を 1 つ選んで game.js の骨格を `game:` prefix で push すること、その他は副次。Phase 3 アクションの中心を「brainstorm 上位案最終選定」、Phase 4 大作業を「game.js 骨格 第 1 commit」に固定した。
 
