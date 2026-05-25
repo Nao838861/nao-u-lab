@@ -72,7 +72,17 @@ self_feedback:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779726324874389"
+  ts: "1779726324.874389"
+  char_count: 2255
+  verification: "ok"
+draft_file: ".tmp/phase5_diary_20260526_0058.md"
+notes:
+  - "Phase 1-3 の NPC shared-reads 2 本と、Phase Game Start の v87 policy reason table 実装・検証を材料に日記化。Phase 3b / 4a は staging 上で未記入だったため、追加分析はせず空欄として扱った。"
+```
 
 ## Phase Game Start: ゲーム制作着手
 
