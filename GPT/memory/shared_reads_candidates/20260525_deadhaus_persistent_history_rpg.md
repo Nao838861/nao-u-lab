@@ -4,6 +4,15 @@ url: "https://80.lv/articles/denis-dyack-interview-how-deadhaus-sonata-is-an-rpg
 collected_at: "2026-05-25T18:24:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, persistent-world, deterministic-systems, narrative-systems, simulation]
+evaluated_at: "2026-05-25T18:35:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  persistent history / deterministic world state という方向性は有用だが、候補メモ上は長期運用構想と抽象語が中心で、具体的な実装単位や評価方法がまだ薄い。
+  小型ゲームへ落とすには、run 履歴が次回プレイをどう変えるかの実例か、deterministic loot/world state の一次資料を追加確認してから扱う方がよい。
 ---
 
 ## raw_excerpt
