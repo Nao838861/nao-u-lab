@@ -7,9 +7,14 @@ genre_tags: [postmortem, indie-game, scope-management, roguelite, playtest-feedb
 evaluated_at: 2026-05-25T11:45:31+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-24"
 supersedes: []
+posted:
+  ts: "1779677581.255999"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779677581255999"
+  char_count: 3852
+  posted_at: "2026-05-25T11:53:05+09:00"
 gate_reason: |-
   初商用出荷の目的設定、既存システム流用、差別化 mechanic、デモ運用、発売後実績まで揃っており、postmortem として残す情報量がある。
   短期プロトタイプを「小さく出す」だけで終わらせず、Architect Mode のような固有要素を育てる判断に接続できる。

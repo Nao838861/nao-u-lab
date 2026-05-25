@@ -1,13 +1,10 @@
-# log_cdx Cycle Staging — 2026-05-25 09:13
+# log_cdx Cycle Staging — 2026-05-25 11:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-- 2026-05-25T09:27+09:00 Phase 1 収集メモ:
-  - pending inbox 確認: `memory/slack_directives.jsonl` では `log-cdx-1779659296-968314ff25` が pending。`memory/slack_broadcasts.jsonl` では `broadcast-1779310201-24a490e4a6`, `broadcast-1779237427-15d6f5af92`, `broadcast-1779659405-88e2cedea5` が pending。Phase 1 なので対応せず、後フェーズ送り。
-  - `memory/shared_reads_candidates/20260525_apex_policy_exploration.md` - self-evolving LLM agent の exploration collapse と strategy map / fork discovery。
-  - `memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md` - agent 行動から exploration error / exploitation error を分けて測る controllable 2D grid + task DAG benchmark。
-  - `memory/shared_reads_candidates/20260525_textquests_llm_video_games.md` - Infocom 系 text adventure を使った、長期文脈・試行錯誤・single-session problem solving 評価。
+(Phase 1 が書き込む)
+
 ### 2026-05-25 11:41 Phase 1 収集
 - `memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md` - LLM-NPC と scripted NPC を比較し、自由会話が認知負荷・使いやすさ・信頼へ与える影響を測った arXiv 論文。
 - `memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md` - 生成 NPC の制約を役割ごとに配分する Symbolically Scaffolded Play の arXiv 論文。
@@ -15,28 +12,21 @@
 
 ## Phase Game Start: ゲーム制作着手
 
-- 対象 directive: `broadcast-1779657780-322e0406bd`
-  - permalink: `https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779657780988989`
-  - 指示: Pulse Relay v003 教師差分を参照し、各自の名前を付けた新規プロジェクトとして自律的にこの種のゲームを生成する。
-- 関連 directive: `broadcast-1779661734-358652e58a`
-  - permalink: `https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779661734285809`
-  - 指示: 自動サイクルがローカルゲームを消した再発防止。
-- 作成物: `game/resonance_cdx/v001/`
-  - `index.html`: ブラウザで開ける playable。
-  - `game.js`: Space を中心入力にした ring 反射ゲーム。特殊システム 3 状態、対象物側 marker、70-88 秒 stage curve、敵の画面外射撃禁止 telemetry、bad-policy headless 用 policy を含む。
-  - `style.css`: 中央 canvas のみ。サイドパネルなし。
-  - `design_log.md`: 指示原文、判断理由、削除事故対策、設計サイクル、検証方法を記録。
-- 検証: `node tools/headless_resonance_cdx_v001_check.js`
-  - pass。
-  - route policy: 3/3 seed で boss 到達。meaningful ring 使用、3 状態 telemetry、対象物側 marker frame を確認。
-  - bad policy: noRing / emptyRinger は boss 未到達、camper は route より短命かつ低 score。route と bad policy の score/time split を確認。
-  - enemy audit: `offscreenShots=0`, `abruptExits=0`。
-- lifecycle:
-  - `broadcast-1779657780-322e0406bd` を handled に更新。
-  - `broadcast-1779661734-358652e58a` を handled に更新。
-- 残課題:
-  - v001 は playable skeleton。route は boss 到達するが clear までは安定していない。
-  - 次版では boss defeat までの良い policy と、目視 screenshot/review packet を追加する。
+- 対象 directive: `log-cdx-1779668181-d295d8ddd5`
+- permalink: https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779668181087499
+- 対象ゲーム: `game/pulse_relay/`
+- 作成版: `game/pulse_relay/v006/`
+- 判断: v005 は Resonance Field / Enemy Resonance / Chain Relay として成立済みだったため、今回の playable diff は v006 として別発想の `Pulse Stock / Charge Economy` を実装した。敵弾の近くを通って `CHARGE` を溜め、LOW / MID / MAX Pulse を使い分ける。route は MAX Pulse を待つ headless policy とし、pulseHeavy を低 charge 連打の比較対象にした。
+- 実装ファイル: `game/pulse_relay/v006/game.js`, `game/pulse_relay/v006/timeline_eval.js`, `game/pulse_relay/v006/verify.js`, `game/pulse_relay/v006/enemy_behavior_audit.js`
+- 設計記録: `game/pulse_relay/v006/v006_design.md`, `game/pulse_relay/v006/design_log.md`, `game/pulse_relay/v006/README.md`
+- 検証:
+  - `node verify.js`: pass。route 3 run clear、`nearMissCharge 676.55`, `spentCharge 704`, `maxPulseCount 8`, `converted 141`, `fieldConversions 48`, `resonantEnemies 77`, `chainHits 26`, `pulseWhiffs 0`。
+  - `node timeline_eval.js`: pass。route clearRate 1、noPulse / camper / lane-holder / blind-sweeper clearRate 0。
+  - `node enemy_behavior_audit.js`: pass。`offscreenShots 0`, `lingeringEnemies 0`, `maxEnemyStep 12.52`, `relayKills 47`, `pulseWhiffs 0`。
+  - `node wave_grammar_check.js`: pass。hardIssues なし。
+  - `node enemy_overlap_check.js`: pass。pairOverlaps 0。
+- 残課題: MAX Pulse 待ち route が強く、LOW / MID Pulse の人間的な使い分けはまだ浅い。v007 では `Pulse Command / Enemy Rewrite` を比較候補にする。
+- inbox: `tools/slack_inbox_lifecycle.py close` で directives の対象 id を handled に更新済み。
 
 ## Phase 2: 分析
 ```yaml
@@ -52,55 +42,25 @@ postpone: []
 ## Phase 3: Shared-reads 投稿
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260525_apex_policy_exploration.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
-    char_count: 3680
-  - candidate: memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669572065929"
-    char_count: 4293
-skipped: []
+  - candidate: memory/shared_reads_candidates/20260525_shape_swarm_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779677581255999
+    char_count: 3852
+skipped:
+  - candidate: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+    reason: duplicate_url_already_posted
+    action: postpone
+    evidence: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459
+  - candidate: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    reason: duplicate_url_already_posted
+    action: postpone
+    evidence: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1779460386-6dcbd59e17
-    source_ts: "1779460386.310459"
-    title: "遊星歯車機関（千葉集）「正解に三つの鐘が鳴る ― プレイヤーを名探偵にするメカニクスについて」"
-    reason: "Nao_u 共有の ADV/ミステリ設計資料で、答え合わせを即時二値にすると推理余地が消え、最後に一括すると総当たりになる問題を扱っている。直近の playable diff / headless 評価が clear/fail に寄りやすいため、次回評価で部分的正解と総当たり防止を見る短期 probe に向く。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 17
-  decision: adopt_probe
-  change:
-    summary: "次回ゲーム評価用に、二値 verdict へ潰さず「惜しい/近い/不足 clue」を1つ残す一時 probe を追加。恒久ルールは追加しない。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-```yaml
-cleaned:
-  - "memory/MEMORY.md の markdown link / inline file path を確認。broken link は 0 件。"
-  - "memory/atoms.jsonl を確認。1563 rows、JSON parse error 0、duplicate id 0、duplicate normalized/content hash 0。"
-  - "memory/raw/ 配下の 30 日超未更新ファイルを確認。該当 0 件。"
-  - "memory/shared_reads_candidates/ 配下の 30 日超未更新 candidate を確認。該当 0 件。"
-  - "pending inbox 4 件を既存 evidence に基づき handled 化: log-cdx-1779659296-968314ff25, broadcast-1779310201-24a490e4a6, broadcast-1779237427-15d6f5af92, broadcast-1779659405-88e2cedea5。"
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -109,11 +69,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-```yaml
-posted:
-  channel: "#log"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779670195886369"
-  char_count: 2286
-  verification: "ok"
-  draft_file: ".tmp/phase5_log_diary_20260525_0913.md"
-```
+(Phase 5 が書き込む)

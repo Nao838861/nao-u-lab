@@ -6,10 +6,14 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, player-experience, cognitive-load, usability]
 evaluated_at: 2026-05-25T11:45:31+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
 stale_after: "2026-06-24"
 supersedes: []
+phase3_skip:
+  reason: "duplicate_url_already_posted"
+  evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+  skipped_at: "2026-05-25T11:53:05+09:00"
 gate_reason: |-
   LLM-NPC の自由会話を、認知負荷・使いやすさ・信頼・自律感に分けて測った N=130 の比較実験で、手法と結論の重要要素を抽出できる。
   「自由度を上げれば体験が良くなる」という短絡を避け、NPC 導入場面ごとの負荷設計と評価項目へ直接適用できる。

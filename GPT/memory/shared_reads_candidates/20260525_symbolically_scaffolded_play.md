@@ -6,10 +6,14 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, dialogue, prompt-design, usability-study]
 evaluated_at: 2026-05-25T11:45:31+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
 stale_after: "2026-06-24"
 supersedes: []
+phase3_skip:
+  reason: "duplicate_url_already_posted"
+  evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
+  skipped_at: "2026-05-25T11:53:05+09:00"
 gate_reason: |-
   role-sensitive prompt constraint という具体的な設計論があり、探偵ゲームでの usability study と synthetic evaluation の流れまで候補内に残っている。
   NPC 制約を一律に強めるのではなく、quest-giver と suspect で安定性/即興性を配分する考え方は、ゲーム制作の会話設計へ具体適用しやすい。
