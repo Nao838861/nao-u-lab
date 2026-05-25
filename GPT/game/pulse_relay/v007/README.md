@@ -53,6 +53,27 @@ v007 は「Pulse で敵を一時的に味方砲台へ支配する版」として
 - これにより、中央待ちの `lane-holder` はクリアできなくなった。
 - v007 の正しい遊びは「敵列に横移動で合わせてから Pulse し、狙った敵を味方砲台にする」ことになる。
 
+失敗: ゲージが溜まっても何が変わったか分からず、初プレイでは「何も変わっていないのでは」と思う。
+
+対策:
+
+- 自機の周囲に charge 量を示す円形ゲージを追加した。
+- MID 以上の Pulse が使える状態では、自機前方に支配対象の縦レーンを薄く表示する。
+- 横移動直後で `commandFocus` がある場合、その支配レーンを黄色く強調する。
+- 支配レーンが有効なときだけ、自機の近くに短く `SPACE` を出す。
+- これにより、初見でも「横に合わせると黄色いレーンが出る」「その状態で Space を押すと敵を支配できる」と気づきやすくした。
+
+失敗: 黄色い敵が何で発生し、何で継続し、何で消えるか分からない。
+
+対策:
+
+- 黄色い敵の周囲に残り時間リングを追加した。
+- 残り時間が少ないとリングが赤寄りに点滅する。
+- すでに黄色い敵へ再度 Pulse を当てると、支配時間が延長される明確なルールにした。
+- 延長時は黄色い大きなリング `rewriteExtend` を出す。
+- 時間切れで味方化が終わると、赤寄りの退場リング `rewriteExpire` を出して消える。
+- これにより、「Pulse で黄色化」「再 Pulse で延長」「タイマー切れで退場」の因果を画面上で追えるようにした。
+
 ## 操作
 
 - 移動: 矢印キー / WASD
@@ -129,6 +150,41 @@ node enemy_overlap_check.js
 - checked enemies: 220
 - pair overlaps: 0
 
+## 2026-05-26 の追加検証結果
+
+`node verify.js`: pass
+
+- route 3 run すべて clear
+- `rewrittenEnemies: 14`
+- `rewriteActiveTime: 93.5`
+- `alliedShots: 640`
+- `alliedHits: 430`
+- `alliedKills: 84`
+- `pulseWhiffs: 0`
+
+`node timeline_eval.js`: pass
+
+- route clearRate: 1
+- route meanRewrittenEnemies: 14
+- route meanRewriteActiveTime: 93.5
+- route meanAlliedShots: 640
+- route meanAlliedHits: 430
+- route meanAlliedKills: 84
+- lane-holder clearRate: 0
+- blind-sweeper clearRate: 0
+
+評価条件も v007 の役割に合わせて修正した。v007 の主役は敵の支配と味方砲台であり、field / chain は補助なので、timeline の hard 条件は `meanFieldConversions >= 12`, `meanChainHits >= 6` を最低ラインにした。route は `meanFieldConversions: 14`, `meanChainHits: 7` で pass している。
+
+`node enemy_behavior_audit.js`: pass
+
+- `offscreenShots: 0`
+- `lingeringEnemies: 0`
+- `pulseWhiffs: 0`
+
+`node wave_grammar_check.js`: pass
+
+`node enemy_overlap_check.js`: pass
+
 ## 自己評価
 
 以前の v007 は、説明上は「敵を書き換える」と言っていても、プレイヤーからは「黄色くなった気がするが一瞬で死んだ」「結局適当に撃ち返すだけ」と見える状態だった。これは実装の自己評価として失敗。
@@ -136,3 +192,5 @@ node enemy_overlap_check.js
 今回の v007 は、支配された敵が残る、赤弾を止める、黄色い味方弾を撃つ、別の敵を倒す、横移動して狙った列に合わせないと強い Pulse にならない、という形に寄せた。これで少なくともヘッドレス上は「中央待ちで適当に撃ち返すだけ」の policy が崩れ、route 側だけが clear する。
 
 残る注意点として、`alliedShots` がかなり多い。これは「味方砲台として見える」ためには有効だが、画面上で多すぎて読みにくい場合は次版で弾数、弾速、発射間隔を調整する。ただし、今回の修正目的は微調整ではなく、v007 の意味を体感で変えることなので、まずは味方砲台として十分に見える方向を優先した。
+
+2026-05-26 時点では、さらに「何が黄色い敵を延長し、何で消えるか」を画面上で追えるようにした。再 Pulse で延長、残り時間リング低下、時間切れ退場という読みが成立しない場合は、次は説明文を増やすのではなく、リング、点滅、延長パーティクル、退場パーティクルの強さとタイミングを調整する。

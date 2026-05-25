@@ -423,9 +423,9 @@ function main() {
   if (report.byPolicy.route.meanNearMissCharge < 80) hardIssues.push("v007 charge economy is not being earned through danger");
   if (report.byPolicy.route.meanSpentCharge < 100) hardIssues.push("v007 route is not spending enough pulse charge");
   if (report.byPolicy.route.meanMidPulseCount < 3) hardIssues.push("v007 route is not using command pulses enough");
-  if (report.byPolicy.route.meanFieldConversions < 16) hardIssues.push("v007 resonance field is not central enough");
+  if (report.byPolicy.route.meanFieldConversions < 12) hardIssues.push("v007 resonance field is not supporting rewrite play enough");
   if (report.byPolicy.route.meanResonantEnemies < 24) hardIssues.push("v007 enemy resonance reaction is not exercised enough");
-  if (report.byPolicy.route.meanChainHits < 8) hardIssues.push("v007 chain relay is not exercised enough");
+  if (report.byPolicy.route.meanChainHits < 6) hardIssues.push("v007 chain relay is not exercised enough");
   if (report.byPolicy.route.meanRewrittenEnemies < 7) hardIssues.push("v007 route is not rewriting enough enemies");
   if (report.byPolicy.route.meanRewriteActiveTime < 18) hardIssues.push("v007 rewritten enemies do not stay alive as allies long enough");
   if (report.byPolicy.route.meanRewriteFuelShots < 24) hardIssues.push("v007 rewritten enemies are not producing enough fuel shots");

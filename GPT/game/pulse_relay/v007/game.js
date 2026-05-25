@@ -508,7 +508,9 @@
     rewriteEnemy(e, tier = "mid") {
       if (!e || e.hp <= 0) return false;
       const before = e.rewritten || 0;
-      e.rewritten = Math.max(e.rewritten || 0, tier === "max" ? 7.2 : tier === "mid" ? 5.6 : 3.4);
+      const duration = tier === "max" ? 7.2 : tier === "mid" ? 5.6 : 3.4;
+      e.rewritten = before > 0 ? Math.min(duration + 2.6, before + duration * 0.46) : Math.max(e.rewritten || 0, duration);
+      e.rewriteMax = Math.max(e.rewriteMax || duration, e.rewritten);
       e.rewrittenKind = e.kind;
       e.rewriteCd = Math.min(e.rewriteCd || 0, 0.04);
       e.allyLock = Math.max(e.allyLock || 0, tier === "max" ? 6.2 : tier === "mid" ? 4.8 : 2.6);
@@ -519,7 +521,7 @@
       if (!e.boss) e.fireCd = Math.max(e.fireCd, 0.8);
       if (e.boss) this.metrics.rewriteBossPatternCount++;
       if (before <= 0) this.metrics.rewrittenEnemies++;
-      this.particles.push({ x: e.x, y: e.y, life: 0.26, max: 0.26, kind: "rewrite" });
+      this.particles.push({ x: e.x, y: e.y, life: before > 0 ? 0.42 : 0.26, max: before > 0 ? 0.42 : 0.26, kind: before > 0 ? "rewriteExtend" : "rewrite" });
       return true;
     }
 
@@ -721,7 +723,7 @@
         if (e.rewritten > 0) this.metrics.rewriteActiveTime += DT;
         if (!e.boss && e.convertedAlly && e.rewritten <= 0) {
           e.hp = 0;
-          this.particles.push({ x: e.x, y: e.y, life: 0.28, max: 0.28, kind: "rewrite" });
+          this.particles.push({ x: e.x, y: e.y, life: 0.34, max: 0.34, kind: "rewriteExpire" });
           continue;
         }
         e.rewriteCd = Math.max(0, (e.rewriteCd || 0) - DT);
@@ -1177,6 +1179,7 @@
     }
     ctx.shadowBlur = 0;
     drawPlayer(ctx, game.player);
+    drawPulseReadiness(ctx, game);
     drawParticles(ctx, game.particles);
     drawHud(ctx, game);
   }
@@ -1224,6 +1227,20 @@
       ctx.beginPath();
       ctx.arc(0, 0, e.r + 15 + Math.sin(e.age * 8) * 3, 0, Math.PI * 2);
       ctx.stroke();
+      const timer = clamp(e.rewritten / Math.max(e.rewriteMax || e.rewritten || 1, 1), 0, 1);
+      ctx.globalAlpha = 0.92;
+      ctx.strokeStyle = timer > 0.32 ? "#ffffff" : "#ff9277";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(0, 0, e.r + 23, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * timer);
+      ctx.stroke();
+      if (timer < 0.32) {
+        ctx.globalAlpha = 0.18 + Math.sin(e.age * 20) * 0.08;
+        ctx.fillStyle = "#ff9277";
+        ctx.beginPath();
+        ctx.arc(0, 0, e.r + 27, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
     ctx.fillStyle = e.rewritten > 0 ? "#ffe66d" : e.boss ? colors.boss : colors[e.kind] || "#d17cff";
     ctx.strokeStyle = "#111722";
@@ -1280,18 +1297,56 @@
     ctx.restore();
   }
 
+  function drawPulseReadiness(ctx, game) {
+    const p = game.player;
+    const charge = clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1);
+    const commandReady = p.pulseCd <= 0 && p.pulseCharge >= MID_PULSE_COST && p.commandFocus > 0;
+    const chargeReady = p.pulseCd <= 0 && p.pulseCharge >= MID_PULSE_COST;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.globalAlpha = 0.22 + charge * 0.38;
+    ctx.strokeStyle = commandReady ? "#fff06a" : chargeReady ? "#bff4ff" : "#617387";
+    ctx.lineWidth = commandReady ? 4 : 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * charge);
+    ctx.stroke();
+    if (chargeReady) {
+      const band = commandReady ? 122 : 74;
+      ctx.globalAlpha = commandReady ? 0.18 + Math.sin(game.t * 14) * 0.04 : 0.08;
+      ctx.fillStyle = commandReady ? "#fff06a" : "#7befff";
+      ctx.fillRect(-band, -H, band * 2, H - 44);
+      ctx.globalAlpha = commandReady ? 0.82 : 0.42;
+      ctx.strokeStyle = commandReady ? "#fff7b2" : "#9ec6d4";
+      ctx.lineWidth = commandReady ? 3 : 1;
+      ctx.beginPath();
+      ctx.moveTo(-band, -H);
+      ctx.lineTo(-band, -44);
+      ctx.moveTo(band, -H);
+      ctx.lineTo(band, -44);
+      ctx.stroke();
+      if (commandReady) {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 13px Segoe UI, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("SPACE", 0, -PULSE_RADIUS - 12);
+      }
+    }
+    ctx.restore();
+  }
+
   function drawParticles(ctx, particles) {
     for (const q of particles) {
       const k = q.life / q.max;
       ctx.globalAlpha = Math.max(0, k);
-      if (q.kind === "ring") {
-        ctx.strokeStyle = q.count > 0 ? "#ffffff" : "#5c6b7e";
-        ctx.lineWidth = q.count > 0 ? 4 : 2;
+      if (q.kind === "ring" || q.kind === "rewriteExtend" || q.kind === "rewriteExpire") {
+        ctx.strokeStyle = q.kind === "rewriteExtend" ? "#fff06a" : q.kind === "rewriteExpire" ? "#ff9277" : q.count > 0 ? "#ffffff" : "#5c6b7e";
+        ctx.lineWidth = q.kind === "rewriteExtend" ? 5 : q.kind === "rewriteExpire" ? 3 : q.count > 0 ? 4 : 2;
         ctx.beginPath();
-        ctx.arc(q.x, q.y, 24 + (1 - k) * 88, 0, Math.PI * 2);
+        ctx.arc(q.x, q.y, 24 + (1 - k) * (q.kind === "rewriteExtend" ? 112 : q.kind === "rewriteExpire" ? 62 : 88), 0, Math.PI * 2);
         ctx.stroke();
       } else {
-        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : "#8fdcff";
+        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : q.kind === "rewrite" ? "#fff06a" : "#8fdcff";
         circle(ctx, q.x, q.y, 6 + (1 - k) * 20);
       }
     }

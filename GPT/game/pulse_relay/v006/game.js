@@ -1174,6 +1174,7 @@
     }
     ctx.shadowBlur = 0;
     drawPlayer(ctx, game.player);
+    drawPulseReadiness(ctx, game);
     drawParticles(ctx, game.particles);
     drawHud(ctx, game);
   }
@@ -1257,6 +1258,40 @@
     ctx.stroke();
     ctx.fillStyle = "#ffffff";
     circle(ctx, p.x, p.y, p.r);
+    ctx.restore();
+  }
+
+  function drawPulseReadiness(ctx, game) {
+    const p = game.player;
+    const charge = clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1);
+    const highReady = p.pulseCd <= 0 && p.pulseCharge >= HIGH_PULSE_COST && !game.pulseStorm;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.globalAlpha = 0.22 + charge * 0.38;
+    ctx.strokeStyle = highReady ? "#ffffff" : p.pulseCharge >= MID_PULSE_COST ? "#bff4ff" : "#617387";
+    ctx.lineWidth = highReady ? 4 : 2;
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * charge);
+    ctx.stroke();
+    if (highReady) {
+      const pulse = 1 + Math.sin(game.t * 10) * 0.06;
+      ctx.globalAlpha = 0.16 + Math.sin(game.t * 14) * 0.04;
+      ctx.fillStyle = "#61f4ff";
+      ctx.beginPath();
+      ctx.arc(0, 0, PULSE_RADIUS * 1.25 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.78;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, PULSE_RADIUS * 1.25 * pulse, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 13px Segoe UI, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("SPACE", 0, -PULSE_RADIUS * 1.25 - 12);
+    }
     ctx.restore();
   }
 

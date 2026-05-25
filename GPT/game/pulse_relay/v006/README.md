@@ -23,6 +23,18 @@ v006 は「MAX Pulse を押した瞬間に全部が終わる版」ではなく�
 - `stormSalvos` を追加し、遅延サルボが実際に発生しているか検証する。
 - 視覚表現として、青いストームリング、捕獲数表示、捕獲パーティクル、放出パーティクルを追加した。
 
+## 2026-05-26 の認知導線修正
+
+ユーザーから「6も7も、ゲージが溜まったら何かが変わるのに気づかず、初プレイは何も変わってないのでは？って思ってしまった」と指摘された。これはヘッドレス指標では検出できないが、独自システムのあるゲームでは必須の初見導線だった。
+
+v006 では方向性自体は悪くないため、仕様は変えずに「MAX Pulse が使える状態」を画面上で分かるようにした。
+
+- 自機の周囲に charge 量を示す円形ゲージを追加した。
+- MAX Pulse が撃てる状態では、自機周辺に大きな青いストーム予告リングが出る。
+- MAX Pulse が撃てる状態では、ストーム予告の上に短く `SPACE` を出す。
+- この `SPACE` は常時説明文ではなく、発動可能状態だけに出る短い入力キューとして扱う。
+- これにより、初回プレイでも「ゲージが溜まると自機周囲の状態が変わる」「Space を押すと何か大きいものが出る」と気づきやすくした。
+
 ## 操作
 
 - 移動: 矢印キー / WASD
@@ -93,6 +105,33 @@ node enemy_overlap_check.js
 
 - checked enemies: 220
 - pair overlaps: 0
+
+## 2026-05-26 の追加検証結果
+
+`node verify.js`: pass
+
+- route 3 run すべて clear
+- `stormCaptures: 369`
+- `stormSalvos: 6`
+- `maxPulseCount: 6`
+
+`node timeline_eval.js`: pass
+
+- route clearRate: 1
+- route meanStormCaptures: 369
+- route meanStormSalvos: 6
+- lane-holder clearRate: 0
+- blind-sweeper clearRate: 0
+
+`node enemy_behavior_audit.js`: pass
+
+- `offscreenShots: 0`
+- `lingeringEnemies: 0`
+- `pulseWhiffs: 0`
+
+`node wave_grammar_check.js`: pass
+
+`node enemy_overlap_check.js`: pass
 
 ## 自己評価
 
