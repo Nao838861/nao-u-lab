@@ -80,6 +80,39 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-25T19:19+09:00 Phase 4a 記憶階層 整理 + 問題抽出:
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    file: memory/MEMORY.md
+    checked_links: 0
+    broken_links: 0
+    note: "現行 MEMORY.md は index 参照を主に inline code で持っており、Markdown link として検査対象になる行はなかった。"
+  atoms:
+    file: memory/atoms.jsonl
+    rows: 1582
+    parse_errors: 0
+    duplicate_ids: 0
+    exact_duplicate_content_groups: 16
+    note: "完全同一内容の重複はあるが、MEMORY.md 生成結果の lifecycle/content fold で 190 件が折り畳まれており、今回の機械的 cleanup 対象にはしない。"
+  raw_archive:
+    path: memory/raw/
+    cutoff: "2026-04-25"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    path: memory/shared_reads_candidates/
+    cutoff: "2026-04-25"
+    older_than_30_days: 0
+  inbox:
+    directives_pending: 0
+    broadcasts_pending: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
