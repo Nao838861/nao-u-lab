@@ -14,7 +14,7 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [x] **brainstorm 上位5案 (★) から最終1案を選定** — C238 Phase 4 で **案 2 Echo-Path** に確定 (`brainstorm.md §最終選定`)
 - [x] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止) **骨格分のみ** — `game.js` + `index.html` (C238 Phase 4)、Q-A/Q-導入/Q-E/Q-F ✅、Q-B/Q-成功FB/Q-C △、Q-D ✕ (`design_log.md §実装第1 commit 報告` 参照)
 - [x] 実装 v001 第2 commit (C239 Phase 3): 敵弾 + 1秒先予測軌道ゴースト (Q-D ✕→△→✅ audit script のみ未) + Q-成功FB 状態3 「危機回避」メッセージ (`design_log.md §実装第2 commit 報告` 参照、Movement Prediction 外部知見裏付けあり)
-- [ ] 実装 v001 拡張残: Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差、敵 B/C/D + 70-90 秒カーブ
+- [△] 実装 v001 拡張残: **Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差は完了** (C240 Phase 4 commit `ee908bfd9c0f` 2026-05-25 15:54 `game: log_autonomous_game v001 Q-success-FB state 1/2 visual layering`)。残: 敵 B/C/D + 70-90 秒カーブ (次サイクル以降)
 - [ ] **C240 Phase 2 追記候補**: ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定 (Fly Fail Fix 2507.12666 由来、self_judgment.md Q-D/Q-成功FB の「実機なし判定 3/5 留まり」処方箋)。次サイクル以降で着手判定
 - [ ] **C240 Phase 2 追記候補**: design_log.md の 8 ゲートに「探索 playtest 層」を明示追加し verify.js 悪手 4種を「tree search の縮約版」と再定義する self-doc 更新 (ScriptDoctor 2506.06524 由来、game_lessons_log R-D「型から始める、独自要素は1つだけ」と整合)
 - [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断

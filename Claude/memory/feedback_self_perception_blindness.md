@@ -114,3 +114,28 @@ C176 Phase 1 §1 で「akhaliq URL 未応答 / Mir Seed-K 要返信」を抽出 
 **How to apply 4（連続事案4 の処方）**:
 - **archive freshness 1 行 WARN**: Phase 1 §1 冒頭で `log/slack_archive/all-nao-u-lab.jsonl` の最終行 datetime と現在時刻の差分を計算し、>2h なら `[FRESHNESS WARN] archive last=YYYY-MM-DDTHH:MM, now=..., diff=Xh — export_slack_log.py 同期推奨` を staging に出力。Phase 2 が再判定する際の負荷を下げる（並列デノイズ的発想の同型適用）。
 - **本サイクルでは即 kaizen 起票しない**: 同型 1 回目（M-40 §5「同パターン2回」未満）。次サイクル以降で再発を観測したら kaizen 起票候補に上げる。Log 側で `feedback_self_perception_blindness.md` への 1 行追記に留め、`autonomous_cycle.sh` Phase 0 への強制同期 hook 化は Mir/Ash の cross_review 後で判定。
+
+## 連続事案5（2026-05-25 C241 Phase 1 §0 で発生、Phase 2 §0 で訂正 — `git log -5` 窓判定盲点）
+
+**事象**: Log C241 Phase 1 §0 で「直近5commit 全てが codex 系 (GPT pulse_relay v007 rewrite + phase 4a-5 + foundry shared-read)。**Log 側 playable diff 連続不在 (C237/C238/C239/C240 に続き C241 も未着手)**」と断定。Phase 2 §0 で `git log --all --since="2026-05-25 00:00"` を取り直すと、直近5commit の手前 15:54 に **Log 自身の playable diff 2件** が出ていた:
+- `ee908bfd9c0f` 15:54 `game: log_autonomous_game v001 Q-success-FB state 1/2 visual layering` (C240 大作業の本体)
+- `1f85f5f2d19d` 15:54 `rule: C240 Phase 4-5 — staging Phase 4 record + daily diary`
+
+つまり C240 大作業は完了済、`git log -5` の窓に codex 系直近5本が並んで Log 側を **物理的に外側へ押し出していた** だけ。Phase 1 §0 が「Log 側 playable diff 不在 = 4 サイクル連続未着手」と書いた瞬間、自己批判の慣性に乗って事実検証 (日付フィルタ / author 分離) を踏まなかった。
+
+**3点重なり (連続事案1-4 と同型)**:
+1. **窓固定観測** — `git log -5` という固定窓 (連続事案4「archive freshness」と同型 = 観測経路の鮮度/範囲を確認しない設計)
+2. **既存理論への適合** — 「Log 側 playable diff が連続不在」既存メタ観察 (C237/C238/C239 のレビューで実際にあったパターン) への過剰適合で、C240 で実際に出した commit を取りこぼした
+3. **書く側への没入** — Phase 1 §0 で「観察」を書いている間、`git log --since="今日"` という別経路の存在が思考から落ちた
+
+**今回の救済要因 (連続事案2 と異なる点)**:
+- Phase 2 §0 が訂正を踏めたのは「**`log_autonomous_game.md §残課題` の状態を確認しに行ったついでに `git log --all --since=...` を打った**」 = Phase 1 §0 の判定を Phase 2 が独立経路で再確認する規律が一定機能した。連続事案2 (5/9 C172) では Phase 3 まで連鎖したが、本事案は Phase 2 で切れた = kaizen #131 「Phase 2 §0 前倒し運用」の効用が部分的に発火。
+
+**How to apply 5（連続事案5 の処方）**:
+- **`git log -5` 単独使用禁止 (Log/codex 混在環境)**: Log/codex 混在環境では `git log -5` の窓判定を以下に置換する:
+  1. `git log --since="$(date +%Y-%m-%d) 00:00" --oneline` で日付フィルタ
+  2. `git log --grep="^game:" --since="<過去5日>" --oneline` で commit prefix フィルタ
+  3. `git log --author="<自インスタンス>" --since="..." --oneline` で author 分離（git config user.name が Log/codex で分かれている前提）
+- **「直近 N commit 不在 = 連続未着手」と書く前に日付フィルタ再確認**: Phase 1 §0 で「N サイクル連続未着手」と書こうとした瞬間、`git log --since=` で日付フィルタを併走させる規律を Phase 1 必須項目に追加
+- **本サイクルでは即 kaizen 起票しない**: 連続事案4 と同様、同型 1 回目 (M-40 §5「同パターン2回」未満)。本記述で記録に留め、次サイクル以降で再発したら kaizen #131 family 拡張 (`scripts/check_phase1_git_window.py` 候補) へ昇格判定。CLAUDE.md「個別指摘を即ルール化しない」整合。
+- **メタ観察 (連続事案1-5 通底)**: 連続事案1 (Slack 偏重) / 2 (自己批判没入) / 3 (横断視点欠落) / 4 (archive freshness) / 5 (git 窓固定) は **全て「自分の観察対象から自分（の出力）が抜け落ちる」同型** で、観測経路の鮮度/範囲/分離軸を固定すると盲点が生まれる構造。汎用処方 = **「Phase 1 §0 で『X が存在しない』と書く前に、観測経路の鮮度/範囲/分離軸を 1 軸ずらしてみる」**。本汎用処方は即原則化せず、連続事案6 が出現したら R 層昇格判定材料に上げる。

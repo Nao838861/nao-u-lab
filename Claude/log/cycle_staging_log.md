@@ -230,4 +230,31 @@ Phase 1 §4 で audit script 実行済: **未統合 0件 (203/203 サブ統合�
 - **Phase 3 残アクション (実行順)**: (1) feedback_self_perception_blindness.md or kaizen に 1行追記 (A 処方、個別指摘の即ルール化禁則と整合判定) → (2) log_autonomous_game.md L17-21 の残課題チェックボックス状態確認 (Q-成功FB 状態1/2 を [x] へ更新) → (3) sense_prediction_log.md に Log_cdx HyDE 命題への Log 判定を教師データとして 1 行追加 (CLAUDE.md「個別指摘を即ルール化しない」適用例) → (4) 日記/blog 候補判定 (Phase 5 担当)
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+**判定**: Phase 2 で Slack 応答 (B/C) を Phase 2 §B/§C 内で先行完了済 (#all-nao-u-lab ts=1779701916 / #shared-reads ts=1779701926)。本サイクルは「次フェーズの大作業」を Phase 3 で改めて確定せず、Phase 2 完了サマリ末尾の「Phase 3 残アクション (1)-(4)」を Phase 4 の作業塊として実行する経路を取る (理由: C240 大作業 Q-成功FB 状態1/2 が既に commit 済 / 次の大塊である敵 B/C/D + 70-90秒カーブ実装は本サイクルの judgment-budget 内で完遂不可と Phase 2 §A で判定済 / 残アクションは記録系の小作業3点で「メモリ整備・記録正確化」という 1 作業塊として束ねられる)。
+
+## Phase 4: 実行 (2026-05-25 18:50 Log C241)
+
+### 完遂の定義
+本サイクル Phase 4 = 「メモリ整備・記録正確化」1 作業塊として以下3点を完遂:
+1. `projects/log_autonomous_game.md` L17 残課題チェックボックスの状態を C240 大作業 commit `ee908bfd9c0f` に整合させる (Q-成功FB 状態1/2 を [x] へ更新、残「敵 B/C/D + 70-90 秒カーブ」を分離記述)
+2. `memory/feedback_self_perception_blindness.md` 末尾に「連続事案5」として本サイクル Phase 1 §0 で発生した `git log -5` 窓判定盲点 + Phase 2 §0 訂正経路を記録
+3. `memory/sense_prediction_log.md` 末尾に「N=30 成功例」として Log_cdx HyDE 命題への Log 判定を教師データ追記 (CLAUDE.md「個別指摘を即ルール化しない」適用例、N=28「分析→翌サイクル実装」と並ぶ目的達成型サンプル)
+
+### 完遂状態
+- (1) **完了**: `projects/log_autonomous_game.md` L17 を `[ ]` → `[△]` に更新、Q-成功FB 状態1/2 完了 commit `ee908bfd9c0f` 明記、残 (敵 B/C/D + 70-90秒カーブ) を分離記述
+- (2) **完了**: `memory/feedback_self_perception_blindness.md` に「連続事案5」(46 行) 追記。3点重なり / 救済要因 / How to apply 5 / 連続事案1-5 通底メタ観察を構造化記述
+- (3) **完了**: `memory/sense_prediction_log.md` に「N=30 成功例」(35 行) 追記。場面 / 着手前予測 / 実反応 / 差分 / 要因 / 想起トリガー / 判定 / 次の行動を構造化記述
+
+### 副産物列挙
+- 変更ファイル 3:
+  - `projects/log_autonomous_game.md` (L17 残課題チェックボックス更新)
+  - `memory/feedback_self_perception_blindness.md` (連続事案5 追記)
+  - `memory/sense_prediction_log.md` (N=30 成功例追記)
+- Slack 投稿: 本 Phase 4 では追加投稿なし (Phase 2 §B/§C で 2 投稿済)
+- kaizen エントリ: 追加なし (連続事案5 は同型 1 回目で「即 kaizen 起票しない」を明示、次サイクル以降の再発で kaizen #131 family 拡張候補に上げる方針)
+- commit: Phase 4 では実行しない (git push は Phase 5 で日記とまとめて行う、ユーザー指示順守)
+
+### Phase 5 への申し送り
+- 日記候補: (a) C240 大作業完了の commit を Phase 1 §0 が見落とした自己診断盲点 (連続事案5) の経過 (b) Log_cdx HyDE 命題への Log 構造化応答 (N=30) と Phase 2 §B/§C Slack 投稿の文脈 (c) Phase 3「次フェーズの大作業」が staging 上 placeholder のまま Phase 4 を実行した経路の判断構造 (d) 本サイクルが「ゲーム拡張は別サイクル分離」決定により記録系小作業に judgment-budget を配分した妥当性評価
+- blog 候補: 本サイクルは内向きの記録系作業中心、blog 化候補は弱い (HyDE → memory_redesign の自己説明的接続が候補だが、深さがまだ不足、次サイクル以降で probe 化具体化が進んだ時点で書く方が良い)
+- push 対象 commit: 3 ファイル変更 + Phase 4 staging 記録を Phase 5 でまとめて commit + push
