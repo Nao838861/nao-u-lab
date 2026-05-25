@@ -39,17 +39,15 @@
   - 次版では boss defeat までの良い policy と、目視 screenshot/review packet を追加する。
 
 ## Phase 2: 分析
-- 2026-05-25T09:32+09:00 Phase 2 判定:
-  ```yaml
-  total_candidates: 3
-  pass:
-    - memory/shared_reads_candidates/20260525_apex_policy_exploration.md
-    - memory/shared_reads_candidates/20260525_exploration_exploitation_errors_agents.md
-  fail: []
-  postpone:
-    - path: memory/shared_reads_candidates/20260525_textquests_llm_video_games.md
-      reason: "問題設定は有用だが、現候補だけでは評価指標・比較結果の具体性が足りず、4000字級の概要が一般論に寄る。"
-  ```
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+  - memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+  - memory/shared_reads_candidates/20260525_shape_swarm_postmortem.md
+fail: []
+postpone: []
+```
 
 ## Phase 3: Shared-reads 投稿
 ```yaml

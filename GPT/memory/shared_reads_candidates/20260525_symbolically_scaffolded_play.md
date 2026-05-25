@@ -4,6 +4,21 @@ url: https://arxiv.org/abs/2510.25820
 collected_at: 2026-05-25T11:41:36+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, dialogue, prompt-design, usability-study]
+evaluated_at: 2026-05-25T11:45:31+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-24"
+supersedes: []
+gate_reason: |-
+  role-sensitive prompt constraint という具体的な設計論があり、探偵ゲームでの usability study と synthetic evaluation の流れまで候補内に残っている。
+  NPC 制約を一律に強めるのではなく、quest-giver と suspect で安定性/即興性を配分する考え方は、ゲーム制作の会話設計へ具体適用しやすい。
+suggested_post_outline:
+  overview_angle: 生成 NPC のプロンプト制約を「強/弱」ではなく、役割ごとの期待機能に合わせて配分する設計として読む。
+  analysis_axis: 高制約が coherence を上げる場面と believability を削る場面を分け、JSON+RAG scaffold と judge 評価で補助する軸。
+  application_target: 謎解き・案内役・敵役・雑談役などの NPC ロール別に、守るべき事実と崩してよい即興範囲を設計するプロンプト/評価テンプレ。
+  pros_cons: 安定性と破綻防止には強いが、ロール定義と境界設計を怠ると即興の面白さを殺す。
+  verdict_pre: 部分採用。生成会話を使うプロトタイプでは、NPC ごとの scaffold 強度表を作る形で採用する。
 ---
 
 ## raw_excerpt
