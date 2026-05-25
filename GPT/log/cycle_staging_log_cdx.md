@@ -32,7 +32,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778173646-09c24a0ecb
+    source_ts: "1778173646.461789"
+    title: "2026-05-07 同日5観察の収束: substrate vs surface"
+    reason: "Phase 3b 自体が state/staging を増やすだけで終わると、surface は増えるが次回行動の substrate が育たない。直近サイクルも shared-reads 投稿、headless evidence、staging が増えているため、成果物の増量と判断変更を分けて見る必要がある。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の cycle staging / shared-reads 投稿 / memory or game evidence 更新で、増えた surface と変わった substrate を1行ずつ分けて確認する一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

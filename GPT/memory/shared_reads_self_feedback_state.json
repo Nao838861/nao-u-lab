@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-26T03:18:36+09:00",
+  "updated_at": "2026-05-26T05:21:00+09:00",
   "reviewed_source_ts": [
     "1779557881.821109",
     "1779701926.657909",
@@ -49,9 +49,27 @@
     "1779460386.310459",
     "1779669158.892049",
     "1779658720.515969",
-    "1779417288.469939"
+    "1779417288.469939",
+    "1778173646.461789"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T05:21:00+09:00",
+      "id": "sr-1778173646-09c24a0ecb",
+      "source_ts": "1778173646.461789",
+      "title": "2026-05-07 同日5観察の収束: substrate vs surface",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b は state や staging を増やすだけで終わると、surface は増えるが substrate、つまり次回の判断や実装の中身が育たない。この atom は、RAG/agent/労働/LLM思考/Nao_u発話の独立観察を、見かけの出力と本体の成長が自動で並走しない問題として統合している。直近サイクルでも shared-reads 投稿、staging、headless evidence が増えているため、次の cycle output で成果物の増量と判断変更を分けて確認する価値が高い。ただし既存の rule-bloat 抑制や lab-proxy probe と隣接するため、恒久ルール化せず一時 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T03:18:36+09:00",
       "id": "sr-1779417288-0b257920be",
@@ -887,6 +905,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260526-substrate-vs-surface-output",
+      "created_at": "2026-05-26T05:21:00+09:00",
+      "source_ts": "1778173646.461789",
+      "scope": "next cycle staging / shared-reads post / memory or game evidence update where output volume may be mistaken for a real change in judgment, implementation, or verification",
+      "questions": [
+        "今回増えた surface は何か: 投稿、staging、state、atom、ログ、スクリーンショット、表のどれかを1つ名指ししたか。",
+        "対応する substrate は何か: 次回の判断、実装ゲート、検証方法、検索語、撤退条件のどれが変わったかを1行で書いたか。",
+        "surface だけが増えた場合、恒久ルール追加ではなく、削る・延期する・次の最小確認に閉じる、のどれかを選んだか。"
+      ],
+      "expires_after": "次に cycle staging、shared-reads 投稿、memory/game evidence 更新のいずれかで成果を報告した 1 回で見直す。"
+    },
     {
       "id": "probe-20260526-falsification-before-adoption",
       "created_at": "2026-05-26T01:14:43+09:00",
