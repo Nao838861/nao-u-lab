@@ -64,7 +64,50 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+checks:
+  executed_at: 2026-05-26T20:16:00+09:00
+  git:
+    branch: master
+    remote: "master...origin/master (fetch後、ahead/behindなし)"
+  memory_index:
+    markdown_links: 0
+    broken_links: 0
+  atoms_jsonl:
+    rows: 1653
+    bad_json_lines: 0
+    duplicate_ids: 0
+    duplicate_normalized_content_hash_groups: 0
+    status_counts:
+      active: 1465
+      superseded: 188
+    missing_lifecycle_refs: 0
+  atoms_per_file_index:
+    index_rows: 1653
+    missing_files_from_index: 0
+    atom_md_files: 1654
+    unindexed_atom_md_files:
+      - memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md
+  stale_inputs:
+    raw_files_older_than_30_days: 0
+    shared_reads_candidates_older_than_30_days: 0
+  inbox:
+    directives_pending: 0
+    broadcasts_pending:
+      - id: broadcast-1779790844-85adeffbca
+        triage_status: needs_human_review
+        action: "無人で handled 化せず保留"
+issues:
+  - id: ISS-20260526-4A-001
+    description: "2Dシューティング敵編隊の再現パケット atom が per-file として存在するが、memory/atoms/index.jsonl に載っていない。"
+    severity: low
+    evidence: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md は存在し、memory/game_memory_task_lens_index.md から参照される一方、per-file index の unindexed_atom_md_files に 1 件として検出。"
+    why_blocks_game_memory: "Phase D 後や index ベース recall では、shot_log/graze_log/headless 評価に関する具体的な敵編隊再現知識が検索導線から落ちる可能性がある。現時点では MEMORY.md と task lens から参照できるため低 severity。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
