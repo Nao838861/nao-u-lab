@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-26T20:22:00+09:00",
+  "updated_at": "2026-05-26T22:30:00+09:00",
   "reviewed_source_ts": [
+    "1779778029.147899",
     "1779221761.120059",
     "1779447884.748739",
     "1779737780.576279",
@@ -57,6 +58,23 @@
     "1779669494.944199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T22:30:00+09:00",
+      "id": "sr-1779778029-efc7e76b4c",
+      "source_ts": "1779778029.147899",
+      "title": "The Illusion of Intervention: Your LLM-Simulated Experiment is an Observational Study",
+      "decision": "adopt_probe",
+      "reason": "直近サイクルでは LLM player / agent playtest / headless 評価を prototype 差分の signal として使う場面が増えている。この atom は synthetic user の条件比較を randomized intervention と読まず、user drift を持つ observational study として扱うべきだと示しており、vA/vB や policy 比較の過信を抑えるのに直接効く。既存の lab-proxy / real-use gap probe と隣接するため、恒久ルールや評価表ではなく、次回の LLM/player-style 評価で primary outcome と negative control を分ける一時 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T20:22:00+09:00",
       "id": "sr-1779669494-15705cce59",
@@ -1624,6 +1642,18 @@
         "If adding a full strategy map would be too heavy, did I keep just one fork candidate with evidence from a trace, screenshot, log row, or review note?"
       ],
       "expires_after": "Review after the next playable diff, headless playtest, or game evaluation that compares routes, policies, scores, or clear metrics."
+    },
+    {
+      "id": "probe-20260526-synthetic-user-drift-check",
+      "created_at": "2026-05-26T22:30:00+09:00",
+      "source_ts": "1779778029.147899",
+      "scope": "next LLM player / synthetic user / headless persona evaluation where prototype variants, policies, prompts, or game versions are compared as if only the intervention changed",
+      "questions": [
+        "Before reading a variant or policy difference as an effect, did I name the primary outcome and at least one negative control attribute that should not change across conditions?",
+        "Did I check whether the evaluator/player persona drifted between conditions, instead of assuming the same prompt label means the same population?",
+        "If drift is plausible and no negative control was measured, did I narrow the claim to an observational signal or choose the smallest follow-up comparison that can expose drift?"
+      ],
+      "expires_after": "Review after the next LLM player, synthetic user, or headless persona evaluation that compares variants, policies, prompts, or game versions."
     }
   ]
 }
