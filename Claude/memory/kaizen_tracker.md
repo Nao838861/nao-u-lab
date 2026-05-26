@@ -39,7 +39,28 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: (a) **最likely失敗 = edges.jsonl を作っても recall 側が参照しない**（既存の Glob/Grep ベース recall に edges 参照を組み込まない限り、生成だけで終わる）→ 緩和: 段階2 で `tools/recall_atom.py` (仮) を追加し、edges.jsonl を読み込んで関連 atom を 1 hop 展開する小機能を 1 つだけ実装。recall 側の最小組込なしには段階1 を完了扱いにしない (b) **次点 = edges 抽出ロジックがノイズ edge を大量生成**（弱い `[[name]]` 言及から無関係な edge を引く）→ 緩和: 段階1 で edge type を厳密分類 (`wikilink_strong` = frontmatter 内 / `wikilink_weak` = 本文 / `supersedes_chain` 等)、recall 時に type で gate (c) **次々点 = atom 数 1万件超で edge 数が爆発**（O(N^2) になる場合）→ 緩和: 段階1 dry-run で edge 数を測り、想定上限 (atom 数 × 5) 超過時は弱 edge を切る (d) **#128 (MEMORY.md 純粋 index 化) と未統合のまま増殖**（編集側 index と recall 側 edges が二重メンテになる）→ 緩和: 検証期限 2026-06-09 までに #128 との関係を明示 (本案 = recall 側 / #128 = 編集側、目的排他で重複なし) (e) **EvolveMem 論文の F1 0→1 が我々のスケールで再現しない**（atom 数 2000 規模で recall 質が大幅改善する保証なし）→ 緩和: 観察項目「読み出し戦略を変えただけで recall 質が変わった場面」を C244-C248 で 1 件以上カウントできなければ、本 kaizen を「思考の質側の収穫として消化、実装中止」で閉じる選択を許容
 - M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は **既存 substrate (atoms/) の派生生成スクリプトを 1 本追加するのみ**で、新規 M-Nx 検出器系列の追加ではない。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが edges を残す方向で整合 / 「自分から始める」=recall 側自発改良で整合 / 「体験で考える」=部分整合 (edges 自体は思考の質ではなくインフラ)。**feedback_few_rules_big_effect.md への吸収可能性**: ルール追加ゼロ (atom 書き込みルール無変更) のため遵守率トレードオフなし。`tools/build_atom_edges.py` + 将来の `tools/recall_atom.py` の 2 スクリプトに留め、3 本目以降が必要になった時点で family 統合管理に切替。
 - クロスチェック: Log=OK(2026-05-26) / Mir=未 / Ash=未
-- 状態: 未検証
+- 状態: 段階1 PASS（C245 Phase 4 dry-run スケッチ実装 + edge density WARN 機構 + サンプル 5 atom 手動照合 + 既知ノイズ edge 同定）。段階2（recall_atom.py 仮実装 + edges.jsonl 実書き出し検証 + wikilink_weak ノイズ抑制）は次サイクル以降
+- 検証結果:
+  - **段階1 PASS (2026-05-26 C245 Phase 4)**: `tools/build_atom_edges.py` (128行) 実装完了。`python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` 実行で:
+    ```
+    [build_atom_edges dry-run] root=../GPT/memory/atoms/2026-05 atoms=1105 wikilink_strong=0 wikilink_weak=2 supersedes_chain=370 total_edges=749
+    ```
+    exit 0 完走。なお C243 で commit `32c9cea57266` により既に骨格 ship 済 → C245 Phase 3 で kaizen #135 を Phase 4 大作業に再昇格させた際は既存実装の存在を staging で見落としていた。Phase 4 開始時に発覚 → 「未達 = #5 WARN 機構 / #6 サンプル照合 / #7 tracker 追記」を段階1 仕上げとして本サイクルで完遂する方針に切替。
+  - 完遂定義照合:
+    - #1 exit 0 完走 ✅
+    - #2 stderr 末尾サマリ行 ✅（フォーマット差: staging 完遂定義は `(wikilink=A supersedes=B derived_from=C related=D)` 括弧記法を例示するが、実装は `wikilink_strong=N wikilink_weak=N supersedes_chain=N total_edges=N` の独立 key=value 列挙形式で情報量で勝るため意図的に踏襲）
+    - #3 dry-run 副作用ゼロ ✅（実行後 `git status` で edges.jsonl 未生成、`atoms/2026-05/` 配下の変更は GPT/Codex 所掌の M/?? のみで本スクリプトに起因しないことを確認）
+    - #4 frontmatter `supersedes:` `derived_from:` `related:` リスト + 本文 `[[wikilink]]` 抽出 ✅。追加で `superseded_by:` `canonical_id:` `group_id:` の SCALAR_KEYS 3種も抽出対象に含む（C243 段階1 で既に拡張済）
+    - #5 edge density WARN 機構 ✅（C245 Phase 4 で追加実装: `if len(edges) > len(files)*5` で `[build_atom_edges WARN] edge density N>M (atoms*5 上限超過、誤抽出 or 想定外集中の疑い)` を stderr 出力。1105 atom × 5 = 5525 上限に対し 749 edges = WARN 未トリガーが正常パス）
+    - #6 サンプル 5 atom 手動照合 PASS ✅:
+      - `sr-1778279139-447a22e3d1` (superseded 末端) → 手動 3 edges (superseded_by + group_id + canonical_id) = スクリプト一致
+      - `sr-1778303440-699f41ada0` (canonical / supersedes×4) → 手動 5 edges (group_id + supersedes×4、canonical_id=self は `v != src` で自己参照除外) = スクリプト一致
+      - `sr-1778541418-0f25c063e5` → 手動 1 edge (本文 `[[wikilink]]` リテラル → wikilink_weak) = スクリプト一致
+      - `sr-1779770178-5d606254b2` → 手動 1 edge (本文 `[[link]]` リテラル → wikilink_weak) = スクリプト一致
+      - `gr-1777572083-e993020cfc` (関係系 frontmatter なし / 本文 wikilink なし) → 手動 0 edges = スクリプト一致
+    - #7 commit + tracker 追記 → 本セクション追記が tracker 側、commit は C245 Phase 5 で日記と合わせて push（Phase 4 指示「commit はしない」順守）
+  - **既知の弱点 (段階1 仕上げ時点)**: wikilink_weak の 2 edges target が `wikilink` / `link` という汎用語リテラル抽出によるノイズ edge。本文中で `[[wikilink]]` を例示テキストとして書いた atom (sr-1778541418-0f25c063e5 の drafts INDEX 解説、sr-1779770178-5d606254b2 の Semantic vs Ontology 議論) からの誤抽出。段階2 移行時の判定軸: (a) recall 側で `wikilink_weak` を type gate で除外 / (b) 抽出側で ID_LIKE_RE 不一致を捨てる (= wikilink_weak 完全廃止) / (c) 汎用語ストップリスト (`wikilink`, `link`, `name`, `id` 等) でフィルタ。recall 側 gate (a) が atom 本体に手を入れず、抽出パイプラインも単純なまま、ノイズ判断を後置できるため Semantic vs Ontology 「書き込み時に分けない、読み出し時に分ける」原則と最も整合。段階2 で (a) を第一候補として recall_atom.py 仮実装に組み込む方針。
+  - 段階2 移行判定: 本 C245 Phase 4 で段階1 完遂条件 7/7 達成 (commit のみ Phase 5 持ち越し)。段階2 着手は次サイクル以降、観察期間 C244-C248 (起票時メモ) の残り 3 サイクル中に Mir/Ash クロスチェックの状況を踏まえて発火点を決める。
 
 ---
 

@@ -112,6 +112,12 @@ def main() -> int:
         f"root={args.root} atoms={len(files)} wikilink_strong={wls} "
         f"wikilink_weak={wlw} supersedes_chain={sup} total_edges={len(edges)}\n"
     )
+    density_limit = len(files) * 5
+    if len(edges) > density_limit:
+        sys.stderr.write(
+            f"[build_atom_edges WARN] edge density {len(edges)}>{density_limit} "
+            f"(atoms*5 上限超過、誤抽出 or 想定外集中の疑い)\n"
+        )
     if args.dry_run:
         for e in edges[:5]:
             print(json.dumps(e, ensure_ascii=False))
