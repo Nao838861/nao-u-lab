@@ -4,6 +4,21 @@ url: "https://www.creativebloq.com/entertainment/gaming/luna-abyss-review-an-amb
 collected_at: "2026-05-27T02:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [review, bullet-hell, fps, readability, combat-flow, visual-clutter]
+evaluated_at: "2026-05-27T03:05:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  FPS 視点の bullet hell で、弾幕密度、lock-on、武器役割、敵優先順位、背景/敵/弾のコントラスト、後半の visual soup まで読み取れる。
+  Nao_u の「中盤以降は敵弾も敵も不足」への反応として、密度追加と可読性維持を同時に評価する具体例になり、ゲーム制作への適用がこじつけになりにくい。
+suggested_post_outline:
+  overview_angle: "Luna Abyss のレビューを、FPS に弾幕を持ち込む時の可読性設計と、その限界が後半で崩れる事例として読む。"
+  analysis_axis: "panic と pattern recognition の両立、lock-on と dash/target snap の補助、武器役割による encounter 整理、背景色と敵弾色が崩す視認性。"
+  application_target: "Pulse Relay v008 以降で敵弾密度を上げる時、弾幕量・敵優先順位・色/背景・補助照準・移動操作の遅延を同時チェックする評価軸にする。"
+  pros_cons: "メリットはプレイヤー体験側の可読性評価が具体的なこと。デメリットはレビュー記事なので、開発内部の実装手順や計測値は得られないこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

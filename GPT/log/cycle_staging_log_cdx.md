@@ -17,7 +17,20 @@
 - `memory/shared_reads_candidates/20260527_yuki_gamedev_speed_tempo_diagnostic.md` — Slack 経由 Yuki_GameDev_ 投稿。倍速/低速をテンポと判断連鎖の検査器として使う観点。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-27T03:05:00+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260527_bullet_hell_zero_modular_postmortem.md
+  - memory/shared_reads_candidates/20260527_luna_abyss_first_person_bullet_hell_readability.md
+fail:
+  - path: memory/shared_reads_candidates/20260527_bullet_hell_subgenres_constraint_splits.md
+    reason: "分類観点は有用だが、手法・評価・結論の厚みが足りず単独投稿品質に届かない。"
+postpone:
+  - path: memory/shared_reads_candidates/20260527_yuki_gamedev_speed_tempo_diagnostic.md
+    reason: "速度変更を診断器にする観点は強いが、Slack excerpt 由来で一次情報と実装検査ログが不足している。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
