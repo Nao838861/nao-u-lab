@@ -74,7 +74,40 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+- 2026-05-26T22:45+09:00 Phase 4a 記憶階層整理 + 問題抽出:
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    markdown_links: 0
+    code_path_refs: 3
+    broken: 0
+  atoms_jsonl:
+    rows: 1654
+    parse_errors: 0
+    duplicate_ids: 0
+    same_normalized_content_groups: 0
+    repeated_title_groups: 17
+    note: "repeated title は既存 duplicate_reason / lifecycle metadata 済みの群が中心で、今回の設計起動根拠にはしない。"
+  raw_archive:
+    old_over_30_days: 0
+  shared_reads_candidates:
+    old_over_30_days: 0
+  inbox:
+    directives_pending: 0
+    broadcasts_pending: 1
+    note: "broadcast-1779790844-85adeffbca は needs_human_review の未処理 broadcast のため handled 化しない。"
+issues:
+  - id: ISS-4A-20260526-03
+    description: "MEMORY.md の Tag Entry Points は game-design/evaluation/operation/identity などの broad tag が巨大化している一方、既存の task lens index (`memory/game_memory_task_lens_index.md`) への直接導線が MEMORY.md にない。"
+    severity: low
+    evidence: "memory/MEMORY.md Tag Entry Points: identity=1277, game-design=966, operation=960, evaluation=957。`rg game_memory_task_lens_index memory/MEMORY.md memory/game_memory_task_lens_index.md` では MEMORY.md 側の参照なし。"
+    why_blocks_game_memory: "次のゲーム制作で MEMORY.md から開始すると、headless-eval / bad-policy / enemy-pattern などの具体 lens に降りる前に broad tag の上位 atom へ流れやすい。既存 index は有効だが入口が弱い。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  note: "新しい仕組みの設計は不要。次回以降の mechanical cleanup で MEMORY.md から既存 lens index へ短い参照を追加すれば足りる。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
