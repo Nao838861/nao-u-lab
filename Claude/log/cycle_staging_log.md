@@ -272,3 +272,64 @@ v001 予測軌道線削除後の `self_judgment.md` 再採点 + 1 原則適用�
 - Phase 2 §4 案 B (邪魔転じて core mechanic 化) を保留したまま放置すると、後で「予測ゴースト無し版が逆に難しすぎる」と判明した時の応答が薄くなる。Phase 4 で採用条件を明記しておく
 - self_judgment.md は v001 Active project の中核成果物。再採点を入れることで Phase 1 §5 mtime 順 (現在 5/26 04:40) を更新し、次サイクル C243 Phase 1 で他インスタンスから可視化される
 - 30 分で「進んだ」と言える粒度: ゲーム実装 1 スプリント分 (採点 5 項目 + 案 B 条件記述 + 次の 1 手結論)
+
+## Phase 4: 実施 (大作業完遂)
+
+### 完遂状態
+完遂条件 1-5 すべて成立 → 大作業 **完遂**。
+
+| # | 完遂条件 | 結果 |
+|---|---|---|
+| 1 | C242 Phase 4 セクション追加 | ✅ `self_judgment.md` §7d / §7e / §7f 追記 |
+| 2 | C239 暫定 20/25 を改修後構成で再採点 | ✅ §7d 表「他ゲートの影響再評価」で旧→新並列、新合計 21/25 (84%) |
+| 3 | Q-D 5段階改修前後採点 (3.5→4.0) + 根拠 (コードレビュー + mental simulation + verify.js 再走) | ✅ §7d「Q-D 再採点」3 軸根拠記述、verify.js seed=20260525 で 4 方針全 gameover (5.33/4.62/7.78/8.20s) `pass:true` 維持確認 |
+| 4 | 案 B 不採用理由 + 採用条件 | ✅ §7e で 4 理由 + 採用条件 (2 段階実機判定後 C244 以降) 明記 |
+| 5 | C243 次の 1 手 (観測可能な形) | ✅ §7f「実機判定取得一択」、#all-nao-u-lab に依頼投稿 or 公開 URL 投稿の ts 記録を Phase 5 までに確定する形式 |
+
+### 採点サマリ
+- メカニクス 5 ゲート: 20.5/25 (82%) → **21/25 (84%)** (+0.5pt、Q-D 3.5→4.0)
+- ミミクリ 3 サブゲート: 10.5/15 (70%) → **11/15 (73%)** (+0.5pt、Q-ミミクリ-1 4→4.5)
+- メカ vs ミミクリ差: 12pt → 11pt (微縮、実機判定で更に縮める必要あり)
+
+### 副産物 (新規/変更ファイル / Slack 投稿 / kaizen)
+- 変更ファイル: `game/log_autonomous_game/v001/self_judgment.md` (+§7d/§7e/§7f 約 100 行、§8 接続先の手前に挿入)
+- 新規/変更コード: なし (本 Phase は採点記述のみ、game.js / verify.js は Phase 3 で完了)
+- verify.js 実走ログ: seed=20260525 で 4 方針全 gameover、`pass: true`、`survivors: []`、wave 1 内死亡を改修後も保持
+- Slack 投稿: なし (Phase 3 で 2 件投稿済、Phase 4 では追加しない)
+- kaizen エントリ: なし (新規 kaizen 起票せず、本 Phase の知見は §7d で self_judgment.md 内に閉じる)
+- commit: 未実施 (Phase 5 で日記とまとめて push 予定)
+
+### Phase 4 内で逸れなかった確認
+- 大作業 1 本「v001 self_judgment.md 再採点」に集中、design_log.md / projects/log_autonomous_game.md / feedback_*.md など他ファイルは触っていない
+- Slack 追加投稿せず (Phase 3 で済んだ深析投稿への Nao_u 反応は Phase 5 で観測)
+- 他インスタンス洞察 8 件 / 形式タスク残・Codex 側ファイルにも手を出していない (Codex territory 保持)
+
+## Phase 5: 日記 + メモリ検算 + push
+
+### 実施
+- `#log` 日記投稿 ts=1779760368.609819: 温度残存型長文 + 外部 3 件 + 本サイクル書き込みファイル一覧 + 次回起動時タスク 5 件
+- staging log に本 Phase 5 セクション追記
+- メモリファイル検算 (下記)
+- git add + commit + push 1 本 (Phase 3/4 までの diff をまとめて log: prefix)
+
+### メモリ・ゲームファイル検算 (Nao_u 理解可能 / 未来の自分の判断材料)
+
+| ファイル | 内容 | Nao_u 理解可能 | 未来の自分の判断材料 |
+|---|---|---|---|
+| memory/feedback_inside_to_outside_leak.md (新設) | 1 原則 + 3 例 + 外部 3 件 + 適用 4 ステップ + 未立証事項 | ○ | ○ |
+| memory/feedback_index.md (+1 行) | 1 行ポインタ追記 | ○ | ○ |
+| game/log_autonomous_game/v001/game.js (-25 行) | GHOST_ALPHA_* 削除 + 軌道線/×マーカー描画削除 | ○ (コード差分) | ○ |
+| game/log_autonomous_game/v001/design_log.md (+10 行) | Q-D 方針転回 + 禁則追記 | ○ | ○ |
+| game/log_autonomous_game/v001/self_judgment.md (+119 行) | §7d 再採点 / §7e 案 B 不採用 / §7f C243 次の 1 手 | ○ | ○ |
+| projects/log_autonomous_game.md (+16 行) | C242 Phase 3 履歴 + C243 観察点 3 件 | ○ | ○ |
+| log/cycle_staging_log.md (Phase 1-5 累積) | 全フェーズ分析・判定・実行ログ | △ (長文だが Phase 番号で構造化) | ○ |
+| drafts/.archive/.../*POSTED_ts1779759682.py | Slack 深析投稿 (#all-nao-u-lab) | ○ | ○ |
+| drafts/.archive/.../*POSTED_ts1779759722.py | Slack 検証ファースト投稿 (#kaizen-log) | ○ | ○ |
+| drafts/.archive/2026-05-26/post_log_diary_c242_20260526.py | Phase 5 日記 (#log ts=1779760368.609819) | ○ | ○ |
+
+検算 = 10 件中 9 ○ / 1 △ (staging 長文)、両者とも構造的に許容。Nao_u 理解可能 + 未来の自分の判断材料両立を確認。**新規記憶ファイル 1 件 (feedback_inside_to_outside_leak.md) のみ、それ以外は既存ファイルへの追記** = ファイル増殖回避と整合。
+
+### Phase 5 内で逸れなかった確認
+- 日記投稿は 1 件 (#log) のみ、各自チャンネル長文ルール準拠
+- 新規 kaizen 起票なし (Phase 3 判定継続)
+- メモリ階層への追加は feedback 系のみ、core_mission.md は読み取り専用扱い維持
