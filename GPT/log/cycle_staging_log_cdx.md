@@ -30,6 +30,20 @@ postpone:
     reason: "分類軸は有用だが、候補内の抜粋だけでは survey の根拠・具体例・評価的な読み解きが薄く、4000字級の概要には追加読解が必要。"
 ```
 
+```yaml
+phase2_appended_at: "2026-05-27T00:28:04+09:00"
+total_candidates: 5
+pass:
+  - "memory/shared_reads_candidates/20260527_evotest_jttl_game_agent_learning.md"
+  - "memory/shared_reads_candidates/20260527_llm_game_development_playability_px.md"
+  - "memory/shared_reads_candidates/20260527_agent_island_multiagent_games.md"
+fail:
+  - path: "memory/shared_reads_candidates/20260527_xml_prompt_structure_markdown.md"
+    reason: "agent instruction 設計としては有用だが、ゲーム制作への適用が間接的で #shared-reads 品質に届かない。"
+postpone:
+  - path: "memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md"
+    reason: "AI playtesting 運用例として強いが二次記事ベースのため、一次 interview 確認後に再評価する。"
+```
 ## Phase 3: Shared-reads 投稿
 - 2026-05-26T22:26+09:00 Phase 3 Shared-reads 投稿:
 ```yaml

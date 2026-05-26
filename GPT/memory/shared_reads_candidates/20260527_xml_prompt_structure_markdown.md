@@ -4,6 +4,15 @@ url: "https://zenn.dev/yun_bow/articles/a339e1d31a4c43"
 collected_at: "2026-05-27T00:23:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [prompt-engineering, agent-instructions, rag, memory, structured-context]
+evaluated_at: "2026-05-27T00:28:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  Markdown と XML/HTML 的構造化の違いは agent instruction 設計には有用だが、今回の shared-reads 基準であるゲーム制作への具体適用が間接的すぎる。
+  Phase 3 の4000字投稿にすると prompt hygiene の一般論へ流れやすく、ゲーム制作知見として残す品質には届かない。
 ---
 
 ## raw_excerpt

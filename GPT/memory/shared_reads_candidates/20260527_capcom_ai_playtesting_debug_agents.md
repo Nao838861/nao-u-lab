@@ -4,6 +4,15 @@ url: "https://www.gamesradar.com/games/resident-evil/capcom-says-generative-ai-s
 collected_at: "2026-05-27T00:23:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [industry-practice, ai-playtesting, debug, game-production, human-sensibility]
+evaluated_at: "2026-05-27T00:28:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  routine checking と director concept 照合 agent という適用先は強いが、候補は二次記事であり、4000字の概要を書くには一次 interview 側の文脈確認が足りない。
+  Phase 3 投稿候補にするなら、4Gamer/Automaton 側の原文に当たり、運用フローと発言範囲を確認してから再評価する。
 ---
 
 ## raw_excerpt
