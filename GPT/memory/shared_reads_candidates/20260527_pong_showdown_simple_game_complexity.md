@@ -4,6 +4,15 @@ url: "https://itch.io/devlog/1516654/devlog-postmortem.amp"
 collected_at: "2026-05-27T04:44:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, beginner-project, ai-behavior, scope-control]
+evaluated_at: "2026-05-27T04:47:11+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  小さなゲームでも AI と mechanics が難所になるという教訓は妥当だが、内容は初回制作の一般的な振り返りに近い。
+  ゲーム制作への適用は可能でも、独自の手法・評価・再利用できる判断基準が薄く、shared-reads 投稿には弱い。
 ---
 
 ## raw_excerpt

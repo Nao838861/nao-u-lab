@@ -11,7 +11,19 @@
 - `memory/shared_reads_candidates/20260527_evaluation_game_dynamic_benchmarking.md` — 静的 benchmark ではなく evaluator/trainer の two-player game として評価を捉える arXiv 論文。headless 評価の固定課題過適応を考える材料。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260527_evaluation_game_dynamic_benchmarking.md
+fail:
+  - path: memory/shared_reads_candidates/20260527_eye_of_goremoth_level_design_debt.md
+    reason: "level design 負債の教訓は有用だが、手法・評価が薄く一般論に寄りやすい。"
+  - path: memory/shared_reads_candidates/20260527_invinciknight_invincible_theme_koth.md
+    reason: "theme をルール条件へ変換する単一アイデアはあるが、4000字投稿に必要な検証密度がない。"
+  - path: memory/shared_reads_candidates/20260527_pong_showdown_simple_game_complexity.md
+    reason: "小規模ゲームの AI/mechanics 難度という教訓は一般的で、独自の判断基準が不足する。"
+postpone: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

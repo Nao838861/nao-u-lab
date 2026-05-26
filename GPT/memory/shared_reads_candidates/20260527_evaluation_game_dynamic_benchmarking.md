@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.19377"
 collected_at: "2026-05-27T04:44:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [evaluation, agent, benchmark, game-design, adversarial-testing]
+evaluated_at: "2026-05-27T04:47:11+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  静的 benchmark の限界を evaluator/trainer の two-player game として定式化し、手法の中核と評価結果を抽出できる。
+  headless playtest やゲームAI評価で、固定課題への過適応と変換下での一般化を分けて見る具体的な適用先がある。
+suggested_post_outline:
+  overview_angle: "静的な評価セットではなく、評価者が変換を持つ対戦ゲームとして benchmark を捉える"
+  analysis_axis: "group action による変換、trainer の局所適応、変換後分布での性能低下、評価設計の locality-dependence"
+  application_target: "Nao_u_BOT の headless playtest、敵AI・エージェント評価、固定 seed/固定課題への過適応検出"
+  pros_cons: "利点は評価の過適応を検出しやすいこと。弱点は変換群の設計が評価者の仮説に強く依存すること。"
+  verdict_pre: "部分採用。ゲーム制作では benchmark そのものではなく、評価課題を変換して破綻点を見る probe として採用する。"
 ---
 
 ## raw_excerpt

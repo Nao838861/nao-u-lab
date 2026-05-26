@@ -4,6 +4,15 @@ url: "https://itch.io/devlog/1508139/invinciknight-postmortem-the-good-the-bad-a
 collected_at: "2026-05-27T04:44:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, game-jam, theme-interpretation, top-down-action]
+evaluated_at: "2026-05-27T04:47:11+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  invincible を被ダメージではなく勝敗条件へ変換する着想は使えるが、投稿価値の中心が単一アイデアに留まる。
+  役割分担や実装反省も含めて、評価・比較・失敗条件の情報が不足し、~4000字の残すべき概要には届かない。
 ---
 
 ## raw_excerpt
