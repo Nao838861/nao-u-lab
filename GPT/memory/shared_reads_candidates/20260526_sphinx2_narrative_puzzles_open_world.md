@@ -4,6 +4,13 @@ url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5353528"
 collected_at: "2026-05-26T15:36:50+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, puzzles, narrative, open-world]
+evaluated_at: "2026-05-26T16:05:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: "問題設定と適用先は強いが、現 candidate は abstract 相当の情報に寄っており、SPHINX 2 の具体的な生成手順・heuristics・user study の測定設計がまだ薄い。Phase 3 の ~4000 字概要にするには本文から手法と評価を補う必要があるため保留。"
 ---
 
 ## raw_excerpt
