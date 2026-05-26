@@ -2,6 +2,15 @@
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending ではなくローカル継続指示として処理。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v91/`。v90 の gameplay と policy reason family 契約を維持し、`review_packet.html` の generated reason row に `reviewQuestion` を追加した。headless evidence を「人間確認へ渡す問い」へ同じ source JSON / DOM row で接続する focused evaluation。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v91/index.html` または `review_packet.html` をブラウザで開く。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v91_review_question_packet_check.js` が pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question contract、screenshot contract を確認。screenshot は 166560 bytes。
+- evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に v91 record を追記。
+- 残課題: review question の自然言語としての良し悪しは headless だけでは判定しない。次 cycle では、この schema から packet HTML 自体を生成するか、人間レビューで問いが使えるかを確認する。
+
 ## Phase 1: 情報収集
 - 2026-05-26T15:36:50+09:00 Phase 1 収集メモ:
   - `memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md` — LLM synthetic user 実験で介入条件が persona 分布を動かす user drift / negative control の話。
