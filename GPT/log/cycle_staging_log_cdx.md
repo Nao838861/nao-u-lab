@@ -144,6 +144,31 @@ not_changed_outside_staging: true
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: "ISS-4A-20260527-01"
+    files_changed:
+      - path: "memory/atoms/unknown/local-20260527-pulse-relay-v008-headless-bridge.md"
+        change: created
+      - path: "memory/atoms.jsonl"
+        change: modified
+      - path: "memory/atoms/index.jsonl"
+        change: modified
+      - path: "memory/game_memory_task_lens_index.md"
+        change: modified
+      - path: "log/cycle_staging_log_cdx.md"
+        change: modified
+    summary: "Converted pulse_relay/v008 Relay Lane and headless route/bad-policy metrics into a local atom, then connected it to the task lens Feedback Bridge / headless-eval / input-feel entry points."
+    partial: false
+migrations:
+  - what: "Added one local atom to per-file .md, atoms.jsonl, and atoms/index.jsonl."
+    affected: "v008 verification knowledge can now be found through memory_recall and game_memory_task_lens_index."
+verification:
+  - "python tools/memory_recall.py \"pulse_relay v008 Relay Lane bad-policy headless\" -> local atom returned as the top result"
+  - "memory/atoms.jsonl and memory/atoms/index.jsonl JSONL parse -> ok rows=1675 found=True"
+  - "node tools/headless_pulse_relay_v008_check.js -> HEADLESS PULSE RELAY V008 OK"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
 

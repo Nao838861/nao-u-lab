@@ -110,6 +110,7 @@ Phase 4a issue `ISS-4A-20260526-01` / Phase 4b decision `introduce` に基づく
 
 更新条件: Phase 3b / 4a で feedback atom と prototype/version/evidence の対応が明確になった時だけ追加する。曖昧な推測、単なる関連語、Slack permalink だけの行は追加しない。将来 atom frontmatter へ昇格する時は、この bridge の高信頼行から移す。
 
+- `local-20260527-pulse-relay-v008-headless-bridge` -> `game/pulse_relay/v008` Relay Lane rebuild -> `tools/headless_pulse_relay_v008_check.js`, `memory/raw/slack_api/log_cdx_headless_pulse_relay_v008_post_20260527.md`, https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779808806063799 -> v005 base rebuild, Relay Lane affordance, and route/bad-policy split metrics for reusing Pulse Relay without falling back to v007/tether.
 ## Specific Entry Points
 
 Phase 4a issue `ISS-4A-20260526-02` / Phase 4b decision `introduce` に基づく、巨大 tag から制作実務軸へ降りるための下位入口。`game-design` / `evaluation` / `operation` などの broad tag の代替ではなく、制作前に最初の recall query と代表リンクを選ぶための短い索引である。各軸の代表リンクは最大 3 件を目安にする。
@@ -119,6 +120,7 @@ Phase 4a issue `ISS-4A-20260526-02` / Phase 4b decision `introduce` に基づく
 - 使う場面: 「単調」「適当に動くだけで勝てる」「平均スコアでは面白さが分からない」という feedback を検証へ落とす時。
 - recall query: `python tools/memory_recall.py "headless eval bad policy camper route clear fail subjective feedback"`
 - atom / probe: `local-20260523-headless-action-eval-v58`
+- atom / probe: `local-20260527-pulse-relay-v008-headless-bridge`
 - representative: `memory/game_headless_action_eval_playbook_20260523.md`
 - representative: `sr-1779369765-a26c2a3f0b` headless 評価を勝敗ではなく進化方向の座標系として読む。
 
@@ -127,6 +129,7 @@ Phase 4a issue `ISS-4A-20260526-02` / Phase 4b decision `introduce` に基づく
 - 使う場面: 特殊アクション、クールダウン、反射/変換、開始/リトライ導線を、常時説明文ではなく入力と状態で教える時。
 - recall query: `python tools/memory_recall.py "input feel affordance special system cooldown title retry target marker"`
 - atom / probe: `sr-1779657471-88f9f3d1ae`
+- atom / probe: `local-20260527-pulse-relay-v008-headless-bridge`
 - representative: `memory/game_special_system_hud_affordance_lesson_20260525.md`
 - representative: `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`
 
