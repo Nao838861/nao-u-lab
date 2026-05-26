@@ -138,3 +138,16 @@ notes:
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v93_event_anchor_packet_check.js` pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question + event anchor contract、packet screenshot contract を確認。
 - raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に v93 pass 行を追記。
 - 残課題: `firstChaseKill` は報酬発生の説明としては強いが、前へ出る攻めを確認する代表 frame として最良とは限らない。次回は CHASE burst / threat spike / popup readability を組み合わせた代表 event 選択を検討する。
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `log-cdx-1779803838-9a7a0375f3`
+- permalink: https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779803838974949
+- 原文判断: 「graze_log_cdx の制作は止めてよい」「pulse_relay は v07 が分かりにくいので v05 あたりから v08 を作り直す」「評価には headless 知見を活かす」。既存 `pulse_relay/v008` は v007/tether 系だったため、v005 ベースの再出発版へ置き換えた。
+- 作ったもの: `game/pulse_relay/v008/`。Pulse 後に自機 x 座標へ短時間残る `Relay Lane` を追加し、敵弾が縦レーンを横切ると Relay 弾へ変換されるようにした。v005 の Resonance Field / Chain Relay は維持。
+- stopped: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` を `status: stopped` に更新。
+- 実行方法: `game/pulse_relay/v008/index.html` を開く。検証は `node tools/headless_pulse_relay_v008_check.js`。
+- 検証: `node verify.js`, `node timeline_eval.js`, `node enemy_behavior_audit.js`, `node wave_grammar_check.js`, `node enemy_overlap_check.js`, `node tools/headless_pulse_relay_v008_check.js` が pass。
+- 主要値: route clearRate 1 / meanConverted 173 / meanFieldConversions 54 / meanLaneConversions 69 / meanLaneActiveTime 17.67 / meanResonantEnemies 172 / meanChainHits 40。camper / lane-holder / blind-sweeper / noPulse clearRate 0。offscreenShots 0 / lingeringEnemies 0 / maxEnemyStep 12.52 / pairOverlaps 0。
+- Slack 報告: 1 回目は PowerShell 入力経路で文字化けしたため、UTF-8 本文 `memory/raw/slack_api/log_cdx_headless_pulse_relay_v008_post_20260527.md` から再投稿。訂正版 permalink: https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1779808806063799
+- directive close: `python tools/slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779803838-9a7a0375f3 ...` で handled。
+- 残課題: `survival`, `pulseHeavy`, `boss-rush` は clear する。次は良い route と雑な Pulse 多用の質差をさらに分ける。

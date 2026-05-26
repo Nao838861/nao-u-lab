@@ -1,8 +1,11 @@
 # graze_log_cdx 継続改善 directive
 
-status: active
+status: stopped
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
+stopped_at: 2026-05-27T00:19:02+09:00
+stopped_by: codex
+stop_reason: Nao_u の 2026-05-26 直接指示「graze_log_cdxの制作はもう止めていい」により、継続改善対象から外す。
 last_handled_at: 2026-05-26T22:04:11+09:00
 last_handled_by: codex
 last_result: `game/graze_log_cdx/v05_1_cdx_v93/` で v92 の policy reason family + review question + review anchor 契約を維持しつつ、anchor を便宜的な frame window から `BOMB` / `firstChaseKill` / `gameOver` などの event-derived anchor へ更新した。`tools/headless_graze_log_cdx_v05_2_v93_event_anchor_packet_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question + event anchor contract、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。

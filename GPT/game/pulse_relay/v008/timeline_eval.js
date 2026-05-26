@@ -1,6 +1,6 @@
 "use strict";
 
-const { Game, W, H, WAVE_EVENTS, LOW_PULSE_COST, MID_PULSE_COST, HIGH_PULSE_COST } = require("./game.js");
+const { Game, W, H, WAVE_EVENTS } = require("./game.js");
 
 const SEEDS = [1779, 1780, 1781, 1782, 1783];
 const MAX_FRAMES = 60 * 105;
@@ -16,6 +16,8 @@ const METRIC_PURPOSES = {
   bottomCampPct: "画面下で待つ雑な勝ち方の成立度を見る。",
   laneSwitches: "左右の切り替えを要求できているかを見る。",
   relayHits: "pulse 変換が敵処理へつながっているかを見る。",
+  laneConversions: "Pulse 後の縦 Relay Lane をプレイヤーが敵弾へ通せているかを見る。",
+  laneActiveTime: "Relay Lane が画面上の操作対象として存在した時間を見る。",
   bossHp: "ボス山場が進行しているかを見る。",
 };
 
@@ -38,14 +40,6 @@ function countNearBullets(game, radius = 92) {
     const dx = b.x - p.x;
     const dy = b.y - p.y;
     return dx * dx + dy * dy <= r2;
-  }).length;
-}
-
-function countRewriteTargets(game, radius = 132) {
-  const p = game.player;
-  return game.enemies.filter(e => {
-    const commandTarget = e.kind === "feeder" || e.kind === "armored" || e.kind === "anchor" || e.kind === "escort" || e.boss;
-    return commandTarget && e.y > 12 && e.y < H * 0.86 && Math.abs(e.x - p.x) <= radius;
   }).length;
 }
 
@@ -150,10 +144,6 @@ function inputToward(game, tx, ty, pulse) {
   };
 }
 
-function pulseReady(game, minCharge = LOW_PULSE_COST) {
-  return game.player.pulseCd <= 0 && game.player.pulseCharge >= minCharge;
-}
-
 const POLICIES = {
   route(game) {
     // v004 の標準ルートは marksman 基準に寄せる。強化した Pulse 経済は、
@@ -162,20 +152,18 @@ const POLICIES = {
   },
   marksman(game) {
     const n = countNearBullets(game, 92);
-    const rewriteTargets = countRewriteTargets(game, 160);
     const m = routeMove(game, authoredRouteY(game) - 6, "marksman");
-    return inputToward(game, m.tx, m.ty, pulseReady(game, MID_PULSE_COST) && (rewriteTargets >= 1 || n >= 1));
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 1);
   },
   aggressive(game) {
     const n = countNearBullets(game, 96);
-    const rewriteTargets = countRewriteTargets(game, 172);
     const m = routeMove(game, H - 185, "aggressive");
-    return inputToward(game, m.tx, m.ty, pulseReady(game, MID_PULSE_COST) && (rewriteTargets >= 1 || n >= 2));
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 2);
   },
   survival(game) {
     const n = countNearBullets(game, 92);
     const m = routeMove(game, H - 62, "route");
-    return inputToward(game, m.tx, m.ty, pulseReady(game, LOW_PULSE_COST) && n >= 4);
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 4);
   },
   camper(game) {
     const p = game.player;
@@ -186,12 +174,12 @@ const POLICIES = {
   },
   "lane-holder"(game) {
     const n = countNearBullets(game, 92);
-    return inputToward(game, W / 2, H - 105, pulseReady(game, LOW_PULSE_COST) && n >= 11);
+    return inputToward(game, W / 2, H - 105, game.player.pulseCd <= 0 && n >= 11);
   },
   "blind-sweeper"(game) {
     const n = countNearBullets(game, 88);
     const phase = Math.sin(game.t * 1.15);
-    return inputToward(game, phase > 0 ? 395 : 85, H - 96, pulseReady(game, LOW_PULSE_COST) && n >= 5);
+    return inputToward(game, phase > 0 ? 395 : 85, H - 96, game.player.pulseCd <= 0 && n >= 5);
   },
   noPulse(game) {
     const m = routeMove(game, authoredRouteY(game), "route");
@@ -200,16 +188,15 @@ const POLICIES = {
   pulseHeavy(game) {
     const n = countNearBullets(game, 104);
     const m = routeMove(game, authoredRouteY(game) - 10, "route");
-    return inputToward(game, m.tx, m.ty, pulseReady(game, LOW_PULSE_COST) && n >= 1);
+    return inputToward(game, m.tx, m.ty, game.player.pulseCd <= 0 && n >= 1);
   },
   "boss-rush"(game) {
     const boss = game.enemies.find(e => e.boss);
     if (!boss) return POLICIES.route(game);
     const n = countNearBullets(game, 96);
-    const rewriteTargets = countRewriteTargets(game, 190);
     const tx = clamp(boss.x, 34, W - 34);
     const ty = H - 172;
-    return inputToward(game, tx, ty, pulseReady(game, MID_PULSE_COST) && (rewriteTargets >= 1 || n >= 1));
+    return inputToward(game, tx, ty, game.player.pulseCd <= 0 && n >= 1);
   },
 };
 
@@ -352,24 +339,11 @@ function aggregate(runs) {
       meanConverted: avg(group.map(r => r.summary.converted)),
       meanRelayHits: avg(group.map(r => r.summary.conversionHits)),
       meanFieldConversions: avg(group.map(r => r.summary.fieldConversions || 0)),
+      meanLaneConversions: avg(group.map(r => r.summary.laneConversions || 0)),
+      meanLaneActiveTime: avg(group.map(r => r.summary.laneActiveTime || 0)),
       meanResonantEnemies: avg(group.map(r => r.summary.resonantEnemies || 0)),
       meanChainHits: avg(group.map(r => r.summary.chainHits || 0)),
       meanRelayKills: avg(group.map(r => r.summary.relayKills || 0)),
-      meanRewrittenEnemies: avg(group.map(r => r.summary.rewrittenEnemies || 0)),
-      meanRewriteFuelShots: avg(group.map(r => r.summary.rewriteFuelShots || 0)),
-      meanRewriteKills: avg(group.map(r => r.summary.rewriteKills || 0)),
-      meanRewriteBossPatternCount: avg(group.map(r => r.summary.rewriteBossPatternCount || 0)),
-      meanRewriteActiveTime: avg(group.map(r => r.summary.rewriteActiveTime || 0)),
-      meanAlliedShots: avg(group.map(r => r.summary.alliedShots || 0)),
-      meanAlliedHits: avg(group.map(r => r.summary.alliedHits || 0)),
-      meanAlliedKills: avg(group.map(r => r.summary.alliedKills || 0)),
-      meanTetherConversions: avg(group.map(r => r.summary.tetherConversions || 0)),
-      meanTetherActiveTime: avg(group.map(r => r.summary.tetherActiveTime || 0)),
-      meanNearMissCharge: avg(group.map(r => r.summary.nearMissCharge || 0)),
-      meanSpentCharge: avg(group.map(r => r.summary.spentCharge || 0)),
-      meanLowPulseCount: avg(group.map(r => r.summary.lowPulseCount || 0)),
-      meanMidPulseCount: avg(group.map(r => r.summary.midPulseCount || 0)),
-      meanMaxPulseCount: avg(group.map(r => r.summary.maxPulseCount || 0)),
       meanPulseWhiffs: avg(group.map(r => r.summary.pulseWhiffs || 0)),
       meanDamage: avg(group.map(r => r.summary.damageTaken || 0)),
       issueCounts: countTypes(group.flatMap(r => r.issues)),
@@ -422,22 +396,12 @@ function main() {
   if (report.byPolicy.route.clearRate < 0.6) hardIssues.push("route clear rate too low");
   if (report.byPolicy.marksman.bossReachRate < 0.8) hardIssues.push("marksman does not reach authored boss");
   if (report.byPolicy.route.meanConverted <= 0 || report.byPolicy.route.meanRelayHits < 3) hardIssues.push("route does not exercise Pulse Relay");
-  if (report.byPolicy.route.meanNearMissCharge < 80) hardIssues.push("v008 charge economy is not being earned through danger");
-  if (report.byPolicy.route.meanSpentCharge < 100) hardIssues.push("v008 route is not spending enough pulse charge");
-  if (report.byPolicy.route.meanMidPulseCount < 3) hardIssues.push("v008 route is not using command pulses enough");
-  if (report.byPolicy.route.meanFieldConversions < 3) hardIssues.push("v008 resonance field disappeared after tether conversion");
-  if (report.byPolicy.route.meanResonantEnemies < 24) hardIssues.push("v008 enemy resonance reaction is not exercised enough");
-  if (report.byPolicy.route.meanChainHits < 6) hardIssues.push("v008 chain relay is not exercised enough");
-  if (report.byPolicy.route.meanRewrittenEnemies < 7) hardIssues.push("v008 route is not rewriting enough enemies");
-  if (report.byPolicy.route.meanRewriteActiveTime < 18) hardIssues.push("v008 rewritten enemies do not stay alive as allies long enough");
-  if (report.byPolicy.route.meanRewriteFuelShots < 24) hardIssues.push("v008 rewritten enemies are not producing enough fuel shots");
-  if (report.byPolicy.route.meanRewriteBossPatternCount < 1) hardIssues.push("v008 boss rewrite pattern is not exercised by the route policy");
-  if (report.byPolicy.route.meanAlliedShots < 20) hardIssues.push("v008 rewritten enemies are not visibly firing enough allied shots");
-  if (report.byPolicy.route.meanAlliedHits < 10) hardIssues.push("v008 allied rewrite shots are not hitting enough enemies");
-  if (report.byPolicy.route.meanAlliedKills < 3) hardIssues.push("v008 allied rewrite shots are not killing enough enemies");
-  if (report.byPolicy.route.meanTetherConversions < 10) hardIssues.push("v008 relay tether is not converting enough crossing bullets");
-  if (report.byPolicy.route.meanTetherActiveTime < 20) hardIssues.push("v008 relay tether is not staying visible long enough");
-  if (report.byPolicy.route.meanPulseWhiffs > 1) hardIssues.push("v008 pulse is still whiffing too often");
+  if (report.byPolicy.route.meanFieldConversions < 20) hardIssues.push("v005 resonance field is not central enough");
+  if (report.byPolicy.route.meanLaneConversions < 25) hardIssues.push("v008 Relay Lane is not being used enough");
+  if (report.byPolicy.route.meanLaneActiveTime < 6) hardIssues.push("v008 Relay Lane does not stay present enough to read");
+  if (report.byPolicy.route.meanResonantEnemies < 30) hardIssues.push("v005 enemy resonance reaction is not exercised enough");
+  if (report.byPolicy.route.meanChainHits < 10) hardIssues.push("v005 chain relay is not exercised enough");
+  if (report.byPolicy.route.meanPulseWhiffs > 1) hardIssues.push("v005 pulse is still whiffing too often");
   if (report.byPolicy.route.meanPressurePct < 0.25) hardIssues.push("route pressure is still too sparse");
   if (report.byPolicy.route.meanPulseOpportunityPct < 0.12) hardIssues.push("route does not create enough pulse opportunities");
   if (report.byPolicy.route.meanDeadlinePressurePct < 0.08) hardIssues.push("hard targets do not create enough deadline pressure");

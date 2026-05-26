@@ -19,7 +19,7 @@ for (let i = 0; i < 60 * 105 && game.state === "play"; i++) {
     if (prev) maxEnemyStep = Math.max(maxEnemyStep, Math.hypot(e.x - prev.x, e.y - prev.y));
     last.set(e, { x: e.x, y: e.y });
     const visible = e.x > -e.r && e.x < W + e.r && e.y > -e.r && e.y < H + e.r;
-    if (!e.boss && !e.convertedAlly && visible && e.age > 7.2) lingeringEnemies++;
+    if (!e.boss && visible && e.age > 7.2) lingeringEnemies++;
   }
 }
 
@@ -30,17 +30,9 @@ const result = {
   lingeringEnemies,
   maxEnemyStep: Number(maxEnemyStep.toFixed(2)),
   relayKills: game.metrics.relayKills,
+  laneConversions: game.metrics.laneConversions,
+  laneActiveTime: Number(game.metrics.laneActiveTime.toFixed(2)),
   pulseWhiffs: game.metrics.pulseWhiffs,
-  nearMissCharge: Number(game.metrics.nearMissCharge.toFixed(2)),
-  spentCharge: game.metrics.spentCharge,
-  midPulseCount: game.metrics.midPulseCount,
-  rewrittenEnemies: game.metrics.rewrittenEnemies,
-  rewriteFuelShots: game.metrics.rewriteFuelShots,
-  rewriteKills: game.metrics.rewriteKills,
-  rewriteBossPatternCount: game.metrics.rewriteBossPatternCount,
-  rewriteActiveTime: Number(game.metrics.rewriteActiveTime.toFixed(2)),
-  tetherConversions: game.metrics.tetherConversions,
-  tetherActiveTime: Number(game.metrics.tetherActiveTime.toFixed(2)),
 };
 
 console.log(JSON.stringify(result, null, 2));
@@ -49,15 +41,7 @@ if (game.state !== "clear") throw new Error(`route did not clear: ${game.state}`
 if (offscreenShots > 0) throw new Error(`offscreen shots detected: ${offscreenShots}`);
 if (lingeringEnemies > 0) throw new Error(`lingering non-boss enemies detected: ${lingeringEnemies}`);
 if (maxEnemyStep > 16) throw new Error(`enemy movement jump too large: ${maxEnemyStep.toFixed(2)}`);
-if (game.metrics.relayKills < 35) throw new Error(`relay payoff too low: ${game.metrics.relayKills}`);
+if (game.metrics.relayKills < 45) throw new Error(`relay payoff too low: ${game.metrics.relayKills}`);
+if (game.metrics.laneConversions < 25) throw new Error(`relay lane payoff too low: ${game.metrics.laneConversions}`);
 if (game.metrics.pulseWhiffs > 1) throw new Error(`pulse whiffs too high: ${game.metrics.pulseWhiffs}`);
-if (game.metrics.nearMissCharge < 80 || game.metrics.spentCharge < 100 || game.metrics.midPulseCount < 3) {
-  throw new Error("command economy did not produce enough mid command pulses");
-}
-if (game.metrics.rewrittenEnemies < 7 || game.metrics.rewriteActiveTime < 18 || game.metrics.rewriteFuelShots < 24 || game.metrics.rewriteBossPatternCount < 1) {
-  throw new Error("enemy rewrite command did not stay central enough");
-}
-if (game.metrics.tetherConversions < 10 || game.metrics.tetherActiveTime < 20) {
-  throw new Error("relay tether did not stay central enough");
-}
 console.log("ENEMY BEHAVIOR OK");

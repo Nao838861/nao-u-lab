@@ -6,14 +6,10 @@
   const DT = 1 / 60;
   const PULSE_RADIUS = 118;
   const PULSE_CD = 1.72;
-  const PULSE_MAX_CHARGE = 100;
-  const LOW_PULSE_COST = 26;
-  const MID_PULSE_COST = 56;
-  const HIGH_PULSE_COST = 88;
-  const NEAR_CHARGE_RADIUS = 112;
-  const DANGER_CHARGE_RADIUS = 64;
   const FIELD_RADIUS = 126;
   const FIELD_DURATION = 0.72;
+  const RELAY_LANE_DURATION = 1.18;
+  const RELAY_LANE_HALF_WIDTH = 24;
   const RESONANCE_DURATION = 2.35;
   const RELAY_SPEED = 660;
   const RELAY_MAX_SPEED = 980;
@@ -29,25 +25,6 @@
     const dx = a.x - b.x;
     const dy = a.y - b.y;
     return dx * dx + dy * dy;
-  }
-
-  function segmentDistance2(p, a, b) {
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const len2 = dx * dx + dy * dy || 1;
-    const t = clamp(((p.x - a.x) * dx + (p.y - a.y) * dy) / len2, 0, 1);
-    const x = a.x + dx * t;
-    const y = a.y + dy * t;
-    const px = p.x - x;
-    const py = p.y - y;
-    return px * px + py * py;
-  }
-
-  function inRewriteCommandRange(player, enemy, tier) {
-    const xRange = tier === "max" ? 138 : tier === "mid" ? 126 : 82;
-    const yMin = tier === "max" ? 4 : 16;
-    const yMax = H * (tier === "max" ? 0.88 : 0.82);
-    return enemy.y > yMin && enemy.y < yMax && Math.abs(enemy.x - player.x) <= xRange;
   }
 
   function easeMotion(t, mode = "smooth") {
@@ -296,15 +273,13 @@
         lives: 5,
         invuln: 0,
         pulseCd: 0,
-        pulseCharge: 32,
-        chargeFlash: 0,
-        commandFocus: 0,
         shotCd: 0,
       };
       this.enemies = [];
       this.enemyBullets = [];
       this.playerBullets = [];
       this.pulseFields = [];
+      this.relayLanes = [];
       this.particles = [];
       this.stars = Array.from({ length: 80 }, () => ({
         x: this.rand() * W,
@@ -322,24 +297,11 @@
         conversionHits: 0,
         relayKills: 0,
         pulseWhiffs: 0,
-        nearMissCharge: 0,
-        spentCharge: 0,
-        lowPulseCount: 0,
-        midPulseCount: 0,
-        maxPulseCount: 0,
         fieldConversions: 0,
+        laneConversions: 0,
+        laneActiveTime: 0,
         resonantEnemies: 0,
         chainHits: 0,
-        rewrittenEnemies: 0,
-        rewriteFuelShots: 0,
-        rewriteKills: 0,
-        rewriteBossPatternCount: 0,
-        rewriteActiveTime: 0,
-        alliedShots: 0,
-        alliedHits: 0,
-        alliedKills: 0,
-        tetherConversions: 0,
-        tetherActiveTime: 0,
         damageTaken: 0,
         bossReached: false,
         bossKilled: false,
@@ -383,9 +345,6 @@
         badPolicy: opts.badPolicy || [],
         shield: opts.shield || 0,
         resonance: 0,
-        rewritten: 0,
-        rewrittenKind: null,
-        rewriteCd: 0,
         ventCd: 0,
         spawnX: x,
         spawnY: y,
@@ -439,18 +398,15 @@
       const len = Math.hypot(ix, iy) || 1;
       p.x = clamp(p.x + (ix / len) * p.speed * DT, 22, W - 22);
       p.y = clamp(p.y + (iy / len) * p.speed * DT, 80, H - 28);
-      p.commandFocus = ix !== 0 ? 1.15 : Math.max(0, p.commandFocus - DT);
       p.invuln = Math.max(0, p.invuln - DT);
       p.pulseCd = Math.max(0, p.pulseCd - DT);
-      p.chargeFlash = Math.max(0, p.chargeFlash - DT);
-      this.updatePulseCharge();
       p.shotCd -= DT;
       if (p.shotCd <= 0) {
         this.playerBullets.push({ x: p.x - 7, y: p.y - 13, vx: 0, vy: -520, r: 3, dmg: 7, friendly: true, relay: false });
         this.playerBullets.push({ x: p.x + 7, y: p.y - 13, vx: 0, vy: -520, r: 3, dmg: 7, friendly: true, relay: false });
         p.shotCd = 0.115;
       }
-      if (input.pulse && p.pulseCd <= 0 && p.pulseCharge >= LOW_PULSE_COST) this.pulse();
+      if (input.pulse && p.pulseCd <= 0) this.pulse();
 
       this.updateEnemies();
       this.updateBullets();
@@ -466,18 +422,12 @@
 
     pulse() {
       const p = this.player;
-      const charge = p.pulseCharge;
-      let tier = charge >= HIGH_PULSE_COST ? "max" : charge >= MID_PULSE_COST ? "mid" : "low";
-      if (tier !== "low" && p.commandFocus <= 0) tier = "low";
-      const radius = tier === "max" ? PULSE_RADIUS + 24 : tier === "mid" ? PULSE_RADIUS : PULSE_RADIUS - 28;
-      const cost = tier === "max" ? HIGH_PULSE_COST : tier === "mid" ? MID_PULSE_COST : LOW_PULSE_COST;
-      const fieldScale = tier === "max" ? 1.15 : tier === "mid" ? 0.82 : 0;
+      const radius = PULSE_RADIUS;
       let converted = 0;
       const next = [];
       const convertedBullets = [];
       const usedTargets = new Map();
       const sourceIds = new Set();
-      let rewritten = 0;
       for (const b of this.enemyBullets) {
         if (dist2(p, b) <= radius * radius) {
           convertedBullets.push(b);
@@ -489,76 +439,22 @@
       }
       converted = convertedBullets.length;
       for (let i = 0; i < convertedBullets.length; i++) {
-        this.createRelayFromBullet(convertedBullets[i], usedTargets, i, convertedBullets.length, tier === "max" ? "maxPulse" : "pulse");
+        this.createRelayFromBullet(convertedBullets[i], usedTargets, i, convertedBullets.length, "pulse");
       }
       for (const e of this.enemies) {
         if (sourceIds.has(e.id) || dist2(p, e) <= (radius + e.r + 18) * (radius + e.r + 18)) {
-          if (tier !== "low") this.activateResonance(e, converted > 0 ? "pulse" : "empty-pulse", tier);
-        }
-        const closeRewrite = dist2(p, e) <= (radius + e.r + (tier === "max" ? 56 : 28)) * (radius + e.r + (tier === "max" ? 56 : 28))
-          && Math.abs(e.x - p.x) <= (tier === "max" ? 122 : tier === "mid" ? 96 : 58);
-        if (inRewriteCommandRange(p, e, tier) || closeRewrite) {
-          if (this.rewriteEnemy(e, tier)) rewritten++;
+          this.activateResonance(e, converted > 0 ? "pulse" : "empty-pulse");
         }
       }
       this.enemyBullets = next;
-      if (fieldScale > 0) {
-        const life = FIELD_DURATION * (tier === "max" ? 1.18 : 0.78);
-        this.pulseFields.push({ x: p.x, y: p.y, r: FIELD_RADIUS * fieldScale, life, max: life, tier });
-      }
-      p.pulseCharge = Math.max(0, p.pulseCharge - cost);
-      p.pulseCd = tier === "low" ? 0.64 : tier === "mid" ? 0.92 : 1.18;
+      this.pulseFields.push({ x: p.x, y: p.y, r: FIELD_RADIUS, life: FIELD_DURATION, max: FIELD_DURATION });
+      this.relayLanes.push({ x: p.x, life: RELAY_LANE_DURATION, max: RELAY_LANE_DURATION, half: RELAY_LANE_HALF_WIDTH });
+      p.pulseCd = PULSE_CD;
       if (converted > 0) p.invuln = Math.max(p.invuln, 0.18);
       this.metrics.pulses++;
       this.metrics.converted += converted;
-      this.metrics.spentCharge += cost;
-      if (tier === "low") this.metrics.lowPulseCount++;
-      if (tier === "mid") this.metrics.midPulseCount++;
-      if (tier === "max") this.metrics.maxPulseCount++;
-      if (converted === 0 && rewritten === 0) this.metrics.pulseWhiffs++;
-      this.particles.push({ x: p.x, y: p.y, life: 0.18, max: 0.18, kind: tier === "max" ? "maxRing" : "ring", count: converted });
-    }
-
-    rewriteEnemy(e, tier = "mid") {
-      if (!e || e.hp <= 0) return false;
-      const before = e.rewritten || 0;
-      const duration = tier === "max" ? 7.2 : tier === "mid" ? 5.6 : 3.4;
-      e.rewritten = before > 0 ? Math.min(duration + 2.6, before + duration * 0.46) : Math.max(e.rewritten || 0, duration);
-      e.rewriteMax = Math.max(e.rewriteMax || duration, e.rewritten);
-      e.rewrittenKind = e.kind;
-      e.rewriteCd = Math.min(e.rewriteCd || 0, 0.04);
-      e.allyLock = Math.max(e.allyLock || 0, tier === "max" ? 6.2 : tier === "mid" ? 4.8 : 2.6);
-      if (!e.boss) e.convertedAlly = true;
-      if (!e.boss) e.hp = Math.max(e.hp, Math.ceil(e.maxHp * 0.72));
-      if (e.kind === "armored" || e.kind === "anchor") e.shield = Math.max(0, e.shield - (tier === "max" ? 0.72 : 0.42));
-      if (e.kind === "escort") e.rewritePush = e.side || (e.x < W / 2 ? 1 : -1);
-      if (!e.boss) e.fireCd = Math.max(e.fireCd, 0.8);
-      if (e.boss) this.metrics.rewriteBossPatternCount++;
-      if (before <= 0) this.metrics.rewrittenEnemies++;
-      this.particles.push({ x: e.x, y: e.y, life: before > 0 ? 0.42 : 0.26, max: before > 0 ? 0.42 : 0.26, kind: before > 0 ? "rewriteExtend" : "rewrite" });
-      return true;
-    }
-
-    updatePulseCharge() {
-      const p = this.player;
-      if (p.pulseCharge >= PULSE_MAX_CHARGE) return;
-      let gained = 0;
-      for (const b of this.enemyBullets) {
-        const dx = b.x - p.x;
-        const dy = b.y - p.y;
-        const d2 = dx * dx + dy * dy;
-        if (d2 <= NEAR_CHARGE_RADIUS * NEAR_CHARGE_RADIUS) {
-          const danger = d2 <= DANGER_CHARGE_RADIUS * DANGER_CHARGE_RADIUS;
-          const closing = Math.max(0, b.y < p.y ? b.vy : -b.vy);
-          gained += (danger ? 0.34 : 0.12) + Math.min(0.12, closing / 1800);
-        }
-      }
-      if (gained > 0) {
-        const actual = Math.min(PULSE_MAX_CHARGE - p.pulseCharge, gained);
-        p.pulseCharge += actual;
-        p.chargeFlash = 0.08;
-        this.metrics.nearMissCharge += actual;
-      }
+      if (converted === 0) this.metrics.pulseWhiffs++;
+      this.particles.push({ x: p.x, y: p.y, life: 0.18, max: 0.18, kind: "ring", count: converted });
     }
 
     createRelayFromBullet(b, usedTargets, index, total, originKind) {
@@ -582,7 +478,7 @@
         vx,
         vy,
         r: originKind === "chain" ? 6 : 8,
-        dmg: originKind === "chain" ? 24 : originKind === "maxPulse" ? (b.fuel ? 58 : 48) : (b.fuel ? 46 : 38),
+        dmg: originKind === "chain" ? 24 : (b.fuel ? 46 : 38),
         friendly: true,
         relay: true,
         chain: originKind === "chain",
@@ -592,31 +488,19 @@
       });
     }
 
-    activateResonance(e, reason, tier = "mid") {
+    activateResonance(e, reason) {
       if (!e || e.hp <= 0) return;
-      e.resonance = Math.max(e.resonance, RESONANCE_DURATION * (tier === "max" ? 1.28 : 1));
+      e.resonance = Math.max(e.resonance, RESONANCE_DURATION);
       e.ventCd = Math.min(e.ventCd, 0.16);
-      if (e.shield > 0) e.shield = Math.max(0, e.shield - (tier === "max" ? 0.58 : 0.28));
+      if (e.shield > 0) e.shield = Math.max(0, e.shield - 0.28);
       this.metrics.resonantEnemies++;
       this.particles.push({ x: e.x, y: e.y, life: 0.22, max: 0.22, kind: reason === "empty-pulse" ? "field" : "resonance" });
     }
 
     bestRelayTarget(origin, usedTargets) {
-      const candidates = this.enemies.filter(e => e.y > -35 && e.y < H * 0.88 && !(e.rewritten > 0 && !e.boss && e !== origin));
+      const candidates = this.enemies.filter(e => e.y > -35 && e.y < H * 0.88);
       if (!candidates.length) return null;
       return candidates.sort((a, b) => this.relayScore(b, origin, usedTargets) - this.relayScore(a, origin, usedTargets))[0];
-    }
-
-    bestAllyTarget(origin) {
-      const candidates = this.enemies.filter(e => e !== origin && e.hp > 0 && e.y > -35 && e.y < H * 0.9 && !(e.rewritten > 0 && !e.boss));
-      if (!candidates.length) return null;
-      return candidates.sort((a, b) => {
-        const ad = Math.hypot(a.x - origin.x, a.y - origin.y);
-        const bd = Math.hypot(b.x - origin.x, b.y - origin.y);
-        const as = (a.boss ? 130 : 0) + (a.shield > 0 ? 60 : 0) + 320 - ad * 0.38 + Math.max(0, origin.y - a.y) * 0.2;
-        const bs = (b.boss ? 130 : 0) + (b.shield > 0 ? 60 : 0) + 320 - bd * 0.38 + Math.max(0, origin.y - b.y) * 0.2;
-        return bs - as;
-      })[0];
     }
 
     relayScore(e, origin, usedTargets) {
@@ -676,14 +560,7 @@
     updateEnemies() {
       for (const e of this.enemies) {
         e.age += DT;
-        if (e.rewritten > 0 && !e.boss) {
-          const slot = ((e.id % 5) - 2) * 34;
-          const tx = clamp(this.player.x + slot, 48, W - 48);
-          const ty = clamp(this.player.y - 210 - (e.id % 3) * 28, 118, 360);
-          e.x += (tx - e.x) * 0.045;
-          e.y += (ty - e.y) * 0.045;
-          e.done = false;
-        } else if (e.kind === "boss") {
+        if (e.kind === "boss") {
           const entry = clamp(e.age / 3.0, 0, 1);
           const ease = entry * entry * (3 - 2 * entry);
           e.x = W / 2 + Math.sin(Math.max(0, e.age - 3.0) * 1.05) * 104;
@@ -732,20 +609,7 @@
         e.shield = Math.max(0, e.shield - DT);
         e.phaseLockFlash = Math.max(0, e.phaseLockFlash - DT);
         e.resonance = Math.max(0, e.resonance - DT);
-        e.rewritten = Math.max(0, (e.rewritten || 0) - DT);
-        e.allyLock = Math.max(0, (e.allyLock || 0) - DT);
-        if (e.rewritten > 0) this.metrics.rewriteActiveTime += DT;
-        if (!e.boss && e.convertedAlly && e.rewritten <= 0) {
-          e.hp = 0;
-          this.particles.push({ x: e.x, y: e.y, life: 0.34, max: 0.34, kind: "rewriteExpire" });
-          continue;
-        }
-        e.rewriteCd = Math.max(0, (e.rewriteCd || 0) - DT);
         e.ventCd = Math.max(0, e.ventCd - DT);
-        if (e.rewritten > 0 && e.rewriteCd <= 0 && this.enemyBullets.length < 220 && e.x > 8 && e.x < W - 8 && e.y > 10 && e.y < H * 0.82) {
-          this.fireRewritePattern(e);
-          e.rewriteCd = e.boss ? 0.36 : e.kind === "feeder" ? 0.38 : e.kind === "armored" || e.kind === "anchor" ? 0.46 : 0.5;
-        }
         if (e.resonance > 0 && e.ventCd <= 0 && this.enemyBullets.length < 220 && e.y > 10 && e.y < H * 0.78) {
           const towardField = this.pulseFields[0];
           if (towardField) {
@@ -759,10 +623,6 @@
           e.ventCd = e.boss ? 0.48 : 0.72;
         }
         if (e.fireCd <= 0 && this.enemyBullets.length < 220 && e.y > 10) {
-          if (e.rewritten > 0 && !e.boss) {
-            e.fireCd = e.kind === "feeder" ? 0.58 : e.kind === "escort" ? 0.72 : 0.64;
-            continue;
-          }
           const bottomCamp = this.player.y > H - 96;
           let nextFireRate = e.fireRate;
           if (e.kind === "boss") {
@@ -831,51 +691,10 @@
             if (e.age > 1.5) this.fireAtPlayer(e, 112, 0, { role: "curve-timeout" });
           }
           if (e.resonance > 0) nextFireRate *= e.boss ? 0.76 : 0.68;
-          if (e.rewritten > 0) nextFireRate *= e.boss ? 1.08 : 1.18;
           e.fireCd = bottomCamp && ["feeder", "anchor", "armored", "escort", "boss"].includes(e.kind) ? nextFireRate * 0.48 : nextFireRate;
         }
       }
       this.enemies = this.enemies.filter(e => !e.done && e.y < H + 70 && e.hp > 0);
-    }
-
-    fireRewritePattern(e) {
-      const allyCount = e.boss ? 4 : e.kind === "feeder" ? 3 : e.kind === "armored" || e.kind === "anchor" ? 4 : 2;
-      for (let i = 0; i < allyCount; i++) this.fireAllyShot(e, i, allyCount);
-    }
-
-    fireAllyShot(e, index, total) {
-      const target = this.bestAllyTarget(e);
-      let vx = 0;
-      let vy = -620;
-      if (target && target !== e) {
-        const offset = (index - (total - 1) / 2) * 18;
-        const dx = target.x + offset - e.x;
-        const dy = target.y - e.y;
-        const len = Math.hypot(dx, dy) || 1;
-        vx = (dx / len) * 640;
-        vy = (dy / len) * 640;
-      }
-      this.playerBullets.push({
-        x: e.x,
-        y: e.y + 8,
-        vx,
-        vy,
-        r: e.boss ? 7 : 6,
-        dmg: e.boss ? 16 : 11,
-        friendly: true,
-        relay: false,
-        ally: true,
-        trail: [{ x: e.x, y: e.y }],
-      });
-      this.metrics.alliedShots++;
-      this.metrics.rewriteFuelShots++;
-    }
-
-    activeTethers() {
-      const p = this.player;
-      return this.enemies
-        .filter(e => e.convertedAlly && e.rewritten > 0 && e.x > 0 && e.x < W && e.y > 0 && e.y < H * 0.84)
-        .map(e => ({ a: { x: p.x, y: p.y - 8 }, b: { x: e.x, y: e.y }, enemy: e }));
     }
 
     movePathEnemy(e, path) {
@@ -917,24 +736,19 @@
     updateBullets() {
       const usedTargets = new Map();
       const keptEnemyBullets = [];
-      const tethers = this.activeTethers();
-      this.metrics.tetherActiveTime += tethers.length * DT;
       for (const b of this.enemyBullets) {
         b.x += b.vx * DT;
         b.y += b.vy * DT;
         const field = this.pulseFields.find(f => dist2(b, f) <= f.r * f.r);
-        if (field) {
-          this.createRelayFromBullet(b, usedTargets, this.metrics.fieldConversions % 9, 9, "field");
-          if (b.source != null) this.activateResonance(this.enemies.find(e => e.id === b.source), "field", field.tier || "mid");
+        const lane = this.relayLanes.find(l => b.y > 28 && b.y < H - 46 && Math.abs(b.x - l.x) <= l.half);
+        if (field || lane) {
+          const origin = lane ? "lane" : "field";
+          this.createRelayFromBullet(b, usedTargets, this.metrics.converted % 9, 9, origin);
+          if (b.source != null) this.activateResonance(this.enemies.find(e => e.id === b.source), "field");
           this.metrics.converted++;
-          this.metrics.fieldConversions++;
-          this.particles.push({ x: b.x, y: b.y, life: 0.16, max: 0.16, kind: "convert" });
-        } else if (tethers.some(t => segmentDistance2(b, t.a, t.b) <= 22 * 22)) {
-          this.createRelayFromBullet(b, usedTargets, this.metrics.tetherConversions % 7, 7, "tether");
-          if (b.source != null) this.activateResonance(this.enemies.find(e => e.id === b.source), "field", "mid");
-          this.metrics.converted++;
-          this.metrics.tetherConversions++;
-          this.particles.push({ x: b.x, y: b.y, life: 0.18, max: 0.18, kind: "tetherConvert" });
+          if (lane) this.metrics.laneConversions++;
+          else this.metrics.fieldConversions++;
+          this.particles.push({ x: b.x, y: b.y, life: 0.16, max: 0.16, kind: lane ? "laneConvert" : "convert" });
         } else {
           keptEnemyBullets.push(b);
         }
@@ -976,12 +790,6 @@
         if (b.hit) continue;
         for (const e of this.enemies) {
           if (dist2(b, e) <= (b.r + e.r) * (b.r + e.r)) {
-            if (e.rewritten > 0 && !e.boss && b.ally) continue;
-            if (e.rewritten > 0 && !e.boss && !b.ally) {
-              if (!b.relay) b.hit = true;
-              this.particles.push({ x: b.x, y: b.y, life: 0.1, max: 0.1, kind: "rewrite" });
-              break;
-            }
             if (e.shield > 0 && !b.relay) {
               b.hit = true;
               this.particles.push({ x: b.x, y: b.y, life: 0.12, max: 0.12, kind: "shield" });
@@ -993,13 +801,10 @@
             this.applyBossPhaseLock(e);
             b.hit = true;
             if (b.relay) this.metrics.conversionHits++;
-            if (b.ally) this.metrics.alliedHits++;
             this.particles.push({ x: b.x, y: b.y, life: b.relay ? 0.24 : 0.12, max: b.relay ? 0.24 : 0.12, kind: b.relay ? "relayHit" : "hit" });
             if (e.hp <= 0) {
               const bottomPenalty = this.player.y > H - 96 ? 0.35 : 1;
               this.score += Math.round((e.score + (b.relay ? 220 : 0)) * bottomPenalty);
-              if (e.rewritten > 0) this.metrics.rewriteKills++;
-              if (b.ally) this.metrics.alliedKills++;
               if (b.relay) {
                 this.metrics.relayKills++;
                 this.relaySplash(e, b.splash || 0);
@@ -1022,7 +827,6 @@
           }
         }
         for (const e of this.enemies) {
-          if (e.rewritten > 0) continue;
           if (dist2(p, e) <= (p.r + e.r - 2) * (p.r + e.r - 2)) {
             this.takeDamage();
             break;
@@ -1035,7 +839,7 @@
     relaySplash(source, radius) {
       if (radius <= 0) return;
       for (const e of this.enemies) {
-        if (e === source || e.hp <= 0 || e.rewritten > 0) continue;
+        if (e === source || e.hp <= 0) continue;
         const dx = e.x - source.x;
         const dy = e.y - source.y;
         if (dx * dx + dy * dy <= radius * radius) {
@@ -1090,6 +894,11 @@
       this.particles = this.particles.filter(q => q.life > 0);
       for (const f of this.pulseFields) f.life -= DT;
       this.pulseFields = this.pulseFields.filter(f => f.life > 0);
+      for (const l of this.relayLanes) {
+        l.life -= DT;
+        this.metrics.laneActiveTime += DT;
+      }
+      this.relayLanes = this.relayLanes.filter(l => l.life > 0);
     }
 
     snapshot() {
@@ -1104,25 +913,11 @@
         conversionHits: this.metrics.conversionHits,
         relayKills: this.metrics.relayKills,
         pulseWhiffs: this.metrics.pulseWhiffs,
-        pulseCharge: this.player.pulseCharge,
-        nearMissCharge: this.metrics.nearMissCharge,
-        spentCharge: this.metrics.spentCharge,
-        lowPulseCount: this.metrics.lowPulseCount,
-        midPulseCount: this.metrics.midPulseCount,
-        maxPulseCount: this.metrics.maxPulseCount,
         fieldConversions: this.metrics.fieldConversions,
+        laneConversions: this.metrics.laneConversions,
+        laneActiveTime: this.metrics.laneActiveTime,
         resonantEnemies: this.metrics.resonantEnemies,
         chainHits: this.metrics.chainHits,
-        rewrittenEnemies: this.metrics.rewrittenEnemies,
-        rewriteFuelShots: this.metrics.rewriteFuelShots,
-        rewriteKills: this.metrics.rewriteKills,
-        rewriteBossPatternCount: this.metrics.rewriteBossPatternCount,
-        rewriteActiveTime: this.metrics.rewriteActiveTime,
-        alliedShots: this.metrics.alliedShots,
-        alliedHits: this.metrics.alliedHits,
-        alliedKills: this.metrics.alliedKills,
-        tetherConversions: this.metrics.tetherConversions,
-        tetherActiveTime: this.metrics.tetherActiveTime,
         bossReached: this.metrics.bossReached,
         bossKilled: this.metrics.bossKilled,
         damageTaken: this.metrics.damageTaken,
@@ -1167,6 +962,22 @@
       ctx.restore();
     }
 
+    for (const l of game.relayLanes) {
+      const k = l.life / l.max;
+      ctx.save();
+      ctx.globalAlpha = 0.1 + k * 0.2;
+      ctx.fillStyle = "#eaff8a";
+      ctx.fillRect(l.x - l.half, 38, l.half * 2, H - 92);
+      ctx.globalAlpha = 0.32 + k * 0.36;
+      ctx.strokeStyle = "#ffffcf";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(l.x, 38);
+      ctx.lineTo(l.x, H - 54);
+      ctx.stroke();
+      ctx.restore();
+    }
+
     for (const e of game.enemies) drawEnemy(ctx, e);
     for (const b of game.playerBullets) {
       if (b.relay && b.trail && b.trail.length > 1) {
@@ -1185,9 +996,9 @@
         ctx.restore();
         ctx.globalAlpha = 1;
       }
-      ctx.fillStyle = b.ally ? "#fff06a" : b.relay ? "#f5fbff" : "#72c8ff";
-      ctx.shadowColor = b.ally ? "#ffe14f" : b.relay ? "#ffffff" : "#3aa3ff";
-      ctx.shadowBlur = b.ally ? 14 : b.relay ? 12 : 6;
+      ctx.fillStyle = b.relay ? "#f5fbff" : "#72c8ff";
+      ctx.shadowColor = b.relay ? "#ffffff" : "#3aa3ff";
+      ctx.shadowBlur = b.relay ? 12 : 6;
       circle(ctx, b.x, b.y, b.r);
     }
     ctx.shadowBlur = 0;
@@ -1208,21 +1019,8 @@
       ctx.shadowBlur = 8;
       circle(ctx, b.x, b.y, b.r);
     }
-    const tethers = game.activeTethers();
-    for (const t of tethers) {
-      const pulse = 0.5 + Math.sin(game.t * 9 + t.enemy.id) * 0.18;
-      ctx.globalAlpha = 0.18 + pulse * 0.22;
-      ctx.strokeStyle = "#fff06a";
-      ctx.lineWidth = 2 + pulse * 2;
-      ctx.beginPath();
-      ctx.moveTo(t.a.x, t.a.y);
-      ctx.lineTo(t.b.x, t.b.y);
-      ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
     drawPlayer(ctx, game.player);
-    drawPulseReadiness(ctx, game);
     drawParticles(ctx, game.particles);
     drawHud(ctx, game);
   }
@@ -1254,38 +1052,7 @@
       ctx.stroke();
       ctx.globalAlpha = 1;
     }
-    if (e.rewritten > 0) {
-      ctx.strokeStyle = "#ffd36a";
-      ctx.globalAlpha = 0.48 + Math.sin(e.age * 22) * 0.14;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(-e.r - 8, 0);
-      ctx.lineTo(e.r + 8, 0);
-      ctx.moveTo(0, -e.r - 8);
-      ctx.lineTo(0, e.r + 8);
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = "#fff5a8";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(0, 0, e.r + 15 + Math.sin(e.age * 8) * 3, 0, Math.PI * 2);
-      ctx.stroke();
-      const timer = clamp(e.rewritten / Math.max(e.rewriteMax || e.rewritten || 1, 1), 0, 1);
-      ctx.globalAlpha = 0.92;
-      ctx.strokeStyle = timer > 0.32 ? "#ffffff" : "#ff9277";
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.arc(0, 0, e.r + 23, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * timer);
-      ctx.stroke();
-      if (timer < 0.32) {
-        ctx.globalAlpha = 0.18 + Math.sin(e.age * 20) * 0.08;
-        ctx.fillStyle = "#ff9277";
-        ctx.beginPath();
-        ctx.arc(0, 0, e.r + 27, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-    ctx.fillStyle = e.rewritten > 0 ? "#ffe66d" : e.boss ? colors.boss : colors[e.kind] || "#d17cff";
+    ctx.fillStyle = e.boss ? colors.boss : colors[e.kind] || "#d17cff";
     ctx.strokeStyle = "#111722";
     ctx.lineWidth = 2;
     if (e.boss) {
@@ -1314,14 +1081,14 @@
   }
 
   function drawPlayer(ctx, p) {
-    const ready = p.pulseCd <= 0 && p.pulseCharge >= LOW_PULSE_COST;
+    const ready = p.pulseCd <= 0;
     const pulseRadius = PULSE_RADIUS;
     ctx.save();
     ctx.globalAlpha = ready ? 0.38 : 0.14;
-    ctx.strokeStyle = p.pulseCharge >= HIGH_PULSE_COST ? "#ffffff" : ready ? "#bff4ff" : "#67778c";
+    ctx.strokeStyle = ready ? "#bff4ff" : "#67778c";
     ctx.lineWidth = ready ? 3 : 2;
     ctx.beginPath();
-    ctx.arc(p.x, p.y, pulseRadius * (ready ? 1 : 0.72 + clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1) * 0.24), 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, pulseRadius * (ready ? 1 : 1 - p.pulseCd / PULSE_CD * 0.28), 0, Math.PI * 2);
     ctx.stroke();
     ctx.globalAlpha = p.invuln > 0 && Math.floor(p.invuln * 16) % 2 === 0 ? 0.35 : 1;
     ctx.fillStyle = "#70e0ff";
@@ -1340,56 +1107,18 @@
     ctx.restore();
   }
 
-  function drawPulseReadiness(ctx, game) {
-    const p = game.player;
-    const charge = clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1);
-    const commandReady = p.pulseCd <= 0 && p.pulseCharge >= MID_PULSE_COST && p.commandFocus > 0;
-    const chargeReady = p.pulseCd <= 0 && p.pulseCharge >= MID_PULSE_COST;
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.globalAlpha = 0.22 + charge * 0.38;
-    ctx.strokeStyle = commandReady ? "#fff06a" : chargeReady ? "#bff4ff" : "#617387";
-    ctx.lineWidth = commandReady ? 4 : 2;
-    ctx.beginPath();
-    ctx.arc(0, 0, 30, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * charge);
-    ctx.stroke();
-    if (chargeReady) {
-      const band = commandReady ? 122 : 74;
-      ctx.globalAlpha = commandReady ? 0.18 + Math.sin(game.t * 14) * 0.04 : 0.08;
-      ctx.fillStyle = commandReady ? "#fff06a" : "#7befff";
-      ctx.fillRect(-band, -H, band * 2, H - 44);
-      ctx.globalAlpha = commandReady ? 0.82 : 0.42;
-      ctx.strokeStyle = commandReady ? "#fff7b2" : "#9ec6d4";
-      ctx.lineWidth = commandReady ? 3 : 1;
-      ctx.beginPath();
-      ctx.moveTo(-band, -H);
-      ctx.lineTo(-band, -44);
-      ctx.moveTo(band, -H);
-      ctx.lineTo(band, -44);
-      ctx.stroke();
-      if (commandReady) {
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 13px Segoe UI, sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText("SPACE", 0, -PULSE_RADIUS - 12);
-      }
-    }
-    ctx.restore();
-  }
-
   function drawParticles(ctx, particles) {
     for (const q of particles) {
       const k = q.life / q.max;
       ctx.globalAlpha = Math.max(0, k);
-      if (q.kind === "ring" || q.kind === "rewriteExtend" || q.kind === "rewriteExpire") {
-        ctx.strokeStyle = q.kind === "rewriteExtend" ? "#fff06a" : q.kind === "rewriteExpire" ? "#ff9277" : q.count > 0 ? "#ffffff" : "#5c6b7e";
-        ctx.lineWidth = q.kind === "rewriteExtend" ? 5 : q.kind === "rewriteExpire" ? 3 : q.count > 0 ? 4 : 2;
+      if (q.kind === "ring") {
+        ctx.strokeStyle = q.count > 0 ? "#ffffff" : "#5c6b7e";
+        ctx.lineWidth = q.count > 0 ? 4 : 2;
         ctx.beginPath();
-        ctx.arc(q.x, q.y, 24 + (1 - k) * (q.kind === "rewriteExtend" ? 112 : q.kind === "rewriteExpire" ? 62 : 88), 0, Math.PI * 2);
+        ctx.arc(q.x, q.y, 24 + (1 - k) * 88, 0, Math.PI * 2);
         ctx.stroke();
       } else {
-        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : q.kind === "rewrite" || q.kind === "tetherConvert" ? "#fff06a" : "#8fdcff";
+        ctx.fillStyle = q.kind === "damage" ? "#ff394a" : q.kind === "relayHit" ? "#ffffff" : q.kind === "laneConvert" ? "#f7ff8a" : "#8fdcff";
         circle(ctx, q.x, q.y, 6 + (1 - k) * 20);
       }
     }
@@ -1403,12 +1132,11 @@
     ctx.fillText(`LIFE ${p.lives}`, 18, 28);
     ctx.fillText(`SCORE ${game.score}`, 18, 52);
     ctx.fillText(`RELAY ${game.metrics.converted}`, 18, 76);
-    ctx.fillText(`CHARGE ${Math.floor(p.pulseCharge)}`, 18, 100);
     const cdw = 112;
     ctx.strokeStyle = "#38445a";
     ctx.strokeRect(W - 132, 18, cdw, 10);
-    ctx.fillStyle = p.pulseCharge >= HIGH_PULSE_COST ? "#ffffff" : p.pulseCharge >= MID_PULSE_COST ? "#bff4ff" : "#5f7894";
-    ctx.fillRect(W - 132, 18, cdw * clamp(p.pulseCharge / PULSE_MAX_CHARGE, 0, 1), 10);
+    ctx.fillStyle = p.pulseCd <= 0 ? "#bff4ff" : "#5f7894";
+    ctx.fillRect(W - 132, 18, cdw * (1 - clamp(p.pulseCd / PULSE_CD, 0, 1)), 10);
     const boss = game.enemies.find(e => e.boss);
     if (boss) {
       ctx.strokeStyle = "#4b3940";
@@ -1466,9 +1194,9 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { Game, W, H, DT, WAVE_EVENTS, PULSE_RADIUS, PULSE_CD, PULSE_MAX_CHARGE, LOW_PULSE_COST, MID_PULSE_COST, HIGH_PULSE_COST };
+    module.exports = { Game, W, H, DT, WAVE_EVENTS, PULSE_RADIUS, PULSE_CD };
   } else {
-    root.PulseRelayV006 = { Game };
+    root.PulseRelayV008 = { Game };
     browserMain();
   }
 })(typeof window !== "undefined" ? window : globalThis);
