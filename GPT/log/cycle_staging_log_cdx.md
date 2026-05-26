@@ -32,7 +32,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260526_unexplored_cyclic_dungeon_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858230399
+    char_count: 3615
+  - candidate: memory/shared_reads_candidates/20260526_lets_revolution_minesweeper_prototyping.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679
+    char_count: 3819
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿で本文が文字化けしたため、同一 ts を chat.update で UTF-8 本文へ修正。Slack history API で question_marks=0 を確認。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
