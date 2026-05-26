@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-26T13:38:00+09:00",
+  "updated_at": "2026-05-26T16:26:00+09:00",
   "reviewed_source_ts": [
+    "1779447884.748739",
     "1779737780.576279",
     "1779557881.821109",
     "1779701926.657909",
@@ -54,6 +55,23 @@
     "1778173646.461789"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T16:26:00+09:00",
+      "id": "sr-1779447884-c4466c5517",
+      "source_ts": "1779447884.748739",
+      "title": "千葉集「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(note 2026) — 「答え合わせ × 総当たり防止」二要素と「ニアピン賞」が STG ヘッドレス評価の層別設計と構造同型",
+      "decision": "adopt_probe",
+      "reason": "Nao_u が #nao-u に投下した記事を Log が #shared-reads に翻訳した score-15 atom。ミステリゲームの「答え合わせのタイミング」「総当たり防止」「ニアピン賞」は、直近の Pulse Relay / headless 評価で pass/fail や clearRate だけに寄せる危険に直接効く。ただしジャンル差が大きく、既存の lab-proxy / state-action-loop probes と重なるため、恒久ルールや評価表ではなく次回 game/headless 評価で二値判定に潰していないかを見る reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T13:38:00+09:00",
       "id": "sr-1779737780-a742b51b5e",
@@ -923,6 +941,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260526-near-miss-not-binary",
+      "created_at": "2026-05-26T16:26:00+09:00",
+      "source_ts": "1779447884.748739",
+      "scope": "next game/headless evaluation or playable diff where a mechanic, scoring change, or player-facing feedback may be judged only by pass/fail, clearRate, or a single verdict",
+      "questions": [
+        "Before reporting improvement, did I name the answer-check timing: immediate, batched, end-of-run, or human review?",
+        "Did I include one near-miss or partial-progress signal instead of collapsing the result to pass/fail, such as N of M goals met, distance to target, wrong-category count, or representative failed policy?",
+        "Did I state one anti-bruteforce or anti-overfit boundary so the partial signal cannot be gamed by the evaluation policy alone?"
+      ],
+      "expires_after": "Review after the next game/headless evaluation or playable diff that reports a mechanic or scoring change."
+    },
     {
       "id": "probe-20260526-repro-condition-before-verdict",
       "created_at": "2026-05-26T13:38:00+09:00",

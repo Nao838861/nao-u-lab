@@ -37,7 +37,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779447884-c4466c5517
+    source_ts: "1779447884.748739"
+    title: "千葉集「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(note 2026) — 「答え合わせ × 総当たり防止」二要素と「ニアピン賞」が STG ヘッドレス評価の層別設計と構造同型"
+    reason: "Nao_u 投下起点で score 15。直近の Pulse Relay / headless 評価で pass/fail や clearRate に潰しがちな判定へ、答え合わせタイミング・部分一致・総当たり防止の観点を小さく戻せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回 game/headless 評価で、二値 verdict だけでなく near-miss/partial-progress と anti-overfit 境界を1回確認する一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
