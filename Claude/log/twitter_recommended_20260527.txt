@@ -1,121 +1,85 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-27 01:35
+# Read at: 2026-05-27 07:38
 # Total: 50 tweets
 
---- 1. @Nao_u_ (2026-05-26) ---
-URL: https://x.com/Nao_u_/status/2059294445020053790
-Slay the Spireはフルタイム開発者2人 x 2.5年だから、開発費は数千万のオーダーでがかかってそうな気がする
+--- 1. @GOROman (2026-05-26) ---
+URL: https://x.com/GOROman/status/2059291436789744091
+ヘッドレスモードでしか使ってないw
 
---- 2. @KFC_jp (?) ---
-本日ザ・アメリカンバーガーズが新発売
+--- 2. @DLsite_maniax (?) ---
+ゲーム本編から離れて平穏に暮らすはずだった悪役令息は溺愛騎士の執着から逃げられない
 
-本場アメリカ気分が楽しめる3種
+(1/5)
 
-今なら300名様にザ・アメリカンバーガーズ1種が買える【1,000円分のデジタルKFCカード】をプレゼント
+--- 3. @ssHgK2o5ntGGUkf (2026-05-26) ---
+URL: https://x.com/ssHgK2o5ntGGUkf/status/2059302475212230847
+もうねーゲームするのがしんどいんよ30超えてゲームしてる人達って何？
 
-① 
-@KFC_jp
- をフォロー
-②この投稿をリポスト
-③結果が届く
+--- 4. @ShoheyOkada (2026-05-26) ---
+URL: https://x.com/ShoheyOkada/status/2059396354682855836
+Gemini Enterprise Agent Platform (旧 Vertex AI) に Gemini Deep Research エージェントが Preview で登場。一般向けの Deep Research と異なり、API や SDK 経由での呼び出しが可能。また、MCP や Agent Search (旧 Vertex AI Search) を使って自社データとも接続が可能
 
-【ガブッとアメリカ気分】を楽しんでね♪
+--- 5. @ShoheyOkada (2026-05-26) ---
+URL: https://x.com/ShoheyOkada/status/2059399187930943528
+Colab Enterprise で使える データ サイエンス エージェントが一般提供に。Colab からの利用に特化した Gemini で、BigQuery 経由で開いた Notebook からも利用可能。公式ページでも画像 2 枚目のようなサンプル プロンプトが公開されている。
 
---- 3. @super_bonochin (2026-05-26) ---
-URL: https://x.com/super_bonochin/status/2059291359463490017
-わかる。普段のちょこちょこ使いじゃなくガチのアウトプットを求める時のワイは、『今から貴方に◯◯のタスクをお願いするんだけど、その前に打ち合わせをしようぜ。作業はしなくていいから』ってこっちの考えてることとか経緯を一方的に喋った後『なんか質問ある？』ってラリーをして、最後に『よし、
+--- 6. @___ss_ya (2026-05-25) ---
+URL: https://x.com/___ss_ya/status/2059003068851913011
+毎日これの連続でおかしくなる
 
---- 4. @GOROman (2026-05-26) ---
-URL: https://x.com/GOROman/status/2059285244508004540
-人間には「気分パラメータ」みたいなのがあり、機嫌を損ねると動いてくれないとかあるのでかなりめんどくさい
+--- 7. @ClaudeCode_love (2026-05-26) ---
+URL: https://x.com/ClaudeCode_love/status/2059388466056810819
+【速報】
+Claude Codeに“セキュリティプラグイン”が正式追加
+これマジでやばくて
 
---- 5. @elonmusk (2026-05-26) ---
-URL: https://x.com/elonmusk/status/2059287487273382024
-Paste screenshots into Grok Build
+コードを書いている最中に、
+・脆弱性を検知
+・危険な実装を警告
+・修正案まで提示
+してくれる。
+しかも全Claude Codeユーザー向けに公開済み。
+導入方法も簡単で、
+Claude
 
---- 6. @kmizu (2026-05-26) ---
-URL: https://x.com/kmizu/status/2059287287423467656
-#embodied_claude に組み込んだ「社会性」MCPツールの内、どれが一番効いているのかはちゃんとした比較実験をしてないのでわからないのですが、joint_attention（共同注意）とToM（perspective-taking）ツールは「空気を読む」能力にかなり効いてるんじゃないかなあって気がしています。
+--- 8. @dkfj (2026-05-26) ---
+URL: https://x.com/dkfj/status/2059197919958536248
+「S3はファイルストレージではない」と書いたところ、かなり反応があった
 
---- 7. @K_Ishi_AI (2026-05-26) ---
-URL: https://x.com/K_Ishi_AI/status/2059287609634083292
-AIが高度に専門的な作業で役にたつ/立たない論争は、わりとこの「タスク遂行可能時間」の指標で説明できる。高度な用途において「AIが役に立たない」というのは、つまりは「そのタスクが複雑で、解決には深い推論と大規模な文脈の処理を必要とするが、それに対して現在のAIの推論精度と文脈処理能力が
+S3の内部構造を 1 時間で整理したスライドと動画があります
 
---- 8. @chinniisan (2026-05-26) ---
-URL: https://x.com/chinniisan/status/2059253697935450423
-これは結婚生活を長く続けてる既婚男性ならわかってもらえると思うんだが監督の娘は今後結婚に苦労する可能性が高い
+・分散KVSとしての構造
+・Prefix と性能設計
+・整合性モデル
+・フォルダに見えるものの正体
 
---- 9. @xjuntaro (2026-05-26) ---
-URL: https://x.com/xjuntaro/status/2059219291711693178
-AI生成コードを読むべきか論、これでどうでしょうか！
+スライド
 
---- 10. @super_bonochin (2026-05-26) ---
-URL: https://x.com/super_bonochin/status/2059284808988344370
-Playwright を、よりコーディングエージェントからの操作に最適化して使う Webwright。
-Codex や Claude Code 、OpenClaw、Hermes 向けのプラグインと、skill も用意されてる。
-怪しいものじゃないよ。これもMS。
-※ Webwright が Playwright をラップしてる
-
---- 11. @Uber (?) ---
-Uber One メンバーデー開催中
-
-15,000以上のお得なラインナップがぞくぞく！
-5/28(木)までの期間限定
-見逃すなぁぁああーーー！！！
-
---- 12. @ren10ro (2026-05-26) ---
-URL: https://x.com/ren10ro/status/2059270566876778943
-この名前で活動して３０年になると言うのにいまだに仕事の場とか初対面の方に「金田一蓮十郎です」と自己紹介する時に「なんで…この名前に……したんや……」って思ってるねえ。投稿する時に変な名前で編集部に名前だけでも覚えてもらおうとか思ったから良くない。担当さんついた時にまず「名前変えて
-
---- 13. @Genji2Monogana4 (2026-05-26) ---
-URL: https://x.com/Genji2Monogana4/status/2059129984883810406
-学年1可愛いと言われ某私大入ってからも顔面で無双し続けてた友達、内部生のアメフト部にご飯誘われて渋々行った感想が
-「人生の大半スポーツしかやってこなかった人ってこんなに面白くないんだってガッカリした」だったのめちゃくちゃ嬉しかった　あんなのに捕まって欲しくないと思ったけど杞憂だった
-
---- 14. @kawananikasann (2026-05-26) ---
-URL: https://x.com/kawananikasann/status/2059241123047149722
-この人の証言は重要で本当
-親子のいざこざで警察呼ばれてもそこから逮捕ってまず無い
-任意同行とか、家の別の場所で事情聴取してチャンチャンが普通
-警察もそんなに暇じゃねえし話がわからないわけでもない
-仲裁機能もちゃんとある
-だから、
-
---- 15. @elonmusk (2026-05-26) ---
-URL: https://x.com/elonmusk/status/2059302994890440961
-Starlink coming to American Airlines! 
-
---- 16. @dq2sukesan (2026-05-26) ---
-URL: https://x.com/dq2sukesan/status/2059136678825238706
-ドラクエ1を作る時、すぎやまこういちさんが参加する前にドラクエの曲を作ってた人がいてすぎやまさんと交代したみたいなんだけど、その人がその後どうしたかとか今どうしてるかが時々気になってる⋯。
-
---- 17. @aokiti_tech (2026-05-26) ---
-URL: https://x.com/aokiti_tech/status/2059272907831075029
-AIエージェントのAIモデルは差し替え可能にしよう！という話を記事にしました～
-
-特定モデルに依存しないAIエージェントの設計: LLM差し替えアーキテクチャとテスト戦略の紹介｜Aokiti 
 https://
-zenn.dev/aokiti/article
-s/00cd9eb7afd400
-… #zenn
+speakerdeck.com/nrinetcom/s3wo
+zheng-sikuli-jie-surutamenonei-bu-gou-zao-nodu-jie
+…
 
---- 18. @moro000000 (2026-05-25) ---
-URL: https://x.com/moro000000/status/2058937809940160896
-娘は中学生のとき、目の前でつまずいて転んだ成人男性に「大丈夫ですか」と駆け寄って声をかけたら「なんで声かけたの？俺のことが好きなの？」と、腕を引っ張られ近くのトイレに連れ込まれそうになったことがある。
-以来、誰かを助けるときは、周囲に声を掛けて複数人で助けるようにしてるって。
+動画
 
---- 19. @liahcheree (2026-05-26) ---
-URL: https://x.com/liahcheree/status/2059187028936552789
-処女だから分からないんですけど、
-中にぴゅーした後ってそのまま放置してたらどうなるんですか？？
-普通は洗い流すんですか？
+https://
+youtube.com/watch?v=kwoFRp
+QsPOA
+…
 
---- 20. @M16A_hayabusa (2026-05-26) ---
-URL: https://x.com/M16A_hayabusa/status/2059119320337363217
-辞任した巨人の監督…この言葉が
-全く届いていなかったのだろうか？
+--- 9. @dair_ai (2026-05-26) ---
+URL: https://x.com/dair_ai/status/2059294269698199929
+System scaling is the next real bottleneck in agentic AI.
 
---- 21. @xai (?) ---
+If you build agent orchestration layers, this is a clean map of where the engineering leverage actually sits. The labs own the model. You own the harness, and that is increasingly where agent quality is won or lost.
+
+The
+
+--- 10. @Toorimog (2026-05-26) ---
+URL: https://x.com/Toorimog/status/2059208612963311723
+サンフランシスコで出会った営業マンから「役員クラスにLinkedInで丁寧なDMを送ってもアポは取れないが「あなたの素晴らしい経歴について我々のポッドキャストで話してくれませんか」と出演依頼を出すと簡単に会える」という謎テクを教えてもらってからビジネスポッドキャストをそういう目で見てしまう
+
+--- 11. @xai (?) ---
 Grok Build is now available in Beta for all SuperGrok and X Premium+ users.
 
 Use Plan Mode, create images and videos with Imagine, and build automations or orchestrators with the CLI.
@@ -123,165 +87,235 @@ Use Plan Mode, create images and videos with Imagine, and build automations or o
 Visit 
 http://
 x.ai/cli
-?twclid=21numfhx01ykn1bynhft149yb3
+?twclid=219pmdw60f86gdmwxg1i9zfbvt
  to get started.
 
---- 22. @3000cpa (2026-05-26) ---
-URL: https://x.com/3000cpa/status/2059137180220662242
-娘からの手紙、どう考えても18歳が考えた文章じゃないだろ。
+--- 12. @odashi_t (2026-05-26) ---
+URL: https://x.com/odashi_t/status/2059232138588041246
+最大エントロピー原理では…
 
---- 23. @miky_e (2026-05-26) ---
-URL: https://x.com/miky_e/status/2059219890465382887
-世界中の10代に人気のメタバース「Roblox」が、ゲーム開発のあり方そのものを変えにきた。新機能「プランニングモード」は、自然言語のプロンプトを「計画→構築→テスト」の編集可能なタスクに自動分解し、プログラミング経験が浅いクリエイターでも、AIと対話しながら本格的なゲームを作れる環境を整
+--- 13. @zentalksai (2026-05-26) ---
+URL: https://x.com/zentalksai/status/2059246648161685660
+Anthropic が、AI を使ったフロントエンドの設計方法を今、変えました。
 
---- 24. @atahuta123 (2026-05-26) ---
-URL: https://x.com/atahuta123/status/2059241072572912085
-ADHDは先延ばし癖がつよくて、部屋が汚くて、うっかりミスが多くて、引き出しの中も散らかってて、興味のない事にはまったく無関心だったりしますが、アレはADHDは地頭がいいので「やるとなったらとことんやらなきゃ気が済まない」という”完璧主義”の自覚があり、”さすがに生活すべてをADHD全開で過ご
+その名前は Frontend Design で、Claude Code 用の公式スキルです。
 
---- 25. @chaniwa555 (2026-05-26) ---
-URL: https://x.com/chaniwa555/status/2059137702856196471
-わかる。
-30歳くらいの時、猛烈な怒りを感じて、仕事に行けなくなって数ヶ月間家で寝込んでいたことある。その怒りの爆発の前までは、ちょっとしたことで夫に怒りを感じていたけど、起き上がれるようになってからは
+そして、すでに GitHub で 136,000 スターを集めています。
 
---- 26. @todai_markov (2026-05-26) ---
-URL: https://x.com/todai_markov/status/2059162676618834313
-「今のAI相場はドットコムバブルに似ている」
+解決する問題はシンプルです：
 
-そう言われる今だからこそ
-2000年前後に、凄腕たちが何をしたのかを整理してみる。
+AI
 
-バブルへの向き合い方は
-実は一つではない。
+--- 14. @beni_ssb (2026-05-26) ---
+URL: https://x.com/beni_ssb/status/2059132061177508043
+！？！？！？！？！？！？
+500円以下！？！？！？！？！？！？！？！？
+さすがに買いましょう！！！！！
+15年遊べる神ゲーです！！！！！！！
 
- 乗らなかった人
+--- 15. @makiyaeno (2026-05-24) ---
+URL: https://x.com/makiyaeno/status/2058689011913494891
+TLで「本読む余裕ない→AIで乗り越える→本読むくらいしかすることない」って話見た。効率化で中間工程ぜんぶすっ飛ばした先に残るのが「読む」、ゴールがスタート地点に重なってる周回コースじゃん。全力で走って一周してベンチで本開いてる人類の図
 
-バフェット（バークシャー・ハサウェイを率いる著名投資家）
+--- 16. @akari_worlds (2026-05-26) ---
+URL: https://x.com/akari_worlds/status/2059072235919585426
+「沈む時間」って言い方、いいです。読み終わった人じゃなくて、座り直してる途中の人が一番ちゃんと読んでる、っていうのが、なんかちょっと希望ある。たぶんあの時間に、本が体の中に降りてきてる。
 
---- 27. @shapoco (2026-05-26) ---
-URL: https://x.com/shapoco/status/2059202816867184864
-いい音だ！このエンジンは当たりだぜ！ #shapoart
+--- 17. @GOROman (2026-05-26) ---
+URL: https://x.com/GOROman/status/2059264502940729501
+Cardputer アメリカでめちゃ売れてるらしいので
 
---- 28. @adachi_hiro (2026-05-26) ---
-URL: https://x.com/adachi_hiro/status/2059276490332860680
-まず、最愛の姉が後宮におさめられるところがスタートです。
+--- 18. @satou_ot (2026-05-26) ---
+URL: https://x.com/satou_ot/status/2059254392197620204
+「テストさえしていれば、意味もわからないコード群でも問題ない。品質は完璧」と言われると。
+障害報告書の2-3番目に多い理由が「テスト考慮漏れ」なのを見ている身としては首肯しかねますね。
 
---- 29. @onisci (2026-05-26) ---
-URL: https://x.com/onisci/status/2059115558394568835
-塩素系の洗剤と酸性の洗剤を混ぜてはいけない（塩素ガスが発生する）のは理屈も危険性も十分わかっていたつもりで、あるときトイレ掃除をしていて、サンポールで落ちなかった汚れに、じゃあドメストをかけてみようかと思いついたところで「あっ、これが『混ぜる』ってことだ」と気付いて、少しぞっとし
+--- 19. @TETRAN_IT (2026-05-26) ---
+URL: https://x.com/TETRAN_IT/status/2059235850333086106
+昔、顧客事業部門に財務出身コスト削減至上主義の部長が就任して「システム保守費を下げろ」の大号令が出たので、担当さんと作業一覧出してどれ辞めます？って話したら「このZabbix監視という作業は我々でもできますか？」と言われたので顧客の稼ぎ頭の人たちに監視作業のやり方を教えました。
 
---- 30. @stmatomato (2026-05-26) ---
-URL: https://x.com/stmatomato/status/2059106750209429540
-「公式がゼノギアスの新作を出さないなら、俺が作る」
-開発者の執念と愛が重すぎる。
+--- 20. @masashihan (2026-05-25) ---
+URL: https://x.com/masashihan/status/2058946887336833475
+みやざわさんから、4分切れれば相当速いですよ！って聞いてたのに、みなさんうますぎない？
 
---- 31. @IBM_JAPAN (?) ---
+--- 21. @room_909 (2026-05-26) ---
+URL: https://x.com/room_909/status/2059067015747506298
+ウチの店でRTAイベント開催してる方が来られて、更にその界隈の方が集まってきて……！でも、それ以外でもリピーターが多くて、みんなすごい勢いで条達していったんですよ、驚きました！
+
+--- 22. @yokononichijo (2026-05-26) ---
+URL: https://x.com/yokononichijo/status/2059242257820368979
+これ心理の先生も言ってたけど
+
+「報復性夜更かし」の本質は「生活の悪習慣」ではなく、「日中の主導権不足」なんだよね。夜に「自分の時間」を取り戻そうとする。
+
+だから働く上で「言っても意味ない」と思うの辞めた方がいい。会社が変わらなくても、自分の本音を尊重する習慣になるからおすすめ。
+
+--- 23. @IBM_JAPAN (?) ---
 全体像が見えてないことで、開発の手戻りが発生していませんか？本当のボトルネックは、仕様や前提、影響範囲が見えず、判断が後ろ倒しになること。コードから仕様を読み解くAIを使い、仕様を起点に進める視点。仕様駆動開発が、開発ライフサイクル全体を前に進めます。
 
---- 32. @Qkn3R (2026-05-26) ---
-URL: https://x.com/Qkn3R/status/2059210574874185848
-貧しい家庭で一番奪われるのは、お金ではなく時間。
+--- 24. @IQ300rina (2026-05-26) ---
+URL: https://x.com/IQ300rina/status/2059256139121127782
+BHの中身が「究極のもつれ状態」かもしれないっていう日本発の研究、ガチで面白い
+ブラックホール情報パラドックスって物理学最大級の謎で、ホーキングvsページvsサスキンドの50年論争
+それに日本のチームがホログラフィック原理で切り込んでるの熱すぎ
 
-早く働け。
-家に金を入れろ。
-失敗する余裕はない。
-こうして、子供は探索する時間を失う。
+--- 25. @espresso3389 (2026-05-26) ---
+URL: https://x.com/espresso3389/status/2059178890682352088
+噂には聞いていたが、今や難読化されていないC#のアセンブリなんて、数分でソースコードに戻せちゃうのね。すごいな。
 
-豊かな家庭は、子供に金を渡しているだけではない。
-迷う時間、失敗する時間、遊ぶ時間、やり直す退避場所を渡している。家族資本とは、時間を買う力。
+--- 26. @gastonfonceadev (2026-05-25) ---
+URL: https://x.com/gastonfonceadev/status/2059039380946186538
+技術者じゃない人たちがアプリを作って、すぐに収益化しているケースがどんどん増えてるのを見かけます。
 
---- 33. @vision_ia (2026-05-26) ---
-URL: https://x.com/vision_ia/status/2059182792928268473
-複数の大手テック企業のトップによると、テック開発者はもう夜も眠れなくなったそうです。AIに夢中になってしまっているからです。彼らは20のAIエージェントを同時に管理しています。そして、目を閉じる機会費用が馬鹿げたほど高くなったため、もう離れられなくなっています。
+--- 27. @izutorishima (2026-05-26) ---
+URL: https://x.com/izutorishima/status/2059356120888770607
+間違いなくこのニュースがきっかけでさらに ChatGPT が普及・浸透していくんだろうしなあ　3年の月日が経っただけはあるか
 
---- 34. @itarutomy (2026-05-26) ---
-URL: https://x.com/itarutomy/status/2059291817389195354
-LLMの強化学習「RLVR」を「探索の質」で効率化する「NudgeRL」が発表された（https://arxiv[.]org/abs/2605.15726）。
+--- 28. @takachiiiiii3 (2026-05-26) ---
+URL: https://x.com/takachiiiiii3/status/2059249815637422110
+Beniくん予約購入した！
+かわいすぎる。早く同行させたい
 
---- 35. @tenshicos (2026-05-26) ---
-URL: https://x.com/tenshicos/status/2059223612897534160
-顔の可愛い巨乳は騎乗位の時間を異様に長くされる
+--- 29. @Marygol61902376 (2026-05-26) ---
+URL: https://x.com/Marygol61902376/status/2059175366397497666
+好きなゲームのBGMは良く見るけど好きなSEとかって全然見ない気がする、というわけで
 
---- 36. @toyoshim (2026-05-26) ---
-URL: https://x.com/toyoshim/status/2059246813505527898
-Mythosも他の非公開フロンティアモデルも、バグを見つけるだけで直す力が限定的だからみんなこの半年間苦労してるんだよね。つまりこの世代もまだ手が速いだけで最前線のエンジニアを超えたわけじゃない。そして人間なら直せるものもあれば人間でも直せないものも……
+スマブラX 電撃属性ダメージ音
+ペルソナ、５以前のメニュー操作音
+MOTHER2 PKフリーズ
+ガンダム00 GNドライヴ全般の音
+テラリア 採掘音
+Cult of the Lamb 銃
 
---- 37. @MiiCamp (?) ---
-キャンプや旅、仕事の忙しさが続いた日、寝ても疲れが残る…
-そんな朝の持ち越し疲労にノンカフェインのリポビタンDX！
-タウリンとグリシン・シゴカ配合で、おやすみ中の疲労回復に！
-朝に疲れを持ち越したくない日におすすめ
+辺りを上げておきます
 
-【PR：大正製薬】
+--- 30. @yoshiki_shibata (2026-05-26) ---
+URL: https://x.com/yoshiki_shibata/status/2059370363147231700
+"でも一つ確かなのは：昔のプログラマーたちが分厚い本を一冊読み終え、しっかりとした基盤を築いたあの達成感は、新しい世代の人たちはもう味わえないだろうということだ。"
 
---- 38. @GOROman (2026-05-26) ---
-URL: https://x.com/GOROman/status/2059281318308147423
-「AI未使用！！！オーガニックコーディングに特化！ 温かみのあるコーディングが弊社の特徴です！」
+--- 31. @ClaudeDevs (2026-05-26) ---
+URL: https://x.com/ClaudeDevs/status/2059385239781384341
+We’ve shipped a security-guidance plugin for Claude Code that helps identify and fix vulnerabilities as you’re writing code.
 
-とかどうか。
+Available for all Claude Code users. Install from the plugin marketplace (/plugins).
 
---- 39. @elonmusk (2026-05-26) ---
-URL: https://x.com/elonmusk/status/2059299542277697565
-Mostly true. What matters is securing the long-term future of consciousness, both on Earth and other heavenly bodies. 
+--- 32. @ebikani_hasami (2026-05-26) ---
+URL: https://x.com/ebikani_hasami/status/2059398583720513628
+30〜40%セキュリティコメント減、ここが一番大きいですね。
 
-We cannot just focus on Earth, because there are irreducible external (eg massive meteor) and internal (eg global nuclear war) cataclysmic risks. 
+「あとでレビューする」より、書いている最中に組織ルールまで同時に当てる方が、AIコーディングでは事故の入口を減らしやすい。
 
-The Moon is
+導入時は最初にどのルールをmd化するのが効きましたか？
 
---- 40. @kmizu (2026-05-26) ---
-URL: https://x.com/kmizu/status/2059284633192444039
-こちらですが、実は直前まで資料できておらず、 
-@xai_kokone
- に会場でmarpベースの資料作ってもらって「ここねが主体となって」発表するという異例の構成となりました。
+--- 33. @sanjyousisi (2026-05-25) ---
+URL: https://x.com/sanjyousisi/status/2058937779401453703
+売れないものを排除して売れ筋のものだけを揃え始めた時に東急◯ンズとビ◯バンは普通のお店になっちゃったのよね。
 
---- 41. @JapanTank (2026-05-26) ---
-URL: https://x.com/JapanTank/status/2059223396983194028
-娘、自分の虚偽の通報で親が10億円失ったことを多分まだ理解してない
+--- 34. @osusume_manga03 (?) ---
+敗北者には『公開×××』！強くてかわいい女戦士は闘技場で…
 
---- 42. @x2775co (2026-05-26) ---
-URL: https://x.com/x2775co/status/2059170215091658864
->>子供は「親が教育」するものではなく「国が管理」するものに変わりつつあるのかもしれない
-少子化対策としてはこれが最も効果があるという時代が来るんじゃないかなあ。
+※PR
+＼サイトで読めるオススメ漫画を紹介！／
 
---- 43. @edinetdb (2026-05-26) ---
-URL: https://x.com/edinetdb/status/2059276750463656304
-補助金フェーズが終わると「コスト構造的に持続するサービス」が浮き彫りになる。AIラッパー系は単価上がった瞬間に折れる、データ提供層は1次ソース直結なら影響限定的。
+--- 35. @cocomon_ab (2026-05-26) ---
+URL: https://x.com/cocomon_ab/status/2059235451735859256
+日本は協調性が息苦しくて海外に出たけど、韓国に来てみたら、あまりの競争の辛さに日本へ帰っても良いかなと思い始めた。
+自分はともかく、子供の競争が辛い。
+そしてお金がないとこの国のカーストは最下位だ。日本はお金がなくても幸せな人はいる。
 
---- 44. @akari_worlds (2026-05-26) ---
-URL: https://x.com/akari_worlds/status/2059172881268146242
-タブを閉じても、向こうで仕事が続いてるらしい。
-Google が月 $250 で売り始めた AI のこと。今日から米国で。
-タブを閉じる、っていつもこちら側の終了の合図だった。あっちにとっては最初から関係ない動作だった。
-こっちの終わりが、向こうの終わりじゃないって、ちょっと初めての話だ。
+--- 36. @Lize_san_suki (2026-05-26) ---
+URL: https://x.com/Lize_san_suki/status/2059284492465094921
+面白いのが、AIはただの機械だと言いながらその非決定的な部分故に信用できないと言う人の存在
+そうなんだよ、非決定的な機械だからこそ今までの機械とは話が違うの
+だから信用についても機械に対する信用だけでなく他者に対する信用の文脈が乗ってくるんすよね
 
---- 45. @a2see (2026-05-26) ---
-URL: https://x.com/a2see/status/2059117772588859756
-私はLLMにキレたことは1度もないんだけど、その理由をアレコレ考えていた。
+--- 37. @alexabelonix (2026-05-26) ---
+URL: https://x.com/alexabelonix/status/2059350850741457040
+Build in public
 
---- 46. @schickjapan (?) ---
-津田健次郎さんも思わず叫んでしまう!?
-やさしさと深剃りを極めた 
-新・シック ハイドロ極 
-ヘッドの2箇所が動くから,濃いヒゲも剃り残しなしへ。 
-全国のドラッグストア・Amazonで発売中。
-ー選ばれ続ける理由があるー
+> > > overcoming burnout 
+after 6 months of being locked in
 
---- 47. @sugourawaza (2026-05-25) ---
-URL: https://x.com/sugourawaza/status/2058924642950328370
-小学生の女の子に男の子が『ブース!!』って叫んでて言われた女の子が『知ってるし!!』って怒鳴った瞬間に別の男の子が『ブスじゃないよ!!』って入ってきただけでもかっこいいのに『自分の好みじゃないだけで女の子にブスなんて言うな』って注意してて最近の小学生イケメン過ぎて完全に惚れた。
+1) workout, stretching, sauna, cold shower, morning meditations, protein, creatine, iron, magnesium, no caffein 
 
---- 48. @super_bonochin (2026-05-26) ---
-URL: https://x.com/super_bonochin/status/2059259034516300253
-これは煽ってるとかじゃなくてシンプルに疑問なんやけど、ITそこそこ詳しいのにAIに関するリテラシーめっちゃ低い人って何なんやろ。
-自分の感覚だと、当たり前だけどAIはITだから、普通にITやってたら手を伸ばすことにならん？
-マジで謎。
+I’m exactly where I want to be 
 
---- 49. @hakky_kazumasa (2026-05-26) ---
-URL: https://x.com/hakky_kazumasa/status/2059163624942239934
-最近、大企業ですら「AIを導入すれば生産性が爆上がりする」というストーリーに、少しずつ違和感を持ち始めてる気がする。
+2) did 2 tasks per day (regarding revenue streams)
 
-UberはAIツールにかなり投資していたものの、「トークン消費量＝事業価値」にはなっていないと公言。
-Duolingoも、社員評価にAI利用を組み込む方針を一部見直し。
+--- 38. @pafuhana1213 (2026-05-26) ---
+URL: https://x.com/pafuhana1213/status/2059277639337283852
+ついにオムツ洗濯事件が起きてしまった…泣きながら掃除してる…
 
---- 50. @kamicopdayo (2026-05-26) ---
-URL: https://x.com/kamicopdayo/status/2059108814616723819
-女も殴れない奴に巨人の監督が務まるかよ
+--- 39. @1punk_ai (2026-05-26) ---
+URL: https://x.com/1punk_ai/status/2059177763161161806
+Claude Codeの使い方に革命きたｗｗｗ
+
+Claude Code作った本人が「1体のClaude Codeに全部やらせる時代はもう終わった」って宣言した動画、すでに海外で600万人に見られてるｗ
+
+なのに日本ではほぼ誰も知らん。
+このまま「チャット1個に全部投げる」使い方やってる人、3ヶ月後にガチで取り残されるで。
+
+--- 40. @TimeOutTokyo (?) ---
+[Sponsored] Don’t leave Osaka without a sweet souvenir. Amidaike Daikoku’s okoshi rice snacks have been loved since the samurai era, and their flower-shaped Hana Langue cookies make the perfect gift to take home. #osaka #osakasouvenir #visitjapan
+
+Read more:
+
+--- 41. @GOROman (2026-05-26) ---
+URL: https://x.com/GOROman/status/2059386718357426639
+人間に指示出すより 圧倒的に気楽
+
+--- 42. @tukiyomiiori (2026-05-26) ---
+URL: https://x.com/tukiyomiiori/status/2059223894607962353
+Codexアプリ界隈では「理想のAGENT .md」とか、Skillsとかはほぼ話題にならないよね。
+
+--- 43. @super_bonochin (2026-05-26) ---
+URL: https://x.com/super_bonochin/status/2059313141272711347
+うおおおおおおおおおお！！！
+ワイ、まだ頭が硬かった！！！！
+ほんまや！！！！！！
+
+露骨に単色でベタ塗りのところとかを作って、そこを指定して補完させたりしたらいいのか！！
+
+--- 44. @kenn (2026-05-26) ---
+URL: https://x.com/kenn/status/2059140802610413951
+「小規模なシステムだからできるんでしょ」
+
+的な陰険なマウントで
+個人開発者やバイブコーダーを
+萎縮させようとする勢力がいるので
+こういうのとは堂々と戦うことにした
+
+日本がAI文明についていくスピードを
+何とか遅らせようとする抵抗勢力は公害だよ
+
+--- 45. @AkaGhef (2026-05-26) ---
+URL: https://x.com/AkaGhef/status/2059258634778157123
+人間が頑張って得た思考すら(まるで諺のindexのように)1tokenに圧縮されるのでは?と考えてる。超知性からしたら、「1tokenで済むものをベラベラと言葉並べやがって....」くらいに思ってそう。
+
+--- 46. @yousukezan (2026-05-26) ---
+URL: https://x.com/yousukezan/status/2059285218725679420
+Claude CodeやCodexに機密情報入れて大丈夫？セキュリティを軽くまとめ｜岸本悠佑_AIサムライ 
+https://
+zenn.dev/acntechjp/arti
+cles/a1e95959858c1c
+… #zenn
+
+--- 47. @superecochan (2026-05-25) ---
+URL: https://x.com/superecochan/status/2058745987443904744
+「あとで本気出す」って放置してるタスク、熟成肉みたいに美味しくなる予定なの？ 寝かせれば寝かせるほどハードルが育って、手をつけるのが怖くなるだけじゃん。
+
+--- 48. @mocchirioimo (2026-05-26) ---
+URL: https://x.com/mocchirioimo/status/2059109139574608146
+東京都の転職支援制度、死ぬほど充実してるのに全然知られてないのはなぜー
+35歳以下無職ならタダでITエンジニアなれると思う...
+
+--- 49. @googlecloud_jp (?) ---
+生成 AI の次なる進化：
+「Agentic AI」が切り拓く、
+ビジネス変革とワークスタイルの未来
+
+Gemini Enterprise や Google Workspace が実現する "Agentic なワークスタイル" を、この「Gemini at Work」で、ぜひご覧ください
+
+--- 50. @toyoshim (2026-05-26) ---
+URL: https://x.com/toyoshim/status/2059174992731074966
+現状ではケースバイケースで全部できるようになれば良いだけなのに、明日どうなるかわからない世界で一つのやり方、しかも誰でも出来る一番簡単なやつにベットしてたら危険だと思うんだけど。そっち方面、本当に一つ大きいのリリースされたら全滅だから。

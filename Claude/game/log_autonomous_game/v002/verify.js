@@ -32,8 +32,17 @@ const ENEMY_R = 10;
 const BULLET_R = 4;
 const ENEMY_VY_A = 1.4;
 const ENEMY_VX_D = 1.4;
+const ENEMY_VY_C = 2.5;
+const ENEMY_C_SWING_AMP = 60;
+const ENEMY_C_SWING_PERIOD = 30;
 const WAVE_REST_FRAMES = FPS * 8; // v002 差分: wave clear 後 8 秒静寂
-const MAX_FRAMES = FPS * 60;       // 60 秒 = 3600 F
+const MAX_FRAMES = FPS * 90;       // 90 秒 = 5400 F (C248: 70-90s カーブ全 phase 観測)
+// WAVE_TIMELINE: game.js と同型 (phase 0/1/2)
+const WAVE_TIMELINE = [
+  { phaseStart: 0,        phaseEnd: 20 * FPS, types: ['A'] },
+  { phaseStart: 20 * FPS, phaseEnd: 50 * FPS, types: ['A', 'D'] },
+  { phaseStart: 50 * FPS, phaseEnd: 90 * FPS, types: ['A', 'D', 'C'] },
+];
 
 function mulberry32(a) {
   return function () {
@@ -81,9 +90,39 @@ function spawnWaveD(state) {
   state.waveCount += 1;
 }
 
+function spawnWaveC(state) {
+  const n = 2;
+  for (let i = 0; i < n; i++) {
+    const baseX = W * (0.3 + i * 0.4);
+    state.enemies.push({
+      id: `W${state.waveCount + 1}-C${i}`,
+      type: 'C',
+      x: baseX, baseX,
+      y: -20 - i * 60,
+      vx: 0, vy: ENEMY_VY_C,
+      r: ENEMY_R, alive: true,
+      shootCooldown: 9999,
+      spawnFrame: state.frame,
+    });
+  }
+  state.waveSpawned = true;
+  state.waveCount += 1;
+}
+
+function currentPhase(state) {
+  const elapsed = state.frame; // verify は playStartFrame=0 起点
+  for (const phase of WAVE_TIMELINE) {
+    if (elapsed >= phase.phaseStart && elapsed < phase.phaseEnd) return phase;
+  }
+  return WAVE_TIMELINE[WAVE_TIMELINE.length - 1];
+}
+
 function spawnNextWave(state) {
-  if (state.waveCount % 2 === 0) spawnWaveA(state);
-  else spawnWaveD(state);
+  const phase = currentPhase(state);
+  const type = phase.types[state.waveCount % phase.types.length];
+  if (type === 'A') spawnWaveA(state);
+  else if (type === 'D') spawnWaveD(state);
+  else if (type === 'C') spawnWaveC(state);
 }
 
 function spawnBullet(state, e) {
@@ -101,12 +140,21 @@ function spawnBullet(state, e) {
 function updateEnemies(state) {
   for (const e of state.enemies) {
     if (!e.alive) continue;
-    e.x += e.vx; e.y += e.vy;
+    if (e.type === 'C') {
+      const t = state.frame - e.spawnFrame;
+      const newX = e.baseX + Math.sin(t / ENEMY_C_SWING_PERIOD) * ENEMY_C_SWING_AMP;
+      e.vx = newX - e.x;
+      e.x = newX;
+      e.y += e.vy;
+    } else {
+      e.x += e.vx; e.y += e.vy;
+    }
     if (e.type === 'D') {
       if (e.x < -30 || e.x > W + 30) { e.alive = false; continue; }
     } else {
       if (e.y > H + 30) { e.alive = false; continue; }
     }
+    if (e.type === 'C') continue; // C は射撃しない
     const inYGate = e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX;
     const inXGate = e.type !== 'D' || (e.x >= SHOOT_GATE_X_MIN && e.x <= SHOOT_GATE_X_MAX);
     if (inYGate && inXGate) {
@@ -191,10 +239,12 @@ function runOne(name, strategyFn, seed) {
     waveSpawned: false,
     waveCount: 0,
     lastClearFrame: null,
+    frame: 0,
   };
   const rng = mulberry32(seed);
 
   for (let frame = 0; frame < MAX_FRAMES; frame++) {
+    state.frame = frame;
     // v002 差分: wave clear 後 8 秒待機ガード反映
     if (state.waveSpawned && state.enemies.length === 0) {
       state.waveSpawned = false;
@@ -253,21 +303,23 @@ const survivors = results.filter(r => r.outcome === 'survived').map(r => r.strat
 const report = {
   audit: 'verify_bad_strategies',
   target: 'game/log_autonomous_game/v002/game.js',
-  thesis: '悪手 4 方針は 60 秒以内に必ず死ぬ — v002 wave 1 軽量化 (n=3) + 8 秒静寂後も死を回避できない',
+  thesis: '悪手 4 方針は 90 秒以内に必ず死ぬ — v002 wave 1 軽量化 (n=3) + 8 秒静寂 + 70-90s 時間カーブ (A→A+D→A+D+C) 下でも死を回避できない',
   max_frames: MAX_FRAMES,
   max_seconds: MAX_FRAMES / FPS,
   wave_rest_frames: WAVE_REST_FRAMES,
+  wave_timeline: WAVE_TIMELINE,
   seed: SEED,
   results,
   pass: allDied,
   survivors,
   note: allDied
-    ? '全 4 方針が gameover に到達。wave 1 軽量化 + 8 秒静寂導入後も castLock 不使用悪手は全滅。'
-    : `生存方針: ${survivors.join(', ')} — wave 1 軽量化が悪手通過の穴を作った可能性。self_judgment §3 へ追記要。`,
+    ? '全 4 方針が gameover に到達。wave 1 軽量化 + 8 秒静寂 + 時間カーブ拡張後も castLock 不使用悪手は全滅。'
+    : `生存方針: ${survivors.join(', ')} — 時間カーブ拡張が悪手通過の穴を作った可能性。self_judgment §3 へ追記要。`,
   limits: [
     'verify.js は悪手検証であり、良手検証ではない',
     '実機判定の代替ではない',
     'wave 間 8 秒静寂の体感的「展開差」は本検証では計測しない',
+    'phase 2 (50-90s, A+D+C) を 4 方針すべてが観測するとは限らない (early death 時)',
   ],
 };
 

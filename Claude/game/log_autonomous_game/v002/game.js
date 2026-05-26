@@ -24,12 +24,26 @@
   // 敵速度定数 (audit が静的抽出するため const 化)
   const ENEMY_VY_A = 1.4;          // 敵A 直進小型 縦速度
   const ENEMY_VX_D = 1.4;          // 敵D 横断敵 横速度 (vy_A と対称)
+  const ENEMY_VY_C = 2.5;          // 敵C ダイブ 縦速度 (A の約 1.8 倍 = 「急襲」体感)
+  const ENEMY_C_SWING_AMP = 60;    // 敵C 横揺れ振幅 (px)、baseX ± この値
+  const ENEMY_C_SWING_PERIOD = 30; // 敵C 横揺れ角速度分母 (frame 単位、t/30 で sin 周期 ≈ 188F=3.1s)
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
   // v002 wave カーブ: wave 1 軽量化 (n=3 + 初弾遅延 +30) → wave clear 後 8 秒静寂 → wave 2 (敵D)
   // Pulse Relay 70-90s カーブ第 1 段 「4-12s 学習 → 静寂 → 12-25s 基本混合」 のローカル化。
   const WAVE_REST_FRAMES = FPS * 8;
+
+  // 70-90 秒時間カーブ本体 (C248 Phase 4): プレイ開始 frame からの経過で 3 phase 切替
+  //   phase 0: 0-20s  導入  (A 単体ループ — 1 wave 内学習)
+  //   phase 1: 20-50s 中盤  (A + D ローテ — 縦横の脅威同居)
+  //   phase 2: 50-90s 終盤  (A + D + C ローテ — ダイブ敵 C で「展開」軸を成立)
+  // 時間カーブ第1段で「2 wave 偶奇ループ反復」を解消するため、phase 進行で wave 種別が増える。
+  const WAVE_TIMELINE = [
+    { phaseStart: 0,        phaseEnd: 20 * FPS, types: ['A'] },
+    { phaseStart: 20 * FPS, phaseEnd: 50 * FPS, types: ['A', 'D'] },
+    { phaseStart: 50 * FPS, phaseEnd: 90 * FPS, types: ['A', 'D', 'C'] },
+  ];
 
   const game = {
     state: STATE.TITLE,
@@ -43,6 +57,7 @@
     bullets: [],
     waveSpawned: false,
     waveCount: 0,
+    playStartFrame: 0, // PLAYING 開始 frame、WAVE_TIMELINE phase 判定基準
     lastClearFrame: null, // 直前 wave 撃破時 frame。次 wave 起動の静寂ガード材料
     lockResults: { hit: 0, miss: 0, idle: 0 },
     idleSince: 0,
@@ -276,10 +291,53 @@
     logEvent('wave_spawn', { wave: game.waveCount, type: 'D', count: n });
   }
 
-  // wave dispatcher: waveCount 偶数 → A、奇数 → D (1=A, 2=D, 3=A, 4=D, ...)
+  // --- 敵 C (ダイブ敵) Wave ---
+  // C248 Phase 4 (2026-05-27): 70-90 秒カーブ phase 2 (50-90s 終盤) の「展開」軸を成立させる第3敵。
+  // design_log §Q-C 敵C「上から急降下、横方向 sin オフセットで読み筋を一筋に縛らせない」を実装。
+  // 設計理由: 敵A (縦進行)・敵D (横進行) の 2 種ループでは「次 wave も同じ向き」予測が成立し、
+  //   Nao_u 5/25 21:10「展開なし繰り返し」批判の本丸 = 「3 種以上の組み合わせで予測を崩す」へ応答。
+  // C は射撃しない (本体接触のみが脅威) = Q-D 弾源負荷の追加なし、純粋に運動軸を1本増やす設計。
+  function spawnWaveC() {
+    const n = 2;
+    for (let i = 0; i < n; i++) {
+      const baseX = W * (0.3 + i * 0.4); // 0.3 / 0.7 = プレイヤー中央 H*0.5 帯と分散
+      game.enemies.push({
+        type: 'C',
+        x: baseX,
+        baseX,
+        y: -20 - i * 60,
+        vx: 0,
+        vy: ENEMY_VY_C,
+        r: 10,
+        alive: true,
+        shootCooldown: 9999, // C は射撃しない (ループ内 inYGate 通過時も無発火)
+        spawnFrame: game.frame,
+      });
+    }
+    game.waveSpawned = true;
+    game.waveCount += 1;
+    logEvent('wave_spawn', { wave: game.waveCount, type: 'C', count: n });
+  }
+
+  // 70-90s 時間カーブ phase 判定: playStartFrame からの経過 frame で現 phase を返す
+  function currentPhase() {
+    const elapsed = game.frame - game.playStartFrame;
+    for (const phase of WAVE_TIMELINE) {
+      if (elapsed >= phase.phaseStart && elapsed < phase.phaseEnd) return phase;
+    }
+    return WAVE_TIMELINE[WAVE_TIMELINE.length - 1]; // 90s 超は phase 2 維持
+  }
+
+  // wave dispatcher: 現 phase の types 配列を waveCount % types.length でローテ
+  // phase 0 (0-20s): [A] → A のみ
+  // phase 1 (20-50s): [A, D] → A, D, A, D, ...
+  // phase 2 (50-90s+): [A, D, C] → A, D, C, A, D, C, ...
   function spawnNextWave() {
-    if (game.waveCount % 2 === 0) spawnWaveA();
-    else spawnWaveD();
+    const phase = currentPhase();
+    const type = phase.types[game.waveCount % phase.types.length];
+    if (type === 'A') spawnWaveA();
+    else if (type === 'D') spawnWaveD();
+    else if (type === 'C') spawnWaveC();
   }
 
   // Q-D: 敵→プレイヤー狙いの単発射撃 (弾自体は発射時の角度で直進 = divergence ゼロ)
@@ -301,14 +359,25 @@
   function updateEnemies() {
     for (const e of game.enemies) {
       if (!e.alive) continue;
-      e.x += e.vx; e.y += e.vy;
-      // 退場判定 (type 別): A は画面下端、D は左右端
+      // 運動更新: C は baseX 中心の sin 横揺れ + 一定 vy ダイブ、A/D は vx/vy 加算
+      if (e.type === 'C') {
+        const t = game.frame - e.spawnFrame;
+        const newX = e.baseX + Math.sin(t / ENEMY_C_SWING_PERIOD) * ENEMY_C_SWING_AMP;
+        e.vx = newX - e.x; // 実効 vx を反映 (audit / trace の整合性)
+        e.x = newX;
+        e.y += e.vy;
+      } else {
+        e.x += e.vx; e.y += e.vy;
+      }
+      // 退場判定 (type 別): A/C は画面下端、D は左右端
       if (e.type === 'D') {
         if (e.x < -30 || e.x > W + 30) { e.alive = false; continue; }
       } else {
         if (e.y > H + 30) { e.alive = false; continue; }
       }
       // SHOOT_GATE: y in [0, H*0.85] (退場前)、type='D' は追加で x in [W*0.2, W*0.8] (中央域)
+      // C は射撃しないため inYGate/inXGate 評価をスキップ (shootCooldown 9999 でも無害だが明示)
+      if (e.type === 'C') continue;
       const inYGate = e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX;
       const inXGate = e.type !== 'D' || (e.x >= SHOOT_GATE_X_MIN && e.x <= SHOOT_GATE_X_MAX);
       if (inYGate && inXGate) {
@@ -431,9 +500,10 @@
       }
     }
 
-    // 敵 (type 別配色: A=赤, D=紫寄り = 横軸の差別化を視覚で示す、内側→外側流出 1 原則は弾本体・予測非表示で維持)
+    // 敵 (type 別配色: A=赤(縦), D=紫(横), C=黄(ダイブ) = 運動軸 3 種を視覚で峻別、
+    //   内側→外側流出 1 原則は弾本体・予測非表示で維持)
     for (const e of game.enemies) {
-      ctx.fillStyle = e.type === 'D' ? '#b878ff' : '#ff6b6b';
+      ctx.fillStyle = e.type === 'D' ? '#b878ff' : (e.type === 'C' ? '#ffd84d' : '#ff6b6b');
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill();
     }
 
@@ -481,7 +551,8 @@
     ctx.textAlign = 'left';
     ctx.fillText(`Relay  hit:${game.lockResults.hit}  miss:${game.lockResults.miss}  idle:${game.lockResults.idle}`, 8, 16);
     ctx.textAlign = 'right';
-    ctx.fillText(`wave:${game.waveCount}`, W - 8, 16);
+    const elapsedSec = Math.floor((game.frame - game.playStartFrame) / FPS);
+    ctx.fillText(`wave:${game.waveCount}  t:${elapsedSec}s`, W - 8, 16);
   }
 
   function drawGameOver() {
@@ -511,6 +582,7 @@
     game.bullets = [];
     game.waveSpawned = false;
     game.waveCount = 0;
+    game.playStartFrame = game.frame; // WAVE_TIMELINE phase 基準
     game.lastClearFrame = null;
     game.lockResults = { hit: 0, miss: 0, idle: 0 };
     game.idleSince = 0;
