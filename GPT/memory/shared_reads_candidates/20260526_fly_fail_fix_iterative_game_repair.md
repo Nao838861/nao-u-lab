@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2507.12666"
 collected_at: "2026-05-26T17:52:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-playtest, automated-repair, reinforcement-learning, lmm]
+evaluated_at: "2026-05-26T17:56:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: |-
+  手法の重要要素と Nao_u 環境への適用軸は抽出できるが、同一論文は 2026-05-15 に pass 済みで #shared-reads 投稿済み。
+  今回の candidate は既投稿を更新する新しい評価・適用差分を持たず、Phase 3 で再投稿すると重複投稿になる。
 ---
 
 ## raw_excerpt

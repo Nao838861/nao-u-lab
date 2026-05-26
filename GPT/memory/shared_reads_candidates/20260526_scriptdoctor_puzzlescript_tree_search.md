@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2506.06524"
 collected_at: "2026-05-26T17:52:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automatic-game-design, puzzles, llm, tree-search, puzzlescript]
+evaluated_at: "2026-05-26T17:56:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: |-
+  LLM 生成、compile feedback、tree-search playtest の中核は明確で、CoopEval 水準の概要も既に書ける題材。
+  ただし同一論文は 2026-05-15 に pass 済みで #shared-reads 投稿済みであり、今回版は再投稿に値する新規差分がない。
 ---
 
 ## raw_excerpt

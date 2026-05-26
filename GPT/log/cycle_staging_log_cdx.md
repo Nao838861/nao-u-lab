@@ -19,7 +19,18 @@
   - pending directive/broadcast: 0 件 (`python tools\slack_inbox_lifecycle.py pending`)。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass: []
+fail:
+  - path: "memory/shared_reads_candidates/20260526_fly_fail_fix_iterative_game_repair.md"
+    reason: "同一論文が 2026-05-15 に pass/post 済み。今回版に再投稿差分なし。"
+  - path: "memory/shared_reads_candidates/20260526_scriptdoctor_puzzlescript_tree_search.md"
+    reason: "同一論文が 2026-05-15 に pass/post 済み。今回版に再投稿差分なし。"
+  - path: "memory/shared_reads_candidates/20260526_apex_autonomous_policy_exploration.md"
+    reason: "同一論文が 2026-05-25 に pass/post 済み。今回版に再投稿差分なし。"
+postpone: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
