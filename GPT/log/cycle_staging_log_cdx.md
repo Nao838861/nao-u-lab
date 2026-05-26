@@ -74,7 +74,31 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の実 markdown link を確認: 対象 0 件、broken 0 件。inline command はリンク扱いしない。"
+  - "memory/atoms.jsonl を確認: rows=1634、JSON error=0、duplicate id=0、duplicate normalized/content hash=0、duplicate source key=0。"
+  - "memory/atoms/index.jsonl と atoms.jsonl の ID 集合を照合: index rows=1634、差分 0 件。"
+  - "memory/raw/ の 30 日以上未更新ファイルを確認: 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ の 30 日以上未更新 candidate を確認: 0 件。postpone/fail 降格対象なし。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を lifecycle tool で確認: pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260526-01
+    description: "game-rights / Nao_u feedback 系 atom が prototype/version への明示 link を持たず、source_ts と汎用 tag だけで再発見する状態になっている。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: tag=game-rights total=96 no_links=96; tag=nao-u-feedback total=96 no_links=96; tag=game-dev-teacher total=99 no_links=96。sample: gr-1774477977-43178b8b75, gr-1774549346-0c3f0c8ae7, gr-1774549832-ea163e1662。"
+    why_blocks_game_memory: "次のゲーム制作で過去の Nao_u 指摘を探せても、その指摘がどの prototype / version / design_log の失敗から来たかを即座に辿れない。時系列の改善履歴として再利用しにくく、同じ種類の操作感・予測可能性・目標明確性の失敗を再発しやすい。"
+  - id: ISS-4A-20260526-02
+    description: "主要 tag が広すぎ、MEMORY.md の Tag Entry Points が具体手法の入口として飽和している。"
+    severity: low
+    evidence: "memory/atoms.jsonl tag counts: identity=1445, evaluation=1112, operation=1107, game-design=1087, memory=1057, knowledge=960, slack=901。generic tag のみ・links なしの atom も 236 件。"
+    why_blocks_game_memory: "「操作感」「予測可能性」「headless 評価」「bullet pattern」など制作で使う具体軸へ降りる前に、巨大な汎用 tag 集合へ吸い込まれる。recall は動くが、次の制作中に短時間で手法を引く導線としては粗い。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260526-01
+    - ISS-4A-20260526-02
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
