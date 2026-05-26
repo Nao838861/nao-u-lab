@@ -70,7 +70,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md のローカル参照 2 件を確認し、broken link は 0 件。"
+  - "memory/atoms.jsonl 1668 行を parse 確認。JSON error 0 件、duplicate id 0 件。内容重複 17 group は既存の lifecycle/content fold 対象として観測のみ。"
+  - "memory/atoms/index.jsonl は 1668 行 / unique id 1668 件で atoms.jsonl と id 差分 0 件。"
+  - "memory/raw/ は 102 file 中、30 日以上未更新の file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ は 204 file 中、30 日以上未更新の file 0 件。降格/保持判断対象なし。"
+  - "inbox は directives pending 0 件、broadcasts pending 1 件。残件 broadcast-1779790844-85adeffbca は needs_human_review のため Phase 4a では close しない。"
+issues:
+  - id: "ISS-4A-20260527-01"
+    description: "直近の playable diff `game/pulse_relay/v008` と検証結果が staging には残っているが、`memory/atoms.jsonl` から `pulse_relay/v008` / `Relay Lane` / `headless_pulse_relay_v008` で引けず、`memory/game_memory_task_lens_index.md` の bridge も v003 までで止まっている。"
+    severity: medium
+    evidence: "log/cycle_staging_log_cdx.md Phase Game Start; `memory/atoms.jsonl` exact search hits 0 for pulse_relay/v008 / Relay Lane / headless_pulse_relay_v008; `memory/game_memory_task_lens_index.md` Feedback Bridge contains pulse_relay/v003 but not v008."
+    why_blocks_game_memory: "今回の v005 ベース再出発、Relay Lane、bad-policy 別 headless 検証の知見が、次の shmup/特殊システム制作時に memory_recall や task lens から自然に出ない。最新の成功/失敗検証が staging の一時ログに閉じると、次作が古い v003/v005 周辺の知見へ戻りやすい。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - "ISS-4A-20260527-01"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
