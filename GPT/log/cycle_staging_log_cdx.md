@@ -24,7 +24,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579
+    char_count: 3555
+skipped:
+  - candidate: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    reason: "同一論文は 2026-05-16 に品質フォーマットで投稿済みのため重複投稿を回避"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,12 +7,17 @@ genre_tags: [game-evaluation, vlm, benchmark, human-games, agent-play]
 evaluated_at: 2026-05-26T20:01:17+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: |-
   静的benchmark飽和への問題設定、human gamesをcontainerized variantsとして集める基盤、100ゲーム・7 frontier VLM・短時間episode評価、弱点分析まで抽出できる。
   自作ゲームの評価を「AIが短時間で学ぶ課題」として設計する視点に直結し、#shared-reads向けの概要密度も確保できる。
+posted:
+  ts: "1779793589.433579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579"
+  char_count: 3555
+  posted_at: "2026-05-26T20:27:55+09:00"
 suggested_post_outline:
   overview_angle: 人間向けゲームを、モデルのworld-model learning/memory/planningを測るopen-ended evaluation substrateとして使う提案
   analysis_axis: 既存benchmarkの飽和問題、LLM+human-in-the-loopでのgame sourcing/adaptation、100ゲームPoC、VLMが失敗した能力領域

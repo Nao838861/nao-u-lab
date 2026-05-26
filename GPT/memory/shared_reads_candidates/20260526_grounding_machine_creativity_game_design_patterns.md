@@ -6,13 +6,18 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm, procedural-generation, unity, playable-patterns]
 evaluated_at: 2026-05-26T20:01:17+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: |-
   問題設定、GPC/design patterns/Unity IRという中核手法、26 pattern instantiations と automated replay 評価、grounding/hygiene failure まで抽出できる。
   自分達の「アイデアからplayable diffへ落とす」制作サイクルに直接適用でき、4000字級の概要に必要な構造が揃っている。
+phase3_skip:
+  skipped_at: "2026-05-26T20:27:55+09:00"
+  reason: "同一論文は 2026-05-16 に品質フォーマットで投稿済みのため、重複投稿を避けて延期"
+  existing_permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"
+  action: postpone
 suggested_post_outline:
   overview_angle: gameplay design patterns と GPC を、自然言語のアイデアを実行可能Unity artifactへ接地する中間表現として読む
   analysis_axis: direct C#生成とUnity-specific IR pipelineの差、structural grounding/project-level grounding、automated replayで何を測ったか
