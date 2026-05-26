@@ -101,7 +101,98 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: 2026-05-26T13:35+09:00
+selected_issues:
+  - ISS-4A-20260526-01
+  - ISS-4A-20260526-02
+designs:
+  - issue_id: ISS-4A-20260526-01
+    problem_restatement: "game-rights / Nao_u feedback atom は指摘内容としては残っているが、どの prototype / version / design_log / review packet から生まれた失敗知見かを辿る構造が薄い。次の制作時に同種の失敗を検索できても、具体的な再現文脈や修正履歴へ戻れない。"
+    alternatives:
+      - name: "A. atom frontmatter へ direct links 追記"
+        sketch: "対象 atom の links / related_versions / related_logs を frontmatter に増やし、atom 自体から prototype と design log へ直接辿れるようにする。per-file .md と Obsidian graph には自然に乗る。"
+        pros:
+          - "atom 単体を開いた時の文脈復元が最も強い。"
+          - "Obsidian graph と per-file 移行方針に素直に合う。"
+          - "将来の lifecycle / supersede と同じ場所で管理できる。"
+        cons:
+          - "既存 96 件の backfill 判断が重く、誤リンクの混入コストが高い。"
+          - "atoms.jsonl / per-file dual-write 中のため、更新経路が増える。"
+          - "version 名の揺れを先に決めないと frontmatter が汚れる。"
+        migration_cost: medium
+      - name: "B. game feedback bridge index"
+        sketch: "atom 本体は変えず、`memory/game_memory_task_lens_index.md` か隣接する lightweight index に、feedback atom id -> prototype/version/log/evidence の対応を curated な行だけ追加する。Phase 4c では新規 index セクションと最小 backfill だけを行う。"
+        pros:
+          - "失敗しても atom 本体を汚さず、rollback が容易。"
+          - "高信頼な対応だけを薄く始められ、誤リンクを隔離できる。"
+          - "既存の game task lens 入口と整合し、制作前 recall の導線になりやすい。"
+        cons:
+          - "atom を直接開いた時には link が見えない。"
+          - "index の更新忘れが起きると二重管理になる。"
+          - "将来的には atom frontmatter へ昇格する判断が別途必要。"
+        migration_cost: low
+      - name: "C. recall query expansion only"
+        sketch: "tools 側の recall クエリに prototype/version らしき語を自動追加し、既存 atoms.jsonl と raw から近傍を拾う。構造データは増やさない。"
+        pros:
+          - "記憶データの移行を伴わない。"
+          - "曖昧な関連も拾える可能性がある。"
+        cons:
+          - "今回の問題である明示 link 不在は解消しない。"
+          - "検索結果の揺れが増え、制作中の短時間導線として弱い。"
+          - "Phase 4b の設計対象が tool tuning に寄りすぎる。"
+        migration_cost: medium
+    recommended: "B. game feedback bridge index"
+    recommended_reason: "現状は atom 本体の一括 backfill より、確実に辿れる少数の feedback -> prototype 対応を別 index で始める方が失敗時のコストが低い。per-file frontmatter への昇格余地を残しつつ、次のゲーム制作で使う入口を先に作れる。"
+    decision: introduce
+    decision_reason: "priority issue の中ではゲーム制作への影響が直接的で、low-cost な bridge index なら Phase 4c で安全に導入できる。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` に feedback bridge セクションを追加し、目的・記入形式・更新条件を短く定義する。"
+      - "高信頼に対応が分かる recent game feedback atom を 3-5 件だけ手動で登録する。"
+      - "Phase 4a の issue id と今回の decision をセクション内に残し、frontmatter backfill は次サイクル以降の optional と明記する。"
+  - issue_id: ISS-4A-20260526-02
+    problem_restatement: "identity / evaluation / operation / game-design のような巨大 tag は全体索引としては有効だが、制作中に欲しい具体手法へ降りる入口としては粗すぎる。MEMORY.md の Tag Entry Points が汎用 tag 上位で占有され、操作感・予測可能性・headless 評価などの実務軸が埋もれている。"
+    alternatives:
+      - name: "A. tag taxonomy を再設計して atom tags を一括 backfill"
+        sketch: "既存 atom の tags を semantic layer / ontology 的に見直し、汎用 tag と具体 tag の階層を定義して全体を再タグ付けする。"
+        pros:
+          - "根本解決に近く、検索語彙の一貫性が高まる。"
+          - "将来の分析や可視化にも効く。"
+        cons:
+          - "対象範囲が広く、誤分類とルール肥大化のリスクが高い。"
+          - "Phase 4c の小さな導入単位を超える。"
+          - "現在の dual-write / retire 前状態では移行面が広すぎる。"
+        migration_cost: high
+      - name: "B. MEMORY.md に Specific Entry Points を別枠追加"
+        sketch: "既存 Tag Entry Points は残し、制作で使う具体軸だけを curated な `Specific Entry Points` として MEMORY.md か task lens index に別掲する。軸は predictability / input-feel / headless-eval / bullet-pattern など少数に限る。"
+        pros:
+          - "既存 tag を壊さず、入口飽和だけを緩和できる。"
+          - "少数軸から始められ、品質が落ちたら戻しやすい。"
+          - "ゲーム制作前の recall 導線として読みやすい。"
+        cons:
+          - "curation の更新責任が発生する。"
+          - "MEMORY.md が長くなりすぎると本来の軽量索引性を損なう。"
+          - "自動生成部との境界を明確にしないと上書きされる可能性がある。"
+        migration_cost: low
+      - name: "C. Tag Entry Points のランキング式を変更"
+        sketch: "generic tag の上位占有を避けるため、count の多すぎる tag を減衰し、具体 tag を上位に出す生成ロジックへ変える。"
+        pros:
+          - "手動 curation なしで MEMORY.md の見え方を改善できる。"
+          - "将来の atom 増加にも追随しやすい。"
+        cons:
+          - "コード変更が必要で、Phase 4b の設計だけでは評価できない。"
+          - "なぜその tag が上がったかが不透明になりやすい。"
+          - "具体軸の定義不在は残る。"
+        migration_cost: medium
+    recommended: "B. MEMORY.md に Specific Entry Points を別枠追加"
+    recommended_reason: "全体 taxonomy の再設計は大きすぎる一方、入口飽和は短い curated 枠で十分に緩和できる。MEMORY.md 直編集が自動生成に巻き込まれる懸念があるため、Phase 4c ではまず game task lens 側に置くのが現状から近い。"
+    decision: introduce
+    decision_reason: "汎用 tag の存在自体は悪くないため no_change ではなく、既存構造を壊さない追加入口として導入する。A は postpone 相当の大規模再設計、C は tool 実装が先行しすぎる。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` に specific entry points セクションを追加し、4-6 個の制作実務軸だけを置く。"
+      - "各軸に atom id / candidate / probe への代表リンクを最大 3 件ずつ登録し、汎用 tag の代替ではなく下位入口だと明記する。"
+      - "MEMORY.md 本体の自動生成領域は今回は触らず、次サイクルで効果を見て昇格・自動生成化を検討する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
