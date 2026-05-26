@@ -768,7 +768,7 @@ function drawHUD(){
   // Level text
   ctx.font='bold 10px system-ui';
   ctx.textAlign='left';
-  ctx.fillStyle=gReady()?'#ffd870':'#8090a8';
+  ctx.fillStyle=gReady()?(S.t%30<15?'#ffd870':'#fff5b0'):'#8090a8';
   const lvText=gReady()?'BOMB READY [B]':('Lv'+lv+(lv<3?' → Lv'+(lv+1):''));
   ctx.fillText(lvText,barX,barY-4);
 

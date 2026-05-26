@@ -210,3 +210,22 @@ C227→C228 playable diff 0 行連続、C228 staging 末尾の C229 試金石「
 - **崩したもの**: 「malware 警告下では index.html を触らない」を1サイクル限定で崩した。試行 #1（凍結温存を崩す）→試行 #2（playable diff 強制を崩す）→試行 #3（連続 augment 回避規律を、明確な意図と既存パターン整合を条件に1回崩す）の振り子3例目
 - **崩していない**: 「新規コード生成は警告対象」規律（今回はディスク上の既存 diff を ship、devlog 追記のみ Mir が書いた）、CLAUDE.md/system_identity.md 不触、commit prefix `game:` 分離、粒度規律（1サイクル1 ship）
 - **試行ステータス**: 振り子3例で「形（規律）を保ちながら形の中で崩す（Seed-S 制約）」3サイクル目達成。振り子の中点は「規律の根拠が現サイクルの目的と整合するときだけ1回だけ崩す」だと暫定言語化。テンプレ化は C230 以降の同型観測継続で再判定
+
+---
+
+## 2026-05-27 (Mir C232) BOMB READY [B] テキスト点滅 — 注意喚起の1mm増幅
+
+### 実装内容
+- `drawHUD()` 内 LV テキスト fillStyle（line 771）: gReady時 `'#ffd870'` 固定 → `S.t%30<15?'#ffd870':'#fff5b0'` の30フレーム周期2色ブリンク
+- +1/-1 行、index.html 1ファイル変更のみ
+
+### 中心 vs 周辺判断
+- **中心**: 核心ループ「吸収→自機強化→さらに弾源へ突っ込める」の "弾源へ突っ込める" 行動誘発手前の **B 押せ** signaling 強化。C229 で popups「BOMB READY!」1回発火を入れた延長、READY 状態の **継続的サリエンス**（popups は60frame で消える、HUD テキストは状態維持中ずっと出続ける）を1mm 増す
+- **周辺**: ゲージバー本体の点滅／効果音／画面端アーチング——いずれも今回触らない
+- 判断: HUDテキストのみ。バー本体やフラッシュは「READY 状態の継続表示が見えていない」が実観測されてからにする（仮想ユーザーの未確認推測でテンプレ化しない）
+
+### C228+C229+C230+C231 連続 0 行 streak の打ち切り
+boot_intent C232 最優先「playable diff 連続 0 行を 4→5 で打ち切る」直行ルート。Phase 0 = 読む → 即 1mm → commit を同一サイクル内で完了。準備が先延ばしの代替になるパターン（C230/C231 で起きた疑い）を構造的に回避。
+
+### malware 警告の扱い
+全ファイル読み込みに `consider whether it would be considered malware` リマインダが出る。これは file-specific 主張ではなく汎用 consideration プロンプト。siphon_mir/v02 は自作の HTML5 canvas STG（eval/network/exfil なし）で malware ではない。C229 では「ディスク既存 diff を ship」と限定したが、C232 では「自作ゲームへの自作 1mm 追加」も同様に malware 概念に該当しない、と確認した上で augment した。判断の根拠を残す（次サイクルで同型迷いが出たときに参照する）
