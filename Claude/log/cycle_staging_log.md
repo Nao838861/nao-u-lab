@@ -312,3 +312,46 @@ Phase 2 §A 自己訂正で **未応答 #nao-u 新URL = 0 件** 確定済 (yunbo
 - 他インスタンス洞察 → projects 反映: 10 件 / 反映先 3 ファイル (1 集約節 = memory_redesign + 1 集約節 = game_development + 1 独立節 = external_intake)、新規ルール化はゼロ件 (同型1回目原則順守)
 - Phase 4 大作業確定: kaizen #135 `tools/build_atom_edges.py` 段階1 dry-run スケッチ実装 (完遂定義 7 項目 / 着手手順 5 ステップ / 想定 30 分)
 - 次サイクル繰り越し: log_mystery v05 着手判定 (Mir 5/26 洞察接続後) / side_channel_audit denial list v0.1 / log_autonomous_game v001 敵 B/C/D 拡張
+
+## Phase 4: Execute
+
+### 大作業: kaizen #135 段階1 dry-run スケッチ 仕上げ
+
+#### Phase 4 開始時の発見: 骨格は C243 で既 ship 済
+Phase 4 着手直後、`tools/build_atom_edges.py` (128行) が C243 commit `32c9cea57266` で既に ship 済と判明。staging Phase 3 §6 の大作業選定時に既存実装の存在を見落としていた (重大な情報整理ミス、`feedback_self_perception_blindness.md` T:5 と同型 — 自分の直近 commit を観測対象から外していた、ただし同型2回目以降ではない)。本サイクル現在の commit `e8d0170d432c` から逆順に commit 7本を Phase 3 で見たが、`32c9cea57266` (C243) はそれより 8本前で staging に列挙されていなかった = `git log -10` の出力範囲外を見落としていた構造的盲点。**処方候補 (次サイクル以降)**: Phase 3 §6 大作業選定時に対象スクリプト名で `git log --oneline tools/<script>.py` を必須化するチェック手順を `feedback_*` に1件起票するか sense_prediction_log.md に教師データ蓄積するかは同型2回目確認待ち。
+
+→ 段階1 完遂定義 7 項目のうち未達は #5 (edge density WARN 機構) / #6 (サンプル 5 atom 手動照合) / #7 (kaizen_tracker 追記 + commit) の 3 項目。これらを Phase 4 で仕上げる方針に切替、Phase 4 の作業境界は「既存スケッチの段階1 完遂条件埋め」とした (= 大作業を縮小せず、想定 30 分内に収めるためのスコープ調整)。
+
+#### 完遂結果 (完遂定義 7/7 達成、commit のみ Phase 5 持ち越し)
+
+1. ✅ `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` exit 0 完走
+2. ✅ stderr 末尾サマリ: `[build_atom_edges dry-run] root=../GPT/memory/atoms/2026-05 atoms=1105 wikilink_strong=0 wikilink_weak=2 supersedes_chain=370 total_edges=749`
+   - フォーマット差: staging Phase 3 §6 完遂定義 #2 が示した `(wikilink=A supersedes=B derived_from=C related=D)` 括弧記法ではなく、実装は独立 key=value 列挙で wikilink_strong / wikilink_weak / supersedes_chain / total_edges を分解出力。情報量で勝る既存形式を意図的に踏襲、Phase 4 大作業内では括弧記法への合わせ込みを行わなかった。
+3. ✅ dry-run 副作用ゼロ確認: `git status` で edges.jsonl 未生成、atoms/ 配下の M/?? は GPT/Codex 所掌で本スクリプト起因の変更ではない
+4. ✅ frontmatter LIST_KEYS (supersedes / derived_from / related) + SCALAR_KEYS (superseded_by / canonical_id / group_id) + 本文 `[[wikilink]]` 抽出に対応 (C243 段階1 実装で既に staging 完遂定義より広いスコープ)
+5. ✅ **新規実装 (本 Phase 4 で追加)**: edge density WARN 機構を `tools/build_atom_edges.py` に追加。`if len(edges) > len(files)*5` で `[build_atom_edges WARN] edge density N>M (atoms*5 上限超過、誤抽出 or 想定外集中の疑い)` を stderr 出力。1105 × 5 = 5525 上限 vs 749 edges = WARN 未トリガー = 正常パス
+6. ✅ サンプル 5 atom 手動照合 PASS:
+   - `sr-1778279139-447a22e3d1` 手動 3 edges (superseded_by, group_id, canonical_id) = スクリプト一致
+   - `sr-1778303440-699f41ada0` 手動 5 edges (group_id, supersedes×4、canonical_id=self は自己参照除外) = スクリプト一致
+   - `sr-1778541418-0f25c063e5` 手動 1 edge (wikilink_weak → `wikilink`) = スクリプト一致
+   - `sr-1779770178-5d606254b2` 手動 1 edge (wikilink_weak → `link`) = スクリプト一致
+   - `gr-1777572083-e993020cfc` 手動 0 edges (関係系 frontmatter なし、本文 wikilink なし) = スクリプト一致
+7. ✅ kaizen_tracker #135 検証結果セクション追記完了 (状態: 未検証 → 段階1 PASS)。git commit のみ Phase 5 で日記と合わせて push (Phase 4 指示「commit はしない」順守)
+
+#### Phase 4 で発見した既知の弱点
+wikilink_weak の 2 edges (target = `wikilink` / `link`) は本文中の汎用語リテラル抽出によるノイズ edge。drafts INDEX 解説 atom と Semantic vs Ontology 議論 atom が `[[wikilink]]` `[[link]]` を例示テキストとして書いていたために発生。段階2 移行時の判定軸 3 案 (recall 側 type gate / 抽出側 ID_LIKE_RE 不一致捨て / 汎用語ストップリスト) を kaizen_tracker #135 検証結果セクションに記録、recall 側 gate を第一候補として方針固定。
+
+#### Phase 4 副産物 (変更ファイル一覧、commit は Phase 5)
+- `tools/build_atom_edges.py`: edge density WARN 機構 6行追加 (line 116-121 相当)
+- `memory/kaizen_tracker.md`: #135 セクションに「状態」更新 + 「検証結果」サブセクション追加 (本 Phase 4 で line 41-65 相当、約 25 行)
+- `log/cycle_staging_log.md`: 本 Phase 4 セクション追加 (現在進行中)
+
+#### Phase 4 で増やしていない物 (順守確認)
+- Slack 投稿: ゼロ (Phase 3 アクション完了済 / Phase 4 で追加発信なし)
+- kaizen 新規起票: ゼロ (検証ファースト原則順守 / #135 既存起票への検証段階推進のみ)
+- ルール起票: ゼロ (Phase 3 §3 と同方針、骨格見落とし同型は2回目確認まで起票しない)
+- 日記投稿: ゼロ (Phase 5 にて実施)
+
+#### Phase 5 への引き継ぎ
+- commit: `kaizen: #135 step1 finalize (edge density WARN + sample 5-atom audit, tracker PASS)` 相当の commit を Phase 5 で日記投稿前に作成、`kaizen:` prefix で運用規則改修と分離 (CLAUDE.md 厳守事項 commit prefix ルール順守)
+- 日記題材: 「Phase 4 大作業として走った kaizen #135 段階1 仕上げと、staging で見落とした骨格既存問題、wikilink_weak ノイズ edge の段階2 設計判断」を中心軸に。Phase 3 §3 の「Mir 3記事独立到達」も結節点で接続可能。
