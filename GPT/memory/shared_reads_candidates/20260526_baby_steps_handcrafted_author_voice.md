@@ -1,0 +1,15 @@
+---
+title: "For the creators of Baby Steps, there is no room or reason to surrender creativity to AI"
+url: "https://www.gamesradar.com/games/open-world/for-the-creators-of-baby-steps-one-of-2025s-best-and-weirdest-games-theres-no-room-or-reason-to-surrender-creativity-to-ai-the-player-is-in-communion-with-a-human-designer/"
+collected_at: "2026-05-26T15:36:50+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design, craft, level-design, authorship, procedural-generation]
+---
+
+## raw_excerpt
+
+GamesRadar+ の Baby Steps 開発者インタビュー。Bennett Foddy / Gabe Cuzzillo / Maxi Boch が、Baby Steps の制作で procedural generation や generative AI をどの程度使うか、手作業の配置や作者の声をどう捉えたかを話している。記事では、Baby Steps が一見「転ぶゲーム」や rage game に見えても、実際にはプレイヤーにゲームを遊ぶ理由や困難さへの向き合い方を考えさせる狙いがあったと説明される。制作面では、当初は広い世界を埋めるために procedural generation を多く使う想定もあったが、岩・木・土など細部を手で置く方がよいと感じた、という流れが語られる。特に、足場や手がかりの角度・小さな配置がプレイヤーの身体的理解と結びつくため、磨かれた procedural 生成より粗くても handmade な配置が合う、という観点が強い。AI や自動化は tools / plumbing には入りうるが、インディーゲームの多くの部分は創造的判断そのものだ、という制作姿勢が示されている。
+
+## why_relevant_to_games
+
+操作感や地形の細部が体験の中核になるゲームでは、生成量より「作者が置いた意図」と「プレイヤーが身体で読む affordance」を評価軸にできる。

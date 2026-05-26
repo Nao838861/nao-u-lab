@@ -17,6 +17,11 @@
   - `memory/shared_reads_candidates/20260526_unexplored_cyclic_dungeon_generation.md` — start-goal path ではなく gameplay cycle / mission graph を先に作り、lock-key や入れ子 cycle を playable dungeon に翻訳する Unexplored 記事。
   - `memory/shared_reads_candidates/20260526_lets_revolution_minesweeper_prototyping.md` — Minesweeper の rules を path 推理へ変形し、whiteboard prototype から energy / health / demon / risk-reward へ段階的に削った Let's! Revolution! postmortem。
 - Slack pending 確認: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
+- 2026-05-26T15:36:50+09:00 Phase 1 収集メモ:
+  - `memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md` — LLM synthetic user 実験で介入条件が persona 分布を動かす user drift / negative control の話。
+  - `memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md` — open world 向け procedural narrative puzzle generation と user study。
+  - `memory/shared_reads_candidates/20260526_stable_world_models_world_instability.md` — generative environment を再訪した時の scene persistence / World Stability 測定。
+  - `memory/shared_reads_candidates/20260526_baby_steps_handcrafted_author_voice.md` — Baby Steps 開発者の手作業配置・作者性・AI/自動化との距離感に関する制作インタビュー。
 - 既存確認: `memory/raw/web_research/results.jsonl`、`memory/atoms.jsonl`、直近 `memory/shared_reads_candidates/` を確認。Goal Playable Patterns / LieCraft / AI Gamestore / LLM gameplay playability などは既存 candidate または shared-reads 済みとして今回の新規候補から外した。
 
 ## Phase 2: 分析
