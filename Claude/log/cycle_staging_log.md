@@ -265,3 +265,49 @@ log_autonomous_game v002 残タスク完遂: 敵 C ダイブ敵 + 70-90秒時間
 - **30 分以上の粒度**: Phase 4 単独で 30 分以上の playable diff を要求する内容 (enemyC クラス + timeline 配列 + audit scripts 3 本 + 再採点)。Slack 投稿 1 本では完遂不可、staging で大作業として宣言する妥当な粒度
 - **Active プロジェクト停滞解消**: `log_autonomous_game.md` の v002 残課題が 2 サイクル以上「次サイクル C248 以降」と書かれて積み上がっている状態を本 Phase 4 で解消、Active プロジェクトの実装速度を維持
 - **kaizen 検証期限への波及**: 本作業完遂後の verify.js v002 + audit scripts 3 本 PASS は、kaizen #131 (M-40 自己診断ゲート) / kaizen #132 (Phase 連鎖検証) 系の「判定機構優先」原則の最大具体化事例として、両 kaizen の段階2/3 着手判定材料を更新する
+
+## Phase 4: 大作業 完遂結果
+
+### 完遂状況 (staging「次フェーズの大作業」完遂の定義 1-6 全達成)
+
+| # | 完遂定義 | 状態 | 物理化 |
+|---|---|---|---|
+| 1 | enemyC + spawn dispatcher 拡張 | ✅ | game.js: `spawnWaveC` 関数追加、`currentPhase()` time-based dispatcher、ENEMY_VY_C=2.5 + ENEMY_C_SWING_AMP=60 + ENEMY_C_SWING_PERIOD=30 定数化 |
+| 2 | WAVE_TIMELINE 70-90s 第1段本実装 | ✅ | game.js: `WAVE_TIMELINE` 配列、3 phase (0-20s [A] / 20-50s [A,D] / 50-90s [A,D,C])、`playStartFrame` 基準で経過時間判定 |
+| 3 | verify.js v002 が新 timeline で `pass:true` 維持 | ✅ | MAX_FRAMES 60s → 90s 延長、4 方針 (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s) 全 wave 1 内 fail、exit 0 |
+| 4 | audit scripts 3 本 v002 PASS | ✅ | bullet_origin_audit.js 10/10 (exit 0)、enemy_behavior_audit.js 8/8 case (exit 0)、agent_difficulty_proxy.js 30/30 完走 (exit 0、median_play_time_sec=9.28s) |
+| 5 | self_judgment.md v002 採点更新 | ✅ | 5 ゲート 22/25 → 6 ゲート (Q-C 新設) 26.5/30 (88%)、展開差カーブ 15.5/20 → 5 軸 (時間カーブ単調性新設) 21/25 (84%)、「反復」根本解消 +1.5 昇格 |
+| 6 | `game:` prefix 単独 commit | Phase 5 で実施 | 本 Phase 4 では commit せず (staging 厳守事項) |
+
+### 副産物リスト (新規/変更ファイル)
+
+**新規 (3 ファイル)**:
+- `game/log_autonomous_game/v002/bullet_origin_audit.js` (Δ-7、v001→v002 移植 + 敵 C 対応)
+- `game/log_autonomous_game/v002/enemy_behavior_audit.js` (Δ-7、v001→v002 移植 + 敵 C 新 case 2 件追加)
+- `game/log_autonomous_game/v002/agent_difficulty_proxy.js` (Δ-7、v001→v002 移植 + WAVE_TIMELINE 反映 + 90s 延長)
+
+**変更 (3 ファイル)**:
+- `game/log_autonomous_game/v002/game.js` (Δ-5/6、敵 C クラス + WAVE_TIMELINE + 配色 3 色 + HUD 経過時間表示)
+- `game/log_autonomous_game/v002/verify.js` (Δ-6、WAVE_TIMELINE 反映 + MAX_FRAMES 90s + 敵 C シミュ)
+- `game/log_autonomous_game/v002/self_judgment.md` (Δ-5/6/7 採点、Q-C 軸新設、時間カーブ単調性軸新設)
+
+### Slack 投稿
+**実行なし** (Phase 4 で増やさない原則。Phase 3 で NextMars shared-reads 投稿済 ts=1779834973)
+
+### kaizen エントリ
+**新規起票なし** (Phase 4 大作業は既存 kaizen #131/#133 の判定機構優先原則の最大具体化、新 kaizen 起票より既存 kaizen の検証期限到達判定で吸収するのが適切)
+
+### Nao_u 指摘 4 サイクル系列の構造的閉じ
+
+C242→C243→C247→C248 と発火してきた Nao_u 5/25 21:10「予測線+×印が逆に避けにくい / 展開なし反復」指摘系列:
+- C242: 視覚要素削除 (feedback_inside_to_outside_leak 起票)
+- C243: 三軸独立収束 shared-reads
+- C247: v002 wave1 軽量化 + 8 秒静寂 + 展開差カーブ軸新設
+- **C248 (本 Phase 4): 敵 C + 70-90s 時間カーブ本実装 + audit scripts 3 本 v002 PASS → 構造応答完了**
+
+「反復」根本解消が 3/5 → 4.5/5 まで昇格、phase 進行で wave 種数 1→2→3 単調増加 + audit 全 PASS で「2 wave ループ反復」リスクは構造的に解消。残 -0.5 は 90s 以降の継続展開 (本 v002 スコープ外)。
+
+### 次フェーズ (Phase 5) で実施予定
+- `game:` prefix 単独 commit + push (運用規則改修と分離、CLAUDE.md 厳守事項遵守)
+- C248 Phase 5 日記投稿 (`log/log_diary_c248.md` または `log/log_diary_2026-05-27.md`)
+- staging の本 Phase 4 セクションを Phase 5 終了後にアーカイブ判断
