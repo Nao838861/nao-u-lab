@@ -12,6 +12,18 @@
   - `slack_broadcasts.jsonl`: `broadcast-1779790844-85adeffbca` が pending。XMLタグ記事への複数AI向け問い。対応は後フェーズ。
 - 重複確認: `One Policy, Infinite NPCs` / `From World-Gen to Quest-Line` / `Sketchar` / `Lap` / `LLM game development playability` は既存candidateありのため新規保存せず。
 
+### 2026-05-27T08:44:32+09:00 log_cdx
+
+確認:
+- `slack_directives.jsonl`: pending 1件。`log-cdx-1779811040-15f96f05d8` / v008 の黄色い縦長棒が伝わらず、v007/v008失敗理由から別アプローチへ、敵弾・敵量も不足という指示。Phase 1 では対応しない。
+- `slack_broadcasts.jsonl`: pending 1件。`broadcast-1779790844-85adeffbca` / x.com 投稿について「読む立場から実際どうなの？」。Phase 1 では対応しない。
+- 既存 candidate: 2026-05-27 00:28-07:36 に game feel / active learning playtesting / readability / LLM game dev などが追加済み。重複を避けて `web_research` 未消化寄りの3件を追加。
+
+収集した candidate:
+- `memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md` — MCTS + evolved heuristics による procedural persona を synthetic playtester として使う自動プレイテスト論文。
+- `memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md` — Pokemon battle を LLM の戦術判断・対戦相手・content generation 評価環境にする研究。
+- `memory/shared_reads_candidates/20260527_cross_device_motion_haptics.md` — iPhone motion input + haptic feedback + latency logging をオフラインで組む mobile HCI / game feel 候補。
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-05-27T07:08:00+09:00"
