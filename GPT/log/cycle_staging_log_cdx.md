@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-26 15:28
+# log_cdx Cycle Staging — 2026-05-26 17:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -12,85 +12,23 @@
 - 残課題: review question の自然言語としての良し悪しは headless だけでは判定しない。次 cycle では、この schema から packet HTML 自体を生成するか、人間レビューで問いが使えるかを確認する。
 
 ## Phase 1: 情報収集
-- 2026-05-26T15:36:50+09:00 Phase 1 収集メモ:
-  - `memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md` — LLM synthetic user 実験で介入条件が persona 分布を動かす user drift / negative control の話。
-  - `memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md` — open world 向け procedural narrative puzzle generation と user study。
-  - `memory/shared_reads_candidates/20260526_stable_world_models_world_instability.md` — generative environment を再訪した時の scene persistence / World Stability 測定。
-  - `memory/shared_reads_candidates/20260526_baby_steps_handcrafted_author_voice.md` — Baby Steps 開発者の手作業配置・作者性・AI/自動化との距離感に関する制作インタビュー。
+- 2026-05-26T17:52+09:00 Phase 1 収集:
+  - `memory/shared_reads_candidates/20260526_fly_fail_fix_iterative_game_repair.md` — RL agent の play trace と LMM designer の config edit をつなぐ iterative game repair 論文。
+  - `memory/shared_reads_candidates/20260526_scriptdoctor_puzzlescript_tree_search.md` — LLM 生成、PuzzleScript compile feedback、tree-search playtest をつなぐ automatic game design 論文。
+  - `memory/shared_reads_candidates/20260526_apex_autonomous_policy_exploration.md` — self-evolving LLM agent の exploration collapse と strategy map による探索維持の論文。
+  - pending directive/broadcast: 0 件 (`python tools\slack_inbox_lifecycle.py pending`)。
 
 ## Phase 2: 分析
-```yaml
-evaluated_at: "2026-05-26T16:05:00+09:00"
-total_candidates: 4
-pass:
-  - memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md
-  - memory/shared_reads_candidates/20260526_stable_world_models_world_instability.md
-fail:
-  - path: memory/shared_reads_candidates/20260526_baby_steps_handcrafted_author_voice.md
-    reason: "制作思想として有用だが、手法・評価・結論を ~4000 字概要に耐える密度で展開する材料が不足。"
-postpone:
-  - path: memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md
-    reason: "問題設定は強いが、abstract 相当の情報だけでは生成 heuristics と user study の中身が薄い。本文確認後に再評価。"
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778029147899
-    char_count: 4215
-  - candidate: memory/shared_reads_candidates/20260526_stable_world_models_world_instability.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778084383239
-    char_count: 4306
-skipped: []
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1779447884-c4466c5517
-    source_ts: "1779447884.748739"
-    title: "千葉集「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(note 2026) — 「答え合わせ × 総当たり防止」二要素と「ニアピン賞」が STG ヘッドレス評価の層別設計と構造同型"
-    reason: "Nao_u 投下起点で score 15。直近の Pulse Relay / headless 評価で pass/fail や clearRate に潰しがちな判定へ、答え合わせタイミング・部分一致・総当たり防止の観点を小さく戻せるため。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 17
-  decision: adopt_probe
-  change:
-    summary: "次回 game/headless 評価で、二値 verdict だけでなく near-miss/partial-progress と anti-overfit 境界を1回確認する一時 probe を state に追加した。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-```yaml
-cleaned:
-  - "memory/MEMORY.md: markdown link は 0 件で、broken link は検出なし。"
-  - "memory/atoms.jsonl: JSON error 0 / duplicate id 0 / duplicate normalized_content_hash 0 / duplicate source_ts 0 を確認。"
-  - "memory/raw/: 30 日以上 mtime が動いていない archive 候補は 0 件。"
-  - "memory/shared_reads_candidates/: 30 日以上 mtime が動いていない candidate は 0 件。"
-  - "inbox: slack_directives.jsonl handled 19 / pending 0、slack_broadcasts.jsonl handled 18 / pending 0 を確認。status 更新対象なし。"
-issues:
-  - id: ISS-20260526-ATOM-INDEX-ORPHAN
-    description: "per-file atom が 1640 件ある一方で memory/atoms/index.jsonl は 1639 行。memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md が index に載っていない。"
-    severity: medium
-    evidence: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md; memory/atoms/index.jsonl"
-    why_blocks_game_memory: "2D shmup の敵編隊再現パケットは、shot_log/graze_log/headless 評価に接続する次回制作向けの重要な実践知だが、index 経由の recall や Phase D 後の per-file 読みに移った時に孤児化する可能性がある。"
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -99,23 +37,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-```yaml
-posted:
-  channel: "#log"
-  file: log/phase5_diary_20260526_1715.md
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779778858779939
-  char_count: 2299
-  verification: ok
-```
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `log-cdx-1779668181-d295d8ddd5` の継続指示。Slack 上の status は既に handled だが、「今後の自律サイクルで pulse_relay の改善を進めて」に従い、`pulse_relay` の次版として扱った。
-- 作ったもの: `game/pulse_relay/v008/`
-  - `relay tether` を追加。Pulse で味方化した敵と自機の間に黄色い線を張り、敵弾が線を横切ると relay 弾へ変換される。
-  - `tetherConversions` / `tetherActiveTime` を headless 指標へ追加。
-  - `tools/headless_pulse_relay_v008_check.js` を追加。
-- 実行方法: ブラウザでは `game/pulse_relay/v008/index.html` を開く。検証は `node tools/headless_pulse_relay_v008_check.js`。
-- 検証結果: `verify.js`, `timeline_eval.js`, `enemy_behavior_audit.js`, `wave_grammar_check.js`, `enemy_overlap_check.js` が pass。wrapper でも `HEADLESS PULSE RELAY V008 OK`。
-- 主要値: route clearRate 1 / meanTetherConversions 269 / meanTetherActiveTime 40.5 / noPulse, camper, lane-holder clearRate 0 / offscreenShots 0 / pairOverlaps 0。
-- 残課題: `blind-sweeper` は clear する。score は route より低いが、次回は tether 判定幅や支配敵数を絞り、雑な左右移動では成立しない形へ戻す。
+(Phase 5 が書き込む)
