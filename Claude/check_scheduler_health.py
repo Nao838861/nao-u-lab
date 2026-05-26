@@ -28,13 +28,14 @@ Usage:
 """
 
 import os
+import re
 import sys
 import json
 import time
 import argparse
 import subprocess
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, date
 
 REPO_DIR = Path(__file__).parent
 
@@ -314,6 +315,73 @@ def check_external_search_all(result):
             result.fail(name, message)
 
 
+_PROMOTION_HEADING = re.compile(r"^## (\d{4}-\d{2}-\d{2})\b")
+
+
+def check_external_promotion_freshness(instance: str) -> tuple[str, str]:
+    """memory/external_notes_<instance>.md の最新昇格日と今日との差分を 3d/7d で評価。
+
+    案E 本格運用組込（projects/external_search_phase1_fixation.md 案E）。
+    tools/check_external_promotion_freshness.py の試作ロジックを移植。
+
+    戻り値: (status, message), status ∈ {"OK", "WARN", "CRITICAL", "SKIP"}
+    判定:
+      - ファイル不在 → SKIP（リモートインスタンスのファイル未sync を想定）
+      - 日付見出し皆無 → CRITICAL「昇格痕跡なし」
+      - diff < 3d  → OK
+      - 3d ≤ diff < 7d → WARN
+      - 7d ≤ diff → CRITICAL
+    """
+    path = REPO_DIR / "memory" / f"external_notes_{instance.lower()}.md"
+    if not path.exists():
+        return ("SKIP", f"{instance} external_notes ファイル不在（{path.name}）")
+
+    latest_date = None
+    try:
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            m = _PROMOTION_HEADING.match(line)
+            if not m:
+                continue
+            try:
+                d = date.fromisoformat(m.group(1))
+            except ValueError:
+                continue
+            if latest_date is None or d > latest_date:
+                latest_date = d
+    except OSError as e:
+        return ("CRITICAL", f"{instance} external_notes 読取失敗: {e}")
+
+    if latest_date is None:
+        return ("CRITICAL", f"{instance} external_notes 昇格痕跡なし（{path.name} に日付見出しなし）")
+
+    today = date.today()
+    diff = (today - latest_date).days
+    if diff >= 7:
+        return ("CRITICAL",
+                f"{instance} external_notes 昇格 7日ゼロ（最終 = {latest_date.isoformat()}, {diff}日前）twitter_recommended 見直し必須")
+    if diff >= 3:
+        return ("WARN", f"{instance} external_notes 昇格 3日ゼロ（最終 = {latest_date.isoformat()}, {diff}日前）")
+    return ("OK", f"{instance} external_notes 昇格 {diff}日前（最終 = {latest_date.isoformat()}）")
+
+
+def check_external_promotion_all(result):
+    """Log/Mir/Ash 3 instance 分の external_notes 昇格鮮度を集約レポートに追加。
+
+    SKIP（ファイル不在）は OK 扱いで詳細だけ残す（リモートインスタンスファイル未sync を想定）。
+    """
+    for inst in ("Log", "Mir", "Ash"):
+        status, message = check_external_promotion_freshness(inst)
+        name = f"external_promotion ({inst})"
+        if status == "OK":
+            result.ok(name, message)
+        elif status == "WARN":
+            result.warn(name, message)
+        elif status == "SKIP":
+            result.ok(name, message)
+        else:
+            result.fail(name, message)
+
+
 def check_git_status(result):
     """gitの状態確認"""
     try:
@@ -377,6 +445,9 @@ def check_mir(result):
     # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
     check_external_search_all(result)
 
+    # external_notes 昇格鮮度（案E 本格運用組込）
+    check_external_promotion_all(result)
+
     # git
     check_git_status(result)
 
@@ -395,6 +466,9 @@ def check_log_instance(result):
     # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
     check_external_search_all(result)
 
+    # external_notes 昇格鮮度（案E 本格運用組込）
+    check_external_promotion_all(result)
+
     # git
     check_git_status(result)
 
@@ -412,6 +486,9 @@ def check_ash(result):
 
     # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
     check_external_search_all(result)
+
+    # external_notes 昇格鮮度（案E 本格運用組込）
+    check_external_promotion_all(result)
 
     # git
     check_git_status(result)

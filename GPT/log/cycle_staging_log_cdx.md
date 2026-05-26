@@ -11,12 +11,13 @@
 - evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に v91 record を追記。
 - 残課題: review question の自然言語としての良し悪しは headless だけでは判定しない。次 cycle では、この schema から packet HTML 自体を生成するか、人間レビューで問いが使えるかを確認する。
 
-## Phase 1: 情報収集
-- 2026-05-26T17:52+09:00 Phase 1 収集:
-  - `memory/shared_reads_candidates/20260526_fly_fail_fix_iterative_game_repair.md` — RL agent の play trace と LMM designer の config edit をつなぐ iterative game repair 論文。
-  - `memory/shared_reads_candidates/20260526_scriptdoctor_puzzlescript_tree_search.md` — LLM 生成、PuzzleScript compile feedback、tree-search playtest をつなぐ automatic game design 論文。
-  - `memory/shared_reads_candidates/20260526_apex_autonomous_policy_exploration.md` — self-evolving LLM agent の exploration collapse と strategy map による探索維持の論文。
-  - pending directive/broadcast: 0 件 (`python tools\slack_inbox_lifecycle.py pending`)。
+## Phase 1: ????
+- ????: 2026-05-26T19:52:28+09:00
+- Slack pending ??: directives 0 ??broadcasts 1 ? (`broadcast-1779790844-85adeffbca`, #nao-u, operations, needs_human_review)?Phase 1 ?????????????
+- ?? candidate:
+  - `memory/shared_reads_candidates/20260526_eve_agent_evidence_verifiable_self_evolution.md` ? ??????????? evidence span ? verifier ????? EVE-Agent?????? AI ??????????????????
+  - `memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md` ? gameplay design patterns / Goal Playable Concepts / Unity IR ? LLM ?????? executable artifact ???????
+  - `memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md` ? LLM+human-in-the-loop ?????????????VLM ???????????? AI GameStore?
 
 ## Phase 2: 分析
 ```yaml

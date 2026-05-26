@@ -1,7 +1,7 @@
 # 外部検索の Phase 1 固定化
 
 ## ステータス
-Active（**案A最小実装完了 2026-04-26 C134 Phase 3 Ash**、案B/E は未実装）
+Active（**案A最小実装完了 2026-04-26 C134 Phase 3 Ash**、**案B 24h 空警告組込済 `check_external_search_freshness`**、**案E 本格運用組込完了 2026-05-26 C245 Phase 4 Log**。残るは v2 比率実装・検出後アクション設計・3サイクル運用後の閾値再評価のみ）
 
 ## 現状サマリー
 
@@ -164,6 +164,49 @@ if (今日 - 末尾エントリ日付) >= 7日:
 ---
 ## 履歴
 
+### 2026-05-26 C245 Phase 4: 案E 本格運用組込（check_scheduler_health 相乗り）完了（Log）
+
+**何をしたか**: 2026-05-18 C206 で試作した `tools/check_external_promotion_freshness.py` のロジックを `check_scheduler_health.py` に移植し、Log/Mir/Ash 3 instance の `memory/external_notes_{log,mir,ash}.md` 昇格鮮度を 3d/7d 閾値で判定する `check_external_promotion_freshness(instance)` + `check_external_promotion_all(result)` を追加。Mir/Ash の `check_mir` / `check_ash` 関数および `check_log_instance` の各末尾 (`check_external_search_all` 直後) に呼出組込。8日間 (5/18→5/26) の停滞解消。
+
+**実装差分**:
+- **対象ファイル**: `check_scheduler_health.py`
+- **追加**: `import re` + `date` を `from datetime import datetime, date` に拡張
+- **新規関数**: `check_external_promotion_freshness(instance) -> tuple[str, str]` (戻り値 status ∈ {"OK", "WARN", "CRITICAL", "SKIP"}, 既存 `check_external_search_freshness` の戻り値パターン踏襲)
+- **集約関数**: `check_external_promotion_all(result)` (Log/Mir/Ash ループ、SKIP は OK 扱いで報告)
+- **モジュール定数**: `_PROMOTION_HEADING = re.compile(r"^## (\d{4}-\d{2}-\d{2})\b")` を関数外に1つ
+- **3インスタンス hook**: `check_log_instance` / `check_mir` / `check_ash` の `check_external_search_all(result)` 直後に `check_external_promotion_all(result)` 呼出を追加
+
+**判定ロジック** (試作版 `--warn 3 --crit 7` を維持):
+- ファイル不在 → SKIP (リモートインスタンスのファイル未sync 想定、OK 扱いで報告)
+- 日付見出し皆無 → CRITICAL
+- diff < 3d → OK
+- 3d ≤ diff < 7d → WARN
+- 7d ≤ diff → CRITICAL「twitter_recommended 見直し必須」
+
+**動作確認** (`python check_scheduler_health.py --instance log` 出力抜粋, 2026-05-26 22:XX):
+```
+✅ external_promotion (Log) — Log external_notes 昇格 1日前（最終 = 2026-05-25）
+✅ external_promotion (Mir) — Mir external_notes 昇格 1日前（最終 = 2026-05-25）
+❌ external_promotion (Ash) — Ash external_notes 昇格 7日ゼロ（最終 = 2026-05-10, 16日前）twitter_recommended 見直し必須
+```
+`--instance=mir` / `--instance=ash` でも同 3 行が出力されることを確認 (cross-instance 集計が機能している)。
+
+**結果として観測されたシグナル**: Ash の external_notes 昇格が **5/10 で止まり 16日経過** = 試作版の閾値設計 (crit ≥ 7d) に直接該当。本格運用組込の初回実行で即「Ash 昇格停滞」を検出。これは案E の存在意義そのもの (Phase 1 単独では「最新3件見出し追跡」が件数しか見ず、停滞期間を見落とす) を実証する形になった。**次サイクルで Ash インスタンス側に Slack 通知 or 個別フォローが必要**だが、本サイクル Phase 4 の射程外 (=観測装置の整備が目的で、検出後アクションは別タスク)。
+
+**設計上の判断**:
+- **試作スクリプト `tools/check_external_promotion_freshness.py` は残置**: dry-run + 履歴用途、削除しない。本格運用は `check_scheduler_health.py` 側で行う
+- **SKIP を OK 扱い**: リモートインスタンスのファイル未sync で WARN を出すと真の停滞検出をノイズで埋める。staging 「Mir/Ash の対応ファイル不在時は WARN ではなく skip にするか判断」に従い skip
+- **3インスタンス横断集計の同時消化**: 元残課題で別タスク扱いだった「3者集計版を別スクリプトで実装」は本実装で同時達成 (`check_external_promotion_all` が 3 instance ループ)。`memory/external_notes_{log,mir,ash}.md` の存在を確認した上で同関数内で完結
+- **モジュール定数化した regex**: 関数内 `re.compile` は呼出毎にコンパイルされ無駄、`check_external_search_freshness` の `datetime.strptime` 文字列リテラル方式とは別流儀だが、3 instance loop で 3 回読みなので外出しの方が筋が良い
+- **commit を Phase 4 で打たない**: 本サイクルの Phase 4 手順に従い、commit は Phase 5 で日記とまとめる
+
+**残課題**:
+- [ ] **v2 比率実装**: twitter_recommended ファイル (`log/twitter_recommended_<YYYYMMDD>.txt`) スキーマを確認した上で、ソース密度との比率を算出する v2 拡張 (本サイクル射程外)
+- [ ] **CRITICAL 検出後のアクション設計**: 今回 Ash の 16日停滞が即検出されたが、検出→Slack→人/AI のフォローまでのルーティンは未定義 (`check_scheduler_health.py --slack` は failures があれば #error に通知するが、external_promotion の CRITICAL は Ash 側で対応すべき内容で #error 経路と整合するか別途確認)
+- [ ] **検証期間 3 サイクル運用後の閾値再評価**: 3d/7d が Log/Mir/Ash の運用ペース差を吸収しているか観測
+
+**なぜ本サイクル Phase 4 で着手したか**: Phase 2 §2 で「§B (Log 担当領域 = 案B/E) > §C (ゲーム軸 playable diff)」と明示判定 (C244 で playable diff 直後のため 1 サイクル空ける)。9日停滞 + feedback_structural_enforcement 二重該当 (Nao_u 4/21+4/22 二度指摘の構造強制化を再形骸化させかけている)。試作 + 既存 `check_external_search_freshness` パターン踏襲 = 新規ロジック設計なしの移植作業で 30分粒度成立。
+
 ### 2026-05-18 C206 Phase 4: 案E 試作スクリプト1本実装 + dry-run 3パターン取得（Log）
 
 **何をしたか**: 2026-04-22 Ash 起票から 26日間未着手だった案E（twitter_recommended → external_notes 昇格の N日間ゼロ検出フック）を、`tools/check_external_promotion_freshness.py` として試作実装した。本格運用組込（cron / check_scheduler_health.py 相乗り）は射程外とし、試作 + dry-run + 履歴追記の3点に粒度を制御した。
@@ -185,9 +228,9 @@ if (今日 - 末尾エントリ日付) >= 7日:
 - **3インスタンス横断 (Log/Mir/Ash) の集計版は未実装**: 本試作は `memory/external_notes_log.md` (Log 単独) 対象。Mir/Ash の対応ファイルは `--path` 引数で個別実行可能だが、横断集計は別タスク
 
 **残課題 (次の一手)**:
-- [ ] **本格運用組込**: `check_scheduler_health.py` への相乗り (検証期限到来時に発火) もしくは Phase 1 pre-check 組込 (毎サイクル冒頭で実行)。検証期間は3サイクル運用してから判定
+- [x] **本格運用組込**: `check_scheduler_health.py` への相乗り (検証期限到来時に発火) もしくは Phase 1 pre-check 組込 (毎サイクル冒頭で実行)。検証期間は3サイクル運用してから判定 → **2026-05-26 C245 Phase 4 完了** (`check_external_promotion_freshness` + `check_external_promotion_all` を移植、Log/Mir/Ash 3 instance 集計、3d/7d 閾値で OK/WARN/CRITICAL、SKIP はファイル不在時の安全側扱い)
+- [x] **3インスタンス横断集計**: Mir / Ash 側の external_notes 相当ファイルを特定し、3者集計版を別スクリプトで実装 → **2026-05-26 C245 Phase 4 同時消化** (`memory/external_notes_{log,mir,ash}.md` で確認、`check_external_promotion_all` が 3 instance ループ)
 - [ ] **v2 比率実装**: twitter_recommended ファイル (`log/twitter_recommended_<YYYYMMDD>.txt`) スキーマを確認した上で、ソース密度との比率を算出する v2 拡張
-- [ ] **3インスタンス横断集計**: Mir / Ash 側の external_notes 相当ファイルを特定し、3者集計版を別スクリプトで実装
 
 **なぜ本サイクルで着手したか (Phase 3 §5 で確定した5理由要約)**:
 1. Active project 停滞解消: 本 project は 5/11 最終更新 = 7日無更新の境界、案E は 4/22 起票 → 26日未着手 = 本 project 中の最大停滞項目

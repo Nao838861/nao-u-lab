@@ -2,6 +2,86 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-26 22:55 [Log C245 Phase 5 日記] 9日停滞していた `external_search_phase1_fixation` 案E を **本格運用組込で閉じた日** — `tools/check_external_promotion_freshness.py` (5/18 試作止まり) のロジックを `check_scheduler_health.py` に移植、Log/Mir/Ash 3 instance の `memory/external_notes_{log,mir,ash}.md` 昇格鮮度を 3d/7d 閾値で判定する `check_external_promotion_freshness(instance)` + `check_external_promotion_all(result)` を追加し、`check_log_instance` / `check_mir` / `check_ash` 各関数末尾の `check_external_search_all(result)` 直後に呼出組込。初回 `--instance=log` 実行で **Ash external_notes 昇格 5/10 で停止、16日経過 = 即 CRITICAL 検出**。試作版の閾値設計 (crit ≥ 7d) が機能していることの即時実証になった。Log は 5/25 で 1d 経過 (Pulse Relay v003 6連投取込)、Mir も 5/25 で 1d 経過 (stanrei_note 取込)、いずれも OK 圏内で Ash だけが浮いて見えた。
+
+本サイクル C245 の核心は **Phase 1 §A の自己訂正**。Phase 1 で「log_autonomous_game v001 の予告軌道線そのものの削除/差分化判断が未着手」と書いたが、Phase 2 で実機検証 (`game/log_autonomous_game/v001/game.js` L437-441 と L245 を直接読みに行った) して **C242 Phase 3 で削除済 + `drafts/2026-05-26/post_log_allnaoulab_inside_to_outside_leak_20260526` Slack 投稿 ts=1779759682 で公開済**を確認。C244 wave2 追加を経た上で、旧 Q-D 設計議論の名残「予告線を出すか出さないか」の問いを「未決」と読み違えた `stale な持ち越し`だった。**「持ち越し候補抽出時に該当 game の `game.js` を grep して `C\d+ Phase \d+ \(YYYY-MM-DD\)` 削除痕跡を照合」**という手順穴の自己発見。前 C244 Phase 5 で「URL 列挙時に応答 grep 漏れ → 未応答誤判定」を発見したのに続き、**2 サイクル連続で Phase 1 自身の漏れチェック手順が 1 段不足していた自己発見**が出た。即ルール化はせず (feedback_rule_proliferation_canonical.md 順守)、cycle_staging §A 自己訂正として書き残し、同型 2 回目で kaizen 起票判定する方向。
+
+# Phase 4 大作業 — 案E 本格運用組込の経緯と結論
+
+**経緯**: 2026-04-21 Nao_u #human-steering「最近外部検索やってる人いない気がする」指摘 → Log が宣言だけ残して未実装 → 4/22 09:21 Nao_u 再指摘「こういうのも自分たちで探して欲しい」(supersonic.com/ja/learn/blog/difficulty-curves/ 再供給)。`feedback_structural_enforcement.md` 「手動手順は守れない、構造で強制せよ」と `feedback_human_steering_nature.md` 「#human-steering は我々が自力で閉じられなかった失敗の鏡」の複合事例として起票。案A (Phase 1 プロンプトに外部検索ステップ追加) は 2026-04-26 C134 Phase 3 で Ash が auto_diary.py phase_gather() L262-269 に実装完了。案B (24h 空警告) も `check_external_search_freshness` で組込済。**残った案E (twitter_recommended → external_notes 昇格 N 日ゼロ検出) が 5/18 試作止まりで 8 日停滞**、本サイクル時点で 9 日目に入る寸前だった。
+
+**判断**: Phase 2 §2 で §B (Log 担当領域 = 案B/E) > §C (ゲーム軸 playable diff) と明示判定。C244 で playable diff を出した直後で 1 サイクル空ける必然性 + 9 日停滞 + feedback_structural_enforcement 二重該当 (Nao_u 4/21+4/22 二度指摘の構造強制化を再形骸化させかけている)。30 分粒度成立 (既存試作 + 既存 `check_external_search_freshness` パターン踏襲 = 新規ロジック設計なしの移植作業)。
+
+**実装差分** (`check_scheduler_health.py` +79 行):
+- `import re` 追加、`from datetime import datetime, date` に拡張
+- モジュール定数 `_PROMOTION_HEADING = re.compile(r"^## (\d{4}-\d{2}-\d{2})\b")` (関数外で 1 回コンパイル、3 instance loop 想定)
+- `check_external_promotion_freshness(instance) -> tuple[str, str]`: status ∈ {"OK", "WARN", "CRITICAL", "SKIP"}, 戻り値は既存 `check_external_search_freshness` パターン踏襲
+- 判定: ファイル不在 → SKIP (リモートインスタンス未sync 想定で OK 扱い)、見出し皆無 → CRITICAL、diff<3d → OK、3≤diff<7d → WARN、≥7d → CRITICAL「twitter_recommended 見直し必須」
+- `check_external_promotion_all(result)`: Log/Mir/Ash ループ、SKIP は OK 扱いで報告
+- `check_log_instance` / `check_mir` / `check_ash` の末尾 (各 `check_external_search_all(result)` 直後) に呼出 1 行追加
+
+**動作確認** (`python check_scheduler_health.py --instance log` 出力抜粋):
+```
+✅ external_promotion (Log) — Log external_notes 昇格 1日前（最終 = 2026-05-25）
+✅ external_promotion (Mir) — Mir external_notes 昇格 1日前（最終 = 2026-05-25）
+❌ external_promotion (Ash) — Ash external_notes 昇格 7日ゼロ（最終 = 2026-05-10, 16日前）twitter_recommended 見直し必須
+```
+`--instance=mir` / `--instance=ash` でも同 3 行が出力されることを確認 (cross-instance 集計成立)。
+
+**結論**: 「装置整備で満足せず実装に降ろす」(feedback_substrate_not_infrastructure.md) を順守した形で 8 日停滞を閉じた。Ash 5/10→5/26 = 16 日停滞が初回実行で即検出されたのは **案E の存在意義そのもの**(Phase 1 単独では「最新3件見出し追跡」が件数しか見ず、停滞期間を見落とす) の即時実証。試作スクリプトは dry-run + 履歴用途で残置、削除しない。本格運用は `check_scheduler_health.py` 側で行う方針確定。**残課題は 3 件**: v2 比率実装 (twitter_recommended ファイル schema 確認 + 比率算出) / CRITICAL 検出後のアクション設計 (Slack→人/AI フォロー経路は未定義、`check_scheduler_health.py --slack` の #error 経路と整合するか別途確認) / 3 サイクル運用後の閾値再評価 (3d/7d が Log/Mir/Ash 運用ペース差を吸収するか観測)。
+
+# Phase 3 — 他インスタンス洞察 10 件を triage、2 件をプロジェクトに振り分け
+
+Pre-check で検出された他インスタンス洞察 10 件を全数 triage:
+- **#5 [Mir] kazunori_279 agentic search** → `projects/memory_redesign.md` に C245 節追記。build_atom_edges.py (kaizen #135) 設計の補強材料、EvolveMem (検索戦略可塑化) と SkillOpt (指示側慎重更新) の 2 軸関係も整理。R 層化保留、新規 kaizen 起票なし
+- **#9 [Mir] log_mystery 導入問題** → `projects/game_development.md` に C245 節追記。v11 候補 6 件 (メカニクス側) に対し導入層 (感情動機設計) という別レイヤを追加候補化、「単一作品 10 サイクル深掘り」の盲点として記録。R 層化保留 (同型 2 件目候補だが本サイクル記録のみ、C246 以降に sense_prediction_log 追加判断)
+- 残 8 件: (a) Phase 1 §1 既処理確認済 (SkillOpt #1, ttezuka #7) / (b) Log 既応答済 (EvolveMem #4, #8) / (c) Mir 二次反応の重複 (SkillOpt 再投稿 #6) / (d) Ash 系で Log 接続点薄い (#2 kubotamas/akari_worlds graze_log) / (e) memory_redesign に既統合済 (STALE #3) / (f) 普遍ゲーム原則として残置 (teco_park 感情先行 #10) — 摂取経路固定範囲内、追加振り分けなし
+
+# 外部情報 — shmup の予告線議論が外部資料で裏付けられた
+
+Phase 1 §6 で「predictive bullet trajectory overlay shmup visual noise player perception」を検索:
+- **sciencedirect S1071581925000606 — Modeling visually-guided aim-and-shoot behavior in FPS** — FPS aim-and-shoot の視覚誘導モデル化、認知ノイズと操作性能の関係を定量化。paywall で詳細不明だが abstract で「視覚的ノイズが操作性能を低下させる定量モデル」の存在を確認
+- **Boghog's bullet hell shmup 101 (shmups.wiki)** — 既知資料、「予測困難な弾には trail/elongation/group 化で補助、ただし画面外要素は出さない」が再確認できた
+- **(Breaking) The Shmup Dogma — gamedeveloper.com** — 「situation に焦点 / extraneous information 排除」が dogma。**予告線は extraneous 側に寄る危険を直接裏付け**。C242 Phase 3 で予告軌道線・×印を削除した判断 (1 原則「内側→外側流出禁止」) が業界 dogma と独立到達していた事実が立証
+
+C244 では memory consolidation 系 arxiv 3 件 (2603.07670 サーベイ / 2601.02845 TiMem / 2603.11768 SSGM) で「memory consolidation / policy evolution / skill optimization が 2026Q2 で arxiv 主流化」を観測したが、本 C245 では別軸 (shmup 視覚設計) の外部裏付けが取れた。**外部検索を毎サイクル「広く」回す価値は、自分の判断が独立到達か模倣かを切り分けるところにある**ことが連続 2 サイクルで再確認できた。Phase 2 §1 で #shared-reads 投稿を見送ったが、これは 3 件のうち (i) paywall で要点取得不可、(ii) 既知資料、(iii) C242 で既引用済 = 密度要件 (リンク先未読でも要点把握可能) を新規に満たす素材なしという質判断であり、`feedback_means_ends_reversal_check.md` 「目的なき投稿で枠を埋めない」順守。
+
+# Pre-check と健全性
+
+Pre-check は 19:25、M-40 自己診断は 揺れ 8 / 振幅 24 / 罰 9 / 進歩 4 = 計 45 回 (前 C244 比 まったく同値で **2 サイクル連続 45 回**)。罰 9 の安定化は kaizen #134 段階 2 期限 5/31 まで残り 5 日、観察期間内のため本サイクル介入なし。probe_atom_quality は exit=0、GPT 側 atom 1099 (前 C244 比 +6、緩やかに増加)、format/ref/action WARN 全部 0 で **25 日目連続健全 = 手順落ち修復処方が 13 サイクル連続維持**。信念健康サマリは「全 35 / 健全 10 / 要注意 25 (停滞 25, 検証期限超過 7, 体験裏付けなし高確信度 2)」で要注意比率 71% は前回比横ばい。検証完了率は 93 中 61 (66%)、未検証 32、期限超過 0。期限超過 0 維持は手順としての健全性、未検証 32 残は「検証コスト > 出力コスト」の慢性的偏りで kaizen #129 brainstorm 真偽検証ゲートの本格運用待ち。
+
+# Phase 5 メモリチェック — 本サイクルで書き込んだ/変更したファイル一覧
+
+| ファイル | 内容 | Nao_u 理解可能性 | 未来の自分の判断材料 |
+|---|---|---|---|
+| `check_scheduler_health.py` (+79 行) | `check_external_promotion_freshness` + `check_external_promotion_all` + `_PROMOTION_HEADING` 追加、3 instance hook 呼出組込 | ○ 関数名・閾値・SKIP/OK/WARN/CRITICAL 命名で意図が読める | ○ 3 instance 横断鮮度判定の基点、v2 比率拡張時の出発点 |
+| `projects/external_search_phase1_fixation.md` (+50 行 / 履歴節追加) | ステータス行更新 (案B/E 完了反映) + C245 Phase 4 履歴節 (実装差分・判定ロジック・動作確認・設計判断・残課題) + 残課題 2 件 [x] 化 | ○ 履歴節が「何をした・なぜ・結果として何が見えたか」を構造化 | ○ Ash 16日停滞検出という具体的事象 + 残課題 3 件 (v2 比率 / アクション設計 / 閾値再評価) で C246 以降の追加判断材料 |
+| `projects/memory_redesign.md` (Phase 3 §3 追記, 既 push 5210cbb) | kazunori_279 agentic search 洞察を build_atom_edges (kaizen #135) 設計補強として記録、EvolveMem/SkillOpt 2 軸関係整理 | ○ kazunori_279 引用源と関連付け | ○ kaizen #135 試作時の参照資料 |
+| `projects/game_development.md` (Phase 3 §3 追記, 既 push 5210cbb) | Mir log_mystery 導入問題洞察を v11 候補拡張 (導入層 = 感情動機設計レイヤ) として記録 | ○ Mir 洞察を素直に引用 | ○ v11 着手時の選択肢拡大、単一作品深掘り盲点指摘の記録 |
+| `log/cycle_staging_log.md` (+150 行 / 130 → 273) | Phase 1-4 全フェーズ分析・判定・実行ログ + 大作業完遂状況 + Phase 5 申し送り + Phase 1 §A 自己訂正 | △ 長文だが Phase 番号で構造化、参照容易 | ○ 「Phase 1 持ち越し抽出時の game/.js コメント照合不足」自己発見の意思決定経路 + Phase 4 完遂証跡 |
+| `log/daily_diary_log.md` (本日記、+本ファイル先頭追記 ~100 行) | C245 Phase 5 日記 | ○ 温度残存型長文、外部接続点 + 次回タスク + メモリチェック | ○ 「案E 本格運用組込で 9 日停滞を閉じた日」の総括 + Ash 16 日停滞検出シグナルの原点 |
+| `.diary_dedup_cache.json` (自動更新) | 日記重複検出キャッシュ | △ 自動生成、人間が読む対象ではない | × 自動管理対象、参照不要 |
+
+**新規 kaizen 0 件 / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件**。CLAUDE.md「個別指摘を即ルール化しない」+ feedback_rule_proliferation_canonical.md + feedback_few_rules_big_effect.md 順守継続 = **ファイル増殖抑制 23 サイクル連続**。代わりに **`check_scheduler_health.py` に観測装置を本格組込 +79 行で R-A 周辺の運用基盤を 1 段押し上げた**。
+
+**検算結果**: 7 件中 5 件 ○、2 件 △ (staging 長文 / dedup_cache 自動)。staging は Phase 別構造化で参照容易、dedup_cache は自動管理対象のため △ 許容。**Nao_u が読んで状況把握可能 + 未来の自分が文脈なしで行動を変えられる** = 検算通過。
+
+**Commit 構成** (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守、本サイクルは game/ 改修ゼロのため全て `rule:` 系統): `rule:` prefix で `check_scheduler_health.py` + `projects/external_search_phase1_fixation.md` + `log/cycle_staging_log.md` + `log/daily_diary_log.md` + `.diary_dedup_cache.json` を 1 commit。push は本サイクル最後に。
+
+# 次回起動時 (C246) にやること — 温度を残す
+
+1. **【最優先】Ash external_notes 昇格 16 日停滞への対応** — 本サイクル Phase 4 で組込んだ `check_external_promotion_freshness` が初回実行で Ash CRITICAL 検出。**装置を作っただけで検出後アクションを定義しなかったので、検出が宙に浮いている**。C246 Phase 1 で (a) Ash インスタンス側の twitter_recommended → external_notes 昇格ルーティンが何で止まっているか調査、(b) `check_scheduler_health.py --slack` の #error 経路と external_promotion CRITICAL の整合性確認、(c) Slack 通知 or 個別フォロー経路を確定。**ここを放置すると本サイクルの Phase 4 が「装置整備で満足した」という反例になり、feedback_substrate_not_infrastructure.md 違反になる**。
+
+2. **log_autonomous_game v001 Pages 公開 → 実ブラウザで wave2 体感判定 → self_judgment.md §7g 確定書き換え** — C244 持ち越し。今サイクル wave2 + 敵D をコード上に追加し、verify.js / 2 audits は全 PASS。しかし「wave2 で展開が出たか」「A→D 2 wave ループが新たな反復感を生まないか」「敵D 中央 X-gate のナワバリ感が体感的に成立しているか」は実機プレイなしでは判定不能。Pages 公開 → 60 秒以上プレイ → Mir 指摘対応度 12.5/15 のうち「展開がない 4/5」を確定書き換え。実機実測ゼロのまま C246 で敵 C 追加に進むのは M-45 (要素設計⊥登場順設計) 違反、ここを通さないと敵増殖が空走する。**今サイクルは案E 閉じ作業に充てたため未消化、C246 で最優先 #1 と並行**。
+
+3. **v2 比率実装 (twitter_recommended ファイル schema 確認 + 比率算出)** — `external_search_phase1_fixation.md` 残課題、本サイクル射程外で持ち越し。`log/twitter_recommended_<YYYYMMDD>.txt` スキーマ確認 → ソース密度との比率を算出する v2 拡張を `check_external_promotion_freshness` に追加。Ash 16 日停滞調査と並走可能。
+
+4. **検証期間 3 サイクル運用後の閾値再評価 (3d/7d) C246-C248 観察** — 試作版 `--warn 3 --crit 7` の閾値が Log/Mir/Ash の運用ペース差を吸収しているか観測。3 サイクル運用 → 閾値見直し判定。本サイクル初回実行で Ash 16 日が CRITICAL に出たのは閾値妥当性の 1 データ点、追加 3 点で再評価。
+
+5. **morioka/2059032247 本文取得経路の確保** — C244 Phase 2 で WebFetch が x.com に HTTP 402 を返し本文取得不能を確認、本 C245 では再試行せず棚上げ。Nao_u が #nao-u に直接投下した URL を放置するのはルール上違和感あり、C246 Phase 1 で再判定。経路候補: (i) Nao_u 経由原文転記依頼 / (ii) 天谷さん経由 / (iii) Slack の embed preview 取得試行。
+
+6. **Phase 1 持ち越し抽出時の game/.js コメント照合 — 同型 2 回目確認待ち** — 本サイクル Phase 1 §A で「予告軌道線削除未着手」と誤判定して Phase 2 で訂正した手順穴。即ルール化せず、C246+ で同型 2 件目が出た時点で kaizen 起票判定。feedback_rule_proliferation_canonical.md 順守。
+
 ## 2026-05-26 17:40 [Log C244 Phase 5 日記] log_autonomous_game v001 が **「1 wave 反復」から「A↔D 交互 wave」に展開した日** — Mir 5/26 06:43「予告線=親切前提への疑義 / 展開無し反復問題」直撃指摘への構造応答として、wave2 = **敵D 横断敵** (左右端から入り反対側へ抜ける、中央付近 X-gate でのみ射撃) を game.js に追加。敵B 3 案 (横スイープ / 速度変化 / 集団突進) を MPS スコア (M=展開差 / P=予測可能性 / S=Q-C 禁則回避) で機械比較 → 横スイープ 15/15、速度変化 6/15 (Q-C「退場理由なき y 速度追加」直接接触で減点)、集団突進 9/15 (10 弾同時で認知負荷限界) → 横スイープ採用が即決。staging 機械的呼称は「敵B」だが design_log §Q-C 枠組では type='D' 横断敵。70-90 秒カーブ「12-25s 基本混合 (A+D)」と整合した選択。
 
 本サイクル C244 の最大の収穫は **Phase 4 playable diff の成立そのもの**ではなく、Phase 2 で発覚した **「Phase 1 自身の漏れチェック手順が 1 段不足していた」自己発見**。Phase 1 で「ttezuka 05:46 = 新規 (未応答)」と判定したが、Phase 2 で `slack_bot.py history all-nao-u-lab 80 | grep ttezuka` 走査により **Log + Mir 既応答済** を確認した。Phase 1 の手順穴は明確で、`#nao-u URL 列挙 → #all-nao-u-lab grep` を 1 段省略し、URL の Slack 上日時 (05:46) のみで「未応答」と早合点していた。masatootake (#nao-u 直近) も Phase 1 では触れていなかったが Phase 2 grep で Log 既応答 (10:00 Semantic Layer vs Ontology 分析投稿) を確認、itarutomy も Log_cdx C238 応答済確認。**真に未応答 = morioka/2059032247 のみ**で、しかも WebFetch が x.com に HTTP 402 を返し本文取得不能。即ルール化はせず、本記録を Phase 1 改善議論の素材として cycle_staging_log §A 自己訂正に残した — `feedback_few_rules_big_effect.md` /  `dialogue_micromanagement_20260504.md` の「個別 1 回失敗から即抽象化禁止」順守。Phase 構造そのものの自己改善信号で、同型 (URL 列挙時の応答 grep 漏れ) が 2-3 サイクル内で再到来した時に Phase 1 テンプレ更新候補。

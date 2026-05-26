@@ -246,3 +246,27 @@ Pre-check で検出された 10 件を triage、active project に直接交差�
 - 30分粒度成立: 既存試作 + 既存 `check_external_search_freshness` パターン踏襲 = 新規ロジック設計なしの移植作業
 - Active project の閉じ条件「24h 無実行時の自己警告が飛ぶ状態」に直接寄与 (案B = freshness 既組込、案E = promotion を本作業で組込 → 閉じ条件半分→満分に近づける)
 - Phase 1 §A 誤判定 (実装済を未着手と誤読) と対称的に、本作業は「試作実装済 (8日経過) を本格組込で閉じる」= 観測装置を整備して終わりではなく実運用に乗せる方向、`feedback_substrate_not_infrastructure.md` 「装置整備で満足せず実装に降ろす」順守
+
+## Phase 4: 大作業実行 (案E 本格運用組込)
+
+### 完遂判定
+完遂の定義 1-4 ✅ / 5 (commit & push) は Phase 5 で日記とまとめて行う方針に従い保留 → **4/5 達成、残 1 は Phase 5 持ち越し**。
+
+1. ✅ `check_scheduler_health.py` に `check_external_promotion_freshness(instance) -> tuple[str, str]` 関数追加 (`check_external_search_freshness` パターン踏襲、status ∈ {"OK", "WARN", "CRITICAL", "SKIP"})
+2. ✅ `check_log_instance` / `check_mir` / `check_ash` 各関数末尾の `check_external_search_all(result)` 直後に `check_external_promotion_all(result)` 呼出組込
+3. ✅ `python check_scheduler_health.py --instance=log` 実行で `external_promotion (Log/Mir/Ash)` 3 行の OK/WARN/CRITICAL 行を出力確認 (`--instance=mir` / `--instance=ash` でも同 3 行確認)
+4. ✅ `projects/external_search_phase1_fixation.md` 更新: ステータス行で 案B/E 完了反映、履歴に「2026-05-26 C245 Phase 4 案E 本格運用組込完了」節追記、残課題リストの「本格運用組込」「3インスタンス横断集計」を [x] に更新
+5. ⏸️ commit & push: Phase 5 で日記とまとめて行う
+
+### 副産物 (新規 / 変更ファイル)
+- `check_scheduler_health.py` M: import 拡張 (`re`, `date`) / `check_external_promotion_freshness` + `check_external_promotion_all` + `_PROMOTION_HEADING` 追加 / `check_log_instance` `check_mir` `check_ash` に呼出 1 行追加
+- `projects/external_search_phase1_fixation.md` M: ステータス行更新 + 履歴節「2026-05-26 C245 Phase 4」追記 + 残課題 2 件を [x] 化
+
+### 観測されたシグナル (副次)
+- Ash external_notes 昇格が **5/10 で 16日停滞** = 本格運用組込の初回実行で即 CRITICAL 検出。これは試作版の閾値設計 (crit ≥ 7d) が機能していることの即時実証。次サイクルで Ash インスタンス側のフォロー要だが本 Phase 4 射程外
+- Log/Mir は 5/25 で 1d 経過 = OK 圏内 (Log 5/25 Pulse Relay v003 6連投取込, Mir 5/25 stanrei_note 取込)
+
+### Phase 4 で増やさなかったもの
+- 新規 kaizen 起票なし (`feedback_few_rules_big_effect.md` 順守、既起票案件の閉じ作業のため)
+- 新規 Slack 投稿なし (Phase 1 §2 で 0 件確定済を honor)
+- 試作スクリプト `tools/check_external_promotion_freshness.py` の削除は見送り (dry-run + 履歴用途で残置)
