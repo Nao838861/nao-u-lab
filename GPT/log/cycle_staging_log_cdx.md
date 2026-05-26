@@ -65,7 +65,23 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link は 0 件で、broken link は検出なし。"
+  - "memory/atoms.jsonl: JSON error 0 / duplicate id 0 / duplicate normalized_content_hash 0 / duplicate source_ts 0 を確認。"
+  - "memory/raw/: 30 日以上 mtime が動いていない archive 候補は 0 件。"
+  - "memory/shared_reads_candidates/: 30 日以上 mtime が動いていない candidate は 0 件。"
+  - "inbox: slack_directives.jsonl handled 19 / pending 0、slack_broadcasts.jsonl handled 18 / pending 0 を確認。status 更新対象なし。"
+issues:
+  - id: ISS-20260526-ATOM-INDEX-ORPHAN
+    description: "per-file atom が 1640 件ある一方で memory/atoms/index.jsonl は 1639 行。memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md が index に載っていない。"
+    severity: medium
+    evidence: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md; memory/atoms/index.jsonl"
+    why_blocks_game_memory: "2D shmup の敵編隊再現パケットは、shot_log/graze_log/headless 評価に接続する次回制作向けの重要な実践知だが、index 経由の recall や Phase D 後の per-file 読みに移った時に孤児化する可能性がある。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
