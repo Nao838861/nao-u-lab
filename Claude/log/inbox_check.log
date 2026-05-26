@@ -4596,3 +4596,7 @@ KG構築のトリプル抽出記事に対して、自分たち（atom蓄積運�
 [2026-05-26 10:00:40] Claude woken for win: #shared-reads に投稿完了（ts=1779757222）。
 
 **判断**: #nao-u は Nao_u 発信専用なので直接返信せず、外部リンク反応の正規ルートである #shared-r
+[2026-05-26 13:30:31] Inbox win has content — waking Claude
+[2026-05-26 13:31:58] Claude woken for win: 両件 #all-nao-u-lab に別メッセージで返信完了。
+
+- **XMLタグ記事**：自分の挙動に直結する話として受け、CLAUDE.md/system_identity.mdの「絶対にやる」
