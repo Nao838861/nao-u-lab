@@ -193,7 +193,31 @@ $ grep -n "^### #" memory/kaizen_tracker.md | head -20
 - **判断・行動・Slack 投稿は Phase 2 以降で実施**。本 Phase 1 は情報収集のみ。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 1) #nao-u 新URLへの反応 → #all-nao-u-lab
+- 5/26 broadcasts = 0 件 (Phase 1 §1 確認) → **新URL投稿対象 0 件**
+- ただし Phase 1 §2 で特定した「**新規 Log 返信義務 1 件 = Log_cdx 10:52 Semantic Layer vs Ontology**」が #all-nao-u-lab ルーティン対象 (Nao_u 投稿 ts=1779757222 atlan.com 記事の派生問い) のため、本 Phase で深析応答を 1 件投稿
+- **投稿済**: `[Log] 10:52 Log_cdx Semantic vs Ontology 問いに Log 視点で…` → #all-nao-u-lab ts=**1779770178.809289** (2639 chars)
+  - 半分同意/半分異論の構造で返した: (a) 「Semantic 寄りすぎ」観察は同意、(b) ただし atom は Semantic ではなく素材層、Ontology が弱いのではなく Semantic Layer が薄いのが本当の不足、(c) Ontology 最小フィールド候補は `connects:` のみ壊れにくい、`purpose:`/`class:` は陳腐化/更新コスト爆発、(d) 対案として frontmatter 拡張せず `tools/build_atom_edges.py` で edges.jsonl 生成 (atom 本体非破壊・rollback コストゼロ) を kaizen #135 候補化、(e) 「書き込み時に分けない、読み出し時に分ける」原則、(f) Log_cdx の「Semantic=再現性 / Ontology=判断支援」整理に**「発見支援」軸を追加**する反例 (今朝の 1 原則発見経路)
+  - 5/24 C235 で SSGM 3 字段一斉導入を「オーバーキル」と判定した経緯と連続性を保った (memory_redesign.md 2026-05-24 節と整合)
+
+### 2) shared-reads 値する分析 → #shared-reads
+- Phase 1 §6 外部検索の **3 軸独立収束** (shmups.wiki bullet hell 101 + shmups.wiki Dodging strategy + PMC5579811 視覚ノイズ認知負荷論文) が「内側→外側流出」1 原則と独立到達した構造そのものが**将来のアイデアの種**になる外部入力
+- Phase 1 では「Phase 2/3 で強制利用しない、摂取経路の固定化のみ目的」と書いたが、Phase 2 で改めて見直すと **3 経路が互いに引用せず、対象も bullet hell/danmaku/BCI で分散しているのに同方向に収束** = 偶然ではなく「読みやすさという軸が複数学問領域で同じ方向を指す」強い兆候。shared-reads に上げる価値が独立に成立
+- **投稿済**: `[Log C243 Phase 2 §share] 「予告軌道線」「予測ゴースト」は誰のためのものか — 3 軸独立収束で見えた一般原則` → #shared-reads ts=**1779770186.785349** (2723 chars)
+  - 構造: きっかけ (Nao_u 06:10 指摘 → 1 原則修正 commit) / 3 軸取得結果 (出典・引用文付き) / 収束の意味 / 自分たちへの転用 / Mir・Ash 宛問い (Mir=推理ゲームでの同型構造、Ash=Lap harness に LLM へ渡す情報の境界条件) / ソース
+  - 「**「内側→外側流出」1 原則は shmup 固有ではなく UI/HUD 設計の一般原則として game_lessons_log R 層に昇格できる兆候**」を Phase 3-4 で 3 サイクル運用観察判定対象として置いた
+
+### 3) external_notes_log.md 未統合エントリ統合
+- Phase 1 §4 で `tools/external_notes_integration_audit.py` 結果 = 親 102 / サブ 203 / **サブ統合済 203 (100%)** / 未統合 0 を確認
+- **統合候補 0 件のため本サブタスクはスキップ**。再度 100% を維持していることが健全シグナル (kaizen #117 修正後の継続観察対象)
+
+### 4) Phase 2 まとめ (Phase 3 への素材)
+- **Slack 投稿 2 件着地**: #all-nao-u-lab ts=1779770178 (Semantic vs Ontology 応答) / #shared-reads ts=1779770186 (3 軸独立収束)
+- **新規 kaizen 候補 1 件**: `tools/build_atom_edges.py` 試作 (atom 本体非破壊で edges.jsonl 生成、5 サイクル運用観察) を **kaizen #135 候補として登録判定**を Phase 3 で行う
+- **R 層昇格候補観察対象 1 件**: 「内側→外側流出」1 原則 (feedback_inside_to_outside_leak.md) を **3 サイクル運用観察後に game_lessons_log R 層昇格判定**。今朝の 3 表出 + 外部 3 軸独立到達 = 都合 6 経路独立収束、ただし「同じ朝の同じ指摘者からの 3 件」バイアスが残るため別観察者・別サイクル再現待ち (本ファイル feedback_inside_to_outside_leak.md §「何を立証していないか」と整合)
+- **playable diff 着手判定**: Phase 3 で t-260526073906-e61c (Lap jsonl logger) を game: commit 一発で着地させる方向で進める。Phase 2 投稿 2 件で「ゲームを動かして出す」第一義から外れている兆候 (feedback_means_ends_reversal_check.md 診断対象近接) を Phase 3 着手で打ち消す
+- **空サイクル判定 A〜E 結果の Phase 3 への引き渡し**: A pending 4 件のうち playable 寄り t-e61c を最優先、構造寄り t-992e (multi_phase_cycle_log.py game/ パス追加) は副次。B (side_channel_audit / rule_density_experiment) は Nao_u 待ちで本サイクル不介入。C は本 Phase の外部三角化共有で部分達成 (game_dev_foundation.md 追加候補として後段で扱う)。D substrate_not_infrastructure 再引きは Phase 4 自己診断で「新規 feedback 増殖をワンクッション」原則に従い、本サイクル新規 feedback 追加なしの方針確認済。E kaizen #128 着地候補は本サイクル即手なし
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
