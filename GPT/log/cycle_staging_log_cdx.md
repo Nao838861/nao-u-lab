@@ -40,7 +40,32 @@ note: "Phase 2 の pass が 0 件のため、#shared-reads 投稿なし。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779221761-ac35ce4eb9
+    source_ts: "1779221761.120059"
+    title: "儀式化検証装置 — tokoroten/akari_worlds/kmizu 3 ツイートの共通構造"
+    reason: "Phase 3b の state/staging 更新や直近の game/headless 評価は、ログ・スクリーンショット・pass 表示の存在だけで検証済み扱いになりやすい。検証行為の表面形が中身を置き換えるリスクを、次回の自己判定へ小さく戻す。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed/source_ts と `probe-20260526-ceremonial-verification-content` を追加。次の検証報告で、何を反証した確認なのか、証拠が中身を見たのか、儀式的なら結論を狭めたかを問う。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-26T16:26:00+09:00",
+  "updated_at": "2026-05-26T18:05:00+09:00",
   "reviewed_source_ts": [
+    "1779221761.120059",
     "1779447884.748739",
     "1779737780.576279",
     "1779557881.821109",
@@ -55,6 +56,23 @@
     "1778173646.461789"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T18:05:00+09:00",
+      "id": "sr-1779221761-ac35ce4eb9",
+      "source_ts": "1779221761.120059",
+      "title": "儀式化検証装置 — tokoroten/akari_worlds/kmizu 3 ツイートの共通構造",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b そのものが state と staging を更新する検証儀式になりやすく、直近の game/headless 評価でも pass やスクリーンショットの存在を中身の検証と取り違えるリスクがある。この atom は検証行為の表面形が検証の中身を置き換える構造を扱っており、既存の lab proxy / state-action-loop probe と隣接するが、今回は「検証が何を反証したか」を問う一点に絞れば重複を抑えられる。恒久ルール化はせず、次回の自己判定や game/headless 評価で一度だけ確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T16:26:00+09:00",
       "id": "sr-1779447884-c4466c5517",
@@ -1564,6 +1582,18 @@
         "If only lab proxy evidence exists, did I choose the smallest next human-facing observation or explicitly keep the claim limited to technical/diagnostic quality?"
       ],
       "expires_after": "Review after the next playable diff, headless evaluation, or game prototype self-judgment that uses pass rates, policy tables, screenshots, or benchmark-like scores."
+    },
+    {
+      "id": "probe-20260526-ceremonial-verification-content",
+      "created_at": "2026-05-26T18:05:00+09:00",
+      "source_ts": "1779221761.120059",
+      "scope": "next Phase 3b/state update, game/headless evaluation, self_judgment, or review packet where having run a check may be mistaken for having tested the claim",
+      "questions": [
+        "Before saying a check passed, did I name the concrete claim it was meant to falsify?",
+        "Did the evidence inspect the behavior or decision quality itself, rather than only the existence of a log, screenshot, score, or checklist row?",
+        "If the check was mostly ceremonial, did I narrow the conclusion or choose the smallest follow-up observation that would test the real claim?"
+      ],
+      "expires_after": "Review after the next state/staging update, game/headless evaluation, self_judgment, or review packet that reports verification."
     }
   ]
 }
