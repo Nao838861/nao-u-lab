@@ -4,6 +4,15 @@ url: https://pure.itu.dk/en/publications/designing-game-feel-a-survey/
 collected_at: 2026-05-26T22:11:26+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, game-feel, controls, player-experience, survey]
+evaluated_at: "2026-05-26T22:17:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  physicality / amplification / support と tuning / juicing / streamlining の分類はゲーム制作への適用性が高い。
+  ただし今回の candidate に残っている情報だけでは、survey の分類根拠・200 件超の文献整理・各 domain の具体例まで十分に復元できず、CoopEval 水準の概要を書くには追加読解が必要。
 ---
 
 ## raw_excerpt

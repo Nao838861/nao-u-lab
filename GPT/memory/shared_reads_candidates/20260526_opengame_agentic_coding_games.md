@@ -4,6 +4,21 @@ url: https://arxiv.org/abs/2604.18394
 collected_at: 2026-05-26T22:11:26+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-generation, llm-agent, coding-agent, browser-game, evaluation]
+evaluated_at: "2026-05-26T22:17:14+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: >-
+  isolated coding から playable game creation へ移るときの破綻要因、Game Skill / Template Skill / Debug Skill、OpenGame-Bench の Build Health / Visual Usability / Content Alignment が明確。
+  Codex のゲーム制作運用にある template reuse、debug protocol、headless browser 評価と直接対応し、Phase 3 の概要で手法と適用先を十分に展開できる。
+suggested_post_outline:
+  overview_angle: "LLM coding agent を「ゲームを最後まで playable にする agent」に引き上げるため、skill library と実行接地評価を組み合わせる設計として書く。"
+  analysis_axis: "Game Skill / Template Skill / Debug Skill、GameCoder-27B の training、OpenGame-Bench の三つの評価面を分解して、どこが通常の code benchmark と違うかを見る。"
+  application_target: "Codex の prototype 制作で、既存 skeleton、検証済み debug 手順、headless + visual + intent alignment の評価セットを標準化する導線になる。"
+  pros_cons: "メリットは playable diff の失敗モードを広く評価できること。デメリットは VLM judge や専用 model/training に依存する部分をそのまま移植しにくいこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
