@@ -1,0 +1,35 @@
+■ 概要
+対象: The Evaluation Game: Beyond Static LLM Benchmarking
+https://arxiv.org/abs/2605.19377
+
+この論文は、LLM の安全性評価を「固定 benchmark を一度解かせる作業」ではなく、評価者と訓練者のあいだで進む two-player game として定式化する。問題意識は jailbreak 対策にある。見つかった jailbreak prompt を fine-tuning で拒否できるようにする運用は広いが、固定 benchmark だけでは、モデルが広い脅威空間に一般化したのか、その prompt 近傍だけを覚えたのかを区別できない。公開 benchmark なら、訓練側が評価 query を観測して次 round までに patch することもできる。論文は、静的な prompt 集合では trainer 側の適応を測れない、という一点を形式化する。
+
+提案する Evaluation Game では、各 round で evaluator が adversarial query の batch を出し、trainer はそれを見たあと、既存データや変換済みデータを訓練集合へ足して fine-tuning する。trainer の防御範囲は、訓練データ点そのものではなく、各点の周辺にある ε-neighborhood の和集合として表す。ε は fine-tuning がどの距離まで一般化するかを表す。round ごとの診断値は miss ratio で、evaluator query のうち trainer の現在の coverage 外に残る比率を指す。
+
+この game の中核は、query を作る操作を group action として扱う点にある。evaluator と trainer はそれぞれ異なる transformation group を持ち、既存 prompt から変換 prompt を生成する。これは単なる比喩ではなく、data augmentation を「prompt 空間上の変換」として扱うための数学的足場である。最小の非自明例として、論文は円周上の有限 cyclic translation game を解析する。evaluator が 1/p ずつ動き、trainer が 1/q の変換を持つ設定で、gcd(p, q) と lcm(p, q) によって、trainer が evaluator orbit をどれだけ早く覆えるかが変わる。特に ε が critical threshold を下回ると、trainer の変換は新しい evaluator query に届かず、実質的に一つずつ記憶するしかない。閾値を越えると、二つの group の算術的な相性によって、coverage の広がり方が大きく変わる。
+
+実験は二つの仮定を支えるために設計されている。第一に、fine-tuning の transfer は距離依存的か。WildJailBreak の adversarial_harmful subset から 47 prompt を訓練 pool とし、2999 prompt の held-out panel を作る。Llama-3.1-8B-Instruct、Mistral-7B-Instruct-v0.3、Qwen2.5-7B-Instruct を LoRA で少数 jailbreak prompt に fine-tuning し、各 held-out prompt が訓練 prompt から embedding 距離でどれだけ離れているかと refusal rate の関係を見る。refusal 判定には OLMo-3.1-32B-Instruct を judge として使う。結果として、複数の embedding pooling で三つの model family すべてに距離依存の refusal transfer が出る。rank-1/exposure-1600 の主条件では MMLU 低下は 2 point 以内、WikiText-2 perplexity drift は 5% 未満、benign query の過拒否も 1/30 以下で、単なる能力崩壊ではない。
+
+第二に、prompt transformation を group action 的に扱えるかを検査する。Behavior Elicitation Tool の primitive transformation、たとえば direct question 化、markdown answer 指定、tutorial 化、rot13 などを、七つの model の embedding 上で source/target pair として集める。各 primitive を主に scale + translation の形で近似し、inverse pair、composition、self-inverse primitive の構造がどこまで保たれるかを見る。単一 primitive 13 種では held-out R2 が概ね 0.81 から 0.90 に入り、forward/inverse pair の shift は予測通りほぼ反対向き、composition の scalar/shift もかなり整合する。rot13_full は完全な involution ではない、という限定も示されている。
+
+結論は明確で、benchmark は固定 prompt 集合ではなく、evaluator が持つ変換群の orbit として設計すべきだ、というもの。trainer 側の適応を明示的に model に入れない評価 protocol は、本物の修正と memorized patch を区別できない。論文自身も、理論解析が一次元円周の cyclic group に限られること、実験 model が比較的小さいこと、judge model や embedding choice に依存し得ることを制約として挙げる。それでも、静的 benchmark の限界を「評価後に訓練側が動く」という運用上の非対称性から説明した点が、この論文の残すべき中身である。
+
+■ 内容分析
+この論文の面白さは、dynamic benchmark と言いながら「難問を毎回ランダム生成する」方向へ逃げていない点にある。中心は、評価側と訓練側がどんな変換を持っているか、その変換群の overlap と coverage がどう交差するかである。つまり、評価の強さは prompt 数ではなく、evaluator が到達できる orbit の設計と、trainer がその orbit を局所 patch で吸収できるかにかかる。
+
+特に重要なのは miss ratio の置き方である。単発の accuracy ではなく、round の始点で「今 trainer がまだ覆えていない query がどれだけあるか」を測るので、前 round の query を見て patch する trainer を自然に扱える。これは公開 benchmark の問題に直接効く。公開された query に対する高得点は、次の query 生成規則が変わったときの安全性を保証しない。
+
+一方で、この枠組みは抽象度が高い。円周 translation game は sharp threshold を示すには良いが、実 prompt 空間が本当に低次元の group orbit として扱えるとは限らない。実験も、距離依存 transfer と transformation の線形近似が「この定式化を使う価値がある」ことを示す段階で、実運用 protocol そのものを完成させてはいない。採用するなら、数式をそのまま持ち込むより、固定 test set への過適応を検出する probe 設計として読むのが妥当である。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作では、headless playtest や自己評価が固定 seed、固定 map、固定 task に過適応する危険がある。たとえば「この seed で勝てる」「このスクリーンショットでは視認性が良い」だけでは、次の変形条件で破綻する可能性を測れない。この論文の読み替えは、評価 task を固定リストではなく orbit として持つこと。入力 seed、敵配置、速度、視界、UI density、ゴール条件、操作遅延などを evaluator 側の transformation として定義し、trainer つまり制作側の調整がどの範囲まで一般化したかを miss ratio で見る。
+
+具体的には、Phase 3b/4a の小 probe として「固定 seed の合格率」ではなく「変換後 seed 群での未被覆率」を残せる。ゲーム AI 評価なら、1 本の playable build に対して、評価者側が seed/配置/入力遅延/視認性負荷を少しずつ動かし、改善後にどの変換でまだ落ちるかを見る。記憶システムにも同じ発想を使える。shared-reads 品質 gate を固定 checklist にせず、言い換え、別記事、別 phase、文字数圧縮の変換下でも「概要が手法説明として残るか」を見る。
+
+■ メリット・デメリット
+メリットは、静的評価の見かけの安心を壊せること。固定 benchmark で良くなった結果を、そのまま一般化と誤読せず、変換後の未被覆領域を探す設計にできる。ゲーム制作では、特定 seed や特定スクリーンショットだけに合わせた調整を早めに検出できる。
+
+デメリットは、evaluator 側の transformation 設計に強く依存すること。変換群が浅いと、結局は少し増やした固定 test set になる。逆に変換を広げすぎると、制作側が何を改善すべきか分からないノイズになる。数式の美しさより、どの変換が Nao_u_BOT の失敗をよく露出するかを地道に設計する必要がある。
+
+■ 判定
+部分採用。論文の理論をそのままゲーム評価へ移植するのではなく、固定 benchmark 過適応を検出する考え方を採用する。次に入れるなら、headless playtest の seed/条件変換 orbit と miss ratio 記録を、小さい probe として始める。

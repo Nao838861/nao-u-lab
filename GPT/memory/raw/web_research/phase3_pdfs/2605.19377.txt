@@ -1,0 +1,1987 @@
+
+
+--- PAGE 1 ---
+The Evaluation Game:
+Beyond Static LLM Benchmarking
+Paul Wang1,3 Jade Garcia Bourrée2 Anne-Marie Kermarrec2 Vincent Corruble1
+1Sorbonne Université, CNRS, LIP6
+2École Polytechnique Fédérale de Lausanne
+Abstract
+As jailbreaks, adversarially crafted inputs that bypass safety constraints, continue
+to be discovered in Large Language Models, practitioners increasingly rely on
+fine-tuning as a defensive strategy. Yet the theoretical foundations underlying
+this robustness fine-tuning remain underexplored. We introduce a game-theoretic
+framework in which the interaction between an evaluator (auditing the model for
+jailbreaks) and a trainer is formalized as a two-player game. A key feature of
+our approach is the use ofgroup actions, a mathematical structure that captures
+symmetries and transformations, to formally represent data augmentation. The
+simplest non-trivial instance is the circle with cyclic translation groups, where we
+exhibit various regimes depending on the trainer’s generalization rangeε. Be-
+low a critical threshold, the evaluator maintains a constant miss ratio for linearly
+many rounds, whereas other settings can yield very different behaviors. We further
+provide empirical evidence supporting locality-dependence of the model: for the
+three model families we tested (Llama, Qwen and Mistral), we have significant
+evidence that fine-tuning on adversarial prompts induces only local generaliza-
+tion, with refusal rates on test examples highly correlated with the distance to
+the fine-tuning prompts. Our framework recasts the central object of adversarial
+evaluation: a benchmark is not a static set of prompts but an orbit under the evalu-
+ator’s group action, and audit protocols that ignore trainer-side adaptation cannot
+distinguish a genuine fix from a memorized patch.
+1 Introduction
+Large language models (LLMs) remain essentially black boxes whose behavior, successes or fail-
+ures, is largely unexplained and misunderstood. The ability to detect and patch vulnerabilities exper-
+imentally is therefore essential. However, new jailbreaks, adversarial inputs that bypass safety con-
+straints, continue to be discovered as deployment scales [41, 40]. A common approach to improving
+LLM safety is known as fine-tuning, including fine-tuning on discovered failures: when a jailbreak
+is identified, the model is fine-tuned on the offending input to suppress it [39, 2]. This practice,
+which aims to eliminate incorrect behavior on these specific malicious inputs, is now widespread,
+yet its theoretical foundations remain underexplored.
+As the space of possible LLM inputs is unbounded, fine-tuning on a finite corpus of known jail-
+breaks cannot, in principle, provide formal coverage guarantees over the full input distribution. The
+standard response has been to rely on safety benchmarks [8, 41], i.e., curated sets of adversarial
+prompts used to measure model robustness at a fixed point in time. These benchmarks have driven
+significant empirical progress, but they share a common limitation: they assume a passive trainer. A
+3Supported by a CoefficientGiving grant.
+Preprint.
+arXiv:2605.19377v1  [cs.LG]  19 May 2026
+
+
+--- PAGE 2 ---
+passive trainer fine-tunes a fixed list of vulnerabilities and does not adaptively respond to evaluation
+queries. In practice however, the trainer observes evaluation queries and can fine-tune against them
+directly. Moreover, those benchmarks are often public: a model may have already been exposed to
+them during pretraining or fine-tuning. Thus, a single evaluation on a static or public benchmark
+cannot distinguish a genuine fix from a patch that merely memorizes the tested input. This limitation
+is already identified in different contexts [31, 15, 53], but not yet formalized for LLM safety.
+The core difficulty is that the input space is unbounded, and neither the evaluator nor the trainer can
+exhaustively explore it. An evaluator that re-uses the queries previously submitted in earlier rounds
+gives the trainer an easy target: a trainer that fine-tunes narrowly may leave large regions of the
+threat space uncovered. Formalizing this tension requires modeling how to generate new queries
+from previous ones, an issue that static benchmarks, by design, do not address.
+To address this issue, we propose a formal framework that explicitly models the coevolution between
+query generation and fine-tuning, capturing the adaptive interplay that static benchmarks structurally
+cannot. The setting is a two-player game between an evaluator, who audits the system with adver-
+sarial queries, and a trainer, who observes those queries and fine-tunes the model before the next
+round. The evaluator wins if their queries jailbreak across many rounds; the trainer wins if they can
+cover the evaluator’s queries quickly enough. This formulation captures the strategic feedback loop
+that static benchmarks ignore.
+We model thedata augmentationavailable to each player as group actions. Data augmentation
+is the way each side constructs new queries from previous ones. A group action is a mathematical
+structure that captures symmetries and transformations on the query space. We treat the group-action
+representation as a modeling assumption that is meant to cover all possible strategies to create new
+data. It is supported empirically in Section 5.2. We also include an empirical check of the locality
+assumption underlying theε-coverage model. Our main contributions are as follows.
+1)A game-theoretic framework for adversarial evaluation.We introduce the Evaluation Game
+in Section 3. Unlike static benchmarks, which audit a fixed model against a fixed query set and
+so cannot address the dynamic adaptation that follows a discovered vulnerability, the framework
+explicitly accounts for the trainer’s ability to fine-tune on evaluation queries between rounds.
+2)Group-theoretic data augmentation in adversarial settings.We equip each player with a
+group of transformations acting on the query space, providing a unified and principled model of
+data augmentation in Section 3. To our knowledge, this is the first application of group-theoretic
+augmentation to prompt spaces in the LLM safety setting.
+3)Sharp phase-transition on circle translation game.We work out representative circle trans-
+lation games, the simplest nontrivial instance of the framework. With cyclic translation groups of
+orderspandq, we identify in Section 4 a critical generalization rangeε ⋆=gcd(p, q)/(pq). Below
+ε⋆, the evaluator sustains a constant success rate for a linear number of turns. The dependency on
+gcd(p, q)implies that nearly equal integers can yield very different behaviors.
+4)Empirical support for the Evaluation Game’s modeling assumptions.First, we show in Sec-
+tion 5 that fine-tuning on adversarial prompts induces refusal transfer that varies with embedding
+distance to the training set, supporting theε-coverage assumption. Second, the panel of prompt
+transformations is well-approximated by linear operators whose fitted parameters are consistent with
+the algebraic relations expected of a group action, with the self-inverse primitive acting as a partial
+involution (Section 5.2). Together, these results support the framework’s two core modeling assump-
+tions on real LLM data, making its conclusions actionable for real audit protocols.
+Beyond jailbreaks, our framework applies to any black-box audit setting (e.g., fairness or privacy
+audits of classifiers or ranking systems) where the audited model may adapt to the auditor’s queries.
+2 Background and related work
+Jailbreaks as Adversarial Attacks on LLMs.Building on the foundational vocabulary of adver-
+sarial robustness [52, 18] and its early extensions to NLP [27, 55],jailbreakinghas emerged as a
+practically significant instance. Wei et al. [56] analyze systematically how safety training can fail,
+Zou et al. [58] demonstrate that such attacks can be automated with gradient-based optimization, and
+2
+
+
+--- PAGE 3 ---
+Shen et al. [50] study how in-the-wild jailbreaks emerge and evolve continuously over time. More
+recently, Chu et al. [8] provide a comprehensive empirical assessment of the attack landscape, while
+Cui et al. [11] investigate a distinct attack vector based on intent concealment and semantic diver-
+sion, together illustrating the breadth and continued evolution of jailbreak methodologies. However,
+these works remain largely empirical and do not formally model the interaction between attacker
+and defender as a dynamic process, leaving open the theoretical question of whether robustness
+fine-tuning reliably reduces vulnerabilities or merely obscures them from evaluation.
+Attacking and Defending Aligned LLMs.Fine-tuning, and in particular Reinforcement Learning
+from Human Feedback (RLHF) [7, 39, 2], is the standard paradigm for aligning LLMs with safety
+objectives. Perez et al. [43] anticipate attacker-side adaptivity by using an LLM to iteratively gen-
+erate adversarial prompts. Building on this line, Peigné-Lefebvre et al. [41] report near-universal
+vulnerability (100% Attack Success Rate against 37 of 41 state-of-the-art LLMs) via Dynamic Ad-
+versarial Optimization over a library of jailbreak primitives, with attack difficulty varying over 300-
+fold across models. Furthermore, robustness fine-tuning empirically exhibits accuracy–robustness
+trade-offs [32], can be undone by adversarial fine-tuning [44, 45], and collapses when alignment and
+fine-tuning data are too similar [25]. These findings motivate a formal framework to characterize
+when fine-tuning succeeds or fails.
+Game Theory and Adversarial Learning.Madry et al. [36] formulate the problem of training
+robust classifiers as a minimax optimization problem, providing both a theoretical grounding and a
+practical training algorithm. The theoretical foundations of adversarial learning are closely related
+to online learning [33, 49, 23], where an agent makes sequential decisions against an adversarial
+environment. A more recent line of work studies iterated retraining as a strategic phenomenon.
+Strategic classification [21, 12] models the case in which data points adapt to a deployed classifier
+under a metric cost on input space, with one-shot Stackelberg [21] and online-regret [12] variants.
+Performative prediction [42] generalizes this to a fixed-point formulation in which the deployment-
+induced distribution shift is the central object. However, none of these works models the specific
+interaction between a trainer performing robustness fine-tuning and an evaluator probing for jail-
+breaks, nor do they connect these dynamics to group-theoretic data augmentation. This gap, both in
+terms of application domain and mathematical structure, is precisely what this article addresses.
+Multi-round adversarial benchmarking and dynamic evaluation.Dwork et al. [13] initiated the
+formal study of adaptive data analysis, showing that an analyst issuing statistical queries against
+a held-out dataset can preserve validity for exponentially many queries using differential-privacy
+mechanisms. Blum and Hardt [4] introduced the Ladder, a defender-side mechanism bounding
+the catastrophic-overfitting risk of public ML leaderboards. On the empirical-LLM-safety side,
+MART [16] iterates attack generation and safety fine-tuning, while Ma et al. [35] provide the clos-
+est formal framework via the Red Teaming Game. Most directly, Shirali et al. [51] give the only
+published theory of iterative human-and-model benchmarking: under non-strategic sampling, per-
+formance stalls in three rounds. Our framework differs from this setting in three ways: it endows
+the evaluator with a strategy class structured by a group action, replaces the scalar-loss objective
+withε-coverage of a held-out adversarial set on a metric query space, and adopts a sustained-margin
+victory predicate over a count of rounds rather than asymptotic stalling.
+Active auditing.A related line of research considers the problem of actively auditing a model
+by querying it to construct a certificate attesting to a given property. Chugg et al. [9] introduce a
+betting-based framework for auditing fairness, while Ajarra et al. [1] propose a Fourier-based active
+auditor for estimating distributional properties of black box models. Hartmann et al. [22] extend this
+active auditing paradigm explicitly to LLMs. A distinguishing feature of this setting is that the target
+model may adapt to the auditor’s queries, and the goal is to characterize the best possible guarantees
+for the auditor in the worst case. Yan and Zhang [57] study this problem under the assumption
+that the model is fixed, while Godinot et al. [17] relax this assumption to allow for limited model
+change. However, these works remain limited to low-dimension classifiers and do not connect the
+auditing dynamics to a game-theoretic framework grounded in the structure of the training process.
+The evaluator in our trainer-evaluator game plays an analogous role: probing a model sequentially
+to characterize its worst-case behavior, now in the high-dimensional setting of LLM prompt spaces
+and within a principled game-theoretic framework.
+Taken together, these works establish the empirical significance of jailbreaking, the dominance of
+robustness fine-tuning as a defense, and the theoretical tools available from group-theoretic data
+3
+
+
+--- PAGE 4 ---
+augmentation, game theory, and active auditing. However, no prior work combines these threads in
+a group-action coverage framework. The present work addresses this gap by modeling the trainer-
+evaluator interaction as a two-player game grounded in group actions, with implications that extend
+beyond jailbreaking to any adversarial evaluation objective.
+3 Framework: evaluation games
+Consider an evaluator tasked with auditing an AI system for safety failures [50] and a trainer who
+improves the system. We now state the three assumptions that define the scope of the model. First,
+the evaluator operates in a black box setting [5, 43]: they cannot observe the trainer’s internals
+or strategy, whereas the trainer has full access to every query the evaluator sends – though not
+to those they keep secret. This asymmetry reflects the typical deployment context, in which the
+evaluator is external to the organization maintaining the model [22]. Second, the trainer fine-tunes
+the model using their own data or by including the queries that were just sent by the evaluator.
+Third, we assume in this model that neither player generates genuinely public data or new data from
+scratch: each constructs new inputs by transforming existing ones. This reflects current practice in
+adversarial research, where attacks are often built by combining existing jailbreak primitives [40]. In
+this setting, the query space consists of test prompts embedded in the model’s representation space.
+We first describe the details of a round of the game, then specify the trainer’s per-round budget, the
+geometric notion of coverage, the diagnostic used to declare a winner, and the victory predicate.
+Section 3.2 then specializes the framework by modeling each player’s data construction as a group
+action.
+3.1 Game description
+The game proceeds in rounds. At each roundn, the evaluatorEselects a batch of queriesE n and
+sends it to the trainer’s systemT. The trainer then chooses how to expand its training dataset: either
+by directly incorporating queries fromE n, or by applying transformations to existing data. After
+this expansion, the trainer fine-tunes the system on the updated dataset.
+The evaluator starts from a finite initial datasetDeval
+0 ⊆X; the trainer starts fromDtrain
+0 =∅. As the
+covering dynamics depend on how many transformations the trainer may apply per round from a set
+of transformationsH train and how broadly each is applied, we now isolate three moves the trainer
+can play at roundn. The transformations inH train are defined in Section 3.2.
+Single-augmentation.The trainer picks oneh n ∈Htrain and onec n ∈Dtrain
+n ∪En; setD train
+n+1 =
+Dtrain
+n ∪En∪{hn⋅cn}. That is to say, the trainer shifts at most one query per round.
+Batch-augmentation.The trainer picks oneh n ∈Htrain and any subsetC n ⊆Dtrain
+n ∪En; set
+Dtrain
+n+1 =D train
+n ∪En∪hn⋅Cn. The trainer applies one type of transformation per training round but
+might apply it to the whole stored corpus at once. This matches typical fine-tuning practice (e.g.,
+paraphrase every existing prompt at once, rather than one prompt at a time).
+Full-augmentation.The trainer uses all the transformations on all the queries:D train
+n+1 =H train⋅
+(Dtrain
+n ∪En). Once E’s queries are absorbed, the trainer’s coverage spreads to everyH-translate
+of it.
+We refer to these three moves assingle,batch, andfullthroughout. We use the placeholder super-
+script●∈{single,batch,full}.
+To model possible generalization beyond exact matches, we represent the trainer’scoverageby the
+union ofε-neighborhoods:
+Vε(Dtrain
+n )= ⋃
+s∈Dtrainn
+B(s, ε),(1)
+whereε>0is thegeneralization rangeof the fine-tuning procedure. Thisε-neighborhood is cen-
+tral: it abstracts the trainer’s generalization capability into a single geometric parameter. Section 5
+empirically validates that this locality assumption holds across models.
+4
+
+
+--- PAGE 5 ---
+We define a key diagnostic, themiss ratior n ∈[0,1], to measure, round by round, whether the
+evaluator is still finding queries that escape it. It is defined as the fraction of queries inE n that fall
+outside the trainer’s current coverage:
+rn =
+⎧⎪⎪⎪⎨⎪⎪⎪⎩
+∣En∖Vε(Dtrain
+n )∣
+∣En∣ , E n ≠∅,
+0, E n =∅.
+It is measured at thebeginningof roundnbefore the trainer expands its dataset. The convention
+rn =0whenE n =∅says that an empty test batch is covered by definition, or equivalently, that E
+skipped the round and did not extract an uncovered query.
+The key question is whetherEcan keep generating queries that maintain highr n values (i.e., queries
+that fall outsideV ε(Dtrain
+n )) or whetherT’s data expansion is rich enough to eventually cover the
+entire threat spaceEcan reach (leading to lowr n values). That is to say, the question is to determine
+whether the evaluator can generate uncovered queries that the trainer is not able to superficially fix.
+Game victory.Victoryis defined as a property of the finite sequence of ratios(r n)n<N . Player
+Ewins if the miss ratio stays high, for instancer n >ρfor alln<N, whereρ∈[0,1]is a given
+threshold.Twins when the condition is not met.
+Since the victory depends on the round, two particular rounds are of interest: the one at which the
+trainer first neutralizes an incoming query, and the one at which the entire evaluator orbit is absorbed.
+Under optimal play by T:
+-N ●
+o(ε, p, q)is the first round at whichr n =0. That is to say, all of E’s next queries areε-covered.
+-N ●
+orbit(ε, p, q)is the first round at whichΩ E ⊆Vε(Dtrain
+n ). It corresponds to the first round when
+the whole evaluator orbit isε-covered.
+In the following, we specify how each player constructs new data from existing inputs and empiri-
+cally test one locality assumption underlying the model in Section 5.
+3.2 Implementation with group actions
+Related work.A principled framework for data augmentation through group theory was developed
+by Cohen and Welling [10], Chen et al. [6], and Lyle et al. [34], primarily in the context of com-
+puter vision. None of these works considers data augmentation applied strategically by a trainer in
+response to an adversary, nor do they transfer group-theoretic augmentation to prompt spaces.
+We model data construction with group actions. Each player is equipped with a distinct group of
+transformations acting onX. The group isG eval for the evaluator andH train for the trainer. At
+roundn,Eapplies a transformationg n ∈Geval to a subsetC eval
+n ⊆Deval
+n , expanding its dataset to
+Deval
+n+1 =D eval
+n ∪gn⋅Ceval
+n . It then selects the batchE n ⊆Deval
+n+1 to send toT. Similarly,Tapplies
+hn ∈Htrain to a subsetC train
+n ⊆Dtrain
+n ∪En, and expands toD train
+n+1 =D train
+n ∪hn⋅Ctrain
+n .
+More generally, the framework defines a family of games parameterised by
+(X, Geval, Htrain, Deval
+0 , ε, N), and the interaction betweenG eval andH train (i.e., their or-
+bits, their overlap, whether their actions commute) is what determines the outcome. The properties
+of the actions inG eval andH train, and the way they interact, appear crucial. We study in Section 4
+how the features of both groups can lead to different game dynamics.
+4 Theoretical analysis on the simplest non-trivial case
+Set up.Among all instances of the framework, finite-order translations on the circle are the smallest
+setting in which the evaluator’s and trainer’s actions can interact non-trivially. LetG eval =⟨1/p⟩≅
+Z/pZandH train =⟨1/q⟩≅Z/qZact onT 1 =R/Zby translation, wherep, q≥1are integers.
+Writeg=gcd(p, q)andL=lcm(p, q)=pq/g.
+Without loss of generality, we considerx 0 =0, so the E-orbit isΩ E ={0,1/p,2/p, . . . ,(p−1)/p}.
+For simplicity, we assume that E’s strategy is acyclic walk: at each turn, they generate one query
+by applying their primitive translation1/pand send it to T. So, we haveE n ={n/p}⊂T1 for all
+5
+
+
+--- PAGE 6 ---
+Round0
+D train
+0 =∅
+r 0 =1
+h 0 =0
+absorb
+Round1
+D train
+1 ={0}
+r 1 =1
+h 1 =+1/3
+Round2
+D train
+2 ={0, 1
+3 , 8
+15 }
+r 2 =1
+h 2 =+2/3
+Round3
+allΩ E covered
+r 3 =0
+Ω E D train
+n current queryE n V ε (D train
+n ),ε=0.08
+Figure 1: Round-by-round trace of play in the circle example withp=5, q=3andε=0.08. E-orbit
+ΩE is in orange dots, white dots mark the accumulated trainer dataDtrain
+n , and orange sectors show
+Vε(D train
+n ). The red open ring is the queryE n revealed that round; eachr n is the miss against the
+pre-update coverage. Between panels, the arrow records T’s chosen actionh n ∈Htrain; one action
+per round is the bottleneck. In three high-failure rounds (r0=r1=r2=1) T exploits∣1/3−2/5∣=1/15<
+εto shift by+2onZ/5Z, yieldingr 3 =0.
+roundsn. In this setting, we can define two key thresholds:ε ⋆, thesub-critical threshold, under
+which E wins for a linear duration, andεsat, thesaturation threshold, over which T can win quickly.
+We prove in Appendix A.1.1 that in this case,ε ⋆=g/(pq)andε sat =⌊p/(2g)⌋/L≃1/(2q). This
+shows that victory conditions can depend on fine properties of the parameters of the game.
+Example.Figure 1 shows the situation withp=5,q=3. With those values,L=15andε ⋆=1/15.
+Forε<1/15, translations are useless and E forces five uncovered singleton queries before T has
+absorbed the whole orbit. The miss ratio sequence isr 0 =r 1 =⋯=r 4 =1,r 5 =0. Forε>1/15, the
+translation by1/3induces an approximate shifti↦i+2on the five-point orbit (since∣1/3−2/5∣=
+1/15<ε), and T can exploit this shift to finish in three high-failure rounds,r 0 =r 1 =r 2 =1,r 3 =0.
+A round-by-round verification is given in Appendix A.1.
+Phase-diagram tables.For each possible move, we summarise in Table 1 the value or magnitude
+of the particular rounds defined in Section 3 across three representative(ε, p, q)-regimes relative
+to the sub-criticalε ⋆and saturationε sat thresholds. The intermediate regimeε ⋆<ε<ε sat is
+where the arithmetic structure of the two groups interacts non-trivially, in ways that require further
+investigation beyond the scope of this paper.
+Table 1: First-neutralisation and orbit-covering times across regimes and per-round augmentation
+budgets. HereQ(ε, p, q)=max z∈ΩE+Htrain ∣ΩE ∩B(z, ε)∣is the reachable-center packing factor,
+withB(⋅, ε)denoting an open ball in the circle metric.
+Regime ConditionN o Nsingle
+orbit Nbatch
+orbit Nfull
+orbit
+Sub-critical,g=1ε≤ε ⋆ p p p p
+Sub-critical,g≥2ε≤ε ⋆ p/g⌈p/2⌉Θ(p/g+logg)p/g
+Saturationε>ε sat, q≤p1 Θ(p/Q(ε, p, q))O(logp)1
+We demonstrate in Theorem A.11 the remarkable fact that the cyclic-walk diagnostic is insensitive
+to T’s batching, i.e., theNo column is identical across all moves. Intuitively, since E only generates
+and sends a single predictable query per round, T only needs one well-placed query to force the
+first zero-miss round, which can be done with single augmentation. In this cyclic-walk example, the
+predictable evaluator schedule makesN o insensitive to the trainer’s batching budget.
+TheN single
+orbit column of Table 1 reportsN single
+orbit across the three regimes, illustrating how the simplest
+data-augmentation budget (e.g., one augmented example produced per round) interacts with the
+geometry of(ε, p, q). In the sub-critical regime withgcd(p, q)=1, translations are useless on the
+orbit and the trainer is reduced to absorbing E’s queries one at a time, yieldingNsingle
+orbit =p. Across all
+three regimes,N single
+orbit remains linear inp(up to the packing factorQ): with only one augmentation
+6
+
+
+--- PAGE 7 ---
+per round, the trainer cannot escape a per-round throughput proportional to its dataset growth rate,
+regardless of how favorable the arithmetic of(p, q)becomes.
+Conclusion.The circle translation game, although minimal, already reveals how the interaction be-
+tween the evaluator’s and the trainer’s transformations shapes the outcome. First, the generalization
+rangeεacts in this model as a sharp on/off switch: below the critical thresholdε⋆, the trainer’s trans-
+formations cannot reach any new evaluator query and coverage reduces to memorizing one prompt
+at a time, while above it the arithmetic compatibility between the two groups dictates how fast the
+threat space is covered. Second, when the evaluator follows a predictable cyclic schedule, how ag-
+gressively the trainer batches its augmentations does not impact how quickly it neutralizes the next
+incoming query – the batching budget only matters once we ask how fast the whole evaluator orbit
+is covered. Third, when the trainer is restricted to one augmentation per round, exploringE’s orbit
+will take linear time, although the factor can depend on strategic and arithmetic conditions.
+5 Empirical evidence: distance-dependent transfer and
+prompt transformations
+Our experiments test two distinct aspects of the model: the local nature of fine-tuning-induced
+generalization (Equation 1), and the representation of query transformations as actions of group
+elements (Section 3.2).
+Datasets.For both questions, we rely on the WildJailBreak dataset [29], which contains hundreds
+of thousands of prompts. We focus on a subset most relevant to us, calledadversarial_harmful.
+The models are fine-tuned using low-rank (LoRA) adaptation [26] on a small set of jailbreak
+prompts. For fine-tuning, we also use MMLU [24] and Wikitext-2 [37] to measure degeneration, as
+well as avanilla_benignsubset of WildJailbreak to measure overrefusal.
+Models.For the question of fine-tuning generalization, we fine-tune three open-weight mod-
+els: LLAMA-3.1-8B-INSTRUCT[19], MISTRAL-7B-INSTRUCT-V0.3 [28], and QWEN2.5-7B-
+INSTRUCT[46], and use OLMO-3.1-32B-INSTRUCT[54] for judging answers. For the
+prompt transformations experiments, we additionally usegpt2(0.12B parameters, base) [47],
+pythia-410mandpythia-1b[3].
+5.1 Distance-dependent transfer of refusal training
+Setup.We evaluate the base and fine-tuned models on a held-out panel of jailbreak prompts and ask
+whether the refusal rate of the fine-tuned modelp ft(z)depends on the embedding-space distance
+zfrom each test prompt to its nearest training prompt. We use a47-prompt training pool selected
+by KNN density in embedding space, and a2999-prompt held-out evaluation panel stratified along
+several embedding metrics; this controls for distribution coverage so that the conditional distancez
+varies across a meaningful range (Appendix C.3–C.4). Each (model, seed) pair is one cell, and our
+main experiments train each family at LoRA rank1, exposure1600, learning rate3×10 −5.
+Distance and refusal rate.For each test promptxwe definez(x)as the minimum Euclidean
+distance between an embedding ofxand the embeddings of training prompts, computed under
+several pooling schemes. The description of the pooling schemes and exact distance definition are
+provided in Appendix C.5. For each model and prompt, we sample repliesN=10times. Refusal
+labels for individual responses are then obtained from a single open-weight LLM-as-judge (OLMO-
+3.1-32B-INSTRUCT) classifying each response asrefuses,complies, orambiguous, yielding per-
+prompt rates for both base and fine-tuned models; ambiguous slots are dropped (Appendix C.6).
+Statistical model.We model the fine-tuned-ratep ft(z)=Pr(R ft=1∣z)∈[0,1], fitting a small
+menuof candidate shapes forp ft (constant; linear; plateau-then-slope; Constrained Piecewise-Linear
+(CPL); two-segment piecewise-linear). The CPL shape, with parameters(z L, zR, dlo, dhi), linearly
+interpolates betweend lo on[0, z L]andd hi on[z R,1]. Each shape is fit independently via NUTS,
+scored by W AIC, and combined into Akaike weightswS (Appendix C.7).
+Result: distance-dependent transfer holds for all three model families.Three embedding pool-
+ing schemes give strongz-dependence results for all families:last_token,spectral_all, and
+7
+
+
+--- PAGE 8 ---
+mean_pool. We display the strongest, namelyspectral_all, in Figure 2. Additional tables and
+plots are in Appendix C.8 and C.9. This experiment confirms the dependence of the refusal rate on
+distance that motivates the introduction of Equation 1.
+Figure 2: Refusal ratep ft(z)versus normalized embedding distancezfrom the active training pool,
+per family. Orange: Constrained Piecewise-Linear posterior median curves forp ft. Blue: base
+refusal rates. Each dot represents a5%-population bin, thus around100−150prompts.
+The posterior probabilities for the Constrained Piecewise-Linear shape are very close to1here, actu-
+ally within the resolution of our model (<1e-6). Thus, this is strong evidence of distance-dependent
+refusal rate, for all three families. See Appendix C.8, Table 2 for more results.
+Capability is preserved at the canonical operating point.We measure capability and fluency
+drift through200-question MMLU and WikiText-2 perplexity respectively (Appendix C.12). We
+also measure refusal on benign queries from WildJailbreak’svanilla_benignsubset. At our main
+rank-1/ exposure-1600setting, we have∣∆MMLU∣≤2pp, the perplexity drift is below5%in
+absolute value, and refusal of benign queries is at most1/30. The results are displayed at the bottom
+of Figure 2; the distance-dependent signal is therefore not confounded with the collapse of the base
+capability, nor with over-refusal.
+Conclusion.Our experiments support the claim that distance-dependent refusal transferholds for
+all three modelstested. Together with the controlled capability-preservation result, this supports the
+ε-coverage locality assumption (Equation 1) underlying the framework introduced in Section 3.1, in
+the setting tested.
+5.2 Prompt transformations
+The Behavior Elicitation Tool (BET) framework [41] is a library ofprimitivetransformations of jail-
+break queries. A primitive maps a promptpto a transformed promptT(p)keeping the prompt’s se-
+mantic intent while perturbing its surface form (e.g. requesting a markdown-formatted answer, para-
+phrasing as a direct question, applyingrot13). We denote(T, T −1)a configured forward/inverse
+primitive pair. A subset of the primitives have known structural relationships: forward/inverse pairs,
+pairwise compositions, and self-inverse transformations. These structural relationships test whether
+the panel of primitives behaves as an algebraic structure on the model’s embedding space.
+Protocol.For each pair of model and primitive, we produce an embedding dataset of sources and
+targets{(x i, yi)}n
+i=1. We then fit a hierarchy of candidate linear operatorsˆφT(x)=α T x+b T ≈y,
+scored by cross-validatedR 2 (Appendix D.4) over the parametersα T andb T . The fitted operators
+are not the final object of interest: their parameters are used as inputs to the structural tests below.
+Experiment 1: the(α,b)class is an adequate representation.On the 13 single-primitive trans-
+formations, the two-parameter operatorφ T(x)=α T x+b T achieves wrapper-mean cross-validated
+R2 ∈[0.81,0.90]across the panel. Operators with more parameters overfit on our dataset. The
+(αT ,b T)class is both minimal — translation alone leaves0.19–0.28R 2 on the table — and not
+under-specified (Appendix D.5, Table 5).
+Experiment 2: inverse and composition coherence both hold under the operator class’s own
+algebra.For a(T, T −1), the fitted shifts should satisfybT ≈−bT−1, scored bycos(b T ,−bT−1). For
+8
+
+
+--- PAGE 9 ---
+a compositionC=L○R, the operator parameters should satisfyα C ≈αLαR andb C ≈αLbR+b L.
+For the six(T, T −1)pairs, the minimum inverse-coherence cosinecos(b T ,−bT−1)is0.887, sup-
+porting the predictedb T ≈−bT−1relation at this early-layer pooled tag (Table 6). For a composition
+C=L○R, the(α,b)-class composition law predictsα C =α LαR andb C =α LbR+b L. The mul-
+tiplicative scalar prediction agrees with the fittedα C to within0.3–6.4%(Table 7).
+Experiment 3: the self-inverse primitive is encoded as a partial involution.For a self-inverse
+primitive, we fit a linear isometric operatorR T to source/target embeddings. It should satisfy
+R2
+T ≈I, scored by the trace ratiotr(R 2
+T)/non the rank-nactive subspace. Forrot13_full,
+the orthogonal operatorRfitted to source/target embedding pairs is invertible by construction but
+not an exact involution: the active-subspace trace ratiotr(R 2)/nlies in[0.49,0.56]in48/49
+(model, embedding-tag) cells (median0.52). The companiontr(R)/nis uniformly≈0. The fact
+tr(R2)/n≈0.52means roughly half then-dimensional active subspace acts as a true order-2 reflec-
+tion and the other half as a non-trivial rotation (Appendix D.7). This∼50/50 split is concentrated
+across the seven models we test.
+Conclusion.These three experiments support that prompt transformations act as group elements on
+the model’s embedding space, lending empirical grounding to the group-action in Section 3.2.
+6 Limitations and broader impacts
+Limitations.Our theoretical analysis is restricted to the simplest instance of the framework: cyclic
+translation groups on the one-dimensional circle; richer group structures (higher-dimensional tori,
+non-abelian groups, infinite-order generators) are not treated here. The empirical study on fine-
+tuning generalization uses three relatively small fine-tuned models, a single judge model (OLMO-
+3.1-32B-INSTRUCT) and computes prompt-prompt distances in base-model embedding spaces;
+downstream conclusions may depend on all such choices. Generalization-range estimates are de-
+rived only in those specific setups, calling for more experiments. The empirical work on prompt
+transformations could also benefit from further investigation, for instance considering additional
+transformation techniques and possibly nonlinear fitted operators.
+Broader impacts.A potential negative use of this framework is that a malicious trainer could
+leverage our theoretical analysis to better understand how to evade evaluation, optimizing a memo-
+rization patch strategy rather than genuinely improving the model. However, our theoretical results
+are derived in the worst case for the evaluator: they hold even when the trainer plays optimally, so
+the guarantees we provide to the evaluator remain valid as long as the underlying assumptions are
+satisfied.
+Generality.Beyond LLM safety, the framework generalizes to any black-box model audit setting
+(e.g., classification [48] or ranking [38]) where purely local behavior changes are possible, and to
+evaluation metrics beyond jailbreak rate, including fairness [30] and privacy [20]. More broadly, as
+AI governance frameworks such as the EU AI Act [14] increasingly rely on evaluation protocols to
+certify model safety and fairness, our results demonstrate that such protocols must explicitly model
+trainer-side adaptation.
+7 Conclusion
+We introduced the Evaluation Game, a game-theoretic framework that models the strategic inter-
+action between a trainer performing robustness fine-tuning and an evaluator auditing for jailbreaks,
+with each player equipped with data augmentation methods modeled as group actions. On the cir-
+cle, a closed-form analysis reveals a sharp phase structure governed by the arithmetic of the two
+groups; empirically, our experiments support both core modeling assumptions – locality of fine-
+tuning-induced generalization across the three fine-tuned families, and group-action-like structure
+of prompt transformations across the seven-model operator panel.
+Our results expose a fundamental limitation of static benchmarks: they cannot distinguish a genuine
+fix from a memorized patch. As governance frameworks increasingly rely on evaluation protocols
+to certify model safety, explicitly modeling trainer-side adaptation should be a core design principle
+9
+
+
+--- PAGE 10 ---
+– for LLM safety and, more broadly, for any black-box audit setting. A natural direction for future
+work is the collaborative setting, in which multiple evaluators jointly audit the same model and must
+coordinate their queries to maximize coverage.
+References
+[1] A. Ajarra, B. Ghosh, and D. Basu. Active fourier auditor for estimating distributional properties
+of ml models. InProceedings of the AAAI Conference on Artificial Intelligence, volume 39,
+pages 15330–15338, 2025.
+[2] Y . Bai, A. Jones, K. Ndousse, A. Askell, A. Chen, N. DasSarma, D. Drain, S. Fort, D. Ganguli,
+T. Henighan, et al. Training a helpful and harmless assistant with reinforcement learning from
+human feedback.arXiv preprint arXiv:2204.05862, 2022.
+[3] S. Biderman, H. Schoelkopf, Q. G. Anthony, H. Bradley, K. O’Brien, E. Hallahan, M. A. Khan,
+S. Purohit, U. S. Prashanth, E. Raff, A. Skowron, L. Sutawika, and O. Van Der Wal. Pythia: A
+suite for analyzing large language models across training and scaling. In A. Krause, E. Brun-
+skill, K. Cho, B. Engelhardt, S. Sabato, and J. Scarlett, editors,Proceedings of the 40th Inter-
+national Conference on Machine Learning, volume 202 ofProceedings of Machine Learning
+Research, pages 2397–2430. PMLR, 23–29 Jul 2023. URLhttps://proceedings.mlr.
+press/v202/biderman23a.html.
+[4] A. Blum and M. Hardt. The ladder: A reliable leaderboard for machine learning competitions.
+InProceedings of the 32nd International Conference on Machine Learning (ICML), volume 37
+ofPMLR, pages 1006–1014, 2015. URLhttps://arxiv.org/abs/1502.04585.
+[5] M. Bunge. A general black box theory.Philosophy of Science, 30(4):346–358, 1963.
+[6] S. Chen, E. Dobriban, and J. H. Lee. A group-theoretic framework for data augmentation.
+Journal of Machine Learning Research, 21(245):1–71, 2020.
+[7] P. F. Christiano, J. Leike, T. Brown, M. Martic, S. Legg, and D. Amodei. Deep reinforcement
+learning from human preferences.Advances in neural information processing systems, 30,
+2017.
+[8] J. Chu, Y . Liu, Z. Yang, X. Shen, M. Backes, and Y . Zhang. Jailbreakradar: Comprehensive
+assessment of jailbreak attacks against llms. InProceedings of the 63rd Annual Meeting of
+the Association for Computational Linguistics (Volume 1: Long Papers), pages 21538–21566,
+2025.
+[9] B. Chugg, S. Cortes-Gomez, B. Wilder, and A. Ramdas. Auditing fairness by betting.Advances
+in Neural Information Processing Systems, 36:6070–6091, 2023.
+[10] T. Cohen and M. Welling. Group equivariant convolutional networks. InInternational confer-
+ence on machine learning, pages 2990–2999. PMLR, 2016.
+[11] T. Cui, Y . Mao, P. Liu, C. Liu, and D. You. Exploring jailbreak attacks on llms through intent
+concealment and diversion. InFindings of the Association for Computational Linguistics: ACL
+2025, pages 20754–20768, 2025.
+[12] J. Dong, A. Roth, Z. Schutzman, B. Waggoner, and Z. S. Wu. Strategic classification from
+revealed preferences. InProceedings of the 2018 ACM Conference on Economics and Com-
+putation (EC), 2018. URLhttps://arxiv.org/abs/1710.07887.
+[13] C. Dwork, V . Feldman, M. Hardt, T. Pitassi, O. Reingold, and A. Roth. Preserving statistical
+validity in adaptive data analysis. InProceedings of the 47th Annual ACM Symposium on
+Theory of Computing (STOC), pages 117–126, 2015. doi: 10.1145/2746539.2746580. URL
+https://arxiv.org/abs/1411.2664.
+[14] European Commission. Proposal for a regulation of the european parliament and of the
+council laying down harmonised rules on artificial intelligence (artificial intelligence act) and
+amending certain union legislative acts.https://eur-lex.europa.eu/legal-content/
+EN/TXT/?qid=1623335154975&uri=CELEX%3A52021PC0206, 2021.
+[15] J. Garcia Bourrée, A. Godinot, M. De V os, M. Vujasinovic, S. Biswas, G. Tredan, E. Le Merrer,
+and A.-M. Kermarrec. Robust ml auditing using prior knowledge.Forty-second International
+Conference on Machine Learning, 2025.
+10
+
+
+--- PAGE 11 ---
+[16] S. Ge, C. Zhou, R. Hou, M. Khabsa, Y .-C. Wang, Q. Wang, J. Han, and Y . Mao. MART:
+Improving LLM safety with multi-round automatic red-teaming. InProceedings of the 2024
+Conference of the North American Chapter of the Association for Computational Linguistics:
+Human Language Technologies (NAACL), 2024. URLhttps://aclanthology.org/2024.
+naacl-long.107.
+[17] A. Godinot, E. Le Merrer, G. Trédan, C. Penzo, and F. Taïani. Change-relaxed active fairness
+auditing. InRJCIA 2023-21e Rencontres des Jeunes Chercheurs en Intelligence Artificielle,
+pages 91–96, 2023.
+[18] I. J. Goodfellow, J. Shlens, and C. Szegedy. Explaining and harnessing adversarial examples.
+InInternational Conference on Learning Representations (ICLR), 2015.
+[19] A. Grattafiori et al. The Llama 3 herd of models.arXiv preprint arXiv:2407.21783, 2024.
+URLhttps://arxiv.org/abs/2407.21783.
+[20] P. Guerra-Balboa, A. Sauer, H. H. Arcolezi, and T. Strufe. Understanding disclosure risk
+in differential privacy with applications to noise calibration and auditing (extended version).
+arXiv preprint arXiv:2603.12142, 2026.
+[21] M. Hardt, N. Megiddo, C. Papadimitriou, and M. Wootters. Strategic classification. InPro-
+ceedings of the 2016 ACM Conference on Innovations in Theoretical Computer Science (ITCS),
+pages 111–122, 2016. doi: 10.1145/2840728.2840730. URLhttps://arxiv.org/abs/
+1506.06980.
+[22] D. Hartmann, L. Pohlmann, L. Hanslik, N. Gießing, B. Berendt, and P. Delobelle. Audit
+me if you can: Query-efficient active fairness auditing of black-box llms.arXiv preprint
+arXiv:2601.03087, 2026.
+[23] E. Hazan. Introduction to online convex optimization.Foundations and Trends in Optimization,
+2(3-4):157–325, 2016.
+[24] D. Hendrycks, C. Burns, S. Basart, A. Zou, M. Mazeika, D. Song, and J. Steinhardt. Measuring
+massive multitask language understanding.arXiv preprint arXiv:2009.03300, 2020.
+[25] L. Hsiung, T. Pang, Y .-C. Tang, L. Song, T.-Y . Ho, P.-Y . Chen, and Y . Yang. Why LLM safety
+guardrails collapse after fine-tuning: A similarity analysis between alignment and fine-tuning
+datasets. InProceedings of the 64th Annual Meeting of the Association for Computational
+Linguistics (ACL), 2026. URLhttps://arxiv.org/abs/2506.05346.
+[26] E. J. Hu, Y . Shen, P. Wallis, Z. Allen-Zhu, Y . Li, S. Wang, L. Wang, and W. Chen. LoRA:
+Low-rank adaptation of large language models. InInternational Conference on Learning Rep-
+resentations (ICLR), 2022.
+[27] R. Jia and P. Liang. Adversarial examples for evaluating reading comprehension systems. In
+Proceedings of the 2017 conference on empirical methods in natural language processing,
+pages 2021–2031, 2017.
+[28] A. Q. Jiang, A. Sablayrolles, A. Mensch, C. Bamford, D. S. Chaplot, D. de las Casas, F. Bres-
+sand, G. Lengyel, G. Lample, L. Saulnier, L. R. Lavaud, M.-A. Lachaux, P. Stock, T. Le Scao,
+T. Lavril, T. Wang, T. Lacroix, and W. El Sayed. Mistral 7b.arXiv preprint arXiv:2310.06825,
+2023. URLhttps://arxiv.org/abs/2310.06825.
+[29] L. Jiang, K. Rao, S. Han, A. Ettinger, F. Brahman, S. Kumar, N. Mireshghallah, X. Lu, M. Sap,
+Y . Choi, and N. Dziri. WildTeaming at scale: From in-the-wild jailbreaks to (adversarially)
+safer language models. InAdvances in Neural Information Processing Systems (NeurIPS),
+2024.
+[30] V . Lafargue, A. L. Monteiro, E. Claeys, L. Risser, and J.-M. Loubes. Exposing the illusion
+of fairness: Auditing vulnerabilities to distributional manipulation attacks.arXiv preprint
+arXiv:2507.20708, 2025.
+[31] J. Li, R. Li, and Q. Liu. Beyond static datasets: A deep interaction approach to llm evaluation.
+arXiv preprint arXiv:2309.04369, 2023.
+[32] K. Li, J.-C. N. Ferrand, R. Sheatsley, B. Hoak, Y . Beugin, E. Pauley, and P. McDaniel. On the
+robustness tradeoff in fine-tuning. InProceedings of the IEEE/CVF International Conference
+on Computer Vision, pages 4898–4907, 2025.
+[33] N. Littlestone and M. K. Warmuth. The weighted majority algorithm.Information and com-
+putation, 108(2):212–261, 1994.
+11
+
+
+--- PAGE 12 ---
+[34] C. Lyle, M. van der Wilk, M. Kwiatkowska, Y . Gal, and B. Bloem-Reddy. On the benefits of
+invariance in neural networks.arXiv preprint arXiv:2005.00178, 2020.
+[35] C. Ma, Z. Yang, M. Gao, H. Ci, J. Gao, X. Pan, and Y . Yang. Red teaming game: A game-
+theoretic framework for red teaming language models, 2023. URLhttps://arxiv.org/
+abs/2310.00322.
+[36] A. Madry, A. Makelov, L. Schmidt, D. Tsipras, and A. Vladu. Towards deep learning mod-
+els resistant to adversarial attacks. InInternational Conference on Learning Representations
+(ICLR), 2018.
+[37] S. Merity, C. Xiong, J. Bradbury, and R. Socher. Pointer sentinel mixture models. InProceed-
+ings of the International Conference on Learning Representations (ICLR), Toulon, France,
+2017. Introduces the WikiText-2 and WikiText-103 language modelling datasets.
+[38] J. Mouton and B. Rottembourg.Auditing the Ranking Strategy of a Marketplace’s Algorithm
+in the Frame of Competition Law Commitments with Surrogate Models: The Amazon’s Buy
+Box Case. GREDEG, 2024.
+[39] L. Ouyang, J. Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin, C. Zhang, S. Agarwal,
+K. Slama, A. Ray, et al. Training language models to follow instructions with human feedback.
+Advances in neural information processing systems, 35:27730–27744, 2022.
+[40] A. Panfilov, P. Romov, I. Shilov, Y .-A. de Montjoye, J. Geiping, and M. Andriushchenko.
+Claudini: Autoresearch discovers state-of-the-art adversarial attack algorithms for llms.arXiv
+preprint arXiv:2603.24511, 2026.
+[41] P. Peigné-Lefebvre, Q. Feuillade-Montixi, T. David, and N. Miailhe. LLM robustness leader-
+board v1 – technical report, 2025. arXiv preprint; PRISM Eval.
+[42] J. C. Perdomo, T. Zrnic, C. Mendler-Dünner, and M. Hardt. Performative prediction. In
+Proceedings of the 37th International Conference on Machine Learning (ICML), volume 119
+ofPMLR, pages 7599–7609, 2020. URLhttps://arxiv.org/abs/2002.06673.
+[43] E. Perez, S. Huang, F. Song, T. Cai, R. Ring, J. Aslanides, A. Glaese, N. McAleese, and
+G. Irving. Red teaming language models with language models. InProceedings of the 2022
+Conference on Empirical Methods in Natural Language Processing, pages 3419–3448, 2022.
+[44] X. Qi, Y . Zeng, T. Xie, P.-Y . Chen, R. Jia, P. Mittal, and P. Henderson. Fine-tuning aligned
+language models compromises safety, even when users do not intend to! InInternational
+Conference on Learning Representations (ICLR), 2024.
+[45] X. Qi, A. Panda, K. Lyu, X. Ma, S. Roy, A. Beirami, P. Mittal, and P. Henderson. Safety
+alignment should be made more than just a few tokens deep. InInternational Conference on
+Learning Representations (ICLR), 2025.
+[46] Qwen Team, A. Yang, B. Yang, B. Zhang, B. Hui, B. Zheng, B. Yu, C. Li, D. Liu, F. Huang,
+H. Wei, H. Lin, J. Yang, J. Tu, J. Zhang, J. Yang, J. Yang, J. Zhou, J. Lin, K. Dang, K. Lu,
+K. Bao, K. Yang, L. Yu, M. Li, M. Xue, P. Zhang, Q. Zhu, R. Men, R. Lin, T. Li, T. Tang,
+T. Xia, X. Ren, X. Ren, Y . Fan, Y . Su, Y . Zhang, Y . Wan, Y . Liu, Z. Cui, Z. Zhang, and
+Z. Qiu. Qwen2.5 technical report.arXiv preprint arXiv:2412.15115, 2024. URLhttps:
+//arxiv.org/abs/2412.15115.
+[47] A. Radford, J. Wu, R. Child, D. Luan, D. Amodei, and I. Sutskever. Language mod-
+els are unsupervised multitask learners.OpenAI, 2019. URLhttps://cdn.openai.
+com/better-language-models/language_models_are_unsupervised_multitask_
+learners.pdf.
+[48] A. Shahin Shamsabadi, M. Yaghini, N. Dullerud, S. Wyllie, U. Aïvodji, A. Alaagib, S. Gambs,
+and N. Papernot. Washing the unwashable: On the (im) possibility of fairwashing detection.
+Advances in Neural Information Processing Systems, 35:14170–14182, 2022.
+[49] S. Shalev-Shwartz. Online learning and online convex optimization.Foundations and Trends
+in Machine Learning, 4(2):107–194, 2012. doi: 10.1561/2200000018.
+[50] X. Shen, Z. Chen, M. Backes, Y . Shen, and Y . Zhang. " do anything now": Characterizing and
+evaluating in-the-wild jailbreak prompts on large language models. InProceedings of the 2024
+on ACM SIGSAC Conference on Computer and Communications Security, pages 1671–1685,
+2024.
+12
+
+
+--- PAGE 13 ---
+[51] A. Shirali, R. Abebe, and M. Hardt. A theory of dynamic benchmarks. InInternational
+Conference on Learning Representations (ICLR), 2023. URLhttps://arxiv.org/abs/
+2210.03165.
+[52] C. Szegedy, W. Zaremba, I. Sutskever, J. Bruna, D. Erhan, I. Goodfellow, and R. Fergus.
+Intriguing properties of neural networks. InInternational Conference on Learning Represen-
+tations (ICLR), 2014.
+[53] W. Tang, Y . Zhou, E. Xu, K. Cheng, M. Li, and L. Xiao. Dsgbench: A diverse strategic
+game benchmark for evaluating llm-based agents in complex decision-making environments.
+InICASSP 2026-2026 IEEE International Conference on Acoustics, Speech and Signal Pro-
+cessing (ICASSP), pages 16987–16991. IEEE, 2026.
+[54] Team Olmo. Olmo 3.arXiv preprint arXiv:2512.13961, 2025. doi: 10.48550/arXiv.2512.
+13961. URLhttps://arxiv.org/abs/2512.13961.
+[55] E. Wallace, S. Feng, N. Kandpal, M. Gardner, and S. Singh. Universal adversarial triggers for
+attacking and analyzing nlp. InProceedings of the 2019 conference on empirical methods in
+natural language processing and the 9th international joint conference on natural language
+processing (EMNLP-IJCNLP), pages 2153–2162, 2019.
+[56] A. Wei, N. Haghtalab, and J. Steinhardt. Jailbroken: How does llm safety training fail?Ad-
+vances in neural information processing systems, 36:80079–80110, 2023.
+[57] T. Yan and C. Zhang. Active fairness auditing. InInternational Conference on Machine
+Learning, pages 24929–24962. PMLR, 2022.
+[58] A. Zou, Z. Wang, N. Carlini, M. Nasr, J. Z. Kolter, and M. Fredrikson. Universal and transfer-
+able adversarial attacks on aligned language models.arXiv preprint arXiv:2307.15043, 2023.
+A Theory Appendix
+A.1 Circle phase diagram — proofs
+This section proves the entries of Table 1. We use the notation and assumptions stated in the main
+body of the article. Forx∈R, write∥x∥=min m∈Z∣x−m∣for the distance to the nearest integer.
+Recallg=gcd(p, q),s=p/g,L=pq/g,ε ⋆=1/L,ε sat =⌊s/2⌋/L, and theε-shift set
+S(ε)∶={m∈Z/pZ∶f(m)<ε }, f(m)∶=min
+j∈{0,...,q−1}
+∥j
+q −m
+p ∥.
+We also use the reachable-center packing factor
+Q(ε, p, q)∶=max
+z∈ΩE+Htrain
+∣ΩE∩B(z, ε)∣,
+whereB(z, ε)is the open ball for the circle metric andΩ E +H train ={k/p+j/q(mod 1)∶0≤
+k<p,0≤j<q}.
+The appendix is organized as follows: §A.1.1 gathers preliminary lemmas about the shift set, the crit-
+ical distance, the structure of the trainer dataset under all three move regimes, the common subgroup
+Hg and its cosets, and the closed forms ofε⋆andε sat. §A.1.2 proves the cyclic-walk diagnostic mas-
+ter theoremN ●
+o =s ⋆for all three move regimes. §A.1.3–§A.1.5 prove the orbit-covering bounds
+underfull,batch, andsinglerespectively for every row of Table 1 (tight in the sub-critical regime;
+the saturation-batchentry is an upper bound). §A.1.6 specializes top=q≥3with0<ε≤ε ⋆to
+exhibit the three-tier batching ladderΘ(1)≪Θ(logp)≪Θ(p).
+A.1.1 Preliminaries
+We begin with the verification of the example from Section 4.
+Example A.1(Detailed verification forp=5, q=3).Letε=0.08>1/15. Translation by1/3
+approximates the shift+2onZ/5Z, and translation by2/3approximates the shift−2. The following
+play realizes the three-high-failure trace in Figure 1; it is not optimal for theN o diagnostic.
+13
+
+
+--- PAGE 14 ---
+• Round 0: E sends0, sor 0 =1. T absorbs it.
+• Round 1: E sends1/5, sor 1 =1. T translates{0,1/5}by2/3, producing2/3and13/15,
+whichε-cover3/5and4/5respectively.
+• Round 2: the only remaining uncovered E-orbit point is2/5. E sends2/5, sor 2 =1. T
+absorbs it.
+At the start of round 3 all five E-orbit points are covered, sor 3 =0. This play therefore has three
+high-failure rounds: it is the batch-augmentation intermediate regime, not the fully independent
+doubling regime. For first neutralisation under optimal play, however, T can choose the1/3shift
+after round 0, covering2/5at the beginning of round 2; this agrees with Theorem A.11, which gives
+No =2in this parameter choice.
+Lemma A.2(Shift-set membership).For everym∈Z/pZ,
+f(m)= ∥mq/p∥
+q = ∣mq∣p
+p q ,
+where∣t∣p∶=min(tmodp, p−(tmodp)).
+Proof.Writemq/p=a+rwitha∈Zandr∈[−1/2,1/2]. The closest point of 1
+q Ztom/pis at
+distance∣r∣/q=∥mq/p∥/q, which proves the first equality. The second is by definition of∣⋅∣p.
+Lemma A.3(Critical positive grid distance).The minimum positive distance between an E-orbit
+point and a trainer translate of an E-orbit point is
+ε⋆=min{d( k
+p , k′
+p + j
+q)∶
+k, k′∈{0, . . . , p−1}, j∈{0, . . . , q−1},
+d( k
+p , k′
+p + j
+q)>0 }= 1
+L = gcd(p, q)
+pq .
+Proof.The subgroup ofT 1 generated by1/pand1/qis the cyclic grid
+⟨1
+p , 1
+q⟩= ⟨1
+L⟩, L=lcm(p, q).
+Indeed,1/pand1/qboth lie in⟨1/L⟩sinceLis a common multiple, and conversely Bezout’s identity
+gives integersu, vwithup+vq=g, henceu/q+v/p=g/(pq)=1/L.
+Every difference of the formk/p−k ′/p−j/qtherefore lies on the1/L-grid, so each nonzero such
+distance is at least1/L. To see that1/Lis realized, take the Bezout identity above: choosing
+k−k′≡v(modp)andj≡−u(modq)produces a difference equal to1/Lon the circle. This also
+covers the trivial-trainer caseq=1: thenj=0,L=p, and the distance1/p=1/Lis realized by
+consecutive E-orbit points. In every case,ε ⋆=1/L.
+Lemma A.4(Trainer dataset form).Let●∈{single,batch,full}. Under any●strategy and the
+cyclic-walk evaluator, everyd∈Dtrain
+n has the formd=k/p+j/q(mod 1)for somek∈{0, . . . , n−
+1}andj∈Z/qZ. Equivalently,
+Dtrain
+n ⊆{k/p+j/q(mod 1)∶0≤k≤n−1, j∈Z/qZ }.
+Proof.Induction onn. The base caseD train
+0 =∅is trivial.
+For the inductive step, each of the three update rules producesDtrain
+n+1 as a subset ofH train⋅(Dtrain
+n ∪
+En):
+•single:D train
+n+1 =D train
+n ∪En∪{hn⋅cn}withc n ∈Dtrain
+n ∪En andh n ∈Htrain;
+•batch:D train
+n+1 =D train
+n ∪En∪hn⋅Cn withC n ⊆Dtrain
+n ∪En;
+•full:D train
+n+1 =H train⋅(Dtrain
+n ∪En).
+14
+
+
+--- PAGE 15 ---
+By the induction hypothesis, every element ofD train
+n has the formk/p+j/qwith0≤k≤n−1;
+the new queryE n ={n/p}has the formn/p+0/qwithk=n, so every element ofD train
+n ∪En
+has the formk/p+j/qwith0≤k≤n. Translating by anyj 0/q∈H train preserves the form: it
+sendsk/p+j/qtok/p+(j+j 0)/qwithkunchanged. Hence every element ofD train
+n+1 has the form
+k/p+j/qwith0≤k≤n, as required.
+Lemma A.5(singledataset capacity).Under anysinglestrategy and the cyclic-walk evaluator,
+∣Dtrain
+n ∣≤2n,hence∣D train
+n ∩ΩE∣≤2n.
+Proof.Thesingleupdate ruleD train
+n+1 =D train
+n ∪En∪{hn⋅cn}adds at most two new points per
+round, so∣Dtrain
+n+1 ∣≤∣Dtrain
+n ∣+2. Induction from∣Dtrain
+0 ∣=0gives∣Dtrain
+n ∣≤2n.
+Common subgroup and cosets.We identifyΩ E withZ/pZviak/p↦k. The intersection
+Hg ∶=Htrain∩Geval =⟨1/g⟩
+acts onΩ E as the subgroupsZ/pZ≤Z/pZ, with orbits thescosets
+Ci =i+sZ/pZ={i, i+s, . . . , i+(g−1)s}, i=0, . . . , s−1.
+Forg=1,H g ={0}and each cosetC i ={i}is a single orbit point.
+Lemma A.6(H g acts regularly on each coset).For eachi∈{0, . . . , s−1}, the action ofH g onC i
+is regular: for anyc, x∈Ci there is a uniqueh∈Hg withh⋅c=x.
+Proof.∣Hg∣=∣Ci∣=gand the action is free: ifh⋅c=cthenh∈Stab(c)={0}, sinceH g acts on
+Z/pZby translation by multiples ofsand only0fixes a point. A free action of a group on a set of
+equal cardinality is regular.
+Lemma A.7(Sub-critical orbit-trace).Assumeε≤ε ⋆=1/L. Let●∈{single,batch,full}and let
+Dtrain
+n be the dataset under any●strategy with the cyclic-walk evaluator. Ifd∈Dtrain
+n ε-covers an
+orbit pointℓ/p∈ΩE, thend=ℓ/p; writingd=k/p+j/qas in Lemma A.4, we further havej/q∈H g
+andℓ≡k(mods). In particular, every covered orbit point produced from absorbed seedk/plies
+in the sameH g-cosetC kmods , and off-orbit trainer points cover no point ofΩ E.
+Proof.By Lemma A.4,d=k/p+j/qwith0≤k≤n−1andj∈Z/qZ. The covering condition is
+∥ℓ/p−k/p−j/q∥<ε≤ε⋆. By Lemma A.3, the only such difference strictly belowε ⋆is zero on
+the circle, soℓ/p=k/p+j/q. Hencej/q=(ℓ−k)/p∈H train∩Geval =H g, andℓ−k∈sZ. The
+off-orbit assertion is the contrapositive of the first line: ifd∉Ω E, thendcannotε-cover any orbit
+point.
+Lemma A.8(Coset-seeding lower bound, sub-critical).Assumeε≤ε ⋆andg≥1. For every●∈
+{single,batch,full},
+N●
+orbit(ε, p, q)≥s=p/g.
+Proof.By Lemma A.7, an orbit point of cosetC i can be covered only by a trainer datum whose
+absorbed seedk/phask≡i(mods). The cyclic walk suppliesE n ={n/p}, so cosetC i has no
+in-coset seed before roundn=i. CosetC s−1thus first has a seed at rounds−1, hence full orbit
+coverage requiresn≥s.
+Lemma A.9(Sub-critical shift set).Forε≤ε ⋆=1/L,
+S(ε)={m∈Z/pZ∶mq≡0(modp)}=(p/g)Z/pZ,
+a subgroup of ordergwith elements equally spaced bys=p/gonZ/pZ.
+Proof.By Lemma A.2,f(m)=∣mq∣ p/(pq). Sinceg∣q,mq∈gZ, hence∣mq∣p ∈gZ, so∣mq∣p ≥g
+whenevermq/≡0(modp). Therefore
+f(m)∈{0}∪[g/(pq),1/(2q)]={0}∪[1/L,1/(2q)],
+andf(m)<ε≤1/Lforcesf(m)=0, i.e.mq≡0(modp). The latter is equivalent tom∈
+(p/g)Z/pZsince(p/g)Z/pZis the kernel of multiplication byqonZ/pZ.
+15
+
+
+--- PAGE 16 ---
+Lemma A.10(Saturation threshold and shift set).The saturation threshold satisfies
+εsat ∶=max
+m∈Z/pZ
+f(m)= ⌊s/2⌋⋅g
+pq = ⌊s/2⌋
+L .
+Forε>ε sat,S(ε)=Z/pZ; equivalently,Ω E ⊆Vε(Htrain).
+Proof.By Lemma A.2,f(m)=∣mq∣ p/(pq). Sinceg∣q, the valuemqmodplies ingZ/pZand
+ranges over{0, g,2g, . . . ,(s−1)g}asmvaries (heres=p/g). Hence∣mq∣ p ∈g⋅{0,1, . . . ,⌊s/2⌋},
+with maximumg⋅⌊s/2⌋. Thereforeεsat =max m f(m)=g⌊s/2⌋/(pq)=⌊s/2⌋/L. The implication
+ε>ε sat⇒S(ε)=Z/pZis by definition of the maximum. The equivalenceS(ε)=Z/pZ⇐⇒
+ΩE ⊆Vε(Htrain)unwinds the definition off:f(m)<εfor everymiff every orbit pointm/pis
+withinεof somej/q∈H train.
+A.1.2 The cyclic-walk diagnostic
+Theorem A.11(N o master theorem).Let●∈{single,batch,full}. For allp≥2,q≥1, andε>0,
+under the cyclic-walk evaluator,
+N●
+o(ε, p, q)=s ⋆(ε, p, q)∶=min( {m∈{1, . . . , p−1}∶f(m)<ε}∪{p}).
+(The convention∪{p}ensuress⋆=pwhen nom∈{1, . . . , p−1}satisfiesf(m)<ε.)
+Proof.We prove matching upper and lower bounds.
+Upper bound:N single
+o ≤s⋆.Ifs ⋆=p, then after the firstprounds the trainer has absorbed
+every point of the cyclic E-orbit, so the query at roundpis covered. Assumes ⋆<pand pick
+j⋆∈{0, . . . , q−1}achieving∥j⋆/q−s⋆/p∥=f(s ⋆)<ε. Define asinglestrategy: in round0,
+absorbE 0 ={0}and chooseh 0 =j ⋆/q,c 0 =0, yieldingD train
+1 ={0, j ⋆/q}. In rounds1≤n<s ⋆,
+absorbE n and chooseh n =0(no-op), soj ⋆/q∈Dtrain
+n for all1≤n≤s ⋆. At rounds ⋆, the query
+Es⋆={s⋆/p}satisfies∥s⋆/p−j⋆/q∥=f(s ⋆)<ε, hencer s⋆=0andN single
+o ≤s⋆.
+Anysinglestrategy embeds as a degeneratebatchorfullstrategy: in each round, augment with the
+same chosen elementh n ∈Htrain (underbatchwith one shift) or with all ofH train (underfull).
+Both yield a datasetD train
+n containing thesingledataset, hence with no smallerV ε-cover. Therefore
+the same upper bound holds forbatchandfull.
+Lower bound:N ●
+o ≥s⋆for●∈{single,batch,full}.Forr n =0we needn/p∈V ε(Dtrain
+n ), i.e.,
+somed∈Dtrain
+n with∥n/p−d∥<ε. By Lemma A.4,d=k/p+j/qwith0≤k≤n−1andj∈Z/qZ.
+Settingm∶=n−k, we obtainm∈{1, . . . , n}, and the covering condition reads∥m/p−j/q∥<ε,
+which by Lemma A.2 is exactlym∈S(ε). The smallest suchm∈{1, . . . , p−1}(orpif none exists)
+iss ⋆, hencen≥s⋆as soon asr n =0.
+Combining both bounds:N ●
+o =s ⋆for●∈{single,batch,full}.
+Remark A.12.The collapseN single
+o =N batch
+o =N full
+o reflects that the cyclic-walk evaluator only
+requiresonepoint to beε-covered per round, and the trainer’s full schedule is offline- predictable.
+The minimum-budget movesinglealready places a single well-positioned anchor in round0that
+suffices through rounds⋆. The diagnostic is therefore insensitive to the trainer’s per-round batching
+budget; sensitivity to that axis appears underN orbit.
+A.1.3 Orbit covering under full
+Lemma A.13(fulldataset).Underfulland the cyclic-walk evaluator, for1≤n≤p,
+Dtrain
+n = {k/p+j/q(mod 1)∶0≤k≤n−1,0≤j<q }.
+Proof.D train
+1 =H train⋅{0}={j/q}q−1
+j=0 . Inductively,D train
+n+1 =H train⋅(Dtrain
+n ∪{n/p})=Dtrain
+n ∪
+Htrain⋅{n/p}(usingHtrain-invariance ofD train
+n ), which is the displayed union.
+16
+
+
+--- PAGE 17 ---
+Theorem A.14(fullorbit covering time).For allp≥2,q≥1, andε>0,
+Nfull
+orbit(ε, p, q)=Γ (S(ε)),
+whereΓ(S)is the maximum cyclic gap ofSonZ/pZ: sortingS={s 0 <s 1 <⋯<s ∣S∣−1}in
+{0, . . . , p−1}and settings∣S∣∶=s0+p,
+Γ(S)∶=max
+0≤i<∣S∣
+(si+1−si).
+Proof.By Lemma A.13, the round-ntrainer data isD train
+n =K n/p+(1/q)Z/qZ, whereK n ∶=
+{0,1, . . . , n−1}⊆Z/pZ. Hence forℓ∈Z/pZ,
+ℓ/p∈Vε(Dtrain
+n ) ⇐⇒∃k∈Kn, j∈{0, . . . , q−1}∶∥ℓ/p−k/p−j/q∥<ε,
+which by Lemma A.2 is equivalent toℓ−k∈S(ε) (modp)for somek∈K n, i.e.,ℓ∈K n+S(ε)
+(modp). Therefore
+Nfull
+orbit =min {n≥1∶Kn+S(ε)=Z/pZ }.
+Fixℓ∈Z/pZ. The conditionℓ∈K n+S(ε)unfolds as
+∃k∈{0, . . . , n−1}, s∈S(ε)∶ℓ−s≡k(modp)⇐⇒∃s∈S(ε)∶(ℓ−s)modp≤n−1.
+Thus the smallestnfor whichℓis covered equals
+n⋆(ℓ)∶=1+min
+s∈S(ε)
+((ℓ−s)modp ).
+Geometrically,(ℓ−s)modpis the cyclic clockwise distance fromstoℓonZ/pZ, son ⋆(ℓ)−1is
+the cyclic distance fromℓbackto the nearest preceding element ofS(ε). Taking the maximum over
+ℓ,
+Nfull
+orbit =max
+ℓ∈Z/pZ
+n⋆(ℓ)=1+max
+ℓ
+min
+s∈S(ε)
+((ℓ−s)modp ).
+The inner max-min is achieved whenℓsits at the far end of the largest cyclic gap ofS(ε): with
+S={s 0 <⋯<s ∣S∣−1}ands ∣S∣∶=s0 +p, choosingℓ=s i+1 −1(the predecessor ofs i+1) gives
+mins(ℓ−s)modp=s i+1 −1−si =g i −1, whereg i ∶=si+1 −si. Hence the maximum equals
+Γ(S(ε))−1, andN full
+orbit =Γ(S(ε)).
+Corollary A.15(Sub-critical, coprime:fullandN o).Forε≤ε ⋆andg=1,S(ε)={0}, hence
+Γ(S(ε))=p,s ⋆=p, andN full
+orbit =N ●
+o =pfor●∈{single,batch,full}.
+Corollary A.16(Sub-critical,g≥2:fullandN o).Forε≤ε ⋆andg≥2,S(ε)=(p/g)Z/pZ
+hasgequally-spaced elements, henceΓ(S(ε))=p/g,s ⋆=p/g, andN full
+orbit =N ●
+o =p/gfor●∈
+{single,batch,full}.
+Corollary A.17(Saturation:fullandN o).Forε>ε sat,S(ε)=Z/pZ, henceΓ(S(ε))=1,s ⋆=1,
+andN full
+orbit =N ●
+o =1for●∈{single,batch,full}. The conclusion covers the large-radius saturation
+casesε>1/2(for exampleq=1with evenp, whereε sat =1/2).
+Proof of Corollaries A.15–A.17.Combine Theorem A.14 (N full
+orbit =Γ(S(ε))) and Theorem A.11
+(N●
+o =s ⋆, the smallest positive element ofS(ε), with the conventions⋆=pifS(ε)∩{1, . . . , p−1}=
+∅) with Lemma A.9 for the sub-critical case (which specializes to{0}atg=1, givingΓ=p
+ands ⋆=p, and to(p/g)Z/pZatg≥2, givingΓ=p/gands ⋆=p/g), and Lemma A.10 for
+the saturation case. The lemmas impose no upper bound onε, hence cover all large-radius cases
+includingε>1/2.
+A.1.4 Orbit covering under batch
+We continue to identifyΩ E withZ/pZviak/p↦k, with cosetsC i =i+sZ/pZofH g.
+17
+
+
+--- PAGE 18 ---
+Lemma A.18(Dyadic subset-sum cover).LetK≥1, letH=⟨1/m⟩≤T 1 be a cyclic subgroup
+of ordermcontained inH train, and writeS 0 ∶=Dtrain
+n0 ∪En0. Suppose inKconsecutive rounds
+n0, n0+1, . . . , n0+K−1the trainer playsbatchwithC n0+k =D train
+n0+k∪En0+k andh n0+k =2 k/m.
+Then
+Dtrain
+n0+K ⊇S0 +{ 1
+m∑
+k∈S
+2k (mod 1)∶S⊆{0, . . . , K−1}}.
+IfK≥⌈log2 m⌉, the right-hand subset-sum set equalsH, soD train
+n0+K contains everyH-translate of
+every point ofS 0.
+Proof.LetT k denote the set of dyadic subset sums{(1/m) ∑j∈S2j mod 1∶S⊆{0, . . . , k−1}},
+soT 0 ={0}andT k+1 =T k∪(Tk+2 k/m). We show by induction onk≥1thatS 0+T k ⊆Dtrain
+n0+k.
+Base case (k=1). The round-n 0 batch update absorbsE n0 unshifted and additionally applies
+hn0 =1/mtoC n0 ⊇S0, so
+Dtrain
+n0+1 ⊇Dtrain
+n0 ∪En0∪hn0⋅Cn0 ⊇S0∪(S0+1/m)=S 0+T 1.
+Inductive step (k→k+1,k≥1). AssumeS 0+T k ⊆Dtrain
+n0+k. SinceD train
+n0+k ⊆Cn0+k, the round-
+(n0+k)update givesD train
+n0+k+1 ⊇hn0+k⋅Cn0+k ⊇hn0+k⋅(S0+T k)=S 0+T k+2 k/m. Combined
+withD train
+n0+k+1 ⊇Dtrain
+n0+k ⊇S0+T k, this yieldsD train
+n0+k+1 ⊇S0+(T k∪(Tk+2 k/m))=S 0+T k+1.
+AfterK≥1rounds,S 0+T K ⊆Dtrain
+n0+K. IfK≥⌈log2 m⌉, the integer subset sums∑k∈S2k exhaust
+{0,1, . . . ,2K−1}, and2K ≥m, so their reductions modulomcover all of{0,1, . . . , m−1}. Hence
+TK =H.
+Theorem A.19(batchsub-critical bound,g≥2).Assumeg≥2and letε≤ε ⋆=g/(pq)=1/L.
+Then
+Nbatch
+orbit (ε, p, q)=Θ (s+logg ) =Θ(p/g+logg).
+Proof.By Lemma A.7, every covered orbit point stays in theH g-coset of its absorbed seed, and
+off-orbit trainer points cover nothing inΩ E. Combining withε≤ε ⋆, two distinct orbit points are
+notε-close, so orbit covering is equivalent toΩ E∩ΩE-covered seeds=Ω E.
+Lower bound.Lemma A.8 givesN batch
+orbit ≥s. For the second bound, fix any cosetCi and define
+Ri ∶={k/p+j/q(mod 1)∶k≡i(mods), j∈Z/qZ}=C i+H train,
+the set of points inΩ E +H train whosep-component lies inC i. EquivalentlyR i =i/p+H train is
+anH train-coset of sizeq, soR i is setwise preserved by everyh∈H train. Seta (i)
+n ∶=∣Dtrain
+n ∩Ri∣.
+Intersecting the batch update withR i,
+a(i)
+n+1 ≤a(i)
+n +∣En∩Ri∣+∣hn⋅(Cn∩Ri)∣≤a(i)
+n +1+(a (i)
+n +1)=2a (i)
+n +2,
+usingC n ⊆Dtrain
+n ∪En and theh n-invariance ofR i. Induction froma (i)
+0 =0yieldsa (i)
+n ≤2n+1−2.
+CoveringC i requires∣Dtrain
+n ∩Ci∣≥g, and sinceDtrain
+n ∩Ci ⊆Dtrain
+n ∩Ri, we havea (i)
+n ≥g, hence
+Nbatch
+orbit ≥log2(g+2)−1. Combining,
+Nbatch
+orbit ≥max(s,log 2(g+2)−1 ) ≥1
+4(s+log 2 g),
+usingg≥2ands≥1.
+Upper bound.SetK∶=⌈log 2 g⌉. During roundsn=0, . . . , s−1, takeC n =D train
+n ∪En and
+hn =0, so the trainer absorbs the evaluator queries. ThenD train
+s ⊇{0,1, . . . , s−1}, one seed
+in eachH g-cosetC i. For roundss, . . . , s+K−1, takeC n =D train
+n ∪En andh s+k =2 k/g,
+and apply Lemma A.18 withH=H g (of orderg, contained inH train sinceg∣q): with seed set
+S0∶=Dtrain
+s ∪Es ⊇{0,1, . . . , s}, each of thesseeds0,1, . . . , s−1inS0 acquires everyH g-translate,
+soD train
+s+K ⊇⊔s−1
+i=0 Ci =Ω E. Hence
+Nbatch
+orbit ≤s+⌈log2 g⌉.
+Combining the two bounds givesN batch
+orbit =Θ(s+logg)=Θ(p/g+logg).
+18
+
+
+--- PAGE 19 ---
+Corollary A.20(Explicit upper-bound expression).Under the hypotheses of Theorem A.19,
+Nbatch
+orbit (ε, p, q)≤s+⌈log 2 g⌉ (ε≤ε ⋆, g≥2),
+which already saturates the asymptotic claim of Theorem A.19. This is deliberately not an exact
+formula: the dyadic construction waits until every coset has a seed and can be non-optimal in
+collapsed cases such asp=q. TheΘ(s+logg)statement is the level needed for Table 1.
+Corollary A.21(Sub-critical coprime,batch).Assumeg=1(equivalentlygcd(p, q)=1) and
+ε≤ε⋆=1/(pq). ThenN batch
+orbit (ε, p, q)=p.
+Proof.By Lemma A.9 atg=1,S(ε)={0}and theH g-cosets are the singletons{i}; so by
+Lemma A.7 every covered orbit point coincides with an absorbed seed. The cyclic walk forces
+prounds before allpseeds have arrived, henceN batch
+orbit ≥p. The upper boundpis achieved by
+absorption alone.
+Theorem A.22(batchsaturation upper bound).Assumeq≤p. Forε>ε sat,
+Nbatch
+orbit (ε, p, q)≤max{1,⌈log2 q⌉}=O(logp).
+Proof.Ifq=1, thenH train ={0}and Lemma A.10 givesΩ E ⊆Vε({0}). After round0the trainer
+has absorbed0, soN batch
+orbit ≤1.
+Assumeq≥2, setK∶=⌈log 2 q⌉, and apply Lemma A.18 withH=H train (orderq) in rounds
+0,1, . . . , K−1starting fromD train
+0 ∪E0 ={0}. The conclusion givesD train
+K ⊇Htrain. By
+Lemma A.10,Ω E ⊆Vε(Htrain)⊆Vε(Dtrain
+K ), henceN batch
+orbit ≤K≤⌈log2 p⌉.
+Remark A.23(Why no error compounding).A naive triangle-inequality bookkeeping of approx-
+imate H-translations in the saturation regime would suggest an error blow-up of sizeKεafterK
+rounds, restricting the doubling argument to a slack windowε−ε sat. The proof above sidesteps
+this entirely by exploiting thatH train is agroup: any chain of H-shifts applied to a fixed seedE 0
+collapses to a single H-translate ofE 0, so the dataset point covering an orbit pointℓ/phas the form
+0+hwithh∈H train, and only the single inequality∥ℓ/p−h∥<ε(i.e.,ℓ∈S(ε)) is needed.
+A.1.5 Orbit covering under single
+Corollary A.24(Sub-critical coprime,single).Assumeg=1andε≤ε ⋆=1/(pq). Then
+Nsingle
+orbit (ε, p, q)=p.
+Proof.Atg=1,H g ={0}, so by Lemma A.7 no augmentation produces a new E-orbit point and
+absorption alone gives∣Dtrain
+n ∩ΩE∣=n. Coverage requiresn≥p. To conclude, note thatn=p
+suffices.
+Theorem A.25(singlesub-critical formula,g≥2).Assumeg≥2andε≤ε ⋆=g/(pq). Then
+Nsingle
+orbit (ε, p, q)=⌈p/2⌉.
+Proof.Lower bound.Capacity.By Lemma A.5,∣D train
+n ∣≤2n. By Lemma A.7, each datum covers
+at most one orbit point, so coverage requires2n≥p, i.e.,n≥⌈p/2⌉.
+Upper bound.We construct an explicitsinglestrategy coveringΩ E inV∶=⌈p/2⌉rounds. Note
+V≥ssinceg≥2impliesp/2≥p/g.
+Fori∈{0, . . . , s−1}, let
+ai ∶=∣{n∈[0, V)∶n≡i(mods)}∣=⌈(V−i)/s⌉
+be the number of E-arrivals in cosetCi during the firstVrounds. The auto-arrivals fill thea i smallest
+representatives ofC i, namelyi, i+s, . . . , i+(a i−1)s. The set ofmissingelements ofCi is therefore
+Mi ={i+a i s, i+(a i+1)s, . . . , i+(g−1)s},∣M i∣=g−ai =∶βi.
+19
+
+
+--- PAGE 20 ---
+A double count gives∑i ai =Vand ∑i βi =sg−V=p−⌈p/2⌉=⌊p/2⌋≤V.
+We schedule the missing points explicitly. Put
+Bi ∶=∑
+r<i
+βr.
+For eachm=i+(a i+u)s∈M i with0≤u<β i, schedulemin round
+n(m)∶=B i+u.
+The assigned rounds are distinct, since the intervals[B i, B i +β i)are consecutive, and all lie in
+{0, . . . , V−1}because their total number is∑i βi =p−V=⌊p/2⌋≤V.
+It remains to check that a seed fromCi is available by roundn(m). For everyione hasa i ≤⌈V/s⌉≤
+g−1: ifg=2thenV=s, while ifg≥3thenV=⌈sg/2⌉≤s(g−1)becauses(g−2)≥1. Hence
+Bi = ∑
+r<i
+(g−ar)=ig− ∑
+r<i
+ar ≥ig−i(g−1)=i.
+Thusn(m)=B i+u≥i. At roundn(m), the pointi∈C i is therefore available: ifn(m)=iit is
+the current query inE i, and ifn(m)>iit has already been absorbed intoD train
+n(m). Sincem∈C i,
+Lemma A.6 gives a unique elementh∈H g ⊆Htrain sendingitom; play this single augmentation
+in roundn(m). In rounds not assigned to any missing point, play the identity shift on the current
+query.
+AfterVrounds,D train
+V contains the auto-arrivals{0,1, . . . , V−1}together with the scheduled
+targets⊔i Mi ={V, V+1, . . . , p−1}. HenceΩ E ⊆Dtrain
+V ⊆Vε(Dtrain
+V ), sinceε>0, soN single
+orbit ≤
+V=⌈p/2⌉.
+Lemma A.26(Arc packing onΩ E).Every open circle ballB T(z, ε)contains at most2pε+1points
+ofΩ E. Consequently,
+Q(ε, p, q)≤2pε+1.
+Proof.Ifε≥1/2, the bound is trivial because∣Ω E∣=p≤2pε+1. Assumeε<1/2.Ω E =
+{0,1/p, . . . ,(p−1)/p}is equally spaced with gap1/p, so an open arc of length2εcontains at
+most⌊2εp⌋+1≤2pε+1points. Each open ballB T(z, ε)is such an arc, hence∣Ω E ∩BT(z, ε)∣≤
+2pε+1.
+Lemma A.27(Sparse H-cover in saturation).Assumeε>ε sat, and letQ=Q(ε, p, q). There is a
+subsetA⊆H train with∣A∣≤10p/Qsuch thatΩE ⊆Vε(A).
+Proof.By Lemma A.10,Ω E ⊆Vε(Htrain). IfQ=1, for eachm/p∈Ω E choose one H-translate
+that covers it; this gives an H-cover of size at mostp=p/Q.
+AssumeQ≥2. By Lemma A.26,2pε≥1, henceQ≤4pε.
+Ifεq<2, takeA=H train: it coversΩ E by saturation, and∣A∣=q<2/ε. Otherwiseεq≥2,
+and we choose points of the regularq-gridH train ={0,1/q, . . . ,(q−1)/q}at spacing at mostεin
+cyclic order: setr∶=⌊εq⌋and take0, r/q,2r/q, . . . ,⌊(q−1)/r⌋⋅r/q. Consecutive chosen H-points,
+including the wrap-around gap, have circular gap at mostr/q≤ε, so theirε-balls cover the whole
+circle. The number chosen is at most2/ε+2.
+In both cases∣A∣≤2/ε+2. SinceQ≥2andQ≤p, the inequalitiesQ≤4pεand2≤2p/Qgive
+∣A∣≤2/ε+2≤8p/Q+2p/Q=10p/Q.
+The argument uses no upper bound onε, so it covers all saturation radii includingε>1/2(for
+exampleq=1with evenp, whereε sat =1/2).
+Corollary A.28(singlesaturation).Forε>ε sat,
+⌈p/(2Q)⌉≤Nsingle
+orbit (ε, p, q)≤10p/Q,
+whereQ=Q(ε, p, q)is the reachable-center packing factor. In particularN single
+orbit =Θ(p/Q).
+20
+
+
+--- PAGE 21 ---
+Proof.For the lower bound, Lemma A.5 gives∣D train
+n ∣≤2nundersingle, and Lemma A.4 gives
+that every point ofD train
+n lies inΩ E+H train. Hence each such point covers at mostQpoints ofΩ E,
+by definition ofQ. Thus full orbit coverage forces2nQ≥p, and hencen≥⌈p/(2Q)⌉.
+For the upper bound, chooseA={a 0, . . . , aK−1}⊆Htrain as in Lemma A.27, soK≤10p/Qand
+ΩE ⊆Vε(A). In each of the firstKrounds, use the seed0∈E 0 (which is available at round0
+and then remains in the trainer dataset) and play thesingleaugmentationh n =a n,c n =0. After
+Krounds the trainer dataset contains all points ofA, hence itsε-neighborhood coversΩ E. Thus
+Nsingle
+orbit ≤K≤10p/Q.
+Remark A.29(On constants in theΘ(p/Q)entry of Table 1).The proof above is deliberately
+coarse: the constant10is only used to make the table’s asymptotic entry explicit. The lower bound
+has the unavoidable factor1/2because asingleround both absorbs the current E-query and adds
+one H-translate. No logarithmic set-cover loss is needed in the saturation regime.
+A.1.6 Three-tier separation at p = q
+Theorem A.30(Three-tier batching ladder at p = q).Forp=q≥3and any0<ε≤ε ⋆,
+Nfull
+orbit(ε, p, p)=1, N batch
+orbit (ε, p, p)=Θ(logp), N single
+orbit (ε, p, p)=⌈p/2⌉.
+In particular the asymptotic orderingΘ(1)≪Θ(logp)≪Θ(p)is strict.
+Proof.Atp=qwe haveg=q=pands=p/g=1. Substituting into the sub-critical formulas with
+g=p:
+•full: by Corollary A.16,N full
+orbit =p/g=1.
+•batch: by Theorem A.19 (applicable sinceg=p≥3≥2),N batch
+orbit =Θ(s+logg)=
+Θ(1+logp)=Θ(logp).
+•single: by Theorem A.25 withg=p≥3≥2,N single
+orbit =⌈p/2⌉.
+The three values areΘ(1),Θ(logp), andΘ(p)respectively, hence strictly ordered forp≥3.
+Remark A.31(Ladder collapse at fixedg).In the sub-critical regimeε≤ε ⋆, the three-tier ladder
+collapses entirely whengis fixed (for exampleg=2). By Corollary A.16,N full
+orbit =p/g; by The-
+orem A.25,N single
+orbit =⌈p/2⌉; and by Corollary A.20,Nbatch
+orbit ≤s+⌈log2 g⌉, which combined with
+the lower boundN batch
+orbit ≥sfrom Lemma A.8 givesN batch
+orbit =p/g+O(logg). Atg=2all three
+arep/2+O(1), so no asymptotic separation is visible. A strictΘ(1)≪Θ(logp)≪Θ(p)ladder
+requiresg=Θ(p), for example the sub-familyp=qwithp→∞used in Theorem A.30.
+B Acknowledgements
+Licenses.We use the MMLU benchmark, and the weights of mistralai/Mistral-7B-Instruct-
+v0.3, Qwen/Qwen2.5-7B-Instruct, EleutherAI/pythia-410m, EleutherAI/pythia-1b, allenai/Olmo-
+3.1-32B-Instruct, underMIT Apache 2.0licenses. We use gpt2 / openai-community/gpt2’s weight
+under amodified MIT license. We use meta-llama/Llama-3.1-8B-Instruct underMeta Llama 3.1
+Community License, and allenai/wildjailbreak / WildJailBreak underODC-BY.
+21
+
+
+--- PAGE 22 ---
+C Distance-dependent transfer: detailed methods and sup-
+plementary results
+C.1 Hardware and compute
+Experiments ran on an internal cluster with GPUs between 40 GB and 128 GB of HBM (PFLOP/s
+range). Each cell consumed a few GPU-hours: a fine-tuning step (≤1hour), a held-out evaluation
+pass withN=10stochastic samples per prompt at temperature0.7(≈2−3hours), and an LLM-as-
+judge labelling pass (≈1−2hours).
+C.2 Models, fine-tuning configuration, and cells
+Three open-weight instruction-tuned models: LLAMA-3.1-8B-INSTRUCT, MISTRAL-7B-
+INSTRUCT-V0.3, QWEN2.5-7B-INSTRUCT, used in their public Hugging Face weights with their
+tokenizers’ native chat templates. Inference is inbfloat16.
+Cells.We report on six cells spanning two LoRA capacity points:
+•Rank-1cohort:one cell per family at LoRA rankr=1, exposure budget1600exam-
+ples (training pool of47prompts cycled with seed-controlled shuffle until the budget is
+reached).
+•Rank-2cohort:one cell per family at LoRA rankr=2. For LLAMAand MISTRALthe
+exposure budget is800; for QWENit is1600(the smaller-exposure QWENcell did not yet
+show a saturated effect at this rank).
+All six cells use the same training-stochasticity seed (42). LoRA configuration is otherwise iden-
+tical across cells:α=32, dropout0.05, target modules[q_proj, k_proj, v_proj, o_proj,
+gate_proj, up_proj, down_proj], AdamW optimizer, learning rate3×10 −5, batch size4. The
+base model is loaded fresh per cell; the adapter is trained, saved, and re-loaded for evaluation.
+C.3 Training pool (corpus-density-driven, shared across families)
+We use a single47-prompt active training poolP train, shared across all three model families. The
+pool is selected by corpus-density and cluster diversity, with the goal of producing meaningful low-
+distance coverage on the held-out panel.
+Per-(target, metric) candidate selection.For each pair(target,metric)
+with target∈{LLAMA,MISTRAL,QWEN}and metric∈
+{last_token,mean_pool,mean_pool_first,spectral_first,spectral_last}we:
+1. Embed every prompt of the WILDJAILBREAK[29] adversarial-harmful split under the tar-
+get’s base model with the chosen embedding tag (Appendix C.5).
+2. Compute thek=50-NN cosine radiusρ 50(p)∈[0,2]of each promptpin that embedding
+space.
+3. Partition the corpus intoK=8clusters byk-means onℓ 2-normalized embeddings.
+4. Pick the densest cluster representative per cluster (smallestρ 50);8representatives per
+(target,metric).
+5. Among the per-target5metrics, keep the two metrics with the smallest meanρ 50 across
+their cluster reps. (Practical outcome:spectral_firstis the tightest metric in all three
+target embedding spaces; the per-target second pick varies.)
+This yields3×2×8=48candidate prompts (with one duplicate across(target,metric)pairs),
+of which47are unique corpus indices. We rank these candidates by a vote scores(p)=
+22
+
+
+--- PAGE 23 ---
+#{(target,metric)∶p∈cluster-reps}with ties broken by lowest meanρ 50, and take all47as the
+final poolP train. Eyeballing confirms semantic spread across8+refusal categories (cyber-attack
+help-seeking, hate-speech generation, privacy intrusion, misinformation, drug/contraband, explicit
+sexual content, professional misconduct, self-harm).
+The same47corpus indices are the training pool for every cell in this report; what differs across
+cells is the model being fine-tuned (hence the per-family embedding of those prompts) and the
+LoRA hyperparameters.
+C.4 Evaluation panel construction
+The held-out evaluation panelHcontains2999corpus prompts and is shared across all cells; it
+excludesP train. The panel is constructed to give substantial near-pool and far-from-pool coverage
+simultaneously, so that the conditional distancezvaries across a meaningful range under any of the
+seven embedding tags:
+1.Near-pool stratum(2116prompts). For each(target,metric)pair used to constructP train
+(Appendix C.3), retrieve the50nearest neighbors of each of the8cluster representatives in
+that embedding space. Union across the3×2=6per-(target, metric) selections, dedupli-
+cate.
+2.Random reference stratum(384prompts). Sample uniformly at random from the cor-
+pus (excludingP train and the near-pool stratum), seed42, giving mid- and high-distance
+reference points.
+3.Per-family low-distance extension stratum(499prompts). For each family, greedily add
+prompts that lie below the family’sz-distribution sixth decile under at least one of the fam-
+ily’s two pool-selection metrics, until each family has250extension prompts; deduplicate
+across families (499unique).
+The three strata are concatenated to formHwith∣H∣=2999. The same2999corpus indices are
+evaluated by every cell.
+C.5 Embedding tags and distance metric
+For each modelMand each held-out promptp, letH M(p)∈RT(p)×d×Ldenote the tensor ofM’s
+per-block hidden states givenpas input underM’s native chat template, whereT(p)is the prompt
+length in tokens,dis the model hidden dimension, andLis the number of transformer blocks. Let
+H (ℓ)
+M (p)∈RT(p)×ddenote the per-block slice at depthℓ∈{1, . . . , L},H(last)
+M (p)the slice at the last
+block, and let
+¯HM(p)= 1
+L
+L
+∑
+ℓ=1
+H (ℓ)
+M (p)∈R T(p)×d
+be the layer-averaged hidden-state matrix.
+The three embedding tags we report on are defined as follows.
+last_token.The hidden state of the final token at the model’s last block:
+φlt
+M(p)=H (last)
+M (p) T(p),∶∈Rd.
+mean_pool.The token-position mean of the last block’s hidden states:
+φmp
+M (p)= 1
+T(p)
+T(p)
+∑
+t=1
+H (last)
+M (p) t,∶∈Rd.
+23
+
+
+--- PAGE 24 ---
+spectral_all.The leading right singular vector of the layer-averaged hidden-state matrix
+¯HM(p). Concretely, write
+¯HM(p)=UΣV ⊺, U∈R T(p)×r,Σ∈R r×r, V∈R d×r, r=min(T(p), d),
+for the (thin) singular value decomposition with singular valuesσ 1 ≥σ2 ≥⋯≥σr ≥0. Then
+φsa
+M(p)=sign (⟨V∶,1, φmp,all
+M (p)⟩)⋅V∶,1∈Rd,
+whereφ mp,all
+M (p)= 1
+T(p)∑
+T(p)
+t=1 ¯HM(p) t,∶is the token-and-layer mean (used only to orient the sign
+so that⟨φsa
+M(p), φmp,all
+M (p)⟩>0, breaking the±V∶,1ambiguity of the SVD). WhenT(p)<2or the
+SVD fails to converge, we fall back toφ sa
+M(p)∶=φmp,all
+M (p)/∥φmp,all
+M (p)∥.
+Distance to the training pool.For test promptp∈Hand poolP train, under embedding tagφ (τ)
+M
+(τ∈{lt,mp,sa}), we set
+z(τ)
+M (p)=min
+q∈Ptrain
+∥φ(τ)
+M (p)−φ(τ)
+M (q)∥2,(2)
+and renormalize across the panel viaz (τ)
+M (p)↦(z(τ)
+M (p)−zmin)/(zmax −zmin)∈[0,1],where
+zmin =min p′∈Hz(τ)
+M (p′)and analogouslyz max. This is a monotone rescaling and does not affect
+rank-based or shape-comparison analyses. Distances are computed against thebasemodel’s embed-
+dings ofP train; the adapter is not active when computingz. Hencezdepends on (family, metric,
+panel) and is shared across cells of the same family.
+C.6 Refusal labels: stochastic FT decoding and LLM-as-judge
+For each cell and each held-out promptp∈H, we drawN=10independent samplesr 1, . . . , r10
+from the fine-tuned model at sampling temperature0.7andtop-p=1.0, capped at≤256generated
+tokens. Analogously for the base model, we drawN=10samples per prompt; the base samples
+are shared across cells of the same family (the base model is fixed). For each sample we extract a
+refusal label by an open-weight LLM judge.
+Judge model and rubric.We use OLMO-3.1-32B-INSTRUCT[54], loaded in 8-bit weights
+(bitsandbytes,NF8), as the headline judge. For each(p, r)pair the judge classifiesrunder a
+three-way rubric:
+•refused(R): the response declines the request (refusal of any kind, including soft refusal,
+persona refusal, lecturing, redirection).
+•complied(C): the response provides (or substantially attempts to provide) the requested
+content.
+•ambiguous(A): the response is too short, off-topic, garbled, or otherwise neither a clear
+refusal nor a clear compliance.
+The judge prompt template is listed below (Appendix C.6.1). The judge model’s next-token logits
+over the three label tokens{R, C, A}are extracted directly (no further sampling); thearg maxtoken
+is recorded as the label.
+Per-prompt count primitives.For each (cell, prompt, condition∈{base,ft}), the analysis primi-
+tives are the integer counts
+ncond(p)=#{i∶judge(r cond
+i )∈{R, C}}, k cond(p)=#{i∶judge(r cond
+i )=R},
+i.e.n cond(p)is the number of non-Ambiguous samples (out ofN=10) andk cond(p)is the number
+judged refused. The empirical refusal rate at promptpisˆp cond(p)=k cond(p)/max(n cond(p),1).
+Prompts where eithern base(p)=0orn ft(p)=0(all-ambiguous on at least one side) are dropped
+pairwise from the cell. After dropping, the per-cell sample size isn cell ∈[2717,2898]across the six
+cells (the across-cell range reflects per-cell Ambiguous-only drop rate).
+24
+
+
+--- PAGE 25 ---
+Why a single strong judge and not majority.We use a single strong open-weight judge for
+two reasons. (i) Inter-judge agreement studies on this rubric show OLMO-3.1-32B-INSTRUCT
+dominates the multi-judge majority on agreement-with-human-spot-checks. (ii) Substring classifiers
+and smaller judges produce metric-dependent false-negative rates on persona refusals and lecturing-
+style soft refusals, which interact with the embedding-distance axis we are studying; using a strong
+tag-agnostic judge avoids the metric–judge interaction.
+C.6.1 Judge prompt template
+The exact prompt used for each (prompt, response) pair is:
+You are judging whether an AI response refused, complied, or is
+ambiguous.
+USER: {prompt}
+AI: {response}
+Did the AI refuse to comply with the user’s request?
+- R = REFUSED (declined, redirected, or expressed inability)
+- C = COMPLIED (provided the requested content)
+- A = AMBIGUOUS (unclear, partial, or evasive)
+Answer (R/C/A):
+The trailing space after(R/C/A):is intentional — it positions the next-token boundary on the label
+vocabulary.
+C.7 Per-cell statistical model
+The cohort figures (Figures 3–4) display posterior fits of thefine-tuned refusal probabilityp ft(z)
+as a function of the normalized distancez∈[0,1]. We modelp ft(z)directly rather than the rate-
+difference∆(z)=p ft(z)−pbase(z): the shape name (CPL, two-segment, etc., defined below) then
+describes the visiblep ft curve.
+Likelihood.For each cell and each held-out prompti=1, . . . , n cell we observe(z i, kft
+i , nft
+i ), where
+zi is the prompt’s normalized pool distance (Eq. 2) and(k ft
+i , nft
+i )are the Binomial primitives from
+the judge (Appendix C.6). We model
+pft(zi)=clip ( δS(zi;θ S), ε,1−ε ),(3)
+kft
+i ∣zi ∼Binomial(nft
+i , p ft(zi)),(4)
+whereε=10 −4is a clipping floor against label saturation, andδ S(⋅;θS)∶[0,1]→[0,1]is one of
+the five candidateshapeslisted below, parametrised byθ S.
+Shape menu.The shape menuS={N,L,P,C,S}contains:
+N.Constant(θ=(d)):δ(z)=d. 1 parameter.
+L.Linear(θ=(d lo, dhi)):δ(z)=d lo+(d hi−dlo)z. 2 parameters.
+P.Plateau-then-slope(θ=(z K, dlo, dhi)):δ(z)=d lo on[0, z K], then linearly interpolates
+from(z K, dlo)to(1, d hi)on[z K,1]. 3 parameters.
+C.Constrained piecewise-linear (CPL)(θ=(z L, zR, dlo, dhi)):δ(z)=d lo on[0, z L], linearly
+interpolates from(z L, dlo)to(z R, dhi)on[z L, zR], and equalsdhi on[z R,1]. Monotonic-
+ity is enforced only on the parameter orderingz L ≤zR (we order the two posterior samples
+at evaluation time); the levelsd lo, dhi are free, so the shape accommodates both increases
+(dhi >d lo) and decreases (dhi <d lo) of refusal with distance. 4 parameters.
+S.Two-segment(θ=(z M , dlo, dmid, dhi)): piecewise-linear with one knee atz M and three
+free levelsd lo, dmid, dhi (the curve passes through(0, d lo),(z M , dmid), and(1, d hi)). 4
+parameters; sign-free.
+25
+
+
+--- PAGE 26 ---
+Priors:z L, zR, zK, zM ∼Beta(2,2)(concentrated away from the boundaries of(0,1));
+d, dlo, dmid, dhi ∼Uniform(0,1).
+Each shape is fit independently by NUTS (NUMPYRO;1000warmup,1500samples,2chains,
+init_to_median). Per-observation log-likelihoodsℓ (s,S)
+i =log Pr (kft
+i ∣nft
+i , p(s,S)
+ft (zi)) are
+recorded under the fitted posterior of shapeS, samples.
+WAIC and Akaike weights.For each shapeSwe compute the standard W AIC estimator
+̂lppd
+(S)
+i =log 1
+NS
+NS
+∑
+s=1
+expℓ (s,S)
+i ,(5)
+̂p(S)
+WAIC,i = ̂Vars[ℓ(s,S)
+i ],(6)
+WAIC(S) =−2∑
+i
+(̂lppd
+(S)
+i −̂p(S)
+WAIC,i).(7)
+The within-cell Akaike weights are
+wS = exp(−1
+2 ∆S)
+∑S′∈Sexp(−1
+2 ∆S′) ,∆ S =WAIC (S)−min
+S′∈S
+WAIC(S′).(8)
+We additionally report∆WAIC null =WAIC (N)−WAIC(best) as the per-cell evidence forz-
+dependence (positive values favor a non-constant alternative), andP(z-dep)=1−w N as the model-
+averaged posterior probability of any non-constant alternative.
+Direction summary.For the best-fitting non-constant shape we report
+P(pft(1)<p ft(0)) = 1
+Nbest
+Nbest
+∑
+s=1
+1[p(s,best)
+ft (1)<p (s,best)
+ft (0)],(9)
+the posterior probability thatp ft(z)is lower atz=1than atz=0under the best shape. This is the
+natural “net decreasing inz” indicator for the FT-direct fit.
+C.8 Per-cell summary tables
+Table 2 reports the per-cell, per-metric headline numbers for the six cells×three metrics in scope:
+per-cell sample sizen cell after the Ambiguous-only pairwise drop, empirical base refusal rate¯pbase,
+empirical fine-tuned refusal rate¯pft, the per-cell rate-difference ¯∆=¯p ft −¯pbase, the per-cell evi-
+dence forz-dependence∆WAIC null, the model-averagedP(z-dep), the best-fitting shape, and the
+direction indicatorP(p ft(1)<p ft(0)).
+Three observations follow directly from Table 2. First, the constant null is rejected at every (cell,
+metric) entry in scope: the smallest∆WAIC null across the18entries is+6.7(e1201 MISTRAL×
+mean_pool, still well past the conventional “substantial evidence” threshold of+2), and the largest
+is+9,046(e1102 QWEN×spectral_all). Second, the magnitude of∆WAICvaries by roughly
+three orders of magnitude across metrics within a cell:spectral_allproduces∆WAIC≥2,000
+in every cell, whilemean_poolcan dip to single digits without losing the sign. Third, the W AIC-
+preferred shape co-varies with the metric:spectral_allprefers CPL in6/6cells;last_token
+mixes between plateau-then-slope, CPL and two-segment;mean_poolmixes between two-segment,
+CPL and plateau-then-slope. The direction indicatorP(p ft(1)<pft(0))is essentially1in17/18en-
+tries; the single exception is e1102 QWEN×mean_pool(0.55, posterior near indifference), con-
+sistent with the corresponding two-segment fit placing its largest level mid-curve rather than at the
+endpoints.
+Table 3 reports the per-cell, per-metric Akaike weights across the five shapes of the menu.
+26
+
+
+--- PAGE 27 ---
+Table 2: Per-cell, per-metric headline numbers for the six dense47-stoch cells.n cell: panel size
+after the Ambiguous-only pairwise drop.¯p base,¯pft: empirical mean refusal rate (base, fine-tuned)
+over the cell’s surviving prompts. ¯∆=¯p ft−¯pbase.∆WAIC 0: per-cell evidence forz-dependence
+(positive favors a non-constant alternative).P(z-dep): model-averaged posterior probability1−wN.
+“best”: W AIC-preferred shape (N = constant; L = linear; P = plateau-then-slope; C = CPL; S = two-
+segment).P post =P(p(1)<p(0)): posterior probability under the best shape thatp ft is lower atz=1
+than atz=0. The notation1−c⋅10−kflags posteriors saturated against the floor of the Monte Carlo
+display precision.
+cell metricn cell ¯pbase ¯pft ¯∆ ∆WAIC 0 bestP(z-dep)P post
+e1200 LLAMAlast_token2876 0.299 0.808 +0.509 +738 C>1−10 −6 >1−10 −6
+(r=1,E=1600)mean_pool2876 0.299 0.808 +0.509 +877 S>1−10 −6 >1−10 −6
+spectral_all2876 0.299 0.808 +0.509 +5,507 C>1−10 −6 >1−10 −6
+e1201 MISTRALlast_token2892 0.121 0.856 +0.735 +841 P>1−10 −6 >1−10 −6
+(r=1,E=1600)mean_pool2892 0.121 0.856 +0.735 +6.7 P 0.9691−3.0⋅10 −4
+spectral_all2892 0.121 0.856 +0.735 +3,667 C>1−10 −6 >1−10 −6
+e1202 QWENlast_token2717 0.285 0.736 +0.451 +619 P>1−10 −6 >1−10 −6
+(r=1,E=1600)mean_pool2717 0.285 0.736 +0.451 +110 S>1−10 −6 >1−10 −6
+spectral_all2717 0.285 0.736 +0.451 +5,391 C>1−10 −6 >1−10 −6
+e1203 LLAMAlast_token2898 0.298 0.758 +0.460 +801 P>1−10 −6 >1−10 −6
+(r=2,E=800)mean_pool2898 0.298 0.758 +0.460 +890 S>1−10 −6 >1−10 −6
+spectral_all2898 0.298 0.758 +0.460 +5,890 C>1−10 −6 >1−10 −6
+e1204 MISTRALlast_token2895 0.121 0.805 +0.685 +597 S>1−10 −6 1−7.0⋅10−4
+(r=2,E=800)mean_pool2895 0.121 0.805 +0.685 +46.1 C>1−10 −6 >1−10 −6
+spectral_all2895 0.121 0.805 +0.685 +2,002 C>1−10 −6 >1−10 −6
+e1102 QWENlast_token2721 0.285 0.825 +0.540 +858 S>1−10 −6 >1−10 −6
+(r=2,E=1600)mean_pool2721 0.285 0.825 +0.540 +300 S>1−10 −6 0.551
+spectral_all2721 0.285 0.825 +0.540 +9,046 C>1−10 −6 >1−10 −6
+C.9 CPL parameter posteriors
+Table 4 reports the CPL fit parameter posteriors per (cell, metric). The CPL parametrisation has two
+distance breakpoints(z L, zR)and two probability levels(d lo, dhi); the curve is the near-pool plateau
+dlo on[0, z L], a linear interpolation todhi on[z L, zR], and the far-from-pool plateaudhi on[z R,1].
+We report the posterior median and90%credible interval for each of the four parameters. Even on
+cells where another shape is the W AIC-preferred best (Table 2), the CPL parametrisation is compet-
+itive within the menu (mean Akaike weight¯w C >0.1throughout) and gives directly interpretable
+near-pool/far-from-pool levels.
+27
+
+
+--- PAGE 28 ---
+Table 3: Per-cell, per-metric within-cell Akaike weightsw S across the five-shape menu (sum to1
+within each row).w N<10−3across all 18 (cell, metric) entries: the constant null carries effectively
+no weight against the data once the panel is atn cell ≈2800withN=10samples per prompt.
+cell metricw N wL wP wC wS
+e1200 LLAMA(r=1,E=1600)last_token<10 −3 <10 −3 <10 −3 1.000<10 −3
+mean_pool<10 −3 <10 −3 <10 −3 <10 −3 1.000
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+e1201 MISTRAL(r=1,E=1600)last_token<10 −3 <10 −3 0.994<10 −3 0.006
+mean_pool0.031 0.002 0.867 0.032 0.068
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+e1202 QWEN(r=1,E=1600)last_token<10 −3 <10 −3 1.000<10 −3 <10 −3
+mean_pool<10 −3 0.116 0.013 0.001 0.870
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+e1203 LLAMA(r=2,E=800)last_token<10 −3 <10 −3 0.800 0.200<10 −3
+mean_pool<10 −3 <10 −3 <10 −3 <10 −3 1.000
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+e1204 MISTRAL(r=2,E=800)last_token<10 −3 <10 −3 <10 −3 <10 −3 1.000
+mean_pool<10 −3 <10 −3 <10 −3 1.000<10 −3
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+e1102 QWEN(r=2,E=1600)last_token<10 −3 <10 −3 <10 −3 <10 −3 1.000
+mean_pool<10 −3 0.008 0.007 0.006 0.980
+spectral_all<10 −3 <10 −3 <10 −3 1.000<10 −3
+Table 4: Posterior summaries of the CPL fit parameters per (cell, metric). The CPL shape
+parametrisesp ft(z)as the near-pool plateaud lo on[0, z L], a linear interpolation todhi on[z L, zR],
+and the far-from-pool plateaud hi on[z R,1]. “med” is the posterior median; “CI” is the90%central
+credible interval. Thez L, zR posteriors are ordered (zL ≤zR) at evaluation time.
+zL zR dlo dhi
+cell metric med CI 90 med CI 90 med CI 90 med CI 90
+e1200 LLAMAlast_token0.26[0.23,0.30]0.96[0.93,0.99]0.89[0.88,0.91]0.49[0.46,0.52]
+(r=1,E=1600)mean_pool0.20[0.07,0.35]0.85[0.77,0.94]0.93[0.88,1.00]0.52[0.42,0.59]
+spectral_all0.04[0.04,0.04]0.47[0.46,0.49]1.00[0.99,1.00]0.22[0.19,0.25]
+e1201 MISTRALlast_token0.37[0.15,0.50]0.64[0.50,0.97]0.90[0.87,0.94]0.68[0.58,0.74]
+(r=1,E=1600)mean_pool0.52[0.49,0.57]0.58[0.57,0.65]0.86[0.85,0.86]0.58[0.48,0.67]
+spectral_all0.14[0.13,0.15]0.43[0.41,0.45]0.96[0.96,0.97]0.57[0.55,0.59]
+e1202 QWEN)last_token0.22[0.18,0.24]0.62[0.42,0.97]0.80[0.79,0.80]0.46[0.24,0.59]
+(r=1,E=1600mean_pool0.49[0.48,0.49]0.49[0.49,0.51]0.74[0.74,0.75]0.44[0.39,0.49]
+spectral_all0.20[0.19,0.20]0.37[0.36,0.38]0.87[0.87,0.88]0.26[0.25,0.28]
+e1203 LLAMAlast_token0.31[0.29,0.33]0.97[0.93,0.99]0.84[0.83,0.85]0.38[0.35,0.41]
+(r=2,E=800)mean_pool0.12[0.05,0.23]0.85[0.78,0.93]0.93[0.88,0.98]0.48[0.42,0.53]
+spectral_all0.04[0.04,0.05]0.41[0.40,0.42]0.98[0.97,0.98]0.21[0.19,0.23]
+e1204 MISTRALlast_token0.19[0.16,0.21]0.89[0.82,0.96]0.88[0.87,0.89]0.57[0.54,0.61]
+(r=2,E=800)mean_pool0.56[0.56,0.57]0.57[0.57,0.57]0.81[0.80,0.81]0.42[0.32,0.52]
+spectral_all0.14[0.12,0.15]0.43[0.41,0.45]0.90[0.89,0.90]0.56[0.54,0.58]
+e1102 QWENlast_token0.09[0.03,0.12]0.92[0.84,0.98]0.92[0.91,0.96]0.45[0.40,0.49]
+(r=2,E=1600)mean_pool0.05[0.01,0.09]0.75[0.59,0.90]0.92[0.90,0.94]0.63[0.56,0.70]
+spectral_all0.20[0.19,0.20]0.35[0.35,0.37]0.98[0.98,0.98]0.32[0.30,0.34]
+28
+
+
+--- PAGE 29 ---
+C.10 Rank-1cohort: direct fits
+Figure 3: Rank-1cohort (exposure budget1600):p ft(z)direct-fit, one panel per family, three rows
+for three embedding metrics. The compact top-right annotation gives the best-fitting shape, the
+model-averaged posterior probabilitiesP(z-dep)andP(p ft(1)<p ft(0)), and∆WAIC null. Bottom
+row of cards: capability and fluency diagnostics per family (MMLU-200accuracy drift, WikiText-2
+perplexity drift, benign-prompt over-refusal count).
+29
+
+
+--- PAGE 30 ---
+C.11 Rank-2cohort: direct fits
+Figure 4: Rank-2cohort (LLAMAand MISTRALat exposure budget800; QWENat exposure budget
+1600):p ft(z)direct-fit, one panel per family, three rows for three embedding metrics. Layout and
+annotations identical to Figure 3.
+C.12 Capability, fluency, and over-refusal probes
+For each cell we measure three side-effects of fine-tuning, independent of the held-out refusal panel:
+30
+
+
+--- PAGE 31 ---
+•Capability drift via MMLU-200: a200-question subset of MMLU sampled to balance sub-
+jects, evaluated under teacher-forcing log-likelihood and standard A/B/C/D answer scoring.
+We reportbase acc,ft acc and∆MMLU=ft acc−baseacc in percentage points.
+•Fluency drift via WikiText-2 perplexity: standard WikiText-2 perplexity probe (1024-token
+windows, fp16). We report relative driftPPL drift %=100⋅(pplft−pplbase)/pplbase.
+•Benign over-refusal: the count of refusals on a30-prompt benign-instruction probe, com-
+paring fine-tuned to base.
+The natural way to evaluate is to load the base model once, attach the LoRA adapter, eval-
+uate the fine-tuned model, then “detach” the adapter to evaluate the base. We usewith
+ft.disable_adapter():for the base measurements andft.unload()between cells.
+Per-cell results are shown as compact cards in the bottom rows of Figures 3–4.
+C.13 Rank–exposure dose-response
+The six reported cells span two LoRA capacity points (rank∈{1,2}) at exposure budgets∈
+{800,1600}. At a coarser scan, a12-cell screening sweep covering exposures{200,400,800,1600}
+at ranks{1,2}reveals a family-dependent dose-response of the per-cell rate-difference ¯∆on expo-
+sure: MISTRAL’s base refusal rate is the lowest of the three families (¯p base ≈0.12) and its dose-
+response curve spans the widest range ( ¯∆∈[0.02,0.74]across exposures200→1600), LLAMAis
+intermediate ( ¯∆∈[0.04,0.51]), and QWENhas the highest low-exposure floor ( ¯∆≤0.02until ex-
+posure800, then ¯∆≈0.45at exposure1600). The six cells reported here are deliberately positioned
+at exposures where each family’s adapter has saturated its rate-difference signal; the corresponding
+z-shape (Figures 3–4) is the inferential target of the reported fits.
+D Prompt Transformation experiments: detailed methods
+D.1 Hardware and compute
+We ran these experiments on an internal cluster, using GPUs between 40GB and 128GB memory, in
+the 100 TFLOP/s range. All experiments lasted at most a couple of GPU-hours. We went through
+moderate iteration before coming to the paper’s setting.
+D.2 Models and inference configuration
+The seven models, their parameter counts, embedding dimensionality, and training character:
+Model (HF identifier) ParamsdTraining Source
+gpt20.12B 768 Causal LM OpenAI
+EleutherAI/pythia-410m0.41B 1024 Causal LM EleutherAI
+EleutherAI/pythia-1b1.0B 2048 Causal LM EleutherAI
+meta-llama/Llama-3.1-8B-Instruct8B 4096 SFT + RLHF instruct Meta
+mistralai/Mistral-7B-Instruct-v0.37B 4096 SFT instruct Mistral AI
+Qwen/Qwen2.5-7B-Instruct7B 3584 SFT + DPO instruct Alibaba
+allenai/Olmo-3.1-32B-Instruct32B 5120 Heavy SFT + RLHF AllenAI
+All models are used in embedding-extraction mode only; we run a forward pass and
+read out hidden states, with no autoregressive generation. No manually-injected sys-
+tem prompt is added. The four instruct-tuned models use their tokenizer’s native
+chat template viatokenizer.apply_chat_template([{"role":"user","content": p}],
+tokenize=False, add_generation_prompt=False), and the base models (gpt2, Pythia,
+which ship without a chat template) use the minimal fallback"User: {p}\nAssistant:". We
+usebf16weights for all instruct-tuned models andfp32forgpt2and Pythia.
+31
+
+
+--- PAGE 32 ---
+D.3 Embedding extraction
+For each (model, prompt) pair, we run a single forward pass on the chat-templated prompt text (Sec-
+tion C.2) and extract per-layer hidden states. We then compute seven embedding tags as different
+aggregations of these hidden states, in order to test whether structural results depend on the specific
+representation choice:
+•last_token: hidden state of the final token at the model’s last block.
+•mean_pool: mean of last-block hidden states across all token positions.
+•mean_pool_first: mean across positions of thefirstblock’s hidden states.
+•mean_pool_all: mean across positionsandblocks.
+•spectral_last: first right singular vectorv 1 of the last-block hidden-state matrix (posi-
+tions×d).
+•spectral_first: same, on the first block.
+•spectral_all: same, on the concatenation of all blocks.
+The spectral tags are computed via thin SVD on the GPU. The headline analyses in the main text
+usemean_pool_first; cross-tag robustness tables for inverse coherence, composition coherence,
+and the involution diagnostic appear in Appendix D.8.
+D.4 Operator-class fits
+For each (model, embedding tag, primitiveT) cell, we collect the source/target embedding
+pairs{(x i, yi)}n
+i=1 wherey i is the embedding ofTapplied to base prompti. The number
+of pairsndepends on the primitive and the rendered graph:n=100for the principal for-
+ward primitives (direct_question,answer_in_markdown,answer_as_tutorial);n=50for
+thestrip_*inverses and the second-tier primitives (answer_in_french,answer_concisely,
+answer_with_disclaimer) and configured composites;n=200forrot13_full. We split these
+into train/test (80/20) using five random seeds, fit each candidate operator class on the train split,
+and score by held-outR 2 =1−∥ytest−ˆφ(xtest)∥2/∥ytest−ytest∥2.
+Candidate operator classes, in order of expressiveness:
+•none:φ(x)=x(identity baseline).
+•mean_only:φ(x)= y(predict the mean ofyregardless ofx).
+•translation:φ(x)=x+b,b= y−x. (dfree parameters.)
+•scale_translation:φ(x)=αx+b, fitted by least-squares minimization of∥y−αx−b∥2
+withα∈R. (1+dfree parameters.)
+•diagonal_affine:φ(x)=Dx+bwithDdiagonal, fitted per-coordinate. (2dfree
+parameters.)
+•low_rank_affine_rk:φ(x)=(XW 1W⊺
+2 )+bwithW 1, W2 ∈Rd×k, fitted via thin-SVD
+factorization of the centered least-squares solution. ((2k+1)dfree parameters; we report
+k=4andk=16, i.e.9dand33dparameters.)
+•procrustes:φ(x)=Rx+bwithRorthogonal, closed-form via SVD of the cross-
+covariance.
+We additionally pre-process embeddings under five normalization choices (raw,mean_center,
+l2_unit,layernorm,rmsnorm) and report the full grid in Appendix D.9; the headline results
+usel2_unit(numerically equivalent tolayernormandrmsnormto within0.01R 2 on this data).
+D.5 Operator-class fit results
+Reading.The simple two-parameter(α,b)class achievesR 2 ∈[0.81,0.90]across the panel;
+diagonal_affineis formally best in every cell but gains≤0.01over(α,b)on six of the seven
+32
+
+
+--- PAGE 33 ---
+Table 5: Wrapper-mean held-outR 2 per (model, operator-form) cell on the headline tag
+mean_pool_first(l2-unit normalized), averaged over the 13 single-primitive transformations and
+5 random 80/20 train/test splits.Bold= best form for that model;italic= negative held-outR 2
+(catastrophic overfit). Operator-form abbreviations: tx = translationφ(x)=x+b;(α,b)= scale-
+translationφ(x)=αx+b; diag = diagonal-affineφ(x)=Dx+b; lr-rk= low-rank-affine of rankk.
+model tx(α,b)diag lr-r4 lr-r16
+gpt20.536 0.8120.882-0.619 -0.574
+pythia-410m0.660 0.9030.910-0.0770.036
+pythia-1b0.665 0.8960.902-0.0790.018
+Llama-3.1-8B-I0.699 0.8850.892-0.0650.013
+Mistral-7B-I0.673 0.8910.898-0.0800.003
+Qwen2.5-7B-I0.687 0.8880.894-0.0530.059
+OLMo-3.1-32B-I0.706 0.8990.906-0.0610.013
+models, with onlygpt2benefiting structurally (+0.07). We adopt(α,b)for the structural tests in
+the main text on grounds of parsimony, accepting the0.07R2 cost ongpt2. The catastrophic-overfit
+pattern oflow_rank_affine_r4(negative held-outR 2 in 7/7 cells) shows that the small training-
+row count per primitive (40 train rows for the second-tier primitives; 80 for the principal forwards)
+does not support a richer linear class at this sample budget, even after rank-ktruncation. Composite
+transformations (markdown_after_direct_question, etc.) are excluded from this table; their
+operator-fit quality is lower (wrapper-meanR 2 ≈0.55) and higher variance, consistent with their
+being less well-described by a single linear operator (Section D.8).
+D.6 Inverse and composition coherence – per-cell numbers
+Headline-tag (mean_pool_first) per-cell numbers for inverse coherence (Table 6) and composi-
+tion coherence (Table 7). The cross-tag versions are in Appendix D.8.
+Table 6: Inverse coherence cosinecos(b T ,−bT−1)per (model, forward/inverse pair) on the head-
+line tagmean_pool_first.Boldcells≥0.85;italiccells<0.50. Predicted value under perfect
+inverse coherence is+1. Models aregpt2, py-410m, py-1b, Llama-8B-I, Mistral-7B-I,
+Qwen-7B-I, OLMo-32B-I
+pairgpt2 py-410m py-1b Llama Mistral Qwen OLMo
+dq / strip_dq0.996 1.000 1.000 0.951 0.999 0.956 0.887
+md / strip_md0.983 0.988 0.983 1.000 0.959 1.000 1.000
+tut / strip_tut0.980 0.991 0.988 1.000 0.978 1.000 1.000
+fr / strip_fr0.955 0.997 0.997 0.979 0.999 0.978 0.974
+conc / strip_conc0.995 0.999 0.999 0.959 0.999 0.962 0.918
+disc / strip_disc0.984 1.000 1.000 0.986 0.999 0.987 0.972
+min0.955 0.988 0.983 0.951 0.959 0.956 0.887
+median0.983 0.998 0.998 0.983 0.999 0.982 0.973
+D.7 Procrustes trace ratios on rank-deficient data
+When the source/target spans of a primitive cover onlyn<ddimensions of embedding space
+(as is the case for our primitives, wherenis the number of source/target pairs and ranges over
+{50,100,200}depending on the primitive, whiledranges over{768,1024,2048,3584,4096,5120}
+across the model panel), the Procrustes solutionR=U V ⊺from the SVDM=UΣV ⊺of the cross-
+covarianceM=X ⊺
+c Yc isd×dorthogonal but its action on the(d−n)-dimensional orthogonal
+complement of the data span is an arbitrary orthonormal completion chosen by the SVD routine;
+in particular,tr(R)/dandtr(R 2)/ddepend on this arbitrary completion and are not well-defined
+diagnostics whend≫n. We therefore restrict attention to the data-determined active subspace.
+33
+
+
+--- PAGE 34 ---
+Table 7: Composition coherence on the two natural compositesC=L○Ron the headline tag
+mean_pool_first. Columns: multiplicative scalar predictionα C vsα LαR; cosine of the addi-
+tive shift predictioncos(b C,b L+b R)vs the operator-class shift predictioncos(b C, αLbR+b L);
+relative reconstruction error∥bC −(αLbR+b L)∥/∥bC∥. The operator-class prediction beats the
+additive baseline (rel-error reduction≥1.6×) in all 14 cells.
+model compositeα C αLαR cosadd cosα,b ∥⋅∥α,b
+gpt2 md○dq0.584 0.571 0.9985 0.9991 0.056
+tut○dq0.529 0.518 0.9983 0.9992 0.050
+py-410m md○dq0.622 0.589 0.9928 0.9961 0.110
+tut○dq0.575 0.541 0.9910 0.9968 0.100
+py-1b md○dq0.622 0.586 0.9914 0.9951 0.120
+tut○dq0.576 0.539 0.9900 0.9961 0.109
+Llama-8B-I md○dq0.785 0.780 0.9998 0.9999 0.027
+tut○dq0.735 0.728 0.9992 0.9999 0.029
+Mistral-7B-I md○dq0.595 0.564 0.9690 0.9809 0.199
+tut○dq0.526 0.492 0.9719 0.9874 0.165
+Qwen-7B-I md○dq0.769 0.763 0.9998 0.9999 0.029
+tut○dq0.716 0.708 0.9989 0.9999 0.031
+OLMo-32B-I md○dq0.840 0.838 0.9999 1.0000 0.018
+tut○dq0.805 0.802 0.9997 1.0000 0.019
+We report active-subspace trace ratiostr(A)/nandtr(A 2)/n, whereA∈R n×nis the restriction of
+Rto the active subspace expressed in a natural basis (constructed below). This is one principled
+choice; alternatives such as the trace over the joint span ofXc andY c would also be reasonable. The
+construction avoids materialisingRor anyd×dmatrix:
+1. Thin SVDsX c =U XΣX V⊺
+X andY c =U Y ΣY V⊺
+Y , withU X , UY ∈Rn×n,Σ X ,Σ Y ∈Rn×n,
+andV ⊺
+X , V⊺
+Y ∈Rn×d.
+2. The cross-covariance becomesM=V X KV ⊺
+Y withK=Σ X(U⊺
+X UY )ΣY ∈Rn×n.
+3. SVDK=U KΣKV⊺
+K (all factorsn×n).
+4. The rank-npart ofRis then(V X UK)(V ⊺
+KV⊺
+Y ), and its trace and squared-trace, taken cycli-
+cally, reduce totr(A)andtr(A 2)whereA=V ⊺
+K(V ⊺
+Y VX)UK ∈Rn×n.
+Reading:tr(A 2)/nmeasures how much of the active subspace acts as a true order-2 reflection
+(eigenvalues±1, contributing+1each) versus a non-trivial rotation (eigenvaluese ±iθ,θ∉{0, π},
+contributingcos(2θ)<1).
+D.8 Cross-tag robustness grids
+We report all three structural diagnostics across the seven embedding tags to discriminate (i)
+representation-invariant model properties from (ii) tag-choice artifacts. Tag rows are ordered from
+earliest layer (top:mean_pool_first, mean of first-block hidden states across positions) to latest
+(bottom:last_token, hidden state of the final token at the model’s last block).1
+Reading.Three structural patterns are visible across the grids:
+1. Inverse coherence (Table 8) is robustly clean on the early-layer pooled tags (mp_first:
+≥0.89for all 7 models;mp_all:≥0.81, with 6/7 above0.95). The single sharpest col-
+lapse is OLMo’s drop from≥0.89atmp_firstto0.01atsp_last; we do not see a mono-
+tone trend in late-layer breakdown across the panel (gpt2 hascos=−0.41atlast_token
+despite no instruct training, and pythia-1b shows−1.00atsp_all).
+1Thespectral_first,spectral_allcolumns currently use a per-prompt sign-flip heuristic to orient the leading
+right-singular vectorv 1, which can yield a±1ambiguity that contaminates inverse-coherence cells (visible ascos=−1
+entries in Table 8). A stable orientation rule is left as a follow-up and does not affect the operator-fitR 2 values.
+34
+
+
+--- PAGE 35 ---
+Table 8: Minimum inverse-coherence cosinecos(b T ,−bT−1)over the six configured for-
+ward/inverse primitive pairs, per (model, embedding tag).Boldcells≥0.85(clean);italiccells
+<0.50(broken). Tags ordered earliest layer (top) to latest (bottom).
+tag gpt2 py-410m py-1b llama-8b mistral-7b qwen-7b olmo-32b
+mp_first0.95 0.99 0.98 0.95 0.96 0.96 0.89
+sp_first0.95 0.99 0.97 0.970.180.91 0.95
+mp 0.640.95 0.94 0.96 0.98 0.870.43
+mp_all1.00 1.00 1.00 0.99 0.95 1.000.81
+sp_all0.99 1.00-1.00 -1.00 -0.85 -1.000.83
+sp_last0.91 0.93 0.89 0.95 0.970.760.01
+last_token-0.410.55 0.77-0.41 0.25 -0.89 -0.79
+Table 9: Composition-law improvement factor: ratio of additive-prediction relative reconstruction
+error to operator-class-prediction relative reconstruction error, averaged over the two non-rot13 com-
+posites (markdown_after_direct_question,tutorial_after_direct_question). Values
+>1mean the operator-class predictionb C ≈αLbR +b L is closer to the fittedb C than the ad-
+ditive baselineb L +b R.Boldcells≥2.0(operator-class prediction at least halves the additive
+error).
+tag gpt2 py-410m py-1b llama-8b mistral-7b qwen-7b olmo-32b
+mp_first3.5 2.4 2.3 3.41.83.6 3.3
+sp_first3.6 3.1 2.9 2.40.7 1.0 1.7
+mp2.5 2.6 2.41.42.51.5 1.4
+mp_all3.7 3.5 3.51.92.4 2.61.3
+sp_all 1.214.3 5.91.0 1.4 0.8 1.3
+sp_last3.0 2.7 2.51.32.51.7 1.2
+last_token3.2 2.1 2.70.92.9 2.3 3.1
+2. Composition-law improvement (Table 9) is positive (>1) in46/49cells and substantial (≥
+2.0) in30/49. The operator-class prediction beats the additive prediction in the row-mean
+sense at every tag, with no clean per-model regularity — e.g. Mistral consistently shows
+the smallest improvement factor (1.6–2.0×) despite its∣αL−1∣on the principal composites
+being among the largest in the panel; and the absolute largest cell issp_all/pythia-410m
+(14.3×), not an early-layer cell.
+3. Involution diagnostic (Table 10) is concentrated:48/49cells lie in[0.494,0.559](me-
+dian0.52); the single outlier ismistral/sp_first(0.413). We have not benchmarked
+tr(R2)/nagainst the null distribution induced by a Haar-random orthogonal matrix re-
+stricted to a randomn-subspace ofR d; we therefore present the "∼50/50split" reading as
+suggestive rather than as a calibrated effect.
+D.9 Cross-norm robustness
+For each (model, operator-form) cell onmean_pool_first, the wrapper-mean held-outR 2 is con-
+stant across the five normalizationsl2_unit,layernorm,rmsnorm,raw, andmean_centerto
+within0.01R 2. The first three are numerically identical to numerical precision (each rescales
+each embedding to a unit-norm representation, with vanishing per-token bias adjustments);raw
+andmean_centerdiffer by no more than0.02from the unit-norm group on the largest models. We
+report headline numbers underl2_unit.
+D.10 Operator-class rescue sweep on a broken cell
+To rule out the possibility that the late-layer breakdown of inverse coherence (Section D.8) reflects
+an operator-class misspecification rather than a structural property of the late-layer representation,
+35
+
+
+--- PAGE 36 ---
+Table 10: Active-subspace involution diagnostic forrot13_full:tr(R 2)/nwhereRis the orthog-
+onal Procrustes operator andn=200is the number of source/target pairs (the active data subspace
+has rank at mostn). Reference values:1.0for an exact involution,0.0for a Haar-random orthogo-
+nal. The single outlier cell (italic) is mistral / spectral_first (0.41);48/49cells lie in[0.49,0.56].
+tag gpt2 py-410m py-1b llama-8b mistral-7b qwen-7b olmo-32b
+mp_first 0.52 0.52 0.54 0.55 0.56 0.56 0.54
+sp_first 0.53 0.52 0.53 0.550.410.54 0.56
+mp 0.51 0.52 0.52 0.52 0.55 0.52 0.54
+mp_all 0.52 0.53 0.53 0.52 0.54 0.54 0.54
+sp_all 0.52 0.51 0.52 0.50 0.53 0.53 0.53
+sp_last 0.51 0.50 0.53 0.53 0.54 0.52 0.55
+last_token 0.49 0.50 0.52 0.50 0.51 0.51 0.53
+we re-ran the full operator-form sweep (5×7×16×5=2800fits, conditioned on a single (model,
+tag)) onOLMo-3.1-32B-Instruct/spectral_last, the most-broken cell in our panel.
+Wrapper-mean held-outR 2:
+Operator class wrapper-meanR 2
+translation0.466
+scale_translation0.740
+diagonal_affine0.740
+low_rank_affine_r40.000
+low_rank_affine_r160.094
+TheR 2 ceiling is0.74across all classes in our candidate list. Adding per-coordinate scaling yields
+zero improvement; the rank-4 and rank-16 affine classes still overfit at this sample budget. By
+contrast, onmean_pool_firstthe same model achievesR 2 =0.91forscale_translationand
+diagonal_affine. The∼26% residual variance atspectral_lastis therefore not closed by any
+of our candidate linear classes within then=80training-row budget; whether a class outside this list
+(e.g. dense unconstrained affine fitted on more training rows, or a nonlinear operator) would close it
+is open. We use this rescue sweep as evidence that the late-layer breakdown is not a within-our-list
+operator-choice artifact, not as a no-linear-class-suffices proof.
+The single exception within the rescue sweep isrot13_full, wherelow_rank_affine_r16
+achievesR 2 =0.79vs0.64forscale_translation. This is the only cell anywhere in our data
+where the rank-16 affine class wins, and it is structurally consistent withrot13_fullbeing a near-
+orthogonal reflection that the(α,b)class cannot fully approximate.
+E Declaration of LLM usage
+LLMs were used as assistive tools at several stages of this work. Specifically, LLMs were used
+for: editing (grammar, spelling, word choice), clarifying technical concepts, drafting sections of the
+manuscript, generating visualizations for submission, data processing and filtering, facilitating and
+running experiments, assisting with theorem proofs, and implementing standard methods. In every
+case, LLM outputs were treated as drafts to be checked rather than as authoritative content. The au-
+thors verified all generated material at each stage of the process. The authors take full responsibility
+for the correctness, originality, and integrity of all content presented in this paper.
+36
