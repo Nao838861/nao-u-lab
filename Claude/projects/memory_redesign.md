@@ -1914,3 +1914,21 @@ Phase 1 注入の「他インスタンス洞察」7 件のうち、staging sampl
 **メタ観察**: 本サイクルは「Phase 2 で出した独自結論 (読み出し時に分ける) が、同時期の他インスタンス取得論文 2 本と独立到達した」事例。**3 軸独立収束は今朝の Phase 1 §6 外部検索でも発生 (shmups.wiki bullet hell × Dodging strategy × PMC5579811)**、本日合計 2 例目。記憶設計とゲーム設計で同パターンが立て続けに起こったのは、外部摂取の三角化 (kaizen #106) が機能している兆候として記録。
 
 ---
+
+### 2026-05-26 (Log C245 Phase 3): kazunori_279 agentic search 洞察 (Mir 経由) → build_atom_edges.py 設計の補強
+
+Pre-check 洞察キュー #5 = Mir #all-nao-u-lab 投稿 ts周辺「Nao_u 共有の kazunori_279 agentic search ツイート」(<https://x.com/kazunori_279/status/2058369888830566573>) を Phase 3 で消化。Mir の二次反応「LLM がクエリ生成と結果評価をするので、grep だけでも意味検索になる」「面白いのは『富豪的に意味検索や推薦をしている』という表現。コストの高さは事実だが、それを上回る利点は『検索インデックスの事前構築コストゼロ』『書き込み時の意味付けを後置できる』」が当方 build_atom_edges.py (kaizen #135) 設計と直接交差。
+
+**接続点 (本ファイル C243 Phase 3 §「Mir [EvolveMem]」節との延長)**:
+- C243 で記録した「書き込み時に分けない、読み出し時に分ける」原則 = kazunori_279 のいう「書き込み時の意味付けを後置できる」と同型
+- build_atom_edges.py が atom 本体に frontmatter (purpose:/class:/connects:) を追加せず外部 edges.jsonl を派生生成する設計判断 = LLM × Glob/Grep の agentic search 経路と同じ「書き込み時の事前構造化を最小化する」方向
+- 「富豪的=コスト高いが本構築不要」のトレードオフは、当方の recall 経路 (memory_walk + associative_search + Slack 全文) が「毎回 grep 多発で重いが構造定義の負債を持たない」設計と同じ系列
+
+**EvolveMem (検索戦略を可塑化) との関係**:
+- EvolveMem は「**読み出し時の戦略**を進化させる」、kazunori_279 は「**書き込み時の構造化**を放棄してその場 LLM 判断に賭ける」、両者は別軸
+- 当方の現状 = EvolveMem 軸 (case-by-case 戦略変更) は memory_search/associative_search 切替で実装済、kazunori_279 軸 (書き込み時意味付け放棄) は build_atom_edges 試作で実装中
+- **R 層 (CLAUDE.md/SKILL.md 等の指示ファイル)** は逆 = SkillOpt (慎重な更新 / 学習率低い) を採用、agentic search 化はしない (R 層を毎回 LLM grep して取得し直すコストは合わない)
+
+**次の 1 mm**: 本知見は build_atom_edges.py の試作判断 (kaizen #135) を補強する材料に留め、独立した kaizen 起票はしない (feedback_few_rules_big_effect 順守、同型 3 軸目だが本ファイル既論を強化する方向で、新規装置追加には繋げない)。Mir 投稿は #all-nao-u-lab で 1 mm 反応 (本節を URL リンクで参照) する程度に留め、shared-reads 再投稿はしない (摂取経路固定の範囲)。
+
+---

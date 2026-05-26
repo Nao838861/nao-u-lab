@@ -196,4 +196,53 @@ Phase 2 で 0 投稿は「サボり」ではなく「Phase 1 を信用した結�
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信
+- Phase 1 §2 の判定 (新規 Slack 返信候補 = **0件**) を honor。投稿なし。`feedback_means_ends_reversal_check.md` 「目的なき投稿で枠を埋めない」適用。
+- 例外候補として Mir #all-nao-u-lab「log_mystery 導入問題」洞察への 1mm 反応は、本 Phase 3 §3 で game_development.md 追記済 + Mir 投稿は Nao_u 共有の二次反応であり Mir への直接返信は Phase 1 §2 で既に「重複返信防止」判定済 → 投稿しない (R 層化保留のまま記録に留める判断 = `feedback_few_rules_big_effect.md` 順守)。
+
+### 2) 改善サイクル (検証ファースト原則)
+- **未検証提案の状況**: #134 probe_atom_quality は段階1-2 PASS / 段階3 観察期間内 (残5日, 期限 2026-05-31)、#135 build_atom_edges は本日起票で未着手 (期限 2026-06-09)。観察期間内のため本サイクルでは検証実行せず。
+- **本サイクル新規提案なし**: 未検証 2 件が観察期間内のため、新規 kaizen 起票は抑制 (`feedback_few_rules_big_effect.md` 「ルール量↑＝遵守率↓」順守)。Phase 4 大作業の案E 本格運用組込は kaizen #135 等とは独立した「既起票案件の閉じ作業」のため新規 kaizen 起票には繋げない。
+
+### 3) 他インスタンス洞察 (10件) の振り分け
+Pre-check で検出された 10 件を triage、active project に直接交差する **2 件** を消化:
+- **#5 [Mir] kazunori_279 agentic search** → `projects/memory_redesign.md` に 2026-05-26 C245 節追記。build_atom_edges.py (kaizen #135) 設計の補強材料として記録。EvolveMem (検索戦略可塑化) と SkillOpt (指示側慎重更新) の 2 軸関係も整理。**R 層化保留**、新規 kaizen 起票なし。
+- **#9 [Mir] log_mystery 導入問題** → `projects/game_development.md` に 2026-05-26 C245 節追記。v11 候補 6 件 (メカニクス側) に対し導入層 (感情動機設計) という別レイヤを追加候補化。「単一作品 10 サイクル深掘り」の盲点として記録。**R 層化保留** (同型 2 件目候補だが本サイクルでは記録のみ、C246 以降に sense_prediction_log 追加判断)。
+- 残 8 件は (a) Phase 1 §1 で既処理確認済 (SkillOpt #1, ttezuka #7) / (b) Log 既応答済 (EvolveMem #4, #8) / (c) Mir 二次反応の重複 (SkillOpt 再投稿 #6) / (d) Ash 系で Log 接続点薄い (#2 kubotamas/akari_worlds graze_log) / (e) memory_redesign に既統合済 (STALE #3) / (f) 普遍ゲーム原則として残置 (teco_park 感情先行 #10) — 摂取経路固定範囲内、追加振り分けなし。
+
+### 4) Active project の状態変化
+- `projects/memory_redesign.md`: 2026-05-26 C245 節追加 (kazunori_279 / build_atom_edges 設計補強)
+- `projects/game_development.md`: 2026-05-26 C245 節追加 (Mir log_mystery 導入問題 / v11 候補拡張)
+- 上記 2 件以外の Active project に本サイクルの追記対象なし (Phase 1 §5 で挙がった log_autonomous_game / game_llm_play は本サイクルの新規変化なし、external_search_phase1_fixation は Phase 4 大作業として本格更新予定)。
+
+### 5) Phase 1 §A 訂正フィードバック
+- Phase 2 §1 で訂正済 (予告軌道線削除は C242 Phase 3 で実施済を未着手と誤判定)。
+- メタ教訓: 「持ち越し候補抽出時に game/*.js のコメント痕跡を直接照合する」は同型 1 件目で原則化せず観察 (`feedback_rule_proliferation_canonical.md` 順守)。次回同型発生時に kaizen 起票判断。
+
+## 次フェーズの大作業
+
+**タイトル**: `projects/external_search_phase1_fixation.md` 案E 本格運用組込 (`tools/check_external_promotion_freshness.py` 試作 → `check_scheduler_health.py` 相乗り)
+
+**完遂の定義** (Phase 4 終了時に観測可能な条件):
+1. `check_scheduler_health.py` に `check_external_promotion_freshness(instance) -> tuple[str, str]` 関数追加 (既存 `check_external_search_freshness` パターン踏襲、戻り値 `(status, message)` で `status ∈ {"OK", "WARN", "CRITICAL"}`)
+2. `check_log_instance(result)` に `check_external_promotion_all(result)` 呼出組込 (Mir/Ash も同様、Log は確実、Mir/Ash は対応ファイル存在確認後)
+3. `python check_scheduler_health.py --instance=log` 実行時、出力に「promotion」or「外部記事昇格」相当の OK/WARN/CRITICAL 行が含まれる
+4. `projects/external_search_phase1_fixation.md` 履歴に「2026-05-26 C245 Phase 4 案E 本格運用組込完了」節追記、残課題リストの「本格運用組込」項目をチェック済に更新
+5. 1 commit (`rule:` prefix) で push 完了
+
+**着手手順**:
+1. `tools/check_external_promotion_freshness.py` の `parse_promotions()` ロジック (regex `^## (\d{4}-\d{2}-\d{2})\b` + diff 計算) を確認し、移植 or import 経路決定 (移植が `check_scheduler_health.py` の独立性維持に整合)
+2. `check_external_promotion_freshness(instance)` 関数を `check_external_search_freshness` 直後に追加 (~40 行)
+3. `check_external_promotion_all(result)` 集約関数追加 (Mir/Ash の対応ファイル不在時は WARN ではなく skip にするか判断)
+4. `check_log_instance` / `check_mir` / `check_ash` の各関数末尾近く (既存 `check_external_search_all(result)` の直後) に `check_external_promotion_all(result)` 呼出追加
+5. `python check_scheduler_health.py --instance=log` で動作確認、`--instance=log` で OK が出ることを確認
+6. `projects/external_search_phase1_fixation.md` 履歴節追記 + 残課題更新
+7. `git add` 該当ファイル + `git commit -m "rule: 案E external_notes promotion freshness を check_scheduler_health に組込 (C245 Phase 4)"` + `git push`
+
+**選んだ理由**:
+- Phase 2 §2 で §B (Log 担当領域 = 案B/E) > §C (ゲーム軸 playable diff) と明示判定 (C244 で playable diff 直後のため 1 サイクル空ける)
+- 9日停滞 (5/18 試作完了→5/26) + feedback_structural_enforcement 二重該当 (Nao_u 4/21+4/22 二度指摘の構造強制化を再形骸化させかけている)
+- 30分粒度成立: 既存試作 + 既存 `check_external_search_freshness` パターン踏襲 = 新規ロジック設計なしの移植作業
+- Active project の閉じ条件「24h 無実行時の自己警告が飛ぶ状態」に直接寄与 (案B = freshness 既組込、案E = promotion を本作業で組込 → 閉じ条件半分→満分に近づける)
+- Phase 1 §A 誤判定 (実装済を未着手と誤読) と対称的に、本作業は「試作実装済 (8日経過) を本格組込で閉じる」= 観測装置を整備して終わりではなく実運用に乗せる方向、`feedback_substrate_not_infrastructure.md` 「装置整備で満足せず実装に降ろす」順守
