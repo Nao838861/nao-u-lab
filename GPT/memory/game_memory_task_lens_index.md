@@ -3,7 +3,7 @@ name: game_memory_task_lens_index
 type: index
 status: active
 created: 2026-05-15
-updated: 2026-05-23
+updated: 2026-05-26
 purpose: ゲーム制作タスク別に、broad tag から具体的な shared-reads / candidate / atom へ降りるための小さな入口。
 ---
 
@@ -95,6 +95,64 @@ LLM にゲーム世界、ルール、コンテンツを生成させる時の入�
 - `memory/shared_reads_candidates/20260515_prompting_destiny_llm_gameworld.md` — gameworld / narrative prompting。
 - `memory/shared_reads_candidates/20260515_textquests_llm_text_games.md` — text game generation / evaluation。
 - atom: `sr-1778936174-e85146f3d1` Agent Sprite Forge 系の一貫性・フォーマット壁・プロトタイピング活用位置。
+
+## Feedback Bridge
+
+Phase 4a issue `ISS-4A-20260526-01` / Phase 4b decision `introduce` に基づく、feedback atom から prototype / lesson / evidence へ戻るための curated bridge。atom 本体の frontmatter backfill は次サイクル以降の optional とし、ここでは高信頼に対応が分かる行だけを置く。
+
+記入形式: `feedback_atom -> prototype/version -> bridge files -> evidence / use`
+
+- `local-20260523-headless-action-eval-v58` -> `game/graze_log_cdx/v05_1_cdx_v58` -> `memory/game_headless_action_eval_playbook_20260523.md`, `game/graze_log_cdx/v05_1_cdx_v58/design_log.md`, `tools/headless_graze_log_cdx_v05_2_v58_check.js` -> Nao_u の「適当に動くだけで勝てる/単調」を `camper` 失敗 policy として再現し、route は clear / camper は fail を要求する。
+- `local-20260523-shmup-enemy-pattern-reproduction-packet` -> `shot_log v01` / 2D shmup teacher reproduction -> `memory/game_2d_shmup_reproduction_packet_20260523.md`, `memory/checklist_noncompression_protocol_20260523.md`, `memory/game_shmup_enemy_design_noncompression_protocol_20260523.md` -> 敵パターンをタイトル名や「圧力/リズム」に圧縮せず、spawn/path/fire/intended movement/bad-policy check へ戻す。
+- `sr-1779657471-88f9f3d1ae` -> `game/pulse_relay/v003` teacher delta -> `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`, `memory/game_special_system_hud_affordance_lesson_20260525.md`, `memory/game_design_rules.md` -> 自動生成後のユーザー修正を「AI が自律的に作れなかった差分」として扱い、悪い要約を避ける。
+- `sr-1779658373-5e5a195063` -> `game/pulse_relay/v003` completion / visual review 分析 -> `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md` -> 教師差分シリーズの要約抵抗と、8 個の悪い要約を次回の禁則句として使う。
+- `sr-1778926135-e43b8b6d9c` -> `shot_log v01` headless sync / self-judgment repair -> `memory/game_teacher_sources.md`, `memory/teacher_shot_log_v01_analysis.md` -> 測定装置を直した直後に、何を測るかを決めず次作へ進む失敗を避ける。
+
+更新条件: Phase 3b / 4a で feedback atom と prototype/version/evidence の対応が明確になった時だけ追加する。曖昧な推測、単なる関連語、Slack permalink だけの行は追加しない。将来 atom frontmatter へ昇格する時は、この bridge の高信頼行から移す。
+
+## Specific Entry Points
+
+Phase 4a issue `ISS-4A-20260526-02` / Phase 4b decision `introduce` に基づく、巨大 tag から制作実務軸へ降りるための下位入口。`game-design` / `evaluation` / `operation` などの broad tag の代替ではなく、制作前に最初の recall query と代表リンクを選ぶための短い索引である。各軸の代表リンクは最大 3 件を目安にする。
+
+### headless-eval / bad-policy
+
+- 使う場面: 「単調」「適当に動くだけで勝てる」「平均スコアでは面白さが分からない」という feedback を検証へ落とす時。
+- recall query: `python tools/memory_recall.py "headless eval bad policy camper route clear fail subjective feedback"`
+- atom / probe: `local-20260523-headless-action-eval-v58`
+- representative: `memory/game_headless_action_eval_playbook_20260523.md`
+- representative: `sr-1779369765-a26c2a3f0b` headless 評価を勝敗ではなく進化方向の座標系として読む。
+
+### input-feel / affordance
+
+- 使う場面: 特殊アクション、クールダウン、反射/変換、開始/リトライ導線を、常時説明文ではなく入力と状態で教える時。
+- recall query: `python tools/memory_recall.py "input feel affordance special system cooldown title retry target marker"`
+- atom / probe: `sr-1779657471-88f9f3d1ae`
+- representative: `memory/game_special_system_hud_affordance_lesson_20260525.md`
+- representative: `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`
+
+### enemy-pattern / stage-grammar
+
+- 使う場面: 敵配置が単調、ランダム風、実ゲーム由来に見えない、shot_log teacher data が再現されない時。
+- recall query: `python tools/memory_recall.py "enemy pattern stage grammar spawn path fire intended movement bad policy shot_log"`
+- atom / probe: `local-20260523-shmup-enemy-pattern-reproduction-packet`
+- representative: `memory/game_2d_shmup_reproduction_packet_20260523.md`
+- representative: `memory/game_enemy_route_intent_lesson_20260523.md`
+
+### supervised-delta / human-correction
+
+- 使う場面: 自動生成後にユーザー修正が入った時、それを一般論に圧縮せず次回の実装前ゲートへ戻す時。
+- recall query: `python tools/memory_recall.py "supervised delta human correction autonomous game creation bad summary forbidden phrase"`
+- atom / probe: `sr-1779657471-88f9f3d1ae`
+- atom / probe: `sr-1779658373-5e5a195063`
+- representative: `memory/game_supervised_delta_autonomous_creation_lesson_20260525.md`
+
+### predictability / rule legibility
+
+- 使う場面: ルール、矛盾、勝利条件、犯人/目的、状況設定がプレイヤーに予測可能かを確認する時。
+- recall query: `python tools/memory_recall.py "predictability rule legibility situation goal contradiction Nao_u feedback"`
+- atom / probe: `gr-1774549346-0c3f0c8ae7`
+- atom / probe: `sr-1777411453-ee79528ff7`
+- representative: `memory/game_teacher_sources.md`
 
 ## 更新ルール
 

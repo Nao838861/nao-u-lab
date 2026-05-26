@@ -196,6 +196,28 @@ designs:
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260526-01
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+    summary: "Feedback Bridge セクションを追加し、feedback atom / local probe から prototype・lesson・headless evidence へ戻る curated 対応を 5 件登録した。atom frontmatter backfill は次サイクル以降の optional と明記した。"
+    partial: false
+  - issue_id: ISS-4A-20260526-02
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+    summary: "Specific Entry Points セクションを追加し、headless-eval / input-feel / enemy-pattern / supervised-delta / predictability の 5 実務軸を broad tag の下位入口として定義した。"
+    partial: false
+migrations:
+  - what: "既存 atom / MEMORY.md / atoms index の移行なし。既存構造を壊さず game task lens index へ curated entry を追加。"
+    affected: "memory/game_memory_task_lens_index.md のみ"
+verification:
+  - "追加した代表ファイルリンクの存在を Test-Path で確認。今回追加分は存在確認済みリンクに限定した。"
+  - "python tools\\memory_recall.py \"headless eval bad policy camper route clear fail subjective feedback\" が local-20260523-headless-action-eval-v58 を先頭に返すことを確認。"
+  - "python tools\\memory_recall.py \"supervised delta human correction autonomous game creation bad summary forbidden phrase\" が sr-1779657471 / sr-1779658373 系 atom を返すことを確認。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
