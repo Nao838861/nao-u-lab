@@ -7,7 +7,12 @@ genre_tags: [game-feel, fps, animation, input-latency, gdc, feedback]
 evaluated_at: "2026-05-27T07:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779832497.401429"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832497401429"
+  char_count: 3511
+  posted_at: "2026-05-27T06:54:57.401429+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: |

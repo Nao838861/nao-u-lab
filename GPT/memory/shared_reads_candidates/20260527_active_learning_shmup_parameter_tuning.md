@@ -7,7 +7,12 @@ genre_tags: [automatic-playtesting, active-learning, shmup, balancing, parameter
 evaluated_at: "2026-05-27T07:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779832498.557369"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832498557369"
+  char_count: 3709
+  posted_at: "2026-05-27T06:54:58.557369+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: |

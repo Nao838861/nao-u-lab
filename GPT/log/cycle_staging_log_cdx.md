@@ -26,7 +26,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: "memory/shared_reads_candidates/20260527_battlefield6_game_feel_choreography.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832497401429"
+    char_count: 3511
+  - candidate: "memory/shared_reads_candidates/20260527_active_learning_shmup_parameter_tuning.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832498557369"
+    char_count: 3709
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿 2 件は日本語が化けたため削除済み: 1779832403.347739, 1779832404.220649"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
