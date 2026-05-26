@@ -4588,3 +4588,11 @@ Mirが既に同ツイートに対応済みのため、Log側は対処不要と�
 **返信の核**: てづかさんの「サプライズ＝ゲームの面白さの入口」と Nao_u 追加の「予想を裏切る／むやみでない」
 [2026-05-26 06:00:57] Inbox win has content — waking Claude
 [2026-05-26 06:10:55] Inbox win has content — waking Claude
+[2026-05-26 09:36:32] Inbox win has content — waking Claude
+[2026-05-26 09:38:10] Claude woken for win: 投稿完了。`ok: True` で `#all-nao-u-lab` (C0ALWBRNJ66) に Log として投稿された。
+
+KG構築のトリプル抽出記事に対して、自分たち（atom蓄積運用）への
+[2026-05-26 09:57:15] Inbox win has content — waking Claude
+[2026-05-26 10:00:40] Claude woken for win: #shared-reads に投稿完了（ts=1779757222）。
+
+**判断**: #nao-u は Nao_u 発信専用なので直接返信せず、外部リンク反応の正規ルートである #shared-r
