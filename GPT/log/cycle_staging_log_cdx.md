@@ -91,7 +91,55 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+phase4b_appended_at: "2026-05-27T01:24:00+09:00"
+designed_issues:
+  - issue_id: "ISS-4A-20260527-01"
+    problem_restatement: "Phase Game Start で作った `game/pulse_relay/v008` は、Relay Lane と bad-policy 別 headless 検証まで含む再利用価値の高い成果だが、現在は staging の一時ログに閉じている。`memory_recall` と `game_memory_task_lens_index.md` の入口から引けないため、次の shmup / 特殊システム制作時に最新の v008 知見ではなく古い v003 周辺へ戻るリスクがある。"
+    alternatives:
+      - name: "A. 既存 bridge へ高信頼行を追加"
+        sketch: "`memory/game_memory_task_lens_index.md` の Feedback Bridge と Specific Entry Points に、v008 の prototype/version、検証 script、Slack permalink、使う場面を 1-2 行だけ追加する。新しい index は作らず、既存の更新条件に従う。"
+        pros:
+          - "既存運用と距離が近く、Phase 4c の変更範囲が小さい。"
+          - "制作前に読む入口からすぐ v008 へ降りられる。"
+          - "曖昧な分類を増やさず、高信頼対応だけを置ける。"
+        cons:
+          - "atom 本体がない場合、`memory_recall` の検索面は弱いまま残る。"
+          - "詳細な検証値は staging か raw Slack 投稿へ飛ぶ必要がある。"
+        migration_cost: low
+      - name: "B. local atom + bridge の二段固定"
+        sketch: "既存の memory ingest / per-file atom 形式を使い、`pulse_relay/v008` の local atom を 1 件作る。その atom id を Feedback Bridge / headless-eval / input-feel / supervised-delta の代表入口に結び、recall と手動入口の両方から引けるようにする。"
+        pros:
+          - "`memory_recall` の exact / semantic 検索と task lens の両方に効く。"
+          - "staging の一時ログを、再利用できる記憶単位へ昇格できる。"
+          - "v008 固有の Relay Lane、bad-policy、検証値を atom excerpt に保持できる。"
+        cons:
+          - "Phase 4c で atom 生成と index 更新の 2 種類の変更が必要。"
+          - "atom が長くなりすぎると、また要約品質の問題を作る。"
+          - "既存の大量未追跡 atom があるため、stage 対象を厳密に絞る必要がある。"
+        migration_cost: medium
+      - name: "C. staging Game Start 自動昇格 gate"
+        sketch: "Phase Game Start に playable diff / headless 検証 / Slack permalink が揃った場合、自動で atom 候補と task lens 更新候補を生成する gate を設計する。Phase 4a は候補の妥当性だけ確認する。"
+        pros:
+          - "今回と同じ取りこぼしを構造的に減らせる。"
+          - "ゲーム制作優先サイクルが通常 Phase の記憶整理から漏れる問題に広く効く。"
+          - "future cycle で作業者の手作業依存を下げられる。"
+        cons:
+          - "自動昇格は低品質 atom や過剰 index 追加を誘発しやすい。"
+          - "Phase 3b の rule bloat 回避方針と緊張する。"
+          - "今回の単発 issue に対して設計・検証コストが大きい。"
+        migration_cost: high
+    recommended: "B. local atom + bridge の二段固定"
+    recommended_reason: "A だけでは task lens からの手動入口は改善するが、Phase 4a が検出した `memory_recall` で引けない問題が残る。C は再発防止として魅力はあるが、現時点では自動昇格の品質ゲートが重く、低品質 atom を増やす失敗コストが高い。B は既存の atom/per-file/index と既存 bridge を使うため新規仕組みを増やさず、今回の v008 を再利用可能な記憶単位へ移せる。"
+    decision: introduce
+    decision_reason: "v008 は playable diff、headless 検証、bad-policy 別の評価、Slack 報告 permalink が揃っており、曖昧な候補ではなく高信頼 evidence として扱える。Phase 4c では新しい tool や命名体系を作らず、既存の memory atom と task lens bridge に最小追加する。"
+    outline_for_4c:
+      - "`pulse_relay/v008` の local atom を既存形式で 1 件追加し、Relay Lane / v005 ベース再出発 / headless policy 結果 / Slack permalink / 検証 script を短く含める。"
+      - "`memory/game_memory_task_lens_index.md` の Feedback Bridge に、その atom または local id から `game/pulse_relay/v008`、`tools/headless_pulse_relay_v008_check.js`、Slack permalink へ戻る行を追加する。"
+      - "`Specific Entry Points` の `headless-eval / bad-policy` と `input-feel / affordance` に v008 を代表 probe として 1 行ずつ足すか、既存代表を圧迫する場合は Feedback Bridge だけに留める。"
+      - "stage 対象は 4c で触った atom / index / task lens だけに限定し、既存の大量未追跡 atom や cycle state は混ぜない。"
+not_changed_outside_staging: true
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
