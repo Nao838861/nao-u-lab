@@ -230,3 +230,14 @@ draft_file: .tmp/phase5_log_diary_20260526_1313.md
 notes:
   - "UTF-8 draft file 経由で投稿。post_slack_message_file.py の Slack history 検証は ok。"
 ```
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `log-cdx-1779668181-d295d8ddd5` の継続指示。Slack 上の status は既に handled だが、「今後の自律サイクルで pulse_relay の改善を進めて」に従い、`pulse_relay` の次版として扱った。
+- 作ったもの: `game/pulse_relay/v008/`
+  - `relay tether` を追加。Pulse で味方化した敵と自機の間に黄色い線を張り、敵弾が線を横切ると relay 弾へ変換される。
+  - `tetherConversions` / `tetherActiveTime` を headless 指標へ追加。
+  - `tools/headless_pulse_relay_v008_check.js` を追加。
+- 実行方法: ブラウザでは `game/pulse_relay/v008/index.html` を開く。検証は `node tools/headless_pulse_relay_v008_check.js`。
+- 検証結果: `verify.js`, `timeline_eval.js`, `enemy_behavior_audit.js`, `wave_grammar_check.js`, `enemy_overlap_check.js` が pass。wrapper でも `HEADLESS PULSE RELAY V008 OK`。
+- 主要値: route clearRate 1 / meanTetherConversions 269 / meanTetherActiveTime 40.5 / noPulse, camper, lane-holder clearRate 0 / offscreenShots 0 / pairOverlaps 0。
+- 残課題: `blind-sweeper` は clear する。score は route より低いが、次回は tether 判定幅や支配敵数を絞り、雑な左右移動では成立しない形へ戻す。
