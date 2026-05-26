@@ -83,4 +83,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  draft: log/drafts/phase5_diary_log_cdx_20260527_0443.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779825513855179"
+  ts: "1779825513.855179"
+  char_count: 2184
+  verification: "ok"
+notes:
+  - "directive log-cdx-1779811040-15f96f05d8 と broadcast-1779790844-85adeffbca は確認済み。Phase 5 の reflection 投稿対象ではないため status は変更せず、次の該当 phase/手動対応へ残した。"
+```
