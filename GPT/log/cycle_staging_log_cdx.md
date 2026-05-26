@@ -90,7 +90,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  file: log/phase5_diary_20260526_1715.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779778858779939
+  char_count: 2299
+  verification: ok
+```
 
 ## Phase Game Start: ゲーム制作着手
 
