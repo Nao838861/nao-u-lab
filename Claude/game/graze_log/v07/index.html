@@ -135,6 +135,17 @@ const BUZZ_INVINCIBLE_FRAMES=60;
 // `state.invincibleT=BUZZ_INVINCIBLE_FRAMES;` の上書き形に戻す。glow ring の chain 識別 (色変化) も削除。
 const BUZZ_INVINCIBLE_CAP=180;
 
+// === v07 B-2: Hyper Activation (CAVE bullet-cancel 経路B / DoDonPachi SaiDaiOuJou Large Star 写し) ===
+// graze gauge >= G_MAX で既存 BOMB キー (SPACE) 発動。fireBomb を Hyper に拡張:
+// 全画面 ebullet 消去 + 消去 1 弾ごと score+100 + popup 1個 'HYPER +N' + Large Star 演出 30F フェード。
+// 復帰: gauge=0 に reset、graze で自然 recharge (別 cooldown 不採用 = HUD 情報密度維持)。
+// 無敵延長との衝突回避: hyperFlashT>0 中は onGraze Lv up で invincibleT を新規セットしない (A-6(a) 二重カバー禁止)。
+// prior art: DoDonPachi SaiDaiOuJou / DaiOuJou / ESPgaluda (M-41 引用文付き、v07/README.md §prior art)。
+// 削除手順 (B-2 → A-6(b) 等価): HYPER_FLASH_FRAMES 定数 / state.hyperFlashT / startGame reset / update tick /
+// fireBomb 内 Hyper ブロック (removedCount 集計 + popup + hyperFlashT セット + 粒子色変更) /
+// onGraze Lv up の hyperFlashT<=0 ガード / draw() Large Star 描画ブロック を削除。
+const HYPER_FLASH_FRAMES=30;
+
 const state={
   mode:'title',
   t:0,
@@ -169,6 +180,8 @@ const state={
   playerLv:0,
   // v06 A-5 (b)
   invincibleT:0,
+  // v07 B-2: Hyper Activation Large Star フェード残時間
+  hyperFlashT:0,
 };
 
 function initStars(){
@@ -277,6 +290,8 @@ function startGame(){
   state.playerLv=0;
   // v06 A-5 (b) reset
   state.invincibleT=0;
+  // v07 B-2 reset
+  state.hyperFlashT=0;
   // 注: state.rng は再シード**しない**。1セッション通しで一系列。
   // 再現したければ ?seed=N で同一 SEED 起動。
 }
@@ -299,18 +314,27 @@ function gameOver(){
 function fireBomb(){
   if(!gaugeReady())return;
   state.bombCount++;
+  // v07 B-2: 全画面 ebullet 消去 + removedCount 集計、消去 1 弾ごとに star 粒子 (黄色 30F 寿命) push
+  const removedCount=state.ebullets.length;
   for(const b of state.ebullets){
-    state.score+=20;
-    state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:3});
+    state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:30,c:'#ffe040',r:2.4});
   }
   state.ebullets.length=0;
+  // v07 B-2: 消去弾数 × 100 を一括加算 (v06 は 20/個、個別 popup 物量で画面情報密度を破綻させていた)
+  state.score+=removedCount*100;
+  if(removedCount>0){
+    state.popups.push({x:state.player.x,y:state.player.y-50,text:'HYPER +'+(removedCount*100),life:60,c:'#ffe040'});
+  }
   for(const e of state.enemies){
     e.hp=Math.max(1,Math.ceil(e.hp/2));
   }
-  state.gauge=G_LV2;
+  // v07 B-2: gauge を 0 にして graze で自然 recharge (別 cooldown 不採用 = HUD 情報密度維持)
+  state.gauge=0;
   state.bombFlash=24;
+  // v07 B-2: Large Star 演出 — hyperFlashT=30、draw() で黄色 (#ffe040) alpha 0.4 → 0 を 30F フェード
+  state.hyperFlashT=HYPER_FLASH_FRAMES;
   for(let i=0;i<3;i++){
-    state.rings.push({x:state.player.x,y:state.player.y,t:i*4,life:30,c:'#ffd870',r0:20,r1:Math.min(W,H)*0.7});
+    state.rings.push({x:state.player.x,y:state.player.y,t:i*4,life:30,c:'#ffe040',r0:20,r1:Math.min(W,H)*0.7});
   }
 }
 
@@ -433,6 +457,8 @@ function update(){
   if(state.activeDefT>0)state.activeDefT--;
   // v06 A-5 (b): buzz chain invincibility 残時間
   if(state.invincibleT>0)state.invincibleT--;
+  // v07 B-2: Hyper Activation Large Star フェード残時間
+  if(state.hyperFlashT>0)state.hyperFlashT--;
 
   if(state.shotCooldown>0)state.shotCooldown--;
   else{
@@ -601,15 +627,19 @@ function onGraze(bx,by){
   if(state.playerLv<PLAYER_LV_MAX && state.grazeCount%LV_GRAZE_TH===0){
     state.playerLv++;
     state.popups.push({x:state.player.x,y:state.player.y-44,text:'LV UP '+state.playerLv,life:50,c:'#ffa040'});
-    // v06 A-6 (a): 無敵中なら 60F 加算 (cap 180F = 3秒) / 無敵切れていれば 60F 上書き
-    // Psyvariar 原典 chain 無敵の核 — 連鎖 Lv up で長期無敵化
-    if(state.invincibleT>0){
-      state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES,BUZZ_INVINCIBLE_CAP);
-      // chain 延長は黄色寄り (#ffd040) の ring で識別、初回 (橙 #ffa040) と区別
-      state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffd040',r0:R_GRAZE,r1:R_GRAZE+28});
-    }else{
-      state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
-      state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
+    // v07 B-2: Hyper 発動中 (hyperFlashT>0) は invincibleT を新規セットしない (A-6(a) 連鎖延長との二重カバー禁止)
+    // 既存 invincibleT は通常 tick で減衰し続ける (update 側で常時 --)。
+    if(state.hyperFlashT<=0){
+      // v06 A-6 (a): 無敵中なら 60F 加算 (cap 180F = 3秒) / 無敵切れていれば 60F 上書き
+      // Psyvariar 原典 chain 無敵の核 — 連鎖 Lv up で長期無敵化
+      if(state.invincibleT>0){
+        state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES,BUZZ_INVINCIBLE_CAP);
+        // chain 延長は黄色寄り (#ffd040) の ring で識別、初回 (橙 #ffa040) と区別
+        state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffd040',r0:R_GRAZE,r1:R_GRAZE+28});
+      }else{
+        state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
+        state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
+      }
     }
   }
 }
@@ -810,6 +840,12 @@ function draw(){
   }
   if(state.bombFlash>0){
     ctx.fillStyle=`rgba(255,216,112,${state.bombFlash/24*0.35})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  // v07 B-2: Hyper Activation Large Star 演出 — 黄色 (#ffe040) alpha 0.4 → 0 を HYPER_FLASH_FRAMES (30F) フェード
+  if(state.hyperFlashT>0){
+    const a=(state.hyperFlashT/HYPER_FLASH_FRAMES)*0.4;
+    ctx.fillStyle=`rgba(255,224,64,${a})`;
     ctx.fillRect(0,0,W,H);
   }
 
