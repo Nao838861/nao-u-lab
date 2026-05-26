@@ -7,7 +7,12 @@ genre_tags: [game-testing, qa, llm-agent, benchmark, evaluation]
 evaluated_at: "2026-05-26T22:17:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779801836.076109"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836076109"
+  char_count: 3551
+  posted_at: "2026-05-26T22:26:00+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: >-

@@ -7,7 +7,12 @@ genre_tags: [game-generation, llm-agent, coding-agent, browser-game, evaluation]
 evaluated_at: "2026-05-26T22:17:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779801836.817719"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
+  char_count: 4408
+  posted_at: "2026-05-26T22:26:00+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: >-
