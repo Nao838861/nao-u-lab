@@ -4,6 +4,21 @@ url: https://www.gamedeveloper.com/production/prototyping-i-let-s-revolution-i-t
 collected_at: 2026-05-26T13:21:25+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, prototyping, puzzle, roguelike, onboarding]
+evaluated_at: 2026-05-26T13:23:58+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: |-
+  既存ルールをそのまま移植せず、「そのルールを path に適用したら何が起きるか」から playable core へ削る過程が明確。
+  whiteboard prototype から energy / health / demon / risk-reward へ段階的に絞る評価材料があり、制作サイクルへ具体適用できる。
+suggested_post_outline:
+  overview_angle: "Minesweeper の模倣ではなく、推理の読みどころを path traversal に変換するプロトタイピング事例として書く。"
+  analysis_axis: "初期問い、紙プロト、Unity 小規模版、energy 失敗、health/demon 導入という仮説検証の連鎖を軸にする。"
+  application_target: "mimicry_log や小規模 puzzle/roguelite 試作で、元ネタの表面でなくプレイヤーの読解行為を抽出する手順に効く。"
+  pros_cons: "メリットは抽象ルールを playable に削る判断が追えること。デメリットは個別作の制作記録なので一般化には慎重さが必要なこと。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

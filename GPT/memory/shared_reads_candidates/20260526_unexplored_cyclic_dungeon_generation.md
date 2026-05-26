@@ -4,6 +4,21 @@ url: https://www.gamedeveloper.com/design/unexplored-s-secret-cyclic-dungeon-gen
 collected_at: 2026-05-26T13:21:25+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, roguelike, level-design, puzzle]
+evaluated_at: 2026-05-26T13:23:58+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: |-
+  start-goal path ではなく gameplay cycle / mission graph を先に設計し、それを playable dungeon に翻訳する中核が明確。
+  lock-key、loop、入れ子 cycle、Ludoscope grammar まで具体化でき、ゲーム制作の構造設計へ無理なく適用できる。
+suggested_post_outline:
+  overview_angle: "ランダム地形生成ではなく、プレイヤーが往復・解除・再解釈する gameplay cycle を先に作る手法として整理する。"
+  analysis_axis: "mission graph から地形・罠・宝箱・shortcut へ翻訳する段階分けと、線形生成との違いを軸にする。"
+  application_target: "rog_mystery や探索/推理系プロトタイプで、UI に graph を出さずに構造を体験へ埋め込む設計チェックへ使う。"
+  pros_cons: "メリットは構造的な探索感と再訪の意味を作れること。デメリットは grammar 設計の手間と、生成結果の読解性検証が必要なこと。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
