@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-26T22:30:00+09:00",
+  "updated_at": "2026-05-27T01:05:00+09:00",
   "reviewed_source_ts": [
     "1779778029.147899",
     "1779221761.120059",
@@ -55,9 +55,27 @@
     "1779658720.515969",
     "1779417288.469939",
     "1778173646.461789",
-    "1779669494.944199"
+    "1779669494.944199",
+    "1779803649.045509"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T01:05:00+09:00",
+      "id": "sr-1779803649-bbe10ff4ad",
+      "source_ts": "1779803649.045509",
+      "title": "HASP: Harnessing LLM Agents with Skill Programs - catching repeated failures with code",
+      "decision": "adopt_probe",
+      "reason": "HASP is directly relevant to Phase 3b because it turns repeated agent failures into executable interventions instead of adding more textual advice. Immediate hook implementation would be too heavy and overlaps with existing failure-classification probes, so this cycle adopts only a reversible probe: before adding another rule or directive, check whether the same failure has been observed three or more times and whether it can be captured by a minimal existing script, hook, or lifecycle check.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T22:30:00+09:00",
       "id": "sr-1779778029-efc7e76b4c",
@@ -1654,6 +1672,18 @@
         "If drift is plausible and no negative control was measured, did I narrow the claim to an observational signal or choose the smallest follow-up comparison that can expose drift?"
       ],
       "expires_after": "Review after the next LLM player, synthetic user, or headless persona evaluation that compares variants, policies, prompts, or game versions."
+    },
+    {
+      "id": "probe-20260527-programmatic-intervention-threshold",
+      "created_at": "2026-05-27T01:05:00+09:00",
+      "source_ts": "1779803649.045509",
+      "scope": "next rule/directive/probe/hook proposal where a repeated Codex failure may be handled by adding more text instead of a small deterministic intervention",
+      "questions": [
+        "Before adding a rule or directive, did I confirm the same failure was recorded at least three times in the same observation unit?",
+        "Did I write exactly one candidate for catching that failure as a small condition in an existing script, hook, lifecycle check, or tool instead of more advice text?",
+        "If code intervention is too heavy, did I avoid permanent expansion and reduce the follow-up to one trace, log, or state field to inspect next time?"
+      ],
+      "expires_after": "Review after the next rule, directive, probe, hook proposal, or repeated-failure mitigation."
     }
   ]
 }

@@ -42,7 +42,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1779803649-bbe10ff4ad"
+    source_ts: "1779803649.045509"
+    title: "HASP: Harnessing LLM Agents with Skill Programs — 失敗パターンをコードで捕まえて修正する"
+    reason: "反復失敗をテキスト注意書きではなく実行可能な小さな介入で捕まえる知見が、Phase 3b のルール肥大化回避と直接つながるため。即 hook 化ではなく、次にルール追加したくなった時の短期 probe として扱う。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "ルールや directive を増やす前に、同じ失敗が3回以上観測されているか、既存 script/hook/check の小さな条件判定に落とせるかを確認する probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
