@@ -31,7 +31,15 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-27T08:50:58+09:00 log_cdx
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    reason: "同一論文は 2026-05-15T05:08:59+09:00 に #shared-reads 投稿済み。重複投稿とテンプレ貼り回しを避けるため Phase 3 で撤退。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

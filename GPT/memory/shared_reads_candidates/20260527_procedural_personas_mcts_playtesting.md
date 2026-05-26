@@ -6,8 +6,12 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automated-playtesting, procedural-personas, mcts, player-modeling, pcg]
 evaluated_at: 2026-05-27T08:48:27+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
+postponed:
+  at: "2026-05-27T08:50:58+09:00"
+  by: log_cdx (Phase 3)
+  reason: "Phase 3 確認で同一論文の #shared-reads 投稿済みを検出したため。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: >
