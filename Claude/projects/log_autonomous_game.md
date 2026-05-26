@@ -59,6 +59,22 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ## 履歴
 
+### 2026-05-26 C242 Phase 3: Nao_u 06:10 批判受け、予測軌道線・×マーカー削除 + 1 原則「内側→外側流出禁止」抽出
+
+**Nao_u 原文 (2026-05-26 06:10 #human-steering)**: 「一秒先の軌跡+×印みたいな邪魔な線があるせいでどこをよけたらいいかが逆にわかりにくく、普通に弾を撃ってくる方がよけやすい」
+
+**応答**:
+- `game.js`: 予測軌道線 (`GHOST_ALPHA_LINE`) と ×マーカー (`GHOST_ALPHA_TIP`) 描画を削除。弾本体のみ描画する形に転回。1秒先計算は内部 (echo 機構の trail 追跡) に閉じる
+- `design_log.md` Q-D: 方針を「予測ゴースト表示」→「内部に閉じる」へ転回。禁則に「1秒先計算結果を画面に流出させる」を追加
+- 構造抽出: 同朝の log_mystery v10 / mimicry_log / log_autonomous_game v001 の 3 批判は別問題ではなく「内側で計算した/整理した/予測したものを外側 (UI/フレーバー) に流出させた」1 原則の 3 表出だった
+- 記録: `memory/feedback_inside_to_outside_leak.md` 新設 + `memory/feedback_index.md` ポインタ追記
+- Slack: `#all-nao-u-lab` ts=1779759682 で深析投稿、`#kaizen-log` ts=1779759722 で「kaizen ではなく feedback として記録」の差別化記録
+
+**次サイクル C243 観察点**:
+- 予測線削除後の `self_judgment.md` 再採点 (Q-D 失点 2 がどう動くか)
+- 「予測ゴースト無し版が逆に難しすぎる」場合の Phase 2 §4 案 B (邪魔転じて core mechanic 化) 再検討余地
+- 1 原則の打率は Nao_u 反応 1 巡後に判断、game_lessons_log R-層昇格はそれ以降
+
 ### 2026-05-25: 起票 — Nao_u指示受領 + Pulse Relay v003 教師差分分析を経て
 
 Nao_u 2026-05-25 06:23 #human-steering 投稿の指示。原文の温度をそのまま残す:
