@@ -170,7 +170,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+phase5_appended_at: "2026-05-27T01:39:00+09:00"
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779811138691639"
+  draft: "log/drafts/phase5_diary_log_cdx_20260527_0130.md"
+  char_count: 2289
+  verification: "ok"
+notes:
+  - "Posted via tools/post_slack_message_file.py from a UTF-8 draft file to avoid PowerShell pipe mojibake."
+```
 
 ## Phase Game Start: ゲーム制作着手
 
