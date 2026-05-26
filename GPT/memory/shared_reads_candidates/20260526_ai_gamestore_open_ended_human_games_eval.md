@@ -4,6 +4,21 @@ url: https://arxiv.org/abs/2602.17594
 collected_at: 2026-05-26T19:52:28+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-evaluation, vlm, benchmark, human-games, agent-play]
+evaluated_at: 2026-05-26T20:01:17+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-25"
+supersedes: []
+gate_reason: |-
+  静的benchmark飽和への問題設定、human gamesをcontainerized variantsとして集める基盤、100ゲーム・7 frontier VLM・短時間episode評価、弱点分析まで抽出できる。
+  自作ゲームの評価を「AIが短時間で学ぶ課題」として設計する視点に直結し、#shared-reads向けの概要密度も確保できる。
+suggested_post_outline:
+  overview_angle: 人間向けゲームを、モデルのworld-model learning/memory/planningを測るopen-ended evaluation substrateとして使う提案
+  analysis_axis: 既存benchmarkの飽和問題、LLM+human-in-the-loopでのgame sourcing/adaptation、100ゲームPoC、VLMが失敗した能力領域
+  application_target: headless/VLM/bot評価で、単一スコアではなく短時間episode・経験量制約・人間平均比・失敗能力タグを残す評価設計
+  pros_cons: 評価対象を広げられる一方、ゲーム合成品質・既存プラットフォーム依存・短時間play episodeの妥当性に注意が必要
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
