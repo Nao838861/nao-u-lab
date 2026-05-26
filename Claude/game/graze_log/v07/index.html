@@ -146,6 +146,13 @@ const BUZZ_INVINCIBLE_CAP=180;
 // onGraze Lv up の hyperFlashT<=0 ガード / draw() Large Star 描画ブロック を削除。
 const HYPER_FLASH_FRAMES=30;
 
+// === v07 観点7: 180F cap reached 大成功反応 (Log_cdx 観点7 「気持ちよさ = 6 種反応分離」の「大成功」欠落埋め) ===
+// onGraze chain 延長分岐で invincibleT が cap 未達 → cap 到達の遷移瞬間を検出し、画面 flash + 大型 ring + popup 'MAX CHAIN!' を発火。
+// 発火条件: 3 連 Lv up + chain 延長分岐 (Hyper 中は不発、B-2 二重カバー排反)。1 ゲーム中 0-3 回のレアイベント。
+// 削除手順 (観点7 → v07 観点3 等価): MAX_CHAIN_FLASH_FRAMES 定数 / state.maxChainFlashT / startGame reset /
+// update tick / onGraze chain 内 cap 到達検出 + 発火 3 行 / draw() flash 描画ブロック を削除。
+const MAX_CHAIN_FLASH_FRAMES=20;
+
 const state={
   mode:'title',
   t:0,
@@ -182,6 +189,8 @@ const state={
   invincibleT:0,
   // v07 B-2: Hyper Activation Large Star フェード残時間
   hyperFlashT:0,
+  // v07 観点7: 180F cap reached 大成功 flash 残時間
+  maxChainFlashT:0,
 };
 
 function initStars(){
@@ -292,6 +301,8 @@ function startGame(){
   state.invincibleT=0;
   // v07 B-2 reset
   state.hyperFlashT=0;
+  // v07 観点7 reset
+  state.maxChainFlashT=0;
   // 注: state.rng は再シード**しない**。1セッション通しで一系列。
   // 再現したければ ?seed=N で同一 SEED 起動。
 }
@@ -459,6 +470,8 @@ function update(){
   if(state.invincibleT>0)state.invincibleT--;
   // v07 B-2: Hyper Activation Large Star フェード残時間
   if(state.hyperFlashT>0)state.hyperFlashT--;
+  // v07 観点7: 180F cap reached 大成功 flash 残時間
+  if(state.maxChainFlashT>0)state.maxChainFlashT--;
 
   if(state.shotCooldown>0)state.shotCooldown--;
   else{
@@ -633,9 +646,17 @@ function onGraze(bx,by){
       // v06 A-6 (a): 無敵中なら 60F 加算 (cap 180F = 3秒) / 無敵切れていれば 60F 上書き
       // Psyvariar 原典 chain 無敵の核 — 連鎖 Lv up で長期無敵化
       if(state.invincibleT>0){
+        // v07 観点7: 加算前後で cap 未達→cap 到達の遷移瞬間を検出 (1 ゲーム中 0-3 回のレアイベント)
+        const wasCapNotReached=state.invincibleT<BUZZ_INVINCIBLE_CAP;
         state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES,BUZZ_INVINCIBLE_CAP);
         // chain 延長は黄色寄り (#ffd040) の ring で識別、初回 (橙 #ffa040) と区別
         state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffd040',r0:R_GRAZE,r1:R_GRAZE+28});
+        if(wasCapNotReached&&state.invincibleT===BUZZ_INVINCIBLE_CAP){
+          // v07 観点7: 大成功反応 — flash 20F + 大型 ring 12→60 30F + popup 'MAX CHAIN!' 60F
+          state.maxChainFlashT=MAX_CHAIN_FLASH_FRAMES;
+          state.rings.push({x:state.player.x,y:state.player.y,t:0,life:30,c:'#ffe040',r0:12,r1:60});
+          state.popups.push({x:W/2,y:80,text:'MAX CHAIN!',life:60,c:'#ffe040'});
+        }
       }else{
         state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
         state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
@@ -851,6 +872,12 @@ function draw(){
   // v07 B-2: Hyper Activation Large Star 演出 — 黄色 (#ffe040) alpha 0.4 → 0 を HYPER_FLASH_FRAMES (30F) フェード
   if(state.hyperFlashT>0){
     const a=(state.hyperFlashT/HYPER_FLASH_FRAMES)*0.4;
+    ctx.fillStyle=`rgba(255,224,64,${a})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  // v07 観点7: 180F cap reached 大成功 flash — 黄色 (#ffe040) alpha 0.5 → 0 を MAX_CHAIN_FLASH_FRAMES (20F) フェード
+  if(state.maxChainFlashT>0){
+    const a=(state.maxChainFlashT/MAX_CHAIN_FLASH_FRAMES)*0.5;
     ctx.fillStyle=`rgba(255,224,64,${a})`;
     ctx.fillRect(0,0,W,H);
   }
