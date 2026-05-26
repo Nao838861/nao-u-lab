@@ -473,3 +473,43 @@
 4. 状態1 グレーリング常時情報過多判定 + 状態2 シアン薄爆発の視覚レビュー
 5. 敵 B/C/D + 70-90 秒ステージカーブ
 6. `completion_report.md` 起票 → Nao_u 出荷
+
+---
+
+## §v002 移行ノート (2026-05-27 C247 Phase 4)
+
+v001 → v002 への分岐契機・差分・採点書き換え方針を本セクションに集約。詳細は `../v002/self_judgment.md` 参照。
+
+### 分岐契機
+- Nao_u 5/26 06:10 #human-steering 指摘: 「予測軌跡＋×印が視界ノイズで弾本体回避を阻害、展開なし反復で明確につまらない」
+- A/B/C 自己判定 (C247 Phase 2 §2、#all-nao-u-lab ts=1779824294): **A (ゴースト全廃) 採用**、B (半残し) は同じ原則を半分破る不徹底のため不採用、C (撤退) は v001 学習を捨てるため不採用
+
+### v002 差分 (4 箇所)
+- Δ-1 `drawTitle()` 内ゴースト + 結線描画削除 (Phase 3 着地) — タイトル画面で残存していた「1 秒先計算結果の画面流出」を消去、1 原則 (`feedback_inside_to_outside_leak.md`) がプレイ画面 + タイトル画面の両方で完全達成
+- Δ-2 UI 用語洗浄 (Phase 3 着地) — `<title>` から「(パイロットごっこ)」削除、`.note` 内部用語削除
+- Δ-3 wave 1 軽量化 (Phase 4 完遂) — `spawnWaveA` n=5→3、shootCooldown +30 オフセット、x=0.25/0.5/0.75 再配置。「導入で castLock 機構の意味を読み解く時間を約 1 秒返す」設計
+- Δ-4 wave 2 遅延 (Phase 4 完遂) — `WAVE_REST_FRAMES=480` 定数 + `lastClearFrame` 記録、wave clear から 8 秒静寂後に次 wave 起動。**Pulse Relay 70-90s カーブ第 1 段「学習→静寂→展開」のローカル化**
+
+### 採点書き換え (v001 21/25 → v002 22/25 暫定)
+- Q-導入 4 → 4.5 (Δ-1 でタイトルゴースト削除、メタファ純化)
+- Q-D 4.0 → 4.5 (Δ-1 で 1 原則完全達成)
+- Q-ミミクリ-1 4.5 → 5 (削除 + 簡素化方向で核を冷やさず最大値到達)
+- 展開差カーブ 78% (v002 で初設置、`../v002/self_judgment.md` §3)
+- 5 確定 (Q-導入/Q-D/Q-ミミクリ-1) は全て実機判定後の課題
+
+### verify.js v002 化結果
+- 4 方針全 wave 1 内 gameover、`pass: true`、exit 0
+- camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s (seed=20260527)
+- v001 (seed=20260525) との差は ±2 秒以内 = **wave 1 軽量化が悪手通過の穴を作っていない**
+
+### v002 で**やらないこと** (Phase 4 スコープ明示)
+- v002 brainstorm.md / user_directives_raw.md の再構築 (v001 共有のまま Phase 5 以降に判断)
+- 敵 C ダイブ敵 + 70-90s 時間カーブ本体 (Phase 5 以降)
+- audit scripts (bullet_origin/enemy_behavior/agent_difficulty_proxy) v002 移植 (Phase 5 以降、本 Phase 4 では verify.js のみ移植)
+- LLM playtester 化 (v001 凍結事項、変更しない)
+
+### 次サイクル C248 以降の優先順 (v001 リスト上書き)
+1. **実機視覚判定の取得** — Nao_u / Mir / Ash いずれかに v002 実機プレイ依頼。Q-導入 / Q-D / Q-成功FB 状態3 / Q-ミミクリ-2/-3 / 展開差カーブを確定採点へ書き換え
+2. 敵 C (ダイブ敵) 追加と 70-90 秒時間カーブ本体実装 ← 「2 wave ループ反復」リスク解消の本丸
+3. audit scripts v002 移植 (bullet_origin/enemy_behavior/agent_difficulty_proxy)
+4. `completion_report.md` 起票 → Nao_u 出荷

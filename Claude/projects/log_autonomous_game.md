@@ -40,6 +40,7 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [x] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止) **骨格分のみ** — `game.js` + `index.html` (C238 Phase 4)、Q-A/Q-導入/Q-E/Q-F ✅、Q-B/Q-成功FB/Q-C △、Q-D ✕ (`design_log.md §実装第1 commit 報告` 参照)
 - [x] 実装 v001 第2 commit (C239 Phase 3): 敵弾 + 1秒先予測軌道ゴースト (Q-D ✕→△→✅ audit script のみ未) + Q-成功FB 状態3 「危機回避」メッセージ (`design_log.md §実装第2 commit 報告` 参照、Movement Prediction 外部知見裏付けあり)
 - [△] 実装 v001 拡張残: **Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差は完了** (C240 Phase 4 commit `ee908bfd9c0f` 2026-05-25 15:54 `game: log_autonomous_game v001 Q-success-FB state 1/2 visual layering`)。残: 敵 B/C/D + 70-90 秒カーブ (次サイクル以降)
+- [△] **実装 v002 (C247 Phase 4)**: タイトルゴースト削除 + UI 用語洗浄 + wave 1 軽量化 (n=3) + wave 2 8 秒静寂ガード = 1 原則「内側→外側流出」完全達成 + 70-90s カーブ第 1 段ローカル化。verify.js v002 化済 (悪手 4 方針全 wave 1 内 fail、pass: true、§v002/self_judgment.md §4)。残: 敵 C ダイブ敵 + 時間カーブ本体 + audit scripts (bullet_origin/enemy_behavior/agent_difficulty_proxy) v002 移植 (次サイクル C248 以降)
 - [ ] **C240 Phase 2 追記候補**: ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定 (Fly Fail Fix 2507.12666 由来、self_judgment.md Q-D/Q-成功FB の「実機なし判定 3/5 留まり」処方箋)。次サイクル以降で着手判定
 - [ ] **C240 Phase 2 追記候補**: design_log.md の 8 ゲートに「探索 playtest 層」を明示追加し verify.js 悪手 4種を「tree search の縮約版」と再定義する self-doc 更新 (ScriptDoctor 2506.06524 由来、game_lessons_log R-D「型から始める、独自要素は1つだけ」と整合)
 - [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断
@@ -58,6 +59,31 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 ---
 
 ## 履歴
+
+### 2026-05-27 C247 Phase 4: v002 着地 — wave カーブ実装 + 1 原則完全達成 + verify.js v002 化
+
+**契機**: Nao_u 5/26 06:10 #human-steering 指摘「予測軌跡＋×印が視界ノイズで弾本体回避を阻害、展開なし反復で明確につまらない」への構造応答。A/B/C 自己判定で A (ゴースト全廃) 採用 (C247 Phase 2 §2、#all-nao-u-lab ts=1779824294)、Phase 3 で v002/ 骨格作成、Phase 4 で wave カーブ完遂。
+
+**v002 差分 (4 箇所)**:
+- Δ-1 `drawTitle()` 内ゴースト + 結線描画 14 行削除 — タイトル画面の「1 秒先計算結果を画面に流出」最後の残存箇所を消去 (Phase 3 着地)
+- Δ-2 UI 用語洗浄 — `<title>` から「(パイロットごっこ)」削除、`.note` 内部用語削除 (Phase 3 着地)
+- Δ-3 wave 1 軽量化 — `spawnWaveA` n=5→3、shootCooldown +30 オフセット、x=0.25/0.5/0.75 再配置 (Phase 4 完遂)
+- Δ-4 wave 2 遅延 — `WAVE_REST_FRAMES=480` 定数 + `lastClearFrame` 記録、wave clear から 8 秒静寂後に次 wave 起動 (Phase 4 完遂)
+
+**完遂物**:
+- [game/log_autonomous_game/v002/game.js](../game/log_autonomous_game/v002/game.js) — Δ-1〜Δ-4 全反映
+- [game/log_autonomous_game/v002/verify.js](../game/log_autonomous_game/v002/verify.js) — 新規。悪手 4 方針 (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s) 全 wave 1 内 gameover、`pass: true` (exit 0)。**wave 1 軽量化が悪手通過の穴を作っていない**確認
+- [game/log_autonomous_game/v002/self_judgment.md](../game/log_autonomous_game/v002/self_judgment.md) — 新規。Q-A〜Q-E 5 ゲート 22/25 (v001 21/25 → +1pt) / Q-ミミクリ 11.5/15 (v001 11/15 → +0.5pt) / 展開差カーブ 15.5/20 (v002 で初設置、78%)
+
+**構造的学び (本サイクルで結晶化)**:
+- 「内側→外側流出」1 原則 (`feedback_inside_to_outside_leak.md`) はプレイ画面で C242 達成、v002 でタイトル画面も含めて**完全達成**。Q-D を 4.0 → 4.5、Q-ミミクリ-1 を 4.5 → 5 まで暫定昇格 (5 確定は実機判定後)
+- Nao_u 5/26 06:10 指摘の核は「視界ノイズ」+「展開なし反復」の 2 軸独立。v001 は前者のみに対応 (C242)、v002 で後者も初対応 (Δ-3/Δ-4 で展開差カーブ 78% 到達)
+- 「Nao_u が判定装置ではなく最終確認装置」原則の運用化 (CLAUDE.md「絶対にやる」L4): A/B/C 提示後 22 時間「指示待ち」凍結 → Phase 2 で自己判定 A 選択 → Phase 3-4 で v002 着地、というフロー自体が原則を結晶化
+
+**残課題 (次サイクル C248 以降)**:
+- 実機判定取得 (Nao_u / Mir / Ash) で Q-導入 / Q-D / Q-成功FB / Q-ミミクリ-2/-3 / 展開差カーブを確定採点へ書き換え
+- 敵 C (ダイブ敵) + 70-90 秒時間カーブ実装 ← 「2 wave ループ反復」リスク解消の本丸 (v002 では A→D 2 wave 偶奇 dispatcher 維持、3 種以上未実装)
+- audit scripts (bullet_origin_audit / enemy_behavior_audit / agent_difficulty_proxy) の v002 移植 (本 Phase 4 では verify.js のみ移植)
 
 ### 2026-05-26 C244 Phase 3: teco_park 感情論 (Mir 経由) からのミミクリ宣言節補強
 

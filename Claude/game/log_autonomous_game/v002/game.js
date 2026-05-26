@@ -27,6 +27,10 @@
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
+  // v002 wave カーブ: wave 1 軽量化 (n=3 + 初弾遅延 +30) → wave clear 後 8 秒静寂 → wave 2 (敵D)
+  // Pulse Relay 70-90s カーブ第 1 段 「4-12s 学習 → 静寂 → 12-25s 基本混合」 のローカル化。
+  const WAVE_REST_FRAMES = FPS * 8;
+
   const game = {
     state: STATE.TITLE,
     frame: 0,
@@ -39,6 +43,7 @@
     bullets: [],
     waveSpawned: false,
     waveCount: 0,
+    lastClearFrame: null, // 直前 wave 撃破時 frame。次 wave 起動の静寂ガード材料
     lockResults: { hit: 0, miss: 0, idle: 0 },
     idleSince: 0,
     introGhostPhase: 0,
@@ -221,19 +226,22 @@
   }
 
   // --- 敵 A (直進小型) Wave ---
+  // Pulse Relay 70-90s カーブ第 1 段 (学習導入): n=5 → 3 に軽量化、shootCooldown +30 オフセット。
+  // 「導入で 1.5秒 castLock 機構の意味を読み解く時間を返す」設計。
+  // wave 2 (敵D) と wave 3+ (waveCount 偶奇で A 復帰) では同じ軽量パラメータを共有する。
   function spawnWaveA() {
-    const n = 5;
+    const n = 3;
     for (let i = 0; i < n; i++) {
       game.enemies.push({
         type: 'A',
-        x: W * (0.15 + i * 0.175),
+        x: W * (0.25 + i * 0.25),
         y: -20 - i * 40,
         vx: 0,
         vy: ENEMY_VY_A,
         r: 10,
         alive: true,
-        // 射撃タイミングを敵間でずらす (画面内到達後 30フレーム + i*20 で初弾)
-        shootCooldown: 30 + i * 20,
+        // 軽量化: 初弾 60 + i*20 (v001=30 + i*20)、敵間ズレ 0.33s 維持
+        shootCooldown: 60 + i * 20,
       });
     }
     game.waveSpawned = true;
@@ -503,6 +511,7 @@
     game.bullets = [];
     game.waveSpawned = false;
     game.waveCount = 0;
+    game.lastClearFrame = null;
     game.lockResults = { hit: 0, miss: 0, idle: 0 };
     game.idleSince = 0;
     game.lockMessage = null;
@@ -520,12 +529,17 @@
       if (game.spaceEdge) castLock();
       updatePlayer();
       updateEcho();
-      if (!game.waveSpawned && game.frame % 2 === 0) spawnNextWave();
-      // Wave が全て退場したら次 Wave (waveCount 偶奇で A/D 切替)
+      // Wave が全て退場したら lastClearFrame 記録 (静寂ガード材料)
       if (game.waveSpawned && game.enemies.length === 0) {
         game.waveSpawned = false;
+        game.lastClearFrame = game.frame;
         logEvent('wave_clear', { wave: game.waveCount });
       }
+      // 初回 wave (waveCount=0) は即起動、wave 2+ は前 wave clear から 8 秒静寂後に起動
+      // (Pulse Relay 70-90s カーブ第 1 段: 学習→静寂→展開、Nao_u 5/26 06:10「展開なし反復」直対応)
+      const restElapsed = game.waveCount === 0
+        || (game.lastClearFrame !== null && game.frame - game.lastClearFrame >= WAVE_REST_FRAMES);
+      if (!game.waveSpawned && restElapsed && game.frame % 2 === 0) spawnNextWave();
       updateEnemies();
       updateBullets();
       checkCollisions();
