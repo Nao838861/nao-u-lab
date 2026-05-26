@@ -210,4 +210,77 @@ https://nao-u-lab.sla
 - 副次着手候補（Phase 3 余力次第）: memory_redesign.md に GAM/SSGM/AtomMem 並置エントリ追記、kaizen #136 N=2 同型観察に「Phase 1 #nao-u 走査打ち切り」追記
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 — 本サイクル新規投稿なし、Phase 2 で 3 件投稿済
+- #shared-reads ts=1779824236 (HiMem/GAM) / ts=1779824262 (AtomMem) / #all-nao-u-lab ts=1779824294 (v002 A 案自己判定) は Phase 2 で着地済
+- Phase 1 §1-§2「新着返信要求 0 件」確定 (Phase 2 §0 走査浅さ自己訂正後も結論不変) のため、Phase 3 で追加 Slack 投稿は不要
+
+### 2) game/log_autonomous_game/v002/ 作成 (Phase 2 A 案の物理化第 1 段)
+- `mkdir game/log_autonomous_game/v002/` + v001 から game.js / index.html copy
+- audit scripts (verify/bullet_origin/enemy_behavior/agent_difficulty_proxy) は v001 path ハードコードのため一旦 v002 から削除 (Phase 4 大作業で v002 対応版を新規作成)
+- **v002/game.js 差分 (3 箇所)**:
+  - L1-L9: 冒頭コメント書換 (v001→v002、改修方針 3 箇条明文化、feedback_inside_to_outside_leak.md 徹底)
+  - drawTitle() 内: 「未来ゴースト + 結線」描画 14 行を削除、キャラ本体のみ静止描画に縮約。理由 = タイトル画面の「1 秒先計算結果を画面に流出」が v001 で残存していた最後の箇所
+  - window.__logAutonomousV001 → window.__logAutonomousV002 (index.html script 側も同期修正)
+- **v002/index.html 差分 (3 箇所)**:
+  - `<title>`: `log_autonomous_game v001 — Echo-Path (パイロットごっこ)` → `Echo-Path` (内部識別子・「ごっこ」乱用削除)
+  - `.note`: 「Trace logger / LLM playtester / memory/raw/playtrace/」等の内部用語を削除、操作説明 2 行のみに圧縮
+  - script コメント `window.__logAutonomousV001` → `window.__logAutonomousV002`
+- **v002/README.md 新規作成**: v001 からの差分 3 箇条 + 残された大作業 3 件 (wave カーブ / audit v002 対応 / self_judgment.md v002) を明示
+- 自己診断 (Q-導入): v001 採点 4 → v002 採点想定 5 (「内側→外側流出」原則を tile 画面で完全達成)。Phase 4 で self_judgment.md v002 として正式採点
+
+### 3) projects/memory_redesign.md 追記 (GAM/SSGM/AtomMem 3 論文並置)
+- §「2026-05-27 (Log C247 Phase 3): GAM + SSGM + AtomMem 3 論文並置」追加 (約 30 行 + 比較表 1 枚)
+- 6 軸 (方向性 / 何を可塑にするか / 書き込み時の意味付け / 当方既実装との対応 / 当方への射程 / 共存設計の課題) で 3 論文並置、当方現状設計を「R 層=SSGM 寄り / 読み出し=EvolveMem 寄り / 書き込み構造=kazunori_279 寄り」3 軸混合形と自己定位
+- 採用判断: GAM/AtomMem は当面**未採用** (R 層 SSGM 性が崩れる / 推論コスト爆発のため)、ただし GAM の「topic shift 検出」だけは atoms/→MEMORY.md 昇格トリガーの**観察項目**として C247-C277 想定で追跡
+- Phase 2 §1 で着想した「atom_operations_log.jsonl (CRUD 4 分類)」は kaizen 起票せず、Phase 4 以降の小実験候補に留める (feedback_rule_proliferation_canonical 順守、同型 N 回未確定)
+- メタ観察 (C243 §「3 軸独立収束」延長): 本日 1 検索で 3 論文同時ヒット = kaizen #106 摂取経路固定化の有意な成果
+
+### 4) memory/kaizen_tracker.md 追記 (kaizen #136 同型観察候補 #1)
+- #136 検証結果欄に「同型観察候補 #1 (2026-05-27 C247 Phase 3): #nao-u 走査打ち切り → 取りこぼし」を記録
+- 判定: **同型外** (#136 同型条件 2 つ「0 件返却」+「既解判明」のうち 1 つ目を満たさない、走査未完で 0 件返却ではない) として N=2 観察カウントには加算しない
+- ただし**上位パターン (Phase 1 走査の途中打ち切り → 取りこぼし)** としては同根 = staging 自己訂正記録のみで打ち止め、別 kaizen 起票はしない (feedback_few_rules_big_effect 順守)
+- C248 以降の再発時に #136 射程拡大 or 別 kaizen 起票を判定
+
+### 5) 他インスタンス洞察 (15 件、Pre-check 注入)
+- Phase 1 §6 + Phase 2 §1 で memory_redesign 直交点 (GAM/AtomMem 投稿) を 2 件消化済 = 洞察キューから 2 件分前進
+- 残 13 件は本サイクルでは消化せず、kaizen #135 観察期間 C244-C248 内で読み出し戦略改善起因の場面を 1 件以上カウントする方針に統合
+- 個別洞察への独立追記はしない (deep_review_dialogue 重複 + feedback_few_rules_big_effect 順守)
+
+### 6) 空サイクル深掘り (Phase 1 §B-E カテゴリから 1-2 件動かす)
+- Phase 1 §B「side_channel_audit.md / game_templates_design.md / principles.md 停滞 3 件」のうち **game_templates_design.md** は「ごっこ＝ラベル堕落」3 件横断の構造的学び (Phase 2 §4) と直結 → 本来 Phase 3 で 1mm 動かすべきだったが、game v002 着手 + memory_redesign 大型追記で時間予算消化、本サイクルは **動かさず、Phase 4 大作業の中で v002 経由間接的に game_templates 化判定** に統合する形に変更
+- Phase 1 §D「feedback_means_ends_reversal_check.md の T 更新候補」は v002 着手自体が「ゲームを動かして出す」原則直接適用 (brainstorm/cross_review 主出力サイクルではない) のため、T 更新せず本サイクル運用継続が正解と判定 = メモのみ (アクセス記録)
+
+## 次フェーズの大作業 (Phase 4 で完遂)
+
+### タイトル
+**log_autonomous_game v002 完成度上げ — wave カーブ実装 + audit scripts v002 対応 + self_judgment.md v002 採点**
+
+### 完遂の定義 (Phase 4 終了時に成立していれば完了)
+- (1) `game/log_autonomous_game/v002/game.js` に **wave 2 開始遅延 + 弾密度カーブ調整** が入っており、wave 1 = 軽量導入 (敵 A 3 体 / 弾密度 v001 の 70% 以下) → wave 2 = wave 1 撃破後 8 秒以上の静寂 → 敵 D 横断追加、というカーブが**コード上**確認できる (該当行コメントに「Pulse Relay 70-90s カーブ第 1 段」明示)
+- (2) `game/log_autonomous_game/v002/verify.js` を新規作成し、悪手 4 種 (camper/lane-holder/blind-sweeper/nospecial) が wave 1 内で全 fail することを v002 game.js で確認 (exit 0 + 各方針の死亡フレーム JSON 出力)
+- (3) `game/log_autonomous_game/v002/self_judgment.md` 新規作成。v001 採点 20/25 を起点に、v002 採点 (5 軸 = Q-A 5 / Q-導入 5 (tile ghost 削除分加点) / Q-成功FB 状態3 / Q-D / Q-E) と「展開なし反復解消度 (wave 2 の出現で v001 から何点改善したか)」を文書化
+- (4) projects/log_autonomous_game.md 履歴欄に「2026-05-27 C247 Phase 4: v002 着地」節を追加、(1)-(3) のリンクと差分要約
+
+### 着手手順 (最初の 1 手と想定手順)
+1. **最初の 1 手**: `Read game/log_autonomous_game/v001/game.js L219-L271` (敵 A/D wave spawner 部分の構造把握) + `Read game/log_autonomous_game/v001/design_log.md` 「70-90 秒カーブ」関連節を再確認
+2. v002/game.js に **wave 1 軽量化** (spawnWaveA() で n=5 → n=3 + shootCooldown 初期値 +30 オフセット)
+3. v002/game.js に **wave 2 遅延機構**: `waveSpawned` flag を「全撃破 + 8 秒経過」で次 wave 起動するよう変更 (game.lastClearFrame 追加 + spawnNextWave() 呼出条件に時間ガード)
+4. v001 verify.js を v002 にコピー → target path書換 + 「wave 1 軽量化分の閾値調整」確認、4 方針が wave 1 内 fail することを再確認
+5. v002/self_judgment.md 新規作成: v001 構造をコピー + v002 差分採点 + 残課題 (実機判定依存) 明示
+6. projects/log_autonomous_game.md 履歴欄 + design_log.md v002 セクション追加
+7. commit prefix=`game:` で v002 wave/verify/self_judgment 一括 push、commit prefix=`log:` 系統と分離
+
+### 選んだ理由 (なぜこれを最優先か)
+- **Active project (log_autonomous_game.md) の停滞解消**: Nao_u 5/26 06:10 指摘から 22 時間「指示待ち」凍結、Phase 2 で自己判定 A 案選択 → Phase 3 で v002 骨格着地 → Phase 4 で wave カーブ完遂 = Nao_u 指摘から ~3 日で v002 出荷可能状態に到達
+- **CLAUDE.md「絶対にやる」第 1 項「ゲームを動かして出す — 積み上げはその副産物」直接適用**: 本サイクルの第一義 game/* playable diff 出力が v002 ディレクトリ作成のみで終わると「brainstorm/結晶化/cross_review 主出力サイクル」(feedback_means_ends_reversal_check.md 診断対象) に逆戻りする。Phase 4 で wave 実装まで進めて初めて「playable diff として展開のある v002」になる
+- **30 分粒度の判定**: wave 1 軽量化 (10 分) + wave 2 遅延 (10 分) + verify.js v002 化 (5 分) + self_judgment.md (5 分) = 約 30 分の最小単位、Phase 4 1 サイクル内で完遂可能
+- **同型再発防止 (Phase 2 §4 「Nao_u 返信待ち凍結」メタ問題)**: Phase 2 で「Nao_u が判定装置ではなく最終確認装置」原則に整合化したばかり = Phase 4 で実物 v002 を出して初めて「自己判定で進める」運用が結晶化する。Phase 3 骨格止まりだと「Nao_u 返信待ち再凍結」リスク残存
+
+### Phase 4 で**やらない**こと (スコープ明示)
+- v002 brainstorm.md / user_directives_raw.md の再構築 (v001 共有のままで Phase 5 以降に判断)
+- ヘッドレス連続フレーム画像化 (Fly Fail Fix 由来、別大作業候補)
+- LLM playtester 化 (v001 凍結事項、変更しない)
+- 敵 B/C 追加 (Q-C で 4 種規定だが、敵 D 追加までで本 Phase 4 完遂、敵 B/C は Phase 5 以降)
+- memory_redesign.md / kaizen_tracker.md への追記 (Phase 3 で着地済、Phase 4 は game/* 専念)
+

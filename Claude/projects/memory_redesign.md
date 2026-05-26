@@ -1955,3 +1955,23 @@ Pre-check 洞察キュー #5 = Mir #all-nao-u-lab 投稿 ts周辺「Nao_u 共有
 **次の 1 mm**: 本知見は build_atom_edges.py の試作判断 (kaizen #135) を補強する材料に留め、独立した kaizen 起票はしない (feedback_few_rules_big_effect 順守、同型 3 軸目だが本ファイル既論を強化する方向で、新規装置追加には繋げない)。Mir 投稿は #all-nao-u-lab で 1 mm 反応 (本節を URL リンクで参照) する程度に留め、shared-reads 再投稿はしない (摂取経路固定の範囲)。
 
 ---
+
+### 2026-05-27 (Log C247 Phase 3): GAM (HiMem 2604.12285) + SSGM (2603.11768) + AtomMem (2601.08323) 3 論文並置
+
+本サイクル Phase 1 §6 外部検索 (kaizen #135 周辺領域、kaizen #106 摂取経路固定化適用) で 3 論文ヒット → Phase 2 で 2 論文 (HiMem/GAM ts=1779824236、AtomMem ts=1779824262) を #shared-reads 投稿、SSGM は前サイクルで既に蓄積済 (C246 Phase 1 §6 由来)。3 論文が「**動的にする箇所と固定する箇所の切り分け**」を 3 方向から照らす偶然 (C243 Phase 3 §EvolveMem/SkillOpt で記録した 2 軸セットの拡張形)。
+
+| 軸 | HiMem / GAM (2604.12285) | SSGM (2603.11768) | AtomMem (2601.08323) |
+|---|---|---|---|
+| **方向性** | 構造分離 (2 層階層化) | 関所ガバナンス (進化抑制) | 学習駆動 (進化促進) |
+| **何を可塑にするか** | 統合タイミング (topic shift で encoding→consolidation 昇格) | risk/mechanism/governance 3 関所で「変えない」を強制 | CRUD 4 操作の policy を SFT+RL で学習 |
+| **書き込み時の意味付け** | 階層分離あり (encoding は緩 / consolidation は厳) | 関所通過時のみ意味付けを更新 | CRUD = 意味付けを操作として外部化 |
+| **当方既実装との対応** | atoms/ → MEMORY.md 昇格 (現状: 手動) ↔ GAM の reconsolidation | R 層判断 (CLAUDE.md/SKILL.md 慎重更新) ↔ SSGM 関所 (Log C243 SkillOpt 同方向) | atom_operations_log.jsonl 案 (Phase 2 §1 着想) ↔ AtomMem CRUD 操作可視化 |
+| **当方への射程** | atoms/→MEMORY.md 昇格判定の **意味的トリガー設計** に直接示唆 (現状はサイクル経過 + Nao_u 指摘で昇格、topic shift 検出ロジックは無い) | 「変えない」装置の正当化 = `feedback_few_rules_big_effect.md` / `core_mission.md` 読み取り専用扱いと同方向 | RL は当面適用不可 (我々は単一 agent 直接実行)、しかし **CRUD 分類で atom 操作の事後可視化** だけなら学習なし流用可能 |
+| **共存設計の課題** | GAM 階層 × SSGM 関所 = 階層別に関所厳しさを変える複合形 | SSGM (進化抑制) × AtomMem (進化駆動) = **方向性逆**、共存設計には「どの軸で動かし、どの軸で止めるか」の明文化が必要 | AtomMem を採用すると SSGM 関所が学習対象になる → 関所自体が動く危険、ガバナンス側の事前固定が必要 |
+
+**3 論文並置から取り出した 1 つの判断**: 当方の現状設計は **R 層 = SSGM 寄り (固定強化) / 読み出し戦略 = EvolveMem 寄り (可塑化) / 書き込み構造 = kazunori_279 寄り (構造化放棄)** という 3 軸混合形になっている。GAM/AtomMem は当面**未採用**でよい (採用すると R 層の SSGM 性が崩れる、または推論コストが跳ね上がる)。ただし「atoms/ → MEMORY.md 昇格の意味的トリガー」だけは GAM の topic shift 検出を**観察項目**として今後 1 ヶ月 (C247-C277 想定) 追跡する。
+
+**メタ観察 (C243 §「3 軸独立収束」延長)**: 本日 C247 Phase 1 §6 外部検索 1 本で 3 論文同時ヒットは **kaizen #106 摂取経路固定化の有意な成果**。memory_redesign を 3 方向から照らす素材が 1 サイクルで揃ったのは外部 survey 軸が機能している兆候として記録。同時に「3 論文ヒットしたから 3 提案を起票する」誘惑への耐性試験でもあり、本節は kaizen 起票ゼロで保留 (`feedback_rule_proliferation_canonical.md` 順守、同型 N 回未確定)。
+
+**次の 1 mm**: atom_operations_log.jsonl (CRUD 4 分類で atom の create/update/delete/promote を 1 行ずつ追記) のみ Phase 4 以降の小実験候補。学習を伴わない、ログ可視化のみ = `feedback_substrate_not_infrastructure.md` T:5 順守の最小実装。kaizen 起票判定は同型 (CRUD 操作の見えなさ) が再度確認されてから。
+
