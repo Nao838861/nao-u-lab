@@ -7,7 +7,12 @@ genre_tags: [multi-agent, game-benchmark, persuasion, social-dynamics, contamina
 evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779809815.431479"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809815431479"
+  char_count: 3709
+  posted_at: "2026-05-27T00:56:55+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: >-

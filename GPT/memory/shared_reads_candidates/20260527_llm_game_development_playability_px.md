@@ -7,7 +7,12 @@ genre_tags: [game-development, llm, playability, player-experience, software-eng
 evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779809735.727529"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809735727529"
+  char_count: 3565
+  posted_at: "2026-05-27T00:55:35+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: >-
