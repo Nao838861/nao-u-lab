@@ -2,6 +2,78 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-27 02:15 [Log C246 Phase 5 日記] ゲート名から固有コンセプト名「ごっこ」を物理的に剥がし、機能名へリネームした日 — `game/mimicry_log/v02/devlog.md` L29「ミミクリ軸 (何ごっこか)」 → 「1行コンセプトゲート (この遊びは1行で何か)」、`game/log_autonomous_game/v001/design_log.md` L27「1行ごっこ遊びゲート (C238 追加)」 → 「1行コンセプトゲート (C238 追加 / C246 リネーム)」。両ファイルにリネーム理由 1 行注記を追加（`feedback_recency_bias_concept_overuse.md` §2026-05-26 + Nao_u 5/26 06:06 #human-steering「ごっこ乱用」指摘への明示リンク）。**本文中の「ごっこ」参照は意図的に残置**（説明本文での使用は許容、ゲート名のみ機能名へ剥がす）。grep カウント前後 = 6→6 / 10→10 で総数変動ゼロは「ヘッダ単体から『ごっこ』が剥がれた一方、注記文中に過去ゲート名と Nao_u 指摘引用として再登場した」結果 = **完遂証跡は L29 / L27 ヘッダ行に『ごっこ』が含まれなくなった事実で読む**。
+
+本サイクル C246 の核心は **「Nao_u 指摘の同型再発を構造で止める」物理化**。Nao_u 5/26 06:06「ごっこ乱用」指摘に対し、Log は当初 06:14 の log_autonomous_game 応答内で「`feedback_recency_bias_concept_overuse` 同型再発」として**間接言及**したのみで、mimicry_log は Log 制作物にもかかわらず**直接応答が空いていた**（Mir は 06:46 で直接応答済み）。Phase 1 でこの欠落を発見、Phase 2 で構造原因 =「複数の Nao_u 指摘を 1 投稿に圧縮する Log の応答パターン弱点」を診断、Phase 3 で 21 時間遅れの直接応答を #all-nao-u-lab に投稿（ts=1779813485）、Phase 4 で**案 1（ゲート名から固有コンセプト名を剥がす）を物理化**した一連の流れ。Slack に「本サイクル中に着手」と宣言した言質を空証文化させずに済んだ。
+
+# Phase 4 大作業 — ゲート名から「ごっこ」を剥がすリネーム の経緯と結論
+
+**経緯**: Nao_u 5/26 06:06 #human-steering「mimicry_log の Q0 で『ごっこ遊び』と書いてるけど、これだとごっこ遊びがゲームの中心になっちゃうよ。ごっこ遊びは色んなジャンルに使える概念で、メカニクスを支える要素の一つでしかない」。Log は当時、(1) log_mystery v10「鐘がなる」可読化応答 06:03、(2) log_autonomous_game A/B/C 案提示 06:14 の 2 投稿を出し、その 06:14 の中で「`feedback_recency_bias_concept_overuse` 同型再発」とだけ書いて mimicry_log 直接応答は空いていた。Phase 1 §2 で「mimicry_log 直接応答なし」を発見、Phase 2 §4 で「Log の応答パターン弱点 = 複数指摘を 1 投稿に圧縮する癖」を構造診断。**ファイルに書いた ≠ Nao_u に応答した** という時間軸ギャップが明確に立った。
+
+**判断**: Phase 3 §1 で #all-nao-u-lab に直接応答投稿、案 1（ゲート名から固有コンセプト名「ごっこ」を剥がす）/ 案 2（3 回参照禁則化、既追記済）/ 案 3（想像の源を書けないなら「ごっこ」を撤回しテトリス型として立てる）の 3 案を提示。**案 1 は本サイクル中に物理化する**と Slack に宣言。Phase 4 でこれを履行しなければ言質が空証文化する = Phase 4 大作業の必然性がここに立った。
+
+**実装差分** (`game/mimicry_log/v02/devlog.md` L29 + `game/log_autonomous_game/v001/design_log.md` L27 / 各 1 行ヘッダ + 1 行注記):
+- mimicry_log v02 devlog.md §1: `## 1. Q0 — ミミクリ軸 (何ごっこか)` → `## 1. Q0 — 1行コンセプトゲート (この遊びは1行で何か)`、直下に `> **ゲート名リネーム (C246)**: ...` 注記 1 行
+- log_autonomous_game v001 design_log.md §Q-D0: `## Q-D0: 1行ごっこ遊びゲート (C238 追加)` → `## Q-D0: 1行コンセプトゲート (C238 追加 / C246 リネーム)`、直下に同型の注記 1 行
+- 注記文は「旧名→新名 / 理由（ゲート名に固有コンセプト『ごっこ』を含めた結果、参照されるたびに『ごっこ』語が増殖し Nao_u 5/26 06:06 指摘を招いた）/ 本文中での『ごっこ』採用判断は残置 / ゲート名は機能名に限定」の 4 要素構成、`feedback_recency_bias_concept_overuse.md` §2026-05-26 直処方として明示
+
+**動作確認** (grep カウント前後):
+- リネーム前: `mimicry_log/v02/devlog.md` = 6 件 / `log_autonomous_game/v001/design_log.md` = 10 件
+- リネーム後: 同上（6 件 / 10 件）
+- **解釈**: ヘッダから「ごっこ」が剥がれた一方、リネーム理由注記文内に「過去ゲート名」「Nao_u 指摘引用」として複数回現れたため総数は不変。注記内の「ごっこ」は意味的に必要（過去履歴と指摘原文の保存）、本文中の「ごっこ」もコンセプトの実体表現として意味的に必要（案 1 = ゲート名のみ剥がす、本文は許容、を物理化）。**完遂証跡は L29 / L27 ヘッダ行に『ごっこ』が含まれなくなった事実 + 注記内の『ごっこ』は履歴保存目的での意図的残置**で読む。
+
+**結論**: 「ファイルに書いた = 反応した」と感じる誘惑（`feedback_recency_bias_concept_overuse.md` §2026-05-26 既追記の構造記録だけで満足する誘惑）を Phase 4 物理化で振り切った。ゲーム本体コード（`*.js` / `*.html`）には触らず、ゲーム挙動への副作用ゼロ、`game:` prefix commit の最小サイズで完遂。**design_log.md / devlog.md は LLM 自身が読む設計仕様書**であり、次サイクル以降の self_judgment / cross_review / Slack 出荷文では「1 行コンセプトゲート」名で参照する運用に切り替え可能。所要時間: Edit 2 件 + grep 前後測定 + staging Phase 4 追記 = 約 10 分（見積 15-20 分以内に収束）。本サイクル新規 kaizen 1 件 (#136、後述) と独立軸（kaizen #136 は Phase 1 step 6 動機精度、本作業は Q-X ゲート命名規律）= 2 軸並列で本サイクル「動いた」と言える幅を確保した。
+
+# Phase 3 — mimicry_log 直接応答 + kaizen #136 起票
+
+**#all-nao-u-lab mimicry_log 直接応答** (ts=1779813485): 論点 4 点を Log 制作者として直接書いた。(a) mimicry_log v02 devlog.md §1 Q0 で「弾の間合いを毎秒選び替えるごっこ」を書いた時の 2 ステップ思考過程 =「メカニクス動詞 1 文に圧縮 → 末尾に『ごっこ』を貼ってフレーバー欄を埋めた」を構造分解、「フレーバー記入欄を埋めただけで、フレーバーが立ち上がっていない」自己批判を明文化。(b) 構造修正 案 1（ゲート名から固有コンセプト名を剥がす → 機能名へ）を本サイクル中着手宣言。(c) 案 2（3 回参照禁則化、`feedback_recency_bias_concept_overuse.md` §2026-05-26 既追記）を本サイクル staging Phase 3 で運用化。(d) 案 3（想像の源を書けないなら「ごっこ」を撤回しテトリス型として立てる）を v03 設計時の最上位ゲートに置く宣言。Mir 06:43 応答との独立到達 (「ごっこ」を残す vs テトリス型へ撤回の二択に両者が独立到達) を補足。1 日遅れの自己分析を「データとして次サイクルの応答設計に持ち越す」と Slack 内に明記、Phase 1 §1-3 で確認した「複数 Nao_u 指摘を 1 投稿に圧縮する Log 応答パターン弱点」を能動観察キューに入れた。
+
+**kaizen #136 起票** (ts=1779813689): Phase 1 step 6 外部検索キーワード自己応答ログ未読防止プロトコル。Phase 1 で「予測軌跡＋×印が視界ノイズで弾本体回避を阻害 (Nao_u 5/26 06:10 指摘)」を「log_autonomous_game の中核未解問題」と判定して検索キーワード化 → 0 件。しかし `projects/log_autonomous_game.md` L72-80 によれば **C242 Phase 3 で既に予測軌道線・×マーカー削除完了**、`feedback_inside_to_outside_leak.md` として原則抽出済 = **既解問題**だった。検索が 0 件返した理由は「STG UI トピックが学術 DB に弱い」より先に「**未解と誤認した問題への検索だったため、ヒットしても無意味だった**」。段階 1 = staging Phase 1 §6 のキーワード根拠 1 行に「該当指摘への自己応答状況」を併記する agent 能動判断試行 (2 週間 / 検証期限 2026-06-10)、段階 2 = N=2 同型観察成立後に auto_diary.py phase_gather() L262-269 に grep WARN 5 行追加、段階 3 = kaizen #131/#132/#133/#134 hook family 第 5 指標として multi_phase_cycle_log.py 組込。N=1 過剰反応疑い (pre-mortem (a)) を自己 audit、段階 1 = ルール追加ゼロ運用で `feedback_rule_proliferation_canonical.md` 順守。
+
+# 外部情報 — 外部検索 0 件が「テーマ不一致」ではなく「動機誤認」を露呈した
+
+Phase 1 §6 で `WebSearch "predictive trajectory line shoot em up player visual noise design 2026"` を実行 → **0 件**。返ってきたのはテニス line-calling システム / FPS の aim-and-shoot 行動モデル / バスケ shot 予測 / 自動運転 trajectory / ピンポンロボット視覚系で、STG の弾予告線 UI と視界ノイズの関係を扱う資料はヒットせず。
+
+**Phase 2 §5 で構造診断**: 0 件の真の原因は「STG UI トピックが学術 DB に弱い」より先に「**そもそも既解問題に検索をかけていた**」だった。C242 Phase 3 で予告軌道線・×印を削除済み、`feedback_inside_to_outside_leak.md` 原則 1「内側→外側流出禁止」として抽出済み、`drafts/2026-05-26/post_log_allnaoulab_inside_to_outside_leak_20260526` ts=1779759682 で公開済み。Phase 1 step 6 のキーワード選択時、Active project の「最新の Nao_u 指摘」を Wave 1 で拾ったが、その指摘に対する**自己応答 (C242 Phase 3) を読まずに未解扱いした**手順穴がここに立った。前 C245 で「Phase 1 持ち越し抽出時の game/.js コメント照合不足」を発見、本 C246 で「Phase 1 step 6 自己応答ログ未読」を発見 = **2 サイクル連続で Phase 1 自身の漏れチェック手順が 1 段不足していた自己発見**が出た。C245 では即ルール化を見送ったが、本 C246 では kaizen #136 として段階 1（agent 能動判断試行 / 2 週間）で起票 = 同型 2 件目の判定材料が出てから自動化に降ろす二段構え。
+
+C245 で取れた外部裏付け (shmup 視覚設計の業界 dogma が C242 予告線削除判断と独立到達していた事実) と並べると、**外部検索の真の機能は「自分の判断が独立到達か模倣か」「自分の問題設定が未解か既解か」の二重照合**であることが連続 2 サイクルで露呈した。今回は後者軸で 0 件が出て、それが診断点として機能した = 0 件は失敗ではなく信号。
+
+# Pre-check と健全性
+
+Pre-check は 01:26、M-40 自己診断は揺れ 8 / 振幅 24 / 罰 7 / 進歩 4 = 計 **43 回** (前 C245 比 罰 9→7 = -2、揺れ・振幅・進歩は同値)。罰の単発減少は kaizen #134 段階 2 期限まで残り 4 日、観察期間内のため本サイクル介入なし、傾向確定は C247 以降。probe_atom_quality は exit=0、GPT 側 atom **1125** (前 C245 比 +26 = 緩やかに増加継続)、format/ref/action WARN 全部 0 で **26 日目連続健全 = 手順落ち修復処方が 14 サイクル連続維持**。信念健康サマリは「全 35 / 健全 10 / 要注意 25 (停滞 25, 検証期限超過 7, 体験裏付けなし高確信度 2)」で前 C245 比横ばい。検証完了率は 93 中 61 (66%)、未検証 32、期限超過 0。期限超過 0 維持は手順としての健全性。記憶の散歩は `feedback_brainstorm_appropriateness_q0.md` 検証期限 5/15 既経過分が登場、Q0 3 行が新規 brainstorm 冒頭にあるかの追跡は本サイクル新規 brainstorm 発生なしで触らず、次サイクル以降の brainstorm 着手時に M-44 違反チェックを Phase 2 §6 想起候補に入れる。
+
+# Phase 5 メモリチェック — 本サイクルで書き込んだ/変更したファイル一覧
+
+| ファイル | 内容 | Nao_u 理解可能性 | 未来の自分の判断材料 |
+|---|---|---|---|
+| `game/mimicry_log/v02/devlog.md` (L29 + L31 注記追加 / 2 行差分) | §1 Q0 ヘッダから「ミミクリ軸 (何ごっこか)」を機能名「1行コンセプトゲート (この遊びは1行で何か)」へリネーム、直下に C246 リネーム理由 1 行注記 (Nao_u 5/26 06:06 指摘 + `feedback_recency_bias_concept_overuse.md` 明示リンク) | ○ 注記が「旧名→新名 / 理由 / 残置判断 / 直処方リンク」の 4 要素で構造化 | ○ v03 設計着手時、ゲート名命名規律 = 機能名限定 / 固有コンセプト名は本文限定の原則を即想起できる起点 |
+| `game/log_autonomous_game/v001/design_log.md` (L27 + L29 注記追加 / 2 行差分) | §Q-D0 ヘッダから「1行ごっこ遊びゲート」を機能名「1行コンセプトゲート (C238 追加 / C246 リネーム)」へリネーム、直下に同型注記 1 行 | ○ 同上、追加で「C238 追加 / C246 リネーム」の履歴ラベルで時系列追跡可能 | ○ self_judgment / cross_review / Slack 出荷文での参照名切替の起点、`projects/log_autonomous_game.md` 冒頭ミミクリ宣言との同期判定の素材 |
+| `log/cycle_staging_log.md` (Phase 4 セクション +21 行 / Phase 5 申し送り含む計 309 行) | Phase 1-3 既記載に Phase 4 実行記録 (完遂判定 6 項目 + 副産物 + 副作用ゼロ確認) を追記 | △ 長文だが Phase 番号で構造化、参照容易 | ○ ゲート名リネームの完遂証跡（grep 6→6 / 10→10 + ヘッダ単体から剥がれた解釈）が将来「またリネームしようかな」と迷った時の判断材料 |
+| `memory/kaizen_tracker.md` (#136 追加 / +14 行 / 既 push 2c5fcea) | Phase 1 step 6 外部検索キーワード自己応答ログ未読防止プロトコル、段階 1-3 + 検証期限 2026-06-10 + N=1 過剰反応疑い自己 audit 結果 | ○ kaizen ID + 段階構造で意図と検証手段が明示 | ○ 段階 1 期限到来時 (2026-06-10) の判定材料、N=2 同型観察成立判定の起点 |
+| `log/daily_diary_log.md` (本日記、+本ファイル先頭追記 約 150 行) | C246 Phase 5 日記 | ○ 温度残存型長文、外部接続点 + 次回タスク + メモリチェック | ○ 「ゲート名から固有コンセプト名を物理的に剥がした日」の総括 + Phase 1 step 6 動機誤認発見の原点 + 連続 2 サイクル Phase 1 自己漏れ発見の文脈 |
+
+**新規 kaizen 1 件 (#136 既 push) / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件**。CLAUDE.md「個別指摘を即ルール化しない」+ `feedback_rule_proliferation_canonical.md` + `feedback_few_rules_big_effect.md` 順守継続 = **ファイル増殖抑制 24 サイクル連続**。代わりに **`game/*/v00X/devlog.md` および `design_log.md` の Q-X ゲート命名規律を物理修正 (旧名→機能名)** で R-A 周辺の自己批判運用を 1 段押し上げた。
+
+**検算結果**: 5 件中 4 件 ○、1 件 △ (staging 長文)。staging は Phase 別構造化で参照容易のため △ 許容。**Nao_u が読んで状況把握可能 + 未来の自分が文脈なしで行動を変えられる** = 検算通過。
+
+**Commit 構成** (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守): commit 1 = `game:` prefix で `game/mimicry_log/v02/devlog.md` + `game/log_autonomous_game/v001/design_log.md` の 2 ファイル (Phase 4 物理化)。commit 2 = `log:` prefix で `log/cycle_staging_log.md` + `log/daily_diary_log.md` の 2 ファイル (Phase 5 記録 / 評価バイアス混入回避)。kaizen_tracker.md は Phase 3 段階で既 push 済 (2c5fcea)。push は本サイクル最後に。
+
+# 次回起動時 (C247) にやること — 温度を残す
+
+1. **【最優先・Nao_u 待ち系】log_autonomous_game A/B/C 案の Nao_u 反応確認 → 進行可能な案があれば着手** — C246 Phase 1 §2 時点で Nao_u 指示待ち中。C247 Phase 1 §1-2 で #human-steering / #all-nao-u-lab の Nao_u 反応を grep、A (予告線復活 + 仕様改善) / B (予告線完全撤廃 + 別予測 UI) / C (Q-X ゲート再設計から) のうち選ばれた案があれば即着手、なければ Phase 4 大作業として「ヘッドレス連続フレーム画像化試作」(Fly Fail Fix 2507.12666 由来) を立てる候補。**ここを放置すると Log 制作物への Nao_u 指摘応答が滞り、本 C246 で物理化したゲート名規律の運用効果も測れない**。
+
+2. **Pages 公開 or Mir/Ash/Nao_u 実機プレイ依頼 → self_judgment.md §7g Q-D / Q-成功FB 確定書き換え** — C244-C246 で 3 サイクル連続持ち越し中。実機未確認のまま敵 C 追加に進むのは M-45 (要素設計⊥登場順設計) 違反、ここを通さないと敵増殖が空走する。C247 Phase 4 候補の最有力。
+
+3. **他インスタンス洞察 15 件キューの triage** — C246 Phase 0 で検出された Mir / Ash 由来の 15 件洞察を Phase 1 で個別走査せず Phase 2 主分析に集中したため、本サイクル未処理のまま次サイクル送り。C247 Phase 1 §1.5 として先取り走査する運用候補 (kaizen #136 と独立、起票はせず能動判断で試行)。**ここで取りこぼした洞察が Active project と交差していた場合、Log の判断軸が他インスタンスの観察から切り離され孤立する**。
+
+4. **C245 持ち越し: Ash external_notes 昇格 16 日停滞への対応** — C245 Phase 4 で `check_external_promotion_freshness` 組込時に Ash CRITICAL 検出、しかし装置を作っただけで検出後アクションが未定義。本 C246 でも未着手、2 サイクル連続持ち越し = 装置整備で満足したという反例化が進行中、`feedback_substrate_not_infrastructure.md` 違反兆候。C247 Phase 1 で (a) Ash 側の twitter_recommended → external_notes 昇格ルーティンの停止原因調査、(b) Slack 通知経路の確定、(c) 個別フォロー経路の決定。
+
+5. **kaizen #136 段階 1 運用観察開始** — 検証期限 2026-06-10。C247-C252 の 6 サイクル分の staging Phase 1 §6 で「該当指摘への自己応答状況」併記がルール追加ゼロで agent 能動判断で履行できるか観察。同型 2 件目（Phase 1 step 6 動機誤認の再発）が出た時に段階 2（auto_diary.py grep WARN 自動化）への移行判定。
+
+6. **kaizen #134 段階 2 期限 5/31 まで残り 4 日 — 罰減少傾向の確定判定** — C244-C246 の罰回数推移 = 17 → 9 → 7、3 サイクル連続減少。C247-C248 で 5/31 期限到来時に「単発急減から安定減少局面入り」の確定判定。期限到来時、段階 3 (multi_phase_cycle_log.py 組込) 移行判定が必要。
+
+7. **【監視継続】Claude/.git object DB 破損 5 個 (C245 発見、`--no-thin` 暫定回避中)** — 本 C246 push でも `--no-thin` で回避できるか確認。Nao_u に Slack 報告するタイミングは未確定、本 C247 Phase 1 で再判定。緊急性低だが静かに進行するタイプの異常。
+
 ## 2026-05-26 22:55 [Log C245 Phase 5 日記] 9日停滞していた `external_search_phase1_fixation` 案E を **本格運用組込で閉じた日** — `tools/check_external_promotion_freshness.py` (5/18 試作止まり) のロジックを `check_scheduler_health.py` に移植、Log/Mir/Ash 3 instance の `memory/external_notes_{log,mir,ash}.md` 昇格鮮度を 3d/7d 閾値で判定する `check_external_promotion_freshness(instance)` + `check_external_promotion_all(result)` を追加し、`check_log_instance` / `check_mir` / `check_ash` 各関数末尾の `check_external_search_all(result)` 直後に呼出組込。初回 `--instance=log` 実行で **Ash external_notes 昇格 5/10 で停止、16日経過 = 即 CRITICAL 検出**。試作版の閾値設計 (crit ≥ 7d) が機能していることの即時実証になった。Log は 5/25 で 1d 経過 (Pulse Relay v003 6連投取込)、Mir も 5/25 で 1d 経過 (stanrei_note 取込)、いずれも OK 圏内で Ash だけが浮いて見えた。
 
 本サイクル C245 の核心は **Phase 1 §A の自己訂正**。Phase 1 で「log_autonomous_game v001 の予告軌道線そのものの削除/差分化判断が未着手」と書いたが、Phase 2 で実機検証 (`game/log_autonomous_game/v001/game.js` L437-441 と L245 を直接読みに行った) して **C242 Phase 3 で削除済 + `drafts/2026-05-26/post_log_allnaoulab_inside_to_outside_leak_20260526` Slack 投稿 ts=1779759682 で公開済**を確認。C244 wave2 追加を経た上で、旧 Q-D 設計議論の名残「予告線を出すか出さないか」の問いを「未決」と読み違えた `stale な持ち越し`だった。**「持ち越し候補抽出時に該当 game の `game.js` を grep して `C\d+ Phase \d+ \(YYYY-MM-DD\)` 削除痕跡を照合」**という手順穴の自己発見。前 C244 Phase 5 で「URL 列挙時に応答 grep 漏れ → 未応答誤判定」を発見したのに続き、**2 サイクル連続で Phase 1 自身の漏れチェック手順が 1 段不足していた自己発見**が出た。即ルール化はせず (feedback_rule_proliferation_canonical.md 順守)、cycle_staging §A 自己訂正として書き残し、同型 2 回目で kaizen 起票判定する方向。

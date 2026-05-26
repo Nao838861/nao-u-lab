@@ -284,3 +284,26 @@ Phase 4 終了時に以下が成立:
 - **playable diff としての軽さ**: ゲーム本体コード (`*.js` / `*.html`) には触らないため、ゲーム挙動への副作用ゼロ、`game:` prefix commit の最小サイズ
 - **kaizen #136 と独立軸**: kaizen #136 は Phase 1 step 6 動機精度、本作業は Q-X ゲート命名規律、対象レイヤーが異なる = 2 軸並列で本サイクル「動いた」と言える幅を確保
 - **case で考えて却下した代替案**: (i) log_autonomous_game v002 着手 = Nao_u A/B/C 指示待ち中で動かしてはいけない / (ii) ヘッドレス連続フレーム画像化試作 = 30 分超過確実 / (iii) projects/log_autonomous_game.md 残課題リスト更新のみ = 「文書のみ」では Active project 停滞解消にならない
+
+## Phase 4: 実行記録 (C246 Phase 4)
+
+### 完遂判定
+1. ✅ `game/mimicry_log/v02/devlog.md` L29 `## 1. Q0 — ミミクリ軸 (何ごっこか)` → `## 1. Q0 — 1行コンセプトゲート (この遊びは1行で何か)` リネーム済
+2. ✅ `game/log_autonomous_game/v001/design_log.md` L27 `## Q-D0: 1行ごっこ遊びゲート (C238 追加)` → `## Q-D0: 1行コンセプトゲート (C238 追加 / C246 リネーム)` リネーム済
+3. ✅ 本文中「ごっこ」参照は残置 (説明本文での使用許容)
+4. ✅ 両ファイルに `> **ゲート名リネーム (C246)**: ...` 注記 1 行追加 (Nao_u 5/26 06:06 #human-steering 指摘 + `feedback_recency_bias_concept_overuse.md` §2026-05-26 への明示リンク)
+5. ✅ grep 結果記録:
+   - **リネーム前**: `mimicry_log/v02/devlog.md` = 6件 / `log_autonomous_game/v001/design_log.md` = 10件
+   - **リネーム後**: 同上 (6件 / 10件)
+   - **解釈**: ヘッダ単体から「ごっこ」が剥がれた一方、リネーム理由を説明する注記内に「ごっこ」が複数回現れたため総数は変動なし。注記内の「ごっこ」は **過去ゲート名** および **Nao_u指摘の引用** のため意味的に必要、本文中の「ごっこ」は **コンセプトの実体** のため意味的に必要 = 残置が正解。完遂証跡は `grep -n` 結果での「ヘッダ行 (L29 / L27) に『ごっこ』が含まれなくなった」事実で読む (L31 / L29 の注記行に移行)
+6. ✅ commit は Phase 5 で `game:` prefix で実施予定 (Phase 4 では commit せず)
+
+### 副産物
+- 変更ファイル: `game/mimicry_log/v02/devlog.md` / `game/log_autonomous_game/v001/design_log.md` / `log/cycle_staging_log.md` (本ファイル Phase 4 セクション追記)
+- Slack 投稿 / kaizen エントリ: なし (Phase 3 で処理済、Phase 4 で増やさない指示順守)
+- 所要時間: Edit 2 件 + grep 前後測定 + staging 追記 = ~10 分 (見積 15-20 分以内)
+
+### 副作用ゼロ確認
+- ゲーム本体コード (`*.js` / `*.html`) には触っていない → ゲーム挙動への影響なし
+- design_log.md / devlog.md は LLM 自身が読む設計仕様書 → Nao_u プレイ体験への直接影響なし
+- 次サイクル以降の self_judgment / cross_review / Slack 出荷文では「1行コンセプトゲート」名で参照する運用に切り替え可能
