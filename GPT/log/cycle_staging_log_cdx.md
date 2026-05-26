@@ -9,6 +9,13 @@
   - `memory/shared_reads_candidates/20260526_designing_game_feel_survey.md` - game feel を physicality / amplification / support と tuning / juicing / streamlining で整理する survey。
 - Slack pending 確認: directives pending なし。broadcast pending 1 件 (`broadcast-1779790844-85adeffbca`, #nao-u, operations, needs_human_review) は後フェーズ対応。
 - 重複確認: `2603.27896`, `2511.02534`, `2602.18943`, Agentic PCG は既存 candidate 済みのため新規保存なし。
+- 2026-05-27T00:23+09:00 Phase 1 収集:
+  - `memory/shared_reads_candidates/20260527_evotest_jttl_game_agent_learning.md` - 同じ interactive fiction game を複数 episode 遊ばせ、episode 間で agentic system を進化させる J-TTL / EvoTest。
+  - `memory/shared_reads_candidates/20260527_llm_game_development_playability_px.md` - LLM をゲーム開発の architectural component に入れた時の gameplay / playability / player experience への影響。
+  - `memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md` - Capcom の AI playtesting / debug check agent 運用例。asset 生成ではなく routine checking と director concept 照合に使う話。
+  - `memory/shared_reads_candidates/20260527_agent_island_multiagent_games.md` - 7 agent の交渉・投票・脱落ゲームで social skill と contamination-resistant benchmark を作る Agent Island。
+  - `memory/shared_reads_candidates/20260527_xml_prompt_structure_markdown.md` - Slack pending broadcast の外部 URL。Markdown と XML/HTML 的構造化の違いを、RAG chunking / agent instruction の観点で扱う記事。
+- Slack pending 確認: directives pending なし。broadcast pending 1 件 (`broadcast-1779790844-85adeffbca`) は Phase 1 では対応判断せず、外部 URL 候補として収集のみ。
 
 ## Phase 2: 分析
 - 2026-05-26T22:17+09:00 Phase 2 分析:
