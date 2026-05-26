@@ -42,7 +42,40 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-05-27T08:53:17+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779449687-d01b633986
+    source_ts: "1779449687.257459"
+    title: "atomic.chat (ローカル完結 ChatGPT 代替 OSS) — Nao_u 5/22 #nao-u atomic_chat_hq URL 投下の翻訳保管"
+    reason: "Nao_u 投下 URL を Log が #shared-reads へ翻訳保管した score 17 atom。memory/game-design/agent/operation/evaluation をまたぎ、外部 API に出しにくい記憶・ログ・検証プロンプトを OpenAI-compatible なローカル provider 候補で扱う視点が、定時サイクルの memory/recall/staging 運用に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed/source_ts と review を追加し、次に local LLM / OpenAI-compatible provider / atomic.chat 候補を扱う時の B-side subpath A/B probe を追加。主系置換や恒久ルール追加はしない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  adopted_probe:
+    id: probe-20260527-local-provider-subpath-ab
+    questions:
+      - "local provider を考える前に、recall summary / dedup judgment / staging template / draft critique / log compression のような低リスク subpath を 1 つだけ名指ししたか。"
+      - "主系 provider を維持し、local path は B-side evidence として採用理由・handoff density・error class・downstream rework のどれか 1 つで比較したか。"
+      - "local provider が実環境にない場合、能力境界として記録し、実装負債や恒久ルールを増やさなかったか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

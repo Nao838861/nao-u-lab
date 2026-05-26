@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-27T07:45:00+09:00",
+  "updated_at": "2026-05-27T08:53:17+09:00",
   "reviewed_source_ts": [
+    "1779449687.257459",
     "1779827466.030839",
     "1779802713.841839",
     "1779778029.147899",
@@ -62,6 +63,23 @@
     "1779514661.303569"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T08:53:17+09:00",
+      "id": "sr-1779449687-d01b633986",
+      "source_ts": "1779449687.257459",
+      "title": "atomic.chat (ローカル完結 ChatGPT 代替 OSS) — Nao_u 5/22 #nao-u atomic_chat_hq URL 投下の翻訳保管",
+      "decision": "adopt_probe",
+      "reason": "Nao_u 投下 URL を Log が #shared-reads へ翻訳保管した score 17 atom。記憶・想起・圧縮、agent、operation、evaluation の複数タグを持ち、ローカル完結 OpenAI-compatible provider を主系置換ではなく低リスクな補助判断の観測点として扱う視点が、現在の定時サイクルと memory 運用に直結する。ただし即実装や恒久ルール化は重いので、次にローカル LLM/provider 候補を扱う時の可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T07:45:00+09:00",
       "id": "sr-1779827466-7c3e4d9749",
@@ -1774,6 +1792,18 @@
         "If prior art is only a proxy for playability, did I keep the verdict limited to structural plausibility and name the remaining player-facing check?"
       ],
       "expires_after": "Review after the next STG or bullet hell mechanic design, prior-art note, playable diff, or self_judgment that uses existing games as evidence."
+    },
+    {
+      "id": "probe-20260527-local-provider-subpath-ab",
+      "created_at": "2026-05-27T08:53:17+09:00",
+      "source_ts": "1779449687.257459",
+      "scope": "next local LLM / OpenAI-compatible provider / atomic.chat candidate evaluation where memory recall, staging summaries, shared-reads drafts, or Slack preflight checks may be moved off the main external API path",
+      "questions": [
+        "Before considering a local provider, did I name exactly one low-risk subpath such as recall summary, dedup judgment, staging template, draft critique, or log compression instead of discussing main-agent replacement?",
+        "Did I keep the main path as the trusted provider and define the local path as B-side evidence only, with one observable comparison such as adopted reason, handoff density, error class, or downstream rework?",
+        "If no local provider is actually available, did I record the missing capability as an environment boundary and avoid adding implementation debt or permanent rules?"
+      ],
+      "expires_after": "Review after the next local provider, OpenAI-compatible endpoint, atomic.chat, or offline memory/log summarization proposal."
     }
   ]
 }
