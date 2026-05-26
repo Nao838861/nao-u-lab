@@ -54,3 +54,16 @@ related:
 - 3 例の独立収束は強い兆候だが、同じ朝の同じ指摘者からの 3 件であり、別観察者・別サイクルでの再現は未確認
 - 「隠した方が強い」判定の打率は v001 改修後の自己採点 + Nao_u 反応で 1 巡見る必要がある
 - 適用後に「予測ゴースト無し版が逆に難しすぎる」場合、「邪魔転じて core mechanic 化」案 (Phase 2 §4 案 B) を再検討する余地は残す
+
+## refine: telegraph は inherently 悪ではない (2026-05-27 C247 NextMars 4軸目)
+
+NextMars 2026-03「Premium 2D Gameplay Readability Systems」が telegraph logic を 7要素のうち 1要素として **積極的に** 位置づけているのを読んだ後、v001 失敗を再診断。
+
+- v001 失敗の真の原因 = telegraph (予告軌道線+×印) が **悪いのではなく**、contrast priorities / silhouette rules / effect hierarchy が同色家族4要素同居で崩壊した結果、telegraph 信号が視覚ノイズに飲まれて読めなくなった
+- つまり「内側→外側流出」の事故面は、本原則の射程外でも別経路で起きる: **visual hierarchy 設計が不在のまま telegraph を足すと telegraph も読めない = 「見せた」のに「見えない」二重事故**
+- 本原則の射程は維持: v001 が telegraph を削った判断は正しい (visual hierarchy 設計と同時にやり直すコストが高い)。ただし将来 v002+ で再採用する際は、本原則の Q3「見せて体験が強くなる根拠」だけでは不十分で、**NextMars Q1 (silhouette が背景・他キャラから3秒以内に識別できるか) を満たした後** に telegraph を足す順序を守る
+
+## 関連投稿
+
+- 2026-05-27 C247 #shared-reads ts=1779834973 「NextMars Readability Systems → v001 失敗の telegraph 位置づけ refine」 (drafts/2026-05-27/post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py)
+- 2026-05-26 C242 三軸独立収束「予告軌道線=邪魔」結論 (本ファイル初版)

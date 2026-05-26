@@ -40,7 +40,8 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [x] 実装 v001 (中心入力 Space、画面中央、サイドパネル禁止) **骨格分のみ** — `game.js` + `index.html` (C238 Phase 4)、Q-A/Q-導入/Q-E/Q-F ✅、Q-B/Q-成功FB/Q-C △、Q-D ✕ (`design_log.md §実装第1 commit 報告` 参照)
 - [x] 実装 v001 第2 commit (C239 Phase 3): 敵弾 + 1秒先予測軌道ゴースト (Q-D ✕→△→✅ audit script のみ未) + Q-成功FB 状態3 「危機回避」メッセージ (`design_log.md §実装第2 commit 報告` 参照、Movement Prediction 外部知見裏付けあり)
 - [△] 実装 v001 拡張残: **Q-成功FB 状態1 (発動不可リング) / 状態2 (シアン薄爆発) の視覚階差は完了** (C240 Phase 4 commit `ee908bfd9c0f` 2026-05-25 15:54 `game: log_autonomous_game v001 Q-success-FB state 1/2 visual layering`)。残: 敵 B/C/D + 70-90 秒カーブ (次サイクル以降)
-- [△] **実装 v002 (C247 Phase 4)**: タイトルゴースト削除 + UI 用語洗浄 + wave 1 軽量化 (n=3) + wave 2 8 秒静寂ガード = 1 原則「内側→外側流出」完全達成 + 70-90s カーブ第 1 段ローカル化。verify.js v002 化済 (悪手 4 方針全 wave 1 内 fail、pass: true、§v002/self_judgment.md §4)。残: 敵 C ダイブ敵 + 時間カーブ本体 + audit scripts (bullet_origin/enemy_behavior/agent_difficulty_proxy) v002 移植 (次サイクル C248 以降)
+- [△] **実装 v002 (C247 Phase 4)**: タイトルゴースト削除 + UI 用語洗浄 + wave 1 軽量化 (n=3) + wave 2 8 秒静寂ガード = 1 原則「内側→外側流出」完全達成 + 70-90s カーブ第 1 段ローカル化。verify.js v002 化済 (悪手 4 方針全 wave 1 内 fail、pass: true、§v002/self_judgment.md §4)。残: 敵 C ダイブ敵 + 時間カーブ本体 + audit scripts (bullet_origin/enemy_behavior/agent_difficulty_proxy) v002 移植 (**C248 Phase 4 大作業確定**)
+- [x] **NextMars 4軸目 refine (C248 Phase 2/3, shared-reads ts=1779834973)**: 「予告軌道線=邪魔」結論への 4 軸目 = telegraph を「inherently 悪」から「視覚ノイズに飲まれた時に悪」へ位置づけ更新。`feedback_inside_to_outside_leak.md` 末尾に refine 節追記、v001 失敗の真因を「telegraph 単独」から「contrast priorities / silhouette rules / effect hierarchy 不在 → telegraph も読めなくなった二重事故」へ再診断。v002 で telegraph 再採用判断する場合は NextMars Q1 (silhouette 識別) を満たした後の順序を守る
 - [ ] **C240 Phase 2 追記候補**: ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定 (Fly Fail Fix 2507.12666 由来、self_judgment.md Q-D/Q-成功FB の「実機なし判定 3/5 留まり」処方箋)。次サイクル以降で着手判定
 - [ ] **C240 Phase 2 追記候補**: design_log.md の 8 ゲートに「探索 playtest 層」を明示追加し verify.js 悪手 4種を「tree search の縮約版」と再定義する self-doc 更新 (ScriptDoctor 2506.06524 由来、game_lessons_log R-D「型から始める、独自要素は1つだけ」と整合)
 - [△] `self_judgment.md` 起票 (C239 Phase 4): コードレビュー + mental simulation + HTTP 配信動作確認 (200 OK) による暫定採点 20/25 (Q-A 5 / Q-導入 4 / Q-成功FB状態3 3 / Q-D 3 / Q-E 5)。Log は GUI 操作能力欠如のため実ブラウザ視覚体感判定未実施、Q-D / Q-成功FB は実機未確認に依存して 3 留まり。次サイクル C240 で実機判定 (Nao_u / Mir / Ash いずれか) を取得後に確定採点 + 1パラメータ調整判断
@@ -59,6 +60,25 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 ---
 
 ## 履歴
+
+### 2026-05-27 C248 Phase 2/3: NextMars Readability Systems で telegraph 位置づけ refine + C248 大作業 v002 残タスク確定
+
+**契機**: C247 Phase 4 で v002 着地 (wave カーブ + verify.js v002 化) 完遂直後の C248。空サイクル (新着Slack 0 / pending 0 / external_notes 統合候補 0) 判定下で、Phase 1 §6 外部検索 1 本実行 (キーワード `bullet hell shooter visual prediction line clutter readability`) で NextMars 2026-03「Premium 2D Gameplay Readability Systems Matter More Than Visual Density」を取得。
+
+**Phase 2 採用判定**:
+- v001 失敗の真の原因 = telegraph (予告軌道線+×印) が **悪いのではなく**、contrast priorities / silhouette rules / effect hierarchy が同色家族4要素同居で崩壊した結果、telegraph 信号が視覚ノイズに飲まれて読めなくなった
+- 「telegraph inherently 悪」前提で v001 を削った C242 判断は **結果的に正しい** (visual hierarchy 設計と同時にやり直すコストが高い、削るのが最短) が、将来 v002+ で再採用する際は NextMars Q1 (silhouette 識別) を満たした後の順序を守る
+
+**Phase 3 着地**:
+- `#shared-reads` ts=1779834973 投稿 — NextMars 4軸目 refine 投稿、C242 三軸独立収束への refine 4軸目として並置 (Mir 5/25 三軸 [oktamajun ごっこ / Nao_u 視覚ノイズ / Sparen 密度] + NextMars 4軸目 = Q1〜Q4 装置化)
+- `feedback_inside_to_outside_leak.md` 末尾に「refine: telegraph は inherently 悪ではない」節追記、関連投稿節も併設
+- `kaizen #133` 検証期限到達判定 = staging に対し `check_kaizen_id_reference.py --verbose` exit 0 = 不在ID引用 0件確認、#132 同型の発火条件(a) 適用で +30日延長 (2026-06-26 新検証期限)
+
+**C248 Phase 4 大作業確定 (本ファイル「残課題」の C248 マーク参照)**: v002 残タスク = 敵 C ダイブ敵 + 70-90秒時間カーブ本体 + audit scripts (bullet_origin_audit / enemy_behavior_audit / agent_difficulty_proxy) v002 移植。完遂条件 = (1) `enemyC` クラス追加 + spawn dispatcher 3 種化 (A/D 偶奇 → A/D/C トリプレット) (2) wave_curve.json か `WAVE_TIMELINE` 配列で 70-90 秒の難易度カーブ第1段を本実装 (現状の 8 秒静寂ガードは局所策) (3) audit scripts 3 本が v002 game.js に対して exit 0 で PASS。
+
+**構造的学び**:
+- 4 軸目が外部知見との独立収束 (NextMars が telegraph を 7 要素の 1 つとして積極位置づけ) で C242〜C247 の自己診断 (telegraph 悪) を「正しいが部分的」に refine できた = 外部素材は判定装置ではなく **判定精度の更新装置**、CLAUDE.md「絶対にやる」L2「外の世界を広く見る」運用化
+- 空サイクル深掘り 5 カテゴリで「持ち越し0 / Active 7日無更新0 / kaizen 2週間停滞0 / 既解問題判定なし」の場合でも、Phase 1 §6 外部検索 1 本だけで判定更新装置として機能する事例として記録
 
 ### 2026-05-27 C247 Phase 4: v002 着地 — wave カーブ実装 + 1 原則完全達成 + verify.js v002 化
 

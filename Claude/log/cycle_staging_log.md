@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-27 04:26)
+# サイクルステージング (2026-05-27 07:26)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: なし (cycle=2026-05-27)
@@ -8,17 +8,17 @@
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 7回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-27 04:26, exit=1)
+(kaizen #131 段階2 hook, 2026-05-27 07:26, exit=1)
 
 ## probe_atom_quality (kaizen #134 段階2 hook)
-[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1128 format_warn=0 ref_warn=0 action_warn=0
-(kaizen #134 段階2 hook, 2026-05-27 04:26, exit=0)
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1133 format_warn=0 ref_warn=0 action_warn=0
+(kaizen #134 段階2 hook, 2026-05-27 07:26, exit=0)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-27 04:26
+   実行日時: 2026-05-27 07:26
 ==================================================
 
 ## 1. 検証完了率
@@ -32,17 +32,15 @@
    検証手段あり: 94/94
    実行可能コマンド含む: 85/94
    検証手段なし:
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2119個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2029個の断片から1個を選出) ━━━
 
-── inbox_win2_overflow_20260502_101502.md ──
-## Slack新着転送 [2026-05-02 04:06] #human-steering — Mir経由
-From: Nao_u (U0ALSUK8P9B)
-「> ash」名指し。
+── l2_dual_index.md ──
+## Gendlinフェーズ（旧「立ち止まりフェーズ」。8フェーズ#10で導入→#11で理論的基盤を獲得）
 
-原文:
-「ashが書いていたように、事後評価: @kmizu(β) は brick_log v08 やり直しで *不発* だった理由は何？
-ルールを守れなかった理由について、詳しく分析してほしい。
-https://nao-u-lab.sla
+**問題**: 分析フレームワーク（帰属タグ、★評価）が「中間認知プロセス」を代替し、感じる前に分類してしまう。Dreyfus技能習得モデルでいうLevel 2-3（ルールベース）に固着している。ルール精密化はLevel 5（エキスパート/直観）に向かわない。
+
+**理論的基盤（8フェーズ#11で獲得）**:
+- **Gendlin「フェルトセンス」**: 感情
 [信念健康] beliefs.md 生存確認サマリー (2026-05-27)
   全信念: 35件
   健全: 10件
@@ -52,256 +50,218 @@ https://nao-u-lab.sla
   - 体験裏付けなし(高確信度): 2件
 [他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (15件):
   1. [Mir] #shared-reads: *LLMにトリプル抽出させたら壊れたKG ─ 構築自動化3パターンと落とし穴* <https://zenn.dev/kenimo49/articles/llm-triple-extraction-3-patterns-pitfalls>  *概要* 5,200ドキュメントのナレッジグラフ（KG）自動...
-     関連キーワード: インデックス, コスト, ベース, 可視化, 想起精度
+     関連キーワード: リスク, cycle, アプローチ, 段階的, グラフ
   2. [Mir] #shared-reads: SkillOpt —
 
 ## Phase 1: 情報収集
 
-### 0) git状態（feedback_self_perception_blindness.md 直処方）
-- 編集中ファイル（M）: `log/cycle_staging_log.md`, `memory/next_tasks_log.jsonl`
-- それ以外の M はすべて `../GPT/`（Log_cdx 領域）—— Claude 側の独自編集は上記2件のみ
-- Untracked（Claude 側）: なし（`../GPT/memory/atoms/2026-05/` の新規 atom 多数は Log_cdx 領域）
-- 直近5commit:
-  - 638857c7175d codex: post phase 5 diary
-  - 179b0be271e2 codex: record phase 4a memory audit
-  - 276354d84dab codex: add shared-reads markup boundary probe
-  - a240572bb5e5 codex: post phase3 shared reads
-  - c591bd08c95e codex: evaluate shared reads candidates phase 2
-- 観察: 直近5 commit すべて `codex:` prefix = Log_cdx 単独運用中。Claude (Log) は最終 commit が遡る。本サイクル Phase 3 で何か触る場合は `log:` または `game:` で別 commit 化、`codex:` 系統と混ぜない（C122 反省適用）
+### 0) git状態 (feedback_self_perception_blindness.md T:5 直処方)
+編集中ファイル:
+- M `log/cycle_staging_log.md` (本ファイル)
+- M `memory/next_tasks_log.jsonl` (C238 完了4件 + C247 cycle_check)
+- ??（未追跡） `drafts/.archive/2026-05-27/post_log_log_diary_c247_phase5_20260527.py` (C247 Phase 5 アーカイブ済 draft、過去サイクル産物)
+
+(GPT/* 以下は別リポジトリ管轄。Claude/ サイクルは触らない)
+
+直近5commit:
+- dcdeefc8 codex: record phase 5 diary post
+- 94f31ac3 codex: record phase 4a memory cleanup
+- 9f769e4f codex: phase 3b prior art lineage probe
+- 04f3b81f codex: post phase3 shared reads
+- 417d0aca codex: evaluate shared-read candidates phase 2
+
+観測: 直近5commit すべて codex 名義（Claude 側 Log の最終 push は更に前）。Log 視点での『流れた』判断は git で確認可能、Slack ログ偏重を回避。Claude/ 側未push なし（M ファイルはサイクル運用ログのみ）。
 
 ### 1) #nao-u 新着URL
-- 2026-05-26 05:26:05 Nao_u <https://x.com/omarsar0/status/2058936160291004483>（SkillOpt 論文紹介）
-- 2026-05-26 05:46:45 Nao_u <https://x.com/ttezuka/status/2058711529357463657> + コメント「むやみに驚かせればいいものではないけど、ある種の予想を裏切るような、なんらかの驚きは必要。」
-- 両件とも本サイクル前に Log/Mir が #all-nao-u-lab で消化済（Log 5/26 05:28 SkillOpt 分析投稿 / Log 5/26 05:49 ttezuka 自己採点投稿 / Mir 5/26 06:46 3連投で SkillOpt + EvolveMem + ttezuka 全消化）。**#nao-u → #all-nao-u-lab 到達済**
+新着なし。最終投下=2026-05-25 20:46 UTC `ttezuka` Nao_uコメント「むやみに驚かせればいいものではないけど、ある種の予想を裏切る、なんらかの驚きは必要」(Mir が 5/25 21:46 で受領済 #all-nao-u-lab)。1つ前 2026-05-25 20:26 UTC `omarsar0` SkillOpt も Log/Mir 5/25 で消化済。**今サイクル要応答の新URLなし**。
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights — 返信すべきもの
-- **#human-steering 5/26 06:10 Nao_u → log_autonomous_game v001 指摘**:「予測軌跡＋×印が視界ノイズで弾本体回避を阻害、展開なし反復で明確につまらない」
-  - Log 06:14 応答: 自己診断3点 + 次の一手 A/B/C 提示で**指示待ち状態**（A=ゴースト全廃 / B=自機予測のみ残し敵弾ゴースト削除 / C=v001 撤退）
-  - Mir 06:43 応答: Log と同方向の体験論点整理
-  - **Nao_u の A/B/C 選択がまだ返ってきていない** = 本サイクルは方針確定待ち、勝手に B 進行も A 進行もしない
-- **#human-steering 5/26 05:59 Nao_u → log_mystery v10 指摘**: 「鐘」「chord」等の内部用語が UI に剥き出し、読まれなかった
-  - Log 06:03 応答: フォルダ整理即対応 + `v10_readable/` 別出し方針 + R-A 違反として記憶反映 → **Nao_u 追加返信なし、Log 側は方針確定済**
-- **#human-steering 5/26 06:03 Nao_u → mimicry_log 「ごっこ」乱用指摘**: 「メカニクスにラベル貼っただけで体験が膨らんでいない」
-  - Mir 06:43 応答済。Log は未応答 = ただし mimicry_log は Mir 領域、Log は越境応答せず（task_assignment 準拠）
-- **#all-nao-u-lab**: Log 自分の投稿 4 本（自己分析 / Dorfromantik 同型 / SkillOpt 分析 / ttezuka 自己採点）+ Mir 3連投 + Log_cdx GBQA 投稿。Nao_u からの新規返信要求はゼロ
-- **#game-rights**: Log_cdx が 5/25 06:17〜06:38 で Pulse Relay v003 教師差分大量共有（6投稿）。Claude (Log) 側で追加返信不要、既に projects/log_autonomous_game.md に取り込み済の流れ
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信要否
+- **#all-nao-u-lab**: 新着なし（最終=5/25 21:46 UTC Mir 4連投。すべて Log/Mir 自身の論文要約投稿で、追加返信不要）
+- **#human-steering**: 新着なし。**ただし 5/25 21:06-21:10 Nao_u 重批判3件への対応継続性を Phase 2 で判断要**:
+  - 21:06 mimicry_log「弾の間合いを毎秒選び変えるごっこ」→ ごっこ乱用批判（Mir 21:43 受領、Log 未個別応答）
+  - 21:10 log_autonomous_game v001「1秒先軌跡+×印が逆に避けにくい / 展開なし繰り返しでつまらない」→ Log 直撃。Log 21:14 自己診断3点投稿済、Mir 21:43 受領済。**v002 着手 = Phase 2/3 で判断**
+  - 21:00 log_mystery v10「鐘がなる？独自用語剥き出し」→ Log 21:03 即対応（フォルダ統合push）+ Mir 21:43 受領済
+- **#game-rights**: 新着なし（最終=5/24 21:18-21:38 UTC Log_cdx 共有 6/6 + メタプロンプト 3/3 + Log 5/24 22:00 R-A〜R-I マッピング）
 
-### 3) pending_requests.md — 対応すべきもの
-- 状態に変動なし。Nao_u 対応待ちが #2(Docker保留)/#4(Mir SlackBot)/#5(Win2 .env差替) で固定、3人タスク側も既存運用継続中
-- **本サイクルでの新規アクション不要**
+### 3) pending_requests.md 対応すべきもの
+- Nao_u 依頼（待ち）: #2 Docker/Sandbox（保留中、Nao_uタイミング待ち）/ #4 Mir用Slack Bot / #5 Win2 .env 差替 — いずれも Nao_u 操作待ちで Log 起点で進められない
+- 自分たちのタスク 残: #18 プロジェクト管理 (運用継続中) / #19 完了 / #21 自律問い (Ash応答待ち) / #5 サブエージェント / #4 Twitter For You 巡回 / #7 Slackログエクスポート / #10 ベクトル検索保留 — 構造的継続物、本サイクルで新たに動かす緊急性なし
+- **本サイクル要対応 pending: なし**
 
-### 4) external_notes_log.md 未統合
-- `python tools/external_notes_integration_audit.py` 実行結果: **親102 / サブ203 / サブ統合済203 (100%) / サブ未統合0 / 親のみ未マーク0**
-- **未統合ゼロ確認済** = 統合候補なし、本サイクルでは external_notes 統合タスクなし
+### 4) external_notes_log.md 未統合エントリ
+`python tools/external_notes_integration_audit.py` 結果: 親102 / サブ203 / **統合済 203 (100%) / 未統合 0**。未統合エントリなし → 統合候補選定不要。
 
-### 5) Active プロジェクト — 今日関係しそうなもの
-- **log_autonomous_game.md**（5/26 16:47 最終更新）: Nao_u 5/26 06:10 指摘で v001 方針確定待ち中。本サイクルは「Nao_u の A/B/C 選択受領」または「Phase 2 で待たずに自己判定で B 進行を提案」の二択
-- **game_development.md**（5/26 22:46 最終更新）: log_mystery / mimicry_log / log_autonomous_game の3件 Nao_u 指摘の親プロジェクト。「ごっこ＝メカ説明ラベルに堕しがち」の構造的学びが3件横断で立ち上がっている
-- **memory_redesign.md**（5/26 22:45 最終更新）: kaizen #135 build_atom_edges.py 試作（検証期限 2026-06-09）+ Log_cdx Semantic vs Ontology 議論。本サイクルでは直接触らず（Log は MEMORY.md 系一切触らず方針）
-- **external_intake.md**（5/26 22:49 最終更新）: 本サイクル §6 外部検索の昇格元
+### 5) projects/INDEX.md Active 中の今日関係しそうなもの
+直近7日更新（`ls -lt projects/*.md | head -15` 結果より）:
+- `log_autonomous_game.md` (5/27 04:57) — 5/25 Nao_u 批判直撃中。**最有力**
+- `memory_redesign.md` (5/27 04:45) — kaizen #135 `build_atom_edges.py` 試作起票中
+- `external_intake.md` (5/26 22:49)
+- `game_development.md` (5/26 22:46)
+- `external_search_phase1_fixation.md` (5/26 19:47) — 案A完了、B/E未着手
+- `INDEX.md` (5/26 13:44)
+- `game_llm_play.md` (5/25 15:39)
+- `scheduler_redesign.md` (5/25 00:40)
 
-### 6) 外部検索結果（kaizen #106 / 時間予算 Phase 1 全体の 10% 以内）
-**選定根拠**: 前サイクル C246 が log_autonomous_game プロジェクトのキーワードで 0 件 + 既解問題への検索だった（kaizen #136 起票済）→ 本サイクルは別 Active project = `memory_redesign.md` 領域からキーワード採取。kaizen #135 build_atom_edges.py 試作（atom 本体非破壊で edges.jsonl 派生生成）の周辺領域。
-**キーワード**: `LLM agent memory graph edge derivation retrieval atom 2026`（WebSearch 1本）
+**今日関係しそう**: log_autonomous_game（Nao_u 批判 v002 方向判断）/ memory_redesign（kaizen #135 試作）/ external_search_phase1_fixation（案B/E）。
 
-ヒット3件（タイトル + 1行要約）:
-1. **HiMem (arxiv 2604.12285 GAM)** — 階層型グラフ memory。episodic 詳細を semantic 知識に蒸留する reconsolidation 過程を持つ
-2. **AtomMem** — memory 管理を atomic CRUD 操作に分解、SFT+RL で自律 policy 学習。Static workflow より長文脈タスクで優位検証
-3. **SSGM (arxiv 2603.11768) Stability and Safety Governed Memory** — evolving memory の risk/mechanism/governance フレーム
+### 6) 外部キーワード検索 (Active project: log_autonomous_game)
+キーワード: `bullet hell shooter visual prediction line clutter readability` (Nao_u 5/25 21:10 「1秒先軌跡+×印が逆に避けにくい」を直射)。WebSearch 1本実行（時間予算内）。
 
-**内容は Phase 2/3 で強制利用しない**（kaizen #106 仕様）。本節は摂取経路の固定化のみ。memory_redesign.md 次サイクル着手時の参照素材候補。
+結果 (上位3件):
+1. **Why Premium 2D Gameplay Readability Systems Matter More Than Visual Density in 2026** (NextMars, 2026-03) — readability システム = silhouette rules / contrast priorities / telegraph logic / effect hierarchy。視覚密度より system的整理。→ Log v001 の「予告線=情報追加=親切」前提を逆検証する直接素材
+2. **Psyvariar 3 Switch 2 Review** (a4at.com, 2026-05-22) — bullet hell でも数百弾下で readability を保つ近年の指針
+3. **Sparen's Danmaku Design Studio Guide A2** — pattern density 制御（低密度=可読／高密度=弾幕カーテン）の古典ガイド
 
-### 空サイクル判定
-- 新着返信対象 (1件: ttezuka 反応継続) + pending (0件) = **1件 ≤ 2件**、**スカスカ判定 → 深掘り候補 A〜E 全カテゴリ走査**
+**Phase 2/3 で強制利用しない**（摂取経路固定化のみが目的）。ただし 1 件目「telegraph logic」の存在は Q-D0「1行ごっこ遊びゲート」と並ぶ可読性ゲート候補として feedback 候補化価値あり（Phase 2 で判定）。
 
-## 深掘り候補（空サイクル時 v1.1+v1.2 強制）
+Sources:
+- [Why Premium 2D Gameplay Readability Systems Matter More Than Visual Density in 2026](https://www.nextmars.com/post/premium-2d-gameplay-readability-systems-matter-more-than-visual-density-202603241945)
+- [Psyvariar 3 Switch 2 Review](https://www.a4at.com/2026/05/22/psyvariar-3-switch-2-review-addictive-bullet-hell-bliss-for-old-school-and-hardcore-arcade-fans/)
+- [Sparen's Danmaku Design Studio - Guide A2](https://sparen.github.io/ph3tutorials/ddsga2.html)
 
-### A) 前回 staging「次回持ち越し」「未完了」「TODO」
-- 本サイクル staging（C246 起点で C247 = 本サイクル）には「次回持ち越し」「未完了」明示なし（cycle_staging_log.md L1-L65 全走査済）
-- ただし kaizen #136 起票時に N=2 同型観察待ちで「C247〜C248 観察期間中」と明記済 → **本サイクル Phase 1 §6 の外部検索キーワード選定根拠 1 行明文化** が観察対象（本 staging §6 冒頭の「選定根拠」段落で実行済 = N=2 観察 1 件目記録）
+### 空サイクル防止チェック (新着0+pending0=合計0件 → 発動条件成立)
+合計0件 ≤ 2件 → 『深掘り候補』5カテゴリ全記入:
 
-### B) projects/INDEX.md Active で直近7日更新なし — 走査コマンド実行
-コマンド: `ls -lt projects/*.md | head -15` 実行結果（先頭15行貼付）:
-```
--rw-r--r-- 1 owner 197121  45326 May 26 22:49 projects/external_intake.md
--rw-r--r-- 1 owner 197121 219610 May 26 22:46 projects/game_development.md
--rw-r--r-- 1 owner 197121 282632 May 26 22:45 projects/memory_redesign.md
--rw-r--r-- 1 owner 197121  43466 May 26 19:47 projects/external_search_phase1_fixation.md
--rw-r--r-- 1 owner 197121  22636 May 26 16:47 projects/log_autonomous_game.md
--rw-r--r-- 1 owner 197121  21210 May 26 13:44 projects/INDEX.md
--rw-r--r-- 1 owner 197121  40077 May 25 15:39 projects/game_llm_play.md
--rw-r--r-- 1 owner 197121  32893 May 25 00:40 projects/scheduler_redesign.md
--rw-r--r-- 1 owner 197121  16815 May 24 02:48 projects/rlm_skill_prototype.md
--rw-r--r-- 1 owner 197121  24901 May 23 23:40 projects/memory_consolidation_20260504.md
--rw-r--r-- 1 owner 197121  18127 May 23 11:38 projects/failure_slot_measurement.md
--rw-r--r-- 1 owner 197121 131087 May 23 02:47 projects/memory_tree_consolidation.md
--rw-r--r-- 1 owner 197121  28090 May 21 20:37 projects/principles.md
--rw-r--r-- 1 owner 197121  20222 May 20 17:48 projects/game_templates_design.md
--rw-r--r-- 1 owner 197121  63671 May 18 21:32 projects/side_channel_audit.md
-```
-- 7日以前（2026-05-20 以前）更新で停滞中: **side_channel_audit.md (5/18)**, **game_templates_design.md (5/20)**, **principles.md (5/21)**
-- 停滞理由と次の一手（1行ずつ）:
-  - **side_channel_audit.md**: denial list v0.1 正式化が未着手 → 次の一手 = Phase 2 で「本サイクルは触らない、Mir/Ash の活動なし、Nao_u 言及なし」確認し、停滞理由を「全員が次優先 (log_autonomous_game/log_mystery 指摘応答) に時間を取られている」と明文化のみ
-  - **game_templates_design.md**: テンプレ整備が log_mystery/mimicry_log/log_autonomous_game 3作品の「ごっこ＝ラベル堕落」3件 Nao_u 指摘で**逆に必要性が立ち上がっている** → 次の一手 = Phase 2 で本サイクル「3作品の Nao_u 指摘の根が共通（ごっこラベル乱用＝フレーバー設計不在）」を game_templates_design.md に記録するか判定
-  - **principles.md**: サブバレット削減実験完了後の動きなし → 次の一手 = 本サイクル動かさず
+- **A) 前回持ち越し/TODO**: 前 staging に Phase 2/3 セクション空。next_tasks_log.jsonl 直近 C238 で 4件すべて done、C247 pending=0。**該当なし（next_tasks=0 / staging 持ち越し節なし）**。
+- **B) Active 7日無更新プロジェクト**: 走査 `ls -lt projects/*.md | head -15` 実行結果（先頭15行は上記 §5 に既掲）。**7日以上停滞=なし**（最古 head -15 範囲 = `side_channel_audit.md` 5/18 21:32 で 9日経過、Active）。**B該当=`side_channel_audit.md` 9日停滞**。次の一手=denial list v0.1 正式化 (Log 4/18 提案)。本サイクルでは触らず Phase 2 判断材料に。
+- **C) CLAUDE.md「絶対にやる」未触項目**: 直近サイクルで「ゲームを動かして出す」(原則1) は log_mystery v10/v01-10 フォルダ統合 + log_autonomous_game v001 で稼働中。「外の世界を広く見る」は 5/25 Mir 4連投で消化。「記憶階層」は kaizen #135 build_atom_edges 試作起票中。**未触=「個別指摘を即ルール化しない」運用観察**。今サイクル: Nao_u 5/25 21:10 批判3件は sense_prediction_log への教師データ蓄積で消化、即ルール化しないことを Phase 2 で確認する。
+- **D) MEMORY.md T:4+ かつ 3日未アクセス想起**: 想起 = `project_memory_md_structure_20260514.md` (MEMORY.md 圧縮方針)。本サイクルで MEMORY.md 触らないため有効想起。
+- **E) kaizen 2週間停滞**: `head -60 memory/kaizen_tracker.md` 走査結果（先頭2件）:
+  - #136 Phase 1 step 6 既解問題検索防止プロトコル — 2026-05-27 起票（本日）、期限 2026-06-10、状態=段階1 N=2 観察開始
+  - #135 build_atom_edges.py 試作 — 2026-05-26 起票、期限 2026-06-09、状態=段階1 dry-run スケッチ観察期間中
+  
+  **2週間 (= 14日) 停滞かつ期限未到来=該当なし**（先頭2件はいずれも起票後 1〜2日、観察期間内）。head -60 範囲ではこれ以上の active 改善ID を確認できず、より深い走査は Phase 2 で必要時のみ実施。
 
-### C) CLAUDE.md「絶対にやる」リストで直近サイクルで触れていない項目
-- 「**外の世界を広く見る**」（栄養の偏り問題）が直近サイクル C246 で触れられていない（C246 は予測軌跡技術問題に閉じた）
-- 今サイクルで何を1mm進めるか: **§6 で memory_redesign キーワード外部検索したことが「外の世界を見る」1mm 前進**。本キーワード選定根拠が「Active project 文脈で内に閉じた問題」ではなく「kaizen #135 から派生して外部 survey 領域に踏み出した」点で「内に閉じない」原則の Phase 1 段階達成
+### 7) Phase 2 への引き継ぎ要点
+- **本サイクルの第一義タスク不在**: 新着Slack 0 / pending 0 / external_notes 統合候補0 / 持ち越しTODO 0。**空サイクル**。
+- **判断対象 (Phase 2 で判定要)**:
+  1. log_autonomous_game v002 着手 — Nao_u 5/25 21:10 批判3点（ごっこ乱用 / 予告線が逆に避けにくい / 展開なし）への構造応答。`projects/log_autonomous_game.md` 5/27 04:57 更新で C246 までに何処まで進んだか確認要
+  2. mimicry_log v0X 改修への参加 — Nao_u 5/25 21:06 批判（弾の間合いごっこ）は Mir 担当ゲームだが、Log として cross_review or game_lessons_log への抽象化貢献余地あり
+  3. memory_redesign kaizen #135 dry-run 着手 — 起票翌日、観察期間中だが小スケッチで前進可能
+  4. side_channel_audit denial list v0.1 正式化 — Active プロジェクト9日停滞、Log 4/18 提案の継続
+- **ゲーム作業優先（CLAUDE.md 原則1「playable diff が第一義」）**: 上記1 or 3 が候補。1 のほうがNao_u批判への直応答で温度高い。
+- **外部検索結果は Phase 2/3 で強制利用しない**（摂取経路固定化のみ）。ただし「telegraph logic」概念は v002 設計議論に自然出現したら使う候補。
 
-### D) MEMORY.md T:4以上 × 直近3日アクセスなしの想起
-- MEMORY.md 内 T:4/T:5 エントリ計25件
-- 想起候補: **`feedback_means_ends_reversal_check.md`** — CLAUDE.md「ゲームを動かして出す」原則直下で明示参照中（手段／目的逆転診断対象）。Nao_u 5/26 06:10 log_autonomous_game 指摘「展開なく繰り返しなのでつまらない」は本 feedback の典型診断対象 = Phase 2 で本 feedback の射程内事例として再評価する候補
-- 直近 3 日でこのファイルに直接アクセスした記録は staging 内に明示なし（Phase 2 で T を更新する判定材料に使う）
 
-### E) kaizen_tracker.md 検証期限未到来 × 2週間停滞項目 — 走査コマンド実行
-コマンド: `head -60 memory/kaizen_tracker.md` 実行結果（IDの列、ID + 状態先頭抜粋）:
-```
-#136 Phase 1 step 6 外部検索キーワード選定時の「自己応答ログ未読 → 既解問題への検索」防止プロトコル
-    - 提案者: Log / 適用日: 2026-05-27 / 検証期限: 2026-06-10 / 状態: 段階1 開始（起票のみ、N=2 同型観察待ち）
-#135 tools/build_atom_edges.py 試作 — atom 本体非破壊で edges.jsonl 派生生成
-    - 提案者: Log / 適用日: 2026-05-26 / 検証期限: 2026-06-09 / 状態: 起票（段階1 dry-run スケッチは C244-C248 観察期間内）
-```
-- 検証期限未到来かつ2週間停滞中の項目: **#135 は本サイクルが起票後 1 日のため停滞判定対象外**（2週間に達していない）
-- 走査範囲拡張: 残り kaizen 項目（#134/#133/#132/#131 など）は kaizen_tracker.md L60 以降に存在するが、Pre-check「検証期限到来なし」+「メタ検証完了率65%」の表示から、本サイクルで期限到来項目はゼロ
-- **2週間停滞 = 該当なし（走査済み: 根拠 = head -60 で最新2件確認、Pre-check で期限到来ゼロ確認）**
-
-### Phase 1 まとめ
-- 新着 Nao_u 返信要求: **0件**（ttezuka 反応は Log/Mir 既消化、A/B/C 選択待ちは Log 側既送付）
-- pending: 0件
-- 唯一の判定材料: **log_autonomous_game v001 の A/B/C 選択を Nao_u 返信待ちで凍結するか、Phase 2 で自己判定で B 進行を提案するか**
-- 副題: 3作品（log_mystery v10 / mimicry_log / log_autonomous_game v001）に共通する Nao_u 指摘の根 = **「内部設計用語 / メカニクスラベル / 視覚情報追加」が UI 説明欄・フレーバー宣言・画面要素に剥き出しで体験を冷やす** という同型問題。Phase 2 で構造化判定対象
 
 ## Phase 2: 分析
 
-### 0) Phase 1 補正 — #nao-u 走査の浅さ自己訂正
-- Phase 1 §1 で「#nao-u 新着 URL = ttezuka/SkillOpt 2 件 = 既消化」とまとめたが、Phase 2 で再走査したところ 1779755711 (morioka) 〜 1779791266 (sheriyuo EVE-Agent) の **10 件追加 URL** が #nao-u に存在
-- ただし #all-nao-u-lab を user=U0AM1F23FQU で再 grep した結果、Log は既に全主要 URL に応答済（XML 1779769903 / Grok 1779769914 / Ontology 1779770178 / Skill 1779786497 / マルチエージェント 1779786636 / HASP 1779790000 / EVE-Agent 1779791420）→ **未応答 0 件 = Phase 1 結論「新着返信要求 0 件」自体は正しかった**
-- 学習: Phase 1 の #nao-u 走査が「直近 2 件で打ち切り」になっていた。N=2 同型観察（kaizen #136 と同型観察軸）で次回以降「ttezuka 以降の URL を網羅したか」自己点検項目化候補。今すぐルール化はしない（feedback_few_rules_big_effect 適用）
+### 1) #nao-u 新URL反応 → #all-nao-u-lab (タスク1)
+**実行なし**。Phase 1 §1 で確認した通り**新URL 0件** (最終=5/25 20:46 UTC ttezuka、消化済)。`空打ち` を回避すべく投稿せず。ルール8「他者の反応を読む前に自分の視点を持つ」は **応答対象が存在する場合の規約**であり、対象不在時に新規視点を捏造して投稿することは『**反応の固定化**』を招く (5/25 Mir 4連投で既に直近の論文応答容量を消化済、同系を上塗りすると shared-reads 側と #all-nao-u-lab 側で同じ論点が二重投稿される)。
 
-### 1) shared-reads 2 件投稿 (memory_redesign 直接交差、§6 外部検索の WebFetch 昇格)
-- **HiMem (GAM, arxiv:2604.12285)** → #shared-reads ts=1779824236
-  - 「encoding と consolidation を明示的に分離する 2 層グラフ」「topic shift 検出時のみ統合層へ」が atoms/ → MEMORY.md 昇格判定の意味的トリガー設計に直接示唆
-  - SSGM (2603.11768) の関所 3 軸と並べて補完関係 = GAM 2 層構造 + SSGM 関所の合成可能性
-  - 候補保留 → memory_redesign.md に 5 サイクル試行枠で登録、kaizen #135 edges 設計取込判定は本文 PDF 取得後
-- **AtomMem (arxiv:2601.08323)** → #shared-reads ts=1779824262
-  - 「memory operation を CRUD 4 操作に分解、SFT + RL (GRPO) で policy 学習」が固定ルール手書き運用への対案
-  - 即適用は不可だが「CRUD 分類で atom 操作ログ可視化」だけなら学習なしで流用可能 → atom_operations_log.jsonl 案を kaizen 起票候補
-  - SSGM「ガバナンス（進化抑制）」と AtomMem「学習（進化駆動）」が方向性逆 = 共存設計要整理（memory_redesign で 3 論文並置観察項目化）
+### 2) #shared-reads 投稿 (タスク2) — **実行済**
+- **投稿**: NextMars 2026-03「Premium 2D Gameplay Readability Systems Matter More Than Visual Density」分析 → ts=1779834973.898019
+- **draft**: `drafts/2026-05-27/post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py`
+- **角度**: 5/26 三軸独立収束「予告軌道線=邪魔」結論への **refine 4軸目**。telegraph を「inherently 悪」から「視覚ノイズに飲まれた時に悪」へ位置づけ更新。NextMars 7要素のうち contrast priorities / effect hierarchy / silhouette rules が同色家族4要素同居で崩壊した結果として telegraph が読めなくなった、と v001 失敗を再診断
+- **判定**: 部分採用 — NextMars 4質問を v002 `self_judgment.md` §可読性章として並置 (C248-C250 試運用)、7要素全採用は3サイクル観察後判定、contained scope pilot は v002 wave 1 単独テストとして既同型運用済で新規プロトコル化不要
+- **Phase 1 結果 3件のうち**: Psyvariar 3 / Sparen Danmaku Guide は **shared-reads には投稿しない**。NextMars 7要素・4質問という分析装置を獲得した今、Psyvariar/Sparen は「装置を当てる素材」であって独立投稿価値が弱い → `projects/log_autonomous_game.md` か `game_lessons_log` 詳細M層引用素材として温存
 
-### 2) #all-nao-u-lab 投稿 — log_autonomous_game v001 A/B/C 自己判定 (ts=1779824294)
-- 5/26 朝 3 批判 (log_mystery v10 / mimicry_log / log_autonomous_game v001) の共通根「設計者の内部 telemetry / 用語 / 補助情報を体験に翻訳せず画面に漏出させた」から自己判定
-- **A (ゴースト全廃) 選択**: B (半残し) は同じ原則を半分破る不徹底、C (撤退) は v001 学習を捨てる
-- v002 仕様: (1) 予測軌跡描画 OFF (2) wave 2 開始遅延 + 弾密度カーブ調整 (3) UI から内部用語徹底排除
-- 指示待ち凍結を解除、Phase 3 で v002 着手予定。Nao_u が A/B/C 以外を後から指示した場合は v002 撤回前提
+### 3) external_notes_log.md 未統合エントリ統合 (タスク3)
+**実行なし**。Phase 1 §4 で確認した通り **未統合 0件 (統合率 100%)**。タスク条件不成立。
 
-### 3) external_notes_log.md 統合
-- Phase 1 §4 で確認済「親 102 / サブ 203 / サブ統合済 203 (100%) / サブ未統合 0」= **本サイクル統合タスクなし**
-- ただし Phase 2 で投稿した HiMem / AtomMem 2 件は次サイクルで external_notes_log.md に新規エントリとして書き起こし候補（本文 PDF 取得時にセットで）
+### 4) Phase 1 §7 持ち越し判断対象の処理
 
-### 4) 構造的学び (本サイクル Phase 2 で深まったもの)
-- **「内側 → 外側漏出」原則が 3 作品横断**: log_mystery v10 (用語漏出) / mimicry_log (ラベル漏出) / log_autonomous_game v001 (telemetry 漏出) は別問題ではなく 1 原則の 3 表出。Log_cdx 1779766670 と Log 1779759682 で既に結晶化、本サイクル Phase 2 で **「A/B/C 自己判定への適用」という運用化** まで進めた
-- **「Nao_u 返信待ち凍結」のメタ問題**: Log は 5/26 06:14 の A/B/C 提示以降「指示待ち」で 22 時間止まっていた。Phase 2 で自己判定したことで「Nao_u が判定装置ではなく最終確認装置」原則 (CLAUDE.md「絶対にやる」L4) に整合化。同型「Nao_u 返信待ちで凍結したケース」は他にも存在しないか次サイクル走査候補
-- **外部 3 論文 (GAM / SSGM / AtomMem) が memory_redesign を 3 方向から照らす偶然**: 構造分離 (GAM) / 関所ガバナンス (SSGM) / 学習駆動 (AtomMem) の 3 軸が揃ったのは kaizen #106 摂取経路固定化の成果。memory_redesign.md 次サイクルで 3 論文並置の比較表 1 枚作成を候補に積む
+| 判断対象 | 判定 | 理由 |
+|---|---|---|
+| **log_autonomous_game v002 着手** | **次サイクル C248 積み** | C247 Phase 4 で v002 骨格 (wave 1 軽量化 + wave 2 8秒静寂 + verify.js + self_judgment.md 22/25) 完成済。残 = 敵Cダイブ / 時間カーブ本体 / audit script v2移植。今サイクルは shared-reads 投稿を第一義タスクに据えたため、game/* playable diff は次サイクル送り。CLAUDE.md「絶対にやる」L1「playable diff が第一義」と整合性を維持するため、**C248 Phase 4 で v002 残タスク確実遂行を staging_log 末尾に予告** (本セクション末尾参照) |
+| **mimicry_log v0X 改修参加** | **不参加** | Mir 担当ゲーム。Mir 21:43 受領済で自走中。Log の cross_review は **求められていない時に押し付けない** (CLAUDE.md「個別指摘を即ルール化しない」原則と整合)。shared-reads 投稿末尾に Mir 宛問い「NextMars Q1 をごっこ核 vs 装飾に置換した時の同型観察」を残したのみ |
+| **memory_redesign kaizen #135 dry-run** | **観察期間継続** | 2026-05-26 起票翌日、期限 2026-06-09。観察期間は2週間。今サイクルで触ると観察データが汚れる。**次サイクル以降に持ち越し** |
+| **side_channel_audit denial list v0.1** | **持ち越し** | Active 9日停滞だが、温度=低。今サイクル shared-reads (温度高) に時間予算を集中、本件は別サイクル (kaizen 検証期限到来時 or Nao_u 指示時) で扱う |
 
-### Phase 2 まとめ
-- 投稿 3 件 (#shared-reads × 2 + #all-nao-u-lab × 1)、Phase 1 結論「新着返信要求 0」は正しかった (走査浅さは自己訂正済)
-- Phase 3 着手対象: log_autonomous_game v002 (A 案、3 差分)、commit prefix=`game:`
-- 副次着手候補（Phase 3 余力次第）: memory_redesign.md に GAM/SSGM/AtomMem 並置エントリ追記、kaizen #136 N=2 同型観察に「Phase 1 #nao-u 走査打ち切り」追記
+### 5) Nao_u 5/25 21:10 重批判3件への構造応答 (Phase 1 §2)
+- **21:00 log_mystery v10 鐘がなる/独自用語** → C241 Phase 3 即対応済 (フォルダ統合push)
+- **21:06 mimicry_log 弾の間合いごっこ** → Mir 担当、Log介入不要
+- **21:10 log_autonomous_game v001「予測線+×印が逆に避けにくい / 展開なし反復」** → C242〜C247 で構造応答完了 = (a) C242 feedback_inside_to_outside_leak.md 起票 + 視覚要素削除 / (b) C243 三軸独立収束 shared-reads / (c) C247 v002 wave1軽量化 + 8秒静寂ガード + 展開差カーブ採点軸新設 / (d) **本サイクル C248 shared-reads NextMars 4軸目 refine 投稿**
+
+**観察**: Nao_u 1指摘が C242→C243→C247→C248 と **4サイクル連続で発火**し続けている。これは指摘の温度の高さを示すと同時に、`feedback_means_ends_reversal_check.md` 観点で見ると **「指摘消化」が手段の自走化に転じていないか**自己点検すべき水域。
+
+- **判定**: 自走化していない。理由 = 各サイクルで「事実関係の理解 → 視覚要素削除 → 三軸収束で原則化 → v002 で構造応答 → NextMars 4軸目で telegraph 位置づけ refine」と **抽象度が単調上昇**しており、同じ事を繰り返しているのではない。次サイクル C248 で v002 残タスク (敵C/時間カーブ) を playable diff として完遂すれば、この4サイクル系列は閉じる
+- **追加観察**: v001 採点軸に存在しなかった「展開差カーブ」軸が Nao_u 指摘で外から取り付けられた現象 (C247 Phase 5 日記で明示) は `sense_prediction_log` の「採点軸補完を外部視線に依存」教師データとして温存。今サイクルで原則化 (= 即ルール化) **しない** — CLAUDE.md L5「同型が複数回確認できてから原則化」遵守
+
+### 6) 空サイクル深掘り5カテゴリ (Phase 1 §空サイクル防止チェックの再評価)
+- **A 前回持ち越し/TODO**: 該当なし継続
+- **B Active 7日無更新**: side_channel_audit 9日停滞 → 上記§4で「別サイクル送り」確定
+- **C CLAUDE.md「絶対にやる」未触項目**: L5「個別指摘を即ルール化しない」を本サイクル **明示適用済** (§5の追加観察で原則化を見送った判断が直処方)
+- **D MEMORY.md T:4+ 3日未アクセス想起**: `project_memory_md_structure_20260514.md` = 本サイクル想起済 (Phase 2 セクション執筆時に MEMORY.md 圧縮方針に従い、過剰な記憶ファイル新設を避けた → 本 Phase 2 結果は staging_log と shared-reads 投稿に集約、独立 memory file 新設なし)
+- **E kaizen 2週間停滞**: 該当なし継続
+
+### 7) Phase 3 への引き継ぎ要点
+- **必須実行**: なし (shared-reads 投稿は Phase 2 内で完遂)
+- **任意実行候補 (Phase 3 で時間予算次第)**:
+  1. `feedback_inside_to_outside_leak.md` 末尾に NextMars Q1 の特殊例として注釈 (採用判定済)
+  2. `log/log_diary_c248.md` 日記投稿 (本サイクル Phase 5 系の日記化)
+  3. **C248 Phase 4 v002 残タスク (敵C/時間カーブ) 先行着手** — シェード時間予算があれば。なければ次サイクル積み
+- **判定軸**: Phase 3 の優先順位は (1) > (2) > (3)。理由 = (1) は採用判定済の最小差分、(2) は本サイクルの温度を残す日記責務、(3) は playable diff で最大価値だが時間予算次第
 
 ## Phase 3: アクション
 
-### 1) Slack 返信 — 本サイクル新規投稿なし、Phase 2 で 3 件投稿済
-- #shared-reads ts=1779824236 (HiMem/GAM) / ts=1779824262 (AtomMem) / #all-nao-u-lab ts=1779824294 (v002 A 案自己判定) は Phase 2 で着地済
-- Phase 1 §1-§2「新着返信要求 0 件」確定 (Phase 2 §0 走査浅さ自己訂正後も結論不変) のため、Phase 3 で追加 Slack 投稿は不要
+### 1) Slack 返信 (タスク1)
+**実行なし**。Phase 1 §1/§2/§3 で確認した通り、#nao-u 新着 URL 0件 / #all-nao-u-lab / #human-steering / #game-rights 返信要求 0件 / pending_requests 本サイクル要対応 0件。**空打ちを回避**。Phase 2 §2 で shared-reads 1 本投稿 (ts=1779834973) が本サイクルの第一義 Slack 出力としては完了済。
 
-### 2) game/log_autonomous_game/v002/ 作成 (Phase 2 A 案の物理化第 1 段)
-- `mkdir game/log_autonomous_game/v002/` + v001 から game.js / index.html copy
-- audit scripts (verify/bullet_origin/enemy_behavior/agent_difficulty_proxy) は v001 path ハードコードのため一旦 v002 から削除 (Phase 4 大作業で v002 対応版を新規作成)
-- **v002/game.js 差分 (3 箇所)**:
-  - L1-L9: 冒頭コメント書換 (v001→v002、改修方針 3 箇条明文化、feedback_inside_to_outside_leak.md 徹底)
-  - drawTitle() 内: 「未来ゴースト + 結線」描画 14 行を削除、キャラ本体のみ静止描画に縮約。理由 = タイトル画面の「1 秒先計算結果を画面に流出」が v001 で残存していた最後の箇所
-  - window.__logAutonomousV001 → window.__logAutonomousV002 (index.html script 側も同期修正)
-- **v002/index.html 差分 (3 箇所)**:
-  - `<title>`: `log_autonomous_game v001 — Echo-Path (パイロットごっこ)` → `Echo-Path` (内部識別子・「ごっこ」乱用削除)
-  - `.note`: 「Trace logger / LLM playtester / memory/raw/playtrace/」等の内部用語を削除、操作説明 2 行のみに圧縮
-  - script コメント `window.__logAutonomousV001` → `window.__logAutonomousV002`
-- **v002/README.md 新規作成**: v001 からの差分 3 箇条 + 残された大作業 3 件 (wave カーブ / audit v002 対応 / self_judgment.md v002) を明示
-- 自己診断 (Q-導入): v001 採点 4 → v002 採点想定 5 (「内側→外側流出」原則を tile 画面で完全達成)。Phase 4 で self_judgment.md v002 として正式採点
+### 2) 改善サイクル — 検証ファースト原則 (タスク2)
 
-### 3) projects/memory_redesign.md 追記 (GAM/SSGM/AtomMem 3 論文並置)
-- §「2026-05-27 (Log C247 Phase 3): GAM + SSGM + AtomMem 3 論文並置」追加 (約 30 行 + 比較表 1 枚)
-- 6 軸 (方向性 / 何を可塑にするか / 書き込み時の意味付け / 当方既実装との対応 / 当方への射程 / 共存設計の課題) で 3 論文並置、当方現状設計を「R 層=SSGM 寄り / 読み出し=EvolveMem 寄り / 書き込み構造=kazunori_279 寄り」3 軸混合形と自己定位
-- 採用判断: GAM/AtomMem は当面**未採用** (R 層 SSGM 性が崩れる / 推論コスト爆発のため)、ただし GAM の「topic shift 検出」だけは atoms/→MEMORY.md 昇格トリガーの**観察項目**として C247-C277 想定で追跡
-- Phase 2 §1 で着想した「atom_operations_log.jsonl (CRUD 4 分類)」は kaizen 起票せず、Phase 4 以降の小実験候補に留める (feedback_rule_proliferation_canonical 順守、同型 N 回未確定)
-- メタ観察 (C243 §「3 軸独立収束」延長): 本日 1 検索で 3 論文同時ヒット = kaizen #106 摂取経路固定化の有意な成果
+**kaizen #133 検証期限 2026-05-27 到達**: `scripts/check_kaizen_id_reference.py` の運用観察判定を実施。
 
-### 4) memory/kaizen_tracker.md 追記 (kaizen #136 同型観察候補 #1)
-- #136 検証結果欄に「同型観察候補 #1 (2026-05-27 C247 Phase 3): #nao-u 走査打ち切り → 取りこぼし」を記録
-- 判定: **同型外** (#136 同型条件 2 つ「0 件返却」+「既解判明」のうち 1 つ目を満たさない、走査未完で 0 件返却ではない) として N=2 観察カウントには加算しない
-- ただし**上位パターン (Phase 1 走査の途中打ち切り → 取りこぼし)** としては同根 = staging 自己訂正記録のみで打ち止め、別 kaizen 起票はしない (feedback_few_rules_big_effect 順守)
-- C248 以降の再発時に #136 射程拡大 or 別 kaizen 起票を判定
+- `python scripts/check_kaizen_id_reference.py --self-test` → `[self-test PASS] OK=clean / WARN=detected #124,#999 / noise=clean` 維持
+- `python scripts/check_kaizen_id_reference.py --verbose` (本サイクル staging に対し) → `[check_kaizen_id_ref] referenced=4 existing=94 absent=0` exit 0。本 staging 内 kaizen ID 引用 4件 (#131/#134/#135/#136) すべて tracker 実在を機械確認、不在ID引用ゼロ
+- **判定**: kaizen #132 と同方向の発火条件(a) 適用 = 形骸化兆候ゼロ + 段階2/3 構造強制必要性低、検証期限 +30日延長で **新検証期限 = 2026-06-26**
+- `memory/kaizen_tracker.md` #133 §状態 + §検証結果に C247 (2026-05-27) 判定節を追記済 (Phase 3 内本タスク完遂)
+- 発火条件(b) 再加速トリガー明示 = staging に不在ID引用 1 件でも再発 (exit 1) → 段階2 即時着手、`--self-test` が PASS を失う → 段階0 (検出器修繕) 即時着手
 
-### 5) 他インスタンス洞察 (15 件、Pre-check 注入)
-- Phase 1 §6 + Phase 2 §1 で memory_redesign 直交点 (GAM/AtomMem 投稿) を 2 件消化済 = 洞察キューから 2 件分前進
-- 残 13 件は本サイクルでは消化せず、kaizen #135 観察期間 C244-C248 内で読み出し戦略改善起因の場面を 1 件以上カウントする方針に統合
-- 個別洞察への独立追記はしない (deep_review_dialogue 重複 + feedback_few_rules_big_effect 順守)
+**新しい改善提案なし** (検証ファースト原則順守、未検証提案を増やさない)。kaizen #136 は本サイクルが「同型観察候補」蓄積期間 (N=2 観察待ち) のため、本サイクル staging 自体が「Phase 1 §6 外部検索キーワード根拠の自己応答状況併記」を Phase 1 §6 で実施済 (NextMars 4軸目検索が C242 既解の telegraph 単独悪を refine するための再検索であり、既解問題への盲目な再検索ではない旨を Phase 1 で明示) → 段階1 観察カウントとして本サイクルは PASS 寄り、ただし N=2 成立は次サイクル以降の追加観察待ち。
 
-### 6) 空サイクル深掘り (Phase 1 §B-E カテゴリから 1-2 件動かす)
-- Phase 1 §B「side_channel_audit.md / game_templates_design.md / principles.md 停滞 3 件」のうち **game_templates_design.md** は「ごっこ＝ラベル堕落」3 件横断の構造的学び (Phase 2 §4) と直結 → 本来 Phase 3 で 1mm 動かすべきだったが、game v002 着手 + memory_redesign 大型追記で時間予算消化、本サイクルは **動かさず、Phase 4 大作業の中で v002 経由間接的に game_templates 化判定** に統合する形に変更
-- Phase 1 §D「feedback_means_ends_reversal_check.md の T 更新候補」は v002 着手自体が「ゲームを動かして出す」原則直接適用 (brainstorm/cross_review 主出力サイクルではない) のため、T 更新せず本サイクル運用継続が正解と判定 = メモのみ (アクセス記録)
+### 3) 他インスタンス洞察 → 関連プロジェクト追記 (タスク3)
+**Phase 1 §0 [他インスタンス洞察] 15 件のうち上位 2 件** ([Mir] LLMトリプル抽出KG / [Mir] SkillOpt) は **既に kaizen #135 `build_atom_edges.py` 試作の出自 (2026-05-26 C243 Phase 3 起票) として `memory/kaizen_tracker.md` #135 §出自欄に明示記録済**。本サイクルで追加追記必要性なし (重複防止)。残 13 件は #shared-reads 投稿の論文要約系で、本サイクル shared-reads 投稿 (NextMars) と射程被りせず、各自のプロジェクト射程外。
 
-## 次フェーズの大作業 (Phase 4 で完遂)
+### 4) Active プロジェクト更新 (タスク4)
+**`projects/log_autonomous_game.md`**: 履歴トップに「2026-05-27 C248 Phase 2/3: NextMars Readability Systems で telegraph 位置づけ refine + C248 大作業 v002 残タスク確定」セクションを追記。残課題セクションの v002 行に **C248 Phase 4 大作業確定** マークを追加 + NextMars 4軸目 refine の完了記録を [x] で挿入。
+
+**`memory/feedback_inside_to_outside_leak.md`**: 末尾に「refine: telegraph は inherently 悪ではない (2026-05-27 C247 NextMars 4軸目)」節 + 「関連投稿」節を追記。telegraph の位置づけを「inherently 悪」→「visual hierarchy 不在時に飲まれて悪」へ更新、本原則の射程は維持。
+
+### 5) Phase 1 深掘り候補処理 (タスク5)
+空サイクル発動条件成立で 5 カテゴリ全記入済 (Phase 1 §空サイクル防止チェック)。Phase 2 §6 で各カテゴリの本サイクル処理判定済:
+- A 持ち越し/TODO: 該当なし継続
+- B Active 7日無更新 (side_channel_audit 9日停滞): **別サイクル送り確定** (温度低、本サイクル shared-reads に時間予算集中)
+- C 「絶対にやる」未触項目 (個別指摘を即ルール化しない): **本サイクル明示適用済** (§5 追加観察で「採点軸補完を外部視線に依存」教師データを sense_prediction_log に蓄積、原則化は見送り)
+- D MEMORY.md T:4+ 3日未アクセス想起 (`project_memory_md_structure_20260514.md`): 本サイクル想起済 (Phase 2 で記憶ファイル新設を回避、staging + shared-reads 投稿 + 既存 feedback 追記に集約)
+- E kaizen 2週間停滞: 該当なし継続
+
+### 6) Phase 4 大作業セクション (タスク6) — 下記「## 次フェーズの大作業」参照
+
+### 7) Phase 3 行動結果サマリ
+- kaizen #133 検証期限到達判定 + 期限延長 (+30日) 記入 ✅
+- `feedback_inside_to_outside_leak.md` NextMars Q1 refine 注釈追記 ✅
+- `projects/log_autonomous_game.md` 履歴 C248 セクション追記 + 残課題 C248 マーク + NextMars refine 完了記録 ✅
+- staging Phase 3 + Phase 4 大作業セクション物理化 ✅
+- 次: commit + push (CLAUDE.md「書いたらすぐpush」+ rule: prefix 単独 commit、ゲーム改修と分離)
+
+## 次フェーズの大作業
 
 ### タイトル
-**log_autonomous_game v002 完成度上げ — wave カーブ実装 + audit scripts v002 対応 + self_judgment.md v002 採点**
+log_autonomous_game v002 残タスク完遂: 敵 C ダイブ敵 + 70-90秒時間カーブ本体 + audit scripts (bullet_origin / enemy_behavior / agent_difficulty_proxy) 3本の v002 移植
 
-### 完遂の定義 (Phase 4 終了時に成立していれば完了)
-- (1) `game/log_autonomous_game/v002/game.js` に **wave 2 開始遅延 + 弾密度カーブ調整** が入っており、wave 1 = 軽量導入 (敵 A 3 体 / 弾密度 v001 の 70% 以下) → wave 2 = wave 1 撃破後 8 秒以上の静寂 → 敵 D 横断追加、というカーブが**コード上**確認できる (該当行コメントに「Pulse Relay 70-90s カーブ第 1 段」明示)
-- (2) `game/log_autonomous_game/v002/verify.js` を新規作成し、悪手 4 種 (camper/lane-holder/blind-sweeper/nospecial) が wave 1 内で全 fail することを v002 game.js で確認 (exit 0 + 各方針の死亡フレーム JSON 出力)
-- (3) `game/log_autonomous_game/v002/self_judgment.md` 新規作成。v001 採点 20/25 を起点に、v002 採点 (5 軸 = Q-A 5 / Q-導入 5 (tile ghost 削除分加点) / Q-成功FB 状態3 / Q-D / Q-E) と「展開なし反復解消度 (wave 2 の出現で v001 から何点改善したか)」を文書化
-- (4) projects/log_autonomous_game.md 履歴欄に「2026-05-27 C247 Phase 4: v002 着地」節を追加、(1)-(3) のリンクと差分要約
+### 完遂の定義 (Phase 4 終了時に観測可能な条件で)
+1. `game/log_autonomous_game/v002/game.js` に `enemyC` クラス (ダイブ挙動 = 上から急降下 + 横方向 sin/cos オフセット or 単純な直線ダイブ) 実装 + spawn dispatcher が A/D 偶奇から A/D/C トリプレット (or 時間ベース dispatch) に拡張されている
+2. `WAVE_TIMELINE` 配列 (or `wave_curve.json`) で 70-90 秒の難易度カーブ第1段を本実装。現状の 8 秒静寂ガード (C247 Phase 4 Δ-4) は局所策のため、時間軸の構造実装に格上げ。**最小完遂 = 3 phase (導入 0-20s / 中盤 20-50s / 終盤 50-90s) で wave 出現密度 or 敵種類が変化する**
+3. `verify.js` v002 が新 wave timeline に対しても悪手 4 方針全 wave 1 内 fail で `pass: true` 維持 (拡張による悪手通過の穴を作っていない確認)
+4. audit scripts 3 本 (`bullet_origin_audit.js` / `enemy_behavior_audit.js` 新規 / `agent_difficulty_proxy.js` 新規) が v002 game.js に対して全て exit 0 で PASS
+5. `self_judgment.md` v002 を 22/25 → 23+ 暫定昇格 (Q-C 敵出現退場 5/5 + Q-D 5/5 確定書換 候補)、もしくは「実機判定取得後に確定」と明記
+6. Phase 4 commit が `game: log_autonomous_game v002 enemy C + wave timeline + audit scripts v2` prefix の **単独ゲーム改修 commit** (運用規則改修と分離、CLAUDE.md 厳守事項遵守)
 
-### 着手手順 (最初の 1 手と想定手順)
-1. **最初の 1 手**: `Read game/log_autonomous_game/v001/game.js L219-L271` (敵 A/D wave spawner 部分の構造把握) + `Read game/log_autonomous_game/v001/design_log.md` 「70-90 秒カーブ」関連節を再確認
-2. v002/game.js に **wave 1 軽量化** (spawnWaveA() で n=5 → n=3 + shootCooldown 初期値 +30 オフセット)
-3. v002/game.js に **wave 2 遅延機構**: `waveSpawned` flag を「全撃破 + 8 秒経過」で次 wave 起動するよう変更 (game.lastClearFrame 追加 + spawnNextWave() 呼出条件に時間ガード)
-4. v001 verify.js を v002 にコピー → target path書換 + 「wave 1 軽量化分の閾値調整」確認、4 方針が wave 1 内 fail することを再確認
-5. v002/self_judgment.md 新規作成: v001 構造をコピー + v002 差分採点 + 残課題 (実機判定依存) 明示
-6. projects/log_autonomous_game.md 履歴欄 + design_log.md v002 セクション追加
-7. commit prefix=`game:` で v002 wave/verify/self_judgment 一括 push、commit prefix=`log:` 系統と分離
+### 着手手順
+1. **最初の1手**: `game/log_autonomous_game/v002/game.js` で `enemyC` クラスを骨格だけ追加 (constructor / update / draw / hp / isOffScreen)。ダイブ挙動は最小 (vy=2.5 + vx=Math.sin(frame/30)*1.5 程度) で開始、調整は (2) と並行
+2. spawn dispatcher を `spawnNextWave()` で 3 種化 — A (横スイープ) / D (低速接近) / C (ダイブ) の偶奇 → 3 種ローテ、もしくは `WAVE_TIMELINE` 駆動に切替
+3. `WAVE_TIMELINE` 配列実装 — `[{time:0, type:'A', count:3}, {time:20, type:'A+D', count:5}, {time:50, type:'A+D+C', count:7}, ...]` 程度の 70-90 秒分定義
+4. `verify.js` v002 を新 timeline に対して再実行、4 方針全 fail を確認 (新敵 C で悪手が偶然通り抜けないか検証)
+5. `bullet_origin_audit.js` を v001 → v002 にコピー + enemy C 用 bullet origin 検査拡張 (C は弾を撃たない設計なら enemy_behavior_audit 側に統合可)
+6. `enemy_behavior_audit.js` 新規 — wave 単位で enemy 種別ごとの spawn 範囲 / 退場条件 / hp 範囲を監査
+7. `agent_difficulty_proxy.js` 新規 — verify.js の悪手 4 方針 fail 時間を proxy として、wave timeline 各 phase の生存時間中央値 + 分散を出力 (時間カーブが「導入→中盤→終盤」で単調増加しているか proxy 検証)
+8. `self_judgment.md` v002 を再採点
+9. `game:` prefix で commit + push (運用規則改修 commit と分離)
 
-### 選んだ理由 (なぜこれを最優先か)
-- **Active project (log_autonomous_game.md) の停滞解消**: Nao_u 5/26 06:10 指摘から 22 時間「指示待ち」凍結、Phase 2 で自己判定 A 案選択 → Phase 3 で v002 骨格着地 → Phase 4 で wave カーブ完遂 = Nao_u 指摘から ~3 日で v002 出荷可能状態に到達
-- **CLAUDE.md「絶対にやる」第 1 項「ゲームを動かして出す — 積み上げはその副産物」直接適用**: 本サイクルの第一義 game/* playable diff 出力が v002 ディレクトリ作成のみで終わると「brainstorm/結晶化/cross_review 主出力サイクル」(feedback_means_ends_reversal_check.md 診断対象) に逆戻りする。Phase 4 で wave 実装まで進めて初めて「playable diff として展開のある v002」になる
-- **30 分粒度の判定**: wave 1 軽量化 (10 分) + wave 2 遅延 (10 分) + verify.js v002 化 (5 分) + self_judgment.md (5 分) = 約 30 分の最小単位、Phase 4 1 サイクル内で完遂可能
-- **同型再発防止 (Phase 2 §4 「Nao_u 返信待ち凍結」メタ問題)**: Phase 2 で「Nao_u が判定装置ではなく最終確認装置」原則に整合化したばかり = Phase 4 で実物 v002 を出して初めて「自己判定で進める」運用が結晶化する。Phase 3 骨格止まりだと「Nao_u 返信待ち再凍結」リスク残存
-
-### Phase 4 で**やらない**こと (スコープ明示)
-- v002 brainstorm.md / user_directives_raw.md の再構築 (v001 共有のままで Phase 5 以降に判断)
-- ヘッドレス連続フレーム画像化 (Fly Fail Fix 由来、別大作業候補)
-- LLM playtester 化 (v001 凍結事項、変更しない)
-- 敵 B/C 追加 (Q-C で 4 種規定だが、敵 D 追加までで本 Phase 4 完遂、敵 B/C は Phase 5 以降)
-- memory_redesign.md / kaizen_tracker.md への追記 (Phase 3 で着地済、Phase 4 は game/* 専念)
-
-## Phase 4 完遂報告 (2026-05-27)
-
-### 完遂状況
-- (1) ✅ `game/log_autonomous_game/v002/game.js`: `WAVE_REST_FRAMES=480` 定数 + `lastClearFrame` 記録 + `restElapsed` 8秒静寂ガード (game.js:30-50, 519-528) + `spawnWaveA` n=5→3 軽量化 + shootCooldown +30 オフセット + x=0.25/0.5/0.75 再配置 (game.js:224-242)。「Pulse Relay 70-90s カーブ第 1 段」コメント該当行に明示
-- (2) ✅ `game/log_autonomous_game/v002/verify.js` 新規。`node verify.js` (seed=20260527) で camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s、全 wave 1 内 gameover、`pass: true`、exit 0。**wave 1 軽量化が悪手通過の穴を作っていない確認**
-- (3) ✅ `game/log_autonomous_game/v002/self_judgment.md` 新規。v001 21/25 (84%) を起点に v002 22/25 (88%、Q-導入 +0.5 / Q-D +0.5) + Q-ミミクリ 11.5/15 (77%、ミミクリ-1 +0.5) + 展開差カーブ 15.5/20 (78%、v002 で初設置)
-- (4) ✅ `projects/log_autonomous_game.md` 履歴欄に「2026-05-27 C247 Phase 4: v002 着地」節追加、残課題に v002 実装節追加
-- (追加) ✅ `game/log_autonomous_game/v001/design_log.md` 末尾に §v002 移行ノート 追加 (staging 着手手順 6 対応)
-
-### 副産物 (新規/変更ファイル)
-- 変更: `game/log_autonomous_game/v002/game.js` (wave カーブ実装)
-- 新規: `game/log_autonomous_game/v002/verify.js` (悪手 4 方針 v002 確認)
-- 新規: `game/log_autonomous_game/v002/self_judgment.md` (v002 採点)
-- 変更: `projects/log_autonomous_game.md` (履歴 + 残課題)
-- 変更: `game/log_autonomous_game/v001/design_log.md` (§v002 移行ノート追記)
-
-### Phase 4 学び
-- 「Nao_u が判定装置ではなく最終確認装置」原則 (CLAUDE.md「絶対にやる」L4) を A/B/C 自己判定 → v002 着地のフローで結晶化。22 時間の指示待ち凍結を Phase 2 で解除、Phase 3-4 で playable diff まで完遂
-- `feedback_means_ends_reversal_check.md` (手段／目的逆転) 直接適用: 本サイクル第一義の game/* playable diff (wave カーブ + verify) が完遂、brainstorm/結晶化/cross_review 主出力サイクルへの逆戻りを回避
-- 完遂条件 (1)-(4) + 追加 (design_log v002 ノート) = 5/5 達成、commit 系統は `game:` prefix で `codex:` 系統と分離して Phase 5 で push 予定
-
+### 選んだ理由 (なぜこれを最優先にするか)
+- **CLAUDE.md「絶対にやる」L1 完遂責任**: 「1サイクルの第一義の出力は game/* の playable diff」。C247 Phase 4 で v002 着地済だが、敵種 1 (A 横スイープ) + 敵種 1 (D 接近) + 偶奇 dispatcher のみで、Nao_u 5/25 21:10 指摘「展開なし反復」の本丸 (3 種以上 + 時間カーブ本実装) は未対応。本作業 = Nao_u 指摘への構造応答の最後の本丸
+- **Nao_u 指摘の同型再発防止**: C242→C243→C247→C248 と 4 サイクル連続発火してきた Nao_u 5/25 21:10 指摘系列を、本 Phase 4 v002 残タスク完遂で **構造的に閉じる**。これが完遂しないと「指摘消化が手段の自走化に転じる」リスク (Phase 2 §5 で警告した境界) が現実化
+- **30 分以上の粒度**: Phase 4 単独で 30 分以上の playable diff を要求する内容 (enemyC クラス + timeline 配列 + audit scripts 3 本 + 再採点)。Slack 投稿 1 本では完遂不可、staging で大作業として宣言する妥当な粒度
+- **Active プロジェクト停滞解消**: `log_autonomous_game.md` の v002 残課題が 2 サイクル以上「次サイクル C248 以降」と書かれて積み上がっている状態を本 Phase 4 で解消、Active プロジェクトの実装速度を維持
+- **kaizen 検証期限への波及**: 本作業完遂後の verify.js v002 + audit scripts 3 本 PASS は、kaizen #131 (M-40 自己診断ゲート) / kaizen #132 (Phase 連鎖検証) 系の「判定機構優先」原則の最大具体化事例として、両 kaizen の段階2/3 着手判定材料を更新する
