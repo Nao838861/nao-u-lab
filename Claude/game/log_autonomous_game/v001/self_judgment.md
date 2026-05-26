@@ -393,6 +393,107 @@ Phase 2 §4 案 B:
 
 ---
 
+## 7g. C244 Phase 4 再採点 — wave2 + 敵D 横断敵 追加後
+
+採点時刻: 2026-05-26 C244 Phase 4
+採点対象: `game/log_autonomous_game/v001/` Phase 4 wave2 追加後 (commit 未、Phase 5 で `game: log_autonomous_game v001 wave2 + 敵B 追加` として push 予定)
+
+### Phase 4 改修内容 (Mir 5/26 06:43「展開がなく繰り返し」指摘への対応)
+
+Mir 5/26 06:43 ts=1779745427 #human-steering 指摘:
+> 予告線=親切前提への疑義 / 展開無し反復問題
+
+`projects/log_autonomous_game.md` 残課題「[△] 実装 v001 拡張残: 残: 敵 B/C/D + 70-90 秒カーブ」直撃の Mir 指摘への構造応答として、wave2 = 敵D 横断敵を追加。**敵B 3 案 (横スイープ / 速度変化 / 集団突進) を MPS スコア (M=展開差 / P=予測可能性 / S=Q-C 禁則回避) で比較**:
+
+| 案 | M | P | S | MPS | 判定 |
+|---|---|---|---|---|---|
+| 横スイープ (= design_log §Q-C 敵D 横断敵) | 5 | 5 | 5 | 15 | 採用 |
+| 速度変化 | 3 | 2 | 1 (Q-C「退場理由なき y 速度追加」直接接触) | 6 | 不採用 |
+| 集団突進 | 2 | 4 | 3 (10弾同時で認知負荷限界) | 9 | 不採用 |
+
+横スイープ採用、staging では「敵B」と機械的に呼称されるが design_log §Q-C 枠組では type='D' (横断敵)。70-90 秒カーブ「12-25s 基本混合 (A+D)」と整合。
+
+### 実装内容
+
+**game.js**:
+- 定数追加: `SHOOT_GATE_X_MIN=128 / SHOOT_GATE_X_MAX=512 / ENEMY_VY_A=1.4 / ENEMY_VX_D=1.4`
+- `spawnWaveD()` 関数追加 (3 体、左右端から交互入場、y=216/310/403 上中段、vx=±1.4/vy=0)
+- `spawnNextWave()` dispatcher 追加 (waveCount 偶奇で A/D 切替: 1=A→2=D→3=A→...)
+- `updateEnemies()` 退場判定を type 別化 (A=画面下、D=左右端) + 射撃 X gate を D に追加
+- 描画: 敵D は紫色 (#b878ff) で A (赤 #ff6b6b) と type を視覚区別
+
+**verify.js**:
+- `MAX_FRAMES = FPS * 60` (30s → 60s 延長、wave2 観測可能化)
+- `spawnWaveD` / `spawnNextWave` 追加
+- 退場判定 + X gate を game.js と同型化
+
+**enemy_behavior_audit.js**:
+- 60s sim、wave A/D 連続シミュ
+- case を 3 → **5** に拡張: `spawn_coord_domain_A / spawn_coord_domain_D / direction_invariant (type 別) / shoot_gate_y / shoot_gate_x_D`
+- 結果: **5/5 PASS** (waves=7, 敵 A=20 + D=9, shots A=71 + D=24)
+
+**bullet_origin_audit.js**:
+- 60s sim、wave A/D 連続シミュ
+- check を 6 → **8** に拡張: `static_x_gate_guard_present / d_shots_within_x_gate` 追加
+- 結果: **8/8 PASS** (waves=7, shots A=71 + D=24, offscreen=0, lingering=0, d_out_of_x=0, max_step=1.4≤player=3.4)
+
+### Phase 4 完遂条件 (a)-(e) 達成状況
+
+- (a) ✅ 敵B (= 敵D 横断敵) クラス追加、wave1 撃破後 wave2 として出現 (waveCount 偶奇 dispatcher)
+- (b) ✅ verify.js 60秒延長、4 方針 (camper 5.33s/lane-holder 4.62s/blind-sweeper 7.78s/nospecial 8.20s) 全 gameover、`pass: true` 維持。**ただし全方針が wave1 内で死亡 = wave2 内死亡は本検証では物理的に observe されない** (悪手は wave1 のうちに必ず死ぬ強度、これは設計通りで設計穴ではない、wave2 加算で初めて死亡する可能性のある場合は別案件)
+- (c) ✅ bullet_origin_audit / enemy_behavior_audit ともに wave2 シミュレートで PASS (画面外射撃ゼロ / 退場帯射撃ゼロ / 敵D 端部射撃ゼロ / max_step ≤ player.speed 維持)
+- (d) ✅ 本セクション §7g で C244 Phase 4 再採点追加、Mir 指摘への対応度を §「Mir 指摘対応度」で 5 段階自己採点、内側→外側流出 1 原則違反なし確認 (敵D 追加に際し予測ゴースト・予告線・×印などの UI 流出要素を一切持たない)
+- (e) Phase 4 では commit/push しない (staging Phase 4 ルール「commit はしない、git push は Phase 5 で日記とまとめて行う」遵守)
+
+### Mir 指摘対応度 — 5 段階自己採点
+
+| 項目 | 採点 | 根拠 |
+|---|---|---|
+| 「展開がない」への対応 | **4/5** | 縦軸 A → 横軸 D で軸が直交、視覚 (赤→紫) でも type 差別化、wave2 で確実に展開差発生。失点 -1: 「展開」は wave 数というより各 wave 内の盛り上がりカーブ (Pulse Relay v003 70-90秒カーブ「学習→基本混合→価値提示→中盤圧力→終盤の山→終端」) を指す可能性、wave2 単独追加では局所改善で全体カーブ未充足 |
+| 「繰り返しが根本的問題」への対応 | **3.5/5** | wave A→D→A→D の交互で「同じパターン反復」は確実に解消、ただし A→D 2 種ループ自体が新しい「2 wave ループ反復」になる構造リスク。長期 (60s 以上) では同じパターン感が再発する可能性、敵 C 追加 (3 種以上) で初めて構造的解消。失点 -1.5 |
+| 「予告線=親切前提への疑義」への対応 | **5/5** | C242 Phase 3 で予測軌道線・×印 削除済、Phase 4 改修は「親切前提」の追加要素を一切導入していない (敵D 追加で予告・予測 UI ゼロ)。1 原則「内側→外側流出禁止」を Phase 4 改修全体で遵守 |
+
+**Mir 指摘対応度 合計: 12.5/15 (83%)**
+
+### 既存ゲート (Q-A〜Q-E) への影響再評価
+
+| ゲート | C242 Phase 4 (§7d) | C244 Phase 4 | 変化理由 |
+|---|---|---|---|
+| Q-A 中心入力 | 5/5 | 5/5 | Space 単一性不変 |
+| Q-導入 | 4/5 | 4/5 | タイトル画面コード不変 |
+| Q-成功FB 状態3 | 3/5 | 3/5 | 状態1/2/3 描画コード不変 |
+| Q-D 予測軌道ゴースト | 4.0/5 | 4.0/5 | 内側→外側流出 1 原則維持、視覚要素変化なし |
+| Q-E レイアウト | 5/5 | 5/5 | HUD 面積 2.2% 不変 |
+
+**新合計 (C244 Phase 4): 21/25 (84%) 据置** — メカニクス採点は不変。改修の意義は「展開不足」という新軸への対応であり、既存ゲート採点は変動しない。
+
+### Q-ミミクリへの影響
+
+| サブゲート | C242 Phase 4 (§7d) | C244 Phase 4 | 変化理由 |
+|---|---|---|---|
+| Q-ミミクリ-1 核を上回るメカニクス改修なし | 4.5/5 | **4.5/5** 据置 | 敵D 追加は「核 (パイロット感) を支持するために展開差を作る」方向で核を冷やしていない。ミミクリ宣言禁則 (graze ボーナス × 軌跡 × 弾速 evolve の積上で核を冷やす) と非接触 |
+| Q-ミミクリ-2 パイロット感の導入 | 3/5 | 3/5 据置 | タイトル画面・遷移演出は不変 |
+| Q-ミミクリ-3 死線スリリング × castLock | 3.5/5 | **3.5/5** 据置 | castLock 機構不変、verify.js 数値同一 |
+
+**Q-ミミクリ 合計 (C244 Phase 4): 11/15 (73%) 据置** — 核を冷やしていない確認のみ。
+
+### 内側→外側流出 1 原則違反確認
+
+本 Phase 4 改修で追加された UI 要素:
+1. 敵 D 紫色描画 (`#b878ff`) — 敵 type の色差別化、内側計算 (predict / echo) の流出ではない (✅ 違反なし)
+2. wave_spawn / wave_clear ログイベントの type フィールド追加 — trace.jsonl 出力で内部状態のメタ、画面には出ない (✅ 違反なし)
+3. その他 UI 追加なし (予告線・予測軌道・×印などゼロ)
+
+**1 原則 (feedback_inside_to_outside_leak.md) 違反なし**。
+
+### Mir 指摘対応度の限界 — 次サイクル C245+ で必要な作業
+
+- **wave 内カーブの実装**: 70-90 秒ステージカーブ (4-12s 学習 / 12-25s 基本混合 / 25-40s 予測価値提示 / 40-58s 中盤圧力 / 58-75s 終盤 / 75-90s 終端) は wave 数ではなく時間ベースの圧力カーブとして実装する必要あり。本 Phase 4 で追加した「waveCount 偶奇 dispatcher」は時間カーブと直交、両方必要
+- **敵 C (ダイブ敵) 追加**: design_log §Q-C 敵 C 「予告軌道 0.3-0.8s → 突入 → 退場」は本 Phase 4 で未実装、敵 3 種揃って初めて「2 wave ループ反復」の構造リスクが解消する
+- **実機判定**: Mir 06:43 指摘の体感的解消確認は実機プレイ依存 (本 Phase 4 のヘッドレス検証で対応度の構造的根拠は揃ったが、体感差は次サイクル以降の cross_review で Nao_u/Mir/Ash いずれかに依頼)
+
+---
+
 ## 8. 接続先
 
 - [game/log_autonomous_game/v001/design_log.md](design_log.md) — §実装第2 commit 報告 が本採点の対象範囲

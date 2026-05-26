@@ -13,7 +13,13 @@
   // Q-D 弾パラメータ (design_log.md §Q-D 実装パラメータ準拠 / Movement Prediction 外部知見裏付け)
   const BULLET_SPEED = 2.0;        // pixel/frame、120 px/s、1秒先=120px=画面短辺640pxの19%
   const SHOOT_INTERVAL = 90;       // 1.5秒間隔
-  const SHOOT_GATE_Y_MAX = H * 0.85; // 退場フェーズ手前まで
+  const SHOOT_GATE_Y_MAX = H * 0.85; // 退場フェーズ手前まで (敵A 縦進行用)
+  // 敵D 横断敵: 中央付近のみ射撃 (design_log §Q-C 敵D「中央付近でのみ射撃」)
+  const SHOOT_GATE_X_MIN = W * 0.2;  // 128
+  const SHOOT_GATE_X_MAX = W * 0.8;  // 512
+  // 敵速度定数 (audit が静的抽出するため const 化)
+  const ENEMY_VY_A = 1.4;          // 敵A 直進小型 縦速度
+  const ENEMY_VX_D = 1.4;          // 敵D 横断敵 横速度 (vy_A と対称)
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
@@ -219,7 +225,7 @@
         x: W * (0.15 + i * 0.175),
         y: -20 - i * 40,
         vx: 0,
-        vy: 1.4,
+        vy: ENEMY_VY_A,
         r: 10,
         alive: true,
         // 射撃タイミングを敵間でずらす (画面内到達後 30フレーム + i*20 で初弾)
@@ -228,7 +234,40 @@
     }
     game.waveSpawned = true;
     game.waveCount += 1;
-    logEvent('wave_spawn', { wave: game.waveCount, count: n });
+    logEvent('wave_spawn', { wave: game.waveCount, type: 'A', count: n });
+  }
+
+  // --- 敵 D (横断敵) Wave ---
+  // C244 Phase 4 (2026-05-26): Mir 5/26 06:43「展開がなく繰り返し」指摘への対応
+  // design_log §Q-C 敵D「左右端から入り反対側へ抜ける、中央付近でのみ射撃」を実装。
+  // 70-90 秒カーブ「12-25s 基本混合 (A+D)」に従い、wave 2 として A 撃破後に出現。
+  // 内側→外側流出 1 原則 (feedback_inside_to_outside_leak.md): 1秒先計算は echo 機構の内部に閉じる、
+  // 敵 D 追加に伴う UI 流出 (ゴースト/予告線/×印) を一切持たない。
+  function spawnWaveD() {
+    const n = 3;
+    for (let i = 0; i < n; i++) {
+      const fromLeft = i % 2 === 0;
+      game.enemies.push({
+        type: 'D',
+        x: fromLeft ? -20 : W + 20,
+        y: H * (0.30 + i * 0.13), // 216 / 309.6 / 403.2 — 上半身〜中段に分散、プレイヤー H*0.78 帯と分離
+        vx: fromLeft ? ENEMY_VX_D : -ENEMY_VX_D,
+        vy: 0,
+        r: 10,
+        alive: true,
+        // X gate (中央域 [128, 512]) に入った後 50F+ で初弾、敵間で時差
+        shootCooldown: 50 + i * 35,
+      });
+    }
+    game.waveSpawned = true;
+    game.waveCount += 1;
+    logEvent('wave_spawn', { wave: game.waveCount, type: 'D', count: n });
+  }
+
+  // wave dispatcher: waveCount 偶数 → A、奇数 → D (1=A, 2=D, 3=A, 4=D, ...)
+  function spawnNextWave() {
+    if (game.waveCount % 2 === 0) spawnWaveA();
+    else spawnWaveD();
   }
 
   // Q-D: 敵→プレイヤー狙いの単発射撃 (弾自体は発射時の角度で直進 = divergence ゼロ)
@@ -251,9 +290,16 @@
     for (const e of game.enemies) {
       if (!e.alive) continue;
       e.x += e.vx; e.y += e.vy;
-      if (e.y > H + 30) { e.alive = false; continue; } // 退場
-      // SHOOT_GATE: 画面内 (y in [0, H*0.85]) かつ退場前のみ射撃
-      if (e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX) {
+      // 退場判定 (type 別): A は画面下端、D は左右端
+      if (e.type === 'D') {
+        if (e.x < -30 || e.x > W + 30) { e.alive = false; continue; }
+      } else {
+        if (e.y > H + 30) { e.alive = false; continue; }
+      }
+      // SHOOT_GATE: y in [0, H*0.85] (退場前)、type='D' は追加で x in [W*0.2, W*0.8] (中央域)
+      const inYGate = e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX;
+      const inXGate = e.type !== 'D' || (e.x >= SHOOT_GATE_X_MIN && e.x <= SHOOT_GATE_X_MAX);
+      if (inYGate && inXGate) {
         e.shootCooldown -= 1;
         if (e.shootCooldown <= 0) {
           spawnBullet(e);
@@ -382,9 +428,9 @@
       }
     }
 
-    // 敵
+    // 敵 (type 別配色: A=赤, D=紫寄り = 横軸の差別化を視覚で示す、内側→外側流出 1 原則は弾本体・予測非表示で維持)
     for (const e of game.enemies) {
-      ctx.fillStyle = '#ff6b6b';
+      ctx.fillStyle = e.type === 'D' ? '#b878ff' : '#ff6b6b';
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill();
     }
 
@@ -479,8 +525,8 @@
       if (game.spaceEdge) castLock();
       updatePlayer();
       updateEcho();
-      if (!game.waveSpawned && game.frame % 2 === 0) spawnWaveA();
-      // Wave が全て退場したら次 Wave (骨格段階ではループ)
+      if (!game.waveSpawned && game.frame % 2 === 0) spawnNextWave();
+      // Wave が全て退場したら次 Wave (waveCount 偶奇で A/D 切替)
       if (game.waveSpawned && game.enemies.length === 0) {
         game.waveSpawned = false;
         logEvent('wave_clear', { wave: game.waveCount });

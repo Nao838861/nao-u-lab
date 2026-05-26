@@ -224,3 +224,44 @@
 - **30 分粒度**: brainstorm 5 分 + 実装 15 分 + verify.js 確認 5 分 + self_judgment 再採点 5 分 = 30 分内で「進んだ」と言える完遂
 - **他候補との比較**: (i) morioka 本文取得 = playable diff にならない / Slack 1 本で済む粒度 (ii) kaizen #136 起票 = Mir/Ash 応答待ち、本サイクル起票は時期尚早 (iii) build_atom_edges.py 実装 = クロスチェック未完了で先行リスク (iv) 他プロジェクト = log_autonomous_game ほど直近 Nao_u/Mir 指摘の差分がない
 
+## Phase 4: 大作業実行 (log_autonomous_game v001 wave2 + 敵D 横断敵 追加)
+
+### A) 完遂条件 (a)-(e) 達成状況
+- (a) ✅ 敵D 横断敵クラス + wave2 trigger 追加 (game.js): `SHOOT_GATE_X_MIN/X_MAX/ENEMY_VY_A/ENEMY_VX_D` 定数 + `spawnWaveD()` + `spawnNextWave()` dispatcher (waveCount 偶奇で A/D 切替) + 退場判定 type 別化 + 射撃 X gate + 敵D 紫色描画
+- (b) ✅ verify.js を 60秒に延長、4 方針全 gameover で `pass: true` 維持 (camper 5.33s/lane-holder 4.62s/blind-sweeper 7.78s/nospecial 8.20s)。**ただし全方針 wave1 内死亡**、wave2 内死亡は物理的に observe されない (悪手は wave1 のうちに必ず死ぬ強度、これは設計通り)
+- (c) ✅ bullet_origin_audit.js 8/8 PASS (新規 check: `static_x_gate_guard_present` / `d_shots_within_x_gate`) + enemy_behavior_audit.js 5/5 PASS (case を 3 → 5 に拡張: `spawn_coord_domain_D` / `direction_invariant` type 別 / `shoot_gate_x_D`)。両 audit ともに 60s sim で waves=7, 敵 A=20+D=9, shots A=71+D=24 を観測、全項 PASS
+- (d) ✅ self_judgment.md §7g 追加: Mir 指摘対応度 12.5/15 (83%) + 既存ゲート影響再評価 (Q-A〜E 据置 21/25=84%) + Q-ミミクリ据置 (11/15=73%) + 内側→外側流出 1 原則違反なし確認 + 次サイクル C245+ 残課題
+- (e) Phase 4 では commit/push しない (staging Phase 4 ルール「commit はしない、git push は Phase 5 で日記とまとめて行う」遵守)。Phase 5 で `game: log_autonomous_game v001 wave2 + 敵B 追加 (Mir 5/26 06:43 展開無し指摘への対応)` として push 予定
+
+### B) 副産物 (新規/変更ファイル一覧)
+- `M game/log_autonomous_game/v001/game.js` — 敵D class + wave dispatcher + X gate + type 別退場 + 紫描画
+- `M game/log_autonomous_game/v001/verify.js` — 60s延長 + spawnWaveD + dispatcher + thesis 文言更新
+- `M game/log_autonomous_game/v001/bullet_origin_audit.js` — 60s sim + 敵D x-gate static check + d_shots_within_x_gate check
+- `M game/log_autonomous_game/v001/enemy_behavior_audit.js` — case 3→5 拡張 (敵D spawn / 方向不変 type 別 / 敵D x-gate)
+- `M game/log_autonomous_game/v001/self_judgment.md` — §7g C244 Phase 4 再採点追記
+
+### C) 敵B 3案 MPS スコア (選定根拠)
+| 案 | M (展開差) | P (予測性) | S (Q-C 禁則回避) | MPS | 判定 |
+|---|---|---|---|---|---|
+| 横スイープ (= design_log §Q-C 敵D 横断敵) | 5 | 5 | 5 | 15 | **採用** |
+| 速度変化 | 3 | 2 | 1 (Q-C「退場理由なき y 速度追加」直接接触) | 6 | 不採用 |
+| 集団突進 | 2 | 4 | 3 (10弾同時で認知負荷限界) | 9 | 不採用 |
+
+横スイープは design_log §Q-C 敵D「横断敵 (左右端から入り反対側へ抜ける、中央付近でのみ射撃)」と等価、70-90 秒カーブ「12-25s 基本混合 (A+D)」と整合。staging では機械的呼称「敵B」だが design_log では type='D'。
+
+### D) Slack 投稿
+- Phase 4 では Slack 投稿なし (Phase 3 で 3 件投稿済、staging 規律「Phase 4 で増やさない」遵守)
+
+### E) kaizen 起票
+- なし (新規ルール乱造リスク回避、feedback_rule_proliferation_canonical.md 順守)
+
+### F) Phase 5 への引継
+- commit 内容: `game: log_autonomous_game v001 wave2 + 敵B 追加 (Mir 5/26 06:43 展開無し指摘への対応)` で game.js / verify.js / bullet_origin_audit.js / enemy_behavior_audit.js / self_judgment.md の 5 ファイルを 1 commit
+- CLAUDE.md 厳守事項「ゲーム改修 (`game/` 配下) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit に分ける」遵守: 本 Phase 4 は game/* + self_judgment.md のみで運用規則改修なし → game: prefix 1 commit で完結
+- staging / 日記 / log/ 更新は Phase 5 で別 commit (log: prefix) として処理
+
+### G) 残課題 (C245+ で対応)
+- 70-90 秒時間ベース圧力カーブ実装 (wave 数 ≠ ステージ進行カーブ、両方必要)
+- 敵 C (ダイブ敵) 追加で「2 wave ループ反復」構造リスク解消
+- 実機判定取得 (Nao_u/Mir/Ash いずれか) で wave2 体感差を確定
+

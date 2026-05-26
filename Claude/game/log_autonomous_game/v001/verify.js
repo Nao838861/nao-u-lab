@@ -2,7 +2,8 @@
 // verify.js — log_autonomous_game v001 悪手 4 種 fail シミュレータ
 //
 // 目的: 4 つの「悪手プレイ方針」(camper / lane-holder / blind-sweeper / nospecial)
-// が 30 秒以内に必ず gameover に到達することを確認する自己批判検証。
+// が 60 秒以内に必ず gameover に到達することを確認する自己批判検証。
+// C244 Phase 4 で 30 秒 → 60 秒 に延長 (wave2 = 敵D 横断敵 を観測可能に)。
 // Pulse Relay v003 教師差分の核命題「悪いプレイ方針を設計の自己批判装置として使う」
 // を本ファイルで物理化する。bullet_origin_audit.js (Q-D 弾発射側の独立監査) の対として、
 // プレイヤー受け手側の設計健全性をシミュレートする 2 軸目。
@@ -26,12 +27,18 @@ const W = 640, H = 720, FPS = 60;
 const BULLET_SPEED = 2.0;
 const SHOOT_INTERVAL = 90;
 const SHOOT_GATE_Y_MAX = H * 0.85; // 612
+const SHOOT_GATE_X_MIN = W * 0.2;  // 128 (敵D 横断敵用)
+const SHOOT_GATE_X_MAX = W * 0.8;  // 512
 const PLAYER_SPEED = 3.4;
 const PLAYER_R = 8;
 const ENEMY_R = 10;
 const BULLET_R = 4;
-const ENEMY_VY = 1.4;
-const MAX_FRAMES = FPS * 30; // 30 秒 = 1800 F
+const ENEMY_VY_A = 1.4;
+const ENEMY_VX_D = 1.4;
+// C244 Phase 4: wave2 (敵D 横断敵) 対応で 30 秒 → 60 秒 に延長。
+// 30 秒では wave1 (敵A 縦進行) のみ exercise、wave2 (敵D 横断) は到達不能。
+// 60 秒で wave1 退場 (約 11s) → wave2 (敵D 通過 約 8s) → wave3 (敵A 再) まで観測可能。
+const MAX_FRAMES = FPS * 60; // 60 秒 = 3600 F
 
 // seeded PRNG (mulberry32) — blind-sweeper の再現性確保
 function mulberry32(a) {
@@ -48,15 +55,41 @@ function spawnWaveA(state) {
   for (let i = 0; i < n; i++) {
     state.enemies.push({
       id: `W${state.waveCount + 1}-A${i}`,
+      type: 'A',
       x: W * (0.15 + i * 0.175),
       y: -20 - i * 40,
-      vx: 0, vy: ENEMY_VY,
+      vx: 0, vy: ENEMY_VY_A,
       r: ENEMY_R, alive: true,
       shootCooldown: 30 + i * 20,
     });
   }
   state.waveSpawned = true;
   state.waveCount += 1;
+}
+
+// C244 Phase 4: 敵D 横断敵 wave (game.js spawnWaveD と同一仕様)
+function spawnWaveD(state) {
+  const n = 3;
+  for (let i = 0; i < n; i++) {
+    const fromLeft = i % 2 === 0;
+    state.enemies.push({
+      id: `W${state.waveCount + 1}-D${i}`,
+      type: 'D',
+      x: fromLeft ? -20 : W + 20,
+      y: H * (0.30 + i * 0.13),
+      vx: fromLeft ? ENEMY_VX_D : -ENEMY_VX_D,
+      vy: 0,
+      r: ENEMY_R, alive: true,
+      shootCooldown: 50 + i * 35,
+    });
+  }
+  state.waveSpawned = true;
+  state.waveCount += 1;
+}
+
+function spawnNextWave(state) {
+  if (state.waveCount % 2 === 0) spawnWaveA(state);
+  else spawnWaveD(state);
 }
 
 function spawnBullet(state, e) {
@@ -75,8 +108,15 @@ function updateEnemies(state) {
   for (const e of state.enemies) {
     if (!e.alive) continue;
     e.x += e.vx; e.y += e.vy;
-    if (e.y > H + 30) { e.alive = false; continue; }
-    if (e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX) {
+    // 退場: A は画面下、D は左右端
+    if (e.type === 'D') {
+      if (e.x < -30 || e.x > W + 30) { e.alive = false; continue; }
+    } else {
+      if (e.y > H + 30) { e.alive = false; continue; }
+    }
+    const inYGate = e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX;
+    const inXGate = e.type !== 'D' || (e.x >= SHOOT_GATE_X_MIN && e.x <= SHOOT_GATE_X_MAX);
+    if (inYGate && inXGate) {
       e.shootCooldown -= 1;
       if (e.shootCooldown <= 0) {
         spawnBullet(state, e);
@@ -176,7 +216,8 @@ function runOne(name, strategyFn, seed) {
 
   for (let frame = 0; frame < MAX_FRAMES; frame++) {
     // Wave 管理: 1 Wave 退場後に次 Wave (game.js と同型、frame % 2 ゲートは省略)
-    if (!state.waveSpawned) spawnWaveA(state);
+    // waveCount 偶奇で A/D 切替 (1=A, 2=D, 3=A, ...)
+    if (!state.waveSpawned) spawnNextWave(state);
     if (state.waveSpawned && state.enemies.length === 0) state.waveSpawned = false;
 
     // Player movement (castLock 不使用、毎フレーム strategyFn で方向決定)
@@ -229,7 +270,7 @@ const survivors = results.filter(r => r.outcome === 'survived').map(r => r.strat
 const report = {
   audit: 'verify_bad_strategies',
   target: 'game/log_autonomous_game/v001/game.js',
-  thesis: '悪手 4 方針は 30 秒以内に必ず死ぬ — 死なないものは設計穴の指標',
+  thesis: '悪手 4 方針は 60 秒以内に必ず死ぬ — 死なないものは設計穴の指標 (C244 Phase 4: wave2 敵D 対応で 60s 延長)',
   max_frames: MAX_FRAMES,
   max_seconds: MAX_FRAMES / FPS,
   seed: SEED,
