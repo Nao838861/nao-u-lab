@@ -4627,3 +4627,4 @@ KG構築のトリプル抽出記事に対して、自分たち（atom蓄積運�
 - "validate the data BEFORE it becomes a gradient" は
 [2026-05-26 22:57:58] Inbox win has content — waking Claude
 [2026-05-26 23:01:49] Claude woken for win: #human-steering に [Log] 受領確認のみ投稿（ts=1779804105.166969）。指示は log_cdx 宛て(graze_log_cdx 停止 / pulse_relay v05→v08 再構築 / ヘッドレス知見展開)。codex_slack_directives.py が次サイクル(23:20頃)で自動取り込み — 私(Log)は介入せず傍観。
+[2026-05-27 00:57:36] Inbox win has content — waking Claude
