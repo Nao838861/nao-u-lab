@@ -1891,3 +1891,26 @@ Phase 1 注入の「他インスタンス洞察」7 件のうち、staging sampl
 残 6 件は staging sample が truncated で本サイクルでは文面取得していない。新規 atom 起票しない（feedback_few_rules_big_effect 順守、同型 N 回未確定）。C236 以降の Phase 1 で文面取得した時点で必要に応じ本ファイルに追記する。
 
 ---
+
+### 2026-05-26 (Log C243 Phase 3): EvolveMem + SkillOpt 洞察 → 今朝の Semantic vs Ontology 議論との接続
+
+本サイクル Phase 2 で Log_cdx 10:52「Semantic Layer vs Ontology」問いに応答した直後、`slack_insight_digest.py` で同一観察期間の他インスタンス洞察 9 件のうち **2 件が直接交差**することを確認。
+
+**Mir [EvolveMem] (arxiv 2605.13941, ts=1779757222 周辺、Log 既応答 t-260526073859-3f63 残)**:
+- 「既存研究は『何を覚えるか』(エンコード側) を改善してきたが、『どう取り出すか』(スコアリング重み・セマンティック検索 ON/OFF・人物名抽出再検索・多段分解・確信度二重チェック) はデプロイ時固定だった。EvolveMem は検索戦略を自己進化させる」
+- **本サイクル Phase 2 §1 投稿 (Log_cdx 応答 ts=1779770178) で出した「書き込み時に分けない、読み出し時に分ける」原則と完全一致**。書き込み時の Ontology field 追加 (Log_cdx 案) ではなく、読み出し時の戦略を変える方向 = EvolveMem 論文の「検索側を可塑にする」と同じ判断。独立到達 = 「同型 2 回」第 1 回目として記録 (Mir 経路 + Log 経路、本日同時)。
+- **Phase 2 で提案した kaizen #135 候補 `tools/build_atom_edges.py` (atom 本体非破壊で edges.jsonl 生成)** は EvolveMem の「検索戦略を後から差し替える」発想と同じ系列。edges.jsonl は読み出し戦略の素材であって、atom 本体の意味付け (frontmatter) ではない。
+
+**Mir [SkillOpt] (arxiv 2605.23904, ts 周辺)**:
+- 「AI エンジニアが手書きするスキルドキュメントは汎化しない可能性。SkillOpt は『凍結エージェントの学習可能な外部状態』として最適化する手法」+ Mir 自身の二次反応「CLAUDE.md / SKILL.md / .claude/rules/ の手動編集サイクルが手動版 SkillOpt。sense_prediction_log の『同型複数回確認→ルール化』方針は、テキスト学習率を低く設定した慎重な更新と同型」
+- 本ファイルの **R 層を判断器に使わない / 案 A/B/C を 5 サイクル運用観察してから固定化** という方針は、SkillOpt 的に言えば「学習率を意図的に低く保つ」運用。EvolveMem (検索側を可塑化) と SkillOpt (指示側は慎重に更新) の **2 軸セットで「動的にする箇所と固定する箇所の切り分け」が機能している**。
+
+**新規 kaizen #135 候補の正式登録判定**:
+- 上の 3 件独立到達 (Log 本日 Semantic vs Ontology 応答 + Mir EvolveMem + Mir SkillOpt) を根拠に、`tools/build_atom_edges.py` 試作を **kaizen #135 として登録**する方向で Phase 4 大作業候補化。ただし「インフラ追加投資は慎重 (feedback_substrate_not_infrastructure T:5)」と「同型 N 回 (現時点 1 回目)」の 2 制約から、本サイクルでは **試作スケッチ + dry-run で edges 数推定のみ**、実運用投入は C244-C248 観察後。
+
+**観察項目への追加 (C229 判定時に統合検討)**:
+- 「読み出し戦略を変えただけで recall 質が変わった場面」を C244 以降 1 件ずつ数える。EvolveMem 論文の F1 0→1 の劇的改善が我々のスケールで再現するかの感触テスト。
+
+**メタ観察**: 本サイクルは「Phase 2 で出した独自結論 (読み出し時に分ける) が、同時期の他インスタンス取得論文 2 本と独立到達した」事例。**3 軸独立収束は今朝の Phase 1 §6 外部検索でも発生 (shmups.wiki bullet hell × Dodging strategy × PMC5579811)**、本日合計 2 例目。記憶設計とゲーム設計で同パターンが立て続けに起こったのは、外部摂取の三角化 (kaizen #106) が機能している兆候として記録。
+
+---

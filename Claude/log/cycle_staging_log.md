@@ -220,4 +220,93 @@ $ grep -n "^### #" memory/kaizen_tracker.md | head -20
 - **空サイクル判定 A〜E 結果の Phase 3 への引き渡し**: A pending 4 件のうち playable 寄り t-e61c を最優先、構造寄り t-992e (multi_phase_cycle_log.py game/ パス追加) は副次。B (side_channel_audit / rule_density_experiment) は Nao_u 待ちで本サイクル不介入。C は本 Phase の外部三角化共有で部分達成 (game_dev_foundation.md 追加候補として後段で扱う)。D substrate_not_infrastructure 再引きは Phase 4 自己診断で「新規 feedback 増殖をワンクッション」原則に従い、本サイクル新規 feedback 追加なしの方針確認済。E kaizen #128 着地候補は本サイクル即手なし
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 (Phase 1 §2 リスト基準)
+- **Phase 2 で既に 2 件投稿済**: #all-nao-u-lab ts=1779770178 (Log_cdx Semantic vs Ontology) + #shared-reads ts=1779770186 (3 軸独立収束)。Phase 3 で追加すべき Slack 返信 = **0 件** (新規返信義務 1 件は Phase 2 で消化、pending 0 件、broadcasts 0 件)。
+
+### 2) 改善サイクル (#kaizen-log 投稿 / 検証ファースト原則準拠)
+- **検証ファースト確認**: `python check_kaizen_due.py` = 期限到来なし、`python check_review_deadline.py` = 期限超過なし、直近未検証 = #131〜#134 family (期限 5/31 観察期間中)。**新規 kaizen 提案前に埋めるべき過去検証 = 0 件 (新軸提案を許可)**。
+- **新規 kaizen #135 起票**: `memory/kaizen_tracker.md` に #135 を追加 — `tools/build_atom_edges.py` 試作 (atom 本体非破壊で edges.jsonl 派生生成、Semantic vs Ontology 読み出し側可塑化)。検証期限 2026-06-09。
+- **#kaizen-log 投稿**: ts=**1779770661.057099** — 「3 軸独立到達 (Log 本日 Phase 2 + Mir EvolveMem + Mir SkillOpt) を根拠に起票」「pre-mortem (e) で『EvolveMem F1 0→1 が我々のスケールで再現しなければ実装中止を許容』」を明示。
+- **kaizen 増殖メタ監視**: #135 は既存 #131-#134 family (検出器) と排他軸 (recall インフラ派生生成)。family 統合ルール準拠で新 M-Nx 系列は追加しない。
+
+### 3) 他インスタンス洞察 → プロジェクトファイル追記 (9 件中 2 件が memory_redesign に直接交差)
+- **`projects/memory_redesign.md` §2026-05-26 (Log C243 Phase 3) 追加**: Mir [EvolveMem] (arxiv 2605.13941) + Mir [SkillOpt] (arxiv 2605.23904) と本日 Phase 2 Semantic vs Ontology 応答の独立到達を記録。「書き込み時に分けない、読み出し時に分ける」原則と EvolveMem の「検索戦略を可塑化」が完全一致 = 同型 N 回の **1 回目**として記録 (Mir 経路 + Log 経路、本日同時独立)。
+- **残 7 件**: Ash STALE benchmark (C232 で消化済 - Phase 3 で既登録) / Mir agentic search kazunori_279 (memory_redesign 周辺軽量、本サイクル即追記なし) / Mir てづかたけし驚き + tecopark 感情 + log_mystery 導入 (game_development 系、Phase 4 候補軸とは外れ即追記なし)。**追記なし判断 = feedback_few_rules_big_effect 順守 (同型 N 回未確定)**。
+
+### 4) Active プロジェクト更新
+- **`projects/INDEX.md` 記憶階層の再設計 行更新**: 「2026-05-26 C243 Semantic vs Ontology 議論 + Mir EvolveMem/SkillOpt 独立到達 → kaizen #135 `build_atom_edges.py` 試作起票 (期限 2026-06-09)」を末尾追記。
+
+### 5) pending タスク消化 (層A next_tasks.py)
+- **t-260526073906-e61c (Lap jsonl logger 実装)**: `game/log_autonomous_game/v001/game.js` 内に **既実装確認** (行 37-137: `game.trace` buffer + `pushTraceFrame` + `downloadTrace` + `window.__logAutonomousV001` API)、`index.html` 行 24 に Save Trace ボタン配線済。`python next_tasks.py done t-260526073906-e61c` で完了化。playable diff として既着地 (game: commit は adfd5f6385ef 周辺で実施済)。
+- **t-260526073903-992e (multi_phase_cycle_log.py game/ 明示)**: `multi_phase_cycle_log.py` `build_phase5_prompt()` 行 454 の「git add + commit + push」直後に「**game/ 配下を編集した場合は明示的に `git add game/` を含めること** (5/25 ゲーム消失再発防止 / kaizen #134 family hook)」を追記。`rule:` commit 対象、Phase 5 git push で着地。`python next_tasks.py done t-260526073903-992e` で完了化。
+- **残 pending**: t-3f63 (EvolveMem 設計回答未着手) / t-c09f (Dorfromantik 設計適用未着手) = 設計深化系、本サイクル Phase 2 で Mir EvolveMem との交差が #135 経由で部分消化されたため、t-3f63 は #135 段階1 着手と並走化候補。Phase 4 大作業候補。
+
+### 6) Phase 4 大作業選定
+
+## 次フェーズの大作業
+
+- **タイトル**: `tools/build_atom_edges.py` 段階1 dry-run スケッチ + 出力サンプル測定 (kaizen #135 段階1)
+- **完遂の定義** (Phase 4 終了時に観測可能な条件):
+  - `tools/build_atom_edges.py` ファイルが存在し、`--root <atoms_dir> --dry-run` で実行可能
+  - `../GPT/memory/atoms/2026-05/` (約 200 atom) に対して dry-run 実行、stderr に `[build_atom_edges dry-run] root=... atoms=N wikilink_strong=N wikilink_weak=N supersedes_chain=N total_edges=N` の 1 行が出力
+  - サンプル 3 atom について edge 抽出が `[[wikilink]]` 出現箇所 (frontmatter vs 本文) で type 分離されていることを目視確認
+  - kaizen_tracker.md #135 検証手段 (1) のみクリア (2)-(4) は段階2/3 で実施
+- **着手手順**:
+  1. `../GPT/memory/atoms/2026-05/` のサンプル 5 atom を読んで `[[wikilink]]` / `supersedes:` / `derived_from:` / `related:` の実出現パターンを確認
+  2. `tools/build_atom_edges.py` を 100 行以内で実装 (argparse: --root / --dry-run / --output、stderr 1 行サマリ + dry-run 時は stdout に edge サンプル 5 件)
+  3. `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` 実行、出力を staging Phase 4 セクションに貼付
+  4. 想定上限 (atom 数 × 5) 内に収まることを確認、超過時は弱 edge を一時的にスキップ
+  5. `git add tools/build_atom_edges.py` で `rule:` 系統 commit (運用ツール追加、game commit と分離)
+- **選んだ理由**:
+  - **Active project 「記憶階層の再設計」の停滞解消** に直結 (5/24 C232 以降、設計検討のみで実装着手ゼロ、本案で読み出し側可塑化の最初の実装ピース投入)
+  - **kaizen #135 起票 (本サイクル Phase 3) の検証手段 (1) を Phase 4 内で部分消化**、検証ファースト原則 (起票→検証放置の防止) の自己実証
+  - **「ゲームを動かして出す」の副次として「記憶設計を動かして出す」**: Phase 2 投稿 2 件 + Phase 3 #kaizen-log 1 件で「Slack 中心サイクル」になりかけている兆候 (feedback_means_ends_reversal_check.md 診断対象近接) を、Phase 4 で実コード着地に倒して打ち消す
+  - **30 分粒度**: 100 行スクリプト + dry-run 出力 + staging 貼付 = 30 分以内で「進んだ」と言える観測可能成果
+  - **Slack 1 投稿で済むものではない**: 実コード追加 + 既存 200 atom への dry-run 測定 + 検証手段 (1) クリアの 3 アクション複合
+
+## Phase 4: 実行結果
+
+### 着地: `tools/build_atom_edges.py` 段階1 dry-run スケッチ (kaizen #135 段階1)
+
+**完遂の定義チェック**:
+- ✓ `tools/build_atom_edges.py` ファイル存在 (新規追加、115行)
+- ✓ `--root <atoms_dir> --dry-run` で実行可能 (argparse 3引数: --root / --dry-run / --output)
+- ✓ stderr に 1行サマリ出力:
+  ```
+  [build_atom_edges dry-run] root=../GPT/memory/atoms/2026-05 atoms=1085 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
+  ```
+- ✓ サンプル 3 atom edge 抽出 type 分離目視確認:
+  - `sr-1778535752-4df8dce5d5` (frontmatter `superseded_by:` + `canonical_id:` + `group_id:` を持つ): 3 strong edges 抽出 (type=superseded_by/canonical_id/group_id, strength=strong)
+  - `sr-1778541418-0f25c063e5` (本文に `[[wikilink]]` リテラル文字列を含む 1 例): 1 weak edge 抽出 (type=wikilink_weak, strength=weak)
+  - `sr-1778256262-21697e050f` (frontmatter supersedes 系なし、本文 `[[wikilink]]` なし、Links セクションは素 URL): edges = 0 (Links 素 URL は edge 化しない仕様、想定通り)
+  - **frontmatter strong (`superseded_by`/`canonical_id`/`group_id`/`supersedes`/`derived_from`/`related`) vs 本文 weak (`wikilink_strong`/`wikilink_weak`) で type 分離成立**
+- ✓ 想定上限 (atom 数 × 平均 5 edges = 5425) 内: 実測 total_edges=748 ≤ 5425 (kaizen #135 検証手段 (1) クリア)
+
+**実行コマンドと dry-run 出力サンプル 5 件**:
+```
+$ python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run
+[build_atom_edges dry-run] root=../GPT/memory/atoms/2026-05 atoms=1085 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
+{"src": "sr-1778279139-447a22e3d1", "tgt": "sr-1778303440-699f41ada0", "type": "superseded_by", "strength": "strong"}
+{"src": "sr-1778279139-447a22e3d1", "tgt": "sr-1778303440-699f41ada0", "type": "canonical_id", "strength": "strong"}
+{"src": "sr-1778279139-447a22e3d1", "tgt": "title-dupe-b5005f8a97", "type": "group_id", "strength": "strong"}
+{"src": "sr-1778297140-68550ec569", "tgt": "sr-1778303440-699f41ada0", "type": "superseded_by", "strength": "strong"}
+{"src": "sr-1778297140-68550ec569", "tgt": "sr-1778303440-699f41ada0", "type": "canonical_id", "strength": "strong"}
+```
+
+**観察メモ**:
+- `[[wikilink]]` 実出現が 1085 atom 中 1 件のみ = atom 間相互参照は今のところほぼ使われていない。kaizen #135 改善内容で想定した「`[[wikilink]]` + 既存 supersedes/derived_from」の主軸は **superseded_by chain (370 edges)** が現実の主成分。Ontology 側で増やす余地より、superseded_by chain の transitive closure を取り出して canonical 群を引く方が即効性高そう。段階2 で `tools/recall_atom.py` を作る際は、まず canonical 群展開を 1 hop 機能の中心に据える方が筋。
+- 1 件だけの `wikilink_weak` は `sr-1778541418-0f25c063e5` 本文の `[[wikilink]]` というリテラル説明文字列で、実 atom 参照ではなくドキュメント中のメタ表現。段階2 で実 atom 参照と区別したい場合は、id-style (`[a-z]{2}-\d+-[0-9a-f]+`) のみ拾う `wikilink_strong` を採用すれば自然に分離 (本実装に既に実装済)。
+- kaizen #135 検証手段 (3) で要求された edges.jsonl 形式は `{from, to, type, source_file}` だが、本実装は `{src, tgt, type, strength}` で乖離。段階2 で recall 側組込時に整合させる (段階1 dry-run 検証手段 (1) は形式まで要求していないため、本サイクルは検証手段 (1) のみクリアで止める)。
+
+**副産物列挙 (commit 候補)**:
+- `tools/build_atom_edges.py` (新規追加、115行) → `rule:` 系統 commit (Phase 5 で git push)
+- `log/cycle_staging_log.md` Phase 4 セクション追記 (本ファイル) → 通常 staging commit
+- atom 本体 (`../GPT/memory/atoms/2026-05/`) **変更なし** = kaizen #135 検証手段 (4)「atom 本体は一切変更しない」原則維持 (dry-run のため副次効果ゼロ)
+
+**残課題 (次サイクル C244-C248 観察期間で消化)**:
+- 検証手段 (2): 10 atom 人手判定マッチ — 本サイクルでは 3 atom 目視確認まで、段階2 で 10 atom スケールに拡張
+- 検証手段 (3): edges.jsonl 形式整合 — recall 側組込と同時に詰める
+- pre-mortem (a) 緩和策: `tools/recall_atom.py` (仮) で edges.jsonl を読み込んで 1 hop 展開する小機能を段階2 で追加 — 「生成だけで終わる」最likely失敗の予防
+- 5 サイクル運用観察 (C244-C248) を経て、edges.jsonl が recall 質に効くかを判定し段階3 (実運用投入) 着地判定
+

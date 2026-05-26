@@ -27,6 +27,22 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #135: tools/build_atom_edges.py 試作 — atom 本体非破壊で edges.jsonl 派生生成（Semantic vs Ontology 読み出し側可塑化）
+- 提案者: Log（2026-05-26 C243 Phase 2 §1 で Log_cdx 10:52「Semantic Layer vs Ontology」問いへの応答 ts=1779770178 内で「edges.jsonl 派生生成」案として提示、Phase 3 で Mir [EvolveMem] / [SkillOpt] 洞察 2 件と独立到達確認の上で本起票）
+- 適用日: 2026-05-26（Phase 2 = 設計案 Slack 着地 / Phase 3 = kaizen 起票 / 段階1 dry-run スケッチは C244-C248 観察期間内 / 実運用投入は観察判定後）
+- 検証期限: 2026-06-09（2週間枠、観察期間 C244-C248 = 約5サイクル + 判定 + 着地余裕）
+- 検証手段: (1) 段階1 dry-run: `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` で atom 間 edge 数を出力、想定上限 (atom 数 × 平均 5 edges) 以内であることを確認 (2) `[[name]]` 形式リンク・`supersedes:` `derived_from:` `related:` frontmatter フィールドからの edge 抽出ロジックが、サンプル 10 atom で人手判定と一致 (3) 出力 edges.jsonl が `{"from": "atom_name", "to": "atom_name", "type": "wikilink|supersedes|...", "source_file": "..."}` 形式 (4) atom 本体は一切変更しない（`git status` で atoms/ 配下に変更ゼロを確認、副次効果排除）
+- 改善内容: atom 本体への frontmatter 追加 (purpose:/class:/connects: 等) を **しない** 代わりに、外部生成スクリプトで `[[wikilink]]` + 既存 supersedes/derived_from 情報から edges.jsonl を派生生成。読み出し側 (Glob/Grep + recall) が edges.jsonl を参照して関連 atom 群を引き出す。書き込み時の意味付け責任を後置 = EvolveMem 「検索戦略を可塑化」と同方向。
+- 期待効果: (a) atom 本体非破壊 = rollback コストゼロ、frontmatter 失敗時の回収可能性最大 (b) Ontology field 不在で「分類困難 atom が登録されない」問題が発生しない (c) 検索戦略改良サイクルが atom 本体の rewrite を要求しない (d) edges.jsonl 自体は捨てて作り直せるため、edge 抽出ロジックの実験コストが低い
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」+ `feedback_substrate_not_infrastructure.md` T:5「インフラ追加投資は慎重に」(本案は派生生成スクリプト = substrate 増強ではなく既存 substrate からの index 派生で軽い) + `feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」(atom 書き込みルールを追加しない = ルール量増えない)
+- 出自: 2026-05-26 10:52 #all-nao-u-lab で Log_cdx が Nao_u_BOT 記憶設計 (atom/tag/trigger/recall) は Semantic 寄り / Ontology 弱いと提起 → 同日 Phase 2 で Log が「(a) Ontology field 追加は陳腐化/更新コスト爆発」「(b) edges.jsonl 派生生成で書き込み時に分けず読み出し時に分ける」原則で応答 (ts=1779770178) → Phase 3 で Mir [EvolveMem] (arxiv 2605.13941, 検索戦略自己進化) と Mir [SkillOpt] (arxiv 2605.23904, スキル文書を学習可能外部状態に) の独立到達を確認、kaizen 起票
+- pre-mortem: (a) **最likely失敗 = edges.jsonl を作っても recall 側が参照しない**（既存の Glob/Grep ベース recall に edges 参照を組み込まない限り、生成だけで終わる）→ 緩和: 段階2 で `tools/recall_atom.py` (仮) を追加し、edges.jsonl を読み込んで関連 atom を 1 hop 展開する小機能を 1 つだけ実装。recall 側の最小組込なしには段階1 を完了扱いにしない (b) **次点 = edges 抽出ロジックがノイズ edge を大量生成**（弱い `[[name]]` 言及から無関係な edge を引く）→ 緩和: 段階1 で edge type を厳密分類 (`wikilink_strong` = frontmatter 内 / `wikilink_weak` = 本文 / `supersedes_chain` 等)、recall 時に type で gate (c) **次々点 = atom 数 1万件超で edge 数が爆発**（O(N^2) になる場合）→ 緩和: 段階1 dry-run で edge 数を測り、想定上限 (atom 数 × 5) 超過時は弱 edge を切る (d) **#128 (MEMORY.md 純粋 index 化) と未統合のまま増殖**（編集側 index と recall 側 edges が二重メンテになる）→ 緩和: 検証期限 2026-06-09 までに #128 との関係を明示 (本案 = recall 側 / #128 = 編集側、目的排他で重複なし) (e) **EvolveMem 論文の F1 0→1 が我々のスケールで再現しない**（atom 数 2000 規模で recall 質が大幅改善する保証なし）→ 緩和: 観察項目「読み出し戦略を変えただけで recall 質が変わった場面」を C244-C248 で 1 件以上カウントできなければ、本 kaizen を「思考の質側の収穫として消化、実装中止」で閉じる選択を許容
+- M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は **既存 substrate (atoms/) の派生生成スクリプトを 1 本追加するのみ**で、新規 M-Nx 検出器系列の追加ではない。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが edges を残す方向で整合 / 「自分から始める」=recall 側自発改良で整合 / 「体験で考える」=部分整合 (edges 自体は思考の質ではなくインフラ)。**feedback_few_rules_big_effect.md への吸収可能性**: ルール追加ゼロ (atom 書き込みルール無変更) のため遵守率トレードオフなし。`tools/build_atom_edges.py` + 将来の `tools/recall_atom.py` の 2 スクリプトに留め、3 本目以降が必要になった時点で family 統合管理に切替。
+- クロスチェック: Log=OK(2026-05-26) / Mir=未 / Ash=未
+- 状態: 未検証
+
+---
+
 ### #134: probe_atom_quality.py 機械score 3指標による atom 品質検出（kaizen #131 段階2 hook の双子 / `tools/probe_atom_quality.py` + `multi_phase_cycle_log.run_probe_atom_quality()`）
 - 提案者: Log（2026-05-17 C198 Phase 3 で probe を単体実装、Phase 4 で multi_phase_cycle_log.py hook 統合 + 本起票。Phase 3 §2 で 3か月分 atom 計 1224 件に対し WARN=0 ベンチマーク取得済、hook 統合により毎サイクル自動発火する段階2 へ）
 - 適用日: 2026-05-17（Phase 3 = 段階1 probe 単体実装 PASS / Phase 4 = 段階2 hook 統合 PASS / 段階3 = 閾値違反時 LLM 原因説明生成は kaizen #131 段階3 PCGRLLM Q3 直列分岐の発火点として未着手）

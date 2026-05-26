@@ -451,7 +451,9 @@ def build_phase5_prompt():
         "他インスタンスやNao_uからも次のアクションが見えるように）\n"
         "3) このサイクルで書き込んだメモリファイルを全てリストアップし、"
         "「Nao_uが読んで理解できるか」「未来の自分が文脈なしで行動を変えられるか」チェック\n"
-        "4) git add + commit + push（書いたらすぐpush）\n"
+        "4) git add + commit + push（書いたらすぐpush）。"
+        "**game/ 配下を編集した場合は明示的に `git add game/` を含めること** "
+        "(5/25 ゲーム消失再発防止 / kaizen #134 family hook)\n"
         f"\n{SLACK_RULES}"
     )
 
