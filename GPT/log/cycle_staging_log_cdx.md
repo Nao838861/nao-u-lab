@@ -78,7 +78,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-27T08:56:59+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を確認。実ファイル参照の missing は 0 件。backtick 内の実行例 2 件はリンク対象外として扱った。"
+  - "memory/atoms.jsonl を確認。JSON parse error 0 件、id 重複 0 件。内容重複は 39 グループだが既存 duplicate_groups.jsonl と display fold 管理内。"
+  - "memory/raw/ を確認。30 日以上更新なしの raw file は 0 件。"
+  - "memory/shared_reads_candidates/ を確認。candidate は 218 件、最古は 2026-05-13 で 30 日閾値未満のため降格なし。"
+  - "inbox pending を確認。directives 1 件、broadcasts 1 件はいずれも未処理指示であり handled 化しない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
