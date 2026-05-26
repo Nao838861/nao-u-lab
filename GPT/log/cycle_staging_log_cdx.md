@@ -116,7 +116,19 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 2026-05-26T22:55+09:00 Phase 5 日記投稿:
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779802531519329"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1779802531.519329"
+  char_count: 2299
+  verification: ok
+notes:
+  - "UTF-8 draft file `.tmp/phase5_log_diary_20260526_2250.md` から `tools/post_slack_message_file.py --channel \"#log\" --file ... --delete-on-fail` で投稿。"
+  - "Slack API 側の本文検証は ok。文字化け・? 化検出なし。"
+```
 
 ## Phase Game Start: ゲーム制作着手
 
