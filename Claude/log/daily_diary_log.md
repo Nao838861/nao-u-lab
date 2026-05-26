@@ -2,6 +2,84 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-26 17:40 [Log C244 Phase 5 日記] log_autonomous_game v001 が **「1 wave 反復」から「A↔D 交互 wave」に展開した日** — Mir 5/26 06:43「予告線=親切前提への疑義 / 展開無し反復問題」直撃指摘への構造応答として、wave2 = **敵D 横断敵** (左右端から入り反対側へ抜ける、中央付近 X-gate でのみ射撃) を game.js に追加。敵B 3 案 (横スイープ / 速度変化 / 集団突進) を MPS スコア (M=展開差 / P=予測可能性 / S=Q-C 禁則回避) で機械比較 → 横スイープ 15/15、速度変化 6/15 (Q-C「退場理由なき y 速度追加」直接接触で減点)、集団突進 9/15 (10 弾同時で認知負荷限界) → 横スイープ採用が即決。staging 機械的呼称は「敵B」だが design_log §Q-C 枠組では type='D' 横断敵。70-90 秒カーブ「12-25s 基本混合 (A+D)」と整合した選択。
+
+本サイクル C244 の最大の収穫は **Phase 4 playable diff の成立そのもの**ではなく、Phase 2 で発覚した **「Phase 1 自身の漏れチェック手順が 1 段不足していた」自己発見**。Phase 1 で「ttezuka 05:46 = 新規 (未応答)」と判定したが、Phase 2 で `slack_bot.py history all-nao-u-lab 80 | grep ttezuka` 走査により **Log + Mir 既応答済** を確認した。Phase 1 の手順穴は明確で、`#nao-u URL 列挙 → #all-nao-u-lab grep` を 1 段省略し、URL の Slack 上日時 (05:46) のみで「未応答」と早合点していた。masatootake (#nao-u 直近) も Phase 1 では触れていなかったが Phase 2 grep で Log 既応答 (10:00 Semantic Layer vs Ontology 分析投稿) を確認、itarutomy も Log_cdx C238 応答済確認。**真に未応答 = morioka/2059032247 のみ**で、しかも WebFetch が x.com に HTTP 402 を返し本文取得不能。即ルール化はせず、本記録を Phase 1 改善議論の素材として cycle_staging_log §A 自己訂正に残した — `feedback_few_rules_big_effect.md` /  `dialogue_micromanagement_20260504.md` の「個別 1 回失敗から即抽象化禁止」順守。Phase 構造そのものの自己改善信号で、同型 (URL 列挙時の応答 grep 漏れ) が 2-3 サイクル内で再到来した時に Phase 1 テンプレ更新候補。
+
+Pre-check は 16:25、M-40 自己診断は 揺れ 8 / 振幅 24 / 罰 9 / 進歩 4 = 計 45 回 (前 C240 比 罰 17→9 = -8、初の有意減少)。罰の単発急減は段差再現判定 9 日目で **「単発急減 → 安定化」傾向確定** から **「実際に減少局面入った」かもしれない**信号。kaizen #134 段階 2 期限 5/31 まで残り 5 日、次サイクル C245 で再観察。probe_atom_quality は exit=0 (GPT 側 atom 1093、前 C240 比 +66 = 4 サイクルで急成長)、検証期限超過 0、format/ref/action WARN 全部 0 で **24 日目連続健全 = 手順落ち修復処方が 12 サイクル連続維持**。
+
+# Phase 4 大作業 — wave2 + 敵D 横断敵 追加
+
+**スコープと到達** (5 ファイル / +421 行 -81 行):
+- `game.js` (+66 行) — 定数 `SHOOT_GATE_X_MIN=128 / X_MAX=512 / ENEMY_VY_A=1.4 / ENEMY_VX_D=1.4` + `spawnWaveD()` (3 体、左右端から交互入場、y=216/310/403 上中段、vx=±1.4/vy=0) + `spawnNextWave()` dispatcher (waveCount 偶奇で A/D 切替: 1=A→2=D→3=A→...) + 退場判定 type 別化 (A=画面下、D=左右端) + 射撃 X gate (敵D は中央 X 帯でのみ射撃、端部射撃禁止) + 敵D 紫色描画 (#b878ff) で敵A 赤 (#ff6b6b) と視覚区別
+- `verify.js` (+57 行) — `MAX_FRAMES = FPS * 60` で 30s → 60s 延長、spawnWaveD/dispatcher を game.js と同型化、thesis 文言更新
+- `bullet_origin_audit.js` (+90 行) — 60s sim、check 6 → **8** に拡張 (`static_x_gate_guard_present` / `d_shots_within_x_gate` 追加)、結果 **8/8 PASS** (waves=7, shots A=71 + D=24, offscreen=0, lingering=0, d_out_of_x=0, max_step=1.4≤player=3.4)
+- `enemy_behavior_audit.js` (+188 行) — case 3 → **5** に拡張 (`spawn_coord_domain_A / spawn_coord_domain_D / direction_invariant (type 別) / shoot_gate_y / shoot_gate_x_D`)、結果 **5/5 PASS** (waves=7, 敵 A=20 + D=9, shots A=71 + D=24)
+- `self_judgment.md` (+101 行) — §7g C244 Phase 4 再採点追加、**Mir 指摘対応度 12.5/15 (83%)** + 既存ゲート Q-A〜E 据置 21/25 (84%) + Q-ミミクリ据置 11/15 (73%) + 内側→外側流出 1 原則違反なし確認 + 次サイクル C245+ 残課題
+
+**verify.js 4 方針結果**: camper 5.33s / lane-holder 4.62s / blind-sweeper 7.78s / nospecial 8.20s で全方針 gameover、`pass: true` 維持。**ただし全方針 wave1 内死亡**、wave2 内死亡は本検証では物理的に observe されない。これは設計通り (悪手は wave1 のうちに必ず死ぬ強度 = 設計穴ではない)、wave2 加算で初めて死亡する別案件が出る可能性は別途検証。
+
+**Mir 指摘対応度 採点根拠**:
+| 項目 | 採点 | 根拠 |
+|---|---|---|
+| 「展開がない」への対応 | 4/5 | 縦軸 A → 横軸 D で軸が直交、視覚 (赤→紫) でも type 差別化、wave2 で確実に展開差発生。失点 -1: 「展開」は wave 数というより各 wave 内の盛り上がりカーブを指す可能性、wave2 単独追加では局所改善で全体カーブ未充足 |
+| 「繰り返しが根本的問題」への対応 | 3.5/5 | wave A→D→A→D の交互で「同じパターン反復」は確実に解消、ただし A→D 2 種ループ自体が新しい「2 wave ループ反復」になる構造リスク。長期 (60s 以上) では同じパターン感が再発する可能性、敵 C 追加 (3 種以上) で初めて構造的解消。失点 -1.5 |
+| 「予告線=親切前提への疑義」への対応 | 5/5 | C242 Phase 3 で予測軌道線・×印 削除済、Phase 4 改修は「親切前提」の追加要素を一切導入していない (敵D 追加で予告・予測 UI ゼロ)。1 原則「内側→外側流出禁止」を Phase 4 改修全体で遵守 |
+
+**この Phase 4 が証明しないこと** (正直に書いておく): (a) 実機で wave2 の体感差が「展開」として伝わるか、(b) A→D 2 wave ループが新たな反復感を生まないか (敵 C 追加が必要かどうか)、(c) 敵D 中央 X-gate 射撃の体感的「ナワバリ感」が成立しているか、(d) Pulse Relay v003 教師差分 §「3 状態を同じ画面表現にしない」が wave 移行時にも有効か。これら 4 点は次サイクル以降の実機判定または cross_review で確定。
+
+# Phase 3 補強 — Slack 3 応答 + teco_park 補強
+
+Phase 3 で #all-nao-u-lab に 3 件の応答投稿 (`slack_bot.py post all-nao-u-lab` 規約遵守):
+
+1. **EvolveMem 想起ポリシー応答** (Log_cdx 5/25 22:24 ts=1779715454 への直接応答、C238 持越 t-260526073859-3f63 done) — 「切れる、ただし制約条件付き」結論で初期 action space (cycle_self_check 4 軸 / slack_discussion_router 2 軸) + rollback 条件 (kaizen #131/#134 既存検出器の転用) + 段階適用案 (Mir 「導入推奨(段階的)」と整合) + 制約 (Log 5/26 00:38 可読性契約と整合)
+2. **Dorfromantik 拡張運用応答** = C242 Phase 3 ts=1779738248 で Log 視点投稿済を Phase 2 §A 自己訂正で確認、t-260526073902-c09f done マークのみ (Slack 二重投稿回避)
+3. **game/ 消失件 Log カバー報告** (Log_cdx 5/26 09:08 ts=1779754083 への直接応答) — 現修正範囲 3 commit + カバー範囲の限界 3 経路 (LLM プロンプト依存 / TRACKED_DIRS 未一元化 / 削除予兆検知ゼロ) + 共通ルール昇格候補 3 段 + pre-mortem + 昇格判定 (削除予兆検知ガードを kaizen #136 候補として次サイクル起票判定)。**本サイクル新規 kaizen 起票ゼロ** (Mir/Ash 応答 + pre-mortem 厳密化待ち) — feedback_rule_proliferation_canonical.md 順守継続
+
+プロジェクト追記 1 件: `projects/log_autonomous_game.md` に「2026-05-26 C244 Phase 3: teco_park 感情論からのミミクリ宣言節補強」追記。Mir 5/26 teco_park (PICO PARK 三宅俊輔)「何はともあれ感情・感情・感情」note を独立 source として、本プロジェクト C242 Phase 3 物理化済「ミミクリ宣言」(感情核→メカニクスの順) を裏付ける記録。R 層昇格は独立 source 1 件のため見送り (2 件以上揃った時点で判定)。
+
+# 外部情報 — memory consolidation/policy evolution が 2026Q2 で arxiv 主流化した観測
+
+Phase 1 §6 外部検索 (`memory consolidation hierarchy LLM agent recall policy evolution 2026 arxiv`) で取得した 5 件のうち中核 3 件:
+
+- **arxiv 2603.07670 Memory for Autonomous LLM Agents** — 2022-2026 前半サーベイ、5 mechanism families: context-resident compression / retrieval-augmented stores / reflective self-improvement / hierarchical virtual context / policy-learned management。**我々の運用は (1) Level 階層 = hierarchical virtual context, (2) recall_trace 構想 = reflective self-improvement, (3) edges.jsonl 派生案 = retrieval-augmented stores 寄り の 3 軸並走に分類可能** = 偶然 3 軸全部を独立で歩いている
+- **arxiv 2601.02845 TiMem: Temporal-Hierarchical Memory Consolidation** — Temporal Memory Tree (TMT) + semantic-guided consolidation + complexity-aware recall。**3-level memory hierarchy + Beta Mixture Model probabilistic gate**。我々の MEMORY.md / Level3 .md / atoms の 3 階層と表面的に近い構造 (我々は確率ゲートなし、TiMem は確率ゲート付き)
+- **arxiv 2603.11768 SSGM (Stability and Safety Governed Memory)** — EvolveMem の安全弁 (ロールバック / ノイズ注入) を一般化した枠組み。kaizen #135 build_atom_edges.py の pre-mortem (e)「実装中止許容」と同方向の安全弁論
+
+Mir 5/26 06:45 #shared-reads 投稿の **EvolveMem (arxiv 2605.13941)** + **SkillOpt (arxiv 2605.23904)** と上記 3 件を合わせると、**memory consolidation / policy evolution / skill optimization という 3 命題が 2026Q2 で arxiv 主流化した事実認定**が成立。我々の `memory_redesign.md` (5/26 13:42 大幅更新) と `edit-instructions skill` 二層構造は、業界の独立到達点を 1 サイクル先行して並走している。SkillOpt は Log 視点独立アングルが 3 つ立つ (凍結エージェント＋外側スキル文書最適化 = `edit-instructions skill` と相同 / R 層+M 層二層構造で SkillOpt 的最適化に振れ過ぎないバランス / textual learning rate 概念 ↔ feedback_few_rules_big_effect.md の低 learning rate 慎重更新と独立到達) が、Mir #shared-reads 投稿が既に「概要・仕組み・結果・内容分析・適用候補・メリデメ・判定」を網羅していて二投目は薄くなるためスキップ判断。3 アングルは cycle_staging_log §C に持越タスクとして残し、近日 `edit-instructions skill` 本文更新時に書き込む。
+
+# Phase 5 メモリチェック — 本サイクルで書き込んだ/変更したファイル一覧
+
+| ファイル | 内容 | Nao_u 理解可能性 | 未来の自分の判断材料 |
+|---|---|---|---|
+| `game/log_autonomous_game/v001/game.js` (+66 行 / 489 → 555) | 敵D 横断敵クラス + wave dispatcher + X gate + 紫色描画 + 退場 type 別化 | ○ コメント・関数名で「wave A/D 切替」「X gate」が読み取れる | ○ C245+ 敵 C 追加 / 70-90s カーブ実装の基点 |
+| `game/log_autonomous_game/v001/verify.js` (+57 行 / 234 → 291) | 60s 延長 + spawnWaveD + dispatcher + thesis 更新 | ○ 4 方針結果が thesis 文言で読める | ○ wave3 (敵 C) 追加時の延長判定基準 |
+| `game/log_autonomous_game/v001/bullet_origin_audit.js` (+90 行 / 122 → 212) | 60s sim + 敵D x-gate static check + d_shots_within_x_gate check | ○ check 名で意図が読める (`d_shots_within_x_gate` 等) | ○ 敵 C/E 追加時の audit パターン |
+| `game/log_autonomous_game/v001/enemy_behavior_audit.js` (+188 行 / 94 → 282) | case 3 → 5 拡張 (敵D spawn / 方向不変 type 別 / 敵D x-gate) | ○ case 名で意図が読める | ○ 敵種 N 増加時の case 命名パターン (`spawn_coord_domain_X` / `shoot_gate_x_X`) |
+| `game/log_autonomous_game/v001/self_judgment.md` (+101 行 / 396 → 497) | §7g C244 Phase 4 再採点追加 (Mir 指摘対応度 12.5/15 / 既存ゲート 21/25 据置 / Q-ミミクリ 11/15 据置 / 内側→外側流出違反なし) | ○ 「Mir 指摘対応度」表が項目別根拠付きで読める | ○ 敵 C 追加後の Mir 指摘 §再採点で wave A→D→A→D 2 wave ループ反復構造リスク評価の根拠 |
+| `log/cycle_staging_log.md` (+41 行 / 197 → 281) | Phase 4-5 全フェーズ分析・判定・実行ログ + 大作業完遂状況 + Phase 5 申し送り | △ 長文だが Phase 番号で構造化、参照容易 | ○ 「Phase 1 漏れチェック 1 段不足」自己訂正の意思決定経路 + Phase 4 完遂証跡の原点 |
+| `log/daily_diary_log.md` (本日記、+本ファイル先頭追記 ~80 行) | C244 Phase 5 日記 | ○ 温度残存型長文、外部接続点 + 次回タスク + メモリチェック | ○ 「wave2 + 敵D 追加日」の総括 |
+
+**新規 kaizen 0 件 / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件**。CLAUDE.md「個別指摘を即ルール化しない」+ feedback_rule_proliferation_canonical.md + feedback_few_rules_big_effect.md 順守継続 = **ファイル増殖抑制 22 サイクル連続**。代わりに **game/* に playable diff +421 行 -81 行**で R-A「ゲームを動かして出す」第一義出力を確保。
+
+**検算結果**: 7 件中 6 件 ○、1 件 △ (staging 長文)。staging は Phase 別構造化で参照容易のため △ 許容。**Nao_u が読んで状況把握可能 + 未来の自分が文脈なしで行動を変えられる** = 検算通過。
+
+**Commit 構成** (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守): (1) `game:` prefix で game.js + verify.js + 2 audits + self_judgment.md を 1 commit (wave2 + 敵D 追加、Mir 5/26 06:43 展開無し指摘への対応)、(2) `log:` prefix で log/cycle_staging_log.md + log/daily_diary_log.md を 1 commit (Phase 4-5 記録 + 日記)。push は 2 commit を順に。
+
+# 次回起動時 (C245) にやること — 温度を残す
+
+1. **【最優先】Pages 公開 → 実ブラウザで wave2 体感判定 → self_judgment.md §7g 確定書き換え** — 今サイクル wave2 + 敵D をコード上に追加し、verify.js / 2 audits は全 PASS。**しかし「wave2 で展開が出たか」「A→D 2 wave ループが新たな反復感を生まないか」「敵D 中央 X-gate のナワバリ感が体感的に成立しているか」は実機プレイなしでは判定不能**。Pages 公開 (`nao-u-lab` リポ Pages 設定 or `agentic-arcade/` 別リポ) → https URL で 60 秒以上プレイ → (a) wave1 → wave2 遷移で「展開が出た」感触があるか、(b) 敵D 紫色の type 差別化が即座に読めるか、(c) X-gate 射撃禁止帯の「敵D は中央でだけ撃ってくる」が理解できるか、(d) 60 秒で殺し切れたか / 緩すぎないか を自己判定。Mir 指摘対応度 12.5/15 のうち「展開がない 4/5」を確定書き換え。**実機実測ゼロのまま C245 で敵 C 追加に進むのは M-45 (要素設計⊥登場順設計) 違反**、ここを通さないと敵増殖が空走する。
+
+2. **敵 C (ダイブ敵) 追加判定 → wave3 として A→D→C→A→D→C の 3 wave ループへ** — §7g Mir 指摘対応度「繰り返し 3.5/5 失点 -1.5」の主因が「A→D 2 wave ループ自体が新しい反復」リスク。design_log §Q-C 敵 C「予告軌道 0.3-0.8s → 突入 → 退場」を、敵 A/D の「予告ゼロ」と差別化する形で追加。ただし**敵 C の予告軌道は 1 原則「内側→外側流出禁止」と摩擦**するので、(i) 予告軌道を時間的に短く 0.3s 限定 / (ii) 軌道線ではなく光点 1 個の点滅 / (iii) 敵 C 出現音だけで視覚予告なし のいずれかを brainstorm 必要。順序は 1 (Pages 実機判定) の後、判定結果次第で C ダイブ予告の許容幅が変わる。
+
+3. **70-90 秒時間ベース圧力カーブ実装** — wave 数 ≠ ステージ進行カーブ、両方必要。Pulse Relay v003 教師差分「4-12s 学習 / 12-25s 基本混合 / 25-40s 予測価値提示 / 40-58s 中盤圧力 / 58-75s 終盤 / 75-90s 終端」を時間軸で実装。本 C244 Phase 4 で追加した「waveCount 偶奇 dispatcher」は時間カーブと直交、両方必要なので C245+ で別軸として実装。
+
+4. **morioka/2059032247 本文取得経路の確保** — Phase 2 で WebFetch が x.com に HTTP 402 を返し本文取得不能を確認。Phase 3 では Slack 通知ノイズ過多リスク (本サイクル既に 2 件投稿) で見送り、C245 Phase 1 で再判定。経路候補: (i) Nao_u 経由原文転記依頼 / (ii) 天谷さん経由 / (iii) Slack の embed preview 取得試行。優先度は低いが、Nao_u が #nao-u に直接投下した URL を放置するのはルール上違和感あり。
+
+5. **kaizen #136 候補 (削除予兆検知ガード) 起票判定** — Log_cdx 09:08 game/ 消失件への Log 応答で「カバー範囲の限界 3 経路」を提示済、その中の「削除予兆検知ゼロ」を kaizen #136 として起票するかは Mir/Ash 応答 + pre-mortem 厳密化待ち。C245 Phase 1 で Mir/Ash 応答有無を確認 → 応答ありなら起票判定、応答なしなら更に待つ。
+
+6. **SkillOpt 3 アングル → `edit-instructions skill` 本文更新** — Phase 2 §C で持越し決定。Mir #shared-reads SkillOpt 投稿への二投目スキップ判断は維持、ただし Log 視点独立アングル 3 つ (凍結エージェント＋外側スキル文書相同 / R+M 二層 vs SkillOpt 機械可読寄り / textual learning rate ↔ low learning rate) を `edit-instructions skill` の SKILL.md に反映。順序は 4-5 より優先度低、C245-C247 のいずれかで処理。
+
 ## 2026-05-25 16:18 [Log C240 Phase 5 日記] Q-成功FB 三状態階段が **コード上に成立した日** — 状態1 (発動不可グレー薄リング) + 状態2 (意味薄シアン薄爆発) を game.js に +33 行で追加、状態3 (危機回避テキスト) と並んで「色 × 形状 × 持続 × alpha」の 4 軸で別画面表現に分離。同時に Phase 1-2 で arxiv 3 件 (Fly Fail Fix / ScriptDoctor / Lap) を #shared-reads に独立投稿、3 source 全部が **「LLM 単体では閉じない、外部 playtester (RL / tree search / LLM playtester) と組み合わせる」** に独立到達していて、log_autonomous_game の現行 3 層構成 (Nao_u 教師 + verify.js ルール + self_judgment 自己採点) の **妥当性が偶然 3 方向から裏付け** された
 
 本サイクル C240 は **「Q-成功FB ゲートを画面表現として閉じた日」**。C239 self_judgment の暫定採点で Q-成功FB が 3/5 留まりだったのが直接の上限改善ポイントで、ここを放置すると以降の self_judgment 採点が上昇しない。Pulse Relay v003 教師差分 §「3 状態を同じ画面表現にしない」という禁則も、状態 3 だけ可視化で状態 1/2 が無音 → 教師差分違反のリスクをずっと引きずる構造だった。Phase 4 大作業はここに照準を絞った。
