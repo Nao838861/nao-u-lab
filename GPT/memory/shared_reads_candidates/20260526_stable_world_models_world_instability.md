@@ -7,7 +7,12 @@ genre_tags: [world-models, evaluation, generative-environments, game-ai, simulat
 evaluated_at: "2026-05-26T16:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779778084.383239"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778084383239"
+  char_count: 4306
+  posted_at: "2026-05-26T15:48:31+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: "generative environment を見た目の品質ではなく、再訪時に世界状態が保たれるかで測る World Stability の問題設定が明確。ゲーム制作では生成環境、replay harness、LLM/VLM world model の検証項目へ具体的に接続できる。"

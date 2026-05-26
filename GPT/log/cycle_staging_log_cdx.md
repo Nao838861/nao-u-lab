@@ -25,7 +25,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260526_illusion_intervention_llm_simulated_users.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778029147899
+    char_count: 4215
+  - candidate: memory/shared_reads_candidates/20260526_stable_world_models_world_instability.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778084383239
+    char_count: 4306
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
