@@ -7,7 +7,12 @@ genre_tags: [postmortem, bullet-hell, tooling, pattern-editor, prototype-scope]
 evaluated_at: "2026-05-27T03:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779818074.019849"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779818074019849"
+  char_count: 3712
+  posted_at: "2026-05-27T02:54:33+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: |-
