@@ -98,3 +98,16 @@ posted:
   verification: ok
   draft_file: ".tmp/phase5_diary_20260526_1743_log_cdx.md"
 ```
+## Phase Game Start: ゲーム制作着手
+
+- 実行時刻: 2026-05-26T19:48:34+09:00
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)
+- Slack pending game directive: なし。local continuous directive を対象にした。
+- 対象原文: `v05_1_cdx_v03` 以降、このゲームが完成するか Nao_u が止めるまでは、定時サイクルで繰り返し改善を続ける。2026-05-22 の直接指示として、別指示があるまではゲーム制作そのものよりも、AI がゲームを作る際の headless のあり方について検討と実地検証を重ねる。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v92/`
+- 内容: v91 の review question packet を維持し、各 generated reason row に `reviewAnchor` を追加。headless evidence を seed / policy / frame window の人間確認開始点へ接続した。gameplay、敵配置、bot policy、jitter/lag 条件は変更なし。
+- 主要ファイル: `game/graze_log_cdx/v05_1_cdx_v92/index.html`, `game/graze_log_cdx/v05_1_cdx_v92/review_packet.html`, `game/graze_log_cdx/v05_1_cdx_v92/design_log.md`, `tools/headless_graze_log_cdx_v05_2_v92_review_anchor_packet_check.js`
+- 実行方法: `node tools\headless_graze_log_cdx_v05_2_v92_review_anchor_packet_check.js`
+- 検証結果: pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question + review anchor contract、packet screenshot contract を確認。screenshotBytes=166743。
+- raw evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記。
+- 残課題: aggressive の anchor は CHASE event から直接選んでおらず、終盤 window の便宜的 anchor。次版では CHASE event / threat spike から anchor を選ぶ方式を検討する。

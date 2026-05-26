@@ -1,0 +1,231 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>graze_log v05.2_cdx_v92 review anchor packet</title>
+<style>
+:root{color-scheme:dark;--bg:#090d14;--panel:#111827;--line:#243244;--text:#dbe7f7;--muted:#8fa3bd;--good:#75d998;--bad:#ff8b8b;--warn:#ffd06b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header,main{max-width:1180px;margin:0 auto;padding:18px}
+h1{margin:0 0 8px;font-size:22px}
+p{margin:0;color:var(--muted)}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.metric{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:10px 12px;min-height:64px}
+.metric b{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.metric span{display:block;margin-top:4px;font-size:18px;color:var(--text)}
+.note{margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#0c1320;color:var(--muted);font-size:12px;line-height:1.45}
+.trace-note{margin-top:-4px}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+caption{text-align:left;padding:10px 12px;color:var(--muted);font-size:12px}
+th,td{border-top:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px}
+.ok{color:var(--good)}.fail{color:var(--bad)}.probe{color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.card header{padding:10px 12px;border-bottom:1px solid var(--line)}
+.card h2{margin:0 0 6px;font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:2px 6px;color:var(--muted)}
+.tag.good{color:var(--good);border-color:#2b7048}.tag.bad{color:var(--bad);border-color:#7c3434}.tag.warn{color:var(--warn);border-color:#80652b}
+iframe{display:block;width:100%;height:752px;border:0;background:#071126}
+@media (max-width:980px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.card{min-width:0}iframe{height:742px}}
+</style>
+</head>
+<body data-game-version="v05_1_cdx_v92" data-review-packet="review-anchor-packet-v009">
+<header>
+  <h1>graze_log v05.2_cdx_v92 review anchor packet</h1>
+  <p>通常 gameplay は v82 と同じ。v92 は理由表の表示行に、人間確認へ渡す問いと確認 anchor を source JSON からブラウザ側で表へ描画できるかを検証する。</p>
+</header>
+<main>
+  <section class="summary" aria-label="review summary">
+    <div class="metric"><b>method</b><span>policy reasons</span></div>
+    <div class="metric"><b>good policies</b><span>3 clear</span></div>
+    <div class="metric"><b>bad policies</b><span>5 fail</span></div>
+    <div class="metric"><b>regression guard</b><span>j4/j6 split</span></div>
+  </section>
+  <p class="note">この packet の目的は、平均スコアや単一 bot の clear だけで完成扱いしないために、route / aggressive / marksman の clear と camper / survival / panic / defensive / novice の failure を同じ表へ置き、その理由を死亡 phase、下端滞在、CHASE、BOMB/Active DEF 到達へ分解すること。headless は「楽しい」を判定せず、比較証拠を人間確認前に残す。</p>
+  <table aria-label="causal slice interpretation">
+    <caption>headless check が assert する causal slice</caption>
+    <thead><tr><th>axis</th><th>assertion</th><th>読み方</th></tr></thead>
+    <tbody>
+      <tr><td class="ok">baseline</td><td>route clear</td><td>seed 12345 / 77777 の control は clear し、比較の基準線になる。</td></tr>
+      <tr><td class="fail">j4/lag4</td><td>route failure</td><td>両 seed で死亡し、route coverage が 1.0 に届かない。</td></tr>
+      <tr><td class="ok">j6/lag6</td><td>late survival + BOMB</td><td>両 seed で j4 より 250 frame 以上長く生存し、j4 が到達しない BOMB を 1 回使って clear する。</td></tr>
+      <tr><td class="probe">target/input</td><td>divergence</td><td>同じ seed の同時刻 window で final target と入力列が分岐する。ここから先はゲーム改変ではなく評価器の原因分解として扱う。</td></tr>
+    </tbody>
+  </table>
+  <table aria-label="human readable trace table" data-trace-table="j4-j6-causal-window">
+    <caption>人間確認用 trace table</caption>
+    <thead><tr><th>seed</th><th>policy cell</th><th>結果</th><th>死亡/同時刻 window の読み</th><th>到達差</th><th>次に見る点</th></tr></thead>
+    <tbody>
+      <tr data-trace-row="12345-baseline"><td>12345</td><td>route j0/lag0</td><td class="ok">clear</td><td>control。route coverage が 1.0 に届く。</td><td>BOMB と final route へ到達。</td><td>比較基準。ここを gameplay regression guard にする。</td></tr>
+      <tr data-trace-row="12345-j4"><td>12345</td><td>route j4/lag4</td><td class="fail">over</td><td>死亡直前の target/input が j6 と分岐する。</td><td>late BOMB へ届かない。</td><td>失った shield と target 変更の時刻を確認する。</td></tr>
+      <tr data-trace-row="12345-j6"><td>12345</td><td>route j6/lag6</td><td class="ok">clear</td><td>j4 の死亡時刻を越えて生存し、同 window で別 target を取る。</td><td>Active DEF と BOMB に到達。</td><td>j6 が正しいとは断定せず、到達できた操作として扱う。</td></tr>
+      <tr data-trace-row="77777-j4-j6"><td>77777</td><td>route j4/lag4 vs j6/lag6</td><td class="probe">split</td><td>別 seed でも j4 failure / j6 clear が残る。</td><td>late survival、Active DEF、BOMB の差が再現。</td><td>seed 固有の偶然ではないかを見るための二点目。</td></tr>
+    </tbody>
+  </table>
+  <p class="note trace-note">この表は最終判定ではない。headless は「楽しい」を判定せず、勝敗差を人間が検査できる行動到達差へ分解するための下ごしらえとして使う。</p>
+  <table aria-label="policy contrast table" data-policy-table="good-bad-policy-contrast">
+    <caption>good / bad policy contrast</caption>
+    <thead><tr><th>policy</th><th>期待結果</th><th>観測</th><th>読み方</th><th>人間確認へ渡す問い</th></tr></thead>
+    <tbody>
+      <tr data-policy-row="route-clear"><td>route</td><td class="ok">clear</td><td>coverage 1.0 / BOMB 到達 / Active DEF 多め。</td><td>標準 route の regression guard。</td><td>route が clear できるだけでなく、BOMB と Active DEF が画面上で読めるか。</td></tr>
+      <tr data-policy-row="aggressive-marksman-clear"><td>aggressive / marksman</td><td class="ok">clear</td><td>下端滞在がほぼなく、CHASE が 100 件以上出る。</td><td>前へ出る上手い方針に報酬が出る。</td><td>高スコア方針が単なる処理最適化に見えず、攻めとして読めるか。</td></tr>
+      <tr data-policy-row="camper-fail"><td>camper</td><td class="fail">over</td><td>bottomCampPct 0.999、coverage 0.313、CHASE 0。</td><td>v58 以降の底待ち支配戦略は戻っていない。</td><td>下で雑に撃つだけでは進めないことが体感でも分かるか。</td></tr>
+      <tr data-policy-row="survival-panic-fail"><td>survival / panic</td><td class="fail">over</td><td>coverage 0.406 付近で落ち、BOMB に届かない。</td><td>逃げ続ける/乱れる方針は stage を突破できない。</td><td>失敗が理不尽ではなく、圧に負けた失敗として読めるか。</td></tr>
+      <tr data-policy-row="novice-defensive-fail"><td>novice / defensive</td><td class="fail">over</td><td>novice は終盤手前まで行くが BOMB なしで落ちる。defensive は下端滞在が高い。</td><td>弱いが進む方針と、守りすぎる方針を分けて見る。</td><td>初心者の失敗位置が次の調整候補として意味を持つか。</td></tr>
+    </tbody>
+  </table>
+  <table aria-label="policy reason table" data-policy-reason-table="policy-outcome-reasons">
+    <caption>policy outcome reason table</caption>
+    <thead><tr><th>policy group</th><th>成功/失敗理由</th><th>headless が見る証拠</th><th>人間確認へ渡す仮説</th></tr></thead>
+    <tbody>
+      <tr data-policy-reason-row="route-resource-clear"><td class="ok">route</td><td>標準 route は BOMB と Active DEF に到達して clear する。</td><td>coverage 1.0、BOMB 1、Active DEF 複数回、control seed 2 点 clear。</td><td>防御/爆弾が「最後に届いた保険」ではなく、画面上で使う理由を読めるか。</td></tr>
+      <tr data-policy-reason-row="forward-chase-clear"><td class="ok">aggressive / marksman</td><td>下端に残らず、横切り raider を追うため CHASE 報酬が出る。</td><td>bottomCampPct &lt; 0.02、CHASE &gt; 100、score が route より高い。</td><td>高得点の理由が処理最適化ではなく、前へ出るプレイの報酬として見えるか。</td></tr>
+      <tr data-policy-reason-row="camper-bottom-denied"><td class="fail">camper</td><td>下端に居座ると RIGHT_BUNKER_ENTRY_COVER で横圧と近弾に潰される。</td><td>bottomCampPct 0.999、coverage 0.313、CHASE 0、death wave 10、nearBullets 14。</td><td>「下で雑に撃つだけ」の失敗が理不尽ではなく、横から切り込まれた失敗に見えるか。</td></tr>
+      <tr data-policy-reason-row="escape-pressure-denied"><td class="fail">survival / panic</td><td>逃げ続ける/乱れる入力は TOP_OFF_BRIDGE_TO_MIDBOSS 付近で密度に負ける。</td><td>coverage 0.406、BOMB 0、nearBullets 30 前後、CHASE 0。</td><td>回避だけで突破できないことが、弾量ではなく進行圧として読めるか。</td></tr>
+      <tr data-policy-reason-row="late-novice-probe"><td class="probe">novice / defensive</td><td>novice は終盤手前まで進むが BOMB なしで落ち、defensive は下端防御に偏る。</td><td>novice coverage 0.969 / wave 31、defensive coverage 0.656 / wave 21、両方 BOMB 0。</td><td>次に調整するなら、初心者向け BOMB 導線か、守りすぎ policy の報酬抑制を分けて見る。</td></tr>
+    </tbody>
+  </table>
+  <script type="application/json" id="generated-reason-table" data-generated-reason-table="telemetry-family-contract">
+{
+  "methodVersion": "graze-review-anchor-packet-v009",
+  "seeds": [12345, 77777],
+  "families": [
+    {
+      "id": "route-resource-clear",
+      "policies": ["route"],
+      "expected": "clear",
+      "criteria": {"routeCoveragePct": 1, "bombCountMin": 1, "activeDefCountMin": 10}
+    },
+    {
+      "id": "forward-chase-clear",
+      "policies": ["aggressive", "marksman"],
+      "expected": "clear",
+      "criteria": {"routeCoveragePct": 1, "bottomCampPctMax": 0.02, "chaseBonusCountMin": 100, "scoreBeatsRoute": true}
+    },
+    {
+      "id": "camper-bottom-denied",
+      "policies": ["camper"],
+      "expected": "over",
+      "criteria": {"routeCoveragePctMax": 0.4, "bottomCampPctMin": 0.98, "chaseBonusCount": 0, "deathWave": 10, "nearBulletsMin": 10}
+    },
+    {
+      "id": "escape-pressure-denied",
+      "policies": ["survival", "panic"],
+      "expected": "over",
+      "criteria": {"routeCoveragePctMax": 0.5, "bombCount": 0, "deathPhase": "TOP_OFF_BRIDGE_TO_MIDBOSS", "nearBulletsMin": 25}
+    },
+    {
+      "id": "late-novice-probe",
+      "policies": ["novice", "defensive"],
+      "expected": "over",
+      "criteria": {"bombCount": 0, "noviceCoverageMin": 0.9, "noviceDeathWave": 31, "defensiveBottomCampPctMin": 0.5}
+    }
+  ]
+}
+  </script>
+  <script type="application/json" id="generated-reason-rows-source" data-generated-reason-table="telemetry-render-source">
+[
+  {
+    "id": "route-resource-clear",
+    "generatedEvidence": "coverage=1.000 bomb=1 activeDef=18 score=212443",
+    "humanRead": "標準 route は資源到達を伴って clear する。",
+    "reviewQuestion": "BOMB と Active DEF は、最後にたまたま出た保険ではなく、画面上で使う理由が読めるか。",
+    "reviewAnchor": "seed=12345 policy=route frame=4441 window=4351-4486 compare=activeDef@4091"
+  },
+  {
+    "id": "forward-chase-clear",
+    "generatedEvidence": "aggressive chase=107 bottom=0.009 score=469339; marksman chase=109 bottom=0.002 score=473096",
+    "humanRead": "前へ出る good policy は CHASE と高スコアで clear する。",
+    "reviewQuestion": "高スコアの理由は処理最適化ではなく、前へ出る攻めとして見えるか。",
+    "reviewAnchor": "seed=12345 policy=aggressive frame=3864 window=3774-3909 compare=marksman score=473096"
+  },
+  {
+    "id": "camper-bottom-denied",
+    "generatedEvidence": "coverage=0.313 bottom=0.999 chase=0 deathWave=10 near=14",
+    "humanRead": "底待ちは CHASE なしで wave 10 の横圧に潰される。",
+    "reviewQuestion": "下で雑に撃つだけの失敗が、理不尽な被弾ではなく横から切り込まれた失敗に見えるか。",
+    "reviewAnchor": "seed=12345 policy=camper frame=1397 window=1307-1442 compare=route same-wave"
+  },
+  {
+    "id": "escape-pressure-denied",
+    "generatedEvidence": "survival coverage=0.406 near=30; panic coverage=0.406 near=31; phase=TOP_OFF_BRIDGE_TO_MIDBOSS",
+    "humanRead": "逃げるだけ/乱れるだけの方針は中盤圧で落ちる。",
+    "reviewQuestion": "回避だけで突破できないことが、弾量ではなく進行圧として読めるか。",
+    "reviewAnchor": "seed=12345 policy=survival frame=1684 window=1594-1729 compare=panic near=31"
+  },
+  {
+    "id": "late-novice-probe",
+    "generatedEvidence": "novice coverage=0.969 wave=31 bomb=0; defensive coverage=0.656 bottom=0.996 wave=21",
+    "humanRead": "初心者寄りの失敗と守りすぎの失敗を別候補として残す。",
+    "reviewQuestion": "次に触るなら、初心者向け BOMB 導線と守りすぎ policy の報酬抑制のどちらを分けて見るべきか。",
+    "reviewAnchor": "seed=12345 policy=novice frame=4010 window=3920-4055 compare=defensive@2808"
+  }
+]
+  </script>
+  <p class="note trace-note" data-generated-reason-table-note="telemetry-family-contract">v92 の headless check は上の family JSON を読み、VM 実行 telemetry から各 policy family を再分類する。さらに source JSON からブラウザが描画した下の evidence 行、review question、review anchor が、実測値から再生成した文字列と一致するかを確認する。</p>
+  <table aria-label="generated policy reason table" data-generated-reason-table="telemetry-generated-policy-reasons">
+    <caption>telemetry source からブラウザ描画した reason rows</caption>
+    <thead><tr><th>reason family</th><th>generated evidence</th><th>人間確認へ渡す読み</th><th>次に見る問い</th><th>確認 anchor</th></tr></thead>
+    <tbody id="generated-reason-table-body" data-render-source="generated-reason-rows-source"></tbody>
+  </table>
+  <script>
+(() => {
+  const source = document.getElementById("generated-reason-rows-source");
+  const body = document.getElementById("generated-reason-table-body");
+  if (!source || !body) return;
+  const rows = JSON.parse(source.textContent);
+  for (const row of rows) {
+    const tr = document.createElement("tr");
+    tr.dataset.generatedReasonRow = row.id;
+    const id = document.createElement("td");
+    id.textContent = row.id;
+    const evidence = document.createElement("td");
+    evidence.dataset.generatedCell = "generated-evidence";
+    evidence.textContent = row.generatedEvidence;
+    const humanRead = document.createElement("td");
+    humanRead.textContent = row.humanRead;
+    const reviewQuestion = document.createElement("td");
+    reviewQuestion.dataset.generatedCell = "review-question";
+    reviewQuestion.textContent = row.reviewQuestion;
+    const reviewAnchor = document.createElement("td");
+    reviewAnchor.dataset.generatedCell = "review-anchor";
+    reviewAnchor.textContent = row.reviewAnchor;
+    tr.append(id, evidence, humanRead, reviewQuestion, reviewAnchor);
+    body.append(tr);
+  }
+})();
+  </script>
+  <section class="grid" aria-label="selected replay frames">
+    <article class="card" data-sample="seed12345-baseline">
+      <header><h2>seed 12345 / route / baseline</h2><div class="tags"><span class="tag good">control clear</span></div></header>
+      <iframe title="seed 12345 baseline route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=0&amp;botLag=0&amp;probeFrame=4552&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-j4">
+      <header><h2>seed 12345 / route / j4 lag4</h2><div class="tags"><span class="tag bad">route failure</span><span class="tag warn">non-monotonic</span></div></header>
+      <iframe title="seed 12345 j4 lag4 route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=4&amp;botLag=4&amp;probeFrame=3499&amp;probeDraw=1&amp;probeReview=1&amp;probeForceIframe=0"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-j6">
+      <header><h2>seed 12345 / route / j6 lag6</h2><div class="tags"><span class="tag good">route clear</span><span class="tag">asserted</span></div></header>
+      <iframe title="seed 12345 j6 lag6 route frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=route&amp;botJitter=6&amp;botLag=6&amp;probeFrame=4447&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed77777-j4-j6">
+      <header><h2>seed 77777 / route pair note</h2><div class="tags"><span class="tag bad">j4 fails</span><span class="tag good">j6 clears</span></div></header>
+      <iframe title="seed 77777 j6 lag6 route frame" src="index.html?seed=77777&amp;bot=1&amp;botStyle=route&amp;botJitter=6&amp;botLag=6&amp;probeFrame=4518&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-camper">
+      <header><h2>seed 12345 / camper / bad policy</h2><div class="tags"><span class="tag bad">bottom camp fails</span><span class="tag warn">CHASE 0</span></div></header>
+      <iframe title="seed 12345 camper failure frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=camper&amp;probeFrame=1397&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+    <article class="card" data-sample="seed12345-aggressive">
+      <header><h2>seed 12345 / aggressive / good policy</h2><div class="tags"><span class="tag good">clear</span><span class="tag">CHASE heavy</span></div></header>
+      <iframe title="seed 12345 aggressive clear frame" src="index.html?seed=12345&amp;bot=1&amp;botStyle=aggressive&amp;probeFrame=4364&amp;probeDraw=1&amp;probeReview=1"></iframe>
+    </article>
+  </section>
+</main>
+</body>
+</html>
+

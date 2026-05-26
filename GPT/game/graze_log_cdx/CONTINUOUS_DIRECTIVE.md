@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-26T13:50:00+09:00
+last_handled_at: 2026-05-26T19:48:34+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v91/` で v90 の policy reason family 契約と browser-rendered reason rows を維持しつつ、各 generated reason row に `reviewQuestion` を追加し、headless evidence を人間確認の問いへ接続する packet contract へ拡張した。`tools/headless_graze_log_cdx_v05_2_v91_review_question_packet_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question contract、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v92/` で v91 の policy reason family + review question 契約を維持しつつ、各 generated reason row に `reviewAnchor` を追加し、headless evidence を seed / policy / frame window の人間確認開始点へ接続した。`tools/headless_graze_log_cdx_v05_2_v92_review_anchor_packet_check.js` は seeds 12345 / 77777 で route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row + review question + review anchor contract、screenshot contract を検証して pass。raw evidence を `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に追記した。
 
 ## Nao_u 指示
 
