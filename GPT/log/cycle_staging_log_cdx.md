@@ -35,7 +35,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779514661-65b281f689
+    source_ts: "1779514661.303569"
+    title: "遊星歯車機関「正解に三つの鐘が鳴る」× Phoenix Yin 拡散 (Wu et al. 2026) × Mir 5/23 障壁4分類 — 3点交差から見える「早すぎる圧縮の拒否」観察フレーム"
+    reason: "Phase 3b の反肥大化方針そのものに近いが、恒久ルールの言い換えにせず、複数観察を一つの正解ラベルへ早く畳みすぎないための次回確認に限定できる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "複数観察をルール・ラベル・判定へ圧縮する前に、差分と未解決の摩擦を残すかを確認する reversible probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

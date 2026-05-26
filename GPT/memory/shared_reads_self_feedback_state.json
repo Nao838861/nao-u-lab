@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T02:56:38+09:00",
+  "updated_at": "2026-05-27T04:54:08+09:00",
   "reviewed_source_ts": [
     "1779802713.841839",
     "1779778029.147899",
@@ -57,9 +57,27 @@
     "1779417288.469939",
     "1778173646.461789",
     "1779669494.944199",
-    "1779803649.045509"
+    "1779803649.045509",
+    "1779514661.303569"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T04:54:08+09:00",
+      "id": "sr-1779514661-65b281f689",
+      "source_ts": "1779514661.303569",
+      "title": "遊星歯車機関「正解に三つの鐘が鳴る」× Phoenix Yin 拡散 (Wu et al. 2026) × Mir 5/23 障壁4分類 — 3点交差から見える「早すぎる圧縮の拒否」観察フレーム",
+      "decision": "adopt_probe",
+      "reason": "Phase 3b の反肥大化方針そのものに近いが、既存ルールの言い換えにせず、複数観察を一つの正解ラベルへ早く畳みすぎないための次回確認に限定できる。ゲーム制作・memory整理・shared-reads反映で、3点交差や外部知見を扱う時に、差分を残したまま小さな次行動へ変換する助けになる。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T02:56:38+09:00",
       "id": "sr-1779802713-c249cdd4a7",
@@ -1714,6 +1732,18 @@
         "If code intervention is too heavy, did I avoid permanent expansion and reduce the follow-up to one trace, log, or state field to inspect next time?"
       ],
       "expires_after": "Review after the next rule, directive, probe, hook proposal, or repeated-failure mitigation."
+    },
+    {
+      "id": "probe-20260527-early-compression-refusal",
+      "created_at": "2026-05-27T04:54:08+09:00",
+      "source_ts": "1779514661.303569",
+      "scope": "next memory consolidation, shared-reads self-feedback, game lesson translation, or directive/probe proposal where multiple observations may be collapsed into one correct-answer label",
+      "questions": [
+        "Before compressing multiple observations into one rule, label, or verdict, did I preserve the distinct source claims and why they rhyme but are not identical?",
+        "Did I name one useful friction, barrier, or unresolved difference that should remain visible instead of being erased by correct-answer phrasing?",
+        "If the compression does not change the next action, did I defer it to candidate/state notes instead of adding a directive, AGENTS entry, or broad rule?"
+      ],
+      "expires_after": "Review after the next memory consolidation, shared-reads self-feedback, game lesson translation, or rule/probe proposal that combines three or more signals."
     }
   ]
 }
