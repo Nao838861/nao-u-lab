@@ -77,7 +77,41 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-27T03:18:00+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned: []
+checks:
+  memory_index:
+    path: memory/MEMORY.md
+    checked_links: 2
+    broken_links: []
+  atoms:
+    path: memory/atoms.jsonl
+    records: 1677
+    bad_json: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 0
+  raw_archive_candidates:
+    path: memory/raw/
+    older_than_30_days: 0
+  shared_reads_candidates:
+    path: memory/shared_reads_candidates/
+    stale_older_than_30_days: 0
+  inbox:
+    directives:
+      pending:
+        - id: log-cdx-1779811040-15f96f05d8
+          reason_not_closed: "pulse_relay v008 への制作指示であり、Phase 4a では完了判定しない"
+    broadcasts:
+      pending:
+        - id: broadcast-1779790844-85adeffbca
+          reason_not_closed: "X URL についての読解依頼であり、needs_human_review のまま保持"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
