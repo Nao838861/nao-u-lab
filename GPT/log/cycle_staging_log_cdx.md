@@ -36,7 +36,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779669494-15705cce59
+    source_ts: "1779669494.944199"
+    title: "APEX / exploration collapse in self-evolving LLM agents"
+    reason: "直近の game/headless 評価は、最初に見つかった高スコアルートや policy table に固着しやすい。APEX atom は reflection/memory だけでなく、観測済みだが未追跡の frontier を増やす必要を示しており、次回の評価行動に小さく変換しやすい。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed_source_ts / review record を追加し、次回 playable diff / headless playtest / game evaluation 用の一時 probe `probe-20260526-untracked-frontier-before-policy-lock` を追加した。恒久ルールや評価表にはしない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

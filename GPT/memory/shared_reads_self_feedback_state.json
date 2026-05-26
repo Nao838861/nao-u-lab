@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-26T18:05:00+09:00",
+  "updated_at": "2026-05-26T20:22:00+09:00",
   "reviewed_source_ts": [
     "1779221761.120059",
     "1779447884.748739",
@@ -53,9 +53,27 @@
     "1779669158.892049",
     "1779658720.515969",
     "1779417288.469939",
-    "1778173646.461789"
+    "1778173646.461789",
+    "1779669494.944199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T20:22:00+09:00",
+      "id": "sr-1779669494-15705cce59",
+      "source_ts": "1779669494.944199",
+      "title": "APEX / exploration collapse in self-evolving LLM agents",
+      "decision": "adopt_probe",
+      "reason": "The atom directly matches current game/headless evaluation work: repeated runs can overuse the first successful policy and stop exposing unvisited mechanics or states. Existing probes already cover exploration-vs-utilization failure and state-action loops, so this should not become a permanent rule or full strategy-map system. A small reversible probe is enough: before treating a route or metric as improved, check whether one observed but untracked fork was preserved as the next exploration candidate.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T18:05:00+09:00",
       "id": "sr-1779221761-ac35ce4eb9",
@@ -1594,6 +1612,18 @@
         "If the check was mostly ceremonial, did I narrow the conclusion or choose the smallest follow-up observation that would test the real claim?"
       ],
       "expires_after": "Review after the next state/staging update, game/headless evaluation, self_judgment, or review packet that reports verification."
+    },
+    {
+      "id": "probe-20260526-untracked-frontier-before-policy-lock",
+      "created_at": "2026-05-26T20:22:00+09:00",
+      "source_ts": "1779669494.944199",
+      "scope": "next playable diff, headless playtest, or game evaluation where a successful route, policy table, score, or clear metric may lock Codex onto one known strategy",
+      "questions": [
+        "Before treating the best current route as the design verdict, did I name one observed but untracked fork: unused mechanic, unvisited state, failed-but-informative action, or reachable unexplored condition?",
+        "Did the next run or next note preserve at least one low-visit frontier candidate, instead of only repeating the highest-scoring policy?",
+        "If adding a full strategy map would be too heavy, did I keep just one fork candidate with evidence from a trace, screenshot, log row, or review note?"
+      ],
+      "expires_after": "Review after the next playable diff, headless playtest, or game evaluation that compares routes, policies, scores, or clear metrics."
     }
   ]
 }
