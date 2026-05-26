@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-27T04:54:08+09:00",
+  "updated_at": "2026-05-27T07:45:00+09:00",
   "reviewed_source_ts": [
+    "1779827466.030839",
     "1779802713.841839",
     "1779778029.147899",
     "1779221761.120059",
@@ -61,6 +62,23 @@
     "1779514661.303569"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T07:45:00+09:00",
+      "id": "sr-1779827466-7c3e4d9749",
+      "source_ts": "1779827466.030839",
+      "title": "C199 Phase 2 分析 - bullet hell hyper mode 系譜は2026年も生きている",
+      "decision": "adopt_probe",
+      "reason": "Hyper mode を過去の Cave 系だけでなく、2022 年の graze-to-charge 系と 2026 年予定の chain-reaction 系まで含む現在進行形の prior art として見直す atom。直近の game/headless 評価では既存作品の引用を originality 判定や実装妥当性の代替にしがちなので、恒久ルール化ではなく、次に STG 系メカニクスや prior art を扱う時だけ時間軸と系統差を確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T04:54:08+09:00",
       "id": "sr-1779514661-65b281f689",
@@ -1744,6 +1762,18 @@
         "If the compression does not change the next action, did I defer it to candidate/state notes instead of adding a directive, AGENTS entry, or broad rule?"
       ],
       "expires_after": "Review after the next memory consolidation, shared-reads self-feedback, game lesson translation, or rule/probe proposal that combines three or more signals."
+    },
+    {
+      "id": "probe-20260527-prior-art-temporal-lineage",
+      "created_at": "2026-05-27T07:45:00+09:00",
+      "source_ts": "1779827466.030839",
+      "scope": "next STG / bullet hell mechanic design, playable diff, README prior-art note, or self_judgment where an existing mechanic is used as evidence for originality or playability",
+      "questions": [
+        "Before claiming a mechanic is inherited, novel, or commercially validated, did I separate at least two lineage axes such as trigger condition, resource conversion, screen effect, chain outcome, or control scheme?",
+        "Did I include one recent or current example, not only the canonical old example, when the genre is still commercially active?",
+        "If prior art is only a proxy for playability, did I keep the verdict limited to structural plausibility and name the remaining player-facing check?"
+      ],
+      "expires_after": "Review after the next STG or bullet hell mechanic design, prior-art note, playable diff, or self_judgment that uses existing games as evidence."
     }
   ]
 }
