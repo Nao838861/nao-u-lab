@@ -1,6 +1,14 @@
 # log_cdx Cycle Staging — 2026-05-26 04:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 実施内容: `game/graze_log_cdx/v05_1_cdx_v90/` を作成。v89 の gameplay / policy family 契約を維持し、`review_packet.html` の generated reason rows を静的 HTML ではなく `generated-reason-rows-source` JSON からブラウザ側で描画する評価 packet へ変更。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v90/index.html` または `game/graze_log_cdx/v05_1_cdx_v90/review_packet.html` をブラウザで開く。検証は `node tools\headless_graze_log_cdx_v05_2_v90_rendered_reason_packet_check.js`。
+- 検証結果: pass。route / aggressive / marksman clear、camper / survival / panic / defensive / novice failure、j4/j6 causal split、source telemetry match、rendered reason row contract、packet screenshot contract が true。スクリーンショット 166598 bytes。
+- evidence: `.tmp/graze_log_cdx_v90_policy_reason/v90_policy_reason_packet.png`、`memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl`。
+- 残課題: source JSON 自体はまだ手で packet に埋め込んでいる。次は headless 実行後に source JSON / review packet 全体を生成する方向へ進める。
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
