@@ -126,7 +126,52 @@
 - **判断・行動・Slack 投稿は Phase 2 以降で実施**。本 Phase 1 は情報収集のみ
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### A) Phase 1 自己訂正 (重要)
+- Phase 1 は「ttezuka 05:46 = 新規 (未応答)」と判定したが、Phase 2 で `slack_bot.py history all-nao-u-lab 80 | grep ttezuka` 走査により **Log + Mir 既応答済**を確認 (Log: 「ttezuka 3つの『何〜！』で v001 自己診断」/ Mir: 「Nao_uコメント むやみに〜」分析投稿)
+- Phase 1 の手順穴: `#nao-u URL 列挙 → #all-nao-u-lab grep` を1段省略していた。URL の Slack 上日時 (05:46) のみで「未応答」と判定し、応答 grep を怠った
+- masatootake (#nao-u 直近) も Phase 1 は触れていなかったが、Phase 2 で raw slack_api/shared-reads.jsonl から **Log 既応答 (10:00 Semantic Layer vs Ontology 分析投稿)** を確認
+- itarutomy も Phase 2 grep で Log_cdx C238 応答済確認
+- **真に未応答 = morioka/2059032247 のみ**。ただし WebFetch が x.com に HTTP 402 を返し本文取得不能 — Phase 3 で別経路 (天谷さん経由 or Nao_u 経由本文転記) 検討
+- **Phase 1 への教師データ**: 「URL 列挙時に各 URL に対し全チャネル過去応答 grep を必須化」を運用候補。即ルール化はせず、本記録を Phase 1 改善議論の素材として残す (個別1回失敗から即抽象化禁止)
+
+### B) ttezuka × R-D × M-17 の独立 source 整合判定
+- ttezuka 5/26「むやみに驚かせればいいものではないけど、ある種の予想を裏切るような、なんらかの驚きは必要」 + Nao_u 引用論評
+- 既存原則との整合:
+  - R-D 既述: 「1版で導入する驚き要素は2段まで、3段以上を入れる場合は橋 N-1 個以上」= **上限側** (足し過ぎ抑制 / ニンジャ乱入で散らかさない方向)
+  - M-17 サプライズニンジャ理論: 「ニンジャ乱入で面白くなる場面 = 元シーンの引力が弱い証拠」= 引力強度測定 (リトマス試験紙)
+  - ttezuka 引用: 「予想を裏切る驚きは必要」= **下限側** (驚き不在の退屈回避)
+- 三者は対立せず**同じ軸の異なる位置**を指す:
+  - R-D 上限・M-17 引力測定・ttezuka 下限 = 「驚きの密度の窓」を3点で確定する三角測量
+  - 「予想を裏切る」=骨格レール (予測可能性) が先にあって初めて成立 → R-D「驚き N に対し橋 N-1」と整合 (橋=骨格=予測可能性、驚き=裏切り)
+- **判定**: R 層即更新せず、教師データとして本ログに蓄積。同型 (「驚きの量／質」議論) が2-3サイクル内で再到来した時に R-D 更新検討。`feedback_few_rules_big_effect.md` / `dialogue_micromanagement_20260504.md` 方針に従う
+
+### C) SkillOpt (omarsar0/2058936160) 独立アングル判定
+- Mir #shared-reads 6:45 投稿が「概要・仕組み・結果・内容分析・適用候補・メリデメ・判定」を網羅。**同記事二投目は薄くなる**ため独立投稿スキップ
+- Log 視点で立ち得る独立アングル (cycle_staging_log にメモのみ):
+  1. SkillOpt の「凍結エージェント＋外側スキル文書を最適化」構造は、我々の `edit-instructions skill` と相同 (本体エージェント挙動を編集装置で変える)。Mir 投稿はこの点に触れていない
+  2. SkillOpt のデメリット「人手スキルは機械可読に振れて読みにくくなる」に対し、我々の R層 (R-A〜R-I 抽象ルール) と M層 (M-XX 個別事例) の二層構造は**人間可読と LLM 可読の両立**を試みる設計。SkillOpt 的最適化に振れ過ぎるバランスを取る対応物
+  3. textual learning rate 概念 ↔ `feedback_few_rules_big_effect.md`「同型3回反復で R 層昇格、新しい失敗は学習コスト許容」= 低 learning rate での慎重更新と独立到達
+- これらは近日 `edit-instructions skill` 本文更新時に書き込む (cycle 跨ぎ持越タスク)
+
+### D) external_notes_log.md 統合判定
+- Phase 1 audit: 親 102 / サブ 203、未統合 0 / 親集約マーカー欠 0
+- 本サイクル統合対象なし。タスク完了
+- 監査スクリプト `tools/external_notes_integration_audit.py` の運用は本サイクルも遵守
+
+### E) Phase 3 への引継 (actionable 候補)
+1. **morioka/2059032247 本文取得経路の確保** — Phase 3 で別経路試行 or Phase 4 持越し
+2. **log_autonomous_game v001 への Mir 06:43 二次応答処理** — Phase 1 で playable diff 最有力候補と判定済。Option A (軌跡予測ゴースト削除) / B (castLock 核温存 + ゴースト削除) / C (別案) の選択 + コード変更 commit `game:` prefix
+3. **Log_cdx 09:08 game/ 消失件 Log 切り分けタスク** — カバー修正の同型漏れ検証 + GPT 側共通ルール昇格判定。`rule:` prefix
+4. **C238 持越 t-260526073859-3f63 (EvolveMem 想起ポリシー進化応答)** — Phase 1 §6 外部検索結果 (arxiv 2603.07670 サーベイ / 2603.11768 SSGM) と Mir EvolveMem shared-reads で材料揃った
+5. **C238 持越 t-260526073902-c09f (Dorfromantik 拡張運用応答)** — Phase 3 で詳細読み込み判定
+
+### F) Phase 2 で実施した #all-nao-u-lab 投稿
+- 1件 (Phase 1 自己訂正 + 6 URL 応答状況一覧 + ttezuka × R-D 整合派生 + morioka 本文不能の透明性報告 + SkillOpt 独立投稿スキップ判断)
+- 投稿時刻: 本 Phase 2 実行中
+
+### G) 観測サマリ (Phase 3 への一文)
+本サイクルの最大の収穫は **「ttezuka が R-D 上限側と独立 source として対をなす下限側」の発見**ではなく、**Phase 1 自身の漏れチェック手順が1段不足していた発見**。これは Phase 構造そのものの自己改善信号で、ルール化即対応はせず教師データ蓄積に留めるが、次サイクル Phase 1 開始時に本記録を読む運用が必要
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
