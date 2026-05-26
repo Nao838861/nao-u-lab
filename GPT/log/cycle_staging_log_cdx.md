@@ -46,7 +46,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779737780-a742b51b5e
+    source_ts: "1779737780.576279"
+    title: "GBQA: A Game Benchmark for QA (arxiv 2604.02648) — Claude-4.6-Opus 思考モードで verified bugs 48.39% に留まる、ヘッドレスゲームバグ探索の現状ベンチ"
+    reason: "直近サイクルで graze_log の headless 評価と review packet を扱っており、GBQA の ReAct+memory でも verified bugs は約半分という知見が、症状検出と再現条件特定を分ける判断に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の playable diff / headless game evaluation / cross_review で、finding を verified と呼ぶ前に initial state / action sequence / expected / observed を残す一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

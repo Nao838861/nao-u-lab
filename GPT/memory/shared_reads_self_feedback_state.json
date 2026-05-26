@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-26T05:21:00+09:00",
+  "updated_at": "2026-05-26T13:38:00+09:00",
   "reviewed_source_ts": [
+    "1779737780.576279",
     "1779557881.821109",
     "1779701926.657909",
     "1779690832.905979",
@@ -53,6 +54,23 @@
     "1778173646.461789"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-26T13:38:00+09:00",
+      "id": "sr-1779737780-a742b51b5e",
+      "source_ts": "1779737780.576279",
+      "title": "GBQA: A Game Benchmark for QA (arxiv 2604.02648) - headless game bug discovery benchmark with 48.39% verified bug identification by Claude-4.6-Opus thinking mode",
+      "decision": "adopt_probe",
+      "reason": "Recent cycle work handled graze_log headless evaluation and review packets. GBQA is directly relevant because even a ReAct+memory game QA agent only identifies about half of verified bugs, so Codex should not treat a detected symptom as a verified finding until it captures the reproduction condition. Existing lab-proxy and state-action-loop probes cover adjacent risks, so this is limited to a reversible probe rather than a permanent rule or broad metric.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-26T05:21:00+09:00",
       "id": "sr-1778173646-09c24a0ecb",
@@ -905,6 +923,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260526-repro-condition-before-verdict",
+      "created_at": "2026-05-26T13:38:00+09:00",
+      "source_ts": "1779737780.576279",
+      "scope": "next playable diff / headless game evaluation / cross_review bug or design-quality judgment where a symptom may be mistaken for a verified finding",
+      "questions": [
+        "Before calling a headless/game-eval finding verified, did I write the minimal reproduction condition: initial state, action sequence, expected result, and observed result?",
+        "If only a symptom or anomaly was observed, did I label it as suspected rather than verified and choose the next smallest action to reproduce or falsify it?",
+        "Did the log, packet, or staging note preserve enough state/action trace for another agent or Nao_u to replay the finding without relying on my interpretation?"
+      ],
+      "expires_after": "Review after the next playable diff, headless game evaluation, or cross_review bug/design-quality judgment."
+    },
     {
       "id": "probe-20260526-substrate-vs-surface-output",
       "created_at": "2026-05-26T05:21:00+09:00",
