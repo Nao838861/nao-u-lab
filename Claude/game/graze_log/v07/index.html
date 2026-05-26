@@ -765,6 +765,12 @@ function draw(){
     const inGrazeRing=!b.grazed&&d2<R_GRAZE*R_GRAZE;
     ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
     ctx.beginPath();ctx.arc(wx,wy,3,0,Math.PI*2);ctx.fill();
+    // v07 観点3: 無敵中の高倍率対象 (2x graze) を弾側マーカー化 — 黄色細リング (描画のみ、当たり判定不変)
+    if(state.invincibleT>0){
+      ctx.strokeStyle='rgba(255,224,64,0.55)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(wx,wy,5,0,Math.PI*2);ctx.stroke();
+    }
   }
   for(const r of state.rings){
     const k=r.t/r.life;
