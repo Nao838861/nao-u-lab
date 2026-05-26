@@ -63,7 +63,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown/path 参照を確認。実 broken link は 0 件。inline code の `python tools/memory_ingest.py` はコマンド参照なので対象外。"
+  - "memory/atoms.jsonl を確認。1678 rows、JSON parse error 0、duplicate id 0。content hash 重複は 17 group あるが、短い定型受領文・external research 定型・shared-reads 再投稿系で、既存の lifecycle/content fold 対象。"
+  - "memory/raw/ 配下の 30 日超未更新ファイルを確認。該当 0 件。"
+  - "memory/shared_reads_candidates/ の 30 日超未更新 candidate を確認。該当 0 件。"
+  - "inbox pending を確認。directives 1 件、broadcasts 1 件が pending のまま残存。ただし Phase 4a で処理済み判定できる案件ではないため status は変更せず。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
