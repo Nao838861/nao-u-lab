@@ -284,3 +284,24 @@ https://nao-u-lab.sla
 - 敵 B/C 追加 (Q-C で 4 種規定だが、敵 D 追加までで本 Phase 4 完遂、敵 B/C は Phase 5 以降)
 - memory_redesign.md / kaizen_tracker.md への追記 (Phase 3 で着地済、Phase 4 は game/* 専念)
 
+## Phase 4 完遂報告 (2026-05-27)
+
+### 完遂状況
+- (1) ✅ `game/log_autonomous_game/v002/game.js`: `WAVE_REST_FRAMES=480` 定数 + `lastClearFrame` 記録 + `restElapsed` 8秒静寂ガード (game.js:30-50, 519-528) + `spawnWaveA` n=5→3 軽量化 + shootCooldown +30 オフセット + x=0.25/0.5/0.75 再配置 (game.js:224-242)。「Pulse Relay 70-90s カーブ第 1 段」コメント該当行に明示
+- (2) ✅ `game/log_autonomous_game/v002/verify.js` 新規。`node verify.js` (seed=20260527) で camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s、全 wave 1 内 gameover、`pass: true`、exit 0。**wave 1 軽量化が悪手通過の穴を作っていない確認**
+- (3) ✅ `game/log_autonomous_game/v002/self_judgment.md` 新規。v001 21/25 (84%) を起点に v002 22/25 (88%、Q-導入 +0.5 / Q-D +0.5) + Q-ミミクリ 11.5/15 (77%、ミミクリ-1 +0.5) + 展開差カーブ 15.5/20 (78%、v002 で初設置)
+- (4) ✅ `projects/log_autonomous_game.md` 履歴欄に「2026-05-27 C247 Phase 4: v002 着地」節追加、残課題に v002 実装節追加
+- (追加) ✅ `game/log_autonomous_game/v001/design_log.md` 末尾に §v002 移行ノート 追加 (staging 着手手順 6 対応)
+
+### 副産物 (新規/変更ファイル)
+- 変更: `game/log_autonomous_game/v002/game.js` (wave カーブ実装)
+- 新規: `game/log_autonomous_game/v002/verify.js` (悪手 4 方針 v002 確認)
+- 新規: `game/log_autonomous_game/v002/self_judgment.md` (v002 採点)
+- 変更: `projects/log_autonomous_game.md` (履歴 + 残課題)
+- 変更: `game/log_autonomous_game/v001/design_log.md` (§v002 移行ノート追記)
+
+### Phase 4 学び
+- 「Nao_u が判定装置ではなく最終確認装置」原則 (CLAUDE.md「絶対にやる」L4) を A/B/C 自己判定 → v002 着地のフローで結晶化。22 時間の指示待ち凍結を Phase 2 で解除、Phase 3-4 で playable diff まで完遂
+- `feedback_means_ends_reversal_check.md` (手段／目的逆転) 直接適用: 本サイクル第一義の game/* playable diff (wave カーブ + verify) が完遂、brainstorm/結晶化/cross_review 主出力サイクルへの逆戻りを回避
+- 完遂条件 (1)-(4) + 追加 (design_log v002 ノート) = 5/5 達成、commit 系統は `game:` prefix で `codex:` 系統と分離して Phase 5 で push 予定
+
