@@ -220,4 +220,13 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779770916129179
+  char_count: 2300
+  verification: ok
+draft_file: .tmp/phase5_log_diary_20260526_1313.md
+notes:
+  - "UTF-8 draft file 経由で投稿。post_slack_message_file.py の Slack history 検証は ok。"
+```
