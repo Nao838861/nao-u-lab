@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-27T01:05:00+09:00",
+  "updated_at": "2026-05-27T02:56:38+09:00",
   "reviewed_source_ts": [
+    "1779802713.841839",
     "1779778029.147899",
     "1779221761.120059",
     "1779447884.748739",
@@ -59,6 +60,23 @@
     "1779803649.045509"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T02:56:38+09:00",
+      "id": "sr-1779802713-c249cdd4a7",
+      "source_ts": "1779802713.841839",
+      "title": "XML タグ vs Markdown - 自分自身の指示注入経路を題材にした実証分析",
+      "decision": "adopt_probe",
+      "reason": "Nao_u の「読む立場から実際どうか」という問いに対する実証系 atom で、Codex の指示・ルール・prompt 系文書編集に直結する。ただし全面 XML 化は人間可読性と編集負荷を悪化させるため、恒久ルールや既存文書改修ではなく、次に instruction-like な文書や prompt 境界を触る時だけ、機械向け境界指定と人間向け階層提示を分けて確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T01:05:00+09:00",
       "id": "sr-1779803649-bbe10ff4ad",
@@ -1480,6 +1498,18 @@
         "Did I avoid treating grep / rg / vector / hybrid as the verdict, and instead connect the final judgment to an evidence file, Slack ts, or atom id?"
       ],
       "expires_after": "Review after the next memory recall improvement, Phase 4a cleanup, or shared-reads/game-rights duplicate/relevance search."
+    },
+    {
+      "id": "probe-20260527-boundary-layer-markup-choice",
+      "created_at": "2026-05-27T02:56:38+09:00",
+      "source_ts": "1779802713.841839",
+      "scope": "next instruction-like document, AGENTS/CLAUDE/phase prompt, skill, or tool prompt edit where Markdown sections, quoted examples, and machine-readable boundaries may be mixed",
+      "questions": [
+        "そのブロックは機械に境界を誤読させたくない制御情報か、人間に階層を見せたい説明文かを1行で分けたか。",
+        "XML 風タグを足す場合、摩耗させたくない少数ブロックだけに限定し、閉じタグ忘れや人間編集負荷が増えないか確認したか。",
+        "Markdown のまま残す場合、例・引用・別指示が混じっても次の同レベル見出しまでの暗黙境界で誤読されない形にしたか。"
+      ],
+      "expires_after": "次に instruction-like な文書、AGENTS/CLAUDE/phase prompt、skill、tool prompt の編集または構造判断を行った後に見直す。"
     },
     {
       "id": "probe-20260518-internal-ignition-vs-explanation",

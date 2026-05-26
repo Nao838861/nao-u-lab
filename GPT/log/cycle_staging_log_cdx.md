@@ -47,7 +47,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-27T02:56:38+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779802713-c249cdd4a7
+    source_ts: "1779802713.841839"
+    title: "XML タグ vs Markdown - 自分自身の指示注入経路を題材にした実証分析"
+    reason: "Nao_u の「読む立場から実際どうか」という問いに対する実証系 shared-reads。Codex の AGENTS/CLAUDE/phase prompt/skill など instruction-like な文書編集に直結するが、全面 XML 化は人間可読性と編集負荷のリスクがあるため、小さな境界選択 probe にする。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次に instruction-like な文書や prompt 境界を触る時だけ、機械向け境界指定(XML風タグ)と人間向け階層提示(Markdown)を分けて判断する probe を state に追加。恒久ルールや既存 prompt 本体は変更しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
