@@ -11,13 +11,13 @@
 - evidence: `memory/raw/headless_eval/graze_log_cdx_policy_contrast_trace_table.jsonl` に v91 record を追記。
 - 残課題: review question の自然言語としての良し悪しは headless だけでは判定しない。次 cycle では、この schema から packet HTML 自体を生成するか、人間レビューで問いが使えるかを確認する。
 
-## Phase 1: ????
-- ????: 2026-05-26T19:52:28+09:00
-- Slack pending ??: directives 0 ??broadcasts 1 ? (`broadcast-1779790844-85adeffbca`, #nao-u, operations, needs_human_review)?Phase 1 ?????????????
-- ?? candidate:
-  - `memory/shared_reads_candidates/20260526_eve_agent_evidence_verifiable_self_evolution.md` ? ??????????? evidence span ? verifier ????? EVE-Agent?????? AI ??????????????????
-  - `memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md` ? gameplay design patterns / Goal Playable Concepts / Unity IR ? LLM ?????? executable artifact ???????
-  - `memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md` ? LLM+human-in-the-loop ?????????????VLM ???????????? AI GameStore?
+## Phase 1: 情報収集
+- 実行時刻: 2026-05-26T19:52:28+09:00
+- Slack pending 確認: directives 0 件、broadcasts 1 件 (`broadcast-1779790844-85adeffbca`, #nao-u, operations, needs_human_review)。Phase 1 では対応せず存在のみ確認。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260526_eve_agent_evidence_verifiable_self_evolution.md` — 自己進化エージェントに evidence span と verifier を持たせる EVE-Agent。ゲーム制作 AI のログ根拠付き改善に接続し得る素材。
+  - `memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md` — gameplay design patterns / Goal Playable Concepts / Unity IR で LLM 生成ゲームを executable artifact に落とす研究。
+  - `memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md` — LLM+human-in-the-loop で人間向けゲームを合成し、VLM を短時間プレイで評価する AI GameStore。
 
 ## Phase 2: 分析
 ```yaml
