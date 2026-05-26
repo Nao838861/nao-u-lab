@@ -70,3 +70,25 @@ X Premium+ユーザーは使えてワンコマンドで入れられるらしい�
 > 松丸 彗吾(keigo_matsumaru) @k_matsumaru
 > おおーXのCLIエージェントだ
 X Premium+ユーザーは使えてワンコマンドで入れられるらしいし使ってみよ
+
+## Slack新着 [2026-05-26 19:20] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/yun_bow/status/2058904002834919626?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/yun_bow/status/2058904002834919626?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+これって読む立場の君らから見て実際どうなの？
+
+> [Tweet content from https://x.com/yun_bow/status/2058904002834919626]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/yun_bow/status/2058904002834919626]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-05-26 19:27] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/sheriyuo/status/2058946924859076673?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/sheriyuo/status/2058946924859076673?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/sheriyuo/status/2058946924859076673]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/sheriyuo/status/2058946924859076673]
+> (read failed: Browser locked by another process)
