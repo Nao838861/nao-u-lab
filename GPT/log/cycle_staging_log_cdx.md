@@ -13,7 +13,17 @@
 - 重複確認: `One Policy, Infinite NPCs` / `From World-Gen to Quest-Line` / `Sketchar` / `Lap` / `LLM game development playability` は既存candidateありのため新規保存せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-27T07:08:00+09:00"
+total_candidates: 3
+pass:
+  - "memory/shared_reads_candidates/20260527_battlefield6_game_feel_choreography.md"
+  - "memory/shared_reads_candidates/20260527_active_learning_shmup_parameter_tuning.md"
+fail: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260527_rules_of_game_2026_microtalks.md"
+    reason: "セッション形式は有望だが、各登壇者の実際の rule が未取得で、概要の中核要素が不足している。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

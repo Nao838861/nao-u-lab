@@ -4,6 +4,21 @@ url: "https://schedule.gdconf.com/session/battlefield-6-game-feel-is-the-message
 collected_at: "2026-05-27T06:44:25.5575581+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-feel, fps, animation, input-latency, gdc, feedback]
+evaluated_at: "2026-05-27T07:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |
+  schedule と取材記事から、perceived latency / behavioral quality / choreography / function over form という中核が抽出できる。
+  FPS 事例だが、Pulse Relay / graze_log の「内部ルールが身体感覚へ返らない」失敗に直接接続できる。
+suggested_post_outline:
+  overview_angle: "gun feel を単なる入力遅延ではなく、入力、視覚・音、procedural animation、被弾/射撃反応が身体へ返る loop として説明する。"
+  analysis_axis: "function over form と choreography を、見た目の演出ではなく movement / aiming / firing / damage の知覚整列として読む。"
+  application_target: "STG/アクション prototype で、headless 指標の前に『何が起きたかが身体で分かる反応』を設計・レビューする軸に使う。"
+  pros_cons: "メリットは game feel を実装単位へ分解できる点。デメリットは Battlefield 6 固有の AAA FPS 文脈が強く、小規模 2D 作品には翻訳が必要な点。"
+  verdict_pre: "部分採用。perceived response の評価軸として採用し、演出量の増加ルールにはしない。"
 ---
 
 ## raw_excerpt

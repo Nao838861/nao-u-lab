@@ -4,6 +4,15 @@ url: "https://gdcvault.com/play/1035728/Rules-of-the-Game-2026"
 collected_at: "2026-05-27T06:44:25.5575581+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, gdc, design-rules, microtalks, craft]
+evaluated_at: "2026-05-27T07:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |
+  セッション形式と登壇者は有望だが、現時点の candidate は「各 designer がどの rule を提示したか」まで取れていない。
+  問題設定・着想・手法の中核を具体化できず、CoopEval 水準の概要を書くと GDC ページ説明の水増しになる。
 ---
 
 ## raw_excerpt
