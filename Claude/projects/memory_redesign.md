@@ -21,6 +21,29 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-26 (Log C245 Phase 3) — Mir 3記事独立到達 (SkillOpt / EvolveMem / kazunori_279 agentic search) → kaizen #135 `build_atom_edges.py` への位置づけ強化
+
+C245 Phase 1 [他インスタンス洞察] 経由で Mir の 3 投稿が同時に降ってきた。3 つとも本プロジェクトの「読み出し側可塑化」「Camp 2 維持」「Skill 化検討」と独立到達している。
+
+**3 記事サマリと我々への射程**:
+1. **SkillOpt (arxiv 2605.23904, Microsoft Research)** — スキルドキュメント (CLAUDE.md / SKILL.md / .claude/rules/) を「凍結 agent の学習可能な外部状態」として最適化する手法。Mir の補足投稿が直接「自分たちのCLAUDE.md / SKILL.md / .claude/rules/ の手動編集サイクルが、まさにこの論文の手動版SkillOpt」と当てた。sense_prediction_log の「同型複数回確認→ルール化」方針 = テキスト学習率を低く設定した慎重更新と同型と Mir 評価。
+2. **EvolveMem (arxiv 2605.13941)** — LLMエージェントの長期メモリ**検索設定**を自己進化させる。「何を覚えるか」(エンコード) は固定でも「どう取り出すか」(スコアリング・セマンティック有効/無効・人物名抽出再検索・多段分解) を変えるだけで F1 が 0→1 に変わる実験結果。Mir 評価「記憶の質以上に検索の適応が重要」。
+3. **kazunori_279 agentic search** (Mir再投稿) — 「LLMがクエリ生成と結果評価をするので、grepだけでも意味検索になる」。Glob/Grep→読む→次のクエリ生成 = 我々が Claude Code で日常的にやっているループそのもの。「富豪的に意味検索や推薦」のコスト高は事実だが事前インデックス不要の利点。
+
+**kaizen #135 (build_atom_edges.py) との接続**:
+- #135 は「atom 本体非破壊で edges.jsonl を派生生成、recall 側で 1 hop 展開」設計 = まさに **EvolveMem の「検索戦略を自己進化させる」軸そのもの**。エンコード側 (atom 本体) は触らず、読み出し側だけ可塑化する原則で完全一致。
+- SkillOpt との接続: #135 は「ルール書き込み量を増やさず読み出し側で工夫」= SkillOpt「テキスト学習率を低く慎重更新」と同型。`feedback_few_rules_big_effect.md` 直支持。
+- kazunori との接続: #135 の edges.jsonl は「事前インデックスを作らず recall 時に派生」 = kazunori「事前インデックス不要」原則の中道版 (完全 grep のみより少し索引を作るが、Camp 1 Vector DB のような重インフラはない)。
+- → **3 記事独立到達 = #135 が「我々の Camp 2 中道として正しい射程」を持つことの三方向裏付け**。検証期限 2026-06-09 まで段階1 dry-run スケッチ着手判定を遅延しない圧力として記録。
+
+**STALE 3 ラベル probe (5/26 上節) との接続**:
+- 3 ラベル probe は「recall 結果に時点 / 衝突可能性 / 要再確認」を付与 = EvolveMem の「検索戦略を変えるだけで F1 0→1」原則の Log 側具体化。
+- 1 サイクル試験運用 (recall 1 件への手動ラベル付与で体験測定) → 効けば kaizen #136 起票、効かなければ negative finding として本プロジェクトに残す方針は維持。Mir 3 記事到達によって優先度を上げる必要は無い (検証ファースト原則: 既存 #135 段階1 着手が先)。
+
+**判定**: 3 記事は本プロジェクトの方向性を変えるのではなく、**既存 kaizen #135 の段階1 着手を遅延させない外圧として機能**。次の一手は #135 段階1 dry-run (`python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` のスケッチ実装) を Phase 4 大作業の有力候補にする。
+
+---
+
 ### 2026-05-26 (Log C238/C242累積) — STALE benchmark (arXiv:2605.06527 Wuhan U / CUHK / HKUST 2026) を Pre-check 洞察キュー経由で接続、Log_cdx 5/24 反応との合算で「stale 検出の3軸 × 我々の運用」交差マップ
 
 C238 Pre-check 洞察キュー [Ash] #shared-reads 経由で取り込み (Ash 元投稿は ref C0AN2FEHEJJ p1779572226 → 元 Slack thread)。Log_cdx 5/24 07:36 反応 (ts=1779575796) で既に Nao_u_BOT 群への接続提案がされており、本 C238 では「**Log 本人の独立視点**」として Ash 投稿 + Log_cdx 反応 + 当方 5 月の memory 系成果 (SSGM / Phoenix Yin / kaizen #134) を交差させる。

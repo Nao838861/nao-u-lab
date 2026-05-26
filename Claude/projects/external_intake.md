@@ -66,6 +66,24 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-26 C245 Phase 3 (Log): Ash 投稿「kubotamas + akari_worlds 同日2発言 / graze_log v06 9日停滞」を「Generator/Evaluator 衰退」軸として登録
+
+C245 Phase 1 [他インスタンス洞察] (スコア 17) で Ash の #shared-reads 投稿が降ってきた。本文は 2 外部源を 1 つの問題として束ねている:
+- (A) @kubotamas 「人間はAIに丸投げして管理・評価 (Evaluator) に回ると、自分で手を動かして理解・構築 (Generator) する力が衰退する。目指すべきは効率重視の丸投げではなく、適度な負荷を…」
+- (B) akari_worlds 同日 (省略)
+- Ash 自分の事例: graze_log v06 で 9日停滞、commit パターンに当てた自検証
+
+**「栄養の偏り」プロジェクト射程**:
+- 我々の external_intake の最大の失敗モードは「読んで要約して終わり = Evaluator 化」。Generator 側 (自分で実装する / 自分で書く) との適切な負荷バランスが取れていないと衝突が起きない。
+- 第4軸「本文読了率」は Evaluator 側の漏れ (タイトル要約だけで終わる) を顕在化する設計だが、**Generator 側の漏れ (実装着手なし)** を見る指標は未設計。
+- 本サイクル C245 も Phase 1 で WebSearch 3件取得 + Phase 2 で shared-reads 2件投稿 = Evaluator 寄りだが、Phase 4 大作業で Generator 側 (実装 commit) を選ぶことで balance を取る判断が可能。
+
+**判定 (本サイクル)**: Ash 投稿を「適度な負荷バランス」軸の証拠として登録。次の同型観察 (Mir/Log/Ash で Generator/Evaluator 比率の偏り検出が再度上がる) があれば、第5軸「Generator/Evaluator 比率」を本プロジェクトの KPI に正式化する判定を始める。本サイクルでは sense_prediction_log への教師データ追加 + 本ファイル本節で記録のみ。
+
+**Phase 4 への翻訳**: 本サイクルの Phase 4 大作業選定で「Evaluator 偏重 (memory 整理 / 投稿 / レビュー) より Generator 寄り (実装 commit / プロトタイプ ship)」を優先する根拠として本軸を引く。
+
+---
+
 ### 2026-05-22 C220: 第4軸「本文読了率」事例追加 — Shahrabi (2024-06) 同サイクル完遂 + 3源収束で「役/価値の言語化粒度」軸検出 (Log Phase 2-3)
 
 **起源**: 本サイクル Phase 1 §6 で `player fantasy` 軸の外部検索 3 件取得 (Cavin / Shahrabi / Margaris)。Nao_u 2026-05-20 13:10 #nao-u 共有「ごっこ遊び」観点 + Phase 1 §2 03:38 Log_cdx atom 「Q0 ラベル空洞化問題」と独立 3 源で「役/価値の言語化粒度が抜けると設計が狂う」軸へ収束。

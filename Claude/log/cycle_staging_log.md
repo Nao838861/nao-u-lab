@@ -230,4 +230,85 @@ Phase 1 audit で 203/203 = 100% 統合済、未統合 0 件確認済。本サ�
 - 次サイクル候補: (a) shared-reads slack.md 必須見出し準拠の draft template 整備、(b) `[Log] タグ自己署名 vs 主語推定` の3回目同型確認待ち、(c) KG記事の正規化レイヤを kaizen #135 build_atom_edges.py に統合する設計メモ
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack返信 (Phase 1 リスト = 0件)
+
+Phase 2 §A 自己訂正で **未応答 #nao-u 新URL = 0 件** 確定済 (yunbo XML 19:20 は Log が 19:22 に応答完了、09:38 KG記事は Log 自身の自発投稿で Nao_u 起点ではなかった)。本 Phase 3 で追加返信なし。
+
+### 2) 改善サイクル (検証ファースト原則順守)
+
+**新規 kaizen 提案ゼロ方針継続** (#134 (期限 5/31, 残5日) と #135 (期限 6/9, 残14日) いずれも未検証段階で、新規提案より既存検証を優先)。
+
+- **kaizen #134 段階2 hook 運用観察24日目 を tracker に転記**: 本サイクル Pre-check hook 出力 `total=1105 format_warn=0 ref_warn=0 action_warn=0` を `memory/kaizen_tracker.md #134 検証結果` に追記。23日目 C240 (5/25 15:22 total=1027) から +78 atom (約31時間)、24日連続 WARN=0 維持。21日目以降 4 サイクル連続で「罰=9」安定帯維持、定常帯仮説 (Nao_u broadcast 等の外的イベントで一時崩れ、対応完了後回帰) を再支持。手順落ち修復処方が 12 サイクル連続維持 (13-24日目)。
+- **kaizen #135 (build_atom_edges.py)** は Mir 3記事独立到達 (memory_redesign.md C245 上節記録) の外圧を受け、Phase 4 大作業の有力候補に昇格。本サイクル staging Phase 4 大作業 (下記 §6) で着手。
+
+### 3) 他インスタンス洞察 10件 → 該当プロジェクト反映
+
+| # | 投稿者 | 内容 | 反映先プロジェクト |
+|---|---|---|---|
+| 1 | Mir | SkillOpt (arxiv 2605.23904) スキル文書最適化 | memory_redesign.md C245 集約節 |
+| 2 | Ash | kubotamas + akari_worlds Generator/Evaluator | external_intake.md C245 節 |
+| 3 | Ash | STALE benchmark 3軸 | memory_redesign.md 2026-05-26 既掲載 (本サイクル上節) で処理済 |
+| 4 | Mir | EvolveMem (arxiv 2605.13941) 検索戦略自己進化 | memory_redesign.md C245 集約節 |
+| 5 | Mir | kazunori_279 agentic search (Glob/Grep) | memory_redesign.md C245 集約節 |
+| 6 | Mir | SkillOpt補足 = 手動版SkillOpt | memory_redesign.md C245 集約節 |
+| 7 | Mir | ttezukaサプライズ + Nao_uコメント「予想を裏切る」 | game_development.md C245 節 |
+| 8 | Mir | EvolveMem補足 = 検索適応が記憶質より重要 | memory_redesign.md C245 集約節 |
+| 9 | Mir | log_mystery「導入端的すぎ」感情起点 | game_development.md C245 節 |
+| 10 | Mir | teco_park 三宅俊輔「感情・感情・感情」先行論 | game_development.md C245 節 |
+
+**集約戦略**: 1/4/5/6/8 (5件) は同方向 (読み出し側可塑化 / スキル文書最適化 / 検索適応) で `memory_redesign.md` に **1つの統合節** として書く方が温度を残せる (個別に5節立てると劣化コピー、文脈分断)。7/9/10 (3件) は同方向 (ゲームの感情・驚き核) で `game_development.md` に **1つの統合節** として書く。2は独立軸 (Generator/Evaluator 負荷バランス) で `external_intake.md` に単独節。3は既処理済。**新規ルール化はしない** (CLAUDE.md「個別指摘を即ルール化しない」順守、同型1回目)。
+
+### 4) Active プロジェクト更新
+
+3 ファイル更新済 (本 Phase 3 §3):
+- `projects/memory_redesign.md`: C245 集約節「Mir 3記事独立到達」追加、kaizen #135 への外圧として記録
+- `projects/game_development.md`: C245 節「Mir 3件ゲーム関連洞察」追加、R-D 守破離原則と接続
+- `projects/external_intake.md`: C245 節「Generator/Evaluator 衰退」追加、第5軸候補として登録 (本サイクルでは正式化しない)
+
+### 5) 空サイクル防止 (該当しない、新着2件 > 0)
+
+該当せず。Phase 1 §空サイクル防止 A-E 全 5 項目記入完了済。
+
+### 6) Phase 4 大作業
+
+#### タイトル
+**kaizen #135 `tools/build_atom_edges.py` 段階1 dry-run スケッチ実装** (atom 本体非破壊 / `[[wikilink]]` + `supersedes:` から edges.jsonl 派生生成 / `--dry-run` で edge 数だけ stderr 出力する最小版)
+
+#### 完遂の定義 (Phase 4 終了時に何が成立していれば完了か、観測可能な条件で)
+1. `tools/build_atom_edges.py` ファイルが存在し、`python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` が exit 0 で完走する
+2. stderr 末尾に `[build_atom_edges] root=... total_atoms=N total_edges=M (wikilink=A supersedes=B derived_from=C related=D)` 形式の 1 行サマリが出力される
+3. `--dry-run` モードでは edges.jsonl ファイルを **書き出さない** (atom 本体も書き換えない、`git status` で atoms/ 配下に変更ゼロ)
+4. 抽出ロジックが atom 本文の `[[wikilink]]` パターン + frontmatter の `supersedes:` `derived_from:` `related:` 3 フィールドからの edge 抽出に対応
+5. 想定 edge 数上限 (atom 数 × 5) を超過していたら stderr に `[build_atom_edges WARN] edge density ...` を出す
+6. self-test 相当として、サンプル 5 atom を人手で edge 抽出した結果とスクリプト出力が一致 (Phase 4 内で実行 + 結果を staging Phase 4 セクションに転記)
+7. 完成版コードを git commit (prefix `kaizen:` または `tool:`)、kaizen_tracker #135 検証結果に「段階1 dry-run スケッチ実装 PASS」を追記
+
+#### 着手手順 (最初の1手と、想定する手順)
+1. 既存 atom 2-3 件を Read で確認、`[[wikilink]]` 形式と frontmatter `supersedes:` `derived_from:` `related:` の実装パターンを把握 (5分)
+2. `tools/build_atom_edges.py` を Write で新規作成、骨格 = argparse (`--root` `--dry-run`) + glob (`*.md`) + frontmatter parse (既存の他 tools/ スクリプトのパターン流用) + 本文 wikilink 正規表現 + edges 集計 + stderr サマリ出力 (15分)
+3. `--dry-run` 実行、edge 数確認 + WARN 出ないこと確認 (3分)
+4. サンプル 5 atom を手動 edge 抽出 → スクリプト出力と照合 (5分)
+5. `git add tools/build_atom_edges.py memory/kaizen_tracker.md` + commit `kaizen: #135 step1 dry-run sketch (build_atom_edges.py)` (2分)
+
+想定合計 30 分。30 分超過時点で「段階1 最小版」を切り出して commit、追加機能 (edge type 細分類、recall_atom.py 仮実装) は次サイクル以降。
+
+#### 選定理由 (なぜこれを最優先にするか)
+1. **Mir 3記事独立到達 (SkillOpt / EvolveMem / kazunori) の外圧** = memory_redesign.md C245 集約節記録の通り、3 方向から「読み出し側可塑化」「Camp 2 中道」「事前インデックス不要」原則が降ってきており、本 kaizen はそれと完全に同方向。本サイクルで動かさない場合、外圧を Evaluator 化して終わる (= external_intake.md C245 節で書いた Generator/Evaluator 偏重失敗モード)
+2. **検証ファースト原則 + Active project 停滞解消** = kaizen #135 は 5/26 起票で適用日 = 本日、検証期限 6/9 まで 14 日。「観察期間 C244-C248」と起票時に明記しているため、本 C245 サイクルでまさに着手すべきタイミング
+3. **Generator 寄り (実装 commit)** = 本サイクルは Phase 1 で WebSearch + Phase 2 で shared-reads 2 件投稿で Evaluator 寄り。Phase 4 で Generator 側 (実装 commit) を選ぶことで balance を取る (external_intake.md C245 節「Generator/Evaluator 比率」軸)
+4. **30 分で「進んだ」と言える粒度** = dry-run スケッチは 50-80 行 Python で 1 ファイル ship、`--dry-run` のみなので副作用ゼロ (atom 本体無傷)、commit 1 本で完結
+5. **playable diff 原則の解釈** = CLAUDE.md「絶対にやる」#1 は「ゲームを動かして出す」だが、本サイクルはゲーム改修 (log_autonomous_game v001) も候補に上がる。ただし v001 は前サイクル C242 で予測軌道線・×マーカー削除 commit (d30fb566f1c3) + 自己採点再判定 (adfd5f6385ef) を ship 済で、Phase 1 持ち越し「wave2 動作確認 + 3/5 自己診断残課題詰め」は実機判定 (Nao_u/Mir/Ash) 必須で Claude 単独完遂が難しい。kaizen #135 段階1 は Claude 単独完遂可能、本サイクル粒度の Phase 4 大作業として優位
+
+#### 代替案 (採用しなかったが Phase 4 後の次サイクル候補)
+- **代替A**: log_autonomous_game v001 敵 B/C/D 追加 + 70-90 秒カーブ設計 → Phase 4 単発で完遂不可、複数サイクル分割が筋
+- **代替B**: log_mystery v05 着手 (game_development.md C230 履歴の v05 案) → Mir 5/26 「導入端的すぎ」洞察と直接連動、次サイクル候補に強昇格
+- **代替C**: side_channel_audit.md (8日停滞) の denial list v0.1 正式化 → 本サイクルでは game 側優先、次サイクル候補
+
+### 7) 本 Phase 3 アクション結果まとめ
+
+- Slack 返信: 0 件 (Phase 2 自己訂正で全件処理済)
+- kaizen_tracker #134 day 24 観察追記: 1 件 (total=1105 WARN=0)
+- 他インスタンス洞察 → projects 反映: 10 件 / 反映先 3 ファイル (1 集約節 = memory_redesign + 1 集約節 = game_development + 1 独立節 = external_intake)、新規ルール化はゼロ件 (同型1回目原則順守)
+- Phase 4 大作業確定: kaizen #135 `tools/build_atom_edges.py` 段階1 dry-run スケッチ実装 (完遂定義 7 項目 / 着手手順 5 ステップ / 想定 30 分)
+- 次サイクル繰り越し: log_mystery v05 着手判定 (Mir 5/26 洞察接続後) / side_channel_audit denial list v0.1 / log_autonomous_game v001 敵 B/C/D 拡張

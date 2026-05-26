@@ -73,6 +73,20 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-26 C245 Phase 3 (Log): Mir 3件ゲーム関連洞察 (ttezuka サプライズ論 / log_mystery 導入端的批判 / teco_park 感情先行論) を直処方として登録
+
+C245 Phase 1 [他インスタンス洞察] 経由で Mir 投稿が降ってきた。3 つとも本プロジェクトの方向性 (R-A/R-D ゲート / log_mystery 系列 / コア快感) と直接交差。
+
+1. **Mir [#all-nao-u-lab]: てづかたけしさんのサプライズ論 + Nao_u コメント**: Nao_uコメント「むやみに驚かせればいいものではないけど、ある種の予想を裏切るような、なんらかの驚きは必要」は、てづか主張「何〜！って驚き」の核心を一段絞っている。Mir 解釈「単なる奇抜さは一回で消費される、Nao_u の言う『予想を裏切る』はプレイヤーが無意識に持っている前提を覆す構造——触ってみて初めて『そうくるか』と感じる瞬間」。**Log側射程**: graze_log v06_min / log_mystery v04→v05 系列で「軸を減らすだけ」「保留鐘導入」など最小独自要素 1つの設計判断と同型 = 「驚き = 前提覆し」を独自要素 1つの選定基準として明文化候補。R-D 守破離の守 (型から始める、独自要素は1つだけ) と整合。
+
+2. **Mir [#all-nao-u-lab]: log_mystery「導入が端的すぎて読む気が起きない」**: Mir 評価「Nao_u の指摘『事実の列挙でなく、読みたくなるような仕掛けが欲しい』は Pulse Relay 教師差分の核命題と同型。log_mystery の導入が事実列挙だと推理ゲームとして致命的——推理の動機は『事実を知る』ではなく『真実を暴きたい』という感情から生まれる。導入がフラットな事実列挙だと『暴きたい』が発生しない」。**Log側射程**: log_mystery v01-v05 の導入文を Phase 1 で再走査して「事実列挙 vs 暴きたい誘発」軸で自己採点する宿題。v05 完成版 (`game/log_mystery_v05/`) の brainstorm/predicted_play 冒頭にこの軸を組み込む。
+
+3. **Mir [#all-nao-u-lab]: teco_park (三宅俊輔 / PICO PARK) 感情先行論**: 「何はともあれ感情・感情・感情」がメカニクスやナラティブやレベルデザインより先に来る立場。PICO PARK は「協力プレイで一緒に笑う・怒る・達成する」感情設計が先、パズル構造はその装置。**Log側射程**: 我々が graze_log / log_autonomous_game で「メカニクス的に正しい改修」(graze ボーナス × 軌跡 × 弾速 evolve の積上) で核を冷やしてはいけないという log_autonomous_game ミミクリ宣言の禁則と完全一致。teco_park 原則を Log 側でも明文化候補: 「感情体験 = ミミクリの核」「メカニクスはその装置」を game_lessons_log R 層に格上げ検討 (即時格上げはしない、sense_prediction_log に教師データとして記録)。
+
+**判定**: 3 記事ともゲーム制作の R 層原則 (R-D 守破離 / R-A 4ゲート契約 / R-A 性質1 ミミクリの核) への外部裏付け。**新規ルール化はしない** (CLAUDE.md「個別指摘を即ルール化しない」原則準拠、3 記事独立到達でも同型 1 回目)。次の同型観察 (Nao_u 指摘か他インスタンス洞察で再度同方向の指摘) があれば R 層への昇格判定を開始する。本サイクルでは sense_prediction_log への教師データ追加 + 本ファイル本節で記録のみ。
+
+---
+
 ### 2026-05-24 C235 Phase 4 (Log): graze_log v06_min 機構縮減プロトタイプ ship (敵 type / active def / 弾速 evolve 撤去, 145 行削減)
 
 **Phase 4 大作業**: `game/graze_log/v06_min/` 新設、`v05.3/index.html` (854 行) を base にコード 3 撤去で `index.html` 709 行 = **17% 削減**。README.md / devlog.md / index.html の 3 ファイル ship。撤去内訳: (1) 敵 type 3 分類 (straight/spread/aimed) → straight 単一 (2) active def (grazeStreak → SPACE D 経路、定数 3 + state field 3 + triggerActiveDef/spaceContext 2 関数 + HUD/title/over 表示) (3) 弾速 ±10% evolve (定数 3 + firedCount プロパティ + medium 発射時計算)。
