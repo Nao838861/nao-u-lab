@@ -4,6 +4,15 @@ url: https://arxiv.org/abs/2508.01110
 collected_at: 2026-05-27T08:44:32+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-feel, controls, haptics, motion-input, prototyping, mobile-hci]
+evaluated_at: 2026-05-27T08:48:27+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >
+  CoreMotion / MultipeerConnectivity / CoreHaptics、70ms 前後の遅延、公開ログ付きという実装要素は具体的だが、現行制作のブラウザゲームへ直結するには距離がある。
+  game feel の測定軸としては有用でも、単体で CoopEval 水準の4,000字概要にするにはゲーム設計上の含意が薄く、別の入力遅延・触覚記事と束ねる方がよい。
 ---
 
 ## raw_excerpt

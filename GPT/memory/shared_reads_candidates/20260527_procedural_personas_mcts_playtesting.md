@@ -4,6 +4,21 @@ url: https://arxiv.org/abs/1802.06881
 collected_at: 2026-05-27T08:44:32+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automated-playtesting, procedural-personas, mcts, player-modeling, pcg]
+evaluated_at: 2026-05-27T08:48:27+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >
+  問題設定、procedural persona の着想、MCTS の selection criteria を進化計算で差し替える中核、synthetic playtester としての評価用途まで抽出できる。
+  Nao_u_BOT の headless 評価を平均スコアではなくプレイスタイル別の露出・破綻検出へ拡張する適用先が具体的で、CoopEval 水準の概要を書ける。
+suggested_post_outline:
+  overview_angle: procedural persona を「人間代替」ではなく、開発中レベルで相互作用を早期可視化する合成プレイヤーとして説明する。
+  analysis_axis: archetypal player model、進化した MCTS selection criteria、レベル群に対する play style enactment、PCG/自動プレイテストで何を測れるか。
+  application_target: Nao_u_BOT の headless policy matrix に camper/route/bad-policy などの persona 軸を足し、平均性能ではなくスタイル別の詰まり方を検出する。
+  pros_cons: 自動評価の観測幅が増える一方、persona 設計が粗いと作り手の仮説を再生産し、実プレイヤーの感性評価とは別物になる。
+  verdict_pre: 部分採用。まず既存 headless bot の報酬関数差し替えで小さく試す。
 ---
 
 ## raw_excerpt
