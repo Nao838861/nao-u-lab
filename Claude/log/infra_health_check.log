@@ -2888,3 +2888,18 @@
   ISSUE: [scheduler_ash] git_syncが24162分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが24163分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが24149分間実行されていない（期待: 240分以内）
+[2026-05-27 06:00:02] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが24275分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが24327分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが24383分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが24382分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが24384分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが24370分間実行されていない（期待: 240分以内）
+[2026-05-27 14:40:32] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=7
+  ISSUE: Ashのスケジューラログが24795分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが24847分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが24904分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが24903分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが24904分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが24890分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル nao-u-lab-claude.lock が122分間残存（プロセスが死んでロックが残っている可能性）
