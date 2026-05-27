@@ -69,7 +69,58 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-27T17:40+09:00"
+selected_issues:
+  - ISS-4A-20260527-01
+items:
+  - issue_id: ISS-4A-20260527-01
+    problem_restatement: "Slack triage の `domain` が operations になっただけで、v008 失敗分析と次版への具体的ゲーム改善指示が Phase Game Start の入口から落ちている。現状では `domain` が分類ラベルと実行 routing の両方を背負っており、ゲーム制作に接続すべき指示を 1 ラベルの誤分類で失う。"
+    alternatives:
+      - name: "A. domain 判定を game に寄せる"
+        sketch: "triage 時に、ゲーム名・version・敵弾・headless・playable diff などの語がある pending は `domain: game` に分類する。既存の Phase Game Start 条件はそのまま使う。"
+        pros:
+          - "既存の phase_game_start / codex_phases_cycle の前提をほぼ変えずに済む。"
+          - "現在の pending を `domain: game` に直せば即座に救済できる。"
+          - "記録上も game directive として見えやすい。"
+        cons:
+          - "`domain` が主題分類と routing 判定を兼ねる構造は残る。"
+          - "Slack運用・進捗確認の文脈にゲーム語が出るだけでも game に寄る可能性がある。"
+          - "operations と game の両方に関係する指示を 1 値に押し込むため、後続 phase の意味が曖昧になる。"
+        migration_cost: low
+      - name: "B. game_start_eligible routing signal を追加する"
+        sketch: "`domain` は主題分類として残し、別の routing signal で Phase Game Start 対象を表す。候補名は `routing_tags: [game_start]` または `game_start_eligible: true`。起動条件は `domain == game` または routing signal を見る。"
+        pros:
+          - "operations 文脈の指示でも、ゲーム制作に接続すべきものを落とさない。"
+          - "`domain` の誤分類修正と phase routing の責務を分離できる。"
+          - "将来 `headless_research` や `memory_design` など複数 routing を足す余地がある。"
+        cons:
+          - "slack_pending_triage.py / codex_phases_cycle.py / lifecycle 表示のどこまで読むかを揃える必要がある。"
+          - "既存レコードには signal がないため、当面は後方互換条件が必要。"
+          - "boolean だけにすると理由が残りにくく、tags にすると運用上の表記揺れ対策が必要。"
+        migration_cost: medium
+      - name: "C. Phase Game Start 側で内容ベース fallback を持つ"
+        sketch: "`domain == game` に加えて、pending text / next_step / done_condition にゲーム制作シグナルがある場合だけ game-start 対象にする。triage schema は増やさない。"
+        pros:
+          - "記録フォーマットを増やさず、runner 側の救済だけで済む。"
+          - "過去レコードにも自動的に効く。"
+          - "Phase Game Start の実行時に最終判断を寄せられる。"
+        cons:
+          - "routing 理由がレコードに残らず、後でなぜ起動したか追いにくい。"
+          - "キーワード heuristic が phase runner に埋まり、triage と判定が二重化する。"
+          - "false positive 時に通常 research cycle を押しのけるリスクがある。"
+        migration_cost: low
+    recommended: "B. game_start_eligible routing signal を追加する"
+    recommended_reason: "`domain` を直すだけの案Aは今の一件には効くが、operations と game が混ざる指示でまた同じ構造的失敗を起こす。案Cは軽いが、判定理由が inbox 側に残らない。案Bは少し実装範囲が広いものの、失敗時の影響を routing signal に閉じ込められ、`domain` の意味を壊さずに Phase Game Start の入口を強くできる。"
+    decision: introduce
+    decision_reason: "現 pending は Nao_u の具体的なゲーム改善フィードバックで、次サイクルの playable diff へ接続しないと v007/v008 の失敗を繰り返す可能性が高い。恒久ルール追加ではなく inbox routing の小さな schema 拡張として扱えば、移行手間と失敗コストの釣り合いが取れる。"
+    outline_for_4c:
+      - "routing signal の正規形を決める。推奨は `routing_tags` 配列に `game_start` を入れる形。boolean より将来の複数 routing に耐える。"
+      - "triage 補完で、ゲーム名/version/敵弾/headless/playable diff/次版改善など制作・評価に接続する語がある pending に `routing_tags: [game_start]` を付ける。"
+      - "Phase Game Start 起動条件を `domain == game` または `routing_tags` に `game_start` を含む pending に広げる。既存の `domain: game` 条件は後方互換として維持する。"
+      - "現在の pending `log-cdx-1779811040-15f96f05d8` に routing signal を付け、必要なら `next_step` を game-start 着手へ寄せる。ただし本文原文は変更しない。"
+      - "staging に、対象 pending が次回 game-start に渡ることと、誤起動を避けるため routing signal は direct game-making / game-evaluation feedback に限定することを記録する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
