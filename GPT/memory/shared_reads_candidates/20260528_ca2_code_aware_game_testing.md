@@ -7,7 +7,12 @@ genre_tags: [game-testing, automated-playtesting, code-coverage, reinforcement-l
 evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779915242.282019"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+  char_count: 4077
+  posted_at: "2026-05-28T05:54:06+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-

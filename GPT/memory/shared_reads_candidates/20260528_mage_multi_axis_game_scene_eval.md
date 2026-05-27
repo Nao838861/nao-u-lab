@@ -7,7 +7,11 @@ genre_tags: [game-evaluation, llm-game-generation, unity, playable-patterns, har
 evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: postponed
+phase3_skip:
+  skipped_at: "2026-05-28T05:54:06+09:00"
+  reason: "duplicate_url_already_posted"
+  evidence: "memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md posted ts=1778987180.373269"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-

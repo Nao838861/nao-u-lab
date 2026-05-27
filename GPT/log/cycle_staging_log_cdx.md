@@ -29,7 +29,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-28T05:54+09:00 log_cdx Phase 3 投稿記録:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_rampart_agent_safety_testing.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915241277009"
+    char_count: 4110
+  - candidate: memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+    char_count: 4077
+skipped:
+  - candidate: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    reason: "duplicate URL: same Mage paper already posted from memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
