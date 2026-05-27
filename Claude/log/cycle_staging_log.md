@@ -327,3 +327,50 @@ Phase 2 §6 で予告した「Phase 3 開始時に Mir/Ash 応答再走査」を
 - kaizen 未検証提案の検証: 本実装自体が検証キュー (a) の deterministic 実装証拠 ✅
 - 30分で「進んだ」と言える粒度: 1サイクル分工数試算 (投稿2で明示) = 30分粒度 ✅
 - Slack投稿1本で済まない: 新規スクリプト1本実装 = ✅
+
+## Phase 4: 大作業実行 (2026-05-27 C250 完遂)
+
+### 完遂結果
+
+**タイトル**: `tools/stale_memory_audit.py` 単体実装 (kaizen #131-#134 family 第5弾基盤)
+
+**完遂定義5項目 全成立**:
+1. ✅ `tools/stale_memory_audit.py` (172行, 新規) が exit 完走 (WARN ありで exit=1 = 仕様通り、ERR=0 / dry-run 副作用ゼロ)
+2. ✅ 判定式3軸 (a-1 git 90日 / a-2 frontmatter expires_at / a-3 本文絶対日付 30日) 全実装、サンプル3ファイル人手照合一致
+   - `memory/MEMORY.md` → WARN なし (本文に直近30日内日付参照あり) 妥当
+   - `memory/core_mission.md` → body_date_warn (latest=2026-03-18, 70日経過) 妥当
+   - `memory/feedback_rule_proliferation_canonical.md` → WARN なし (本文直近日付あり) 妥当
+3. ✅ stderr サマリ1行 `[stale_memory_audit] target=memory files=207 stale_warn=0 expires_err=0 body_date_warn=105` 出力確認
+4. ✅ dry-run 副作用ゼロ (`git status memory/` 差分なし、`memory/stale_audit_queue.jsonl` 未生成)
+5. ✅ kaizen #137 (仮) 起票準備整 (Phase 5 で `memory/kaizen_tracker.md` 追記、family 統合管理ルール準拠で第5弾扱い、Phase 4 では起票しない)
+
+### 副産物
+
+**新規ファイル**:
+- `tools/stale_memory_audit.py` (172行) — 判定3軸 + dry-run sketch + exit code 0/1/2
+
+**変更ファイル**:
+- `log/cycle_staging_log.md` (本ファイル) — Phase 4 セクション追記のみ
+- `memory/next_tasks_log.jsonl` — サイクル開始時の M、Phase 4 で追加変更なし
+
+**memory/*.md 変更**: なし (dry-run 設計通り)
+
+**Slack 投稿**: なし (Phase 3 で投稿2件完遂済、Phase 4 で増やさない原則順守)
+
+**kaizen エントリ**: 本サイクル Phase 4 では追記なし。Phase 5 で kaizen #137 (仮) 起票判定 = family 統合管理ルール準拠 (kaizen #135 pre-mortem (d) で第5弾は別 kaizen 起票せず family 拡張方針)、実起票するか family 拡張記録に留めるかは Phase 5 で判定
+
+### 観測ベンチマーク (本サイクル初回計測)
+
+- memory/ 直下 `*.md` total = 207 件
+- stale_warn (git 90日経過) = **0 件** (本サイクル直近活動ファイル群、想定通り)
+- expires_err = **0 件** (現状 frontmatter `expires_at:` 使用ファイル不在、将来段階で使用開始)
+- body_date_warn (本文絶対日付 30日経過) = **105 件** = 全 207 件中 51%
+  - 過半数が本文最新参照日 30日経過 = 「日付参照型 stale」は既に常態化、後続サイクルで閾値妥当性再検討候補
+  - 第1回ベンチマーク値として記録、次サイクル以降の同コマンド出力との差分で stale 増減傾向観測
+
+### 完遂時点で次サイクル以降に残る射程
+
+- (i) **`memory/stale_audit_queue.jsonl` 実書き出しモード**追加 (現状 dry-run のみ、`--write` フラグで queue 出力可能化)
+- (ii) **body_date_warn 105 件の絞り込みフィルタ** (例: 本文に複数日付参照ある場合の latest 採用は妥当だが、引用ブロック内日付は除外する等のノイズ抑制)
+- (iii) **kaizen #137 起票 or family 拡張** (Phase 5 で判定)
+- (iv) **2 サイクル後の同コマンド再実行** で stale_warn / body_date_warn 件数推移観測 (本サイクル = baseline 207 / 0 / 0 / 105)
