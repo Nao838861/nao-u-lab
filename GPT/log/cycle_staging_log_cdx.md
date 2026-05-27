@@ -22,7 +22,31 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778536700-e1ed9f0fdd
+    source_ts: "1778536700.085879"
+    title: "CoopEval: LLMエージェント同士の協力を、道徳プロンプトではなくゲーム理論メカニズムで成立させる評価ベンチマーク"
+    reason: "AGENTS でも #shared-reads 品質基準として参照され、Nao_u の human-steering でも同水準の概要品質を求める明示評価が残っている。内容も複数 LLM agent の協力を善意や道徳プロンプトではなく、契約・メディエーション・利得構造として設計する話で、Slack/git/記憶/phase handoff をまたぐ Codex 定時サイクルに直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の multi-agent handoff / Slack・git・memory lifecycle / cooperative-agent game design で、善意に頼らず explicit contract・mediator/harness・柔軟な escape hatch を確認する一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

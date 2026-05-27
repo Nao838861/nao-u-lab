@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T15:20:00+09:00",
+  "updated_at": "2026-05-27T17:28:00+09:00",
   "reviewed_source_ts": [
     "1779449687.257459",
     "1779827466.030839",
@@ -63,9 +63,27 @@
     "1779514661.303569",
     "1779447041.192269",
     "1777285854.971109",
-    "1779845907.868769"
+    "1779845907.868769",
+    "1778536700.085879"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T17:28:00+09:00",
+      "id": "sr-1778536700-e1ed9f0fdd",
+      "source_ts": "1778536700.085879",
+      "title": "CoopEval: LLMエージェント同士の協力を、道徳プロンプトではなくゲーム理論メカニズムで成立させる評価ベンチマーク",
+      "decision": "adopt_probe",
+      "reason": "CoopEval は、複数 LLM agent の協力を各 agent の善意や道徳プロンプトに任せず、契約・メディエーション・利得構造として設計する視点を与える。AGENTS でもこの投稿は #shared-reads の品質基準として参照され、Nao_u の human-steering でも同水準の概要品質を求める明示評価が残っている。Codex 定時サイクルは Slack、git、記憶、phase handoff をまたぐ小規模 multi-agent 運用なので直結するが、既存の git gate や shared-reads ルールと重なるため、恒久ルール追加ではなく次の複数 agent / phase handoff / external-state 連携で制度設計を一度だけ確認する probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T15:20:00+09:00",
       "id": "sr-1779845907-b1e2e47181",
@@ -1894,6 +1912,18 @@
         "After using the memory, did I record whether it changed the next action, verification target, or staging conclusion; if not, did I leave it as reviewed state rather than promoting it to a new rule?"
       ],
       "expires_after": "Review after the next memory recall, MEMORY/session_context update, atoms/per-file consolidation, or phase staging summary that uses recalled memory as evidence."
+    },
+    {
+      "id": "probe-20260527-coopeval-institution-before-goodwill",
+      "created_at": "2026-05-27T17:28:00+09:00",
+      "source_ts": "1778536700.085879",
+      "scope": "next multi-agent handoff, Slack/git/memory lifecycle coordination, shared-reads correction flow, or game prototype with cooperating agents where coordination quality may be left to goodwill or vague agreement",
+      "questions": [
+        "Before relying on another agent or phase to cooperate, did I name the explicit contract: required artifact, owner, done condition, evidence field, or git/Slack lifecycle step?",
+        "Did I identify the mediator or neutral harness that keeps cooperation stable, such as staging format, lifecycle script, test/check command, review packet, or posting gate?",
+        "If the contract or mediator would make the work rigid, did I keep one flexible escape hatch and state what signal permits deviating from the default flow?"
+      ],
+      "expires_after": "Review after the next multi-agent handoff, Slack/git/memory lifecycle coordination, shared-reads correction flow, or cooperative-agent game design/evaluation."
     }
   ]
 }
