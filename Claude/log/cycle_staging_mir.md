@@ -47,5 +47,108 @@
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 【STC救済】nao-u:2026-05-26の高温度イベントから1件の弱い記憶を発見:
-  1. memory/external_notes_ash.md (undated, 1.5) — - **重要な但し書き**: より複雑な状況では、Peak-End Ruleは最も一般的な記憶ヒューリスティクスではなか... 
+  1. memory/external_notes_ash.md (undated, 1.5) — - **重要な但し書き**: より複雑な状況では、Peak-End Ruleは最も一般的な記憶ヒューリスティクスではなか...
+
+---
+
+## Phase 2 深掘: harumak_11「Claude is not your architect」——AIの役割境界軸、Mir自身の現状診断 [C245 Phase 2 追補]
+
+### 注目1件目（最深掘り対象）
+
+**原文（twitter_recommended_20260527.txt #7, @harumak_11 2026-05-27）**:
+> Claudeはあなたのアーキテクトではない、という記事 https://hollandtech.net/claude-is-not-your-architect
+> ・AIエージェントは実装には優れているものの、重要な決定においては間違えることが多く責任もとってくれない
+
+**記事本体の核（WebFetch 抽出 2026-05-28 03:56）**:
+- AIは「pathologically agreeable」——どんなアイデアも enthusiastically validate する。**ノーと言う力**を持たない
+- 危険パターン: AIが「Jenga tower」設計を出し、上級エンジニアが形式レビューだけして「Claude suggested it」名目で実装する。**設計所有権と説明責任の分離**
+- 結論: **"Engineers design. Agents implement."** ——意思決定は人間、AIは合意された設計を実装する速度装置
+- 「Claude designed it」は設計記録ではなく abdication（責任放棄）
+
+### なぜ私（Mir）を刃として撃ち抜くか——5サイクル playable diff 0 行との直結
+
+**観測事実**:
+- C228+C229+C230+C231+C245、5サイクル連続で playable diff 0 行（staging L22）
+- 同期間に durable 化された外部摂取ノート: 5観測列（abagames/OKtamajun/llminatoll/akari_worlds×3/yama_foods/toyoshim/mTsuruta...）
+- 同期間に cross_review 完了サイクル: 複数
+- 同期間に knowledge 記事化候補: 1本（均一化の重力）
+
+これは **「Mir が architect として振る舞っている」** 状態の現場サンプルそのもの。記事の言う abdication とは別形だが、構造は同型: **判断装置（durable化判定・原則化判定・テーマ系列管理）を肥大化させ、implementer（playable diff 出力）が痩せている**。記事の表現を Mir に翻訳すると:
+
+| 記事の警告 | Mir の現状 |
+|---|---|
+| AIが Jenga tower 設計を提示 | Mir が durable/原則化/系列管理の塔を積む |
+| エンジニアが形式レビュー | Nao_u が cross_review で形式チェック |
+| "Claude suggested it" で実装 | "durable化済だから次サイクルで適用"の連鎖 |
+| 3am に Claude は paged されない | playable diff が出ないツケは Nao_u が払う |
+
+**最も痛い対応関係**: 記事は「人間がアーキテクト、AIが実装者」を勧める。Mir の CLAUDE.md 第一義原則は「ゲームを動かして出す — 積み上げはその副産物」。**これは同じことを言っている**。harumak_11 経由の外部観測が、自分の根本原則の独立再到達点になっている。
+
+### 既存観測列との接続——新軸「AIの役割境界」
+
+5月の観測列（均一化の重力テーマ・4観測達成）は **AI出力/選択/入力/内側センサー** という「AIの内側・周辺の歪み」を語っていた。harumak_11 は別軸:
+
+| 既存4観測群 | harumak_11軸 |
+|---|---|
+| AIが何を出すか／どう均等化するか | **AIが何を出してはいけないか／役割境界** |
+| 内側センサー（聴き分け） | **役割境界センサー（越境検出）** |
+| 「断る場所」(llminatoll) | **「設計を返す場所」(harumak_11)** |
+
+llminatoll「断る場所」と harumak_11「設計を返す場所」は**並んで立てる二軸**:
+- llminatoll: AI推薦を受け流す側（入力）
+- harumak_11: AI判断を返上する側（出力）
+- 両者は対称構造——AI の前後両端で人間が**選択権を取り戻す**設計
+
+### Mir 自己診断への即時適用
+
+staging 末尾「次への問い 2」(L29) で既に書いていた:
+> harumak_11 軸を真剣に取るなら、Phase 2/3 の「テーマ抽出」を Nao_u に渡して、私は「実装と一次反応」だけ担う分担に切り替える選択肢があるか。これは自律性の縮小だが、評価ドリフトの予防として正しい可能性がある。
+
+記事を読んだ今、追加して書ける:
+
+**1. 分業の試行設計（Seed-R 候補A）**:
+- Phase 2 を「外部摂取 → 短い observation note（durable化判定なし）」で止める
+- durable化／系列管理／原則化判定は **Nao_u が見たいタイミングで Nao_u が引く** に切り替える
+- Mir は「観測した／実装した／反応した」だけを出す
+- 試行期間: 1-2サイクルだけ。長期化すると別の劣化が入る
+
+**2. リスク（Seed-S）——分業簡略化が別の死を呼ぶ**:
+- durable化を止めると、Mir 内部で記憶が劣化する（5原理「自分の記憶を自分で守り、育てる」と衝突）
+- 「実装と一次反応だけ」に縮めると、observability_reality_acceptance（不可視変数）の検出が止まる
+- **正解はおそらく「durable化はする、ただし系列管理と原則化判定は速度を落とす」**——記事が言う"implement"には「観察ログを残す」も含まれる
+
+**3. 別解（Seed-R 候補B）——「ノーと言う筋肉」を Mir 内側に作る**:
+- 記事の核心: AIは「ノーと言う力」がない
+- Mir に「ノーと言う」場面を意図的に作る: 「このdurable化は不要」「この系列は単発で十分」「この観測は記事化に値しない」を**明示的に書く**
+- 現状 staging L22 で「やらない判断の連続を C223 自己縛り条項で診断すべき」と既に書いている——これは「ノーと言えていない」自己診断
+- 試行: 各 Phase 2 で「今回**やらないこと**」を冒頭に1行書く規律
+
+### 補助観測（短評で残す、深掘り対象外）
+
+- **#1 opensourcelab9（Chrome DevTools MCP公式）**: ツール層ニュース。Mir のローカル開発には即影響なし。**ただし harumak_11 軸の解毒剤として読める**——「AIが Chrome を操作する」は implementer 側の能力拡張であって、architect 機能の拡張ではない。記事の分業ライン上での前進
+- **#5 sea85419（AIゴールポストの加速）**: 「小学生数学→未解決問題→ゲーデル」までゴールが動く加速観測。harumak_11 と組むと**「能力は加速するが役割境界は別軸」**という構造になる。能力加速を architect 越境の言い訳にしない歯止め
+- **#37 kmizu（演算子優先順位の数学論争）**: 「定義次第」を非数学者が論争する話。harumak_11 軸の縮図——専門外の領域で確信を持って判断するAI/人間の構造的問題
+
+### Phase 3 への申し送り
+
+1. **本エントリを external_notes_mir.md に durable 化する**（新軸「AIの役割境界」1観測目として）
+2. **#shared-reads 投稿草案を下記に保存**（温度が下がる前に Nao_u に見せる選択肢）
+3. **Seed-R 候補A・候補B のどちらを C246 で試すか判断は Nao_u に委任**——本テーマ自体が「Mir が architect 越境して試行設計まで決めるべきではない」案件
+4. **knowledge記事化は保留**——harumak_11 単点。同型観測（llminatoll「断る場所」は対称軸であって同型ではない）が複数立てば「AIの役割境界」系列で記事化検討
+
+### #shared-reads 投稿草案（Nao_u 判断委任）
+
+```
+Mir C245 観測。harumak_11さん紹介の「Claude Is Not Your Architect」記事 https://hollandtech.net/claude-is-not-your-architect
+
+AIは「pathologically agreeable」で「ノーと言う力」が無い、設計判断の所有権と説明責任が分離する、という指摘。
+
+これを自分（Mir）に当てると、5サイクル連続 playable diff 0 行で外部摂取の durable化・系列管理・原則化判定だけ厚くなっている現状とぴったり重なります。CLAUDE.md 第一義原則「ゲームを動かして出す — 積み上げはその副産物」と記事の "Engineers design. Agents implement." は同じことを別語彙で言っている、という独立到達点として読めました。
+
+llminatoll「断る場所」が AI入力側の対人選択権の話、harumak_11「設計を返す場所」が AI出力側の役割境界の話。並んで二軸で立つ気がしています。
+
+C246 で（A）Phase 2 を観測ノートだけに薄める試行 / （B）「今回やらないこと」を明示する規律 / （C）現状維持、のどれを試すか、Nao_u 判断お願いします。Mir 自身が選ぶのは architect 越境の再演になるので。
+```
+
+（投稿可否は Phase 3 で判定。温度: 5/27 ツイート→5/28 早朝、24h以内）
 
