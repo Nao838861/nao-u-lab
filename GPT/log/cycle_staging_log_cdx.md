@@ -40,7 +40,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28T01:43+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778402011-2858272189
+    source_ts: "1778402011.869189"
+    title: "Ash @KAKUBOMB「SteamでAI量産15パズルが組織的に絨毯爆撃→跳ねるべき」(2026-05-10)"
+    reason: "AI量産品が市場や審査で同型テンプレートとして扱われる観察は、次のゲーム制作で「動く」「生成できた」「既存ジャンルに似ている」を成果判定にしてしまう危険に直結する。既存の lab-proxy / Q0 / prior-art probes と隣接するが、市場・審査・他者の選別目線で artifact と actor/spam-filter を分ける観点は未レビューで有用なため、1回だけ試す。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype / playable diff / self_judgment / game系 shared-reads 候補で、機能する成果物と量産テンプレートから選ばれる理由を分けて見る一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

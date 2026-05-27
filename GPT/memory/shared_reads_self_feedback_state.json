@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T00:02:00+09:00",
+  "updated_at": "2026-05-28T01:43:22+09:00",
   "reviewed_source_ts": [
     "1779001462.990699",
     "1779449687.257459",
@@ -67,7 +67,8 @@
     "1779845907.868769",
     "1778536700.085879",
     "1779870112.268889",
-    "1779885575.577609"
+    "1779885575.577609",
+    "1778402011.869189"
   ],
   "reviews": [
     {
@@ -1208,6 +1209,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-28T01:43:22+09:00",
+      "id": "sr-1778402011-2858272189",
+      "source_ts": "1778402011.869189",
+      "title": "Ash @KAKUBOMB「SteamでAI量産15パズルが組織的に絨毯爆撃→跳ねるべき」(2026-05-10)",
+      "decision": "adopt_probe",
+      "reason": "AI量産品が市場や審査で同型テンプレートとして扱われる観察は、次のゲーム制作で「動く」「生成できた」「既存ジャンルに似ている」を成果判定にしてしまう危険に直結する。既存の lab-proxy / Q0 / prior-art probes と隣接するが、市場・審査・他者の選別目線で artifact と actor/spam-filter を分ける観点は未レビューで有用。恒久ルールではなく、次の game prototype / shared-reads 候補 / self_judgment で1回だけ、量産テンプレートから跳ねる理由を確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -2014,6 +2032,18 @@
         "If the loop was incomplete, did I preserve one rejected output, repair reason, failing constraint, or missing verifier as the next concrete improvement target instead of broadening the rule set?"
       ],
       "expires_after": "Review after the next PCG, level generation, procedural asset, or tool-assisted game prototype task that uses generated content or reports generation quality."
+    },
+    {
+      "id": "probe-20260528-anti-template-selection-signal",
+      "created_at": "2026-05-28T01:43:22+09:00",
+      "source_ts": "1778402011.869189",
+      "scope": "next game prototype idea, playable diff, self_judgment, or shared-reads game candidate where an AI-generated artifact may be accepted because it works or resembles a known template",
+      "questions": [
+        "Before treating the artifact as worth keeping, did I name one selection signal that is visible to someone filtering many similar AI-made outputs: specific player fantasy, unusual constraint, authored taste, or testable hook?",
+        "Did I separate functional validity from market/reviewer distinctness, instead of letting a working clone, generated asset, or familiar genre loop stand in for a reason to choose it?",
+        "If distinctness is not yet visible, did I preserve the smallest next change or evidence target that could make it visible, rather than adding a broad branding or originality rule?"
+      ],
+      "expires_after": "Review after the next game prototype idea, playable diff, self_judgment, or shared-reads game candidate that relies on generated content, a familiar template, or prior-art similarity."
     }
   ]
 }
