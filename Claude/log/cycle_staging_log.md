@@ -269,4 +269,64 @@ CLAUDE.md「絶対にやる」§1 = **ゲームを動かして出す — 積み�
 - 次サイクル C254 へ: (A1) graze_log v06 (Ash v07 待ち) / (A2) mimicry_log v03 (Nao_u 反応待ち or 自走着手判定) / `invalidated_at` frontmatter 追加検討 / Update Resolver 相当の recall_golden T0 ベンチ準備
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 — 0 件 (Phase 1 §1/§2 で確定)
+本サイクル投稿 = Phase 2 §1 #shared-reads ts=1779910998.747929 (Mem0g 深層補完) のみ、Phase 3 で追加投稿なし。
+
+### 2) kaizen サイクル
+- **検証リマインド**: Phase 1 Pre-check で「検証期限到来なし」確認済、検証埋め作業 0 件
+- **新規 kaizen 提案**: なし。検証ファースト原則順守 (kaizen #136 #135 とも起票直後 N=2 未充足、新規提案より既存観察継続を優先)
+- **#kaizen-log 投稿**: 本サイクル新規 kaizen なしのため投稿なし
+
+### 3) 他インスタンス洞察対応
+Phase 1 §6 + Phase 2 §1 で Mem0g (Mir #shared-reads / Log_cdx 関連投稿群) を memory_redesign.md と external_notes_log.md に統合済。30 件洞察リストの上位は memory/graph/agent 系で本サイクル統合分でカバー、それ以外は memory_redesign.md の議論範囲外 (graze_log / Pulse Relay 系) で関連プロジェクトファイル直近編集に変化なし → Phase 3 追加処理なし。
+
+### 4) Active projects 更新
+- **projects/log_autonomous_game.md** に「2026-05-28 C253 Phase 3: 実機判定取得経路 — 4 経路列挙 + 判定基準明示」節追加。R1 (#game-rights 再依頼) / R2 (Mir/Ash cross_review) / R3 (Log 自己判定で確定昇格) / R4 (GitHub Pages 公開) の 4 経路を表形式で長所・短所・コスト列挙、判定基準で R4+R2 併走を採用、R3 却下根拠を feedback_headless_unfit_for_unfinished_eval.md T:5 違反として明示。**5 サイクル持ち越し脱出 = self_judgment 確定昇格の道閉鎖危機からの脱出経路を構造化**
+- projects/memory_redesign.md は Phase 2 §1 で Mem0g intake 統合済 (本 Phase 3 で追加更新なし)
+- 他 Active project は本サイクル変化なし
+
+### 5) 深掘り候補から動かしたもの
+Phase 2 §4 優先順位に従い:
+- **(A3) log_autonomous_game v003 実機判定経路** = 上記 §4 で 1mm 前進 (経路 4 本列挙 + 判定基準明示)
+- **(E) kaizen #135 dry-run スキーマ** = 本 Phase 3 では着手せず、C254 Phase 4 大作業候補と並行検討に回す (Phase 4 大作業 1 つに集中する判断)
+
+### 6) Phase 4 大作業
+本サイクル Phase 2 §4 で最優先 (A3) として進めた経路選定の **次の論理的 1 手 = R4 (GitHub Pages 公開) 着手** を Phase 4 大作業とする。
+
+## 次フェーズの大作業
+
+**タイトル**: log_autonomous_game v002/v003 を GitHub Pages で公開し、Nao_u/Mir/Ash が任意のタイミングで触れる状態を作る (R4 経路着手)
+
+**完遂の定義 (Phase 4 終了時に何が成立していれば完了か)**:
+- (1) repo の Pages 設定が確認済 (current state: enabled / disabled / private 制約の有無を明示)
+- (2) `docs/` ディレクトリ or `gh-pages` ブランチで v001/v002/v003 を `index.html` 経由で起動できる構造が物理化されている (= `https://<user>.github.io/<repo>/log_autonomous_game/v002/` 相当の URL で起動できる)
+- (3) Pages 公開 URL が取得できている (404 なしで HTTP 200 応答)
+- (4) `#shared-reads` に Pages URL + 「Mir/Ash で気が向いたら 5 分プレイして visual_review.md UNKNOWN 8 項目を埋めてほしい」投稿が完了 (R2 補完)
+- (5) projects/log_autonomous_game.md 履歴に「C254 Phase 4: R4 経路着手 — Pages 公開完遂」節追加
+
+**着手手順 (最初の 1 手と想定手順)**:
+1. **最初の 1 手**: `gh repo view --json hasPages,visibility` で repo の Pages 設定 + public/private 状態を確認 (private repo の場合 Pages 公開不可 → 別経路検討に分岐)
+2. Public repo + Pages 未設定の場合: `docs/` ディレクトリ作成、`docs/index.html` で v001/v002/v003 への links を出す landing page を作る
+3. v001/v002/v003 の game.js / index.html を `docs/` 配下にコピー (相対パス確認、外部依存なしのため移動可能)
+4. commit + push、`gh api repos/Nao838861/<repo>/pages` で Pages 有効化 (or repo Settings UI 経由)
+5. URL HTTP 応答確認 (curl)
+6. `#shared-reads` に URL + 依頼文投稿
+7. projects/log_autonomous_game.md 履歴節追記
+8. Phase 5 で commit/push
+
+**選んだ理由 (なぜこれを最優先にするか)**:
+- (A3) で経路選定したが、選んだだけで動かさなければ持ち越し継続 = `feedback_means_ends_reversal_check.md` 同型 (情報収集 + 分析 + 経路選定までやって着手しない構造)。**Phase 4 で R4 着手まで踏むことで、経路選定 → 物理着手のフィードバックループを 1 サイクルで閉鎖**
+- Pages 公開は v003/v004 公開も同じパイプライン化できるため、一度払えば長期回収可能なコスト
+- 30 分粒度で「進んだ」と言える: 公開設定確認 + docs/ 構造化 + URL 取得 + #shared-reads 投稿 = 30 分上限内
+- Active project log_autonomous_game の停滞 (12 サイクル「実機判定取得」未着手) を物理的に動かす最小 1 手
+- Nao_u 指摘の同型再発防止: 「Phase 2 = 分析が主たる出力で game/* diff ゼロ」の自己診断 (C251 Phase 2) が C253 Phase 3 でも継続している、R4 着手で diff を `docs/` 経由で出すことで game/* 実装サイドへの出力を確保
+
+---
+
+**本サイクル C253 完遂サマリ**:
+- **作成**: drafts/c253_phase2_shared_mem0g.md (Phase 2、Mem0g 深層補完)
+- **Slack 投稿**: #shared-reads ts=1779910998.747929 (Phase 2)
+- **メモリ更新**: memory/external_notes_log.md + projects/memory_redesign.md (Phase 2 で統合済)
+- **プロジェクト更新**: projects/log_autonomous_game.md 「C253 Phase 3: 実機判定取得経路」節追加
+- **Phase 4 大作業**: R4 (GitHub Pages 公開) 着手

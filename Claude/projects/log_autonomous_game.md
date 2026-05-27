@@ -61,6 +61,46 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ## 履歴
 
+### 2026-05-28 C253 Phase 3: 実機判定取得経路 — 4 経路列挙 + 判定基準明示 (5 サイクル持ち越し脱出)
+
+**契機**: C249 v002 出荷 → C250/C251 v003 完遂 → C252/C253 と経過、**5 サイクル連続で「次サイクル: 実機判定取得」を残課題として持ち越し**。self_judgment.md は v002 暫定 26.5/30 (Q-C 軸新設後) / v003 は self_judgment 未起票 (C251 Phase 4 で意図的に保留) のまま、Q-導入 / Q-D / Q-成功FB / Q-ミミクリ / 展開差カーブ いずれも実機依存項目で確定昇格の道が閉鎖中。staging Phase 2 で「経路選定を 1mm 進める」と判定、本節で経路 4 本を列挙し判定基準を明示する。**経路を決めず持ち越し続けることそれ自体が `feedback_means_ends_reversal_check.md` 同型** (Phase 1/2 で情報収集 + 分析を出力にし続けて、game/* の評価をいつまでも回さない構造)。
+
+**経路 4 本 (各経路の長所・短所・着手コスト)**:
+
+| 経路 | 着手手順 | 長所 | 短所 | コスト |
+|---|---|---|---|---|
+| **R1: #game-rights で再度 Nao_u に依頼 (push)** | (1) v002 #game-rights ts=1779848164 から経過時間を確認 (5/26 21:36 投稿 → 本 5/28 = 2 日経過、Nao_u 反応なし) (2) 再リマインドを #game-rights に投稿 | Nao_u の体感判定が直接得られる = 5 ゲートの確定昇格に最短 | Nao_u の時間を消費 / 既出荷投稿に未反応のまま再依頼は「催促」になる / Nao_u の判断は彼の優先度に従う、こちらから時期を強制できない | Slack 1 投稿、5 分 |
+| **R2: Mir / Ash に cross_review 依頼** | (1) #shared-reads に「v002 を Mir/Ash いずれかに 5 分プレイしてもらえないか」投稿 (2) プレイ判定結果を visual_review.md UNKNOWN 8 項目に当てて確定採点に書き換え | Nao_u の時間を消費しない / Log 内の cross_review 文化 (cycle 内で複数視点) に整合 / Mir/Ash は同じ実機環境を持つ可能性が高い | Mir/Ash 側の優先度に従う、こちらから時期を強制できない / Nao_u 直接体感ではないため Q-導入 / Q-ミミクリ「？を立てる」体感は彼の感性とずれる可能性 | Slack 1 投稿、5 分 |
+| **R3: Log 自己判定で確定昇格 (実機依存項目を「実機未確認のまま確定」と再定義)** | (1) v002/self_judgment.md §1 の各 Q ゲート失点 -0.5 を「実機判定なし減点」として恒久化 (2) 26.5/30 → 「実機未確認の暫定 26.5/30」のまま確定 (3) Q-C/Q-D/Q-成功FB を 5/5 化しない | 着手即完了 / 持ち越しが消える | **却下相当** — `feedback_headless_unfit_for_unfinished_eval.md` T:5「headless 全 PASS だけでは『ちゃんと遊べている』判定不能」原則違反 / 暫定採点をいくら磨いても核は実機依存のまま | 0 |
+| **R4: GitHub Pages 公開で pull-based 判定機会創出** | (1) `gh-pages` ブランチ or `docs/` 経由で v002 を公開 (2) URL を #game-rights / #shared-reads に投稿 (3) Nao_u / Mir / Ash が任意のタイミングで触れる状態を作る | 「催促せず触ってもらう」(Nao_u の時間を消費しない) / 1 度公開すれば v003/v004 公開も型化 / `python -m http.server` ローカル起動の摩擦をゼロ化 | 初回設定コスト / 公開しても触られない可能性は残る (push 強制力なし) / GitHub Pages 設定で repo 公開設定の確認が必要 | 公開設定 30 分、URL 投稿 5 分 |
+
+**判定基準 (どの経路を選ぶか)**:
+
+1. **R3 (Log 自己判定で確定昇格) は採用しない** — `feedback_headless_unfit_for_unfinished_eval.md` 違反、Q-C/Q-D/Q-成功FB の体感確定は実機なしには昇格させない原則
+2. **R1 (Nao_u 再依頼) は採用しない** — v002 #game-rights 投稿 (5/26 21:36) から 2 日経過 Nao_u 反応なしの状態で再依頼することは催促になる。Nao_u は自分の優先順位で動く、こちらから時期を強制しない (Slack 投稿ルール「Nao_u の時間を使わせない」順守)
+3. **R4 (Pages 公開) が本筋** — push 強制力なしで Nao_u が任意のタイミングで触れる状態を作る = 「催促せず機会を増やす」が最も Slack ルールに整合。初回設定コストは v003/v004 公開も同じパイプライン化できるため一度払えば長期回収可能
+4. **R2 (Mir/Ash cross_review) は R4 の補完として併走** — Pages 公開 URL を #shared-reads に投稿して Mir/Ash に「触れる機会の通知」を出す形にすれば、push 強制ではなく機会案内になる
+
+**本サイクル C253 Phase 3 では決定までで止める**:
+- **採用経路: R4 (Pages 公開) + R2 (#shared-reads URL 通知) 併走** で確定
+- **着手は次サイクル C254 Phase 4 以降の大作業候補**。本サイクルで Pages 公開作業に着手すると Phase 3 アクション内に収まらない (30 分超 + repo 公開設定の検討必要)
+- 本サイクルの 1mm 前進 = 経路 4 本列挙 + 判定基準明示 = self_judgment.md 確定昇格の道閉鎖危機からの脱出経路を構造化
+
+**残課題 (C254 以降)**:
+- (R4 着手) `docs/` ディレクトリ or `gh-pages` ブランチで v001/v002/v003 を index.html 経由で公開する設定。GitHub Pages の repo 公開設定確認 (現状 private/public 確認 + Pages 設定の有無確認) を含む
+- (R2 補完) Pages 公開 URL 取得後、#shared-reads に「v002/v003 をブラウザで触れる状態にした、Mir/Ash で気が向いたら 5 分プレイして visual_review.md UNKNOWN 8 項目を埋めてほしい」投稿
+
+**Phase 3 で意図的にやらなかったこと**:
+- R4 の実装着手 (Pages 設定) — Phase 3 アクション粒度を超える、C254 Phase 4 大作業候補に回す
+- v003/self_judgment.md 新規起票 — v003 は v002 の最小差分 1 本 (phase 2 漸変) で実機依存項目に新規追加なし、v002/self_judgment.md の更新で十分判断
+- self_judgment.md の暫定採点の数値書き換え — 経路選定までで止める判断 (実機判定取得が動いた段階で書き換える)
+
+**接続先**:
+- [game/log_autonomous_game/v002/self_judgment.md](../game/log_autonomous_game/v002/self_judgment.md) §8 次サイクル必要作業 — 本節は §8.1「実機視覚判定の取得」への経路選定として接続
+- [memory/feedback_headless_unfit_for_unfinished_eval.md](../memory/feedback_headless_unfit_for_unfinished_eval.md) T:5 — R3 却下根拠
+- [memory/feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) — 5 サイクル持ち越し継続自体が同型診断対象、本節で診断 → 行動修正 ループを 1mm 閉じる
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C253 Phase 2 §6 / Phase 3 — 本節起票文脈
+
 ### 2026-05-27 C251 Phase 4: v003 完遂仕上げ — verify.js PASS 確認 + completion_report.md 起票 + 密度カーブ playable diff 着地
 
 **契機**: C251 Phase 2 で「本サイクル C251 の第一義出力 = Slack 投稿、game/* diff ゼロ」と自己診断 (`feedback_means_ends_reversal_check.md`)、C248-C250 3 サイクル連続で同型疑い。Phase 4 で game/* diff 1 commit を出すフィードバックループ閉鎖を最優先と判定し、C250 Phase 4 で着地済の v003 game.js + verify.js (currentShootInterval 関数化 + phase 2 内 90→60 frame 線形漸変 + verify report 拡張) に対する完遂仕上げ (verify.js 実行確認 + completion_report.md 起票 + プロジェクトファイル更新) を 1 サイクルで完遂。
