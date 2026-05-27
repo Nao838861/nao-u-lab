@@ -57,7 +57,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779870112-aecc86a403
+    source_ts: "1779870112.268889"
+    title: "ProxyWar: LLM生成コードを固定テスト通過だけで測らず、動的なゲーム環境・制約・対戦で評価するフレームワーク"
+    reason: "直近の Pulse Relay v009 は verify/timeline/audit/headless が pass している一方で、survival / pulseHeavy の差や未観測ルートが残る。ProxyWar の固定テスト外評価の視点は、次回の game/headless 評価で過剰な pass 解釈を防ぐ小さな probe に変換できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "固定/interface テストの pass と動的環境での頑健性を分け、次回は happy path 外の最小ストレス条件を1つ置く probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

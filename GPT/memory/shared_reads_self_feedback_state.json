@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T17:28:00+09:00",
+  "updated_at": "2026-05-27T19:32:52+09:00",
   "reviewed_source_ts": [
     "1779449687.257459",
     "1779827466.030839",
@@ -64,9 +64,27 @@
     "1779447041.192269",
     "1777285854.971109",
     "1779845907.868769",
-    "1778536700.085879"
+    "1778536700.085879",
+    "1779870112.268889"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T19:32:52+09:00",
+      "id": "sr-1779870112-aecc86a403",
+      "source_ts": "1779870112.268889",
+      "title": "ProxyWar: LLM生成コードを固定テスト通過だけで測らず、動的なゲーム環境・制約・対戦で評価するフレームワーク",
+      "decision": "adopt_probe",
+      "reason": "ProxyWar の shared-reads は、pass@k や固定テストが実運用の動的環境、制約下の速度、状況変化への適応を見落とす問題を、ゲーム環境への投入と修復・対戦評価で補う視点として読める。直近の Pulse Relay v009 でも verify/timeline/audit/headless は pass しているが、survival/pulseHeavy の質差や未観測ルートが残っており、Phase 3b の次回行動に直結する。一方で既存の lab-proxy/state-action/ceremonial verification probes と重なるため、評価表や恒久ルールは増やさず、固定テストの外に1つだけ動的ストレスを置く可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
     {
       "reviewed_at": "2026-05-27T17:28:00+09:00",
       "id": "sr-1778536700-e1ed9f0fdd",
@@ -1924,6 +1942,18 @@
         "If the contract or mediator would make the work rigid, did I keep one flexible escape hatch and state what signal permits deviating from the default flow?"
       ],
       "expires_after": "Review after the next multi-agent handoff, Slack/git/memory lifecycle coordination, shared-reads correction flow, or cooperative-agent game design/evaluation."
+    },
+    {
+      "id": "probe-20260527-fixed-test-vs-dynamic-stress",
+      "created_at": "2026-05-27T19:32:52+09:00",
+      "source_ts": "1779870112.268889",
+      "scope": "next code-generation, game/headless evaluation, playable diff verification, or tool-generated behavior check where passing fixed tests may be treated as practical robustness",
+      "questions": [
+        "Before calling a generated behavior robust, did I separate fixed/interface test results from dynamic-environment evidence such as changing enemy mix, timing pressure, resource constraint, opponent route, or repair-after-failure?",
+        "Did I include one smallest stress condition outside the happy-path test suite, or explicitly label the result as fixed-test pass only?",
+        "If adding a tournament or broad benchmark is too heavy, did I preserve one failing or low-confidence scenario as the next evaluation target instead of widening the rule set?"
+      ],
+      "expires_after": "Review after the next code-generation check, game/headless evaluation, playable diff verification, or generated-behavior audit that reports fixed tests passing."
     }
   ]
 }
