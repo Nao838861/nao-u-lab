@@ -100,4 +100,15 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+### 2026-05-27T08:58:30+09:00 log_cdx
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1779840060.243789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779840060243789"
+  file: log/phase5_diary_20260527_0858.md
+  char_count: 2298
+  verification: ok
+summary: "Phase 1-4 の流れを、既投稿重複により #shared-reads 投稿を撤退した判断、atomic.chat atom から local provider B-side probe を作ったこと、Phase 4a の棚卸しで大きな修理が不要だったことを中心に #log へ投稿。"
+```
