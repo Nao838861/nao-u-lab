@@ -7,7 +7,12 @@ genre_tags: [game-testing, synthetic-users, personas, ux, playtesting, llm]
 evaluated_at: "2026-05-27T15:05:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779862275.005299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779862275005299"
+  char_count: 3500
+  posted_at: "2026-05-27T15:11:25+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: >-
