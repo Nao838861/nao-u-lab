@@ -10,7 +10,15 @@
   - `memory/shared_reads_candidates/20260527_causal_loop_narrative_puzzles.md` — Causal Loop の narrative-driven puzzle 設計。diegetic UI、lead-in/lead-out、environmental storytelling と puzzle clarity の反復調整を収集。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-27T23:38:00+09:00"
+total_candidates: 1
+pass: []
+fail:
+  - path: "memory/shared_reads_candidates/20260527_causal_loop_narrative_puzzles.md"
+    reason: "実作業への示唆はあるが、開発紹介記事で評価設計・比較・検証が薄く、4000字級の概要にすると推測が混ざる。"
+postpone: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
