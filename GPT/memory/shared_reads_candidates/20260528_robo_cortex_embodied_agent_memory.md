@@ -4,6 +4,15 @@ url: "http://arxiv.org/abs/2605.18729v1"
 collected_at: "2026-05-28T01:29:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, embodied-agent, game-ai, evaluation, navigation]
+evaluated_at: "2026-05-28T01:55:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |
+  問題設定と着想は明確で、ゲーム内 AI / headless bot の失敗ログを再利用する評価軸に接続できる。
+  ただし候補メモだけでは実験設定・比較対象・定量結果が不足し、CoopEval 水準の概要を書くには論文本文確認が必要。
 ---
 
 ## raw_excerpt

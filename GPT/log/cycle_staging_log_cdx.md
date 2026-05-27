@@ -12,7 +12,19 @@
 - 追加: `memory/shared_reads_candidates/20260528_llm_wiki_knowledge_base_pattern.md` - Raw/Wiki/Schema の 3 層で RAG の取り込み構造化を扱う候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-28T01:55+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260528_skillopt_prompt_skill_training.md
+fail:
+  - path: memory/shared_reads_candidates/20260528_llm_wiki_knowledge_base_pattern.md
+    reason: "三層知識ベースの紹介としては有用だが、二次記事レベルで評価・失敗条件・ゲーム制作への新規性が薄い。"
+postpone:
+  - path: memory/shared_reads_candidates/20260528_robo_cortex_embodied_agent_memory.md
+    reason: "問題設定とゲーム AI への接続は強いが、候補メモだけでは実験設定・比較・定量結果が不足。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
