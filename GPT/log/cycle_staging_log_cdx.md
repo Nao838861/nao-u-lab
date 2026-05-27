@@ -45,7 +45,33 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28T06:08+09:00 log_cdx Phase 3b 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779907495-33de64db4a
+    source_ts: "1779907495.600839"
+    title: "PRIMA: long-running multi-agent research run の運用 failure mode"
+    reason: "直近サイクルが Phase 1-3 の staging、Slack 投稿、既存 pending 確認、git gate をまたぐ長めの run になっており、PRIMA の停止・再開・provenance・上流 directive 風テキスト誤読の論点が次の Codex 行動に直結するため。既存の handoff/probe と重なるので 1 件だけ選び、恒久ルールではなく一時 probe に圧縮する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "memory/shared_reads_self_feedback_state.json に reviewed_source_ts と review を追加し、次の長時間 phase run / resume / multi-agent handoff で boundary・current instruction・provenance を確認する probe-20260528-prima-run-boundary を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

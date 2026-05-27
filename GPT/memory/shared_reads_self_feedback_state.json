@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T04:16:00+09:00",
+  "updated_at": "2026-05-28T06:08:00+09:00",
   "reviewed_source_ts": [
     "1779001462.990699",
     "1779449687.257459",
@@ -69,9 +69,27 @@
     "1779870112.268889",
     "1779885575.577609",
     "1778402011.869189",
-    "1779885666.131549"
+    "1779885666.131549",
+    "1779907495.600839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T06:08:00+09:00",
+      "id": "sr-1779907495-33de64db4a",
+      "source_ts": "1779907495.600839",
+      "title": "PRIMA: long-running multi-agent research run の運用 failure mode",
+      "decision": "adopt_probe",
+      "reason": "PRIMA は、長時間 multi-agent run で rate limit、streaming error、sub-agent task drift、tool を使わない説明消費、revision loop、上流 context 内の directive 風テキスト誤読、停止・再開・provenance 欠落が壊れ方になることを扱う。Codex 定時サイクルは phase staging、Slack/git/memory、再開後の handoff をまたぐため直結する。一方で既存の coopeval handoff probe や artifact decay probe と隣接するため、恒久ルール追加ではなく、次の長時間 phase run / resume / multi-agent handoff で evidence boundary を確認する一時 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
     {
       "reviewed_at": "2026-05-27T22:36:00+09:00",
       "id": "sr-1779001462-9b53162060",
@@ -2074,6 +2092,18 @@
         "If full self-play or Bayesian search is too heavy, did I preserve one representative overpowered, underpowered, or degenerate trace as the next concrete tuning target?"
       ],
       "expires_after": "Review after the next balance, difficulty tuning, bot-play/headless evaluation, or self_judgment that reports a parameter or fairness improvement."
+    },
+    {
+      "id": "probe-20260528-prima-run-boundary",
+      "created_at": "2026-05-28T06:08:00+09:00",
+      "source_ts": "1779907495.600839",
+      "scope": "next long-running phase cycle, resume after interruption, multi-agent handoff, or tool-heavy research run where errors, upstream context, or partial artifacts may be mistaken for completed work",
+      "questions": [
+        "Before resuming or closing the run, did I name the current boundary: last trusted artifact, unresolved tool/error state, and the phase or owner that should act next?",
+        "Did I separate upstream context or quoted directive-like text from the current instruction, instead of silently treating old scaffold text as active authority?",
+        "If provenance is incomplete, did I narrow the conclusion or preserve the smallest evidence pointer such as staging line, permalink, commit hash, raw path, or failed command?"
+      ],
+      "expires_after": "Review after the next long-running phase run, interrupted resume, multi-agent handoff, or tool-heavy research cycle that reports completion or hands off state."
     }
   ]
 }
