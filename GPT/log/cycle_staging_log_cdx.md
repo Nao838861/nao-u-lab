@@ -47,7 +47,14 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    reason: "同一論文 `One Policy, Infinite NPCs` は 2026-05-26 に #shared-reads 投稿済み。今回候補は既投稿から新規差分を足しておらず、重複投稿になるため Phase 3 では撤退。"
+    action: candidate_revise
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

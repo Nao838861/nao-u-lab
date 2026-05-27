@@ -6,8 +6,14 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc-ai, reinforcement-learning, persona, evaluation]
 evaluated_at: "2026-05-27T19:27:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
+postponed:
+  at: "2026-05-27T19:42:00+09:00"
+  reason: "Phase 3 で同一論文の既投稿を確認したため。2026-05-26 の投稿と新規差分がなく、#shared-reads の重複投稿を避ける。"
+  duplicate_of:
+    candidate: "memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: |-
