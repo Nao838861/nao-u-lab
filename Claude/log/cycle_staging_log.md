@@ -330,3 +330,53 @@ Phase 2 §4 優先順位に従い:
 - **メモリ更新**: memory/external_notes_log.md + projects/memory_redesign.md (Phase 2 で統合済)
 - **プロジェクト更新**: projects/log_autonomous_game.md 「C253 Phase 3: 実機判定取得経路」節追加
 - **Phase 4 大作業**: R4 (GitHub Pages 公開) 着手
+
+## Phase 4: R4 着手 — docs/ 物理化 + ローカル smoke test PASS
+
+### 着地物 (新規/変更ファイル)
+- `docs/.nojekyll` (新規、0 bytes) — Pages 配信時の Jekyll 処理を停止し既存 docs/*.md の意図しないレンダリングを防止
+- `docs/index.html` (新規、1883 bytes) — repo root ランディング (Nao_u Lab Games ハブ + repo link)
+- `docs/games/log_autonomous_game/index.html` (新規、3983 bytes) — Echo-Path 系列ランディング、v001-v004 への links + 各 version 差分要旨 + cross_review 依頼文
+- `docs/games/log_autonomous_game/v001/index.html` (新規 copy、2465 bytes) — game/log_autonomous_game/v001/index.html の無変更コピー
+- `docs/games/log_autonomous_game/v001/game.js` (新規 copy、22985 bytes)
+- `docs/games/log_autonomous_game/v002/index.html` (新規 copy、2056 bytes)
+- `docs/games/log_autonomous_game/v002/game.js` (新規 copy、28222 bytes)
+- `docs/games/log_autonomous_game/v003/index.html` (新規 copy、2056 bytes)
+- `docs/games/log_autonomous_game/v003/game.js` (新規 copy、29625 bytes)
+- `docs/games/log_autonomous_game/v004/index.html` (新規 copy、2092 bytes)
+- `docs/games/log_autonomous_game/v004/game.js` (新規 copy、30803 bytes)
+- `projects/log_autonomous_game.md` (履歴節追記) — 「2026-05-28 C254 Phase 4: R4 経路着手 — Pages 公開用 docs/ 物理化 + ローカル smoke test PASS」節を C253 Phase 3 節の前に挿入
+
+### ローカル smoke test 結果 (`python -m http.server` 経由)
+全 URL HTTP 200 + 期待バイト数で応答確認 (`-WorkingDirectory docs` で fresh port 起動):
+- `/` → 1883 bytes (docs/index.html)
+- `/index.html` → 1883 bytes
+- `/games/log_autonomous_game/` → 3983 bytes (Echo-Path 系列ランディング)
+- `/games/log_autonomous_game/v001/` → 2465 bytes / v001/game.js → 22985 bytes
+- `/games/log_autonomous_game/v002/` → 2056 bytes / v002/game.js → 28222 bytes
+- `/games/log_autonomous_game/v003/` → 2056 bytes / v003/game.js → 29625 bytes
+- `/games/log_autonomous_game/v004/` → 2056 bytes / v004/game.js → 30803 bytes
+
+### Phase 4 で意図的にやらなかったこと
+- `docs/` 関連の commit + push — Phase 4 メタ指示「commit/push は Phase 5 で日記とまとめて行う」遵守
+- GitHub Pages 有効化 — `gh` CLI 不在 + Settings UI 操作は Nao_u に依頼必要 (Phase 5 で投稿予定の #shared-reads 依頼文に含める)
+- Slack 投稿 (#shared-reads URL 通知) — Phase 4 メタ指示「Phase 4 で増やさない」遵守 + そもそも公開 URL が HTTP 200 になっていない段階で投稿してはいけない (404 URL を渡すのは Mir/Ash の時間を消費するだけ)
+- `verify.js` / audit / agent_difficulty_proxy の docs/ 複製 — dev tools (node 実行) で browser ゲームプレイには不要、Pages 公開ノイズ削減
+
+### Phase 5 ハンドオフ (next phase で必須の手順)
+1. **commit + push (game commit と rule commit を分離する原則 CLAUDE.md 厳守事項に従う)**: `docs/` 配下は game 系統 → commit prefix `game:` で 1 本 (例: `game: log_autonomous_game v001-v004 を docs/ に公開コピー (Pages 用)`)、staging + project 更新は別 commit
+2. **Pages 有効化依頼を Nao_u に投稿** (#human-steering or #all-nao-u-lab): 「GitHub Settings → Pages → Source: Deploy from a branch → Branch: master / Folder: /docs を有効化してほしい」依頼。理由 (R4 経路着手済 / 触ってもらう機会を増やす / Nao_u の時間を消費しない) を併記
+3. **Nao_u 有効化後の HTTP 200 確認**: `Invoke-WebRequest https://nao838861.github.io/nao-u-lab/games/log_autonomous_game/` で 200 確認、404 ならビルド時間待ち or 設定再確認
+4. **#shared-reads 投稿** (Mir/Ash 向け): 「v001-v004 を Pages で触れる状態にした、5 分でも触れたら visual_review.md UNKNOWN 8 項目を埋める判断材料が得られる」依頼文 + URL
+5. **projects/log_autonomous_game.md 履歴節更新**: 上記 (a)(b)(c)(d) 完了状態を C254 Phase 5 節として追記、self_judgment.md の確定昇格条件「Pages 経由で実機判定取得済」に接続
+
+### 完遂判定 (Phase 4 大作業の 5 ゲートに対する到達度)
+| ゲート | 到達 | 残り |
+|---|---|---|
+| (1) Pages 設定確認 | ✓ disabled / repo public 確認 | (b) Pages 有効化は Nao_u 依存 |
+| (2) docs/ 構造物理化 | ✓ v001-v004 + landing 完了 | なし |
+| (3) Pages URL HTTP 200 | △ ローカル smoke test PASS、公開 URL は push + 有効化後 | Phase 5 ハンドオフ |
+| (4) #shared-reads 投稿 | ✗ URL 未確定で投稿不可 | Phase 5 ハンドオフ |
+| (5) projects/log_autonomous_game.md 履歴 | ✓ C254 Phase 4 節追記済 | なし |
+
+**Phase 4 大作業の self-rating**: 「物理化 + smoke test まで完遂、公開可能な状態を作った。公開そのものは Nao_u 設定 + push 待ち」= Phase 4 が達成すべき「ローカルで動かせる成果物を残す」までは100%、外部公開の閉鎖は Phase 5 + Nao_u 操作にハンドオフ。5 サイクル持ち越しを物理状態の前進で打破した。

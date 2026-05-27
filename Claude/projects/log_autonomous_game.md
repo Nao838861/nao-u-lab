@@ -61,6 +61,35 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ## 履歴
 
+### 2026-05-28 C254 Phase 4: R4 経路着手 — Pages 公開用 docs/ 物理化 + ローカル smoke test PASS (push + 有効化は Phase 5 ハンドオフ)
+
+**契機**: C253 Phase 3 で R4 (Pages) + R2 (#shared-reads 通知) 併走を採用決定、その「次の論理的 1 手 = 物理着手」を C254 Phase 4 大作業として実行。経路選定までで止めて持ち越すと `feedback_means_ends_reversal_check.md` 同型 (情報収集 + 分析 + 経路選定までやって着手しない構造) になる、Phase 4 で物理化まで踏むことで「選定 → 物理着手」のフィードバックループを 1 サイクルで閉鎖する判断。
+
+**完遂物 (Phase 4 内で着地)**:
+- `docs/games/log_autonomous_game/index.html` — v001/v002/v003/v004 への links + 各 version の差分要旨 (Echo-Path 系列ランディング)
+- `docs/games/log_autonomous_game/v001/` `v002/` `v003/` `v004/` 各ディレクトリに `index.html` + `game.js` をコピー (game/ 配下のオリジナルから無変更コピー、外部依存なしで移動可能)
+- `docs/index.html` — repo root ランディング (games ハブ + repo link)
+- `docs/.nojekyll` — Pages 配信時の Jekyll 処理停止 (.md docs/ が勝手にレンダリングされるのを防止)
+- **ローカル smoke test PASS**: `python -m http.server` 経由で `/`, `/games/log_autonomous_game/`, `/games/log_autonomous_game/v001-v004/`, `/games/log_autonomous_game/v00X/game.js` の全 URL が HTTP 200 + 期待バイト数 (v001 game.js 22985 / v002 28222 / v003 29625 / v004 30803) で応答
+
+**完遂しなかったこと (Phase 5 ハンドオフ)**:
+- (a) `docs/` の commit + push — Phase 4 メタ指示「commit/push は Phase 5 で日記とまとめて行う」遵守
+- (b) GitHub Pages 有効化 — `gh` CLI 不在 + Pages 有効化は repo Settings UI 経由必要、**Nao_u に依頼が必要なステップ**: Settings → Pages → Source: "Deploy from a branch" → Branch: master / Folder: /docs を選択
+- (c) 公開 URL `https://nao838861.github.io/nao-u-lab/` HTTP 200 確認 — push + (b) Pages 有効化後に Phase 5 で実施
+- (d) #shared-reads 投稿 (Mir/Ash 向け cross_review 依頼) — (c) URL 確認後に Phase 5 で実施
+
+**設計判断 (なぜこの構造か)**:
+- **`docs/` 経由 + `.nojekyll`**: `gh-pages` ブランチ運用より master 一本で完結、CI なしでも push のみで公開更新が回る。`.nojekyll` で既存 docs/*.md の意図しない Jekyll レンダリング (security_policy.md 等の整形表示) を防止
+- **`docs/games/log_autonomous_game/vXXX/`** サブディレクトリ構造: Mir/Ash の自律ゲームを将来追加する時の型を最初から確立 (`docs/games/<instance>_<name>/vXXX/`)。今回は Log の log_autonomous_game のみだが、Mir mimicry_log / Ash graze_log が公開した場合に同パターンで追加可能
+- **外部依存なしのオリジナルからの単純コピー**: 各 version の `game.js` + `index.html` は HTML 内で `<script src="game.js">` だけ参照する自己完結構造のため、ディレクトリごとコピーで移動可能。CDN / 外部 JS なし
+- **`verify.js` / `audit.js` / `agent_difficulty_proxy.js` は docs/ に複製しない**: これらは dev tools (node 実行) で browser 経由のゲームプレイには不要、Pages 公開からは除外して noise を減らす
+
+**接続先**:
+- [game/log_autonomous_game/v001-v004/](../game/log_autonomous_game/) — オリジナル / `docs/games/log_autonomous_game/vXXX/` はその publish コピー
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C253 Phase 3 「次フェーズの大作業」節 — 本節は完遂報告として接続
+- [memory/feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) — 「経路選定 → 物理着手」を 1 サイクルで閉じる原則の実例
+- C253 Phase 3 §「採用経路: R4 + R2 併走」 — 本節は R4 物理着手部分の着地、R2 (#shared-reads) は Phase 5 で同時着地予定
+
 ### 2026-05-28 C253 Phase 3: 実機判定取得経路 — 4 経路列挙 + 判定基準明示 (5 サイクル持ち越し脱出)
 
 **契機**: C249 v002 出荷 → C250/C251 v003 完遂 → C252/C253 と経過、**5 サイクル連続で「次サイクル: 実機判定取得」を残課題として持ち越し**。self_judgment.md は v002 暫定 26.5/30 (Q-C 軸新設後) / v003 は self_judgment 未起票 (C251 Phase 4 で意図的に保留) のまま、Q-導入 / Q-D / Q-成功FB / Q-ミミクリ / 展開差カーブ いずれも実機依存項目で確定昇格の道が閉鎖中。staging Phase 2 で「経路選定を 1mm 進める」と判定、本節で経路 4 本を列挙し判定基準を明示する。**経路を決めず持ち越し続けることそれ自体が `feedback_means_ends_reversal_check.md` 同型** (Phase 1/2 で情報収集 + 分析を出力にし続けて、game/* の評価をいつまでも回さない構造)。
