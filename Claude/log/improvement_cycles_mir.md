@@ -603,3 +603,25 @@
 **行動/分析比率**: 3件のファイル更新 + 3件の外部研究統合 / 1サイクル。★26サイクル連続行動フェーズあり
 **進捗**: inter-depth接続 14/21対完了。免疫系(L2#1)×種子銀行(L2#2)=filter bubbleは免疫寛容、推薦フィードは他者の免疫系の移植
 **実装課題**: read_twitter_recommended.py存在するがMac CLI非対応（Playwright+Edge+GUI必要）。Win側で取得→git共有が現実的
+
+---
+
+## Cycle C245 (2026-05-27 — yama_foods/akari_worlds「2000字レシピ」shared-reads処理 + v05設計seed記入)
+
+**外部情報**: twitter_recommended_20260527.txt #8 yama_foods + #9 akari_worlds 連鎖（「ほうれん草を茹でます」を2000字で書く——時短の逆、結果より手前の時間に滞留）、補助 #7/#41/#44
+**分析**: 前サイクル末尾で整理した「v05 引き理論（scene/sequel・ページターナー・認知的不協和・情報の非対称性）」は全て「中心に向かわせる力」。yama_foods/akari_worlds は「中心への手前で立ち止まる密度」を正面から投げてきた。両者はスケール違い——マクロでM-17、ミクロで充填。
+**改善対象**: v05 設計seed（進ませる/立ち止まらせる比率観測）、M-17b 拡張仮説の durable 化、新テーマ系列「手前の時間の密度」1観測目登録
+
+**行動**:
+1. memory/external_notes_mir.md — C245 entry追記（新テーマ系列1観測目として durable 化、Seed-R 3種記入）
+2. log/improvement_cycles_mir.md — 本エントリ
+3. log/cycle_staging_mir.md — Phase 3 結果追記
+
+**v05 着手時の試行メモ（Seed-R 種A）**:
+- 各sequelで「進ませる文」と「立ち止まらせる文」の比率を概算記録
+- 前者ばかりなら yama_foods 軸が抜けている = M-17b 拡張仮説の検証ポイント
+- 1シーンだけ「一行で済む手順を10倍の密度で書く」実験（引き弱体化リスクあり、バランス検証用）
+
+**kaizen-log投稿**: shared-reads 投稿草案は Phase 2 で作成、Phase 3 では durable 優先で Slack 投稿は Nao_u 判断待ち（外部状態に影響するため）
+**行動/分析比率**: 3件のファイル更新 + 5観測の外部情報処理 / 1サイクル
+**進捗**: 新テーマ系列「手前の時間の密度」立ち上げ。akari_worlds 3観測連鎖確認。同系列の他発信者観測待ち（knowledge 記事化しきい値）
