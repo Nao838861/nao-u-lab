@@ -79,6 +79,54 @@ recommendation:
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_issues:
+  - issue_id: "ISS-4A-20260527-001"
+    problem_restatement: "MEMORY.md の Tag Entry Points は broad tag の件数と上位代表だけを出しているため、件数が大きい tag ほど同じ high-signal atom が繰り返し先頭に出る。次のゲーム制作では、game-design / evaluation / memory から直接読むより、制作局面・評価目的・手法名へ一段降りる入口が必要。"
+    alternatives:
+      - name: "A. broad tag 直下に task-lens overlay を出す"
+        sketch: "MEMORY.md 生成時に、既存の `memory/game_memory_task_lens_index.md` と `Specific Entry Points` を短く参照する derived section を追加する。`game-design`, `evaluation`, `harness`, `operation` などの broad tag は、代表 atom の前に lens 名・使う場面・recall query へ誘導する。"
+        pros:
+          - "atom 本体や ingest schema を変えず、post-hoc 派生層として安全に試せる。"
+          - "既存の task lens index を再利用でき、分類語彙を新しく大量に作らない。"
+          - "ゲーム制作直前の探索行動を broad tag から具体タスクへ誘導できる。"
+        cons:
+          - "MEMORY.md generator と lens index の対応を保つ必要がある。"
+          - "lens index 側の内容が古くなると、入口だけが整って中身が弱くなる。"
+          - "ゲーム以外の memory / identity には別 lens が必要になる可能性がある。"
+        migration_cost: "low"
+      - name: "B. atom frontmatter に micro_tags / task_lens を backfill する"
+        sketch: "既存 atom を解析し、`micro_tags` や `task_lens` を per-file frontmatter と index.jsonl に追加する。recall / MEMORY.md は broad tag ではなく micro tag を主要入口にする。"
+        pros:
+          - "検索・recall・Obsidian 表示まで構造化された細粒度分類を共有できる。"
+          - "将来的には game 以外の領域にも同じ仕組みを広げやすい。"
+          - "代表 atom の偏りを根本的に減らせる。"
+        cons:
+          - "1730 atoms への backfill 判断が重く、誤分類を大量に混ぜるリスクがある。"
+          - "Phase D 前の atoms.jsonl / per-file dual state にさらに同期対象を増やす。"
+          - "分類体系の合意が未成熟なまま schema を固めると修正コストが高い。"
+        migration_cost: "high"
+      - name: "C. Tag Entry Points の代表選定だけを多様化する"
+        sketch: "MEMORY.md の Tag Entry Points で、同じ atom が複数 broad tag の上位代表に出る回数を制限する。source_ts / kind / score / title 類似度で代表を分散させ、重複した high-signal atom は 1-2 tag だけに出す。"
+        pros:
+          - "小さい generator 変更で見た目の偏りをすぐ減らせる。"
+          - "既存 MEMORY.md の構造を大きく変えず、失敗時に戻しやすい。"
+          - "broad tag の入口品質を最低限改善できる。"
+        cons:
+          - "具体タスクへの導線は増えず、探索者が query を考える負担は残る。"
+          - "多様化された代表が必ずしも制作局面に合うとは限らない。"
+          - "偏りの症状を隠すだけで、分類分解能の低さは残る。"
+        migration_cost: "low"
+    recommended: "A. broad tag 直下に task-lens overlay を出す"
+    recommended_reason: "現状の問題は保存形式ではなく、起動時索引から具体タスクへ降りる導線不足。既に `game_memory_task_lens_index.md` があり、Phase 4a の指摘も game memory の再利用導線なので、まず派生 overlay として使うのが最短で低リスク。B は分類体系を固めるには早く、C は偏りの見た目だけを直して根本の探索導線を弱く残す。"
+    decision: "introduce"
+    decision_reason: "Phase 4c で小さく導入でき、失敗しても MEMORY.md の派生セクションを戻すだけで済む。atom schema / atoms.jsonl / per-file frontmatter を触らずに効果を検証でき、post-hoc 派生層を優先する現在の設計方針とも合う。"
+    outline_for_4c:
+      - "MEMORY.md generator が Tag Entry Points の前後に、既存 `game_memory_task_lens_index.md` の主要 lens と Specific Entry Points への短い導線を出せるか確認する。"
+      - "まず対象 broad tags を `game-design`, `evaluation`, `harness`, `operation`, `memory` に限定し、各 tag から該当 lens 名と recall query へ降りる短い表を生成する。"
+      - "既存 atom / frontmatter / atoms.jsonl は変更しない。生成物の差分は MEMORY.md と必要最小限の generator 変更に限定する。"
+      - "導入後の検証は、`PCG 評価`, `playtesting persona`, `game feel 調整`, `headless bad-policy` のような具体 query が broad tag 直読より早く該当 lens へ到達するかで見る。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
