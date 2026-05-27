@@ -76,6 +76,49 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-28T06:18+09:00 log_cdx Phase 4a 記憶階層整理 + 問題抽出:
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    result: "ok"
+    note: "memory/MEMORY.md の markdown/file link は破損なし。backtick 内の python コマンドはリンク対象から除外。"
+  atoms:
+    atoms_jsonl: 1754
+    per_file_md: 1754
+    index_jsonl: 1754
+    mirror_drift: 0
+    duplicate_ids: 0
+    duplicate_source_ts_groups: 0
+    duplicate_groups_index: "ok: 39 groups"
+    health_warning: "repeated title group 未付与 11種 / mojibake suspect atoms 2件"
+  raw_archive_candidates:
+    older_than_30_days: 0
+  shared_reads_candidates:
+    total_files: 248
+    older_than_30_days: 0
+    action: "none"
+  inbox:
+    directives_pending: 0
+    broadcasts_pending: 1
+    action: "broadcast-1779790844-85adeffbca は needs_human_review のため handled 化せず保持"
+issues:
+  - id: ISS-4A-20260528-001
+    description: "atom の上位タグが広すぎ、Tag Entry Points が検索入口として弱くなっている。identity=1367, game-design=1030 など、多数の atom が同じ broad tag に集まり、ゲーム制作時に具体的な手法へ降りる導線が薄い。"
+    severity: medium
+    evidence: "memory/MEMORY.md Tag Entry Points; memory_health.py top_tags: identity=1554, game-design=1167, memory=1143"
+    why_blocks_game_memory: "次のゲーム制作で『敵出現パターン』『自己判定ハーネス』『プレイヤー意見の扱い』のような具体テーマを探す時、broad tag だけでは候補が多すぎて、代表 atom や task lens へ絞り込む判断が毎回手作業になる。"
+  - id: ISS-4A-20260528-002
+    description: "repeated title group 未付与 11種と mojibake suspect atom 2件が残っている。重複・文字化けの規模は小さいが、検索結果で同型情報や壊れた語が混ざる。"
+    severity: low
+    evidence: "tools/memory_health.py output: repeated title group 未付与 11種; mojibake suspect atoms sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "現時点では致命的ではないが、game-rights feedback や shared-reads の原題が壊れると、後続の recall/要約で同じ概念を別物として扱うリスクがある。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260528-001
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
