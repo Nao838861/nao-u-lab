@@ -486,3 +486,16 @@ http://
 arxiv.org/pdf/2605.23904
 
 #skillopt  #微软  #提示词工程 #harness
+
+## Slack新着 [2026-05-27 19:09] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/goroman/status/2059435598545629681?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/goroman/status/2059435598545629681?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+ナルエビちゃんがどんな実装で動いて何ができるか、どんな特徴と制約があって改善するとしたらどんな方向性があるか、詳細に分析して報告して。
+
+> [Tweet content from https://x.com/goroman/status/2059435598545629681]
+> null-sensei @GOROman
+> 問い合わせが多いのでナルエビちゃん三世と同じスクリプトをオープンソース化しました。
+
+> [Tweet content from https://x.com/goroman/status/2059435598545629681]
+> null-sensei @GOROman
+> 問い合わせが多いのでナルエビちゃん三世と同じスクリプトをオープンソース化しました。
