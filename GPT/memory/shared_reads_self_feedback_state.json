@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-27T19:32:52+09:00",
+  "updated_at": "2026-05-27T22:36:00+09:00",
   "reviewed_source_ts": [
+    "1779001462.990699",
     "1779449687.257459",
     "1779827466.030839",
     "1779802713.841839",
@@ -68,6 +69,23 @@
     "1779870112.268889"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T22:36:00+09:00",
+      "id": "sr-1779001462-9b53162060",
+      "source_ts": "1779001462.990699",
+      "title": "shmup bullet pattern variety/rhythm 設計論 3 sources の精読 — graze_log v04 Nao_u 指摘の「変化と予測の同居」",
+      "decision": "adopt_probe",
+      "reason": "Nao_u の shot_log 的なリズム/バリエーション指摘に直接つながる shared-reads で、次の STG / bullet hell 制作や headless 評価で見落としやすい「変化がある」と「予測して避けられる」が同居しているかを確認できる。既存の prior-art / lab-proxy / fixed-test probe は外部根拠や評価の限界を見るもので、弾幕パターン内の rhythm / variation / readability の最小チェックとは重ならない。恒久ルール化せず、次の対象作業で使う 3 問の reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T19:32:52+09:00",
       "id": "sr-1779870112-aecc86a403",
@@ -1954,6 +1972,18 @@
         "If adding a tournament or broad benchmark is too heavy, did I preserve one failing or low-confidence scenario as the next evaluation target instead of widening the rule set?"
       ],
       "expires_after": "Review after the next code-generation check, game/headless evaluation, playable diff verification, or generated-behavior audit that reports fixed tests passing."
+    },
+    {
+      "id": "probe-20260527-bullet-rhythm-variation-readability",
+      "created_at": "2026-05-27T22:36:00+09:00",
+      "source_ts": "1779001462.990699",
+      "scope": "next STG / bullet hell pattern design, playable diff, headless evaluation, or self_judgment where bullet variety, rhythm, difficulty, or readability is discussed",
+      "questions": [
+        "Before calling a pattern varied, did I name the rhythm unit and at least one variation axis such as speed, curve, spawn interval, direction, density, or safe-lane movement?",
+        "Did I preserve one predictability anchor the player can learn, instead of adding random-looking changes that only increase noise?",
+        "If the check is headless or screenshot-based, did I keep the claim limited to structural readability and name the remaining human-facing timing-feel check?"
+      ],
+      "expires_after": "Review after the next STG or bullet hell pattern design, playable diff, headless evaluation, or self_judgment that discusses rhythm, variation, difficulty, or readability."
     }
   ]
 }

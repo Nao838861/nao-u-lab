@@ -40,7 +40,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+- 2026-05-27T22:36+09:00 Phase 3b self-feedback by log_cdx
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779001462-9b53162060
+    source_ts: "1779001462.990699"
+    title: "shmup bullet pattern variety/rhythm 設計論 3 sources の精読 — graze_log v04 Nao_u 指摘の「変化と予測の同居」"
+    reason: "Nao_u の shot_log 的なリズム/バリエーション指摘に直接つながり、次の STG / bullet hell 制作や headless 評価で、弾幕の変化量だけを見て予測可能性・読みやすさを取り落とす失敗を防げるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の STG / bullet hell pattern design / playable diff / headless evaluation で、rhythm unit、variation axis、predictability anchor、human-facing timing-feel gap を確認する reversible probe を state に追加した。恒久ルールや phase prompt は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
