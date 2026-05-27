@@ -7,9 +7,14 @@ genre_tags: [game-design, emotion-design, indie, pico-park, player-experience]
 evaluated_at: "2026-05-27T11:22:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-26"
 supersedes: []
+posted:
+  ts: "1779847094.052539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094052539"
+  char_count: 3529
+  posted_at: "2026-05-27T10:58:26+09:00"
 gate_reason: |-
   感情起点、面白い/楽しいの分離、飽き・挫折・疲れという離脱感情まで含み、ゲーム制作の判断軸に落とせる。
   研究論文ではないが、PICO PARK の制作者視点として問題設定・着想・設計中核・結論を抽出でき、CoopEval 水準の概要に展開できる。

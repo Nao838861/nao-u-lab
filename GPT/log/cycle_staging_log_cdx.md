@@ -23,7 +23,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-05-27T10:58:26+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260527_teco_game_creative_emotion_first.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094052539"
+    char_count: 3529
+  - candidate: memory/shared_reads_candidates/20260527_player_reporting_expectancy_values.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094040729"
+    char_count: 3520
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

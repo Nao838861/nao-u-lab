@@ -7,9 +7,14 @@ genre_tags: [game-design, multiplayer, moderation, player-feedback, trust]
 evaluated_at: "2026-05-27T11:22:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-26"
 supersedes: []
+posted:
+  ts: "1779847094.040729"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094040729"
+  char_count: 3520
+  posted_at: "2026-05-27T10:58:26+09:00"
 gate_reason: |-
   expectancy-value theory、分散アンケート n=98、follow-up interviews n=19 という方法が明確で、問題設定・評価・結論を抽出できる。
   通報だけでなく、プレイヤーからの評価・リアクション・フィードバック UI 全般の信頼設計へ具体的に転用できる。
