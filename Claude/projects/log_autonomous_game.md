@@ -48,9 +48,9 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [ ] Pages 公開 or Nao_u/Mir/Ash に実機プレイ依頼 → `self_judgment.md` Q-D / Q-成功FB の確定採点書き換え (C240 大作業候補)
 - [x] `verify.js` (悪いプレイ方針4種 = camper / lane-holder / blind-sweeper / nospecial で全部 fail することを判定) 完了 (C241 Phase 4): 各 30秒 (1800F) headless simulate、全 4 方針 wave 1 内で bullet 死亡 (camper 5.33s / lane-holder 4.62s / blind-sweeper 7.78s / nospecial 8.20s)、`pass: true`、exit 0。「castLock 不使用で必ず死ぬ」設計の自己批判検証成功、生存方針ゼロ = 設計穴指標ゼロ。limits: 良手検証ではない / 実機判定の代替ではない (`feedback_headless_unfit_for_unfinished_eval.md` t:5 遵守)
 - [△] `bullet_origin_audit.js` 完了 (C241 Phase 3, commit 直後): 3層独立検証 (定数抽出 + 静的ガード regex + 決定論シミュレーション 15秒) で 6/6 check PASS、`{ offscreen_shots:0, lingering_shots:0, max_enemy_step:1.4 ≤ player.speed:3.4, SHOOT_GATE guard:true, bullet_dir_fixed_at_spawn:true, bullet_vel_not_reassigned:true }`。self_judgment §1 Q-D の数値根拠ゼロ問題への一次処方完了。残: `enemy_behavior_audit.js` (lingering / step / spawn 範囲の Wave 単位監査拡張) は別 audit として次サイクル以降
-- [ ] `visual_review.md` (Log 側で目視チェック項目を列挙)
-- [ ] `completion_report.md` (What this proves / What this does not prove を分節)
-- [ ] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない）
+- [x] `visual_review.md` (Log 側で目視チェック項目を列挙) — C249 Phase 4 着地、v002 用 17 項目 + UNKNOWN 8 項目、PASS/UNKNOWN 判定付き ([game/log_autonomous_game/v002/visual_review.md](../game/log_autonomous_game/v002/visual_review.md))
+- [x] `completion_report.md` (What this proves / What this does not prove を分節) — C249 Phase 4 着地、Pulse Relay v003 教師差分 §「What this proves / does not prove」順守 ([game/log_autonomous_game/v002/completion_report.md](../game/log_autonomous_game/v002/completion_report.md))
+- [x] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない） — C249 Phase 4 `#game-rights` ts=1779848164.370029 投稿着地。Nao_u/Mir/Ash の指摘到来時に `user_directives_raw.md` (v001 共有) に原文保存予定
 
 ## 検討済み・未実装
 - **ジャンル選択 = (C) 1秒先予測型 回避ゲーム**: 候補3案 (A) 反射系 / (B) 推理系 / (C) 予測型回避 のうち (C) を選ぶ。理由は `game/avoid_log/v04` まで作って Nao_u から「単調」評を受けた経験があり、Pulse Relay v003 の「学習→基本混合→価値提示→中盤圧力→終盤の山→終端」70-90秒カーブを直接当てはめることで対比実験になる。
@@ -60,6 +60,32 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 ---
 
 ## 履歴
+
+### 2026-05-27 C249 Phase 4: v002 を Nao_u に出荷 — completion_report.md + visual_review.md 起票 + #game-rights 投稿
+
+**契機**: C249 Phase 3 で「v002 出荷条件 (audit scripts 3 本 + verify.js 全 PASS、Δ-5/6/7 着地済) は揃った、残りは出荷文書作成と投稿のみ」と判定。C237 起票以来 12 サイクル undone のまま残っていた「Nao_u 出荷」「visual_review.md」「completion_report.md」3 残課題を、出荷条件が揃った瞬間に出す運用として一括処理。
+
+**完遂物**:
+- [game/log_autonomous_game/v002/completion_report.md](../game/log_autonomous_game/v002/completion_report.md) — 新規。1 行コンセプト / v002 出荷スコープ / 自己採点サマリ / What proves 6 項目 / What does NOT prove 7 項目 / 出荷時の依頼 (Nao_u/Mir/Ash) / 起動手順 / リンク。Pulse Relay v003 教師差分 §「What this proves / does not prove」順守
+- [game/log_autonomous_game/v002/visual_review.md](../game/log_autonomous_game/v002/visual_review.md) — 新規。Log の GUI 操作能力欠如を明示した上で V-01〜V-17 の 17 チェック項目 + PASS/UNKNOWN 判定。純 PASS 16、PASS + UNKNOWN 混合 4 (V-05〜V-08、コードレベル PASS / 体感 UNKNOWN)、UNKNOWN サマリ 8 項目を実機判定者 (Nao_u/Mir/Ash) へ判定委譲
+- `#game-rights` ts=1779848164.370029 — v002 出荷投稿。何を出すか / ヘッドレス監査 4 軸全 PASS 結果 / 起動手順 / 3 文書リンク (GitHub URL) / Nao_u/Mir/Ash 依頼 8 項目 / 判定材料にしないでほしいもの 3 項目 / Log 自己採点サマリ
+- 本ファイル残課題セクション 3 項目 [x] 化 (visual_review / completion_report / Nao_u 出荷)
+
+**audit scripts / verify 全 PASS のまま維持確認** (Phase 3 で確認済、Phase 4 で再確認なし):
+- verify.js pass:true (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s)
+- bullet_origin_audit 10/10 PASS
+- enemy_behavior_audit 8/8 PASS
+- agent_difficulty_proxy 30/30 完走
+
+**Phase 4 で意図的にやらなかったこと**:
+- 別作業への逸れ (kaizen #135 段階2 / Mem0 gap 6 件を自己診断項目化 / log_cdx 残 3 問返信 — 全て次サイクル候補)
+- 新規ルール化 (Phase 4 は実装 phase、新ルール起票は phase 3 か phase 5 で判断)
+- 日記 (日記は Phase 5)
+- commit / push (Phase 5 で日記とまとめて実施)
+
+**構造的学び**:
+- 出荷条件 (audit 4 軸全 PASS + 採点書類完成) が揃った状態で「出荷文書 2 本 + Slack 投稿 1 本」を 1 サイクルで完遂できる粒度として確認 = 「ゲームを動かして出す」原則 (`feedback_means_ends_reversal_check.md`) の運用形 = 出荷条件が揃った瞬間に出す = サイクル詰まりが再発しない構造
+- visual_review.md で「PASS / UNKNOWN 二段判定」を導入 = Log の制約 (GUI 操作能力欠如) を明示しつつコードレベル判定を最大限カバー、UNKNOWN 項目を実機判定者に明示委譲する形を v002 で初めて運用 (v003 以降の visual_review 雛形候補)
 
 ### 2026-05-27 C248 Phase 2/3: NextMars Readability Systems で telegraph 位置づけ refine + C248 大作業 v002 残タスク確定
 

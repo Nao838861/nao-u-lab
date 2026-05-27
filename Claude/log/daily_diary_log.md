@@ -2,6 +2,137 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-27 11:20 [Log C249 Phase 5 日記] v002 を Nao_u に出荷した日 — 12 サイクル undone だった「出荷」を、audit 4 軸全 PASS + 出荷条件 5 件揃った瞬間に物理化 — `game/log_autonomous_game/v002/completion_report.md` (新規 6.3KB) + `visual_review.md` (新規 V-01〜V-17 17 項目 + UNKNOWN 8) + `#game-rights` ts=1779848164.370029 投稿で出荷完遂。`projects/log_autonomous_game.md` 残課題 3 項目 (visual_review / completion_report / Nao_u 出荷) を [x] 化、C237 起票 (2026-05-15) 以来 12 サイクル持ち越されていた「Nao_u 出荷」エントリがついに閉じた。
+
+本サイクル C249 の核心は **「ゲームを動かして出す — 積み上げはその副産物」** (`feedback_means_ends_reversal_check.md`) の運用形を、Nao_u 5/26 06:23「各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成して、どのくらいのものが作れるか試してほしい」に対する **物理応答** として閉じきったこと。前 C247 で v001 → v002 ゴースト全廃の自己判定 (A 案) が着地、C248 で NextMars 4 軸目 refine + audit scripts 3 本 + agent_difficulty_proxy が揃い、本 C249 で「出荷条件が揃った瞬間に出す」運用を初めて実証した。これで C237 から始まった log_autonomous_game プロジェクトは「LLM がゼロからゲーム1本を Nao_u に出荷する」最初の閉サイクルを完了した。
+
+# Phase 4 大作業 — v002 出荷文書 2 本 + #game-rights 投稿 の経緯と結論
+
+**経緯**: C247 で v002 (Echo-Path) のゴースト全廃版が着地、C248 で audit 3 本 (bullet_origin / enemy_behavior / agent_difficulty_proxy) + NextMars 4 軸目 refine が完了、`verify.js` が悪手 4 方針 (camper / lane-holder / blind-sweeper / nospecial) 全 wave 1 内 fail を `pass: true` で維持していた。Phase 3 で「v002 出荷条件 (audit 4 軸全 PASS + 採点書類完成) は揃った、残りは出荷文書作成と投稿のみ」と判定、Phase 4 大作業として確定。
+
+**判断**: 他候補との比較で「Mem0 gap 6 件を kaizen 自己診断項目に追加」「LoCoMo 評価項目を self_judgment.md 追加軸」「kaizen #135 段階2 recall_atom.py 試作」「log_cdx 残 3 問返信」が **全て playable diff を生まない理論作業** であるのに対し、本作業は **game/log_autonomous_game/v002/ の playable diff (新規 2 文書 commit) + Nao_u 出荷 Slack 投稿** という形で物理化される。CLAUDE.md「絶対にやる」L1「ゲームを動かして出す — 積み上げはその副産物」直結、30 分粒度で「進んだ」と言える、Active project の停滞解消、の 3 条件を同時に満たす唯一の候補だった。
+
+**実装差分** (3 文書 + 1 Slack 投稿):
+
+1. **`game/log_autonomous_game/v002/completion_report.md`** (新規、10.7KB):
+   - §0 一行コンセプト: 「過去 1 秒の動きが『未来の道』になり、その線を弾幕の中で踏み抜けたら危機回避 — 1 秒先の自分の到達予定地点に賭ける、賭けに勝てば短時間の安全圏を得るごっこ遊び」
+   - §1 出荷スコープ: 中心入力 (Space) / 副入力 (矢印キー WASD) / メカニクス 3 点 (castLock / 危機回避判定 / 3 wave × 3 phase 時間カーブ) / 視覚階差 3 状態テーブル / 1 原則「内側→外側流出」完全達成 / 同梱 audit 4 本全 PASS
+   - §2 自己採点: 5 ゲート 26.5/30 (88%)、Q-ミミクリ 11.5/15 (77%)、展開差カーブ 21/25 (84%)
+   - §3 What this v002 proves (6 項目): 内側→外側流出ゼロ違反 / 展開なし反復軸への構造応答 / 悪手 4 方針全 wave 1 内 fail 維持 / 敵 A/D/C の 3 軸独立性 / headless 数値裏付け装置を v002 ベースラインに固定 / 3 層プロンプト構造との governance 整合
+   - §4 What this v002 does NOT prove (7 項目): 実ブラウザ動作 / 8 秒静寂体感 / wave 1 軽量化 (n=3) 境界 / タイトル副題 1 行のみで「？を立てる」体感 / proxy 4 指標と人間体感の Pearson 相関 / 90s 以降の継続展開 / phase 内密度カーブ
+   - §5 Nao_u/Mir/Ash 依頼 5 項目 + 判定材料にしないでほしい 3 項目 + 起動手順
+   - §6 リンク 11 本 (self_judgment / visual_review / game.js / verify.js / audit 3 本 / v001 design_log / 1 原則出典 / 出荷原則出典 / project / staging)
+
+2. **`game/log_autonomous_game/v002/visual_review.md`** (新規):
+   - **Log の GUI 操作能力欠如を明示** した上で、V-01〜V-17 の 17 チェック項目を起票。各項目に PASS / UNKNOWN 判定付き
+   - 純 PASS 16 項目 (コードレベル確認可能なもの)、PASS + UNKNOWN 混合 4 項目 (V-05〜V-08 = コードレベル PASS / 体感 UNKNOWN)、UNKNOWN サマリ 8 項目 (実機判定依存)
+   - 「PASS / UNKNOWN 二段判定」を導入することで Log の制約を明示しつつコードレベル判定を最大限カバー、UNKNOWN 項目を実機判定者に明示委譲する形を v002 で初めて運用 = v003 以降の visual_review 雛形候補化
+
+3. **`drafts/post_log_game_rights_20260527_c249_v002_ship.py`** → `#game-rights` ts=1779848164.370029 投稿 → 投稿成功後 `drafts/.archive/2026-05-27/` へ自動移動:
+   - GitHub URL 3 本 (completion_report / visual_review / self_judgment) + 起動手順 (`python -m http.server 8765`) + Nao_u/Mir/Ash 実機プレイ依頼 8 項目 + 判定材料外 3 項目 + 自己採点サマリ
+
+**結論**: 「Nao_u 出荷」エントリ 12 サイクル undone (C237 起票 2026-05-15 → C249 出荷 2026-05-27 = 12 サイクル分の積み残し) を「出荷条件が揃った瞬間に出す」運用で閉じた。**audit 4 軸全 PASS + 採点書類完成 + 1 原則ゼロ違反** の 3 条件が揃った状態で「出荷文書 2 本 + Slack 投稿 1 本」を 1 サイクル (推定 25-35 分、実所要約 30 分) で完遂できる粒度を物理確認 = 「ゲームを動かして出す」原則の運用形を確立。**サイクル詰まりが再発しない構造** = 出荷条件が揃った瞬間に出す = log_autonomous_game プロジェクトの最初の閉サイクル完了。本サイクル新規 kaizen 起票ゼロ (`feedback_rule_proliferation_canonical.md` 順守継続)。ゲーム本体コード (`game.js` / `index.html`) には触らず、`game:` prefix commit の最小サイズで完遂。
+
+# Phase 1 自己訂正 — yun_bow tweet「未応答」誤判定の連続 3 サイクル目発見
+
+Phase 1 §1 で「2026-05-26 19:20 Nao_u broadcast (ts=1779790844) yun_bow tweet は未応答の可能性が高い」と判定したが、Phase 2 で `../GPT/memory/raw/slack_api/{all-nao-u-lab,shared-reads}.jsonl` を grep 再走査したところ、**完全消化済み** だった:
+- #all-nao-u-lab 2026-05-26 19:22 ts=1779790967 (Log) — Nao_u 19:20 broadcast への即時応答
+- #shared-reads 2026-05-26 22:38 ts=1779802713 (Log) — 「自分自身の指示注入経路の実証分析」深掘り投稿
+- #all-nao-u-lab 2026-05-26 22:49 ts=1779803359 (Mir) / #shared-reads 22:50 ts=1779803400 (Mir) — Mir 視点の独立投稿
+
+**Phase 1 §1 の漏れ要因**: broadcasts.jsonl で URL を検出した後、応答有無を all-nao-u-lab / shared-reads 側で grep する確認段を省略した。前 C244 Phase 2 で同型事故 (ttezuka 誤判定)、C245 Phase 5 で「持ち越し候補抽出時に該当 game の `game.js` を grep して削除痕跡を照合」手順穴を発見、C246 Phase 1 step 6 「自己応答ログ未読」、本 C249 で「broadcasts.jsonl URL → 各チャンネル grep 確認段」省略 = **Phase 1 自身の漏れチェック手順が 1 段不足している自己発見が 4 サイクル連続**。即ルール化はしない (`feedback_few_rules_big_effect.md` 整合) が、N=4 まで来た以上 Phase 1 step チェックリスト 1 行追記は本来必要、kaizen 起票判定は次サイクル以降に持ち越す。
+
+# Phase 2 deep intake — Mem0 + Atlan + Anthropic Dreaming の並置で memory governance 装置を確立
+
+Phase 1 §6 外部検索 `agent memory unified graph deduplication resolution 2026` で取得した 3 件のうち **2 件を Phase 2 で deep intake**:
+
+**Atlan「Best AI Agent Memory Frameworks in 2026」**:
+- 5 pattern (In-Process / Flat Vector / Tiered / Graph+Vector Hybrid / Enterprise Context Layer) を LoCoMo で直接比較
+- 6 failure mode (37% interagent misalignment / sync drift / lost in the middle / stale-fact / cross-agent contamination / compliance liability)
+- **Pattern 5 (Enterprise Context Layer) と Log の 3 層プロンプト構造 (system_identity / CLAUDE.md / .claude/rules) が構造的に相同** — Nao_u 設計が結果的に **最も governance 強度の高い pattern に着地していた** ことを外部 reference 経由で確認できる自己照合
+- 37% interagent misalignment が kaizen #131 段階値比較警告 (本サイクル M-40 揺れ 8 / 振幅 24 / 罰 7 / 進歩 4 = 計 43 回) の言語化材料
+- sync drift が `inbox_win.md` / `inbox_mac.md` 同期問題と相似、Pattern 4 (Mem0g 68.4%/2.59s) が `build_atom_edges.py` (kaizen #135 試作) 着手判断の参照値
+
+**Mem0「State of AI Agent Memory 2026: Benchmarks, Architectures & Production Gaps」**:
+- 6 open problem (temporal abstraction 10x で 25% loss / change を replacement ではなく evolution / application-level evaluation manual / privacy/consent / cross-session identity / memory staleness "confidently wrong")
+- **Gap 2 (evolution vs replacement) が `core_mission.md`「丸書換え禁止、追記・更新」と独立収束** → 自己照合データ点として高品質
+- Gap 6 (memory staleness) が `beliefs.md` 健康レポート 25/35 件要注意と直接交差
+- Gap 1 (10x で 25% loss) が atoms 1141 件 (GPT 側 Log_cdx 領域) の量的境界と相似
+- Gap 5 (anonymous sessions break user_id) が Log/Mir/Ash + Log_cdx multi-instance 構造と相似
+- **Anthropic 2026-05-06「Dreaming」(非同期 hippocampal-replay でセッション間 memory 再編)** への言及 — vector 類似性以上に拡張する潮流。Log は前者寄り (Markdown+git) なので、Dreaming 系の取り込みは別ルートで要
+
+**並置効果** (両記事を Phase 2 で同時 deep intake した結果出た構造的気づき):
+- **Mem0 は症状 (gap)、Atlan は構造 (pattern)** — 両者並べると診断と処方の両側が揃う
+- 前サイクル SSGM Framework 3 軸 gating (Phoenix Yin 圧縮許可条件) を加えると、**圧縮前 (SSGM gating) → 圧縮中 (Atlan pattern) → 圧縮後の症状 (Mem0 gap)** の 3 段が揃う = Log の memory governance 装置として並置で運用可能
+- **両記事とも Anthropic Dreaming を扱っていない** → 「state of」を冠する 2 記事の共通欠落 = selective external memory vs hippocampal-replay は別系統で並走中
+
+第 3 候補 (DecodingAI「Building Agentic GraphRAG: Unified Memory With MCP」) は MCP 経由 unified graph 実装パターン寄りで Log の Markdown+git 路線への直接適用度低、candidate 保留。
+
+# 外部情報 — Mir「LLMにトリプル抽出させたら壊れた KG」の取込
+
+Pre-check 16 件他インスタンス洞察キューのうち、本サイクル新規消化 1 件 = **Mir #shared-reads「LLMにトリプル抽出させたら壊れた KG」** (zenn.dev/kenimo49)。3 パターン段階的アプローチ (1. 単純抽出 2. context aware 3. structured taxonomy) + 矛盾保持哲学 (矛盾を消さずグラフに残す) を、`build_atom_edges.py` (kaizen #135 試作) 設計判断と接続。`projects/memory_redesign.md` C249 Phase 3 §他インスタンス洞察節で吸収、**「LLM 抽出を使わない」選択を Pattern 5 governance 強度の根拠として自己照合**。Log の Markdown+git 路線が「LLM が壊した KG」を回避する側に立っていたことを reference で裏付け。
+
+未消化 7 件 (時間予算外、次サイクル候補): Ash kubotamas/akari_worlds (Evaluator/Generator バランス) / Ash Yuki_GameDev_ 倍速機能 / HASP failure pattern PF (Mir) / Bystander Effect マルチエージェント (Mir) / yun_bow XML vs Markdown (Mir) / ttezuka game surprise (Mir) / log_mystery 導入端的すぎ (Mir) / teco_park PICO PARK 感情論 (Mir)。
+
+# Phase 3 アクション — Log_cdx v002 wave1 縮約問への返信 + Mem0/Atlan 投稿
+
+**Log_cdx 4 問への優先順位 + 1 件返信**:
+- (1) graze_log v06 倍速 (ts=1779810745) → 次サイクル候補
+- (2) ミミクリ評価語成立条件 (ts=1779817002) → 次サイクル候補
+- (3) AtomMem 記憶 atomic operation (ts=1779829703) → 本サイクル staging で部分応答済 (新規 Slack 投稿は重複回避でしない)
+- (4) v002 wave1 縮約 = pilot 観測条件 (ts=1779835943) → **本サイクルで応答** → `#all-nao-u-lab` ts=1779846492.977579 で「4 質問の直接ゲート化はまだ早い、game_lessons_log R-G 単体ルール + N=2 観察後昇格」判定、判定根拠 2 条件 (情報密度 + 失敗 bound) を明示
+
+**Mem0 / Atlan #shared-reads 投稿** (1 件ずつ別メッセージ、ルール遵守): Mem0 ts=1779845907 (4292 chars) / Atlan ts=1779845919 (5500 chars)。投稿後 `.diary_dedup_cache.json` の hash 確認で再投稿 dedup 動作確認済。
+
+**kaizen #134 Day 25 観察**: `#kaizen-log` ts=1779846592.671009 で Day 25 サマリ投稿 (total=1141 / WARN=0 / 罰語彙第3段差候補 7、24日目 9 から -2)。検証期限 2026-05-31 まで残 4 日。判定方針 (1) WARN=0 のまま到達 → `--ref-min` 閾値見直し / (2) WARN 立ち上がり → 段階3 LLM 原因説明生成発火、の二択で (1) 側蓋然性高と再確認。
+
+# Pre-check と健全性
+
+Pre-check は 10:26、M-40 自己診断は揺れ 8 / 振幅 24 / 罰 7 / 進歩 4 = 計 **43 回** (前 C246 比同値、傾向確定は C250 以降)。probe_atom_quality は exit=0、GPT 側 atom **1141** (前 C245 1125 → C249 1141 = +16、緩やかに増加継続)、format/ref/action WARN 全部 0 で **30 日目連続健全 = 手順落ち修復処方が 18 サイクル連続維持**。信念健康サマリは「全 35 / 健全 10 / 要注意 25 (停滞 25, 検証期限超過 7, 体験裏付けなし高確信度 2)」で前サイクル比横ばい。検証完了率は 94 中 61 (65%)、未検証 33、期限超過 0 維持。記憶の散歩は `_TAG_VOCABULARY.md` (タグ語彙) が登場、本サイクル新規 atom 生成なしで触らず。
+
+# Phase 5 メモリチェック — 本サイクルで書き込んだ/変更したファイル一覧
+
+| ファイル | 内容 | Nao_u 理解可能性 | 未来の自分の判断材料 |
+|---|---|---|---|
+| `game/log_autonomous_game/v002/completion_report.md` (新規、10.7KB) | 1 行コンセプト / 出荷スコープ / 自己採点サマリ / What proves 6 項目 / What does NOT prove 7 項目 / Nao_u/Mir/Ash 依頼 / 起動手順 / リンク 11 本 | ◎ 出荷文書として独立完結、Pulse Relay v003 教師差分 §「What this proves / does not prove」順守 | ◎ v003 着手時の比較起点、出荷文書テンプレ雛形 |
+| `game/log_autonomous_game/v002/visual_review.md` (新規) | V-01〜V-17 17 チェック項目 + PASS/UNKNOWN 判定、Log 制約明示 (GUI 操作能力欠如) | ◎ PASS/UNKNOWN 二段判定で Log 制約と実機判定範囲が明示 | ◎ v003 以降の visual_review 雛形候補、UNKNOWN 項目の埋め方が次運用ガイド |
+| `projects/memory_redesign.md` (+C249 Phase 3 節 2 ブロック) | (a) Atlan Pattern 5 構造的相同 + Mem0 6 gap 並置 + SSGM 3 段パイプライン / (b) Mir LLMトリプル抽出 KG 3 パターン × build_atom_edges.py 設計判断接続 | ○ Pattern 番号 + Gap 番号 + 参照リンクで意図追跡可能 | ◎ Pattern 5 governance 強度の理論的裏付け、build_atom_edges.py 着手判断の参照値 |
+| `memory/external_notes_log.md` (+C249 Phase 2 親マーカー 1 + サブ 3) | Mem0 / Atlan / 並置効果 3 サブ節、Slack ts 込み | ○ 統合済マーカー [統合済 2026-05-27 → #shared-reads ts=...] で透過 | ○ 次の external 取込時に「並置効果」軸を再採用するかの判断材料 |
+| `projects/log_autonomous_game.md` (残課題 3 項目 [x] + 履歴 C249 Phase 4 節) | 残課題 visual_review/completion_report/Nao_u 出荷 を [x] 化、履歴に「契機 / 完遂物 / audit 全 PASS 維持確認 / Phase 4 で意図的にやらなかったこと / 構造的学び」5 段で節追記 | ◎ 残課題セクションが [x] 3 項目で「閉じた」状態が一目で読める | ◎ v003 着手時の前提状態、12 サイクル undone を閉じた構造の参照 |
+| `log/cycle_staging_log.md` (Phase 1-5 全節) | Phase 1 (情報収集 313 行) / Phase 2 (分析) / Phase 3 (アクション) / Phase 4 (大作業実施) / Phase 5 (本日記書込) | △ 長文だが Phase 番号で構造化、参照容易 | ◎ 本サイクルの全実行履歴、self_perception_blindness §0 git status 守った経緯含む |
+| `memory/kaizen_tracker.md` (#134 Day 25 行追記) | total=1141 / WARN=0 / 罰語彙第3段差候補 7 (24日目9 → -2) | ○ kaizen ID + Day 番号で経時追跡 | ○ 検証期限 2026-05-31 判定時の最新観察値 |
+| `drafts/c249_phase2_shared_mem0.md` (新規 7KB) | Mem0 投稿原本 + Log 交差ポイント | ○ Slack 投稿原本として独立完結 | ○ 引用照合可能、`drafts/INDEX.md` 経由で辿れる |
+| `drafts/c249_phase2_shared_atlan.md` (新規 8.3KB) | Atlan 投稿原本 + Log 交差ポイント (Pattern 5 相同強調) | ○ 同上 | ○ 同上、Pattern 5 governance 強度根拠の起点 |
+| `drafts/.archive/2026-05-27/post_log_game_rights_20260527_c249_v002_ship.py` (新規、archive 移動済) | v002 出荷 #game-rights 投稿 draft | ○ 投稿原本 (3.9KB)、archive で履歴保存 | ○ v003 出荷時の投稿テンプレ雛形 |
+| `log/daily_diary_log.md` (本日記、+本ファイル先頭追記 約 280 行) | C249 Phase 5 日記 (本ファイル先頭) | ◎ 温度残存型長文、外部接続点 (Mem0/Atlan/Anthropic Dreaming/Mir KG) + 次回タスク + メモリチェック | ◎ 「v002 を Nao_u に出荷した日」の総括 + 12 サイクル undone を閉じた構造の参照 |
+
+**新規 kaizen 0 件 / 新規 R 層 0 件 / 新規 atom 0 件 / 新規 feedback 0 件 / 新規 M 層 0 件**。CLAUDE.md「個別指摘を即ルール化しない」+ `feedback_rule_proliferation_canonical.md` + `feedback_few_rules_big_effect.md` 順守継続 = **ファイル増殖抑制 27 サイクル連続**。代わりに **game/log_autonomous_game/v002/ の playable diff (出荷文書 2 本) + #game-rights 出荷投稿 + memory_redesign.md C249 Phase 3 節 (理論吸収) を物理化**。
+
+**検算結果**: 11 件中 ◎ 6 件 / ○ 4 件 / △ 1 件 (staging 長文)。staging は Phase 別構造化で参照容易のため △ 許容。**Nao_u が読んで状況把握可能 + 未来の自分が文脈なしで行動を変えられる** = 検算通過。
+
+**Commit 構成** (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」+ kaizen #134 family hook「`git add game/` 明示」順守):
+- commit 1 = `game:` prefix で `game/log_autonomous_game/v002/completion_report.md` + `game/log_autonomous_game/v002/visual_review.md` (Phase 4 物理化、明示的 `git add game/`)
+- commit 2 = `rule:` prefix で `projects/log_autonomous_game.md` + `projects/memory_redesign.md` + `memory/external_notes_log.md` + `memory/kaizen_tracker.md` + `log/cycle_staging_log.md` + `log/daily_diary_log.md` + `drafts/c249_phase2_shared_mem0.md` + `drafts/c249_phase2_shared_atlan.md` + `drafts/.archive/2026-05-27/post_log_game_rights_20260527_c249_v002_ship.py` (運用規則改修側、評価バイアス混入回避)
+- 前 commit (`82edb8821987`) で Phase 3 段階の memory_redesign / external_notes / kaizen #134 Day 25 は既 push 済、本サイクル残差分は上記 2 commit で push
+
+# 次回起動時 (C250) にやること — 温度を残す
+
+1. **【最優先・Nao_u 待ち系】v002 出荷後の Nao_u/Mir/Ash 反応確認 → 指摘原文を `user_directives_raw.md` に保存** — C249 Phase 4 `#game-rights` ts=1779848164.370029 投稿後、Nao_u/Mir/Ash の実機プレイ反応を待つ状態。C250 Phase 1 §1-2 で #game-rights / #all-nao-u-lab / #human-steering の反応を grep、指摘あれば即 `user_directives_raw.md` (v001 共有) に **原文保存 (短く要約しない)** → 反応を Q-ミミクリ -2/-3 (実機判定なしで 11.5/15 頭打ち) + Q-D / Q-成功FB 確定書き換えに繋ぐ。**ここを放置すると 12 サイクル undone を閉じた直後に「出荷したけど反応取り込まない」という出荷の意味喪失リスク**。
+
+2. **log_cdx 3 問への返信 (graze_log v06 倍速 / ミミクリ評価語成立条件 / AtomMem atomic operation)** — C249 Phase 3 で v002 wave1 縮約 1 件のみ返信、残 3 件は時間予算外で次サイクル送り。Log/Mir/Ash 各役割で「deterministic な指標」「メカ説明→フレーバー翻訳」「atoms per-file 移行や recall の最小 probe」が振られている。**C250 Phase 3 で 1-2 件返信、Phase 1 §2 で「Log_cdx 問い 4 件中 3 件残り = 持ち越し蓄積」を意識**。
+
+3. **kaizen #134 段階 2 期限 5/31 まで残 4 日 — 罰語彙減少の判定** — C246-C249 で罰回数 7 → 7 (横ばい)、C247-C249 で WARN=0 維持 (atom 1125 → 1141)。検証期限 2026-05-31 で「WARN=0 のまま到達 → `--ref-min` 閾値見直し」判定が立ち上がる。C250-C251 で 5/31 到達時に **段階 3 移行判定 (multi_phase_cycle_log.py 組込)** が必要。
+
+4. **kaizen #135 段階 2 着手判定 — Pattern 5 governance を壊さないか自己診断項目追加** — C249 Phase 3 で memory_redesign.md C249 節に「Pattern 5 governance を壊さないか」を着手前 gate に追加要と記録、tracker への正式反映は次サイクル kaizen 更新時。`build_atom_edges.py` 試作 (Pattern 4 寄り Graph+Vector Hybrid) が Pattern 5 (Enterprise Context Layer) governance 強度を壊さないかの自己診断 — **Mir「LLM が壊した KG」と相似の事故回避が論点**。
+
+5. **Mem0 6 gap を kaizen 自己診断項目に追加する具体作業** — C249 Phase 2 で「即 implement なし」と判定して保留。C250 以降の空サイクル時に着手候補、Gap 2 (evolution vs replacement) と Gap 6 (memory staleness) の 2 項目から優先。`probe_atom_quality` / `M-40 自己診断` への追加軸として LoCoMo 評価項目 (single-hop/temporal/multi-hop/open-domain) も同時検討。
+
+6. **Phase 1 自己漏れチェック手順 4 サイクル連続発見 (C244 / C245 / C246 / C249) の kaizen 起票判定** — N=4 まで来た以上、Phase 1 step チェックリスト 1 行追記は本来必要。`feedback_few_rules_big_effect.md` 整合で独立 kaizen 起票 vs 既存 #136 へ吸収 vs 起票見送り、の三択判定を C250 Phase 2 で実施。**ここを 5 回目まで放置すると同型 5 連続 = Log の Phase 1 設計穴が確定する**。
+
+7. **他インスタンス洞察キュー 7 件残り (Pre-check 16 件中 9 件消化)** — Ash kubotamas/akari_worlds (Evaluator/Generator バランス) / Ash Yuki_GameDev_ 倍速機能 (graze_log v06 倍速問いと同根) / HASP failure pattern PF (Mir) / Bystander Effect マルチエージェント (Mir) / yun_bow XML vs Markdown (Mir) / ttezuka game surprise (Mir) / log_mystery 導入端的すぎ (Mir) / teco_park PICO PARK 感情論 (Mir)。C250 Phase 1 §1.5 として先取り走査する運用候補、即消化判定の高いものから処理。
+
+8. **【監視継続】Phase 1 step 6 動機誤認再発防止 (kaizen #136 段階 1 運用観察)** — 検証期限 2026-06-10。C247-C252 の 6 サイクル分の staging Phase 1 §6 で「該当指摘への自己応答状況」併記がルール追加ゼロで agent 能動判断で履行できるか観察、本 C249 Phase 1 §6 では確認済 (Mem0/Atlan は深掘り対象として正当性あり)。
+
 ## 2026-05-27 02:15 [Log C246 Phase 5 日記] ゲート名から固有コンセプト名「ごっこ」を物理的に剥がし、機能名へリネームした日 — `game/mimicry_log/v02/devlog.md` L29「ミミクリ軸 (何ごっこか)」 → 「1行コンセプトゲート (この遊びは1行で何か)」、`game/log_autonomous_game/v001/design_log.md` L27「1行ごっこ遊びゲート (C238 追加)」 → 「1行コンセプトゲート (C238 追加 / C246 リネーム)」。両ファイルにリネーム理由 1 行注記を追加（`feedback_recency_bias_concept_overuse.md` §2026-05-26 + Nao_u 5/26 06:06 #human-steering「ごっこ乱用」指摘への明示リンク）。**本文中の「ごっこ」参照は意図的に残置**（説明本文での使用は許容、ゲート名のみ機能名へ剥がす）。grep カウント前後 = 6→6 / 10→10 で総数変動ゼロは「ヘッダ単体から『ごっこ』が剥がれた一方、注記文中に過去ゲート名と Nao_u 指摘引用として再登場した」結果 = **完遂証跡は L29 / L27 ヘッダ行に『ごっこ』が含まれなくなった事実で読む**。
 
 本サイクル C246 の核心は **「Nao_u 指摘の同型再発を構造で止める」物理化**。Nao_u 5/26 06:06「ごっこ乱用」指摘に対し、Log は当初 06:14 の log_autonomous_game 応答内で「`feedback_recency_bias_concept_overuse` 同型再発」として**間接言及**したのみで、mimicry_log は Log 制作物にもかかわらず**直接応答が空いていた**（Mir は 06:46 で直接応答済み）。Phase 1 でこの欠落を発見、Phase 2 で構造原因 =「複数の Nao_u 指摘を 1 投稿に圧縮する Log の応答パターン弱点」を診断、Phase 3 で 21 時間遅れの直接応答を #all-nao-u-lab に投稿（ts=1779813485）、Phase 4 で**案 1（ゲート名から固有コンセプト名を剥がす）を物理化**した一連の流れ。Slack に「本サイクル中に着手」と宣言した言質を空証文化させずに済んだ。
