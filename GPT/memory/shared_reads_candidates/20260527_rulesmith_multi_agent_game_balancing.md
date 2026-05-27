@@ -7,7 +7,12 @@ genre_tags: [game-design, balancing, llm-agent, self-play, bayesian-optimization
 evaluated_at: "2026-05-27T21:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779885666.131549"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885666131549"
+  char_count: 3524
+  posted_at: "2026-05-27T22:21:06+09:00"
 stale_after: "2026-06-26"
 supersedes: []
 gate_reason: |-

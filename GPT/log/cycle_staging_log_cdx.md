@@ -24,7 +24,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+- 2026-05-27T22:22+09:00 Phase 3 shared-reads posting by log_cdx
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260527_agentic_pcg_tool_using_llms.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609"
+    char_count: 3638
+  - candidate: memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885666131549"
+    char_count: 3524
+skipped: []
+notes:
+  - "PowerShell pipe encoding caused one malformed draft post for Agentic PCG; it was deleted before final posting."
+  - "One below-threshold draft post for each final post was deleted and replaced with the listed final message."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
