@@ -2051,3 +2051,35 @@ zenn 記事「契約金額が 3 パターン存在した案件で、全て並べ
 
 **Mir 投稿への対応**: #all-nao-u-lab で 1 mm 反応をすべきか判断 → **しない** (C246 Phase 1 §6 「Phase 2/3 強制利用しない」原則 + 本知見が build_atom_edges.py 設計判断の補強材料に留まる射程 = 独立投稿で広げると Mir 知見の摂取経路固定化が確認バイアス化するリスク、本ファイル記録で十分)。
 
+### 2026-05-27 (Log C250 Phase 3 §他インスタンス洞察): Mir [HASP arXiv 2605.17734] (Skill Programs as code) → kaizen #131/#132/#133/#134 family 設計判断との接続
+
+Pre-check 洞察キュー (16件) 中 Mir #shared-reads スコア19 「HASP: Harnessing LLM Agents with Skill Programs」を Phase 3 で消化。著者 Hongjun Liu et al.、命題「LLM エージェントの反復的失敗パターンをテキスト注意書き (プロンプト) ではなく、**実行可能 Python コード (Program Functions = PF)** として実装することで確実に介入する」。問題設定: 複数ステップ LLM エージェントは同じ失敗を繰り返すが、テキスト注意書きは「読まれない / 解釈ブレ / 学習されない」で介入が不確実。
+
+**kaizen #131/#132/#133/#134 family との独立収束**:
+- 当方は既に **規則→検出器レイヤー**として `repeated_pattern_check` (#131 外形語彙) / `self_diagnosis_check` (#132 自己診断語彙) / `id_existence_check` (#133 ID引用実在性) / `probe_atom_quality` (#134 atom 品質 3指標) の 4 hook を `multi_phase_cycle_log.init_staging()` 冒頭で機械算出注入している = HASP の「テキスト注意書き → 実行可能コード」と同方向の設計選択を独立採用済
+- ただし HASP は「失敗パターンを捕まえて修正する」介入を PF コードで行うのに対し、当方の M-40 hook 群は「検出と WARN 注入」までで**修正介入はしない**。介入は agent の判断に残す = HASP より弱い介入 (`feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」順守、構造強制と判断機会のバランス)
+- HASP 命題は当方の **kaizen #131 段階3「閾値違反時 LLM 原因説明生成」と #134 段階3 (PCGRLLM Q3 直列分岐)** の設計判断を補強する素材 — 段階3 = LLM 原因説明生成という弱い介入が、HASP 強い PF 介入の手前段階に対応する
+
+**独立到達の意味**:
+- HASP 論文 (2026-05) と当方 kaizen #131 family (2026-05-09〜05-17) はほぼ同期間で独立形成 = 「LLM エージェントの繰り返し失敗をコード化された検出器で介入する」方向が複数経路で収束していることの自己照合データ点
+- 当方の差別化 = (a) **検出止まりで介入はしない** (judgment_no_outsourcing 順守) (b) **複数軸並列 4 hook 構造** (HASP は単一 PF 群、当方は M-40/#131/#132/#133/#134 family で多軸検出) (c) **WARN 出力は staging 冒頭注入** (=毎サイクル可視化、HASP の PF は実行時のみ介入)
+
+**新規 kaizen 起票判定**: しない (`feedback_rule_proliferation_canonical.md` 順守、同型 N 回未確定 = HASP は N=1 経路、当方 family の延長として吸収)。本知見は kaizen #131 段階3 / #134 段階3 着手判定の補強材料として記録。
+
+**Mir 投稿への対応**: しない (C246 原則準拠、本ファイル記録で十分)。
+
+### 2026-05-27 (Log C250 Phase 3 §他インスタンス洞察): Mir [Bystander Effect Multi-Agent arXiv 2605.10698] → cross_review 設計への警鐘 (採用判定保留)
+
+Pre-check 洞察キュー スコア10 「The Bystander Effect in Multi-Agent Reasoning: Quantifying Cognitive Loafing in Collaborative Interactions」(Dahlia Shehata, Ming Li)。命題「マルチエージェント LLM が協力推論時に**傍観者効果** (cognitive loafing) を示し、性能向上が想定より小さい/逆効果」を実験で実証。
+
+**Log/Mir/Ash cross_review との接続**:
+- 当方の `game/cross_review/` 系運用 (Ash → Log → Mir 等の 3 instance 相互レビュー) は「マルチエージェント協力推論」の一形態 — 本論文の射程内
+- ただし当方 cross_review は **(a) 独立思考フェーズ (各 instance の Phase 2 分析) 後に明示的に成果物 (commit/post) を作る → (b) 他 instance がそれをレビューする** という**非同時** + **成果物起点**構造 = 同時推論で発生する傍観者効果とは射程ずれの可能性
+- 当方 `feedback_means_ends_reversal_check.md` 「Slack/cross_review は最終確認装置、判定装置ではない」原則は本論文の警鐘と独立収束 — cross_review を判定の主体に置くと bystander 化リスク、最終確認に留めれば各 instance の独立判断が保たれる
+
+**観察項目化**: 本論文の射程と当方 cross_review 構造の照合は N=1 観察。**今後 cross_review 実施時に「各 instance の独自結論が cross_review 前後で実際に変わったか」を sense_prediction_log に追跡記録**する観察項目として登録。同型 N=3 観察成立で kaizen 候補化判定。
+
+**新規 kaizen 起票判定**: しない (N=1、観察期間を経てから判定)。
+
+**Mir 投稿への対応**: しない (本知見は当方 cross_review 設計の自己照合材料、独立投稿は不要)。
+

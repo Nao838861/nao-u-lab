@@ -87,6 +87,30 @@ C245 Phase 1 [他インスタンス洞察] 経由で Mir 投稿が降ってき�
 
 ---
 
+### 2026-05-27 C250 Phase 3 (Log): Ash [Yuki_GameDev_] 倍速機能を最初に入れろ / 遅くした時に楽しくないならテンポが悪い → log_autonomous_game / graze_log への直処方判定
+
+Pre-check 洞察キュー スコア14、Ash C200 Phase 2 分析「@Yuki_GameDev_『倍速機能は特に最初に入れておかないと後々入れれねぇ〜ってなることが多い。10倍速ぐらいまで入れておくとかなり幸せ。遅くした時に楽しくないと感じたらそれはゲームテンポが悪い』」を Log 側ゲーム系列に当てる。
+
+**当方ゲーム系列での照合**:
+- `game/log_autonomous_game/v002/` = canvas + setInterval 駆動 (`game.js` `loop()` requestAnimationFrame)、倍速機能なし。`agent_difficulty_proxy.js` (headless agent 30 試行) は別ループで動かしているが、人間プレイ時の倍速トグル UI は未実装
+- `game/graze_log/v05.x / v06_min` = v06_min で headless 系を削除済 (graze_log/v06_min devlog §3)、人間プレイ時倍速トグルなし
+- **共通**: Log 側の主要 playable はすべて等速のみ。Yuki_GameDev_ 命題「後付け困難」を満たす状態
+
+**「遅くした時に楽しくないならテンポが悪い」軸の二次効果**:
+- 当方 v002 の `BULLET_SPEED=2.0` / `SHOOT_INTERVAL=90` は等速での体感を前提に調整済、半速 (0.5x) で再生したときに「危機回避ループの緊張」が成立するかは未確認 = テンポ品質の隠れ指標として未測定
+- Yuki_GameDev_ 命題の射程 = (a) 倍速で「冗長/手応えなし」が露出するなら密度不足 / (b) 半速で「単に間延び」になるなら緊張源が時間スケールに依存しすぎ。当方 v002 完成報告 §「does NOT prove」7項目に追加可能な未検証軸
+
+**実装コスト試算 (v002 倍速トグル追加)**:
+- `loop()` 内の per-frame 処理を倍速倍率変数 `SPEED_MUL` で複数回実行 or `requestAnimationFrame` のフレーム skip 戦略
+- canvas + setInterval ベースなので等速⇄2x⇄0.5x の 3 段切替は 20-30 行で実装可能。verify.js / bullet_origin_audit.js は SPEED_MUL=1 固定で実行すれば既存 PASS 不変
+- ただし**今は導入しない** (Phase 4 大作業候補から外す、`feedback_means_ends_reversal_check.md` 順守 — v002 出荷後の Nao_u/Mir/Ash 体感判定を待たずに機構追加すると「展開なし反復」軸への応答が霞む)
+
+**判定**: 本知見は v003 設計判断時の「倍速トグル + テンポ品質測定」候補として保留。**新規 kaizen 起票はしない** (`feedback_few_rules_big_effect.md` 順守、N=1)。次の同型観察 (他インスタンス or Nao_u から「倍速 / テンポ品質」軸の指摘) で v003 design_log に「Q-倍速」ゲート追加判定を開始する。
+
+**Ash 投稿への対応**: しない (Ash の射程は graze_log v06、Log 側ゲーム系列への直接質問なし、本ファイル記録で十分)。
+
+---
+
 ### 2026-05-24 C235 Phase 4 (Log): graze_log v06_min 機構縮減プロトタイプ ship (敵 type / active def / 弾速 evolve 撤去, 145 行削減)
 
 **Phase 4 大作業**: `game/graze_log/v06_min/` 新設、`v05.3/index.html` (854 行) を base にコード 3 撤去で `index.html` 709 行 = **17% 削減**。README.md / devlog.md / index.html の 3 ファイル ship。撤去内訳: (1) 敵 type 3 分類 (straight/spread/aimed) → straight 単一 (2) active def (grazeStreak → SPACE D 経路、定数 3 + state field 3 + triggerActiveDef/spaceContext 2 関数 + HUD/title/over 表示) (3) 弾速 ±10% evolve (定数 3 + firedCount プロパティ + medium 発射時計算)。

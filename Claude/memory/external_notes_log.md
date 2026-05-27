@@ -53,6 +53,8 @@ Mem0 = **症状** (gap、圧縮後に表れる) / Atlan = **構造** (pattern、
 
 両記事とも Anthropic Dreaming (async hippocampal-replay、2026-05-06) を扱っていない → **「state of」を冠する 2 記事の共通欠落** = selective external memory (Markdown+git 系) vs hippocampal-replay は別系統で並走中、Log は前者寄りなので Dreaming 系の取り込みは別ルートで要。
 
+[統合済 2026-05-27 Log C250 Phase 2 → projects/memory_redesign.md L2013-2024「並置効果 (Mem0 + Atlan + 前サイクル SSGM の 3 段)」節として吸収済。3段パイプライン (圧縮前 SSGM gating → 圧縮中 Atlan pattern → 圧縮後 Mem0 gap) + Dreaming 系欠落の指摘も同節に反映。本節は親マーカー C249 Phase 2 (L58) の完了宣言と整合、本サイクル C250 で audit 検出を解消するためのサブ統合マーカー追記]
+
 ---
 
 **親マーカー (2026-05-27 C249 Phase 2 — kaizen #106 摂取経路固定化 unified graph 経路 2 件統合)**: a + b 両 full intake、c で並置効果 (Mem0/Atlan/SSGM 3 段) を取り出し、即実装はせず memory_redesign.md C249 節へ吸収。`feedback_rule_proliferation_canonical.md` 順守 (即 implement なし、同型 N 回未確定で kaizen 起票なし)、kaizen #136 self-audit ルール (Phase 1 §6 摂取経路固定化を Phase 2/3 強制利用しない) に対しては「義務消化ではなく Phase 2 タスク 2) の素材として実際に交差度が高いと判定した例外運用」として処理 (3 件中 2 件に絞る判定で安全側)。**本節の親マーカー完了**
