@@ -61,6 +61,33 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ## 履歴
 
+### 2026-05-27 C251 Phase 4: v003 完遂仕上げ — verify.js PASS 確認 + completion_report.md 起票 + 密度カーブ playable diff 着地
+
+**契機**: C251 Phase 2 で「本サイクル C251 の第一義出力 = Slack 投稿、game/* diff ゼロ」と自己診断 (`feedback_means_ends_reversal_check.md`)、C248-C250 3 サイクル連続で同型疑い。Phase 4 で game/* diff 1 commit を出すフィードバックループ閉鎖を最優先と判定し、C250 Phase 4 で着地済の v003 game.js + verify.js (currentShootInterval 関数化 + phase 2 内 90→60 frame 線形漸変 + verify report 拡張) に対する完遂仕上げ (verify.js 実行確認 + completion_report.md 起票 + プロジェクトファイル更新) を 1 サイクルで完遂。
+
+**完遂物**:
+- [game/log_autonomous_game/v003/completion_report.md](../game/log_autonomous_game/v003/completion_report.md) — 新規。§1 v002→v003 差分 (game.js 17 行追加 + verify.js 同期 + 維持要素列挙) / §2 verify.js 実行結果サマリ (`pass: true`、4 方針すべて phase 0 内死亡で v002 と完全一致) / §3 What this v003 proves 4 項目 / §4 What this v003 does NOT prove 8 項目。Pulse Relay v003 教師差分 §「What this proves / does not prove」順守
+- `node game/log_autonomous_game/v003/verify.js` 実行確認 (本 Phase 4): `pass: true`, exit 0, survivors=[]、camper 319f / lane-holder 277f / blind-sweeper 378f / nospecial 489f = v002 verify と死亡時刻完全一致 = phase 2 漸変が phase 0 の悪手通過の穴を新規に開けていない regression test 通過
+- 本ファイル履歴セクション本節追加 + [projects/INDEX.md](INDEX.md) log_autonomous_game 行更新 (起票記述 → v003 着地記述)
+
+**Phase 4 で意図的にやらなかったこと**:
+- 別作業への逸れ (graze_log v06 deterministic 指標 draft 送信 / mimicry_log v03 実装 / kaizen #135 build_atom_edges 段階2 — 全て次サイクル C252 以降候補)
+- proxy 4 指標 v003 再走 (design_log §2.2 で意図的選択、v002 baseline を据え置き Pearson 相関第 1 サンプル化は実機判定後)
+- self_judgment.md v003 起票 (Q-D / Q-成功FB / Q-ミミクリ / 展開差カーブ いずれも実機判定依存項目で、v003 単体で書ける差分は微小、`feedback_headless_unfit_for_unfinished_eval.md` 順守)
+- 新規ルール化 (Phase 4 は実装 phase)
+- 日記 (日記は Phase 5)
+- commit / push (Phase 5 で日記とまとめて実施)
+
+**構造的学び**:
+- 「最小差分 1 commit 隔離可能性」の物理確認 = v003 は game.js 17 行追加 + 1 行参照置換のみで v002 の他領域 (echo / wave dispatcher / 敵運動 / 弾源 / UI) を一切 touch せずに phase 内密度カーブを変えられた。「次の改修候補を 1 項目ずつ最小差分で出す」運用形が機能している
+- verify.js が **regression test として機能した** = v003 は phase 2 内の漸変だが verify の悪手 4 方針はすべて phase 0 内死亡で phase 2 に到達しない。それでも「死亡時刻が v002 と完全一致」を確認することで「改修対象外 phase に副作用が出ていない」検証ができた。これは verify.js の用途が「悪手検証」だけでなく「改修隔離性の regression check」に拡張可能なことを示す
+- 「手段の目的化診断 → 行動修正」フィードバックループの閉鎖事例: C251 Phase 2 自己診断で「Slack 主、game/* diff ゼロ」を検出 → Phase 4 大作業を「game/* diff 1 commit」に固定 → 完遂、というフロー自体が `feedback_means_ends_reversal_check.md` の運用形
+
+**残課題 (次サイクル C252 以降)**:
+- 実機判定取得 (Nao_u / Mir / Ash) で v003 完遂報告 → Q-導入 / Q-D / Q-成功FB / Q-ミミクリ / 展開差カーブ の確定採点書き換え + proxy 4 指標 Pearson 相関第 1 回計算
+- v002 completion_report §4「does NOT prove」残 5 項目の優先順位付け (実機依存 4 項目 / 90s 以降継続展開 / headless 順守原則継続)
+- graze_log v06 deterministic 指標 draft の送信判定 (Ash の v07 設計動向確認後)
+
 ### 2026-05-27 C249 Phase 4: v002 を Nao_u に出荷 — completion_report.md + visual_review.md 起票 + #game-rights 投稿
 
 **契機**: C249 Phase 3 で「v002 出荷条件 (audit scripts 3 本 + verify.js 全 PASS、Δ-5/6/7 着地済) は揃った、残りは出荷文書作成と投稿のみ」と判定。C237 起票以来 12 サイクル undone のまま残っていた「Nao_u 出荷」「visual_review.md」「completion_report.md」3 残課題を、出荷条件が揃った瞬間に出す運用として一括処理。

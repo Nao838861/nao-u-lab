@@ -330,3 +330,35 @@ log_autonomous_game v003 完遂仕上げ: verify.js 実行 + completion_report.m
   - graze_log v06 deterministic 指標投稿 → Ash 動向待ち、本サイクルで 1 commit に閉じない
   - mimicry_log v02 → v03 着手 → Phase 2 投稿で v03 設計案 (剣豪試案) を Nao_u に問う形で投げており、Nao_u 判定前の v03 実装は時期尚早
   - kaizen #135 build_atom_edges 段階2 着手 → 記憶階層整備で「手段の目的化」診断対象、本サイクルの game/* diff 補完目的に不適合
+
+## Phase 4: 実施記録
+
+### 完遂状態
+**全 5 完遂条件のうち 1-4 達成**、条件 5 (commit + push) は本 Phase 4 指示「commit はしない（git push は Phase 5 で日記とまとめて行う）」で Phase 5 へ持ち越し。
+
+| 条件 | 状態 | 観測根拠 |
+|---|---|---|
+| (1) verify.js 実行 + pass: true 確認 | ✅ | `node game/log_autonomous_game/v003/verify.js` exit 0、`pass: true`、survivors=[]、4 方針すべて gameover (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s) |
+| (2) completion_report.md 起票 (§1-§4 含む) | ✅ | `game/log_autonomous_game/v003/completion_report.md` 新規作成。§0 一行コンセプト / §1 v002→v003 差分 (1.1 game.js / 1.2 verify.js / 1.3 維持要素) / §2 verify.js 実行結果サマリ / §3 What proves 4 項目 / §4 What does NOT prove 8 項目 / §5 リンク |
+| (3) projects/log_autonomous_game.md 履歴追記 | ✅ | 「2026-05-27 C251 Phase 4: v003 完遂仕上げ」節を「## 履歴」直下に追加 (C249 節の前) |
+| (4) projects/INDEX.md 1 行更新 | ✅ | log_autonomous_game 行を「起票 2026-05-25」→「v003 着地 2026-05-27 C251」、本文も v001→v002→v003 進捗 + 次サイクル課題に更新 |
+| (5) 1 commit (`game:` prefix) で push | ⏭️ Phase 5 へ持ち越し | 本 Phase 4 指示「commit はしない (git push は Phase 5 で日記とまとめて行う)」順守。Phase 5 で日記 + 上記 (2)/(3)/(4) を 1 commit (`game:` prefix) でまとめて push |
+
+### 副産物 (本 Phase 4 で新規/変更したファイル)
+
+| ファイル | 種別 | 概要 |
+|---|---|---|
+| `game/log_autonomous_game/v003/completion_report.md` | 新規 | v003 出荷文書本体 (§0-§5) |
+| `projects/log_autonomous_game.md` | 変更 | 履歴節 1 件追加 (C251 Phase 4 v003 完遂仕上げ) |
+| `projects/INDEX.md` | 変更 | log_autonomous_game 行を v003 着地状態に更新 (1 行) |
+| `log/cycle_staging_log.md` | 変更 | 本 Phase 4 セクション追記 |
+
+**Slack 投稿・kaizen エントリは本 Phase で増やしていない** (Phase 3 で全処理済、Phase 4 は game/* diff 1 commit に集中)。
+
+### Phase 5 への引き継ぎ
+
+- (P5-1) **Phase 4 完遂物 + 日記を 1 commit (`game:` prefix) で push**: `git add game/log_autonomous_game/v003/completion_report.md projects/log_autonomous_game.md projects/INDEX.md log/cycle_staging_log.md log/daily_diary_log.md` → `git commit -m "game: log_autonomous_game v003 完遂仕上げ — verify.js PASS 確認 + completion_report.md 起票"` → `git push`。staging step 5 の commit prefix `game:` 順守 (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit に分ける」)
+- (P5-2) **日記本文への焼き付け**: 本サイクル C251 の最大の動き = (a) Phase 2 自己診断「Slack 主、game/* diff ゼロ」→ Phase 4 で game/* diff 1 commit を出すフィードバックループ閉鎖、(b) verify.js を regression test として再用途化 (悪手 4 方針 phase 0 内死亡で phase 2 漸変に到達しなくても「改修隔離性」確認に転用可能)、(c) v003 = 「次の改修候補を 1 項目ずつ最小差分で出す」運用形の物理確認 (17 行追加 + 1 行参照置換のみで phase 内密度カーブ追加)
+- (P5-3) **次サイクル C252 候補引き継ぎ**: graze_log v06 deterministic 指標 draft 送信判定 (Ash 動向確認後) / mimicry_log v03 Nao_u 反応待ち / v003 実機判定取得 (Nao_u / Mir / Ash) → 確定採点書き換え + proxy 4 指標 Pearson 相関第 1 回計算
+
+Phase 4 完了。次は Phase 5 (日記 + commit + push)。
