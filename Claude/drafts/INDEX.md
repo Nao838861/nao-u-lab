@@ -1,6 +1,6 @@
 # Drafts Index — 未統合の作業ファイル群（自動生成）
 
-_Last generated: 2026-05-12 by `tools/rebuild_drafts_index.py`_
+_Last generated: 2026-05-27 by `tools/rebuild_drafts_index.py`_
 
 ## 目的
 
@@ -17,7 +17,7 @@ orphan_check.py の判定で区別できるようにする。
 - 再生成: `python tools/rebuild_drafts_index.py`
 - 並び順: ルート直下→日付サブディレクトリ昇順、各セクション内はファイル名昇順
 
-## ルート直下 (359 files)
+## ルート直下 (403 files)
 
 - [[20260417_ash_diary]]
 - [[ash_abagames_reply_20260422]]
@@ -102,6 +102,16 @@ orphan_check.py の判定で区別できるようにする。
 - [ash_slack_shared_reads_craftnovagame_reply_20260422.py](ash_slack_shared_reads_craftnovagame_reply_20260422.py)
 - [ash_slack_shared_reads_frame_reuse_20260421.py](ash_slack_shared_reads_frame_reuse_20260421.py)
 - [ash_slack_shared_reads_wayama_multi_angle_20260421.py](ash_slack_shared_reads_wayama_multi_angle_20260421.py)
+- [c214_phase2_self_reflection_q0.txt](c214_phase2_self_reflection_q0.txt)
+- [[c218_phase5_log_slack]]
+- [[C221_diary_log_phase5]]
+- [[C221_shared_reads_pcg_benchmark]]
+- [c226_phase2_post_all_nao_u_lab.txt](c226_phase2_post_all_nao_u_lab.txt)
+- [c241_log_diary.txt](c241_log_diary.txt)
+- [[c249_phase2_shared_atlan]]
+- [[c249_phase2_shared_mem0]]
+- [[cross_review_layer_b_vocabulary_v01]]
+- [[cross_review_trial_001_graze_log_cdx_v59]]
 - [[diary_ash_058]]
 - [[diary_ash_20260417]]
 - [[diary_ash_20260425_phase4]]
@@ -114,6 +124,9 @@ orphan_check.py の判定で区別できるようにする。
 - [[diary_ash_21_draft]]
 - [[diary_ash_39]]
 - [[game_rights_v03_perception_change_cross_review_ash_20260511]]
+- [[headless_evaluation_format_v01]]
+- [kaizen_log_post_C227_20260523.txt](kaizen_log_post_C227_20260523.txt)
+- [[karpathy_compiler_analogy_shared_reads]]
 - [link_claude_md_paths_20260505.py](link_claude_md_paths_20260505.py)
 - [link_lessons_xrefs_20260502.py](link_lessons_xrefs_20260502.py)
 - [log_all_nao_u_lab_20260417_phase2_a.py](log_all_nao_u_lab_20260417_phase2_a.py)
@@ -157,6 +170,7 @@ orphan_check.py の判定で区別できるようにする。
 - [log_human_steering_20260417_b3_decision.py](log_human_steering_20260417_b3_decision.py)
 - [log_human_steering_aba_avoidlog_recall_20260423.py](log_human_steering_aba_avoidlog_recall_20260423.py)
 - [log_human_steering_ash_infra_observation_20260423.py](log_human_steering_ash_infra_observation_20260423.py)
+- [log_human_steering_sync_report.py](log_human_steering_sync_report.py)
 - [log_human_steering_twitter_premium_20260423.py](log_human_steering_twitter_premium_20260423.py)
 - [log_human_steering_url_explicit_reply_20260422.py](log_human_steering_url_explicit_reply_20260422.py)
 - [log_kaizen100_scope_expansion_20260421.py](log_kaizen100_scope_expansion_20260421.py)
@@ -165,6 +179,8 @@ orphan_check.py の判定で区別できるようにする。
 - [log_kaizen_log_20260420_C84.py](log_kaizen_log_20260420_C84.py)
 - [log_kaizen_log_20260421_C93.py](log_kaizen_log_20260421_C93.py)
 - [log_kaizen_log_20260422_C105.py](log_kaizen_log_20260422_C105.py)
+- [log_lap_response_supplement.py](log_lap_response_supplement.py)
+- [[log_response_logcdx_1226_alpha2]]
 - [log_shared_reads_20260417_phase2.py](log_shared_reads_20260417_phase2.py)
 - [log_shared_reads_20260419_phase2.py](log_shared_reads_20260419_phase2.py)
 - [log_shared_reads_20260420_0030.py](log_shared_reads_20260420_0030.py)
@@ -180,6 +196,7 @@ orphan_check.py の判定で区別できるようにする。
 - [log_slack_all_corpus2skill_memory_mirror_20260421.py](log_slack_all_corpus2skill_memory_mirror_20260421.py)
 - [log_slack_all_curast_20260424.py](log_slack_all_curast_20260424.py)
 - [log_slack_all_denial_list_v02_review_20260421.py](log_slack_all_denial_list_v02_review_20260421.py)
+- [log_slack_all_kazunori_agentic_search_20260525.py](log_slack_all_kazunori_agentic_search_20260525.py)
 - [log_slack_all_kazunori_mizchi_20260421.py](log_slack_all_kazunori_mizchi_20260421.py)
 - [log_slack_all_kogu_8co28_20260420.py](log_slack_all_kogu_8co28_20260420.py)
 - [log_slack_all_masafumi_codex_debug_20260424.py](log_slack_all_masafumi_codex_debug_20260424.py)
@@ -204,6 +221,7 @@ orphan_check.py の判定で区別できるようにする。
 - [log_slack_all_twitter_reply_karpathy_20260419.py](log_slack_all_twitter_reply_karpathy_20260419.py)
 - [log_slack_all_url_fetch_blocked_20260421.py](log_slack_all_url_fetch_blocked_20260421.py)
 - [log_slack_all_yuo_misaki_giveup_20260428.py](log_slack_all_yuo_misaki_giveup_20260428.py)
+- [log_slack_alllab_m28_binding_20260513.py](log_slack_alllab_m28_binding_20260513.py)
 - [log_slack_correction_20260423_url_table.py](log_slack_correction_20260423_url_table.py)
 - [log_slack_diary_20260419_0629.py](log_slack_diary_20260419_0629.py)
 - [log_slack_diary_20260419_0940.py](log_slack_diary_20260419_0940.py)
@@ -216,6 +234,7 @@ orphan_check.py の判定で区別できるようにする。
 - [log_slack_game_rights_chain_log_response_20260507.py](log_slack_game_rights_chain_log_response_20260507.py)
 - [log_slack_game_rights_doh_fabrication_20260502.py](log_slack_game_rights_doh_fabrication_20260502.py)
 - [log_slack_game_rights_folder_structure_20260422.py](log_slack_game_rights_folder_structure_20260422.py)
+- [log_slack_game_rights_headless_litmus_20260517.py](log_slack_game_rights_headless_litmus_20260517.py)
 - [log_slack_game_rights_kogasoo_axis_20260418.py](log_slack_game_rights_kogasoo_axis_20260418.py)
 - [log_slack_game_rights_m38_genre_deep_analysis_20260501.py](log_slack_game_rights_m38_genre_deep_analysis_20260501.py)
 - [log_slack_game_rights_player_ai_v2_20260418.py](log_slack_game_rights_player_ai_v2_20260418.py)
@@ -260,12 +279,15 @@ orphan_check.py の判定で区別できるようにする。
 - [log_slack_shared_pretime_vs_runtime_20260424.py](log_slack_shared_pretime_vs_runtime_20260424.py)
 - [log_slack_shared_reads_30sec_wall_matrix_20260419.py](log_slack_shared_reads_30sec_wall_matrix_20260419.py)
 - [log_slack_shared_reads_craftnova_20260422.py](log_slack_shared_reads_craftnova_20260422.py)
+- [log_slack_shared_reads_externalization_20260513.py](log_slack_shared_reads_externalization_20260513.py)
 - [log_slack_shared_reads_five_papers_pattern_20260421.py](log_slack_shared_reads_five_papers_pattern_20260421.py)
+- [log_slack_shared_reads_memora_20260513.py](log_slack_shared_reads_memora_20260513.py)
 - [log_slack_shared_reads_pacing_3axis_20260422.py](log_slack_shared_reads_pacing_3axis_20260422.py)
 - [log_slack_shared_reads_rppo_risk_diversity_20260426.py](log_slack_shared_reads_rppo_risk_diversity_20260426.py)
 - [log_slack_shared_reads_rsi_human_anchor_20260420.py](log_slack_shared_reads_rsi_human_anchor_20260420.py)
 - [log_slack_shared_sgs_guide_role_20260424.py](log_slack_shared_sgs_guide_role_20260424.py)
 - [log_slack_witcheer_camp2_reaction_20260418.py](log_slack_witcheer_camp2_reaction_20260418.py)
+- [log_slhyde_response.py](log_slhyde_response.py)
 - [merge_memory_redesign_history_20260505.py](merge_memory_redesign_history_20260505.py)
 - [mir_diary_20260417_0200.py](mir_diary_20260417_0200.py)
 - [mir_diary_20260417_c66.py](mir_diary_20260417_c66.py)
@@ -311,6 +333,11 @@ orphan_check.py の判定で区別できるようにする。
 - [mir_slack_mirlog_diary_c126_20260426.py](mir_slack_mirlog_diary_c126_20260426.py)
 - [mir_slack_mirlog_diary_c130_20260426.py](mir_slack_mirlog_diary_c130_20260426.py)
 - [mir_slack_mirlog_diary_c133_20260427.py](mir_slack_mirlog_diary_c133_20260427.py)
+- [mir_slack_mirlog_diary_c220_20260522.py](mir_slack_mirlog_diary_c220_20260522.py)
+- [mir_slack_mirlog_diary_c223_20260523.py](mir_slack_mirlog_diary_c223_20260523.py)
+- [mir_slack_mirlog_diary_c224_20260523.py](mir_slack_mirlog_diary_c224_20260523.py)
+- [mir_slack_mirlog_diary_c227_20260524.py](mir_slack_mirlog_diary_c227_20260524.py)
+- [mir_slack_mirlog_diary_c228_20260524.py](mir_slack_mirlog_diary_c228_20260524.py)
 - [mir_slack_mirlog_diary_c84_20260419.py](mir_slack_mirlog_diary_c84_20260419.py)
 - [mir_slack_mirlog_diary_c85_20260419.py](mir_slack_mirlog_diary_c85_20260419.py)
 - [mir_slack_mirlog_diary_c88_20260420.py](mir_slack_mirlog_diary_c88_20260420.py)
@@ -345,7 +372,14 @@ orphan_check.py の判定で区別できるようにする。
 - [post_ash_kaizen_log_20260504_predicted_play_retroactive.py](post_ash_kaizen_log_20260504_predicted_play_retroactive.py)
 - [post_ash_shared_reads_20260501_subliminal_runtime_analog.py](post_ash_shared_reads_20260501_subliminal_runtime_analog.py)
 - [post_ash_shared_reads_algomatic_self_evolving_harness_20260504.py](post_ash_shared_reads_algomatic_self_evolving_harness_20260504.py)
+- [post_c220_phase2_gokko.py](post_c220_phase2_gokko.py)
+- [post_c220_phase2_logcdx_response.py](post_c220_phase2_logcdx_response.py)
+- [post_c220_phase2_sharedreads.py](post_c220_phase2_sharedreads.py)
+- [post_drafts_index_20260512_POSTED_ts1778541418.py](post_drafts_index_20260512_POSTED_ts1778541418.py)
+- [post_kaizen_log_20260522.txt](post_kaizen_log_20260522.txt)
 - [post_log_all_nao_u_lab_20260501_phase1_phase2_disconnect.py](post_log_all_nao_u_lab_20260501_phase1_phase2_disconnect.py)
+- [post_log_all_nao_u_lab_memlog_paper_c227_20260523.py](post_log_all_nao_u_lab_memlog_paper_c227_20260523.py)
+- [post_log_cdx_response_20260522.txt](post_log_cdx_response_20260522.txt)
 - [post_log_game_rights_20260501_brainstorm_violation_admit.py](post_log_game_rights_20260501_brainstorm_violation_admit.py)
 - [post_log_game_rights_20260501_brick_arkanoid_recancel.py](post_log_game_rights_20260501_brick_arkanoid_recancel.py)
 - [post_log_game_rights_20260501_brick_log_v03.py](post_log_game_rights_20260501_brick_log_v03.py)
@@ -354,6 +388,7 @@ orphan_check.py の判定で区別できるようにする。
 - [post_log_game_rights_20260502_v08_three_questions.py](post_log_game_rights_20260502_v08_three_questions.py)
 - [post_log_game_rights_20260509_ash_headless_stop.py](post_log_game_rights_20260509_ash_headless_stop.py)
 - [post_log_game_rights_20260512_graze_log_v04_m38_completed_POSTED_ts1778537760.py](post_log_game_rights_20260512_graze_log_v04_m38_completed_POSTED_ts1778537760.py)
+- [post_log_game_rights_20260517_litmus_floor_response_POSTED_ts1779008932.py](post_log_game_rights_20260517_litmus_floor_response_POSTED_ts1779008932.py)
 - [post_log_human_steering_20260502_guide_enemies_taste_reply.py](post_log_human_steering_20260502_guide_enemies_taste_reply.py)
 - [post_log_human_steering_20260503_m42_selection_sense.py](post_log_human_steering_20260503_m42_selection_sense.py)
 - [post_log_human_steering_20260504_broken_record_root_cause.py](post_log_human_steering_20260504_broken_record_root_cause.py)
@@ -364,22 +399,31 @@ orphan_check.py の判定で区別できるようにする。
 - [post_log_log_diary_C178_phase5.py](post_log_log_diary_C178_phase5.py)
 - [post_log_log_diary_C179_phase5.py](post_log_log_diary_C179_phase5.py)
 - [post_log_log_diary_c183_20260512.py](post_log_log_diary_c183_20260512.py)
+- [post_log_log_diary_c199_20260517.py](post_log_log_diary_c199_20260517.py)
+- [post_log_log_diary_c226_20260523.py](post_log_log_diary_c226_20260523.py)
 - [post_log_mir_log_20260505_adv_accumulation_check.txt](post_log_mir_log_20260505_adv_accumulation_check.txt)
 - [post_log_mir_log_20260505_adv_correction.txt](post_log_mir_log_20260505_adv_correction.txt)
 - [post_log_shared_reads_20260501_breakout_design_patterns.py](post_log_shared_reads_20260501_breakout_design_patterns.py)
 - [post_log_shared_reads_20260512_graphiti_temporal_context.py](post_log_shared_reads_20260512_graphiti_temporal_context.py)
+- [post_log_shared_reads_agent_eval_2026_trends_c227_20260523.py](post_log_shared_reads_agent_eval_2026_trends_c227_20260523.py)
 - [post_mir_all_20260504_micromanagement.py](post_mir_all_20260504_micromanagement.py)
 - [post_mir_human_steering_20260502_design_sense.py](post_mir_human_steering_20260502_design_sense.py)
 - [post_mir_human_steering_20260505_obsidian_recursive_hierarchy.py](post_mir_human_steering_20260505_obsidian_recursive_hierarchy.py)
+- [post_mir_human_steering_logcdx_metaprompt_eval_20260525.py](post_mir_human_steering_logcdx_metaprompt_eval_20260525.py)
 - [post_mir_log_20260511_c173.py](post_mir_log_20260511_c173.py)
+- [post_mir_log_logcdx_phase14_fix_relay_20260525.py](post_mir_log_logcdx_phase14_fix_relay_20260525.py)
 - [post_tree_integration_20260512.py](post_tree_integration_20260512.py)
+- [[README]]
 - [shared_reads_anthropic_marketplace_ash_20260425.txt](shared_reads_anthropic_marketplace_ash_20260425.txt)
 - [[shared_reads_ash_nyp_qoo]]
 - [[slack_human_steering_ideation_pattern_ash]]
+- [slack_post_matrix_v0.txt](slack_post_matrix_v0.txt)
+- [slack_reply_ai_gamestore_20260523.txt](slack_reply_ai_gamestore_20260523.txt)
+- [slack_reply_atomic_chat_20260523.txt](slack_reply_atomic_chat_20260523.txt)
 - [split_lessons_20260502.py](split_lessons_20260502.py)
 - [split_lessons_appendix_20260502.py](split_lessons_appendix_20260502.py)
 
-## 日付サブディレクトリ (20 dirs)
+## 日付サブディレクトリ (36 dirs)
 
 ### 2026-04-25 (8 files)
 
@@ -627,12 +671,222 @@ orphan_check.py の判定で区別できるようにする。
 - [post_mir_human_steering_tags_20260511.py](2026-05-11/post_mir_human_steering_tags_20260511.py)
 - [post_mir_shared_reads_20260511_reply_naou_detail_instruction_POSTED_ts1778495852.py](2026-05-11/post_mir_shared_reads_20260511_reply_naou_detail_instruction_POSTED_ts1778495852.py)
 
-### 2026-05-12 (4 files)
+### 2026-05-12 (18 files)
 
+- [post_ash_all_20260512_governed_memory_response_POSTED_ts1778560537.py](2026-05-12/post_ash_all_20260512_governed_memory_response_POSTED_ts1778560537.py)
+- [post_ash_diary_c182_20260512_POSTED_ts1778596451.py](2026-05-12/post_ash_diary_c182_20260512_POSTED_ts1778596451.py)
+- [post_ash_game_rights_20260512_v03_cross_review_procedural_proposals_POSTED_ts1778596244.py](2026-05-12/post_ash_game_rights_20260512_v03_cross_review_procedural_proposals_POSTED_ts1778596244.py)
+- [post_ash_game_rights_20260512_v04_judgment_request_POSTED_ts1778554320.py](2026-05-12/post_ash_game_rights_20260512_v04_judgment_request_POSTED_ts1778554320.py)
+- [post_ash_game_rights_20260512_v04_post_ship_judgment_POSTED_ts1778584994.py](2026-05-12/post_ash_game_rights_20260512_v04_post_ship_judgment_POSTED_ts1778584994.py)
+- [post_ash_kaizen_log_20260512_131_stage2_crosscheck_POSTED_ts1778560496.py](2026-05-12/post_ash_kaizen_log_20260512_131_stage2_crosscheck_POSTED_ts1778560496.py)
 - [post_log_all_nao_u_lab_20260512_curse_of_knowledge_inversion_POSTED_ts1778523866.py](2026-05-12/post_log_all_nao_u_lab_20260512_curse_of_knowledge_inversion_POSTED_ts1778523866.py)
+- [post_log_game_rights_20260512_v04_ship_directive_POSTED_ts1778577264.py](2026-05-12/post_log_game_rights_20260512_v04_ship_directive_POSTED_ts1778577264.py)
+- [post_log_human_steering_20260512_neurostate_bench_judgement_POSTED_ts1778560066.py](2026-05-12/post_log_human_steering_20260512_neurostate_bench_judgement_POSTED_ts1778560066.py)
 - [post_log_log_diary_c183_evening_20260512_POSTED_ts1778525199.py](2026-05-12/post_log_log_diary_c183_evening_20260512_POSTED_ts1778525199.py)
 - [post_log_log_diary_c184_20260512_POSTED_ts1778535751.py](2026-05-12/post_log_log_diary_c184_20260512_POSTED_ts1778535751.py)
+- [post_log_log_diary_c188_20260512_POSTED_ts1778589522.py](2026-05-12/post_log_log_diary_c188_20260512_POSTED_ts1778589522.py)
+- [post_log_shared_reads_20260512_3papers_template_contract_POSTED_ts1778577943.py](2026-05-12/post_log_shared_reads_20260512_3papers_template_contract_POSTED_ts1778577943.py)
 - [post_mir_diary_c175_20260512_POSTED_ts1778533605.py](2026-05-12/post_mir_diary_c175_20260512_POSTED_ts1778533605.py)
+- [post_mir_diary_c179_20260512_POSTED_ts1778583430.py](2026-05-12/post_mir_diary_c179_20260512_POSTED_ts1778583430.py)
+- [post_mir_diary_c180_20260512_POSTED_ts1778593929.py](2026-05-12/post_mir_diary_c180_20260512_POSTED_ts1778593929.py)
+- [post_mir_human_steering_20260512_shared_reads_quality.py](2026-05-12/post_mir_human_steering_20260512_shared_reads_quality.py)
+- [post_mir_kaizen_log_20260512_131_stage2_crosscheck_POSTED_ts1778557012.py](2026-05-12/post_mir_kaizen_log_20260512_131_stage2_crosscheck_POSTED_ts1778557012.py)
+
+### 2026-05-13 (9 files)
+
+- [log_slack_game_rights_graze_log_v04_done_20260513.py](2026-05-13/log_slack_game_rights_graze_log_v04_done_20260513.py)
+- [log_slack_game_rights_graze_log_v04_kickoff_20260513.py](2026-05-13/log_slack_game_rights_graze_log_v04_kickoff_20260513.py)
+- [post_log_all_20260513_reply_logcdx_memora_POSTED_ts1778645381.py](2026-05-13/post_log_all_20260513_reply_logcdx_memora_POSTED_ts1778645381.py)
+- [post_log_all_20260513_reply_logcdx_tariq_POSTED_ts1778645388.py](2026-05-13/post_log_all_20260513_reply_logcdx_tariq_POSTED_ts1778645388.py)
+- [post_log_all_20260513_reply_ynishi_codex_10para_POSTED_ts1778645526.py](2026-05-13/post_log_all_20260513_reply_ynishi_codex_10para_POSTED_ts1778645526.py)
+- [post_log_log_diary_c189_20260513_POSTED_ts1778633246.py](2026-05-13/post_log_log_diary_c189_20260513_POSTED_ts1778633246.py)
+- [post_log_log_diary_c190_20260513_POSTED_ts1778677244.py](2026-05-13/post_log_log_diary_c190_20260513_POSTED_ts1778677244.py)
+- [post_mir_diary_c181_20260513.py](2026-05-13/post_mir_diary_c181_20260513.py)
+- [post_mir_diary_c182_20260513.py](2026-05-13/post_mir_diary_c182_20260513.py)
+
+### 2026-05-14 (13 files)
+
+- [post_ash_all_nao_u_lab_cmi_missing_files_verification_20260514_POSTED_ts1778758549.py](2026-05-14/post_ash_all_nao_u_lab_cmi_missing_files_verification_20260514_POSTED_ts1778758549.py)
+- [post_ash_all_nao_u_lab_codex_memory_eval_20260514_POSTED_ts1778716772.py](2026-05-14/post_ash_all_nao_u_lab_codex_memory_eval_20260514_POSTED_ts1778716772.py)
+- [post_ash_game_rights_20260514_v05_design_fladdict_bank_control_POSTED_ts1778706470.py](2026-05-14/post_ash_game_rights_20260514_v05_design_fladdict_bank_control_POSTED_ts1778706470.py)
+- [post_ash_kaizen_log_broken_ref_resolution_20260514_POSTED_ts1778718113.py](2026-05-14/post_ash_kaizen_log_broken_ref_resolution_20260514_POSTED_ts1778718113.py)
+- [post_ash_kaizen_log_rebase_guard_implemented_20260514_POSTED_ts1778693972.py](2026-05-14/post_ash_kaizen_log_rebase_guard_implemented_20260514_POSTED_ts1778693972.py)
+- [post_ash_kaizen_log_wave1_master_actually_landed_POSTED_ts1778700361.py](2026-05-14/post_ash_kaizen_log_wave1_master_actually_landed_POSTED_ts1778700361.py)
+- [post_ash_shared_reads_fladdict_poker_bank_control_POSTED_ts1778705953.py](2026-05-14/post_ash_shared_reads_fladdict_poker_bank_control_POSTED_ts1778705953.py)
+- [post_ash_shared_reads_phase2_fix_UPDATED_ts1778706094.py](2026-05-14/post_ash_shared_reads_phase2_fix_UPDATED_ts1778706094.py)
+- [post_log_log_diary_c191_20260514_POSTED_ts1778698787.py](2026-05-14/post_log_log_diary_c191_20260514_POSTED_ts1778698787.py)
+- [post_log_log_diary_c194_20260514_POSTED_ts1778687297.py](2026-05-14/post_log_log_diary_c194_20260514_POSTED_ts1778687297.py)
+- [post_log_shared_reads_20260514_graze_counter_semantic_transform_POSTED_ts1778697399.py](2026-05-14/post_log_shared_reads_20260514_graze_counter_semantic_transform_POSTED_ts1778697399.py)
+- [post_mir_mir_log_diary_c184_20260514_POSTED_ts1778703091.py](2026-05-14/post_mir_mir_log_diary_c184_20260514_POSTED_ts1778703091.py)
+- [post_mir_mir_log_diary_c186_20260514_POSTED_ts1778766595.py](2026-05-14/post_mir_mir_log_diary_c186_20260514_POSTED_ts1778766595.py)
+
+### 2026-05-15 (6 files)
+
+- [mir_slack_mirlog_diary_c190_20260515_POSTED_ts1778852547.py](2026-05-15/mir_slack_mirlog_diary_c190_20260515_POSTED_ts1778852547.py)
+- [post_ash_ash_diary_c183_20260515.py](2026-05-15/post_ash_ash_diary_c183_20260515.py)
+- [post_ash_human_steering_c183_eval_already_arrived_20260515.py](2026-05-15/post_ash_human_steering_c183_eval_already_arrived_20260515.py)
+- [post_mir_all_nao_u_lab_dot_connection_critique_20260515.py](2026-05-15/post_mir_all_nao_u_lab_dot_connection_critique_20260515.py)
+- [post_mir_mir_log_diary_c187_20260515_POSTED_ts1778787757.py](2026-05-15/post_mir_mir_log_diary_c187_20260515_POSTED_ts1778787757.py)
+- [post_mir_mir_log_diary_c188_20260515_POSTED_ts1778814207.py](2026-05-15/post_mir_mir_log_diary_c188_20260515_POSTED_ts1778814207.py)
+
+### 2026-05-16 (6 files)
+
+- [post_log_all_nao_u_lab_vero_evaluation_20260516_POSTED_ts1778936964.py](2026-05-16/post_log_all_nao_u_lab_vero_evaluation_20260516_POSTED_ts1778936964.py)
+- [post_log_log_diary_c195_20260516_POSTED_ts1778927518.py](2026-05-16/post_log_log_diary_c195_20260516_POSTED_ts1778927518.py)
+- [post_log_log_diary_c196_20260516_POSTED_ts1778937858.py](2026-05-16/post_log_log_diary_c196_20260516_POSTED_ts1778937858.py)
+- [post_mir_diary_c192_20260516.py](2026-05-16/post_mir_diary_c192_20260516.py)
+- [post_mir_diary_c192_v07_gate_20260516.py](2026-05-16/post_mir_diary_c192_v07_gate_20260516.py)
+- [post_mir_diary_c194_20260516_POSTED_ts1778967543.py](2026-05-16/post_mir_diary_c194_20260516_POSTED_ts1778967543.py)
+
+### 2026-05-17 (26 files)
+
+- [log_slack_all_kogu_sprite_forge_quitting_basis_20260517_POSTED_ts1778979840.py](2026-05-17/log_slack_all_kogu_sprite_forge_quitting_basis_20260517_POSTED_ts1778979840.py)
+- [log_slack_all_q1_graze_overhead_20260517_POSTED_ts1778969157.py](2026-05-17/log_slack_all_q1_graze_overhead_20260517_POSTED_ts1778969157.py)
+- [log_slack_all_q2_trajectory_naming_20260517_POSTED_ts1778969171.py](2026-05-17/log_slack_all_q2_trajectory_naming_20260517_POSTED_ts1778969171.py)
+- [log_slack_all_q3_pcgrllm_probe_20260517_POSTED_ts1778969177.py](2026-05-17/log_slack_all_q3_pcgrllm_probe_20260517_POSTED_ts1778969177.py)
+- [log_slack_all_url_unreadable_report_20260517_POSTED_ts1778979848.py](2026-05-17/log_slack_all_url_unreadable_report_20260517_POSTED_ts1778979848.py)
+- [log_slack_kaizen_log_probe_commit_rule_20260517_POSTED_ts1778969437.py](2026-05-17/log_slack_kaizen_log_probe_commit_rule_20260517_POSTED_ts1778969437.py)
+- [log_slack_shared_reads_shmup_variety_rhythm_20260517_POSTED_ts1778979856.py](2026-05-17/log_slack_shared_reads_shmup_variety_rhythm_20260517_POSTED_ts1778979856.py)
+- [post_log_all_nao_u_lab_mtsuruta_tutorial_design_20260517_POSTED_ts1778964204.py](2026-05-17/post_log_all_nao_u_lab_mtsuruta_tutorial_design_20260517_POSTED_ts1778964204.py)
+- [post_log_diary_c198_20260517.py](2026-05-17/post_log_diary_c198_20260517.py)
+- [post_log_diary_c199_20260517_POSTED_ts1778981089.py](2026-05-17/post_log_diary_c199_20260517_POSTED_ts1778981089.py)
+- [post_log_diary_c199_phase5_4_20260517_POSTED_ts1779014225.py](2026-05-17/post_log_diary_c199_phase5_4_20260517_POSTED_ts1779014225.py)
+- [post_log_diary_c200_phase5_20260517_POSTED_ts1779020543.py](2026-05-17/post_log_diary_c200_phase5_20260517_POSTED_ts1779020543.py)
+- [post_log_diary_c201_phase5_20260517_POSTED_ts1779029805.py](2026-05-17/post_log_diary_c201_phase5_20260517_POSTED_ts1779029805.py)
+- [post_log_game_rights_30sec_ai_eval_response_20260517.py](2026-05-17/post_log_game_rights_30sec_ai_eval_response_20260517.py)
+- [post_log_game_rights_60s_rule_retract_llm_judge_20260517_POSTED_ts1779012399.py](2026-05-17/post_log_game_rights_60s_rule_retract_llm_judge_20260517_POSTED_ts1779012399.py)
+- [post_log_game_rights_c200_graze_log_v05_1_cdx_observation_POSTED_ts1779018030.py](2026-05-17/post_log_game_rights_c200_graze_log_v05_1_cdx_observation_POSTED_ts1779018030.py)
+- [post_log_kaizen_log_c199_phase3_improvements_20260517_POSTED_ts1779012652.py](2026-05-17/post_log_kaizen_log_c199_phase3_improvements_20260517_POSTED_ts1779012652.py)
+- [post_log_kaizen_log_c200_phase3_92_93_verification_POSTED_ts1779018466.py](2026-05-17/post_log_kaizen_log_c200_phase3_92_93_verification_POSTED_ts1779018466.py)
+- [post_log_log_push_failure_escalation_8_objects_POSTED_ts1779019070.py](2026-05-17/post_log_log_push_failure_escalation_8_objects_POSTED_ts1779019070.py)
+- [post_log_log_push_failure_fsck_detail_20260517_POSTED_ts1779013280.py](2026-05-17/post_log_log_push_failure_fsck_detail_20260517_POSTED_ts1779013280.py)
+- [post_log_log_push_failure_loose_object_corruption_20260517_POSTED_ts1779013208.py](2026-05-17/post_log_log_push_failure_loose_object_corruption_20260517_POSTED_ts1779013208.py)
+- [post_log_shared_reads_element_order_separation_20260517_POSTED_ts1779012072.py](2026-05-17/post_log_shared_reads_element_order_separation_20260517_POSTED_ts1779012072.py)
+- [post_mir_diary_c199_20260517_POSTED_ts1778983311.py](2026-05-17/post_mir_diary_c199_20260517_POSTED_ts1778983311.py)
+- [post_mir_diary_c200_20260517_POSTED_ts1778996541.py](2026-05-17/post_mir_diary_c200_20260517_POSTED_ts1778996541.py)
+- [post_mir_diary_c201_20260517_POSTED_ts1779007932.py](2026-05-17/post_mir_diary_c201_20260517_POSTED_ts1779007932.py)
+- [post_mir_kaizen_review_weekly_20260517_POSTED_ts1778983107.py](2026-05-17/post_mir_kaizen_review_weekly_20260517_POSTED_ts1778983107.py)
+
+### 2026-05-18 (12 files)
+
+- [log_slack_all_nao_u_lab_hermes_agent_ack_20260518_POSTED_ts1779063051.py](2026-05-18/log_slack_all_nao_u_lab_hermes_agent_ack_20260518_POSTED_ts1779063051.py)
+- [log_slack_shared_reads_bomb_design_graze_log_v05_1_cdx_v01_20260518_POSTED_ts1779050088.py](2026-05-18/log_slack_shared_reads_bomb_design_graze_log_v05_1_cdx_v01_20260518_POSTED_ts1779050088.py)
+- [post_log_all_nao_u_lab_log_cdx_citation_detection_response_c208_20260518_POSTED_ts1779104545.py](2026-05-18/post_log_all_nao_u_lab_log_cdx_citation_detection_response_c208_20260518_POSTED_ts1779104545.py)
+- [post_log_all_nao_u_lab_url_unreadable_c208_20260518_POSTED_ts1779104536.py](2026-05-18/post_log_all_nao_u_lab_url_unreadable_c208_20260518_POSTED_ts1779104536.py)
+- [post_log_diary_c202_phase5_20260518_POSTED_ts1779040849.py](2026-05-18/post_log_diary_c202_phase5_20260518_POSTED_ts1779040849.py)
+- [post_log_diary_c203_phase5_20260518_POSTED_ts1779051785.py](2026-05-18/post_log_diary_c203_phase5_20260518_POSTED_ts1779051785.py)
+- [post_log_diary_c204_phase5_20260518_POSTED_ts1779062436.py](2026-05-18/post_log_diary_c204_phase5_20260518_POSTED_ts1779062436.py)
+- [post_log_diary_c205_phase5_20260518_POSTED_ts1779074517.py](2026-05-18/post_log_diary_c205_phase5_20260518_POSTED_ts1779074517.py)
+- [post_log_diary_c207_phase5_20260518_POSTED_ts1779094520.py](2026-05-18/post_log_diary_c207_phase5_20260518_POSTED_ts1779094520.py)
+- [post_log_diary_c208_phase5_20260518_POSTED_ts1779105539.py](2026-05-18/post_log_diary_c208_phase5_20260518_POSTED_ts1779105539.py)
+- [post_log_human_steering_branch_per_cycle_reply_20260518_POSTED_ts1779104886.py](2026-05-18/post_log_human_steering_branch_per_cycle_reply_20260518_POSTED_ts1779104886.py)
+- [post_log_human_steering_branch_per_task_reply_20260518_POSTED_ts1779104588.py](2026-05-18/post_log_human_steering_branch_per_task_reply_20260518_POSTED_ts1779104588.py)
+
+### 2026-05-19 (1 files)
+
+- [post_mir_diary_c202_20260519_POSTED_ts1779148456.py](2026-05-19/post_mir_diary_c202_20260519_POSTED_ts1779148456.py)
+
+### 2026-05-20 (11 files)
+
+- [[log_game_rights_v05_2_proposal_with_phase3_correction]]
+- [post_log_all_nao_u_lab_firing_distance_20260520_POSTED_ts1779287481.py](2026-05-20/post_log_all_nao_u_lab_firing_distance_20260520_POSTED_ts1779287481.py)
+- [post_log_diary_c208_cycle2_phase5_20260520_POSTED_ts1779234886.py](2026-05-20/post_log_diary_c208_cycle2_phase5_20260520_POSTED_ts1779234886.py)
+- [post_log_diary_c211_phase5_matrix_v0_shot_log_v01_apply_20260520_POSTED_ts1779267865.py](2026-05-20/post_log_diary_c211_phase5_matrix_v0_shot_log_v01_apply_20260520_POSTED_ts1779267865.py)
+- [post_log_diary_c213_phase5_matrix_3ship_full_scoring_20260520_POSTED_ts1779288325.py](2026-05-20/post_log_diary_c213_phase5_matrix_3ship_full_scoring_20260520_POSTED_ts1779288325.py)
+- [post_log_game_rights_v05_2_meta_correction_20260520_POSTED_ts1779233787.py](2026-05-20/post_log_game_rights_v05_2_meta_correction_20260520_POSTED_ts1779233787.py)
+- [post_log_game_rights_v05_2_proposal_with_phase3_correction_20260520.py](2026-05-20/post_log_game_rights_v05_2_proposal_with_phase3_correction_20260520.py)
+- [post_log_game_rights_v06b_ready_20260520_POSTED_ts1779234888.py](2026-05-20/post_log_game_rights_v06b_ready_20260520_POSTED_ts1779234888.py)
+- [post_log_kaizen_log_115_formal_closure_20260520_POSTED_ts1779233589.py](2026-05-20/post_log_kaizen_log_115_formal_closure_20260520_POSTED_ts1779233589.py)
+- [post_log_response_logcdx_def_cue_means_ends_20260520_POSTED_ts1779276534.py](2026-05-20/post_log_response_logcdx_def_cue_means_ends_20260520_POSTED_ts1779276534.py)
+- [post_log_shared_reads_shot_log_dialogue_location_20260520_POSTED_ts1779237323.py](2026-05-20/post_log_shared_reads_shot_log_dialogue_location_20260520_POSTED_ts1779237323.py)
+
+### 2026-05-21 (15 files)
+
+- [log_slack_all_firing_distance_retraction_20260521.py](2026-05-21/log_slack_all_firing_distance_retraction_20260521.py)
+- [log_slack_all_v052_v053_split_intent_20260521.py](2026-05-21/log_slack_all_v052_v053_split_intent_20260521.py)
+- [log_slack_shared_reads_popcorn_enemies_20260521.py](2026-05-21/log_slack_shared_reads_popcorn_enemies_20260521.py)
+- [post_log_all_nao_u_lab_firing_distance_retraction_20260521_POSTED_ts1779310399.py](2026-05-21/post_log_all_nao_u_lab_firing_distance_retraction_20260521_POSTED_ts1779310399.py)
+- [post_log_all_nao_u_lab_headless_eval_format_v01_20260521_POSTED_ts1779363790.py](2026-05-21/post_log_all_nao_u_lab_headless_eval_format_v01_20260521_POSTED_ts1779363790.py)
+- [post_log_all_nao_u_lab_oktamajun_what_pretend_play_20260521_POSTED_ts1779319952.py](2026-05-21/post_log_all_nao_u_lab_oktamajun_what_pretend_play_20260521_POSTED_ts1779319952.py)
+- [post_log_all_nao_u_lab_santtiagom_implementation_notes_20260521_POSTED_ts1779298280.py](2026-05-21/post_log_all_nao_u_lab_santtiagom_implementation_notes_20260521_POSTED_ts1779298280.py)
+- [post_log_diary_c214_phase5_mimicry_v02_brainstorm_20260521_POSTED_ts1779299544.py](2026-05-21/post_log_diary_c214_phase5_mimicry_v02_brainstorm_20260521_POSTED_ts1779299544.py)
+- [post_log_diary_c219_phase5_headless_eval_format_crystallized_20260521_POSTED_ts1779364347.py](2026-05-21/post_log_diary_c219_phase5_headless_eval_format_crystallized_20260521_POSTED_ts1779364347.py)
+- [post_log_game_rights_headless_evaluation_assist_20260521_POSTED_ts1779337354.py](2026-05-21/post_log_game_rights_headless_evaluation_assist_20260521_POSTED_ts1779337354.py)
+- [post_log_game_rights_mimicry_v01_4elements_v02_brainstorm_20260521_POSTED_ts1779299195.py](2026-05-21/post_log_game_rights_mimicry_v01_4elements_v02_brainstorm_20260521_POSTED_ts1779299195.py)
+- [post_log_shared_reads_oktamajun_what_pretend_play_20260521_POSTED_ts1779320105.py](2026-05-21/post_log_shared_reads_oktamajun_what_pretend_play_20260521_POSTED_ts1779320105.py)
+- [post_mir_diary_c207_20260521_POSTED_ts1779323392.py](2026-05-21/post_mir_diary_c207_20260521_POSTED_ts1779323392.py)
+- [post_mir_diary_c208_20260521_POSTED_ts1779360717.py](2026-05-21/post_mir_diary_c208_20260521_POSTED_ts1779360717.py)
+- [post_mir_diary_c209_20260521_POSTED_ts1779371780.py](2026-05-21/post_mir_diary_c209_20260521_POSTED_ts1779371780.py)
+
+### 2026-05-22 (8 files)
+
+- [post_log_all_nao_u_lab_atomic_chat_reaction_20260522_POSTED_ts1779449543.py](2026-05-22/post_log_all_nao_u_lab_atomic_chat_reaction_20260522_POSTED_ts1779449543.py)
+- [post_log_all_nao_u_lab_phase2_relapse_check_20260522_POSTED_ts1779384903.py](2026-05-22/post_log_all_nao_u_lab_phase2_relapse_check_20260522_POSTED_ts1779384903.py)
+- [post_log_diary_c219_phase5_mimicry_v02_self_judgment_20260522_POSTED_ts1779386080.py](2026-05-22/post_log_diary_c219_phase5_mimicry_v02_self_judgment_20260522_POSTED_ts1779386080.py)
+- [post_log_diary_c220_noon_phase5_20260522_POSTED_ts1779418601.py](2026-05-22/post_log_diary_c220_noon_phase5_20260522_POSTED_ts1779418601.py)
+- [post_log_diary_c220_phase5_20260522_POSTED_ts1779396646.py](2026-05-22/post_log_diary_c220_phase5_20260522_POSTED_ts1779396646.py)
+- [post_log_game_rights_headless_evaluation_v02_20260522_POSTED_ts1779418018.py](2026-05-22/post_log_game_rights_headless_evaluation_v02_20260522_POSTED_ts1779418018.py)
+- [post_log_game_rights_headless_evaluation_v03_logcdx_reply_20260522_POSTED_ts1779423371.py](2026-05-22/post_log_game_rights_headless_evaluation_v03_logcdx_reply_20260522_POSTED_ts1779423371.py)
+- [post_log_shared_reads_atomic_chat_20260522_POSTED_ts1779449687.py](2026-05-22/post_log_shared_reads_atomic_chat_20260522_POSTED_ts1779449687.py)
+
+### 2026-05-23 (1 files)
+
+- [post_log_human_steering_planetary_gear_memory_20260523_POSTED_ts1779490621.py](2026-05-23/post_log_human_steering_planetary_gear_memory_20260523_POSTED_ts1779490621.py)
+
+### 2026-05-24 (8 files)
+
+- [post_log_allnaoulab_logcdx_adv_migration_reply_c232_20260524_POSTED_ts1779590653.py](2026-05-24/post_log_allnaoulab_logcdx_adv_migration_reply_c232_20260524_POSTED_ts1779590653.py)
+- [post_log_allnaoulab_logcdx_replayable_harness_reply_c232_20260524_POSTED_ts1779590662.py](2026-05-24/post_log_allnaoulab_logcdx_replayable_harness_reply_c232_20260524_POSTED_ts1779590662.py)
+- [post_log_log_diary_c229_20260524.py](2026-05-24/post_log_log_diary_c229_20260524.py)
+- [post_log_log_diary_c231_20260524.py](2026-05-24/post_log_log_diary_c231_20260524.py)
+- [post_log_log_diary_c232_20260524_POSTED_ts1779591488.py](2026-05-24/post_log_log_diary_c232_20260524_POSTED_ts1779591488.py)
+- [post_log_log_diary_c233_20260524_POSTED_ts1779602392.py](2026-05-24/post_log_log_diary_c233_20260524_POSTED_ts1779602392.py)
+- [post_log_log_mystery_v01_v05_playtest_request_v01_c233_20260524.py](2026-05-24/post_log_log_mystery_v01_v05_playtest_request_v01_c233_20260524.py)
+- [post_log_shared_reads_opengame_3axis_vs_layered_v01_c233_20260524_POSTED_ts1779601071.py](2026-05-24/post_log_shared_reads_opengame_3axis_vs_layered_v01_c233_20260524_POSTED_ts1779601071.py)
+
+### 2026-05-25 (11 files)
+
+- [post_log_allnaoulab_log_mystery_intro_fix_v10_20260525_POSTED_ts1779658579.py](2026-05-25/post_log_allnaoulab_log_mystery_intro_fix_v10_20260525_POSTED_ts1779658579.py)
+- [post_log_allnaoulab_phase5_diary_c237_20260525_POSTED_ts1779649387.py](2026-05-25/post_log_allnaoulab_phase5_diary_c237_20260525_POSTED_ts1779649387.py)
+- [post_log_allnaoulab_v01_v10_playtest_request_c237_20260525.py](2026-05-25/post_log_allnaoulab_v01_v10_playtest_request_c237_20260525.py)
+- [post_log_allnaoulab_v10_self_diagnosis_c237_20260525_POSTED_ts1779648429.py](2026-05-25/post_log_allnaoulab_v10_self_diagnosis_c237_20260525_POSTED_ts1779648429.py)
+- [post_log_gamerights_metaprompt_eval_20260525_POSTED_ts1779659902.py](2026-05-25/post_log_gamerights_metaprompt_eval_20260525_POSTED_ts1779659902.py)
+- [post_log_humansteering_pulse_relay_v003_analysis_and_project_plan_20260525_POSTED_ts1779658588.py](2026-05-25/post_log_humansteering_pulse_relay_v003_analysis_and_project_plan_20260525_POSTED_ts1779658588.py)
+- [post_log_kaizenlog_134_day20_c237_20260525_POSTED_ts1779648475.py](2026-05-25/post_log_kaizenlog_134_day20_c237_20260525_POSTED_ts1779648475.py)
+- [post_log_log_diary_c239_20260525_POSTED_ts1779681229.py](2026-05-25/post_log_log_diary_c239_20260525_POSTED_ts1779681229.py)
+- [post_log_log_phase14_fix_20260525_POSTED_ts1779659932.py](2026-05-25/post_log_log_phase14_fix_20260525_POSTED_ts1779659932.py)
+- [post_log_shared_reads_movement_prediction_20260525_POSTED_ts1779679990.py](2026-05-25/post_log_shared_reads_movement_prediction_20260525_POSTED_ts1779679990.py)
+- [post_mir_mirlog_diary_c229_20260525_POSTED_ts1779659618.py](2026-05-25/post_mir_mirlog_diary_c229_20260525_POSTED_ts1779659618.py)
+
+### 2026-05-26 (14 files)
+
+- [post_log_all_nao_u_lab_hasp_response.py](2026-05-26/post_log_all_nao_u_lab_hasp_response.py)
+- [post_log_allnaoulab_inside_to_outside_leak_20260526_POSTED_ts1779759682.py](2026-05-26/post_log_allnaoulab_inside_to_outside_leak_20260526_POSTED_ts1779759682.py)
+- [post_log_allnaoulab_steipete_skill_token_audit_POSTED_ts1779786497.py](2026-05-26/post_log_allnaoulab_steipete_skill_token_audit_POSTED_ts1779786497.py)
+- [post_log_allnaoulab_tezuka_surprise_reply_20260526_POSTED_ts1779742176.py](2026-05-26/post_log_allnaoulab_tezuka_surprise_reply_20260526_POSTED_ts1779742176.py)
+- [post_log_humansteering_log_autonomous_game_v001_ack_20260526_POSTED_ts1779743677.py](2026-05-26/post_log_humansteering_log_autonomous_game_v001_ack_20260526_POSTED_ts1779743677.py)
+- [post_log_kaizen_log_c243_phase3_kaizen135_POSTED_ts1779770661.py](2026-05-26/post_log_kaizen_log_c243_phase3_kaizen135_POSTED_ts1779770661.py)
+- [post_log_kaizenlog_inside_to_outside_leak_20260526_POSTED_ts1779759722.py](2026-05-26/post_log_kaizenlog_inside_to_outside_leak_20260526_POSTED_ts1779759722.py)
+- [post_log_log_diary_c238_phase4_proxy_20260526_POSTED_ts1779728732.py](2026-05-26/post_log_log_diary_c238_phase4_proxy_20260526_POSTED_ts1779728732.py)
+- [post_log_log_diary_c238_phase5_trace_logger_20260526_POSTED_ts1779749774.py](2026-05-26/post_log_log_diary_c238_phase5_trace_logger_20260526_POSTED_ts1779749774.py)
+- [post_log_log_diary_c242_phase5_mimicry_20260526_POSTED_ts1779738941.py](2026-05-26/post_log_log_diary_c242_phase5_mimicry_20260526_POSTED_ts1779738941.py)
+- [post_log_log_diary_c243_phase5_20260526_POSTED_ts1779771274.py](2026-05-26/post_log_log_diary_c243_phase5_20260526_POSTED_ts1779771274.py)
+- [post_log_shared_reads_20260526_ontology_vs_semantic_layer_POSTED_ts1779757222.py](2026-05-26/post_log_shared_reads_20260526_ontology_vs_semantic_layer_POSTED_ts1779757222.py)
+- [post_mir_mirlog_diary_c230_20260526_POSTED_ts1779745137.py](2026-05-26/post_mir_mirlog_diary_c230_20260526_POSTED_ts1779745137.py)
+- [post_mir_mirlog_diary_c231_20260526_POSTED_ts1779804361.py](2026-05-26/post_mir_mirlog_diary_c231_20260526_POSTED_ts1779804361.py)
+
+### 2026-05-27 (6 files)
+
+- [post_log_allnaoulab_graphiti_akshay_20260527_POSTED_ts1779842673.py](2026-05-27/post_log_allnaoulab_graphiti_akshay_20260527_POSTED_ts1779842673.py)
+- [post_log_allnaoulab_mimicry_log_direct_20260527_POSTED_ts1779813485.py](2026-05-27/post_log_allnaoulab_mimicry_log_direct_20260527_POSTED_ts1779813485.py)
+- [post_log_kaizenlog_136_phase1_step6_protocol_20260527_POSTED_ts1779813689.py](2026-05-27/post_log_kaizenlog_136_phase1_step6_protocol_20260527_POSTED_ts1779813689.py)
+- [post_log_log_diary_c246_phase5_20260527_POSTED_ts1779814660.py](2026-05-27/post_log_log_diary_c246_phase5_20260527_POSTED_ts1779814660.py)
+- [post_log_log_diary_c248_phase5_20260527_POSTED_ts1779836534.py](2026-05-27/post_log_log_diary_c248_phase5_20260527_POSTED_ts1779836534.py)
+- [post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py](2026-05-27/post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py)
+
+### __pycache__ (1 files)
+
+- [log_reply_to_logcdx_adv_playbook_20260523.cpython-310.pyc](__pycache__/log_reply_to_logcdx_adv_playbook_20260523.cpython-310.pyc)
 
 ### blog_Mir (13 files)
 

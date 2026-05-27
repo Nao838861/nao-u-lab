@@ -1975,3 +1975,79 @@ Pre-check 洞察キュー #5 = Mir #all-nao-u-lab 投稿 ts周辺「Nao_u 共有
 
 **次の 1 mm**: atom_operations_log.jsonl (CRUD 4 分類で atom の create/update/delete/promote を 1 行ずつ追記) のみ Phase 4 以降の小実験候補。学習を伴わない、ログ可視化のみ = `feedback_substrate_not_infrastructure.md` T:5 順守の最小実装。kaizen 起票判定は同型 (CRUD 操作の見えなさ) が再度確認されてから。
 
+---
+
+### 2026-05-27 (Log C249 Phase 3): Atlan Pattern 5 (Enterprise Context Layer) × 3層プロンプト構造の構造的相同 / Mem0 6 gap 並置
+
+本サイクル Phase 1 §6 外部検索 (kaizen #106 摂取経路固定、キーワード `agent memory unified graph deduplication resolution 2026`) で取得した 2 記事 (Mem0/Atlan) を Phase 2 で #shared-reads 投稿 (Mem0 ts=1779845907、Atlan ts=1779845919)。両者の並置で Log の 3層プロンプト構造の理論的裏付けが得られた。
+
+**Atlan Pattern 5 (Enterprise Context Layer) との構造的相同**:
+- Atlan 5 pattern (In-Process / Flat Vector / Tiered / Graph+Vector Hybrid / Enterprise Context Layer) のうち、Pattern 5 = 「governed metadata graph (organizational memory) + ontology 層」が **Log の `.claude/system_identity.md` 常時注入 + `CLAUDE.md` セッション開始注入 + `.claude/rules/*.md` ファイル操作時注入** という 3 段 governed layer と構造的に相同
+- Pattern 5 の定量効果 (「text-to-SQL 3x 改善 vs bare schema」「ontology 層で 20% answer accuracy 改善」) は ontology 層 (definition 一貫性) 効果 — Log の **「リポジトリフォルダ以下のみ触る」「丸書換え禁止」「core_mission.md 読み取り専用」** がこの definition 一貫性に相当
+- Atlan の「Pattern 5 は greenfield single agent では viable でない」制約は、Log/Mir/Ash 3 instance + Log_cdx 別系統 = 既に multi-agent governance 要件下にいる前提から、Nao_u 設計が結果的に最も governance 強度の高い pattern を選んでいたことになる **(自己照合データ点として強い、設計の意図的選択ではなく結果的整合)**
+
+**Pattern 別 適用判定**:
+- Pattern 1 (Pure context, 14.7x コスト): 採用しない (log_autonomous_game v001 評価層構造で同方向結論済)
+- Pattern 2 (Flat vector, temporal awareness なし): 採用しない (beliefs.md 検証期限の温度差を失う、unfit)
+- Pattern 3 (Tiered MemGPT 系, 自己 manage): 部分採用済 — 3層プロンプト + MEMORY.md index + atoms/ archival はこれに近い、ただし自己 manage ではなく Nao_u + Log 共同 manage
+- Pattern 4 (Graph+Vector Hybrid, Mem0g 68.4%/2.59s): build_atom_edges.py (kaizen #135 試作) がこの方向、実装着手判断は Log_cdx と並走
+- Pattern 5 (Enterprise Context Layer): 既に部分採用 (3層プロンプト構造)。**ontology 層に相当する CLAUDE.md「絶対にやる」5 項目は「definition の governed source」として機能、ここを丸書換えしないことが Pattern 5 強度の根拠**
+
+**Atlan failure modes 6 件と Log 既装置の対応**:
+| failure mode | Log 側対応装置 | 現状機能度 |
+|---|---|---|
+| 37% interagent misalignment | kaizen #131 段階値比較警告 (8/24/7/4 件) | 検出器試作中 |
+| Synchronization drift | inbox_win.md / inbox_mac.md + Auto sync from Win | 機能中 |
+| Lost in the middle | CLAUDE.md「絶対にやる」5 項目を冒頭集約 | 整合 |
+| Stale-fact failures | beliefs.md 検証期限装置 | **健康レポート 25/35 件要注意 = 機能不全** |
+| Cross-agent contamination | system_identity instance 名分離 (Log/Mir/Ash) | 機能中 |
+| Compliance liability | リポジトリ外不可触ポリシー | 機能中 |
+
+**Mem0 6 gap 並置 (圧縮後の症状軸)**:
+- 6 gap = (1) temporal abstraction 10x で 25% loss / (2) change を replacement ではなく evolution / (3) application-level evaluation manual / (4) privacy/consent / (5) cross-session identity / (6) memory staleness "confidently wrong"
+- **gap 2 (evolution vs replacement)** が core_mission.md「丸書換え禁止、追記・更新」と独立収束 (Mem0 著者 = memory governance 研究者、こちら = 個人の20年日記運用、共通根拠は別) → 「正しい memory 設計は別経路から見ても同じ結論に着くか」の自己照合データ点として高品質
+- **gap 6 (memory staleness)** が beliefs.md 健康レポート 25/35 件要注意 (検証期限超過 7 件 = "confidently wrong" 候補) と直接交差、最優先で要処理
+- **gap 1 (temporal abstraction 10x で 25% loss)** が atoms 1141 件 (GPT/memory/atoms/2026-05) と相似、kaizen #134 probe_atom_quality は format/ref/action 3 指標で WARN=0 だが temporal 抽象化品質は別軸
+- **gap 5 (cross-session identity)** が Log/Mir/Ash + Log_cdx + 20年日記の構造と相似 — Mem0 が想定する「Anonymous sessions break user_id」と同型、`coefficient_evidence:` メタデータ運用 (案 B) はこの gap への対処と読み替え可能
+
+**並置効果 (Mem0 + Atlan + 前サイクル SSGM の 3 段)**:
+- Mem0 = **症状** (gap、圧縮後に表れる) / Atlan = **構造** (pattern、圧縮中の選択肢) / SSGM = **関所** (圧縮許可条件、圧縮前のゲート)
+- 3 段並べると **圧縮前 (SSGM gating) → 圧縮中 (Atlan pattern) → 圧縮後の症状 (Mem0 gap)** の memory governance パイプライン全体が見える
+- 両記事とも Anthropic Dreaming (async hippocampal-replay、2026-05-06) を扱っていない → **「state of」を冠する 2 記事の共通欠落** = selective external memory (Markdown+git 系) vs hippocampal-replay は別系統で並走中、Log は前者寄りなので Dreaming 系の取り込みは別ルートで要
+
+**判定 (即実装はしない、観察項目と素材として残す)**:
+- Atlan Pattern 5 相同は **3層プロンプト構造の理論的裏付け** として本ファイルに記録 (本節) → 外部レビュー時の説明速度を上げる素材 (Pot 設計の C227 §share と同型運用)
+- Mem0 6 gap は **kaizen 自己診断項目の語彙拡張候補** として保留 (即 implement なし、`feedback_rule_proliferation_canonical.md` 順守 / 同型 N 回未確定)
+- LoCoMo 評価項目 (single-hop / temporal / multi-hop / open-domain) は **self_judgment.md / probe_atom_quality の追加軸として導入検討** → C250 以降の判定発火点
+- DecodingAI「Building Agentic GraphRAG: Unified Memory With MCP」候補保留 (MCP 経由 unified graph、Log の Markdown+git 路線とは別系統)
+- build_atom_edges.py (Pattern 4 寄り) が Pattern 5 governance を壊さないかの自己診断項目を **kaizen #135 段階2 着手判定の事前 gate** に追加要 (本節を起点に次サイクル kaizen tracker に反映)
+
+**次の 1 mm**: 3層プロンプト構造 = Pattern 5 相同という認識を、新 instance 立ち上げ時のオンボーディング設計 (Mir / Ash 立ち上げ時に経験したコスト = system_identity / CLAUDE.md / rules 群読み込み負荷) の改善材料として保留。Atlan「greenfield viable でない」制約は新 instance に当てはまる = 新 instance 立ち上げ時に「Pattern 5 governance 強度を維持しつつ最小読み込みで起動できるか」の自己診断項目を kaizen 候補化 (同型 N 回未確定で保留)。
+
+---
+
+### 2026-05-27 (Log C249 Phase 3 §他インスタンス洞察): Mir [LLMトリプル抽出KG 3パターン] (zenn.dev/kenimo49) との build_atom_edges.py 設計判断接続
+
+Pre-check 洞察キュー (16件) 中 Mir #shared-reads「LLMにトリプル抽出させたら壊れたKG」を Phase 3 で消化。5,200 ドキュメントの実務 KG 構築で 12 万ノード・40 万エッジが「壊れた」(Microsoft が 7 別ノード化、関係方向反転 10-15%、矛盾蔓延) 事例 + パターン1 (Few-shot $3/1000文書) / パターン2 (スキーマ駆動 $10) / パターン3 (マルチパス + Self-correction $30-50) の 3 段階アプローチ + 落とし穴対処 (正規化辞書 + 埋め込み類似度 / 矛盾を削除せず source_doc_id + extracted_at 付与で全バージョン保持) を提示。
+
+**build_atom_edges.py (kaizen #135) 設計判断との接続**:
+- 当方の build_atom_edges.py は **frontmatter `[[wikilink]]` + supersedes/derived_from/related の 4 軸抽出のみ**で edges.jsonl を派生生成 = LLM トリプル抽出を**使わない**。zenn 記事の「壊れた KG」12万ノード経由は LLM 抽出由来、当方は構造化マークアップからのパターン抽出で「LLM 抽出に依存しない安全側」に倒している
+- ただし build_atom_edges.py で発生した wikilink_weak 2 edges のノイズ (本文中の `[[wikilink]]` 例示テキストからの誤抽出) は、zenn 記事「Microsoft の表記揺れ 7 別ノード」と相似 → **当方も「表記揺れ」を別形式 (汎用語リテラル誤抽出) で抱えている**ことの自己照合
+- 段階2 移行判定 (kaizen #135) で「recall 側 type gate で wikilink_weak 除外」を第一候補にしている設計は、zenn 記事の「矛盾を削除せず全バージョン保持」哲学とも整合 — 抽出側で除外しない、recall 側で gate する = 削除ではなく可視化を保つ
+
+**zenn パターン 3 段階と当方 build_atom_edges.py 段階1/2/3 の対応**:
+| zenn パターン | 当方 build_atom_edges.py 段階 | 採用判断 |
+|---|---|---|
+| パターン1 Few-shot + 後段検証 (LLM 抽出) | (該当なし、当方は LLM 抽出を使わない) | 採用しない (Pattern 5 governance を壊す + コスト 1000文書 $3 でも積み上がる) |
+| パターン2 スキーマ駆動 (allowed_nodes/relationships) | 段階1 (現状) — frontmatter 4 軸 + 本文 wikilink で抽出種類を制限 | 部分採用 (スキーマ = 4 軸の限定列挙、ただし LLM 抽出なし) |
+| パターン3 マルチパス Self-correction | (該当なし、当方は Self-correction を持たない) | 採用しない (トークンコスト 3倍 + R 層を判断器に使わない方針と矛盾) |
+
+→ 当方は **パターン2 ベースの LLM 抽出なし版** という独自路線。zenn 記事は LLM 抽出前提なので直接比較できないが、「LLM 抽出を使わない」選択を Pattern 5 governance 強度の根拠として自己照合できた。
+
+**矛盾保持哲学の独立収束**:
+zenn 記事「契約金額が 3 パターン存在した案件で、全て並べたことで『別紙が間違っている』発見に繋がった」= 矛盾を削除せず source_doc_id + extracted_at をエッジ属性に付けて全バージョン保持 → 当方の **beliefs.md「古い信念を修正する」と core_mission.md「丸書換え禁止、追記・更新」の二段運用** と独立収束。Mem0 gap 2 (evolution vs replacement) と同方向、本ファイル C249 Atlan 節で記録した自己照合データ点を補強。
+
+**新規 kaizen 起票判定**: しない (`feedback_rule_proliferation_canonical.md` 順守、同型 N 回未確定)。本知見は build_atom_edges.py (kaizen #135) 段階2 移行判定の素材として吸収、独立装置として立てない。
+
+**Mir 投稿への対応**: #all-nao-u-lab で 1 mm 反応をすべきか判断 → **しない** (C246 Phase 1 §6 「Phase 2/3 強制利用しない」原則 + 本知見が build_atom_edges.py 設計判断の補強材料に留まる射程 = 独立投稿で広げると Mir 知見の摂取経路固定化が確認バイアス化するリスク、本ファイル記録で十分)。
+
