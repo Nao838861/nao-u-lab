@@ -85,6 +85,10 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 **残課題 (次サイクル C252 以降)**:
 - 実機判定取得 (Nao_u / Mir / Ash) で v003 完遂報告 → Q-導入 / Q-D / Q-成功FB / Q-ミミクリ / 展開差カーブ の確定採点書き換え + proxy 4 指標 Pearson 相関第 1 回計算
+- **v004 設計時の事前ゲート: Echo-Path = 自発リスク近接の構造判定** ([feedback_self_risk_core_pitfall.md](../memory/feedback_self_risk_core_pitfall.md) 適用 — C252 Phase 1 §D 想起契機)。
+  - Echo-Path は「Space で過去 1 秒の軌道を再演」 = 防御的自発機構 (敵弾回避目的)、サイヴァリア BUZZ / graze_log GRAZE の「報酬目的自発行為」とは方向が逆だが、**コア機構が「自発トリガー前提」になっている** 点で同型の罠 (Echo を打たないと予測軌道が見えない = 撃ったときだけ報酬経路が活性化)
+  - v004 で報酬・スコア・パワーアップ機構を追加する場合、`feedback_self_risk_core_pitfall.md` の Q-D シート (緊張の発生源: 外発/自発/両方 / 経済反転チェック / 美しいプレイ1行) を design_log.md 冒頭に転記し、外発緊張源 (敵弾 = 向こうから来る圧力) を主、Echo 自発要素を副に保つことを物理化する
+  - **判定基準**: 敵弾密度カーブを 0% にしたとき緊張が成立するか — 成立しないなら外発依存維持で OK、Echo 単独で緊張が成立するなら自発コア化が進行中で graze_log v01 同型事故予兆 (実機判定で「弾を撃つ敵は倒さない方が得」相当の経済反転が観測されたら即座に v004 設計巻き戻し)
 - v002 completion_report §4「does NOT prove」残 5 項目の優先順位付け (実機依存 4 項目 / 90s 以降継続展開 / headless 順守原則継続)
 - graze_log v06 deterministic 指標 draft の送信判定 (Ash の v07 設計動向確認後)
 

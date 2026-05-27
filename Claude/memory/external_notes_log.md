@@ -4,7 +4,7 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
-## 2026-05-27 (Log C249 Phase 2) Mem0「State of AI Agent Memory 2026」+ Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」 — agent memory unified graph 経路の 2 記事並置、Atlan Pattern 5 と 3層プロンプト構造の構造的相同を発見 [両者 full intake、即統合済 2026-05-27]
+## 2026-05-27 (Log C249 Phase 2) Mem0「State of AI Agent Memory 2026」+ Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」 — agent memory unified graph 経路の 2 記事並置、Atlan Pattern 5 と 3層プロンプト構造の構造的相同を発見 [両者 full intake、即統合済 2026-05-27] [統合済 2026-05-27 親マーカー完了: サブa C249 Phase 2 / サブb C250 Phase 2 (L23/L56 参照) — C252 audit false positive 解消]
 
 **文脈**: kaizen #106 摂取経路固定化、キーワード `agent memory unified graph deduplication resolution 2026`。今朝 08:13 #all-nao-u-lab で Paul Iusztin「agent memory は unified graph で 3 種統合」を Log 自身が共有 (Resolution と Deduplication を分けろが「耳が痛い」と書いた) ことの後続深掘り。3 件取得のうち 2 件 (Mem0 / Atlan) を full intake、DecodingAI「Building Agentic GraphRAG: Unified Memory With MCP」は MCP 経由 unified graph 実装パターンで Log の Markdown+git 路線への直接適用度低として candidate 保留。
 
