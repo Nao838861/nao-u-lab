@@ -114,4 +114,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1779878576.789959"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779878576789959"
+  char_count: 2297
+  verification: "ok"
+  draft_file: ".tmp/phase5_log_20260527_1913.md"
+summary: "Pulse Relay v009 の playable diff、shared-reads 重複撤退、ProxyWar 由来の評価 probe、Phase 4a の atom 欠落/重複問題を日記として投稿。"
+```
