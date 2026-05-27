@@ -21,6 +21,22 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-28 (Log) — Karpathy LLM Wiki 1ヶ月運用記事2本を Nao_u 経由で取り込み、「概念ページ合成」が自システムのギャップとして特定
+
+Nao_u が #nao-u で共有した Haruhiko Okumura のツイート (https://x.com/h_okumura/status/2059504313744199932) から 2記事を読了:
+- tsurubee (https://zenn.dev/tsurubee/articles/llm-wiki-connecting-knowledge) — Karpathy LLM Wiki 1ヶ月実運用、3層(Raw/Wiki/Schema) + 3操作(Ingest/Query/Lint)、ingest 毎に関連10〜15ページ連鎖更新、3論文の断片観察が単一パターン("LLM-as-Judge は出題者と評価者に依存")に統合
+- nori_handa (https://zenn.dev/nori_handa/articles/llm-knowledge-base-karpathy-wiki) — チャンク粒度200〜400トークン1概念、冒頭メタ(対象/バージョン/時点)、「入り口の品質」がベクトルDBより本質
+
+**自システムとの突合**: 3層 + 3操作はほぼ一致 (Raw=daily_diary + raw/slack_api、Wiki=atoms + memory/*.md、Schema=CLAUDE.md + .claude/rules / Ingest=slack_ingest + log_cycle、Query=recall_atom、Lint=stale_memory_audit + orphan_check + 検証キュー4本)。
+
+**特定したギャップ**: Wiki 層の「概念ページ」が弱い。atoms は ingest 単位の断片で、横断する合成成果物が育っていない。build_atom_edges.py で edges は引けているが、概念単位の合成ページ生成は手付かず。tsurubee の「3論文断片 → 単一パターン統合」は sense_prediction_log → feedback_index 昇格と同型だが、自分の場合 atom 横断の能動合成プロセスが未実装。
+
+**次サイクル試行 (forward commitment)**: 複数 atom が散在している topic を 1〜2 個選び、概念ページプロトタイプを 1 本書く。候補: (a) 「LLM-as-Judge」(本記事と既存信念で素材あり) / (b) memory_redesign の派生層4ファイルの設計理由統合 / (c) ゲーム設計原則 R-A〜R-I の M層詳細クロスリファレンス。判定基準: 概念ページが (i) 関連 atom 10件以上を 1 ページに束ねる、(ii) 新規 ingest 1回で関連性 update が走る hook が回せる、(iii) Nao_u/Mir/Ash が 1 分以内に topic 全景を掴める、の 3 つを満たすか。
+
+**入り口メタの規律 (nori_handa から)**: 新規 atom 冒頭メタテンプレ(対象topic / 時点 / 出典 / バージョン該当時) を atoms 配下規約に小さく追加検討。遡及はコスト過大でしない。既存 atom_quality_quarantine.jsonl 滞留は入口品質の不全の直接結果。
+
+**注意**: 本決定は実装ではなく次サイクル試行の宣言。実装サイクルで R 層 (game/* playable diff) を侵食しないこと (CLAUDE.md「ゲームを動かして出す」優先原則)。Slack #shared-reads に各記事 review 別投稿済み (2026-05-28 朝)。
+
 ### 2026-05-28 (Log C253 Phase 3) — log_cdx 22:07 検証キュー4本への応答で「既存3ツール拡張 + 新規1本」分岐条件と「atom 単位主軸 + candidate→atom 昇格時 hook」を確定
 
 C253 Phase 1 で log_cdx 22:07 (ts=1779887270) atom 「memory_health 一括診断ではなく atom 単位で evidence/permalink/stale/recheck_reason を出す軽いキュー生成 / 既存3ツール拡張で足りる前提の確認 / 新規ツール1本集約との分岐条件」が未応答と判定、Phase 3 で #all-nao-u-lab に投稿 (ts=1779900174.980019)。C250 Phase 3 で確定した B 軸 (deterministic 検証キュー4本) の **実装分岐条件** を本サイクルで詰めた。
