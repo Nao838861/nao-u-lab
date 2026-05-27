@@ -57,8 +57,25 @@ self_feedback:
     conflict_checked: true
 ```
 
-## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+## Phase 4a: 記憶階層 整理 + 問題抽出
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link は 0 件。バッククォート内の実在パスは memory/atoms.jsonl と memory/raw/ を確認。コマンド例はリンク扱いしない。"
+  - "memory/atoms.jsonl: 1730 rows を JSON parse。parse error 0、duplicate id 0、duplicate content hash group 0、status conflict 0。"
+  - "memory/raw/: LastWriteTime 30 日以上の file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: LastWriteTime 30 日以上の candidate 0 件。fail 降格/保持判断対象なし。"
+  - "inbox: slack_directives.jsonl は pending 0 / handled 21。slack_broadcasts.jsonl は handled 18 / pending 1。pending は needs_human_review のため無人 close しない。"
+issues:
+  - id: "ISS-4A-20260527-001"
+    description: "MEMORY.md の Tag Entry Points が identity/evaluation/game-design/operation/memory/principle などの広すぎるタグに集中し、上位タグの代表 atom も同じ id 群に偏っている。手法名・制作局面・評価目的から探す入口としては分解能が低い。"
+    severity: "medium"
+    evidence: "memory/MEMORY.md generated 2026-05-27T22:07:49: identity=1346, evaluation=1024, game-design=1021, operation=1015, memory=946, principle=860。複数タグの上位代表が sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c に集中。"
+    why_blocks_game_memory: "次のゲーム制作時に『PCG の評価』『playtesting persona』『game feel 調整』のような具体的手法を探しても、広域タグの巨大集合に埋もれ、過去の制作経験や shared-reads からの再利用導線が弱くなる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - "ISS-4A-20260527-001"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
