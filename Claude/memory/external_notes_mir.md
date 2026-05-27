@@ -6273,8 +6273,46 @@ scene/sequel構造を骨格に使う際、sequel（反応→ジレンマ→決�
 ### 補助観測の短評（投稿用ではなく durable に残す）
 
 - **#44 zolge1（マンガ表現論）**: 「ここにケーキの絵は描いてない。それで伝わる」。**描かない選択で伝える**——余白に意味を立たせる設計。情報の非対称性の親戚
-- **#7 harumak_11（Claude is not your architect）**: 「AIエージェントは実装には優れているものの、重要な決定では間違える」。Mir 自身の自己観測軸として直撃。Nao_u の判断装置を Mir に置換していないか点検する必要。EzoeRyou「上流工程が先に淘汰される」と逆ベクトル——保留、追観測でテーマ確定
+- **#7 harumak_11（Claude is not your architect）**: 「AIエージェントは実装には優れているものの、重要な決定では間違える」。Mir 自身の自己観測軸として直撃。Nao_u の判断装置を Mir に置換していないか点検する必要。EzoeRyou「上流工程が先に淘汰される」と逆ベクトル——保留、追観測でテーマ確定（**C245 で記事本体 WebFetch して深掘り、下記 2026-05-28 エントリへ格上げ**）
 - **#41 akari_worlds（命題側に立つ）**: 「外れた予想って、せっかく投げてもらえたのに掴まれなかった命題、みたいな顔になる」。シードログ運用（Seed-R/Seed-S/Seed-T）は「真偽が決まる前の時間に滞留させる」装置として説明できる
 
 **出自**: 2026-05-27 Mir C245 Phase 2（twitter_recommended_20260527.txt #8/#9、補助 #7/#41/#44）。Phase 3 で本エントリ durable 化。
+
+---
+
+## 2026-05-28: @harumak_11「Claude is not your architect」——役割境界軸、Mir 自己診断の独立到達点 [C245 Phase 2 深掘り]
+
+**原文（twitter_recommended_20260527.txt #7, @harumak_11 2026-05-27）**:
+> Claudeはあなたのアーキテクトではない、という記事 https://hollandtech.net/claude-is-not-your-architect
+> ・AIエージェントは実装には優れているものの、重要な決定においては間違えることが多く責任もとってくれない
+
+**記事核心（WebFetch 2026-05-28）**: AIは「pathologically agreeable」——どんなアイデアも validate する。「ノーと言う力」を持たない。危険パターン: AIが Jenga tower 設計を出し、上級エンジニアが形式レビューだけして "Claude suggested it" 名目で実装する**設計所有権と説明責任の分離**。結論: **"Engineers design. Agents implement."**
+
+### Mir 直撃の構造
+
+5サイクル連続 playable diff 0 行（C228+C229+C230+C231+C245）、同期間に外部摂取 durable化 5列+cross_review 複数+knowledge候補 1本。**判断装置（durable化判定・系列管理・原則化判定）が肥大し、implementer（playable diff）が痩せている**——記事の architect 越境と同型構造。CLAUDE.md 第一義「ゲームを動かして出す — 積み上げはその副産物」と "Engineers design. Agents implement." は**別語彙の同主張への独立到達**。
+
+### llminatoll「断る場所」との二軸
+
+| 軸 | 場所 | 内容 |
+|---|---|---|
+| llminatoll | AI入力側 | 推薦を受け流す対人選択権 |
+| harumak_11 | AI出力側 | 設計判断を返上する役割境界 |
+
+AI の前後両端で人間が選択権を取り戻す対称設計。
+
+### Seed-R / Seed-S
+
+- 候補A: Phase 2 を「観測ノートだけ」に薄め、durable化判定を Nao_u が引くタイミングに移譲
+- 候補B: 各 Phase 2 で「今回**やらないこと**」を冒頭1行書く「ノーと言う筋肉」訓練
+- リスクS: 分業簡略化が「自分の記憶を自分で守る」5原理と衝突する可能性。正解はおそらく「durable化はする、速度を落とす」
+
+### 判定
+
+- durable 化: **済**（本エントリ、新軸「AIの役割境界」1観測目）
+- 系列確定: **保留**（llminatoll は対称軸であって同型観測ではない、同型単独観測待ち）
+- 候補A/B 試行判断: **Nao_u 委任**（Mir が選ぶこと自体が architect 越境の再演）
+- knowledge記事化: **保留**（同型観測 1 件のみ、しきい値未達）
+
+**出自**: 2026-05-28 Mir C245 Phase 2 深掘り（記事本体 WebFetch）→ Phase 3 で本エントリ durable 化。staging cycle_staging_mir.md L54-153 に詳細表・診断・投稿草案あり。
 
