@@ -66,6 +66,17 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-28 C254 Phase 3 (Log): Generator/Evaluator 軸を Phase 4 大作業選定に適用 — kaizen #135 段階2 (recall_atom.py 実装) を確定
+
+C245 履歴で登録した「Generator/Evaluator 比率」軸を本サイクル Phase 4 大作業選定で初めて運用判断軸として使用。本サイクル C254 全体の Generator/Evaluator 比率分布:
+- **Phase 1 (Pre-check + 情報収集)**: Evaluator 寄り (git status / shared-reads 新着判定 / external_notes 監査 / 外部検索 3 件取得)
+- **Phase 2 (分析)**: Evaluator 寄り (#nao-u yun_bow 既解判定 / QuartetFuzz 角度設計 / N=5 観察記録) + Generator 寄り 1 件 (`drafts/c254_phase2_shared_quartetfuzz.md` 4329字 + Slack 投稿 2 メッセージ)
+- **Phase 3 (本セクション)**: kaizen_tracker #136 観察追記 = Evaluator 寄り / external_intake.md 履歴追記 = Evaluator 寄り
+
+C254 全体 Phase 1-3 は Evaluator 4 : Generator 1 で偏り顕著。**Phase 4 大作業選定の判定軸**: Generator 比率を上げる方向 = kaizen #135 段階2 `recall_atom.py` 仮実装 (新規スクリプト + edges.jsonl 実書き出し + 1 hop 展開 + wikilink_weak type gate)。memory_redesign プロジェクトの中核作業でもあり、Active project 停滞解消 + Generator 寄りの両立を満たす。
+
+**第5軸候補化への進捗**: 本サイクルで C245 登録の Generator/Evaluator 軸が初運用されたが、N=1 観察で正式 KPI 化はしない。次サイクル以降で (a) 同型運用判定が再発、または (b) Mir/Ash で Phase 4 大作業選定時に Generator/Evaluator 比率の偏り検出が再度上がる、のどちらかで第5軸正式起票判定発火点。
+
 ### 2026-05-26 C245 Phase 3 (Log): Ash 投稿「kubotamas + akari_worlds 同日2発言 / graze_log v06 9日停滞」を「Generator/Evaluator 衰退」軸として登録
 
 C245 Phase 1 [他インスタンス洞察] (スコア 17) で Ash の #shared-reads 投稿が降ってきた。本文は 2 外部源を 1 つの問題として束ねている:

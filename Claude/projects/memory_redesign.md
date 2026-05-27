@@ -2170,3 +2170,22 @@ Pre-check 洞察キュー スコア10 「The Bystander Effect in Multi-Agent Rea
 
 **Slack 共有**: #shared-reads ts=1779910998.747929 で 4797 chars 投稿済。memory/external_notes_log.md「2026-05-28 (Log C253 Phase 2)」節に親マーカー [統合済 2026-05-28] 付き吸収済。
 
+### 2026-05-28 (Log C254 Phase 4): kaizen #135 段階2 着地 — edges.jsonl 実書き出し + recall_atom.py 1-hop 展開
+
+**着地点**:
+- `tools/build_atom_edges.py --output ../GPT/memory/atoms/edges.jsonl` で edges.jsonl 実書き出し。`../GPT/memory/atoms/2026-05` の 1203 atom → total_edges=751 (C245 dry-run 749 と±2 一致、frontmatter scan ロジックの安定確認)。内訳: supersedes_chain=370 (superseded_by+supersedes 両方向)、wikilink_strong=0、wikilink_weak=4。
+- `tools/recall_atom.py` 新規 (84 行)。`--atom`/`--root`/`--exclude-type`/`--max-hops`/`--edges` を受け、edges.jsonl を line-by-line 読み込み → seed から無向 1+ hop 展開 → type gate 適用 → stderr に `seed/edges/exclude_types/max_hops/related` サマリ + 各 atom の (via, type, hop) を出力、stdout に atom id 一覧。edges.jsonl 不在時は FileNotFoundError + 復旧コマンド示唆。
+
+**動作確認 (サンプル 3 atom)**:
+- `sr-1778303440-699f41ada0`: related=5 (group_id→title-dupe-b5005f8a97 + supersedes×2 + superseded_by×2) — staging Phase 3 完遂条件 #2「5 件」と一致
+- `sr-1779770178-5d606254b2`: gate 無し related=1 ("link" を wikilink_weak で抽出)、`--exclude-type wikilink_weak` で related=0 — wikilink_weak ノイズ除去効果を実測 (完遂条件 #3)
+- `gr-1777572083-e993020cfc`: related=0 — 孤立 atom (frontmatter に supersedes/canonical_id なし、本文 wikilink なし) は正しく 0 件返す
+
+**Mem0g 欠落 3 機構との対応進捗**:
+- 欠落 #3 「Entity 正規化」= wikilink_weak gate で「link/wikilink/name」等の generic 語をノイズ扱いに分類できた。core relation 語彙 (supersedes/group_id/canonical_id) と「ロングテール weak edge」の境界が運用可能化
+- 欠落 #1 (Update Resolver) / #2 (invalidated_at) は本 Phase 4 では未着手 — recall_golden T0 ベンチ取得が gate
+
+**次サイクル以降の派生効果**:
+- 他インスタンス洞察消化 (C254 Phase 1 §他洞察 31 件) で 1 hop 展開使用可、kaizen #135 段階2 を「recall 経路の最小実装」として cross_review 前に提示できる
+- 段階3 (recall_golden T0 ベンチ) は edges.jsonl 安定化を確認してから着手判定
+
