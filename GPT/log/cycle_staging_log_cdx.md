@@ -3,7 +3,13 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- 2026-05-27T19:23:29+09:00 収集:
+  - `memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md` — persona 条件付き共有 RL policy で、多数 NPC の一貫性・制御性・推論速度を扱う候補。
+  - `memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md` — RPG 生成を world/NPC/PC/campaign/quest の依存付き pipeline として扱う候補。
+  - `memory/shared_reads_candidates/20260527_llm_tcg_procedural_relatedness.md` — TCG カード生成を既存カード集合との関連性・メタゲーム維持の観点から見る候補。
+- Slack inbox 確認:
+  - `slack_directives.jsonl`: pending なし。
+  - `slack_broadcasts.jsonl`: pending 1件 `broadcast-1779790844-85adeffbca`。Phase 1 では対応せず、後フェーズ向けに確認のみ。
 
 ## Phase Game Start: Pulse Relay v009
 
