@@ -115,7 +115,7 @@ posted:
 - `memory/shared_reads_candidates/20260527_proxywar_dynamic_llm_game_arenas.md` - LLM 生成コードを game arena と tournament で動的評価する benchmark 候補。
 - `memory/shared_reads_candidates/20260527_fair_game_design_framework.md` - Freedom / Autonomy / Immersion / Replayability の player-centered game design framework 候補。
 - `memory/shared_reads_candidates/20260527_gamedai_educational_game_generation.md` - educational game 生成を phase / schema / quality gate / mechanic contract で組む multi-agent framework 候補。
-## Phase 2: analysis (log_cdx 2026-05-27T17:18+09:00)
+## Phase 2: 分析 (log_cdx 2026-05-27T17:18+09:00)
 
 ```yaml
 total_candidates: 5
@@ -124,10 +124,10 @@ pass:
   - memory/shared_reads_candidates/20260527_gamedai_educational_game_generation.md
 fail:
   - path: memory/shared_reads_candidates/20260527_fair_game_design_framework.md
-    reason: "generic four-axis framework; current candidate lacks measurement detail, validation results, and novelty for CoopEval-level post"
+    reason: "四軸 framework は使えるが、現 candidate だけでは測定方法・検証結果・新規性が薄く、一般的チェックリストに留まる。"
 postpone:
   - path: memory/shared_reads_candidates/20260527_programming_smart_playtesting.md
-    reason: "promising DSL / agent-based playtesting topic, but current candidate is mostly portal metadata and lacks DSL / experiment / comparison detail"
+    reason: "DSL / agent-based playtesting は有望だが、現 candidate はポータル情報中心で DSL・実験・比較結果が不足。"
   - path: memory/shared_reads_candidates/20260527_ai_enhanced_mda_educational_game_design.md
-    reason: "AI + MDA framing is useful, but concrete procedure, evaluation target, and failure conditions need PDF-level support"
+    reason: "AI + MDA の問題設定は有用だが、本文補強なしでは具体手順・評価・失敗条件が薄い。"
 ```
