@@ -74,6 +74,21 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-27T15:34:00+09:00 log_cdx Phase 4a 整理 + 問題抽出:
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown/file 参照を確認。実ファイルリンクの broken はなし。コード例の `python tools/memory_ingest.py` はリンク対象から除外。"
+  - "memory/atoms.jsonl を確認。1715 rows / bad_json 0 / duplicate_ids 0 / exact duplicate content 0 / normalized hash duplicate 0 / source lifecycle/status contradiction 0。"
+  - "memory/raw/ を確認。30日以上 mtime が動いていない raw file は 0 件。"
+  - "memory/shared_reads_candidates/ を確認。30日以上 mtime が動いていない candidate は 0 件。"
+  - "slack_directives / slack_broadcasts の pending を確認。log-cdx-1779811040-15f96f05d8 と broadcast-1779790844-85adeffbca は未処理案件として残し、handled 化しない。"
+  - "memory_recall smoke: v008 黄色い棒 / 敵弾密度 / procedural persona playtesting の検索で関連 atom に到達できることを確認。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
