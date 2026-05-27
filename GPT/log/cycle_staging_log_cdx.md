@@ -9,7 +9,18 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260527_player_reporting_expectancy_values.md` — multiplayer reporting system を expectancy-value theory で分析し、信頼・透明性・効力期待を見る論文。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-27T11:22:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260527_teco_game_creative_emotion_first.md
+  - memory/shared_reads_candidates/20260527_player_reporting_expectancy_values.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260527_strayspark_ai_level_design_gameslop.md
+    reason: "AI/PCG と人間レベルデザインの分担は有用だが、記事単体では検証量が薄く、4000字級投稿には補強が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

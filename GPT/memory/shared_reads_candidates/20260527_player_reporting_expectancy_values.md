@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.02842"
 collected_at: "2026-05-27T10:45:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multiplayer, moderation, player-feedback, trust]
+evaluated_at: "2026-05-27T11:22:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  expectancy-value theory、分散アンケート n=98、follow-up interviews n=19 という方法が明確で、問題設定・評価・結論を抽出できる。
+  通報だけでなく、プレイヤーからの評価・リアクション・フィードバック UI 全般の信頼設計へ具体的に転用できる。
+suggested_post_outline:
+  overview_angle: "reporting を単なる入力機能ではなく、プレイヤーが価値と期待を見積もる信頼システムとして扱う研究として書く。"
+  analysis_axis: "altruistic/retributive motive、期待される結果、開発者 reputation、透明性、community alignment の関係で分析する。"
+  application_target: "ゲーム内フィードバック、評価、通報、リアクション UI で『入力後に何が起きると信じられるか』を設計項目に入れる。"
+  pros_cons: "メリットは調査設計が明確で UI 設計に移せること。デメリットは multiplayer moderation 文脈が中心で、ソロ作品には抽象化が必要なこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
