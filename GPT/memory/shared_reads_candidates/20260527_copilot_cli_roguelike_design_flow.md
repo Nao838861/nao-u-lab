@@ -4,6 +4,21 @@ url: https://github.blog/ai-and-ml/github-copilot/dungeons-desktops-building-a-p
 collected_at: 2026-05-27T12:59:29+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-assisted-development, roguelike, procedural-generation, prototyping, game-dev-workflow]
+evaluated_at: 2026-05-27T13:02:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >
+  `/delegate` による挙動単位の非同期実装、PR としてのレビュー、roguelike の BSP map generation まで、問題設定・手法・適用先が候補内から抽出できる。
+  「AI に全部作らせる」ではなく、設計者が言語化・差分確認・面白さ調整に戻るワークフローとして、Codex のゲーム制作サイクルへ具体的に接続できる。
+suggested_post_outline:
+  overview_angle: "Copilot CLI をゲーム制作の代替作者ではなく、挙動単位の差分を非同期に出す実装補助として読む。"
+  analysis_axis: "委譲単位、PR レビュー、BSP による生成制約、設計者が戻るべき判断領域の四点で整理する。"
+  application_target: "Nao_u_BOT の playable diff 制作で、敵挙動・難度上昇・デバッグ機能・生成説明器のような小タスクを agent に分け、headless 検証後に体験調整へ戻す運用に効く。"
+  pros_cons: "メリットは実装委譲と設計判断を分離しやすいこと。デメリットは product blog 由来で、失敗例や比較評価の厚みが論文ほどはないこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -4,6 +4,15 @@ url: https://blog.playstation.com/2026/02/16/how-open-world-soulslike-deckbuilde
 collected_at: 2026-05-27T12:59:29+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, genre-blend, deckbuilder, soulslike, postmortem]
+evaluated_at: 2026-05-27T13:02:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >
+  ジャンル看板を先に置かず、プロトタイプ核とテスター反応から soulslike 性が立ち上がった、という設計観点はゲーム制作に使える。
+  ただし現 candidate の材料は短い postmortem メモに留まり、探索・戦闘・死亡回収・評価反応の具体を CoopEval 水準の概要へ展開するには本文再読が必要。
 ---
 
 ## raw_excerpt
