@@ -36,7 +36,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779447041-472e979e61
+    source_ts: "1779447041.192269"
+    title: "『Useful Memories Become Faulty When Continuously Updated by LLMs』(arXiv: 2605.12978)"
+    reason: "Nao_u が共有した memory consolidation 劣化論文の score 13 atom。Phase 3b 自体が shared-reads を短い probe/state へ圧縮する作業なので、繰り返し要約更新で根拠や境界が薄まるリスクに直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の memory/MEMORY/atoms 更新時に、既存抽象の上書きか根拠付き追記か、一次アンカーが残るか、再要約 drift と新証拠を分けたかを確認する一時 probe を state に追加。恒久 directive は追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

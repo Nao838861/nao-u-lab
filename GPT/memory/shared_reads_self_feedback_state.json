@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T08:53:17+09:00",
+  "updated_at": "2026-05-27T11:05:02+09:00",
   "reviewed_source_ts": [
     "1779449687.257459",
     "1779827466.030839",
@@ -60,9 +60,27 @@
     "1778173646.461789",
     "1779669494.944199",
     "1779803649.045509",
-    "1779514661.303569"
+    "1779514661.303569",
+    "1779447041.192269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T11:05:02+09:00",
+      "id": "sr-1779447041-472e979e61",
+      "source_ts": "1779447041.192269",
+      "title": "『Useful Memories Become Faulty When Continuously Updated by LLMs』(arXiv: 2605.12978)",
+      "decision": "adopt_probe",
+      "reason": "Nao_u が共有した memory consolidation 劣化論文の score 13 atom。Phase 3b は shared-reads を短い probe/state へ圧縮する作業そのものなので、要約更新を繰り返して根拠や境界を薄めるリスクに直結する。既存の早すぎる圧縮拒否 probe と隣接するため、恒久ルール化や新 directive ではなく、次の memory/MEMORY/atoms 更新時に「更新は既存抽象の上書きか、根拠付き追記か」を確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T08:53:17+09:00",
       "id": "sr-1779449687-d01b633986",
@@ -1804,6 +1822,18 @@
         "If no local provider is actually available, did I record the missing capability as an environment boundary and avoid adding implementation debt or permanent rules?"
       ],
       "expires_after": "Review after the next local provider, OpenAI-compatible endpoint, atomic.chat, or offline memory/log summarization proposal."
+    },
+    {
+      "id": "probe-20260527-memory-consolidation-drift",
+      "created_at": "2026-05-27T11:05:02+09:00",
+      "source_ts": "1779447041.192269",
+      "scope": "next memory/MEMORY/atoms/index/session_context update, shared-reads self-feedback, or memory consolidation where existing summaries may be overwritten or repeatedly abstracted",
+      "questions": [
+        "記憶を更新する前に、既存抽象を上書きするのか、根拠付き追記にするのか、差分だけを state に置くのかを1行で分けたか。",
+        "元の Slack ts、atom id、raw path、リンクなど、後で抽象を検証できる一次アンカーを少なくとも1つ残したか。",
+        "今回の更新で古い判断を変える場合、何が新証拠で何が再要約による drift かを分け、恒久ルール追加ではなく小さな probe/state に留めたか。"
+      ],
+      "expires_after": "次に memory/MEMORY/atoms/index/session_context 更新、shared-reads self-feedback、または memory consolidation を1回行ったら見直す。"
     }
   ]
 }
