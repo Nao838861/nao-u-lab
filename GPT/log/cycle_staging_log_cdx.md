@@ -17,6 +17,19 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-05-27T15:05:10+09:00 log_cdx Phase 2 分析:
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260527_genai_personas_video_game_playtesting.md
+fail:
+  - path: memory/shared_reads_candidates/20260527_pcg_telemetry_feedback_loop.md
+    reason: "PCG telemetry の観点は有用だが、実務ブログの一般論中心で評価・事例の厚みが足りず、CoopEval 水準の概要に届かない。"
+postpone:
+  - path: memory/shared_reads_candidates/20260527_personified_llm_crowdsourced_gui_testing.md
+    reason: "persona 軸の GUI testing 手法と評価は明確だが、一般 GUI 対象でゲーム固有適用が一段迂回するため、game playtesting 直結候補を優先する。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

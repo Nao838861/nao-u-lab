@@ -4,6 +4,21 @@ url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6432686"
 collected_at: "2026-05-27T14:59:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, synthetic-users, personas, ux, playtesting, llm]
+evaluated_at: "2026-05-27T15:05:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  video game playtesting を対象に、data acquisition から persona 構築、zero-shot role-play prompt、screenshot-grounded iterative playtesting までの手順と、実ユーザー比較による評価が揃っている。
+  planned actions / pain points / in-the-moment feedback の再現率と hallucination・loop behavior の限界が明示されており、LLM persona を人間テストの代替ではなく事前リスク発見に使う、というゲーム制作への具体的接続が強い。
+suggested_post_outline:
+  overview_angle: "合成 persona をゲーム playtesting の代替ではなく、実ユーザーテスト前に UX リスクを炙り出す補助層として扱う手順と限界を中心に書く。"
+  analysis_axis: "data-grounded persona construction、screenshot-grounded playtesting、real tester との行動一致・痛点再現・即時フィードバック再現、hallucination / loop behavior の失敗分析を軸にする。"
+  application_target: "Nao_u_BOT の小規模 prototype で、人間に出す前の tutorial 詰まり、視認性、操作意図の誤読、探索順の偏りを persona 別に検出する phase 3b probe に効く。"
+  pros_cons: "メリットは低コストで複数行動様式の事前探索ができる点。デメリットは幻覚・ループ・視覚理解のズレが残り、実ユーザーの代替として使うと判断を誤る点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

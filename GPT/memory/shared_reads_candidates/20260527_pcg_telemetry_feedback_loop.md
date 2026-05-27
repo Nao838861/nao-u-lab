@@ -4,6 +4,15 @@ url: "https://www.ixiegaming.com/blog/pcg-telemetry-the-feedback-loop-that-make-
 collected_at: "2026-05-27T14:59:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, telemetry, liveops, evaluation, retention]
+evaluated_at: "2026-05-27T15:05:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  PCG を telemetry と closed feedback loop で扱う方向性は制作サイクルに有用だが、候補本文は実務ブログの一般論に寄っており、具体的な評価設計・実験結果・失敗事例の厚みが足りない。
+  drop-off / retry / heatmap などの観点は抽出できるものの、CoopEval 水準の約4000字概要にすると既知の liveops 原則の言い換えが多くなり、#shared-reads に残す品質には届かない。
 ---
 
 ## raw_excerpt

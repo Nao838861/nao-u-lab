@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2603.24160"
 collected_at: "2026-05-27T14:59:35+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, automated-testing, personas, llm-agents, gui-testing, evaluation]
+evaluated_at: "2026-05-27T15:05:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  testing mindset / exploration strategy / interaction habit で persona を切り、GUI 探索の多様性と bug 発見数で評価する骨格は明確で、ゲーム UI・tutorial・設定画面の自動探索に転用できる。
+  ただし対象は一般 GUI testing であり、今回同時に収集された game playtesting 直結候補と比べるとゲーム制作への適用説明が一段迂回する。Phase 3 投稿候補としては、ゲーム固有候補の後に再比較するのが妥当。
 ---
 
 ## raw_excerpt
