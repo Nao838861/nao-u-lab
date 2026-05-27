@@ -141,6 +141,34 @@ designed:
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-28T05:11:00+09:00 log_cdx Phase 4c:
+```yaml
+implemented:
+  - issue_id: ISS-4A-001
+    files_changed:
+      - path: tools/audit_atom_mirror_drift.py
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "per-file .md / atoms.jsonl / index.jsonl の id drift を監査し、明示 --repair で per-file-only atom を atoms.jsonl に戻して index を再生成する tool を導入。対象 local atom を repair して recall 対象へ復帰させた。"
+    partial: false
+migrations:
+  - what: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md を parse し、同 id を memory/atoms.jsonl に append。memory/atoms/index.jsonl は 1746 atom から再生成。"
+    affected: "atoms.jsonl 1745 -> 1746、index.jsonl 1745 -> 1746。per-file .md 実体は削除・上書きなし。"
+verification:
+  - "python -m py_compile tools/audit_atom_mirror_drift.py: pass"
+  - "python tools/audit_atom_mirror_drift.py before repair: per_file_only は local-20260523-shmup-enemy-pattern-reproduction-packet の 1 件のみ"
+  - "python tools/audit_atom_mirror_drift.py --repair: appended_to_atoms_jsonl 1、index_entries_written 1746"
+  - "python tools/audit_atom_mirror_drift.py after repair: atoms_jsonl/per_file_md/index_jsonl は全て 1746、drift 0"
+  - "python tools/memory_recall.py \"local-20260523-shmup-enemy-pattern-reproduction-packet\" --no-log: id exact recall で対象 atom を確認"
+  - "python tools/memory_recall.py \"2Dシューティング 敵編隊 shot_log\" --no-log: 通常検索 top1 で対象 atom を確認"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
