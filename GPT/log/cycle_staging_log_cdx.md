@@ -43,7 +43,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-27T15:20:00+09:00 log_cdx Phase 3b 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779845907-b1e2e47181
+    source_ts: "1779845907.868769"
+    title: "Mem0「State of AI Agent Memory 2026: Benchmarks, Architectures & Production Gaps」 — production gap 6件と Log の memory 設計の独立収束"
+    reason: "未レビューの score 12 shared-reads atom。memory / harness / game-design / agent / operation / evaluation を同時に持ち、記憶を増やす話ではなく、どの作業局面でどの粒度の記憶をどの失敗防止に使うかへ評価を寄せる話なので Phase 3b の目的に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory recall / consolidation 時に、想起する記憶が防ぐ具体的な失敗と最小粒度、次行動への差分を確認する一時 probe を追加。恒久ルールや新 directive は追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

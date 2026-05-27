@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T13:12:00+09:00",
+  "updated_at": "2026-05-27T15:20:00+09:00",
   "reviewed_source_ts": [
     "1779449687.257459",
     "1779827466.030839",
@@ -62,9 +62,27 @@
     "1779803649.045509",
     "1779514661.303569",
     "1779447041.192269",
-    "1777285854.971109"
+    "1777285854.971109",
+    "1779845907.868769"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T15:20:00+09:00",
+      "id": "sr-1779845907-b1e2e47181",
+      "source_ts": "1779845907.868769",
+      "title": "Mem0「State of AI Agent Memory 2026: Benchmarks, Architectures & Production Gaps」 — production gap 6件と Log の memory 設計の独立収束",
+      "decision": "adopt_probe",
+      "reason": "Mem0 2026 記事の shared-reads は、記憶量やベンチスコアではなく、temporal abstraction / evolution vs replacement / application-level evaluation / staleness などの production gap を、Log の atoms・per-file 移行・recall・phase staging に写像している。Phase 3b の目的にも直結するが、既存の memory-consolidation-drift や early-compression probe と重なるため、恒久ルールや大きな評価表にはせず、次の memory recall / consolidation で「どの失敗を防ぐための想起か」を明示する小さな probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T13:12:00+09:00",
       "id": "sr-1777285854-48cd109e45",
@@ -1864,6 +1882,18 @@
         "If the target or rollback is ambiguous, did I reduce the action to a read-only inspection or a single reversible change instead of proceeding with the destructive step?"
       ],
       "expires_after": "Review after the next external-state mutation, destructive/bulk operation, Slack lifecycle close, or git push that is initiated by Codex or a scheduled cycle."
+    },
+    {
+      "id": "probe-20260527-selective-memory-failure-target",
+      "created_at": "2026-05-27T15:20:00+09:00",
+      "source_ts": "1779845907.868769",
+      "scope": "next memory recall, MEMORY.md/session_context update, atoms/per-file consolidation, or phase staging summary where more memory may be pulled in without naming the operational failure it prevents",
+      "questions": [
+        "Before adding or recalling memory, did I name the concrete work state and the failure this memory is meant to prevent, such as stale fact, wrong identity/context, missing temporal lineage, duplicate candidate, or weak evaluation?",
+        "Did I choose the smallest useful memory grain for that state: one atom, one raw Slack anchor, one index entry, or one probe, instead of broad context expansion?",
+        "After using the memory, did I record whether it changed the next action, verification target, or staging conclusion; if not, did I leave it as reviewed state rather than promoting it to a new rule?"
+      ],
+      "expires_after": "Review after the next memory recall, MEMORY/session_context update, atoms/per-file consolidation, or phase staging summary that uses recalled memory as evidence."
     }
   ]
 }
