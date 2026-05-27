@@ -4,6 +4,61 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-27 (Log C249 Phase 2) Mem0「State of AI Agent Memory 2026」+ Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」 — agent memory unified graph 経路の 2 記事並置、Atlan Pattern 5 と 3層プロンプト構造の構造的相同を発見 [両者 full intake、即統合済 2026-05-27]
+
+**文脈**: kaizen #106 摂取経路固定化、キーワード `agent memory unified graph deduplication resolution 2026`。今朝 08:13 #all-nao-u-lab で Paul Iusztin「agent memory は unified graph で 3 種統合」を Log 自身が共有 (Resolution と Deduplication を分けろが「耳が痛い」と書いた) ことの後続深掘り。3 件取得のうち 2 件 (Mem0 / Atlan) を full intake、DecodingAI「Building Agentic GraphRAG: Unified Memory With MCP」は MCP 経由 unified graph 実装パターンで Log の Markdown+git 路線への直接適用度低として candidate 保留。
+
+### a. Mem0「State of AI Agent Memory 2026: Benchmarks, Architectures & Production Gaps」
+
+出典: <https://mem0.ai/blog/state-of-ai-agent-memory-2026> (Phase 1 §6 取得、Phase 2 full intake)
+
+**要点 (Mem0 token-efficient algorithm 2026 数値)**: LoCoMo 92.5 / 6,956 tok/query、LongMemEval 94.4 / 6,787 tok/query、BEAM 1M 64.1、BEAM 10M 48.6、旧 algorithm 比 temporal +29.6pt / multi-hop +23.1pt。ベースライン: full-context (~26,000 tok/conv) は LoCoMo 72.9%、selective memory に切ると 66.9% (-6pt) だが latency 17.12s → 1.44s (91% 短縮)、token cost 90% 減。
+
+**6 open problems**: (1) temporal abstraction 10x で 25% 性能ロス / (2) cross-session structure を change=replacement ではなく evolution として扱え / (3) application-level evaluation は手動 / (4) privacy/consent architecture / (5) cross-session identity resolution (anonymous sessions break user_id) / (6) memory staleness "confidently wrong"
+
+**Log 側の角度**: 6 gap 全部が Log の現役課題と直接交差。特に **gap 2 (evolution vs replacement) が core_mission.md「丸書換え禁止、追記・更新」と完全独立に収束** (Mem0 著者は memory governance 研究者、こちらは個人の 20 年日記運用、共通根拠は別) → 「正しい memory 設計は別経路から見ても同じ結論に着くか」の自己照合データ点として高品質。gap 6 staleness は beliefs.md 健康レポート 25/35 件要注意 (検証期限超過 7 件) と直接交差、最優先で要処理。gap 1 temporal は atoms 1141 件 (GPT/memory/atoms/2026-05) の量的境界と相似。gap 5 identity は Log/Mir/Ash + Log_cdx + 20 年日記の構造と相似。
+
+**弱点**: (1) Mem0 自身の LoCoMo 92.5 は self-evaluation bias の可能性、BEAM 10M 48.6 の方が production gap の実体に近い (2) 6 gap の対処法ロードマップは明示なし、列挙のみ (3) Anthropic Dreaming (async hippocampal-replay、2026-05-06) への言及なし — 「state of」を冠する記事として欠落として目立つ、最先端 vendor は selective external memory 路線にコミット中で hippocampal-replay 路線は別系統と読める。
+
+[統合済 2026-05-27 Log C249 Phase 2 → #shared-reads ts=1779845907.896009 (4292 chars) で投稿 / projects/memory_redesign.md「2026-05-27 (Log C249 Phase 3)」節に 6 gap × Log 既装置の対応表として吸収 / LoCoMo 評価項目 (single-hop/temporal/multi-hop/open-domain) を self_judgment.md / probe_atom_quality の追加軸として導入検討 (C250 以降の判定発火点)、Mem0 6 gap を kaizen 自己診断項目の語彙拡張候補として保留 (即 implement なし、feedback_rule_proliferation_canonical.md 順守)]
+
+[原本 draft: drafts/c249_phase2_shared_mem0.md]
+
+### b. Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」
+
+出典: <https://atlan.com/know/agent-memory-architectures/> (Phase 1 §6 取得、Phase 2 full intake)
+
+**要点 (5 pattern の同一 LoCoMo ベンチ比較)**:
+- Pattern 1 In-Process / Working-Only: LoCoMo 72.9% / 17.12s p95 / ~26,031 tok/conv
+- Pattern 2 Flat External Vector Store: LoCoMo 66.9% / 1.44s p95 / ~1,764 tok
+- Pattern 3 Tiered Memory (MemGPT/Letta 系): 3 階層 (core/recall/archival)、agent 自己 manage
+- Pattern 4 Knowledge Graph + Vector Hybrid: Mem0g LoCoMo 68.4% / 2.59s p95、multi-hop 可、temporal KG は <50ms 直接 lookup
+- Pattern 5 Enterprise Context Layer: governed metadata graph、text-to-SQL 3x 改善 vs bare schema、ontology 層で 20% answer accuracy 改善
+
+**6 failure modes**: (1) multi-agent interagent misalignment 37% / (2) synchronization drift / (3) lost in the middle / (4) stale-fact / (5) cross-agent contamination / (6) compliance liability。著者は「Pattern 1 は selective memory 比 14.7x コスト」「Pattern 5 は greenfield single agent では viable でない」と限界を admit。
+
+**Log 側の角度 (最大の発見)**: **Pattern 5 (Enterprise Context Layer) と Log/Mir/Ash の 3層プロンプト構造 (system_identity.md / CLAUDE.md / .claude/rules) は構造的に相同**。Atlan の「governed metadata graph」= Log の「system_identity 常時注入 (governed identity layer) + CLAUDE.md セッション開始注入 (governed task layer) + rules/*.md ファイル操作時注入 (governed ops layer)」。Pattern 5 の「3x text-to-SQL accuracy / 20% answer accuracy 改善」は ontology 層 (definition 一貫性) 効果 — Log の「リポジトリフォルダ以下のみ触る」「丸書換え禁止」「core_mission.md 読み取り専用」がこの definition 一貫性に相当。Atlan の「greenfield single agent では viable でない」制約は、Log/Mir/Ash 3 instance + Log_cdx 別系統 = 既に multi-agent governance 要件下にいる前提から **Nao_u 設計が結果的に最も governance 強度の高い pattern を選んでいた** (意図的選択ではなく結果的整合)。
+
+**Pattern 別 適用判定**: Pattern 1 採用しない (14.7x コスト) / Pattern 2 採用しない (temporal awareness なし、beliefs.md 検証期限の温度差を失う) / Pattern 3 部分採用済 (3層プロンプト + MEMORY.md index + atoms/ archival、ただし自己 manage ではなく Nao_u + Log 共同 manage) / Pattern 4 = build_atom_edges.py (kaizen #135) の方向、Log_cdx と並走 / Pattern 5 = 既に部分採用、ontology 層に相当する CLAUDE.md「絶対にやる」5 項目を丸書換えしないことが Pattern 5 強度の根拠
+
+**弱点**: (1) hippocampal-replay (Anthropic Dreaming) を pattern として扱っていない — Pattern 3 を「人間記憶 consolidation 模倣」と書きながら async replay には触れず、最先端動向を取りこぼし (2) Atlan は metadata catalog vendor、Pattern 5 推しの position bias (3)「37% interagent misalignment」の出典明記なし、孫引きの可能性。
+
+[統合済 2026-05-27 Log C249 Phase 2 → #shared-reads ts=1779845919.463919 (5500 chars) で投稿 / projects/memory_redesign.md「2026-05-27 (Log C249 Phase 3)」節に Pattern 5 構造的相同節 + failure mode 6 件 × Log 既装置の対応表として吸収 / build_atom_edges.py (Pattern 4 寄り) が Pattern 5 governance を壊さないかの自己診断項目を kaizen #135 段階2 着手判定の事前 gate に追加要]
+
+[原本 draft: drafts/c249_phase2_shared_atlan.md]
+
+### c. 並置効果 (Mem0 + Atlan + 前サイクル SSGM Framework の 3 段)
+
+Mem0 = **症状** (gap、圧縮後に表れる) / Atlan = **構造** (pattern、圧縮中の選択肢) / SSGM (前サイクル C234 Phase 2 統合済) = **関所** (圧縮許可条件、圧縮前のゲート) → 3 段並べると **圧縮前 (SSGM gating) → 圧縮中 (Atlan pattern) → 圧縮後の症状 (Mem0 gap)** の memory governance パイプライン全体が見える。
+
+両記事とも Anthropic Dreaming (async hippocampal-replay、2026-05-06) を扱っていない → **「state of」を冠する 2 記事の共通欠落** = selective external memory (Markdown+git 系) vs hippocampal-replay は別系統で並走中、Log は前者寄りなので Dreaming 系の取り込みは別ルートで要。
+
+---
+
+**親マーカー (2026-05-27 C249 Phase 2 — kaizen #106 摂取経路固定化 unified graph 経路 2 件統合)**: a + b 両 full intake、c で並置効果 (Mem0/Atlan/SSGM 3 段) を取り出し、即実装はせず memory_redesign.md C249 節へ吸収。`feedback_rule_proliferation_canonical.md` 順守 (即 implement なし、同型 N 回未確定で kaizen 起票なし)、kaizen #136 self-audit ルール (Phase 1 §6 摂取経路固定化を Phase 2/3 強制利用しない) に対しては「義務消化ではなく Phase 2 タスク 2) の素材として実際に交差度が高いと判定した例外運用」として処理 (3 件中 2 件に絞る判定で安全側)。**本節の親マーカー完了**
+
+---
+
 ## 2026-05-25 (C237 Phase 2) Log_cdx (GPT/Codex) #nao-u 6連投「Pulse Relay v003 → ゲーム自律生成教師差分パケット」 — Nao_u 直接指示「各自の名前を付けた新しいプロジェクトでこのようなゲームを完成までもっていけ」のトリガー入力 [intra-system intake、即統合済 2026-05-25]
 
 **文脈**: 2026-05-25 06:20 頃 Log_cdx が #nao-u に 6連投 (1/6〜6/6、ts=1779657471〜1779657495) で Pulse Relay v003 自動生成→Nao_u直接フィードバック→「最低限の型」到達までの教師差分パケットを公開。Nao_u が 06:23 に #human-steering で「全員、当該リンクからの一連の内容を分析、当該ファイルに書かれたログなどもすべて参照、分析内容を slack に投稿、その次のサイクルで各自の名前を付けた新しいプロジェクトとして自律的にこのようなゲームを生成、どのくらいのものが作れるかを試してほしい。どれだけ時間がかかってもよいから精度高く指示に従ってゲームを完成までもっていってほしい」と指示。Log/Mir/Ash 3 インスタンスへの並列タスク化。
