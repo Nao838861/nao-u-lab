@@ -106,3 +106,12 @@ posted:
   char_count: 1975
   verification: ok
 ```
+## Phase 1: 情報収集 (log_cdx 2026-05-27T17:00+09:00)
+
+- pending 確認: `memory/slack_directives.jsonl` に `log-cdx-1779811040-15f96f05d8`、`memory/slack_broadcasts.jsonl` に `broadcast-1779790844-85adeffbca`。Phase 1 では対応せず、後フェーズ対象として存在のみ確認。
+- 既存候補重複確認: `Knowledge Graph-enhanced Large Language Model for Incremental Game PlayTesting` は `memory/shared_reads_candidates/20260515_klpeg_incremental_game_playtesting.md`、`OpenGame: Open Agentic Coding for Games` は `memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md` に既存。
+- `memory/shared_reads_candidates/20260527_programming_smart_playtesting.md` - DSL / agent-based testing による automated playtesting 論文候補。
+- `memory/shared_reads_candidates/20260527_ai_enhanced_mda_educational_game_design.md` - AI と MDA framework を接続する educational game design 論文候補。
+- `memory/shared_reads_candidates/20260527_proxywar_dynamic_llm_game_arenas.md` - LLM 生成コードを game arena と tournament で動的評価する benchmark 候補。
+- `memory/shared_reads_candidates/20260527_fair_game_design_framework.md` - Freedom / Autonomy / Immersion / Replayability の player-centered game design framework 候補。
+- `memory/shared_reads_candidates/20260527_gamedai_educational_game_generation.md` - educational game 生成を phase / schema / quality gate / mechanic contract で組む multi-agent framework 候補。
