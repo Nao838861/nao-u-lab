@@ -5,6 +5,28 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+## Phase Game Start: Pulse Relay v009
+
+- target_directive: `log-cdx-1779811040-15f96f05d8`
+  - permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779811040548749
+  - request: v008 vertical yellow bar was unclear, enemy bullets did not cross it, v007/v008 should be treated as failed concepts, and mid/late enemy and bullet density should increase.
+- output: `game/pulse_relay/v009/`
+  - replaced v008 vertical `Relay Lane` with a horizontal forward `Relay Gate`.
+  - added `crossfire_gate_drill` and extra mid/late feeder / escort / armored waves so bullets actually pass through the Gate.
+  - added `gateConversions` / `gateActiveTime` to verify / timeline / audit.
+- run: open `game/pulse_relay/v009/index.html`; headless check is `node tools/headless_pulse_relay_v009_check.js`.
+- verification:
+  - `node verify.js`: pass
+  - `node timeline_eval.js`: pass
+  - `node enemy_behavior_audit.js`: pass
+  - `node wave_grammar_check.js`: pass
+  - `node enemy_overlap_check.js`: pass
+  - `node tools/headless_pulse_relay_v009_check.js`: pass
+  - route meanGateConversions: 194 / meanGateActiveTime: 14.98 / meanPressurePct: 0.53 / meanPulseOpportunityPct: 0.58
+  - camper / lane-holder / blind-sweeper / noPulse clearRate: 0; offscreenShots: 0; pairOverlaps: 0
+- remaining_issue: `survival` and `pulseHeavy` still clear; next cycle should separate good route quality from frequent rough Pulse use.
+- directive_status: closed with `tools/slack_inbox_lifecycle.py close`.
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
