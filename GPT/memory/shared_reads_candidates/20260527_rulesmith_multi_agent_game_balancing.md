@@ -1,0 +1,15 @@
+---
+title: "RuleSmith: Multi-Agent LLMs for Automated Game Balancing"
+url: "https://arxiv.org/abs/2602.06232"
+collected_at: "2026-05-27T21:40:00+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design, balancing, llm-agent, self-play, bayesian-optimization]
+---
+
+## raw_excerpt
+短い引用: "Game balancing is a longstanding challenge"
+
+メモ: RuleSmith は、ゲームエンジン、複数 LLM エージェントの self-play、Bayesian optimization を組み合わせ、ルール空間の多次元パラメータを自動調整する枠組み。実証対象は CivMini という簡略化された civilization-style game で、異種 faction、経済、production rules、combat mechanics を持つ。LLM エージェントはテキスト rulebook と game state を読んで行動を生成し、win-rate disparities のような balance metrics を評価する。探索では、見込みのある候補に多めの evaluation games を割り当て、探索的候補には少なめにする acquisition-based adaptive sampling と discrete projection を使う。
+
+## why_relevant_to_games
+手触り調整を「平均スコア」だけでなく、複数 bot / 複数ルール候補 / 反復評価で扱う候補。Pulse Relay や graze_log の headless policy matrix を、設計パラメータ探索へ広げる時の参照になる。
