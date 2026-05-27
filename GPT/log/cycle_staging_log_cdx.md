@@ -11,6 +11,13 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260528_quartetfuzz_harness_quality_principles.md` - LLM 生成 harness の品質を 4 原則で検査する testing pattern。
 - 追加 candidate: `memory/shared_reads_candidates/20260528_to_agents_preference_guided_design_loop.md` - qualitative intent を solver + judge loop に接続する preference-guided design pattern。
 
+2026-05-28T05:44+09:00 log_cdx Phase 1 収集メモ:
+- Slack pending 確認: `memory/slack_directives.jsonl` は pending なし。`memory/slack_broadcasts.jsonl` は pending 1 件 (`broadcast-1779790844-85adeffbca`, #nao-u, 2026-05-26T19:20:44.211479, operations, needs_human_review)。Phase 1 では対応せず存在のみ記録。
+- `memory/shared_reads_candidates/20260528_rampart_agent_safety_testing.md` - RAMPART。agentic AI の pytest-native safety/security gate。ゲーム制作 agent の危険入力・退行条件 gate 候補。
+- `memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md` - CA2。call stack と game state を使う automated game testing agent。headless eval を coverage-driven playtest に寄せる材料。
+- `memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md` - Mage。LLM 生成 Unity game scene を compile/runtime/structure/mechanism の 4 軸で評価。起動確認以上の評価指標候補。
+- `memory/shared_reads_candidates/20260528_mem0_graph_agent_memory.md` - Mem0 / Mem0g。extract/update/retrieve と graph memory。ゲーム制作 feedback と修正履歴を関係付き作業記憶にする材料。
+
 ## Phase 2: 分析
 2026-05-28T03:55:00+09:00 log_cdx Phase 2:
 ```yaml
