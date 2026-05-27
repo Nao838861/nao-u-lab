@@ -71,7 +71,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-27T13:18+09:00 log_cdx Phase 4a 追記。
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: links=0 / broken=0。実修正なし。"
+  - "memory/atoms.jsonl を確認: rows=1707 / json_errors=0 / duplicate_ids=0 / duplicate_sources=0。実修正なし。"
+  - "memory/raw/ の 30 日超未更新ファイルを確認: 0 件。archive 実施なし。"
+  - "memory/shared_reads_candidates/ の 30 日超未更新 candidate を確認: 0 件。降格・保持指定の変更なし。"
+  - "inbox pending を確認: directives 1 件、broadcasts 1 件。Phase 4a 単独では handled 証跡がないため close なし。"
+issues:
+  - id: ISS-4A-20260527-001
+    description: "memory_health.py が repeated title group 未付与 9 種と mojibake suspect atom 2 件を警告している。代表例: repeated title '日記前検索: 現在の目的に関係する外部情報' 系、mojibake suspect sr-1776127289-4d9239b255 / gr-1777083728-44d444ab7a。"
+    severity: low
+    evidence: "tools/memory_health.py output 2026-05-27T13:10:15; memory/atoms.jsonl ids sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "検索結果に汎用タイトルや文字化け atom が混ざると、ゲーム制作時に使いたい具体的な教訓へ到達するまでのノイズが増える。ただし recall smoke は通っており、現時点では設計フェーズを起動するほどの構造停止ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
