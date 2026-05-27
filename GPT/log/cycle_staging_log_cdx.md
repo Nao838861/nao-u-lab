@@ -97,4 +97,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-27T13:34+09:00 log_cdx Phase 5 追記。
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779855245504949
+  char_count: 2221
+  verification: ok
+draft_file: .tmp/phase5_diary_20260527_1258.md
+notes:
+  - "Phase 1-4 の staging を読み直し、Copilot CLI roguelike flow 投稿、DB Delete 事故 atom からの可逆性 probe、memory_health の低優先ノイズを中心に日記化。"
+```
