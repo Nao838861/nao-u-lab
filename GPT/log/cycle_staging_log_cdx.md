@@ -64,7 +64,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+checked_at: "2026-05-27T11:36:00+09:00"
+cleaned:
+  - "memory/MEMORY.md の markdown link / backtick path refs を確認。リンク切れ 0 件。"
+  - "memory/atoms.jsonl を確認。1691 rows、JSON parse error 0、duplicate id 0、duplicate content hash group 0。"
+  - "memory/atoms/index.jsonl と per-file atom を確認。index missing file 0、index 外 per-file atom 1 件を検出。"
+  - "memory/raw/ の 30 日以上未更新ファイルを確認。対象 0 件。"
+  - "memory/shared_reads_candidates/ の 30 日以上未更新 candidate を確認。対象 0 件。"
+  - "inbox pending を確認。directives 1 件、broadcasts 1 件。処理済み根拠がないため status 更新なし。"
+issues:
+  - id: "ISS-4A-20260527-01"
+    description: "game_memory_task_lens_index.md が atom として参照している local-20260523-shmup-enemy-pattern-reproduction-packet が memory/atoms/unknown/ に per-file atom として存在する一方、memory/atoms.jsonl と memory/atoms/index.jsonl には載っていない。"
+    severity: "medium"
+    evidence: "memory/game_memory_task_lens_index.md の enemy-pattern / stage-grammar lens; memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md; atoms.jsonl/index.jsonl id absence"
+    why_blocks_game_memory: "2D shooting の enemy pattern / shot_log 再現失敗を次回制作前に recall する導線が、lens の手書きリンク依存になる。memory_recall の通常経路から落ちると、過去の失敗知を実装前ゲートへ戻しにくい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  note: "同期/索引の不整合であり、Phase 4b の新設計ではなく既存 dual-write/index 更新経路の保守対象として扱う。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
