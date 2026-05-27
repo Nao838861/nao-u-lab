@@ -29,7 +29,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-27T13:04+09:00 log_cdx Phase 3 追記。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779854697895229
+    char_count: 3023
+skipped: []
+notes:
+  - "Phase 3 投稿は 1 candidate 1 message で実行。リンク先の GitHub Blog 本文を参照。"
+  - "文字数実測は 3023 字で 3500 字帯を下回ったが、投稿済みのため追記分割はせず記録に残した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
