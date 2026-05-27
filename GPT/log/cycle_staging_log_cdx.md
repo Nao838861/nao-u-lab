@@ -122,6 +122,59 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+2026-05-28T06:31+09:00 log_cdx Phase 4b 記憶階層 仕組み検討:
+```yaml
+designed_issues:
+  - issue_id: ISS-4A-20260528-001
+    problem_restatement: "atom の broad tag は recall 母集団としては機能しているが、ゲーム制作の着手時に『いま必要な制作判断』へ降りる入口としては粗すぎる。既に task lens index はあるが、Tag Entry Points から lens へ移るための対応関係と選択基準が明示されていないため、毎回 broad tag の山を手で掘り直している。"
+    alternatives:
+      - name: "案A: game_memory_task_lens_index に broad-tag descent map を追加"
+        sketch: "既存の task lens index 冒頭に、`game-design` / `evaluation` / `operation` / `identity` / `memory` などの巨大タグから、まず読む lens と代表 recall query へ降りる短い対応表を置く。各 broad tag は 2-4 個の lens だけへ割り当て、網羅ではなく制作前の入口に限定する。"
+        pros:
+          - "既存 index の目的と一致し、新しいファイルやツールを増やさずに導線だけ補える。"
+          - "Phase 4c は docs 更新だけで済み、失敗しても表を戻すだけで巻き戻せる。"
+          - "上位タグを増やさず、既存 lens の『使う場面』を再利用できる。"
+        cons:
+          - "自動 recall の rank 自体は改善しないため、運用時にこの index を読む習慣が必要。"
+          - "対応表が古くなると、lens 本文との差分が生まれる。"
+          - "ゲーム制作以外の memory / identity 問題には直接効かない。"
+        migration_cost: low
+      - name: "案B: atom frontmatter に task_lens / subtopic を backfill"
+        sketch: "既存 atom の frontmatter に `task_lens` や `subtopic` を追加し、broad tag より細かい構造を per-file atom 側に持たせる。recall や health check はこの metadata を使って候補を絞る。"
+        pros:
+          - "検索時点で絞り込みが効くため、将来的には recall 品質へ直接効く。"
+          - "Obsidian 上でも lens / subtopic が見える。"
+          - "broad tag の過密を構造データとして解消できる。"
+        cons:
+          - "1754 atom への backfill 方針が必要で、誤分類の混入リスクが高い。"
+          - "dual-write / atoms.jsonl retire 移行中のため、metadata 更新面が増える。"
+          - "Phase 4c の小さな導入としては重く、検証対象が広がりすぎる。"
+        migration_cost: high
+      - name: "案C: memory_recall に lens-aware query expansion を追加"
+        sketch: "recall query に `game-design` などの broad tag が含まれる時、既存 lens の recall query を展開して検索する。CLI 側で broad tag から lens への mapping を持ち、候補出力に lens 名を表示する。"
+        pros:
+          - "ユーザーや phase が index を手で読まなくても導線が効く。"
+          - "検索結果に lens provenance を出せれば、次の読み先判断が速くなる。"
+          - "将来の automated phase に組み込みやすい。"
+        cons:
+          - "Phase 4b の範囲を超える実装が必要で、query expansion の副作用検証も要る。"
+          - "mapping がコード側に入ると、docs の lens 更新と二重管理になりやすい。"
+          - "broad tag が曖昧なまま expansion すると、候補がさらに膨らむ可能性がある。"
+        migration_cost: medium
+    recommended: "案A: game_memory_task_lens_index に broad-tag descent map を追加"
+    recommended_reason: "今回の問題は broad tag そのものの廃止ではなく、制作時に broad tag から具体 lens へ降りる判断が毎回手作業になること。既存 index はすでにその受け皿になっているため、まず docs 上の対応表だけを追加するのが現状から最短で、失敗時のコストも低い。frontmatter backfill や recall 改修は、案Aで lens 対応が安定してから必要なら昇格すればよい。"
+    decision: introduce
+    decision_reason: "Phase 4c で小さく導入でき、コード変更なしでも次回ゲーム制作前の入口改善に効く。Phase 4a の priority issue が medium で、放置すると毎回の recall が broad tag 掘りに戻るため、postpone より低リスクな docs 導入が妥当。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` に `Broad Tag Descent Map` セクションを追加する。"
+      - "`game-design` / `evaluation` / `operation` / `identity` / `memory` の各 broad tag について、最初に見る lens、避ける探し方、代表 recall query を 2-4 行で記録する。"
+      - "既存 lens は増やさず、対応表は既存 lens への参照だけにする。"
+      - "更新ルールに、Phase 4a で broad tag 偏りを見つけた時は tag 追加ではなく descent map の不足確認を先に行う、という運用を追記する。"
+postponed_issues:
+  - issue_id: ISS-4A-20260528-002
+    reason: "priority_issues に含まれておらず severity も low。重複 title / mojibake は品質問題だが、今回の設計焦点である broad tag 導線とは別系統なので、Phase 4b の集中範囲から外す。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
