@@ -264,3 +264,34 @@ Phase 1 末尾の A〜E 5 カテゴリに対する本サイクル消化:
 - **30分粒度内に収まる**: copy + 1関数追加 + verify run + design_log スケルトン + commit = 既存装置 (verify/audit) を再利用する小さな diff、Pulse Relay 型新プロト着手より着手コスト 1/5 程度
 - **Yuki_GameDev_ 倍速トグル / HASP 介入コード化 / Bystander cross_review 警鐘は Phase 4 大作業の射程外** (本 Phase 3 §3 で記録のみ、次サイクル以降で再評価)
 
+## Phase 4: 大作業完遂報告
+
+### 完遂判定 (Phase 3 §「完遂の定義」5 項目)
+1. ✅ `game/log_autonomous_game/v003/` ディレクトリ存在
+2. ✅ `v003/game.js` 存在、v002 → v003 差分: `currentShootInterval(nowFrame)` 関数追加 (game.js L324-339 相当)、phase 2 内で SHOOT_INTERVAL 90 → 60 frame 線形漸変 (50s 時点 1.5秒間隔 → 90s 時点 1.0秒間隔 = 射撃頻度 +50%)。`SHOOT_INTERVAL_PHASE2_MIN = 60` 定数追加、`updateEnemies` 内の `e.shootCooldown = SHOOT_INTERVAL` を `currentShootInterval()` 呼び出しに置換
+3. ✅ `v003/design_log.md` スケルトン起票完了。does NOT prove 7 項目のうち 2 項目への着地スコープ明文化:
+   - 「phase 内密度カーブ」(§2.1) — phase 2 内 SHOOT_INTERVAL 線形漸変で直処方
+   - 「proxy 4 指標 と人間体感の Pearson 相関」(§2.2) — proxy は v003 で意図的に再走しない、v002 baseline 据置で実機判定後の第1サンプル化を待つ
+4. ✅ `v003/verify.js` 実行で `pass: true` exit 0 確認。悪手 4 方針すべて wave 1 内死亡 (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s、全 `death_cause: bullet`、`waves_seen: 1`)。密度カーブ漸変が「悪手通過の穴」を作っていないこと物理確認済
+5. ⏳ commit (`game:` prefix) は Phase 5 で日記とまとめて push (※Phase 4 では commit しない指示順守)
+
+### 副産物 (新規/変更ファイル)
+- 新規: `game/log_autonomous_game/v003/game.js` (v002 ベース + 密度カーブ漸変)
+- 新規: `game/log_autonomous_game/v003/verify.js` (v002 ベース + currentShootInterval 同型実装)
+- 新規: `game/log_autonomous_game/v003/bullet_origin_audit.js` (v002 完全コピー、変更なし)
+- 新規: `game/log_autonomous_game/v003/enemy_behavior_audit.js` (v002 完全コピー、変更なし)
+- 新規: `game/log_autonomous_game/v003/index.html` (v002 ベース、`window.__logAutonomousV002` → `V003` のみ)
+- 新規: `game/log_autonomous_game/v003/design_log.md` (スケルトン起票)
+- 変更: `log/cycle_staging_log.md` (本セクション追記)
+
+### Slack 投稿
+- Phase 4 では追加投稿なし (Phase 3 で「追加投稿なし」確定済、Phase 4 大作業中は新規 Slack 投稿を発生させない方針順守)
+
+### kaizen エントリ
+- Phase 4 で新規 kaizen 起票なし (Phase 3 §「3) 検証期限到来なし」確定、`feedback_few_rules_big_effect.md` 順守継続)
+
+### 残し / 次サイクルへの引き継ぎ
+- v003 実機判定 (Nao_u/Mir/Ash) は Phase 5 日記での出荷案内後に依存。実機体感が proxy 4 指標 第 1 サンプルとして揃った段階で v004 design 開始
+- `agent_difficulty_proxy.js` を v003 ディレクトリにコピーしていない (意図的、design_log §2.2 順守) — 次サイクル proxy 再走判断時に v002 からコピーする
+- self_judgment.md / completion_report.md / visual_review.md は v003 では未起票 (実機判定到達前のため、design_log §4 暫定採点のみで保留)
+
