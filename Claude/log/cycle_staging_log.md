@@ -196,6 +196,31 @@
 - 本サイクル Phase 3 で実装系 game/* playable diff はゼロ (Phase 1 自己診断「means_ends_reversal_check 該当注意」を Phase 3 で解消できず、memory_redesign 議論継続が主実装になった)
 - Phase 4 大作業で game/* diff を 1 commit 以上出すことを下節に明記
 
+## Phase 4: 実行結果
+
+### 完遂物
+- **新規ファイル**: `game/log_autonomous_game/v004/design_log.md` (約11KB、6 章構成: §0 v003 Echo-Path Q-D 構造判定 / §1 Q-D シート転記 / §2 報酬機構候補 4 案 brainstorm + Q-D 判定 / §3 verify.js 拡張案 3 項目 / §4 スコープ外明示 / §5 次サイクル判断材料 / §6 リンク 12 本)
+- **新規ディレクトリ**: `game/log_autonomous_game/v004/` (design_log.md のみ、コード変更ゼロ = 事前ゲート骨格の宣言段階)
+
+### Phase 4 完遂の定義に対する到達状況
+- [x] `v004/design_log.md` 新規作成、冒頭 §1 で `feedback_self_risk_core_pitfall.md` Q-D シート (5 項目) 全文転記済
+- [x] v004 報酬機構候補 4 案 (A: castLock 弾消し / B: 撃破連鎖 / C: 軌道再走破 / D: 生存時間) brainstorm 級列挙、各案に「外発主/自発主/両方バランス」「経済反転リスク有無」「コア接続」を 1 行ずつ付記、本サイクル序列表まで作成
+- [x] §3 拡張 §1 で「敵弾密度カーブ 0% 緊張成立テスト」を verify.js 拡張案として明文化 (--bullet-density-zero モード仮称、5 方針 90 秒生存 + Echo 発動有無での得失差ゼロ で PASS 判定)
+- [x] §3 拡張 §2 で経済反転 audit (撃破 vs 不撃破方針比較) を追加検証項目として記載
+- [x] v003 self_judgment.md は未起票 (= 実機判定依存項目マーカー対象ファイル自体が無い)。本 design_log §4 で v003 実機判定結果待ち項目は別件として明示
+- [ ] commit + push は **Phase 5 で日記とまとめて実行** (Phase 4 システム指示順守、staging 着手手順 step 6 とは別解釈)
+
+### Phase 4 副産物の追加判明事項
+- Phase 1 §D 想起の **`feedback_self_risk_core_pitfall.md` Q-D シートを Echo-Path v003 に通した結果、案 C (軌道再走破ボーナス) が graze_log v01 同型事故予兆候補と判定** → Nao_u 直接相談必須案件として §2 サマリ表に明示。これは本 Phase 4 が単なる「テンプレ転記」ではなく **構造判定を伴う事前ゲート** として機能した証拠
+- 案 A (castLock 弾消し報酬) を本 brainstorm の第 1 候補に序列、次サイクル C253 以降の実装着手検討対象として宣言済
+
+### 残時間で実施しなかった項目 (staging 着手手順 step 7)
+- v003 self_judgment.md 「実機判定依存項目」マーカー可読性向上は **対象ファイル未起票のためスキップ**。v003/self_judgment.md 自体は実機判定到達後に新規起票予定 (= 本 v004 design_log §4「v003 実機判定結果待ち項目」明示で別案件扱い)
+
+### Phase 5 引継ぎ
+- commit message: `game: log_autonomous_game v004 design_log 起票 (自発リスク Q-D 事前ゲート物理化)` で Phase 5 日記 commit と同時 or 別 commit
+- CLAUDE.md ルール「ゲーム改修 (`game/` 配下) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit に分ける」順守 = Phase 5 日記 (運用) と本 v004 design_log (game) は **別 commit** にする必要あり (prefix: `game:` / `rule:` 区別)
+
 ## 次フェーズの大作業
 
 ### タイトル
