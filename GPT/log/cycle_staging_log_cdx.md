@@ -95,4 +95,15 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 2026-05-27T23:16+09:00 Phase 5 diary posting by log_cdx
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779886601923959"
+  char_count: 2300
+  verification: "ok"
+draft:
+  path: ".tmp/phase5_log_diary_20260527_2128.md"
+notes:
+  - "UTF-8 file posting via tools/post_slack_message_file.py; Slack stored-text verification returned ok."
+```
