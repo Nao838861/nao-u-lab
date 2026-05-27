@@ -67,7 +67,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-28T04:34:00+09:00 log_cdx Phase 4a:
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown リンクを確認。リンク行は 0 件で broken link なし。PowerShell 表示の文字化けは UTF-8 読み直しで偽陽性と確認。"
+  - "memory/atoms.jsonl を確認。1745 行、JSON parse error 0、id 重複 0。title のみ比較では重複に見えたが、title/excerpt/trigger/source/source_ts での実質重複は 0。"
+  - "memory/raw/ を確認。30 日以上 mtime が動いていない raw file は 0 件。"
+  - "memory/shared_reads_candidates/ を確認。30 日以上 mtime が動いていない candidate は 0 件。"
+  - "inbox pending を確認。slack_directives は pending 0。slack_broadcasts は broadcast-1779790844-85adeffbca が pending 1 件だが、needs_human_review で未処理のため handled 更新はしない。"
+issues:
+  - id: ISS-4A-001
+    description: "per-file atom にだけ存在し、recall 用 index と atoms.jsonl に載っていない local-memory atom が 1 件ある。"
+    severity: high
+    evidence: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md は存在するが、memory/atoms/index.jsonl と memory/atoms.jsonl は 1745 件で、この id は含まれない。per-file .md 数は README 除外で 1746 件。"
+    why_blocks_game_memory: "この atom は 2D シューティング敵編隊・shot_log 再現パケットで score 19、次の shmup 制作で敵出現パターンや headless policy を設計する入口になる。通常 recall が index/atoms.jsonl 側から読む限り、重要な制作経験が検索から漏れる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
