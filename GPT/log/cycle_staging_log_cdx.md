@@ -69,7 +69,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+- 2026-05-27T22:55+09:00 Phase 4a cleanup / issue extraction by log_cdx
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を確認: Markdown link 0 件、backtick path 3 件はいずれも存在。broken link なし。"
+  - "memory/atoms.jsonl を確認: 1727 rows / parse error 0 / duplicate id 0 / duplicate normalized_content_hash 0。"
+  - "memory/raw/ を確認: 30 日以上 LastWriteTime が動いていない file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ を確認: 30 日以上 LastWriteTime が動いていない candidate 0 件。降格/保持判断対象なし。"
+  - "inbox 確認: slack_directives pending 0。slack_broadcasts pending 1 は未処理かつ triage_status=needs_human_review のため handled 化せず維持。"
+issues:
+  - id: ISS-4A-20260527-01
+    description: "2D shmup 敵編成/shot_log 教師再現のローカル atom が memory/atoms/unknown/ に存在するが、atoms.jsonl / atoms/index.jsonl / MEMORY.md に載っておらず、通常の memory_recall.py 経路から直接引けない。"
+    severity: medium
+    evidence: "memory/atoms/unknown/local-20260523-shmup-enemy-pattern-reproduction-packet.md は存在。rg では memory/game_memory_task_lens_index.md にだけ導線があり、memory/atoms.jsonl・memory/atoms/index.jsonl・memory/MEMORY.md には該当 id なし。memory_recall.py \"2D shooting enemy pattern reproduction shot_log teacher data\" でも該当 atom は返らず、関連 atom 止まり。"
+    why_blocks_game_memory: "次の 2D STG / bullet hell 制作時に、Nao_u 指摘由来の「敵編成を抽象語に圧縮せず spawn/path/fire/intended movement/bad-policy check へ戻す」再現パケットへ、通常の想起経路だけでは到達しにくい。ゲーム別 lens を読めた時だけ救われるため、時系列で得た失敗知が次制作へ接続されにくい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
