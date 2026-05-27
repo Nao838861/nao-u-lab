@@ -153,3 +153,82 @@ if(wasCapNotReached && state.invincibleT===BUZZ_INVINCIBLE_CAP){
 合計 ~45 行追加。戻し方: 全削除 + spawnWave 旧形 (wave==1..4 + WAVE_FUNCS rng pick) 復元で v07 観点 7 等価戻し。1 機構刻み制約 (R-D + `feedback_clone_strategy.md` t:5) — 「時間軸で wave を切り替える」1 機構として実装、spawnInterval は同機構の付随要素 (時間 curve の発露を物理化するため不可分)。
 
 — Ash (Win2) 2026-05-27 C201 Phase 4 (観点 6 実装**前** Stage 3 予測)
+
+---
+
+# 観点 8 (bad policy headless 4 方針 物理化) — 実装**前** Stage 3 予測 (2026-05-28 C202 Ash)
+
+**status**: v07/index.html 上に **B-2 Hyper Activation (`246ed50e3`)** + **観点 3 弾側マーカー (`697d36453`)** + **観点 7 180F cap reached 大成功反応 (`c63ebd842`)** + **観点 6 7 区分 spawn テーブル (`43c520c3f`)** の 4 機構を積み上げた v07 に対し、**観点 8 (bad policy headless 4 方針)** を `game/graze_log/v07/headless.py` として物理化する**前**に書面で予測する。判定方針: index.html のロジック移植 + 4 方針 AI agent (route/camper/panic/novice) を Python 上で動かし relative order を構造判定として確認。**数値の絶対値は judgment / cross_review / Slack / merge 要請の根拠にしない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5 厳守、R-I の死守ライン)。
+
+## 実装する 1 機構 (観点8 / bad policy headless 4 方針)
+
+`game/graze_log/v07/headless.py` を新設 (独立ファイル、index.html 無改変)。Python 純粋実装で外部依存は標準ライブラリのみ (math / random / json / argparse)。中核ロジック (player移動 / 自機弾 / 敵移動 / 敵弾発射 / hit/graze 判定 / Lv up / Hyper / phase 切替) を JavaScript から移植し、4 方針 AI agent で 100 試行ずつ回す。
+
+```python
+# 4 policy definitions (概略)
+def policy_route(state):     # Psyvariar 想定良方針: 画面下半分 8 字経路 + phase 5/7 山で BOMB
+def policy_camper(state):    # 画面下端中央張り付き、BOMB 使わない (graze 機会捨て)
+def policy_panic(state):     # 動きは route 同等、gauge MAX 到達即 BOMB (使い所無視)
+def policy_novice(state):    # ランダム移動 + 弾無視、BOMB は稀にランダム発動
+```
+
+### 移植の粒度 (relative order 判定に十分な範囲)
+
+- **完全移植**: player 移動 (dx/dy normalized 0.707) / 自機弾発射 (cooldown / shotCount n=gaugeLevel+playerLv) / 敵弾発射 (aimed / fan3 ±15°) / hit/graze 判定 (R_HIT=8 / R_GRAZE=22) / 被弾→gauge降格 (lv3→G_LV2 / lv2→0 / lv1→gameOver) / graze→gauge+score (mult=2 if invincibleT>0) / Lv up→invincibleT (BUZZ 60F / cap 180F) / Hyper (gauge>=G_MAX → ebullets 全消去 + score+100/弾 + gauge=0 + hyperFlashT=30) / spawn phase 1-7 (PHASE_BOUNDARIES) / spawnInterval (140/110/80F)
+- **省略**: anticipation queue 30F 遅延 (relative order 不変) / windup telegraph 10F (描画のみ、bullet 実 aim は発射瞬間に再計算) / wobble (描画のみ、当たり判定は b.x,b.y) / particle / ring / popup / 観点3 マーカー描画 / 観点7 flash 描画 / Hyper Large Star 描画 / grazeStreak / activeDef (BOMB と排反、bad policy 検証本旨外) / playerLv shotCount n=4 以上の追加弾 (gauge MAX 到達後の差分は relative order の主軸ではない)
+- **simplify**: setTimeout(1200ms) phase 1 medium intro → 72F カウントダウンで simulate
+
+省略項目は描画系か当たり判定に影響しない補助要素のみ。**relative order 構造判定に必要な「核機構の発火パス」は完全移植**。
+
+### 4 方針 AI agent の振る舞い
+
+| 方針 | 移動 | BOMB 戦略 | 想定 relative order 位置 |
+|---|---|---|---|
+| **route** | 画面下半分 8 字経路 (Psyvariar 良方針)、graze 機会を能動的に作る | phase 5/7 山 (52-65s / 78-90s) で gauge MAX 時 BOMB (戦略的タイミング) | **最高生存秒 / 最高 score** 想定 |
+| **camper** | 画面下端中央張り付き、移動最小 | BOMB 使わない (graze 機会捨て) | 中程度生存秒 / 低 score (graze ゼロ、kill score のみ) |
+| **panic** | 移動は route 同等 | gauge MAX 到達即 BOMB (使い所無視、Hyper 連発) | 低 score (Hyper 消費が早く弾密度高 phase で弾消去機会を逃す) |
+| **novice** | ランダム移動 + 弾無視 | 稀にランダム発動 | **最低生存秒 / 最低 score** 想定 |
+
+## 4 方針の想定 relative order (Stage 3 予測の核)
+
+**想定**: `route > camper ≈ panic > novice` (生存秒 / score)
+
+- **route 最強**: 8 字経路で graze 機会を能動生成 → gauge MAX 蓄積 + 180F 無敵中 2x graze → 連鎖 Lv up + cap 180F 到達 + Hyper 戦略的発動 → R-A 「一番楽しい瞬間」 + R-B 「報酬と緊張のペア」 + 観点 6 phase 7 (山2 final) で Hyper による弾消去 = 90秒生存 + 高 score
+- **camper / panic は中程度**: camper は graze ゼロだが被弾も少ない (張り付き = 弾密度低の前提)。panic は Hyper を早期消費するが gauge MAX 到達は route 同等なので score も中程度。**両者は relative order 上で接近する可能性が高い** (生存秒は camper の方が高い、score は panic の方が高い)
+- **novice 最弱**: ランダム移動 + 弾無視 → R_HIT=8 半径で被弾頻度高、graze 機会も偶発のみで gauge 蓄積遅い → 早期 gameOver
+
+### 判定軸 (relative order の signal 読み)
+
+- **route が camper を大きく上回る** → A-6(b) Volguard 罠予防 (擦る方が得) が機構として効いている (R-B 準拠)
+- **route が camper と同等以下** → 「擦らない方が得」が再起している shallow design (R-B 失敗、観点3 マーカー誘導が不十分)
+- **panic が route を大きく下回る** → Hyper の発動タイミング判断が core mechanic として効いている (R-A 核体験の縦深化)
+- **panic が route と同等** → Hyper のタイミング選択が無意味化、Hyper を「ただ消える便利キー」として消費しても結果が変わらない shallow design
+- **novice が最低** → 視認 (anticipation/telegraph/windup/wobble) が核機構として効いている (R-A 「動く ≠ 遊べる」の「遊べる」閾値の存在を示唆)
+- **novice が camper / panic と同等** → 視認系の readability 機構が relative order に効いていない shallow design
+
+**数値の絶対値は judgment 根拠にしない** (R-I 死守、`feedback_headless_unfit_for_unfinished_eval.md` t:5)。relative order が想定通りか想定外かのみを構造判定の signal として読む。
+
+## プレイヤー視点予測 (= AI agent 視点予測、5 項目)
+
+1. **route の phase 7 (78-90s) 到達率が 30-50% 想定**: graze_log は 3 段階 gauge 制 (Lv 3→2→0→gameOver) で被弾耐性低、無敵化 (chain MAX) が継続発火しないと 90 秒生存難しい。route の 8 字経路は graze 機会を能動生成するが、phase 5 山 1 (52-65s) の弾密度 spawnPhase5 (small 8 + medium 2 aimed、9.75 回呼び/13秒 ≈ 97 体 spawn) は plays 不能リスク 25% を v07 self_judgment-C201 で記録済 → route でも phase 7 到達は 30-50% 想定。**過剰密度リスクが headless で先に観測される可能性** — ただし数値根拠としては使えない (R-I 死守)、構造判定として「全方針 phase 7 未到達」なら spawnPhase5 数値調整の signal。
+
+2. **camper の生存秒が route と接近する可能性 40%**: graze_log の弾は medium aimed (player 直撃) で発射されるが、aimed は **発射瞬間の player 位置** に向かう (windup 中の player 移動は回避有効、index.html L552-L553)。camper は静止しているので **aimed 弾が直撃** → 被弾頻度は route より高くなる予測。ただし phase 4 (39-52s) 圧力でも fan3 ±15° の中心弾は camper に直撃するので、camper は「動かない = 当たる」構造で生存秒は低い。**camper > route の relative order reversal が起きたら shallow design 確定**。
+
+3. **panic の Hyper 使用回数が route の 2-3 倍想定**: gauge MAX 到達は graze 速度依存 (route も panic も同等)。panic は MAX 到達即 BOMB → 1 ゲーム中 Hyper 5-8 回想定。route は phase 5/7 山で発動を選ぶので 1 ゲーム中 1-3 回想定。**Hyper 1 回あたりの消去弾数は panic < route** (panic は phase 2/3/4 の中弾密度で発動、route は phase 5/7 の高弾密度で発動) → score 差は panic < route で 1.5-2 倍程度の予測。
+
+4. **novice の生存秒が 20-40s 想定**: ランダム移動で R_HIT=8 半径に弾が偶発侵入する確率が高い。phase 1 学習 (0-13s) の小弾密度なら生き残るが、phase 2 圧力 (13-26s) で fan3 導入 → ランダム移動と fan3 が偶発衝突 → gameOver。**novice 平均生存秒 < 30s** が relative order の最低基準。
+
+5. **観点3 マーカー (黄色細リング) は headless では効果ゼロ**: 観点3 マーカーは「無敵中の弾側」に追加描画されるが、**描画のみで当たり判定不変** (index.html L834-L838)。headless agent は描画を見ない (numeric state のみ参照) → 観点3 マーカーは headless では route と他方針の差に**影響しない**。Nao_u プレイ評価で観点3 マーカーの効果を確認することが**唯一の経路**であり、headless 観点8 は観点3 評価の代替にはならない。これは R-I 「人間プレイは判定装置でなく最終確認装置」の構造的限界の体現。
+
+## 予測の限界
+
+- 観点8 headless 4 方針は **relative order の構造判定のみ** に使う。数値 (生存秒 / score / kill / graze 平均) を Nao_u プレイ評価 / cross_review / Slack / merge 要請の根拠にすると `feedback_headless_unfit_for_unfinished_eval.md` t:5 違反、R-I 退路の最大級違反 (Nao_u 「やめて」3 度目の警告ライン)。**結果は self_judgment.md 内で構造判定のみに使用**、外部に出さない
+- 100 試行/方針 = 400 試行は seed 別実行で平均化するが、Python 移植の精度限界 (anticipation 30F 省略 / windup 10F 省略 / wobble 省略 等) で実 index.html プレイとは差が出る → **実機械精度の判定根拠ではなく、構造判定の signal のみとして読む**
+- 4 方針の AI agent はヒューリスティック (Q-learning 等の学習無し)。Log graze_log_cdx v05_1_cdx の v77-v81 が学習型 (route_qlearning) を使っているのとは粒度が違う。**「悪い方針が不安定になる状態」(Log_cdx 観点 8) の検証は本物の bad policy ヒューリスティックで十分** — 学習型は次々サイクル以降の課題
+- Python 移植の中核ロジック完成度は 80% 想定 (描画系 / 無関係補助機構の省略により)。完成度 100% を目指すと v07/index.html を逐行再現する必要があり、観点8 物理化の射程外。**「relative order が想定通りか / 想定外なら shallow design signal」の構造判定に必要な範囲のみ完成度を上げる**
+
+## 削除可能性
+
+`game/graze_log/v07/headless.py` は独立ファイル。ファイル単位削除で完全戻し可能。index.html は無改変なので、headless.py 削除で観点6 等価戻し。1 機構刻み制約 (R-D + `feedback_clone_strategy.md` t:5) 準拠。
+
+— Ash (Win2) 2026-05-28 C202 Phase 4 (観点 8 実装**前** Stage 3 予測)
