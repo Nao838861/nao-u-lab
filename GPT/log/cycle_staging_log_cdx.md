@@ -70,7 +70,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-28T02:08+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned: []
+issues:
+  - id: ISS-4A-20260528-001
+    description: "memory/MEMORY.md の Recent 行に `probe_atom_quality.py` という存在しない backtick パスが残っている。該当内容は `tools/atom_quality.py` や kaizen 系チェックへの言及と見られるが、索引から直接たどれない。"
+    severity: low
+    evidence: "memory/MEMORY.md:59; `rg --files -g '*probe*atom*quality*'` は該当なし、`tools/atom_quality.py` は存在"
+    why_blocks_game_memory: "ゲーム制作時に atom 品質検査や recall 改善 probe を探す導線が、存在しないファイル名で一度途切れる。ただし単一行の stale reference で、既存タグ・atom 本体・主要 recall 導線は生きているため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "MEMORY.md の markdown link は 0 件、backtick path は 2 件中 1 件だけ未解決。"
+  - "memory/atoms.jsonl は 1741 行、JSON 破損 0、duplicate id 0、duplicate content hash 0。"
+  - "memory/raw/ は 107 files、30 日超未更新 0。"
+  - "memory/shared_reads_candidates/ は 241 files、30 日超未更新 0。"
+  - "inbox は directives pending 0、broadcast pending 1 (`broadcast-1779790844-85adeffbca`)。triage_status=needs_human_review かつ本 Phase 4a の整理対象として完了判定できないため close せず保持。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
