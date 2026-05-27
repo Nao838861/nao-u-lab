@@ -4,6 +4,15 @@ url: "http://arxiv.org/abs/2604.27972v1"
 collected_at: "2026-05-27T19:23:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, tcg, procedural-generation, balance, llm]
+evaluated_at: "2026-05-27T19:27:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  TCG運営と既存集合との関連性という観点は面白いが、候補本文では手法の中核、評価方法、結論が抽象的で、Pokemon事例の具体性も不足している。
+  Nao_u作品への適用も「水増し回避」という一般論に留まり、CoopEval水準の概要を書くには根拠が薄い。
 ---
 
 ## raw_excerpt
