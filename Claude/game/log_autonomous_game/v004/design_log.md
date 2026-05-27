@@ -116,6 +116,76 @@ graze 機構 (= 自発リスク機構) の落とし方 4 分岐:
 
 ---
 
+## 2.A 案 A (castLock 弾消し報酬) 詳細仕様 — C253 Phase 4 雛形実装着手
+
+**起票**: 2026-05-28 C253 Phase 4 (Log)。本節は §2 brainstorm 結論「案 A 第 1 候補」を物理化する雛形仕様。実装着手と同サイクル内で記述。
+
+### 2.A.1 機構仕様 (最小差分: v003 game.js から +10〜20 行)
+
+- **発動条件**: `game.echo` 非 null かつ `bullet.collidesWithPlayer()` (= 既存 `checkCollisions` の bullet ループ内、castLock 区間中に弾と重なった瞬間)
+- **挙動**:
+  - 該当弾 `b.alive = false` で消滅 (= updateBullets の filter で次フレーム除去)
+  - `game.echo.bulletsErased` カウント加算 (echo 単位、resolveLock 時に集計はせず、観測専用)
+  - `game.lockFlash = { x: b.x, y: b.y, frame: game.frame }` = visual feedback の起点
+  - `logEvent('bullet_erased', { x, y })` trace 記録 (LLM プレイヤー側教師資料化)
+- **GAMEOVER 遷移をスキップ**: 従来 (v003) は echo 中でも弾接触で GAMEOVER に遷移していた。v004 案 A では **castLock 中の弾接触は erase に置換** = castLock は弾に対しては安全圏として機能 (Echo-Path コンセプト「castLock 区間 = 短時間の安全圏」の明示物理化)
+- **敵本体との接触は erase 対象外**: castLock 中でも敵本体に重なれば従来通り GAMEOVER。「弾は消せるが敵には突っ込めない」を物理保証 (= castLock を「強引な突撃武器」に転用できない)
+- **score / gauge / waveCount / lockResults への接続なし**: bulletsErased はカウントするだけで HUD 表示も lockResults 加算もしない (= 経済反転ガード継続、graze_log v01 同型事故予兆を構造的に bound)
+
+### 2.A.2 visual feedback 仕様 (色 flash 1 frame)
+
+- **描画位置**: 消滅した弾の座標 (= bullet 消滅点 x, y) に黄色系フラッシュ (`rgba(255, 220, 100, 0.85)`、半径 12px の円塗り)
+- **持続**: 1 frame のみ (= 16.6ms、目視ギリギリのサブリミナル)
+- **意図**: 「castLock 中に何かが起きた」を最小限知覚に残す。あえて派手にしない (派手にすると Echo を打ちたくなる = 自発コア化の加速、Q-D シート「自発のみ → コア化難度極高」逸脱予兆)
+- **対比**: 既存の Q-成功FB 状態 2 (シアン薄爆発 = resolveLock 時 30 frame)・状態 3 (危機回避メッセージ = 45 frame) より **桁違いに短い** = bulletsErased は「副産物」と位置づけ、castLock 成功 (= resolveLock 'hit') が主役の階層を維持
+
+### 2.A.3 経済反転ガード Q-D 再判定 (案 A 詳細実装版)
+
+§2 brainstorm 時点の Q-D 判定「経済反転リスク 低」を、詳細仕様 (上記 §2.A.1, §2.A.2) を前提に再判定:
+
+- **緊張の発生源**: 両方バランス維持。「castLock 発動 = 自発」「弾消し対象 = 外発の敵弾」 = 外発が無いと弾消しも発生しない (verify.js §1 で物理確認)
+- **(自発要素の位置)**: コア機構入口だが副産物層が score/gauge 非接続 = 報酬経路の活性化を bullet 消滅可視化 1 frame のみに圧縮 → 4 分岐 (b) コアルール特別ルール側のままで、(d) Every Extend Extra 化へのドリフト無し
+- **30秒で死ぬ要素**: あり継続 (敵本体接触 + 弾源負荷 90s カーブで死ねる)。castLock 中の弾無効化が「死なないプレイ」を作るリスクは castLock 発動条件 (trail >= 60 frame = 1 秒蓄積) + resolveLock の 1 秒待ちで構造的に上限
+- **経済反転チェック**: ゲージ蓄積源は無 (score 非導入)。bulletsErased は観測カウンタのみで報酬経路を作らない = 「敵を倒さない方が得」の構造的成立条件無し
+- **美しいプレイ**: 「**敵弾の動きを見て 1 秒先の自分の到達予定地点を予測し、Echo の castLock 区間を狙ったタイミングで弾幕の中を踏み抜ける**」維持。案 A 追加でも「弾を踏み抜く」コンセプトは弾消しに増強 (= 踏み抜けた弾が消える = 「踏み抜き」の物理結果が画面に現れる) で強化方向、逸脱無し
+
+### 2.A.4 既存 v003 機構との非破壊接続
+
+- **castLock 発動条件 (trail >= ECHO_FRAMES)** = 変更なし
+- **resolveLock 判定 (echo.hit の有無で result hit/miss)** = 変更なし。ただし echo 中の弾接触は erase で吸収されるため、`echo.hit` が立つのは「敵本体接触」時のみに収束 (= v003 では敵+弾の両方で立ったが、v004 では敵のみ。実質的に "miss" 判定が出にくくなる方向 = castLock 成功率が体感的に上がる)
+- **Q-成功FB 状態 1/2/3** = 変更なし。状態 1 (グレーリング = 蓄積中)、状態 2 (シアン爆発 = 弾なし hit)、状態 3 (危機回避メッセージ = 弾あり hit) はそのまま。case A の弾消しフラッシュはこれらと独立した第 4 種視覚チャネル
+- **trace logger** = `bullet_erased` event 追加で拡張。`echo_resolve` event の result フィールドは変更なし
+
+### 2.A.5 雛形実装スコープ (本サイクル C253 で着地)
+
+- v004/game.js: §2.A.1 機構 + §2.A.2 visual feedback 実装 (10〜20 行追加)
+- v004/verify.js: §3 拡張 §1 (bullet-density-zero モード) + Echo-spam 戦略追加 (echo 簡易シミュレーション含む)
+- v004/index.html: タイトル `Echo-Path (v004)` + `game.js` 参照のまま (v003 から非破壊フォーク)
+- 本 design_log §2.A 詳細起票 (本節)
+
+### 2.A.6 雛形実装で扱わない項目 (案 A の本格化は次サイクル以降)
+
+- HP system / 連続 erase によるパワーアップ / Echo クールダウン調整 → 次サイクル以降
+- 案 B/D の並行実装 → 次サイクル以降
+- 案 C は Nao_u 相談前提のため永久に保留 (4 分岐 b/d 判定が無いと進められない)
+- 経済反転 audit (verify.js 拡張 §2) は本サイクル未着手 (案 A 雛形と並列起動が理想だが、本サイクルは §1 のみ最小実装、§2 は次サイクル)
+
+### 2.A.7 C253 Phase 4 雛形実装結果
+
+**game.js / verify.js / index.html を v003 から fork、案 A 機構を実装し verify 2 mode を走らせた。**
+
+- **追加行数**: game.js 機構コードのみで +15 行 (checkCollisions の弾 erase 分岐 8 行 + lockFlash 描画 6 行 + state 初期化 1 行 + echo init フィールド追加 1 箇所、コメント・空行除く)。staging 上限 20 行を遵守
+- **regression (default mode)**: `node verify.js` → exit 0、v003 既存 4 悪手方針が wave 1 内 fail を維持 (camper 5.32s / lane-holder 4.62s / blind-sweeper 6.30s / nospecial 8.15s、v003 と同タイミング)。**= v004 弾消し追加が悪手通過の穴を作っていない**
+- **bullet-density-zero mode**: `node verify.js --bullet-density-zero` → exit 0、構造的テスト通過。
+  - 全 5 方針 bullets_erased = 0 (弾源 0% で発火しない確認)
+  - echo-spam (echo_casts=7) と camper (echo_casts=0) が **同フレーム同要因 (frame 431, 敵 A 接触)** で死亡 = Echo を打っても死亡時刻すら変わらない = Echo 単独で得失差ゼロ
+  - 移動系 2 方針 (blind-sweeper / nospecial) が 90s 生存 = 弾以外の経路の死は移動で回避可能
+- **pass 条件改訂の経緯**: staging 初版は「5 方針すべてが 90 秒生存」を pass 条件にしていたが、SHOOT_INTERVAL=Infinity でも敵 A は vy=1.4 で縦進行を続けるため静止方針 (camper / lane-holder / echo-spam) は frame ~430 で敵接触死する。これは案 A 弾消し機構と独立の構造で、staging 初版は「弾源 0% なら何も死なない」と過剰仮定していた。改訂 pass 条件は (a) 全方針 bulletsErased=0 (b) echo-spam と camper の outcome/death_frame 一致 (c) 移動系 2 方針生存、の 3 条件同時満足。本丸は (a)+(b)
+- **構造的に確認できたこと**: 案 A 弾消し報酬は弾源依存 (= 外発依存) で発火し、Echo 単独 (= 自発のみ) では報酬経路を活性化しない。graze_log v01 同型「自発のみで報酬経路がコア化」を物理的に bound 済
+- **構造的に確認できないこと**: 弾源があるときに案 A 報酬が **どれだけ** 経済反転を引き起こす/起こさないか (案 A は score 非接続のため経済反転 audit §2 が意味希薄)。これは案 B/D (score 接続あり) 実装時に拡張対象
+
+---
+
 ## 3. v004 ヘッドレス検証項目 (verify.js 拡張案)
 
 ### 拡張 §1: 敵弾密度カーブ 0% 緊張成立テスト (**本事前ゲートのコア検証項目**)
@@ -156,12 +226,16 @@ graze 機構 (= 自発リスク機構) の落とし方 4 分岐:
 
 ## 5. 次サイクル以降の判断材料
 
-- **次サイクル C253 の候補手順**:
-  1. v003 実機判定取得状況確認 (Nao_u / Mir / Ash 反応の有無)
-  2. 案 A (castLock 弾消し報酬) の Q-D 判定通過確認 + design_log 詳細起票 (本ファイルとは別 §章)
-  3. verify.js 拡張 §1 (bullet-density-zero テスト) の実装着手判定
-- **案 C 採用判定**: Nao_u に **「Echo Path 上での軌道再走破ボーナス案は 4 分岐 (b) 斑鳩型 / (d) Every Extend Extra 型のどちらに落とすべきか」を直接相談** する。本 design_log のリンクを #human-steering で提示するか、Slack 投稿で論点提示するかは次サイクル判定
-- **経済反転 audit (拡張 §2) 実装時期**: 案 A 実装着手と同サイクル内で並列起動 (= 機構実装と audit 拡張が同じ commit に乗る形が理想)
+- **C253 Phase 4 完了状況 (2026-05-28 更新)**:
+  1. 案 A 詳細仕様 §2.A 起票済
+  2. game.js + verify.js + index.html v004 fork 済、案 A 機構 +13 行で実装、verify.js に --bullet-density-zero モード + Echo-spam 戦略 + 簡易 echo シミュレーション追加
+  3. verify 2 mode 双方 pass (default exit 0 = regression 維持 / --bullet-density-zero exit 0 = Echo 単独で得失差ゼロ確認、改訂 pass 条件下)
+  4. 静止方針が SHOOT_INTERVAL=Infinity でも敵 A vy=1.4 縦進行で frame ~430 接触死する構造を発見。pass 条件 (a)+(b)+(c) に改訂
+- **次サイクル C254 以降の候補手順**:
+  1. **実機判定**: v004 game.js を localhost で実プレイし、castLock 中の黄色 1 frame flash が知覚されるかを Nao_u / Mir / Ash で実機判定取得 (sub-perception 設計の体感確認)
+  2. **HP system or 連続 erase パワーアップ**: 案 A を score 非接続のまま「連続 erase で flash が大きくなる/色が変わる」のみで段階表現する案。score を介さない経済反転耐性の延長
+  3. **経済反転 audit §2 (verify.js 次拡張)**: 案 A は score 非接続のため意味希薄、案 B/D 着手時に対で起票
+- **案 C 採用判定**: Nao_u に **「Echo Path 上での軌道再走破ボーナス案は 4 分岐 (b) 斑鳩型 / (d) Every Extend Extra 型のどちらに落とすべきか」を直接相談** する (本サイクル C253 では Slack 提示せず、案 A 雛形優先)。次サイクル以降に持ち越し
 
 ---
 
