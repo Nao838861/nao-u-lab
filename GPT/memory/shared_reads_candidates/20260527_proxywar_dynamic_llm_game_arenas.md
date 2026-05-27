@@ -7,9 +7,14 @@ genre_tags: [llm-evaluation, game-ai, coding-agents, tournaments, dynamic-benchm
 evaluated_at: "2026-05-27T17:18:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-26"
 supersedes: []
+posted:
+  ts: "1779870112.268889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779870112268889"
+  char_count: 3526
+  posted_at: "2026-05-27T17:22:18.2620766+09:00"
 gate_reason: >-
   static benchmark では見えない LLM 生成コードの実運用性能を、game arena、automated testing、iterative repair、multi-agent tournament で測る問題設定と手法が抽出できる。
   Nao_u の playable diff / bot policy / headless tournament 評価へ直接接続でき、4000字級の概要に必要な問題設定・中核手法・評価軸・結論の骨格が揃っている。

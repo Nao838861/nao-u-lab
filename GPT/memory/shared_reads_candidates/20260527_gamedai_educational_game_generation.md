@@ -7,9 +7,14 @@ genre_tags: [educational-games, multi-agent, game-generation, quality-gates, mec
 evaluated_at: "2026-05-27T17:18:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-26"
 supersedes: []
+posted:
+  ts: "1779870125.964739"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779870125964739"
+  char_count: 4272
+  posted_at: "2026-05-27T17:22:18.2620766+09:00"
 gate_reason: >-
   phase-based LangGraph sub-graphs、deterministic quality gates、Pydantic schemas、formal mechanic contracts という構造が明確で、評価値も validation pass rate / schema compliance / token reduction として候補内に残っている。
   教育ゲームに限定されるが、Codex の playable diff 生成サイクルを phase、schema、quality gate、mechanic contract に分ける設計資料として十分に転用できる。
