@@ -103,6 +103,12 @@ class State:
         self.axis_shifted_by_other_voice = False  # 相手の声で譲れない筋が揺らいだ痕跡が場に残ったか
         # C201 セット4 sequel 追加フラグ
         self.observer_position_held = True        # 刑事=プレイヤーの中立観察者位置が保たれているか
+        # C209 セット5 scene 追加フラグ（scene_5_notebook_side で立つ）
+        self.notebook_blank_preserved = False     # 34行目を空白のまま残したか
+        self.notebook_self_referenced = False     # 34行目に「書けなかったこと」を書いたか
+        # C246 セット5 sequel 追加フラグ（sequel_5_notebook で立つ）
+        self.notebook_closed_with_gap = False     # 手帳を閉じたが背表紙が合いきらなかったか
+        self.notebook_left_open_to_morning = False  # 手帳を開いたまま朝の自分に渡したか
 
     def trust_change(self, d):
         self.trust = max(0, min(100, self.trust + d))
@@ -1386,6 +1392,92 @@ def scene_5_notebook_side(state: State):
 
 
 # ---------------------------------------------------------------------------
+# シークエル5（手帳の側）— C246 着手
+#   scene_5_notebook_side で立った2フラグ（blank_preserved / self_referenced）
+#   のいずれかを受け、刑事の反応→ジレンマ→決断（Dwight Swain sequel）を
+#   最小で書く。chapter_hook_5 は次サイクル送り（粒度規律: 1サイクル1関数）。
+#
+#   還元不可性: scene_5 の選択（空白の保持 / 書けなかった記録）が
+#   「手帳を閉じる時刻に何が起こるか」に降りる。閉じた／閉じきれなかった
+#   /開いたまま残した の事実が、章末フックの温度を分ける（実装は次サイクル）。
+#
+#   サイレンススズカ収束: 物理は時計の針と手帳の角度に限定。
+#   解釈を地の文に出さない（自警2: scene_5 と同じ register を継承）。
+#
+#   サプライズニンジャ発散: 予想は「刑事が手帳を閉じて部屋を出る」。
+#   実際は、閉じる選択をしても背表紙が完全には合わない／開いたままなら
+#   ペンの置き位置が翌朝の視線を予約する、という別の温度が立つ。
+# ---------------------------------------------------------------------------
+def sequel_5_notebook(state: State):
+    clear()
+    print("第五セット シークエル：取調 5日目 02:34  ／  手帳の側（続）")
+    print("─" * 40)
+    print()
+    # 反応（reaction）: ペン先の止まり/書き直しに対する物理的応答。
+    # 解釈は地の文に出さず、時計の針と手帳の角度だけで返す（自警2）。
+    if state.notebook_blank_preserved:
+        print("ペンを机に置いた。")
+        print("34行目は空けたまま、ページは開いたまま。")
+        print("時刻は 02:34。")
+        print()
+        print("手帳の角度が、書き始めたときから 3度ずれている。")
+        print("ずれているのは、手帳の側ではない。")
+    else:  # notebook_self_referenced
+        print("ペンを置く前に、もう一度ページを戻した。")
+        print("34行目に書いた『今日、最初の1行が書けなかった』を、")
+        print("もう一度、目で追った。")
+        print("時刻は 02:34。")
+        print()
+        print("手帳の角度は、書き始めたときと同じ。")
+        print("ずれているのは、手帳の側ではない。")
+    print()
+    pause()
+
+    clear()
+    # ジレンマ（dilemma）: 手帳を閉じる/開いたまま朝まで残す。両方前進。
+    # この選択は chapter_hook_5（次サイクル）の温度を分けるフラグになる。
+    print("詰所の蛍光灯は、まだ消えていない。")
+    print("朝までに、判断を一つ、残す必要がある。")
+    print()
+    c = choose([
+        "手帳を閉じる（今夜のページを **閉じた状態で** 残す）",
+        "手帳を開いたまま机に残す（朝の自分に **判断を渡す**）",
+    ])
+    print()
+
+    if c == 1:
+        # 決断: 閉じる。観察者位置の維持を物理的にも完了させる。
+        # ただし閉じた瞬間に、ページの間に挟まったペンが、
+        # 完全には閉じきれないことに気づく（ニンジャ的瞬間）。
+        # 解釈は加えない（3ミリの隙間という物理だけで返す）。
+        print("手帳を閉じる。")
+        print("ペンを挟んだまま閉じたため、")
+        print("背表紙が完全には合わない。")
+        print("3ミリの隙間が、机の光に薄く反射している。")
+        state.notebook_closed_with_gap = True
+    else:
+        # 決断: 開いたまま残す。観察者位置を意図的に翌朝の自分に引き継ぐ。
+        # 中立を維持する責任を、未来の自分に転送した形。
+        # ペンを 34ページ目の余白に置く = 翌朝の最初の視線を予約する物理。
+        print("手帳を開いたまま、机の端に寄せた。")
+        print("ペンを、34ページ目の余白に置く。")
+        print("朝に座る席から、ちょうど見える角度に。")
+        state.notebook_left_open_to_morning = True
+
+    print()
+    print(f"信頼ゲージ: {state.trust}")
+    print("手帳の隅: 『観察者位置は、")
+    if state.notebook_closed_with_gap:
+        print("           **閉じたが、完全には閉じきれなかった**』")
+    else:
+        print("           **朝の自分に引き渡された**』")
+    print()
+    print("(C246 sequel_5_notebook 実装完了：chapter_hook_5 は次サイクル送り)")
+    print()
+    pause()
+
+
+# ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
 def main():
@@ -1427,9 +1519,11 @@ def main():
         chapter_hook_4(state, next_act)
 
     # セット5（C209 scene_5_notebook_side 着手 — 中立復帰分岐のみ実装、ずれの記録分岐は別サイクル）
-    # 粒度規律: scene_5 単独で1mm。sequel_5/章末フックは次サイクル送り。
+    # C246: sequel_5_notebook 追加。chapter_hook_5 は次サイクル送り。
+    # 粒度規律: 1サイクル1関数。sequel_5 単独で1mm 加算、章末フックは持ち越し。
     if next_act == "中立復帰":
         scene_5_notebook_side(state)
+        sequel_5_notebook(state)
 
 
 if __name__ == "__main__":
