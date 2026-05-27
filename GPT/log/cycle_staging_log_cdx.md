@@ -27,7 +27,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-28T01:40+09:00 log_cdx Phase 3
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_skillopt_prompt_skill_training.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779899859079309"
+    char_count: 3724
+skipped: []
+notes:
+  - "PowerShell pipe 経由の初回投稿で日本語が文字化けしたため、同一 Slack message ts を chat.update で UTF-8 blocks に差し替えた。分割投稿なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
