@@ -3,7 +3,7 @@ name: game_memory_task_lens_index
 type: index
 status: active
 created: 2026-05-15
-updated: 2026-05-26
+updated: 2026-05-28
 purpose: ゲーム制作タスク別に、broad tag から具体的な shared-reads / candidate / atom へ降りるための小さな入口。
 ---
 
@@ -19,6 +19,40 @@ purpose: ゲーム制作タスク別に、broad tag から具体的な shared-re
 - `game-design` / `memory` / `identity` のような broad tag から直接探し始めず、まず下の `broad_tags` が合う lens へ降りる。
 - Phase 4a で broad tag 偏りを検出した時は、同じ broad tag をさらに掘らず、該当 lens の「使う場面」/ recall query / 代表リンクへ落としてから読む。
 - 例: `shmup 弾幕評価` は `Playable / Headless 評価` と `Balance / Rule Space`、`playtest harness` は `Playable / Headless 評価` と `Repair / Iterative Improvement`、`素材生成 pipeline` は `Generation / Co-creation` から入る。
+
+## Broad Tag Descent Map
+
+Phase 4a issue `ISS-4A-20260528-001` / Phase 4b decision `introduce` に基づく、巨大 tag から既存 lens へ降りるための対応表。ここでは lens を増やさず、最初に読む既存 lens と代表 query だけを選ぶ。避ける探し方に当てはまる時は、Tag Entry Points の上位 atom を順に掘らず、該当 lens の「使う場面」/ representative / atom を確認する。
+
+### `game-design`
+
+- 最初に見る lens: `Playable / Headless 評価`, `Balance / Rule Space`, `Feedback / Rights / Human Judgment`, `Generation / Co-creation`
+- 避ける探し方: `game-design` の上位 atom をそのまま順に読み、ゲーム制作前の判定・評価・実装入口を毎回手で選び直すこと。
+- 代表 recall query: `python tools/memory_recall.py "game-design playable headless balance feedback generation shmup prototype"`
+
+### `evaluation`
+
+- 最初に見る lens: `Playable / Headless 評価`, `Balance / Rule Space`, `Player Simulation / Persona`, `Repair / Iterative Improvement`
+- 避ける探し方: 評価を平均スコアや起動確認だけに圧縮し、bad-policy / persona / regression のどれを測るか決めないまま検索すること。
+- 代表 recall query: `python tools/memory_recall.py "evaluation playable headless bad policy persona regression balance game"`
+
+### `operation`
+
+- 最初に見る lens: `Repair / Iterative Improvement`, `Playable / Headless 評価`, `Feedback / Rights / Human Judgment`
+- 避ける探し方: runbook や Slack 運用 atom だけを掘り、制作物の再現手順・修復 loop・evidence へ接続しないこと。
+- 代表 recall query: `python tools/memory_recall.py "operation repair loop regression evidence headless game feedback"`
+
+### `identity`
+
+- 最初に見る lens: `Feedback / Rights / Human Judgment`, `Generation / Co-creation`, `Player Simulation / Persona`
+- 避ける探し方: identity atom を一般的な自己像として読み、Nao_u feedback / human correction / player persona の判断材料へ降ろさないこと。
+- 代表 recall query: `python tools/memory_recall.py "identity Nao_u feedback human judgment persona co-creation game"`
+
+### `memory`
+
+- 最初に見る lens: `Feedback / Rights / Human Judgment`, `Repair / Iterative Improvement`, `Generation / Co-creation`
+- 避ける探し方: memory 改善そのものを目的化し、次の制作で読む source / candidate / lesson / evidence のどれを増やすか決めないこと。
+- 代表 recall query: `python tools/memory_recall.py "memory game feedback bridge repair lesson generation evidence"`
 
 ## Lens
 
@@ -163,6 +197,7 @@ Phase 4a issue `ISS-4A-20260526-02` / Phase 4b decision `introduce` に基づく
 - lens は 5-7 個程度を上限の目安にし、増やす前に既存 lens に入れられないか確認する。
 - 代表リンクは各 lens 2-4 件に抑え、網羅リストにしない。
 - 上位タグを増やして解決しない。新しい lens を足す前に、既存 lens の「使う場面」と `broad_tags` で受け止められるか見直す。
+- Phase 4a で broad tag 偏りを見つけた時は、tag 追加や atom metadata backfill の前に `Broad Tag Descent Map` の不足を確認する。
 - 代表リンクは現状維持を基本にし、Phase 3b / 4a で採用済み probe など明確な追加理由がある時だけ差し替える。
 
 

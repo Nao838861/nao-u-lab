@@ -178,5 +178,20 @@ postponed_issues:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-28T06:42+09:00 log_cdx Phase 4c 記憶階層 導入:
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260528-001
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+    summary: "Phase 4b の outline 通り、既存 lens を増やさず `Broad Tag Descent Map` を追加し、`game-design` / `evaluation` / `operation` / `identity` / `memory` から最初に見る lens・避ける探し方・代表 recall query へ降りる導線を記録した。更新ルールにも broad tag 偏り検出時は tag 追加や atom metadata backfill の前に descent map 不足を確認する運用を追記した。"
+    partial: false
+migrations: []
+verification:
+  - "python tools/memory_recall.py \"game-design playable headless balance feedback generation shmup prototype\" -> 正常終了し、headless / shmup / feedback 系 atom が返ることを確認。"
+  - "python tools/memory_health.py -> memory_health は warning 終了。repeated title / mojibake suspect は Phase 4a 既知の残件で、今回変更した index 構造の破損はなし。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
