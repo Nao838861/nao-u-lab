@@ -59,6 +59,33 @@ Mem0 = **症状** (gap、圧縮後に表れる) / Atlan = **構造** (pattern、
 
 **親マーカー (2026-05-27 C249 Phase 2 — kaizen #106 摂取経路固定化 unified graph 経路 2 件統合)**: a + b 両 full intake、c で並置効果 (Mem0/Atlan/SSGM 3 段) を取り出し、即実装はせず memory_redesign.md C249 節へ吸収。`feedback_rule_proliferation_canonical.md` 順守 (即 implement なし、同型 N 回未確定で kaizen 起票なし)、kaizen #136 self-audit ルール (Phase 1 §6 摂取経路固定化を Phase 2/3 強制利用しない) に対しては「義務消化ではなく Phase 2 タスク 2) の素材として実際に交差度が高いと判定した例外運用」として処理 (3 件中 2 件に絞る判定で安全側)。**本節の親マーカー完了**
 
+## 2026-05-28 (Log C253 Phase 2) Mem0g (Mem0 graph variant) 深掘り — directed labeled graph + Update Resolver + invalid フラグの 3 機構を 5/27 Mem0 intake から補完 [統合済 2026-05-28]
+
+**文脈**: C249 (5/27) で Mem0 (素 vector store 版) を full intake したが、g 版の Update Resolver (ADD / UPDATE / DELETE / NOOP の LLM 判定) と invalid フラグ (DELETE せず時間軸を保つ) の 2 機構は当時の intake では深掘りしていなかった。本サイクル C253 Phase 1 §6 で memory_redesign keyword (Graphiti / Mem0 unified graph) を再検索した際に表層化、g 版 architecture の specific 詳細を取得。kaizen #135 build_atom_edges.py (atom 派生 edge 生成、5/26 起票、観察期間 C244-C248 中) が Mem0g の directed labeled graph G=(V,E,L) と構造一致を独立到達していることを確認。
+
+出典: <https://memo.d.foundation/breakdown/mem0> (full intake、breakdown 公式) / arXiv <https://arxiv.org/pdf/2504.19413> (Mem0 production-ready paper、要点のみ) / <https://yogeshyadav.medium.com/ai-agent-memory-systems-in-2026-mem0-zep-hindsight-memvid-and-everything-in-between-compared-96e35b818da8> (LOCOMO 58.13% vs OpenAI 21.71% 数値の出典)
+
+**Mem0g architecture 3 機構** (5/27 Mem0 intake で取り逃した詳細):
+1. **Extraction Phase**: 直近メッセージ + 会話サマリーから Entity Extractor がエンティティを node 化、Relations Generator が label 付き edge を生成、triplet (source, relation, destination) を出力。例: "Alice" —lives_in→ "San Francisco"
+2. **Update Phase + Update Resolver**: vector embedding で意味的に近い既存 memory を top-s 取得 → LLM-powered Update Resolver が function-calling で ADD / UPDATE / DELETE / NOOP を決定。NOOP の存在が核心 (曖昧なら採用しない方向に倒す、feedback_rule_proliferation_canonical.md と同型判断)
+3. **Invalid フラグ (graph 版固有)**: DELETE せず関係を invalid マーク。後続クエリは invalid 関係も「過去事実」として参照可、temporal reasoning で LOCOMO 58.13% vs OpenAI 21.71% を出している根拠
+
+**Log 側欠落 3 機構** (kaizen #135 段階1 dry-run 着手判定の事前 gate として記録):
+- Conflict Detector + Update Resolver 相当: 現状 atom ingest は ADD only、UPDATE / DELETE / NOOP 分岐なし。新 atom が古い atom と矛盾しても両方残る → atom_quality_quarantine.jsonl が「矛盾 fact / ノイズ fact / 新規 fact」を分離できていない
+- Temporal invalidation: frontmatter に `date_created` のみ、`invalidated_at` / `valid_until` 相当なし。core_mission.md「丸書換え禁止、追記・更新」原則 (5/27 Atlan Pattern 5 governance) と Mem0g invalid フラグは方向一致 — どちらも「上書きしないが無効化はする」
+- Entity 正規化: atom 内 `[[link]]` は手書きで表記揺れ収束しない (例: "kaizen #135" / "build_atom_edges" / "atom edges")。Mem0g Entity Extractor → 正規化 node 化に相当する層がない
+
+**順序計画** (即 implement 禁止、kaizen #136 self-audit 順守):
+1. kaizen #135 段階1 dry-run スケッチ完遂 → 我々のデータで edge が意味を持つか実測
+2. `invalidated_at` フィールド追加を低コスト先行実装 (frontmatter のみ、ルール変更不要)
+3. Update Resolver は recall_golden T0 で「Resolver なし vs あり」を比較してから採用判定
+
+**弱点**: (1) edge label 語彙統制が breakdown 未解決、我々は core relation 語彙 (extends / contradicts / supersedes / depends_on) を先に確定しないと「relation 名ロングテール」で graph が壊れる (2) LOCOMO 58.13% は GPT-4 系前提、Haiku 系で同精度かは未確定 (3) breakdown は production 投入時の Update Resolver LLM 呼び出し量 / latency 未開示、arXiv 側参照必要
+
+[統合済 2026-05-28 Log C253 Phase 2 → #shared-reads ts=1779910998.747929 (4797 chars) で投稿 / projects/memory_redesign.md「2026-05-28 (Log C253 Phase 2)」節に「Mem0g 独立到達確認 + 欠落 3 機構 + 順序計画」として吸収予定 / `invalidated_at` frontmatter 追加候補は kaizen 起票せず C254 以降の memory_redesign 検討項目として保留]
+
+[原本 draft: drafts/c253_phase2_shared_mem0g.md]
+
 ---
 
 ## 2026-05-25 (C237 Phase 2) Log_cdx (GPT/Codex) #nao-u 6連投「Pulse Relay v003 → ゲーム自律生成教師差分パケット」 — Nao_u 直接指示「各自の名前を付けた新しいプロジェクトでこのようなゲームを完成までもっていけ」のトリガー入力 [intra-system intake、即統合済 2026-05-25]

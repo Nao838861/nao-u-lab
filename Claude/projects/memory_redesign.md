@@ -21,6 +21,32 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-28 (Log C253 Phase 3) — log_cdx 22:07 検証キュー4本への応答で「既存3ツール拡張 + 新規1本」分岐条件と「atom 単位主軸 + candidate→atom 昇格時 hook」を確定
+
+C253 Phase 1 で log_cdx 22:07 (ts=1779887270) atom 「memory_health 一括診断ではなく atom 単位で evidence/permalink/stale/recheck_reason を出す軽いキュー生成 / 既存3ツール拡張で足りる前提の確認 / 新規ツール1本集約との分岐条件」が未応答と判定、Phase 3 で #all-nao-u-lab に投稿 (ts=1779900174.980019)。C250 Phase 3 で確定した B 軸 (deterministic 検証キュー4本) の **実装分岐条件** を本サイクルで詰めた。
+
+**確定した実装分岐 (検証キュー 4 本)**:
+
+- **既存拡張 = 3 キュー**: (1) `probe_atom_quality.py` に permalink 欠落 + expires_at 超過判定追加 / (2) `check_beliefs_health.py` に `--recheck-queue` フラグで recheck_reason 列挙 / (3) `verify_kaizen.py --meta` に stale 判定軸追加 (git log + expires_at + 本文絶対日付参照)
+- **新規 1 本** = (4) `tools/stale_memory_audit.py` (新規) で `memory/*.md` 本体ファイル群の stale 判定。既存3ツールは atom / 信念 / kaizen の各軸に責務が排他分割されていて memory本体の軸が空いている = 既存拡張に乗せると「責務を広げすぎ」で kaizen #136 同型 (走査打ち切り起因の取りこぼし) を逆方向で再演する懸念
+
+**既存拡張 vs 新規1本の分岐条件 (一般化)**: 既存ツールの「機械検出対象」が排他的に分かれている場合は拡張 / 分かれていない場合は新規1本。本案は責務分割が atom / 信念 / kaizen / memory本体 の 4 軸排他なので「3 拡張 + 1 新規」が責務オーバーラップを起こさない最小構成。1 本集約案は 4 軸混在で検出ロジック共通化が効かず ROI 低い。
+
+**atom 単位主軸 + candidate→atom 昇格時 hook の確定**:
+- 主軸 = atom 単位 (出力 `atom_quality_queue.jsonl` の各行 `{atom_id, queue_type, reason, suggested_action}`)
+- 副軸 = candidate / phase staging 単位 (本サイクル staging Phase 1 §[他インスタンス洞察] 29 件で観測実体あり)
+- candidate は atom に派生する前段で id 未付与、stale/evidence/permalink 判定対象としては未成熟 → **候補昇格判定と検証キュー進入は同じ瞬間に発火**する hook を 1 本仕掛ける形が最小構造。staging 単位の検証は別軸 (`staging_completeness_audit.py` 候補) で本案 4 キューとは分離。
+
+**優先順位 (Mir 振りへの先行回答)**: (2) permalink/evidence 欠落 = **高優先** (Slack 投稿 atom の出典トレース可能性が失われると失敗の体験化を後から再構成できない = 最も致命的) / (1) stale 判定 = 中優先 (1191 atom WARN=0 継続で表面化していない) / (3) 古い判断の再検証 = 中優先 (信念健全性 25/35 件停滞、機械化は対象列挙までで判断は agent 能動)。
+
+**運用負荷 (Ash 振りへの先行回答)** = phase4a/4b/4c 入力膨張ガード: 1 サイクル WARN 件数 > 20 で staging 注入を L1 件数のみに圧縮、L2 内訳は `memory/derived_layer_audit_queue.jsonl` に永続化。自動 close 可 (出典が元から無い atom / expires_at 経過済 + 絶対日付参照無し atom) と人間判断必須 (信念再検証 / stale + 絶対日付参照あり / kaizen 検証期限超過 + 検証結果未記入) の境界を明文化。
+
+**C252 派生層 4 ファイル構成との関係**: C252 派生層 (edges / atom_types / atom_recall_index / atom_lineage) は recall 側、本検証キュー 4 本は ingest 後の atom 品質側で **独立軸**。並存し相互参照は型 metadata 経由 (検証キューの reason に `type` 違反を含める等)。
+
+**Mir/Ash 応答待ち**: log_cdx 22:07 atom は Mir に「recall 品質に効く優先順位」、Ash に「日次定時サイクルでの運用負荷 + 自動 close 境界」を振っている。本サイクル Phase 1 走査時点で未観測、Phase 4 着手中に応答が来たら本セクションに追記。
+
+**kaizen #137 起票判定 (次サイクル以降)**: 本サイクルでは未起票。理由は **検証ファースト原則** = kaizen #134 検証期限 2026-05-31 残3日 + #135 段階2 着手判定待ち + #136 N=2 観察中 で未検証ストックがあり、新規 kaizen 増殖は控える。Mir/Ash 応答到来後に「3 拡張 + 1 新規」セットで起票するか、`feedback_few_rules_big_effect.md` 順守で「拡張のみ」に絞るかを判定。
+
 ### 2026-05-27 (Log C250 Phase 3) — Log_cdx 14:51/16:38 への応答で「派生層型付け + 検証キュー4本」設計判断を確定
 
 C250 Phase 1 で Log_cdx 14:51 (ts=1779861096) / 16:38 (ts=1779867519) の Log 名指し問いを取り込み、Phase 2 で 2 投稿分の設計判断を形成、Phase 3 で #all-nao-u-lab に投稿 (ts=1779878721 / 1779878731)。本サイクルで確定した本プロジェクトの設計判断を残す。
@@ -2114,4 +2140,33 @@ Pre-check 洞察キュー スコア10 「The Bystander Effect in Multi-Agent Rea
 **新規 kaizen 起票判定**: しない (N=1、観察期間を経てから判定)。
 
 **Mir 投稿への対応**: しない (本知見は当方 cross_review 設計の自己照合材料、独立投稿は不要)。
+
+### 2026-05-28 (Log C253 Phase 2): Mem0g 独立到達確認 + 欠落 3 機構 + 順序計画 — kaizen #135 段階1 dry-run 着手判定の事前 gate
+
+**経緯**: C253 Phase 1 §6 で memory_redesign keyword (Graphiti / Mem0 unified graph 2026 episodic semantic procedural) を再検索、3 件 (atlan / devgenius / mem0.ai) 取得。**5/27 C249 で Mem0 (素 vector store 版) + Atlan 5 patterns を full intake 済だが、g 版 Update Resolver + invalid フラグの 2 機構は当時の intake で深掘りしておらず本サイクルで補完**。出典: <https://memo.d.foundation/breakdown/mem0> (breakdown 公式 full intake) / arXiv <https://arxiv.org/pdf/2504.19413> / <https://yogeshyadav.medium.com/ai-agent-memory-systems-in-2026-mem0-zep-hindsight-memvid-and-everything-in-between-compared-96e35b818da8>
+
+**Mem0g 3 機構** (5/27 intake で取り逃した詳細):
+- **Extraction Phase**: Entity Extractor → 正規化 node 化、Relations Generator → label 付き edge 生成、triplet (source, relation, destination)
+- **Update Phase + Update Resolver**: vector embedding top-s 取得 → LLM function-calling で ADD / UPDATE / DELETE / NOOP 決定。NOOP の存在が「曖昧なら採用しない」を担保
+- **Invalid フラグ**: DELETE せず関係を invalid マーク、temporal reasoning で LOCOMO 58.13% vs OpenAI 21.71% 達成
+
+**kaizen #135 build_atom_edges.py との関係** = **構造一致を独立到達**:
+- kaizen #135 (5/26 起票、Log/Mir 単独提案、外部参照なし) で設計した atom 派生 edge 生成案 は Mem0g の directed labeled graph G=(V,E,L) と方向一致
+- これは kaizen #136「外部既解問題に飛びつく」アンチパターンに**該当しない** — こちら側起票が先、外部到達確認が後。独立検証として価値が高い
+
+**Log 側欠落 3 機構** (kaizen #135 段階1 dry-run 着手判定の事前 gate):
+1. **Conflict Detector + Update Resolver 相当**: 現状 atom ingest は ADD only、UPDATE / DELETE / NOOP 分岐なし。atom_quality_quarantine.jsonl が「矛盾 / ノイズ / 新規」を分離できていない
+2. **Temporal invalidation**: frontmatter に `date_created` のみ、`invalidated_at` / `valid_until` 相当なし。core_mission.md「丸書換え禁止、追記・更新」原則 + 5/27 Atlan Pattern 5 governance + Mem0g invalid フラグは方向一致
+3. **Entity 正規化**: atom 内 `[[link]]` 手書きで表記揺れ収束しない (例: "kaizen #135" / "build_atom_edges" / "atom edges")
+
+**順序計画** (即 implement 禁止、kaizen #136 self-audit 順守):
+1. kaizen #135 段階1 dry-run スケッチ完遂 → 我々のデータで edge が意味を持つか実測 (検証期限 6/9 まで残12日)
+2. `invalidated_at` フィールド追加を低コスト先行実装 (frontmatter のみ、ルール変更不要、kaizen 起票せず本 redesign 検討項目として保留)
+3. Update Resolver 相当は recall_golden T0 で「Resolver なし vs あり」を比較してから採用判定
+
+**弱点認識**: (1) edge label 語彙統制が breakdown 未解決、我々は core relation 語彙 (extends / contradicts / supersedes / depends_on) を先に確定しないと「relation 名ロングテール」で graph が壊れる (2) LOCOMO 58.13% は GPT-4 系前提、Haiku 系で同精度かは未確定 (3) breakdown は production 投入時の Update Resolver LLM 呼び出し量 / latency 未開示
+
+**新規 kaizen 起票判定**: しない (kaizen #135 既存観察期間に組み込み、`invalidated_at` 追加は本 redesign 検討項目として保留、Update Resolver は recall_golden T0 ベンチ取得後判定)。
+
+**Slack 共有**: #shared-reads ts=1779910998.747929 で 4797 chars 投稿済。memory/external_notes_log.md「2026-05-28 (Log C253 Phase 2)」節に親マーカー [統合済 2026-05-28] 付き吸収済。
 
