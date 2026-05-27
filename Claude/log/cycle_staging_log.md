@@ -250,7 +250,38 @@ Pre-check 洞察キュー 16 件中、本サイクル既消化済 = 7 件:
 
 本サイクルは Phase 1 で「新着返信要求 5件 + pending 0件 + 統合候補 0件」 → 2件以下に該当せず、「深掘り候補」セクション発動なし。次サイクル以降の空サイクル判定で発動条件成立時に対応。
 
-## 次フェーズの大作業
+## Phase 4: 大作業実施 (副産物列挙)
+
+**タイトル**: v002 を Nao_u に出荷 — completion_report.md + visual_review.md 起票 + #game-rights 投稿セット (完遂)
+
+### 完遂物 (新規/変更ファイル)
+- (新規) `game/log_autonomous_game/v002/completion_report.md` — 1 行コンセプト / 出荷スコープ / 自己採点サマリ / What proves 6 項目 / What does NOT prove 7 項目 / Nao_u 依頼 / 起動手順 / リンク。Pulse Relay v003 教師差分 §3 順守
+- (新規) `game/log_autonomous_game/v002/visual_review.md` — V-01〜V-17 の 17 チェック項目 + PASS/UNKNOWN 判定。純 PASS 16、PASS+UNKNOWN 混合 4、UNKNOWN サマリ 8 項目
+- (新規) `drafts/post_log_game_rights_20260527_c249_v002_ship.py` (送信成功で `drafts/.archive/2026-05-27/` へ自動移動)
+- (変更) `projects/log_autonomous_game.md` — 残課題 3 項目 [x] 化 (visual_review / completion_report / Nao_u 出荷) + 履歴に「2026-05-27 C249 Phase 4」節追記
+- (変更) `log/cycle_staging_log.md` — 本 Phase 4 セクション追記
+
+### Slack 投稿
+- `#game-rights` ts=1779848164.370029 — v002 出荷投稿、GitHub URL 3 本 + 起動手順 + Nao_u/Mir/Ash 依頼 8 項目 + 判定材料外 3 項目 + 自己採点サマリ
+
+### kaizen エントリ
+- 新規 kaizen 起票なし (`feedback_rule_proliferation_canonical.md` 順守、本 Phase 4 は出荷文書 + Slack 投稿の 1 作業集中で完遂)
+
+### audit / verify 状態 (Phase 3 確認分の維持)
+- verify.js pass:true (4 方針全 wave 1 内 fail) / bullet_origin_audit 10/10 PASS / enemy_behavior_audit 8/8 PASS / agent_difficulty_proxy 30/30 完走 (Phase 3 で確認、Phase 4 で再実行なし)
+
+### 完遂定義 (a)〜(e) 達成状況
+- (a) ✅ `completion_report.md` 新規、What proves / does not prove 分節済
+- (b) ✅ `visual_review.md` 新規、17 項目 (>10) + PASS/UNKNOWN 判定付き、Log 制約明示
+- (c) ✅ `#game-rights` 投稿 (ts=1779848164.370029)、HTTP URL 3 本含む、Nao_u/Mir/Ash 実機プレイ依頼 + 3 文書リンク
+- (d) ✅ `projects/log_autonomous_game.md` 残課題 3 項目 [x] + 履歴 C249 Phase 4 節追記済
+- (e) ✅ audit 3 本 + verify.js 全 PASS のまま (Phase 3 で確認した状態を Phase 4 で改変せず維持)
+
+### 次フェーズ (Phase 5) への引き継ぎ
+- commit / push (Phase 5): `game:` prefix で v002 配下 2 文書 (completion_report.md + visual_review.md) を単独 commit、`rule:` prefix で projects/log_autonomous_game.md + log/cycle_staging_log.md + drafts/.archive を別 commit に分離 (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」)
+- 日記 (Phase 5)
+
+## 次フェーズの大作業 (Phase 3 起票時の元タイトル)
 
 **タイトル**: v002 を Nao_u に出荷 — completion_report.md + visual_review.md 起票 + #game-rights 投稿セット
 
