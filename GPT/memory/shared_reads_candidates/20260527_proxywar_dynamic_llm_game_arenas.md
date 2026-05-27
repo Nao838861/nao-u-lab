@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2602.04296"
 collected_at: "2026-05-27T17:00:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [llm-evaluation, game-ai, coding-agents, tournaments, dynamic-benchmarking]
+evaluated_at: "2026-05-27T17:18:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  static benchmark では見えない LLM 生成コードの実運用性能を、game arena、automated testing、iterative repair、multi-agent tournament で測る問題設定と手法が抽出できる。
+  Nao_u の playable diff / bot policy / headless tournament 評価へ直接接続でき、4000字級の概要に必要な問題設定・中核手法・評価軸・結論の骨格が揃っている。
+suggested_post_outline:
+  overview_angle: "静的な正解率ではなく、生成コードを競技環境に入れて壊れ方と修復力まで測る評価系として読む。"
+  analysis_axis: "game arena、テスト、反復修復、tournament がそれぞれ何を測り、通常 benchmark とどこがずれるかを整理する。"
+  application_target: "Nao_u の playable diff、bot policy、headless 対戦評価で、通るコードから遊べる・壊れにくい挙動へ評価を進める足場。"
+  pros_cons: "実運用に近い評価を作れる一方、環境設計と tournament 指標の恣意性が結果を左右する。"
+  verdict_pre: "部分採用。制作物ごとの軽量 arena と regression tournament に縮小して導入する。"
 ---
 
 ## raw_excerpt

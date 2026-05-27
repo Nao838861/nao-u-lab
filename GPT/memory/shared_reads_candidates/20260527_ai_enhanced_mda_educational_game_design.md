@@ -4,6 +4,15 @@ url: "https://eprints.gla.ac.uk/382516/"
 collected_at: "2026-05-27T17:00:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mda, educational-games, generative-ai, procedural-content-generation]
+evaluated_at: "2026-05-27T17:18:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: >-
+  AI と MDA を接続する問題設定は有用だが、現 candidate は framework の主張と教育用途の一般論に寄っており、具体的な設計手順・評価対象・失敗条件がまだ見えない。
+  PDF があり本文補強の余地はあるため fail ではなく postpone とする。
 ---
 
 ## raw_excerpt
