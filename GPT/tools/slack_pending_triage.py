@@ -20,7 +20,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
 
 
-TRIAGE_KEYS = {"action_type", "domain", "next_step", "done_condition", "triage_status"}
+TRIAGE_KEYS = {"action_type", "domain", "next_step", "done_condition", "triage_status", "routing_tags"}
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:

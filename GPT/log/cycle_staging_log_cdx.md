@@ -123,7 +123,33 @@ items:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260527-01
+    files_changed:
+      - path: tools/codex_slack_directives.py
+        change: modified
+      - path: tools/slack_pending_triage.py
+        change: modified
+      - path: tools/codex_phases_cycle.py
+        change: modified
+      - path: phases/phase_game_start.md
+        change: modified
+      - path: memory/slack_directives.jsonl
+        change: modified
+    summary: "domain とは別に routing_tags: [game_start] を付与し、Phase Game Start が domain: game または routing tag のどちらでも起動するようにした。現 pending log-cdx-1779811040-15f96f05d8 へ game_start signal と game-start 向け next_step/done_condition を付けた。"
+    partial: false
+migrations:
+  - what: "既存 pending 1 件へ routing_tags: [game_start] を追加"
+    affected: "memory/slack_directives.jsonl id=log-cdx-1779811040-15f96f05d8"
+verification:
+  - "python -m py_compile tools\\codex_slack_directives.py tools\\slack_pending_triage.py tools\\codex_phases_cycle.py tools\\slack_inbox_lifecycle.py: pass"
+  - "python tools\\slack_pending_triage.py --dry-run: pass (directives pending 1, dry-run changed 11; 実ファイルは該当 pending 1 件だけ更新)"
+  - "codex_phases_cycle.has_pending_game_directive(): True"
+  - "python tools\\memory_recall.py \"game_start routing_tags\": pass"
+notes:
+  - "routing signal は direct game-making / game-evaluation feedback に限定する。domain は主題分類のまま維持し、phase 起動判定だけ routing_tags を併用する。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

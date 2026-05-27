@@ -9,7 +9,7 @@ outputs: [新規または更新ゲームプロトタイプ, design_log.md, headl
 
 # Phase Game Start: ゲーム制作着手
 
-`memory/slack_directives.jsonl` に `domain: game` かつ `status: pending` の直接指示がある時、このフェーズを通常の Phase 1 より優先して実行する。
+`memory/slack_directives.jsonl` に `status: pending` かつ `domain: game` または `routing_tags` に `game_start` を含む直接指示がある時、このフェーズを通常の Phase 1 より優先して実行する。`domain` は主題分類、`routing_tags` は phase 起動用の補助 signal として扱う。
 
 ## このフェーズで集中すること
 
@@ -24,7 +24,7 @@ outputs: [新規または更新ゲームプロトタイプ, design_log.md, headl
 
 ## やること
 
-1. pending game directive を 1 件選ぶ。古い未完了指示と新しい補足指示が同じ目的なら、まとめて扱う。
+1. pending game directive (`domain: game` または `routing_tags: [game_start]`) を 1 件選ぶ。古い未完了指示と新しい補足指示が同じ目的なら、まとめて扱う。
 2. 何を作るかを Codex 自身で決める。決定理由には、過去知見のどれを使うかを書く。
 3. 新規プロトタイプなら `game/<slug>/v001/` を作る。既存改修なら対象 version を明示する。
 4. `design_log.md` に、実装前判断、設計サイクル、採用案、懸念、検証方法を日本語で残す。

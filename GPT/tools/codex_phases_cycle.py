@@ -217,6 +217,13 @@ def has_active_local_game_directive() -> bool:
     return False
 
 
+def has_game_start_routing_tag(row: dict[str, Any]) -> bool:
+    tags = row.get("routing_tags")
+    if isinstance(tags, list):
+        return "game_start" in {str(tag) for tag in tags}
+    return False
+
+
 def has_pending_game_directive() -> bool:
     if has_active_local_game_directive():
         return True
@@ -226,6 +233,8 @@ def has_pending_game_directive() -> bool:
         if row.get("status") != "pending":
             continue
         if row.get("domain") == "game":
+            return True
+        if has_game_start_routing_tag(row):
             return True
         text = str(row.get("text", ""))
         if "ゲーム" in text and ("作" in text or "始め" in text):

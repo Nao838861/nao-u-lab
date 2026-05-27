@@ -131,6 +131,23 @@ def permalink(channel_id: str, ts: str) -> str:
     return f"https://nao-u-lab.slack.com/archives/{channel_id}/p{ts.replace('.', '')}"
 
 
+GAME_START_ROUTING_RE = re.compile(
+    r"ゲーム|game|graze_log|brick_log|playable|ヘッドレス|headless|"
+    r"敵弾|弾幕|敵|v\d{3}|コンセプト|面白く|次.*アプローチ",
+    re.I,
+)
+
+
+def routing_tags_for(row: dict[str, Any]) -> list[str]:
+    """Return phase-routing hints separate from the topical domain label."""
+    text = str(row.get("text", ""))
+    channel = str(row.get("channel", ""))
+    tags: list[str] = []
+    if "game-rights" in channel or GAME_START_ROUTING_RE.search(text):
+        tags.append("game_start")
+    return tags
+
+
 def triage_fields(row: dict[str, Any], queue_kind: str) -> dict[str, Any]:
     """Classify a pending Slack queue row for later phase routing.
 
@@ -140,6 +157,8 @@ def triage_fields(row: dict[str, Any], queue_kind: str) -> dict[str, Any]:
     text = str(row.get("text", ""))
     channel = str(row.get("channel", ""))
     lower = text.lower()
+
+    routing_tags = routing_tags_for(row)
 
     if "game-rights" in channel or re.search(r"ゲーム|game|graze_log|brick_log|playable|ヘッドレス", text, re.I):
         domain = "game"
@@ -174,13 +193,16 @@ def triage_fields(row: dict[str, Any], queue_kind: str) -> dict[str, Any]:
     if "?" in text or "？" in text or "大丈夫" in text or "危険" in text:
         triage_status = "needs_human_review"
 
-    return {
+    fields = {
         "action_type": action_type,
         "domain": domain,
         "next_step": next_step,
         "done_condition": done_condition,
         "triage_status": triage_status,
     }
+    if routing_tags:
+        fields["routing_tags"] = routing_tags
+    return fields
 
 
 def normalize_directive(channel: dict[str, Any], msg: dict[str, Any]) -> dict[str, Any]:
