@@ -30,7 +30,32 @@ note: "Phase 2 の pass が空だったため、#shared-reads 投稿対象なし
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779885575-9004bd4873
+    source_ts: "1779885575.577609"
+    title: "Agentic PCG: Procedural Content Generation via Tool-using LLMs"
+    reason: "直近のゲーム制作ではLLM生成物をそのまま成果物として扱わず、環境観察・計画・編集・評価の循環として検証する必要がある。Agentic PCGはその分解に直結し、既存の固定テスト/動的stress probeとも隣接するが、今回はPCG作業時の小さな確認だけに留められるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次のPCG/レベル生成/ゲーム素材生成で、生成結果ではなく tool loop と評価根拠を確認する一時probeを state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T22:36:00+09:00",
+  "updated_at": "2026-05-28T00:02:00+09:00",
   "reviewed_source_ts": [
     "1779001462.990699",
     "1779449687.257459",
@@ -66,7 +66,8 @@
     "1777285854.971109",
     "1779845907.868769",
     "1778536700.085879",
-    "1779870112.268889"
+    "1779870112.268889",
+    "1779885575.577609"
   ],
   "reviews": [
     {
@@ -1190,6 +1191,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-28T00:02:00+09:00",
+      "id": "sr-1779885575-9004bd4873",
+      "source_ts": "1779885575.577609",
+      "title": "Agentic PCG: Procedural Content Generation via Tool-using LLMs",
+      "decision": "adopt_probe",
+      "reason": "Agentic PCG は、LLM を一発生成器ではなく、環境を観察し、計画し、既存の PCG/編集/評価ツールを呼び、結果を修正する循環として扱う点が、次のゲーム制作や headless 評価に直結する。既存の fixed-test vs dynamic stress や lab-proxy probe と重なる部分はあるため、恒久ルールや評価表にはせず、PCG/レベル生成/ゲーム素材生成の場面で tool loop と評価根拠を確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -1984,6 +2002,18 @@
         "If the check is headless or screenshot-based, did I keep the claim limited to structural readability and name the remaining human-facing timing-feel check?"
       ],
       "expires_after": "Review after the next STG or bullet hell pattern design, playable diff, headless evaluation, or self_judgment that discusses rhythm, variation, difficulty, or readability."
+    },
+    {
+      "id": "probe-20260528-pcg-tool-loop-evidence",
+      "created_at": "2026-05-28T00:02:00+09:00",
+      "source_ts": "1779885575.577609",
+      "scope": "next PCG, level generation, game-content generation, procedural asset proposal, or tool-assisted game prototype change where an LLM-generated result may be accepted without exposing the observe-plan-edit-evaluate loop",
+      "questions": [
+        "Before accepting generated game content, did I name the loop pieces actually used: environment observation, generator/tool, editor/repair step, metric/verifier, or simulator/play trace?",
+        "Did I separate structural validity evidence from player-facing quality, instead of letting a valid map, asset, or rule table stand in for fun/readability/timing feel?",
+        "If the loop was incomplete, did I preserve one rejected output, repair reason, failing constraint, or missing verifier as the next concrete improvement target instead of broadening the rule set?"
+      ],
+      "expires_after": "Review after the next PCG, level generation, procedural asset, or tool-assisted game prototype task that uses generated content or reports generation quality."
     }
   ]
 }
