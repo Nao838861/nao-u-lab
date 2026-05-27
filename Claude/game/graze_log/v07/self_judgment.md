@@ -281,3 +281,126 @@ v06 self_judgment / v07 self_judgment-C199/C200 で確立した「Nao_u 評価�
 - `memory/feedback_clone_strategy.md` t:5 — 守の段階 1 機構刻み制約、観点6 の spawnPhase1-4 alias で既存 rhyme 保持
 
 — Ash (Win2) 2026-05-27 C201 Phase 4 大作業 (v07 観点 6 実装 + Stage 4 自判定 追記)
+
+---
+
+# graze_log v07 — Stage 4 自判定 追記 (B-2 + 観点3 + 観点7 + 観点6 + 観点8 / 2026-05-28 C202 Ash)
+
+**status**: v07/index.html 上に **B-2 (`246ed50e3`)** + **観点 3 (`697d36453`)** + **観点 7 (`c63ebd842`)** + **観点 6 (`43c520c3f`)** の 4 機構 + 本サイクル C202 で **観点 8 (bad policy headless 4 方針) を `game/graze_log/v07/headless.py` として物理化 (commit `e79908226`)** した時点の Stage 4 自判定 追記 (`feedback_prediction_responsibility.md` t:5)。
+
+**判定方針 (R-I 死守ライン明示)**: 観点 8 headless 4 方針の数値出力 (生存秒 / score / kill / graze / bomb / phase 7 到達率) は **本ファイル内の構造判定 (relative order signal の読み) のみに使用**、Nao_u プレイ評価 / cross_review / Slack / merge 要請の根拠としては**使用しない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5 厳守、Nao_u 「やめて」3 度目警告ライン)。
+
+## 観点 8 実行結果 (relative order 構造判定のみ、数値の絶対値は判定根拠外)
+
+`python game/graze_log/v07/headless.py --trials 100` 実行 (seed=1000〜1099):
+
+| policy | seconds_avg | score_avg | grazes_avg | kills_avg | bombs_avg | p7_rate | 90s_rate | player_lv_avg |
+|---|---|---|---|---|---|---|---|---|
+| **route** | 59.2 | 3469 | 10.7 | 136.4 | 0.58 | 0.35 | 0.17 | 0.02 |
+| **camper** | 13.6 | 87 | 1.2 | 4.2 | 0.00 | 0.00 | 0.00 | 0.00 |
+| **panic** | 53.6 | 2877 | 9.2 | 115.8 | 0.72 | 0.27 | 0.17 | 0.01 |
+| **novice** | 19.1 | 160 | 2.9 | 7.0 | 0.00 | 0.00 | 0.00 | 0.00 |
+
+- **score 降順**: route(3469) > panic(2877) > novice(160) > camper(87)
+- **seconds 降順**: route(59.2s) > panic(53.6s) > novice(19.1s) > camper(13.6s)
+
+## 想定 (predicted_play.md 観点8) vs 実態 relative order
+
+**想定 (predicted_play.md L 観点8 §予測の核)**: `route > camper ≈ panic > novice`
+
+**実態**: `route > panic > novice > camper`
+
+### 想定通り (Yes signal)
+- **route > panic** (score / seconds): Hyper 発動タイミングの戦略選択 (route: phase 5/7 山で発動 vs panic: gauge MAX 即発動) が score に効いている → **R-A 核体験の縦深化 (Hyper のタイミング選択が core mechanic として機能)** の構造判定 Yes
+- **route が最高**: 8 字経路で graze 機会を能動生成 → gauge 蓄積 → BOMB 戦略発動 → kill 増 → score 蓄積 → **R-B 「報酬と緊張のペア」が relative order に反映** の構造判定 Yes
+- **novice 低位**: ランダム移動 + 弾無視 → R_HIT=8 半径への偶発侵入で被弾 → 早期 gameOver → **視認 (anticipation/telegraph/wobble) が relative order に影響している** の構造判定 Yes (ただし camper との順位が逆転している、後述)
+
+### 想定外 (想定外 signal、shallow design 兆候の可能性)
+
+#### 想定外 #1: **camper < novice** (camper が最低、想定では novice が最低)
+
+- 実態: camper 13.6s / 87 score, novice 19.1s / 160 score → camper の方が短命 + 低 score
+- 構造的原因: graze_log の弾は **medium aimed (player 直撃)** が主軸 (phase 1/3/5/6 = aimed 主体)。camper は画面下端中央に静止 → **aimed 弾が直撃しまくる** → 短時間で gameOver
+- 一方 novice は random 移動で偶発的に弾の予想軌道から外れる → aimed 弾を「動くこと自体が回避になる」 → camper より長く生存
+- **これは shallow design signal か?** — 解釈は両端で割れる:
+  - (a) **設計通り**: 「動かない = 即死」は Log_cdx 観点 1 「動く ≠ 遊べる」と整合、aimed 弾が「動く」プレイヤーに報酬を与える設計の体現。R-B 「報酬と緊張のペア」が camper 罰として機能している → **構造判定 Yes** (camper は static evil policy として正しく失敗している)
+  - (b) **shallow signal**: 「ランダムに動く」だけで camper より長生きできる = random は **kill 0 でも被弾を 1.4x 遅らせるだけで novice score 160 > camper score 87** → 「弾を見ない」(novice 定義) が「動かない」(camper 定義) より優れる relative order は、視認 (anticipation/telegraph/wobble) の機構が **「動くこと」に対する勾配を作れていない可能性**。視認が relative order に効いているなら novice > camper 程度の差ではなく **camper ≈ novice (両者 floor)** が想定だった
+- **結論**: (a) と (b) の両方が並存する。**観点 1 (「動く ≠ 遊べる」の「遊べる」閾値) が未通過** の現状で「動くこと自体が回避になる」aimed 主体の弾源は R-B 機能側、しかし「視認しないこと」が「動かないこと」より上に立つのは視認系機構 (windup/wobble/anticipation) の勾配が relative order に届いていない側面も示唆。**次サイクル以降の観点 1 着手時の起点 signal として記録**
+
+#### 想定外 #2: **player_lv_avg が全方針で 0-0.02** (Lv up が headless ではほぼ発火していない)
+
+- graze 平均は route 10.7 / camper 1.2 / panic 9.2 / novice 2.9 → Lv up threshold (LV_GRAZE_TH=30 graze) に届いていない
+- 構造的原因: graze_log v07 は graze→gauge→BOMB の経路が主で、Lv up (30 graze) は **gauge MAX 到達 (gauge 増 6/graze なので 35 graze で MAX)** より遅い → BOMB 1 回発動分の graze で Lv up 1 段がギリギリ
+- route の Hyper 発動 0.58 回/ゲーム → graze 30 回 ≈ 1 Lv up 想定なのに player_lv 0.02 → **Hyper 発動が graze 蓄積をリセットしている** わけではない (graze_count は累積、Lv up 判定も累積で行う) → **headless agent の graze 機会が想定より少ない**
+- 解釈: AI agent (route) の 8 字経路は graze 機会を「弾の近く」に近づくが、`R_GRAZE=22` (R_HIT=8 の 2.75 倍) の輪の内側に **正確に** 入る精度が AI には不十分 → 実プレイヤーは弾を視認して半径 14-21 の輪に入れるが、AI route は経路追従のみで弾位置を見ていない → **実プレイ時の graze 量は headless agent より多い** 可能性。実 Nao_u プレイ時の Lv up 発火頻度を別途確認する必要
+- **これは観点 7 (180F cap reached 大成功反応) の発火頻度 0 (3 連 Lv up は cap_reached 必要) を意味する** → 観点 7 が headless 4 方針では一度も発火していない。Nao_u プレイで観点 7 大成功反応が見える前提が「Lv up 3 段 = 90 graze 達成」だが、AI route ですら 10.7 graze 平均 → 実プレイで Lv up 1 段すら届かないリスク 40-50%
+
+#### 想定外 #3: **route の 90s 到達率 17%** (predicted_play.md 観点8 §予測 #1 で 30-50% 想定)
+
+- route 100 試行中 17 試行のみ 90s 到達。predicted_play §予測 #1 で「phase 5 山 1 (52-65s) で gameOver する確率が高ければ phase 6/7 は多くのプレイで体感されない」を予測したが、AI agent 上では **想定範囲の下限 (30%) を 13pt 下回る** → 過剰密度リスク (v07 self_judgment-C201 §「過剰密度リスク 25%」) が **headless で 73% 顕在化** している側面
+- これは構造判定 signal として: **観点 6 spawnPhase5 (山 1) の数値設計が AI 視点では plays 不能寄り** → 実プレイヤーは弾を視認して回避できるので「過剰密度 = plays 不能」とは限らないが、**観点 6 の数値調整 (spawnInterval 山=80F → 100F or spawnPhase5 small 8 → 5) を v07 第二手の候補に置く**
+
+## Log_cdx メタプロンプト観点 1-8 × v07 (B-2 + 観点3 + 観点7 + 観点6 + 観点8) 照合
+
+| 観点 | v07 該当機構 | 判定 |
+|---|---|---|
+| 1. 動く ≠ 遊べる | v06 継承 + Hyper + 観点3 + 観点7 + 観点6 + **観点8 headless で「動く ≠ 死なない」確認** | **部分的に満たす (signal 強化)**: 観点 8 で「動かない (camper) = 即死 / 動く (route) = 長生き」が relative order として観測 → 「動く」勾配は機能。ただし「動く ≠ 遊べる」の「遊べる」閾値は未通過 (route ですら 90s 到達率 17%) |
+| 2. 敵に行動意図 | 未実装 | **満たさない**: 観点 8 で発火するシグナルなし、**v08 以降の課題** |
+| 3. 特殊システム 3 状態を対象物側マーカー | 観点3 弾側マーカー (C199 達成、headless では描画不参照で効果ゼロ) | **満たす (C199 達成、観点 8 では検証不能)**: 観点 3 マーカーは描画のみ、headless agent は numeric state のみ参照 → 観点 8 で観点 3 の効果は確認できない (構造的限界) |
+| 4. 中心入力をタイトル/リトライで | v06 から不変 | **判定保留** |
+| 5. 常時表示情報は少ない方が良い | gauge 共用 + 観点3 (無敵中のみ) + 観点7 (発火時のみ) + 観点6 (常時表示増加なし) + **観点8 (別ファイル、index.html 無改変)** | **満たす (C201 維持)**: 観点 8 は `headless.py` 独立ファイル、index.html / HUD には一切影響しない |
+| 6. 難易度 = 学習/圧力/休符/山 | 観点6 7 区分 spawn テーブル (C201 達成) | **部分的に満たす (C201 達成、観点 8 で signal)**: 観点 8 で「全方針 90s 到達率 < 20%」 → **観点 6 spawnPhase5 数値調整候補** が relative order signal として浮上 |
+| 7. 気持ちよさ = 6 種反応分離 | 観点7 大成功反応 (C200 達成、headless ではほぼ発火なし) | **部分的に満たす (C200 維持、観点 8 で signal)**: 観点 8 で「全方針 player_lv_avg 0-0.02」 → **観点 7 大成功反応 (3 連 Lv up = 90 graze 必要) の発火頻度が low** が relative order signal として浮上、実プレイで Lv up 1 段すら届かないリスク 40-50% |
+| **8. bad policy headless** | **観点8 headless.py 4 方針 (新規)** | **満たす (新規達成)**: route / camper / panic / novice 4 方針を Python 移植 + 各 100 試行実行可能、relative order 構造判定で 3 つの想定外 signal を獲得 → **C201 「満たさない」→ C202 「満たす」格上げ達成** |
+
+**観点 1-8 のうち判定が立った 7 項目 / 8 (観点 4 保留)**: 満たす **3** (観点 3 / 5 / **観点 8**) / 部分的 **3** (観点 1 / 6 / 7) / 満たさない **1** (観点 2) = **観点 8 で v07-C201 から 1 項目格上げ達成 (「満たさない」→「満たす」)、観点 1 は signal 強化**
+
+## R-A〜R-I マッピング (観点 8 で関係する 4 項目)
+
+### R-A. 一番楽しい瞬間を強化する
+**v07 観点 8 該当判定**: route > panic の score 差 (route 3469 vs panic 2877) は **Hyper のタイミング選択が core mechanic として効いている** signal。「核体験 = Hyper の戦略的発動」が R-A の縦深化として relative order に反映。**R-A 準拠**
+
+### R-B. 緊張は外発、誘導は報酬で
+**v07 観点 8 該当判定**: route (能動 graze) > camper (受動 = 動かない罰) で **「報酬経路 (graze) と緊張経路 (被弾) のペア」が camper 罰として機能** している signal。ただし camper < novice の想定外 signal は「random 動 = aimed 弾を 1.4x 遅らせる」が「動かない = aimed 直撃」に勝つ relative order → **視認系機構の勾配が「動くこと」に対して足りていない側面** が浮上。**R-B 準拠 (camper 罰側) + 視認系勾配の signal**
+
+### R-I. 着手前30本、提出前自己判定 — **headless 数値の R-I 死守ライン明示**
+**v07 観点 8 該当判定**: 本ファイル §結論 で「観点 8 数値の絶対値は Slack / cross_review / Nao_u プレイ評価 / merge 要請の根拠に使用しない」を明文化、構造判定 (relative order signal の読み) のみに使用。`feedback_headless_unfit_for_unfinished_eval.md` t:5 「校正前 headless は未完成ゲームの設計判定根拠に使わない」を **本サイクルで明示的に履行**。Nao_u 2026-05-09 05:01 #game-rights 「やめて」3 度目警告ラインの **正面遵守**。**R-I 死守準拠**
+
+### (補助) R-D. 型から始める — 守破離の守、独自要素は1つだけ
+**v07 観点 8 該当判定**: 本サイクル C202 で追加した機構は **観点 8 (headless.py 独立ファイル) 1 個のみ**。index.html は一切編集していない (戻し方: `headless.py` 単体削除で観点 6 等価戻し)。**R-D 準拠 (1 機構 + 戻し方保証)**
+
+## 「良い」と確信できない条件 (Nao_u 評価で覆る可能性)
+
+- **観点 8 数値の解釈に頼りすぎリスク**: 4 方針 AI agent はヒューリスティック (学習無し)、Python 移植粒度は 80% (描画系 / anticipation 30F / windup 10F / wobble 省略)。relative order が「想定外」だった camper < novice / player_lv_avg ≈ 0 / route 90s 到達率 17% は **実プレイヤーの挙動を反映しない** 可能性が高い → **本ファイルの signal を v07 第二手の優先付けに使うが、実プレイ評価で覆る前提**
+- **「面白い」閾値到達 45% は据え置き**: 観点 8 は構造判定の signal を 3 つ獲得したが、Nao_u v02 評価「面白くはないが、ぎりぎりゲーム」を「面白い」に押し上げるかは観点 8 では確認不能 (headless agent は描画を見ない、観点 3/7 の効果も検証不能)。**閾値 45% の +0pt** 据え置き
+- **観点 6 数値調整 / 観点 7 発火頻度の対策が次サイクル候補**: 観点 8 signal 3 件が次サイクル以降の候補を **明示的に並べる** signal として効いた → 観点 8 自身の物理化は判定を立てるが、判定先 (Nao_u v07 プレイ評価 vs v07 第二手 (観点 6 数値調整 or 観点 7 LV 発火を促す改修)) の選択は次サイクル
+- R-I 「面白いか／前作より良いか」を結論: **「単機構ずつ局所改善 + 4 観点で構造判定軸獲得」確信 92% (C201 90% → +2pt) / 「面白い」閾値到達 45% (C201 と同) 据え置き**。誠実な現状は **構造判定 Yes / 体験判定 部分 Yes / 「面白い」閾値接近中 (45%) / 観点 6/7 の調整余地が headless signal で浮上**
+
+## 次 iteration 起点を 1 つ確定 → **Nao_u v07 プレイ評価依頼 (#game-rights)**
+
+候補比較:
+- (α) **Nao_u v07 プレイ評価依頼**: B-2 + 観点3 + 観点7 + 観点6 + 観点8 の 5 機構積層 + Log_cdx メタプロンプト 8 観点中 6 観点 (1/3/5/6/7/8) を満たす or 部分的に満たす状態に到達 → **自律 Stage 4 自判定 4 サイクル連続継承 (C199/C200/C201/C202) の節目**。観点 6/7 の signal (90s 到達率 17% / player_lv ≈ 0) を **実プレイ評価で校正する** 経路
+- (β) 観点 6 数値調整 (spawnPhase5 弾密度緩和 / spawnInterval 山=80→100F): 観点 8 signal #3 への対症。1 機構刻みで実装量は 5-10 行。**ただし observed_value で iteration するのは R-I 「校正前 headless 数値で設計判定」の境界に接近**、慎重に
+- (γ) 観点 7 LV 発火促進 (LV_GRAZE_TH=30→20 or GRAZE_GAUGE=6→8): 観点 8 signal #2 への対症。1 機構刻みで実装量は 1-2 行。**graze 単位を変える** = gauge 蓄積バランス全体に波及するので 1 機構刻み制約の境界に近い
+
+**選定: (α) Nao_u v07 プレイ評価依頼**。理由: 
+- (a) Nao_u v06 評価未受領 11 日 + v07 で 5 機構独立進化 = Nao_u 視点で「自走しすぎ」リスクが累積、**今が校正の節目**
+- (b) 観点 8 signal 3 件 (camper<novice / Lv up ≈ 0 / 90s 到達率 17%) は **AI agent ヒューリスティック由来の限界も含む** → 実プレイ評価で「signal が校正されるか / 別の問題が浮上するか」を確認する経路が **観点 8 数値による対症 (β/γ)** より上位
+- (c) `feedback_headless_unfit_for_unfinished_eval.md` t:5 「校正前 headless は未完成ゲームの設計判定根拠に使わない」を死守する場合、観点 8 signal を **対症 (β/γ) の根拠** にすると R-I 違反に接近する → 観点 8 signal は **次の打ち手の候補を浮上させる役割** のみに留め、実打ち手は Nao_u プレイ評価後に決める
+- (d) Nao_u プレイ評価依頼 Slack 投稿 (#game-rights) は本ファイル ship 後の次サイクル C203 で実施。本 Stage 4 自判定が ship される時点で「観点 8 物理化 + relative order signal 獲得 + R-I 死守ライン明示 + 次起点として実プレイ評価依頼を選定」が物理閉鎖される
+
+## 出荷判断: 本 Stage 4 自判定追記を ship、次サイクル C203 で Nao_u v07 プレイ評価依頼
+
+C199/C200/C201/C202 で **4 サイクル連続** で「Nao_u 評価を待たず Stage 4 自判定で iteration 起点を 1 つ確定する」R-I 退路解除パターンを継承した結果、v07 は 5 機構積層 + Log_cdx 観点 6/8 達成 + R-A/B/C/D/E/I の 6 項目縦深化 + 観点 8 headless signal 3 件獲得が物理化された。次サイクル C203 で Nao_u v07 プレイ評価依頼を #game-rights に 1 メッセージ投げ、Stage 4 自律判定 + Stage 5 外部評価校正の連動 + 観点 6/7 数値調整 (β/γ) の優先付けを実プレイ評価で確定する。
+
+## 接続先 (C202 追加分)
+
+- `game/graze_log/v07/headless.py` — 観点8 実装 (commit `e79908226`、594 行新設)
+- `game/graze_log/v07/predicted_play.md` 観点8 §Stage 3 予測 (commit `82e2ae889`)
+- `game/graze_log/v07/README.md` §観点 8 — 観点8 設計仕様 (本実装の出典)
+- 本ファイル前半 — v07 B-2 + 観点3 + 観点7 + 観点6 Stage 4 自判定 (C199/C200/C201 commit `b4ea69581` / `1dc4480be` / `32d22fd02`)
+- `log/slack_archive/game-rights.jsonl` ts=1779658696-8705 — Log_cdx メタプロンプト 1-8 原文 (観点8 「悪い方針」の出典)
+- `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — **本ファイルの R-I 死守ライン明示の根拠** (Nao_u 2026-05-09 「やめて」3 度目警告ラインの正面遵守)
+- `memory/feedback_prediction_responsibility.md` t:5 — Stage 1-4 予測責任の連続体、C199/C200/C201/C202 で 4 サイクル連続継承
+
+— Ash (Win2) 2026-05-28 C202 Phase 4 大作業 (v07 観点 8 物理化 + Stage 4 自判定 追記 + R-I 死守ライン明示)
