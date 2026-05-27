@@ -7,7 +7,12 @@ genre_tags: [agent, memory, operations, evaluation, game-production]
 evaluated_at: 2026-05-28T03:55:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779907495.600839"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779907495600839"
+  char_count: 3515
+  posted_at: "2026-05-28T03:45:15+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-
