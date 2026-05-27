@@ -153,6 +153,23 @@ const HYPER_FLASH_FRAMES=30;
 // update tick / onGraze chain 内 cap 到達検出 + 発火 3 行 / draw() flash 描画ブロック を削除。
 const MAX_CHAIN_FLASH_FRAMES=20;
 
+// === v07 観点6: 7 区分 spawn テーブル (Log_cdx 観点6 「難易度 = 学習/圧力/休符/山 時間予算」根本応答) ===
+// 90秒 = 5400F (60fps) を 7 区分に分割、各 phase の敵種類/弾密度/spawn 間隔を時間 (state.t) で独立定義。
+// 既存 wave 番号駆動 (`state.spawnT=160-Math.min(state.wave*8,80)`) を phase 駆動 (PHASE_FUNCS[currentPhase()]) に置換。
+// phase 1 (0-13s): 学習 — spawnWave1 等価 (aimed 低密度)
+// phase 2 (13-26s): 圧力 — spawnWave2 等価 (fan3 導入)
+// phase 3 (26-39s): 休符 — spawnWave3 等価 (aimed 復帰)
+// phase 4 (39-52s): 圧力 — spawnWave4 等価 (fan3 増量)
+// phase 5 (52-65s): 山 1 — spawnPhase5 新規 (aimed 高密度)
+// phase 6 (65-78s): 休符 — spawnPhase6 新規 (decrescendo)
+// phase 7 (78-90s): 山 2 final — spawnPhase7 新規 (fan3 final)
+// 90秒以降は phase 7 維持 (graze_log は stage clear 演出を持たないので無限 final)。
+// spawnInterval(): 学習/休符=140F / 圧力=110F / 山=80F の 3 段階で時間予算を体感化。
+// 削除手順 (観点6 → v07 観点7 等価): PHASE_BOUNDARIES / currentPhase() / spawnPhase1-4 alias /
+// spawnPhase5/6/7 関数 / PHASE_FUNCS / spawnInterval() / spawnWave 内 PHASE_FUNCS 分岐 / spawnT 代入式の spawnInterval() を削除し、
+// spawnWave 旧形 (wave==1..4 + WAVE_FUNCS rng pick) と `state.spawnT=160-Math.min(state.wave*8,80)` を復元。
+const PHASE_BOUNDARIES=[780,1560,2340,3120,3900,4680,5400]; // 各 phase 終端 F (13/26/39/52/65/78/90秒)
+
 const state={
   mode:'title',
   t:0,
@@ -425,20 +442,48 @@ function spawnWaveRandom(w){
   }
 }
 const WAVE_FUNCS=[spawnWave1,spawnWave2,spawnWave3,spawnWave4];
+
+// === v07 観点6: spawnPhase1..7 関数群 + currentPhase + spawnInterval (PHASE_BOUNDARIES 定数併設) ===
+// spawnPhase1-4 は spawnWave1-4 の alias (rhyme 維持、削除可能性確保)。spawnPhase5-7 は新規 (山/休符/山 curve)。
+const spawnPhase1=spawnWave1, spawnPhase2=spawnWave2, spawnPhase3=spawnWave3, spawnPhase4=spawnWave4;
+function spawnPhase5(){
+  // phase 5 (52-65s): 山 1 — aimed 高密度 (small 8 列 + medium 2 aimed)
+  for(let i=0;i<8;i++)spawnEnemy('small',W*0.1+i*W*0.11);
+  spawnEnemy('medium',W*0.35,0,'aimed');
+  spawnEnemy('medium',W*0.65,0,'aimed');
+}
+function spawnPhase6(){
+  // phase 6 (65-78s): 休符 — decrescendo (small 4 + medium 1 aimed、gauge 回復時間)
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+  spawnEnemy('medium',W*0.5,0,'aimed');
+}
+function spawnPhase7(){
+  // phase 7 (78-90s): 山 2 final — fan3 4 体 + small 4 列 (90秒の頂点)
+  spawnEnemy('medium',W*0.2,0,'fan3');
+  spawnEnemy('medium',W*0.4,0,'fan3');
+  spawnEnemy('medium',W*0.6,0,'fan3');
+  spawnEnemy('medium',W*0.8,0,'fan3');
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.15+i*W*0.24);
+}
+const PHASE_FUNCS=[null,spawnPhase1,spawnPhase2,spawnPhase3,spawnPhase4,spawnPhase5,spawnPhase6,spawnPhase7];
+function currentPhase(){
+  for(let i=0;i<PHASE_BOUNDARIES.length;i++){
+    if(state.t<PHASE_BOUNDARIES[i])return i+1;
+  }
+  return 7; // 90秒以降は phase 7 維持 (無限 final)
+}
+function spawnInterval(){
+  const p=currentPhase();
+  if(p===1||p===3||p===6)return 140; // 学習 / 休符 (息継ぎ)
+  if(p===5||p===7)return 80;         // 山 (圧力ピーク)
+  return 110;                         // 圧力 (phase 2/4)
+}
+
 function spawnWave(){
   state.wave++;
-  const w=state.wave;
-  if(w===1){spawnWave1();return;}
-  if(w===2){spawnWave2();return;}
-  if(w===3){spawnWave3();return;}
-  if(w===4){spawnWave4();return;}
-  // wave >= 5: 70% で過去 wave 1-4 を rhyme として再使用、30% で random
-  if(state.rng()<0.7){
-    const idx=Math.floor(state.rng()*WAVE_FUNCS.length);
-    WAVE_FUNCS[idx]();
-  }else{
-    spawnWaveRandom(w);
-  }
+  // v07 観点6: 時間 (state.t) で phase を決定し、対応 PHASE_FUNCS を呼ぶ。
+  // state.wave は HUD 等の表示用に残すが、難易度算出からは外す (時間予算駆動へ移行)。
+  PHASE_FUNCS[currentPhase()]();
 }
 
 function update(){
@@ -487,7 +532,7 @@ function update(){
   state.spawnT--;
   if(state.spawnT<=0&&state.enemies.length<3&&state.pendingEnemies.length===0){
     spawnWave();
-    state.spawnT=160-Math.min(state.wave*8,80);
+    state.spawnT=spawnInterval(); // v07 観点6: phase 駆動の時間予算 (学習/休符=140 / 圧力=110 / 山=80F)
   }
 
   // === v06 A-1: pendingEnemies countdown tick → 0 で実 enemy 化 ===
