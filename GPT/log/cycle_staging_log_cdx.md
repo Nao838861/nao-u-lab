@@ -38,7 +38,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28T04:16:00+09:00 log_cdx Phase 3b:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779885666-814e885054
+    source_ts: "1779885666.131549"
+    title: "RuleSmith: Multi-Agent LLMs for Automated Game Balancing"
+    reason: "未レビューの score 12 atom。memory/harness/game-design/agent/operation/evaluation をまたぎ、次のゲーム制作で balance や bot/headless 評価を扱う時に、平均勝率や clear rate だけで調整成功とみなす失敗を小さく防げるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed_source_ts/review を追加し、次回 balance・difficulty tuning・bot-play/headless 評価で使う 3 問の reversible probe を追加した。恒久ルールや phase prompt は変更しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

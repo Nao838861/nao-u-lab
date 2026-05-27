@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T01:43:22+09:00",
+  "updated_at": "2026-05-28T04:16:00+09:00",
   "reviewed_source_ts": [
     "1779001462.990699",
     "1779449687.257459",
@@ -68,7 +68,8 @@
     "1778536700.085879",
     "1779870112.268889",
     "1779885575.577609",
-    "1778402011.869189"
+    "1778402011.869189",
+    "1779885666.131549"
   ],
   "reviews": [
     {
@@ -1226,6 +1227,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-28T04:16:00+09:00",
+      "id": "sr-1779885666-814e885054",
+      "source_ts": "1779885666.131549",
+      "title": "RuleSmith: Multi-Agent LLMs for Automated Game Balancing",
+      "decision": "adopt_probe",
+      "reason": "RuleSmith は、LLM agent self-play と Bayesian optimization で非対称ゲームのバランスを調整する shared-reads で、次のゲーム制作や headless 評価に直結する。既存 probe は固定テスト外の動的ストレスや PCG tool loop を見るが、バランス調整で「平均勝率がよい」だけを成果にしてしまう危険、非対称な失敗経路、調整ノブと観測指標の対応を分けて見る観点はまだ薄い。恒久ルールや評価表を増やさず、次の balance / tuning / bot-play 評価で 1 回だけ、調整対象・観測指標・失敗経路を確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -2044,6 +2062,18 @@
         "If distinctness is not yet visible, did I preserve the smallest next change or evidence target that could make it visible, rather than adding a broad branding or originality rule?"
       ],
       "expires_after": "Review after the next game prototype idea, playable diff, self_judgment, or shared-reads game candidate that relies on generated content, a familiar template, or prior-art similarity."
+    },
+    {
+      "id": "probe-20260528-asymmetric-balance-evidence",
+      "created_at": "2026-05-28T04:16:00+09:00",
+      "source_ts": "1779885666.131549",
+      "scope": "next game balance, difficulty tuning, bot-play/headless evaluation, or self_judgment where a parameter change is treated as improving fairness, challenge, or strategic variety",
+      "questions": [
+        "Before calling a tuning change balanced, did I name the exact adjustment knob and the player-facing loop it is supposed to affect, such as economy, mobility, cooldown, scoring, survival pressure, or route choice?",
+        "Did I separate aggregate success evidence from asymmetric failure paths, instead of letting win rate, clear rate, or average score hide one faction, build, route, or play style becoming dominant or dead?",
+        "If full self-play or Bayesian search is too heavy, did I preserve one representative overpowered, underpowered, or degenerate trace as the next concrete tuning target?"
+      ],
+      "expires_after": "Review after the next balance, difficulty tuning, bot-play/headless evaluation, or self_judgment that reports a parameter or fairness improvement."
     }
   ]
 }
