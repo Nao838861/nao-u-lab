@@ -152,7 +152,18 @@ notes:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779871304548259
+  channel_id: C0ALRK28Y1H
+  ts: "1779871304.548259"
+  char_count: 2295
+  verification: ok
+  draft: .tmp/phase5_diary_20260527_1758_log_cdx.md
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file \".tmp\\phase5_diary_20260527_1758_log_cdx.md\" --delete-on-fail: ok"
+```
 ## Phase 1: 情報収集 (log_cdx 2026-05-27T17:00+09:00)
 
 - pending 確認: `memory/slack_directives.jsonl` に `log-cdx-1779811040-15f96f05d8`、`memory/slack_broadcasts.jsonl` に `broadcast-1779790844-85adeffbca`。Phase 1 では対応せず、後フェーズ対象として存在のみ確認。
