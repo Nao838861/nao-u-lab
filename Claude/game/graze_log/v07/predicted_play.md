@@ -92,3 +92,64 @@ if(wasCapNotReached && state.invincibleT===BUZZ_INVINCIBLE_CAP){
 - 合計 ~15-20 行。戻し方: 全削除で v07 観点3 等価戻し。1 機構刻み制約 (R-D + `feedback_clone_strategy.md` t:5) 準拠。
 
 — Ash (Win2) 2026-05-27 C200 Phase 4 (観点 7 実装**前** Stage 3 予測)
+
+---
+
+# 観点 6 (7 区分 spawn テーブル — 学習/圧力/休符/山 時間予算) — 実装**前** Stage 3 予測 (2026-05-27 C201 Ash)
+
+**status**: v07 B-2 Hyper Activation (`246ed50e3`) + 観点3 弾側マーカー (`697d36453`) + 観点7 180F cap reached 大成功反応 (`c63ebd842`) commit 済の v07/index.html に対し、**観点 6 (7 区分 spawn テーブル)** を実装**する前**に書面で予測する。前サイクル C200 の self_judgment.md §「次 iteration 起点」で (α) として選定済 (候補 α/β/γ 比較で 「単調」評価への根本応答最短距離を評価)。判定方針: コード読解 + 90 秒 plays 時間体感予測 + Nao_u v02 評価原文照合、headless 数値は根拠から外す (`feedback_headless_unfit_for_unfinished_eval.md` t:5)。
+
+## 実装する 1 機構 (観点6 / 7 区分 spawn テーブル)
+
+90 秒 = 5400F (60fps) を 7 区分に分割。各 phase の敵種類/弾密度/spawn 間隔を**時間 (state.t) で独立定義**。既存の wave 番号駆動 (`state.spawnT=160-Math.min(state.wave*8,80)`) を **phase 駆動** (`state.spawnT=spawnInterval()` / `PHASE_FUNCS[currentPhase()]()`) に置換。
+
+| phase | 時間 | 役割 | 内容 (既存 spawnWave 流用 or 新規) |
+|---|---|---|---|
+| 1 (0-13s) | 0-780F | **学習** | spawnWave1 等価 (aimed 低密度 / small 3 + medium 1 aimed) |
+| 2 (13-26s) | 780-1560F | **圧力** | spawnWave2 等価 (fan3 導入 / small 4 + medium 2 fan3) |
+| 3 (26-39s) | 1560-2340F | **休符** | spawnWave3 等価 (aimed 復帰 / small 6 + medium 1 aimed) |
+| 4 (39-52s) | 2340-3120F | **圧力** | spawnWave4 等価 (fan3 増量 / small 4 + medium 3 fan3) |
+| 5 (52-65s) | 3120-3900F | **山 1** | **新規** (aimed 高密度 / small 8 列 + medium 2 aimed) |
+| 6 (65-78s) | 3900-4680F | **休符** | **新規** (decrescendo / small 4 + medium 1 aimed) |
+| 7 (78-90s) | 4680-5400F | **山 2 final** | **新規** (fan3 final / medium 4 fan3 + small 4 列) |
+
+- 既存 `spawnWave1..4` は `spawnPhase1..4` の alias として保持 (rhyme 維持、削除可能性確保)
+- 新規 `spawnPhase5..7` で「山/休符/山」curve を追加
+- `spawnInterval()`: 学習/休符=140F / 圧力=110F / 山=80F の3段階 (時間予算化)
+- 90 秒以降 (5400F+) は phase 7 維持 (= 「無限 final」: graze_log の 90 秒終端は明示されていないので継続)
+- 当たり判定/弾速/敵 HP には**一切干渉しない**
+
+## プレイヤー視点予測 (体験変化、5 項目)
+
+1. **「90 秒の時間 curve が体感で見える」(Yes 側、確度 70%)**: v07 までは「敵が出る → 撃つ → 弾を擦る」の繰り返しが 90 秒間ほぼ等密度で続いていた → Nao_u v02 評価「**早めに3段階までパワーアップして以降は普通のシューティング**」の根本原因 = 時間軸での起伏欠落。観点 6 で phase 2 圧力 → phase 3 休符 → phase 4 圧力 → phase 5 山 1 → phase 6 休符 → phase 7 山 2 final の **dynamics curve** が時間体感として立つ。「単調」評価への根本応答に最も効く 1 機構 (v06 self_judgment §観点 6 / v07 self_judgment-C200 §依然観点 6 待ち の長期保留が物理回収される)。
+
+2. **「初心者と上級者でゲーム体験が分かれる」(Yes 側、確度 55%)**: 初心者は phase 1-2 (0-26秒) で核体験 (graze→Lv up→無敵→chain) を学習しながら gameOver しがち。上級者は phase 5 山 1 (52秒) と phase 7 山 2 final (78秒) で chain MAX を狙う「峰」が立つ。**同じ 90 秒でもプレイヤー熟練度で見える景色が違う** → Log_cdx 観点 1 「動く ≠ 遊べる」の「遊べる」閾値通過に寄与する予測 (体験の幅が広がる)。
+
+3. **「phase 切替の境界で違和感」リスク 30%**: 13 秒で aimed → fan3 突然導入、26 秒で fan3 → aimed 復帰、52 秒で山 1 (弾密度急増)、65 秒で休符 (急に楽になる) — **時間境界で「いきなり難易度が変わった」体感が出る**リスク。Log_cdx 観点 6 「学習/圧力/休符/山」curve は理想形だが、境界が急峻だと「ぶつ切り」体感になる。実装後の self_judgment で境界 transition の体感を観察、過剰なら境界 ±2 秒の漸進的密度変化 (例: phase 2 後半 5 秒で fan3 比率を段階的に増やす) を v??以降の候補に記録。
+
+4. **「phase 7 (final 78-90秒) 到達確率が低い」リスク 40%**: graze_log は 3 段階 gauge 制 (Lv 3 → 2 → 0 → gameOver) で被弾耐性が低く、無敵化 (chain MAX) が継続発火しないと 90 秒生存は難しい。phase 5 山 1 (52-65秒) で gameOver する確率が高ければ、phase 6 休符 / phase 7 山 2 final は**多くのプレイで体感されない** → 観点 6 の効果が「実プレイで届かない」リスク。Nao_u プレイで phase 7 到達率を確認し、未到達なら phase 5 弾密度を緩める or 90秒中盤の gauge 補給を増やす対策を準備。
+
+5. **「観点 7 大成功反応 (180F cap reached) の発火頻度が phase 6/7 で増加」(Yes 側、確度 60%)**: phase 6 休符 (decrescendo) で gauge 回復 + chain 中断、phase 7 山 2 final (fan3 急増) で graze 機会増 → 3 連 Lv up が phase 7 で発火しやすい設計。観点 7 (`c63ebd842`) で物理化した「大成功反応」が観点 6 で発火タイミングを時間体感で誘導されるようになる。**観点 6 + 観点 7 が相乗で核体験頂点を強化する** → R-A 「一番楽しい瞬間を強化する」の縦深化が時間軸で完成。
+
+## 予測の限界
+
+- 観点 6 単体での体感変化は「時間 curve を可視化した」局所改善であり、Nao_u v02 評価を `面白い` に押し上げる単機構ではない可能性が残る (確度 30-40%)。Nao_u v02 評価「ぎりぎりゲーム」を「ゲーム」に押し上げる程度の効果。`面白い` に押し上げるには観点 1 (動く ≠ 遊べる) / 観点 2 (敵に行動意図) / 観点 4 (中心入力) が未着手のままなので、観点 6 完了後も道半ば。
+- spawnInterval の数値 (140/110/80F) は機械的に置いたので、実プレイで違和感が出たら調整必須 (R-D 「数値は目的の下限」原則)。初版は数値を 1 機構として ship、観点6 第二手で数値調整の場合は別 commit に分離。
+- 90 秒以降 (5400F+) は phase 7 を維持する設計だが、これは graze_log が「90 秒終端で stage clear」演出を持たない (= 無限に続く) ため。stage clear を明示する設計は本観点の射程外 (v??以降の観点 1 「動く ≠ 遊べる」の「遊べる」閾値通過の文脈で別途扱う)。
+- phase 5/7 山で弾密度が急増するが、当たり判定 R_HIT=8 / graze R_GRAZE=22 は不変。被弾と graze の差分 14px は固定なので、phase 5/7 で「擦りに行く」 R-B 緊張経路は維持される。新規の被弾増加リスクは phase 切替直後の「学習負債」分のみ。
+
+## 削除可能性
+
+- 新規定数 PHASE_BOUNDARIES 1 行
+- currentPhase() 関数 ~5 行
+- spawnPhase1-4 alias 4 行 (const 宣言)
+- spawnPhase5/6/7 関数 ~14 行
+- PHASE_FUNCS テーブル 1 行
+- spawnInterval() 関数 ~6 行
+- spawnWave 内分岐書き換え ~3 行
+- spawnT 代入式書き換え 1 行
+- コメントブロック ~12 行
+
+合計 ~45 行追加。戻し方: 全削除 + spawnWave 旧形 (wave==1..4 + WAVE_FUNCS rng pick) 復元で v07 観点 7 等価戻し。1 機構刻み制約 (R-D + `feedback_clone_strategy.md` t:5) — 「時間軸で wave を切り替える」1 機構として実装、spawnInterval は同機構の付随要素 (時間 curve の発露を物理化するため不可分)。
+
+— Ash (Win2) 2026-05-27 C201 Phase 4 (観点 6 実装**前** Stage 3 予測)
