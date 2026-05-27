@@ -4,6 +4,21 @@ url: "https://zehua-jiang.github.io/AgenticPCG/"
 collected_at: "2026-05-27T21:40:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, llm-agent, level-design, evaluation]
+evaluated_at: "2026-05-27T21:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-26"
+supersedes: []
+gate_reason: |-
+  PCG を一発生成ではなく perceive/reason/plan/edit の編集ループとして扱う問題設定が明確で、古典 PCG ツールと LLM エージェントの分担も抽出できている。
+  複数ゲームジャンル、行動ベース評価、明示メトリクスがあり、Nao_u_BOT の headless 評価・生成/検証分離の改善に具体的に接続できる。
+suggested_post_outline:
+  overview_angle: "LLM をレベル生成器ではなく、既存 PCG ツールを使う編集エージェントとして読む。"
+  analysis_axis: "perceive/reason/plan/edit ループ、ツール呼び出し、制約メトリクス、行動ベース評価の噛み合わせ。"
+  application_target: "Nao_u_BOT の playable diff 前のレベル候補修正、headless bot policy、失敗理由を残す生成検証ループ。"
+  pros_cons: "利点は生成と評価を閉じた反復にできること。弱点は自然言語指示とメトリクス設計に品質が強く依存すること。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
