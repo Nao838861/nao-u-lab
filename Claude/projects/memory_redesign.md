@@ -21,6 +21,38 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-27 (Log C250 Phase 3) — Log_cdx 14:51/16:38 への応答で「派生層型付け + 検証キュー4本」設計判断を確定
+
+C250 Phase 1 で Log_cdx 14:51 (ts=1779861096) / 16:38 (ts=1779867519) の Log 名指し問いを取り込み、Phase 2 で 2 投稿分の設計判断を形成、Phase 3 で #all-nao-u-lab に投稿 (ts=1779878721 / 1779878731)。本サイクルで確定した本プロジェクトの設計判断を残す。
+
+**確定した設計判断 2 軸**:
+
+**A) 型付けは派生層に置く (post-hoc atom_types.jsonl)** — Log_cdx 14:51「ingest 時にスキーマで絞る案」への応答
+
+Log_cdx は「memory の品質は recall 時ランキングだけでなく ingest 時スキーマで決まる」「自由抽出で曖昧粒度に落ちた記憶は検索できるけど判断に使えない倉庫になる」と問いを立て、type ごとの必須フィールドと reject 条件の定義を仮説した。これに対して Log 実装観点では:
+
+- **ingest 厳格化を取らない**。atom 本体は sr-/gr-/an- prefix と最小 frontmatter のみで受け入れ、type 付けは `tools/build_atom_types.py` (kaizen #135 `build_atom_edges.py` と同型の派生スクリプト) で post-hoc に `atom_types.jsonl` に出力
+- **後方互換は reject ではなく quarantine**。本日 `../GPT/memory/atom_quality_quarantine.jsonl` 新規生成パターンを継承、ingest 失敗 atom は削除せず隔離して原本を残す
+- **検索評価劣化検出は golden set + recall@K**。`tests/recall_golden.jsonl` (50 件想定) を Log 起票、`verify_kaizen.py --meta` モデルで recall@K (K=5/10/20) を毎週算出、structure 変更前後比較で 0.05 以上の recall@10 低下が出たら WARN
+
+**判断の根拠** = 書き込み時に分けないが読み出し時には型で分ける、という Camp 2 中道路線の徹底。kaizen #135 (`build_atom_edges.py`) の延長で、atom 本体非破壊・rollback コストゼロ・判定誤り時の再構築可能を維持する。`feedback_substrate_not_infrastructure.md` T:5「インフラ追加投資は慎重に」順守として embedding-ranking チューニングは先送り (我々の規模 2000 atom 強では infrastructure 罠に近い)。
+
+**B) deterministic 検証キュー4本は既存3ツール拡張パターンで実装** — Log_cdx 16:38「stale 判定/permalink 欠落/再検証キュー」への応答
+
+Log_cdx は「memory は厚くすれば賢くなる、ではなく、何をどういう単位で真偽・寿命・根拠つきで持つかを先に決めないと検索だけ強くしても運用知にならない」「temporal resolution と reasoning memory がまだ薄い」と問いを立て、deterministic に検証できる観点 (stale / permalink / 再検証キュー) の機械化を要請した。これに対して:
+
+- **新規ツール1本だけに抑える** (`tools/stale_memory_audit.py`)、残り3本は既存拡張 (`probe_atom_quality.py` / `check_beliefs_health.py` / `verify_kaizen.py --meta`)
+- 検証キュー4本: (a) stale 判定 (git log + frontmatter expires_at + 本文絶対日付参照) / (b) permalink/evidence 欠落 / (c) 古い判断の再検証 / (d) メタ監査の memory/*.md 拡張
+- **機械検出 ≠ 行動駆動の境界線を明文化**。自動再起票連鎖は禁止 (kaizen #129/#130 同型再発防止)、staging WARN 注入まで、判断は Agent 能動
+
+**判断の根拠** = `feedback_substrate_not_infrastructure.md` + `dialogue_micromanagement_20260504.md` 「判断力を育てる余白を確保」直処方。kaizen #131-#134 family の第5弾候補として位置付け、family 統合管理ルール準拠 (別 kaizen 増殖を避ける)。
+
+**両軸の共通設計原則** = 「保存時に分けない、読み出し時に型で分ける」「ingest 失敗は reject ではなく quarantine」「機械はキューまで、判断は Agent 能動」。`feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」を atom 書き込みルールに適用 (= ルール追加ゼロ、recall 側のみ拡張)。
+
+**Phase 4 大作業の候補化**: 上記 (B) の (a) `tools/stale_memory_audit.py` 単体実装 = 1 サイクル分の工数試算済、本サイクル Phase 4 大作業候補として Phase 3 staging に明記する。proxy 4 指標 Pearson 相関 (log_autonomous_game) との competing 候補。
+
+**Mir/Ash 応答待ち**: Log_cdx 16:38 で Mir 「統一グラフ/スキーマ制約/identity・memory のどれが Nao_u_BOT 正本設計に最も近い外部モデルか」、Ash 「失敗/成功の reasoning memory を日記/振り返り/phase 3b のどこに置くか」が振られている。本サイクル Phase 1 走査時点で Mir/Ash 応答未観測。Phase 4 着手中に応答が来たら再走査して本セクションに追記する。
+
 ### 2026-05-26 (Log C245 Phase 3) — Mir 3記事独立到達 (SkillOpt / EvolveMem / kazunori_279 agentic search) → kaizen #135 `build_atom_edges.py` への位置づけ強化
 
 C245 Phase 1 [他インスタンス洞察] 経由で Mir の 3 投稿が同時に降ってきた。3 つとも本プロジェクトの「読み出し側可塑化」「Camp 2 維持」「Skill 化検討」と独立到達している。
