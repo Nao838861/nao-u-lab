@@ -49,7 +49,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 行リンクを確認。実リンク broken 0 件。バッククォート内のコマンド例 2 件だけが機械検出に引っかかったため、リンク切れ扱いしない。"
+  - "memory/atoms.jsonl を確認。1717 rows、JSON parse error 0、duplicate id 0。normalized/content hash 重複 group は 17 件あるが、既に lifecycle/content fold 190 件として表示側で畳まれているため、このフェーズでは atom 本体を変更しない。"
+  - "memory/raw/ 配下を 30 日基準で確認。archive 対象 0 件。"
+  - "memory/shared_reads_candidates/ を 30 日基準で確認。old candidate 0 件。"
+  - "inbox pending を確認。directives 1 件、broadcasts 1 件。完了証跡がないため handled 化はしない。"
+issues:
+  - id: ISS-4A-20260527-01
+    description: "ゲーム制作への直接フィードバックを含む pending directive が `domain: operations` に分類され、Phase Game Start の `domain: game` 起動条件から外れている。現 pending `log-cdx-1779811040-15f96f05d8` は v008 の失敗理由、敵弾不足、次アプローチへの指示を含むが、現行 triage では game directive として扱われない。"
+    severity: high
+    evidence: "memory/slack_directives.jsonl id=log-cdx-1779811040-15f96f05d8; phases/phase_game_start.md は `domain: game` pending を優先起動条件にしている; tools/codex_phases_cycle.py has_pending_game_directive() も `domain == game` を主条件にしている"
+    why_blocks_game_memory: "最新の失敗分析が game-start に渡らないと、次の playable diff が v007/v008 の失敗理由を踏まずに始まり、同じ headless/敵弾密度/コンセプト不明瞭の失敗を再発させる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260527-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
