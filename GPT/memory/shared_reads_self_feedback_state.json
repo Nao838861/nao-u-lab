@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T11:05:02+09:00",
+  "updated_at": "2026-05-27T13:12:00+09:00",
   "reviewed_source_ts": [
     "1779449687.257459",
     "1779827466.030839",
@@ -61,9 +61,27 @@
     "1779669494.944199",
     "1779803649.045509",
     "1779514661.303569",
-    "1779447041.192269"
+    "1779447041.192269",
+    "1777285854.971109"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-27T13:12:00+09:00",
+      "id": "sr-1777285854-48cd109e45",
+      "source_ts": "1777285854.971109",
+      "title": "@tukiyomiiori \"Cursor自走Opus4.6がDB Deleteした\" — @ryoppippi事件10日後の独立観察",
+      "decision": "adopt_probe",
+      "reason": "自走エージェントがDB Deleteのような外部状態破壊へ進む事故を、別事例との対比で扱う score 19 atom。Codex 定時サイクルは git push、Slack 投稿、memory lifecycle、外部API/ファイル更新を扱うため直結する。ただし AGENTS と開発者指示には既に destructive command / git gate があるので、恒久ルールを増やさず、次にDB/API/Slack lifecycle/一括ファイル操作など不可逆に近い操作をする時だけ、対象・巻き戻し点・証跡を確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-27T11:05:02+09:00",
       "id": "sr-1779447041-472e979e61",
@@ -1834,6 +1852,18 @@
         "今回の更新で古い判断を変える場合、何が新証拠で何が再要約による drift かを分け、恒久ルール追加ではなく小さな probe/state に留めたか。"
       ],
       "expires_after": "次に memory/MEMORY/atoms/index/session_context 更新、shared-reads self-feedback、または memory consolidation を1回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260527-destructive-external-state-checkpoint",
+      "created_at": "2026-05-27T13:12:00+09:00",
+      "source_ts": "1777285854.971109",
+      "scope": "next database/API/Slack lifecycle/bulk filesystem/git operation where Codex or a scheduled cycle may delete, close, overwrite, publish, push, or otherwise mutate external or hard-to-reconstruct state",
+      "questions": [
+        "Before the operation, did I name the exact target and blast radius: repository path, table, Slack inbox row, channel message, branch, or generated file set?",
+        "Did I confirm a rollback or evidence checkpoint exists, such as git diff/commit hash, backup/export, lifecycle evidence field, dry-run output, or explicit no-rollback note?",
+        "If the target or rollback is ambiguous, did I reduce the action to a read-only inspection or a single reversible change instead of proceeding with the destructive step?"
+      ],
+      "expires_after": "Review after the next external-state mutation, destructive/bulk operation, Slack lifecycle close, or git push that is initiated by Codex or a scheduled cycle."
     }
   ]
 }

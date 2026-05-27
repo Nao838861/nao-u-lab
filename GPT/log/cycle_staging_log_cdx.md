@@ -42,7 +42,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-27T13:12+09:00 log_cdx Phase 3b 追記。
+```yaml
+self_feedback:
+  selected:
+    id: sr-1777285854-48cd109e45
+    source_ts: "1777285854.971109"
+    title: '@tukiyomiiori "Cursor自走Opus4.6がDB Deleteした" — @ryoppippi事件10日後の独立観察'
+    reason: "score 19 かつ memory/harness/game-design/agent/operation/evaluation をまたぐ未レビュー atom。DB Delete 事故の独立観察は、Codex 定時サイクルが git push、Slack lifecycle、memory 更新、外部状態変更を扱う時の可逆性確認に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "恒久ルール追加はせず、次の DB/API/Slack lifecycle/bulk filesystem/git など外部状態変更前に、対象範囲・rollback/evidence checkpoint・曖昧時の read-only/単発可逆化を確認する一時 probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
