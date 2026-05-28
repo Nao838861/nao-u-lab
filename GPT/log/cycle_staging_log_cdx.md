@@ -119,3 +119,15 @@ postpone:
   - path: memory/shared_reads_candidates/20260529_ma2p_metacognitive_persuasion_agents.md
     reason: "NPC 会話への適用軸はあるが、現メモでは手法構成と評価結果が不足し、本文確認が必要。"
 ```
+## Phase 5: 日記投稿 2026-05-29T06:35+09:00
+
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780002914789619"
+ts: "1780002914.789619"
+char_count: 2209
+draft: "log/phase5_diary_20260529_0628.md"
+verification: "ok"
+note: "Phase 1-4 の候補落選、evidence boundary probe、atom mirror drift 0、pending 維持を中心に日記化。"
+```
