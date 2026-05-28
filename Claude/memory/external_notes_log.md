@@ -4,6 +4,29 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-28 (Log C258 Phase 2) Boghog's bullet hell shmup 101 (shmups.wiki, CAVE 系 danmaku 設計指南) — v005 連続 erase 段階化 (黄 12px / 黄 16px / 橙 20px) の独立検証 + 色相衝突警告 [full intake、即統合済 2026-05-28]
+
+**文脈**: C258 Phase 1 §6 で WebSearch 取得 (キーワード `bullet hell shmup visual noise prediction line player feedback 2025`)、Phase 1 staging に URL を残し損ねたため Phase 2 で再取得 + WebFetch 厚読み。本サイクル v005 (C256 Phase 4 着地、連続 erase 視覚段階化) の Q-D 再判定資料 + Nao_u 5/26 06:10 「予測軌跡+×印が逆にわかりにくい」批判 (C242 削除済) の業界経験則裏付け候補として摂取。
+
+**要点 (5 層)**:
+1. **Sprite Construction (contrast 並置)**: 「light & dark values side-by-side」 = 明部 (glowing core) と暗部 (border/inner line) を sprite 1 枚で並置することで背景色に依存せず輪郭が認識される
+2. **Pattern Grouping (stray bullet 禁忌)**: 「Single stray bullets are hard to read and can often feel unfair」 = 単独散らばり弾は読めず unfair に感じる。trail 補助 or group up into lines が原則
+3. **Color Strategy (黄/橙は禁色に近い)**: 「reds, pinks and purples...are less likely to clash with commonly used colours, unlike traditional yellow and orange bullets which tend to overlap with explosions & golden items」 = 赤/桃/紫は爆発・金色アイテムと衝突しにくく、黄/橙は最も衝突しやすい
+4. **Animation (wobble/ripple で identity 付与)**: 「CAVE bullet sprites will quickly reveal all kinds of wobble and ripple animation which catch the player's eye and give each bullet a unique identity」 = 2-3 frame wobble (揺れ) や ripple (波紋) で animate することで弾の個別性が生まれる。static sprite では弾幕の一部に溶ける
+5. **Depth Sorting (faster on top)**: 「Smaller, faster bullets should be drawn over bigger, slower bullets」 = 高速弾を上 layer
+
+**Log 側の角度 (v005 接続)**:
+- v005 採用色 (N=1 黄 / N=4+ 橙) = Boghog 経験則上 explosion/golden item と最も衝突する色相 → **重大警告**。log_autonomous_game v005 には explosion/golden item が現状未実装で即時衝突なしだが、将来「敵撃破時 explosion」「弾源負荷 90s カーブで黄色 indicator」等を足した時に色相衝突 → v006 案 A 候補 (色相を赤/桃/紫に段階化、castLock の「強く踏み抜いた」感とのトレードオフ要 Nao_u/Mir/Ash 実機判定)
+- v005 lockFlash は 1 frame static、Boghog 経験則の wobble/ripple animation 未到達 → **v006 案 B 候補** (N=2-3 で 3 frame wobble 半径 16±2 振動、N=4+ で 5 frame ripple 半径 20→24→16→20 拡縮 で motion を 3 段階目チャネル化)
+- Boghog 「stray bullet は read 不能で unfair」 = Nao_u 5/26 06:10 「予測軌跡+×印が逆にわかりにくい」批判と独立到達。C242 削除判断 (`memory/feedback_inside_to_outside_leak.md` 結晶化済) への外部独立 source として **追記候補マーキング** (R 層昇格条件 = 同方向独立 source 2 件以上に近づく、機械反映禁止順守で本サイクル昇格判定は行わない)
+- depth sorting / sprite contrast は lockFlash 適用範囲外 (lockFlash は弾でなく erase エフェクト) → 却下
+
+**弱点**: (1) CAVE 特化バイアス (東方/Cuphead/Furi 等他系統の経験則を吸収していない) (2) sprite 設計の話で erase エフェクト直接 reference でない = 転用解釈の責任は我々 (3) 数値根拠なし、全て経験則 (4) self-described as "sloppy"、academic peer review なし (5) 我々 (Log/Mir/Ash) が CAVE 作品実プレイ経験を持たず経験則解釈がメタになるリスク
+
+[統合済 2026-05-28 Log C258 Phase 2 → #shared-reads ts=1779972076.794739/.823599/.849019 (Slack 自動分割で 3 メッセージ連続投稿、合計 8178 chars、順序保持) で投稿 / projects/log_autonomous_game.md v005 §5 次サイクル候補に v006 案 A (色相再検討) + 案 B (motion 追加) として吸収 / memory/feedback_inside_to_outside_leak.md 末尾に Boghog 業界裏付け追記候補マーキング (R 層昇格判定は C259 以降、独立 source 2 件以上揃った時点で判定)]
+
+---
+
 ## 2026-05-28 (Log C257 Phase 2) arXiv 2511.07800「From Experience to Strategy: Empowering LLM Agents with Trainable Graph Memory」 — RL で edge weight を学習させる graph memory、A-MEM / Mem0g とは別系統の link 自動化アプローチ [full intake、即統合済 2026-05-28]
 
 **文脈**: kaizen #106 摂取経路固定化、キーワード `Mem0g graph memory agent LLM 2026 link generation`。本日 log_cdx 10:37 (ts=1779932228) で「A-MEM 的 Link Generation 案、段階2 比較対象として却下しておきたい」起票中の補強材料として摂取。Phase 1 §6 で WebSearch 3件取得のうち本論文を full intake、他2件 (Mem0 本論文 / A-MEM 論文本体) は Mir 5/27 出荷済の重複として candidate 保留。

@@ -67,3 +67,10 @@ NextMars 2026-03「Premium 2D Gameplay Readability Systems」が telegraph logic
 
 - 2026-05-27 C247 #shared-reads ts=1779834973 「NextMars Readability Systems → v001 失敗の telegraph 位置づけ refine」 (drafts/2026-05-27/post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py)
 - 2026-05-26 C242 三軸独立収束「予告軌道線=邪魔」結論 (本ファイル初版)
+
+## 追記候補マーキング: Boghog 業界経験則 (2026-05-28 C258 Phase 2)
+
+- 2026-05-28 #shared-reads ts=1779972076.794739/.823599/.849019 「Boghog's bullet hell shmup 101 → v005 連続 erase 段階化の独立検証 + 色相衝突警告」(drafts/.archive/2026-05-28/post_log_sharedreads_boghog_shmup101_20260528.py)
+- Boghog 経験則: 「**Single stray bullets are hard to read and can often feel unfair**. Bullets with unusual, hard to predict trajectories may need extra effects like trails to help players out」 = Nao_u 5/26 06:10 「予測軌跡+×印が逆にわかりにくい」批判と独立到達
+- **R 層昇格判定は保留** (機械反映禁止、CLAUDE.md「個別指摘を即ルール化しない」順守)。独立 source 数: NextMars (5/27 C247) + Boghog (5/28 C258) で本原則周辺は **3 source 同方向 = Nao_u + NextMars + Boghog**。次サイクル C259 以降で R-X 抽象ルール昇格判定検討
+- **昇格判定の論点**: NextMars は telegraph の inherently 悪ではない説で本原則の射程を refine、Boghog は stray bullet 禁忌で「内側→外側流出」の表出経路の一つを独立補強。両者の合流点は **「メタ情報 (予測線・×印・タグ) が画面を stray bullet 的に汚す = visual hierarchy の阻害」** という共通核。昇格時は本核を R-X として抽象化、M-XX として 3 事例 (log_mystery v10 / log_autonomous_game v001 / mimicry 宣言) を保持
