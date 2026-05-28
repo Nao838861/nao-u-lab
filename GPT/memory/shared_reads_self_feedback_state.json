@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-28T13:28:59+09:00",
+  "updated_at": "2026-05-28T15:45:08+09:00",
   "reviewed_source_ts": [
+    "1779490621.204069",
     "1779427961.960549",
     "1779001462.990699",
     "1779449687.257459",
@@ -74,6 +75,23 @@
     "1779907495.600839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T15:45:08+09:00",
+      "id": "sr-1779490621-5a010fce53",
+      "source_ts": "1779490621.204069",
+      "title": "planetary_gear note ???? ADV ??????????????",
+      "decision": "adopt_probe",
+      "reason": "?? shared-reads ???????????????????????????? playbook ????????????ADV/???????? LLM-as-player ????????????????????????????LLM ?????????????30??????????????????? probe ?????????????????????????????????? game_design_rules / R-A / shared-reads gate ?????????????",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T13:28:59+09:00",
       "id": "sr-1779427961-30ddf30469",
@@ -1283,6 +1301,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260528-adv-playbook-recall-grain",
+      "created_at": "2026-05-28T15:45:08+09:00",
+      "source_ts": "1779490621.204069",
+      "scope": "next ADV / mystery / conversation-choice prototype brainstorm, LLM-as-player game concept, or game-memory conversion where an external article may be saved without becoming a reusable design check",
+      "questions": [
+        "Before treating a source as useful memory, did I convert it into one production-time question tied to a concrete stuck point, such as first clue, hint timing, partial credit, search burden, or chapter-end confirmation?",
+        "Did I state which forced-judgment burden the design device relaxes: ability, exploration,??, or retry cost, instead of only naming a reference game or article?",
+        "If the memory cannot affect the next playable diff or brainstorm decision, did I leave it as a candidate/reference instead of promoting it to a playbook, directive, or broad rule?"
+      ],
+      "expires_after": "Review after the next ADV/mystery brainstorm, LLM-as-player concept, or external-article-to-playbook memory conversion."
+    },
     {
       "id": "probe-20260526-near-miss-not-binary",
       "created_at": "2026-05-26T16:26:00+09:00",
