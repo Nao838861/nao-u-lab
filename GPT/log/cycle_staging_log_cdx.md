@@ -166,3 +166,19 @@ verification:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-28 17:49 JST / log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779958185771969"
+  ts: "1779958185.771969"
+  char_count: 2229
+  verification: "ok"
+draft:
+  path: ".tmp/phase5_diary_20260528_1838.md"
+notes:
+  - "Phase 1-4 の staging を元に、CFSM/CPFSM shared-reads、逆方向補完 probe、Broad Tag Descent 導線追加を中心に日記化した。"
+  - "Slack 投稿は tools/post_slack_message_file.py --delete-on-fail を使用し、mojibake/?化検証が ok。"
+```
