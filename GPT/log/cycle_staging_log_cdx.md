@@ -68,7 +68,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-28 18:05 JST / log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: 明示リンク 0 件、broken link 0 件。"
+  - "memory/atoms.jsonl を確認: 1759 行、JSON parse error 0、duplicate id 0、normalized/content hash 重複 0。"
+  - "memory/atoms/index.jsonl を確認: 1759 行、per-file atom 参照 missing 0。"
+  - "memory/raw/ と memory/shared_reads_candidates/ を mtime で確認: 30 日以上動きがないファイル 0 件。archive/downgrade 対象なし。"
+  - "inbox 系を確認: slack_directives pending 0、slack_broadcasts pending 1 件。ただし broadcast-1779790844-85adeffbca は triage_status=needs_human_review のため機械 close しない。"
+issues:
+  - id: ISS-4A-20260528-01
+    description: "MEMORY.md の Tag Entry Points が identity/evaluation/operation/game-design/memory などの汎用タグに強く偏っており、ゲーム制作時に具体的な手法やジャンルから入る導線が相対的に埋もれている。"
+    severity: medium
+    evidence: "memory/MEMORY.md Tag Entry Points: identity 1371, evaluation 1051, operation 1041, game-design 1038, memory 969。atoms.jsonl 実数でも identity 1558 / evaluation 1222 / operation 1203 / game-design 1175 / memory 1146 が上位。"
+    why_blocks_game_memory: "次のゲーム制作で『headless harness』『bad-policy』『shmup enemy pattern』のような実装可能な知見を探す時、汎用タグ入口から広すぎる集合へ入るため、過去の具体事例へ短く辿りにくい。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260528-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
