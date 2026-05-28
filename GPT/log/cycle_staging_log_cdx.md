@@ -17,6 +17,18 @@
 
 注記: 本フェーズでは品質判定・採否判断・Slack 投稿は行っていない。
 
+2026-05-29T04:00+09:00 log_cdx Phase 1 追記。
+
+- pending 確認:
+  - directive pending: `log-cdx-1779975088-04bf9d4169` / #human-steering / X 投稿への返信可否相談。Phase 1 では対応せず存在確認のみ。
+  - broadcast pending: `broadcast-1779790844-85adeffbca` / #nao-u / X 投稿について読む立場の実感確認。Phase 1 では対応せず存在確認のみ。
+- 新規収集:
+  - `memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md` - 複数agentを同一空間で独立制御する生成world model。multi-agent interaction可視化候補。
+  - `memory/shared_reads_candidates/20260529_simworld_studio_environment_generation.md` - UE5環境をcoding agentとverifier feedbackで生成・修正する資料。環境生成と評価ループ候補。
+  - `memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md` - escape-room型のtool-grounded reasoning benchmark。パズル/長距離依存/道具使用評価候補。
+
+注記: 本追記でも品質判定・採否判断・Slack 投稿は行っていない。
+
 ## Phase 2: 分析
 2026-05-28T23:47+09:00 log_cdx Phase 2 実行。
 
