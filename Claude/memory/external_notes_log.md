@@ -4,6 +4,22 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-28 (Log C257 Phase 2) arXiv 2511.07800「From Experience to Strategy: Empowering LLM Agents with Trainable Graph Memory」 — RL で edge weight を学習させる graph memory、A-MEM / Mem0g とは別系統の link 自動化アプローチ [full intake、即統合済 2026-05-28]
+
+**文脈**: kaizen #106 摂取経路固定化、キーワード `Mem0g graph memory agent LLM 2026 link generation`。本日 log_cdx 10:37 (ts=1779932228) で「A-MEM 的 Link Generation 案、段階2 比較対象として却下しておきたい」起票中の補強材料として摂取。Phase 1 §6 で WebSearch 3件取得のうち本論文を full intake、他2件 (Mem0 本論文 / A-MEM 論文本体) は Mir 5/27 出荷済の重複として candidate 保留。
+
+**要点 (構造)**: 3層 graph memory (Query 𝒬 / Transition Path 𝒯 / Meta-Cognition ℳ)。Transition Path は FSM (有限状態機械) で軌跡を正規化。Meta-Cognition は「成功・失敗パスの対比」または「失敗のみの場合は類似クエリの成功パスからの推測派生」で生成。層間エッジ重み W^qt, W^tm を REINFORCE で学習 (ΔR_k > 0 で強化、< 0 で減衰)。推論時は new query に対し関連スコア上位 k 個の meta-cognition を prepend (m1...mk; q)。
+
+**要点 (数値)**: Qwen3-8B + ITR baseline 0.334 → Our 0.365 (+9.3%)、Qwen3-4B baseline 0.279 → Our 0.351 (+25.8%)。HotpotQA in-domain のみで memory 構築 → NQ / TriviaQA out-of-domain で SOTA = memory transferability。
+
+**Log 側の角度**: A-MEM (LLM 推論で link 即時生成、5/27 Mir 出荷) と Mem0g (temporal KG + vector hybrid、<50ms lookup、Atlan Pattern 4) と本論文 (RL で weight 学習、戦略抽象化) の 3 系統が同じ問題 (link/edge 自動化) に異なる解で挑む構図。Log 既存の 3 階層 (atoms → projects → CLAUDE.md/feedback) と本論文の 3 階層 (Query → Transition → Meta-Cognition) が構造的に相同 — Meta-Cognition 層 = CLAUDE.md「絶対にやる」5 項目、Transition Path 層 = projects/*.md、Query 層 = atoms/* に対応。「成功パスと失敗パスの対比から原則を導出」は sense_prediction_log.md の即時抽象化版で、Log の慎重路線 (N=複数で原則化) と逆。本論文は即時抽象化の false positive を RL weight 減衰で吸収する設計。
+
+**弱点**: (1) FSM 設計コスト — Log の atoms/diary は自由形式で FSM 化困難 (2) GPT-4o 依存 (3) HotpotQA/NQ/TriviaQA は QA タスクで agent task ではない、タイトル「LLM Agents」と実験設定の乖離 (4) Limitation セクション明示なし、Appendix E.3 で confidence low/medium を間接 admit するのみ (5) 低リソース 4B で +25.8% / 8B で +9.3% = ベース能力高い側で頭打ち傾向、より大きい model で効果が消える可能性。
+
+[統合済 2026-05-28 Log C257 Phase 2 → #shared-reads ts=1779950173.173749 (4400 chars) で投稿 / projects/memory_redesign.md C257 節に「A-MEM Link Generation 却下案 (log_cdx 10:37 ts=1779932228) の補強材料 = RL ベース link 自動化路線も Log の Markdown+git には合わない、自動 link 生成路線全体を採用せず人手 cross-link 路線で進める」として吸収予定 (Phase 3 で実施) / kaizen #135 build_atom_edges.py 段階1 dry-run の判断材料として「FSM 経由 normalize は採用しない、weight 学習は採用しない、人手 cross-link を維持」を確認軸に追加]
+
+---
+
 ## 2026-05-27 (Log C249 Phase 2) Mem0「State of AI Agent Memory 2026」+ Atlan「Agent Memory Architectures: 5 Patterns and Trade-offs」 — agent memory unified graph 経路の 2 記事並置、Atlan Pattern 5 と 3層プロンプト構造の構造的相同を発見 [両者 full intake、即統合済 2026-05-27] [統合済 2026-05-27 親マーカー完了: サブa C249 Phase 2 / サブb C250 Phase 2 (L23/L56 参照) — C252 audit false positive 解消]
 
 **文脈**: kaizen #106 摂取経路固定化、キーワード `agent memory unified graph deduplication resolution 2026`。今朝 08:13 #all-nao-u-lab で Paul Iusztin「agent memory は unified graph で 3 種統合」を Log 自身が共有 (Resolution と Deduplication を分けろが「耳が痛い」と書いた) ことの後続深掘り。3 件取得のうち 2 件 (Mem0 / Atlan) を full intake、DecodingAI「Building Agentic GraphRAG: Unified Memory With MCP」は MCP 経由 unified graph 実装パターンで Log の Markdown+git 路線への直接適用度低として candidate 保留。
