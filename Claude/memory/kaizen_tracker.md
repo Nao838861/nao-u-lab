@@ -92,6 +92,43 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
     atoms=590 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
     ```
     起票時 (C245) との差分: atoms 1105→590 (差 -515、~46% 減 — 5/28 0:00 跨ぎ + 5月分 atom の supersedes 集約進行 or 一部 fragment 数算定ロジック差の可能性、本サイクル時点では深掘り保留) / wikilink_weak 2→1 (-1 = 本文 `[[wikilink]]` 例示テキストの掃除 1 件分相当 or 抽出元 atom 1 件 supersedes) / supersedes_chain 370→370 (完全一致 = frontmatter scan ロジック安定) / total_edges 749→748 (±1 一致)。**解釈軸**: 本サイクル C257 Phase 3 で arXiv 2511.07800「Trainable Graph Memory」full intake により「自動 link 生成路線 全体却下 (A-MEM / Mem0g Update Resolver / RL weight 学習 の 3 系統全件却下)」が確定、build_atom_edges.py は **「auto link 生成の precursor」ではなく「人手 cross-link を支援する道具」** として位置づけが明示された。dry-run の wikilink_weak 残存 1 件 = recall 側 type gate で除外 (段階2 で実装済) という構造は「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学と整合、本論文 RL 経由の false positive 吸収とは別軸の解を独立採用済と再確認。詳細は [projects/memory_redesign.md](../projects/memory_redesign.md) §「2026-05-28 (Log C257 Phase 3)」節。**段階2 移行判定の現状**: C254 Phase 4 で既に段階2 着地済 (`tools/recall_atom.py` 84行 + edges.jsonl 実書き出し + 1-hop 展開動作確認、sample 3 atom で related=5/1/0 確認)、本観察で段階1 dry-run の安定性も再確認 = 段階3 (recall_golden T0 ベンチ) 着手判定の事前 gate を 1 つ満たした位置。残 gate = (i) wikilink_weak ノイズが C257 1 件レベルで bound 維持 (ii) atoms 数変動の説明確定 (5/28 month-end 跨ぎでの fragment 数算定差仮説確認) の 2 つ、検証期限 2026-06-09 まで観察延長。
+  - **段階1 dry-run 再再観察 (2026-05-29 C258 Phase 3)**: 再々実行 `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` →
+    ```
+    atoms=1253 wikilink_strong=0 wikilink_weak=5 supersedes_chain=370 total_edges=752
+    ```
+    前回 (C257) との差分: atoms 590→1253 (+663、~112% 増)、wikilink_weak 1→5 (+4)、supersedes_chain 370→370 (不変)、total_edges 748→752 (+4 = ww 増分と一致)。**atoms 数変動の説明 (gate ii の解消)**: 実ファイル数 `ls ../GPT/memory/atoms/2026-05/ | wc -l = 1253` と完全一致 → 本サイクル値が正、**C257 staging に書かれた 590 は誤記または別集計値**疑い濃厚 (staging Phase 3 のコピペ時混線、あるいは別 root を一時的に対象に取ったログ)。C245 (1105) → C258 (1253) は +148 で 5/26-5/29 の 3 日間取り込み分として妥当 (gr/sr/an prefix 新規 + 5月後半分)。**wikilink_weak 5件 src/tgt 全件特定 (gate i の評価データ)**: (1) sr-1778541418-0f25c063e5 → `wikilink` (drafts INDEX 例示)、(2) sr-1779770178-5d606254b2 → `link` (Semantic vs Ontology 例示)、(3) sr-1779837186-3f3e3bd4cf → `name` (frontmatter スキーマ例示)、(4) sr-1779842300-a6f128d8bd → `name` (同上)、(5) sr-1779941593-b733fdcf1c → `link` (再例示)。**5件全てが汎用語リテラル `wikilink`/`link`/`name`** = L88 既知ノイズ仮説と完全整合、**N=1 同型ノイズの件数増 (型は同じ、5月後半の memory 議論 atom が増えた副次)** で本質的に新規ノイズ種は出現せず。**段階3 着手判定 (gate i+ii の総合)**: (ii) atoms 変動説明済、(i) ノイズ件数は増えたが内容同型で recall 側 type gate で吸収可能。**判定 = 再観察延長 (C259-C261)** — 理由: recall_atom.py 段階2 実装の type gate 実効性を「現 ww=5 入力で 0 件 noise 抑制」と再確認するのが先、ベンチ集合の atoms 数も 1253 で安定確認できれば段階3 (recall_golden T0) 着手判定発火点に十分接近。詳細は [projects/memory_redesign.md](../projects/memory_redesign.md) §「2026-05-29 (Log C258 Phase 3)」節 (Phase 4 で追記予定)。
+  - **段階2 type gate 実効性検証 (2026-05-29 C259 Phase 3)**: C258 で残した「段階3 着手判定 gate (i) = ww=5 入力で recall 側 type gate が 0 件 noise 抑制」を本サイクルで実測。`tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --output ../GPT/memory/atoms/edges.jsonl` で edges 752 (内 wikilink_weak=5) 生成 → 5 件の wikilink_weak src atom を seed に `tools/recall_atom.py` を `--exclude-type` 有無で対照実行。結果:
+    | seed | tgt | exclude なし related | `--exclude-type wikilink_weak` related |
+    |---|---|---|---|
+    | sr-1778541418-0f25c063e5 | wikilink | 1 | **0** |
+    | sr-1779770178-5d606254b2 | link | 1 | **0** |
+    | sr-1779837186-3f3e3bd4cf | name | 1 | **0** |
+    | sr-1779842300-a6f128d8bd | name | 1 | **0** |
+    | sr-1779941593-b733fdcf1c | link | 1 | **0** |
+
+    **5/5 で 100% noise 抑制 = gate (i) PASS**。type gate が wikilink_weak を完全に除外し、汎用語リテラル `wikilink`/`link`/`name` への偽リンク 5/5 が消失。Semantic vs Ontology「書き込み時に分けない、読み出し時に分ける」原則の動作確認エビデンス第一報。
+  - **副次発見 (path inconsistency bug)**: 段階2 検証中に `build_atom_edges.py --output` default = cwd 直下 `edges.jsonl` / `recall_atom.py` edges default = `<root>/../edges.jsonl` の path 不整合を発見。`--root ../GPT/memory/atoms/2026-05` 指定時、recall が読むのは `../GPT/memory/atoms/edges.jsonl`、build の `--output ../GPT/memory/edges.jsonl` は別位置 = recall は **stale な edges を黙って読む**。初回テストで 5th seed (sr-1779941593-b733fdcf1c) のみ exclude なしでも related=0 を返した症状の真因 (古い edges.jsonl=751 行に該 edge が無かった、新規 build は `../GPT/memory/edges.jsonl` に書いていた)。**新規 kaizen 起票しない** (即ルール化禁止、CLAUDE.md「個別指摘を即ルール化しない」順守) が、**段階3 着手前に必須修正**: (a) `build_atom_edges.py` default output を `<root>/../edges.jsonl` に揃える、または (b) `recall_atom.py` の default を見直し。本ノートを段階3 着手判定前ゲートに追加。
+  - **段階3 着手判定 (本サイクル C259 時点)**: gate (i) PASS / gate (ii) PASS (C258 で解消済) / 新規 gate (iii) = path inconsistency 修正 — 段階3 (recall_golden T0 ベンチ) 着手は (iii) 解消後。検証期限 2026-06-09 まで 11日、観察延長余地あり。本サイクル Phase 4 で gate (iii) 修正を大作業候補に昇格させる方針。
+  - **段階3 着手前 gate (iii) 解消 (2026-05-29 C259 Phase 4)**: Phase 3 §3 で発見した path inconsistency を本 Phase 4 で修正。**修正方針 = 案A (片側修正)**: `tools/build_atom_edges.py` の `--output` default を `None` に変更し、未指定時に `Path(args.root).parent / "edges.jsonl"` を採用する形に書き換え (`recall_atom.py` の edges default = `<root>/../edges.jsonl` と完全一致)。副次として書き込み先 stderr 1 行 (`[build_atom_edges] wrote N edges → <path>`) を追加、書き込み先親ディレクトリの `mkdir(parents=True, exist_ok=True)` も追加 (初回 root 直下に edges 親が無い場合の defensive 措置、既存運用には no-op)。
+    - **修正後コマンド出力 (build)**:
+      ```
+      $ python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05
+      [build_atom_edges write] root=../GPT/memory/atoms/2026-05 atoms=1257 wikilink_strong=0 wikilink_weak=5 supersedes_chain=370 total_edges=752
+      [build_atom_edges] wrote 752 edges → ..\GPT\memory\atoms\edges.jsonl
+      ```
+      書き込み先 = `../GPT/memory/atoms/edges.jsonl` (recall 既定読み込み先と一致)。`../GPT/memory/edges.jsonl` の旧 stale は完遂定義 (4) に従い物理削除せず留置。
+    - **修正後コマンド出力 (recall 5 seed 再実行)**:
+      | seed | tgt | exclude なし related | `--exclude-type wikilink_weak` related |
+      |---|---|---|---|
+      | sr-1778541418-0f25c063e5 | wikilink | 1 | **0** |
+      | sr-1779770178-5d606254b2 | link | 1 | **0** |
+      | sr-1779837186-3f3e3bd4cf | name | 1 | **0** |
+      | sr-1779842300-a6f128d8bd | name | 1 | **0** |
+      | sr-1779941593-b733fdcf1c | link | 1 | **0** |
+
+      **5/5 で 100% noise 抑制再現 + 5th seed の「exclude なしでも related=0」symptom 消失** = build/recall 同一 edges.jsonl 参照状態に整列、stale silent read 構造欠陥 解消。
+    - **gate 状態更新**: (i) PASS / (ii) PASS / (iii) PASS → **段階3 (recall_golden T0 ベンチ) 着手判定 = 着手可**。本サイクル C259 中の段階3 着手は時間配分上見送り、次サイクル以降で recall_golden T0 集合定義 + ベンチ実行スクリプト設計に進む。検証期限 2026-06-09 まで 11日、観察期間 + 着手余裕あり。
+    - **commit**: 本サイクル master の interactive rebase 進行中のため Phase 4 commit は保留、Phase 5 で日記と合わせて `rule:` prefix で push (Phase 3 §6 判断に整合、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守 — 本変更は運用規則改修系統)。
 
 ---
 

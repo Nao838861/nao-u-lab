@@ -512,6 +512,26 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [ ] **beliefs.mdの意思決定時参照問題**（2026-03-28 Log L-1 priming実践で発見）: BeliefShift論文の核心「信念を書いた≠信念が使われている」。check_beliefs_health.pyは定期健康診断だが、判断の瞬間に信念が参照される保証がない。L-1 Encoding Specificity Principleから: 信念はメタ認知的文脈で符号化されているが、参照されるべき場面は行動的文脈→文脈の不一致が到達性を下げている。解法候補: ルール追加ではなく、3原則の「体験で考える」の射程に信念も含める（体験=Slack+memory+**beliefs**）。B022(代理報酬)・B030(固着装置/再構築装置)と直結
 
 
+## 2026-05-29: kaizen #135 段階2 type gate 実効性検証 + path inconsistency 発見（Log C259 Phase 3）
+
+### 検証結果（gate (i) PASS）
+C258 で残した「ww=5 入力で recall 側 type gate が 0 件 noise 抑制」を本サイクル C259 で実測。`tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --output ../GPT/memory/atoms/edges.jsonl` で edges 752 (内 wikilink_weak=5) → 5件の wikilink_weak src atom を seed に `tools/recall_atom.py` を `--exclude-type` 有無で対照実行。**5/5 で WITHOUT exclude=1 / WITH `--exclude-type wikilink_weak`=0** = 100% noise 抑制。
+
+汎用語リテラル `wikilink`/`link`/`name` への偽 edge 5/5 が type gate で完全除外され、「書き込み時に分けない、読み出し時に分ける」Semantic vs Ontology 原則の動作確認エビデンス第一報。
+
+### 副次発見: build と recall の path inconsistency（段階3 着手前の必須修正）
+段階2 検証中に、5番目の seed (sr-1779941593-b733fdcf1c) のみが exclude なしでも related=0 を返す症状を観察 → 真因は **`build_atom_edges.py --output` default が cwd 直下 `edges.jsonl`、`recall_atom.py` edges default が `<root>/../edges.jsonl`** の path 不整合。`--root ../GPT/memory/atoms/2026-05` 指定時、recall が読むのは `../GPT/memory/atoms/edges.jsonl`、build が `--output ../GPT/memory/edges.jsonl` に書くと別位置 = recall は **stale edges を黙って読む**。初回テストで stale (751 行) を読み 5th edge が無く related=0、`--output` を recall-default に揃えて再実行で 5/5 全件 related=1 確認。
+
+新規 kaizen 起票しない (CLAUDE.md「個別指摘を即ルール化しない」順守) が、kaizen #135 段階3 (recall_golden T0 ベンチ) 着手前ゲートに **gate (iii) = path 整合** を追加。修正候補: (a) `build_atom_edges.py` default output を `<root>/../edges.jsonl` に揃える / (b) `recall_atom.py` default の明示エラー化。本サイクル Phase 4 で gate (iii) 修正を大作業候補に昇格。
+
+### 段階3 着手判定の現状
+- gate (i) wikilink_weak ノイズ吸収 = **PASS** (本サイクル実測)
+- gate (ii) atoms 数変動説明 = PASS (C258 解消)
+- gate (iii) build/recall path 整合 = **本サイクル新規発見、未解消**
+- 検証期限 2026-06-09 まで 11日。段階3 着手は (iii) 解消後。
+
+---
+
 ## 2026-05-28: 他インスタンス洞察2件（Paul Iusztin / LLMトリプル抽出KG）の統合（Log C258 Phase 3）
 
 ### Mir経由 #shared-reads: Paul Iusztin「エージェントメモリは統一グラフで3種を統合すべき」

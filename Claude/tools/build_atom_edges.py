@@ -94,9 +94,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", required=True)
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--output", default="edges.jsonl")
+    ap.add_argument("--output", default=None,
+                    help="output path (default: <root>/../edges.jsonl — matches recall_atom.py)")
     args = ap.parse_args()
     root = Path(args.root)
+    output_path = Path(args.output) if args.output else root.parent / "edges.jsonl"
     files = sorted(root.glob("*.md"))
     edges: list = []
     for p in files:
@@ -122,10 +124,12 @@ def main() -> int:
         for e in edges[:5]:
             print(json.dumps(e, ensure_ascii=False))
         return 0
-    Path(args.output).write_text(
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
         "\n".join(json.dumps(e, ensure_ascii=False) for e in edges) + "\n",
         encoding="utf-8",
     )
+    sys.stderr.write(f"[build_atom_edges] wrote {len(edges)} edges → {output_path}\n")
     return 0
 
 
