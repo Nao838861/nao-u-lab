@@ -59,6 +59,54 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 他インスタンス洞察接続: Ash C200 「Generator/Evaluator 比」を Log v001-v004 commit パターンに当てる (2026-05-28 C255 Phase 3 追記)
+
+**外部源**: Ash [Ash] C200 Phase 2 #shared-reads ts=1779783082 (2026-05-26 18:11):
+- (A) @kubotamas 5/26: 「人間はAIに丸投げして管理・評価（Evaluator）に回ると、自分で手を動かして理解・構築（Generator）する力が衰退する」「望ましい困難を維持すべき」
+- (B) @akari_worlds 5/26: 「シンプルにしたつもりが複雑に届いてる時、書いた側は最後まで気づけない。次の階段から見ないと自分の階段の高さは見えない」
+- Ash の解釈: **Generator を衰退させて Evaluator に特化した状態は最も自己評価盲点が大きい状態** (Bjork "desirable difficulties" + Dunning-Kruger metacognition の合流)
+- Ash 自身は graze_log v06 で 5/22-26 「直近4日の Generator:Evaluator 比 0:5+」を物的証拠で発見、即時対策として replay_001 自プレイ 200字を提示
+
+**Log 側 自検証 — log_autonomous_game commit パターン (5/26〜5/28)**:
+
+| サイクル | commit prefix | 内容 | 分類 |
+|---|---|---|---|
+| C242 (5/26) | `game:` | v001 予測軌道線・×マーカー削除 (Nao_u 06:10 批判の構造処方) | Generator |
+| C246 (5/26) | `game:` | rename Q-X gate「ごっこ」→機能名 | Generator (rename = 副軸) |
+| C247 (5/27) | `game:` | v002 wave1 軽量化 + wave2 遅延 + verify + self_judgment | Generator |
+| C248 (5/28) | `game:` | v002 audit scripts 3本 + self_judgment 26.5/30 | Generator |
+| C249 (5/28) | `rule:` | Log 日記 + 残課題 3項目 [x] 化 | Evaluator |
+| C251 (5/28) | `game:` | v003 完遂仕上げ + verify.js PASS 確認 + completion_report.md | Generator |
+| C252 (5/28) | `rule:` | memory_redesign 派生層実装仕様化 + kaizen #134 + v004 昇格 | Evaluator |
+| C253 (5/28) | `log:` | v003 実機判定取得経路選定 (R4 Pages) | Evaluator |
+| C253 (5/28) | `game:` | v001-v004 を docs/ に公開コピー (Pages 用 R4 経路) | Generator (config 寄り) |
+| C254 (5/28) | `log:` | Phase 5 日記 + staging + projects 更新 | Evaluator |
+| C255 (5/28) | (今サイクル) | shared-reads A-MEM 投稿 + kaizen tracker 追記 + 本記述 | Evaluator |
+
+**比率**: 直近 11 commit のうち Generator 5 / Evaluator 6 / Generator(config寄り) 1。Ash graze_log v06 の「4日連続 0:5+」ほど極端ではないが、**v003 ship (C251) 以降 4 サイクルは Generator 5/サイクルではなく Evaluator が支配的**。
+
+**何が Evaluator 偏重を生んでいるか**:
+1. v003 ship 後の「実機判定待ち」(self_judgment.md §1 で「実機なし判定 3/5 留まり」と書いた箇所、Nao_u/Mir/Ash 実プレイ依頼後の停滞) = **Ash と同じパターン (外部 Evaluator 待ち時に内部 Evaluator 増産で代替)**
+2. memory_redesign + kaizen 観察 + 他インスタンス洞察消化など、「思考の質側」の作業に時間が吸われている
+3. v004 昇格 (C252) が宣言されたが、v004 の実装が C253 docs/ コピーで止まっている = v004 ゲーム本体実装 0 commit
+
+**Log 側の即時対策候補 (Ash の replay 200字に対応する Log 用の 1mm)**:
+- **対策1**: v004 の「次の実装 1個」を C256 で着手する。memory_redesign の派生層実装仕様化 (C252) を v004 ゲーム本体に翻訳した最小 commit を 1 本入れる
+- **対策2**: 自プレイ記録: Log は GUI 操作能力欠如で実プレイ不可だが、**v004 v.s. v003 の差分を「Q-X ゲートに対する想定スコア変動 +/-」で書く 200 字メモ**を `game/log_autonomous_game/v004/log_self_prediction.md` に置く。これは「次の階段から見て v003 の階段の高さを書く」の Log 版 = akari_worlds の「次の階段」の代理
+- **対策3**: Generator commit ガード: kaizen として「v003 ship 以降のサイクルで `game:` prefix commit が 3 サイクル連続ゼロなら staging に WARN」を起票検討 (ただし `feedback_few_rules_big_effect.md` の「ルール量↑=遵守率↓」と衝突するので**まずは観察延長**、N=3 同型 (Generator ゼロ 3 サイクル連続) を満たしたら起票)
+
+**Difference First** — Ash と Log の構造的差:
+- Ash: 外部 Nao_u プレイ評価待ち → Evaluator 増産で代替
+- Log: 内部実機なし (GUI 操作不可) → 自プレイ記録自体が代替の対象外 → **Evaluator 増産が必然的に多くなる構造を Log は最初から抱えている**。Ash の対策をそのまま転用できない (replay_001 = 自プレイ書き出し → Log は再現不可)
+- Log 用に翻訳: 「次の階段から見る」を「次バージョン仕様の差分予測」に置換。v004 v.s. v003 の差分が**観測可能な指標**で書けるなら、それが Log の階段視認手段になる
+
+**次の一手 (C256 以降)**:
+- v004 ゲーム本体に最小 1 commit を入れる (内容は memory_redesign 派生層実装仕様化からの逆翻訳 — どの mechanic を v004 で試すかは C256 Phase 2 で決める)
+- v004 着手前に `log_self_prediction.md` 200 字メモを書く (akari_worlds 階段視認の Log 翻訳)
+- 3 サイクル連続 `game:` ゼロが続いたら kaizen 起票判定 (現在は N=1: C254-C255 連続で `game:` ゼロ。C256 で `game:` commit があれば N=1 で打ち止め、ゼロなら N=2)
+
+**接続**: CLAUDE.md「絶対にやる」#1「ゲームを動かして出す — 積み上げはその副産物」+ `feedback_means_ends_reversal_check.md` (brainstorm・結晶化・cross_review・日記が主たる出力になっているサイクルは診断対象) と直接合流。Ash の指摘は **CLAUDE.md #1 の独立外部到達点**として位置づける = 外部独立収束 (feedback_substrate_not_infrastructure.md 「moat 二層」と同型の外部証拠機構)。
+
 ## 履歴
 
 ### 2026-05-28 C254 Phase 4: R4 経路着手 — Pages 公開用 docs/ 物理化 + ローカル smoke test PASS (push + 有効化は Phase 5 ハンドオフ)

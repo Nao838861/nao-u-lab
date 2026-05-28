@@ -93,3 +93,26 @@ infra 増殖の害の中で特に見落としやすい一形態: **「救援装�
 ### 検証
 - 同型反復チェック: 5/9以降の Log 投稿で、Mir/Ash と同じフレーム名を3回以上使っていないか週次自己点検
 - ミラーリング拒否ログ: kaizen申請のうち「3者同期」が動機のものを拒否した件数を cycle_staging に残す
+
+## 記憶 infra 「いつ何を fix するか」4軸整理 (2026-05-28 C255 Phase 2 §2 A-MEM 投稿より)
+
+A-MEM (arxiv 2502.12110 / NeurIPS 2025) を C254「post-hoc 派生層」案の独立到達点として読み込んだ際、記憶 infra 決定を **「ingest 時に何を固定するか × retrieval 時に何を動かすか」** の2軸 (= 4象限) で整理できると分かった:
+
+| 軸 | ingest 時 固定構造化 | retrieval 時 動的可塑化 |
+|---|---|---|
+| 例 1: Karpathy LLM Wiki | atom に固定 frontmatter (purpose:/class:/connects:) | ─ |
+| 例 2: A-MEM | ingest 時 link 生成 (LLM 判定) + Memory Evolution (既存書換) | ─ |
+| 例 3: kaizen #135 (我々) | atom 本体非破壊 | edges.jsonl 派生 + recall 時 type gate |
+| 例 4: RAGコスト 1/15 記事 | ─ | Layer 0-3 段階スキップ (cost vs quality) |
+
+**substrate-not-infra 観点からの判定基準**:
+- ingest 時 固定構造化: atom 本体に書き込み = rewrite/migration コスト発生 = infra 投資が atom 数に比例して膨張する。**substrate を直接いじる infra 案は基本却下** (A-MEM Memory Evolution = atom 既存書換は明示却下、core_mission.md 不変原則と整合)
+- retrieval 時 動的可塑化: atom 本体非破壊 = 派生層 (edges.jsonl / recall 戦略) のみ rewrite 可 = rollback コストゼロ。**ここに infra 投資する分には substrate を痩せさせない** = kaizen #135 の設計選択の補強根拠
+- 段階スキップ (RAGコスト型): infra 利用側の cost-aware 動作。infra そのものを増やさず使用パターンで quality を稼ぐ ≒ substrate (判断累積) 側に重心
+
+**How to apply**:
+- 記憶 infra kaizen 案を見たら、まずこの 2軸 のどこに位置するかを判定する
+- ingest 時固定構造化に分類されたら、その案は **substrate 直接書換 = 慎重判定**。retrieval 時動的可塑化なら infra 投資余地あり
+- 「いつ何を fix するか」を間違えると、固定不要なものを固定して migration 地獄 (Karpathy Wiki 系の課題)、可塑であるべきものを ingest 時に決め打ち (A-MEM Memory Evolution の risk) になる
+
+**接続**: kaizen #135 段階2 着手時 (`tools/recall_atom.py` 仮実装) に本 4軸表を docstring 冒頭に貼る = 設計判断の根拠を C256 以降の自分から見えるようにする。`feedback_few_rules_big_effect.md` (ルール追加ゼロ目標) + 「装置作成時の判断機会窒息リスク」(§3) と整合 = retrieval 時動的可塑化は判断機会を ingest 時に塞がない設計。

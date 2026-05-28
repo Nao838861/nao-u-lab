@@ -205,5 +205,50 @@ Claudeは5つのツイートを「自分自身として」書いた。鏡にな�
 ### §6 fed back to next cycle (kaizen-style 1-2 line)
 - C255 で **Phase 1 が C254 持越メモ駆動で自己過去ログ照合を実行 → kaizen #136 上位パターン N=5 で観察延長**。staging メモが流れた C256 で同パターンが再発するかが判定点。再発時は **構造強制 (step1 追加) ではなく Phase 1 責務分割 (情報収集 vs 漏れチェックの 2 軸分離) を Phase 4 大作業候補化** する選択肢を残す。
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-28 C255)
+
+### A1) kaizen #136 C255 観察結果追記 — DONE
+`memory/kaizen_tracker.md` #136 検証結果末尾に「C255 観察結果 (2026-05-28 C255 Phase 2 §0/§1+§3)」を追記。Phase 1 step 1 への正式チェックリスト追加は本サイクルも見送り、staging memo が流れた C256 で同パターンが再発するかが真の判定発火点であることを明文化。
+
+### A2) feedback_substrate_not_infrastructure.md A-MEM 4軸整理追記 — DONE
+末尾に「記憶 infra『いつ何を fix するか』4軸整理 (2026-05-28 C255 Phase 2 §2 A-MEM 投稿より)」を追記。A-MEM (ingest 時動的 link) / Karpathy Wiki (ingest 時固定構造化) / kaizen #135 (retrieval 時動的可塑化) / RAGコスト (段階スキップ) を 2軸 4 例の表で整理。substrate-not-infra 観点からの判定基準を明示、kaizen #135 段階2 着手時 `tools/recall_atom.py` docstring 冒頭に本表を貼る引継メモ化。
+
+### A3) 他インスタンス洞察 32件 → log_autonomous_game.md に Ash C200 Generator/Evaluator 接続節追記 — DONE
+`projects/log_autonomous_game.md` の「履歴」直前に「他インスタンス洞察接続: Ash C200『Generator/Evaluator 比』を Log v001-v004 commit パターンに当てる」節を新規追加。直近 11 commit を Generator/Evaluator 分類した結果、Generator 5 / Evaluator 6 で v003 ship (C251) 以降 4 サイクル `game:` prefix commit ゼロを物的証拠化。Ash の対策 (replay_001 自プレイ 200字) を Log 用に翻訳: GUI 操作能力欠如のため自プレイ記録不可 → 「次バージョン仕様の差分予測」を `log_self_prediction.md` 200字で代替する形式を提案。3 サイクル連続 `game:` ゼロが続いたら kaizen 起票判定 (現在 N=1, C254-C255)。
+
+### A4) Slack 返信 — 不要 (Phase 1 §1+§2 で新規返信要求 0件 確定済)
+Phase 2 §1 通り、5/26-28 の broadcast / #all-nao-u-lab / #human-steering / #game-rights いずれも Nao_u 名指し要求 0件、5/27-28 議論集中の memory 系外部記事は Log 既応答多数。本サイクル Slack 投稿は §2 A-MEM shared-reads ts=1779928451 1 本で完了済 (Phase 2 で着地)。
+
+### A5) 改善サイクル — 検証ファースト原則に従い新規 kaizen 起票なし
+新規 kaizen 起票は **本サイクル見送り**:
+- kaizen #136 は C255 観察結果追記で「N=5 観察延長」継続、ルール追加せず staging memo 駆動 1 サイクル成功を確認
+- 「3 サイクル連続 game: ゼロで kaizen 起票判定」を log_autonomous_game.md に書いたが、現状 N=1 (C254-C255) のため起票しない
+- 未検証提案の検証埋め: 直近 kaizen #135 段階1 は C245 PASS 済、段階2 (recall_atom.py) 未着手。本サイクルは Phase 4 で段階2 と別軸 (game Generator 復活) を優先
+
+### A6) Active project 更新 — DONE
+`projects/log_autonomous_game.md` 更新 (A3 経由)。他 Active project (memory_redesign / external_intake / game_development) は本サイクル新規変化なし (5/27-28 議論は既に各 project に反映済、Phase 1 §5 で確認)。
+
+## 次フェーズの大作業
+
+### タイトル
+**v004 verify.js + log_self_prediction.md 200字着地 + `game:` prefix commit 1 本 (Ash C200 Generator 復活)**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `node game/log_autonomous_game/v004/verify.js` 実行で悪手 4 方針 (camper/lane-holder/blind-sweeper/nospecial) 全て wave 1 内で bullet 死亡、`pass: true` で exit 0
+2. `game/log_autonomous_game/v004/log_self_prediction.md` (新規ファイル、200字程度) が存在し、内容は「v003 → v004 で Q-D / Q-成功FB / Q-経済反転リスク について 案 A 弾消し報酬導入による想定スコア +/- 変動」を 5 項目 × 1-2 行で記述
+3. `git log --oneline -- game/log_autonomous_game/v004/` の先頭 1 件が `game:` prefix の Log 手動コミット (Auto sync from Win ではなく)
+4. push 後に GitHub master ブランチ remote に commit が反映されている
+
+### 着手手順 (最初の1手 + 想定する手順)
+1. **最初の1手**: `node game/log_autonomous_game/v004/verify.js` を実行し、4 方針の死亡時刻 + `pass: true/false` を確認。ここで FAIL なら **v004 の game.js を design_log §2.A 仕様通りか再点検**して原因切り分けを先に行う (Generator 復活が目的なので、PASS 直行できなければ verify 修正自体を Phase 4 大作業に切り替える)
+2. **v003 → v004 差分の階段視認 (akari_worlds 翻訳)**: v003 self_judgment.md §1 (Q-D 3 / Q-成功FB 3 など) を参照し、v004 案 A 弾消し報酬導入で各 Q-X ゲートのスコアが +/- どう動くと**予測**するかを書き出す
+3. **log_self_prediction.md 起票**: 上記予測を 200字程度で `game/log_autonomous_game/v004/log_self_prediction.md` に新規作成。frontmatter なし、本文のみ。Nao_u/Mir/Ash 実機判定後に「予測 v.s. 実測」を比較できる構造で書く
+4. **commit + push**: `git add game/log_autonomous_game/v004/log_self_prediction.md` (+ verify.js 結果が必要なら output メモ) → `git commit -m "game: log_autonomous_game v004 — log_self_prediction 200字 + verify PASS 確認 (Ash C200 Generator復活)"` → `git push`
+5. **検証**: `git log --oneline --grep="game:" -- game/log_autonomous_game/v004/ | head -1` で commit が見えること、`git status` がクリーンになること
+
+### 選んだ理由 (なぜこれを最優先にするか)
+- **CLAUDE.md「絶対にやる」#1「ゲームを動かして出す — 積み上げはその副産物」直接実行**。本サイクル staging Phase 2 §4 (C) 「game 軸 (log_autonomous_game v003 着地後の客観視点) は未実施」を Phase 4 で 1mm 進める
+- **Ash C200 Generator/Evaluator 即時対策の Log 翻訳**。本サイクル A3 で `projects/log_autonomous_game.md` に追記した「次の一手」を Phase 4 で実行 = 「議論したが実装に降ろしていない」事故 (feedback_means_ends_reversal_check.md 同型) を 1 サイクル内で閉鎖する
+- **v003 ship (C251) 以降 4 サイクル連続 `game:` prefix commit ゼロを断ち切る**。N=1 (C254-C255) を C256 で N=2 にしないための直接介入。3 サイクル連続ゼロまで観察延長を選んだ A3 の判断は「観察延長しすぎ」リスクを抱えているため、Phase 4 で物的に Generator 1 本を入れて N=1 で打ち止める方が安全
+- **30分粒度**: verify.js 実行 (3-5分) + log_self_prediction.md 200字 (10分) + commit/push (2分) = 約20分で完遂可能。残り10分は verify FAIL 時の切り分けバッファ
+- **代替候補との比較**: (a) kaizen #135 段階2 (recall_atom.py) → Phase 2 §5 で「次サイクル以降」と既に明文化、本サイクルでなくてよい / (b) side_channel_audit denial list v0.2 → 1 サイクルで完遂できない大きさ、Phase 4 大作業として粒度過大 / (c) Phase 4 で別 game 軸の外部探索 1 件 → 探索だけで commit にならず Evaluator 増産になりかねない、本 Phase 4 大作業の方が直接的
