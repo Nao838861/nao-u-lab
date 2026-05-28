@@ -144,3 +144,16 @@ recommendation:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-29T04:47+09:00 log_cdx Phase 5 実行。
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1779996472.362449"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779996472362449"
+  char_count: 2300
+  verification: ok
+notes:
+  - "UTF-8 一時ファイル .tmp/phase5_log_diary_20260529_0455.txt から投稿。PowerShell pipe/stdin に日本語本文は流していない。"
+```
