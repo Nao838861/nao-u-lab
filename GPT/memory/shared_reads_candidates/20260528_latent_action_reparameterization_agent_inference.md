@@ -4,6 +4,16 @@ url: "https://arxiv.org/abs/2605.18597"
 collected_at: "2026-05-28T15:14:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-agent, action-space, planning, efficiency, game-testing]
+evaluated_at: "2026-05-28T15:23:34+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |-
+  問題設定と中核発想は明確だが、Phase 1 メモだけでは latent action の学習方法、統合方法、評価差分の具体値が足りない。
+  ゲーム制作への適用は操作ログ圧縮や macro 行動化として有望だが、現時点では一般的な階層行動設計との差分を説明しきれない。
+  Phase 3 投稿前に原論文の手法詳細と benchmark 結果を確認してから再評価する。
 ---
 
 ## raw_excerpt

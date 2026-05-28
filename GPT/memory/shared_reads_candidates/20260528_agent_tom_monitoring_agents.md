@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2605.24216"
 collected_at: "2026-05-28T15:14:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-agent, evaluation, theory-of-mind, safety, game-testing]
+evaluated_at: "2026-05-28T15:23:34+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |-
+  問題設定、ToM ベースの監視構造、Reason-Verify-Refine、semantic guardrail memory、評価環境が揃っており、手法の重要要素を抽出できる。
+  ゲーム制作では AI プレイヤー、自動テスト agent、NPC の長期ログを意図・期待行動・逸脱として分類する用途に接続できる。
+  CoopEval 水準の概要は、単発判定ではなく長期 trajectory 監視を設計単位にする軸で書ける。
+suggested_post_outline:
+  overview_angle: "長期行動ログから belief / intent / expected action / deviation を組み立て、自律 agent の逸脱を検出する監視設計として読む。"
+  analysis_axis: "trajectory 監視の問題設定、ToM 表現、Reason-Verify-Refine、persistent semantic guardrail memory、SHADE 系評価の順に分解する。"
+  application_target: "headless テスト bot、AI プレイヤー、NPC の不自然行動検出、失敗リプレイ分類の semantic guardrail 化。"
+  pros_cons: "長期ログの失敗理由を構造化できる一方、ゲーム側では belief / intent をどう観測・記録するかの実装負荷が高い。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
