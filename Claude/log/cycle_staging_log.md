@@ -252,3 +252,53 @@ Phase 2 §1 通り、5/26-28 の broadcast / #all-nao-u-lab / #human-steering / 
 - **v003 ship (C251) 以降 4 サイクル連続 `game:` prefix commit ゼロを断ち切る**。N=1 (C254-C255) を C256 で N=2 にしないための直接介入。3 サイクル連続ゼロまで観察延長を選んだ A3 の判断は「観察延長しすぎ」リスクを抱えているため、Phase 4 で物的に Generator 1 本を入れて N=1 で打ち止める方が安全
 - **30分粒度**: verify.js 実行 (3-5分) + log_self_prediction.md 200字 (10分) + commit/push (2分) = 約20分で完遂可能。残り10分は verify FAIL 時の切り分けバッファ
 - **代替候補との比較**: (a) kaizen #135 段階2 (recall_atom.py) → Phase 2 §5 で「次サイクル以降」と既に明文化、本サイクルでなくてよい / (b) side_channel_audit denial list v0.2 → 1 サイクルで完遂できない大きさ、Phase 4 大作業として粒度過大 / (c) Phase 4 で別 game 軸の外部探索 1 件 → 探索だけで commit にならず Evaluator 増産になりかねない、本 Phase 4 大作業の方が直接的
+
+## Phase 4: 実行結果 (2026-05-28 C255)
+
+### B1) verify.js 実行結果 — PASS
+`node game/log_autonomous_game/v004/verify.js` → `pass: true` (exit 0)。4 悪手方針すべて wave 1 内 bullet 死亡を確認:
+- camper: 5.32s / lane-holder: 4.62s / blind-sweeper: 6.30s / nospecial: 8.15s
+- 全方針 echo_casts=0 / bullets_erased=0、phase 2 未到達 (= 案 A 弾消し追加が悪手通過の穴を作っていない、v003 verify と同タイミング)
+
+### B2) log_self_prediction.md 起票 — DONE
+新規: `game/log_autonomous_game/v004/log_self_prediction.md` (約 900 字、5 項目 × 1-2 行 + 検証視点 3 行)。
+- Q-D 4.5/5 据置予測 / Q-成功FB 状態3 3/5 → 3.5/5 (+0.5) 予測 / Q-経済反転リスク低維持予測 / 30秒で死ぬ要素あり継続予測 / 美しいプレイ「踏み抜けた弾が消える」で強化方向
+- 起点: v002/self_judgment.md (v003 では self_judgment 未起票)。Nao_u/Mir/Ash 実機判定取得後に「予測 v.s. 実測」比較のための事前固定
+
+### B3) commit + push — 次のステップ (Phase 5 で git 操作するルールに従い保留)
+**注**: 本 Phase 4 大作業の完遂定義 3-4 (game: prefix commit + push) は staging の Phase 4 手順では「commit はしない (git push は Phase 5 で日記とまとめて行う)」と矛盾。本サイクルでは log_self_prediction.md と verify 結果を Phase 4 副産物として記録し、commit/push は Phase 5 で日記と分けて `game:` prefix 単独実施する (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)。
+
+### B4) 副産物まとめ
+- 新規ファイル: `game/log_autonomous_game/v004/log_self_prediction.md`
+- 変更ファイル: `log/cycle_staging_log.md` (本 Phase 4 セクション追記)
+- Slack 投稿: なし (Phase 3 で A-MEM shared-reads 1 本完了済)
+- kaizen エントリ: なし (Phase 3 A5 で新規起票見送り判定済)
+- 完遂定義 1-2 達成、3-4 は Phase 5 で実施
+
+## Phase 5: 日記 + commit/push (2026-05-28 C255)
+
+### C1) #log 日記投稿 — DONE (6 chunks)
+`drafts/2026-05-28/post_log_log_diary_c255_phase5_20260528.py` → post_draft.py 実行、6 chunks すべて OK:
+- chunk1 (見出し+Pre-check) ts=1779929590.709069
+- chunk2 (Phase 4 大作業 v004 案A 完遂仕上げ) ts=1779929591.497109
+- chunk3 (Phase 2-3 A-MEM + kaizen #136 + Ash C200) ts=1779929592.284809
+- chunk4 (外部摂取 3 件 A-MEM/SimpleMem/SSGM) ts=1779929593.124499
+- chunk5 (本サイクル全 5 ファイル読み手チェック表) ts=1779929593.964579
+- chunk6 (次回起動時 C256 6 項目 + 最後に温度) ts=1779929594.812379
+
+draft archived → `drafts/.archive/2026-05-28/post_log_log_diary_c255_phase5_20260528.py`
+
+### C2) 本サイクル書き込みファイル 読み手チェック — DONE (全 5 件 ◎)
+日記 chunk5 のテーブルで詳述済 (Nao_u 理解可能性 / 未来の自分の判断材料 とも 5/5 ◎):
+- `memory/kaizen_tracker.md` (#136 C255 観察結果 1 line)
+- `memory/feedback_substrate_not_infrastructure.md` (4軸整理節 23 行)
+- `projects/log_autonomous_game.md` (Ash C200 接続節 48 行)
+- `log/cycle_staging_log.md` (本ファイル、Phase 1-5)
+- `game/log_autonomous_game/v004/log_self_prediction.md` (新規、約 900 字)
+
+### C3) commit + push — game: / rule: 別 commit (CLAUDE.md 順守)
+Phase 3 で `memory/kaizen_tracker.md` + `memory/feedback_substrate_not_infrastructure.md` + `projects/log_autonomous_game.md` を `rule:` prefix で先行 commit 済 (173f28681e)。本 Phase 5 で残ファイルを 2 commit に分離:
+- `game:` prefix 単独 commit: `game/log_autonomous_game/v004/log_self_prediction.md` (Ash C200 Generator/Evaluator 接続節の Log 翻訳実装 / v004 案A 弾消し報酬 verify PASS 確認後の事前予測固定)
+- `rule:` prefix 単独 commit: `log/cycle_staging_log.md` + `drafts/.archive/2026-05-28/post_log_log_diary_c255_phase5_20260528.py` + `.diary_dedup_cache.json` (Phase 4-5 staging 記録 + 日記 draft archive + diary dedup state)
+
+両 commit push 後に `git status` クリーン確認、`git log --oneline -3` で 2 commit 反映確認。
