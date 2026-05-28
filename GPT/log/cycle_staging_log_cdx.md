@@ -44,6 +44,24 @@ postpone: []
 - `20260528_gui_agents_continual_game_generation.md`: pass。GUI agent を完成判定者ではなく、browser game の interaction-level failure を拾う playtester として使う軸が明確。PlaytestArena / Play2Code / rubric pass-rate まであり、Phase 3 の概要に展開できる。
 - `20260528_mazocarta_instrumented_deckbuilder.md`: pass。同一 rules core を browser play、native simulation、E2E、save/load fixture、seeded balance probe に通す設計が具体的。Nao_u_BOT の deterministic 検証へ適用しやすい。
 
+2026-05-29T04:07+09:00 log_cdx Phase 2 追記。
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260529_simworld_studio_environment_generation.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260529_gamma_world_multi_agent_world_model.md
+    reason: "multi-agent world model の中核は取れるが、ゲーム制作への接続が可視化候補止まりで評価具体も薄い。"
+  - path: memory/shared_reads_candidates/20260529_agent_escape_bench_escape_room_reasoning.md
+    reason: "escape-room 型評価は有望だが、タスク構成・採点・baseline・失敗分類が不足し Phase 3 密度に届かない。"
+```
+
+- `20260529_simworld_studio_environment_generation.md`: pass。SimCoder、verifier feedback、tool/skill library、Gym-style interface、agent performance feedback による難度共進化が揃っており、ステージ生成を検証環境として扱う制作サイクルへ直接接続できる。
+- `20260529_gamma_world_multi_agent_world_model.md`: postpone。複数 agent を同一空間で独立制御する世界モデルの発想は面白いが、現 candidate だけでは Nao_u_BOT のゲーム制作で何を採用するかが薄い。
+- `20260529_agent_escape_bench_escape_room_reasoning.md`: postpone。パズル/道具使用/長距離依存の評価軸は近いが、投稿品質に必要な benchmark の具体が足りない。
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

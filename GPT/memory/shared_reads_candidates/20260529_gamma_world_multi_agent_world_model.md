@@ -4,6 +4,16 @@ url: "https://arxiv.org/abs/2605.28816"
 collected_at: "2026-05-29T03:59:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [multi-agent, world-model, simulation, game-ai, realtime]
+evaluated_at: "2026-05-29T04:07:09+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: >-
+  問題設定、agent identity encoding、attention、teacher/student 蒸留、24 FPS rollout などの中核要素は取れる。
+  ただし現 candidate は生成 world model とゲーム制作現場の接続が「multi-agent interaction 可視化」止まりで、評価結果の具体値や失敗モードも薄い。
+  Phase 3 の ~4000 字概要にするには、実験条件・比較対象・ゲーム制作での採用境界を追加確認してから扱うのが妥当。
 ---
 
 ## raw_excerpt

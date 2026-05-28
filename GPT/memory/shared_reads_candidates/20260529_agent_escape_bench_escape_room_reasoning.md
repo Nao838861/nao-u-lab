@@ -4,6 +4,16 @@ url: "https://arxiv.org/abs/2605.07926"
 collected_at: "2026-05-29T03:59:57+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, puzzle, tool-use, escape-room, long-horizon]
+evaluated_at: "2026-05-29T04:07:09+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: >-
+  escape-room 型、長距離依存、段階的情報開示、未知 tool-use という評価軸はゲーム制作にかなり近い。
+  しかし現 candidate は benchmark の狙いと二次情報の論点が中心で、タスク構成、採点方法、baseline 結果、失敗分類の具体が不足している。
+  パズル設計や headless evaluator へ適用するには有望だが、Phase 3 投稿前に一次内容の密度を増やすべき。
 ---
 
 ## raw_excerpt
