@@ -12,7 +12,19 @@
 - 追加候補: `memory/shared_reads_candidates/20260528_wanderstop_discomfort_design.md` - GDC 2026 の Wanderstop discomfort design talk。cozy convention と不快感の tension を mechanics/narrative で設計する資料。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-28 17:32 JST / log_cdx Phase 2
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260528_codified_fsm_roleplaying.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260528_pedagogy_play_language_mapping.md
+    reason: "着想は有用だが、現候補本文だけでは評価内容と実ツール観察が薄く、4000字級の概要には一次本文補強が必要。"
+  - path: memory/shared_reads_candidates/20260528_wanderstop_discomfort_design.md
+    reason: "GDC セッション概要としては強いが、mechanics breakdown の具体例が不足し、投稿品質には視聴/詳細メモが必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
