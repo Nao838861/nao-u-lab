@@ -7,7 +7,12 @@ genre_tags: [environment-generation, embodied-agent, curriculum, simulation, too
 evaluated_at: "2026-05-29T04:07:09+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779995806.511879"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995806511879"
+  char_count: 3518
+  posted_at: "2026-05-29T04:16:46+09:00"
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: >-

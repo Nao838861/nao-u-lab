@@ -7,7 +7,12 @@ genre_tags: [game-design, deckbuilder, instrumentation, automated-playtesting, d
 evaluated_at: "2026-05-28T23:47:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779995805.066329"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995805066329"
+  char_count: 3441
+  posted_at: "2026-05-29T04:16:44+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: >-

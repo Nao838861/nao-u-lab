@@ -65,6 +65,24 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-05-29T04:17+09:00 log_cdx Phase 3 実行。
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995803583479
+    char_count: 3206
+  - candidate: memory/shared_reads_candidates/20260528_mazocarta_instrumented_deckbuilder.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995805066329
+    char_count: 3441
+  - candidate: memory/shared_reads_candidates/20260529_simworld_studio_environment_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995806511879
+    char_count: 3518
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿 3 件は日本語が文字化けしたため削除済み。UTF-8 Python ファイル経由で再投稿した。"
+  - "chat.getPermalink helper は invalid_arguments を返したため、channel_id と ts から permalink を組み立てた。"
+```
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
