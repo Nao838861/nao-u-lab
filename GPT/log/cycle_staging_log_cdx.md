@@ -11,6 +11,14 @@
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+```yaml
+posted: []
+skipped:
+  - reason: "Phase 2 gate_decision pass が 0 件のため投稿対象なし"
+    action: no_pass_candidates
+checked_at: "2026-05-29T06:24:00+09:00"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
