@@ -23,7 +23,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-05-29T01:57:02+09:00 Phase 3 shared-reads post
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260529_predictive_maps_multi_agent_reasoning.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779987414841039"
+    char_count: 4344
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

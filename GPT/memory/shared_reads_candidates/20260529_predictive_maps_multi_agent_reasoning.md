@@ -7,9 +7,14 @@ genre_tags: [multi-agent, llm, evaluation, topology, game-ai]
 evaluated_at: "2026-05-29T01:49:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-28"
 supersedes: []
+posted:
+  ts: "1779987414.841039"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779987414841039"
+  char_count: 4344
+  posted_at: "2026-05-29T01:57:02.1627951+09:00"
 gate_reason: |-
   問題設定、successor representation による structural diagnostic、spectral quantities と drift / consensus / robustness の接続が抽出できる。
   AI 評価者 ensemble、NPC 群、bot playtest の topology 設計に直接転用でき、Phase 3 で概要・分析・適用・利害を分けて書ける。
