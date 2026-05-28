@@ -183,3 +183,27 @@ designs:
 - `memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md` - 4D world modeling 用 multi-domain / multi-modal dataset。物理・カメラ・将来予測の参照候補。
 - `memory/shared_reads_candidates/20260529_predictive_maps_multi_agent_reasoning.md` - multi-agent LLM の communication topology を事前診断する spectral diagnostic。AI 評価者 ensemble / NPC 群の接続形候補。
 - `memory/shared_reads_candidates/20260529_one_sentence_one_drama_multi_agent.md` - 一文から short drama を作る hierarchical multi-agent framework。短い quest / cutscene 生成の候補。
+
+## Phase 4c: 導入 追記
+### 2026-05-29T02:31:00+09:00 Phase 4c implementation
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260529-001
+    files_changed:
+      - path: tools/memory_lifecycle.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: memory/directive_recall_fold_group_metadata_20260529.md
+        change: created
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "recall の同一内容 fold 結果に grouped_count / grouped_ids / representative_reason / normalized_content_hash を出し、raw atom を削除せず代表 1 件として追跡可能にした。"
+    partial: false
+migrations: []
+verification:
+  - "python -m py_compile tools\\memory_lifecycle.py tools\\memory_recall.py: passed"
+  - "python tools\\memory_recall.py shared-reads --limit 5 --compact --no-log: 重複 shared-reads atom が grouped_count=70 + grouped_ids として 1 件表示されることを確認"
+  - "python tools\\memory_recall.py 日記 検索 --limit 5 --no-log: grouped_count / grouped_ids / representative_reason / normalized_content_hash が通常出力に表示されることを確認"
+```

@@ -159,6 +159,10 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "tags": atom.get("tags", [])[:8],
             "folded_count": atom.get("folded_count", 0),
             "folded_ids": atom.get("folded_ids", [])[:20],
+            "grouped_count": atom.get("grouped_count", 1),
+            "grouped_ids": atom.get("grouped_ids", [])[:20],
+            "representative_reason": atom.get("representative_reason"),
+            "normalized_content_hash": atom.get("normalized_content_hash"),
         }
         for score, atom in results
     ]
@@ -187,10 +191,16 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     links = atom.get("links", [])
     folded_count = int(atom.get("folded_count") or 0)
     folded_ids = [str(aid) for aid in atom.get("folded_ids", []) if aid]
+    grouped_count = int(atom.get("grouped_count") or (folded_count + 1 if folded_count else 1))
+    grouped_ids = [str(aid) for aid in atom.get("grouped_ids", folded_ids) if aid]
+    representative_reason = str(atom.get("representative_reason") or "")
     if compact:
         suffix = ""
         if folded_count:
-            suffix = f" folded={folded_count} folded_ids=[{', '.join(folded_ids[:5])}]"
+            suffix = (
+                f" grouped_count={grouped_count}"
+                f" grouped_ids=[{', '.join(grouped_ids[:5])}]"
+            )
         print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]{suffix}")
         return
     print(f"[{atom['id']}] score={score:.1f} {atom.get('datetime', '')} {atom.get('author', '')}")
@@ -202,6 +212,10 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     if folded_count:
         print(f"folded_count: {folded_count}")
         print(f"folded_ids: {', '.join(folded_ids)}")
+        print(f"grouped_count: {grouped_count}")
+        print(f"grouped_ids: {', '.join(grouped_ids)}")
+        if representative_reason:
+            print(f"representative_reason: {representative_reason}")
         if atom.get("normalized_content_hash"):
             print(f"normalized_content_hash: {atom.get('normalized_content_hash')}")
     print(f"excerpt: {atom.get('excerpt', '')}")

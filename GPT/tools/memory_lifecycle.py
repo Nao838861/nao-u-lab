@@ -82,8 +82,7 @@ def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
     """Pick a representative for same-content atoms.
 
     Lifecycle metadata still wins first; among otherwise equal duplicate bodies,
-    the newest source_ts is the safest representative because reposts and
-    corrected versions tend to arrive later.
+    prefer rows with stronger quality signals, then newer reposts/corrections.
     """
     explicit = [
         atom
@@ -93,28 +92,68 @@ def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
     candidates = explicit or atoms
     visible = [atom for atom in candidates if not is_hidden(atom)] or candidates
 
-    def key(atom: dict[str, Any]) -> tuple[int, float, int, str]:
+    def key(atom: dict[str, Any]) -> tuple[int, int, int, int, int, float, str]:
         try:
             source_ts = float(atom.get("source_ts") or 0)
         except (TypeError, ValueError):
             source_ts = 0.0
         lifecycle_rank = 1 if atom.get("canonical_id") or atom.get("group_id") else 0
+        text_len = len(normalized_content(atom))
+        reviewed_rank = 1 if str(atom.get("status") or "").lower() in {"reviewed", "curated"} else 0
+        source_text = " ".join(
+            str(atom.get(field) or "")
+            for field in ("source", "ingested_via", "channel", "id", "title")
+        ).lower()
+        shared_reads_rank = 1 if "shared" in source_text or str(atom.get("id") or "").startswith("sr-") else 0
         return (
             lifecycle_rank,
-            source_ts,
+            reviewed_rank,
+            shared_reads_rank,
             int(atom.get("score", 0)),
+            text_len,
+            source_ts,
             str(atom.get("datetime", "")),
         )
 
     return sorted(visible, key=key, reverse=True)[0]
 
 
+def representative_reason(atom: dict[str, Any], group: list[dict[str, Any]]) -> str:
+    reasons: list[str] = []
+    if atom.get("group_id") or atom.get("canonical_id"):
+        reasons.append("explicit_lifecycle")
+    status = str(atom.get("status") or "").lower()
+    if status in {"reviewed", "curated"}:
+        reasons.append(f"status={status}")
+    source_text = " ".join(
+        str(atom.get(field) or "")
+        for field in ("source", "ingested_via", "channel", "id", "title")
+    ).lower()
+    if "shared" in source_text or str(atom.get("id") or "").startswith("sr-"):
+        reasons.append("shared_reads_signal")
+    score = atom.get("score")
+    if score:
+        reasons.append(f"score={score}")
+    text_len = len(normalized_content(atom))
+    if text_len:
+        max_len = max(len(normalized_content(item)) for item in group)
+        if text_len >= max_len:
+            reasons.append("longest_body")
+    if not reasons:
+        reasons.append("newest_visible")
+    return ", ".join(reasons)
+
+
 def annotate_fold(atom: dict[str, Any], group: list[dict[str, Any]], content_hash: str = "") -> dict[str, Any]:
     row = dict(atom)
     folded_count = len(group) - 1
     if folded_count > 0:
+        grouped_ids = [atom_id(a) for a in group if atom_id(a) and atom_id(a) != atom_id(atom)]
         row["folded_count"] = folded_count
-        row["folded_ids"] = [atom_id(a) for a in group if atom_id(a) and atom_id(a) != atom_id(atom)]
+        row["folded_ids"] = grouped_ids
+        row["grouped_count"] = len(group)
+        row["grouped_ids"] = grouped_ids
+        row["representative_reason"] = representative_reason(atom, group)
     if content_hash:
         row["normalized_content_hash"] = content_hash
     return row
