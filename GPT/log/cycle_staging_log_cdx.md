@@ -68,7 +68,31 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-28 13:47 JST / log_cdx Phase 4a
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    result: "ok"
+    detail: "memory/MEMORY.md の path refs を確認。実ファイル参照 1 件、broken 0 件。初回の広い inline-code 検査で `python tools/memory_ingest.py` を command として誤検出したため、path 形だけに絞って再確認。"
+  atoms_jsonl:
+    result: "ok_with_existing_fold_duplicates"
+    detail: "parse_errors=0, duplicate_ids=0, duplicate_content_hashes=19。MEMORY.md 上でも content/lifecycle fold が記録されており、今回の 4a で構造変更や削除はしない。"
+  raw_archive_candidates:
+    result: "none"
+    detail: "memory/raw/ 配下で 2026-04-28 より古い LastWriteTime のファイルなし。"
+  shared_reads_candidates_stale:
+    result: "none"
+    detail: "memory/shared_reads_candidates/ は最古 LastWriteTime が 2026-05-13。30 日超の postpone/fail 判定対象なし。"
+  inbox:
+    result: "pending_broadcast_kept"
+    detail: "directives pending 0。broadcast pending 1 (`broadcast-1779790844-85adeffbca`, #nao-u, 2026-05-26T19:20:44.211479, operations, needs_human_review)。Codex 側で完了条件を確認できないため close せず保持。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
