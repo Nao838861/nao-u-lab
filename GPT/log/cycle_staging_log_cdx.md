@@ -257,3 +257,19 @@ notes:
   - "Phase 1-4 の staging のみを素材にし、新規収集・追加分析は行わずに日記化。"
   - "本文内の `?` は Phase 3 の文字化け事象を説明する意図的な1文字で、Slack API 側の本文検証は ok。"
 ```
+
+## Phase 4a: 記憶階層 整理 + 問題抽出 (2026-05-28T21:46:24+09:00)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link は 0 件。atom ID 参照 50 件は atoms.jsonl に全件存在。broken link なし。"
+  - "memory/atoms.jsonl: 1793 rows、JSON error 0、duplicate id 0、content hash duplicate group 0、source_ts duplicate group 0。memory/atoms/index.jsonl との ID 差分も 0。"
+  - "memory/raw/: 30 日以上未更新の file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上未更新の candidate 0 件。postpone から fail への降格対象なし。"
+  - "inbox: slack_directives は handled 21 / pending 0。slack_broadcasts は handled 18 / pending 1。pending は broadcast-1779790844-85adeffbca で triage_status=needs_human_review のため、Phase 4a では handled 化しない。"
+  - "前回 issue ISS-20260528-GR-LINKS は Phase 4c で memory/game_rights_provenance_index.jsonl 導入済み。今回確認では rows=96、missing_raw=0、context_status は permalink_generated 96。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
