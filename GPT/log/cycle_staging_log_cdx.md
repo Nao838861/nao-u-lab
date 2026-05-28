@@ -49,7 +49,46 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+checks:
+  memory_index:
+    result: "ok"
+    note: "memory/MEMORY.md の markdown link は実体 broken なし。backtick 内の `python tools/memory_ingest.py` は実行例であり file link として扱わない。"
+  atoms:
+    result: "ok"
+    atoms_jsonl: 1818
+    parse_errors: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups_observed: 19
+    note: "content hash 相当の重複は既存の lifecycle/content fold と duplicate_groups の補助対象で、今回の 4a で矛盾や新規構造問題とは判定しない。"
+  atom_mirror:
+    result: "ok"
+    atoms_jsonl: 1818
+    per_file_md: 1818
+    index_jsonl: 1818
+    drift: 0
+    evidence: "python tools/audit_atom_mirror_drift.py"
+  raw_archive:
+    result: "no_action"
+    cutoff: "2026-04-29"
+    note: "memory/raw/ に 30 日以上未更新の整理対象なし。最古 LastWrite は 2026-05-11。"
+  shared_reads_candidates:
+    result: "no_action"
+    cutoff: "2026-04-29"
+    note: "memory/shared_reads_candidates/ に 30 日以上未更新の candidate なし。最古 LastWrite は 2026-05-13。"
+  inbox:
+    result: "pending_kept"
+    directives_pending:
+      - "log-cdx-1779975088-04bf9d4169"
+    broadcasts_pending:
+      - "broadcast-1779790844-85adeffbca"
+    note: "どちらも今回の Phase 4a で完了証跡を作れる内容ではないため handled 化しない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
