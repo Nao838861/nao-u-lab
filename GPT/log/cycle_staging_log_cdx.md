@@ -38,7 +38,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28 13:29 JST / log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779427961-30ddf30469
+    source_ts: "1779427961.960549"
+    title: "GAM (Hierarchical Graph-based Agentic Memory) - 2層記憶と意味的境界 bt 判定"
+    reason: "Topic/Event の2層分離と、固定時間ではなく意味的発散 bt で consolidation を発火する設計が、Codex の Phase staging / MEMORY / atoms 運用に直結するため。既存 probe は記憶劣化や証拠保持を見ているが、今回は「いつ圧縮・引き継ぎ境界を切るか」の小さい確認に絞れる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "固定 phase / elapsed-time 境界だけで memory consolidation や handoff を進める前に、semantic boundary と event-level evidence を確認する一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

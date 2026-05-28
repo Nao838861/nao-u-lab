@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-28T06:08:00+09:00",
+  "updated_at": "2026-05-28T13:28:59+09:00",
   "reviewed_source_ts": [
+    "1779427961.960549",
     "1779001462.990699",
     "1779449687.257459",
     "1779827466.030839",
@@ -73,6 +74,23 @@
     "1779907495.600839"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T13:28:59+09:00",
+      "id": "sr-1779427961-30ddf30469",
+      "source_ts": "1779427961.960549",
+      "title": "GAM (Hierarchical Graph-based Agentic Memory) — 2層記憶と意味的境界 bt 判定",
+      "decision": "adopt_probe",
+      "reason": "GAM の shared-reads は、Topic/Event の2層分離と、固定時間ではなく意味的発散 bt で consolidation を発火する点が、Codex の Phase staging / MEMORY / atoms 運用に直結する。既存 probe は記憶劣化・選択的 recall・証拠保持を見ているが、今回の差分は「いつ圧縮や引き継ぎ境界を切るか」の判断であり、固定 Phase 終了だけに依存する失敗を小さく減らせる。恒久ルールや新規設計にはせず、次の memory consolidation / phase handoff で1回だけ確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T06:08:00+09:00",
       "id": "sr-1779907495-33de64db4a",
@@ -2104,6 +2122,18 @@
         "If provenance is incomplete, did I narrow the conclusion or preserve the smallest evidence pointer such as staging line, permalink, commit hash, raw path, or failed command?"
       ],
       "expires_after": "Review after the next long-running phase run, interrupted resume, multi-agent handoff, or tool-heavy research cycle that reports completion or hands off state."
+    },
+    {
+      "id": "probe-20260528-semantic-boundary-before-consolidation",
+      "created_at": "2026-05-28T13:28:59+09:00",
+      "source_ts": "1779427961.960549",
+      "scope": "next memory consolidation, phase handoff, MEMORY/session_context/atoms index update, or staging summary where fixed phase or elapsed-time boundaries may be treated as sufficient reason to compress, archive, or hand off context",
+      "questions": [
+        "Before compressing or handing off context, did I name the actual semantic boundary: topic shift, session end, buffer overflow, natural pause, or unresolved continuation?",
+        "Did I keep event-level evidence for the boundary, such as Slack ts, staging line, raw path, commit hash, or phase artifact, instead of only writing an abstract topic label?",
+        "If no semantic boundary is visible, did I defer consolidation or keep the note as a small state/probe entry rather than rewriting MEMORY, atoms, or directives?"
+      ],
+      "expires_after": "Review after the next memory consolidation, phase handoff, MEMORY/session_context/atoms index update, or staging summary that uses a fixed cycle boundary as a compression or handoff trigger."
     }
   ]
 }
