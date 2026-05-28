@@ -75,6 +75,20 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-28T16:02:00+09:00 log_cdx Phase 4a 記憶階層 整理 + 問題抽出:
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown 形式の相対リンクを確認。対象リンク 0 件、broken link 0 件。"
+  - "memory/atoms.jsonl: 1591 行を確認。JSON 破損 0 件、duplicate id 0 件、duplicate content hash 0 件。memory/atoms/index.jsonl も 1591 行で一致。"
+  - "memory/raw/: 30 日以上更新のない file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上更新のない candidate は 0 件。postpone/fail 降格対象なし。"
+  - "inbox 系: tools/slack_inbox_lifecycle.py pending で directives 0 件、broadcasts 0 件。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
