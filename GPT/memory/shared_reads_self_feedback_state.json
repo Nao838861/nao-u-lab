@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T21:52:00+09:00",
+  "updated_at": "2026-05-28T23:56:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -75,9 +75,27 @@
     "1779907495.600839",
     "1779938795.408569",
     "1778300066.673579",
-    "1778474714.809439"
+    "1778474714.809439",
+    "1779979770.780529"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T23:56:00+09:00",
+      "id": "sr-1779979770-debe6e8ae9",
+      "source_ts": "1779979770.780529",
+      "title": "GUI Agents for Continual Game Generation",
+      "decision": "adopt_probe",
+      "reason": "score 13 かつ memory/harness/game-design/agent/operation/evaluation をまたぐ直近未レビュー atom。静的検査や headless pass だけでは、ブラウザ上で開始できる、入力に反応する、主要リスクや勝敗が観測できる、復帰できるといった interaction-level failure を見落とす。既存の fixed-test vs dynamic stress / PCG tool loop probe と近いので恒久ルールや評価表には昇格せず、次の browser game playable diff で rubric と操作ログを 1 回だけ確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T21:52:00+09:00",
       "id": "sr-1778474714-94940686d3",
@@ -2254,6 +2272,18 @@
         "If it is separate-axis expansion or interference, did I reduce the action to one reversible test, deferred note, or removal candidate rather than shipping it as an improvement?"
       ],
       "expires_after": "Review after the next game prototype playable diff, variant iteration, or feature addition where an added mechanic/mode/content/tuning axis is discussed as an improvement."
+    },
+    {
+      "id": "probe-20260528-browser-interaction-rubric",
+      "created_at": "2026-05-28T23:56:00+09:00",
+      "source_ts": "1779979770.780529",
+      "scope": "next browser game playable diff, Playwright/in-app browser verification, or self_judgment where a build, screenshot, headless test, or code pass may be treated as evidence that the game is playable",
+      "questions": [
+        "Before calling the browser game playable, did I exercise at least one real input path and record the resulting state change, not only load/build/screenshot success?",
+        "Did I write a small rubric for the intended loop such as start, main input, risk or obstacle, score/state update, win/loss, and restart, instead of relying on a generic smoke test?",
+        "If the check is performed by automation or GUI agent, did I keep the verdict limited to interaction-level failure detection and name the remaining human-facing feel check?"
+      ],
+      "expires_after": "Review after the next browser game playable diff, browser verification, or self_judgment that claims playable behavior from static or automated evidence."
     }
   ]
 }

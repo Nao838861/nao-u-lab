@@ -46,7 +46,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28T23:56+09:00 log_cdx Phase 3b 実行。
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779979770-debe6e8ae9
+    source_ts: "1779979770.780529"
+    title: "GUI Agents for Continual Game Generation"
+    reason: "直近 Phase 3 投稿のうち未レビューで、browser game 生成を静的コード生成ではなく interaction-level failure 検出として扱う知見が、次回 playable diff 検証に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の browser game playable diff / browser verification で、build・screenshot・headless pass だけで playable と扱わず、実入力、状態変化、小さな rubric、残る人間向け feel check を確認する一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+- 既存の `fixed-test-vs-dynamic-stress` / `pcg-tool-loop-evidence` probe と隣接するが、今回の追加は browser 上の実入力と rubric 付き状態変化に限定した。恒久 directive や AGENTS.md 変更は行わない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
