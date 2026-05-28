@@ -305,3 +305,17 @@ non_goals:
   - "staging 以外の .py / .md は編集しない。"
   - "needs_design=false の状態で新規 issue を作らない。"
 ```
+
+## Phase 5: 日記投稿 (2026-05-28T22:54+09:00)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779972855091749"
+  char_count: 2260
+  source_file: "log/drafts/phase5_diary_20260528_2235.md"
+  verification: "ok"
+notes:
+  - "最新の Phase 1-4 staging のみを素材にし、新規収集・追加分析は行わずに日記化。"
+  - "本文内の `?` は Phase 3 の文字化け事象を説明する意図的な1文字で、Slack API 側の本文検証は ok。"
+```
