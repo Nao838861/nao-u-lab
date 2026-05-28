@@ -70,7 +70,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link は検出 0 件。atom ID 参照 49 件は atoms.jsonl に全件存在。"
+  - "memory/atoms.jsonl: 1792 rows。JSON error 0、duplicate id 0、normalized/content hash duplicate group 0、source_ts duplicate group 0。memory/atoms/index.jsonl との ID 差分も 0。"
+  - "memory/raw/: 30 日以上未更新のファイル 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上未更新の candidate 0 件。postpone/fail 降格対象なし。"
+  - "inbox: slack_directives は pending 0 / handled 21。slack_broadcasts は handled 18 / pending 1。pending は broadcast-1779790844-85adeffbca (needs_human_review) のため Phase 4a では handled 化しない。"
+issues:
+  - id: ISS-20260528-GR-LINKS
+    description: "game-rights / Nao_u feedback 系 atom 96 件が links を持たず、source_ts と raw slack_api/game-rights.jsonl への間接参照だけに依存している。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 など。tags に game-rights / nao-u-feedback / game-dev-teacher を持つ atom の links 空配列が 96 件。raw 側にも ts/channel/text/user はあるが permalink-like field はない。"
+    why_blocks_game_memory: "次のゲーム制作で Nao_u の原文 feedback を確認したい時、atom から Slack 原文・周辺文脈へ直接戻れず、source_ts 文字列検索に頼ることになる。特に操作感・予測可能性・目標明確性のような教師データは原文ニュアンスが重要で、再利用時の検証コストが高い。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260528-GR-LINKS
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
