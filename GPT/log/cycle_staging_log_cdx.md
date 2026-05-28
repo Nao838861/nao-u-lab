@@ -31,6 +31,41 @@ postpone:
     reason: "現実世界 gamification の倫理論点は強いが、HN 議論中心で設計詳細・運用知見・評価が薄く、4000字投稿には追加確認が必要。"
 ```
 
+## Phase 3b: Shared-reads 自己フィードバック (2026-05-28T21:52+09:00)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778474714-94940686d3
+    source_ts: "1778474714.809439"
+    title: "Nao_u本人発言「グランツーリスモモードが一番面白かったのは初代だった」をシリーズ減衰の証拠に置く"
+    reason: "Nao_u 本人発言を核にした score 15 の未レビュー atom。GT 初代の面白さを機能総量ではなくコアモードの守の濃度として読む視点は、次のゲーム改修で機能追加を改善と誤認するリスクに直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype / playable diff / variant iteration で、追加要素が主ベクトル同方向の深化か、別軸の足し算か、逆方向干渉かを一度だけ確認する reversible probe を追加。恒久ルールや AGENTS 変更は行わない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    id: probe-20260528-core-density-before-expansion
+    scope: "next game prototype playable diff, sequel/variant iteration, or feature addition where adding a mechanic, mode, content set, or tuning axis may be treated as improvement"
+    questions:
+      - "Before adding the feature or variant, did I name the current core vector in one sentence: player loop, main intervention, tension source, and reward?"
+      - "Did I classify the addition as same-vector deepening, adjacent support, separate-axis expansion, or opposite-vector interference instead of relying on feature count or novelty?"
+      - "If it is separate-axis expansion or interference, did I reduce the action to one reversible test, deferred note, or removal candidate rather than shipping it as an improvement?"
+```
+
 ### 2026-05-28T21:32:16+09:00 log_cdx Phase 2
 
 ```yaml

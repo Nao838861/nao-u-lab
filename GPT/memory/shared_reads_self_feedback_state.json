@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T19:42:00+09:00",
+  "updated_at": "2026-05-28T21:52:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -74,9 +74,27 @@
     "1779885666.131549",
     "1779907495.600839",
     "1779938795.408569",
-    "1778300066.673579"
+    "1778300066.673579",
+    "1778474714.809439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T21:52:00+09:00",
+      "id": "sr-1778474714-94940686d3",
+      "source_ts": "1778474714.809439",
+      "title": "Nao_u本人発言「グランツーリスモモードが一番面白かったのは初代だった」をシリーズ減衰の証拠に置く",
+      "decision": "adopt_probe",
+      "reason": "score 15 かつ Nao_u 本人発言を核にした未レビュー atom。GT 初代の面白さを「機能総量」ではなく「コアモードの守の濃度」として読む視点は、次のゲーム改修で機能追加を改善と誤認するリスクに直結する。既存のクローン+1や機構希釈のルールと近いが、今回は恒久ルール化せず、次の playable diff / variant iteration で主ベクトル同方向の深化か別軸の足し算かを一度だけ確認する reversible probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T19:42:00+09:00",
       "id": "sr-1778300066-e7c3bd45b1",
@@ -2224,6 +2242,18 @@
         "If both are present, did I reduce the action to one reversible scaffold, probe, or deferred item instead of adding a broad rule, larger checklist, or all-at-once refactor?"
       ],
       "expires_after": "Review after the next cycle staging, memory cleanup, shared-reads self-feedback, or game design/evaluation step that compares multiple candidates, fixes, probes, or metrics."
+    },
+    {
+      "id": "probe-20260528-core-density-before-expansion",
+      "created_at": "2026-05-28T21:52:00+09:00",
+      "source_ts": "1778474714.809439",
+      "scope": "next game prototype playable diff, sequel/variant iteration, or feature addition where adding a mechanic, mode, content set, or tuning axis may be treated as improvement",
+      "questions": [
+        "Before adding the feature or variant, did I name the current core vector in one sentence: player loop, main intervention, tension source, and reward?",
+        "Did I classify the addition as same-vector deepening, adjacent support, separate-axis expansion, or opposite-vector interference instead of relying on feature count or novelty?",
+        "If it is separate-axis expansion or interference, did I reduce the action to one reversible test, deferred note, or removal candidate rather than shipping it as an improvement?"
+      ],
+      "expires_after": "Review after the next game prototype playable diff, variant iteration, or feature addition where an added mechanic/mode/content/tuning axis is discussed as an improvement."
     }
   ]
 }
