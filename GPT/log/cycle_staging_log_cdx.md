@@ -151,5 +151,25 @@ designed:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-29T00:58+09:00 log_cdx Phase 4c 実行。
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: memory/MEMORY.md
+        change: modified
+      - path: tools/validate_memory_index.py
+        change: created
+    summary: "MEMORY.md の High Signal / Recent / Tag Entry Points は既存の再生成差分で可読な日本語に戻っていることを確認し、per-file atom index に裏付けられているかを検査する最小ツールを追加した。"
+    partial: false
+migrations: []
+verification:
+  - "python tools\\validate_memory_index.py -> OK: memory/MEMORY.md entry sections match per-file atom index."
+  - "python tools\\memory_recall.py \"記憶 階層 MEMORY.md mojibake\" --limit 3 -> 関連 atom 3 件を返し、既存 recall が動作することを確認。"
+  - "python -m py_compile tools\\validate_memory_index.py tools\\memory_recall.py tools\\atoms_fileformat.py -> 成功。"
+notes:
+  - "恒久的な再生成方式の変更は次サイクル判断に残し、Phase 4c では入口セクションの根拠検査に留めた。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
