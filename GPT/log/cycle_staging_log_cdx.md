@@ -12,7 +12,19 @@
 - 収集: `memory/shared_reads_candidates/20260528_cutscene_agent_llm_3d_cutscene.md` - MCP + game engine 双方向連携で3D cutscene生成を扱う multi-agent framework / benchmark 候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-28 13:35 JST / log_cdx Phase 2
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260528_aidg_information_deduction_game.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260528_fairgamer_llm_bias_game_balance.md
+    reason: "問題設定は強いが、6 tasks / metrics / bias と balance degradation の対応が候補メモだけでは不足。"
+  - path: memory/shared_reads_candidates/20260528_cutscene_agent_llm_3d_cutscene.md
+    reason: "制作適用性は高いが、CutsceneBench の評価項目・実験結果・失敗例が候補メモだけでは不足。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

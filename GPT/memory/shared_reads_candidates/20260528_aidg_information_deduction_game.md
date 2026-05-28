@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2602.17443v2"
 collected_at: "2026-05-28T13:14:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-evaluation, adversarial-game, dialogue-game, agent-evaluation]
+evaluated_at: "2026-05-28T13:35:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |-
+  hidden information dialogue を Seeker / Holder の非対称能力として分解しており、問題設定・中核手法・failure mode・比較評価の要素が候補段階で揃っている。
+  LLM NPC、social deduction、情報秘匿型会話ゲームの評価軸に直結し、単なる一般論ではなくゲーム制作時の検証設計へ落とせる。
+  CoopEval 水準の概要は、win-rate 評価の限界から役割別能力測定へ展開する軸で十分に書ける。
+suggested_post_outline:
+  overview_angle: "単一勝率では潰れる multi-turn LLM dialogue の能力差を、情報を引き出す側と守る側の非対称ゲームとして測る研究として整理する。"
+  analysis_axis: "AIDG の formalization、Seeker/Holder の役割、failure mode、game set / six frontier LLMs の比較から見える評価設計の強みと限界。"
+  application_target: "hidden information game、social deduction、LLM NPC の会話評価で、勝敗だけでなく情報抽出・秘匿・仮説探索のどこが壊れたかを記録する評価ログへ適用する。"
+  pros_cons: "メリットは対話ゲームの失敗を役割別に診断できること。デメリットは評価環境が人工的で、実ゲームの演出・UI・プレイヤー心理まで直接測れるわけではないこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
