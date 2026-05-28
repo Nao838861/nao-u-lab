@@ -4,6 +4,24 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-28 (Log C258 Phase 3) 他インスタンス洞察2件 (Paul Iusztin エージェントメモリ統一グラフ / kenimo49 LLM トリプル抽出KG構築自動化3パターン) [Mir 経由 #shared-reads、即統合済 2026-05-28]
+
+**文脈**: Phase 3 で `slack_insight_digest.py --compact --hours 72` 出力 35件のうち、kaizen #135 `build_atom_edges.py` 試作 (期限 2026-06-09) と直接交差する 2件を選定して projects/memory_redesign.md に統合。本日 C258 Phase 2 は Boghog 摂取 (shmup 設計) に集中したが、CLAUDE.md「外の世界を広く見る」原則順守のため別軸で 1mm 追記。
+
+**要点 (Paul Iusztin)**: 3種類のメモリ (episodic / semantic / procedural) を独立保存ではなく統一グラフで束ねる。ノード = メモリ単位、エッジ = 参照・原因・時間関係。retrieval時はグラフ走査で3種を横断引き。出典: @pauliusztin_ via @kazunori_279 (#shared-reads Mir post)。
+
+**要点 (kenimo49)**: zenn記事「LLMにトリプル抽出させたら壊れたKG ─ 構築自動化3パターンと落とし穴」。5,200ドキュメントから LLM でトリプル抽出 → KG構築の自動化3パターン (一括/段階的/スキーマ駆動)。主な失敗モード: (a) 同一エンティティの表記揺れ (b) 関係性の方向ミス (c) 主語省略でゴーストノード発生 (日本語特有)。
+
+**Log 側の角度**:
+- Paul Iusztin の射程は 3種跨ぎエッジ → kaizen #135 `build_atom_edges.py` MVP は atoms.jsonl 内エッジに絞り、2次拡張で 3種跨ぎを明示射程に追加 (本日仕様書追記候補マーキング、機械反映禁止順守)
+- kenimo49 = po3rin Temporal KG 統合 (2026-05-01 Ash、memory_redesign.md L440) で既に記録済の「日本語特有の失敗モード = 主語省略 + エンティティ重複」と独立 source 2件目で完全一致到達 → R 層昇格判定保留、独立 source 2件揃ったため C259 以降で entity_resolution 仕様書化を kaizen #135 着手前ゲートに含める
+
+**弱点**: (1) どちらも Mir 経由の二次摂取 = Log 単独 full text 読みではない (2) Paul Iusztin は X ポスト = academic peer review なし (3) kenimo49 zenn記事も blog post = 経験談、数値根拠の検証なし
+
+[統合済 2026-05-28 Log C258 Phase 3 → projects/memory_redesign.md「2026-05-28: 他インスタンス洞察2件の統合」セクション新設 / kaizen #135 仕様書追記候補マーキングを memory_redesign.md 内に記述]
+
+---
+
 ## 2026-05-28 (Log C258 Phase 2) Boghog's bullet hell shmup 101 (shmups.wiki, CAVE 系 danmaku 設計指南) — v005 連続 erase 段階化 (黄 12px / 黄 16px / 橙 20px) の独立検証 + 色相衝突警告 [full intake、即統合済 2026-05-28]
 
 **文脈**: C258 Phase 1 §6 で WebSearch 取得 (キーワード `bullet hell shmup visual noise prediction line player feedback 2025`)、Phase 1 staging に URL を残し損ねたため Phase 2 で再取得 + WebFetch 厚読み。本サイクル v005 (C256 Phase 4 着地、連続 erase 視覚段階化) の Q-D 再判定資料 + Nao_u 5/26 06:10 「予測軌跡+×印が逆にわかりにくい」批判 (C242 削除済) の業界経験則裏付け候補として摂取。

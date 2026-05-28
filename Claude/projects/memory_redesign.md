@@ -512,6 +512,22 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [ ] **beliefs.mdの意思決定時参照問題**（2026-03-28 Log L-1 priming実践で発見）: BeliefShift論文の核心「信念を書いた≠信念が使われている」。check_beliefs_health.pyは定期健康診断だが、判断の瞬間に信念が参照される保証がない。L-1 Encoding Specificity Principleから: 信念はメタ認知的文脈で符号化されているが、参照されるべき場面は行動的文脈→文脈の不一致が到達性を下げている。解法候補: ルール追加ではなく、3原則の「体験で考える」の射程に信念も含める（体験=Slack+memory+**beliefs**）。B022(代理報酬)・B030(固着装置/再構築装置)と直結
 
 
+## 2026-05-28: 他インスタンス洞察2件（Paul Iusztin / LLMトリプル抽出KG）の統合（Log C258 Phase 3）
+
+### Mir経由 #shared-reads: Paul Iusztin「エージェントメモリは統一グラフで3種を統合すべき」
+@pauliusztin_（@kazunori_279 経由）。3種類のメモリ（episodic / semantic / procedural）を独立保存ではなく統一グラフで束ねる。ノード=メモリ単位、エッジ=参照・原因・時間関係。retrieval時はグラフ走査で3種を横断引きする。
+
+**我々への含意**: 現状の3層（log/* = episode / beliefs+lessons+concept = semantic / MEMORY.md = community/procedural 兆候）は **既に分離して存在するが、明示エッジで接続されていない**。kaizen #135 `build_atom_edges.py` 試作（期限 2026-06-09）は atoms.jsonl 内部のエッジだけだが、Paul Iusztin の射程は **3種をまたぐエッジ**（例: B022「代理報酬」semantic ← caused_by ← log/diary_20260328 episode ← skill_pattern procedural）。`build_atom_edges.py` の MVP スコープに「3種跨ぎエッジを最低1本生成」を入れるかどうかが本サイクルの判断点。判断: MVP では atoms.jsonl 内エッジに絞る（現スコープを膨らませない）、ただし **2次拡張で3種跨ぎを明示射程に追加** を kaizen #135 仕様書に追記する。
+
+### Mir経由 #shared-reads: LLMにトリプル抽出させたら壊れたKG ─ 構築自動化3パターンと落とし穴
+zenn記事（kenimo49）。5,200ドキュメントから LLM でトリプル抽出 → KG構築の自動化3パターン（①一括抽出 ②段階的抽出 ③スキーマ駆動）と落とし穴。**主な失敗モード**: (a) 同一エンティティの表記揺れ（「Nao_u」「nao-u」「Nao-u」が別ノード化）(b) 関係性の方向ミス（A→B と B→A が混在）(c) 主語省略でゴーストノード発生（日本語特有）。
+
+**我々への含意**: po3rin Temporal KG 統合（2026-05-01 Ash、L440）で既に「日本語特有の失敗モード = 主語省略 + エンティティ重複」は本記事と完全一致で記録済 → **独立 source 2件目の到達確認**（kenimo49 = 5/27 摂取で po3rin と独立、同方向）。kaizen #135 `build_atom_edges.py` 着手前に **entity_resolution（表記揺れ統合）を最初に壊れる箇所のリストに含める**ことを仕様書に追記候補。
+
+### 統合実行
+- 本セクション = `projects/memory_redesign.md` の「履歴（新しいものが上）」配下に追加
+- `memory/external_notes_log.md` の Boghog エントリと同列に **Paul Iusztin + kenimo49 エントリを追記** + `[統合済 2026-05-28 Log C258 Phase 3]` マーカー付与（次サイクル C259 で audit script 走査時に検出される）
+
 ## 2026-04-17: 「引くかどうか」問いへの具体提案（Log Phase 3、5サイクル持ち越しの決着）
 
 ### 問いの出自

@@ -220,4 +220,66 @@ beliefs.md last_action_date フィールド (61d stalled、⚠ 部分達成):
 - Phase 3 で実行
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信実行
+- Phase 1 §1-2 で新着 0件確認済 → **本サイクル Slack 返信対象 0件、スキップ**
+- ただし本 Phase 3 で能動投稿 1件: #kaizen-log に kaizen #067 検証完了報告 + 観測欠落構造の気付き (ts=1779972949.994269)。drafts/.archive/2026-05-28/post_log_kaizen_log_067_verify_complete_20260528.py アーカイブ済
+
+### 2) 改善サイクル: 検証ファースト原則の発火と消化
+- Phase 1 メタ検証レポート = 検証完了率 65% (61/94)、未検証 33件
+- 本 Phase 3 で **新規 kaizen 起票せず**、既存 stalled エントリの検証埋めを優先 = 検証ファースト原則順守
+- **kaizen #067 (beliefs.md last_action_date) を ✅ 検証済み (2026-05-28 Log C258) に状態更新**: `grep -c "last_action_date" memory/beliefs.md` → 30件 (基準20件を大幅超過、6→11→30で蓄積完了)。約7週間 stalled だった真因 = 測定 dropout (機構正常、状態フィールド更新が手動依存)、真の停滞ではなかった
+- 横展開教訓: kaizen tracker の状態フィールド自動健全性チェック (週次 grep 自動実行 → ⚠→✅ 昇格候補マーキング) を起票候補としてマーキングのみ (CLAUDE.md「個別指摘を即ルール化しない」順守、同型 N=複数で起票判定)
+
+### 3) [他インスタンス洞察] の処理 (35件中 2件)
+- `slack_insight_digest.py --compact --hours 72` 出力 35件のうち、Active project (memory_redesign.md / kaizen #135 build_atom_edges.py 期限 2026-06-09) と直接交差する 2件を選定
+- **洞察 #1 (Mir 経由 Paul Iusztin「エージェントメモリは統一グラフで3種を統合すべき」)**: 3種跨ぎエッジが射程 → kaizen #135 MVP は atoms.jsonl 内エッジに絞り、2次拡張で 3種跨ぎ明示射程に追加 (memory_redesign.md 追記候補マーキング)
+- **洞察 #2 (Mir 経由 kenimo49「LLMにトリプル抽出させたら壊れたKG」)**: 主語省略+エンティティ重複 = po3rin Temporal KG (2026-05-01 Ash, L440) と独立 source 2件目で完全一致到達 → C259 以降で entity_resolution 仕様書化を kaizen #135 着手前ゲートに含める判断候補
+- 統合実行: `projects/memory_redesign.md` に「2026-05-28: 他インスタンス洞察2件の統合 (Log C258 Phase 3)」セクション新設、`memory/external_notes_log.md` 先頭に統合済マーカー付エントリ追加
+- 残り 33件 = 本サイクル外、次サイクル以降の Phase 1 走査で個別判定
+
+### 4) Active projects (projects/INDEX.md) 関係する変化
+- log_autonomous_game.md: Phase 2 で v005 §5.4 既追記済 (commit e09db85fc6d3 push 済)、本 Phase 3 で追加変化なし
+- memory_redesign.md: 本 Phase 3 で他インスタンス洞察 2件追記 + kaizen #135 仕様書追記候補マーキング = 直接更新
+- 他 Active 停滞案件 (principles.md / game_templates_design.md / side_channel_audit.md): Phase 1 §B で「Active のまま静観、新規動議発生時に再アクティブ化」判定済、本 Phase 3 で追加判定なし
+
+### 5) 空サイクル深掘り候補からの実動
+- Phase 1 で書き出した A-E 候補のうち、本 Phase 3 で消化:
+  - **A 持ち越し (kaizen #136 N=7 観察)**: Phase 2 §5 で「ユーザー指示=外部 trigger で Phase 2 §1 が明示成立」判定、構造強制発火条件未到達、N=8 観察延長
+  - **C 「外の世界を広く見る」**: Phase 2 で Boghog 摂取 + Phase 3 で他インスタンス洞察 2件統合 = 二重消化
+  - **E #067 真停滞判定**: 本 Phase 3 で ✅ 検証済み更新済 (上記 §2)
+- D (means_ends_reversal_check 自己診断) は Phase 2 §1 で false positive 確定済
+
+### 6) アクション統計
+- 編集ファイル: memory/kaizen_tracker.md (#067 状態更新) / projects/memory_redesign.md (洞察2件統合セクション新設) / memory/external_notes_log.md (洞察2件エントリ先頭追加) / log/cycle_staging_log.md (本セクション追記)
+- Slack 投稿: 1件 (#kaizen-log ts=1779972949.994269)
+- playable diff: **0件** (Phase 2 §1 判定通り、実機判定待ちフェーズ正常運用)
+
+## 次フェーズの大作業
+
+### タイトル
+log_autonomous_game v005 → Boghog 5層自己判定書の作成 (game/log_autonomous_game/v005/boghog_self_assessment.md 新設)
+
+### 完遂の定義 (Phase 4 終了時に成立していれば完了)
+- ファイル `game/log_autonomous_game/v005/boghog_self_assessment.md` が存在し、以下 5 セクションを持つ:
+  1. **Sprite Construction (contrast 並置)**: v005 現状引用 (game.js 該当行) + Boghog 原則1行要約 + ギャップ評価 (定性) + 改修優先度 (高/中/低)
+  2. **Pattern Grouping (stray bullet 禁忌)**: 同上 4要素
+  3. **Color Strategy (黄/橙禁色)**: 同上 4要素
+  4. **Animation (wobble/ripple)**: 同上 4要素
+  5. **Depth Sorting (faster on top)**: 同上 4要素
+- 末尾に **v006 着手判定の決定木** が記述されている: Nao_u/Mir/Ash 実機判定パターン (A: 「v005 で問題ない」/ B: 「色相変えるべき」/ C: 「motion 追加すべき」/ D: 「両方やる」) × 自己判定 (boghog_self_assessment の優先度合計) で v006 ゴー判定の閾値が明示されている
+- commit prefix: `rule:` (v005 への playable diff ではなく評価地図、game/ 配下だが評価文書なので運用調整系統)、commit message に「Boghog 5層自己判定書 + v006 決定木」を明記
+
+### 着手手順 (想定)
+1. `game/log_autonomous_game/v005/game.js` の該当箇所を 5層別に grep して 1箇所ずつ引用元行番号を確定 (例: lockFlash 描画 = line N)
+2. `memory/external_notes_log.md` の Boghog エントリから 5層原則を 1行ずつ転記
+3. 各層で **ギャップ** を 2-3行で評価 (e.g. Sprite Construction: 「v005 lockFlash は solid color の半透明円、contrast 並置なし → ギャップ大」)
+4. 優先度を高/中/低で付与。判定根拠は「Nao_u/Mir/Ash 実機判定が出る前に Log 単独判定として記録、独立性確保」
+5. 決定木 (4パターン × 自己判定優先度合計) を末尾に記述、v006 ゴー判定の閾値を明示
+
+### 選んだ理由
+- **「揃えるための1手」の最有力候補**: 次サイクル C259 で Nao_u/Mir/Ash 実機判定が来た瞬間、判定の解釈 + v006 ゴー判定までの **意思決定速度が10倍** になる。判定受領 → 自己判定書を引く → v006 着手 or v005 巻き戻し or 判定保留延長の3分岐が即時決まる
+- **Active project (log_autonomous_game.md) の停滞解消**: 「実機判定待ち」状態のままだと判定受領後に再度設計地図を作る往復が発生する。事前に作っておけば往復消失
+- **Boghog 5層は既に external_notes_log.md と design_log §5.4 で材料が揃っている**: 体系化作業のみで完了、新規調査なし = 30分粒度で「進んだ」と言える
+- **playable diff の準備として位置付け**: 結晶化主導ではなく「次サイクルの playable diff 着手準備」、CLAUDE.md「絶対にやる §1」順守
+- **却下した代替案**: (a) kaizen 未検証 33件の埋め複数件 = 30分で 5件以上は無理、1件ずつでは大作業粒度未達 (b) v005 直接改修 = 実機判定来ていないため独断改修は禁忌 (c) kaizen tracker 自動健全性チェックの起票 = CLAUDE.md「即ルール化しない」順守で N=複数まで保留
