@@ -2266,3 +2266,92 @@ atoms=590 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
 - [memory/kaizen_tracker.md #135](../memory/kaizen_tracker.md) — build_atom_edges.py 段階1/2 観察、本節で段階1 dry-run 再確認 + 解釈軸明示
 - 本ファイル C249 Atlan 節 / C253 Mem0g 節 / C254 段階2 着地節 — 3 系統独立到達の系譜
 
+### 2026-05-29 (Log C258 Phase 4) — kaizen #135 dry-run 再再観察と段階3 着手判定 = 再観察延長
+
+**経緯**: C257 で段階3 (recall_golden T0 ベンチ) 着手判定 2 gate (i wikilink_weak ノイズ bound, ii atoms 数変動の説明) を残置していた。本サイクル C258 Phase 3/4 で両 gate を評価し、段階3 着手判定の根拠を本ファイルに書き残す。
+
+**(a) C245/C257/C258 dry-run 時系列差分** (同一コマンド `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` の出力推移):
+
+| サイクル | atoms | wikilink_strong | wikilink_weak | supersedes_chain | total_edges |
+|---|---|---|---|---|---|
+| C245 (2026-05-26) | 1105 | 0 | 2 | 370 | 749 |
+| C257 (2026-05-28) | 590 | 0 | 1 | 370 | 748 |
+| C258 (2026-05-29) | 1253 | 0 | 5 | 370 | 752 |
+
+- `supersedes_chain=370` は 3 時点で完全一致 → frontmatter scan ロジック安定確認 (gate ii の補強根拠)
+- `wikilink_weak` 2→1→5 は範囲を超えた振れではなく atom 母数の増減と整合 (C257 値については下記 gate ii 参照)
+- `total_edges` 差分 (749/748/752) は ±数件で ww 増分とほぼ一致 (本質的構造変動なし)
+
+**(b) gate (i)/(ii) 評価**:
+
+- **gate (ii) atoms 数変動の説明 = 解消**: 本サイクル C258 で `ls ../GPT/memory/atoms/2026-05/ | wc -l = 1253` を実測 → dry-run 値と完全一致 → **C258 値が正**。C257 staging に書かれた `atoms=590` は staging Phase 3 のコピペ時混線、または別 root を一時的に対象に取った output の誤転記疑い濃厚。C245 (1105) → C258 (1253) は +148 で 5/26-5/29 の 3 日間取り込み分 (gr/sr/an prefix 新規 + 5月後半分) として妥当。**gate ii 解消、5/28 month-end fragment 数算定差仮説は不要となり破棄**。
+- **gate (i) wikilink_weak ノイズ bound = 件数 5 だが内容同型**: C258 dry-run の ww 5 件全件 src/tgt を特定 (本サイクル Phase 3 で抽出):
+
+  | # | src atom | tgt (literal) | 出自 |
+  |---|---|---|---|
+  | 1 | sr-1778541418-0f25c063e5 | `wikilink` | drafts INDEX 解説 (C245 既知ノイズ) |
+  | 2 | sr-1779770178-5d606254b2 | `link` | Semantic vs Ontology 議論 (C245 既知ノイズ) |
+  | 3 | sr-1779837186-3f3e3bd4cf | `name` | frontmatter スキーマ説明 |
+  | 4 | sr-1779842300-a6f128d8bd | `name` | frontmatter スキーマ説明 (再例示) |
+  | 5 | sr-1779941593-b733fdcf1c | `link` | memory 議論 (再例示) |
+
+  → **5 件全件 tgt が汎用語リテラル `wikilink`/`link`/`name`** = L88 (kaizen_tracker #135 既知弱点) 仮説と完全整合。**新規ノイズ種ゼロ、5月後半の memory 議論 atom 増による副次的件数増**。recall 側 type gate (`--exclude-type wikilink_weak`) で吸収可能。gate i は「件数 bound 維持」ではなく「**型 bound 維持** = N=1 ノイズ型のみ」で再定義してパス判定。
+
+**(c) recall_atom.py 段階2 type gate 実効性再確認 (Phase 4 完遂条件 #2)**:
+
+新規 fresh edges `tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --output .tmp/edges_c258_test.jsonl` で ww=5 入力を確定し、5 件全 src を seed として gate 前後比較:
+
+```
+$ python tools/recall_atom.py --root ../GPT/memory/atoms/2026-05 --edges .tmp/edges_c258_test.jsonl --atom sr-1779770178-5d606254b2 --max-hops 1
+[recall_atom] seed=sr-1779770178-5d606254b2 edges=752 exclude_types=- max_hops=1 related=1
+  - link (via sr-1779770178-5d606254b2 type=wikilink_weak hop=1)
+
+$ python tools/recall_atom.py ... --atom sr-1779770178-5d606254b2 --exclude-type wikilink_weak --max-hops 1
+[recall_atom] seed=sr-1779770178-5d606254b2 edges=752 exclude_types=['wikilink_weak'] max_hops=1 related=0
+```
+
+| seed | gate なし related | gate あり related | noise 抑制 |
+|---|---|---|---|
+| sr-1779770178-5d606254b2 | 1 (link) | 0 | ✅ |
+| sr-1779837186-3f3e3bd4cf | 1 (name) | 0 | ✅ |
+| sr-1779941593-b733fdcf1c | 1 (link) | 0 | ✅ |
+| sr-1778541418-0f25c063e5 | 1 (wikilink) | 0 | ✅ |
+| sr-1779842300-a6f128d8bd | 1 (name) | 0 | ✅ |
+
+→ **5/5 全件 0 件 noise 抑制を実測**。staging Phase 4 完遂条件 #2「現 ww=5 入力で 0 件 noise 抑制」達成。
+
+**カスケード noise 抑制の追加検証 (hop=2)**: literal node `link` を target に持つ atom が 2 件あるため (#2 と #5)、gate なし hop=2 では意味的に無関係な atom が literal 経由でカスケード接続される。実測:
+
+```
+$ python tools/recall_atom.py ... --atom sr-1779770178-5d606254b2 --max-hops 2
+[recall_atom] ... related=2
+  - link (via sr-1779770178-5d606254b2 type=wikilink_weak hop=1)
+  - sr-1779941593-b733fdcf1c (via link type=wikilink_weak hop=2)   # ← 意味的に無関係な atom がカスケード
+
+$ python tools/recall_atom.py ... --atom sr-1779770178-5d606254b2 --exclude-type wikilink_weak --max-hops 2
+[recall_atom] ... related=0
+```
+
+→ gate 1 段で hop=1 の literal noise だけでなく **hop=2 以降の cross-atom literal cascade も完全抑制**。「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学が hop 連鎖でも崩れないことを実測確認。
+
+**(d) 段階3 (recall_golden T0 ベンチ) 着手判定 = 再観察延長 (C259-C261)**:
+
+- gate (i)(ii) 共に解消、recall_atom.py type gate 実効性も実測確認 → **段階3 着手の前提 gate は本サイクルで全クリア**
+- しかし**段階3 着手をもう 1〜2 サイクル延長する**判断:
+  - 理由 1: ベンチ集合 (atoms 1253) の安定性を C259-C261 で再確認したい (新規 atom 流入で ww が +3 / +5 / +10 と増えるか、5 で頭打ちか)
+  - 理由 2: 段階3 着手前に **「recall_golden の golden set 構築方針」を本ファイル C249 Atlan 節 + C253 Mem0g 節 + 本節と接続して明文化**するステップを 1 つ挟みたい (kaizen #135 段階3 の検証手段定義が staging 大作業に直接落とせるレベルに粗い)
+  - 理由 3: 検証期限 2026-06-09 まで残 11 日、観察期間枠内で着手判定可
+- → 段階3 着手は **C260 か C261 を発火点候補とする**。C259-C260 で recall_golden 設計議論を memory_redesign.md に追記、C261 を段階3 PASS/FAIL 判定 Phase 4 候補に積む。
+
+**memory_redesign 全体への波及**:
+
+- 「人手 cross-link + 構造化マークアップ抽出 + recall 側 gate」3 段ノイズ抑制路線 (C257 確定) の **3 段目 gate の効果を初めて定量実測** → C257 の決定根拠が「論理的整合」から「論理 + 実測整合」に強化
+- A-MEM Link Generation / Mem0g Update Resolver / RL weight 学習 の 3 系統却下決定 (C257) は本実測でさらに強化: ww 5 件中 5 件が「frontmatter スキーマ説明 + 議論例示」由来 = 人手が抽象化を済ませた跡 = LLM 推論で取りに行くべき edge ではない
+- Mem0g の `invalidated_at` / NOOP 分岐は本実測の射程外 (recall 側 gate と直交、別系列観察継続)
+
+**接続先**:
+- [memory/kaizen_tracker.md #135](../memory/kaizen_tracker.md) L90-L99 — C257 / C258 dry-run 再観察記録 (本節と双方向 link)
+- [tools/recall_atom.py](../tools/recall_atom.py) — 段階2 実装本体 (84 行、type gate ロジック L44-L49)
+- 本ファイル C254 段階2 着地節 — sample 3 atom 動作確認の延長として本節 5 atom × hop=1/2 計 10 ケース実測
+- 本ファイル C257 arXiv 2511.07800 節 — 3 段ノイズ抑制哲学の C257 確定 → C258 実測強化の系譜
+

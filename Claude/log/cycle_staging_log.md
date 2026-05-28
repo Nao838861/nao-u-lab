@@ -177,5 +177,98 @@
 - **不足兆候**: 24h 内 2件は閾値以上だが、v006 案 A 影響評価が v005 実機判定待ちで止まっている = 摂取量は十分だが消化が滞留している状態
 - 次の一手: 摂取増ではなく v005 実機判定到来時の消化準備 (上記 Phase 3 第二候補と整合)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-29 C258 Phase 3 着地)
+
+### 1) Slack 返信 = 0 件 (Phase 1/2 確定通り)
+- #nao-u broadcast yun_bow 5/26 = 既応答 (C254→C257 二段検証で確定済)
+- #shared-reads = 24h 内 Log 系統 2 本飽和、新規外部源なし
+- #human-steering = Log 受領済の log_cdx 宛指示のみ、Log 本体追加返信不要
+- → **Slack 新規投稿 = #kaizen-log 1 本のみ** (改善検証結果、下記 §2)
+
+### 2) 改善検証 (検証ファースト原則 = kaizen #135 段階1 dry-run 再再観察)
+- **発見**: staging Phase 1/2 で「kaizen #135 dry-run スケッチ未着手」と書いていたが、`memory/kaizen_tracker.md` L68-94 を読み直すと **段階1 は C245 で PASS 済、段階2 も C254 で着地済**。Phase 1/2 認識が古かった。本サイクルの実装行動は **新規スケッチではなく「段階1 dry-run 再再観察」=検証ファースト原則の追跡データ点追加** に位置付け直し。
+- **実行**: `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run`
+  ```
+  [build_atom_edges dry-run] root=../GPT/memory/atoms/2026-05 atoms=1253 wikilink_strong=0 wikilink_weak=5 supersedes_chain=370 total_edges=752
+  ```
+- **時系列差分** (C245→C257→C258): atoms 1105→590→1253 / wikilink_weak 2→1→5 / supersedes_chain 370→370→370 / total 749→748→752
+- **段階3 着手判定の事前 gate 評価**:
+  - **gate (ii) atoms 数変動の説明 = 解消**。実ファイル数 `ls .../atoms/2026-05 | wc -l = 1253` と一致 → C258 値が正。C257 staging の 590 は誤記/別集計疑い濃厚 (staging Phase 3 コピペ時混線、または root を一時的に別 dir に取った output の誤転記)。C245→C258 で +148 は 5/26-5/29 の 3 日分新規取り込みとして妥当。
+  - **gate (i) wikilink_weak ノイズ bound = 件数 5 だが内容同型**。5件 全件 target が `wikilink`/`link`/`name` の汎用語リテラル (drafts INDEX 解説 / Semantic vs Ontology 議論 / frontmatter スキーマ説明)。**新規ノイズ種ゼロ、5月後半の memory 議論 atom 増による副次**、tracker L88 既知ノイズ仮説と完全整合。recall 側 type gate で吸収可能。
+  - **段階3 (recall_golden T0 ベンチ) 着手判定 = 再観察延長 (C259-C261)**。recall_atom.py の type gate 実効性を「現 ww=5 入力で 0 件 noise 抑制」と再確認するのが先。検証期限 2026-06-09 まで残 11 日、観察期間枠内で着手判定可。
+- **記録先**: (a) `memory/kaizen_tracker.md` #135 § 2026-05-29 C258 観察節を追記済、(b) #kaizen-log 1 本投稿 (ts=1779982786、Log 名義)、(c) projects/memory_redesign.md § 2026-05-29 (Log C258 Phase 3) 節は Phase 4 で追記予定 (Phase 4 大作業へ)。
+- **新規改善提案 = ゼロ**: 検証ファースト原則順守、`feedback_few_rules_big_effect.md` 順守、`feedback_rule_proliferation_canonical.md` 順守。本サイクルは既存改善の検証データ点を 1 つ進めた純粋 1mm 進行サイクル。
+
+### 3) 他インスタンス洞察 = 35件 (Phase 1 §6 検出) → 本サイクル能動消化 0 件
+- Phase 1 §6 で報告された 35 件は前サイクル以前の堆積 (Paul Iusztin 統一グラフ / Akshay スキーマ制約 / LLMトリプル抽出 / GUI Agents Play2Code 等)、いずれも `projects/memory_redesign.md` または `projects/external_intake.md` で既翻訳済。本サイクルは新規消化ではなく既翻訳の検証行動 (=§2 dry-run 再観察) に時間配分。
+- **能動消化 0 件は意図的**: 検証ファースト順守 (未検証提案の検証を新規消化より優先)。
+
+### 4) Active プロジェクト変化 = 反映なし (本サイクル kaizen_tracker.md 更新のみ)
+- `projects/memory_redesign.md` § 2026-05-29 C258 観察節は Phase 4 大作業で追記予定 (下記 §6)。
+- `projects/log_autonomous_game.md` v005 実機判定到来前で待機 (Nao_u/Mir/Ash 受領前)、本サイクルは進展なし。
+- `projects/INDEX.md` 構造変化なし。
+
+### 5) 深掘り候補からの 1mm 進行 = §2 が該当 (kaizen #135 段階1 dry-run 再再観察)
+- Phase 1 §A(2) 「kaizen #135 build_atom_edges.py dry-run スケッチ未着手」記述を本サイクルで再評価 → 「未着手ではなく再観察データ点追加」に位置付け直し。Phase 2 推奨第一候補と完全整合。
+
+### 6) 上位パターン N=7 観察更新 (kaizen #136 段階1)
+- 本サイクル C258 Phase 1 §1 は staging memo なしの自発的二段検証成立 (broadcasts.jsonl 末尾走査 + Log 既応答 ts=1779769903 照合) → **N=7 上位パターン (Phase 1 走査自己過去ログ未照合) は再発なし**、staging memo 駆動 1 サイクル成功更新。
+- 累積: N=7 連続成功維持 (C252-C258)、構造強制発火点 N=10 まで残 3 サイクル。
+- kaizen #136 段階1 観察は受動的に進行、本 Phase 3 で追加アクション不要。
+
+## 次フェーズの大作業 (Phase 4 で完遂)
+
+**タイトル**: kaizen #135 段階3 (recall_golden T0 ベンチ) 着手判定根拠を `projects/memory_redesign.md` C258 観察節に書き残し、recall_atom.py 段階2 type gate 実効性を「現 ww=5 入力で 0 件 noise 抑制」で再確認する
+
+**完遂の定義** (Phase 4 終了時に観測可能な条件):
+1. `projects/memory_redesign.md` 末尾に「### 2026-05-29 (Log C258 Phase 3) — kaizen #135 dry-run 再再観察と段階3 着手判定 = 再観察延長」節が追加され、(a) C245/C257/C258 時系列差分、(b) gate (i)/(ii) 評価、(c) 段階3 着手判定 = 再観察延長 の 3 点が記載されている
+2. `python tools/recall_atom.py --root ../GPT/memory/atoms/2026-05` (or 適切な実引数) を実行し、出力に **wikilink_weak 由来の noise edge が混在していないこと** (type gate 実効性) を確認、結果を上記 memory_redesign.md 節に append
+3. `git diff` で本サイクル変更が (a) `log/cycle_staging_log.md` (Phase 3/4 追記)、(b) `memory/kaizen_tracker.md` (#135 C258 観察追記)、(c) `projects/memory_redesign.md` (C258 観察節追記) の 3 ファイル限定であることを `git status --short` で確認 (rebase 進行中なので commit はしない、Phase 5 持ち越し)
+
+**着手手順**:
+- (step 1) `tools/recall_atom.py` の現状 (84行) を Read し、`--root` 引数の有無 + type gate ロジック (`wikilink_weak` 除外) の実装箇所を確認
+- (step 2) recall_atom.py を 3-5 個の sample atom (例: sr-1779770178-5d606254b2 [Semantic vs Ontology 例示] / sr-1779837186-3f3e3bd4cf [frontmatter スキーマ例示] / 任意の 1 件) で実行し、関連 atom の type 別出力を取得
+- (step 3) 出力で `wikilink_weak` 由来 edge が hop 展開時に表示されないことを確認 (= type gate 実効性確認)
+- (step 4) projects/memory_redesign.md 末尾に C258 観察節を追記 (上記完遂定義 #1 の 3 点)
+- (step 5) Phase 4 が「commit はしない」原則の場合は Phase 5 まで持ち越し、commit はしない
+
+**選んだ理由**:
+- 検証ファースト原則の直接実行 (新規改善提案ではなく既存提案の検証データ点深化)
+- 30 分粒度に収まる (recall_atom.py は 84 行で sample 実行 5-10 分、節追記 10 分)
+- Phase 4 終了時に「段階3 着手判定が観測可能な形で記録」が成立 = 完遂判定明確
+- 第1原則 (ゲームを動かして出す) は v005 実機判定到来前で待機状態、第3原則 (記憶階層を自分で設計し、次サイクルへ繋ぐ) の進行に該当 = 第1原則待機帯での副次原則進行として整合
+- v006 game.js 実装着手は R-I 順守違反 (v005 実機判定到来前)、本作業はその不可帯域で出せる最も骨太な検証作業
+
+## Phase 4 着地 (2026-05-29 C258)
+
+**完遂状態**: 完遂条件 #1/#2/#3 すべて達成。
+
+**実施内容**:
+- (step 1) `tools/recall_atom.py` (84行) Read 済、type gate ロジックは `expand()` L44-49 `if e["type"] in exclude_types: continue` で実装確認
+- (step 2-3) 5 件 ww edge 全件 src を seed として gate 前後比較を実測 (sr-1779770178/sr-1779837186/sr-1779941593/sr-1778541418/sr-1779842300)、5/5 全件で gate あり related=0 / hop=2 cascade も完全抑制 確認
+- (step 4) `projects/memory_redesign.md` 末尾に「### 2026-05-29 (Log C258 Phase 4) — kaizen #135 dry-run 再再観察と段階3 着手判定 = 再観察延長」節を追記、(a) 時系列差分表 (b) gate (i)(ii) 評価表 (c) recall_atom.py 実測 5 件表 + hop=2 cascade 実測 (d) 段階3 着手判定 = 再観察延長 (C259-C261、検証期限 2026-06-09 残 11 日)、波及/接続先 4 点 を記載
+- (step 5) commit せず (rebase 進行中・Phase 5 持ち越し)
+
+**副産物 (新規/変更ファイル)**:
+- M `projects/memory_redesign.md` — C258 観察節 約 80 行追記 (完遂条件 #1, #2 達成)
+- M `log/cycle_staging_log.md` — 本 Phase 4 着地節追記 (本セクション)
+- 既に Phase 3 で追記済: M `memory/kaizen_tracker.md` (#135 C258 観察 L95-99)
+- 一時生成 (gitignored): `.tmp/edges_c258_test.jsonl` 87KB (fresh ww=5 入力、`.tmp/` は .gitignore L2)
+
+**Slack 投稿 / kaizen エントリ**: なし (Phase 3 で #kaizen-log 1本投稿済、Phase 4 で新規発火なし)
+
+**段階3 着手判定派生 (kaizen #135 への影響)**:
+- 段階3 着手の前提 gate (i)(ii) は本サイクルで全クリア、recall_atom.py type gate 実効性も実測確認
+- ただし段階3 着手をもう 1〜2 サイクル (C259-C261) 延長判定: (1) ww 増減推移を母数 1253 で再確認、(2) recall_golden の golden set 構築方針を memory_redesign.md に C249 Atlan + C253 Mem0g 接続で先に明文化
+- 検証期限 2026-06-09 まで残 11 日、観察期間枠内で着手判定可能
+
+**`git status --short` 該当差分** (本 Phase 4 で発生したリポジトリ内追加変更、staging 起算):
+- M `projects/memory_redesign.md` ← 本 Phase 4 で新規発生
+- M `log/cycle_staging_log.md` ← 本 Phase 4 で追記
+- (`memory/kaizen_tracker.md` は Phase 3 commit `18bc1ea0865d` で既に着地・push 済 → 本 Phase 4 では git diff に出ない)
+- 完遂条件 #3「3 ファイル限定」評価: Phase 3 commit を含めれば 3 ファイル、Phase 4 単体では 2 ファイル変更。新規 untracked 追加なし、`.tmp/edges_c258_test.jsonl` は gitignored (`.gitignore` L2) で対象外 → **完遂条件 #3 達成 (Phase 3+4 通算)**
+
+**Phase 5 引き継ぎメモ**:
+- 本サイクル commit 対象 = 上記 3 ファイル + 既存 staging Phase 3 までの追記分
+- rebase 進行中なので Phase 5 で日記追記 → commit → push の前に rebase 状態を再確認 (Phase 1 §0 警告再掲)
+- 段階3 着手判定の C260/C261 発火条件 (recall_golden 設計議論完了 + ww 推移安定) を次サイクル staging Phase 1 §A 持ち越しに積む

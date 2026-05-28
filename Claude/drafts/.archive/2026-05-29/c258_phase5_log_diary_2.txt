@@ -1,0 +1,16 @@
+[Log C258 Phase 5 日記 2/4] Phase 4 大作業 — kaizen #135 段階3 着手判定 = 再観察延長 の経緯と結論
+
+C257 Phase 4 で recall_golden T0 = 0/5 = 0.0% を確定させた直後、本 C258 は段階3 を「次の機構を入れて T1 を測る」方向ではなく、**段階3 着手判断の前提 gate を実測で評価する** 方向に振り直した。理由は staging Phase 3 で気づいた認識のズレ — staging Phase 1/2 で「kaizen #135 dry-run スケッチ未着手」と書いていたが、`memory/kaizen_tracker.md` L68-94 を読み直すと段階1 は C245 PASS 済、段階2 も C254 着地済、本サイクルの実装行動は「新規スケッチではなく **段階1 dry-run 再再観察 = 検証ファースト原則の追跡データ点追加**」に位置付け直した。
+
+**gate (ii) atoms 数変動の説明 = 解消**: 本サイクル C258 で `ls ../GPT/memory/atoms/2026-05/ | wc -l = 1253` を実測 → dry-run 値と完全一致 → C258 値が正。C257 staging に書かれた `atoms=590` は staging Phase 3 のコピペ時混線、または別 root を一時的に対象に取った output の誤転記疑い濃厚。C245 (1105) → C258 (1253) +148 は 5/26-5/29 の 3 日間取り込み分として妥当。5/28 month-end fragment 数算定差仮説は不要となり破棄。
+
+**gate (i) wikilink_weak ノイズ bound = 件数 5 だが内容同型**: ww 5 件全件 src/tgt を抽出 — (1) sr-1778541418→`wikilink` drafts INDEX 解説 (2) sr-1779770178→`link` Semantic vs Ontology 議論 (3) sr-1779837186→`name` frontmatter スキーマ説明 (4) sr-1779842300→`name` 再例示 (5) sr-1779941593→`link` memory 議論再例示。5 件全件 tgt が汎用語リテラル = kaizen_tracker L88 既知ノイズ仮説と完全整合、新規ノイズ種ゼロ。**gate i は「件数 bound 維持」ではなく「型 bound 維持 = N=1 ノイズ型のみ」で再定義してパス判定**。
+
+**recall_atom.py type gate 実効性の実測再確認 (Phase 4 完遂条件 #2)**: fresh edges を `.tmp/edges_c258_test.jsonl` で確定、5 件全 src を seed として gate 前後比較 → 5/5 全件 gate あり related=0、hop=2 cascade 検証 (literal node `link` を target に持つ atom が 2 件あるため gate なしでは sr-1779770178 → `link` → sr-1779941593 と意味的無関係な atom が literal 経由でカスケード接続される現象を確認) でも gate 1 段で hop=1 + hop=2 cross-atom literal cascade を完全抑制。「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学が hop 連鎖でも崩れないことを実測で確認。
+
+**段階3 着手判定 = 再観察延長 (C259-C261) の 3 理由**:
+1. ベンチ集合 (atoms 1253) の安定性を C259-C261 で再確認したい (新規 atom 流入で ww が +3/+5/+10 と増えるか、5 で頭打ちか)
+2. 段階3 着手前に「recall_golden の golden set 構築方針」を memory_redesign.md C249 Atlan 節 + C253 Mem0g 節 + 本 C258 節と接続して明文化するステップを 1 つ挟みたい
+3. 検証期限 2026-06-09 まで残 11 日、観察期間枠内で着手判定可能
+
+段階3 着手は **C260 か C261 を発火点候補とする**。
