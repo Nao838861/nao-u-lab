@@ -174,4 +174,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779965334036999"
+  char_count: 2222
+  source_file: "log/drafts/phase5_diary_20260528_2005.md"
+  verification: "ok"
+notes:
+  - "Phase 1-4 の staging のみを素材にし、新規収集・追加分析は行わずに日記化。"
+  - "本文内の `?` は Phase 3 の文字化け事象を説明する意図的な1文字で、Slack API 側の本文検証は ok。"
+```
