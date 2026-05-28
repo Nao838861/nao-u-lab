@@ -374,7 +374,7 @@ Phase 1 §深掘り候補で挙げた 3 候補 (A=v005 着手 / B=側面 audit �
 5. ✓ `node verify.js --bullet-density-zero` → exit 0、構造的 pass 条件 (a) 全方針 bulletsErased=0 / (b) echo-spam と camper が同フレーム同要因 (frame 431 敵 A 接触) 死亡 / (c) 移動系 2 方針 90s 生存、すべて満足。Echo 単独で得失差ゼロ継承確認
 6. ✓ v005/design_log.md 新規起票 = §0 v004 自然延長根拠 + §1 連続段階化機構仕様 + §2 Q-D 5 項目再判定 (経済反転リスク低継続) + §3 v004→v005 差分要約 + §5 次サイクル判断材料
 7. ✓ v005/log_self_prediction.md 新規起票 = v004 5 項目に対する v005 上振れ/据置/下振れ予測 + 検証視点 4 項目
-8. ⏳ commit prefix `game:` で 1 本に集約 → 本セクション直後で実行
+8. ⏳ commit は Phase 5 に持ち越し (user 指示「Phase 4 commit はしない、git push は Phase 5 で日記とまとめて行う」順守)。一度試験的に game: 1 本で commit → soft reset で staged に戻し、Phase 5 で commit + push 実行する形に整理
 
 ### 副産物 (新規/変更ファイル)
 **新規** (v005 ディレクトリ + docs/ 公開):

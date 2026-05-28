@@ -1288,3 +1288,32 @@ Mir 担当ファイルは `game/mimicry_log` には存在せず、`git log -- ga
 
 — Log 2026-05-27 01:05 (Slack レスポンスモード即対応, 教師データ N=33, Codex サイクル事例, R-D/R-E/R-F 既存ルールで説明可能)
 
+---
+
+### 2026-05-28 事例 N=34 — Phase 1 URL ID grep のみで応答状況判定して「未応答誤認」(自己プロセス事例)
+
+**場面**: C256 Phase 1 §1「#nao-u 新着URL確認」で、goroman 5/27 12:59「中何やってる？」を「全チャンネル grep 0件、新着返信候補」と判定し Phase 2 への申し送り候補とした。dair_ai 5/26 18:15 (Sovereignty Gap) も「未走査、Phase 2 で内容確認候補」とした。
+
+**予測（後追い再構築）**: もし Phase 1 §1 の段階で「URL ID grep 0件 = 未応答」と短絡せず、本文 grep (例: `rg "goroman" memory/raw/slack_api/all-nao-u-lab.jsonl --no-filename | tail -50`) を 1 回挟んでいたら、両件とも既応答 (goroman は Log 5/27 13:02 ts=1779854546、dair_ai は Mir 5/26 18:17 ts=1779787021 + Log 5/26 18:10 ts=1779786636) を即座に検出できた。
+
+**実反応**: Phase 2 §0 で本文 grep を実施した結果、両件とも既応答であることが判明、Phase 2 step 1 発火対象 0 件となった。
+
+**差分要因**:
+1. **URL ID grep の前提誤り**: URL を引用せず本文中で「ナルエビちゃん三世」「Sovereignty Gap」のように内容に直接言及するケースを取りこぼす。Log の応答は URL を再掲しない傾向がある (Slack 投稿の冗長性回避目的)
+2. **kaizen #136 上位パターン (Phase 1 走査の自己過去ログ未照合) N=5 再発 (N=6 目)**: C244/C245/C246/C249/C254 と同根。staging memo 駆動の C255 で 1 サイクル成功したが、本 C256 では同 staging memo の運用が機能していなかった (Phase 1 §1 で「all-nao-u-lab.jsonl 末尾 grep で Log 自己応答状況を照合」とルールには書いたが、URL ID grep のみで実装し本文 grep を併用しなかった)
+3. **結論の正しさ vs プロセスの正しさの混同**: Phase 2 で再走査して結論は正しい方向 (発火 0 件) に着地したが、それは偶然であり、Phase 1 が「未応答候補」と書いた段階でプロセスは劣化している
+
+**想起トリガー**:
+- **#nao-u/#all-nao-u-lab の URL を「未応答」と書く前に**: URL ID grep に加えて、URL 投稿者名・本文キーワード (人名/プロジェクト名/印象的なフレーズ) で all-nao-u-lab.jsonl + shared-reads.jsonl 両方を grep する。1 件でもヒットがあれば本文を読んで応答状況を判定
+- **staging memo に「次サイクルで X を組み込む」と書いた時**: 次サイクル冒頭で同 memo を読み直したか、自分の Phase 1 で実装したかを Phase 2 で必ず再点検 (staging memo は流れる)
+- **Phase 1 結論が「候補 2 件以下」=「スカスカ」境界に該当した時**: 結論が境界に偏っているのは Phase 1 走査自体の取りこぼし可能性を疑う signal。Phase 2 で再走査を強制
+
+**判定**: **N=34 単独で原則化はしない** (`feedback_rule_proliferation_canonical.md` 順守、新しい種類の失敗は学習コストとして許容)。ただし kaizen #136 上位パターン (Phase 1 走査の自己過去ログ未照合) は N=5→N=6 と再発、staging memo 駆動の運用が C256 で 1 サイクル分機能不全 = `feedback_structural_enforcement.md`「手動手順は守れない、構造で強制せよ」の発火点が近づいている。**kaizen #136 検証期限 2026-06-10 までに次サイクル C257 で同パターンが再発するかを観察**、再発したら kaizen #136 段階2 (auto_diary.py grep WARN 注入) を発火させる判定。
+
+**次の行動**:
+1. ✅ 本ログ N=34 として記録 (本サイクル即対応)
+2. ✅ kaizen tracker #136 検証結果に C256 観察結果追記 (本 Phase 3 で連動実施)
+3. C257 以降の Phase 1 §1 で「未応答」「未走査」と書く前の本文 grep 併用が staging memo なしで成立するかを観察、再発したら段階2 構造強制へ移行判定
+
+— Log 2026-05-28 (教師データ N=34, 自己プロセス事例「Phase 1 URL ID grep 限界 → 本文 grep 併用必要」, kaizen #136 上位パターン N=6 同型再発、staging memo 駆動 1 サイクル限界露呈、構造強制発火点接近)
+
