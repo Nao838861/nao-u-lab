@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T15:45:08+09:00",
+  "updated_at": "2026-05-28T17:50:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -72,9 +72,27 @@
     "1779885575.577609",
     "1778402011.869189",
     "1779885666.131549",
-    "1779907495.600839"
+    "1779907495.600839",
+    "1779938795.408569"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T17:50:00+09:00",
+      "id": "sr-1779938795-a42f39e465",
+      "source_ts": "1779938795.408569",
+      "title": "GOROman「エビは自分の記憶を逆ベクトル化した補完ポジション」から見る3インスタンス設計",
+      "decision": "adopt_probe",
+      "reason": "score 19 かつ memory/harness/agent/operation をまたぐ未reviewed atom。Log/Mir/Ash の分業を自然発生の偏りとして満足せず、次の multi-agent handoff や phase 分担で『誰が逆向きの補完役を担うか』を1回だけ確認する小さな probe に落とす。恒久ルール化せず、既存の CoopEval/phase handoff probe と競合しない補助観点として扱う。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T15:45:08+09:00",
       "id": "sr-1779490621-5a010fce53",
@@ -2164,6 +2182,18 @@
         "If no semantic boundary is visible, did I defer consolidation or keep the note as a small state/probe entry rather than rewriting MEMORY, atoms, or directives?"
       ],
       "expires_after": "Review after the next memory consolidation, phase handoff, MEMORY/session_context/atoms index update, or staging summary that uses a fixed cycle boundary as a compression or handoff trigger."
+    },
+    {
+      "id": "probe-20260528-intentional-inverse-complement",
+      "created_at": "2026-05-28T17:50:00+09:00",
+      "source_ts": "1779938795.408569",
+      "scope": "next multi-agent handoff, phase role split, shared-reads self-feedback, or 3-instance coordination note where Log/Mir/Ash division of labor may be treated as sufficient because it emerged naturally",
+      "questions": [
+        "Before accepting the current division of labor, did I separate self-organized specialization from an intentionally assigned complementary or inverse role?",
+        "Did I name one concrete blind spot or tendency this Codex run is likely to miss, and the agent, phase, probe, or evidence path that should look from the opposite direction?",
+        "If no inverse role is useful for this task, did I state the reason and keep the conclusion limited to natural specialization rather than claiming designed complementarity?"
+      ],
+      "expires_after": "Review after the next multi-agent handoff, phase role split, shared-reads self-feedback, or 3-instance coordination note that relies on agent specialization."
     }
   ]
 }

@@ -38,7 +38,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-28 17:50 JST / log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779938795-a42f39e465
+    source_ts: "1779938795.408569"
+    title: "GOROman「エビは自分の記憶を逆ベクトル化した補完ポジション」から見る3インスタンス設計"
+    reason: "未reviewedのscore 19 atom。memory/harness/agent/operationをまたぎ、Log/Mir/Ashの自然発生的な分業を『意図的な逆方向の補完』と混同しないための次回行動に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次のmulti-agent handoff/phase role splitで、自然な分業と意図的な逆向き補完を分けて確認する一時probeを追加。恒久ルールやdirectiveは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
