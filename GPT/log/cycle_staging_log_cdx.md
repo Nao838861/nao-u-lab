@@ -35,7 +35,39 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778300066-e7c3bd45b1
+    source_ts: "1778300066.673579"
+    title: "@shirasu59s「判断は作業より重く一日3-4hが限界」 × @ebikani_hasami「抽象思考できないとAIとおしゃべり」を1つの構造に畳む"
+    reason: "score 18 かつ memory/harness/game-design/operation/evaluation をまたぐ未レビュー atom。判断の量的枯渇と抽象不足によるおしゃべり化を独立制約として扱う点が、Phase 3b の「1件だけ選び、小さく反映する」運用に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の cycle staging / memory cleanup / game 判断で、多数候補を一度に抱えず「今回の判断スライス」を1つ固定する短期 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    id: probe-20260528-judgment-slice-abstraction-scaffold
+    scope: "next cycle staging, memory cleanup, shared-reads self-feedback, or game design/evaluation step where many candidates, fixes, probes, or metrics compete for judgment at once"
+    questions:
+      - "Before comparing many options, did I name the single judgment slice for this pass, such as adoption, evidence strength, implementation gate, risk, or next playable effect?"
+      - "Did I separate quantity overload from quality failure: too many decisions to hold at once versus missing the abstraction that prevents generic AI chat?"
+      - "If both are present, did I reduce the action to one reversible scaffold, probe, or deferred item instead of adding a broad rule, larger checklist, or all-at-once refactor?"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

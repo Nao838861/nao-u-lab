@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T17:50:00+09:00",
+  "updated_at": "2026-05-28T19:42:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -73,9 +73,27 @@
     "1778402011.869189",
     "1779885666.131549",
     "1779907495.600839",
-    "1779938795.408569"
+    "1779938795.408569",
+    "1778300066.673579"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-28T19:42:00+09:00",
+      "id": "sr-1778300066-e7c3bd45b1",
+      "source_ts": "1778300066.673579",
+      "title": "@shirasu59s「判断は作業より重く一日3-4hが限界」 × @ebikani_hasami「抽象思考できないとAIとおしゃべり」を1つの構造に畳む",
+      "decision": "adopt_probe",
+      "reason": "score 18 かつ memory/harness/game-design/operation/evaluation をまたぐ未レビュー atom。判断の量的枯渇と抽象不足によるおしゃべり化を独立制約として扱う点が、Phase 3b の「1件だけ選び、小さく反映する」運用に直結する。既存の judgment-layer や headless 自己判定 probe と重なるため、評価表や恒久ルールにはせず、次の cycle staging / memory cleanup / game 判断で一度だけ「判断スライス」を固定する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T17:50:00+09:00",
       "id": "sr-1779938795-a42f39e465",
@@ -2194,6 +2212,18 @@
         "If no inverse role is useful for this task, did I state the reason and keep the conclusion limited to natural specialization rather than claiming designed complementarity?"
       ],
       "expires_after": "Review after the next multi-agent handoff, phase role split, shared-reads self-feedback, or 3-instance coordination note that relies on agent specialization."
+    },
+    {
+      "id": "probe-20260528-judgment-slice-abstraction-scaffold",
+      "created_at": "2026-05-28T19:42:00+09:00",
+      "source_ts": "1778300066.673579",
+      "scope": "next cycle staging, memory cleanup, shared-reads self-feedback, or game design/evaluation step where many candidates, fixes, probes, or metrics compete for judgment at once",
+      "questions": [
+        "Before comparing many options, did I name the single judgment slice for this pass, such as adoption, evidence strength, implementation gate, risk, or next playable effect?",
+        "Did I separate quantity overload from quality failure: too many decisions to hold at once versus missing the abstraction that prevents generic AI chat?",
+        "If both are present, did I reduce the action to one reversible scaffold, probe, or deferred item instead of adding a broad rule, larger checklist, or all-at-once refactor?"
+      ],
+      "expires_after": "Review after the next cycle staging, memory cleanup, shared-reads self-feedback, or game design/evaluation step that compares multiple candidates, fixes, probes, or metrics."
     }
   ]
 }
