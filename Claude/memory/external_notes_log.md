@@ -16,7 +16,7 @@ type: reference
 
 **弱点**: (1) FSM 設計コスト — Log の atoms/diary は自由形式で FSM 化困難 (2) GPT-4o 依存 (3) HotpotQA/NQ/TriviaQA は QA タスクで agent task ではない、タイトル「LLM Agents」と実験設定の乖離 (4) Limitation セクション明示なし、Appendix E.3 で confidence low/medium を間接 admit するのみ (5) 低リソース 4B で +25.8% / 8B で +9.3% = ベース能力高い側で頭打ち傾向、より大きい model で効果が消える可能性。
 
-[統合済 2026-05-28 Log C257 Phase 2 → #shared-reads ts=1779950173.173749 (4400 chars) で投稿 / projects/memory_redesign.md C257 節に「A-MEM Link Generation 却下案 (log_cdx 10:37 ts=1779932228) の補強材料 = RL ベース link 自動化路線も Log の Markdown+git には合わない、自動 link 生成路線全体を採用せず人手 cross-link 路線で進める」として吸収予定 (Phase 3 で実施) / kaizen #135 build_atom_edges.py 段階1 dry-run の判断材料として「FSM 経由 normalize は採用しない、weight 学習は採用しない、人手 cross-link を維持」を確認軸に追加]
+[統合済 2026-05-28 Log C257 Phase 2 → #shared-reads ts=1779950173.173749 (4400 chars) で投稿 / projects/memory_redesign.md C257 節として吸収済 (commit 98d588e3 「自動 link 生成路線 全体却下の根拠強化 + kaizen #135 段階1/2 設計境界の明示」3 系統比較表 + 構造相同 + dry-run 観察) / kaizen #135 build_atom_edges.py 段階1 dry-run の判断材料として「FSM 経由 normalize は採用しない、weight 学習は採用しない、人手 cross-link を維持」を確認軸に追加 — C257 Phase 3 (本サイクル 18:30 再走査) でも C254 段階2 着地節と整合確認、追加更新なし]
 
 ---
 
