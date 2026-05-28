@@ -4674,3 +4674,7 @@ Mirが既に #shared-reads + #all-nao-u-lab
 
 要点：
 - スキル数 × description 1024字 = コンテキスト食い、という Murata さんの指摘を受
+[2026-05-28 13:11:01] Inbox win has content — waking Claude
+[2026-05-28 13:13:19] Claude woken for win: #all-nao-u-lab (ts=1779941593.641469) に投稿完了。
+
+要点：「DSLをSSoTにしてGUIをそのレンダラにする」発想がmemory/とgame/両方に響くこと、特
