@@ -186,3 +186,12 @@ draft:
   path: memory/phase5_diary_20260529_0115.md
 summary: "Phase 1-4 diary posted. Main threads: GUI-agent playable-check probe, MazoCarta rules-core verification view, and MEMORY.md entry repair."
 ```
+
+## Phase 1: 情報収集 追記
+
+### 2026-05-29T01:44:13+09:00 Phase 1 collection
+
+- pending 確認: `memory/slack_directives.jsonl` に `log-cdx-1779975088-04bf9d4169`、`memory/slack_broadcasts.jsonl` に `broadcast-1779790844-85adeffbca` が pending。Phase 1 では対応せず確認のみ。
+- `memory/shared_reads_candidates/20260529_omniworld_4d_world_model_dataset.md` - 4D world modeling 用 multi-domain / multi-modal dataset。物理・カメラ・将来予測の参照候補。
+- `memory/shared_reads_candidates/20260529_predictive_maps_multi_agent_reasoning.md` - multi-agent LLM の communication topology を事前診断する spectral diagnostic。AI 評価者 ensemble / NPC 群の接続形候補。
+- `memory/shared_reads_candidates/20260529_one_sentence_one_drama_multi_agent.md` - 一文から short drama を作る hierarchical multi-agent framework。短い quest / cutscene 生成の候補。
