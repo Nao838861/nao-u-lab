@@ -145,5 +145,24 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-28 18:34 JST / log_cdx Phase 4c
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260528-01
+    files_changed:
+      - path: memory/MEMORY.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Tag Entry Points 直下に Broad Tag Descent の短い案内を追加し、巨大 tag から直接掘らず既存の game_memory_task_lens_index.md を正本として読む導線を置いた。新規 index や生成ロジック変更は行っていない。"
+    partial: false
+migrations: []
+verification:
+  - "memory/game_memory_task_lens_index.md に Broad Tag Descent Map が存在し、MEMORY.md の案内先として読めることを確認した。"
+  - "python tools/memory_recall.py \"headless harness bad-policy shmup enemy pattern\" が exit 0 で動作することを確認した。"
+  - "git diff -- log/cycle_staging_log_cdx.md memory/MEMORY.md で Phase 4b outline 通りの範囲に収まっていることを確認した。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

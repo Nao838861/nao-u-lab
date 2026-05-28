@@ -68,6 +68,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1779669494-15705cce59` 2026-05-25T09:38:14.944199 <https://arxiv.org/abs/2605.21240> ■ 概要 この論文は、自己改善型 LLM agent がエピソードを重ねるほど賢くなる一方で、過去に報酬が高かった行動列へ固着し、まだ試していない有望な方針を捨ててしまう問題を「exploration coll tags=[memory, harness, game-design, agent, identity]
 
 ## Tag Entry Points
+
+### Broad Tag Descent
+
+`identity` / `evaluation` / `operation` / `game-design` / `memory` のような巨大 tag は、上位 atom を順に掘らず、まず `memory/game_memory_task_lens_index.md` の `Broad Tag Descent Map` に降りる。具体対応表は lens index 側を正本にし、この MEMORY.md は入口だけに留める。
+
+- ゲーム制作前は、該当 broad tag から `Playable / Headless 評価`、`Balance / Rule Space`、`Feedback / Rights / Human Judgment` などの lens を先に選ぶ。
+- `headless harness`、`bad-policy`、`shmup enemy pattern`、`feedback bridge` のような具体タスクは、Tag Entry Points ではなく lens の「使う場面」/ recall query / representative を読む。
+- 足りない時だけ `python tools/memory_recall.py "<lens 名 + 具体タスク>"` を実行し、broad tag 全体検索へ戻る。
+
 - `identity` (1213): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `game-design` (917): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `operation` (910): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
