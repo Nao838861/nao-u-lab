@@ -71,7 +71,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-05-29T02:05:00+09:00 Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    links_checked: 0
+    broken_links: 0
+  atoms_jsonl:
+    total_atoms: 1807
+    bad_json_lines: 0
+    duplicate_ids: 0
+    duplicate_content_groups: 19
+    atoms_index_sync:
+      index_ids: 1807
+      atoms_not_in_index: 0
+      index_not_in_atoms: 0
+  raw_archive:
+    cutoff: "2026-04-29T02:01:45+09:00"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    older_than_30_days: 0
+  inbox:
+    pending_directives:
+      - id: log-cdx-1779975088-04bf9d4169
+        status: pending
+        reason: "needs_human_review のため Phase 4a では handled 化しない"
+    pending_broadcasts:
+      - id: broadcast-1779790844-85adeffbca
+        status: pending
+        reason: "needs_human_review のため Phase 4a では handled 化しない"
+issues:
+  - id: ISS-4A-20260529-001
+    description: "Slack 取り込み atom に、同一タイトルだけで正規化内容が重複するグループが残っている。例: shared-reads 再投稿補正版 70 件、日記前検索 62 件、議論論点 27 件、broadcast 受領 12 件。ID は重複していないためデータ破損ではないが、検索結果では本文差分や代表性が見えにくい。"
+    severity: medium
+    evidence: "memory/atoms.jsonl lines 831-900, 745-806, 738-795, 996-1057; memory/atoms/index.jsonl sync OK"
+    why_blocks_game_memory: "ゲーム制作時に shared-reads や Slack 由来の lesson を探すと、同名の薄い atom が多数返り、実際に次の playable diff へ使える要点へ到達する導線が埋もれる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260529-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
