@@ -121,6 +121,21 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-29T04:44+09:00 log_cdx Phase 4a 実行。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を確認。Markdown/file 参照の broken link はなし。`python tools/memory_ingest.py` はコマンド例として検出されたため broken link 扱いしない。"
+  - "memory/atoms.jsonl を確認。1772 行、JSON parse error 0、重複 id 0、重複 normalized/content hash 0、source_ts 多重 0。"
+  - "memory/raw/ を確認。30 日以上未更新の raw file は 0 件。"
+  - "memory/shared_reads_candidates/ を確認。30 日以上未更新の candidate は 0 件。"
+  - "inbox 系を確認。slack_directives pending 0、slack_broadcasts pending 1。残 pending は broadcast-1779790844-85adeffbca / triage_status=needs_human_review のため、この mechanical cleanup では handled 化しない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
