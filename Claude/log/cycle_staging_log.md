@@ -283,3 +283,41 @@ log_autonomous_game v005 → Boghog 5層自己判定書の作成 (game/log_auton
 - **Boghog 5層は既に external_notes_log.md と design_log §5.4 で材料が揃っている**: 体系化作業のみで完了、新規調査なし = 30分粒度で「進んだ」と言える
 - **playable diff の準備として位置付け**: 結晶化主導ではなく「次サイクルの playable diff 着手準備」、CLAUDE.md「絶対にやる §1」順守
 - **却下した代替案**: (a) kaizen 未検証 33件の埋め複数件 = 30分で 5件以上は無理、1件ずつでは大作業粒度未達 (b) v005 直接改修 = 実機判定来ていないため独断改修は禁忌 (c) kaizen tracker 自動健全性チェックの起票 = CLAUDE.md「即ルール化しない」順守で N=複数まで保留
+
+## Phase 4: 実行
+
+### 完遂判定: ✅ 完了
+
+新規ファイル `game/log_autonomous_game/v005/boghog_self_assessment.md` を作成、完遂定義 4 項目すべて充足:
+
+| 完遂条件 | 状態 | 根拠 |
+|---|---|---|
+| 5 セクション存在 | ✅ | §1 Sprite Construction / §2 Pattern Grouping / §3 Color Strategy / §4 Animation / §5 Depth Sorting |
+| 各セクション 4 要素 | ✅ | v005 現状引用 (game.js 行番号付) + Boghog 原則 1 行要約 + ギャップ評価 + 改修優先度 (高/中/低) |
+| 末尾 v006 着手判定の決定木 | ✅ | §6 = 自己判定優先度合計 9 (高=3+中=2+中=2+低=1+低=1) × Nao_u/Mir/Ash 4 パターン (A/B/C/D) 表 |
+| v006 ゴー判定の閾値明示 | ✅ | §6 「閾値と例外」節 = 合計 ≥ 5 かつ判定 ∈ {B,C,D} → 起票確定 / 合計 ≥ 5 かつ判定 = A → ズレ例外で sense_prediction_log 行 / 合計 < 5 かつ判定 = A → v005 着地 |
+
+### 副産物
+
+**新規ファイル (1 件)**:
+- `game/log_autonomous_game/v005/boghog_self_assessment.md` (約 8KB、7 セクション = 5 層 + 決定木 + リンク)
+
+**変更ファイル (1 件)**:
+- `log/cycle_staging_log.md` (本 Phase 4 セクション追記)
+
+**Slack 投稿**: なし (Phase 4 で増やさない指示順守)
+**kaizen エントリ**: なし (CLAUDE.md「即ルール化しない」順守、Sprite Construction 高優先度判定は実機ズレ確認まで起票しない)
+**playable diff**: 0 件 (本サイクル意図的に 0、評価地図整備のみ。Phase 3 §6 アクション統計と整合)
+
+### Phase 4 で逸れなかった確認
+
+- 着手前に大作業仕様 (§ 次フェーズの大作業) を staging から再読 = ✅ 実行
+- 途中で別作業に逸脱せず単一ファイル作成に集中 = ✅ (Slack 観測・kaizen 起票・v005 game.js 改修は一切行わず)
+- 1 作業に集中 = ✅
+- commit/push は行わない (Phase 5 で日記とまとめて行う) = ✅ git add していない
+
+### Phase 4 で得た副次的発見 (Phase 5 日記候補)
+
+1. **5 層中 3 層が中以上 (Sprite=高, Color=中, Animation=中)** = v005 readability 設計には Log 単独評価でも改修余地が複数残っている。Nao_u/Mir/Ash 実機判定が「v005 で問題ない」=A パターンになると合計 9 ≥ 5 のズレ検知が発火する設計
+2. **Pattern Grouping (層2) で Boghog 推奨 vs Nao_u 批判が逆方向独立到達**を構造化した。「補助を足せ (Boghog)」「補助を剥がせ (Nao_u)」が同じ readability 問題に正反対の解で到達。v005 は Nao_u 側を採用済 = 個別判定で済むが、汎用ルール化 (R 層昇格) する場合は「補助の足し引きは状況に応じて両方ある」と書く必要がある
+3. **決定木 A パターン (ズレ例外)** の処理に sense_prediction_log.md を組み込んだ = 単純 GO/NOGO ではなく「ズレを教師データ化」経路を組んだことで、Nao_u 判定信頼度の長期的な校正機構として機能する設計に
