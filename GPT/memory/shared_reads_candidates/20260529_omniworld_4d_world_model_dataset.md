@@ -4,6 +4,15 @@ url: "http://arxiv.org/abs/2509.12201v2"
 collected_at: "2026-05-29T01:44:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-tech, world-model, physics, dataset, 3d]
+evaluated_at: "2026-05-29T01:49:12+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  4D world modeling の問題設定と dataset 不足の論点は明確だが、現候補には dataset 構成、annotation 種別、評価 task の中身がほぼない。
+  ゲーム制作では物理予測・カメラ制御への参照になり得るものの、現時点で CoopEval 水準の概要を書くと一般論が増えすぎる。
 ---
 
 ## raw_excerpt

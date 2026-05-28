@@ -4,6 +4,15 @@ url: "http://arxiv.org/abs/2605.22144v1"
 collected_at: "2026-05-29T01:44:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [narrative, multi-agent, content-generation, llm, production-pipeline]
+evaluated_at: "2026-05-29T01:49:12+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  narrative pacing / spatial consistency / production quality control という問題分解はゲーム内イベント生成に使える。
+  ただし現候補には hierarchical multi-agent framework の役割分担、評価方法、失敗例が不足しており、Phase 3 投稿には追加の中身確認が必要。
 ---
 
 ## raw_excerpt
