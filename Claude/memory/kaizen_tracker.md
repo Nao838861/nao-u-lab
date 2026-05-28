@@ -86,6 +86,11 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
     - #7 commit + tracker 追記 → 本セクション追記が tracker 側、commit は C245 Phase 5 で日記と合わせて push（Phase 4 指示「commit はしない」順守）
   - **既知の弱点 (段階1 仕上げ時点)**: wikilink_weak の 2 edges target が `wikilink` / `link` という汎用語リテラル抽出によるノイズ edge。本文中で `[[wikilink]]` を例示テキストとして書いた atom (sr-1778541418-0f25c063e5 の drafts INDEX 解説、sr-1779770178-5d606254b2 の Semantic vs Ontology 議論) からの誤抽出。段階2 移行時の判定軸: (a) recall 側で `wikilink_weak` を type gate で除外 / (b) 抽出側で ID_LIKE_RE 不一致を捨てる (= wikilink_weak 完全廃止) / (c) 汎用語ストップリスト (`wikilink`, `link`, `name`, `id` 等) でフィルタ。recall 側 gate (a) が atom 本体に手を入れず、抽出パイプラインも単純なまま、ノイズ判断を後置できるため Semantic vs Ontology 「書き込み時に分けない、読み出し時に分ける」原則と最も整合。段階2 で (a) を第一候補として recall_atom.py 仮実装に組み込む方針。
   - 段階2 移行判定: 本 C245 Phase 4 で段階1 完遂条件 7/7 達成 (commit のみ Phase 5 持ち越し)。段階2 着手は次サイクル以降、観察期間 C244-C248 (起票時メモ) の残り 3 サイクル中に Mir/Ash クロスチェックの状況を踏まえて発火点を決める。
+  - **段階1 dry-run 再観察 (2026-05-28 C257 Phase 3)**: 再実行 `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` →
+    ```
+    atoms=590 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
+    ```
+    起票時 (C245) との差分: atoms 1105→590 (差 -515、~46% 減 — 5/28 0:00 跨ぎ + 5月分 atom の supersedes 集約進行 or 一部 fragment 数算定ロジック差の可能性、本サイクル時点では深掘り保留) / wikilink_weak 2→1 (-1 = 本文 `[[wikilink]]` 例示テキストの掃除 1 件分相当 or 抽出元 atom 1 件 supersedes) / supersedes_chain 370→370 (完全一致 = frontmatter scan ロジック安定) / total_edges 749→748 (±1 一致)。**解釈軸**: 本サイクル C257 Phase 3 で arXiv 2511.07800「Trainable Graph Memory」full intake により「自動 link 生成路線 全体却下 (A-MEM / Mem0g Update Resolver / RL weight 学習 の 3 系統全件却下)」が確定、build_atom_edges.py は **「auto link 生成の precursor」ではなく「人手 cross-link を支援する道具」** として位置づけが明示された。dry-run の wikilink_weak 残存 1 件 = recall 側 type gate で除外 (段階2 で実装済) という構造は「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学と整合、本論文 RL 経由の false positive 吸収とは別軸の解を独立採用済と再確認。詳細は [projects/memory_redesign.md](../projects/memory_redesign.md) §「2026-05-28 (Log C257 Phase 3)」節。**段階2 移行判定の現状**: C254 Phase 4 で既に段階2 着地済 (`tools/recall_atom.py` 84行 + edges.jsonl 実書き出し + 1-hop 展開動作確認、sample 3 atom で related=5/1/0 確認)、本観察で段階1 dry-run の安定性も再確認 = 段階3 (recall_golden T0 ベンチ) 着手判定の事前 gate を 1 つ満たした位置。残 gate = (i) wikilink_weak ノイズが C257 1 件レベルで bound 維持 (ii) atoms 数変動の説明確定 (5/28 month-end 跨ぎでの fragment 数算定差仮説確認) の 2 つ、検証期限 2026-06-09 まで観察延長。
 
 ---
 

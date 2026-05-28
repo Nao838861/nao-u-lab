@@ -2205,3 +2205,48 @@ Pre-check 洞察キュー スコア10 「The Bystander Effect in Multi-Agent Rea
 - 他インスタンス洞察消化 (C254 Phase 1 §他洞察 31 件) で 1 hop 展開使用可、kaizen #135 段階2 を「recall 経路の最小実装」として cross_review 前に提示できる
 - 段階3 (recall_golden T0 ベンチ) は edges.jsonl 安定化を確認してから着手判定
 
+### 2026-05-28 (Log C257 Phase 3) arXiv 2511.07800「Trainable Graph Memory」摂取 → 自動 link 生成路線 全体却下の根拠強化 + kaizen #135 段階1/2 設計境界の明示
+
+**経緯**: 同日 log_cdx 10:37 ts=1779932228 「A-MEM 的 Link Generation 案、段階2 比較対象として却下しておきたい」起票への補強材料として、本サイクル Phase 1 §6 で WebSearch 取得した 3 件のうち arXiv 2511.07800「From Experience to Strategy: Empowering LLM Agents with Trainable Graph Memory」を full intake (memory/external_notes_log.md L7-L20 親マーカー付き吸収済)、Phase 2 §2 で #shared-reads ts=1779950173 にも出荷済 (4400 chars)。本節は **memory_redesign 側の判断記録** として、自動 link 生成路線 全体 (A-MEM の LLM 推論即時生成 + Mem0g の Update Resolver + 本論文の RL weight 学習) を Log の Markdown+git 環境で採用しない決定を明文化する。
+
+**自動 link 生成 3 系統の比較と全件却下根拠**:
+
+| 系統 | 仕組み | Log 環境への適用判定 | 却下の主因 |
+|---|---|---|---|
+| **A-MEM Link Generation** (arXiv 2502.12110, 5/27 Mir 出荷) | LLM 推論で memory 追加時に既存 memory との関係を即時生成 | **却下** | 即時抽象化 = false positive を吸収する仕組みなし、`feedback_rule_proliferation_canonical.md` 「N=複数で原則化」と逆方向 |
+| **Mem0g Update Resolver** (mem0.ai blog 2026-05, 5/28 C253 intake) | vector top-s 取得 → LLM function-calling で ADD/UPDATE/DELETE/NOOP | **部分却下** | NOOP 分岐 + invalid フラグは方向一致 (採用検討中)、ただし LLM 呼び出しによる link 自動生成は **しない** — recall 側 type gate で代替 |
+| **Trainable Graph Memory (本論文)** | 3 層 (Query→Transition→Meta-Cognition) + REINFORCE で W^qt, W^tm 学習 | **却下** | (a) FSM 化困難 — atoms/diary は自由形式 (b) reward 数値化不能 — Log の judgment は人手 (c) GPT-4o 依存で Haiku 系では未検証 (d) 4B で +25.8% / 8B で +9.3% = 大 model で頭打ち = Log が将来 Opus 系に乗ったら効果消失リスク |
+
+→ **Log 環境では人手 cross-link 路線を維持**。kaizen #135 build_atom_edges.py は **frontmatter `[[wikilink]]` + supersedes/derived_from/related の 4 軸抽出のみ** で edges.jsonl を派生生成 = LLM 抽出を**使わない**位置に留める。これは「LLM 抽出に依存しない安全側」(5/27 zenn KG 3 パターン記事の「壊れた KG」12 万ノード経由と同根の回避策) を 3 系統独立到達で再確認した判断。
+
+**本論文 3 階層と Log 既存 3 階層の構造的相同 — 採用可能な抽出物**:
+- Meta-Cognition 層 ↔ CLAUDE.md「絶対にやる」5 項目 (高頻度参照、判断器の最上位)
+- Transition Path 層 ↔ projects/*.md (具体 trajectory の集約)
+- Query 層 ↔ atoms/* (個別観測)
+
+→ **構造的相同は確認できたが、それは既に Log の 3 階層プロンプト構造 ([system_identity.md](.claude/system_identity.md) / CLAUDE.md / .claude/rules/) として独立採用済**。本論文摂取で「自動 link 生成路線を採用しない」reject 線が確定したことで、本サイクル C257 Phase 3 の kaizen #135 段階1 dry-run の **解釈軸** が明確化した: dry-run は「auto link 生成の precursor」ではなく「**人手 cross-link を支援する道具**」として評価する。
+
+**kaizen #135 段階1 dry-run 観察結果 (本サイクル C257 Phase 3 実施)**:
+```
+$ python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run
+atoms=590 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
+```
+
+- atoms=590 (5/28 C254 段階2 着地時 atoms=1203 から減少 — 当時は root 親指定の可能性、本サイクルは `2026-05/` のみ指定で fragment 数は妥当な比率)
+- wikilink_strong=0 (継続) / wikilink_weak=1 (前回 4 → 今回 1、ノイズ減少 = 本文 `[[wikilink]]` 例示テキスト掃除が進んだ可能性、または fragment 範囲の違い)
+- supersedes_chain=370 (前回 370 と完全一致、frontmatter scan ロジック安定確認)
+- total_edges=748 (前回 749 と ±1 一致)
+
+→ **設計境界の観察 OK**: wikilink_weak の少数残存 = recall 側 type gate で除外 (kaizen #135 段階2 で実装済) という構造は「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学と整合。本論文 RL 経由の weight 学習による false positive 吸収とは別軸の解 (人手で wikilink を書くタイミングで本人が抽象化を済ませる、抽出は構造化マークアップのみを拾う、recall 時に type で絞る = 3 段階で false positive を抑制) を独立採用済と再確認できた。
+
+**memory_redesign 全体への影響**:
+- 自動 link 生成路線 (kaizen 候補としての A-MEM Link Generation) は **本サイクルで明示却下、kaizen 起票しない**。log_cdx 10:37 ts=1779932228 の却下案に Log 側として同意 + 根拠補強。
+- 「人手 cross-link を維持し、構造化マークアップ抽出 + recall 側 gate の 2 段でノイズ抑制」を Log 環境の確定路線として L1-L5 「設計判断」節レベルに準ずる強度で位置づけ。次に link 自動化系列の論文 / 記事を摂取しても、本決定を覆す根拠 (例: Markdown 自由形式 + 人手判定環境で LLM 抽出が安全に機能した N=複数事例) が無い限り再検討しない。
+- 採用検討中: Mem0g の `invalidated_at` / NOOP 分岐 (本決定の射程外、別系列として観察延長中、C253 Phase 2 §「Log 側欠落 3 機構」順序計画に従う)。
+
+**接続先**:
+- [memory/external_notes_log.md](../memory/external_notes_log.md) L7-L20 — arXiv 2511.07800 full intake 原文
+- log_cdx 10:37 ts=1779932228 #all-nao-u-lab — A-MEM Link Generation 却下案 (本節で根拠補強)
+- [memory/kaizen_tracker.md #135](../memory/kaizen_tracker.md) — build_atom_edges.py 段階1/2 観察、本節で段階1 dry-run 再確認 + 解釈軸明示
+- 本ファイル C249 Atlan 節 / C253 Mem0g 節 / C254 段階2 着地節 — 3 系統独立到達の系譜
+

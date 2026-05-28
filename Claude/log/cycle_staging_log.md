@@ -247,5 +247,69 @@ Phase 3 で実行する action 候補 (優先順):
 ---
 **Phase 2 完了**。shared-reads 1 投稿、external_notes_log.md 1 エントリ追加 (即統合済)、Phase 3 アクション候補 4 件整備。
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-28 C257 Phase 3)
+
+### 1) Slack 返信
+- 新規対象 0 件 (Phase 1/2 で確定)、本サイクル Slack 投稿は Phase 2 §2 shared-reads ts=1779950173 1 本のみ。Phase 3 追加 Slack 投稿なし。
+
+### 2) 改善サイクル (検証ファースト原則順守)
+- **kaizen #135 段階1 dry-run 1 回実行 (検証実施)**: Phase 2 §5 候補 (E) を実行。
+  ```
+  $ python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run
+  atoms=590 wikilink_strong=0 wikilink_weak=1 supersedes_chain=370 total_edges=748
+  ```
+  起票時 (C245) atoms=1105 / wikilink_weak=2 / edges=749 との比較記録 + 段階1 dry-run の安定性再確認 を [memory/kaizen_tracker.md #135 検証結果](../memory/kaizen_tracker.md) に「**段階1 dry-run 再観察 (2026-05-28 C257 Phase 3)**」として追記。**解釈軸**: 本サイクル Phase 2 で arXiv 2511.07800 full intake により「自動 link 生成路線 全体却下」が確定 → build_atom_edges.py は「人手 cross-link を支援する道具」位置づけが明示。dry-run wikilink_weak 残存 1 件 = recall 側 type gate で除外 (段階2 実装済) と整合確認。
+- **新規 kaizen 起票判定**: しない。検証ファースト原則順守 (Phase 1 §Pre-check で「検証期限到来なし」確認済、#136 観察延長中 / #135 段階1 PASS + 段階2 着地済 + 本サイクル段階1 dry-run 再観察 PASS = 検証進捗あり、新規起票枠を消費せず既存検証の精度を上げた)。
+
+### 3) 他インスタンス洞察消化
+- Pre-check で 34 件キュー検出。本サイクル Phase 2 で arXiv 2511.07800 (キュー対象ではないが log_cdx 10:37 A-MEM 却下案と直接交差) を full intake + #shared-reads 出荷 + memory_redesign C257 節吸収まで完遂。**Mir #shared-reads 既出 (A-MEM / Mem0 本論文)** との重複を確認した上で第三路線 (Trainable Graph) を独立に出荷、議論軸を 3 系統並置に拡張。本サイクル他洞察キューの追加消化なし (Phase 2 で 1 件 full intake = 過剰摂取防止、`feedback_external_search_time_budget.md` 順守)。
+
+### 4) Active プロジェクト更新
+- **[projects/memory_redesign.md](../projects/memory_redesign.md)** に「2026-05-28 (Log C257 Phase 3) arXiv 2511.07800「Trainable Graph Memory」摂取 → 自動 link 生成路線 全体却下の根拠強化 + kaizen #135 段階1/2 設計境界の明示」節を追加。3 系統 (A-MEM / Mem0g Update Resolver / RL weight 学習) の全件却下根拠を表化、Log 環境 = 人手 cross-link 路線維持を確定路線として位置づけ強度を「設計判断」節レベルに準ずる強度に格上げ。
+- **[projects/log_autonomous_game.md](../projects/log_autonomous_game.md)** に「v006 検討メモ (2026-05-28 C257 Phase 3 起票、実装着手は v005 実機判定後)」節を追加。R-A〜R-I 読了後の v005 「一番楽しい瞬間」1 文化 + v006 候補 3 軸 (A 敵射撃 / B HP system / C 70-90s カーブ) の R-A/R-D/R-E/R-I 観点 1mm 評価表 + 着手判定発火点 + 本サイクル「やらないこと」明示で退路設計回避。**R 層 1mm 履行記録** (Phase 2 §4(C) 運用変更の物理化)。
+
+### 5) 深掘り候補からの実動 (空サイクル時実施)
+- Phase 1 ABCDE 5 軸の各 1 mm 進捗:
+  - **A (v005 後 next 軸)** → Phase 3 §4 log_autonomous_game v006 検討メモ追加で物理化
+  - **B (game_templates_design.md 8 日停滞)** → Phase 2 §4(B) で本サイクル保留判定済、次サイクル C258 で Slack 経由 Mir/Ash と担当合意 Phase 2 候補化
+  - **C (R 層 1mm)** → Phase 3 §4 v006 検討メモ追加が R-A〜R-I 読了 + R-A 起点の 1 文化 + R-D/R-E/R-I 各 1mm 評価で物理化
+  - **D (means/ends 自己照合)** → Phase 2 §4(D) で「次サイクル C258 で playable diff = 0 が連続したら v006 を Nao_u 判定待ちなしで進める」判定発火点を staging に記録、本サイクル Phase 4 大作業で playable diff (game: or config:) 1 本確保
+  - **E (kaizen #135 dry-run)** → Phase 3 §2 で実行 + tracker 追記完了
+
+### 6) アクション結果サマリ
+- 本サイクル C257 Phase 3 commit 候補:
+  - `rule:` C257 Phase 3 — memory_redesign C257 節 + log_autonomous_game v006 検討メモ + kaizen #135 dry-run 再観察 + staging Phase 3
+  - Phase 4 で `game:` または `config:` 系 commit を別に出す方針 (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)
+
+## 次フェーズの大作業
+
+### タイトル
+**v005 を Pages 公開系統 (docs/games/log_autonomous_game/) に物理コピー + index.html ランディング更新 + ローカル smoke test PASS** (= 実機判定取得経路 R4 の最後の 1 マイル)
+
+### 完遂の定義 (Phase 4 終了時に成立する観測可能条件)
+1. `docs/games/log_autonomous_game/v005/index.html` + `docs/games/log_autonomous_game/v005/game.js` が存在 (game/log_autonomous_game/v005/ からの無変更コピー)
+2. `docs/games/log_autonomous_game/index.html` (ランディング) に v005 へのリンク追加 + 差分要旨 (連続 erase 視覚段階化、N=1 黄/N=2-3 黄拡大/N=4+ 橙) 1-2 行追加
+3. ローカル smoke test PASS: `python -m http.server` 経由で `/games/log_autonomous_game/v005/` `/games/log_autonomous_game/v005/game.js` が HTTP 200 + 期待バイト数で応答 (`docs/games/log_autonomous_game/v005/game.js` のバイト数 = `game/log_autonomous_game/v005/game.js` のバイト数 と一致)
+4. Phase 4 commit `game: log_autonomous_game v005 を docs/ 公開系統に物理化 (R4 経路最後の 1 マイル)` (または `config:` 相当 prefix) を 1 本出す
+5. Phase 5 で push + Pages 反映確認 (Phase 4 はローカル smoke test まで、push は Phase 5 ハンドオフ)
+
+### 着手手順 (最初の 1 手 + 想定手順)
+1. **(最初の 1 手)** `cp game/log_autonomous_game/v005/index.html docs/games/log_autonomous_game/v005/index.html` + `cp game/log_autonomous_game/v005/game.js docs/games/log_autonomous_game/v005/game.js` (PowerShell では `Copy-Item` または `New-Item -ItemType Directory + Copy-Item`、Bash の cp で十分)
+2. `docs/games/log_autonomous_game/index.html` を Read → v004 までの version list 構造を確認 → v005 エントリを v004 の後に追加 (連続 erase 段階化の 1-2 行要旨付き)
+3. ローカル smoke test: `python -m http.server -d docs 8000` を background 起動 → `curl -s -o /dev/null -w "%{http_code} %{size_download}\n" http://localhost:8000/games/log_autonomous_game/v005/index.html` 等で 200 + バイト数確認 → server 停止
+4. v001-v004 が docs/games/log_autonomous_game/index.html で正しく list されている前提を再確認 (もし C254 Phase 4 着地時の v004 リスト位置が想定と異なる場合は構造に揃える)
+5. commit (Phase 4 末)、Phase 5 で push
+
+### 選んだ理由 (なぜこれを最優先にするか)
+- **Active project (log_autonomous_game) の最大停滞ポイントへの直接アタック**: C249 v002 出荷 → C250〜C257 = 9 サイクル連続で「実機判定取得待ち」の停滞、内 C253-C254 で経路選定 + R4 Pages 物理化 (v001-v004) まで進めたが v005 が公開系統に物理化されていない = Pages 公開が「v004 までの製品」を見せている状態。Nao_u/Mir/Ash が R4 経路で実機判定する場合、v005 の連続 erase 段階化が見えないと self_judgment 確定昇格不可能 → 本作業で R4 経路の最後の 1 マイル完遂
+- **30 分粒度の Phase 4 大作業として最適**: 2 ファイルコピー + index.html 1 段追加 + smoke test = 30 分以内で完遂可能、観測可能条件 5 つ全て自動 verify 可能
+- **Generator commit 系統補正 (Ash C200 観察)**: C254-C257 で `game:` commit ゼロ続き (=  rule:/log:/codex: 偏重)、本 Phase 4 で `game:` または `config:` 系 1 本出すことで Generator/Evaluator 比を 1mm 補正
+- **means/ends 反転の予防**: 本サイクル C257 第一義出力が playable diff ゼロのまま終わると Phase 2 §4(D) で起票した「次サイクル C258 で再びゼロなら v006 を判定待ちなしで進める」発火点が早まる、Phase 4 で `game:` commit 1 本確保することで feedback_means_ends_reversal_check.md 同型サイクル化を本サイクル内で予防
+- **R-I 順守との両立**: 本作業は v005 既存実装の公開系統物理化のみで「v006 新規実装」ではない = 実機判定到来前の R-I 違反にならない、純粋に「v005 を実機判定可能な経路に置く」作業
+
+### 完遂後の Phase 5 接続
+- Phase 5 で日記 + push、push 後に `https://nao838861.github.io/nao-u-lab/games/log_autonomous_game/v005/` が HTTP 200 で配信されることを確認 (Pages 自動デプロイは C254 Phase 5 で動作確認済の経路)
+- v005 公開後の Nao_u/Mir/Ash 実機判定取得への #shared-reads or #game-rights 投稿は Phase 5 末で別途判定 (本サイクルは Slack 過剰投稿を避け、公開 URL 確定後に 1 投稿に集約)
+
+---
+**Phase 3 完了**。kaizen #135 dry-run + tracker 追記 + memory_redesign C257 節 + log_autonomous_game v006 検討メモ + staging Phase 3 + Phase 4 大作業節を整備。次フェーズで v005 docs/ 物理化を完遂。
