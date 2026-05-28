@@ -29,6 +29,18 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-05-28T15:40:58+09:00 log_cdx Phase 3 Shared-reads 投稿:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_agent_tom_monitoring_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950437392149
+    char_count: 3608
+  - candidate: memory/shared_reads_candidates/20260528_enacttom_functional_tom_embodied_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950438133899
+    char_count: 3549
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

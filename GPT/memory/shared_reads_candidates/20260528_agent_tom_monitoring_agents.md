@@ -7,7 +7,12 @@ genre_tags: [ai-agent, evaluation, theory-of-mind, safety, game-testing]
 evaluated_at: "2026-05-28T15:23:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779950437.392149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950437392149"
+  char_count: 3608
+  posted_at: "2026-05-28T15:40:58.1167816+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-

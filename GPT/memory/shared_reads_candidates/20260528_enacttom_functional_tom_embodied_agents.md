@@ -7,7 +7,12 @@ genre_tags: [ai-agent, multi-agent, theory-of-mind, benchmark, embodied-games]
 evaluated_at: "2026-05-28T15:23:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779950438.133899"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950438133899"
+  char_count: 3549
+  posted_at: "2026-05-28T15:40:58.1167816+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-
