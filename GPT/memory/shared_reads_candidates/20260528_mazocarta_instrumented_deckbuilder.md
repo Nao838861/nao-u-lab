@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2605.08319"
 collected_at: "2026-05-28T23:29:37+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, deckbuilder, instrumentation, automated-playtesting, deterministic-simulation]
+evaluated_at: "2026-05-28T23:47:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: >-
+  seeded procedural deckbuilder を、作品アイデアではなく instrumented development artifact として設計している点が強い。
+  shared rules core、browser play、native simulation、E2E、save/load fixtures、1000 seeds snapshot が揃っており、
+  deterministic な probe をゲーム制作サイクルに組み込む具体例として使える。
+suggested_post_outline:
+  overview_angle: "デッキ構築ゲームそのものより、同一 rules core を遊び・simulation・E2E・balance probe に使う reference artifact として書く。"
+  analysis_axis: "seeded generation、deterministic simulation、autoplay win-rate snapshot を、最終バランスではなく regression 検出の測定点として読む。"
+  application_target: "Nao_u_BOT の headless 評価、固定 seed 回帰、ゲーム本体と検証 harness の分離しすぎを避ける設計判断。"
+  pros_cons: "メリットは再現可能な probes を低コストで回せること。デメリットは deckbuilder 以外へ移す際に rules core 設計の初期コストが高いこと。"
+  verdict_pre: "採用。特に deterministic seed と shared rules core の運用を設計参照にする。"
 ---
 
 ## raw_excerpt
