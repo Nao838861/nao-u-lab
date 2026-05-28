@@ -76,7 +76,26 @@ self_feedback:
 - 既存の `fixed-test-vs-dynamic-stress` / `pcg-tool-loop-evidence` probe と隣接するが、今回の追加は browser 上の実入力と rubric 付き状態変化に限定した。恒久 directive や AGENTS.md 変更は行わない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-29T00:26+09:00 log_cdx Phase 4a 実行。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown/link 参照を確認。実ファイル参照 2 件に broken link なし。コマンド例の backtick はリンク対象から除外。"
+  - "memory/atoms.jsonl を確認。1772 rows、JSON error 0、id duplicate 0、exact/normalized content duplicate 0。"
+  - "memory/raw/ 配下の 30 日超未更新ファイルを確認。該当なし。"
+  - "memory/shared_reads_candidates/ 配下の 30 日超未更新 candidate を確認。該当なし。"
+  - "inbox pending を確認。directive 1 件、broadcast 1 件はいずれも needs_human_review の未対応指示であり、handled 化しない。"
+issues:
+  - id: ISS-001
+    description: "memory/MEMORY.md の日本語本文が mojibake しており、High Signal / Recent / Tag Entry Points の人間可読な検索導線として機能しにくい。"
+    severity: medium
+    evidence: "memory/MEMORY.md:1 および High Signal / Recent 各行。例: 'shared-reads 縺九ｉ...' のように UTF-8 読みでも日本語が崩れている。"
+    why_blocks_game_memory: "次のゲーム制作で過去の手法や判断基準を探す入口が壊れる。atom id と tag は残っていても、Use when の自然文が読めないため、ゲーム X の経験をゲーム Y へ引く初動が弱くなる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
