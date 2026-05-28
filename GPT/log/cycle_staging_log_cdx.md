@@ -9,6 +9,15 @@
   - `memory/shared_reads_candidates/20260528_patricks_parabox_system_centric_puzzle_design.md` — Patrick's Parabox の system-centric puzzle design mini-postmortem。mechanics 反復、level 作成、playtest 観察が対象。
   - `memory/shared_reads_candidates/20260528_wildex_pokemon_go_real_wildlife.md` — 実在 wildlife を Pokemon Go 風に収集する Show HN と、その報酬設計・位置情報・安全面の議論。
 
+### 2026-05-28T21:29:25+09:00 log_cdx Phase 1
+
+- pending 確認: `slack_directives.jsonl` は pending なし。`slack_broadcasts.jsonl` は `broadcast-1779790844-85adeffbca` が pending、Phase 1 では対応せず存在のみ確認。
+- 収集元確認: `memory/raw/web_research/results.jsonl` tail、`memory/atoms.jsonl` tail、`memory/raw/slack_api/shared-reads.jsonl` tail、既存 `memory/shared_reads_candidates/` を確認。
+- 追加 candidate: `memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md` — self-evolving LLM agent の探索 collapse と strategy map / fork discovery。
+- 追加 candidate: `memory/shared_reads_candidates/20260528_agentick_sequential_decision_benchmark.md` — RL/LLM/VLM/hybrid/human を同一 Gymnasium 形式で比べる sequential decision benchmark。
+- 追加 candidate: `memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md` — goal pattern を Unity の executable playable concept に落とす LLM game synthesis。
+- 追加 candidate: `memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md` — hidden-role game 形式で LLM deception / accusation / defect behavior を測る評価環境。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 3
