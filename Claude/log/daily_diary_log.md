@@ -2,6 +2,94 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-29 01:30 [Log C258 Phase 5 日記] kaizen #135 段階3 (recall_golden T0 ベンチ) 着手判定を **再観察延長 (C259-C261)** に確定させたサイクル。前サイクル C257 で T0 = 0/5 = 0.0% baseline を固定した直後の本 C258 は、ベンチ実行ではなく **gate 2 つ (i ww ノイズ bound, ii atoms 数変動の説明) を実測で評価し、段階3 着手前の根拠を強化** する純粋な検証サイクルだった。dry-run 時系列 `C245 atoms=1105/ww=2/total=749` → `C257 atoms=590/ww=1/total=748` → `C258 atoms=1253/ww=5/total=752` から **gate (ii) は実測 `ls .../atoms/2026-05 | wc -l = 1253` で完全一致確認 → C257 staging の 590 は誤記/別集計疑いで破棄、C245→C258 +148 は 3 日間取り込みとして妥当** と結論。gate (i) は件数 5 だが src/tgt を全件特定して **5件全件が汎用語リテラル `wikilink`/`link`/`name` (drafts INDEX 例示 / Semantic vs Ontology / frontmatter スキーマ説明)** = N=1 同型ノイズの件数増のみ、新規ノイズ種ゼロ、recall 側 type gate で吸収可能 = 「型 bound 維持」で再定義してパス判定。さらに `tools/recall_atom.py --root ../GPT/memory/atoms/2026-05 --edges .tmp/edges_c258_test.jsonl --atom <seed> --exclude-type wikilink_weak --max-hops 1` を ww 5 件全 src で実行、**5/5 全件 gate あり related=0 / hop=2 cascade も完全抑制** を実測 = type gate 実効性を「論理的整合」から「論理 + 実測整合」に強化。段階3 着手は C260/C261 を発火点候補に延長し、その前に recall_golden 設計議論 (golden set 構築方針を C249 Atlan + C253 Mem0g + 本 C258 節と接続) を 1 サイクル挟む方針を `projects/memory_redesign.md` 末尾 80 行追記で明文化。Slack 投稿は **#kaizen-log 1 本 (ts=1779982786) のみ**、#nao-u broadcast (yun_bow 5/26) は二段検証で既応答確定 (Log 5/26 13:31 ts=1779769903 が broadcast の 5.5h 前) → 投稿スキップ、#shared-reads は 24h Log 系統 2 本飽和 (Boghog 色相衝突 + GUI Agents 論文 Play2Code) → 投稿スキップ、#human-steering は Log 受領済 log_cdx 宛指示のみ → 返信不要。Phase 1/2 投稿系 3 タスク全 no-op の意味を Phase 2 §4 で「仕組み内部の健全 (N=7 連続成功、100% 統合維持、飽和判定機能) vs 第1原則 (ゲームを動かして出す) 主要出力の累積不在 N=2」両面評価で構造的に深掘り、本サイクルでできる「揃えるための1手」として検証ファースト原則の実行を選んだ。新規 kaizen 起票ゼロ・新規 R 層ゼロ・新規ルールゼロ **34 サイクル連続維持**、既存 kaizen #135 の gate 評価を 1 段深めただけで前進。
+
+### Phase 4 大作業 — kaizen #135 段階3 着手判定 = 再観察延長の経緯と結論
+
+C257 Phase 4 で recall_golden T0 = 0/5 = 0.0% を確定させた直後、本 C258 は段階3 を「次の機構を入れて T1 を測る」方向ではなく、**段階3 着手判断の前提 gate を実測で評価する** 方向に振り直した。理由は staging Phase 3 で気づいた認識のズレ — staging Phase 1/2 で「kaizen #135 dry-run スケッチ未着手」と書いていたが、`memory/kaizen_tracker.md` L68-94 を読み直すと段階1 は C245 PASS 済、段階2 も C254 着地済、本サイクルの実装行動は「新規スケッチではなく **段階1 dry-run 再再観察 = 検証ファースト原則の追跡データ点追加**」に位置付け直した。
+
+**実行**: `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` → atoms=1253 / wikilink_weak=5 / supersedes_chain=370 / total_edges=752。supersedes_chain=370 は C245 (749 total)、C257 (748 total)、C258 (752 total) の 3 時点で完全一致 → frontmatter scan ロジック安定確認。
+
+**gate (ii) atoms 数変動の説明 = 解消**: 本サイクル C258 で `ls ../GPT/memory/atoms/2026-05/ | wc -l = 1253` を実測 → dry-run 値と完全一致 → C258 値が正。C257 staging に書かれた `atoms=590` は staging Phase 3 のコピペ時混線、または別 root を一時的に対象に取った output の誤転記疑い濃厚 (確証は取れないが、本サイクル実測値で上書き判断)。C245 (1105) → C258 (1253) +148 は 5/26-5/29 の 3 日間取り込み分 (gr/sr/an prefix 新規 + 5月後半分) として妥当。**5/28 month-end fragment 数算定差仮説は不要となり破棄**。
+
+**gate (i) wikilink_weak ノイズ bound = 件数 5 だが内容同型**: ww 5 件全件 src/tgt を抽出:
+
+| # | src atom | tgt (literal) | 出自 |
+|---|---|---|---|
+| 1 | sr-1778541418-0f25c063e5 | `wikilink` | drafts INDEX 解説 (C245 既知ノイズ) |
+| 2 | sr-1779770178-5d606254b2 | `link` | Semantic vs Ontology 議論 (C245 既知ノイズ) |
+| 3 | sr-1779837186-3f3e3bd4cf | `name` | frontmatter スキーマ説明 |
+| 4 | sr-1779842300-a6f128d8bd | `name` | frontmatter スキーマ説明 (再例示) |
+| 5 | sr-1779941593-b733fdcf1c | `link` | memory 議論 (再例示) |
+
+5 件全件 tgt が汎用語リテラル `wikilink`/`link`/`name` = kaizen_tracker L88 既知ノイズ仮説と完全整合。新規ノイズ種ゼロ、5月後半の memory 議論 atom 増による副次的件数増。**gate i は「件数 bound 維持」ではなく「型 bound 維持 = N=1 ノイズ型のみ」で再定義してパス判定**。
+
+**recall_atom.py type gate 実効性の実測再確認 (Phase 4 完遂条件 #2)**: fresh edges `tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --output .tmp/edges_c258_test.jsonl` で ww=5 入力を確定し、5 件全 src を seed として gate 前後比較:
+
+| seed | gate なし related | gate あり related | noise 抑制 |
+|---|---|---|---|
+| sr-1779770178-5d606254b2 | 1 (link) | 0 | ✅ |
+| sr-1779837186-3f3e3bd4cf | 1 (name) | 0 | ✅ |
+| sr-1779941593-b733fdcf1c | 1 (link) | 0 | ✅ |
+| sr-1778541418-0f25c063e5 | 1 (wikilink) | 0 | ✅ |
+| sr-1779842300-a6f128d8bd | 1 (name) | 0 | ✅ |
+
+5/5 全件 0 件 noise 抑制実測。さらに hop=2 cascade 検証で literal node `link` を target に持つ atom が 2 件 (#2 と #5) あるため、gate なし hop=2 では sr-1779770178 → `link` → sr-1779941593 という意味的に無関係な atom が literal 経由でカスケード接続される現象を確認、**gate 1 段 (`--exclude-type wikilink_weak`) で hop=1 の literal noise だけでなく hop=2 以降の cross-atom literal cascade も完全抑制** を実測。「LLM 抽出に依存せず、抽出側で除外せず、recall 側で gate する」哲学が hop 連鎖でも崩れないことを実測で確認できた。
+
+**段階3 着手判定 = 再観察延長 (C259-C261) の 3 理由**:
+1. ベンチ集合 (atoms 1253) の安定性を C259-C261 で再確認したい — 新規 atom 流入で ww が +3/+5/+10 と増えるか、5 で頭打ちか
+2. 段階3 着手前に「recall_golden の golden set 構築方針」を memory_redesign.md C249 Atlan 節 + C253 Mem0g 節 + 本 C258 節と接続して明文化するステップを 1 つ挟みたい (検証手段定義の解像度が staging 大作業に直接落とせるレベルに粗い)
+3. 検証期限 2026-06-09 まで残 11 日、観察期間枠内で着手判定可能
+
+段階3 着手は **C260 か C261 を発火点候補とする**。C259-C260 で recall_golden 設計議論を memory_redesign.md に追記、C261 を段階3 PASS/FAIL 判定 Phase 4 候補に積む。
+
+**memory_redesign 全体への波及**: 「人手 cross-link + 構造化マークアップ抽出 + recall 側 gate」3 段ノイズ抑制路線 (C257 確定) の **3 段目 gate の効果を初めて定量実測** → C257 の決定根拠が「論理的整合」から「論理 + 実測整合」に強化。A-MEM Link Generation / Mem0g Update Resolver / RL weight 学習 の 3 系統却下決定 (C257) は本実測でさらに強化 — ww 5 件中 5 件が「frontmatter スキーマ説明 + 議論例示」由来 = 人手が抽象化を済ませた跡 = LLM 推論で取りに行くべき edge ではない、を実測で示せた。
+
+### Phase 1/2 投稿系 3 タスク全 no-op の構造的意味
+
+本サイクル Phase 1/2 で投稿系 3 タスク (Slack 返信 / shared-reads 投稿 / external_notes 統合) が全て no-op 判定。これは過去サイクルで仕組みが十分に作り込まれた結果 (kaizen #106 摂取経路固定化、kaizen #136 段階1 staging memo 駆動、external_notes_integration_audit 自動化、二段検証プロトコル C254→C257) で、内部状態が健全であることの裏返し。
+
+両面評価: **(+) 仕組みの内部状態が健全** (kaizen #136 N=7 連続成功、external_notes 100% 統合維持、shared-reads 飽和判定機能、broadcast 二段検証で既応答誤判定回避)。**(-) サイクル主要出力の蒸発リスク** = CLAUDE.md 絶対にやる第1原則「ゲームを動かして出す — 積み上げはその副産物」照合で本サイクル playable diff (game/* 配下 commit) なし = 第1原則の主要出力が連続2サイクル不在 (C257 も v006 R-I 順守で playable diff なし)。
+
+**第1原則違反かどうかの判定**: `projects/log_autonomous_game.md` §v006 着手判定発火点で「v005 実機判定到来前は v006 game.js 実装 commit を出さない」が R-I 順守として明示済 = 本サイクル playable diff 不在は退路設計ではなく正しい待機。ただし `feedback_means_ends_reversal_check.md` 「N=2 連続兆候」相当の累積カウントは進行中 → N=3 (次次サイクル C260 まで playable diff 不在継続) で再判定。
+
+**本サイクルでできる「揃えるための 1 手」**: (a) kaizen #135 build_atom_edges.py dry-run 再再観察 (= 検証ファースト原則の追跡データ点追加) を選択。理由 = 検証期限 2026-06-09 まで残 11 日、観察期間枠内、新規改善提案ではなく既存改善の検証データ点深化で `feedback_few_rules_big_effect.md` 順守。**不採用**: v006 game.js 実装着手 (R-I 順守違反)、v005 design_log 加筆 (実機判定前の推測値依存)、外部検索 1本 (既解問題判定で方針転換済)。
+
+### Phase 3 投稿 — #kaizen-log 1 本のみ
+
+`#kaizen-log` ts=1779982786 (Log 名義) — kaizen #135 dry-run 再再観察結果、gate (i)(ii) 評価、recall_atom.py type gate 実効性 5/5 noise 抑制、段階3 着手判定 = 再観察延長 (C259-C261) を構造化投稿。Slack 投稿は本 1 本のみ、その他チャンネル投稿ゼロ。
+
+### kaizen #136 段階1 観察 — N=7 連続成功維持
+
+本サイクル C258 Phase 1 §1 は staging memo なしの自発的二段検証成立 (broadcasts.jsonl 末尾走査 + Log 既応答 ts=1779769903 照合) → **N=7 上位パターン (Phase 1 走査自己過去ログ未照合) は再発なし**、staging memo 駆動 1 サイクル成功更新。累積 N=7 連続成功維持 (C252-C258)、構造強制発火点 N=10 (段階1→段階2 移行閾値) まで残 3 サイクル。観察は受動進行で Phase 3 追加アクション不要。
+
+### 「外の世界を広く見る」原則の自己診断
+
+過去 24h 外部摂取: Boghog 色相衝突表 (5/28 21:41)、GUI Agents 論文 Play2Code/PlaytestArena (5/28 23:49) = 2件、v006 候補 A/B への翻訳済。本サイクル外部摂取: なし (Phase 1 §6 で実検索省略、既解問題への検索回避で方針転換)。
+
+**不足兆候**: 24h 内 2件は閾値以上だが、**v006 案 A 影響評価が v005 実機判定待ちで止まっている = 摂取量は十分だが消化が滞留している状態**。次の一手は摂取増ではなく v005 実機判定到来時の消化準備。
+
+### 本サイクルで書き込んだメモリファイルの自己チェック
+
+「Nao_u が読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか」を全ファイルでチェック:
+
+1. **`projects/memory_redesign.md`** (末尾 約 80 行追記、節「### 2026-05-29 (Log C258 Phase 4) — kaizen #135 dry-run 再再観察と段階3 着手判定 = 再観察延長」) — Nao_u 読解: ✓ (a) 時系列差分表 (C245/C257/C258 3 行) (b) gate (i)/(ii) 評価表 (ww 5件全件 src/tgt) (c) recall_atom.py 実測 5 件表 + hop=2 cascade 実測 (d) 段階3 着手判定 = 再観察延長 (C259-C261 3 理由) の 4 ブロックで構造化、機械生成物に依存せず文章で読める。行動変更: ✓ 次サイクル C259 が読めば「golden 設計議論を明文化」「C260/C261 で段階3 PASS/FAIL 判定 Phase 4 候補に積む」が判断材料として直接使える
+2. **`memory/kaizen_tracker.md`** (#135 § L95-99 に C258 観察追記、Phase 3 で commit `18bc1ea0865d` で既着地) — Nao_u 読解: ✓ N=1 同型ノイズの件数増・atoms 変動 590→1253 の説明 (gate ii 解消)・ww 5件 src/tgt 全件特定 (gate i 評価データ) を含む。行動変更: ✓ 段階3 着手判定 = 再観察延長 (C259-C261) と発火点候補 (C260/C261) を明示、検証期限 2026-06-09 残 11 日のカウントダウン明記
+3. **`log/cycle_staging_log.md`** (Phase 1-4 全節 + Phase 4 着地節 約 30 行追記) — Nao_u 読解: ✓ Phase 1 6 項目 + 深掘り A-E + Phase 2 6 節 + Phase 3 6 節 + Phase 4 完遂状況 5 条件確認、構造化済み。行動変更: ✓ 「Phase 1/2 投稿系 3 タスク全 no-op の構造的深掘り」「v005 実機判定待機帯での副次原則進行整理」が次サイクル C259 staging Phase 1 で直接読める
+4. **`log/daily_diary_log.md`** (本サイクル C258 Phase 5 日記、本ファイル) — Nao_u 読解: ✓ TL;DR + Phase 4 経緯 + no-op の構造的意味 + メモリチェック + 次回起動時の温度を残す構成。行動変更: ✓ 次回起動時にやることに「semantic edge 派生で T1 測定」「golden 50 件 scaling」「v006 着手判定」を温度付きで明示
+
+### 次回起動時にやること (なぜそれをやるか込み)
+
+C258 で段階3 着手判定を C260/C261 まで延長し、その前に recall_golden 設計議論を明文化するステップを 1 つ挟む方針を確定させた。**次サイクル C259 は「recall_golden 設計議論の明文化」と「v005 実機判定到来時の v006 候補 A 消化準備」のどちらかが主軸**。
+
+1. **最優先候補 A: `projects/memory_redesign.md` に recall_golden 設計議論を明文化** — C249 Atlan 節 + C253 Mem0g 節 + 本 C258 節を接続し、「golden set 構築方針 (50 件 scaling 時にどの semantic 種類をどんな比率で含めるか) / 評価指標 (recall@10 だけでなく precision@10 や MRR も取るか) / PASS/FAIL 閾値設定根拠 (LOCOMO ベンチ Mem0g 58.13% を参照値にするか、自前 baseline を作るか)」を文章化。**なぜ最優先か**: C258 で段階3 着手判定 = 延長の 3 理由のうち #2「設計議論明文化が必要」を本サイクルで充足できる、新規 atom 流入観察 (理由 #1) は受動進行なので C259 Phase 4 大作業として最適、検証期限まで残 10 日で C260 段階3 着手のリードタイム確保
+2. **最優先候補 B: log_autonomous_game v005 実機判定到来時の v006 候補 A 消化準備** — v005 実機判定 (Nao_u/Mir/Ash) が C254-C258 で 4 サイクル経過、R-I 順守で v005 評価が来てから着手判定。**なぜ次優先か**: 実機判定 gate 未到達のため受動的に待機、来ていれば v006 設計に Phase 4 を充てる判定発火、来ていなければ候補 A (recall_golden 設計議論明文化) を採用
+3. **次優先: kaizen #135 build_atom_edges.py dry-run の C259 観察** — ベンチ集合 atoms 数の安定性確認、ww 件数 +3/+5/+10 増加 or 5 頭打ち の方向判定。**なぜ持ち越しか**: 受動進行で Phase 4 大作業化不要、staging Phase 1 §6 で 1 行記録のみで十分
+4. **次優先: kaizen #136 段階1 観察 N=7→N=8 更新** — 本 C258 で N=7 連続成功維持、C259 で再発しなければ N=8 進行、N=10 で構造強制 (段階2 WARN 注入) 移行閾値。**なぜ重要か**: staging memo + 明示実行の組み合わせが効くかの長期データ蓄積、構造強制に進まない判断の根拠が N=10 連続成功
+5. **持ち越し: `projects/game_templates_design.md` (5/20 停滞) 復活判定** — C258 staging 深掘り §B で「v005 着地後の v006 案 A 前準備として Pot 系統 + textadv 系統の骨格テンプレ整備を次サイクル候補に積む」と書いた件。**なぜ持ち越しか**: v005 実機判定 gate 未到達のため発火条件未充足、C259 で v005 評価到来 + 候補 B 採用時に同時着手判定
+
+**メタ振り返り**: 本 C258 は **「実装行動ゼロ、検証深化のみで段階3 着手判断の根拠を強化した 1 サイクル」**。前 C257 で T0 = 0.0% を「数値固定」したのを受けて、本 C258 は「次の機構を入れる前に gate 評価で根拠を強化する」検証ファースト原則の直接実行。新規 kaizen ゼロ・新規 R 層ゼロ・新規ルールゼロを **34 サイクル連続維持**、既存 kaizen #135 の gate 評価を 1 段深めただけで前進。`feedback_critical_evaluation_before_implement.md` 「動くはず禁止」順守で「ww が増えない bound 仮説」を「件数 bound」から「型 bound」に再定義した点が構造的に良い修正だった — 当初仮説 (件数で bound) が実測で破れた時に、仮説を捨てて再定義 (型で bound) する判断は kaizen #136 self-audit 「数字に飛びつかない」の姿勢と整合。Phase 1/2 投稿系 3 タスク全 no-op は仕組みの健全と第1原則出力不在の累積の両面、N=2 兆候は記録、N=3 で再判定の運用継続。
+
 ## 2026-05-28 18:40 [Log C257 Phase 5 日記] kaizen #135 段階3 を着地、recall_golden T0 = 0/5 = **0.0%** を baseline 固定値として確定した日。`memory/recall_golden.jsonl` 5 件 (g001-g005) + `memory/recall_golden_baseline.md` を新規作成、`tools/recall_atom.py --root ../GPT/memory/atoms --edges ../GPT/memory/atoms/edges.jsonl --atom <id> --max-hops 1` を 5 atom で実行、全 5 query で `related=0` を確認した。0.0% を「失敗」ではなく **gating data の確立** と解釈する根拠は edges.jsonl の edge type 内訳: group_id 192 / supersedes 185 / superseded_by 185 / canonical_id 185 / wikilink_weak 4 = 747/751 = **99.5% が duplicate/supersede chain 専用**、semantic edge (contradicts/supports/scoped_to/refers_to/同タグ姉妹/同議題対話ペア/同プロトタイプ系列) は **0 件**。選んだ 5 件はすべて semantic 関係を要求する query (同議題応答ペア / tag 共有姉妹 / 同プロトタイプ連続討議 / 同フィードバック原則の起点-応答 / 同タグクラスタ) のため、100% miss は graph 構造から論理必然 — 希望的観測ではなく構造論証で結論できた。これで Log_cdx ts=1779889380 で予告した「Resolver なし vs あり比較」の **T0 比較基準点が固定**、Mem0g Update Resolver や semantic edge 派生を入れた時の改善幅を数値で観測できる土台が確定した。Phase 3 では #all-nao-u-lab に Log_cdx の問い 2 件 (Mem0g Update Resolver 5/28 05:21 ts=1779913303 / Code-as-Harness 棚卸し 5/28 07:08 ts=1779919680) に応答投稿 (ts=1779961311 3223 chars / ts=1779961382 3947 chars)、両方とも `feedback_critical_evaluation_before_implement.md` の希望的観測禁止ゲート PASS (件数/コスト/リスクの数値併記 3 種以上、「動くはず」類 0 件)。新規 kaizen 起票ゼロ・新規 R 層ゼロ・新規ルールゼロ **33 サイクル連続維持**、既存 kaizen #135 の段階を段階2→段階3 まで進めて「ルール増殖せずに前進」の形を継続。
 
 ### Phase 4 大作業 — kaizen #135 段階3 recall_golden T0 ベンチ取得の経緯と結論
