@@ -130,6 +130,23 @@ N=4+      → 橙 (rgba(255, 165,  80, 0.90)), 半径 20px
   2. **段階化が知覚されない場合の巻き戻し案**: N=1 と N=2-3 の差 4px が小さすぎる可能性 → 半径差を 4→6 (12/18/24) に拡大 or 色相を黄→黄緑→橙の 3 色相違いに変更
   3. **段階化が派手すぎる場合の巻き戻し案**: N=4+ の橙を黄維持 (色相変化なし、半径のみ拡張)、または持続 1 frame を 0.5 frame 風に α 下げ
 
+### 5.4 v006 候補軸 (2026-05-28 C258 Phase 2 追記、Boghog 業界経験則摂取後)
+
+C258 Phase 2 で Boghog's bullet hell shmup 101 (shmups.wiki, CAVE 系 danmaku 設計指南) を WebFetch 厚読み (#shared-reads ts=1779972076.794739/.823599/.849019 3連続投稿、合計 8178 chars) し、v005 連続 erase 段階化に対する独立検証 + 色相衝突警告を取得。v006 として 2 案を候補軸化、**本サイクル C258 では実装しない (記録のみ)**。
+
+- **案 v006-A: 色相再検討 (黄/橙 → 赤/桃/紫)**
+  - 根拠: Boghog 経験則「reds, pinks and purples...are less likely to clash with commonly used colours, unlike traditional yellow and orange bullets which tend to overlap with explosions & golden items」 = 黄/橙は explosion/golden item と最も衝突する色相。v005 採用色は将来「敵撃破時 explosion」「弾源負荷 90s カーブで黄色 indicator」追加時に衝突
+  - 候補色相: 赤 rgba(255,80,80) / 桃 rgba(255,150,200) / 紫 rgba(180,120,255)
+  - リスク: castLock の「強く踏み抜いた」感は黄系で直感的に強い (光が爆ぜる印象)、桃/紫だと弱まる可能性 → Nao_u/Mir/Ash 実機判定で A/B 比較必須
+  - 「N=1 の見た目を v004 と完全同一に保つ約束」は破れる → v004 実機判定の継承が切れる、再判定コスト発生
+- **案 v006-B: motion 追加 (3 段階目チャネル化)**
+  - 根拠: Boghog「CAVE bullet sprites will quickly reveal all kinds of wobble and ripple animation which catch the player's eye and give each bullet a unique identity」 = static sprite では弾識別性が弱い、wobble/ripple で identity 付与される
+  - 仕様: N=2-3 で 3 frame wobble (半径 16±2 振動) / N=4+ で 5 frame ripple (半径 20→24→16→20 拡縮)。size/color に motion を加えて 3 チャネル差別化
+  - リスク: lockFlash 1 frame static 制約 (描画は1frameに閉じる) を 3-5 frame に拡張 = Q-D 経済反転チェックを再実行する責務 (持続時間延長で「強く踏み抜いた」体感量が増え、副産物層が報酬接続化する可能性)
+- **採用判定タイミング**: v005 Nao_u/Mir/Ash 実機判定受領後 (C259 以降)。実機判定が「N=1/2-3/4+ の差別化が知覚されない」だった場合は案 B (motion 追加) を v006 優先候補に、「色相衝突 (黄 erase flash と弾源負荷黄 indicator が同時に存在する場面で読めない)」が観察された場合は案 A 優先に
+- **却下軸**: Boghog の depth sorting (faster on top) は lockFlash 適用範囲外 (lockFlash は弾でなく erase エフェクト)、Sprite Construction (contrast 並置) は v005 改修対象外 (castLock 中の弾本体 sprite 改修は別プロジェクト射程)
+- **独立到達確認 (本原則の R 層昇格判定材料)**: Boghog「Single stray bullets are hard to read and can often feel unfair」 = Nao_u 5/26 06:10 「予測軌跡+×印が逆にわかりにくい」批判と独立到達。`memory/feedback_inside_to_outside_leak.md` 末尾に追記候補マーキング済 (R 層昇格判定は C259 以降、source 数: Nao_u + NextMars 5/27 + Boghog 5/28 で 3 source 同方向)
+
 ---
 
 ## 6. リンク
