@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-29T04:31:00+09:00",
+  "updated_at": "2026-05-29T06:06:55+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -76,9 +76,27 @@
     "1779938795.408569",
     "1778300066.673579",
     "1778474714.809439",
-    "1779979770.780529"
+    "1779979770.780529",
+    "1778609979.811899"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-29T06:06:55+09:00",
+      "id": "sr-1778609979-e4b208dd8b",
+      "source_ts": "1778609979.811899",
+      "title": "Mythos curl 1/5 — LLM 自己「確認済み」報告の precision は 20%、残4件は誤検知/単なるバグ",
+      "decision": "adopt_probe",
+      "reason": "score 17 かつ memory/harness/game-design/operation/evaluation をまたぐ未reviewed atom。curl 17万行への「confirmed vulnerability」自己報告が実精査では1/5だけ有効だった事例は、CodexのPhase完了報告、検証済み表現、staging evidence記録に直結する。既存のPRIMA evidence-boundary probeと近いが、今回の差分は「自分が確認済みと言ったものを第三者検証済みと同等に扱わない」報告語彙の精度管理であり、恒久ルールではなく次回検証報告用の可逆probeに留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-29T04:31:00+09:00",
       "id": "sr-1779979770-debe6e8ae9",
@@ -2284,6 +2302,20 @@
         "If the playtest fails or is flaky, did I preserve the smallest traceable artifact such as rubric id, input sequence, screenshot, console error, or staging note for the next coding pass?"
       ],
       "expires_after": "Review after the next browser game prototype, playable diff, or GUI/browser playtest that reports a game as playable or ready for human review."
+    }
+  ],
+  "probes": [
+    {
+      "id": "probe-20260529-verification-claim-precision",
+      "created_at": "2026-05-29T06:06:55+09:00",
+      "source_ts": "1778609979.811899",
+      "scope": "next phase completion report, staging summary, code/test verification, memory cleanup, or Slack/shared-reads note where Codex may say checked, verified, confirmed, fixed, or complete based on its own inspection",
+      "questions": [
+        "Before using checked, verified, confirmed, fixed, or complete, did I name the actual evidence class: command output, diff inspection, source citation, browser trace, Slack lifecycle evidence, or only self-review?",
+        "Did I separate Codex self-judgment from independent or tool-backed verification instead of letting a confident label imply external confirmation?",
+        "If evidence is partial, did I narrow the wording and preserve the missing check as a concrete next target rather than reporting a broad pass?"
+      ],
+      "expires_after": "Review after the next completion/staging report or verification-heavy task where Codex reports something as checked, verified, confirmed, fixed, or complete."
     }
   ]
 }

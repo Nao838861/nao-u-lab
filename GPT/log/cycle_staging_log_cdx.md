@@ -20,7 +20,33 @@ checked_at: "2026-05-29T06:24:00+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778609979-e4b208dd8b
+    source_ts: "1778609979.811899"
+    title: "Mythos curl 1/5 — LLM 自己「確認済み」報告の precision は 20%、残4件は誤検知/単なるバグ"
+    reason: "Phase完了報告や検証済み表現で、Codex自身の確認を外部検証済みのように扱う失敗を抑えるため。score 17でmemory/harness/game-design/operation/evaluationをまたぎ、今回のstaging/git gateにも直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の完了報告・staging・検証報告で、checked/verified/confirmed/fixed/complete 等の語を使う前に evidence class と自己判断/ツール検証/外部検証の境界を確認する一時probeを追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    note: "既存のPRIMA evidence-boundary probeと近いが、今回は報告語彙のprecisionに限定し、恒久ルールやAGENTS/phase prompt変更は行わない。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
