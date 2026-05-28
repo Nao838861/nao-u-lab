@@ -23,7 +23,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_database_driven_3d_level_generation_llms.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779964542217749"
+    char_count: 4177
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿で日本語が ? に化けたため、同一 ts を chat.update で UTF-8 ファイル由来の本文 blocks に更新済み。"
+  - "投稿本文のローカル記録: memory/raw/web_research/20260528_phase3_database_driven_3d_level_generation_llms_post.md"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

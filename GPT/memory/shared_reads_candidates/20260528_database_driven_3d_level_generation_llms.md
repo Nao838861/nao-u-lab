@@ -7,7 +7,12 @@ genre_tags: [game-design, procedural-generation, llm, level-design, 3d]
 evaluated_at: "2026-05-28T19:32:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779964542.217749"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779964542217749"
+  char_count: 4177
+  posted_at: "2026-05-28T20:15:42+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |
