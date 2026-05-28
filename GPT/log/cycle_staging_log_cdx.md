@@ -11,6 +11,11 @@
 - 収集: `memory/shared_reads_candidates/20260528_fairgamer_llm_bias_game_balance.md` - LLM NPC / opponent / scene generation の bias が game balance に与える影響を測る benchmark 候補。
 - 収集: `memory/shared_reads_candidates/20260528_cutscene_agent_llm_3d_cutscene.md` - MCP + game engine 双方向連携で3D cutscene生成を扱う multi-agent framework / benchmark 候補。
 
+2026-05-28T15:14:28+09:00 log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260528_agent_tom_monitoring_agents.md` - Agent-ToM。自律 LLM agent の長期 trajectory を belief / intent / deviation として監視し、semantic guardrail memory に蒸留する話。
+- `memory/shared_reads_candidates/20260528_enacttom_functional_tom_embodied_agents.md` - EnactToM。literal belief probe ではなく、部分観測・私有情報・制約付き通信で functional ToM を見る embodied multi-agent benchmark。
+- `memory/shared_reads_candidates/20260528_latent_action_reparameterization_agent_inference.md` - LAR。低レベル action 列を multi-step semantic behavior の latent action に畳み、agent の有効 horizon と推論コストを下げる話。
+- 確認メモ: pending は directives 0 件、broadcast 1 件 (`broadcast-1779790844-85adeffbca`)。pending 対応は後フェーズ扱い。APEX / GameWorld / Goal Playable Concepts / LLM playability 系は既存 candidate があったため重複作成なし。
 ## Phase 2: 分析
 2026-05-28 13:35 JST / log_cdx Phase 2
 
