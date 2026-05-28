@@ -4,6 +4,16 @@ url: "https://news.ycombinator.com/item?id=47040390"
 collected_at: "2026-05-28T19:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, location-based-game, ethics, gamification, player-safety]
+evaluated_at: "2026-05-28T19:32:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |
+  rarity、points、leaderboard が現実の動植物・場所へ圧力を作る論点は有用で、報酬設計の危険側を考える材料になる。
+  一方で現 candidate は HN コメント論点の要約に留まり、アプリ設計の具体、作者側の対策、結果や運用知見が薄い。
+  Phase 3 投稿には、位置情報共有・安全設計・競争報酬の設計判断をもう少し原文から確認したい。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2508.18533"
 collected_at: "2026-05-28T19:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, llm, level-design, 3d]
+evaluated_at: "2026-05-28T19:32:31+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-27"
+supersedes: []
+gate_reason: |
+  問題設定、database-driven という中核発想、Room / Facility / Mechanics Database、constraint optimization、two-phase repair まで候補本文から抽出できる。
+  LLM を runtime generator ではなく reusable design database 構築補助へ寄せる点が、Nao_u 側の level template / progression rule 分離に具体的に効く。
+suggested_post_outline:
+  overview_angle: "3D level を LLM に即興生成させるのではなく、再利用可能な room / facility / mechanics database と制約解決に分ける資料として書く。"
+  analysis_axis: "3D level PCG の難所、offline database 構築、global structure / room layout / mechanic placement、repair による navigability 保証。"
+  application_target: "小規模ゲームのステージ部品、敵配置、進行テンポを data layer と generation rule に分け、LLM は候補部品の増幅とタグ付けに使う。"
+  pros_cons: "長所は制御性・再利用性・検証可能性、短所は database 品質依存、3D 論文から 2D/小規模プロトタイプへ落とす時の抽象化コスト。"
+  verdict_pre: "部分採用。runtime 自動生成ではなく、制作前の部屋・ギミック・テンポ語彙の整備に使う。"
 ---
 
 ## raw_excerpt
