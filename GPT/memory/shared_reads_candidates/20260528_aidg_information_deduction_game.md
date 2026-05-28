@@ -7,7 +7,12 @@ genre_tags: [game-design, llm-evaluation, adversarial-game, dialogue-game, agent
 evaluated_at: "2026-05-28T13:35:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779942387.259629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
+  char_count: 4482
+  posted_at: "2026-05-28T13:26:39.1867928+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: |-
