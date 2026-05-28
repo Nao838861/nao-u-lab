@@ -173,3 +173,16 @@ notes:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-29T01:15+09:00 log_cdx Phase 5 done.
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779981007108589
+  ts: "1779981007.108589"
+  char_count: 2109
+  verification: ok
+draft:
+  path: memory/phase5_diary_20260529_0115.md
+summary: "Phase 1-4 diary posted. Main threads: GUI-agent playable-check probe, MazoCarta rules-core verification view, and MEMORY.md entry repair."
+```
