@@ -90,7 +90,63 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-28T19:58:00+09:00"
+scope:
+  selected_priority_issues:
+    - ISS-20260528-GR-LINKS
+  judgment_slice: "game-rights atom から Nao_u 原文へ戻る検証コストを、最小の派生層で下げる"
+items:
+  - issue_id: ISS-20260528-GR-LINKS
+    problem_restatement: "game-rights / Nao_u feedback atom は source_ts と raw slack_api/game-rights.jsonl には対応しているが、atom の links が空のため、recall 後に Slack 原文・周辺文脈へ戻る導線が人手検索になる。教師データとして再利用するたびに、原文確認の摩擦と取り違えリスクが残る。"
+    alternatives:
+      - name: "atom links 直接補完"
+        sketch: "既存 96 件の game-rights atom に Slack permalink または raw anchor を links として直接追記する。per-file .md と atoms.jsonl / index.jsonl の整合も同時に保つ。"
+        pros:
+          - "memory_recall や auto_recall_gate が既存の links 表示だけで恩恵を受ける。"
+          - "atom 単体を開けば原文導線まで完結する。"
+          - "将来 atoms.jsonl retire 後も per-file atom に情報が残る。"
+        cons:
+          - "96 件の atom と dual-write 系の整合を一度に触るため、Phase 4c の差分が大きくなる。"
+          - "Slack permalink 生成規則や channel_id 対応を誤ると、誤リンクを恒久データへ埋め込む。"
+          - "既存 ingest の再実行で links が再び空になるなら、補完が一回限りの修復になる。"
+        migration_cost: high
+      - name: "game-rights provenance index"
+        sketch: "atom 本体は変更せず、source_ts / channel / atom_id / raw_path / permalink / context_status を持つ小さな派生 index を作る。recall や人手確認はこの index を見て、必要な時だけ permalink または raw 周辺文脈へ戻る。"
+        pros:
+          - "atom 本体と dual-write 移行中の正本に手を入れず、失敗時は index を捨てられる。"
+          - "raw に permalink-like field がない現状でも、channel_id 対応と source_ts から後付けで検証できる。"
+          - "context_status を持てば、permalink 未生成・raw 欠落・channel 不明を deterministic な監査対象にできる。"
+        cons:
+          - "memory_recall から即表示するには、後続で参照導線を足す必要がある。"
+          - "atom と index の二重管理になるため、生成タイミングと stale 判定を決める必要がある。"
+          - "permalink が private Slack 権限に依存するため、リンク存在だけでは閲覧可能性までは保証できない。"
+        migration_cost: medium
+      - name: "on-demand source_ts resolver"
+        sketch: "常設データは増やさず、必要時に atom_id/source_ts を入力して raw slack_api と Slack URL を解決する運用にする。recall 結果には『resolver を使う』だけを案内する。"
+        pros:
+          - "永続ファイルをほぼ増やさず、設計負債が小さい。"
+          - "誤った permalink を大量に保存するリスクが低い。"
+          - "個別確認の用途なら十分に軽い。"
+        cons:
+          - "ゲーム制作中の recall から原文確認までの手数は大きくは減らない。"
+          - "欠落件数や stale 状態を定時サイクルで監査しにくい。"
+          - "Slack 関連のたびに同じ解決処理を再実行し、知見が蓄積しない。"
+        migration_cost: low
+    recommended: "game-rights provenance index"
+    recommended_reason: "現状は atoms.jsonl と per-file atom の移行途中で、96 件の atom 本体へ直接 links を焼き込むと差分と失敗時コストが大きい。一方で on-demand resolver だけでは Phase 4a の問題である再利用時の検証コストが十分に下がらない。派生 index なら既存正本を汚さず、channel_id 対応や permalink 生成の誤りを context_status と監査で隔離でき、うまく機能した後に atom links へ昇格できる。"
+    decision: introduce
+    decision_reason: "ISS-20260528-GR-LINKS は中 severity だが、game-rights / Nao_u feedback は次のゲーム制作判断に直接使う教師データであり、原文ニュアンスへ戻れない摩擦は継続的に効く。導入対象は atom 本体の大改修ではなく派生 index に限定するため、Phase 4c の実装リスクは許容できる。"
+    outline_for_4c:
+      - "raw slack_api/game-rights.jsonl と game-rights atom を source_ts で突合する provenance index の形式を決める。最小フィールドは atom_id, source_ts, channel, channel_id または channel_name, raw_path, permalink, context_status, generated_at。"
+      - "channel name から Slack channel_id への対応は既存 raw/state から取れるかを確認し、取れない場合は permalink を unknown にして context_status に理由を残す。"
+      - "index 生成後、96 件のうち matched / permalink_generated / missing_raw / missing_channel_id の件数を staging に記録する。"
+      - "Phase 4c では atom 本体の links 直接更新は行わず、index の有効性確認までに留める。recall 表示への接続は次サイクルの 4b/4c 候補に回す。"
+non_goals:
+  - "この Phase 4b ではコード・index ファイル・atom 本体を作成しない。"
+  - "既存 96 件の atom links を直接編集しない。"
+  - "Slack API へ問い合わせて permalink の閲覧可否を検証しない。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
