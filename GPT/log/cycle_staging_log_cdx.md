@@ -31,6 +31,21 @@ postpone:
     reason: "現実世界 gamification の倫理論点は強いが、HN 議論中心で設計詳細・運用知見・評価が薄く、4000字投稿には追加確認が必要。"
 ```
 
+## Phase 4c: 記憶階層 導入 (2026-05-28T22:18+09:00)
+
+```yaml
+implemented: []
+migrations: []
+verification:
+  - "最新の Phase 4b (2026-05-28T22:06+09:00) は decision: no_change で、decision: introduce の新規対象は 0 件。旧 ISS-20260528-GR-LINKS は既に Phase 4c 実装済み。"
+  - "Test-Path tools\\build_game_rights_provenance_index.py / memory\\game_rights_provenance_index.jsonl / memory\\game_rights_provenance_index.md -> 全て True"
+  - "python tools\\build_game_rights_provenance_index.py --check -> target_atoms=96, index_rows=96, matched=96, permalink_generated=96, missing_raw=0, missing_channel_id=0"
+  - "python tools\\memory_recall.py \"game-rights Nao_u feedback\" --limit 3 --compact --no-log -> game-rights / nao-u-feedback atom を返すことを確認"
+  - "python -m py_compile tools\\build_game_rights_provenance_index.py -> 成功"
+notes:
+  - "Phase 4c の gating に従い、今回の新規ファイル変更・移行は行わなかった。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック (2026-05-28T21:52+09:00)
 ```yaml
 self_feedback:
