@@ -98,7 +98,55 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-29T00:41+09:00 log_cdx Phase 4b 実行。
+```yaml
+designed:
+  - issue_id: ISS-001
+    problem_restatement: "memory/MEMORY.md の日本語本文が mojibake しており、atom id や tag は残っていても、人間と LLM が次のゲーム制作で『どの記憶をいつ使うか』を判断する入口として機能しにくい。全量復元を急ぐより、まず入口として必要な High Signal / Recent / Tag Entry Points の可読性と再生成可能性を確保する必要がある。"
+    alternatives:
+      - name: "案A: MEMORY.md を手作業で全面復元"
+        sketch: "壊れている見出しと本文を、人間が読める日本語へ直接書き直す。既存リンク、atom id、tag を目視で残しながら、現行ファイルを正本として修復する。"
+        pros:
+          - "最短で可読性を戻せる"
+          - "追加の仕組みを増やさない"
+          - "修復後の読み手負荷が低い"
+        cons:
+          - "同じ文字化けや生成ミスが再発した時に検知しにくい"
+          - "どの atom から復元したかの根拠が薄くなりやすい"
+          - "大きな手編集になり、無関係な意味変更を混ぜるリスクがある"
+        migration_cost: medium
+      - name: "案B: MEMORY.md の入口セクションを per-file/index から再生成する"
+        sketch: "MEMORY.md の High Signal / Recent / Tag Entry Points を、既存の per-atom .md と memory/atoms/index.jsonl から再構成する運用に寄せる。Phase 4c ではまず小さい再生成手順と検査観点だけ導入し、全面自動化は後続に分ける。"
+        pros:
+          - "Phase C の per-file 移行方針と整合する"
+          - "修復根拠が atom id / title / tag に残る"
+          - "再発時に壊れた本文だけを直すのでなく、入口を作り直せる"
+        cons:
+          - "初回は生成対象の範囲定義が必要"
+          - "既存 MEMORY.md の自由記述と完全一致はしない"
+          - "自動化を広げすぎると Phase 4c の実装範囲が膨らむ"
+        migration_cost: medium
+      - name: "案C: MEMORY.md を入口として退役し、memory_recall.py に集約"
+        sketch: "MEMORY.md の人間向け索引を最小化し、検索入口は memory_recall.py と per-file atom に寄せる。壊れた日本語は修復せず、ファイルの役割を縮小する。"
+        pros:
+          - "手編集される集約ファイルを減らせる"
+          - "検索は構造化データへ寄る"
+          - "将来の atoms.jsonl retire と方向性は近い"
+        cons:
+          - "起動時に読む索引としての AGENTS.md 導線と衝突する"
+          - "人間が俯瞰する入口を失う"
+          - "既存運用の変更幅が大きく、今回の issue に対して過剰"
+        migration_cost: high
+    recommended: "案B: MEMORY.md の入口セクションを per-file/index から再生成する"
+    recommended_reason: "ISS-001 は単なる表記崩れではなく、記憶入口の信頼性低下である。案Aは早いが再発耐性が弱く、案Cは現行運用から遠い。案Bなら既存の per-file/index 移行成果を使い、Phase 4c で小さく導入して失敗時も MEMORY.md の該当入口だけを戻せる。"
+    decision: introduce
+    decision_reason: "Phase 4a で needs_design: true とされた唯一の priority issue であり、ゲーム制作時の記憶探索入口を直接阻害している。導入範囲を『入口セクションの再生成/検査設計』に限定すれば、実装コストと運用リスクは許容できる。"
+    outline_for_4c:
+      - "MEMORY.md の壊れている入口範囲を特定し、変更対象を High Signal / Recent / Tag Entry Points に限定する"
+      - "memory/atoms/index.jsonl と代表 per-atom .md から、title / tags / source / short note を根拠付きで拾う"
+      - "再生成後にリンク先存在、atom id 重複、mojibake 残存の簡易検査を行う"
+      - "自動化を恒久 tool にするかは次サイクル判断とし、Phase 4c では最小の修復 diff に留める"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
