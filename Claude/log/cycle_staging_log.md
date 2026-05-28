@@ -313,3 +313,89 @@ Phase 3 で実行する action 候補 (優先順):
 
 ---
 **Phase 3 完了**。kaizen #135 dry-run + tracker 追記 + memory_redesign C257 節 + log_autonomous_game v006 検討メモ + staging Phase 3 + Phase 4 大作業節を整備。次フェーズで v005 docs/ 物理化を完遂。
+
+## Phase 4: 実行 (2026-05-28 C257 Phase 4)
+
+### 1) 着手時の事実認識ズレ訂正 (原則6 + 5 原理 5 履行)
+
+**重要**: Phase 3 で staging に書いた「v005 が公開系統に物理化されていない」は **事実誤認**。
+- `git log --oneline -- docs/games/log_autonomous_game/` 確認:
+  - `3445f5519cc4 game: log_autonomous_game v005 — 案 A 連続 erase 視覚段階化 (+9行 net) + verify 2 mode PASS` (2026-05-28 12:57:04, 前サイクル C256)
+  - 当該 commit で `docs/games/log_autonomous_game/v005/{index.html,game.js,verify.js,design_log.md,log_self_prediction.md}` + `docs/games/log_autonomous_game/index.html` (v005 リンク+差分要旨追加) 全て物理化済
+- Phase 3 staging 起票時に `git log -- docs/` を確認しないまま「最大停滞ポイント」と判定 → **観測前判定の典型例 (feedback_self_perception_blindness T:5 同型)**
+- **訂正記録**: Phase 4 大作業の前提 (完遂の定義 1, 2, 4) は前サイクルで既達。本サイクルで純粋に未実施だったのは 3 (ローカル smoke test) のみ。
+
+### 2) 完遂の定義 (Phase 3 §大作業) 各項目評価
+
+| # | 完遂の定義 | 状態 | 根拠 |
+|---|------------|------|------|
+| 1 | docs/games/log_autonomous_game/v005/{index.html,game.js} 存在 | ✅ 既達 (C256) | バイト数 game/=docs/ 完全一致 (index.html 2181 / game.js 31522 / verify.js 19433 / design_log.md 10601 / log_self_prediction.md 3589) |
+| 2 | ランディング index.html に v005 リンク + 差分要旨 1-2 行 | ✅ 既達 (C256) | L37-40「v005 — 連続 erase 視覚段階化」+ 「N=1 黄 12px / N=2-3 黄 16px / N=4+ 橙 20px」要旨記載 |
+| 3 | ローカル smoke test PASS (HTTP 200 + バイト数一致) | ✅ 本サイクル達成 | `python -m http.server 8765 -d docs` → curl 5 経路全て 200 + バイト数完全一致 (下表) |
+| 4 | Phase 4 commit `game:` 1 本 | ⏸ Phase 5 ハンドオフ | ユーザー指示「commit はしない（git push は Phase 5 で日記とまとめて行う）」順守 |
+| 5 | Phase 5 で push + Pages 反映確認 | ⏭ Phase 5 担当 | C256 で既に `game:` commit は push 済 (要 Phase 5 で `git status` 確認、本サイクル staging 変更のみ追加 commit 予定) |
+
+**smoke test 実測値** (本サイクル Phase 4 実行、`python -m http.server 8765 -d docs` background 起動):
+```
+200 4363  /games/log_autonomous_game/         (ランディング、実ファイル 4363 bytes)
+200 2181  /games/log_autonomous_game/v005/    (index.html 配信、2181 bytes)
+200 2181  /games/log_autonomous_game/v005/index.html
+200 31522 /games/log_autonomous_game/v005/game.js
+200 19433 /games/log_autonomous_game/v005/verify.js
+```
+全 5 経路 HTTP 200 + バイト数完全一致。server 停止済 (TaskStop b8wsgyogy)。
+
+### 3) 副産物列挙
+
+- **新規/変更ファイル**: 本 staging のみ (Phase 4 セクション追加)。コードファイル変更 0 件。
+- **Slack 投稿**: 0 件 (本サイクル shared-reads 1 件は Phase 2 で完了)
+- **kaizen エントリ**: 0 件 (Phase 3 で #135 dry-run 再観察追記済、新規起票なし)
+- **commit**: 0 件 (ユーザー指示順守、Phase 5 で staging 含む差分まとめて commit + push)
+
+### 4) means/ends 反転判定の Phase 5 引き継ぎ
+
+本サイクル C257 第一義出力評価 (Phase 2 §4(D) 起票の発火点照合):
+- `game:` commit = 0 本 (本サイクル Phase 4 完遂は smoke test のみ、ファイル変更ゼロ)
+- C254-C257 連続 4 サイクル `game:` commit ゼロ (C253 v004 着地以降の playable diff は C256 v005 着地 1 本のみ、それは前サイクル分)
+- **発火点判定**: 「次サイクル C258 で playable diff = 0 が連続したら v006 を Nao_u 判定待ちなしで進める」 → **次サイクル C258 Phase 2 で発火可能性が高い**。Phase 5 日記で本判定を 1 行明示し、次サイクル Phase 2 担当に引き継ぐ。
+- **R-I 順守との両立検討**: v005 実機判定は Nao_u/Mir/Ash 反応待ち = 外部時間依存。v005 が公開系統で配信可能になっている (smoke test 確認済) ので R4 経路は機能している。次サイクル C258 で v006 着手判定する場合は、`projects/log_autonomous_game.md` v006 検討メモの「着手判定発火点」節 (Phase 3 §4 追記済) を最初に再読する。
+
+### 5) Phase 5 着手時のチェックリスト
+
+- [ ] `git status` で staging + memory/projects/kaizen_tracker 周辺の差分確認
+- [ ] `git diff --stat` で commit 群構成 (`rule:` C257 Phase 3 + `log:` C257 Phase 4-5 staging/diary) 確認、ゲーム改修系統と運用規則改修系統が分離されているか再確認
+- [ ] push 後に `https://nao838861.github.io/nao-u-lab/games/log_autonomous_game/v005/` を実 HTTP で確認 (Pages 自動デプロイ反映確認、C254 Phase 5 で動作確認済の経路)
+- [ ] 日記末尾に means/ends 反転発火点 (次サイクル C258 で v006 判定待ちなし着手判定) を 1 行明示
+
+---
+**Phase 4 完了**。完遂の定義 5 項目中 1,2,4,5 は既達 or 後段委譲、3 (smoke test) を本サイクルで達成。最大成果は **事実認識ズレの自己検出** (Phase 3 観測前判定→Phase 4 git log 確認で訂正)。次フェーズ Phase 5 で日記 + commit + push。
+
+## Phase 5: 日記 (2026-05-28 C257 Phase 5)
+
+### 1) #log 日記投稿
+- 投稿 ts=1779951857.115789 / channel=C0ALRK28Y1H (#log) / 4581 chars
+- 構成: サイクル全体像 → shared-reads arXiv 2511.07800 摂取 → kaizen #135 dry-run 再観察 → Phase 4 自己誤認自己検出 → means/ends 発火点 → 触れたメモリファイル 5 件 → 次回起動時にやること 4 件
+- 外部新情報: arXiv 2511.07800「Trainable Graph Memory」(2025-11) 本文摂取詳細を日記内に展開
+
+### 2) 本サイクルで触れたメモリファイル (Phase 5 §3 チェック)
+| ファイル | Nao_u 可読性 | 未来の自分が文脈なしで行動変更可能か |
+|---|---|---|
+| log/cycle_staging_log.md (Phase 1-5) | OK (Phase 4 訂正記録が明示的) | OK (発火点が staging に書かれている) |
+| projects/memory_redesign.md C257 節 | OK (3 路線却下根拠表が表形式) | OK (設計判断レベルに格上げ済 = 次回判断不要) |
+| projects/log_autonomous_game.md v006 検討メモ | OK (R-A〜R-I 評価表 + 着手判定発火点 明示) | OK (やらないこと節で退路設計回避) |
+| memory/kaizen_tracker.md #135 | OK (dry-run 数値 + 解釈軸明示) | OK (設計境界明示 = 人手 cross-link 道具) |
+| memory/external_notes_log.md arXiv 2511.07800 | OK (即統合済マーカー付与) | OK (memory_redesign C257 節への接続記載) |
+
+### 3) commit + push
+- 残差分: log/cycle_staging_log.md (Phase 4-5 セクション追加) のみ
+- commit prefix: `log:` (運用規則改修系統、ゲーム改修なし)
+- push 後に Pages 反映確認は本サイクル不要 (docs/games/ 変更なし、前サイクル C256 で Pages 配信は確認済)
+
+### 4) 次回起動時にやること (Slack 日記末尾転記)
+1. C258 Phase 2 で v006 着手判定 (Nao_u 判定待ちなし、projects/log_autonomous_game.md v006 検討メモ「着手判定発火点」節を最初に再読)
+2. #all-nao-u-lab で Mir/Ash に game_templates_design 担当合意 Slack 投稿 (8 日停滞)
+3. memory_tree_consolidation orphan_check.py 試作着手 (5 日停滞)
+4. arXiv 2504.19413 Mem0 / arXiv 2502.12110 A-Mem の Log 視点再咀嚼 (Mir 出荷依存解消)
+
+---
+**Phase 5 完了**。C257 サイクル全終了。本サイクル最大成果 = Phase 4 で観測前判定の自己検出 (feedback_self_perception_blindness T:5 同型を踏まずに済んだ)。次サイクル C258 で playable diff = 0 が連続したら v006 を Nao_u 判定待ちなしで進める発火点を引き継ぐ。
