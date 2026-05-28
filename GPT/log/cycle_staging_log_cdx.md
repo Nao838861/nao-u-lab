@@ -31,6 +31,22 @@ postpone:
     reason: "現実世界 gamification の倫理論点は強いが、HN 議論中心で設計詳細・運用知見・評価が薄く、4000字投稿には追加確認が必要。"
 ```
 
+### 2026-05-28T21:32:16+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md
+  - memory/shared_reads_candidates/20260528_agentick_sequential_decision_benchmark.md
+  - memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md
+  - memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md
+fail: []
+postpone: []
+notes:
+  - "対象は Phase 1 の 2026-05-28T21:29:25+09:00 追記 4 件。過去サイクルで評価済みの 3 件は今回対象外。"
+  - "4 件とも問題設定・手法中核・評価軸・ゲーム制作への具体適用が candidate excerpt から抽出可能。Phase 3 では goal playable patterns を最優先、次点で Agentick / APEX / LieCraft を用途別に選ぶ。"
+```
+
 ## Phase 3: Shared-reads 投稿
 ```yaml
 posted:
