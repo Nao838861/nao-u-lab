@@ -7,9 +7,14 @@ genre_tags: [game-design, ai-playtesting, gui-agent, game-generation, evaluation
 evaluated_at: "2026-05-28T23:47:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-27"
 supersedes: []
+posted:
+  ts: "1779979770.780529"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
+  char_count: 3673
+  posted_at: "2026-05-29T00:09:30+09:00"
 gate_reason: >-
   ブラウザゲーム生成の失敗を static artifact ではなく interaction-level failure として扱う問題設定が明確。
   PlaytestArena と Play2Code の役割分担、200 tasks / 8 genres / rubric pass-rate という評価軸があり、

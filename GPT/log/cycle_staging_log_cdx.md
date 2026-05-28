@@ -33,7 +33,17 @@ postpone: []
 - `20260528_mazocarta_instrumented_deckbuilder.md`: pass。同一 rules core を browser play、native simulation、E2E、save/load fixture、seeded balance probe に通す設計が具体的。Nao_u_BOT の deterministic 検証へ適用しやすい。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-29T00:11+09:00 log_cdx Phase 3 実行。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529
+    char_count: 3673
+  - candidate: memory/shared_reads_candidates/20260528_mazocarta_instrumented_deckbuilder.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979852965569
+    char_count: 3709
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

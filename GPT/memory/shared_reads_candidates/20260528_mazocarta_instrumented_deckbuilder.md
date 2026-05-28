@@ -7,9 +7,14 @@ genre_tags: [game-design, deckbuilder, instrumentation, automated-playtesting, d
 evaluated_at: "2026-05-28T23:47:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-27"
 supersedes: []
+posted:
+  ts: "1779979852.965569"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979852965569"
+  char_count: 3709
+  posted_at: "2026-05-29T00:10:52+09:00"
 gate_reason: >-
   seeded procedural deckbuilder を、作品アイデアではなく instrumented development artifact として設計している点が強い。
   shared rules core、browser play、native simulation、E2E、save/load fixtures、1000 seeds snapshot が揃っており、
