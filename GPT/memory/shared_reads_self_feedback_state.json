@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-28T21:52:00+09:00",
+  "updated_at": "2026-05-29T04:31:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -75,9 +75,27 @@
     "1779907495.600839",
     "1779938795.408569",
     "1778300066.673579",
-    "1778474714.809439"
+    "1778474714.809439",
+    "1779979770.780529"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-29T04:31:00+09:00",
+      "id": "sr-1779979770-debe6e8ae9",
+      "source_ts": "1779979770.780529",
+      "title": "GUI Agents for Continual Game Generation - PlaytestArena / Play2Code as browser-game interaction failure detection",
+      "decision": "adopt_probe",
+      "reason": "This recent Phase 3 shared-reads item spans memory, harness, game-design, agent, operation, and evaluation, and can be fed directly into the next game prototype verification pass. It overlaps with the fixed-test-vs-dynamic-stress and PCG tool-loop probes, but its distinct point is to treat a GUI agent as a browser interaction failure detector rather than a final quality judge. Keep the reflection as a temporary probe: use a small 5-8 item rubric and preserve input/log/screenshot evidence for the next browser or playable diff.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-28T21:52:00+09:00",
       "id": "sr-1778474714-94940686d3",
@@ -2254,6 +2272,18 @@
         "If it is separate-axis expansion or interference, did I reduce the action to one reversible test, deferred note, or removal candidate rather than shipping it as an improvement?"
       ],
       "expires_after": "Review after the next game prototype playable diff, variant iteration, or feature addition where an added mechanic/mode/content/tuning axis is discussed as an improvement."
+    },
+    {
+      "id": "probe-20260529-gui-agent-interaction-failure",
+      "created_at": "2026-05-29T04:31:00+09:00",
+      "source_ts": "1779979770.780529",
+      "scope": "next browser game prototype, playable diff, Playwright/in-app browser verification, or GUI-agent style playtest where visual render or build success may be mistaken for playable behavior",
+      "questions": [
+        "Before calling the build playable, did I run or specify one interaction rubric that covers start, primary input response, state change, risk/reward event, and win/fail or restart visibility?",
+        "Did I keep GUI/browser evidence as failure discovery only, separating interaction-level breakage from claims about fun, balance, pacing, or long-term player quality?",
+        "If the playtest fails or is flaky, did I preserve the smallest traceable artifact such as rubric id, input sequence, screenshot, console error, or staging note for the next coding pass?"
+      ],
+      "expires_after": "Review after the next browser game prototype, playable diff, or GUI/browser playtest that reports a game as playable or ready for human review."
     }
   ]
 }

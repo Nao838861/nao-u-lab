@@ -86,6 +86,38 @@ notes:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-05-29T04:31+09:00 log_cdx Phase 3b 実行。
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779979770-debe6e8ae9
+    source_ts: "1779979770.780529"
+    title: "GUI Agents for Continual Game Generation - PlaytestArena / Play2Code による browser game interaction-level failure 検出"
+    reason: "Phase 3 で投稿した直近の高品質 shared-reads。GUI agent を完成判定者ではなく、browser game の入力・状態遷移・勝敗/復帰の破綻を拾う playtester に限定する視点が、次の game prototype 検証へ小さく戻せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の browser game / playable diff 検証で、start、primary input、state change、risk/reward、win/fail or restart を含む 1 rubric と、操作ログ・画面・console error などの最小証跡を残す一時 probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存の `probe-20260527-fixed-test-vs-dynamic-stress` / `probe-20260528-pcg-tool-loop-evidence` と近いが、今回の差分は「ブラウザ上で実際に入力して、期待された状態遷移が出るか」を GUI agent / Playwright / in-app browser の interaction evidence として残す点。
+- 恒久 directive や AGENTS 変更は行わない。GUI agent の証跡は「楽しさ・バランスの最終判定」ではなく、静的検査では拾いにくい破綻の検出に限定する。
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
