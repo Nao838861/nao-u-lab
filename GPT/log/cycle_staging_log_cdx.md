@@ -118,6 +118,57 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+### 2026-05-29T02:04:02+09:00 Phase 4b design
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260529-001
+    problem_restatement: "Slack 由来 atom は ID と index 同期は正常だが、同一タイトル・同一正規化内容の薄い atom 群が recall 結果を占有し、ゲーム制作で使える代表 lesson や本文差分へ到達しにくい。削除で解くと履歴性を失うため、検索・表示層で代表性を上げる仕組みが必要。"
+    alternatives:
+      - name: "recall 時 fold + representative metadata"
+        sketch: "memory_recall 系の結果生成時に normalized_content_hash / title / source を使って同一内容グループを折りたたみ、代表 atom と grouped_count、代表選定理由、同グループ id 一覧を表示する。raw atom と per-file atom は削除しない。"
+        pros:
+          - "既存データを保持したまま、検索結果のノイズだけを減らせる。"
+          - "Phase C の normalized_content_hash fold 方針と近く、現状の設計から距離が小さい。"
+          - "失敗しても表示層の変更を戻せばよく、履歴データへの不可逆影響がない。"
+        cons:
+          - "recall 以外の atoms.jsonl 直読スクリプトには効果が及ばない。"
+          - "代表選定規則が弱いと、薄い atom が代表に残る可能性がある。"
+          - "グループ詳細へ辿る UI/出力形式を整理しないと、調査時の透明性が落ちる。"
+        migration_cost: low
+      - name: "duplicate quality index"
+        sketch: "memory/atoms/index.jsonl とは別に duplicate_groups index を持ち、content hash・title・source・quality signals・代表 id を事前計算しておく。recall や health check はこの index を参照する。"
+        pros:
+          - "重複グループを横断的に監査でき、recall 以外のツールにも再利用しやすい。"
+          - "代表選定の根拠を永続化でき、品質改善の履歴を追いやすい。"
+          - "大規模化した時の毎回計算コストを抑えられる。"
+        cons:
+          - "index 更新タイミングが増え、atoms index との同期不整合リスクが増える。"
+          - "Phase D 移行前の dual-write / dual-read 複雑性をさらに増やす。"
+          - "現時点の問題規模に対して仕組みが重くなりやすい。"
+        migration_cost: medium
+      - name: "ingest-time suppression"
+        sketch: "Slack 取り込み時に既存の normalized_content_hash / title を照合し、重複 atom は新規作成せず既存 atom の metadata に occurrence を追記する。以後の atom 数増加を入口で止める。"
+        pros:
+          - "将来の重複増殖を根本から抑えられる。"
+          - "検索・health check・index の全体負荷が下がる。"
+          - "同一投稿の再取り込みや補正版連鎖を構造的に扱える。"
+        cons:
+          - "既存 atom の不変性が崩れ、履歴追跡や permalink 単位の証跡が曖昧になる。"
+          - "取り込み元ごとの微差や再投稿の意味を誤って潰すリスクがある。"
+          - "複数の ingest 経路に手を入れる必要があり、Phase 4c の小変更には大きい。"
+        migration_cost: high
+    recommended: "recall 時 fold + representative metadata"
+    recommended_reason: "現状の障害はデータ破損ではなく recall 結果の代表性低下なので、raw atom を保持したまま表示層で解く案が最も失敗時コストが低い。すでに memory_recall.py には normalized_content_hash による fold 方針があり、Phase C の設計と整合する。duplicate quality index は再利用性があるが今は同期面が重く、ingest-time suppression は不可逆な意味潰しのリスクが高い。"
+    decision: introduce
+    decision_reason: "Phase 4a の evidence は index 同期正常・duplicate_ids なしを示しており、削除や ingest 抑制よりも recall 表示の代表性改善が適切。低コストで試せ、失敗時は表示層を戻せばよいため Phase 4c の小さな導入対象にできる。"
+    outline_for_4c:
+      - "memory_recall.py の既存 fold 出力を確認し、同一 normalized_content_hash グループで grouped_count と grouped_ids が見えるようにする。"
+      - "代表 atom は、本文が長い、reviewed / high score / shared-reads candidate 由来などの品質 signal を優先する簡単な順位で選ぶ。"
+      - "fold により隠れた atom を削除せず、必要時に追跡できる id 一覧または evidence を出力する。"
+      - "smoke test は重複タイトルの recall で、同名 atom が多数並ばず代表 + count で表示されることを確認する。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
