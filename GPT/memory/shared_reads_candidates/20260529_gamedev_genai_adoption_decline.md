@@ -4,6 +4,15 @@ url: "https://www.gamedeveloper.com/production/developer-use-of-generative-ai-ma
 collected_at: "2026-05-29T06:18:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, generative-ai, industry-survey, tools, adoption]
+evaluated_at: "2026-05-29T06:03:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  ゲーム開発現場における生成 AI 採用の外部状況メモとしては有用だが、記事自体は手法提案ではなく、問題設定・中核手法・評価・結論を展開する shared-reads 向けの骨格が弱い。
+  AI 制作パイプラインの社会的受容を語る補助資料にはできるが、~4000字の「残すべき」概要を単独で書くと調査数値の紹介に寄りすぎる。
 ---
 
 ## raw_excerpt

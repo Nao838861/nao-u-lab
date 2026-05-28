@@ -4,6 +4,15 @@ url: "http://arxiv.org/abs/2605.18572v1"
 collected_at: "2026-05-29T06:18:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, dialogue, npc, persuasion, player-modeling]
+evaluated_at: "2026-05-29T06:03:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  LLM NPC や交渉メカニクスへの適用軸は明確で、相手の latent state 推定から戦略へ写す着想もゲーム制作に接続できる。
+  ただし現 candidate には MA^2P の構成要素、実験設定、比較対象、評価結果が不足しており、Phase 3 の CoopEval 水準の概要を書くには本文確認が必要。
 ---
 
 ## raw_excerpt
