@@ -282,3 +282,46 @@ brick_log v01 裏抜けカウンタ全否定フィードバック (2026-04-30) �
 - kaizen #136 段階2 (WARN 注入 5 行): C257 で N=6→N=7 同型再発せず = 構造強制発火点未到達と本サイクル kaizen tracker で判定済、保留
 - Phase 1 責務分割 (情報収集 vs 漏れチェック): 設計に 30 分超過、kaizen #136 観察延長と並列で次サイクル以降検討
 - failure_slot_measurement.md 進展 (停滞 5 日): 次の一手「v002 self_judgment Q-D の bullet_origin_audit と合流」は v006 着手依存のため後置
+
+## Phase 4: Execute (C257 大作業実施結果)
+
+### 完遂状況: ✅ 全 5 条件到達
+
+1. ✅ `memory/recall_golden.jsonl` 5 件作成 (g001-g005、1 行 1 query jsonl)
+2. ✅ 各 query について `tools/recall_atom.py --root ../GPT/memory/atoms --edges ../GPT/memory/atoms/edges.jsonl --atom <id> --max-hops 1` を実行 (note: staging 着手手順は `--edges` 明示なしだったが、edges.jsonl が `../GPT/memory/atoms/edges.jsonl` に実在するため `--edges` 明示で実行 — recall_atom.py default が `<root>/../edges.jsonl` を見るため)
+3. ✅ recall@10 = **0/5 = 0.0%** を `memory/recall_golden_baseline.md` に T0 固定値として記録
+4. ✅ 本セクションに 5 件 query 内訳 + recall@10 + 解釈を記載 (下記)
+5. ✅ atom 本体無編集確認: `git status ../GPT/memory/atoms/` で M2件は **Phase 4 開始前から既存** (index.jsonl は Codex 系自動更新、unknown/local-... は 5/23 起源)、Phase 4 自体は atoms/ ゼロ編集
+
+### 5 件 query 結果 (全 miss)
+
+| query_id | seed atom_id | expected | recall_atom.py related | hit |
+|----------|-------------|----------|------------------------|-----|
+| g001 (kaizen #135) | sr-1779878368-c7143cffc0 | sr-1779880912-1215b43136 | 0 | ❌ |
+| g002 (self_perception) | sr-1778256262-21697e050f | sr-1778256776-05933f3d3b | 0 | ❌ |
+| g003 (mimicry_log) | sr-1779256825-1fc1b9fccc | sr-1779258092-4582ec4618, sr-1779299195-5c89f30229 | 0 | ❌ |
+| g004 (brick_log critical) | sr-1777832603-2b9322b35c | gr-1777552614-fbb8970fd3 | 0 | ❌ |
+| g005 (sense_prediction) | sr-1778371754-762821903b | sr-1778448786-71fdfc25ab, sr-1778560537-6d405e1fc8 | 0 | ❌ |
+
+### 解釈
+
+**現状の edges.jsonl は purely duplicate/supersede chain graph** (group_id 192 / supersedes 185 / superseded_by 185 / canonical_id 185 / wikilink_weak 4 = 重複検出 + 手動相互参照のみ、747/751 = 99.5%)。semantic edge (contradicts / supports / scoped_to / refers_to / 同タグ姉妹 / 同議題対話ペア / 同プロトタイプ系列) は 0 件。
+
+→ 選定した 5 件はすべて semantic 関係 (同議題応答ペア / tag 共有姉妹 / 同プロトタイプ連続討議 / 同フィードバック原則の起点-応答 / 同タグクラスタ) を要求する query のため、現状グラフでは 100% miss が論理必然。
+
+**T0 = 0.0% は失敗ではなく gating data の確立**: Mem0g Update Resolver / build_atom_edges semantic edge 拡張のような次の機構を入れた時、recall@10 がどれだけ上がるかの **比較基準点が固定された**。Log_cdx ts=1779889380 で予告した「Resolver なし vs あり比較」の T0 として確定。
+
+### 副産物
+
+- 新規ファイル: `memory/recall_golden.jsonl` (5 行)、`memory/recall_golden_baseline.md`
+- staging 更新: 本 Phase 4 セクション追加
+- Slack 投稿: 0 件 (Phase 3 で 2 件消化済、Phase 4 で増やさない原則順守)
+- kaizen エントリ更新: 0 件 (kaizen #135 段階3 完遂、Phase 5 で kaizen_tracker 更新候補)
+- 次サイクル C258 への引き継ぎ: (a) golden 50 件への scaling / (b) build_atom_edges.py semantic edge 派生追加 → T1 測定 / (c) Resolver 採用判定は T0→T1 改善幅で gating
+
+### 完遂時の自己レビュー
+
+- 完遂の定義 5 条件すべて到達 ✓
+- staging 着手手順との差分: 手順 3 で `--edges` 明示が必要だった (recall_atom.py default path ↔ 実 edges.jsonl 位置のミスマッチ) — 着手手順テンプレ更新候補として kaizen 観察記録 (本記録に留めて kaizen 増殖は回避)
+- 希望的観測ゲート: T0=0.0% を「失敗」ではなく「gating data」と解釈する根拠 = edge type 内訳 99.5% が duplicate/supersede 専用 = semantic recall を要求する query での miss は graph 構造から必然、希望的観測ではなく構造論証 → PASS
+- Phase 4 単一作業集中: 別作業への逸脱なし、Slack 投稿なし、kaizen 追加なし ✓
