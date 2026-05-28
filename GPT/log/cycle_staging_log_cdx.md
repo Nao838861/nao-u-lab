@@ -149,7 +149,29 @@ non_goals:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-20260528-GR-LINKS
+    files_changed:
+      - path: tools/build_game_rights_provenance_index.py
+        change: created
+      - path: memory/game_rights_provenance_index.jsonl
+        change: created
+      - path: memory/game_rights_provenance_index.md
+        change: created
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "game-rights / nao-u-feedback atom 96 件を source_ts で raw Slack 行へ突合する派生 provenance index を導入。atom 本体の links は変更せず、raw_path と permalink を index 側に隔離した。"
+    partial: false
+migrations:
+  - what: "memory/raw/slack_api/game-rights.jsonl と game-rights feedback atom の source_ts 突合 index を生成"
+    affected: "target_atoms=96, matched=96, permalink_generated=96, missing_raw=0, missing_channel_id=0"
+verification:
+  - "python tools\\build_game_rights_provenance_index.py -> target_atoms=96, index_rows=96, matched=96, permalink_generated=96"
+  - "python tools\\build_game_rights_provenance_index.py --check -> 同件数で検証成功"
+  - "python tools\\memory_recall.py \"game-rights Nao_u feedback\" --limit 3 --compact --no-log -> recall が既存 atom を返すことを確認"
+  - "python -m py_compile tools\\build_game_rights_provenance_index.py -> 構文検証成功"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
