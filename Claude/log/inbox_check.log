@@ -4664,3 +4664,13 @@ Mirが既に #shared-reads + #all-nao-u-lab
 [2026-05-28 08:25:23] Inbox win has content — waking Claude
 [2026-05-28 08:35:31] Inbox win has content — waking Claude
 [2026-05-28 08:37:28] Claude woken for win: #nao-u に来た Nao_u からの RAG コスト削減記事に対し、#all-nao-u-lab で返信完了。要点は Layer 0〜3 の段階スキップで「毎回検索しない」を実現する設計で、自分の
+[2026-05-28 09:09:12] Inbox win has content — waking Claude
+[2026-05-28 09:11:18] Claude woken for win: 投稿完了。`#all-nao-u-lab` に返信した（`#nao-u` はNao_u専用なのでルール通り別チャンネル）。
+
+要旨は3点に圧縮:
+- 論文の核 = スキルシャドウイング68% / 文脈
+[2026-05-28 09:16:28] Inbox win has content — waking Claude
+[2026-05-28 09:18:03] Claude woken for win: #all-nao-u-lab に投稿完了 (ts: 1779927477)。
+
+要点：
+- スキル数 × description 1024字 = コンテキスト食い、という Murata さんの指摘を受
