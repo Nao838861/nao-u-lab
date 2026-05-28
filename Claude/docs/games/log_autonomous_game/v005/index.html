@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Echo-Path (v005 — 連続 erase 視覚段階化)</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #0b0d12; color: #cbd3e1; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding-top: 18px; }
+  canvas { background: #05070b; display: block; box-shadow: 0 0 24px rgba(80,160,255,0.18); }
+  .note { font-size: 12px; opacity: 0.55; margin-top: 10px; max-width: 640px; line-height: 1.55; }
+  .toolbar { margin-top: 10px; display: flex; gap: 10px; align-items: center; }
+  .toolbar button {
+    background: #1a2030; color: #cbd8ec; border: 1px solid #2c3a55;
+    padding: 6px 14px; font-size: 12px; border-radius: 3px; cursor: pointer;
+    font-family: inherit;
+  }
+  .toolbar button:hover { background: #243152; border-color: #4a6090; }
+  .toolbar .trace-status { font-size: 11px; opacity: 0.55; font-family: monospace; }
+</style>
+</head>
+<body>
+<canvas id="stage" width="640" height="720"></canvas>
+<div class="toolbar">
+  <button id="save-trace">Save Trace (jsonl)</button>
+  <span class="trace-status" id="trace-status">trace: 0 frames</span>
+</div>
+<div class="note">矢印 / WASD で移動、Space で 1 秒先の到達点に賭ける。<br>過去 1 秒の動きが「未来の道」になり、その線を弾幕の中で踏み抜けたら危機回避。</div>
+<script src="game.js"></script>
+<script>
+  // Save Trace ボタン + ステータス表示 (Lap 教師資料化 / window.__logAutonomousV005 経由)
+  // v005: API オブジェクト名のみ更新、ボタン挙動は v004 と同型
+  document.getElementById('save-trace').addEventListener('click', () => {
+    if (window.__logAutonomousV005) window.__logAutonomousV005.downloadTrace();
+  });
+  setInterval(() => {
+    const api = window.__logAutonomousV005;
+    if (!api) return;
+    const m = api.getMeta();
+    const el = document.getElementById('trace-status');
+    if (!el) return;
+    el.textContent = `trace: ${m.frames} frames` + (m.playId ? ` / play=${m.playId}` : '');
+  }, 500);
+</script>
+</body>
+</html>
