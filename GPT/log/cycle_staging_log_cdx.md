@@ -92,6 +92,56 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+2026-05-28 18:18 JST / log_cdx Phase 4b
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260528-01
+    problem_restatement: "MEMORY.md の Tag Entry Points は現在の atom 分布を正しく示しているが、identity / evaluation / operation / game-design / memory などが巨大すぎる。ゲーム制作前に具体的な headless 評価、bad-policy、shmup enemy pattern、feedback bridge へ降りるには、上位 tag の代表 atom を順に読むより、既存の task lens に誘導する入口が必要。"
+    alternatives:
+      - name: "A. MEMORY.md に Broad Tag Descent の短い案内を追加"
+        sketch: "MEMORY.md の Tag Entry Points 直前または直後に、巨大 tag は直接掘らず `memory/game_memory_task_lens_index.md` の Broad Tag Descent Map を先に見る、という 5-8 行の導線を置く。実体の対応表は既存 lens index に寄せ、MEMORY.md はポインタに留める。"
+        pros:
+          - "常時読む MEMORY.md から迷わず task lens へ降りられる。"
+          - "既存の game_memory_task_lens_index.md を再利用でき、分類体系を増やさない。"
+          - "失敗時は案内文を消すだけで戻せる。"
+        cons:
+          - "MEMORY.md がさらに入口リンクを持つため、索引の責務が少し増える。"
+          - "lens index 側が古くなると、案内だけ残って実効性が落ちる。"
+        migration_cost: low
+      - name: "B. MEMORY.md の Tag Entry Points を task lens 別に生成し直す"
+        sketch: "Tag Entry Points の集計自体を broad tag ではなく Playable / Headless 評価、Balance / Rule Space などの lens 単位に変える。生成ロジックも lens mapping を読み、代表 atom を lens ごとに出す。"
+        pros:
+          - "MEMORY.md 単体でゲーム制作向けの入口が完結する。"
+          - "汎用 tag 偏りを表示上から大きく減らせる。"
+          - "将来の自動 recall と統合しやすい。"
+        cons:
+          - "生成ロジック改修が必要で Phase 4c の範囲が広がる。"
+          - "game 以外の作業では broad tag の全体分布が見えにくくなる。"
+          - "lens mapping の保守コストが上がる。"
+        migration_cost: medium
+      - name: "C. 新しい derived index を作る"
+        sketch: "MEMORY.md には触らず、`memory/game_memory_task_lens_index.md` とは別に、broad tag から具体 query / representative atom へ降りる専用 index を新設する。Phase 4a はそこへのリンクを report する。"
+        pros:
+          - "既存ファイルの責務を分離できる。"
+          - "実験的に壊しても既存 lens index への影響が小さい。"
+          - "将来 per-file atom frontmatter から自動生成しやすい。"
+        cons:
+          - "入口ファイルが増え、どれを見るべきかが逆に増える。"
+          - "既に lens index に近い構造があるため重複しやすい。"
+          - "Phase 4b の issue に対しては過剰設計。"
+        migration_cost: medium
+    recommended: "A. MEMORY.md に Broad Tag Descent の短い案内を追加"
+    recommended_reason: "問題は recall データ不足ではなく、最初の降り口が broad tag に寄りすぎること。既に `memory/game_memory_task_lens_index.md` に Broad Tag Descent Map と task lens があるため、新しい分類や生成ロジックを増やすより、常時読む MEMORY.md から既存 lens へ誘導するのが最短で可逆。失敗時のコストも案内文削除だけで低い。"
+    decision: introduce
+    decision_reason: "Phase 4a の blocker は中程度だが、次のゲーム制作で毎回 broad tag から読み始めるコストが出る。既存 index を使う軽量導線なら設計リスクが低く、Phase 4c で staging 以外の実装に進む価値がある。B は自動生成改修まで含み重く、C は既存 lens index と重複するため今回は採らない。"
+    outline_for_4c:
+      - "MEMORY.md の Tag Entry Points 付近に、巨大 tag から直接掘らず `memory/game_memory_task_lens_index.md` の Broad Tag Descent Map を先に読む短い案内を追加する。"
+      - "案内は 5-8 行程度に抑え、具体対応表は lens index 側を正本にする。"
+      - "新しい .py や新規 index は作らない。生成ロジック変更も今回は行わない。"
+      - "編集後に `git diff -- log/cycle_staging_log_cdx.md memory/MEMORY.md` で Phase 4b decision と Phase 4c 実変更の範囲だけ確認する。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
