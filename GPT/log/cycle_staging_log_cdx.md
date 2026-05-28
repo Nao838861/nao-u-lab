@@ -273,3 +273,20 @@ recommendation:
   needs_design: false
   priority_issues: []
 ```
+
+## Phase 4b: 記憶階層 仕組み検討 (2026-05-28T22:06+09:00)
+
+```yaml
+designed_at: "2026-05-28T22:06:00+09:00"
+gate:
+  source_phase4a: "2026-05-28T21:46:24+09:00"
+  needs_design: false
+  priority_issues: []
+decision: no_change
+decision_reason: "最新の Phase 4a で priority_issues が空であり、設計対象がない。前回の ISS-20260528-GR-LINKS は既に Phase 4c で provenance index 導入済みかつ今回 Phase 4a で rows=96 / missing_raw=0 / context_status=permalink_generated 96 と確認されているため、この Phase 4b では新しい構造・index・tool・命名規則を設計しない。"
+items: []
+non_goals:
+  - "この Phase 4b ではコードを書かない。"
+  - "staging 以外の .py / .md は編集しない。"
+  - "needs_design=false の状態で新規 issue を作らない。"
+```
