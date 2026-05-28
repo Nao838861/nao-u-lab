@@ -53,6 +53,18 @@ posted:
   - candidate: memory/shared_reads_candidates/20260528_database_driven_3d_level_generation_llms.md
     permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779964542217749"
     char_count: 4177
+  - candidate: memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971755674859"
+    char_count: 3611
+  - candidate: memory/shared_reads_candidates/20260528_agentick_sequential_decision_benchmark.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971910677459"
+    char_count: 3753
+  - candidate: memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971995584189"
+    char_count: 3566
+  - candidate: memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779972051823869"
+    char_count: 3700
 skipped: []
 notes:
   - "PowerShell stdin 経由の初回投稿で日本語が ? に化けたため、同一 ts を chat.update で UTF-8 ファイル由来の本文 blocks に更新済み。"

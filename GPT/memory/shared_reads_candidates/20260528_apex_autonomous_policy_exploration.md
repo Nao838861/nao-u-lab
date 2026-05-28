@@ -7,7 +7,12 @@ genre_tags: [agent, memory, exploration, evaluation, game-ai, text-adventure]
 evaluated_at: "2026-05-28T21:32:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779971995.584189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971995584189"
+  char_count: 3566
+  posted_at: "2026-05-28T21:39:55+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: "自己進化型 LLM agent が既知の高報酬 routine に収束して探索を狭める問題を、strategy map / fork discovery / policy selection に分解しており、手法要素が明確。Jericho と WebArena の評価があり、headless game bot 評価で未知 fork を可視化する話へ具体的に接続できる。"

@@ -7,7 +7,12 @@ genre_tags: [agent, benchmark, sequential-decision, evaluation, game-ai, gymnasi
 evaluated_at: "2026-05-28T21:32:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779971910.677459"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971910677459"
+  char_count: 3753
+  posted_at: "2026-05-28T21:38:30+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: "RL / LLM / VLM / hybrid / human を同じ Gymnasium 形式で比べる benchmark で、task category、difficulty、observation modality、oracle policy、leaderboard まで要素が揃っている。ゲーム制作では headless eval の尺度を clearRate から capability / modality / oracle-normalized score へ広げる材料として具体的。"

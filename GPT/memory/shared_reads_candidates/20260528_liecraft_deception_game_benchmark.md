@@ -7,7 +7,12 @@ genre_tags: [hidden-role, social-deduction, agent-evaluation, deception, multi-a
 evaluated_at: "2026-05-28T21:32:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779972051.823869"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779972051823869"
+  char_count: 3700
+  posted_at: "2026-05-28T21:40:51+09:00"
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: "hidden-role game benchmark として cooperator / defector、grounded scenario、deception skill、accusation accuracy、degenerate strategy 対策が揃い、ゲーム内 deception 評価の構成要素を抽出できる。social deduction や LLM NPC の設計・検証に具体的に使える。"
