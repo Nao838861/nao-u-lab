@@ -175,6 +175,19 @@ designs:
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
 
+### 2026-05-29T14:32:00+09:00 Phase 5 diary post
+
+```yaml
+posted:
+  - channel: "#log"
+    file: memory/phase5_diary_20260529_1430.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780030320197349"
+    char_count: 1735
+    verification: "ok"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file memory\\phase5_diary_20260529_1430.md --delete-on-fail: ok"
+```
+
 ## Phase 1: 情報収集 追記
 
 ### 2026-05-29T01:44:13+09:00 Phase 1 collection
