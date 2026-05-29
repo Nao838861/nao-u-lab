@@ -12,7 +12,17 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260530_sine_open_weight_interactive_fiction_serious_games.md` - open-weight LLM で interactive-fiction serious games を生成し、compilation / playability / learning-goal fidelity を自動評価する SINE pipeline。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-30T04:32:00+09:00 log_cdx Phase 2
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260530_gkms_schema_governed_executable_rpg_narrative.md
+  - memory/shared_reads_candidates/20260530_sine_open_weight_interactive_fiction_serious_games.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260530_quest_of_aivengarde_llm_dialogue_player_experience.md
+    reason: "NPC 対話の比較軸は良いが、現候補メモだけでは survey/log 指標と variant 間の差分が薄く、4000字概要には追加読解が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

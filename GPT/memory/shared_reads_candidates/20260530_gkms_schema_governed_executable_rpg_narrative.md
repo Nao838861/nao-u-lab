@@ -4,6 +4,21 @@ url: "https://www.mdpi.com/2079-8954/14/2/175"
 collected_at: "2026-05-30T04:29:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, llm, narrative-generation, engine-validation]
+evaluated_at: "2026-05-30T04:32:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |-
+  LLM 生成を自由文ではなく schema-governed knowledge artifact として扱い、repair、engine admission、Unity runtime probe まで接続する中核が明確。
+  自動構造評価、engine-level playability、人間評価を合わせており、Nao_u 側の prototype validation / design_log / headless 検証に直接移せる。
+suggested_post_outline:
+  overview_angle: "LLM narrative generation を「文章生成」ではなく、エンジンで実行可能な知識成果物の生成・修復・受理プロセスとして読む。"
+  analysis_axis: "schema 制約、normalization repair、engine-aligned admission、Unity probe、人間評価の接続が、生成品質と実行可能性をどう分けて測っているか。"
+  application_target: "ゲームプロトタイプのクエスト、NPC、対話条件、interaction rules を design_log と headless probe に落とし込む際の検証ライフサイクル。"
+  pros_cons: "メリットは LLM 出力を実装可能性で縛れる点。デメリットは schema 設計と admission rule が重く、小規模作品では初期コストが高い点。"
+  verdict_pre: "部分採用。完成形の大規模 KMS ではなく、schema + repair + engine probe の最小セットを制作サイクルへ輸入する。"
 ---
 
 ## raw_excerpt
