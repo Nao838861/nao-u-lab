@@ -126,4 +126,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-05-30T01:31:43+09:00"
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780068703202239"
+  draft_file: "log/phase5_diary_20260530_0013.md"
+  char_count: 2293
+  verification: "ok"
+summary: "Phase 1-4 の収集、shared-reads 投稿、RepoMirage probe、Phase 4a 棚卸しを温度の残る日記として投稿。"
+```
