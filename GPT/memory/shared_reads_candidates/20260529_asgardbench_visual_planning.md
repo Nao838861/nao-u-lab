@@ -4,6 +4,15 @@ url: "https://www.microsoft.com/en-us/research/publication/asgardbench-evaluatin
 collected_at: "2026-05-29T13:30:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, visual-grounding, planning, minimal-feedback, game-testing]
+evaluated_at: "2026-05-29T13:35:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |
+  visual observation に基づく plan adaptation 評価という問題設定は、ゲーム AI tester / visual playtest に接続できる。
+  ただし候補本文だけでは task 設計、baseline、失敗類型、評価結果の粒度が足りず、Phase 3 で残すべき密度の概要を書くには追加読解が必要。
 ---
 
 ## raw_excerpt

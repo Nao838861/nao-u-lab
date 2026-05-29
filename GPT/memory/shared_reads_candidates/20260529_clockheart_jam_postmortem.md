@@ -4,6 +4,15 @@ url: "https://itch.io/devlog/1504691/clockheart-postmortem-gamedevjs-jam-2026.am
 collected_at: "2026-05-29T13:30:04+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, game-jam, platformer, scope-control, feedback]
+evaluated_at: "2026-05-29T13:35:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |
+  scope control と movement feel の教訓は実用的だが、単独で CoopEval 水準の 4000 字概要に耐える手法・評価・一般化軸が不足している。
+  Nao_u の短期プロトタイプ運用への示唆はあるものの、shared-reads 投稿では既存の jam/postmortem 教訓と重複しやすい。
 ---
 
 ## raw_excerpt

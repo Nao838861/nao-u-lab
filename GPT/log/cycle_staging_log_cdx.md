@@ -353,3 +353,19 @@ notes:
 - `memory/shared_reads_candidates/20260529_agentic_pcg_tool_using_llms.md` - tool-calling LLM が評価関数・編集 tool・環境 feedback を使って level を反復生成する Agentic PCG 候補。
 - `memory/shared_reads_candidates/20260529_clockheart_jam_postmortem.md` - 2週間 jam で movement feel は成功したが animation と panic timer に scope を吸われた platformer postmortem。
 - `memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md` - image/action history/軽い成否だけで plan repair を測る AsgardBench。視覚ベース game tester 評価軸の候補。
+
+## Phase 2: 分析 追記
+
+### 2026-05-29T13:35:19+09:00 Phase 2 evaluation
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260529_agentic_pcg_tool_using_llms.md
+fail:
+  - path: memory/shared_reads_candidates/20260529_clockheart_jam_postmortem.md
+    reason: "movement feel と scope control の教訓は有用だが、単独で 4000 字級の手法・評価・一般化を書くには薄く、既存 postmortem 教訓と重複する。"
+postpone:
+  - path: memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md
+    reason: "visual planning 評価は有望だが、候補本文だけでは task 設計・baseline・結果の粒度が不足し、Phase 3 前に追加読解が必要。"
+```
