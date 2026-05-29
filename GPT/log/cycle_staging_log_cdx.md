@@ -144,6 +144,51 @@ recommendation:
     - ISS-4A-20260529-001
 ```
 
+### 2026-05-29T16:15:00+09:00 Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    links_checked: 1
+    broken_links: 0
+    note: "`python tools/memory_ingest.py` のような command 文字列は path 判定から除外"
+  memory_index_freshness:
+    memory_md_generated: "2026-05-28T23:54:38"
+    memory_md_atoms: 1772
+    atoms_jsonl_current: 1591
+    atoms_index_current: 1591
+    status: stale_counts_only
+  atoms_jsonl:
+    total_atoms: 1591
+    bad_json_lines: 0
+    duplicate_ids: 0
+    normalized_duplicate_groups: 39
+    atoms_index_sync:
+      index_ids: 1591
+      atoms_not_in_index: 0
+      index_not_in_atoms: 0
+      index_bad_json_lines: 0
+    note: "normalized_content_hash の重複は残るが、前回 4c の recall fold 対応後なので今回の設計課題にはしない"
+  raw_archive:
+    cutoff: "2026-04-29T16:11:02+09:00"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    older_than_30_days: 0
+  inbox:
+    pending_directives: []
+    pending_broadcasts: []
+issues:
+  - id: ISS-4A-20260529-002
+    description: "memory/MEMORY.md の生成済み atom 件数が現行 atoms.jsonl / memory/atoms/index.jsonl とずれている。リンク切れや index 同期不整合ではなく、起動時索引の freshness 問題。"
+    severity: low
+    evidence: "memory/MEMORY.md generated=2026-05-28T23:54:38 atoms=1772 display=1582; memory/atoms/index.jsonl rows=1591; memory/atoms.jsonl rows=1591"
+    why_blocks_game_memory: "ゲーム制作前の入口として MEMORY.md を読む時、件数や Tag Entry Points の鮮度が古いと、最近の playable diff / feedback atom の見積もりを誤る可能性がある。ただし recall 本体と per-file index は同期しているため致命的ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
