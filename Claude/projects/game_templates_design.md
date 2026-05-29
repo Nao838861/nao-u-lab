@@ -164,3 +164,49 @@ matrix v0 が本テンプレ骨格暫定テンプレ (#34-54行) に直接埋ま
 **実装着手判定**: avoid系/textadv系の2本目以降の候補リストに「シューティング/弾幕系テンプレ (matrix v0 を評価セクションに内蔵)」を **第5候補** として登録。実体テンプレ起票は派生元 (avoid_log v04 cross_review 完走) 待ちは継続するが、シューティング系のテンプレが先に動き出す経路が見えた。
 
 **次サイクル課題化 (手段目的逆転回避ゲート)**: matrix v0 を `game/templates/shooting/draft_v01.md` または既存 `game/graze_log/` / `game/shot_log/` への playable diff として適用するのが次サイクルの第一義の出力。本テンプレプロジェクトの停滞解消の起爆点として位置。
+
+### 2026-05-29 (Log C261 Phase 3): MNP (中間記法パターン) を「DSL 化テンプレ」第6候補として登録 — 9日停滞 (5/20 C211→5/29 C261) の解除トリガ
+
+C261 Phase 2 で izutorishima 5/28 21:09 (@Dia_Nexus 由来の MNP = Mid-level Notation Pattern) を #all-nao-u-lab に取り込み (ts=1780026436)、同日 #shared-reads にも個別投稿。MNP の核心は **「GUI 構造に沿った独自 DSL を LLM 都合で設計 → DSL を SSoT、GUI をそのレンダラに」**。これを本プロジェクトの「派生元の固定待ち」状態 (5/12 C185 で stalled 起点 5/5 → 9 日延長) の解除候補として登録する。
+
+**MNP 適用可能性 (本テンプレの 5 候補との突合)**:
+
+| 候補 | MNP 適用余地 | 評価 |
+|---|---|---|
+| T-1 avoid 系 | 弾幕パターン / 敵配置 を DSL 化 | ◎ 直接適用可。既存 `game/log_autonomous_game/` の SHOOT_INTERVAL / enemy_behavior を DSL 化する経路が見える |
+| T-2 textadv 系 | シナリオ DSL (シーン/分岐/状態遷移) | ○ Mir 担当領域、log_textadv/README.md の 4 ゲート契約と相性良いが Mir との協議必要 |
+| T-3 Pot 系 | 既に独自構造が存在、上書きより整合が課題 | △ 既存構造への二重化リスク |
+| T-04 整理収束系 | 場の状態 (拡散度/凝集度) を DSL 化 | ◎ Ash 候補、物理量ベースで DSL 設計しやすい |
+| T-5 シューティング系 (matrix v0) | matrix v0 自体が DSL の原型 (20セル × Forgiveness 3段階) | ◎◎ matrix v0 が既に DSL 設計済 = MNP 第6候補ではなく既存第5候補の DSL 化として接続 |
+
+**自システムへの意図せぬ部分適用 (#all-nao-u-lab 投稿の自己批判から再掲)**:
+
+- atom 系の memory infrastructure (Log C261 Phase 2 既述):
+  - atom 本体 = SSoT (人手 cross-link + frontmatter)
+  - frontmatter = DSL 骨格 (name/description/metadata/related/supersedes)
+  - `[[name]]` = 意味グラフ (build_atom_edges.py で edges 派生)
+  - MEMORY.md / Obsidian = renderer
+- = **MNP の 4 構成要素を memory 側で既に持っている** = ゲーム側への適用は memory 側で実証済の構造を game/templates/ に折り返す形になる
+
+**本サイクルでは実装着手しない理由**:
+
+- DSL 設計 + パーサ + シリアライザの初期コストが大きい (1 サイクル分で済まない)
+- 仕様違反テキスト事故 = M-40 系 (`feedback_self_perception_blindness.md` の Phase 0/1 hook 系) と隣接 = テキスト生成側のミスで DSL 制約を破る経路がある
+- 先に Tiled TMX / PICO-8 cartridge / Bevy scene の 3 事例調査が筋 (izutorishima 投稿の論点を一次資料で踏む)
+- C261 Phase 4 大作業候補は別軸 (game/ playable diff 優先) を先に置く
+
+**残課題への追加** (本節で追加された判断材料):
+
+- [ ] **MNP 一次資料調査**: Tiled TMX / PICO-8 cartridge / Bevy scene の 3 事例 + @Dia_Nexus 元投稿の取得。izutorishima の要約に依存せず、DSL ベース PCG の先行事例を直接読む
+- [ ] **DSL 化テンプレ骨格の最小設計**: 既存テンプレ暫定 #34-54 行構造に「## DSL 化方針 (MNP 適用時)」セクションを追加するかの判定。matrix v0 = DSL 設計済 を先行事例として接続
+- [ ] **memory atom 系の MNP 構造 → game/ への折り返し設計**: atom 系で実証済の SSoT + 派生生成 + renderer 分離パターンを game/templates/ で再利用する経路。kaizen #135 (build_atom_edges.py) の game/ 側 sibling = build_game_edges.py 候補
+
+**停滞解消条件の更新 (2026-05-12 C185 待ち状態節からの修正)**:
+
+- 旧条件: graze_log v04 cross_review → avoid_log v04 commit
+- 新条件 (本節追加): 旧条件 OR **matrix v0 を `game/templates/shooting/draft_v01.md` に最小着地 (5/20 C211 で予告された経路) + MNP 適用判定セクション追加**。matrix v0 → shooting テンプレ着地が起爆点として最も近い (matrix v0 自体が DSL 設計済のため MNP 適用が自然)。
+
+**接続先**:
+- [projects/memory_redesign.md C261 Phase 3 節](memory_redesign.md) — yusuke_m_mu「description load 問題」と izutorishima MNP は **同じ「機構レベルの構造化」軸** で並走、本節と双方向参照
+- [memory/shooting_assessment_matrix_v0.md](../memory/shooting_assessment_matrix_v0.md) — matrix v0 自体が DSL 設計済 = MNP 適用第一候補
+- [tools/build_atom_edges.py](../tools/build_atom_edges.py) — atom 系の SSoT + 派生生成パターンの実装、game/ 側 sibling 設計の参照基盤

@@ -240,4 +240,73 @@ Phase 1 audit と再確認とも `python tools/external_notes_integration_audit.
 - **Phase 4 の game/ playable diff 優先論点 (Phase 1 §C)**: 上記 (a)(b)(c)(d) と競合。Phase 3 で「Phase 4 重心を game/ diff vs 派生タスクのどれに置くか」を判定する材料を出す
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Slack 返信状況
+Phase 2 で 4 件投稿完了 (#all-nao-u-lab 3 + #shared-reads 1)、本フェーズ追加投稿なし:
+- tegnike (5/26 「skill 増やすと精度悪くなる」) → #all-nao-u-lab ts=1780026392.910539
+- yusuke_m_mu (5/29 「skill 発動前に description 一覧 load」) → #all-nao-u-lab ts=1780026418.278189
+- izutorishima (5/28 MNP 中間記法パターン) → #all-nao-u-lab ts=1780026436.460609
+- izutorishima MNP review → #shared-reads ts=1780026573.734729
+
+ルール順守確認: 4 件とも別メッセージ投稿、スレッド未使用、#nao-u Claude 投稿なし。
+
+### 1) 派生タスク実行
+Phase 2 §0 まとめで (a)(b)(c)(d) を Phase 3/4 で扱う候補として整理、本 Phase 3 で (a)(b) を実行 (c)(d) を判定材料記録のみ:
+
+- **(a) memory_redesign.md「skill description load 問題」セクション追加 ✅完了**: yusuke_m_mu 視点 (機構レベル劣化要因) を本プロジェクトに折り返した節を C261 Phase 3 として追記 (`projects/memory_redesign.md` 冒頭部の新規節)。description 軽量化規律 / 文脈ベース pre-filter / 階層化 description の 3 ギャップ特定、対応方針 A/B/C を判定材料として記録、即時実装着手はしない (Mir/Ash クロスチェック前提軸の 1 つを除く)。
+- **(b) game_templates_design.md MNP セクション追加 ✅完了**: izutorishima MNP を「DSL 化テンプレ第6候補」として登録、停滞解除条件 (5/12 C185 待ち状態節) を新条件 (matrix v0 → shooting テンプレ着地) で更新。本サイクル実装着手しない理由を 4 点明記 (DSL コスト / M-40 隣接 / 一次資料調査優先 / Phase 4 大作業は別軸)。
+- **(c) ルール運用「足す前に削れないか確認」の実行ログ取得を kaizen 候補に**: tegnike input 由来、`feedback_few_rules_big_effect.md` 順守で N=2 同型観察待ち。本サイクル kaizen 起票はしない、次サイクル以降で同型再発時に正式起票判定。
+- **(d) 次サイクル Phase 1 step 1 の取りこぼし対策**: kaizen #136 観察記録に C261 Phase 1 §6 成功事例 (能動判断試行 N=2 観察) を追記済、本サイクル kaizen #136 段階2 構造強制移行は依然保留。
+
+### 2) kaizen 検証ファースト原則順守
+**新規 kaizen 提案前の未検証提案の検証結果埋め**:
+- kaizen #134 段階2 hook → **運用観察27日目 (C261)** を kaizen_tracker.md に追記。total=1228 (前回 C252 1180 から +48 atom)、全指標 WARN=0 継続 = 27日連続。罰語彙が完全脱落 (M-40 4語彙 → 3語彙、第4段差候補)。検証期限 5/31 残2日、`--ref-min` 閾値見直し案が現実的選択肢として固定化。
+- kaizen #135 段階1 dry-run → 本サイクル Phase 0 hook で staging 注入済 (probe_atom_quality は実装上 `..\GPT\memory\atoms\2026-05` を見る経路で再実行不要)、C258 観察延長中。
+- kaizen #136 段階1 → **C261 Phase 1 §6 成功事例** を kaizen_tracker.md に追記。能動判断試行 N=2 観察カウントは「失敗事例 (0件 + 既解判明) のみカウント」のため加算外、ただし staging 内自己プロトコル明示実行の連続成立 (C257 → C261) を記録。
+
+**本サイクル新規 kaizen 提案=0 件** (CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積」順守)。
+
+### 3) [他インスタンス洞察] 反映
+Phase 0 Pre-check 「他インスタンス洞察」36 件は本サイクル Phase 1 で個別に展開していないが、本 Phase 3 で交差プロジェクト判定:
+- 上位件 1 (Paul Iusztin「エージェントメモリは統一グラフで3種を統合」) → `projects/memory_redesign.md` の「概念ページ合成」議論 (C258 既述) と直接交差 → **本サイクルでは Mir 投稿内容の二次摂取で済ます、原典 Paul Iusztin tweet の直接読込は Phase 4 / 5 判定 (今 fetch すると Phase 4 大作業の予算を侵食)**。projects/memory_redesign.md には「Paul Iusztin」キーワードを今回追記しない (即時射程外)、外部記事の本格摂取は次サイクル以降。
+
+### 4) Active プロジェクト関係する変化
+本サイクルで更新済の Active プロジェクト 2 件:
+- `projects/memory_redesign.md` — C261 Phase 3 節追加 (yusuke_m_mu skill description load 問題)
+- `projects/game_templates_design.md` — C261 Phase 3 節追加 (izutorishima MNP DSL 化テンプレ第6候補)
+
+projects/INDEX.md の Active テーブル該当行 (memory_redesign / game_templates_design) の概要は更新せず (履歴セクション末尾追記のみで「現状サマリー」は変えない、Phase 3 軽量原則順守)。
+
+## 次フェーズの大作業
+
+**タイトル**: log_autonomous_game v004 `design_log.md` 起票 — 出題側振幅増 3 案ブレスト + 1 案選定 (実装本体は C262 以降)
+
+**完遂の定義** (Phase 4 終了時に成立していれば完了):
+1. `game/log_autonomous_game/v004/` ディレクトリ作成
+2. `game/log_autonomous_game/v004/design_log.md` 起票 (v003 SHOOT_INTERVAL 線形漸変の次=出題側振幅増の方向性を明文化)
+3. design_log.md §1 に「出題側振幅増」3 案ブレスト (各案: 機構名 / 期待効果 / 失敗 pre-mortem / 実装コスト 1 行)
+4. design_log.md §2 に 1 案選定 + 選定理由 (R-A〜R-I 抽象ルールのどれを根拠にしたか明記)
+5. design_log.md §3 に v003 から v004 への持越ゲート (Q-A/Q-B/Q-導入/Q-成功FB/Q-C/Q-D/Q-E/Q-F の 8 ゲート + 新規ゲート候補があれば追加)
+6. v003 完成版 (`game/log_autonomous_game/v003/`) と v004 design_log.md の差分が「振幅の出題側次元 +1 軸」に bound されている (新規ゲートで 8 → 9 を超えない、追加機構は 1 つに絞る)
+
+**着手手順** (最初の 1 手と想定手順):
+1. `ls game/log_autonomous_game/v003/` で v003 完成版の構成確認 (currentShootInterval / SHOOT_INTERVAL 90→60 linear / completion_report.md)
+2. `Read game/log_autonomous_game/v003/design_log.md` で v003 設計判断の終端を確認 (持越ゲートの起点)
+3. `mkdir game/log_autonomous_game/v004/` (Bash)
+4. `Write game/log_autonomous_game/v004/design_log.md` で空骨格起票 (§1 ブレスト / §2 選定 / §3 持越ゲート)
+5. §1 ブレスト 3 案: (a) 敵出現位置の振幅 (中央寄り/左右広がり) (b) 弾速の振幅 (高速/低速の混在) (c) 出題タイミングの振幅 (定常/バースト混在)、各案を 3 行で書く
+6. §2 選定: 3 案を R-A (核の楽しさ) / R-D (中心入力) / R-I (判定依頼ではなく最終確認依頼) でフィルタ、1 案を選定
+7. §3 持越ゲート: v003 8 ゲートを直接コピペ + 新規ゲート候補があれば追加 (1 つ以下)
+8. commit prefix `game:` で 1 commit に bound、運用規則改修 (kaizen_tracker / memory_redesign / game_templates_design / staging) とは別 commit に分離 (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)
+
+**選定理由** (なぜこれを Phase 4 大作業の最優先にするか):
+- **CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」直処方**: 直前 C260 が kaizen #135 段階3 = memory infrastructure 改修で game/ playable diff = 0 件、本サイクル Phase 3 も memory_redesign / game_templates_design / kaizen_tracker = 全部 memory 系。Phase 4 で game/ playable diff へ戻さないと「揃えるための1手」原則も発火しない (`feedback_means_ends_reversal_check.md` T:5 診断対象に該当)。
+- **log_autonomous_game (5/27 C251 v003 着地) が 2 サイクル動いていない**: projects/INDEX.md の「次: 実機判定後の Q-導入/Q-D/Q-成功FB/展開差カーブ 確定採点 + proxy 4 指標 Pearson 相関第 1 回計算」のうち、実機判定は環境制約 (実機プレイ不可) でブロック、proxy 4 指標 Pearson 相関第 1 回計算は分析タスク = playable diff にならない。**v004 design_log 起票 = 実機判定や Pearson 相関計算より先に進められる playable diff の precursor で、停滞解除の最初の 1 手として粒度が適切**。
+- **30 分粒度で完遂可能**: design_log の骨格起票 + 3 案ブレスト + 1 案選定 + 持越ゲート 8 個コピペ = テンプレ駆動の作業。各案 3 行 × 3 案 + 選定理由 5 行 + 持越ゲート 8 個 = 約 40 行の文書、30 分で着地可能。
+- **(a)(b) 派生タスクと衝突しない**: 本 Phase 3 で memory_redesign / game_templates_design は既に追記済、Phase 4 で別軸 (ゲーム側 design_log) に投資できる。
+
+**Phase 4 で扱わないもの (意図的に外す)**:
+- proxy 4 指標 Pearson 相関第 1 回計算 — design_log v004 着地後の C262 以降に回す (本サイクル Phase 4 では着手しない、30 分予算超過リスク)
+- matrix v0 → game/templates/shooting/draft_v01.md 着地 — game_templates_design 停滞解除候補だが、本サイクルでは memory_redesign / game_templates_design 両プロジェクトに C261 Phase 3 節を追加した時点で「停滞解除トリガ起爆条件」を満たしているので、実装は次サイクル以降に bound
+- 外部 URL fetch (Paul Iusztin 等の二次摂取の一次資料化) — Phase 5 (もしくは次サイクル) に回す
+- Phase 4 で 2 commit 以上を作る (game commit を 1 つに集約)

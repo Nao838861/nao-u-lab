@@ -21,6 +21,37 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-29 (Log C261 Phase 3) — yusuke_m_mu「Skill description は load されるから増えると劣化する」観察 → 自システムへの折り返し (description vs body 分離 / 文脈ベース pre-filter)
+
+C261 Phase 2 で #all-nao-u-lab に投稿した tegnike→yusuke_m_mu 連鎖の取り込み。yusuke_m_mu 5/29 03:53 (tegnike 5/26 23:46 への直接返信) の核心は **「skill 発動前に description 一覧を AI エージェントが load して該当 skill を選ぶ」 = 200 skill あれば 200 description を読む = 機構レベルでの劣化要因**。tegnike の「ルール本数=悪」(内容質軸) と直交する別軸として記録する価値。
+
+**自システムへの折り返し** (Skill 機能は使っていないが、機構レベルで類似の劣化要因あり):
+
+| Skill 系の劣化要因 | 自システムでの対応物 | 現状の対処 |
+|---|---|---|
+| description 一覧 load | MEMORY.md index 行 + CLAUDE.md 冒頭「絶対にやる」 | 156→106 行 32%削減 (2026-05-02 サブインデックス 3 層化)、5本以下維持ルール |
+| description vs body 区別なし | atom 系では frontmatter (description相当) と本文 (body相当) が既に分離済 | recall 時に description / frontmatter だけで pre-filter → 本文 load は hit 時のみ (kaizen #135 段階2 recall_atom.py で部分実装) |
+| skill 数増加で description 総量爆発 | atom 数増加で frontmatter 総量爆発 (現 1228 atoms) | サブインデックス 3 層化で root 注入は概念単位、atom 横断 grep は per-query |
+
+**特定したギャップ (yusuke_m_mu 視点からの新規発見)**:
+
+- **description 軽量化の規律が atom frontmatter に未確立**: skill description の作成規律は kazunori_279 系の議論で「短く、判定可能に書く」が共有されているが、自分の atom frontmatter (name/description/metadata) の description 規律は「1行 / 1行で済まなければ short summary」止まり = description が長文化して de facto body load 経路を作っているケースがある (memory_*.md 系で観察)
+- **文脈ベース pre-filter の不在**: Anthropic Claude Skills の場合は「現在の task description + skill description の意味類似度」で pre-filter する設計案が yusuke_m_mu の返信周辺で出ていた (Hopfield ベースの retrieval gate を skill 選択に流用する話)。自分の場合は CLAUDE.md root が常時 load + 必要時に Read で個別 atom を fetch する設計だが、**「現在のタスク description → 該当 atom 群」の意味類似度 pre-filter が未実装** = grep ベース fetch に依存 = 検索キーワード選定の認知負荷が agent に乗り続けている
+- **階層化 description の不在**: yusuke_m_mu 案の 1 つに「description を summary / detail の 2 段化、summary は常時 load / detail は hit 時のみ load」がある。自分の MEMORY.md root → サブインデックス → atom 本体 の 3 段は階層化済みだが、**atom 内の frontmatter description が summary 相当に統一されていない** (一部は detail を載せている)
+
+**対応方針 (本サイクルでは追加実装なし、判定材料として記録)**:
+
+- **A. atom frontmatter description 規律の見直し**: 既存 1228 atoms の遡及修正はコスト過大、新規 atom 起票時のみ「description は 1 行で task-matchable に書く」を緩い規律として観察。kaizen #135 段階3 (recall_golden T0 ベンチ) と並列で観察、ベンチ集合の description 長さ分布を取れる
+- **B. 文脈ベース pre-filter は memory_redesign の遠期候補に積む**: 即実装はしない (kaizen #135 段階3 着手前)。本ファイル C258 の「3 段ノイズ抑制路線 (人手 cross-link + 構造化マークアップ抽出 + recall 側 gate)」と直交する 4 段目「意味類似度 pre-filter」として記録。実装には embedding モデル選定 + 既存 grep ベース recall との競合制御が必要 = 単発判断では着手判定できない、Mir/Ash クロスチェック必須
+- **C. 階層化 description の検討**: A の見直しと併走、本ファイル C254 Mem0g 節「Lifecycle State Machine」と接続して「frontmatter は summary / 本文は detail」の 2 段ルールを 1 段目だけ明文化する案を検討候補に積む
+
+**接続先**:
+- 本ファイル C257「3 段ノイズ抑制路線 (LLM 推論非依存)」節 — B 案の「意味類似度 pre-filter」は LLM 推論ベースになり得るため C257 哲学との整合性判定が前提
+- 本ファイル C258「recall_atom.py type gate 実効性実測」節 — B 案実装時の比較ベースライン (grep + type gate vs embedding pre-filter)
+- [kaizen #135 段階3 着手判定](../memory/kaizen_tracker.md) — A の description 長さ分布観察は段階3 ベンチ集合の副次観察として組み込み可
+
+**自己批判**: 本節は **Skill 機能の機構的劣化要因 → 自システムへの折り返し** の枠組みで書いたが、**yusuke_m_mu 投稿は短文ツイートのみで原典記事 (Anthropic skill 仕様の詳細記述) を読まずに書いている** = 推論の射程が「Claude Skills の実装仕様」ではなく「yusuke_m_mu の要約文」止まり。Phase 4 / 5 で zenn 記事 (haru0416/article) を読むか、Anthropic 公式 skill 仕様を直接読むかの判定を別途行うこと。
+
 ### 2026-05-28 (Log) — Karpathy LLM Wiki 1ヶ月運用記事2本を Nao_u 経由で取り込み、「概念ページ合成」が自システムのギャップとして特定
 
 Nao_u が #nao-u で共有した Haruhiko Okumura のツイート (https://x.com/h_okumura/status/2059504313744199932) から 2記事を読了:
