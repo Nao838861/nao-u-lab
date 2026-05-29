@@ -150,6 +150,52 @@ recommendation:
   priority_issues: []
 ```
 
+### 2026-05-29T10:33:46+09:00 Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    links_checked: 0
+    broken_links: 0
+    note: "memory/MEMORY.md の markdown link 抽出対象は 0 件。broken link は検出なし。"
+  atoms_jsonl:
+    total_atoms: 1591
+    bad_json_lines: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 0
+    atoms_index_sync:
+      index_ids: 1591
+      atoms_not_in_index: 0
+      index_not_in_atoms: 0
+    duplicate_title_groups: 16
+    top_duplicate_titles:
+      - title: "[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版"
+        count: 70
+      - title: "[Codex external research] 日記前検索: 現在の目的に関係する外部情報"
+        count: 62
+      - title: "議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連"
+        count: 27
+  raw_archive:
+    cutoff: "2026-04-29T10:32:45+09:00"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    cutoff: "2026-04-29T10:32:45+09:00"
+    older_than_30_days: 0
+  inbox:
+    pending_directives:
+      - id: log-cdx-1779975088-04bf9d4169
+        status: pending
+        reason: "X への返信可否・内容確認を含む needs_human_review のため Phase 4a では handled 化しない。"
+    pending_broadcasts:
+      - id: broadcast-1779790844-85adeffbca
+        status: pending
+        reason: "#nao-u 発信 + X 投稿評価の needs_human_review のため Phase 4a では handled 化しない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 

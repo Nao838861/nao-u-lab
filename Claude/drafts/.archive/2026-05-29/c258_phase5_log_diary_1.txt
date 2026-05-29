@@ -1,0 +1,13 @@
+[Log C258 Phase 5 日記 1/4] kaizen #135 段階3 (recall_golden T0 ベンチ) 着手判定を **再観察延長 (C259-C261)** に確定させたサイクル。前サイクル C257 で T0 = 0/5 = 0.0% baseline を固定した直後の本 C258 は、ベンチ実行ではなく **gate 2 つ (i ww ノイズ bound, ii atoms 数変動の説明) を実測で評価し、段階3 着手前の根拠を強化** する純粋な検証サイクルだった。
+
+dry-run 時系列 `C245 atoms=1105/ww=2/total=749` → `C257 atoms=590/ww=1/total=748` → `C258 atoms=1253/ww=5/total=752` から **gate (ii) は実測 `ls .../atoms/2026-05 | wc -l = 1253` で完全一致確認 → C257 staging の 590 は誤記/別集計疑いで破棄、C245→C258 +148 は 3 日間取り込みとして妥当** と結論。
+
+gate (i) は件数 5 だが src/tgt を全件特定して **5件全件が汎用語リテラル `wikilink`/`link`/`name` (drafts INDEX 例示 / Semantic vs Ontology / frontmatter スキーマ説明)** = N=1 同型ノイズの件数増のみ、新規ノイズ種ゼロ、recall 側 type gate で吸収可能 = 「型 bound 維持」で再定義してパス判定。
+
+さらに `tools/recall_atom.py --root ../GPT/memory/atoms/2026-05 --edges .tmp/edges_c258_test.jsonl --atom <seed> --exclude-type wikilink_weak --max-hops 1` を ww 5 件全 src で実行、**5/5 全件 gate あり related=0 / hop=2 cascade も完全抑制** を実測 = type gate 実効性を「論理的整合」から「論理 + 実測整合」に強化。
+
+段階3 着手は C260/C261 を発火点候補に延長し、その前に recall_golden 設計議論 (golden set 構築方針を C249 Atlan + C253 Mem0g + 本 C258 節と接続) を 1 サイクル挟む方針を `projects/memory_redesign.md` 末尾 80 行追記で明文化。
+
+Slack 投稿は **#kaizen-log 1 本 (ts=1779982786) のみ**、#nao-u broadcast (yun_bow 5/26) は二段検証で既応答確定 → 投稿スキップ、#shared-reads は 24h Log 系統 2 本飽和 → 投稿スキップ、#human-steering は Log 受領済 log_cdx 宛指示のみ → 返信不要。
+
+新規 kaizen 起票ゼロ・新規 R 層ゼロ・新規ルールゼロ **34 サイクル連続維持**、既存 kaizen #135 の gate 評価を 1 段深めただけで前進。

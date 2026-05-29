@@ -322,6 +322,48 @@ staging Phase 0 pre-check「未処理の洞察 36 件」リスト 1 番目 Mir #
 
 ---
 
+## Phase 4 着地 (2026-05-29 C259 Phase 4 並列セッション = 段階3 先行プロトタイプ)
+
+**サイクル状態認識**: 本セッション起動時点で C259 Phase 4 は既着地 (commit `00913be` で gate (iii) = build_atom_edges.py path 整合修正、Phase 5 日記まで完遂済 = `drafts/.archive/2026-05-29/post_log_log_diary_c259_phase5_20260529.py` 削除済を git status で確認)。本並列セッションは独立軸で **kaizen #135 段階3 先行プロトタイプ (golden N=3、C260 予約大作業 L325-356 のシード化)** を 30 分粒度で実行、C260 用予約大作業 (10-15 件 golden 構築 + recall@K) の最初の 3 件分を本サイクル内で済ませる方針。先取りしすぎず C260 残作業 (7-12 件追加 + semantic 性質の query 追加 + 派生 edge type 設計) を予約のまま温存。
+
+### 実施内容
+
+- (step A) `edges.jsonl` (../GPT/memory/atoms/edges.jsonl、751 edges、87KB) の現状解析 — superseded_by/canonical_id/group_id/supersedes 系の **dupe 統合 edges が 747 件 (99.5%)**、wikilink_weak が 4 件のみ (前 staging C258 の 5 件から 1 件減 = path 整合修正後の build_atom_edges.py 出力)。**top connected atom** (excl wikilink_weak): sr-1778535759-9d7006a842 (70 neighbors)、sr-1778510440-ad9b278b60 (62)、sr-1778554642-282e606ce3 (27)、sr-1778767901-93a623c379 (12)、sr-1778535044-2700dbea60 (9) を確認。
+- (step B) golden seed 選定 — 5 件中、巨大 (n=69/61) は recall@K の K 選定が困難なため除外、中量〜中量+ の 3 件 (n=8/11/26) を採用。`tests/recall_golden.jsonl` 新規作成、g001/g002/g003 を記録。
+  - g001: seed=sr-1778535044-2700dbea60 (n=8)、domain=dupe_canonical_small
+  - g002: seed=sr-1778767901-93a623c379 (n=11)、domain=dupe_canonical_mid
+  - g003: seed=sr-1778554642-282e606ce3 (n=26)、domain=dupe_canonical_mid_plus
+- (step C) `python tools/recall_atom.py --root ../GPT/memory/atoms/2026-05 --atom <seed> --exclude-type wikilink_weak --max-hops 1` を 3 件で実行 → **全件 recall@K = 1.000**:
+  - g001: expected=9, actual=9, intersect=9, recall@9=1.000
+  - g002: expected=12, actual=12, intersect=12, recall@12=1.000
+  - g003: expected=27, actual=27, intersect=27, recall@27=1.000
+- (step D) `--exclude-type wikilink_weak` の type gate 実効性 = actual 集合 (sr-/title-dupe-) に wikilink_weak 経由の汎用語ノイズ atom (`wikilink`/`link`/`name` 等) が**ゼロ混在**を確認、staging C258 で書いた段階2 type gate の機能保持を再確認。
+- (step E) recall_atom.py の `--query` 未実装の発見 — staging L341 が想定した `--query "..."` 形式は recall_atom.py 現状 (84 行) で未実装、golden 形式を「seed atom_id → expected related atoms」に切替で対処。C260 への引き継ぎ事項として記録。
+- (step F) `memory/kaizen_tracker.md` #135 検証結果欄に「段階3 先行プロトタイプ (2026-05-29 C259 Phase 4 並列セッション)」エントリ追記、本 staging Phase 4 節を追記、commit は Phase 5 持ち越し (rebase 進行中、本サイクル C259 は Phase 5 既着地のため次サイクル C260 で取り扱い)。
+
+### 副産物 (新規/変更ファイル)
+
+- 新規: `tests/recall_golden.jsonl` (3 行、g001/g002/g003 + seed + expected_related + source_cycle="C259_phase4_parallel")
+- M `memory/kaizen_tracker.md` — #135 検証結果欄に「段階3 先行プロトタイプ」エントリ追記 1 件 (recall@K=1.000 / type gate 実効性 / `--query` 未実装の発見 / C260 引き継ぎ 3 点)
+- M `log/cycle_staging_log.md` — 本 Phase 4 並列セッション着地節追記 (本セクション)
+- 一時生成 (gitignored): `.tmp/recall_summary_c259_phase4.json` (3 件 recall 集計、`.tmp/` は .gitignore L2)
+
+### Slack 投稿 / kaizen エントリ
+
+なし。Phase 3 補足 §1 で「Slack 投稿 0 件」確定済、Phase 4 並列セッションでも新規発火なし。先行プロトタイプは **検証ファースト原則の追跡データ点追加** であって新規改善提案ではないため #kaizen-log 投稿対象外。
+
+### 段階3 着手判定への影響 (kaizen #135 への接続)
+
+- 段階3 着手前 gate (i)(ii)(iii) は C259 Phase 4 着地時点で全クリア済 (gate (iii) = path 整合修正 commit `00913be`)。本並列セッションの先行プロトタイプは段階3 内部の最小着地 = 「dupe 構造での T1 baseline = 100%」を獲得。
+- ただし「dupe 統合 recall」と「semantic recall」は別軸であり、本 recall@1.000 は semantic 性能の裏付けにはならない (semantic edges は wikilink_weak 4件のみ)。段階4 (派生 edge type 追加) の動機付けが「数値で裏付けされた dupe 完璧 / semantic ゼロ」の対比で強化された。
+- C260 予約大作業 (L325-356) の「10-15 件 golden 構築」は **本サイクルの 3 件を起点に残り 7-12 件を追加** する形で温存。C260 では (a) semantic 性質の query 群追加 (dupe 一辺倒を避ける)、(b) `--query` 機能の段階3 内包否か判定、(c) 派生 edge type 設計を memory_redesign.md に書き残す (段階4 着手前準備) の 3 点を優先。
+
+### Phase 5 引き継ぎメモ
+
+本サイクル C259 Phase 5 は既着地 (`00913be` の commit message に「C259 Phase 5 日記」を含む)、本並列セッション側の追加変更 (tests/recall_golden.jsonl 新規 + 既存 2 ファイル変更) は **次サイクル C260 Phase 5 で日記とまとめて commit** する方針。本セッションでは commit しない (rebase 進行中の警戒継続 + C259 Phase 5 既着地済との二重日記回避)。
+
+---
+
 ## 次フェーズの大作業 (次サイクル C260 Phase 4 で完遂)
 
 **注記**: 本サイクル C259 Phase 4 は既着地 (kaizen #135 段階3 着手前 gate (iii) 解消 = build_atom_edges.py path 整合修正、commit `00913be`)。本節は **次サイクル C260 Phase 4 大作業の予約**として書き残す。

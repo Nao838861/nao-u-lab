@@ -1,6 +1,6 @@
 # Drafts Index — 未統合の作業ファイル群（自動生成）
 
-_Last generated: 2026-05-27 by `tools/rebuild_drafts_index.py`_
+_Last generated: 2026-05-29 by `tools/rebuild_drafts_index.py`_
 
 ## 目的
 
@@ -17,7 +17,7 @@ orphan_check.py の判定で区別できるようにする。
 - 再生成: `python tools/rebuild_drafts_index.py`
 - 並び順: ルート直下→日付サブディレクトリ昇順、各セクション内はファイル名昇順
 
-## ルート直下 (403 files)
+## ルート直下 (407 files)
 
 - [[20260417_ash_diary]]
 - [[ash_abagames_reply_20260422]]
@@ -110,6 +110,8 @@ orphan_check.py の判定で区別できるようにする。
 - [c241_log_diary.txt](c241_log_diary.txt)
 - [[c249_phase2_shared_atlan]]
 - [[c249_phase2_shared_mem0]]
+- [[c253_phase2_shared_mem0g]]
+- [[c254_phase2_shared_quartetfuzz]]
 - [[cross_review_layer_b_vocabulary_v01]]
 - [[cross_review_trial_001_graze_log_cdx_v59]]
 - [[diary_ash_058]]
@@ -417,13 +419,15 @@ orphan_check.py の判定で区別できるようにする。
 - [shared_reads_anthropic_marketplace_ash_20260425.txt](shared_reads_anthropic_marketplace_ash_20260425.txt)
 - [[shared_reads_ash_nyp_qoo]]
 - [[slack_human_steering_ideation_pattern_ash]]
+- [slack_post_log_c257_harness_inventory.txt](slack_post_log_c257_harness_inventory.txt)
+- [slack_post_log_c257_mem0g_resolver.txt](slack_post_log_c257_mem0g_resolver.txt)
 - [slack_post_matrix_v0.txt](slack_post_matrix_v0.txt)
 - [slack_reply_ai_gamestore_20260523.txt](slack_reply_ai_gamestore_20260523.txt)
 - [slack_reply_atomic_chat_20260523.txt](slack_reply_atomic_chat_20260523.txt)
 - [split_lessons_20260502.py](split_lessons_20260502.py)
 - [split_lessons_appendix_20260502.py](split_lessons_appendix_20260502.py)
 
-## 日付サブディレクトリ (36 dirs)
+## 日付サブディレクトリ (38 dirs)
 
 ### 2026-04-25 (8 files)
 
@@ -875,14 +879,28 @@ orphan_check.py の判定で区別できるようにする。
 - [post_mir_mirlog_diary_c230_20260526_POSTED_ts1779745137.py](2026-05-26/post_mir_mirlog_diary_c230_20260526_POSTED_ts1779745137.py)
 - [post_mir_mirlog_diary_c231_20260526_POSTED_ts1779804361.py](2026-05-26/post_mir_mirlog_diary_c231_20260526_POSTED_ts1779804361.py)
 
-### 2026-05-27 (6 files)
+### 2026-05-27 (11 files)
 
 - [post_log_allnaoulab_graphiti_akshay_20260527_POSTED_ts1779842673.py](2026-05-27/post_log_allnaoulab_graphiti_akshay_20260527_POSTED_ts1779842673.py)
+- [post_log_allnaoulab_graze_v06_deterministic_metrics_20260527.py](2026-05-27/post_log_allnaoulab_graze_v06_deterministic_metrics_20260527.py)
 - [post_log_allnaoulab_mimicry_log_direct_20260527_POSTED_ts1779813485.py](2026-05-27/post_log_allnaoulab_mimicry_log_direct_20260527_POSTED_ts1779813485.py)
+- [post_log_allnaoulab_mimicry_log_flavor_translation_20260527_POSTED_ts1779867697.py](2026-05-27/post_log_allnaoulab_mimicry_log_flavor_translation_20260527_POSTED_ts1779867697.py)
+- [post_log_allnaoulab_naruebi3_analysis_20260527_POSTED_ts1779876968.py](2026-05-27/post_log_allnaoulab_naruebi3_analysis_20260527_POSTED_ts1779876968.py)
 - [post_log_kaizenlog_136_phase1_step6_protocol_20260527_POSTED_ts1779813689.py](2026-05-27/post_log_kaizenlog_136_phase1_step6_protocol_20260527_POSTED_ts1779813689.py)
 - [post_log_log_diary_c246_phase5_20260527_POSTED_ts1779814660.py](2026-05-27/post_log_log_diary_c246_phase5_20260527_POSTED_ts1779814660.py)
 - [post_log_log_diary_c248_phase5_20260527_POSTED_ts1779836534.py](2026-05-27/post_log_log_diary_c248_phase5_20260527_POSTED_ts1779836534.py)
+- [post_log_log_diary_c251_phase5_20260527_POSTED_ts1779868983.py](2026-05-27/post_log_log_diary_c251_phase5_20260527_POSTED_ts1779868983.py)
 - [post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py](2026-05-27/post_log_sharedreads_nextmars_readability_systems_refinement_20260527_POSTED_ts1779834973.py)
+- [post_mir_mirlog_diary_c245_20260527_POSTED_ts1779889002.py](2026-05-27/post_mir_mirlog_diary_c245_20260527_POSTED_ts1779889002.py)
+
+### 2026-05-28 (2 files)
+
+- [post_log_allnaoulab_rampart_skeptical_20260528_POSTED_ts1779910177.py](2026-05-28/post_log_allnaoulab_rampart_skeptical_20260528_POSTED_ts1779910177.py)
+- [post_mir_mirlog_diary_c246_20260528_POSTED_ts1779909135.py](2026-05-28/post_mir_mirlog_diary_c246_20260528_POSTED_ts1779909135.py)
+
+### 2026-05-29 (0 files)
+
+_(empty)_
 
 ### __pycache__ (1 files)
 
