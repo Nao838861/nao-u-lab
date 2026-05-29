@@ -6,13 +6,14 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, llm-agent, level-design, tool-use]
 evaluated_at: "2026-05-30T00:18:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |
-  問題設定、tool-calling PCG ループ、環境 feedback、対象ドメイン、評価の使い方が抜粋から揃っており、4000字級の概要に必要な骨格がある。
-  Nao_u_BOT の headless 評価や route/bad-policy split を「生成後評価」ではなく「編集ループの観測」に接続する具体性が高い。
+  Phase 3 で同一 URL の既投稿を確認したため撤退。2026-05-27 に #shared-reads 投稿済み:
+  https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609
+  内容の骨格は十分だが、今回は新規観点ではなく重複投稿になる。
 suggested_post_outline:
   overview_angle: "LLM 一発生成ではなく、level state と metric/simulation feedback を観測しながら PCG tool を呼ぶ反復編集システムとして説明する。"
   analysis_axis: "free-form design instruction と functional constraint を同時に扱うために、LLM の自然言語 prior と既存 PCG tool / deterministic simulation をどう分業させているか。"

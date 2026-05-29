@@ -29,7 +29,21 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-05-30T00:42:43+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260530_klpeg_incremental_game_playtesting.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169"
+    char_count: 3786
+  - candidate: "memory/shared_reads_candidates/20260530_agent_lifespan_engineering_agingbench.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068163256159"
+    char_count: 4234
+skipped:
+  - candidate: "memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md"
+    reason: "同一 URL の Agentic PCG は 2026-05-27 に #shared-reads 投稿済み。新規観点ではなく重複投稿になるため Phase 3 で撤退。"
+    action: candidate_revise
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

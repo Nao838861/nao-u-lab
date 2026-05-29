@@ -7,7 +7,12 @@ genre_tags: [game-testing, playtesting, knowledge-graph, llm-agent, regression-t
 evaluated_at: "2026-05-30T00:18:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780068162.217169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169"
+  char_count: 3786
+  posted_at: "2026-05-30T00:42:42+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |
