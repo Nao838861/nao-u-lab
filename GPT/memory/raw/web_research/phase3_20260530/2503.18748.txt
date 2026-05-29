@@ -1,0 +1,1181 @@
+
+
+--- PAGE 1 ---
+Simulation-Driven Balancing of Competitive Game
+Levels with Reinforcement Learning
+Florian Rupp , Manuel Eberhardinger , Kai Eckert
+Abstract—The balancing process for game levels in competitive
+two-player contexts involves a lot of manual work and testing,
+particularly for non-symmetrical game levels. In this work,
+we frame game balancing as a procedural content generation
+task and propose an architecture for automatically balancing
+of tile-based levels within the PCGRL framework (procedural
+content generation via reinforcement learning). Our architecture
+is divided into three parts: (1) a level generator, (2) a balancing
+agent, and (3) a reward modeling simulation. Through repeated
+simulations, the balancing agent receives rewards for adjusting
+the level towards a given balancing objective, such as equal
+win rates for all players. To this end, we propose new swap-
+based representations to improve the robustness of playability,
+thereby enabling agents to balance game levels more effectively
+and quickly compared to traditional PCGRL. By analyzing the
+agent’s swapping behavior, we can infer which tile types have the
+most impact on the balance. We validate our approach in the
+Neural MMO (NMMO) environment in a competitive two-player
+scenario. In this extended conference paper, we present improved
+results, explore the applicability of the method to various forms
+of balancing beyond equal balancing, compare the performance
+to another search-based approach, and discuss the application of
+existing fairness metrics to game balancing.
+Index Terms —PCG, game balancing, reinforcement learning,
+simulation
+I. I NTRODUCTION
+Level design is a key concept when creating games. In order
+to keep players engaged, a balance must be struck between a
+challenging and enjoyable experience. This is generally not
+an easy task, as it also depends on the skill and experience
+of the players [1]. In addition, game levels for competitive
+multiplayer games must be designed to be balanced towards
+equal initial win chances for all players. Imbalanced games
+will lead to boredom or frustration, and players will quit
+playing [2], [3].
+To ensure balance through level design, game designers
+often rely on nearly (point) symmetric map architectures.
+This can be seen in popular competitive e-sports titles such
+as League of Legends, DotA 2 or Starcraft 2, but also in
+other competitive tile-based games such as Advance Wars
+or Bomberman. In addition to symmetric levels, alternative
+approaches are also possible. Non-symmetric levels offer more
+variety and can create new ways for playful creativity to be
+entertaining and challenging.
+We formulate the level balancing task as a procedural
+content generation (PCG) task. In previous works, several
+approaches have been proposed using (PCG) for level bal-
+ancing, such as search-based approaches [4], [5], evolutionary
+This research was supported by the V olkswagen Foundation (Project:
+Consequences of Artificial Intelligence on Urban Societies, Grant 98555).
+Fig. 1: In our game environment, two players must forage for
+resources like food (dark green) and water (blue) to survive
+longest. By swapping the highlighted tiles (red), the trained
+model achieved a more balanced game in simulated game runs.
+algorithms [6]–[10] or graph grammars [11]. In this work, we
+introduce the use of reinforcement learning (RL) to balance
+tile-based levels. Once a RL model is trained, it can generate
+levels fast and is less dependent on randomness compared to
+evolutionary methods. We apply RL for balancing by design-
+ing a reward function based on multiple simulation runs using
+scripted agents. While this approach becomes computationally
+intensive due to the simulations for each reward calculation,
+the advantage of RL over other search-based approaches is that
+it learns during training. This reduces the need for unnecessary
+simulations in the inference step, unlike e.g., evolutionary
+algorithms, which start over each time. In addition, we design
+our method to be domain independent, unlike graph grammars
+or search-based approaches.
+Therefore, we use the Procedural Content Generation via
+Reinforcement Learning framework (PCGRL) [12] which has
+recently been introduced for the generation of tile-based levels.
+Together with the newly introduced swapping representations,
+our method can be viewed as a fine-tuning task to optimize
+a generated level towards a certain balance. Our method is
+evaluated on the open-source Neural Massively Multiplayer
+Online (NMMO) environment [13] which was designed for
+competitive multiplayer research. We frame the problem as
+a resource gathering and survival game. Figure 1 shows an
+example of how our method balanced a generated level (left)
+by swapping highlighted tiles (right). The code used in this
+research is available on Github 1.
+Our contributions are:
+• A domain-independent architecture for learning to auto-
+matically alter game levels towards a specified balance
+with RL.
+1https://github.com/FlorianRupp/pcgrl-simulation-driven-balancing
+©2024 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future
+media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or
+redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+arXiv:2503.18748v1  [cs.LG]  24 Mar 2025
+
+--- PAGE 2 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+• A novel swap-based representation pattern to frame the
+problem as a Markov decision process.
+• An experimental study to evaluate the proposed architec-
+ture against the original PCGRL method.
+This paper is an extended version of the conference pa-
+per [14]. We provide improved results, a detailed discussion
+of how existing fairness metrics can be transferred to game
+balancing, a comparison with a search-based approach, and a
+study of how this can be used for any balancing and not just
+equal balancing. Therefore, we revise the reward function and
+explain its derivation from the statistical parity metric [15].
+The structure of this paper is as follows: We give a brief
+overview of related work (II) and the background (III). In
+Section IV the method is described and the implementation
+details in V subsequently. Experiments and results are pre-
+sented in VI, followed by an extended study on the generalized
+approach of an arbitrary balancing in VII. The discussion is
+in Section VIII, the conclusion in IX.
+II. R ELATED WORK
+Several methods for balancing multiplayer games have
+been proposed in the past. One approach is to balance the
+configuration of game entities such as characters, weapons, or
+items [1]. To this end, the gaming industry uses pipelines to
+gain data-driven insights from games played and to adjust the
+balance on a regular basis 2.
+Evolutionary algorithms are further widely applied for game
+balancing. Morosan et al. balance a real-time strategy game
+(RTS) [6] and Sorochan et al. generate new and balanced
+units for an RTS game [5]. V olz et al. balance decks for
+a card game and, similar to this work, they evaluate the
+quality with a simulation-driven approach [16]. De Mesentier
+Silva et al. optimize cards for the game Hearthstone [10] to
+balance the metagame. Pfau et al. train models with data from
+played games to replicate human behavior for automated entity
+balancing [17].
+A level’s balance is furthermore affected by its design. This
+refers e.g., to the position of game entities in relation to the
+players’ initial spawn position. As aforementioned, in many
+games this is ensured with (point) symmetric map architec-
+tures. Contrary to the intended balance, players’ perceptions
+may differ. A survey revealed that the prevailing opinion
+among highly experienced players is that only symmetric
+levels can actually be balanced [18].
+To automatically construct balanced levels with PCG, sev-
+eral works using evolutionary algorithms have been intro-
+duced [7], [8]. In contrast to this work, the fitness for balancing
+is evaluated using rule-based heuristics or metrics. These
+metrics are either hand-crafted or rely on a data-driven method
+using played games. Karavolos et al. extend this with a con-
+volutional neural network to predict game related information
+which are then used in the fitness function of an evolutionary
+algorithm to produce balanced levels [9]. A different approach
+is the usage of graph grammars [11]. The balance here is
+constructed by the rule-based placement of strategic game
+2https://www.leagueoflegends.com/en-gb/news/dev/dev-balance-
+framework-update/
+entities, which is, however, highly domain-dependent. Rupp et
+al. present GEEvo, a framework for generating and balancing
+graph-based game economies [19]. An evolutionary algorithm
+is used to balance the weights on the edges of the graph to
+a given value. Similar to this work, fitness is evaluated by
+running multiple simulations.
+In this work, we focus on procedural content generation
+for level generation, but the term PCG is also used in other
+applications such as the generation of game economies [19],
+[20], rules [21] or narratives [22]. PCG methods span over
+from dedicated algorithms [23], search-based methods [4],
+[7], [8] up to the use of machine learning [24] and deep
+learning [25]–[28]. Once trained, machine learning methods
+can quickly generate content on demand, but they rely on the
+existence of game levels from which a model can be learned.
+As a result, these methods are usually not efficiently applicable
+to the creation of new games.
+In the games community, RL has been widely applied to
+play games [29], [30], but recently, it has also been applied
+to PCG [12], [31]–[33]. The framework we use and extend
+in this work is PCGRL [12], utilizing RL for PCG tasks (cf.
+Section III-A). Zakaria et al. compare different deep learning-
+based PCG approaches for the puzzle game Sokoban, with un-
+controllable PCGRL showing superior quality [33]. There are
+already a few methods that have adapted the PCGRL method.
+In [34] controllable content generators were introduced, where
+users control the generated content with additional constraints,
+such as e.g., the number of players. However, we do not
+compare our method to it, since our goal is only a balanced
+level. Other approaches use evolutionary strategies on top of
+the PCGRL framework to achieve more content diversity [35]
+or adapt the method for 3D environments [36].
+III. B ACKGROUND
+A. The PCGRL Framework
+In this work, we use the PCGRL [12] framework for level
+balancing. In PCGRL, PCG is formulated as a sequential
+decision-making task to maximize a given reward function,
+where semantic constraints can be expressed and thus, no
+training data is needed. To apply RL, the PCG problem is
+formulated as a Markov decision process (MDP). Therefore,
+PCGRL introduces three different MDP representations for
+level generation. We will introduce three new swap represen-
+tations based on the existing ones. Later, we will argue that
+they are more suitable for modifying game levels to improve
+the balance state. The original representations in PCGRL are:
+a) Narrow: This representation randomly selects a tile
+in the grid and the agent only has to decide what type of tile
+to place on the selected position. The action space is small as
+it only consists of the different tile types.
+b) Turtle: The turtle representation allows the agent to
+move around the map and then to decide what type of tile
+to place on the current position. The advantage of the narrow
+representation is that the agent is not restricted to the randomly
+assigned position and can therefore learn where to move next.
+
+--- PAGE 3 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+c) Wide: The wide representation gives the agent full
+control over the level generation process, since the agent can
+decide which tile of the entire grid should be changed. This
+greatly increases the action space as each position of the grid
+multiplied by the number of tiles represents an action. Because
+the agent can change everything directly according to a plan
+it has constructed, it is the most human-like representation.
+B. The Neural MMO Environment
+As a basis for our experiments, we use the NMMO en-
+vironment [13]. The NMMO environment is a Massively
+Multiplayer Online Battle Royal-inspired multi-agent RL envi-
+ronment for research. It simulates a tile-based virtual world in
+which agents must forage for resources to survive and prepare
+for battles with other agents. All agent actions are processed
+simultaneously per time step. The agent that survives the
+longest wins the game. The state of an agent is represented
+by its position as well as its current health, food, and water
+levels.
+In this paper, we focus on the balancing in the PCG process
+of the game map. To apply and evaluate our method, we
+simplify the winning condition and frame the game as a forage
+survival game. Therefore, we disable the combat system and
+restrict the map tiles to the types of grass
+ , forest
+ ,
+stone
+ , and water
+ . Agents
+ cannot move on stone
+or water tiles. Forest and water are resources that the agent
+can gather. When moving on a forest tile, it is automatically
+consumed as food and refills the agent’s food indicator. In the
+process, the forest tile changes to the state scrub. Scrub tiles
+cannot be consumed, but there is a 2.5% chance per time step
+per scrub tile that it will respawn and transit back to the forest
+state. To refill an agent’s water indicator, it must simply step
+on an adjacent tile. Water tiles are not depleted. If one of both
+resource indicators are empty, the agent loses a fixed amount
+of health per step. If the agent’s health indicator reaches zero,
+the agent dies. An agent can regain health if its water and food
+indicators are above 50%.
+For this research, the winning conditions are the same for
+both agents. The first agent to reach one of the two goals wins:
+• Collect five food resources.
+• Last agent standing: Neither starved nor died of thirst.
+In this research, we fix the map size to a grid of 6x6 tiles and
+two players to speed up the experiments and to keep the results
+interpretable by human evaluators. Furthermore, the smaller
+grid size limits the available space and resources, which
+increases the competitive race of the agents. This competitive
+race is to be balanced in this paper.
+IV. M ETHOD
+A. Balancing Architecture
+This paper proposes an architecture for balancing tile-based
+levels with RL. The idea is to reward a PCGRL agent for
+only altering a given playable level towards a balanced level.
+A balanced level is one where all player agents with the same
+skill have the same win rate. We focus only on game balance
+through level design, which excludes balancing a sequence of
+levels or different play styles for instance. The architecture
+is shown in Figure 2. It is separated into three parts: a level
+generator, a balancing agent, and a game playing simulation.
+The level generator constructs a playable level from random
+noise which is then fed to the balancing agent. In this work
+we use PCGRL for the generator, but other PCG methods
+will serve comparable at this point. The generator is trained
+separately before training the balancing agent.
+The core idea of level balancing is not to generate a new
+level, but to modify the given level to satisfy the balancing
+constraint. At each time step, the balancing agent can decide
+to swap the positions of two selected tiles. If a swap (cf.
+Section IV-B) has been made, the level is played n-times in
+a simulation by player agents. Subsequently, the balancing
+agent is rewarded based on how this action affected the
+balance state in simulations (Section IV-C). The simulations
+can therefore be understood as the basis for a static simulation-
+based evaluation function as described by Yannakakis and
+Togelius [ ?]. More details are given in the implementation
+details (Section V).
+B. Swap-based Representation Pattern
+To formulate the problem of PCG with RL as MDP, three
+representations have been introduced in [12]. In all of them,
+the agent can decide to replace a tile at a particular position.
+This method, however, can lead to unplayable levels at a time
+step. Furthermore, to move the position of e.g., a player tile
+somewhere else, the agent would first have to remove the
+player tile before creating it at a different position. In this
+time step, the level would not be playable for the player agents,
+and thus, no reward could be computed in the simulation step.
+Additionally, the agent would first receive a negative reward
+due to the number of players is now invalid. The subsequent
+creation at a different position under the previously given
+negative reward is hard to learn for RL agents.
+For this reason, we introduce a swap-based representation
+pattern. In these representations, the agent can decide to swap
+the positions of two tiles per time step. Not adding or removing
+tiles entirely is a more robust approach to ensuring level
+playability.
+However, there may be game domains where multiple
+tiles have a semantic connection, such as multiple river tiles
+forming a river. Swapping these tiles around can break playa-
+bility. Therefore, in the balancing step, we suggest sending
+unplayable levels back to the generator for repair. This repair
+is similar to the level fixing seen in [37], but it would also
+involve an additional increase in computation.
+In this work, we demonstrate the power of swapping with
+a simpler domain where there are no semantic relationships
+between multiple tiles. In addition, swapping tiles ensures
+that the old level isn’t simply regenerated from scratch, since
+that is the job of the level generator. Swapping two tiles of
+the same type has no effect on balance. Thus, we prevent
+these swaps to reduce the computational effort. In these
+cases, the agent is rewarded with 0. Therefore, we extend the
+narrow, turtle and wide representations [12] with a swapping
+mechanism. Like in PCGRL, observations are one-hot encoded
+
+--- PAGE 4 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+Fig. 2: Description of the balancing architecture. It is separated into three units: A level generator, a level balancing agent, and
+a game playing simulation. In the latter, the game is simulated by playing it n-times with heuristic player agents. The reward
+rt for training the balancing agent is computed from the balance states bt and bt−1 of the simulations.
+in all representations. The detailed description for each swap
+representation is provided below.
+a) Swap-Narrow: At each time step two random tile
+positions are presented to the agent, and it can decide to swap
+the tiles or not. The agent’s limited positional control results
+in a very small action space A with only two actions: swap
+or do not swap. A is therefore A = [2].
+b) Swap-Turtle: Starting from two random positions, the
+agent can decide to swap the tiles at the current positions in
+each time step. If no change is made, it can decide to which
+adjacent tile to move to next. As in the original PCGRL,
+staying at a position and not changing a tile is not an option. A
+is therefore A = [4, 4, 2], which results in 32 possible actions.
+c) Swap-Wide: In this representation, the agent sees the
+entire level and can freely determine the tile positions and
+whether to swap them. It can be interpreted as looking at
+the whole level and then deciding what to move where.
+A drawback here is the large action space, since it scales
+twice with the grid width w and height h. A is therefore
+A = [ w, h, w, h, 2]. In the case of a square grid, as in this
+work with a size of 6, A has 2592 possible actions.
+C. Reward Design
+The reward function is crucial for the successful training
+of an RL agent. Heuristic approaches for evaluating the
+balance have been introduced in [7], [8]. These approaches,
+however, contain domain-specific information and are thus not
+transferable. To address this shortcoming, we propose the use
+of a more generic, game domain-independent reward function
+that depends only on how often each player wins. In addition,
+we require that the game has at least one winner at the end.
+Since draws also provide information about the balance, our
+reward function must take this into account as well.
+To adequately measure the balance, we are inspired by
+fairness metrics from the fair machine learning community.
+A survey of common metrics used in that field is provided
+by Makhlouf et al. [38]. The statistical parity metric [15] is
+one of them and is often used to measure fairness between
+two groups. The fairness for two groups G = 1 and G = 2
+is considered as fair if the conditional probability of the same
+outcome ˆY is the same for both groups, as seen in Eq. 1.
+P ( ˆY | G = 1) = P ( ˆY | G = 2) (1)
+In this work, we transfer this definition of fairness to the
+domain of game balancing. In the context of the statistical
+parity, the two groups represent the two players, and we want
+to optimize their win rates. However, the direct use of Eq. 1 is
+not applicable to RL since it requires a function that rewards
+the agent with positive or negative incentives per time step t.
+In addition, an intermediate reward design which compares t
+to t − 1 has shown good results in PCGRL. First, we therefore
+define the win rate wpit per player pi:
+wpit = P (wt | p = i) (2)
+wpit is then inferred from the data of the n-runs of the player
+agent simulations per step. This can be seen as a sampling
+from the actual win rate distribution (cf. Section V-C and
+Fig. 3). Second, in this extended paper, we additionally want
+to make the reward design configurable to a certain balance
+state b and thus rewrite the balancing calculation bt as:
+bt = | wp1t − b | (3)
+Due to the use of the absolute value, wpit of both players
+could be used in Eq. 3, since their values describe probabilities
+that sum up to 1. bt is defined in [0, 1] as well, where 0
+indicates that bt is exactly equal to b; 1 indicates the maximum
+deviation from b. In the example where an exact balance
+between both players is desired ( b = 0 .5), bt = 1 indicates
+a particular player wins every game. With bt in this range,
+there is flexibility to configure towards which player the game
+should be balanced against. Finally, the reward rt is:
+rt = bt−1 − bt + α (4)
+To reward the agent additionally, a reward α is given if bt
+is exactly b. Otherwise, α is 0. If α > 0, the episode always
+ends since bt = b. As a result, the reward will be positive if
+the agent improves the balance state, negative otherwise. For
+no impact on the balance state, the agent receives no reward
+(value 0). Using this reward design, the RL agent is gradually
+incentivized to reduce the absolute difference from the current
+balance state to the desired one.
+V. I MPLEMENTATION DETAILS
+A. Level Generator
+The task of this unit is to generate playable levels for
+balancing. In this work, the generator is a model trained using
+the PCGRL framework. The reward for the training process is
+designed to reward the agent for having exactly two players
+and creating a valid path between them. To ensure direct
+competition, the latter restriction ensures that both players
+
+--- PAGE 5 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+have access to the same area of the game level. Additionally, it
+prevents single players from being locked behind stone walls.
+The NMMO environment uses PCG by default to generate
+random levels, however, the players’ spawn positions are
+randomly determined at the start of the game. Nevertheless, the
+spawn positions are crucial for the balance, so the balancing
+agent should be able to influence them. For this reason, player
+tiles representing these positions are integrated in the level
+generation process.
+If there is a valid path between both players, the agent
+receives a positive reward, otherwise a negative one. Addi-
+tionally, at each step the agent is rewarded with the difference
+of the players that are and should be (similar to [12]). We get
+the best results using the wide representation. An episode ends
+when both constraints are met, or when the agent exceeds a
+fixed number of permitted steps or changes.
+After training, the model can produce levels satisfying the
+given constraints in 98,7% levels out of an evaluation sample
+of 5000. The generated levels achieve a maximum diversity
+at 100%, so no two levels are completely identical. An
+example of a generated level is shown in Figure 1 (left). The
+functionality of the game and tiles is given in Section III-B.
+Level generation in this step continues until the agent has
+produced a valid level that satisfies the constraints to ensure
+that the balancing agent receives playable levels only. The
+generated levels are then passed on to the balancing agent.
+B. Balancing Agent
+The balancing agent is the core component of the architec-
+ture in Figure 2. We model the agent as a PCGRL agent that
+can decide to alter a previously generated game level per time
+step. To support this process, we use swapping representations.
+The reward is computed from the results of a simulation of
+the balance state (Section IV-C).
+The observation is the current level one-hot encoded. In
+detail, this depends on the chosen representation. As RL
+algorithm, we use PPO (proximal policy optimization) [39].
+An episode ends when the level is either balanced, or a fixed
+number of steps or changes is exceeded. In PCGRL, the
+number of changes allowed is determined relative to the grid
+size (cf. change percentage). As in the original PCGRL we use
+a change percentage of 20%. We set the value for the number
+of allowed steps within an episode to 100.
+C. Player Simulation
+To compute bt for the reward (Section V-B), we run a
+simulation n-times of player agents playing the game. The
+player agents can be any solution which can simulate a player’s
+behavior with a desired quality. In this work we use the
+scripted Forage-agent for the NMMO environment, which is
+publicly available 3. An agent gathers the nearest available
+food resource. If its water indicator drops below a certain
+threshold, it will search for the nearest water resource to
+refill it. The usage of scripted agents provides the advantage
+of a deterministic behavior at each time step. At this point,
+3https://github.com/NeuralMMO/baselines
+Fig. 3: How many times n should we run the simulation
+to approximate the balance state? We figure that out by
+calculating the mean deviation µn of win rates from n − 2
+to n for the investigation of fluctuations in win rates.
+however, the use of trained agents with e.g., RL, different
+skilled or types of agents would also be feasible. See the
+discussion (Section VIII) for further information.
+Despite the simulation is run with the same player agents,
+the winners may differ each pass. This is due to the probabilis-
+tic mechanics that make games interesting, such as dice rolling
+or the respawning of resources with a certain probability.
+A player can win with luck, but when playing many times,
+skill should make the difference. The question then becomes,
+how often must a simulation be run to minimize the noise
+of the probability? Since the simulations are computationally
+intensive, it is of interest to find the number of minimum runs
+where the win rates vary at an acceptable level.
+We approach this by investigating how much the win rates
+wn of a given number of simulations n differ on average
+from n − 2. Only even values for n are applicable since
+otherwise a balanced game is not possible. Therefore, we
+run the simulation on a sample of size s = 500 levels up
+to a number of N = 30 times and compare how the win
+rates for n vary on average in comparison to n − 2. The
+average deviation µn of a particular n is expressed with:
+µn = 1
+s
+PN
+n=0 |wn−wn−2| and its course is shown in Figure 3.
+In addition, the standard deviation is given with σ and 2σ.
+It is clear that the larger n, the smaller µn. To determine a
+reasonable n, we set the threshold: µn + σ < 0.05. For this
+game with the configured number of players, this is n ≥ 14.
+Therefore, we use n = 14 in this work. This method can be
+used to determine n for any domain.
+VI. E XPERIMENTS AND RESULTS
+We evaluate our architecture in several steps: First, we sam-
+ple a fixed dataset of levels to use for direct comparison with
+the generator. Second, we compare the balancing performances
+of the three introduced representations with the original PC-
+GRL method as a baseline (VI-A). To generate balanced levels
+with the original PCGRL method, we integrated the balancing
+constraint into the reward function.
+Subsequently, we investigate on the levels the models cre-
+ated (VI-B) and examine which tiles the models swapped
+in the level altering process (VI-C). The latter can provide
+insights into which tiles actually affect the balance.
+
+--- PAGE 6 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+Fig. 4: Distribution of the initial balance states based on the
+players’ win rates in the generated dataset of 1000 levels. We
+use this dataset to compare the different representations.
+A. Performance Overall
+We compare the performance of the swap representations
+against each other and against the original PCGRL as base-
+line4. For direct comparison, all models were trained with the
+same number of 200k training steps, resulting in 970 policy
+updates.
+For the evaluation, we create a dataset of 1000 levels with
+our PCGRL generator. This dataset is then used for all four
+models for evaluation. First, we examine the distribution of the
+initial balance states of the levels in the dataset (see Figure 4).
+It is important to note that the distribution is not uniform.
+Except for the states 0 and 1, the levels seem to be normally
+distributed around the state of 0.5, indicating that both players
+won equally often. Initially, 13.6% of the levels are balanced.
+However, peaks towards maximally unbalanced levels can be
+observed at the outer edges of the distribution. Maximally
+unbalanced levels make up 26.6% of the dataset.
+To evaluate the performance of the balancing method we
+compare the balance state before and after per representation.
+A general overview is given in Table I. A histogram of the
+balancing improvement is shown in Figure 5.
+The performance of all three swap representations is of
+comparable quality. Each representation managed to improve
+the proportion of balanced levels. The swap-narrow and swap-
+wide representations perform slightly better than swap-turtle in
+terms of balancing. The original PCGRL narrow representation
+also improved the share of balanced levels, however, with
+36.7% this share is smaller compared to the swap represen-
+tations. Additionally, a proportion of 38.8% of the levels are
+in an unplayable state at the end of an episode (Figure 5b);
+whereas our methods result in 100% of playable levels in this
+domain in all cases. However, unbalanced levels remain in all
+results. The largest proportion remains for the balance states 0
+and 1. For representations with a higher proportion of balanced
+levels, the average episode lengths are shorter. This is because
+the remaining unbalanced levels maximize the episode length.
+B. Generated Levels
+Figures 1 and 6 show examples of the different types of
+generated levels taken from the samples in Section VI-A.
+Figure 6a is an example where the balancing agent altered
+the given level to a balanced level by swapping only one tile.
+4Only the narrow representation is shown here; the other two give similar
+results.
+(a) Swap representations.
+(b) Original PCGRL (narrow).
+Fig. 5: Comparison of the balance state distributions before
+and after the balancing process for each representation using
+the dataset of 1000 levels (Figure 4). The swap representations
+(a) are compared to the original PCGRL implementation
+directly (b).
+TABLE I: Performance overview of the representations. Ini-
+tially balanced levels were not considered.
+S-narrow∗ S-turtle∗ S-wide∗ PCGRL
+Balanced (%) 48.1 42.5 48.1 30.4
+Improved (%) 63.3 56.8 64.1 36.7
+Avg. changes 4.6 ±1.9 4.7 ±1.9 4.9 ±1.9 5 ±1.8
+Avg. ep. length 11.3 ±6.1 25.4 ±17.7 14.1 ±7.9 15 ±7.9
+Size action space 2 32 2592 10
+∗Swap representations are abbreviated with S.
+By swapping the highlighted grass tile with the rock tile the
+path to the resource (forest) tiles is now blocked. This results
+in a more equal availability of food resources for both players.
+In Figure 1, the agent has balanced the level from an initial
+balance state of 0.3 to 0.5. By swapping the marked water
+tile to a more central position for both players, the balance is
+improved. In Figure 6b the agent failed to balance the initial
+level with b0 = 0 . The balancing process terminated after
+reaching the maximum number of changes permitted. In the
+end, b is still 0.
+C. Impact of Tiles on Balancing
+The analysis of the actual swaps made by a model gives
+insight into its behavior. Thus, we have shown that the model
+could improve the balance state of the given levels, we can
+further argue that the swaps made by the model have an impact
+on the balancing. Conversely, we can infer from this behavior
+which tiles in the game have the most impact on the balance.
+
+--- PAGE 7 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+(a) The agent balanced a maximum unbalanced level (0)
+to a balanced level (0.5) by swapping one tile.
+(b) The agent could not change the initial balance of 0. The
+generation stopped after exceeding the allowed number of
+changes. Since several tiles were swapped, they are not
+highlighted for the sake of visualization.
+Fig. 6: Examples of levels modified by the balancing agent.
+The left column shows the generated levels before balancing.
+The right column levels are the results after the balancing.
+Swapped tiles are marked with red frames.
+For comparison, for each pair of swaps, we compute the
+relative differences between the frequencies of random swaps
+and those of the models. These frequencies are then factorized
+with the inverse probabilities of the total tile occurrences in
+the dataset. Due to swapping the same tile types is prohibited
+by the representations, ten different combinations are possible.
+This is shown in Figure 7. The Figure shows that the three
+representations have different behaviors, but they agree on
+particular points. Swapping forest for stone tiles has the most
+impact, followed by swapping forest for water tiles. This
+makes sense in the context of the resource gathering win
+condition. Moving the resource tiles forest or water is likely
+to affect the balance as they are included in the win condition.
+A stone tile can be used to block a player’s path. Therefore,
+swapping forest tiles for stone tiles has an additional powerful
+effect. Surprisingly, swapping a player’s spawn position with
+other tiles is not a favored action in all cases.
+VII. E XTENDED STUDY ON OVERALL IMPROVEMENTS
+AND BALANCING WITH A VARIED TARGET BALANCE
+In Section VI, we focused on a balance where both players
+win equally often. This study extends the core idea of the
+paper by showing that this method can also optimize given
+levels towards arbitrary balancing values. Furthermore, the
+performance of the trained models is improved.
+A. Improvement of Results
+To improve the results of Section VI, we addressed two
+issues: First, both players’ spawn positions were previously
+represented by the same tile type, making it impossible for the
+model to distinguish between them. For this reason, we now
+Fig. 7: Comparison of the swapped tiles by the model per
+representation on the generated 1000 levels. The comparison
+is made with respect to the inverse tile type distribution of all
+levels. This shows the difference to random swapping.
+assign different tile representations to each spawn position, as
+our previous research has shown that these affect balance. To
+differentiate when drawing, we assign green to player 1
+and yellow to player 2
+ . The different encoding of the two
+positions adds more information and thus slightly increases
+the observation space, but the action space remains the same.
+Training under identical conditions as described in Section VI
+improves the previous results to 65.6% of levels reaching
+balance for b = 0 .5. Second, we improved the performance
+of our code, reducing computation time. As a result, training
+became more efficient, allowing for more updates (10k) to the
+model’s policy in the same amount of time.
+In the results of the experiments in Table I, the best model
+could balance 48.1% and could improve 64.1% of the levels
+to a balance of 0.5. In this extended work, we improve
+the proportion of balanced levels to 68.0% compared to the
+baseline (Table II). The extended training could additionally
+lead to a slight improvement in performance (2.4 percentage
+points). Levels where the model could at least improve towards
+the desired balancing are improved to a proportion of 88.9%.
+A level is considered improved if the balance is equal to or
+comes closer to the desired state.
+B. Balancing with Different Target Values
+With this set of experiments, we extend the previous re-
+search by also training models to generate levels that are not
+equally balanced for both players. This shows that our method
+is generally capable of balancing levels to a certain value.
+Therefore, we use the adapted reward function (Eq. 4),
+which is configurable with a parameter b towards a desired
+balance. We investigate this by training six different models
+in tenth increments of possible values for b in the interval
+[0, 0.5]. As it performed best according to the previous results
+we use the swap-wide representation in combination with the
+improvements from Section VII-A. We refrain from imple-
+menting a single but controllable approach as in [34], as we
+are only experimenting with different parametrizations of the
+reward function. Applying controllable RL would imply an
+
+--- PAGE 8 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+TABLE II: Performance overview of six swap-wide models
+trained to optimize different balance values b over the interval
+[0, 0.5] of the balance metric (cf. Section IV-C). All values are
+given as a percentage.
+b Balanced to b Improved towards b Initial = b Baseline
+0.0 36.1 71.1 8.6 -
+0.1 35.1 73.5 7.2 -
+0.2 42.9 76.3 6.4 -
+0.3 54.6 77.9 11.4 -
+0.4 60.7 81.4 12.0 -
+0.5 68.0 88.9 15.6 48.1
+adaptation of the previously defined MDP, making a direct
+comparison with the previous results difficult. To evaluate all
+models, we use the same level dataset from Section VI-A to
+ensure comparability. An overview of the results is given in
+Table II.
+For all values of b, a significant improvement of the respec-
+tive balance state can be observed (blue). The performance,
+however, differs depending on b. For b ≥ 0.3, the proportion
+of levels with the desired balance is even higher than the
+baseline from the previous experiments. For the value 0, which
+indicates levels that are heavily balanced towards a particular
+player, the performance is slightly worse than the baseline.
+In all cases, however, the models were able to improve the
+balancing towards the given value.
+C. Comparison with Hill Climbing Approaches
+To further evaluate our method in comparison to a search-
+based method, we compare its performance against two hill
+climbing approaches. Therefore, we run these approaches
+on the dataset of 1000 generated levels and compare the
+performances to the models listed in Table II. The hill climbing
+approaches are similar to the PCGRL narrow representation
+and the swap-narrow (S-narrow) representation introduced in
+this paper. Since they incorporate no model to predict a
+position on the level to change or swap, the representations
+based on the wide and turtle representations are not applicable.
+Our S-narrow hill climbing implementation operates as
+follows: During each iteration, the method randomly selects
+two positions and swaps the tiles. Swaps must be carried out at
+each iteration since there is no model to predict this behavior.
+We utilize the same reward function to evaluate the balancing
+(Eq. 4) as when using PCGRL. If the reward is negative in
+time step t, the level state is reverted to the state in t − 1. As
+in the experiments with PCGRL, levels initially matching the
+given balancing constraint are not considered. The execution
+terminates either when the desired balancing is achieved or
+when the maximum of 8 changes is reached. This is the
+same value used in our experiments with PCGRL (cf. change
+percentage, Section V-B). Since we consider the balancing
+phase as a fine-tuning stage for pre-existing content, it’s crucial
+to restrict the number of changes. Excessive changes can lead
+to a total overhaul, transforming the content into an entirely
+new level. Moreover, adhering to the PCGRL’s constraint on
+the number of changes also promotes content diversity, as the
+approach cannot consistently yield identical outcomes [35].
+TABLE III: Performance comparison of PCGRL with hill
+climbing approaches for optimizing different balancing values
+b. All values are expressed as percentages.
+PCGRL Hill Climbing Hill Climbing
+b S-wide S-narrow narrow unplayable
+0.0 36.1 33.7 5.4 92.4
+0.1 35.1 31.9 10.8 85.8
+0.2 42.9 36.6 7.9 89.5
+0.3 54.6 39.6 8.9 88.8
+0.4 60.7 45.2 12.2 85.9
+0.5 68.0 59.6 14.3 83.1
+The narrow hill climbing approach operates similarly, how-
+ever, due to its ability to freely exchange tiles from the pool
+of available tiles, it may happen that levels remain unplayable
+after the execution has finished.
+The results in Table III indicate that PCGRL using the S-
+wide representation balances a larger portion of levels within
+the prescribed limit of changes compared to both hill climbing
+approaches. The S-narrow hill climbing approach achieves
+noteworthy balancing percentages across all b-values, however,
+it was not able to achieve a better performance than PCGRL.
+In contrast, the narrow hill climbing approach shows a weak
+performance, still clearly lagging behind the methods using
+swap representations. Furthermore, a substantial number of
+levels remain unplayable, with this proportion being notably
+higher compared to the previous PCGRL narrow approach (cf.
+Fig. 5b).
+D. Evaluation of the Asymmetries of the Generated Levels
+The motivation behind this work includes the creation of
+asymmetric game levels to enhance diversity for competitive
+play, which is also of general interest when implementing
+a PCG method [4]. For all generated levels per model, we
+therefore evaluate their diversity and asymmetry with matrix
+comparisons. For each b, we determine a content diversity of
+100% of the balanced levels, which means that no level is
+identical to another one.
+We evaluate the asymmetries across all generated levels of
+all models outlined in Section VII-B regarding their symmetric
+properties along the horizontal, vertical, diagonal, and counter-
+diagonal axes. The diagonal symmetry of an n × n matrix M
+can be evaluated using the Frobenius norm with ||M −M T ||F
+which computes the sum of the absolute differences of the
+matrix elements [40]. As we are dealing with non-numerical
+tile representations, we use a distance metric h which returns
+1 for an element i if |Mi − M T
+i | > 0, otherwise 0. To
+compute symmetries along all four axes, we rotate or transpose
+M accordingly which yields a matrix M ′. The symmetry
+between M and M ′ can then be computed using Eq. 5. Lower
+values indicate greater symmetry, a value of 0 indicates perfect
+symmetry.
+sym(M, M ′) = || h(M − M ′) ||F (5)
+Mrot denotes M rotated counterclockwise by 90 or
+180 degrees respectively, and M T the transposed matrix
+of M. To compute the symmetry score for the diagonal
+
+--- PAGE 9 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+TABLE IV: Overview of symmetry scores for generated levels
+across the four axes using Eq. 5. Lower values indicate more
+symmetry along an axis, 0 indicates perfect symmetry.
+diagonal counter-diagonal vertical horizontal
+Mean 4.52 4.51 4.95 4.96
+Std. 0.41 0.40 0.40 0.39
+Min. 2.83 2.83 3.16 3.46
+Max. 5.48 5.48 6.0 6.0
+axis we compute sym(M, M T ), for the counter-diagonal
+sym(M, (M T )rot180), the vertical sym(M, (Mrot90)T ), and
+the horizontal sym(M, (M T )rot90). The mean, standard de-
+viation, minimal, and maximum values are presented for the
+four symmetry axes in Table IV.
+The results show that none of the generated levels for any
+model is symmetric.
+VIII. D ISCUSSION AND LIMITATIONS
+Our experiments showed promising results within fewer
+training steps compared to the original PCGRL, while being
+more robust to ensure playability. There are, however, several
+things that need to be discussed.
+The balancing agent’s reward represents the balance state
+of multiple simulations on the current level state. By design,
+this is done based on the information about which player
+has won how many times in the simulations. Incorporating
+game-specific information, such as player health, into the
+reward function could potentially improve the results. This
+is, however, not desirable since including domain-specific
+information creates dependencies on the particular game. In
+this case, a specific reward function must be developed for
+each game. Furthermore, including too much or the wrong
+information could bias the reward, resulting in poor perfor-
+mance or undesirable behavior of the model. Consequently,
+the model would not learn what really affects the balance, or
+it might exploit unforeseen loopholes.
+Splitting up the level generation and balancing process
+into separate units yielded much better results than doing the
+balancing in a single step as in the original PCGRL. The plain
+PCGRL may be able to achieve comparable results with longer
+training, but the architecture proposed in this work converges
+faster with fewer policy updates. This provides evidence that
+our architecture is more efficient by decomposing the problem
+into two simpler problems. In combination with the swapping
+representations, the balancing process can fully focus on bal-
+ancing. We compared three adapted representations from the
+original PCGRL and evaluated them in terms of performance.
+All of them can improve the balance state, while swap-turtle
+gave slightly worse results than the other two. Since swap-
+narrow and swap-wide perform comparably, we recommend
+using the narrow representation when faster training and
+generation is required. In addition, it is independent of the grid
+size. If the focus is on performance, we recommend using the
+swap-wide representation.
+Since we have shown that our approach can improve the
+balance of a level, it is possible to draw conclusions about
+which tile types have the most impact on the balance in terms
+of their swap frequencies. For this domain, the swapping of
+resource tiles (e.g., forest) with blocking elements (stone)
+had the greatest impact. Swapping players’ spawn positions
+was not a favored action. We assume that this is due to
+the small number of available types of this type (only two)
+compared to resource tiles and therefore the model had less
+experience to learn these swaps appropriately. Further insights
+into the decision-making process of the balancing agent could
+be gained with methods for explainable RL [41].
+The balance state is evaluated by simulating the game n-
+times with heuristic player agents. Of course, this metric
+depends on exactly these types of players. In multiplayer
+online games, the pairing of players of the same skill is
+often ensured by matchmaking algorithms [42] that use the
+Elo rating system [43]. For example, the balance would be
+different for players of different skill or type. This is a
+limitation, but also an advantage. By using different types
+of player agents, the level could be balanced to compensate
+for differences in player skill by adjusting only the level,
+not the players themselves. This is of great interest when
+balancing levels for different types of players, such as a mage
+and a fighter. It can be applied in e.g., role-playing games,
+where gear levels are an indicator of the character strength.
+In this way, players can use their long-farmed equipment in
+a competitive setting, and the game could be balanced only
+by the environment. Future research will extend our work in
+this direction. The controllable content generators [34] could
+be an applicable solution in this context.
+A challenge with the proposed architecture is the compu-
+tational effort during model training. In particular, this is due
+to the simulation steps required for reward computation, as
+multiple simulations are initiated for each swap made by the
+agent. RL learns throughout the training trajectories, providing
+an optimized approach to reduce unnecessary swaps and
+therefore the computational cost at inference. We compared
+our method to hill climbing approaches, which rely heavily
+on randomness and require starting from scratch with each
+new iteration. The comparison showed PCGRL’s superior per-
+formance in balancing levels across various balancing values
+within the same dataset, while adhering to the same limit on
+allowed changes per episode. The comparison between two hill
+climbing methods — one using the introduced swap narrow
+approach and the other using PCGRL’s narrow representa-
+tion — showed notably superior performance for the swap
+narrow representation. This also highlights the benefit of the
+introduced swapping mechanism for the fine-tuning of existing
+content.
+In addition, we found that the reward is mostly sparse
+in training. This indicates that only a small subset of the
+action space are actions that affect the balance. Especially
+at the beginning of the training, the model must learn this.
+To speed up the training process, we consider methods that
+reduce the computational effort. This would also be of great
+interest for the application in more complex environments. One
+solution could be to reward the agent only after several time
+steps or even to use sparse rewards. Although the learning
+process would then be harder for the agent, simulation steps
+for the reward would be omitted. This would speed up the
+
+--- PAGE 10 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+training process and allow the agent to explore faster. Another
+approach could be to use a surrogate reward model to predict a
+level’s balance state. This would further speed up the training,
+but the model’s accuracy must be high enough to give appro-
+priate rewards to ensure a correct training. Reducing the cost
+of reward computation thus improves the feasibility of search-
+based approaches. Investigating the swap-based representation
+pattern incorporated into e.g., the crossovers or mutations of
+an evolutionary algorithm is an interesting target for future
+research.
+A. Discussion on the Application of Fairness Metrics for
+Game Balancing
+We’ve automated the decision-making process of how bal-
+anced a game is, based on a function inspired by the sta-
+tistical parity metric [15]. This metric is commonly used in
+the fair machine learning community e.g., to measure how
+fair automated decision-making systems based on machine
+learning are [38]. With this section, we want to open the
+discussion on how fairness metrics can be applied to game
+balancing in general. At this point, it is important to note that
+the concept of fairness is a social and ethical concept, and
+not a statistical one [44]. Games are, however, designed to be
+played by humans. Therefore, social and ethical considerations
+should be taken into account when applying an automated
+balancing process, particularly in a competitive environment
+with multiple players.
+a) An acceptable range of win rates: So far, we have
+only considered the balancing process for a level to be suc-
+cessful if the metric exactly matches the predefined balancing
+goal (e.g., b = 0.5). In many cases, however, it is not possible
+to measure a certain value exactly by sampling. Although we
+have examined how often we should sample to find a balance
+between the number of simulation runs and minimizing the
+uncertainty in estimating the actual game balance, there is still
+a residual uncertainty. This is also a problem that often arises
+when collecting data about the real world, such as surveys.
+To address this issue, a solution is the introduction of a bias
+and define the optimal value not as a single value, but as
+a range. The Disparate Impact metric [45], [46] expresses
+fairness with the ratio of a predicted outcome of two groups.
+The fairest ratio here would be represented by a value of
+1. A commonly used range for this metric to consider an
+outcome as fair is >= 0 .8 as noted by Saleiro et al. [46].
+That being said, applied to game balancing, values in a
+range to the desired value can be considered as balanced.
+For this work, we could define a balanced game state as:
+1 − (wp1t − wp2t) ≥ 0.8. Introducing this bias would increase
+the range of levels considered balanced, resulting in an even
+better proportion of balanced levels in our method. Since this
+bias has a strong influence on this proportion, it should be
+adapted to the game domain in terms of residual uncertainty
+when transferred to game balancing.
+IX. C ONCLUSION AND FUTURE WORK
+In this paper, we proposed a new method to balance tile-
+based game levels with reinforcement learning (RL). There-
+fore, we introduced a novel swap-based representation family
+for the PCGRL framework, where the RL agent swaps the
+locations of tiles in a level. Our architecture benefits from the
+separation of the level generation and balancing process into
+two subsequent processes. The latter can thus be considered as
+a task for fine-tuning existing content. In this extended paper,
+we discussed the application of existing fairness metrics to
+game balancing and thus derived the reward function for the
+RL from the statistical parity metric, in order to automatically
+measure the balance state of a level. Furthermore, we improved
+the results of the conference paper on level balancing to a
+proportion of balanced levels of 68% and a proportion of
+improvements of 88.9%. Compared to the original PCGRL
+method (30.4%) on generated levels, our approach is easier
+to learn and significantly improves the results. Our RL-based
+method outperforms hill climbing approaches by balancing
+more levels within the same number of allowed changes, thus
+reducing the required simulation effort.
+In addition, our approach is generalized, and we have shown
+how one can also generate levels with a specific balance
+in order to generate unbalanced levels that favor a specific
+player. This opens up new perspectives for creating levels
+when e.g., adults play against children or for players with
+different gear levels. Finally, by analyzing which tiles are
+frequently swapped, it is possible to infer which tile types are
+most likely to affect the balance. This provides game designers
+with additional empirical evidence about how the game system
+itself actually behaves.
+For future work, we plan to empirically evaluate the heuris-
+tically estimated balance using human playtests. Additionally,
+we are interested in balancing for different types of players,
+such as a mage versus an archer, by changing only the game
+level. Moreover, we believe that this method is applicable not
+only to games, but also to other domains as well. In subsequent
+research, we are interested in applying it to urban planning for
+fair infrastructure distribution.
+ACKNOWLEDGMENTS
+We thank Christoph Kern, Frederic Gerdon, Jakob Kappen-
+berger, and Lea Cohausz for their feedback and discussions on
+fairness metrics. We would also like to thank Patrick Takenaka
+for additional feedback and comments.
+REFERENCES
+[1] Ian Schreiber and Brenda Romero. Game Balance . CRC Press, Boca
+Raton, August 2021.
+[2] Gustavo Andrade, Geber Ramalho, Alex Gomes, and Vincent Corruble.
+Dynamic Game Balancing: an Evaluation of User Satisfaction. Proceed-
+ings of the AAAI Conference on Artificial Intelligence and Interactive
+Digital Entertainment, 2:3–8, 2006.
+[3] Alexander Becker and Daniel G ¨orlich. What is Game Balancing? - An
+Examination of Concepts. ParadigmPlus, 1:22–41, 2020.
+[4] Julian Togelius, Georgios N. Yannakakis, Kenneth O. Stanley, and
+Cameron Browne. Search-Based Procedural Content Generation: A Tax-
+onomy and Survey. IEEE Transactions on Computational Intelligence
+and AI in Games , 3:172–186, 2011.
+[5] Kynan Sorochan and Matthew Guzdial. Generating Real-Time Strategy
+Game Units Using Search-Based Procedural Content Generation and
+Monte Carlo Tree Search, 2022. arXiv:2212.03387.
+[6] Mihail Morosan and Riccardo Poli. Automated Game Balancing in Ms
+PacMan and StarCraft Using Evolutionary Algorithms. In Applications
+of Evolutionary Computation, Lecture Notes in Computer Science, pages
+377–392, Cham, 2017. Springer International Publishing.
+
+--- PAGE 11 ---
+Preprint of the IEEE Transactions on Games paper of the same name
+[7] Pier Luca Lanzi, Daniele Loiacono, and Riccardo Stucchi. Evolving
+maps for match balancing in first person shooters. In 2014 IEEE
+Conference on Computational Intelligence and Games , 2014. ISSN:
+2325-4289.
+[8] Ra ´ul Lara-Cabrera, Carlos Cotta, and Antonio J. Fern ´andez-Leiva. On
+balance and dynamism in procedural content generation with self-
+adaptive evolutionary algorithms. Natural Computing , 13:157–168,
+2014.
+[9] Daniel Karavolos, Antonios Liapis, and Georgios N. Yannakakis. Using
+a Surrogate Model of Gameplay for Automated Level Design. In 2018
+IEEE Conference on Computational Intelligence and Games (CIG) ,
+2018. ISSN: 2325-4289.
+[10] Fernando de Mesentier Silva, Rodrigo Canaan, Scott Lee, Matthew C.
+Fontaine, Julian Togelius, and Amy K. Hoover. Evolving the Hearthstone
+Meta. In IEEE Conference on Games (CoG) , 2019. ISSN: 2325-4289.
+[11] Jakub Kowalski, Radosław Miernik, Piotr Pytlik, Maciej Pawlikowski,
+Krzysztof Piecuch, and Jakub Sekowski. Strategic Features and Terrain
+Generation for Balanced Heroes of Might and Magic III Maps. In
+2018 IEEE Conference on Computational Intelligence and Games (CIG),
+2018. ISSN: 2325-4289.
+[12] Ahmed Khalifa, Philip Bontrager, Sam Earle, and Julian Togelius.
+Pcgrl: Procedural content generation via reinforcement learning. In
+Proceedings of the AAAI Conference on Artificial Intelligence and
+Interactive Digital Entertainment , volume 16, pages 95–101, 2020.
+[13] Joseph Suarez, Yilun Du, Phillip Isola, and Igor Mordatch. Neural
+MMO: A Massively Multiagent Game Environment for Training and
+Evaluating Intelligent Agents, 2019. arXiv:1903.00784.
+[14] Florian Rupp, Manuel Eberhardinger, and Kai Eckert. Balancing of
+competitive two-player Game Levels with Reinforcement Learning. In
+2023 IEEE Conference on Games (CoG) , 2023. ISSN: 2325-4289.
+[15] Cynthia Dwork, Moritz Hardt, Toniann Pitassi, Omer Reingold, and
+Richard Zemel. Fairness through awareness. In Proceedings of the
+3rd Innovations in Theoretical Computer Science Conference, ITCS ’12,
+pages 214–226, New York, NY , USA, January 2012. Association for
+Computing Machinery.
+[16] Vanessa V olz, G ¨unter Rudolph, and Boris Naujoks. Demonstrating the
+Feasibility of Automatic Game Balancing. In Proceedings of the Genetic
+and Evolutionary Computation Conference (GECCO) , pages 269–276.
+Association for Computing Machinery, 2016.
+[17] Johannes Pfau, Antonios Liapis, Georg V olkmar, Georgios N. Yan-
+nakakis, and Rainer Malaka. Dungeons & Replicants: Automated Game
+Balancing via Deep Player Behavior Modeling. In IEEE Conference on
+Games (CoG), pages 431–438, 2020. ISSN: 2325-4289.
+[18] Julian Togelius, Mike Preuss, Nicola Beume, Simon Wessing, Johan
+Hagelb¨ack, and Georgios N. Yannakakis et al. Controllable procedural
+map generation via multiobjective evolution. Genetic Programming and
+Evolvable Machines, 14:245–277, 2013.
+[19] Florian Rupp and Kai Eckert. GEEvo: Game Economy Generation and
+Balancing with Evolutionary Algorithms. In 2024 IEEE Congress on
+Evolutionary Computation (CEC) , pages 1–8, 2024.
+[20] Katja Rogers, Vincent Le Claire, Julian Frommel, Regan Mandryk, and
+Lennart E. Nacke. Using Evolutionary Algorithms to Target Complexity
+Levels in Game Economies. IEEE Transactions on Games, 15(1):56–66,
+March 2023. Conference Name: IEEE Transactions on Games.
+[21] Michael Cook, Simon Colton, Azalea Raad, and Jeremy Gow. Me-
+chanic Miner: Reflection-Driven Game Mechanic Discovery and Level
+Design. In Applications of Evolutionary Computation , Lecture Notes in
+Computer Science, pages 284–293. Springer, 2013.
+[22] Alberto Alvarez and Jose Font. TropeTwist: Trope-based Narrative
+Structure Generation. In Proceedings of the 17th International Confer-
+ence on the Foundations of Digital Games , pages 1–8, Athens Greece,
+September 2022. ACM.
+[23] Mojang. Minecraft. Mojang and Microsoft Studios, 2011.
+[24] Adam Summerville, Sam Snodgrass, Matthew Guzdial, Christoffer
+Holmg˚ard, Amy K. Hoover, and Aaron Isaksen et al. Procedural Content
+Generation via Machine Learning (PCGML). IEEE Transactions on
+Games, 10:257–270, 2018.
+[25] Jialin Liu, Sam Snodgrass, Ahmed Khalifa, Sebastian Risi, Georgios N.
+Yannakakis, and Julian Togelius. Deep learning for procedural content
+generation. Neural Computing and Applications , 33:19–37, 2021.
+[26] Edoardo Giacomello, Pier Luca Lanzi, and Daniele Loiacono. Doom
+level generation using generative adversarial networks. In 2018 IEEE
+Games, Entertainment, Media Conference (GEM), pages 316–323, 2018.
+[27] Maren Awiszus, Frederik Schubert, and Bodo Rosenhahn. TOAD-GAN:
+Coherent Style Level Generation from a Single Example. Proceedings
+of the AAAI Conference on Artificial Intelligence and Interactive Digital
+Entertainment, 16:10–16, 2020.
+[28] Shyam Sudhakaran, Miguel Gonz ´alez-Duque, Claire Glanois, Matthias
+Freiberger, Elias Najarro, and Sebastian Risi. Prompt-Guided Level
+Generation. In Proceedings of the Companion Conference on Genetic
+and Evolutionary Computation , GECCO ’23 Companion, pages 179–
+182. Association for Computing Machinery, 2023.
+[29] David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou,
+Matthew Lai, and Arthur Guez et al. A general reinforcement learning
+algorithm that masters chess, shogi, and Go through self-play. Science,
+362:1140–1144, 2018.
+[30] Oriol Vinyals, Igor Babuschkin, Wojciech M. Czarnecki, Micha ¨el Math-
+ieu, Andrew Dudzik, and Junyoung Chung et al. Grandmaster level in
+StarCraft II using multi-agent reinforcement learning. Nature, 575:350–
+354, 2019.
+[31] Philip Bontrager and Julian Togelius. Learning to Generate Levels From
+Nothing. IEEE Conference on Games (CoG) , 2021.
+[32] Linus Gissl ´en, Andy Eakins, Camilo Gordillo, Joakim Bergdahl, and
+Konrad Tollmar. Adversarial Reinforcement Learning for Procedural
+Content Generation. In 2021 IEEE Conference on Games (CoG) , 2021.
+ISSN: 2325-4289.
+[33] Yahia Zakaria, Magda Fayek, and Mayada Hadhoud. Procedural Level
+Generation for Sokoban via Deep Learning: An Experimental Study.
+IEEE Transactions on Games , 15(1):108–120, March 2022.
+[34] Sam Earle, Maria Edwards, Ahmed Khalifa, Philip Bontrager, and Julian
+Togelius. Learning Controllable Content Generators. IEEE Conference
+on Games (CoG) , 2021.
+[35] Ahmed Khalifa, Julian Togelius, and Michael Cerny Green. Mutation
+Models: Learning to Generate Levels by Imitating Evolution. In
+FDG ’22: Proceedings of the 17th International Conference on the
+Foundations of Digital Games . ACM, 2022.
+[36] Zehua Jiang, Sam Earle, Michael Green, and Julian Togelius. Learning
+Controllable 3D Level Generators. Proceedings of the 17th International
+Conference on the Foundations of Digital Games , 2022.
+[37] Matthew Siper, Ahmed Khalifa, and Julian Togelius. Path of Destruction:
+Learning an Iterative Level Generator Using a Small Dataset. In 2022
+IEEE Symposium Series on Computational Intelligence (SSCI) , pages
+337–343, 2022.
+[38] Karima Makhlouf, Sami Zhioua, and Catuscia Palamidessi. On the
+Applicability of Machine Learning Fairness Notions. ACM SIGKDD
+Explorations Newsletter, 23(1):14–23, 2021.
+[39] John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and
+Oleg Klimov. Proximal Policy Optimization Algorithms, 2017.
+arXiv:1707.06347.
+[40] Gene H Golub and Charles F Van Loan. Matrix computations . JHU
+press, 2013.
+[41] Manuel Eberhardinger, Johannes Maucher, and Setareh Maghsudi.
+Learning of generalizable and interpretable knowledge in grid-based
+reinforcement learning environments. Proceedings of the AAAI Con-
+ference on Artificial Intelligence and Interactive Digital Entertainment ,
+19(1):203–214, Oct. 2023.
+[42] Josh Alman and Dylan McKay. Theoretical Foundations of Team Match-
+making. In Proceedings of the 16th Conference on Autonomous Agents
+and MultiAgent Systems, AAMAS ’17, pages 1073–1081, Richland, SC,
+2017.
+[43] Arpad E Elo. The rating of chessplayers, past and present . Arco Pub.,
+1978.
+[44] Alexandra Chouldechova. Fair Prediction with Disparate Impact: A
+Study of Bias in Recidivism Prediction Instruments. Big Data, 5(2):153–
+163, June 2017. Publisher: Mary Ann Liebert, Inc., publishers.
+[45] Michael Feldman, Sorelle A. Friedler, John Moeller, Carlos Scheidegger,
+and Suresh Venkatasubramanian. Certifying and Removing Disparate
+Impact. In Proceedings of the 21th ACM SIGKDD International
+Conference on Knowledge Discovery and Data Mining, KDD ’15, pages
+259–268. Association for Computing Machinery, 2015.
+[46] Pedro Saleiro, Benedict Kuester, Loren Hinkson, Jesse London, Abby
+Stevens, and Ari Anisfeld et al. Aequitas: A Bias and Fairness Audit
+Toolkit, 2018. arXiv:1707.06347.

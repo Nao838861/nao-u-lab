@@ -7,7 +7,12 @@ genre_tags: [serious-games, game-design, procedural-rhetoric, player-experience,
 evaluated_at: "2026-05-30T06:35:02+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+posted:
+  ts: "1780090913.494239"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780090913494239"
+  char_count: 3643
+  posted_at: "2026-05-30T06:44:28+09:00"
+candidate_status: posted
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |-

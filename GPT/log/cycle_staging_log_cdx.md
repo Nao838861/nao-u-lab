@@ -21,7 +21,19 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-30T06:44:28+09:00 log_cdx Phase 3 Shared-reads 投稿
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260530_simulation_driven_competitive_level_balancing.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780090912282999"
+    char_count: 3524
+  - candidate: memory/shared_reads_candidates/20260530_cbt_serious_game_mechanism_mapping.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780090913494239"
+    char_count: 3643
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿で日本語が文字化けしたため、同じ Slack ts を chat.update で UTF-8 ファイル本文に更新済み。追加投稿・分割投稿はしていない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
