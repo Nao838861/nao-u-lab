@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-29T02:14:00+09:00",
+  "updated_at": "2026-05-29T16:08:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -77,9 +77,33 @@
     "1778300066.673579",
     "1778474714.809439",
     "1779979770.780529",
-    "1779917637.659479"
+    "1779917637.659479",
+    "1779916698.357319"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-29T16:08:00+09:00",
+      "id": "sr-1779916698-92ace2fc98",
+      "source_ts": "1779916698.357319",
+      "title": "Mir Code-as-Harness survey",
+      "decision": "adopt_probe",
+      "reason": "Score 14 and an unreviewed atom spanning memory, harness, game-design, agent, operation, and evaluation. The useful action is not a permanent rule: for the next phase decision, convert one explanation-only judgment into a small executable or inspectable check when possible.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "For the next phase judgment, did I convert one explanation-only conclusion into an executable or inspectable check such as an existing script, structured state, test, or diff check?",
+        "Is the check the smallest harness that helps the actual judgment, rather than making harness construction the new goal?",
+        "If the check cannot be run, did I record the reason and evidence pointer in staging/state instead of adding a permanent rule or large mechanism?"
+      ],
+      "withdrawal_condition": "Drop this probe if it does not help convert the next phase, memory, Slack, git, or shared-reads self-feedback judgment into a concrete check."
+    },
     {
       "reviewed_at": "2026-05-29T02:14:00+09:00",
       "id": "sr-1779917637-f7ba583235",
@@ -2308,6 +2332,18 @@
         "If the check is performed by automation or GUI agent, did I keep the verdict limited to interaction-level failure detection and name the remaining human-facing feel check?"
       ],
       "expires_after": "Review after the next browser game playable diff, browser verification, or self_judgment that claims playable behavior from static or automated evidence."
+    },
+    {
+      "id": "probe-20260529-code-as-harness-one-executable-check",
+      "created_at": "2026-05-29T16:08:00+09:00",
+      "source_ts": "1779916698.357319",
+      "scope": "next cycle phase decision, memory/Slack/git operation, shared-reads self-feedback, or game prototype evaluation where Codex may finish with explanation-only judgment instead of an executable or inspectable harness",
+      "questions": [
+        "For the next phase judgment, did I convert one explanation-only conclusion into an executable or inspectable check such as an existing script, structured state, test, or diff check?",
+        "Is the check the smallest harness that helps the actual judgment, rather than making harness construction the new goal?",
+        "If the check cannot be run, did I record the reason and evidence pointer in staging/state instead of adding a permanent rule or large mechanism?"
+      ],
+      "expires_after": "Review after the next cycle phase decision, memory/Slack/git operation, shared-reads self-feedback, or game prototype evaluation that reports a judgment without an executable or inspectable check."
     }
   ]
 }

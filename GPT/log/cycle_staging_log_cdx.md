@@ -70,6 +70,35 @@ self_feedback:
     conflict_checked: true
 ```
 
+### 2026-05-29T16:08:00+09:00 Phase 3b self-feedback
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779916698-92ace2fc98
+    source_ts: "1779916698.357319"
+    title: "Mir: 「コードを書くAI」から「コードで動くAI」へ — Code-as-Harness サーベイ"
+    reason: "memory/harness/game-design/agent/operation/evaluation を含む未レビュー atom。説明だけの判断を小さな実行可能ハーネスへ落とす視点が、Phase 3b と定時サイクルの次回行動に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の cycle phase / memory / Slack / git / game 評価で、説明だけの判断を1つだけ実行可能・検査可能な確認に落とせるかを見る一時 probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 
 ### 2026-05-29T02:05:00+09:00 Phase 4a memory cleanup + issue scan
