@@ -237,4 +237,62 @@
 - **観測すべき例外 = なし** (Slack export 取得停止疑いは Phase 2 で「無投稿状態」と判明、機構正常)
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### A) Slack 返信 (新着返信対象 = 0件)
+- Phase 1/2 で確定済の通り、本サイクル新着返信対象 0件。返信実施なし。
+
+### B) 検証ファースト原則順守 — kaizen #134 / #135 観察記録の更新
+本サイクル新規 kaizen 提案は行わず、直近未検証提案の検証記録埋めを優先。
+- **kaizen #134 段階2 hook 運用観察 (C262)**: `python tools/probe_atom_quality.py --root ../GPT/memory/atoms/2026-05 --verbose` 実行 → `total=1229 format_warn=0 ref_warn=0 action_warn=0` exit=0。C253 (1191) → C262 (1229) +38 で 5/28-5/29 取り込み分妥当、**12 サイクル連続 WARN=0**。検証期限 5/31 まで残 2 日、判定発火点接近。memory/kaizen_tracker.md #134 検証結果に C262 観察エントリ追記。閾値見直し判定の preview (内部生 atom 比率の集計 / `--ref-min` 引き上げ要否) を 5/31 着地時の方針案として記載。
+- **kaizen #135 段階1 dry-run 第4観察 (C262)**: `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05 --dry-run` → `atoms=1229 wikilink_strong=0 wikilink_weak=4 supersedes_chain=370 total_edges=751`。C258 (1253) → C262 (1229) -24 (5/29 month-end 集約候補)、ww 5→4 (-1、N=1 同型ノイズ件数の自然減)、**supersedes_chain=370 が 4 サイクル連続不動 = 抽出ロジック不動の最強エビデンス**。memory/kaizen_tracker.md #135 検証結果に C262 観察エントリ追記。**段階3 着手判定発火点 = ベンチ集合構成条件 3 つ全成立 (atoms 安定 / supersedes_chain 不動 / ww 同型 bound)**、検証期限 6/9 まで残 11 日内に T1 ベンチ計算着手可。
+
+### C) 他インスタンス洞察の projects 反映
+Phase 1 §0 で受信した「他インスタンス洞察 (9件)」のうち、kaizen #135 派生層原則と直接交差する 2 件 (Paul Iusztin 統一グラフ案 / GAM 論文 5件目で外部検索取得) を本サイクル統合。
+- **projects/memory_redesign.md** に「2026-05-29 (Log C262 Phase 3) GAM 論文 full intake + Paul Iusztin 独立 source 2件目到達 → 派生層原則の R 層昇格圏」セクション新設。GAM 要点 5 層 + Log 側角度 (3 点 = build_atom_edges 妥当性 / sparse maintenance events 転用 / 独立 source 2 件目) + Paul Iusztin / Karpathy LLM Wiki / Zenn 壊れた KG 記事との突合 + 派生層原則の次の一手 (Phase 4 候補 A) を記載。
+- 他インスタンス洞察残 7 件 (RAMPART / Code-as-Harness / SkillOpt / Bystander Effect / XML タグ / EVE-Agent / HASP) は本サイクル時間予算外で取り込み保留、Phase 1 §6 候補制度に従い候補 jsonl への追加判定は次サイクル以降。
+
+### D) external_notes_log.md 統合
+- `memory/external_notes_log.md` 冒頭に「2026-05-29 (Log C262 Phase 2) GAM」エントリ追加、`[統合済 2026-05-29 Log C262 Phase 3 → projects/memory_redesign.md ...]` マーカー付与。
+- Phase 1 §4 で確認した「親107 / サブ206 / 統合済 100%」状態は維持、本追加で親 108 / サブ 207 / 統合済 207 (100% 維持)。
+
+### E) #shared-reads 投稿
+- `drafts/2026-05-29/post_log_shared_reads_20260529_gam_hierarchical_graph_memory_POSTED_ts1780037605.py` で GAM 論文 full intake を #shared-reads に投稿 (ts=1780037605.969949、2026-05-29 16:13)。
+- 投稿内容: 概要 / 内容分析 (ablation -38% 最大寄与点) / 自分達の環境への適用 (3 点) / メリット (a-c) / デメリット (5 点、うち (5) は Zenn 壊れた KG 記事との衝突警告) / 判定 (R 層昇格は C263 以降、段階3 着手は本サイクル Phase 4)。
+- Slack ルール順守: スレッド返信なし / フラット投稿 / 外部 URL 明記 (arxiv:2604.12285 + Paul Iusztin x.com) / 概要は 1行サマリでなく密度ある記述。
+
+### F) 深掘り候補 (Phase 1 §7 強制) からの 1mm 進
+- 深掘り C「CLAUDE.md 絶対にやる (3) 記憶階層」を 1mm 進めた = memory_redesign.md 派生層原則の R 層昇格圏到達を確認 + 外部裏付け 1 件追加 (GAM)。Phase 4 候補 A の発火点を明確化。
+- 深掘り D substrate_not_infrastructure 想起への対処は本サイクルでは行わず、Phase 4 候補 A 着手後の C263 以降で意識的に substrate 側 1mm 進める判定を継続。
+
+## 次フェーズの大作業
+
+### タイトル
+**kaizen #135 段階3 T1 拡張 — build_atom_edges.py に tag 共有 edge 派生を追加し、edges.jsonl 実書き出し + recall_atom.py で 5 件 golden 再走査 → recall@10 T1 を T0 (0/5 = 0.0%) と比較**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `tools/build_atom_edges.py` に `tag_share` edge 抽出ロジック追加 (frontmatter `tags:` リスト共有 atom 間に edge 派生、type=`tag_share` / strength=`semantic`)
+2. `python tools/build_atom_edges.py --root ../GPT/memory/atoms/2026-05` 実行で `edges.jsonl` を実書き出し (dry-run でなく)。stderr に `tag_share=N` 行が追加されている
+3. `python tools/recall_atom.py --root ../GPT/memory/atoms --edges ../GPT/memory/atoms/edges.jsonl --atom <id> --max-hops 1` を 5 件 golden の query_atom_id で実行、各 query の related 件数を取得
+4. `memory/recall_golden_baseline.md` に「T1 (tag_share edge 派生後)」セクション追記 + recall@10 T1 値と T0 vs T1 比較表 (query_id × hit/miss × related 件数)
+5. 5 件全件 miss の場合は「tag 共有のみでは semantic recall 不足 → 段階4 同議題 / 同プロトタイプ系列 edge 派生が必要」を結論として記載 (希望的観測禁止ゲート順守)
+
+### 着手手順
+1. **最初の 1 手** = `tools/build_atom_edges.py` を Read してパース構造を再確認 → `parse_frontmatter` の `tags:` 抽出を確認 (現状 LIST_KEYS に含まれていない可能性)
+2. `LIST_KEYS` に `tags` を追加、または `tags` 専用パースを追加
+3. `extract_edges()` に第 2 パス: 全 atom の tag → atoms マップを構築後、同タグ atom 間に `tag_share` edge を emit (双方向)
+4. `--root ../GPT/memory/atoms/2026-05 --dry-run` で edge density WARN を確認 (1229 × 5 = 6145 上限、tag 共有が 5000 超えるなら閾値見直し)
+5. WARN 内なら `--root ../GPT/memory/atoms` (3 ヶ月分) で `edges.jsonl` 実書き出し (recall_atom.py が期待するパスに合わせる)
+6. recall_atom.py 5 件走査 → 結果集計
+7. `recall_golden_baseline.md` に T1 セクション追記
+
+### 選んだ理由
+- **発火点到達済**: kaizen #135 段階3 着手判定の前提条件 3 つ (atoms 安定 / supersedes_chain 不動 / ww ノイズ bound) を本サイクル C262 で全成立確認。検証期限 6/9 まで残 11 日。
+- **GAM 接続の即反映**: 本サイクル Phase 2 で取り込んだ GAM ablation「event progression graph w/o = -38% 最大寄与」が atoms.jsonl の cycle 時系列保持 (supersedes_chain) の妥当性を立証 = 既存設計の延長線で tag_share 追加の判断材料が揃った。
+- **30 分粒度**: build_atom_edges.py に 30〜50 行の追加 + recall_atom.py は既存 + 5 件 golden は既存 = 新規実装は build_atom_edges.py のみ、テスト範囲は 1229 atom × 5 件 query で完結。
+- **Active project 停滞解消**: memory_redesign の T0→T1 比較は C253 以降の検証キュー4本路線と direct 接続、Active project 直近更新 (5/29 13:29) を再度進める。
+- **希望的観測ゲート順守**: T0 が 0/5 = 0.0% で baseline 確定済、T1 改善幅の有無を経験的に測定する設計 = 実装前に「動くはず」段階で止まらない、recall_golden_baseline.md の「step 3 frontmatter 拡張は T0→T1 改善有意時のみ」ゲートと整合。
+
+## ステータス
+- Phase 3 実行完了 = 6 アクション (A〜F) 全件実施
+- Phase 4 大作業 = kaizen #135 段階3 T1 拡張、着手手順 7 段確定
+- 残課題 = 本サイクル commit + push (Phase 3 / Phase 4 跨ぎ commit prefix `rule:` / `game:` 規律順守、本サイクルは memory_redesign + kaizen_tracker + external_notes 全て `kaizen:` 系列 = `rule:` 寄り)

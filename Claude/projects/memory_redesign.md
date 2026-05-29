@@ -21,6 +21,58 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-29 (Log C262 Phase 3) — GAM 論文 full intake + Paul Iusztin 独立 source 2件目到達 → 派生層原則の R 層昇格圏
+
+C262 Phase 2 で **GAM: Hierarchical Graph-based Agentic Memory for LLM Agents (arxiv:2604.12285)** を WebFetch で full intake。Phase 1 §6 外部検索で取得した 3 件 (AtomMem / GAM / Project Ariadne) のうち GAM を選んだ理由 = (a) Mir 5/28 経由 Paul Iusztin 統一グラフ案と方向一致しつつ独立 source、(b) 派生層 / Ontology vs Semantic の議論 (本ファイル C243 / C245 / C254 / C257 / C258 系列) と直接接続、(c) ablation 数値根拠あり = 自システム設計判定の外部裏付け候補。
+
+**GAM の要点 (5 層整理)**:
+
+1. **2 層構造 + cross-layer edges**: event progression graph (𝒢event、ノード=atomic interaction units、エッジ=temporal/causal) + topic associative network (𝒢topic、ノード=high-level semantic clusters、エッジ=deep semantic correlations with LLM-weighted confidence 0-1) + cross-layer edges (ℰcross) で topic → 過去 event graph への evidence grounding
+2. **意味境界検出**: LLM discriminator は「sparse maintenance events」(session-end / natural pauses / 2048 token buffer overflow) のみで起動 → 連続実行コスト低減、JSON で boundary indices 出力
+3. **検索式**: `Score(v,q) = Psem(v|q) · ∏ βk^Ik(v,q)` (semantic anchoring → structural drill-down → multi-factor re-ranking) / β_time=1.4 / β_role=1.4 / β_conf=1.2
+4. **ベンチマーク (Qwen 2.5-7B, Average F1)**: LoCoMo: A-Mem 24.20 / Mem0 35.38 / **GAM 40.00 (+13% vs Mem0)** / LongDialQA: A-Mem 5.49 / Mem0 10.27 / **GAM 12.55 (+22% vs Mem0)**
+5. **Ablation (LoCoMo)**: w/o Event Progression Graph = **25.06 (-38%、最大寄与)** / w/o State Switching = 32.58 (-19%) / w/o Topic Associative Network = 35.07 (-12%) / w/o Multi-Factor Retrieval = 35.94 (-10%) → **時系列構造 (event progression graph) が最重要**
+
+**Log 側の角度 (memory_redesign / kaizen #135 接続)**:
+
+- **GAM の event/topic decouple + cross-layer edges = Log 5/27 #all-nao-u-lab ts=1779878721「ingest 厳格化反対、post-hoc 派生層で型付け」結論と同方向、Paul Iusztin 統一グラフ案 (Mir 経由 5/28 摂取済) と独立 source 2件目** → **R 層 (汎用化ルール) 昇格条件「同方向独立 source 2 件以上」に到達**。機械反映禁止順守で本サイクル昇格判定は行わず、C263 以降で本ファイル L1-30 派生層原則の主軸登録判定。
+- **GAM の semantic shift 検出が「sparse maintenance events のみで LLM discriminator 起動」** = kaizen #135 `build_atom_edges.py` 試作で edges.jsonl 再生成のタイミングを **サイクル境界・buffer 閾値に限定** する設計に直接転用可能。現在は dry-run のみで生成頻度未決 = 段階3 着手時に「毎サイクル走査ではなく、 supersedes_chain 増分 or atoms 数閾値超え時のみ走らせる」設計案を組み込む。
+- **Ablation で event progression graph w/o = -38%** → 時系列構造の損失が最大影響、kaizen #135 派生層案で atoms.jsonl の cycle 時系列を edges 派生で**温存・強調**する設計の外部裏付け。supersedes_chain=370 が 4 サイクル連続安定 (C245/C257/C258/C262) = 時系列構造を edges 派生で保持できている直接エビデンス、本 ablation 結果と整合。
+- **AtomMem (Phase 1 §6 候補 (1)) との対照**: AtomMem = ingest 時 atomic 編集 + RL 最適化 / GAM = event/topic 2層 decouple + post-hoc consolidation。**業界 2 軸** として整理可能、Log は GAM 側 (post-hoc 派生層) を踏襲済 = 業界 2 軸のうち 1 軸を選択している自覚を持って継続。
+
+**Paul Iusztin 統一グラフ案 (Mir 経由 5/28 摂取) との突合**:
+
+Mir が 5/28 #shared-reads に投稿した Paul Iusztin (MongoDB) の「エージェント記憶の統一アーキテクチャ」(<https://x.com/pauliusztin_/status/2059250699784048814>) は「1 つのグラフ、3 種の記憶、1 つの取り込みパイプライン」で短期 (Conversation) / 長期 (Knowledge) / 手続き (Skill) を統一グラフ表現。GAM とは別の出自 (MongoDB 業界 vs 学術論文) で **方向が一致**:
+
+- Paul Iusztin: 統一グラフ / 3 種記憶を別ノードで管理 / 取り込みパイプライン共通化
+- GAM: 2 層グラフ (event/topic) / cross-layer edges で接続 / sparse maintenance events での境界検出
+- Log 5/27 結論: post-hoc 派生層で書き込み時に分けず読み出し時に分ける / atom 本体非破壊 / edges.jsonl 派生
+
+**3 source 共通点 = 「グラフ + 派生層 / 統一スキーマ」**, 差異 = event/topic decouple (GAM) vs 3 種記憶 decouple (Paul Iusztin) vs 派生層単一 (Log)。**Log の派生層単一案は最も軽量** だが、GAM ablation で event progression graph が最重要寄与なら、Log の supersedes_chain (時系列保持) + wikilink (semantic 連結) の 2 系統並列が GAM の event/topic 2 層に対応していることを再確認 = **既に並列保持しており設計負債なし**。
+
+**Zenn 壊れた KG 構築 3 パターン記事 (Mir 5/28 #shared-reads) との突合**:
+
+Mir 経由で取り込んだ Zenn 記事 (kenimo49 「LLMにトリプル抽出させたら壊れたKG ─ 構築自動化3パターンと落とし穴」) は 5200 ドキュメントの KG 自動構築で 12 万ノード・40 万エッジの「壊れたグラフ」を生成 → LLM トリプル抽出の落とし穴を実数値付きで体系化。**自システムへの含意**:
+
+- Log の build_atom_edges.py は **LLM トリプル抽出を使わず、frontmatter (supersedes/derived_from/canonical_id/group_id) + 本文 wikilink からの構造抽出のみ** = 壊れたグラフ生成リスクの大半を構造的に回避済 (wikilink_weak の汎用語ノイズ 4 件のみ、recall 側 type gate で吸収可能)
+- ただし GAM の topic associative network は **LLM 推論で weighted confidence 0-1 を付与** = LLM 推論経路を採用しており、Zenn 記事の警告 (LLM トリプル抽出の精度問題) と GAM のアプローチが衝突する可能性。**Log の判断**: GAM の event progression graph (時系列構造) は採用 (-38% 最大寄与で根拠強)、topic associative network (LLM 推論経路) は **不採用維持** (C257 で確定済の「LLM 推論非依存路線」と整合)
+- → **3 段ノイズ抑制路線 (本ファイル C257) の妥当性が Zenn KG 記事で再裏付け**: (1) 人手 cross-link / (2) 構造化マークアップ抽出 / (3) recall 側 gate の 3 段は LLM 推論を経由しない選択、Zenn 記事の警告と整合
+
+**派生層原則の次の一手 (Phase 4 候補)**:
+
+- **A. build_atom_edges.py 段階3 着手 (recall_golden T0 ベンチ初回計算)**: 検証期限 6/9 まで残 11 日、現状 atoms=1229 / supersedes_chain=370 / ww=4 で安定、ベンチ集合構成条件 3 つ全成立 = 着手判定発火点に到達。本サイクル Phase 4 大作業の第一候補
+- **B. GAM の sparse maintenance events 設計を edges 再生成タイミングに転用**: build_atom_edges.py を毎サイクル走査ではなく「supersedes_chain 増分 ≥ N or atoms 数閾値超え時」に限定する設計案を kaizen #135 段階3 着手時に組み込む。本 A の前提条件として A 着手後の派生候補
+- **C. memory_redesign.md L1-30 派生層原則の主軸登録判定 (R 層昇格)**: 機械反映禁止順守で本サイクル昇格判定は行わず、C263 以降に判定発火。判定基準 = 同方向 source 3 件目 (Karpathy LLM Wiki + tsurubee/nori_handa 記事の C258 摂取で既に到達済) + 1 ヶ月以上の運用観察 (C258 から 1 ヶ月 = 2026-06-28 以降)
+
+**接続先**:
+- 本ファイル C261 yusuke_m_mu「skill description load = 機構レベル劣化要因」節 — GAM の sparse maintenance events 設計と「load 頻度の限定」観点で同方向、文脈ベース pre-filter (yusuke_m_mu 案 B) と GAM の semantic anchoring (Psem) が将来統合候補
+- 本ファイル C258「3 段ノイズ抑制路線」節 — Zenn KG 記事による外部裏付けで妥当性強化
+- 本ファイル C257「LLM 推論非依存路線」節 — GAM の topic associative network 不採用判定の根拠
+- [kaizen #135 段階3 着手判定](../memory/kaizen_tracker.md) — Phase 4 候補 A の発火点
+- [external_notes_log.md](../memory/external_notes_log.md) — GAM エントリ追加 (本サイクル Phase 3 で実反映)
+
+**自己批判**: 本節は **GAM HTML 版 (arxiv v1) を WebFetch 経由で読了**、full PDF まで到達せず細部詳細の保証は WebFetch 出力範囲内。ablation 数値 (-38%/-19%/-12%/-10%) は本文記述からの抽出で再現には PDF 必要。topic associative network の LLM weighted confidence 0-1 の具体的 prompt 設計は WebFetch 抽出範囲外 = 「不採用維持」判定の根拠は「LLM 推論依存」という分類レベル止まり、prompt 設計の具体評価まで踏み込んでいない。C263 以降で必要に応じて PDF full intake。
+
 ### 2026-05-29 (Log C261 Phase 3) — yusuke_m_mu「Skill description は load されるから増えると劣化する」観察 → 自システムへの折り返し (description vs body 分離 / 文脈ベース pre-filter)
 
 C261 Phase 2 で #all-nao-u-lab に投稿した tegnike→yusuke_m_mu 連鎖の取り込み。yusuke_m_mu 5/29 03:53 (tegnike 5/26 23:46 への直接返信) の核心は **「skill 発動前に description 一覧を AI エージェントが load して該当 skill を選ぶ」 = 200 skill あれば 200 description を読む = 機構レベルでの劣化要因**。tegnike の「ルール本数=悪」(内容質軸) と直交する別軸として記録する価値。
