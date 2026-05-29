@@ -238,4 +238,67 @@ R 層昇格条件「独立 source 2+件 × 1 ヶ月運用観察」の **source �
 - **Phase 3 の最優先 = log_autonomous_game v003 実機自プレイ + 自判定 (CLAUDE.md R-A 順守)**、次点 = kaizen_tracker.md 更新 (#136 N=2 観察前進記録 + #137 起票判定材料追記) + projects/memory_redesign.md L1 追記 (Tier 0-2 自動キャッシュ検討点)。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 指示 1: Slack返信 → 該当なし
+- Phase 1 §2 で確認済: #all-nao-u-lab / #human-steering / #game-rights 全て応答済、新着返信候補 = 0 件、broadcasts 新着 URL = 0 件。
+- 投稿対象なし → 空打ち回避（テンプレ流用品質低下禁止ルール順守）。
+
+### 指示 2: 改善サイクル → kaizen #136 C265 観察結果追記完了
+- `memory/kaizen_tracker.md` #136 末尾に「C265 観察結果」節追加 (本ファイル本サイクル冒頭で実施)。
+- 追記要旨: Phase 1 §6 で memory_redesign T2 設計へ staging memo なしで自発切替成立 + ByteRover を独立到達点 5 件目として発見 = **能動判断試行 N=2 成功事例**、staging memo 駆動の自己プロトコル明示実行 (C257 → C261 → C265) **3 サイクル連続成立**、構造強制 (auto_diary.py phase_gather() WARN 注入) への移行は依然保留、staging 内自己プロトコルで吸収できる蓋然性さらに上昇。
+- **検証ファースト原則**: 本サイクルで新規 kaizen 起票はしない（#137 AKL borrow / #138 sharding 設計逆算 はどちらも C266 以降の発火点に保留、Phase 2 で記録済）。直近の未検証提案 #136 段階1 検証結果埋め込みを優先実施 = 検証ファースト順守。
+
+### 指示 3: 他インスタンス洞察処理 → Mir Paul Iusztin (1位) は memory_redesign.md に既統合確認
+- pre-check が拾った 27 件未処理洞察のうち、1 位 = Mir #shared-reads Paul Iusztin「統一グラフ案」(@pauliusztin_ / @kazunori_279 経由)。
+- 確認結果: `projects/memory_redesign.md` L31 (本 Phase 2 で追記済の独立到達点表) に **件 2 として既統合済**「Paul Iusztin 統一グラフ案 (@pauliusztin_ / Mir 5/28 経由)」明示記載済。kaizen #115 48h 再供給フラグ対象外 (経過日数大、5/28 → 5/30 = 2 日経過は再供給範囲だが、本 Phase 2 ByteRover full intake 文脈で独立到達点 5 件中の 2 位として明示借用済 = 再消化済と判定)。
+- 他インスタンス洞察の 1 位は本サイクルで処理済。2 位以下は次サイクル C266 以降の処理候補に持ち越し（時間予算理由、本 Phase 2 で ByteRover full intake に大幅時間消費したため）。
+
+### 指示 4: Active プロジェクト関連変化 → projects/memory_redesign.md 既更新 / projects/log_autonomous_game.md は Phase 4 で前進予定
+- `projects/memory_redesign.md` L24-58: Phase 2 で ByteRover findings 追記済 (本 Phase 3 開始時に確認、追記不要)。
+- `projects/log_autonomous_game.md`: 本 Phase 4 大作業で前進予定 = 「v003 ヘッドレスフレーム画像化 + Log 自己視覚判定経路の確保」。Phase 4 終了後に同ファイル「残課題」を 1 行更新する想定。
+- `projects/INDEX.md`: 直近 7 日 idle = principles.md (9日) / side_channel_audit.md (12日) の 2 件、本サイクル時間予算では着手せず Phase 4 大作業の対象外（後述「次フェーズの大作業」選定根拠参照）。
+
+### 指示 5: 深掘り候補からの実施 → 「ゲームを動かして出す」を Phase 4 大作業として確定
+- 深掘り候補 (C): CLAUDE.md「絶対にやる」(i) ゲームを動かして出す = log_autonomous_game v003 実機自プレイ + 自判定。
+- **実機自プレイは Log の GUI 操作能力欠如のため不可** (self_judgment.md L1-L20 で明示済)、しかし C240 Phase 2 追記候補にあった「ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定」(Fly Fail Fix 2507.12666 由来) が代替パス。本 Phase 4 大作業はこの代替パスの**段階 1 = 最小 1 フレーム成功**を完遂する。
+- 深掘り候補 (B) #128 段階2 skills/ 棚卸し (15日 idle) / side_channel_audit.md (12日 idle) は本サイクル Phase 4 では選定せず、次サイクル以降に持ち越し。理由 = CLAUDE.md「絶対にやる」#1 (R-A 「ゲームを動かして出す」) が他項目より優先順位上位、R-A 順守を本サイクルで前進させる方が長期 ROI 大きい。
+
+### 指示 6: Phase 4 大作業選定（後述「次フェーズの大作業」節）
+
+### Phase 3 アクション結果
+- kaizen_tracker.md #136 C265 観察結果追記: 1 編集 = 1 段落追加、約 1400 字。
+- 新規 kaizen 起票: ゼロ（#137 #138 は C266 発火点に保留）。
+- 他インスタンス洞察処理: 1 位 = 既統合確認のみ、新規追記なし。
+- Active プロジェクト更新: memory_redesign.md は Phase 2 で更新済（追加なし）、log_autonomous_game.md は Phase 4 で更新予定。
+- Slack投稿: ゼロ（新着返信候補 0、空打ち回避）。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**log_autonomous_game v003 ヘッドレスフレーム画像化スクリプトの実装と最小 1 フレーム取得成功** (Log 自己視覚判定経路の確保段階 1)
+
+### 完遂の定義
+Phase 4 終了時に以下の **全て** が成立していれば完了:
+1. `game/log_autonomous_game/v003/capture_frames.js` (新規) が存在し、Playwright (or Puppeteer) を用いてヘッドレス Chromium で v003 を起動、指定タイミング (例: ゲーム開始 5 秒後) に canvas 内容を PNG として `game/log_autonomous_game/v003/frames/frame_0001.png` に保存できる。
+2. 上記スクリプトの実行が **exit 0** で完走し、frame_0001.png が実在する (`Test-Path` or `ls` で確認)。
+3. Log 自身が Read tool で frame_0001.png を開き、何が映っているかを 1 段落で観察記述（プレイヤー位置 / 敵位置 / 弾道 / 状態表示の有無）し、staging log にその観察結果を残す。
+4. `game/log_autonomous_game/v003/self_judgment.md` Q-D 節 (敵弾予測軌道) に **「2026-05-30 C265 Phase 4: ヘッドレスフレーム画像化経路で初フレーム視覚体感達成」** の 1 行追記。
+5. `projects/log_autonomous_game.md` 残課題リストの「ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定」項目を `[ ]` → `[△]` (段階 1 達成 / 連続フレーム + 60 秒分は次サイクル) に更新。
+
+### 着手手順
+1. **環境確認**: `node_modules/` 配下に playwright/puppeteer が既にあるか確認。なければ最小依存で `playwright` をローカルインストール (`npm init -y && npm install playwright` を v003/ 配下で実行、サイズ大きいので必要なら `puppeteer-core + Chromium 既設パス` に切替)。
+2. **capture_frames.js 雛形作成**: Playwright で `chromium.launch({ headless: true })` → `page.goto('file:///D:/AI/Nao_u_BOT/Claude/game/log_autonomous_game/v003/index.html')` → `page.waitForTimeout(5000)` → `page.screenshot({ path: 'frames/frame_0001.png' })`。canvas 内のみのキャプチャは `page.locator('canvas').screenshot()` を試行。
+3. **frames/ ディレクトリ作成**: `mkdir game/log_autonomous_game/v003/frames`。
+4. **実行**: `node capture_frames.js` 実行、exit 0 確認、frame_0001.png 存在確認。
+5. **Log 自己視覚判定**: 生成 PNG を Read tool で開き、観察を 1 段落で staging に書く。
+6. **self_judgment.md / projects/log_autonomous_game.md 更新**: 上記完遂定義 #4 / #5 達成。
+7. **commit prefix**: `game:` (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守、本作業は game/log_autonomous_game/v003/ 配下のみ + projects/log_autonomous_game.md 残課題 1 行更新 = ゲーム改修系統)。
+8. **想定リスク**: (a) Playwright インストール 200MB 級 = ディスク圧迫 → puppeteer-core + 既設 Chrome 経路へ切替、(b) headless で `requestAnimationFrame` 等の動作が実機と乖離 → 段階 1 では「何か映る」を達成基準とし、内容妥当性は段階 2 に持ち越し、(c) Windows パス区切り `\` vs URL `/` の取り違え → file:/// URL は forward-slash 統一、`path.resolve` 経由でクロスプラットフォーム化。
+
+### 選んだ理由
+- **CLAUDE.md「絶対にやる」#1「ゲームを動かして出す — 積み上げはその副産物」の R-A 直処方**: 本サイクルは Phase 2 で T2 設計 (memory_redesign 系統) と ByteRover full intake (外部摂取系統) に時間を使ったが、game/* の playable diff (コード変更 commit) はゼロ。R-A 順守のため Phase 4 で**game/* に commit を残す**ことが本サイクル長期 ROI 最大化の必須条件。
+- **self_judgment.md Q-D / Q-成功FB の実機未確認 3 留まり問題への一次処方**: Log は GUI 操作能力欠如で実機自プレイ不可、しかしヘッドレスフレーム画像化 + Read tool 経路を開けば「Log 自身が自分のゲームを視覚的に確認できる」新しい経路が確立、Nao_u/Mir/Ash 依存度を下げる（最終確認装置は依然 Nao_u だが、自己判定の精度が上がる）。
+- **30 分で「進んだ」と言える粒度**: Phase 4 段階 1 = 最小 1 フレーム成功のみに絞る、連続 60 秒分のフレーム取得 + Q-D / Q-成功FB 視覚判定の本番は次サイクル C266 以降の Phase 4 大作業候補化、本サイクルは経路開設のみ。
+- **他候補 (#128 段階2 skills/ 棚卸し / side_channel_audit.md clean-up) との比較**: どちらも整理作業中心で「ゲームを動かして出す」優先順位より下、本サイクル ByteRover 摂取で T2 設計議論を進めた直後に整理作業に転じると主軸ブレ。R-A 一本に絞る方が判断負荷低い。
