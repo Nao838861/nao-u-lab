@@ -77,7 +77,47 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+checked_at: "2026-05-30T01:28:00+09:00"
+checked_by: "log_cdx (Phase 4a)"
+cleaned: []
+checks:
+  memory_index:
+    markdown_links: 0
+    broken_markdown_links: 0
+    atom_refs_in_index: 50
+    missing_atom_refs: 0
+    note: "MEMORY.md は Markdown link ではなく atom id / tag entry point 中心の index。記載 atom id は atoms.jsonl に存在。"
+  atoms_jsonl:
+    records: 1851
+    parse_errors: 0
+    duplicate_ids: 0
+    conflicting_duplicate_ids: 0
+    duplicate_content_groups: 39
+    note: "同一内容候補はあるが、MEMORY.md 生成結果では lifecycle/content fold 済み: display 1661 / folded 190。今回の機械整理では削除しない。"
+  stale_raw:
+    cutoff: "30 days"
+    old_files: 0
+  stale_shared_reads_candidates:
+    cutoff: "30 days"
+    old_files: 0
+    oldest_sample:
+      - "memory/shared_reads_candidates/phase3_draft_autoue_20260513.txt (mtime 2026-05-13)"
+      - "memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md (mtime 2026-05-17)"
+  inbox:
+    directives_pending:
+      - id: "log-cdx-1780027275-ab93155518"
+        channel: "nao-u"
+        domain: "operations"
+        permalink: "https://nao-u-lab.slack.com/archives/C0ALVUTKK2A/p1780027275308089"
+        text: "全員宛broadcastの誤検出が連続している原因調査と対処依頼"
+        handling: "未対応の運用指示なので close しない。Phase 4a の整理対象ではなく、後続の手動/該当phase作業へ残す。"
+    broadcasts_pending: []
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
