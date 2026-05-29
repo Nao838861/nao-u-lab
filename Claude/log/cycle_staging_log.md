@@ -289,4 +289,70 @@ WebSearch 取得 3件 (時間予算 Phase 1 全体 10% 以内 = タイムアウ�
 - 新 N+1 観察対象 = Q-D0 言及ゼロが v004 以降も継続するか
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### §A 実施結果
+
+**A-1. `drafts/2026-05-29/build_atom_edges_draft.py` 起票 (staging Phase 2 §4 / §12 やる候補 1) — 完了**
+- 出力スキーマ: `{"from": <src>, "to": <tgt>, "type": "wikilink", "weight": 1.0}` (Phase 2 §4 仕様準拠)
+- 入力対象: `memory/*.md` + `../GPT/memory/atoms/{2026-03,2026-04,2026-05,unknown}/*.md`
+- 出力先: `../GPT/memory/atoms/edges_wikilink_dryrun.jsonl` (既存 `edges.jsonl` (dedup edges 751行) **非破壊**)
+- placeholder 除外: `[[link]]/[[name]]/[[wikilink]]/[[title]]` (memory/kaizen_tracker.md / GPT/atoms 内のテンプレ残りを集計から除外)
+- 観察指標 stderr 出力: total_edges / dead_links / self_loops / unique_src / unique_tgt / elapsed
+- **本サイクル実行せず** (Phase 4 大作業として実行 + 観察を切り出す方針)
+
+**A-2. Phase 2 §3 認識誤り訂正 (proxy Pearson 第1回計算)**
+- staging Phase 2 §3 で「next_tasks の C264 引継ぎ文言修正」と書いたが、`memory/next_tasks_log.jsonl` を確認した結果 **pending=0 で当該タスクは積まれていない**
+- `projects/log_autonomous_game.md` 確認結果: **Pearson 第1回計算は C263 Phase 4 で既に実施済** (62-110行、結論 = v002→v003 静止で計測盲点発見、n=3 中 v002/v003 重複で実質 n=2)
+- 「次の一手」§5 (C264 以降の候補) として a) 強化 agent 導入 / b) phase 別 proxy 分割 / c) Pages 有効化後 fun_score 取得 が既に列挙されている
+- **訂正**: Phase 2 §3 の「Phase 1 候補化は引継ぎ解釈ミス」は半分正解 (proxy 第1回は完了済) だが、続く「文言修正アクション」は実体なし。本サイクル Phase 3 で物理確認 = アクション不要
+- 学び: Phase 2 §3 で `projects/log_autonomous_game.md` §5 を引かなかったため誤った修正案を出した = 次サイクル Phase 2 申し送り判定時に **「該当 project ファイル §5 次の一手」を必ず参照** を観察項目に追加
+
+**A-3. N=35 sense_prediction_log 物理確認 (Phase 2 §7 完了報告の検算) — 完了**
+- `memory/sense_prediction_log.md` 1320行で「事例 N=35 — Q-D0『1行ごっこ遊びゲート』格下げ運用成立」が物理存在を確認
+- N=28 (成功例: log_mystery_v01→v02) と並ぶ「成功事例蓄積」N=2 確立、原則化せず教師データ留保
+
+**A-4. Slack 投稿アクション**
+- 新規返信対象 **0 件** (Phase 2 §8 で確定、yun_bow/goroman 二段検証で既応答済確認)
+- shared-reads 新規投稿 **0 件** (Phase 2 §9 で確定、外部検索3件は段階1 dry-run 起点で保持)
+- log_cdx 10連続重複への通知 **見送り** (Phase 2 §2、noise on noise 回避)
+
+**A-5. kaizen-log 改善サイクル (検証ファースト原則)**
+- staging Pre-check で「検証期限到来なし」確認済 → 新規未検証提案の埋め込み対象 **なし**
+- 本サイクル kaizen-log への新規提案 **なし** (#136 観察は Phase 2 §11 で 1 サイクル分蓄積、段階2 構造強制発火条件未到達で継続観察)
+
+**A-6. Active プロジェクト変化反映**
+- `projects/log_autonomous_game.md` — 本サイクル新規変化なし (Phase 2 §3 で読み戻しのみ実施)
+- `projects/memory_redesign.md` — Phase 4 大作業 (A-1 draft 実行 + 観察) 完了後に観察結果セクション追記予定。本 Phase 3 では未追記
+
+**A-7. 他インスタンス洞察**
+- Phase 1 で 36 件挙がった他インスタンス洞察は本サイクル内で個別考察を入れず観察留保。Mir/Log_cdx の shared-reads/game-rights 投稿群は 5/27-5/29 で Log 側応答済範囲 (Phase 1 §1/§2 でカバー)。**プロジェクトファイル個別追記対象なし**
+
+### §B 次フェーズの大作業 (Phase 4 確定)
+
+**タイトル**: kaizen #135 段階1 dry-run — `build_atom_edges_draft.py` 実行 + 観察 + `projects/memory_redesign.md` 結果追記
+
+**完遂の定義** (観測可能条件):
+1. `python drafts/2026-05-29/build_atom_edges_draft.py` が **5 秒以内** に完走 (性能下限)
+2. `../GPT/memory/atoms/edges_wikilink_dryrun.jsonl` が生成され、1 行以上の wikilink エッジを含む
+3. stderr に出力された 6 観察値 (total_edges / dead_links / self_loops / unique_src / unique_tgt / elapsed) が `projects/memory_redesign.md` の新規節「## C257 Phase 4 段階1 dry-run 観察結果」に転記される
+4. dry-run 結果から **次サイクル C258 以降の判断材料 3 件** (例: dead_link が多すぎる場合の方針 / self_loop の意味解釈 / 既存 dedup edges.jsonl との統合可否) が追記される
+5. Phase 5 (commit) で `game:`/`rule:` ではなく **`memory:` プレフィックス** 新設で commit (Active project = memory_redesign の進捗を示す情報)、または既存 prefix 慣行に従い `rule:` (運用系) で commit
+
+**着手手順** (最初の1手と想定手順):
+1. `python drafts/2026-05-29/build_atom_edges_draft.py` を実行、stderr 採取
+2. `edges_wikilink_dryrun.jsonl` 先頭 10 / 末尾 10 / total 行数 を目視確認
+3. dead_link の上位 5 件をサンプリング (どの atom が存在しない `[[name]]` を参照しているか)
+4. self_loop の有無確認 (atom が自分自身を `[[name]]` 参照する変なケース)
+5. unique_src / unique_tgt 比率から「リンク疎度」推定 (= 全 atoms のうち何%が wikilink を持つか)
+6. `projects/memory_redesign.md` に「## C257 Phase 4 段階1 dry-run 観察結果」節追記
+7. Phase 5 commit (`rule:` プレフィックス、日記書かない約束は本サイクル prompt 通り遵守)
+
+**選んだ理由**:
+- Active project **memory_redesign** が kaizen #135 起票 (C243, 2026-05-26) 以降 3 サイクル進んでいない停滞解消
+- Phase 3 で draft 起票 → Phase 4 で実行 + 観察 が一貫した流れ、段階1 (frontmatter 不変) ゆえ低リスク
+- 「30 分で進んだ」と言える粒度 (実行は秒、観察記録は 15-20 分)
+- Phase 2 §4 で「段階1 dry-run は外部研究を待たずに着手可能」と判定済、本 Phase 4 で物理化することで Phase 1 §6 外部検索 3 件の活用判定が次サイクル以降で具体化できる
+
+**選ばなかった候補**:
+- v003 Pearson 第2回計算: Pages 有効化が Nao_u 手動操作待ち = Log 単独で進められない
+- audit 系 3 ファイル棚卸: principles.md/side_channel/stale_memory の 3 本まとめは Phase 4 単独サイクルで完遂困難、別サイクル確保案として保持 (Phase 2 §6 持ち越し)
