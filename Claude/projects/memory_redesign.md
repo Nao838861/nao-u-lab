@@ -21,6 +21,39 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 (Log C264 Phase 3) — T2 安定判定 3軸 + 失敗例 4 型分類 + frontmatter 摩耗 probe 案を #all-nao-u-lab に着地
+
+C264 Phase 2 で Log_cdx 5/29 21:36 (ts=1780058192) の T2 frontmatter 階層 tag → chain edge 派生提案への応答案を組み、Phase 3 で #all-nao-u-lab に投稿 (ts=1780069396)。**安定判定の 3 軸ゲート** を recall@10 単独ではなく以下で組む:
+
+- **軸 a**: recall@10 ±0.05 / 3 サイクル連続 (C262 着地値 40% を基準点に 0.35-0.45 帯)。既存 `verify_kaizen.py --meta` の WARN 閾値 -0.05 を「安定判定」用に対称化
+- **軸 b**: 失敗例の型が同型 3 件以上反復しない。recall@10 = 40% = 5 件中 3 件 miss の中身を型分類しないと「同じ穴を踏み続けている」を切れない (Log_cdx 5/29 21:36 提案の根)
+- **軸 c**: ベンチ集合自体の構造的偏りが前回比 ±5% 以内 (atom 月次分布 / type 分布 / 本文長中央値の 3 統計、いずれか ±5% 超でベンチ更新発火)
+
+**失敗例の型分類 (4 型案、C262 のミス 3 件を後追い分類予定)**:
+
+| 型 | 説明 | T2 chain edge での挙動 |
+|---|---|---|
+| (i) tag-only-cover | frontmatter tag は当たるが本文 semantic とずれている hit | T2 で改善しない、false-positive 増加リスク |
+| (ii) chain-hop-noise | hop 距離 2 以上の弱い edge が top10 押し込み、近距離 atom を 11 位以下に押し出す | β_tag_overlap と β_hop_distance のバランス問題 |
+| (iii) supersedes-displacement | supersedes_chain 経由で時系列古い node を返す displacement | 並列返却 vs 新側 switch の設計未確定 |
+| (iv) structured-markup-miss | 本文 wikilink や cross-link 薄い atom で取りこぼし | T2 では救えない、T3 description 階層化領域 |
+
+C264-C265 で (i)(iii) が反復していれば T2 chain edge は「正しい次の改善対象」、(ii)(iv) が反復していれば T2 は早すぎ。
+
+**「正本 = 人手 frontmatter」摩耗観測 probe 案**:
+
+- `tools/probe_tag_consistency.py` (仮) で 1 サイクル分の新規 atom について「tag 付与率」「3 段以上の階層 tag 付与率」を測る別 jsonl 出力
+- 摩耗の閾値: 新規 atom のうち階層 tag 付与率が 50% 下回ったら、T2 設計を「flat tag list + 派生 chain (後付け clustering)」方向に倒すべきシグナル
+- 起票元 = Log_cdx 5/29 21:36 「人手 frontmatter が正本になるほど一貫して書けない」を間違い第一候補に挙げた点への直接応答
+
+**Log_cdx 第二候補「chain edge 派生で探索意味が遅れて壊れる」への評価 = 杞憂判定**:
+
+supersedes_chain=370 が **4 サイクル連続安定** (C245/C257/C258/C262)、派生戦略の安定性は実証済 = 派生計算の遅延は実害になっていない。むしろ気になるのは **派生計算の頻度設計**で、GAM の「sparse maintenance events (session-end / 2048 token buffer)」と同方向に「supersedes_chain 増分 ≥ N or atoms 数閾値超え時のみ」に限定したい (C262 GAM 摂取で確認済 = [memory_redesign.md](memory_redesign.md) §「2026-05-29 (Log C262 Phase 3) — GAM 論文 full intake」と接続)。
+
+**T2 設計の起票時期**: 上記 3 軸ゲート全通過後 (= C265-C266 想定)。本サイクル C264 では起票しない、本節は **C264-C265 観察期間のための判定軸明文化** が目的。
+
+**Log_cdx との R 層独立到達状況**: 「人手 frontmatter 派生方針」自体は依然 Log 単独 + Log_cdx (両方 Log 系) で **同 Log 系統 2 件、独立 source としてはまだ 1 件**。C263 TagRAG / C262 GAM の論文側 2 件と組み合わせれば独立到達 2+1 = 3 件相当だが、論文と運用ルールは独立度が異なるため、Mir / Ash の同方向独立到達待ち。
+
 ### 2026-05-29 (Log C263 Phase 2) — TagRAG 論文 full intake → 階層タグ chain 派生方針確立 (T2 候補軸の人手側設計)
 
 C263 Phase 1 §6 で取得した 3 件 (TagRAG / HG-RAG / GraphRAG 2026 Buyer's Guide) のうち、kaizen #135 段階3 T2 候補軸「tag_share edge → 階層タグ chain hop」と最も直接接続する **TagRAG: Tag-guided Hierarchical Knowledge Graph RAG (arxiv:2601.05254)** を Phase 2 で WebFetch full intake。Nao_u 指示「詳細な記述と分析を。将来のアイデアの種につなげる大事な外部入力。1フェーズ丸ごと使ってもいいくらい重要」に従い、本 Phase の中心作業として実施。
