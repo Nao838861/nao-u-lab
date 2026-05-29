@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.25707"
 collected_at: "2026-05-29T15:29:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, computer-use, robustness, playtesting, harness]
+evaluated_at: "2026-05-29T15:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  GUI agent の実運用で起きる common corruption を configurable perturbation として扱う問題設定が明確。
+  ブラウザゲーム自動プレイテストでも解像度・フォーカス・ポップアップ・入力こぼしが失敗原因になるため、clean run 依存を崩す評価設計として具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "clean benchmark では見えない GUI agent の壊れ方を、common corruption benchmark として整理する。"
+  analysis_axis: "corruption taxonomy、性能劣化の測り方、AgentHijack-Agent の grounding / environment checking 対策を見る。"
+  application_target: "ブラウザゲーム自動プレイテストと playable diff 検証に、解像度変更・フォーカス喪失・予期しない UI 介入の probe を足す。"
+  pros_cons: "メリットは実環境の脆さを再現可能なテストにできる点。デメリットはゲーム固有の楽しさ評価ではなく操作堅牢性に寄る点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

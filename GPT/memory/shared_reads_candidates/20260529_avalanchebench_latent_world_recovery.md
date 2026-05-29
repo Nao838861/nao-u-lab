@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2605.24183"
 collected_at: "2026-05-29T15:29:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, latent-world, analytics, simulation, harness]
+evaluated_at: "2026-05-29T15:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: |-
+  latent world recovery という評価観点は有用だが、候補本文だけでは enterprise analytics からゲーム制作への接続がまだ抽象的。
+  プレイログから難所・誤誘導・学習イベントを復元する具体手順や評価例まで補えないため、Phase 3 の ~4000 字投稿には時期尚早。
 ---
 
 ## raw_excerpt
