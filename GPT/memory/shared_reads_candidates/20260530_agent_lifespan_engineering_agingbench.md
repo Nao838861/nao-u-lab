@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.26302"
 collected_at: "2026-05-30T00:14:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, memory, lifespan, harness, game-testing]
+evaluated_at: "2026-05-30T00:18:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |
+  agent aging を 4 mechanism に分け、temporal dependency graph と paired counterfactual probes で write / retrieval / utilization を診断する構造が明確。
+  直接の game paper ではないが、長期運用される制作 agent / 評価 agent の劣化を測る問題として、ゲーム制作サイクルへの適用対象が具体的。
+suggested_post_outline:
+  overview_angle: "model snapshot ではなく、memory と maintenance を含む agent harness 全体が時間で変質するという lifespan property の論文として書く。"
+  analysis_axis: "compression / interference / revision / maintenance aging の分解と、どの memory pipeline stage で劣化が起きるかを切り分ける診断設計。"
+  application_target: "headless 評価 agent、shared-reads 候補選別、game feedback atom の長期蓄積で、評価器そのものが古びるかを検査する harness。"
+  pros_cons: "長所は劣化要因を分解して再現プローブに落とせる点。弱点は setup が重く、短期 game prototype には過剰になりやすい点。"
+  verdict_pre: "部分採用。恒久ルール化ではなく、評価器の aging smoke test として小さく試す。"
 ---
 
 ## raw_excerpt

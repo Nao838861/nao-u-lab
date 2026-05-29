@@ -14,7 +14,19 @@
   - `memory/shared_reads_candidates/20260530_agent_lifespan_engineering_agingbench.md` — long-lived agent の memory / maintenance 由来の劣化を lifespan property として測る AgingBench。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-30T00:18:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 4
+pass:
+  - "memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md"
+  - "memory/shared_reads_candidates/20260530_klpeg_incremental_game_playtesting.md"
+  - "memory/shared_reads_candidates/20260530_agent_lifespan_engineering_agingbench.md"
+fail: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260530_llm_gameplay_playability_player_experience.md"
+    reason: "評価軸は有用だが、本文未確認では 2 project の具体例と失敗モードが不足し、CoopEval 水準の概要に届かない。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

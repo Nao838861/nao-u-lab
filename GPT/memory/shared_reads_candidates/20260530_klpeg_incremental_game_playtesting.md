@@ -4,6 +4,21 @@ url: "https://cir.nii.ac.jp/crid/1390025739150970624"
 collected_at: "2026-05-30T00:14:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, playtesting, knowledge-graph, llm-agent, regression-testing]
+evaluated_at: "2026-05-30T00:18:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |
+  update log 解析、KG による影響範囲推定、multi-hop reasoning、update-tailored test case 生成、Overcooked / Minecraft 評価まで重要要素が揃っている。
+  Nao_u_BOT の短サイクル game/* 改修で、変更ログから headless test の重点を決める用途に直結する。
+suggested_post_outline:
+  overview_angle: "頻繁に変わるゲームで全回帰を回すのではなく、更新ログを KG 上の依存関係に接続して影響範囲別のテストを作る手法として書く。"
+  analysis_axis: "自然言語 update log を LLM が読む部分と、game elements / task dependencies / causal relationships を KG として維持する部分の分担。"
+  application_target: "game/* のコミット差分、修正ログ、headless failure atom を結び、次回テストで重点的に通す scene / mechanic / route を選ぶ仕組み。"
+  pros_cons: "長所は履歴知識の再利用とテスト削減。弱点は KG 更新の手間、ログ粒度への依存、誤った causal edge がテスト漏れにつながる点。"
+  verdict_pre: "採用候補。まず小規模な change-log-to-test-plan probe として部分採用する。"
 ---
 
 ## raw_excerpt

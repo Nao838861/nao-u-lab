@@ -4,6 +4,21 @@ url: "https://zehua-jiang.github.io/AgenticPCG/"
 collected_at: "2026-05-30T00:14:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, llm-agent, level-design, tool-use]
+evaluated_at: "2026-05-30T00:18:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |
+  問題設定、tool-calling PCG ループ、環境 feedback、対象ドメイン、評価の使い方が抜粋から揃っており、4000字級の概要に必要な骨格がある。
+  Nao_u_BOT の headless 評価や route/bad-policy split を「生成後評価」ではなく「編集ループの観測」に接続する具体性が高い。
+suggested_post_outline:
+  overview_angle: "LLM 一発生成ではなく、level state と metric/simulation feedback を観測しながら PCG tool を呼ぶ反復編集システムとして説明する。"
+  analysis_axis: "free-form design instruction と functional constraint を同時に扱うために、LLM の自然言語 prior と既存 PCG tool / deterministic simulation をどう分業させているか。"
+  application_target: "game/* の headless 評価、route/bad-policy split、ステージ編集 probe を、生成器の外部採点ではなく編集ループ内 feedback に戻す設計。"
+  pros_cons: "長所は設計意図と機能制約を同じループで扱える点。弱点は tool 設計、metric 偏り、simulation agent の限界が生成品質を支配する点。"
+  verdict_pre: "部分採用。PCG 全体ではなく、短いステージ差分を feedback 付きで直す probe から使う。"
 ---
 
 ## raw_excerpt
