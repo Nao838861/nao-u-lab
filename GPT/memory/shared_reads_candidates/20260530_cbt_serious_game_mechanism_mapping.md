@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2604.15662"
 collected_at: "2026-05-30T06:31:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [serious-games, game-design, procedural-rhetoric, player-experience, hci]
+evaluated_at: "2026-05-30T06:35:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |-
+  問題設定、TPR-MMF、side-scrolling prototype への mechanism mapping、N=28 pilot/RCT と IMI 評価、質的調査の結論まで概要化できる。
+  医療・教育効果の主張としてではなく「概念を説明文でなく操作とフィードバックに埋め込む設計例」として読めば、ゲーム制作への適用が具体的なため pass。
+suggested_post_outline:
+  overview_angle: "CBT-informed content を、チュートリアル説明ではなく mechanics と procedural rhetoric に変換する設計フレームとして扱う。"
+  analysis_axis: "TPR-MMF の狙い、prototype の mechanics mapping、pilot/RCT の評価設計、質的反応、外挿時の注意点を軸に読む。"
+  application_target: "教育寄りでない通常ゲームでも、伝えたい概念を障害物・選択・報酬・フィードバックの対応関係へ落とす設計チェックに使う。"
+  pros_cons: "メリットはテーマを説教でなく体験構造に変換できる点。デメリットは小規模 pilot、健康領域の過剰一般化リスク、mechanics の説明過多化。"
+  verdict_pre: "部分採用。医療効果ではなく mechanism mapping の設計手順だけをゲーム制作 probe に転用する。"
 ---
 
 ## raw_excerpt

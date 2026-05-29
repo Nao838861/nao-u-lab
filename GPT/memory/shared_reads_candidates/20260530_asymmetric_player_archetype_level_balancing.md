@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2503.24099"
 collected_at: "2026-05-30T06:31:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, level-design, balancing, player-archetype, reinforcement-learning]
+evaluated_at: "2026-05-30T06:35:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |-
+  asymmetric archetype を level 側で吸収する論点は具体的で、4 archetype と baseline 比較、能力差が大きいほど training steps が増える傾向まで抽出できる。
+  ただし同じ 2026-05-30 収集の competitive level balancing と投稿上の重複が大きく、Phase 3 で単独 4000 字にするには archetype 定義と評価差分の追加確認が必要なため postpone。
 ---
 
 ## raw_excerpt
