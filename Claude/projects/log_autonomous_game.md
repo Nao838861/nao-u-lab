@@ -59,6 +59,74 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-05-29 C263 Phase 4: proxy 4 指標 Pearson 相関第 1 回計算 — v002→v003 静止で計測盲点発見
+
+**起票根拠**: C251 Phase 4 残課題 §1「実機判定取得後に proxy 4 指標 Pearson 相関第 1 回計算」が staging Phase 1 §5 で「最大停滞」と明記、本サイクル C263 Phase 4 大作業として「揃っていなければ揃える 1 手」方針で着手 (実機判定は依然未到達のため、Log 自己採点を fun_score 代理として暫定試算)。
+
+### 着地物
+- [game/log_autonomous_game/v003/agent_difficulty_proxy.js](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) — 新規。v002 版から `currentShootInterval(elapsed)` 関数 + `SHOOT_INTERVAL_PHASE2_MIN` 定数抽出を移植 (phase 2 内 90→60 frame 線形漸変対応)
+- v001/v002/v003 3 バージョン分の proxy 4 指標を同一 baseSeed=20260527 で取得、本節 §2 に表化
+
+### §1. proxy 4 指標 計測値 (n=3 バージョン × 30 試行 中央値)
+
+| バージョン | median_clear_wave | median_residual_hp_ratio | median_play_time_sec | median_graze_count | survival_rate |
+|---|---|---|---|---|---|
+| v001 | 1 | **1.0** | **60.00** | 0 | **30/30 (1.0)** |
+| v002 | 1 | 0.0 | 9.28 | 2 | 0/30 (0.0) |
+| v003 | 1 | 0.0 | 9.28 | 2 | 0/30 (0.0) |
+
+**主観察**:
+- **v001→v002 は 4 指標すべてで激変** (構造的大改修: wave 1 軽量化 + WAVE_TIMELINE + 敵 C 追加が proxy 側で捕捉された)
+- **v002→v003 は 4 指標すべてで完全静止** (v003 改修 = phase 2 内 SHOOT_INTERVAL 90→60 frame 線形漸変が proxy 側で全く捕捉されていない)
+- 静止の原因: 素朴良手 agent が wave 1 内 (median 9.28s) で 30/30 死亡 = phase 2 (50-90s) に到達できないため、phase 2 内の改修は計測対象外
+
+### §2. fun_score 代理 (Log 自己採点、25/30 分母を 1.0 正規化)
+
+| バージョン | Log 自己採点 (Q-A〜Q-E) | 正規化 fun_score | 採点出典 |
+|---|---|---|---|
+| v001 | 20.5/25 | **0.8200** | [v001/self_judgment.md §7g](../game/log_autonomous_game/v001/self_judgment.md) |
+| v002 | 26.5/30 (Q-C 軸新設) | **0.8833** | [v002/self_judgment.md §1 末尾合計](../game/log_autonomous_game/v002/self_judgment.md) |
+| v003 | 26.5/30 (v002 値暫定継続) | 0.8833 | self_judgment 未起票 (`feedback_headless_unfit_for_unfinished_eval.md` 順守、実機判定後に確定) |
+
+**注意**: v003 fun_score は **暫定継続値**で、実機判定到達まで未確定。v002 と同値を置いた理由は v003 改修 (phase 2 内密度漸変) が Log 視点では微差扱い + completion_report §3 で「v003 が proves する 4 項目」も既存 v002 構造の延長線にあるため。本暫定値は実機判定到達時に上書き必須。
+
+### §3. Pearson 相関 r 算出結果 (n=3、参考値)
+
+| proxy | r | p_value | 備考 |
+|---|---|---|---|
+| median_clear_wave | **NaN** | — | proxy 分散ゼロ (全 1) のため数学的に計算不能 |
+| median_residual_hp_ratio | **-1.0** | (自由度 1 で算出不能) | survive ⇄ fun_score 逆相関 (良手が生き残る = 簡単 = 面白くない、論文 Slay the Spire と同方向) |
+| median_play_time_sec | **-1.0** | 〃 | play 時間 ⇄ fun_score 逆相関 (同上、長く生き残れる = 簡単) |
+| median_graze_count | **+1.0** | 〃 | graze 回数 ⇄ fun_score 正相関 (擦りが多い = 危機接触多 = 面白い) |
+
+**r = ±1.0 の数学的必然**: v002 と v003 が proxy 完全一致 + fun_score 完全一致 のため、実質 2 点線形 (n=3 = v001 1 点 + v002/v003 重複 1 点 = 独立 2 点)。n=2 では Pearson は常に ±1.0 になる (2 点を結ぶ直線が完全相関)。**論文 (Wordle n>30 r=0.624 / Slay the Spire n>30 r=0.871) と直接比較不可、信頼性なし**。
+
+### §4. 結論 — Pearson 相関第 1 回計算の真の出力 = proxy 計測の盲点発見
+
+数値結果 (r=±1.0) は数学的必然で意味なし。本サイクルの真の出力は以下 3 点:
+
+1. **v002→v003 改修を proxy が捉えられない事実認定**: 素朴良手 agent が wave 1 内死亡 (9.28s) で phase 2 (50-90s) 到達ゼロ。**v003 のような phase 2 内パラメータ漸変は本 proxy の計測限界外**。「v003 改修が体感難易度に効いたかどうか」は本 proxy では原理的に判定不能。これは v003 改修が無意味という意味ではなく、proxy 側の盲点 (=「素朴良手 agent では到達できない領域の改修」は計測されない) という発見
+2. **fun_score 代理問題の構造化**: Log 自己採点は実機判定なしのため、人間体感 fun_score とのギャップ未確認。proxy 4 指標を **真の fun_score** (人間体感ランキング) と相関するには、n≥4 (最低 Pearson 自由度 2) + 実機 fun_score 取得が必須
+3. **n=3 サンプル不足の物理確認**: v002 self_judgment.md §8 #3 で「3 サイクル分蓄積で初判定可能」と書いたが、**3 サイクル蓄積しても v002/v003 重複で実質 n=2 になりうる**ことが本計算で明らかに。「proxy 値が変動するバージョン群」を蓄積条件に追加する必要
+
+### §5. 次の一手 (C264 以降の候補)
+
+a) **強化 agent 導入で phase 2 到達**: PLAYER_SPEED 1.5 倍 or 弾予測込み move 関数で素朴良手→中級手化、phase 2 (50-90s) 観察可能化。proxy 計測対象を v003 改修対象 (phase 2 内漸変) と一致させる
+b) **phase 別 proxy 分割**: 現 4 指標を phase 0 内 / phase 1 内 / phase 2 内に分割して測ることで、改修対象 phase の解像度向上 ([Slay the Spire 論文 Act 1 限定計測と同方針])
+c) **実機判定取得経路 R4 (Pages 公開) 完遂 + Nao_u 体感 fun_score 取得**: C254 Phase 4 で `docs/` 物理化 + smoke test PASS 着地済、Pages 有効化は Nao_u 手動操作待ち (C253 §c)。push + Pages 有効化後に #shared-reads 投稿 → Nao_u/Mir/Ash の **真の fun_score** を 1-5 段階で取得 → n=5 以上の Pearson 計算で論文水準の信頼性に近づける
+d) **v004/v005 へ agent_difficulty_proxy 移植継続**: 本サイクルは v003 までで時間予算切れ、v004/v005 への移植は次サイクル C264 候補
+e) **「proxy 値が変動するバージョン群」蓄積条件の self_judgment §8 追記**: v002 self_judgment §8 #3 の「3 サイクル分蓄積」を「3 サイクル分 + proxy 値変動」に上書き
+
+### §6. 接続先
+
+- [game/log_autonomous_game/v002/self_judgment.md](../game/log_autonomous_game/v002/self_judgment.md) §4.4 / §8 #3 — v002 proxy 中央値の出典 + 「3 サイクル蓄積で初判定可能」原文 (本節で更新条件追加)
+- [game/log_autonomous_game/v003/completion_report.md](../game/log_autonomous_game/v003/completion_report.md) §3 — v003 が proves する 4 項目 (本節 §2 v003 fun_score 暫定継続の根拠)
+- [game/log_autonomous_game/v001/agent_difficulty_proxy.js](../game/log_autonomous_game/v001/agent_difficulty_proxy.js) / [v002/](../game/log_autonomous_game/v002/agent_difficulty_proxy.js) / [v003/](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) — 計測 runner 本体 (本サイクル v003 用新規移植)
+- [memory/feedback_headless_unfit_for_unfinished_eval.md](../memory/feedback_headless_unfit_for_unfinished_eval.md) T:5 — 「headless 全 PASS だけでは判定不能」原則 (本節 v003 fun_score 未確定 + n=3 信頼性なし の根拠)
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C263 Phase 4 「次フェーズの大作業」節 — 本節は完遂報告として接続
+
+---
+
 ## v006 検討メモ (2026-05-28 C257 Phase 3 起票、実装着手は v005 実機判定後)
 
 **起票根拠**: 本サイクル C257 Phase 2 §4(C) で「v006 brainstorm 開始前に game_lessons_log R-A〜R-I を 1 回 read する」運用変更を決定、Phase 3 で R 層を最初に開いてから本節を書く構造に物理化 (R 層 1mm 履行記録)。**実装 commit は v005 実機判定到来前は出さない** (R-I 順守: 「人間プレイは判定装置でなく最終確認装置」、v005 self_judgment が Nao_u/Mir/Ash 実機反応待ちで未確定の状態で v006 を進めると、改修判断の根拠が v005 推測値に依存する = 退路設計化リスク)。本節は v006 着手前ガード文書として位置づける。
