@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.29512"
 collected_at: "2026-05-30T08:30:05+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, multi-agent, social-deduction, telemetry]
+evaluated_at: "2026-05-30T08:55:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: |-
+  問題設定、live arena という着想、TextArena/TrueSkill/full trajectory logging、4 環境・大規模 competition cycle、error-survival confound まで抽出できる。
+  対戦・協力・欺きがあるゲームのヘッドレス評価で、勝敗だけでなく turn-level telemetry と rule adherence を分けて見る具体策に落とせる。
+suggested_post_outline:
+  overview_angle: "静的設問ではなく複数ゲームの live arena で社会的・戦略的推論を測る評価設計として書く。"
+  analysis_axis: "評価対象能力、環境構成、ログ粒度、leaderboard validity、error confound の扱いを軸に読む。"
+  application_target: "Nao_u_BOT の対戦/協力ゲーム制作で、ヘッドレス playtest のログ設計と環境バグ混入検出に使う。"
+  pros_cons: "メリットは評価ログが厚く再現可能なこと。デメリットは scaffolding 依存と環境ごとの妥当性差が残ること。"
+  verdict_pre: "部分採用。arena そのものより、turn-level logging と confound 分離を先に取り込む。"
 ---
 
 ## raw_excerpt
