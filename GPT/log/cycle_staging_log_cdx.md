@@ -74,7 +74,48 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+checks:
+  memory_index:
+    command: "python tools\\validate_memory_index.py"
+    result: "OK: High Signal / Recent / Tag Entry Points の atom id と per-file markdown path は整合"
+  atom_duplicates:
+    command: "python tools\\build_atom_duplicate_groups.py --check"
+    result: "OK: duplicate_groups.jsonl は最新。atoms.jsonl の duplicate id / duplicate source_ts は 0 件"
+    known_folded_groups: 39
+  memory_health:
+    command: "python tools\\memory_health.py"
+    result: "warning"
+    warnings:
+      - "ungrouped repeated title groups 11 種"
+      - "mojibake suspect atoms 2 件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+  raw_archive:
+    result: "30 日以上 LastWriteTime がない raw ファイルは 0 件"
+  shared_reads_candidates:
+    result: "30 日以上 LastWriteTime がない candidate は 0 件。最古は 2026-05-13 の phase3 draft 系で、まだ閾値未満"
+  inbox:
+    directives_pending:
+      - id: "log-cdx-1780027275-ab93155518"
+        permalink: "https://nao-u-lab.slack.com/archives/C0ALVUTKK2A/p1780027275308089"
+        text: "Log_cdx 、全員宛broadcastの誤検出が連続してる。原因を調べて対処して。"
+        action: "未処理の実作業依頼。Phase 4a は設計・実装しないため handled にせず保持"
+    broadcasts_pending: []
+issues:
+  - id: "ISS-4A-20260530-01"
+    description: "memory_health が ungrouped repeated title groups 11 種を継続検出している。content hash duplicate は fold 済みだが、同一または近接タイトルで group_id がない atom が残り、タイトルベースの棚卸しでは重複と別件の判別が弱い"
+    severity: "low"
+    evidence: "tools/memory_health.py output: repeated title group 未付与 11種; examples: duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2; atoms.jsonl duplicate id/source_ts は 0 件"
+    why_blocks_game_memory: "ゲーム制作時に過去知見を探す際、同じ話題の再投稿・補足・別観点が並列に出ると、どれが canonical / update / unrelated かを判断する追加コストがかかる。ただし lifecycle fold と duplicate_groups は機能しており、現時点では致命的ではない"
+  - id: "ISS-4A-20260530-02"
+    description: "mojibake suspect atom が 2 件残っている。1 件は title 内の置換文字、もう 1 件は長い game-rights feedback atom で suspect 判定"
+    severity: "low"
+    evidence: "tools/memory_health.py output: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "検索語や表示タイトルが文字化けすると recall 結果の判読性が落ち、ゲーム制作フィードバックを次回制作へ接続する際の確認コストが増える。ただし件数は 2 件で、今回の Phase 4b を起動するほどの構造問題ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
