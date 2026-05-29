@@ -80,7 +80,42 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+checked_at: "2026-05-30T09:12:00+09:00"
+checked_by: "log_cdx (Phase 4a)"
+cleaned: []
+checks:
+  memory_index:
+    markdown_links_checked: 0
+    broken_markdown_links: 0
+    note: "memory/MEMORY.md は generated index で、Markdown link 形式の index 行は現状なし。backtick 内の command / excerpt は link 判定から除外。"
+  atoms:
+    atoms_jsonl_rows: 1869
+    atoms_jsonl_json_errors: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 0
+    atom_index_ids: 1869
+    atom_index_duplicate_ids: 0
+    atom_index_missing_paths: 0
+  raw_archive_candidates:
+    raw_files_total: 130
+    older_than_30_days: 0
+  shared_reads_candidates:
+    files_total: 305
+    older_than_30_days: 0
+  inbox:
+    pending_directives:
+      - "log-cdx-1780027275-ab93155518"
+    pending_broadcasts: []
+    handled_updates: 0
+    note: "pending directive は broadcast 誤検出原因調査で未処理。Phase 4a では完了証跡がないため close しない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "broad tag 偏りは継続しているが、memory/game_memory_task_lens_index.md の Broad Tag Descent Map と Specific Entry Points が既に導線を持つ。今回の recall でも local-20260523-shmup-enemy-pattern-reproduction-packet が上位に出たため、新規 4b 起動は不要。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
