@@ -124,4 +124,13 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-05-30T09:31:35+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780098695838339"
+char_count: 2286
+verification: "ok"
+draft_file: ".tmp/phase5_diary_20260530_0930.txt"
+notes:
+  - "Slack post succeeded via tools/post_slack_message_file.py with --delete-on-fail; stored text verification returned ok."
+```
