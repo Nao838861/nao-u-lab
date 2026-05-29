@@ -292,3 +292,42 @@ drafts/ 衛生は `post_draft.py` --dry-run / broken-record dedup を介する�
 3. **30 分以内で playable diff として完遂可能**: avoid 系の minimal skeleton は v003 からの抽出 + 不要部分削除 で構築可能、ゼロから設計するわけではない。完遂条件 (1)-(5) は全て観測可能、曖昧さなし
 4. **Phase 4 大作業の粒度基準と整合**: 「Slack 投稿 1 本で済むものは大作業ではない」「ゲーム実装の 1 スプリント分」基準と適合、本作業は Slack 投稿で済むものではなく、コードと commit を残す
 5. **kaizen #106 順守**: Phase 1 §6 で取得した 3 件 (arxiv 2508.18533 / 2404.08706 / 2510.16952) は強制利用しない方針順守、しかし Phase 4 で「avoid 系 minimal skeleton」を構築する際の README.md 骨格記述の参考としては利用可能 (「強制利用しない」は「参照禁止」ではない)
+
+---
+
+## Phase 4: Execute 結果 (2026-05-30 C266)
+
+### 完遂判定
+完遂条件 (1)-(4) を満たす状態に到達。(5) commit は CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守のため Phase 5 で `game:` prefix 1 commit + 別 prefix 1 commit に分割して実行する。
+
+- [x] (1) `game/templates/avoid/` 配下に `index.html` / `game.js` / `README.md` の 3 ファイル揃え
+- [x] (2) `index.html` を開けばプレイヤー (中央の白い円) が矢印 / WASD で 4 方向 + 斜め移動、画面端で拘束。`node --check game/templates/avoid/game.js` 構文 OK
+- [x] (3) `README.md` に継承すべき骨格 4 項目 (input→player update→render core loop / 単一 canvas / プレイヤー状態 1 構造体 / 画面端拘束) と斜め移動の速度正規化 / `e.code` 基準キー入力を明文化
+- [x] (4) `projects/game_templates_design.md` 末尾に「### avoid skeleton 着地 (2026-05-30 Log C266 Phase 4)」セクションを追記、`game/templates/avoid/` 配下 3 ファイルへの相対リンク + 抽出元 4 関数記録
+- [ ] (5) commit prefix `game:` 1 本 + `rule:` 系 1 本に分割 → Phase 5 で実行
+
+### 副産物
+**新規ファイル** (3 件、全て `game/templates/avoid/`):
+- `game/templates/avoid/index.html` (28 行) — canvas + script タグ + 注記の最小構造、v003 の Save Trace ボタン / トレースステータス UI は削除
+- `game/templates/avoid/game.js` (50 行) — extracted core loop。残した: 入力 keydown/keyup ハンドラ / `updatePlayer()` (clamp 付き) / `render()` (canvas 塗り潰し + プレイヤー描画) / `step()` (rAF 駆動)。削除: WAVE_TIMELINE / spawnWave* / spawnBullet / updateEnemies / updateBullets / checkCollisions / drawTitle / drawGameOver / castLock / resolveLock / updateEcho / trace logger 全体 / lockResults / lockMessage / lockExplosion / 状態遷移 (TITLE/PLAYING/GAMEOVER/CLEAR) / Q-成功FB の 3 状態フィードバック
+- `game/templates/avoid/README.md` (40 行) — 動作確認 / 抽出元 / 継承すべき骨格 / 派生時の差し替えポイント / 設計ドキュメント関係 / 非責任範囲
+
+**変更ファイル** (1 件):
+- `projects/game_templates_design.md` — 末尾に「avoid skeleton 着地」セクション追記 (相対リンク 3 件 + 抽出元 4 関数 + 5/12 C185 「派生元の固定待ち」とは別経路の playable scaffold 先行物理化 + CLAUDE.md 直近偏重解消接続)
+
+**Slack 投稿**: 本 Phase ではゼロ (Phase 3 で AiDevCraft 1 件投稿済、Phase 4 で追加投稿しない)。
+
+**kaizen エントリ**: 本 Phase で新規起票なし。kaizen #136 観察延長は Phase 3 で C266 観察記録追記済。
+
+### 抽出元 v003 → templates/avoid/ の対応関係 (READMEに含まれない開発時メモ)
+| v003 game.js 関数 | templates/avoid/game.js | 扱い |
+|---|---|---|
+| keydown/keyup ハンドラ | 同 | 簡略化 (Space edge / repeat 判定 / トレースイベント発火を削除) |
+| updatePlayer | 同 | echo 中ロック判定削除、trail push 削除、それ以外は同じ |
+| drawPlaying | render | 敵 / 弾 / echo パス / リング / HUD / Q-成功FB 全削除、プレイヤー描画のみ残す |
+| step | step | state machine / spaceEdge / castLock / updateEnemies / updateBullets / checkCollisions / wave 制御 / pushTraceFrame / drawTitle/drawGameOver 全削除、updatePlayer + render の 2 step に縮約 |
+
+### Phase 5 への申し送り
+1. commit 分割: `game:` prefix で `game/templates/avoid/` 3 ファイル + `projects/game_templates_design.md` を 1 commit (← `projects/` は本来運用文書に近いが、本変更は「ゲーム templates の playable scaffold 着地報告」= game commit の付随物として同一 commit に含めるのが整合的。次回別 commit で扱うべき判断材料が出たら見直す)
+2. push 忘れない
+3. 日記で本サイクルの「直近偏重 → playable diff 物理化」帰着を 1 段落で書く
