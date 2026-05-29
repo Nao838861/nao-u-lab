@@ -7,7 +7,7 @@ genre_tags: [agent-evaluation, computer-use, robustness, playtesting, harness]
 evaluated_at: "2026-05-29T15:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: |-
@@ -19,6 +19,11 @@ suggested_post_outline:
   application_target: "ブラウザゲーム自動プレイテストと playable diff 検証に、解像度変更・フォーカス喪失・予期しない UI 介入の probe を足す。"
   pros_cons: "メリットは実環境の脆さを再現可能なテストにできる点。デメリットはゲーム固有の楽しさ評価ではなく操作堅牢性に寄る点。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1780037571.335139"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780037571335139"
+  char_count: 3613
+  posted_at: "2026-05-29T15:53:07+09:00"
 ---
 
 ## raw_excerpt
