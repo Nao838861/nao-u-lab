@@ -3,7 +3,10 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- 2026-05-30T08:30+09:00: pending 確認。`slack_directives.jsonl` に `log-cdx-1780027275-ab93155518` (broadcast 誤検出の原因調査) が pending。`slack_broadcasts.jsonl` の pending は 0 件。Phase 1 では対応せず後フェーズ向けに記録のみ。
+- 追加 candidate: `memory/shared_reads_candidates/20260530_mindgames_multi_agent_llm_arena.md` — MINDGAMES: multi-agent LLM arena、turn-level logging、error confound を含む評価環境。
+- 追加 candidate: `memory/shared_reads_candidates/20260530_generalist_game_players_multiverse.md` — generalist game player を Dataset / Model / Harness / Benchmark の 4 層で整理するサーベイ。
+- 追加 candidate: `memory/shared_reads_candidates/20260530_lmgame_bench_modular_game_harness.md` — LMGame-Bench: perception / memory / reasoning modules を切り替える game-playing benchmark。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
