@@ -28,12 +28,20 @@ DIRECTIVES_PATH = MEMORY_DIR / "slack_directives.jsonl"
 BROADCASTS_PATH = MEMORY_DIR / "slack_broadcasts.jsonl"
 RAW_PATH = MEMORY_DIR / "raw" / "slack_api" / "log_cdx_directives.jsonl"
 RAW_BROADCASTS_PATH = MEMORY_DIR / "raw" / "slack_api" / "broadcasts.jsonl"
+# Git-untracked append-only ledger of acked ids. state.json + slack_*.jsonl
+# are tracked in git and can be reverted by auto_sync pulls, which previously
+# caused old broadcasts to be re-detected and re-acked. This ledger survives
+# any git reset/pull because memory/.local/ is gitignored.
+ACK_LEDGER_PATH = MEMORY_DIR / ".local" / "acked_ids.txt"
 
 NAO_U_USER_ID = "U0ALSUK8P9B"
 ADDRESS_RE = re.compile(r"(?i)(?:^|[\s\[@:>])log[_\-\s]?cdx(?:$|[\s\].,:：、。])")
 BROADCAST_RE = re.compile(
     r"(?:みんな|皆さん|全員|AIたち|AI達|エージェント(?:たち|達)?|諸君|君たち|君ら)"
 )
+# Anything older than this when first seen is treated as already-handled even
+# if absent from state/jsonl — protects against state reverts re-acking old msgs.
+STALE_SOURCE_SECONDS = 6 * 3600
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -80,6 +88,22 @@ def append_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("a", encoding="utf-8", newline="\n") as f:
         for row in rows:
             f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def load_ack_ledger() -> set[str]:
+    if not ACK_LEDGER_PATH.exists():
+        return set()
+    with ACK_LEDGER_PATH.open("r", encoding="utf-8") as f:
+        return {line.strip() for line in f if line.strip()}
+
+
+def append_ack_ledger(ids: list[str]) -> None:
+    if not ids:
+        return
+    ACK_LEDGER_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with ACK_LEDGER_PATH.open("a", encoding="utf-8", newline="\n") as f:
+        for ack_id in ids:
+            f.write(ack_id + "\n")
 
 
 def directive_id(channel_id: str, ts: str, text: str) -> str:
@@ -271,8 +295,10 @@ def broadcast_ack_text(row: dict[str, Any]) -> str:
 
 
 def scan(args: argparse.Namespace, state: dict[str, Any]) -> dict[str, Any]:
-    existing_ids = {str(row.get("id")) for row in read_jsonl(DIRECTIVES_PATH)}
-    existing_broadcast_ids = {str(row.get("id")) for row in read_jsonl(BROADCASTS_PATH)}
+    ledger = load_ack_ledger()
+    existing_ids = {str(row.get("id")) for row in read_jsonl(DIRECTIVES_PATH)} | ledger
+    existing_broadcast_ids = {str(row.get("id")) for row in read_jsonl(BROADCASTS_PATH)} | ledger
+    now_epoch = time.time()
     channels_state = state.setdefault("channels", {})
     channels = list_visible_channels()
     visible = 0
@@ -307,15 +333,26 @@ def scan(args: argparse.Namespace, state: dict[str, Any]) -> dict[str, Any]:
                 continue
             if msg.get("user") != NAO_U_USER_ID:
                 continue
+            try:
+                msg_ts = float(msg.get("ts", "0") or 0)
+            except (TypeError, ValueError):
+                msg_ts = 0.0
+            stale = msg_ts > 0 and (now_epoch - msg_ts) > STALE_SOURCE_SECONDS
             if is_addressed_to_log_cdx(text):
                 row = normalize_directive(channel, msg)
                 if row["id"] in existing_ids:
+                    continue
+                if stale:
+                    existing_ids.add(row["id"])
                     continue
                 found.append(row)
                 existing_ids.add(row["id"])
             elif is_broadcast(text):
                 row = normalize_broadcast(channel, msg)
                 if row["id"] in existing_broadcast_ids:
+                    continue
+                if stale:
+                    existing_broadcast_ids.add(row["id"])
                     continue
                 found_broadcasts.append(row)
                 existing_broadcast_ids.add(row["id"])
@@ -352,7 +389,8 @@ def main() -> int:
         result["broadcasts"] = []
         result["initialized"] = True
 
-    acked_ids = set(str(x) for x in state.get("acked_ids", []))
+    acked_ids = set(str(x) for x in state.get("acked_ids", [])) | load_ack_ledger()
+    newly_acked: list[str] = []
     ack_results: list[dict[str, Any]] = []
     if directives and not args.dry_run:
         append_jsonl(DIRECTIVES_PATH, directives)
@@ -365,6 +403,7 @@ def main() -> int:
                 ack_results.append({"id": row["id"], "ok": post_result.get("ok"), "result": post_result})
                 if post_result.get("ok"):
                     acked_ids.add(row["id"])
+                    newly_acked.append(row["id"])
     if broadcasts and not args.dry_run:
         append_jsonl(BROADCASTS_PATH, broadcasts)
         append_jsonl(RAW_BROADCASTS_PATH, broadcasts)
@@ -376,8 +415,10 @@ def main() -> int:
                 ack_results.append({"id": row["id"], "ok": post_result.get("ok"), "result": post_result})
                 if post_result.get("ok"):
                     acked_ids.add(row["id"])
+                    newly_acked.append(row["id"])
 
     if not args.dry_run:
+        append_ack_ledger(newly_acked)
         for channel_id, max_ts in result["max_ts_by_channel"].items():
             state.setdefault("channels", {})[channel_id] = {
                 "last_ts": max_ts,
