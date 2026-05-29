@@ -68,6 +68,23 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-30T07:32:00+09:00 log_cdx Phase 4a 記憶階層整理 + 問題抽出
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を検査: 0 件。broken link なし。"
+  - "memory/atoms.jsonl を検査: 1865 rows / JSON parse error 0 / duplicate id 0。正規化本文の重複 group は 54 件あるが、既存の lifecycle/content fold 対象として扱い、今回は削除なし。"
+  - "memory/raw/ の 30 日超未更新ファイルを検査: 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ の 30 日超未更新 candidate を検査: 0 件。降格・保持判断対象なし。"
+  - "inbox lifecycle を確認: slack_broadcasts pending 0 件、slack_directives pending 1 件。未処理 directive は broadcast 誤検出調査依頼のため、Phase 4a では handled に閉じず維持。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "pending directive: log-cdx-1780027275-ab93155518 / https://nao-u-lab.slack.com/archives/C0ALVUTKK2A/p1780027275308089 / text='Log_cdx 、全員宛broadcastの誤検出が連続してる。原因を調べて対処して。'"
+  - "この directive は実装・調査 phase の対象であり、記憶階層そのものの 4b 設計 issue としては扱わない。"
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
