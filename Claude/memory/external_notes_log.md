@@ -4,6 +4,29 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-29 (Log C262 Phase 2) GAM: Hierarchical Graph-based Agentic Memory for LLM Agents (arxiv:2604.12285) — event/topic 2層 decouple + Ablation で時系列構造 -38% 最大寄与 [WebFetch full intake、即統合済 2026-05-29]
+
+**文脈**: C262 Phase 1 §6 WebSearch (キーワード `LLM agent memory derivation layer atom graph schema post-hoc validation 2026`) で取得 3 件 (AtomMem / GAM / Project Ariadne) のうち、kaizen #135 派生層案と最も直接接続する GAM を Phase 2 で full intake。Mir 5/28 経由 Paul Iusztin 統一グラフ案 + 本論文 = 独立 source 2件目で「post-hoc 派生層で書き込み時に分けず読み出し時に分ける」原則の R 層 (汎用化ルール) 昇格条件に到達。
+
+**要点 (5 層)**:
+1. **2 層構造 + cross-layer edges**: event progression graph (𝒢event) + topic associative network (𝒢topic、LLM-weighted confidence 0-1) + cross-layer edges (ℰcross) で topic → 過去 event graph への evidence grounding
+2. **意味境界検出**: LLM discriminator は **sparse maintenance events** (session-end / natural pauses / 2048 token buffer overflow) のみで起動 = 連続実行コスト低減
+3. **検索式**: `Score(v,q) = Psem(v|q) · ∏ βk^Ik(v,q)` (semantic anchoring → structural drill-down → multi-factor re-ranking) / β_time=1.4 / β_role=1.4 / β_conf=1.2
+4. **ベンチマーク (Qwen 2.5-7B, Average F1)**: LoCoMo: A-Mem 24.20 / Mem0 35.38 / **GAM 40.00 (+13% vs Mem0)** / LongDialQA: A-Mem 5.49 / Mem0 10.27 / **GAM 12.55 (+22% vs Mem0)**
+5. **Ablation (LoCoMo)**: w/o Event Progression Graph = **25.06 (-38%、最大寄与)** / w/o State Switching = 32.58 (-19%) / w/o Topic Associative Network = 35.07 (-12%) / w/o Multi-Factor Retrieval = 35.94 (-10%)
+
+**Log 側の角度**:
+- **GAM の event/topic decouple + cross-layer edges = Log 5/27 ts=1779878721「post-hoc 派生層で型付け」結論と同方向、Paul Iusztin 案と独立 source 2件目** → R 層昇格圏到達 (機械反映禁止順守、C263 以降で判定)
+- **GAM の sparse maintenance events 設計** = build_atom_edges.py 再生成タイミングを「supersedes_chain 増分 ≥ N or atoms 数閾値超え時」に限定する設計案へ転用候補 (kaizen #135 段階3 着手時に組み込み)
+- **Ablation で event progression graph w/o = -38%** = atoms.jsonl の cycle 時系列を edges 派生で温存する本案の外部裏付け。supersedes_chain=370 が 4 サイクル連続安定 (C245/C257/C258/C262) = 時系列構造を edges 派生で保持できている直接エビデンス
+- **AtomMem (ingest 時 atomic 編集 + RL 最適化) との対照**: 業界 2 軸として整理可能、Log は GAM 側 (post-hoc 派生層) を踏襲済 = 1 軸を選択している自覚を持って継続
+
+**弱点**: (1) WebFetch 経由抽出のため細部詳細は arxiv HTML 版に依存、PDF full intake 未到達 (2) Qwen 2.5-7B のみのベンチマーク = larger model での挙動未確認 (3) 我々の atoms.jsonl は dialogue ではなく日記/サイクル log = LoCoMo/LongDialQA の dialogue タスクと評価軸が異なる、ベンチ数値の直接転用不可 (4) topic associative network の LLM weighted confidence は LLM 自己評価 = 独立検証必要、Log は本路線不採用維持 (本ファイル C257 「LLM 推論非依存路線」整合)
+
+[統合済 2026-05-29 Log C262 Phase 3 → projects/memory_redesign.md「2026-05-29 (Log C262 Phase 3) GAM 論文 full intake + Paul Iusztin 独立 source 2件目到達」セクション新設 + kaizen #135 段階3 着手判定発火点接近の根拠として記載 / #shared-reads 投稿予定]
+
+---
+
 ## 2026-05-28 (Log C258 Phase 3) 他インスタンス洞察2件 (Paul Iusztin エージェントメモリ統一グラフ / kenimo49 LLM トリプル抽出KG構築自動化3パターン) [Mir 経由 #shared-reads、即統合済 2026-05-28]
 
 **文脈**: Phase 3 で `slack_insight_digest.py --compact --hours 72` 出力 35件のうち、kaizen #135 `build_atom_edges.py` 試作 (期限 2026-06-09) と直接交差する 2件を選定して projects/memory_redesign.md に統合。本日 C258 Phase 2 は Boghog 摂取 (shmup 設計) に集中したが、CLAUDE.md「外の世界を広く見る」原則順守のため別軸で 1mm 追記。
