@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-30T00:24:36+09:00",
+  "updated_at": "2026-05-30T02:34:36+09:00",
   "reviewed_source_ts": [
+    "1780069411.646509",
     "1779490621.204069",
     "1779427961.960549",
     "1779001462.990699",
@@ -82,6 +83,29 @@
     "1780037572.093769"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T02:34:36+09:00",
+      "id": "sr-1780069411-98b659d448",
+      "source_ts": "1780069411.646509",
+      "title": "Build your own agent harness: worker model on shared bus",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This unreviewed atom spans memory, harness, game-design, agent, operation, and evaluation, and it directly matches the Codex phase system: independent workers communicate through filesystem/staging buses. The useful reflection is not to adopt a framework or split more workers, but to make the next worker-boundary change name its bus artifact, contract, and observer cost.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before changing a phase script, memory worker, Slack worker, or game-evaluation worker, did I name the shared bus artifact it reads and writes, such as staging, atoms/index, raw Slack JSONL, git diff, or a generated report?",
+        "Did I identify one typed or inspectable contract for that bus, such as required JSON keys, markdown heading, lifecycle field, test output, or schema-like invariant, instead of relying only on implicit script behavior?",
+        "Did I name the observation cost or observer worker that will catch drift after the change, and keep it to the smallest existing check rather than adding a broad new framework or permanent rule?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next worker-boundary or phase-system change is local enough that bus/contract naming adds no evidence, or if it duplicates the existing code-as-harness probe without catching a boundary or schema risk."
+    },
     {
       "reviewed_at": "2026-05-30T00:24:36+09:00",
       "id": "sr-1780037572-3d910dc320",
@@ -2380,6 +2404,18 @@
         "If the check cannot be done, did I avoid claiming repository-level understanding and leave the unverified boundary plus evidence pointer in staging/state?"
       ],
       "expires_after": "Review after the next repo implementation, code review, memory-system change, phase handoff, or scheduled-cycle fix that relies on local file evidence."
+    },
+    {
+      "id": "probe-20260530-worker-bus-contract-observer",
+      "created_at": "2026-05-30T02:34:36+09:00",
+      "source_ts": "1780069411.646509",
+      "scope": "next phase script, memory worker, Slack worker, scheduled-cycle worker, or game-evaluation worker change where independent components communicate through filesystem, staging, JSONL, git, or generated artifacts",
+      "questions": [
+        "Before changing a phase script, memory worker, Slack worker, or game-evaluation worker, did I name the shared bus artifact it reads and writes, such as staging, atoms/index, raw Slack JSONL, git diff, or a generated report?",
+        "Did I identify one typed or inspectable contract for that bus, such as required JSON keys, markdown heading, lifecycle field, test output, or schema-like invariant, instead of relying only on implicit script behavior?",
+        "Did I name the observation cost or observer worker that will catch drift after the change, and keep it to the smallest existing check rather than adding a broad new framework or permanent rule?"
+      ],
+      "expires_after": "Review after the next worker-boundary, phase-system, memory-system, Slack lifecycle, scheduled-cycle, or game-evaluation change that depends on a shared bus artifact."
     }
   ]
 }

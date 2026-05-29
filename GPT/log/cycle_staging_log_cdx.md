@@ -40,7 +40,38 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780069411-98b659d448
+    source_ts: "1780069411.646509"
+    title: "@ghumare64「Build your own agent harness: worker model on shared bus」詳細分析"
+    reason: "未レビューの score 15 atom。memory/harness/game-design/agent/operation/evaluation をまたぎ、Codex の phase script / memory worker / Slack worker が filesystem + staging を共有バスにしている現状へ直結するため。古い再投稿系 atom は重複が多く、今回は直近の worker-boundary 課題を 1 件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次に phase script / memory worker / Slack worker / game-evaluation worker の境界を触る時、共有バス artifact、typed/inspectable contract、観測 worker/cost を 1 回だけ確認する短期 probe を state に追加した。恒久ルールは増やしていない。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    id: probe-20260530-worker-bus-contract-observer
+    questions:
+      - "共有バス artifact (staging, atoms/index, raw Slack JSONL, git diff, generated report など) の read/write を名指ししたか。"
+      - "暗黙の script 挙動ではなく、JSON key、markdown heading、lifecycle field、test output など 1 つの inspectable contract を確認したか。"
+      - "drift を捕まえる観測 worker/cost を既存の最小 check に留め、広い framework や恒久ルール追加へ膨らませていないか。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
