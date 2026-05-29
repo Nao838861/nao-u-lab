@@ -21,6 +21,43 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-29 (Log C263 Phase 2) — TagRAG 論文 full intake → 階層タグ chain 派生方針確立 (T2 候補軸の人手側設計)
+
+C263 Phase 1 §6 で取得した 3 件 (TagRAG / HG-RAG / GraphRAG 2026 Buyer's Guide) のうち、kaizen #135 段階3 T2 候補軸「tag_share edge → 階層タグ chain hop」と最も直接接続する **TagRAG: Tag-guided Hierarchical Knowledge Graph RAG (arxiv:2601.05254)** を Phase 2 で WebFetch full intake。Nao_u 指示「詳細な記述と分析を。将来のアイデアの種につなげる大事な外部入力。1フェーズ丸ごと使ってもいいくらい重要」に従い、本 Phase の中心作業として実施。
+
+**TagRAG の要点 (5 層整理)**:
+
+1. **階層タグ KG 自動構築**: LLM で chunk 単位に階層タグ (broad → narrow) を自動生成、DAG として mount、broad タグ同士・narrow タグ→ broad タグの edges 派生
+2. **tag-guided retrieval**: query→tag mapping → tag chain hop で関連 chunk を選別、tag overlap 数 + hop 距離で score 化（**スコア式は論文に未開示**）
+3. **ベンチマーク**: 78.36% winning rate vs baseline、構築効率 14.6× vs GraphRAG (主張)、retrieval 効率 1.9× vs GraphRAG (主張)
+4. **再現性検証**: 著者再実装の数値は **4.78× 構築効率** に留まる、14.6× は cherry-picked。limitations 節が論文に存在しない = academic rigor 弱め
+5. **ノイズ抑制機構なし**: LLM 自動タグ生成 → 壊れたタグ問題が原理的に発生 (Zenn KG 記事 C262 引用の警告と同型)
+
+**Log 側の角度 (kaizen #135 T2 候補軸接続)**:
+
+- **採用検討: 人手 frontmatter 階層 tag → chain edge 派生方向**。atom 内 flat tag list を `tag_hierarchy: memory > knowledge_graph > kaizen135` のような chain 表現に拡張、chain hop edge を派生。TagRAG の自動 chain 生成は不採用 (LLM 推論経路 = C257 確定の非依存路線と衝突)、**人手 frontmatter から派生する方向**は C262 GAM の post-hoc 派生層原則と整合
+- **検索スコア式が論文未開示** = T2 で recall_atom.py に階層 tag hop 実装する際は独自設計が必須 (tag overlap 数 + hop 距離 + atom 時系列の組み合わせ)。GAM のスコア式 `Score(v,q) = Psem(v|q) · ∏ βk^Ik(v,q)` (β_time=1.4 / β_role=1.4 / β_conf=1.2) を tag chain 版にアダプト = β_tag_overlap / β_hop_distance / β_time の 3 因子設計が初手候補
+- **C262 で確立した 3 段ノイズ抑制路線の優位性が再確認**: TagRAG はノイズ抑制機構なし、LLM 推論で構築 = 壊れたタグ問題 (Zenn KG 記事と同型) を原理的に抱える。Log の 3 段 (人手 cross-link / 構造化マークアップ抽出 / recall 側 gate) は LLM 推論非依存で同問題を回避
+- **C262 GAM + 本サイクル TagRAG で独立 source 2 件目到達** (階層タグ系の効用)。ただし「人手 frontmatter 派生方針」自体の独立到達はまだ Log 単独 = R 層昇格は次サイクル以降に持ち越し、C264-C265 で T1 ベンチ集合安定性再確認後に T2 起票判定
+
+**論文の弱点 5 軸**:
+
+- 検索スコア式の具体形が論文に未開示
+- 14.6× 構築効率主張の再現性低 (実数値 4.78×)
+- limitations 節なし
+- ノイズ抑制機構の議論なし (LLM 自動タグの誤生成への対策不明)
+- ablation の組み合わせカバレッジ低 (タグ階層レベル 1/2/3 の単独効果分離なし)
+
+**接続先**:
+- 本ファイル C262 GAM 節 — TagRAG と同方向 (階層タグ系) の独立 source 2 件目、ただし TagRAG は LLM 推論経路で C257 路線と衝突 → 採用は人手 frontmatter 派生方向のみ
+- 本ファイル C258「3 段ノイズ抑制路線」節 — TagRAG のノイズ抑制機構なし問題で再裏付け
+- 本ファイル C257「LLM 推論非依存路線」節 — TagRAG 自動 chain 生成不採用の根拠
+- [kaizen #135 段階3 T2 候補軸](../memory/kaizen_tracker.md) — 本節の「人手 frontmatter 階層 tag chain」設計案が起票元
+- [external_notes_log.md](../memory/external_notes_log.md) — TagRAG エントリ (Phase 2 で追加済、[統合済 2026-05-29 Log C263 Phase 2] マーカー)
+- [drafts/shared_reads_tagrag_c263.txt](../drafts/shared_reads_tagrag_c263.txt) — #shared-reads 投稿原稿 (2026-05-29 18:35 投稿済、ts=1780047750.140829 + 1780047750.168409)
+
+**自己批判**: 本節は TagRAG HTML 版 (arxiv v1) を WebFetch 経由で読了、検索スコア式の具体形は WebFetch 抽出範囲内では未取得 = 論文本体への参照経路を保ったままで独自設計の初手 (β_tag_overlap / β_hop_distance / β_time) を立てている。T2 実装着手時に PDF full intake で再確認、スコア式が判明していれば設計差分を取り込む。14.6× 構築効率の再現性低問題は別ソース (Medium @tongbing 2026 Buyer's Guide 等) で再検証可能だが本サイクルでは未実施。
+
 ### 2026-05-29 (Log C262 Phase 3) — GAM 論文 full intake + Paul Iusztin 独立 source 2件目到達 → 派生層原則の R 層昇格圏
 
 C262 Phase 2 で **GAM: Hierarchical Graph-based Agentic Memory for LLM Agents (arxiv:2604.12285)** を WebFetch で full intake。Phase 1 §6 外部検索で取得した 3 件 (AtomMem / GAM / Project Ariadne) のうち GAM を選んだ理由 = (a) Mir 5/28 経由 Paul Iusztin 統一グラフ案と方向一致しつつ独立 source、(b) 派生層 / Ontology vs Semantic の議論 (本ファイル C243 / C245 / C254 / C257 / C258 系列) と直接接続、(c) ablation 数値根拠あり = 自システム設計判定の外部裏付け候補。

@@ -4,6 +4,30 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-29 (Log C263 Phase 2) TagRAG: Tag-guided Hierarchical Knowledge Graph RAG (arxiv:2601.05254) — domain tag DAG + LLM chain mount で勝率 95.41% / 構築 4.78× 高速 [WebFetch full intake、Phase 3 統合予定]
+
+**文脈**: C263 Phase 1 §6 WebSearch (キーワード `knowledge graph edges tag overlap shared tags retrieval recall augmentation 2026`) で取得 3 件 (TagRAG / HG-RAG / GraphRAG 2026 Buyer's Guide) のうち、kaizen #135 段階3 T2 候補軸「tag_share edge → 階層タグ chain hop 拡張」と最も直接接続する TagRAG を Phase 2 で full intake。C262 で T1 拡張 (tag_share edge 派生) が recall@10 = 40% (T0 0/5 → 2/5) に着地、本 intake は T2 着手判定 (T2 設計を起こすか / 観察延長か) の根拠材料。
+
+**要点 (5 層)**:
+1. **階層タグ KG 構築 (LLM + DAG mount)**: LLM が doc chunk から domain-specific keyword と説明を抽出 → predefined root domain tag に対して LLM が多層チェーンを生成 → Algorithm 1 で既存 DAG に新チェーンを「親ノード位置に mount」して段階統合。cyclic dependency は DAG 構造で回避、redundant association は排除規則あり。**人手 schema 駆動ではなく LLM 自動生成**、Log 既存路線 (人手 frontmatter tag) と方向逆
+2. **Tag-guided retrieval**: cosine similarity で top-k=3 関連 domain tag を引き、検索後に階層チェーン統合で上位レベル知識を追加。**明示的検索スコア式は論文に記載なし** (semantic + tag overlap の重み式は未開示)
+3. **ベンチマーク (UltraDomain, Qwen3-4B 総合勝率)**: Agriculture/CS/Legal/Mix の 4 dataset で TagRAG vs ベースライン各社、平均勝率 95.41% (vs NaiveRAG/GraphRAG/LightRAG/MiniRAG)。**Recall/Accuracy 等の学術指標は未報告**、勝率のみ
+4. **構築効率 (Mix dataset 増分構築)**: GraphRAG 30.47h vs TagRAG 6.37h = **4.78× 高速** (論文冒頭主張の 14.6× は完全再構築 or 別計算条件と推測、論文に 14.6× の計算過程明記なし)。1.9× retrieval 効率も同様、内訳明記なし
+5. **ノイズ抑制機構 = 未実装**: 誤 tag-edge / 表記揺れ / ゴーストノードへの明示対策は論文に記載なし。DAG cyclic 回避と redundant association 排除のみ。**limitations 節も存在せず、結論は成果のみ列挙**
+
+**Log 側の角度 (kaizen #135 T2 接続)**:
+- **TagRAG の階層タグ chain = 我々の階層タグ chain T2 候補軸と同方向、ただし構築方針は逆 (TagRAG = LLM 自動 / Log = 人手 frontmatter)**: 本路線で recall@10 が上がる根拠は得られるが、我々の C257 確定路線「人手 cross-link + 構造化マークアップ抽出 + recall 側 gate」と直接接続できない。**T2 設計を「LLM 自動 chain 生成」方向で起こすのではなく、「人手 frontmatter の階層 tag → chain edge 派生」方向で起こす**べき。具体: atom 内 `tags: [memory, kaizen135, atom_graph]` のような flat list を、`tag_hierarchy: memory > knowledge_graph > kaizen135` のような chain 表現に拡張し、chain hop edge を派生する
+- **TagRAG の検索スコア式が論文に未開示 = 致命的弱点、踏襲不可**: 我々が kaizen #135 段階3 で recall_atom.py に階層 tag hop を実装する時は、独自設計せざるを得ない (TagRAG は参考にならず、内部 cosine top-k=3 で素朴に拾うだけと推測)
+- **ノイズ抑制機構なし = 我々の C257 確定 3 段路線 (人手 + マークアップ抽出 + recall 側 gate) が本論文より優位の領域**: TagRAG は LLM 自動生成のため誤 chain edge が混入しても抑制機構がない。我々の human-curated tag hierarchy + chain edge 派生型では、人手段階でフィルタが効く + recall 側 type gate で chain edge 型を選択的 exclude 可能 = ノイズ堅牢性で本論文を超える設計が射程内
+- **構築効率 4.78× (vs GraphRAG)** = 我々の `build_atom_edges.py` 試算 (現 atoms=1253, 5月分のみ) でも参考値、ただし我々は dialogue ではなく日記/サイクル log = ベンチ転用不可
+- **ベンチ整合性**: TagRAG は dialogue/QA タスク (UltraDomain) で評価、我々の atoms.jsonl は日記/作業 log = 評価軸が異なる。recall@10 = 40% (T1 着地) を T2 で 60% に上げる方が、本論文の 95.41% 勝率を真似るより直接的な目標
+
+**弱点**: (1) WebFetch HTML 抽出のため数式・表本文は二次解釈、PDF 直読み未到達 (2) 論文の 14.6× 構築効率主張の根拠不明、4.78× が実数値 = 主張インフレ気味で信頼性に黄信号 (3) ノイズ抑制機構 / limitations 節欠落 = academic rigor 弱い (4) recall/accuracy ではなく「勝率」のみ報告 = 評価軸が比較困難 (5) UltraDomain は dialogue/QA 寄り、我々の日記/作業 log タスクと直接比較不可
+
+[統合済 2026-05-29 Log C263 Phase 3] (a) #shared-reads 投稿完了 (ts=1780047750.140829 + 1780047750.168409、2-msg split、Slack 自動分割で順序保持) (b) projects/memory_redesign.md に「2026-05-29 (Log C263 Phase 2) TagRAG 論文 full intake → 階層タグ chain 派生方針確立 (T2 候補軸の人手側設計)」節新設 (c) kaizen #135 検証結果に C263 観察 (T2 候補軸の外部裏付け確立 / β_tag_overlap/β_hop_distance/β_time 3 因子設計初手候補) を追記 / R 層昇格 (人手 frontmatter 派生方向の同方向独立 source) は Log 単独到達のため C264-C265 で T1 ベンチ集合安定性再確認後に判定発火点更新
+
+---
+
 ## 2026-05-29 (Log C262 Phase 2) GAM: Hierarchical Graph-based Agentic Memory for LLM Agents (arxiv:2604.12285) — event/topic 2層 decouple + Ablation で時系列構造 -38% 最大寄与 [WebFetch full intake、即統合済 2026-05-29]
 
 **文脈**: C262 Phase 1 §6 WebSearch (キーワード `LLM agent memory derivation layer atom graph schema post-hoc validation 2026`) で取得 3 件 (AtomMem / GAM / Project Ariadne) のうち、kaizen #135 派生層案と最も直接接続する GAM を Phase 2 で full intake。Mir 5/28 経由 Paul Iusztin 統一グラフ案 + 本論文 = 独立 source 2件目で「post-hoc 派生層で書き込み時に分けず読み出し時に分ける」原則の R 層 (汎用化ルール) 昇格条件に到達。
