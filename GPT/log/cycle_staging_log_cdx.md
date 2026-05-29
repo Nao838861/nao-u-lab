@@ -69,7 +69,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-30T04:58:00+09:00 log_cdx Phase 4a
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: links 0 / broken 0。現行 MEMORY は atom id と tag entry 중심の索引で、実ファイルリンク切れはなし。"
+  - "memory/atoms.jsonl を確認: records 1861 / JSON parse errors 0 / duplicate ids 0 / duplicate content hashes 0。機械的な重複削除対象なし。"
+  - "memory/raw/ と memory/shared_reads_candidates/ の 30 日超未更新ファイルを確認: raw 0 / candidates 0。archive・fail 降格対象なし。"
+  - "Slack inbox を確認: directives pending 1 (`log-cdx-1780027275-ab93155518`, broadcast 誤検出調査) / broadcasts pending 0。完了証跡がないため handled にはしない。"
+issues:
+  - id: ISS-4A-20260530-001
+    description: "game-design / game-rights 系 atom 1231 件のうち 274 件に related_atoms・links・references・source_refs の明示参照がない。現行の `game_memory_task_lens_index.md` で高価値導線は補われているが、atom 単体から prototype / lesson / evidence へ戻る接続は薄いものが残る。"
+    severity: low
+    evidence: "memory/atoms.jsonl 集計: game_related=1231, game_missing_explicit_refs=274; memory/game_memory_task_lens_index.md は 2026-05-28 更新で broad tag descent / feedback bridge / specific entry points を保持。"
+    why_blocks_game_memory: "次のゲーム制作で broad tag からは lens に降りられるが、個別 atom を直接引いた時に制作物・評価証跡・教師データへ戻れないものが残り、過去の具体例を再利用する導線が弱くなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "ISS-4A-20260530-001 は既存 lens が主要経路をカバーしており、今回ただちに Phase 4b を起動するほどではない。次に具体的な制作タスクで recall 落ちが再現した場合に priority 化する。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
