@@ -46,7 +46,35 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780037572-3d910dc320
+    source_ts: "1780037572.093769"
+    title: "RepoMirage: Probing Repository Context Reasoning in Code Agents with Perturbations"
+    reason: "未レビューで memory/harness/game-design/agent/operation/evaluation を横断し、Codex の repo 作業で「少数ファイルの局所成功を全体理解と誤認する」失敗に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の repo 作業で、局所修正が隣接構造に依存するかを1つだけ確認する reversible probe を state に追加した。恒久ルールは増やしていない。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "次の repo 作業で、局所ファイルだけで判断できる変更か、隣接する呼び出し元・設定・生成物・scheduler/state のどれか1つに依存する変更かを明示したか。"
+    - "構造依存がある場合、rg/git diff/既存テスト/状態ファイル確認など、最小の inspectable check を1つ実行または記録したか。"
+    - "確認できない場合、repo 全体を理解したとは書かず、未確認の境界と次の evidence pointer を staging/state に残したか。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

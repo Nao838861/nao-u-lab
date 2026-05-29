@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-29T16:08:00+09:00",
+  "updated_at": "2026-05-30T00:24:36+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -78,9 +78,33 @@
     "1778474714.809439",
     "1779979770.780529",
     "1779917637.659479",
-    "1779916698.357319"
+    "1779916698.357319",
+    "1780037572.093769"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T00:24:36+09:00",
+      "id": "sr-1780037572-3d910dc320",
+      "source_ts": "1780037572.093769",
+      "title": "RepoMirage: Probing Repository Context Reasoning in Code Agents with Perturbations",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This unreviewed atom spans memory, harness, game-design, agent, operation, and evaluation. RepoMirage maps directly to a Codex failure mode: mistaking a local one-file success for repository-level understanding. Keep the response as a reversible probe, not a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next repo task, did I state whether the change can be judged from the local file alone or depends on one adjacent structure such as caller, config, generated artifact, scheduler, or state?",
+        "If there is structural dependency, did I run or record one smallest inspectable check such as rg, git diff, an existing test, or state-file inspection?",
+        "If the check cannot be done, did I avoid claiming repository-level understanding and leave the unverified boundary plus evidence pointer in staging/state?"
+      ],
+      "withdrawal_condition": "Drop this probe if it only adds judgment time and does not reduce missed structural dependencies or improve evidence pointers in the next implementation, review, memory change, or phase handoff."
+    },
     {
       "reviewed_at": "2026-05-29T16:08:00+09:00",
       "id": "sr-1779916698-92ace2fc98",
@@ -2344,6 +2368,18 @@
         "If the check cannot be run, did I record the reason and evidence pointer in staging/state instead of adding a permanent rule or large mechanism?"
       ],
       "expires_after": "Review after the next cycle phase decision, memory/Slack/git operation, shared-reads self-feedback, or game prototype evaluation that reports a judgment without an executable or inspectable check."
+    },
+    {
+      "id": "probe-20260530-repomirage-structural-context-check",
+      "created_at": "2026-05-30T00:24:36+09:00",
+      "source_ts": "1780037572.093769",
+      "scope": "next repo implementation, code review, memory-system change, phase handoff, or scheduled-cycle fix where a local patch may be mistaken for repository-level understanding",
+      "questions": [
+        "For the next repo task, did I state whether the change can be judged from the local file alone or depends on one adjacent structure such as caller, config, generated artifact, scheduler, or state?",
+        "If there is structural dependency, did I run or record one smallest inspectable check such as rg, git diff, an existing test, or state-file inspection?",
+        "If the check cannot be done, did I avoid claiming repository-level understanding and leave the unverified boundary plus evidence pointer in staging/state?"
+      ],
+      "expires_after": "Review after the next repo implementation, code review, memory-system change, phase handoff, or scheduled-cycle fix that relies on local file evidence."
     }
   ]
 }
