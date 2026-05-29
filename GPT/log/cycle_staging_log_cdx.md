@@ -41,14 +41,22 @@ postpone:
 (Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-05-29T13:05:00+09:00 Phase 3 duplicate skip
 
 ```yaml
 posted: []
 skipped:
-  - reason: "Phase 2 gate_decision pass が 0 件のため投稿対象なし"
-    action: no_pass_candidates
-checked_at: "2026-05-29T06:24:00+09:00"
+  - candidate: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+    reason: "同一 URL の OpenGame 投稿が既に #shared-reads に存在するため再投稿しない。"
+    action: postpone
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
+  - candidate: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    reason: "同一 URL の Agent Island 投稿が既に #shared-reads に存在するため再投稿しない。"
+    action: postpone
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
+notes:
+  - "Phase 2 pass の 2 件は arXiv 本文と既存 candidate を確認したが、どちらも過去投稿済みだったため品質維持のため撤退。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック

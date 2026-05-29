@@ -6,8 +6,15 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, agentic-coding, browser-games, playability-evaluation, llm]
 evaluated_at: 2026-05-29T12:37:16+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
+phase3_review:
+  reviewed_at: "2026-05-29T13:05:00+09:00"
+  decision: postpone
+  reason: "同一 URL の OpenGame 投稿が 2026-05-26 に #shared-reads へ投稿済みのため、重複投稿を避けて撤退。"
+  duplicate_of:
+    candidate: "memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: |-
