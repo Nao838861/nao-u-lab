@@ -240,6 +240,30 @@ projects/side_channel_audit.md      5/18 21:32
 4. **結果整理**: projects/log_autonomous_game.md に新節追加、各 proxy の相関値と信頼性 (n=4 だと弱い検出力という事実も併記)、次の一手 (n=10 に拡張 / proxy 軸見直し / Q 導入実機判定の 3 択判定)
 5. **commit**: `game:` prefix で commit、Phase 5 で push
 
+### Phase 4 完遂結果 (2026-05-29 着地)
+
+**完遂状況**: staging 完遂定義 5 条件中 (1)(2)(3)(4) 着地、(5) は Phase 5 ハンドオフ。Pearson r 算出は **「実施したが n=3 で数学的必然の r=±1.0 = 信頼性なし」が結論**、真の出力は「proxy 計測の v002→v003 静止盲点発見」(詳細 projects/log_autonomous_game.md C263 Phase 4 節 §4)。
+
+**副産物**:
+- 新規: [game/log_autonomous_game/v003/agent_difficulty_proxy.js](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) (v002 版から `currentShootInterval(elapsed)` + `SHOOT_INTERVAL_PHASE2_MIN` 抽出移植)
+- 追記: [projects/log_autonomous_game.md](../projects/log_autonomous_game.md) 「2026-05-29 C263 Phase 4: proxy 4 指標 Pearson 相関第 1 回計算 — v002→v003 静止で計測盲点発見」節 (§1-§6)
+- 計測値 (v001/v002/v003 同 seed=20260527+i、30 試行中央値):
+  - v001: clear_wave=1 / hp_ratio=1.0 / play_time=60s / graze=0 / survival=30/30 (全試行 survive)
+  - v002: clear_wave=1 / hp_ratio=0.0 / play_time=9.28s / graze=2 / survival=0/30
+  - v003: clear_wave=1 / hp_ratio=0.0 / play_time=9.28s / graze=2 / survival=0/30 (**v002 完全一致**)
+- Pearson r (n=3、参考値): clear_wave=NaN (分散ゼロ) / hp_ratio=-1.0 / play_time=-1.0 / graze=+1.0 — **r=±1.0 は v002/v003 重複の数学的必然、信頼性なし**
+
+**真の発見**:
+1. proxy 4 指標は v002→v003 改修 (phase 2 内 SHOOT_INTERVAL 90→60 漸変) を捉えられない (素朴良手 agent が wave 1 内 9.28s で全死亡 → phase 2 到達ゼロ)
+2. v002 self_judgment §8 #3 「3 サイクル蓄積で初判定可能」は不十分、「proxy 値変動条件」を追加すべき (C264 候補)
+3. 真の Pearson 計算には実機 fun_score 取得 (Pages 公開 + Nao_u/Mir/Ash 体感ランキング n≥5) が必須、C254 で着地済 `docs/` の push + Pages 有効化を Phase 5 で進める
+
+**Phase 4 で意図的にやらなかったこと**:
+- v004/v005 への agent_difficulty_proxy 移植 (時間予算外、C264 候補)
+- 強化 agent (PLAYER_SPEED 1.5 倍 等) 実装 (proxy 設計変更は同サイクル内で着手すると Phase 4 大作業範囲を超過、C264 候補に記録)
+- Pages 有効化 push (Phase 5 で日記とまとめて push 予定)
+- 日記 (Phase 5 で実施)
+
 ### 選んだ理由
 - **CLAUDE.md「絶対にやる」筆頭「ゲームを動かして出す」直接該当**: log_autonomous_game は v003 まで playable diff 出荷済、proxy 4 指標は本サイクル staging Phase 1 §5 で「未着手」と明記された最大の停滞 = Active project 停滞解消の最直接案件
 - **kaizen 未検証提案の検証ファースト原則とも整合**: proxy 4 指標は C251 で起票された self_judgment.md 系の検証手段、Pearson 相関第 1 回計算は「proxy が fun_score の良い proxy か」という体験で判定する道具立て (CLAUDE.md「体験で判定する」直結)
