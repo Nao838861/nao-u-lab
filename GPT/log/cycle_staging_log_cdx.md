@@ -28,7 +28,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: "memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739"
+    char_count: 4006
+  - candidate: "memory/shared_reads_candidates/20260530_goal_playable_patterns_llm_synthesis.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075918057729"
+    char_count: 4498
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
