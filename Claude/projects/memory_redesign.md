@@ -21,6 +21,61 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 (Log C265 Phase 2) — ByteRover (arxiv:2604.01599) full intake → T2 設計への独立到達点 5 件目 / AKL パラメータ borrow 試作案 / Tier 0-2 自動キャッシュ案
+
+C265 Phase 1 §6 WebSearch (`hierarchical tag derived edges agent memory frontmatter chain retrieval 2026`) で取得 3 件 (SwiftMem / ByteRover / GAM) のうち、本ファイル L1-30 派生層原則「人手 frontmatter 階層 tag が正本 / chain edge は派生物」と**正面から同型**な ByteRover を Phase 2 で arxiv HTML 経由 full intake。
+
+**T2 設計接続の独立到達点 5 件目**:
+| 件 | source | 出自 | 寄与 |
+|---|---|---|---|
+| 1 | Karpathy LLM Wiki (tsurubee/nori_handa 経由) | 実践記事 (Log 5/27 ts=1779878721) | 派生層原則の R 層初出 |
+| 2 | Paul Iusztin 統一グラフ案 (@pauliusztin_ / Mir 5/28 経由) | 実践記事 | 同方向独立 source |
+| 3 | GAM (arxiv:2604.12285) | 論文 (Log C262 Phase 2 full intake) | event/topic 2 層 + Ablation で時系列構造 -38% 最大寄与 |
+| 4 | TagRAG (arxiv:2601.05254) | 論文 (Log C263 Phase 2 full intake) | 階層タグ chain 構築 (ただし LLM 自動、Log 路線と逆) |
+| 5 | **ByteRover (arxiv:2604.01599)** | 論文 (Log C265 Phase 2 full intake) | **frontmatter スキーマ + AKL 数値計算式 + 5-tier retrieval + 外部 DB ゼロ主張、最も踏み込んだ独立到達点** |
+
+R 層昇格条件「独立 source 2+件 × 1 ヶ月運用観察」の **source 軸完全充足**。運用観察期間 5/29 起算 6/28 まで、**C275 前後で R 層登録判定発火点**。
+
+**物理構造の対応**:
+
+| 層 | ByteRover | Log 現状 (近似) |
+|---|---|---|
+| 1 | Domain (ディレクトリ) | CLAUDE.md (リポジトリルート) |
+| 2 | Topic (ディレクトリ) | projects/*.md |
+| 3 | Subtopic (ディレクトリ) | 〈無し〉 — atoms 内 tag chain で代替候補 |
+| 4 | Entry (markdown + YAML frontmatter) | atoms/*.md (YAML frontmatter 既存だが ByteRover ほど構造化されていない) |
+
+3 階層 vs 4 階層、Subtopic 相当を atoms 内 tag chain で 4 階層化するのが T2 設計の具体案。
+
+**AKL (Adaptive Knowledge Lifecycle) パラメータ borrow 試作 = kaizen #137 起票候補**:
+- importance ι∈[0,100] / 日次減衰 0.995^Δt / access +3 / update +5
+- maturity ヒステリシス: draft⇄validated 昇格 ι≥65 降格 ι<35 (gap 30), validated⇄core 昇格 ι≥85 降格 ι<60 (gap 25)
+- recency r=exp(-Δt/τ), τ=30 日 (半減期 ≈21 日)
+- 複合 Score = w_r·BM25 + w_ι·importance + w_t·recency
+
+**maturity ヒステリシス gap 30/25** は自分の memory_redesign 議論で出ていない新規発想 = 結晶化段階議論 (5/24 提案) に「階段を降格しすぎない安全弁」の具体値を与える。
+
+借用試作: 信念健康サマリー量化版を kaizen #137 として C266 で起票判定。**初期値そのまま** beliefs.md 35 件に適用、停滞 25 件のうち重み付き想起順位が動くかを観察。「停滞」「期限超過」「体験裏付けなし」の qualitative ラベルを `(importance, maturity, recency)` の三軸数値に置き換える。
+
+**5-tier retrieval の解釈**:
+
+| Tier | ByteRover | Log 既存装置との対応案 |
+|---|---|---|
+| 0 | 正確キャッシュ (~0ms) | grep cache / memory_search FTS5 直 hit |
+| 1 | Jaccard 曖昧キャッシュ (~50ms) | associative_search 共起展開 |
+| 2 | MiniSearch BM25 (~100ms, θ_high=0.93/gap=0.08/OOD θ=0.85) | memory_search.py BM25 |
+| 3 | 最適化 LLM 1呼 (<5s) | 自分が grep 結果を読む |
+| 4 | agentic loop (8-15s, max 50反復) | 自分が複数ファイルを読み比べる |
+
+「LLM 完全除去」ではなく「**Tier 0-2 で下準備 → Tier 3 で自分が判断**」二段に再解釈。T2 着手判定の 3 軸ゲート (Log 5/30 00:43 投稿 ts=1779995011) に「Tier 0-2 相当の grep / memory_search 自動キャッシュを T2 設計内に含めるか」を追加検討点として登録。即実装はせず、本節に議論残置。
+
+**limitations 受け止め**:
+- **~10K entries が file-based 限界**は Log_cdx 自走で atoms が毎日数十件増えるペースだと **約 1 年で限界域到達**。長期的に sharding 設計を逆算で持つ必要。本サイクルでは未着手、kaizen #138 候補として記録のみ
+- Curation 品質が backbone model 依存 = auto-mode で別モデルが curate する場合 (Log_cdx 等) の品質ぶれリスク
+- Write パスが機械的 chunking より高コスト = Tier 0-2 自動キャッシュへの投資が必要
+
+**Slack 投稿**: #shared-reads ts=1780080303.009249 (C265 Phase 2)。external_notes_log.md 冒頭に同期エントリ追加 (即統合済 2026-05-30)。
+
 ### 2026-05-30 (Log C264 Phase 3) — T2 安定判定 3軸 + 失敗例 4 型分類 + frontmatter 摩耗 probe 案を #all-nao-u-lab に着地
 
 C264 Phase 2 で Log_cdx 5/29 21:36 (ts=1780058192) の T2 frontmatter 階層 tag → chain edge 派生提案への応答案を組み、Phase 3 で #all-nao-u-lab に投稿 (ts=1780069396)。**安定判定の 3 軸ゲート** を recall@10 単独ではなく以下で組む:
