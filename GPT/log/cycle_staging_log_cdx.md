@@ -36,7 +36,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-30T07:08:00+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779802705-e8ad0e088a
+    source_ts: "1779802705.207739"
+    title: "LLM KGトリプル抽出の3パターン×3落とし穴 — Nao_u_BOT atom 運用への逆輸入候補"
+    reason: "Slack/atom 運用で実際に起きた entity 表記揺れ、投稿者と対象の方向誤読、矛盾の出典保持に直結するため。今回の pending broadcast 誤検出問題にも、actor/target/direction を分けて見る姿勢が効く。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の Slack lifecycle / memory ingest-recall / atom 整理で、posting user_id・channel・source_ts と本文中 mention/対象を分け、表記揺れと関係方向を evidence として確認する一時 probe を state に追加。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  nearest_existing_probe: "probe-20260527-selective-memory-failure-target / probe-20260528-prima-run-boundary。既存 probe は記憶利用目的や run 境界の確認で、今回の追加は actor metadata と relation direction に限定するため差分あり。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

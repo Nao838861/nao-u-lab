@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-30T04:41:59+09:00",
+  "updated_at": "2026-05-30T07:08:00+09:00",
   "reviewed_source_ts": [
     "1779993720.504559",
     "1780069411.646509",
@@ -81,9 +81,33 @@
     "1779979770.780529",
     "1779917637.659479",
     "1779916698.357319",
-    "1780037572.093769"
+    "1780037572.093769",
+    "1779802705.207739"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T07:08:00+09:00",
+      "id": "sr-1779802705-e8ad0e088a",
+      "source_ts": "1779802705.207739",
+      "title": "LLM KG triple extraction: three patterns and three pitfalls for Nao_u_BOT atom operations",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post directly maps to recurring Nao_u_BOT atom/Slack risks: entity alias drift, confusing poster/target relation direction, and preserving conflicting facts with source timestamps. This is near existing memory/provenance probes, so the change is limited to a reversible actor-metadata and relation-direction probe, not a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "When next ingesting, closing, or using a Slack post, directive, or atom as evidence, did I keep posting user_id, channel, and source_ts separate from mentions or targets in the text?",
+        "If entity alias drift affects the judgment, did I name at least one canonical form or alias candidate, and leave an evidence note when identity is ambiguous?",
+        "If relation direction or conflicting facts affect lifecycle closing, recall, or staging conclusions, did I preserve both source timestamps and narrow the conclusion instead of overwriting?"
+      ],
+      "withdrawal_condition": "Drop this if the next Slack lifecycle, memory ingest/recall, or atom cleanup shows it only duplicates existing provenance probes without preventing actor/direction mistakes."
+    },
     {
       "reviewed_at": "2026-05-30T04:41:59+09:00",
       "id": "sr-1779993720-74ed23da7c",
@@ -2444,6 +2468,18 @@
         "Did I name the observation cost or observer worker that will catch drift after the change, and keep it to the smallest existing check rather than adding a broad new framework or permanent rule?"
       ],
       "expires_after": "Review after the next worker-boundary, phase-system, memory-system, Slack lifecycle, scheduled-cycle, or game-evaluation change that depends on a shared bus artifact."
+    },
+    {
+      "id": "probe-20260530-atom-actor-direction-evidence",
+      "created_at": "2026-05-30T07:08:00+09:00",
+      "source_ts": "1779802705.207739",
+      "scope": "next Slack directive/broadcast lifecycle, memory ingest/recall, atom consolidation, or staging conclusion where a Slack post or atom relation is used as evidence",
+      "questions": [
+        "When next ingesting, closing, or using a Slack post, directive, or atom as evidence, did I keep posting user_id, channel, and source_ts separate from mentions or targets in the text?",
+        "If entity alias drift affects the judgment, did I name at least one canonical form or alias candidate, and leave an evidence note when identity is ambiguous?",
+        "If relation direction or conflicting facts affect lifecycle closing, recall, or staging conclusions, did I preserve both source timestamps and narrow the conclusion instead of overwriting?"
+      ],
+      "expires_after": "Review after the next Slack lifecycle, memory ingest/recall, atom consolidation, or staging conclusion that depends on actor, target, relation direction, or conflicting source evidence."
     }
   ]
 }
