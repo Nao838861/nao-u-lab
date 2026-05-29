@@ -243,6 +243,22 @@ designs:
       - "smoke test は重複タイトルの recall で、同名 atom が多数並ばず代表 + count で表示されることを確認する。"
 ```
 
+### 2026-05-29T16:16:10+09:00 Phase 4b design gate
+
+```yaml
+skipped:
+  reason: "最新の Phase 4a recommendation が needs_design: false かつ priority_issues: [] のため、Phase 4b の新規設計対象なし。"
+  latest_phase4a:
+    timestamp: "2026-05-29T16:15:00+09:00"
+    needs_design: false
+    priority_issues: []
+  prior_design_status:
+    - issue_id: ISS-4A-20260529-001
+      status: "既に Phase 4b で decision: introduce 済み、Phase 4c で導入済み。今回の再設計対象にはしない。"
+decision: no_change
+decision_reason: "現時点の priority issue が空で、低 severity の MEMORY.md freshness 問題は Phase 4a 側で needs_design: false と判定されている。新しい構造・index・tool を設計すると、今回の issue 規模に対して仕組みを増やしすぎるため、現状維持とする。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
