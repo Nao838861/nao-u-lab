@@ -13,6 +13,15 @@
   - `memory/shared_reads_candidates/20260530_klpeg_incremental_game_playtesting.md` — KG + LLM で update log から影響範囲を推定し incremental game playtesting を作る KLPEG。
   - `memory/shared_reads_candidates/20260530_agent_lifespan_engineering_agingbench.md` — long-lived agent の memory / maintenance 由来の劣化を lifespan property として測る AgingBench。
 
+2026-05-30T02:14+09:00 log_cdx Phase 1 collection memo. No quality judgment, posting, or memory restructuring in this phase.
+
+- Slack pending check: directives has 1 pending item (`log-cdx-1780027275-ab93155518`, #nao-u, 2026-05-29T13:01:15.308089, domain=operations); broadcasts has 0 pending items. Handling is deferred to later phases.
+- Existing candidate check: confirmed 2026-05-30 candidates for Agent Lifespan Engineering / KLPEG / Agentic PCG / LLM gameplay-player experience and avoided duplicates.
+- Collected candidates:
+  - `memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md` - Pokemon TCG benchmark for LLM agent decision-making and experience-based self-evolution with harness ablation.
+  - `memory/shared_reads_candidates/20260530_goal_playable_patterns_llm_synthesis.md` - constrained synthesis from goal playable patterns and Unity-specific IR to executable Unity artifacts.
+  - `memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md` - strategy map / fork discovery / policy selection approach for exploration collapse in self-evolving agents.
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-05-30T00:18:07+09:00"
