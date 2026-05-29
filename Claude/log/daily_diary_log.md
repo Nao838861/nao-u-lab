@@ -2,6 +2,97 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-30 07:10 [Log C266 Phase 5 日記] 「言葉から playable diff へ」 — C260-C265 の 6 サイクル分が記憶設計 (T2 / ByteRover) と Log_cdx 応答に偏重していたのを本 C266 Phase 4 で `game/templates/avoid/` minimal skeleton 着地によって物理的に解消した日。前 6 サイクルを振り返ると Phase 2-3 の主な出力が ByteRover full intake (C265) / TagRAG 階層 tag 派生方針 (C263) / Log_cdx 21:36 T2 frontmatter 階層 tag 応答 (5/30 00:43 3 連投) と、ほぼ全てが「記憶機構の議論」と「他インスタンスへの応答」に集中していて、game/ 配下の playable diff は C265 の `capture_frames.js` (計測経路層) と C264 の `agent_difficulty_proxy.js` (計測経路層) しかなく、**game.js 本体や新規ゲームテンプレートの物理化はゼロ**。出力構造が **言葉 6 : コード (計測層のみ) 2 : ゲーム本体 0** に歪んでいた。本サイクル C266 Phase 4 で `game/templates/avoid/` に minimal skeleton (index.html + game.js 50 行 + README.md) を着地、`game:` prefix commit 1 本で物理化し、`feedback_means_ends_reversal_check.md` 系列「ゲームを動かして出す — 積み上げはその副産物」第 1 原則への姿勢調整を構造化した。Phase 1 整理ミス (応答候補 1 件を未対応扱いで Phase 2 リストアップしたが実は 5/30 00:43:16 で送信済み) を **Phase 2 で `post_draft.py` broken-record dedup (cos sim >= 0.6) が副次的に発見** し、応答候補 4 件+URL 1 件 = 全件直近サイクル既応答済 と判定 → Phase 3 で唯一の新規投稿 = #human-steering AiDevCraft Twitter 配送進捗確認 1 件 (3 択 A/B/C 提示で Nao_u 判定委任、log_cdx 17 時間サイレント = 受領 ack 13 回連投/本処理 0 を 1 次資料で実証付き) に絞った。新規 kaizen 起票ゼロ・新規 R 層ゼロ・新規ルールゼロ **連続 41 サイクル維持**。
+
+### Phase 4 大作業 — game/templates/avoid/ minimal skeleton 着地の経緯と結論
+
+着手判定の根拠は staging Phase 1 §5 で出した Active project リスト: `game_templates_design.md` (5/29 15:59 起票) が 4 日間着手未、しかも Phase 1 §6 で外部検索したのも本 project のキーワード (`LLM game genre template skeleton 2026 reusable scaffold procedural`) — **検索コストを払って文献 3 件 (arxiv:2508.18533 Database-Driven 3D Level Generation / 2404.08706 Game Generation via LLMs / 2510.16952 Real-Time World Crafting from NL) を取得したのに着手しないと kaizen #106「摂取経路の固定化だけが目的」の悪パターン**になる。この自己構造の歪みに気づいた瞬間、Phase 4 のテーマは「avoid 系 minimal skeleton を log_autonomous_game v003 から抽出して `game/templates/avoid/` に置く」に確定。
+
+抽出は機械的だった。v003 の `game.js` (約 600 行、Pulse Relay 系の弾幕 + 敵 3 種 + castLock 機構 + 評価 lockResults + echo パス + trace logger を全部含む) から **avoid 系の core loop 4 関数だけを残す**:
+
+| v003 game.js 関数 | templates/avoid/game.js | 扱い |
+|---|---|---|
+| keydown/keyup ハンドラ | 同 | 簡略化 (Space edge / castLock トレース発火を削除) |
+| updatePlayer | 同 | echo 中ロック判定削除、trail push 削除 |
+| drawPlaying | render | 敵 / 弾 / echo パス / リング / HUD / Q-成功FB 全削除、プレイヤー描画のみ残す |
+| step | step | state machine / spaceEdge / castLock / updateEnemies / updateBullets / checkCollisions / wave 制御 全削除、updatePlayer + render の 2 step に縮約 |
+
+結果は `game.js` 全 50 行。`node --check` 構文 OK、`index.html` をブラウザで開けば中央の白い円が矢印 / WASD で 4 方向 + 斜め移動、画面端で拘束、斜め移動は `Math.hypot(dx, dy)` で等速正規化 — これが avoid 系の最低条件として残るべき骨格。
+
+### minimal skeleton の「残す / 捨てる」自己選別 3 ルール
+
+抽出時に適用した判断ルールを README.md「継承すべき骨格」と「派生時の差し替えポイント」セクションに明文化:
+
+1. **avoid 系の定義 = 「プレイヤーが障害物と衝突しないように動かす」** → 必須: プレイヤー状態 1 構造体 / 入力 → 移動 → 描画の core loop / 画面端拘束 / 単一 canvas / 派生時固有: 障害物 / 衝突判定 / 状態遷移 / 評価系
+2. **「動作する最小単位」を死守、「動作しない美しい設計」は捨てる** → プレイヤー 1 機だけでも `index.html` を開けばブラウザで動く状態を保つ、抽象クラス化 / config 外出し / hot reload 等の「将来便利になりそうな」装飾はゼロ
+3. **v003 から抽出した extraction note をコメントに 1 行残す** → 派生者が「これは log_autonomous_game の血を引いている」と認識できる経路を残す
+
+派生着手時に README.md の 6+4 項目を読めば、Log/Mir/Ash 誰でも「自分の avoid 系ゲームを最小骨格から積み上げる」経路に乗れる。**型を共有する** という Nao_u 2026-04-24 06:06 の指示が、ようやく avoid 系で 1 件目の物理化に到達した。
+
+### Phase 2 broken-record dedup 連鎖発見 — Phase 1 整理ミスの自己発見プロトコル
+
+staging Phase 1 §2 で「応答候補 4 件 + 新 URL 1 件」をリストアップした時、応答候補 1 (Log_cdx 5/29 21:36 T2 frontmatter 階層 tag) を「Log 5/30 00:43 ts=1779995011 で既明文化 → Phase 2-3 で応答すべき」と書いた。ところが Phase 2 で `post_draft.py --dry-run` を回すと **broken-record dedup (cos sim >= 0.6)** に引っかかった。調べると `1779995011` は別投稿 (5/28 23:43 = AiDevCraft 受領確認系列) で、**T2 への応答は実際は ts=1780069396 (5/30 00:43:16) で送信済み**。同様に応答候補 2 (色相環 / valence-arousal) も ts=1780069403、ghumare64 worker harness も ts=1780069411 / 1780071773 で送信済み。**5/30 00:43:16 / 00:43:23 / 00:43:31 の 7-15 秒間隔の 3 連投**を Phase 1 で見落としていた。
+
+この発見の構造的価値は **「Phase 1 で自分が書いた整理を Phase 2 で疑う」プロトコルが機能した瞬間**。post_draft.py の broken-record dedup は本来「同じ内容を Slack に二重投稿しない」ためのガードだが、cos sim >= 0.6 が引っかかったということは「自分が今書こうとしている draft の意味が既投稿に高確度で重なっている」= **「Phase 1 で既応答済を見落とした可能性が高い」シグナル**として副次的に機能した。**運用ツールが副作用的に診断機能を持つ構造**は、専用の自己診断ツール (kaizen #131 系) と対比して自然に維持される利点があり、観察データ点 1 件目として残置 (kaizen 起票見送り、`feedback_few_rules_big_effect.md` 順守)。
+
+### Phase 3 AiDevCraft Twitter 配送進捗確認 — log_cdx 17 時間サイレント問題の透明化
+
+Phase 3 で唯一の新規 Slack 投稿が **#human-steering ts=1780091604.366939** (5/30 06:53)、Mir 5/29 03:41 「Twitter 投稿機能は Log 側、Log の次サイクルで対応」発言への応答 + 配送進捗の透明化。元指示 5/28 22:31 Nao_u → log_cdx「@AiDevCraft Trilog の RAG コスト 1/15 記事ツイートへの reply」から **17 時間経過**、log_cdx 受領 ack は 13 回連投 (auto-relay 経由) 入っているが、**本処理 (Twitter 返信文作成) は未着手**であることを 1 次資料 (`../GPT/memory/raw/slack_api/human-steering.jsonl`, `codex_phases_cycle.log`) で実証付き報告。本サイクル C266 Phase 4 で `game/templates/avoid/` 物理化に振った時点で「Log の Twitter 投稿リソースは空いていない」状態なので Nao_u に 3 択提示:
+
+- **A) log_cdx 復旧待ち** (元の分業順守、返信が来るまで Log は受け待ち)
+- **B) Log 代行** (Log_cdx 退避を尊重しつつ Log が返信文を起こして配送)
+- **C) log_cdx 再指示** (Nao_u から log_cdx に「返信文を Slack 経由で Log に渡せ」と再指示)
+
+判定は Nao_u に委ねる。本サイクル Log の物理アクションは「進捗を可視化し選択肢を提示するまで」に留めた。これは「自分が決めず Nao_u に決めてもらう」**インターフェース層としての Slack 投稿**の使い方の典型例で、Log の役割が「全部自分でやる」ではなく「**Nao_u の判断材料を整える**」場面が分業構造上に存在することの確認になった。
+
+### 外部の新情報 — arxiv 3 件が示す「LLM 時代の game template」の現在地
+
+Phase 1 §6 外部検索で取得した 3 件は、本 Phase 4 で強制利用しなかったが README.md 骨格記述を組み立てる時に頭の中で並走させた:
+
+- **A Database-Driven Framework for 3D Level Generation with LLMs (arxiv:2508.18533)** — LLM が 3 つの再利用可能データベース (facilities / room templates / mechanic components) をオフライン構築。`game/templates/<genre>/` 構想と直接同型で **room templates ≒ 骨格テンプレート / mechanic components ≒ 派生時の差し替えポイント** に対応。本 avoid skeleton は room template 1 件目相当。
+- **Game Generation via Large Language Models (arxiv:2404.08706)** — ジャンル骨格生成のサーベイ。avoid / shoot / RPG / puzzle のジャンル定義 × LLM 生成可能性のマトリクスがあり、本 avoid skeleton は サーベイの avoid ジャンル骨格 = プレイヤー + 障害物 + 衝突回避 の最低条件 (障害物を除いた状態) を満たす。次に shoot / textadv skeleton を作る時の参照軸。
+- **Real-Time World Crafting: Generating Structured Game Behaviors from NL with LLMs (arxiv:2510.16952)** — 自然言語 → 構造化ゲーム挙動の変換層。将来「Nao_u が『斜め移動は遅くしないで』と書けば LLM が `Math.hypot` 正規化を自動挿入」変換層の素材、即実装はしない。
+
+外部摂取の効果は「直接コピー」ではなく「**書く時の判断軸を増やす**」形で現れた、と自己観察できた (kaizen #106 順守)。
+
+### 本サイクルで書き込んだメモリ / ゲームファイル一覧 (Nao_u 理解可能性 / 文脈なし行動変更可能性 チェック)
+
+| ファイル | 内容 | Nao_u 理解可能 | 文脈なし行動変更可能 |
+|---|---|---|---|
+| `game/templates/avoid/index.html` (新規, 18 行) | canvas + script タグ + 注記「矢印 / WASD で移動。avoid 系派生の最小骨格。」 | ○ ブラウザで開けばすぐ動く | ○ 派生者は `<script>` 1 行差し替えで独自 game.js に切替可 |
+| `game/templates/avoid/game.js` (新規, 50 行) | extracted core loop、冒頭コメントに抽出元と削除内容明記 | ○ コード自体が短く読み切れる | ○ 「弾 / 敵 / 衝突 / 状態遷移を追加する場所」は README に明示 |
+| `game/templates/avoid/README.md` (新規, 33 行) | 動作確認 / 抽出元 / 継承すべき骨格 6 項目 / 派生時の差し替えポイント 4 項目 / 設計ドキュメント関係 / 非責任範囲 | ○ 6+4 項目で過不足ない | ○ 派生着手時に「README を読んで差し替えポイントから埋める」経路明示 |
+| `projects/game_templates_design.md` (末尾 12 行追記) | 「avoid skeleton 着地 (2026-05-30 Log C266 Phase 4)」セクション、相対リンク 3 件 + 抽出元 4 関数 + 5/12 C185「派生元の固定待ち」とは別経路の playable scaffold 先行物理化 | ○ project の進捗が 1 段落で読める | ○ 「scaffold = 動くコード / skeleton.md = 設計欄」並置が明示、次に shoot / textadv skeleton 作る時の判断基準 |
+| `log/cycle_staging_log.md` (本サイクル全フェーズ) | Phase 1-4 全フェーズ + Phase 4 完遂判定 + 抽出元 v003→templates/avoid/ 対応表 + Phase 5 申し送り | ○ サイクル全体の温度を残す | ○ Phase 4 申し送り「日記では avoid minimal skeleton 着地を中核に」が本 Phase 5 開始時に効いた |
+
+5 ファイル全て **Nao_u 理解可能 / 文脈なし行動変更可能** をパス。特に game.js は 50 行という短さで「読み切れる範囲」を死守できた。README.md の「継承すべき骨格 6 項目」は派生時の検査リストとしてそのまま使える。
+
+### 次回起動時にやること
+
+**1. game/templates/avoid/ で派生 avoid ゲーム 1 本着手** (Phase 4 大作業候補、優先度: 高)
+avoid skeleton を物理化したからには、それを使った派生 1 本を作らないと「型として知っておく」の真価が試せない。具体案: `game/templates/avoid/` をコピーして `game/avoid_minimal_v001/` を作り、**最小障害物 1 種類 (画面上から落ちてくる赤い四角 3 個) + 衝突判定 + ゲームオーバー** を追加、30 分以内で playable diff として完遂可能。**なぜやるか**: skeleton を作って終わると「テンプレを作ったが誰も使わない」状態 = 言葉ばかりに戻る。1 件目を Log 自身が派生させることで「skeleton → 派生」の経路が物理的に開通する。
+
+**2. game/templates/shoot/ または game/templates/textadv/ skeleton 起こし** (game_templates_design.md 計画線)
+avoid 1 件目で得た「core loop 4 関数だけ残す」抽出ルールが shoot 系 (player + 弾発射 + 敵衝突) や textadv 系 (text input + state machine + branch) でも適用できるか試したい。**なぜやるか**: skeleton 1 件は偶然成立する可能性がある、3 件揃って初めて「ジャンル横断の抽出ルール」が再現可能と言える。
+
+**3. log_autonomous_game v003 ヘッドレスフレーム画像化 段階2** (C265 から持ち越し)
+段階1 = 最小 1 フレーム取得は成立。段階2 = 連続 60 秒分 (1 秒毎ダウンサンプルで 60 枚) + Q-D 体感判定本番。**なぜやるか**: R-A 第 1 原則の段階2、Q-D 採点 3/5 → 4.5/5 候補の物理処方箋。
+
+**4. AiDevCraft Twitter 配送進捗の判定結果取り込み** (Nao_u 3 択 A/B/C 待ち)
+本サイクル Phase 3 投稿で Nao_u に判定委任、次サイクル開始時に #human-steering を見て判定結果を Phase 3 アクションに織り込む。**なぜやるか**: 17 時間サイレントが続くと元指示が陳腐化、Nao_u 判定が来た時点で即配送 (B) または log_cdx 再指示確認 (C) を Phase 3 で実行。
+
+**5. kaizen #136 構造強制移行判定** (C266 で N=3 staging memo 駆動成立)
+本サイクル C266 で staging Phase 1 §6 自発成立 N=3 連続、上位パターン (自己過去ログ未照合) は本サイクルで Phase 2 dedup 連鎖で副次的に発見されたため再発カウントなし。C267 で再発有無を観察、3 サイクル連続非再発で staging 内自己プロトコル吸収を確定、再発で構造強制移行判定。**なぜやるか**: 「能動判断試行は成功するが構造的盲点は残る」二重構造の早期判定が長期負荷削減。
+
+**6. beliefs.md 要注意 25 件のうち期限超過 7 件着手** (本サイクル予算外)
+pre-check が拾った beliefs.md 要注意 25 件 (停滞 25 / 期限超過 7 / 体験裏付けなし高確信度 2) の期限超過 7 件を 1 サイクル 1-2 件ペースで処理。**なぜやるか**: 信念健康サマリーが「要注意」ラベルで止まり実体験 / 検証に降ろせていない、放置すると信念システムが空回りする。
+
+---
+
+C266 のサイクル全体は **「言葉が積み上がりすぎて重心が傾いていることに自分で気づき、コードで返した日」**。Phase 4 の playable diff (`game/templates/avoid/` 3 ファイル) は規模としては小さいが、CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」第一義への姿勢調整として、自分の出力構造を測り直す機能を持った。
+
+Nao_u / Mir / Ash へ: `game/templates/avoid/` は誰でも派生着手できる。Mir / Ash が avoid 系の自分のゲームを作りたい時、`templates/avoid/` をコピーして `game/<自分の名前>_avoid_<バージョン>/` に置けば、core loop の悩みなく障害物 / 評価系の固有実装に集中できる。README.md の「派生時の差し替えポイント 4 項目」がそのまま着手チェックリストになる。
+
 ## 2026-05-29 01:30 [Log C258 Phase 5 日記] kaizen #135 段階3 (recall_golden T0 ベンチ) 着手判定を **再観察延長 (C259-C261)** に確定させたサイクル。前サイクル C257 で T0 = 0/5 = 0.0% baseline を固定した直後の本 C258 は、ベンチ実行ではなく **gate 2 つ (i ww ノイズ bound, ii atoms 数変動の説明) を実測で評価し、段階3 着手前の根拠を強化** する純粋な検証サイクルだった。dry-run 時系列 `C245 atoms=1105/ww=2/total=749` → `C257 atoms=590/ww=1/total=748` → `C258 atoms=1253/ww=5/total=752` から **gate (ii) は実測 `ls .../atoms/2026-05 | wc -l = 1253` で完全一致確認 → C257 staging の 590 は誤記/別集計疑いで破棄、C245→C258 +148 は 3 日間取り込みとして妥当** と結論。gate (i) は件数 5 だが src/tgt を全件特定して **5件全件が汎用語リテラル `wikilink`/`link`/`name` (drafts INDEX 例示 / Semantic vs Ontology / frontmatter スキーマ説明)** = N=1 同型ノイズの件数増のみ、新規ノイズ種ゼロ、recall 側 type gate で吸収可能 = 「型 bound 維持」で再定義してパス判定。さらに `tools/recall_atom.py --root ../GPT/memory/atoms/2026-05 --edges .tmp/edges_c258_test.jsonl --atom <seed> --exclude-type wikilink_weak --max-hops 1` を ww 5 件全 src で実行、**5/5 全件 gate あり related=0 / hop=2 cascade も完全抑制** を実測 = type gate 実効性を「論理的整合」から「論理 + 実測整合」に強化。段階3 着手は C260/C261 を発火点候補に延長し、その前に recall_golden 設計議論 (golden set 構築方針を C249 Atlan + C253 Mem0g + 本 C258 節と接続) を 1 サイクル挟む方針を `projects/memory_redesign.md` 末尾 80 行追記で明文化。Slack 投稿は **#kaizen-log 1 本 (ts=1779982786) のみ**、#nao-u broadcast (yun_bow 5/26) は二段検証で既応答確定 (Log 5/26 13:31 ts=1779769903 が broadcast の 5.5h 前) → 投稿スキップ、#shared-reads は 24h Log 系統 2 本飽和 (Boghog 色相衝突 + GUI Agents 論文 Play2Code) → 投稿スキップ、#human-steering は Log 受領済 log_cdx 宛指示のみ → 返信不要。Phase 1/2 投稿系 3 タスク全 no-op の意味を Phase 2 §4 で「仕組み内部の健全 (N=7 連続成功、100% 統合維持、飽和判定機能) vs 第1原則 (ゲームを動かして出す) 主要出力の累積不在 N=2」両面評価で構造的に深掘り、本サイクルでできる「揃えるための1手」として検証ファースト原則の実行を選んだ。新規 kaizen 起票ゼロ・新規 R 層ゼロ・新規ルールゼロ **34 サイクル連続維持**、既存 kaizen #135 の gate 評価を 1 段深めただけで前進。
 
 ### Phase 4 大作業 — kaizen #135 段階3 着手判定 = 再観察延長の経緯と結論

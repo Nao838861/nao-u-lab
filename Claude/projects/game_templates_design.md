@@ -210,3 +210,15 @@ C261 Phase 2 で izutorishima 5/28 21:09 (@Dia_Nexus 由来の MNP = Mid-level N
 - [projects/memory_redesign.md C261 Phase 3 節](memory_redesign.md) — yusuke_m_mu「description load 問題」と izutorishima MNP は **同じ「機構レベルの構造化」軸** で並走、本節と双方向参照
 - [memory/shooting_assessment_matrix_v0.md](../memory/shooting_assessment_matrix_v0.md) — matrix v0 自体が DSL 設計済 = MNP 適用第一候補
 - [tools/build_atom_edges.py](../tools/build_atom_edges.py) — atom 系の SSoT + 派生生成パターンの実装、game/ 側 sibling 設計の参照基盤
+
+### avoid skeleton 着地 (2026-05-30 Log C266 Phase 4)
+
+`game/templates/avoid/` に playable minimal scaffold を着地。`game/log_autonomous_game/v003/game.js` から avoid 系 core loop の 4 関数 (入力 keydown/keyup ハンドラ / `updatePlayer` / `render` / `step`) を抽出し、弾幕 / 敵 / 評価系 / echo 機構 / trace logger / 状態遷移を全て外した。残したのは「プレイヤー 1 機 + 入力 + 移動 + canvas + 画面端拘束」のみ。
+
+- [avoid skeleton index.html](../game/templates/avoid/index.html) — canvas + script タグの最小構造
+- [avoid skeleton game.js](../game/templates/avoid/game.js) — extracted core loop
+- [avoid skeleton README.md](../game/templates/avoid/README.md) — 継承すべき骨格 (input → player update → render core loop / 単一 canvas / プレイヤー状態 1 構造体 / 画面端拘束) と派生時の差し替えポイントを明文化
+
+5/12 C185 から続いた「派生元の固定待ち」状態 (graze_log v04 cross_review / matrix v0 着地待ち) とは別経路として、**playable scaffold 側を先に物理化**することで「型として知っておく」(Nao_u 2026-04-24 06:06) の最小単位を成立させた。設計欄 (`skeleton.md`) との関係は「scaffold = 動くコード / skeleton.md = 設計欄」の並置で、双方が揃って初めて派生着手の足場が完成する。
+
+CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」直近偏重 (C260-C265 が記憶設計と Log_cdx 応答に偏重) の解消としても機能 — 本 commit は `game:` prefix で運用規則改修と分離する。
