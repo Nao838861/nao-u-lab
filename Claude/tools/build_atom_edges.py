@@ -13,6 +13,8 @@ edge 種別:
       derived_from  → 派生元 (任意)
       related       → 関連 (任意)
       canonical_id  → group の代表 (重複群識別)
+  - semantic (frontmatter `tags:` 共有由来, kaizen #135 段階3 T1):
+      tag_share → 同一 tag を共有する atom 間 (双方向)
   - weak (本文 [[wikilink]] 由来):
       wikilink_body → atom_id らしき形 (id-style) ならその id を target、
                       ファイル名らしければ basename を target
@@ -70,7 +72,7 @@ def emit(edges: list, src: str, tgt: str, etype: str, strength: str) -> None:
     edges.append({"src": src, "tgt": tgt, "type": etype, "strength": strength})
 
 
-def extract_edges(path: Path, edges: list) -> None:
+def extract_edges(path: Path, edges: list, tag_index: dict) -> None:
     text = path.read_text(encoding="utf-8", errors="replace")
     fm, body = parse_frontmatter(text)
     src = fm.get("id") or path.stem
@@ -82,6 +84,11 @@ def extract_edges(path: Path, edges: list) -> None:
         for v in fm.get(key, []) or []:
             if v and v != src:
                 emit(edges, src, v, key, "strong")
+    tags = fm.get("tags") or []
+    if isinstance(tags, list):
+        for tag in tags:
+            if tag:
+                tag_index.setdefault(tag, []).append(src)
     for m in WIKILINK_RE.finditer(body):
         raw = m.group(1).split("|")[0].strip()
         tgt = raw.removesuffix(".md")
@@ -90,19 +97,53 @@ def extract_edges(path: Path, edges: list) -> None:
             emit(edges, src, tgt, etype, "weak")
 
 
+def emit_tag_share(edges: list, tag_index: dict, max_cluster: int) -> int:
+    """tag_index から同タグ共有 atom 間に tag_share edge を双方向で派生。
+
+    max_cluster 超のタグはノイズ抑制のため skip (汎用 tag による edge 爆発防止)。
+    実装は双方向 emit (= recall_atom.py 側で双方向走査済なので src→tgt 一方向のみ emit)。
+    重複防止のため (src, tgt) 順序 sort で唯一性確保。
+    """
+    emitted = 0
+    skipped_tags: list[tuple[str, int]] = []
+    for tag, atoms in tag_index.items():
+        if len(atoms) > max_cluster:
+            skipped_tags.append((tag, len(atoms)))
+            continue
+        uniq = sorted(set(atoms))
+        for i, a in enumerate(uniq):
+            for b in uniq[i + 1:]:
+                emit(edges, a, b, "tag_share", "semantic")
+                emitted += 1
+    if skipped_tags:
+        sys.stderr.write(
+            f"[build_atom_edges tag_share] skipped {len(skipped_tags)} tags "
+            f"with cluster > {max_cluster} (top: "
+            f"{sorted(skipped_tags, key=lambda x: -x[1])[:5]})\n"
+        )
+    return emitted
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", required=True)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--output", default=None,
                     help="output path (default: <root>/../edges.jsonl — matches recall_atom.py)")
+    ap.add_argument("--recursive", action="store_true",
+                    help="recurse into subdirs (e.g. <root>/2026-03/*.md). default: top-level only")
+    ap.add_argument("--max-tag-cluster", type=int, default=50,
+                    help="skip tag_share for tags shared by > N atoms (noise suppression)")
     args = ap.parse_args()
     root = Path(args.root)
     output_path = Path(args.output) if args.output else root.parent / "edges.jsonl"
-    files = sorted(root.glob("*.md"))
+    glob_pattern = "**/*.md" if args.recursive else "*.md"
+    files = sorted(root.glob(glob_pattern))
     edges: list = []
+    tag_index: dict = {}
     for p in files:
-        extract_edges(p, edges)
+        extract_edges(p, edges, tag_index)
+    tag_share_count = emit_tag_share(edges, tag_index, args.max_tag_cluster)
     by_type: dict = {}
     for e in edges:
         by_type[e["type"]] = by_type.get(e["type"], 0) + 1
@@ -112,7 +153,8 @@ def main() -> int:
     sys.stderr.write(
         f"[build_atom_edges {'dry-run' if args.dry_run else 'write'}] "
         f"root={args.root} atoms={len(files)} wikilink_strong={wls} "
-        f"wikilink_weak={wlw} supersedes_chain={sup} total_edges={len(edges)}\n"
+        f"wikilink_weak={wlw} supersedes_chain={sup} "
+        f"tag_share={tag_share_count} total_edges={len(edges)}\n"
     )
     density_limit = len(files) * 5
     if len(edges) > density_limit:

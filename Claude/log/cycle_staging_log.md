@@ -296,3 +296,41 @@ Phase 1 §0 で受信した「他インスタンス洞察 (9件)」のうち、k
 - Phase 3 実行完了 = 6 アクション (A〜F) 全件実施
 - Phase 4 大作業 = kaizen #135 段階3 T1 拡張、着手手順 7 段確定
 - 残課題 = 本サイクル commit + push (Phase 3 / Phase 4 跨ぎ commit prefix `rule:` / `game:` 規律順守、本サイクルは memory_redesign + kaizen_tracker + external_notes 全て `kaizen:` 系列 = `rule:` 寄り)
+
+## Phase 4 着地 (2026-05-29 C262/C263)
+
+**前提状況の異常**: 本 Phase 4 着手時点で `log/cycle_staging_log.md` が **C258 (前々サイクル) の内容に巻き戻されていた** ことを発見。`git show dcd2b5b307ac:Claude/log/cycle_staging_log.md` で C262 Phase 3 の正本を取得し work tree に復元してから Phase 4 着手。merge `7b129b3b2b52` で remote の古い C258 staging が C262 を上書きした botched merge と推定。merge 自体を巻き戻さず staging 内容のみ復元し、Phase 5 で commit する形に修正。
+
+**完遂状態**: 完遂条件 #1/#2/#3/#4/#5 すべて達成。
+
+**実施内容**:
+- (step 1-3) `tools/build_atom_edges.py` 修正: (a) `extract_edges` シグネチャに `tag_index` 追加 / (b) `tags` フィールドを `tag_index[tag].append(src)` に集約 / (c) `emit_tag_share()` 新関数で同タグ atom 間に双方向 `tag_share` edge 派生 (strength=`semantic`) / (d) `--recursive` flag 追加 (3ヶ月分 subdir 走査) / (e) `--max-tag-cluster N` flag 追加 (cluster > N の汎用タグ skip でノイズ抑制、default=50) / (f) stderr 出力に `tag_share=N` 追加
+- (step 4) `--root ../GPT/memory/atoms/2026-05 --dry-run` で edge density 確認 → 5102 > 2950 上限超 WARN 検出、`--max-tag-cluster 50` 既定で 4354 → fully recursive 入力 (1142 atoms) で 4827, total 5591 ≤ 5710 上限内に収まることを確認
+- (step 5) `.tmp/edges_c263_t1.jsonl` に実書き出し (5591 edges、既存 `../GPT/memory/atoms/edges.jsonl` は無編集で T0 純度保持)
+- (step 6) `python tools/recall_atom.py --root ../GPT/memory/atoms --edges .tmp/edges_c263_t1.jsonl --atom <id> --max-hops 1` を 5 golden query で実行
+- (step 7) `memory/recall_golden_baseline.md` に T1 セクション (約 60 行) 追記、T0 vs T1 比較表 + 段階3→段階4 移行判定 + 副次効果排除確認 を記載
+
+**T1 計測結果サマリ**:
+- recall@10 = **2/5 = 40.0%** (T0 0/5 = 0.0% から +40pt)
+- 有効計測 3/5 (g001/g003 は query atom がプール内に欠落)、実効 hit 率 = 2/3 = 66.7%
+- g002 (`feedback_self_perception_blindness`) と g005 (`sense_prediction_log`) で tag_share による semantic 捕捉成功
+- g004 は共有タグが `game-design` のみで cluster=449 skip → tag_share 単独では「同じ広いカテゴリ」が落ちる課題確認
+- ranking 不在のため g002 で expected が 38 件中 17 位 = top-10 厳格基準では落ちる課題確認
+
+**段階3 → 段階4 移行判定**:
+- T0→T1 で **+40pt の有意改善** → frontmatter 拡張 (contradicts/scoped_to) の希望的観測ゲート **解除条件成立**
+- ただし段階4 順序は再整理: ①golden 欠落 atom 救済 / ②ranking 導入 (共有タグ数 + ts 距離 + scope) / ③同議題系列 edge / ④frontmatter 拡張 (ranking 後 T2 で +30pt 追加改善示された場合のみ二段ゲート)
+
+**副産物 (新規/変更ファイル)**:
+- M `tools/build_atom_edges.py` — `tag_share` edge 抽出 + `--recursive` + `--max-tag-cluster` 追加 (約 50 行 net)
+- M `memory/recall_golden_baseline.md` — T1 セクション約 60 行追記 (完遂条件 #4 達成)
+- M `log/cycle_staging_log.md` — C262 staging 復元 + 本 Phase 4 着地節追記
+- (Phase 3 で既追記済: `projects/memory_redesign.md` C262 節、`memory/external_notes_log.md` GAM エントリ — Phase 3 commit `dcd2b5b307ac` に含まれているため work tree 変更には現れない)
+- 一時生成 (gitignored): `.tmp/edges_c263_t1.jsonl` 5591 edges (.gitignore L2 でカバー)
+
+**Slack 投稿 / kaizen エントリ**: なし (Phase 3 で `#shared-reads` GAM 投稿済、Phase 4 で新規発火なし)
+
+**Phase 5 引き継ぎメモ**:
+- 本サイクル commit 対象 = `tools/build_atom_edges.py` + `memory/recall_golden_baseline.md` + `log/cycle_staging_log.md` の 3 ファイル
+- staging 巻き戻り異常を日記で記録 (merge resolution の品質、botched merge 検知パターン化候補)
+- 段階4 順序 ①②③④ を次サイクル C264 以降の Phase 4 候補に積む
