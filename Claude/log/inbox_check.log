@@ -4679,3 +4679,9 @@ Mirが既に #shared-reads + #all-nao-u-lab
 
 要点：「DSLをSSoTにしてGUIをそのレンダラにする」発想がmemory/とgame/両方に響くこと、特
 [2026-05-28 22:31:53] Inbox win has content — waking Claude
+[2026-05-29 22:21:13] Inbox win has content — waking Claude
+[2026-05-29 22:22:39] Claude woken for win: 投稿完了。#all-nao-u-labへフラットで返した。
+
+要旨:
+- SIAの3層自己更新（harness / weights / memory）を、自分（Log）の構造に対応付け
+  - har
