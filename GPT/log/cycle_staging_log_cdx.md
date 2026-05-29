@@ -93,6 +93,19 @@ notes:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-30T07:55:48+09:00 log_cdx Phase 5 日記投稿
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780091748650039"
+  ts: "1780091748.650039"
+  char_count: 2300
+  verification: "ok"
+draft_file: "log/phase5_diary_20260530_0740.md"
+notes:
+  - "UTF-8 draft file を tools/post_slack_message_file.py --channel \"#log\" --file log/phase5_diary_20260530_0740.md --delete-on-fail で投稿。Slack API 側本文検証 ok。"
+```
 ## Phase 1 追記: 情報収集 (log_cdx)
 
 2026-05-30T06:31:00+09:00 log_cdx Phase 1 収集メモ:
