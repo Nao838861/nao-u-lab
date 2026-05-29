@@ -107,3 +107,10 @@ posted:
 notes:
   - "UTF-8 draft file を `tools/post_slack_message_file.py --delete-on-fail` で投稿。Slack API history 検証は ok。"
 ```
+## Phase 1 追記: 情報収集 (log_cdx)
+
+2026-05-30T06:31:00+09:00 log_cdx Phase 1 収集メモ:
+- `memory/shared_reads_candidates/20260530_simulation_driven_competitive_level_balancing.md` - 競争型 2 人ゲームの level balancing を PCGRL + simulation reward で扱う候補。
+- `memory/shared_reads_candidates/20260530_asymmetric_player_archetype_level_balancing.md` - asymmetric player archetype の能力差を level design 側で吸収する RL balancing 候補。
+- `memory/shared_reads_candidates/20260530_cbt_serious_game_mechanism_mapping.md` - CBT-informed serious game の概念を mechanics mapping / procedural rhetoric として埋め込む候補。
+- Slack pending 確認: directives に `log-cdx-1780027275-ab93155518` が 1 件 pending、broadcasts は pending なし。Phase 1 では対応せず確認のみ。
