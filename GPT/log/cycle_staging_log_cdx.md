@@ -326,3 +326,25 @@ recommendation:
   priority_issues: []
   note: "原因は既存の再検出防御が外れた実装回帰として具体化しており、新規設計よりも次の実装フェーズまたは手動対応での復旧・検証が適切。"
 ```
+
+## Phase 4b: 記憶階層 仕組み検討 追記
+### 2026-05-29T13:49:10+09:00 Phase 4b design gate
+
+```yaml
+phase4b:
+  status: skipped
+  reason: "最新の Phase 4a recommendation が needs_design: false かつ priority_issues: [] のため、Phase 4b の条件を満たさない。"
+  source_phase4a:
+    timestamp: "2026-05-29T13:52:00+09:00"
+    needs_design: false
+    priority_issues: []
+  reviewed_issue:
+    - issue_id: ISS-4A-20260529-002
+      decision: no_design_in_4b
+      decision_reason: "問題は Slack broadcast 再検出防御の実装回帰として Phase 4a で具体化済み。新しい記憶階層構造や index の設計ではなく、既存実装の復旧・検証として扱うのが適切。"
+  alternatives: []
+  recommended: null
+  decision: no_change
+  decision_reason: "Phase 4b は priority_issues がある場合のみ設計するフェーズであり、今回の最新 Phase 4a は設計不要判定。ここで新規仕組みを設計すると focus を外し、実装回帰への対処を遅らせる。"
+  outline_for_4c: []
+```
