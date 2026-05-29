@@ -310,3 +310,55 @@ projects/INDEX.md の Active テーブル該当行 (memory_redesign / game_templ
 - matrix v0 → game/templates/shooting/draft_v01.md 着地 — game_templates_design 停滞解除候補だが、本サイクルでは memory_redesign / game_templates_design 両プロジェクトに C261 Phase 3 節を追加した時点で「停滞解除トリガ起爆条件」を満たしているので、実装は次サイクル以降に bound
 - 外部 URL fetch (Paul Iusztin 等の二次摂取の一次資料化) — Phase 5 (もしくは次サイクル) に回す
 - Phase 4 で 2 commit 以上を作る (game commit を 1 つに集約)
+
+## Phase 4: 実行
+
+### 0) Phase 4 大作業認識誤りの補正 (重要観察点)
+
+staging Phase 1-3 で書かれた「Phase 4 大作業 = v004 design_log 起票」は **実態と乖離**:
+- v004 design_log は C252 Phase 4 で着地済 (5/27、案 A 弾消し報酬 雛形)
+- v005 design_log は C256 Phase 4 で着地済 (5/28、連続 erase 段階化)
+- v005/design_log §5.4 で v006 候補軸 2 案 (色相再検討 / motion 追加) も C258 Phase 2 で記録済
+- projects/log_autonomous_game.md「v006 検討メモ」(C257 Phase 3) で v006 候補 3 軸 (敵バリエーション / HP system / 70-90s カーブ) を R-A/R-D/R-E 評価付きで起票済
+
+Phase 1 §C 自己宣言「log_autonomous_game (5/27 C251 v003 着地) が 2 サイクル動いていない」も誤り = 5/27 v003 着地後に v004 (5/27)、v005 (5/28) と 2 サイクル進行済。Phase 1 step 5 (Active プロジェクト確認) で `projects/log_autonomous_game.md` 末尾の v006 検討メモまで読まなかった + `ls game/log_autonomous_game/` で v004/v005 ディレクトリ存在を確認しなかった = **自己認識ドリフトの観測点**。
+
+**Phase 4 補正方針**: staging 指示の精神 (「次バージョン design_log 起票 + 3 案ブレスト + 1 案選定 + 持越ゲート」+「ゲームを動かして出す原則の game/ commit 系統補正」) を活かしつつ、対象を **v004 → v006** に補正、ブレスト軸を **出題側 (= 敵/弾源側) 振幅増** に特化して整理。完遂定義 1-6 はすべて v006 文脈で満たす。
+
+### 1) 副産物列挙
+
+**新規ファイル**:
+- `game/log_autonomous_game/v006/` ディレクトリ作成
+- `game/log_autonomous_game/v006/design_log.md` 起票 (§0 経緯補正 / §1 出題側振幅増 3 案ブレスト (敵バリ / 70-90s カーブ / タイミング・弾速振幅) / §2 案 (a) 敵バリ選定 + R-A/R-D/R-I 根拠 / §3 8 ゲート継承 + 新規 Q-Q 1 ゲート / §4 扱わない項目 / §5 次サイクル判断材料 / §6 リンク)
+
+**変更ファイル**:
+- `log/cycle_staging_log.md` 本 Phase 4 セクション追記 (本ファイル)
+
+**Slack 投稿**: 本 Phase 4 では追加投稿なし (Phase 3 で 4 件投稿済、Phase 5 で日記投稿)
+
+**kaizen エントリ**: 本 Phase 4 では新規起票なし。**自己認識ドリフト観測点** (Phase 1 step 5 でプロジェクト最新状態確認漏れ) は次サイクル Phase 1 step 0「対象プロジェクト最新状態確認 (game directory + projects ファイル両方)」の運用変更候補として記録、N=2 同型観察待ち (kaizen #136 段階1 と並列の観察案件として保持、`feedback_few_rules_big_effect.md` 順守で即時 kaizen 起票はしない)
+
+### 2) 完遂定義への到達状況
+
+staging Phase 3 §「次フェーズの大作業」完遂定義 1-6 への対応 (v004 → v006 補正版):
+1. ✅ `game/log_autonomous_game/v006/` ディレクトリ作成
+2. ✅ `game/log_autonomous_game/v006/design_log.md` 起票
+3. ✅ design_log.md §1 に「出題側振幅増」3 案ブレスト (各案: 機構名 / 期待効果 / 失敗 pre-mortem / 実装コスト 1 行)
+4. ✅ design_log.md §2 に案 (a) 敵バリ選定 + R-A (核強化) / R-D (型側継承) / R-I (最終確認可) の根拠明記
+5. ✅ design_log.md §3 に持越ゲート 8 個 (Q-A〜Q-F、Q-G は Q-成功FB に統合済) を v005 → v006 差分付き表で継承 + 新規 Q-Q (出題側振幅 = 読みやすさ劣化判定) 1 個追加 = 8 → 9
+6. ✅ v005 → v006 差分が「振幅の出題側次元 +1 軸」に bound (新規ゲート Q-Q のみ、追加機構 = 案 (a) 敵バリエーション 1 つに絞り、8 → 9 を超えない)
+
+**完遂定義 1-6 全項到達**。実装 commit (案 (a) game.js / verify.js 改修) は v005 実機判定後の C262+ 以降に bound (R-I 順守、判定でなく最終確認装置に倒す)。
+
+### 3) 「ゲームを動かして出す」原則への寄与
+
+本 Phase 4 は **playable diff の precursor (= 次バージョン骨格起票)** で `game/log_autonomous_game/v006/design_log.md` 新規 1 ファイル = `game:` 系統の commit 候補を本サイクルに 1 本確保 (`feedback_means_ends_reversal_check.md` 順守)。実装本体 (game.js fork) は v005 実機判定到来前に進めると退路設計化リスクのため、design_log 起票で停滞解除トリガを物理化する形で系統補正を成立させる。
+
+### 4) Phase 5 申し送り
+
+- Phase 5 (日記) で commit 分離: `game:` 1 commit (`game/log_autonomous_game/v006/design_log.md`) + `rule:` 1 commit (`log/cycle_staging_log.md` Phase 4 追記 + Phase 5 日記 + memory_redesign / game_templates_design / kaizen_tracker C261 Phase 3 追記分)
+- 日記本文の核論点 (Phase 5 用素材):
+  - tegnike + yusuke_m_mu + izutorishima 3 連続摂取 (#all-nao-u-lab 4 件投稿) で「skill description load 問題」「MNP 中間記法パターン」を本日得た外部視点として展開
+  - Phase 4 認識誤り補正 = 自己認識ドリフト観測点として日記に明記 (次サイクル Phase 1 step 0 候補も同時記録)
+  - kaizen #134 運用観察 27 日目 (罰語彙 4 → 3 第 4 段差候補)、kaizen #135 段階3 着地後 1 サイクル目の memory infrastructure 安定確認
+  - v006 design_log 起票で log_autonomous_game プロジェクトの停滞 (5/26 06:10 Nao_u「展開がなく繰り返し」批判) への構造応答が「敵側の質的多様性」軸で初手着地
