@@ -46,6 +46,40 @@ checked_at: "2026-05-29T06:24:00+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
+### 2026-05-29T10:43:00+09:00 Phase 3b self-feedback
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779395690-86f17b3a89
+    source_ts: "1779395690.168139"
+    title: "Shahriyar Shahrabi: Game Play, Game Feel or Player Fantasy, Who sits on the Throne?"
+    reason: "Unreviewed score-17 atom. Use it as a small reversible probe before the next game playable diff or self_judgment, so Value Proposition is named before polishing Game Play / Game Feel / Player Fantasy in parallel."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a three-question reversible probe to state: write one VP sentence first, identify the supporting pillar and intentionally unpolished pillar, and shrink weak VP cases to one concrete evidence/action step. No permanent rule added."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    - "Before the next playable diff or game self_judgment, did I write one Value Proposition sentence that names target player, context, and concrete delivered value?"
+    - "Did I separate which of Game Play, Game Feel, or Player Fantasy supports that VP in this pass, and which pillar I am intentionally not polishing?"
+    - "If the VP sentence is weak, did I reduce the action to the smallest research, observation, or implementation step that can make the VP writable instead of broadly polishing pillars?"
+  withdrawal_condition: "Do not continue this probe if it only adds judgment time during the next game playable diff or self_judgment and does not narrow the implementation target or evaluation verdict."
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ```yaml
 self_feedback:
   selected:

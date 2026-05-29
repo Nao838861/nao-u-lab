@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-29T06:06:55+09:00",
+  "updated_at": "2026-05-29T10:43:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -77,9 +77,33 @@
     "1778300066.673579",
     "1778474714.809439",
     "1779979770.780529",
-    "1778609979.811899"
+    "1778609979.811899",
+    "1779395690.168139"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-29T10:43:00+09:00",
+      "id": "sr-1779395690-86f17b3a89",
+      "source_ts": "1779395690.168139",
+      "title": "Shahriyar Shahrabi \"Game Play, Game Feel or Player Fantasy, Who sits on the Throne?\" (Medium 2024-06-10)",
+      "decision": "adopt_probe",
+      "reason": "Unreviewed score-17 atom spanning memory/game-design/operation/evaluation. For the next playable diff or self_judgment, it gives a small way to avoid polishing Game Play, Game Feel, and Player Fantasy in parallel before naming the Value Proposition. This overlaps with existing Q0 and core-density probes, but differs by asking for target player, context, delivered value, and the pillar intentionally not polished. Keep it as a reversible probe, not a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff or game self_judgment, did I write one Value Proposition sentence that names target player, context, and concrete delivered value?",
+        "Did I separate which of Game Play, Game Feel, or Player Fantasy supports that VP in this pass, and which pillar I am intentionally not polishing?",
+        "If the VP sentence is weak, did I reduce the action to the smallest research, observation, or implementation step that can make the VP writable instead of broadly polishing pillars?"
+      ],
+      "withdrawal_condition": "Do not continue this probe if it only adds judgment time during the next game playable diff or self_judgment and does not narrow the implementation target or evaluation verdict."
+    },
     {
       "reviewed_at": "2026-05-29T06:06:55+09:00",
       "id": "sr-1778609979-e4b208dd8b",
@@ -2302,6 +2326,18 @@
         "If the playtest fails or is flaky, did I preserve the smallest traceable artifact such as rubric id, input sequence, screenshot, console error, or staging note for the next coding pass?"
       ],
       "expires_after": "Review after the next browser game prototype, playable diff, or GUI/browser playtest that reports a game as playable or ready for human review."
+    },
+    {
+      "id": "probe-20260529-value-proposition-before-pillars",
+      "created_at": "2026-05-29T10:43:00+09:00",
+      "source_ts": "1779395690.168139",
+      "scope": "next game playable diff, game design note, browser-game verification, or self_judgment where Game Play, Game Feel, Player Fantasy, Q0, fun, feel, or role fantasy may be evaluated in parallel",
+      "questions": [
+        "Before the next playable diff or game self_judgment, did I write one Value Proposition sentence that names target player, context, and concrete delivered value?",
+        "Did I separate which of Game Play, Game Feel, or Player Fantasy supports that VP in this pass, and which pillar I am intentionally not polishing?",
+        "If the VP sentence is weak, did I reduce the action to the smallest research, observation, or implementation step that can make the VP writable instead of broadly polishing pillars?"
+      ],
+      "expires_after": "Review after the next game playable diff, game design note, browser-game verification, or self_judgment that uses pillar-style evaluation."
     }
   ],
   "probes": [
