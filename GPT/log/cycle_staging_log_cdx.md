@@ -224,7 +224,20 @@ designs:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-05-29T14:36:05+09:00 Phase 5 diary post
+
+```yaml
+posted:
+  channel: "#log"
+  file: memory/phase5_diary_20260529_1435.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780028165009239"
+  char_count: 2240
+  verification: "ok"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file \"memory\\phase5_diary_20260529_1435.md\" --delete-on-fail: ok"
+  - "chat.getPermalink は api wrapper 経由で invalid_arguments になったため、既存 tools\\codex_slack_directives.py と同じ channel/ts 形式で permalink を生成。"
+```
 
 ## Phase 1: 情報収集 追記
 
