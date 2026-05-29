@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-30T02:34:36+09:00",
+  "updated_at": "2026-05-30T04:41:59+09:00",
   "reviewed_source_ts": [
+    "1779993720.504559",
     "1780069411.646509",
     "1779490621.204069",
     "1779427961.960549",
@@ -83,6 +84,33 @@
     "1780037572.093769"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T04:41:59+09:00",
+      "id": "sr-1779993720-74ed23da7c",
+      "source_ts": "1779993720.504559",
+      "title": "Nao_uが #nao-u で共有: 「More Skills, Worse Agents?」— スキルが増えると性能が落ちるメカニズム",
+      "decision": "adopt_metric",
+      "reason": "Score 17. Nao_u共有由来で、Phase 3b の最重要リスクである probe/skill/rule の増加と選択劣化に直結する。本文は Context Overhead と Skill Shadowing を分け、特に description 空間の重複が選択失敗の主因になると示す。反映は新しい常用 probe を増やさず、次に probe/rule/skill を追加または有効化する時の小さな shadowing metric に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "metric": {
+        "name": "selection_shadowing_check",
+        "scope": "next probe/rule/skill/directive addition or activation, including Phase 3b self-feedback",
+        "check": [
+          "Name the closest existing probe/rule/skill/directive that could shadow the new one, or record none found.",
+          "If a neighbor exists, state the differentiator in one sentence: trigger, non-use case, evidence type, or work surface.",
+          "If the differentiator is weak, prefer marking the atom reviewed/deferred or updating state only instead of adding another active probe or permanent rule."
+        ],
+        "withdrawal_condition": "Drop this metric if it merely slows Phase 3b selection without preventing duplicate probes, vague triggers, or rule/probe accumulation."
+      }
+    },
     {
       "reviewed_at": "2026-05-30T02:34:36+09:00",
       "id": "sr-1780069411-98b659d448",

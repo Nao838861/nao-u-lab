@@ -40,7 +40,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-30T04:41:59+09:00 log_cdx Phase 3b
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779993720-74ed23da7c
+    source_ts: "1779993720.504559"
+    title: "Nao_uが #nao-u で共有: 「More Skills, Worse Agents?」— スキルが増えると性能が落ちるメカニズム"
+    reason: "Nao_u共有由来で、Phase 3b の probe/rule 増加リスクに直結する。Context Overhead と Skill Shadowing を分け、特に description 空間の重複が選択失敗を起こすという知見を、次の probe/rule/skill 選択に小さく反映できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_metric
+  change:
+    summary: "active_probes は増やさず、state の review に selection_shadowing_check metric を追加。次に probe/rule/skill/directive を追加・有効化する時、近接する既存項目、差別化点、差別化が弱い場合の state-only/defer 判断を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
