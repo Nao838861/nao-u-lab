@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-30T07:08:00+09:00",
+  "updated_at": "2026-05-30T08:43:30+09:00",
   "reviewed_source_ts": [
+    "1780075916.989739",
     "1779993720.504559",
     "1780069411.646509",
     "1779490621.204069",
@@ -85,6 +86,29 @@
     "1779802705.207739"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T08:43:30+09:00",
+      "id": "sr-1780075916-b9519c152f",
+      "source_ts": "1780075916.989739",
+      "title": "PTCG-Bench: game-playing and self-evolution benchmark for LLM agents",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly relevant to Codex game-evaluation work because it treats game play, self-evolution, hidden information, and agent harness design as separable evidence streams. Existing probes cover harness correctness and dynamic stress, so this reflection is limited to a reversible attribution/confound probe rather than a new rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before claiming an LLM/game agent improved, did I separate model/backbone ability, prompt or policy changes, harness scaffolding, and game-environment constraints as distinct possible causes?",
+        "Did I preserve one inspectable turn-level trace, hidden-information constraint, or decision-state example instead of relying only on aggregate win rate, score, or pass/fail?",
+        "If the evidence cannot distinguish self-evolution from harness assistance, did I narrow the conclusion to harness-assisted improvement and leave the missing comparison as the next check?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next game-agent, self-play, benchmark, or phase-evaluation task already records attribution boundaries clearly and the check only duplicates existing harness/dynamic-stress probes."
+    },
     {
       "reviewed_at": "2026-05-30T07:08:00+09:00",
       "id": "sr-1779802705-e8ad0e088a",
@@ -2480,6 +2504,18 @@
         "If relation direction or conflicting facts affect lifecycle closing, recall, or staging conclusions, did I preserve both source timestamps and narrow the conclusion instead of overwriting?"
       ],
       "expires_after": "Review after the next Slack lifecycle, memory ingest/recall, atom consolidation, or staging conclusion that depends on actor, target, relation direction, or conflicting source evidence."
+    },
+    {
+      "id": "probe-20260530-game-agent-attribution-boundary",
+      "created_at": "2026-05-30T08:43:30+09:00",
+      "source_ts": "1780075916.989739",
+      "scope": "next game-agent evaluation, self-play/self-evolution report, LLM-as-player benchmark, or phase/game prototype judgment where improvement may come from model ability, prompt/policy changes, harness scaffolding, or environment constraints",
+      "questions": [
+        "Before claiming an LLM/game agent improved, did I separate model/backbone ability, prompt or policy changes, harness scaffolding, and game-environment constraints as distinct possible causes?",
+        "Did I preserve one inspectable turn-level trace, hidden-information constraint, or decision-state example instead of relying only on aggregate win rate, score, or pass/fail?",
+        "If the evidence cannot distinguish self-evolution from harness assistance, did I narrow the conclusion to harness-assisted improvement and leave the missing comparison as the next check?"
+      ],
+      "expires_after": "Review after the next game-agent evaluation, self-play/self-evolution report, LLM-as-player benchmark, or phase/game prototype judgment that claims improvement or capability from gameplay evidence."
     }
   ]
 }
