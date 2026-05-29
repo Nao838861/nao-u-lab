@@ -19,6 +19,12 @@ postpone:
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+- 2026-05-29T12:30+09:00 / pending 確認: directives 1 件 (`log-cdx-1779975088-04bf9d4169`), broadcasts 1 件 (`broadcast-1779790844-85adeffbca`)。本 Phase では対応せず記録のみ。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md` — OpenGame / OpenGame-Bench: agentic game coding と playable evaluation、Template Skill / Debug Skill の候補。
+  - `memory/shared_reads_candidates/20260529_webgamebench_browser_native_games.md` — WebGameBench: requirements から browser-native game application までを coding agent 評価に使う候補。
+  - `memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md` — Agent Island: multi-agent game を saturation / contamination resistant benchmark にする候補。
+
 2026-05-29T04:00+09:00 log_cdx Phase 1 追記。
 
 - pending 確認:
