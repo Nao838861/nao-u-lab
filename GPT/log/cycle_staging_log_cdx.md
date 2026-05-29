@@ -276,3 +276,53 @@ self_feedback:
     replaces_or_simplifies_existing: false
     conflict_checked: true
 ```
+
+## Phase 4a: 記憶階層 整理 + 問題抽出 追記
+
+### 2026-05-29T13:52:00+09:00 Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    links_checked: 0
+    broken_links: 0
+    note: "memory/MEMORY.md から Markdown link として抽出できる index 行は現時点で 0 件"
+  atoms_jsonl:
+    total_atoms: 1591
+    bad_json_lines: 0
+    duplicate_ids: 0
+    duplicate_content_groups: 0
+    atoms_index_sync:
+      index_ids: 1591
+      atoms_not_in_index: 0
+      index_not_in_atoms: 0
+  raw_archive:
+    cutoff: "2026-04-29T13:46:48+09:00"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    cutoff: "2026-04-29T13:46:48+09:00"
+    older_than_30_days: 0
+  inbox:
+    pending_directives:
+      - id: log-cdx-1780027275-ab93155518
+        status: pending
+        reason: "Nao_u からの broadcast 誤検出調査依頼。Phase 4a では原因を issue 化し、実装修正は行わないため未 close。"
+      - id: log-cdx-1779975088-04bf9d4169
+        status: pending
+        reason: "外部 X 投稿への返信可否確認。needs_human_review のため Phase 4a では未 close。"
+    pending_broadcasts:
+      - id: broadcast-1779790844-85adeffbca
+        status: pending
+        reason: "5/26 の古い '君ら' 投稿が 5/29 に再検出された疑い。誤検出 issue の evidence として保持し、Phase 4a では未 close。"
+issues:
+  - id: ISS-4A-20260529-002
+    description: "Slack broadcast 検出で、過去投稿の再検出を防ぐ防御が未コミット差分上で外れており、古い '君ら' 投稿が数日遅れで pending broadcast 化している。"
+    severity: high
+    evidence: "tools/codex_slack_directives.py diff removes ACK_LEDGER_PATH / load_ack_ledger() / append_ack_ledger() / STALE_SOURCE_SECONDS; memory/slack_broadcasts.jsonl adds broadcast-1779790844-85adeffbca detected_at=2026-05-29T13:37:37 for source_ts=2026-05-26T19:20:44; memory/slack_directives.jsonl adds log-cdx-1780027275-ab93155518 stating '全員宛broadcastの誤検出が連続してる。原因を調べて対処して。'"
+    why_blocks_game_memory: "broadcast 誤検出が続くと、ゲーム制作の本物の指示と雑談・確認依頼が同じ pending 経路に混ざり、phase_game_start や Phase 4a の triage がノイズに埋もれる。結果として次の playable diff に接続すべき Nao_u 指示を見落とす危険が上がる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  note: "原因は既存の再検出防御が外れた実装回帰として具体化しており、新規設計よりも次の実装フェーズまたは手動対応での復旧・検証が適切。"
+```
