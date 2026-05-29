@@ -1,0 +1,431 @@
+{
+  "audit": "agent_difficulty_proxy",
+  "target": "game/log_autonomous_game/v002/game.js",
+  "source": "arXiv:2410.02829 (Wordle r=0.624 / Slay the Spire r=0.871, Pearson, p<10^-3)",
+  "thesis": "素朴良手 agent (Space 約2秒に1回 castLock + 中央バイアス nospecial 移動) 30 試行 4 指標中央値で v002 を計測",
+  "trials_count": 30,
+  "max_frames": 5400,
+  "max_seconds": 90,
+  "cast_gap_frames": 120,
+  "graze_distance_px": 30,
+  "wave_rest_frames": 480,
+  "wave_timeline": [
+    {
+      "phaseStart": 0,
+      "phaseEnd": 1200,
+      "types": [
+        "A"
+      ]
+    },
+    {
+      "phaseStart": 1200,
+      "phaseEnd": 3000,
+      "types": [
+        "A",
+        "D"
+      ]
+    },
+    {
+      "phaseStart": 3000,
+      "phaseEnd": 5400,
+      "types": [
+        "A",
+        "D",
+        "C"
+      ]
+    }
+  ],
+  "extracted_params": {
+    "ECHO_FRAMES": 60,
+    "BULLET_SPEED": 2,
+    "SHOOT_INTERVAL": 90,
+    "SHOOT_GATE_Y_MAX": 612,
+    "SHOOT_GATE_X_MIN": 128,
+    "SHOOT_GATE_X_MAX": 512,
+    "PLAYER_SPEED": 3.4,
+    "ENEMY_VY_A": 1.4,
+    "ENEMY_VX_D": 1.4,
+    "ENEMY_VY_C": 2.5,
+    "ENEMY_C_SWING_AMP": 60,
+    "ENEMY_C_SWING_PERIOD": 30,
+    "PLAYER_SPEED_STRENGTH": 1.5,
+    "PLAYER_SPEED_AGENT": 5.1
+  },
+  "median_clear_wave": 1,
+  "median_residual_hp_ratio": 0,
+  "median_play_time_sec": 8.68,
+  "median_graze_count": 2,
+  "survival_rate": 0,
+  "death_cause_breakdown": {
+    "bullet": 30
+  },
+  "all_trials": [
+    {
+      "seed": 20260527,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260528,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260529,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260530,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260531,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260532,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260533,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260534,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260535,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260536,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260537,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260538,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260539,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260540,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260541,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260542,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260543,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260544,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260545,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260546,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260547,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260548,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260549,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260550,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260551,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260552,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260553,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260554,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260555,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 1,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    },
+    {
+      "seed": 20260556,
+      "outcome": "gameover",
+      "death_cause": "bullet",
+      "clear_wave": 1,
+      "residual_hp_ratio": 0,
+      "play_time_sec": 8.68,
+      "graze_count": 2,
+      "cast_count": 3,
+      "lock_hit": 3,
+      "lock_miss": 0
+    }
+  ],
+  "limits": [
+    "人間体感難易度との Pearson 相関は未測定、3 サイクル運用後に Nao_u 体感ランキング vs proxy ランキング合致で妥当性判定",
+    "論文 (Wordle / Slay the Spire) はターン制、v002 はリアルタイム弾避け = 構造違いリスクあり",
+    "本数値は self_judgment の 3→4 暫定昇格根拠まで。確定 5 採点は実機判定依存",
+    "residual_hp_ratio は 1-hit kill のため binary (1.0/0.0)、HP system 導入時に連続値化",
+    "素朴良手 agent には MOVE_NOISE_SCALE=0.25 の方向微小ノイズあり、seed 差で結果分散が出る"
+  ]
+}

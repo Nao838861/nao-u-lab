@@ -59,6 +59,57 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-05-30 C264 Phase 4: 強化 agent (PLAYER_SPEED 1.5x) で proxy 再計測 — v001/v002/v003 比較
+
+**起票根拠**: C263 Phase 4 §5 a) 「強化 agent 導入で phase 2 到達」候補を最優先実装。素朴良手 agent が wave 1 内 (9.28s) で 30/30 死亡 → phase 2 (50-90s) 到達ゼロ = v003 改修対象 (phase 2 内 SHOOT_INTERVAL 90→60 frame 線形漸変) 計測不能の盲点を、agent 側 PLAYER_SPEED 1.5 倍化で打開できるかの試行。**game.js は変更せず、agent_difficulty_proxy.js 側だけ強化** (proxy 計測解像度の問題であり game balance の問題ではないため)。
+
+### 着地物
+- [game/log_autonomous_game/v001/agent_difficulty_proxy.js](../game/log_autonomous_game/v001/agent_difficulty_proxy.js) / [v002](../game/log_autonomous_game/v002/agent_difficulty_proxy.js) / [v003](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) — `PLAYER_SPEED_STRENGTH = 1.5` + `PLAYER_SPEED_AGENT = PLAYER_SPEED * PLAYER_SPEED_STRENGTH` 定数を追加、`naiveGoodHandMove` 内の移動量を `PLAYER_SPEED_AGENT` に差し替え。`extracted_params` JSON にも両定数を載せ再現性確保
+- log/c264_phase4_v001_result.json / v002_result.json / v003_result.json — 30 試行 × 3 バージョン分の生 JSON (Untracked、commit せず保存のみ)
+
+### §1. 強化 agent (1.5x) proxy 4 指標 計測値 (n=3 バージョン × 30 試行 中央値)
+
+| バージョン | median_clear_wave | median_residual_hp_ratio | median_play_time_sec | median_graze_count | survival_rate | phase 2 到達 (≥50s) | PLAYER_SPEED | PLAYER_SPEED_AGENT |
+|---|---|---|---|---|---|---|---|---|
+| v001 | 1 | **1.0** | **60.00** | 0 | **30/30 (1.0)** | 30/30 | 3.4 | 5.1 |
+| v002 | 1 | 0.0 | 8.68 | 2 | 0/30 (0.0) | 0/30 | 3.4 | 5.1 |
+| v003 | 1 | 0.0 | 8.68 | 2 | 0/30 (0.0) | 0/30 | 3.4 | 5.1 |
+
+### §2. C263 baseline (1.0x) との対比
+
+| バージョン | median_play_time_sec (1.0x → 1.5x) | survival_rate (1.0x → 1.5x) | phase 2 到達 (1.0x → 1.5x) | 差分判定 |
+|---|---|---|---|---|
+| v001 | 60.00 → 60.00 | 30/30 → 30/30 | 30/30 → 30/30 | **無変化** (1.0x で既に天井 = 1.5x の効果が出る余地なし) |
+| v002 | 9.28 → **8.68** (-0.60s) | 0/30 → 0/30 | 0/30 → 0/30 | **わずかに悪化** (1.5x 移動量が MOVE_NOISE_SCALE=0.25 noise を増幅、agent が弾に突っ込みやすくなった) |
+| v003 | 9.28 → **8.68** (-0.60s) | 0/30 → 0/30 | 0/30 → 0/30 | **わずかに悪化** (v002 と同様) |
+
+### §3. 判定 — 退路 1 発火 (staging C264 Phase 4 §退路)
+
+staging「次フェーズの大作業」§退路の 3 分岐:
+1. **強化 agent でも phase 2 到達ゼロのまま** → PLAYER_SPEED 1.5 倍化では不十分事実認定 ← **本サイクルはこれ**
+2. 強化 agent で 30/30 全クリア → 強すぎ判定 (1.2-1.3 倍に下げる) → v001 のみ該当だが元から 30/30 なので新規発火ではない
+3. 中間 (phase 2 到達 1 件以上 + 全クリア未到達) → 計測解像度向上成功 → 該当バージョンなし
+
+**結論**: PLAYER_SPEED 1.5 倍化は v002/v003 の phase 2 到達盲点を打開できない。むしろ median 0.6 秒悪化 = 「速度を上げると noise が増幅され、弾回避ではなく弾突入になる」現象を観察。素朴良手 agent の弱点は **速度ではなく予測能力** (nospecial 移動は最近接脅威からの逃避のみで、弾軌道予測なし) と判明。
+
+### §4. 次の一手 (C265 候補)
+
+a) **弾予測 move 関数導入 (C263 §5 a の続き)**: 現 `naiveGoodHandMove` は最近接弾からの斥力のみ。弾の vx/vy を 30-60 frame 先 (= 0.5-1.0 秒先) まで線形外挿し、player 位置との minimum-distance 時刻を計算 → その時刻の弾位置の集合から repulsive field を作って斥力を取る、を試す。Pulse Relay v003 教師差分の「1秒先予測 castLock」を agent 側にも導入する設計上の対称性あり
+b) **MOVE_NOISE_SCALE 動的調整**: 1.5x boost 時に noise を 0.25 → 0.15 程度に下げ、boost 効果を移動量だけに集中させる。本サイクル §2 で観察した「速度↑だけだと noise が増幅される」現象への対症療法
+c) **phase 別 proxy 分割 (C263 §5 b 継承)**: agent 改修で phase 2 到達が困難な場合、proxy 側を「phase 0 内 (0-20s) サブ指標」「phase 1 内 (20-50s) サブ指標」に分割し、現 4 指標を全 phase 込みの集約ではなく phase 別に出す。v003 改修 (phase 2 内漸変) の計測には phase 2 サブ指標の起動が必要だが、当面は wave 1 内死亡軽減 (phase 0 内指標の解像度向上) が現実的
+
+### §5. 接続先
+
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C264 Phase 4 「次フェーズの大作業」節 — 本節は完遂報告として接続、退路 1 発火を物理化
+- 本 md L62 C263 §5 a) 「強化 agent 導入で phase 2 到達」候補 — 本節 §3 結論で「不十分」事実認定 = a) 案は単独では効かないことが判明、C265 で a) を弾予測込みに進化させる流れ
+- [game/log_autonomous_game/v002/agent_difficulty_proxy.js](../game/log_autonomous_game/v002/agent_difficulty_proxy.js) / [v003](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) `naiveGoodHandMove` — 次サイクル C265 弾予測 move 関数導入の改修対象
+
+### §6. kaizen #136 上位パターン補償との接続
+
+本 Phase 4 は **staging Phase 3 §6 で発覚した「Phase 1 §6 が L72-80 のみ読み L62 を読み落とした → 既解問題を未解扱い」kaizen #136 同型再発の補償行動** として位置づけた。書類修正ではなく Active project (log_autonomous_game) の真の最重要残課題 (proxy 計測盲点) を直接動かすことで構造的補償を狙ったが、結果は退路 1 発火 = 1.5 倍化では不十分。**ただし「動かす」ことで判明した知見 (速度↑ + noise → 弾突入)** は次サイクル C265 b) MOVE_NOISE_SCALE 動的調整 の根拠になる = 進歩はあった。
+
+---
+
 ## 2026-05-29 C263 Phase 4: proxy 4 指標 Pearson 相関第 1 回計算 — v002→v003 静止で計測盲点発見
 
 **起票根拠**: C251 Phase 4 残課題 §1「実機判定取得後に proxy 4 指標 Pearson 相関第 1 回計算」が staging Phase 1 §5 で「最大停滞」と明記、本サイクル C263 Phase 4 大作業として「揃っていなければ揃える 1 手」方針で着手 (実機判定は依然未到達のため、Log 自己採点を fun_score 代理として暫定試算)。

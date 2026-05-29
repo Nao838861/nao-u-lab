@@ -216,3 +216,34 @@ Slack 投稿 3 件 + Active project 更新 1 件 + 上位パターン N=7 同型
 - 強化 agent で 30/30 全クリア = **PLAYER_SPEED 1.5 倍化は強すぎ、PLAYER_SPEED 1.2-1.3 倍に下げる**判定
 - 中間 (phase 2 到達 1 件以上 + 全クリア未到達) = **計測解像度向上成功**、phase 2 内 SHOOT_INTERVAL 90→60 frame 漸変が proxy 上で観測可能になったかを v002 vs v003 median 差分で判定
 
+## Phase 4: 完遂報告 (2026-05-30 C264 着地)
+
+### 完遂状況: **退路 1 発火** (PLAYER_SPEED 1.5 倍化では不十分事実認定)
+
+| 項目 | 結果 |
+|---|---|
+| 1.5x 強化 agent 実装 | ✅ v001/v002/v003 三本に `PLAYER_SPEED_STRENGTH=1.5` + `PLAYER_SPEED_AGENT=PLAYER_SPEED*PLAYER_SPEED_STRENGTH` 追加、move 関数差し替え |
+| 30 試行 × 3 バージョン再計測 | ✅ 全試行 exit 0 (allInstantDeath 発火なし) |
+| log_autonomous_game.md L62 新規節追加 | ✅ 「2026-05-30 C264 Phase 4: 強化 agent (PLAYER_SPEED 1.5x) で proxy 再計測 — v001/v002/v003 比較」節を旧 C263 節の上に追加 |
+| phase 2 到達率 (≥50s) | v001 30/30 / v002 0/30 / v003 0/30 = **退路 1 発火** |
+| 副作用観察 | v002/v003 median play_time が 9.28s → 8.68s (-0.6s) **わずかに悪化** = 速度↑が MOVE_NOISE_SCALE=0.25 noise を増幅、agent が弾に突っ込みやすくなった |
+
+### 変更ファイル (commit せず、Phase 5 にまとめ)
+- `game/log_autonomous_game/v001/agent_difficulty_proxy.js` (M, +5 lines)
+- `game/log_autonomous_game/v002/agent_difficulty_proxy.js` (M, +5 lines)
+- `game/log_autonomous_game/v003/agent_difficulty_proxy.js` (M, +5 lines)
+- `projects/log_autonomous_game.md` (M, +52 lines C264 Phase 4 節)
+- `log/c264_phase4_v001_result.json` / `v002_result.json` / `v003_result.json` (新規、結果 JSON 保存)
+
+### Slack 投稿 / kaizen 起票 / blog 着地
+- Phase 4 内で **追加なし** (Phase 3 で 3 件投稿済、Phase 4 はゲーム作業に集中)
+
+### 次サイクル C265 への引き継ぎ
+- log_autonomous_game.md 新規節 §4 a/b/c に C265 候補 3 案を物理化:
+  - a) **弾予測 move 関数導入**: 弾 vx/vy 線形外挿で 0.5-1.0 秒先の弾位置場から repulsive field 構築 (第一候補)
+  - b) **MOVE_NOISE_SCALE 動的調整**: 1.5x boost 時 0.25 → 0.15 に下げ (本サイクル副作用への対症療法)
+  - c) **phase 別 proxy 分割**: phase 0 / phase 1 サブ指標起動
+
+### kaizen #136 上位パターン補償との接続
+本 Phase 4 は Phase 3 §6 で発覚した「staging Phase 1 §6 が log_autonomous_game.md L72-80 のみ読み L62 を読み落とした → 既解問題 (proxy 4 指標計算) を未解扱い」kaizen #136 同型再発の **構造的補償** として位置づけた。書類修正ではなく Active project の真の最重要残課題 (proxy 計測盲点) を直接動かすことで補償を狙い、退路 1 発火 = 1.5 倍化単独では不十分と判明したが、副作用観察 (速度↑→弾突入) は C265 候補 b) の根拠になった = 「動かして判明した知見」あり。
+

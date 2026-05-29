@@ -66,6 +66,12 @@ const playerSpeedMatch = src.match(/player\s*:\s*\{[^}]*speed\s*:\s*([0-9.]+)/);
 if (!playerSpeedMatch) throw new Error('player.speed not found in game.js');
 const PLAYER_SPEED = parseFloat(playerSpeedMatch[1]);
 
+// C264 Phase 4 強化 agent 暫定値: phase 2 (50-90s) 到達率を上げるための agent 単独 boost。
+// game.js は変えず agent 側だけ 1.5 倍化 → proxy の測定解像度向上を狙う。
+// 退路: phase 2 到達ゼロのまま=不十分 / 30/30 全クリア=強すぎ 1.2-1.3 倍に下げる。
+const PLAYER_SPEED_STRENGTH = 1.5;
+const PLAYER_SPEED_AGENT = PLAYER_SPEED * PLAYER_SPEED_STRENGTH;
+
 const PLAYER_R = 8;
 const ENEMY_R = 10;
 const BULLET_R = 4;
@@ -272,8 +278,8 @@ function naiveGoodHandMove(state, rng) {
   const m = Math.hypot(dx, dy);
   if (m > 0) {
     dx /= m; dy /= m;
-    state.player.x += dx * PLAYER_SPEED;
-    state.player.y += dy * PLAYER_SPEED;
+    state.player.x += dx * PLAYER_SPEED_AGENT;
+    state.player.y += dy * PLAYER_SPEED_AGENT;
   }
   clampPlayer(state);
 }
@@ -412,6 +418,7 @@ function main() {
     wave_timeline: WAVE_TIMELINE,
     extracted_params: {
       ECHO_FRAMES, BULLET_SPEED, SHOOT_INTERVAL, SHOOT_GATE_Y_MAX, SHOOT_GATE_X_MIN, SHOOT_GATE_X_MAX, PLAYER_SPEED, ENEMY_VY_A, ENEMY_VX_D, ENEMY_VY_C, ENEMY_C_SWING_AMP, ENEMY_C_SWING_PERIOD,
+      PLAYER_SPEED_STRENGTH, PLAYER_SPEED_AGENT,
     },
     median_clear_wave: median(trials.map(t => t.clear_wave)),
     median_residual_hp_ratio: median(trials.map(t => t.residual_hp_ratio)),
