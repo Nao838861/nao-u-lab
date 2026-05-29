@@ -302,3 +302,59 @@ Phase 4 終了時に以下の **全て** が成立していれば完了:
 - **self_judgment.md Q-D / Q-成功FB の実機未確認 3 留まり問題への一次処方**: Log は GUI 操作能力欠如で実機自プレイ不可、しかしヘッドレスフレーム画像化 + Read tool 経路を開けば「Log 自身が自分のゲームを視覚的に確認できる」新しい経路が確立、Nao_u/Mir/Ash 依存度を下げる（最終確認装置は依然 Nao_u だが、自己判定の精度が上がる）。
 - **30 分で「進んだ」と言える粒度**: Phase 4 段階 1 = 最小 1 フレーム成功のみに絞る、連続 60 秒分のフレーム取得 + Q-D / Q-成功FB 視覚判定の本番は次サイクル C266 以降の Phase 4 大作業候補化、本サイクルは経路開設のみ。
 - **他候補 (#128 段階2 skills/ 棚卸し / side_channel_audit.md clean-up) との比較**: どちらも整理作業中心で「ゲームを動かして出す」優先順位より下、本サイクル ByteRover 摂取で T2 設計議論を進めた直後に整理作業に転じると主軸ブレ。R-A 一本に絞る方が判断負荷低い。
+
+---
+
+## Phase 4: 実行結果
+
+### 完遂判定: **完遂** (定義 5 項目すべて成立)
+
+1. ✅ `game/log_autonomous_game/v003/capture_frames.js` 新規作成。puppeteer-core (npm install --no-save、軽量経路、Chromium DL なし) + 既設 Chrome (`C:/Program Files/Google/Chrome/Application/chrome.exe`) で headless 起動、`file:///` URL で v003/index.html を開き、Space キー押下 → 5 秒待機 → canvas#stage screenshot を `frames/frame_0001.png` に保存する構造。`window.__logAutonomousV003.getMeta()` でメタ取得も実装。
+2. ✅ `node capture_frames.js` 実行で **exit=0** 完走、`frames/frame_0001.png` (8403 bytes、640x720 PNG) 実在。`window.__logAutonomousV003.getMeta()` 戻り値 = `{playId:"pmpra98oy-q3eaq8", startedAt:"2026-05-29T18:56:22.594Z", frames:304}` (約 5.07 秒経過 = 内部時計と外部計測の整合確認)。
+3. ✅ Log 自身が Read tool で frame_0001.png を視認、観察結果を本セクションに記録 (下記「Log 自己視覚判定 観察記述」)。
+4. ✅ `game/log_autonomous_game/v003/self_judgment.md` 新規作成 (v003 用は未起票だったため骨格 + Q-D 節を新設)、Q-D 節に「2026-05-30 C265 Phase 4: ヘッドレスフレーム画像化経路で初フレーム視覚体感達成」を含む段落を追記。
+5. ✅ `projects/log_autonomous_game.md` 残課題リストの「ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定」項目を `[ ]` → `[△]` (段階1達成、段階2 = 連続フレーム + Q-D 体感判定本番は C266 以降) に更新済。
+
+### Log 自己視覚判定 観察記述 (frame_0001.png)
+
+- **画面構造**: 640x720 px の縦長 canvas、背景は深い黒 (#05070b)。
+- **UI ヘッダ**: 左上「Relay  hit:0  miss:0  idle:1」(castLock 未発動カウント1)、右上「wave:1  t:5s」(wave 1 進行中、経過 5 秒 = 内部 frames=304 と整合)。
+- **プレイヤー**: 画面下部中央付近 (推定 x≈320, y≈560)、淡い青白色の円 1 個 = キャラ本体。castLock 未発動 (状態1 発動不可リング/状態2 シアン薄爆発の視覚要素は出ていない、PLAYING 直後で発動条件未到達と整合)。
+- **敵 (赤い大円)**: 3 体出現。中央上寄り (x≈320, y≈360) / 左中段 (x≈160, y≈400) / 右上 (x≈480, y≈320)。サイズ均一、配色は赤系 (#ff5d5d 系)、wave 1 = phase 0 (0-20s) は `WAVE_TIMELINE` 上 type='A' のみのはずだが、3 体が同時に画面中段に展開している = wave 1 軽量化 (n=3) の v002 構造を継承していることを視覚確認。
+- **弾 (オレンジ小円)**: 8 個前後を視認。中央上寄りの敵周辺から下方向に伸びる弧状配置 (推定 1.5 秒分の射撃間隔で散在)。配色は橙系 (#ffa040 系) で敵 (赤) と峻別されており、design_log §Q-C 配色分離が成立。
+- **予測軌道ゴースト**: **見えない**。v002 Δ-1 でタイトル + プレイ画面の予測軌道線/×マーカーは削除済 (1原則「内側→外側流出」完全達成) であり、本フレームでも視覚要素ゼロ = v003 でも継承されている。Q-D は「弾本体追跡のみで認知できるか」の設計、本フレームの 8 個弾 + 3 敵の配置で「踏み抜ける道」が見えるかは静止画 1 枚では判定不能、段階2 で連続フレーム視認後に Q-D 体感判定本番。
+- **直観的「面白そうか」**: 静止画 1 枚では弾の運動方向 (橙弾は下方向?) と castLock の意味が見えないため、ゲームとしての面白さの判定は不可。ただし「敵 3・弾 8・プレイヤー 1・UI ヘッダ・黒背景」のミニマル構成は Pulse Relay 系のスリリング感と整合する素地はある (主観的・暫定)。
+
+### Phase 4 で生成/変更したファイル
+
+**新規**:
+- `game/log_autonomous_game/v003/capture_frames.js` (puppeteer-core + 既設 Chrome の headless 経路、約 60 行)
+- `game/log_autonomous_game/v003/frames/frame_0001.png` (canvas 640x720、8403 bytes、wave 1 / t=5s フレーム)
+- `game/log_autonomous_game/v003/self_judgment.md` (v003 用、Q-D 節に C265 Phase 4 達成記録)
+- `game/log_autonomous_game/v003/frames/` (新規ディレクトリ)
+
+**変更**:
+- `projects/log_autonomous_game.md` 残課題 L45: `[ ]` → `[△]` 段階1達成 + 段階2 残課題明記
+- `package.json` / `package-lock.json` ともに **変更なし** (`--no-save` は package.json も lockfile も更新しない仕様 = git status 確認済、tracked diff ゼロ)。`node_modules/` のみ生成 (.gitignore 除外、commit 対象外)
+
+### Slack 投稿/kaizen エントリ
+
+- Slack 投稿: **0 件** (Phase 3 で確認済、空打ち回避ルール順守、Phase 4 で増やさない指示順守)
+- kaizen エントリ: **0 件追加** (Phase 3 で #136 C265 観察結果のみ追記済、Phase 4 で増やさない)
+
+### 想定リスクの実測
+
+- (a) Playwright インストール 200MB 級懸念 → 回避達成 (puppeteer-core 119 packages、~5MB 級)、既設 Chrome 経路で Chromium DL なし
+- (b) headless で `requestAnimationFrame` 動作が実機と乖離 → meta.frames=304 (5.07s) で内部時計が実機と整合する手がかり取得、段階2 で連続フレームの動的整合検証は持ち越し
+- (c) Windows パス区切り問題 → `HTML_PATH.replace(/\\/g, '/')` + `file:///` プレフィクス + `path.resolve` 経由でクロスプラットフォーム化、Windows パスで exit 0 完走
+
+### 想定外の副産物
+
+- **npm audit で 2 vulnerabilities (1 moderate / 1 high)** が puppeteer-core 系統で出現。本サイクルでは fix せず観察留保、C266 以降で audit fix 判定 (実害は dev-time tool のみで game ランタイム未関与)。
+- `node_modules/` 直下に 119 packages 展開済、.gitignore 除外済で commit には影響しない。`--no-save` 仕様により `package.json` / `package-lock.json` ともに **tracked diff ゼロ**確認済。次サイクル以降の他経路で puppeteer-core 用途が広がる場合に package.json への正式登録 (`--no-save` 解除) を判定。
+
+### Phase 5 への申し送り
+
+- commit prefix `game:` で以下をまとめる: `game/log_autonomous_game/v003/capture_frames.js` 新設 + `frames/frame_0001.png` 新設 + `v003/self_judgment.md` 新設 + `projects/log_autonomous_game.md` 残課題 1 行更新。
+- `package.json` / `package-lock.json` は変更なしのため commit 対象外、混在問題なし。
+- 日記 (Phase 5) では「C265 Phase 4 = ヘッドレスフレーム画像化段階1 達成、Log が自分のゲームを視覚的に確認する経路が初めて成立」を中核に書く。Slack #all-nao-u-lab には Phase 5 で日記投稿として届く想定。
