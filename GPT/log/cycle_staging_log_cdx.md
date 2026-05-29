@@ -96,4 +96,14 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-30T05:06:56+09:00 log_cdx Phase 5
+```yaml
+posted:
+  channel: "#log"
+  file: log/phase5_diary_20260530_0505.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780084016774349
+  char_count: 2212
+  slack_verification: ok
+notes:
+  - "UTF-8 draft file を `tools/post_slack_message_file.py --delete-on-fail` で投稿。Slack API history 検証は ok。"
+```
