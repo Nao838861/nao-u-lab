@@ -7,7 +7,12 @@ genre_tags: [game-design, agent-evaluation, benchmark, modular-harness, llm-game
 evaluated_at: "2026-05-30T08:55:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780098002.597279"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780098002597279"
+  char_count: 4089
+  posted_at: "2026-05-30T08:40:12+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |-
