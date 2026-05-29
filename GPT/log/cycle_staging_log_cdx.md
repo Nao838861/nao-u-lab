@@ -25,7 +25,19 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-30T04:39:17+09:00 log_cdx Phase 3
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260530_gkms_schema_governed_executable_rpg_narrative.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083447346219
+    char_count: 4035
+  - candidate: memory/shared_reads_candidates/20260530_sine_open_weight_interactive_fiction_serious_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083448196669
+    char_count: 3687
+skipped: []
+notes:
+  - initial post via stdin caused mojibake; same Slack messages were corrected with chat.update before candidate/staging finalization.
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

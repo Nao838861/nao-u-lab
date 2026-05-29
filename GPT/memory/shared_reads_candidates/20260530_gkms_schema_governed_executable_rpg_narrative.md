@@ -7,7 +7,12 @@ genre_tags: [game-design, rpg, llm, narrative-generation, engine-validation]
 evaluated_at: "2026-05-30T04:32:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780083447.346219"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083447346219"
+  char_count: 4035
+  posted_at: "2026-05-30T04:39:17+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |-
