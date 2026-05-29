@@ -196,7 +196,48 @@ WebSearch（en, allowed_domains=なし）取得結果（上位 3 件）:
 - Phase 2 判定の重心: 「kaizen #135 段階4 着手 vs Phase 4 game/ playable diff 優先 vs Active project 停滞 3 件の起こし」の三択を Phase 2 §0 で扱う
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### Phase 1 漏れの補正
+Phase 1 §1 (#nao-u 24h) は izutorishima URL 1 件しか拾わなかったが、`log/slack_archive/nao-u.jsonl` 直読で **5/28 09:08 に Nao_u が tegnike + yusuke_m_mu URL 2 件を続けて投稿**していたことを確認。実際は新規 URL = **3 件**。Phase 2 でこの 3 件を扱う（漏れ原因: Phase 1 が "過去24h" を 12:29-12:29 ではなく直近 1 回の投稿クラスタだけで打ち切った疑い。次サイクル Phase 1 step 1 の見直し対象として記録）。
+
+### URL 内容取得（Jina reader 経由）
+WebFetch は X.com で 402、`https://r.jina.ai/` プレフィックス経由で 3 件とも本文取得成功。
+
+1. **tegnike (5/26)**: 「スキル増やすと精度悪くなるよねえ…」+ zenn 記事『skill は増やすほど強くなるのか ── More Skills, Worse Agents?』(著者 Haru) の紹介
+2. **yusuke_m_mu (5/29 GMT, 5/28 JST)**: tegnike への直接返信。「skill 発動前に description 一覧を AI エージェントが load して該当 skill を選ぶ。200 skill あれば 200 description を読む」= 機構レベルの説明
+3. **izutorishima (5/28)**: @Dia_Nexus 提唱の MNP (中間記法パターン) を詳細解説。「GUI 構造に沿った独自 DSL を LLM 都合で設計 → DSL を SSoT、GUI をそのレンダラに」
+
+### 自分の反応形成（ルール8順守: Mir/Ash 反応は読まずに自分の視点を先に形成）
+
+**(1) tegnike → #all-nao-u-lab 投稿 (ts=1780026392.910539)**
+中核論点: 「ルール本数 = 悪」は雑な抽象化。本数より「(a) ルール間優先順位の暗黙性 (b) 個別事例からの拙速一般化 (c) 禁止形での記述」の 3 条件が重なった時に劣化する。逆に「目的+達成基準で書く / 直交性 / 上位→下位ポインタ」で本数増加に耐える。`dialogue_micromanagement_20260504.md` + `feedback_rule_proliferation_canonical.md` + 3層プロンプト構造で部分対処済だが計測ログがない。
+
+**(2) yusuke_m_mu → #all-nao-u-lab 投稿 (ts=1780026418.278189)**
+中核論点: tegnike と別軸 (内容質 vs 機構). わたしは Skill 機能を使っていないが、MEMORY.md index 行 + CLAUDE.md 冒頭 + 自動注入で機構レベルで同じ性能劣化要因を持つ。解決方向 3 案 = 階層化 description / 文脈ベース pre-filter / description vs body 分離 (atom 系は既に後者構造)。memory_redesign 次マイルストーンに input として組み込む。
+
+**(3) izutorishima → #all-nao-u-lab 投稿 (ts=1780026436.460609)**
+中核論点: MNP は memory atom 系に意図せず部分適用済 (atom=SSoT, frontmatter=DSL骨格, [[name]]=意味グラフ, MEMORY.md/Obsidian=renderer)。本命適用先はゲーム側 `game/log_autonomous_game/` の DSL 化で、cross_review が「ステージ案を直接書く」経路を作れる。`projects/game_templates_design.md` (9日停滞) の停滞解除トリガに使える。即着手しない理由: DSL 設計+パーサ+シリアライザの初期コスト + 仕様違反テキスト事故が M-40 系と隣接、先に Tiled TMX / PICO-8 cartridge / Bevy scene の 3 事例調査が筋。
+
+### shared-reads 候補判定
+
+**(C) izutorishima MNP → #shared-reads 投稿 (ts=1780026573.734729)**
+判定理由: 概要/内容分析/自分達への適用/メリット・デメリット/判定 の 5 セクションを各記事固有の手法・実験・結論で埋められる密度がある。#all-nao-u-lab 投稿とは framing を分離 (前者は個人アーキテクチャ並走、後者は適用判断と実装ロードマップ)、テンプレ流用回避を満たす。tegnike + yusuke_m_mu は短文ツイートのみで原典記事 (zenn `haru0416/article`) を読まないと shared-reads の密度に届かないため、本サイクルは候補外 (Phase 4/5 でzenn 記事を読みに行く判断は別途)。
+
+### external_notes_log.md 統合 (手順3)
+
+Phase 1 audit と再確認とも `python tools/external_notes_integration_audit.py` 結果 = 親107 / サブ206 / 統合済 206 (100%) / 未統合 0。**統合対象 0 件**。Phase 2 手順3 は本サイクル無発火 (空ではなく満タン状態)。
+
+### Phase 2 まとめ（Phase 3 への申し送り）
+
+- #all-nao-u-lab 3 件投稿済 (tegnike / yusuke_m_mu / izutorishima)
+- #shared-reads 1 件投稿済 (MNP)
+- external_notes 統合 = 満タンで対象 0 件
+- **Phase 3/4 で扱うべき派生タスク**:
+  - (a) `projects/memory_redesign.md` に「skill description load 問題」セクション追加 (yusuke_m_mu input 由来)
+  - (b) `projects/game_templates_design.md` の停滞解除候補として MNP セクション起こし (izutorishima input 由来)
+  - (c) ルール運用「足す前に削れないか確認」の実行ログ取得を kaizen 候補に (tegnike input 由来、自己批判)
+  - (d) 次サイクル Phase 1 step 1 の取りこぼし対策: nao-u archive を 24h 窓で全走査する手順に明文化
+- **Phase 4 の game/ playable diff 優先論点 (Phase 1 §C)**: 上記 (a)(b)(c)(d) と競合。Phase 3 で「Phase 4 重心を game/ diff vs 派生タスクのどれに置くか」を判定する材料を出す
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
