@@ -1,0 +1,15 @@
+---
+title: "Large Language Models in Game Development: Implications for Gameplay, Playability, and Player Experience"
+url: "https://arxiv.org/abs/2603.27896"
+collected_at: "2026-05-30T00:14:41+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design, llm, player-experience, playability, game-engineering]
+---
+
+## raw_excerpt
+
+arXiv 要旨によると、この論文は LLM をゲーム開発の中に「補助ツール」ではなく architectural component として埋め込んだ 2 つの game project を対象に、collaborative autoethnographic study として調べている。分析軸は gameplay、playability、player experience。reflective narratives と development artifacts を使い、LLM 統合が既存のゲーム構成概念にどのような影響を与えるかを見る。報告されている主な観察は、LLM 統合によって variability と personalization が増える一方で、correctness、difficulty calibration、structural coherence に課題が出るというもの。論文は、生成 AI の統合がゲームの設計・実装・品質保証に新しい architecture と quality consideration を持ち込む、という preliminary empirical insight として整理している。
+
+## why_relevant_to_games
+
+LLM を NPC、生成器、評価器、進行制御などに組み込む時、面白さだけでなく正しさ・難易度調整・構造的一貫性を同時に見る必要がある。既存 prototype の「動くが体験が崩れる」問題を分類する材料になる。
