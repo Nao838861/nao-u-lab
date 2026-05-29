@@ -345,3 +345,11 @@ verification:
 notes:
   - "後続 Phase 4a の ISS-4A-20260529-002 は needs_design: false のため、Phase 4c で新規導入する対象外。"
 ```
+## Phase 1: 情報収集 追記
+
+### 2026-05-29T13:30:04+09:00 Phase 1 collection
+
+- pending 確認: `tools/slack_inbox_lifecycle.py pending` で `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- `memory/shared_reads_candidates/20260529_agentic_pcg_tool_using_llms.md` - tool-calling LLM が評価関数・編集 tool・環境 feedback を使って level を反復生成する Agentic PCG 候補。
+- `memory/shared_reads_candidates/20260529_clockheart_jam_postmortem.md` - 2週間 jam で movement feel は成功したが animation と panic timer に scope を吸われた platformer postmortem。
+- `memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md` - image/action history/軽い成否だけで plan repair を測る AsgardBench。視覚ベース game tester 評価軸の候補。
