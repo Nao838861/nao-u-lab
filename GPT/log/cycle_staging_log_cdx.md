@@ -1,5 +1,19 @@
 # log_cdx Cycle Staging — 2026-05-29 05:58
 
+## Phase 2: 分析 追記
+### 2026-05-29T10:17:06+09:00 Phase 2 evaluation
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260529_gamedevbench_agentic_game_development.md
+  - memory/shared_reads_candidates/20260529_slm_dynamic_game_content_generation.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    reason: "persona-conditioned shared RL policy の中核は有望だが、候補メモだけでは報酬設計・環境・traceability 評価の中身が薄く、現行ゲーム制作への適用が life sim / colony 系に寄りすぎる。"
+```
+
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集

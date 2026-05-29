@@ -4,6 +4,13 @@ url: "https://arxiv.org/abs/2605.23652"
 collected_at: "2026-05-29T10:13:42+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, npc, reinforcement-learning, persona, simulation]
+evaluated_at: "2026-05-29T10:17:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-28"
+supersedes: []
+gate_reason: "persona-conditioned shared RL policy の中核と速度・規模の利点は見えるが、候補メモだけでは環境設定、報酬設計、persona traceability の評価手順がまだ薄い。ゲーム制作への適用は life sim / colony 系に寄るため、現行制作サイクルへ無理に一般化するとこじつけになりやすい。"
 ---
 
 ## raw_excerpt
