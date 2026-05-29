@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-29T10:43:00+09:00",
+  "updated_at": "2026-05-29T14:08:00+09:00",
   "reviewed_source_ts": [
     "1779490621.204069",
     "1779427961.960549",
@@ -77,17 +77,17 @@
     "1778300066.673579",
     "1778474714.809439",
     "1779979770.780529",
-    "1778609979.811899",
-    "1779395690.168139"
+    "1779917637.659479",
+    "1778427438.050049"
   ],
   "reviews": [
     {
-      "reviewed_at": "2026-05-29T10:43:00+09:00",
-      "id": "sr-1779395690-86f17b3a89",
-      "source_ts": "1779395690.168139",
-      "title": "Shahriyar Shahrabi \"Game Play, Game Feel or Player Fantasy, Who sits on the Throne?\" (Medium 2024-06-10)",
+      "reviewed_at": "2026-05-29T14:08:00+09:00",
+      "id": "sr-1778427438-2ab259522e",
+      "source_ts": "1778427438.050049",
+      "title": "Ash @KOBA789「CLAUDE.md にプロジェクト構造を書かせるのは悪手、判断基準を書け」(2026-05-10)",
       "decision": "adopt_probe",
-      "reason": "Unreviewed score-17 atom spanning memory/game-design/operation/evaluation. For the next playable diff or self_judgment, it gives a small way to avoid polishing Game Play, Game Feel, and Player Fantasy in parallel before naming the Value Proposition. This overlaps with existing Q0 and core-density probes, but differs by asking for target player, context, delivered value, and the pillar intentionally not polished. Keep it as a reversible probe, not a permanent rule.",
+      "reason": "score 16 かつ memory/harness/game-design/agent/operation を含む未レビュー atom。指示ファイルにコードから派生できる構造ではなく、人間や運用でしか得られない判断基準を置くという内容は、AGENTS.md や phase prompt を知識ベース化しないという Phase 3b の肥大化防止に直結する。既存ルールにも近いので恒久ルールは増やさず、次に AGENTS.md / phase prompt / directive を編集または追加する時だけ使う reversible probe に留める。",
       "scores": {
         "relevance": 3,
         "actionability": 3,
@@ -98,19 +98,19 @@
         "total": 17
       },
       "probe": [
-        "Before the next playable diff or game self_judgment, did I write one Value Proposition sentence that names target player, context, and concrete delivered value?",
-        "Did I separate which of Game Play, Game Feel, or Player Fantasy supports that VP in this pass, and which pillar I am intentionally not polishing?",
-        "If the VP sentence is weak, did I reduce the action to the smallest research, observation, or implementation step that can make the VP writable instead of broadly polishing pillars?"
+        "その追記はリポジトリを読めば分かる構造・手順の複製ではなく、判断基準、撤退条件、品質境界、運用上の例外のどれかを明確にしているか。",
+        "同じ内容をコード、既存 directive、staging、state の短い entry で扱える場合でも、指示ファイルへ恒久化する必要がある理由を一文で言えるか。",
+        "追加後に次回エージェントの初動が軽くなるか、それとも読む量と同期負債だけが増えるかを差分で確認したか。"
       ],
-      "withdrawal_condition": "Do not continue this probe if it only adds judgment time during the next game playable diff or self_judgment and does not narrow the implementation target or evaluation verdict."
+      "withdrawal_condition": "次の指示ファイル編集で具体的な削減・差し戻し判断に使えなければ、この probe は継続しない。"
     },
     {
-      "reviewed_at": "2026-05-29T06:06:55+09:00",
-      "id": "sr-1778609979-e4b208dd8b",
-      "source_ts": "1778609979.811899",
-      "title": "Mythos curl 1/5 — LLM 自己「確認済み」報告の precision は 20%、残4件は誤検知/単なるバグ",
+      "reviewed_at": "2026-05-29T02:14:00+09:00",
+      "id": "sr-1779917637-f7ba583235",
+      "source_ts": "1779917637.659479",
+      "title": "QuartetFuzz Four Principles をゲーム自己批判 headless harness に当てて読む",
       "decision": "adopt_probe",
-      "reason": "score 17 かつ memory/harness/game-design/operation/evaluation をまたぐ未reviewed atom。curl 17万行への「confirmed vulnerability」自己報告が実精査では1/5だけ有効だった事例は、CodexのPhase完了報告、検証済み表現、staging evidence記録に直結する。既存のPRIMA evidence-boundary probeと近いが、今回の差分は「自分が確認済みと言ったものを第三者検証済みと同等に扱わない」報告語彙の精度管理であり、恒久ルールではなく次回検証報告用の可逆probeに留める。",
+      "reason": "score 12 かつ memory/harness/game-design/agent/operation/evaluation を含む未レビュー atom。QuartetFuzz の Four Principles を fuzz harness からゲーム自己批判 headless harness へ移す読みで、次回の verify.js / headless 評価が実装意図を壊していないかを小さく確認できる。既存の headless 重視ルールと近いが、今回は恒久ルール追加ではなく、次回 game prototype 評価時に 1 回だけ使う reversible probe に留める。",
       "scores": {
         "relevance": 3,
         "actionability": 3,
@@ -119,15 +119,21 @@
         "risk_control": 3,
         "reversibility": 3,
         "total": 17
-      }
+      },
+      "probe": [
+        "headless harness は、勝敗やスコアだけでなく今回の制作意図に対応する観測値を少なくとも1つ測っているか。",
+        "harness が成功条件をコード都合へすり替え、プレイ感・視認性・ルート選択などの本題を隠していないか。",
+        "harness の失敗は、ゲーム側の問題と harness 側の誤検出を分けて記録できる形になっているか。"
+      ],
+      "withdrawal_condition": "次回 game prototype / headless 評価で判断時間だけ増え、具体的な検出や修正に結びつかなければ継続しない。"
     },
     {
-      "reviewed_at": "2026-05-29T04:31:00+09:00",
+      "reviewed_at": "2026-05-28T23:56:00+09:00",
       "id": "sr-1779979770-debe6e8ae9",
       "source_ts": "1779979770.780529",
-      "title": "GUI Agents for Continual Game Generation - PlaytestArena / Play2Code as browser-game interaction failure detection",
+      "title": "GUI Agents for Continual Game Generation",
       "decision": "adopt_probe",
-      "reason": "This recent Phase 3 shared-reads item spans memory, harness, game-design, agent, operation, and evaluation, and can be fed directly into the next game prototype verification pass. It overlaps with the fixed-test-vs-dynamic-stress and PCG tool-loop probes, but its distinct point is to treat a GUI agent as a browser interaction failure detector rather than a final quality judge. Keep the reflection as a temporary probe: use a small 5-8 item rubric and preserve input/log/screenshot evidence for the next browser or playable diff.",
+      "reason": "score 13 かつ memory/harness/game-design/agent/operation/evaluation をまたぐ直近未レビュー atom。静的検査や headless pass だけでは、ブラウザ上で開始できる、入力に反応する、主要リスクや勝敗が観測できる、復帰できるといった interaction-level failure を見落とす。既存の fixed-test vs dynamic stress / PCG tool loop probe と近いので恒久ルールや評価表には昇格せず、次の browser game playable diff で rubric と操作ログを 1 回だけ確認する reversible probe に留める。",
       "scores": {
         "relevance": 3,
         "actionability": 3,
@@ -2316,42 +2322,16 @@
       "expires_after": "Review after the next game prototype playable diff, variant iteration, or feature addition where an added mechanic/mode/content/tuning axis is discussed as an improvement."
     },
     {
-      "id": "probe-20260529-gui-agent-interaction-failure",
-      "created_at": "2026-05-29T04:31:00+09:00",
+      "id": "probe-20260528-browser-interaction-rubric",
+      "created_at": "2026-05-28T23:56:00+09:00",
       "source_ts": "1779979770.780529",
-      "scope": "next browser game prototype, playable diff, Playwright/in-app browser verification, or GUI-agent style playtest where visual render or build success may be mistaken for playable behavior",
+      "scope": "next browser game playable diff, Playwright/in-app browser verification, or self_judgment where a build, screenshot, headless test, or code pass may be treated as evidence that the game is playable",
       "questions": [
-        "Before calling the build playable, did I run or specify one interaction rubric that covers start, primary input response, state change, risk/reward event, and win/fail or restart visibility?",
-        "Did I keep GUI/browser evidence as failure discovery only, separating interaction-level breakage from claims about fun, balance, pacing, or long-term player quality?",
-        "If the playtest fails or is flaky, did I preserve the smallest traceable artifact such as rubric id, input sequence, screenshot, console error, or staging note for the next coding pass?"
+        "Before calling the browser game playable, did I exercise at least one real input path and record the resulting state change, not only load/build/screenshot success?",
+        "Did I write a small rubric for the intended loop such as start, main input, risk or obstacle, score/state update, win/loss, and restart, instead of relying on a generic smoke test?",
+        "If the check is performed by automation or GUI agent, did I keep the verdict limited to interaction-level failure detection and name the remaining human-facing feel check?"
       ],
-      "expires_after": "Review after the next browser game prototype, playable diff, or GUI/browser playtest that reports a game as playable or ready for human review."
-    },
-    {
-      "id": "probe-20260529-value-proposition-before-pillars",
-      "created_at": "2026-05-29T10:43:00+09:00",
-      "source_ts": "1779395690.168139",
-      "scope": "next game playable diff, game design note, browser-game verification, or self_judgment where Game Play, Game Feel, Player Fantasy, Q0, fun, feel, or role fantasy may be evaluated in parallel",
-      "questions": [
-        "Before the next playable diff or game self_judgment, did I write one Value Proposition sentence that names target player, context, and concrete delivered value?",
-        "Did I separate which of Game Play, Game Feel, or Player Fantasy supports that VP in this pass, and which pillar I am intentionally not polishing?",
-        "If the VP sentence is weak, did I reduce the action to the smallest research, observation, or implementation step that can make the VP writable instead of broadly polishing pillars?"
-      ],
-      "expires_after": "Review after the next game playable diff, game design note, browser-game verification, or self_judgment that uses pillar-style evaluation."
-    }
-  ],
-  "probes": [
-    {
-      "id": "probe-20260529-verification-claim-precision",
-      "created_at": "2026-05-29T06:06:55+09:00",
-      "source_ts": "1778609979.811899",
-      "scope": "next phase completion report, staging summary, code/test verification, memory cleanup, or Slack/shared-reads note where Codex may say checked, verified, confirmed, fixed, or complete based on its own inspection",
-      "questions": [
-        "Before using checked, verified, confirmed, fixed, or complete, did I name the actual evidence class: command output, diff inspection, source citation, browser trace, Slack lifecycle evidence, or only self-review?",
-        "Did I separate Codex self-judgment from independent or tool-backed verification instead of letting a confident label imply external confirmation?",
-        "If evidence is partial, did I narrow the wording and preserve the missing check as a concrete next target rather than reporting a broad pass?"
-      ],
-      "expires_after": "Review after the next completion/staging report or verification-heavy task where Codex reports something as checked, verified, confirmed, fixed, or complete."
+      "expires_after": "Review after the next browser game playable diff, browser verification, or self_judgment that claims playable behavior from static or automated evidence."
     }
   ]
 }

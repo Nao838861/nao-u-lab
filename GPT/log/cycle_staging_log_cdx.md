@@ -34,23 +34,6 @@ posted:
 skipped: []
 ```
 
-### 2026-05-29T13:05:00+09:00 Phase 3 duplicate skip
-
-```yaml
-posted: []
-skipped:
-  - candidate: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
-    reason: "同一 URL の OpenGame 投稿が既に #shared-reads に存在するため再投稿しない。"
-    action: postpone
-    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
-  - candidate: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
-    reason: "同一 URL の Agent Island 投稿が既に #shared-reads に存在するため再投稿しない。"
-    action: postpone
-    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
-notes:
-  - "Phase 2 pass の 2 件は arXiv 本文と既存 candidate を確認したが、どちらも過去投稿済みだったため品質維持のため撤退。"
-```
-
 ## Phase 3b: Shared-reads 自己フィードバック
 
 ### 2026-05-29T02:14:00+09:00 Phase 3b self-feedback
@@ -81,40 +64,6 @@ self_feedback:
     - "harness が成功条件をコード都合へすり替え、プレイ感・視認性・ルート選択などの本題を隠していないか。"
     - "harness の失敗は、ゲーム側の問題と harness 側の誤検出を分けて記録できる形になっているか。"
   withdrawal_condition: "次回 game prototype / headless 評価で判断時間だけ増え、具体的な検出や修正に結びつかなければ継続しない。"
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
-
-### 2026-05-29T13:00:00+09:00 Phase 3b self-feedback
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1779572226-4f99fc9fca
-    source_ts: "1779572226.979089"
-    title: "STALE benchmark — 古い知識を AI が「自分から検出して更新する」能力を3次元で測る最初のフレーム"
-    reason: "未レビュー、score 16、memory/game-design/slack/agent/operation/evaluation を含み、定時サイクルの memory recall・shared-reads・git 状態判断で古い根拠を現在証拠として扱うリスクに直結するため。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 17
-  decision: adopt_probe
-  change:
-    summary: "次回の memory recall / shared-reads / git sync 報告で、根拠を time-sensitive fact / past judgment / stable preference-rule / local state snapshot に分け、必要なら current anchor を1つ確認する probe を state に追加。恒久ルールは増やしていない。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  probe:
-    - "根拠を使う前に、それが時間で腐る事実・過去判断・安定した嗜好/ルール・ローカル状態スナップショットのどれかを分けたか。"
-    - "時間で腐る情報やローカル状態なら、git status/fetch、source date、公式/current page、Slack permalink state のような current anchor を1つ確認したか。未確認なら未確認と明示したか。"
-    - "古い記憶と現在証拠が衝突する場合、古い source_ts/id を残し、上書きではなく差分を staging/state に記録したか。"
-  withdrawal_condition: "次回の recall / shared-reads / git sync 報告で既存の selective-memory-failure probe と重複して判断を増やすだけなら継続しない。"
   anti_bloat_check:
     adds_permanent_rule: false
     replaces_or_simplifies_existing: false
@@ -224,20 +173,7 @@ designs:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-### 2026-05-29T14:36:05+09:00 Phase 5 diary post
-
-```yaml
-posted:
-  channel: "#log"
-  file: memory/phase5_diary_20260529_1435.md
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780028165009239"
-  char_count: 2240
-  verification: "ok"
-notes:
-  - "python tools\\post_slack_message_file.py --channel \"#log\" --file \"memory\\phase5_diary_20260529_1435.md\" --delete-on-fail: ok"
-  - "chat.getPermalink は api wrapper 経由で invalid_arguments になったため、既存 tools\\codex_slack_directives.py と同じ channel/ts 形式で permalink を生成。"
-```
+(Phase 5 が書き込む)
 
 ## Phase 1: 情報収集 追記
 
@@ -271,80 +207,7 @@ verification:
   - "python tools\\memory_recall.py shared-reads --limit 5 --compact --no-log: 重複 shared-reads atom が grouped_count=70 + grouped_ids として 1 件表示されることを確認"
   - "python tools\\memory_recall.py 日記 検索 --limit 5 --no-log: grouped_count / grouped_ids / representative_reason / normalized_content_hash が通常出力に表示されることを確認"
 ```
-## Phase 4a: 整理 + 問題抽出 追記
 
-### 2026-05-29T14:20:00+09:00 Phase 4a memory cleanup + issue scan
-
-```yaml
-cleaned: []
-checks:
-  memory_index_links:
-    markdown_links_checked: 0
-    broken_markdown_links: 0
-    entry_validation:
-      result: "stale_atom_entry_ids"
-      unknown_entry_ids: 23
-      evidence: "python tools\\validate_memory_index.py"
-  atoms_jsonl:
-    total_atoms: 1591
-    bad_json_lines: 0
-    duplicate_ids: 0
-    duplicate_content_groups: 0
-    atoms_index_sync:
-      index_ids: 1591
-      atoms_not_in_index: 0
-      index_not_in_atoms: 0
-    per_file_drift:
-      per_file_md_ids: 1779
-      md_not_in_index: 188
-      index_not_in_md: 0
-      md_not_in_atoms_jsonl: 188
-  raw_archive:
-    cutoff: "2026-04-29T14:20:00+09:00"
-    older_than_30_days: 0
-  shared_reads_candidates:
-    cutoff: "2026-04-29T14:20:00+09:00"
-    older_than_30_days: 0
-  inbox:
-    pending_directives: []
-    pending_broadcasts: []
-issues:
-  - id: ISS-4A-20260529-002
-    description: "MEMORY.md の Recent / High Signal / Tag Entry Points が参照する最近の atom の一部が、per-file .md としては存在するが memory/atoms/index.jsonl と memory/atoms.jsonl に未収録。例: sr-1779979942-eff5e8817a, sr-1779938795-a42f39e465, sr-1779827466-7c3e4d9749, sr-1779846492-8c411b6576 は .md 実体あり・index/jsonl なし。"
-    severity: medium
-    evidence: "tools/validate_memory_index.py errors; rg confirms memory/atoms/2026-05/*.md exists; atoms/index and atoms.jsonl both 1591 rows while per-file md ids are 1779"
-    why_blocks_game_memory: "MEMORY.md の入口から見える最新のゲーム制作 lesson や shared-reads atom が recall の正規 loader から落ちるため、次の制作時に『入口にはあるが検索で引けない』時系列断絶が起きる。実例として GUI Agents Continual Game Generation の最近 atom は indexed recall では返らなかった。"
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
-
-## Phase 4c: 記憶階層 導入 追記
-
-### 2026-05-29T13:10:05+09:00 Phase 4c verification
-
-```yaml
-implemented:
-  - issue_id: ISS-4A-20260529-001
-    files_changed:
-      - path: tools/memory_lifecycle.py
-        change: modified
-      - path: tools/memory_recall.py
-        change: modified
-      - path: memory/directive_recall_fold_group_metadata_20260529.md
-        change: created
-      - path: log/cycle_staging_log_cdx.md
-        change: modified
-    summary: "既存の Phase 4c 実装を再確認。recall fold 結果に grouped_count / grouped_ids / representative_reason / normalized_content_hash が出る状態を維持している。"
-    partial: false
-migrations: []
-verification:
-  - "python -m py_compile tools\\memory_lifecycle.py tools\\memory_recall.py: passed"
-  - "python tools\\memory_recall.py shared-reads --limit 5 --compact --no-log: grouped_count=70 の代表 atom 表示を確認"
-  - "python tools\\memory_recall.py 日記 検索 --limit 5 --no-log: grouped_count / grouped_ids / representative_reason / normalized_content_hash の通常表示を確認"
-notes:
-  - "後続 Phase 4a の ISS-4A-20260529-002 は needs_design: false のため、Phase 4c で新規導入する対象外。"
-```
 ## Phase 1: 情報収集 追記
 
 ### 2026-05-29T13:30:04+09:00 Phase 1 collection
@@ -368,4 +231,48 @@ fail:
 postpone:
   - path: memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md
     reason: "visual planning 評価は有望だが、候補本文だけでは task 設計・baseline・結果の粒度が不足し、Phase 3 前に追加読解が必要。"
+```
+
+## Phase 3: Shared-reads 投稿 追記
+
+### 2026-05-29T13:42:07+09:00 Phase 3 duplicate skip
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260529_agentic_pcg_tool_using_llms.md
+    reason: "同一タイトル・同一 URL の Agentic PCG 投稿が既に #shared-reads に存在するため再投稿しない。candidate は既存投稿の posted 情報に紐づけた。"
+    action: postpone
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609"
+notes:
+  - "candidate frontmatter を candidate_status: posted に更新。新規 chat.postMessage は重複回避のため未実行。"
+```
+## Phase 3b: Shared-reads 自己フィードバック 追記
+### 2026-05-29T14:08:00+09:00 Phase 3b self-feedback
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778427438-2ab259522e
+    source_ts: "1778427438.050049"
+    title: "Ash @KOBA789「CLAUDE.md にプロジェクト構造を書かせるのは悪手、判断基準を書け」(2026-05-10)"
+    reason: "未レビューの score 16 atom。AGENTS.md や phase prompt を構造説明や知識ベースで太らせず、判断基準だけを残すという Phase 3b の反肥大化目的に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次に AGENTS.md / phase prompt / directive を編集または追加する時だけ使う、指示ファイル恒久化前の3問 probe を state に追加した。恒久ルールは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
 ```
