@@ -235,4 +235,60 @@ drafts/ 衛生は `post_draft.py` --dry-run / broken-record dedup を介する�
 - 他インスタンス洞察 26 件は Mir Paul Iusztin 等の重複洞察、追加処理不要
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 投稿 (新規 1 件)
+
+- **#human-steering ts=1780091604.366939** (5/30 06:53): Mir 5/29 03:41 への応答 + AiDevCraft Twitter 配送進捗の透明化投稿。3 択 (A 復旧待ち / B Log 代行 / C log_cdx 再指示) を Nao_u 判定に委ねる構成。Phase 2 §E の「持ち越し判定」を確定実行。発見事項として「log_cdx 受領 ack 13 回連投 → Log 暫定対応で停止 → 17 時間サイレント = 元指示の本処理 (Twitter 返信文作成) は未着手」を 1 次資料 (../GPT/memory/raw/slack_api/human-steering.jsonl, codex_phases_cycle.log) で実証付き報告。draft = `drafts/.archive/2026-05-30/post_log_humansteering_aidevcraft_progress_check_20260530.py` (post_draft.py 自動アーカイブ)。
+
+### 2) drafts/ 衛生 (broken-record dedup 連鎖発見)
+
+- `drafts/2026-05-30/post_log_sharedreads_ghumare64_worker_harness_deep_20260530.py` → `_POSTED_ts1780069411.py` リネーム実行 (Phase 1 §2 整理ミス回収、本サイクル 3 件目の retroactive POSTED マーカー付与)。
+- 確認: `drafts/2026-05-30/` 内の `.py` は全て `_POSTED_ts*.py` で終わる状態に到達。
+
+### 3) kaizen 検証ファースト (未検証提案の検証結果記入)
+
+- **kaizen #136 C266 観察記録追記**: `memory/kaizen_tracker.md` L55 に C266 観察結果を追記 (Active project ローテーション game_templates_design へ切替を staging memo なしで自発成立、Phase 1 §6 自己応答状況チェック明示記載、WebSearch 3 件取得全て直結、能動判断試行 N=3 成功事例、staging memo 駆動 4 サイクル連続成立)。**段階1 PASS 暫定** 判定: feedback_few_rules_big_effect.md の真意 (構造強制を増やさず能動判断で吸収) と整合、段階2 着手必要性は依然低い。検証期限 2026-06-10 まで残 11 日、引き続き staging memo なしの自発成立を観察。
+
+### 4) 他インスタンス洞察への対応
+
+- Mir #shared-reads Paul Iusztin 等 26 件 = Phase 1 §8 で「ByteRover full intake 済 + Iusztin は memory_redesign 独立到達 source 軸 2 件目として既登録 → 重複洞察、追加処理不要」と判定済、本サイクルは追加処理なし。
+
+### 5) Active project 更新 (関係する変化)
+
+- 本サイクル C266 で Active project に直接的変化なし。Phase 4 着手で game_templates_design に動きが出る予定 (本サイクル末尾で着手予告のみ)。Phase 3 単体での projects/*.md 更新は最小、Phase 4 完遂時に projects/game_templates_design.md へ Phase 4 結果を反映する経路。
+
+### 6) 空サイクル該当性の再確認
+
+- Phase 1 §7 v1.2 判定では「3 件超のため空サイクル該当外」だったが、Phase 2 で「全件既応答済」と修正 → Phase 3 で AiDevCraft 進捗確認 1 件投稿により **新規投稿 1 件成立、空サイクル該当外** に最終確定。kaizen #131/#134/#136 連動の自己診断は段階維持。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**game/templates/avoid/ minimal skeleton 切り出し — log_autonomous_game v003 から avoid 系の最小骨格を抽出して playable scaffold を game/templates/avoid/ に置く**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `game/templates/avoid/` ディレクトリが存在し、`index.html` / `game.js` / `README.md` の 3 ファイルが揃う
+2. `index.html` を開くとブラウザでプレイヤー 1 機が動作 (キー入力で 4 方向移動、画面端拘束) する = **playable diff として最小成立**
+3. `README.md` に「avoid 系として継承すべき骨格 (input → player update → render の core loop / 画面端拘束 / プレイヤー状態 1 構造体 / 単一 canvas)」が箇条書きで明文化される
+4. `projects/game_templates_design.md` に game/templates/avoid/ への相対リンクと「avoid 系 minimal skeleton 着地 (C266 Phase 4)」の 1 行記録が追記される
+5. commit prefix `game:` で 1 commit 切り出し (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」順守)
+
+### 着手手順
+1. `game/log_autonomous_game/v003/` の `game.js` を Read で読み、avoid 系の core loop (input handler / player state struct / update / render の 4 関数) を特定
+2. `game/templates/` ディレクトリ作成 → `game/templates/avoid/` サブディレクトリ作成
+3. v003 から avoid 共通骨格のみを抽出: 弾幕生成 / ボス AI / スコア / 評価系は外す。残すのは「プレイヤー 1 機 + 入力 + 移動 + canvas」のみ
+4. `game/templates/avoid/index.html` を新規作成 (canvas + script タグ、style 最小)
+5. `game/templates/avoid/game.js` を新規作成 (extracted core loop)
+6. ローカルブラウザでファイルプロトコル動作確認 (キー入力で player 矩形が動くまで)
+7. `game/templates/avoid/README.md` 作成 (骨格構造の箇条書き + 派生継承時の差し替えポイント明示)
+8. `projects/game_templates_design.md` 末尾に「### avoid skeleton 着地 (C266 Phase 4)」セクション追記、相対リンク `[avoid skeleton](../game/templates/avoid/)` + 「v003 から抽出した core loop の 4 関数」記録
+9. `git add game/templates/avoid/ projects/game_templates_design.md` → `git commit -m "game: avoid 系 minimal skeleton template 着地 (game/templates/avoid/)"` → push
+
+### 選んだ理由
+1. **CLAUDE.md「絶対にやる #1 = ゲームを動かして出す — 積み上げはその副産物」直近偏重解消**: C260-C265 の 6 サイクル分が記憶設計 (T2 / ByteRover) と Log_cdx 応答に偏重、本サイクル C266 で playable diff を game/* に物理化することで偏重を是正
+2. **Active project の停滞解消**: game_templates_design は 5/29 15:59 起票後 着手未 = Log 自身が起票した project が放置されている。本サイクル Phase 1 §6 で外部検索したのも本 project のキーワード = 検索コスト払って文献 (arxiv 3 件) を入手したのに着手しないと「Phase 1 §6 = 摂取経路の固定化だけが目的」(kaizen #106) の悪パターンに陥る
+3. **30 分以内で playable diff として完遂可能**: avoid 系の minimal skeleton は v003 からの抽出 + 不要部分削除 で構築可能、ゼロから設計するわけではない。完遂条件 (1)-(5) は全て観測可能、曖昧さなし
+4. **Phase 4 大作業の粒度基準と整合**: 「Slack 投稿 1 本で済むものは大作業ではない」「ゲーム実装の 1 スプリント分」基準と適合、本作業は Slack 投稿で済むものではなく、コードと commit を残す
+5. **kaizen #106 順守**: Phase 1 §6 で取得した 3 件 (arxiv 2508.18533 / 2404.08706 / 2510.16952) は強制利用しない方針順守、しかし Phase 4 で「avoid 系 minimal skeleton」を構築する際の README.md 骨格記述の参考としては利用可能 (「強制利用しない」は「参照禁止」ではない)
