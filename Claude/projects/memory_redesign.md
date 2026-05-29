@@ -2475,3 +2475,66 @@ $ python tools/recall_atom.py ... --atom sr-1779770178-5d606254b2 --exclude-type
 - 本ファイル C254 段階2 着地節 — sample 3 atom 動作確認の延長として本節 5 atom × hop=1/2 計 10 ケース実測
 - 本ファイル C257 arXiv 2511.07800 節 — 3 段ノイズ抑制哲学の C257 確定 → C258 実測強化の系譜
 
+### 2026-05-29 (Log C257 Phase 4) — 段階1 dry-run 観察結果 (build_atom_edges_draft.py 初回実行)
+
+C257 Phase 3 で起票した [drafts/2026-05-29/build_atom_edges_draft.py](../drafts/2026-05-29/build_atom_edges_draft.py) を物理実行し、atoms + memory 全 root の `[[name]]` wikilink を edges.jsonl 派生形式で書き出した。本節は kaizen #135 段階1 着地観察。
+
+**実行**:
+```
+$ python drafts/2026-05-29/build_atom_edges_draft.py
+[build_atom_edges_draft] roots=5 known_atoms=2135 total_edges=13 dead_links=2 self_loops=0 unique_src=5 unique_tgt=12 elapsed=0.18s out=D:\AI\Nao_u_BOT\GPT\memory\atoms\edges_wikilink_dryrun.jsonl
+```
+
+**6 観察値**:
+| 指標 | 値 | コメント |
+|---|---|---|
+| `known_atoms` | 2,135 | roots 5本 (memory + atoms/{2026-03,2026-04,2026-05,unknown}) |
+| `total_edges` | **13** | 想定外に少ない。**全 known atom の 0.61%** しか wikilink 出力源にならない |
+| `dead_links` | 2 | 内訳は下記 |
+| `self_loops` | 0 | 健全 |
+| `unique_src` | 5 | 全件 `memory/*.md` 由来、`atoms/2026-05/` (1,298件) からの src は **ゼロ** |
+| `unique_tgt` | 12 | src の 2.4 倍 = hub-spoke 形状 |
+| `elapsed` | 0.18 s | 性能下限 5 s に対し 28 倍速、性能不安なし |
+
+**src 5 件 (wikilink 出力源)** = 全て `memory/*.md`:
+- `feedback_headless_litmus_floor` (→2)
+- `feedback_inside_to_outside_leak` (→1)
+- `feedback_niche_maniac_not_core` (→3)
+- `recall_golden_baseline` (→3)
+- `20260524_ssgm_memgen_survey_log` (→4)
+
+**dead_links 内訳 (2 件)**:
+1. `recall_golden_baseline → memory_redesign` — **本ファイル自身**を指す wikilink。スクリプトの roots に `projects/` が含まれていないため dead 扱いになった (= 設計バグ寄りの不在). 物理的には [projects/memory_redesign.md](memory_redesign.md) として存在
+2. `20260524_ssgm_memgen_survey_log → ssgm_atom_field_probe` — **本当に存在しない**。`memory/` `projects/` `../GPT/memory/atoms/**` を全走査して見つからず、真の dead link
+
+**先頭 / 末尾 サンプル** (`edges_wikilink_dryrun.jsonl` 13 行全列挙):
+```json
+{"from": "feedback_headless_litmus_floor", "to": "feedback_means_ends_reversal_check", "type": "wikilink", "weight": 1.0}
+... (中略 11 件、tgt = feedback_*.md / memory_redesign / sense_prediction_log / cross_instance_feedback_cycle 等)
+{"from": "20260524_ssgm_memgen_survey_log", "to": "cross_instance_feedback_cycle", "type": "wikilink", "weight": 1.0}
+```
+
+**観察の含意**:
+
+- **wikilink は memory/*.md でのみ採用、atoms/*/*.md (= GPT 側生 atom) では未採用**。これは「人手キュレーション領域 (memory) と 自動生成領域 (atoms) で edge の発生源が分離している」現状の物理証拠
+- 既存 `edges.jsonl` (dedup edges 751 行、C258 で実測した wikilink_weak 含む) とは **edge 数で 58 倍の差**。dedup edges は本文中の言及・tag 共起・タイムスタンプ近接など多経路で派生、wikilink は人手が `[[name]]` を打ち込んだもののみ = **意図密度が桁違い**
+- hub-spoke 形状 (src 5 / tgt 12) は memory/*.md の構造を反映。`feedback_*` 系 hub から複数の派生原則へ放射状にリンク
+
+**C258 以降の判断材料 3 件** (本サイクル staging Phase 4 完遂条件 #4):
+
+1. **roots に `projects/` を追加するか判定** (C258 Phase 3 で判定推奨) — dead_links 2 件のうち 1 件 (`memory_redesign`) は projects/ scope 漏れに起因。`projects/INDEX.md` 以下 30+ 本の active project は memory / atoms との相互参照の中核で、本 dry-run スコープから外れているのは設計の不備。**ただし** projects/ 追加は known_atoms 膨張 → dead 判定が緩くなる副作用があるので、(a) roots に追加して known_atoms を増やす案 と (b) projects/ は別 source として扱い `from`/`to` の所属 root を edge に注釈付与する案 を C258 で比較
+2. **wikilink 採用率 0.61% を「実態」として受容するか、人手 atom 化フェーズで `[[link]]` 推奨を運用化するか** — atoms/2026-05/ 1,298 件で wikilink ゼロ = 外部記事のスナップショット主体で wikilink 適性が低い実態。これを (a) 受容して edges は dedup edges (751 行) 主流で運用、(b) atom 化テンプレに wikilink セクション追加で意図密度を上げる、の選択。**現状は (a) を暫定採用**、(b) は kaizen #135 段階3 (recall_golden T0 ベンチ) で「wikilink edge を retrieval に使うと精度がどう変わるか」を計測してから判定。本実測 13 edges という小ささは「人手意図 edge は scarce だが密度は高い」可能性を示唆 = T0 ベンチで `weight` 多段化 (wikilink=1.0 / dedup=0.3 等) の参考値
+3. **既存 edges.jsonl (dedup 751 行) との統合スキーマ** — 本 dry-run 出力 `edges_wikilink_dryrun.jsonl` (13 行) と既存 `edges.jsonl` (751 行) は `type` フィールドで分離可能 (`type: "wikilink"` vs 既存タイプ群)。統合の選択肢: (i) 別ファイル維持 + retrieval 時 union、(ii) 単一 edges.jsonl に merge して `type` で区別、(iii) bitemporal annotation (Phase 1 §6-3 Graphiti) で `created_at`/`source_run` 付記して履歴保持。**(i) を C258-C260 暫定**、(ii)(iii) は段階3 retrieval 設計と同期して判定
+
+**段階1 着地判定**:
+- 性能下限 (5s 以内): ✅ 0.18 s
+- 出力存在 (1行以上): ✅ 13 行
+- frontmatter 不変 / 本体ファイル無編集: ✅ (dry-run、書き出しは `edges_wikilink_dryrun.jsonl` のみ)
+- → **kaizen #135 段階1 PASS**。段階2 (recall_atom.py への type gate 実装) は既に C254/C258 で完了済 = 段階順序が一部前後しているが、段階1 dry-run の物理証拠が後追いで埋まった形
+
+**接続先**:
+- [drafts/2026-05-29/build_atom_edges_draft.py](../drafts/2026-05-29/build_atom_edges_draft.py) — 本 dry-run 実装 (108 行、Phase 3 起票)
+- [memory/kaizen_tracker.md #135](../memory/kaizen_tracker.md) — 段階1 PASS 記録の追記候補 (本サイクル Phase 5 or 次サイクル)
+- 本ファイル C258 段階2 wikilink_weak gate 実測節 (直前) — 段階2 実装の type gate 効果実測と本節段階1 dry-run の対応関係
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C257 Phase 2 §4 / §B — 段階1 dry-run スコープ決定根拠
+

@@ -356,3 +356,48 @@ WebSearch 取得 3件 (時間予算 Phase 1 全体 10% 以内 = タイムアウ�
 **選ばなかった候補**:
 - v003 Pearson 第2回計算: Pages 有効化が Nao_u 手動操作待ち = Log 単独で進められない
 - audit 系 3 ファイル棚卸: principles.md/side_channel/stale_memory の 3 本まとめは Phase 4 単独サイクルで完遂困難、別サイクル確保案として保持 (Phase 2 §6 持ち越し)
+
+## Phase 4: 大作業実施記録
+
+### §C 完遂報告 — kaizen #135 段階1 dry-run
+
+**実行**:
+```
+$ python drafts/2026-05-29/build_atom_edges_draft.py
+[build_atom_edges_draft] roots=5 known_atoms=2135 total_edges=13 dead_links=2 self_loops=0 unique_src=5 unique_tgt=12 elapsed=0.18s out=D:\AI\Nao_u_BOT\GPT\memory\atoms\edges_wikilink_dryrun.jsonl
+```
+
+**完遂条件 vs 実測**:
+| # | 条件 | 結果 |
+|---|---|---|
+| 1 | 5 秒以内完走 | ✅ 0.18 s |
+| 2 | 1 行以上の edge | ✅ 13 行 |
+| 3 | 6 観察値を `projects/memory_redesign.md` 新節に転記 | ✅ 末尾に「### 2026-05-29 (Log C257 Phase 4) — 段階1 dry-run 観察結果」追記 |
+| 4 | C258 以降の判断材料 3 件追記 | ✅ (1) projects/ を roots に追加するか / (2) wikilink 採用率 0.61% 受容 vs 運用化 / (3) 既存 edges.jsonl との統合スキーマ |
+| 5 | commit (Phase 5 で実施、本 Phase ではしない) | 保留 (本 Phase 4 prompt 指示通り) |
+
+**dead_links 内訳** (Phase 4 で初めて判明):
+1. `recall_golden_baseline → memory_redesign` — projects/ scope 漏れ (= スクリプト設計の補正候補)
+2. `20260524_ssgm_memgen_survey_log → ssgm_atom_field_probe` — 真の dead
+
+**観察の含意 (1 行サマリー)**: wikilink は memory/*.md でのみ採用、atoms/2026-05/ 1,298 件で wikilink ゼロ = 「人手キュレーション領域 (memory) と 自動生成領域 (atoms) で edge の発生源が分離している」現状の物理証拠。既存 dedup edges.jsonl (751 行) との 58 倍差 = 意図密度の桁違い。
+
+**段階1 着地判定**: **PASS**。段階2 (recall_atom.py type gate) は既に C254/C258 で完了済のため、段階1 dry-run の物理証拠が後追いで埋まった形。
+
+### §D Phase 4 副産物
+
+**新規/変更ファイル**:
+- `../GPT/memory/atoms/edges_wikilink_dryrun.jsonl` (新規生成、13 行 = 本 dry-run の物理出力)
+- `projects/memory_redesign.md` (末尾に「### 2026-05-29 (Log C257 Phase 4) — 段階1 dry-run 観察結果」節追記、約 60 行)
+- `log/cycle_staging_log.md` (本ファイル、Phase 4 セクション追記)
+
+**Slack 投稿**: なし (Phase 3 §A-4 で確定済、Phase 4 で新規投稿しない方針通り遵守)
+
+**kaizen エントリ更新**: kaizen #135 段階1 PASS は **Phase 5 で kaizen_tracker.md に反映候補**。本 Phase 4 では未追記 (Phase 4 prompt の「Slack返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない」に従う)
+
+**Phase 5 申し送り**:
+- 日記書き出し (Phase 5 prompt 範囲)
+- commit prefix 選定: `rule:` (運用系 = memory_redesign project 進捗) または `memory:` 新設 — Phase 5 で決定
+- git push (commit 後)
+- kaizen #135 段階1 PASS の kaizen_tracker.md 反映 (Phase 5 まとめ commit 内)
+- C258 引継ぎ事項: 「projects/ を roots に追加するか判定」「wikilink 採用率 0.61% 受容判定」「既存 edges.jsonl 統合スキーマ判定」の 3 件を C258 Phase 1 §A 持ち越し候補に積む
