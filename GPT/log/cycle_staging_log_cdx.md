@@ -264,3 +264,50 @@ draft: "log/phase5_diary_20260529_0628.md"
 verification: "ok"
 note: "Phase 1-4 の候補落選、evidence boundary probe、atom mirror drift 0、pending 維持を中心に日記化。"
 ```
+## Phase 4a: ?? + ???? ??
+
+### 2026-05-29T14:20:00+09:00 Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    markdown_links_checked: 0
+    broken_markdown_links: 0
+    entry_validation:
+      result: "stale_atom_entry_ids"
+      unknown_entry_ids: 23
+      evidence: "python tools\\validate_memory_index.py"
+  atoms_jsonl:
+    total_atoms: 1591
+    bad_json_lines: 0
+    duplicate_ids: 0
+    duplicate_content_groups: 0
+    atoms_index_sync:
+      index_ids: 1591
+      atoms_not_in_index: 0
+      index_not_in_atoms: 0
+    per_file_drift:
+      per_file_md_ids: 1779
+      md_not_in_index: 188
+      index_not_in_md: 0
+      md_not_in_atoms_jsonl: 188
+  raw_archive:
+    cutoff: "2026-04-29T14:20:00+09:00"
+    older_than_30_days: 0
+  shared_reads_candidates:
+    cutoff: "2026-04-29T14:20:00+09:00"
+    older_than_30_days: 0
+  inbox:
+    pending_directives: []
+    pending_broadcasts: []
+issues:
+  - id: ISS-4A-20260529-002
+    description: "MEMORY.md ? Recent / High Signal / Tag Entry Points ???????? atom ?????per-file .md ????????? memory/atoms/index.jsonl ? memory/atoms.jsonl ??????: sr-1779979942-eff5e8817a, sr-1779938795-a42f39e465, sr-1779827466-7c3e4d9749, sr-1779846492-8c411b6576 ? .md ?????index/jsonl ???"
+    severity: medium
+    evidence: "tools/validate_memory_index.py errors; rg confirms memory/atoms/2026-05/*.md exists; atoms/index and atoms.jsonl both 1591 rows while per-file md ids are 1779"
+    why_blocks_game_memory: "MEMORY.md ???????????????? lesson ? shared-reads atom ? recall ??? loader ????????????????????????????????????????????? GUI Agents Continual Game Generation ??? atom ? indexed recall ?????????"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
