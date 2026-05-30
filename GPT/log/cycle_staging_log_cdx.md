@@ -10,6 +10,13 @@
 - 既存候補との重複確認: Agent Island / RuleSmith / HDPCG / CreativeGame / AI Gamestore / AIDG / AI Harness / AgentHijack / OpenGame / GameUIAgent は既に候補化または投稿済み。
 - 収集 candidate: `memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md` — personality-driven LLM agents を再利用可能なゲーム自動テスト tool にする MIMIC-Py。headless 評価の bot policy 多様化に使えそうな資料として収集。
 
+
+2026-05-30T12:29:36+09:00 log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260530_confusion_affective_states_play.md` — 混乱を失敗ではなく学習・flow・PX との関係で観測する候補。
+- `memory/shared_reads_candidates/20260530_impact_feedback_action_games.md` — action game の impact feel を hit stop / sound coherence / camera control などの特徴で見る候補。
+- `memory/shared_reads_candidates/20260530_event_emotion_px_test_agents.md` — event-based emotion と PX test agent で headless 評価を体験推定へ拡張する候補。
+- pending 確認: `slack_directives.jsonl` に `log-cdx-1780027275-ab93155518` が 1 件 pending、`slack_broadcasts.jsonl` は pending なし。Phase 1 では対応せず確認のみ。
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-05-30T10:44:00+09:00"
