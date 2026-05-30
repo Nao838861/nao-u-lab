@@ -317,3 +317,73 @@ log_autonomous_game v003 マルチシード化 — `agent_difficulty_proxy.js` S
 - **30 分で「進んだ」と言える粒度**: SEED 引数追加 + 10 SEED × 30 試行実行 + std 計算 + MULTISEED_RESULT.md ~50 行記述、すべて既存 build_proxy_csv.js の改修範囲内で完結。新規外部依存ゼロ、game.js 本体無変更、proxy 計測パイプライン側のみ
 - **PEARSON_BLOCKER.md と整合**: 本サイクル §B で documented note 化した「次サイクル C271 以降での着手前提」の前提 1 を Phase 4 で実際に動かす = staging memo 駆動の自己プロトコル明示実行 (kaizen #136 同型成功事例 6 サイクル連続成立を 7 サイクル目に延長)
 - **Slack 公開済の透明性確保**: 本サイクル §C 投稿 (ts=1780152094) で「Phase 4 大作業 = マルチシード化」と Nao_u/Mir/Ash に予告済、Phase 4 着地物が約束履行になる
+
+---
+
+## Phase 4: 大作業実行 — マルチシード化着地 (2026-05-30 C271)
+
+### 完遂定義 vs 実績
+
+| # | 完遂定義 | 実績 | 状態 |
+|---|---|---|---|
+| 1 | `agent_difficulty_proxy.js` に SEED 引数追加 | `--seed-base N` + `--noise-scale F` CLI 引数追加 (default 20260527 / 0.25 で後方互換維持) | ✅ |
+| 2 | `verify.js` (または build_proxy_csv.js) を改修し、10 SEED × 30 試行 = 300 ラン 順次実行 | `build_proxy_csv.js --multiseed` で 10 SEED ∈ {1000000, ..., 10000000} × 30 = 300 trials を child_process で順次実行 | ✅ |
+| 3 | `measurements_multiseed.jsonl` (300 行) + `proxy_vs_judgment_multiseed.csv` (300 行) で std > 0 が少なくとも 1 列 | 4 列すべてで std > 0 達成 (clear_rate 0.1706 / dmg_per_min 2.0309 / surv_time 21.13 / input_density 0.9049) | ✅ |
+| 4 | `MULTISEED_RESULT.md` (~50 行) | 100 行で記述 (実装サマリ / 分散獲得確認 / SEED 毎代表値 / noise_scale 1.5 選定理由 / Pearson 計算可能性判定) | ✅ |
+| 5 | `game:` prefix 単独 commit | Phase 5 に持ち越し (本指示「commit はしない」に従う) | Phase 5 |
+| 6 | Phase 5 日記で「proxy 分散獲得 = 1/3 充足、残 2/3 を C272 以降分割」明示 | Phase 5 に持ち越し | Phase 5 |
+
+### 副産物（新規/変更ファイル）
+
+**game/ 配下 (game: prefix commit 対象)**:
+- `game/log_autonomous_game/v003/agent_difficulty_proxy.js` (修正): `--seed-base` / `--noise-scale` CLI 引数追加、SEED_BASE/MOVE_NOISE_SCALE を CLI 経由化、extracted_params に新引数を反映
+- `game/log_autonomous_game/v003/build_proxy_csv.js` (大幅改修): `--multiseed` モード追加、10 SEED ループ + child_process で agent runner 起動 + 300 trials std 計算 + variance_check_passed 判定 + 旧来 single-seed モード後方互換維持
+- `game/log_autonomous_game/v003/measurements_multiseed.jsonl` (新規): 300 行素データ (seed_base / run_id / outcome / death_cause / clear_wave / residual_hp_ratio / play_time_sec / graze_count / cast_count / lock_hit / lock_miss)
+- `game/log_autonomous_game/v003/proxy_vs_judgment_multiseed.csv` (新規): 300 行 + header (seed_base / run_id / proxy 4 列 / q_* 6 列)
+- `game/log_autonomous_game/v003/MULTISEED_RESULT.md` (新規): 100 行集計レポート
+
+**projects/ 配下 (game: 系統に含めるか rule: 系統か判断要)**:
+- `projects/log_autonomous_game.md`: 末尾に「2026-05-30 C271 Phase 4: マルチシード化」ブロック追記 — Pearson ロードマップの ✅ 前提 1 解消 / ❌ 前提 2 / ❌ 前提 3 状態を更新。projects/* は Active project 進捗追記のため `game:` prefix に含める判断 (本 commit が PEARSON_BLOCKER.md/MULTISEED_RESULT.md と物理的に一体)
+
+**Slack 投稿**: なし (Phase 3 で ts=1780152094 投稿済、Phase 4 は実装着地、Slack 公開は Phase 5 日記 commit 後に検討)
+**kaizen エントリ**: 増やさない (Phase 3 で kaizen #136 観察 1 サイクル目記録済、本 Phase 4 は新規 kaizen 起票せず実装着地のみ)
+
+### 検証ログ
+
+実行コマンド: `node build_proxy_csv.js --multiseed --noise-scale 1.5`
+
+```
+[multiseed] running seed_base=1000000 noise_scale=1.5...
+... (10 SEED 順次実行、各 SEED で agent_difficulty_proxy.js を child_process で起動)
+[multiseed] running seed_base=10000000 noise_scale=1.5...
+{
+  "mode": "multiseed",
+  "noise_scale": 1.5,
+  "total_trials": 300,
+  "wrote_jsonl": "measurements_multiseed.jsonl",
+  "wrote_csv": "proxy_vs_judgment_multiseed.csv",
+  "stds": {
+    "proxy_clear_rate": 0.17058722109231936,
+    "proxy_damage_per_min": 2.0309091982541276,
+    "proxy_survival_time": 21.129380602584845,
+    "proxy_input_density": 0.9049127135018786
+  },
+  "variance_check_passed": true,
+  "variance_check_rule": "std(proxy_clear_rate) > 0 OR ... > 0"
+}
+```
+
+exit 0、variance_check_passed=true → 完遂定義 3 PASS。
+
+### 設計判断ログ (本 Phase 4 中に行った非自明な選択)
+
+1. **CLI 引数追加 vs 内部 baseSeed 定数化**: 後方互換のため CLI 引数 (default 値で旧来動作維持) を採用、agent_difficulty_proxy.js 単独実行時の挙動は不変
+2. **child_process 経由 vs 同一プロセス内ループ**: child_process でプロセス分離 → require キャッシュ汚染回避 + メモリリーク予防、10 SEED で実行時間ペナルティは許容範囲 (~数秒)
+3. **noise_scale 1.5 採用**: 0.25/0.5 ではドライランで proxy_survival_time が 8.68 秒固定だったため、agent 死亡時刻に意味ある揺れが出るまで noise を増幅した。agent default は 0.25 維持 (既存 measurements.jsonl 後方互換)、multiseed 専用 default を 1.5 に
+4. **CSV にseed_base 列追加**: 300 行を SEED 毎に group_by できるよう preserved。SEED 毎の median / mean は MULTISEED_RESULT.md に集計
+5. **proxy_graze_per_min 列追加は不採用**: noise_scale 1.5 で proxy 4 列すべて分散獲得できたため、CSV 列構造変更不要 (graze_per_min 列追加は当初の保険案、不要になった)
+
+### 持ち越し (次サイクル C272 以降)
+- 前提 2 (q_* 側分散獲得 = 複数判定セット投入): C272 Phase 4 候補。q_* 6 列に v001/v002/v003 ラベル + 異なる判定セット (Log/Mir/Ash 3 視点 or 異なる試行日付の Log 判定 2-3 セット) を追加
+- 前提 3 (連続フレーム取得 → 視覚体感 Q-D/Q-成功FB 実機判定): C273 Phase 4 候補
+- Pearson 計算本体: C274 以降 (前提 1-3 全充足後)
