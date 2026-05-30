@@ -66,6 +66,47 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-31 (Log C272 Phase 3): HTTP 402 intake_failure 課題 + 外部入力ゼロ N=2 連続 = 構造課題化
+
+本サイクルで Log_cdx ts=1780134701 (HTTP 402 同型障害基準への問い) と ts=1780153609 (C270 ゼロ判定肯定) の 2 件に応答する過程で、本プロジェクト射程の構造課題が 2 つ顕在化した。両方とも本サイクル Phase 3 で kaizen 起票は見送り、本履歴節への記録と #all-nao-u-lab 投稿 (ts=1780173815 / ts=1780173822) のみで着地、C273 で Log_cdx 相互レビュー後に判定発火点を再評価する。
+
+**課題 1: HTTP 402 intake_failure atom 分離問題**
+
+観察: 5/26 morioka / 5/28 06:15 itarutomy の 2 件で、Nao_u が #nao-u に X URL を本文なしで投下 → AI 側 (Log/Log_cdx/Mir/Ash) が WebFetch を試行 → HTTP 402 で本文取得失敗 → 「本文なし URL atom」が通常 atom と同じ棚に蓄積される構造。
+
+型分解 (3 層):
+- (i) Nao_u が本文なし URL を投げる
+- (ii) AI 側は X 認証経路を持たない
+- (iii) 本文を見た前提で反応できない (見えたふりすると造語症 + 比喩濫用に直結)
+
+頻度: 4日2件 = 統計ノイズと区別困難、N=2 で X 認証経路構築まで踏み込むのは過剰。だが**型** (i)(ii)(iii) は 3 層すべて再現済 = **頻度ではなく構造で昇格判定する筋**。
+
+Log 側設計課題昇格先の優先順位 (本サイクル提案、C273 で Log_cdx 相互レビュー後に判定発火):
+- (i) **Slack 側共有フォーマット**: Nao_u に「URL + 1 行要点」を**任意付与**してもらう pending プロトコル。強制ではなく Nao_u が時間に余裕があれば付ける、本文取得失敗時のフォールバックとして機能。コスト最小、Nao_u 時間を 5-10 秒/URL 使うだけ。
+- (ii) **Slack/AI 側の intake_failure atom 分離**: `phase_gather()` の URL 検出箇所で WebFetch 失敗時に `intake_failure: true` を atom frontmatter に印字、recall 時に default では除外、明示的に `--include-intake-failure` でのみ取り出せる。memory_redesign.md の T2 議論 (frontmatter tag 階層) と並列で進められる。
+- (iii) **X 認証経路**: Log/Mir/Ash には API key を配布せず、Nao_u 経由で本文取得。認証情報管理コストが大きく、(i)(ii) で間に合うなら不要。
+
+実装順は (i) → (ii) → (iii)。本サイクル kaizen 起票見送り、C273 で (i) Slack 共有フォーマット提案を Nao_u に出すかを Log_cdx と相互レビュー。
+
+**課題 2: 外部入力ゼロサイクル N=2 連続 = 「intake ゼロサイクルの定義」起票**
+
+観察: C270 (5/30 23:31) + C272 (5/31 02:32) の 2 連続で、Nao_u 指示 1-3 (新URL反応 / shared-reads / external_notes) が同時ゼロ。単発ゼロは観測結果、**N=2 連続は構造課題**として記録。
+
+構造解析: Nao_u の時間が「Slack URL キュレーション」から「他のレイヤ (コード設定 / Twitter 配送 / Mir Slack Bot / Ash .env / セキュリティ強化)」に移行している可能性。pending_requests.md #2/#4/#5 がすべて Nao_u 対応待ちで停止している事実と整合。Log/Mir/Ash の運用ループは Nao_u URL キュレーションを「主たる外部入力」として設計しているため、これがゼロになるとサイクル本体が空転する設計脆弱性。
+
+Log 側 ゼロサイクル時 2 段構え (本サイクル Phase 2 で確定、Log_cdx 相互レビュー済):
+- (a) **N=2 連続で構造課題化** — 本ファイル本節 (これ) に記録、N=3 連続なら kaizen 起票判定発火点
+- (b) **内向き材料を明示的に選ぶ** — Log 側の自走材料を 2 軸に絞る: (i) game_templates_design.md の罠リスト先行反映 (実装着手前の設計原則焼き込み、C272 rule: 10747e0f で着地済)、(ii) log_autonomous_game v003 自判定 (Q-導入/Q-D/Q-成功FB/展開差 採点)。「内向き作業の発見」ではなく「ゼロ時に何を内向き材料にするか」を staging に明文化する方が、後手回避と疑似タスク作成回避の両方を満たす。
+
+**判定発火点 (C273 以降)**:
+- (1) C273 で再びゼロサイクル → N=3 連続 = kaizen 起票判定発火 (「ゼロサイクル時の内向き振替先 2 軸」を構造強制ルール化)
+- (2) C273 で Nao_u URL キュレーション復活 → N=2 で打ち止め、構造課題ステータスを「観察延長中」に降格
+- (3) C273-C275 でゼロサイクル散発 (N=2-3 が間欠) → 「Nao_u 時間配分の他レイヤ移行」を本プロジェクト現状サマリーに反映、ゼロサイクル発生頻度の長期追跡指標化
+
+**機械反映禁止順守**: 本記録は両課題ともに観察記録 + 提案位置取り。kaizen 起票・実装着手は C273 Log_cdx 相互レビュー後に判定。本サイクル Phase 3 は本履歴節記録 + Slack 投稿 2 件 + Pearson 前提 3/3 gate 化提案 (#all-nao-u-lab ts=1780173815) のみで打ち止め。
+
+---
+
 ### 2026-05-28 C254 Phase 3 (Log): Generator/Evaluator 軸を Phase 4 大作業選定に適用 — kaizen #135 段階2 (recall_atom.py 実装) を確定
 
 C245 履歴で登録した「Generator/Evaluator 比率」軸を本サイクル Phase 4 大作業選定で初めて運用判断軸として使用。本サイクル C254 全体の Generator/Evaluator 比率分布:

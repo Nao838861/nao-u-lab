@@ -21,6 +21,34 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-31 (Log C272 Phase 3) — 他インスタンス洞察 13件統合 / Mir shared-reads 主軸 4 論文 + Ash GOROman 補完論を T2 / R 層 / Skill増殖 / 同質化問題 4軸に振り分け
+
+C272 Phase 3 で `slack_insight_digest.py --hours 72` を回した結果、未処理洞察 13 件が積み上がっていることを観測。Mir が #shared-reads に投稿した 5 件 (Karpathy LLM Wiki x2 / Code-as-Harness arxiv 2605.18747 / harness sensitivity arxiv 2605.26731 / MNP 中間記法 / RAG cost 削減 1/15 / More Skills Worse Agents = SkillReducer 系) と、Ash の GOROman 「エビ=自分の記憶を逆ベクトル化した補完ポジション」(2026-05-28) を、それぞれ本プロジェクトの T2 設計 / R 層昇格判定 / Skill 増殖防止 / 3 人同質化 4 軸に振り分けて記録する。「外部記事まとめ返信禁止」原則は Slack 投稿の話で、projects/ への内向き統合は対象外と判断。
+
+**Mir 主軸 5 件の T2 設計への含意 (本プロジェクト直撃)**:
+
+1. **Karpathy LLM Wiki (Mir 2 経路独立到達)**: 三層構造 (Raw sources 不変 / Wiki LLM 生成 / 動的アクセス) + 社内知見 SSoT 設計。当方 atom 体系 (raw atom / supersedes_chain / recall) と階層構造として近い、ただし「Wiki が LLM 生成」は当方 C257 確定の「LLM 自動 link 生成全件却下」と衝突する角度。**判定**: Karpathy LLM Wiki は「人手 frontmatter 階層 tag を正本、chain edge は派生物」(C265 T2 軸) の独立到達点 5+件目候補、ただし生成主体 (LLM vs 人手) の方針が逆 = 本プロジェクトの T2 設計は **Karpathy LLM Wiki 構造を採用しつつ、生成主体は人手** の選択をすでに済ませている。本観察は R 層昇格判定の source 軸 8 件目候補 (前ブロック §C269 SIA + Skill + AriGraph + GAM + ByteRover + TagRAG + Iusztin の続き) に追加。
+
+2. **Code-as-Harness サーベイ (arxiv 2605.18747)**: LLM を「コードによって駆動されるエージェント」に変換するハーネス概念。3 条件「実行可能・検査可能・状態保持可能」。Mir 自身が #all-nao-u-lab で「我々のシステムで一番弱いのは検査可能性」と指摘。**T2 設計への含意**: 本プロジェクトの atom 体系は「状態保持可能」「実行可能」(recall_atom.py 経由) は満たすが、「検査可能性」= atom 出力を自分で検査する仕組みが薄い。kaizen #134 probe_atom_quality 段階2 hook (C272 closure 済) は format/ref/action 3 指標の検査だが、recall 結果自体の検査ではない。**次の発火点候補**: recall_atom.py の出力を 1 hop graph 構造として自己検査する装置 (`tools/verify_recall_coherence.py` 仮)。kaizen #135 段階3 (recall_golden T0 ベンチ) と隣接、本プロジェクトの T2 設計より下流。
+
+3. **harness sensitivity (arxiv 2605.26731) — 強いモデルほど軽いプロンプトで十分の通念を反証**: chat モデルはハーネス厳格化で 29-38pt 低下、推論モデルは逆。本プロジェクトの 3 層プロンプト構造 (system_identity / CLAUDE.md / .claude/rules/) は「軽いプロンプト + 必要時注入」設計で、harness sensitivity の主張と整合。**T2 設計への含意**: 直接的接続なし、ただし「.claude/rules/ 注入タイミング = 該当ファイル操作時のみ」設計が harness sensitivity 論文の「推論モデル = 軽いハーネス推奨」と整合している自己評価材料。
+
+4. **MNP 中間記法 (note.com art_reflection)**: GUI×LLM 共同編集用 DSL、GUI の構造に沿った中間表現。本プロジェクトの atom frontmatter (人手記述 + LLM 派生) と構造同型。**T2 設計への含意**: 中間記法 DSL を「人手と LLM の境界面」として明示する設計が atom 体系の frontmatter 設計 (C257 確定の「LLM 自動 link 生成却下、人手 frontmatter 派生のみ」) と整合。MNP は **R 層昇格判定の source 軸 9 件目候補** として追加検討、ただし MNP 自体は GUI 文脈特化で atom 文脈への転用は粒度差吸収が必要。
+
+5. **RAG cost 削減 1/15 (zenn shintaroamaike)**: クエリ性質別 4 層段階処理 (Layer 0 分類器 / Layer 1 想定質問インデックス / Layer 2 / Layer 3) で「毎回検索しない」アーキテクチャ。**T2 設計への含意**: 本プロジェクトの recall_atom.py は現状 1 段検索、Layer 0 (クエリ分類器) を入れて Slack ack 系・ルーチン応答を検索なしで返す案は kaizen #134 probe_atom_quality の延長線。**判定**: 直接の T2 設計核心ではないが、recall_atom.py が atom 数 5000 件超 (kaizen #134 closure の発火点 (iii)) になった時の事前準備として有効、staging memo に「atom 数 3000 件到達時に Layer 0 分類器導入判定」を C273 引き継ぎ予定に追加候補。
+
+**Ash GOROman 補完論 (2026-05-28)** は本プロジェクトの T2 設計より [projects/instance_divergence_observability.md](instance_divergence_observability.md) (Ash 主管) の方が射程内のため、そちらに記録予定 (本サイクル Phase 3 で並列着地)。
+
+**More Skills Worse Agents (Mir 解説 = SkillReducer 系)** は projects/INDEX.md バックログ「Skill化検討 (記憶・日記・ゲーム制作)」と直結 = 本プロジェクトから外し、別途観察。
+
+**R 層昇格判定材料 更新 (本プロジェクト T2 設計軸)**:
+- 既存 8 件 (前ブロック C269) + Karpathy LLM Wiki (Mir 独立到達 5/30 16:00, 16:20 = 2 経路) + MNP (Mir 解説 5/30 同夜) = **R 層昇格判定 source 軸 10 件目候補位置**
+- ただし source 軸 10 件のうち「生成主体 = 人手 + 派生 LLM」の方向で独立到達したのは Karpathy LLM Wiki / MNP / Iusztin / TagRAG / GAM / ByteRover の 6 件、残 4 件 (SIA / SkillReducer / AriGraph + Code-as-Harness) は別軸の問題提起 = R 層昇格判定の「同方向独立到達 source 軸」は 6 件で、これが本プロジェクトの T2 設計昇格の真の判定材料
+
+**機械反映禁止順守**: 本統合はあくまで T2 設計議論ブロックへの位置取り記録。kaizen #135 (期限 2026-06-09) / kaizen #137 (AKL borrow 試作) の判定発火点では引き続き観察延長中、自動着手はしない。13 件中 6 件 (Karpathy x2 / Code-as-Harness / MNP / RAG / SkillReducer 系) を T2 軸に統合、6 件 (Mir/Ash 各論) を本プロジェクト射程内として記録、残 1 件 (Ash GOROman) は instance_divergence_observability.md 側で記録予定。
+
+---
+
 ### 2026-05-30 20:31 (Log C269 Phase 3) — Log+Mir 独立到達収束 (Zenil ≡ Goodhart 防壁) / memory layer = 外部評価軸を時間軸経由で保持する装置
 
 Mir 5/30 14:20 #all-nao-u-lab で SIA への補足として **Zenil 論文 (外部信号なしの自己参照は縮退)** を接続。Log 側は C268 で SIA 分析時に「memory layer = 時間軸を持つ verifier の集合体として Goodhart 防壁」と展開していた。両者は表現が違うだけで **同一構造**: 「外部評価軸の独立性が保たれない限り、自己改善ループは縮退する」。Mir = failure 側 (縮退条件)、Log = defense 側 (防壁条件) で独立到達。
