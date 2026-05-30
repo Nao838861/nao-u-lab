@@ -403,6 +403,13 @@ function runOne(seed) {
 
   const survived = deathFrame === null;
   const endFrame = survived ? MAX_FRAMES : deathFrame;
+  // fun_proxy 1 指標 (C273 Phase 4 着地): castlock_activation_rate = castCount ÷ endFrame
+  // = 1 frame あたりの castLock 発動回数。Q-成功FB 状態 3「危機回避」の頻度代理。
+  // trial 間で seed/agent 進路により cast_count・endFrame ともに変動するため σ_fun > 0 が
+  // 構造的に成立する想定 (Pearson 計算前提 3/3 を proxy 暫定で解消、実機判定経路と置換可能)。
+  const castlockActivationRate = endFrame > 0
+    ? Number((state.castCount / endFrame).toFixed(6))
+    : 0;
   return {
     seed,
     outcome: survived ? 'survived' : 'gameover',
@@ -414,6 +421,7 @@ function runOne(seed) {
     cast_count: state.castCount,
     lock_hit: state.lockResults.hit,
     lock_miss: state.lockResults.miss,
+    castlock_activation_rate: castlockActivationRate,
   };
 }
 
@@ -454,6 +462,7 @@ function main() {
     median_residual_hp_ratio: median(trials.map(t => t.residual_hp_ratio)),
     median_play_time_sec: median(trials.map(t => t.play_time_sec)),
     median_graze_count: median(trials.map(t => t.graze_count)),
+    median_castlock_activation_rate: median(trials.map(t => t.castlock_activation_rate)),
     survival_rate: trials.filter(t => t.outcome === 'survived').length / trials.length,
     death_cause_breakdown: trials.reduce((acc, t) => {
       const k = t.death_cause || 'survived';
@@ -467,6 +476,7 @@ function main() {
       '本数値は self_judgment の 3→4 暫定昇格根拠まで。確定 5 採点は実機判定依存',
       'residual_hp_ratio は 1-hit kill のため binary (1.0/0.0)、HP system 導入時に連続値化',
       '素朴良手 agent には MOVE_NOISE_SCALE=0.25 の方向微小ノイズあり、seed 差で結果分散が出る',
+      'castlock_activation_rate は fun_proxy 1 指標 (C273 Phase 4 着地)、実機判定経路に置き換え可能な暫定 proxy。Q-成功FB「危機回避」の頻度代理だが、実機の体感「楽しさ」とは独立軸の可能性あり (Goodhart リスク)、3 サイクル運用で v001/v002/v003 ランキング合致を判定',
     ],
   };
 

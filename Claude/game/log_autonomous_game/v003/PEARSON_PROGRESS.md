@@ -1,18 +1,48 @@
 # Pearson 計算前提 解消 進捗 (v003)
 
-最終更新: 2026-05-31 C272 Phase 4 (Log)
+最終更新: 2026-05-31 C273 Phase 4 (Log)
 
 ## 前提 3 つと進捗
 
 | 前提 | 内容 | 状態 | 着地 commit / cycle | 物理化ファイル |
 |---|---|---|---|---|
 | 1/3 | proxy 側 σ_x > 0 (proxy 4 列のうち最低 1 列で std > 0) | ✅ 充足 | C271 Phase 4 (2026-05-30) | [MULTISEED_RESULT.md](MULTISEED_RESULT.md) / [proxy_vs_judgment_multiseed.csv](proxy_vs_judgment_multiseed.csv) |
-| 2/3 | judgment 側 σ_y > 0 (judgment 6 列のうち少なくとも 2 列で std > 0) | ✅ 充足 | **C272 Phase 4 (2026-05-31, 本サイクル)** | 本ファイル / [proxy_vs_judgment_labeled.csv](proxy_vs_judgment_labeled.csv) |
-| 3/3 | 連続フレーム視覚判定値の取得 (n>3 化、実機・連続観測由来の独立 judgment 軸) | ⏳ 未着手 | C273 以降の Phase 4 候補 | [capture_frames.js](capture_frames.js) (段階 2 着地済) / [self_judgment.md](self_judgment.md) Q-D 節 |
+| 2/3 | judgment 側 σ_y > 0 (judgment 6 列のうち少なくとも 2 列で std > 0) | ✅ 充足 | C272 Phase 4 (2026-05-31) | [proxy_vs_judgment_labeled.csv](proxy_vs_judgment_labeled.csv) |
+| 3/3 | fun 側 σ_fun > 0 (fun_proxy 列 std > 0、proxy 暫定。**実機判定経路に置換可能**) | △ proxy 暫定 | **C273 Phase 4 (2026-05-31, 本サイクル)** | 本ファイル / [agent_difficulty_proxy.js](agent_difficulty_proxy.js) `castlock_activation_rate` |
+| 3/3' | 連続フレーム視覚判定値の取得 (n>3 化、実機・連続観測由来の独立 fun_score 軸) | ⏳ 未着手 | C274 以降の Phase 4 候補 | [capture_frames.js](capture_frames.js) (段階 2 着地済) / [self_judgment.md](self_judgment.md) Q-D 節 |
 
-前提 1/3 + 2/3 充足で **σ_x > 0 ∧ σ_y > 0** が同時成立。Pearson 相関係数 r = Cov(x,y) / (σ_x · σ_y) の分母ゼロ問題は解消、ただし前提 3/3 (実機由来の独立 fun_score) 未到達のため r の値はまだ意味解釈に堪えない (今は「計算できる」段階)。
+前提 1/3 + 2/3 + 3/3 (proxy 暫定) 充足で **σ_x > 0 ∧ σ_y > 0 ∧ σ_fun > 0** が同時成立。Pearson 相関係数 r = Cov(x,y) / (σ_x · σ_y) の分母ゼロ問題は解消、ただし前提 3/3 は **proxy 暫定** (castlock_activation_rate = castCount ÷ endFrame) で「fun_score の代理性」が未検証のため r の値はまだ意味解釈に堪えない (今は「計算できる」段階)。前提 3/3' (実機由来の独立 fun_score) で置換するまで Goodhart リスクあり。
 
-## 本サイクル C272 Phase 4 着地物
+## 本サイクル C273 Phase 4 着地物 (fun_proxy 1 指標追加で前提 3/3 暫定解消)
+
+### 実装サマリ
+
+| 項目 | 値 |
+|---|---|
+| 実行 commit | C273 Phase 4 (本サイクル、`game:` prefix) |
+| 実行コマンド | `node build_proxy_csv.js --labeled` |
+| 新規追加列 | `fun_proxy_castlock_rate` (= `castCount` ÷ `endFrame`、agent_difficulty_proxy.js trial 出力) |
+| 追加実装位置 | [agent_difficulty_proxy.js](agent_difficulty_proxy.js) `runOne()` 末尾 + [build_proxy_csv.js](build_proxy_csv.js) 全 3 モード (single / multiseed / labeled) |
+| variance 観測 | `fun_proxy_castlock_rate` std=**0.000251** (n=900) → σ_fun > 0 ✅ |
+| variance_check_passed | true (判定式: `judgment 列 std > 0 が 2 列以上 AND fun_proxy_castlock_rate std > 0`) |
+
+### fun_proxy 設計 (完遂定義 1)
+
+- **指標名**: `castlock_activation_rate` = `castCount` ÷ `endFrame`
+- **意味**: 1 frame あたりの castLock 発動回数。**Q-成功FB 状態 3「危機回避」と直結する頻度 proxy**
+- **trial 間 variance > 0 の根拠**: cast_count (castLock 成功数) と endFrame (生存 frame 数) が seed/agent 進路で変動するため、比は構造的に variance > 0 になる (game.js 改修なしで proxy 単独で σ_fun > 0 が成立)
+- **実装位置**: [agent_difficulty_proxy.js](agent_difficulty_proxy.js) `runOne()` 末尾、trial JSON に `castlock_activation_rate` を追加 (game.js は変更せず、agent 計測側だけの拡張)
+- **暫定 proxy 位置付け**: 実機判定 (Nao_u/Mir/Ash) で「楽しさ」を直接 fun_score として取得できれば置換可能。前提 3/3' (連続フレーム視覚判定または実機判定) で fun_score 軸の独立性が担保されるまでは Goodhart リスクあり
+
+### Goodhart リスクと退路
+
+- **リスク**: castlock_activation_rate が高い ≠ 楽しい。agent が頻繁に死ぬ (= 短 endFrame) と castCount/endFrame が見かけ上上がる場合あり (1 cast を打って即死すれば rate は max)
+- **退路**: 実機 fun_score (前提 3/3') で 3 version ランキング合致しなければ、castlock_activation_rate は破棄して別の fun_proxy (例: `close_call_per_minute` = 敵弾接近 ±5px frame 数 ÷ play_time_sec) に置き換える
+- **判定タイミング**: 前提 3/3' 着地サイクルで「proxy ランキング (v003 > v002 > v001) と 実機 fun_score ランキングが Spearman ≥ 0.5 で合致するか」を判定。合致しなければ fun_proxy 設計を再選定
+
+---
+
+## 前サイクル C272 Phase 4 着地物
 
 ### 実装サマリ
 
@@ -73,31 +103,35 @@ variance_check_passed = true     (rule: judgment 列 std > 0 が 2 列以上)
 | | 状態 | 備考 |
 |---|---|---|
 | proxy 側 σ_x > 0 | ✅ 4 列とも | C271 Phase 4 着地 |
-| judgment 側 σ_y > 0 | ✅ 2 列 (q_intro, q_d) | **本 C272 Phase 4 着地** |
-| n ≥ 4 (Pearson 自由度 ≥ 2) | △ n=3 version (v001/v002/v003) で実質 n=2 (重複 v002/v003 同値) | 前提 3/3 で実機由来 fun_score 追加が必須 |
-| **Pearson r 値が意味解釈可能** | ❌ まだ | n 不足 + judgment 側が「Log 暫定値」由来で fun_score 代理性が未検証 |
+| judgment 側 σ_y > 0 | ✅ 2 列 (q_intro, q_d) | C272 Phase 4 着地 |
+| fun 側 σ_fun > 0 | △ proxy 暫定 (castlock_activation_rate std=0.000251) | **C273 Phase 4 着地、実機判定経路に置換可能** |
+| n ≥ 4 (Pearson 自由度 ≥ 2) | △ n=3 version (v001/v002/v003) で実質 n=2 (重複 v002/v003 同値) | 前提 3/3' で実機由来 fun_score 追加が必須 |
+| **Pearson r 値が意味解釈可能** | ❌ まだ | n 不足 + judgment 側が「Log 暫定値」由来で fun_score 代理性が未検証 + fun_proxy は proxy 暫定 |
 
-**結論**: 本サイクルで Pearson 計算の **数学的前提** (σ_x > 0 ∧ σ_y > 0) は揃った。次に詰めるべきは「Pearson 値の **解釈可能性**」= 前提 3/3 (連続フレーム視覚判定 or 実機判定) で独立 judgment 軸を増やす経路。
+**結論**: C273 で Pearson 計算の **数学的前提** (σ_x > 0 ∧ σ_y > 0 ∧ σ_fun > 0) はすべて揃った (うち σ_fun は proxy 暫定)。次に詰めるべきは「Pearson 値の **解釈可能性**」= 前提 3/3' (連続フレーム視覚判定 or 実機判定) で fun_score 軸を実機由来データに置換する経路。
 
 ## 既知の限界と次サイクル候補
 
 ### 既知の限界
-1. **n 不足**: version = 3、しかも v002 と v003 の judgment が同値 → 実質独立点 n=2。前提 3/3 で連続フレーム視覚判定値 (例えば各 frame から推定した「危機接触頻度」「弾密度」「予測軌道存在率」など) を judgment 列に追加できれば n が version 軸から trial 軸へ拡張可能
+1. **n 不足**: version = 3、しかも v002 と v003 の judgment が同値 → 実質独立点 n=2。前提 3/3' で連続フレーム視覚判定値 (例えば各 frame から推定した「危機接触頻度」「弾密度」「予測軌道存在率」など) を judgment 列に追加できれば n が version 軸から trial 軸へ拡張可能
 2. **q_a / q_success_fb / q_e 軸の差分ゼロ**: 改修が無かった軸を 6 軸並べることで σ_y は希薄化。「改修差分が出る軸だけで Pearson」のサブ計算が必要になる場面が来る
 3. **proxy 側の盲点維持**: C271 で観察された「素朴良手 agent が wave 1 内死亡で phase 2 計測ゼロ」問題は変わらず。proxy_vs_judgment_labeled.csv の survival_rate (300/900 × 3 version で約 3%) は agent 弱さの反映、game 難易度の純粋な反映ではない (C263 §1 / C264 §1 と同根)
+4. **fun_proxy の Goodhart リスク**: castlock_activation_rate は「死亡前 1 cast を打って即死」した trial で rate が見かけ上 max になる構造を持つ。実機 fun_score でランキング合致確認するまで proxy として暫定扱い
 
-### 次サイクル候補 (C273 以降)
-1. **前提 3/3 着手**: [capture_frames.js](capture_frames.js) の 60 frame サンプル (C268 着地) から、frame 毎に「弾密度 (画面内弾数)」「自機-最近接弾距離」「予測軌道線本数 (v001 のみ存在)」を視覚判定 → 連続観測由来 judgment 軸を 1〜2 本追加
-2. **fun_score 代理問題への直撃**: 実機判定 (Nao_u / Mir / Ash の Pulse Relay) 取得 → [projects/log_autonomous_game.md §C251 残課題 経路 R1〜R5](../../../projects/log_autonomous_game.md) のうち R1 (Nao_u 評価依頼) 着手
-3. **「改修差分が出る軸だけで Pearson」サブ計算**: q_intro と q_d の 2 軸だけで Pearson 計算を試す。proxy 4 軸 × judgment 2 軸 = 8 ペアの r を出して、proxy 何が fun_score と相関するかの仮説候補を絞る
+### 次サイクル候補 (C274 以降)
+1. **前提 3/3' 着手**: [capture_frames.js](capture_frames.js) の 60 frame サンプル (C268 着地) から、frame 毎に「弾密度 (画面内弾数)」「自機-最近接弾距離」「予測軌道線本数 (v001 のみ存在)」を視覚判定 → 連続観測由来 judgment 軸を 1〜2 本追加
+2. **fun_score 代理問題への直撃**: 実機判定 (Nao_u / Mir / Ash の Pulse Relay) 取得 → [projects/log_autonomous_game.md §C251 残課題 経路 R1〜R5](../../../projects/log_autonomous_game.md) のうち R1 (Nao_u 評価依頼) 着手 → castlock_activation_rate との Spearman 順位合致で fun_proxy 妥当性検証
+3. **「改修差分が出る軸だけで Pearson」サブ計算**: q_intro と q_d の 2 軸だけで Pearson 計算を試す。proxy 4 軸 + fun_proxy 1 軸 × judgment 2 軸 = 10 ペアの r を出して、proxy 何が fun_score と相関するかの仮説候補を絞る
+4. **fun_proxy 候補の比較**: castlock_activation_rate に加えて `close_call_per_minute` (敵弾接近 ±5px frame 数 ÷ play_time_sec) を実装し、どちらが実機 fun_score とよく相関するか比較
 
 ## 関連ファイル
 
 - [PEARSON_BLOCKER.md](PEARSON_BLOCKER.md) — 前提 1/2/3 設計 (C270 起票、本ファイル前段)
 - [MULTISEED_RESULT.md](MULTISEED_RESULT.md) — 前提 1/3 解消の着地報告 (C271 Phase 4)
-- [build_proxy_csv.js](build_proxy_csv.js) — `--labeled` モード追加済 (C272 Phase 4)
-- [proxy_vs_judgment_labeled.csv](proxy_vs_judgment_labeled.csv) — 900 行素データ (本サイクル新規)
-- [measurements_labeled.jsonl](measurements_labeled.jsonl) — 900 行 jsonl (本サイクル新規)
+- [agent_difficulty_proxy.js](agent_difficulty_proxy.js) — `castlock_activation_rate` 計測追加 (C273 Phase 4)
+- [build_proxy_csv.js](build_proxy_csv.js) — `--labeled` モード fun_proxy 列追加 (C273 Phase 4)
+- [proxy_vs_judgment_labeled.csv](proxy_vs_judgment_labeled.csv) — 900 行素データ (C273 で fun_proxy 列追加)
+- [measurements_labeled.jsonl](measurements_labeled.jsonl) — 900 行 jsonl (C273 で fun_proxy 列追加)
 - [v001/self_judgment.md](../v001/self_judgment.md) §7b — v001 起点 20.5/25 出典
 - [v002/self_judgment.md](../v002/self_judgment.md) §1 — v002 26.5/30 出典
 - [self_judgment.md](self_judgment.md) (v003) — Q-D 連続フレーム視覚判定 4.0 暫定 (C268)、本 Pearson は headline 4.5 採用、出典差は本ファイル「判定値出典」節で明示

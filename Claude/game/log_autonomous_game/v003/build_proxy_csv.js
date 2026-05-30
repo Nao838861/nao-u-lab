@@ -15,6 +15,11 @@
 //   node build_proxy_csv.js --labeled            — v001/v002/v003 ラベル付き 900 行
 //                                                 (10 SEED × 30 trial × 3 version、judgment 列を version 別に転記)
 //
+// C273 Phase 4 (2026-05-31) 拡張:
+//   - fun_proxy_castlock_rate 列を追加 (agent_difficulty_proxy.js 出力の castlock_activation_rate 受け)
+//   - 全 3 モード (single / multiseed / labeled) の CSV / JSONL に列追加
+//   - labeled モードの std 計算に fun_proxy を含め、std > 0 を Pearson 前提 3/3 判定に使用
+//
 // C272 Phase 4 (2026-05-31) 新設:
 //   - --labeled フラグで v_label カラム + JUDGMENT_BY_VERSION 経路を有効化
 //   - 出力: proxy_vs_judgment_labeled.csv (900 行) + measurements_labeled.jsonl (900 行)
@@ -26,11 +31,13 @@
 //   - measurements_multiseed.jsonl (300 行) / proxy_vs_judgment_multiseed.csv (300 行) 出力
 //   - proxy 4 列の std を 300 行で計算し標準出力に出す (Pearson 計算前提 1/3 = proxy 側分散獲得 の検証)
 //
-// proxy 4 列の意味:
-//   proxy_clear_rate     — 1 trial 内 survived フラグ (0/1)。1-hit kill のため binary
-//   proxy_damage_per_min — 死亡時 60/play_time_sec, 生存時 0。被弾頻度の代理
-//   proxy_survival_time  — play_time_sec
-//   proxy_input_density  — cast_count / play_time_sec * 60 (cast/min)
+// proxy 4 列 + fun_proxy 1 列の意味:
+//   proxy_clear_rate          — 1 trial 内 survived フラグ (0/1)。1-hit kill のため binary
+//   proxy_damage_per_min      — 死亡時 60/play_time_sec, 生存時 0。被弾頻度の代理
+//   proxy_survival_time       — play_time_sec
+//   proxy_input_density       — cast_count / play_time_sec * 60 (cast/min)
+//   fun_proxy_castlock_rate   — castCount / endFrame (1 frame あたり castLock 発動率、C273 Phase 4 新設)
+//                                Q-成功FB「危機回避」頻度代理、実機判定経路に置換可能な暫定 proxy
 //
 // JUDGMENT_BY_VERSION (出典は本ファイル下記 dict 参照、projects/log_autonomous_game.md §fun_score §2 headline 値):
 //   v001: 20.5/25 (5 軸、Q-C 軸未設定) — v001/self_judgment.md §7b 新合計
@@ -109,6 +116,7 @@ function trialToJsonl(t, seedBase) {
     cast_count: t.cast_count,
     lock_hit: t.lock_hit,
     lock_miss: t.lock_miss,
+    castlock_activation_rate: t.castlock_activation_rate,
   });
 }
 
@@ -125,6 +133,7 @@ function trialToCsvRow(t, seedBase) {
     damagePerMin,
     t.play_time_sec,
     inputDensity,
+    t.castlock_activation_rate,
     JUDGMENT.q_a,
     JUDGMENT.q_intro,
     JUDGMENT.q_success_fb,
@@ -150,6 +159,7 @@ function trialToLabeledCsvRow(t, seedBase, vLabel) {
     damagePerMin,
     t.play_time_sec,
     inputDensity,
+    t.castlock_activation_rate,
     fmt(j.q_a),
     fmt(j.q_intro),
     fmt(j.q_success_fb),
@@ -173,6 +183,7 @@ function trialToLabeledJsonl(t, seedBase, vLabel) {
     cast_count: t.cast_count,
     lock_hit: t.lock_hit,
     lock_miss: t.lock_miss,
+    castlock_activation_rate: t.castlock_activation_rate,
   });
 }
 
@@ -193,6 +204,7 @@ function singleSeedMode() {
   fs.writeFileSync(OUT_JSONL, jsonlLines.join('\n') + '\n');
   const header = [
     'seed_base', 'run_id', 'proxy_clear_rate', 'proxy_damage_per_min', 'proxy_survival_time', 'proxy_input_density',
+    'fun_proxy_castlock_rate',
     'q_a', 'q_intro', 'q_success_fb', 'q_d', 'q_c', 'q_e',
   ];
   const rows = trials.map(t => trialToCsvRow(t, 20260527));
@@ -224,6 +236,7 @@ function multiseedMode() {
 
   const header = [
     'seed_base', 'run_id', 'proxy_clear_rate', 'proxy_damage_per_min', 'proxy_survival_time', 'proxy_input_density',
+    'fun_proxy_castlock_rate',
     'q_a', 'q_intro', 'q_success_fb', 'q_d', 'q_c', 'q_e',
   ];
   fs.writeFileSync(OUT_JSONL, allRowsJsonl.join('\n') + '\n');
@@ -236,11 +249,13 @@ function multiseedMode() {
   const stdDmg = std(vals.map(r => r[3]));
   const stdSurv = std(vals.map(r => r[4]));
   const stdInput = std(vals.map(r => r[5]));
+  const stdFun = std(vals.map(r => r[6]));
   const stdsByColumn = {
     proxy_clear_rate: stdClear,
     proxy_damage_per_min: stdDmg,
     proxy_survival_time: stdSurv,
     proxy_input_density: stdInput,
+    fun_proxy_castlock_rate: stdFun,
   };
   const variancePassed = stdClear > 0 || stdDmg > 0 || stdSurv > 0 || stdInput > 0;
 
@@ -286,22 +301,24 @@ function labeledMode() {
   const header = [
     'seed_base', 'v_label', 'run_id',
     'proxy_clear_rate', 'proxy_damage_per_min', 'proxy_survival_time', 'proxy_input_density',
+    'fun_proxy_castlock_rate',
     'q_a', 'q_intro', 'q_success_fb', 'q_d', 'q_c', 'q_e',
   ];
   fs.writeFileSync(OUT_JSONL, allRowsJsonl.join('\n') + '\n');
   fs.writeFileSync(OUT_CSV, [header.join(','), ...allRowsCsv].join('\n') + '\n');
 
-  // std 計算 — proxy 4 列 + judgment 6 列
+  // std 計算 — proxy 4 列 + fun_proxy 1 列 + judgment 6 列
   const parseCsvRowVals = (row) => row.split(',').map(s => s === '' ? NaN : Number(s));
   const vals = allRowsCsv.map(parseCsvRowVals);
 
   const colName = ['seed_base', 'v_label', 'run_id',
     'proxy_clear_rate', 'proxy_damage_per_min', 'proxy_survival_time', 'proxy_input_density',
+    'fun_proxy_castlock_rate',
     'q_a', 'q_intro', 'q_success_fb', 'q_d', 'q_c', 'q_e'];
 
   const stdsByColumn = {};
   const finiteCountByColumn = {};
-  for (const colIdx of [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+  for (const colIdx of [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) {
     const arr = vals.map(r => r[colIdx]).filter(x => Number.isFinite(x));
     stdsByColumn[colName[colIdx]] = Number(std(arr).toFixed(6));
     finiteCountByColumn[colName[colIdx]] = arr.length;
@@ -309,9 +326,14 @@ function labeledMode() {
 
   const judgmentCols = ['q_a', 'q_intro', 'q_success_fb', 'q_d', 'q_c', 'q_e'];
   const judgmentStdGtZeroCount = judgmentCols.filter(c => stdsByColumn[c] > 0).length;
+  const funProxyStd = stdsByColumn['fun_proxy_castlock_rate'];
+  const funProxyStdGtZero = funProxyStd > 0;
 
-  // Pearson 前提 2/3 の判定: 完遂定義 2「judgment 6 列のうち少なくとも 2 列で std > 0」
-  const variancePassed = judgmentStdGtZeroCount >= 2;
+  // Pearson 前提解消の判定:
+  //   前提 1/3 = proxy 側 σ_x > 0 (C271 着地)
+  //   前提 2/3 = judgment 側 σ_y > 0 (C272 着地、judgment 列 std > 0 が 2 以上)
+  //   前提 3/3 = fun 側 σ_fun > 0 (C273 着地、fun_proxy_castlock_rate std > 0)
+  const variancePassed = judgmentStdGtZeroCount >= 2 && funProxyStdGtZero;
 
   console.log(JSON.stringify({
     mode: 'labeled',
@@ -325,8 +347,9 @@ function labeledMode() {
     stds: stdsByColumn,
     finite_count: finiteCountByColumn,
     judgment_std_gt_zero_count: judgmentStdGtZeroCount,
+    fun_proxy_std_gt_zero: funProxyStdGtZero,
     variance_check_passed: variancePassed,
-    variance_check_rule: 'judgment 列 (q_a/q_intro/q_success_fb/q_d/q_c/q_e) のうち std > 0 の列が 2 以上',
+    variance_check_rule: 'judgment 列 (q_a/q_intro/q_success_fb/q_d/q_c/q_e) std > 0 が 2 列以上 AND fun_proxy_castlock_rate std > 0',
   }, null, 2));
 
   if (!variancePassed) process.exit(2);
