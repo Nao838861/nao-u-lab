@@ -501,6 +501,28 @@ def main():
         if not ok:
             log(f"[multi_phase] Phase {p} failed, continuing to next phase")
 
+        # kaizen #136 段階2 hook: Phase 1 完了直後に URL 既応答チェックを構造強制
+        # Phase 1 §1 に書かれた #nao-u の新URL を 3 経路 grep し、ヒットすれば WARN 注入。
+        # Phase 2 が staging を読む前に走らせる必要がある。
+        if p == 1:
+            try:
+                hook_script = REPO_DIR / "tools" / "check_url_response_coverage.py"
+                kwargs = dict(
+                    capture_output=True, text=True, timeout=60,
+                    cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+                )
+                if _CREATION_FLAGS:
+                    kwargs["creationflags"] = _CREATION_FLAGS
+                r = subprocess.run(
+                    [sys.executable, str(hook_script),
+                     "--from-staging", str(STAGING_FILE), "--apply"],
+                    **kwargs,
+                )
+                fired = sum(1 for ln in (r.stdout or "").splitlines() if ln.startswith("[既応答 WARN]"))
+                log(f"[multi_phase] kaizen #136 hook: exit={r.returncode} fired={fired}")
+            except Exception as e:
+                log(f"[multi_phase] kaizen #136 hook error: {e}")
+
     total_elapsed = time.time() - total_start
     summary = " ".join(f"P{p}={'OK' if ok else 'FAIL'}" for p, ok in results.items())
     log(f"[multi_phase] === マルチフェーズサイクル完了 ({total_elapsed:.0f}s) {summary} ===")

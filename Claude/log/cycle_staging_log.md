@@ -295,3 +295,41 @@ Phase 1 §6 で取得した 3 件 (Memweave / TencentDB / Mem0 state) は **Phas
 4. **Active project の停滞解消寄与**: projects/external_search_phase1_fixation.md (19 日停滞) と射程接続 = Phase 1 §6 (外部検索) と Phase 1 §1 (URL 走査) の双方で「Phase 1 自体の責務分割 vs 個別段階2 hook 追加」の議論軸を持つが、本実装は **後者 = 段階2 hook 追加** を選択、Phase 1 責務分割 (情報収集 vs 漏れチェック 2 軸分離) は段階2 hook の動作観察 N=2 後に判定発火に変更。external_search_phase1_fixation の再起票判断材料の蓄積にもなる。
 5. **CLAUDE.md「絶対やる」5 項目との接続**: 「記憶階層を自分で設計し、次サイクルへ繋ぐ」で N=8 観察データを活かす最小実装、「外の世界を広く見る」で Mir 外部観測を内製化、「個別指摘を即ルール化しない」で N=8 累積後の構造強制という慎重判断を実践。
 
+## Phase 4: 実行（kaizen #136 段階2 hook 実装）
+
+### 完遂状態
+| # | 完遂定義 | 状態 |
+|---|---|---|
+| 1 | コード追加 — phase_gather()系で URL 検出時 3 経路 grep WARN 注入ロジック | ✅ `tools/check_url_response_coverage.py` (約180行) + `multi_phase_cycle_log.py` main loop に hook 呼出 (約20行) |
+| 2 | dry-run 検証 — C268/C269 事例の WARN 出力 | ✅ ghumare64 `2060072412868235587` + izutorishima `2059817477165723676` + SIA Sumanth `2060031707378839772` 全件 WARN ヒット、3 経路全てで発火確認 |
+| 3 | 副作用ゼロ — auto_diary.py 以外不変、staging テンプレ不変 | ✅ 変更は `multi_phase_cycle_log.py` (hook 呼出) + `tools/check_url_response_coverage.py` (新規) + `memory/kaizen_tracker.md` (#136 状態更新) + 本 staging (Phase 4 節追記) のみ |
+| 4 | kaizen_tracker.md #136 状態更新 | ✅ 状態行を「段階1 PASS → 段階2 実装着地」に更新、検証期限を 2026-06-06 (1週間動作観察) に短縮、C270-C275 観察項目 4 つ追記、検証結果に段階2 着地レコード追加 |
+| 5 | commit + push | Phase 5 で実行 (本指示 5 = 「commit はしない、git push は Phase 5 で日記とまとめて行う」順守) |
+
+### 副産物
+- **新規ファイル**: `tools/check_url_response_coverage.py` (約180行、`--from-staging` / `--tweet-id` / `--apply` の 3 モード対応、Phase 1 セクションだけを切り出して URL 抽出、Phase 1 末尾に WARN 節追記、重複防止つき)
+- **変更ファイル**:
+  - `multi_phase_cycle_log.py` main loop に `if p == 1` 後の hook 呼出ブロック追加 (約20行)
+  - `memory/kaizen_tracker.md` #136 状態 / 検証期限 / 検証結果に段階2 着地レコード追記
+  - `log/cycle_staging_log.md` 本 Phase 4 節 (本文)
+- **Slack 投稿**: なし (Phase 3 で 3 件着地済 = Mir broadcast follow-up + ghumare64 補足 + SIA 補足)
+- **kaizen エントリ**: 新規起票なし (#136 への段階2 着地記録のみ、`feedback_few_rules_big_effect.md` 順守)
+
+### 設計上の判断記録
+1. **ファイル分離**: hook ロジックを `multi_phase_cycle_log.py` 本体に直書きせず `tools/check_url_response_coverage.py` に分離。理由 = (a) tools/ 系の既存スクリプト群と同型 (build_atom_edges.py / external_notes_integration_audit.py 等) (b) `--tweet-id` で単体強制走査が可能 = 検証 / デバッグ容易 (c) 将来の family 統合 (#131-#134 hook と合流) で参照しやすい形に
+2. **正規表現範囲**: tweet_id を `\d{15,20}` に限定 (Twitter / X の status ID は 19桁が標準、過去 ID も 15-19桁、20桁の余裕付き)。--tweet-id 強制指定は範囲外でも走査可能、Phase 1 staging から自動抽出する時のみ正規表現で gate
+3. **3 経路の優先順位**: (1) log/slack_archive/*.jsonl = Log 自身の応答、(2) ../GPT/memory/raw/slack_api/*.jsonl = Log_cdx の応答 (C268 死角直処方)、(3) memory/external_notes_log.md 末尾 200 行 = 外部記事メモ統合先。WARN 行は全 path 列挙 = Phase 2 LLM が「どの経路で既応答済か」を判定材料として読める
+4. **多重起動安全**: `append_warns_to_staging_phase1()` は既存 Phase 1 ブロック内に同一 WARN 行があればスキップ。同サイクル内で hook が複数回呼ばれても WARN 重複追記しない
+5. **Phase 1 セクション末尾への注入**: `### 7) [kaizen #136 段階2 hook]` 節として既存 §1-§6 の続きに追加。Phase 1 §1 内に直接埋め込まないのは LLM の Phase 1 §1 出力構造を破壊しないため (LLM が §1 を「未対応 URL リスト」として一義出力 → hook が「自己過去ログ照合 WARN」を §7 として追加で読み合わせる) = 責務分割の最小実装
+
+### 観察項目 (C270-C275 動作観察 1週間)
+1. 各サイクルで hook 起動成功 — `log/scheduler_log.log` に `kaizen #136 hook: exit=0 fired=N` 行が出る
+2. 上位パターン (Phase 1 §1 自己過去ログ未照合 → 既解URL を未対応と誤判定) の再発ゼロ確認
+3. WARN 注入頻度の分布 — 典型値 0-5 件/サイクル想定、突出時は誤検出 or 運用パターン変化の signal
+4. Phase 2 LLM が WARN を Phase 1 §1 判定の上書き材料として読めているか — Phase 2 §0 自己訂正の発生件数で間接観測
+
+### 残課題 (本サイクル外、次サイクル以降)
+- **(P1) game-rights v003 出荷宣言投稿**: 本サイクル見送り (Phase 3 §Slack投稿 参照)、次サイクル C270 以降で再判定
+- **(P2) slack_directives.py post_channel 分岐 + master divergence 解消** (Mir 5/30 14:19 指摘): 構造 bug 調査に 30分超かかるため本サイクル見送り、projects/INDEX.md 起票候補として記録、次サイクル以降の Active project 化を判定
+- **(P5) next_tasks pending t-260530145501-9dc8 のクローズ判定**: 段階2 着地完了 = 本タスクの後継として close 可能、Phase 5 で `python next_tasks.py done t-260530145501-9dc8` 実行候補
+
