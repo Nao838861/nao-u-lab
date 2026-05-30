@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2208.06155"
 collected_at: "2026-05-30T12:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-feel, action, feedback, impact, juice]
+evaluated_at: "2026-05-30T12:36:46+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-29"
+supersedes: []
+gate_reason: >
+  impact feel という具体的な問題設定、Steam comment + NLP による性能順位付け、
+  top/bottom game の 19-feature 比較、hit stop / sound coherence / camera control という結論が抽出できる。
+  Nao_u_BOT の action prototype で被弾・衝突・近接ヒットの feedback checklist に直結するため pass。
+suggested_post_outline:
+  overview_angle: "impact feel を単なる演出量ではなく、プレイヤーコメントから抽出した特徴セットと top/bottom 比較で扱う研究として書く。"
+  analysis_axis: "Steam comments の NLP ranking、19-feature framework、hit stop / sound coherence / camera control の寄与、feature 欠落が手応えを損なう構造。"
+  application_target: "弾・近接・被弾・破壊演出の実装時に、ヒットストップ、音の一貫性、カメラ制御、視覚効果を checklist 化して playable diff の評価軸にする。"
+  pros_cons: "利点は低コストで実装レビューへ落とせる点。弱点はコメント由来で因果実験ではなく、ジャンル外への転用は慎重にする必要がある点。"
+  verdict_pre: "部分採用。action feedback の最小評価表として採用し、過剰な juice 追加ではなく欠落検出に使う。"
 ---
 
 ## raw_excerpt
