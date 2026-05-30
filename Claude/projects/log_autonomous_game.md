@@ -544,3 +544,51 @@ Phase 1 §6 で取得した arxiv 3 件 (Fly Fail Fix 2507.12666 / ScriptDoctor 
 4. brainstorm 着手前に `memory/game_lessons_log.md` 冒頭 R-A〜R-I 抽象ルール読込（R 層で判断可なら M-XX に降りない、faulty-memory 論文後の修正方針「R を索引として使う」と整合）
 
 選定理由: 5/25 06:23 Nao_u 指示「精度高く完成まで」への直接応答。次サイクル冒頭で着手しないと「Phase 2 で分析した熱量が冷める」(faulty-memory 論文 = 反復で記憶が事前分布に収束) リスク。Pulse Relay v003 教師差分の流入直後でゲート設計が手前に立つ稀少タイミング。
+
+---
+
+## 2026-05-30 C269 Phase 4: v003 proxy 30 ラン計測 + 中間 csv 作成 (Pearson 準備基盤)
+
+**起票根拠**: C269 Phase 2 §5 「proxy 4 指標 Pearson 相関第 1 回計算」を次サイクル Phase 3 専有タスクとして staging に残す判定 → C269 Phase 4 大作業として消化。完遂条件 = (1) 30 ラン完走 + 30 行 measurements.jsonl (2) proxy_vs_judgment.csv 作成 (3) 本ブロック追記 (4) `game:` prefix 単独 commit (Phase 5)。
+
+### 着地物
+- [game/log_autonomous_game/v003/build_proxy_csv.js](../game/log_autonomous_game/v003/build_proxy_csv.js) — proxy.js を実行 → all_trials を jsonl 化 + self_judgment 暫定値を行毎定数列として結合した csv を生成する Node スクリプト (新規)
+- [game/log_autonomous_game/v003/measurements.jsonl](../game/log_autonomous_game/v003/measurements.jsonl) — 30 行、各行 = `{run_id, outcome, death_cause, clear_wave, residual_hp_ratio, play_time_sec, graze_count, cast_count, lock_hit, lock_miss}`
+- [game/log_autonomous_game/v003/proxy_vs_judgment.csv](../game/log_autonomous_game/v003/proxy_vs_judgment.csv) — ヘッダ + 30 行、列 = `run_id, proxy_clear_rate, proxy_damage_per_min, proxy_survival_time, proxy_input_density, q_a, q_intro, q_success_fb, q_d, q_c, q_e`
+
+### 列マッピング (proxy 4 列)
+- `proxy_clear_rate` = `outcome == 'survived' ? 1 : 0` (1-hit kill のため binary)
+- `proxy_damage_per_min` = 死亡時 `60 / play_time_sec`、生存時 0 (被弾頻度の代理)
+- `proxy_survival_time` = `play_time_sec` (秒)
+- `proxy_input_density` = `cast_count / play_time_sec * 60` (cast/min)
+
+### 列マッピング (self_judgment 暫定 6 列、行毎定数)
+起点 = `v002/self_judgment.md` + `v003/self_judgment.md` (C268 Phase 4 で Q-D 暫定 -0.5):
+- q_a=5 / q_intro=4.5 / q_success_fb=3 / q_d=4.0 (v003 暫定、v002=4.5 から C268 連続フレーム視認で -0.5) / q_c=4.5 / q_e=5
+
+### §1. 30 ラン計測結果サマリ
+- trials_count=30、exit=0
+- median_clear_wave=1 / median_play_time_sec=8.68 / median_graze_count=2 / survival_rate=0/30
+- death_cause: bullet 30/30
+
+### §2. Pearson 相関計算の現時点での阻害要因 (重要観察)
+**proxy_survival_time の分散ゼロ問題**: 30 ラン全てで `play_time_sec=8.68` 固定。MOVE_NOISE_SCALE=0.25 + seed 差で結果分散が出る、と `agent_difficulty_proxy.js` の limits に記載されていたが、**実測では分散ゼロ**。同様に `cast_count=3` 全 trial 同一、`proxy_clear_rate=0` 全 trial 同一、`proxy_damage_per_min=6.9124` 全 trial 同一。trial 間で揺れたのは `graze_count` (1 or 2) のみ。
+
+意味: **現状の proxy 列 4 本のうち 3 本が分散ゼロ** → Pearson 相関は分散ゼロ列で未定義 (分母 → 0)。実機 Q-D / Q-成功FB / 展開差カーブ確定値が入っても、現中間 csv のままでは相関が出ない。
+
+### §3. Pearson 計算到達への次手順 (本サイクルでは着手しない、staging 候補)
+1. **proxy 側の分散を作る**: seed 差を agent 挙動に効かせる経路の精査 (MOVE_NOISE_SCALE=0.25 が effective か検証、rng 消費点が cast_gap や echo 経路で吸収されてないかの追跡)
+2. **複数 PLAYER_SPEED_STRENGTH** (1.0 / 1.2 / 1.5 / 1.8) を別行として csv に加える = 30 ラン × 4 strength = 120 行で strength 軸の分散を作る (C264 強化 agent 1.5x 実験との接続)
+3. **複数 game version** (v001 / v002 / v003) を別行として csv に加える = 30 ラン × 3 version = 90 行で version 軸の分散を作る (C264 §1 のデータが既存、流用可能)
+4. **HP system 導入** (residual_hp_ratio を連続値化) は §2 §8 で既出、本サイクルスコープ外
+
+### §4. 完遂判定
+- (1) ✅ 30 ラン完走 + measurements.jsonl 30 行 (exit 0)
+- (2) ✅ proxy_vs_judgment.csv 作成 (ヘッダ + 30 行、列定義は上記)
+- (3) ✅ 本ブロック追記
+- (4) Phase 5 で実施予定: `game:` prefix 単独 commit (運用規則改修との混在禁止)
+
+### §5. 持ち越し
+- Pearson 相関本体は **proxy 分散ゼロ問題** を解消するまで計算不能。実機 Q 値 (Q-D 5/5 確定 / Q-成功FB 5/5 確定 / 展開差カーブ 実機値) が揃っても、現中間 csv のままでは r=NaN になる
+- 中間 csv 自体は実機判定到来時に q_* 列の値を書き換えるだけで使い回せる構造 (build_proxy_csv.js の JUDGMENT 定数を書き換え + 再実行)
+- §3 の 3 案 (proxy 分散作り) のどれを採るかは C270 以降の Phase 2-3 判定対象

@@ -291,3 +291,37 @@ log_autonomous_game v003 agent_difficulty_proxy 30 ラン計測 + 自己採点�
 - 30 分粒度で完遂可能 (node 1 スクリプト + csv 1 本 + projects/ 1 段追記)
 - Pearson 相関本体は実機判定待ちだが、**中間 csv を残しておけば実機判定到来時に計算が 1 行で済む** = 自分が動かせる範囲で先回り
 - Phase 2 で挙げた他候補 (kaizen #136 段階2 実装) は N=2 観察未成立で pre-mortem (a) N=1 過剰反応違反、本サイクル着手しない判断を維持
+
+## Phase 4: Execute
+
+### 大作業完遂状況
+
+完遂条件 4 件すべて Phase 4 内で達成。commit (条件 4) のみ Phase 5 で実施 (本指示「commit はしない／git push は Phase 5」順守)。
+
+- (1) ✅ `node agent_difficulty_proxy.js` 30 ラン完走、`measurements.jsonl` 30 行記録、exit 0
+- (2) ✅ `proxy_vs_judgment.csv` 作成、ヘッダ + 30 行 (列定義は projects/log_autonomous_game.md §列マッピング)
+- (3) ✅ projects/log_autonomous_game.md 末尾に「2026-05-30 C269 Phase 4: v003 proxy 30 ラン計測 + 中間 csv 作成」ブロック追加 (§1-§5、約 50 行)
+- (4) Phase 5 で実施: `game: log_autonomous_game v003 proxy 30 ラン計測 + 中間 csv 作成 (Pearson 準備)` 単独 commit + push
+
+### 重要観察 (完遂条件外、Phase 5 日記候補)
+
+**proxy 列 4 本中 3 本が分散ゼロ** (`proxy_clear_rate=0` 全 trial / `proxy_damage_per_min=6.9124` 全 trial / `proxy_survival_time=8.68` 全 trial)、揺れたのは `graze_count` (1 or 2) のみ。Pearson 相関は分散ゼロ列で未定義 (分母 → 0) のため、**実機 Q 値が確定しても現中間 csv のままでは r=NaN になる**。`agent_difficulty_proxy.js` の limits 行 5「seed 差で結果分散が出る」は実測と矛盾、要追跡。
+
+projects/log_autonomous_game.md §3 で次手順 3 案を staging 候補化:
+- (a) MOVE_NOISE_SCALE が effective か rng 消費点を追跡
+- (b) PLAYER_SPEED_STRENGTH 4 段で 30 ラン × 4 = 120 行
+- (c) v001/v002/v003 を別行として 30 ラン × 3 version = 90 行 (C264 データ流用可能)
+
+### 副産物 (新規/変更ファイル)
+
+新規:
+- `game/log_autonomous_game/v003/build_proxy_csv.js` (proxy 実行 → jsonl + csv 生成)
+- `game/log_autonomous_game/v003/measurements.jsonl` (30 行)
+- `game/log_autonomous_game/v003/proxy_vs_judgment.csv` (ヘッダ + 30 行)
+
+変更:
+- `projects/log_autonomous_game.md` (末尾に C269 Phase 4 ブロック追加)
+- `log/cycle_staging_log.md` (本セクション)
+
+### Slack 投稿 / kaizen 起票 / next_tasks 追加
+Phase 4 では一切なし (Phase 3 で必要分は処理済、Phase 4 で増やさない指示順守)。
