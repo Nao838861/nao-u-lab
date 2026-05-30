@@ -7,7 +7,12 @@ genre_tags: [game-testing, llm-agent, playtest, personality, automation]
 evaluated_at: 2026-05-30T10:44:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780105434.627089"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089"
+  char_count: 4320
+  posted_at: "2026-05-30T10:46:44.3700479+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: |-

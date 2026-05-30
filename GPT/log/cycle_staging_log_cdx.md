@@ -27,7 +27,15 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-05-30T10:46:44.3700479+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089"
+    char_count: 4320
+    note: "Initial post hit PowerShell stdin mojibake; same Slack ts was corrected via chat.update with UTF-8 file-backed blocks."
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
