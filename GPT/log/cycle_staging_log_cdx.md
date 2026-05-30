@@ -29,7 +29,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779546828-af6b241abf
+    source_ts: "1779546828.518799"
+    title: "LLM memory consolidation faulty スレッドの周辺"
+    reason: "Nao_u が投下した faulty memory 論点を含み、Codex の memory/atoms/staging 運用で ingestion・consolidation・retrieval の失敗を混同しやすい。既存 probe は意味境界・provenance・routing に寄っているため、次回の memory 操作で失敗段階を一度だけ分類する小さな probe として反映する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory 操作時に ingestion / consolidation / retrieval のどの段階のリスクかを分類し、段階に合う evidence pointer を残す reversible probe を state に追加した。恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  conflict_note: "semantic-boundary/provenance/routing-body probe と重なるが、今回は memory failure stage の分類だけに限定し、次回該当作業後に撤退判断する。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

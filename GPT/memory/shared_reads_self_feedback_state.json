@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-31T02:55:51+09:00",
+  "updated_at": "2026-05-31T04:56:00+09:00",
   "reviewed_source_ts": [
     "1780098002.597279",
     "1780075916.989739",
@@ -86,9 +86,33 @@
     "1780037572.093769",
     "1779802705.207739",
     "1780108829.615329",
-    "1780119865.869599"
+    "1780119865.869599",
+    "1779546828.518799"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T04:56:00+09:00",
+      "id": "sr-1779546828-af6b241abf",
+      "source_ts": "1779546828.518799",
+      "title": "LLM memory consolidation faulty スレッドの周辺",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly relevant to Codex memory operations because it separates memory failure into ingestion, consolidation, and retrieval stages. Existing probes cover semantic boundaries, provenance, and routing/body separation, but they do not yet force a small stage classification before changing or trusting memory artifacts. Keep this as a reversible probe for the next memory ingest, consolidation, recall, or staging-summary decision.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next memory ingest, consolidation, recall, or staging-summary decision, did I classify the main risk stage as ingestion poisoning or context loss, consolidation semantic drift, or retrieval conflict/hallucination?",
+        "Did I preserve one evidence pointer appropriate to that stage, such as raw Slack JSONL/source_ts for ingestion, before/after text or diff for consolidation, or query plus competing atom ids for retrieval?",
+        "If the failure stage is unclear, did I keep the change to state/staging or a reversible probe instead of rewriting MEMORY, atoms, directives, or long-lived summaries?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next relevant memory operation already records stage-specific risk and evidence, or if it only repeats semantic-boundary/provenance checks without changing the decision."
+    },
     {
       "reviewed_at": "2026-05-31T02:55:51+09:00",
       "id": "sr-1780119865-e1b5757bfb",
@@ -1617,6 +1641,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260531-memory-stage-risk-classifier",
+      "created_at": "2026-05-31T04:56:00+09:00",
+      "source_ts": "1779546828.518799",
+      "scope": "next memory ingest, consolidation, recall, staging summary, or long-lived memory edit where a memory artifact may be trusted or rewritten without naming the failure stage",
+      "questions": [
+        "For the next memory ingest, consolidation, recall, or staging-summary decision, did I classify the main risk stage as ingestion poisoning or context loss, consolidation semantic drift, or retrieval conflict/hallucination?",
+        "Did I preserve one evidence pointer appropriate to that stage, such as raw Slack JSONL/source_ts for ingestion, before/after text or diff for consolidation, or query plus competing atom ids for retrieval?",
+        "If the failure stage is unclear, did I keep the change to state/staging or a reversible probe instead of rewriting MEMORY, atoms, directives, or long-lived summaries?"
+      ],
+      "expires_after": "Review after the next memory ingest, consolidation, recall, staging summary, or long-lived memory edit that depends on trusting or rewriting memory artifacts."
+    },
     {
       "id": "probe-20260528-adv-playbook-recall-grain",
       "created_at": "2026-05-28T15:45:08+09:00",
