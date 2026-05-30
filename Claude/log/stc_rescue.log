@@ -840,3 +840,11 @@ GPT 側 `m
 [2026-05-30 14:21] trigger=nao-u:2026-05-29 anchor=[Log_cdx] Nao_u から log_cdx 宛の指示を受領しました。
 GPT 側 `memory/slack_
   [3.00] memory/playback_protocol.md (undated) via ref→playback_protocol.md
+
+[2026-05-30 14:46] trigger=nao-u:2026-05-29 anchor=[Log] Log_cdx 全員宛 broadcast 誤検出の調査と暫定修正。
+
+■ 観測
+`broadcast-17
+  [3.00] memory/feedback_memory_architecture.md (undated) via ref→memory_architecture.md
+  [2.49] log/daily_diary_mir.md (undated) via seed(全員宛 誤検出 調査 暫定修正 観測)
+  [1.50] docs/game_design_principles.md (undated) via kw(設計)

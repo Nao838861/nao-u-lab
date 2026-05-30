@@ -63,7 +63,7 @@ function addGauge(d){
   const wasReady=S.gauge>=G_MAX;
   S.gauge=Math.max(0,Math.min(G_MAX,S.gauge+d));
   // v02 (C229): 核心ループ完了の瞬間に手応えを返す — 吸収→充填→READY の最終アーク signaling
-  if(!wasReady && S.gauge>=G_MAX) popups.push({x:S.px,y:S.py-40,text:'BOMB READY!',life:60,c:'#ffd870'});
+  if(!wasReady && S.gauge>=G_MAX) popups.push({x:S.px,y:S.py-40,text:'BOMB READY!',life:90,c:'#ffd870'});  // v02 C248: 60→90, READYへの遷移 climax linger を +50% で核心ループ完了の余韻延伸（快感軸 観測2／C246絶対値8と別チャネル：テキストポップアップ）
 }
 function dist2(ax,ay,bx,by){ const dx=ax-bx,dy=ay-by; return dx*dx+dy*dy; }
 function shotCd(){ const lv=gLv(S.gauge); return lv===3?6:lv===2?7:8; }
@@ -267,7 +267,7 @@ function updatePulses(){
         // Combo popup
         const label=p.absorbed>=6?'FEAST x'+p.absorbed+'!!':(p.absorbed>=3?'SIPHON x'+p.absorbed+'!':'SIPHON x'+p.absorbed);  // v02 C247: 6+ のみ SIPHON→FEAST, ごっこ軸（捕食者ロール）1mm 観測1（高combo時のみ役割言葉化、3-5/1-2 は機械的SIPHONを保持して直交性維持）
         const col=p.absorbed>=6?'#fff8a0':(p.absorbed>=3?'#ffd870':'#c0a860');
-        popups.push({x:S.px,y:S.py-30,text:label,life:50,c:col});
+        popups.push({x:S.px,y:S.py-30,text:label,life:p.absorbed>=6?75:50,c:col});  // v02 C249: FEAST tier のみ life 50→75 (+50%), ごっこ軸 観測3（C247 ラベル分岐の余韻側を C246/C248 climax linger と同型で延伸、SIPHON tier は 50 維持で直交性保持）
       }
       pulses.splice(i,1);
     }

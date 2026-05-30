@@ -250,3 +250,24 @@ Mir 5/16 C191「(2) 加算半透明閉じ込め範囲は別サイクル」14 日
 
 ### 構文確認
 node --check は HTML 非対応のため、Edit 差分の括弧バランスと変数名一貫性を目視確認。ctx.strokeStyle / ctx.lineWidth / ctx.strokeText の API シグネチャは既存 L582-583 (敵弾 outline)、L600-604 (siphon pulse stroke) と同型。
+
+---
+
+## 2026-05-30 (Mir C249) FEAST tier 余韻延伸 — ごっこ軸 観測3
+
+### 実装内容
+- L270 popups.push の `life:50` を `life:p.absorbed>=6?75:50` に変更
+- FEAST tier (6+) のみ +50% 余韻延伸、SIPHON tier (1-5) は 50 維持
+- +1/-1 行、index.html 1ファイル変更のみ
+
+### 中心 vs 周辺判断
+- **中心**: C247 で FEAST/SIPHON ラベル分岐を入れたが、テキスト life は 6+ も 1-5 も同じ 50。役割言葉を変えただけで「捕食 climax の余韻」は他 tier と同等だった——ごっこ軸の片肺。C246（absorb particle life 6→8）と C248（BOMB READY popup life 60→90）の climax linger 系列を、C247 ラベル分岐側に1mm 反映する
+- **周辺**: 色彩変更／フォント／座標オフセット／効果音——いずれも触らない
+- 判断: 既存の `p.absorbed>=6` 分岐を再利用、SIPHON tier を温存して直交性を保つ。C247 の分岐構造への自然な追加であり、ロジック新設ではない
+
+### 連続 ship streak (C246→C247→C248→C249 = 4サイクル)
+Phase 2 で「6サイクル連続 0 行」と書いたのは記憶誤り（実際は C246-C248 で 3サイクル連続 1mm ship 済み）。C249 で 4サイクル目。Phase 2 の合成命題「Humans evaluate, Agents iterate」に照らすと、Mir は事実（diff）を出すこと自体は継続できているが、評価（面白くなったか）は Nao_u 委任。1mm の意味判定を自己で完結させない
+
+### 今回崩したもの（五味太郎 Seed-R 試行 #N）
+- **崩したもの**: Phase 2 が「6サイクル0行」と誤認した自己評価を、git log で物証取りして訂正した。Phase 内記述を後段で覆すことへの抵抗が薄かった——記憶の整合より事実の優先
+- **崩していない**: 1サイクル1 ship、commit prefix 分離、popups 既存配列との整合性、p.absorbed>=6 分岐の再利用
