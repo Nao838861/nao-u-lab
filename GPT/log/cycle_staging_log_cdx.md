@@ -157,5 +157,35 @@ designed:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+### 2026-05-31 03:58 JST - log_cdx Phase 4c
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-001
+    files_changed:
+      - path: tools/memory_game_task_facets.py
+        change: created
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/validate_memory_index.py
+        change: modified
+      - path: memory/MEMORY.md
+        change: modified
+      - path: memory/README.md
+        change: modified
+    summary: "atom 本体や既存 tag を書き換えず、Game Task Entry Points を MEMORY.md の派生 index として導入。facet は enemy-pattern / px-evaluation / impact-feel / ui-agent / headless-eval / memory-routing / game-rights-feedback の 7 件に限定。"
+    partial: false
+migrations:
+  - what: "既存 atom から lightweight facet view を生成するだけのため、atom / per-file frontmatter / atoms.jsonl の移行なし。"
+    affected: "MEMORY.md 表示と validate_memory_index.py の検証対象のみ。"
+verification:
+  - "python -m py_compile tools\\memory_game_task_facets.py tools\\memory_ingest.py tools\\memory_recall.py tools\\validate_memory_index.py -> OK"
+  - "python tools\\validate_memory_index.py -> OK"
+  - "memory_ingest.render_index(...) の dry run で Game Task Entry Points が生成されることを確認。"
+  - "memory_recall.search dry run: 敵出現パターン / PX 評価 / UI agent / impact feel で関連 atom が上位 3 件以内に出ることを確認。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

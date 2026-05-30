@@ -2,7 +2,7 @@
 """Validate the human-facing MEMORY.md entry sections.
 
 Checks are intentionally small and deterministic:
-- High Signal / Recent / Tag Entry Points atom ids exist in per-file atoms.
+- High Signal / Recent / Game Task Entry Points / Tag Entry Points atom ids exist in per-file atoms.
 - High Signal / Recent ids are not duplicated.
 - Referenced per-atom markdown files exist through memory/atoms/index.jsonl.
 - Entry sections do not contain common mojibake residue.
@@ -24,7 +24,7 @@ MEMORY_PATH = ROOT / "memory" / "MEMORY.md"
 ATOMS_DIR = ROOT / "memory" / "atoms"
 INDEX_PATH = ATOMS_DIR / "index.jsonl"
 
-SECTION_NAMES = ["High Signal", "Recent", "Tag Entry Points"]
+SECTION_NAMES = ["High Signal", "Recent", "Game Task Entry Points", "Tag Entry Points"]
 MOJIBAKE_RE = re.compile(r"(縺|繧|譁|螳|蟆|邵|荳|逕|蜿|隱|髢|鬆|豁|譛|驕|雜)")
 ATOM_ID_RE = re.compile(r"`([^`]+)`")
 
@@ -129,6 +129,11 @@ def validate(memory_path: Path = MEMORY_PATH) -> list[str]:
     for atom_id in extract_tag_example_ids(tag_section):
         if atom_id not in atoms_by_id:
             errors.append(f"Tag Entry Points: unknown example atom id: {atom_id}")
+
+    game_task_section = sections.get("Game Task Entry Points", "")
+    for atom_id in extract_tag_example_ids(game_task_section):
+        if atom_id not in atoms_by_id:
+            errors.append(f"Game Task Entry Points: unknown example atom id: {atom_id}")
 
     return errors
 

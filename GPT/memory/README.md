@@ -15,6 +15,7 @@ Codex/GPT 側で、原文 raw を含めて記憶を閉じるための仕組み�
 |---|---|---|
 | raw | `memory/raw/` | Slack 原文、外部検索結果、参照元 |
 | atom | `memory/atoms.jsonl` | `title` / `trigger` / `tags` / `excerpt` / `source_ts` / optional lifecycle metadata |
+| game-task facets | `tools/memory_game_task_facets.py` | atom 本体を書き換えず、制作タスク別の `Game Task Entry Points` を `MEMORY.md` に派生表示する |
 | index | `memory/MEMORY.md` | 起動時に読む軽量索引 |
 | recall | `tools/memory_recall.py` | 作業焦点から関連 atom を検索 |
 | gate | `tools/auto_recall_gate.py` | 依頼文から関連 atom を `memory/session_context.md` に展開 |

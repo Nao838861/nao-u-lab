@@ -14,6 +14,7 @@ from typing import Any
 
 import memory_lifecycle
 from atoms_fileformat import sync_per_file_atoms
+from memory_game_task_facets import build_game_task_entry_points
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -317,6 +318,11 @@ def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
     for atom in recent:
         tag_str = ", ".join(atom.get("tags", [])[:5])
         lines.append(f"- `{atom['id']}` {atom.get('datetime', '')} {atom['title']} tags=[{tag_str}]")
+
+    lines += ["", "## Game Task Entry Points"]
+    for entry in build_game_task_entry_points(display_atoms):
+        examples = " / ".join(entry["examples"])
+        lines.append(f"- `{entry['name']}` ({entry['count']}): {examples}")
 
     lines += ["", "## Tag Entry Points"]
     for tag, count in tag_counts.most_common(24):

@@ -52,8 +52,10 @@ def load_atoms() -> list[dict[str, Any]]:
 def tokenize(text: str) -> list[str]:
     text = text.lower()
     tokens = re.findall(r"[a-z0-9_./-]{3,}", text)
+    tokens += [t for t in re.findall(r"[a-z0-9_./-]{2}", text) if t in {"ai", "px", "ui"}]
     tokens += re.findall(r"[\u30a0-\u30ff]{3,}", text)
     tokens += re.findall(r"[\u4e00-\u9fff]{2,6}", text)
+    tokens += re.findall(r"[\u3040-\u30ff\u3400-\u9fff]{2,}", text)
     stop = {
         "する", "ある", "いる", "ない", "できる", "という", "ため", "今回",
         "the", "and", "for", "with", "from", "that", "this", "when",

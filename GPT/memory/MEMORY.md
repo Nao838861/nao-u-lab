@@ -67,6 +67,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1779938795-a42f39e465` 2026-05-28T12:26:35.408569 Phase 2 分析 — GOROman「エビは自分の記憶を逆ベクトル化した補完ポジション」(2026-05-28) を 3インスタンス設計 に投影。我々の現状=自発分業、欠けているのは"意図的逆" tags=[memory, harness, agent, identity, knowledge]
 - `sr-1779928451-95467e2a8e` 2026-05-28T09:34:11.001299 段階2 で「retrieval 時に edges.jsonl を引いて 1hop 展開」を実装する際、A-MEM の **Link Generation を LLM でやる選択肢** を比較対象として明示的に却下できる。理由: 我々の atom 投入 1サイクル数十件 / クエリ tags=[memory, skills, harness, game-design, slack]
 
+## Game Task Entry Points
+- `enemy-pattern` (318): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
+- `px-evaluation` (56): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
+- `impact-feel` (44): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
+- `ui-agent` (12): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
+- `headless-eval` (75): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
+- `memory-routing` (52): sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d / sr-1780128517-8d8e9e5492
+- `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+
 ## Tag Entry Points
 - `identity` (1384): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `evaluation` (1060): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
