@@ -267,7 +267,7 @@ function updatePulses(){
         // Combo popup
         const label=p.absorbed>=6?'FEAST x'+p.absorbed+'!!':(p.absorbed>=3?'SIPHON x'+p.absorbed+'!':'SIPHON x'+p.absorbed);  // v02 C247: 6+ のみ SIPHON→FEAST, ごっこ軸（捕食者ロール）1mm 観測1（高combo時のみ役割言葉化、3-5/1-2 は機械的SIPHONを保持して直交性維持）
         const col=p.absorbed>=6?'#fff8a0':(p.absorbed>=3?'#ffd870':'#c0a860');
-        popups.push({x:S.px,y:S.py-30,text:label,life:p.absorbed>=6?75:50,c:col});  // v02 C249: FEAST tier のみ life 50→75 (+50%), ごっこ軸 観測3（C247 ラベル分岐の余韻側を C246/C248 climax linger と同型で延伸、SIPHON tier は 50 維持で直交性保持）
+        popups.push({x:S.px,y:S.py-30,text:label,life:p.absorbed>=6?75:(p.absorbed>=3?60:50),c:col});  // v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影、C247 ラベル分岐と C249 FEAST linger を中間段に橋渡し、役割階層を時間で可視化）
       }
       pulses.splice(i,1);
     }
