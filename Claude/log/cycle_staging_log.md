@@ -244,3 +244,56 @@ v003 Pearson 前提 2 解消 — 複数判定セット投入で σ_y > 0 を獲�
 3. **30 分粒度で「進んだ」と言える**: build_proxy_csv.js 拡張 + 既存 judgment 値転記 + std 計算 = 既存スクリプト 7316 bytes + 既存判定値 (本ファイル staging Phase 1 §5 と log_autonomous_game.md L138 で全て揃い済) = 新規調査不要、純粋に**つなぎ込み実装**で 30 分内完遂可能
 4. **将来 Pearson 前提 3/3 (連続フレーム視覚判定) への足場**: 前提 2/3 充足で σ_y > 0 が成立すれば、前提 3/3 で連続フレーム視覚判定値を加えて n>3 の本格 Pearson 計算が可能になる経路が見える = C273 以降の Phase 4 大作業候補化発火点固定
 5. **Slack 投稿 1 本で済まない粒度**: build_proxy_csv.js 拡張 + CSV 再生成 + PEARSON_PROGRESS.md 起票 + commit/push = Slack 投稿のみでは到底完遂できない実装作業
+
+## Phase 4 (Execute) 着地記録
+
+### 完遂判定: **完遂** (定義 1〜5 すべて充足、commit/push は Phase 5 へ合流)
+
+| 完遂定義 | 達成内容 |
+|---|---|
+| 1. JUDGMENT_BY_VERSION + v_label カラム + CSV 経路 | ✅ [game/log_autonomous_game/v003/build_proxy_csv.js](../game/log_autonomous_game/v003/build_proxy_csv.js) に `JUDGMENT_BY_VERSION` dict + `--labeled` モード + `labeledMode()` 関数追加。CSV 出力に `v_label` カラム + v 別 judgment 値 |
+| 2. judgment 6 列のうち std > 0 が 2 列以上 | ✅ q_intro std=0.235702 / q_d std=0.471405 で **2 列達成**、`variance_check_passed: true` |
+| 3. PEARSON_PROGRESS.md で前提 1/2/3 進捗可視化 | ✅ [game/log_autonomous_game/v003/PEARSON_PROGRESS.md](../game/log_autonomous_game/v003/PEARSON_PROGRESS.md) 新設、前提 1=✅/2=✅/3=⏳ テーブル + 本サイクル前提 2/3 充足根拠を明文化 |
+| 4. `game:` prefix で 1 commit 着地 | ⏸ Phase 5 で実施 (本サイクル Phase 4 指示「commit はしない、Phase 5 で日記とまとめて push」順守、CLAUDE.md 厳守事項の prefix 分離は Phase 5 時点で `game:` / `rule:` 分離する) |
+| 5. 判定値出典 (v001=20.5/25, v002=26.5/30, v003=暫定 26.5/30) を暫定値表記で記録 | ✅ PEARSON_PROGRESS.md「判定値出典」節に v001/v002/v003 の出典リンク + 暫定値表記 (v003 は「暫定継続」、v001 は「§7b 起点採用」明示) を記載、`feedback_headless_unfit_for_unfinished_eval.md` T:5 順守 |
+
+### 副産物 (新規/変更ファイル)
+
+| ファイル | 種別 | 内容 |
+|---|---|---|
+| [game/log_autonomous_game/v003/build_proxy_csv.js](../game/log_autonomous_game/v003/build_proxy_csv.js) | 変更 | `JUDGMENT_BY_VERSION` dict + `JUDGMENT_TOTAL_BY_VERSION` dict + `trialToLabeledCsvRow()` + `trialToLabeledJsonl()` + `labeledMode()` 追加。ヘッダコメントに `--labeled` CLI + C272 着地記録追記。既存 `singleSeedMode()` / `multiseedMode()` は後方互換維持 |
+| [game/log_autonomous_game/v003/PEARSON_PROGRESS.md](../game/log_autonomous_game/v003/PEARSON_PROGRESS.md) | 新規 | 前提 1/2/3 進捗テーブル + 本サイクル前提 2/3 充足の根拠 + 判定値出典 + 既知の限界 + 次サイクル候補。`game:` prefix 物質化対象 |
+| [game/log_autonomous_game/v003/proxy_vs_judgment_labeled.csv](../game/log_autonomous_game/v003/proxy_vs_judgment_labeled.csv) | 新規 | 900 行 (10 SEED × 30 trial × 3 version)。Pearson 素データ。v001 の q_c は空セル (軸未設定) |
+| [game/log_autonomous_game/v003/measurements_labeled.jsonl](../game/log_autonomous_game/v003/measurements_labeled.jsonl) | 新規 | 900 行 jsonl、各 row に `v_label` フィールド追加 |
+
+### 実行ログ (`node build_proxy_csv.js --labeled` 標準出力 要約)
+
+```
+total_rows: 900
+stds:
+  proxy_clear_rate     : 0.170587
+  proxy_damage_per_min : 2.030909
+  proxy_survival_time  : 21.129381
+  proxy_input_density  : 0.904913
+  q_a          : 0
+  q_intro      : 0.235702   ← std > 0
+  q_success_fb : 0
+  q_d          : 0.471405   ← std > 0
+  q_c          : 0          (finite_count=600, v001 欠損のため n=600 で計算)
+  q_e          : 0
+judgment_std_gt_zero_count: 2
+variance_check_passed: true
+variance_check_rule: "judgment 列 (q_a/q_intro/q_success_fb/q_d/q_c/q_e) のうち std > 0 の列が 2 以上"
+```
+
+### Slack 投稿 / kaizen エントリ等
+
+- Slack 投稿: なし (Phase 4 は実装集中、Phase 5 で日記投稿時に合流)
+- kaizen エントリ: なし (`feedback_few_rules_big_effect.md` 順守、本サイクル新規同型 N=0)
+- 新規 pending_requests.md エントリ: なし
+
+### 副次効果 (Phase 3 §5 の C 案 / D 案 即対応)
+
+- **C 案 (CLAUDE.md「ゲームを動かして出す」必達ライン)**: 本 Phase 4 で `game/log_autonomous_game/v003/` 配下に 4 ファイル (1 変更 + 3 新規) → Phase 5 commit 時点で `game:` prefix 1 本が確定発火
+- **D 案 ([[feedback_means_ends_reversal_check]] 想起 → 行動転化)**: Phase 3 で対面化 → Phase 4 で物理化、想起から行動転化までを 1 サイクル内で完結
+- **kaizen #136 段階2 hook 観察 N=5**: 本サイクル Phase 1 §1 で新着 URL 0 件、Phase 4 着手中も新規 URL 検出機会なし → 「無事象 2 サイクル目」として観察累積 (検証期限 2026-06-06 まで残 6 日)
