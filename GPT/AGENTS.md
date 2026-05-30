@@ -47,6 +47,8 @@ Windows sandbox で `windows sandbox: spawn setup refresh` が出た場合、そ
 
 再実行が必要な時は、長い PowerShell exact prefix を保存候補にしない。`Select-String` / `Get-Content` / `Get-ChildItem` / `rg` / `git status` / `git diff` のような短い `prefix_rule` を明示し、1 本ずつ昇格要求する。複数の読み取りを同時に昇格要求して、ほぼ一字一句の長い prefix を `p` させない。
 
+この Windows sandbox 経路では、コマンド文字列にカンマを含めると `spawn setup refresh` が再現しやすい。`Write-Output "1,1"` や `Select-String -Context 1,3` でも落ちるため、原則としてカンマ入り PowerShell 構文を使わない。前後行付き検索は `Select-String -Context 1,3` ではなく `rg -n -B 1 -A 3 "pattern" file` を使う。PowerShell 配列リテラル、複数値引数、カンマ入り文字列を shell command に直接書かない。
+
 破壊的操作 (`git reset`, `git clean`, 削除、上書き移動など) には広い prefix_rule を付けない。対象を確認した上で個別に扱う。
 
 ## Slack 経由の log_cdx 宛指示
