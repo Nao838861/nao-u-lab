@@ -658,12 +658,14 @@ function render(){
   // Popups
   ctx.font='bold 13px system-ui';
   ctx.textAlign='center';
+  ctx.strokeStyle='#1a0008'; ctx.lineWidth=3;
   for(const p of popups){
     ctx.globalAlpha=Math.min(1,p.life/15);
+    ctx.strokeText(p.text,p.x,p.y);
     ctx.fillStyle=p.c;
     ctx.fillText(p.text,p.x,p.y);
   }
-  ctx.globalAlpha=1;
+  ctx.globalAlpha=1; ctx.lineWidth=1;
 
   // HUD
   drawHUD();

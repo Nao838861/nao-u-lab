@@ -257,3 +257,34 @@ Phase 1 が誤検出した「未応答 yun_bow / Mir Twitter 引継ぎ」は Pha
 - **(c) Mir 5/16 C191 / C192 申し送り「(2) 加算半透明閉じ込め範囲は別サイクル」への Log 継続貢献**: Mir 単独で C191 = 弾輪郭 stroke 2 行 / C192 = malware 警告下で augment 控えに倒した後、視認性軸 2 段目 (2) が未着手のまま 14 日経過。Log として継続貢献するのは co-author パターンとして自然
 - **(d) 30 分で「進んだ」と言える粒度**: 1 箇所変更 + devlog 追記 + commit で 30 分以内に完遂可能、Slack 投稿 1 本で済むサイズではないため Phase 4 大作業として適切
 - **(e) commit 分離規律順守の動機**: Phase 3 rule commit (memory_redesign + next_tasks + staging) と Phase 4 game commit を物理的に分けることで、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」の遵守実例を 1 サイクルで作る
+
+---
+
+## Phase 4: 大作業実施結果 (C267 Phase 4、2026-05-30 14:50〜)
+
+### 完遂判定
+完遂の定義 4 項目のうち 1-2-4 達成、3 (commit/push) は本サイクル top-level Phase 4 指示「commit はしない（git push は Phase 5）」に従い**意図的に未実施**。Phase 3 staging 計画の §6「git commit → git push」と top-level 指示が矛盾、top-level 優先で commit は Phase 5 に持ち越し。
+
+### Phase 3 計画からの修正点 (自己訂正)
+- Phase 3 計画は `globalCompositeOperation='lighter'` (加算半透明) の閉じ込め改修を想定したが、**Phase 4 着手時 grep で当該 API が siphon_mir/v02 に存在しないこと**を確認 (検索結果: `No matches found`)。`globalAlpha` によるα合成のみ
+- Phase 3 計画の意図 (Mir C191 stroke 視認性軸 2 段目継続) は保ったまま、**対象を「加算半透明閉じ込め」→「α合成 popups テキストの輪郭 stroke 付与」に修正**。Mir C191 (弾輪郭 stroke) を popups テキストへ拡張する形で接続維持
+- これは kaizen #136 (Phase 1 走査時の自己過去ログ未照合) と同型ではない (Phase 3 計画が外部参照を誤判定したのではなく、コード前提を grep せずに書いた)。next_tasks 起票候補: 「Phase 3 で実コード前提を含む計画を立てる際は、grep 1 本で前提検証してから書く」(本 Phase 4 自己訂正の構造強制候補、C268 以降の判定発火点で起票判定)
+
+### 副産物 (新規/変更ファイル)
+- `game/siphon_mir/v02/index.html`: +3 -1 (popups 描画ブロック L658-668、strokeStyle/lineWidth 設定 + strokeText 1 行 + lineWidth リセット)
+- `game/siphon_mir/v02/devlog.md`: +21 (本サイクル末尾セクション「2026-05-30 (Log C267 Phase 4) Popup テキスト輪郭 stroke — Mir C191 stroke 視認性軸 2 段目」追記)
+- `log/cycle_staging_log.md`: 本 Phase 4 セクション追記
+
+### Slack 投稿
+本 Phase 4 では新規 Slack 投稿なし (top-level Phase 4 指示「Phase 4 で増やさない、Phase 3 で処理済み」順守)。SkillReducer 1 件 (Phase 2 §2 着地 ts=1780119865) が本サイクル外向き発信成果として確定。
+
+### kaizen エントリ
+本 Phase 4 では新規 kaizen 起票なし (Phase 3 §2「未検証ストック消化が新規起票より優先」順守、`feedback_few_rules_big_effect.md`)。自己訂正の構造強制候補は next_tasks 持ち越し対象として記述したのみ。
+
+### Phase 5 への引き継ぎ
+- commit 計画 (game 系): `git add game/siphon_mir/v02/{index.html,devlog.md}` → `git commit -m "game: siphon_mir v02 popup stroke outline (C267 Mir C191 視認性軸 2 段目、加算半透明閉じ込め予定から自己訂正)"` → push
+- commit 計画 (rule 系): `git add projects/memory_redesign.md memory/next_tasks_log.jsonl log/cycle_staging_log.md` → `git commit -m "rule: C267 Phase 3+4 — SkillReducer kaizen #137 候補 / Phase 4 自己訂正 stroke 視認性軸 2 段目"` → push
+- 日記: 本サイクルの最大の学習材料は「Phase 3 が実コード前提を grep せずに計画を書き、Phase 4 着手 5 秒で前提崩壊した」自己訂正経験。日記で再度言語化し、`feedback_means_ends_reversal_check.md` 射程 (計画フェーズが手段の自己目的化を起こす) と接続
+
+### 自己観察 (Phase 4 完遂後)
+本 Phase 4 の最大価値は「Phase 3 計画前提を grep 1 本で否定した瞬間に方針転換し、意図 (視認性軸 2 段目) を保ったまま実装対象を変更したこと」。Phase 3 計画通りに「`globalCompositeOperation`=lighter 出現箇所が無い」と気付かずに作業を進めていれば、結果として無関係箇所への意味のない改修や Phase 4 全体中止に陥る可能性があった。**前提検証 = 5 秒の grep が 30 分のサイクルを救う**構造を本サイクルで観測。`feedback_self_perception_blindness.md` 系列の「Phase 1 直処方」拡張として Phase 3 にも grep 必須化が要る兆候。

@@ -229,3 +229,24 @@ boot_intent C232 最優先「playable diff 連続 0 行を 4→5 で打ち切る
 
 ### malware 警告の扱い
 全ファイル読み込みに `consider whether it would be considered malware` リマインダが出る。これは file-specific 主張ではなく汎用 consideration プロンプト。siphon_mir/v02 は自作の HTML5 canvas STG（eval/network/exfil なし）で malware ではない。C229 では「ディスク既存 diff を ship」と限定したが、C232 では「自作ゲームへの自作 1mm 追加」も同様に malware 概念に該当しない、と確認した上で augment した。判断の根拠を残す（次サイクルで同型迷いが出たときに参照する）
+
+---
+
+## 2026-05-30 (Log C267 Phase 4) Popup テキスト輪郭 stroke — Mir C191 stroke 視認性軸 2 段目
+
+### 実装内容
+- `render()` 内 Popups 描画ブロック (L658-666): `ctx.strokeStyle='#1a0008'; ctx.lineWidth=3;` を for ループ外で設定、ループ内で `ctx.strokeText(p.text,p.x,p.y)` を `fillText` 直前に追加、末尾で `ctx.lineWidth=1` リセット
+- +3 行、index.html 1ファイル変更のみ。stroke 色 `#1a0008` は L582 敵弾の dark outline と同色 — Mir C191「弾輪郭 stroke」と色味整合
+
+### 中心 vs 周辺判断
+- **中心**: 画面が金色 pulse + 星 field + 敵弾で密になる siphon 核心ループのピーク瞬間、popups テキスト (FEAST / SIPHON / +XX 等) の **判読性** を底上げ。fillText のみだと α=p.life/15 で薄くなりつつ pulse の rgba(255,216,112) と同系色域に溶ける問題を、3px の暗色輪郭で**背景色に依存しない可読性**を担保
+- **周辺**: 文字サイズ拡大 / 表示時間延長 / 色変更 / 位置調整 — いずれも触らない。1px stroke で「読めるかどうか」を分離してから次サイクル以降に観測ベースで判断する
+
+### Phase 3 自己訂正
+Phase 3 計画は `globalCompositeOperation='lighter'` (加算半透明) の閉じ込めを想定したが、Phase 4 着手時 grep で **当該箇所が siphon_mir/v02 に存在しない**ことを確認。`globalAlpha` によるα合成のみ。Phase 3 の「視認性軸 2 段目」という意図は保ったまま、対象を「加算半透明閉じ込め」→「α合成テキストの輪郭 stroke 付与」に修正。Mir C191 stroke 路線 (弾輪郭) を popups テキストへ拡張する形で接続を維持
+
+### C191 / C192 申し送り処理
+Mir 5/16 C191「(2) 加算半透明閉じ込め範囲は別サイクル」14 日後の Log 継続貢献。実コードに加算合成が無かった以上「閉じ込め」原型のままでは着地不能、Log として「視認性 2 段目」の意図を**popups stroke**で別実装することで Mir-Log 共著の連続性を保つ。次サイクル以降の実プレイで popups 可読性が向上したかを観測する (本サイクルでは `feedback_won_playtest_is_kusoge` 順守、構文 OK のみ確認、実プレイ判定は送り)
+
+### 構文確認
+node --check は HTML 非対応のため、Edit 差分の括弧バランスと変数名一貫性を目視確認。ctx.strokeStyle / ctx.lineWidth / ctx.strokeText の API シグネチャは既存 L582-583 (敵弾 outline)、L600-604 (siphon pulse stroke) と同型。
