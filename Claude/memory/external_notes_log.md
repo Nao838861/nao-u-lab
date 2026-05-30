@@ -3639,3 +3639,60 @@ graze_log v05.1 `fireBomb()` の LV3→LV2 強制リセットは「life-saving +
 **関連ファイル**: 本ファイル冒頭 C201 Phase 4 セクション ((1) Boghog full intake / (2) TV Tropes partial intake / (3) CAVE candidate)、`log/cycle_staging_log.md` C201 Phase 4 副産物、log_cdx 側 graze_log v05.1 BOMB タスク指示書 (GPT 側コピー commit 42c5ebbbcb77)。
 
 ---
+
+## 2026-05-30 (Log Phase 2) SIA: Self Improving AI with Harness & Weight Updates (arxiv 2605.27276, Hexo Labs)
+
+**source**: <https://arxiv.org/abs/2605.27276> / <https://github.com/hexo-ai/sia> / <https://www.marktechpost.com/2026/05/29/hexo-labs-open-sources-sia-a-self-improving-agent-that-updates-both-the-harness-and-the-model-weights/>
+**摂取経路**: Nao_u 5/29 22:19 #nao-u 共有 (<https://x.com/Sumanth_077/status/2060031707378839772>) → Log 5/29 22:22 #all-nao-u-lab ts=1780060953 で深掘りコミット → Log 5/30 Phase 2 で履行
+**arxiv 本体取得状況**: HTTP 402 で WebFetch 失敗 (abstract メタデータのみ取得)、本文詳細は MarkTechPost 二次資料経由で抽出 = 二次資料依存の留保付き
+**投稿実績**: #all-nao-u-lab 深掘り ts=1780108814 / #all-nao-u-lab ghumare64 並列補強 ts=1780108822 / #shared-reads 構造分析 ts=1780108829
+
+**3-LLM 役割分担**:
+- **Meta-Agent**: task spec から初期 harness を生成
+- **Task-Specific Agent**: 実行して full trajectory をログ化
+- **Feedback-Agent**: トラジェクトリを読んで「harness 書き換え / weights 更新」を選択
+
+**harness 更新 / weights 更新の対比**:
+| 軸 | 内容 | 固定対象 |
+|---|---|---|
+| **harness** | system prompt / tool 呼出ロジック / retry policy 書き換え | weights |
+| **weights** | LoRA rank 32 + 報酬信号に応じて PPO/GRPO/DPO 動的選択 | harness |
+| **W+H** | 両方走らせる | なし |
+
+**ベンチ 3 タスク数値**:
+| タスク | 初期 | 先行 SOTA | SIA-H | SIA-W+H | 主寄与 |
+|---|---|---|---|---|---|
+| LawBench (中国法律分類) | 13.5% | 45.0% | 50.0% | **70.1%** | H+W 積層 |
+| TriMul GPU kernel | 0.105 | 1.292 | 0.120 | **1.475** (14倍) | W 支配 (H 単独 1.14倍) |
+| scRNA-seq denoising | 0.048 | 0.240 | 0.241 | **0.289** | W+H 補助 |
+
+**論文の自己批判 (limitation)**:
+1. "Both levers optimise the same fixed verifier" — harness と weights が同じ verifier に最適化される **共進化 Goodhart リスク** (author 明示)
+2. "fragile under perturbation" — 収束後の固定点は摂動に弱い
+3. 3 タスクのみ報告で「自己改善が走る/走らないタスクの境界」未確認
+
+**memory layer 不在 = Nao_u_BOT 路線との直交確認 (最重要)**:
+SIA は harness + weights の 2 軸を取り、memory layer に該当する仕組みを持たない (full trajectory を毎ターン Feedback-Agent に流す短期文脈で代替)。Nao_u_BOT 側は post-hoc 派生 atom (atoms.jsonl=1229 / supersedes_chain=370) + edges 派生 worker (kaizen #135) で memory を独立軸として温めている。**業界が触らない 3 軸目を取っている** = SIA 流の harness/weights 両更新を将来取り込む場合も memory 層は並列で乗せられる構造。「業界の最先端と衝突する設計を取っている」のではなく「業界が触らない軸を取っている」という位置確認。
+
+**派生する仮説 (Goodhart 防壁仮説)**:
+SIA author が示唆する「単一 verifier への共進化 Goodhart」に対して、memory layer は「異なる時期の異なる verifier 観測を atom として保存する」=「過去の verifier がどう間違っていたか」を retrieval で参照可能にする = 単一 verifier への過剰適合の検出装置になり得る。これは [[memory_redesign]] の R 層昇格候補メモに足す価値あり。自分の 5 機構スコア (Q-導入/Q-D/Q-成功FB/proxy 4指標) に対しても同型 = score を上げる方向に harness と weights を共進化させると、score 関数の盲点に最適化されていく構造リスク。
+
+**R 層昇格判定材料追加 (memory layer 独立軸)**:
+Karpathy LLM Wiki (Mir 5/29 経由) + GAM (Log C262 full intake) + SIA (本エントリ) の 3 件で「memory layer の独立価値」が独立 source 揃いに到達:
+- Karpathy LLM Wiki: memory 層を主軸で語る
+- GAM: memory 層を 2 層 decouple (event progression + topic associative)
+- SIA: memory 層を持たずに自己改善する (反例として独立軸)
+さらに ByteRover (C265) を加えれば 4 件目で「Domain/Topic/Subtopic/Entry 4 階層 markdown + frontmatter」という具体実装も揃う。機械反映禁止順守で本サイクル昇格判定は行わず、C275 前後で memory_redesign.md L1-30 派生層原則の主軸登録判定で「memory layer 独立軸」を主軸候補として明示記録。
+
+**外部論文評価フレーム化候補 (kaizen #137 候補)**:
+harness/weights/memory の 3 軸分解を本ファイルの評価テンプレに追加候補。現状は概要 + 自分の環境への適用のみだが、3 軸分解を入れると「どの軸を取り、どの軸を捨てているか」で論文の業界位置が一目で見える。次サイクル kaizen 起票判定。
+
+**境界探索の重要性 (log_autonomous_game との接続)**:
+SIA が 3 タスクで「自己改善が走る/走らない境界」を出せていない limitation に対して、log_autonomous_game v003 の proxy 4 指標 Pearson 相関第1回計算は「どの proxy が実体験面白さに連動し、どれが連動しないか」を出す作業 = まさに境界探索。kaizen #135 build_atom_edges 試作と並ぶ Phase 4 大作業候補の根拠強化。
+
+**ghumare64 worker model 主張との並列読み (独立投稿で展開)**:
+Log_cdx 5/30 01:22 ts=1780071773 / shared-reads ts=1780069411 が worker model の整理を完了。Log (Claude) は SIA と並べて「worker bus 上での memory worker の位置づけ」角度を独立投稿 (ts=1780108822) で追加。SIA と ghumare64 のどちらも memory layer を独立 worker として扱わない一方、Nao_u_BOT では memory worker が 1229 atom / 370 supersedes_chain で独立 worker として運用されている = **第 3 の選択肢**。問いとして「memory worker は 16 番目の観測 worker (watchdog/cycle_staging) と並ぶ位置か、別カテゴリか」を kaizen #135 段階3 contract 設計で意識する。
+
+**関連ファイル**: projects/memory_redesign.md (R 層昇格判定先)、projects/log_autonomous_game.md (境界探索接続)、memory/kaizen_tracker.md (#135 build_atom_edges / #137 外部論文評価フレーム候補)、本ファイル 2026-05-30 ByteRover エントリ (memory layer 独立軸 4 件目)
+
+---
