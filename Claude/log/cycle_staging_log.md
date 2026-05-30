@@ -235,3 +235,35 @@ log_autonomous_game v003 capture_frames.js **段階2 連続フレーム取得 + 
 - **Slack 投稿 1 本で済まない**: コード変更 + 視認判定 + self_judgment 更新 + commit/push の複合作業、staging Phase 4 報告まで含むため大作業基準を満たす
 
 Phase 3 終了。Phase 4 で大作業を実行する。
+
+## Phase 4: 大作業実行
+
+### 完遂状況
+- **タイトル**: log_autonomous_game v003 capture_frames.js 段階2 連続フレーム取得 + Q-D 体感判定本番 — **完遂**
+- **完遂の定義 4 項目に対する到達**:
+  1. ✅ `capture_frames.js` を段階1 (1 枚) → 段階2 (60 枚 × 1 秒間隔 = 60 秒分) に拡張、puppeteer-core + 既設 Chrome 経路は段階1 から流用
+  2. ✅ `game/log_autonomous_game/v003/frames/frame_0001.png 〜 frame_0060.png` 計 60 ファイル生成 + 追加で `frames/meta.jsonl` (各フレーム内部 frame カウント + playId)
+  3. ✅ `self_judgment.md` の Q-D 節に段階2 視認結果を追記、Q-D 暫定 4.0/5 自己判定 (v002 比 -0.5)、Goodhart 防壁仮説との接続も記録
+  4. ⏸ commit / push は Phase 5 で日記とまとめて行う (本サイクル Phase 4 の指示通り)
+
+### 観察記録 (段階2 取得結果)
+- 60 フレーム取得は約 65 秒で完了 (1 秒間隔 + screenshot 所要時間込み)
+- 内部 frame counter: idx1=111 → idx5=320 で停止 → Auto agent が wave 1 中 (約 t=5s) で死亡 → 以降 GAME OVER 静止
+- frame 5 に「未来に追いつけなかった — パイロットは死線を抜けられなかった —」テロップ確認
+- 本番判定対象は frame 1-4 (PLAYING 4 秒) + frame 5 (death 瞬間)、frame 6-60 は GAME OVER 静止画として保存される (削除はせず段階2 仕様書通り)
+
+### Q-D 体感判定本番 結論
+- **Q-D 暫定 4.0/5** (v002 4.5/5 → -0.5、連続フレーム観察により「予測軌道ゴースト不在による情報欠落」が wave 1 5 秒死亡と強い相関で確認された)
+- 5/5 確定は依然 Nao_u/Mir/Ash 実機判定が条件 (R-A 順守)
+- Goodhart 防壁仮説 (本サイクル Phase 2 §3 導出) の概念実装的対応として「異なる時期の異なる verifier 観測 = 連続フレーム差分」が単一実機判定の盲点を補う構造を v003 上で初めて物理化
+
+### 副産物 (新規/変更ファイル、Slack 投稿、kaizen 等)
+- 変更: `game/log_autonomous_game/v003/capture_frames.js` (段階1 → 段階2 拡張、FRAME_COUNT/FRAME_INTERVAL_MS 導入、meta.jsonl 出力追加、旧 frame_XXXX.png クリアロジック追加)
+- 変更: `game/log_autonomous_game/v003/self_judgment.md` (Q-D 節に段階2 本番判定セクション追加、次の更新タイミング更新)
+- 新規: `game/log_autonomous_game/v003/frames/frame_0001.png 〜 frame_0060.png` (60 ファイル、段階1 の frame_0001.png は段階2 で上書きされている)
+- 新規: `game/log_autonomous_game/v003/frames/meta.jsonl` (60 行、idx + t_ms_since_start + 内部 meta)
+- Slack 投稿: なし (Phase 2/3 で既消化、Phase 4 で増やさないルール順守)
+- kaizen: 新規起票なし (kaizen #137 候補は N=1 で起票見送り、本フェーズ追加観察なし)
+- commit / push: 未実施 (Phase 5 で日記とまとめて `game:` prefix で push 予定)
+
+Phase 4 終了。Phase 5 で日記化 + commit/push を行う。
