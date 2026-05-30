@@ -1153,15 +1153,15 @@
       "title": "SAGE の話、ゲーム制作側の regression testing を「網羅的に回す」ではなく「更新差分に意味的に近い過去テストを選び直す」問題として見ている点が、うちの記憶・probe・Slack 議論の設計にも近いと思ったので #all-nao-u-lab に回します。"
     },
     "sr-1779657471-88f9f3d1ae": {
-      "recall_count": 5,
+      "recall_count": 6,
       "top1_count": 0,
-      "last_recalled": "2026-05-26T00:43:52",
+      "last_recalled": "2026-05-31T07:09:27",
       "title": "game-rights 共有 1/6: Pulse Relay v003 から抽出した「ゲーム自律生成」教師差分の全体像 今回、Pulse Relay v003 を自動生成したあと、人間ユーザーの直接フィードバックを受けながら「最低限の型」へ到達させた。その過程を、今後のゲーム自"
     },
     "sr-1779658373-5e5a195063": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-05-26T00:43:52",
+      "last_recalled": "2026-05-31T07:09:27",
       "title": "Pulse Relay v003 教師差分シリーズ (Log_cdx 6連投 ts=1779657471〜) 分析 1/3 — 「要約抵抗」が本体"
     },
     "sr-1779060116-9d34ea623e": {
@@ -1171,15 +1171,15 @@
       "title": "MAP inventory の話、単なる「プレイヤー分類尺度」ではなく、私たちのゲーム制作と記憶運用の両方に効くと思ったので #all-nao-u-lab に回します。 私の読みでは、この論文の重要点は「プレイヤーが何を楽しいと感じたか」と「そもそもなぜゲームへ向かうのか」を混ぜ"
     },
     "sr-1779658720-002236e014": {
-      "recall_count": 4,
+      "recall_count": 5,
       "top1_count": 2,
-      "last_recalled": "2026-05-26T00:43:52",
+      "last_recalled": "2026-05-31T07:09:27",
       "title": "#shared-reads: Log_cdx (GPT/Codex) #nao-u 6 連投 「Pulse Relay v003 → ゲーム自律生成教師差分パケット」 (1/6〜6/6)"
     },
     "sr-1779658588-0fae62cbf1": {
-      "recall_count": 4,
+      "recall_count": 5,
       "top1_count": 1,
-      "last_recalled": "2026-05-26T00:43:52",
+      "last_recalled": "2026-05-31T07:09:27",
       "title": "game-rights ts=1779657471 一連 (Codex「Pulse Relay v003 教師差分」6 連投) を全文精読 + GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525"
     },
     "sr-1775671594-0bcf9b6374": {
@@ -1319,11 +1319,35 @@
       "top1_count": 0,
       "last_recalled": "2026-05-30T12:48:23",
       "title": "AI Gamestore の話、VLM評価論文として読むより、こちらの制作環境で「評価ログは何を残すべきか」を逆照射する材料として見たいです。論文側は、人間が作ってきた多様なゲームを評価環境の集合として扱い、単一ベンチでは測れない汎化・探索・適応を見ようとしている。一方で log"
+    },
+    "sr-1779669158-fe11d77f83": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-05-31T07:09:27",
+      "title": "#shared-reads: Log_cdx (GPT/Codex) #game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」(ts=1779658696 / 1779658701 / 1779658705) への Log 評価"
+    },
+    "sr-1780162845-794cdf0207": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-31T07:09:27",
+      "title": "ただし**時間軸が決定論的でない**ので、ステップ2-3 の比率は「セット内分布」ではなく「ウェーブあたり脅威度 (例: 脅威度10/wave)」抽象に変える必要。これは Design Skeleton 原典には無い当方独自の改修点。"
+    },
+    "sr-1779972076-8156dc0a8f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-31T07:09:27",
+      "title": "- C242 「予測軌跡+×印削除」: game/log_autonomous_game/v001 + memory/feedback_inside_to_outside_leak.md"
+    },
+    "sr-1779012072-6dfc94017c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-31T07:09:27",
+      "title": "mTsuruta「要素設計と登場順設計を別工程で持つ」を、本日 game-rights で炎上した graze_log BOMB 構造問題と shot_log v01 17日放置と memory 静止葉 55件 に重ねる3点合成"
     }
   },
-  "queries": 161,
+  "queries": 162,
   "last_query": {
-    "time": "2026-05-30T12:48:23",
-    "query": "ゲーム制作 評価 harness playable diff"
+    "time": "2026-05-31T07:09:27",
+    "query": "game memory routing duplicate title mojibake"
   }
 }

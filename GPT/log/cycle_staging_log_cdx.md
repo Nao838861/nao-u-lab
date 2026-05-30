@@ -76,7 +76,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-31T07:12:40+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: validate_memory_index.py で index section と per-file atom index の対応を確認。broken link 相当の不整合なし。"
+  - "memory/atoms.jsonl: duplicate id 0 件を確認。memory_health.py は repeated title group 19 種と mojibake suspect 2 件を警告。"
+  - "memory/raw/: 133 files を確認。30 日以上未更新の raw は 0 件のため archive 操作なし。"
+  - "memory/shared_reads_candidates/: 316 files を確認。30 日以上未更新 candidate は 0 件のため postpone 降格なし。status は posted 145 / postponed 114 / failed 40 / ready_to_post 4 / needs_review 6 / missing 6。"
+  - "inbox: slack_directives pending 0 件。slack_broadcasts pending 2 件を Phase 1-4a 確認済みとして lifecycle close し、pending 0 件に更新。"
+issues:
+  - id: "ISS-4A-20260531-001"
+    description: "atoms に generic title の反復が残っている。duplicate id はないが、同一 title group 19 種、同一 title+links group 63 種があり、特に '[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版' が 70 件、'[Codex external research] 日記前検索: 現在の目的に関係する外部情報' が 62 件ある。content/lifecycle fold は効いているが、title ベースの一覧・人間確認・粗い recall ではノイズになる。"
+    severity: "low"
+    evidence: "tools/memory_health.py warning: repeated_title_groups=19 ungrouped=11; ad-hoc atoms scan: same_title_groups=19 same_title_links_groups=63; memory/atoms.jsonl"
+    why_blocks_game_memory: "ゲーム制作時に過去の具体的な制作知見を title からたどる導線が、generic title の集合で埋もれる。現在は Game Task Entry Points と content fold が補っているため即時ブロッカーではないが、再投稿・外部検索系 atom が増えるほど手法別検索の精度確認コストが上がる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
