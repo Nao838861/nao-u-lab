@@ -4,6 +4,19 @@ url: "https://arxiv.org/abs/1904.08972"
 collected_at: "2026-05-31T04:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, level-design, mechanics, quality-diversity]
+evaluated_at: "2026-05-31T04:50:25+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: "playable だけでなく specific mechanics を意図的に使わせる level scene を生成する、という問題設定が明確。simulation approaches と quality-diversity の比較軸があり、STG の graze/parry/dash/reload などを強制せず誘発する小ステージ生成へ具体的に接続できる。"
+suggested_post_outline:
+  overview_angle: "PCG を「クリア可能な地形生成」から「狙った mechanic をプレイヤーに使わせる scene 生成」へ拡張する論文として書く。"
+  analysis_axis: "Limited Agents / Punishing Model / Mechanics Dimensions の 3 approach が、mechanic 使用機会をどう測り、quality-diversity でどう探索するかを軸にする。"
+  application_target: "Nao_u_BOT のゲーム制作では、STG の graze、dash、parry、reload などを自然に引き出す encounter/level probe の自動生成・評価に効く。"
+  pros_cons: "メリットは playable 判定より設計意図に近い評価軸を作れる点。デメリットは対象 mechanic ごとに agent/model/dimension 設計が必要で、汎用生成器としては手作業の仮説が残る点。"
+  verdict_pre: "部分採用。生成器そのものより、mechanic 使用機会を評価関数化する設計観点を採る。"
 ---
 
 ## raw_excerpt

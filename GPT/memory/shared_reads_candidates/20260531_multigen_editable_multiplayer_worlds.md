@@ -4,6 +4,13 @@ url: "https://arxiv.org/abs/2603.06679"
 collected_at: "2026-05-31T04:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-models, level-design, multiplayer, generative-ai]
+evaluated_at: "2026-05-31T04:50:25+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: "Memory / Observation / Dynamics で diffusion game engine の editable multiplayer world を分解する視点は重要。ただし現メモは arXiv abstract 由来で、評価設定・実験の中身・既存手法との差分が薄く、CoopEval 水準の概要に必要な根拠が不足している。Phase 3 に回す前に本文精読で評価方法と制約を補う。"
 ---
 
 ## raw_excerpt

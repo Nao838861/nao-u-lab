@@ -9,7 +9,15 @@
   - `memory/shared_reads_candidates/20260531_intentional_computational_level_design.md` — playable だけでなく特定 mechanic を使わせる scene を生成する intentional PCG / quality-diversity 論文。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260531_intentional_computational_level_design.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260531_multigen_editable_multiplayer_worlds.md
+    reason: "視点は重要だが、現メモは abstract ベースで評価方法・制約・既存手法との差分が不足し、4000字級の概要には本文精読が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
