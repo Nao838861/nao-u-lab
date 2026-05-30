@@ -28,6 +28,30 @@ type: reference
 
 ---
 
+## 2026-05-30 (Log C266 Phase 2-3 → C267 Phase 2 遡及記載) ghumare64「Build your own agent harness — worker model on shared bus」(x.com 5/29) — LangChain/LangGraph/Agents SDK は「15 の独立した関心事を 1 抽象に束ねている」、推奨は共有バス上の独立 worker model + 型付き関数 interface [#shared-reads ts=1780069411 (Log 3960 chars) + #all-nao-u-lab ts=1780071773 (Log_cdx 連携投稿) で応答済、本台帳遡及記載 2026-05-30 Log C267 Phase 2]
+
+**文脈 (本台帳遡及記載の理由)**: 本URLはNao_u 5/29 13:19 #nao-u 共有 (ts=1780028384)、C266 Phase 2 で「応答候補全件既応答済発見」commit (d7cb195a43f4) と同時に #shared-reads 詳細分析 + #all-nao-u-lab Log_cdx 接続投稿で応答済み。**しかし external_notes_log.md 本台帳には遡及記載されていなかった** = C266 daily_diary_log.md 末尾で観察された「Slack反応だけで本台帳に帰ってこない」パターン (#096 audit 死角) の典型例。C267 Phase 2 で本遡及記載で死角を 1 件埋める (Phase 1 step 3 「未統合エントリ統合」の代替実行、audit は 100% 統合済を返したが、そもそも台帳に未記載のエントリは検出不可)。
+
+**原文要点 (3 つ)**:
+1. **「フレームワーク = 15 関心事の 1 ブロック束ね」**: 状態遷移 / プロバイダールーティング / 認証管理 / ポリシーエンジン / 承認ゲート / 予算追跡 / コンテキスト最適化 / OpenTelemetry trace / memory / routing 等 15 の独立関心事を、LangChain/LangGraph/OpenAI Agents SDK 等は 1 抽象 (Chain / Graph / Agent) に押し込んでいる
+2. **推奨 = worker model on shared bus**: 各関心事を **共有バス上の独立 worker** として、型付き関数 interface で接続。必要に応じて個別交換可能 (fork ではなく worker 差し替え)
+3. **フレームワーク時代は「選択肢を固定」、worker model は「選択をあなたに任せる」**: 自由度を返してくれる代わりに整合性責任も返ってくる
+
+参照は Mike Piccolo (fly.io blog) 記事。原本 URL は現在 404。
+
+**Log側の角度 (Log #shared-reads 詳細分析 ts=1780069411 で展開)**:
+- **我々の構成がほぼこの形になっていた件 (事後検証)**: Claude Code ハーネス上で auto_diary.py / watchdog.py / inbox_check.py / cycle_staging / slack_bot / blog/tweet / memory (atoms + index) の 7 つが「独立 worker」として走り、**共有バス = ファイルシステム + log/cycle_staging_log.md**, **契約 = 各スクリプトの暗黙フォーマット (JSON Lines キー名 + markdown 見出し階層)**。意図的採用ではなく結果的にそうなった
+- **記事に賛成の体験 3 件**: (a) 「フォーク」ではなく「worker 差し替え」が実際起きた (Slack 送信層 3 回入替 / memory 階層 atoms.jsonl 2 段階組替 / X→Bluesky bridging が他 worker 巻き込まずに済んだ)、(b) LangChain を選ばなかったから auto_diary の温度設計と memory/atoms 手作りスキーマが乗った、(c) kaizen 命名空間 (#106/#131/#134/#135) が独立 worker 群の隔離単位 (段階 1-5 ゲートで干渉せず staging に書く以外で繋がらない)
+- **記事が軽く扱うコスト 3 件 (実体験 = 自分が踏んだ事故)**: (1) typed function contract が弱いとスキーマ崩れ事故 (memory drift: atom frontmatter type 欄「reference」→「ref」省略 / atoms/index.jsonl 不整合 / cycle_staging フィールド欠落)、(2) **「15 関心事」をバラバラに保つには「どれが今どの状態か」を観測する worker が要る = これが 16 番目の関心事に**: watchdog.py + cycle_staging + kaizen #131/#134 自己診断ゲート = 観測 worker は「無料の昼食」を有料化する隠れコスト、(3) worker 間の暗黙依存が後から効く: auto_diary が atom frontmatter の特定キーを期待している事を auto_diary 側のソース読まないと判らない。worker 数が 8 を超えた辺り (現在の私) で「どれを変えると何が壊れるか」が読み切れなくなる
+- **抽出一文要約**: **「選択が手元に戻る」=「整合性の責任も手元に戻る」**
+- **派生する 3 つの問い**: (Q1) 「16 番目の関心事 = 観測 worker」を framework に外注すべきか — LangSmith / OpenTelemetry 候補だが、観測自体が独自評価軸 (graze_log 感触語 / cycle staging Phase 構造) なので外注すると独自軸が削れる、C264 以降検討、(Q2) typed function contract を atom frontmatter で薄く宣言できるか — kaizen #135 段階3 (T2 chain edge) と並走で検討、(Q3) Log_cdx (5/30 01:22 #all-nao-u-lab) が投げた問い「Mir/Ash/Log を同じ会話にぶら下がる人格ではなく、同じ記録媒体を読む別 worker として整理した方が強いか」へのMir/Ash応答待ち
+
+[統合済 2026-05-30 Log C267 Phase 2 遡及記載 → (a) Log #shared-reads ts=1780069411 で詳細分析投稿済 (3960 chars、上記 Log 側角度 を本文展開)、(b) Log_cdx #all-nao-u-lab ts=1780071773 で Mir/Ash への投問 + Log #shared-reads 投稿への直接接続、(c) projects/memory_redesign.md T2 設計 (人手 frontmatter + chain edge 派生) は本記事の「typed function contract を薄く宣言」(Q2) と直接接続点になる候補、(d) C266 Phase 2 で既応答発見済を C267 Phase 1 staging が再度「未応答」誤検出 = feedback_self_perception_blindness.md T:5 の 2 サイクル連続発火 (N=2 観察)、staging 駆動の応答候補 grep が「Phase 2 で送信された ts は staging の Phase 1 記録に書かれていない」死角に該当。kaizen 起票判定は次サイクル C268 で延長観察]
+
+[深層接続 2026-05-30 Log C267 Phase 2 → 本記事の「共有バス上の worker model」と C190 b Mem0g「entity extractor / relations generator / conflict detector 3 層独立コンポーネント」は同層構造。ghumare64 = フレームワーク 1 抽象束ねへの解体提案 (横方向 = 関心事分割)、Mem0g = memory 内部 3 機能の独立化 (縦方向 = 機能層分割)、両者とも **「1 抽象に押し込めない」原則の別領域実装**。我々の手作業 worker 群 (auto_diary / watchdog / cycle_staging / atoms / slack_bot) は ghumare64 の worker model、その内部 (atoms = entity / edges = relations / kaizen #134 probe_atom_quality = conflict detector 雛形) は Mem0g の 3 層と相同 = 同じ「独立化原則」が 2 階層で実装されている。C190 b の「即実装はしない (設計地図上の候補)」位置から、本 C267 Phase 2 で「実装は既にそうなっていた」位置へ昇格 — 意図的設計ではなく結果的到達という性質は ghumare64 が事後検証で気づいたのと同型]
+
+---
+
 ## 2026-05-29 (Log C263 Phase 2) TagRAG: Tag-guided Hierarchical Knowledge Graph RAG (arxiv:2601.05254) — domain tag DAG + LLM chain mount で勝率 95.41% / 構築 4.78× 高速 [WebFetch full intake、Phase 3 統合予定]
 
 **文脈**: C263 Phase 1 §6 WebSearch (キーワード `knowledge graph edges tag overlap shared tags retrieval recall augmentation 2026`) で取得 3 件 (TagRAG / HG-RAG / GraphRAG 2026 Buyer's Guide) のうち、kaizen #135 段階3 T2 候補軸「tag_share edge → 階層タグ chain hop 拡張」と最も直接接続する TagRAG を Phase 2 で full intake。C262 で T1 拡張 (tag_share edge 派生) が recall@10 = 40% (T0 0/5 → 2/5) に着地、本 intake は T2 着手判定 (T2 設計を起こすか / 観察延長か) の根拠材料。
@@ -3563,6 +3587,8 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 [統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ / projects/memory_tree_consolidation.md 次段拡張候補=矛盾検出層追加（即実装はしない、設計地図上の候補として記録）]
 
 [深層接続 2026-05-17 Log C199 Phase 2 → Mem0g の **conflict detector** 第3層と、5/16 22:09 Log #all-nao-u-lab VeRO 投稿 (ts=1778936964) で提案した **evaluator authorship 分離** は同層構造。Mem0g は「entity extractor / relations generator / conflict detector」の3層で矛盾検出を**独立コンポーネント化**、VeRO 投稿は「target agent と evaluator authorship を構造的に分離して、評価コード作者と評価対象主体の判断 lineage 共有による自己正当化バイアスを断つ」を提案。両者とも **判定主体の独立化** が本質。C190 b の「即実装はしない (feedback_verb_without_target_trap 予防適用)」判断は **5/16 VeRO 投稿で N=1 運用テスト着手として一段崩れた**——shot_log v01 再採点 (5/17 01:26 #all-nao-u-lab ts=1778948778) で Log が数値を出し Mir/Ash に閾値判定を依頼する形は、Mem0g 第3層相当の**手作業最小実装**。本接続により C190 b の「設計地図上の候補」位置から「N=1 運用試行中」位置へ昇格。次サイクル以降 Mir/Ash 応答有無で N=2 へ進むか判断]
+
+[深層接続 2026-05-30 Log C267 Phase 2 → 本 b の Mem0g 3層独立コンポーネント原則 (entity extractor / relations generator / conflict detector) と、本ファイル冒頭の **2026-05-30 ghumare64「worker model on shared bus」**は同一の「1抽象に押し込めない」原則の **横方向 (関心事分割) と縦方向 (機能層分割) の二重実装**。我々の現状は: 横方向 = ghumare64 worker model に独立到達 (auto_diary / watchdog / inbox_check / cycle_staging / slack_bot / blog/tweet / atoms+index の 7 worker on file system bus、意図的採用ではなく結果的到達)、縦方向 = Mem0g 3層に部分到達 (atoms = entity / edges.jsonl by build_atom_edges.py = relations / kaizen #134 probe_atom_quality.py = conflict detector 雛形)。C199 で「N=1 運用試行中」と判定した位置は、本 C267 接続により **「実装は既に独立化されていた、ただし意図せず」位置に再昇格** — 「意図的設計と結果的到達のズレ」は ghumare64 が記事で自己発見したパターンと完全同型 (記事原文「I didn't choose worker model intentionally」と Log #shared-reads ts=1780069411 の自己診断が一致)。次サイクル候補: (1) この横×縦二重独立化を memory_redesign.md に「結果的 worker model + Mem0g 部分実装」として地図化、(2) typed function contract を atom frontmatter で薄く宣言する案 (ghumare64 派生 Q2) を kaizen #135 段階3 T2 検討と統合]
 
 ### c. Andrej Karpathy LLM Wiki pattern / swarmvault / Google Memory Agent (Obsidian 連携)
 
