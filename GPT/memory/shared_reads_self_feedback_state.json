@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-30T12:45:38+09:00",
+  "updated_at": "2026-05-31T02:55:51+09:00",
   "reviewed_source_ts": [
     "1780098002.597279",
     "1780075916.989739",
@@ -85,9 +85,33 @@
     "1779916698.357319",
     "1780037572.093769",
     "1779802705.207739",
-    "1780108829.615329"
+    "1780108829.615329",
+    "1780119865.869599"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T02:55:51+09:00",
+      "id": "sr-1780119865-e1b5757bfb",
+      "source_ts": "1780119865.869599",
+      "title": "SkillReducer: Optimizing LLM Agent Skills for Token Efficiency",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This post directly addresses Phase 3b's main failure mode: adding skills, probes, and memory entries can increase routing cost before any useful body content is loaded. The closest existing check is selection_shadowing_check, but SkillReducer adds a distinct routing/body separation lens and a failure-log trigger. Keep it as a reversible probe, not a permanent rule or new mechanism.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before adding or updating a memory index line, skill, probe, directive, or phase instruction, did I separate routing text from body content and keep the routing text short enough to choose or skip the item without opening the body?",
+        "Did I name the closest existing probe, skill, directive, or index entry and state whether the change fixes a missing description, non-actionable body content, or an observed routing/recall failure?",
+        "If there is no observed routing failure, recall miss, or body-noise problem, did I avoid adding a new mechanism and record the atom as reviewed/deferred or state-only instead?"
+      ],
+      "withdrawal_condition": "Drop this probe if it only repeats selection_shadowing_check, or if the next memory/skill/probe addition already separates routing text from body content without reducing a real recall or routing failure."
+    },
     {
       "reviewed_at": "2026-05-30T12:45:38+09:00",
       "id": "sr-1780108829-d83b693372",
@@ -2588,6 +2612,18 @@
         "If the result only optimizes a fixed verifier, did I narrow the conclusion to verifier-bound improvement and preserve one memory/evidence hook for future Goodhart or perturbation checks?"
       ],
       "expires_after": "Review after the next self-improvement, external-paper, memory-redesign, or autonomous-game evaluation that claims an improvement or robustness signal."
+    },
+    {
+      "id": "probe-20260531-routing-body-separation",
+      "created_at": "2026-05-31T02:55:51+09:00",
+      "source_ts": "1780119865.869599",
+      "scope": "next memory index line, skill, probe, directive, phase instruction, or recall surface change where adding knowledge may increase routing cost or hide useful body content",
+      "questions": [
+        "Before adding or updating the item, did I separate routing text from body content and keep the routing text short enough to choose or skip the item without opening the body?",
+        "Did I name the closest existing probe, skill, directive, or index entry and state whether the change fixes a missing description, non-actionable body content, or an observed routing/recall failure?",
+        "If there is no observed routing failure, recall miss, or body-noise problem, did I avoid adding a new mechanism and record the atom as reviewed/deferred or state-only instead?"
+      ],
+      "expires_after": "Review after the next memory index, skill, probe, directive, phase instruction, or recall-surface change that adds or restructures routing text."
     }
   ]
 }

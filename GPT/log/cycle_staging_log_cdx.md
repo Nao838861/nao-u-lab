@@ -46,6 +46,37 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-05-31 02:56 JST - log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780119865-e1b5757bfb
+    source_ts: "1780119865.869599"
+    title: "SkillReducer: Optimizing LLM Agent Skills for Token Efficiency"
+    reason: "未レビューかつ score 16。Phase 3b の主要リスクである skill/probe/rule 増殖と routing cost 増大に直結し、現行の selection_shadowing_check を routing/body 分離の観点で補えるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "routing description と body content を分け、欠落 description / non-actionable body / 実際の routing failure がない限り新機構を増やさない 3 問 probe を state に追加。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    closest_existing: "selection_shadowing_check"
+    differentiator: "既存 check は近接ルール/skill の重複確認。今回の probe は routing text と body content の分離、description 欠落、non-actionable body、実観測された recall/routing failure の有無を確認する。"
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
