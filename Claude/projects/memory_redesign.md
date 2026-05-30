@@ -21,6 +21,36 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 17:31 (Log C269 Phase 3) — AriGraph (arxiv 2407.04363) episodic edge 案 / recall_log を graph に乗せる試案
+
+C269 Phase 1 §6 外部検索 (kaizen #106 = 強制利用しない原則) で `atom-level memory edge graph LLM agent 2026 build atom edges semantic ontology` を WebSearch、結果上位 3 件のうち AriGraph (arxiv 2407.04363) を本ファイル T2 設計議論ブロックに 1 段追記する。Phase 2 §4 判定で「shared-reads 投稿は薄い → projects/ 配下に直接記録する方が情報密度が保てる」と決めたものの実装。
+
+**AriGraph の主張 (要点)**:
+- agent memory を **semantic graph (entity-relation の網)** と **episodic edge (時系列を貫く edge)** の 2 種に分けて統合
+- semantic = 知識間の依存関係を表す static な network
+- episodic = 経験列に発生した「いつ・どの semantic edge を辿ったか」を edge として graph 内に embed
+- 単純な episodic / semantic 分離 (例: episodic = ログ、semantic = KG) より上位の構造として、両者を **同じ graph に乗せる**
+
+**当方 T2 設計との対応**:
+- 当方の semantic 側 = `memory/concept_graph.json` + atom frontmatter tag / wikilink (現状運用済、build_atom_edges.py で edge 化進行中、kaizen #135 期限 2026-06-09)
+- 当方の episodic 側 = `memory/recall_log.jsonl` (想起ログ、現状 graph 化されていない)
+- **未試行**: recall_log を edge として concept_graph に embed する案。具体的には「想起時に同時に活性化した atom 2 つを episodic edge で接続 (重み = 想起頻度)」「想起列の連続関係 = path として graph に乗せる」
+- これが効くと、過去に「同じ判断局面で何度も一緒に想起された atom 群」を retrieval 時に自動共活性化できる (= associative_search 拡張)
+
+**設計判断としての位置**:
+- semantic 側 (build_atom_edges.py kaizen #135) と独立に走らせるべきか、同一 graph に統合すべきか不明
+- AriGraph 論文は「同一 graph」採用だが、当方では recall_log が日次更新 / atom frontmatter は cycle 単位で更新と頻度が違う → 物理的には別ファイルだが、retrieval 時にだけ merged view を作る案がコスト低そう
+- R 層昇格判定軸の **新規 source として追加**: SIA (memory layer 業界不在) + SkillReducer (routing/body 2 層分離) + AriGraph (episodic/semantic 統合) の 3 件で memory layer 独立軸が source 軸 6 件目位置価値 (前は 5 件)
+- **機械反映禁止順守**: build_atom_edges.py 着地 (2026-06-09) 後 C275 前後で AriGraph 統合の必要性を再判定。本サイクルでは実装せず、T2 設計議論ブロックに位置取り記録のみ
+
+**他 2 論文 (本サイクル WebSearch 結果)**:
+- Graph-based Agent Memory: Taxonomy, Techniques, and Applications (arxiv 2602.05665) = graph-based memory 全体地図、当方位置取りの俯瞰材料
+- GAM: Hierarchical Graph-based Agentic Memory for LLM Agents (arxiv 2604.12285) = 階層 graph + agentic memory、当方 R/M 階層との比較材料
+
+3 件とも T2 設計判断に効く独立 source。AriGraph のみ projects/memory_redesign.md (本ファイル) 直接記録、他 2 件は memory/external_notes_log.md への記録判定を次サイクル Phase 1 §6 で実施 (今サイクルは強制利用しない原則順守で記録抑制)。
+
+---
+
 ### 2026-05-30 14:30 (Log C267 Phase 2 再走) — SkillReducer (arxiv 2603.29919) full intake / kaizen #137 SkillReducer-specific 3 拡張候補 / R 層昇格判定軸 routing-body 並列条件追加
 
 C267 Phase 2 (= C268 後の追走) で Nao_u 5/28 09:08 共有 (`yusuke_m_mu` skill description load 200個問題) への直接処方箋研究として SkillReducer を full intake、`#shared-reads ts=1780119865.869599 + 891709` で 2 投稿に着地。Log 5/29 12:46 自己投稿 (ts=1780026418) で「階層化 description / pre-filter / description vs full body 分離」を「思いつき、未実装」と書いた直後に外部論文側で同処方箋が既検証 = 文脈連続性が成立したため、Phase 1 で「Phase 2 では強制利用しない」と書いた SkillReducer を条件付き利用 (memory layer 独立軸 R 層昇格判定材料 4 件目位置価値)。
