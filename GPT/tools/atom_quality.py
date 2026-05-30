@@ -9,6 +9,18 @@ from typing import Any
 
 
 CHECK_FIELDS = ("title", "trigger", "excerpt")
+OPERATIONAL_ACK_PATTERNS = (
+    "memory/slack_broadcasts.jsonl",
+    "slack_broadcasts.jsonl",
+)
+
+
+def atom_search_text(atom: dict[str, Any]) -> str:
+    return "\n".join(
+        str(atom.get(field, ""))
+        for field in ("title", "trigger", "excerpt")
+        if atom.get(field)
+    )
 
 
 def mojibake_score(text: str) -> dict[str, Any]:
@@ -49,6 +61,42 @@ def atom_quality_report(atom: dict[str, Any]) -> dict[str, Any]:
 
 def is_mojibake_suspect(atom: dict[str, Any]) -> bool:
     return bool(atom_quality_report(atom)["suspect"])
+
+
+def operational_ack_report(atom: dict[str, Any]) -> dict[str, Any]:
+    """Classify low-value Slack ack/receipt atoms for default recall filtering.
+
+    The rule is intentionally narrow: it targets operational receipt records
+    that say a broadcast was stored for later handling, not substantive
+    follow-up analysis that happens to mention a broadcast.
+    """
+    text = atom_search_text(atom)
+    lowered = text.lower()
+    reasons: list[str] = []
+    if any(pattern in lowered for pattern in OPERATIONAL_ACK_PATTERNS):
+        reasons.append("slack_broadcasts_jsonl_receipt")
+    if "broadcast" in lowered and any(marker in text for marker in ("受領", "蜿鈴", "女鬆", "ack")):
+        reasons.append("broadcast_receipt_phrase")
+    if "[Log_cdx]" in text and "broadcast" in lowered and "Codex" in text and "作業" in text:
+        reasons.append("codex_work_receipt")
+    return {
+        "is_operational_ack": bool(reasons),
+        "reasons": reasons,
+    }
+
+
+def is_operational_ack(atom: dict[str, Any]) -> bool:
+    return bool(operational_ack_report(atom)["is_operational_ack"])
+
+
+def apply_memory_layer(atom: dict[str, Any]) -> dict[str, Any]:
+    """Attach memory quality/layer metadata used by ingest and recall."""
+    report = operational_ack_report(atom)
+    if report["is_operational_ack"]:
+        atom["quality"] = "quarantine"
+        atom["memory_layer"] = "operational_ack"
+        atom["quality_reason"] = ",".join(report["reasons"])
+    return atom
 
 
 def append_quarantine(path: Path, atom: dict[str, Any], row: dict[str, Any], reason: str) -> None:

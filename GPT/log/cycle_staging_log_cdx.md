@@ -128,7 +128,44 @@ designed:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-001
+    files_changed:
+      - path: tools/atom_quality.py
+        change: modified
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: tools/slack_memory_ingest.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/atoms_fileformat.py
+        change: modified
+      - path: tools/backfill_operational_ack_atoms.py
+        change: created
+      - path: memory/directive_operational_ack_quarantine_20260531.md
+        change: created
+      - path: memory/atom_operational_ack_quarantine.jsonl
+        change: created
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/atoms/2026-05/*.md
+        change: modified
+    summary: "Slack broadcast 受領通知などを quality=quarantine / memory_layer=operational_ack として層分けし、通常 recall から既定除外する経路を追加。既存 39 atom を backfill し、監査用には --include-operational を残した。"
+    partial: false
+migrations:
+  - what: "既存 operational ack atom 39 件へ quality/memory_layer/quality_reason を backfill"
+    affected: "memory/atoms.jsonl、memory/atoms/index.jsonl、対象 per-file atom 39 件、memory/atom_operational_ack_quarantine.jsonl"
+verification:
+  - "python -m py_compile tools/atom_quality.py tools/memory_ingest.py tools/slack_memory_ingest.py tools/memory_recall.py tools/atoms_fileformat.py tools/backfill_operational_ack_atoms.py: pass"
+  - "python tools/backfill_operational_ack_atoms.py --dry-run: 1899 atoms 中 39 件が対象であることを確認"
+  - "python tools/backfill_operational_ack_atoms.py: 39 件を backfill"
+  - "python tools/memory_recall.py sr-1779200358-f431569123 --no-log --compact: No memory atoms matched."
+  - "python tools/memory_recall.py sr-1779200358-f431569123 --include-operational --no-log --compact: 対象 operational_ack atom を表示"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

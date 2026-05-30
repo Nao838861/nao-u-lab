@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_ingest
-from atom_quality import append_quarantine, is_mojibake_suspect
+from atom_quality import append_quarantine, apply_memory_layer, is_mojibake_suspect
 from atoms_fileformat import sync_per_file_atoms
 from slack_client import api_call, resolve_channel
 
@@ -123,6 +123,7 @@ def ingest_slack_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         atom["source"] = f"slack_api/{row.get('channel')}"
         atom["ingested_via"] = "slack_memory_ingest.py"
+        apply_memory_layer(atom)
         if is_mojibake_suspect(atom):
             append_quarantine(QUARANTINE_PATH, atom, row, "mojibake_guard")
             continue

@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_lifecycle
+from atom_quality import apply_memory_layer
 from atoms_fileformat import sync_per_file_atoms
 from memory_game_task_facets import build_game_task_entry_points
 
@@ -258,7 +259,7 @@ def row_to_atom(row: dict[str, Any]) -> dict[str, Any] | None:
         return None
     ts = str(row.get("ts", "0"))
     title = concrete_title(first_title(text), row, text)
-    return {
+    return apply_memory_layer({
         "id": stable_id(ts, text),
         "source": "slack_archive/shared-reads.jsonl",
         "source_ts": ts,
@@ -273,7 +274,7 @@ def row_to_atom(row: dict[str, Any]) -> dict[str, Any] | None:
         "score": score,
         "trigger": make_trigger(title, tags, kind),
         "excerpt": excerpt(text),
-    }
+    })
 
 
 def cutoff_ts(days: int) -> float:

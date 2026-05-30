@@ -27,6 +27,8 @@ ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
 ATOMS_DIR = MEMORY_DIR / "atoms"
 RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
 ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
+EXCLUDED_MEMORY_LAYERS = {"operational_ack"}
+EXCLUDED_QUALITIES = {"quarantine"}
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
@@ -102,6 +104,13 @@ def score_atom(atom: dict[str, Any], query_terms: list[str]) -> float:
     return score
 
 
+def is_default_excluded(atom: dict[str, Any]) -> bool:
+    return (
+        str(atom.get("memory_layer", "")) in EXCLUDED_MEMORY_LAYERS
+        or str(atom.get("quality", "")) in EXCLUDED_QUALITIES
+    )
+
+
 def exact_reference_matches(atoms: list[dict[str, Any]], query: str) -> list[tuple[float, dict[str, Any]]]:
     ref = query.strip()
     if not ref:
@@ -114,6 +123,11 @@ def exact_reference_matches(atoms: list[dict[str, Any]], query: str) -> list[tup
     return [(999.0, atom) for atom in matches]
 
 
+def looks_like_reference_query(query: str) -> bool:
+    ref = query.strip()
+    return bool(re.fullmatch(r"(?:sr|gr|local)-[A-Za-z0-9_.-]+", ref) or re.fullmatch(r"\d{10}(?:\.\d+)?", ref))
+
+
 def fold_scored(
     scored: list[tuple[float, dict[str, Any]]],
     atoms_by_id: dict[str, dict[str, Any]],
@@ -121,11 +135,15 @@ def fold_scored(
     return memory_lifecycle.fold_scored(scored, atoms_by_id)
 
 
-def search(query: str, limit: int) -> list[tuple[float, dict[str, Any]]]:
+def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
     atoms = load_atoms()
+    if not include_operational:
+        atoms = [atom for atom in atoms if not is_default_excluded(atom)]
     exact_matches = exact_reference_matches(atoms, query)
     if exact_matches:
         return exact_matches[:limit]
+    if looks_like_reference_query(query):
+        return []
 
     terms = tokenize(query)
     if not terms:
@@ -231,6 +249,11 @@ def main() -> None:
     parser.add_argument("--compact", action="store_true")
     parser.add_argument("--no-log", action="store_true", help="do not record recall usage")
     parser.add_argument("--tags", action="store_true", help="show tag counts and exit")
+    parser.add_argument(
+        "--include-operational",
+        action="store_true",
+        help="include quarantined operational ack atoms in recall results",
+    )
     args = parser.parse_args()
 
     atoms = load_atoms()
@@ -241,7 +264,7 @@ def main() -> None:
         return
 
     query = " ".join(args.query)
-    results = search(query, args.limit)
+    results = search(query, args.limit, include_operational=args.include_operational)
     if not results:
         print("No memory atoms matched.")
         return

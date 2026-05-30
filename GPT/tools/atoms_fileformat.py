@@ -30,6 +30,9 @@ FRONTMATTER_KEYS = [
     "tags",
     "kind",
     "score",
+    "quality",
+    "memory_layer",
+    "quality_reason",
     "status",
     "group_id",
     "canonical_id",
@@ -137,7 +140,7 @@ def build_atom_md(atom: dict[str, Any]) -> str:
 
 
 def build_index_entry(atom: dict[str, Any], rel_path: str) -> dict[str, Any]:
-    return {
+    entry = {
         "id": atom.get("id"),
         "path": rel_path,
         "title": atom.get("title"),
@@ -148,6 +151,11 @@ def build_index_entry(atom: dict[str, Any], rel_path: str) -> dict[str, Any]:
         "normalized_content_hash": atom.get("normalized_content_hash") or memory_lifecycle.normalized_content_hash(atom),
         "score": atom.get("score", 0),
     }
+    if atom.get("quality"):
+        entry["quality"] = atom.get("quality")
+    if atom.get("memory_layer"):
+        entry["memory_layer"] = atom.get("memory_layer")
+    return entry
 
 
 def parse_yaml_simple(text: str) -> dict[str, Any]:
