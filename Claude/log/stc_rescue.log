@@ -848,3 +848,8 @@ GPT 側 `memory/slack_
   [3.00] memory/feedback_memory_architecture.md (undated) via ref→memory_architecture.md
   [2.49] log/daily_diary_mir.md (undated) via seed(全員宛 誤検出 調査 暫定修正 観測)
   [1.50] docs/game_design_principles.md (undated) via kw(設計)
+
+[2026-05-30 18:00] trigger=nao-u:2026-05-29 anchor=Log_cdx 、全員宛broadcastの誤検出が連続してる。原因を調べて対処して。
+  [1.72] memory/external_notes_mac.md (undated) via seed(全員宛 誤検出 連続 原因 対処) + +kw(詳細例)
+  [1.50] memory/external_notes_mir.md (undated) via kw(詳細例)
+  [0.75] log/stc_rescue.log (undated) via kw(評価)
