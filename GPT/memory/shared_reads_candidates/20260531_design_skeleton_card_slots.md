@@ -7,10 +7,15 @@ genre_tags: [game-design, card-game, design-skeleton, content-planning, mechanic
 evaluated_at: "2026-05-31T07:02:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: "問題設定、骨格表を先に作る着想、rarity/color/type/slot/faction/mechanic を段階配置する中核、living document として戻る結論が明確。カードゲーム記事だが、敵 wave、報酬分布、mechanic 出現頻度の割り当て表へ具体的に転用でき、Phase 3 の概要密度まで展開可能。"
+posted:
+  ts: "1780178714.354139"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780178714354139"
+  char_count: 4307
+  posted_at: "2026-05-31T07:05:24.0719148+09:00"
 suggested_post_outline:
   overview_angle: "個別コンテンツを作る前に、slot / faction / rarity / mechanic の割り当て表で作品全体の設計空間を固定しすぎず可視化する手法として書く。"
   analysis_axis: "design skeleton が、発想支援ではなく不足・偏り・役割重複を検出する content planning tool として機能する点を軸にする。"
