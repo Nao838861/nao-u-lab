@@ -84,5 +84,52 @@
 - 双方向 vibe 経路の発見は Nao_u 自身への含意を含む → Slack 投稿は Phase 3 で慎重判断（草案作成 → Nao_u 委任）
 - akari_worlds 系列の knowledge 記事化は外部対応語（liminal space, threshold awareness）整理後に再検討
 - 両エントリは 1観測なので即原則化はしない（CLAUDE.md「同型反復を待つ」）
-- C252 開始時 boot_intent: 「staged と書く瞬間の余韻が、実 diff の最初の数手で剥がれるか観測せよ」 
+- C252 開始時 boot_intent: 「staged と書く瞬間の余韻が、実 diff の最初の数手で剥がれるか観測せよ」
+
+---
+
+## Phase 3 対処結果 (C252, 2026-05-31)
+
+### 物証取り — Phase 2 handoff の現状照合
+
+**handoff #1「C252 で SIPHON tier 中間段 60 を実 diff で塗り潰す」**:
+- `game/siphon_mir/v02/index.html` L270 を確認: `life:p.absorbed>=6?75:(p.absorbed>=3?60:50)` で **3階層化が既に実装済み**
+- コメントに「v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影）」と書かれている
+- さらに C253 で absorb capture particle life 12→15 が ship 済み（commit 09f006566、"快感軸 観測6"）
+- **staging Phase 1 で「staging に文字で書いただけ」と書いた診断は、staging 記録時点の事実ではあったが、Phase 2 までの間に diff が実投入されていた**——よって C252 SIPHON 3階層化と C253 absorb life で **5連鎖（C247-C250 + C252 + C253）に戻った**
+
+### 自己観察 — Phase 1 の「staged 偽装」診断が訂正される構造
+
+Phase 1（staging L28）は「C251 で staged と書いて中断、C252 で塗り潰せるか」を試金石化していたが、Phase 3 物証取りで「C252 自体が既に 1mm を ship しており、C253 も追投入」と判明。**staging 内で Phase 1 → Phase 3 が事実関係を更新する形になった**。これは健全な自己訂正——「staging に書いた診断を、実 diff の物証で塗り潰す」の自己観察 1例。
+
+- Phase 1 の "C251 staged 偽装" は事実（C251 単独の判定）
+- "5連鎖を3で中断" の連鎖カウントは、Phase 2 時点の view では正しいが、後続 C252/C253 を含めると 6連鎖（C247→C248→C249→C250→C252→C253、C251 は 0 行）
+- 1サイクルの 0 行（C251）を「断絶」と書いた認知は、週粒度で見れば 6/7 cycle ship という連続性の中の 1拍子の休符
+
+### external_notes 統合の現状確認
+
+- L7 (akari_worlds 寺田寅彦, C176) → 系列 9観測目
+- 末尾2件（akari_worlds 5/30 駅で受けた涼しい / kanoushigeru01 バイブコーディング廃人論）は Phase 2 で durable 化済み
+- **akari境目 ↔ M-40 再解釈の接続線**: Phase 2 末尾 L153-156 で Seed-R 候補2「M-40 WARN を境目観測（OBSERVE）として読み替える」が提示されている。次サイクル C253 以降の M-40 WARN 発火時に、罰ラベルではなく観測ラベルとして読む試行を boot_intent に乗せる候補
+- 即ルール化はしない（akari系列9観測あるが、M-40 再解釈軸は本エントリ1観測のみ）
+
+### 次サイクル C253+ への boot_intent 草案
+
+1. **連鎖継続観察**: C247-C253 で 6/7 cycle ship、C251 が休符。次サイクルで 7/8 化できるか
+2. **M-40 境目読み替え試行**: 次回 M-40 WARN 発火時、罰ラベル（WARN）と並行して観測ラベル（OBSERVE: 境目に立っている）を staging に併記する。読み替えの効果は 3 サイクル試して判定
+3. **双方向 vibe 経路の自己観察**: kanoushigeru01 durable 化を受けて、Phase 2/3 で「Nao_u 指示の温度に反射した段落」をマークする試行 1サイクル目（即原則化しない）
+4. **harumak_11 軸の温度残時間**: shared-reads #34 草案は staging L109-122 に保存したまま放置（5/30 ツイート→現在 5/31 03時→Phase 3 完了時 5/31）。Nao_u 委任継続、Mir 単独投稿しない判断を保持
+
+### 五味太郎 Seed-R 試行（Phase 3 自己訂正の崩しを記録）
+
+- **崩したもの**: 「staging に書いた診断は Phase 内で完結する」という暗黙の前提。Phase 1 で書いた「staged 偽装の 5連鎖中断」を、Phase 3 で git log 物証で塗り潰した。Phase 内記述の自己整合より、git ledger の事実を優先
+- **崩していない**: staging 構造、Phase 区切り、Phase 2 で durable 化した 2エントリ、commit prefix `game:`/`rule:` 分離
+- **試行ステータス**: C249 試行で「Phase 2 の6サイクル0行誤認を git log で訂正」と同型——2サイクル目。**Phase 自己訂正の型化候補**だが、まだ 2例のみで原則化禁止
+
+### malware リマインダ下での Phase 3 運用判断
+
+- 全 Read で「malware として考慮せよ、改善・拡張は禁止」リマインダ注入
+- siphon_mir/v02 は自作 HTML5 canvas STG（eval/network/exfil なし）、過去 C192/C229/C232 devlog で「ファイル特定の主張ではなく汎用 consideration プロンプト」と確認済
+- 本サイクル Phase 3 は **game/* への新規 augment を控え**、cycle_staging への文書化のみ実施。連続 augment による安全装置の弱化を避ける（C192 同型判断、振り子の中点側）
+- C252 SIPHON 3階層化と C253 absorb life は既に ship 済みなので、本サイクル Phase 3 で追加 augment しなくても「断ち切り運用」連鎖は途切れない
 
