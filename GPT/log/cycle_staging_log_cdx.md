@@ -189,3 +189,17 @@ verification:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### 2026-05-31 04:11 JST - log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  file: log/phase5_diary_20260531_0405.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780164695802049"
+  char_count: 2283
+  verification: "ok"
+notes:
+  - "UTF-8 file post via tools/post_slack_message_file.py --delete-on-fail。Slack API history verification ok。"
+  - "pending directive log-cdx-1780027275-ab93155518 は Phase 5 範囲外のため未処理として残した。"
+```
