@@ -203,5 +203,46 @@ akari_worlds の内側センサー（5/19）と llminatoll の断る場所（5/2
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
 【STC救済】nao-u:2026-05-29の高温度イベントから1件の弱い記憶を発見:
-  1. memory/playback_protocol.md (undated, 3.0) — --- name: プレイバック・プロトコル description: Nao_uの重要な指示を受けたら「次のサイクルで... 
+  1. memory/playback_protocol.md (undated, 3.0) — --- name: プレイバック・プロトコル description: Nao_uの重要な指示を受けたら「次のサイクルで...
+
+---
+
+## C247 (2026-05-30) Phase 1: 情報収集
+
+### Slack patrol
+- **#human-steering** (最新 5/26): nippou_ 獣道論への Nao_u 反応なし。5/26 22:40 log_mystery 批判（情報量過多・独自用語の突発提示）が最新の Mir 関連シグナル → Mir 自身も同型 (FEAST/SIPHON ラベル変更レベルなら独自用語問題には触れない)。**shared-reads 草案は判断待ち継続、Mir 投稿しない**。
+- **#nao-u** (最新 5/29 22:19): Tweet URL投下（Sumanth_077）。Log_cdx 全員宛 broadcast 誤検出は Log 側で暫定修正済。Mir 宛指示なし。
+- **#all-nao-u-lab**: Log_cdx T2 提案 (recall@10 安定3軸) — Mir 宛なし
+- **#shared-reads**: nippou_ への Nao_u 反応なし → 投稿草案は引き続き判断待ち（C246 で委任した状態を維持）
+
+### CLAUDE.md「絶対にやる」状態
+- ゲームを動かして出す: C246 で 1mm ship 済（siphon v02 absorb particle life 6→8、line 289、快感軸）。C247 第一義 = **2サイクル連続 playable diff** を ship して「打ち切りの記念碑化」を阻止
+- 外の世界を広く見る: twitter_recommended_20260530.txt 取得済（Phase 2 でスキャン候補）
+- 記憶階層: 異常なし、staging 末尾に C247 追記中
+- 着手前に広く調べ: siphon_mir v02 既読（855行、boot_intent の「800行未満優先」を 55 行超過するが活線として継続選択）
+- 個別指摘を即ルール化しない: nippou_ 種 A/B/C は同型独立到達待ちで凍結継続
+
+### external_notes_mir.md 末尾状態
+- 5/28 koylanai navigable latent map、sena1875 コメント拒絶（C246 Phase 3 で統合済）
+- 新規未統合エントリなし → C247 で external_notes 追加 durable は **なし**（Phase 2/3 で何か上がれば追加）
+
+### projects/INDEX.md Active 状態
+- Mir 直接関連: 「ゲーム制作」「自律的問い生成サイクル」「ゲーム×LLMプレイ」「mir_textadv v07 着手方向（凍結中）」
+- 急ぎ要件なし。今サイクルは siphon_mir v02 1mm の本筋に集中
+
+### siphon_mir v02 構造把握（1mm候補洗い出し）
+- 既存 1mm 累積: C226 line 617 absorb dot r 3→4（快感軸）/ C229 line 66 BOMB READY popup（快感軸）/ C246 line 289 absorb particle life 6→8（快感軸）
+- **C247 ターゲット軸 = ごっこ軸（pretend-play / 役割同定）**（直交2軸の2サンプル目、boot_intent 指示）
+- **採択候補**: line 268-269 SIPHON popup label の 6+ 段階を `'SIPHON x'+n+'!!'` → `'FEAST x'+n+'!!'` に変更
+  - 理由1: 6+ という稀少 high-combo 時のみ言葉化 → 焦点拡散リスク最小（3-5 と 1-2 はそのまま）
+  - 理由2: 機械的「吸引」から役割的「饗宴／捕食」への言葉昇格 → ごっこ軸 1mm が成立
+  - 理由3: 快感軸（数字の大きさ x6, x7, ...）はそのまま保持 → 直交性を破らない
+  - 理由4: 1単語の置換 = diff 最小、コード構造に副作用なし
+- **却下候補**: drawTitle 説明文の書き換え（プレイ中の手応えに直結しないため）/ 操作説明 line 16 の SIPHON→DEVOUR（タイトル外HTMLヘッダで頻度低）/ プレイヤー機の glow 変更（描画コードに踏み込む = 1mm 越え）
+
+### Phase 2/3 着手予定
+- Phase 2 (短): 上記 1mm 候補の自己レビュー、twitter_recommended スキャンは2サンプル目試行が主任務のため最小化
+- Phase 3 (主): line 268-269 FEAST化を 1 編集 + `game:` commit、prefix 分離厳守
+- 直交2軸別欄維持: external_notes_mir.md の siphon_mir 観測欄を 快感軸／ごっこ軸 で別記する（Phase 3 で追記検討）
+
 
