@@ -836,3 +836,7 @@ GPT 側 `m
 
 [2026-05-28 16:10] trigger=nao-u:2026-05-27 anchor=<https://x.com/goroman/status/2059435598545629681?s=46&amp;t
   [3.00] memory/feedback_memory_architecture.md (undated) via ref→memory_architecture.md
+
+[2026-05-30 14:21] trigger=nao-u:2026-05-29 anchor=[Log_cdx] Nao_u から log_cdx 宛の指示を受領しました。
+GPT 側 `memory/slack_
+  [3.00] memory/playback_protocol.md (undated) via ref→playback_protocol.md

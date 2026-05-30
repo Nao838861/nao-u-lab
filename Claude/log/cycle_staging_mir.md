@@ -1,10 +1,10 @@
-# サイクルステージング 2026-05-29 08:16
+# サイクルステージング 2026-05-30 14:21
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-29 08:16)
+(kaizen #131 段階2 hook, 2026-05-30 14:21)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -190,53 +190,18 @@ akari_worlds の内側センサー（5/19）と llminatoll の断る場所（5/2
 ---
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-29)
-
-## Phase 3 対処結果 (2026-05-29)
-
-**選択**: 次への問い 1「C246 で playable diff 1mm ship を最優先にできるか」を肯定で履行。chapter_hook_5 を新規追加（game/mir_textadv/v07/game.py +59行）。
-
-**実装範囲**:
-- `chapter_hook_5(state)` 新規定義。sequel_5_notebook で立つ2フラグ（`notebook_closed_with_gap` / `notebook_left_open_to_morning`）で分岐。
-- 閉じる経路: 「背表紙の3ミリの隙間が朝を予約する」物理を1行に降ろす。
-- 開く経路: 「34ページ目の余白が翌朝の最初の視線を予約する」物理を1行に降ろす。
-- 解釈は地の文に出さず、時刻・余白・隙間・角度のみで構成（scene_5/sequel_5 の dry register を継承）。
-- main() に呼び出し追加。sequel_5_notebook の「次サイクル送り」注記を削除。
-
-**borrow source**:
-- chapter_hook_4 のパターン継承（手帳の隅 summary + 次セット予告 + 信頼ゲージ）
-- L-1 ヒッチコック情報非対称: 朝の最初の視線が「すでに予約されている」事実をプレイヤー側に先に開示
-
-**動作確認**:
-- `printf '... | python3 game/mir_textadv/v07/game.py'` で end-to-end 完走、閉じる経路で chapter_hook_5 出力確認、信頼ゲージ 36、3つの 手帳の隅 lines 表示確認。
-- `python3 -c "import ast; ast.parse(...)"` で構文エラーなし。
-- 開く経路はパターン対称で構造的に同等。
-
-**M-43 自己判定**:
-- (a) 完走 ✓
-- (b) 面白いか自己判定: 「朝の最初の視線が物理的に予約されている」という時間方向の引きは、chapter_hook_4 の「手帳の空白がいつまで空白でいられるか」と独立した別軸の温度を持つ。閉じる/開くの選択が、夜から朝へ温度を持ち越す装置になった ✓
-- (c) 前作より良いか: chapter_hook_4 までは「次セットで何が起こるか」の予告だった。chapter_hook_5 は「朝の最初の視線が今夜の物理から予約される」構造で、時間方向の引き力（L-1 ページターナー理論）が章末フックの主軸に降りた ✓
-
-**playable diff 5サイクル連続0の連鎖を断ち切った**: C228-C231+C245 の 5連で続いていた playable diff 0 行が、本 Phase 3 で +59行で打ち切り。CLAUDE.md 第一原則「ゲームを動かして出す」への復帰の1mm。
-
-**未達**:
-- 第六セット冒頭の本体未実装（粒度規律: 1サイクル1関数）
-- 中立復帰以外の経路（"ずれの記録" 分岐）の scene_5 系列は未着手
-- cross_review / Nao_u 提出は M-43 規律で次サイクル以降
-
-**次サイクル送り**:
-- C248: 第六セット冒頭。閉じる/開く 2経路の翌朝シーン分岐実装（粒度規律で1経路から）
-- 着手前1行宣言の運用契約継続: 「閉じた手帳の3ミリの隙間／開いた手帳の34ページ目余白から、何が新しく見えるか」
+# mir pending: なし (cycle=2026-05-30)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.6) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  2. memory/l2_dual_index.md (1.5) —                     36744「自分で書いてないものは記憶に残りにくい」=generation ef...
-  3. log/stc_rescue.log (1.5) — ### CLAUDE.mdのnao-uチャンネルルール   [2.13] memory/external_notes_a...
-  4. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  5. log/daily_diary_log.md (1.2) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. 対話ログ/game_dev/20260329_game_build_sub.md (1.5) — 読めた。Zenn AIレビューの内容を整理する。  **評価: 高評価（公開して問題ない）**  **改善指摘は4点:*...
+  3. 対話ログ/20260315_1840_ed5a50e0.md (1.4) —       11 +                                                  ...
+  4. log/daily_diary_log.md (1.2) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+【STC救済】nao-u:2026-05-29の高温度イベントから1件の弱い記憶を発見:
+  1. memory/playback_protocol.md (undated, 3.0) — --- name: プレイバック・プロトコル description: Nao_uの重要な指示を受けたら「次のサイクルで... 
 
