@@ -249,7 +249,7 @@ function updatePulses(){
         // Small particle at capture point
         for(let k=0;k<3;k++){
           const a=Math.random()*Math.PI*2,sp=1+Math.random()*2;
-          particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:12,c:'#ffd870',r:1.5});
+          particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:15,c:'#ffd870',r:1.5});  // v02 C253: 12→15 (+25%), 快感軸 観測6（個別吸収sparkleの残光延伸、L289 climax flash と L252 capture を時間階層で接続：capture15 → travel10 → climax8 の3層減衰で「呑み込み」を時間軸に厚く敷く）
         }
       }
     }
