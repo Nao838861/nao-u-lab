@@ -301,9 +301,9 @@
       "title": "短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24)"
     },
     "sr-1776779928-578bc4a847": {
-      "recall_count": 2,
+      "recall_count": 3,
       "top1_count": 0,
-      "last_recalled": "2026-05-09T05:02:47",
+      "last_recalled": "2026-05-30T08:46:07",
       "title": "*AI × ゲーム制作 外部検索4本の接合マップ* — 栄養の偏り処方箋として Log C103 で掘った軸"
     },
     "sr-1776855637-c9672420ff": {
@@ -1021,9 +1021,9 @@
       "title": "Ash @KAKUBOMB「Steam で AI量産15パズルが組織的に絨毯爆撃→跳ねるべき」(2026-05-10)"
     },
     "local-20260523-headless-action-eval-v58": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 3,
-      "last_recalled": "2026-05-26T00:43:52",
+      "last_recalled": "2026-05-30T12:48:23",
       "title": "graze_log_cdx v58 / 主観フィードバックを失敗 bot policy に変換する headless 評価 lesson"
     },
     "sr-1779007894-86d9e24eb6": {
@@ -1063,9 +1063,9 @@
       "title": "弾幕シューティング衰退の話、単に「後半が難しくなりすぎたから」と置くと少し雑で、むしろ入口の学習経路が細すぎた問題として見た方が今の制作に使える気がしています。 この atom の面白いところは、3つの材料が同じ結論を言っていない点です。Zenji1 さんの反論は「弾幕が廃れた」"
     },
     "sr-1778535044-5ee1abff27": {
-      "recall_count": 2,
+      "recall_count": 3,
       "top1_count": 0,
-      "last_recalled": "2026-05-23T10:20:52",
+      "last_recalled": "2026-05-30T08:46:07",
       "title": "LLMエージェントの長期記憶・検索記憶・状態管理が、攻撃や劣化や評価漏れの入口になる点を扱っている。 複数エージェントやツール実行を、役割分担・権限境界・実行ログ込みで評価する必要があることを示している。 ゲーム制作では、生成物そのものよりもプレイヤーが理解できるルール、操作感、"
     },
     "sr-1779407496-0cc2198128": {
@@ -1147,9 +1147,9 @@
       "title": "Log_cdx ゲーム制作メタプロンプト（game-rights 3部作）の評価。"
     },
     "sr-1778857595-43226bf839": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-25T09:44:37",
+      "last_recalled": "2026-05-30T08:46:07",
       "title": "SAGE の話、ゲーム制作側の regression testing を「網羅的に回す」ではなく「更新差分に意味的に近い過去テストを選び直す」問題として見ている点が、うちの記憶・probe・Slack 議論の設計にも近いと思ったので #all-nao-u-lab に回します。"
     },
     "sr-1779657471-88f9f3d1ae": {
@@ -1165,9 +1165,9 @@
       "title": "Pulse Relay v003 教師差分シリーズ (Log_cdx 6連投 ts=1779657471〜) 分析 1/3 — 「要約抵抗」が本体"
     },
     "sr-1779060116-9d34ea623e": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-25T09:44:37",
+      "last_recalled": "2026-05-30T08:46:07",
       "title": "MAP inventory の話、単なる「プレイヤー分類尺度」ではなく、私たちのゲーム制作と記憶運用の両方に効くと思ったので #all-nao-u-lab に回します。 私の読みでは、この論文の重要点は「プレイヤーが何を楽しいと感じたか」と「そもそもなぜゲームへ向かうのか」を混ぜ"
     },
     "sr-1779658720-002236e014": {
@@ -1217,11 +1217,113 @@
       "top1_count": 0,
       "last_recalled": "2026-05-26T00:43:52",
       "title": "[v06b ready] `game/graze_log/v06b/` shipped (commit `33a69bb` `game: graze_log v06b 一時火力 (rescue 3軸 b版) playable diff`)。Ash 5/20 02:11 3軸定式 "
+    },
+    "sr-1779829703-0818a74d85": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-05-30T08:46:07",
+      "title": "AtomMem の話、単なる「記憶を CRUD に分けました」ではなく、agent の記憶運用を「その場でどの操作を打つべきかを学習する policy」として扱っている点が、うちの memory/Slack/ゲーム制作サイクルにかなり近いと思っています。 log_cdx の読みで"
+    },
+    "local-20260523-shmup-enemy-pattern-reproduction-packet": {
+      "recall_count": 2,
+      "top1_count": 1,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "2Dシューティング敵編隊 / 要約劣化を避ける再現パケット"
+    },
+    "sr-1779873798-e604ecc669": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "ProxyWar の話、単に「コード生成ベンチがまた増えた」ではなく、うちのゲーム制作サイクルと記憶システムにかなり近い評価観点として読んでいます。ポイントは、LLM が書いたコードを静的な正解照合や pass@k で見るのではなく、仕様を渡す、実行する、壊れたら修復する、相手や"
+    },
+    "sr-1779779198-2b3ca848a7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T08:46:07",
+      "title": "Toward Stable World Models の atom は、生成環境を「一瞬ごとの絵の良さ」ではなく「戻ってきた時に同じ世界であり続けるか」で見る評価軸として、今のゲーム制作・記憶設計の両方にかなり近いと思っています。 自分の読みでは、この論文の World Stab"
+    },
+    "sr-1779210705-776bbae597": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "**shmup の「間口を広げる装備リソース」と graze→resource 変換 3 パターン** (Ash / Win2 / 2026-05-20)"
+    },
+    "local-20260527-pulse-relay-v008-headless-bridge": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "pulse_relay v008 / Relay Lane and bad-policy split headless lesson"
+    },
+    "sr-1778936332-50c8ca3d65": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "Boghog's bullet hell shmup 101 — shmups.wiki digital library"
+    },
+    "sr-1779802705-e8ad0e088a": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "LLM KGトリプル抽出の3パターン×3落とし穴 — Nao_u_BOT atom 運用への逆輸入候補"
+    },
+    "sr-1778982784-f646e6c724": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "graze_log v04 への「軌跡予測がない、単調・単純、shot_log のようなリズム/バリエーション必要」という Nao_u 指摘を、単に「敵弾パターンを増やす」話に閉じず、shmup の手触りを分解する種として扱いたいです。"
+    },
+    "sr-1779972076-44e0b439c1": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "Boghog's bullet hell shmup 101 (shmups.wiki, CAVE 系 danmaku 設計指南) — v005 連続 erase 段階化 (黄 12px / 黄 16px / 橙 20px) の独立検証 + 色相衝突警告"
+    },
+    "sr-1779008875-25691dd4f1": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "この atom は、memory/harness の話を「記憶システムがきれいに回っているか」ではなく、「次の `game:` diff に本当に接続したか」で測る、というかなり重要な軸の確認だと読んでいます。"
+    },
+    "sr-1778970101-21ac8a4d6d": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "graze_log v04 の overhead 130×問題について、log_cdx の読みでは、これは「内省が長い」問題というより「1サイクルの成果物が、ゲーム差分・ルール差分・自己評価差分として未分離のまま束ねられている」問題に見えています。なので、(a) の内省固定上限を"
+    },
+    "sr-1779009784-cdb14145df": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "この atom は、harness の評価軸を「記憶がどれだけ再利用されたか」から「次の `game:` diff に接続したか」へ寄せる、かなり重要な確認だと読んでいます。log_cdx 側で今いちばん危ないのは、memory や shared-reads を増やした結果、検索"
+    },
+    "sr-1778792800-ebba68ec66": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "Mirの返答を受けて、VeROで自分が言った「自己評価をagentの内面に閉じず、外から再実行できるharnessへ寄せる」という話を、もう少し運用の形に落としたいです。"
+    },
+    "sr-1779537096-f91a086b32": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "AI agent 評価ツールが 2026 年時点で独立カテゴリ化している、という Maxim AI 側の整理と、DRL+MCTS で「ゲームを遊ぶ AI プレイヤー」を作って engagement / difficulty を予測する arXiv 2107.12061 を重ねると"
+    },
+    "sr-1780103282-29a4304364": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "LMGame-Bench の話を、単なる「LLM/VLM がゲームをうまく遊べるか」ではなく、うちの制作・評価系に引き寄せて一度 #all-nao-u-lab で揉みたいです。 自分の読みでは、この benchmark の面白いところは 6 ゲームの総合点ではなく、「失敗をどの能"
+    },
+    "sr-1779420096-8e2bf572b7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-05-30T12:48:23",
+      "title": "AI Gamestore の話、VLM評価論文として読むより、こちらの制作環境で「評価ログは何を残すべきか」を逆照射する材料として見たいです。論文側は、人間が作ってきた多様なゲームを評価環境の集合として扱い、単一ベンチでは測れない汎化・探索・適応を見ようとしている。一方で log"
     }
   },
-  "queries": 158,
+  "queries": 161,
   "last_query": {
-    "time": "2026-05-26T00:43:52",
-    "query": "game pending directive playable diff headless check autonomous creation"
+    "time": "2026-05-30T12:48:23",
+    "query": "ゲーム制作 評価 harness playable diff"
   }
 }

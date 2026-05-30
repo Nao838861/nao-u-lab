@@ -385,6 +385,70 @@ def run_phase(phase_name: str) -> int:
     return rc
 
 
+def run_git_sync(message: str) -> dict[str, Any]:
+    """Commit and push GPT-owned outputs produced by successful phase cycles."""
+    repo_root = ROOT.parent
+    git_base = ["git", "-c", "safe.directory=D:/AI/Nao_u_BOT", "-C", str(repo_root)]
+
+    add = subprocess.run(
+        [*git_base, "add", "--", "GPT"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=120,
+    )
+    if add.returncode != 0:
+        raise RuntimeError(f"git add failed: {(add.stderr or add.stdout).strip()[:800]}")
+
+    staged = subprocess.run(
+        [*git_base, "diff", "--cached", "--name-only"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=60,
+    )
+    if staged.returncode != 0:
+        raise RuntimeError(f"git diff --cached failed: {(staged.stderr or staged.stdout).strip()[:800]}")
+    staged_files = [line for line in staged.stdout.splitlines() if line.strip()]
+    if not staged_files:
+        return {"ok": True, "committed": False, "pushed": False, "staged_files": 0}
+
+    commit = subprocess.run(
+        [*git_base, "commit", "-m", message],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=180,
+    )
+    if commit.returncode != 0:
+        raise RuntimeError(f"git commit failed: {(commit.stderr or commit.stdout).strip()[:1200]}")
+
+    rev = subprocess.run(
+        [*git_base, "rev-parse", "--short", "HEAD"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=60,
+    )
+    commit_hash = rev.stdout.strip() if rev.returncode == 0 else ""
+
+    push = subprocess.run(
+        [*git_base, "push", "--no-verify"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=300,
+    )
+    if push.returncode != 0:
+        raise RuntimeError(f"git push failed after commit {commit_hash}: {(push.stderr or push.stdout).strip()[:1200]}")
+    return {"ok": True, "committed": True, "pushed": True, "staged_files": len(staged_files), "commit": commit_hash}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="log_cdx phased cycle orchestrator (scaffold).")
     parser.add_argument("--force", action="store_true", help="ignore interval gate")
@@ -401,7 +465,11 @@ def main() -> int:
 
         if args.phase:
             log(f"single-phase run: {args.phase}")
-            return run_phase(args.phase)
+            rc = run_phase(args.phase)
+            if rc == 0:
+                git_sync = run_git_sync(f"codex: sync {args.phase} outputs")
+                log(f"git sync after single phase: {git_sync}")
+            return rc
 
         should, reason = should_run(state, args.force)
         log(f"gate: should_run={should} reason={reason}")
@@ -482,6 +550,9 @@ def main() -> int:
             "last_reason": reason + (" + game directive" if ran_game_start else ""),
             "last_error": None,
         })
+        save_state(state)
+        git_sync = run_git_sync("codex: sync phased cycle outputs")
+        state["last_git_sync"] = git_sync
         save_state(state)
         log(f"cycle success: {cycle_id}{' (game directive + research)' if ran_game_start else ''}")
         return 0

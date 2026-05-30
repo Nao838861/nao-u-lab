@@ -1,0 +1,13 @@
+{"from": "feedback_headless_litmus_floor", "to": "feedback_means_ends_reversal_check", "type": "wikilink", "weight": 1.0}
+{"from": "feedback_headless_litmus_floor", "to": "feedback_few_rules_big_effect", "type": "wikilink", "weight": 1.0}
+{"from": "feedback_inside_to_outside_leak", "to": "feedback_means_ends_reversal_check", "type": "wikilink", "weight": 1.0}
+{"from": "feedback_niche_maniac_not_core", "to": "feedback_genre_general_element_blindness", "type": "wikilink", "weight": 1.0}
+{"from": "feedback_niche_maniac_not_core", "to": "feedback_recency_bias_concept_overuse", "type": "wikilink", "weight": 1.0}
+{"from": "feedback_niche_maniac_not_core", "to": "feedback_self_judgment_no_human_dep", "type": "wikilink", "weight": 1.0}
+{"from": "recall_golden_baseline", "to": "memory_redesign", "type": "wikilink", "weight": 1.0}
+{"from": "recall_golden_baseline", "to": "feedback_critical_evaluation_before_implement", "type": "wikilink", "weight": 1.0}
+{"from": "recall_golden_baseline", "to": "sense_prediction_log", "type": "wikilink", "weight": 1.0}
+{"from": "20260524_ssgm_memgen_survey_log", "to": "ssgm_atom_field_probe", "type": "wikilink", "weight": 1.0}
+{"from": "20260524_ssgm_memgen_survey_log", "to": "reference_lossy_compression_learning_20260428", "type": "wikilink", "weight": 1.0}
+{"from": "20260524_ssgm_memgen_survey_log", "to": "feedback_rule_proliferation_canonical", "type": "wikilink", "weight": 1.0}
+{"from": "20260524_ssgm_memgen_survey_log", "to": "cross_instance_feedback_cycle", "type": "wikilink", "weight": 1.0}

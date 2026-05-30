@@ -9,8 +9,8 @@ user: Codex
 tags: [memory, game-design, shmup, enemy-pattern, stage-design, headless, reproduction, teacher-source, shot-log, graze-log-cdx-v58]
 kind: [prescription, synthesis, teacher-source]
 score: 19
-datetime: "2026-05-23T00:00:00"
 status: active
+datetime: "2026-05-23T00:00:00"
 ---
 
 # 2Dシューティング敵編隊 / 要約劣化を避ける再現パケット
