@@ -295,3 +295,32 @@ Phase 4 終了時に以下 5 つすべてが成立していれば完了:
 3. **Phase 3 で予告した内容の物理化**: #all-nao-u-lab ts=1780173815 投稿で「Pearson 前提 3/3 ブロッカー解除条件」を C273 Phase 1 §0 で gate 化すると Log_cdx に宣言した直後、本 Phase 4 で σ_fun > 0 proxy 解消を実装することで「言ったことを次フェーズで物理化」の連続性を担保。次サイクル C273 Phase 1 §0 gate 判定の発火条件 (実機 fun_score 取得経路 3 案検討) のうち (c) 実機ヘッドレス v003 経路を先行検証することになる = C273 gate 判定の作業量が前倒しで削減。
 4. **30 分粒度で「進んだ」と言える完遂条件 5 項目すべて観測可能**: 上記 §完遂の定義 1-5 はすべて bash 実行確認 + git log 確認で検証可能、Phase 4 終了時の状態が観測可能で再現性確保。
 5. **game commit 0 件で着地するリスクの解消**: 本サイクル Phase 3 で rule commit 3 件 = `feedback_means_ends_reversal_check.md` 警告対象。Phase 4 で game commit 1 件を出すことで、本サイクル全体の Generator/Evaluator 比率を Generator 側に倒し、CLAUDE.md「絶対にやる #1」順守と整合。
+
+## Phase 4: 大作業着地 (2026-05-31 → Log 実行)
+
+### 完遂状況
+
+| 完遂定義 | 状態 | 観測結果 |
+|---|---|---|
+| 1) agent_difficulty_proxy.js に fun_proxy 1 指標追加 | ✅ | `castlock_activation_rate = castCount ÷ endFrame` を `runOne()` 末尾に追加。trial JSON + median 集計値に出現 |
+| 2) ヘッドレス実行で fun_proxy 列の数値出力 | ✅ | `node agent_difficulty_proxy.js` → `median_castlock_activation_rate: 0.005758`、各 trial に `castlock_activation_rate` フィールド出力 |
+| 3) proxy_vs_judgment_labeled.csv に fun_proxy 列 + variance > 0 | ✅ | `fun_proxy_castlock_rate` 列追加 (8 番目)、std=**0.000251** (n=900)、`fun_proxy_std_gt_zero: true` |
+| 4) PEARSON_PROGRESS.md 前提 3/3 を ⏳ → △ (proxy 暫定) に更新 | ✅ | 前提テーブル更新 + C273 Phase 4 着地物節新設 + Goodhart リスク・退路節新設 + 前提 3/3' (実機判定経路) を分離記載 |
+| 5) `game:` prefix で 1 commit | ⏸ | Phase 5 で日記とまとめて push 予定 (staging 指示「commit はしない（git push は Phase 5）」順守) |
+
+### 変更ファイル一覧 (本サイクル Phase 4)
+
+| ファイル | 種別 | 概要 |
+|---|---|---|
+| `game/log_autonomous_game/v003/agent_difficulty_proxy.js` | M | `runOne()` 末尾に `castlock_activation_rate` 計算追加、`median_castlock_activation_rate` を report に追加、limits に fun_proxy Goodhart リスク 1 行追加 |
+| `game/log_autonomous_game/v003/build_proxy_csv.js` | M | 全 3 モード (single / multiseed / labeled) で CSV ヘッダーに `fun_proxy_castlock_rate` 追加。labeled モードの std 計算に fun_proxy 含め、variance_check に AND 条件追加 |
+| `game/log_autonomous_game/v003/PEARSON_PROGRESS.md` | M | 前提テーブル更新 (3/3 △ proxy 暫定 + 3/3' ⏳ 実機判定経路を分離)。C273 Phase 4 着地物節新設 (fun_proxy 設計 / Goodhart リスクと退路 / 次サイクル候補 4 件) |
+| `game/log_autonomous_game/v003/proxy_vs_judgment_labeled.csv` | M | 900 行再生成 (header に `fun_proxy_castlock_rate` 8 番目に追加、各行に値) |
+| `game/log_autonomous_game/v003/measurements_labeled.jsonl` | M | 900 行再生成 (各行 JSON に `castlock_activation_rate` フィールド追加) |
+
+### Phase 5 への引き継ぎ
+- commit prefix: `game:` (rule 系統と分離、CLAUDE.md 厳守事項順守)
+- commit メッセージ案: `game: C273 Phase 4 — log_autonomous_game v003 fun_proxy 1 指標追加 (castlock_activation_rate) で σ_fun > 0 暫定解消`
+- push 対象: 上記 5 ファイル
+- 日記タイトル候補: 「C273 — Pearson 前提 3/3 を proxy 暫定で解消、実機判定経路 (3/3') を次サイクル課題に分離」
+- 次サイクル C274 Phase 1 §0 gate 判定材料: 前提 3/3' (実機判定経路) 着手可能性 = capture_frames.js 視覚判定 R1 経路 / Nao_u 評価依頼 R1 経路 / Pulse Relay R1 経路 のいずれか選定
