@@ -103,6 +103,57 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+### 2026-05-31 03:28 JST - log_cdx Phase 4b
+
+```yaml
+designed:
+  - issue_id: ISS-4A-001
+    problem_restatement: "既存の Tag Entry Points は `identity` / `evaluation` / `operation` / `game-design` のような巨大タグを上位入口にしているため、ゲーム制作中に欲しい「手法」「評価軸」「制作局面」「ジャンル上の問題」へ短時間で降りにくい。atom の保存自体は壊れていないが、入口の粒度が制作時の検索行動と合っていない。"
+    alternatives:
+      - name: "案A: 汎用タグの抑制表示"
+        sketch: "MEMORY.md の Tag Entry Points 生成時に、件数が過大な汎用タグを上位から除外または下位へ移す。既存 tag schema と atom は変更せず、表示だけを調整する。"
+        pros:
+          - "移行コストが低く、既存 atom を触らずに入口のノイズを減らせる。"
+          - "失敗しても表示順位を戻すだけで復旧できる。"
+          - "Phase 4c の実装範囲が小さい。"
+        cons:
+          - "具体入口が自動で増えるわけではなく、候補 tag が薄い場合は空白が残る。"
+          - "汎用タグにも有用な横断検索価値があるため、完全除外すると別の探索を損なう。"
+          - "なぜそのタグを抑制したかの説明責任を別に持つ必要がある。"
+        migration_cost: low
+      - name: "案B: game-task facet index の派生生成"
+        sketch: "既存 tags/content/id を入力にして、制作時の入口だけを `game-task facets` として別枠生成する。例: `enemy-pattern`, `px-evaluation`, `impact-feel`, `ui-agent`, `headless-eval`, `memory-routing`。MEMORY.md には汎用タグとは別の Game Task Entry Points を出す。"
+        pros:
+          - "atom 本体のタグを大規模変更せず、制作中の検索行動に合わせた入口を追加できる。"
+          - "汎用タグは横断用途として残しつつ、具体入口を同じページで見せられる。"
+          - "facet 定義を小さく始められ、誤分類しても派生 index の修正だけで済む。"
+        cons:
+          - "facet 名と抽出規則を維持する必要があり、放置すると別の索引負債になる。"
+          - "初期規則が少ない間は coverage が限定される。"
+          - "content keyword ベースに寄せすぎると表記揺れに弱い。"
+        migration_cost: medium
+      - name: "案C: atom タグ体系の全面再分類"
+        sketch: "既存 atom の tags を、汎用タグと具体タグに分けて再付与する。タグ正規化、旧タグの retire、per-file frontmatter 更新まで含める。"
+        pros:
+          - "長期的には tag schema がきれいになり、検索・集計・表示の一貫性が高い。"
+          - "汎用タグ過集中の根本原因に踏み込める。"
+          - "per-file atoms 移行後の Obsidian 的な利用にも合う。"
+        cons:
+          - "1896 atom への影響が大きく、誤分類や履歴汚染のリスクが高い。"
+          - "Phase 4c の小さな導入範囲を超えやすい。"
+          - "現状の recall script や既存運用への副作用検証が重い。"
+        migration_cost: high
+    recommended: "案B: game-task facet index の派生生成"
+    recommended_reason: "案Aは即効性があるが具体入口を増やさない。案Cは根本対応だが、現時点の issue は保存形式ではなく入口粒度なので過剰。案Bは既存 atom を壊さず、汎用タグの価値を残したまま制作時の入口を追加でき、失敗時も派生 index と MEMORY.md 表示だけを戻せばよい。初期 facet は少数に絞れば移行手間も制御できる。"
+    decision: introduce
+    decision_reason: "Phase 4a の blocker は実データ破損ではなく recall 入口の実用性低下であり、小さな派生 index を導入するのが現状からの距離と失敗時コストのバランスがよい。次サイクルで具体 facet を 6-10 個程度に限定し、既存 Tag Entry Points と並列表示する形なら、既存運用を壊さず検証できる。"
+    outline_for_4c:
+      - "Game Task Entry Points の初期 facet 名を 6-10 個に限定して定義する。候補: enemy-pattern, px-evaluation, impact-feel, ui-agent, headless-eval, memory-routing, game-rights-feedback。"
+      - "既存 atom の tags/content/title 相当から facet 候補を派生する lightweight な規則を作る。atom 本体の tags は書き換えない。"
+      - "MEMORY.md 更新時に、既存 Tag Entry Points とは別枠で Game Task Entry Points を出す。汎用タグの表示は残すが、制作入口としては新枠を優先する。"
+      - "導入後の smoke check として、Phase 4a が挙げた `敵出現パターン` / `PX 評価` / `UI agent` / `impact feel` の 4 クエリで入口 atom が見えるか確認する。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
