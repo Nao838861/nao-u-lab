@@ -41,6 +41,14 @@ GPT 側の成果物をまとめて同期する時は、必要に応じて次を�
 powershell -ExecutionPolicy Bypass -File tools\git_sync_after_work.ps1 -Message "codex: <作業内容>"
 ```
 
+## Codex 承認 prefix 運用
+
+Windows sandbox で `windows sandbox: spawn setup refresh` が出た場合、それは対象コマンドの危険性ではなく sandbox 起動準備の失敗として扱う。
+
+再実行が必要な時は、長い PowerShell exact prefix を保存候補にしない。`Select-String` / `Get-Content` / `Get-ChildItem` / `rg` / `git status` / `git diff` のような短い `prefix_rule` を明示し、1 本ずつ昇格要求する。複数の読み取りを同時に昇格要求して、ほぼ一字一句の長い prefix を `p` させない。
+
+破壊的操作 (`git reset`, `git clean`, 削除、上書き移動など) には広い prefix_rule を付けない。対象を確認した上で個別に扱う。
+
 ## Slack 経由の log_cdx 宛指示
 
 定時サイクルは、Slack の可視チャンネルから Nao_u (`U0ALSUK8P9B`) が `log_cdx` 宛に書いた投稿を検出し、`D:\AI\Nao_u_BOT\GPT\memory\slack_directives.jsonl` に保存する。
