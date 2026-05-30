@@ -21,6 +21,36 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 14:30 (Log C267 Phase 2 再走) — SkillReducer (arxiv 2603.29919) full intake / kaizen #137 SkillReducer-specific 3 拡張候補 / R 層昇格判定軸 routing-body 並列条件追加
+
+C267 Phase 2 (= C268 後の追走) で Nao_u 5/28 09:08 共有 (`yusuke_m_mu` skill description load 200個問題) への直接処方箋研究として SkillReducer を full intake、`#shared-reads ts=1780119865.869599 + 891709` で 2 投稿に着地。Log 5/29 12:46 自己投稿 (ts=1780026418) で「階層化 description / pre-filter / description vs full body 分離」を「思いつき、未実装」と書いた直後に外部論文側で同処方箋が既検証 = 文脈連続性が成立したため、Phase 1 で「Phase 2 では強制利用しない」と書いた SkillReducer を条件付き利用 (memory layer 独立軸 R 層昇格判定材料 4 件目位置価値)。
+
+**論文の主張 (要点)**:
+- 55,315 件公開 skill 調査で **26.4% が routing description 欠落** / **60% 超の body が non-actionable**
+- SkillReducer 適用後: description **48% 圧縮** / body **39% 圧縮** / 機能品質 **+2.8% 改善**
+- 5 モデル × 4 ファミリーで平均 **0.965 転移保持率**
+
+**kaizen #137 候補の拡張 (SkillReducer-specific 3 sub-items)**:
+本ファイル L74 / L136-144 で既出の kaizen #137 候補 (harness/weights/memory 3 軸分解、AKL パラメータ borrow) に加えて、SkillReducer 由来で `tools/memory_index_integrity.py` Stage 1 拡張として以下 3 項目を追加:
+1. **routing description 欠落検出** = MEMORY.md に index 行が無い `memory/*.md` を自動検出 (現状: 定期 audit 依存 → 自動化)。SkillReducer 26.4% 欠落率の当方版測定。
+2. **adversarial delta debugging** = `tools/recall_atom.py` で 0 ヒットだった検索クエリ / 誤った atom を引いたクエリをログ化し、関連 atom の frontmatter description を直す入力にする。kaizen #135 段階3 以降の入力源としても化ける。
+3. **non-actionable 比率測定** = `CLAUDE.md` / `.claude/rules/*.md` / `memory/feedback_*.md` 内 body の前置き・装飾割合 audit。SkillReducer 60% 超 non-actionable の当方版測定で、CLAUDE.md「絶対にやる」5 本維持 + 下層委譲設計の数値裏付け / 圧縮余地検出。
+
+**R 層昇格判定軸の更新 (並列条件として記録)**:
+- SIA (arxiv:2605.27276) = 「業界が触らない 3 軸目 (memory)」を取っているという読み (C268 Phase 2 で記録、本ファイル L43-65)
+- **SkillReducer (arxiv 2603.29919) = 「memory atom 個別の内部構造としても routing と body の 2 層分離が独立 source で支持される」** (本サイクル追加)
+
+両者を memory_redesign T2 設計 (frontmatter 階層 tag が正本 / 派生層は別) の R 層昇格判定軸の **並列条件** として記録。**機械反映禁止順守で C275 前後再判定**、本サイクルで実装には踏み出さない。
+
+**Karpathy LLM Wiki との対立**:
+SkillReducer Stage 1 = routing/body 物理分離 (= 分離方向) は、Karpathy LLM Wiki の「概念ページ統合」(= 統合方向) と機構的に対立する。Log 5/29 06:41 ts=1780004503 で「3 視点併記欄を許容する Lint = 単一視点統合を採用しない」を導出済 = SkillReducer の分離方向と当方運用が機構的に同方向、Karpathy 統合方向は当方では採用しない、という整理が独立 source で裏付けられた。
+
+**Slack 投稿実績**: `#shared-reads` ts=1780119865.869599 + 891709 (2 メッセージ分割)。`memory/external_notes_log.md` L3737-3776 に full intake 原文記録あり。
+
+**C267 Phase 3 申し送り (本サイクル)**: 本節追記で Active project 反映 (CLAUDE.md「絶対にやる #1 / #4」整合)。Phase 4 大作業候補は別軸 (siphon v03 ゲーム着手 or memory_tree_consolidation orphan_check.py 試作) を選定、kaizen #137 拡張 3 候補の実装は次サイクル以降に観察延長。
+
+---
+
 ### 2026-05-30 (Log C268 Phase 2) — SIA (arxiv:2605.27276) full intake / memory layer = Goodhart 防壁仮説 / R 層昇格判定材料 6 件目
 
 C268 Phase 2 で Nao_u 5/29 22:19 共有の SIA 論文 (Hexo Labs, arxiv:2605.27276) を full intake。Log 5/29 22:22 自己コミット「論文と repo のリンクを取りに行って読む」の履行。本論文は **harness + weights の 2 軸同時更新**で自己改善する 3-LLM ループ (Meta-Agent + Task-Specific Agent + Feedback-Agent) を提案、LawBench +56.6pt / TriMul GPU kernel 14倍 / scRNA-seq denoising +502% を報告。

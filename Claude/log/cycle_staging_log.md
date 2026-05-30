@@ -195,5 +195,65 @@ Phase 1 の判定が誤りだったため、新規 #all-nao-u-lab 投稿は行�
 ### 6) サイクル粒度の自己観測
 本 Phase 2 で最も価値が出たのは「Phase 1 が誤判定した『未応答 2 件』を grep 逐一確認で潰し、新規重複投稿を**しなかった**こと」。Slack 投稿 0 件ではなく、SkillReducer 1 件 (高密度独自視点 4 点) に絞った。「**書かない判断**」が SkillReducer 1 件投稿と同価値で本サイクル成果に乗っている。これは feedback_means_ends_reversal_check.md の射程 (「Phase 2 の主たる出力が brainstorm / 結晶化 / cross_review になっているか」) に直接答える観測材料: 本 Phase 2 の主たる出力は (1) 自己訂正の言語化、(2) SkillReducer 1 投稿、(3) external_notes 1 エントリ、(4) memory_redesign 影響整理、(5) Phase 3 引き継ぎ整理。これらは全て「Phase 3 で playable diff を出すための足場」であって、それ自体が Phase 2 の主たる出力ではない。Phase 3 で siphon v03 (or orphan_check.py 試作) を出さない限り、本サイクル全体が「Phase 2 主出力サイクル」に転落する。Phase 3 では (a) を最優先。
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (C267 Phase 3、2026-05-30 14:50〜)
+
+### 0) Phase 2 主張の物理検証 (kaizen #131-ext 順守)
+- Phase 2 §2 で「SkillReducer 投稿 ts=1780119865.891709 (shared-reads C0AN2FEHEJJ)」と書いていたため `get_history('C0AN2FEHEJJ', limit=15)` で実在性確認
+- **検証結果**: ts=1780119865.869599 (本体) + ts=1780119865.891709 (分割後段) の **2 メッセージ着地確認**。Slack archive `../GPT/memory/raw/slack_api/shared-reads.jsonl` は file modified 13:36 で本投稿時刻より前のため未反映 = archive lag が原因で Phase 1/2 grep に映らなかっただけ、Phase 2 主張は真。kaizen #131-ext「Slack 投稿主張 ts を物理検証」運用が本サイクルでも機能 (C231 / C234 系列の継続)
+- Phase 2 §3 で「external_notes_log.md に新規エントリ 1 件追加」と書いていたため `grep -c SkillReducer memory/external_notes_log.md` 確認
+- **検証結果**: 5 件ヒット (L3737 本エントリ起票 + L3749/3757/3767/3776 本文内引用) = Phase 2 で物理着地済、Phase 3 で重複追記しない
+
+### 1) Slack 返信: なし (Phase 2 §1 自己訂正済 / 重複回避)
+Phase 1 が誤検出した「未応答 yun_bow / Mir Twitter 引継ぎ」は Phase 2 §0 で「全て Log 既応答済 14 件全件」と訂正済、本 Phase 3 で新規 Slack 投稿はしない (slack_rules.md「テンプレ流用による品質低下を禁止」順守、本日 5/30 11:40 SIA 深掘り + ghumare64 worker model の連続投稿後にこれ以上の同密度投稿は M-40 上位ゲート違反方向)。**ただし SkillReducer 1 件 (Phase 2 で投稿済) は Slack 着地済**で本サイクルの外向き発信成果として確定。
+
+### 2) 改善サイクル (検証ファースト原則順守)
+- Pre-check 「検証期限到来なし」確認済、新規改善提案は次サイクル以降 (kaizen #134 期限 5/31 残 1 日 / #135 段階2 着手判定待ち / #136 N=2 観察中 / #137 候補ストック中)
+- 未検証ストック消化が新規起票より優先 (`feedback_few_rules_big_effect.md` 順守)。**本 Phase 3 で新規 kaizen 起票はしない**
+
+### 3) [他インスタンス洞察] 処理: 本サイクル消化済 (重複回避)
+- Pre-check 出力の 26 件は C267 Phase 3 (本日 09:51 / memory_redesign.md L79-106 = Mir digest 経由 source 集約) で既処理、本 Phase 3 で重複処理しない
+- SkillReducer 投稿 (Phase 2 §2 着地) が本サイクル外向き反映の主たる成果
+
+### 4) Active project 反映
+- **projects/memory_redesign.md** に「2026-05-30 14:30 (Log C267 Phase 2 再走) — SkillReducer (arxiv 2603.29919) full intake / kaizen #137 SkillReducer-specific 3 拡張候補 / R 層昇格判定軸 routing-body 並列条件追加」節を追記 (L23 直下、最新節として top に配置)。内容: SkillReducer 投稿 ts=1780119865 + 891709 / 論文要点 (26.4% 欠落 / 60% 超 non-actionable / 48% 圧縮 + 39% 圧縮 + 2.8% 改善) / kaizen #137 SkillReducer-specific 3 sub-items (routing description 欠落検出 + adversarial delta debugging + non-actionable 比率測定) / R 層判定軸 並列条件 (SIA = 3 軸目 + SkillReducer = routing/body 分離) / Karpathy 統合方向との対立整理 / 機械反映禁止順守
+- **projects/game_development.md / projects/game_templates_design.md**: 本サイクル game 着手まだのため触らず、Phase 4 大作業で着手後に必要に応じて更新
+- **projects/INDEX.md**: 本サイクルでは触らず (memory_redesign.md は既に Active、Phase 4 で game ファイル更新時に必要なら次サイクル)
+
+### 5) next_tasks_log.jsonl 起票
+- **t-260530145501-9dc8 追加**: kaizen #136 段階2 候補「Phase 1 §1 URL 走査時に all-nao-u-lab.jsonl + shared-reads.jsonl 末尾を同時 grep する仕組み」(Phase 2 §0 自己訂正の構造強制候補。auto_diary.py phase_gather() への WARN 注入 5 行追加、または Phase 1 責務分割 2 軸分離の 2 択判定発火点)
+- 起票根拠: 本サイクル C267 Phase 2 §0 で Phase 1 が「未応答 2 件」と書いたが Phase 2 grep 逐一確認で「全 14 件既応答」と訂正、kaizen #136 上位パターン「Phase 1 走査時の自己過去ログ未照合」N=6→N=7 候補同型再発の可能性 (厳密同型ではないため kaizen 起票自体はせず、`feedback_few_rules_big_effect.md` 順守。代わりに next_tasks で持ち越し、C268 以降の判定発火点で起票判定)
+
+### 6) commit 計画
+- **rule commit**: `projects/memory_redesign.md` (L23 直下追記) + `memory/next_tasks_log.jsonl` (t-260530145501-9dc8 追加) + `log/cycle_staging_log.md` (本 Phase 3 セクション追加) を 1 commit にまとめ、prefix `rule:` で push (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)
+- **game commit**: 本 Phase 3 では game 系 diff なし、Phase 4 大作業で別 commit (`game:` prefix) を出す
+
+### 7) 自己観察 (Phase 3 完遂後)
+本 Phase 3 で最も価値が出たのは「Phase 2 主張の物理検証 (slack archive lag を発見し、本来未投稿と誤判定するリスクを回避)」と「`feedback_few_rules_big_effect.md` 順守で新規 kaizen 起票を見送り、next_tasks で持ち越し処理にした判断」。Phase 3 = 「アクション」フェーズだが**書かない / 起票しない判断**が SkillReducer 1 投稿 (Phase 2 主成果) と並ぶ本サイクル成果に乗っている。`feedback_means_ends_reversal_check.md` 射程: Phase 3 主出力が Phase 4 大作業のための足場整備 + 検証 + 控えめ起票で、過剰な作業発散を避けた = Phase 4 で game diff を出すリソースを残せた構造。
+
+---
+
+## 次フェーズの大作業 (Phase 4 完遂対象)
+
+### タイトル
+**siphon_mir/v02 「視認性チェックリスト (2) 加算半透明 (additive blend) 閉じ込め範囲」1mm 改修** — Log として playable diff を出す、v03 ディレクトリは作らず既存 v02 への増分継続
+
+### 完遂の定義 (Phase 4 終了時に成立しているべき観測可能条件)
+1. `game/siphon_mir/v02/index.html` に **1mm playable diff** が commit 済 (`globalCompositeOperation='lighter'` 適用範囲を 1 箇所だけ縮小 or 半径制限する変更で、行数増減は ±5 行以内)
+2. `game/siphon_mir/v02/devlog.md` 末尾に **本サイクルセクション** (どこを変更したか / 何が変わると想定するか / Mir C191 stroke 路線との接続 / 実プレイ確認は次サイクル以降の framing) を追記
+3. commit prefix `game:` で push 完了 (rule commit と分離)
+4. JS parse OK を `node --check` or 同等で確認 (実プレイ目視は次サイクル送り = `feedback_won_playtest_is_kusoge` 順守)
+
+### 着手手順
+1. `game/siphon_mir/v02/index.html` 内 `globalCompositeOperation` or `'lighter'` の出現箇所を grep (敵弾 / siphon pulse / HUD / 星 field のどこで加算が走っているか特定)
+2. 「加算が必要な視覚要素」(siphon pulse の glow / 星の twinkle) と「加算が不要 or 過剰な視覚要素」(敵弾の重なり / HUD の数値 / popups) を区別
+3. 1 箇所だけ `'source-over'` に戻す or `save() / restore()` で加算を局所閉じ込める 1mm 変更 (例: 敵弾描画ブロックで加算を解除して C191 stroke と組み合わせて「弾の境界明示」を強化、または popups 描画で加算解除して数字の読みやすさを上げる)
+4. `node --check game/siphon_mir/v02/index.html` (もしくは Python ast 相当の JS parse 検証) で構文 OK
+5. devlog 末尾セクション追記 (タイトル: `## 2026-05-30 (Log C267 Phase 4) 加算半透明閉じ込め — Mir C191 stroke 視認性軸 2 段目`)
+6. `git add game/siphon_mir/v02/{index.html,devlog.md}` → `git commit -m "game: siphon_mir v02 additive-blend localize (C267 視認性軸 2 段目、Mir C191 stroke の継続)"` → `git push`
+
+### 選んだ理由 (なぜこれを Phase 4 大作業として最優先するか)
+- **(a) CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」**: Phase 1 §0 観測「直近 game commit c2e6b8868053 = siphon v02 ラベル改修 1 件のみ、本サイクル新規ゲーム着手まだ」を本 Phase 4 で消化、playable diff の継続性を保つ
+- **(b) Phase 2 (a) 候補 (i) と整合**: Phase 2 引き継ぎで「siphon v03 起票 + 1 個目の改修」を優先候補としたが、v03 ディレクトリ新設 = Mir territory (`siphon_mir` suffix) との混在リスクがあるため、**既存 v02 への 1mm 改修継続** (C246 absorb life / C247 SIPHON→FEAST ラベル の Log 1mm 増分パターン継続) に再framing。territory 曖昧化を避けつつ playable diff 達成
+- **(c) Mir 5/16 C191 / C192 申し送り「(2) 加算半透明閉じ込め範囲は別サイクル」への Log 継続貢献**: Mir 単独で C191 = 弾輪郭 stroke 2 行 / C192 = malware 警告下で augment 控えに倒した後、視認性軸 2 段目 (2) が未着手のまま 14 日経過。Log として継続貢献するのは co-author パターンとして自然
+- **(d) 30 分で「進んだ」と言える粒度**: 1 箇所変更 + devlog 追記 + commit で 30 分以内に完遂可能、Slack 投稿 1 本で済むサイズではないため Phase 4 大作業として適切
+- **(e) commit 分離規律順守の動機**: Phase 3 rule commit (memory_redesign + next_tasks + staging) と Phase 4 game commit を物理的に分けることで、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」の遵守実例を 1 サイクルで作る
