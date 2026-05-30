@@ -97,7 +97,101 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-30T11:36:00+09:00"
+designed_by: "log_cdx (Phase 4b)"
+scope:
+  note: "設計のみ。Phase 4b では staging 以外のファイル編集・コード実装は行わない。"
+  selected_priority_issues:
+    - "ISS-002"
+    - "ISS-001"
+designs:
+  - issue_id: "ISS-002"
+    problem_restatement: "Slack broadcast の受領通知・誤検出調査ログ・実質的な制作指示が active atom 上で同じ粒度に見えるため、recall 時にゲーム制作ノウハウと運用ノイズを区別しにくい。特に ack 文面が title になった atom は、検索上は目立つが次の制作判断にはほぼ使えない。"
+    alternatives:
+      - name: "A. broadcast_atom_classification_index"
+        sketch: "broadcast 系 atom を `actionable_directive` / `ack_only` / `false_positive_investigation` / `reflection` に分類する軽量 index を持つ。atom 本体は維持し、recall 側または Phase 4a 側が index を見て ack_only を低優先化する。"
+        pros:
+          - "既存 atom を削除せず、監査ログとしての価値を残せる。"
+          - "分類軸が明示され、誤検出調査と制作ノウハウを同じ検索面で扱わずに済む。"
+          - "将来 recall 側で重み付けする時の入力にしやすい。"
+        cons:
+          - "分類 index の更新漏れが起きると本体 atom とずれる。"
+          - "既存 recall が index を読まない間は効果が Phase 4a の検出に限定される。"
+          - "初回分類では過去の 43 件を一度棚卸しする必要がある。"
+        migration_cost: "medium"
+      - name: "B. title_prefix_normalization"
+        sketch: "ack / 誤検出調査 / 実質指示の title 命名規則だけを決め、今後の ingest で `ack:` や `ops-investigation:` を先頭に付ける。既存 atom は原則そのまま。"
+        pros:
+          - "導入が小さく、将来の混入を減らしやすい。"
+          - "人間が一覧を見る時に区別しやすい。"
+          - "atom schema を増やさずに済む。"
+        cons:
+          - "既存の active ack atom には効きにくい。"
+          - "title 依存なので recall 重み付けの制御としては弱い。"
+          - "命名規則が守られないとすぐに崩れる。"
+        migration_cost: "low"
+      - name: "C. archive_ack_atoms"
+        sketch: "ack_only と判断した broadcast atom を inactive または archive 扱いにする。制作知識ではないものを active recall 面から直接外す。"
+        pros:
+          - "recall ノイズは最も直接的に減る。"
+          - "運用ログと制作ノウハウの境界が明確になる。"
+          - "Phase 4a の同種 issue 再検出が減りやすい。"
+        cons:
+          - "誤分類時に必要な経緯が見えにくくなる。"
+          - "atom lifecycle の正本ルールに触れるため、操作の心理的コストが高い。"
+          - "pending directive の調査完了前に archive すると evidence が薄くなる。"
+        migration_cost: "medium"
+    recommended: "A. broadcast_atom_classification_index"
+    recommended_reason: "削除や inactive 化を急がず、まず分類を外付けにして recall ノイズの原因を可視化するのが現状から近い。失敗しても atom 本体を傷つけず、index を捨てれば戻せる。pending の broadcast 誤検出調査とも相性がよく、ack_only と false_positive_investigation を分けられる。"
+    decision: "introduce"
+    decision_reason: "ISS-002 は具体的な evidence と pending directive があり、分類軸もほぼ確定している。Phase 4c で小さく index を作るだけなら可逆性が高く、実装後の効果確認も `broadcast` 含有 active atom の棚卸しで測れる。"
+    outline_for_4c:
+      - "broadcast 系 atom の分類 index 仕様を `memory/` 配下の小さな JSONL か Markdown decision record として固定する。"
+      - "`broadcast` 含有 atom 43 件を対象に、最低限 `atom_id` / `classification` / `reason` / `source_title` / `reviewed_at` を記録する。"
+      - "分類値は `actionable_directive` / `ack_only` / `false_positive_investigation` / `reflection` に限定する。"
+      - "ack_only を active atom から即削除せず、次回 Phase 4a で recall ノイズが減るか検査できる evidence を staging に残す。"
+  - issue_id: "ISS-001"
+    problem_restatement: "identity / evaluation / operation / game-design / memory の broad tag が多すぎて、検索入口としては常に当たるが、enemy-pattern や player policy のような制作中の具体判断へ降りる導線になりにくい。広い tag を消すのではなく、代表 atom へ進むための狭い lens が必要。"
+    alternatives:
+      - name: "A. task_lens_subtag_index"
+        sketch: "既存 `game_memory_task_lens_index.md` を入口に、broad tag から `enemy-pattern` / `headless-evaluation` / `player-policy` / `iteration-feedback` など制作タスク別 lens へ降りる index を追加・更新する。"
+        pros:
+          - "既存の game task lens 方針と整合し、新しい概念を増やしすぎない。"
+          - "broad tag を残したまま、制作タスク単位の代表 atom を固定できる。"
+          - "Phase 3b probe と Phase 4a issue を次回制作の入口に接続しやすい。"
+        cons:
+          - "lens の粒度を誤ると、別の索引肥大化になる。"
+          - "代表 atom の選定に人間判断が必要で、自動集計だけでは完結しない。"
+          - "更新頻度を決めないと古くなる。"
+        migration_cost: "medium"
+      - name: "B. tag_frequency_cap_report"
+        sketch: "Phase 4a で broad tag の件数が閾値を超えたら警告し、過広 tag の下位候補を提案する report を出す。構造変更ではなく検査を強める。"
+        pros:
+          - "導入が軽く、現状の統計確認に足せる。"
+          - "どの tag が過広かを継続的に見える化できる。"
+          - "既存 atom への変更が不要。"
+        cons:
+          - "警告だけでは制作時の recall 入口は改善しない。"
+          - "毎回同じ警告が出ると無視されやすい。"
+          - "下位 lens の設計は別途必要になる。"
+        migration_cost: "low"
+      - name: "C. atom_retagging_campaign"
+        sketch: "broad tag が付いた atom を一括レビューし、より狭い tag を追加または broad tag を減らす。tag 体系そのものを整える。"
+        pros:
+          - "検索品質への影響が根本的。"
+          - "既存 recall でもすぐ効く可能性がある。"
+          - "broad tag 依存を長期的に減らせる。"
+        cons:
+          - "対象件数が 1000 件級で、Phase 4c の小さな導入に収まらない。"
+          - "誤 retag のコストが高く、履歴監査も重い。"
+          - "現時点では具体制作タスクに対する効果測定が曖昧。"
+        migration_cost: "high"
+    recommended: "A. task_lens_subtag_index"
+    recommended_reason: "既存の `game_memory_task_lens_index.md` という入口があり、broad tag の全面 retag より失敗時のコストが低い。広い tag を残したまま、次回制作で使う代表 atom への短い導線だけを増やす方が、現状からの距離が小さい。"
+    decision: "postpone"
+    decision_reason: "方向性は A が妥当だが、今回の Phase 4a evidence は件数集計が中心で、どの lens を最初に足すべきかは Phase 3b probe や次の game directive と結び付けて決める方がよい。Phase 4c で即導入すると、使われない lens を増やすリスクがある。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
