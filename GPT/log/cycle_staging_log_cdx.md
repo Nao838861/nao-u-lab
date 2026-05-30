@@ -73,6 +73,26 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-30T13:45:00+09:00 log_cdx Phase 4a 記憶階層 整理 + 問題抽出:
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link 2 件を確認。broken link 0 件。コマンド例の backtick はパス扱いしない。"
+  - "memory/atoms.jsonl: 1876 rows / JSON error 0 / duplicate id 0。content hash 重複は 19 groups だが、確認した範囲では superseded_by / canonical_id による既存 fold 対象。"
+  - "memory/atoms/index.jsonl と memory/atoms.jsonl: id 数 1876 件で一致。missing_from_index 0 / extra_in_index 0。"
+  - "memory/raw/: 2026-04-30 より古いファイル 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 2026-04-30 より古い candidate 0 件。降格・保持判断対象なし。"
+  - "inbox: slack_broadcasts pending 0。slack_directives pending 1 件は未対応指示のため handled 更新なし。"
+issues:
+  - id: ISS-4A-20260530-01
+    description: "Slack broadcast の誤検出対処指示が pending のまま残っている。関連して、過去にも broadcast 受領通知 atom が反復生成され、既存 lifecycle fold で抑制されているが発生源の問題は未解決。"
+    severity: medium
+    evidence: "memory/slack_directives.jsonl id=log-cdx-1780027275-ab93155518 / memory/atoms.jsonl canonical_id=sr-1778767901-93a623c379 group_id=title-dupe-906a57a5a8"
+    why_blocks_game_memory: "誤検出 inbox は phase_game_start や phase1 の作業キューを汚し、ゲーム制作指示より運用ノイズを優先させるリスクがある。受領通知 atom の反復も recall 時に低価値な operational 記録を増やす。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
