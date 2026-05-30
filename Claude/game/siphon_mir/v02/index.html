@@ -312,7 +312,7 @@ function fireBomb(){
     particles.push({x:S.px,y:S.py,vx:0,vy:0,life:l,maxLife:l,c:'#ffd870',r:20+i*40,ring:true,maxR:300+i*60});
   }
   // Explosion particles
-  for(let i=0;i<60;i++){
+  for(let i=0;i<75;i++){  // v02 C250: 60→75 (+25%), 快感軸 観測4（BOMB 爆発粒子量で炸裂感を物量で延伸、L308 bombFlash/L317 life は維持して粒子数のみ単軸操作）
     const a=Math.random()*Math.PI*2,sp=2+Math.random()*6;
     particles.push({x:S.px,y:S.py,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:30+Math.random()*20,c:['#ffd870','#ff9040','#fff'][i%3],r:2});
   }
