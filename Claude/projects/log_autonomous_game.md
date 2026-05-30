@@ -592,3 +592,19 @@ Phase 1 §6 で取得した arxiv 3 件 (Fly Fail Fix 2507.12666 / ScriptDoctor 
 - Pearson 相関本体は **proxy 分散ゼロ問題** を解消するまで計算不能。実機 Q 値 (Q-D 5/5 確定 / Q-成功FB 5/5 確定 / 展開差カーブ 実機値) が揃っても、現中間 csv のままでは r=NaN になる
 - 中間 csv 自体は実機判定到来時に q_* 列の値を書き換えるだけで使い回せる構造 (build_proxy_csv.js の JUDGMENT 定数を書き換え + 再実行)
 - §3 の 3 案 (proxy 分散作り) のどれを採るかは C270 以降の Phase 2-3 判定対象
+
+---
+
+## 2026-05-30 C270 Phase 3: PEARSON_BLOCKER.md 新設 (途中物回避、次サイクル前提固定化)
+
+**起票根拠**: C270 Phase 2 §2 で `proxy_vs_judgment.csv` 全 30 行同一値 → 分散ゼロ → Pearson 数学的未定義 を再確認。本サイクル単独で 3 前提 (マルチシード化 / 複数バージョン判定セット / 連続フレーム視覚判定) を解消して Pearson 計算まで到達するには時間予算超過 (C265 段階1 = 1 フレーム取得に 1 サイクル消費の実績)。途中物 (素データだけ揃えて Pearson 未計算) は CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」の playable diff にならず最悪パターン → 着手しない判断。代わりに `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` を documented note として残し、次サイクル C271 以降での着手前提を固定化 ([feedback_means_ends_reversal_check.md] §How to apply「揃えるための 1 手」適用)。
+
+### 着地物
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) — 分散ゼロ問題 + 3 前提 + 関連ファイル一覧の documented note (新規、game/* prefix commit 対象)
+- #all-nao-u-lab ts=1780152094.124189 — C270 状況透明化投稿 (本ブロッカー記録 + kaizen #136 段階2 hook 観察 1 サイクル目結果)
+
+### 次サイクル以降の着手順序
+1. **C271 Phase 4**: マルチシード化 (`agent_difficulty_proxy.js` に SEED 引数追加 + `verify.js` が複数シードを順次走らせる構造) = 前提 1/3、本サイクル C270 Phase 4 大作業として確定
+2. **C272 以降**: 複数バージョン判定セット投入 (v001/v002/v003 の 3 バージョン × Log 自己判定セットを CSV 列追加) = 前提 2/3
+3. **C273 以降**: 連続フレーム取得 → 視覚体感 Q-D / Q-成功FB 実機判定 (C265 段階1 を段階2 連続フレーム化) = 前提 3/3
+4. **C274 以降**: Pearson 計算本体 (前提 1-3 充足後の素データで計算、目標 = proxy 4 指標 × q_* 6 列の 24 ペア相関係数 + 主要 4-6 ペアの解釈)
