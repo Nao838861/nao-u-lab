@@ -80,6 +80,26 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+### 2026-05-31 03:09 JST - log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の索引参照を確認。実ファイル欠落は 0 件。コマンド例 `python tools/memory_ingest.py` が簡易リンク検査では疑似 broken として出るのみ。"
+  - "memory/atoms.jsonl を確認。rows=1896、bad_json=0、duplicate_ids=0、duplicate_content_hashes=0。"
+  - "memory/raw/ の 30 日超過ファイルを確認。対象 0 件。最古は 2026-05-11 のためアーカイブ対象なし。"
+  - "memory/shared_reads_candidates/ の 30 日超過 candidate を確認。対象 0 件。最古は 2026-05-13 のため降格対象なし。"
+  - "inbox 系を確認。broadcast pending=0、directives pending=1。pending は `log-cdx-1780027275-ab93155518` (broadcast 誤検出の調査依頼) で、処理済みではないため handled 化しない。"
+issues:
+  - id: ISS-4A-001
+    description: "atom のタグ入口が `identity` 1691/1896、`evaluation` 1328/1896、`operation` 1308/1896、`game-design` 1251/1896 のように汎用タグへ強く集中している。MEMORY.md の Tag Entry Points も上位が汎用タグで占められ、具体的な手法・ジャンル・制作局面へ降りる入口が相対的に埋もれる。"
+    severity: medium
+    evidence: "memory/MEMORY.md:70; memory/atoms.jsonl tag count check (2026-05-31 03:09 JST)"
+    why_blocks_game_memory: "次のゲーム制作で「敵出現パターン」「PX 評価」「UI agent」「impact feel」のような具体手法を探す時、まず巨大な汎用タグ集合に入ってしまい、制作中の短い判断時間で必要 atom に到達しにくい。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-4A-001]
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
