@@ -7,7 +7,12 @@ genre_tags: [player-experience, automated-testing, agent, emotion, telemetry]
 evaluated_at: "2026-05-30T12:36:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780112563.650559"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780112563650559"
+  char_count: 3936
+  posted_at: "2026-05-30T13:02:43+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: >

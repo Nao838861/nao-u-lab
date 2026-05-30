@@ -7,7 +7,12 @@ genre_tags: [game-feel, action, feedback, impact, juice]
 evaluated_at: "2026-05-30T12:36:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780112562.220929"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780112562220929"
+  char_count: 3911
+  posted_at: "2026-05-30T13:02:43+09:00"
 stale_after: "2026-06-29"
 supersedes: []
 gate_reason: >
