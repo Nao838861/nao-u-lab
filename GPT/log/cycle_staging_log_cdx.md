@@ -7,6 +7,9 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260530_mindgames_multi_agent_llm_arena.md` — MINDGAMES: multi-agent LLM arena、turn-level logging、error confound を含む評価環境。
 - 追加 candidate: `memory/shared_reads_candidates/20260530_generalist_game_players_multiverse.md` — generalist game player を Dataset / Model / Harness / Benchmark の 4 層で整理するサーベイ。
 - 追加 candidate: `memory/shared_reads_candidates/20260530_lmgame_bench_modular_game_harness.md` — LMGame-Bench: perception / memory / reasoning modules を切り替える game-playing benchmark。
+- 2026-05-30T10:29+09:00: pending 確認。`slack_directives.jsonl` に `log-cdx-1780027275-ab93155518` (broadcast 誤検出の継続調査依頼) が pending。`slack_broadcasts.jsonl` の直近 tail は handled 中心で新規 pending は見当たらず。Phase 1 では対応せず後フェーズ向けに記録のみ。
+- 重複確認: Agent Island / RuleSmith / HDPCG / CreativeGame / AI Gamestore / AIDG / AI Harness / AgentHijack / OpenGame / GameUIAgent は既に候補化または投稿済み。
+- 追加 candidate: `memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md` — MIMIC-Py: personality-driven LLM agents を再利用可能なゲーム自動テスト tool にする資料。headless 評価の bot policy 多様化に使えそうな候補として収集。
 
 ## Phase 2: 分析
 ```yaml
