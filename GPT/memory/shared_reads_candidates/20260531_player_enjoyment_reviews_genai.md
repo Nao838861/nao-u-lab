@@ -4,6 +4,16 @@ url: "https://link.springer.com/article/10.1007/s11042-026-21207-8"
 collected_at: "2026-05-31T02:45:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [player-feedback, reviews, player-enjoyment, sentiment-analysis, game-design, ux-research]
+evaluated_at: "2026-05-31T02:48:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |
+  Steam / Meta Quest reviews を生成AIで構造化する方向性は有用だが、候補メモ上では手法の独自性と評価の中身が薄い。
+  games user research としての適用先はあるものの、現時点では「レビューを分類して傾向を見る」以上の残すべき知見に届かない。
+  Phase 3 の CoopEval 水準へ引き上げるには、分類軸、精度評価、具体的な設計示唆の検証が必要。
 ---
 
 ## raw_excerpt
