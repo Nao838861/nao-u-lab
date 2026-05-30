@@ -4,6 +4,96 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-31 (Log C272 Phase 2) ジャンル骨格テンプレート 3 source 統合 — Template Method (refactoring.guru) / Design Skeleton 7 Steps (nerdlab-games) / Computational Thinking via Design Patterns (arxiv 2407.03860) [WebFetch 3件、#shared-reads ts=1780162845 で統合投稿済、即統合済 2026-05-31]
+
+**source**: 
+1. <https://refactoring.guru/design-patterns/template-method> Template Method (古典 GoF パターン解説)
+2. <https://nerdlab-games.com/043-how-to-create-a-design-skeleton-in-7-steps/> Design Skeleton 7 Steps (カードゲーム実務 blog)
+3. <https://arxiv.org/abs/2407.03860> Computational Thinking through Design Patterns in Video Games (FDG 2020 査読 / arxiv 2024 再掲)
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `game skeleton template genre design pattern reuse 2026` / Active project = projects/game_templates_design.md (5/30 06:57 更新、計画起票段階)
+
+**摂取契機**: C272 が C271 直後の空サイクル (新着URL 0件 / pending 対応 0件) で、深掘り候補 B (停滞 Active project) より C (CLAUDE.md「ゲームを動かして出す」) を主軸に置く判断の補強として、計画起票段階の game_templates_design.md に**実装着手前**に罠リストを焼き込めるタイミングを狙った外部入力選定。
+
+**3 source の性格分布 (本投稿の前提)**:
+古典コードパターン (1) / カードゲーム設計実務 (2) / 学術的計算思考接続 (3) と性格が大きく分散。**3 source とも「ジャンル骨格を抽象化する」ことには肯定的だが、抽象化の罠の指摘軸が全部違う**ことが本エントリ最大の発見。
+
+**(1) Template Method の罠 (refactoring.guru)**:
+本質 = "skeleton of an algorithm in the superclass but lets subclasses override specific steps"。3 段階 (abstract / optional default / hooks) を区別。ゲーム AI の race 別挙動差分例 (Orcs/Humans/Monsters が共通 `turn()` を継承し `buildStructures()` / `sendScouts()` を独立実装) は転用しやすそうに見えるが、ジャンル骨格に直適用すると **3 つの致命的問題**:
+- (a) **LSP 違反警告 (refactoring.guru 明示)**: "You might violate the Liskov Substitution Principle by suppressing a default step implementation via a subclass" = 共通ステップを空実装するジャンルが基底契約を破綻させる
+- (b) **hooks 不確定性**: "optional step with an empty body" = 呼ばれることを期待できない拡張点が骨格に残ると構造保証が形骸化
+- (c) **メンテ爆発**: "Template methods tend to be harder to maintain the more steps they have"
+- (d) **新ジャンル不適合**: 既存テンプレに収まらない新ジャンル (RTS×Roguelike 融合等) は基底変更=全 subclass 影響
+結論: **「複数の独立したバリエーション軸」には不適切**、代替 = Strategy (composition) で動的選択 + 各ジャンル独立性を保持。
+
+**(2) Design Skeleton 7 Steps の罠 (nerdlab-games)**:
+本質 = "a rough and preliminary plan...a blueprint for your future work from a meta perspective"。7 ステップ:
+| Step | 決めること | 意図的に保留 |
+|---|---|---|
+| 1 前置き | 総数、カテゴリ軸 | 具体値、個別仕様 |
+| 2 スロット定義 | 種別×属性枠組み | 各スロットの内容 |
+| 3 重要種別 | 比率配分 (50% creatures 等) | パワーレベル |
+| 4 粗設計 | タイプ別アーキタイプ | フレーバー、個別能力 |
+| 5 他種別充填 | 色/派閥の機能差別化 | 効果テキスト |
+| 6 派閥効果 | プレイスタイル象徴能力 | 実装メカニクス |
+| 7 セット固有 | キーワード候補、テスト対象 | 調整値、組み合わせ |
+"the skeleton isn't there to lock the designer in" との警告ありながら、Shmup/自律ゲーム転用罠は 3 種:
+- (a) **静的設計への固着**: カード=決定論的 (マナコスト=固定スロット)、shmup=動的 (確率/入力依存)、Skeleton 厳密化で dynamism 死亡
+- (b) **時間軸無視**: カードは「セット内分布」が主、shmup は「秒単位の出現パターン」=時系列。blueprint で曖昧に留めるとプレイテスト難度調整が破綻
+- (c) **学習・相互作用への非対応**: 自律ゲーム (NPC ビヘイビア相互作用) は skeleton レベルで予測困難、前置きの「想定条件」が瓦解
+**カードでは「粗さ」が強み、デジタル/自律領域では設計の不完全性を隠蔽するリスクに反転**。
+
+転用テンプレ案 (Design Skeleton の shmup 改修、当方独自):
+```
+ステップ1: 敵種別、出現パターン分類軸、難度帯
+ステップ2: 敵スロット = [敵種×難度×出現時間帯] 組み合わせ表
+ステップ3: 最重要敵種の出現比率 (基本70/特殊20/ボス10)
+ステップ4-5: 敵行動アーキタイプ粗定義 (追跡/パターン射撃/etc)
+ステップ6-7: 難度スケーリング規則、環境相互作用メカニクス
+```
+**時間軸が決定論的でない**ので、ステップ2-3 の比率は「セット内分布」ではなく「ウェーブあたり脅威度 (例: 脅威度10/wave)」抽象に変える必要。Design Skeleton 原典には無い当方独自の改修点 = 外部検証なし=実装で確認するしかない。
+
+**(3) arxiv 2407.03860 の主張と弱点**:
+"ビデオゲームの個別デザインパターンと計算思考スキルの有益な接続を定義する"中間立場。既存研究が「一般的すぎるか教育目的特化」に偏る問題提起は妥当。**ただし WebFetch は PDF 抽出失敗で abstract 経由の浅い分析**:
+- (a) 具体パターンカタログが abstract には出ない (PDF 本文要)
+- (b) 「ゲーム内で計算思考が潜在的に訓練される」主張に認知心理学的エビデンス不足
+- (c) **自律ゲーム (プレイヤー制御不在) は論文枠組み外** = log_autonomous_game v003 に直撃
+- (d) "design patterns have capacity" 可能性表現に留まり帰納検証なし
+- (e) 対照群研究の明記なし
+
+FDG 2020 査読論文 + 2024 arxiv 再掲というラインで「補強候補」止まり、独立 source 揃いの軸では使えない。
+
+**3 source の対立軸 (本エントリの核)**:
+| source | 罠の指摘軸 | 解像度 |
+|---|---|---|
+| Template Method | 静的構造保証の形骸化 (LSP違反、hooks 不確定性) | 高 (具体警告) |
+| Design Skeleton | 時間軸/動的環境/学習相互作用の欠落 | 中 (カード前提) |
+| arxiv 2407.03860 | ジャンル特異性 / 自律ゲーム / 実装粒度 | 低 (抽象主張) |
+3 軸を直交として読むと、`game/templates/<genre>/` 設計には**少なくとも 3 種類の独立した罠**が同時に潜む。Template Method 警告だけ守って Strategy 採用しても Design Skeleton の時間軸/動的環境罠は別軸で残り、arxiv の自律ゲーム不適合は log_autonomous_game に直撃。
+
+**自分達の環境への適用 (3 点)**:
+1. **game_templates_design.md (5/30 06:57 更新、計画起票段階) への罠リスト先行反映** — テンプレ実装前に projects/game_templates_design.md に「3 source 由来の罠 3 種類 = (a) Template Method 直適用回避→Strategy/composition 優先、(b) 時間軸/動的要素を blueprint 段階で明示的に含める、(c) 自律ゲームでは skeleton の『想定条件』が瓦解する前提を持つ」を**設計原則として先に書く**。実装着手前にメモを残すことで、後から「テンプレ作ったら何か違った」を回避。Phase 3 アクション候補化。
+2. **log_autonomous_game v003 への直撃 = arxiv 自律ゲーム不適合との対面** — v003 は「予測軌跡視界ノイズ (Nao_u 5/26 06:10)」「proxy 4 列 Pearson 前提 1/3 解消」を進めているが、arxiv の「自律ゲームは論文枠組み外」=既存ジャンル骨格テンプレートを v003 にそのまま流し込むのはミスマッチ。**v003 のテンプレ化は通常ジャンル骨格とは別系統 (autonomous template)** として projects/log_autonomous_game.md に分岐記録すべき。Phase 3 アクション候補化 (game 1mm の C 案と合流可能)。
+3. **Design Skeleton 7 ステップ→shmup 転用テンプレ案 (上記表)** が当方独自改修込みで取れた = game_templates_design.md の具体テンプレ第1稿として流用可能。
+
+**自己批判**:
+- arxiv 2407.03860 は PDF 抽出失敗で abstract 経由の浅い分析、具体パターンカタログ未取得 = 学術的厳密さで「補強候補」止まり (本エントリで唯一 source 単独投稿価値が薄い 1 件)
+- Template Method の罠は古典として既知、目新しさ薄。ただし「ジャンル骨格に Template Method 直適用が罠」の角度はジャンル骨格軸での再定式化として価値
+- 3 source の性格が広く分散 (古典/blog/学術) で「同一論点の独立到達点」ではなく「異なる角度からの並列入力」 = R 層昇格判定軸として使うには独立性の定義要調整
+- Design Skeleton の「時間軸/動的要素」改修案は当方独自で外部検証なし
+
+**R 層昇格判定材料への加点 (memory_redesign とは別軸)**:
+[[memory_redesign]] の派生層原則 R 層昇格判定材料 4 件揃い (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer) に加え、本 3 source 統合は**「ジャンル骨格テンプレート設計」という別軸の R 層昇格判定の起点**として記録。ただし source 性格が散らばっており memory_redesign のような「派生層独立 source 揃い」とは構造が違う。**新規 projects 軸 (game_templates_design.md R 層昇格軌道) を memory_redesign と並列で立てるか、game_templates_design 単体に閉じるかは 1 サイクル様子見**。即昇格判定はしない。
+
+**メリット・デメリット**:
+**メリット**: (a) game_templates_design.md が計画起票段階で実装着手前 → 罠リストを設計原則に先に焼き込めるタイミング、後手回避、(b) 3 source の罠軸が直交=単一 source 採用バイアスを回避できる構造、(c) Design Skeleton 7 ステップを「時間軸」「動的要素」改修で shmup 転用テンプレ案として落ちた、(d) arxiv 自律ゲーム不適合=log_autonomous_game v003 をテンプレ別系統化する根拠を独立 source で取れた
+
+**デメリット**: (1) arxiv 2407.03860 PDF 抽出失敗で abstract 経由の浅い分析、(2) Template Method の罠は古典として既知の警告で目新しさ薄、(3) 3 source 性格が広く分散で「同一論点独立到達点」ではなく「異なる角度の並列入力」、(4) Design Skeleton 「時間軸/動的要素」改修案は当方独自で外部検証なし
+
+**関連ファイル**: projects/game_templates_design.md (Phase 3 罠リスト先行反映先)、projects/log_autonomous_game.md (autonomous template 別系統分岐記録先)、log/cycle_staging_log.md (本サイクル Phase 2 起点)、[[memory_redesign]] (R 層昇格軸の並列起点判定)
+
+---
+
 ## 2026-05-30 (Log C268 Phase 2) SIA: Self-Improving AI with Harness & Weight Updates (arxiv:2605.27276, Hexo Labs) — Meta-Agent + Task-Specific Agent + Feedback-Agent の 3-LLM ループで harness (prompts/tools/retry) + 重み を同時更新、LawBench +56.6pt / TriMul GPU kernel 14倍 / scRNA-seq denoising +502% [WebSearch 3件 + 統合済 2026-05-30]
 
 **文脈**: Nao_u 5/29 22:19 #nao-u 共有 (<https://x.com/Sumanth_077/status/2060031707378839772>) → Log 5/29 22:22 #all-nao-u-lab ts=1780060953 で「論文と repo のリンクを取りに行って読む」自己コミット → 本サイクル C268 Phase 2 で履行。harness/weights/memory **3 軸分解**の試行的評価フレームを適用。

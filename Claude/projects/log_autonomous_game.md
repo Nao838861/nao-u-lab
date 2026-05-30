@@ -59,6 +59,49 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-05-31 C272 Phase 3: v003「予測軌跡視界ノイズ」自己応答状況の確定 + autonomous template が通常ジャンル骨格と別系統である根拠
+
+**契機**: 本サイクル空サイクル深掘り A 案 (前サイクル staging 持ち越し残課題に「5/26 06:10 Nao_u 指摘 (予測軌跡視界ノイズ) への自己応答確認」)。kaizen #136 段階2 hook の自己プロトコル先取り運用として、「既解問題」の自己応答状況を v003 文脈で明文化することで未解扱いへの誤回帰を防ぐ。同時に 5/31 Phase 2 §0 で external_notes_log.md に追加した「ジャンル骨格テンプレ 3 source 統合分析」(Template Method / Design Skeleton / arxiv 2407.03860) のうち arxiv 結論 = **「自律ゲームは論文枠組み外」**との接触結果を v003 文脈に折り返す。
+
+### §1. 「予測軌跡視界ノイズ」自己応答状況 — **既解判定 (C242/v002 で完全達成)**
+
+Nao_u 5/26 06:10 #human-steering 指摘原文: 「一秒先の軌跡+×印みたいな邪魔な線があるせいでどこをよけたらいいかが逆にわかりにくく、普通に弾を撃ってくる方がよけやすい」
+
+**自己応答経路 (時系列)**:
+1. **C242 Phase 3 (2026-05-26)**: `game.js` 内 `GHOST_ALPHA_LINE` (予測軌道線) / `GHOST_ALPHA_TIP` (×マーカー) 描画を削除、1 秒先計算は内部 (echo trail) に閉じる構造に転回。原則「内側→外側流出禁止」を `memory/feedback_inside_to_outside_leak.md` に新設、`memory/feedback_index.md` ポインタ追記。Slack `#all-nao-u-lab` ts=1779759682 + `#kaizen-log` ts=1779759722 で深析投稿
+2. **C247 Phase 4 (2026-05-27)**: v002 で **タイトル画面に残存していたゴースト + 結線描画 14 行を削除** (Δ-1)、「内側→外側流出」1 原則の完全達成。`feedback_inside_to_outside_leak.md` 末尾に refine 節 (telegraph は inherently 悪ではない、視覚ノイズに飲まれた時に悪) を追記
+3. **C248 Phase 2/3 (2026-05-27)**: NextMars 4 軸目で「contrast priorities / silhouette rules / effect hierarchy 不在 → telegraph も読めなくなった二重事故」へ再診断、`feedback_inside_to_outside_leak.md` に refine 節追記済
+4. **v003 への継承確認** (本節): v003 `game.js` (29625 bytes) を 5/31 時点で確認、予測軌道線・×マーカー描画コードは v002 から継承された削除済状態 = 復活なし。`v003/self_judgment.md` Q-D 節は「予測軌道ゴースト無し」前提で連続フレーム視認による 4.0/5 暫定判定済 (C268 Phase 4 着地)
+5. **外部独立到達**: Boghog 経験則「Single stray bullets are hard to read and can often feel unfair」(C258 Phase 2 摂取、`memory/external_notes_log.md` L249-261) が Nao_u 5/26 06:10 指摘と独立到達 → `feedback_inside_to_outside_leak.md` の R 層昇格条件「同方向独立 source 2 件以上」に近づくが、機械反映禁止順守で本サイクル昇格判定はしない
+
+**結論**: 「予測軌跡視界ノイズ」は **C242/v002 で構造応答完了済**、v003 でも継承維持、自己応答ログ未読扱いで未解と誤判定するリスクは本ファイル L456-470 (C242 Phase 3 節) + 本節 §1 で二重に防衛。kaizen #136 段階2 hook は「既解判定 staging memo 明示」を継続実施。
+
+### §2. autonomous template が通常ジャンル骨格と別系統である根拠 (arxiv 2407.03860 接触結果)
+
+**外部素材**: arxiv 2407.03860「Computational Thinking through Design Patterns in Video Games」(本日 Phase 1 §6 取得) — ビデオゲーム設計パターンを「semi-formal interdependent description of recurring parts of game design」と定式化。学術文脈の独立 source として game_templates_design.md 理論補強候補。
+
+**v003 への直撃**:
+- arxiv の設計パターン論は「**人間設計者が事前にゲーム設計を決め、パターンとして抽出・再利用する**」枠組み = `game/templates/<genre>/` の通常ジャンル骨格テンプレートと整合
+- 一方 log_autonomous_game v003 は「**Log 自身が自律的に設計判断 + 実機判定 + Q-X ゲート連続改修**」を回す枠組み = `Nao_u 2026-05-25 06:23 #human-steering` 指示「各自の名前を付けた新しいプロジェクトとして自律的に...」由来
+- arxiv 結論 = **「自律ゲームは論文枠組み外」** = v003 のテンプレ化を `game/templates/avoid/` などの通常ジャンル骨格にそのまま流し込むのはミスマッチ
+
+**判定 — v003 テンプレ化は別系統 (autonomous template) として分岐記録**:
+- 通常 `game/templates/<genre>/` = 人間設計者 (Log/Mir/Ash) が型を読んで派生する基盤 (arxiv パターン論 / Template Method / Design Skeleton 系)
+- 別系統 **`game/templates/autonomous/<instance>_<lineage>/`** (将来案) = Log/Mir/Ash 自身が自律生成サイクルを回すための型。骨格項目に「実機判定の取得経路 R1-R4」「self_judgment.md Q-X ゲート連続改修プロトコル」「内側→外側流出禁則」など、通常テンプレには入らない自律サイクル特化要素を含む
+- 本サイクル C272 では実装着手しない (R-I 順守 + `feedback_means_ends_reversal_check.md`「揃えるための 1 手」優先): v003 が実機判定到達前のため、autonomous template の骨格項目を v003 観測値で確定するには時期尚早。本節は **分岐根拠の記録のみ** = 将来 v005 以降で実機判定が揃った時点で `game/templates/autonomous/log_v003_lineage/draft_v01.md` 起票判定発火点として固定化
+
+**接続先 (双方向参照)**:
+- [projects/game_templates_design.md](game_templates_design.md) — 本節 §2 と同サイクル C272 Phase 3 で「罠リスト先行反映」節追記、両ファイルで autonomous template 別系統判定を同根異所に物理化
+- [memory/external_notes_log.md](../memory/external_notes_log.md) — 5/31 Phase 2 §0「ジャンル骨格テンプレ 3 source 統合」エントリが本節の外部素材源
+- [memory/feedback_inside_to_outside_leak.md](../memory/feedback_inside_to_outside_leak.md) — §1 既解判定の T:5 結晶化先
+
+### §3. 本サイクルの構造的学び (means/ends 逆転回避ガード)
+
+- **「絶対にやる #1 = ゲームを動かして出す」順守の枠内で本節を書ける根拠**: 本節は v003 game.js への直接 commit ではないが、(a) 既解判定の自己応答ログ未読リスクを v003 文脈で再固定 = kaizen #136 自己プロトコル先取りでの上位パターン (Phase 1 走査時の自己過去ログ未照合) N=7→N=8 移行ガード、(b) autonomous template 別系統判定の根拠記録 = 将来 v005 実機判定到達後の自律ゲーム型起票発火点固定化、の 2 軸で「揃えるための 1 手」に該当
+- **C272 = game commit 0 件で着地する場合の自己診断**: 本サイクル Phase 4 大作業に game/* playable diff (v003 の残 Pearson 前提 2/3 解消 or 別 game 実装) を据えれば打率回復、本 Phase 3 では rule commit (本節 + game_templates_design.md 罠リスト追記 + staging Phase 3 記録) で「揃えるための 1 手」を着地。`feedback_means_ends_reversal_check.md` 警告には本節 §3 で対面化、Phase 4 で必達ラインを物理化
+
+---
+
 ## 2026-05-30 C264 Phase 4: 強化 agent (PLAYER_SPEED 1.5x) で proxy 再計測 — v001/v002/v003 比較
 
 **起票根拠**: C263 Phase 4 §5 a) 「強化 agent 導入で phase 2 到達」候補を最優先実装。素朴良手 agent が wave 1 内 (9.28s) で 30/30 死亡 → phase 2 (50-90s) 到達ゼロ = v003 改修対象 (phase 2 内 SHOOT_INTERVAL 90→60 frame 線形漸変) 計測不能の盲点を、agent 側 PLAYER_SPEED 1.5 倍化で打開できるかの試行。**game.js は変更せず、agent_difficulty_proxy.js 側だけ強化** (proxy 計測解像度の問題であり game balance の問題ではないため)。

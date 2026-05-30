@@ -211,6 +211,42 @@ C261 Phase 2 で izutorishima 5/28 21:09 (@Dia_Nexus 由来の MNP = Mid-level N
 - [memory/shooting_assessment_matrix_v0.md](../memory/shooting_assessment_matrix_v0.md) — matrix v0 自体が DSL 設計済 = MNP 適用第一候補
 - [tools/build_atom_edges.py](../tools/build_atom_edges.py) — atom 系の SSoT + 派生生成パターンの実装、game/ 側 sibling 設計の参照基盤
 
+### 2026-05-31 (Log C272 Phase 3): 3 source 統合分析からの罠リスト先行反映 + autonomous template 別系統分岐
+
+**契機**: 本サイクル Phase 1 §6 で外部検索 3 件取得 (Template Method / Design Skeleton / arxiv 2407.03860 Computational Thinking via Design Patterns)、Phase 2 §1 で 3 source を「直交する罠軸」として軸統合分析、`#shared-reads` ts=1780162845.524299 + `memory/external_notes_log.md` 先頭に同時投稿。3 source は本テンプレ計画起票段階で着手前に罠リストを設計原則に焼き込めるタイミング (`feedback_means_ends_reversal_check.md`「揃えるための 1 手」適用) と判断、実装着手 (avoid skeleton 起票) 前の予防効果を狙う。
+
+**3 source 由来の罠軸 (直交)**:
+
+| source | 罠軸 | 本テンプレへの反映 |
+|---|---|---|
+| **Template Method Pattern (refactoring.guru)** | superclass がアルゴリズム skeleton を定義 / subclass が個別ステップ override = **LSP 違反 / hook 不確定性 / 継承爆発**のリスク。Game AI で race ごとの挙動差分実装に直適用例あるが、深い継承で派生先の予測不能性が増す | **罠 #1**: テンプレ骨格を継承前提 (superclass-subclass) で設計しない、**Strategy / composition (object 注入)** ベースで設計する。継承で骨格を伝播させると派生先の Q-X ゲートが祖父テンプレに引きずられて見えなくなる |
+| **Design Skeleton in 7 Steps (nerdlab-games)** | カードセット系で「詳細を書かずに必要な要素種別だけ blueprint 化」 = 静的構造のみ skeleton 化、**時間軸・動的要素 (60-90 秒カーブ / wave 推移 / 学習→圧力→終端の山)** が blueprint から欠落する | **罠 #2**: 暫定テンプレ #34-54 行に「**時間軸層** (60-90 秒カーブのフェーズ区切り / phase 別評価指標)」と「**動的要素** (wave 推移 / 状態遷移 / 段階的開示)」を blueprint 必須項目として明示。Pulse Relay v003 教師差分の 70-90 秒カーブ構造 (学習→基本混合→価値提示→中盤圧力→終盤の山→終端) はこの層の参照点 |
+| **arxiv 2407.03860 Computational Thinking via Design Patterns** | 「semi-formal interdependent description of recurring parts of game design」と定式化。学術文脈のジャンル特異性 + **自律ゲームは論文枠組み外** (Log/Mir/Ash 自身が自律生成サイクルを回す枠組みは本論文の patterns 抽出対象外) | **罠 #3**: 通常 `game/templates/<genre>/` (avoid/textadv/Pot/T-04整理収束/T-05 shooting matrix v0 系) と、log_autonomous_game v003 系 (自律生成サイクル) は **別系統テンプレ** として分岐記録。混在させると人間設計者向け基盤と自律サイクル基盤が干渉し、Q-X ゲートが両者のどちらに対応するか不明瞭になる |
+
+**反映先 (本サイクルでは骨格項目追加せず、罠リスト記録のみ)**:
+
+- **罠 #1**: 暫定テンプレ #34-54 行「## 派生ポイント (ここから独自性が出る。チェックボックス式)」の運用ルールに、**「派生は継承ではなく composition で書く」**を 1 行追記候補 (次サイクル以降の実体テンプレ起票時に正式反映)。本サイクルは罠リスト記録のみで打ち止め (`feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」順守、N=1 source × 1 直接適用例なので機械反映禁止)
+- **罠 #2**: 暫定テンプレ #34-54 行に **「## 時間軸層 (60-90 秒カーブのフェーズ区切り)」** と **「## 動的要素 (wave 推移 / 状態遷移 / 段階的開示)」** の 2 項目を追加する候補。実体テンプレ起票時 (avoid 系か shooting matrix v0 経由) に Pulse Relay v003 教師差分の時間カーブ構造を初期値として埋める運用候補。本サイクルは候補登録のみ
+- **罠 #3**: **autonomous template 別系統分岐**を本ファイル「ディレクトリ」欄 (#27) に追加候補: 既存 `game/templates/<genre>/` (通常ジャンル骨格 = 人間設計者向け) + 新規 `game/templates/autonomous/<instance>_<lineage>/` (自律サイクル基盤 = log_autonomous_game v003 系の将来テンプレ化) の **2 系統並置**。本サイクルは分岐根拠の記録のみ、実体ディレクトリ作成は v003/v004/v005 のいずれかが実機判定到達後の判定発火点
+
+**自律ゲーム別系統分岐 = log_autonomous_game.md 双方向参照**:
+
+- 本節と [projects/log_autonomous_game.md](log_autonomous_game.md) 「2026-05-31 C272 Phase 3」§2 が同サイクルで同根異所に物理化 (autonomous template 別系統判定の根拠を両ファイルで二重に記録)
+- v003 の「予測軌跡視界ノイズ」既解判定 (本サイクル log_autonomous_game.md §1) は通常テンプレ罠 #2「時間軸層」とは別軸 = 自律ゲーム特有の Q-X ゲート (内側→外側流出禁則 / self_judgment.md 連続改修 / 実機判定取得経路 R1-R4) に属する
+- 将来 autonomous template 骨格起票時には本ファイル罠 #3 + log_autonomous_game.md §2 を双方向参照で初期値に持ち、通常テンプレと干渉しない設計
+
+**機械反映禁止順守 (CLAUDE.md「個別指摘を即ルール化しない」)**:
+
+- 本記述は 3 source 統合分析の罠リスト記録に留め、暫定テンプレ #34-54 行への正式項目追加 (罠 #1/#2/#3 反映) は同方向の独立 source が 2 件以上揃った時点 + 実体テンプレ起票時に判定
+- 現時点 source 数: 罠 #1 = Template Method 1 件 / 罠 #2 = Design Skeleton + Pulse Relay v003 教師差分 2 件 (R 層昇格条件充足) / 罠 #3 = arxiv 2407.03860 + Nao_u 2026-05-25 06:23 自律ゲーム指示 2 件 (同上)
+- 罠 #2 / #3 は R 層昇格条件 (独立 source 2+ 件) を充足、ただし**実体テンプレ起票時の初期値反映**として運用 = テンプレ骨格 #34-54 行への即時項目追加ではなく、avoid skeleton 起票時 (派生元固定後) に Q-X ゲートとして埋め込む経路で反映
+
+**接続先**:
+- [memory/external_notes_log.md](../memory/external_notes_log.md) 先頭 2026-05-31 (Log C272 Phase 2) ジャンル骨格テンプレ 3 source 統合 — 本節の外部素材源
+- [projects/log_autonomous_game.md](log_autonomous_game.md) 2026-05-31 C272 Phase 3 §2 — autonomous template 別系統判定の双方向参照
+- [memory/feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) — 「実装着手前に罠リストを設計原則に焼き込めるタイミング = 揃えるための 1 手」適用例
+- [memory/feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 罠リスト記録のみで暫定テンプレ #34-54 行への即時項目追加を見送る順守根拠
+
 ### avoid skeleton 着地 (2026-05-30 Log C266 Phase 4)
 
 `game/templates/avoid/` に playable minimal scaffold を着地。`game/log_autonomous_game/v003/game.js` から avoid 系 core loop の 4 関数 (入力 keydown/keyup ハンドラ / `updatePlayer` / `render` / `step`) を抽出し、弾幕 / 敵 / 評価系 / echo 機構 / trace logger / 状態遷移を全て外した。残したのは「プレイヤー 1 機 + 入力 + 移動 + canvas + 画面端拘束」のみ。
