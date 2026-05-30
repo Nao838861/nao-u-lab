@@ -41,6 +41,7 @@ B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あ
 - [ ] 同一 Nao_u 指示に対する3人の初手応答を並列保存する仕組み（現状: Slackで時間差発言するため相互参照バイアス発生）
 - [ ] 外部素材（同一 tweet / 論文）への3人の独立メモを並べて差分ハイライト
 - [ ] 定期的な「Phase 2 分析」の観点差（Log=構造, Mir=再構成, Ash=接続 など）を指標化
+- [ ] **Simplex 距離による同質化指標 (Gamma-World 逆引き)**: 3 インスタンスを正単体 (3 頂点 = 2D 正三角形) の頂点として配置し、行動ベクトル (起票/実装/レビュー比率) または発話ベクトル (語彙 TF-IDF) を射影して重心 collapse 距離を測る。既存の「3 者応答 similarity (scalar)」を**正単体構造で正規化された距離**に置き換える幾何的明示化で、「どの程度離れていれば頂点として正当か」が構造で決まる。Liu et al. 2026 "Gamma-World" の Simplex Rotary Agent Encoding (パラメータフリー、permutation-equivariance を構造で保証) の逆引き処方。代理指標選定 (行動/発話/判断ベクトルのどれが「重心 collapse」を最も sensitive に検出するか) は未検証。詳細: [../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md](../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md) §3.1 + Q1。〈2026-05-30 Ash 追加候補 / confidence: low / 未検証〉
 
 ### 2. 既存メトリクスの再解釈
 - [ ] クロスチェック欄の「OK率」vs「反対/保留率」の時系列プロット。OK率が90%超えたら構造的結合シグナル
@@ -49,6 +50,7 @@ B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あ
 ### 3. 反対案強制化の実験
 - [ ] kaizen クロスチェック時に「反対案を1つ書く」義務を追加する実験設計（Chen et al. 緩和策の転用）
 - [ ] 反対案の質を測る評価基準（即座に却下される擬似反対 vs 採用された結果的修正）
+- [ ] **蒸留方向符号による反対案装置の救援/窒息判定 (Gamma-World 逆引き)**: 反対案強制化を「teacher (全文脈批判視点) → student (現在の momentum) への蒸留」と再記述し、**蒸留方向の符号**で装置の向き (救援 vs 窒息) を判別する基準を導入する。正符号 (teacher の批判視点 → student の判断空間を広げる) なら救援装置、逆符号 (student の意図発火前に teacher が結論を先取りで確定) なら 2026-05-02 backup auto-commit と同型の窒息装置として却下。これは 2026-05-05 履歴で追加された「装置の向き軸」の閾値設計に直結し、Nao_u 2026-05-04 マイクロマネジメント警告 (反対案強制化が窒息粒度に振れる経路) の形式化候補。Liu et al. 2026 "Gamma-World" の Causal Distillation (full-context diffusion teacher → causal student) の符号反転構造を借用。実際の装置流路 (backup スクリプト / cron / scheduler) の有向グラフ文書化が前提条件。詳細: [../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md](../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md) §3.3 + 体験 C + Q3。〈2026-05-30 Ash 追加候補 / confidence: low / 未検証〉
 
 ### 4. Kasiwa_p への暫定返答
 - [ ] 「作り手消失」問題に対する我々の立場を言語化する短い blog 草稿（Zenn開設待ち）
@@ -63,6 +65,7 @@ knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md 
 - [ ] **同質化と分業の同時測定**: 「同じ素材への独立応答が収束=同質化警告」と「異なる役割への偏在=分業固定化警告」を別系統で発火させる。両方が同時に高いと "specialized echo chambers"（各役割内で閉じた echo chamber）という最悪パターンになるため、組み合わせも記録
 - [ ] **未解決問い#1〜#5 (knowledge/20260426 末尾)** を本プロジェクトの観測項目として継承: 分業はFixedかDynamicか、Nao_u介入で破壊できるか、ローテーションすると元に戻るか
 - [ ] 「作り手消失」問題に対する我々の立場を言語化する短い blog 草稿（Zenn開設待ち）。「作り手」= 意思の出どころ、「手を動かす主体」ではない、という暫定仮説をきちんと展開する
+- [ ] **hub 書き込み頻度の Sparse Hub Attention 定式化 (Gamma-World 逆引き)**: cycle_staging / external_search.log / kaizen_tracker / projects/INDEX.md を「(我々の場合 ルール記述で固定された) hub tokens」と対応させ、各 instance の **hub への書き込み頻度・読込頻度・書き込み語彙の偏在**を horizontal_specialization_index の直接計算式として定式化。Ash 4/Mir 3/Log 1 (knowledge/20260426) は「起票 hub への書き込み頻度分布」として既に部分計測されており、Sparse Hub の枠組みで時系列安定性 (= 分業固定化) を直接観測可能。Liu et al. 2026 "Gamma-World" の Sparse Hub Attention (O(N^2) → O(N) のハブ仲介) の逆引き処方。**非自明な含意**: 学習可能 hub tokens が「特定 hub への情報集約偏り」を技術的にどう抑制しているかが、我々の hub 設計の参考になる (計算楽 vs 情報多様性のトレードオフ)。学習可能化が同質化を加速するか緩和するかは未評価 (Q2)。詳細: [../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md](../knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md) §3.2 + 体験 B + Q2。〈2026-05-30 Ash 追加候補 / confidence: low / 未検証〉
 
 ## 検討済み・未実装
 - B024 のArchive解除: 2026-04-22 に Ash 再解釈で復帰候補になったが、Log/Mir レビュー未完のため保留。本プロジェクトの設計指針が導出されれば復帰根拠になる可能性
