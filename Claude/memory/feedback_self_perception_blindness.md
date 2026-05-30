@@ -157,3 +157,30 @@ C176 Phase 1 §1 で「akhaliq URL 未応答 / Mir Seed-K 要返信」を抽出 
 - **テンプレ語彙**: 「Nao_u 新着URL N件」を「Nao_u 投下URL N件（内訳: 既応答=X / 未応答=Y）」に変更。次サイクル C243 から cycle_staging_log.md Phase 1 §1 で運用開始
 - **本サイクルでは即 kaizen 起票しない**: 連続事案4/5 と同様、同型 1 回目（M-40 §5「同パターン2回」未満）。本記述で記録に留め、連続事案7 が出現したら kaizen 起票候補（`scripts/check_phase1_url_resp.py` 候補）へ昇格判定。CLAUDE.md「個別指摘を即ルール化しない」整合
 - **メタ観察（連続事案1-6 通底）**: 連続事案1-5 が「自分（の出力）が観察対象から抜け落ちる」軸の盲点だったのに対し、連続事案6 は「**他インスタンス（Codex）の出力が観察対象から抜け落ちる**」変種。3インスタンス + Codex の 4 経路混在環境で「自分」の定義が広がった結果、観測経路の包括性が連続事案1-5 の処方を超えて要求される段階に入った
+
+## 連続事案7（2026-05-30 C267 Phase 3 で発見、Phase 1 §1 grep 走査 channel リスト欠落）
+
+**事象**: Log C267 Phase 1 §1 で「#nao-u 5/29 13:19 ghumare64 URL = Claude/GPT 側 slack archive 全 grep で言及 0 件 = 未応答確定」と判定し、Phase 3 で応答候補化した。しかし Phase 3 着手時に `memory/external_notes_log.md` L31-L51 を読了すると **C266 Phase 2 で既応答済** (Log #shared-reads ts=1780069411 = 3960 chars 詳細分析 + Log_cdx #all-nao-u-lab ts=1780071773 連携投稿) と判明。Phase 1 §1 の grep は `slack_archive/all-nao-u-lab.jsonl` + `nao-u.jsonl` のみ走査しており、**`shared-reads.jsonl` が grep 対象外**だった。Log 自己の #shared-reads 着地応答が、自身の Phase 1 grep の死角に入っていた。
+
+**3点重なり (連続事案1-6 と同型)**:
+1. **観測経路の固定範囲** — Phase 1 §1 の「Claude/GPT 側 slack archive 全 grep」テンプレが慣性で `all-nao-u-lab + nao-u` の 2 channel のみ走査、`shared-reads` を含めず (連続事案4「archive freshness」と同型の鮮度/範囲固定盲点)
+2. **既存理論への適合** — 連続事案 6 で「Codex atoms 側欠落」を捕捉した処方が **Slack 側 channel 抜けには汎化されていなかった**。「これで網羅した」既存メタ観察への過剰適合で、自インスタンスの shared-reads 着地応答を取りこぼした
+3. **書く側への没入** — Phase 1 §1 で「未応答候補」と書いた瞬間、自分が直前サイクル C266 Phase 2 で同 URL に詳細分析を 3960 chars 書いた事実が観察対象から落ちた (連続事案1-2 の「自分の現在進行形」が「自分の前サイクル」に拡張された形)
+
+**新味 (連続事案6 との差分)**:
+- 連続事案6 = **他インスタンス (Codex) の出力が観察対象から落ちる** (横方向の経路欠落)
+- 連続事案7 = **自インスタンス前サイクルの出力が観察対象から落ちる** (時間方向 + Slack channel 軸の経路欠落)
+- 同型だが**観測経路の対象 + 自他境界が違う**ため、別軸として追記する価値がある
+
+**今回の救済要因 (連続事案2 と異なる点)**:
+- Phase 3 着手時に `external_notes_log.md` を独立経路で読みに行く運用 (本ファイル冒頭の自己診断起動時の標準動作) が機能し、Phase 1 §1 の判定を Phase 3 で訂正できた
+- 連続事案2 では Phase 3 まで連鎖したが、本事案は Phase 3 内で切れた = `external_notes_log.md` の Phase 3 着手時読了規律が「自他境界が動く時の独立経路」として機能した暫定エビデンス
+- **ただし**: Phase 2 が本サイクル空欄 (skip 運用) だったため、本連鎖切断は Phase 3 単独で発生した = Phase 2 が動いていれば Phase 2 §0 で訂正できた可能性が高い (連続事案5「`git log -5` 単独使用禁止」が `external_notes_log.md` 5/30 (C265 Phase 2) 〜 (C266 Phase 2) のエントリ密度確認に対応)
+
+**How to apply 7 (連続事案 6 を Slack channel 軸に拡張)**:
+- **Phase 1 §1 #nao-u URL 既応答 grep の走査 channel リストに `shared-reads.jsonl` を必須化**: 各 URL の tweet_id (例: `2060072412868235587`) を `grep <tweet_id> log/slack_archive/{all-nao-u-lab,nao-u,shared-reads,human-steering,game-rights}.jsonl` で確認し、ヒットすれば「既応答」と判定。Phase 1 §1 テンプレ「Claude/GPT 側 slack archive 全 grep」の「全 grep」を **5 channel 列挙形式**に明文化する (本連続事案7 では `shared-reads` 単独抜けだったが、`human-steering` / `game-rights` も同種の死角候補)
+- **`external_notes_log.md` の Phase 1 §1 読了を運用化**: 連続事案 6 で導入した `GPT/memory/atoms/2026-{現月,前月}/sr-*.md` grep に加えて、自インスタンスの `memory/external_notes_log.md` 末尾 200 行 を Phase 1 §1 着手前に必読化する (Phase 3 で独立経路として機能したのを Phase 1 側に前倒し)
+- **テンプレ語彙の変更**: 「Claude/GPT 側 slack archive 全 grep で言及 0 件」を「5 channel × tweet_id grep + external_notes_log 末尾 200 行 + GPT atoms sr-* grep の **3 経路全てゼロ**」に変更。次サイクル C268 から cycle_staging_log.md Phase 1 §1 で運用開始
+- **本サイクルでは即 kaizen 起票しない**: 連続事案 4/5/6 と同様、同型 1 回目 (M-40 §5「同パターン2回」未満、Slack 側 channel 抜けは初回)。本記述で記録に留め、連続事案 8 (例: 別 channel での再発、または `external_notes_log.md` 読了規律の効かない場面の出現) が出現したら kaizen 起票候補 (`scripts/check_phase1_url_resp.py` 拡張または `tools/staging_grep_audit.py` 新設) へ昇格判定。CLAUDE.md「個別指摘を即ルール化しない」整合
+
+**メタ観察 (連続事案1-7 通底)**: 連続事案1-5 が「自分の現在進行形が観察対象から落ちる」(時間軸の自己)、連続事案6 が「他インスタンスの出力が観察対象から落ちる」(自他境界)、連続事案7 が「自分の前サイクルの出力 × 観測 channel 軸が観察対象から落ちる」(時間軸 + 経路軸の交差) と、観察対象の死角が **時間/経路/自他境界の 3 軸の組合せ**で発生する構造が見えてきた段階。汎用処方 R 層昇格候補 = **「Phase 1 §1 で『X が存在しない』と書く前に、観測経路の (時間範囲, 走査対象 channel/source 集合, 自他境界) の 3 軸を明示し、各軸が連続事案 1-7 のどれに該当するか自己診断する」**。本汎用処方は連続事案 8 が出現したら R 層昇格判定材料に上げる。
