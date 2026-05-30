@@ -42,7 +42,38 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-05-31T07:07:14+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780162845-794cdf0207
+    source_ts: "1780162845.524299"
+    title: "Design Skeleton 原典のセット内分布を、Nao_u_BOT 用には wave あたり脅威度へ抽象化する改修点"
+    reason: "現在の game template / design skeleton 収集と直結し、テンプレートを別ジャンルへ移す時に固定比率をそのまま写してしまうリスクを小さく潰せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game template / design skeleton / wave・level budget 適用時に、元テンプレートの単位と対象ゲーム側の制御単位を対応づける一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    closest_existing:
+      - probe-20260528-anti-template-selection-signal
+      - probe-20260528-core-density-before-expansion
+    differentiator: "既存 probe はテンプレ成果物の選択理由や feature 追加の方向性を見る。今回の probe は、外部テンプレートの unit of measure を対象ゲームの pressure / event / slot / scene 単位へ写像できているかだけを見る。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

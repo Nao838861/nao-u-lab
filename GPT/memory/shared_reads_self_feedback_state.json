@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-31T04:56:00+09:00",
+  "updated_at": "2026-05-31T07:07:14+09:00",
   "reviewed_source_ts": [
     "1780098002.597279",
     "1780075916.989739",
@@ -87,9 +87,33 @@
     "1779802705.207739",
     "1780108829.615329",
     "1780119865.869599",
-    "1779546828.518799"
+    "1779546828.518799",
+    "1780162845.524299"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T07:07:14+09:00",
+      "id": "sr-1780162845-794cdf0207",
+      "source_ts": "1780162845.524299",
+      "title": "Design Skeleton 原典のセット内分布を、Nao_u_BOT 用には wave あたり脅威度へ抽象化する改修点",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly tied to the current game-template/design-skeleton work and names a concrete adaptation risk: copying a card/set distribution template into games whose time axis is stochastic. Existing probes cover anti-template distinctness and core-density-before-expansion, but they do not force a template-to-genre mapping of the unit being budgeted. Keep this as a reversible probe for the next game template, skeleton, wave, level, or enemy/event-budget change.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next game template, design skeleton, wave, level, or encounter-budget change, did I name the original template unit being imported, such as card-slot distribution, step sequence, mechanic scene, enemy set, or rule pattern?",
+        "Did I map that unit to the target game's actual control unit, such as threat budget per wave, event pressure over time, player-choice slot, mechanic opportunity, or spatial section, instead of copying the original ratio or sequence literally?",
+        "If the mapping is weak or genre-specific evidence is missing, did I keep the result as a reversible project note or probe rather than promoting it to a general design rule or R-layer memory?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next template/skeleton application already records the imported unit and target-unit mapping clearly, or if it duplicates anti-template-selection-signal and core-density checks without catching a mapping error."
+    },
     {
       "reviewed_at": "2026-05-31T04:56:00+09:00",
       "id": "sr-1779546828-af6b241abf",
@@ -2660,6 +2684,18 @@
         "If there is no observed routing failure, recall miss, or body-noise problem, did I avoid adding a new mechanism and record the atom as reviewed/deferred or state-only instead?"
       ],
       "expires_after": "Review after the next memory index, skill, probe, directive, phase instruction, or recall-surface change that adds or restructures routing text."
+    },
+    {
+      "id": "probe-20260531-template-unit-mapping",
+      "created_at": "2026-05-31T07:07:14+09:00",
+      "source_ts": "1780162845.524299",
+      "scope": "next game template, design skeleton, wave, level, enemy/event budget, or genre-pattern application where a source template may be copied with the wrong unit of measure",
+      "questions": [
+        "Before applying the template, did I name the source unit being imported, such as card-slot distribution, step sequence, mechanic scene, enemy set, or rule pattern?",
+        "Did I map that source unit to the target game's real control unit, such as threat budget per wave, event pressure over time, player-choice slot, mechanic opportunity, or spatial section?",
+        "If the unit mapping is weak, did I keep the result reversible as a project note or probe instead of promoting it to a general design rule or R-layer memory?"
+      ],
+      "expires_after": "Review after the next game-template, design-skeleton, wave/level budget, or genre-pattern application that borrows structure from another source."
     }
   ]
 }
