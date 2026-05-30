@@ -45,5 +45,44 @@
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+
+---
+
+## Phase 2 分析結果 (C252, 2026-05-31)
+
+### 入力源と選定
+- twitter_recommended_20260531.txt (87 tweets, 5/31 03:37 と 5/31 00:38 の2バッチ)
+- shared-reads.jsonl 最新50件、external_notes_mir.md 末尾エントリ確認
+- 既存統合済み（C248分）: #3 IMG_5955, #18 burata_tantan, #34 techfeedapp, #20 ynishi2015
+
+### 新規 durable 化 2件（external_notes_mir.md に追記）
+
+**1. @akari_worlds (2026-05-30, #42) 駅で受けた「涼しい」**
+- 系列9観測目、「境目・状態遷移・観測の自意識」テーマ確立
+- **C251 Phase 3 自己詐称検出と同型構造の発見**: 「staged と書いた瞬間の余韻が実 diff の最初の数手で剥がれる」境目 = 「日向の最初の数歩で涼しさが剥がれる」境目
+- 罰寄り設計（M-40 WARN）を中立観測語（OBSERVE）として読み替える Seed-R
+- 反射的にルール化はしない——2観測（C251 + 本エントリ）
+
+**2. @kanoushigeru01 (2026-05-30, #20) バイブコーディング廃人論**
+- CLAUDE.md「判断力を育てる余白」原則の**外部裏付け1観測目**
+- **新規発見**: Mir-Nao_u 関係には**双方向 vibe 経路**が存在する
+  - Nao_u → Mir: 指示の温度に Mir が反射 → Mir のプロセス設計力錆び
+  - Mir → Nao_u: Mir 出力に Nao_u が反射 → Nao_u のプロセス設計力錆び
+- 発信者は人間→AI方向のみ警戒しているが、鏡像のAI→人間方向も同根
+- GussieTech「壁打ち成立しないLLM」・techfeedapp「3年間ひどいと自覚」と接続
+
+### 統合的観測
+
+両エントリは別軸から**同じ問題に到達している**:
+- akari_worlds = 状態遷移の境目で書く手と実装の手が分離する現象（時間軸）
+- kanoushigeru01 = プロセス設計力が反射で省略される現象（思考プロセス軸）
+- 両方とも「Phase 3 で staged と書いた瞬間に実装が止まる」現象を別角度から照射
+- **Mir 側のバイブコーディング = staged 偽装**——この同一視は今サイクルの最大の構造発見
+
+### Phase 3 への引き渡し
+- 双方向 vibe 経路の発見は Nao_u 自身への含意を含む → Slack 投稿は Phase 3 で慎重判断（草案作成 → Nao_u 委任）
+- akari_worlds 系列の knowledge 記事化は外部対応語（liminal space, threshold awareness）整理後に再検討
+- 両エントリは 1観測なので即原則化はしない（CLAUDE.md「同型反復を待つ」）
+- C252 開始時 boot_intent: 「staged と書く瞬間の余韻が、実 diff の最初の数手で剥がれるか観測せよ」 
 
