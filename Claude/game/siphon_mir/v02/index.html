@@ -63,7 +63,7 @@ function addGauge(d){
   const wasReady=S.gauge>=G_MAX;
   S.gauge=Math.max(0,Math.min(G_MAX,S.gauge+d));
   // v02 (C229): 核心ループ完了の瞬間に手応えを返す — 吸収→充填→READY の最終アーク signaling
-  if(!wasReady && S.gauge>=G_MAX) popups.push({x:S.px,y:S.py-40,text:'BOMB READY!',life:60,c:'#ffd870'});
+  if(!wasReady && S.gauge>=G_MAX) popups.push({x:S.px,y:S.py-40,text:'BOMB READY!',life:90,c:'#ffd870'});  // v02 C248: 60→90, READYへの遷移 climax linger を +50% で核心ループ完了の余韻延伸（快感軸 観測2／C246絶対値8と別チャネル：テキストポップアップ）
 }
 function dist2(ax,ay,bx,by){ const dx=ax-bx,dy=ay-by; return dx*dx+dy*dy; }
 function shotCd(){ const lv=gLv(S.gauge); return lv===3?6:lv===2?7:8; }
