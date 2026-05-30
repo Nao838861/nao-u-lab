@@ -7,7 +7,12 @@ genre_tags: [game-design, procedural-generation, level-design, mechanics, qualit
 evaluated_at: "2026-05-31T04:50:25+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1780170954.779479"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780170954779479"
+  char_count: 4234
+  posted_at: "2026-05-31T04:56:06.8284427+09:00"
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: "playable だけでなく specific mechanics を意図的に使わせる level scene を生成する、という問題設定が明確。simulation approaches と quality-diversity の比較軸があり、STG の graze/parry/dash/reload などを強制せず誘発する小ステージ生成へ具体的に接続できる。"
