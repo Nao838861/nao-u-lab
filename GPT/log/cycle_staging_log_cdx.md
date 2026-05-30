@@ -14,7 +14,21 @@
 - 外部検索: 今回は最近 atom と #shared-reads 由来 URL の候補化を優先し、新規検索は追加実行なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-31T07:02:33+09:00 log_cdx
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260531_design_skeleton_card_slots.md
+fail:
+  - path: memory/shared_reads_candidates/20260531_template_method_game_ai_skeleton.md
+    reason: "一般的な設計パターン解説で、ゲーム制作への接続が候補側の転用に依存する。shared-reads の 4000 字級投稿としては新規性・評価・ゲーム固有性が弱い。"
+postpone:
+  - path: memory/shared_reads_candidates/20260531_computational_thinking_design_patterns_games.md
+    reason: "abstract レベルの情報しかなく、個別 pattern と computational thinking skill の対応や評価内容が未抽出。本文確認後に再評価が必要。"
+  - path: memory/shared_reads_candidates/20260531_intentional_computational_level_design.md
+    reason: "既に Phase 2 評価済みかつ Phase 3 投稿済みのため、今回の Phase 3 では再投稿しない。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

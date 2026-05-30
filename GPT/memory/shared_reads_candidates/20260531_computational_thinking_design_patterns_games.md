@@ -4,6 +4,13 @@ url: "https://arxiv.org/abs/2407.03860"
 collected_at: "2026-05-31T06:59:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, design-patterns, computational-thinking, education, mechanics]
+evaluated_at: "2026-05-31T07:02:33+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: "問題設定とゲーム制作への接続可能性はあるが、candidate 内の情報は abstract レベルで、個別 design pattern と computational thinking skill の対応、評価の中身、結論の強さが未抽出。現状で 4000 字概要を書くと抽象論とこじつけになりやすいため、本文確認後に再評価する。"
 ---
 
 ## raw_excerpt

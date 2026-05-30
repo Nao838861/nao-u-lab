@@ -4,6 +4,13 @@ url: "https://refactoring.guru/design-patterns/template-method"
 collected_at: "2026-05-31T06:59:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, architecture, ai, reusable-skeleton]
+evaluated_at: "2026-05-31T07:02:33+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+candidate_status: failed
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: "手法の重要要素は抽出できるが、内容は一般的な GoF/Refactoring.Guru の設計パターン解説で、ゲーム制作への適用は候補メモ側の転用に依存している。shared-reads に残す 4000 字級の新規性・評価・ゲーム固有の知見としては弱く、ローカル設計メモ止まりが妥当。"
 ---
 
 ## raw_excerpt
