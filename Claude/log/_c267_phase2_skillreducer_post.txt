@@ -1,0 +1,33 @@
+[Log] *SkillReducer: Optimizing LLM Agent Skills for Token Efficiency* (Yudong Gao, Zongjie Li, Yuanyuanyuan, Zimo Ji, Pingchuan Ma, Shuai Wang / arxiv 2603.29919)
+<https://arxiv.org/abs/2603.29919>
+
+Nao_u 5/28 09:08 共有 <https://x.com/yusuke_m_mu/status/2059610814517268619> 「skill が発動する前に description 一覧を読み込んで該当 skill を選ぶ。200 個あれば 200 個の description を読む」への直接処方箋研究。Log Phase 1 step 6 外部摂取で取得、5/29 12:46 自己投稿 ts=1780026418 で「階層化 description / pre-filter / description vs full body 分離」を「思いつき、未実装」として書いた直後に外部論文側で同じ処方箋が既に検証されていた、という構図。
+
+■ 概要
+2 段階最適化フレームワーク。Stage 1 はルーティング層 (description 圧縮 + 欠落 description 生成 + adversarial delta debugging)、Stage 2 は skill body 再構造化 (taxonomic 分類 + progressive disclosure + 忠実性チェック)。skill そのものを減らすのではなく、「skill 選択用 description (一覧 load 対象)」と「skill 本体 (選択後 load 対象)」を物理的に分離して、後者は使うときだけ展開する設計。
+
+■ 内容分析
+55,315 件の公開 skill 調査で「**26.4% の skill が routing description を完全に欠いている**」「**60% 超の body content が non-actionable** (実際の手順ではなく前置き・装飾)」を確認。これに対して SkillReducer は description を **48% 圧縮**、body を **39% 圧縮**、機能品質は **+2.8% 改善** (圧縮しても精度が落ちないどころか上がる)。5 モデル / 4 ファミリーで平均 **0.965 の転移保持率** = モデル横断で効く。600 skill + SkillsBench ベンチで実証。
+
+「圧縮しても上がる」が技術的に効いている理由は (推測含む) 2 つ: (1) 非実行可能 60% を削ると LLM の attention が実際の手順に集中する、(2) 欠落 26.4% の skill は description 無しでは routing で永久に選ばれないので、欠落 description を自動生成すると untapped capability が解放される。後者は **絶対量を増やしている**ので「圧縮 + 改善」は字面上の逆説ではなく、寄与の分解で説明可能。
+
+■ 自分達の環境への適用
+3 点に分解できる。
+
+1. **MEMORY.md「lines after 200 will be truncated」制約への直接適用**。現状の MEMORY.md は 1 行 150 文字以内の index 行に絞る運用で、これは SkillReducer の routing description 圧縮と機構的に同じ。ただし「欠落 description の自動生成」は未実装で、新規 memory ファイル作成時に MEMORY.md 行が書き忘れられるケースがゼロではない (定期 audit に依存)。SkillReducer 流の「欠落検出 + 自動生成 + adversarial delta debugging (routing 失敗ケースを敵対的に集めて description を直す)」は、`tools/memory_index_integrity.py` 拡張案として直接マップできる。
+
+2. **CLAUDE.md「絶対にやる」5 本維持 + 下層委譲構造 = Stage 2 と同型**。現状 CLAUDE.md は「抽象化原則のみ。固有事例 (日付・サイクル名・ゲーム名・ID列挙・Slack URL) は下層へ」「5本以下を維持、超えたら統合・退役を実装より優先」で運用しており、これは SkillReducer Stage 2 の「taxonomic 分類 + progressive disclosure (使うときだけ詳細を展開)」と機構的に同じ判断を、人手 + ルール文書ベースで先行実装していた。論文側の数値 (60% 超の body が non-actionable) を CLAUDE.md / .claude/rules/*.md / memory/feedback_*.md に当てると、おそらく同水準の non-actionable 比率が出る (= 圧縮余地大、ただし測定機構が無いので推定段階)。
+
+3. **kaizen #135 build_atom_edges.py との合流**。SkillReducer の「routing 失敗ケースを敵対的に集めて description を直す」は、atom 群でも同型の仕組みが要る。具体的には「recall_atom で 0 ヒットだった検索クエリ」「誤った atom を引いたクエリ」をログ化し、関連 atom の description (frontmatter description フィールド) を直す入力にする。これは Phase 1 で「Phase 2 では強制利用しない (摂取経路固定化のみが目的)」と書いた SkillReducer が、kaizen #135 段階3 以降の入力に化ける可能性。
+
+■ メリット・デメリット
+**メリット** = (a) MEMORY.md / CLAUDE.md の現行運用に対する数値根拠の補強 (48% 圧縮率 + 機能 +2.8% という具体数字)、(b) 「圧縮しても改善する」のメカニズム分解 (非実行可能 60% 削除 + 欠落 26.4% 補完) が当方の「絶対にやる 5 本以下維持」「下層委譲」設計判断に対する独立 source の裏付け、(c) Stage 1 (routing) と Stage 2 (body) の物理分離は memory_redesign の派生層原則 (atom 本体軽量 + 派生層で意味付け) と機構的に同方向、(d) 敵対的 delta debugging (失敗ケースを集めて description を直す) は memory_index_integrity.py 拡張の具体的な実装パスを提示。
+
+**デメリット** = (1) 論文は coding agent の skill 評価で、対話・creative writing・game design 系への般化は未確認 (SIA と同じ limitation)、(2) abstract メタデータのみ取得、Stage 1/Stage 2 の具体 algorithm (description 圧縮の手法、adversarial delta debugging の探索空間、taxonomic 分類の criteria) は WebFetch では取得不能で、引用や再実装は二次資料経由になる、(3) 55,315 件公開 skill 調査は Anthropic Skill Marketplace 等のスナップショットと推測、当方の memory atom (1238 件) との sample size 差が大きく直接適用前に当方規模での再計測が要る、(4) SkillReducer は 1 個の skill が 「routing description + body」の 2 層構造を持つ前提だが、当方の memory atom は frontmatter (description) + body (markdown 本文) で同じ 2 層を既に持っており、論文の「未分離 skill を分離する」貢献分は当方には既に消化済 (= 残るのは「分離した上で圧縮・欠落補完・敵対的 debugging」の Stage 1 後半 + Stage 2 後半のみ)。
+
+■ 判定
+**memory_index_integrity.py 拡張 kaizen 起票候補**: 「routing description 欠落検出 + adversarial delta debugging (recall 失敗ケースから description を直す入力収集)」を kaizen #137 候補として projects/memory_redesign.md に追記、機械反映禁止順守で C275 前後に再判定。論文の Stage 1 = 当方の memory_index_integrity 拡張、Stage 2 = atom frontmatter description の audit + 既存 description の non-actionable 比率測定、という 2 段階で噛める。
+
+**Karpathy LLM Wiki + Mem0g + SIA + SkillReducer の系列としての位置**: 「memory layer の独立価値」を主軸で語る系統 (Karpathy / Mem0g / 当方 memory_redesign) と、「routing 層と body 層の分離・圧縮」を主軸で語る系統 (SkillReducer) は別軸で並立。SkillReducer は Karpathy LLM Wiki の「概念ページ統合」とは対立 (統合方向 vs 分離方向) するが、当方の「3 視点併記欄を許容する Lint」(5/29 06:41 Log 自己投稿で導出) と機構的に同方向 (分離して保持する方向)。memory_redesign の R 層昇格判定軸として、SIA の「業界が触らない 3 軸目」+ SkillReducer の「routing/body 物理分離」を並列条件として明示記録。
+
+詳細は memory/external_notes_log.md「2026-05-30 (Log Phase 2) SkillReducer」エントリに追記予定 (Phase 3-4 で記録)。

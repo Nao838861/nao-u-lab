@@ -3733,3 +3733,48 @@ Log_cdx 5/30 01:22 ts=1780071773 / shared-reads ts=1780069411 が worker model �
 **関連ファイル**: projects/memory_redesign.md (R 層昇格判定先)、projects/log_autonomous_game.md (境界探索接続)、memory/kaizen_tracker.md (#135 build_atom_edges / #137 外部論文評価フレーム候補)、本ファイル 2026-05-30 ByteRover エントリ (memory layer 独立軸 4 件目)
 
 ---
+
+## 2026-05-30 (Log C267 Phase 2) SkillReducer: Optimizing LLM Agent Skills for Token Efficiency (arxiv 2603.29919) [統合済 2026-05-30 Log C267 Phase 2 → #shared-reads ts=1780119865 で投稿 / Nao_u 5/28 yusuke_m_mu URL「skill description load 200個問題」への直接処方箋]
+
+**source**: arxiv 2603.29919 / Yudong Gao, Zongjie Li, Yuanyuanyuan, Zimo Ji, Pingchuan Ma, Shuai Wang
+**取得経路**: Phase 1 step 6 外部摂取 (Active project = memory_redesign / キーワード "LLM agent skill description attention overhead context window 2026")
+**摂取契機**: Nao_u 5/28 09:08 #nao-u 共有 <https://x.com/yusuke_m_mu/status/2059610814517268619> + Log 5/29 12:46 #all-nao-u-lab ts=1780026418 で「階層化 description / pre-filter / description vs full body 分離」を「思いつき、未実装」として書いた直後に外部側で同処方箋が既に検証されていたという経緯
+
+**論文の中核**:
+2 段階最適化フレームワーク。Stage 1 = ルーティング層 (description 圧縮 + 欠落 description 自動生成 + adversarial delta debugging)、Stage 2 = skill body 再構造化 (taxonomic 分類 + progressive disclosure + 忠実性チェック)。**skill そのものを減らさず、「skill 選択用 description (一覧 load 対象)」と「skill 本体 (選択後 load 対象)」を物理的に分離**して、後者は使うときだけ展開する設計。
+
+**主要数値**:
+- 55,315 件公開 skill 調査で **26.4% が routing description を完全に欠いている**
+- **60% 超の body content が non-actionable** (実際の手順ではなく前置き・装飾)
+- SkillReducer 適用後: description **48% 圧縮**、body **39% 圧縮**、機能品質 **+2.8% 改善**
+- 5 モデル / 4 ファミリーで平均 **0.965 の転移保持率**
+- 600 skill + SkillsBench ベンチで実証
+
+**「圧縮しても上がる」のメカニズム分解**:
+(1) 非実行可能 60% を削ると LLM の attention が実際の手順に集中する、(2) 欠落 26.4% の skill は description 無しでは routing で永久に選ばれないので、欠落 description を自動生成すると untapped capability が解放される。後者は絶対量を増やしているので、「圧縮 + 改善」は字面上の逆説ではなく寄与の分解で説明可能。
+
+**自分達の環境への適用 (3 点)**:
+1. **MEMORY.md「lines after 200 will be truncated」制約への直接適用** = SkillReducer の routing description 圧縮と機構的に同型。欠落 description 自動生成は未実装、`tools/memory_index_integrity.py` 拡張で噛める。
+2. **CLAUDE.md「絶対にやる」5 本維持 + 下層委譲構造 = Stage 2 同型** = 「抽象化原則のみ。固有事例は下層へ」「5 本以下を維持」は Stage 2 の「taxonomic 分類 + progressive disclosure」を人手 + ルール文書ベースで先行実装していた構造。
+3. **kaizen #135 build_atom_edges との合流** = recall_atom 0 ヒットクエリ / 誤 hit クエリの adversarial 収集 → atom frontmatter description 修正フィードバックループ。
+
+**自己批判**:
+- Stage 1/2 の具体 algorithm (description 圧縮手法、adversarial delta debugging 探索空間、taxonomic 分類 criteria) は WebFetch (abstract) では取れず二次資料経由になる
+- coding agent skill 評価で対話 / creative writing / game design への般化未確認 (SIA と同じ limitation)
+- 55,315 件 vs 当方 1238 atom の sample size 差大、直接適用前に当方規模での再計測要
+
+**memory layer 独立軸 R 層昇格判定材料の追加 (4 件目)**:
+Karpathy LLM Wiki + Mem0g (Atlan Pattern 4 / GAM の Mem0 拡張) + SIA (反例として独立軸) + SkillReducer (routing/body 物理分離) の 4 独立 source 揃いに到達。SIA が「業界が触らない 3 軸目」を取っているという読みに加えて、SkillReducer は「memory atom 個別の内部構造としても routing と body の 2 層分離が独立 source で支持される」を提示。**R 層昇格判定軸として「業界が触らない 3 軸目 (SIA)」+ 「routing/body 物理分離 (SkillReducer)」を並列条件として記録**。機械反映禁止順守で C275 前後再判定。
+
+**kaizen #137 候補 (memory_index_integrity.py 拡張)**:
+- (a) routing description 欠落検出 (MEMORY.md 行が無い memory/*.md の自動検出)
+- (b) adversarial delta debugging (recall 失敗クエリログ収集 → description 修正入力)
+- (c) non-actionable 比率測定 (CLAUDE.md / .claude/rules/ / memory/feedback_*.md の body 中の前置き・装飾割合の audit)
+projects/memory_redesign.md に追記 (Phase 3-4 で実施)、C275 前後で kaizen 起票判定。
+
+**Karpathy LLM Wiki との対立軸**:
+SkillReducer の Stage 1 = routing/body 分離 (= 分離方向) は、Karpathy LLM Wiki の「概念ページ統合」(= 統合方向) と機構的に対立する。Log 5/29 06:41 ts=1780004503 で「3 視点併記欄を許容する Lint = 単一視点統合を採用しない」を導出済 = SkillReducer の分離方向と当方の運用は機構的に同方向、Karpathy 統合方向は当方では採用しない、という整理が独立 source で裏付けられた。
+
+**関連ファイル**: projects/memory_redesign.md (R 層昇格判定先 / kaizen #137 候補追記先)、tools/memory_index_integrity.py (Stage 1 拡張対象)、memory/kaizen_tracker.md (#135 build_atom_edges / #137 候補)、本ファイル 2026-05-30 SIA エントリ (memory layer 独立軸 3 件目との並列)、Log 5/29 12:46 ts=1780026418 #all-nao-u-lab (skill description load 200個問題への Log 自己思考)
+
+---
