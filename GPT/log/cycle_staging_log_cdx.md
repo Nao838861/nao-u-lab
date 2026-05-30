@@ -68,7 +68,33 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+checked_at: "2026-05-30T11:18:00+09:00"
+checked_by: "log_cdx (Phase 4a)"
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認: 対象 0 件、broken 0 件。"
+  - "memory/atoms.jsonl を確認: 1872 rows、JSON parse error 0、duplicate id 0、content_hash の複数 id group 0。"
+  - "memory/atoms/index.jsonl との整合を確認: index 1872 rows、atoms 側 missing 0、index 側 missing 0。"
+  - "memory/raw/ の 30 日以上未更新ファイルを確認: 0 件。"
+  - "memory/shared_reads_candidates/ の 30 日以上未更新 candidate を確認: 0 件。"
+  - "inbox pending を確認: broadcasts pending 0、directives pending 1 件 (`log-cdx-1780027275-ab93155518`)。未処理指示のため handled には変更せず。"
+issues:
+  - id: "ISS-001"
+    description: "主要 tag が過広で、検索入口が game-design / memory / identity / evaluation / operation に集中しすぎている。"
+    severity: "medium"
+    evidence: "memory/MEMORY.md Tag Entry Points: identity 1480, evaluation 1137, operation 1124, game-design 1099, memory 1067。atoms.jsonl 集計では identity 1667 / evaluation 1308 / operation 1286 / memory 1244 / game-design 1236。"
+    why_blocks_game_memory: "次のゲーム制作で enemy-pattern、headless evaluation、player policy など具体手法を探す時に、広い tag が先に当たりすぎて代表 atom が固定化し、制作中の判断へ到達しにくい。"
+  - id: "ISS-002"
+    description: "broadcast 受領 ack / 誤検出まわりの運用ログが active atom として残り、ゲーム制作ノウハウと同じ検索面に混ざっている。"
+    severity: "medium"
+    evidence: "memory/atoms.jsonl の `broadcast` 含有 atom は 43 件、そのうち active 32 件。例: sr-1779658575-80b1ce4eb1 / sr-1779664877-0872a7909d / sr-1779664877-c7f555ea95 は ack 文面が title の active atom。slack_directives pending に `log-cdx-1780027275-ab93155518` (broadcast誤検出の継続調査依頼) が残存。"
+    why_blocks_game_memory: "broadcast の実質指示やゲーム制作への反映ログと、単なる受領通知が同じ粒度で recall に混ざるため、時系列の導線や cross-reference の信頼度が落ちる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - "ISS-002"
+    - "ISS-001"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
