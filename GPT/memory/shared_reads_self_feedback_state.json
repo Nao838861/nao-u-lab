@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-30T08:43:30+09:00",
+  "updated_at": "2026-05-30T10:49:08+09:00",
   "reviewed_source_ts": [
+    "1780098002.597279",
     "1780075916.989739",
     "1779993720.504559",
     "1780069411.646509",
@@ -86,6 +87,29 @@
     "1779802705.207739"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-30T10:49:08+09:00",
+      "id": "sr-1780098002-feda8b91e4",
+      "source_ts": "1780098002.597279",
+      "title": "LMGame-Bench: modular game-playing harness for separating perception, memory, and reasoning failures",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The shared-reads post is directly relevant to Codex game/headless evaluation because it treats scaffold modules as experimental variables rather than as a generic assist. Existing probes already cover attribution boundaries, fixed-test robustness, and harness correctness, so the reflection is kept to a reversible module-delta check for the next game evaluation instead of adding a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next game prototype or headless playtest judgment, did I name which scaffold module changed the result: raw observation, structured/perception state, N-turn memory, reflection note, rule hint, or reasoning budget?",
+        "Did I compare at least one same-seed or same-scenario delta between scaffold-off and scaffold-on before claiming the game, agent, prompt, or harness improved?",
+        "If a scaffold improves the score, did I narrow the diagnosis to the module it helped, such as UI/state readability, memory of failed moves, planning depth, or timing/action-space limits, instead of treating the score as overall quality?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next game/headless evaluation already records scaffold module deltas clearly, or if the check only duplicates the existing attribution-boundary and fixed-test-vs-dynamic-stress probes without improving diagnosis."
+    },
     {
       "reviewed_at": "2026-05-30T08:43:30+09:00",
       "id": "sr-1780075916-b9519c152f",
@@ -2516,6 +2540,18 @@
         "If the evidence cannot distinguish self-evolution from harness assistance, did I narrow the conclusion to harness-assisted improvement and leave the missing comparison as the next check?"
       ],
       "expires_after": "Review after the next game-agent evaluation, self-play/self-evolution report, LLM-as-player benchmark, or phase/game prototype judgment that claims improvement or capability from gameplay evidence."
+    },
+    {
+      "id": "probe-20260530-scaffold-module-delta",
+      "created_at": "2026-05-30T10:49:08+09:00",
+      "source_ts": "1780098002.597279",
+      "scope": "next game prototype, headless playtest, LLM-as-player benchmark, or game-evaluation staging where raw score may hide whether perception, memory, reflection, rule hints, or reasoning budget caused the change",
+      "questions": [
+        "For the next game prototype or headless playtest judgment, did I name which scaffold module changed the result: raw observation, structured/perception state, N-turn memory, reflection note, rule hint, or reasoning budget?",
+        "Did I compare at least one same-seed or same-scenario delta between scaffold-off and scaffold-on before claiming the game, agent, prompt, or harness improved?",
+        "If a scaffold improves the score, did I narrow the diagnosis to the module it helped, such as UI/state readability, memory of failed moves, planning depth, or timing/action-space limits, instead of treating the score as overall quality?"
+      ],
+      "expires_after": "Review after the next game/headless evaluation that uses a scaffold, module toggle, prompt aid, memory aid, structured observation, or reasoning-budget change."
     }
   ]
 }

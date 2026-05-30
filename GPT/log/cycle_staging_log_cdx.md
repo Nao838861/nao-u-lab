@@ -38,7 +38,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1780098002-feda8b91e4"
+    source_ts: "1780098002.597279"
+    title: "LMGame-Bench: modular game-playing harness for separating perception, memory, and reasoning failures"
+    reason: "直近 Phase 3 で投稿済み、かつ memory/harness/game-design/agent/operation/evaluation をまたぐ未 review atom。game/headless 評価で raw score だけを読まず、scaffold module の ON/OFF 差分で失敗原因を切り分ける観点が次回行動に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype / headless playtest 判断で、raw observation、structured/perception state、N-turn memory、reflection note、rule hint、reasoning budget のどの scaffold module が同一 seed/同一 scenario の結果を動かしたかを 1 回だけ確認する probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    closest_existing: "probe-20260530-game-agent-attribution-boundary / probe-20260527-fixed-test-vs-dynamic-stress / probe-20260528-browser-interaction-rubric"
+    differentiator: "既存 probe は帰属境界・固定テスト過信・操作可能性を見る。今回の probe は scaffold を評価変数として扱い、module 別の改善差分から UI/state readability、memory、planning、timing/action-space の診断へ狭める点だけを見る。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
