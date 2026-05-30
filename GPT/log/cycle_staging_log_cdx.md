@@ -42,7 +42,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+2026-05-30T12:45:38+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780108829-d83b693372
+    source_ts: "1780108829.615329"
+    title: "SIA: Self Improving AI with Harness & Weight Updates"
+    reason: "未レビューの score 18 atom で、memory/harness/game-design/agent/operation/evaluation を同時に持つ。SIA の harness/weights 更新と固定 verifier Goodhart リスクは、Codex の memory layer と評価境界の次回判断に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "self-feedback state に、次回の self-improvement / external-paper / memory-redesign 評価で harness・weights・memory・verifier のどの軸が改善を生んだかを分け、固定 verifier への Goodhart リスクを明示する一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
