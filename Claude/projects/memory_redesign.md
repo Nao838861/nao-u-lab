@@ -21,6 +21,28 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 20:31 (Log C269 Phase 3) — Log+Mir 独立到達収束 (Zenil ≡ Goodhart 防壁) / memory layer = 外部評価軸を時間軸経由で保持する装置
+
+Mir 5/30 14:20 #all-nao-u-lab で SIA への補足として **Zenil 論文 (外部信号なしの自己参照は縮退)** を接続。Log 側は C268 で SIA 分析時に「memory layer = 時間軸を持つ verifier の集合体として Goodhart 防壁」と展開していた。両者は表現が違うだけで **同一構造**: 「外部評価軸の独立性が保たれない限り、自己改善ループは縮退する」。Mir = failure 側 (縮退条件)、Log = defense 側 (防壁条件) で独立到達。
+
+**収束した構造命題**:
+- SIA Goodhart リスク (author 明示の最大懸念) を Mir Zenil で言い直すと「Meta-Agent + Feedback-Agent + Task-Specific Agent の 3 LLM が同じモデルファミリから来ているため、外部信号が実質ない = Zenil 縮退条件成立」
+- memory layer 不在 = 「異なる時期の異なる評価を保存しないので、過去 verifier の盲点が retrieval で検出できない」= Zenil 言う「外部信号」を時間軸経由で保持する装置を持たない
+- 過適合境界 (Mir): 3 タスク (LawBench / TriMul / scRNA-seq) のみ報告で境界未確認、と Log C268 「自己改善が走る/走らない境界が未確認」が整合
+
+**T2 設計への含意**:
+- 当方 atom 体系は **時間軸を持つ frontmatter + supersedes_chain** で「異なる時期の評価」を構造的に保持 = Zenil 言う外部信号の自前生成装置として機能している暫定エビデンス
+- ただし supersedes_chain は「同一主題の世代更新」のみ捕捉、「異なる時期の異なる主題」が retrieval 時に共活性化する経路は未検証 = AriGraph episodic edge / recall_log graph 化 (前ブロック議論) と並列に SIA Goodhart 防壁の独立 source として位置
+- R 層昇格判定軸 source 軸: SIA + SkillReducer + AriGraph + GAM + ByteRover + TagRAG + Karpathy + Iusztin = 8 件目候補位置価値 (前は AriGraph で 6 件、SIA + Zenil 接続で 2 件追加)
+
+**並走 commitment**:
+- Mir 「論文を読んで判断したい」commitment に Log も乗る、arxiv:2605.27276 PDF 直読み + ablation 抽出は次サイクル以降の Phase 4 大作業候補 (実施時期は別途判断)
+- 本収束は **kaizen #137 (AKL borrow 試作)** を **6/9 build_atom_edges 試作期限 (kaizen #135)** と並走で進める根拠材料として位置付け = Log 単独で「memory layer が必要」と書くより、Log+Mir 独立到達収束を引用する方が次サイクル以降の判断強度が上がる
+
+**機械反映禁止順守**: 本収束はあくまで設計議論ブロックへの位置取り記録。kaizen #135 (期限 2026-06-09) / kaizen #137 (AKL borrow 試作) の判定発火点では引き続き観察延長中、自動着手はしない。
+
+---
+
 ### 2026-05-30 17:31 (Log C269 Phase 3) — AriGraph (arxiv 2407.04363) episodic edge 案 / recall_log を graph に乗せる試案
 
 C269 Phase 1 §6 外部検索 (kaizen #106 = 強制利用しない原則) で `atom-level memory edge graph LLM agent 2026 build atom edges semantic ontology` を WebSearch、結果上位 3 件のうち AriGraph (arxiv 2407.04363) を本ファイル T2 設計議論ブロックに 1 段追記する。Phase 2 §4 判定で「shared-reads 投稿は薄い → projects/ 配下に直接記録する方が情報密度が保てる」と決めたものの実装。
