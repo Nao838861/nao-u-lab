@@ -58,7 +58,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown/path link scan checked 0 explicit local links; missing 0."
+  - "memory/atoms.jsonl: 1899 rows parsed; parse_errors 0; duplicate ids 0; normalized_content_hash duplicate groups 0."
+  - "memory/raw/: 132 files checked; 30日以上 LastWriteTime がない archive 対象 0."
+  - "memory/shared_reads_candidates/: 30日以上 LastWriteTime がない candidate 0."
+  - "memory/slack_directives.jsonl: pending log-cdx-1780027275-ab93155518 を handled に更新。broadcast誤検出対処は tools/codex_slack_directives.py の ack ledger/stale guard で反映済みと確認。"
+  - "memory/slack_broadcasts.jsonl: pending 0; 追加更新なし。"
+issues:
+  - id: ISS-4A-001
+    description: "Slack broadcast の受領 ack や誤検出フォローアップが memory atoms に通常知識として多数残っている。ingest 側に除外/隔離の痕跡はあるが、既存 atom には `Nao_u からの全員宛 broadcast を log_cdx も受領しました。` 系が複数残り、ゲーム制作ノウハウと同じ検索面に混ざっている。"
+    severity: medium
+    evidence: "rg result: memory/atoms/2026-05/sr-1778623983-e827cdc142.md, sr-1778698559-ce147f720e.md, sr-1778767901-93a623c379.md, sr-1779200358-f431569123.md など。pending directive: memory/slack_directives.jsonl id=log-cdx-1780027275-ab93155518."
+    why_blocks_game_memory: "次のゲーム制作時に broadcast / Slack / Nao_u 指示で recall すると、実質的な設計判断ではなく受領通知が混入し、過去の制作判断や教師コメントへの到達を遅らせる。特に broadcast 誤検出の運用ノイズが、ゲーム制作に活かすべき Nao_u 原文や Log 固有の反応と同じ階層に見える。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-4A-001]
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
