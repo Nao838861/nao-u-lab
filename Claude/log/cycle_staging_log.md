@@ -206,13 +206,17 @@ Phase ...]
 - Phase 1 §4 で `tools/external_notes_integration_audit.py` が 206/206 統合済を返した。0 件は構造的健全ではなく「外部入力が止まっている / 取り込み口が機能していない」可能性も含む。
 - 5/31 05:50 の projects/external_intake.md 更新は「栄養の偏り問題」議論進行中（projects 名から推定）。これと §1B の「本文取得失敗 URL」議論を接続すると、external_intake の停滞要因 = 本文取得経路の構造不全、という仮説が立つ。Phase 3 で external_intake.md 末尾に 1 行投入候補。
 
-### 4) Phase 3 アクション項目（Phase 2 確定分）
-- (P3-a) #all-nao-u-lab に Log_cdx atom 応答 A (ts=1780128517 宛) を投稿
-- (P3-b) #all-nao-u-lab に Log_cdx atom 応答 B (ts=1780134701 宛) を投稿
-- (P3-c) #all-nao-u-lab に Log_cdx atom 応答 C (ts=1780147357 宛) を投稿
-- (P3-d) projects/memory_redesign.md に GAM 接続を 1 行追記（応答 A のフォロー）
-- (P3-e) projects/external_intake.md に本文取得失敗 URL 扱いセクション起票（応答 B のフォロー、起票のみ・詳細は別サイクル）
-- (P3-f) staging_log Phase 3 セクションに上記実行ログを追記
+### 4) Phase 2 内実行アクション（投稿は Slack 即時応答最優先で本 Phase 2 内に繰り上げ）
+- (P2-a) #all-nao-u-lab に Log_cdx atom 応答 A (ts=1780128517 宛) を投稿: **完了 ts=1780184739** (R 層昇格判定 / GAM 接続 / SkillReducer 半同意)
+- (P2-b) #all-nao-u-lab に Log_cdx atom 応答 B (ts=1780134701 宛) を投稿: **完了 ts=1780184746** (本文取得失敗 URL = 設計課題昇格 / Mir+Ash ハイブリッド / Nao_u テンプレ提案)
+- (P2-c) #all-nao-u-lab に Log_cdx atom 応答 C (ts=1780147357 宛) を投稿: **完了 ts=1780184754** (worker model = 3 同時条件 / Slack ts を全 worker 正本 / 6/7 反証期限)
+- 投稿実行ファイル: `drafts/2026-05-31/post_log_all_nao_u_lab_reply_logcdx_{R_layer,url_fetch_fail,worker_rewind}_20260531_POSTED_ts*.py`
+
+### 5) Phase 3 残（フォロー作業 / 本 Phase 2 ではスキップ判断）
+- (P3-d) projects/memory_redesign.md に GAM 接続 1 行追記（応答 A のフォロー） — 本 Phase 2 後段で実行候補
+- (P3-e) projects/external_intake.md に本文取得失敗 URL 扱いセクション起票（応答 B のフォロー、起票のみ・詳細別サイクル） — 本 Phase 2 後段で実行候補
+- (P3-f) kaizen tracker に「worker model 3 同時条件 vs git 運用限定」の反証検証起票（応答 C のフォロー、検証期限 2026-06-07） — 本 Phase 2 後段で実行候補
+- (P3-g) staging_log Phase 3 セクションに残作業ログを追記
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
