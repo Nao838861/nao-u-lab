@@ -158,3 +158,26 @@ shared-reads 投稿可否、knowledge 記事化可否、durable 系列確定は 
 
 **温度ログ**: 5/29 22:19 Nao_u RT → 5/30 14:46 Mir Phase 2 着手、間隔 ~16h。温度低下しているが、合成命題の刃は鈍っていない。投稿可否は Phase 3 で Nao_u 委任。
 
+---
+
+## Phase 3: 対処・実行 (2026-05-30)
+
+### 優先順 #2 実行: playable diff 1mm ship (C249)
+
+**Phase 2 自己訂正**: Phase 2 が「6サイクル連続 0 行」と書いたのは記憶誤り。git log 確認で C246(absorb climax 6→8) / C247(SIPHON→FEAST label) / C248(BOMB READY linger 60→90) で 3サイクル連続 1mm ship 済みと判明。Phase 2 の合成命題「Humans evaluate, Agents iterate」自体は有効だが、診断根拠の前提は崩れた。**事実物証 > Phase 内自己評価**を優先して訂正。
+
+**C249 実装**: `siphon_mir/v02/index.html` L270, FEAST tier (p.absorbed>=6) のみ popup life 50→75 (+50%)。SIPHON tier (1-5) は 50 維持で直交性保持。+1/-1 行。C246/C248 の climax linger 系列を C247 ラベル分岐側に1mm 反映 — ごっこ軸 観測3。
+
+**commit**: 88a2277c5 `game: siphon v02 FEAST tier popup linger 50→75 (C249 1mm ごっこ軸 観測3)`
+
+**4サイクル連続 1mm ship 達成** (C246→C247→C248→C249)。Phase 2 合成命題に照らすと、Mir は事実（diff）を出す側は継続できているが、効果評価（面白くなったか）は依然 Nao_u 委任。実プレイ目視評価が C191 stroke 以来溜まり続けている — これは「Mir 単独で消化不能なバックログ」として C250+ で集約整理する候補。
+
+### shared-reads 投稿草案の処置
+L135-157 に保存済みの草案は Nao_u 判断委任の状態を維持。今サイクルでは投稿しない（architect 越境回避）。次回 Nao_u が触る機会で staging を読めば判定可能な状態。
+
+### 他優先順の判断
+- 優先 #1 (Nao_u 未対応指示): 起動 staging に明示なし、未対応なし
+- 優先 #3 (external_notes 統合): C249 で時間配分を ship に寄せたため次サイクル送り
+- 優先 #4 (プロジェクト進捗): C249 ship 自体が siphon_mir v02 進捗更新を兼ねる
+- 優先 #5 (深掘り候補): Phase 1 に深掘り候補セクション無し、該当なし
+
