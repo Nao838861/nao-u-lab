@@ -32,9 +32,22 @@
 //
 // 使い方: cd game/log_autonomous_game/v002 && node agent_difficulty_proxy.js
 //   exit 0 = 30 試行全完走、exit 1 = 全試行が frame=0 で死ぬ等の frame 計算破綻
+//
+// C271 Phase 4 (2026-05-30): マルチシード化対応。CLI 引数:
+//   --seed-base N    : 各 trial の seed = N + i (default 20260527)
+//   --noise-scale F  : 移動 noise 振幅 (default 0.25)
+// build_proxy_csv.js 側から SEED ループでこの runner を 10 回叩く。
 
 const fs = require('fs');
 const path = require('path');
+
+function parseArg(name, fallback) {
+  const idx = process.argv.indexOf(name);
+  if (idx === -1 || idx === process.argv.length - 1) return fallback;
+  const v = process.argv[idx + 1];
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
+}
 
 const SRC_PATH = path.join(__dirname, 'game.js');
 const src = fs.readFileSync(SRC_PATH, 'utf8');
@@ -261,7 +274,8 @@ function clampPlayer(state) {
   state.player.y = Math.max(state.player.r, Math.min(H - state.player.r, state.player.y));
 }
 
-const MOVE_NOISE_SCALE = 0.25;
+const MOVE_NOISE_SCALE = parseArg('--noise-scale', 0.25);
+const SEED_BASE = parseArg('--seed-base', 20260527);
 
 function naiveGoodHandMove(state, rng) {
   let dx = 0, dy = 0;
@@ -413,9 +427,8 @@ function median(arr) {
 
 function main() {
   const trials = [];
-  const baseSeed = 20260527;
   for (let i = 0; i < TRIALS; i++) {
-    trials.push(runOne(baseSeed + i));
+    trials.push(runOne(SEED_BASE + i));
   }
 
   const allInstantDeath = trials.every(t => t.play_time_sec < 0.05);
@@ -435,6 +448,7 @@ function main() {
     extracted_params: {
       ECHO_FRAMES, BULLET_SPEED, SHOOT_INTERVAL, SHOOT_INTERVAL_PHASE2_MIN, SHOOT_GATE_Y_MAX, SHOOT_GATE_X_MIN, SHOOT_GATE_X_MAX, PLAYER_SPEED, ENEMY_VY_A, ENEMY_VX_D, ENEMY_VY_C, ENEMY_C_SWING_AMP, ENEMY_C_SWING_PERIOD,
       PLAYER_SPEED_STRENGTH, PLAYER_SPEED_AGENT,
+      SEED_BASE, MOVE_NOISE_SCALE,
     },
     median_clear_wave: median(trials.map(t => t.clear_wave)),
     median_residual_hp_ratio: median(trials.map(t => t.residual_hp_ratio)),

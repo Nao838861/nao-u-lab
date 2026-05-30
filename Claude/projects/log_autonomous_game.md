@@ -608,3 +608,41 @@ Phase 1 §6 で取得した arxiv 3 件 (Fly Fail Fix 2507.12666 / ScriptDoctor 
 2. **C272 以降**: 複数バージョン判定セット投入 (v001/v002/v003 の 3 バージョン × Log 自己判定セットを CSV 列追加) = 前提 2/3
 3. **C273 以降**: 連続フレーム取得 → 視覚体感 Q-D / Q-成功FB 実機判定 (C265 段階1 を段階2 連続フレーム化) = 前提 3/3
 4. **C274 以降**: Pearson 計算本体 (前提 1-3 充足後の素データで計算、目標 = proxy 4 指標 × q_* 6 列の 24 ペア相関係数 + 主要 4-6 ペアの解釈)
+
+---
+
+## 2026-05-30 C271 Phase 4: マルチシード化 — proxy 側分散獲得 (Pearson 前提 1/3 解消)
+
+**起票根拠**: C270 Phase 3 で [PEARSON_BLOCKER.md] を新設、前提 1 (マルチシード化) を C271 Phase 4 大作業として確定。本サイクル C271 Phase 4 で実装着地。
+
+### 実装サマリ
+- `agent_difficulty_proxy.js` に `--seed-base N` / `--noise-scale F` CLI 引数追加 (default は 20260527 / 0.25、後方互換維持)
+- `build_proxy_csv.js` に `--multiseed` モード追加 (10 SEED ∈ {1000000, 2000000, ..., 10000000} × 30 trials = 300 trials を順次実行)
+- noise_scale 1.5 を multiseed default に採用 — noise 0.25/0.5 では agent の決定論的死亡パターン (wave1 8.68 秒) を破れず分散ゼロのまま、1.5 まで上げて nearest-threat 寄与と同オーダーで初めて意味ある揺れが生じる ([MULTISEED_RESULT.md](../game/log_autonomous_game/v003/MULTISEED_RESULT.md) §noise_scale 選定理由)
+- 新規 `measurements_multiseed.jsonl` (300 行) / `proxy_vs_judgment_multiseed.csv` (300 行 + header)
+- 新規 [MULTISEED_RESULT.md](../game/log_autonomous_game/v003/MULTISEED_RESULT.md) — 300 trials std / SEED 毎代表値 / Pearson 計算可能性判定
+
+### 分散獲得確認 (完遂定義 3 = PASS)
+```
+proxy_clear_rate     std = 0.1706 (mean 0.0300, min 0, max 1)
+proxy_damage_per_min std = 2.0309 (mean 2.5195, min 0, max 8.5714)
+proxy_survival_time  std = 21.13  (mean 36.99, min 7.00, max 90.00)
+proxy_input_density  std = 0.9049 (mean 20.26, min 18.71, max 25.71)
+survival_rate (300 trials) = 0.0300
+```
+4 列すべて std > 0 → 完遂定義 3 PASS (variance_check_passed=true)
+
+### Pearson 計算到達ロードマップ更新
+- ✅ **前提 1**: proxy 側マルチシード化 (本サイクル C271 Phase 4 解消)
+- ❌ **前提 2**: 複数判定セット投入 — 依然 q_a/q_intro/q_success_fb/q_d/q_c/q_e 6 列固定値、σ_y=0 のため Pearson は依然未定義 (C272 以降の着手対象)
+- ❌ **前提 3**: 連続フレーム取得 → 視覚体感 Q-D/Q-成功FB 実機判定 (C273 以降の着手対象)
+
+### 着地物
+- [game/log_autonomous_game/v003/agent_difficulty_proxy.js](../game/log_autonomous_game/v003/agent_difficulty_proxy.js) — CLI 引数追加
+- [game/log_autonomous_game/v003/build_proxy_csv.js](../game/log_autonomous_game/v003/build_proxy_csv.js) — `--multiseed` モード
+- [game/log_autonomous_game/v003/measurements_multiseed.jsonl](../game/log_autonomous_game/v003/measurements_multiseed.jsonl) — 300 行素データ
+- [game/log_autonomous_game/v003/proxy_vs_judgment_multiseed.csv](../game/log_autonomous_game/v003/proxy_vs_judgment_multiseed.csv) — 300 行判定結合
+- [game/log_autonomous_game/v003/MULTISEED_RESULT.md](../game/log_autonomous_game/v003/MULTISEED_RESULT.md) — 結果集計
+
+### 次サイクル候補
+- C272 Phase 4 候補: 前提 2 (複数判定セット投入) — q_* 6 列に v001/v002/v003 ラベル + 異なる判定セット (Log/Mir/Ash 3 視点 or 異なる試行日付の Log 判定 2-3 セット) を追加して q_* 側 σ_y > 0 を作る
