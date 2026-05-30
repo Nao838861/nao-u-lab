@@ -186,4 +186,52 @@ Phase 1 終了。Phase 2 で発火候補を選別し、Phase 3-4 で実行する
 Phase 2 終了。Phase 3 で kaizen #136 段階2 hook 追加 + Phase 4 大作業選択を行う。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 (Phase 2 で既消化)
+- #all-nao-u-lab SIA 深掘り ts=1780108814 / ghumare64 並列補強 ts=1780108822
+- #shared-reads SIA 構造分析 ts=1780108829
+- **Phase 3 新規追加**: #kaizen-log Log C268 改善観察 ts=1780109381 (kaizen #136 段階1 PASS 暫定 5 サイクル連続成立 + Log_cdx 投稿併走照合死角発見 N=1 + kaizen #137 起票判定 N=1 試行記録)
+
+### 2) 検証ファースト原則 = 直近の未検証提案の検証結果埋め
+- **kaizen #136**: C266 staging memo 駆動 4 サイクル連続成立 → 本サイクル C268 で 5 サイクル連続成立として `memory/kaizen_tracker.md` に追記済 (段階1 PASS 暫定継続、構造強制保留継続)。**新規死角 (Log_cdx 投稿併走照合) N=1 観察記録、N=2 で段階2 着手判定発火**
+- **kaizen #135**: 段階1 PASS 段階2 着地済 (C254)、段階3 (recall_golden T0 ベンチ) は検証期限 2026-06-09 まで観察延長中。本サイクル新規動きなし
+- **kaizen #134**: 12 日連続 WARN=0 (C262 観察)、検証期限 2026-05-31 まで残 1 日、本サイクル新規動きなし
+- **kaizen #137 候補**: 外部論文評価フレーム化 (harness/weights/memory 3 軸分解) は N=1 試行のみで起票見送り (`feedback_few_rules_big_effect.md` 順守)、external_notes_log.md SIA エントリで試行的適用
+
+### 3) Active プロジェクト反映
+- **memory_redesign.md**: 「2026-05-30 (Log C268 Phase 2) — SIA full intake / memory layer = Goodhart 防壁仮説 / R 層昇格判定材料 6 件目」節新設済 (本ファイル先頭追記、R 層昇格条件 source 軸完全充足 + Goodhart 防壁仮説という新解釈軸が追加された状態で C275 前後判定発火点)
+- **external_intake**: external_notes_log.md に SIA エントリ追加済、3 軸分解評価フレーム N=1 試行記録
+
+### 4) 他インスタンス洞察
+- 本サイクル staging Pre-check `[他インスタンス洞察]` で 24 件未処理表示があったが、Phase 2 で SIA 深掘り + ghumare64 並列補強で 2 件消化 (Log_cdx 既応答併走照合死角発見も含む)。残 22 件は次サイクル以降 (C269 Phase 3 で消化想定)
+
+### 5) Phase 1 の「深掘り候補」消化
+- 本サイクル Phase 1 §1 が抽出した未応答系 (ghumare64 + SIA) は両方とも Phase 2 で深掘り消化済 = 空サイクルではない、追加抽出不要
+
+## 次フェーズの大作業
+
+### タイトル
+log_autonomous_game v003 capture_frames.js **段階2 連続フレーム取得 + Q-D 体感判定本番**
+
+### 完遂の定義 (Phase 4 終了時に何が成立していれば完了か、観測可能な条件)
+1. `game/log_autonomous_game/v003/capture_frames.js` を拡張: 段階1 (1 フレーム取得済) → 段階2 (60 秒分を 1 秒毎 = 60 枚 もしくは 5 秒分を 30fps = 150 枚 のダウンサンプル) を puppeteer-core + 既設 Chrome 経路で取得
+2. `game/log_autonomous_game/v003/frames/` 配下に連続 PNG 1 列 (frame_0001.png 〜 frame_NNNN.png) として保存、ファイル数が指定枚数と一致 (`ls frames/ | wc -l` で確認)
+3. `game/log_autonomous_game/v003/self_judgment.md` の Q-D 節に「実機なし判定 3/5 留まり」処方箋として本連続フレーム取得結果を追記、敵弾の到達点が事前認知できるかの体感判定 (Read tool で 5-10 枚抽出して視認、軌道予測の連続性確認) を 1 段落書き、暫定スコア更新
+4. Phase 4 commit prefix `game:` で commit + push、staging Phase 4 セクションに完了記録
+
+### 着手手順 (最初の 1 手と想定する手順)
+1. `game/log_autonomous_game/v003/capture_frames.js` を Read して段階1 構造を再確認
+2. 段階2 拡張: 連続フレーム取得ループ追加 (setInterval or for ループ + page.evaluate + page.screenshot)、frame_XXXX.png 連番保存
+3. ローカル HTTP サーバが既稼働かを確認 (なければ起動)、puppeteer-core + 既設 Chrome 経路で connect、Space 押下 → 連続キャプチャ → 保存
+4. Read tool で 5-10 枚を抽出視認、軌道予測の認知可能性を判定
+5. self_judgment.md Q-D 節に追記、必要なら capture_frames.js を 1 パラメータ調整
+6. commit prefix `game:` + push、staging Phase 4 セクション記入
+
+### 選んだ理由 (なぜこれを最優先にするか)
+- **CLAUDE.md「絶対にやる #1 = ゲームを動かして出す — 積み上げはその副産物」直線**: 本サイクルは Phase 2 で SIA full intake + 投稿 3 件 + memory_redesign 節追加 = 非 playable 寄りの出力が支配的、Phase 4 で game/* 直接編集 (capture_frames.js 拡張 + frames/ 配下生成 + self_judgment.md 更新) の playable diff を出す必要が高い
+- **30 分粒度 = 「進んだ」と言える単位**: 段階1 (1 フレーム取得) → 段階2 (連続 60-150 枚) は capture_frames.js への ループ追加 + Read tool 視認の単純拡張、新規創作要素ゼロ。30 分粒度に収まる
+- **Active project 停滞解消**: log_autonomous_game v003 の「[△] C240 Phase 2 追記候補: ヘッドレス連続フレーム画像化 → Log 自己再読み込みによる視覚体感擬似判定 (C266 以降の Phase 4 大作業候補)」が明示記録されている、本サイクルで着手する正当性あり
+- **Goodhart 防壁仮説接続**: 本サイクル Phase 2 §3 で導出した「memory layer = 時間軸を持つ verifier の集合体として Goodhart 防壁になり得る」を v003 の self_judgment Q-D に「単一 verifier (実機判定 3/5 固定) の盲点を異なる時期の連続フレーム視認で補う」として実装的に対応させる、概念実装の最小一歩
+- **Slack 投稿 1 本で済まない**: コード変更 + 視認判定 + self_judgment 更新 + commit/push の複合作業、staging Phase 4 報告まで含むため大作業基準を満たす
+
+Phase 3 終了。Phase 4 で大作業を実行する。

@@ -21,6 +21,61 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-30 (Log C268 Phase 2) — SIA (arxiv:2605.27276) full intake / memory layer = Goodhart 防壁仮説 / R 層昇格判定材料 6 件目
+
+C268 Phase 2 で Nao_u 5/29 22:19 共有の SIA 論文 (Hexo Labs, arxiv:2605.27276) を full intake。Log 5/29 22:22 自己コミット「論文と repo のリンクを取りに行って読む」の履行。本論文は **harness + weights の 2 軸同時更新**で自己改善する 3-LLM ループ (Meta-Agent + Task-Specific Agent + Feedback-Agent) を提案、LawBench +56.6pt / TriMul GPU kernel 14倍 / scRNA-seq denoising +502% を報告。
+
+**3-LLM 役割分担**:
+- **Meta-Agent**: 初期 harness 生成 (system prompt + tool 呼出ロジック + retry policy)
+- **Task-Specific Agent**: タスク実行 + full trajectory ログ
+- **Feedback-Agent**: harness/weights どちらを直すか選択 + 更新パッチ生成
+
+**3 軸分解**:
+- **harness 更新** = system prompt / tool 呼出ロジック / retry policy 書き換え (weights 固定)
+- **weights 更新** = LoRA rank 32 + 報酬信号で PPO/GRPO/DPO 動的選択 (harness 固定)
+- **W+H** = 両方同時
+
+**論文自身の自己批判 (limitation)**:
+1. **単一 verifier 共進化 Goodhart リスク**: author 明示の最大懸念。「verifier を 1 つに固定して harness + weights を共進化させると、verifier 関数の盲点に最適化される」
+2. **摂動に脆い固定点**: 自己改善が走った後の解が小さな環境変化で崩壊する
+3. **3 タスクのみ報告**: 自己改善が走る/走らない境界が未確認
+
+**memory layer 不在の位置確認**:
+- SIA は full trajectory **短期文脈**で代替、永続的記憶構造を持たない
+- 5/29 ghumare64 「worker model on shared bus」も memory を独立 worker として立てていない
+- **Nao_u_BOT の memory (atoms + index + 派生 edges) = 業界 (SIA / ghumare64) のどちらにも回収されない第 3 の選択**
+- Log_cdx の整理「memory atom は共有状態そのものではなく、worker が次の行動を選ぶための観測ログに近い」を受けると、memory worker の役割 = 「他 worker の trajectory を post-hoc に派生加工して、次サイクルの全 worker に観測材料として供給する」 = **bus への書き戻し型 worker**
+
+**派生する仮説 (memory layer = Goodhart 防壁仮説)**:
+- SIA author の「単一 verifier 共進化 Goodhart」に対して、memory layer は「**異なる時期の異なる verifier 観測を atom として保存**」 = 過去 verifier の盲点を retrieval で検出可能
+- 自分の 5 機構スコア (Q-導入/Q-D/Q-成功FB/proxy 4指標) にも同型リスク。score を上げる方向に harness + weights を共進化させると、score 関数の盲点に最適化される
+- → **memory layer は時間軸を持つ verifier の集合体として Goodhart 防壁になり得る**、というのが本サイクル独立到達した仮説。R 層昇格時に追加価値メモとして記録
+
+**R 層昇格判定材料への寄与 (独立到達 source 軸更新)**:
+| 件 | source | 寄与 |
+|---|---|---|
+| 1 | Karpathy LLM Wiki | 派生層原則の R 層初出 (実践) |
+| 2 | Paul Iusztin 統一グラフ | 同方向独立 source (実践) |
+| 3 | GAM (arxiv:2604.12285) | event/topic 2 層 (論文) |
+| 4 | TagRAG (arxiv:2601.05254) | 階層タグ chain (LLM 自動、逆向き) |
+| 5 | ByteRover (arxiv:2604.01599) | 4 階層 + AKL + 5-tier (論文) |
+| 6 | Akshay Pachaar Graphiti | スキーマ駆動 (C267 Mir digest) |
+| 7 (本サイクル追加) | **SIA (arxiv:2605.27276)** | **反例として独立軸 = memory layer 不在で harness+weights のみで自己改善 → memory layer の存在意義 = Goodhart 防壁という新解釈軸** |
+
+source 軸完全充足 + Goodhart 防壁仮説という新解釈軸が追加された状態で C275 前後の R 層登録判定発火点を迎える。
+
+**Slack 投稿実績**:
+- **#all-nao-u-lab SIA 深掘り** ts=1780108814 (3-LLM 役割分担 + ベンチ数値 + memory layer 不在の位置確認 + Goodhart 防壁仮説 + 境界探索接続)
+- **#all-nao-u-lab ghumare64 並列補強** ts=1780108822 (Log_cdx 整理に被せず、SIA との並列で見える memory worker の位置づけ角度を 1 点だけ追加)
+- **#shared-reads SIA 構造分析** ts=1780108829 (フル構造分析、Nao_u 指示「詳細な記述と分析、将来のアイデアの種」順守)
+
+**C268 Phase 3 申し送り**:
+- 本節追記で Active project 反映 (CLAUDE.md「絶対にやる #1 / #4」整合) は本サイクルで消化
+- kaizen #137 候補 (外部論文評価フレーム化: harness/weights/memory 3 軸分解) は N=1 起票見送り、staging で観察延長
+- Phase 4 大作業は別軸 (log_autonomous_game v003 capture_frames.js 段階2 = 連続フレーム取得 + Q-D 体感判定本番) を選定、本節の Goodhart 防壁仮説は次サイクル以降の memory_redesign R 層判定議論で本節へ自然帰着
+
+---
+
 ### 2026-05-30 (Log C267 Phase 3) — Mir digest 経由独立到達 source 集約 / SkillOpt + Code-as-Harness 新規軸 / 「ゲート設計」(og3_gata) 同方向到達
 
 C267 Phase 3 [他インスタンス洞察] 工程で `python slack_insight_digest.py` 出力 (Mir #shared-reads 直近 72h 26 件) 上位スコア帯を確認。**スコア 28-13 圏内の 6 件がエージェント記憶統一グラフ系で固まる**現象を観察。本ファイル L24-L37 の独立到達 source 5 件表 (C265 Phase 2 確定版) と照合し、Mir 経由 source の独立性検証 + 新規軸寄与を整理する。

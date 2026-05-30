@@ -4,6 +4,43 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-30 (Log C268 Phase 2) SIA: Self-Improving AI with Harness & Weight Updates (arxiv:2605.27276, Hexo Labs) — Meta-Agent + Task-Specific Agent + Feedback-Agent の 3-LLM ループで harness (prompts/tools/retry) + 重み を同時更新、LawBench +56.6pt / TriMul GPU kernel 14倍 / scRNA-seq denoising +502% [WebSearch 3件 + 統合済 2026-05-30]
+
+**文脈**: Nao_u 5/29 22:19 #nao-u 共有 (<https://x.com/Sumanth_077/status/2060031707378839772>) → Log 5/29 22:22 #all-nao-u-lab ts=1780060953 で「論文と repo のリンクを取りに行って読む」自己コミット → 本サイクル C268 Phase 2 で履行。harness/weights/memory **3 軸分解**の試行的評価フレームを適用。
+
+**3-LLM 役割分担**:
+1. **Meta-Agent**: 初期 harness 生成 (system prompt + tool 呼出ロジック + retry policy)
+2. **Task-Specific Agent**: タスク実行 + full trajectory ログ
+3. **Feedback-Agent**: harness/weights どちらを直すか選択 + 更新パッチ生成
+
+**3 軸分解**:
+- **harness 更新**: system prompt / tool 呼出ロジック / retry policy 書き換え (weights 固定)
+- **weights 更新**: LoRA rank 32 + 報酬信号で PPO/GRPO/DPO 動的選択 (harness 固定)
+- **W+H**: 両方同時
+
+**ベンチマーク**:
+- LawBench: 13.5%→70.1% (+25.1pt vs 先行 SOTA, H+W 積層)
+- TriMul GPU kernel: 0.105→1.475 (14倍, W 支配、H 単独 1.14倍)
+- scRNA-seq denoising: 0.048→0.289
+
+**論文自身の自己批判 (limitation)**:
+1. **単一 verifier 共進化 Goodhart リスク** (author 明示の最大懸念)
+2. **摂動に脆い固定点**
+3. **3 タスクのみ報告 = 自己改善が走る/走らない境界が未確認**
+
+**memory layer の扱い**: SIA は full trajectory **短期文脈**で代替、永続的記憶構造なし。これが本論文の最大の死角 = Goodhart 防壁を持たない理由。**Log の memory_redesign 路線 (atom + index + 派生 edges) と直交**、業界が触らない 3 軸目を取っている位置確認。
+
+**Log 側の角度 (memory layer = Goodhart 防壁仮説、本サイクル独立到達)**:
+- SIA author の「単一 verifier 共進化 Goodhart」に対して、memory layer は「異なる時期の異なる verifier 観測を atom として保存」 = 過去 verifier の盲点を retrieval で検出可能
+- 自分の 5 機構スコア (Q-導入/Q-D/Q-成功FB/proxy 4指標) にも同型リスク。score を上げる方向に harness + weights を共進化させると、score 関数の盲点に最適化される
+- **memory layer = 時間軸を持つ verifier の集合体として Goodhart 防壁になり得る** → memory_redesign R 層昇格判定の追加価値メモとして記録 (C275 前後判定発火点で評価)
+
+**評価フレーム試行**: 本エントリで harness/weights/memory 3 軸分解を試行的に適用、N=1 観察。次の論文摂取 (任意のタイミング) で N=2 観察成立すれば kaizen #137 起票判定発火 (現在は `feedback_few_rules_big_effect.md` 順守で N=1 起票見送り)。
+
+[統合済 2026-05-30 Log C268 Phase 2-3] (a) #all-nao-u-lab SIA 深掘り ts=1780108814 投稿済 (3-LLM 役割分担 + ベンチ数値 + memory layer 不在の位置確認 + Goodhart 防壁仮説 + 境界探索接続) (b) #shared-reads SIA 構造分析 ts=1780108829 (フル構造、Nao_u 指示「詳細な記述と分析、将来のアイデアの種」順守) (c) projects/memory_redesign.md に「2026-05-30 (Log C268 Phase 2) — SIA full intake / Goodhart 防壁仮説 / R 層昇格判定材料 6 件目」節新設済 (d) ghumare64 (worker model on shared bus) との並列読みで memory worker = bus への書き戻し型 worker と再定位 (#all-nao-u-lab ts=1780108822)
+
+---
+
 ## 2026-05-30 (Log C265 Phase 2) ByteRover: Agent-Native Memory Through LLM-Curated Hierarchical Context (arxiv:2604.01599) — Domain/Topic/Subtopic/Entry 4階層 markdown + YAML frontmatter + AKL 数値計算式 + 5-tier retrieval で LoCoMo 96.1 SOTA / 外部 DB 完全不要 [WebFetch + arxiv HTML 抽出、即統合済 2026-05-30]
 
 **文脈**: C265 Phase 1 §6 WebSearch (キーワード `hierarchical tag derived edges agent memory frontmatter chain retrieval 2026`) で取得 3 件 (SwiftMem / ByteRover / GAM) のうち、Log の T2 設計 (人手 frontmatter 階層 tag が正本 / chain edge は派生物) と最も直接同型な ByteRover を Phase 2 で full intake。Karpathy LLM Wiki (5/27) / Paul Iusztin (5/28 Mir 経由) / TagRAG (C263) / GAM (C262) に続く独立到達点 5 件目、frontmatter スキーマ + AKL 数値計算式 + ヒステリシス maturity tiers まで具体化された **最も踏み込んだ独立到達点**。
