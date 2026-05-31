@@ -105,4 +105,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780254192198539"
+  ts: "1780254192.198539"
+  char_count: 2234
+  verification: ok
+  draft: ".tmp/phase5_diary_20260601_0343.md"
+notes:
+  - "Phase 1-4 の staging を読み直し、COSPLAY の skill bank、human-wait boundary probe、Phase 4a の memory health issue を中心に日記化。"
+```
