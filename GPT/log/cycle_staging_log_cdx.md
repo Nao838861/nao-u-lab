@@ -38,7 +38,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779907501-9fd1ee322a
+    source_ts: "1779907501.386039"
+    title: "QuartetFuzz harness trust gate"
+    reason: "未レビューの high-score shared-reads のうち、harness / evaluation / game-design に直結する。LLM 生成 harness は crash/coverage の後段指標より先に source-level の信頼条件を確認する、という点が Codex の headless/game 検証に関係するため読む。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 2
+    total: 13
+  decision: defer
+  change:
+    summary: "none: 同論文の後続 atom sr-1779917637-f7ba583235 が既に game/headless harness 用 probe として reviewed_source_ts にあり、ここで新規 probe を足すと重複するため state の reviewed 記録だけ追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

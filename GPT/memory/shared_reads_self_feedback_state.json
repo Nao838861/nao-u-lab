@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-01T05:50:57+09:00",
+  "updated_at": "2026-06-01T07:41:06+09:00",
   "reviewed_source_ts": [
     "1780209448.200149",
     "1780195573.145499",
@@ -97,9 +97,28 @@
     "1778185532.659519",
     "1779928451.001299",
     "1780227395.204329",
-    "1780216954.986009"
+    "1780216954.986009",
+    "1779907501.386039"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-01T07:41:06+09:00",
+      "id": "sr-1779907501-9fd1ee322a",
+      "source_ts": "1779907501.386039",
+      "title": "QuartetFuzz harness trust gate",
+      "decision": "defer",
+      "reason": "Score 13. QuartetFuzz is relevant because it says harness trust must be checked at source-level before relying on crash or coverage output. However, the later active atom sr-1779917637-f7ba583235 already converted the same paper into a game/headless-harness probe and is already reviewed as source_ts 1779917637.659479. Adding another probe from the original post would mostly duplicate that decision. Keep this review as an anti-bloat state update only.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 2,
+        "total": 13
+      },
+      "defer_reason": "Covered by reviewed follow-up atom sr-1779917637-f7ba583235; no new directive or probe added."
+    },
     {
       "reviewed_at": "2026-06-01T05:50:57+09:00",
       "id": "sr-1780216954-3cb09e2394",
