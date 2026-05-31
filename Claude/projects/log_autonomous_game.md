@@ -102,6 +102,41 @@ Nao_u 5/26 06:10 #human-steering 指摘原文: 「一秒先の軌跡+×印みた
 
 ---
 
+## 2026-05-31 C275 Phase 3: Pearson 前提 4 軸の確立 — proxy 分散ゼロブロッカー解除手順を 3 → 4 段化
+
+**契機**: 本サイクル Phase 1 §6 で外部摂取した 3 論文 (Sharma 2512.24145 paired seed / Mustahsan 2512.06710 ICC / Burch 1612.06915 AIVAT) を Phase 2 §2 で操作対象直交配置として深掘り、#shared-reads ts=1780216954/1780216958/1780216961 で 3 連投投稿 + `memory/external_notes_log.md` L3962 即統合済。Phase 3 で v003 [PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) を 3 前提 → 4 前提化、Phase 4 大作業の前提 1 (マルチシード化) 着手判定の上流に「分散の事前診断」レイヤーを差し込む。
+
+### §1. 前提 4 = 分散の事前診断 (Mustahsan ICC)
+
+**何を診断するか**:
+- 観測分散 σ² の存在確認: 前提 1 (マルチシード化 N=10) でシードを増やした後、proxy_clear_rate / proxy_damage_per_min / proxy_survival_time / proxy_input_density の各列で σ² > 0 になるか
+- 観測分散がクエリ間 (シード間) とクエリ内 (再現性ノイズ) のどちらに分布しているか: ICC=variance_between / (variance_between + variance_within)、Mustahsan GAIA 0.304-0.774 / FRAMES 0.4955-0.7118 が経験則
+- 閾値: **ICC ≥ 0.3 未満は Pearson 計算不適格** (シード間分散が無視できる = エージェントが seed に対し同型決定論的)
+
+**前提 1 / 前提 4 の順序**:
+- 前提 1 (シード追加) → 前提 4 (ICC 診断) → ICC PASS なら前提 2 (複数バージョン判定セット) → Pearson 計算
+- ICC FAIL なら前提 1 のシード数を増やすか、agent_difficulty_proxy.js の MOVE_NOISE_SCALE / castLock 戦略乱択化など seed 感度を上げる設計に戻る
+
+**実装候補**: `tools/proxy_icc_diagnose.py` (kaizen #137 候補、本サイクル next_tasks 追加 t-260531174750-0637)。ICC(2,1) one-way random formula で proxy_vs_judgment.csv を入力に取り、列毎の ICC + 95% CI + Mustahsan 閾値判定を出力。実装本体は Phase 4 大作業の前提 1 着地後の判定発火。
+
+### §2. Sharma paired seed = 前提 1 の補強 (シード設計の改良)
+
+- 単純な独立シード N=10 ではなく、competing system (v002 vs v003 / 強化 agent vs 素朴 agent) を同一 seed で評価する paired evaluation を採用すれば variance reduction が厳密に成立 (Sharma の理論結果、条件 = positive correlation の存在のみ)
+- v002/v003 比較に paired seed を採用すれば、現状 30 ラン全て 8.68 秒固定の **「v002 と v003 で agent 挙動が一致するのは決定論的同型なのか、それとも単に MOVE_NOISE_SCALE=0.25 が seed を吸収できていないのか」を切り分け可能**
+- 前提 1 マルチシード化実装時に「paired seed mode (--paired)」を CLI オプションとして追加検討。本サイクル実装はしない、前提 4 ICC 診断のロジックと一緒に Phase 4 大作業候補 #2 として保留
+
+### §3. AIVAT = n=300 物理時間限界到達時の保留メモ
+
+- 不完全情報ゲーム向け variance reduction 技法、nature + 既知戦略 player 両方の variance を削減し必要サンプル 10 倍以上削減
+- 当面採用せず: 前提 1-4 のいずれかが解除されてシード数 N=300 級の物理時間ボトルネックに到達した時点で再評価
+- v003 の悪手 4 方針 (camper/lane-holder/blind-sweeper/nospecial) は AIVAT の「既知戦略 baseline」として転用候補だが、現時点では実装コスト > 効用
+
+### §4. 「絶対にやる #1 = ゲームを動かして出す」原則との整合
+
+本節は v003/PEARSON_BLOCKER.md の 3 → 4 前提化と Phase 4 大作業の上流設計のみで game/* playable diff には繋がらない、ただし Phase 4 大作業 = **前提 1 (マルチシード化) v003/agent_difficulty_proxy.js への SEED 引数追加 + N=10 ラン実測** を据えれば本節は Phase 4 着手の上流文書として機能。Phase 3 では本節 + PEARSON_BLOCKER.md 編集 + next_tasks 1 件追加で「揃えるための 1 手」を着地、Phase 4 で game/agent_difficulty_proxy.js への直接 commit に進む。
+
+---
+
 ## 2026-05-30 C264 Phase 4: 強化 agent (PLAYER_SPEED 1.5x) で proxy 再計測 — v001/v002/v003 比較
 
 **起票根拠**: C263 Phase 4 §5 a) 「強化 agent 導入で phase 2 到達」候補を最優先実装。素朴良手 agent が wave 1 内 (9.28s) で 30/30 死亡 → phase 2 (50-90s) 到達ゼロ = v003 改修対象 (phase 2 内 SHOOT_INTERVAL 90→60 frame 線形漸変) 計測不能の盲点を、agent 側 PLAYER_SPEED 1.5 倍化で打開できるかの試行。**game.js は変更せず、agent_difficulty_proxy.js 側だけ強化** (proxy 計測解像度の問題であり game balance の問題ではないため)。
