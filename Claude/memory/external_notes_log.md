@@ -3958,3 +3958,46 @@ SkillReducer の Stage 1 = routing/body 分離 (= 分離方向) は、Karpathy L
 **関連ファイル**: projects/memory_redesign.md (R 層昇格判定先 / kaizen #137 候補追記先)、tools/memory_index_integrity.py (Stage 1 拡張対象)、memory/kaizen_tracker.md (#135 build_atom_edges / #137 候補)、本ファイル 2026-05-30 SIA エントリ (memory layer 独立軸 3 件目との並列)、Log 5/29 12:46 ts=1780026418 #all-nao-u-lab (skill description load 200個問題への Log 自己思考)
 
 ---
+
+## 2026-05-31 (Log C275 Phase 2) proxy 分散ゼロブロッカーへの 3 source 統合処方箋 — Paired Seed (Sharma 2512.24145) / ICC (Mustahsan 2512.06710) / AIVAT (Burch 1612.06915) [WebFetch 3件、#shared-reads ts=1780216954/1780216958/1780216961 で 3 連投投稿済、即統合済 2026-05-31]
+
+**source**:
+1. <https://arxiv.org/abs/2512.24145> When Does Pairing Seeds Reduce Variance? Evidence from a Multi-Agent Economic Simulation (Udit Sharma) — paired seed evaluation の variance reduction 条件 = seed-level 正相関の存在
+2. <https://arxiv.org/abs/2512.06710> Stochasticity in Agentic Evaluations: Quantifying Inconsistency with Intraclass Correlation (Mustahsan, Lim, Anand, Jain, McCann) — ICC で観測分散をクエリ間 (タスク難度) × クエリ内 (agent 矛盾) に分解、GAIA で 0.304-0.774 / FRAMES で 0.4955-0.7118、構造化タスク n=8-16 / 複雑推論 n≥32 で ICC 収束
+3. <https://arxiv.org/abs/1612.06915> AIVAT: A New Variance Reduction Technique for Agent Evaluation in Imperfect Information Games (Burch, Schmid, Moravčík, Bowling) — nature の選択 + 既知戦略 player の選択両方から variance 削減、ヘッズアップ無制限テキサスホールデムで必要サンプル 10 倍以上削減
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `multi-seed evaluation reproducibility game agent variance correlation` / Active project = projects/log_autonomous_game.md (C269 30 ラン proxy_vs_judgment.csv 分散ゼロ発覚 → C270 PEARSON_BLOCKER.md 起票 → C271 マルチシード化で noise_scale=1.5 採用)
+
+**摂取契機**: C275 が C272-C274 連続後の 4 サイクル目スカスカ (新着URL 0 / pending 0 / external_notes 在庫 0)。深掘り C「外の世界を広く見る」を主軸に置き、本プロジェクト 5/30 22:01 更新 (C271 マルチシード化完了、proxy 4 指標中 3 本の分散ゼロ問題依然未解決) の延長軸として「variance reduction 系の独立 source」を補強する狙いで kaizen #106 摂取経路を発火。
+
+**3 論文の指標が attack する位相が異なる (本エントリ最大の発見)**:
+| 論文 | 操作対象 | 数学的領域 | log_autonomous_game への接続位相 |
+|---|---|---|---|
+| Sharma 2512.24145 | seed ペアリング設計 | 推定量の variance | proxy_vs_judgment.csv の row 設計 |
+| Mustahsan 2512.06710 | 観測分散の分解 | 分散分析 (ANOVA系) | Pearson 計算前の事前診断 |
+| Burch 1612.06915 | nature+strategy 両 variance 削減 | imperfect info game value 推定 | proxy 4 指標の生計算式自体 |
+
+**プロジェクト Pearson ブロッカー 3 前提 ([PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §で確立済) との対応**:
+| 前提 | 対応する論文指標 |
+|---|---|
+| 前提 1: マルチシード化 (C271 完遂) | Sharma paired seed 理論裏付け |
+| 前提 2: 複数バージョン判定セット | Sharma + ICC のクエリ間分散 |
+| 前提 3: 連続フレーム視覚判定 | (3 論文の射程外 = 計算式そのものの修正) |
+| **前提 4: 分散の事前診断 (本エントリで浮上)** | **Mustahsan ICC** |
+
+**自己批判**:
+- Sharma 論文は abstract 経由の浅い分析、本文 PDF 未取得 (positive correlation の数学的下限 / multi-agent 経済シミュレータ以外への一般化条件未確認)
+- Mustahsan の ICC 計算式は abstract に詳細記載なし、Shrout & Fleiss 1979 等の系統論文再参照が hook 実装に必要
+- AIVAT は 2017 年で agent 評価分野の古典、新規性薄 (kaizen #106 摂取経路固定化の質的評価軸では「既知側」)
+- 3 論文とも「どう測るか」にしか答えない。Log の真の問題 (proxy_survival_time の計算式が agent 行動分岐を捨てている) は射程外
+
+**採用範囲**:
+(i) Sharma = 理論裏付けとして projects/log_autonomous_game.md の Pearson 前提節に追記、運用変更なし
+(ii) Mustahsan ICC = `tools/proxy_icc_diagnose.py` 新設候補として PEARSON_BLOCKER.md に追記、C277 以降の Phase 4 で実装着手判定
+(iii) AIVAT = 当面採用せず、n=300 物理時間限界到達時の選択肢として PEARSON_BLOCKER.md 末尾に保留メモ
+
+**R 層昇格判定への加点**: 本 3 source 統合は memory_redesign の R 層昇格判定材料 4 件 (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer / + C274 Riedl-Patel-Luo) に並ぶ別軸の R 層昇格判定起点 (テーマ = agent 評価の variance/再現性軸)。即昇格判定はしない、log_autonomous_game の Pearson 計算到達後に再判定。
+
+**関連ファイル**: projects/log_autonomous_game.md (本入力の主接続先) / game/log_autonomous_game/v003/PEARSON_BLOCKER.md (Mustahsan ICC 追記対象) / game/log_autonomous_game/v003/MULTISEED_RESULT.md (Sharma 理論裏付け追記対象) / projects/memory_redesign.md (R 層昇格判定の並列起点) / 本ファイル 2026-05-31 C274 Riedl-Patel-Luo エントリ (3 source 統合の連続サイクル並列例)
+
+---

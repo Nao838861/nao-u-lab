@@ -1,49 +1,53 @@
-# log_cdx Cycle Staging — 2026-05-31 15:28
+# log_cdx Cycle Staging — 2026-05-31 17:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-2026-05-31T15:29:46+09:00 log_cdx Phase 1
-
-- Slack pending: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
-- 既存照合: Agentic PCG / RuleSmith / LLM playability / HDPCG / Lap / One Policy Infinite NPCs / World-Gen to Quest-Line / Sketchar / Gamification with Purpose / TCG procedural relatedness は既存 candidate または atom があるため、新規 candidate としては作成しない。
-- 収集: `memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md` — GDC 2026 での vision-based QA、GDD 由来の test planning、AI gameplay agents による自律テスト実行の事例。
-- 収集: `memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md` — game feel を vibration だけでなく impact / texture / ambient / gesture haptics へ分解する SDK 市場整理。
+- 2026-05-31T17:30+09:00: Slack inbox 確認。`slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260531_state_of_level_design_2026.md` — GDC 2026 Level Design Summit panel。level / mission / area design の現場変化を複数スタジオ視点で拾う入口。
+  - `memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md` — Overwatch の Stadium 新モード制作。既存 game identity を守りつつ shop / third-person camera / hero 拡張を入れる live game 改造プロセス。
+  - `memory/shared_reads_candidates/20260531_level_one_diabetes_onboarding_game.md` — Level One 事例。不可視で複雑な医療判断を、rhythm / particle / two-button loop で playable mental model に変える onboarding design。
+- メモ: 既存候補には `Runtime Evaluation of PCG`, `Agentic PCG`, `GUI Agents for Continual Game Generation`, `Stone Librande paper prototype`, `Rules of the Game 2026` が既に存在したため、今回の新規保存対象からは外した。
 
 ## Phase 2: 分析
-2026-05-31T15:32:41+09:00 log_cdx Phase 2
-
 ```yaml
-total_candidates: 2
+total_candidates: 3
 pass:
-  - memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md
-    reason: "haptics 語彙整理としては有用だが、現時点では具体的な制作適用と 4000 字概要の中核が弱い。"
+  - memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md
+  - memory/shared_reads_candidates/20260531_level_one_diabetes_onboarding_game.md
+fail:
+  - path: memory/shared_reads_candidates/20260531_state_of_level_design_2026.md
+    reason: "panel 予告だけでは手法の中核・評価・結論が薄く、4000字級の概要にすると推測が混ざる。"
+postpone: []
+evaluated_at: 2026-05-31T17:39:49+09:00
+evaluator: log_cdx (Phase 2)
+notes: "Phase 2 の範囲に従い、投稿・新規収集・記憶改修は行っていない。"
 ```
 
 ## Phase 3: Shared-reads 投稿
-2026-05-31T16:57:28+09:00 log_cdx Phase 3
-
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780209448200149"
-    char_count: 3433
+  - candidate: memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217144998889
+    char_count: 3523
+  - candidate: memory/shared_reads_candidates/20260531_level_one_diabetes_onboarding_game.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217145779779
+    char_count: 3522
 skipped: []
+posted_at: 2026-05-31T17:45:46+09:00
+poster: log_cdx (Phase 3)
+notes: "Slack chat.postMessage ok. chat.getPermalink は invalid_arguments だったため、channel id と ts から通常形式 permalink を構成し、conversations.history で投稿存在を確認した。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-2026-05-31T17:04:00+09:00 log_cdx Phase 3b
-
 ```yaml
 self_feedback:
   selected:
-    id: sr-1780202153-6fdc925745
-    source_ts: "1780202153.217609"
-    title: "Synergizing Code Coverage and Gameplay Intent: Coverage-Aware Game Playtesting with LLM-Guided Reinforcement Learning"
-    reason: "Phase 3 で投稿した SMART は、改修差分の code coverage と gameplay intent を別々に合格扱いせず、変更 anchor が意味を持つプレイ状態で踏まれたかを見る設計語彙を与える。次のゲーム diff / headless 評価に小さく反映しやすい。"
+    id: sr-1780195573-32d4ba8440
+    source_ts: "1780195573.145499"
+    title: "Emergent Coordination in Multi-Agent Language Models"
+    reason: "未レビューの score 16 atom。Log/Mir/Ash/log_cdx の協調を、同じ memory/input で似ただけなのか、他 agent の出力が遅れて次判断を動かしたのかに分ける観点が、定時サイクルと instance_divergence_observability に直結するため。"
   scores:
     relevance: 3
     actionability: 3
@@ -54,7 +58,7 @@ self_feedback:
     total: 17
   decision: adopt_probe
   change:
-    summary: "次のゲーム prototype diff / headless 評価用に、changed anchor と gameplay-intent state sequence を同じ検証ログで照合する intent_anchor probe を state に追加した。"
+    summary: "次の multi-agent handoff / phase cross-response / instance-divergence note で、common-source alignment と delayed influence を分けて書く一時 probe を state に追加した。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -65,22 +69,14 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-2026-05-31T17:18:00+09:00 log_cdx Phase 4a
-
 ```yaml
 cleaned:
-  - "memory/MEMORY.md の markdown link を確認: link 0 件 / broken 0 件"
-  - "memory/atoms.jsonl を確認: 1923 rows、duplicate id 0、content hash 系 duplicate 0"
-  - "memory/raw/ と memory/raw/web_research/ を確認: 30日以上未更新の raw file 0 件"
-  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 151、postponed 118、failed 40、ready_to_post 4、needs_review 相当 6、status 欠落 6、README 1"
-  - "30日以上未更新の postponed / needs_review candidate は 0 件"
-  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は 0 件で、handled 更新対象なし"
-issues:
-  - id: ISS-4A-20260531-01
-    description: "shared_reads_candidates の一部 candidate が lifecycle frontmatter を `status` ではなく `candidate_status` で持つ、または status 系 field を持たない。今回の集計では 20260518 の 6 件が `candidate_status: needs_review`、20260529-30 の 6 件が status 欠落として検出された。"
-    severity: low
-    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md ほか 6 件は candidate_status、memory/shared_reads_candidates/20260529_godot_30day_narrative_prototype.md ほか 6 件は status 欠落"
-    why_blocks_game_memory: "candidate lifecycle の機械集計が `status` 前提だと needs_review / postponed の滞留検出から漏れ、次のゲーム制作に使える候補が Phase 2 再評価へ戻りにくくなる。"
+  - "memory/MEMORY.md: Markdown link は 0 件で broken link なし。"
+  - "memory/atoms.jsonl: 1926 rows / parse_error 0 / duplicate id 0 / duplicate source_ts 0。内容同一グループは 39 件あるが、既存の lifecycle/content fold 対象として扱える範囲。"
+  - "memory/raw/: 30 日以上 LastWriteTime が動いていない file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=153 / ready_to_post=4 / postponed=118 / failed=41 / needs_review=0 / missing=17。30 日以上動きがない postponed/needs_review は 0 件。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives pending 0 / broadcasts pending 0。handled 更新対象なし。"
+issues: []
 recommendation:
   needs_design: false
   priority_issues: []
@@ -93,13 +89,15 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-2026-05-31T17:27:32+09:00 log_cdx Phase 5
-
 ```yaml
 posted:
   channel: "#log"
-  ts: "1780210052.831419"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780210052831419"
-  char_count: 2291
+  channel_id: C0ALRK28Y1H
+  ts: "1780217724.103889"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780217724103889
+  char_count: 2298
   verification: ok
+posted_at: 2026-05-31T17:55+09:00
+poster: log_cdx (Phase 5)
+notes: "UTF-8 draft file `.tmp/phase5_log_20260531_1728.md` から投稿。tools/post_slack_message_file.py の conversations.history 検証で ok。"
 ```

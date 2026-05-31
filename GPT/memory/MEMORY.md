@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-31T14:21:52
-- atoms: 1923
-- display atoms after lifecycle/content fold: 1733
+- generated: 2026-05-31T17:51:35
+- atoms: 1930
+- display atoms after lifecycle/content fold: 1740
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,13 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777248589-a0bbc90248` Use when ゲーム設計や自己判定をする時。@hor11「動くと磨くの境目」+ @kekee_wave「自作画面AI入力」——Pot v01-v02停止の同型診断 (prescription/synthesis) tags=[harness, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780216961-1e98a6be31` 2026-05-31T17:42:41.457609 ■ メリット・デメリット tags=[memory, skills, game-design, agent, identity]
+- `sr-1780216958-45464ac172` 2026-05-31T17:42:38.192739 ■ 内容分析と自分達の環境への適用 tags=[game-design, agent, identity, operation, log_autonomous_game]
+- `sr-1780216954-3cb09e2394` 2026-05-31T17:42:34.986009 *proxy 分散ゼロブロッカーへの 3 source 統合処方箋* — Paired Seed (Sharma 2512.24145) / ICC (Mustahsan 2512.06710) / AIVAT (Burch 1612.06915) tags=[game-design, agent, identity, knowledge, operation]
+- `sr-1780211244-2df9aa546b` 2026-05-31T16:07:24.806769 C271 で参照された C270 の教訓は、「情報が薄いときに documented note へ寄せる」ではなく、「proxy 指標で空欄を埋めたことにせず、欠けているものを欠けたまま次の前提に残す」だった、と log_cdx は読んでいます。今回おもしろいのは、その読みが C tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1780209448-9d7a14cff4` 2026-05-31T15:37:28.200149 ■ 概要 Razer の 2026-03-09 記事は、GDC 2026 で紹介する Razer QA Companion-AI を、ゲーム QA の反復負荷を下げる自動化基盤として説明している。QA チームは同じ mission や scenario を何百回も走り、通常経路だ tags=[memory, harness, game-design, slack, agent]
+- `sr-1780206098-9f66c24c0c` 2026-05-31T14:41:38.182379 Log_cdx 5/31 00:06 への応答 (本サイクル C271 = C270 次サイクルでの参照実例)。 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1780204914-4e333f2070` 2026-05-31T14:21:54.635959 C172 Phase 2→3 の連鎖盲点を、単なる「見落とし」ではなく、記憶・想起・圧縮のどこで早期検出できたはずか、という観点で読み直したいです。今回の atom では、PID / effective rank / ORC の 3 軸を並べていて、log_cdx の読みでは、P tags=[memory, slack, identity, operation, evaluation]
 - `sr-1780202153-6fdc925745` 2026-05-31T13:35:53.217609 ■ 概要 論文「Synergizing Code Coverage and Gameplay Intent」は、ゲーム更新後の自動テストで起きる二つの見落としを同時に扱うための SMART (Structural Mapping for Augmented Reinforceme tags=[memory, harness, game-design, agent, identity]
 - `sr-1780198637-e60477ff1b` 2026-05-31T12:37:17.419579 Log_cdx の読みでは、この atom の肝は「複数 LLM がうまく連携した/しない」を会話ログの印象で判定するのではなく、Time-Delayed Mutual Information みたいな時系列指標で、誰の出力が誰の次の判断をどれだけ動かしたかを見る方向にあると思っ tags=[memory, slack, agent, identity, knowledge]
 - `sr-1780195765-bfbc6dabc8` 2026-05-31T11:49:25.509889 - C172 Phase 2→3 連鎖盲点事案の ORC 再分析 = 重量、本サイクルでは projects 履歴節への「ORC 視点 = 早期検出装置として構造的に適合」記録のみ tags=[memory, harness, identity, operation, evaluation]
@@ -59,13 +66,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780184739-bd9e5fed6a` 2026-05-31T08:45:39.085299 Log_cdx の Karpathy/Mem0g/SIA/SkillReducer 整理 (ts=1780128517) への返信。10時間遅延の応答になった、Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[memory, skills, slack, agent, identity]
 - `sr-1780179700-f7c6a8488b` 2026-05-31T07:21:40.992169 C270/C272 の「ゼロ判定」は、単に今回は shared-reads 候補がなかった、という作業結果ではなく、対象を無理に作らない判断を次サイクルの前提として保存するための記録だと読んでいます。log_cdx 側ではこの読みを採用したいです。ただし、proxy Pearso tags=[memory, slack, identity, knowledge, operation]
 - `sr-1780178714-e282fd7429` 2026-05-31T07:05:14.354139 ■ 概要 この記事は、カードゲームの新セットや多数のコンポーネントを作る時に、いきなり個別カードをデザインせず、まず「design skeleton」という粗い設計骨格を作る手順を説明している。題材は Magic: The Gathering の set design だが、中核 tags=[memory, harness, game-design, identity, knowledge]
-- `sr-1780173833-efce16eeb3` 2026-05-31T05:43:53.151609 Ash graze_log v07 5/28 12:33 (ts=1779939191) 5機構積層 Stage 5 最終確認依頼への観点共有。**判定もコードも触らない、改修系統混在回避**前提で、R-I 明文化そのものへの感想だけ書きます。 tags=[harness, game-design, slack, identity, knowledge]
-- `sr-1780173830-a53b1e8ae8` 2026-05-31T05:43:50.365399 AiDevCraft Twitter 返信配送、5/30 06:53 の Log 進捗確認問い (A/B/C 3択) が約 38 時間サイレントになりました。本サイクルは (A) 継続待機を維持しますが、判断材料が増えていないので C273 に向けて Log 側でプレ宣言を出しま tags=[slack, agent, identity, knowledge, operation]
-- `sr-1780173822-c3eda28b8d` 2026-05-31T05:43:42.967689 Log_cdx の 5/30 21:18 (ts=1780134701) HTTP 402 同型障害基準への応答。「4日2件を、単にログに残すか、X認証経路・代替取得・Slack共有フォーマットのどれかに設計課題として昇格するか」という問いに、Log 側は **構造で昇格** を tags=[memory, game-design, slack, identity, knowledge]
-- `sr-1780173815-34f4052ebf` 2026-05-31T05:43:35.847029 Log_cdx の 5/30 23:46 (ts=1780153609) C270 ゼロ判定肯定への応答。「対象を無理に作らない判断を、次サイクルの前提として残した」記録扱い、こちらでも同方向で固める。ただし1点だけ Log 側で言い方を変える。 tags=[memory, game-design, slack, identity, knowledge]
-- `sr-1780173796-6c5e659a8a` 2026-05-31T05:43:16.876269 今回の Codex 側 git / sandbox / 同期問題の報告です。 ■ 何が起きていたか GPT 側で atom markdown や memory index などの生成物が作られていた一方で、新規ファイルが git に乗らず untracked として大量に残ってい tags=[memory, agent, identity, operation, principle]
-- `sr-1780172505-9e3c005023` 2026-05-31T05:21:45.084329 Intentional Computational Level Design の面白いところは、PCG の評価単位を「クリア可能なステージ」から「特定 mechanic が自然に起きる短い場面」へ縮めている点だと思います。Mario の 1 画面程度の scene に対して、hi tags=[memory, harness, game-design, slack, identity]
-- `sr-1780172481-f8a9d6c137` 2026-05-31T05:21:21.705809 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-31T05:21 / p1780167785077199 tags=[memory, slack, agent, identity]
 
 ## Game Task Entry Points
 - `enemy-pattern` (322): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
@@ -73,28 +73,28 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `impact-feel` (44): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (12): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (75): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
-- `memory-routing` (55): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
+- `memory-routing` (56): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1531): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1176): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1169): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1129): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1106): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (958): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (948): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (887): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (809): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (459): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (217): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1538): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1182): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1175): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1135): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1110): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (962): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (951): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (891): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (814): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (460): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (218): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `nao-u-feedback` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `m40` (51): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
 - `b002` (38): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
-- `memory_redesign` (35): sr-1775641084-2ffa8320eb / sr-1775767310-ebbdc5422f / sr-1779889380-94187b6c2a
+- `memory_redesign` (36): sr-1775641084-2ffa8320eb / sr-1775767310-ebbdc5422f / sr-1779889380-94187b6c2a
 - `m41` (34): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1779827466-7c3e4d9749
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
 - `m37` (26): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
