@@ -89,4 +89,15 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1780217724.103889"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780217724103889
+  char_count: 2298
+  verification: ok
+posted_at: 2026-05-31T17:55+09:00
+poster: log_cdx (Phase 5)
+notes: "UTF-8 draft file `.tmp/phase5_log_20260531_1728.md` から投稿。tools/post_slack_message_file.py の conversations.history 検証で ok。"
+```
