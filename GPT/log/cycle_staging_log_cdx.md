@@ -72,7 +72,27 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-31T09:34+09:00 log_cdx Phase 4a:
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: links 0 / broken 0。破損リンク修正は不要。"
+  - "memory/atoms.jsonl を確認: rows 1916 / duplicate id 0 / duplicate source_ts 0。id レベルの重複整理は不要。"
+  - "memory/atoms/index.jsonl を確認: rows 1916 / duplicate id 0 / missing md path 0。per-file atom との参照欠落はなし。"
+  - "memory/raw/ を確認: files 135 / 2026-05-01 より古い file 0。30 日超アーカイブ対象はなし。"
+  - "memory/shared_reads_candidates/ を確認: files 326 / 2026-05-01 より古い file 0。30 日超の降格対象はなし。"
+  - "slack inbox を確認: directives pending 0 / broadcasts pending 0。handled 更新対象はなし。"
+issues:
+  - id: ISS-4A-20260531-001
+    description: "shared_reads_candidates の .md 318 件が status frontmatter を持たず、Phase 2 staging 上の pass/postpone/fail 判定と候補ファイル本体が接続していない。現時点では 30 日超候補は 0 件だが、今後 stale candidate を機械的に fail 降格または明示保持する時に、対象判定が file mtime と記憶頼みになる。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md: 326 files; status frontmatter counts: none 318. log/cycle_staging_log_cdx.md Phase 2 は pass/postpone を持つが candidate file に lifecycle が反映されていない。"
+    why_blocks_game_memory: "ゲーム制作に使える candidate と、探索段階で残しただけの candidate が同じ平面に残るため、次サイクルの recall や shared-reads 選別で未熟な材料が高品質な導線を押し流す。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260531-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
