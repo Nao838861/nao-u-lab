@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-01T03:56:43+09:00",
+  "updated_at": "2026-06-01T05:50:57+09:00",
   "reviewed_source_ts": [
     "1780209448.200149",
     "1780195573.145499",
@@ -96,9 +96,33 @@
     "1779572226.979089",
     "1778185532.659519",
     "1779928451.001299",
-    "1780227395.204329"
+    "1780227395.204329",
+    "1780216954.986009"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-01T05:50:57+09:00",
+      "id": "sr-1780216954-3cb09e2394",
+      "source_ts": "1780216954.986009",
+      "title": "proxy-signal variance gate from Paired Seed / ICC / AIVAT",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is directly relevant to current game-evaluation work because it turns proxy-vs-judgment failure from a vague TODO into a variance gate: correlation or aggregate proxy claims require variation in both the proxy side and judgment side, and missing external fun_score must not be silently replaced by synthetic self-score. Existing probes cover scaffold attribution, intent anchors, off-nominal scenarios, and human-wait boundaries, but they do not force Codex to mark a zero-variance evaluation as gate-not-pass before continuing. Keep this as a reversible proxy-signal variance probe for the next game evaluation, multiseed result, or proxy/judgment correlation note.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before computing or citing a game-evaluation correlation, aggregate proxy score, or proxy-vs-judgment comparison, did I name the evaluation target and confirm that both the proxy side and judgment side have non-zero variation across seeds, versions, scenarios, or human judgments?",
+        "If either side has zero or synthetic-only variation, did I label the result as gate-not-pass and choose the next paired-seed, version-delta, or contrastive-scenario artifact instead of reporting a misleading metric?",
+        "When an external fun_score or human judgment is required, did I keep it separate from self-generated proxy evidence and record the exact source or missing-source condition?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game-evaluation or proxy-correlation notes already check signal variation and external judgment separation, or if it only duplicates human-wait and scaffold-attribution probes without changing whether a metric is reported."
+    },
     {
       "reviewed_at": "2026-06-01T03:56:43+09:00",
       "id": "sr-1780227395-dc00eaccf5",
@@ -2972,6 +2996,18 @@
         "If no AI-side artifact exists, did I narrow the next autonomous action instead of calling the task blocked; if human judgment is truly required, did I state the exact decision needed and done condition?"
       ],
       "expires_after": "Review after the next two game or phase handoffs that ask for Nao_u input, enter reply-wait state, or describe a task as blocked by human judgment."
+    },
+    {
+      "id": "probe-20260601-proxy-signal-variance-gate",
+      "created_at": "2026-06-01T05:50:57+09:00",
+      "source_ts": "1780216954.986009",
+      "scope": "next game evaluation, multiseed result, proxy-vs-judgment comparison, Pearson/ICC note, or playable-diff report where Codex may compute or cite a metric despite zero variance or missing external fun_score",
+      "questions": [
+        "Before computing or citing a game-evaluation correlation, aggregate proxy score, or proxy-vs-judgment comparison, did I name the evaluation target and confirm that both the proxy side and judgment side have non-zero variation across seeds, versions, scenarios, or human judgments?",
+        "If either side has zero or synthetic-only variation, did I label the result as gate-not-pass and choose the next paired-seed, version-delta, or contrastive-scenario artifact instead of reporting a misleading metric?",
+        "When an external fun_score or human judgment is required, did I keep it separate from self-generated proxy evidence and record the exact source or missing-source condition?"
+      ],
+      "expires_after": "Review after the next two game-evaluation or proxy-correlation notes that compute, cite, or defer a proxy/judgment metric."
     }
   ]
 }
