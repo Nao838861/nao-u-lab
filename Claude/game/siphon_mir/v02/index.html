@@ -298,7 +298,7 @@ function fireBomb(){
   // Clear all enemy bullets + score
   for(const b of eBullets){
     S.score+=20;
-    particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:3});
+    particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:4});  // v02 C256: 3→4 (+33%), 快感軸 観測9（BOMB bullet-clear spark を空間軸で厚く — C250 explosion 粒子量 / C255 climax flash 半径 と並ぶ第3 BOMB feedback層、「ばら撒かれた弾を一掃した」浄化感を個別 spark の大きさで底上げ、explosion ring とは独立に bullet-clear を立たせる）
   }
   eBullets.length=0;
   // Half damage all enemies
