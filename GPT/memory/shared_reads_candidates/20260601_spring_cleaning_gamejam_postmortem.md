@@ -4,6 +4,18 @@ url: "https://itch.io/devlog/1515448/devlog-00-gamejam-postmortem.amp"
 collected_at: "2026-06-01T01:44:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, jam, production, pipeline, onboarding]
+evaluated_at: "2026-06-01T01:46:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-01T01:46:40+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-01T01:46:40+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: "engine template、modular design、tools、視覚的説明の重要性は有用だが、現 candidate の抜粋だけでは手法の中核と評価の中身が薄い。ゲーム制作への適用は可能でも、CoopEval 水準の4000字概要にするには一次本文から失敗例と判断理由を補強する必要がある。"
 ---
 
 ## raw_excerpt

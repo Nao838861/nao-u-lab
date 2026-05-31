@@ -4,6 +4,24 @@ url: "https://forum.defold.com/t/robo-dance-postmortem-gamedevjs-jam-2026/82698"
 collected_at: "2026-06-01T01:44:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, jam, rhythm, turn-based, testing]
+evaluated_at: "2026-06-01T01:46:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-01T01:46:40+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-01T01:46:40+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: "同時ターン制とリズム同期の組み合わせで edge case が爆発し、movement/pushing を unit test/TDD 的に固めて進捗を回復した流れが明確。ゲーム制作への適用先が core logic、入力計画 UI、テスト設計に分解できる。4000字級の概要は設計変更、テスト導入、プレイテスト発見を軸に書ける。"
+suggested_post_outline:
+  overview_angle: "ジャム制作で複雑な同時解決ルールに詰まった時、ゲームロジックをテスト可能な単位に分けて制作速度を取り戻した事例として読む。"
+  analysis_axis: "初期案の撤退、simultaneous turn-based への回帰、リズム同期の副作用、edge case、unit test/TDD 的な解決、プレイテストでの UI 課題を見る。"
+  application_target: "パズル/アクション prototype の core logic を、見た目の前に deterministic な状態遷移テストで固める制作サイクル。"
+  pros_cons: "メリットは実装上の詰まりと解決策が具体的な点。デメリットは Defold/ジャム文脈の個別事情があり、全ジャンルにそのまま当てはまるわけではない点。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

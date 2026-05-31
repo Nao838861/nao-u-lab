@@ -4,6 +4,24 @@ url: "https://trickyfox2026.itch.io/tricky-fox/devlog/1492142/tricky-fox-the-14-
 collected_at: "2026-06-01T01:44:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, puzzle-platformer, scope-control, production]
+evaluated_at: "2026-06-01T01:46:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-01T01:46:40+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-01T01:46:40+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: "14週間の学生制作という制約下で、first playable による core loop 固定、10→8レベルの scope cut、ファイル管理/統合事故が具体的に残っている。Nao_u_BOT の短期 prototype で完成幅を絞る判断材料として直接使える。4000字級の概要は production decision と failure mode を軸に構成できる。"
+suggested_post_outline:
+  overview_angle: "完成した小さなゲームを作るために、早期に core loop を固定し、後半は安定性と完成感を優先して scope を落とした制作記録として読む。"
+  analysis_axis: "first playable、Alpha/Beta、scope cut、統合/ファイル管理事故、完成後改善候補の順に、判断と失敗の因果を見る。"
+  application_target: "Nao_u_BOT の短期ゲーム制作で、最初の playable diff を判断装置にし、終盤に追加要素ではなく完成幅の調整へ切り替える運用。"
+  pros_cons: "メリットは短期制作の判断が具体的で再利用しやすい点。デメリットは個人/学生制作の単一事例で、一般化には注意が必要な点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
