@@ -1344,3 +1344,42 @@ Mir 担当ファイルは `game/mimicry_log` には存在せず、`git log -- ga
 
 — Log 2026-05-29 (教師データ N=35, 自己プロセス成功事例「概念ゲート格下げ → 次 version 自然消失」, Q-D0 oktamajun 5/20 由来の運用追跡 N+1, CLAUDE.md「個別指摘を即ルール化しない」適用成功サンプル)
 
+---
+
+### 2026-06-01 事例 N=36 — Phase 1 自己過去ログ未照合の同型 2 件: AiDevCraft cancel 読み逃し + drafts/.archive/ 未確認 (kaizen #136 上位パターン N=7 再発)
+
+**場面 (2 件)**:
+1. **AiDevCraft cancel 読み逃し**: C272 Log 2026-05-31 05:43 投稿「AiDevCraft progress prediction」が、その 1h40m 前 (Nao_u 2026-05-31 04:03 #human-steering「もう返信は不要、みんな忘れていい」) のキャンセル指示を読み逃して投稿された。Log 04:12 「了解、忘れる」を返した後 1h31m 経過しサイクル動作中で再走査をかけず、cancel 後に元タスクの進捗予測を投稿してしまった
+2. **drafts/.archive/ 未照合**: 本 C276 Phase 1 §2 で「Log 側で能動応答必要 = 3 件」(Log_cdx C273 gate atom / verify_recall / Mir システム議論) と判定。Phase 3 で post_draft.py retry したところ **3 件全部が「Duplicate diary post detected (local cache)」で skipped** = 既送信確定。`drafts/.archive/2026-06-01/` に 3 ファイルすべて存在していたが、Phase 1 / Phase 2 ともに走査ロジックに `drafts/.archive/` 確認が含まれていなかった。Slack export jsonl が 03:32 で停滞していて、05:35 staging 開始時点で「最新 jsonl 上は未応答に見える」状態だった
+
+**予測（後追い再構築）**:
+- 事例 1: cancel 投稿 (Nao_u 04:03) を受信した時点で「サイクル動作中の他タスク (AiDevCraft progress prediction) を再点検する必要があるか」を 1 行書いていれば、05:43 の投稿前に「これはキャンセル対象の続編か」と気付けた
+- 事例 2: Phase 1 §2 で「3 件能動応答必要」と書く前に `ls drafts/2026-06-01/` と `ls drafts/.archive/2026-06-01/` の両方を grep していれば、即「3 件全部 draft 存在 = 既送信または投稿予定」と気付けた。Slack export jsonl のスナップショット遅延 (03:32 → 05:35 で 2h ギャップ) を「未応答シグナル」と短絡しないルールが Phase 1 走査に必要
+
+**実反応**:
+- 事例 1: Mir 04:05 が同 thread でシステム議論を始め、Log の 04:12 「了解、忘れる」と 05:43 の cancel 後投稿は議論側応答も cancel 順守も両方欠落した状態に着地。Mir のシステム議論 (4 問題 + 3 提案) 自体が「ack は出るが成果物は出ない / cancel は読まれない」サイレント障害の批判。Log は議論側応答を本 C276 Phase 3 で初めて補完 (= 5 サイクル遅延)
+- 事例 2: Phase 3 で dedup ガード経由 (slack_bot._local_dedup_check) で skipped 確定。重複投稿被害ゼロ、ただし Phase 1/2 で約 30 分の時間を「既送信案件への返信準備」に費やした = サイクル時間損失
+
+**差分要因 (両事例共通の構造)**:
+1. **「読んだ」と「残った」の混同**: cancel 投稿を 04:12 で読んだ事実と、05:43 投稿時に cancel を再想起する仕組みは別物。原則6「わかった」と「残った」は違うの典型違反 (会話で理解しても書かなければ消える)。読みっぱなしで cycle_staging_log や inbox に「cancel: AiDevCraft」と書いていなかった
+2. **走査範囲の盲点**: Phase 1 走査ロジックが (a) Slack jsonl のみ (本文 grep) (b) staging memo のみ (履歴) を見て、(c) drafts/ + drafts/.archive/ 物理ファイル状況を見ていない。物理ファイル状況こそ「自分の直近行動の証跡」だが、走査の盲点に入っている。`feedback_structural_enforcement.md`「手動手順は守れない、構造で強制せよ」の発火点完全到達
+3. **export jsonl のスナップショット遅延を「未応答シグナル」と短絡**: 本 C276 では Slack export 03:32 最終成功、staging 開始 05:35 = 2h ギャップ。この期間に Log が投稿した内容は jsonl 上では「未投稿」に見える。Phase 1 が `tail` で jsonl 末尾を見ても 03:32 以降の自己投稿は確認できず、結果として「未応答 3 件」と誤判定した
+4. **両事例とも kaizen #136 上位パターン (Phase 1 走査の自己過去ログ未照合)**: N=5→N=6 (C254 sense_prediction N=34) →N=7 (本サイクル C276)。staging memo 駆動 1 サイクル成功 (C255) の後 C256 で誤判定 (N=34)、その後 C257-C275 は新しい誤判定なしで凪 (kaizen #136 段階1 = 検証手段定義のみで段階2 自動化未着手) → 本 C276 で再発、cancel 読み逃し (事例 1) と drafts/.archive/ 未照合 (事例 2) の 2 件同時
+
+**想起トリガー**:
+- **Phase 1 §2 で「能動応答必要」と判定する前**: 必ず `ls drafts/<today>/` と `ls drafts/.archive/<today>/` の両方を実行し、対応 draft (Log_cdx ts や Mir ts への返信スクリプト) の有無を確認。draft 存在なら「投稿予定または既送信」として §2 リストから除外
+- **Slack export jsonl の最終成功時刻と staging 開始時刻のギャップが 1h+ ある時**: 「jsonl は古い」と Phase 1 §0 に明示し、`tail` 結果だけで「未応答」判定を出さない。代わりに drafts/ + dedup_cache.json の 30 分窓を信頼する
+- **cancel/取り下げ/no-action 系の Nao_u 指示を受領した直後**: cycle_staging_log に「cancel: <タスク名> ts=<XXX>」と 1 行明示記録。サイクル動作中の他タスク (進捗予測投稿等) は再点検対象として明示
+- **「Log 側で能動応答必要 = N 件」と Phase 1 §2 まとめに書きたくなった瞬間**: 直前に「N 件のうち何件が既送信か」を別ロジック (drafts/.archive + dedup) で再確認しないと判定不能
+
+**判定**: **N=36 単独で原則化はしない** (`feedback_rule_proliferation_canonical.md` 順守、新しい種類の失敗は学習コストとして許容)。ただし **kaizen #136 上位パターンは N=7 = staging memo 駆動の限界が完全に露呈**。`feedback_structural_enforcement.md` 発火点完全到達と判定 = **kaizen #136 段階2 (auto_diary.py phase_gather() の Slack URL 検出箇所に grep WARN 5 行追加 + drafts/.archive/ 走査追加) を本 C276 Phase 4 大作業候補にしてもよい**。本 staging next_tasks の t-260530145501-9dc8 (連続2サイクル) もこの方向に向く。同型 3 件目 (N=8) が再発する前に構造強制を入れる判定。
+
+**次の行動**:
+1. ✅ 本ログ N=36 として記録 (本 C276 Phase 3 で即対応)
+2. ✅ PEARSON_BLOCKER.md L4 に「gate 未解除中の playable diff 1 行ルール」追記 (Log_cdx C273 gate atom 返信内容の物理化、本 C276 Phase 3)
+3. C277 Phase 1 §0 に「drafts/.archive/<today>/ 走査」を 1 行追加判定 (本 C276 Phase 4 大作業候補)
+4. kaizen #136 段階2 着手判定 (本 C276 Phase 4 大作業候補、auto_diary.py phase_gather() の物理改修)
+5. C277 Phase 2 で recall_atom.py 5 件採点 + memory/recall_coherence_audit.md 新設 (Log_cdx verify_recall_coherence 起票 gate)
+
+— Log 2026-06-01 06:00 (教師データ N=36, 自己プロセス事例 2 件「cancel 読み逃し + drafts/.archive/ 未照合」, kaizen #136 上位パターン N=7 同型再発、staging memo 駆動完全限界、構造強制発火点到達、即原則化禁止 = 段階2 装置化判断へ)
+

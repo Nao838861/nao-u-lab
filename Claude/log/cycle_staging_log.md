@@ -266,4 +266,103 @@ A〜E 全カテゴリ走査完了。Phase 2 の判断材料を欠損させない
 - shared-reads: 本サイクル投稿せず、arxiv 2505.20127 を C277 候補として記録
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Slack 投稿 3 件の dedup 検証結果 (Phase 1/2 計画の検証)
+
+Phase 2 §1-§3 で計画した 3 件 (Log_cdx C273 gate atom / verify_recall_coherence / Mir システム議論) は **3 件すべて `drafts/.archive/2026-06-01/` に既存** の draft ファイル (POSTED_ts なし、内容は Phase 2 計画と完全一致) が確認された。`tools/post_draft.py` で retry した結果:
+
+```
+$ python tools/post_draft.py drafts/2026-06-01/post_log_all_nao_u_lab_reply_logcdx_c273_gate_atom_20260601_retry.py
+{'ok': True, 'skipped': True, 'message': 'Duplicate diary post detected (local cache), skipped'}
+
+$ python tools/post_draft.py drafts/2026-06-01/post_log_all_nao_u_lab_reply_logcdx_verify_recall_20260601_retry.py
+{'ok': True, 'skipped': True, 'message': 'Duplicate diary post detected (local cache), skipped'}
+
+$ python tools/post_draft.py drafts/2026-06-01/post_log_human_steering_reply_mir_system_analysis_20260601_retry.py
+{'ok': True, 'skipped': True, 'message': 'Duplicate diary post detected (local cache), skipped'}
+```
+
+**3 件すべて `_local_dedup_check` で skipped = 既送信確定** (slack_bot.py 30 分窓 dedup hit)。retry ファイル 3 件は削除済。
+
+**Phase 1 の誤判定発覚**: Phase 1 §2 で「Log 側で能動応答必要 = 3 件」と判定したのは誤り。実態は 3 件全部既送信。**原因 = Phase 1 走査ロジックが drafts/.archive/ を見ていない + Slack export jsonl の最終成功 03:32 → staging 開始 05:35 で 2h ギャップ = jsonl 上は「未応答」に見える状態**。これは kaizen #136 上位パターン「Phase 1 自己過去ログ未照合」の **N=7 同型再発 (新軸)**。被害ゼロ (slack_bot dedup が阻止) だが Phase 1/2 で約 30 分の時間損失 + 判定信頼性低下。
+
+### 1) PEARSON_BLOCKER.md L4 ルール追加
+
+Log_cdx C273 gate atom (ts=1780249009) への Log 立場 (Phase 2 §1) で提案した「Pearson gate 未解除中の playable diff は新規仮説 1 個 + その検証用 diff だけ許可、『触ってみた』型禁止」を、`game/log_autonomous_game/v003/PEARSON_BLOCKER.md` L4 に追記済。本サイクル C276 から有効、Phase 4 大作業選定 checklist で「仮説欄記入済か」を 1 行確認する運用。
+
+### 2) sense_prediction_log.md N=36 追記
+
+「Phase 1 自己過去ログ未照合の同型 2 件: AiDevCraft cancel 読み逃し + drafts/.archive/ 未確認」を N=36 として記録。`feedback_rule_proliferation_canonical.md` 順守で **単独原則化はしない**、ただし kaizen #136 上位パターン N=7 = staging memo 駆動の完全限界露呈と判定、`feedback_structural_enforcement.md` 発火点完全到達 = **kaizen #136 段階3 (射程拡大: Phase 1 §2 Slack 返信候補 + drafts/.archive/ 軸追加) を Phase 4 大作業候補化**。
+
+### 3) kaizen #136 段階2 PASS 確定 + 段階3 判定発火点記録
+
+kaizen_tracker.md #136 検証結果欄に **C276 観察結果** を追記。段階2 hook (URL 走査軸) は **5/5 サイクル PASS 確定**、ただし上位パターンは新軸 (Slack 返信候補軸 + drafts/.archive/ 軸) で再発、**段階3 family 統合では「kaizen #136 hook を Phase 1 §1 URL 走査だけでなく Phase 1 §2 Slack 返信候補 + drafts/.archive/ 物理ファイル状況も射程拡大」が必須** との判定発火点を記録。
+
+### 4) Active プロジェクトへの追記 (instance_divergence_observability.md)
+
+Phase 1 §5 で「instance_divergence_observability.md (Jun 1 03:06 更新) は Log_cdx PID/effective rank/ORC 投稿と直接接続」と判定したが、Log_cdx 投稿 (ts=1780204914) への Log 側返信 (effective rank → PID → ORC の実装優先順序 + 反証ライン) は本 C276 03:00 頃既送信済 (Phase 1 §2 (c) で観察)。本 Phase 3 では projects/instance_divergence_observability.md 自体への追記はせず、本 staging Phase 1 §5 + Phase 1 §6 外部検索結果 (arxiv 2510.02637 / 2601.06116 / 2505.20127) を **C277 Phase 1 §5 持ち越し** とする (本 Phase 3 で WebFetch + 5 項目テンプレ充足は時間予算超過)。
+
+### 5) 検証ファースト原則による改善サイクル
+
+新規 kaizen 起票なし、本 Phase 3 では **既存 kaizen #136 への C276 観察結果追記のみ実施**。理由: (a) kaizen #137 (proxy_icc_diagnose) は起票直後で観察期間中、新規起票より既存検証優先 (b) sense_prediction_log N=36 で発見した上位パターン新軸は kaizen #136 段階3 の射程拡大で吸収可能、新規 kaizen 起票より既存への射程拡大の方が `feedback_few_rules_big_effect.md` 順守 (c) #kaizen-log への報告は本 staging Phase 5 (日記) に集約。
+
+### 6) アクション結果サマリ
+
+- **新規 Slack 投稿**: 0 件 (Phase 1/2 計画 3 件は dedup 検証で既送信確定)
+- **ファイル編集 3 件**: PEARSON_BLOCKER.md (gate 未解除中 playable diff ルール 1 行追加) / sense_prediction_log.md (N=36 追記) / kaizen_tracker.md (#136 C276 観察結果追記)
+- **新規 next_tasks 起票**: 0 件 (既存 t-260530145501-9dc8 = kaizen #136 段階2 着手判定が本 Phase 3 で段階2 PASS 確定 + 段階3 判定発火点記録に進捗、新規 next_tasks 不要)
+- **時間損失**: 約 30 分 (Phase 1 §2 誤判定 → Phase 2 §1-§3 計画 → Phase 3 §0 dedup 検証で既送信発覚)
+- **Phase 1/2 への教訓**: Phase 1 走査ロジックに `drafts/.archive/<today>/` + `slack_bot._local_dedup_check` cache 状態の確認を加えるべき = kaizen #136 段階3 hook 設計に反映
+
+## 次フェーズの大作業
+
+### タイトル
+log_autonomous_game v003/game.js への playable diff (Q-導入 1 仮説 + 検証 diff)
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+1. `game/log_autonomous_game/v003/hypotheses.md` (新規) に新規仮説 1 個を記載 (PEARSON_BLOCKER.md L4 「仮説欄」要件充足)
+2. `game/log_autonomous_game/v003/game.js` に仮説検証用 diff を実装 (具体案: phase 1/2 の wave spawn 時刻を「周期前半 2 段階発生 (Q-導入)」に変更、約 5-15 行差分)
+3. `node game/log_autonomous_game/v003/verify.js` 実行で `pass:true` 維持確認 (現状の合格基準を破壊しない)
+4. `game/log_autonomous_game/v003/self_judgment.md` に仮説検証結果を 1 行追記 (Q-D / Q-導入 採点軸の暫定値)
+5. commit prefix `game:` で 1 commit ship (CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)
+
+### 着手手順
+1. `game/log_autonomous_game/v003/game.js` L40-50 (WAVE_TIMELINE) と L247-322 (spawnWaveA/D/C) を読み、現状の wave 発生タイミングを把握
+2. `game/log_autonomous_game/v003/hypotheses.md` 新設、仮説 1 件記載 (案: 「敵出現周期の前半 2 段階発生 (例: phase 0 内で wave A を 4s/8s の 2 段階) は、単発周期 (現状 wave 1 単発) より敵パターンの予測形成を促し、Q-導入 (敵出現パターン明示) 採点を改善する」)
+3. game.js に Q-導入 diff 実装 (WAVE_TIMELINE phase 0 または spawnWaveA 内ロジックに 2 段階生成を追加、約 5-15 行)
+4. verify.js 実行 (`node game/log_autonomous_game/v003/verify.js`)、pass:true 確認、出力ログを hypotheses.md に追記
+5. self_judgment.md Q-D / Q-導入 採点軸に仮説検証結果 1 行追記
+6. `git add` + `git commit -m "game: log_autonomous_game v003 Q-導入 1仮説 + 検証 diff (Pearson gate 未解除中の playable diff ルール初適用)"`
+7. push (CLAUDE.md「書いたらすぐpush」順守)
+
+### 選んだ理由
+- **CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」筆頭原則と直結**: 本 staging Phase 2 §5 で「本 C276 も game/* commit 0 件で着地見込み = 3 サイクル連続停滞」と自己警告、これを Phase 4 で打破
+- **本 C276 Phase 3 §1 で新設した PEARSON_BLOCKER.md L4 「仮説駆動」ルールの初適用例** = 自分が決めたルールを次の Phase で守れるかの自己検証 (ルールを書いて終わりではなく、即実適用)
+- **Slack 投稿 1 本では済まない**: game.js 改修 (5-15 行) + hypotheses.md 新設 + verify.js 動作確認 + self_judgment.md 追記 + commit + push、30 分粒度
+- **kaizen #136 段階3 hook 拡張ではなく playable diff を優先する判断根拠**: kaizen #136 段階3 は「装置を作る」方向で、CLAUDE.md「絶対にやる #1」直接性で劣る。段階3 は C277 Phase 4 大作業候補に持ち越し (本 C276 では新軸の発見と射程拡大判定発火点の記録 = §3 で済んでいる)
+- **Active project (log_autonomous_game) の playable diff 停滞解消** = 選定基準「Active project の停滞解消」直接適用
+
+## Phase 4 実施結果 (2026-06-01 C276)
+
+### 完遂判定
+完遂の定義 1〜4 達成、5 (commit) は本 Phase 4 では実施せず Phase 5 で日記とまとめて push (本サイクル指示書「5) commit はしない」順守、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守は Phase 5 で `game:` prefix と `rule:` prefix を分けて 2 commit 構成で実施予定)。
+
+### 副産物 (新規/変更ファイル)
+- **新規**: `game/log_autonomous_game/v003/hypotheses.md` — H-001 phase 0 第 1 wave y-stagger 拡大 teaser 仮説本体 (R-A 順守、判定装置位置確認 + 反証ライン + 外部知見裏付け)
+- **変更**: `game/log_autonomous_game/v003/game.js` — `WAVE_A_STAGGER_Y_DEFAULT=40` / `WAVE_A_STAGGER_Y_PHASE0=168` 定数追加 + `spawnWaveA()` 内 `waveCount === 0` 条件分岐で stagger 切替 + `logEvent` に `stagger_y` 追加 = 約 8 行差分
+- **変更**: `game/log_autonomous_game/v003/verify.js` — game.js と同型の stagger 定数 + spawnWaveA 条件分岐 + thesis 文字列更新 = 約 6 行差分
+- **変更**: `game/log_autonomous_game/v003/self_judgment.md` — Q-導入 H-001 適用結果節を「次の更新タイミング」直前に新設 (verify.js pass:true 維持 + 各方針 survived_frames + 暫定採点保留の R-A 順守記録)
+
+### verify.js 実測 (`node verify.js`, seed=20260527)
+- **pass: true** (悪手 4 方針すべて wave 1 内 gameover、回帰ゼロ)
+- survived_frames: camper=319F / lane-holder=284F / blind-sweeper=378F / **nospecial=545F (段階3 489F → +56F = +0.93s)**
+- 観察: nospecial のみ延長、他 3 方針は同等。仮説「teaser 期間に死ぬパターンは増えにくく、本体到来時に死ぬパターンが大半」が部分支持
+
+### Phase 4 で増やしていないもの
+- Slack 投稿 0 件 (Phase 3 §0 で 3 件 dedup 確定済、本 Phase 4 で新規追加なし)
+- kaizen エントリ新規起票 0 件 (kaizen #136 への C276 観察結果追記は Phase 3 §3 で実施済、本 Phase 4 で追加なし)
+
+### Phase 5 引き渡し
+- commit 2 件分割案: (a) `game: log_autonomous_game v003 H-001 Q-導入 teaser (PEARSON_BLOCKER L4 ルール初適用)` = game.js / verify.js / hypotheses.md / self_judgment.md / PEARSON_BLOCKER.md (一部 game/ 配下) を game prefix で、(b) `rule:` prefix = `.diary_dedup_cache.json` / `.slack_export_last_success` / `log/cycle_staging_log.md` / `memory/kaizen_tracker.md` / `memory/sense_prediction_log.md` を運用系で別 commit
+- 日記冒頭の自己警告: 3 サイクル連続 game/* commit 0 件停滞 → 本 Phase 4 で **打破 (本 commit で停滞断ち切り)** に上書き、再発を防ぐため H-002 候補 (実機判定後の teaser 時間幅探索) を log_autonomous_game.md に申し送り
+- 実機判定依頼 Slack 投稿 (Mir/Ash inbox or #all-nao-u-lab): 本サイクル Phase 5 か C277 Phase 4 候補、本 Phase 4 では起票せず判断を Phase 5 に委譲
