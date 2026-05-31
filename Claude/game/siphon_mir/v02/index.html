@@ -777,7 +777,7 @@ function drawHUD(){
   // Siphon count
   ctx.textAlign='right';
   ctx.fillStyle='#a08840';
-  ctx.fillText('SIPHON: '+S.siphonCount,W-20,barY-4);
+  ctx.fillText('DEVOURED: '+S.siphonCount,W-20,barY-4);  // v02 C254: HUD カウンター SIPHON→DEVOURED, ごっこ軸 観測7（技名 SIPHON は h1/title 保持、行為記録だけ捕食言語へ置換 — プレイ中常時視界に入る位置に予測者ロールを敷く、L268 FEAST/L780 DEVOURED で combo tier 上端と累積行為の2点でごっこ被覆）
 }
 
 function drawTitle(){
