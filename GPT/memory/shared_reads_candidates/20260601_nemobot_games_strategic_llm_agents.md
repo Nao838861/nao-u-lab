@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2604.21896"
 collected_at: "2026-06-01T03:45:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-agents, strategic-games, ai-education, game-ai]
+evaluated_at: "2026-06-01T03:48:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-01T03:48:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-01T03:48:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: |-
+  Shannon 分類の拡張と agentic engineering environment という着想は見えるが、候補本文だけでは評価設計、実験結果、具体的な失敗条件が薄い。
+  ゲーム制作への適用も「戦略類型で分ける」水準に留まり、CoopEval 水準の約4000字概要に必要な中核情報を十分に組めない。
 ---
 
 ## raw_excerpt

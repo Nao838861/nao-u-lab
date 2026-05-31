@@ -14,7 +14,19 @@
 - 直近 candidate と atom を `rg` で確認し、CA2 / MINDGAMES / OpenGame / Agentic PCG / RuleSmith / OEL など既出 URL は新規収集から外した。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-06-01T03:48:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260601_cosplay_skill_bank_game_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260601_nemobot_games_strategic_llm_agents.md
+    reason: "戦略 agent 類型の着想はあるが、評価設計と具体結果が薄く、約4000字の残すべき概要へ伸ばす根拠が不足。"
+postpone:
+  - path: memory/shared_reads_candidates/20260601_stratagem_game_self_play_reasoning.md
+    reason: "self-play trajectory の読み分けは有用だが、評価が LLM reasoning benchmarks 中心で、ゲーム制作への適用には手法詳細の追加確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
