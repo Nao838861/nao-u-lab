@@ -69,7 +69,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-06-01 02:18 log_cdx Phase 4a
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link 0 件、broken link 0 件を確認"
+  - "memory/atoms.jsonl: 1937 rows、duplicate id 0、duplicate content hash 0 を確認"
+  - "memory/raw/: 30 日以上更新なしの raw file 0 件を確認"
+  - "memory/shared_reads_candidates/: posted 154 / postponed 121 / failed 41 / ready_to_post 4 / needs_review 0 / status missing 13 を確認"
+  - "memory/slack_directives.jsonl と memory/slack_broadcasts.jsonl: pending 0 件を確認。handled 化対象なし"
+issues:
+  - id: ISS-20260601-4A-001
+    description: "shared_reads_candidates に lifecycle frontmatter の status が欠けた candidate が 13 件ある。最古は 2026-05-18 作成で 30 日未満のため、今回の fail 降格対象ではない。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md ほか 13 件。集計: status missing 13"
+    why_blocks_game_memory: "候補の状態が未定義だと、次の Phase 2 再評価や投稿済み/失敗済み判定の対象集合が曖昧になり、ゲーム制作向け資料ストックの優先順位付けがぶれる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
