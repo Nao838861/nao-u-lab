@@ -11,7 +11,17 @@
   - `memory/shared_reads_candidates/20260531_biped_playtesting_game_sketches.md` — BIPED による game sketch から human-playable prototype と machine-analyzable rule system を同時に作る古典的 playtesting 支援。
   - `memory/shared_reads_candidates/20260531_player_experience_design_engineering_process.md` — CoG 2025 の player experience centered game design engineering process。system as-is / as-should-be 差分で PX を計画・検証・改良する候補。
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-31T09:02:48+09:00 log_cdx Phase 2:
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260531_biped_playtesting_game_sketches.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260531_player_experience_design_engineering_process.md
+    reason: "PX 中心の設計工程として適用軸は強いが、候補本文だけでは手法詳細と評価内容が薄く、4000 字概要の材料が足りない。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
