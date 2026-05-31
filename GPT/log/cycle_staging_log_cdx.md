@@ -15,6 +15,19 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-05-31T13:32:16+09:00 log_cdx Phase 2 追記
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260531_smart_coverage_aware_game_playtesting.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    reason: "人格差を使う game-testing 観点は有望だが、現候補本文では評価設計・実験結果・既存手法との差分が不足。"
+  - path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    reason: "mechanic 生成の適用先は近いが、annotation 仕様・生成例・testing/評価の具体性が不足。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

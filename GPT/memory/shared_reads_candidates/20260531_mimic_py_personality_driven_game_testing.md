@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2604.07752"
 collected_at: "2026-05-31T13:29:20.9041162+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, llm-agent, playtesting, personality, headless-evaluation]
+evaluated_at: "2026-05-31T13:32:16.0597736+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-05-31T13:32:16.0597736+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-31T13:32:16.0597736+09:00"
+next_action: revise_or_research
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |-
+  personality-driven LLM agent を game testing に使う問題設定と設計思想は Nao_u 環境の bad-policy bot 拡張に近い。
+  ただし現候補本文では評価設計・実験結果・既存手法との差分が薄く、CoopEval 水準の概要を書くには根拠不足。
+  Phase 3 投稿前に paper 本文から evaluation と limitation を補う必要がある。
 ---
 
 ## raw_excerpt
