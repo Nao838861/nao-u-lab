@@ -5,6 +5,11 @@ collected_at: "2026-05-18T14:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [procedural-generation, level-design, 3d-maps, designer-control, navigation]
 candidate_status: needs_review
+status: needs_review
+last_reviewed_at: "2026-05-18T14:20:00+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260518_snappable_meshes_pcg_maps.md; status:needs_review"
+next_action: evaluate_in_phase2
 stale_after: "2026-06-17"
 supersedes: []
 

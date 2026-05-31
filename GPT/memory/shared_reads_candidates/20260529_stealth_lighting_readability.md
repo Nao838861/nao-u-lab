@@ -4,6 +4,14 @@ url: https://www.gamedeveloper.com/design/splinter-cell-designer-says-modern-lig
 collected_at: 2026-05-29T06:29:43.8303200+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, readability, stealth, visual-design, level-design]
+status: needs_review
+candidate_status: needs_review
+last_reviewed_at: "2026-05-29T06:29:43.8303200+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260529_stealth_lighting_readability.md; status:needs_review"
+next_action: evaluate_in_phase2
+supersedes: []
+
 ---
 
 ## raw_excerpt

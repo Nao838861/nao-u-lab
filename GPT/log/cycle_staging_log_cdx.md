@@ -74,7 +74,29 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: branch=master, origin/master と同期済み。開始時点の既存差分はログ/lock/state と ../Claude/.slack_export_last_success。"
+  - "memory/MEMORY.md: validate_memory_index.py は OK。Markdown link 抽出では対象 link 0 件、broken link 0 件。"
+  - "atoms: audit_atom_mirror_drift.py で atoms.jsonl/per-file/index が各 1939 件で一致。atom id 重複 0、source_ts 重複 0。duplicate_groups.jsonl は --check OK (39 groups)。"
+  - "memory/raw/: 140 files。30 日以上動きがない archive 候補 0 件。"
+  - "memory/shared_reads_candidates/: lifecycle status 内訳 posted=156, ready_to_post=4, postponed=122, failed=42, needs_review=12。未分類 12 candidate を needs_review として機械的 backfill。30 日以上動きがない postponed/needs_review は 0 件。"
+  - "inbox: slack_directives.jsonl pending=0、slack_broadcasts.jsonl pending=0。handled 化対象なし。"
+issues:
+  - id: ISS-4A-20260601-01
+    description: "memory_health.py が repeated title group 未付与 11 種を警告している。重複 body は duplicate_groups で派生 index 化されているが、同名 title の一部は group_id が未付与。"
+    severity: low
+    evidence: "tools/memory_health.py output: repeated title group 未付与 11種; memory/atoms/duplicate_groups.jsonl --check OK"
+    why_blocks_game_memory: "同名候補や補正版を recall した時に、どれが canonical / preferred かを人間が読み分ける手間が少し残る。現状は recall smoke が通っており、次ゲーム制作を止めるほどではない。"
+  - id: ISS-4A-20260601-02
+    description: "memory_health.py が mojibake suspect atom 2 件を警告している。"
+    severity: low
+    evidence: "sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "該当 atom が検索上位に出た場合、内容理解と再利用の信頼性が落ちる。ただし件数は 2 件で、今回の recall smoke には影響していない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)

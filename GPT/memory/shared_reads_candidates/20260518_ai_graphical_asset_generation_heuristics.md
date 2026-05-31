@@ -5,6 +5,11 @@ collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-tools, asset-generation, pipeline, game-production, user-study]
 candidate_status: needs_review
+status: needs_review
+last_reviewed_at: "2026-05-18T05:59:17+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260518_ai_graphical_asset_generation_heuristics.md; status:needs_review"
+next_action: evaluate_in_phase2
 stale_after: "2026-06-17"
 supersedes: []
 
