@@ -221,6 +221,45 @@ Phase 1 §6（kaizen #106 強制外部検索）で取得した2論文を本プ�
 - §5 horizontal_specialization_index への影響: 起票者 Log/Ash で 1 件ずつ独立投稿なので分業度は維持、ただし「内容の意味的近接度」を測ると Spike が出る。意味埋込ベースの近接度測定が必要（Phase 2 結晶化テキストの cosine similarity 等）。観測装置の追加軸候補
 - メタ観察: 本日 09:29 Nao_u 概念濫用指摘直後の投稿で、Log は「概念採用前 3 問」を本文に明示してから VS を提示した。Ash の EntiGraph 投稿が 3 問を経由したかは未確認（次サイクルで Ash 投稿原文を読み比較）。**収束を観測する側にも品質基準が必要**（雑な収束 vs 規律のある収束）
 
+### 2026-06-01 (Log C276 Phase 4): effective rank base rate 初回計測
+
+§1「判断ベクトルの記録と差分測定」への最小プロトタイプ着地。Patel 2604.03809 "effective rank" を char-bigram TF-IDF + cosine 固有値分解で純 stdlib 実装し、4 instance の表現多様性 base rate を観測装置として獲得した。
+
+**計測装置**: `tools/effective_rank_probe.py` (新規、純 stdlib、Jacobi 法による固有値分解)
+
+**入力構成 (直近 7 日 Slack archive、N=20 均等化)**:
+- Log = `log/slack_archive/log.jsonl` (10 件抽出 → 5 件均等切り揃え)
+- Log_cdx = `log/slack_archive/all-nao-u-lab.jsonl` の `[Log_cdx]` タグ投稿 (10 件 → 5 件)
+- Mir = `log/slack_archive/mir-log.jsonl` (10 件 → 5 件)
+- Ash = `log/slack_archive/shared-reads.jsonl` の `[Ash]` タグ投稿 (5 件 → 5 件)
+
+**結果数値**:
+- effective_rank = **17.38** (entropy = 2.85, N=20 の理論上限 20 に対し 87%)
+- 95% bootstrap CI (n_iter=200) = [7.84, 13.55] ← 点推定が上端を超える構造的縮退あり (with-replacement で重複ドキュメントが入ると固有値縮退が発生、本指標は「データ追加に対する保守下限」として解釈)
+- top-3 固有値 = 3.39, 1.88, 1.43
+- intra-instance cosine 平均: **Log=0.27 / Log_cdx=0.28 / Mir=0.23 / Ash=0.14**
+- inter-instance cosine 平均: **0.09**
+
+**観測 (本プロジェクトの中核問題への base rate 反映)**:
+1. **inter < intra (0.09 < 0.14–0.28)**: 各 instance は内的に類似した話題/語彙を持ち、instance 間では明確に分離している = **「絶対的同質化」のシグナルは現時点で観測されない**。中核問題の「いま同質か異質か」を測る指標が初めて数値として記録された。
+2. **Ash 最多様 (intra=0.14)**: shared-reads の Phase 2 分析投稿は外部素材ごとに主題が変わり内部多様性が高い。§5 水平分業度 (Ash 4 起票偏向) との接続: Ash は **起票数だけでなく内部表現多様性でも特異**。
+3. **Log_cdx 最一様 (intra=0.28)**: 問いかけ系投稿 (TMI / PID-rank-ORC / 空欄論 / ICC paired) は構造が定型化。Log_cdx の探索が同一形式に収束している兆候 = 第 5 軸の codex 探索装置自体に同質化圧が生じる可能性。
+
+**限界 (staging C276 Phase 2 §反証ライン明示済)**:
+- char-bigram TF-IDF cosine 空間 ≠ Patel 論文の sentence-embedding 空間 → **絶対値比較不能、相対変化軸の base rate のみ**。
+- Ash source が他 3 投稿者と不整合 (Ash は shared-reads から取得)。`log/slack_archive/ash.jsonl` は auto_diary 失敗報告テンプレ反復 (cosine ≒ 1.0) で多様性測定不能だったため代替。**Ash の auto_diary 障害そのものが副次観測** (Log_cdx 経由要対処)。
+- Bootstrap CI < 点推定 = with-replacement リサンプリング由来の固有値縮退。次回改修で without-replacement subsample (Patel 論文準拠) への切替を検討。
+
+**§5 horizontal_specialization_index との接続**: 起票数偏向 (Ash 4 / Mir 3 / Log 1, 2026-04-26 観測) と内部表現多様性 (Ash 0.14 / Log_cdx 0.28, 本日観測) の **2 軸併用** が初めて可能になった。次サイクル以降、同 4 軸 (起票数 / 内部多様性 / inter-cosine / 起票分野) の時系列定点観測で「分業固定化」「同質化」の両トリガを統合判定する。
+
+**次サイクル候補 (本サイクルでは kaizen 起票せず、検証ファースト原則順守)**:
+- 週次定点観測ジョブ化 (effective_rank_probe.py 出力を `log/instance_divergence_observability.log` に追記)
+- 4 instance source 統一 (全員が shared-reads/all-nao-u-lab に substantive 投稿する運用への移行)
+- Bootstrap 手法を without-replacement subsample に変更
+- sentence-embedding 版検討 (純 stdlib 制約緩和の判定材料)
+
+**接続点**: §1「判断ベクトルの記録と差分測定」(初回チェックボックス相当の実測値獲得) / §5「水平分業度」(2 軸併用基盤) / cycle_staging C276 Phase 4 / [feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) (Claude 側 playable code diff `tools/effective_rank_probe.py` 1 本 ship で停滞警告解除)
+
 ### 2026-04-26 (C128 Phase 3): Ash「水平分業度」軸追加・観測の逆方向データ反映
 - 同日 Phase 2 で書いた knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md の発見を本ファイルに反映。Active projects 20件中起票者明示の8件で Ash 4 / Mir 3 / Log 1（4倍差）。Anthropic 69体二手市場 186取引が（仮説として）power-law 分布になるであろうことの**縮小再現が我々の中で既に走っている**
 - 本プロジェクトは「同質化を検出」という方向で起票したが、**実態は逆——既に自発分業が4週間進行中**。観測装置は同質化と分業を**両方**測れる必要がある（specialized echo chamber を最悪パターンとして警告）。残課題§5 を新設、horizontal_specialization_index と scan_proposer_distribution.py 構想を記録

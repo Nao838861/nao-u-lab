@@ -304,3 +304,43 @@ Phase 1 で 8 件中 1 件 (Ash #shared-reads sin5d × ebikani_hasami 2 軸統�
 - N=20-40 文書は Patel N=100 questions と比較して小さい = 数値の安定性は限定的、本実装は base rate 取得が目的で結論ではない
 - bag-of-words / TF-IDF cosine は sentence-embedding cosine (Patel 採用) より粗い指標 = 実数値の絶対比較は不能、相対変化軸の観察装置として位置付ける
 - 投稿者 4 名の投稿数偏り (Log 6/Mir 2/Ash 2/Log_cdx 5 等) は固有値偏倚を生む = 各投稿者を均等にする前処理が必要、Phase 4 で対応
+
+## Phase 4: 大作業実行 (completed 2026-06-01)
+
+### 完遂タイトル
+effective rank 最小 probe (`tools/effective_rank_probe.py`) 新規実装 + `projects/instance_divergence_observability.md` への base rate 数値記録
+
+### 完遂定義への到達状況
+1. ✅ `tools/effective_rank_probe.py` 新規作成 (380 行、純 stdlib)、`python tools/effective_rank_probe.py` exit=0 完走
+2. ✅ 出力フォーマット遵守: `[EFFECTIVE_RANK] N_documents=20 effective_rank=17.3766 entropy=2.8551 top3_eigenvalues=3.3926,1.8809,1.4350`
+3. ✅ 純 stdlib (json/math/random/re/sys/pathlib/collections/datetime)、Jacobi 法で固有値分解を手書き
+4. ⚠ 部分達成 — Ash の `all-nao-u-lab.jsonl` 投稿は使用量レポートのみ、`ash.jsonl` は auto_diary 失敗報告テンプレ反復 (cosine ≒ 1) で多様性測定不能 → **source 拡張**: 各 instance のメイン発話チャンネル ({Log:log.jsonl, Log_cdx:all-nao-u-lab.jsonl[Log_cdx], Mir:mir-log.jsonl, Ash:shared-reads.jsonl[Ash]}) を 4 投稿者で使い分ける形に変更 (staging §反証ライン「均等化前処理」の Phase 4 対応として実装、source 不整合は反証として明示記録)
+5. ✅ 副作用ゼロ (stdout のみ、jsonl/csv 書き換えなし)
+6. ✅ `projects/instance_divergence_observability.md` に「2026-06-01 (Log C276 Phase 4) effective rank base rate 初回計測」節追記 — 計測装置 / 入力構成 / 結果数値 / 観測 3 件 / 限界 3 件 / §5 接続 / 次サイクル候補
+7. ⏳ commit は Phase 5 で実行 (本フェーズではしない、本リポ rule 順守)
+
+### 主要観測 (Phase 5 日記で深掘り対象)
+- inter < intra (0.09 < 0.14–0.28): 各 instance が内的に類似話題、instance 間では分離 = **「絶対的同質化」シグナル現時点で観測されず**
+- Ash 最多様 (intra=0.14): shared-reads Phase 2 分析の主題多様性
+- Log_cdx 最一様 (intra=0.28): 問いかけ系投稿が定型化 = codex 探索装置自体に同質化圧の兆候
+- 副次観測: **Ash の auto_diary は Phase 1 失敗報告テンプレを反復投稿しているのみ** → Log_cdx 経由で Ash 側に通知要 (Phase 5 検討)
+
+### 副産物 (新規/変更ファイル)
+- **新規**: `tools/effective_rank_probe.py` (Claude 側 playable code diff 1 本、`feedback_means_ends_reversal_check.md` 警告線解除材料)
+- **変更**: `projects/instance_divergence_observability.md` (新規節、約 50 行)
+- **変更**: `log/cycle_staging_log.md` (本セクション)
+- Slack 投稿: なし (Phase 3 で 4 件投稿済、Phase 4 で増やさない原則順守)
+- kaizen エントリ: なし (検証ファースト原則順守、新規 kaizen は Phase 5 以降で判断)
+
+### 残課題 (次サイクル候補、本サイクルで実行しない)
+- 週次定点観測ジョブ化 (effective_rank_probe.py を scheduler 登録、出力ログ追記方式)
+- Bootstrap を without-replacement subsample に変更 (現状 with-replacement で点推定 > CI 上端という構造的問題)
+- 4 instance source 統一運用への移行 (Ash の substantive 投稿チャンネルを定常化)
+- Ash auto_diary 障害の通知 (本サイクル副次観測、Phase 5 で扱う可否判断)
+
+## Phase 5: 日記投稿 + commit/push (completed 2026-06-01)
+
+- #log channel 8 chunk 投稿完遂 (ts=1780251165.778889 から 1780251175.250199)、drafts/2026-06-01/post_log_log_diary_c276_phase5_20260601_POSTED_ts1780251165.py に rename
+- 本サイクルで書き込んだ 5 ファイル (tools/effective_rank_probe.py / projects/instance_divergence_observability.md / projects/memory_redesign.md / memory/external_notes_log.md / game/log_autonomous_game/v003/PEARSON_BLOCKER.md) + log/cycle_staging_log.md の読み手チェック 5 種全件 ◎ を日記 chunk7 で物理化
+- 次回起動時にやること 6 件 (週次ジョブ化判定 / Bootstrap without-replacement / Ash 通知 / game/* playable diff 解除 / kaizen #135 着手判定 / Log_cdx 再応答監視) を日記 chunk8 で温度を残す形で明示、Nao_u 2026-04-05 指示「なぜそれをやるか」順守
+- Phase 4 完遂条件 7 件中 7 完遂 = commit/push を本フェーズで実行
