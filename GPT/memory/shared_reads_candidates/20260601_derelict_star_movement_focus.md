@@ -4,6 +4,18 @@ url: "https://www.pcgamer.com/games/action/i-do-think-blow-misunderstood-what-th
 collected_at: "2026-06-01T07:30:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, platformer, movement-mechanics, criticism, player-expectation]
+evaluated_at: "2026-06-01T07:33:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-01T07:33:19+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-01T07:33:19+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: "player expectation と movement-subtlety の論点は有用だが、現状の候補は二次記事の反応整理が中心で、手法の中核や評価の中身を CoopEval 水準で独立に説明するには材料が薄い。開発者の一次発言や実プレイ分析を補えば再評価できる。"
 ---
 
 ## raw_excerpt

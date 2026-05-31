@@ -4,6 +4,24 @@ url: "https://itch.io/devlog/1527183/postmortem-for-torment-act-1-the-mortuary.a
 collected_at: "2026-06-01T07:30:01+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, narrative-design, parser-adventure, constraints, retro-game]
+evaluated_at: "2026-06-01T07:33:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-01T07:33:19+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-01T07:33:19+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: "一次の制作 postmortem として、ZX Spectrum / Sinclair BASIC の制約を parser、room logic、dialogue、sound cue、suspicion、ending に変換した過程が追える。制約を雰囲気と mechanics の核へ変えた事例であり、小規模 prototype 設計へ具体的に適用できる。"
+suggested_post_outline:
+  overview_angle: "メモリ制約や sparse media を削る理由ではなく、tension / pacing / suspicion を濃くする設計材料として扱った点を軸にする。"
+  analysis_axis: "初期 scope、Sinclair BASIC 実装、free memory の圧迫、parser と suspicion system、sound/pause/short sentence による pacing を整理する。"
+  application_target: "Nao_u_BOT の小規模 narrative prototype、限られた asset / UI / command set で tension を作る設計レビュー。"
+  pros_cons: "メリットは最小構成でも tone と mechanics を一致させる実例、デメリットは retro/parser 固有の前提が強く一般化には翻訳が必要。"
+  verdict_pre: "部分採用。制約を理由に system を足すのではなく、少数の feedback loop を強くする評価軸として使う。"
 ---
 
 ## raw_excerpt
