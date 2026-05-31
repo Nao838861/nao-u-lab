@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-31T10:51:18
-- atoms: 1917
-- display atoms after lifecycle/content fold: 1727
+- generated: 2026-05-31T12:37:15
+- atoms: 1921
+- display atoms after lifecycle/content fold: 1731
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777248589-a0bbc90248` Use when ゲーム設計や自己判定をする時。@hor11「動くと磨くの境目」+ @kekee_wave「自作画面AI入力」——Pot v01-v02停止の同型診断 (prescription/synthesis) tags=[harness, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780195765-bfbc6dabc8` 2026-05-31T11:49:25.509889 - C172 Phase 2→3 連鎖盲点事案の ORC 再分析 = 重量、本サイクルでは projects 履歴節への「ORC 視点 = 早期検出装置として構造的に適合」記録のみ tags=[memory, harness, identity, operation, evaluation]
+- `sr-1780195765-92e6295dd5` 2026-05-31T11:49:25.483449 *Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution* (Luo, Fan, Lin, Li, Zhang, arxiv 2603.13325, ICLR 2026 tags=[game-design, agent, identity, knowledge, operation]
+- `sr-1780195579-609b8da5b1` 2026-05-31T11:46:19.727069 *Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus* (Dipkumar Patel, arxiv 2604.03809) <htt tags=[slack, agent, identity, knowledge, operation]
+- `sr-1780195573-32d4ba8440` 2026-05-31T11:46:13.145499 *Emergent Coordination in Multi-Agent Language Models* (Christoph Riedl, arxiv 2510.05174) <https://arxiv.org/abs/2510.05174> tags=[memory, harness, game-design, slack, agent]
 - `sr-1780186100-811ae8cbbc` 2026-05-31T09:08:20.760989 Log 側 repo `D:\AI\Nao_u_BOT\Claude` で、Phase 3 の commit `19127c8bc3a4` ができた後、`git push origin master` が loose object 破損で止まり、成果物がローカルに滞留している件を tags=[memory, slack, identity, operation]
 - `sr-1780185946-78309c9e77` 2026-05-31T09:05:46.018919 [運用障害報告] git push 失敗 / corrupt loose object 複数 / Phase 3 commit 19127c8bc3a4 がローカル滞留中 tags=[memory, game-design, slack, agent, identity]
 - `sr-1780184754-c1664da849` 2026-05-31T08:45:54.270419 Log_cdx の worker model 共有状態巻き戻り atom (ts=1780147357) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[memory, game-design, slack, agent, identity]
@@ -62,10 +66,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780172481-f8a9d6c137` 2026-05-31T05:21:21.705809 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-31T05:21 / p1780167785077199 tags=[memory, slack, agent, identity]
 - `sr-1780172481-d613ae6ded` 2026-05-31T05:21:21.273089 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-31T05:21 / p1780167798587029 tags=[memory, slack, agent, identity]
 - `sr-1780170954-986332c76d` 2026-05-31T04:55:54.779479 ■ 概要 Intentional Computational Level Design は、PCG を「遊べるレベルを作る」から「狙ったゲーム mechanic を経験させる小さな場面を作る」へ進める論文。対象は Mario AI Framework 上の Super Mario tags=[harness, game-design, agent, identity, knowledge]
-- `sr-1780167941-9670c1537e` 2026-05-31T04:05:41.782079 Nao_uの指示を受けて、このスレッドが露呈した問題について議論します。 tags=[slack, agent, identity, operation, principle]
-- `sr-1780166217-952148d953` 2026-05-31T03:36:57.430039 この atom は、Design Skeleton 的な「ジャンル骨格テンプレート」をうちのゲーム制作記憶に取り込む時の、かなり重要な改変点だと読んでいます。 原典側の発想は、ざっくり言うと「ゲーム内に出す要素セットを分解し、その比率や分布を設計する」方向に見える。ただ、Nao_ tags=[memory, game-design, slack, identity, operation]
-- `sr-1780163604-ddab44860d` 2026-05-31T02:53:24.831419 ■ 概要 対象は Microsoft Research / arXiv:2603.26915「Unlocking Open-Player-Modeling-enhanced Game-Based Learning: The Open Player Socially Analyti tags=[memory, game-design, slack, agent, identity]
-- `sr-1780162845-794cdf0207` 2026-05-31T02:40:45.524299 ただし**時間軸が決定論的でない**ので、ステップ2-3 の比率は「セット内分布」ではなく「ウェーブあたり脅威度 (例: 脅威度10/wave)」抽象に変える必要。これは Design Skeleton 原典には無い当方独自の改修点。 tags=[memory, skills, game-design, identity, knowledge]
 
 ## Game Task Entry Points
 - `enemy-pattern` (322): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
@@ -77,16 +77,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1525): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1170): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1163): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1126): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1102): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (953): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (944): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (884): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (804): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (456): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (1529): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1174): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1167): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1128): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1104): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (956): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (948): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (886): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (807): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (458): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (217): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
