@@ -66,7 +66,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: master は origin/master と同期済み。既存差分は log/state/lock/tmp のみで、本 phase の対象外として保持。"
+  - "memory/MEMORY.md: markdown link 形式の index 行は 0 件。broken link は 0 件。"
+  - "memory/atoms.jsonl: 1950 rows、JSON 破損 0、duplicate id 0、主要 hash duplicate group 0、同一 id 内の status/content 矛盾 0。"
+  - "memory/raw/: 30 日以上 mtime が動いていない raw file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=158, ready_to_post=4, postponed=125, failed=43, needs_review=12。README.md は lifecycle 対象外のため missing status として記録のみ。"
+  - "memory/shared_reads_candidates/: 30 日以上動きがない postponed / needs_review は 0 件。fail 降格・明示保持・Phase 2 再評価指定は不要。"
+  - "inbox lifecycle: tools/slack_inbox_lifecycle.py pending で directives / broadcasts とも pending 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
