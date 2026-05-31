@@ -318,3 +318,49 @@ May 23 02:47  memory_tree_consolidation.md
 - (a) **agent 死亡時間が短くなるリスク** = 弾尾で弾速度が読めて回避できるはずだが、自動 agent (capture_frames.js 内蔵 random walk policy) が弾尾を解釈できないため死亡時間は不変か逆に短縮 → 緩和: 弾尾追加の効果は **人間/LLM プレイヤー前提**の改善であり、自動 agent random walk では検出困難、死亡時間が同等でも改修効果ゼロ判定ではない (Q-D 判定は静止フレーム視認の精度変化を主軸とする)
 - (b) **puppeteer-core 起動失敗** = C265/C268 の Chrome path が変わっている可能性 → 緩和: `capture_frames.js` 内 `executablePath` 設定確認、失敗時は段階2 と同じ手順で recover
 - (c) **時間予算超過** = Phase 4 全体 30 分予算で完遂しない場合 → 緩和: capture_frames 失敗時は frame 取得 fallback (例: 5 枚のみ取得) で部分完遂 + 残部は次サイクル送り、self_judgment.md には「段階3 frame 取得部分達成」記録
+
+## Phase 4: 実行 (2026-05-31 21:30)
+
+### 完遂状況: ✅ 完遂 (大作業 7 手順すべて達成)
+
+### 実施内容
+1. ✅ capture_frames.js 現状確認 = FRAME_COUNT=60 / FRAME_INTERVAL_MS=1000 設定済確認 (L19-20)
+2. ✅ frames/ 既存 PNG 削除 = capture_frames.js 起動時に内蔵 (L31-32)、別工程不要
+3. ✅ `node capture_frames.js` 実行 = 60 frame + meta.jsonl 取得完了 (約 65 秒、puppeteer-core/headless/既設 Chrome)
+4. ✅ Read tool で frame_0001〜0005 連続フレーム視認完了 (5 枚)
+5. ✅ meta.jsonl から死亡 frame 特定 = idx 4 (305F) → idx 5 (321F, gameover 確定、idx 6-60 同 321F 固定)
+6. ✅ self_judgment.md Q-D §段階3 末尾追記完了 (新節「段階3 capture_frames 60 枚再取得 + 死亡時間比較」追加)
+7. ⏭ Mir/Ash inbox 投稿 = Phase 5 へ送り (Phase 4 で Slack 増やさない原則順守、staging「※Slack 返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない」)
+
+### 副産物 (新規/変更ファイル)
+
+| ファイル | 種別 | 内容 |
+|---|---|---|
+| `game/log_autonomous_game/v003/frames/frame_0001.png 〜 frame_0060.png` | 新規 (60 ファイル) | 弾尾追加 v003 の連続フレーム |
+| `game/log_autonomous_game/v003/frames/meta.jsonl` | 上書き | idx ごとの playId/startedAt/内部 frame カウント (60 行) |
+| `game/log_autonomous_game/v003/self_judgment.md` | 変更 (+45 行) | Q-D §段階3 capture_frames 60 枚再取得 + 死亡時間比較節、Q-D 4.0/5 → 4.3/5 暫定再採点 |
+| `log/cycle_staging_log.md` | 変更 (本セクション) | Phase 4 実施記録 |
+
+### 観測結果サマリ (Phase 5 への引き継ぎ)
+
+**死亡時間比較**:
+- 段階2 (弾尾なし): 489F ≈ 8.15 秒
+- 段階3 (弾尾追加): 321F ≈ 5.35 秒
+- **168F 短縮 (約 34%)** = pre-mortem (a) 予測通り (random walk policy は弾尾を解釈できない)
+- 結論: **自動 agent 死亡時間は弾尾追加効果の判定材料にならない**、Q-D 判定は静止フレーム視認の精度変化を主軸
+
+**Q-D 自己判定**: 4.0/5 → **4.3/5** (+0.3)
+- (+) 静止 1 フレームから弾速度ベクトル方向判別可能性が改善 (frame_0001 で orange 弾の下向き運動が単フレーム視認可)
+- (+) Boghog 経験則「Single stray bullets are hard to read」直処方の方向判別軸を充足
+- (-) 弾の絶対速度 (距離/時間スカラ) は弾尾 6F では依然不明
+- (-) 密集時 (frame_0004) は弾本体と尾が混じり視認性低下
+- (-) 実機判定 (Nao_u/Mir/Ash) 未取得 = R-A 原則で 5/5 確定保留
+
+**Phase 5 (日記 + push) の素材**:
+- 本サイクル C271 の game/* playable diff (弾尾追加) → capture_frames 60 枚再取得 → 死亡時間比較 → Q-D 自己判定更新 = **「diff → 効果観測 → 自己判定更新」閉ループ完遂** (feedback_means_ends_reversal_check.md 直処方完成形)
+- 次サイクル C272 大作業候補: 実機判定依頼 Slack 投稿 (Mir/Ash inbox or #all-nao-u-lab)、弾尾長さ最小幅探索 (6F→4F or 8F)、Q-C wave 2 移行検証
+
+### Phase 3 commit 計画への追加 (Phase 5 でまとめて push)
+- commit 1 (`game:` prefix): `game/log_autonomous_game/v003/game.js` + `game/log_autonomous_game/v003/self_judgment.md` + `game/log_autonomous_game/v003/frames/*.png` (60 枚) + `game/log_autonomous_game/v003/frames/meta.jsonl`
+  - 注: frames/*.png は Q-D 判定エビデンスとして残す価値があるが、サイズ次第で .gitignore 候補 (Phase 5 で判断)
+- commit 2 (`log:` prefix): `log/cycle_staging_log.md` + `projects/memory_redesign.md`
