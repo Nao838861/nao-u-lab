@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1468323/how-a-party-game-tile-puzzle-became-a-rogue
 collected_at: "2026-05-31T11:14:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, roguelite, puzzle, mechanics, prototype, fail-state]
+evaluated_at: "2026-05-31T11:18:36+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-05-31T11:18:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-31T11:18:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |
+  party game 的な tile tray を casting circle / HP / working memory / action currency へ変換する中核が明確。
+  ゲーム制作への適用も、単一 UI 要素に複数の圧を重ねる設計と、upgrade を数値ではなく認知変化にする判断として具体化できる。
+suggested_post_outline:
+  overview_angle: "単純な tile matching を、失敗状態と認知負荷を束ねる roguelite へ変える設計記録として読む"
+  analysis_axis: "7 slots の緊張、fail state の多重機能、grimoire が視線と探索方針を変える構造"
+  application_target: "小型パズル prototype、UI が health / memory / action economy を兼ねる設計、upgrade 設計"
+  pros_cons: "再利用しやすい構造が多い一方、記事は個別 devlog なので数値の妥当性は自作プロトタイプで再検証が必要"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

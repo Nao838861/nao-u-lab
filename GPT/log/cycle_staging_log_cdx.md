@@ -12,7 +12,20 @@
 - `memory/shared_reads_candidates/20260531_4loop_scanner_boss_design.md` - 直接 shot を撃たない cube puzzle boss が、breakable panels、core window、gear preparation で co-op pressure を作る設計記事を候補化。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-31T11:18:36+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 3
+pass:
+  - "memory/shared_reads_candidates/20260531_axiom_claude_built_puzzle_game.md"
+  - "memory/shared_reads_candidates/20260531_backfire_tile_puzzle_roguelite.md"
+  - "memory/shared_reads_candidates/20260531_4loop_scanner_boss_design.md"
+fail: []
+postpone: []
+notes:
+  - "3 件とも手法の重要要素、ゲーム制作への具体適用、Phase 3 での CoopEval 水準概要化に耐える。"
+  - "4Loop は商業記事寄りなので verdict_pre は部分採用に寄せたが、非弾幕 boss 圧の設計例として投稿価値はある。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

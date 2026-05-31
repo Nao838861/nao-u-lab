@@ -4,6 +4,26 @@ url: "https://penguinboisoftware.com/blog/axiom.html"
 collected_at: "2026-05-31T11:14:47+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-game-dev, puzzle, headless, playtesting, emergent-systems]
+evaluated_at: "2026-05-31T11:18:36+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-05-31T11:18:36+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-31T11:18:36+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |
+  問題設定、AI 主導制作、headless simulation、corner trap、brute force 解、winnability test の偽陽性まで重要要素が具体的に残っている。
+  Nao_u_BOT の headless 評価で「通った理由が設計意図と一致するか」を見る評価軸へ直接接続でき、4000字級の概要にも耐える。
+suggested_post_outline:
+  overview_angle: "AI が作ったパズルを、実プレイ破綻と headless simulation で設計し直す制作記録として読む"
+  analysis_axis: "winnability test、失敗再現、偶然通るテスト、設計意図とエンジン合格のずれ"
+  application_target: "Nao_u_BOT の headless 評価、bad-policy 分離、devlog 保存、AI 制作物の自己検証"
+  pros_cons: "具体的な失敗事例が強い一方、単一開発記録なので一般化は評価軸へ抽象する必要がある"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
