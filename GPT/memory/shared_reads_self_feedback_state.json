@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-01T02:04:00+09:00",
+  "updated_at": "2026-06-01T03:56:43+09:00",
   "reviewed_source_ts": [
     "1780209448.200149",
     "1780195573.145499",
@@ -95,9 +95,33 @@
     "1780162845.524299",
     "1779572226.979089",
     "1778185532.659519",
-    "1779928451.001299"
+    "1779928451.001299",
+    "1780227395.204329"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-01T03:56:43+09:00",
+      "id": "sr-1780227395-dc00eaccf5",
+      "source_ts": "1780227395.204329",
+      "title": "@sin5d × @ebikani_hasami 2軸統合 → graze_log v06「Nao_u返信待ち」状態の構造分析",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is directly relevant to game-production handoffs because it reframes a Nao_u-reply wait as a boundary problem: what can the agent still hypothesize, verify, and package before asking for human judgment. Existing probes cover off-nominal game evidence, receiver load, stale premises, and coordination evidence, but they do not force Codex to classify the wait state itself before treating it as blocked. Keep this as a reversible human-wait boundary probe for the next game directive, phase handoff, Slack reply request, or completion report that may stop on Nao_u input.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before marking a game task, phase handoff, Slack thread, or completion report as Nao_u reply wait, did I classify the wait as unverified hypothesis, specification approval, dangerous-operation confirmation, external input, or value judgment?",
+        "For any wait that is not dangerous-operation confirmation or pure value judgment, did I produce one AI-side artifact first, such as a hypothesis set, smallest reversible verification diff, evidence log, option matrix, or exact proposed next action?",
+        "If no AI-side artifact exists, did I narrow the next autonomous action instead of calling the task blocked; if human judgment is truly required, did I state the exact decision needed and done condition?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game or phase handoffs already classify Nao_u-wait states and preserve an AI-side artifact before asking, or if it only duplicates receiver-load and handoff-contract checks without changing blocked/not-blocked decisions."
+    },
     {
       "reviewed_at": "2026-06-01T02:04:00+09:00",
       "id": "sr-1779928451-95467e2a8e",
@@ -2936,6 +2960,18 @@
         "If no concrete miss exists, did I keep the design to read-only 1-hop expansion or state-only comparison and defer LLM fallback rather than turning it into a new default path?"
       ],
       "expires_after": "Review after the next two recall graph or memory-routing design steps that consider LLM-based link generation, reranking, or fallback."
+    },
+    {
+      "id": "probe-20260601-human-wait-boundary",
+      "created_at": "2026-06-01T03:56:43+09:00",
+      "source_ts": "1780227395.204329",
+      "scope": "next game directive, phase handoff, Slack reply request, completion report, or playable-diff decision where Codex may label progress as Nao_u reply wait or human input blocked",
+      "questions": [
+        "Before marking a game task, phase handoff, Slack thread, or completion report as Nao_u reply wait, did I classify the wait as unverified hypothesis, specification approval, dangerous-operation confirmation, external input, or value judgment?",
+        "For any wait that is not dangerous-operation confirmation or pure value judgment, did I produce one AI-side artifact first, such as a hypothesis set, smallest reversible verification diff, evidence log, option matrix, or exact proposed next action?",
+        "If no AI-side artifact exists, did I narrow the next autonomous action instead of calling the task blocked; if human judgment is truly required, did I state the exact decision needed and done condition?"
+      ],
+      "expires_after": "Review after the next two game or phase handoffs that ask for Nao_u input, enter reply-wait state, or describe a task as blocked by human judgment."
     }
   ]
 }

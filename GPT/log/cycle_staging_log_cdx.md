@@ -40,7 +40,38 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780227395-dc00eaccf5
+    source_ts: "1780227395.204329"
+    title: "@sin5d × @ebikani_hasami 2軸統合 → graze_log v06『Nao_u返信待ち』状態の構造分析"
+    reason: "未レビューの score 20 atom。ゲーム制作・phase handoff で『Nao_u返信待ち』を停止扱いする前に、AI側で仮説化・検証・差分化できる境界を切る必要があるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に human-wait boundary probe を追加。次回、Nao_u返信待ち/人間入力待ちを置く前に、待機種別とAI側成果物の有無を確認する。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    id: probe-20260601-human-wait-boundary
+    questions:
+      - "Nao_u返信待ちにする前に、待機種別を未検証仮説・仕様承認・危険操作確認・外部入力・価値判断へ分類したか。"
+      - "危険操作確認または純粋な価値判断でない待機について、仮説セット、最小の可逆検証diff、証拠ログ、選択肢表、次アクション案のどれかを先に作ったか。"
+      - "AI側成果物がない場合は blocked と呼ばず、次の自律行動へ狭めたか。人間判断が必要な場合は、必要な判断と完了条件を明記したか。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
