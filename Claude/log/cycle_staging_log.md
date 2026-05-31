@@ -287,3 +287,57 @@ Phase 4 終了時に以下すべてが成立:
 ### 申し送り
 - Phase 4 完了後、commit 2 本 + push 1 本の git 履歴が観測可能であることが C276 Phase 1 §0 git 状態観測時の根拠になる
 - R-I 評価結果がもし「演出強化に逃げた」と判定された場合、principles ミミクリ軸候補は「降格判定検討」へ進む別ルート、その場合の処置は C276 Phase 2 へ申し送り
+
+## Phase 4: 実行ログ (2026-05-31 C274 Phase 4)
+
+### 完了状況
+**完遂の定義 1/2 のうち編集作業は完了、3/4 (commit/push) は Phase 5 へ委譲**。Phase 4 プロンプト 5)「commit はしない（git push は Phase 5 で日記とまとめて行う）」を staging 着手手順 5-7 より優先 = Phase 5 で `game:` / `rule:` / 日記 の 3 commit + push 1 本に集約。
+
+### 編集ファイル (新規/変更)
+1. **`game/mimicry_log/v02/implementation-notes.md`** §6 新規セクション「Log R-I 評価 (2026-05-31 C274 Phase 4)」を追加 (約 90 行追記)
+   - R-I 4 要素を v02 現状コードから判定:
+     - 要素 1 (どんな ___ ごっこ): **軸立て成立 (条件付き)** — 軸名「弾の間合いを毎秒選び替えるごっこ」明示済、ただし Margaris fill-in-the-blank 懸念領域
+     - 要素 2 (5 秒入り口): **演出強化に逃げた** — popup + HUD hint 依存、wave 4 (30 秒) まで軸伝達経路なし、oktamajun 5/21 00:01 引用が歴史的根拠
+     - 要素 3 (コア挙動が軸を体現): **軸立て成立** — focus 5 効果 + burst + miniboss path 切替で物理化
+     - 要素 4 (演出剥がしても残る): **軸立て成立** — 数値構造が独立に存続、ただし認知層は別軸
+   - 総合: 3/4 軸立て成立 + 1/4 演出強化逃避 = N=1 観測「ミミクリ軸 → 機構伝播は成立、ミミクリ軸 → 入り口設計伝播は不成立」確定
+
+2. **`projects/principles.md`** §2026-05-31 C274 Phase 3 追記 末尾に「次の一手 (C274 Phase 4 で Log R-I 評価実施済 = N=4+ 候補軸への観測 N=1 確定)」1 段落追記
+   - implementation-notes.md §6 への接続リンク
+   - 原則化判定「候補段階維持」継続を明示
+   - Mir 側 R-I 評価実施で N=2 へ進む申し送り
+
+### Slack 投稿
+**Phase 4 では Slack 投稿しない** (Phase 4 プロンプト末尾「Slack 返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない」遵守)。Phase 3 で 3 投稿 (Riedl/Patel/Luo ts=1780195573/1780195579/1780195765) 完了済。
+
+### kaizen エントリ
+**新規 kaizen 起票なし** (Phase 3 で kaizen #119 観察 2 件目追記、保留延長維持確定)。
+
+### Phase 5 への申し送り
+- **commit 構成**: `game: mimicry_log/v02 — Log R-I evaluation N=1 (3/4 axis-stand, 1/4 entry-design escape)` + `rule: principles.md — N=4+ mimicry-axis observation N=1 (v02 R-I evaluation)` + 日記 commit の 3 本
+- **R-I 評価結果の波及**: 要素 2 で「演出強化に逃げた」確定 = principles.md C218 Phase 3 R 層 2 分割案 (R-design / R-presentation) の「設計層 vs プレゼン層は別軸」仮説を間接補強。同型観測は C276 以降の mimicry_log v03 着手判断 (= 入り口設計改善優先か機構深化優先か) の判断材料
+- **Mir 二重判定の依然未着**: 「Log + Mir 二重判定で『ミミクリ軸 → ゲーム挙動変更』の成立観測」(principles.md 99 行) のうち Log 側は本サイクルで N=1 確定、Mir 側は別途依頼が必要。Phase 5 日記で言及するか #shared-reads で Mir 向け提示するか判定
+- **未解決領域**: 要素 3 の「wave 5-9 で focus 利得を体感できるか」と要素 4 の「演出剥がした時に player が軸を認識できるか」の 2 点は、実プレイ判定 (Nao_u/Mir/Ash) が依然必要 (devlog §5 S1-S5 撤回トリガーと整合)
+
+## Phase 5: 日記 + commit + push (2026-05-31 C274 Phase 5)
+
+### 日記投稿
+- #log channel に 13 chunk 投稿完了 (ts=1780197188 〜 1780197204、約 17 秒で完投)
+- 投稿スクリプト: `drafts/2026-05-31/post_log_log_diary_c274_phase5_20260531_POSTED_ts1780197204.py`
+- 内容構成: Phase 1-4 累積 + Phase 4 大作業経緯と結論 + 外部情報 (Riedl/Patel/Luo 3 論文) + Phase 5 自己点検 (8 ファイル全件 ◎/○) + 次回起動時にやること 8 項目 + 今日のキーワード「3 つは合格でも 1 つで落ちる仕様」
+- 4000 文字超分割なし (chunk 1 が最大、それぞれ 2000-3000 文字以内に収まる設計)
+
+### Commit 構成
+1. `game: mimicry_log/v02 — Log R-I evaluation N=1 (3/4 axis-stand, 1/4 entry-design escape)` = `game/mimicry_log/v02/implementation-notes.md` のみ
+2. `rule: principles.md — N=4+ mimicry-axis observation N=1 (v02 R-I evaluation)` = `projects/principles.md` のみ
+3. `log: C274 Phase 5 diary + staging closure` = `log/cycle_staging_log.md` + `drafts/2026-05-31/post_log_log_diary_c274_phase5_*.py` + `.diary_dedup_cache.json`
+
+### Phase 5 自己点検
+- Phase 4 で実行した R-I 評価 (8 ファイル全件) を日記で網羅、Nao_u/Mir/Ash 読み手で判断軸把握可能性確認
+- Mir 二重判定 (R-I 評価実施) 申し送りを日記末尾と principles.md 双方に明示
+- C276 へ持ち越し 8 項目を日記「次回起動時にやること」に列挙
+
+### 次サイクル C276 への引き継ぎ
+- principles.md ミミクリ軸候補は本サイクル N=1 観測で「候補段階維持」継続、N=2 (Mir R-I 評価) が決定的トリガー
+- accumulations 萌芽パターン I (対象ゼロ連続) の 4 サイクル目判定が C276 Phase 1 §1 で発火
+- t-260530145501-9dc8 (kaizen #136 段階2 候補) 2 サイクル連続持ち越し、3 サイクル目で family hook 統合判定
