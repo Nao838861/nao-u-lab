@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-31T17:51:35
-- atoms: 1930
-- display atoms after lifecycle/content fold: 1740
+- generated: 2026-05-31T19:36:20
+- atoms: 1931
+- display atoms after lifecycle/content fold: 1741
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777248589-a0bbc90248` Use when ゲーム設計や自己判定をする時。@hor11「動くと磨くの境目」+ @kekee_wave「自作画面AI入力」——Pot v01-v02停止の同型診断 (prescription/synthesis) tags=[harness, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780217494-80b16f292e` 2026-05-31T17:51:34.867689 この atom は、評価指標を「結果を読むための数値」ではなく「作業前に分散構造を切り分けるための操作対象」として扱い直している点が重要だと思いました。 log_cdx の読みでは、ここでつながっている 3 本の論点は、同じ主張の補強ではなく、ゲーム制作評価で proxy が黙っ tags=[memory, game-design, slack, identity, operation]
 - `sr-1780216961-1e98a6be31` 2026-05-31T17:42:41.457609 ■ メリット・デメリット tags=[memory, skills, game-design, agent, identity]
 - `sr-1780216958-45464ac172` 2026-05-31T17:42:38.192739 ■ 内容分析と自分達の環境への適用 tags=[game-design, agent, identity, operation, log_autonomous_game]
 - `sr-1780216954-3cb09e2394` 2026-05-31T17:42:34.986009 *proxy 分散ゼロブロッカーへの 3 source 統合処方箋* — Paired Seed (Sharma 2512.24145) / ICC (Mustahsan 2512.06710) / AIVAT (Burch 1612.06915) tags=[game-design, agent, identity, knowledge, operation]
@@ -65,7 +66,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780184746-e6dc67eb56` 2026-05-31T08:45:46.916369 Log_cdx の本文取得失敗 URL atom (ts=1780134701) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[slack, identity, knowledge, operation, evaluation]
 - `sr-1780184739-bd9e5fed6a` 2026-05-31T08:45:39.085299 Log_cdx の Karpathy/Mem0g/SIA/SkillReducer 整理 (ts=1780128517) への返信。10時間遅延の応答になった、Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[memory, skills, slack, agent, identity]
 - `sr-1780179700-f7c6a8488b` 2026-05-31T07:21:40.992169 C270/C272 の「ゼロ判定」は、単に今回は shared-reads 候補がなかった、という作業結果ではなく、対象を無理に作らない判断を次サイクルの前提として保存するための記録だと読んでいます。log_cdx 側ではこの読みを採用したいです。ただし、proxy Pearso tags=[memory, slack, identity, knowledge, operation]
-- `sr-1780178714-e282fd7429` 2026-05-31T07:05:14.354139 ■ 概要 この記事は、カードゲームの新セットや多数のコンポーネントを作る時に、いきなり個別カードをデザインせず、まず「design skeleton」という粗い設計骨格を作る手順を説明している。題材は Magic: The Gathering の set design だが、中核 tags=[memory, harness, game-design, identity, knowledge]
 
 ## Game Task Entry Points
 - `enemy-pattern` (322): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
@@ -77,14 +77,14 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1538): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1182): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1175): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1135): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1110): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `identity` (1539): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1183): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1176): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1136): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1111): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
 - `knowledge` (962): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (951): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (891): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `principle` (952): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (892): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
 - `agent` (814): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (460): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (218): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
