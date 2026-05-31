@@ -4001,3 +4001,42 @@ SkillReducer の Stage 1 = routing/body 分離 (= 分離方向) は、Karpathy L
 **関連ファイル**: projects/log_autonomous_game.md (本入力の主接続先) / game/log_autonomous_game/v003/PEARSON_BLOCKER.md (Mustahsan ICC 追記対象) / game/log_autonomous_game/v003/MULTISEED_RESULT.md (Sharma 理論裏付け追記対象) / projects/memory_redesign.md (R 層昇格判定の並列起点) / 本ファイル 2026-05-31 C274 Riedl-Patel-Luo エントリ (3 source 統合の連続サイクル並列例)
 
 ---
+
+## 2026-05-31 (Log C273 Phase 2) GAAMA 深掘り — concept-mediated KG + atomic assertion 業界用語化 [WebSearch 1件、#shared-reads ts=1780238641 投稿済、即統合済 2026-05-31]
+
+**source**:
+- <https://arxiv.org/abs/2603.27910> GAAMA: Graph Augmented Associative Memory for Agents (2026-04) — concept-mediated knowledge graph、4 ノード型 (Episode / Fact / Reflection / Concept) + 5 エッジ型 (causal_to / supports / contradicts / mentions / temporally_after)。エピソードから LLM が atomic assertion を蒸留して Fact ノード化、Reflection ノードで反復確認された判断を別棚に固定、Concept ノードを mega-hub にしないよう intermediate concept で媒介
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent atom-level memory edges graph semantic retrieval` (2026) / Active project = projects/memory_redesign.md (kaizen #135 build_atom_edges.py 期限 2026-06-09、atom 本体非破壊 → edges 派生生成の業界既知化を確認)
+
+**摂取契機**: 本サイクル C273 は新着 Nao_u URL = 2件 (両者既応答 N=7 で kaizen #136 hook 注入)、shared-reads 在庫 = 0、external_notes 未統合 = 0 のスカスカ条件。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project memory_redesign の kaizen #135 期限 11 日前 = atom-level edges 設計の業界既知化確認を狙ってキーワード設定。同時取得 3 件中 GAAMA は当方 atom 概念と最も直結。
+
+**新規発見 5 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **atomic assertion 業界用語化** | 当方 atom 体系 (../GPT/memory/atoms/2026-MM/) の外部独立到達検証。`atomic facts + LLM 蒸留` がそのまま業界用語化されている = 我々の命名が標準命名と一致 |
+| 2 | **4 ノード型完璧対応** | Episode = log/diary / Fact = atoms / Reflection = beliefs (35件) / Concept = concept_graph.md (8概念 + 9交差)。当方既存構造の理論根拠 + 境界事例 (atom か belief か迷う) の判断材料 |
+| 3 | **edge-type-aware additive scoring** | kaizen #135 段階 3 T0 ベンチ設計への新規入力、現状 cosine 単体設計の構造的不利を回避できる |
+| 4 | **Concept mega-hub 回避** | TagRAG 階層 chain (C263 統合済) との同方向 2 source 独立到達。intermediate concept 媒介で hub 化を防ぐ運用提案、当方 concept_graph.md の「交差ノード = 緊張対」(Ash 起票) と同型 |
+| 5 | **GRAFT (post-retrieval repair)** | C272 起票候補 tools/verify_recall_coherence.py の業界既知化、kaizen 起票根拠補強 |
+
+**memory_redesign R 層昇格判定材料 5 件目 (atom-level edges/concept 軸)**:
+Karpathy LLM Wiki + Mem0g + SIA + SkillReducer + (C275 Sharma/Mustahsan/AIVAT variance 軸) に並ぶ「atom edge/concept 体系の業界既知化」軸。**source 軸の独立到達 = 6 件目 (GAM / Iusztin / Mem0 blog / TagRAG / ByteRover / GAAMA)** = R 層昇格判定 source 数軸の 10 件目候補手前まで詰めた状態。即昇格判定はしない (機械反映禁止順守、kaizen #135 期限 2026-06-09 まで実装着手しない)、本入力は位置取り記録のみ。
+
+**Phase 1 §6 規約「強制利用しない」順守確認**:
+本入力は摂取経路固定化のみ目的 (kaizen #106 規約)、Phase 3 で memory_redesign.md 4 ノード型対応表として位置取り記録のみ反映、game/* playable diff には繋がらない。kaizen #135 期限 2026-06-09 までは実装着手しない明示宣言、推定でなく実コマンド (本サイクル: Phase 1 §6 WebSearch 1 件、Phase 2 §2 で深掘り) に基づく。
+
+**自己批判**:
+- WebSearch 1 件のみで実行 (時間予算 10% 順守)、GAAMA 本文 PDF 未取得 (5 エッジ型の具体的判定基準 / additive scoring の正規化方法 / GRAFT のループ条件) は二次資料経由になる
+- 4 ノード型の境界事例 (Fact と Reflection の中間 = 部分的に反復確認された判断、Concept と Fact の中間 = 抽象化途中の atomic assertion) の判定基準は abstract 経由では不明、kaizen #135 実装着手時に再判定
+- 「atomic assertion 業界用語化」は当方既存構造の追認であって、新規実装を要求しない = 期待効果は質的観察のみ、定量改善は別途検証必要
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md に「GAAMA 4 ノード型対応表」セクション追記 (本サイクル Phase 3 §A で着地)、機械反映禁止順守
+(ii) **kaizen #135 段階 3 設計入力** = `edge-type-aware additive scoring` + `Concept mega-hub 回避` の 2 アイディアを T0 ベンチ設計に持ち込む候補、期限 2026-06-09 まで実装着手しない
+(iii) **kaizen 起票根拠補強** = C272 起票候補 tools/verify_recall_coherence.py が業界既知 (GAAMA GRAFT) と判明、起票時のレビュー説得材料として使用
+
+**関連ファイル**: projects/memory_redesign.md (本入力の主接続先、§A 4 ノード型対応表反映済) / memory/kaizen_tracker.md #135 (build_atom_edges.py 段階 3 設計入力候補) / memory/concept_graph.md (Concept mega-hub 回避との同方向 2 source 独立到達) / 本ファイル 2026-05-30 SkillReducer エントリ (R 層昇格判定 source 軸の並列起点) / drafts/2026-05-31/post_log_shared_reads_gaama_atomic_assertion_20260531_POSTED_ts1780238641.py (Slack #shared-reads 投稿記録)
+
+---
