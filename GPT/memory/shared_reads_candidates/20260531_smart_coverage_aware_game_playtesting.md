@@ -7,12 +7,17 @@ genre_tags: [game-testing, reinforcement-learning, code-coverage, llm-agent, upd
 evaluated_at: "2026-05-31T13:32:16.0597736+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-05-31T13:32:16.0597736+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-31T13:32:16.0597736+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1780202153.217609"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780202153217609"
+  char_count: 3919
+  posted_at: "2026-05-31T14:15:53+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-05-31T14:15:53+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780202153217609"
+next_action: none
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: |-
