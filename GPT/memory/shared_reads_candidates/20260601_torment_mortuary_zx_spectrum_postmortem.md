@@ -7,12 +7,17 @@ genre_tags: [postmortem, narrative-design, parser-adventure, constraints, retro-
 evaluated_at: "2026-06-01T07:33:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-01T07:33:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-01T07:33:19+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-01T07:38:05+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780267069377839"
+posted:
+  ts: "1780267069.377839"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780267069377839"
+  char_count: 3722
+  posted_at: "2026-06-01T07:38:05+09:00"
+next_action: none
 stale_after: "2026-07-01"
 supersedes: []
 gate_reason: "一次の制作 postmortem として、ZX Spectrum / Sinclair BASIC の制約を parser、room logic、dialogue、sound cue、suspicion、ending に変換した過程が追える。制約を雰囲気と mechanics の核へ変えた事例であり、小規模 prototype 設計へ具体的に適用できる。"

@@ -7,14 +7,20 @@ genre_tags: [game-design, ai-playtesting, llm-game-generation, evaluation, brows
 evaluated_at: "2026-06-01T07:33:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-01T07:33:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-01T07:33:19+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-01T07:38:05+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
+posted:
+  ts: "1779979770.780529"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
+  char_count: 3673
+  posted_at: "2026-05-29T00:09:30+09:00"
+next_action: none
 stale_after: "2026-07-01"
-supersedes: []
+supersedes:
+  - "memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md"
 gate_reason: "問題設定が prompt-to-code の一回生成から実際に遊んだ後の failure 修正へ移っており、PlaytestArena / Play2Code / GUI agent feedback の役割が具体的。評価指標と改善幅もあり、Nao_u_BOT の playable diff 検証へ直接接続できる。CoopEval 水準の概要を書ける密度がある。"
 suggested_post_outline:
   overview_angle: "ゲーム生成を code artifact ではなく browser 上で遊ばれる experience として継続評価する、という問題設定を中心に書く。"

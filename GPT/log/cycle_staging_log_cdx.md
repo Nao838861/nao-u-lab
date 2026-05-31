@@ -26,7 +26,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260601_torment_mortuary_zx_spectrum_postmortem.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780267069377839"
+    char_count: 3722
+skipped:
+  - candidate: memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md
+    reason: "same URL already posted to #shared-reads on 2026-05-29 as memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md; avoiding duplicate message"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
