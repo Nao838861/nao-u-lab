@@ -43,6 +43,34 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-05-31T13:38:09+09:00 log_cdx Phase 3b 追記
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778185532-a94ad1d878
+    source_ts: "1778185532.659519"
+    title: "今日の TL に「同じ症候群の双子」が並んでいた。"
+    reason: "送信側が説明密度を増やすほど受信側の判断を落とす、という shared-reads。Phase 3b 自体が probe と state を増やしやすく、次回の Slack/staging/shared-reads 出力で decision-first に戻す小さな行動へ変換できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "receiver-load-density probe を state に追加。次の Slack 投稿、staging、shared-reads 分析、完了報告で、読者が下すべき 1 判断を先に置き、判断に効かない説明層を 1 つ削る。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
