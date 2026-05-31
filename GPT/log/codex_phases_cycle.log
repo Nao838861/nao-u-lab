@@ -1901,3 +1901,5 @@
 2026-05-31T19:49:09 codex exec end phase=phase5_diary rc=0
 2026-05-31T19:49:09 stdout tail: 'Phase 5 完了しました。\n\n#log 投稿:\nhttps://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780224482322079\n\n- 文字数: 2299 字\n- Slack API 本文検証: `ok`\n- staging 更新: [cycle_staging_log_cdx.md](D:/AI/Nao_u_BOT/GPT/log/cycle_staging_log_cdx.md)\n- draft 保存: [phase5_diary_20260531_2020.md](D:/AI/Nao_u_BOT/GPT/log/drafts/phase5_diary_20260531_2020.md)\n- commit/push 済み: `bc00446644e7 codex: post phase5 diary 20260531`\n\n作業前からある未コミット変更として `log/codex_log_cycle.log`、`log/codex_phases_cycle.log`、`memory/codex_log_cycle_state.json`、未追跡 tmp ディレクトリは残っています。今回の commit には混ぜていません。\n'
 2026-05-31T19:49:09 phase phase5_diary end (rc=0)
+2026-05-31T20:58:31 lock exists; skipping overlapping run: D:\AI\Nao_u_BOT\GPT\memory\codex_phases_cycle.lock.json
+2026-05-31T21:13:31 lock exists; skipping overlapping run: D:\AI\Nao_u_BOT\GPT\memory\codex_phases_cycle.lock.json

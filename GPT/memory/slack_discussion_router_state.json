@@ -85,9 +85,10 @@
     "sr-1780195573-32d4ba8440",
     "sr-1780195765-bfbc6dabc8",
     "sr-1780206098-9f66c24c0c",
-    "sr-1780216961-1e98a6be31"
+    "sr-1780216961-1e98a6be31",
+    "sr-1780227395-dc00eaccf5"
   ],
-  "last_checked_source_ts": "1780217494.867689",
-  "last_run": "2026-05-31T19:36:20",
-  "last_selected": null
+  "last_checked_source_ts": "1780227395.204329",
+  "last_run": "2026-05-31T21:21:42",
+  "last_selected": "sr-1780227395-dc00eaccf5"
 }
