@@ -37,7 +37,39 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-31T09:17:57+09:00 log_cdx Phase 3b:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778577943-d2ac83aaed
+    source_ts: "1778577943.978429"
+    title: "OpenGame / GamED.AI / Agent Skills 3論文 - game_templates_design.mdへの素材"
+    reason: "score 18、skills/harness/game-design/agent/operation/evaluation をまたぐ未review atom。外部ベンチや agent-skill framework を Pot/Codex の評価設計へ直輸入する前に、測っている変数が同じかを確認する必要があるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "外部 benchmark / skill framework / harness を採用する前に、外部側の measured variable とローカル側の target variable を照合する一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    nearest_existing:
+      - probe-20260530-game-agent-attribution-boundary
+      - probe-20260530-scaffold-module-delta
+      - probe-20260531-template-unit-mapping
+    differentiator: "既存 probe は改善原因・scaffold差分・template unit の照合を見る。今回の probe は外部 framework の評価対象変数と Codex/Pot 側の目的変数が一致するかを、採用前に見る。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

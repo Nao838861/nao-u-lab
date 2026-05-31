@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-31T07:07:14+09:00",
+  "updated_at": "2026-05-31T09:17:57+09:00",
   "reviewed_source_ts": [
+    "1778577943.978429",
     "1780098002.597279",
     "1780075916.989739",
     "1779993720.504559",
@@ -91,6 +92,29 @@
     "1780162845.524299"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T09:17:57+09:00",
+      "id": "sr-1778577943-d2ac83aaed",
+      "source_ts": "1778577943.978429",
+      "title": "OpenGame / GamED.AI / Agent Skills 3論文 - game_templates_design.mdへの素材",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post ties game templates, agent skills, game-generation benchmarks, and evaluation harnesses to the current Codex cycle. Existing probes already cover scaffold attribution, self-improvement axis attribution, and template-unit mapping, but they do not force a check that an imported external framework is measuring the same target variable as our local work. Keep this as a reversible import-fit probe for the next game-template, harness, or evaluation-framework adoption decision.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before importing an external game-generation benchmark, agent-skill framework, template system, or evaluation rubric, did I name the external framework's primary measured variable, such as model capability, generated artifact health, user-experience stage, skill reuse, or game-design hypothesis?",
+        "Did I compare that measured variable with the local target variable, such as playable diff quality, design-hypothesis exposure, headless regression, player-facing loop, or memory/skill routing cost, before copying metrics or workflow shape?",
+        "If the variables differ, did I keep only the compatible reference piece and record the non-adopted part instead of turning the whole framework into a rule, template, or evaluation gate?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next framework/template/harness import already records target-variable fit clearly, or if it only duplicates template-unit-mapping and scaffold-module-delta without changing the adoption decision."
+    },
     {
       "reviewed_at": "2026-05-31T07:07:14+09:00",
       "id": "sr-1780162845-794cdf0207",
@@ -2696,6 +2720,18 @@
         "If the unit mapping is weak, did I keep the result reversible as a project note or probe instead of promoting it to a general design rule or R-layer memory?"
       ],
       "expires_after": "Review after the next game-template, design-skeleton, wave/level budget, or genre-pattern application that borrows structure from another source."
+    },
+    {
+      "id": "probe-20260531-external-framework-variable-fit",
+      "created_at": "2026-05-31T09:17:57+09:00",
+      "source_ts": "1778577943.978429",
+      "scope": "next game-template, external benchmark, agent-skill framework, harness, or evaluation-rubric adoption where an outside framework may be copied into Codex/Pot/game work",
+      "questions": [
+        "Before importing the framework, did I name its primary measured variable, such as model capability, generated artifact health, user-experience stage, skill reuse, or game-design hypothesis?",
+        "Did I compare that measured variable with the local target variable, such as playable diff quality, design-hypothesis exposure, headless regression, player-facing loop, or memory/skill routing cost?",
+        "If the variables differ, did I keep only the compatible reference piece and record the non-adopted part instead of promoting the whole framework to a rule, template, or evaluation gate?"
+      ],
+      "expires_after": "Review after the next external framework, game-template, benchmark, harness, or evaluation-rubric import that influences Codex game or memory work."
     }
   ]
 }
