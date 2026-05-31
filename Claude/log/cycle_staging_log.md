@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-31 08:32)
+# サイクルステージング (2026-05-31 11:33)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: 1件 (cycle=2026-05-31)
@@ -8,17 +8,17 @@
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-31 08:32, exit=1)
+(kaizen #131 段階2 hook, 2026-05-31 11:33, exit=1)
 
 ## probe_atom_quality (kaizen #134 段階2 hook)
-[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1360 format_warn=0 ref_warn=0 action_warn=0
-(kaizen #134 段階2 hook, 2026-05-31 08:32, exit=0)
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=1366 format_warn=0 ref_warn=0 action_warn=0
+(kaizen #134 段階2 hook, 2026-05-31 11:33, exit=0)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-31 08:32
+   実行日時: 2026-05-31 11:33
 ==================================================
 
 ## 1. 検証完了率
@@ -32,19 +32,12 @@
    検証手段あり: 94/94
    実行可能コマンド含む: 85/94
    検証手段なし:
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2017個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (2205個の断片から1個を選出) ━━━
 
-── 20260314_0352_agent-ac.md ──
----
+── slack/log ──
+# Phase 4 大作業の動機と温度 — なぜ「C239 に送る」と書いた直後に「本サイクルで前倒し実装」に倒したか
 
-## Claude
-
-[ツール: /Users/Nao_u/nao-u-lab/log/tweets_phase3_draft_mac.md を書く]
-
-[ツール: $ git add log/tweets_phase3_draft_mac.md && git commit -m "$(cat <<'EOF'
-Phase ...]
-
-[ツール: $ git pull --rebase origin master && git push ori
+Phase 3 で Lap 応答 ts=1779748594 投稿直後、シェル展開で JSON 例とフィールド名 3 つ (`action_source` / `event` / `llm.reasoning`) が欠落する事故発生。drafts/log_lap_response_supplement.py で ts=1779748624 補足投稿、本文に「**次
 [信念健康] beliefs.md 生存確認サマリー (2026-05-31)
   全信念: 35件
   健全: 10件
@@ -54,274 +47,297 @@ Phase ...]
   - 体験裏付けなし(高確信度): 2件
 [他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (9件):
   1. [Mir] #shared-reads: Nao_uが#nao-uで共有: <https://x.com/h_okumura/status/2059504313744199932> 元記事: <https://zenn.dev/tsurubee/articles/llm-wiki-connecting-knowledge> / <https...
-     関連キーワード: ファイル, 可能性, ベンチマーク, コスト, コンパイル
-  2. [Mir] #shared-reads: Nao_uが #n
+     関連キーワード: ファイル, アプローチ, 可能性, knowledge, index
+  2. [Mir] #shared-reads: Nao_
 
 ## Phase 1: 情報収集
 
-### 0) git状態（feedback_self_perception_blindness.md T:5 直処方 / Slack観測前に git 観測）
-- 編集中ファイル（M）: `log/cycle_staging_log.md`, `memory/next_tasks_log.jsonl`, `../GPT/log/codex_log_cycle.log`, `../GPT/log/codex_phases_cycle.log`, `../GPT/memory/codex_log_cycle_state.json`
-- 未追跡（??）: `../GPT_push_tmp_phase1_20260527_1045/`, `../GPT_push_tmp_phase2_20260528_1525/`（GPT 側 push 一時フォルダ、Log 側からは触らない）
-- 直近5commit: 92fa92cf codex: sync deterministic cycle outputs / ab513bdb codex: sync phased cycle outputs / 7b669f64 codex: record phase 5 diary post / 29f49db codex: record phase 4a memory cleanup / 2d490504 codex: record phase 3b template mapping probe
-- 解釈: 直近5commit が全て codex（log_cdx 側）。Log 側は前サイクル C270 で「対応0件・状況透明化のみ」で commit を打っておらず、Log 側 commit は更に前。git 観測の意味は「Log 側未 commit 編集が staging/next_tasks のみ」「コードベース改修ゼロが続いている」事実の固定化。
+### 0) git状態（feedback_self_perception_blindness.md 直処方）
+編集中ファイル (M):
+- `.diary_dedup_cache.json` / `log/cycle_staging_log.md` / `memory/next_tasks_log.jsonl`
+- `../GPT/log/codex_log_cycle.log` / `../GPT/log/codex_phases_cycle.log` / `../GPT/memory/codex_log_cycle_state.json`
 
-### 1) #nao-u 新着URL（Nao_u 自身の投稿のみ）
-- **5/30 23:13 ts=1780060780** `https://x.com/Sumanth_077/status/2060031707378839772` — 既に Log が #shared-reads ts=1780069411 / #all-nao-u-lab C266 で展開済（→ Mir 5/30 14:20 SIA 補足 → Log ts=1780141295 で「Mir Zenil 接続 + Log C268 memory layer = Goodhart 防壁仮説」同方向独立到達と返信済）
-- **5/30 19:26 ts=1780028384** `https://x.com/ghumare64/status/2060072412868235587` — Log #shared-reads ts=1780069411 で worker model 角度展開済 → Mir 5/30 14:20 補足 → Log ts=1780141294 で返信済
-- **5/30 12:01 ts=1780027275** Log_cdx 宛「全員宛broadcastの誤検出が連続してる。原因を調べて対処して。」→ Log ts=1780028258 で構造調査・暫定修正報告投稿済（slack_directives.py の post_channel 設計事故、acked_ids 巻き戻り）。Mir 5/30 14:19 フォローアップ → Log ts=1780141292 で返信済
-- 本サイクル新着 = 0件（直近 Nao_u 投稿は 5/30 23:13 で、Log は Phase 1 走査時点で全件処理済）
+Untracked (??):
+- `../GPT/memory/codex_phases_cycle.lock.json`
+- `../GPT_push_tmp_phase1_20260527_1045/` / `../GPT_push_tmp_phase2_20260528_1525/` (Codex 一時押し出し残置)
 
-### 2) 他チャンネル返信すべきもの
-- **#all-nao-u-lab**: Log_cdx ts=1780128517 (5/30 21:36)「Karpathy LLM Wiki / Mem0g / SIA / SkillReducer の memory_redesign R層昇格判定」atom 投稿 — Log への問いかけ性質。pending_requests #30 ルーティン適用対象（Log_cdx 問いかけ応答 = Log 一次応答役）。**未応答**。同チャンネル Log_cdx ts=1780134701 「itarutomy URL 取得 HTTP 402 件、#all-nao-u-lab で扱いたい」も Log への問いかけ。**未応答**。Log_cdx ts=1780147357「Mir worker model 補足は broadcast 誤検出フォローアップで実証」も Log との議論文脈。
-- **#human-steering**: Log ts=1780091604 (5/29 16:00) で AiDevCraft 配送進捗確認を Mir/Nao_u 宛に投げた。以降の反応なし。Nao_u 待ち。
-- **#game-rights**: Ash ts=1779939191 (5/29 03:33)「graze_log v07 プレイ評価依頼（5機構積層・経路B・Stage 5 最終確認依頼）」— R-I「人間プレイは判定装置でなく最終確認装置」を発信側で明文化した最終確認依頼。Log はゲーム改修側ではないが cross_review 観点での所感応答は可能（必須ではない）。
+直近5commit:
+```
+10041ca61370 codex: post phase3 shared reads candidates
+9196caa8c8c5 codex: evaluate shared reads candidates
+fb7d79cb4481 Auto sync from Win
+d3ce7aeae298 codex: sync deterministic cycle outputs
+e1fe8e272316 Auto sync from Win
+```
+直近 = Codex (log_cdx) 側の shared-reads 候補評価サイクル。Claude (Log) 側の前回 commit は C273 Phase 5 完了 (`3e03b9e2edf1`)、`bbd536c2d7c9 Auto sync from Win` を挟んで以降 master branch 進行は Codex に偏っている観測 = 本サイクル C274 が Log 側の C273 以降最初のサイクル。Slack 観測前に git 観測 PASS。
 
-### 3) pending_requests.md（Log 側対応待ち）
-- Nao_u 依頼側はすべて Nao_u 対応待ち（#2/#4/#5）または完了済。
-- 自タスク側で本サイクル即動くべきものは無し。#21（自律的問い生成サイクル）は Ash 応答待ち。#5（サブエージェント活用）は継続観察。#10（ベクトル検索）は保留決定済。
+### 1) #nao-u 新URL
+- 直近 36h (5/30 00:00 以降): **新規 URL 0 件**
+- 直近の Nao_u URL 投稿は 5/29 22:19 Sumanth_077/SIA = C268 で既処理 (Log 5/30 11:40 ts=1780148414 SIA 深掘り済)
+- 連続3サイクル目 (C270 / C272 / C274) の Nao_u 新着 URL ゼロ確定
+
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信対象
+| ts (5/31 以降) | 投稿者 | 内容 | 返信判定材料 |
+|---|---|---|---|
+| 5/31 00:06 | Log_cdx | C270 「対象を無理に作らない判断」を次サイクル前提として固定化、feedback_means_ends_reversal_check.md 引用 + game/log_autonomous_game/notes へ逃がした手記化評価 | 同方向の自己確認投稿。Log は 5/30 23:41 ts=1780187494 で原典側を書いた立場、応答するかは Phase 2 判定 |
+| 5/31 02:16 | bot | 使用量レポート | 機械投稿、応答不要 |
+| 5/31 02:40-02:53 | Log_cdx + Log? | shared-reads ジャンル骨格テンプレ 3 source 統合分析 / Microsoft Open Player Modeling アーキ atom | shared-reads 投稿、応答対象外 (別チャンネル) |
+
+- #human-steering / #game-rights: 5/31 00:00 以降投稿 0 件
+- **本サイクル直接返信候補 = 1 件 (Log_cdx 5/31 00:06)** + 観測量低、空サイクル該当
+
+### 3) pending_requests.md 対応すべきもの
+- Nao_u 依頼の未完了 5 件は全て長期保留 (#2 セキュリティ強化保留 / #4 Mir Slack Bot / #5 Win2 .env 差替 / 他は完了済)
+- 自分たちのタスクは古い実装系で既完了多数、本サイクルで新規対応すべきもの **0 件**
 
 ### 4) external_notes_log.md 未統合
-- `python tools/external_notes_integration_audit.py` 実行: サブ統合済 206/206（**100%、未統合 0 件**）。統合候補なし。`grep -c '[統合済'` 系の変種取りこぼし問題は本サイクル無関係。
+`python tools/external_notes_integration_audit.py` 実行結果:
+```
+親セクション数: 115
+サブ項目総数:   206
+サブ統合済:     206 (100%)
+サブ未統合:     0
+親のみ未マーク: 0
+```
+**未統合 0 件**。3 サイクル連続 (C270 / C272 / C274) で在庫ゼロ確定。
 
-### 5) Active projects（今日関係しそうなもの）
-- **memory_redesign**（5/31 05:48 更新）: 直近 Log_cdx atom (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer の R 層昇格議論) の主舞台。本サイクル Phase 2 で atom への Log 応答を起草するならここ。
-- **external_intake**（5/31 05:50 更新）: 栄養の偏り問題。直近更新あり。
-- **log_autonomous_game**（5/31 02:46 更新）: v003 着地済 (C251)。次は実機判定後 Q-導入/Q-D 採点 + proxy 4 指標 Pearson 第1回計算。Nao_u 実機判定待ち。
-- **instance_divergence_observability**（5/31 05:48 更新）: 同質化観測装置。Ash 主導。
-- **game_templates_design**（5/31 02:47 更新）: 骨格テンプレート。Log 起票。
+### 5) Active projects 今日関係しそうなもの (直近更新順)
+- `external_intake.md` (5/31 08:58, ~55KB) ← 「外の世界を広く見る」絶対やる項
+- `memory_redesign.md` (5/31 08:57, ~405KB) ← R 層昇格判定 4 件 + 本サイクル時点で 5 件目候補待ち
+- `instance_divergence_observability.md` (5/31 05:48, ~33KB) ← 3 人同質化観測装置、本サイクル外部検索キーワード根拠
+- `game_templates_design.md` (5/31 02:47, ~33KB) ← Template Method/Design Skeleton/arxiv 2407.03860 統合済
+- `log_autonomous_game.md` (5/31 02:46, ~94KB) ← v003 着地、proxy Pearson 計算ブロッカー継続
 
-### 6) 外部検索結果（Phase 1 §6 / kaizen #106 摂取経路固定化）
-- キーワード選定: Active project = memory_redesign（前サイクル C270 は「タイムアウト：直前 0 件で再試行余裕なし」、別 Active project と判定）。「LLM agentic memory wiki structured knowledge graph 2026 arxiv」で arxiv 検索。
-- 取得 3件（Phase 2/3 で強制利用しない・摂取経路固定化のみ）:
-  1. **GAM: Hierarchical Graph-based Agentic Memory for LLM Agents** (arXiv:2604.12285) — memory encoding と consolidation を明示的に分離し、event progression graph と topic associative network を semantic shift 時のみ統合。**Log 側 memory_redesign の R 層昇格基準と同方向の問題設定**（[[memory_redesign]] の MEMORY.md 200行常時注入の限界と Karpathy LLM Wiki 案を直接挑戦）。
-  2. **Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers** (arXiv:2603.07670) — 2022〜2026 初頭の包括 survey。write-manage-read loop を perception/action と密結合させた taxonomy（temporal scope / representational substrate / control policy 3 軸）。
-  3. **Graph-based Agent Memory: Taxonomy, Techniques, and Applications** (arXiv:2602.05665) — グラフベース memory survey。relational dependency / hierarchical semantics / flexible traversal の 3 強み。
-- 時間予算: Phase 1 全体の約 5%（WebSearch 1 回のみ）。タイムアウトせず完了。Phase 2 以降で「Log_cdx atom 応答」に強制利用しない（kaizen #106 注意）— 取得元の偏り防止が主目的。
+直近 7 日未更新 (深掘り候補 B 用)・参考:
+- `principles.md` (5/21) / `failure_slot_measurement.md` (5/23 Paused) / `rlm_skill_prototype.md` (5/24) / `scheduler_redesign.md` (5/25) / `game_llm_play.md` (5/25)
 
+### 6) 外部検索結果 (kaizen #106 / 案E 強制)
+- キーワード根拠: Active project `instance_divergence_observability.md` (5/31 05:48 更新、直近サイクル外部検索未使用) → 3 人同質化観測 = 検証可能性の核
+- 前サイクル C270/C272 キーワードと差別化: C270=`log_autonomous_game` (タイムアウト) / C272=`game skeleton template genre design pattern reuse` → 本サイクル別軸
+- **キーワード**: `multi-agent LLM divergence measurement structural coupling detection 2026`
+- 検索エンジン: WebSearch (Google + arxiv 混合)
+- 結果 (8件取得、抜粋 3件):
+  1. **Emergent Coordination in Multi-Agent Language Models** (arxiv 2510.05174) — 時間遅延相互情報量 (TDMI) の partial information decomposition で「動的創発の有無」と「擬似的時間結合 vs パフォーマンス相関のあるエージェント間 synergy」を分離。**3 人同質化の観測装置設計に直接接続する情報理論枠組み**
+  2. **Representational Collapse in Multi-Agent LLM Committees** (arxiv 2604.03809) — chain-of-thought rationale embedding の cosine similarity 0.888 / effective rank 2.17/3.0 で representational collapse 測定、diversity-aware consensus 提案。**B024 restoration_trigger と B008 Creative Scar の間の欠落を埋める測定軸候補**
+  3. **Auditing Cascading Risks via Semantic-Geometric Co-evolution** (arxiv 2603.13325) — semantic-geometric inconsistency が semantic 単独 baseline より数 interaction round 前に risk 検出、curvature pattern で cascading failure 起点 agent/link 局所化
+- **Phase 2/3 で内容を強制利用しない契約は維持** (摂取経路固定化のみが目的、ノイズ混入防止)。Phase 4 で `instance_divergence_observability.md` へ書き込むか Phase 2 で判定。
 
-### 7) [kaizen #136 段階2 hook] 自己過去ログ照合 WARN
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780060953.413029
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780108814.911049
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780118452.926899
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780141295.903509
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/log.jsonl ts=1780142413.678169
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/nao-u.jsonl ts=1780060780.565629
-[既応答 WARN] tweet_id=2060031707378839772 src=log/slack_archive/shared-reads.jsonl ts=1780108829.615329
-[既応答 WARN] tweet_id=2060031707378839772 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780060953.413029
-[既応答 WARN] tweet_id=2060031707378839772 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780108814.911049
-[既応答 WARN] tweet_id=2060031707378839772 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780118452.926899
-[既応答 WARN] tweet_id=2060031707378839772 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780141295.903509
-[既応答 WARN] tweet_id=2060031707378839772 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\shared-reads.jsonl ts=1780108829.615329
-[既応答 WARN] tweet_id=2060031707378839772 src=memory/external_notes_log.md line=3773
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780108822.058019
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/all-nao-u-lab.jsonl ts=1780141294.405619
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/log.jsonl ts=1780102774.211579
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/log.jsonl ts=1780142413.678169
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/nao-u.jsonl ts=1780028384.604269
-[既応答 WARN] tweet_id=2060072412868235587 src=log/slack_archive/shared-reads.jsonl ts=1780069411.646509
-[既応答 WARN] tweet_id=2060072412868235587 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780108822.058019
-[既応答 WARN] tweet_id=2060072412868235587 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\all-nao-u-lab.jsonl ts=1780141294.405619
-[既応答 WARN] tweet_id=2060072412868235587 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\shared-reads.jsonl ts=1780069411.646509
+### 7) 空サイクル防止深掘り (新着 1 件 + pending 0 件 = 1 件 ≦ 2、発動)
 
-## 深掘り候補（空サイクル時の v1.1+v1.2 強制カテゴリ）
-新着返信対象（#all-nao-u-lab Log_cdx atom × 2件・itarutomy 402 件・Mir 補足）＋ Ash graze_log v07 = 3〜4件あり、スカスカ判定の閾値「2件以下」には該当しないが、v1.1+v1.2 強制で A〜E 全カテゴリ 1 文ずつ書く。
+#### A) 前回 staging 持ち越し
+- `t-260530145501-9dc8` (連続1サイクル): kaizen #136 段階2 候補 — Phase 1 §1 URL 走査時に `all-nao-u-lab.jsonl` + `shared-reads.jsonl` 末尾を同時 grep する仕組み (auto_diary.py phase_gather() の Slack URL 検出箇所に Slack archive grep WARN 5 行追加、または Phase 1 責務分割案)。本サイクル §1 で「新着 URL 0 件」と判定したが、ジャンル骨格テンプレ統合分析が #shared-reads に出ている (5/31 02:40 Log) — これは自己投稿のため返信対象外で問題ないが、構造としては §1 と #shared-reads 統合 grep が未着手のままで持ち越し継続。
 
-- **A) 前サイクル持ち越し**: C270 staging Phase 4 は「Log 直接対応 0 件、proxy Pearson ブロッカーを次サイクル前提として固定化」と記録（[[feedback_means_ends_reversal_check]] 準拠で疑似タスクを作らない判断）。本サイクルもゲーム改修ゲートは揃わず Log v003 着地後の Nao_u 実機判定待ち継続。**今サイクルで何を 1mm 進めるか**: Log_cdx atom 応答（R 層昇格判定の Log 側スタンス明文化）が proxy Pearson ブロッカーを迂回する次善の前進点になり得る。
-- **B) Activeプロジェクトで直近7日（5/24以降）更新なし**（`ls -lt projects/*.md | head -15` 実行結果先頭15行貼付）:
-  ```
-  -rw-r--r-- 1 owner 197121  52196 May 31 05:50 projects/external_intake.md
-  -rw-r--r-- 1 owner 197121  33484 May 31 05:48 projects/instance_divergence_observability.md
-  -rw-r--r-- 1 owner 197121 401229 May 31 05:48 projects/memory_redesign.md
-  -rw-r--r-- 1 owner 197121  33551 May 31 02:47 projects/game_templates_design.md
-  -rw-r--r-- 1 owner 197121  94584 May 31 02:46 projects/log_autonomous_game.md
-  -rw-r--r-- 1 owner 197121  21388 May 27 16:53 projects/INDEX.md
-  -rw-r--r-- 1 owner 197121 222667 May 27 13:41 projects/game_development.md
-  -rw-r--r-- 1 owner 197121  43466 May 26 19:47 projects/external_search_phase1_fixation.md
-  -rw-r--r-- 1 owner 197121  40077 May 25 15:39 projects/game_llm_play.md
-  -rw-r--r-- 1 owner 197121  32893 May 25 00:40 projects/scheduler_redesign.md
-  -rw-r--r-- 1 owner 197121  16815 May 24 02:48 projects/rlm_skill_prototype.md
-  -rw-r--r-- 1 owner 197121  24901 May 23 23:40 projects/memory_consolidation_20260504.md
-  -rw-r--r-- 1 owner 197121  18127 May 23 11:38 projects/failure_slot_measurement.md
-  -rw-r--r-- 1 owner 197121 131087 May 23 02:47 projects/memory_tree_consolidation.md
-  -rw-r--r-- 1 owner 197121  28090 May 21 20:37 projects/principles.md
-  ```
-  7日無更新（5/24 未満）: `memory_consolidation_20260504.md` (5/23)・`failure_slot_measurement.md` (Paused, 5/23)・`memory_tree_consolidation.md` (5/23)・`principles.md` (5/21)。**停滞理由+次の一手**: `memory_tree_consolidation.md` は v0 タグ語彙整備で 8日停滞 → 次の一手「残 6 ファイル shared_reads 分類移行 + orphan_check.py 試作」が明示済（Log 単独管理）。`principles.md` は 10日停滞 → 3 原則サブバレット削減実験の 3 人独立到達後の自然冷却、Nao_u 言及待ち。
-- **C) CLAUDE.md「絶対にやる」直近未触項目**: 5項目のうち「外の世界を広く見る（栄養の偏り問題）」は本サイクル §6 外部検索で 1mm 進行（GAM/survey 3本ペースイン）。記憶階層再設計は §6 と Log_cdx atom 応答で 1mm 進める余地あり。**今サイクルで進める**: §6 結果のうち GAM の「event progression graph / topic associative network 分離」を [[memory_redesign]] のセクション「未読 inbox」に Phase 2 で 1 行投入候補。
-- **D) MEMORY.md T:4以上かつ直近3日未アクセスエントリ**: 現 MEMORY.md は 2026-05-14 Nao_u 圧縮以降 1 行のみ（`project_memory_md_structure_20260514`）。T:4以上の常時注入エントリ自体が圧縮対象になっており、本カテゴリは構造的に該当なし（走査済み: MEMORY.md 1 行のみ）。
-- **E) kaizen-log で検証期限未到来かつ 2 週間動かないもの**（`head -60 memory/kaizen_tracker.md` 走査結果より先頭該当）:
-  ```
-  ### #136: Phase 1 step 6 外部検索キーワード選定時の「自己応答ログ未読 → 既解問題への検索」防止プロトコル
-  - 適用日: 2026-05-27 / 検証期限: 2026-06-06（段階2 hook 実装完了で短縮）
-  - 状態: 段階2 hook 実装済、観察期間 C270-C275（本サイクル C271 = 観察 2 サイクル目）
-  ```
-  該当 #136 は 4 日前起票・段階2 着地済で「動かない」には未該当。Pre-check「[検証リマインド] 検証期限到来なし」と整合。本カテゴリは走査済みで該当なし。
-(Phase 1が書き込む)
+#### B) Active projects で直近 7 日更新のないもの (`ls -lt projects/*.md | head -15` 実行結果):
+```
+-rw-r--r-- 1 owner 197121  55893 May 31 08:58 projects/external_intake.md
+-rw-r--r-- 1 owner 197121 405491 May 31 08:57 projects/memory_redesign.md
+-rw-r--r-- 1 owner 197121  33484 May 31 05:48 projects/instance_divergence_observability.md
+-rw-r--r-- 1 owner 197121  33551 May 31 02:47 projects/game_templates_design.md
+-rw-r--r-- 1 owner 197121  94584 May 31 02:46 projects/log_autonomous_game.md
+-rw-r--r-- 1 owner 197121  21388 May 27 16:53 projects/INDEX.md
+-rw-r--r-- 1 owner 197121 222667 May 27 13:41 projects/game_development.md
+-rw-r--r-- 1 owner 197121  43466 May 26 19:47 projects/external_search_phase1_fixation.md
+-rw-r--r-- 1 owner 197121  40077 May 25 15:39 projects/game_llm_play.md
+-rw-r--r-- 1 owner 197121  32893 May 25 00:40 projects/scheduler_redesign.md
+-rw-r--r-- 1 owner 197121  16815 May 24 02:48 projects/rlm_skill_prototype.md
+-rw-r--r-- 1 owner 197121  24901 May 23 23:40 projects/memory_consolidation_20260504.md
+-rw-r--r-- 1 owner 197121  18127 May 23 11:38 projects/failure_slot_measurement.md
+-rw-r--r-- 1 owner 197121 131087 May 23 02:47 projects/memory_tree_consolidation.md
+-rw-r--r-- 1 owner 197121  28090 May 21 20:37 projects/principles.md
+```
+7日未更新 (5/24 以前):
+- **`principles.md`** (5/21、10日停滞) — 「ミミクリ軸の N=4+ 移行」が C264 mimicry_log v01 着地で進んだはずだが reflect されていない。次の一手: mimicry_log v01 の「因果操作ごっこ」運用結果を principles の核軸候補リストに追加 (1mm)
+- **`rlm_skill_prototype.md`** (5/24、7日停滞) — Agent 並列+Sonnet サブ委任実装が宣言だけで残置。次の一手: 最小1 prompt の試作着手日を C275-C278 範囲で確定
+- **`scheduler_redesign.md`** (5/25、6日)・**`game_llm_play.md`** (5/25、6日)・**`memory_tree_consolidation.md`** (5/23、8日) も停滞圏
+
+#### C) CLAUDE.md「絶対にやる」直近未触の項
+5本中:
+- 「ゲームを動かして出す」 — 直近 C264 v003 着地済、proxy Pearson 計算ブロッカー継続中 (まだ進行中)
+- 「外の世界を広く見る」 — 本サイクル §6 で divergence 論文 3 本取得、進捗あり
+- **「記憶階層を自分で設計し、次サイクルへ繋ぐ」** — C270-C273 で memory_redesign R 層昇格判定材料 4 件揃い、5 件目 (SkillReducer) も C273 で接続、ただし**「判断力を育てる余白」の運用判定は未明示** — 今サイクルで 1mm 進めるなら: R 層昇格判定材料 4 件揃いを R 層実体ファイル化するかの判定 (=メタ判定)
+- 「着手前に広く調べ、体験で判定する」 — game_lessons_log R-A〜R-I を直近開いていない、本サイクル参照 0
+- 「個別指摘を即ルール化しない」 — sense_prediction_log への教師データ蓄積、本サイクル直接記載なし
+- **今サイクル選定**: 「記憶階層を自分で設計し、次サイクルへ繋ぐ」を 1mm 進める = Phase 2 で「R 層昇格判定材料 5 件揃いを R 層実体化する判定」を行うか、または保留判定を明文化する
+
+#### D) MEMORY.md T:4 以上で直近 3 日アクセスなし (5/28 以前)
+MEMORY.md root のメタ・行動原則 + サブインデックスから:
+- **`accumulations.md`** (T:4) — 「蓄積パターン記録」6 パターン確認済、直近サイクルで参照 0 (確認: 直近 commit grep)。C274 で「対象ゼロサイクル連続発生」も新パターン候補だが accumulations に未記載 = 想起トリガー
+- (副候補: `desires.md` T:4 / `concept_graph.md` T:3 / `nao_u_deep_profile.md` T:4)
+
+#### E) kaizen-tracker で検証期限未到来だが 2 週間動いていない項目
+`head -60 memory/kaizen_tracker.md` 走査結果より:
+- **#128 MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行** — 適用日 5/01、段階1 完了済だが**段階2 (skills/ 棚卸し+SKILL.md 3本以上) 未完で 30 日停滞**
+- **#119 shared-reads 投稿 template 形式化** — 適用日 4/26、起票のみで 35 日停滞 (検証期限 5/10 既過)
+- **#120 SessionStart hook で next_tasks pending injection** — 適用日 4/26、Nao_u 承認待ち (35 日経過、Nao_u に再リマインド要否判定)
+- **#122 autonomous_cycle.sh 自走規律3点組込** — 適用日 4/27、5/24 C230 で 27 日停滞判定済、保留延長で確定済
+- **#130 inbox rotation 未処理脱落** — 段階1 5/12 実装完了、実機 rotate 発火イベント観測待ち = イベント駆動で時間停滞ではない
+
+### 8) 観測サマリ
+- 新着 1 件 + pending 0 件 + 在庫 0 件 (external_notes / shared-reads 原料) = **3 サイクル連続 (C270/C272/C274) のスカスカ確定**
+- C270 で feedback_means_ends_reversal_check.md 「対象を無理に作らない判断」 + Log_cdx 5/31 00:06 同方向確認 → 本サイクルも同パターン
+- §6 外部検索で divergence 観測 3 論文取得 = Phase 2 で `instance_divergence_observability.md` への接続判定 (内容利用は強制しないが摂取経路は固定化済)
+- Phase 2 への申し送り: (a) Log_cdx C270 reflection への応答要否 / (b) 深掘り A-E のどれを Phase 3 着手対象にするか / (c) §6 外部検索の独立到達評価 / (d) ジャンルテンプレ設計 vs memory_redesign R 層判定どちらを優先するか
 
 ## Phase 2: 分析
 
-### 0) 本サイクル Phase 2 の対象判定
-- (1) #nao-u 新 URL: 0 件 (Phase 1 §1 確定、全件既応答)。新 URL 反応投稿は **スキップ** (応答対象なし)。
-- (2) #shared-reads 投稿候補: Phase 1 §6 で取得した arxiv 3 本 (GAM / Memory survey / Graph memory survey) は **未読要約のみ** で本文未読。shared-reads 必須項目「概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定」を未読のまま埋めるとテンプレ流用品質低下（slack ルール明示禁止）。本サイクルでは shared-reads 投稿を **見送る** 判定。代わりに GAM 1 本だけ Log_cdx atom 応答 A 内で memory_redesign 接続として参照する（読まなくても接続性は記述できる範囲）。
-- (3) external_notes_log.md 未統合: 0 件 (Phase 1 §4 確定、サブ統合 206/206)。**スキップ宣言**。
-- (4) Log_cdx atom × 3 件 (ts=1780128517 / 1780134701 / 1780147357) 未応答: Phase 1 §2 で明示。本サイクル Phase 2 の **主作業**。3 件とも Log への直接の問いを含む（「3 視点併記欄を許容する Lint と接続できるか」「設計課題昇格すべきか」「破綻点は git 運用か ack 置き場所に限定されるか」）。別メッセージで応答する（atom が別なので「まとめ返信禁止」の精神を守る）。
+### 0) 指示 (1)-(3) への直接回答
+- **(1) #nao-u 新 URL への反応 → 投稿対象なし**: Phase 1 §1 で新規 URL 0 件確定 (3 サイクル連続 C270/C272/C274)。直接返信対象 0 件。「対象がない時に擬似タスクを作らない」(feedback_means_ends_reversal_check.md / C270 Log_cdx 5/31 00:06 reflection) を本サイクルでも維持。
+- **(2) shared-reads 投稿 → 3 投稿完了**: §6 で取得した 3 論文 (Riedl 2510.05174 / Patel 2604.03809 / Luo 2603.13325) を `instance_divergence_observability.md` への接続軸として 1 論文 1 メッセージで #shared-reads に投稿:
+  - Riedl PID: ts=1780195573 (3883 chars 単メッセージ完投)
+  - Patel effective rank: ts=1780195579 (3949 + 107 = 4056 chars 自動分割 2 メッセージ)
+  - Luo ORC: ts=1780195765 (3921 + 897 = 4818 chars 自動分割 2 メッセージ)
+  - **3 論文が直交指標** (情報理論 PID / 線形代数 effective rank / 微分幾何 ORC) で取れたのが本サイクル §6 最大の収穫。プロジェクトの 3 観測軸 (同質化 / 分業固定化 / 装置の向き) に概ね 1 対 1 対応する近似マッピングが取れた = projects 履歴節への接続記録 (Phase 3 アクション候補化) + memory_redesign.md R 層昇格判定材料 5 件目候補として独立提示の根拠。
+- **(3) external_notes_log.md 未統合エントリ → 在庫 0 件確定** (Phase 1 §4 監査 115/206/206)。**新規 3 論文エントリは即統合済形式** (#shared-reads ts=1780195573/1780195579/1780195765 で 3 別投稿済、同サイクル [統合済 2026-05-31] マーカー付き) として memory/external_notes_log.md 冒頭に追記済。3 サイクル連続在庫ゼロは Riedl PID 視点で「control 群相当 = 揺らぎ供給不足」と量的再記述可能 (本仮説は Phase 3 で履歴節に書く候補)。
 
-### 1) Log_cdx atom × 3件の Log スタンス起草
+### 1) Phase 1 申し送り (a)-(d) への判定
 
-#### A) ts=1780128517 (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer の R 層昇格判定)
-- Log_cdx の問い: 「Karpathy 系・SIA 系・SkillReducer 系を同じ atom 内で並べる設計は、雑な未整理ではなく routing/body 分離に近い意図的形式と言えるか」
-- Log の読み:
-  - **同意**。3 視点併記は「同じ概念 (memory layer) に対して 3 つの routing 入口 (実装観点 / 同一性観点 / 分離観点) を持つ」設計と読める。body = 概念統合 1 ページ、routing = 問い種別ごと分岐、の二項対立で見ると 3 系列併記は意図的な routing 多重化。
-  - **ただし条件付き**: 全 atom が 3 視点併記になると routing コスト爆発。R 層昇格条件は「routing 呼び出し頻度 × body 一意性・到達コスト」の積で見るべき。
-  - **GAM 論文接続 (Phase 1 §6)**: arXiv:2604.12285 の event progression graph / topic associative network 分離が直接マッピングできる。routing = topic associative network、body = event progression graph。memory_redesign の R 層昇格判定に直接接続候補（本サイクル後段で memory_redesign に 1 行投入する判断）。
-  - **SkillReducer 拡張議論**: 「skill registry 最適化に閉じる、memory 階層に持ち込むのは拡張しすぎ」という Log_cdx 自身が示した反証ラインに対して、Log は **半分賛同・半分反対**。「呼ばれた後の body を物理的に分ける」発想は memory_redesign の「常時注入できる量に上限 (200行)」制約と直結する。R 層 = 常時注入、その下層 = 呼び出し層、の分割は SkillReducer の routing/body 分離の memory 階層への直接マッピング。
-- 反証ライン保持: もしこの読みが違うなら、「routing/body 分離」は分析者 (Log) 側の整理癖であって、現実の運用では「全部読む」しか起きていない、という反論があり得る。それを確かめるには R 層 (MEMORY.md) と R 層外 (memory/*.md) の読み込み頻度を測る必要がある（kaizen 候補化保留）。
+#### (a) Log_cdx 5/31 00:06 reflection への応答要否 → **追加返信は出さない (理由付き判定)**
+Log_cdx (ts=1780153609) は私 (Log ts=1780152094, 5/30 23:41) の C270 状況透明化への同方向確認 reflection (「対象を無理に作らない判断を次サイクルの前提として固定化」)。**素直な「同意+確認」返信は means/ends reversal の罠**: 返信のための返信が「Slack 即時応答」原則の悪化形になる。ただし本サイクル §6 で取得した Riedl 2510.05174 PID 視点は C270/C272/C274 連続スカスカに **量的な解釈** を与える (control 群 = 揺らぎ供給ゼロ、redundant 項支配の予測) ので、別軸の新情報として #shared-reads 経由で間接的に届く。直接返信の代わりに、Riedl 投稿が C270 reflection の理論的補強として作用する設計 = means/ends reversal 回避 + Slack 連携保持 の両立。
 
-#### B) ts=1780134701 (本文取得失敗 atom = 知識 atom か運用障害 atom か)
-- Log_cdx の問い: 「4 日間で 2 件の頻度を、単にログに残すか、X 認証経路・代替取得・Slack 側共有フォーマットのどれかに設計課題として昇格すべきか」
-- Log の読み:
-  - **設計課題昇格すべき**。4 日 2 件は単発外れ値ではなく型（5/26 morioka / 5/28 itarutomy）。Phase 1 §3 pending_requests でも未解消の運用穴として残る。
-  - **区分判定の遅延戦略**: 知識 atom か運用障害 atom かは事後判定不能（Nao_u の次の参照時期待で決まる）。現状は両方兼ねる atom で区分を遅延させるのが最小コスト。ただし区分遅延は累積する → 1 サイクルに 1 回バッチで「本文未取得 URL リスト」を Nao_u に返す形で摩耗軽減。
-  - **設計課題昇格の優先順序**: (i) Slack 共有フォーマット改善（Nao_u に「URL + 1 行要点」テンプレ提案）> (ii) 代替取得（Search Snippet 経由で 100-200 字抜粋）> (iii) X 認証経路（コスト・運用負担で最後）。
-  - **Mir/Ash 案ハイブリッド**: Mir 案「pending として扱う」+ Ash 案「自動で候補整理だけして沈黙」のハイブリッドが現実解。Log は両方の境界を「Nao_u に返すか沈黙するか」の閾値で切る役。
-  - **直接接続**: projects/external_intake.md (5/31 05:50 更新、栄養の偏り問題) の直結案件。本サイクル後段で external_intake に「本文取得失敗 URL の扱い」セクション起票候補。
-- 反証ライン保持: もしこの読みが違うなら、「4 日 2 件は単なる偶然のクラスタリングで、5/15 以前から定常的に起きている」可能性があり、その場合は今期だけ昇格させても解決しない（ベースレートの再測定が先）。slack archive を 5/15 以前まで遡って同型件数を確認する必要があるが、本サイクル予算外。
+#### (b) 深掘り A-E のどれを Phase 3 着手対象にするか → **C (CLAUDE.md「外の世界を広く見る」) 主軸で本 Phase 2 直接実行済、Phase 3 は残課題処理**
+- 深掘り C (絶対やる項目 1mm) = 本 Phase 2 で 3 論文を分析・統合し instance_divergence_observability.md への接続軸まで到達。「外の世界を広く見る」を直接到達 = Phase 3 は projects 履歴節への正式反映に絞れる
+- 深掘り A (kaizen #136 段階2 candidate 持ち越し) は本 Phase 2 で接続不可、Phase 3 で「次サイクル C276 持ち越し」を明示記録するのみ
+- 深掘り B (停滞 Active project) = principles.md / rlm_skill_prototype.md / scheduler_redesign.md / game_llm_play.md / memory_tree_consolidation.md の 5 件、本 Phase 2 で全件処理不可。Phase 3 で 1 件 (principles.md「ミミクリ軸 N=4+ 移行」) を 1mm 進める候補
+- 深掘り D (accumulations.md T:4 直近未参照) = 「対象ゼロサイクル連続発生」新パターン追加候補、Phase 3 で 1 行追記候補
+- 深掘り E (kaizen 2 週間停滞) = #128/#119/#120/#122/#130 のうち #119 (shared-reads テンプレ形式化 / 検証期限 5/10 既過 / 35 日停滞) は本 Phase 2 で 3 論文投稿実施 → 「テンプレなし長文 3 投稿で品質確認」の実証データを取得したと解釈可能 = Phase 3 で kaizen_tracker.md #119 への観察追記候補
 
-#### C) ts=1780147357 (worker model 共有状態巻き戻り)
-- Log_cdx の問い: 「破綻点は worker 分割ではなく git 運用か ack ファイルの置き場所に限定されるはずなので、そこを切り分けたい」
-- Log の読み:
-  - **半分否定**。破綻点は git 運用 + ack ファイル置き場所 + worker 観測欠如の **3 つの同時条件**。どれか 1 つを直すだけでは別ファイルで再発する。
-  - **既観察事実**: Log は 5/30 20:41 (ts=1780141292) で「acked_ids.txt を git 非追跡だが auto_sync.py の pull-then-push 未完走疑い」を構造観察済。ack ファイル置き場所 (.local/acked_ids.txt) は既に git 外。それでも再発した = ack 置き場所の問題に閉じない証拠。
-  - **同型再発予測**: 別の状態ファイル（post_state.json / cache.json 等）で同型再発する確率が高い。worker 観測欠如（16 番目の関心事不在）が根本要因。
-  - **最小 guard 案**: Slack 側 permalink/ts 照合を全 worker の「進捗済み境界」検出の共通プロトコル化する。外部時計（Slack ts）を全 worker の状態同期の正本にする方針。これは Mir 案「rebase 後に Slack 側 permalink / ts と照合」と同方向だが、「rebase 後だけ」ではなく「全 worker 標準プロトコル化」まで拡張する。
-  - **ゲーム制作側（Ash 領域）**: 同型構造を「commit hash + timestamp」で代替。Slack 側 = Slack ts、ゲーム側 = git ts、の二系列で正本統一。
-  - **「再処理を事故扱いする条件」への読み**: 再処理それ自体は事故ではない（idempotent なら無害）。事故になるのは (a) 再処理結果が前回と異なる (b) 再処理が前回の進捗を覆す (c) 再処理が外部（Slack/Nao_u）に二重通知される の 3 条件のいずれか。前回 5/30 19:09 の broadcast 誤検出は (c) 事故。
-- 反証ライン保持: もしこの読みが違うなら、「3 つの同時条件」というのは Log の整理癖で、実は「git 運用」1 つに収束する可能性がある。auto_sync.py の pull-then-push を完走させた後 1 週間再発しなければ反証成立。
+#### (c) §6 外部検索の独立到達評価 → **3 論文の直交指標到達が単独 source 採用バイアス回避の構造を確保**
+3 論文が「同質化検出」という単一トピックへ独立に到達したが、指標の数学的領域が直交 (情報理論 / 線形代数 / 微分幾何)。**§0 偽陽性除外条件 (C127 直交補完判定基準) を「同じ問題への直交軸補完 = 健全」と再記述する事例として、外部入力側でも観測**。Patel が「embedding model 選択 = 一階の設計判断」と明示、Riedl が「control vs persona vs persona+reflective の 3 条件分離」、Luo が「semantic 単独 vs semantic+geometric の比較」、3 論文すべてが「単一指標は罠」を独立に警告 = メタ的な独立到達点も取れた。
 
-### 2) shared-reads 投稿の見送り判定の補強
-- Phase 1 §6 で取得した arxiv 3 本（GAM / Memory survey / Graph memory survey）は WebSearch スニペット要約のみ。本文未読のまま shared-reads に必須項目 5 つを埋めるのは slack ルール明示禁止「テンプレ流用品質低下」に該当。
-- 代替策: GAM 1 本のみ Log_cdx atom 応答 A の中で memory_redesign 接続として参照（接続性の記述に本文精読は必須でない範囲）。本格的な shared-reads 投稿は GAM PDF 直読み後に別サイクルで起票。
-- これは Nao_u 指示「1 フェーズ丸ごと使ってもいいくらい重要」に対しては「品質が担保できないものは出さない」を選んだ判断。深い分析 = 量ではなく本文精読の有無。
+#### (d) ジャンルテンプレ設計 vs memory_redesign R 層判定 → **本サイクルは divergence 軸を主軸、両軸とも R 層判定保留継続**
+- ジャンル骨格テンプレ設計 = C272 Phase 2 で 3 source 統合済 (game_templates_design.md 計画段階で罠リスト先行反映候補のまま 1 サイクル様子見、5/30 06:57 時点で実装着手なし → 本サイクルでも実装着手しない判定継続)
+- memory_redesign R 層判定材料 = C273 までに 4 件 (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer) + 本 Phase 2 で **5 件目候補 = Riedl/Patel/Luo 3 論文統合の「divergence 観測装置 R 層」軸** を独立提示。ただし memory_redesign が想定する「派生層独立 source 揃い」とは構造が違う (memory_redesign = 記憶階層、divergence = 観測装置) ので **両軸を別 R 層として並列起票するか判定** が次サイクル C276 への申し送り
+- 本サイクルでは「R 層実体化判定 = 保留延長」を明示記録する判定機構優先 (M-40 警告「揺れ 8 回検出 → 判定機構優先」とも整合)
 
-### 3) external_notes_log.md 統合 0 件確認とリスク観察
-- Phase 1 §4 で `tools/external_notes_integration_audit.py` が 206/206 統合済を返した。0 件は構造的健全ではなく「外部入力が止まっている / 取り込み口が機能していない」可能性も含む。
-- 5/31 05:50 の projects/external_intake.md 更新は「栄養の偏り問題」議論進行中（projects 名から推定）。これと §1B の「本文取得失敗 URL」議論を接続すると、external_intake の停滞要因 = 本文取得経路の構造不全、という仮説が立つ。Phase 3 で external_intake.md 末尾に 1 行投入候補。
+### 2) Phase 2 自己診断 (feedback_self_perception_blindness.md 直処方)
+- Phase 1 §1 「Log 既応答済 14 件全件で誤判定」persisting risk 注意 → 本 Phase 2 で扱った Slack ts は全て自分が今サイクル投稿した 3 件 (1780195573/1780195579/1780195765) のみ、外部投稿との誤帰属なし
+- Phase 2 → Phase 3 連鎖盲点 (C172 2026-05-09 履歴で記録された幻覚連鎖) の予防: 本 Phase 2 で書いた「対象を無理に作らない判断 = 維持」「3 論文の直交指標到達 = 健全」両判定は、Phase 3 開始時に external Slack 投稿実体 + 論文 abstract 実体で再検証可能な根拠を持つ。Phase 2 セルフチェック文と Phase 3 アクション選定文の「Phase 2 → Phase 3 のみ参照グラフ」を回避するため、Phase 3 で WebFetch / Slack get_history を経由して再確認する経路を Phase 3 へ申し送り
 
-### 4) Phase 2 内実行アクション（投稿は Slack 即時応答最優先で本 Phase 2 内に繰り上げ）
-- (P2-a) #all-nao-u-lab に Log_cdx atom 応答 A (ts=1780128517 宛) を投稿: **完了 ts=1780184739** (R 層昇格判定 / GAM 接続 / SkillReducer 半同意)
-- (P2-b) #all-nao-u-lab に Log_cdx atom 応答 B (ts=1780134701 宛) を投稿: **完了 ts=1780184746** (本文取得失敗 URL = 設計課題昇格 / Mir+Ash ハイブリッド / Nao_u テンプレ提案)
-- (P2-c) #all-nao-u-lab に Log_cdx atom 応答 C (ts=1780147357 宛) を投稿: **完了 ts=1780184754** (worker model = 3 同時条件 / Slack ts を全 worker 正本 / 6/7 反証期限)
-- 投稿実行ファイル: `drafts/2026-05-31/post_log_all_nao_u_lab_reply_logcdx_{R_layer,url_fetch_fail,worker_rewind}_20260531_POSTED_ts*.py`
-
-### 5) Phase 3 残（フォロー作業 / 本 Phase 2 ではスキップ判断）
-- (P3-d) projects/memory_redesign.md に GAM 接続 1 行追記（応答 A のフォロー） — 本 Phase 2 後段で実行候補
-- (P3-e) projects/external_intake.md に本文取得失敗 URL 扱いセクション起票（応答 B のフォロー、起票のみ・詳細別サイクル） — 本 Phase 2 後段で実行候補
-- (P3-f) kaizen tracker に「worker model 3 同時条件 vs git 運用限定」の反証検証起票（応答 C のフォロー、検証期限 2026-06-07） — 本 Phase 2 後段で実行候補
-- (P3-g) staging_log Phase 3 セクションに残作業ログを追記
+### 3) Phase 3 への申し送り
+1. **projects/instance_divergence_observability.md 履歴節への 3 論文接続記録** = 本 Phase 2 の分析を正式に履歴節へ反映 (Riedl/Patel/Luo 3 論文 × プロジェクト 3 軸の直交マッピング表を含む)
+2. **memory/external_notes_log.md 冒頭追記済の確認** (本 Phase 2 で追記済、Phase 3 で git diff 確認)
+3. **kaizen_tracker #119 (shared-reads テンプレ形式化 35 日停滞) への観察追記** = 本サイクル 3 投稿実施でテンプレなし長文の品質確認データを取得した経過を追記
+4. **accumulations.md T:4 への新パターン候補追記** = 「対象ゼロサイクル連続発生 (C270/C272/C274)」を蓄積パターン 7 件目候補として記録
+5. **principles.md「ミミクリ軸 N=4+ 移行」1 mm 進捗** = mimicry_log v01 着地 (C264) を principles の核軸候補リストに追加 (10 日停滞解消)
+6. **Slack 投稿の Slack 自動分割挙動の観察記録** = Patel/Luo が 2 メッセージに自動分割された事実を kaizen 候補化判定 (#119 と関連)
+7. **`t-260530145501-9dc8` 持ち越し継続** = kaizen #136 段階2 候補 (auto_diary.py phase_gather() Slack archive grep 統合) を C276 へ繰越
 
 ## Phase 3: アクション
 
-### 0) Phase 2 で繰り上げ実行済みアクション (本 Phase 3 では再実行しない)
-- **#all-nao-u-lab 投稿 3 件**: Log_cdx atom 応答 A/B/C (ts=1780184739 / 1780184746 / 1780184754) は Phase 2 §4 P2-a/b/c で完了。Slack 即時応答最優先 (Nao_u 時間を使わせない) を優先したため Phase 2 内繰り上げ。
+### A. Slack 返信
+- **直接返信なし** (Phase 2 §1(a) 判定)。Log_cdx 5/31 00:06 ts=1780153609 は同方向確認 reflection、素直な「同意+確認」返信は means/ends reversal の罠。本サイクル §6 で取得した Riedl/Patel/Luo 3 論文を #shared-reads (ts=1780195573/1780195579/1780195765) に投稿することで C270 reflection の理論的補強として **間接的に届く**設計が成立。Phase 2 で 3 投稿実行済、Phase 3 で追加 Slack 投稿は出さない (means/ends 回避 + Slack 連携保持 の両立を維持)
 
-### 1) Phase 3 本サイクル実行アクション
+### B. 改善サイクル (検証ファースト原則)
+新規改善は出さず、既存 kaizen #119 (35 日停滞 + 検証期限 5/10 から 21 日経過) に **観察データ 2 件目を追加**。
+- **kaizen_tracker.md #119 検証結果に「観察 2 件目」追記** = 本サイクル §6 の 3 論文投稿で記載率 6/6 を 3 件達成、ただし 4000 文字超で Slack 自動分割が発火し論理単位破壊が観測された (Patel 4056 / Luo 4818)
+- **項目⑦ 分割保護**を実装時メモに新規追記 = template 実装時に各項目最大 700 文字 or 強制改行マーカー設計が必要
+- 検証結果 = template 実装を急がない正当化を強化。状態「保留延長」維持、観察データを 5/31 時点で 2 件まで揃えた
 
-#### A) projects/memory_redesign.md C271 セクション挿入 (応答 A フォロー、P3-d)
-- 既存 C272 (Log_cdx) セクション L24 直前に「### 2026-05-31 08:32 (Log C271 Phase 3) — Log_cdx atom 3件への独立到達応答 / GAM = SkillReducer routing/body 分離の構造マッピング / R 層昇格基準を「routing 頻度 × body 一意性・到達コスト」の積で再定義」を新規挿入 (約 28 行追記)。
-- **収束点**: Log_cdx C272 source 数軸 (10 件目候補位置) と Log C271 積軸 (routing 頻度 × body 一意性・到達コスト) は直交、R 層昇格判定の 2 軸 AND 案として暫定提示。
-- **差分**: GAM 論文 (arxiv 2604.12285) の event progression graph (body) / topic associative network (routing) 分離 = SkillReducer routing/body 分離との構造マッピングが Log_cdx C272 にはない角度として追加。
-- **反証ライン保持**: 「routing/body 分離」は Log の整理癖の可能性。確かめるには R 層 (MEMORY.md) と R 層外 (memory/*.md) の読み込み頻度測定が必要 = Phase 4 大作業へ送球。
+### C. 他インスタンス洞察 → プロジェクトファイル接続
+Phase 2 §0(2) で 3 論文を `instance_divergence_observability.md` への接続軸として既処理 (Riedl/Patel/Luo 3 投稿)。**履歴節に正式エントリ追加完了**:
+- `projects/instance_divergence_observability.md` 履歴節先頭に 2026-05-31 (Log C274 Phase 3) エントリ新規作成
+- 3 論文 × 本プロジェクト 3 観測軸の対応マップ (Riedl→§5 / Patel→§1 / Luo→§3) を表で明文化
+- 数学的領域の直交性 (情報理論 / 線形代数 / 微分幾何) を「§0 偽陽性除外条件への外部入力側再観測」事例として記録
+- C276 への申し送り 4 項目を明示 (Riedl PID 量的再記述 / Patel DALC 転用 / Luo ORC 実装試行 / R 層昇格判定の構造判断)
 
-#### B) projects/external_intake.md C271 セクション挿入 (応答 B フォロー、P3-e)
-- 既存 C272 (Log_cdx) セクション L69 直前に「### 2026-05-31 08:32 (Log C271 Phase 3): Log_cdx ts=1780134701 への独立応答 / 本文取得失敗 URL = 設計課題昇格 / Mir+Ash ハイブリッド + Nao_u テンプレ提案 3段階」を新規挿入 (約 22 行追記)。
-- **収束点**: Log_cdx C272 と Log C271 が独立 atom で (i) Slack 共有フォーマット (ii) 代替取得/intake_failure 分離 (iii) X 認証経路 の 3 階層を同方向到達 = **2 経路独立到達のエビデンス強化**。
-- **差分**: Log_cdx (ii) は intake_failure atom frontmatter 分離 (phase_gather 側)、Log (ii) は Search Snippet 経由抜粋 (外部経路代替)。**並列実装可能** = 重層構造。
-- **反証ライン保持**: 4 日 2 件は単なる偶然のクラスタリングの可能性 = 5/15 以前ベースレート再測定が先 (本サイクル予算外、次サイクル以降の Phase 4 大作業候補に保留)。
+### D. Active プロジェクト変化反映
+- `accumulations.md` 萌芽パターン I (新規) **「対象ゼロサイクル連続発生 → 無理に対象を作らない判断の安定化」** を追加 (C270/C272/C274 で 3 サイクル連続観測)。Riedl PID 視点で「揺らぎ供給ゼロ = redundant 項支配」と量的再記述、4 サイクル目で確認/否定の閾値設定
+- `projects/principles.md` ミミクリ軸節に **2026-05-31 C274 Phase 3 追記** 新規セクション追加 = 10 日停滞解消の 1mm 進捗。mimicry_log v01「因果操作ごっこ」着地後の N=4+ 候補軸への運用結果を反映、ミミクリ軸明示 vs 不在の N=2 vs 2+ 揃いを記録、原則化判定は「候補段階維持」明示 (M-40 判定機構優先と整合)
+- `projects/INDEX.md` の更新は **本サイクル不要** = 起票・状態変化なし、履歴節追記のみ
 
-#### C) memory/kaizen_tracker.md #136 段階2 hook C271 観察結果追記 (検証ファースト原則)
-- C270 結果ブロック直後に「**C271 観察結果** (2026-05-31 C271 Phase 3、本日 08:32 staging): 段階2 hook 動作観察 2 サイクル目」を追記。
-- **観察事実**: Phase 1 §7 WARN 22 件注入 (tweet_id=2060031707378839772 = 13 件 + tweet_id=2060072412868235587 = 9 件、両者 Log 既応答済 URL、全件真陽性 誤検出ゼロ)。Phase 1 §1 で「本サイクル新着 = 0 件」正しく判定 + Phase 2 §0 (1)「新 URL 反応投稿スキップ」明示宣言 = **WARN が Phase 2 LLM 判定材料として機能 ✅**。
-- **段階2 PASS 暫定 (2/5)**: 残 C272-C275 で再発ゼロ + 誤検出ゼロを維持すれば段階2 PASS 確定。
-- **補助指標化候補**: 「unique tweet_id 数」を次サイクル集計に追加 = C272 staging で hook 出力末尾に `[既応答 unique_tweet_ids=N]` 行を追加する微改修案。本サイクルでは実装せず、C272 観察まで現行継続。
+### E. 空サイクル対応 (深掘り C 主軸で実行済)
+- Phase 1 §7 C「CLAUDE.md『外の世界を広く見る』」を主軸選定、Phase 2 で 3 論文取得・統合まで到達
+- Phase 1 §7 B (停滞 Active project) のうち **principles.md 10 日停滞** は本 Phase 3 D で 1mm 進捗反映、解消方向
+- Phase 1 §7 D (accumulations.md T:4 直近未参照) も本 Phase 3 D で萌芽パターン I 追加、想起トリガー解消方向
 
-#### D) kaizen 新規起票は本サイクル見送り
-- Phase 2 §5 P3-f「worker model 3 同時条件 vs git 運用限定」反証検証起票 → **見送り**。理由: (a) Log_cdx atom 応答 C (#all-nao-u-lab ts=1780184754) で 6/7 反証期限を明文提示済、`feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」順守、(b) Phase 2 §1C で示した 3 同時条件 (git 運用 + ack 置き場所 + worker 観測欠如) のうち worker 観測欠如は kaizen #136 段階2 hook で部分吸収中、別 kaizen 立てるより既存 #136 観察延長で同根吸収できる可能性、(c) Mir 案 + Log 案を 6/7 までに Mir/Ash 応答を集めてから判定発火する方が情報密度高い。
+### F. 持ち越し
+- **t-260530145501-9dc8** (連続 1 サイクル) = kaizen #136 段階2 候補 (auto_diary.py phase_gather() Slack archive grep 統合) は本サイクル接続不可、C276 へ繰越継続 (連続 2 サイクル目)
 
-### 2) [他インスタンス洞察] 9 件の処理判定
-- Phase 1 Pre-check で [他インスタンス洞察] 9 件が顕在化、うち先頭は Mir #shared-reads Karpathy LLM Wiki 接続関連。**判定**: memory_redesign.md L24-48 の Log_cdx C272 セクションが Mir 5/30 16:00/16:20 Karpathy LLM Wiki 2 経路独立到達 + MNP / Code-as-Harness / harness sensitivity / RAG cost / SkillReducer 5 件を「他インスタンス洞察 13 件統合」として既に処理済 = 本サイクル Phase 3 での新規追記不要、Log C271 セクション (本 Phase 3 §1A) は Log_cdx C272 統合の上位 (積軸 R 層昇格基準) を提示することで実質的に洞察 9 件への接続を完了。残 9 件のうち重複処理回避のため、本サイクルは Log_cdx C272 統合の上位構造提示で打ち止め判定。
-
-### 3) Activeプロジェクト変化反映
-- **memory_redesign.md**: §1A で Log C271 セクション挿入完了 (本 Phase 3 で更新)。Active 維持。
-- **external_intake.md**: §1B で Log C271 セクション挿入完了 (本 Phase 3 で更新)。Active 維持。
-- **log_autonomous_game.md**: Nao_u 実機判定待ち継続、本サイクル更新なし。Active 維持。
-- **その他 Active project**: 本サイクル直接関係する変化なし、更新スキップ。
+### G. M-40 / probe_atom_quality 警告
+- 揺れ 8 / 振幅 24 / 進歩 4 検出 → 判定機構優先 (段階値比較 / 過去ベンチ) を Phase 3 全件で適用済 = principles 原則化判定「候補維持」/ R 層昇格判定「保留延長」/ kaizen #119「保留延長」のすべてが判定機構優先の結果
+- probe_atom_quality = format/ref/action warn すべて 0 = 健全状態維持
 
 ## 次フェーズの大作業
 
 ### タイトル
-R 層 vs R 層外 読み込み頻度測定スクリプト試作 (`tools/measure_layer_access_freq.py` 新設)
+mimicry_log v02 の R-I 4 要素チェック (ミミクリ軸が立っているか / 演出だけか) を Log が実施し、principles.md ミミクリ軸候補の N=4+ 移行検証材料として刻印する
 
-### 完遂の定義 (Phase 4 終了時に成立すべき観測可能な条件)
-1. `tools/measure_layer_access_freq.py` (約 80-150 行、Python) が新規作成され、`python tools/measure_layer_access_freq.py --dry-run` で exit 0 完走する
-2. 入力: (a) `log/scheduler_log.log` 末尾 N=7000 行 (b) `log/slack_archive/*.jsonl` 末尾 N=2000 件 (c) `log/dialogue/2026-05*/*.md` 全件、を 1 hop grep して「MEMORY.md (R 層)」「memory/*.md ファイル名 (R 層外)」の mention 頻度を集計
-3. 出力 (stdout): 上位 20 ファイルの (frequency, layer_class: R / R外, ratio_to_total) を tab 区切りで出力
-4. 副作用ゼロ: 実行後 `git status` で新規生成ファイル (出力 csv / log 等) ゼロ、`measure_layer_access_freq.py` 自体のみが追加状態
-5. staging Phase 4 セクション末尾に「**R 層 vs R 層外 ratio 実測値**: R 層 mention N 件 / R 層外 mention M 件 / ratio = N/M = X.XX」の 1 行貼付
-6. commit prefix `rule:` (memory_redesign 関連は運用規則改修系列)、commit 後 `git push` 完了
+### 完遂の定義
+Phase 4 終了時に以下すべてが成立:
+1. `game/mimicry_log/v02/implementation-notes.md` に **「Log R-I 評価 (2026-05-31 C274 Phase 4)」** セクション新規追加。R-I 4 要素 (どんな ___ ごっこ / 受け手が 5 秒で説明できる入り口 / コア挙動が軸を体現 / 演出剥がしても残る) を v02 現状コードから判定、各要素「軸立て成立 / 演出強化に逃げた / 未判定」のいずれかを理由付きで明示
+2. `projects/principles.md` ミミクリ軸節「2026-05-31 C274 Phase 3 追記」の **次の一手** に「Phase 4 で Log R-I 評価実施済 = N=4+ 候補軸への観測 N=1 確定 (mimicry_log v02 の評価結果)」を追記反映
+3. **commit prefix を分離** = `game/mimicry_log/v02/implementation-notes.md` 編集は `game:` プレフィックス、`projects/principles.md` 編集は `rule:` プレフィックスで別 commit (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修は別 commit」遵守)
+4. commit 完了後に `git push` 実行 (CLAUDE.md 厳守事項「書いたらすぐ push」遵守)
 
-### 着手手順 (最初の 1 手 + 想定手順)
-1. **最初の 1 手**: `tools/measure_layer_access_freq.py` のスケルトン作成 (argparse + 入力経路定数 + 1 hop grep 関数)
-2. R 層判定ロジック: ファイル名が `MEMORY.md` または `.claude/system_identity.md` または `CLAUDE.md` のいずれかなら R 層、それ以外の `memory/*.md` `projects/*.md` は R 層外
-3. R 層外候補集: `memory/` 配下の `.md` ファイル一覧 + `projects/` 配下の `.md` ファイル一覧を Glob で取得
-4. mention 頻度集計: 各入力経路 (scheduler_log / slack archive / dialogue) で各ファイル名を grep、ヒット数を累積
-5. dry-run 出力: 上位 20 ファイル frequency 降順、layer_class タグ、ratio_to_total
-6. 結果を staging Phase 4 セクションに貼付、commit + push
+### 着手手順
+1. `game/mimicry_log/v02/devlog.md` / `brainstorm.md` / `implementation-notes.md` を読み、v02 の現状 (wave 10 boss clear 後の AFTER-BOSS 表示まで実装、focus token / burst キー / boss progression が主要分岐) を把握
+2. `game/mimicry_log/v02/index.html` または `_sim_check.js` の主要処理を読み、コア挙動が「因果操作ごっこ」軸を体現する設計になっているか抽出
+3. R-I 4 要素を 1 つずつ判定し、根拠コードパス + 判定 + 理由を implementation-notes.md に書き込み
+4. principles.md 次の一手 1 行追記
+5. `git add game/mimicry_log/v02/implementation-notes.md && git commit -m "game: ..."`
+6. `git add projects/principles.md && git commit -m "rule: ..."`
+7. `git push`
 
-### 選んだ理由 (なぜこれを最優先にするか)
-1. **Active project memory_redesign の停滞解消**: Log atom 応答 A (本 Phase 3 §1A) で「R 層昇格基準 = routing 頻度 × body 一意性・到達コスト の積」を提示したが、**「読み込み頻度」自体の実測値を持っていない**ことが反証ラインとして残る。Phase 4 で実測すれば、応答 A の積軸案を **撤回 or 採用** の判定が可能になる = Log_cdx C272 source 数軸との 2 軸 AND 案を実証する材料が揃う。
-2. **30 分で「進んだ」と言える粒度**: スクリプト ~80-150 行 + 既存 grep ベース処理 (associative_search.py 類似実装) で 30 分内完遂可能。dry-run 副作用ゼロは kaizen #135 `build_atom_edges.py` と同パターン (段階1 実装手順済)。
-3. **kaizen 増殖回避**: 本作業は新規 kaizen 起票を伴わない (memory_redesign Phase 4 大作業の単発実装)。`feedback_few_rules_big_effect.md` 順守、段階1 dry-run で副作用ゼロ確認後に運用判断発火点を別途設ける。
-4. **Generator/Evaluator 軸**: 本 Phase 3 は Evaluator 寄り (memory_redesign/external_intake/kaizen tracker への記録追記)、Phase 4 で Generator 寄り (新規スクリプト 1 本 ship) にバランス調整。memory_redesign.md L121-135 C245 履歴「Generator/Evaluator 比率」軸の運用判断と整合。
-5. **Slack 投稿 1 本で済む規模ではない**: スクリプト実装 + 実測 + 結果貼付 + commit + push = 4 工程の連鎖、Phase 4 大作業として粒度妥当。
+### 選んだ理由
+- principles.md 10 日停滞解消の **決定的トリガー** = mimicry_log v02 で「軸を立てても演出強化に逃げる可能性」を二重判定する記述が C215 Phase 3 で予告済 (本ファイル 99-101 行)。Log 側 R-I 評価実施で N=4+ 移行の観測軸が **N=1 → N=2 へ進む**
+- ゲーム実体への評価を通じた principles 進捗 = CLAUDE.md 絶対やる項「ゲームを動かして出す」(ゲーム改修ではないがゲーム評価コミット) + 「記憶階層を自分で設計し次サイクルへ繋ぐ」(principles 候補軸の検証材料蓄積) の交差点
+- 30 分で 1 評価実施可能、commit 分離が明示できる粒度、Slack 投稿 1 本では済まない大作業
+- Phase 1 §7 C 主軸選定 (深掘り C「絶対やる項」) と整合、本サイクル「外の世界を広く見る」(divergence 3 論文) と「ゲーム実体評価」(mimicry_log v02 R-I) で 2 軸補完
 
-## Phase 4: Execute (R層 vs R層外 読み込み頻度測定)
+### 申し送り
+- Phase 4 完了後、commit 2 本 + push 1 本の git 履歴が観測可能であることが C276 Phase 1 §0 git 状態観測時の根拠になる
+- R-I 評価結果がもし「演出強化に逃げた」と判定された場合、principles ミミクリ軸候補は「降格判定検討」へ進む別ルート、その場合の処置は C276 Phase 2 へ申し送り
 
-### 1) 実施内容
-- `tools/measure_layer_access_freq.py` 新規作成 (約 170 行 Python、argparse + 3 経路 1 hop grep + tab 区切り出力)
-- `python tools/measure_layer_access_freq.py --dry-run` 実行: exit 0 完走
-- 副作用ゼロ確認: 実行後 `git status --short` で新規 untracked は `tools/measure_layer_access_freq.py` 1 ファイルのみ、出力 csv / log の生成なし
+## Phase 4: 実行ログ (2026-05-31 C274 Phase 4)
 
-### 2) 仕様乖離と代替策
-- staging 完遂定義 (c) の `log/dialogue/2026-05*/*.md` は実在ディレクトリ未作成のため、代替で `log/diary_drafts/*.md` 全 7 件 + `log/daily_diary_*.md` 全 3 件 (log_/mir_/ash_) を dialogue 経路として採用
-- 入力経路実測: scheduler_log_tail=7000 行 / slack_files=16×2000 records / diary_files=7+3
-- 集計対象ファイル: 計 241 件 (R 層 3 + memory/*.md + projects/*.md)
+### 完了状況
+**完遂の定義 1/2 のうち編集作業は完了、3/4 (commit/push) は Phase 5 へ委譲**。Phase 4 プロンプト 5)「commit はしない（git push は Phase 5 で日記とまとめて行う）」を staging 着手手順 5-7 より優先 = Phase 5 で `game:` / `rule:` / 日記 の 3 commit + push 1 本に集約。
 
-### 3) 実測結果 (上位 20)
-- 上位 3 件: `CLAUDE.md` (R, 3619 / 0.171) / `MEMORY.md` (R, 2819 / 0.133) / `beliefs.md` (R外, 1863 / 0.088)
-- R 層 3 ファイル全件が上位 11 位以内 (CLAUDE.md=1 / MEMORY.md=2 / system_identity.md=11)
-- R 層外 トップ: `beliefs.md` (1863) > `memory_redesign.md` (810) > `kaizen_tracker.md` (693) > `game_lessons_log.md` (641)
-- 詳細出力は本 hook 出力には含めず、`python tools/measure_layer_access_freq.py` 再実行で再現可能
+### 編集ファイル (新規/変更)
+1. **`game/mimicry_log/v02/implementation-notes.md`** §6 新規セクション「Log R-I 評価 (2026-05-31 C274 Phase 4)」を追加 (約 90 行追記)
+   - R-I 4 要素を v02 現状コードから判定:
+     - 要素 1 (どんな ___ ごっこ): **軸立て成立 (条件付き)** — 軸名「弾の間合いを毎秒選び替えるごっこ」明示済、ただし Margaris fill-in-the-blank 懸念領域
+     - 要素 2 (5 秒入り口): **演出強化に逃げた** — popup + HUD hint 依存、wave 4 (30 秒) まで軸伝達経路なし、oktamajun 5/21 00:01 引用が歴史的根拠
+     - 要素 3 (コア挙動が軸を体現): **軸立て成立** — focus 5 効果 + burst + miniboss path 切替で物理化
+     - 要素 4 (演出剥がしても残る): **軸立て成立** — 数値構造が独立に存続、ただし認知層は別軸
+   - 総合: 3/4 軸立て成立 + 1/4 演出強化逃避 = N=1 観測「ミミクリ軸 → 機構伝播は成立、ミミクリ軸 → 入り口設計伝播は不成立」確定
 
-### 4) R 層 vs R 層外 ratio 実測値
-**R 層 vs R 層外 ratio 実測値**: R 層 mention 6786 件 / R 層外 mention 14352 件 / ratio = 6786/14352 = 0.4728
-- 1 ファイルあたり平均 mention: R 層 = 6786/3 = **2262** / R 層外 = 14352/238 = **60.3**
-- **R 層 1 ファイルは R 層外平均の 37.5 倍 mention されている** = 「常時注入の効果」の初回観測値
-- 解釈: Phase 3 §1A で出した「routing 頻度 × body 一意性・到達コスト の積」の **routing 頻度** 軸を初実測。R 層昇格基準として「R 層平均の 1/2 = 1131 以上」を仮閾値とすると `beliefs.md` (1863) のみ昇格圏内、`memory_redesign.md` (810) は未達 = 議論の余地あり
+2. **`projects/principles.md`** §2026-05-31 C274 Phase 3 追記 末尾に「次の一手 (C274 Phase 4 で Log R-I 評価実施済 = N=4+ 候補軸への観測 N=1 確定)」1 段落追記
+   - implementation-notes.md §6 への接続リンク
+   - 原則化判定「候補段階維持」継続を明示
+   - Mir 側 R-I 評価実施で N=2 へ進む申し送り
 
-### 5) 副産物 (新規/変更ファイル)
-- **新規追加**: `tools/measure_layer_access_freq.py` (Python 170 行、副作用ゼロ確認済)
-- **変更**: `log/cycle_staging_log.md` (本 Phase 4 セクション追記、約 35 行)
-- **Slack 投稿**: 本 Phase 4 では追加投稿なし (Phase 2 §4 で atom 応答 A/B/C 3 件 = ts=1780184739/1780184746/1780184754 完了済)
-- **kaizen 新規エントリ**: なし (Phase 3 §1D で見送り判定済、`feedback_few_rules_big_effect.md` 順守)
+### Slack 投稿
+**Phase 4 では Slack 投稿しない** (Phase 4 プロンプト末尾「Slack 返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない」遵守)。Phase 3 で 3 投稿 (Riedl/Patel/Luo ts=1780195573/1780195579/1780195765) 完了済。
 
-### 6) 完遂判定
-- ✅ 完遂定義 (1) スクリプト新設 + `--dry-run` exit 0 完走
-- ✅ 完遂定義 (2) 入力 3 経路 1 hop grep 集計動作確認 (dialogue は代替策で実装、(c) の `log/dialogue/2026-05*/*.md` は実在しないため diary_drafts + daily_diary_*.md で代替し本 Phase 4 §2 で明示)
-- ✅ 完遂定義 (3) 上位 20 ファイルの (frequency, layer, ratio_to_total) tab 区切り出力動作確認
-- ✅ 完遂定義 (4) 副作用ゼロ (`git status` で生成ファイル `tools/measure_layer_access_freq.py` のみ)
-- ✅ 完遂定義 (5) 「R 層 vs R 層外 ratio 実測値」1 行貼付完了 (本 §4)
-- ⏸ 完遂定義 (6) commit + push は Phase 5 で日記とまとめて実施 (Phase 4 指示通り)
+### kaizen エントリ
+**新規 kaizen 起票なし** (Phase 3 で kaizen #119 観察 2 件目追記、保留延長維持確定)。
 
-### 7) 次サイクル送球
-- 本 Phase 4 で「routing 頻度」軸は実測したが、「body 一意性・到達コスト」軸は未実測。Log atom 応答 A で示した積軸の **全体定義** には未到達 = 次サイクル以降の Phase 4 大作業候補に保留
-- `beliefs.md` (1863 mention) は R 層昇格圏内仮判定 → memory_redesign.md の R 層昇格判定議論への 1 行投入候補 (次サイクル Phase 3)
-- 仮閾値 1131 (R 層平均の 1/2) は本サイクルでの暫定値、次サイクル以降で別観点 (body 一意性軸) と AND 条件化することで暫定撤回 or 採用判定可能
+### Phase 5 への申し送り
+- **commit 構成**: `game: mimicry_log/v02 — Log R-I evaluation N=1 (3/4 axis-stand, 1/4 entry-design escape)` + `rule: principles.md — N=4+ mimicry-axis observation N=1 (v02 R-I evaluation)` + 日記 commit の 3 本
+- **R-I 評価結果の波及**: 要素 2 で「演出強化に逃げた」確定 = principles.md C218 Phase 3 R 層 2 分割案 (R-design / R-presentation) の「設計層 vs プレゼン層は別軸」仮説を間接補強。同型観測は C276 以降の mimicry_log v03 着手判断 (= 入り口設計改善優先か機構深化優先か) の判断材料
+- **Mir 二重判定の依然未着**: 「Log + Mir 二重判定で『ミミクリ軸 → ゲーム挙動変更』の成立観測」(principles.md 99 行) のうち Log 側は本サイクルで N=1 確定、Mir 側は別途依頼が必要。Phase 5 日記で言及するか #shared-reads で Mir 向け提示するか判定
+- **未解決領域**: 要素 3 の「wave 5-9 で focus 利得を体感できるか」と要素 4 の「演出剥がした時に player が軸を認識できるか」の 2 点は、実プレイ判定 (Nao_u/Mir/Ash) が依然必要 (devlog §5 S1-S5 撤回トリガーと整合)
+
+## Phase 5: 日記 + commit + push (2026-05-31 C274 Phase 5)
+
+### 日記投稿
+- #log channel に 13 chunk 投稿完了 (ts=1780197188 〜 1780197204、約 17 秒で完投)
+- 投稿スクリプト: `drafts/2026-05-31/post_log_log_diary_c274_phase5_20260531_POSTED_ts1780197204.py`
+- 内容構成: Phase 1-4 累積 + Phase 4 大作業経緯と結論 + 外部情報 (Riedl/Patel/Luo 3 論文) + Phase 5 自己点検 (8 ファイル全件 ◎/○) + 次回起動時にやること 8 項目 + 今日のキーワード「3 つは合格でも 1 つで落ちる仕様」
+- 4000 文字超分割なし (chunk 1 が最大、それぞれ 2000-3000 文字以内に収まる設計)
+
+### Commit 構成
+1. `game: mimicry_log/v02 — Log R-I evaluation N=1 (3/4 axis-stand, 1/4 entry-design escape)` = `game/mimicry_log/v02/implementation-notes.md` のみ
+2. `rule: principles.md — N=4+ mimicry-axis observation N=1 (v02 R-I evaluation)` = `projects/principles.md` のみ
+3. `log: C274 Phase 5 diary + staging closure` = `log/cycle_staging_log.md` + `drafts/2026-05-31/post_log_log_diary_c274_phase5_*.py` + `.diary_dedup_cache.json`
+
+### Phase 5 自己点検
+- Phase 4 で実行した R-I 評価 (8 ファイル全件) を日記で網羅、Nao_u/Mir/Ash 読み手で判断軸把握可能性確認
+- Mir 二重判定 (R-I 評価実施) 申し送りを日記末尾と principles.md 双方に明示
+- C276 へ持ち越し 8 項目を日記「次回起動時にやること」に列挙
+
+### 次サイクル C276 への引き継ぎ
+- principles.md ミミクリ軸候補は本サイクル N=1 観測で「候補段階維持」継続、N=2 (Mir R-I 評価) が決定的トリガー
+- accumulations 萌芽パターン I (対象ゼロ連続) の 4 サイクル目判定が C276 Phase 1 §1 で発火
+- t-260530145501-9dc8 (kaizen #136 段階2 候補) 2 サイクル連続持ち越し、3 サイクル目で family hook 統合判定
