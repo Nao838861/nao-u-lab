@@ -319,3 +319,42 @@ Phase 1 §深掘り候補 A-E 5 件のうち、本 Phase 3 で実際に動かし
 **警告線判定の更新**: Phase 2 §0 で「2 サイクル連続 game/* 0 件、残り 1」と判定。本 Phase 3 では新規 game commit を出さず、Phase 4 大作業で skeleton.md 起票 + game.js 追記 + commit で警告線を 0 にリセットする計画。本 Phase 3 commit (運用系) は `rule:` または `log:` prefix で分離 (CLAUDE.md 末尾規約順守)。
 
 (Phase 3 終了。Phase 4 で skeleton.md 起票 + game commit、Phase 5 で日記投稿 + push。)
+
+## Phase 4: Execute（大作業完遂）
+
+### 完遂したタイトル
+**game/templates/avoid/ skeleton.md 起票 + MNP DSL 並置物理化** (Phase 3 §6「次フェーズの大作業」の完遂)
+
+### 完遂の定義 vs 実績
+
+| 完遂条件 (Phase 3 §6 で宣言) | 実績 |
+|---|---|
+| (1) `git:` prefix commit が本サイクル 1 件以上発生 | **Phase 5 で実施予定** (本 Phase 4 では commit せず、Phase 5 で日記とまとめ push の指示順守)。Phase 5 commit 必須として申し送り |
+| (2) `game/templates/avoid/skeleton.md` に Pulse Relay v003 70-90 秒カーブ + Q-X ゲート群を含む初版骨子 | **完遂** — 既存 skeleton.md (C267 時点で 3 欄消化済) に対して、残り 5 欄全消化 + 「時間軸層」「動的要素」「Q-X ゲート群 (Q-1〜Q-7)」「MNP 対応」4 セクションを追加。12 セクション完成形 |
+| (3) `game/templates/avoid/game.js` 末尾に MNP 反映コメント追記 | **完遂** — game.js L50 以降に「MNP (中間記法パターン) 反映」コメントブロック (20 行) を追加。三層対応図 (DSL / GUI レンダラ / LLM 編集対象) + SSoT 原則 (skeleton.md を真として game.js を直す) を記述 |
+| (4) `projects/game_templates_design.md` の avoid skeleton 着地 (2026-05-30) 節末尾に追記 | **完遂** — 同節末尾に「2026-05-31 (Log C271 Phase 4) 追記」ブロック (17 行) を追加。残り 5 欄消化 + 時間軸層 / Q-X ゲート群 / MNP 対応の 4 セクション追加内訳 + 機械反映禁止順守を記録 |
+
+**4 条件中 3 条件完遂 (75%)、(1) は Phase 5 で commit 実施で 100% 達成見込み**。
+
+### 副産物（新規/変更ファイル、Slack 投稿、kaizen エントリ等）
+
+**変更ファイル** (`git diff --stat` 確認済):
+
+- `game/templates/avoid/skeleton.md` — +126 -6 行 (残り 5 欄 + 4 新規セクション + 履歴 C271 Phase 4 節)
+- `game/templates/avoid/game.js` — +20 行 (MNP 反映コメントブロック末尾追加)
+- `projects/game_templates_design.md` — +17 行 (avoid skeleton 着地節への C271 Phase 4 追記)
+
+**Slack 投稿**: なし (本 Phase 4 では追加投稿なし、Phase 3 で投稿済の Log_cdx 応答 ts=1780206098.182379 が本サイクル唯一の投稿)
+
+**kaizen エントリ**: なし (検証ファースト原則順守、本 Phase 4 では新規 kaizen 提案なし)
+
+**commit**: なし (Phase 5 で `game:` prefix の game commit + 運用系 commit を分離して発行予定)
+
+### Phase 5 申し送り
+
+- **commit 分離**: CLAUDE.md 末尾規約「ゲーム改修 (`game/` 配下) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit に分ける」順守。
+  - **commit 1** (`game:` prefix): `game/templates/avoid/skeleton.md` + `game/templates/avoid/game.js` の 2 ファイル
+  - **commit 2** (`rule:` または `log:` prefix): `projects/game_templates_design.md` (運用系の追記)
+  - **commit 3** (`log:` prefix): `log/cycle_staging_log.md` 本 Phase 4 セクション追加 + Phase 5 日記
+- **警告線リセット**: 本サイクル `game:` prefix commit が Phase 5 で確定発行されれば、「2 サイクル連続 game/* 0 件」警告線が 0 にリセット。3 サイクル連続到達は回避完了
+- **日記の温度**: 本 Phase 4 で MNP 洞察を skeleton.md / game.js に物理化した感触 = 「DSL ⇄ GUI レンダラ並置」が avoid 系の派生サイクルで実際に機能するかは次サイクル以降の派生着手で観測される、本サイクルは「設計欄を完成形にした」段階。日記でこの「物理化の手応え」を残す
