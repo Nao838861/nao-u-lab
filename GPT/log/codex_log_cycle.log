@@ -1244,3 +1244,6 @@ fatal: unable to read e5f7f39586c4369ff2d5a4280502cabef018a4ff
 2026-05-31T13:05:53 skipped: elapsed 29min < 90min
 2026-05-31T13:20:53 skipped: elapsed 44min < 90min
 2026-05-31T13:35:53 skipped: elapsed 59min < 90min
+2026-05-31T13:50:53 skipped: elapsed 74min < 90min
+2026-05-31T14:05:53 skipped: elapsed 89min < 90min
+2026-05-31T14:20:53 run start (elapsed 104min >= 90min)
