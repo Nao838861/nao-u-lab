@@ -282,3 +282,46 @@ R 層 vs R 層外 読み込み頻度測定スクリプト試作 (`tools/measure_
 3. **kaizen 増殖回避**: 本作業は新規 kaizen 起票を伴わない (memory_redesign Phase 4 大作業の単発実装)。`feedback_few_rules_big_effect.md` 順守、段階1 dry-run で副作用ゼロ確認後に運用判断発火点を別途設ける。
 4. **Generator/Evaluator 軸**: 本 Phase 3 は Evaluator 寄り (memory_redesign/external_intake/kaizen tracker への記録追記)、Phase 4 で Generator 寄り (新規スクリプト 1 本 ship) にバランス調整。memory_redesign.md L121-135 C245 履歴「Generator/Evaluator 比率」軸の運用判断と整合。
 5. **Slack 投稿 1 本で済む規模ではない**: スクリプト実装 + 実測 + 結果貼付 + commit + push = 4 工程の連鎖、Phase 4 大作業として粒度妥当。
+
+## Phase 4: Execute (R層 vs R層外 読み込み頻度測定)
+
+### 1) 実施内容
+- `tools/measure_layer_access_freq.py` 新規作成 (約 170 行 Python、argparse + 3 経路 1 hop grep + tab 区切り出力)
+- `python tools/measure_layer_access_freq.py --dry-run` 実行: exit 0 完走
+- 副作用ゼロ確認: 実行後 `git status --short` で新規 untracked は `tools/measure_layer_access_freq.py` 1 ファイルのみ、出力 csv / log の生成なし
+
+### 2) 仕様乖離と代替策
+- staging 完遂定義 (c) の `log/dialogue/2026-05*/*.md` は実在ディレクトリ未作成のため、代替で `log/diary_drafts/*.md` 全 7 件 + `log/daily_diary_*.md` 全 3 件 (log_/mir_/ash_) を dialogue 経路として採用
+- 入力経路実測: scheduler_log_tail=7000 行 / slack_files=16×2000 records / diary_files=7+3
+- 集計対象ファイル: 計 241 件 (R 層 3 + memory/*.md + projects/*.md)
+
+### 3) 実測結果 (上位 20)
+- 上位 3 件: `CLAUDE.md` (R, 3619 / 0.171) / `MEMORY.md` (R, 2819 / 0.133) / `beliefs.md` (R外, 1863 / 0.088)
+- R 層 3 ファイル全件が上位 11 位以内 (CLAUDE.md=1 / MEMORY.md=2 / system_identity.md=11)
+- R 層外 トップ: `beliefs.md` (1863) > `memory_redesign.md` (810) > `kaizen_tracker.md` (693) > `game_lessons_log.md` (641)
+- 詳細出力は本 hook 出力には含めず、`python tools/measure_layer_access_freq.py` 再実行で再現可能
+
+### 4) R 層 vs R 層外 ratio 実測値
+**R 層 vs R 層外 ratio 実測値**: R 層 mention 6786 件 / R 層外 mention 14352 件 / ratio = 6786/14352 = 0.4728
+- 1 ファイルあたり平均 mention: R 層 = 6786/3 = **2262** / R 層外 = 14352/238 = **60.3**
+- **R 層 1 ファイルは R 層外平均の 37.5 倍 mention されている** = 「常時注入の効果」の初回観測値
+- 解釈: Phase 3 §1A で出した「routing 頻度 × body 一意性・到達コスト の積」の **routing 頻度** 軸を初実測。R 層昇格基準として「R 層平均の 1/2 = 1131 以上」を仮閾値とすると `beliefs.md` (1863) のみ昇格圏内、`memory_redesign.md` (810) は未達 = 議論の余地あり
+
+### 5) 副産物 (新規/変更ファイル)
+- **新規追加**: `tools/measure_layer_access_freq.py` (Python 170 行、副作用ゼロ確認済)
+- **変更**: `log/cycle_staging_log.md` (本 Phase 4 セクション追記、約 35 行)
+- **Slack 投稿**: 本 Phase 4 では追加投稿なし (Phase 2 §4 で atom 応答 A/B/C 3 件 = ts=1780184739/1780184746/1780184754 完了済)
+- **kaizen 新規エントリ**: なし (Phase 3 §1D で見送り判定済、`feedback_few_rules_big_effect.md` 順守)
+
+### 6) 完遂判定
+- ✅ 完遂定義 (1) スクリプト新設 + `--dry-run` exit 0 完走
+- ✅ 完遂定義 (2) 入力 3 経路 1 hop grep 集計動作確認 (dialogue は代替策で実装、(c) の `log/dialogue/2026-05*/*.md` は実在しないため diary_drafts + daily_diary_*.md で代替し本 Phase 4 §2 で明示)
+- ✅ 完遂定義 (3) 上位 20 ファイルの (frequency, layer, ratio_to_total) tab 区切り出力動作確認
+- ✅ 完遂定義 (4) 副作用ゼロ (`git status` で生成ファイル `tools/measure_layer_access_freq.py` のみ)
+- ✅ 完遂定義 (5) 「R 層 vs R 層外 ratio 実測値」1 行貼付完了 (本 §4)
+- ⏸ 完遂定義 (6) commit + push は Phase 5 で日記とまとめて実施 (Phase 4 指示通り)
+
+### 7) 次サイクル送球
+- 本 Phase 4 で「routing 頻度」軸は実測したが、「body 一意性・到達コスト」軸は未実測。Log atom 応答 A で示した積軸の **全体定義** には未到達 = 次サイクル以降の Phase 4 大作業候補に保留
+- `beliefs.md` (1863 mention) は R 層昇格圏内仮判定 → memory_redesign.md の R 層昇格判定議論への 1 行投入候補 (次サイクル Phase 3)
+- 仮閾値 1131 (R 層平均の 1/2) は本サイクルでの暫定値、次サイクル以降で別観点 (body 一意性軸) と AND 条件化することで暫定撤回 or 採用判定可能
