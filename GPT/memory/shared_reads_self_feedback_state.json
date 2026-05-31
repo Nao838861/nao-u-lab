@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-31T13:38:09+09:00",
+  "updated_at": "2026-05-31T17:04:00+09:00",
   "reviewed_source_ts": [
+    "1780202153.217609",
     "1778577943.978429",
     "1780098002.597279",
     "1780075916.989739",
@@ -94,6 +95,29 @@
     "1778185532.659519"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T17:04:00+09:00",
+      "id": "sr-1780202153-6fdc925745",
+      "source_ts": "1780202153.217609",
+      "title": "Synergizing Code Coverage and Gameplay Intent: Coverage-Aware Game Playtesting with LLM-Guided Reinforcement Learning",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly useful for Codex game work because it separates raw code coverage from gameplay-intent validation and then maps changed structural anchors to the player state where they matter. Existing probes cover scaffold attribution, browser interaction, and harness evidence, but they do not require a changed branch or mechanic to be tied to the play-state sequence that gives the change meaning. Keep this as a reversible intent-anchor probe for the next game prototype diff or headless evaluation.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next game prototype diff or headless evaluation, did I name one changed anchor such as function, branch, event id, state flag, enemy behavior, UI path, or failure condition?",
+        "Did I map that anchor to the gameplay-intent state sequence where it should matter, such as setup, trigger, player response, success or failure, and recovery?",
+        "Did the verification log show both the anchor firing and the intended state sequence, or did I narrow the claim to code coverage only or intent-only instead of treating the change as validated?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game diff evaluations already pair changed anchors with play-state intent, or if it only duplicates scaffold-module-delta and browser-interaction checks without catching a coverage-intent mismatch."
+    },
     {
       "reviewed_at": "2026-05-31T13:38:09+09:00",
       "id": "sr-1778185532-a94ad1d878",
