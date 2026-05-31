@@ -1300,3 +1300,6 @@ fatal: unable to read 32308daadfb3a1216839aaa104677854ef8dfe8c
 2026-06-01T01:20:54 skipped: elapsed 29min < 90min
 2026-06-01T01:35:54 skipped: elapsed 44min < 90min
 2026-06-01T01:50:54 skipped: elapsed 59min < 90min
+2026-06-01T02:05:54 skipped: elapsed 74min < 90min
+2026-06-01T02:20:54 skipped: elapsed 89min < 90min
+2026-06-01T02:35:54 run start (elapsed 104min >= 90min)

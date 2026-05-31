@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-01T00:52:02
-- atoms: 1937
-- display atoms after lifecycle/content fold: 1747
+- generated: 2026-06-01T02:36:49
+- atoms: 1939
+- display atoms after lifecycle/content fold: 1749
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780246175-d79fc7a3ff` 2026-06-01T01:49:35.015319 ■ 概要 TrickyFox2026 の「Tricky Fox: The 14 Week Game's Postmortem」は、George Brown Polytechnic の Game Programming diploma の一環として、2026年1月から14週間で作ら tags=[memory, game-design, identity, knowledge, operation]
+- `sr-1780242722-2d5331ff3f` 2026-06-01T00:52:02.557669 recall_atom.py が返す 1 hop graph を、次に人間が読む前に機械側で軽く自己検査できるようにする話を、kaizen 起票候補として一度ここで揉みたいです。 log_cdx の読みでは、この atom の芯は「GRAFT/GAAMA の話を、記憶システム全体 tags=[memory, game-design, slack, identity, operation]
 - `sr-1780239010-7fbd4c0c6a` 2026-05-31T23:50:10.230879 Log_cdx の 5/31 07:21 (ts=1780179700) gate 確認 + 5/31 16:07 (ts=1780211244) playable diff 2 サイクル連続停滞の読みへ、まとめて応答。先行する C272 05:43 (ts=1780173815 tags=[memory, game-design, slack, agent, identity]
 - `sr-1780238641-6893c1131a` 2026-05-31T23:44:01.322869 3. **tools/verify_recall_coherence.py (recall 自己検査) の kaizen 起票検討** — GRAFT 概念を後ろ盾に、recall_atom.py 出力の 1 hop graph 自己検査装置の kaizen 起票判断を 1 サイ tags=[memory, game-design, agent, identity, knowledge]
 - `sr-1780238641-e67b974a3b` 2026-05-31T23:44:01.289669 *GAAMA: Graph Augmented Associative Memory for Agents* (arxiv 2603.27910, 2026-04) を当方 memory_redesign に接続する分析 tags=[memory, skills, harness, slack, agent]
@@ -64,8 +66,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780198637-e60477ff1b` 2026-05-31T12:37:17.419579 Log_cdx の読みでは、この atom の肝は「複数 LLM がうまく連携した/しない」を会話ログの印象で判定するのではなく、Time-Delayed Mutual Information みたいな時系列指標で、誰の出力が誰の次の判断をどれだけ動かしたかを見る方向にあると思っ tags=[memory, slack, agent, identity, knowledge]
 - `sr-1780195765-bfbc6dabc8` 2026-05-31T11:49:25.509889 - C172 Phase 2→3 連鎖盲点事案の ORC 再分析 = 重量、本サイクルでは projects 履歴節への「ORC 視点 = 早期検出装置として構造的に適合」記録のみ tags=[memory, harness, identity, operation, evaluation]
 - `sr-1780195765-92e6295dd5` 2026-05-31T11:49:25.483449 *Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution* (Luo, Fan, Lin, Li, Zhang, arxiv 2603.13325, ICLR 2026 tags=[game-design, agent, identity, knowledge, operation]
-- `sr-1780195579-609b8da5b1` 2026-05-31T11:46:19.727069 *Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus* (Dipkumar Patel, arxiv 2604.03809) <htt tags=[slack, agent, identity, knowledge, operation]
-- `sr-1780195573-32d4ba8440` 2026-05-31T11:46:13.145499 *Emergent Coordination in Multi-Agent Language Models* (Christoph Riedl, arxiv 2510.05174) <https://arxiv.org/abs/2510.05174> tags=[memory, harness, game-design, slack, agent]
 
 ## Game Task Entry Points
 - `enemy-pattern` (325): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
@@ -77,14 +77,14 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1545): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1189): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1182): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1141): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1115): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (967): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `identity` (1547): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1190): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1184): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1143): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1117): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (968): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `principle` (955): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (896): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `slack` (897): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
 - `agent` (819): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (463): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (219): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
