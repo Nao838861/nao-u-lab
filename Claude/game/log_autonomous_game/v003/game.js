@@ -524,12 +524,25 @@
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill();
     }
 
-    // Q-D: 敵弾本体のみ描画
+    // Q-D: 敵弾本体 + 過去6frameベクトル方向の短い弾尾
     // C242 Phase 3 (2026-05-26): Nao_u 06:10 「1秒先軌跡+×印が邪魔で逆によけにくい」批判を受け
     // 予測軌道線・×マーカーを削除。1秒先計算は内部状態 (echo 機構) に閉じ、
     // プレイヤーには弾本体の素直な読み取りで対決させる方向に転回。
-    // 1 原則: 内側で計算したものを外側に流出させない (feedback_inside_to_outside_leak.md)
+    // C271 Phase 3 (2026-05-31) 弾尾追加: 弾の vx/vy ベクトル方向に長さ 6frame 分 (= 12px)・
+    //   alpha 0.35 の短い尾を後方に描画。性質判別: 過去/現在の運動ベクトルの視覚化であり
+    //   未来 1 秒先の予測計算結果ではない = 内側→外側流出 1 原則違反しない。
+    //   根拠 (二重): (a) self_judgment.md v003 Q-D 4.0/5 の根拠「静止 1 フレームから弾速度
+    //   ベクトル判別不能」への直処方、(b) Boghog 経験則「Single stray bullets are hard to
+    //   read and can often feel unfair」(memory/external_notes_log.md L249-261, C258 摂取)
+    //   と独立到達。Nao_u 5/26 06:10 指摘の再発リスクは pre-mortem: 弾尾長を castLock の
+    //   1秒予測の 1/10 (6frame) に抑制 + alpha 控えめで邪魔感を最小化。
     for (const b of game.bullets) {
+      ctx.strokeStyle = 'rgba(255, 184, 120, 0.35)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(b.x - b.vx * 6, b.y - b.vy * 6);
+      ctx.stroke();
       ctx.fillStyle = '#ffb878';
       ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
     }

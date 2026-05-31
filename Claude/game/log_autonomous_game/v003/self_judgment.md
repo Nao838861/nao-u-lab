@@ -45,8 +45,32 @@ v002 採点起点: 自身の差分採点 (`v002/self_judgment.md`) Q-A 5/5 / Q-�
 
 ---
 
+## Q-D 予測軌道ゴースト — 段階3 弾尾追加 (C271 Phase 3, 2026-05-31)
+
+**契機**: 段階2 自己判定 4.0/5 (連続フレーム視認) の根拠「静止 1 フレームから弾速度ベクトル (どこへ進むか) は判別不能」への直処方を、predicted ghost を復活させず実装する最小 diff として実施。3 サイクル連続 game/* diff ゼロ (C270/C272/C271 Phase 1 時点) の means/ends 逆転断ち切りを兼ねる。
+
+**改修内容** (`game.js` drawPlaying 関数 弾描画ループ、約 8 行):
+- 弾本体描画前に `ctx.moveTo(b.x, b.y) → ctx.lineTo(b.x - b.vx * 6, b.y - b.vy * 6)` で「過去 6frame 分 (= 12px) の進行方向ベクトル線分」を `rgba(255,184,120,0.35)` (弾本体と同系・薄め) で描画
+- ロジック (updateBullets / spawnBullet / collisions) には一切手を入れない → verify.js 4方針 fail テスト pass: true 維持 (blind-sweeper 378F / nospecial 489F / camper / lane-holder、全 wave 1 内 gameover、回帰ゼロ)
+
+**性質判別** (Nao_u 5/26 06:10 指摘との分離):
+- Nao_u 5/26 06:10 指摘対象 = **未来 1 秒先の予測軌跡 + ×印** = 内部計算結果の外側流出 (feedback_inside_to_outside_leak.md 違反)
+- 本改修 = **過去/現在の運動ベクトルの視覚化** (vx/vy は弾発射時に確定済の物理量) = 内部 1 秒先計算 (echo 機構の path) とは別系統 = 内側→外側流出 1 原則違反なし
+- 弾尾長さ = 6frame = castLock の予測時間 (60frame) の 1/10 に抑制、視界占有面積を「予告線」と「跡」の中間より「跡」側に強く寄せる
+
+**外部独立到達根拠**: Boghog 経験則「Single stray bullets are hard to read and can often feel unfair」(memory/external_notes_log.md L249-261, C258 摂取) と本改修の動機が独立到達 = R 層昇格条件「同方向独立 source 2 件以上」を Q-D 弾視認性軸で部分充足 (1. Nao_u 5/26 22:24 系の「弾本体読み取り体感」、2. Boghog 経験則、3. self_judgment.md Q-D 4.0/5 自己観測)。
+
+**pre-mortem**:
+- (a) **「邪魔な線」再発リスク** = Nao_u が「弾尾も予告線と区別つかない」と判定する可能性 → 緩和: 長さ 6frame / alpha 0.35 / 弾本体と同色系 で「予告線」性を最大限抑制、実機判定で「邪魔」と出たら撤回 (revert は 1 commit)
+- (b) **castLock 機構の意味薄化リスク** = 弾尾で弾速度が読めるなら castLock いらず通常移動で回避可能になる懸念 → 緩和: 弾尾 12px ≪ 1 秒先 = 120px、castLock の予測時間優位は保たれる。verify.js 4 方針 fail 維持で「castLock 不使用 = 死」の自己批判判定は不変
+- (c) **自己批判 verify.js の射程外** = verify.js は描画変更を観測しないため弾尾追加の効果検証には使えない → 緩和: Phase 4 大作業として capture_frames.js 60 枚再取得 + 死亡時間比較 (segment 段階2 = 489F より延びるか) を実施
+
+**次サイクル C272 以降 Phase 4 大作業候補**: capture_frames 60 枚再取得 + Q-D 自己判定 4.0/5 → 暫定再判定。実機判定 (Nao_u/Mir/Ash) は Phase 5 以降の Slack 出荷タイミングで取得。
+
+---
+
 ## 次の更新タイミング
 
-- v003 → v004 (もしくは v003.1) で予測軌道ゴーストを実装した版を作り、同じ capture_frames.js で 60 枚取得 → wave 1 死亡時間が伸びるか比較するのが次の Phase 4 候補 (C269 以降)
-- Auto agent 死亡前にゲーム再起動して wave 2/3 のサンプルを取る拡張 (capture_frames.js Space 再押下) は段階3 候補
-- v002 → v003 差分採点 (主に Δ-1 phase 2 SHOOT_INTERVAL 漸変) は実機判定後に Q-C/Q-D 節へ追記
+- C272 Phase 4 大作業 = 弾尾追加 v003 の capture_frames 60 枚再取得 + Q-D 自己判定更新 + 死亡時間比較 (段階2 = 489F vs 段階3 新値)
+- Auto agent 死亡前にゲーム再起動して wave 2/3 のサンプルを取る拡張 (capture_frames.js Space 再押下) は段階4 候補
+- v002 → v003 差分採点 (Δ-1 phase 2 SHOOT_INTERVAL 漸変 + Δ-2 弾尾追加) は実機判定後に Q-C/Q-D 節へ追記
