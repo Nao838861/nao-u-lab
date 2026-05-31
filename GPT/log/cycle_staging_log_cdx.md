@@ -69,7 +69,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link は 0 件で broken link なし。"
+  - "memory/atoms.jsonl: 1926 rows / parse_error 0 / duplicate id 0 / duplicate source_ts 0。内容同一グループは 39 件あるが、既存の lifecycle/content fold 対象として扱える範囲。"
+  - "memory/raw/: 30 日以上 LastWriteTime が動いていない file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=153 / ready_to_post=4 / postponed=118 / failed=41 / needs_review=0 / missing=17。30 日以上動きがない postponed/needs_review は 0 件。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives pending 0 / broadcasts pending 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
