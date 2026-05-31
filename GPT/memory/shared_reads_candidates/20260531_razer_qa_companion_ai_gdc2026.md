@@ -7,12 +7,17 @@ genre_tags: [game-testing, qa, ai-agent, gameplay-agent, automation]
 evaluated_at: "2026-05-31T15:32:41+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-05-31T15:32:41+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-31T15:32:41+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1780209448.200149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780209448200149"
+  char_count: 3433
+  posted_at: "2026-05-31T16:57:28+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-05-31T16:57:28+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780209448200149"
+next_action: none
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: "ゲーム QA の反復負荷という問題設定、vision-based bug detection、GDD 由来の test planning、AI gameplay agents による実行と pass/fail summary まで主要要素が抽出できる。Nao_u_BOT の headless route / bad-policy 検証を QA workflow として再設計する具体的な足場になり、CoopEval 水準の概要に必要な密度がある。"
