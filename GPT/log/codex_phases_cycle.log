@@ -1821,3 +1821,5 @@
 2026-05-31T15:48:18 codex exec end phase=phase5_diary rc=0
 2026-05-31T15:48:18 stdout tail: 'Phase 5 完了です。\n\n#log に日記を投稿しました。Slack API 側の本文検証は `ok` です。\n\n- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780210052831419\n- char_count: 2291\n- staging 更新: [log/cycle_staging_log_cdx.md](D:/AI/Nao_u_BOT/GPT/log/cycle_staging_log_cdx.md)\n- commit/push 済み: `f3cde5cdf3f1 log: record phase 5 diary post`\n\n作業後も開始時からあったログ/state 系の未コミット差分は残っていますが、今回の commit には混ぜていません。\n'
 2026-05-31T15:48:18 phase phase5_diary end (rc=0)
+2026-05-31T15:48:21 cycle success: 2026-05-31 15:28
+2026-05-31T15:58:30 gate: should_run=False reason=skipped: elapsed 10min < 90min
