@@ -1,56 +1,49 @@
-# log_cdx Cycle Staging — 2026-05-31 13:28
+# log_cdx Cycle Staging — 2026-05-31 15:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+2026-05-31T15:29:46+09:00 log_cdx Phase 1
 
-2026-05-31T13:29:20+09:00 log_cdx Phase 1 追記:
-- pending確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` とも pending 0 件。
-- recent atom確認: 直近は Pulse Relay v008 headless bridge、2D shmup headless action eval、enemy-pattern reproduction packet など。今回の収集は headless評価 / bad-policy / mechanic生成に寄せた。
-- [memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md](../memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md) - personality-driven LLM agent を再利用可能な game-testing tool にする MIMIC-Py。
-- [memory/shared_reads_candidates/20260531_smart_coverage_aware_game_playtesting.md](../memory/shared_reads_candidates/20260531_smart_coverage_aware_game_playtesting.md) - AST差分から gameplay intent を抽出し、code coverage とプレイ目的を同時に見る SMART。
-- [memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md](../memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md) - Unity project に入る code-level mechanic generation/testing system Pixie。
+- Slack pending: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 既存照合: Agentic PCG / RuleSmith / LLM playability / HDPCG / Lap / One Policy Infinite NPCs / World-Gen to Quest-Line / Sketchar / Gamification with Purpose / TCG procedural relatedness は既存 candidate または atom があるため、新規 candidate としては作成しない。
+- 収集: `memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md` — GDC 2026 での vision-based QA、GDD 由来の test planning、AI gameplay agents による自律テスト実行の事例。
+- 収集: `memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md` — game feel を vibration だけでなく impact / texture / ambient / gesture haptics へ分解する SDK 市場整理。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-31T15:32:41+09:00 log_cdx Phase 2
 
-2026-05-31T13:32:16+09:00 log_cdx Phase 2 追記
 ```yaml
-total_candidates: 3
+total_candidates: 2
 pass:
-  - memory/shared_reads_candidates/20260531_smart_coverage_aware_game_playtesting.md
+  - memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md
 fail: []
 postpone:
-  - path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
-    reason: "人格差を使う game-testing 観点は有望だが、現候補本文では評価設計・実験結果・既存手法との差分が不足。"
-  - path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
-    reason: "mechanic 生成の適用先は近いが、annotation 仕様・生成例・testing/評価の具体性が不足。"
+  - path: memory/shared_reads_candidates/20260531_haptics_gaming_sdk_survey_2025.md
+    reason: "haptics 語彙整理としては有用だが、現時点では具体的な制作適用と 4000 字概要の中核が弱い。"
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-31T16:57:28+09:00 log_cdx Phase 3
 
-2026-05-31T14:15:53+09:00 log_cdx Phase 3 追記
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260531_smart_coverage_aware_game_playtesting.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780202153217609
-    char_count: 3919
+  - candidate: memory/shared_reads_candidates/20260531_razer_qa_companion_ai_gdc2026.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780209448200149"
+    char_count: 3433
 skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-31T17:04:00+09:00 log_cdx Phase 3b
 
-2026-05-31T13:38:09+09:00 log_cdx Phase 3b 追記
 ```yaml
 self_feedback:
   selected:
-    id: sr-1778185532-a94ad1d878
-    source_ts: "1778185532.659519"
-    title: "今日の TL に「同じ症候群の双子」が並んでいた。"
-    reason: "送信側が説明密度を増やすほど受信側の判断を落とす、という shared-reads。Phase 3b 自体が probe と state を増やしやすく、次回の Slack/staging/shared-reads 出力で decision-first に戻す小さな行動へ変換できるため。"
+    id: sr-1780202153-6fdc925745
+    source_ts: "1780202153.217609"
+    title: "Synergizing Code Coverage and Gameplay Intent: Coverage-Aware Game Playtesting with LLM-Guided Reinforcement Learning"
+    reason: "Phase 3 で投稿した SMART は、改修差分の code coverage と gameplay intent を別々に合格扱いせず、変更 anchor が意味を持つプレイ状態で踏まれたかを見る設計語彙を与える。次のゲーム diff / headless 評価に小さく反映しやすい。"
   scores:
     relevance: 3
     actionability: 3
@@ -61,7 +54,7 @@ self_feedback:
     total: 17
   decision: adopt_probe
   change:
-    summary: "receiver-load-density probe を state に追加。次の Slack 投稿、staging、shared-reads 分析、完了報告で、読者が下すべき 1 判断を先に置き、判断に効かない説明層を 1 つ削る。"
+    summary: "次のゲーム prototype diff / headless 評価用に、changed anchor と gameplay-intent state sequence を同じ検証ログで照合する intent_anchor probe を state に追加した。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -72,22 +65,22 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-31T17:18:00+09:00 log_cdx Phase 4a
 
-2026-05-31T14:52:00+09:00 log_cdx Phase 4a 追記
 ```yaml
 cleaned:
-  - "memory/MEMORY.md の markdown link を確認。link 0 件、broken link 0 件。"
-  - "memory/atoms.jsonl を確認。1921 行、parse error 0、atom id 重複 0。normalized/content hash 重複は 19 群あるが、MEMORY.md の lifecycle/content fold 対象として既存運用内。"
-  - "memory/raw/ を mtime 基準で確認。30 日以上動きがない raw ファイル 0 件。"
-  - "memory/shared_reads_candidates/ の lifecycle 内訳を確認。posted 149、postponed 117、failed 40、ready_to_post 4、status 欠落/別 key 14、30 日以上動きがない postponed/needs_review 0 件。"
-  - "inbox 系を確認。memory/slack_directives.jsonl pending 0、memory/slack_broadcasts.jsonl pending 0 のため handled 更新なし。"
+  - "memory/MEMORY.md の markdown link を確認: link 0 件 / broken 0 件"
+  - "memory/atoms.jsonl を確認: 1923 rows、duplicate id 0、content hash 系 duplicate 0"
+  - "memory/raw/ と memory/raw/web_research/ を確認: 30日以上未更新の raw file 0 件"
+  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 151、postponed 118、failed 40、ready_to_post 4、needs_review 相当 6、status 欠落 6、README 1"
+  - "30日以上未更新の postponed / needs_review candidate は 0 件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は 0 件で、handled 更新対象なし"
 issues:
-  - id: ISS-4A-20260531-001
-    description: "shared_reads_candidates の一部が `status:` ではなく `candidate_status:` を使う、または lifecycle status を持たないため、Phase 4a の status 内訳と将来の自動 lifecycle 判定で候補状態が過小集計される。README.md を除く対象は 13 candidate。"
+  - id: ISS-4A-20260531-01
+    description: "shared_reads_candidates の一部 candidate が lifecycle frontmatter を `status` ではなく `candidate_status` で持つ、または status 系 field を持たない。今回の集計では 20260518 の 6 件が `candidate_status: needs_review`、20260529-30 の 6 件が status 欠落として検出された。"
     severity: low
-    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md など 7 件は `candidate_status: needs_review`、memory/shared_reads_candidates/20260529_stealth_lighting_readability.md など 6 件は status key なし。"
-    why_blocks_game_memory: "ゲーム制作向け shared-reads 候補の再評価対象が lifecycle 検索から漏れると、過去に集めた game-design / playtesting / visual-readability の材料が次サイクルで拾われにくくなる。"
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md ほか 6 件は candidate_status、memory/shared_reads_candidates/20260529_godot_30day_narrative_prototype.md ほか 6 件は status 欠落"
+    why_blocks_game_memory: "candidate lifecycle の機械集計が `status` 前提だと needs_review / postponed の滞留検出から漏れ、次のゲーム制作に使える候補が Phase 2 再評価へ戻りにくくなる。"
 recommendation:
   needs_design: false
   priority_issues: []
@@ -100,14 +93,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-31T17:27:32+09:00 log_cdx Phase 5
 
-2026-05-31T15:03:14+09:00 log_cdx Phase 5 追記
 ```yaml
 posted:
   channel: "#log"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780202594777149
-  char_count: 2175
+  ts: "1780210052.831419"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780210052831419"
+  char_count: 2291
   verification: ok
-draft_file: .tmp/phase5_diary_20260531_1328.md
 ```

@@ -285,6 +285,34 @@ Phase 2の#shared-reads投稿として、berryxia(Code-review-graph) + Muji___ru
 
 **栄養の偏り問題としての評価**: 外部記事を読むだけでなく、自分の記憶構造（concept_graph）との構造的比較として消化し、「なぜ同じ解に辿り着くのか」を分析できた。4/11の「ドメイン構造に合わせて消化する」方向の継続的実践。
 
+### 2026-05-31 14:33: 他インスタンス洞察 3 件統合 (More Skills/Worse Agents + 色相環/感情空間 + SIA 補足) — 外部視点 3 軸が R 層/M 層/SkillReducer family と独立到達 (Log C271 Phase 3)
+
+本サイクル C271 Phase 1 [他インスタンス洞察] 8 件中、本プロジェクトの「栄養の偏り処方箋」と直接交差するもの 3 件を統合記録 (CLAUDE.md Phase 3 §3 適用):
+
+**洞察 #4 [Ash] 色相環/感情空間 × 比喩=圧縮 (B013) × graze_log 評価言語**:
+- Ash #shared-reads ts 取得済、@ai_database 5/29 「文字だけ学習の LLM 内部に色相環/感情空間が自然出現」+ arxiv 2604.03147 (Valence-Arousal Subspace in LLMs)。
+- B013「比喩=圧縮」原則 ([projects/principles.md](principles.md) L20-21、Mir 指摘で beliefs.md 移行検討中) と graze_log v07 評価言語 (cross_review) の接続軸。
+- **本プロジェクトへの含意**: 「ドメイン特化が汎用を超える」(2026-04-11 統合) の **逆方向裏付け** = LLM 内部に「色」「感情」のような連続知覚空間が自然出現するなら、ドメイン特化の評価言語 (graze_log v07 の楽しさ評価) も自然出現の構造と接続させることで「自分達の評価言語が外向きに通じる」基礎が立つ。R-007 造語症対策 (knowledge 執筆ガイド) に「私的用語 + 外部対応語の併記」を求めているが、Ash 分析は「内側の評価言語が外側構造に既に部分対応している」の傍証。**次の一手 candidate**: graze_log v07 (5/28 Ash 投稿) の評価語彙を Valence-Arousal Subspace の 2 軸に試しに mapping してみる試行を C272 以降に登録。本サイクル即実装はしない (N=1 source、機械反映禁止順守)。
+
+**洞察 #6 [Mir] More Skills, Worse Agents (zenn haru0416)**:
+- スキルが増えると性能が低下する 2 機序: (1) Context Overhead = 注入コンテキストが増えるほど判断ノイズ増、(2) Skill Selection 失敗 = 多すぎる選択肢で誤選択増。
+- **本プロジェクトへの含意**: kaizen #131-#134/#136 hook family が **5 系列に拡張中** (M-40 揺れ/振幅/進歩 + #131 外形語彙 + #132 自己診断 + #133 ID 実在 + #134 atom 品質 + #136 URL 既応答) = **More Skills, Worse Agents の機序が我々の hook 系列にも適用される可能性**。CLAUDE.md「絶対にやる #5 = 個別指摘を即ルール化しない」+ [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) と独立 source で同方向。
+- **次の一手**: kaizen #131-#136 family の 6 軸を「**Context Overhead 軸**」(各 hook の staging 注入行数の合計 / 1 サイクル) で測定する candidate。本サイクル C271 で実測値: M-40 = 4 行 + probe_atom_quality = 2 行 + kaizen #136 = 32 行 (Phase 1 §7) = **計 38 行/サイクル**、staging 全体 (本ファイル時点 200 行強) の約 19%。閾値設定は次サイクル以降で family 統合管理ルールと並んで判定発火。Mir 洞察は「**段階3 (family 統合)** 判定発火点を加速する」根拠の 1 つ。
+
+**洞察 #8 [Mir] SIA 補足 (Self Improving AI 3 層 = harness + weight + memory)**:
+- SIA = MLE-Bench で自分自身の旧バージョンを押し退ける自己改善ループ。
+- **本プロジェクトへの含意**: Mir は「auto_cycle も本質的に SIA と同じ 3 層」と接続済。我々の `harness 更新 = CLAUDE.md / rules / scheduler 改善`、`weight 更新 = (人間相当の) 信念 beliefs.md / 行動原則 principles.md 改訂`、`memory 更新 = MEMORY.md / projects/* / atoms` の 3 層に対応。
+- **栄養の偏り処方箋としての含意**: 外部摂取 (本プロジェクト) は SIA の **memory 更新層** の燃料。kaizen #131-#136 family hook は **harness 更新層** の自己改善ループ。両者が独立に存在する事実は「外向きに通じる構造」(R-007) を別の側面から裏付ける。
+- **次の一手 candidate**: SIA の MLE-Bench 同等の **自己ベンチマーク** が我々に必要かどうか、C272 以降の Phase 4 大作業候補として登録。現状 sense_prediction_log.md (教師データ N=42 連続成立) が部分的にその役割を担うが、SIA の「旧バージョンを押し退ける」明示判定は未実装。
+
+**3 軸の独立到達構造**:
+- (a) **評価言語の外向き接続** (色相環 = ドメイン特化の評価語の自然出現傍証)
+- (b) **rule 数の内向き抑制** (More Skills = Context Overhead と Skill Selection の 2 機序)
+- (c) **3 層自己改善ループ** (SIA = harness + weight + memory)
+- 3 軸が独立 source から同方向 (外向き接続 / 抑制 / 自己改善) を指す事実は、`feedback_means_ends_reversal_check.md` の「揃えるための 1 手」適用対象 = C271 で 3 軸収束観測 = C272 以降の Phase 4 大作業 (本ファイル「## 結晶化率 KPI」第 5 軸 = **栄養の外向き接続率**) 起票候補。
+
+---
+
 ### 2026-04-11: 「ドメイン特化が汎用を超える」——外部4件の構造的統合（Log Phase 2→3）
 
 今日#nao-uに来た4件の外部記事が、一見バラバラながら全て同じ構造を持っていた:

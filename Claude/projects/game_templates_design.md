@@ -258,3 +258,48 @@ C261 Phase 2 で izutorishima 5/28 21:09 (@Dia_Nexus 由来の MNP = Mid-level N
 5/12 C185 から続いた「派生元の固定待ち」状態 (graze_log v04 cross_review / matrix v0 着地待ち) とは別経路として、**playable scaffold 側を先に物理化**することで「型として知っておく」(Nao_u 2026-04-24 06:06) の最小単位を成立させた。設計欄 (`skeleton.md`) との関係は「scaffold = 動くコード / skeleton.md = 設計欄」の並置で、双方が揃って初めて派生着手の足場が完成する。
 
 CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」直近偏重 (C260-C265 が記憶設計と Log_cdx 応答に偏重) の解消としても機能 — 本 commit は `game:` prefix で運用規則改修と分離する。
+
+**2026-05-31 (Log C271 Phase 4) 追記: skeleton.md (設計欄) 起票 + MNP 反映 + 残り 5 欄消化 + 時間軸層 / Q-X ゲート群 追加**:
+
+C266 で playable scaffold (game.js + index.html + README.md) を着地、C267 で skeleton.md の 3 欄 (核の楽しさ / 最低限の構成要素 / 既出失敗ゲート) 消化、本サイクル C271 Phase 4 で残り作業を完遂:
+
+- **残り 5 欄消化** (30 秒オンボーディング / 評価基準事前固定 vs 実行時開放 / 負荷種別 / 改修の性質 / 初期プレイテスト観点) — `docs/game_design_principles.md` 30 秒原則 + npaka123 由来汚染回避 + ニカイドウ由来負荷種別 + ABA 圧力設計 vs 禁止追加 + v01/v02 `headless.py` 実装指標 を各欄に折り込み
+- **時間軸層** (60-90 秒カーブのフェーズ区切り) を新規セクションとして追加 — 罠 #2 (Design Skeleton in 7 Steps の静的限界) 反映、Pulse Relay v003 教師差分の 70-90 秒カーブ (学習 → 基本混合 → 価値提示 → 中盤圧力 → 終盤の山 → 終端) を初期値として埋め込み、派生時は自作カーブで上書き運用 (Q-4 ゲート)
+- **動的要素** (wave 推移 / 状態遷移 / 段階的開示) を新規セクションとして追加 — 罠 #2 反映、段階的開示の成功例として v02 磁石軸 1 軸 3 段派生 (iron → weapon → returned → chain) を参照
+- **Q-X ゲート群** (Q-1〜Q-7、派生時の独自性 1 軸禁則) を新規セクションとして追加 — Pulse Relay 系の Q-X 構造を avoid 系に適応、M-11 の 5 連禁止と同型構造を手前で阻止する派生時必読セット。Q-7 = scaffold の `player` 構造体を継承せず composition で並置 (罠 #1 = Template Method Pattern 継承爆発回避)
+- **MNP (中間記法パターン) 対応** セクション追加 — 本サイクル C271 Phase 3 で記録した MNP 洞察 ([Mir] #shared-reads 経由) を skeleton.md と game.js の三層対応 (DSL / GUI レンダラ / LLM 編集対象) として物理化。双方向同期は skeleton.md を真として game.js を直す SSoT 原則
+- **game.js 末尾コメント追記** — MNP 反映の三層対応図と SSoT 原則を game.js 側からも参照可能に
+
+これにより skeleton.md は 12 セクション (核の楽しさ / 最低限の構成要素 / 派生ポイント / 既出失敗ゲート / 30 秒オンボーディング / 評価基準事前固定 vs 実行時開放 / 負荷種別 / 改修の性質 / 初期プレイテスト観点 / 既知実例ポインタ / 時間軸層 / 動的要素 / Q-X ゲート群 / MNP 対応) を持つ完成形に。**派生時はまず skeleton.md を読み、Q-1〜Q-7 ゲートに従って独自性 1 軸を宣言してから派生先 game/<id>/v<NN>/ を書く** 運用が成立。
+
+**機械反映禁止順守**: MNP 対応は N=1 source × 1 直接適用例 (avoid 系のみ)。他テンプレ (textadv / Pot / shooting matrix v0) への自動展開はしない。R 層昇格判定発火点 (独立 source 2+ 件) 到達まで本テンプレ内に閉じる。罠 #2 (時間軸層 / 動的要素) は 2 source 収束済のため avoid 系で物理化、他テンプレへの自動展開も同条件で判定可能。
+
+本作業は Phase 5 で `game:` prefix commit と日記投稿でまとめ push 予定 (CLAUDE.md 末尾規約「ゲーム改修と運用規則改修は別 commit」順守)。
+
+### 2026-05-31 14:33 (Log C271 Phase 3) — 他インスタンス洞察 [Mir] MNP (中間記法パターン) との交差: GUI×LLM 共同編集 DSL は autonomous template 別系統分岐の補強 source
+
+本サイクル C271 Phase 1 [他インスタンス洞察] 8 件中 #3 (Mir #shared-reads、Nao_u が #nao-u で共有: zenn art_reflection / 詳細解説 izutorishima) が本プロジェクトの autonomous template 別系統分岐論 (上節「罠 #3」+「自律ゲーム別系統分岐」) と交差。
+
+**MNP 提案の核**: GUI アプリと LLM の共同編集問題に対し、「中間記法パターン (MNP)」= GUI の構造に沿った独自 DSL (ドメイン固有言語) を中間層として設計し、**GUI をその DSL ファイルのレンダラにする**ことで、LLM の編集対象を DSL に絞る。GUI ⇄ LLM 間に DSL 中間層を挟む。
+
+**本プロジェクトとの構造マッピング**:
+
+- **GUI = 動くゲーム (game/templates/<genre>/index.html + game.js)**
+- **DSL = 設計欄 (skeleton.md) + テンプレ blueprint (#34-54 行の 7 項目)**
+- **LLM = Log/Mir/Ash の派生着手プロセス** (skeleton.md を読んで派生先 game/<id>/v<NN>/ を書く)
+
+つまり我々の `skeleton.md` は MNP の DSL に対応し、`scaffold/index.html + game.js` は GUI レンダラに対応する。avoid skeleton 着地 (上節) で **「scaffold = 動くコード / skeleton.md = 設計欄」の並置** を成立させた構造が、MNP のレンダラ ⇄ DSL 並置と同型。
+
+**autonomous template 別系統分岐 (罠 #3) への補強**:
+
+- 罠 #3 = autonomous template (`game/templates/autonomous/<instance>_<lineage>/`) と通常テンプレ (`game/templates/<genre>/`) を別系統で分岐保持。本洞察で「**autonomous template の DSL = log_autonomous_game self_judgment.md + Q-X ゲート集**」と読み替えると、autonomous 側の DSL 層が既に部分実装されている事実が浮き上がる。
+- 次の一手 candidate (本サイクル即実装はしない、N=1 source なので機械反映禁止順守): 罠 #3 の「実体ディレクトリ作成は v003/v004/v005 のいずれかが実機判定到達後」の判定条件に、**「DSL 層 (Q-X ゲート集) が独立可読な形式で結晶化済かどうか」** を 1 軸追加する候補。MNP の DSL は GUI 非依存で読めることが核なので、autonomous template の Q-X ゲート集も `self_judgment.md` から独立した形式で書けるかが判定材料になる。
+
+**MNP source の独立性評価**:
+
+- 本洞察は 2026-05-31 取得、`feedback_few_rules_big_effect.md` 「N=1 source × 1 直接適用例なので機械反映禁止」順守で、本セクション記録のみで打ち止め。罠 #3 への正式反映は同方向の独立 source が 2 件以上揃った時点 + 実体テンプレ起票時に判定。
+- 期待される独立 source の方向: (a) GUI×LLM 編集の DSL 化を扱う論文 / 別記事 1 件以上、または (b) 我々自身の autonomous template 起票時に DSL 層独立可読性をテストする実機サイクル 1 件以上。両者のうちどちらかが成立すれば R 層昇格判定発火点 (本ファイル罠リスト R 層昇格条件 = 独立 source 2+ 件) に到達。
+
+**接続先**:
+- [memory_redesign.md](memory_redesign.md) 2026-05-31 14:33 節 (本サイクル同時記録) — Karpathy LLM Wiki SSoT + RAG cost Layer 0/1 routing + GAM routing/body 分離の 3 軸収束が、本 MNP 洞察の DSL ⇄ GUI 分離と **同方向の構造分離原則**で繋がる
+- [external_notes_log.md](../memory/external_notes_log.md) — 本洞察の取得経路 (本サイクル candidate 追記済)

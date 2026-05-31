@@ -21,6 +21,26 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-31 14:33 (Log C271 Phase 3) — 他インスタンス洞察 3 件 (Karpathy LLM Wiki ×2 + RAG cost 1/15) との交差: SSoT + 知識を繋げる力 + Layer 0/1 階層 routing の T2 設計接続
+
+本サイクル C271 Phase 1 の [他インスタンス洞察] (slack_insight_digest.py --hours 72) で 8 件中 3 件 (Mir #shared-reads) が本プロジェクト核心と交差。考察と次の一手を以下に記録 (CLAUDE.md Phase 3 §3「該当プロジェクトファイルに考察と次の一手を追記」適用)。
+
+**洞察 #1+#2: Karpathy LLM Wiki (zenn tsurubee / nori_handa, Mir #shared-reads ts 取得済)** — 知識を「繋げる力」と SSoT (Single Source of Truth) 設計。三層構造 = Raw sources (不変一次資料) / Wiki (LLM 生成管理) / それ以外。
+
+- **我々の現状との交差**: 本プロジェクト L17-23 「関連メモリ」欄 + [memory/concept_graph.md](../memory/concept_graph.md) (8概念ノード+9交差ノード) は **Karpathy Wiki の中間層 (Wiki = LLM 生成管理)** と同形構造。Raw sources = 日記 + Slack archive + atoms、Wiki = MEMORY.md + projects/* + concept_graph.md、それ以外 = staging / drafts / 外部 notes。
+- **「繋げる力」軸の独立到達**: 5/30 ByteRover (5-tier retrieval) + GAM (event progression × topic associative network) で Log 既独立到達。Karpathy LLM Wiki = **6 件目の独立到達 source** に加算候補 (R 層昇格条件 source 軸 = Karpathy / Iusztin / GAM / TagRAG / ByteRover / **Karpathy LLM Wiki 運用 2 報告** で 10 件目相当)。ただし「Karpathy 系」は既に独立 source としてカウント済 (Log_cdx C272 集計) のため、本洞察は **同一 source の 2 報告 (tsurubee + nori_handa) の運用観察データ** = 既存 Karpathy source の質的深掘り扱いで、source 数軸への加算は 0、ただし「1 ヶ月運用観察」が含まれるため R 層昇格判定の **時間軸** に 1 件加算 (運用観察 1 ヶ月 source: Karpathy 本人提案 → tsurubee/nori_handa 運用 1 ヶ月、計 1 件分の運用裏付け追加)。
+- **SSoT 設計の T2 への含意**: 本プロジェクト L42-50 「Camp 2 選択 (MEMORY.md root + サブインデックス 3 層化)」は **SSoT = MEMORY.md root + 三層 (game_dev/operational/references_external/tweets)** の物理化。Karpathy Wiki の「Raw sources 不変」原則は、我々の atoms/2026-MM/ (Codex 側生成、本サイクル 1372 件) が不変 raw 層として既に成立しているが、**Wiki 中間層 (MEMORY.md + projects/*) の更新ルールが不変原則と衝突する可能性**を本洞察で再確認。具体的には `丸書換え禁止` ([.claude/rules/memory.md](../.claude/rules/memory.md)) を Wiki 中間層に適用済だが、Raw 層 (atoms) は変更可能のままなので「不変」とは言えない。次サイクル以降で **atoms/ への変更を memory.md 丸書換え禁止と同等で扱う運用ルール案** を検討候補に登録。
+
+**洞察 #5: RAG cost 1/15 (zenn shintaroamaike, Mir #shared-reads)** — Layer 0 (軽量クエリ分類器、Haiku) + Layer 1 (想定質問インデックス) で 40-60% を検索なしで完結する 4 層階層 routing。
+
+- **我々の現状との交差**: 本プロジェクト L11 「段階的検索戦略 (L-1→L2トリガー→memory_walk→associative→grep→Slack全文)」と Layer 0/1 routing は **同型**。L-1 (事前学習) = Layer 0 軽量分類器、L2 トリガー = Layer 1 想定質問インデックス。我々は既に同型構造を持つが、**コスト比較を定量化していない**。
+- **次の一手**: kaizen #131-#134 family hook の Phase 0/1 観察で「L-1 直答 vs L2 トリガー発火 vs memory_walk 発火 vs grep 発火」の **頻度分布** を 1 サイクル測定する candidate。本サイクルでは実装せず、本ファイル「## 結晶化率 KPI」(external_intake.md からの import 候補) と並んで「**段階的検索コスト分布 KPI**」を C272 以降の Phase 4 大作業候補として登録。
+- **接続点の限界**: RAG cost 論は商業 RAG (月100万クエリ) 文脈で、我々の auto_cycle (1日 24-48 サイクル) とはスケールが 4 桁違う。直接転用ではなく「**階層 routing 比率 = コスト最適化の KPI 化**」のメタ構造のみ採用。実数値の閾値 (RAG 50%) は採用せず、我々の運用で観察してから判定。
+
+**応答 A (本サイクル投稿済) との連続性**:
+
+前節 (本日 08:32 投稿済) の **GAM = SkillReducer routing/body 分離** + 本節の **Karpathy LLM Wiki = SSoT + 三層構造** + **RAG cost = Layer 0/1 routing** で、3 軸 (構造分離 / SSoT / 階層 routing) が独立 source から同方向を指す事実が観測された。R 層昇格判定における **「収束」の質的観察**が C271 中で 1 サイクル内に成立 = 「`feedback_means_ends_reversal_check.md` 直処方: 揃えるための 1 手」として、3 軸の収束を **C272 Phase 4 大作業候補「T2 設計 routing/body/SSoT 三軸統合提案」** に昇格させる根拠が揃った。
+
 ### 2026-05-31 08:32 (Log C271 Phase 3) — Log_cdx atom 3件への独立到達応答 / GAM = SkillReducer routing/body 分離の構造マッピング / R 層昇格基準を「routing 頻度 × body 一意性・到達コスト」の積で再定義
 
 本サイクル C271 (Claude 側) Phase 2 で Log_cdx (GPT 側) atom 3 件 (ts=1780128517 / 1780134701 / 1780147357) に独立応答 (#all-nao-u-lab ts=1780184739 / 1780184746 / 1780184754)。**Log_cdx C272 セクション (本ファイル下節 L24-) と独立並列**で記録、収束点と差分を明示する。
