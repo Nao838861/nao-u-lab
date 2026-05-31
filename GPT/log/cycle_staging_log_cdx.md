@@ -40,6 +40,32 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1780209448-9d7a14cff4"
+    source_ts: "1780209448.200149"
+    title: "Razer QA Companion-AI at GDC 2026"
+    reason: "ゲーム QA を通常経路だけでなく、変な入力、予期しないシステム相互作用、designer intent から外れる瞬間の検出として扱っており、次の playable diff / headless / browser verification の検証対象を 1 つ具体化できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次のゲーム検証で、通常経路に加えて off-nominal scenario 1 件と evidence pointer を残す reversible probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-31T17:48:38+09:00",
+  "updated_at": "2026-05-31T19:55:00+09:00",
   "reviewed_source_ts": [
+    "1780209448.200149",
     "1780195573.145499",
     "1780202153.217609",
     "1778577943.978429",
@@ -96,6 +97,29 @@
     "1778185532.659519"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T19:55:00+09:00",
+      "id": "sr-1780209448-9d7a14cff4",
+      "source_ts": "1780209448.200149",
+      "title": "Razer QA Companion-AI at GDC 2026",
+      "decision": "adopt_probe",
+      "reason": "Score 16. The post is directly useful for Codex game verification because it frames QA as repeated mission/scenario runs that also look for strange inputs, unexpected system interactions, and moments where behavior drifts from designer intent. Existing probes cover browser interaction, scaffold deltas, and intent anchors, but they do not explicitly preserve one off-nominal scenario and its evidence as a first-class verification target. Keep this as a reversible scenario-evidence probe for the next game prototype, headless evaluation, or browser verification.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "For the next game prototype, headless evaluation, or browser verification, did I name one mission or scenario path plus one off-nominal input, timing, or system-interaction case that could reveal drift from designer intent?",
+        "Did I capture an evidence pointer for that case, such as event log, screenshot, video, console output, seed, replay step, or state transition, instead of relying only on pass/fail or normal-route success?",
+        "If only the normal route was checked, did I narrow the verdict to baseline interaction or smoke-test evidence and leave the off-nominal scenario as the next explicit test target?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game verification notes already preserve one off-nominal scenario with evidence, or if it only duplicates browser-interaction-rubric and intent-anchor checks without changing the verification target."
+    },
     {
       "reviewed_at": "2026-05-31T17:48:38+09:00",
       "id": "sr-1780195573-32d4ba8440",
@@ -2864,6 +2888,18 @@
         "If the evidence only shows common-source alignment or parallel role differentiation, did I narrow the claim to that instead of promoting it to coordination or synergy?"
       ],
       "expires_after": "Review after the next two multi-agent handoff, phase cross-response, or instance-divergence notes that describe convergence, coordination, synergy, or division of labor."
+    },
+    {
+      "id": "probe-20260531-off-nominal-scenario-evidence",
+      "created_at": "2026-05-31T19:55:00+09:00",
+      "source_ts": "1780209448.200149",
+      "scope": "next game prototype, headless evaluation, browser verification, or playable-diff judgment where normal-route success may hide strange input, timing, or system-interaction drift from designer intent",
+      "questions": [
+        "Did I name one mission or scenario path plus one off-nominal input, timing, or system-interaction case that could reveal drift from designer intent?",
+        "Did I capture an evidence pointer for that case, such as event log, screenshot, video, console output, seed, replay step, or state transition?",
+        "If only the normal route was checked, did I narrow the verdict to baseline interaction or smoke-test evidence and leave the off-nominal scenario as the next explicit test target?"
+      ],
+      "expires_after": "Review after the next two game verification notes that could claim playable behavior from normal-route success alone."
     }
   ]
 }
