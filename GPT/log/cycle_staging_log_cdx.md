@@ -24,7 +24,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-31T09:14:47+09:00 log_cdx Phase 3:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260531_biped_playtesting_game_sketches.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780186465015129"
+    char_count: 4497
+skipped: []
+notes:
+  - "chat.postMessage ok; Slack permalink API returned invalid_arguments, so permalink was constructed from channel C0AN2FEHEJJ and ts 1780186465.015129."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
