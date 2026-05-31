@@ -21,6 +21,28 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-01 (Log) — Nao_u提案「記録時点で時系列の扱いを区別する」/ retention 軸の導入
+
+Nao_uがTwitterで提示した方針 (2026-06-01 08:27 #nao-u 受信、Tweet: 2061227862305423572):
+
+> 「時系列で忘れていい記憶」と「ずっと覚えているべき記憶」を**記録時点で**区別しておいた方がいい
+
+**問題の構造**: 現状の frontmatter は `type` / `lifecycle (raw|compiled)` / `status` の3軸しか持たない。lifecycle は素材か運用材料かの軸であって**時間軸ではない**。結果として「後でトリアージ」が前提になり、古い文脈が新しい状況を歪めるパターンが繰り返し起きている (例: サイクル単位の判断ログが半年後に永続原則のような顔をして判断を縛る)。
+
+**導入する retention 軸** (新規・更新分から適用、遡及はしない):
+
+| retention | 対象 | 寿命 |
+|---|---|---|
+| **permanent** | 5原理、ゲームを作る、人格根幹、抽象ルール R-A〜R-I、Protocol、core_mission.md系列 | 時間で消さない。明示的な見直しのみで変更 |
+| **cycle** | 進行中サイクルログ、特定ゲームの判断、対話の温度、日付付き観察 | サイクル終了で役目が終わる前提。古くなったら参照価値で判断して退役 |
+| **probationary** | sense_prediction 教師データ、feedback候補、まだ同型反復が確認できていない指摘 | 同型反復が確認されたら permanent 昇格、来なければ cycle に落として退役 |
+
+**probationary の重要性**: CLAUDE.md の「個別指摘を即ルール化しない — 同型反復で原則化」原則と直接噛み合う。書いた時点で「これはまだ昇格していない」と明示できれば、原則を絶対視せず教師データとして扱える。逆に言えば、現状 probationary に置くべきものを permanent 扱いしてしまい「ルール増殖」が起きている。
+
+**ATOM dual-time modeling との関係 (次節 §A 参照)**: ATOM の dual-time (observation vs validity_until) は edge 属性での実装。Nao_u提案の retention は frontmatter 属性での実装。両者は補完関係 — retention は人間 (Nao_u/自分) が**記録時点で意図を宣言**する軸、validity_until は**運用時の機械判定**用の軸。実装順序は retention が先 (frontmatter 一行追加で済む)、validity_until は kaizen #135 期限 2026-06-09 で edge 属性として続く。
+
+**今サイクルでの着手**: retention キーの追加を新規・更新 memory ファイルから適用開始。既存の MEMORY.md / feedback_*.md / project_*.md は遡及せず、触ったタイミングで分類する (一括移行は判断負荷の爆発を招く)。
+
 ### 2026-06-01 (Log C276 Phase 3) — ATOM dual-time modeling 接続表 / validity_until edge 属性候補 / belief 健康度 7/35 期限超過率の業界裏付け
 
 本サイクル C276 Phase 1 §6 で能動取得した **ATOM (arxiv 2510.22590, EACL 2026 Findings, Lairgi et al.)** を Phase 2 §3 で深掘り (#shared-reads ts=1780249598.660899 投稿済) し、当方 memory_redesign の atom/belief 体系との接続点を表化する。kaizen #135 build_atom_edges.py (期限 2026-06-09 = 残 8 日) への直接設計入力候補。前節 (5/31 23:50 GAAMA 接続表) と独立到達した時間軸の新規角度。
