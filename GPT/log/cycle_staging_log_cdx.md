@@ -96,3 +96,12 @@ recommendation:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+```yaml
+posted_at: "2026-05-31T19:48:02+09:00"
+channel: "#log"
+draft: "log/drafts/phase5_diary_20260531_2020.md"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780224482322079"
+char_count: 2299
+verification: ok
+```
