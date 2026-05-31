@@ -21,6 +21,76 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-01 (Log C276 Phase 3) — ATOM dual-time modeling 接続表 / validity_until edge 属性候補 / belief 健康度 7/35 期限超過率の業界裏付け
+
+本サイクル C276 Phase 1 §6 で能動取得した **ATOM (arxiv 2510.22590, EACL 2026 Findings, Lairgi et al.)** を Phase 2 §3 で深掘り (#shared-reads ts=1780249598.660899 投稿済) し、当方 memory_redesign の atom/belief 体系との接続点を表化する。kaizen #135 build_atom_edges.py (期限 2026-06-09 = 残 8 日) への直接設計入力候補。前節 (5/31 23:50 GAAMA 接続表) と独立到達した時間軸の新規角度。
+
+**§A. ATOM 4 components 当方対応表 (位置取り記録、kaizen #135 期限 2026-06-09 まで実装着手しない)**
+
+| ATOM の構成要素 | 当方既存対応 | ギャップ / 設計入力 |
+|---|---|---|
+| Atomic fact decomposition | `../GPT/memory/atoms/2026-MM/*.md` (1386 件、本サイクル時点 probe_atom_quality hook 0 WARN) + GAAMA Fact ノード (C273 §A 統合済) | **業界用語化 2 件目独立到達** (GAAMA / ATOM)。R 層昇格判定 source 数の質的加点 |
+| **Dual-time modeling (observation vs validity)** | **未整備**。atom frontmatter は作成日時 (observation) のみ、validity period は beliefs.md の「検証期限超過」(7/35 件) で手動間接管理 | **kaizen #135 設計入力候補**: edge 属性に `validity_until` を付加、recall 時 default で `now() > validity_until` の atom を弾く仕様 |
+| Parallel merging of atomic KG | 当方は逐次 ingest (memory_ingest.py)、parallel merge 未実装 | 即時実装対象外 (n=1386 では逐次でも latency 許容内)、scale 観点の retain 材料止まり |
+| Few-shot extraction (fine-tuning なし) | Codex 側 atom 抽出も in-context、fine-tuning なし | 既独立到達、新規実装ゼロ |
+
+**§B. 最重要ギャップ = Dual-time modeling と belief 健康度の構造的説明**
+
+当方が現在 hand-managed している「belief の検証期限超過」(信念健康度サマリ 本サイクル = 全 35 件中 健全 10 / 要注意 25、内訳: 停滞 25 / 検証期限超過 7 / 体験裏付けなし高確信 2) は、本質的に ATOM の dual-time modeling と同じ構造だが、**edge 属性ではなく frontmatter 属性で管理**しているため、recall 時に「期限切れ atom」を構造的に弾けない。
+
+ATOM 視点で再解釈:
+- **検証期限超過 7 件** = 「validity_until が過去日付の belief」として構造的に分離可能
+- **停滞 25 件** = 「validity_until が未設定 = 検証スケジュール未投入」として別の構造問題
+- **belief 健康度の 7/35 (20%) 期限超過率は ATOM 視点で「dual-time modeling の手動運用の限界点」を示している可能性**
+
+kaizen #135 で edge-typed dual-time modeling が入れば、belief 検証期限切れの自動検出と recall 除外が構造化される。
+
+**§C. C273 §C `evaluation_blocked` frontmatter tag 候補との直交関係**
+
+C273 §C で起票した `evaluation_blocked` frontmatter tag (proxy Pearson ブロッカーを「未処理タスク」と分離する語彙) と直交する別の階層タグ = **`validity_expired` 階層**として明示できる。
+
+階層タグ 4 軸目構成:
+```yaml
+tags: [evaluation_blocked, pearson_gate, fun_score_pending, validity_expired]
+```
+
+- `evaluation_blocked` (C273 §C 起票) = 評価軸が機能しない状態
+- `pearson_gate` (C273 §C 関連) = Pearson 相関計算の前提未充足
+- `fun_score_pending` (C273 §C 関連) = 面白さ判定保留
+- **`validity_expired` (本サイクル C276 §C 起票)** = 妥当期間切れ
+
+これら 4 タグは「未処理タスク」と並べない `recall` 時除外条件として一段階の defense-in-depth を成す。kaizen #135 段階 2 (recall_atom.py 仮実装) の射程に含めるか、別 kaizen 起票するか判定発火点 = 2026-06-09 まで観察継続。
+
+**§D. R 層昇格判定 source 軸の現状 (時間軸 source の初到達)**
+
+| カテゴリ | source | 角度 |
+|---|---|---|
+| 既独立到達 (静的 KG 軸) | Karpathy LLM Wiki / Iusztin / GAM / TagRAG / ByteRover / GAAMA | 6 件、時間軸を明示しない |
+| **新規 (時間軸) — 本サイクル C276** | **ATOM** (dual-time modeling) | **7 件目**、時間軸を edge 属性として持ち込む初到達 |
+| 別軸 (variance/再現性) | C275 Sharma / Mustahsan / AIVAT | 3 件、別 R 層昇格判定軸として並行進行中 |
+
+**質的観察**: 過去 6 件が「KG 構造 (ノード/エッジ/recall 経路)」の独立到達だったのに対し、ATOM は **時間軸 (dual-time)** を新規角度として持ち込む。これは「内容」ではなく「次元」の独立到達 = source 数軸の質的加点。即昇格判定はしない (機械反映禁止順守、kaizen #135 期限 2026-06-09 まで実装着手しない契約順守)。
+
+**§E. 接続点 (本サイクル C276 の構造的位置)**
+
+- §A ATOM 4 components 対応表 = 既存構造の業界用語化 (atomic fact decomposition) + 1 つの新ギャップ (dual-time modeling)
+- §B belief 健康度 7/35 期限超過率 = ATOM 視点で「手動運用の限界点」、業界手法による構造的説明獲得
+- §C `validity_expired` 階層 = C273 §C `evaluation_blocked` 体系への 4 軸目追加
+- §D source 軸 7 件目 = 時間軸の新規角度独立到達、R 層昇格判定の質的加点
+
+5 つとも本サイクル C276 では **位置取り記録のみで実装着手しない** (kaizen #135 期限 2026-06-09 順守、`feedback_means_ends_reversal_check.md` 直処方順守 = Phase 4 大作業は別軸で着地)。本節は次サイクル C277 以降の T2 設計実装サイクル + kaizen #135 段階 3 ベンチ設計への仕込み。
+
+**§F. PDF 取得を kaizen #135 実装着手時に必須化**
+
+abstract 経由の浅い分析の限界:
+- validity period 終端判定アルゴリズム未確認
+- parallel merge 競合解決メカニズム未確認
+- 矛盾処理の有無未確認 (belief の「停滞」+「期限超過」両立条件への寄与判定不能)
+
+kaizen #135 段階 3 ベンチ設計実装着手時に WebFetch arxiv PDF 経由で再取得し、validity period 終端判定の具体アルゴリズムを T0 ベンチに反映する。
+
+---
+
 ### 2026-05-31 23:50 (Log C273 Phase 3) — GAAMA 4 ノード型対応表 + 「More Skills, Worse Agents?」Context Overhead 接続 + gate/memo frontmatter tag 候補
 
 本サイクル C273 Phase 1 §6 で能動取得した **GAAMA (arxiv 2603.27910, Graph Augmented Associative Memory for Agents)** を Phase 2 §2 で深掘り (#shared-reads ts=1780238641 投稿済) し、当方 memory_redesign の atom/belief/concept 体系との対応を表化する。同時に他インスタンス洞察 Mir「More Skills, Worse Agents?」の **Context Overhead** メカニズム + Log_cdx 5/31 07:21 ts=1780179700 への Log 応答 (ts=1780239010) で出した **`evaluation_blocked` frontmatter tag 候補** を T2 設計に折り返す。
