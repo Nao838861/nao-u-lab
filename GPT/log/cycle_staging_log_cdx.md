@@ -41,7 +41,32 @@ notes: "Slack chat.postMessage ok. chat.getPermalink は invalid_arguments だ�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780195573-32d4ba8440
+    source_ts: "1780195573.145499"
+    title: "Emergent Coordination in Multi-Agent Language Models"
+    reason: "未レビューの score 16 atom。Log/Mir/Ash/log_cdx の協調を、同じ memory/input で似ただけなのか、他 agent の出力が遅れて次判断を動かしたのかに分ける観点が、定時サイクルと instance_divergence_observability に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の multi-agent handoff / phase cross-response / instance-divergence note で、common-source alignment と delayed influence を分けて書く一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

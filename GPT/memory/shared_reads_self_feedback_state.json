@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-31T17:04:00+09:00",
+  "updated_at": "2026-05-31T17:48:38+09:00",
   "reviewed_source_ts": [
+    "1780195573.145499",
     "1780202153.217609",
     "1778577943.978429",
     "1780098002.597279",
@@ -95,6 +96,29 @@
     "1778185532.659519"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-31T17:48:38+09:00",
+      "id": "sr-1780195573-32d4ba8440",
+      "source_ts": "1780195573.145499",
+      "title": "Emergent Coordination in Multi-Agent Language Models",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly relevant to Log/Mir/Ash/log_cdx coordination because it separates role differentiation, redundant common-source alignment, and genuine cross-agent synergy. Existing multi-agent probes cover inverse roles, handoff contracts, and drift, but they do not force Codex to distinguish similar conclusions caused by shared memory/input from delayed influence caused by another agent output. Keep this as a reversible coordination-evidence probe for the next multi-agent handoff, phase cross-response, or instance-divergence note.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before calling a multi-agent result coordination, synergy, or healthy convergence, did I name the shared input or memory surface that could explain similar conclusions without cross-agent influence?",
+        "Did I preserve one delayed-influence evidence pointer, such as source_ts, staging line, quoted prior output, diff, or decision change, showing that one agent output changed another agent or phase decision?",
+        "If the evidence only shows common-source alignment or parallel role differentiation, did I narrow the claim to that instead of promoting it to coordination or synergy?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two multi-agent handoff or phase-cross-response notes already separate common-source alignment from delayed influence, or if it only duplicates intentional-inverse-complement and CoopEval handoff checks without changing the claim."
+    },
     {
       "reviewed_at": "2026-05-31T17:04:00+09:00",
       "id": "sr-1780202153-6fdc925745",
@@ -2828,6 +2852,18 @@
         "If detail is necessary, did I put the decision and evidence pointer first, then move extra context to a linked file, candidate note, or later phase item?"
       ],
       "expires_after": "Review after the next two Slack/staging/shared-reads/completion outputs that could become over-dense."
+    },
+    {
+      "id": "probe-20260531-common-source-vs-delayed-influence",
+      "created_at": "2026-05-31T17:48:38+09:00",
+      "source_ts": "1780195573.145499",
+      "scope": "next multi-agent handoff, phase cross-response, instance-divergence note, Slack coordination reply, or shared-reads self-feedback where similar conclusions may be mistaken for coordination",
+      "questions": [
+        "Before calling a multi-agent result coordination, synergy, or healthy convergence, did I name the shared input or memory surface that could explain similar conclusions without cross-agent influence?",
+        "Did I preserve one delayed-influence evidence pointer, such as source_ts, staging line, quoted prior output, diff, or decision change, showing that one agent output changed another agent or phase decision?",
+        "If the evidence only shows common-source alignment or parallel role differentiation, did I narrow the claim to that instead of promoting it to coordination or synergy?"
+      ],
+      "expires_after": "Review after the next two multi-agent handoff, phase cross-response, or instance-divergence notes that describe convergence, coordination, synergy, or division of labor."
     }
   ]
 }
