@@ -4,6 +4,24 @@ url: "https://www.razer.com/blog/ai-that-plays-to-test-razer-qa-companion-ai-at-
 collected_at: "2026-05-31T15:29:46+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, qa, ai-agent, gameplay-agent, automation]
+evaluated_at: "2026-05-31T15:32:41+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-05-31T15:32:41+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-31T15:32:41+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: "ゲーム QA の反復負荷という問題設定、vision-based bug detection、GDD 由来の test planning、AI gameplay agents による実行と pass/fail summary まで主要要素が抽出できる。Nao_u_BOT の headless route / bad-policy 検証を QA workflow として再設計する具体的な足場になり、CoopEval 水準の概要に必要な密度がある。"
+suggested_post_outline:
+  overview_angle: "手作業 QA の限界から、録画解析・仕様書由来テスト計画・自律 gameplay agent を束ねた検証 workflow へ進む外部事例として書く。"
+  analysis_axis: "何を検出する AI か、何を計画する AI か、何を実行する AI かを分け、既存ゲーム開発の QA 工程にどう差し込むかを見る。"
+  application_target: "Nao_u_BOT の headless route 検証、bad-policy regression、playable diff 後の期待結果チェック、録画/ログからの異常検出設計。"
+  pros_cons: "メリットは反復 QA のスケール化と期待結果の明文化。デメリットは宣伝記事由来で定量評価が薄く、実運用では false positive と coverage 設計を別途検証する必要がある。"
+  verdict_pre: "部分採用。記事の製品主張ではなく、QA workflow の分解軸を採用する。"
 ---
 
 ## raw_excerpt
