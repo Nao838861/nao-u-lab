@@ -404,3 +404,112 @@ C199/C200/C201/C202 で **4 サイクル連続** で「Nao_u 評価を待たず 
 - `memory/feedback_prediction_responsibility.md` t:5 — Stage 1-4 予測責任の連続体、C199/C200/C201/C202 で 4 サイクル連続継承
 
 — Ash (Win2) 2026-05-28 C202 Phase 4 大作業 (v07 観点 8 物理化 + Stage 4 自判定 追記 + R-I 死守ライン明示)
+
+---
+
+## §juicy_amplification_matrix Stage 4 自判定 (2026-05-31 C188 Ash)
+
+**接続元**: `game/graze_log/v07/juicy_amplification_matrix.md` (commit 2f5d4228f) は ACM 2024 Hicks et al. "Juicy Audio" の polishing/amplification 2 操作枠で v07 5 機構を読み直した Stage 3 予測 matrix。末尾「v08 着手前に index.html の現状を AI 自プレイで触り、本 matrix の予測が体感と一致するかを Stage 4 として記録すべき」と Stage 4 自宣言保留を残していた。本セクションで Stage 4 を解消する。
+
+**Stage 4 自判定の方法**: AI 自プレイ (実走) は本 Ash インスタンスからは headless 計装経由しか取れず、`feedback_headless_unfit_for_unfinished_eval.md` t:5 が「校正前 headless 数値を未完成ゲームの設計判定根拠に使わない」を厳守する以上、headless 数値は本判定の根拠から外す。代替として **index.html の現状コードを精読し、matrix の Stage 3 予測が実装と整合するか / 予測の前提が外れる箇所はないか** をコード根拠で判定する。これは `feedback_prediction_responsibility.md` t:5 の Stage 4 (= AI 側で「良い/外れ」を結論してから Stage 5 に出す) の **コード精読版** であり、Stage 5 Nao_u プレイ評価で覆る前提は維持する。
+
+**制約遵守 (本セクション本文での明示)**:
+- `feedback_headless_unfit_for_unfinished_eval.md` t:5: 本 Stage 4 判定で headless 数値 (route/camper/panic/novice の到達率 / score / player_lv_avg) は根拠として使用しない
+- `feedback_clone_strategy.md` t:5 守破離守準拠: Nao_u v07 プレイ評価返信 (ts=1779939191.243789) 受領前は v08 着手判断を凍結。本セクションの「v08 候補 Ash 暫定推奨」は Nao_u 評価が amplification 余地大方向に偏った場合の v08 経路選定材料として記録するに留め、**着手判断ではない**
+
+### Stage 4 セル判定 (player 側 9 セル: matrix 8 セル + 矩形横断観察)
+
+#### Cell 1: B-2 Hyper Activation × polishing
+- **体感予測 (matrix §1)**: 消去波の前進感 (画面中心から外周へ scan する波形 alpha) が polishing 候補。「Hyper を撃った」が「一瞬で何かが消えた」のままだと empowerment 薄い
+- **index.html コード根拠**: `fireBomb()` (lines 342-367) — 3 つの rings を 4F ずらして発火 (`for(let i=0;i<3;i++) state.rings.push({...r0:20, r1:Math.min(W,H)*0.7, life:30, c:'#ffe040'})`)。draw() ring 描画 (lines 841-849) で r=r0+(r1-r0)*k 拡大 + alpha=1-k フェード = **実質「中心→外周への波形 scan」を 3 連発で実装済み**。加えて全画面 flash 2 種 (bombFlash 24F #ffd870 alpha 0.35 / hyperFlashT 30F #ffe040 alpha 0.4 in lines 909-922)
+- **Stage 4 自判定 (予測命中信頼度)**: **低**。Stage 3 予測「消去波前進感は未獲得」は **外れ**。3 連の拡大 ring (r0=20 → r1≈340) が中心→外周波 scan を物理的に実装済み。matrix の polishing 余地評価「中 (消去波前進感)」は誤読、現状の polishing 余地は **「全画面 flash の輝度を下げて ring 波形を見せる」逆方向の polishing** にあり (現状 flash alpha 0.4 + 0.35 重複で ring が埋もれる懸念)
+
+#### Cell 2: B-2 Hyper Activation × amplification
+- **体感予測 (matrix §2)**: gauge 充填速度の **対 phase 期待値との差分** を gauge UI 側に細い背景線として描画。「いま Hyper を撃つべきか溜めるべきか」を gauge 数値ではなく **gauge UI 形状** で読めるようになる
+- **index.html コード根拠**: `drawHUD()` gauge bar 描画 (lines 935-966) — gauge bar は H-14 に gw=W-20, gh=8 の横 bar、G_LV2/G_LV3 縦 tick 2 本 + lv 別色変化 (4a7fc0 / 60c0ff / ffa040→ffd870) のみ。**phase 別期待ラインは一切描画されていない**。currentPhase() (line 446 周辺) は spawn 駆動のみで gauge UI 連動なし
+- **Stage 4 自判定**: **高**。Stage 3 予測命中。amplification 余地は明らかに大、実装は drawHUD に phase 別期待ライン (例: 圧力 phase 期待値 = gauge 0.7 × G_MAX の縦 tick 半透明) を 5-10 行追加で得られる。**本セルが v08 候補 (b) の Stage 4 根拠**
+
+#### Cell 3: 観点 3 弾側マーカー × polishing
+- **体感予測 (matrix §3)**: 鼓動振動 / graze 成功時 burst / 無敵終了 5F fadeout。**消失 fadeout 5F が最小の polishing**
+- **index.html コード根拠**: ebullet 描画 (lines 834-839) — `if(state.invincibleT>0){ ctx.strokeStyle='rgba(255,224,64,0.55)'; ... arc(wx,wy,5,0,Math.PI*2) }` で **r=5 固定、alpha 固定 0.55、消失は invincibleT が 0 になった瞬間 (1F で消える)**
+- **Stage 4 自判定**: **高**。Stage 3 予測命中。マーカーは r/alpha 固定 + 瞬時消失で確認、fadeout 5F は 3 行追加 (前 5F の invincibleT で alpha 線形減衰) で実現可能。鼓動振動については「弾密度が高い phase で全弾同期させると画面ノイズ」予測も整合 (現状 state.t グローバルなので全弾同期になる)
+
+#### Cell 4: 観点 3 弾側マーカー × amplification
+- **体感予測 (matrix §4)**: 黄色弾と通常弾の **画面内出現比率** / graze 成功時のどの弾種から graze 取れたかの事後可視化
+- **index.html コード根拠**: ebullet 描画ループ (line 813) では invincibleT>0 中は **全 ebullet にマーカー発火** (lines 834-839 = 弾種区別なし)。`onGraze()` (line 667) は弾種を popup に出していない (`text:'+'+(GRAZE_GAUGE*mult)` line 679)
+- **Stage 4 自判定**: **中**。Stage 3 予測「出現比率の amp 余地大」は **前提が部分外れ**。invincibleT 中=全弾 2x 対象なので「比率」は常に 100% / 0% のトグルになり、amp 余地は「invincibleT が effective な時間帯がいつ来るか」の HUD 可視化に修正必要。chain 末尾 popup (graze 弾種別 popup) は Stage 3 予測通り未獲得で残る
+
+#### Cell 5: 観点 6 7 区分 spawn テーブル × polishing
+- **体感予測 (matrix §5)**: phase 切替時の画面端 1F フラッシュ + phase 名瞬間表示。**画面端 1F フラッシュは polishing として軽量 (~3 行)**
+- **index.html コード根拠**: bg 描画 (lines 738-739) は `ctx.fillStyle='#07091a'; ctx.fillRect(0,0,W,H)` 固定一色。phase 切替の視覚演出は **draw() / drawHUD() に一切存在しない** (grep で phase tick / phase flash 文字列 0 件)。currentPhase() の閾値超え瞬間を検出する hook も update() にない
+- **Stage 4 自判定**: **高**。Stage 3 予測命中。phase 切替時に視覚的に何も起きないことをコードで確認。端 flash は 3-5 行 (update() に lastPhase 記録 + 切替検出、draw() に flash 残時間描画) で実現可能。最小実装条件を満たす
+
+#### Cell 6: 観点 6 7 区分 spawn テーブル × amplification
+- **体感予測 (matrix §6)**: 画面端の **時間 bar** (90 秒進行度 + phase 区切り tick) / 背景色微変化。**時間 bar は amplification 典型、画面下端 1px 高 bar で「いま圧力区間に入った」を体感可能**
+- **index.html コード根拠**: PHASE_BOUNDARIES (line 171) `=[780,1560,2340,3120,3900,4680,5400]` で phase 境界 F 列定義済み。state.t (line 187 周辺) で経過 F を保持。drawHUD() に phase / 時間 情報の HUD 表示は **完全に不在** (lines 935-980 にも grep 0 件)
+- **Stage 4 自判定**: **高**。Stage 3 予測命中。データソース (state.t + PHASE_BOUNDARIES) が既存で、画面下端 1px 高 bar 実装は 5-8 行 (gauge bar gy=H-14 の 1px 上 gy=H-15 で 90 秒進捗 + 7 tick 描画)。**本セルが v08 候補 (a) の Stage 4 根拠 (最強)**
+
+#### Cell 7: 観点 7 180F cap reached 大成功反応 × polishing
+- **体感予測 (matrix §7)**: cap 持続中 (180F = 3 秒) の **持続演出** / cap 解除瞬間の着地演出。持続中の演出を加えると **持続自体が体験** になる
+- **index.html コード根拠**: cap 到達瞬間 (lines 700-704) = maxChainFlashT=20F + 大型 ring r0=12→r1=60 30F + popup 'MAX CHAIN!' 60F、draw() flash 描画 (lines 923-928) で 20F フェード。**cap 持続中** (= invincibleT が BUZZ_INVINCIBLE_CAP まで延長されている間) は通常の橙色 glow ring (lines 883-889 `rgba(255,160,64,...)` orange) しか出ず、**cap 状態と非 cap 無敵状態が視覚的に区別されていない**
+- **Stage 4 自判定**: **高**。Stage 3 予測命中。cap 到達瞬間の polishing は確かに強いが持続中は弱い (= 通常無敵と同視覚)。「cap 持続中だけ橙色 ring を金色 ring (#ffd870 等) に変える」 polishing 案が 2-3 行で実装可能 (line 886-889 の strokeStyle 三項分岐に invincibleT===BUZZ_INVINCIBLE_CAP 条件追加)
+
+#### Cell 8: 観点 7 180F cap reached 大成功反応 × amplification
+- **体感予測 (matrix §8)**: cap 到達まで残 chain 数の **chain counter 可視化** (●●○ 形式) / cap 持続中の **残時間 bar**
+- **index.html コード根拠**: onGraze() (lines 685-703) cap 検出 = `wasCapNotReached=state.invincibleT<BUZZ_INVINCIBLE_CAP` && `state.invincibleT===BUZZ_INVINCIBLE_CAP` への遷移。cap 条件は **invincibleT の加算量** で判定、`Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES, BUZZ_INVINCIBLE_CAP)` (line 696)。HUD には `PLv {playerLv}/{PLAYER_LV_MAX}` (line 976) はあるが **cap までの残量は invincibleT/BUZZ_INVINCIBLE_CAP 進捗で計算可能だが表示なし**
+- **Stage 4 自判定**: **中**。Stage 3 予測「3 chain ●●○ 表示」は **前提部分外れ**。cap 条件は整数 chain 単位ではなく invincibleT 加算量 (BUZZ_INVINCIBLE_FRAMES 単位の累積) で判定するため、**残 chain ●●○ ではなく invincibleT 進捗 bar** の方が実装に整合。amplification 余地自体はある (cap までの残量がプレイヤーに不可視)
+
+#### Cell 9: 矩形横断観察 (Stage 4 整合性チェック)
+- **matrix 横断観察の主張 (再掲)**:
+  1. 観点 3 弾側マーカーが唯一の amplification 機構 (player 側 amp で「強」評価は観点 3 のみ)
+  2. 観点 6 spawn テーブルの amplification 余地最大
+  3. B-2 Hyper Activation の amplification 余地次点
+  4. 観点 7 cap reached は polishing 側で既に強い
+- **Stage 4 自判定 (4 主張のコード根拠整合)**:
+  1. ○ **整合**: 観点 3 マーカー (lines 834-839) は「invincibleT というロジック状態」を player に可視化する典型 amplification。他機構の amplification はコード上不在 (drawHUD に phase 情報なし / gauge 期待ラインなし / cap 残量なし)
+  2. ○ **整合**: PHASE_BOUNDARIES 既存 + 描画 0 = 余地最大が裏付け
+  3. ○ **整合**: gauge UI は段階別色変化のみで phase 期待値 amp 不在 = 余地次点
+  4. △ **部分整合 (修正)**: cap reached 瞬間の polishing は確かに強い (3 種演出) が **cap 持続中の polishing は弱い** (通常無敵と同視覚)。matrix 表「polishing 現状 強 / 余地 小 (持続演出)」の余地評価は「小」より「中」が妥当
+- **Stage 4 横断結論信頼度**: **高**。matrix 横断観察の構造判断 (どの機構の余地が大/中/小か) は概ねコード裏付けあり。修正点 1 つ: 観点 7 polishing は「cap 到達瞬間 強 / 持続中 弱」と二分すべき
+
+### v08 候補 (a)〜(e) の Stage 4 整合性ランキング
+
+| 候補 | matrix Stage 3 予測 | Stage 4 信頼度 | 実装行数 | 戻し方 |
+|---|---|---|---|---|
+| (a) 観点 6 時間 bar | amp 余地最大 | **高** (Cell 6 根拠) | ~10 行 (drawHUD 末尾追加) | 10 行削除で v07 等価 |
+| (b) B-2 gauge 期待ライン | amp 余地次点 | **高** (Cell 2 根拠) | ~8 行 (drawHUD gauge ブロック追加) | 8 行削除で v07 等価 |
+| (c) 観点 7 残 chain ●●○ | amp 余地中 | **中** (Cell 8 前提部分外れ → bar 表示なら整合) | ~6 行 (drawHUD chain 描画追加) | 6 行削除 |
+| (d) 観点 3 fadeout 5F | polishing 余地小 | **高** (Cell 3 根拠) | ~3 行 (ebullet ループ修正) | 3 行差し戻し |
+| (e) 観点 3 黄色弾出現比率 | 結合候補 | **中** (Cell 4 前提部分外れ → トグル可視化に修正) | ~10 行 (HUD 追加) | 10 行削除 |
+
+### Ash 側暫定推奨 v08 候補 ≤2 件 (`feedback_clone_strategy.md` t:5 守破離守準拠 = 着手判断ではない暫定)
+
+**推奨 1 (最優先): v08 候補 (a) 観点 6 spawn テーブル 時間 bar**
+- **推奨理由 (Stage 4 自判定との接続)**: Cell 6 で Stage 4 信頼度 **高** (PHASE_BOUNDARIES 既存 + HUD 描画 0 のコード根拠が確定)。amplification 余地評価が matrix 横断観察の主張 #2「余地最大」と整合し、Cell 6 と矩形横断観察 Cell 9 主張 #2 で二重に裏付けられた。最小実装 (~10 行) + 戻し方明確 (10 行削除で v07 等価) で `feedback_clone_strategy.md` の「削除可能改良 1 個刻み」要件を満たす。実装位置は drawHUD() 末尾 (line 980 後) に追加可能で、既存 HUD 行 (line 976) の情報密度には影響しない (画面下端 1px 高 bar = `feedback_clone_strategy.md` Log_cdx 観点 5 「常時表示情報は少ない方が良い」とも両立)
+
+**推奨 2 (次点): v08 候補 (d) 観点 3 弾側マーカー fadeout 5F**
+- **推奨理由 (Stage 4 自判定との接続)**: Cell 3 で Stage 4 信頼度 **高** (r=5 + alpha 0.55 固定 + 瞬時消失のコード根拠が確定)。実装最小 (~3 行) + 振る舞いの破壊範囲が局所 (ebullet 描画ループ 1 箇所のみ) で副作用懸念が最低。polishing 余地は matrix 表で「小」評価だが Stage 4 で「無敵終了瞬間の認識を緩やかにする」効果がコード上明確 (現状の瞬時消失は急峻すぎる体感) で、**侵襲の少なさ × 効果予測の確実さ** で第 2 推奨に位置づける
+
+**非推奨理由 (b)(c)(e)**:
+- **(b) gauge 期待ライン**: Cell 2 Stage 4 信頼度 高で実装も小規模だが、gauge UI は既に段階別色変化 + 縦 tick 2 本 + ready 時 pulse ring + lv 別色変化と情報層が **既に厚い**。期待ライン追加は HUD 情報密度を一段押し上げるリスクがあり、`feedback_clone_strategy.md` Log_cdx 観点 5 との折衝が必要 → 第 3 候補以下に降格
+- **(c) 残 chain 表示**: Cell 8 Stage 4 で前提部分外れ (3 chain 単位ではなく invincibleT 加算量判定)。●●○ 形式を採用するには cap 条件式の意味づけを変える設計修正が要り、`feedback_clone_strategy.md` の「1 機構刻み」を超える
+- **(e) 出現比率表示**: Cell 4 Stage 4 で前提部分外れ (invincibleT 中 = 100% トグル)。amp 仕様の再設計が要る
+
+### Nao_u v07 プレイ評価返信受領後の v08 経路選定指針
+
+`game/graze_log/v07/self_judgment.md` §「次 iteration 起点を 1 つ確定」(line 379-394) で本ファイル前半は「Nao_u v07 プレイ評価依頼を次サイクル C203 で実施」を確定済み。本 Stage 4 自判定は **Nao_u v07 評価返信受領時** に以下のフローで使用する:
+
+1. Nao_u 評価コメントの「単調」「核体験」「気持ちよさ」等のキーワードを polishing/amplification 軸でタグ付け (matrix §「v06 self_judgment.md 5 機構統合版」step 2 流用)
+2. キーワードが **amplification 側** に偏った場合 → 本 Stage 4 推奨 1 (時間 bar) を v08 第一手として着手判断、追加で推奨 2 (fadeout) を併発する 2 機構刻み判断
+3. キーワードが **polishing 側** に偏った場合 → 推奨 2 (fadeout) を v08 第一手として着手判断、加えて Cell 7 の修正 (cap 持続中の polishing = 金色 ring 切替 2-3 行) を追加候補
+4. キーワードが「面白い、次の機構を」方向 → v08 ではなく次の独自要素 1 つ追加に振る (matrix §「v08 実装可能性候補」flow と一致)
+
+### Stage 4 自判定の制約遵守チェック
+
+- [x] `feedback_headless_unfit_for_unfinished_eval.md` t:5: 本判定は **index.html コード精読** に基づき、headless 数値 (route/camper/panic/novice 到達率 / score / player_lv_avg) を一切根拠として使用していない。Stage 4 「AI 自プレイで良いと確信」をコード精読版で代替したことを冒頭で明示
+- [x] `feedback_clone_strategy.md` t:5 守破離守: v08 候補推奨は **着手判断ではない暫定推奨** と明示、Nao_u v07 評価返信受領後の判断材料として記録するに留めた。本セクション内で v08 着手は決定していない
+- [x] `feedback_prediction_responsibility.md` t:5: Stage 3 (matrix) → Stage 4 (本セクション) → Stage 5 (Nao_u 評価) の連続体で、Stage 4 で予測命中信頼度を「高/中/低」3 段階で明示し、外れ箇所 (Cell 1 消去波余地誤読 / Cell 4・8 前提部分外れ) を隠さず記録
+- [x] `feedback_prior_art_citation_must_verify.md` t:5: 本セクションは matrix (ACM 2024 引用済) と index.html コードを接続するので新規外部引用なし、既存引用の二次接続のみ
+- [x] `feedback_means_ends_reversal_check.md` t:5: 本 Stage 4 自判定の出力は v08 候補絞り込み (2 件推奨 + 3 件非推奨理由) = iteration の次手選定根拠で、ship に直結する判定材料。matrix を読み直すだけの中間文書ではなく、Nao_u 評価返信受領後の v08 着手判断を物理的に短縮する材料を残した
+
+— Ash (Win2) 2026-05-31 C188 Phase 4 大作業 (juicy_amplification_matrix Stage 4 自判定追記 + v08 候補 (a)(d) 暫定推奨 + matrix 主張 4 件のコード根拠整合性記録)
