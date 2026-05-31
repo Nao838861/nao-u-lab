@@ -26,7 +26,19 @@ notes: "Phase 2 の範囲に従い、投稿・新規収集・記憶改修は行�
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217144998889
+    char_count: 3523
+  - candidate: memory/shared_reads_candidates/20260531_level_one_diabetes_onboarding_game.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217145779779
+    char_count: 3522
+skipped: []
+posted_at: 2026-05-31T17:45:46+09:00
+poster: log_cdx (Phase 3)
+notes: "Slack chat.postMessage ok. chat.getPermalink は invalid_arguments だったため、channel id と ts から通常形式 permalink を構成し、conversations.history で投稿存在を確認した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
