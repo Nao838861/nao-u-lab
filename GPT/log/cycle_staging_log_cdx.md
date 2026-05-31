@@ -74,6 +74,25 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-31T14:52:00+09:00 log_cdx Phase 4a 追記
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認。link 0 件、broken link 0 件。"
+  - "memory/atoms.jsonl を確認。1921 行、parse error 0、atom id 重複 0。normalized/content hash 重複は 19 群あるが、MEMORY.md の lifecycle/content fold 対象として既存運用内。"
+  - "memory/raw/ を mtime 基準で確認。30 日以上動きがない raw ファイル 0 件。"
+  - "memory/shared_reads_candidates/ の lifecycle 内訳を確認。posted 149、postponed 117、failed 40、ready_to_post 4、status 欠落/別 key 14、30 日以上動きがない postponed/needs_review 0 件。"
+  - "inbox 系を確認。memory/slack_directives.jsonl pending 0、memory/slack_broadcasts.jsonl pending 0 のため handled 更新なし。"
+issues:
+  - id: ISS-4A-20260531-001
+    description: "shared_reads_candidates の一部が `status:` ではなく `candidate_status:` を使う、または lifecycle status を持たないため、Phase 4a の status 内訳と将来の自動 lifecycle 判定で候補状態が過小集計される。README.md を除く対象は 13 candidate。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md など 7 件は `candidate_status: needs_review`、memory/shared_reads_candidates/20260529_stealth_lighting_readability.md など 6 件は status key なし。"
+    why_blocks_game_memory: "ゲーム制作向け shared-reads 候補の再評価対象が lifecycle 検索から漏れると、過去に集めた game-design / playtesting / visual-readability の材料が次サイクルで拾われにくくなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
