@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-31T09:17:57+09:00",
+  "updated_at": "2026-05-31T11:35:23+09:00",
   "reviewed_source_ts": [
     "1778577943.978429",
     "1780098002.597279",
@@ -89,7 +89,8 @@
     "1780108829.615329",
     "1780119865.869599",
     "1779546828.518799",
-    "1780162845.524299"
+    "1780162845.524299",
+    "1779572226.979089"
   ],
   "reviews": [
     {
@@ -1686,6 +1687,29 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-31T11:35:23+09:00",
+      "id": "sr-1779572226-4f99fc9fca",
+      "source_ts": "1779572226.979089",
+      "title": "STALE benchmark — 古い知識を AI が「自分から検出して更新する」能力を3次元で測る最初のフレーム",
+      "decision": "adopt_probe",
+      "reason": "Score 17. The post is directly relevant to Codex memory, phase staging, and game/cross_review work because it separates outdated-belief detection from resisting stale premises and proactively adapting behavior. Existing probes cover memory pipeline stage, semantic boundaries, and aging mechanisms, but they do not force a check that the next action is still resting on a current premise. Keep this as a reversible stale-presupposition probe rather than a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before using an old memory, directive, cross_review note, or game feedback as a premise for the next action, did I name the premise plus its source_ts/status or current file evidence?",
+        "Did I check one later or current signal that could implicitly invalidate it, such as newer staging, active directive status, git state, current game diff, Slack lifecycle state, or a more recent atom?",
+        "If the later signal changes the premise, did I update the action or narrow the conclusion instead of carrying the stale premise into a proposal, evaluation, or completion report?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next memory/game/cross_review action already records current-premise fit clearly, or if it only duplicates memory-stage and aging probes without changing the action."
     }
   ],
   "active_probes": [
@@ -2732,6 +2756,18 @@
         "If the variables differ, did I keep only the compatible reference piece and record the non-adopted part instead of promoting the whole framework to a rule, template, or evaluation gate?"
       ],
       "expires_after": "Review after the next external framework, game-template, benchmark, harness, or evaluation-rubric import that influences Codex game or memory work."
+    },
+    {
+      "id": "probe-20260531-stale-presupposition-check",
+      "created_at": "2026-05-31T11:35:23+09:00",
+      "source_ts": "1779572226.979089",
+      "scope": "next memory recall/consolidation, phase staging decision, cross_review proposal, game feedback application, or completion report where an older memory or directive becomes a premise for current action",
+      "questions": [
+        "Before using an old memory, directive, cross_review note, or game feedback as a premise for the next action, did I name the premise plus its source_ts/status or current file evidence?",
+        "Did I check one later or current signal that could implicitly invalidate it, such as newer staging, active directive status, git state, current game diff, Slack lifecycle state, or a more recent atom?",
+        "If the later signal changes the premise, did I update the action or narrow the conclusion instead of carrying the stale premise into a proposal, evaluation, or completion report?"
+      ],
+      "expires_after": "Review after the next memory, staging, cross_review, game-feedback, or completion-report action that relies on an older premise."
     }
   ]
 }
