@@ -7,13 +7,18 @@ genre_tags: [game-design, postmortem, puzzle-platformer, scope-control, producti
 evaluated_at: "2026-06-01T01:46:40+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-01T01:46:40+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-01T01:46:40+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-01T01:49:41+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780246175015319"
+next_action: none
 stale_after: "2026-07-01"
+posted:
+  ts: "1780246175.015319"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780246175015319"
+  char_count: 3645
+  posted_at: "2026-06-01T01:49:41+09:00"
 supersedes: []
 gate_reason: "14週間の学生制作という制約下で、first playable による core loop 固定、10→8レベルの scope cut、ファイル管理/統合事故が具体的に残っている。Nao_u_BOT の短期 prototype で完成幅を絞る判断材料として直接使える。4000字級の概要は production decision と failure mode を軸に構成できる。"
 suggested_post_outline:

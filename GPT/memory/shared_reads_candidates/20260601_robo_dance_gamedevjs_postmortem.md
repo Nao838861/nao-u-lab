@@ -6,14 +6,15 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, jam, rhythm, turn-based, testing]
 evaluated_at: "2026-06-01T01:46:40+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-01T01:46:40+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-01T01:46:40+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-01T01:49:41+09:00"
+last_decision: postponed_duplicate
+evidence: "already posted to #shared-reads as https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
+next_action: none
 stale_after: "2026-07-01"
+postpone_reason: "Phase 3 duplicate guard: same source URL already exists in #shared-reads atom sr-1779034850-de94d348a3."
 supersedes: []
 gate_reason: "同時ターン制とリズム同期の組み合わせで edge case が爆発し、movement/pushing を unit test/TDD 的に固めて進捗を回復した流れが明確。ゲーム制作への適用先が core logic、入力計画 UI、テスト設計に分解できる。4000字級の概要は設計変更、テスト導入、プレイテスト発見を軸に書ける。"
 suggested_post_outline:

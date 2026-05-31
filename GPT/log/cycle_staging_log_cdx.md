@@ -27,7 +27,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-06-01 01:49 log_cdx Phase 3
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260601_tricky_fox_14_week_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780246175015319
+    char_count: 3645
+skipped:
+  - candidate: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    reason: "same source URL already posted to #shared-reads as sr-1779034850-de94d348a3 / p1779034850236629"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
