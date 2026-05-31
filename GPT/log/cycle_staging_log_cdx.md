@@ -74,7 +74,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+checked_at: "2026-05-31T12:03:00+09:00"
+checked_by: "log_cdx (Phase 4a)"
+cleaned:
+  - "memory/MEMORY.md: Markdown link は 0 件で broken link なし。"
+  - "memory/atoms.jsonl: 1917 rows、JSON parse error 0、duplicate id 0、normalized/content hash duplicate group 0。"
+  - "memory/raw/: 30 日以上更新のない raw file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: lifecycle status 内訳は posted 149、ready_to_post 4、postponed 115、failed 40、missing 17。30 日以上動きがない postponed / needs_review は 0 件。"
+  - "inbox: tools\\slack_inbox_lifecycle.py pending で directives / broadcasts とも pending なし。handled 更新対象なし。"
+issues:
+  - id: "ISS-20260531-4A-001"
+    description: "shared_reads_candidates に lifecycle status frontmatter がない .md が 17 件ある。README.md と posted_drafts 4 件を含むが、通常候補にも 12 件含まれている。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md ほか 17 件。status_counts missing=17。"
+    why_blocks_game_memory: "候補の posted / postponed / failed 判定を status で機械集計する時に、古い候補の再評価や fail 降格対象から漏れ、ゲーム制作に使う shared-reads 候補プールの品質管理が弱くなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  note: "欠落は既存 lifecycle schema の機械補完で扱える範囲。新しい仕組み設計を起動するほどではない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a で needs_design: true の場合のみ実行される)
