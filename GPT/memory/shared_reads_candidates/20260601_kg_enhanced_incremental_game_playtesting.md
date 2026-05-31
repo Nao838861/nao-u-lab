@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2511.02534"
 collected_at: "2026-06-01T06:15:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [playtesting, llm-agent, knowledge-graph, regression-testing, game-updates]
+evaluated_at: "2026-06-01T06:30:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-01T06:30:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-01T06:30:00+09:00; prior_candidate:memory/shared_reads_candidates/20260515_klpeg_incremental_game_playtesting.md"
+next_action: revise_or_research
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: >-
+  変更ログ、ゲーム要素 KG、multi-hop reasoning で差分テスト範囲を絞る発想は、playable diff 後の headless 回帰テスト設計に具体的に効く。
+  ただし candidate 内には KG スキーマ、テスト生成手順、Overcooked/Minecraft 評価の数値や失敗例が不足し、現状のままでは投稿本文が一般論に膨らむ。
 ---
 
 ## raw_excerpt

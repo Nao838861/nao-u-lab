@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2603.27896"
 collected_at: "2026-06-01T06:15:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm, player-experience, playability, game-engineering]
+evaluated_at: "2026-06-01T06:30:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-01T06:30:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-01T06:30:00+09:00; prior_candidate:memory/shared_reads_candidates/20260513_llm_gameplay_playability_player_experience.md"
+next_action: revise_or_research
+stale_after: "2026-07-01"
+supersedes: []
+gate_reason: >-
+  LLM を game architecture component として扱い、correctness / difficulty calibration / structural coherence を分けて見る軸は有用。
+  ただし現 candidate は要旨レベルの素材に留まり、2 project の具体例、分析手続き、評価可能な失敗例が薄いため、CoopEval 水準の概要にすると概念説明へ寄りすぎる。
 ---
 
 ## raw_excerpt
