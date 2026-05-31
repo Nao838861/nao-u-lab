@@ -37,6 +37,9 @@ const ENEMY_VX_D = 1.4;
 const ENEMY_VY_C = 2.5;
 const ENEMY_C_SWING_AMP = 60;
 const ENEMY_C_SWING_PERIOD = 30;
+// v003 C276 (Log Phase 4): H-001 Q-導入 teaser 用 stagger 定数 (game.js と同型)
+const WAVE_A_STAGGER_Y_DEFAULT = 40;
+const WAVE_A_STAGGER_Y_PHASE0 = 168;
 const WAVE_REST_FRAMES = FPS * 8; // v002 差分: wave clear 後 8 秒静寂
 const MAX_FRAMES = FPS * 90;       // 90 秒 = 5400 F (C248: 70-90s カーブ全 phase 観測)
 // WAVE_TIMELINE: game.js と同型 (phase 0/1/2)
@@ -58,12 +61,14 @@ function mulberry32(a) {
 // v002 差分: n=5 → 3、shootCooldown 初期値 +30、初期 x 配置を 0.25/0.5/0.75 に再配置
 function spawnWaveA(state) {
   const n = 3;
+  // H-001: phase 0 第 1 wave のみ y-stagger 拡大 (game.js spawnWaveA と同型)
+  const staggerY = state.waveCount === 0 ? WAVE_A_STAGGER_Y_PHASE0 : WAVE_A_STAGGER_Y_DEFAULT;
   for (let i = 0; i < n; i++) {
     state.enemies.push({
       id: `W${state.waveCount + 1}-A${i}`,
       type: 'A',
       x: W * (0.25 + i * 0.25),
-      y: -20 - i * 40,
+      y: -20 - i * staggerY,
       vx: 0, vy: ENEMY_VY_A,
       r: ENEMY_R, alive: true,
       shootCooldown: 60 + i * 20,
@@ -314,7 +319,7 @@ const survivors = results.filter(r => r.outcome === 'survived').map(r => r.strat
 const report = {
   audit: 'verify_bad_strategies',
   target: 'game/log_autonomous_game/v003/game.js',
-  thesis: '悪手 4 方針は 90 秒以内に必ず死ぬ — v003 phase 2 内 SHOOT_INTERVAL 漸変 (90→60 frame) 追加後も castLock 不使用悪手は全滅',
+  thesis: '悪手 4 方針は 90 秒以内に必ず死ぬ — v003 phase 2 内 SHOOT_INTERVAL 漸変 (90→60F) + H-001 phase 0 第1wave Q-導入 teaser (y-stagger 40→168) 追加後も castLock 不使用悪手は全滅',
   max_frames: MAX_FRAMES,
   max_seconds: MAX_FRAMES / FPS,
   wave_rest_frames: WAVE_REST_FRAMES,

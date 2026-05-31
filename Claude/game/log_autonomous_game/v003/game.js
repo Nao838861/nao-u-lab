@@ -30,6 +30,12 @@
   const ENEMY_VY_C = 2.5;          // 敵C ダイブ 縦速度 (A の約 1.8 倍 = 「急襲」体感)
   const ENEMY_C_SWING_AMP = 60;    // 敵C 横揺れ振幅 (px)、baseX ± この値
   const ENEMY_C_SWING_PERIOD = 30; // 敵C 横揺れ角速度分母 (frame 単位、t/30 で sin 周期 ≈ 188F=3.1s)
+  // v003 C276 (Log Phase 4): Q-導入 H-001 teaser 仮説 — phase 0 第 1 wave (waveCount === 0) のみ、
+  // 敵A の y-stagger を WAVE_A_STAGGER_Y_DEFAULT (40px = 28F) から WAVE_A_STAGGER_Y_PHASE0 (168px = 120F)
+  // に拡大し、先行 1 体が単独で約 2 秒間プレイヤーに観測される「teaser → 本体 2 体」構造を作る。
+  // 詳細: hypotheses.md H-001
+  const WAVE_A_STAGGER_Y_DEFAULT = 40;
+  const WAVE_A_STAGGER_Y_PHASE0 = 168;
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
@@ -249,11 +255,13 @@
   // wave 2 (敵D) と wave 3+ (waveCount 偶奇で A 復帰) では同じ軽量パラメータを共有する。
   function spawnWaveA() {
     const n = 3;
+    // H-001 Q-導入 teaser: phase 0 第 1 wave (waveCount === 0) のみ y-stagger 拡大
+    const staggerY = game.waveCount === 0 ? WAVE_A_STAGGER_Y_PHASE0 : WAVE_A_STAGGER_Y_DEFAULT;
     for (let i = 0; i < n; i++) {
       game.enemies.push({
         type: 'A',
         x: W * (0.25 + i * 0.25),
-        y: -20 - i * 40,
+        y: -20 - i * staggerY,
         vx: 0,
         vy: ENEMY_VY_A,
         r: 10,
@@ -264,7 +272,7 @@
     }
     game.waveSpawned = true;
     game.waveCount += 1;
-    logEvent('wave_spawn', { wave: game.waveCount, type: 'A', count: n });
+    logEvent('wave_spawn', { wave: game.waveCount, type: 'A', count: n, stagger_y: staggerY });
   }
 
   // --- 敵 D (横断敵) Wave ---

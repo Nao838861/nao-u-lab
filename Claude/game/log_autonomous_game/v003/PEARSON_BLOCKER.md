@@ -1,6 +1,11 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-05-31 C275 (Log) — 前提 4 = ICC 事前診断レイヤー追記
+最終更新: 2026-06-01 C276 (Log) — gate 未解除中の playable diff 運用ルール 1 行追記
+
+## gate 未解除中の playable diff 1 行ルール (C276 追加)
+
+**Pearson gate 未解除中の `game/log_autonomous_game/v003/` 以降への playable diff は「新規仮説 1 個 + その検証用 diff」だけ許可。仮説欄なしの『触ってみた』型 diff は禁止。**
+意図: 外部 fun_score なしでも 1 サイクル分の仮説検証は前進と数えられる / 仮説駆動を強制すれば自己満足反復との境界が明示される。Phase 4 大作業選定 checklist で「仮説欄記入済か」を 1 行確認。
 
 ## 何が起きているか
 

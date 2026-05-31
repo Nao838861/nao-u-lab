@@ -116,6 +116,19 @@ v002 採点起点: 自身の差分採点 (`v002/self_judgment.md`) Q-A 5/5 / Q-�
 
 ---
 
+## Q-導入 — H-001 phase 0 第 1 wave y-stagger 拡大 teaser (C276 Phase 4, 2026-06-01)
+
+**実施**: `game.js` / `verify.js` で waveCount === 0 のみ y-stagger 40→168 切替 (`WAVE_A_STAGGER_Y_PHASE0=168`)、PEARSON_BLOCKER.md L4 「仮説駆動」ルール初適用。仮説本体は `hypotheses.md` H-001 参照。
+
+**verify.js 結果** (`node verify.js`, seed=20260527):
+- pass: true (悪手 4 方針すべて wave 1 内死、回帰ゼロ)
+- 各方針 survived_frames: camper=319F / lane-holder=284F / blind-sweeper=378F / **nospecial=545F (段階3 489F → +56F = +0.93s)**
+- 観察: nospecial のみ +56F 延長、他 3 方針は変化なし or 別パターン同等。仮説「teaser 期間に死ぬパターンは増えにくく、本体到来時に死ぬパターンが大半」が部分支持 (脅威方向への積極退避戦略 nospecial で teaser 単独敵 1 体が薄い脅威として通過 → 本体到来で死)
+
+**Q-導入 暫定採点**: 自己判定では未確定。実機判定 (Nao_u/Mir/Ash) で「親切」(成立) / 「冗長」(撤回) を判定後に v002 比較 (v002 Q-導入 4.5/5) して節更新。本サイクル C276 では verify.js 回帰ゼロ確認のみで暫定値置かない (R-A 順守)。
+
+---
+
 ## 次の更新タイミング
 
 - C272 Phase 4 大作業候補 = 実機判定依頼 Slack 投稿 (Mir/Ash inbox) → 段階3 結果フィードバック
