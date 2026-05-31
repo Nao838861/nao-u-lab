@@ -2869,3 +2869,32 @@ $ python drafts/2026-05-29/build_atom_edges_draft.py
 - 本ファイル C258 段階2 wikilink_weak gate 実測節 (直前) — 段階2 実装の type gate 効果実測と本節段階1 dry-run の対応関係
 - [log/cycle_staging_log.md](../log/cycle_staging_log.md) C257 Phase 2 §4 / §B — 段階1 dry-run スコープ決定根拠
 
+### 2026-05-31 (Log C271 Phase 3): GAM/AtomMem/Mem0 blog 参照頻度集計 — R 層昇格判定発火点固定化
+
+**契機**: 本サイクル Phase 1 §6 で WebSearch keyword `LLM agent memory atom edge semantic graph hierarchical retrieval 2026` で取得した 3 件 (GAM / AtomMem / Mem0 blog "State of AI Agent Memory 2026") を Phase 2 §2 で既統合履歴と照合した結果、3 件とも複数回参照済と判明。R 層昇格条件 (独立 source 2+件 × 1 ヶ月運用観察) の **source 軸充足度** を機械観測値として固定化する。
+
+**参照頻度集計** (本ファイル + 関連 projects/memory ファイル grep):
+
+| 文献 | 主参照位置 | 参照サイクル | 累積参照回数 |
+|---|---|---|---|
+| GAM (arxiv 2604.12285, HiMem) | 本ファイル L2500-2520 (C247 Phase 3 並置) / L2675+ (C257 Phase 3 link gen 路線却下) / staging C271 Phase 3 (本サイクル) | C247, C257, C258, C262, C265, C271, C272 | **7 回以上** |
+| AtomMem (arxiv 2601.08323 系) | 本ファイル L2500-2520 (C247 Phase 3 並置) | C247, C271 (本サイクル shared-reads 既統合確認) | **2 回以上** |
+| Mem0 blog "State of AI Agent Memory 2026" | Mem0g 系列言及複数 (本ファイル L2627+ C253 Phase 2 独立到達確認) | C253, C265, C271 (本サイクル取得) | **3 回以上** |
+
+**R 層昇格条件チェック** (memory_redesign T2 設計の昇格判定軸):
+
+| 条件 | 状態 |
+|---|---|
+| 独立 source 2+件 | ✅ Karpathy LLM Wiki / Iusztin Reasoning Memory / GAM / TagRAG / ByteRover / Mem0 blog の **6 件独立到達** (C265 観察結果に追加) |
+| 1 ヶ月運用観察 | △ 観察開始 2026-05-04 (memory_redesign 起票) から本日 5/31 で **28 日経過 ≒ 1 ヶ月** |
+| 機械観測値の確定 | △ 本節集計で初回固定化、次サイクル C272 で再走査して安定性確認後に R 層昇格判定発火 |
+
+**判定**:
+- 本節は **R 層昇格判定発火点の物理化** であり、本サイクルでは未昇格。判定根拠を 1 箇所に集約 (本節) し、次サイクル C272 以降に「同集計が 1 週間安定」を確認後に [memory/game_lessons_log.md](../memory/game_lessons_log.md) R-X 章追記 or 新 R 章起票判定。
+- 機械反映禁止順守 (`feedback_rule_proliferation_canonical.md`): 6 件独立到達の事実だけで R 層に上げず、参照頻度の安定性 (1 週間) と Nao_u 言及機会 (Slack) を待つ。
+
+**接続先**:
+- [log/cycle_staging_log.md](../log/cycle_staging_log.md) C271 Phase 2 §2 — 3 件参照頻度の初回観測根拠
+- 本ファイル L2500-2520 (C247 Phase 3) / L2627+ (C253 Phase 2) / L2675+ (C257 Phase 3) — 過去参照節への遡及
+- [memory/kaizen_tracker.md #136](../memory/kaizen_tracker.md) — Phase 1 §6 検索の自己応答状況チェック (本節は「memory_redesign T2 = 未解問題への検索」と staging で明示判定済 = #136 厳密同型条件不発火、成功事例 N=4 として記録)
+
