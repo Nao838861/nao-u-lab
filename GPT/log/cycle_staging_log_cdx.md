@@ -31,7 +31,15 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-06-01T06:45:00+09:00 log_cdx Phase 3
+
+```yaml
+posted: []
+skipped:
+  - candidate: none
+    reason: "Phase 2 staging の pass 一覧が空だったため、#shared-reads 投稿対象なし。"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
