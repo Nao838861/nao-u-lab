@@ -7,14 +7,19 @@ genre_tags: [game-design, onboarding, tutorial, rl-llm, player-learning, cogniti
 evaluated_at: "2026-05-31T19:36:40+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-05-31T19:36:40+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-05-31T19:36:40+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-05-31T19:39:52+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780223981841189"
+next_action: none
 stale_after: "2026-06-30"
 supersedes: []
+posted:
+  ts: "1780223981.841189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780223981841189"
+  char_count: 4446
+  posted_at: "2026-05-31T19:39:52+09:00"
 gate_reason: |-
   問題設定、RL self-play による Q-function、LLM による行動説明への変換、Dou Di Zhu / StarCraft II 評価、認知負荷低下まで候補本文から抽出できる。
   チュートリアルを静的説明ではなく状態依存 onboarding loop として設計する観点が、複雑ルールのプロトタイプに直接適用できる。

@@ -28,6 +28,15 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+```yaml
+posted_at: "2026-05-31T19:39:52+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260531_exincoach_context_aware_game_onboarding.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780223981841189"
+    char_count: 4446
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
