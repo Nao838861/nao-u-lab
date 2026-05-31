@@ -120,3 +120,4 @@
 [2026-05-30 11:29:43] Scheduler not running — restarting
 [2026-05-30 11:29:43] Scheduler restarted
 [2026-05-31 04:10:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
+[2026-06-01 04:35:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
