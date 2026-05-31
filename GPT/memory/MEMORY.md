@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-31T21:21:42
-- atoms: 1933
-- display atoms after lifecycle/content fold: 1743
+- generated: 2026-05-31T23:06:36
+- atoms: 1934
+- display atoms after lifecycle/content fold: 1744
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780230102-8dd94a0925` 2026-05-31T21:21:42.942989 @sin5d の「AIは人間の指示なしには何が問題かすら気づけない」という軸と、@ebikani_hasami 側の問題発見・引き継ぎ仕様の軸を、Ash が graze_log v06 の「Nao_u返信待ち」状態に接続している atom です。log_cdx の読みでは、ここで tags=[game-design, slack, agent, identity, operation]
 - `sr-1780227395-dc00eaccf5` 2026-05-31T20:36:35.204329 @sin5d × @ebikani_hasami 2軸統合 → graze_log v06「Nao_u返信待ち」状態の構造分析 tags=[harness, game-design, slack, agent, identity]
 - `sr-1780223981-37d231e9fc` 2026-05-31T19:39:41.841189 ■ 概要 ExInCOACH は、複雑なゲームの onboarding を「最初に読む説明」から「プレイ中の状態に応じて変わる tutoring loop」へ移すための RL + LLM framework である。問題設定は、現代のゲームがルール、操作、資源管理、協調、戦術判断 tags=[memory, harness, game-design, identity, knowledge]
 - `sr-1780217494-80b16f292e` 2026-05-31T17:51:34.867689 この atom は、評価指標を「結果を読むための数値」ではなく「作業前に分散構造を切り分けるための操作対象」として扱い直している点が重要だと思いました。 log_cdx の読みでは、ここでつながっている 3 本の論点は、同じ主張の補強ではなく、ゲーム制作評価で proxy が黙っ tags=[memory, game-design, slack, identity, operation]
@@ -65,10 +66,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780186100-811ae8cbbc` 2026-05-31T09:08:20.760989 Log 側 repo `D:\AI\Nao_u_BOT\Claude` で、Phase 3 の commit `19127c8bc3a4` ができた後、`git push origin master` が loose object 破損で止まり、成果物がローカルに滞留している件を tags=[memory, slack, identity, operation]
 - `sr-1780185946-78309c9e77` 2026-05-31T09:05:46.018919 [運用障害報告] git push 失敗 / corrupt loose object 複数 / Phase 3 commit 19127c8bc3a4 がローカル滞留中 tags=[memory, game-design, slack, agent, identity]
 - `sr-1780184754-c1664da849` 2026-05-31T08:45:54.270419 Log_cdx の worker model 共有状態巻き戻り atom (ts=1780147357) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[memory, game-design, slack, agent, identity]
-- `sr-1780184746-e6dc67eb56` 2026-05-31T08:45:46.916369 Log_cdx の本文取得失敗 URL atom (ts=1780134701) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[slack, identity, knowledge, operation, evaluation]
 
 ## Game Task Entry Points
-- `enemy-pattern` (323): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
+- `enemy-pattern` (324): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
 - `px-evaluation` (56): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
 - `impact-feel` (44): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (12): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
@@ -77,15 +77,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1541): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1185): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1178): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1138): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (1542): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1186): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1179): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1139): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `memory` (1112): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
 - `knowledge` (964): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (954): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (893): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (815): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (955): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (894): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (816): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (462): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (218): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
