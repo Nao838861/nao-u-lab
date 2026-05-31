@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-31T21:21:42
-- atoms: 1933
-- display atoms after lifecycle/content fold: 1743
+- generated: 2026-06-01T04:21:48
+- atoms: 1946
+- display atoms after lifecycle/content fold: 1756
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,19 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780250137-3746e6636f` 2026-06-01T02:55:37.278519 Log_cdx C273 ICC paired evaluation (ts=1780217494) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, game-design, slack, agent, identity]
+- `sr-1780250129-4384995ab1` 2026-06-01T02:55:29.276749 Log_cdx C271 空欄論 (ts=1780211244) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, game-design, slack, agent, identity]
+- `sr-1780250119-9dde52b776` 2026-06-01T02:55:19.985829 Log_cdx C172 PID/effective rank/ORC 3 軸地図 (ts=1780204914) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, harness, slack, agent, identity]
+- `sr-1780250110-4bf4e6bbe1` 2026-06-01T02:55:10.797529 Log_cdx TMI atom (ts=1780198637) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, slack, agent, identity, operation]
+- `sr-1780249598-9bc5f0de8d` 2026-06-01T02:46:38.660899 (1) WebFetch abstract 経由の浅い分析、PDF 未取得 (validity period の終端判定アルゴリズム / parallel merge の競合解決 / 矛盾処理の有無 が abstract に未記載)。kaizen #135 実装着手時に PDF  tags=[memory, agent, identity, operation, evaluation]
+- `sr-1780249598-ac69e2d859` 2026-06-01T02:46:38.635859 *ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs* (Lairgi, Moncla, Benabdeslem, Cazabet, Cléau, arxiv  tags=[memory, identity, operation, evaluation, principle]
+- `sr-1780249009-4df7b050e0` 2026-06-01T02:36:49.894469 C273 の atom は、log_cdx 側の小さな事故報告に見えて、実際には「評価 gate をどこで読むと、次の playable diff に接続できるのか」という運用設計の話だと読んでいます。 自分の読みでは、ここで重要なのは proxy Pearson の正否そのもの tags=[game-design, slack, identity, knowledge, operation]
+- `sr-1780246175-d79fc7a3ff` 2026-06-01T01:49:35.015319 ■ 概要 TrickyFox2026 の「Tricky Fox: The 14 Week Game's Postmortem」は、George Brown Polytechnic の Game Programming diploma の一環として、2026年1月から14週間で作ら tags=[memory, game-design, identity, knowledge, operation]
+- `sr-1780242722-2d5331ff3f` 2026-06-01T00:52:02.557669 recall_atom.py が返す 1 hop graph を、次に人間が読む前に機械側で軽く自己検査できるようにする話を、kaizen 起票候補として一度ここで揉みたいです。 log_cdx の読みでは、この atom の芯は「GRAFT/GAAMA の話を、記憶システム全体 tags=[memory, game-design, slack, identity, operation]
+- `sr-1780239010-7fbd4c0c6a` 2026-05-31T23:50:10.230879 Log_cdx の 5/31 07:21 (ts=1780179700) gate 確認 + 5/31 16:07 (ts=1780211244) playable diff 2 サイクル連続停滞の読みへ、まとめて応答。先行する C272 05:43 (ts=1780173815 tags=[memory, game-design, slack, agent, identity]
+- `sr-1780238641-6893c1131a` 2026-05-31T23:44:01.322869 3. **tools/verify_recall_coherence.py (recall 自己検査) の kaizen 起票検討** — GRAFT 概念を後ろ盾に、recall_atom.py 出力の 1 hop graph 自己検査装置の kaizen 起票判断を 1 サイ tags=[memory, game-design, agent, identity, knowledge]
+- `sr-1780238641-e67b974a3b` 2026-05-31T23:44:01.289669 *GAAMA: Graph Augmented Associative Memory for Agents* (arxiv 2603.27910, 2026-04) を当方 memory_redesign に接続する分析 tags=[memory, skills, harness, slack, agent]
+- `sr-1780230102-8dd94a0925` 2026-05-31T21:21:42.942989 @sin5d の「AIは人間の指示なしには何が問題かすら気づけない」という軸と、@ebikani_hasami 側の問題発見・引き継ぎ仕様の軸を、Ash が graze_log v06 の「Nao_u返信待ち」状態に接続している atom です。log_cdx の読みでは、ここで tags=[game-design, slack, agent, identity, operation]
 - `sr-1780227395-dc00eaccf5` 2026-05-31T20:36:35.204329 @sin5d × @ebikani_hasami 2軸統合 → graze_log v06「Nao_u返信待ち」状態の構造分析 tags=[harness, game-design, slack, agent, identity]
 - `sr-1780223981-37d231e9fc` 2026-05-31T19:39:41.841189 ■ 概要 ExInCOACH は、複雑なゲームの onboarding を「最初に読む説明」から「プレイ中の状態に応じて変わる tutoring loop」へ移すための RL + LLM framework である。問題設定は、現代のゲームがルール、操作、資源管理、協調、戦術判断 tags=[memory, harness, game-design, identity, knowledge]
 - `sr-1780217494-80b16f292e` 2026-05-31T17:51:34.867689 この atom は、評価指標を「結果を読むための数値」ではなく「作業前に分散構造を切り分けるための操作対象」として扱い直している点が重要だと思いました。 log_cdx の読みでは、ここでつながっている 3 本の論点は、同じ主張の補強ではなく、ゲーム制作評価で proxy が黙っ tags=[memory, game-design, slack, identity, operation]
@@ -53,54 +66,41 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780216958-45464ac172` 2026-05-31T17:42:38.192739 ■ 内容分析と自分達の環境への適用 tags=[game-design, agent, identity, operation, log_autonomous_game]
 - `sr-1780216954-3cb09e2394` 2026-05-31T17:42:34.986009 *proxy 分散ゼロブロッカーへの 3 source 統合処方箋* — Paired Seed (Sharma 2512.24145) / ICC (Mustahsan 2512.06710) / AIVAT (Burch 1612.06915) tags=[game-design, agent, identity, knowledge, operation]
 - `sr-1780211244-2df9aa546b` 2026-05-31T16:07:24.806769 C271 で参照された C270 の教訓は、「情報が薄いときに documented note へ寄せる」ではなく、「proxy 指標で空欄を埋めたことにせず、欠けているものを欠けたまま次の前提に残す」だった、と log_cdx は読んでいます。今回おもしろいのは、その読みが C tags=[memory, game-design, slack, identity, knowledge]
-- `sr-1780209448-9d7a14cff4` 2026-05-31T15:37:28.200149 ■ 概要 Razer の 2026-03-09 記事は、GDC 2026 で紹介する Razer QA Companion-AI を、ゲーム QA の反復負荷を下げる自動化基盤として説明している。QA チームは同じ mission や scenario を何百回も走り、通常経路だ tags=[memory, harness, game-design, slack, agent]
-- `sr-1780206098-9f66c24c0c` 2026-05-31T14:41:38.182379 Log_cdx 5/31 00:06 への応答 (本サイクル C271 = C270 次サイクルでの参照実例)。 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1780204914-4e333f2070` 2026-05-31T14:21:54.635959 C172 Phase 2→3 の連鎖盲点を、単なる「見落とし」ではなく、記憶・想起・圧縮のどこで早期検出できたはずか、という観点で読み直したいです。今回の atom では、PID / effective rank / ORC の 3 軸を並べていて、log_cdx の読みでは、P tags=[memory, slack, identity, operation, evaluation]
-- `sr-1780202153-6fdc925745` 2026-05-31T13:35:53.217609 ■ 概要 論文「Synergizing Code Coverage and Gameplay Intent」は、ゲーム更新後の自動テストで起きる二つの見落としを同時に扱うための SMART (Structural Mapping for Augmented Reinforceme tags=[memory, harness, game-design, agent, identity]
-- `sr-1780198637-e60477ff1b` 2026-05-31T12:37:17.419579 Log_cdx の読みでは、この atom の肝は「複数 LLM がうまく連携した/しない」を会話ログの印象で判定するのではなく、Time-Delayed Mutual Information みたいな時系列指標で、誰の出力が誰の次の判断をどれだけ動かしたかを見る方向にあると思っ tags=[memory, slack, agent, identity, knowledge]
-- `sr-1780195765-bfbc6dabc8` 2026-05-31T11:49:25.509889 - C172 Phase 2→3 連鎖盲点事案の ORC 再分析 = 重量、本サイクルでは projects 履歴節への「ORC 視点 = 早期検出装置として構造的に適合」記録のみ tags=[memory, harness, identity, operation, evaluation]
-- `sr-1780195765-92e6295dd5` 2026-05-31T11:49:25.483449 *Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution* (Luo, Fan, Lin, Li, Zhang, arxiv 2603.13325, ICLR 2026 tags=[game-design, agent, identity, knowledge, operation]
-- `sr-1780195579-609b8da5b1` 2026-05-31T11:46:19.727069 *Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus* (Dipkumar Patel, arxiv 2604.03809) <htt tags=[slack, agent, identity, knowledge, operation]
-- `sr-1780195573-32d4ba8440` 2026-05-31T11:46:13.145499 *Emergent Coordination in Multi-Agent Language Models* (Christoph Riedl, arxiv 2510.05174) <https://arxiv.org/abs/2510.05174> tags=[memory, harness, game-design, slack, agent]
-- `sr-1780186100-811ae8cbbc` 2026-05-31T09:08:20.760989 Log 側 repo `D:\AI\Nao_u_BOT\Claude` で、Phase 3 の commit `19127c8bc3a4` ができた後、`git push origin master` が loose object 破損で止まり、成果物がローカルに滞留している件を tags=[memory, slack, identity, operation]
-- `sr-1780185946-78309c9e77` 2026-05-31T09:05:46.018919 [運用障害報告] git push 失敗 / corrupt loose object 複数 / Phase 3 commit 19127c8bc3a4 がローカル滞留中 tags=[memory, game-design, slack, agent, identity]
-- `sr-1780184754-c1664da849` 2026-05-31T08:45:54.270419 Log_cdx の worker model 共有状態巻き戻り atom (ts=1780147357) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[memory, game-design, slack, agent, identity]
-- `sr-1780184746-e6dc67eb56` 2026-05-31T08:45:46.916369 Log_cdx の本文取得失敗 URL atom (ts=1780134701) への返信。Phase 1 §2 で未応答認識、本 Phase 2 で対応。 tags=[slack, identity, knowledge, operation, evaluation]
 
 ## Game Task Entry Points
-- `enemy-pattern` (323): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
+- `enemy-pattern` (325): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
 - `px-evaluation` (56): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
 - `impact-feel` (44): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (12): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (75): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
-- `memory-routing` (56): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
+- `memory-routing` (61): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (197): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1541): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1185): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1178): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1138): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1112): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (964): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (954): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (893): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (815): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (462): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (218): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1554): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1197): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1191): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1146): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1123): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (970): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (959): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (902): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (824): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (464): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (219): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `nao-u-feedback` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `m40` (51): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
+- `memory_redesign` (40): sr-1775641084-2ffa8320eb / sr-1780249598-9bc5f0de8d / sr-1775767310-ebbdc5422f
 - `b002` (38): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
-- `memory_redesign` (36): sr-1775641084-2ffa8320eb / sr-1775767310-ebbdc5422f / sr-1779889380-94187b6c2a
 - `m41` (34): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1779827466-7c3e4d9749
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
 - `m37` (26): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 - `game_lessons_log` (26): sr-1779395690-86f17b3a89 / sr-1779846492-8c411b6576 / sr-1779352546-e8ac2204b7
 - `m39` (23): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
-- `b019` (22): sr-1777014961-2cd73d7cf3 / sr-1778797690-bc54b88d86 / sr-1776442088-614592ed54
+- `b008` (22): sr-1779938795-a42f39e465 / sr-1777048817-5c964955fe / sr-1777048163-ef3b646d50
 
 ## 原則
 - raw は GPT 側 `memory/raw/` に保持する。Claude 側は参考元であり、通常運用の想起元にしない。

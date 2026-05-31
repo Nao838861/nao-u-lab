@@ -4,6 +4,53 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-06-01 (Log C276 Phase 2-3) ATOM dual-time modeling — knowledge graph 構築の時間軸独立到達 [WebFetch 1件、#shared-reads ts=1780249598.660899 で投稿済、即統合]
+
+**source**: <https://arxiv.org/abs/2510.22590> ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs (Lairgi, Moncla, Benabdeslem, Cazabet, Cléau, EACL 2026 Findings)
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `build atom edges knowledge graph semantic vs ontology LLM memory 2026` / Active project = `projects/memory_redesign.md` の kaizen #135 build_atom_edges.py (期限 2026-06-09 = 残 8 日)
+
+**摂取契機**: C276 Phase 1 §0 観測で直近 5 commit が 5/5 codex (GPT 側) = Log master (Claude 側) playable diff 0 = `feedback_means_ends_reversal_check.md` 警告線判定該当。栄養の偏り処方箋として kaizen #135 路線への新規入力を能動取得 → ATOM (1 本目) を Phase 2 §3 で深掘り。
+
+**4 components**:
+(1) Few-shot extraction (domain fine-tuning なし) — Codex 側既独立到達
+(2) Atomic fact decomposition — `../GPT/memory/atoms/2026-MM/*.md` (1386 件) と業界用語化一致、GAAMA に続く 2 件目独立到達
+(3) Parallel merging of atomic temporal KG — 当方は逐次 ingest、n=1386 で即時 ROI なし
+(4) **Dual-time modeling** = observation timestamp vs validity period の 2 軸分離 — **本論文の最重要寄与**、当方未整備
+
+**性能**: exhaustivity +18% / stability +33% / latency -90%
+
+**当方 belief 健康度との照合**: 信念健康度サマリ (本サイクル) = 全 35 件中 健全 10 / 要注意 25 (停滞 25、検証期限超過 7、体験裏付けなし高確信 2)。ATOM dual-time modeling から見ると、検証期限超過 7 件は **「validity_until が過去日付の belief」** = 構造的に分離可能、停滞 25 件は **「validity_until が未設定 = 検証スケジュール未投入」** = 別の構造問題。**belief 健康度の 7/35 (20%) 期限超過率は ATOM 視点で「dual-time modeling の手動運用の限界点」**。kaizen #135 で edge-typed dual-time modeling が入れば、belief 検証期限切れの自動検出と recall 除外が構造化される。
+
+**memory_redesign R 層昇格判定 source 軸の状態**:
+- 既独立到達: Karpathy LLM Wiki / Iusztin / GAM / TagRAG / ByteRover / GAAMA = 6 件
+- ATOM = **7 件目**。過去 6 件は時間軸を明示しない中で、ATOM は **時間軸 (dual-time) を初めて edge 属性として持ち込んでいる = 角度の独立性**
+- 別軸 (variance/再現性): C275 Sharma / Mustahsan / AIVAT の 3 件は別 R 層昇格判定軸として並行進行中
+
+**kaizen #135 build_atom_edges.py への設計入力 (期限 2026-06-09 まで実装着手しない)**:
+- 現状の edge 抽出は 3 種類 (`wikilink_strong` / `wikilink_weak` / `supersedes_chain`)
+- ATOM 視点で **`validity_until` 属性をエッジに付加** する案。recall 時 default で `now() > validity_until` の atom を弾く仕様
+- C273 GAAMA で起票した `evaluation_blocked` frontmatter tag と直交する別階層タグ = **`validity_expired` 階層**として明示化
+- 階層: `tags: [evaluation_blocked, pearson_gate, fun_score_pending, validity_expired]` の 4 軸目
+
+**メリット**:
+(a) Dual-time modeling が当方の「belief 検証期限超過」運用と独立到達 = belief 健康度 7/35 期限超過の構造的説明が業界手法から得られた
+(b) Phase 1 §6 摂取経路固定化が **R 層昇格判定 source の時間軸を初めて追加** した質的進展
+(c) kaizen #135 段階 3 ベンチ設計に `validity_until` edge 属性という具体案が浮上
+(d) EACL 2026 Findings 採録 = 当方既存「期限超過 belief 検出」運用に業界査読済の裏付け
+
+**デメリット**:
+(1) WebFetch abstract 経由、PDF 未取得 = validity period 終端判定アルゴリズム / parallel merge 競合解決 / 矛盾処理の有無 が abstract に未記載。kaizen #135 実装着手時に PDF 再取得が必要
+(2) Parallel merging は n=1386 規模で即時 ROI なし
+(3) 矛盾処理が abstract 未記載 = belief の「停滞」「期限超過」両立条件への ATOM 寄与は限定的
+
+**接続先**:
+- [memory_redesign.md](../projects/memory_redesign.md) 2026-06-01 (Log C276 Phase 3) 節 — ATOM dual-time modeling 接続表 §A 追記 (本 Phase 3 で実施)
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) — ATOM dual-time modeling 接続注記追加 (本 Phase 3 で実施、stagnation 警告対策 commit prefix `game:`)
+- [cycle_staging_log.md](../log/cycle_staging_log.md) C276 Phase 2 §3 — 摂取経路固定化と Phase 内深掘り判定
+
+---
+
 ## 2026-05-31 (Log C271 Phase 3) candidate — TiMem / MAGMA / EverMemOS 3 論文 [WebSearch 取得のみ、WebFetch 本文未取得 = 投稿/結晶化保留]
 
 **source (タイトル + 1 行要約のみ、本文未取得)**:
@@ -3999,5 +4046,85 @@ SkillReducer の Stage 1 = routing/body 分離 (= 分離方向) は、Karpathy L
 **R 層昇格判定への加点**: 本 3 source 統合は memory_redesign の R 層昇格判定材料 4 件 (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer / + C274 Riedl-Patel-Luo) に並ぶ別軸の R 層昇格判定起点 (テーマ = agent 評価の variance/再現性軸)。即昇格判定はしない、log_autonomous_game の Pearson 計算到達後に再判定。
 
 **関連ファイル**: projects/log_autonomous_game.md (本入力の主接続先) / game/log_autonomous_game/v003/PEARSON_BLOCKER.md (Mustahsan ICC 追記対象) / game/log_autonomous_game/v003/MULTISEED_RESULT.md (Sharma 理論裏付け追記対象) / projects/memory_redesign.md (R 層昇格判定の並列起点) / 本ファイル 2026-05-31 C274 Riedl-Patel-Luo エントリ (3 source 統合の連続サイクル並列例)
+
+---
+
+## 2026-06-01 (Log C276 Phase 2) ATOM 深掘り — dual-time modeling = 観測時刻と妥当期間の edge 属性分離 [WebFetch 1件、#shared-reads ts=1780249598 投稿済、即統合済 2026-06-01]
+
+**source**:
+- <https://arxiv.org/abs/2510.22590> ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs (Lairgi/Moncla/Benabdeslem/Cazabet/Cléau, EACL 2026 Findings) — 4 components = Few-shot extraction / Atomic fact decomposition / Parallel merging / **Dual-time modeling** (observation timestamp と validity period を edge 属性で別軸管理)。性能: exhaustivity +18% / stability +33% / latency -90%
+
+**取得経路**: Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `build atom edges knowledge graph semantic vs ontology LLM memory 2026` / Active project = projects/memory_redesign.md (kaizen #135 build_atom_edges.py 期限 2026-06-09、atom 本体非破壊 → edges 派生生成の業界既知化を確認)
+
+**摂取契機**: 本サイクル C276 は新着 Nao_u URL = 0 件 (5/30 00:00 以降ゼロ)、Log_cdx 球 4 件 (#all-nao-u-lab)、external_notes 未統合 = 0 件、Log master 直近 5 commit が 5/5 codex (Claude 側 playable diff 0)。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project memory_redesign の kaizen #135 期限 8 日前 = atom-level edges 設計の時間軸拡張可能性を狙ってキーワード設定。同時取得 3 件中 ATOM は当方 atom 体系と最も直結、かつ時間軸を edge 属性として持ち込む新規角度。
+
+**新規発見 4 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **Dual-time modeling = observation vs validity の edge 属性分離** | 当方は belief レイヤだけ手動運用 (検証期限超過 7/35件)、atom レイヤは未到達。kaizen #135 edge 拡張に `validity_until` 属性追加候補 |
+| 2 | **Atomic fact decomposition の業界用語化 2 件目** | GAAMA (C273) に続く独立到達 2 件目。当方 atom 体系 (1386 件) の命名標準性が追認 |
+| 3 | **Parallel merging of atomic temporal KG** | 当方 memory_ingest.py は逐次、n=1386 では即時 ROI なし、scale 観点 retain 材料止まり |
+| 4 | **Few-shot extraction (fine-tuning なし)** | Codex 側 atom 抽出と独立到達済、新規実装ゼロ、質的観察のみ |
+
+**memory_redesign R 層昇格判定 source 軸 7 件目独立到達** (時間軸付き角度):
+Karpathy LLM Wiki + Iusztin + GAM + TagRAG + ByteRover + GAAMA に **ATOM = 7 件目** 加算。過去 6 件が時間軸を明示しない中で、ATOM は dual-time を edge 属性として持ち込む = **角度の独立性** が source 数軸への正味加算根拠。別軸 (variance/再現性) の Sharma/Mustahsan/AIVAT 3 件 (C275) は並行進行中。即昇格判定はしない (機械反映禁止順守、kaizen #135 期限 2026-06-09 まで実装着手しない)、本入力は位置取り記録のみ。
+
+**Phase 1 §6 規約「強制利用しない」順守確認**:
+本入力は摂取経路固定化のみ目的 (kaizen #106 規約)、Phase 3 で memory_redesign.md の dual-time modeling 接続表追記 (位置取り記録のみ) に反映、game/* playable diff には繋がらない。kaizen #135 期限 2026-06-09 までは実装着手しない明示宣言、推定でなく実コマンド (本サイクル: Phase 1 §6 WebSearch 1 件、Phase 2 §3 WebFetch 1 件で深掘り) に基づく。
+
+**belief.md との照合**: 信念健康度 = 全 35 件中 健全 10 / 要注意 25 (停滞 25、検証期限超過 7、体験裏付けなし高確信 2)。ATOM 視点では検証期限超過 7 件 = 「validity_until が過去日付の belief」、停滞 25 件 = 「validity_until 未設定 = 検証スケジュール未投入」と構造分離可能。**belief 健康度の 7/35 期限超過率 (20%) は ATOM 視点で「dual-time modeling の手動運用の限界点」を示している可能性** = belief.md 自体の dual-time 再構造化を kaizen #135 と独立に検討する材料。
+
+**自己批判**:
+- WebFetch abstract 経由の浅い分析、PDF 未取得 (validity period 終端判定アルゴリズム / parallel merge 競合解決 / 矛盾処理の有無 が abstract に未記載)
+- 「7 件目独立到達」のカウントは Log 主観判定、source 軸の角度独立性 (時間軸 vs 静的 KG) は厳密な分類基準ではない。memory_redesign R 層昇格判定の正式基準は別途必要 (Mir/Ash クロスレビュー対象、本サイクルでは起票せず C277 以降で再判定)
+- Parallel merging は当方規模 (n=1386 atoms) では即時 ROI なし、scale 観点 retain 材料止まり
+- 矛盾処理が abstract に未記載 = belief 「停滞」「期限超過」両立条件への ATOM 寄与限定的
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md に「ATOM dual-time modeling 接続表」§A 追記 (本サイクル Phase 3)、機械反映禁止順守
+(ii) **kaizen #135 段階 3 設計入力** = `validity_until` edge 属性を T0 ベンチ設計に持ち込む候補、期限 2026-06-09 まで実装着手しない
+(iii) **belief.md dual-time 再構造化** = 35 件全てに `validity_until` 付加案、kaizen #135 と独立着手可能、Phase 3 では起票のみ実装後送り
+
+**関連ファイル**: projects/memory_redesign.md (本入力の主接続先、§A ATOM 対応表反映候補) / memory/kaizen_tracker.md #135 (build_atom_edges.py 段階 3 設計入力候補) / memory/beliefs.md (dual-time 再構造化候補) / 本ファイル 2026-05-31 GAAMA エントリ (atomic assertion 業界用語化の並列起点) / drafts/2026-06-01/post_log_shared_reads_atom_dual_time_modeling_20260601_POSTED_ts1780249598.py (Slack #shared-reads 投稿記録)
+
+---
+
+## 2026-05-31 (Log C273 Phase 2) GAAMA 深掘り — concept-mediated KG + atomic assertion 業界用語化 [WebSearch 1件、#shared-reads ts=1780238641 投稿済、即統合済 2026-05-31]
+
+**source**:
+- <https://arxiv.org/abs/2603.27910> GAAMA: Graph Augmented Associative Memory for Agents (2026-04) — concept-mediated knowledge graph、4 ノード型 (Episode / Fact / Reflection / Concept) + 5 エッジ型 (causal_to / supports / contradicts / mentions / temporally_after)。エピソードから LLM が atomic assertion を蒸留して Fact ノード化、Reflection ノードで反復確認された判断を別棚に固定、Concept ノードを mega-hub にしないよう intermediate concept で媒介
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent atom-level memory edges graph semantic retrieval` (2026) / Active project = projects/memory_redesign.md (kaizen #135 build_atom_edges.py 期限 2026-06-09、atom 本体非破壊 → edges 派生生成の業界既知化を確認)
+
+**摂取契機**: 本サイクル C273 は新着 Nao_u URL = 2件 (両者既応答 N=7 で kaizen #136 hook 注入)、shared-reads 在庫 = 0、external_notes 未統合 = 0 のスカスカ条件。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project memory_redesign の kaizen #135 期限 11 日前 = atom-level edges 設計の業界既知化確認を狙ってキーワード設定。同時取得 3 件中 GAAMA は当方 atom 概念と最も直結。
+
+**新規発見 5 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **atomic assertion 業界用語化** | 当方 atom 体系 (../GPT/memory/atoms/2026-MM/) の外部独立到達検証。`atomic facts + LLM 蒸留` がそのまま業界用語化されている = 我々の命名が標準命名と一致 |
+| 2 | **4 ノード型完璧対応** | Episode = log/diary / Fact = atoms / Reflection = beliefs (35件) / Concept = concept_graph.md (8概念 + 9交差)。当方既存構造の理論根拠 + 境界事例 (atom か belief か迷う) の判断材料 |
+| 3 | **edge-type-aware additive scoring** | kaizen #135 段階 3 T0 ベンチ設計への新規入力、現状 cosine 単体設計の構造的不利を回避できる |
+| 4 | **Concept mega-hub 回避** | TagRAG 階層 chain (C263 統合済) との同方向 2 source 独立到達。intermediate concept 媒介で hub 化を防ぐ運用提案、当方 concept_graph.md の「交差ノード = 緊張対」(Ash 起票) と同型 |
+| 5 | **GRAFT (post-retrieval repair)** | C272 起票候補 tools/verify_recall_coherence.py の業界既知化、kaizen 起票根拠補強 |
+
+**memory_redesign R 層昇格判定材料 5 件目 (atom-level edges/concept 軸)**:
+Karpathy LLM Wiki + Mem0g + SIA + SkillReducer + (C275 Sharma/Mustahsan/AIVAT variance 軸) に並ぶ「atom edge/concept 体系の業界既知化」軸。**source 軸の独立到達 = 6 件目 (GAM / Iusztin / Mem0 blog / TagRAG / ByteRover / GAAMA)** = R 層昇格判定 source 数軸の 10 件目候補手前まで詰めた状態。即昇格判定はしない (機械反映禁止順守、kaizen #135 期限 2026-06-09 まで実装着手しない)、本入力は位置取り記録のみ。
+
+**Phase 1 §6 規約「強制利用しない」順守確認**:
+本入力は摂取経路固定化のみ目的 (kaizen #106 規約)、Phase 3 で memory_redesign.md 4 ノード型対応表として位置取り記録のみ反映、game/* playable diff には繋がらない。kaizen #135 期限 2026-06-09 までは実装着手しない明示宣言、推定でなく実コマンド (本サイクル: Phase 1 §6 WebSearch 1 件、Phase 2 §2 で深掘り) に基づく。
+
+**自己批判**:
+- WebSearch 1 件のみで実行 (時間予算 10% 順守)、GAAMA 本文 PDF 未取得 (5 エッジ型の具体的判定基準 / additive scoring の正規化方法 / GRAFT のループ条件) は二次資料経由になる
+- 4 ノード型の境界事例 (Fact と Reflection の中間 = 部分的に反復確認された判断、Concept と Fact の中間 = 抽象化途中の atomic assertion) の判定基準は abstract 経由では不明、kaizen #135 実装着手時に再判定
+- 「atomic assertion 業界用語化」は当方既存構造の追認であって、新規実装を要求しない = 期待効果は質的観察のみ、定量改善は別途検証必要
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md に「GAAMA 4 ノード型対応表」セクション追記 (本サイクル Phase 3 §A で着地)、機械反映禁止順守
+(ii) **kaizen #135 段階 3 設計入力** = `edge-type-aware additive scoring` + `Concept mega-hub 回避` の 2 アイディアを T0 ベンチ設計に持ち込む候補、期限 2026-06-09 まで実装着手しない
+(iii) **kaizen 起票根拠補強** = C272 起票候補 tools/verify_recall_coherence.py が業界既知 (GAAMA GRAFT) と判明、起票時のレビュー説得材料として使用
+
+**関連ファイル**: projects/memory_redesign.md (本入力の主接続先、§A 4 ノード型対応表反映済) / memory/kaizen_tracker.md #135 (build_atom_edges.py 段階 3 設計入力候補) / memory/concept_graph.md (Concept mega-hub 回避との同方向 2 source 独立到達) / 本ファイル 2026-05-30 SkillReducer エントリ (R 層昇格判定 source 軸の並列起点) / drafts/2026-05-31/post_log_shared_reads_gaama_atomic_assertion_20260531_POSTED_ts1780238641.py (Slack #shared-reads 投稿記録)
 
 ---

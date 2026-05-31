@@ -4,6 +4,14 @@ url: https://www.gamedeveloper.com/art/latam-indie-devs-lay-out-how-to-improve-y
 collected_at: 2026-05-29T06:29:43.8303200+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ui-ux, game-feel, tutorial-design, narrative]
+status: needs_review
+candidate_status: needs_review
+last_reviewed_at: "2026-05-29T06:29:43.8303200+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260529_text_animation_player_attention.md; status:needs_review"
+next_action: evaluate_in_phase2
+supersedes: []
+
 ---
 
 ## raw_excerpt

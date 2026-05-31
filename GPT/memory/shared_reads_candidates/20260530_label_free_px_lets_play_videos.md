@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2410.02967"
 collected_at: "2026-05-30T20:44:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, affect-modeling, video-analysis, playtesting]
+status: needs_review
+candidate_status: needs_review
+stale_after: "2026-06-29"
+supersedes: []
+last_reviewed_at: "2026-05-30T20:44:28+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260530_label_free_px_lets_play_videos.md; status:needs_review"
+next_action: evaluate_in_phase2
+
 ---
 
 ## raw_excerpt

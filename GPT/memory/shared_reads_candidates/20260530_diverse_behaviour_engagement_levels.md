@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2207.02100"
 collected_at: "2026-05-30T20:44:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, player-archetypes, level-design, automated-playtesting]
+status: needs_review
+candidate_status: needs_review
+stale_after: "2026-06-29"
+supersedes: []
+last_reviewed_at: "2026-05-30T20:44:28+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260530_diverse_behaviour_engagement_levels.md; status:needs_review"
+next_action: evaluate_in_phase2
+
 ---
 
 ## raw_excerpt

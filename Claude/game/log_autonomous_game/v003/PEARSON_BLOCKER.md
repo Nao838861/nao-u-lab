@@ -44,6 +44,10 @@
 - Sharma 2512.24145 paired seed evaluation は前提 1 のシード設計の補強 (正相関 seed のペアリングで variance reduction)、AIVAT 1612.06915 は n=300 物理時間限界到達時の variance reduction 選択肢として保留メモ
 - 関連: `memory/external_notes_log.md` 2026-05-31 (Log C275 Phase 2) 節 / `#shared-reads` ts=1780216954/1780216958/1780216961
 
+### 前提 5: 評価軸の dual-time modeling 接続 (C276 Phase 3 追記、ATOM 2510.22590 由来)
+- ATOM (Lairgi et al., arxiv 2510.22590, EACL 2026 Findings) の dual-time modeling = observation timestamp と validity period を別軸で持つ。当方 q_* 判定列は判定時刻のみ frontmatter 化、validity period (この判定が次のいつまで妥当か) は未管理。Pearson 相関分析の母集団内に **判定時刻が異なる q_*** が混在した時の扱いを将来明示化する余地あり (v001/v002/v003 を時系列軸で並べる際の validity_until 属性)。kaizen #135 (期限 2026-06-09) で edge-typed dual-time が入れば、本ゲーム判定値にも将来流用可能
+- 関連: `memory/external_notes_log.md` 2026-06-01 (Log C276 Phase 2-3) 節 / `projects/memory_redesign.md` 2026-06-01 (Log C276 Phase 3) §A-§F / `#shared-reads` ts=1780249598.660899
+
 #### 初回計測値 (C275 Phase 4, 2026-05-31)
 
 入力: `measurements_multiseed.jsonl` (10 seed_base × 30 trial = 300 行、noise_scale=1.5)

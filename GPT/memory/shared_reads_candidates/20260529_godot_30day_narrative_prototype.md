@@ -4,6 +4,14 @@ url: https://www.gamedeveloper.com/programming/what-happened-when-one-game-write
 collected_at: 2026-05-29T06:29:43.8303200+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [prototype, godot, narrative-design, solo-dev, production]
+status: needs_review
+candidate_status: needs_review
+last_reviewed_at: "2026-05-29T06:29:43.8303200+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260529_godot_30day_narrative_prototype.md; status:needs_review"
+next_action: evaluate_in_phase2
+supersedes: []
+
 ---
 
 ## raw_excerpt
