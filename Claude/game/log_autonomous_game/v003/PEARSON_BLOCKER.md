@@ -1,6 +1,6 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-05-30 C270 (Log)
+最終更新: 2026-05-31 C275 (Log) — 前提 4 = ICC 事前診断レイヤー追記
 
 ## 何が起きているか
 
@@ -36,6 +36,12 @@
 ### 前提 3: 連続フレーム取得 → 視覚体感 Q-D/Q-成功FB 実機判定
 - C265 Phase 4 で段階1 (1 フレーム取得) 成功済、連続フレーム化が次段階
 - ヘッドレス連続フレーム自己再認識ができれば Q-D (難易度) / Q-成功FB (成功フィードバック) の人手判定固定値を実機観測値に置換可能
+
+### 前提 4: 分散の事前診断レイヤー (C275 Phase 3 追記、Mustahsan 2512.06710 ICC 由来)
+- Pearson 計算の前段で「観測分散がそもそも存在するか」を ICC (intraclass correlation) で診断する。proxy_vs_judgment.csv は σ²=0 のため Pearson 数学的未定義だが、ICC=0.0 として観測分散ゼロを構造化記録できる
+- 前提 1 (マルチシード化) でシードを増やした後に proxy_clear_rate などが何 σ² まで上がるか、ICC ≥ 0.3 (Mustahsan 経験則 GAIA 下限) を超えるかを `tools/proxy_icc_diagnose.py` (kaizen #137 候補) で測定。閾値未達なら Pearson 計算しても意味なし = 前提 1 のシード数を増やす方向に戻る
+- Sharma 2512.24145 paired seed evaluation は前提 1 のシード設計の補強 (正相関 seed のペアリングで variance reduction)、AIVAT 1612.06915 は n=300 物理時間限界到達時の variance reduction 選択肢として保留メモ
+- 関連: `memory/external_notes_log.md` 2026-05-31 (Log C275 Phase 2) 節 / `#shared-reads` ts=1780216954/1780216958/1780216961
 
 ## なぜ本サイクル C270 で着手しなかったか
 
