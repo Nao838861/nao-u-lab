@@ -96,6 +96,57 @@ recommendation:
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-31T09:48+09:00 log_cdx Phase 4b:
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260531-001
+    problem_restatement: "shared_reads_candidates の候補 .md は本文としては残っているが、pass / postpone / fail / posted / stale などの lifecycle が候補本体にない。現在は Phase 2 staging や mtime を読むしかなく、次サイクルの候補選別で「育てる候補」と「探索段階で止める候補」を機械的に分けにくい。"
+    alternatives:
+      - name: "candidate frontmatter lifecycle"
+        sketch: "各 candidate .md の YAML frontmatter に status / last_reviewed_at / last_decision / evidence / next_action を持たせる。Phase 2 と Phase 3 は判定結果を候補本体へ反映し、候補ファイル単体で現在位置を読めるようにする。"
+        pros:
+          - "Obsidian や rg で候補単体を見た時に状態が即座に分かる。"
+          - "candidate の本文・URL・判定履歴が同じ場所に残るため、staging 依存が減る。"
+          - "既存の per-file atom 方針と近く、記憶階層の見通しが揃う。"
+        cons:
+          - "既存 300 件超への backfill が必要。"
+          - "Phase 2 / Phase 3 側の write path を触るため、雑に実装すると本文差分が増えやすい。"
+          - "複数サイクルが同じ候補を扱う場合、frontmatter 更新競合に注意が必要。"
+        migration_cost: medium
+      - name: "candidate lifecycle sidecar index"
+        sketch: "memory/shared_reads_candidates/index.jsonl のような sidecar に path 単位の status と判定履歴を集約する。candidate .md は本文のまま保ち、Phase 2 は index を読んで selection / stale 判定を行う。"
+        pros:
+          - "既存 candidate 本文をほぼ変更せず導入できる。"
+          - "集計や stale 判定は 1 ファイルを読むだけで速い。"
+          - "履歴を追記型にすれば更新競合時の復旧が比較的容易。"
+        cons:
+          - "候補ファイル単体を開いた時に状態が見えない。"
+          - "path rename や削除時に sidecar との不整合が起きる。"
+          - "atoms.jsonl 退役方針と同じく、単一 index が新たな source of truth になりやすい。"
+        migration_cost: low
+      - name: "staging-only lifecycle"
+        sketch: "Phase 2 / Phase 3 の staging 記録を正本とし、必要な時だけ直近 staging から候補状態を推定する。candidate .md には手を入れない。"
+        pros:
+          - "実装変更がほぼ不要。"
+          - "現行運用を壊すリスクが低い。"
+          - "短期の一回限り判定なら十分。"
+        cons:
+          - "サイクルを跨いだ候補育成には弱い。"
+          - "staging が流れると状態を再構成しづらい。"
+          - "Phase 4a が検出した問題を根本的には解かない。"
+        migration_cost: low
+    recommended: "candidate frontmatter lifecycle"
+    recommended_reason: "候補ファイル自体が shared-reads の育成単位なので、状態も同じ単位に置くのが一番読み戻しやすい。sidecar は低コストだが、atoms.jsonl 退役で避けようとしている単一バルク正本を候補側に再導入する形になる。frontmatter 案は backfill と write path の手間があるものの、失敗しても candidate .md の metadata 追加に閉じ、本文や atom 正本を壊さず rollback できる。"
+    decision: introduce
+    decision_reason: "Phase 4a の issue は候補 lifecycle の正本がないことなので、現状維持や staging-only では次サイクルでも同じ検出になる。candidate frontmatter は既存の per-file 記憶方針と整合し、Phase 4c で小さく導入できる。"
+    outline_for_4c:
+      - "candidate frontmatter の最小 schema を決める: status / last_reviewed_at / last_decision / evidence / next_action。"
+      - "既存 candidate のうち Phase 2 / Phase 3 staging で判定済みのファイルだけを backfill 対象にする。全件一括分類は避ける。"
+      - "Phase 2 が pass / postpone / fail を出した時に candidate frontmatter を更新する導線を追加する。"
+      - "Phase 3 投稿済み candidate は status: posted と evidence: Slack permalink を残す。"
+      - "Phase 4a の cleanup check は status なし件数だけでなく stale / pending / posted の内訳を見る形に変える。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
