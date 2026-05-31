@@ -69,6 +69,25 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+```yaml
+checked_at: "2026-05-31T20:05:00+09:00"
+cleaned:
+  - "memory/MEMORY.md: Markdown links 0 件、backtick path 2 件を確認。`python tools/memory_ingest.py` はコマンド例であり broken file link ではないため修正なし。"
+  - "memory/atoms.jsonl: 1931 rows、JSON 破損 0、duplicate id 0。normalized content hash duplicate は 19 group あり、MEMORY.md の lifecycle/content fold 対象として扱える範囲。"
+  - "memory/raw/: file 140 件、30 日以上未更新の archive 候補 0 件。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=154, ready_to_post=4, postponed=119, failed=41, needs_review=0, missing=13。30 日以上未更新の postponed/needs_review は 0 件。"
+  - "inbox: `python tools\\slack_inbox_lifecycle.py pending` で directives/broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: "ISS-20260531-4A-001"
+    description: "shared_reads_candidates に lifecycle `status` を持たない candidate が 13 件ある。既存 gate の status 語彙は定義済みなので、設計問題ではなく未評価/旧形式 candidate の残存。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md など 13 files; 集計 status missing=13"
+    why_blocks_game_memory: "candidate の再評価、stale 判定、投稿済み/失敗済みの除外が機械的に追えず、ゲーム制作向け知見の候補プールが Phase 2 で余計に再走査される。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
