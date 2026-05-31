@@ -46,7 +46,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1779572226-4f99fc9fca"
+    source_ts: "1779572226.979089"
+    title: "STALE benchmark — 古い知識を AI が自分から検出して更新する能力を3次元で測る最初のフレーム"
+    reason: "古い記憶や directive を current action の前提にするとき、明示的に否定されていないだけで古い前提を運び続ける危険が、Phase staging / memory / cross_review / game feedback に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の memory recall/consolidation、phase staging、cross_review 提案、game feedback 適用、completion report で、古い前提を使う前に source_ts/status と現在の反証シグナルを1つ確認する reversible probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
