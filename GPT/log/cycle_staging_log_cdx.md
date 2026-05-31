@@ -65,7 +65,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-31T17:18:00+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認: link 0 件 / broken 0 件"
+  - "memory/atoms.jsonl を確認: 1923 rows、duplicate id 0、content hash 系 duplicate 0"
+  - "memory/raw/ と memory/raw/web_research/ を確認: 30日以上未更新の raw file 0 件"
+  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 151、postponed 118、failed 40、ready_to_post 4、needs_review 相当 6、status 欠落 6、README 1"
+  - "30日以上未更新の postponed / needs_review candidate は 0 件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は 0 件で、handled 更新対象なし"
+issues:
+  - id: ISS-4A-20260531-01
+    description: "shared_reads_candidates の一部 candidate が lifecycle frontmatter を `status` ではなく `candidate_status` で持つ、または status 系 field を持たない。今回の集計では 20260518 の 6 件が `candidate_status: needs_review`、20260529-30 の 6 件が status 欠落として検出された。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_ai_graphical_asset_generation_heuristics.md ほか 6 件は candidate_status、memory/shared_reads_candidates/20260529_godot_30day_narrative_prototype.md ほか 6 件は status 欠落"
+    why_blocks_game_memory: "candidate lifecycle の機械集計が `status` 前提だと needs_review / postponed の滞留検出から漏れ、次のゲーム制作に使える候補が Phase 2 再評価へ戻りにくくなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
