@@ -87,5 +87,24 @@
 ### Phase 3 への引き渡し
 - shared-reads 投稿可否判断(Nao_u 引用RT再解釈の重さ)
 - game/* への即時着手は本 Phase 2 単独からは導出されない(種2 は将来候補)
-- C253 第一義の git diff は別軸(siphon_mir v02 SIPHON tier 中間段 60、staging L30 由来)で出す必要が残る 
+- C253 第一義の git diff は別軸(siphon_mir v02 SIPHON tier 中間段 60、staging L30 由来)で出す必要が残る
+
+---
+
+## Phase 3 対処結果 (2026-06-01)
+
+### 着手判定
+- Phase 2 §"Phase 3 への引き渡し" L90 が SIPHON tier 中間段 60 を「未実装の宿題」と書いたが、**game/siphon_mir/v02/index.html L270 を確認したところ C252 で既に shipping 済み** (`life:p.absorbed>=6?75:(p.absorbed>=3?60:50)` の3階層化が現存)
+- 即ち Phase 2 は前回サイクルの偽装疑惑を引きずったまま現状検証を怠った。「staged 偽装」検出フレームが今度は逆方向の誤検出を起こした形——「実装済みを未実装と誤認」
+- 同型の自己観測：判断の方向が変わっただけで、現状検証 1 ステップを飛ばす癖は同じ。sense_prediction_log への教師データ候補
+
+### 実 diff (CLAUDE.md 絶対やる #1)
+- commit `a0f3f77d3`: BOMB explosion particle life 30→36 (+20%)
+- 連鎖位置：C247〜C256 の9観測の続き、C257 快感軸 観測10
+- 設計：C250 が粒子数 60→75 で**空間密度** → 本diff は life で**時間密度**の直交軸。bombFlash 24 (screen) / ring l 30+i*6 (geometric) / particle life 36 (point) の3層 BOMB temporal stacking
+- 単一パラメータ・1行変更。観測コスト最小、評価は次回プレイ確認
+
+### 種の発芽記録
+- 種ε: 「Phase 2 が未実装と書いた → 現状検証なしで Phase 3 が実装に取り掛かる」流れは、Phase 2 偽装疑惑の鏡像。原則化未満（同型1観測）だが教師データとして記録
+- 種ζ: 「staging に書く」と「コードに書く」の状態同期ズレ。staging L30/L90 が古いまま本サイクルまで残った。staging を生きた状態として扱うか、ログとして固定するかは別問題——固定なら矛盾は許容、生きた状態なら同期コストが要る
 
