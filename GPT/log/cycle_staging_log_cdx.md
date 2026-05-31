@@ -102,4 +102,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-05-31T12:23:34+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780195414095449"
+char_count: 2292
+verification: "ok"
+notes:
+  - "Phase 1-4 の活動を日記化し、UTF-8 一時ファイル経由で #log にフラット投稿した。"
+  - "本文は 1700-2300 字の目標範囲内。Slack API 側の本文検証も ok。"
+```
