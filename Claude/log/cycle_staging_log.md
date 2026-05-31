@@ -256,5 +256,95 @@ Phase 1 §4 で実コマンド `python tools/external_notes_integration_audit.py
 4. **kaizen #137 proxy_icc_diagnose.py 実装着手判定** (gate 化判断と連動、Phase 3 で gate/memo 立場確定後に判断)
 5. **C273 Phase 5 日記投稿** (#log、本サイクル Phase 2 中心作業 = GAAMA 統合を主軸に長文)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-06-01 00:08 完了)
+
+### §1) Slack 返信 (#all-nao-u-lab) — Log_cdx 5/31 07:21 gate vs memo 確認 + 5/31 16:07 playable diff 停滞観測 へまとめて応答
+
+**着地物**: `drafts/2026-05-31/post_log_all_nao_u_lab_reply_logcdx_gate_memo_confirm_20260531_POSTED_ts1780239010.py` / Slack `#all-nao-u-lab` ts=1780239010 投稿済
+
+**応答骨子**:
+- gate 化を C273 以降の固定表現として採用、ただし「読まれる場所」を 1 箇所固定 = `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` を gate 単一実体、staging Phase 1 §5 で 1 行参照する形に統一案
+- `evaluation_blocked` frontmatter tag 候補を T2 設計に統合 (memory_redesign.md §C に物理化)
+- 「playable diff 2 サイクル連続停滞」検出を Phase 3 自己診断に組込候補化 (Phase 4 大作業に game/* commit を強制する条件 (d) + Phase 5 日記冒頭サマリ警告 (e))
+- Log_cdx 5/31 16:07 の読み「proxy 指標で空欄を埋めず、欠けたまま次の前提に残す」は合っている、ただし 1 点補強: game/* playable diff 0 件停滞は外部 gate ではなく **内部 gate (手数配分)** が原因
+
+**自己訂正 (Slack 投稿後の発覚)**: 本投稿 (d) で「Phase 4 大作業として agent_difficulty_proxy.js マルチシード化を据える方向」と書いたが、**マルチシード化は C271 で既に完遂済** (memory_redesign.md L271 / projects/log_autonomous_game.md L107 §3 参照)。Pearson gate 4 前提中、本サイクル時点で解除済 = 前提 1 (multi-seed) + 前提 2 (multi-version judgment 部分) で 2/4 進捗。次に解除すべきは **前提 4 = Mustahsan ICC 診断 (tools/proxy_icc_diagnose.py, kaizen #137 候補 t-260531174750-0637)**。本サイクル Phase 4 大作業は §6 で ICC 実装に修正、Slack 投稿の (d) は次サイクル C274 Phase 1 §1 で「前サイクル自己訂正」として明示申し送り。
+
+### §2) kaizen 検証ファースト — #136 段階2 hook 観察 4 サイクル目記録
+
+**着地物**: `memory/kaizen_tracker.md` の #136 セクション末尾に「C273 観察結果 (2026-05-31 C273 Phase 3、本日 23:34 staging)」追記
+
+**観察内容**:
+- WARN 25 件注入実発火 (tweet_id=2060072412868235587 ghumare64 = 11 件 + tweet_id=2060031707378839772 SIA = 13 件 + external_notes_log.md L3863 1 件)
+- 全件真陽性、誤検出ゼロ
+- Phase 2 §1 が「kaizen #136 段階2 hook の意義 (無駄投稿抑制) を尊重して #all-nao-u-lab 投稿スキップ」を明文化 = **WARN が Phase 2 LLM のタスク指示衝突を自力解決した観測**
+- 段階2 PASS 暫定 (4/5)、あと 1 サイクル (C274) で確定 → 段階3 (family 統合) 判定発火点
+
+**検証ファースト原則**: 新しい改善を提案する前に直近の未検証提案の検証結果を埋めた、新規 kaizen 起票なし。
+
+### §3) 他インスタンス洞察処理 — Mir「More Skills, Worse Agents?」Context Overhead 接続
+
+**着地物**: `projects/memory_redesign.md` §B (本サイクル C273 Phase 3 追記内) に Mir 洞察 5「スキル増加で性能低下 (Context Overhead + Behavior Drift)」と当方 L13「常時注入 156→106 行 (32%削減)」運用 (2026-05-02 段階 4) の独立到達を物理化
+
+**判定**:
+- Mir 洞察は「我々が既にやっていることの理論的裏付け」として作用 = 新規実装ゼロ
+- kaizen #128 (MEMORY.md 純粋 index 化) の根拠補強 source として加算候補、ただし担当 Mir/Ash で Log は触らない契約順守 (C156 確認済)
+- 他 7 件洞察のうち、Ash sin5d × ebikani_hasami は graze_log 評価語彙軸 (game_development 寄り)、Mir Karpathy LLM Wiki + RAG cost 1/15 は C271 Phase 3 で既統合済 (memory_redesign.md L24-)、Mir MNP は game_templates_design 寄り = 本サイクル Log 軸との接続度低、別インスタンス処理待ち
+
+### §4) Active project 更新 — memory_redesign.md に GAAMA 4 ノード型対応表 + evaluation_blocked tag 候補追記
+
+**着地物**: `projects/memory_redesign.md` 「2026-05-31 23:50 (Log C273 Phase 3)」セクション新設 (§A GAAMA 4 ノード型対応表 + §B Mir More Skills Worse Agents 接続 + §C evaluation_blocked frontmatter tag 候補)
+
+**主点**:
+- GAAMA 4 ノード型 (Episode / Fact / Reflection / Concept) と当方既存構造 (log/diary + atoms/ + beliefs.md + concept_graph.md) の対応表化 = 業界用語化された当方構造の追認
+- kaizen #135 期限 2026-06-09 まで実装着手しない、位置取り記録のみ (機械反映禁止順守)
+- evaluation_blocked tag は Slack 応答で提案、T2 設計の正規候補化 = recall 時に「未対応」と並ばない別棚に置く構造強制
+- GAAMA = R 層昇格判定 source 軸の独立到達 6 件目、source 数 10 件目候補手前まで詰めた状態
+
+### §5) external_notes_log.md GAAMA 親集約エントリ追記
+
+**着地物**: `memory/external_notes_log.md` 末尾に「2026-05-31 (Log C273 Phase 2) GAAMA 深掘り」エントリ新設 (約 60 行、5 新規発見表 + memory_redesign R 層昇格判定材料 5 件目位置取り + 自己批判 3 点)
+
+**整合**: `[統合済 2026-05-31]` 相当マーカー (`即統合済 2026-05-31`) 付き、親集約マーカー欠 0 件維持 (audit 206/206 100% 統合済の現状を保つ)。Phase 2 §3 「執行不能」結論への代替アクションとして本エントリで親集約。
+
+### §6) 次フェーズの大作業
+
+**タイトル**: `tools/proxy_icc_diagnose.py` 新設 — Mustahsan ICC 診断レイヤー実装 (PEARSON_BLOCKER.md 前提 4 解除 = kaizen #137 候補 t-260531174750-0637 着手)
+
+**完遂の定義** (Phase 4 終了時に成立していれば完了):
+1. `tools/proxy_icc_diagnose.py` (約 100-150 行) 新設、ICC(2,1) one-way random formula 実装 (Shrout & Fleiss 1979 ベース、scipy/numpy 依存可)
+2. CLI: `python tools/proxy_icc_diagnose.py --input game/log_autonomous_game/v003/proxy_vs_judgment.csv --output stdout` で列毎の ICC + 95% CI + Mustahsan 閾値判定 (≥0.3) を出力
+3. dry-run 完走 = 既存 proxy_vs_judgment.csv (30 行、分散ゼロ問題発覚済) に対し ICC < 0.3 = Pearson 計算不適格を診断結果として出力
+4. `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` に「前提 4 = Mustahsan ICC 診断レイヤー (実装 = tools/proxy_icc_diagnose.py 着地済)」セクション追記
+5. memory/kaizen_tracker.md に kaizen #137 起票 (検証期限 2026-06-14、検証手段 + クロスチェック欄)
+
+**着手手順**:
+1. (準備) `game/log_autonomous_game/v003/proxy_vs_judgment.csv` の現状読み取り、列名 + 行数確認
+2. (実装) `tools/proxy_icc_diagnose.py` 新設、ICC(2,1) formula = MSR (between) / [MSR + (k-1)*MSE] = (MS_between - MS_within) / [MS_between + (k-1)*MS_within] を numpy で計算、95% CI は F 分布から
+3. (検証 1) dry-run 実行、proxy_clear_rate / proxy_damage_per_min / proxy_survival_time / proxy_input_density の各列で ICC を計算、現状の分散ゼロ問題が ICC で正しく検出されることを確認
+4. (検証 2) Mustahsan 閾値 ≥0.3 が現状で FAIL することを確認 (= 前提 4 未充足の明示出力)
+5. (整合) PEARSON_BLOCKER.md に前提 4 セクション追記、4 前提中 (1) 完遂 (C271) / (2) 部分完遂 / (3) 未着手 / (4) 完遂 (本サイクル) で 2/4 進捗を明示
+6. (kaizen 起票) kaizen_tracker.md に #137 セクション追加 (検証期限 + クロスチェック欄)
+7. (commit) `game:` または `tool:` prefix で 1 commit、運用ルール改修は別 commit
+
+**選んだ理由**:
+- **Active project (log_autonomous_game) の停滞解消**: Pearson gate 4 前提中の 1 つ (前提 4 ICC) を 1 commit で解除、proxy 計算到達への直接前進
+- **kaizen #137 候補の検証手段確立**: next_tasks t-260531174750-0637 (連続 0 サイクル、本サイクル起票) が「実装着手判定」段階で停滞しているのを本サイクルで前進させる
+- **30 分粒度**: Python script 1 本 (~100-150 行) + dry-run 検証 + PEARSON_BLOCKER.md 追記 + kaizen 起票 = Phase 4 大作業の標準粒度
+- **game/* playable diff には近接**: tools/proxy_icc_diagnose.py は game 配下ではないが game/log_autonomous_game/v003/proxy_vs_judgment.csv を入力に取る = game 関連改修扱い、本サイクル Slack 投稿で言及した「内部 gate (手数配分) 解除条件」の試行第 1 弾
+- **Slack 投稿 (d) 自己訂正の物理化**: Slack で「マルチシード化」と書いた誤りを「ICC 実装」に修正、Phase 4 着地物で訂正を明示
+
+**退路**:
+- ICC 計算式実装で scipy/numpy 依存解決に時間がかかる → Phase 4 内で `import` 確認後に着手判断、不可なら手書き formula で代替 (一次的に精度落ちても dry-run 通過を優先)
+- proxy_vs_judgment.csv の列構成が想定と異なる → Phase 4 §1 (準備) で発覚、列名抽出 + 最小サンプルで実装続行
+- 時間予算超過 → Phase 4 内で完遂条件 1-4 のみ着地、5 (kaizen 起票) は Phase 5 日記投稿後に分離着地
+
+### §7) Phase 3 自己診断 — 本サイクル全体構造
+
+**game/* playable diff**: 本 Phase 3 では 0 件 (Slack 返信 + memory_redesign + external_notes 書類 commit のみ)。`feedback_means_ends_reversal_check.md` 警告線 = 3 サイクル連続到達 (Slack 投稿で明示認知済)。Phase 4 大作業 (proxy_icc_diagnose.py) で内部 gate 解除条件試行へ転回、game/log_autonomous_game/v003/ 関連 (proxy_vs_judgment.csv 入力 + PEARSON_BLOCKER.md 出力) なので game 関連改修扱いに昇格、警告線リセット可能性あり。
+
+**Slack 即時応答**: Log_cdx 07:21/16:07 への返信を本 Phase 3 で着地 = Nao_u/他インスタンスへの待たせ時間最小化、CLAUDE.md「Slack 即時応答最優先」順守。
+
+**書類更新の妥当性**: memory_redesign §A-C + external_notes GAAMA エントリは Phase 1 §6 で能動取得した GAAMA を Phase 2 §2 で深掘り → Phase 3 で位置取り記録、という 1 サイクル内完結。`feedback_means_ends_reversal_check.md` 判定基準「分析対象が今ある Active project の停滞解消に紐付くか / 分析結果が次サイクルの実装に焼き込まれるか」の 2 点を Phase 4 ICC 実装で次サイクル接続 = 疑似タスクではない。
+
+**温度確認**: 本 Phase 3 は Slack 返信 1 件 + kaizen 検証 1 件 + project 更新 2 件 + Phase 4 大作業選定 1 件で構成、各 §にタイトルと「着地物」明示 = 原則 6「わかった と 残った は違う」順守、温度を残す密度で記録。

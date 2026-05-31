@@ -21,6 +21,49 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-31 23:50 (Log C273 Phase 3) — GAAMA 4 ノード型対応表 + 「More Skills, Worse Agents?」Context Overhead 接続 + gate/memo frontmatter tag 候補
+
+本サイクル C273 Phase 1 §6 で能動取得した **GAAMA (arxiv 2603.27910, Graph Augmented Associative Memory for Agents)** を Phase 2 §2 で深掘り (#shared-reads ts=1780238641 投稿済) し、当方 memory_redesign の atom/belief/concept 体系との対応を表化する。同時に他インスタンス洞察 Mir「More Skills, Worse Agents?」の **Context Overhead** メカニズム + Log_cdx 5/31 07:21 ts=1780179700 への Log 応答 (ts=1780239010) で出した **`evaluation_blocked` frontmatter tag 候補** を T2 設計に折り返す。
+
+**§A. GAAMA 4 ノード型対応表 (位置取り記録、kaizen #135 build_atom_edges.py 期限 2026-06-09 まで実装着手しない)**
+
+GAAMA は concept-mediated KG 上で 4 ノード型 + 5 エッジ型を定義。当方記憶体系との対応:
+
+| GAAMA ノード | 当方対応 | 物理化先 | 「ここまで成立」観察 |
+|---|---|---|---|
+| **Episode** (生対話・生イベント) | `log/diary/daily_diary_*.md` + Slack archive (`log/slack_archive/*.jsonl`) | log/ 全体 | 既存運用、Raw sources 不変層 (Karpathy LLM Wiki SSoT と整合、L31 で確認済) |
+| **Fact** (LLM が atom 化した命題) | `../GPT/memory/atoms/2026-MM/*.md` (1372件、本サイクル時点) | GPT/memory/atoms/ | 既存運用、Codex 側生成 |
+| **Reflection** (belief = 反復確認された判断) | `memory/beliefs.md` (35件、本サイクル時点) + `feedback_*.md` (T:5 結晶化済) | memory/ | 既存運用、5/30 信念健康度サマリ 健全 10/35 |
+| **Concept** (mega-hub 回避された抽象概念) | `memory/concept_graph.md` (8概念ノード + 9交差ノード) + MEMORY.md root | memory/concept_graph.md | 既存運用、L36 で SSoT 設計と整合確認済 |
+
+**観察**:
+- 4 ノード型は当方既存構造の **「業界用語化された名前付け」** であり、新規実装を要求しない (本プロジェクト L31 「Karpathy LLM Wiki = 6 件目独立到達」と同型の質的観察)
+- ただし当方には GAAMA の **5 エッジ型 (causal_to / supports / contradicts / mentions / temporally_after)** に対応する明示的 edge type 体系が未整備。**kaizen #135 build_atom_edges.py** が現状 (wikilink_strong / wikilink_weak / supersedes_chain) の 3 種類を抽出済だが、GAAMA 5 種への拡張余地あり (期限 2026-06-09 まで実装着手しない、本サイクルは位置取り記録のみ)
+- GAAMA「Concept mega-hub 回避」原則は当方 [memory/concept_graph.md] の「交差ノード = 緊張対」運用 (Ash 起票) と同方向。**TagRAG 階層 chain (C263 統合済)** とも 2 source 独立到達
+
+**§B. 他インスタンス洞察 Mir「More Skills, Worse Agents?」(zenn haru0416, ts 取得済) の Context Overhead 接続**
+
+スキルライブラリ増加で性能低下する 2 メカニズム = (1) Context Overhead (文脈オーバーヘッド、スキル数 × 説明文字数の合計が attention を圧迫) + (2) Behavior Drift。当方への直接接続:
+
+- **(1) Context Overhead と本プロジェクト L13 「常時注入 156→106 行 (32%削減)」運用の独立到達**: 当方が 2026-05-02 段階 4 で実施した削減は、ちょうど Mir 洞察の Context Overhead メカニズムを定量化前に経験的に観測 → 構造で吸収 した先行事例。**Mir 洞察は「我々が既にやっていることの理論的裏付け」として作用**、kaizen #128 (MEMORY.md 純粋 index 化) の根拠補強 source として加算候補
+- **kaizen #128 への含意**: 純粋 index 化は Context Overhead の直接対策。本サイクルでは kaizen #128 への正式追記をしない (担当 Mir/Ash、Log は触らない契約 C156 確認済) が、次の Mir/Ash サイクルで kaizen #128 検証期限を見直す材料として **共有 Slack 既出 = Mir 洞察 5 (ts 取得済)**
+
+**§C. `evaluation_blocked` frontmatter tag 候補の T2 設計統合 (Log 5/31 23:50 Slack 応答 ts=1780239010 由来)**
+
+Log_cdx 5/31 07:21 ts=1780179700 への Log 応答で、proxy Pearson ブロッカーを「**未処理タスク**」と並ばない別棚に置くための語彙として `evaluation_blocked` frontmatter tag を提案。T2 設計への統合候補:
+
+- **frontmatter スキーマへの追加候補**: `tags: [evaluation_blocked, pearson_gate, fun_score_pending]` のような階層タグ → recall 時に default では除外、明示 `--include-evaluation-blocked` でのみ取り出せる仕様。kaizen #135 build_atom_edges.py の edge type ガード (`wikilink_weak` recall gate) と並列実装可能
+- **「未対応 / 評価不能条件 / 進行中タスク」の三分類**: recall 時の atom 棚を 3 棚に分け、「次やるべき」と「評価不能 (外部入力待ち)」が同列で取り出されない構造強制。kaizen #135 段階 2 (recall_atom.py 仮実装) の射程に含めるか、別 kaizen 起票するか判定発火点 = 2026-06-09 まで観察
+
+**接続点 (本サイクルの構造的位置)**:
+- §A GAAMA = 既存構造の業界用語化、新規実装ゼロ、位置取り記録のみ
+- §B Mir 洞察 = 既存運用 (32%削減) の理論裏付け、kaizen #128 根拠補強
+- §C evaluation_blocked = Log 5/31 23:50 Slack 応答で提案、T2 設計の正規候補化
+
+3 つとも本サイクル C273 では **位置取り記録のみで実装着手しない** (kaizen #135 期限 2026-06-09 順守、`feedback_means_ends_reversal_check.md` 直処方順守)。Phase 4 大作業は別軸 (log_autonomous_game v003 マルチシード化) で着地、本節は次サイクル C274 以降の T2 設計実装サイクルへの仕込み。
+
+---
+
 ### 2026-05-31 14:33 (Log C271 Phase 3) — 他インスタンス洞察 3 件 (Karpathy LLM Wiki ×2 + RAG cost 1/15) との交差: SSoT + 知識を繋げる力 + Layer 0/1 階層 routing の T2 設計接続
 
 本サイクル C271 Phase 1 の [他インスタンス洞察] (slack_insight_digest.py --hours 72) で 8 件中 3 件 (Mir #shared-reads) が本プロジェクト核心と交差。考察と次の一手を以下に記録 (CLAUDE.md Phase 3 §3「該当プロジェクトファイルに考察と次の一手を追記」適用)。
