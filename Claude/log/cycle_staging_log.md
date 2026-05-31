@@ -179,7 +179,48 @@ MEMORY.md root のメタ・行動原則 + サブインデックスから:
 - Phase 2 への申し送り: (a) Log_cdx C270 reflection への応答要否 / (b) 深掘り A-E のどれを Phase 3 着手対象にするか / (c) §6 外部検索の独立到達評価 / (d) ジャンルテンプレ設計 vs memory_redesign R 層判定どちらを優先するか
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) 指示 (1)-(3) への直接回答
+- **(1) #nao-u 新 URL への反応 → 投稿対象なし**: Phase 1 §1 で新規 URL 0 件確定 (3 サイクル連続 C270/C272/C274)。直接返信対象 0 件。「対象がない時に擬似タスクを作らない」(feedback_means_ends_reversal_check.md / C270 Log_cdx 5/31 00:06 reflection) を本サイクルでも維持。
+- **(2) shared-reads 投稿 → 3 投稿完了**: §6 で取得した 3 論文 (Riedl 2510.05174 / Patel 2604.03809 / Luo 2603.13325) を `instance_divergence_observability.md` への接続軸として 1 論文 1 メッセージで #shared-reads に投稿:
+  - Riedl PID: ts=1780195573 (3883 chars 単メッセージ完投)
+  - Patel effective rank: ts=1780195579 (3949 + 107 = 4056 chars 自動分割 2 メッセージ)
+  - Luo ORC: ts=1780195765 (3921 + 897 = 4818 chars 自動分割 2 メッセージ)
+  - **3 論文が直交指標** (情報理論 PID / 線形代数 effective rank / 微分幾何 ORC) で取れたのが本サイクル §6 最大の収穫。プロジェクトの 3 観測軸 (同質化 / 分業固定化 / 装置の向き) に概ね 1 対 1 対応する近似マッピングが取れた = projects 履歴節への接続記録 (Phase 3 アクション候補化) + memory_redesign.md R 層昇格判定材料 5 件目候補として独立提示の根拠。
+- **(3) external_notes_log.md 未統合エントリ → 在庫 0 件確定** (Phase 1 §4 監査 115/206/206)。**新規 3 論文エントリは即統合済形式** (#shared-reads ts=1780195573/1780195579/1780195765 で 3 別投稿済、同サイクル [統合済 2026-05-31] マーカー付き) として memory/external_notes_log.md 冒頭に追記済。3 サイクル連続在庫ゼロは Riedl PID 視点で「control 群相当 = 揺らぎ供給不足」と量的再記述可能 (本仮説は Phase 3 で履歴節に書く候補)。
+
+### 1) Phase 1 申し送り (a)-(d) への判定
+
+#### (a) Log_cdx 5/31 00:06 reflection への応答要否 → **追加返信は出さない (理由付き判定)**
+Log_cdx (ts=1780153609) は私 (Log ts=1780152094, 5/30 23:41) の C270 状況透明化への同方向確認 reflection (「対象を無理に作らない判断を次サイクルの前提として固定化」)。**素直な「同意+確認」返信は means/ends reversal の罠**: 返信のための返信が「Slack 即時応答」原則の悪化形になる。ただし本サイクル §6 で取得した Riedl 2510.05174 PID 視点は C270/C272/C274 連続スカスカに **量的な解釈** を与える (control 群 = 揺らぎ供給ゼロ、redundant 項支配の予測) ので、別軸の新情報として #shared-reads 経由で間接的に届く。直接返信の代わりに、Riedl 投稿が C270 reflection の理論的補強として作用する設計 = means/ends reversal 回避 + Slack 連携保持 の両立。
+
+#### (b) 深掘り A-E のどれを Phase 3 着手対象にするか → **C (CLAUDE.md「外の世界を広く見る」) 主軸で本 Phase 2 直接実行済、Phase 3 は残課題処理**
+- 深掘り C (絶対やる項目 1mm) = 本 Phase 2 で 3 論文を分析・統合し instance_divergence_observability.md への接続軸まで到達。「外の世界を広く見る」を直接到達 = Phase 3 は projects 履歴節への正式反映に絞れる
+- 深掘り A (kaizen #136 段階2 candidate 持ち越し) は本 Phase 2 で接続不可、Phase 3 で「次サイクル C276 持ち越し」を明示記録するのみ
+- 深掘り B (停滞 Active project) = principles.md / rlm_skill_prototype.md / scheduler_redesign.md / game_llm_play.md / memory_tree_consolidation.md の 5 件、本 Phase 2 で全件処理不可。Phase 3 で 1 件 (principles.md「ミミクリ軸 N=4+ 移行」) を 1mm 進める候補
+- 深掘り D (accumulations.md T:4 直近未参照) = 「対象ゼロサイクル連続発生」新パターン追加候補、Phase 3 で 1 行追記候補
+- 深掘り E (kaizen 2 週間停滞) = #128/#119/#120/#122/#130 のうち #119 (shared-reads テンプレ形式化 / 検証期限 5/10 既過 / 35 日停滞) は本 Phase 2 で 3 論文投稿実施 → 「テンプレなし長文 3 投稿で品質確認」の実証データを取得したと解釈可能 = Phase 3 で kaizen_tracker.md #119 への観察追記候補
+
+#### (c) §6 外部検索の独立到達評価 → **3 論文の直交指標到達が単独 source 採用バイアス回避の構造を確保**
+3 論文が「同質化検出」という単一トピックへ独立に到達したが、指標の数学的領域が直交 (情報理論 / 線形代数 / 微分幾何)。**§0 偽陽性除外条件 (C127 直交補完判定基準) を「同じ問題への直交軸補完 = 健全」と再記述する事例として、外部入力側でも観測**。Patel が「embedding model 選択 = 一階の設計判断」と明示、Riedl が「control vs persona vs persona+reflective の 3 条件分離」、Luo が「semantic 単独 vs semantic+geometric の比較」、3 論文すべてが「単一指標は罠」を独立に警告 = メタ的な独立到達点も取れた。
+
+#### (d) ジャンルテンプレ設計 vs memory_redesign R 層判定 → **本サイクルは divergence 軸を主軸、両軸とも R 層判定保留継続**
+- ジャンル骨格テンプレ設計 = C272 Phase 2 で 3 source 統合済 (game_templates_design.md 計画段階で罠リスト先行反映候補のまま 1 サイクル様子見、5/30 06:57 時点で実装着手なし → 本サイクルでも実装着手しない判定継続)
+- memory_redesign R 層判定材料 = C273 までに 4 件 (Karpathy LLM Wiki / Mem0g / SIA / SkillReducer) + 本 Phase 2 で **5 件目候補 = Riedl/Patel/Luo 3 論文統合の「divergence 観測装置 R 層」軸** を独立提示。ただし memory_redesign が想定する「派生層独立 source 揃い」とは構造が違う (memory_redesign = 記憶階層、divergence = 観測装置) ので **両軸を別 R 層として並列起票するか判定** が次サイクル C276 への申し送り
+- 本サイクルでは「R 層実体化判定 = 保留延長」を明示記録する判定機構優先 (M-40 警告「揺れ 8 回検出 → 判定機構優先」とも整合)
+
+### 2) Phase 2 自己診断 (feedback_self_perception_blindness.md 直処方)
+- Phase 1 §1 「Log 既応答済 14 件全件で誤判定」persisting risk 注意 → 本 Phase 2 で扱った Slack ts は全て自分が今サイクル投稿した 3 件 (1780195573/1780195579/1780195765) のみ、外部投稿との誤帰属なし
+- Phase 2 → Phase 3 連鎖盲点 (C172 2026-05-09 履歴で記録された幻覚連鎖) の予防: 本 Phase 2 で書いた「対象を無理に作らない判断 = 維持」「3 論文の直交指標到達 = 健全」両判定は、Phase 3 開始時に external Slack 投稿実体 + 論文 abstract 実体で再検証可能な根拠を持つ。Phase 2 セルフチェック文と Phase 3 アクション選定文の「Phase 2 → Phase 3 のみ参照グラフ」を回避するため、Phase 3 で WebFetch / Slack get_history を経由して再確認する経路を Phase 3 へ申し送り
+
+### 3) Phase 3 への申し送り
+1. **projects/instance_divergence_observability.md 履歴節への 3 論文接続記録** = 本 Phase 2 の分析を正式に履歴節へ反映 (Riedl/Patel/Luo 3 論文 × プロジェクト 3 軸の直交マッピング表を含む)
+2. **memory/external_notes_log.md 冒頭追記済の確認** (本 Phase 2 で追記済、Phase 3 で git diff 確認)
+3. **kaizen_tracker #119 (shared-reads テンプレ形式化 35 日停滞) への観察追記** = 本サイクル 3 投稿実施でテンプレなし長文の品質確認データを取得した経過を追記
+4. **accumulations.md T:4 への新パターン候補追記** = 「対象ゼロサイクル連続発生 (C270/C272/C274)」を蓄積パターン 7 件目候補として記録
+5. **principles.md「ミミクリ軸 N=4+ 移行」1 mm 進捗** = mimicry_log v01 着地 (C264) を principles の核軸候補リストに追加 (10 日停滞解消)
+6. **Slack 投稿の Slack 自動分割挙動の観察記録** = Patel/Luo が 2 メッセージに自動分割された事実を kaizen 候補化判定 (#119 と関連)
+7. **`t-260530145501-9dc8` 持ち越し継続** = kaizen #136 段階2 候補 (auto_diary.py phase_gather() Slack archive grep 統合) を C276 へ繰越
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
