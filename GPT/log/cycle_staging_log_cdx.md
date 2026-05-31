@@ -29,7 +29,15 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260601_cosplay_skill_bank_game_agents.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780253613395159"
+    char_count: 3621
+skipped: []
+notes:
+  - "Initial Slack post was updated in-place at the same ts because PowerShell stdin mojibake corrupted the first payload; final message blocks are UTF-8."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
