@@ -8,6 +8,10 @@ evaluated_at: "2026-05-30T12:36:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-30T13:02:43+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780112562220929"
 posted:
   ts: "1780112562.220929"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780112562220929"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-30T13:02:43+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: none
 gate_reason: >
   impact feel という具体的な問題設定、Steam comment + NLP による性能順位付け、
   top/bottom game の 19-feature 比較、hit stop / sound coherence / camera control という結論が抽出できる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "弾・近接・被弾・破壊演出の実装時に、ヒットストップ、音の一貫性、カメラ制御、視覚効果を checklist 化して playable diff の評価軸にする。"
   pros_cons: "利点は低コストで実装レビューへ落とせる点。弱点はコメント由来で因果実験ではなく、ジャンル外への転用は慎重にする必要がある点。"
   verdict_pre: "部分採用。action feedback の最小評価表として採用し、過剰な juice 追加ではなく欠落検出に使う。"
+
 ---
 
 ## raw_excerpt

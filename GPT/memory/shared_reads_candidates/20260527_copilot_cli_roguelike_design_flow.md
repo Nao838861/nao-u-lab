@@ -8,6 +8,10 @@ evaluated_at: 2026-05-27T13:02:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T13:04:57.895229+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779854697895229"
 posted:
   ts: "1779854697.895229"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779854697895229"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T13:04:57.895229+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: >
   `/delegate` による挙動単位の非同期実装、PR としてのレビュー、roguelike の BSP map generation まで、問題設定・手法・適用先が候補内から抽出できる。
   「AI に全部作らせる」ではなく、設計者が言語化・差分確認・面白さ調整に戻るワークフローとして、Codex のゲーム制作サイクルへ具体的に接続できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の playable diff 制作で、敵挙動・難度上昇・デバッグ機能・生成説明器のような小タスクを agent に分け、headless 検証後に体験調整へ戻す運用に効く。"
   pros_cons: "メリットは実装委譲と設計判断を分離しやすいこと。デメリットは product blog 由来で、失敗例や比較評価の厚みが論文ほどはないこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

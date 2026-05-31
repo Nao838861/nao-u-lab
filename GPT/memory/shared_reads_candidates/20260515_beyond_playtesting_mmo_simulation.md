@@ -8,13 +8,18 @@ evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T11:06:03+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810803000339"
 posted:
   ts: "1778810803.000339"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810803000339"
   char_count: 3519
   posted_at: "2026-05-15T11:06:03+09:00"
+next_action: none
 gate_reason: |
   問題設定、LLM agent + environment model の中核、SFT/RL による行動適応、介入評価という要素が抽出できる。
   MMO 規模の研究だが、wave/報酬/進行設計を複数プレイヤー像の反応として事前比較する発想に落とせるため、ゲーム制作への適用が具体的。

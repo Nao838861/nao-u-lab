@@ -1,5 +1,5 @@
 ---
-title: GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents
+title: "GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents"
 url: https://arxiv.org/abs/2603.24329
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
@@ -8,6 +8,10 @@ evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T07:15:58+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660802750739"
 posted:
   ts: "1779660802.750739"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660802750739"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T07:15:58+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   decision-dense gameplay を Self / Other Agents / World と time-synced labels で分解する評価設計が明確で、問題設定・手法・失敗分析まで揃っている。
   headless gameplay log の評価を「遊べたか」から「何を誤認したか」へ拡張する具体的な参照軸として、ゲーム制作サイクルへの適用性が高い。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless replay と review packet を、event density と誤認 taxonomy で評価する"
   pros_cons: "評価設計の移植価値は高いが、動画 benchmark なので現在の2D/DOMログには軽量化して適用する必要がある"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

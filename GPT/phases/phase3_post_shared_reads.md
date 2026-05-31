@@ -68,7 +68,12 @@ Phase 2 で `gate_decision: pass` の candidate のみ、~4000字概要として
         permalink: <url>
         char_count: <int>
         posted_at: <ISO>
+      status: posted
       candidate_status: posted
+      last_reviewed_at: <ISO>
+      last_decision: posted
+      evidence: <Slack permalink>
+      next_action: none
       ```
 3. staging Phase 3 セクションに記録:
    ```yaml
@@ -93,7 +98,7 @@ Phase 2 で `gate_decision: pass` の candidate のみ、~4000字概要として
 
 ## 撤退判定 (正常動作)
 
-書いてみて 4000字相当の密度に届かない場合は **投稿せず**、candidate を local に戻す (`gate_decision: postpone` / `candidate_status: postponed` に更新、reason に「Phase 3 で密度不足」)。撤退は失敗ではなく品質維持。
+書いてみて 4000字相当の密度に届かない場合は **投稿せず**、candidate を local に戻す (`gate_decision: postpone` / `status: postponed` / `candidate_status: postponed` に更新、reason に「Phase 3 で密度不足」)。撤退は失敗ではなく品質維持。
 
 ## 出力チェック
 

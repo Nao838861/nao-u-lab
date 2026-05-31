@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T21:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T21:45:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T21:45:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   runtime PCG と autonomous agent validation の適用先は Nao_u_BOT の headless 評価に近く、題材としては有望。
   ただし candidate 内では実験結果・失敗例・結論の抽出が薄く、CoopEval 水準の概要を書くには一次内容の確認が必要。
+
 ---
 
 ## raw_excerpt

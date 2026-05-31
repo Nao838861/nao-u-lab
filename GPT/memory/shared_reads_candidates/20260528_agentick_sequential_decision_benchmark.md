@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T21:32:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T21:38:30+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971910677459"
 posted:
   ts: "1779971910.677459"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971910677459"
@@ -16,12 +20,14 @@ posted:
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: "RL / LLM / VLM / hybrid / human を同じ Gymnasium 形式で比べる benchmark で、task category、difficulty、observation modality、oracle policy、leaderboard まで要素が揃っている。ゲーム制作では headless eval の尺度を clearRate から capability / modality / oracle-normalized score へ広げる材料として具体的。"
+next_action: none
 suggested_post_outline:
   overview_angle: "一般 sequential decision benchmark として読むより、ゲーム AI 評価を単一スコアから capability 分解へ移す事例として書く。"
   analysis_axis: "27 procedurally generated task、6 capability category、difficulty、observation modality、oracle reference policy の組み合わせが、評価設計に何を足しているかを軸にする。"
   application_target: "Nao_u_BOT の game eval harness で、観測表現別の失敗、oracle 比、task family 別の弱点を残すための評価 schema に効く。"
   pros_cons: "メリットは比較の土台が安定し、agent 実装差とタスク難度を分離しやすいこと。デメリットは benchmark 文化に寄せすぎると、実際の作品の面白さや手触りを測れないこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T01:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T01:05:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
 posted:
   ts: "1779725135.414829"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T01:05:35+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: |-
   問題設定、free-form persona を frozen LLM embedding から shared RL policy の条件へ落とす中核、PPO/InfoNCE/KL を含む訓練目的、300 persona benchmark と推論速度の評価軸が揃っている。
   ゲーム制作では「NPC を LLM 会話だけで差別化する」のではなく、人格を playable な行動差へ変換する設計論として使えるため、4000字級の概要に耐える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "敵・味方・市民・観客などを、台詞ではなく移動、優先目標、リスク許容度、協調行動の差として設計する時の NPC 行動基盤。"
   pros_cons: "利点は大量 NPC の推論コストと人格一貫性を両立しやすい点。弱点は RL 環境設計と報酬設計が重く、会話の豊かさは別系統で補う必要がある点。"
   verdict_pre: "部分採用。LLM NPC の代替ではなく、人格を行動 policy に変換する設計パターンとして採用候補。"
+
 ---
 
 ## raw_excerpt

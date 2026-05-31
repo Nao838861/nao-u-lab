@@ -8,8 +8,13 @@ evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-15T09:03:27+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-15T09:03:27+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: >-
   reward design という主題は重要だが、候補内で見える評価は story-to-reward generation の改善率中心で、実ゲーム制作への接続がまだ抽象的。
   CoopEval 水準の概要を書くには、環境、報酬生成手順、失敗例、PCG への具体転用が不足しており、現時点では候補止まり。

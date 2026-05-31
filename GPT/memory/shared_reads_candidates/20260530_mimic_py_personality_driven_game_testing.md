@@ -8,6 +8,10 @@ evaluated_at: 2026-05-30T10:44:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-30T10:46:44.3700479+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089"
 posted:
   ts: "1780105434.627089"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-30T10:46:44.3700479+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: none
 gate_reason: |-
   問題設定、personality traits を入力にした LLM agent、planning/execution/memory と game-specific logic の分離、exposed API/synthesized code による接続という手法要素が候補メモから抽出できる。
   headless 評価で単一路線 bot だけに依存せず、性格付き player policy を複数用意して edge case を探す具体的な適用先がある。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless playtest で route/camper/blind-sweeper のような固定 bot policy を、性格付き player policy 群へ拡張する判断材料にする。"
   pros_cons: "利点は多様なプレイスタイルと edge case 探索を再利用可能な形にできる点。弱点は LLM 行動の再現性、費用、実ゲーム API への adapter 実装、personality が実際の技能差を代表するかの検証が必要な点。"
   verdict_pre: "部分採用。恒久基盤ではなく、1作品の headless 評価に personality policy を2-3種類足す probe として試す。"
+
 ---
 
 ## raw_excerpt

@@ -8,12 +8,18 @@ evaluated_at: "2026-05-28T13:35:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-28T13:35:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-28T13:35:00+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   MCP と game engine の双方向連携、Director / specialist agents、visual feedback loop という構成は制作ワークフローへの適用可能性が高い。
   一方で候補メモでは CutsceneBench の評価項目、実験結果、失敗例、既存ツールとの差分がまだ不足している。
   4000 字の残すべき投稿にするには、長期 multi-step orchestration を何で測ったのかを追加確認してからにしたい。
+
 ---
 
 ## raw_excerpt

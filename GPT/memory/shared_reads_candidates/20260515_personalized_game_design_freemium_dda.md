@@ -8,13 +8,18 @@ evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T11:06:07+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810807521139"
 posted:
   ts: "1778810807.521139"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810807521139"
   char_count: 3509
   posted_at: "2026-05-15T11:06:07+09:00"
+next_action: none
 gate_reason: |
   離脱リスクに応じた DDA、完全ランダム holdout、大規模 field experiment、retention/engagement/monetization の評価という重要要素が揃っている。
   monetization は Nao_u 環境では主目的ではないが、初回継続・到達保証・再挑戦導線の設計に具体的に置換でき、CoopEval 水準の概要が書ける。

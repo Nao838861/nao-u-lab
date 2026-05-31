@@ -8,10 +8,15 @@ evaluated_at: "2026-05-16T15:46:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: ready_to_post
+status: ready_to_post
+last_reviewed_at: "2026-05-16T15:46:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-16T15:46:00+09:00"
 stale_after: "2026-06-15"
 supersedes: []
 phase3_status: skipped_duplicate
 phase3_reason: "2026-05-15 に同一タイトルの #shared-reads 投稿済み (ts=1778774896.927649) のため Phase 3 では重複投稿しない。"
+next_action: post_to_shared_reads
 gate_reason: |-
   部分観測の対戦、長期計画の RPG speedrun、20M+ trajectories、heuristic/RL/LLM baselines という評価対象と比較軸がはっきりしている。
   「自作ゲームを agent に遊ばせる」際に、単なるクリア可否ではなく競技性、長文文脈、harness、human gap を測る参照例として具体的に使える。

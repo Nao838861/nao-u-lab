@@ -8,6 +8,10 @@ evaluated_at: "2026-05-31T09:02:48+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-31T09:14:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780186465015129"
 posted:
   ts: "1780186465.015129"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780186465015129"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-31T09:14:47+09:00"
 stale_after: "2026-06-30"
 supersedes: []
+next_action: none
 gate_reason: >-
   game sketch から playable prototype と formal rule system を同時に作る問題設定、BIPED の中核、
   human playtest と machine playtesting という二系統の backtalk が候補内で説明できる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "早期 mechanics sketch、headless playtest、human review を別々の backtalk として並べる評価サイクル。"
   pros_cons: "利点は低コストで設計反応を増やせること。弱点は表現できる mechanics が抽象ルール寄りに制約されること。"
   verdict_pre: "部分採用。headless 評価を万能化せず、早期スケッチ段階の補助反応として採用する。"
+
 ---
 
 ## raw_excerpt

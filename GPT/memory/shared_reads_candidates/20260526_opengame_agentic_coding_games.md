@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T22:17:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T22:26:00+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
 posted:
   ts: "1779801836.817719"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T22:26:00+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: >-
   isolated coding から playable game creation へ移るときの破綻要因、Game Skill / Template Skill / Debug Skill、OpenGame-Bench の Build Health / Visual Usability / Content Alignment が明確。
   Codex のゲーム制作運用にある template reuse、debug protocol、headless browser 評価と直接対応し、Phase 3 の概要で手法と適用先を十分に展開できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Codex の prototype 制作で、既存 skeleton、検証済み debug 手順、headless + visual + intent alignment の評価セットを標準化する導線になる。"
   pros_cons: "メリットは playable diff の失敗モードを広く評価できること。デメリットは VLM judge や専用 model/training に依存する部分をそのまま移植しにくいこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

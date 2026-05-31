@@ -8,11 +8,17 @@ evaluated_at: 2026-05-27T13:02:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T13:02:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T13:02:23+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >
   ジャンル看板を先に置かず、プロトタイプ核とテスター反応から soulslike 性が立ち上がった、という設計観点はゲーム制作に使える。
   ただし現 candidate の材料は短い postmortem メモに留まり、探索・戦闘・死亡回収・評価反応の具体を CoopEval 水準の概要へ展開するには本文再読が必要。
+
 ---
 
 ## raw_excerpt

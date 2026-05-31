@@ -8,6 +8,9 @@ evaluated_at: "2026-05-29T15:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-29T15:53:07+09:00"
+last_decision: posted
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: |-
@@ -19,11 +22,14 @@ suggested_post_outline:
   application_target: "Phase 0 / playable diff 前の repo 探索、既存 prototype 改修、Playwright 検証前の構造把握チェックに使う。"
   pros_cons: "メリットは制作エージェントの文脈把握失敗を可視化できる点。デメリットはゲーム体験そのものではなく開発プロセス評価に寄る点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780037572093769"
+next_action: none
 posted:
   ts: "1780037572.093769"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780037572093769"
   char_count: 3914
   posted_at: "2026-05-29T15:53:07+09:00"
+
 ---
 
 ## raw_excerpt

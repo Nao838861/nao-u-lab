@@ -8,11 +8,17 @@ evaluated_at: "2026-05-30T02:19:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-30T02:19:19+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-30T02:19:19+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   exploration collapse、strategy map、fork discovery、policy selection という構成は有用だが、候補本文だけでは具体的な map 更新規則や評価結果の粒度が不足している。
   ゲーム制作への適用は見えるものの、Phase 3 の ~4000 字概要に必要な手法詳細を今の candidate だけで書くと抽象化が強くなりすぎるため保留。
+
 ---
 
 ## raw_excerpt

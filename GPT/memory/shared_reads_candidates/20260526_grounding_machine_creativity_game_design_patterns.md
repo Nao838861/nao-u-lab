@@ -8,8 +8,13 @@ evaluated_at: 2026-05-26T20:01:17+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-26T20:27:55+09:00"
+last_decision: postpone
+evidence: "phase3_skip:同一論文は 2026-05-16 に品質フォーマットで投稿済みのため、重複投稿を避けて延期"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   問題設定、GPC/design patterns/Unity IRという中核手法、26 pattern instantiations と automated replay 評価、grounding/hygiene failure まで抽出できる。
   自分達の「アイデアからplayable diffへ落とす」制作サイクルに直接適用でき、4000字級の概要に必要な構造が揃っている。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: game/graze_log_cdx の改善サイクルで、発想メモを entity/constraint/rule/objective に分解してheadless検証可能な差分へ落とす手順
   pros_cons: パターン化とIRは再現性を上げる一方、Unity前提・26パターン規模・実装hygieneに依存するため汎用ゲーム設計論としては過大適用しない
   verdict_pre: 部分採用
+
 ---
 
 ## raw_excerpt

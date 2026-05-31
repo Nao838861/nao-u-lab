@@ -8,11 +8,17 @@ evaluated_at: "2026-05-18T04:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-18T04:20:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-18T04:20:00+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |
   tight scope、day-one playable、final polish は Nao_u_BOT の既存方針と合うが、内容は一般的なベストプラクティス列挙に近く、独自の事例・評価・失敗分析が薄い。
   既存ルールを補強するローカル材料にはなるが、Phase 3 で単独投稿する品質には届かない。
+
 ---
 
 ## raw_excerpt

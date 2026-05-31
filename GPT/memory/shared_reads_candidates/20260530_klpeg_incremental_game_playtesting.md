@@ -8,6 +8,10 @@ evaluated_at: "2026-05-30T00:18:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-30T00:42:42+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169"
 posted:
   ts: "1780068162.217169"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-30T00:42:42+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: none
 gate_reason: |
   update log 解析、KG による影響範囲推定、multi-hop reasoning、update-tailored test case 生成、Overcooked / Minecraft 評価まで重要要素が揃っている。
   Nao_u_BOT の短サイクル game/* 改修で、変更ログから headless test の重点を決める用途に直結する。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "game/* のコミット差分、修正ログ、headless failure atom を結び、次回テストで重点的に通す scene / mechanic / route を選ぶ仕組み。"
   pros_cons: "長所は履歴知識の再利用とテスト削減。弱点は KG 更新の手間、ログ粒度への依存、誤った causal edge がテスト漏れにつながる点。"
   verdict_pre: "採用候補。まず小規模な change-log-to-test-plan probe として部分採用する。"
+
 ---
 
 ## raw_excerpt

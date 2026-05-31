@@ -8,6 +8,10 @@ evaluated_at: 2026-05-26T13:23:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T13:33:18+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858230399"
 posted:
   ts: "1779769858.230399"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858230399"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T13:33:18+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: |-
   start-goal path ではなく gameplay cycle / mission graph を先に設計し、それを playable dungeon に翻訳する中核が明確。
   lock-key、loop、入れ子 cycle、Ludoscope grammar まで具体化でき、ゲーム制作の構造設計へ無理なく適用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "rog_mystery や探索/推理系プロトタイプで、UI に graph を出さずに構造を体験へ埋め込む設計チェックへ使う。"
   pros_cons: "メリットは構造的な探索感と再訪の意味を作れること。デメリットは grammar 設計の手間と、生成結果の読解性検証が必要なこと。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

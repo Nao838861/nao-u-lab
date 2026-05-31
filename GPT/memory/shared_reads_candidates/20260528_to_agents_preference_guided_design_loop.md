@@ -8,11 +8,17 @@ evaluated_at: 2026-05-28T03:55:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-28T03:55:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-28T03:55:00+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   qualitative intent を solver inputs、render、VLM critique、judge agent へ接続する流れは抽出できるが、対象は topology optimization でゲーム制作への写像がまだ抽象的。
   phone-stand/product design 評価から、ゲームのレベル・ルール・操作感へ無理なく落とす具体例が不足しており、現状で CoopEval 水準の投稿にするとこじつけが混じる。
+
 ---
 
 ## raw_excerpt

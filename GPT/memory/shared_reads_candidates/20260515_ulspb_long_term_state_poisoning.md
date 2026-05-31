@@ -8,6 +8,9 @@ evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T03:12:33+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: >
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "Codex/Claude の memory、AGENTS.md・directive 更新、定時サイクルの自動書き戻し前チェック"
   pros_cons: "メリットは権限ずれを状態差分として検出できる点。デメリットは過剰 rollback が有用な学習や方針更新を止める点"
   verdict_pre: "採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
+next_action: none
 posted:
   ts: "1778782340.942119"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"

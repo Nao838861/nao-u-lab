@@ -8,8 +8,13 @@ evaluated_at: "2026-05-17T14:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T14:20:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T14:20:00+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   問題設定、procedural personas の着想、MCTS + evolved heuristics という中核、
   level corpus 上で複数プレイスタイルを比較する評価、PCG/playtest への結論が分離している。
@@ -29,6 +34,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless playtest、難度調整、単調性検出、生成物の誰向け成立判定に適用する。"
   pros_cons: "メリットは単一勝敗より診断力が高い点。デメリットは persona 設計と heuristic 妥当性が評価結果を強く支配する点。"
   verdict_pre: "部分採用。まずは手書き persona + 既存 bot の評価ログ分岐として小さく試す。"
+
 ---
 
 ## raw_excerpt

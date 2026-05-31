@@ -27,7 +27,12 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
    evaluated_at: <ISO>
    evaluated_by: log_cdx (Phase 2)
    gate_decision: pass | fail | postpone
+   status: ready_to_post | postponed | failed
    candidate_status: ready_to_post | postponed | failed
+   last_reviewed_at: <ISO>
+   last_decision: pass | fail | postpone
+   evidence: "gate_decision:<decision>; evaluated_at:<ISO>"
+   next_action: post_to_shared_reads | revise_or_research | keep_for_reference
    stale_after: "YYYY-MM-DD"  # evaluated_at から 30 日後
    supersedes: []
    gate_reason: <decision の根拠、2-3 行>

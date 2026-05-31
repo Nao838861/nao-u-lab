@@ -8,12 +8,18 @@ evaluated_at: "2026-05-27T23:38:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-27T23:38:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-27T23:38:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   パズル、diegetic UI、lead-in/lead-out、environmental storytelling を統合する観点は実作業に使える。
   ただし記事は発売前後の開発紹介で、評価設計や比較、失敗例の検証が薄く、手法の重要要素をCoopEval水準の概要へ伸ばすには推測が混ざる。
   #shared-reads 投稿ではなく、パズル導入設計のローカル参照メモに留める。
+
 ---
 
 ## raw_excerpt

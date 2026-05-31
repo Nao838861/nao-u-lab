@@ -8,9 +8,15 @@ evaluated_at: 2026-05-18T05:48:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-18T05:48:52+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-18T05:48:52+09:00"
 stale_after: "2026-06-17"
 supersedes: []
 gate_reason: "core concept 固定、10 levels から 8 levels への scope cut、統合事故などの教訓はあるが、学生制作 postmortem の一般的な範囲に留まる。既知の制作管理論点を超える新規性や評価密度が弱く、投稿品質に引き上げると水増しになる。"
+next_action: keep_for_reference
+
 ---
 
 ## raw_excerpt

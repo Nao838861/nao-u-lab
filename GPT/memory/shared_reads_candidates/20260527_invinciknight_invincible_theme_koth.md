@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T04:47:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-27T04:47:11+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-27T04:47:11+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   invincible を被ダメージではなく勝敗条件へ変換する着想は使えるが、投稿価値の中心が単一アイデアに留まる。
   役割分担や実装反省も含めて、評価・比較・失敗条件の情報が不足し、~4000字の残すべき概要には届かない。
+
 ---
 
 ## raw_excerpt

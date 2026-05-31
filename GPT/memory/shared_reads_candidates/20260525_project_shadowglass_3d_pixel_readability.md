@@ -8,6 +8,10 @@ evaluated_at: "2026-05-25T18:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T18:44:10+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702139356069"
 posted:
   ts: "1779702139.356069"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702139356069"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T18:44:10+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   3D pixel art を単なる低解像度演出ではなく、camera stability、shader/rendering code、pixel stabilization、角度/距離別 readability として扱っている。
   弾・敵・地形・UI の視認性を制約から逆算する話に直結し、制作コストと gameplay readability の両面で Phase 3 投稿に耐える具体性がある。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "弾幕/見下ろし/2.5D 試作で、低解像度表現を採用する前の可読性チェックリストと asset variant 見積もりに使う。"
   pros_cons: "利点は表現制約を gameplay readability に接続できること。弱点は技術詳細が完全な実装手順までは開示されていないこと。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

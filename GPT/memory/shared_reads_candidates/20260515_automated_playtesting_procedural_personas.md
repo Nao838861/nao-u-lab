@@ -8,6 +8,9 @@ evaluated_at: 2026-05-15T05:12:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T05:08:59+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "プロトタイプの headless regression、探索型/収集型/リスク回避型 bot、難度・誘導・資源配置の早期検査。"
   pros_cons: "メリットは人手前の高速スクリーニング。デメリットは persona 設計が偏ると評価対象の盲点も固定される点。"
   verdict_pre: "採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
+next_action: none
 posted:
   ts: "1778789339.493129"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"

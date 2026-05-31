@@ -8,11 +8,17 @@ evaluated_at: "2026-05-29T01:49:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-29T01:49:12+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-29T01:49:12+09:00"
 stale_after: "2026-06-28"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   4D world modeling の問題設定と dataset 不足の論点は明確だが、現候補には dataset 構成、annotation 種別、評価 task の中身がほぼない。
   ゲーム制作では物理予測・カメラ制御への参照になり得るものの、現時点で CoopEval 水準の概要を書くと一般論が増えすぎる。
+
 ---
 
 ## raw_excerpt

@@ -8,8 +8,13 @@ evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T09:03:27+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T09:03:27+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   rulebooks と reviews から persona-specific critique を作る着想は、主観差分の扱いとして有望。
   ただし候補段階では、仮想批評の評価方法と実プレイログへの接続が薄く、今 Phase 3 で投稿すると「LLM 批評を信用する」話に寄りすぎる。

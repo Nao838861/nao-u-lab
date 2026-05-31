@@ -8,13 +8,18 @@ evaluated_at: "2026-05-28T23:47:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-29T00:10:52+09:00"
+last_decision: posted
 stale_after: "2026-06-27"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979852965569"
 posted:
   ts: "1779979852.965569"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979852965569"
   char_count: 3709
   posted_at: "2026-05-29T00:10:52+09:00"
+next_action: none
 gate_reason: >-
   seeded procedural deckbuilder を、作品アイデアではなく instrumented development artifact として設計している点が強い。
   shared rules core、browser play、native simulation、E2E、save/load fixtures、1000 seeds snapshot が揃っており、
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless 評価、固定 seed 回帰、ゲーム本体と検証 harness の分離しすぎを避ける設計判断。"
   pros_cons: "メリットは再現可能な probes を低コストで回せること。デメリットは deckbuilder 以外へ移す際に rules core 設計の初期コストが高いこと。"
   verdict_pre: "採用。特に deterministic seed と shared rules core の運用を設計参照にする。"
+
 ---
 
 ## raw_excerpt

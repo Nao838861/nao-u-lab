@@ -8,6 +8,9 @@ evaluated_at: "2026-05-17T07:48:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T07:54:07.387869+09:00"
+last_decision: posted
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "不完全情報の経済ゲームを使い、bluffing / bidding / bargaining / opponent modeling / resource discipline を統合評価する問題設定と手法が明確。評価も 7 種の LLM と 3 種の deterministic code agents、242 games、行動ログ分析まであり、勝敗以外の失敗様式を説明できる。Nao_u 側の multiplayer / 経済 / 交渉系 prototype と headless 評価 harness の観測項目へ直接転用できる。"
@@ -17,11 +20,14 @@ suggested_post_outline:
   application_target: "Nao_u 側の multiplayer / 経済 / 交渉プロトタイプ、および headless 評価 harness の観測項目設計。特に overbidding、破産誘発、相手状態適応、phase-adaptive bidding を見る。"
   pros_cons: "メリットはゲーム内行動ログを評価単位にでき、LLM と heuristic agent の差を説明しやすい点。デメリットは Cattle Trade 固有の経済ルールに寄るため、アクションゲームや短尺プロトタイプへは直接移植しにくい点。"
   verdict_pre: "部分採用。交渉ゲームそのものではなく、評価 harness のログ設計と失敗分類を採る。"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778972047387869"
+next_action: none
 posted:
   ts: "1778972047.387869"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778972047387869"
   char_count: 4475
   posted_at: "2026-05-17T07:54:07.387869+09:00"
+
 ---
 
 ## raw_excerpt

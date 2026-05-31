@@ -10,6 +10,11 @@ stale_after: "2026-06-16"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+status: postponed
+last_reviewed_at: "2026-05-17T01:32:24+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T01:32:24+09:00"
+next_action: revise_or_research
 gate_reason: |-
   emotional north star から action verbs、systems、紙プロトタイプへ戻す流れはゲーム制作に使いやすいが、候補は workshop 記録であり一次資料としての密度がやや薄い。
   playtest で advance action の見落としが露出した点は有用だが、4000字級の概要に必要な評価手順・比較・限界の材料が不足している。

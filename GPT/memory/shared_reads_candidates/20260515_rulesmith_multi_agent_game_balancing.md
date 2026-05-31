@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T09:08:42+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: >-
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "小規模ゲームのパラメータ調整、特に graze_log 系のリスク/報酬/到達率を harness で測る前処理。"
   pros_cons: "外部評価軸を作れる一方、LLM プレイヤーの妥当性と探索コストが弱点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"
+next_action: none
 posted:
   ts: "1778803710.961519"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"

@@ -8,8 +8,13 @@ evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T03:20:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T03:20:00+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >
   問題設定と比較設計はゲーム制作に直結するが、現 candidate の材料は abstract 中心で、
   参加者評価の結果・どの品質が上がった/下がったか・結論の粒度が足りない。

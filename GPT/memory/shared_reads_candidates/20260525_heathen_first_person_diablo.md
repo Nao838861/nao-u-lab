@@ -8,6 +8,10 @@ evaluated_at: "2026-05-25T18:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T18:44:10+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702138512369"
 posted:
   ts: "1779702138.512369"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779702138512369"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T18:44:10+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   Diablo 1 的な価値を first-person 化する際の保存対象が、horror/minimalism、手触りとしての武器差、tight affix、tile chunk + node graph まで具体化されている。
   小型プロトタイプでも「数値差を操作感差に翻訳する」「完全自動生成ではなく pacing 制御を残す」という適用点があり、4000字級の概要に必要な重要要素を抽出できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Pulse Relay や短編 dungeon prototype の敵/武器/部屋生成で、数値差ではなくプレイヤーが知覚できる差へ変換する設計チェックに使う。"
   pros_cons: "利点は小さい素材数でも密度を出せること。弱点は記事がインタビュー中心で、生成器や戦闘評価の定量情報は薄いこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

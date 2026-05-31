@@ -8,9 +8,15 @@ evaluated_at: "2026-05-26T16:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-26T16:05:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-26T16:05:00+09:00"
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: "制作思想としては有用だが、現 candidate から抽出できるのは authorial craft / handmade placement の価値判断が中心で、手法の中核・評価設計・結論を CoopEval 水準で厚く書く材料が不足している。ゲーム制作メモには向くが #shared-reads 投稿候補としては落とす。"
+next_action: keep_for_reference
+
 ---
 
 ## raw_excerpt

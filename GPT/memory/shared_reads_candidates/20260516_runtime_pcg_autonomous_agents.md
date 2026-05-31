@@ -9,13 +9,18 @@ evaluated_at: 2026-05-16T07:36:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T08:01:09+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884869679689"
 posted:
   ts: "1778884869.679689"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884869679689"
   char_count: 3609
   posted_at: "2026-05-16T08:01:09+09:00"
+next_action: none
 gate_reason: |
   問題設定、WFC着想の生成、先行する2種類のagent検査、ray/sweep/crash report、評価軸まで候補メモ内で揃っている。
   生成物をプレイヤー到達前に検査する構図が、ヘッドレス評価・ランタイム安全網・PCG制作の具体場面へ直接移せる。

@@ -8,11 +8,17 @@ evaluated_at: "2026-05-30T08:55:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-30T08:55:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-30T08:55:00+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   Dataset / Model / Harness / Benchmark の 4 層整理は有用だが、現 candidate の内容はサーベイの地図に寄っており、個別手法・評価結果・失敗知見の密度が不足している。
   ゲーム制作への適用は分類軸としては使える一方、CoopEval 水準の約4000字概要を書くには本文精読と具体例の補強が必要。
+
 ---
 
 ## raw_excerpt

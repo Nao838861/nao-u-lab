@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T21:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T22:19:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609"
 posted:
   ts: "1779885575.577609"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T22:19:35+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: |-
   PCG を一発生成ではなく perceive/reason/plan/edit の編集ループとして扱う問題設定が明確で、古典 PCG ツールと LLM エージェントの分担も抽出できている。
   複数ゲームジャンル、行動ベース評価、明示メトリクスがあり、Nao_u_BOT の headless 評価・生成/検証分離の改善に具体的に接続できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の playable diff 前のレベル候補修正、headless bot policy、失敗理由を残す生成検証ループ。"
   pros_cons: "利点は生成と評価を閉じた反復にできること。弱点は自然言語指示とメトリクス設計に品質が強く依存すること。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

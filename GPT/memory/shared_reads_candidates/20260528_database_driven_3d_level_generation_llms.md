@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T19:32:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T20:15:42+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779964542217749"
 posted:
   ts: "1779964542.217749"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779964542217749"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T20:15:42+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |
   問題設定、database-driven という中核発想、Room / Facility / Mechanics Database、constraint optimization、two-phase repair まで候補本文から抽出できる。
   LLM を runtime generator ではなく reusable design database 構築補助へ寄せる点が、Nao_u 側の level template / progression rule 分離に具体的に効く。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "小規模ゲームのステージ部品、敵配置、進行テンポを data layer と generation rule に分け、LLM は候補部品の増幅とタグ付けに使う。"
   pros_cons: "長所は制御性・再利用性・検証可能性、短所は database 品質依存、3D 論文から 2D/小規模プロトタイプへ落とす時の抽象化コスト。"
   verdict_pre: "部分採用。runtime 自動生成ではなく、制作前の部屋・ギミック・テンポ語彙の整備に使う。"
+
 ---
 
 ## raw_excerpt

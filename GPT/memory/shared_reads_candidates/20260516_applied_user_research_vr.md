@@ -10,6 +10,11 @@ stale_after: "2026-06-15"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
+status: failed
+last_reviewed_at: "2026-05-16T23:32:45+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-16T23:32:45+09:00"
+next_action: keep_for_reference
 gate_reason: |-
   VR ユーザーリサーチの概観としては有用だが、候補本文だけでは個別手法・評価設計・結論の密度が不足している。
   2026-05-12 に同一 arXiv の shared-reads 再投稿履歴もあり、現状の材料で再投稿すると一般論の水増しになりやすい。

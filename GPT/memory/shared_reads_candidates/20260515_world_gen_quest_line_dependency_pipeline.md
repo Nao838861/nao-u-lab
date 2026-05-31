@@ -8,11 +8,16 @@ evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T17:30:14+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
   world、NPC、player character、campaign quest、quest expansion を structured JSON で段階接続する中核が明確で、coherence を data flow と schema で支える論点がある。
   RPG 生成に限らず、ゲーム仕様を一気に作らず中間表現と破綻確認点に分ける設計へ適用できる。
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"
+next_action: none
 posted:
   ts: "1778833809.466169"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"

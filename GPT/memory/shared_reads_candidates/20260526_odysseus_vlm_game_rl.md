@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T03:29:40+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779732980931389"
 posted:
   ts: "1779732980.931389"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779732980931389"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T03:29:40+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: >-
   100+ turn の長期意思決定で VLM agent が崩れる問題、turn-level critic 付き RL、Super Mario Land 評価という骨格が揃っている。
   Nao_u_BOT の headless 評価が短期入力列に寄りがちな問題へ、長期ターン安定性と action prior の観点を直接持ち込める。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "headless playtest harness、長期 run の崩壊検出、BOMB なし完走などの評価設計に適用する。"
   pros_cons: "強みは長期行動評価の具体軸がある点。弱みは Super Mario Land 依存と RL 訓練コストで、即時実装は proxy 指標からになる点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

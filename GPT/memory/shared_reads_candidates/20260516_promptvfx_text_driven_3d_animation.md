@@ -8,9 +8,14 @@ evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-16T09:44:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-16T09:44:00+09:00"
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: "text-driven 4D flow field と 3D Gaussian animation の技術候補としては面白いが、現候補だけでは評価内容やゲーム制作サイクルへの具体適用が薄い。#shared-reads のゲーム制作向け4000字概要としては、制作評価よりビジュアル技術紹介に寄りすぎる。"
+next_action: keep_for_reference
 
 ---
 

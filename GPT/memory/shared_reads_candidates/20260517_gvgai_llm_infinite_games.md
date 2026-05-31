@@ -10,6 +10,9 @@ stale_after: "2026-06-16"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+status: posted
+last_reviewed_at: "2026-05-17T01:38:12+09:00"
+last_decision: posted
 gate_reason: |-
   LLM agent を固定タスクではなく、GVGAI のゲーム記述と ASCII scene で増殖可能な infinite games に当てる問題設定が明確。
   meaningful step ratio、step efficiency、overall score など、勝敗以外の失敗観測を headless/scripted player 評価へ移植できる。
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の prototype/headless 評価で、勝敗だけでなく無意味入力率、進行効率、局面理解ミスをイベント列から測る probe に使う。"
   pros_cons: "メリットは小型ゲームの自動評価を定量化できる点。デメリットは benchmark が arcade-style に寄り、創作中ゲームの面白さ評価へ直結しない点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778949410890539"
+next_action: none
 posted:
   ts: "1778949410.890539"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778949410890539"

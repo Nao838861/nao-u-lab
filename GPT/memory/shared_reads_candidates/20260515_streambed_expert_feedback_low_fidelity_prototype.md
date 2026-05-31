@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T21:38:33+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "ゲーム制作で、専門領域や複雑なシステムをプレイヤーに学ばせる時の cue 設計、早期試作、専門家レビュー導線に効く。"
   pros_cons: "メリットは制作前半で専門知をゲーム内行動へ翻訳できること。デメリットは対象領域依存が強く、面白さ評価とは別の検証が必要なこと。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709778919"
+next_action: none
 posted:
   ts: "1778848709.778919"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709778919"

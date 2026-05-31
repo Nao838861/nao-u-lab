@@ -8,11 +8,17 @@ evaluated_at: "2026-05-25T16:13:12+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-25T16:13:12+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-25T16:13:12+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   2D/3D 間の rule consistency、editor-first、trigger 対応表という適用先は具体的で、ゲーム制作への接続も自然。
   ただし候補本文だけでは評価・失敗例・比較対象が不足し、4000字級の投稿にするには追加の一次情報確認が必要。
+
 ---
 
 ## raw_excerpt

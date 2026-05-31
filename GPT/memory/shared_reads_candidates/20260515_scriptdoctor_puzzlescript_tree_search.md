@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T23:40:20+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "Nao_u の puzzle / gridworld 系プロトタイプで、生成候補を compile/playtest/selection loop に通してから人間レビューへ出す運用に効く。"
   pros_cons: "メリットは実行可能性と遊べるかを loop 内で検査する点。デメリットは PuzzleScript の制約に支えられており、汎用ゲームへそのまま広げると検証信号が弱くなる点。"
   verdict_pre: "採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199"
+next_action: none
 posted:
   ts: "1778856016.745199"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199"

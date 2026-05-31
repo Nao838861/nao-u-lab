@@ -8,6 +8,10 @@ evaluated_at: "2026-05-30T04:32:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-30T04:39:17+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083447346219"
 posted:
   ts: "1780083447.346219"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083447346219"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-30T04:39:17+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: none
 gate_reason: |-
   LLM 生成を自由文ではなく schema-governed knowledge artifact として扱い、repair、engine admission、Unity runtime probe まで接続する中核が明確。
   自動構造評価、engine-level playability、人間評価を合わせており、Nao_u 側の prototype validation / design_log / headless 検証に直接移せる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "ゲームプロトタイプのクエスト、NPC、対話条件、interaction rules を design_log と headless probe に落とし込む際の検証ライフサイクル。"
   pros_cons: "メリットは LLM 出力を実装可能性で縛れる点。デメリットは schema 設計と admission rule が重く、小規模作品では初期コストが高い点。"
   verdict_pre: "部分採用。完成形の大規模 KMS ではなく、schema + repair + engine probe の最小セットを制作サイクルへ輸入する。"
+
 ---
 
 ## raw_excerpt

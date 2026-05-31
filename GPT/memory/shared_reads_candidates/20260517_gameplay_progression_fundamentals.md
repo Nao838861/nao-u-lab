@@ -8,9 +8,15 @@ evaluated_at: "2026-05-17T12:02:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T12:02:16+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T12:02:16+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "ゲーム制作への適用性は高く、mechanics/rewards/difficulty/duration を分ける実務軸として使える。一方で候補本文の範囲では評価実験や検証の中身が薄く、CoopEval 水準の ~4000 字概要にするには一次記事の精読と事例補強が必要。今回は pass を捻出せず postpone。"
+next_action: revise_or_research
+
 ---
 
 ## raw_excerpt

@@ -8,11 +8,17 @@ evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-25T07:07:52+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-25T07:07:52+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   unique mechanic が camera/UI/tutorial/genre expectation と衝突する観点は実用的だが、現候補の材料は Reddit postmortem とコメント要約に寄っている。
   Phase 3 品質にするには、失敗デモの具体構造や反応パターンをもう少し一次情報から固める必要があるため保留する。
+
 ---
 
 ## raw_excerpt

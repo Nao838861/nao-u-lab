@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T04:47:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T04:51:42.9034759+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779825099980279"
 posted:
   ts: "1779825099.980279"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779825099980279"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T04:51:42.9034759+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: |-
   静的 benchmark の限界を evaluator/trainer の two-player game として定式化し、手法の中核と評価結果を抽出できる。
   headless playtest やゲームAI評価で、固定課題への過適応と変換下での一般化を分けて見る具体的な適用先がある。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless playtest、敵AI・エージェント評価、固定 seed/固定課題への過適応検出"
   pros_cons: "利点は評価の過適応を検出しやすいこと。弱点は変換群の設計が評価者の仮説に強く依存すること。"
   verdict_pre: "部分採用。ゲーム制作では benchmark そのものではなく、評価課題を変換して破綻点を見る probe として採用する。"
+
 ---
 
 ## raw_excerpt

@@ -8,11 +8,16 @@ evaluated_at: "2026-05-16T21:33:15+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T09:08:30+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: |
   問題設定、LLM self-play と Bayesian optimization の組み合わせ、CivMini 上の評価指標、返される rule adjustments が候補メモだけでも分離できる。
   Nao_u_BOT の小規模対戦/資源管理プロトタイプで、勝率差や行動分布を deterministic probe にして数値調整へ接続できるため、ゲーム制作への適用が具体的。
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"
+next_action: none
 posted:
   ts: "1778803710.961519"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"

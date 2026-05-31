@@ -8,11 +8,17 @@ evaluated_at: "2026-05-17T22:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-17T22:56:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-17T22:56:00+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   短期 jam で scope を削る判断、LLM narrative の薄さ、vibe coding の debug 負債という論点は有用。
   ただし素材は制作反省の箇条書きに近く、問題設定・手法の中核・評価の中身を CoopEval 水準の概要へ展開するには根拠量が足りない。
+
 ---
 
 ## raw_excerpt

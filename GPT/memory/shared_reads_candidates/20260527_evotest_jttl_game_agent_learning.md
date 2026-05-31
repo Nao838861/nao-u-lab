@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T00:54:13+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809653165429"
 posted:
   ts: "1779809653.165429"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809653165429"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T00:54:13+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: >-
   J-TTL の問題設定、EvoTest の Actor/Evolver 構成、episode 間で system configuration を更新する中核、
   baseline 比較と Detective/Library の結論まで抽出できる。headless playtest を単発評価から反復学習評価へ拡張する具体性があり、4000字概要に耐える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u 系 headless harness の複数 episode 化、ログから次回 policy/rubric/tool-use を変える評価サイクル。"
   pros_cons: "メリットは評価と改善が同じ loop に乗る点。デメリットは transcript 解析品質への依存、ゲーム側が探索学習に向く設計を要する点。"
   verdict_pre: "部分採用。すぐ実装するなら headless run の反復ログ比較と config 差分記録から始める。"
+
 ---
 
 ## raw_excerpt

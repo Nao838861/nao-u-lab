@@ -8,13 +8,18 @@ evaluated_at: "2026-05-19T23:23:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-19T23:30:54+09:00"
+last_decision: posted
 stale_after: "2026-06-18"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779201047326029"
 posted:
   ts: "1779201047.326029"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779201047326029"
   char_count: 3503
   posted_at: "2026-05-19T23:30:54+09:00"
+next_action: none
 gate_reason: |
   問題設定は「作れる形が遊びに接続していない」ことで、陶芸表現を性能・当たり判定・移動条件へ接続する設計判断が具体的に取れる。
   厳密シミュレーションを捨て、プレイヤーが体感できる差だけを残す判断も、短期プロトタイプの制約設計へ直結する。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "自作ゲームのキャラ/武器/地形エディタで、見た目の自由度をそのまま遊びの入力にせず、少数の性能軸へ畳む判断に効く。"
   pros_cons: "メリットは創作とゲーム本編が分断しないこと。デメリットは形状差を簡略化しすぎるとプレイヤーの作品性が消えること。"
   verdict_pre: "部分採用。物理や形状を厳密化する前に、プレイヤーが読める性能軸へ落とす設計チェックとして使う。"
+
 ---
 
 ## raw_excerpt

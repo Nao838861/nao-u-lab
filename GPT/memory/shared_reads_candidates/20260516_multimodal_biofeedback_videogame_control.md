@@ -8,6 +8,9 @@ evaluated_at: 2026-05-16T03:31:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T03:40:29+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: >-
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "ブラウザゲームやプロトタイプでの同時入力、長押し、移動量、視線/カーソル滞留などを深さとして扱う時の評価項目設計。"
   pros_cons: "メリットは入力の複雑化を realism/depth と負荷/安全性の両面で検査できる点。デメリットは古い研究でサンプルやデバイス前提が限定的な点、現行制作では生体センサー部分を抽象化して読む必要がある点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129"
+next_action: none
 posted:
   ts: "1778870430.127129"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129"

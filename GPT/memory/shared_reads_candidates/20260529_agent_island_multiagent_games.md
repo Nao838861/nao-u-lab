@@ -8,6 +8,10 @@ evaluated_at: 2026-05-29T12:37:16+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-29T12:37:16+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-29T12:37:16+09:00"
 phase3_review:
   reviewed_at: "2026-05-29T13:05:00+09:00"
   decision: postpone
@@ -17,6 +21,7 @@ phase3_review:
     permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
 stale_after: "2026-06-28"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   saturation / contamination に強い multi-agent game benchmark という問題設定、協力・対立・説得を含む環境、Bayesian Plackett-Luce による ranking、ログ分析までの重要要素が抽出できる。
   Nao_u_BOT の社会心理・交渉・NPC 相互作用ゲームで、ログ設計と行動バイアス評価に具体的に使えるため、Phase 3 投稿水準の概要を書ける。
@@ -26,6 +31,7 @@ suggested_post_outline:
   application_target: "社会心理・交渉・NPC 相互作用プロトタイプで、プレイログから協力、裏切り、説得、同盟形成の偏りを後から読める設計。"
   pros_cons: "利点は静的ベンチより汚染に強く、ゲームログが設計知見に戻ること。懸念は winner-take-all 評価が面白さや役割演技を単純化する点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

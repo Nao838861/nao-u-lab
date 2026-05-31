@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T01:55:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T01:40:30+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779899859079309"
 posted:
   ts: "1779899859.079309"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779899859079309"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T01:40:30+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |
   skill を実行 agent と optimizer に分け、検証セットで小さく編集する構図が抽出できる。
   ゲーム制作の headless 評価・prompt/skill 改善サイクルへ具体的に適用でき、投稿では全書き換えを避ける運用設計まで論じられる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のゲーム制作 skill、headless 評価手順、Phase 3b の小 probe 設計に適用する。"
   pros_cons: "メリットは skill 改善を測定可能にできる点。デメリットは検証セット設計が弱いと局所最適や過学習を招く点。"
   verdict_pre: "部分採用。まず既存 skill の全面改稿ではなく、1 task・1 validation set の probe に落とす。"
+
 ---
 
 ## raw_excerpt

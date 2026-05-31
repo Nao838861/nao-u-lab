@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T00:28:04+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T00:28:04+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   routine checking と director concept 照合 agent という適用先は強いが、候補は二次記事であり、4000字の概要を書くには一次 interview 側の文脈確認が足りない。
   Phase 3 投稿候補にするなら、4Gamer/Automaton 側の原文に当たり、運用フローと発言範囲を確認してから再評価する。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T21:32:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T21:36:09+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971755674859"
 posted:
   ts: "1779971755.674859"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971755674859"
@@ -16,12 +20,14 @@ posted:
 stale_after: "2026-06-27"
 supersedes: []
 gate_reason: "goal pattern を Unity 上の executable playable concept に落とす問題で、抽象的な発想から entity / constraint / rule-driven dynamics へ分解する中核が明確。ゲーム制作への適用が直接的で、発想メモではなく playable artifact 対応で candidate を残す基準として使える。"
+next_action: none
 suggested_post_outline:
   overview_angle: "LLM にゲームを丸投げする話ではなく、game design knowledge representation を playable artifact に変換する制約付き合成として紹介する。"
   analysis_axis: "goal pattern、structural constraints、Unity architecture、gameplay meaning preservation の関係を見る。特に高レベル目標を entity / constraint / rule dynamics に分解する点を中心にする。"
   application_target: "小型 prototype の企画メモを、goal pattern / constraint / playable artifact の対応表として残し、実装前の品質ゲートにする用途。"
   pros_cons: "メリットは発想から実装までの欠落を見つけやすいこと。デメリットは Unity 前提や設計表現の粒度が強く、別エンジンや短時間 jam では重くなりうること。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T12:02:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T12:08:49+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987311130029"
 posted:
   ts: "1778987311.130029"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987311130029"
@@ -16,12 +20,14 @@ posted:
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、着想、agent variation による solvability difference、Mario AI Framework での評価範囲、結論が明確。ゲーム制作への適用は tutorial / onboarding / level gate に具体的で、文章説明ではなく行動要求として mechanic を教える軸が強い。~4000 字概要も、手法の単純さと限界を含めて構成できる。"
+next_action: none
 suggested_post_outline:
   overview_angle: "tutorial を説明文ではなく、特定 mechanic を使わないと解けない小レベルとして生成・検査する発想。"
   analysis_axis: "完全 agent と能力欠損 agent の solvability difference を、mechanic teaching の検査条件にする点。"
   application_target: "新 mechanic 導入直後の小ステージ、パズル/アクションの onboarding、プレイヤーに操作を体得させる level gate。"
   pros_cons: "メリットは mechanic 要求を実行可能な判定に落とせる点。デメリットは agent モデルを作れる範囲に依存し、楽しさや人間の学習負荷は別評価が必要な点。"
   verdict_pre: "部分採用。tutorial 設計時の検査条件として採用し、人間プレイテストで補完。"
+
 ---
 
 ## raw_excerpt

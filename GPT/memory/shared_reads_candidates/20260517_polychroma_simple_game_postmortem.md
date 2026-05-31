@@ -8,11 +8,17 @@ evaluated_at: "2026-05-17T22:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-17T22:56:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-17T22:56:00+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   simple に見える mechanic/dialogue system が実装負債を膨らませる例としては読める。
   しかし UI polish と未完成 mechanics の一般的反省に留まり、ゲーム制作サイクルへ持ち込める具体手法や評価設計が弱い。
+
 ---
 
 ## raw_excerpt

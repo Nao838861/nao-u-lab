@@ -8,12 +8,18 @@ evaluated_at: 2026-05-17T17:02:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T17:02:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T17:02:23+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   入力分類・ノイズ平滑化・ゲームアクションとの意味対応という設計要素は抽出できる。
   ただし臨床寄りの予備評価で、ゲーム制作一般への適用は「身体入力プロトタイプ」に限定される。
   Phase 3 の ~4000 字投稿にするには、accessibility input design の比較文脈を追加してから扱う方がよい。
+
 ---
 
 ## raw_excerpt

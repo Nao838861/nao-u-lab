@@ -8,6 +8,10 @@ evaluated_at: 2026-05-25T20:44:38+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T20:53:59+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898875179"
 posted:
   ts: "1779709898.875179"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898875179"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T20:53:59+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   labyrinth-building / trap placement / enemy routing を中心に、プレイヤー実験を成立させる設計判断と post-launch balancing の論点が抽出できる。
   Nao_u_BOT の経路・装置・難度調整プロトタイプへ具体適用でき、demo 滞在時間という評価観点も使える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "罠・経路・敵誘導を持つ小規模プロトタイプで、探索導線、シナジー可視化、滞在時間評価、nerf 方針に使う。"
   pros_cons: "メリットは設計と運用の両方に落とせる点。デメリットはインタビュー記事で、定量データは demo 滞在時間程度に限られる点。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-31T02:48:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-31T02:53:24.831419+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780163604831419"
 posted:
   ts: "1780163604.831419"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780163604831419"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-31T02:53:24.831419+09:00"
 stale_after: "2026-06-30"
 supersedes: []
+next_action: none
 gate_reason: |
   gameplay telemetry から player model を作り、可視化・reflective prompts・recommendations としてプレイヤーへ戻す feedback loop が明確。
   Frontend / stateless Backend / two-tier Log Storage という構成要素も抽出でき、学習ゲームに限らず練習場・リプレイ・助言UIへ転用しやすい。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Nao_u 作品の練習モード、リプレイ診断、難所ヒント、Slack/プレイログからの自己改善ループ"
   pros_cons: "メリットはログが行動変化に直結すること。デメリットは可視化の誤解、過剰な助言、教育文脈外での動機づけ設計不足。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

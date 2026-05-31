@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T03:31:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T04:17:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
 posted:
   ts: "1778956655.699379"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
@@ -16,12 +20,14 @@ posted:
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、benchmark 構成、評価結果、画像・動画 feedback loop の効果が候補メモ内で揃っている。Nao_u_BOT のゲーム制作 harness に直接接続でき、~4000字の概要で失敗分類と検査ループの話まで展開できる。"
+next_action: none
 suggested_post_outline:
   overview_angle: "ゲーム開発 agent を、コードだけでなく視覚・アセット・実行時挙動を含む multimodal software task として評価する benchmark として書く。"
   analysis_axis: "132 task の構成、既存 coding benchmark との差、multimodal complexity と成功率、画像・動画 feedback mechanism の改善幅を軸にする。"
   application_target: "shot_log / graze_log 系の headless 検査に、スクリーンショット・録画・差分観察を入れる評価 harness 設計へ接続する。"
   pros_cons: "メリットは agent game dev の失敗を測る語彙が増える点。デメリットは benchmark 成功率をそのまま作品品質や面白さの評価に混同しやすい点。"
   verdict_pre: "部分採用。制作 agent の能力評価ではなく、視覚 feedback を検査ループに入れる設計資料として採用する。"
+
 ---
 
 ## raw_excerpt

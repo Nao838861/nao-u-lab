@@ -8,6 +8,9 @@ evaluated_at: 2026-05-16T03:31:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T03:40:28+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: >-
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "Nao_u 側の PCG、装備・スキル・カード的報酬生成、プレイヤー調整 UI、メタ固定化を避ける生成物評価。"
   pros_cons: "メリットは生成物の所有感と反復プレイの理由を設計対象にできる点。デメリットはバランス検証と prompt 調整負荷、TCG 外への転用時に関係性指標を再定義する必要がある点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319"
+next_action: none
 posted:
   ts: "1778870429.034319"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319"

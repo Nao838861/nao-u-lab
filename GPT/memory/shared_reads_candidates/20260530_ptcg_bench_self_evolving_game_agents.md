@@ -8,13 +8,18 @@ evaluated_at: "2026-05-30T02:19:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-30T02:51:58+09:00"
+last_decision: posted
 stale_after: "2026-06-29"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739"
 posted:
   ts: "1780075916.989739"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739"
   char_count: 4006
   posted_at: "2026-05-30T02:51:58+09:00"
+next_action: none
 gate_reason: |
   Pokemon TCG という複雑な対戦環境を使い、単発性能と経験蓄積による self-evolution を分けて測る問題設定が明確。
   harness ablation により「モデル能力」と「評価器・ログ・経験管理の設計」を分離して見られるため、ゲーム制作の headless 評価設計に直接使える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless playtest、対戦ログ蓄積、修正後の再評価 harness 設計。"
   pros_cons: "メリットは評価対象を環境・経験・agent に分解できる点。デメリットは Pokemon TCG 固有性と安定した成長の難しさ。"
   verdict_pre: "部分採用。ゲーム本体ではなく評価 harness とログ設計の参照として使う。"
+
 ---
 
 ## raw_excerpt

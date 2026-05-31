@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T07:32:02+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T07:37:48+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
 posted:
   ts: "1778971050.740239"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T07:37:48+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: >
   saturation / contamination resistant benchmark という問題設定、multiagent game 化、Bayesian Plackett-Luce による skill 推定、
   99 games / 49 models と provider bias 分析まで candidate 内で抽出できる。ゲームを agent 評価装置として使う設計にも直接つながる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u 側の agent / game harness で、単体解答では見えない交渉、同盟、投票、provider bias を読む評価設計に効く。"
   pros_cons: "長所は相互作用ログと不確実性つき rank が残る点。短所は game 固有の戦略適性や provider 分布が評価結果に混ざる点。"
   verdict_pre: "部分採用。benchmark 全体ではなく、対戦・投票ログを評価 artifact として残す発想を取り込む。"
+
 ---
 
 ## raw_excerpt

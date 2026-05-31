@@ -8,12 +8,18 @@ evaluated_at: "2026-05-19T23:23:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-19T23:23:11+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-19T23:23:11+09:00"
 stale_after: "2026-06-18"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |
   CPU/ネットワークを gameplay に使うという問題提起は強いが、記事はインタビュー由来の思想紹介に近い。
   具体的な手法、評価方法、制作で再利用できる粒度のプロセスが excerpt からは不足している。
   shared-reads へ 4000 字級で出すと、ゲーム制作への適用が「相互作用を増やすべき」という一般論に寄りやすい。
+
 ---
 
 ## raw_excerpt

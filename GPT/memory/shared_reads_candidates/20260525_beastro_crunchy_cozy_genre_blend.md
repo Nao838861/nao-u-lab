@@ -8,11 +8,17 @@ evaluated_at: 2026-05-25T20:44:38+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-25T20:44:38+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-25T20:44:38+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   crunchy cozy / cooking / deckbuilding / puppet battle というジャンル統合の着想は有用だが、候補メモだけでは評価の中身と結論が薄い。
   Nao_u_BOT への適用は可能だが、Phase 3 の ~4000字概要に耐えるには追加の一次情報確認が必要。
+
 ---
 
 ## raw_excerpt

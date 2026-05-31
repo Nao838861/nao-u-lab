@@ -9,6 +9,9 @@ evaluated_at: 2026-05-16T11:33:56+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T11:41:36+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: |-
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のゲーム制作で、brainstorm 候補を playable diff 前に評価・交叉・棄却する小さな設計ループへ適用する。"
   pros_cons: "長所は発散と選別を同じプロトコルに載せられる点。短所は評価者の選好が曖昧だと探索が偏り、LLM 出力の品質管理が別途必要な点。"
   verdict_pre: "部分採用。実装自動化より、候補設計ログと選好フィードバックの型として使う。"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778899287487259"
+next_action: none
 posted:
   ts: "1778899287.487259"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778899287487259"

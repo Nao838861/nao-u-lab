@@ -8,8 +8,13 @@ evaluated_at: "2026-05-30T00:18:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-30T00:18:07+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-30T00:18:07+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   Phase 3 で同一 URL の既投稿を確認したため撤退。2026-05-27 に #shared-reads 投稿済み:
   https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609
@@ -20,6 +25,7 @@ suggested_post_outline:
   application_target: "game/* の headless 評価、route/bad-policy split、ステージ編集 probe を、生成器の外部採点ではなく編集ループ内 feedback に戻す設計。"
   pros_cons: "長所は設計意図と機能制約を同じループで扱える点。弱点は tool 設計、metric 偏り、simulation agent の限界が生成品質を支配する点。"
   verdict_pre: "部分採用。PCG 全体ではなく、短いステージ差分を feedback 付きで直す probe から使う。"
+
 ---
 
 ## raw_excerpt

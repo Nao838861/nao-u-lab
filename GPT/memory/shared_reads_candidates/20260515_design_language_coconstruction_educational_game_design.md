@@ -8,8 +8,13 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-15T23:33:39+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-15T23:33:39+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |
   教育目標と game design language を共構築する問題設定は有用だが、Doctoral Consortium 論文として枠組み提案の色が強く、評価の中身が薄い。
   Nao_u 環境への適用も「設計会話を残す」以上に具体化しにくく、CoopEval 水準の概要に必要な手法・評価・結論の密度が不足している。

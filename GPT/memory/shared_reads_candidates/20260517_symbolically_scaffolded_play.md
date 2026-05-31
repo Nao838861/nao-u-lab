@@ -8,12 +8,18 @@ evaluated_at: "2026-05-17T14:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T14:20:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T14:20:00+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   LLM NPC の prompt constraint、人間プレイ評価、JSON+RAG scaffold の比較軸は重要だが、
   現候補は abstract 由来の情報に寄っており、合成評価の指標・結果・失敗分類の中身が薄い。
   Phase 3 の 4000 字概要にするには本文確認後に evaluation design を補う必要がある。
+
 ---
 
 ## raw_excerpt

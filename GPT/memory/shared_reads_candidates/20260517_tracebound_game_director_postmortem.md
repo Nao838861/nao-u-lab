@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T22:56:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T23:19:40+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779026380879389"
 posted:
   ts: "1779026380.879389"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779026380879389"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T23:19:40+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |-
   vision statement / design pillar sheet / gameplay loop diagram / narrative beat map を、抽象的な感情目標から実装判断へ落とす具体例がある。
   playtest で疲労や disengagement を生んだ mechanic を削る判断まで含み、小規模ゲーム制作の評価フィルタとして転用しやすい。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の短期プロトタイプで、mechanic がテーマに合っていても疲労や disengagement を生む場合に削る評価フィルタ"
   pros_cons: "メリットは抽象ビジョンを実装・検証単位へ落とせること。デメリットは pillar 自体が曖昧だと後付け正当化になりやすいこと"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

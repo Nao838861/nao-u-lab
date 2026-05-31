@@ -13,9 +13,14 @@ evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T09:35:44.290009+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778891744290009"
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: "12種類のゲーム関連問題、content representation / control parameters、quality / diversity / controllability という評価軸が明確で、手法の重要要素を概要に展開できる。Nao_u側のプロトタイプ評価を主観評価から分解指標へ移す具体的な足場になるため、ゲーム制作への適用性も高い。"
+next_action: none
 suggested_post_outline:
   overview_angle: "PCGを単発の生成デモではなく、問題表現・制御パラメータ・quality/diversity/controllabilityで評価する open-source benchmark として紹介する。"
   analysis_axis: "12タスクの範囲、レベル生成以外に rule set 生成も含む点、ベースライン比較、目的関数選択が各指標へ与える影響を軸に読む。"

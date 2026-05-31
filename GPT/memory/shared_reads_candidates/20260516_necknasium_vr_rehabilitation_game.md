@@ -10,6 +10,11 @@ stale_after: "2026-06-15"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+status: postponed
+last_reviewed_at: "2026-05-16T23:32:45+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-16T23:32:45+09:00"
+next_action: revise_or_research
 gate_reason: |-
   身体動作をゲーム目標とフィードバックに変換する題材として、serious game 制作への適用可能性はある。
   ただし現 candidate は問題設定と狙いの excerpt に留まり、具体的 interaction、評価方法、結果が不足しているため、Phase 3 品質にはまだ届かない。

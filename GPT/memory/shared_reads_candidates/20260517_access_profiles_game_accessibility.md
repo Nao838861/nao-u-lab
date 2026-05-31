@@ -10,6 +10,11 @@ stale_after: "2026-06-16"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+status: postponed
+last_reviewed_at: "2026-05-17T01:32:24+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T01:32:24+09:00"
+next_action: revise_or_research
 gate_reason: |-
   accessibility feature を個別オプションではなく、player/developer/engine/launcher/retailer を結ぶ Access Profiles という基盤として扱う問題設定と着想が明確。
   ゲーム制作では、初回設定、入力補助、難度・字幕・発見可能性をプロトタイプ段階から検査項目に落とせるため、具体適用がある。

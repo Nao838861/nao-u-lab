@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T21:00:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T20:47:29+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447983779"
 posted:
   ts: "1779018447.983779"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447983779"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T20:47:29+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |
   retrieval 精度を grep/vector の単体比較ではなく、agent harness と tool-result delivery style の相互作用として評価しており、手法と結論の重要要素を抽出できる。
   ゲームそのものではないが、game-rights feedback、playable diff、shared-reads 候補を次の制作判断へ接続する検索基盤の評価軸として具体的に適用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の memory_recall / rg recall / candidate gate で、検索手段だけでなく検索結果を次の playable diff へ渡す形式を検証する場面。"
   pros_cons: "利点は現行の rg 中心運用を評価可能な仮説に落とせること。弱点はゲーム制作の一次手法ではなく、適用先が記憶・ログ運用に寄ること。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -8,13 +8,18 @@ evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T07:07:16.378854+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796437903149"
 posted:
   ts: "1778796437.903149"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796437903149"
   char_count: 3958
   posted_at: "2026-05-15T07:07:16.378854+09:00"
+next_action: none
 gate_reason: >-
   code coverage と gameplay intent の分断という問題設定、AST diff から reward を作る中核、Overcooked/Minecraft 評価指標が揃っている。
   Nao_u 環境の「今回触った分岐をプレイが踏んだか」問題に直結し、実装可能な harness probe へ落とせる。

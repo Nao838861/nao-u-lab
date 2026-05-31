@@ -8,9 +8,15 @@ evaluated_at: 2026-05-18T05:48:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-18T05:48:52+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-18T05:48:52+09:00"
 stale_after: "2026-06-17"
 supersedes: []
 gate_reason: "72 時間 jam の準備・発想・2D から 3D puzzle への転換は参考になるが、候補本文からは評価結果や失敗分析の厚みが不足している。自分達の制作に使える具体軸はあるものの、#shared-reads に残す 4000 字級の概要にするには材料が足りない。"
+next_action: keep_for_reference
+
 ---
 
 ## raw_excerpt

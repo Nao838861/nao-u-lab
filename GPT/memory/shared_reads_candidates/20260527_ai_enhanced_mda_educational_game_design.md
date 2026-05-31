@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T17:18:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T17:18:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T17:18:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   AI と MDA を接続する問題設定は有用だが、現 candidate は framework の主張と教育用途の一般論に寄っており、具体的な設計手順・評価対象・失敗条件がまだ見えない。
   PDF があり本文補強の余地はあるため fail ではなく postpone とする。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T15:23:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T15:40:58.1167816+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950437392149"
 posted:
   ts: "1779950437.392149"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950437392149"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T15:40:58.1167816+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   問題設定、ToM ベースの監視構造、Reason-Verify-Refine、semantic guardrail memory、評価環境が揃っており、手法の重要要素を抽出できる。
   ゲーム制作では AI プレイヤー、自動テスト agent、NPC の長期ログを意図・期待行動・逸脱として分類する用途に接続できる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "headless テスト bot、AI プレイヤー、NPC の不自然行動検出、失敗リプレイ分類の semantic guardrail 化。"
   pros_cons: "長期ログの失敗理由を構造化できる一方、ゲーム側では belief / intent をどう観測・記録するかの実装負荷が高い。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

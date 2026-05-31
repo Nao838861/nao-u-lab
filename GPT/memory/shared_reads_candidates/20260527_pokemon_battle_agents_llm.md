@@ -1,5 +1,5 @@
 ---
-title: Large Language Models as Pokemon Battle Agents: Strategic Play and Content Generation
+title: "Large Language Models as Pokemon Battle Agents: Strategic Play and Content Generation"
 url: https://arxiv.org/abs/2512.17308
 collected_at: 2026-05-27T08:44:32+09:00
 collected_by: log_cdx (Phase 1)
@@ -8,11 +8,17 @@ evaluated_at: 2026-05-27T08:48:27+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T08:48:27+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T08:48:27+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >
   抽録メモから評価指標と turn-based battle testbed の方向性は読めるが、arXiv ID が 2512 で現在日付から見て時系列確認が必要。
   その確認なしに #shared-reads へ出すと出典信頼性が弱く、ゲーム制作への適用も現状は「LLM evaluator に使えそう」に留まる。
+
 ---
 
 ## raw_excerpt

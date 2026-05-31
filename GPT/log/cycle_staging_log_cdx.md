@@ -150,6 +150,35 @@ designs:
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-31T10:30+09:00 log_cdx Phase 4c:
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260531-001
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase3_post_shared_reads.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/shared_reads_candidates/*.md
+        change: modified
+    summary: "Phase 4b outline 通り、shared_reads_candidates の per-file frontmatter に status / last_reviewed_at / last_decision / evidence / next_action を導入した。Phase 2/3 の書き込み指示と Phase 4a の棚卸し観点も新 schema に合わせた。"
+    partial: false
+migrations:
+  - what: "Phase 2/3 の根拠がある candidate 305 件へ lifecycle metadata を backfill。未判定 12 件は outline 通り一括分類せず未変更。"
+    affected: "memory/shared_reads_candidates/*.md; status_counts = failed 40 / needs_review 6 / posted 146 / postponed 115 / ready_to_post 4 / skipped_unreviewed 6"
+verification:
+  - "python tools\\backfill_shared_reads_candidate_status.py -> changed 0 / anomalies 0"
+  - "memory/shared_reads_candidates/*.md の YAML frontmatter 317 件を PyYAML で parse -> bad_count 0"
+  - "python -m py_compile tools\\backfill_shared_reads_candidate_status.py -> pass"
+  - "python tools\\memory_recall.py \"shared reads candidate lifecycle\" -> recall 出力あり"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

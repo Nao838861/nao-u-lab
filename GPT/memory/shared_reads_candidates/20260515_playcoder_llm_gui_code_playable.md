@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T09:08:42+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: >-
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "HTML/JS 小規模ゲームのヘッドレス操作列、到達不能状態、勝敗/スコア/リスタートの破綻検出。"
   pros_cons: "playable diff の評価を具体化できる一方、GUI agent のタスク設計が浅いと表層クリック検査に落ちる。"
   verdict_pre: "採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803714602289"
+next_action: none
 posted:
   ts: "1778803714.602289"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803714602289"

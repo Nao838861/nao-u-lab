@@ -8,6 +8,9 @@ evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T15:27:00+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: >-
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "NPC 会話、自由入力、生成 AI ギミックを入れる前に、負荷を下げる UI・選択肢・目的提示を設計する基準"
   pros_cons: "メリットは LLM NPC を万能視しない実験根拠。デメリットは prototype と task scenario 依存で、全ジャンルへ直輸入はできない"
   verdict_pre: "採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+next_action: none
 posted:
   ts: "1778826411.891459"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"

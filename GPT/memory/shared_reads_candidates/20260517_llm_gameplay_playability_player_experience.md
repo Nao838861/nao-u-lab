@@ -8,11 +8,17 @@ evaluated_at: "2026-05-17T21:00:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T21:00:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T21:00:00+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   gameplay / playability / player experience という問題設定は Nao_u_BOT に関係するが、candidate 本文は abstract レベルで、2 つの事例の中身や分析手続きがまだ薄い。
   現状では「LLM 統合は多様性を増やすが一貫性を壊す」という一般論に留まり、CoopEval 水準の概要を書くには原文の事例・引用・評価粒度を追加確認する必要がある。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T05:36:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T05:38:02+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963879436699"
 posted:
   ts: "1778963879.436699"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963879436699"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T05:38:02+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |
   repeated security dilemma を通信、人数、有限 horizon で操作する設計なので、問題設定・手法・評価結果・結論が候補段階で具体的に揃っている。
   協力/裏切り/交渉ゲームのルール設計と、LLM player の公開発話・内部推論ログを分ける評価設計に接続でき、4000 字級の概要にも耐える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "協力ゲーム、交渉ゲーム、裏切りを含む小規模プロトタイプ、LLM プレイヤー評価ログ設計"
   pros_cons: "長所はルール変数と行動変化の対応が明確な点。短所は security dilemma の抽象ゲームであり、商用ゲームの体験価値には翻訳が必要な点"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

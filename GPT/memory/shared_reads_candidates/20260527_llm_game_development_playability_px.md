@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T00:55:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809735727529"
 posted:
   ts: "1779809735.727529"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809735727529"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T00:55:35+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: >-
   gameplay / playability / player experience を guiding constructs にし、LLM を制作補助でなくゲーム内 architecture として扱う問題設定が明確。
   variability/personalization と correctness/difficulty/structural coherence のトレードオフを、ゲーム評価項目へ落とし込める。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "LLM-assisted playtest、生成イベント、director concept 照合で見るべき rubric の設計。"
   pros_cons: "メリットは評価語彙を gameplay/PX まで広げられる点。デメリットは preliminary study で一般化に限界がある点。"
   verdict_pre: "部分採用。rubric の観点セットとして採用し、実装手法そのものは別途検証する。"
+
 ---
 
 ## raw_excerpt

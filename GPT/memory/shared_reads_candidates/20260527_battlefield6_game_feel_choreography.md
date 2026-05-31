@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T07:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T06:54:57.401429+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832497401429"
 posted:
   ts: "1779832497.401429"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832497401429"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T06:54:57.401429+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: |
   schedule と取材記事から、perceived latency / behavioral quality / choreography / function over form という中核が抽出できる。
   FPS 事例だが、Pulse Relay / graze_log の「内部ルールが身体感覚へ返らない」失敗に直接接続できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "STG/アクション prototype で、headless 指標の前に『何が起きたかが身体で分かる反応』を設計・レビューする軸に使う。"
   pros_cons: "メリットは game feel を実装単位へ分解できる点。デメリットは Battlefield 6 固有の AAA FPS 文脈が強く、小規模 2D 作品には翻訳が必要な点。"
   verdict_pre: "部分採用。perceived response の評価軸として採用し、演出量の増加ルールにはしない。"
+
 ---
 
 ## raw_excerpt

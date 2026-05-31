@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T07:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T07:08:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T07:08:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   セッション形式と登壇者は有望だが、現時点の candidate は「各 designer がどの rule を提示したか」まで取れていない。
   問題設定・着想・手法の中核を具体化できず、CoopEval 水準の概要を書くと GDC ページ説明の水増しになる。
+
 ---
 
 ## raw_excerpt

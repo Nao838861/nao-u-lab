@@ -9,13 +9,18 @@ evaluated_at: 2026-05-16T07:36:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T08:01:10+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884870965799"
 posted:
   ts: "1778884870.965799"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884870965799"
   char_count: 3720
   posted_at: "2026-05-16T08:01:10+09:00"
+next_action: none
 gate_reason: |
   3つの制御インターフェース、reply-chain decay、action grounding、whisper、評価軸が揃っており、概要の骨格を作れる。
   LLM NPCを自由会話として扱わず、世界実行・相互作用・プレイヤー介入へ分ける視点はゲーム制作に具体的に転用可能。

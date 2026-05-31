@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T03:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-27T03:05:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-27T03:05:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   「どの制約を壊したか」で subgenre を見る観点は使えるが、candidate 内の材料は分類紹介が中心で、手法の評価や結論を CoopEval 水準の概要に展開するには薄い。
   Relay Lane の言語化には補助材料として有用でも、単独で #shared-reads に残す品質には届かない。
+
 ---
 
 ## raw_excerpt

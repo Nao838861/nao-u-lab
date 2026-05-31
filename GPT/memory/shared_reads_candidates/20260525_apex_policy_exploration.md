@@ -8,6 +8,10 @@ evaluated_at: "2026-05-25T09:32:35+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T09:39:41.9098595+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
 posted:
   ts: "1779669494.944199"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T09:39:41.9098595+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   exploration collapse という問題設定、strategy map / fork discovery / policy selection の中核、Jericho と WebArena での評価軸が揃っている。
   ゲーム制作では headless playtest agent が既知攻略に固着する問題へ直結し、探索ログを milestone DAG と未探索 fork に分ける運用へ落とせる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Nao_u 側の探索型ゲーム、text adventure、headless 攻略 bot 評価で、既知ルート反復と新規ルール発見を分離する harness。"
   pros_cons: "利点は探索失敗を構造ログにできる点。弱点は strategy map 設計と evidence 判定が重く、小型ゲームでは過剰になり得る点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

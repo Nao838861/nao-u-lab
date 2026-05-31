@@ -8,6 +8,10 @@ evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T07:15:58+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660801997189"
 posted:
   ts: "1779660801.997189"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779660801997189"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T07:15:58+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   theme を UI/feedback に貼るのではなく、player action と判断軸へ移す pivot が明確で、初期案・失敗観察・再設計の筋が追える。
   72h jam の具体判断として、Nao_u_BOT の短期 prototype で「測りたい軸が操作制約に入っているか」を評価する材料になる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "graze/headless 評価で、測定したい概念が UI 表示ではなく player action の制約に入っているかを見る"
   pros_cons: "短時間 pivot の判断材料として強い一方、完成後評価や広いプレイヤー検証は薄い"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

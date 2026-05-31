@@ -8,9 +8,14 @@ evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-16T09:44:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-16T09:44:00+09:00"
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: "DRL game testing agents で PCG 差分を win rate / training time として見る着想は有用だが、現候補の情報量では framework の構成や評価設計を4000字水準で十分に展開しにくい。serious game / card mechanics への依存も強く、Nao_u側への適用は追加確認後に判断したい。"
+next_action: revise_or_research
 
 ---
 

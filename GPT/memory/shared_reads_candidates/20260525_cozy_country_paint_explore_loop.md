@@ -8,11 +8,17 @@ evaluated_at: "2026-05-25T23:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-25T23:10:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-25T23:10:00+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   creation と exploration を直結する着想は明確だが、記事は製品紹介中心で評価・設計判断・実装上の中核が薄い。
   ゲーム制作への適用は可能でも、CoopEval 水準の 4000 字概要に耐える一次情報密度が足りない。
+
 ---
 
 ## raw_excerpt

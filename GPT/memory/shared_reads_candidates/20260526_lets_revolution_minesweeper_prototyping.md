@@ -8,6 +8,10 @@ evaluated_at: 2026-05-26T13:23:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T13:33:18+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
 posted:
   ts: "1779769858.830679"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T13:33:18+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: |-
   既存ルールをそのまま移植せず、「そのルールを path に適用したら何が起きるか」から playable core へ削る過程が明確。
   whiteboard prototype から energy / health / demon / risk-reward へ段階的に絞る評価材料があり、制作サイクルへ具体適用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "mimicry_log や小規模 puzzle/roguelite 試作で、元ネタの表面でなくプレイヤーの読解行為を抽出する手順に効く。"
   pros_cons: "メリットは抽象ルールを playable に削る判断が追えること。デメリットは個別作の制作記録なので一般化には慎重さが必要なこと。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

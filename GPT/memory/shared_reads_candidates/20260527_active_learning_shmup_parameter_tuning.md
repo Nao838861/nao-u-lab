@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T07:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T06:54:58.557369+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832498557369"
 posted:
   ts: "1779832498.557369"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779832498557369"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T06:54:58.557369+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: |
   問題設定、人間 playtest のコスト、active learning による低レベル parameter tuning、STG case study という重要要素が揃っている。
   Nao_u_BOT の敵密度・弾速・HP・報酬調整に直結し、headless を面白さ判定器にしない注意点も明確に書ける。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "STG prototype の敵密度、弾速、HP、cooldown、報酬量を小さな探索空間に落とし、headless run の使い道を限定する。"
   pros_cons: "メリットは調整作業を再現可能にしやすい点。デメリットは objective 設計を間違えると、測れるが面白くない方向へ最適化する点。"
   verdict_pre: "採用。Phase 3b/4a の probe として、1 prototype 1-2 指標の parameter search に落とす価値が高い。"
+
 ---
 
 ## raw_excerpt

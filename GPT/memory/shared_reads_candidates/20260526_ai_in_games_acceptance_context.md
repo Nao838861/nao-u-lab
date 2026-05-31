@@ -7,6 +7,10 @@ evaluated_at: "2026-05-26T05:12:44+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T05:38:14+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779740294393709"
 posted:
   ts: "1779740294.393709"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779740294393709"
@@ -14,6 +18,7 @@ posted:
   posted_at: "2026-05-26T05:38:14+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: >-
   8つの AI 利用文脈ごとに acceptance / rejection / conditional acceptance を分け、
   6つの evaluative logics へ抽象化しているため、問題設定・手法・評価・結論を概要化できる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   pros_cons: "受容理由と抵抗理由を分離できる一方、質問票研究なので実プレイ中の行動差分は別検証が必要。"
   verdict_pre: "部分採用"
 genre_tags: [game-design, player-experience, ai-in-games, ux, survey]
+
 ---
 
 ## raw_excerpt

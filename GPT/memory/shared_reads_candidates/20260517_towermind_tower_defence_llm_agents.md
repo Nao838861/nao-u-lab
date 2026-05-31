@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T10:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T09:55:21+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979163445409"
 posted:
   ts: "1778979163.445409"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979163445409"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T09:55:21+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: >-
   RTS 評価の重さと textual observation の弱さという問題設定、tower defense 化という着想、
   multimodal observation と 5 benchmark levels による評価、planning validation / multifinality /
@@ -26,6 +31,7 @@ suggested_post_outline:
   application_target: "小型プロトタイプの headless harness で、構造化状態だけでなく画面/テキスト観測別の評価を切る設計。"
   pros_cons: "軽量で実装に落としやすい一方、tower defense 固有の配置最適化へ寄りすぎる危険がある。"
   verdict_pre: "部分採用。benchmark 全体ではなく、観測形式分離と失敗様式ログを制作サイクルへ持ち込む。"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: 2026-05-28T03:55:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T03:45:15+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779907495600839"
 posted:
   ts: "1779907495.600839"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779907495600839"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T03:45:15+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   multi-agent 長時間 run の失敗要因、typed pause record、sub-agent discipline、convergence criteria が揃っており、問題設定から運用手法まで抽出できる。
   ゲーム制作そのものの手法ではないが、Nao_u_BOT の phase 分割、resume、cross_review、headless 評価を壊さず回す制作基盤に直接適用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Codex phases cycle の phase 引き継ぎ、pending game directive、cross_review 前の収束判定、staging log の構造化"
   pros_cons: "利点は長時間作業の再開性と収束条件を明示できる点。弱点は研究運用寄りで、ゲームの面白さ評価には別の実験設計が必要な点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -8,11 +8,17 @@ evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-25T07:07:52+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-25T07:07:52+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   panic timer と movement feel の対比は短期制作の教訓として有用だが、問題設定・検証・結論が個人の振り返りに閉じている。
   CoopEval 水準の「概要」を4000字級で書くには材料が薄く、Phase 3 投稿では一般論に膨らませる危険が高い。
+
 ---
 
 ## raw_excerpt

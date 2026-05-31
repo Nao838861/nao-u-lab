@@ -8,6 +8,9 @@ evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T15:27:00+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: >-
@@ -20,6 +23,8 @@ suggested_post_outline:
   application_target: "小規模ゲームの部屋・通路・地形セットを、手作り資産 + 制約探索 + 即時確認の制作サイクルにする"
   pros_cons: "メリットは制御可能性とプロトタイピング速度。デメリットはパーツ準備コストと制約設計の詰まりやすさ"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"
+next_action: none
 posted:
   ts: "1778826283.429469"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"

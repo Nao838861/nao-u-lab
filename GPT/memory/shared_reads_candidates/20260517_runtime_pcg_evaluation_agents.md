@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T21:00:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T20:47:29+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447709959"
 posted:
   ts: "1779018447.709959"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447709959"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T20:47:29+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |
   PCG の失敗を blocked / repetitive / unsolvable などの runtime 問題として置き、生成ループ内に先行 scanner と traversal agent を入れる手法が具体的に読める。
   Nao_u_BOT の headless 判定や到達不能地形検出に直接接続でき、評価軸も playability / diversity / controllability / performance として概要化できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "graze_log / shot_log 系の headless 評価で、プレイヤーより前に未来地形・弾幕・通路を検査して playable diff の失敗原因を構造化する場面。"
   pros_cons: "利点は PCG の破綻を実プレイ前に検出できること。弱点は endless runner 依存があり、面白さや学習曲線の評価は別軸で補う必要があること。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -8,9 +8,14 @@ evaluated_at: "2026-05-31T07:02:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-31T07:05:24.0719148+09:00"
+last_decision: posted
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: "問題設定、骨格表を先に作る着想、rarity/color/type/slot/faction/mechanic を段階配置する中核、living document として戻る結論が明確。カードゲーム記事だが、敵 wave、報酬分布、mechanic 出現頻度の割り当て表へ具体的に転用でき、Phase 3 の概要密度まで展開可能。"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780178714354139"
+next_action: none
 posted:
   ts: "1780178714.354139"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780178714354139"
@@ -22,6 +27,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の shooter/action prototype で、wave ごとの敵種、弾種、報酬、gimmick、learned mechanic の出現順を実装前に配置する表へ適用する。"
   pros_cons: "メリットはコンテンツ制作前に分布と役割を検査できる点。デメリットは表が設計を固定する危険と、action game では card slot より時間軸・難度曲線への変換が必要な点。"
   verdict_pre: "部分採用。カード制作手順そのものではなく、prototype の encounter/content allocation skeleton として採る。"
+
 ---
 
 ## raw_excerpt

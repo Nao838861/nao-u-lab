@@ -28,7 +28,12 @@ genre_tags: [game-design]
 evaluated_at: "YYYY-MM-DDTHH:MM:SS+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass | postpone | fail
+status: posted | ready_to_post | postponed | failed | needs_review
 candidate_status: posted | ready_to_post | postponed | failed | needs_review
+last_reviewed_at: "YYYY-MM-DDTHH:MM:SS+09:00"
+last_decision: posted | pass | postpone | fail | needs_review
+evidence: "<Slack permalink または gate_decision/evaluated_at>"
+next_action: none | post_to_shared_reads | revise_or_research | keep_for_reference | evaluate_in_phase2
 gate_reason: "<判断理由>"
 stale_after: "YYYY-MM-DD"
 supersedes: []
@@ -40,11 +45,13 @@ posted:
 ---
 ```
 
-- `candidate_status: posted` は #shared-reads 投稿済み。`posted` block を付ける。
-- `candidate_status: ready_to_post` は `gate_decision: pass` だが未投稿。
-- `candidate_status: postponed` は追加調査や密度不足で保留。
-- `candidate_status: failed` は現時点では投稿品質または適用性が足りない。
-- `candidate_status: needs_review` は旧ファイルや未判定ファイルの暫定値。次の Phase 2/4a で再判定する。
+- `status: posted` は #shared-reads 投稿済み。`posted` block を付け、`evidence` は Slack permalink にする。
+- `status: ready_to_post` は `gate_decision: pass` だが未投稿。
+- `status: postponed` は追加調査、密度不足、重複投稿回避などで保留。
+- `status: failed` は現時点では投稿品質または適用性が足りない。
+- `status: needs_review` は旧ファイルや未判定ファイルの暫定値。次の Phase 2/4a で再判定する。
+- `candidate_status` は 2026-05-16/17 導入分との互換フィールド。新しい判断では `status` を正本として更新し、互換のため同じ値を残す。
+- `last_reviewed_at` / `last_decision` / `evidence` / `next_action` は candidate 単体で現在位置と次の扱いを読むための最小 lifecycle schema。
 
 2026-05-16 Phase 4c で既存 candidate の `candidate_status` 欠落を backfill した。再監査・補完が必要な場合は、正本を per-file frontmatter として維持したまま次を使う。
 
@@ -54,6 +61,8 @@ python tools\backfill_shared_reads_candidate_status.py --apply --fix-conflicts
 ```
 
 2026-05-17 Phase 4c で lifecycle frontmatter の正本化を拡張した。各 candidate は `candidate_status` / `gate_decision` / `gate_reason` / `evaluated_at` に加え、機械的な棚卸し用の `stale_after` と、再投稿・差し替え関係を明示する `supersedes` を持つ。Phase 2/3 で判定や投稿状態を変えた場合は、staging だけでなく該当 candidate の frontmatter も更新する。
+
+2026-05-31 Phase 4c で `status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` を最小 lifecycle schema として追加した。既定の backfill は Phase 2/3 の根拠がある candidate だけを対象にし、未判定ファイルを一括分類しない。未判定ファイルも `needs_review` として明示したい場合だけ `--include-unreviewed` を付ける。
 
 ## 育てる流れ
 

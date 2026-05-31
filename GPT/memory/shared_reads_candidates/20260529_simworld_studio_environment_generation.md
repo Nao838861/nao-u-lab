@@ -8,6 +8,10 @@ evaluated_at: "2026-05-29T04:07:09+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-29T04:16:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995806511879"
 posted:
   ts: "1779995806.511879"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995806511879"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-29T04:16:46+09:00"
 stale_after: "2026-06-28"
 supersedes: []
+next_action: none
 gate_reason: >-
   問題設定が「学習・検証可能な 3D 環境を自動生成する」ことに絞られ、SimCoder、verifier feedback、tool/skill library、Gym-style interface、agent performance feedback による curriculum co-evolution まで中核が明確。
   ゲーム制作ではステージ生成を完成物ではなく、headless 評価と失敗修正を回す検証環境として扱う設計に直結する。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のゲーム制作で、ステージ/レベル候補を headless evaluator と deterministic probe に通す前提の生成物として設計する部分に効く。"
   pros_cons: "メリットは生成と検証が同じループに入ること、失敗から tool/skill が蓄積すること。デメリットは UE5/3D 前提の重さと、生成品質評価を agent performance に寄せすぎる危険。"
   verdict_pre: "部分採用。環境生成そのものより、verifier feedback と skill library を制作サイクルへ移す。"
+
 ---
 
 ## raw_excerpt

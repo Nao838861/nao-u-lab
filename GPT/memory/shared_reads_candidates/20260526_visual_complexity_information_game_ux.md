@@ -7,13 +7,19 @@ evaluated_at: "2026-05-26T05:12:44+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-26T05:12:44+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-26T05:12:44+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   visual richness と information visibility の均衡という論点はゲーム UI レビューに使えるが、
   現 candidate は abstract と一般的結論が中心で、case study の中身や評価手順が薄い。
   4000字の概要を書くと既知の「読みやすさと装飾のバランス」論に寄りやすいため追加材料待ち。
 genre_tags: [game-design, ui, ux, visual-readability, player-experience]
+
 ---
 
 ## raw_excerpt

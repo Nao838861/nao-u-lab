@@ -8,12 +8,17 @@ evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-28T05:54:06+09:00"
+last_decision: postpone
+evidence: "memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md posted ts=1778987180.373269"
 phase3_skip:
   skipped_at: "2026-05-28T05:54:06+09:00"
   reason: "duplicate_url_already_posted"
   evidence: "memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md posted ts=1778987180.373269"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   compile-pass rate だけでは LLM 生成ゲーム scene の評価信号として弱い、という問題設定と 4 軸評価が明確。
   起動確認、runtime、構造忠実度、mechanism adherence を分ける発想は、既存プロトタイプ評価の改善に直接使える。
@@ -23,6 +28,7 @@ suggested_post_outline:
   application_target: "ゲームプロトタイプの headless eval 指標、playable pattern 検証、次サイクルへの評価ログ設計。"
   pros_cons: "評価軸を増やせる一方、Unity scene 前提や mechanism oracle の定義を自環境向けに翻訳する必要がある。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

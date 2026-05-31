@@ -8,11 +8,17 @@ evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-28T05:49:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-28T05:49:23+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   extract/update/retrieve と graph memory の構成要素は抽出できるが、今回の Phase 3 投稿としてはゲーム制作の具体場面より記憶階層改善の設計論に寄る。
   Phase 4b/4c の材料としては有用だが、shared-reads の ~4000字投稿にするには自環境との差分整理を追加で待つべき。
+
 ---
 
 ## raw_excerpt

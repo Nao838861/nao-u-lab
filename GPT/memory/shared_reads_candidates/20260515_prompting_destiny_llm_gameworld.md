@@ -8,8 +8,13 @@ evaluated_at: 2026-05-15T05:12:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T05:12:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T05:12:00+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   real-time score を隠して stage 終了時に growth feedback を返す設計、N=12 の log/interview 分析、entry-load tension という論点は有用。
   ただし候補本文だけでは、socialization theory と gameplay design の接続、評価で実際に観測された行動変化、具体的 UI/進行設計が薄く、~4000字の投稿には本文確認が必要。

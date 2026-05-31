@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T15:23:34+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T15:40:58.1167816+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950438133899"
 posted:
   ts: "1779950438.133899"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779950438133899"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T15:40:58.1167816+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   literal belief probe と functional ToM の差、partial observability / private information / constrained communication、formal verification、失敗分析まで揃っている。
   協力ゲームや非対称情報ゲームで「相手が何を知り、何を伝えるべきか」を評価する具体軸に転用しやすい。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "協力パズル、ステルス、非対称マルチ、AI teammate の通信・役割分担・制約理解の評価設計。"
   pros_cons: "評価軸がゲーム制作に近い一方、3D household task 由来なのでジャンル転用時は情報状態と通信制約の再設計が必要。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

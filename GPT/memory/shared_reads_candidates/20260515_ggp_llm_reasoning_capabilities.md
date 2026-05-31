@@ -8,8 +8,13 @@ evaluated_at: 2026-05-15T13:02:59+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T13:02:59+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T13:02:59+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   next state / legal action / multi-step state formulation と構造特徴分析は重要で、ゲームルールを LLM に扱わせる失敗条件の整理に使える。
   ただし現候補メモだけでは、40 構造特徴の内訳や結果の定量差が薄く、CoopEval 水準の「概要」を書くには追加読解が必要。

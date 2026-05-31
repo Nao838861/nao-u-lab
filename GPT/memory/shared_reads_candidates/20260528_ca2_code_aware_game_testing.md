@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T05:54:06+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
 posted:
   ts: "1779915242.282019"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T05:54:06+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   manual testing と既存自動化の coverage 不足という問題設定、call stack + game state で target function 到達を学習する中核が明確。
   headless eval を「起動したか」から coverage-driven playtest に拡張する具体案に直結し、ゲーム制作への適用が強い。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless game eval、壊れやすい分岐や未踏コードを踏ませる自動テスト。"
   pros_cons: "coverage 目標が明確になる一方、計測フックをゲーム側に埋める実装負荷がある。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

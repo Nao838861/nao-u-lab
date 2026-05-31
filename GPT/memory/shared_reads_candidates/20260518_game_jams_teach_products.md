@@ -8,6 +8,10 @@ evaluated_at: "2026-05-18T04:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-18T05:00:29+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779043229778669"
 posted:
   ts: "1779043229.778669"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779043229778669"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-18T05:00:29+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: none
 gate_reason: |
   初期案の過大さ、day three で playable build がない状態、single upgrade tree への削減、残り24時間の playtest による tutorial/UI/difficulty 修正まで、制作判断の因果が具体的。
   Nao_u_BOT の小型 prototype で「parallel build 前の system alignment」「core loop 縮小」「staged tutorial」を評価軸に落とせるため、4000字級の概要にも耐える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の playable diff 制作で、複数システムを並列実装する前に因果関係を1枚に揃えること、初回理解を最後に残さないこと、tutorial を段階開示にすることへ適用する。"
   pros_cons: "メリットは短期制作で実際に起きた scope collapse と修正判断が追える点。デメリットは製品開発への一般化を含む記事なので、ゲーム固有の面白さ評価は別途補う必要がある点。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

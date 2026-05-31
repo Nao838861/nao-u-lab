@@ -8,13 +8,18 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-13T00:23:53.8139214+09:00"
+last_decision: posted
 stale_after: "2026-06-12"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529"
 posted:
   ts: "1778599412.481529"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529"
   char_count: 4220
   posted_at: "2026-05-13T00:23:53.8139214+09:00"
+next_action: none
 gate_reason: >
   問題設定、multi-agent 分業、RAG による tool-use hallucination 対策、automated play-testing pipeline が候補内で抽出できる。
   Nao_u 環境では asset/code/test を分離した prototype 生成と runtime 検証設計に具体接続でき、投稿水準の概要を組める。

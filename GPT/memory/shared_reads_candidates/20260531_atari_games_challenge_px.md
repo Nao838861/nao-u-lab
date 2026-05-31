@@ -8,12 +8,18 @@ evaluated_at: "2026-05-31T02:48:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-31T02:48:56+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-31T02:48:56+09:00"
 stale_after: "2026-06-30"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   telemetry / survey / biometrics / C-RTA を同時に取る設計は、難易度調整とPX観察ログの設計に具体的に使える。
   ただし候補メモは abstract 抜粋中心で、19名 pilot の評価結果や各モダリティの寄与まで Phase 3 水準で説明する材料が不足している。
   full paper か dataset/protocol の詳細を確認してから投稿判定する。
+
 ---
 
 ## raw_excerpt

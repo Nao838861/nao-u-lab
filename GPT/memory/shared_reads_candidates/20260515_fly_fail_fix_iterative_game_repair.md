@@ -8,13 +8,18 @@ evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T07:07:15.148045+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796436646579"
 posted:
   ts: "1778796436.646579"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796436646579"
   char_count: 3565
   posted_at: "2026-05-15T07:07:15.148045+09:00"
+next_action: none
 gate_reason: >-
   問題設定、RL playtest、LMM による mechanics parameter 修正、比較条件、限界が候補内で揃っている。
   Nao_u 環境の headless harness を「測定から小修正へ」進める具体場面に接続でき、CoopEval 水準の概要も書ける。

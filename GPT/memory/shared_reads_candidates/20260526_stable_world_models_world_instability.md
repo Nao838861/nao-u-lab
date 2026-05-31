@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T16:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T15:48:31+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778084383239"
 posted:
   ts: "1779778084.383239"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779778084383239"
@@ -16,12 +20,14 @@ posted:
 stale_after: "2026-06-25"
 supersedes: []
 gate_reason: "generative environment を見た目の品質ではなく、再訪時に世界状態が保たれるかで測る World Stability の問題設定が明確。ゲーム制作では生成環境、replay harness、LLM/VLM world model の検証項目へ具体的に接続できる。"
+next_action: none
 suggested_post_outline:
   overview_angle: "生成世界の失敗を「画像が自然か」ではなく「戻った時に同じ世界か」として測る評価軸を中心に書く。"
   analysis_axis: "行動列、逆操作、初期視点への再訪、observation consistency、semantic drift の測定と改善策。"
   application_target: "生成ステージ、NPC 記憶、replay/rollback 検証、world-model ベースのゲーム AI における状態保持テスト。"
   pros_cons: "強みはゲームの継続体験に近い検査で、見た目評価の盲点を突ける点。弱みは diffusion world model 前提が強く、既存 2D/HTML プロトタイプへは指標を抽象化して移植する必要がある点。"
   verdict_pre: "採用。生成環境そのものより、世界・ルール・演出の persistence 評価軸として使う。"
+
 ---
 
 ## raw_excerpt

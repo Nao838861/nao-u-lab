@@ -8,9 +8,15 @@ evaluated_at: "2026-05-17T15:03:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-17T15:03:49+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-17T15:03:49+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "PCG手法全体の見取り図として有用だが、現candidateの要旨メモだけでは各カテゴリの評価軸・限界・具体例まで十分に抽出できない。Phase 3で~4000字の残すべき概要を書くには、本文確認または比較対象の補強が必要。"
+next_action: revise_or_research
+
 ---
 
 ## raw_excerpt

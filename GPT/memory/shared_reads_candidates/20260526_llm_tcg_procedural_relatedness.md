@@ -8,12 +8,18 @@ evaluated_at: "2026-05-26T03:11:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-26T03:11:06+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-26T03:11:06+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   procedural relatedness という概念は面白いが、現メモでは Pokemon card case study の具体的な生成条件と評価結果がまだ薄い。
   ゲーム制作への適用も「個別化された武器・仲間・スキル」へ広げるには追加読解が必要で、現状のまま投稿すると一般論になりやすい。
   user study の中身を確認できれば再評価対象になるため postpone とする。
+
 ---
 
 ## raw_excerpt

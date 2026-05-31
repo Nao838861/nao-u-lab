@@ -8,13 +8,18 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-13T00:23:53.8139214+09:00"
+last_decision: posted
 stale_after: "2026-06-12"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349"
 posted:
   ts: "1778599414.224349"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349"
   char_count: 4468
   posted_at: "2026-05-13T00:23:53.8139214+09:00"
+next_action: none
 gate_reason: >
   geometry だけでなく gravity inversion や time dynamics などの gameplay dimension を state space に入れる着想が強い。
   playability / structure / style / robustness / efficiency の評価軸もあり、Nao_u の小規模ゲームの生成・検証観点へ直接落とせる。

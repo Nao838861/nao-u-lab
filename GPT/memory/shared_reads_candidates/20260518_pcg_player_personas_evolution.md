@@ -8,11 +8,17 @@ evaluated_at: "2026-05-18T12:06:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-18T12:06:49+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-18T12:06:49+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   persona agents と experience metrics による PCG 評価枠は、headless 評価や難易度調整へ接続できるため題材は強い。
   ただし現候補は abstract レベルで、4 personas / 3 metrics / evolutionary architecture の実験内容を十分に掘れておらず、Phase 3 投稿前に本文精読が必要。
+
 ---
 
 ## raw_excerpt

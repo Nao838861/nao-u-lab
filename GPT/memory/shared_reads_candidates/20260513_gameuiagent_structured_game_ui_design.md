@@ -8,13 +8,18 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-13T00:23:53.8139214+09:00"
+last_decision: posted
 stale_after: "2026-06-12"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
 posted:
   ts: "1778599413.402399"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
   char_count: 4276
   posted_at: "2026-05-13T00:23:53.8139214+09:00"
+next_action: none
 gate_reason: >
   Design Spec JSON、deterministic post-processing、LLM reflection、failure taxonomy、110 test cases という手法と評価の骨格が明確。
   ゲーム UI 制作における「見た目生成」ではなく、編集可能な構造と失敗分類を残す実務知見として具体的に使える。

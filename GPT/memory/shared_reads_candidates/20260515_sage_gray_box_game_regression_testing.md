@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T23:40:20+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "小型プロトタイプの更新履歴から再確認すべきプレイ経路・失敗条件・既存テストを選ぶ Phase 4/実装後チェックへ接続する。"
   pros_cons: "メリットは更新差分とテスト選択を結びつける点。デメリットは RL/大規模環境前提が重く、小規模運用では簡略版に落とす必要がある点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599"
+next_action: none
 posted:
   ts: "1778856013.077599"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599"

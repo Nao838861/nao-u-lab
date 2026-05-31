@@ -8,11 +8,17 @@ evaluated_at: "2026-05-30T00:18:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-30T00:18:07+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-30T00:18:07+09:00"
 stale_after: "2026-06-29"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   gameplay / playability / player experience という評価軸は有用だが、現時点の抜粋は preliminary empirical insight の範囲で、2 project の中身や観察の具体例が不足している。
   ゲーム制作への適用は可能だが、CoopEval 水準の概要を書くには本文から事例、失敗モード、評価手順を追加確認する必要がある。
+
 ---
 
 ## raw_excerpt

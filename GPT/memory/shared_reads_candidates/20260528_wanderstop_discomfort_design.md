@@ -8,11 +8,17 @@ evaluated_at: "2026-05-28T17:32:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-28T17:32:56+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-28T17:32:56+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   cozy convention と discomfort を衝突させる設計論は、快適さ一辺倒でない体験設計にかなり有用。
   ただし現候補は GDC セッション概要レベルで、複数 mechanics の breakdown や設計判断の具体例が不足しており、投稿品質には視聴/詳細メモが必要。
+
 ---
 
 ## raw_excerpt

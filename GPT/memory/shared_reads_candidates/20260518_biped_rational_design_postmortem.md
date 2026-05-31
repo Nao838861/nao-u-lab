@@ -8,6 +8,10 @@ evaluated_at: "2026-05-18T12:06:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-18T12:10:57+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779073851737479"
 posted:
   ts: "1779073851.737479"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779073851737479"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-18T12:10:57+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: none
 gate_reason: >-
   問題設定、偶然の発見、PvP/戦闘方向の棄却、core fun への回帰、level design の核までが一連の制作判断として抽出できる。
   現在の小規模プロトタイプでも「強い追加要素が核を薄めていないか」を判定する具体軸に転用でき、CoopEval 水準の概要に膨らませられる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "BOMB/shot_log 系の新要素評価で、追加要素の強さより core action の読める楽しさ・協力/補完構造を守る判定軸に使う。"
   pros_cons: "メリットは制作中の捨てる判断を具体化できる点。デメリットは coop 前提の知見が単独プレイ作品へはそのまま移らない点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

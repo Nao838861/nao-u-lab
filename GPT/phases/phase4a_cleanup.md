@@ -21,7 +21,7 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定)]
 1. `memory/MEMORY.md` の index 行で broken link 確認
 2. `memory/atoms.jsonl` の重複・矛盾の有無を確認
 3. `memory/raw/` の古いファイルでアーカイブすべきもの (30 日以上動きがない原文等)
-4. `memory/shared_reads_candidates/` で 30 日以上動きがない candidate の取扱い (postpone から fail に降格、または明示的に保持)
+4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。30 日以上動きがない `postponed` / `needs_review` candidate は fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
 
 ## やること (問題抽出)

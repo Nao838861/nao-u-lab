@@ -8,11 +8,17 @@ evaluated_at: "2026-05-18T04:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-18T04:20:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-18T04:20:00+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   満足感を中心にした scope / milestone / pipeline と、残課題としての UI・導線・進行条件が具体的に出ており、短期制作の反省材料としては有用。
   ただし現候補の情報量では、CoopEval 水準の「概要」で問題設定・手法中核・評価・結論を単独で4000字級に伸ばすには薄い。Phase 3 へ出す前に原文精読で具体場面を補う必要がある。
+
 ---
 
 ## raw_excerpt

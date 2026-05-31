@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-27T00:28:04+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-27T00:28:04+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: >-
   Markdown と XML/HTML 的構造化の違いは agent instruction 設計には有用だが、今回の shared-reads 基準であるゲーム制作への具体適用が間接的すぎる。
   Phase 3 の4000字投稿にすると prompt hygiene の一般論へ流れやすく、ゲーム制作知見として残す品質には届かない。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T10:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T09:55:21+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979164601779"
 posted:
   ts: "1778979164.601779"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979164601779"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T09:55:21+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: >-
   一発生成ではなく perceive / reason / plan / edit の反復に置く問題設定、構造指標と
   gameplay simulation feedback、classic PCG tool 呼び出し、free-form instruction と
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "Pot 系 prototype の wave/level 調整で、LLM 提案を deterministic 評価と再編集 loop に接続する。"
   pros_cons: "制作 harness に落としやすい一方、評価関数の設計が弱いと LLM が局所最適や見た目だけの修正へ逃げる。"
   verdict_pre: "採用。まずは小さい level/wave grammar に solvability と行動 simulation feedback を付ける形で試す。"
+
 ---
 
 ## raw_excerpt

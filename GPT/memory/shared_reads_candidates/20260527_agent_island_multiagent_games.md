@@ -8,6 +8,10 @@ evaluated_at: "2026-05-27T00:28:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T00:56:55+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809815431479"
 posted:
   ts: "1779809815.431479"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779809815431479"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-27T00:56:55+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: none
 gate_reason: >-
   saturation/contamination-resistant benchmark という問題設定、7 agent の交渉・投票・脱落ルール、Bayesian Plackett-Luce による skill 推定、
   999 games / 49 models の評価まで概要化できる。ゲームルールを agent 評価装置にする設計例として具体性がある。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "小型 social mechanics の設計、評価 AI の勝ち方/説得/投票行動を見る benchmark、敵 AI 評価の拡張。"
   pros_cons: "メリットは評価が動的でログ分析もできる点。デメリットは実ゲーム制作への接続が social game 寄りで、アクション系には直接移植しにくい点。"
   verdict_pre: "部分採用。今すぐは評価ゲームの設計参照として使い、既存アクション prototype には抽象度を落として適用する。"
+
 ---
 
 ## raw_excerpt

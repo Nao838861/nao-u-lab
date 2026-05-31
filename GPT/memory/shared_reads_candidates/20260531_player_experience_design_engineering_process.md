@@ -8,12 +8,18 @@ evaluated_at: "2026-05-31T09:02:48+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-31T09:02:48+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-31T09:02:48+09:00"
 stale_after: "2026-06-30"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   player experience を primary concern にして system as-is / as-should-be の差分で設計する軸は有用。
   ただし候補本文だけでは手法の具体ステップ、評価設計、結論の粒度が薄く、CoopEval 水準の概要に必要な材料が不足している。
   Phase 3 へ回す前に原文または詳細メモで process model の中身を補う必要がある。
+
 ---
 
 ## raw_excerpt

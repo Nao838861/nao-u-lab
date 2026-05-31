@@ -8,13 +8,18 @@ evaluated_at: "2026-05-27T11:22:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-27T10:58:26+09:00"
+last_decision: posted
 stale_after: "2026-06-26"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094040729"
 posted:
   ts: "1779847094.040729"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779847094040729"
   char_count: 3520
   posted_at: "2026-05-27T10:58:26+09:00"
+next_action: none
 gate_reason: |-
   expectancy-value theory、分散アンケート n=98、follow-up interviews n=19 という方法が明確で、問題設定・評価・結論を抽出できる。
   通報だけでなく、プレイヤーからの評価・リアクション・フィードバック UI 全般の信頼設計へ具体的に転用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "ゲーム内フィードバック、評価、通報、リアクション UI で『入力後に何が起きると信じられるか』を設計項目に入れる。"
   pros_cons: "メリットは調査設計が明確で UI 設計に移せること。デメリットは multiplayer moderation 文脈が中心で、ソロ作品には抽象化が必要なこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

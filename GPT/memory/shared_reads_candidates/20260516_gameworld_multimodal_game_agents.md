@@ -8,8 +8,13 @@ evaluated_at: 2026-05-16T17:32:15+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-16T17:32:15+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-16T17:32:15+09:00"
 stale_after: "2026-06-15"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   ゲーム画面理解を含むエージェント評価という適用先は明確だが、現候補は arXiv 要旨メモと短い断片のみ。
   ベンチマークの環境数、タスク設計、評価指標、比較結果が未確認で、CoopEval 水準の概要を書く材料が不足している。

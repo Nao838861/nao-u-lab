@@ -8,6 +8,10 @@ evaluated_at: "2026-05-18T01:24:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-18T01:20:59.1639286+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
 posted:
   ts: "1779034850.236629"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-18T01:20:59.1639286+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: none
 gate_reason: |-
   問題設定、初期案の破棄、同時ターン制の中核、playtest で露呈した理解不能性、4手強制を外した結論まで抽出できる。
   Nao_u 側のゲーム制作では「制約で深くする」前に入力・目的・反応学習を先に通す評価軸として具体的に使える。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "turn-planning、同時解決、音楽同期、短時間プロトタイプの初回導線評価に効く。"
   pros_cons: "メリットは設計変更の因果が明確なこと。デメリットは原文が個人 jam 記録で、定量評価や長期運用の検証は薄いこと。"
   verdict_pre: "部分採用。入力直後の理解と自己ペース学習を、制約追加前のゲートとして採用する。"
+
 ---
 
 ## raw_excerpt

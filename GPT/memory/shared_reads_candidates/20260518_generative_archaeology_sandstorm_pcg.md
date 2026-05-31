@@ -8,11 +8,17 @@ evaluated_at: "2026-05-18T12:06:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-18T12:06:49+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-18T12:06:49+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   PCG を地形生成ではなく「痕跡を解釈する遊び」に接続する観点は、探索/推理/環境ストーリー系プロトタイプに適用可能。
   ただし現候補では survey の評価内容や glitch の扱いが薄く、~4000 字概要を書くには研究本文から方法と結果を追加確認する必要がある。
+
 ---
 
 ## raw_excerpt

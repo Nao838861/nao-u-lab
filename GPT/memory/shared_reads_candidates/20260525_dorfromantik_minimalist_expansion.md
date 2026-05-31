@@ -8,6 +8,10 @@ evaluated_at: "2026-05-25T23:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T23:00:36+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779717626976659"
 posted:
   ts: "1779717626.976659"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779717626976659"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T23:00:36+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   minimalism/readability を守りながら biome・night mode・特殊 tile を増やす判断基準が具体的に抽出できる。
   grayscale value、vertex color、modular curated tiles など実装・評価へ落とせる要素があり、CoopEval 水準の概要に展開できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "小規模ゲームの biome/skin 追加、AI 生成ゲームの視認性レビュー、headless 評価で拾えない visual readability の手動チェック軸に効く。"
   pros_cons: "利点は拡張時に核の体験を壊しにくいこと。弱点は数値評価だけでは noise や mood の良否を取り逃がすこと。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

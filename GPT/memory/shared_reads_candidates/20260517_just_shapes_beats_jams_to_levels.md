@@ -8,13 +8,18 @@ evaluated_at: 2026-05-17T17:02:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T17:45:51+09:00"
+last_decision: posted
 stale_after: "2026-06-16"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779005151403919"
 posted:
   ts: "1779005151.403919"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779005151403919"
   char_count: 3675
   posted_at: "2026-05-17T17:45:51+09:00"
+next_action: none
 gate_reason: |-
   問題設定、音楽同期、日常パターン収集、手作業 editor、safe environment からの段階的危険化まで抽出できる。
   「弾幕を置く」ではなく fair challenge を成立させる制作手順として、具体的にゲーム制作へ適用できる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "bullet hell/rhythm hybrid、ミニゲームの障害物導入、敵パターンの初回提示、制作メモからレベル案へ落とすサイクル。"
   pros_cons: "メリットは制作判断が具体的で、試作の評価軸に直結する点。デメリットは procedural/AI 生成手法ではなく、音楽前提でジャンル依存がある点。"
   verdict_pre: "部分採用。リズム同期ゲームに限らず、危険物の初回提示と段階的難化の制作チェックリストとして採用する。"
+
 ---
 
 ## raw_excerpt

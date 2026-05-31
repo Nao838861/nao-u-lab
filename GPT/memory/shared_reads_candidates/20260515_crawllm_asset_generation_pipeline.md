@@ -8,8 +8,13 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T23:33:39+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T23:33:39+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   fixed template + human-authored seed + LLM/diffusion の cohesive asset generation は有用だが、candidate 本文は project page/abstract 相当で手法細部と user study の評価軸がまだ薄い。
   4000字概要を書くには原論文の条件、比較対象、失敗例を確認したい。現時点では Phase 3 投稿候補にせず保留が妥当。

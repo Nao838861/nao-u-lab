@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T05:36:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T05:37:56+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963876642889"
 posted:
   ts: "1778963876.642889"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963876642889"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T05:37:56+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |
   問題設定、task 構成、oracle policy / SFT dataset / harness、評価結果、結論の各要素が揃っており、概要を単なる論文紹介でなく評価設計の話として書ける。
   Nao_u_BOT の headless 評価、観測表現、scripted/RL/LLM player 比較に直結し、ASCII observation 優位という結果も具体的な制作判断に落とせる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "headless playtest、AI プレイヤー評価、デバッグ用 state 表現、LLM/RL/scripted player の比較 harness"
   pros_cons: "長所は観測表現と評価基盤を制作サイクルに移しやすい点。短所は benchmark task と実ゲームの面白さ評価が一致しない点"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

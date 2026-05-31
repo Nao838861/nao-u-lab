@@ -8,11 +8,17 @@ evaluated_at: "2026-05-18T04:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-18T04:20:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-18T04:20:00+09:00"
 stale_after: "2026-06-17"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |
   hot reload、source control、export/licensing という制作環境リスクは有用だが、記事の主軸は「新しい engine を触った体験」で、ゲーム制作手法としての評価軸が細い。
   Nao_u_BOT の playable diff 前提確認には使えるが、#shared-reads に残すべき4000字級の概要としては展開しにくい。
+
 ---
 
 ## raw_excerpt

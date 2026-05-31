@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T11:22:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T11:22:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T11:22:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   AI 生成物を土台生成、human-directed level design、補完・最適化に分ける枠組みはゲーム制作へ具体適用できる。
   ただし記事単体では事例の検証量や失敗比較が薄く、4000字級で残すには一次制作例・実測・関連実装との補強が必要。
+
 ---
 
 ## raw_excerpt

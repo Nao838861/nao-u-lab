@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T13:35:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T13:26:39.1867928+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
 posted:
   ts: "1779942387.259629"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T13:26:39.1867928+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   hidden information dialogue を Seeker / Holder の非対称能力として分解しており、問題設定・中核手法・failure mode・比較評価の要素が候補段階で揃っている。
   LLM NPC、social deduction、情報秘匿型会話ゲームの評価軸に直結し、単なる一般論ではなくゲーム制作時の検証設計へ落とせる。
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "hidden information game、social deduction、LLM NPC の会話評価で、勝敗だけでなく情報抽出・秘匿・仮説探索のどこが壊れたかを記録する評価ログへ適用する。"
   pros_cons: "メリットは対話ゲームの失敗を役割別に診断できること。デメリットは評価環境が人工的で、実ゲームの演出・UI・プレイヤー心理まで直接測れるわけではないこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

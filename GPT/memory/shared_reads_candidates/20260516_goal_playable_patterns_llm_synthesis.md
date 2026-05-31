@@ -8,12 +8,17 @@ evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-16T19:36:16+09:00"
+last_decision: posted
 stale_after: "2026-06-15"
 supersedes: []
 gate_reason: >-
   Goal Playable Concepts から Unity 実装へ落とす問題設定、IR を挟む着想、
   automated Unity replay による検証、grounding/hygiene failure の分類が揃っている。
   Nao_u_BOT の「自然言語案から playable diff へ接続する」制作サイクルに直接適用できる。
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"
+next_action: none
 posted:
   ts: "1778927776.158409"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"

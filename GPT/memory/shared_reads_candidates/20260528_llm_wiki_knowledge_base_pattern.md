@@ -8,11 +8,17 @@ evaluated_at: "2026-05-28T01:55:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-28T01:55:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-28T01:55:00+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |
   Raw/Wiki/Schema の三層化は現在の memory 運用に近く、適用先はある。
   しかし候補は二次記事のパターン紹介に留まり、独自の評価・失敗条件・ゲーム制作への新規示唆が薄いため、~4000字で残す品質に届かない。
+
 ---
 
 ## raw_excerpt

@@ -8,11 +8,17 @@ evaluated_at: "2026-05-26T22:17:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-26T22:17:14+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-26T22:17:14+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   physicality / amplification / support と tuning / juicing / streamlining の分類はゲーム制作への適用性が高い。
   ただし今回の candidate に残っている情報だけでは、survey の分類根拠・200 件超の文献整理・各 domain の具体例まで十分に復元できず、CoopEval 水準の概要を書くには追加読解が必要。
+
 ---
 
 ## raw_excerpt

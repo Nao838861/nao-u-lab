@@ -8,11 +8,17 @@ evaluated_at: "2026-05-25T23:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-25T23:10:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-25T23:10:00+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   weekly updates、new/veteran onboarding、linear power gain 回避など有用な論点はあるが、会社史・F2P 運用寄りで手法の中核が散っている。
   Phase 3 で投稿するには、長期運用設計としての具体例とゲーム制作サイクルへの対応付けを追加確認したい。
+
 ---
 
 ## raw_excerpt

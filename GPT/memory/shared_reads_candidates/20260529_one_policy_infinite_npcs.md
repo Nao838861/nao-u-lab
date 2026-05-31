@@ -8,9 +8,15 @@ evaluated_at: "2026-05-29T10:17:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-29T10:17:06+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-29T10:17:06+09:00"
 stale_after: "2026-06-28"
 supersedes: []
 gate_reason: "persona-conditioned shared RL policy の中核と速度・規模の利点は見えるが、候補メモだけでは環境設定、報酬設計、persona traceability の評価手順がまだ薄い。ゲーム制作への適用は life sim / colony 系に寄るため、現行制作サイクルへ無理に一般化するとこじつけになりやすい。"
+next_action: revise_or_research
+
 ---
 
 ## raw_excerpt

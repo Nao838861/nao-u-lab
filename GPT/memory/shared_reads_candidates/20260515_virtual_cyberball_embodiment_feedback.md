@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T21:38:33+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "Nao_u_BOT 側の小型ゲームや社会的相互作用プロトタイプで、プレイヤー評価と専門家評価を混ぜずに読むためのテスト設計に効く。"
   pros_cons: "メリットは少人数でも観点差を抽出できること。デメリットは Cyberball 固有の研究課題に寄るため、一般ゲームへ移すには評価項目の翻訳が必要なこと。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709160389"
+next_action: none
 posted:
   ts: "1778848709.160389"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709160389"

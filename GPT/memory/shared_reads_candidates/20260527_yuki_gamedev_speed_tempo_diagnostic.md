@@ -8,11 +8,17 @@ evaluated_at: "2026-05-27T03:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-27T03:05:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-27T03:05:00+09:00"
 stale_after: "2026-06-26"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   速度変更を QoL ではなく診断器として使う観点は制作サイクルに強く効くが、現状は Slack excerpt と短文由来のメモで、一次情報と文脈が不足している。
   4000字程度の「概要」を書くには、原文確認や実装例、既存 prototype での検査ログが必要なので Phase 3 には送らない。
+
 ---
 
 ## raw_excerpt

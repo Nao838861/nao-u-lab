@@ -8,12 +8,17 @@ evaluated_at: 2026-05-25T11:45:31+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-25T11:53:05+09:00"
+last_decision: postpone
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
 stale_after: "2026-06-24"
 supersedes: []
 phase3_skip:
   reason: "duplicate_url_already_posted"
   evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
   skipped_at: "2026-05-25T11:53:05+09:00"
+next_action: revise_or_research
 gate_reason: |-
   role-sensitive prompt constraint という具体的な設計論があり、探偵ゲームでの usability study と synthetic evaluation の流れまで候補内に残っている。
   NPC 制約を一律に強めるのではなく、quest-giver と suspect で安定性/即興性を配分する考え方は、ゲーム制作の会話設計へ具体適用しやすい。
@@ -23,6 +28,7 @@ suggested_post_outline:
   application_target: 謎解き・案内役・敵役・雑談役などの NPC ロール別に、守るべき事実と崩してよい即興範囲を設計するプロンプト/評価テンプレ。
   pros_cons: 安定性と破綻防止には強いが、ロール定義と境界設計を怠ると即興の面白さを殺す。
   verdict_pre: 部分採用。生成会話を使うプロトタイプでは、NPC ごとの scaffold 強度表を作る形で採用する。
+
 ---
 
 ## raw_excerpt

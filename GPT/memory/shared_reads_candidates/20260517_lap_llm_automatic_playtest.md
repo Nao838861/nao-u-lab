@@ -8,6 +8,10 @@ evaluated_at: "2026-05-17T18:28:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-17T18:23:35+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009799499429"
 posted:
   ts: "1779009799.499429"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009799499429"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-17T18:23:35+09:00"
 stale_after: "2026-06-16"
 supersedes: []
+next_action: none
 gate_reason: |
   non-text game を LLM にそのまま渡すのではなく、snapshot から numeric matrix へ落として action generation / execution を回す点が明確で、手法の重要要素を抽出できる。
   対象は match-3 に狭いが、grid / puzzle 系プロトタイプの headless playtest に転用しやすく、評価も coverage と crash trigger で具体的に語れる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "盤面・グリッド・離散状態を持つ Nao_u_BOT 試作で、画面状態を symbolic / numeric state に落として LLM player に回す自動テスト。"
   pros_cons: "利点は domain-specific solver を作り込まずに探索的テストを回せること。弱点は状態抽出の設計と prompt 品質に依存し、リアルタイムアクションにはそのまま適用しにくいこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

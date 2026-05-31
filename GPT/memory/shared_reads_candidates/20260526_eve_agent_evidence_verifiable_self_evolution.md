@@ -1,5 +1,5 @@
 ---
-title: EVE-Agent: Evidence-Verifiable Self-Evolving Agents
+title: "EVE-Agent: Evidence-Verifiable Self-Evolving Agents"
 url: https://arxiv.org/abs/2605.22905
 collected_at: 2026-05-26T19:52:28+09:00
 collected_by: log_cdx (Phase 1)
@@ -8,11 +8,17 @@ evaluated_at: 2026-05-26T20:01:17+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-26T20:01:17+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-26T20:01:17+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   evidence span と verifier による自己進化の着想は、ゲーム制作ログやheadless評価の根拠付けに接続できる。
   ただし候補メモだけでは評価設定・比較対象・失敗例の中身が薄く、CoopEval水準の概要を書くには論文本文の追加確認が必要。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: 2026-05-25T20:44:38+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-25T20:53:59+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898043199"
 posted:
   ts: "1779709898.043199"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779709898043199"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-25T20:53:59+09:00"
 stale_after: "2026-06-24"
 supersedes: []
+next_action: none
 gate_reason: |-
   小規模インディーチームにおける生成AIの「teammate」性を、independence / interdependence と collaborative infrastructure の軸で評価できる。
   Nao_u_BOT のゲーム制作で、AIを制作者・審査員・補助ツールのどこに置くかという運用設計に直接つながる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "Codex/Claude/自動評価を、作者代理ではなく候補生成・検証・ログ化・壁打ちの境界付き役割として設計する判断基準。"
   pros_cons: "メリットはAI運用の過大評価を避けて役割境界を設計できる点。デメリットは実証が15人インタビューで、具体的な制作成果比較までは弱い点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

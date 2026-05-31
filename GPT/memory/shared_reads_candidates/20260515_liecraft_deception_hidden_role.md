@@ -8,8 +8,13 @@ evaluated_at: 2026-05-15T13:02:59+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T13:02:59+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T13:02:59+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |-
   隠れ役職、長期目標、疑念、協力/裏切り、degenerate strategy 排除はゲーム設計素材として具体性がある。
   一方で主眼は deception 評価と ethical alignment で、ゲーム制作記事として投稿するにはシナリオ設計・報酬設計・評価結果の本文確認が不足している。

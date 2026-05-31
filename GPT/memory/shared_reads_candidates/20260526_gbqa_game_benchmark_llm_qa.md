@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T22:17:14+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T22:26:00+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836076109"
 posted:
   ts: "1779801836.076109"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836076109"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T22:26:00+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: >-
   LLM を実行環境内の QA engineer として扱う問題設定、GBQA のゲーム数・バグ数・注入/検証構成、baseline agent と 48.39% 上限という評価結果が候補内で取れる。
   自作ゲームの headless 評価や bot policy 検証を「何を見逃したか」まで測る軸に直結し、CoopEval 水準の概要に必要な問題設定・手法・評価・結論が揃っている。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "graze_log_cdx などの playable diff 検証で、単なるクリア可否ではなく event-derived bug 発見率・再現性・見逃し分類を作るための評価設計に効く。"
   pros_cons: "メリットは QA 評価の粒度が具体化すること。デメリットは benchmark 化されたバグが自作 prototype の主観的違和感や game feel までは拾いにくいこと。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-28T05:49:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-28T05:54:06+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915241277009"
 posted:
   ts: "1779915241.277009"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915241277009"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-28T05:54:06+09:00"
 stale_after: "2026-06-27"
 supersedes: []
+next_action: none
 gate_reason: |-
   pytest-native safety/security gate という問題設定、cross-prompt injection を中心にした手法、CI gate としての運用単位が抽出できる。
   ゲーム制作 agent の Slack 指示、外部 asset、memory recall、play log を危険入力として扱う具体場面に落とせるため、~4000字の概要に耐える。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "ゲーム制作 agent の危険入力、外部資料読み込み、Slack 指示、memory recall に対する regression gate。"
   pros_cons: "既存 pytest 運用に載せやすい一方、ゲーム固有の失敗 oracle は自前定義が必要。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

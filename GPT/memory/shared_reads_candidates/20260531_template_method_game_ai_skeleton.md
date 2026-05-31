@@ -8,9 +8,15 @@ evaluated_at: "2026-05-31T07:02:33+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-31T07:02:33+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-31T07:02:33+09:00"
 stale_after: "2026-06-30"
 supersedes: []
 gate_reason: "手法の重要要素は抽出できるが、内容は一般的な GoF/Refactoring.Guru の設計パターン解説で、ゲーム制作への適用は候補メモ側の転用に依存している。shared-reads に残す 4000 字級の新規性・評価・ゲーム固有の知見としては弱く、ローカル設計メモ止まりが妥当。"
+next_action: keep_for_reference
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,10 @@ evaluated_at: "2026-05-26T01:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-26T01:05:54+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725154850429"
 posted:
   ts: "1779725154.850429"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725154850429"
@@ -15,6 +19,7 @@ posted:
   posted_at: "2026-05-26T01:05:54+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: none
 gate_reason: |-
   VR interrogation simulator、GPT-4 Turbo NPC、18人 user study、SUS/GEQ/believability/latency 測定、約7秒 latency と emotion/personality の弱さという結論が揃っている。
   会話 NPC の品質を「賢さ」だけでなく待ち時間、believability、感情・人格の薄さへ分解でき、ゲーム制作の評価ログ設計へ具体的に適用できる。
@@ -24,6 +29,7 @@ suggested_post_outline:
   application_target: "会話 NPC、チュートリアル役、推理・尋問・案内役の headless/人手評価で、遅延と人格評価を別ログに分ける設計。"
   pros_cons: "利点は実装時に見るべき測定項目が明確な点。弱点は参加者数とシナリオが限定的で、非 VR や高速アクションへの一般化には注意が必要な点。"
   verdict_pre: "部分採用。LLM NPC の実装方式そのものより、評価項目と失敗検出のチェックリストとして採用候補。"
+
 ---
 
 ## raw_excerpt

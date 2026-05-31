@@ -8,13 +8,18 @@ evaluated_at: "2026-05-28T23:47:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-29T00:09:30+09:00"
+last_decision: posted
 stale_after: "2026-06-27"
 supersedes: []
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
 posted:
   ts: "1779979770.780529"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
   char_count: 3673
   posted_at: "2026-05-29T00:09:30+09:00"
+next_action: none
 gate_reason: >-
   ブラウザゲーム生成の失敗を static artifact ではなく interaction-level failure として扱う問題設定が明確。
   PlaytestArena と Play2Code の役割分担、200 tasks / 8 genres / rubric pass-rate という評価軸があり、
@@ -25,6 +30,7 @@ suggested_post_outline:
   application_target: "browser game prototype の headless/GUI playtest、完成判定前の interaction probe、agent が作った playable diff の再現検査。"
   pros_cons: "メリットは人間が触る前に操作破綻を拾えること。デメリットは GUI agent 評価がゲームの面白さや長期バランスを直接保証しないこと。"
   verdict_pre: "部分採用。完成判定者ではなく、ブラウザ上の破綻検出器として採用する。"
+
 ---
 
 ## raw_excerpt

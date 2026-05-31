@@ -8,11 +8,17 @@ evaluated_at: "2026-05-26T17:56:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 candidate_status: failed
+status: failed
+last_reviewed_at: "2026-05-26T17:56:19+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-05-26T17:56:19+09:00"
 stale_after: "2026-06-25"
 supersedes: []
+next_action: keep_for_reference
 gate_reason: |-
   手法の重要要素と Nao_u 環境への適用軸は抽出できるが、同一論文は 2026-05-15 に pass 済みで #shared-reads 投稿済み。
   今回の candidate は既投稿を更新する新しい評価・適用差分を持たず、Phase 3 で再投稿すると重複投稿になる。
+
 ---
 
 ## raw_excerpt

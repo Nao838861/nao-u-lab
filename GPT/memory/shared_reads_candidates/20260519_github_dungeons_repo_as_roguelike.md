@@ -8,12 +8,18 @@ evaluated_at: "2026-05-19T23:23:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-19T23:23:11+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-19T23:23:11+09:00"
 stale_after: "2026-06-18"
 supersedes: []
+next_action: revise_or_research
 gate_reason: |
   commit SHA を seed にした deterministic PCG と BSP の使い方は具体的で、ゲーム制作への接続もある。
   ただし記事の主眼は GitHub Copilot CLI/拡張のデモに寄っており、ゲーム設計上の評価、失敗、調整の中身が excerpt だけでは薄い。
   Phase 3 投稿候補にするには、実装リポジトリや生成結果の検証を追加で読んで「残すべき」密度にできるか確認が必要。
+
 ---
 
 ## raw_excerpt

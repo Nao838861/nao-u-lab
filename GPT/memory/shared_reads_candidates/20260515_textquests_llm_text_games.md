@@ -8,8 +8,13 @@ evaluated_at: 2026-05-15T01:02:01+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+status: postponed
+last_reviewed_at: "2026-05-15T01:02:01+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-15T01:02:01+09:00"
 stale_after: "2026-06-14"
 supersedes: []
+next_action: revise_or_research
 gate_reason: >-
   interactive fiction を使った探索・文脈保持・目標推定の評価という方向は有用だが、現 candidate の材料は abstract レベルに留まり、
   評価手法・結果・失敗分析の中身が 4000 字級の概要に足りない。Phase 3 に回す前に原文精読か既投稿との差分確認が必要。

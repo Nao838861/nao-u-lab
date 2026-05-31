@@ -8,6 +8,9 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+status: posted
+last_reviewed_at: "2026-05-15T23:40:20+09:00"
+last_decision: posted
 stale_after: "2026-06-14"
 supersedes: []
 gate_reason: |
@@ -19,6 +22,8 @@ suggested_post_outline:
   application_target: "Nao_u 作品の仕様書・ルール変更案を LLM に読ませる前に、理解確認用の progression question / explanation harness を作る発想へ接続する。"
   pros_cons: "メリットはルール理解をデータセット化して測れる点。デメリットはカードゲーム testbed からアクション/物理/曖昧な体験設計へ拡張する際に追加設計が要る点。"
   verdict_pre: "部分採用"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856008709709"
+next_action: none
 posted:
   ts: "1778856008.709709"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856008709709"
