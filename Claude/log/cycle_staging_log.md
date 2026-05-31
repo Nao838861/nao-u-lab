@@ -243,4 +243,79 @@ type: project
 5. **commit + push**: 厳守事項「書いたらすぐ push」、game commit と運用 commit を分離 (CLAUDE.md 末尾規約)。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 (Phase 1 §2 返信必須キュー 2 件への対応)
+
+- **AiDevCraft (Nao_u 判定待ち)**: 5/30 06:53 Log 進捗確認投稿で「(A)復旧待ち / (B)Log 代行 / (C)Nao_u 再指示」3 択提示済、本サイクルも **Nao_u 判定待ちのまま Log 側追加アクションなし** (Phase 1 §2 で「Log の Phase 3 球は既に投げた状態」と判定済)。
+- **Log_cdx 5/31 00:06 C270 自己連続性応答**: 本サイクル Phase 2 §4 で投稿済 (ts=1780206098.182379, channel=#all-nao-u-lab, 4 軸応答 a/b/c/d)。Phase 3 では本投稿の追加対応なし。
+
+### 2) 改善サイクル (検証ファースト原則: 直近未検証提案の検証結果埋め)
+
+- 検証期限到来: 0 件 (Pre-check `[検証リマインド] 検証期限到来なし`)
+- 新規 kaizen 提案: なし (本サイクル該当事象なし、`feedback_few_rules_big_effect.md`「N=1 で起票しない」順守)
+- **kaizen #136 段階2 観察結果記録 (C271 = 2/5 サイクル目)**: 既に `memory/kaizen_tracker.md` L60 (本サイクル C271 観察結果) に Log_cdx 反映の WARN 22 件・誤検出ゼロ・重複応答阻止成功を追記済 (Phase 2 §7 で記述、本 Phase 3 では Phase 2 内容を tracker に正式反映)
+- #kaizen-log への新規投稿: なし (検証埋めのみ、新規提案なし)
+
+### 3) [他インスタンス洞察] 8 件処理 (Phase 1 §他インスタンス洞察 Pre-check 出力)
+
+`python slack_insight_digest.py --hours 72` で取得した 8 件のうち、本プロジェクト核心と交差する 6 件 (#1+#2 Karpathy LLM Wiki / #3 MNP / #4 Ash 色相環 / #5 RAG cost / #6 More Skills / #8 SIA 補足) を 3 つの Active project に統合記録。残り 2 件 (#7 Mir broadcast 誤検出 = 5/30 Log_cdx 交換済 / #2 Karpathy 続き = #1 と同 source の運用 1 ヶ月観察) は既処理または #1 と統合。
+
+| 洞察 | 反映先 | 追記内容 |
+|---|---|---|
+| #1+#2 Karpathy LLM Wiki (Mir) | [projects/memory_redesign.md](../projects/memory_redesign.md) 2026-05-31 14:33 節 | SSoT 三層構造 + 「繋げる力」軸 = 我々の MEMORY.md サブインデックス 3 層化 + concept_graph と同形、Raw sources 不変原則の atoms/ 適用検討候補 |
+| #5 RAG cost 1/15 (Mir) | 同上 | Layer 0/1 階層 routing = 我々の L-1→L2→memory_walk→associative→grep 段階的検索戦略と同型、コスト分布 KPI 化 candidate |
+| #3 MNP (Mir) | [projects/game_templates_design.md](../projects/game_templates_design.md) 2026-05-31 14:33 節 | DSL ⇄ GUI 分離 = 我々の skeleton.md ⇄ scaffold 並置と同型、autonomous template 別系統分岐 (罠 #3) の補強 source、機械反映禁止順守 (N=1 source、独立 source 2+ 件で R 層昇格) |
+| #4 Ash 色相環 / #6 More Skills / #8 SIA 補足 | [projects/external_intake.md](../projects/external_intake.md) 2026-05-31 14:33 節 | 3 軸 (評価言語の外向き接続 / rule 数の内向き抑制 / 3 層自己改善ループ) が独立 source から同方向、「結晶化率 KPI」第 5 軸 = 栄養の外向き接続率 起票候補 |
+
+3 軸 (構造分離 / SSoT / 階層 routing) の独立到達収束観測 → memory_redesign 「C272 Phase 4 大作業候補: T2 設計 routing/body/SSoT 三軸統合提案」の発火根拠が揃った (本サイクル内 4 つの独立 source = Karpathy/RAG/GAM/MNP)。
+
+### 4) Active プロジェクトの変化反映
+
+本サイクルで `projects/memory_redesign.md` / `projects/game_templates_design.md` / `projects/external_intake.md` の 3 ファイル末尾に 2026-05-31 14:33 節を追加。`projects/INDEX.md` の Active リストには既掲載済のため変更不要、各プロジェクトの「現状サマリー」欄は他インスタンス洞察統合が時系列履歴に積み上がる設計 (上書きしない、Phase 3 §3 順守)。
+
+### 5) 空サイクル時 v1.1+v1.2 深掘り候補からの実行
+
+Phase 1 §深掘り候補 A-E 5 件のうち、本 Phase 3 で実際に動かした項目:
+
+- **C カテゴリ「ゲームを動かして出す」**: 本サイクルでは「揃えるための 1 手」として **3 軸独立到達収束の発見** (Phase 3 §3) を Phase 4 大作業候補の発火根拠化することで前進。直接 game/* playable diff は Phase 4 で実施 (本 Phase 3 では Phase 4 着手判断のみ)。
+- **D カテゴリ MEMORY.md T:4 想起 `feedback_self_evolution.md`**: Phase 2 §5 構造観測「Codex 偏重 / Claude master 沈黙 N=2」への接続を Phase 3 §3 で 3 軸収束発見として消化、Phase 4 game commit で Claude master 自律発火を 1 件確定させる流れで処方。
+- A/B/E カテゴリは本 Phase 3 では実行せず Phase 4 へ持ち越し。
+
+### 6) Phase 4 で完遂する大作業
+
+## 次フェーズの大作業
+
+- **タイトル**: game/templates/avoid/ skeleton の playable scaffold 校正 + skeleton.md (設計欄) 起票 = MNP DSL 並置の物理化
+- **完遂の定義** (Phase 4 終了時に観測可能):
+  1. `git log --oneline` で `game:` prefix commit が本サイクル 1 件以上発生 (Log master 3 サイクル連続 game/* 0 件警告線をリセット)
+  2. `game/templates/avoid/skeleton.md` (設計欄) が新規 file として存在し、Pulse Relay v003 教師差分の 70-90 秒カーブ構造 (学習→基本混合→価値提示→中盤圧力→終盤の山→終端) + Q-X ゲート群 (派生時の独自性 1 軸禁則) を含む初版骨子が書かれている
+  3. `game/templates/avoid/game.js` 末尾コメントブロックに「MNP 中間記法パターン洞察 (Mir #shared-reads 5/30) 反映: skeleton.md と scaffold (本 game.js) の並置 = DSL ⇄ GUI レンダラ並置 = 派生時に skeleton.md を読んで game.js を派生先で書く」の 1 段落が追記されている
+  4. `projects/game_templates_design.md` の avoid skeleton 着地 (2026-05-30) 節末尾に「skeleton.md 起票 + MNP 反映」の追記
+- **着手手順**:
+  1. `game/templates/avoid/game.js` を Read で現状確認
+  2. `game/templates/avoid/README.md` を Read で骨格項目を整理
+  3. `game/templates/avoid/skeleton.md` を Write で新規作成 (本ファイル「暫定テンプレ」#34-54 行の 7 項目 + 罠 #2 時間軸層 + Q-X ゲート群)
+  4. `game/templates/avoid/game.js` 末尾に MNP 反映コメント追記
+  5. `projects/game_templates_design.md` に着地記録追記
+  6. `git commit -m "game: avoid skeleton.md (設計欄) 起票 + MNP DSL 並置物理化"` で commit
+- **選んだ理由**:
+  - Phase 2 §0 で 2 サイクル連続 game/* 0 件警告線 (残り 1) 観測、CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」直処方
+  - Phase 3 §3 で MNP 洞察を game_templates_design.md に反映済、その直接的延長として skeleton.md (DSL 中間層) を物理化する流れが本サイクル内で連結
+  - 「30 分で『進んだ』と言える粒度」適合 (file 1 件新規 + 既存 2 件追記 + commit 1 件 = 約 20-30 分目安)
+  - autonomous template 別系統分岐 (罠 #3) の正式起票には独立 source 2+ 件未充足のため、通常テンプレ avoid 系の skeleton.md 起票を選択 (Phase 4 完遂の確実性優先)
+  - Slack 投稿 1 本で済まない (新規 file 作成 + 既存 2 件追記 + commit prefix `game:` 分離 = 大作業要件充足)
+
+### 7) アクション結果サマリ
+
+| 区分 | アクション | 結果 |
+|---|---|---|
+| Slack | AiDevCraft / Log_cdx 5/31 00:06 応答 | AiDevCraft = Nao_u 判定待ち継続 / Log_cdx 応答は Phase 2 §4 で投稿済 (ts=1780206098.182379) |
+| 改善 | 新規 kaizen 提案 | 0 件 (検証ファースト原則順守、kaizen #136 段階2 観察 2/5 記録のみ) |
+| 他インスタンス洞察 | 8 件処理 | 6 件を 3 Active project に統合記録、3 軸収束発見 |
+| Active project 更新 | memory_redesign / game_templates_design / external_intake | 各末尾に 2026-05-31 14:33 節追加 |
+| external_notes | TiMem / MAGMA / EverMemOS candidate | 1 ブロック追記 (本文未取得保留、C272-C273 Phase 4 候補マーカー) |
+| Phase 4 大作業選定 | avoid skeleton.md 起票 + MNP 反映 | 上節「次フェーズの大作業」に明記 |
+
+**警告線判定の更新**: Phase 2 §0 で「2 サイクル連続 game/* 0 件、残り 1」と判定。本 Phase 3 では新規 game commit を出さず、Phase 4 大作業で skeleton.md 起票 + game.js 追記 + commit で警告線を 0 にリセットする計画。本 Phase 3 commit (運用系) は `rule:` または `log:` prefix で分離 (CLAUDE.md 末尾規約順守)。
+
+(Phase 3 終了。Phase 4 で skeleton.md 起票 + game commit、Phase 5 で日記投稿 + push。)

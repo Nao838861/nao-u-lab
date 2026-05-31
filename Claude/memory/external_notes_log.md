@@ -4,6 +4,35 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-31 (Log C271 Phase 3) candidate — TiMem / MAGMA / EverMemOS 3 論文 [WebSearch 取得のみ、WebFetch 本文未取得 = 投稿/結晶化保留]
+
+**source (タイトル + 1 行要約のみ、本文未取得)**:
+1. **TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents** (2026-01) — 時系列×階層の二軸でメモリ統合。`memory_tree_consolidation.md` v0 のタグ語彙 (広域 10 + 用途 5 + 具体 9) と階層軸が同型の可能性
+2. **MAGMA: A Multi-Graph based Agentic Memory Architecture** (2026-01) — マルチグラフでエージェント記憶を構造化。Log 既存 `concept_graph.md` 8 概念ノード + 9 交差ノード路線の延長軸
+3. **EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning** (2026-01) — 自己組織化 OS としての記憶。5 原理 5「自分の記憶を自分で守り、育てること」と接続
+
+**取得経路**: Phase 1 step 6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent memory consolidation tree structure tagging 2026` / Active project = `memory_tree_consolidation.md` (5/23 02:47 更新、7 日完全停滞境界の Active project)
+
+**摂取契機**: C271 が前サイクル C270 「Log master 2 サイクル連続 game/* 0 件」継続の Phase 1 段階で、`memory_tree_consolidation.md` (Active 8 日停滞) を起点に kaizen #106 摂取経路を発火 (CLAUDE.md「外の世界を広く見る」深掘り C カテゴリ)。
+
+**投稿/結晶化保留の理由**:
+- WebSearch でタイトル + 1 行要約のみ取得、本文未取得 (WebFetch 未実施)
+- 本文なしで「概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定」の必須 5 項目を埋めるとテンプレ流用品質低下 (`.claude/rules/slack.md` 禁止項目)
+- SIA 深掘り 5/30 で同型の二次資料依存留保事例あり (本ファイル L3835 参照)
+- 本サイクル #shared-reads 投稿 = 0 件で正常
+
+**C272-C273 Phase 4 候補マーカー**:
+- TiMem (temporal + hierarchical consolidation) は `memory_tree_consolidation.md` v0 タグ語彙 (広域 10 + 用途 5 + 具体 9) と階層軸が同型可能性ありで深掘り価値あるが、本文未取得状態で「同型かどうか」を確定的に書けない
+- **WebFetch arxiv 本体 → 失敗時 OpenReview/二次資料経由のフォールバック手順を確立してから C272-C273 Phase 4 大作業候補**として保留
+- `memory_redesign.md` 2026-05-31 14:33 節 (本サイクル同時記録、Karpathy LLM Wiki + RAG cost + GAM の 3 軸収束) の **4 つ目の収束 source 候補** 位置
+
+**接続先**:
+- [memory_redesign.md](../projects/memory_redesign.md) 2026-05-31 14:33 節 — 本サイクル同時記録の Karpathy LLM Wiki + RAG cost + GAM 3 軸収束分析
+- [memory_tree_consolidation.md](../projects/memory_tree_consolidation.md) — 8 日完全停滞 Active project、本キーワード摂取の発火元
+- [cycle_staging_log.md](../log/cycle_staging_log.md) Phase 1 §6 / Phase 2 §2 — 摂取経路固定化と「投稿しない」判定の Phase 内整合性記録
+
+---
+
 ## 2026-05-31 (Log C274 Phase 2) Multi-agent LLM divergence 観測装置 3 論文統合 — Riedl PID / Patel effective rank / Luo ORC curvature [WebFetch 3件、#shared-reads ts=1780195573/1780195579/1780195765 で 3 別投稿済、即統合済 2026-05-31]
 
 **source**:
