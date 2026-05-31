@@ -4,6 +4,26 @@ url: "https://www.sciencedirect.com/science/article/pii/S1566253526000308"
 collected_at: "2026-05-31T19:29:21+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, onboarding, tutorial, rl-llm, player-learning, cognitive-load]
+evaluated_at: "2026-05-31T19:36:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-05-31T19:36:40+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-31T19:36:40+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |-
+  問題設定、RL self-play による Q-function、LLM による行動説明への変換、Dou Di Zhu / StarCraft II 評価、認知負荷低下まで候補本文から抽出できる。
+  チュートリアルを静的説明ではなく状態依存 onboarding loop として設計する観点が、複雑ルールのプロトタイプに直接適用できる。
+suggested_post_outline:
+  overview_angle: "静的チュートリアルの限界を、ゲーム状態に基づく RL 評価値と LLM 説明で補う onboarding 手法として整理する。"
+  analysis_axis: "Q-function が何を判断材料にし、LLM がそれをどの粒度のルール説明・戦略助言へ翻訳するか、評価で勝率と認知負荷をどう見ているか。"
+  application_target: "Nao_u_BOT の複雑ルール系プロトタイプで、headless player / scripted player の判断ログを説明 UI や tutorial prompt に接続する設計。"
+  pros_cons: "メリットは状況依存の助言と学習負荷低減。デメリットは RL 環境構築コスト、助言の正当化、プレイヤー主体性を奪うリスク。"
+  verdict_pre: "部分採用。RL そのものより、状態評価と自然言語説明を分ける設計パターンを採る。"
 ---
 
 ## raw_excerpt

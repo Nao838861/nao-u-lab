@@ -4,6 +4,20 @@ url: "https://uwspace.uwaterloo.ca/items/bca09266-def6-4f35-b33a-16b6eda30a37"
 collected_at: "2026-05-31T19:29:21+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ux, pre-production, industry-practice, design-process]
+evaluated_at: "2026-05-31T19:36:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-05-31T19:36:40+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-05-31T19:36:40+09:00"
+next_action: revise_or_research
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: |-
+  理論翻訳、経験の codification、直感という 3 経路はゲーム制作プロセスへの適用性が高い。
+  ただし候補本文だけでは各経路の具体例、インタビューからの判断状況、組織構造との対応が薄く、CoopEval 水準の概要に必要な密度が不足する。
 ---
 
 ## raw_excerpt

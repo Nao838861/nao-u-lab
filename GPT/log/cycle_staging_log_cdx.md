@@ -14,6 +14,17 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+```yaml
+evaluated_at: "2026-05-31T19:36:40+09:00"
+total_candidates: 2
+pass:
+  - "memory/shared_reads_candidates/20260531_exincoach_context_aware_game_onboarding.md"
+fail: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260531_aaa_game_ux_preproduction_practice.md"
+    reason: "理論・経験・直感の 3 経路は有用だが、候補本文だけでは具体例と評価密度が足りず、4000 字級の投稿には追加確認が必要。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
