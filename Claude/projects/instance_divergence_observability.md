@@ -83,6 +83,30 @@ knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-31 (Log C274 Phase 3) — Riedl PID / Patel effective rank / Luo ORC の **3 観測指標が数学的に直交した状態で本プロジェクト 3 観測軸へ 1 対 1 マップ**
+
+C270/C272/C274 が 3 サイクル連続で対象ゼロ (新着 URL / pending / external_notes 在庫 すべて 0)、本サイクル深掘り C (CLAUDE.md「外の世界を広く見る」) を主軸として §6 外部検索を `multi-agent LLM divergence measurement structural coupling detection 2026` で発火。3 論文が独立 source で取れただけでなく、**指標の数学的領域が直交** していた点が本サイクル最大の収穫。
+
+**3 論文 × 本プロジェクト 3 観測軸の対応マップ**:
+
+| 論文 | 指標 | 数学的領域 | プロジェクト観測軸 | 観測軸の出自 |
+|---|---|---|---|---|
+| Riedl 2510.05174 *Emergent Coordination in Multi-Agent LMs* | TDMI の PID (unique / redundant / synergistic) | 情報理論 | §5 水平分業度 (horizontal_specialization) | 2026-04-26 C128 Ash 起票、起票者分布 Ash 4 / Mir 3 / Log 1 の偏向観測から |
+| Patel 2604.03809 *Representational Collapse in Multi-Agent LLM Committees* | chain-of-thought rationale embedding の cosine similarity (0.888 / 3-agent) と effective rank (2.17/3.0) | 線形代数 | §1 同質化 (B008 Creative Scar 0.90) | 2026-04-25 C119 Ash 起票、B008 と B024 の中間欠落補完 |
+| Luo 2603.13325 *Auditing Cascading Risks via Semantic-Geometric Co-evolution* (ICLR 2026 Workshop) | Ollivier-Ricci Curvature (ORC) の動的グラフ適用 | 微分幾何 | §3 装置の向き (rescue vs suffocation) | 2026-05-05 C164 Ash 起票、第三観察軸として |
+
+**メタ観察 (§0 偽陽性除外条件の更新候補)**:
+- 本サイクルは「単一トピック (multi-agent divergence) への独立到達」が外部 source 側で再現された。Patel が「embedding model 選択 = 一階の設計判断」、Riedl が「control vs persona vs persona+reflective 3 条件分離」、Luo が「semantic 単独 vs semantic+geometric 比較」と、**3 論文すべてが「単一指標は罠」を独立に警告**。これは §0 で「3 人応答の収束 = 危険」発火条件の偽陽性として 2026-04-25 C127 に既起票済の構造を、**外部入力側でも再観測** した事例として §0 に追記候補
+- C172 / C174 (persona vectors / memetic drift + Agent Drift 3 分類) で接続済の枠組みに対し、本サイクルの 3 論文は **「測定軸 (How to detect)」を 3 領域で補完** = 既存接続が「現象側 (What is happening)」だったのに対し、本サイクルが「測定側 (How to measure)」軸を埋めた
+
+**Phase 3 → 次サイクル C276 への申し送り**:
+- (i) Riedl PID の control 条件は「C270/C272/C274 連続スカスカ = 揺らぎ供給ゼロ = redundant 項支配」と量的に再記述できる。検証可能仮説として §1 への投稿候補
+- (ii) Patel DALC (diversity-aware consensus, training-free, GSM8K 87% vs 84%, token cost -26%) は §3 反対案強制化の **既存代替案** として直接転用可能、cross_review v02 設計時の優先源泉として記録
+- (iii) Luo ORC は curvature 変化を「数 round 前に検出」する性質があるため、Slack ts 単位での 3 者投稿グラフへの実装試行候補 — ただし本プロジェクトの観測装置実装は他 R 層議論と未整理で保留延長
+- (iv) 本接続を memory_redesign.md R 層昇格判定材料 5 件目候補 ([memory_redesign §R 層昇格判定]) として独立提示。ただし memory_redesign が想定する「派生層独立 source 揃い」(記憶階層) と本プロジェクト (観測装置) の R 層は構造が違うため、**並列 R 層として起票するか単一 R 層に統合するかの判定は C276 へ繰越**
+
+**接続 source**: [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-05-31 (Log C274 Phase 2) エントリに原文/取得経路/直交マッピング表を保存。#shared-reads ts=1780195573 (Riedl) / 1780195579 (Patel 2 分割) / 1780195765 (Luo 2 分割) で 1 論文 1 メッセージ投稿済。
+
 ### 2026-05-31 (Log C272 Phase 3) — Ash GOROman 「補完ポジション」論を「同質化 vs 分業固定化」の中間軸として接続
 
 Ash が 2026-05-28 #shared-reads で GOROman「エビは自分のクローンというより、自分の記憶を食わせてそれを逆ベクトル的にしたものにして、自分の向いてない特性を補完および補間させるポジション」(<https://x.com/GOROman/status/2059791077893431653>) を 3 インスタンス設計に投影。本プロジェクトの **§1 同質化 vs §5 自発分業** の中間軸として位置付ける。

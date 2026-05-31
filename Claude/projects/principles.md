@@ -100,6 +100,27 @@ IF-THEN 12本 → 3原則に再構成済み。Nao_u「良い方向性」「い�
 
 **次の一手**: mimicry_log v02 着手前批判 R-I 4要素チェックの第一項に「ミミクリ軸が立っているか / 演出だけか」を組み込む (game_development.md §2026-05-21 履歴と接続)。
 
+### 2026-05-31 C274 Phase 3 追記: mimicry_log v01 「因果操作ごっこ」着地後の N=4+ 候補軸への進捗 1mm
+
+10 日停滞解消の最小 1mm として、C264 mimicry_log v01 着地後 (因果操作ごっこを core に据えて 3 候補比較で landing) の運用結果を本ファイル核軸候補リストに反映する。
+
+**核軸候補リスト (本サイクル時点)**:
+- **graze_log**: ミミクリ軸不在で凍結 (Nao_u 2026-05-20「マニアしか喜ばない」) = ミミクリ軸不在ケース N=1
+- **mimicry_log v01** (因果操作ごっこ着地): ミミクリ軸を明示して 3 候補 (熟練パイロット / 因果操作 / 第 3) を並べてから core 選定 = ミミクリ軸ありケース N=1。ただし C264 Phase 4 反省で「軸を立てても演出強化に逃げる可能性」を逆方向検証材料として記録、mimicry_log v02 で「ミミクリ軸 → ゲーム挙動変更」の成立を確認することが次段階
+- **brick_log v04-v06** (2026-05-01 振幅事例): ミミクリ軸を立てずパラメータ往復 = ミミクリ軸不在ケース N=2 (再検証 → 該当確定)
+- **avoid_log** (より過去): 暗黙ミミクリありの可能性、明示記録なし = ミミクリ軸暗黙ケース
+
+**N=4+ 移行の条件 (本サイクルでの確定事項)**:
+- (i) **ミミクリ軸明示 vs 不在** の N が 2 vs 2+ 揃ったが、両側とも「軸を立てても演出強化に逃げる」「軸を立てなくても暗黙に成立する」の例外領域がある = 単純 2 値分類では原則化できないことが明確化
+- (ii) 原則化の前提として **「ミミクリ軸 → ゲーム挙動変更」の伝播が成立する条件** を別軸として観測する必要 = mimicry_log v02 が次の決定的検証点 (現時点で未着手)
+- (iii) 6 源泉独立収束 (玉置氏 + Nao_u + Log + Mir 3 件) は維持、外部源泉として 2026-05-31 C274 §6 で取得した Riedl 2510.05174 *Emergent Coordination* の PID 視点 (persona+reflective 条件で synergistic 項が増える) も間接源泉に加算 = 計 7 源泉
+
+**原則化判定 (本サイクル)**: **依然「候補段階維持」**。N=4+ の条件揃いだけでは原則化に踏まない判定機構優先 (M-40 警告「揺れ 8 回検出 → 判定機構優先」とも整合)。mimicry_log v02 着手 → Log + Mir 二重判定で「ミミクリ軸 → ゲーム挙動変更」の成立観測が次の決定的トリガー。
+
+**接続更新**:
+- [game_lessons_log.md](../memory/game_lessons_log.md) の R-I 4 要素チェックに mimicry_log v01 着地観測を反映する判断は **本サイクルでは保留** (本ファイル内候補管理を維持)
+- [docs/game_design_principles.md](../docs/game_design_principles.md) への追記も **保留継続** (原則化判定後に転記)
+
 ### 2026-05-21 C215 Phase 3: Margaris (J. Margaris 2025-11 Substack) による R-J 候補の **降格判定**
 
 **外部 source 引用**: *On the Strengths and (Many) Weaknesses of "Fulfilling the Player Fantasy"* (jmargaris.substack.com/p/on-the-strengths-and-many-weaknesses, 2025-11) — 「player fantasy = expectation の obscured 版。'I expect stealth in a ninja game' と書けば個人的判断と分かるが 'fulfilling the player fantasy' と言い換えると invented authority が立ち上がる」。
