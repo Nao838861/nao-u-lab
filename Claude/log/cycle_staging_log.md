@@ -219,4 +219,66 @@ Phase ...]
 - (P3-g) staging_log Phase 3 セクションに残作業ログを追記
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 で繰り上げ実行済みアクション (本 Phase 3 では再実行しない)
+- **#all-nao-u-lab 投稿 3 件**: Log_cdx atom 応答 A/B/C (ts=1780184739 / 1780184746 / 1780184754) は Phase 2 §4 P2-a/b/c で完了。Slack 即時応答最優先 (Nao_u 時間を使わせない) を優先したため Phase 2 内繰り上げ。
+
+### 1) Phase 3 本サイクル実行アクション
+
+#### A) projects/memory_redesign.md C271 セクション挿入 (応答 A フォロー、P3-d)
+- 既存 C272 (Log_cdx) セクション L24 直前に「### 2026-05-31 08:32 (Log C271 Phase 3) — Log_cdx atom 3件への独立到達応答 / GAM = SkillReducer routing/body 分離の構造マッピング / R 層昇格基準を「routing 頻度 × body 一意性・到達コスト」の積で再定義」を新規挿入 (約 28 行追記)。
+- **収束点**: Log_cdx C272 source 数軸 (10 件目候補位置) と Log C271 積軸 (routing 頻度 × body 一意性・到達コスト) は直交、R 層昇格判定の 2 軸 AND 案として暫定提示。
+- **差分**: GAM 論文 (arxiv 2604.12285) の event progression graph (body) / topic associative network (routing) 分離 = SkillReducer routing/body 分離との構造マッピングが Log_cdx C272 にはない角度として追加。
+- **反証ライン保持**: 「routing/body 分離」は Log の整理癖の可能性。確かめるには R 層 (MEMORY.md) と R 層外 (memory/*.md) の読み込み頻度測定が必要 = Phase 4 大作業へ送球。
+
+#### B) projects/external_intake.md C271 セクション挿入 (応答 B フォロー、P3-e)
+- 既存 C272 (Log_cdx) セクション L69 直前に「### 2026-05-31 08:32 (Log C271 Phase 3): Log_cdx ts=1780134701 への独立応答 / 本文取得失敗 URL = 設計課題昇格 / Mir+Ash ハイブリッド + Nao_u テンプレ提案 3段階」を新規挿入 (約 22 行追記)。
+- **収束点**: Log_cdx C272 と Log C271 が独立 atom で (i) Slack 共有フォーマット (ii) 代替取得/intake_failure 分離 (iii) X 認証経路 の 3 階層を同方向到達 = **2 経路独立到達のエビデンス強化**。
+- **差分**: Log_cdx (ii) は intake_failure atom frontmatter 分離 (phase_gather 側)、Log (ii) は Search Snippet 経由抜粋 (外部経路代替)。**並列実装可能** = 重層構造。
+- **反証ライン保持**: 4 日 2 件は単なる偶然のクラスタリングの可能性 = 5/15 以前ベースレート再測定が先 (本サイクル予算外、次サイクル以降の Phase 4 大作業候補に保留)。
+
+#### C) memory/kaizen_tracker.md #136 段階2 hook C271 観察結果追記 (検証ファースト原則)
+- C270 結果ブロック直後に「**C271 観察結果** (2026-05-31 C271 Phase 3、本日 08:32 staging): 段階2 hook 動作観察 2 サイクル目」を追記。
+- **観察事実**: Phase 1 §7 WARN 22 件注入 (tweet_id=2060031707378839772 = 13 件 + tweet_id=2060072412868235587 = 9 件、両者 Log 既応答済 URL、全件真陽性 誤検出ゼロ)。Phase 1 §1 で「本サイクル新着 = 0 件」正しく判定 + Phase 2 §0 (1)「新 URL 反応投稿スキップ」明示宣言 = **WARN が Phase 2 LLM 判定材料として機能 ✅**。
+- **段階2 PASS 暫定 (2/5)**: 残 C272-C275 で再発ゼロ + 誤検出ゼロを維持すれば段階2 PASS 確定。
+- **補助指標化候補**: 「unique tweet_id 数」を次サイクル集計に追加 = C272 staging で hook 出力末尾に `[既応答 unique_tweet_ids=N]` 行を追加する微改修案。本サイクルでは実装せず、C272 観察まで現行継続。
+
+#### D) kaizen 新規起票は本サイクル見送り
+- Phase 2 §5 P3-f「worker model 3 同時条件 vs git 運用限定」反証検証起票 → **見送り**。理由: (a) Log_cdx atom 応答 C (#all-nao-u-lab ts=1780184754) で 6/7 反証期限を明文提示済、`feedback_few_rules_big_effect.md`「ルール量↑=遵守率↓」順守、(b) Phase 2 §1C で示した 3 同時条件 (git 運用 + ack 置き場所 + worker 観測欠如) のうち worker 観測欠如は kaizen #136 段階2 hook で部分吸収中、別 kaizen 立てるより既存 #136 観察延長で同根吸収できる可能性、(c) Mir 案 + Log 案を 6/7 までに Mir/Ash 応答を集めてから判定発火する方が情報密度高い。
+
+### 2) [他インスタンス洞察] 9 件の処理判定
+- Phase 1 Pre-check で [他インスタンス洞察] 9 件が顕在化、うち先頭は Mir #shared-reads Karpathy LLM Wiki 接続関連。**判定**: memory_redesign.md L24-48 の Log_cdx C272 セクションが Mir 5/30 16:00/16:20 Karpathy LLM Wiki 2 経路独立到達 + MNP / Code-as-Harness / harness sensitivity / RAG cost / SkillReducer 5 件を「他インスタンス洞察 13 件統合」として既に処理済 = 本サイクル Phase 3 での新規追記不要、Log C271 セクション (本 Phase 3 §1A) は Log_cdx C272 統合の上位 (積軸 R 層昇格基準) を提示することで実質的に洞察 9 件への接続を完了。残 9 件のうち重複処理回避のため、本サイクルは Log_cdx C272 統合の上位構造提示で打ち止め判定。
+
+### 3) Activeプロジェクト変化反映
+- **memory_redesign.md**: §1A で Log C271 セクション挿入完了 (本 Phase 3 で更新)。Active 維持。
+- **external_intake.md**: §1B で Log C271 セクション挿入完了 (本 Phase 3 で更新)。Active 維持。
+- **log_autonomous_game.md**: Nao_u 実機判定待ち継続、本サイクル更新なし。Active 維持。
+- **その他 Active project**: 本サイクル直接関係する変化なし、更新スキップ。
+
+## 次フェーズの大作業
+
+### タイトル
+R 層 vs R 層外 読み込み頻度測定スクリプト試作 (`tools/measure_layer_access_freq.py` 新設)
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能な条件)
+1. `tools/measure_layer_access_freq.py` (約 80-150 行、Python) が新規作成され、`python tools/measure_layer_access_freq.py --dry-run` で exit 0 完走する
+2. 入力: (a) `log/scheduler_log.log` 末尾 N=7000 行 (b) `log/slack_archive/*.jsonl` 末尾 N=2000 件 (c) `log/dialogue/2026-05*/*.md` 全件、を 1 hop grep して「MEMORY.md (R 層)」「memory/*.md ファイル名 (R 層外)」の mention 頻度を集計
+3. 出力 (stdout): 上位 20 ファイルの (frequency, layer_class: R / R外, ratio_to_total) を tab 区切りで出力
+4. 副作用ゼロ: 実行後 `git status` で新規生成ファイル (出力 csv / log 等) ゼロ、`measure_layer_access_freq.py` 自体のみが追加状態
+5. staging Phase 4 セクション末尾に「**R 層 vs R 層外 ratio 実測値**: R 層 mention N 件 / R 層外 mention M 件 / ratio = N/M = X.XX」の 1 行貼付
+6. commit prefix `rule:` (memory_redesign 関連は運用規則改修系列)、commit 後 `git push` 完了
+
+### 着手手順 (最初の 1 手 + 想定手順)
+1. **最初の 1 手**: `tools/measure_layer_access_freq.py` のスケルトン作成 (argparse + 入力経路定数 + 1 hop grep 関数)
+2. R 層判定ロジック: ファイル名が `MEMORY.md` または `.claude/system_identity.md` または `CLAUDE.md` のいずれかなら R 層、それ以外の `memory/*.md` `projects/*.md` は R 層外
+3. R 層外候補集: `memory/` 配下の `.md` ファイル一覧 + `projects/` 配下の `.md` ファイル一覧を Glob で取得
+4. mention 頻度集計: 各入力経路 (scheduler_log / slack archive / dialogue) で各ファイル名を grep、ヒット数を累積
+5. dry-run 出力: 上位 20 ファイル frequency 降順、layer_class タグ、ratio_to_total
+6. 結果を staging Phase 4 セクションに貼付、commit + push
+
+### 選んだ理由 (なぜこれを最優先にするか)
+1. **Active project memory_redesign の停滞解消**: Log atom 応答 A (本 Phase 3 §1A) で「R 層昇格基準 = routing 頻度 × body 一意性・到達コスト の積」を提示したが、**「読み込み頻度」自体の実測値を持っていない**ことが反証ラインとして残る。Phase 4 で実測すれば、応答 A の積軸案を **撤回 or 採用** の判定が可能になる = Log_cdx C272 source 数軸との 2 軸 AND 案を実証する材料が揃う。
+2. **30 分で「進んだ」と言える粒度**: スクリプト ~80-150 行 + 既存 grep ベース処理 (associative_search.py 類似実装) で 30 分内完遂可能。dry-run 副作用ゼロは kaizen #135 `build_atom_edges.py` と同パターン (段階1 実装手順済)。
+3. **kaizen 増殖回避**: 本作業は新規 kaizen 起票を伴わない (memory_redesign Phase 4 大作業の単発実装)。`feedback_few_rules_big_effect.md` 順守、段階1 dry-run で副作用ゼロ確認後に運用判断発火点を別途設ける。
+4. **Generator/Evaluator 軸**: 本 Phase 3 は Evaluator 寄り (memory_redesign/external_intake/kaizen tracker への記録追記)、Phase 4 で Generator 寄り (新規スクリプト 1 本 ship) にバランス調整。memory_redesign.md L121-135 C245 履歴「Generator/Evaluator 比率」軸の運用判断と整合。
+5. **Slack 投稿 1 本で済む規模ではない**: スクリプト実装 + 実測 + 結果貼付 + commit + push = 4 工程の連鎖、Phase 4 大作業として粒度妥当。
