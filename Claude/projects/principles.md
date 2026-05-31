@@ -121,6 +121,8 @@ IF-THEN 12本 → 3原則に再構成済み。Nao_u「良い方向性」「い�
 - [game_lessons_log.md](../memory/game_lessons_log.md) の R-I 4 要素チェックに mimicry_log v01 着地観測を反映する判断は **本サイクルでは保留** (本ファイル内候補管理を維持)
 - [docs/game_design_principles.md](../docs/game_design_principles.md) への追記も **保留継続** (原則化判定後に転記)
 
+**次の一手 (C274 Phase 4 で Log R-I 評価実施済 = N=4+ 候補軸への観測 N=1 確定)**: [`game/mimicry_log/v02/implementation-notes.md`](../game/mimicry_log/v02/implementation-notes.md) §6 で R-I 4 要素チェックを v02 現状コードに対し実施完了。判定結果は **要素 1/3/4 で軸立て成立、要素 2 (受け手が 5 秒で説明できる入り口) で演出強化に逃げた** = 4/4 のうち 3/4 成立。N=1 観測として「ミミクリ軸 → 機構伝播は成立、ミミクリ軸 → 入り口設計伝播は不成立」を本ファイル候補軸の検証材料に確定。原則化判定は「候補段階維持」継続、N=4+ 移行の決定的トリガーには **同型観測を mimicry_log v03 (= 軸を立てたまま入り口設計を改善する試行) で重ねる必要**あり (= Mir 二重判定が依然未着、Mir 側 R-I 評価実施で N=2 へ)。
+
 ### 2026-05-21 C215 Phase 3: Margaris (J. Margaris 2025-11 Substack) による R-J 候補の **降格判定**
 
 **外部 source 引用**: *On the Strengths and (Many) Weaknesses of "Fulfilling the Player Fantasy"* (jmargaris.substack.com/p/on-the-strengths-and-many-weaknesses, 2025-11) — 「player fantasy = expectation の obscured 版。'I expect stealth in a ninja game' と書けば個人的判断と分かるが 'fulfilling the player fantasy' と言い換えると invented authority が立ち上がる」。
