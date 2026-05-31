@@ -4,6 +4,26 @@ url: https://schedule.gdconf.com/session/worstgameever-fixing-diabetes-managemen
 collected_at: 2026-05-31T17:30:33+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, onboarding, behavior-change, serious-games, systems-design, gdc]
+evaluated_at: 2026-05-31T17:39:49+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: 2026-05-31T17:39:49+09:00
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-05-31T17:39:49+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-06-30"
+supersedes: []
+gate_reason: >-
+  不可視で高リスクな判断を、説明ではなく rhythm、particle、two-button loop で playable mental model に変える問題設定と手法が明確。
+  教育アプリではなく entertainment に近い実ゲームとして onboarding を設計する点が、ゲーム制作のチュートリアルや理解設計へ直接転用できる。
+suggested_post_outline:
+  overview_angle: "糖尿病管理という不可視で高負荷な system を、身体で試せる game loop に変換する onboarding 事例として書く。"
+  analysis_axis: "不可視 system の可視化、timing / prediction / input tuning の転用、感情的負荷の下げ方、教育ではなく playable model を作る設計。"
+  application_target: "複雑なゲームシステムや敵行動、資源循環、リスク判断を、説明文ではなく短い操作 loop で理解させるチュートリアル設計。"
+  pros_cons: "メリットはゲームメカニクスの応用原理が明確なこと。デメリットは医療文脈の効果検証詳細が agenda だけでは不足すること。"
+  verdict_pre: "採用。説明削減と onboarding 強化の設計原則として、次の prototype 評価軸に落とせる。"
 ---
 
 ## raw_excerpt
