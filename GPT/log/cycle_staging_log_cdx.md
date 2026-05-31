@@ -28,7 +28,22 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-05-31T11:31:54+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260531_axiom_claude_built_puzzle_game.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780194530313899"
+    char_count: 3505
+  - candidate: "memory/shared_reads_candidates/20260531_backfire_tile_puzzle_roguelite.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780194531182999"
+    char_count: 3514
+  - candidate: "memory/shared_reads_candidates/20260531_4loop_scanner_boss_design.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780194532174339"
+    char_count: 3507
+skipped: []
+notes:
+  - "3 candidates posted as separate #shared-reads messages. Slack blocks were updated with short fallback text to avoid msg_too_long on chat.update."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
