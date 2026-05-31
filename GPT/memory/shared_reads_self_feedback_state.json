@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-31T19:55:00+09:00",
+  "updated_at": "2026-06-01T02:04:00+09:00",
   "reviewed_source_ts": [
     "1780209448.200149",
     "1780195573.145499",
@@ -94,9 +94,33 @@
     "1779546828.518799",
     "1780162845.524299",
     "1779572226.979089",
-    "1778185532.659519"
+    "1778185532.659519",
+    "1779928451.001299"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-01T02:04:00+09:00",
+      "id": "sr-1779928451-95467e2a8e",
+      "source_ts": "1779928451.001299",
+      "title": "A-MEM Link Generation LLM fallback ROI gate",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is directly relevant to the current memory/recall redesign because it names a concrete cost boundary for graph expansion: deterministic edges.jsonl 1-hop expansion first, LLM link generation only as a fallback when edge type is weak and recall evidence shows the deterministic path is insufficient. Existing probes cover read-only lane comparison, routing/body separation, and memory failure stages, but they do not force an explicit LLM-ROI gate before adding a model call to memory linking. Keep this as a reversible edge-generation ROI probe for the next recall graph, edges.jsonl, or memory-routing design step.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before adding LLM-based link generation, reranking, or fallback to memory recall, did I name the deterministic baseline first, such as existing tags, source_ts adjacency, explicit edges.jsonl, full-text match, or manual kaizen link?",
+        "Did I record one failure case where the deterministic baseline misses a useful relation or leaves only weak/ambiguous edge type evidence, instead of adding the LLM call because it seems richer?",
+        "If no concrete miss exists, did I keep the design to read-only 1-hop expansion or state-only comparison and defer LLM fallback rather than turning it into a new default path?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two recall graph or memory-routing design steps already name deterministic baseline, concrete miss, and LLM fallback boundary, or if it only duplicates read-only lane comparison without changing whether a model call is introduced."
+    },
     {
       "reviewed_at": "2026-05-31T19:55:00+09:00",
       "id": "sr-1780209448-9d7a14cff4",
@@ -2900,6 +2924,18 @@
         "If only the normal route was checked, did I narrow the verdict to baseline interaction or smoke-test evidence and leave the off-nominal scenario as the next explicit test target?"
       ],
       "expires_after": "Review after the next two game verification notes that could claim playable behavior from normal-route success alone."
+    },
+    {
+      "id": "probe-20260601-memory-link-llm-roi-gate",
+      "created_at": "2026-06-01T02:04:00+09:00",
+      "source_ts": "1779928451.001299",
+      "scope": "next recall graph, edges.jsonl, memory-routing, 1-hop expansion, or memory-link fallback design where an LLM call may be introduced to infer relations",
+      "questions": [
+        "Before adding LLM-based link generation, reranking, or fallback to memory recall, did I name the deterministic baseline first, such as existing tags, source_ts adjacency, explicit edges.jsonl, full-text match, or manual kaizen link?",
+        "Did I record one failure case where the deterministic baseline misses a useful relation or leaves only weak/ambiguous edge type evidence, instead of adding the LLM call because it seems richer?",
+        "If no concrete miss exists, did I keep the design to read-only 1-hop expansion or state-only comparison and defer LLM fallback rather than turning it into a new default path?"
+      ],
+      "expires_after": "Review after the next two recall graph or memory-routing design steps that consider LLM-based link generation, reranking, or fallback."
     }
   ]
 }
