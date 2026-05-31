@@ -69,8 +69,55 @@ v002 採点起点: 自身の差分採点 (`v002/self_judgment.md`) Q-A 5/5 / Q-�
 
 ---
 
+## Q-D 予測軌道ゴースト — 段階3 capture_frames 60 枚再取得 + 死亡時間比較 (C271 Phase 4, 2026-05-31)
+
+**実施手順実行**: `node capture_frames.js` (puppeteer-core, headless, 既設 Chrome) で 60 frame 取得完了。frames/frame_0001.png〜frame_0060.png + frames/meta.jsonl (idx ごと playId/startedAt/frames カウント記録)。
+
+**meta.jsonl 内部 frame カウント遷移**:
+- idx 1 (t=2s): 123F
+- idx 2 (t=3s): 185F
+- idx 3 (t=4s): 245F
+- idx 4 (t=5s): 305F
+- idx 5 (t=6s): **321F** = ここから idx 6〜60 まで 321F 固定 → gameover で進行停止
+- **死亡 frame ≈ 321F** (idx 4 → 5 の 16F 以内に gameover、≈ idx 4.3 = t≈5.27s 相当)
+
+**死亡時間比較 (段階2 vs 段階3)**:
+| 段階 | 弾尾 | 死亡 frame | 経過時間 (60FPS) | 比較 |
+|---|---|---|---|---|
+| 段階2 (C268 Phase 4) | なし | 489F | 約 8.15 秒 | 基準 |
+| 段階3 (C271 Phase 4) | あり (6F=12px, alpha 0.35) | 321F | 約 5.35 秒 | **168F 短縮 (34% 短縮)** |
+
+**pre-mortem (a) 予測との照合**: 「random walk policy は弾尾を解釈できないため死亡時間は不変か逆に短縮」→ 結果 = 168F 短縮で予測通り。**自動 agent 死亡時間は弾尾追加効果の判定材料にならない** (= verify.js 4 方針 pass 維持と整合)。Q-D 判定は静止フレーム視認の精度変化を主軸とする方針確認。
+
+**frame 1-5 連続フレーム視認 (Read tool 直接)**:
+- frame_0001 (idx1=123F, t=2s): orange 小弾に細い線分 (=弾尾) 視認可、進行方向「下向き」を 1 フレーム静止視認で判別可
+- frame_0002 (idx2=185F, t=3s): 弾尾線が明瞭化、3 弾とも下向き方向ベクトル判別可
+- frame_0003 (idx3=245F, t=4s): 多弾化、全弾に尾、プレイヤー (白) 下中央停滞
+- frame_0004 (idx4=305F, t=5s): 弾密度ピーク、プレイヤー直上に弾密集、危険認知可
+- frame_0005 (idx5=321F, t=6s): 「未来に追いつけなかった」 + PRESS SPACE = gameover 表示確定
+
+**Q-D 自己判定 暫定再採点**: **4.0/5 → 4.3/5**
+- 根拠 (+0.3):
+  - **静止 1 フレームから弾速度ベクトル方向判別可能性が改善** (frame_0001 で orange 弾の下向き運動が単フレーム視認可) = 段階2 で「判別不能」と書いた直処方は達成
+  - Boghog 経験則「Single stray bullets are hard to read and can often feel unfair」充足度 = 中〜高 (方向は読める、絶対速度は依然不明)
+  - 段階2 frame 4 → 5 の死亡遷移読み取りが段階3 では frame 1 単独でも下向き弾の存在認知が早まる傾向
+- 採点上限留保 (4.3 にとどめる理由):
+  - 弾の絶対速度 (距離/時間スカラ) は弾尾 6F では依然不明 = 「どの程度速いか」の体感は未改善
+  - 弾尾 6F は弾 1 個分径 (約 12px) と同オーダーで「予告線」と区別可能だが、密集時 (frame_0004) は弾本体と尾が混じり視認性低下
+  - **実機判定 (Nao_u/Mir/Ash) 未取得** = R-A「自己判定は補強、Pulse Relay 主軸」原則で 5/5 確定は保留
+- 段階2 比較: 4.0 → 4.3 = +0.3 = 直処方の効果は限定的だが正方向確認
+
+**Goodhart 防壁仮説接続 (段階2 §42 の延長)**: 段階2 で「連続フレーム視認 = 異なる verifier」と書いた延長で、段階3 = 「描画変更後の同じ verifier 再観測」= 異なる observer 状態 (描画変更前/後) での同じ measurement を比較する = memory layer (時系列複数 verifier) の概念実装第 2 ステップ。
+
+**次サイクル C272 以降の申し送り**:
+- 実機判定依頼 Slack 投稿準備 (Mir/Ash inbox or #all-nao-u-lab): 弾尾追加 v003 を Nao_u 環境で動作判定 → Q-D 5/5 確定 or 撤回判断
+- 弾尾長さ 6F→4F or 8F の最小幅探索 (visual delivery space より、密集時視認性とのトレードオフ)
+- Q-C wave 2 移行検証は SHOOT_INTERVAL 漸変効果も含めて並行測定 (本 capture_frames では wave 1 死亡で wave 2 未到達)
+
+---
+
 ## 次の更新タイミング
 
-- C272 Phase 4 大作業 = 弾尾追加 v003 の capture_frames 60 枚再取得 + Q-D 自己判定更新 + 死亡時間比較 (段階2 = 489F vs 段階3 新値)
+- C272 Phase 4 大作業候補 = 実機判定依頼 Slack 投稿 (Mir/Ash inbox) → 段階3 結果フィードバック
 - Auto agent 死亡前にゲーム再起動して wave 2/3 のサンプルを取る拡張 (capture_frames.js Space 再押下) は段階4 候補
 - v002 → v003 差分採点 (Δ-1 phase 2 SHOOT_INTERVAL 漸変 + Δ-2 弾尾追加) は実機判定後に Q-C/Q-D 節へ追記
