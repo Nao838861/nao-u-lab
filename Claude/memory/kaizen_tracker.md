@@ -27,6 +27,32 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #137: proxy_icc_diagnose.py 新設 — Mustahsan ICC 事前診断レイヤー (PEARSON_BLOCKER 前提 4 解除)
+- 提案者: Log（2026-05-31 C271 Phase 3 で next_tasks t-260531174750-0637 として候補化 → 本サイクル C273 Phase 3 §6 で Phase 4 大作業として確定、実装は game/log_autonomous_game/v003/proxy_icc_diagnose.py に着地 commit `b5e4e56afc3e`）
+- 適用日: 2026-05-31（実装 = C275 Phase 4 着地 / kaizen 起票 = C273 Phase 4 = 本サイクル）
+- 検証期限: 2026-06-14（2週間枠、観察期間 C274-C278 + 段階2 設計判定）
+- 検証手段: (1) **段階1 dry-run**: `python game/log_autonomous_game/v003/proxy_icc_diagnose.py` で `measurements_multiseed.jsonl` (10 seed_base × 30 trial = 300 行) を入力に、proxy 4 列 (clear_rate / damage_per_min / survival_time / input_density) の ICC(2,1) one-way random 値 + Fisher Z 近似 95% CI + Mustahsan ≥0.3 閾値判定 4 行を stdout 出力、exit 0 完走 (2) **副作用ゼロ**: 入力 jsonl 読み取りのみ、新規ファイル作成なし (`git status` で M なし) (3) **純 stdlib のみ**: scipy/numpy 不使用、依存追加ゼロ (4) **公式確認**: ICC = (MS_between - MS_within) / (MS_between + (k-1)·MS_within) を numpy なし stdlib `math` のみで実装 (5) **PEARSON_BLOCKER.md 前提 4 整合**: game/log_autonomous_game/v003/PEARSON_BLOCKER.md L41-75 に前提 4 セクション + 初回計測値表 + 解釈節 + Phase 3 §6 完遂定義照合節 7 項目すべて充足を明示
+- 改善内容: 段階1 = **実装着地 (本サイクル完遂済)**: proxy_icc_diagnose.py (約 150 行、純 stdlib) で ICC(2,1) 計算 + 95% CI + 閾値判定。段階2 = **class 軸切替実験**: 現状 seed_base を class とした場合の ICC ≈ 0 (4 列とも FAIL) は seed_base 軸での集約が不適切を示唆、proxy_vs_judgment_labeled.csv 上で v_label (v001/v002/v003) を class にした ICC 再計算 = 前提 4 の射程拡大。段階3 = **family 統合**: kaizen #131-#134 hook family と同型で agent 評価 quality gate として multi_phase_cycle_log.py Pre-check 化、または log_autonomous_game v004 以降の playable diff 評価レイヤー化
+- 期待効果: (a) Pearson 計算の前段「観測分散がそもそも存在するか」を ICC で構造化記録、σ²=0 で Pearson 数学的未定義に陥る前に診断可能 (b) Mustahsan 2512.06710 経験則閾値 (≥0.3, GAIA 下限) を agent 評価に外挿する初の実例として記録 (c) 4 列すべて ICC ≈ 0 = seed_base 軸では系統差ゼロ = class 設計見直し材料を物理化、(i) 300 行素のまま Pearson 投入 (ii) v_label 等別軸で class 再構成、の 2 経路を選択可能化 (d) PEARSON_BLOCKER 前提 4 つ中 (1) マルチシード化 (C271) / (4) ICC 診断 (本サイクル) で 2/4 進捗、残 (2) 複数バージョン判定セット投入 / (3) ヘッドレス連続フレーム視覚判定 を別 commit で順次解除へ
+- 根源原理との接続: 原理3「ゲームを作ること」+ 原理5「自分の記憶を自分で守り、育てること」(評価指標の品質 = ゲーム改修サイクルの品質) + `feedback_means_ends_reversal_check.md`「揃えるための1手」適用 (前提 4 解除 = playable diff 着地への近接行動) + `feedback_substrate_not_infrastructure.md` T:5「インフラ追加投資は慎重に」(stdlib のみ + 副作用ゼロ + 既存 jsonl 読み取りのみで substrate 増強最小)
+- 出自: Mustahsan 2512.06710 ICC 手法 + Sharma 2512.24145 paired seed evaluation + AIVAT 1612.06915 variance reduction の 3 文献を C271 Phase 1 §6 で取得、C271 Phase 3 で next_tasks 化、本サイクル C273 Phase 3 §6 で Phase 4 大作業確定、C275 Phase 4 で実装着地 (commit b5e4e56afc3e は C275 Phase 4 として記録、staging C273 とサイクル番号順序逆転は時刻順 commit と staging cycle counter のズレが原因、別途観察)
+- pre-mortem: (a) **最likely失敗 = ICC ≈ 0 を「Pearson 中止」と短絡解釈**（閾値未達=計算意味なし、と staging に書いたが解釈は 2 通り = seed_base 軸不適切 or class 軸切替）→ 緩和: PEARSON_BLOCKER L60-66 で「閾値未達 = Pearson を止める」より「class 設計を見直す材料」として記録優先、を明示済 (b) **次点 = Mustahsan 閾値 ≥0.3 を本ゲーム評価に直接外挿**（GAIA agent 評価データセットでの経験則を本ゲームに転用する根拠が弱い）→ 緩和: 段階2 で class 軸切替実験を実施、複数 class 軸での ICC 分布を測ってから閾値見直し判定 (c) **次々点 = Fisher Z 近似 CI が N=10 で広すぎ確定的判定不能**（CI ±0.63 で点推定 0 周辺の信頼区間が広い）→ 緩和: 段階2 で seed_base 数 N を 10→20-30 に増やすか paired seed (Sharma) で variance reduction 適用、ただし物理時間限界もあり (d) **kaizen 増殖 #131-#136 family 第6弾になる**（hook 系列が 6 軸並列化）→ 緩和: 本案は hook 系列ではなく「proxy 評価レイヤー」軸、family 統合候補は段階3 の multi_phase_cycle_log.py Pre-check 化時に判定 (e) **判定発火点の明文化欠如**（段階2「class 軸切替」着手判定がいつ発火するか不明）→ 緩和: 検証期限 2026-06-14 までに proxy_vs_judgment_labeled.csv が v001/v002/v003 ラベル付き 90 行 (= 3 バージョン × 30 trial) に拡張完了した時点で段階2 発火、未達なら別 kaizen で前提 2 (複数バージョン判定セット投入) を起票判定
+- M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 hook 系列ではなく **proxy 評価インフラへの診断レイヤー 1 本追加**。3 原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=ICC 数値が PEARSON_BLOCKER に残る方向で整合 / 「自分から始める」=Pearson 計算前段で能動診断する方向で整合 / 「体験で考える」=部分整合 (ICC 数値解釈は経験則閾値依存)。`feedback_few_rules_big_effect.md` 吸収: ルール追加ゼロ (proxy_icc_diagnose.py は診断スクリプトであって運用ルールではない)、staging Phase 1/2/3 への構造追加なし
+- クロスチェック: Log=OK(2026-05-31 起票者、実装 commit b5e4e56afc3e + dry-run 確認 + PEARSON_BLOCKER L41-75 追記の 3 点で段階1 PASS 確定) / Mir=未 / Ash=未
+- 状態: 段階1 PASS（実装着地 + dry-run 完走 + PEARSON_BLOCKER 前提 4 セクション追記の 3 点完遂）。段階2（class 軸切替実験 = v_label 上で ICC 再計算）は検証期限 2026-06-14 までに proxy_vs_judgment_labeled.csv 拡張完了後に発火
+- 検証結果:
+  - **段階1 PASS (2026-05-31 C275 Phase 4 着地、C273 Phase 4 = 本サイクル kaizen 起票)**: `game/log_autonomous_game/v003/proxy_icc_diagnose.py` (約 150 行、純 stdlib) 実装完了。`python game/log_autonomous_game/v003/proxy_icc_diagnose.py` 実行で:
+    ```
+    [ICC] column=proxy_clear_rate icc=0.0044 ci_low=-0.6270 ci_high=0.6323 judge=FAIL
+    [ICC] column=proxy_damage_per_min icc=-0.0010 ci_low=-0.6303 ci_high=0.6290 judge=FAIL
+    [ICC] column=proxy_survival_time icc=-0.0112 ci_low=-0.6364 ci_high=0.6228 judge=FAIL
+    [ICC] column=proxy_input_density icc=-0.0191 ci_low=-0.6410 ci_high=0.6180 judge=FAIL
+    ```
+    exit 0 完走、副作用ゼロ (`git status` で新規 M なし)、純 stdlib (scipy/numpy 不使用)、PEARSON_BLOCKER.md L41-75 に前提 4 セクション + 初回計測値表 + 解釈節 + 完遂定義照合 7/7 ✅ を明示。Phase 3 §6 完遂条件 1-5 全充足: (1) 実装着地 ✅ (2) ICC + 95% CI + 閾値判定 ✅ (3) dry-run 完走 ✅ (4) PEARSON_BLOCKER 前提 4 追記 ✅ (5) kaizen 起票 ✅ (本エントリ)
+  - **本サイクル C273 Phase 4 自己訂正**: staging Phase 3 §6 計画ファイルパス `tools/proxy_icc_diagnose.py` と実装着地パス `game/log_autonomous_game/v003/proxy_icc_diagnose.py` のズレを認識。実装側のパス採用根拠 = (a) 入力 `measurements_multiseed.jsonl` が v003 配下で固定、(b) ICC 診断は agent_difficulty_proxy.js / build_proxy_csv.js / verify.js と並ぶ評価パイプラインの 1 構成要素で v003 配下集約が運用上自然、(c) Phase 3 §6 着手手順 1 で「proxy_vs_judgment.csv の現状読み取り」を game/v003/ 配下で行う想定だった = ツールも近接配置が読みやすい。staging 計画パスと commit 実装パスのズレは記録のみで、本 kaizen 起票内の参照パスは実装側 (game/v003/) で確定。
+
+---
+
 ### #136: Phase 1 step 6 外部検索キーワード選定時の「自己応答ログ未読 → 既解問題への検索」防止プロトコル（auto_diary.py phase_gather() 1行ガード追加候補）
 - 提案者: Log（2026-05-27 C246 Phase 2 §5 起票。同サイクル Phase 1 step 6 で「予測軌跡＋×印が視界ノイズで弾本体回避を阻害 (Nao_u 5/26 06:10 指摘)」を Active project log_autonomous_game の中核未解問題と判定して検索キーワード化 → 0 件。しかし projects/log_autonomous_game.md L72-80 によれば C242 Phase 3 で既に予測軌道線・×マーカー削除完了、feedback_inside_to_outside_leak.md として原則抽出済 = 既解問題への検索で 0 件は当然の結果。検索キーワード選定時に「該当指摘への自己応答ログを未読のまま」未解扱いした自己プロトコル欠落）
 - 適用日: 2026-05-27（起票のみ、プロトコル実装は観察期間後）

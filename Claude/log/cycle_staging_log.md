@@ -348,3 +348,92 @@ Phase 1 §4 で実コマンド `python tools/external_notes_integration_audit.py
 **書類更新の妥当性**: memory_redesign §A-C + external_notes GAAMA エントリは Phase 1 §6 で能動取得した GAAMA を Phase 2 §2 で深掘り → Phase 3 で位置取り記録、という 1 サイクル内完結。`feedback_means_ends_reversal_check.md` 判定基準「分析対象が今ある Active project の停滞解消に紐付くか / 分析結果が次サイクルの実装に焼き込まれるか」の 2 点を Phase 4 ICC 実装で次サイクル接続 = 疑似タスクではない。
 
 **温度確認**: 本 Phase 3 は Slack 返信 1 件 + kaizen 検証 1 件 + project 更新 2 件 + Phase 4 大作業選定 1 件で構成、各 §にタイトルと「着地物」明示 = 原則 6「わかった と 残った は違う」順守、温度を残す密度で記録。
+
+## Phase 4: 大作業実行 (2026-06-01 完遂)
+
+### §1) Phase 3 §6 計画と実装着地の照合 — proxy_icc_diagnose.py 既着地発見
+
+**タイトル**: `tools/proxy_icc_diagnose.py` 新設 — Mustahsan ICC 診断レイヤー実装 (PEARSON_BLOCKER.md 前提 4 解除 = kaizen #137 候補 t-260531174750-0637 着手)
+
+**完遂条件 5 つの充足状況**:
+
+| # | 完遂条件 | 状態 | 着地物 |
+|---|---|---|---|
+| 1 | proxy_icc_diagnose.py (~100-150 行) 新設、ICC(2,1) one-way random 実装 | ✅ | `game/log_autonomous_game/v003/proxy_icc_diagnose.py` (約 150 行、純 stdlib、commit `b5e4e56afc3e`) |
+| 2 | CLI: 列毎の ICC + 95% CI + Mustahsan 閾値判定 (≥0.3) 出力 | ✅ | `[ICC] column=X icc=Y ci_low=Z ci_high=W judge=PASS\|FAIL` 形式 4 行 stdout 出力 |
+| 3 | dry-run 完走 = 既存データに対し ICC < 0.3 = Pearson 計算不適格を診断 | ✅ | 本サイクル再実行: 4 列とも ICC ≈ 0、judge=FAIL (clear_rate=0.0044 / damage_per_min=-0.0010 / survival_time=-0.0112 / input_density=-0.0191) |
+| 4 | PEARSON_BLOCKER.md に前提 4 = ICC 診断レイヤー実装着地済 セクション追記 | ✅ | `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` L41-75 に前提 4 + 初回計測値表 + 解釈節 + Phase 3 §6 完遂定義照合 7 項目 |
+| 5 | kaizen_tracker.md に kaizen #137 起票 (検証期限 2026-06-14、検証手段 + クロスチェック欄) | ✅ | `memory/kaizen_tracker.md` #137 セクション新設 (本サイクル Phase 4 完遂、Log=OK / Mir=未 / Ash=未) |
+
+**Phase 3 §6 計画と実装の差分認識**:
+- 計画パス `tools/proxy_icc_diagnose.py` ↔ 実装パス `game/log_autonomous_game/v003/proxy_icc_diagnose.py` (異なる)
+- 計画 CLI `--input proxy_vs_judgment.csv --output stdout` ↔ 実装 固定パス `measurements_multiseed.jsonl` 入力、stdout 出力 (異なる)
+- 計画は staging C273 Phase 3 で書かれたが、実装は commit `b5e4e56afc3e`「C275 Phase 4」として既着地、staging Phase 4 (本サイクル) より時系列上は先行
+- 実装側パス採用根拠は kaizen #137「本サイクル C273 Phase 4 自己訂正」節に明示 (input jsonl が v003 配下固定 / 評価パイプライン v003 集約 / Phase 3 §6 着手手順 §1 で v003/ 読み取り想定)
+
+**サイクル番号順序逆転の認識**:
+- 本 staging は C273 Phase 4 として実行中、kaizen #136 内には「C275 観察結果」と「C273 観察結果」が共存し、staging 時刻順 (2026-05-31 23:34) と tracker 表記 (時刻順) が一致する一方、commit メッセージは「C275」と書かれている = staging cycle counter と commit cycle counter のズレが存在、本サイクルでは事実認識のみで原因究明は別サイクル送り
+
+### §2) Phase 4 副産物列挙
+
+**新規/変更ファイル (本 Phase 4 内の追記)**:
+- `memory/kaizen_tracker.md` — kaizen #137 セクション新規追加 (#136 の前に挿入、約 25 行ブロック)
+- `log/cycle_staging_log.md` — Phase 4 セクション (本節) 追記
+
+**実装着地の前サイクル相続 (本サイクル Phase 4 は kaizen 起票 + 副産物列挙のみ)**:
+- `game/log_autonomous_game/v003/proxy_icc_diagnose.py` (commit `b5e4e56afc3e`、前サイクル着地)
+- `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` 前提 4 セクション (L41-75、前サイクル着地、本サイクルでは内容確認のみ)
+
+**Slack 投稿**: なし (Phase 3 §1 で 1 件投稿済、Phase 4 で追加投稿なし、指示書「Slack 返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない」順守)
+
+**kaizen エントリ**: kaizen #137 起票 (本 Phase 4 着地、検証期限 2026-06-14、状態 = 段階1 PASS)
+
+### §3) commit はしない (Phase 5 で日記とまとめて push)
+
+指示書「commit はしない (git push は Phase 5 で日記とまとめて行う)」順守。本 Phase 4 で実行した編集 (`memory/kaizen_tracker.md` + `log/cycle_staging_log.md`) は Phase 5 で日記投稿と一緒に 1 commit でまとめる。`game/` 配下と運用ルール改修は別 commit に分ける CLAUDE.md「厳守事項」最終項順守の準備として、本サイクル Phase 4 の編集対象は運用ルール改修側 (kaizen_tracker.md + staging) のみで game/* playable diff は前サイクル既着地 = commit 分離問題は本サイクルでは発火しない。
+
+### §4) Phase 4 自己診断 — 完遂条件と未達認識
+
+**完遂**: 完遂条件 5/5 充足、Phase 4 タスク終了。kaizen #137 起票が本サイクル Phase 4 の唯一の新規着地物 = 残り 4 条件は前サイクル既着地で本サイクルは「事実認識 + 起票」が実質作業内容。
+
+**未達認識ゼロ**: 完遂条件 5 つすべて充足、未達なし。
+
+**game/* playable diff**: 本 Phase 4 で 0 件 (前サイクル proxy_icc_diagnose.py 着地 + 本サイクル kaizen 起票 + staging 編集のみ)。Slack Phase 3 §1 で言及した「playable diff 2 サイクル連続停滞」検出を Phase 3 自己診断に組込候補化が次サイクル C274 への申し送り = 本サイクルは proxy_icc_diagnose.py = game/v003/ 配下ツール扱いで game 関連改修扱いに昇格可能だが、新規 commit は本サイクル Phase 4 では発生しない (前サイクル commit + 本サイクル kaizen 起票で代替)。
+
+**「揃えるための 1 手」が出力**: 本サイクル Phase 4 = Pearson gate 4 前提中の前提 4 (ICC 診断) を kaizen として正式起票 = 評価設計の構造化 1mm 進行、`feedback_means_ends_reversal_check.md`「揃えるための 1 手」の範疇内。次サイクル以降は前提 2 (複数バージョン判定セット投入) または前提 3 (ヘッドレス連続フレーム視覚判定) への着手判定。
+
+**温度確認**: Phase 4 §1-§4 で「完遂条件照合表」「副産物列挙」「commit 方針」「自己診断」を各節に明示 = 原則 6「わかった と 残った は違う」順守、温度を残す密度で記録。本 Phase 4 は新規実装着地ゼロ + kaizen 起票 1 件 + staging 編集 = 軽い Phase 4 だが、5/5 完遂条件充足を物理化した点で空回りではない。
+
+## Phase 5: 日記投稿 + commit (2026-06-01 00:12 完了)
+
+### §1) #log Phase 5 日記投稿 = 8 chunk 投稿完遂 (ts=1780240109〜1780240118)
+
+**着地物**: `drafts/2026-06-01/post_log_log_diary_c273_phase5_20260601_POSTED_ts1780240109.py` / Slack `#log` 8 chunk 投稿 (ts=1780240109.039859〜1780240118.804089)
+
+**chunk 構成**:
+- chunk1: 冒頭サマリ — Phase 4 「自分が立てた計画が前サイクル既着地」気づき + kaizen #136 段階2 hook 4/5 PASS 暫定 + Pre-check
+- chunk2: Phase 1 — #nao-u 新 URL 2 件 + kaizen #136 WARN 25 件発火 + Active project / 外部検索キーワード
+- chunk3: Phase 2 — GAAMA arxiv 2603.27910 深掘り 5 新規発見 (atomic assertion / 4 ノード型対応 / edge-type-aware / Concept mega-hub / GRAFT)
+- chunk4: Phase 3 — Slack gate/memo 応答 + memory_redesign GAAMA 4 ノード型対応表 + external_notes GAAMA + kaizen #136 観察 4/5
+- chunk5: Phase 4 大作業 — proxy_icc_diagnose.py 既着地発見 + 完遂 5/5 + kaizen #137 起票 + サイクル番号順序逆転認識
+- chunk6: 外部情報 — GAAMA / GAM / HAGE 3 論文、memory_redesign R 層昇格判定 source 6 件目
+- chunk7: 書き込んだファイル読み手チェック 6 種全件 ◎/○
+- chunk8: 次回起動時にやること — kaizen #136 PASS 確定 + 自己訂正申し送り + Pearson gate 残前提解除 + game/* playable diff 内部 gate 解除条件試行第 2 弾
+
+### §2) 書き込んだメモリファイル一覧 (本サイクル全体、Phase 3 + Phase 4 + Phase 5)
+
+| ファイル | Phase | commit | 読み手チェック |
+|---|---|---|---|
+| `drafts/2026-05-31/post_log_all_nao_u_lab_reply_logcdx_gate_memo_confirm_*.py` | Phase 3 | b28290969aff | ◎ Nao_u 理解可 / 未来判断材料 |
+| `drafts/2026-05-31/post_log_shared_reads_gaama_atomic_assertion_*.py` | Phase 2 | b28290969aff | ◎ Nao_u 理解可 / 未来判断材料 |
+| `projects/memory_redesign.md` | Phase 3 | b28290969aff | ◎ Nao_u 理解可 / kaizen #135 設計入力 |
+| `memory/external_notes_log.md` | Phase 3 | b28290969aff | ◎ audit 100% 維持 / R 層昇格 source |
+| `memory/kaizen_tracker.md` | Phase 4 | 本 commit | ◎ kaizen #137 起票 / #136 観察 4/5 |
+| `log/cycle_staging_log.md` | Phase 1-5 累積 | 本 commit | ◎ Phase 毎独立可読 / 次 C274 前提情報 |
+| `drafts/2026-06-01/post_log_log_diary_c273_phase5_20260601_POSTED_*.py` | Phase 5 | 本 commit | ◎ 8 chunk 日記 / 投稿済 ts 履歴付き |
+
+合計 7 ファイル、全件「Nao_u が読んで理解できる」「未来の自分が文脈なしで行動を変えられる」の 2 軸チェック完了。
+
+### §3) commit + push 方針
+
+本 commit は運用ルール改修側 (kaizen_tracker.md + staging + drafts) のみで game/* playable diff は前サイクル既着地 = CLAUDE.md「厳守事項」最終項 (`game:` / `rule:` 分離) は本サイクルでは発火しない。prefix は `log:` で C273 Phase 4+5 まとめ。push 完了後に本サイクル終了。
