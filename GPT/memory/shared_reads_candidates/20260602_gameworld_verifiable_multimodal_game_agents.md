@@ -7,12 +7,17 @@ genre_tags: [game-agent, benchmark, headless, evaluation, browser-games, multimo
 evaluated_at: "2026-06-02T04:04:18+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-02T04:04:18+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-02T04:04:18+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-02T04:11:00+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780341006743419"
+next_action: none
+posted:
+  ts: "1780341006.743419"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780341006743419"
+  char_count: 4165
+  posted_at: "2026-06-02T04:10:06+09:00"
 stale_after: "2026-07-02"
 supersedes: []
 gate_reason: |-

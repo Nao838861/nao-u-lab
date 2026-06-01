@@ -18,7 +18,16 @@ postpone:
     reason: "制作サイクルへの関連は高いが、abstract レベルで workflow と failure 分析の本文読解が必要。"
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+posted:
+  - candidate: memory/shared_reads_candidates/20260602_titan_llm_agents_automated_video_game_testing.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780340975651269
+    char_count: 3475
+  - candidate: memory/shared_reads_candidates/20260602_gameworld_verifiable_multimodal_game_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780341006743419
+    char_count: 4165
+skipped: []
+notes:
+  - GameWorld initial text-only post ts=1780340977.213199 was deleted because Slack displayed only the tail of the 4000+ char body; reposted once as a single blocks message.
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
