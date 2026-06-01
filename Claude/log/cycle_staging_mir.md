@@ -249,3 +249,50 @@ Mir(Mac)です。これ、自分自身の C247-C251 連続1mm diff 積み上げ�
 - 種C (Log引継ぎ提案) の Slack/projects 着地判定
 - #44/#46 を sense_prediction_log に教師データとして即記録
 - ゲーム軸 (d)(e)(f) は別系統で並走
+
+---
+
+## Phase 3 対処・実行 (2026-06-01 C274)
+
+### 優先順位判定
+1. Nao_u 直接指示の未対応: なし（Phase 1 巡回で確認）
+2. CLAUDE.md「絶対にやる」最上位 = **ゲーム playable diff** を最優先
+3. external_notes_mir.md 未統合エントリの 1 件接続: #6 kis を #34 補強観測として
+4. プロジェクト進捗更新: 本サイクルは触らず（時間配分）
+5. 深掘り候補: A の「Phase 3 staged 偽装」は同型未反復、原則化見送り（教師データ蓄積のみ）
+
+### 実行結果
+
+**(1) game: siphon_mir/v02 title hint に [B] キー明示**
+- 編集箇所: `game/siphon_mir/v02/index.html` L792
+- 変更: `'SPACE to siphon  /  BOMB at MAX gauge'` → `'SPACE to siphon  /  [B] BOMB at MAX gauge'`
+- **軸選定の理由**: C247-C257 観測10連続は feedback 強度軸（粒子量・linger・半径・life）の数値ナッジ。Phase 2 で見た abagames #8「LLM は学習済み近傍 1mm」/ kis #6「学習済み = 競争力なし」直撃への構造的応答として、本サイクルは**意図的に affordance 軸（初意関）へシフト**。L16 HTML hint には既に [B] 表記があり、in-canvas title だけ抜けていた整合性バグでもある。観測11だが**新軸**として記録。
+- 効果判定: 次サイクル以降、同型 affordance 軸の発見が続くか、feedback 強度軸へ自動回帰するかで判定。
+
+**(2) external_notes_mir.md #34 補強観測追記**
+- 追記内容: @kis #6 を #34 AI外注不可リスト系列の補強観測として durable 化（独立第5観測ではなく、4観測の裏返し補強）
+- 反証併記: kis命題の射程限定（コードに限る）、「ありふれた」閾値依存、Mir自身の使い分け自戒
+- 本 game diff の axis-shift を **kis/abagames 命題への self-binding 実験**として記録（次サイクル同型反復で効果判定）
+
+**(3) 種B (shared-reads 投稿) 判定: 引き続き Nao_u 委任**
+- 前 C273 で abagames #34 shared-reads 投稿は Nao_u 委任引き継ぎ済
+- 本サイクルで Mir 主体投稿実行は委任契約への上書き、評価ドリフトリスク
+- 判定: **据え置き**。Nao_u 側で読まれるタイミングを待つ
+
+**(4) 種C (Log 引継ぎ提案) 判定: 見送り**
+- 「遊びながら感触調整 commit ratio」評価軸の提案は、Log 側プロジェクト (log_autonomous_game) の進行に対する外部介入
+- task_assignment.md 原則「誰がやるか迷ったらこれを見る」→ 本件は Log 主管領域、Mir は観測共有まで
+- 判定: external_notes_mir.md の kis 補強観測エントリ内に「BOMB feedback軸 自動連鎖の自己観測」として記録止まり、Slack 投下は見送り
+
+**(5) #44/#46 sense_prediction_log 教師データ記録: 本サイクル見送り**
+- 時間配分理由: game diff + external_notes 補強 + staging 記録で 1 サイクルの温度が散らないよう絞った
+- 引き継ぎ: 次サイクル Phase 3 候補へ持ち越し（同型反復観測の蓄積待ち、即原則化リスク回避）
+
+### サイクル番号の物証
+- 本 Phase 3 commit 後の `git log -1 --oneline -- game/siphon_mir/v02/` で C274 ラベルの定着確認予定
+- boot_intent ヘッダ "C247→実態C257" の修正は Phase 4 wrap-up 時に物証付きで実施
+
+### 今サイクルの構造的特徴
+- **観測11だが axis-shift**: 連続 1mm diff を切らずに、軸だけ変える「斜め継続」が成立するか試行
+- **書く手と実装の手の整合**: C251「staged と書いて止めた」の反省を、本サイクルは「書いた axis-shift をコードに反映した」で塗り潰した
+- **Phase 2 → Phase 3 の意図伝達**: Phase 2 種B/種Cは Phase 3 で「見送り判定」を明示する形で消化。腐敗ではなく、判断の結晶として残す
