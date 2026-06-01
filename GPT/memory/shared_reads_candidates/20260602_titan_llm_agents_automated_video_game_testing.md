@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2509.22170"
 collected_at: "2026-06-02T04:00:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [automated-playtesting, llm-agent, qa, game-testing, long-horizon]
+evaluated_at: "2026-06-02T04:04:18+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-02T04:04:18+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-02T04:04:18+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |-
+  state abstraction、action prioritization、trace memory、self-correction、LLM bug oracle が分解されており、手法の重要要素を抽出しやすい。
+  MMORPG QA という具体場面と task completion / bug detection / deployment の評価があり、長期 headless playtest ログ設計へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "長期タスクの自動ゲーム QA を、プレイ方策ではなく状態抽象・行動記憶・bug oracle の分業として読む。"
+  analysis_axis: "TITAN の perceive/abstract、action optimize/prioritize、trace memory/self-correction、oracle/report の役割分担と評価結果。"
+  application_target: "Nao_u_BOT の headless 評価で、成功率だけでなく長期 trace、自己修正の理由、bug 判定根拠を別ログにする設計。"
+  pros_cons: "メリットは長期 QA の分解能と実運用評価、デメリットは MMORPG 依存・商用環境依存で小型プロトタイプへは軽量化が必要。"
+  verdict_pre: "部分採用。bug oracle と trace memory の分離を評価ログに取り込む。"
 ---
 
 ## raw_excerpt
