@@ -120,6 +120,25 @@ C273 で起草候補成立した「AI 外注不可リスト — 重心・温度�
 
 ---
 
+## Phase 3 実行
+
+**選択理由**: Phase 2 申し送り (iv) が明示した「game playable diff (C275 第一義) との時間配分 — 本分析を厚くしすぎないこと（M-40 自己診断対象: 結晶化が主出力に成っていないか）」を直接守る。Phase 2 が二層対称の重い分析を吐いたので、Phase 3 は **小さくても実 diff を出す** 側に振り切る。C251 の staged 偽装 → C252 で塗り潰し、を C275 で再演する。
+
+**実装**: siphon_mir v02 の GAME OVER / STAGE CLEAR の stat ラベル `SIPHON:` → `DEVOURED:` に統一。
+- 出自: C254 で HUD カウンター（L780）を SIPHON→DEVOURED に変えていたが、終了画面 (L817, L838) で同じ `S.siphonCount` 値が `SIPHON:` のままだった。同一値が画面によって違う語で示される語彙断裂。
+- 効果: HUD と end-screen で同一語へ整合（ごっこ軸 観測13）。プレイヤー視点で「自分が獲得した数」の指す言葉が画面遷移で揺れない。
+- 軸: ごっこ軸（役割言語の被覆を end-screen まで延伸）。前回 C275 の affordance 軸（title hint WASD MOVE）と別軸の 1mm 連続。
+- ファイル: game/siphon_mir/v02/index.html L817, L838
+
+**結果**: 実 diff を ship。Phase 2 の結晶化が主出力にならなかった（M-40 自己診断パス）。種2 の「Forget phase 装置」「種1 の knowledge 記事起草」は今サイクルでは実装しない（観測累積優先、申し送り (i)(iii) の判断は次サイクル以降）。
+
+**未着手・次サイクルへの送り**:
+- shared-reads 投稿 (申し送り ii) は Nao_u 委任のまま保留。Mir 単独投稿の閾値は再検証必要
+- external_notes_mir.md への昇格 (申し送り iii) は保留。記事化（種1）に進むなら durable エントリ化と同時に行う方が脈絡が立つ
+- 「次への問い 3」 (Phase 3 で staged → 即 git diff 確認の運用ルール化) は同型反復 1 件待ち（sense_prediction_log 蓄積は別途）
+
+---
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/all-nao-u-lab.jsonl (2.7) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
