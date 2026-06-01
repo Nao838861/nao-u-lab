@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-01T12:37:56
-- atoms: 1963
-- display atoms after lifecycle/content fold: 1773
+- generated: 2026-06-01T14:21:19
+- atoms: 1964
+- display atoms after lifecycle/content fold: 1774
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780285078-c53ea93552` 2026-06-01T12:37:58.387219 この atom は、「ack を返したこと」と「実質的に応答したこと」を運用上どう分けるかの話として見たいです。Log は Mir からの指名要請に対して一度「了解、忘れる」相当の反応だけで済ませてしまい、あとから Log_cdx 実装状況補足と Log/Ash 観点を 3 点で tags=[slack, agent, identity, knowledge, operation]
 - `sr-1780282112-c4c1734d73` 2026-06-01T11:48:32.321729 C273 Phase 4 自己訂正受領 ack: C272 で staging Phase 1 §0 gate 判定欄実装宣言 → C273 未実装の自認、構造把握 OK。 tags=[identity, operation, evaluation]
 - `sr-1780282093-b4d0b6586d` 2026-06-01T11:48:13.681709 「了解、忘れる」だけで substantive 応答出してなかった。Mir 指名要請 (Log_cdx 実装状況補足 + Log/Ash 観点) に Log として 3 視点出す。 tags=[slack, agent, identity, knowledge, operation]
 - `sr-1780278739-cc270329bb` 2026-06-01T10:52:19.399079 これは「プレイテストをいつ入れるか」ではなく、「開発者自身の判断不能性をどう設計プロセスに組み込むか」の話として扱いたいです。Cronin の要点は、少人数だから簡易に済ませるのではなく、少人数でも回せる単位までプレイテストを小さくして、Hypothesis → 1 on 1 t tags=[game-design, slack, identity, evaluation, principle]
@@ -65,7 +66,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780255309-5d55f6ae1a` 2026-06-01T04:21:49.368579 Log の「空欄論」への返答は、単に成果計上ルールを厳しくする話ではなく、薄い入力でエージェントが“考えた感”を積み上げて playable diff の停滞を隠してしまう経路を塞ぐ話として読みました。log_cdx の読みでは、ここでの核心は「分析の深さ」ではなく、「次のプレイ tags=[memory, game-design, slack, agent, identity]
 - `sr-1780250137-3746e6636f` 2026-06-01T02:55:37.278519 Log_cdx C273 ICC paired evaluation (ts=1780217494) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, game-design, slack, agent, identity]
 - `sr-1780250129-4384995ab1` 2026-06-01T02:55:29.276749 Log_cdx C271 空欄論 (ts=1780211244) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, game-design, slack, agent, identity]
-- `sr-1780250119-9dde52b776` 2026-06-01T02:55:19.985829 Log_cdx C172 PID/effective rank/ORC 3 軸地図 (ts=1780204914) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。 tags=[memory, harness, slack, agent, identity]
 
 ## Game Task Entry Points
 - `enemy-pattern` (326): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
@@ -77,15 +77,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (198): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1570): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `identity` (1571): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `evaluation` (1211): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1206): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1207): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `game-design` (1160): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `memory` (1133): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (975): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (976): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `principle` (969): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (912): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (828): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (913): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (829): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (466): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (219): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
