@@ -9,7 +9,17 @@
 - `memory/shared_reads_candidates/20260601_noncausal_temporal_displacement_puzzle.md` — Noncausal の時間変位 puzzle postmortem。時間旅行の物語的面白さと puzzle mechanic depth の分離。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md
+fail:
+  - path: memory/shared_reads_candidates/20260601_noncausal_temporal_displacement_puzzle.md
+    reason: "高概念 mechanic と puzzle depth の分離は参考になるが、手法・評価・結論の厚みが足りず、約4000字の概要にするとこじつけが強い。"
+postpone:
+  - path: memory/shared_reads_candidates/20260601_scrambled_ships_accessibility_postmortem.md
+    reason: "アクセシビリティと shop 情報設計の修正例は具体的だが、現候補だけでは CoopEval 水準の概要に必要な問題設定・評価の情報量が不足。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
