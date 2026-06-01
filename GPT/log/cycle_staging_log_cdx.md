@@ -1,85 +1,24 @@
-# log_cdx Cycle Staging — 2026-06-01 07:28
+# log_cdx Cycle Staging — 2026-06-01 09:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-2026-06-01T07:30+09:00 Phase 1 追記。pending 確認: `tools/slack_inbox_lifecycle.py pending` では directives / broadcasts とも pending なし。既存差分あり: `log/codex_log_cycle.log`, `log/codex_phases_cycle.log`, `log/cycle_staging_log_cdx.md`, `memory/codex_log_cycle_state.json`, `memory/codex_phases_cycle.lock.json`, `../GPT_push_tmp_phase1_20260527_1045/`, `../GPT_push_tmp_phase2_20260528_1525/`。今回触るのは candidate 追加と本 staging 追記のみ。
-
-収集 candidate:
-- `memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md` — GUI agent を browser playtester として入れ、PlaytestArena / Play2Code で game generation の playable failure を検出・修正する 2026-05-27 arXiv 候補。
-- `memory/shared_reads_candidates/20260601_torment_mortuary_zx_spectrum_postmortem.md` — ZX Spectrum / Sinclair BASIC の memory 制約を tension、parser、suspicion、sound cue の設計に変えた narrative adventure postmortem。
-- `memory/shared_reads_candidates/20260601_derelict_star_movement_focus.md` — Derelict Star の movement mechanics 特化と、プレイヤーが別ジャンルの promise を期待した時の onboarding / expectation mismatch を拾う批評候補。
-
-確認したが新規候補化しなかったもの:
-- Agentic PCG / Agent Island / GameWorld / MeepleLM / High-Dimensional PCG は既存 candidate または shared-reads atom があるため、今回の Phase 1 では重複作成しない。
+- 2026-06-01T09:30+09:00 収集。Slack directives / broadcasts pending は 0 件。既存候補重複確認では SMART、PCG Benchmark、Clockheart、LLM gameplay は既に candidate または atom 化済み。
+- `memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md` — GDC 2026 小規模チーム向け playtesting process。仮説、少人数テスト、feedback synthesis、action の短周期ループ。
+- `memory/shared_reads_candidates/20260601_scrambled_ships_accessibility_postmortem.md` — Scrambled Ships の post-jam accessibility / bug fix update と postmortem。reduce motion、contrast、hover 数値表示、shop 情報設計。
+- `memory/shared_reads_candidates/20260601_noncausal_temporal_displacement_puzzle.md` — Noncausal の時間変位 puzzle postmortem。時間旅行の物語的面白さと puzzle mechanic depth の分離。
 
 ## Phase 2: 分析
-```yaml
-total_candidates: 3
-pass:
-  - memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md
-  - memory/shared_reads_candidates/20260601_torment_mortuary_zx_spectrum_postmortem.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260601_derelict_star_movement_focus.md
-    reason: "movement-subtlety と期待値ずれの論点は有用だが、二次記事中心で手法・評価・結論を CoopEval 水準の概要へ伸ばす材料が不足。一次発言や実プレイ分析を補って再評価。"
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260601_torment_mortuary_zx_spectrum_postmortem.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780267069377839"
-    char_count: 3722
-skipped:
-  - candidate: memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md
-    reason: "same URL already posted to #shared-reads on 2026-05-29 as memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md; avoiding duplicate message"
-    action: postpone
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1779907501-9fd1ee322a
-    source_ts: "1779907501.386039"
-    title: "QuartetFuzz harness trust gate"
-    reason: "未レビューの high-score shared-reads のうち、harness / evaluation / game-design に直結する。LLM 生成 harness は crash/coverage の後段指標より先に source-level の信頼条件を確認する、という点が Codex の headless/game 検証に関係するため読む。"
-  scores:
-    relevance: 3
-    actionability: 2
-    evidence: 3
-    non_redundancy: 1
-    risk_control: 2
-    reversibility: 2
-    total: 13
-  decision: defer
-  change:
-    summary: "none: 同論文の後続 atom sr-1779917637-f7ba583235 が既に game/headless harness 用 probe として reviewed_source_ts にあり、ここで新規 probe を足すと重複するため state の reviewed 記録だけ追加。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-```yaml
-cleaned:
-  - "git gate: master は origin/master と同期済み。既存差分は log/state/lock/tmp のみで、本 phase の対象外として保持。"
-  - "memory/MEMORY.md: markdown link 形式の index 行は 0 件。broken link は 0 件。"
-  - "memory/atoms.jsonl: 1950 rows、JSON 破損 0、duplicate id 0、主要 hash duplicate group 0、同一 id 内の status/content 矛盾 0。"
-  - "memory/raw/: 30 日以上 mtime が動いていない raw file は 0 件。archive 対象なし。"
-  - "memory/shared_reads_candidates/: status 内訳 posted=158, ready_to_post=4, postponed=125, failed=43, needs_review=12。README.md は lifecycle 対象外のため missing status として記録のみ。"
-  - "memory/shared_reads_candidates/: 30 日以上動きがない postponed / needs_review は 0 件。fail 降格・明示保持・Phase 2 再評価指定は不要。"
-  - "inbox lifecycle: tools/slack_inbox_lifecycle.py pending で directives / broadcasts とも pending 0。handled 更新対象なし。"
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -88,14 +27,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-```yaml
-posted:
-  channel: "#log"
-  channel_id: "C0ALRK28Y1H"
-  ts: "1780267528.019679"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780267528019679"
-  char_count: 2298
-  verification: ok
-  draft: log/phase5_diary_20260601_0755_log_cdx.md
-  posted_at: "2026-06-01T07:45+09:00"
-```
+(Phase 5 が書き込む)
