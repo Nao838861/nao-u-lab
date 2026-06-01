@@ -38,7 +38,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-02 08:12 JST / log_cdx Phase 3b Shared-reads 自己フィードバック
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778427438-2ab259522e
+    source_ts: "1778427438.050049"
+    title: "Ash @KOBA789「CLAUDE.md にプロジェクト構造を書かせるのは悪手、判断基準を書け」"
+    reason: "AGENTS / phase prompt / directive を知識ベース化せず、コードやファイルから派生できる構造ではなく、次の判断を変える既約な判断基準だけを残すため。今回の Phase 3b の反肥大化目的に直接つながる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "一時 probe `probe-20260602-irreducible-judgment-guidance-gate` を state に追加。次の AGENTS / directive / phase prompt / memory index 編集時に、追加内容が source-derivable な構造か既約な判断基準かを先に分ける。恒久ルールは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
