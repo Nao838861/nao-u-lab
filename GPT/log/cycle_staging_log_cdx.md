@@ -68,7 +68,30 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-06-02 08:16 JST / log_cdx Phase 4a 整理 + 問題抽出
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: tools/validate_memory_index.py で High Signal / Recent / Game Task Entry Points / Tag Entry Points の参照整合を確認。broken link 相当の unknown atom / missing per-file path は 0 件。"
+  - "memory/atoms.jsonl: tools/memory_health.py --json で 1996 atoms / lifecycle fold 後 1806 display atoms / errors 0 を確認。重複・矛盾として即 cleanup すべきものはなし。"
+  - "memory/raw/: 30 日以上 LastWriteTime が動いていない raw file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: lifecycle 内訳 posted=163, ready_to_post=4, postponed=129, failed=46, needs_review=15。30 日以上動きがない postponed / needs_review は 0 件。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives/broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260602-001
+    description: "memory_health warning として未 group の repeated title が 13 種残っている。例: duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2。現時点では lifecycle fold と検索 entry point が機能しており、破壊的な重複ではない。"
+    severity: low
+    evidence: "tools/memory_health.py --json: warnings.repeated title group 未付与 13種"
+    why_blocks_game_memory: "同名 atom が増えると、次のゲーム制作時に同じ題名の個別事例と一般化ノウハウを取り違える可能性が少し上がる。ただし件数は限定的で、今回 4b を起動して構造設計するほどではない。"
+  - id: ISS-4A-20260602-002
+    description: "mojibake suspect atom が 2 件検出された。MEMORY.md index 自体は validate OK だが、該当 atom の title/excerpt に表示劣化の疑いがある。"
+    severity: low
+    evidence: "tools/memory_health.py --json: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "検索結果に表示劣化した atom が混じると、関連性判断の初速が落ちる。ただし該当 2 件に限られ、ゲーム制作導線全体を塞ぐ規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
