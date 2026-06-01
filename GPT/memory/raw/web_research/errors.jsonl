@@ -287,3 +287,8 @@
 {"error": "The read operation timed out", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-06-01T07:23:18"}
 {"error": "The read operation timed out", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-06-01T07:23:18"}
 {"error": "HTTP Error 429: Too Many Requests", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-06-01T07:23:18"}
+{"error": "The read operation timed out", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-06-01T09:08:19"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "procedural game generation player feedback", "source": "arxiv", "time": "2026-06-01T09:08:19"}
+{"error": "The read operation timed out", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-06-01T09:08:19"}
+{"error": "The read operation timed out", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-06-01T09:08:19"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-06-01T09:08:19"}
