@@ -21,6 +21,35 @@ posted:
 skipped: []
 ```
 
+## Phase 3b: Shared-reads 自己フィードバック 追記 2026-06-02T06:39:00+09:00
+
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1780341253-54ad8c8fa8"
+    source_ts: "1780341253.417639"
+    title: "Multi-Layered Memory Architectures: adaptive gating for memory retention"
+    reason: "memory_tree_consolidation / orphan_check の停滞解除に直結し、記憶を残す・退役する判断を恒久ルールではなく retention signal + evidence gate として小さく試せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "memory retention gate probe を state に追加。次の memory cleanup / orphan_check / retention-axis design で、保持シグナル・観測証拠・可逆境界を確認する。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

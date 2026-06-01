@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-02T04:13:12+09:00",
+  "updated_at": "2026-06-02T06:39:00+09:00",
   "reviewed_source_ts": [
+    "1780341253.417639",
     "1780112563.650559",
     "1779950437.392149",
     "1780209448.200149",
@@ -103,6 +104,29 @@
     "1779907501.386039"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T06:39:00+09:00",
+      "id": "sr-1780341253-54ad8c8fa8",
+      "source_ts": "1780341253.417639",
+      "title": "Multi-Layered Memory Architectures: adaptive gating for memory retention",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is relevant to the current memory cycle because it turns memory retention from a vague keep/forget discussion into a small gating question: before promoting or pruning a memory item, name the retention signal and the observed access or failure evidence. Existing probes cover stale premises, routing/body separation, and LLM link ROI, but they do not force a retention gate before changing memory lifetime. Keep this reversible for the next memory cleanup, orphan check, recall index update, or retention-axis design step.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before promoting, pruning, archiving, or changing the lifetime of a memory item, did I name the retention signal being used, such as ref count, recent recall, source quality, task recurrence, or false-memory risk?",
+        "Did I attach one observed evidence pointer, such as recall output, orphan_check result, git/staging use, Slack source_ts, or a concrete miss, instead of relying on the item sounding important?",
+        "If retention evidence is weak or purely speculative, did I keep the change as state-only, probationary, or reversible instead of adding a permanent rule or deleting the memory?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory cleanup, orphan check, or retention-axis design steps already name retention signal, observed evidence, and reversible action boundary before changing memory lifetime."
+    },
     {
       "reviewed_at": "2026-06-02T04:13:12+09:00",
       "id": "sr-1780112563-a24c566994",
@@ -3099,6 +3123,18 @@
         "When an external fun_score or human judgment is required, did I keep it separate from self-generated proxy evidence and record the exact source or missing-source condition?"
       ],
       "expires_after": "Review after the next two game-evaluation or proxy-correlation notes that compute, cite, or defer a proxy/judgment metric."
+    },
+    {
+      "id": "probe-20260602-memory-retention-gate",
+      "created_at": "2026-06-02T06:39:00+09:00",
+      "source_ts": "1780341253.417639",
+      "scope": "next memory cleanup, orphan_check, recall index update, memory_tree_consolidation step, or retention-axis design where Codex may promote, prune, archive, or extend a memory item",
+      "questions": [
+        "Before promoting, pruning, archiving, or changing the lifetime of a memory item, did I name the retention signal being used, such as ref count, recent recall, source quality, task recurrence, or false-memory risk?",
+        "Did I attach one observed evidence pointer, such as recall output, orphan_check result, git/staging use, Slack source_ts, or a concrete miss, instead of relying on the item sounding important?",
+        "If retention evidence is weak or purely speculative, did I keep the change as state-only, probationary, or reversible instead of adding a permanent rule or deleting the memory?"
+      ],
+      "expires_after": "Review after the next two memory cleanup, orphan check, recall index, or retention-axis design steps that change memory lifetime or retention status."
     }
   ]
 }
