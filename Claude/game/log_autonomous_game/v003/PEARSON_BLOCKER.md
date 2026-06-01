@@ -1,6 +1,6 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-06-01 C277 (Log) — 前提 6 (proxy validity 反証 + 評価軸 2 軸併走候補、Lost in Simulation 2601.17087 + 2410.02829 接続) 追記
+最終更新: 2026-06-01 C277 Phase 4 (Log) — §6 末尾に v_label class 軸 ICC 再計算結果 + §6-3 (a) 絶対軸判定 追記 (`proxy_icc_diagnose.py --class-col v_label` 拡張着地)
 
 ## gate 未解除中の playable diff 1 行ルール (C276 追加)
 
@@ -116,6 +116,47 @@
 - (5) 純 stdlib のみ (numpy も不使用) — **OK** (依存追加ゼロ)
 - (6) 本表追記 — **OK** (本節)
 - (7) game/ 配下 commit prefix `game:` で 1 commit ship — Phase 5 で日記とまとめて push 予定 (本サイクル Phase 4 では commit しない、Phase 4 指示書順守)
+
+#### C277 Phase 4 v_label class 軸 ICC 再計算結果 (2026-06-01)
+
+入力: `proxy_vs_judgment_labeled.csv` (10 seed_base × 3 v_label × 30 trial = 900 行)
+公式: ICC(2,1) one-way random、v_label class で N=3, k=300。N≤3 のため Fisher Z CI は退化 (point=lo=hi)。seed_base class on CSV は N=10, k=90 (CSV は v_label 3 倍化のため jsonl 版 k=30 と異なる)。
+実行: `python proxy_icc_diagnose.py --class-col v_label --input proxy_vs_judgment_labeled.csv` (`--class-col` / `--input` CLI 新規追加、純 stdlib 維持、副作用ゼロ)
+
+##### v_label class (N=3, k=300)
+
+| column | ICC | 95% CI | judge (≥0.3) |
+|---|---:|---|:-:|
+| proxy_clear_rate | -0.0033 | [-0.0033, -0.0033] | FAIL |
+| proxy_damage_per_min | -0.0033 | [-0.0033, -0.0033] | FAIL |
+| proxy_survival_time | -0.0033 | [-0.0033, -0.0033] | FAIL |
+| proxy_input_density | -0.0033 | [-0.0033, -0.0033] | FAIL |
+
+##### seed_base class on CSV (N=10, k=90) — 比較参照用
+
+| column | ICC | 95% CI | judge (≥0.3) |
+|---|---:|---|:-:|
+| proxy_clear_rate | 0.0268 | [-0.6132, 0.6455] | FAIL |
+| proxy_damage_per_min | 0.0214 | [-0.6165, 0.6424] | FAIL |
+| proxy_survival_time | 0.0115 | [-0.6227, 0.6365] | FAIL |
+| proxy_input_density | 0.0038 | [-0.6273, 0.6319] | FAIL |
+
+##### §6-3 (a) 絶対軸 gate に対する判定
+
+v_label class 軸での ICC ≈ -0.0033 は理論ノイズ床 -1/(k-1) = -1/299 にちょうど貼り付き = **v_label が proxy 値を一切区別していない**ことの数学的反映。原因は `build_proxy_csv.js` が同一 (seed_base, run_id) に対し v001/v002/v003 で同一 proxy 値を出力している (proxy 計算式に v_label が入っていない) ためで、between-class variance が構造的にゼロ。これは C275 解釈 (ii)「class 軸を v_label に切替えると ICC が変わる」仮説への **直接反証** = §6-3 (a) 絶対軸 gate は v_label class でも復活せず。
+
+seed_base class on CSV (N=10, k=90) も全列 FAIL (点推定 0.004-0.027、CI が ±0.63 に拡散) = 集計軸を v_label / seed_base いずれに振っても ICC ≥ 0.3 達成路線は閉じている。Mustahsan 経験則 GAIA 下限は当方 proxy 4 列に対し 2 通りの class 軸で充足せず。
+
+**判定**: §6-3 (a) 絶対軸 gate は本サイクル時点で **計算不能 (= ICC FAIL 確定)**。次サイクル以降は §6-3 (b) 相対軸路線 (Spearman ≥ 0.5 + top-K 順位整合率 60%) への転進判断材料が揃った。proxy validity 反証ライン §6-1 (Lost in Simulation) と本実測 ICC 反証結果が一致 → 路線変更が合理的。なお v_label が proxy に効いていない構造を変えるには `agent_difficulty_proxy.js` 自体に v_label 依存パラメータ (例: cast cooldown / dash duration の version 別チューニング) を入れる必要があり、これは前提 1 (マルチシード化) と並ぶ別系統の前提として将来の検討対象。
+
+##### Phase 4 完遂の対応
+- (1) `--class-col` / `--input` CLI 追加、純 stdlib 維持 — **OK** (依存追加ゼロ、numpy/scipy/pandas 不使用)
+- (2) v_label class で exit 0 完走、4 列 ICC + 95% CI + judge 規定フォーマット出力 — **OK**
+- (3) v_label class ICC 結果表追記 — **OK** (本節 4 列 × 4 行)
+- (4) §6-3 (a) 絶対軸判定 1 段落 + (b) 相対軸転進判断材料 — **OK** (本節)
+- (5) 1 commit (`game:` prefix) で ship、副作用ゼロ — Phase 5 で日記とまとめて push
+- (6) cycle_staging_log.md Phase 4 セクション着地報告 — Phase 4 末尾で実施
+- (7) 回帰: 旧 `python proxy_icc_diagnose.py` (jsonl + seed_base デフォルト) は C275 初回値 (0.0044 / -0.0010 / -0.0112 / -0.0191) と完全一致 — **OK** (後方互換維持)
 
 ## なぜ本サイクル C270 で着手しなかったか
 
