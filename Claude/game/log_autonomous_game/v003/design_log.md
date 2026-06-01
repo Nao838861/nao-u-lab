@@ -63,6 +63,20 @@ v002 採点 (`v002/self_judgment.md`) からの差分のみ記載。詳細 self_
 | Q-ミミクリ | 11.5/15 | 11.5/15 (維持) | 密度カーブ追加は核を上回るメカ改修ではない (Q-ミミクリ-1 維持) |
 | その他ゲート | — | 未変更 | — |
 
+## 4.5 C284 Phase 4 段階1 — ICC 戦略軸計測着地
+
+**起票**: 2026-06-02 C284 Phase 4 (Log)
+**狙い**: PEARSON_BLOCKER §6-3 (a) 絶対軸 gate FAIL (proxy 4 列とも seed_base 軸 ICC≈0) に対する処方第 1 段 = **軸を変えて再計測**。
+**実装**:
+- `instinct_probe.js` に `--strategy <name>` フラグ追加 (3 戦略: naive_good / camper / blind-sweeper)
+- `instinct_grid_icc.py` 新規 (純 stdlib, probe_density 列の戦略軸 ICC(2,1) + Fisher Z CI)
+- 3 戦略 × 10 seeds = 30 trials を `measurements_instinct_grid.jsonl` に集約
+**結果**: `[ICC] column=probe_density classes=3 trials=10 icc=0.9621 judge=PASS` (Mustahsan ≥0.3 を大幅超過)
+- mean: camper=0.000 / naive_good=0.289 / blind-sweeper=0.750 = 戦略軸で物理的にほぼ等間隔分離
+**意味**: 本能側計測経路が戦略軸で機能している = 「測れている」第 1 関門通過。proxy 系列 ICC FAIL の出口は「proxy 設計不良」ではなく「class 軸不適切」可能性を支持。
+**game.js 改変ゼロ** (`git diff -- game/log_autonomous_game/v003/game.js` 空、純観測実装)。
+**未確認**: probe_density と人間体感 Pearson 相関、link 強度との単調関係、N=3 のため CI 縮退 (N≥4 で区間取得)。詳細解釈 = [INSTINCT_GRID_RESULT.md](INSTINCT_GRID_RESULT.md)
+
 ## 5. 次サイクル以降の処方候補 (v004 以降)
 
 本 design_log は v003 着地のみを明文化。以下は次サイクル以降の判断材料:

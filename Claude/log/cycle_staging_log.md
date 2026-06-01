@@ -331,3 +331,60 @@ Phase 1 §0 で観察した 3929 件 drafts/.archive M 状態は本サイクル�
 - ??: drafts/2026-06-02/post_log_kaizenlog_138_stage2_second_try_20260602_POSTED_ts1780341555.py
 - Phase 4 で追加予定 (M): game/log_autonomous_game/v003/instinct_probe.js, projects/log_autonomous_game.md (or design_log.md)
 - Phase 4 で追加予定 (??): game/log_autonomous_game/v003/{measurements_instinct_*.jsonl, instinct_grid_icc.py, INSTINCT_GRID_RESULT.md}
+
+## Phase 4: 実装
+
+### A) 完遂状況
+
+完遂の定義 5 項目すべて達成:
+1. ✅ `instinct_probe.js` に `--strategy <name>` フラグ + 3 戦略 (naive_good / camper / blind-sweeper) 実装。default = naive_good で旧コマンド後方互換。
+2. ✅ `measurements_instinct_grid.jsonl` = 3 戦略 × 10 seeds = **30 行** 出力 (`wc -l` 確認済)。game.js 改変ゼロ (`git diff -- game/log_autonomous_game/v003/game.js` 空)。
+3. ✅ `instinct_grid_icc.py` (新規, 約 110 行純 stdlib) で戦略軸 ICC 計算。stdout 1 行:
+   ```
+   [ICC] column=probe_density classes=3 trials=10 icc=0.9621 ci_low=0.9621 ci_high=0.9621 judge=PASS
+   ```
+   Mustahsan ≥0.3 を大幅超過 (0.9621)。N=3 のため Fisher Z CI は point estimate に縮退 (proxy_icc_diagnose.py の `N <= 3` 分岐と同型挙動)。
+   `INSTINCT_GRID_RESULT.md` 新規作成: 戦略別 mean/variance 表 + 解釈節 (PASS 意味 / link 強度との接続 / does NOT prove 5 項目 / 次手 4 候補)
+4. ✅ exit 0 完走、game.js 改変なし、純 stdlib (Node 標準 + Python 標準のみ)
+5. ✅ `design_log.md` §4.5 に「C284 Phase 4 段階1 — ICC 戦略軸計測着地」セクション追記 (起票 / 狙い / 実装 / 結果 / 意味 / 未確認 / 詳細リンク)
+
+### B) 主要数値結果
+
+| 戦略 | mean probe_density | variance | n | 死因 |
+|---|---:|---:|---:|---|
+| camper | 0.0000 | 0.000000 | 10 | 全 trial 5.32s bullet 死 (不動) |
+| naive_good | 0.2889 | 0.012207 | 10 | 全 trial 8.68s bullet 死 |
+| blind-sweeper | 0.7500 | 0.004630 | 10 | 5.28-7.35s bullet 死 |
+
+**戦略軸 ICC = 0.9621** = 物理的にほぼ等間隔分離。proxy_icc_diagnose.py が seed_base 軸で 4 列 ICC≈0 / FAIL を返したのと対照的 = 「軸を変えれば測れる」第 1 サンプル取得。
+
+### C) 副産物
+
+**変更ファイル (M)**:
+- `game/log_autonomous_game/v003/instinct_probe.js` — `--strategy` flag / 3 戦略関数 / `applyMove` 抽出 / 出力に `strategy` 列追加 / docstring 拡張
+- `game/log_autonomous_game/v003/design_log.md` — §4.5 C284 Phase 4 段階1 セクション追記
+- `log/cycle_staging_log.md` — 本 Phase 4 セクション追記
+
+**新規ファイル (??)**:
+- `game/log_autonomous_game/v003/instinct_grid_icc.py` (約 110 行、純 stdlib)
+- `game/log_autonomous_game/v003/INSTINCT_GRID_RESULT.md` (結果表 + 解釈 + 次手候補)
+- `game/log_autonomous_game/v003/measurements_instinct_grid.jsonl` (30 trials 集約)
+- `game/log_autonomous_game/v003/measurements_instinct_naive_good.jsonl` (10 trials 個別)
+- `game/log_autonomous_game/v003/measurements_instinct_camper.jsonl` (10 trials 個別)
+- `game/log_autonomous_game/v003/measurements_instinct_blind_sweeper.jsonl` (10 trials 個別)
+
+**Slack 投稿 / kaizen 追加**: なし (Phase 3 で着地済、Phase 4 では新規発信せず実装に集中)
+
+### D) 観察と判定
+
+- **camper の probe_density = 0 が予測通り**: 設計確認として狙い通りの極限挙動
+- **blind-sweeper の variance が camper より大きく naive_good より小さい**: 乱数系の中央値接近 (0.75 中心の集中) を示唆 = post-lock 6 frame の窓内変化数は理論期待値 (≈8/9 token transitions) に近接
+- **naive_good の variance が最も大きい**: 状態依存挙動 (敵位置 / 弾位置で方向決定) が seed 差で実質的に揺らぐ = 「環境応答性」の証拠
+- **判定**: 本サイクル PASS は **戦略軸での probe 機能** までで、人間体感との Pearson 相関や link 強度との単調関係は本サイクル不可。Phase 5 日記で次手候補を明示 (N≥4 化 / 窓幅 sensitivity / 判定値接続 / proxy の戦略軸再計測)
+
+### E) Phase 4 終了時点の git 状態
+
+- **M**: log/cycle_staging.md, memory/kaizen_tracker.md, projects/memory_redesign.md, log/cycle_staging_log.md, game/log_autonomous_game/v003/instinct_probe.js, game/log_autonomous_game/v003/design_log.md
+- **??**: drafts/2026-06-02/post_log_kaizenlog_138_stage2_second_try_20260602_POSTED_ts1780341555.py, game/log_autonomous_game/v003/{INSTINCT_GRID_RESULT.md, instinct_grid_icc.py, measurements_instinct_grid.jsonl, measurements_instinct_naive_good.jsonl, measurements_instinct_camper.jsonl, measurements_instinct_blind_sweeper.jsonl}
+- `game/log_autonomous_game/v003/game.js`: 改変なし (確認済)
+- commit / git push は Phase 5 で日記とまとめて実施

@@ -35,9 +35,17 @@
 //   実証ステータス: 本 docstring 更新 (C282) は仮説提示のみ、3 trial 分散観測は C283-C290 で実施。
 //   独立同型: 濱村 6/01 09:15「本能側 + 逆算側の複合、再設計時はまず分解」と 3 ソース独立到達。
 //
+// C284 Phase 4 拡張 (戦略 × seed grid + ICC 軸独立性検証):
+//   --strategy フラグで 3 bot 戦略を切替可能化 (naive_good / camper / blind-sweeper)。
+//   3 戦略 × 10 seeds = 30 trials の probe_density 集合に対し instinct_grid_icc.py で
+//   戦略軸 ICC(2,1) を計算、軸独立性 (probe_density が戦略間で分離するか) を 1 関門
+//   進める。proxy_icc_diagnose.py が seed_base 軸で 4 列とも ICC≈0 / FAIL 確定済 → 軸を
+//   変えて再計測する処方の第 1 段。
+//
 // 使い方: cd game/log_autonomous_game/v003 && node instinct_probe.js
 //   stdout: 1 JSONL 行/trial (--trials N で複数 trial、default 1)
 //   --seed-base N (default 20260601)、--trials N (default 1)、--out PATH で JSONL 保存
+//   --strategy NAME (default naive_good。naive_good / camper / blind-sweeper)
 
 const fs = require('fs');
 const path = require('path');
@@ -124,8 +132,12 @@ function collided(s) {
   return null;
 }
 
-// 素朴良手: 最近接の脅威から離反、中央バイアス、微小ノイズ (proxy と同型を簡略化)
-function moveStep(s, rng) {
+// 戦略: 各関数は正規化前の (dx, dy) を返す。applyMove で速度反映・クランプ・dirToken 生成。
+//   - naive_good: 素朴良手 (最近接脅威から離反 + 中央バイアス + 微小ノイズ)
+//   - camper: 完全不動 (verify.js strategyCamper 同型) — castLock 自体は発火するが
+//             post-lock 6 frame の dirToken 列は中央停止のまま → probe_density = 0.0 想定
+//   - blind-sweeper: 毎 frame 一様乱数 ±1 方向 (verify.js strategyBlindSweeper 同型)
+function strategyNaiveGood(s, rng) {
   let nx = null, nd = Infinity;
   for (const b of s.bullets) { const d = Math.hypot(b.x - s.player.x, b.y - s.player.y); if (d < nd) { nd = d; nx = b; } }
   for (const e of s.enemies) { const d = Math.hypot(e.x - s.player.x, e.y - s.player.y); if (d < nd) { nd = d; nx = e; } }
@@ -134,14 +146,30 @@ function moveStep(s, rng) {
   const cx = W * 0.5, cy = H * 0.78, tx = cx - s.player.x, ty = cy - s.player.y, tn = Math.hypot(tx, ty) || 1;
   dx += (tx / tn) * 0.25; dy += (ty / tn) * 0.25;
   dx += (rng() - 0.5) * 0.5; dy += (rng() - 0.5) * 0.5;
-  const m = Math.hypot(dx, dy);
-  if (m > 0) { dx /= m; dy /= m; s.player.x += dx * PLAYER_SPEED; s.player.y += dy * PLAYER_SPEED; }
+  return { dx, dy };
+}
+function strategyCamper(_s, _rng) { return { dx: 0, dy: 0 }; }
+function strategyBlindSweeper(_s, rng) {
+  const dx = Math.floor(rng() * 3) - 1;
+  const dy = Math.floor(rng() * 3) - 1;
+  return { dx, dy };
+}
+const STRATEGIES = {
+  naive_good: strategyNaiveGood,
+  camper: strategyCamper,
+  'blind-sweeper': strategyBlindSweeper,
+};
+
+function applyMove(s, rawDx, rawDy) {
+  const m = Math.hypot(rawDx, rawDy);
+  let dx = 0, dy = 0;
+  if (m > 0) { dx = rawDx / m; dy = rawDy / m; s.player.x += dx * PLAYER_SPEED; s.player.y += dy * PLAYER_SPEED; }
   s.player.x = Math.max(s.player.r, Math.min(W - s.player.r, s.player.x));
   s.player.y = Math.max(s.player.r, Math.min(H - s.player.r, s.player.y));
   return { dx, dy };
 }
 
-function runOne(seed) {
+function runOne(seed, strategyName, strategyFn) {
   const s = { player: { x: W * 0.5, y: H * 0.78, r: PLAYER_R }, enemies: [], bullets: [], trail: [],
     echo: null, waveSpawned: false, waveCount: 0, lastEndFrame: -CAST_GAP_FRAMES, frame: 0 };
   const rng = mulberry32(seed);
@@ -164,7 +192,8 @@ function runOne(seed) {
         if (p) { s.player.x = p.x; s.player.y = p.y; }
       }
     } else {
-      const { dx, dy } = moveStep(s, rng);
+      const raw = strategyFn(s, rng);
+      const { dx, dy } = applyMove(s, raw.dx, raw.dy);
       s.trail.push({ x: s.player.x, y: s.player.y });
       if (s.trail.length > ECHO_FRAMES * 2) s.trail.shift();
       lastDir = dirToken(dx, dy);
@@ -182,11 +211,11 @@ function runOne(seed) {
     if (!s.waveSpawned && s.enemies.length === 0) spawnWaveA(s);
     updateEnemies(s); updateBullets(s);
     const cause = collided(s);
-    if (cause) return { seed, outcome: 'gameover', death_cause: cause, play_time_sec: Number((f / FPS).toFixed(2)),
+    if (cause) return { strategy: strategyName, seed, outcome: 'gameover', death_cause: cause, play_time_sec: Number((f / FPS).toFixed(2)),
       cast_count: castCount, post_lock_input_count: postLockInputCount, post_lock_frame_total: postLockFrameTotal,
       probe_density: postLockFrameTotal > 0 ? Number((postLockInputCount / postLockFrameTotal).toFixed(4)) : null };
   }
-  return { seed, outcome: 'survived', death_cause: null, play_time_sec: 90.0,
+  return { strategy: strategyName, seed, outcome: 'survived', death_cause: null, play_time_sec: 90.0,
     cast_count: castCount, post_lock_input_count: postLockInputCount, post_lock_frame_total: postLockFrameTotal,
     probe_density: postLockFrameTotal > 0 ? Number((postLockInputCount / postLockFrameTotal).toFixed(4)) : null };
 }
@@ -194,9 +223,15 @@ function runOne(seed) {
 const SEED_BASE = parseArg('--seed-base', 20260601);
 const TRIALS = parseArg('--trials', 1);
 const OUT = parseStr('--out', null);
+const STRATEGY_NAME = parseStr('--strategy', 'naive_good');
+const strategyFn = STRATEGIES[STRATEGY_NAME];
+if (!strategyFn) {
+  process.stderr.write(`[ERROR] unknown strategy: ${STRATEGY_NAME} (available: ${Object.keys(STRATEGIES).join(', ')})\n`);
+  process.exit(1);
+}
 const lines = [];
 for (let i = 0; i < TRIALS; i++) {
-  const r = runOne(SEED_BASE + i);
+  const r = runOne(SEED_BASE + i, STRATEGY_NAME, strategyFn);
   r.seed_base = SEED_BASE; r.trial = i; r.probe_window_frames = PROBE_WINDOW_FRAMES;
   lines.push(JSON.stringify(r));
 }
