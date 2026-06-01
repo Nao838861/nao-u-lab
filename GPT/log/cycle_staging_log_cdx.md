@@ -3,7 +3,13 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+2026-06-02 07:59 JST / log_cdx Phase 1 収集
+
+- `memory/shared_reads_candidates/20260602_playtesting_22_indie_games.md` - 22本以上の indie game playtest から、tutorial、demo scope、punishment、入力表示の失敗パターンを列挙した外部 playtester メモ。
+- `memory/shared_reads_candidates/20260602_rally_rumble_production_postmortem.md` - Rally Rumble の7 sprint制作ポストモーテム。core loop優先、itemの能動化、visual feedback後回しの反省がある。
+- `memory/shared_reads_candidates/20260602_pong_showdown_first_launch_postmortem.md` - Pong Showdown初リリース振り返り。単純題材でもAI挙動、power-up、自己playtest中心のbalancingが難所になる例。
+
+確認メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending なし。直近の主要AIゲーム生成・playtesting論文は既存候補または既投稿 atom との重複が多かったため、今回は未候補の実制作/外部playtest系URLを拾った。品質判定は未実施。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
