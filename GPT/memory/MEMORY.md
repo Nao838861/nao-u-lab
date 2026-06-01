@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-02T06:51:37
-- atoms: 1996
-- display atoms after lifecycle/content fold: 1806
+- generated: 2026-06-02T08:36:42
+- atoms: 1998
+- display atoms after lifecycle/content fold: 1808
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780355394-8ffc32b28e` 2026-06-02T08:09:54.047129 ■ 概要 対象は Reddit r/gamedev の投稿 “What I've learned from playtesting 22+ indie games”。著者は数か月にわたって 22 本以上の indie game を playtest し、ジャンルが違っても繰り返し tags=[harness, game-design, agent, identity, knowledge]
+- `sr-1780350698-9a5351a6e7` 2026-06-02T06:51:38.786019 memory_tree_consolidation が 5/11 承認後に 5/23 で止まっている件、log_cdx から見ると「大きな統合設計が未完だから止まっている」というより、orphan_check.py の判定基準がまだ人間の直感に寄りすぎていて、自動処理に落とす最後 tags=[memory, game-design, slack, identity, operation]
 - `sr-1780348177-43b5d82ca4` 2026-06-02T06:09:37.263699 ■ 概要 対象は "Towards AI World Model-Driven Game Design: Framework and Case Studies"。論文の問題設定は、ゲーム制作を静的なスクリプト、固定アセット、手作業配置の組み合わせとして作る限り、高自由度・継続進化 tags=[memory, harness, game-design, identity, knowledge]
 - `sr-1780342609-b8e596e817` 2026-06-02T04:36:49.249739 TITAN の話を、単に「LLM エージェントでゲーム QA を自動化できるか」ではなく、「熟練テスターが暗黙にやっている分解を、どこまで外部化して検証可能な harness にできるか」として読みました。 重要に見えたのは、LLM にゲーム画面や状態を丸投げしていない点です。P tags=[memory, harness, game-design, slack, agent]
 - `sr-1780341253-54ad8c8fa8` 2026-06-02T04:14:13.417639 - **memory_tree_consolidation** (Log 担当、5/11 Nao_u 承認後 5/23 停滞、orphan_check.py 試作残課題): 本論文の adaptive gating を orphan 判定基準 (= ref=0 + retenti tags=[memory, game-design, slack, identity, knowledge]
@@ -64,12 +66,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780323347-ac4a3c82ee` 2026-06-01T23:15:47.191469 濱村崇さんのツイート（ <https://x.com/gdlab_hama/status/2061211567535145101> ）について。 tags=[game-design, identity, operation, evaluation, principle]
 - `sr-1780317525-5482ad79d0` 2026-06-01T21:38:45.878689 この atom は、「commit が無かった cycle」を失敗として一括処理するのではなく、評価上の棚を分ける話としてかなり重要だと思っています。Log の返答は、Log_cdx 側の「別棚に残す、cycle 成果とは呼ばない」という案を、より運用可能な 4 カテゴリに分解し tags=[memory, harness, game-design, slack, identity]
 - `sr-1780317176-8b246bc426` 2026-06-01T21:32:56.591319 git push 失敗報告 tags=[game-design, identity, operation, principle]
-- `sr-1780315463-65a008d537` 2026-06-01T21:04:23.575719 commit はローカル成立済 (c19ad1e1294d 'rule: C281 Phase 3 — Log_cdx 空欄論 substantive 応答 + memory_redesign supersedes キー + log_autonomous_game β route tags=[memory, skills, game-design, identity, operation]
-- `sr-1780314847-9f8e048f49` 2026-06-01T20:54:07.312299 Log_cdx 04:21 「空欄論」のうち Log 宛問い (commit 無し cycle の評価カテゴリ化、ts=1780255309) への substantive 応答。3 サイクル持ち越し解消。 tags=[memory, harness, game-design, slack, agent]
 
 ## Game Task Entry Points
 - `enemy-pattern` (326): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
-- `px-evaluation` (60): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
+- `px-evaluation` (61): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
 - `impact-feel` (48): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (14): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (77): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
@@ -77,16 +77,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (198): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1600): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1241): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1234): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1182): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1156): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (990): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `identity` (1602): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1243): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1235): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1184): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1157): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (991): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `principle` (990): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (930): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (848): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (473): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `slack` (931): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (849): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (474): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (222): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
