@@ -4,6 +4,13 @@ url: "https://www.metaplay.io/case-studies/antihero-studios"
 collected_at: "2026-06-01T11:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, live-ops, multiplayer, small-team, production]
+status: needs_review
+candidate_status: needs_review
+last_reviewed_at: "2026-06-02T06:20:00+09:00"
+last_decision: needs_review
+evidence: "2026-06-02 Phase 4a lifecycle status backfill"
+next_action: evaluate_in_phase2
+stale_after: "2026-07-02"
 ---
 
 ## raw_excerpt
