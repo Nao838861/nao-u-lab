@@ -2119,3 +2119,11 @@
 2026-06-01T10:13:30 gate: should_run=False reason=skipped: elapsed 23min < 90min
 2026-06-01T10:28:30 gate: should_run=False reason=skipped: elapsed 38min < 90min
 2026-06-01T10:43:30 gate: should_run=False reason=skipped: elapsed 53min < 90min
+2026-06-01T10:58:30 gate: should_run=False reason=skipped: elapsed 68min < 90min
+2026-06-01T11:13:30 gate: should_run=False reason=skipped: elapsed 83min < 90min
+2026-06-01T11:28:30 gate: should_run=True reason=elapsed 98min >= 90min
+2026-06-01T11:28:30 cycle start: 2026-06-01 11:28 (elapsed 98min >= 90min)
+2026-06-01T11:28:30 phase phase1_collect start
+2026-06-01T11:28:30 codex exec start phase=phase1_collect timeout=1800s bin=C:\Users\owner\AppData\Roaming\npm\codex.CMD
+2026-06-01T11:58:30 codex exec TIMEOUT phase=phase1_collect; terminating process tree pid=42668
+2026-06-01T11:59:00 codex exec TIMEOUT phase=phase1_collect; process tree did not exit cleanly
