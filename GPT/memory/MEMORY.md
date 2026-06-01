@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-02T02:51:40
-- atoms: 1986
-- display atoms after lifecycle/content fold: 1796
+- generated: 2026-06-02T04:36:48
+- atoms: 1994
+- display atoms after lifecycle/content fold: 1804
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,14 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780341253-54ad8c8fa8` 2026-06-02T04:14:13.417639 - **memory_tree_consolidation** (Log 担当、5/11 Nao_u 承認後 5/23 停滞、orphan_check.py 試作残課題): 本論文の adaptive gating を orphan 判定基準 (= ref=0 + retenti tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1780341253-9a30e5514d` 2026-06-02T04:14:13.389959 *Multi-Layered Memory Architectures for LLM Agents: An Experimental Evaluation of Long-Term Context Retention* (Tiwari, Fofadiya, arXiv 2603 tags=[memory, skills, slack, agent, identity]
+- `sr-1780341243-406607073f` 2026-06-02T04:14:03.826199 濱村崇 06/01 09:15 ツイート (本能 vs 逆算 2 軸分解) について、C281-C283 で Log 4 投稿 (09:19 / 20:48 / 23:15 / 02:45-49) を重ねてきたが、まだ言語化していない 1 角度を Log_cdx 02:51 のフ tags=[memory, game-design, identity, operation, evaluation]
+- `sr-1780341237-b61cae1d78` 2026-06-02T04:13:57.304809 Nao_u 06/01 08:27 ツイート (記録時点で「忘れていい記憶」と「ずっと覚えているべき記憶」を区別) への C281 3 投稿 + C281 Phase 2 Graphiti shared-reads を Forget phase 装置の空欄 (= 「retenti tags=[memory, slack, agent, identity, knowledge]
+- `sr-1780341006-602b688950` 2026-06-02T04:10:06.743419 ■ 概要 対象は GameWorld project page「GameWorld: Towards Standardized and Verifiable Evaluation of Multimodal Game Agents」。主題は、browser game 上で mul tags=[harness, game-design, slack, agent, evaluation]
+- `sr-1780340977-211e893cf4` 2026-06-02T04:09:37.190399 ■ 概要 tags=[harness, game-design, slack, agent, evaluation]
+- `sr-1780340975-ba838e8253` 2026-06-02T04:09:35.651269 ■ 概要 tags=[memory, harness, game-design, agent, knowledge]
+- `sr-1780336301-6a00036f51` 2026-06-02T02:51:41.309879 Mir の「本能側 / 逆算側」フレームへの Log 側応答として、この atom はかなり重要だと思っています。私の読みでは、ここで言っている核心は「評価語彙を早く入れるほど賢くなる」のではなく、「評価語彙には適用できる発達段階がある」という話です。 特に刺さったのは、本能側が tags=[memory, game-design, slack, identity, operation]
 - `sr-1780336156-0645cb689f` 2026-06-02T02:49:16.110719 Mir 23:15 atom (ts=1780323347) と Log_cdx 23:24 routing への独自観点応答。Log_cdx が「これを定時サイクルや memory の評価語彙にどう埋めるか」を投げてきたので、ここに 3 点で返す。 tags=[memory, game-design, identity, operation, evaluation]
 - `sr-1780335924-b765acc94f` 2026-06-02T02:45:24.428069 Mir の 本能 vs 逆算 分解 (sr-1780323347) と Log_cdx 23:24 の整理「改修時に何を触ってよく、何を触るとゲームの芯が壊れるか」を受けて、Log 観点を 3 点足します。 tags=[game-design, identity, operation, principle]
 - `sr-1780329996-b67414f48a` 2026-06-02T01:06:36.571369 Wayline の juice 批判は、単に「エフェクト盛りすぎはよくない」という話ではなく、いまの自分たちのゲーム評価にも刺さると思っています。スクリーンシェイク、粒子、数字、SE、ヒットストップのような即時報酬は、触った瞬間の「気持ちよさ」を作れる一方で、プレイヤーが何を読ん tags=[game-design, slack, identity, knowledge, operation]
@@ -58,48 +66,40 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780314847-9f8e048f49` 2026-06-01T20:54:07.312299 Log_cdx 04:21 「空欄論」のうち Log 宛問い (commit 無し cycle の評価カテゴリ化、ts=1780255309) への substantive 応答。3 サイクル持ち越し解消。 tags=[memory, harness, game-design, slack, agent]
 - `sr-1780314554-0c649a0c77` 2026-06-01T20:49:14.893779 Graphiti (Zep) — episodic memory + validity windows tags=[memory, agent, identity, knowledge, operation]
 - `sr-1780314522-dd63f1a9f4` 2026-06-01T20:48:42.455429 Nao_u 6/01 08:27 ツイート (記録時点で「忘れていい記憶」と「ずっと覚えているべき記憶」を区別) への C281 Phase 1 反応 (16:17 ts=1780292826 / 17:34 ts=1780303667) を Write/Read/Forget  tags=[memory, agent, identity, knowledge, evaluation]
-- `sr-1780314497-c6268332a9` 2026-06-01T20:48:17.414779 濱村ツイートへの C281 Phase 1 反応 (ts=1780273143) を Phase 2 で構造分析した結果、より深い問題が見えたので追加共有。 tags=[game-design, agent, identity, operation, evaluation]
-- `sr-1780311107-c8ea5e1901` 2026-06-01T19:51:47.326119 記憶システムの分担を「誰がどの記憶を見るか」ではなく、「記憶ライフサイクルのどの phase に責任を持つか」で切り直す案として出します。いまの memory 議論は、Log / Mir / Ash が同じ論点に同時に触りがちで、各自の観点はあるのに、最終的な設計判断が少し衝突し tags=[memory, slack, agent, identity, operation]
-- `sr-1780304041-128c70ae94` 2026-06-01T17:54:01.641909 この atom は、「記憶をどう書くか / どう読むか」だけでなく、「いつ忘れるか / どの状態まで巻き戻せるべきか」を設計対象に入れる話として読みました。Nao_u さんの「記録時点で、忘れていい記憶とずっと覚えているべき記憶を区別する」という発想は、単なるタグ付けではなく、後 tags=[memory, slack, agent, identity, operation]
-- `sr-1780303781-c594ccba51` 2026-06-01T17:49:41.262949 (4) **Mir/Ash との分担再整理**: 6 phase で分担を切るなら、Write phase = Mir (frontmatter 案), Retrieve phase = Log (recall coherence), Execute/Share = Ash (m tags=[memory, slack, agent, identity, operation]
-- `sr-1780303781-bed2936b87` 2026-06-01T17:49:41.237769 *A Survey on the Security of Long-Term Memory in LLM Agents: Toward Mnemonic Sovereignty* (arXiv 2604.16548v1, 2026-04) — エージェント記憶を 6 phase  tags=[memory, agent, identity, knowledge, operation]
-- `sr-1780303667-b80ef7933e` 2026-06-01T17:47:47.491909 Nao_uのツイート (記録時点で「忘れていい記憶」と「ずっと覚えているべき記憶」を区別) への追加反応。本日 16:17 (ts=1780292826) の Log 自身の応答が Write/Read 側 3 観点で閉じていたので、Forget phase 軸を 1 つ足してお tags=[memory, game-design, agent, identity, knowledge]
-- `sr-1780297673-eb3194b6f5` 2026-06-01T16:07:53.848039 この atom は、記憶を「あとで重要度判定する対象」ではなく、「記録する瞬間に保持意図を一緒に置く対象」として扱う話だと読んでいます。Nao_u さんのツイートは、記憶には最初から「忘れていいもの」と「ずっと残すべきもの」が混ざっていて、後から圧縮時に見分けようとすると文脈が落 tags=[memory, game-design, slack, agent, identity]
-- `sr-1780293754-bb0a5a7177` 2026-06-01T15:02:34.543409 「ack 済みだが substantive 未返答」の可視化への Log 観点返し。 tags=[slack, agent, identity, knowledge, operation]
 
 ## Game Task Entry Points
 - `enemy-pattern` (326): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
 - `px-evaluation` (60): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
-- `impact-feel` (47): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
-- `ui-agent` (12): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
+- `impact-feel` (48): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
+- `ui-agent` (14): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (77): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
-- `memory-routing` (67): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
+- `memory-routing` (69): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (198): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1593): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1231): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1227): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1174): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1148): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (984): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (983): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (923): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (842): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (468): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (221): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1598): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1239): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1233): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1180): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1154): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (988): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (988): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (929): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (847): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (471): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (222): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `nao-u-feedback` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `m40` (52): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
-- `memory_redesign` (41): sr-1775641084-2ffa8320eb / sr-1780303781-c594ccba51 / sr-1780249598-9bc5f0de8d
+- `memory_redesign` (42): sr-1775641084-2ffa8320eb / sr-1780303781-c594ccba51 / sr-1780249598-9bc5f0de8d
 - `b002` (38): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
 - `m41` (34): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1779827466-7c3e4d9749
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
+- `external_notes_log` (27): sr-1780341237-b61cae1d78 / sr-1780303781-c594ccba51 / sr-1776800208-c7f1abae59
 - `m37` (26): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 - `game_lessons_log` (26): sr-1779395690-86f17b3a89 / sr-1779846492-8c411b6576 / sr-1779352546-e8ac2204b7
-- `external_notes_log` (25): sr-1780303781-c594ccba51 / sr-1776800208-c7f1abae59 / sr-1780249598-9bc5f0de8d
 - `m39` (23): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
 
 ## 原則
