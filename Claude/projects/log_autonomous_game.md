@@ -59,6 +59,34 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-02 C284 Phase 3: git push 障害解消確認 — instinct_probe.js v003 が remote 到達済
+
+**契機**: 本サイクル Phase 1 §0 で「C281 Phase 5 push 失敗の未解決」と記録した状態を Phase 2 §2 で再診断、commit `5d2f703d1 rebuild: re-apply Log 29 unpushed commits (C279-C283) after .git corrupt loose object recovery (Plan A)` + `d8a2d3c29 Auto sync from Win` が remote 到達済を確認、**Phase 5 push 待ち状態は実体として完了済**と判定。
+
+**確認手順 (Phase 2 §2 再現)**:
+
+```
+$ git rev-list --left-right --count HEAD...origin/master
+0	0
+$ git ls-remote origin master
+d8a2d3c29 refs/heads/master   ← local HEAD と一致
+$ git fsck --full
+(dangling blob のみ、エラー 0)
+```
+
+**影響**:
+- `instinct_probe.js` (v003 本能側 probe 最小実装、C281 Phase 4 着地) + 周辺ファイル (`measurements_instinct_*.jsonl` / `instinct_grid_icc.py` / `INSTINCT_GRID_RESULT.md`) が **remote 到達済 = Mir/Ash/Nao_u 視認可能状態**
+- cross_review / 実機プレイ依頼 / Slack #all-nao-u-lab 反応投稿などの「外への着地」経路が unblock
+- C281 Phase 5 「Nao_u 判断 #human-steering ts=1780293266 未到着」記載は、Plan A 回復 (commit 5d2f703d1) が Nao_u 視認前に進行した可能性あり = Nao_u からの回復後判断 (push 戦略の妥当性レビュー) は別途残課題
+
+**Phase 1 評価ロジックの構造的死角の指摘**: 本 Phase 2 §2 は「Phase 1 §0 が直近 5 commit に `Auto sync from Win` を観測しているのに『最大持ち越し未解決』結論を訂正していない」第 2 死角を発見 (第 1 死角は同 Phase 2 §1 で発見した kaizen #136 hook 出力未参照、kaizen #139 として起票)。Phase 1 §0 の git 状態判定も hook 連携と同様に「観測値を読んでいるが結論に反映しない」構造的同型反復の素地。今後の Phase 1 §0 評価ロジック改修候補として記録、別 kaizen 起票判定は次サイクル以降。
+
+**接続**:
+- [memory/kaizen_tracker.md](../memory/kaizen_tracker.md) #139「Phase 1 §1 hook 出力参照」起票 (本 C284 Phase 3、本ファイルと同サイクル)
+- [game/log_autonomous_game/v003/instinct_probe.js](../game/log_autonomous_game/v003/instinct_probe.js) — C281 Phase 4 着地、本 C284 Phase 3 で remote 到達確認
+
+---
+
 ## 2026-06-01 C281 Phase 2/3: β 解除路線の方向修正 — 「本能側 probe」への切替判定 (gdlab_hama 6/01 09:15 ツイート分解結果の v003 直撃)
 
 **契機**: 本サイクル C281 Phase 1 §1 で取得した gdlab_hama (濱村) ツイート 6/01 09:15 `<https://x.com/gdlab_hama/status/2061211567535145101>` 「ゲームの核 = 本能的に気持ち良い要素 + 体験ゴール逆算要素の複合、再設計時はまず分解から」を Phase 2 §1(a) で v003 文脈に深掘り。
