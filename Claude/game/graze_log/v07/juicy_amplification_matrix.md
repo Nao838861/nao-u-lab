@@ -1,36 +1,47 @@
-# graze_log v07 — juicy_amplification_matrix.md (juiciness 2 操作 × 5 機構 Stage 3 予測 / 2026-05-31 C188 Ash)
+# graze_log v07 — juicy_amplification_matrix.md (polishing × amplification 5 機構 Stage 3 予測 / 2026-05-31 C188 Ash / 2026-06-01 C189 prior art 訂正)
 
-**status**: v07/index.html 上に **B-2 Hyper Activation** + **観点 3 弾側マーカー** + **観点 6 7 区分 spawn テーブル** + **観点 7 180F cap reached 大成功反応** + **観点 8 bad policy headless** の 5 機構を積層した v07 に対し、**Nao_u プレイ評価返信 (Stage 5, ts=1779939191.243789) 受領前** の AI 側 Stage 3 補強として、ACM 2024 Hicks et al. "Juicy Audio" の juiciness = polishing × amplification 2 操作再定義を v07 5 機構と 2 軸 matrix で接続する。
+**status**: v07/index.html 上に **B-2 Hyper Activation** + **観点 3 弾側マーカー** + **観点 6 7 区分 spawn テーブル** + **観点 7 180F cap reached 大成功反応** + **観点 8 bad policy headless** の 5 機構を積層した v07 に対し、**Nao_u プレイ評価返信 (Stage 5, ts=1779939191.243789) 受領前** の AI 側 Stage 3 補強として、**Pichlmair & Johansen (2020) "Designing Game Feel. A Survey"** の game feel framework (3 domains × polishing operations、特に juicing = amplification domain への polishing 適用) を v07 5 機構と 2 軸 matrix で接続する。
 
-**限定明示 (philosophizing 抑止)**: 本ファイルは v07 評価返信受領前の Stage 3 補強であり、**v08 経路の確定は Nao_u プレイ評価返信受領後**に行う。本ファイル内で v08 採否を決定しない (`feedback_clone_strategy.md` t:5 守破離守の段階準拠)。判定方針: ACM 2024 の 2 操作枠で 5 機構を読み直し、各機構の「未獲得の amplification 余地」を Stage 3 形式で予測列挙する。headless 数値は根拠から外す (`feedback_headless_unfit_for_unfinished_eval.md` t:5)。
+**重大訂正 (2026-06-01)**: 初版 (2026-05-31 C188) は本論文を「ACM 2024 Hicks et al. 'Juicy Audio'」と誤帰属し、引用文も「juiciness は polishing と amplification の 2 操作の合成」と誤訳していた。実体は (a) 著者は Pichlmair & Johansen の 2 名、(b) 出典は IEEE TG / arxiv 2011.09201、(c) framework は「3 domains (physicality / amplification / support) × polishing operations (tuning / juicing / streamlining)」で、**amplification は domain、polishing は operation**、juicing = amplification domain への polishing 適用。`feedback_prior_art_citation_must_verify.md` t:5 違反。詳細は本ファイル末尾 §訂正履歴。本訂正により matrix の 2 軸 (polishing / amplification) は **Pichlmair framework に厳密準拠する 2 軸ではなく、Ash の独自分析軸 (= polishing operation 側面 / amplification domain への射影側面)** として再定位する。
 
-**前提**: 本ファイルは `knowledge/20260531_acm_juicy_audio_polishing_amplification_plu_plus_two_op_revision.md` の §「graze_log v07 5 機構積層 × juiciness 2 操作のマトリクス分析」仮置きを、game/<id>/ 側で Stage 3 予測形式に変換した実装接続書面である。knowledge 側は外部接続点、本ファイルは v07/v06 self_judgment 着手時の評価軸候補。
+**限定明示 (philosophizing 抑止)**: 本ファイルは v07 評価返信受領前の Stage 3 補強であり、**v08 経路の確定は Nao_u プレイ評価返信受領後**に行う。本ファイル内で v08 採否を決定しない (`feedback_clone_strategy.md` t:5 守破離守の段階準拠)。判定方針: Pichlmair framework から派生した 2 軸で 5 機構を読み直し、各機構の「未獲得の amplification 余地 (= 内部状態の知覚化余地)」を Stage 3 形式で予測列挙する。headless 数値は根拠から外す (`feedback_headless_unfit_for_unfinished_eval.md` t:5)。
+
+**前提**: 本ファイルは `knowledge/20260531_acm_juicy_audio_polishing_amplification_plu_plus_two_op_revision.md` の §「graze_log v07 5 機構積層 × juiciness 2 操作のマトリクス分析」仮置きを、game/<id>/ 側で Stage 3 予測形式に変換した実装接続書面である。**knowledge 側ファイルは同じ誤帰属を含んでいる可能性が高く、別途訂正が必要 (Phase 5/次サイクル繰越)**。本ファイルは v07/v06 self_judgment 着手時の評価軸候補。
 
 ## 概念ノード (R-007 外部対応語)
 
-- **juiciness 2 操作合成** = juiciness as composition of polishing and amplification (Hicks, Liapis, Yannakakis 2024) — juiciness は単一の「装飾追加」操作ではなく、(a) polishing と (b) amplification の 2 操作の合成
-- **polishing** = polishing / embellishment (Hicks 2024; Swink 2009 Game Feel) — 既に表に出ている要素 (ボタン反応・ヒットエフェクト・UI 遷移) の質感向上
-- **amplification** = amplification / perceptualizing implicit state (Hicks 2024) — ゲーム内部状態のうちロジック上は存在するがプレイヤーが知覚していないものを感覚化する操作
-- **empowerment** = sense of empowerment (Hicks 2024) — 2 操作合成の心理効果その 1。プレイヤー有能感
-- **enhanced clarity of feedback** = enhanced clarity of feedback (Hicks 2024) — 2 操作合成の心理効果その 2。フィードバックの明瞭性向上
+- **game feel 3 domains** = physicality / amplification / support (Pichlmair & Johansen 2020) — プレイヤー体験を 3 つの design intent domain に分けて捉える framework
+- **polishing operations** = tuning / juicing / streamlining (Pichlmair & Johansen 2020) — 各 domain に対応する polishing operation。tuning ↔ physicality、juicing ↔ amplification、streamlining ↔ support
+- **amplification (domain)** = amplification domain (Pichlmair & Johansen 2020) — ゲーム内部状態 (logical state) を player に向けて communicate する design intent。**operation ではなく domain**
+- **juicing (operation)** = the act of polishing amplification (Pichlmair & Johansen 2020) — amplification domain に対する polishing operation。screenshake、hit-stop、popup 等、内部状態の知覚化を増幅する
+- **empowerment** = empowerment (Pichlmair & Johansen 2020) — juicing が結果として produce する player の有能感
+- **clarity of feedback** = clarity of feedback (Pichlmair & Johansen 2020) — juicing が provide する、game events の重要性 communication 明瞭性
 
-## ACM 2024 核心定義 (M-41 prior art 実体引用)
+**本ファイル独自軸 (Pichlmair framework からの派生)**:
 
-**Hicks, Liapis, Yannakakis (2024)** "Juicy Audio: Audio Designers' Conceptualization of the Term in Video Games" — ACM TOG / CHI Play 系
-URL: https://dl.acm.org/doi/10.1145/3677084
+- **polishing 側面** = 本 matrix では「既に表に出ている要素 (操作反応・既存エフェクト) の質感向上」を指す Ash 独自軸。Pichlmair の operation 'polishing' とは厳密一致せず、「surface-level 質感」観点として転用
+- **amplification 側面** = 本 matrix では「ゲーム内部状態のうちロジック上は存在するがプレイヤーが知覚していないものを感覚化する余地」を指す Ash 独自軸。Pichlmair の amplification domain への射影として位置づける
 
-業界 audio designer 13 名へのインタビューに基づく juiciness の再定義 (要約引用):
+## 原典核心定義 (M-41 prior art 実体引用)
 
-> "Juiciness is achieved through **polishing and amplification**, which together produce a sense of empowerment and enhanced clarity of feedback in the player."
+**Pichlmair, M., & Johansen, M. (2020)** "Designing Game Feel. A Survey" — IEEE Transactions on Games (2021) / arxiv:2011.09201 (2020-11-18 submission)
+URL: https://arxiv.org/abs/2011.09201
+DOI: 10.1109/TG.2021.3072241
 
-ここで juiciness は **2 つの操作の合成** として定義される:
+200+ academic/practitioner sources の体系的サーベイから game feel design の framework を提示。abstract 末尾の framework 提示部 (直接引用):
 
-- **polishing** = 既に表に出ている要素を磨く (ボタン反応の質感・SE のミックス・視覚要素の動き)
-- **amplification** = 既に存在する状態を増幅して知覚させる (hit-stop で衝突の重みを伸ばす・screenshake で被弾の物理感を拡張する・close-call で「あと一歩」を可視化する)
+> "...This resulted in three different domains of intended player experiences: physicality, amplification, and support. In these domains, the act of polishing that determines game feel, takes the shape of tuning, juicing, and streamlining respectively. Tuning the physicality of game objects creates cohesion, predictability, and the resulting movement informs many other design aspects. **Juicing is the act of polishing amplification and it results in empowerment and provides clarity of feedback by communicating the importance of game events.** Streamlining allows a game to act on the intention of the player, supporting the execution of actions in the game."
+>
+> — Pichlmair & Johansen 2020, abstract (arxiv:2011.09201)
 
-両操作は empowerment と enhanced clarity of feedback という 2 つの心理効果に向かう。Swink (2009) Game Feel の系譜にあるが、「装飾の追加」という単一操作で語られがちな juiciness を 2 操作に分解した点が新しい。
+ここで framework の構造は以下:
 
-(`feedback_prior_art_citation_must_verify.md` t:5 準拠: URL 貼るだけでなく該当箇所の引用文を併記済み。本論文の核心定義は polishing/amplification 2 操作の合成として juiciness を捉える点に存在)
+- **3 domains** (player experience 側): physicality / amplification / support
+- **3 polishing operations** (designer operation 側): tuning / juicing / streamlining
+- **対応関係**: tuning ↔ physicality、**juicing ↔ amplification**、streamlining ↔ support
+- juicing は amplification domain への polishing 適用 → empowerment + clarity of feedback を produce
+
+`feedback_prior_art_citation_must_verify.md` t:5 準拠: arxiv URL + DOI + abstract 直接引用文を併記。本論文の核心定義は「3 domains × polishing operations の対応構造」と「juicing = polishing applied to amplification」にあり、**「polishing と amplification の 2 操作の合成」という並列構造ではない** (= 本ファイル初版の誤訳)。
 
 ## v07 5 機構 × juiciness 2 操作 matrix (10 セル Stage 3 予測)
 
@@ -169,9 +180,31 @@ v08 経路選定の優先順位 (Nao_u 評価受領後に確定):
 
 ## 制約遵守チェック
 
-- [x] `feedback_prior_art_citation_must_verify.md` t:5: ACM 2024 論文の引用文を本文に含み、URL も明示
+- [x] `feedback_prior_art_citation_must_verify.md` t:5: Pichlmair & Johansen 2020 (arxiv:2011.09201 / IEEE TG 10.1109/TG.2021.3072241) の abstract 直接引用文 + URL + DOI を本文に明示。**初版 (2026-05-31) の Hicks/Liapis/Yannakakis 2024 帰属は誤り**で、本サイクル (2026-06-01) に訂正済み (§訂正履歴 参照)
 - [x] `feedback_headless_unfit_for_unfinished_eval.md` t:5: matrix セルでは headless 数値を judgment 根拠に使っていない (観点 8 のみ dev 側 amplification として記述、player 側 matrix から除外)
 - [x] `feedback_clone_strategy.md` t:5: 守破離の守段階準拠、v08 採否決定は本ファイル内で行わない (Stage 3 予測列挙のみ)
 - [x] `feedback_prediction_responsibility.md` t:5: Stage 3 予測形式、校正前提 (Nao_u 評価受領後の予測精度逆算を明示)
-- [x] R-007 造語症対策: 概念ノードに外部既存語併記 (juiciness 2 操作合成 / polishing / amplification / empowerment / enhanced clarity of feedback)
+- [x] R-007 造語症対策: 概念ノードに外部既存語併記。**ただし「polishing 側面 / amplification 側面 (本 matrix 2 軸)」は Pichlmair framework と厳密一致しない Ash 独自軸であることを明示**
 - [x] `feedback_means_ends_reversal_check.md` t:5: 本ファイルは playable diff を直接生まないが、v08 候補列挙で出力ゲームへの接続点を確保。手段の目的化 (matrix 数増目的の作文) を避け、既存 knowledge §マトリクス分析の implementation 接続書面として位置づけ
+
+## 訂正履歴
+
+### 2026-06-01 C189 — prior art 二重誤帰属の訂正 (M-41 違反対応)
+
+**経緯**: Phase 4 で Phase 1 の指摘「juicy_amplification_matrix の commit message が 'ACM 2024' と書かれているが、外部検索で見つかったのは arxiv 2011.09201 (2020)。M-41 違反疑い」を検証した結果、誤帰属が複数層に存在することが判明:
+
+1. **著者誤り**: 初版は "Hicks, Liapis, Yannakakis (2024)" と帰属したが、(a) Pichlmair & Johansen 2020 が原典、(b) 別の関連論文 ACM 2024 "Juicy Audio" の実著者は Kieran Hicks, Katja Rogers, Kathrin Gerling, Lennart E. Nacke で、Liapis/Yannakakis は別の著名 game AI 研究者で本論文の著者ではない
+2. **出典誤り**: 初版は ACM TOG / CHI Play 系 DOI 10.1145/3677084 を引用したが、これは ACM 2024 "Juicy Audio" のものであり、polishing/amplification framework の原典ではない。原典は arxiv:2011.09201 / IEEE TG DOI 10.1109/TG.2021.3072241 (Pichlmair & Johansen 2020)
+3. **引用文誤訳**: 初版は "Juiciness is achieved through polishing and amplification, which together produce a sense of empowerment and enhanced clarity of feedback in the player." と引用したが、原文は "Juicing is the act of polishing amplification and it results in empowerment and provides clarity of feedback by communicating the importance of game events." — 意味が反転している
+4. **構造誤読**: 初版は「polishing と amplification の 2 操作合成」と framework を要約したが、原典は「3 domains (physicality / amplification / support) × polishing operations (tuning / juicing / streamlining)」で、**amplification は domain、polishing は operation の総称、juicing は amplification domain への polishing 適用**。「polishing と amplification が並列の 2 操作」ではない
+5. **インタビュー件数誤り**: 初版は「業界 audio designer 13 名へのインタビュー」と記述したが、(a) Pichlmair & Johansen は 200+ sources の academic/practitioner survey、(b) Hicks 2024 は audio designer 12 名インタビュー — どちらの数字とも一致しない
+
+**根本原因**: 知識結晶化サイクル (`knowledge/20260531_acm_juicy_audio_polishing_amplification_plu_plus_two_op_revision.md`) で複数論文を統合する過程で、framework 原典 (Pichlmair 2020) と関連派生研究 (Hicks 2024 "Juicy Audio") を混同し、後者の DOI/著者と前者の framework 内容を組み合わせた合成誤帰属が発生。M-41 (`feedback_prior_art_citation_must_verify.md`) の「URL 貼るだけ不可、引用文抜粋カラムに該当機能の記述文を併記」の「該当箇所」の確認 (実体 PDF を読んで該当節を引用するステップ) を skip し、要約から逆構築した引用を貼ってしまった
+
+**訂正内容**: (i) 表紙の status / 限定明示 / 前提セクションに重大訂正を明示、(ii) 概念ノードを Pichlmair framework の 3 domains × 3 polishing operations 構造に書き直し、(iii) 「ACM 2024 核心定義」セクションを「原典核心定義」に改名し、Pichlmair 2020 の abstract 直接引用に差し替え、(iv) 本 matrix の 2 軸 (polishing 側面 / amplification 側面) を Ash 独自軸として再定位 (Pichlmair framework と厳密一致しないことを明示)、(v) 関連 knowledge ファイル (`knowledge/20260531_acm_juicy_audio_polishing_amplification_plu_plus_two_op_revision.md`) の訂正は次サイクル繰越
+
+**未訂正の派生影響 (次サイクル繰越)**:
+
+- `knowledge/20260531_acm_juicy_audio_polishing_amplification_plu_plus_two_op_revision.md` の §マトリクス分析仮置きは同じ誤帰属を持つ可能性大 → 次サイクル冒頭で確認・訂正
+- v07 関連 commit message (a2b1a3328, 2f5d4228f) の "ACM 2024 polishing/amplification 2操作 × 5機構" 表記は git history なので不可逆、本 matrix の §訂正履歴で訂正記録として残置
+- `log/external_search.log` / `log/external_notes_ash.md` に同じ誤帰属が残置している可能性あり → 次サイクル冒頭で grep 確認
