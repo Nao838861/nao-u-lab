@@ -129,8 +129,103 @@ v002 採点起点: 自身の差分採点 (`v002/self_judgment.md`) Q-A 5/5 / Q-�
 
 ---
 
+## Q-成功FB — 本能側応答密度初回計測 (C281 Phase 4, 2026-06-01)
+
+**契機**: gdlab_hama 2026-06-01 09:15 ツイート「ゲームの核 = 本能的に気持ち良い要素 + 体験ゴール逆算要素の複合、再設計時はまず分解」を v003 に適用、Phase 2 で **proxy_icc_diagnose.py が「逆算側の道具を本能側の測定器として流用している」混線**であると分解診断。本能側を直接観測する装置の第 1 本として `instinct_probe.js` (純 Node、192 行) 新設。
+
+**仕様**:
+- castLock 解除 (resolveLock 発火) 直後 `PROBE_WINDOW_FRAMES=6` frame (=100ms) の bot 移動方向を 9-way 離散化 (`dirToken`)、隣接 frame 間の方向変化回数を `post_lock_input_count` として集計
+- 1 trial 末尾で `probe_density = post_lock_input_count / post_lock_frame_total` を出力 (post_lock_frame_total = castLock 成功数 × 6)
+- bot = `agent_difficulty_proxy.js` の素朴良手 (近接脅威退避 + 中央バイアス + 微小ノイズ) を簡略化、PLAYER_SPEED は agent boost 1.5x 同型
+
+**初回計測値** (seed_base=20260601, trials=3, dry-run):
+| trial | seed | play_time_sec | cast_count | input_count / frame_total | probe_density |
+|---|---|---|---|---|---|
+| 0 | 20260601 | 8.68 | 3 | 4 / 18 | 0.2222 |
+| 1 | 20260602 | 8.68 | 3 | 2 / 18 | 0.1111 |
+| 2 | 20260603 | 8.68 | 3 | 8 / 18 | 0.4444 |
+
+**判定 (確定採点ではなく観測値報告)**:
+- **(a) 測定経路が動く**: 3 trial すべて castLock 成功 3 回、post_lock_frame_total=18 で集計成立、JSONL 出力 `frames/instinct_probe_test.jsonl` 確認済
+- **(b) 値の分散が出る**: probe_density 0.111 → 0.444 = 4 倍変動 (range), seed 差で結果分散 = staging 反証ライン §1 「測れているように見えて測れていない二重事故リスク」の初期検証段階クリア (3 trial で分散観測条件成立)
+- **(c) 確定採点は保留**: probe_density と人間体感の相関は本サイクル未測定。本数値は density 軸が機能することの証拠であり、density の絶対値の意味は次サイクル以降 (Nao_u/Mir/Ash 実機判定経路または seed × bot 戦略 grid での Spearman 相関測定)
+- **(d) R-A 順守**: 本 probe は自己判定精度の補強、判定装置の置換ではない
+
+**反証ライン §2 (substrate 増強最小) 順守**: 純 Node 192 行 (staging Phase 3 想定 50-80 行を超過、game 物理を inline せざるを得ず増)、puppeteer 不要、frames/ 直下 1 ファイル追加のみ。副作用ゼロ設計、game.js / verify.js / agent_difficulty_proxy.js 改変ゼロ。
+
+**接続**:
+- kaizen #137 (proxy_icc_diagnose.py) 段階 2 方向修正 = 「本能側 vs 逆算側分解」の実装根拠
+- projects/log_autonomous_game.md 2026-06-01 C281 §3 β 解除路線修正の物理化
+- graze_log v06 R-J 候補 (本能側の核を 1 行で同定) との接続点を実装で得る
+
+**次サイクル C282 以降候補**:
+- 30 trial × 複数 seed_base で probe_density 中央値 + IQR を agent_difficulty_proxy.js と並列計測
+- bot 戦略軸 (camper / lane-holder / nospecial と本 probe 戦略) を切替えて probe_density の戦略間順位を観測 = ICC 軸 (proxy ↔ 本能側) の独立性検証
+- Nao_u 実機判定での「本能的に気持ち良い」体感 ranking と probe_density ranking の Spearman 相関 (5 trial 程度の small-N 出発)
+
+---
+
+## Q-成功FB — マルチシード分散観測 + n=3 degenerate triplet 発見 (C283 Phase 4, 2026-06-02)
+
+**契機**: C281 で seed_base=20260601 trials=3 (consecutive seeds 20260601-3) の dry-run で probe_density={0.2222, 0.1111, 0.4444} と 4 倍変動を確認。本サイクルは「widely-separated seed_base で §5 反証ライン第一関門 (分散観測可能性) を正式判定」が目的。
+
+**実施**:
+1. 計画通り seed_base=1, 11, 21 で 1 trial ずつ実行 → JSONL 3 ファイル取得 (`frames/instinct_probe_seed{1,11,21}.jsonl`)
+2. 想定外の結果: **3 seed すべて probe_density=0.2778 (input_count=5/18)、std=0、range=[0.2778, 0.2778]** — degenerate triplet
+3. triangulation: 追加 seed_base ∈ {2, 3, 5, 100, 1000, 12345} で個別観測 → 4 distinct values {0.1111, 0.2222, 0.2778, 0.4444}
+4. n=10 ベースライン取得 (seed_base ∈ {1, 11, 21, 31, 41, 51, 61, 71, 81, 91}) → `frames/instinct_probe_n10.jsonl`
+
+**初回計測値** (n=3 plan / n=10 baseline 並記):
+
+| set | seeds | mean | std | range | distinct |
+|---|---|---|---|---|---|
+| 計画 n=3 | 1, 11, 21 | 0.2778 | **0.0000** | [0.2778, 0.2778] | 1 |
+| ベースライン n=10 | 1, 11, 21, 31, 41, 51, 61, 71, 81, 91 | 0.3000 | 0.1086 | [0.1667, 0.4444] | 4 |
+
+**判定**:
+- **(a) §5 反証ライン第一関門 (分散観測可能性) = PASS、ただし n=10 で**: n=3 計画は degenerate triplet を引き当て std=0、population レベルでは 4 distinct values が観測されることを n=10 で確認
+- **(b) methodological 発見 = n=3 は信頼分散推定として不十分**: 9 seed 試行中 3 seed (1, 11, 21) が偶然同値、確率約 3/9=33% で n=3 が縮退に当たる経路あり。**次サイクル以降の probe ベースラインは n≥10 を default**
+- **(c) 死亡時間 seed 不変性**: 全 trial で `play_time_sec=8.68, cast_count=3` 一致 → RNG は echo path (cast 中) に影響せず、6-frame probe window 中の noise のみに使われるため初回死亡 frame は seed 不変。これは設計通り (echo 中は trail から path 再生、RNG 不使用) で異常ではない
+- **(d) probe 設計の制約明示**: 「本能側応答密度」を 1 試行 18 frame (= 3 cast × 6 frame) で推定する設計上、離散値が {0/18, 1/18, ..., 18/18} の 19 段階に制限される。分散度の理論上限が低く、n を増やしても std 値の上限がある (今回 std=0.1086 は離散刻み 1/18≈0.0556 の約 2 倍)
+- **(e) 確定採点は引き続き保留**: probe_density と人間体感の相関は本サイクル未測定 (C281 と同じ留保)
+
+**反証ライン §2 (substrate 増強最小) 順守**: instinct_probe.js 改変ゼロ (既に --seed-base/--trials 引数あり)、新規ツール追加ゼロ、`frames/instinct_probe_seed{1,11,21,n10}.jsonl` 4 ファイル追加のみ。集計は python 純 stdlib 1 行コマンド。
+
+**接続**:
+- kaizen #137 (proxy_icc_diagnose.py) — 「逆算側の道具を本能側測定器に流用混線」の補完路、本能側 probe の variance も n=3 では不安定と判明
+- kaizen #138 (memory_retention_audit) — 本サイクル Phase 3 で段階 2 を 1mm 試験、独立に進展
+- C282 Phase 4 capture_frames J-04 構造証明 PASS との接続 = 本能側 (instinct_probe) と逆算側 (J-04 構造証明) の双方で「動く測定経路」を確保
+
+**次サイクル C284 以降候補**:
+- bot 戦略軸 (camper / nospecial / blind-sweeper) × seed n=10 grid で probe_density の戦略間順位観測 → ICC 軸独立性検証 (C281 候補の継続)
+- probe window を 6 frame → 12 / 30 frame に拡張して離散刻み制約を緩めた版を試作 (理論上限の確認)
+- 死亡 frame 不変性を逆手に取って「同一死亡 frame における方向変化分散」を新たな指標として直接定義 (現 probe_density は density の意味で 0..1 だが、本来は 0..6 までの整数変動も観測対象になり得る)
+
+---
+
+## Q-D 予測軌道ゴースト — 段階2 引数化 PASS + ジュース監査 J-04 構造証明 (C282 Phase 4, 2026-06-02)
+
+**実施**: `capture_frames.js` を `--duration N` `--interval F` 引数化。`FRAME_COUNT = (duration * 60) / interval`、`FRAME_INTERVAL_MS = (interval / 60) * 1000` で算出。`node capture_frames.js --duration 60 --interval 60` で frame_0001〜0060.png + meta.jsonl 60 行を生成、exit 0 確認。
+
+**meta 観察**:
+- idx=1 frames=124 / idx=4 frames=306 / idx=5+ frames=320 (定常) = 自動ランダムウォーク agent が wave 1 frame 320 で死亡、段階3 C271 死亡 frame 321 と ±1F で再現
+- HUD: `Relay hit:0 miss:0 idle:1` = castLock/resolveLock 発火ゼロ (Space 非押下) → resolveLock 直後 0-30 frame の経験観察は本 run では取得不能
+
+**ジュース監査 J-04 構造証明 PASS**:
+- resolveLock 本体 (`game.js:206-211`) は `if (e.hadBullets) game.lockMessage = ... else game.lockExplosion = ...` の if/else 排他分岐 = 1 回の resolveLock で 2 変数同時更新は不可能
+- `castLock()` は `game.echo` 存在中の再 cast を拒否 (`game.js:190`)、`updateEcho()` は `elapsed >= ECHO_FRAMES(=60)` で resolveLock 発火 → 連続 resolveLock 間隔 ≥ 60 frame
+- 描画寿命 lockExplosion 30F (`:564`) / lockMessage 45F (`:577`) < 最小間隔 60F → 同 frame 重畳は構造上不可能
+- 詳細は `visual_review.md` J-04 PASS 節 + V-06 PASS 節
+
+**段階2 達成判定**: PASS (capture_frames 引数化 + 60 枚生成 + meta 整合 + J-04 構造証明)。経験観察は実機判定 (Nao_u/Mir/Ash) に委譲、capture_frames 経路はインフラ整備として完成
+
+**Q-D 採点**: 段階3 4.3/5 を維持 (本 phase 4 は capture インフラ整備 + J-04 構造証明であり描画変更なし → Q-D 採点に直接影響なし)
+
+---
+
 ## 次の更新タイミング
 
 - C272 Phase 4 大作業候補 = 実機判定依頼 Slack 投稿 (Mir/Ash inbox) → 段階3 結果フィードバック
 - Auto agent 死亡前にゲーム再起動して wave 2/3 のサンプルを取る拡張 (capture_frames.js Space 再押下) は段階4 候補
 - v002 → v003 差分採点 (Δ-1 phase 2 SHOOT_INTERVAL 漸変 + Δ-2 弾尾追加) は実機判定後に Q-C/Q-D 節へ追記
+- C282 以降 Phase 4 候補 = instinct_probe.js × bot 戦略 grid で probe_density 軸の独立性検証

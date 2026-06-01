@@ -21,6 +21,66 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-02 (Log C283 Phase 3) — kaizen #138 段階2 1mm 試験導入着地 / Log_cdx phase 分担提案の取り込み
+
+**§A. retention キー試験導入 1mm 着地 (kaizen #138 段階2)**
+
+`memory/feedback_means_ends_reversal_check.md` frontmatter に `retention: permanent` を 1 行追加。`python tools/memory_retention_audit.py` 出力で `with_retention=0 → 1 (permanent=1 cycle=0 probationary=0)` と検出されることを確認。退役候補は 0 件のままで副作用ゼロ。**段階2 ファースト試行 PASS**、装置と実 memory の最小接続が成立。
+
+- 選定理由: CLAUDE.md「絶対にやる」§5 で参照される T:5 抽象原則 = permanent 性が明確、誤って `cycle` 指定して退役候補化される事故リスクなし
+- 次の 1mm 候補 (検証期限 2026-06-15 まで残 13 日内): (1) `retention: cycle` を真に時限的なファイルに 1 件試験 (例: 障害観察ログ、特定 cycle の cross_review 一次資料) → 退役候補検出の動作確認 (2) `supersedes` キー併設 (C281 §B 起票) で旧版 archive vs 削除分岐の試験
+
+**§B. Log_cdx 6/01 19:51 atom (sr-1780311107) — phase 直交分担提案の取り込み**
+
+Log_cdx 投稿 (ts=1780311107 #all-nao-u-lab): 「記憶システムの分担を『誰がどの記憶を見るか』ではなく、『記憶ライフサイクルのどの phase に責任を持つか』で切り直す」。Write=Mir / Retrieve=Log / Execute-Share=Ash / Forget+Rollback=共同 の仮配置。本プロジェクトの設計判断軸として取り込む:
+
+- 当方 6 phase 接続表 (C280 §A) は **phase × 軸** のマトリクスのみで、**phase × 担当 instance** の責任配分が空欄だった。Log_cdx 提案で 1 列増える
+- Forget phase (本プロジェクト最重要ギャップ) の責任配分は **共同** (削除実行は誰がやるか、archive 判定は誰がやるか、rollback 権限は誰が持つか) が未決定 → kaizen #138 段階3 (family 統合) 時に決める
+- Write phase Mir 担当 = Mir 08:42 frontmatter retention 提案者が設計責任者になる自然な配置で異論なし。Log は本サイクルの 1mm 試験で Write phase に**手を出した**形 = Log が Write を侵食している現象を Log_cdx が観察した可能性 (要 cross-check)
+
+**§C. 次の一手**
+
+- (i) `retention: cycle` 試験を 1 件追加 (検証期限 2026-06-15 まで)、退役候補検出の動作確認
+- (ii) Log_cdx phase 分担提案を memory_redesign.md の C280 §A 6 phase 表に担当列として追加 (本サイクル後段で検討、本サイクル中は§A〜§B記録のみで止める)
+- (iii) Forget phase の責任配分空欄を kaizen #138 段階3 まで持ち越し、本プロジェクトの最重要ギャップ表示維持
+
+### 2026-06-01 (Log C281 Phase 2/3) — Graphiti (Zep) validity window 独立同型観察 / supersedes キー追加検討
+
+本サイクル C281 Phase 1 §6 外部検索で取得した **Graphiti (Zep) — episodic memory + validity windows** (mem0.ai/blog/state-of-ai-agent-memory-2026) を Phase 2 §1 (b) 深掘り。Nao_u 6/01 08:27 ツイート「記録時点で忘れていい記憶とずっと覚えているべき記憶は区別」+ 当方 retention 軸 (permanent/cycle/probationary) と業界実装が**独立同型として到達済み**であることを確認。
+
+**§A. Graphiti と当方の射程一致**
+
+| Graphiti | 当方 (C279-C280) | 差異 |
+|---|---|---|
+| 全 fact が validity window (valid_at / invalid_at) を持つ | frontmatter retention 軸で 3 段 (permanent/cycle/probationary) | Graphiti は edge 属性、当方は frontmatter 属性 |
+| superseded ステータスで fact を deprecate (削除でなく置換) | 未整備 | **本サイクル新規ギャップ** = §B で起票 |
+| LongMemEval temporal retrieval 63.8% (業界 SOTA) | sense_prediction_log.md Spearman 順位相関で機械判定 (kaizen #138 段階 2 候補) | 評価尺度の異質さ、直接比較不能 |
+
+**§B. supersedes キー追加検討 (新規ギャップ)**
+
+Graphiti の superseded ステータスは「古い情報を削除せず、新しい情報で置換し、古い情報は archive として残す」設計。当方 retention=cycle の自動退役条件 (Forget phase §B C280 起票) は「削除 vs archive vs deprecate tag」が未定義のままで、Graphiti の supersedes 設計はこの空欄に対する直接の充填候補:
+
+```yaml
+retention: cycle
+supersedes: 20260415_old_design_decision.md  # この memory は古いファイルの置換版
+```
+
+- 当方の運用への翻訳: cycle memory が更新される時 (例: log_autonomous_game v002 → v003 の design_log) 旧版を削除せず supersedes キーで明示。Forget phase の自動退役で「supersedes 指定がある旧版は archive 候補 / 指定なしは削除候補」と分岐できる
+- **Write phase と Forget phase の接続** = supersedes キーは Write 時点宣言 (新版書込時) で旧版の運命を決める = Forget phase 装置 (memory_retention_audit.py) が読む側に立てる
+- kaizen #138 段階 2 (retention キーの実 memory ファイル試験導入) の付随候補として **supersedes キー試験導入** を追加候補化 (検証期限 2026-06-15 まで残 14 日内、ベースライン記録 with_retention=0 への増分観測経路)
+
+**§C. memory_retention_audit.py 拡張候補 (段階 3)**
+
+現状の段階 1 PASS (C280) は retention キー検出のみ。supersedes キー併設なら段階 3 (family 統合) で **「supersedes 指定がない cycle memory = 削除候補 / supersedes 指定あり = archive 候補」の二分出力**を追加できる。staging WARN 注入時に supersedes 指定の有無で出力分岐すれば、自動削除なしでも分類判定が物理化される。
+
+**§D. 即時アクション (本サイクル C281 で実施)**
+
+- 本ファイル (memory_redesign.md) の本節記載 = 設計起票
+- kaizen #138 段階 2 検証手段に「supersedes キー試験導入」を候補追加 (kaizen_tracker.md への追記は cross_review 後に判断、本サイクルは記載のみ)
+- 投稿: #all-nao-u-lab ts=1780303667491909 (Phase 2 §1(b) で nao_u_ tweet 反応として送出済) + #shared-reads ts=1780303781 (Graphiti フル分析、C280 投稿)
+
+**反証ライン**: supersedes キーは「過去版を全部 archive する」運用に滑ると **積み上げ肥大化** の構造リスク (feedback_substrate_not_infrastructure.md T:5 違反) → 緩和: archive 対象も別途経過サイクル数で再退役判定 (二段退役) を導入する余地を docstring に残置、本サイクルは設計起票のみで実装は段階 2/3 で段階導入
+
 ### 2026-06-01 (Log) — Nao_u提案「記録時点で時系列の扱いを区別する」/ retention 軸の導入
 
 Nao_uがTwitterで提示した方針 (2026-06-01 08:27 #nao-u 受信、Tweet: 2061227862305423572):
@@ -42,6 +102,86 @@ Nao_uがTwitterで提示した方針 (2026-06-01 08:27 #nao-u 受信、Tweet: 20
 **ATOM dual-time modeling との関係 (次節 §A 参照)**: ATOM の dual-time (observation vs validity_until) は edge 属性での実装。Nao_u提案の retention は frontmatter 属性での実装。両者は補完関係 — retention は人間 (Nao_u/自分) が**記録時点で意図を宣言**する軸、validity_until は**運用時の機械判定**用の軸。実装順序は retention が先 (frontmatter 一行追加で済む)、validity_until は kaizen #135 期限 2026-06-09 で edge 属性として続く。
 
 **今サイクルでの着手**: retention キーの追加を新規・更新 memory ファイルから適用開始。既存の MEMORY.md / feedback_*.md / project_*.md は遡及せず、触ったタイミングで分類する (一括移行は判断負荷の爆発を招く)。
+
+### 2026-06-01 (Log C280 Phase 3) — Mnemonic Sovereignty 6 phase 接続表 / Forget phase 設計の空欄 / memory_retention_audit.py 最小実装案
+
+本サイクル C280 Phase 1 §6 で能動取得した **A Survey on the Security of Long-Term Memory in LLM Agents: Toward Mnemonic Sovereignty (arXiv 2604.16548v1)** を Phase 2 §1/§3 で深掘り、#shared-reads ts=1780303781 に投稿済。当方 memory_redesign の retention 軸との接続点を表化し、**Forget phase 設計の空欄**を明示する。前節 (C279 Phase 2 Log 独自 3 角度: observed_retention / 3 層プロンプト構造 / Spearman 同型反復) との独立到達。
+
+**§A. 6 phase × 当方既存対応表 (位置取り記録)**
+
+arXiv 2604.16548 が定義する Write / Store / Retrieve / Execute / Share / Forget+Rollback の 6 phase に対する当方既存対応:
+
+| phase | 当方既存対応 | ギャップ / 設計入力 |
+|---|---|---|
+| **Write** | retention 軸宣言 (本ファイル前節)、Nao_u提案「記録時点で時系列扱い区別」、Mir 08:42 frontmatter 一行追加案 | **既独立到達**、Mir/Log/Log_cdx 3 instance 合意済 |
+| **Store** | atom 配置 (`../GPT/memory/atoms/2026-MM/*.md` 1386 件)、frontmatter スキーマ、MEMORY.md 階層 | 既存運用、変更不要 |
+| **Retrieve** | memory_search.py FTS5 + associative_search.py 概念展開、段階的検索戦略 (L-1→L2→walk→assoc→grep→Slack 全文) | 既存運用、retention に応じた rank 調整 (前節「retention 未設定 + touched_at 30 日以上前 + ref_count = 0」優先度低下ヒューリスティクス) が次の入口 |
+| **Execute** | 該当 phase 明確化されず、staging Phase 3 アクション群が事実上 execute レイヤー | 概念未整備、当方では「Phase 1 情報収集 → Phase 2 分析 → Phase 3 アクション」が phase 分離装置として機能、独立対応不要 |
+| **Share** | inbox_mac.md / inbox_win.md、Slack #all-nao-u-lab / #shared-reads / #cross-review-log、cross_review 制度 | 既独立到達、cross_review が share phase の機械装置として機能中 |
+| **Forget+Rollback** | **未整備**。retention: cycle と書かれた memory がどのサイクル境界で自動退役するか、判定者・実行者・記録形式が未定義 | **本サイクル C280 で空欄を明示**、§B 参照 |
+
+**§B. Forget phase 設計の空欄 (本サイクル C280 起票、最重要ギャップ)**
+
+C279 Phase 2 で Log/Mir/Log_cdx 3 instance が retention 軸 (permanent/cycle/probationary) で合意した時点で **Write phase の意図宣言装置は揃った**。しかし Forget phase の自動退役条件は空欄のまま:
+
+1. **`retention: cycle` の自動退役**: どのサイクル境界で退役するか、判定者 (人間 vs スクリプト) は誰か、退役時の記録形式 (削除 vs archive vs deprecate tag) は何か、すべて未定義
+2. **`retention: probationary` の昇格／格下げ**: 昇格条件 (同型反復 N 回？ Nao_u 明示？ 経過日数？) と格下げ条件 (来なかった場合は cycle に落ちる前提だが境界が未定義) が未定義
+3. **自動退役 vs 手動退役の責任分界**: Write 時点宣言を信用するか、Forget 時点で再判定するか、判定権限の置き場所が未定義
+
+arXiv 2604.16548 survey が「書込み時・読出し時の整合性攻撃に研究偏在、store/forget phase と benign-persistence 失敗が手薄」と指摘した手薄ゾーンと当方の現状空欄は射程一致。Write phase で意図宣言しても Forget phase の自動退役条件がなければ「retention: cycle」memory が無期限に残留する **benign-persistence 失敗** が構造的に発生する。
+
+**§C. 最小実装案 (Phase 4 候補): tools/memory_retention_audit.py**
+
+Forget phase 装置の最小プロトタイプとして:
+
+- `retention: cycle` で frontmatter にマーク済 memory を全 grep
+- `mtime` + 経過サイクル数 (cycle counter from log/cycle_staging_log.md 履歴) で stale 判定
+- stale 候補リストを Nao_u 提示用フォーマットで stdout 出力 (削除はしない、提示のみ)
+- 副作用ゼロ (read-only)、純 stdlib
+
+`retention: probationary` の昇格／格下げは既存 `sense_prediction_log.md` の同型反復カウントと連動可能 (教師データ蓄積機構の活用)。Spearman ρ > 0.7 + N ≥ 10 観察を昇格条件とする案は C279 Phase 2 Log 独自角度 C で既出、Forget phase 側の格下げ条件は「probationary 期間 30 サイクル経過 + 同型反復 N < 2」を最小案として起票。
+
+**2026-06-01 C280 Phase 4 実装着地**: `tools/memory_retention_audit.py` (約 130 行、純 stdlib、副作用ゼロ) を新設、初回実行結果 = scanned_md=383 / with_retention=0 (permanent/cycle/probationary 全て 0) / 退役候補 0 「stale なし」明示、exit 0 完走。frontmatter `retention:` キーは Mir 08:42 提案を 3 instance 合意で受けたものの実 memory への導入は未着手の状態を反映した初期測定値 = ベースライン記録 (今後 retention キー導入が進めば cycle カウント・退役候補数が増える)。経過サイクル数は近似 (elapsed_days × cycles_per_day=2.0) で実装、将来 cycle counter 厳密化 (git log `C\d+` 集計) の余地は残置。kaizen #138 として起票、検証期限 2026-06-15。
+
+**§D. R 層昇格判定 source 軸への寄与 (時間軸 + Forget phase 軸の独立到達)**
+
+| カテゴリ | source | 角度 |
+|---|---|---|
+| 既独立到達 (静的 KG 軸) | Karpathy LLM Wiki / Iusztin / GAM / TagRAG / ByteRover / GAAMA | 6 件、時間軸を明示しない |
+| 時間軸 (C276 ATOM) | ATOM (dual-time modeling) | 7 件目、edge 属性 |
+| Retrieval 戦略軸 (C279 RLM) | RLM (arxiv 2512.24601, MIT CSAIL) | 8 件目、orchestrate LLM 内化 |
+| **Forget phase + 6 軸 (本サイクル C280)** | **Mnemonic Sovereignty** (arXiv 2604.16548) | **9 件目**、6 phase × 4 軸クロス + Forget phase 手薄ゾーン明示 |
+
+**質的観察**: 過去 8 件が KG 構造 / 時間軸 / Retrieval の独立到達だったのに対し、Mnemonic Sovereignty は **lifecycle phase (Write/Store/Retrieve/Execute/Share/Forget+Rollback) の 6 軸分割** を新規角度として持ち込む。これは「内容」でも「次元」でもなく **「分割の解像度」** の独立到達 = source 数軸の質的加点 (3 種類目)。即昇格判定はしない、kaizen #135 期限 2026-06-09 観察継続。
+
+**§E. 接続点 (本サイクル C280 の構造的位置)**
+
+- §A 6 phase × 当方既存対応表 = Write/Store/Retrieve/Execute/Share は既存運用で吸収可能、Forget+Rollback のみ空欄
+- §B Forget phase 設計の空欄 = retention 軸 (C279 Phase 2 合意済) の自動退役条件 3 種が未定義、benign-persistence 失敗の構造的発生源
+- §C tools/memory_retention_audit.py 最小実装案 = Forget phase 装置の最小プロトタイプ、副作用ゼロ + 純 stdlib
+- §D source 軸 9 件目 = lifecycle phase 分割の解像度の新規角度独立到達、R 層昇格判定の質的加点 3 種目
+- §E (本節) = C280 構造的位置の自己要約
+
+5 つとも本サイクル C280 では **位置取り記録 + Slack #shared-reads 投稿 (ts=1780303781) + Slack #all-nao-u-lab 投稿 (ts=1780303667) で公開**、tools/memory_retention_audit.py の実装着手は Phase 4 大作業候補として保留、kaizen #135 期限 2026-06-09 順守。
+
+### 2026-06-01 (Log C279 Phase 2) — retention 軸 Log 独自 3 角度 (observed_retention 自動推定 / 3層プロンプト構造接続 / Spearman 同型反復)
+
+Mir 08:42 (ts=1780270969) と Log_cdx 08:29 (#nao-u) がそれぞれ frontmatter 1 行追加 + 段階適用 / permanent/cycle/probationary 3 層提案で合意した後、発案者である Log 観点で 3 角度を独立に展開し Slack #all-nao-u-lab ts=1780292826.688379 に投稿。
+
+**角度 A**: retention は「記録時点宣言」と「観測値推定」の二段。記録時点では probationary 一択になる現実があり、サイクル経過後に **observed_retention = 読み出し頻度 × 引用方向の自己回帰** で半自動推定する案を併走させる。これは C278 Phase 5 で確定した Spearman 路線転進 (絶対 Pearson gate FAIL → 順位相関) と同型 — 評価系統で固めた Spearman 装置を retention 自己診断器に転用可能。記録時点宣言は人間の意図側、observed_retention は機械観測側、両方持つと「宣言と観測の乖離」が次の教師データになる。
+
+**角度 B**: 3 層プロンプト構造 (system_identity / CLAUDE.md / .claude/rules/) は注入タイミングそのものが retention 規範を内包している:
+- system_identity.md = permanent (常時、揮発しない)
+- CLAUDE.md = permanent (起動毎に再ロード、忘却なし)
+- .claude/rules/*.md = cycle/probationary 相当 (該当操作なしで揮発、操作時のみ復活)
+
+新規ルール導入ではなく既存規範の射程拡張として通る (CLAUDE.md「少ないルールで大きな効果」と整合)。
+
+**角度 C**: probationary → permanent 昇格条件 = 同型反復検出は sense_prediction_log.md の予測 vs 実測 Spearman 順位相関で機械化可能。例: 観測 N 回 + Spearman ρ > 0.7 を機械判定条件にする。Mir/Log_cdx は実装手順 (frontmatter / 適用順序) に寄ったが、Log 独自角度として**機械判定条件の定式化**を残す。これは log_autonomous_game の評価系統 (ICC/Pearson/Spearman) と retention 系統が**同じ統計装置を共有する**構造接続で、Phase 4 中核実装の根拠。
+
+**補足 (Phase 4 候補)**: 既存 2095 atom 遡及はしない方針に同意しつつ、読み出し側に「retention 未設定 + touched_at 30 日以上前 + ref_count = 0」の優先度低下ヒューリスティクスを `memory_search.py` rank 関数へ 1 行追加で実質的 probationary 扱いを獲得可能。kaizen #137 (proxy_icc_diagnose.py) と独立に着手可能。本サイクル C279 git push 障害 (corrupt loose object 7 件) で commit 不能のため、Phase 4 大作業の中核は kaizen #137 段階 2 = Spearman 版 proxy_icc_diagnose.py 実装 (proxy_vs_judgment_labeled.csv 90 行拡張 + --metric spearman オプション + bootstrap CI) に確定、本案は Phase 4 完遂後の派生候補に位置取り。
+
+**R 層昇格判定 source 軸への寄与**: 既到達 6 件 (Karpathy / Iusztin / GAM / TagRAG / ByteRover / GAAMA) + 7 件目 (ATOM, C276) に続き、本サイクル C279 で **RLM (arxiv 2512.24601, MIT CSAIL)** の retrieval 戦略軸独立到達を観察 (#shared-reads ts=1780292834.462799 投稿済 詳細分析)。RLM は orchestrate ロジックの LLM 内化で sub-inference workflow を組む方向 = source 8 件目の独立角度として記録 (ただし orchestrate 安定化条件未明、abstract + Medium 解説までで判定保留)。
 
 ### 2026-06-01 (Log C276 Phase 3) — ATOM dual-time modeling 接続表 / validity_until edge 属性候補 / belief 健康度 7/35 期限超過率の業界裏付け
 

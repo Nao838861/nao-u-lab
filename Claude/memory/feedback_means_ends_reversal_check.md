@@ -2,6 +2,7 @@
 name: サイクル冒頭で「今サイクルの出力はゲーム制作の試行錯誤ループにどう接続するか」を1行書く
 description: Ash由来の手段の目的化検出プロトコルをLog運用に当てはめた版。記憶整備・制度化・Slack応答にサイクルが流れて game/* playable diff が出ない事故を検出する
 type: feedback
+retention: permanent
 origin: Ash session 4fa1f194-1ab5-4dab-926a-789e4b9fdce4 (`memory_backup/ash/feedback_means_ends_reversal_check.md`) を Log 運用文脈に微修正
 ---
 # サイクル冒頭で「今サイクルの出力はゲーム制作の試行錯誤ループにどう接続するか」を1行書く

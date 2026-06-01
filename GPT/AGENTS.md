@@ -115,6 +115,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 
 - 作業開始時、必要なら `python tools/auto_recall_gate.py "<依頼内容>"` を実行し、生成された `memory/session_context.md` を読む。
 - 作業焦点がある場合は `python tools/memory_recall.py "<焦点>"` で関連 atom を引く。
+- 外部プロジェクトの作業記憶は、対象リポジトリ内に独立した `AGENTS.md` や記憶システムを増やさず、原則として `memory/projects/<project>/` に集約する。`D:\HomeBrew\MonoSH` の入口は `memory/projects/monosh/README.md`。
 - ゲーム制作タスク別の入口は `memory/game_memory_task_lens_index.md` を使う。broad tag から代表 atom / candidate へ降りるための軽量 index で、Phase 3b/4a で有用な probe や issue が出た時だけ更新する。
 - raw 原文は GPT 側 `memory/raw/` に保存する。Claude 側は参照元であり、通常運用の記憶アンカーにしない。
 

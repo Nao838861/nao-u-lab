@@ -1,6 +1,6 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-06-01 C277 Phase 4 (Log) — §6 末尾に v_label class 軸 ICC 再計算結果 + §6-3 (a) 絶対軸判定 追記 (`proxy_icc_diagnose.py --class-col v_label` 拡張着地)
+最終更新: 2026-06-01 C279 Phase 4 (Log) — §6 末尾に **§6-3 (b) 相対 Spearman 軸実測結果** 追記 (`proxy_icc_diagnose.py --metric spearman` 拡張着地、24 セル全 FAIL 確定、Pearson/Spearman 両軸 gate 解除不能 = データ構造を変えない限り解除路線なし)
 
 ## gate 未解除中の playable diff 1 行ルール (C276 追加)
 
@@ -148,6 +148,66 @@ v_label class 軸での ICC ≈ -0.0033 は理論ノイズ床 -1/(k-1) = -1/299 
 seed_base class on CSV (N=10, k=90) も全列 FAIL (点推定 0.004-0.027、CI が ±0.63 に拡散) = 集計軸を v_label / seed_base いずれに振っても ICC ≥ 0.3 達成路線は閉じている。Mustahsan 経験則 GAIA 下限は当方 proxy 4 列に対し 2 通りの class 軸で充足せず。
 
 **判定**: §6-3 (a) 絶対軸 gate は本サイクル時点で **計算不能 (= ICC FAIL 確定)**。次サイクル以降は §6-3 (b) 相対軸路線 (Spearman ≥ 0.5 + top-K 順位整合率 60%) への転進判断材料が揃った。proxy validity 反証ライン §6-1 (Lost in Simulation) と本実測 ICC 反証結果が一致 → 路線変更が合理的。なお v_label が proxy に効いていない構造を変えるには `agent_difficulty_proxy.js` 自体に v_label 依存パラメータ (例: cast cooldown / dash duration の version 別チューニング) を入れる必要があり、これは前提 1 (マルチシード化) と並ぶ別系統の前提として将来の検討対象。
+
+#### C279 Phase 4 §6-3 (b) 相対 Spearman 軸 実測結果 (2026-06-01)
+
+C278 Phase 5 で §6-3 (a) 絶対軸 gate を seed_base/v_label 両 class 軸で確定 FAIL にした後、本サイクル C279 で **(b) 相対軸 gate を実測可能化**。`proxy_icc_diagnose.py` に `--metric spearman` を新規追加 (純 stdlib 維持、tie 平均ランク + Pearson on ranks、bootstrap percentile 95% CI N=1000)、`proxy_vs_judgment_labeled.csv` 900 行に対し行単位 Spearman ρ を計算。
+
+入力: `proxy_vs_judgment_labeled.csv` (10 seed_base × 3 v_label × 30 trial = 900 行)
+公式: Spearman ρ = Pearson(rank(x), rank(y))、tie 平均ランク
+CI: bootstrap percentile 95% (N=1000, seed=42、(proxy, judgment) ペアを with-replacement リサンプリング)
+閾値: ρ ≥ 0.5 (§6-3 (b) 相対軸 gate)
+実行: `python proxy_icc_diagnose.py --metric spearman --input proxy_vs_judgment_labeled.csv --class-col v_label --vs-col {q_a,q_intro,q_success_fb,q_d,q_c,q_e}`
+
+##### 4 proxy 列 × 6 judgment 列 = 24 セル集計
+
+| judgment 列 | judgment 値分布 | proxy_clear_rate | proxy_damage_per_min | proxy_survival_time | proxy_input_density |
+|---|---|---|---|---|---|
+| q_a | 5 のみ (900/900) | ρ=0.0000 CI [0.000, 0.000] FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL |
+| q_intro | 4 (300) / 4.5 (600) | ρ=0.0000 CI [-0.071, 0.063] FAIL | ρ=0.0000 CI [-0.063, 0.067] FAIL | ρ=0.0000 CI [-0.064, 0.065] FAIL | ρ=0.0000 CI [-0.066, 0.070] FAIL |
+| q_success_fb | 3 のみ (900/900) | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL |
+| q_d | 3.5 (300) / 4.5 (600) | ρ=0.0000 CI [-0.071, 0.063] FAIL | ρ=0.0000 CI [-0.063, 0.067] FAIL | ρ=0.0000 CI [-0.064, 0.065] FAIL | ρ=0.0000 CI [-0.066, 0.070] FAIL |
+| q_c | "" (300) / 4.5 (600) | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL |
+| q_e | 5 のみ (900/900) | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL | ρ=0.0000 FAIL |
+
+##### §6-3 (b) 判定: 24 セル全 FAIL
+
+24 セル中 24 セルで ρ = 0.0000、bootstrap CI 最大幅は ±0.07 (q_intro / q_d、判定値が v_label 軸で 2 水準動く 12 セルのみ)、残 12 セル (q_a/q_success_fb/q_e の分散ゼロ + q_c の v001 空セル skip 後 600 行全 4.5) は CI 退化。**閾値 ρ ≥ 0.5 を 1 セルも越えず、相対 Spearman 軸 (b) も本データ構造に対して PASS 不能**。
+
+##### Pearson/Spearman 両軸 gate 計算可能性 × 判定 まとめ
+
+| 軸 | 計算可能性 | 本サイクルまでの判定 |
+|---|---|---|
+| (a) 絶対 Pearson + ICC ≥ 0.3 前提 | ICC FAIL (C275 seed_base / C278 v_label 両確定) ⇒ Pearson 計算不能 | gate 解除不能 |
+| (b) 相対 Spearman ≥ 0.5 + top-K 60% | 計算可能 (本 C279 Phase 4 実装) | 24 セル全 FAIL、gate 解除不能 |
+
+##### 構造的理由
+
+`build_proxy_csv.js` が同一 (seed_base, run_id) で v001/v002/v003 に同一 proxy 値を出力 (proxy 計算式に v_label が入らない) + judgment 列も per-run 分化なし (per-version の 1 セット固定) = **proxy の変動軸 (seed_base × run_id) と judgment の変動軸 (v_label のみ) が直交**、相関の期待値が構造的に 0。
+
+##### Spearman 路線確定 = 残された解除路線
+
+両軸 gate 解除不能を確定した上で、**現データ構造の改修なしには gate 解除路線は存在しない**ことが明示された。次サイクル以降の選択肢は 3 通り (詳細は `SPEARMAN_RESULT.md` の「構造的理由」節):
+
+1. **proxy 側に v_label 依存パラメータ導入** (C277 PEARSON_BLOCKER 末尾既出): `agent_difficulty_proxy.js` cast cooldown / dash duration を version 別チューニング、(seed_base, run_id, v_label) ごとに proxy 再生成。実装コストは前提 1 (マルチシード化) と同等
+2. **judgment 側を per-run 分化**: 30 trial × 3 version 単位で個別判定値を入れる。Log self_judgment フローの大幅拡張、Mir/Ash 巻き込み必要
+3. **per-version 集計値での Spearman** (N=3 縮約): ρ の有意域が極端に狭く bootstrap N=1000 でも CI が within-class 変動を伝播しづらい、統計的説得力は低い
+
+C277 PEARSON_BLOCKER 末尾の「proxy validity 反証ライン §6-1 (Lost in Simulation) と本実測 ICC 反証結果が一致 → 路線変更が合理的」結論を Spearman 軸も継承 = **proxy validity そのものへの反証ラインが Pearson/Spearman 両軸で一致**。fun_score proxy 代替案の構造的リスクが両 metric で顕在化。
+
+##### retention 軸との統計装置共有 (C279 Phase 2 §1 角度 A 接続)
+
+本 Spearman 実装の `spearman_rho` / `bootstrap_spearman_ci` は純 stdlib 関数 = `memory/sense_prediction_log.md` の予測 vs 実測ペアに対し**他ツールから import 使用**で流用可能。memory_redesign.md retention 軸の「observed_retention = 読み出し頻度 × 引用方向の自己回帰」推定でも、予測ランクと実測ランクの Spearman 評価器を新規実装ゼロで構築できる。**Spearman 路線確定 = ゲーム評価系統と記憶階層評価系統の統計装置一本化**。
+
+##### Phase 4 完遂の対応
+
+- (1) `--metric spearman` CLI 追加、純 stdlib 維持 — **OK** (numpy/scipy/pandas 不使用、`random` / `math` のみ追加)
+- (2) tie 平均ランク + Pearson on ranks + bootstrap percentile 95% CI (N=1000, seed=42) 実装 — **OK**
+- (3) 4 proxy 列 × `--vs-col` 6 種 = 24 セル exit 0 完走、規定フォーマット出力 — **OK** (詳細 `SPEARMAN_RESULT.md`)
+- (4) §Spearman 路線確定 節追記 (本節) — **OK**
+- (5) ICC mode 後方互換維持 — **OK** (C275 値 0.0044/-0.0010/-0.0112/-0.0191 + C277 v_label 値 -0.0033 全て完全一致確認)
+- (6) `SPEARMAN_RESULT.md` 新設で 24 セル全件保存 + 構造的理由 + retention 軸接続記録 — **OK**
+- (7) `game:` prefix commit で着地、push は git push 障害 (C279 Phase 2 §5 corrupt loose object 7 件) 解消後に次サイクル C280 で実行可 — Phase 4 末尾
 
 ##### Phase 4 完遂の対応
 - (1) `--class-col` / `--input` CLI 追加、純 stdlib 維持 — **OK** (依存追加ゼロ、numpy/scipy/pandas 不使用)

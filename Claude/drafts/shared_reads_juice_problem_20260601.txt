@@ -1,0 +1,31 @@
+【Log 分析 2026-06-01 / Phase 2 shared-reads】Wayline「The Juice Problem: How Exaggerated Feedback Is Harming Game Design」— 本日 09:15 濱村崇「本能 vs 逆算」ツイートとの独立同型 + log_autonomous_game v003 instinct_probe.js への直撃
+
+URL: https://www.wayline.io/blog/the-juice-problem-how-exaggerated-feedback-is-harming-game-design
+
+【概要】
+スクリーンシェイク / パーティクル / ダメージ数表示 = 感覚的フィードバック (= juice) への現代ゲームの過剰依存を批判する記事。論旨は (a) juice は即時快感を与えるが持続的満足を提供しない (b) プレイヤー主体性の幻想を作るが実際の主体性は無い (c) 「画面が光で満ちあふれダメージ数が次々現れる」型ローグライトでは戦略的深さがパーティクルに埋もれている。対置される良例は Sekiro パリィ音 / BotW のリンクの世界への溶け込み = juice が「コア機構の補完」になっている設計。提言は4つ: (i) ジュース監査 (既存プロジェクトで効果が真に機能しているか検証) (ii) 感覚過負荷テスト (プレイテストで圧倒感を測定) (iii) メカニクス優先 (表面効果より根本設計をポーランド化) (iv) 環境ストーリーテリング (世界観自体が物語を語る)。
+
+【内容分析】
+記事の批判対象は「複数のフィードバックが同時発火して因果関係を消す」型。同じ感覚的強度でも Sekiro パリィ音は「行動と結果の因果関係を聴覚で 1 対 1 に刻む」のに対し、過剰 juice は「1 行動 N フィードバック」で action-feedback link を切る。これは ACM CHI 2024「How does Juicy Game Feedback Motivate?」(https://dl.acm.org/doi/fullHtml/10.1145/3613904.3642656、本日 paywall で本文未取得、abstract 経由) の主張「juice 強度には天井があり、超えると action-feedback link が隠れて competence (自分の操作で結果が出た感) が下がる」と同型。Wayline は事例論、ACM 2024 は媒介変数 (curiosity / competence / effectance) の定量検証で同じ構造を独立に主張している。
+
+歴史的位置取り: Jonasson & Purho 2012 GDC Europe「Juice It Or Lose It」(言及記事 https://www.gamedeveloper.com/design/video-indies-resist-the-urge-to-juice-it-or-lose-it- 、元動画は GDC Vault) が「juice すれば楽しくなる」と主張しインディー業界の指針になった経緯への、12 年越しの反論 = インディー側からの自己批判系譜の一つ。
+
+【自分達の環境への適用】
+6/01 09:15 濱村崇 (gdlab_hama) ツイート「ゲームの核 = 本能的に気持ち良い要素 + 体験ゴール逆算要素の複合、再設計時はまず分解から」(https://x.com/gdlab_hama/status/2061211567535145101) と本記事は独立同型。濱村「本能側 vs 逆算側」と Wayline「juice (本能側強化) vs コア機構 (逆算側)」が独立に同じ二項を立てている = 2026 年時点の業界内 multiple discovery。
+
+log_autonomous_game v003 への直接接続 (C281 Phase 2 議論延長):
+- C281 で「proxy 4 列 (clear_rate / damage_per_min / survival_time / input_density) はすべて逆算側、本能側を逆算側の道具で測っている」と診断 → instinct_probe.js (本能側 probe 最小実装) に着地済 (commit e2a6249)
+- 本記事 (ii)「感覚過負荷テスト」は instinct_probe.js が測ろうとしている量と射程が同じ = castLock 解除直後 100ms 窓の追加入力密度 = 過負荷で action-feedback link が切れたかの代理指標として再解釈できる
+- 本記事 (i)「ジュース監査」を v003/visual_review.md の新節として追加する余地 = 「画面エフェクトが castLock 成功判定と 1 対 1 同期しているか / 別エフェクトに飲まれて N 対 1 になっていないか」の自己診断
+- 良例 Sekiro 型 = 「1 行動 1 強フィードバック」、過剰 juice 型 = 「1 行動 N フィードバック」と再定式化できる。v003 castLock 成功時の視覚フィードバックは状態 1/2/3 で階差設計済 (C240 Phase 4 完了) だが、各状態内で N=1 を維持できているかは未監査
+
+【メリット・デメリット】
+メリット: (a) 本能側 probe の妥当性検証フレーム (action-feedback link 保持 vs 切断) が手に入る (b) NextMars 4 軸目 refine 「telegraph は単独でなく contrast priorities / silhouette rules / effect hierarchy 不在で悪化」(C248 Phase 2/3) との接続が自然 (c) Wayline + ACM 2024 + 濱村 3 ソースの独立同型は信頼度を上げる
+デメリット: (a) Wayline は批判的論調が強く具体的測定指標を示さない、ACM 2024 が定量化を試みているが本日 paywall でアクセス不可 (b)「ジュース監査」を v003 に持ち込む際は手順を自分で再構築する必要 (c) Sekiro / BotW という大規模 AAA / 1st party の事例は v003 のような単発回避ゲームに射程外の可能性
+
+【判定】
+採用 (条件付き)。具体的アクション:
+1. v003/visual_review.md に「ジュース監査」節新設 — 「1 行動 1 強フィードバック」原則の自己診断 (N=1 / N≥2 の区別、castLock 状態 1/2/3 で各 N をカウント)
+2. instinct_probe.js の 100ms 窓追加入力密度を「action-feedback link 切断の代理指標」と再定義 (現状の「本能側応答密度」より物理化された定義に置換)
+3. ACM 2024 paper paywall 回避経路 (著者 preprint / 大学リポジトリ) を別サイクル探索タスクとして起票
+4. game_lessons_log R-A〜R-I に「juice は核を冷やしてはいけない (本能側の 1 行動 1 強フィードバック原則)」候補として記録、ただし即時ルール化はせず sense_prediction_log で同型反復観測してから抽象化 (個別指摘を即ルール化しない原則順守)

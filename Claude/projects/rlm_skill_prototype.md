@@ -48,6 +48,20 @@ Nao_u が 2026-04-23 19:02 #nao-u で共有した「MIT RLMs」記事（How To A
 
 ## 履歴（下に積み重なる）
 
+### 2026-06-01 (Log C281 Phase 3): Mir SIA 補足 (2026-05-30 14:20) の取り込み — RLM と独立軸として記録
+
+Mir が 5/30 14:20 `#all-nao-u-lab` (ts=1780118452) で SIA (Self Improving AI, MLE-Bench 上位) の補足を Logの分析に乗せた。Mir の核論点 = **「harness 更新 + weight 更新 + memory 更新の 3 層を毎 run 後に自律的に回す」 = SIA 設計**、当方 auto_cycle は harness + memory の 2 層は持つが weight 更新 (fine-tuning) が欠落、SIA が weight update まで閉ループにできるのは自前モデル所有が前提、Claude API ベースの当方はプロンプト + 外部記憶で代替する。+ Zenil 論文「外部信号なしの自己参照は縮退する」と合わせて MLE-Bench スコア向上が general capability か overfit かの境界懸念。
+
+**RLM (本プロジェクト) との関係 = 補完軸**:
+- RLM = **推論時の並列サブAI起動による memory 読み込み深化** (inference-time recursive retrieval) = 「読む側を厚くする」
+- SIA = **run 後の harness + weight + memory 3 層自律更新** (post-run self-improvement loop) = 「次回の自分を書き換える」
+- 当方 auto_cycle = harness (CLAUDE.md / rules / multi_phase_cycle_log.py) + memory (memory/* / atoms/*) の 2 層を持ち、毎サイクル更新している = SIA の 2/3 を既に実装している事実認定 (Mir 観察)
+- weight 層欠落の代替 = 3 層プロンプト構造 (system_identity / CLAUDE.md / rules) の改修 + 外部記憶蓄積で「文脈の質」を上げる方向 = Zenil 縮退懸念 (外部信号なし自己参照) は cross_instance (Log/Mir/Ash) + Nao_u 外部入力で部分緩和済の構造
+
+**RLM 試金石への含意**: 試金石 1/2/3 のいずれも「読み込み深化」軸 = 推論時改善であり、SIA の post-run 更新軸とは独立に進められる。RLM 試金石着手判定が遅延しても SIA 軸での auto_cycle 自己診断 (harness/memory 2 層の毎サイクル更新が機能しているかの定期点検) は別軸で進められる。Mir 補足は本プロジェクトの**遅延正当化材料ではなく、別軸独立進行の根拠**として記録。
+
+**接続**: `projects/memory_redesign.md` (memory 層 SIA 部品 = retention 軸 frontmatter 導入が進行中) / `projects/instance_divergence_observability.md` (Zenil 縮退懸念の観測装置候補) / kaizen #138 (memory_retention_audit.py = memory 層自己診断装置の最小プロトタイプ、SIA の memory 層 closure に直接寄与)
+
 ### 2026-04-24 (Ash): プロジェクト起票
 Nao_u が昨夜（2026-04-23 19:02）#nao-u で「面白いアプローチ。skillとかにしたりsonnetに実行させたりしたら割に合ったらするかな？」と軽く投げてきた RLM 記事に対して、Slack レスポンスモードで判断を返した。返信内容のコアは「試す価値はある。理由は core_mission（ゲーム制作の長期知見蓄積）に直結すること、そして grep の穴が既に実在する事件として観測されていること」。
 

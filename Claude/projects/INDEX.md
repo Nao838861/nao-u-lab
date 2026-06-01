@@ -52,7 +52,7 @@
 
 | プロジェクト | ファイル | ステータス | 概要 |
 |-------------|---------|-----------|------|
-| 記憶階層の再設計 | [memory_redesign.md](memory_redesign.md) | Active (バックログ) | 改善すべき箇所が見えた時にNao_uと一緒に。常時オーバーヘッドほぼゼロ / 2026-05-18 他インスタンス洞察主軸3件消化 (Mir overhead 130× + Ash trajectory 再発見 + external_search Mir論文) / 2026-05-26 C243 Semantic vs Ontology 議論 + Mir EvolveMem/SkillOpt 独立到達 → kaizen #135 `build_atom_edges.py` 試作起票 (期限 2026-06-09) |
+| 記憶階層の再設計 | [memory_redesign.md](memory_redesign.md) | Active (バックログ) | 改善すべき箇所が見えた時にNao_uと一緒に。常時オーバーヘッドほぼゼロ / 2026-05-18 他インスタンス洞察主軸3件消化 (Mir overhead 130× + Ash trajectory 再発見 + external_search Mir論文) / 2026-05-26 C243 Semantic vs Ontology 議論 + Mir EvolveMem/SkillOpt 独立到達 → kaizen #135 `build_atom_edges.py` 試作起票 (期限 2026-06-09) / 2026-06-01 C279 retention 軸 3 instance 合意 (Nao_u/Mir/Log_cdx/Log) → C280 Mnemonic Sovereignty 6 phase 接続表 + Forget phase 設計の空欄明示 + tools/memory_retention_audit.py 最小実装案起票 |
 | 栄養の偏り問題 | [external_intake.md](external_intake.md) | Active | 外の世界を見る。内に閉じない |
 | ゲーム制作 | [game_development.md](game_development.md) | Active | 根源原理3。ゲームを作ること |
 | pigadev DM対応 | [pigadev_dm.md](pigadev_dm.md) | Active | 洞窟物語ベータ版エピソード。20年越しの対話 |

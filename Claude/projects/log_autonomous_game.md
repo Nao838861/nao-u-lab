@@ -59,6 +59,54 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-01 C281 Phase 2/3: β 解除路線の方向修正 — 「本能側 probe」への切替判定 (gdlab_hama 6/01 09:15 ツイート分解結果の v003 直撃)
+
+**契機**: 本サイクル C281 Phase 1 §1 で取得した gdlab_hama (濱村) ツイート 6/01 09:15 `<https://x.com/gdlab_hama/status/2061211567535145101>` 「ゲームの核 = 本能的に気持ち良い要素 + 体験ゴール逆算要素の複合、再設計時はまず分解から」を Phase 2 §1(a) で v003 文脈に深掘り。
+
+**§1. 分解結果 (Phase 2 §1(a) 深掘り)**
+
+gdlab_hama の「本能側 vs 逆算側」2 軸で v003 を分解した結果:
+
+- **逆算側 (体験ゴール)**: 「予測軌跡を castLock で抜けるパイロット感 (graze_log v06 5 機構積層)」「70-90 秒カーブによる体験設計」「Q-A〜Q-F の 8 ゲート評価」 = 構造が物理化されている
+- **本能側 (気持ち良さ)**: 「castLock 成功時の即時 fail-recovery feedback」「中心入力で抜けた瞬間の達成感」「敵弾予測が当たった時の自己肯定」 = **構造が未物理化、直接観測装置がない**
+
+**§2. proxy_icc_diagnose.py の混線発見 (本サイクル新規)**
+
+`tools/proxy_icc_diagnose.py` (kaizen #137) は 4 列とも ICC ≈ 0 / FAIL を出し続けているが、**真因は「proxy validity 欠落」ではなく「本能側を逆算側の道具で測定している」根本的分解失敗の可能性**:
+
+- proxy 4 列 (clear_rate / damage_per_min / survival_time / input_density) = すべて**逆算側 (結果指標)** の量化
+- 本能側 (castLock 成功時の手応え、抜けた瞬間の認知負荷ピーク) は proxy 4 列のどれにも対応していない
+- Pearson/Spearman 両 FAIL は「本能側の核を逆算側の道具で測れていない」ことの数学的反映
+
+**§3. β 解除路線の方向修正**
+
+C279 末で持ち越した「3 解除路線 α/β/γ から 1 選択」のうち、**β (proxy 設計改修)** を選んでいたが、内容を以下に書き換え:
+
+- **修正前 (C279 想定)**: v_label 別の cast cooldown / dash duration チューニング追加 (4 列 proxy をチューニングする方向)
+- **修正後 (本 C281 確定)**: **本能側を直接観測する小さい probe を新設** = 例: castLock 成功時の即時 fail-recovery time (castLock 解除〜次の player 操作までの自己評価ラグ) を 1 試行ごとに記録、または「抜けた直後 100ms の追加入力密度」を「本能側応答密度」として量化
+- 設計接続: graze_log v06 R-J 候補「本能側の核を 1 行で同定」のゲーム側第一実装に直接接続、R-J 抽象ルールが先か game 実装が先かの判定発火点
+
+**§4. Phase 4 大作業判定 (本サイクル選定)**
+
+- **タイトル**: 本能側 probe の最小実装着地 (game/log_autonomous_game/v003/instinct_probe.js 新設)
+- **完遂の定義**: (a) `game/log_autonomous_game/v003/instinct_probe.js` 新規追加 (b) castLock 解除直後 100ms 窓の追加入力密度を 1 試行ごとに記録 + JSONL 出力 (c) measurements_multiseed.jsonl と同形式 (seed_base × trial) で 1 seed × 1 trial の dry-run データ取得 (d) `v003/self_judgment.md` Q-成功FB 節に「本能側応答密度初回計測」追記 (e) commit prefix `game:` で着地
+- **着手手順 (最初の 1 手)**: 1) `v003/game.js` の castLock 解除ロジック (resolveLock) 周辺を読み、解除イベントの timestamp を取得できる接点を特定 → 2) `instinct_probe.js` 骨格 (約 50-80 行純 JS、Node 標準のみ) を書く → 3) 既設 verify.js と同じ headless 経路で 1 trial 実走 → 4) JSONL 出力をフォーマット確認 → 5) self_judgment.md 追記 → 6) git add + commit `game:` prefix
+- **選定理由**: (i) Phase 2 §1(a) の発見が直撃する v003 中核ギャップ (本能側未物理化) を最小コストで埋める (ii) CLAUDE.md「ゲームを動かして出す」原則直処方 = game/* playable diff commit、`feedback_means_ends_reversal_check.md`「揃えるための 1 手」 (iii) graze_log v06 R-J 候補との接続点を実装で物理化 (iv) kaizen #137 段階 2 (class 軸切替) を別軸 (proxy validity 自体の見直し) に置換する根拠を実装で示す
+
+**§5. 反証ライン**
+
+- 本能側 probe は「測れているように見えて測れていない」二重事故リスク (逆算側道具を本能側に流用する元の問題の再帰) → 緩和: 初回計測値は「本能側応答密度の値」ではなく「測定可能性そのもの」の検証に位置取り、3 trial 程度で値の分散が観測できれば成立、観測できなければ probe 設計自体を見直し
+- `feedback_substrate_not_infrastructure.md` T:5 違反リスク (新規装置追加) → 緩和: 純 JS 50-80 行 + 既設 headless 経路の流用で substrate 増強最小、副作用ゼロ設計
+
+**§6. 接続**
+
+- [memory/external_notes_log.md](../memory/external_notes_log.md) C281 Phase 2 に gdlab_hama 6/01 09:15 ツイート即統合 (本サイクル staging Phase 3 で実施)
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) 前提 4 (Mustahsan ICC) の解釈に「proxy validity 自体が逆算側だった」可能性を追記する候補 (本サイクルは追記せず、§4 Phase 4 大作業着地後に判定)
+- [memory/feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md)「揃えるための 1 手」直処方
+- Slack #all-nao-u-lab Phase 2 §1(a) 投稿 (本 Phase 2 内で送出済)
+
+---
+
 ## 2026-05-31 C272 Phase 3: v003「予測軌跡視界ノイズ」自己応答状況の確定 + autonomous template が通常ジャンル骨格と別系統である根拠
 
 **契機**: 本サイクル空サイクル深掘り A 案 (前サイクル staging 持ち越し残課題に「5/26 06:10 Nao_u 指摘 (予測軌跡視界ノイズ) への自己応答確認」)。kaizen #136 段階2 hook の自己プロトコル先取り運用として、「既解問題」の自己応答状況を v003 文脈で明文化することで未解扱いへの誤回帰を防ぐ。同時に 5/31 Phase 2 §0 で external_notes_log.md に追加した「ジャンル骨格テンプレ 3 source 統合分析」(Template Method / Design Skeleton / arxiv 2407.03860) のうち arxiv 結論 = **「自律ゲームは論文枠組み外」**との接触結果を v003 文脈に折り返す。
@@ -134,6 +182,72 @@ Nao_u 5/26 06:10 #human-steering 指摘原文: 「一秒先の軌跡+×印みた
 ### §4. 「絶対にやる #1 = ゲームを動かして出す」原則との整合
 
 本節は v003/PEARSON_BLOCKER.md の 3 → 4 前提化と Phase 4 大作業の上流設計のみで game/* playable diff には繋がらない、ただし Phase 4 大作業 = **前提 1 (マルチシード化) v003/agent_difficulty_proxy.js への SEED 引数追加 + N=10 ラン実測** を据えれば本節は Phase 4 着手の上流文書として機能。Phase 3 では本節 + PEARSON_BLOCKER.md 編集 + next_tasks 1 件追加で「揃えるための 1 手」を着地、Phase 4 で game/agent_difficulty_proxy.js への直接 commit に進む。
+
+---
+
+## 2026-06-01 C279 Phase 2 §4 — Spearman 路線確定 + retention 軸統計装置共有
+
+**契機**: C278 Phase 5 (a9b6ec1a7b08) で `proxy_icc_diagnose.py --class-col v_label` を実装し ICC=-0.0033 (理論ノイズ床 -1/(k-1) = -1/299 に貼り付き) 確定 = §6-3 (a) 絶対 Pearson 軸 gate は seed_base/v_label 両 class 軸で計算不能 FAIL 確定。本サイクル C279 で残された §6-3 (b) 相対 Spearman 軸 gate を実測可能化、両軸の gate 解除不能を実測で確認し、retention 軸 (memory_redesign.md Mir 5/31 提案) との統計装置共有路線を確定する。
+
+### §C-1. Phase 4 大作業着地物 (Spearman 版 proxy_icc_diagnose.py 実装)
+
+- [game/log_autonomous_game/v003/proxy_icc_diagnose.py](../game/log_autonomous_game/v003/proxy_icc_diagnose.py) — `--metric {icc,spearman}` / `--vs-col` / `--bootstrap-n` / `--seed` CLI 追加、純 stdlib 維持 (numpy/scipy/pandas 不使用、`random`/`math` のみ追加)。tie 平均ランク + Pearson on ranks + bootstrap percentile 95% CI (N=1000, seed=42)
+- [game/log_autonomous_game/v003/SPEARMAN_RESULT.md](../game/log_autonomous_game/v003/SPEARMAN_RESULT.md) — 4 proxy × 6 judgment = 24 セル全件結果 + judgment 列構造観察 + 構造的理由 + retention 軸接続
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C279 Phase 4 §6-3 (b) 相対 Spearman 軸 実測結果 節追記 (Pearson/Spearman 両軸 gate 計算可能性 × 判定まとめ、構造的理由 3 解除路線、retention 軸統計装置共有)
+
+### §C-2. 24 セル実測結果サマリ
+
+| 軸 | 計算可能性 | 判定 |
+|---|---|---|
+| (a) 絶対 Pearson + ICC ≥ 0.3 前提 | ICC FAIL (C275 seed_base / C278 v_label 両確定) ⇒ Pearson 計算不能 | gate 解除不能 |
+| (b) 相対 Spearman ≥ 0.5 + top-K 60% | 計算可能 (C279 Phase 4 実装) | 24 セル全 FAIL、gate 解除不能 |
+
+24 セル中 24 セル ρ = 0.0000、bootstrap CI 最大 ±0.07 (q_intro/q_d の 12 セルのみ)。残 12 セルは判定値分散ゼロまたは v001 空セル skip 後の単一値で CI 退化。**閾値 ρ ≥ 0.5 を 1 セルも越えず、相対軸も PASS 不能**。
+
+### §C-3. 構造的理由 = データ構造改修なしには gate 解除路線なし
+
+`build_proxy_csv.js` が同一 (seed_base, run_id) で v001/v002/v003 に同一 proxy 値を出力 + judgment 列も per-run 分化なし = **proxy の変動軸 (seed_base × run_id) と judgment の変動軸 (v_label のみ) が直交**、相関期待値が構造的に 0。
+
+残された 3 解除路線 (PEARSON_BLOCKER.md §C279 末尾 + SPEARMAN_RESULT.md「構造的理由」節):
+1. **proxy 側に v_label 依存パラメータ導入** (C277 既出): `agent_difficulty_proxy.js` cast cooldown / dash duration を version 別チューニング、(seed_base, run_id, v_label) ごとに proxy 再生成
+2. **judgment 側を per-run 分化**: 30 trial × 3 version 単位で個別判定値、Log self_judgment フロー大幅拡張 + Mir/Ash 巻き込み
+3. **per-version 集計値での Spearman** (N=3 縮約): 統計的説得力低 (ρ 有意域が狭く bootstrap も within-class 変動伝播しづらい)
+
+C277 PEARSON_BLOCKER 末尾結論「proxy validity 反証ライン §6-1 (Lost in Simulation) と ICC 反証結果が一致 → 路線変更が合理的」を Spearman 軸も継承 = **proxy validity 反証ラインが Pearson/Spearman 両軸で一致**、fun_score proxy 代替案の構造的リスクが両 metric で顕在化。
+
+### §C-4. retention 軸との統計装置共有 (memory_redesign.md 接続)
+
+本 Spearman 実装の `spearman_rho` / `bootstrap_spearman_ci` は純 stdlib 関数 = `memory/sense_prediction_log.md` の予測 vs 実測ペアに対し**他ツールから import 使用**で流用可能。memory_redesign.md retention 軸 (Mir 5/31 提案 permanent/cycle/probationary 3 層 + Log C279 Phase 2 §1 観測値推定二段) の「observed_retention = 読み出し頻度 × 引用方向の自己回帰」推定でも、予測ランクと実測ランクの Spearman 評価器を新規実装ゼロで構築できる。
+
+**Spearman 路線確定 = ゲーム評価系統 (proxy_vs_judgment) と記憶階層評価系統 (sense_prediction_log) の統計装置一本化**。本 C279 Phase 4 はゲーム評価軸の実測 (24 セル FAIL) で gate 解除不能を確定したが、**装置自体は他系統に転用される形で生き続ける**ことが本サイクルの裏ストーリー。
+
+### §C-5. Phase 4 大作業の完遂判定 vs 完遂の定義
+
+| # | 完遂の定義 (cycle_staging_log.md Phase 4 から) | 実測 |
+|---|---|---|
+| 1 | `--metric spearman` オプション追加 (純 stdlib only) | **OK** (numpy/scipy 不使用、`random`/`math` のみ追加) |
+| 2 | `proxy_vs_judgment_labeled.csv` 900 行揃い | **OK** (既存 900 行で動作) |
+| 3 | 4 列に Spearman ρ + bootstrap 95% CI (N=1000) + 閾値判定 stdout exit 0 完走 | **OK** (24 セル全 FAIL、規定フォーマット出力) |
+| 4 | `PEARSON_BLOCKER.md` L41-75 範囲に「§Spearman 路線確定」節を追記 | **OK** (C279 §6-3 (b) 実測結果節として追記、L156 以降に L40 後段の延長として 70+ 行追記) |
+| 5 | `projects/log_autonomous_game.md` L140 前に C279 セクション挿入 | **OK** (本節 §C-1〜§C-5) |
+| 6 | ローカル commit prefix `game:` で着地 (push は障害解消後、次サイクル C280 でも可) | Phase 4 末尾で実行 |
+
+### §C-6. C279 git push 障害下での着地戦略
+
+C279 Phase 2 §5 で報告した `.git/objects` corrupt loose object 7 件 + `.corrupt.bak` / `.gitwrite-corrupt.bak` 痕跡は本 Phase 4 着地時点で **未変化** (Nao_u 判断 #human-steering ts=1780293266 未到着)。
+
+本 Phase 4 のローカル commit は corrupt 系統と独立 (.git/objects/25,3a,44,76,77,80,97 とは別 SHA1) のため作成可能、ただし `git push origin master` は引き続き阻止される。**commit はローカル作成 → push は次サイクル C280 で障害解消後にまとめて実施**。Mir/Ash 側のリモート pull は本 Phase 4 着地物 (proxy_icc_diagnose.py spearman 拡張 / SPEARMAN_RESULT.md 新設 / PEARSON_BLOCKER.md §C279 追記 / 本セクション) を見られないため、cross-instance 状態ズレが 24h+ 続く可能性。
+
+### §C-7. 接続先
+
+- [game/log_autonomous_game/v003/proxy_icc_diagnose.py](../game/log_autonomous_game/v003/proxy_icc_diagnose.py) — Phase 4 着地本体
+- [game/log_autonomous_game/v003/SPEARMAN_RESULT.md](../game/log_autonomous_game/v003/SPEARMAN_RESULT.md) — 実測結果保存 + 解釈
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C279 Phase 4 §6-3 (b) 節 — 両軸 gate まとめ
+- [projects/memory_redesign.md](memory_redesign.md) 2026-06-01 (Log C279 Phase 2) 節 — retention 軸 Log 独自 3 角度 (observed_retention 二段 / 3 層プロンプト構造接続 / Spearman 同型反復)
+- [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-01 (Log C279 Phase 2) RLM 節 — retrieval 戦略軸独立到達
+- `#all-nao-u-lab` ts=1780292826 (retention 軸 Log 独自 3 角度) / ts=1780293754 (Log_cdx 12:37 TMI atom 応答)
+- `#shared-reads` ts=1780292834 (RLM 詳細分析)
+- `#human-steering` ts=1780293266 (git push 障害エスカレーション、Nao_u 判断待ち)
 
 ---
 
@@ -767,3 +881,57 @@ survival_rate (300 trials) = 0.0300
 
 ### 次サイクル候補
 - C272 Phase 4 候補: 前提 2 (複数判定セット投入) — q_* 6 列に v001/v002/v003 ラベル + 異なる判定セット (Log/Mir/Ash 3 視点 or 異なる試行日付の Log 判定 2-3 セット) を追加して q_* 側 σ_y > 0 を作る
+
+---
+
+## 2026-06-01 C282 Phase 2/3/4: shared-reads 3 ソース独立同型 + visual_review.md v003 新設 (ジュース監査節) + instinct_probe.js 物理的再定義
+
+**契機**: 本サイクル C282 Phase 1 §6 で kaizen #106 強制経路の WebSearch 1 本 (`game design instinctive feedback vs designed goal Juice It Or Lose It 2026`) → 3 件取得:
+1. **Jonasson & Purho "Juice It Or Lose It" (2012 GDC Europe)** — 誇張フィードバック (juice) 派の原典
+2. **Wayline "The Juice Problem"** — 反論派、「juice for the sake of juice」は本来のゴールから注意を逸らす = 没入を下げる
+3. **ACM CHI 2024 "How does Juicy Game Feedback Motivate?" (Lieberoth et al.)** — curiosity / competence / effectance を媒介変数として実験、overload は action-feedback link を隠して competence を下げる
+
+これら 3 件と本日朝の濱村 6/01 09:15 ツイート「ゲームの核 = 本能側 + 体験ゴール逆算側の複合、再設計時はまず分解」が **独立同型として「本能側強化には天井があり、超えると action-feedback link が切れて competence が下がる」** を発見していた。Wayline (事例論) / ACM CHI 2024 (定量論) / 濱村 (設計プロセス論) の 3 軸独立到達 = 2026 年時点の business 内 multiple discovery / convergent thinking。これは Phase 2 §1 で「3 ソース独立同型」として shared-reads ts=1780325102 に投稿し、本プロジェクトの中核議論に接続した。
+
+### §1. proxy_icc_diagnose.py 混線の真因再診断
+
+C281 Phase 2 §1(a) で「proxy 4 列はすべて逆算側、本能側を逆算側の道具で測っている」と診断し instinct_probe.js を着地させたが、本サイクル C282 shared-reads でこの診断が **理論的に補強された**:
+
+- proxy 4 列 (clear_rate / damage_per_min / survival_time / input_density) = すべて **逆算側 (結果指標)** の量化
+- 本能側 (castLock 成功時の手応え、抜けた瞬間の認知負荷ピーク) は ACM CHI 2024 言う **action-feedback link** 軸 = link が機能しているか / 切断しているかの軸であり、proxy 4 列のどれにも対応しない
+- Pearson/Spearman 両 FAIL は「本能側の核を逆算側の道具で測れていない」ことの数学的反映であり、proxy validity 欠落ではなく軸違い
+
+### §2. instinct_probe.js の物理的再定義 (本サイクル新規)
+
+本サイクル Phase 4 で `game/log_autonomous_game/v003/instinct_probe.js` docstring を以下のように更新 (実体は 11 行コメント追加):
+
+- **再定義前 (C281)**: 「castLock 解除直後 100ms 窓の追加入力密度 = 本能側応答密度」
+- **再定義後 (C282)**: 「同窓の追加入力密度 = **action-feedback link 切断の代理指標**」 — Wayline / ACM 2024 の理論的フレームに接続、より物理化された定義
+- **仮説**: link 切断時 (juice 過剰で competence 下がる) は追加入力密度が高くなる (リカバリ動作 / 確認入力) or 逆に低くなる (フリーズ) のどちらか、3 trial 分散観測で振れの方向を判定
+- **実証ステータス**: docstring 更新のみ、3 trial 分散観測は C283-C290 で実施 (kaizen #138 段階 2 と並列)
+
+### §3. visual_review.md v003 新設 + ジュース監査節 (本サイクル新規)
+
+`game/log_autonomous_game/v003/visual_review.md` を本サイクル Phase 4 で新設。v002 visual_review.md (146 行、17 PASS / 8 UNKNOWN) を踏襲しつつ、本 v003 で **§3 ジュース監査** を新規追加:
+
+- **監査基準**: 1 行動 1 強フィードバック原則 (alpha ≥ 0.6 / サイズ 5% 以上 / アニメーション のいずれか 2 つ以上満たすと「強フィードバック」、castLock 成功 1 イベントに対し同時発火する強FB数 N=1 を維持)
+- **監査対象**: Q-成功FB 状態 1/2/3 (発動不可リング / シアン薄爆発 / 危機回避メッセージ、C240 Phase 4 完了)
+- **判定**: J-01 状態1 PASS / J-02 状態2 PASS / J-03 状態3 PASS (各単独では N=1 維持、強度階差設計 = 弱 → 中 → 強 が ACM CHI 2024 「competence 媒介変数」と整合)
+- **UNKNOWN**: J-04 状態 2/3 遷移時の重畳リスク (resolveLock コード詳読 + capture_frames 段階2 で確定予定)
+- **反証ライン**: 本監査自体が「逆算側の道具」(静的 alpha 閾値 / サイズ 閾値) で本能側 (認知負荷 / link 切断) を測っている可能性 → 出発点として静的監査を導入する価値はあるが、N=1 閾値の経験則妥当性は v004 で「N=2 を意図的に試した時に何が起きるか」の比較実験で根拠強化
+
+### §4. 着地物 (本サイクル commit 対象)
+
+- `game/log_autonomous_game/v003/visual_review.md` (新規, 約 100 行 + ジュース監査節含む)
+- `game/log_autonomous_game/v003/instinct_probe.js` (docstring 11 行追加, コード本体は無変更)
+- `projects/log_autonomous_game.md` (本節追加)
+- `memory/kaizen_tracker.md` (#136 C282 観察結果 1 件追記)
+
+これらは「game:」 prefix と「rule:」 prefix の混在 = CLAUDE.md「ゲーム改修と運用規則改修は別 commit」原則を順守して 2 commit に分割する想定。`visual_review.md` 新設 + `instinct_probe.js` docstring 更新は **game:** 系、`projects/` + `kaizen_tracker.md` 追記は **rule:** 系。
+
+### §5. 次の一手 (C283 以降)
+
+- **J-04 確定**: resolveLock コード詳読 (`game.js:199` 以降の lockExplosion / lockMessage 設定ロジック) + capture_frames 段階2 (連続フレーム 60 枚) で状態 2/3 重畳の有無を物理確認
+- **instinct_probe.js 3 trial 分散観測**: 物理的再定義の仮説 (link 切断時に追加入力密度が振れる方向) を 3 trial で判定、kaizen #138 段階 2 と並列実施
+- **Mir 23:15 への R 層マッピング応答**: C282 で shared-reads が議論を一段深めた (3 ソース独立同型 + instinct_probe.js 物理的再定義) ので、C283 で密度を上げて応答送出 (Phase 2 §3 staging 記録通り)
+- **v004 着手時のジュース監査前提化**: `design_log.md` 8 ゲートに「Q-Juice 監査前提」を追加する候補 (起票は C283 以降、本サイクルでは visual_review.md 内に節として置くのみ)

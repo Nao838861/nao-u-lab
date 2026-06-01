@@ -4150,6 +4150,46 @@ Karpathy LLM Wiki + Iusztin + GAM + TagRAG + ByteRover + GAAMA に **ATOM = 7 �
 
 ---
 
+## 2026-06-01 (Log C280 Phase 2) Mnemonic Sovereignty 深掘り — 6 phase × 4 軸クロスで Forget phase 空欄を診断 [WebSearch 1件、#shared-reads ts=1780303781 + #all-nao-u-lab ts=1780303667 投稿済、即統合済 2026-06-01]
+
+**source (3 件、主軸 1 + 補助 2)**:
+- **主軸**: <https://arxiv.org/abs/2604.16548> A Survey on the Security of Long-Term Memory in LLM Agents: Toward Mnemonic Sovereignty (2026-04) — エージェント記憶を **Write / Store / Retrieve / Execute / Share / Forget+Rollback の 6 phase × 4 軸 (intent / actor / vector / impact)** でクロス集計、benign-persistence 失敗ゾーン (Store + Forget+Rollback 手薄) を業界共通課題として明示。Mnemonic Sovereignty = 「記憶がいつ・誰に・何の目的で残るか/消えるかをエージェント自身が宣言的に制御できる状態」と定義
+- **補助 1**: <https://arxiv.org/abs/2603.07670> Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers (2026-03) — write–manage–read loop として 3 phase 分類、本主軸 (6 phase) より粗いが知覚・行動と密結合の定式化が読める。"manage" 内に Store + Forget + Rollback が吸収され Forget が見えにくくなる構造を補助的に確認できる
+- **補助 2**: <https://labelstud.io/blog/episodic-vs-persistent-memory-in-llms/> Episodic vs Persistent Memory in LLMs (Label Studio) — 2 値分類で persistent/episodic を区別、Mir 08:42 3 層案 (persistent/session/raw) との用語整合チェックに有用。ただし「persistent → episodic 格下げ」遷移は扱わず
+
+**取得経路**: Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent memory lifecycle classification at write time persistent vs ephemeral 2026` / Active project = projects/memory_redesign.md × Nao_u 06-01 lifecycle tweet (記録時点で記憶 lifecycle 区別) のクロス、本日 16:17 (ts=1780292826) Log 既応答が Write/Read 側 3 観点で閉じていたため、Forget phase 軸の理論枠組みを補強する目的でキーワード設定。同時取得 3 件中 Mnemonic Sovereignty が最も射程一致。
+
+**新規発見 5 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **6 phase 切り分け = 自プロジェクトの空欄診断装置** | Mir 08:42 frontmatter retention キー / Log 16:17 observed_retention 二段 / Log retention 軸 (permanent/cycle/probationary) は全て Write phase 集中、Forget+Rollback 空欄が用語で言える |
+| 2 | **benign-persistence 失敗ゾーン定義** | Mir 08:42 指摘「半年前の判断ログが現在を歪める」現象を学術用語で言語化。攻撃面と分離して扱う構造的問題として記述、自分達は実例を持っていたが理論枠組みが無かった |
+| 3 | **Mnemonic Sovereignty 定義 = Nao_u 直感の独立到達確認** | Nao_u tweet「記録時点で lifecycle 区別」と射程一致、独立到達源として強い |
+| 4 | **Spearman 路線の retention 軸 2 方向適用** | 16:17 で probationary → permanent 昇格を Spearman 機械化したが、retrieval frequency 順位の経時的低下 + ref_count 順位の経時的低下で permanent → probationary 格下げ機械化も同統計装置で可能 |
+| 5 | **phase 直交分担案** | Write=Mir, Retrieve=Log (recall coherence), Execute/Share=Ash, Forget=Log の責任分界。同一 memory 議論で 3 instance がぶつかる現状の整理装置 |
+
+**memory_redesign R 層昇格判定材料 7 件目 (記憶ライフサイクル × Mnemonic Sovereignty 軸)**:
+Karpathy / Iusztin / Mem0 blog / TagRAG / ByteRover / GAAMA / ATOM dual-time に並ぶ「記憶ライフサイクル設計の業界既知化」軸。**source 軸の独立到達 = 8 件目相当**、R 層昇格判定 source 数軸を 10 件目候補に詰めた。即昇格判定はしない (機械反映禁止順守)、本入力は位置取り記録のみ。
+
+**Phase 1 §6 規約「強制利用しない」順守確認**:
+本入力は摂取経路固定化のみ目的 (kaizen #106 規約)、Phase 3 で memory_redesign.md「Mnemonic Sovereignty 接続表」セクション位置取り記録のみ反映、game/* playable diff には繋がらない。`tools/memory_retention_audit.py` 実装は kaizen 起票判定保留 (同型反復 1 回目、本 C280 が初記録)。
+
+**自己批判**:
+- WebSearch 1 件のみで実行 (時間予算 10% 順守)、主軸 Mnemonic Sovereignty 本文 PDF 未取得 (6 phase 各々の境界線・分類例・典型的弱点 / 4 軸クロス具体的論文マッピング表) は二次資料経由になる、次サイクル PDF 取得タスク化
+- benign-persistence 失敗ゾーン手薄の指摘は学術論文での偏在の話、production system (RAG database / vector store) では退役機構が実装済の可能性 = 業界実装 vs 学術研究の乖離を survey が抱える
+- 「Forget phase 空欄」と判定したのは Log 解釈、survey 著者の本文と整合するかは PDF 確認待ち
+- 6 phase 分担案は綺麗だが過剰設計リスク (Mir/Ash と分担再整理する際に責任を 6 phase 全部に振らない判断が必要)
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md に「Mnemonic Sovereignty 接続表」セクション追記 (本サイクル Phase 3 または C281 着地)、6 phase 用語と 4 軸クロスで自プロジェクト現状診断
+(ii) **Forget phase 装置着手準備** = `tools/memory_retention_audit.py` 案 (3 軸 stale 判定: cycle×mtime×ref_count / probationary×touched×反復ゼロ / permanent×retrieve×ref_count) を memory_redesign.md に明示記録、kaizen 起票は同型反復 2 回目以降
+(iii) **belief.md retention 軸再構造化** = 35 件全てに retention キー付加案、Forget phase 装置の入力データとして活用可能
+
+**関連ファイル**: projects/memory_redesign.md (本入力の主接続先、Mnemonic Sovereignty 接続表反映候補) / memory/beliefs.md (retention キー再構造化候補) / 本ファイル 2026-06-01 ATOM dual-time エントリ (記憶ライフサイクル業界用語化の並列起点、R 層 source 軸 7→8) / drafts/2026-06-01/post_log_shared_reads_mnemonic_sovereignty_20260601_POSTED_ts1780303781.py (Slack #shared-reads 投稿記録) / drafts/2026-06-01/post_log_all_nao_u_lab_lifecycle_forget_phase_20260601_POSTED_ts1780303667.py (Slack #all-nao-u-lab Forget phase 軸投稿記録)
+
+---
+
 ## 2026-05-31 (Log C273 Phase 2) GAAMA 深掘り — concept-mediated KG + atomic assertion 業界用語化 [WebSearch 1件、#shared-reads ts=1780238641 投稿済、即統合済 2026-05-31]
 
 **source**:

@@ -1,56 +1,66 @@
 #!/usr/bin/env python3
-# proxy_icc_diagnose.py — log_autonomous_game v003 Phase 4 (C275 初版 / C277 class 軸拡張)
+# proxy_icc_diagnose.py — log_autonomous_game v003 Phase 4
+#   C275 初版 (ICC seed_base class on jsonl)
+#   C277 拡張 (--class-col / --input、v_label class on csv)
+#   C279 拡張 (--metric spearman、bootstrap 95% CI、§6-3 (b) 相対軸 gate 実装)
 #
 # 役割:
 #   proxy 4 列 (proxy_clear_rate / proxy_damage_per_min / proxy_survival_time /
-#   proxy_input_density) の ICC(2,1) one-way random 値 + 95% CI + 判定を計算する。
+#   proxy_input_density) について、以下 2 metric を切替計算する:
+#     - icc      : ICC(2,1) one-way random + Fisher Z 95% CI (class 軸集約)
+#     - spearman : Spearman ρ (proxy ↔ q_*) + bootstrap percentile 95% CI
 #
 # 入力:
 #   - jsonl: measurements_multiseed.jsonl (10 seed_base × 30 trial = 300 行)
 #       row["seed_base"] / row["outcome"] / row["play_time_sec"] / row["cast_count"]
-#       から proxy 4 列を derive する (build_proxy_csv.js と同一定義)
+#       から proxy 4 列を derive (build_proxy_csv.js と同一定義)。
+#       jsonl は judgment 列を持たないため spearman mode は CSV 入力前提。
 #   - csv : proxy_vs_judgment_labeled.csv (10 seed × 3 v_label × 30 trial = 900 行)
-#       proxy 4 列は既存列としてそのまま読む
+#       proxy 4 列 + q_a/q_intro/q_success_fb/q_d/q_c/q_e (空セルあり)
 #
 # CLI:
 #   --input <path>          入力ファイル (.jsonl または .csv)
-#   --class-col <name>      class 軸列名 (jsonl デフォルト: seed_base / csv: seed_base or v_label)
+#   --class-col <name>      class 軸列名 (ICC mode: 必須 / spearman mode: メタデータ表示のみ)
+#   --metric {icc,spearman} 計算 metric (デフォルト: icc、後方互換)
+#   --vs-col <name>         spearman mode の judgment 列名 (デフォルト: q_a)
+#   --bootstrap-n <N>       spearman mode の bootstrap 反復回数 (デフォルト: 1000)
+#   --seed <N>              spearman mode の bootstrap 乱数 seed (デフォルト: 42)
 #
 # 由来:
-#   Mustahsan 2512.06710 — agent 評価で観測分散を「クエリ間 (タスク難度)」と
-#   「クエリ内 (agent 矛盾)」に分解し ICC で再現性チェック。GAIA ICC=0.304-0.774。
-#   経験則閾値 ≥0.3 を Pearson 計算の前段「観測分散がそもそも存在するか」の
-#   診断レイヤーとして PEARSON_BLOCKER.md 前提 4 に位置付け。
-#   C277 拡張: PEARSON_BLOCKER.md §6-3 (a) 絶対軸 gate 判定で v_label class 切替再計算
-#   を可能にし、seed_base class での ICC ≈ 0 FAIL を v_label class で再判定する。
+#   - ICC: Mustahsan 2512.06710 — GAIA ICC=0.304-0.774、経験則閾値 ≥0.3 を Pearson
+#     計算前段の「観測分散の存在診断」に使用。PEARSON_BLOCKER.md 前提 4。
+#   - Spearman: §6-3 (b) 相対軸 gate (C277 Phase 3 §A-2 / 2410.02829 LLMs as Testers)
+#     — 絶対 Pearson 軸 (a) が ICC FAIL で計算不能の時の fallback。閾値 ρ ≥ 0.5。
+#     C278 Phase 5 で (a) 絶対軸が seed_base/v_label 両 class で FAIL 確定、
+#     C279 Phase 4 で本実装により (b) を実測可能化。
 #
 # 公式:
-#   ICC(2,1) one-way random model:
+#   ICC(2,1) one-way random:
 #     ICC = (MS_between - MS_within) / (MS_between + (k-1) * MS_within)
-#     k = trials per class, N = class 数
-#   MS_between = (k * Σ_i (mean_i - grand_mean)^2) / (N - 1)
-#   MS_within  = (Σ_i Σ_j (x_ij - mean_i)^2) / (N * (k - 1))
-#   95% CI は Fisher Z 近似:
-#     z = 0.5 * ln((1+r)/(1-r)), SE(z) = 1/√(N-3), z ± 1.96·SE → 逆変換
-#   N ≤ 3 は CI 退化 (point=lo=hi)。
+#   Spearman ρ:
+#     rank(x) / rank(y) を tie 平均で計算 → Pearson(rank(x), rank(y))
+#   Bootstrap percentile 95% CI:
+#     N 回 (proxy, q) ペアを len 同じで with-replacement リサンプリング、
+#     各 ρ を計算 → [2.5%, 97.5%] percentile を CI とする。
 #
 # 制約:
 #   依存追加なし (純 stdlib のみ)。scipy / numpy / pandas は不要。
 #   副作用なし (入力 jsonl / csv は読み取りのみ、新規ファイル作成なし)。
 #
 # 出力フォーマット (stdout):
-#   [ICC] column=proxy_clear_rate icc=... ci_low=... ci_high=... judge=PASS|FAIL
-#   ... (4 行)
-#   exit 0
+#   icc mode      : [ICC] column=X icc=... ci_low=... ci_high=... judge=PASS|FAIL
+#   spearman mode : [Spearman] column=X vs=Y rho=... ci_low=... ci_high=... judge=PASS|FAIL
 
 import argparse
 import csv
 import json
 import math
+import random
 import sys
 from pathlib import Path
 
 ICC_THRESHOLD = 0.3  # Mustahsan 経験則 (GAIA 下限)
+SPEARMAN_THRESHOLD = 0.5  # PEARSON_BLOCKER §6-3 (b) 相対軸 gate 閾値
 
 PROXY_COLUMNS = [
     "proxy_clear_rate",
@@ -91,7 +101,6 @@ def icc_one_way_random(groups):
     sizes = [len(g) for g in groups]
     if any(s < 2 for s in sizes):
         return 0.0, 0.0, 0.0
-    # 不均衡 design 時は k = 平均 group size を採用 (one-way random で許容)
     k = sizes[0] if len(set(sizes)) == 1 else sum(sizes) / N
 
     flat = [v for g in groups for v in g]
@@ -111,7 +120,6 @@ def icc_one_way_random(groups):
 
     icc = (ms_between - ms_within) / denom
 
-    # ICC が ±1 に近すぎる / N<=3 の場合は CI を退化させて返す
     if N <= 3 or abs(icc) >= 0.9999:
         return icc, icc, icc
 
@@ -125,6 +133,73 @@ def icc_one_way_random(groups):
     ci_lo = (math.exp(2 * z_lo) - 1.0) / (math.exp(2 * z_lo) + 1.0)
     ci_hi = (math.exp(2 * z_hi) - 1.0) / (math.exp(2 * z_hi) + 1.0)
     return icc, ci_lo, ci_hi
+
+
+def average_ranks(values):
+    """tie を平均ランクで処理した順位列を返す (Spearman 用).
+    values: list[float] → ranks: list[float] (同じ長さ)。
+    """
+    n = len(values)
+    indexed = sorted(range(n), key=values.__getitem__)
+    ranks = [0.0] * n
+    i = 0
+    while i < n:
+        j = i
+        while j + 1 < n and values[indexed[j + 1]] == values[indexed[i]]:
+            j += 1
+        avg = (i + j) / 2.0 + 1.0  # 1-based 平均ランク
+        for m in range(i, j + 1):
+            ranks[indexed[m]] = avg
+        i = j + 1
+    return ranks
+
+
+def pearson(xs, ys):
+    """Pearson 相関係数. 分散ゼロ時は 0.0。"""
+    n = len(xs)
+    if n < 2:
+        return 0.0
+    mx = sum(xs) / n
+    my = sum(ys) / n
+    sxx = sum((x - mx) ** 2 for x in xs)
+    syy = sum((y - my) ** 2 for y in ys)
+    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    denom = math.sqrt(sxx * syy)
+    if denom == 0:
+        return 0.0
+    return sxy / denom
+
+
+def spearman_rho(xs, ys):
+    """Spearman ρ = Pearson(rank(xs), rank(ys)). tie 平均ランク."""
+    if len(xs) != len(ys):
+        raise ValueError(f"length mismatch: {len(xs)} vs {len(ys)}")
+    if len(xs) < 2:
+        return 0.0
+    return pearson(average_ranks(xs), average_ranks(ys))
+
+
+def bootstrap_spearman_ci(xs, ys, n_iter, rng):
+    """percentile bootstrap 95% CI for Spearman ρ.
+    各 iter で (xs[i], ys[i]) ペアを len(xs) 個 with-replacement リサンプリング → ρ.
+    返り値: (ci_low, ci_high) = (2.5% percentile, 97.5% percentile)。
+    """
+    n = len(xs)
+    if n < 2:
+        return 0.0, 0.0
+    rhos = []
+    for _ in range(n_iter):
+        idx = [rng.randrange(n) for _ in range(n)]
+        bx = [xs[i] for i in idx]
+        by = [ys[i] for i in idx]
+        # 分散ゼロ resample は pearson で 0 が返るので skip 不要
+        rhos.append(spearman_rho(bx, by))
+    rhos.sort()
+    lo_idx = int(0.025 * n_iter)
+    hi_idx = int(0.975 * n_iter)
+    if hi_idx >= n_iter:
+        hi_idx = n_iter - 1
+    return rhos[lo_idx], rhos[hi_idx]
 
 
 def load_by_class_jsonl(path, class_col):
@@ -167,9 +242,49 @@ def load_by_class_csv(path, class_col):
     return by_class
 
 
+def load_pairs_csv(path, vs_col):
+    """spearman mode 用: (proxy_X, vs_col) ペアを行単位で取得.
+    vs_col が空セルの行は skip。
+    返り値: dict[column_name -> (xs, ys)] 4 列分。
+    """
+    xs_by_col = {c: [] for c in PROXY_COLUMNS}
+    ys_by_col = {c: [] for c in PROXY_COLUMNS}
+    skipped = 0
+    with path.open(encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        if vs_col not in (reader.fieldnames or []):
+            sys.stderr.write(
+                f"[ERROR] vs-col '{vs_col}' not in csv header {reader.fieldnames}\n"
+            )
+            sys.exit(1)
+        missing = [c for c in PROXY_COLUMNS if c not in (reader.fieldnames or [])]
+        if missing:
+            sys.stderr.write(f"[ERROR] csv missing proxy columns: {missing}\n")
+            sys.exit(1)
+        for row in reader:
+            vs_raw = row[vs_col]
+            if vs_raw is None or vs_raw == "":
+                skipped += 1
+                continue
+            try:
+                vs_val = float(vs_raw)
+            except ValueError:
+                skipped += 1
+                continue
+            for col in PROXY_COLUMNS:
+                try:
+                    xs_by_col[col].append(float(row[col]))
+                    ys_by_col[col].append(vs_val)
+                except ValueError:
+                    pass
+    if skipped:
+        sys.stderr.write(f"[INFO] spearman: {skipped} 行を vs-col 欠損で skip\n")
+    return xs_by_col, ys_by_col
+
+
 def parse_args():
     p = argparse.ArgumentParser(
-        description="ICC(2,1) one-way random diagnose for proxy 4 columns"
+        description="ICC / Spearman diagnose for proxy 4 columns"
     )
     p.add_argument(
         "--input",
@@ -179,23 +294,39 @@ def parse_args():
     p.add_argument(
         "--class-col",
         default="seed_base",
-        help="class 軸列名 (デフォルト seed_base、csv では v_label も指定可)",
+        help="class 軸列名 (icc mode: 必須 / spearman mode: メタデータ表示のみ)",
+    )
+    p.add_argument(
+        "--metric",
+        choices=("icc", "spearman"),
+        default="icc",
+        help="計算 metric (デフォルト icc、後方互換)",
+    )
+    p.add_argument(
+        "--vs-col",
+        default="q_a",
+        help="spearman mode の judgment 列名 (デフォルト q_a)",
+    )
+    p.add_argument(
+        "--bootstrap-n",
+        type=int,
+        default=1000,
+        help="spearman mode の bootstrap 反復回数 (デフォルト 1000)",
+    )
+    p.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="spearman mode の bootstrap 乱数 seed (デフォルト 42)",
     )
     return p.parse_args()
 
 
-def main():
-    args = parse_args()
-    path = Path(args.input)
-    if not path.exists():
-        sys.stderr.write(f"[ERROR] input not found: {path}\n")
-        sys.exit(1)
-
-    suffix = path.suffix.lower()
+def run_icc(path, suffix, class_col):
     if suffix == ".jsonl":
-        by_class = load_by_class_jsonl(path, args.class_col)
+        by_class = load_by_class_jsonl(path, class_col)
     elif suffix == ".csv":
-        by_class = load_by_class_csv(path, args.class_col)
+        by_class = load_by_class_csv(path, class_col)
     else:
         sys.stderr.write(f"[ERROR] unsupported extension: {suffix}\n")
         sys.exit(1)
@@ -218,6 +349,44 @@ def main():
         print(
             f"[ICC] column={col} icc={icc:.4f} ci_low={ci_lo:.4f} ci_high={ci_hi:.4f} judge={judge}"
         )
+
+
+def run_spearman(path, suffix, vs_col, bootstrap_n, seed):
+    if suffix != ".csv":
+        sys.stderr.write(
+            "[ERROR] spearman mode は CSV 入力前提 (judgment 列が必要)\n"
+        )
+        sys.exit(1)
+    xs_by_col, ys_by_col = load_pairs_csv(path, vs_col)
+    rng = random.Random(seed)
+    for col in PROXY_COLUMNS:
+        xs = xs_by_col[col]
+        ys = ys_by_col[col]
+        if len(xs) < 2:
+            print(
+                f"[Spearman] column={col} vs={vs_col} rho=0.0000 ci_low=0.0000 ci_high=0.0000 judge=FAIL"
+            )
+            continue
+        rho = spearman_rho(xs, ys)
+        ci_lo, ci_hi = bootstrap_spearman_ci(xs, ys, bootstrap_n, rng)
+        judge = "PASS" if rho >= SPEARMAN_THRESHOLD else "FAIL"
+        print(
+            f"[Spearman] column={col} vs={vs_col} rho={rho:.4f} ci_low={ci_lo:.4f} ci_high={ci_hi:.4f} judge={judge}"
+        )
+
+
+def main():
+    args = parse_args()
+    path = Path(args.input)
+    if not path.exists():
+        sys.stderr.write(f"[ERROR] input not found: {path}\n")
+        sys.exit(1)
+
+    suffix = path.suffix.lower()
+    if args.metric == "icc":
+        run_icc(path, suffix, args.class_col)
+    elif args.metric == "spearman":
+        run_spearman(path, suffix, args.vs_col, args.bootstrap_n, args.seed)
 
 
 if __name__ == "__main__":
