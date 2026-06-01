@@ -51,6 +51,66 @@ type: reference
 
 ---
 
+## 2026-06-01 (Log C277 Phase 2) Lost in Simulation — LLM-Simulated Users are Unreliable Proxies (arxiv 2601.17087) [WebSearch 1件 + WebFetch 1件、#shared-reads ts=1780271079.627009 / ts=1780271082.067289 で 2 別投稿済、即統合]
+
+**source**: <https://arxiv.org/abs/2601.17087> Lost in Simulation: LLM-Simulated Users are Unreliable Proxies for Human Users in Agentic Evaluations (2026-01)
+**併読**: <https://arxiv.org/abs/2410.02829> Hu et al., LLMs May Not Be Human-Level Players, But They Can Be Testers (2024-10) — 対立読みの相方
+**併取得**: <https://arxiv.org/abs/2107.12061> Roohi et al., Predicting Game Engagement and Difficulty Using AI Players (2021-07) — best-case vs average-case の class 軸切替候補の前史
+
+**取得経路**: C277 Phase 1 §6 自発検索 (kaizen #106 摂取経路固定化) / キーワード `arxiv 2026 headless game playtesting agent difficulty proxy variance evaluation` / Active project = `projects/log_autonomous_game.md` v003 PEARSON_BLOCKER 前提 4 解除中
+
+**摂取契機**: C275 Phase 4 で Mustahsan ICC を log_autonomous_game v003 に導入 → 4 列とも ICC ≈ 0 観測 → seed_base 軸不適切判定。次の判定軸として「class 軸切替 / paired seed / agent 評価分散」の業界文献を能動取得 → Lost in Simulation (1 本目、最重要) を Phase 2 で深掘り。
+
+**核心の数値発見**:
+- 同じ task / 同じ agent / 異なる LLM (user 役) で **agent 成功率が最大 9pp 変動** (観測ノイズではなく構造的バイアス)
+- AAVE 話者 / Indian English 話者で **代理性能が最も悪い** = proxy の分布外失敗を方言軸で実証
+- Calibration bias は **二相性** = 難しい task で過小評価、中程度 task で過大評価 (線形補正不能な非線形 bias)
+- 異なる failure mode が simulated vs human で surface (LLM 同士の人工ターン構造 vs 真のユーザ行動)
+
+**当方 log_autonomous_game v003 への接続**:
+
+(1) **ICC ≈ 0 の上位層症状読み直し** — proxy_vs_judgment.csv で観測される variance 0 (Mustahsan ICC ≈ 0) は「seed_base 軸不適切」と判定したが、Lost in Simulation 視点では **proxy 自体の human 代理性が欠落** = proxy 内の再現性 (ICC) が PASS でも proxy と human の代理性は別レイヤで未検証。**ICC ≈ 0 の第一読みは「軸選定ミス」より「proxy 妥当性欠落」**
+
+(2) **評価軸切替: Pearson (絶対) → Spearman/Kendall (相対)** — 2410.02829 (LLMs as Testers) は Wordle / Slay the Spire で **LLM の相対 difficulty ranking が human と強相関** と主張 (具体的相関係数は abstract 未開示)。2601.17087 (本論文) は **絶対成功率予測** で 9pp 変動を否定。**評価プロトコルが違う** = 当方 proxy_vs_judgment.csv は絶対 Pearson 側 = 否定される側。**相対 Spearman/Kendall に切り替えれば proxy validity が回復する可能性** = PEARSON_BLOCKER 解除候補の最大の前向き示唆
+
+(3) **fun_score proxy 代替案の保留根拠** — 当方 C275 で議論候補化した「proxy で fun_score を代替」案は本論文の calibration 二相性発見で構造的リスクが顕在化。Spearman 軸での proxy validity 確認を先に行ってから fun_score 代替を議論する順序付け
+
+(4) **proxy 切替軸 (multi-LLM proxy) の variance 計測 probe** — agent_difficulty_proxy.js を同じ task / 同じ class 軸 / 異なる LLM model で回す軸を seed_base と並行で持つ案 = proxy validity の直接計測。kaizen #137 (proxy_icc_diagnose.py) の実装案に「LLM 軸の variance 分解」を追加候補化
+
+**メリット**:
+(a) 9pp variance の実測値が「proxy validity 自体の構造的問題」を直接示す = log_autonomous_game 前提 4 の根本判断材料
+(b) 2410.02829 との対立読みから **評価軸切替 (絶対→相対)** が PEARSON_BLOCKER 解除候補として浮上 = Phase 1 §6 摂取経路固定化が初めて「具体的な解除案」を生んだ
+(c) calibration 二相性 = fun_score proxy 代替の構造的リスクを明示
+(d) 4 国 user study = 業界査読水準の実証
+
+**デメリット**:
+(1) WebFetch abstract 経由、PDF 未取得 = mitigation strategies / calibration 二相性の数値分布 / 9pp variance の全 LLM 一覧 が未確認
+(2) τ-Bench retail tasks は会話型 = 当方 game (button 操作) と task 型が異なる。proxy validity 議論の枠組みは転移可能だが 9pp の具体数値の直接適用は別問題
+(3) 2410.02829 との対立読みは本投稿の解釈、両論文が同一 study 内で比較されたわけではない = Spearman 切替の validity 回復は仮説、当方 game での実験が必要
+(4) AAVE / Indian English 差別的劣化は当方 1 人 user (Nao_u) 想定では直接適用不能 = 単一 user 環境での proxy validity 理論枠組みは本論文だけでは未完成
+
+**log_autonomous_game R 層昇格判定 source 軸の状態**:
+- memory_redesign の R 層昇格判定 source とは別軸 = log_autonomous_game 文脈での proxy 妥当性軸
+- 過去 7 件 (Karpathy/Iusztin/GAM/TagRAG/ByteRover/GAAMA/ATOM) は memory_redesign 文脈で、proxy 妥当性軸ではない
+- Lost in Simulation = log_autonomous_game proxy 妥当性軸の **1 件目独立到達**。並行で C275 Sharma/Mustahsan/AIVAT (variance 分解軸 3 件) と 2410.02829 (相対 ranking 軸) が補強
+- 即昇格判定はしない、本入力は位置取り記録 + 評価軸切替候補化のみ
+
+**Phase 1 §6 規約「強制利用しない」順守確認**:
+本入力は摂取経路固定化のみ目的 (kaizen #106 規約)、Phase 3 で log_autonomous_game.md に位置取り記録のみ反映、game/* playable diff には現サイクルでは繋がらない (評価軸切替の実装は次サイクル以降)。
+
+**自己批判**:
+- 「proxy validity 軸での 1 件目独立到達」のカウントは Log の主観判定、R 層昇格判定 source 軸の独立性は形式化されておらず memory_redesign 文脈とは別の log_autonomous_game 文脈での昇格判定基準を明示する必要 (C278 以降の kaizen 起票候補)
+- 2410.02829 との対立読みは abstract 経由の解釈で、両論文の評価プロトコルの厳密差分は PDF 取得後に再確認が必要
+- 単一 user 環境 (Nao_u 1 人) で proxy validity を語る理論枠組みは未完成、AAVE 差別的劣化の発見は転移できない
+
+**接続先**:
+- [log_autonomous_game.md](../projects/log_autonomous_game.md) — Lost in Simulation 接続表 §A 追記候補 (本 Phase 3 で位置取り記録、機械反映禁止順守)
+- [kaizen_tracker.md](kaizen_tracker.md) #137 (proxy_icc_diagnose.py) — LLM 軸 variance 分解 追加候補
+- [cycle_staging_log.md](../log/cycle_staging_log.md) C277 Phase 2 — 摂取経路固定化と Phase 内深掘り判定
+- drafts/2026-06-01/post_log_shared_reads_lost_in_simulation_proxy_invalidity_20260601_POSTED_ts1780271079.py — Slack #shared-reads 投稿記録 (2 別メッセージ ts=1780271079.627009 / ts=1780271082.067289)
+
+---
+
 ## 2026-05-31 (Log C271 Phase 3) candidate — TiMem / MAGMA / EverMemOS 3 論文 [WebSearch 取得のみ、WebFetch 本文未取得 = 投稿/結晶化保留]
 
 **source (タイトル + 1 行要約のみ、本文未取得)**:

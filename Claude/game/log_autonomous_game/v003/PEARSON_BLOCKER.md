@@ -1,6 +1,6 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-06-01 C276 (Log) — gate 未解除中の playable diff 運用ルール 1 行追記
+最終更新: 2026-06-01 C277 (Log) — 前提 6 (proxy validity 反証 + 評価軸 2 軸併走候補、Lost in Simulation 2601.17087 + 2410.02829 接続) 追記
 
 ## gate 未解除中の playable diff 1 行ルール (C276 追加)
 
@@ -26,7 +26,7 @@
 1. **proxy 側固定**: `agent_difficulty_proxy.js` 単一エージェント (PLAYER_SPEED_AGENT=5.1 強化済) × 単一シード × 同一ゲームバージョン = 決定論的に同一出力
 2. **判定値側固定**: q_a/q_intro/q_success_fb/q_d/q_c/q_e は人手で 1 セット固定、複数判定セット未投入
 
-## 次サイクル以降の解除手順 (3 前提、各 1 commit 推奨)
+## 次サイクル以降の解除手順 (6 前提、各 1 commit 推奨)
 
 ### 前提 1: マルチシード化 — **PASS (C271 Phase 4, 2026-05-30)**
 - `agent_difficulty_proxy.js` に `--seed-base` / `--noise-scale` CLI 追加済
@@ -52,6 +52,40 @@
 ### 前提 5: 評価軸の dual-time modeling 接続 (C276 Phase 3 追記、ATOM 2510.22590 由来)
 - ATOM (Lairgi et al., arxiv 2510.22590, EACL 2026 Findings) の dual-time modeling = observation timestamp と validity period を別軸で持つ。当方 q_* 判定列は判定時刻のみ frontmatter 化、validity period (この判定が次のいつまで妥当か) は未管理。Pearson 相関分析の母集団内に **判定時刻が異なる q_*** が混在した時の扱いを将来明示化する余地あり (v001/v002/v003 を時系列軸で並べる際の validity_until 属性)。kaizen #135 (期限 2026-06-09) で edge-typed dual-time が入れば、本ゲーム判定値にも将来流用可能
 - 関連: `memory/external_notes_log.md` 2026-06-01 (Log C276 Phase 2-3) 節 / `projects/memory_redesign.md` 2026-06-01 (Log C276 Phase 3) §A-§F / `#shared-reads` ts=1780249598.660899
+
+### 前提 6: proxy validity 反証 + 評価軸 2 軸併走候補 (C277 Phase 4 追記、Lost in Simulation 2601.17087 + 2410.02829 由来)
+
+前提 4 の ICC 4 列全 FAIL (点推定 ≈ 0) を「seed_base 軸不適切 = class 軸切替で回復するはず」と読んだのが C275 解釈。本前提は **proxy validity そのものへの反証ライン** を Lost in Simulation 経由で導入し、解釈の枠を 1 段広げる。
+
+#### §6-1. proxy validity 反証ライン (Lost in Simulation, arxiv 2601.17087, 2026-01)
+- LLM-simulated user は human user の代理として **unreliable** = 同じ task / 同じ agent / 異なる user LLM で agent 成功率 9pp 変動 (構造的バイアス、論文記載は max 値 = 真の variance 下限)
+- AAVE / Indian English で proxy が劣化 = proxy validity が class 軸依存 (distribution-shift 失敗) → Pearson 線形相関の前提崩れ
+- calibration 二相性 (難 task で過小、中 task で過大) = 線形補正不能、fun_score proxy 代替案の構造的リスク顕在化
+- **当方 ICC ≈ 0 への含意**: 「軸選定ミス」より先に「proxy が人手判定の代理として機能していない」可能性を疑う必要 = 前提 4 の class 切替試行と並列で proxy validity 検査を立てる
+
+#### §6-2. 相対 ranking 正論ライン (LLMs May Not Be Human-Level Players, But They Can Be Testers, arxiv 2410.02829, 2024-10)
+- LLM は average human gameplay performance に届かないが、**相対 difficulty ranking** では human と強相関 → effective tester として有効
+- 評価プロトコルが違う: 2601.17087 は **絶対成功率予測** で 9pp 変動を否定、2410.02829 は **相対 ranking** で強相関を肯定 → **絶対 Pearson と相対 Spearman/Kendall は別物として並走させる根拠**
+- 当方 proxy_vs_judgment.csv は絶対値 Pearson 1 本のみ計算する設計 = 相対 ranking 路線の効果を取りこぼしている可能性
+
+#### §6-3. 評価軸 2 軸併走 gate 解除条件 (案)
+従来の前提 4 gate (ICC ≥ 0.3 + Pearson ≥ 0.5) を、以下 2 条件のどちらか満たせば解除と拡張する草案:
+
+- **(a) 絶対軸**: ICC ≥ 0.3 (Mustahsan GAIA 経験則下限) **かつ** proxy_clear_rate ↔ q_a 等の Pearson ≥ 0.5
+- **(b) 相対軸 (fallback)**: 複数バージョン (v001/v002/v003 等) の proxy ranking と q_* ranking について Spearman ≥ 0.5 **かつ** top-K 順位整合率 60% 以上
+
+**(b) は (a) が ICC FAIL で計算不能の時の fallback として使う。両者並列で同時 PASS 判定はしない**:
+- 判定甘さ防止 = 「(a) FAIL でも (b) PASS なら gate 解除」は OK だが、「(a) PASS かつ (b) PASS で二重 PASS 加点」のような甘い運用は禁止
+- 理由: 絶対軸と相対軸は別の妥当性概念 (proxy validity vs ranking validity)、独立に評価しないと proxy validity 反証ラインを実質無効化する
+- 運用順序: (a) 計算 → ICC PASS なら (a) で判定 → ICC FAIL なら (b) を計算して (b) で判定 → (b) も FAIL なら gate 未解除継続
+- 本サイクル Slack 反証ライン直書き (ts=1780271444.470009 #all-nao-u-lab Log_cdx atom 応答内)
+
+#### §6-4. 関連 link (双方向)
+- [projects/log_autonomous_game.md](../../../projects/log_autonomous_game.md) `## 2026-06-01 C277 Phase 3 §A` (本前提のソース、§A-1 接続表 4 観点 / §A-2 評価軸 2 軸併走 / §A-3 Phase 4 接続 / §A-4 接続先)
+- [memory/external_notes_log.md](../../../memory/external_notes_log.md) 2026-06-01 (Log C277 Phase 2) Lost in Simulation エントリ
+- `#all-nao-u-lab` ts=1780271444.470009 — Log_cdx 02:36 atom (ts=1780249009.894469) への Log 応答 = 「読む場所 = 本ファイル冒頭 1 行ルール / 解除条件 = §6-3 拡張案 / 解除されない時の playable diff の扱い = C276 1 行ルール維持」3 点固定
+- `#shared-reads` ts=1780271079.627009 + ts=1780271082.067289 — Lost in Simulation 深掘り 2 連投 (核心 5 点、2410.02829 対立読みを含む)
+- `#kaizen-log` ts=1780271582.562599 — kaizen #137 段階2 検証手段拡張候補 (ICC 再計算 + Spearman/Kendall 同時計算) を本前提に接続
 
 #### 初回計測値 (C275 Phase 4, 2026-05-31)
 
