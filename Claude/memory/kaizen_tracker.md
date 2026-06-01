@@ -39,7 +39,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: (a) **最likely失敗 = retention キー導入ゼロのまま装置だけ残留** (装置が空回りし続けて「retention: cycle 0 件」と毎回出すうちに無視される)→ 緩和: 初回実行のベースライン記録 (with_retention=0) を本起票に明示、段階2 として Mir 提案の retention キー導入を 2 週間枠の検証期限内に最低 1 件は試行する明示宣言、未試行なら段階2 着手判定保留判定発火 (b) **次点 = cycles_per_day=2.0 近似が現実とずれて誤判定**（実サイクル頻度が day=1 や day=4 にぶれて推定経過サイクル数が 2-4 倍ズレ）→ 緩和: 出力に「(approximate)」明示、将来 cycle counter 厳密化 (git log `C\d+` 集計) の余地を docstring に明示残置、本プロトタイプは近似値で十分な「相対順位」判定が主目的 (c) **次々点 = 退役候補リスト出力が Nao_u 判定なしに自動削除される運用に滑る** (副作用ゼロ設計を逸脱する)→ 緩和: ツール docstring 冒頭で「退役そのものは人手判断、本ツールは提示のみで副作用ゼロ」を明示、自動削除ロジックは段階3 family 統合時にも実装しない原則を本起票で固定 (d) **kaizen 増殖 #131-#137 family 第8弾になる**（hook 系列が 8 軸並列化）→ 緩和: 本案は hook 系列ではなく「Forget phase 診断レイヤー 1 本」軸、family 統合候補は段階3 で multi_phase_cycle_log.py Pre-check 化時に判定 (e) **判定発火点の明文化欠如**（段階2「retention キー導入」の発火条件が曖昧）→ 緩和: 検証期限 2026-06-15 までに `memory/` 配下の任意 1 ファイルに frontmatter `retention:` キー (permanent/cycle/probationary) を試験導入し、本ツールでの検出を実機確認、未試行なら段階2 着手判定保留
 - M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 hook 系列ではなく **Forget phase 診断レイヤー 1 本追加**。3 原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=ツールが stdout に「stale なし」or 候補リストを残す方向で整合 / 「自分から始める」=Mir 提案を待たずに装置側を Log が先行実装する方向で整合 / 「体験で考える」=部分整合 (退役判定は経験則閾値依存)。`feedback_few_rules_big_effect.md` 吸収: ルール追加ゼロ (診断スクリプトであって運用ルールではない)、frontmatter スキーマ拡張なし (既存 retention キー検出のみ)、staging Phase 1/2/3 への構造追加なし
 - クロスチェック: Log=OK(2026-06-01 起票者、実装 + dry-run 完走 + ベースライン記録 + 副作用ゼロ確認 + memory_redesign.md §C 着地コメント追記の 4 点で段階1 PASS 確定 / 2026-06-02 C283 Phase 3 で段階2 1mm 試行 = `memory/feedback_means_ends_reversal_check.md` に `retention: permanent` 追加 → with_retention=0→1 検出確認、装置が実 memory と接続することを実機確認) / Mir=未 / Ash=未
-- 状態: 段階1 PASS（実装着地 + dry-run 完走 + ベースライン記録 + 副作用ゼロ確認 + memory_redesign.md §C 「2026-06-01 C280 Phase 4 実装着地」追記の 5 点完遂）。**段階2 ファースト試行 PASS** (2026-06-02 C283 Phase 3、`retention: permanent` 1件試験導入 + 装置検出確認、退役候補は 0 件のまま副作用ゼロ)。段階2 残タスク = `retention: cycle` 試験 (退役候補検出の動作確認) + `supersedes` キー併設試験 (Graphiti supersedes 設計の取り込み、C281 §B 起票) を検証期限 2026-06-15 までに発火
+- 状態: 段階1 PASS（実装着地 + dry-run 完走 + ベースライン記録 + 副作用ゼロ確認 + memory_redesign.md §C 「2026-06-01 C280 Phase 4 実装着地」追記の 5 点完遂）。**段階2 ファースト試行 PASS** (2026-06-02 C283 Phase 3、`retention: permanent` 1件試験導入 + 装置検出確認、退役候補は 0 件のまま副作用ゼロ)。**段階2 セカンド試行 PASS** (2026-06-02 C284 Phase 3、`retention: cycle` 1 件導入 (`log/cycle_staging.md` 旧共通ステージング遺物) + 装置検出確認 + 退役候補検出ロジック実機 PASS = with_retention=1→2、cycle=1、退役候補=1件 (cycles≈34.6 ≥ 5.0))。段階2 残タスク = `supersedes` キー併設試験 (Graphiti supersedes 設計の取り込み、C281 §B 起票) を検証期限 2026-06-15 までに発火
 - 検証結果:
   - **段階1 PASS (2026-06-01 C280 Phase 4 着地)**: `tools/memory_retention_audit.py` 約 130 行純 stdlib 実装完了。`python tools/memory_retention_audit.py` 実行で:
     ```
@@ -65,6 +65,18 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
       stale なし
     ```
     `with_retention=0 → 1 (permanent=1)` 検出、退役候補は 0 件のまま (permanent は退役対象外なので正しい挙動)、副作用ゼロ。装置と実 memory の最小接続が成立。選定理由 = CLAUDE.md「絶対にやる」§5 で参照される T:5 抽象原則 = permanent 性が明確、誤って `cycle` 指定して退役候補化される事故リスクなし。次の 1mm 候補 (検証期限 2026-06-15 まで残 13 日) = (1) `retention: cycle` を真に時限的なファイルに 1 件試験 → 退役候補検出の動作確認 (2) `supersedes` キー併設 (C281 §B 起票) で旧版 archive vs 削除分岐の試験。memory_redesign.md §2026-06-02 (Log C283 Phase 3) §A に記録
+  - **段階2 セカンド試行 PASS (2026-06-02 C284 Phase 3)**: `log/cycle_staging.md` (2026-05-15 で停止した旧共通ステージング、cycle_staging_log/mir.md per-instance 分岐前の遺物) frontmatter に `retention: cycle` を導入。`python tools/memory_retention_audit.py` 再実行で:
+    ```
+    [memory_retention_audit] roots=['memory', 'projects', 'log'] scanned_md=383 with_retention=2 (permanent=1 cycle=1 probationary=0)
+    [memory_retention_audit] threshold: max_cycles=5.0 cycles_per_day≈2.0 (approximate)
+
+    ## retention: cycle 全件 (1 件)
+      log\cycle_staging.md (retention=cycle days=17.3 cycles≈34.6)
+
+    ## 退役候補 (経過サイクル数 ≥ 5.0, 1 件)
+      log\cycle_staging.md (retention=cycle days=17.3 cycles≈34.6)
+    ```
+    `with_retention=1 → 2 (permanent=1 cycle=1)` 検出、**退役候補ロジック実機 PASS** (cycle 1 件が cycles≈34.6 ≥ 5.0 を満たし候補リストへ正しく出力)、副作用ゼロ。**重要発見 = 編集行為が mtime をリセットする問題**: 初回 `retention: cycle` 追加 edit 直後の audit では days=0.0 で 退役候補ゼロだった (編集行為が mtime をリセットする副作用、想定範囲内)。`os.utime` で mtime を 2026-05-15 21:11 に戻して再 audit、退役候補 1 件検出を確認。実運用ではファイル編集ごとに mtime リセットされるため「真に編集されていない期間」の測定指標となる = 設計上の妥当性確認。段階2 残 = `supersedes` キー試験 (検証期限 2026-06-15 まで残 13 日)
 
 ---
 

@@ -21,6 +21,43 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-02 (Log C284 Phase 3) — kaizen #138 段階2 セカンド試行 PASS / retention: cycle + 退役候補ロジック実機検証
+
+**§A. retention: cycle 試験導入 + 退役候補検出ロジック実機 PASS (kaizen #138 段階2 セカンド試行)**
+
+`log/cycle_staging.md` (2026-05-15 で停止した旧共通ステージング = cycle_staging_log/mir.md per-instance 分岐前の遺物) frontmatter に `retention: cycle` を 1 行導入。`python tools/memory_retention_audit.py` 出力:
+
+```
+[memory_retention_audit] roots=['memory', 'projects', 'log'] scanned_md=383 with_retention=2 (permanent=1 cycle=1 probationary=0)
+[memory_retention_audit] threshold: max_cycles=5.0 cycles_per_day≈2.0 (approximate)
+
+## retention: cycle 全件 (1 件)
+  log\cycle_staging.md (retention=cycle days=17.3 cycles≈34.6)
+
+## 退役候補 (経過サイクル数 ≥ 5.0, 1 件)
+  log\cycle_staging.md (retention=cycle days=17.3 cycles≈34.6)
+```
+
+- `with_retention=1 → 2 (permanent=1 cycle=1)` 検出
+- **退役候補ロジック実機 PASS**: cycles≈34.6 ≥ 5.0 を満たし候補リストへ正しく出力
+- 副作用ゼロ
+- Forget phase 装置として「Write (frontmatter) → mtime 計測 → cycle 経過判定 → 候補リスト出力」が初めて閉ループで動いた
+
+**§B. 重要発見 = 編集行為が mtime をリセットする副作用**
+
+初回 `retention: cycle` 追加 edit 直後の audit では `days=0.0 cycles≈0.0` で退役候補ゼロだった (編集が mtime を更新する OS 仕様)。`os.utime` で mtime を 2026-05-15 21:11 に戻して再 audit、退役候補 1 件検出を確認。実運用上、この mtime リセット挙動は **「真に編集されていない期間」の測定指標として正しい** (休眠ファイルだけが退役候補に上がる、頻繁に手入れされているファイルは候補化されない)。設計の妥当性確認。
+
+ただし副作用として、retention 軸を後付けで追加するときの「mtime リセット問題」を意識する必要がある = 古いファイルを「これは retention:cycle」と marking した瞬間に「古さ」がリセットされる現象。これは仕様だが運用上の注意点として記録。緩和策: frontmatter 編集と本体編集を分け、frontmatter 追加 commit を別途追跡する余地がある (今サイクルは深掘りせず保留)。
+
+**§C. 段階2 残タスク (検証期限 2026-06-15 まで残 13 日)**
+
+- (i) `supersedes` キー併設試験 (C281 §B Graphiti supersedes 設計の取り込み、旧版 archive vs 削除分岐) — 現状 audit は supersedes 未対応、機能追加 or 別ツール起票判定が必要
+- (ii) 段階3 family 統合 (multi_phase_cycle_log.py Pre-check 化) は段階2 全完了後に判定
+
+**§D. log_autonomous_game v003 instinct_probe との並行関係**
+
+本サイクル Phase 4 大作業 = `instinct_probe.js` bot 戦略 × seed grid n=10 拡張 + ICC 軸独立性検証 (CLAUDE.md「ゲームを動かして出す」第一義への直接接続)。retention 軸試験 (段階2 セカンド) は「記憶階層を自分で設計する」軸の前進、両者は **CLAUDE.md「絶対にやる」5項目中 2 項目** を本サイクルで同時に 1mm 進めた状態。
+
 ### 2026-06-02 (Log C283 Phase 3) — kaizen #138 段階2 1mm 試験導入着地 / Log_cdx phase 分担提案の取り込み
 
 **§A. retention キー試験導入 1mm 着地 (kaizen #138 段階2)**

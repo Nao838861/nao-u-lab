@@ -1,3 +1,7 @@
+---
+retention: cycle
+note: 2026-05-15 で停止した旧共通ステージング (cycle_staging_log/mir.md per-instance 分岐前の遺物)。kaizen #138 段階2 retention:cycle 試験対象 (C284 2026-06-02)
+---
 # サイクルステージング (2026-05-15 21:11)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
