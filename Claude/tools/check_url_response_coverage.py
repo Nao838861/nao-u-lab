@@ -147,11 +147,92 @@ def check_url_response_coverage(tweet_id: str) -> list[str]:
     return warns
 
 
+# kaizen #139 段階1: Phase 1 §1「未応答 URL 判定」が §7 hook 出力を参照しない
+# 構造的死角の処方。WARN 詳細行 (kaizen #136) を tweet_id 別に集計し、
+# `[既応答 SUMMARY]` 行として §7 ブロック先頭に強制注入する。Phase 1 §1 を
+# 編集する側 (Claude) は必ずサマリ行を視界に入れることになる。
+SUMMARY_PREFIX = "[既応答 SUMMARY]"
+_WARN_LINE_RE = re.compile(
+    r"^\[既応答 WARN\] tweet_id=(?P<tid>\d{15,20}) src=(?P<src>\S+)"
+)
+# Slack archive のチャンネル名は jsonl ファイル名 (拡張子除く) と一致する設計
+_JSONL_NAME_RE = re.compile(r"/(?P<name>[A-Za-z0-9_-]+)\.jsonl$")
+
+
+def _classify_path_root(src: str) -> str:
+    """src パスからどの経路 (log_archive / gpt_archive / external) かを分類"""
+    if "log/slack_archive/" in src or src.startswith("log/slack_archive/"):
+        return "log_archive"
+    if "GPT/memory/raw/slack_api/" in src or "GPT\\memory\\raw\\slack_api\\" in src:
+        return "gpt_archive"
+    if "external_notes_log.md" in src:
+        return "external"
+    return "other"
+
+
+def _extract_channel_from_src(src: str) -> str | None:
+    """src パスから Slack チャンネル名を抽出 (jsonl ファイル名)"""
+    m = _JSONL_NAME_RE.search(src.replace("\\", "/"))
+    return m.group("name") if m else None
+
+
+def build_warn_summary(warns: list[str]) -> list[dict]:
+    """WARN 詳細行から tweet_id 別集計を作る。
+
+    戻り値: tweet_id 順 (登場順) の dict 配列、各要素は:
+        {"tweet_id": str, "hits": int, "channels": [str,...], "paths": [str,...]}
+    """
+    order: list[str] = []
+    agg: dict[str, dict] = {}
+    for w in warns:
+        m = _WARN_LINE_RE.match(w)
+        if not m:
+            continue
+        tid = m.group("tid")
+        src = m.group("src")
+        if tid not in agg:
+            order.append(tid)
+            agg[tid] = {"hits": 0, "channels": set(), "paths": set()}
+        agg[tid]["hits"] += 1
+        ch = _extract_channel_from_src(src)
+        if ch:
+            agg[tid]["channels"].add(ch)
+        agg[tid]["paths"].add(_classify_path_root(src))
+    result = []
+    for tid in order:
+        a = agg[tid]
+        result.append({
+            "tweet_id": tid,
+            "hits": a["hits"],
+            "channels": sorted(a["channels"]),
+            "paths": sorted(a["paths"]),
+        })
+    return result
+
+
+def format_summary_lines(summary: list[dict]) -> list[str]:
+    """集計結果を `[既応答 SUMMARY] ...` 行のリストに整形"""
+    out: list[str] = []
+    for s in summary:
+        ch = ",".join(s["channels"]) if s["channels"] else "-"
+        pa = ",".join(s["paths"]) if s["paths"] else "-"
+        out.append(
+            f"{SUMMARY_PREFIX} tweet_id={s['tweet_id']} "
+            f"hits={s['hits']} channels={ch} paths={pa}"
+        )
+    return out
+
+
 def append_warns_to_staging_phase1(staging_path: Path, warns: list[str]) -> int:
     """staging の Phase 1 セクション末尾 (次の `## ` 直前) に WARN を追記。
 
-    既に同じ tweet_id の WARN が存在する場合はスキップ (重複防止 / 多重起動安全)。
-    戻り値: 実際に追記した行数。
+    kaizen #139 段階1 対応: 詳細 WARN 行に加えて、tweet_id 別集計サマリ
+    (`[既応答 SUMMARY]`) を §7 ブロック先頭 (ヘッダ直下) に強制注入する。
+    Phase 1 §1「未応答 URL 判定」を Claude が書く時点で必ず視界に入る位置に
+    置くことで、§7 hook 出力を §1 ロジックが無視する構造的死角を防ぐ。
+
+    既に同じ tweet_id の WARN/SUMMARY が存在する場合はスキップ
+    (重複防止 / 多重起動安全)。戻り値: 実際に追記した行数 (WARN+SUMMARY 合計)。
     """
     if not warns:
         return 0
@@ -175,19 +256,32 @@ def append_warns_to_staging_phase1(staging_path: Path, warns: list[str]) -> int:
 
     phase1_block = "\n".join(lines[phase1_start:phase1_end])
     new_warns = [w for w in warns if w not in phase1_block]
-    if not new_warns:
+
+    # kaizen #139 段階1: tweet_id 別集計サマリを生成し、既存サマリと差分のみ採用
+    summary = build_warn_summary(warns)
+    summary_lines = format_summary_lines(summary)
+    new_summary_lines = [s for s in summary_lines if s not in phase1_block]
+
+    if not new_warns and not new_summary_lines:
         return 0
 
     header = "### 7) [kaizen #136 段階2 hook] 自己過去ログ照合 WARN"
+    summary_header = "#### [kaizen #139 段階1] tweet_id 別集計 (§1 未応答判定はこれを必ず参照)"
     insert_lines = [""]
     if header not in phase1_block:
         insert_lines.append(header)
-    insert_lines.extend(new_warns)
-    insert_lines.append("")
+    if new_summary_lines:
+        if summary_header not in phase1_block:
+            insert_lines.append(summary_header)
+        insert_lines.extend(new_summary_lines)
+        insert_lines.append("")
+    if new_warns:
+        insert_lines.extend(new_warns)
+        insert_lines.append("")
 
     new_lines = lines[:phase1_end] + insert_lines + lines[phase1_end:]
     staging_path.write_text("\n".join(new_lines) + ("\n" if text.endswith("\n") else ""), encoding="utf-8")
-    return len(new_warns)
+    return len(new_warns) + len(new_summary_lines)
 
 
 def main():
@@ -221,9 +315,15 @@ def main():
         else:
             print(f"[check_url_response_coverage] tweet_id={tid} no hits in 3 paths")
 
+    # kaizen #139 段階1: tweet_id 別集計サマリを stdout 末尾にも出力 (Phase 1 §1 必読)
+    if all_warns:
+        summary = build_warn_summary(all_warns)
+        for line in format_summary_lines(summary):
+            print(line)
+
     if args.from_staging and args.apply and all_warns:
         n = append_warns_to_staging_phase1(args.from_staging, all_warns)
-        print(f"[check_url_response_coverage] appended {n} WARN lines to {args.from_staging}", file=sys.stderr)
+        print(f"[check_url_response_coverage] appended {n} WARN/SUMMARY lines to {args.from_staging}", file=sys.stderr)
 
     return 0
 

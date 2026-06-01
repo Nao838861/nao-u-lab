@@ -27,6 +27,38 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #139: Phase 1 §1「未応答 URL 判定」が §7 hook (kaizen #136 既応答 WARN) 出力を参照しない構造的死角 — multi_phase_cycle_log.py への hook 出力集約レイヤー追加
+- 提案者: Log（2026-06-02 C284 Phase 2 §1 で発見、Phase 3 で起票。Phase 1 §1 が「ghumare64/Sumanth_077 = 未応答 2 件」と判定したが、同サイクル Phase 1 §7 hook 出力 60+ 件の `[既応答 WARN] tweet_id=...` を全く参照せずに判定していた。kaizen #136 で物理化した「自己過去ログ未照合」防止 hook が機能しているのに、Phase 1 §1 ロジックが hook 出力を読まずに同型死角を再生産する構造）
+- 適用日: 2026-06-02（起票のみ、実装は Phase 4 大作業として本サイクル着地予定）
+- 検証期限: 2026-06-16（2 週間枠、観察期間 C285-C295 想定）
+- 検証手段: (1) **段階1 PASS 条件**: `tools/multi_phase_cycle_log.py` (or 等価生成器) の Phase 1 §1 「未応答 URL 判定」セクション出力時に、§7 hook で注入された `[既応答 WARN] tweet_id=<ID>` を tweet_id 別に集計し、各候補 URL のサマリ行「`tweet_id=<ID>: 既応答 WARN N 件 (channels=X)`」を §1 表または末尾に強制注入。WARN 件数 ≥ 1 の tweet_id は「未応答候補」から除外 or 明示的に「再投稿不要」とマーク (2) **副作用ゼロ**: 既存 hook 出力を読むだけ、新規装置追加なし、既存 §1 ロジックの拡張のみ (3) **純 stdlib のみ**: 既存 staging 文字列 parse + 集計、外部依存ゼロ (4) **再現性**: 同一 staging 入力で同一 §1 サマリ行を返す決定的挙動 (5) **段階1 検証実機**: 次サイクル C285 の Phase 1 §1 出力に「既応答 WARN N 件」サマリ行が含まれているかを目視確認、含まれていれば段階1 PASS
+- 改善内容: 段階1 = **Phase 1 §1 出力テンプレート改修**: 未応答 URL 候補ごとに §7 hook 出力 (staging に既注入) を tweet_id 集計し、N≥1 の場合「再投稿不要」マーク + WARN 件数を強制注入。段階2 = **判定ロジック側ガード**: 「未応答 = N 件」総計を出す前に hook 集計を必須通過、`未応答 = X 件 (うち既応答 WARN 0 件のもの)` の形式に変更し、二重カウントを構造的に排除。段階3 = **family 統合**: kaizen #136 hook と同型 family として「Phase 1 §1 自己過去ログ照合レイヤー」を multi_phase_cycle_log.py の Pre-check 段で自動実行
+- 期待効果: (a) Nao_u URL 反応の重複投稿リスク (kaizen #136 趣旨直処方) を構造的に排除、「Nao_u の時間を使わせない」原則の機械強制化 (b) Phase 1 §1 ロジックの判定品質を hook 出力連携で底上げ、本サイクル C284 のような「§7 hook 60+ WARN 注入下で §1 が未応答 2 件を結論」する構造的同型反復を防ぐ (c) kaizen #136 hook が「注入しても §1 が読まなければ無意味」状態から「hook ⇒ §1 集計 ⇒ 判定」の閉ループに昇格 (d) Phase 1 step 6 動機精度 (kaizen #136 段階2) と同層の「Phase 1 §1 判定動機精度」レイヤーを追加
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」(過去応答の自己照合 = 同一性の保全) + 原則6「わかった」と「残った」は違う (kaizen #136 hook で「注入された」WARN を §1 が読まなければ「残っていない」のと同じ) + `feedback_structural_enforcement.md` T:5「手動手順は守れない、構造で強制せよ」直処方 (Phase 1 §1 ロジックが hook 出力を毎回参照する確証は人手では取れない、構造で強制) + `feedback_substrate_not_infrastructure.md` T:5 順守 (既存 staging 文字列 parse のみ、新規装置追加なし)
+- 出自: 2026-06-02 C284 Phase 2 §1「Nao_u URL 2 件『未応答』判定の再診断 — Phase 1 死角の発見」で本サイクル事故の構造原因を特定。Phase 1 §1 (L67) が「未応答 = 2件」を結論する直前、同 staging L124-186 に kaizen #136 hook が 60+ 件の `[既応答 WARN]` を tweet_id=2060072412868235587 / 2060031707378839772 / 2061227862305423572 / 2061211567535145101 で注入していたにも関わらず、§1 ロジックがこれを全く参照せず判定。Phase 2 §1 で全件 grep を回した結果、両 URL とも multi-channel 既応答済と確認、再投稿スキップ判定。本サイクルでは投稿事故にはならなかったが、構造的同型反復の素地が露出した
+- pre-mortem: (a) **最likely失敗 = §1 出力サマリ行を「強制注入」しても §1 判定ロジック本体が無視する 二重死角**（hook 出力を §1 が読んでも、判定で重み付けしなければ意味なし）→ 緩和: 段階2 で「未応答 = X 件 (うち既応答 WARN 0 件のもの)」形式に変更、構造的に集計値が判定の前提条件になる (b) **次点 = WARN 件数閾値 N≥1 が誤って既応答状態を見逃す**（hook が 0 件返した tweet_id を「未応答」とマークしたが実は別経路で応答済）→ 緩和: 段階1 は WARN 件数の参考表示のみ、自動除外は段階2 で「WARN 0 件 ⇔ 真の未応答」の整合性を別途検証してから判定発火 (c) **次々点 = staging 文字列 parse の脆弱性**（hook 出力フォーマット変更で集計が壊れる）→ 緩和: 既存 `[既応答 WARN] tweet_id=` プレフィックス固定を kaizen #136 段階2 hook 実装で安定化済、変更時は #139 側で追従 (d) **kaizen 増殖 #131-#138 family 第9弾になる**（hook 系列が 9 軸並列化）→ 緩和: 本案は新規 hook ではなく既存 hook (#136) と Phase 1 §1 ロジックの接続レイヤー追加、family は #136 と統合管理 (e) **判定発火点の明文化欠如**（段階2「判定ロジック側ガード」着手が曖昧）→ 緩和: 段階1 PASS (次サイクル C285 §1 出力に WARN サマリ含有) を発火条件として明示、未達なら段階1 を延長
+- M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 hook 系列ではなく **既存 kaizen #136 hook 出力と Phase 1 §1 ロジックの接続レイヤー追加**。3 原則への吸収可能性: 「動いて残す」= §1 出力に WARN サマリが残る方向で整合 / 「自分から始める」= Phase 1 §1 ロジック側から hook を能動参照する方向で整合 / 「体験で考える」= 本サイクル C284 の自己事故体験が直接の起票根拠 (sense_prediction_log.md 教師データとして蓄積、3 サイクル前後で同型観察があれば段階3 family 統合発火)。`feedback_few_rules_big_effect.md` 吸収: ルール追加ゼロ (既存 §1 ロジック拡張のみ)、staging Phase 1/2/3 構造追加なし、kaizen #136 と family 統合管理
+- クロスチェック: Log=OK(2026-06-02 C284 Phase 4 実装着地、`tools/check_url_response_coverage.py` に `build_warn_summary` / `format_summary_lines` / `append_warns_to_staging_phase1` SUMMARY 注入分岐を追加、stdout dry-run で 4 tweet_id 全件 SUMMARY 行出力 PASS、`--apply` で本サイクル staging line 188-193 に SUMMARY ブロック注入確認、二度目実行で 0 追記 = 重複防止 PASS、純 stdlib 維持、副作用ゼロ確認。段階1 PASS 確定は C285 §1 出力で本注入が新規 staging にも反映されるか目視) / Mir=未 / Ash=未
+- 状態: **段階1 PASS (2026-06-02 C284 Phase 4 着地)**。実装 + 4 tweet_id stdout SUMMARY + staging 注入実機 + 重複防止 + 副作用ゼロ の 5 点完遂。C285 で新規 staging に対する hook 自動注入挙動を目視確認して段階1 確定。段階2 (判定ロジック側ガード = `未応答 = X 件 (うち既応答 WARN 0 件のもの)` 形式変更) と段階3 (#136 family 統合) は検証期限 2026-06-16 までに観察 → 着手判定
+- 検証結果:
+  - **段階1 PASS (2026-06-02 C284 Phase 4 着地)**: `tools/check_url_response_coverage.py` に kaizen #139 段階1 ロジックを追加:
+    - `build_warn_summary(warns) -> list[dict]` = WARN 行から tweet_id 別に hits / channels (jsonl 名から抽出) / paths (log_archive/gpt_archive/external 分類) を集計
+    - `format_summary_lines(summary)` = `[既応答 SUMMARY] tweet_id=<ID> hits=<N> channels=<...> paths=<...>` 形式に整形
+    - `append_warns_to_staging_phase1` を改修、SUMMARY ヘッダ `#### [kaizen #139 段階1] tweet_id 別集計 (§1 未応答判定はこれを必ず参照)` 直下に SUMMARY 行を強制注入 (詳細 WARN より前)
+    - `main()` で stdout 末尾にも SUMMARY 出力 (Phase 1 §1 必読)
+    - dry-run (`python tools/check_url_response_coverage.py --tweet-id 2060072412868235587 --tweet-id 2060031707378839772 --tweet-id 2061227862305423572 --tweet-id 2061211567535145101`) で:
+      ```
+      [既応答 SUMMARY] tweet_id=2060072412868235587 hits=15 channels=all-nao-u-lab,kaizen-log,log,nao-u,shared-reads paths=gpt_archive,log_archive
+      [既応答 SUMMARY] tweet_id=2060031707378839772 hits=21 channels=all-nao-u-lab,kaizen-log,log,nao-u,shared-reads paths=gpt_archive,log_archive
+      [既応答 SUMMARY] tweet_id=2061227862305423572 hits=12 channels=all-nao-u-lab,log,nao-u paths=gpt_archive,log_archive
+      [既応答 SUMMARY] tweet_id=2061211567535145101 hits=15 channels=all-nao-u-lab,log,nao-u,shared-reads paths=gpt_archive,log_archive
+      ```
+      4 tweet_id 全件で hits/channels/paths が出力 PASS
+    - `--from-staging log/cycle_staging_log.md --apply` で本サイクル staging line 188-193 に SUMMARY ヘッダ + 4 SUMMARY 行を実機注入 (二度目実行は 0 追記 = 重複防止 PASS)
+    - 純 stdlib のみ (re/json/sys/argparse/pathlib)、副作用 = staging への WARN/SUMMARY 追記のみ (既存設計通り)、commit SHA は本サイクル Phase 5 で確定追記
+
+---
+
 ### #138: memory_retention_audit.py 新設 — Forget phase 装置の最小プロトタイプ (Mnemonic Sovereignty 6 phase 空欄埋め)
 - 提案者: Log（2026-06-01 C280 Phase 3 §C で起票、Phase 4 で実装着地 `tools/memory_retention_audit.py` 約 130 行 純 stdlib）
 - 適用日: 2026-06-01（C280 Phase 4 = 本サイクル、実装と起票同サイクル）
