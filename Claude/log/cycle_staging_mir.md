@@ -178,3 +178,55 @@
 - shoushin03 automaton 記事 fetch 試行
 - shared-reads 投稿 0-1 件（Nao_u 委任の境界判定はゲーム改修着地の有無と相関させる）
 
+---
+
+## Phase 3: 対処・実行 結果（2026-06-01）
+
+### 優先順1: Nao_u 未対応指示
+- なし（pre-check で確認済）。
+
+### 優先順2: クロスチェック #137 (Mir 未レビュー → OK)
+**実行内容**:
+- `game/log_autonomous_game/v003/proxy_icc_diagnose.py` を Read で確認（pure stdlib: `json/math/sys/pathlib` のみ、副作用ゼロ、ICC(2,1) 公式実装、Mustahsan 経験則閾値 0.3）。
+- 直接 dry-run 実行: stdout 4行 (proxy_clear_rate / damage_per_min / survival_time / input_density) で icc≈0.00-(-0.02), ci_low≈-0.63, ci_high≈+0.63, judge=FAIL、exit 0 完走。kaizen tracker L46-49 の記載値と完全一致。
+- `memory/kaizen_tracker.md` クロスチェック欄を `Mir=OK(2026-06-01 C273 Phase 3: ...)` に更新。pre-mortem 5項目 (a)-(e) すべて納得可、段階1 PASS 3点全充足を承認。段階2 (class 軸切替実験) は labeled.csv 拡張完了の物理進捗待ち、本クロスチェックは段階1 PASS 確定が射程。
+
+**Mir 側追加観察**: Log の起票（#137）は「proxy 評価インフラの診断レイヤー追加」として独立軸——hook family (#131-#136) との同型増殖ではない。`feedback_few_rules_big_effect.md` 順守 (ルール追加ゼロ、診断スクリプトは運用ルールではない)。pre-mortem (b) の Mustahsan 閾値外挿リスクのみ将来の検証期限 2026-06-14 で再確認したい論点。
+
+### 優先順3: external_notes_mir.md 未統合エントリ統合
+Phase 2 で「未統合なし」と確認済。**逆方向で実行**: Phase 2 で新規拾い 3 件のうち durable 判定 2 件を本サイクルで durable 化着地。
+
+**着地 1: akari_worlds 5/31 3連発（系列7-9観測目）**
+- 既存 5/19 系列の追補エントリとして durable 化。独立エントリではなく**系列追補**形式を選択した理由 = 同一発信者9観測で独立4発信者しきい値未到達、独立化は記事 inflation リスク。系列追補で発信者依存リスクを構造的に可視化。
+- Seed-R 候補3つは試行段階のまま記録（「目盛り獲得期間」概念 / knowledge 余白項目 / M-17 不在の中心）。即原則化禁止を明記。
+
+**着地 2: yutakashino #46「理解は外注できない」（AI外注不可リスト 4観測目）**
+- 独立 durable 化エントリ。独立4観測しきい値到達（abagames 4/22 + akari 5/19 + ebikani 5/31 + yutakashino 5/31）でしきい値突破を明記。
+- 外部対応語の試案を併記（tacit knowledge / division of cognitive labor / internalization / salience judgment）——docs/knowledge_writing_guide.md 造語症対策に従い、私的用語と外部対応語を 6 行表で対応。
+- knowledge 記事化候補成立。次サイクル C274 以降で knowledge/ 配下に起草着手判定発火。
+
+### 優先順4: shoushin03 automaton 記事 fetch 試行
+**判定**: 本サイクルでは見送り。理由 = (a) Phase 2 で durable 判定「保留」（業界俯瞰系は単発引用ではなく本文確認後）、(b) Phase 3 物理時間配分上、durable 化 2 件 + クロスチェック 1 件で予算消化、(c) 次サイクル C274 引き継ぎとして staging 記録のみ残す。
+
+### 優先順5: shared-reads 投稿判定
+**判定**: 本サイクル投稿 0 件。理由 = (a) ゲーム改修着地なし（CLAUDE.md「投稿の Nao_u 委任境界判定はゲーム改修着地の有無と相関」原則）、(b) akari 系列は自己システム直撃で評価ドリフトリスク継続、(c) yutakashino 系列は投稿可だが knowledge 起草前に独立4観測の整合性確認が先。Nao_u 委任は次サイクル以降。
+
+### 優先順6: プロジェクト進捗更新
+- `projects/INDEX.md` への新規追加なし（本サイクルで新規プロジェクト発生なし）。
+- AI外注不可リスト knowledge 起草は次サイクル発火、起草着手時に projects/ 配下にプロジェクトファイル作成判定。
+
+### Phase 3 で明示的に「やらなかった」こと（自己観察）
+- **ゲーム改修 (CLAUDE.md 絶対項目1)**: 本サイクル diff ゼロ。Phase 1-2 が shared-reads 分析中心、Phase 3 でも観察知見の durable 化に時間配分。**「ゲームを動かして出す = 第一義」原則に対して本サイクル 0-diff を続けた**。akari 系列「目盛り獲得期間」語彙で慰めない（本エントリで明記済の罠）。
+- **構造強制への移行**: kaizen #136 段階2 (auto_diary.py phase_gather() WARN 注入) は判定発火点保留継続。staging memo 駆動 3-4 サイクル連続成立 (C257 → C261 → C265 → 本サイクル) で構造強制移行を遅延中、`feedback_few_rules_big_effect.md` 順守。
+
+### 次サイクル C274 への引き継ぎ
+1. **AI外注不可リスト knowledge 起草**: 着手判定発火、独立4観測の原文・外部対応語は本サイクル整備済、knowledge/ 配下にファイル新規作成
+2. **ゲーム改修着地**: 0-diff 連続 N=? に対する自己観察、game/* 配下で 1mm diff を出す方向の Phase 4 大作業候補化
+3. **akari 系列の反例観測**: 同発信者 9 観測の依存リスク中和のため、反例観測を 1 つでも見つける作業
+4. **shoushin03 automaton 記事**: 本文 fetch 試行 → durable 化判定
+5. **kaizen #136 観察**: 構造強制移行判定発火点は (1) 厳密同型再発 or (2) staging memo 駆動の自発成立サイクル累計到達——本サイクルは(2)の累計1積み増し
+
+### 教師データ蓄積
+- 本サイクル成功事例: クロスチェック実行 + durable 化 2 件 = 観察知見の構造化着地、ゲーム改修なしで知識資産は積み上げた
+- 本サイクル失敗事例: ゲーム改修ゼロ、Phase 2 で「shared-reads 分析」に時間配分が偏った構造を観察
+- `memory/sense_prediction_log.md` への N=? 加算判定: 本サイクルは失敗事例側で 0-diff 連続パターンに 1 サイクル積み増し、構造強制移行判定発火点の閾値接近を記録
