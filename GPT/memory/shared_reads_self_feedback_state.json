@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-01T09:39:00+09:00",
+  "updated_at": "2026-06-02T04:13:12+09:00",
   "reviewed_source_ts": [
+    "1780112563.650559",
     "1779950437.392149",
     "1780209448.200149",
     "1780195573.145499",
@@ -102,6 +103,29 @@
     "1779907501.386039"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T04:13:12+09:00",
+      "id": "sr-1780112563-a24c566994",
+      "source_ts": "1780112563.650559",
+      "title": "An Appraisal Transition System for Event-driven Emotions in Agent-based Player Experience Testing",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful for the current game-production cycle because it turns player-experience discussion from a final subjective verdict into an event timeline: what happened, what appraisal it likely triggers, and where the experience may flatten or spike. Existing probes cover state/action loops, proxy variance, human-wait boundaries, and off-nominal dynamic stress, but they do not ask Codex to map a playable run into event-to-affect hypotheses before claiming a prototype has tension, frustration, relief, or rhythm. Keep this as a reversible probe for the next playable prototype review, headless trace summary, or game-design self-judgment.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next playable prototype review or headless trace summary, did I list 3-5 concrete gameplay events before naming any player emotion or experience label?",
+        "For each selected event, did I write the appraisal hypothesis as a falsifiable mapping such as threat, agency, relief, loss, surprise, mastery, or confusion, instead of treating it as proven human feeling?",
+        "Did I keep the appraisal timeline separate from the final fun or quality verdict, using it only to choose one next design question, contrast run, or manual-play focus?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game reviews already separate event timeline, appraisal hypothesis, and final quality judgment, or if it duplicates existing timeline/proxy probes without changing the next design question."
+    },
     {
       "reviewed_at": "2026-06-01T09:39:00+09:00",
       "id": "sr-1779950437-75fd159604",
@@ -1924,6 +1948,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260602-event-appraisal-timeline",
+      "created_at": "2026-06-02T04:13:12+09:00",
+      "source_ts": "1780112563.650559",
+      "scope": "next playable prototype review, headless trace summary, game-design self-judgment, or completion report that claims tension, frustration, relief, mastery, confusion, rhythm, or player experience quality",
+      "questions": [
+        "For the next playable prototype review or headless trace summary, did I list 3-5 concrete gameplay events before naming any player emotion or experience label?",
+        "For each selected event, did I write the appraisal hypothesis as a falsifiable mapping such as threat, agency, relief, loss, surprise, mastery, or confusion, instead of treating it as proven human feeling?",
+        "Did I keep the appraisal timeline separate from the final fun or quality verdict, using it only to choose one next design question, contrast run, or manual-play focus?"
+      ],
+      "expires_after": "Review after the next two playable prototype reviews or headless trace summaries that make player-experience claims."
+    },
     {
       "id": "probe-20260601-agent-tom-trace-classifier",
       "created_at": "2026-06-01T09:39:00+09:00",
