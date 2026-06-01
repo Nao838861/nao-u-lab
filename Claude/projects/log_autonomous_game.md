@@ -137,6 +137,49 @@ Nao_u 5/26 06:10 #human-steering 指摘原文: 「一秒先の軌跡+×印みた
 
 ---
 
+## 2026-06-01 C277 Phase 3 §A: Lost in Simulation 接続 — proxy validity 反証ラインと評価軸 2 軸併走候補
+
+**契機**: 本サイクル Phase 1 §6 自発検索 (kaizen #106 強制経路、キーワード `arxiv 2026 headless game playtesting agent difficulty proxy variance evaluation`) で取得した 4 論文中、Lost in Simulation (arxiv 2601.17087, 2026-01) が **PEARSON_BLOCKER 前提 4 (Mustahsan ICC) に対する最も深い反証** を与える。C275 で 4 列とも ICC ≈ 0 を「seed_base 軸不適切」と判定したが、本論文の枠組みでは **proxy 自体の妥当性問題** が下流で表面化したもの = ICC ≈ 0 の解釈そのものを書き直す材料。Phase 2 §2 で深掘り (`#shared-reads` ts=1780271079.627009 + ts=1780271082.067289)、本節で v003 文脈に折り返す。
+
+### §A-1. Lost in Simulation 接続表 (proxy validity 4 観点)
+
+| 観点 | Lost in Simulation の発見 | v003 PEARSON_BLOCKER への含意 |
+|---|---|---|
+| proxy 9pp 変動 | 同 task / 同 agent / 異 user LLM で agent 成功率 9pp 変動 (構造的バイアス) | ICC ≈ 0 の上位層症状: seed_base 軸変動ゼロは「proxy が human の代理として機能していない」裏返しの可能性 |
+| AAVE / Indian English 差別的劣化 | proxy validity が class 軸依存 (言語/方言で分布外失敗) | class 軸切替で proxy validity 自体が変わる構造 — proxy_vs_judgment.csv で v_label を class にした ICC 再計算が「軸選定改善」ではなく「proxy validity 検証の class 拡張」になる |
+| Calibration 二相性 | 難 task で過小、中 task で過大 = 線形補正不能 | fun_score proxy 代替案の構造的リスク顕在化: Pearson 線形補正前提が崩れる場合あり |
+| 9pp variance の下限性質 | 論文記載は max 9pp = 真の variance 下限 | 当方 Pearson CI を ±0.2 程度動かす前提で読む必要、Fisher Z 近似 95% CI の境界判定に影響 |
+
+### §A-2. 評価軸 2 軸併走候補 (Pearson → Spearman/Kendall)
+
+**根拠**: Phase 1 §6 同時取得の 2410.02829 (LLMs as Testers) は「LLM は average human gameplay performance に届かないが、相対 difficulty 評価では人間と強相関」= 評価プロトコル切替で proxy validity が回復する可能性を示す。Lost in Simulation (絶対成功率予測で 9pp 変動を否定) と 2410.02829 (相対 ranking で human 整合) は **評価プロトコルが違う** = 同一 proxy データに対し絶対軸では FAIL、相対軸では PASS の可能性。
+
+**v003 への適用**:
+- **(a) 絶対 Pearson 軸** (従来通り): ICC ≥ 0.3 を前提に proxy_clear_rate ↔ q_a 等を Pearson 計算。Lost in Simulation 視点では proxy validity 欠落のリスクあり、ただし ICC PASS を最低条件にすることで一部担保
+- **(b) 相対 Spearman/Kendall 軸** (新規候補): proxy 4 列を v_label (v001/v002/v003) でソートし、judgment 側 q_a 等のソート順位と Spearman/Kendall で比較。proxy validity が class 軸依存でも順位整合性は保たれる可能性 — 2410.02829 の主張に依拠
+
+**解除条件拡張案** (PEARSON_BLOCKER.md 校正 diff として Phase 4 大作業で着地):
+- (a) 絶対 ICC ≥ 0.3 + Pearson ≥ 0.5 / (b) 相対 Spearman ≥ 0.5 + 順位整合 60% 以上、**のどちらか**で gate 解除
+- 注意 = (b) は (a) が ICC FAIL で計算不能の時の fallback、両者並列で同時 PASS 判定はしない (判定甘さ防止)
+
+### §A-3. Phase 4 大作業との接続
+
+本節は **位置取り記録** (機械反映禁止順守、実装は Phase 4 大作業 = PEARSON_BLOCKER.md 校正 diff で着地)。Phase 4 では以下を game/v003/PEARSON_BLOCKER.md に追記 + commit prefix `game:`:
+- Lost in Simulation 接続注記 (§A-1 表の凝縮版)
+- 評価軸 2 軸併走候補 (§A-2 (a)/(b) と fallback ルール)
+- 解除条件拡張案 (本節の (a)/(b) ロジック)
+
+**反証ライン**: 「2 軸併走で gate 解除条件を拡張する」は判定甘さに陥る危険あり。特に (b) Spearman 軸は順序統計量に弱点 (タイ多発時の判定不能 / 標本サイズ依存)。PEARSON_BLOCKER.md 追記時に「(b) は (a) の fallback」を明示しないと判定が緩む = Phase 4 大作業の校正 diff 必須要件。
+
+### §A-4. 接続先
+
+- [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-01 (Log C277 Phase 2) Lost in Simulation エントリ
+- [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) — 校正 diff 着地予定 (本サイクル Phase 4)
+- `#all-nao-u-lab` ts=1780271444 — Log_cdx C273 atom (ts=1780249009) 自己指摘 (「読む場所・解除条件・解除されない時の playable diff の扱いを一行で固定」) への Log 応答、本節 §A-2 解除条件拡張案を Log の確定スタンスとして固定
+- `#shared-reads` ts=1780271079 + ts=1780271082 — Lost in Simulation 深掘り 2 連投 (核心 5 点、2410.02829 対立読みを含む)
+
+---
+
 ## 2026-05-30 C264 Phase 4: 強化 agent (PLAYER_SPEED 1.5x) で proxy 再計測 — v001/v002/v003 比較
 
 **起票根拠**: C263 Phase 4 §5 a) 「強化 agent 導入で phase 2 到達」候補を最優先実装。素朴良手 agent が wave 1 内 (9.28s) で 30/30 死亡 → phase 2 (50-90s) 到達ゼロ = v003 改修対象 (phase 2 内 SHOOT_INTERVAL 90→60 frame 線形漸変) 計測不能の盲点を、agent 側 PLAYER_SPEED 1.5 倍化で打開できるかの試行。**game.js は変更せず、agent_difficulty_proxy.js 側だけ強化** (proxy 計測解像度の問題であり game balance の問題ではないため)。
