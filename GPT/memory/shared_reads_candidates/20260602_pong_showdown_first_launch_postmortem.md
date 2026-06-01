@@ -4,6 +4,20 @@ url: "https://itch.io/devlog/1516654/devlog-postmortem.amp"
 collected_at: "2026-06-02T07:59:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, solo-dev, ai-behavior, balancing, launch]
+evaluated_at: "2026-06-02T08:04:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-02T08:04:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-02T08:04:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |-
+  「単純なPongでもAI挙動、power-up、balancing、自己playtest偏重で難しくなる」という教訓は明確だが、抽出できる中核は既知の制作リスクに近い。
+  具体場面への適用はできる一方、記事単体でCoopEval水準の概要・分析・判定を書くには情報量と独自性が不足する。
 ---
 
 ## raw_excerpt

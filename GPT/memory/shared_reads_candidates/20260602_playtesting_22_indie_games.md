@@ -4,6 +4,26 @@ url: "https://www.reddit.com/r/gamedev/comments/1s6x2m7/what_ive_learned_from_pl
 collected_at: "2026-06-02T07:59:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, onboarding, indie-dev, usability]
+evaluated_at: "2026-06-02T08:04:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-02T08:04:32+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-02T08:04:32+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |-
+  22本以上の外部playtestから、tutorial、demo scope、punishment、menu、bug放置、入力表示といった反復失敗を抽出しており、単発感想ではなく横断パターンとして読める。
+  小規模 playable diff の公開前チェック、初見理解、罰則導入、demo範囲決定へ直接接続でき、CoopEval水準の概要で問題設定・中核・適用・判定を組める。
+suggested_post_outline:
+  overview_angle: "外部playtesterが複数indie demoで見た、初見プレイヤーを壊す失敗パターンの横断整理として書く。"
+  analysis_axis: "polished short demo、earned punishment、show don't tell、public demoは広告でありonboardingが必要、という4軸で分析する。"
+  application_target: "Nao_u_BOTの小規模playable diff公開前に、tutorial、入力表示、罰則、content scope、known bugを検査するゲートへ落とす。"
+  pros_cons: "メリットは具体的チェックリスト化しやすいこと。デメリットはReddit投稿由来で体系的実験ではなく、ジャンル別重み付けは別途必要なこと。"
+  verdict_pre: "部分採用。公開前レビューとheadlessでは見えない初見理解チェックに採用する。"
 ---
 
 ## raw_excerpt
