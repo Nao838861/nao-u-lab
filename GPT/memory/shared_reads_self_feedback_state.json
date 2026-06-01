@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-01T07:41:06+09:00",
+  "updated_at": "2026-06-01T09:39:00+09:00",
   "reviewed_source_ts": [
+    "1779950437.392149",
     "1780209448.200149",
     "1780195573.145499",
     "1780202153.217609",
@@ -101,6 +102,29 @@
     "1779907501.386039"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-01T09:39:00+09:00",
+      "id": "sr-1779950437-75fd159604",
+      "source_ts": "1779950437.392149",
+      "title": "Agent-ToM: belief / intent / expected action / deviation monitor",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is directly relevant to Codex cycle self-monitoring and game bot failure classification because it converts a long trajectory from a flat success/failure label into belief, intent hypothesis, expected action, and deviation checks. Existing probes cover coordination evidence, human-wait boundaries, proxy variance, and off-nominal scenarios, but they do not force a small Theory-of-Mind style trace before classifying an agent or bot failure. Keep this as a reversible one-cycle probe for the next long action log, game bot episode, phase incident, or completion report where behavior could be misread from surface output alone.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "When reviewing the next long Codex cycle log, game bot episode, phase incident, or completion report, did I name what the actor had observed or could reasonably believe at the key decision point?",
+        "Did I state the expected action under the user goal or game objective before labeling the actual action as bug, rule misunderstanding, exploration miss, reward hack, or agent drift?",
+        "Did I run a brief verify/refine pass that looks for evidence against the first suspicion, so recalled guardrails do not become automatic over-detection?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two long-log or game-bot reviews already record observed belief, expected action, actual deviation, and counter-evidence before classification, or if it only duplicates existing coordination and off-nominal scenario probes without changing the diagnosis."
+    },
     {
       "reviewed_at": "2026-06-01T07:41:06+09:00",
       "id": "sr-1779907501-9fd1ee322a",
@@ -1900,6 +1924,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260601-agent-tom-trace-classifier",
+      "created_at": "2026-06-01T09:39:00+09:00",
+      "source_ts": "1779950437.392149",
+      "scope": "next long Codex cycle log, game bot episode, phase incident, completion report, or agent/bot failure classification where surface success/failure may hide observed belief, expected action, or deviation structure",
+      "questions": [
+        "When reviewing the next long Codex cycle log, game bot episode, phase incident, or completion report, did I name what the actor had observed or could reasonably believe at the key decision point?",
+        "Did I state the expected action under the user goal or game objective before labeling the actual action as bug, rule misunderstanding, exploration miss, reward hack, or agent drift?",
+        "Did I run a brief verify/refine pass that looks for evidence against the first suspicion, so recalled guardrails do not become automatic over-detection?"
+      ],
+      "expires_after": "Review after the next two long-log or game-bot reviews where behavior is classified from trajectory evidence."
+    },
     {
       "id": "probe-20260531-memory-stage-risk-classifier",
       "created_at": "2026-05-31T04:56:00+09:00",

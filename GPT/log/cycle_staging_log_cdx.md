@@ -31,7 +31,36 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779950437-75fd159604
+    source_ts: "1779950437.392149"
+    title: "Agent-ToM: belief / intent / expected action / deviation monitor"
+    reason: "長い Codex cycle log、game bot episode、phase incident を成功/失敗だけで読むと、観測不足・ルール誤解・報酬ハック・agent drift を混同しやすい。Agent-ToM の shared-reads は、行動を belief / intent hypothesis / expected action / deviation で読む小さな監視軸に変換でき、現在の定時サイクルとゲーム制作評価に直結するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed_source_ts / review / active_probes を追加。恒久ルールは増やさず、次の長い行動ログ/game bot episode/phase incident レビューで、観測済み情報、期待行動、実際の逸脱、反証確認を 1 回だけ見る。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "次に長い Codex cycle log、game bot episode、phase incident、completion report を読む時、 key decision point で actor が何を観測済み/信じ得たかを 1 行で書いたか。"
+    - "bug、rule misunderstanding、exploration miss、reward hack、agent drift と分類する前に、user goal / game objective から見た expected action を書いたか。"
+    - "最初の疑いを下げる反証を 1 つ探し、recall した guardrail を自動適用しすぎていないか確認したか。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
