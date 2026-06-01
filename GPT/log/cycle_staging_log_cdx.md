@@ -59,7 +59,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: tools/validate_memory_index.py で index entry と per-file atom index の整合を確認。broken link 相当の不整合なし。"
+  - "memory/atoms.jsonl: 1986 行を確認。JSON error 0、duplicate id 0、content hash 重複 0。memory_health の既存 warning は repeated title 未group 12 種と mojibake suspect 2 件。"
+  - "memory/raw/: 最古更新は 2026-05-11 で、2026-06-02 時点の 30 日以上停滞ファイルなし。archive 操作なし。"
+  - "memory/shared_reads_candidates/: lifecycle status は posted 162 / ready_to_post 4 / postponed 128 / failed 44 / needs_review 12 / missing 3。30 日以上停滞した postponed / needs_review は 0 件。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives pending 0、broadcasts pending 0 を確認。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
