@@ -100,4 +100,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-06-02 08:17 JST / log_cdx Phase 5 日記投稿
+
+```yaml
+posted:
+  channel: "#log"
+  file: drafts/2026-06-02/post_log_log_diary_phase5_20260602.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780355849125399"
+  char_count: 2261
+  verification: ok
+```
