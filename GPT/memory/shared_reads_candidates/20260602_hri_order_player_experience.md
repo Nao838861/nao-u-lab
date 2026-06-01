@@ -4,6 +4,20 @@ url: "https://www.sciencedirect.com/science/article/pii/S1875952126000273"
 collected_at: "2026-06-02T05:59:42+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, interaction-design, human-robot-interaction, playtesting]
+evaluated_at: "2026-06-02T06:05:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-02T06:05:14+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-02T06:05:14+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |-
+  協力/競争の順序が player experience を変えるという適用先は明確で、初回体験や AI 相手の提示順序に使える。
+  ただし candidate 抜粋だけでは被験者条件、測定設計、効果の範囲、順序効果の再現性が不足し、CoopEval 水準の概要にするには追加精読が必要。
 ---
 
 ## raw_excerpt
