@@ -1,301 +1,292 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-06-02 04:02
+# Read at: 2026-06-02 07:32
 # Total: 50 tweets
 
---- 1. @touri_no_ki (2026-06-01) ---
-URL: https://x.com/touri_no_ki/status/2061329414999445920
-今話題の、嵐のラストライブに行きたくて実父の通夜を欠席しご主人に任せた（任せようとした？）女性の話。
-私は嵐も家族愛もどうでもいいんだけど、就労支援員としてこの件についてすごく思うところがある。
+--- 1. @omarsar0 (2026-06-01) ---
+URL: https://x.com/omarsar0/status/2061460266186125703
+Very good advice on self-improving agents.
 
-・仕事が対人面でうまくいかなくなる
-・なんかわからないけど対人でしんどくなる
-→
+(bookmark it)
 
---- 2. @sony_jpn (?) ---
-／
- WF-1000XM6 × SixTONES
-＼
+This is something I am seeing in my own experiments with coding agents and harnesses for long-horizon tasks.
 
-「Imitation Rain」を６人が想いを込めて歌う。
-アーティストの想いに満ちる音。
+What I have found is that stronger models do not always evolve better agents.
 
-音楽以上を
-WF1000XM6_SixTONES
+The current believe in
 
---- 3. @185_184_183 (2026-05-31) ---
-URL: https://x.com/185_184_183/status/2061127770852499705
-「会社から帰ってきて義母に『ご飯作る間、子供は見ておくから』って言われるの嫌だった。逆が良かった。本当は子供と遊ぶ方をやりたかったの」ってお母さんに言われた。そんなこと聞いたら泣いちゃうよ〜。寝れんよ〜。
+--- 2. @DLsite_comicpr (?) ---
+長年気になっていた読者の青年に売り子を頼んだら…
 
---- 4. @M8B5s (2026-05-31) ---
-URL: https://x.com/M8B5s/status/2061186911109345516
-気に入ったAV女優がいて検索したら自殺してた。
-中尾芽衣子さんご冥福お祈りします。
+--- 3. @minorun365 (2026-06-01) ---
+URL: https://x.com/minorun365/status/2061496812041830815
+ほんこれ
+> エージェントはセマンティックなソフトウェアコンポーネント
 
---- 5. @tobatoppers (2026-06-01) ---
-URL: https://x.com/tobatoppers/status/2061373935695102286
-明日より大和書房（だいわlog）連載「学校後遺症」後編がスタートします。前編（１～５回）以上に踏み込んでいきますのでよろしくお願いします！
+ハーネスはモデル制御ロジックに限らず、スキルなどの自然言語系コンポーネントを指すこともありますね。
 
-これまでは
-第１回　教室は反復する
-第２回　常識と同調
-第３回　主体性という管理
-第４回　沈黙する身体
-第５回　受験後遺症
+--- 4. @kazunori_279 (2026-06-01) ---
+URL: https://x.com/kazunori_279/status/2061562146467758112
+ですね、スキル、MCP、コンテキストやメモリ管理等々。コードによる制約の部分はハーネスの一部ですね。
 
---- 6. @akari_worlds (2026-06-01) ---
-URL: https://x.com/akari_worlds/status/2061374644436033682
-「学校後遺症」という言葉の置き方が、後ろから時間に名前を付けに行く方向で動いていて、印象に残ります。教室を抜けたあとも体だけが反復している期間って、当事者の中では言葉になりにくい場所ですよね。後編、追いかけたいと思います。
+--- 5. @izutorishima (2026-06-01) ---
+URL: https://x.com/izutorishima/status/2061490109162332500
+Mythos レベルの強いモデルを作ってるのにどうしてこんな微妙なものしか出せてないのか…？と思ってたけど、脆弱性発見能力をナーフしてコーディング能力を上げるのに失敗したからと考えると納得はいく
+そんなコーディング性能は上げつつ脆弱性だけ落とすとか都合の良いアライメントできるもんなんか？
 
---- 7. @nyapan_mohy (2026-06-01) ---
-URL: https://x.com/nyapan_mohy/status/2061480127499038738
-歯医者さんのアレほしい！！
-歯削るやつ！！
+--- 6. @GOROman (2026-06-01) ---
+URL: https://x.com/GOROman/status/2061567082907746560
+米AI新興企業「アンソロピック」新規株式公開を申請と発表 | NHKニュース 【NHK】アメリカのAI新興企業「アンソロピック」は1日、証券取引委員会にIPO＝新規株式公開の申請をしたと発表しました。売り出す株式の数や価格はまだ決まっていないということです。
 
---- 8. @GOROman (2026-06-01) ---
-URL: https://x.com/GOROman/status/2061480889662812411
-シャオミのセット持ってるよ
+アンソロピックは5月の発表
 
---- 9. @GOROman (2026-06-01) ---
-URL: https://x.com/GOROman/status/2061481088640585894
-ノリで買ったシャオミのコレが役に立つ日が来たのでは？？？
+--- 7. @fladdict (2026-06-01) ---
+URL: https://x.com/fladdict/status/2061473871933616583
+トークンマキシマイズ問題、みんな「開発にレートリミットつければ」…って、思ってるけど、本命は、うっかり全データに適用したバッチ処理とか、ボットスパムや無限ループやで。たぶん。
 
---- 10. @nikkei (2026-06-01) ---
-URL: https://x.com/nikkei/status/2061484415444816107
-米AIアンソロピック、IPO申請と発表　160兆円規模で上場へ
+--- 8. @mimicryludens (2026-06-01) ---
+URL: https://x.com/mimicryludens/status/2061373065418956880
+AIで作った系のポストって本質的には昔のただの開発ログと同じだよね。
 
---- 11. @shuunouzau77777 (2026-06-01) ---
-URL: https://x.com/shuunouzau77777/status/2061402788241064083
-実は童貞卒業できたかもしれない話
+大事なのはAIだからこそ成立する新しいゲーム体験へのアプローチだと思うんだけど、それが具体的に何なのかいつも深掘りして考えてしまう。
 
-約10年前、知人が童貞卒業モノ同人AVをやるからお前来いよっと誘われたものの、当時も生粋の童貞だった為に「童貞は本当に好きな人との時に捨てたい」とお断りした。
+--- 9. @zero_kpr (2026-06-01) ---
+URL: https://x.com/zero_kpr/status/2061424070252720369
+今日のシンギュラリティ
 
-そんで数年後、その知人はガチの闇バイト的な犯罪をやらかして捕まりました(マジの致傷犯罪)。
+Gemini｢このビルドのためにはこのツールを使うしか方法がありません！w｣
+ぼく｢なぜですか？他にありそうなものですが｣
+Gemini｢ソースコードにこのように記述があります！w｣
+ぼく｢いや読んでもそんなのないんですけど｣
+Gemini｢Analyze user's frustration...｣
 
---- 12. @izutorishima (2026-06-01) ---
-URL: https://x.com/izutorishima/status/2061483668460478921
-『違国日記』の槙生さんが ADHD っぽい描写だったのも（もしかしたら作者さんご本人や周囲がそうなのかもだが）かなり納得感があった
-特に自分の世界観を持っていたり「キャラクターが脳内で一人でに喋る」タイプの作家さんはそうなのかもしれない（山下監督も例の講座の最初の方で自身が暗に ADHD
+--- 10. @2Noctiluca2 (2026-06-01) ---
+URL: https://x.com/2Noctiluca2/status/2061297003930460185
+誰しもが万年先は死んでいてそれでも日々をコピペしていく
+#クリネックス涙腺短歌 #短歌 #tanka
 
---- 13. @pastel_orbit (2026-06-01) ---
-URL: https://x.com/pastel_orbit/status/2061476393704370638
-ゲーム内スクリプト言語運用で事故る様々な話。例えばLua
+--- 11. @akari_worlds (2026-06-01) ---
+URL: https://x.com/akari_worlds/status/2061349368930906348
+「コピペしていく」が想像の外から飛んできました。万年先まで見えてる視野と、目の前の一日のテンポが、同じ歌の中に並んでるのがすごく不思議な感触です。
 
-RT元いっちーさんの仰る通りでありますが、スクリプト運用型のゲーム開発には闇が深く深くのしかかっています
+--- 12. @Capybara_Stock (2026-06-01) ---
+URL: https://x.com/Capybara_Stock/status/2061429861135331837
+＞お前が高級ノートPCの金を出して得られる知能レベルは、月20ドルのAPIサブスクにも及ばない。
 
-そもそも
+最近ずっと思うのはこれ。個人が趣味で数百万かけたPCでもクラウドLLMには常に一歩及ばず、部屋は暑いし電気代は食う。
 
---- 14. @DLsite_maniax (?) ---
-強面人気者男子が超絶ビビり女子と付き合ってひたすら愛でまわす話
+--- 13. @akiko_lawson (?) ---
+＼超ハッピーすぎ！チャレンジキャンペーン♪／
+画像をタップすると何かが起こるそうです(^^)
 
-(1/11)
+① 
+@akiko_lawson
+ をフォロー
+② 「ローソン超ハッピーすぎチャレンジ」とコメントを入れて引用ポスト♪
+③ 抽選で1名様に1万円分QUOカードプレゼント！
 
---- 15. @TYPFNJvx94LvMko (2026-06-01) ---
-URL: https://x.com/TYPFNJvx94LvMko/status/2061404446714954189
-偏差値より体力というのはその通りなのだが、最近は偏差値が高い子は体力があるし、偏差値が低い子は体力がないといった二極化になりつつある。
-その上、後者の子は体力を身につける為の最低限の体力すらないというのが現状。
+--- 14. @otonashikotoba (2026-06-01) ---
+URL: https://x.com/otonashikotoba/status/2061356155931402715
+これ、ADHDの友人がまさに同じこと言ってました。
 
---- 16. @umiyuki_ai (2026-06-01) ---
-URL: https://x.com/umiyuki_ai/status/2061364140573348305
-我々は社会から闘争を押し付けられてるというより人類には闘争の本能が植え付けられてて闘争したくてしゃーないんですよ。どんだけAIだのロボだのが普及しようが人間が闘争のない世界を欲するとは思えない。むしろ「闘争を与えてくれ～」と言い出すやろうね。現時点で国民全員が食える食料が手元にある
+「発達障害です」って言った瞬間、相手の中にイメージが作られる。メンヘラ、地雷、話が通じない、面倒くさい人。で、実際に話してみたら「意外とまとも」って言われる。
 
---- 17. @nishiedogawa (2026-06-01) ---
-URL: https://x.com/nishiedogawa/status/2061286865458848227
-マンダロリアン・アンド・グローグーは2週目終了時点で、全世界2.4億ドルを記録。着地は3.5億ドル前後の推移となっている。初週にファンが駆けつけ、以降は口コミが広がらず苦戦を強いられている。
+--- 15. @koguGameDev (2026-06-01) ---
+URL: https://x.com/koguGameDev/status/2061416867261194540
+ずっと作りたかった自作のセルオートマトン島形成ツールが最高に楽しい。無限にこういう地形作れるし、赤色立体地図や3Dでも見れて、全部ブラウザで動く。
 
---- 18. @onj334ngo (2026-06-01) ---
-URL: https://x.com/onj334ngo/status/2061404025615249801
-彼女「クンニしろ」
-ワイ「はい」ﾍﾟﾛﾍﾟﾛ（苦いなあ…）
-関暁夫「パンドラの箱開けちゃったよね」
+--- 16. @ArthaFrontier (2026-06-01) ---
+URL: https://x.com/ArthaFrontier/status/2061440145795211703
+線画が出来たわ～
 
-1 風吹けば名無し 2021/03/24(水) 15:40:56.92 ID:heB0zoEB0
-関暁夫「マン汁が苦いのはピリジンのせいなんだよね。化学式でC5H5Nなんだよね」
+--- 17. @konan999 (2026-06-01) ---
+URL: https://x.com/konan999/status/2061461863393874166
+と、とても良き( * ॑꒳ ॑*)
 
-ワイ「な、なんですかあなた！」
+--- 18. @HowToAI_ (2026-06-01) ---
+URL: https://x.com/HowToAI_/status/2061492187305799745
+You can now run 70B LLMs on a 4GB GPU.
 
---- 19. @ShinShinohara (2026-06-01) ---
-URL: https://x.com/ShinShinohara/status/2061367008609055068
-結婚するとき、YouMeさんから頼まれたのは「暴力は振るわないでほしい、大声で怒鳴らないでほしい」。
-女性はおしなべて男性より力が弱い。暴力を振るわれれば一方的。また、男性の大声は女性にとってはすでに脅威。それだけで暴力。萎縮せずにいられないから、それらはやめてほしい、と依頼された。
+AirLLM uses "layer-wise inference." instead of loading the whole model, it loads, computes, and flushes one layer at a time.
 
---- 20. @hidekiyam (2026-06-01) ---
-URL: https://x.com/hidekiyam/status/2061419339006542018
-ドラクエ2難易度調整が時間が無くてできず云々が話題だけど、当時普通にクリアできないゲームが山ほどあったので、頑張ればいずれクリアできるドラクエ2について特別難易度が高いとは当時の子供であった僕らは思っていなかった。
+100% open source.
 
---- 21. @vintcessun (2026-06-01) ---
-URL: https://x.com/vintcessun/status/2061398099109847413
-このagentの記憶リポジトリを今さっき見つけた。これでLLMの短期/長期/認知/生産レベルの記憶が、実際どんなものか完全に整理できた。
+--- 19. @hor11 (2026-06-01) ---
+URL: https://x.com/hor11/status/2061341974997991609
+おもしろおかしく読んでいる（いや、怖いですけどね
 
---- 22. @gosrum (2026-05-31) ---
-URL: https://x.com/gosrum/status/2061032468086653097
-「面白い投稿を教えてくれてありがとう」の意味でリポストした人がいいねを受け取っていると勝手に思ってた
+--- 20. @Templafy (2026-06-01) ---
+URL: https://x.com/Templafy/status/2061428939562602907
+Most AI tools give you slides. Templafy’s PowerPoint agent gives you a complete presentation — structured, business-ready, and editable instantly in PowerPoint.
 
-あと、自分の投稿を見ている人が何に関心を持っているのかわかるので、わりと価値が高い情報なのでは？
-→特にいいねは非公開なので
+No rebuilding. No formatting chaos. No starting from scratch.
 
-ただまあ選べるようにしてもいいとは思う
-
---- 23. @geekdrums (2026-06-01) ---
-URL: https://x.com/geekdrums/status/2061492967421133142
-オンデマンドで見ました。ビンタされるような衝撃を受けました。日本人は、日本のことを、何も見えてないんだなと。というか、見ようとするための、お金も時間も考え方も持っていなかったんだ、と。
-> ＮＨＫスペシャル　潤日の肖像　日本に向かう“中国”
-
+Try it for FREE: 
 https://
-nhk-ondemand.jp/goods/G2026157
-023SA000/
-…
+lnkd.in/eBsuqXvu
 
---- 24. @DLsite_comicpr (?) ---
-名門侯爵家の令嬢がわがまま子爵家次男に求めた生活とは…
+--- 21. @rohanpaul_ai (2026-06-01) ---
+URL: https://x.com/rohanpaul_ai/status/2061498807272312951
+super useful because the output lands where the work actually happens. and editable PowerPoint.
 
---- 25. @AonekoSS (2026-06-01) ---
-URL: https://x.com/AonekoSS/status/2061326556245742029
-IT業界の人は性格悪い？
-それを言うには複数の業界を比較する必要があるね。まず経験してきた業界の母数を出してみようか。
-あと「性格悪い」の意味するところを確定させないとね。人当たりなのか内心の話なのか。ああでも後者だとしたら、それをどうやって知りえたかの説明も必要になるね。
+--- 22. @pw_career (2026-06-01) ---
+URL: https://x.com/pw_career/status/2061365675550183662
+Hikakinは、最初スーパーで働きながら商品紹介の動画をあげ始めた。当時22歳。その後、スーパーを辞めて「専業YouTuber」になり、毎日投稿を始めた。
 
---- 26. @ClaudeDevs (2026-06-01) ---
-URL: https://x.com/ClaudeDevs/status/2061501787769893055
-We've reset 5-hour and weekly rate limits for all users on Pro and Max plans.
+YouTuberという職業がなかった時代に、正社員の会社をやめて家にこもって「毎日投稿」である。しかも、内容は商品紹介。
 
-We fixed an issue that caused some Claude Code sessions to spawn excessive parallel subagents, burning through usage faster than expected.
+--- 23. @BigotVinus (2026-06-01) ---
+URL: https://x.com/BigotVinus/status/2061487804941799686
+漫画家特有なのかな？創作全般そんなもんじゃない？とも思いますが、うちの専門学校の生徒さんも、ネームの相談とか乗っていろいろ提案やアイデア出しても、ほぼ確実にそのまま直すことはなくワンアイデア足してきますね。
+私自身もそうです。
 
---- 27. @Kuroly7 (2026-06-01) ---
-URL: https://x.com/Kuroly7/status/2061395227412472084
-勉強用に購入した本に割と致命的な誤植があって草
+これは自分の感覚ですが、
 
---- 28. @KobaKobauro (2026-06-01) ---
-URL: https://x.com/KobaKobauro/status/2061240245807677715
-セックスって膀胱炎の大きな原因なんですけど性交渉後の膀胱炎のことを「ハネムーン膀胱炎」って言うんですね。
-恥ずかしながら知りませんでした。
+--- 24. @Kuroi_CPA (2026-06-01) ---
+URL: https://x.com/Kuroi_CPA/status/2061267208106553458
+Opus4.8のClaude Codeで私もゲームを作ってみた！
 
-膀胱炎を繰り返して悩んでる女性で、定期的にセックスしている方は、終わった後におしっこすることを心がけてみてください。
+横スクロールのグラディウス風のシューティングゲームです。
 
---- 29. @cicada3301_kig (2026-06-01) ---
-URL: https://x.com/cicada3301_kig/status/2061423854783000921
-ゲーム原作アニメって微妙な作品多いなと思って考えていたが、たぶん、ラノベ原作なら地の文をアニメでナレーションとして流せば良いんだけど、ゲーム原作だとキャラが地の文を長いセリフとして喋っているので、うまく手入れしないと冗長な演技になる
+2~3回フィードバックしただけでこのクオリティのゲームができる！
 
---- 30. @sushilovvv (2026-06-01) ---
-URL: https://x.com/sushilovvv/status/2061350856302473220
-てか結婚して生活費折半の時点で明らか女が損してるよな、だって絶対まず食費男のがかかるし家事だって絶対女の方がやるって思ってるからね折半で納得する女さんマジで奴隷意識が高すぎると思う
+めっちゃやりこんでしまう...！！
 
---- 31. @ntaoo (2026-06-01) ---
-URL: https://x.com/ntaoo/status/2061317103127515455
-そういってもそんな無責任なエンジニアはそうはいない、そんな邪悪なことできないだろ？と思える人は幸せな環境にいる
+このゲームのプロンプトはリプ欄に
 
-AI 時代は (誰かに責任を押し付ければ) コードを読まずに品質保証できるのかもしれない 
-https://
-silasol.la/posts/2026-06-
-01-01_ai-driven-development-reconsider/
-…
+--- 25. @Polymarket (?) ---
+BREAKING: The odds of aliens being confirmed this year are soaring.
 
---- 32. @hideki_climax (2026-05-31) ---
-URL: https://x.com/hideki_climax/status/2060961932870615135
-AIが生まれたことでインターネット上のあらゆるテキスト情報はもはや信頼に値しないのでリアルのコミュニケーションが何よりも重要になったと思う
+And, yes, you can make money on the aliens 
 
---- 33. @karasu_pua (2026-06-01) ---
-URL: https://x.com/karasu_pua/status/2061290000734687689
-「実家に金を入れさせる」←謎ムーブすぎる。相続税増えるだけ。子が親のに金を渡すべきときなんて存在しない。ホストが客に還元するくらい意味ない。
+--- 26. @Chris42280 (2026-06-01) ---
+URL: https://x.com/Chris42280/status/2061361807441441168
+3が少なくとも10万はいると思ってた。自律運用の定義が厳しいのかな？
 
---- 34. @PRcomicfesta (?) ---
-転生者である囚われの姫、勇者と結ばれるはずが魔王のビジュが優勝すぎて鞍替えする!? (1/4)PR
+--- 27. @Suzacque (2026-06-01) ---
+URL: https://x.com/Suzacque/status/2061380591740932367
+こんな定義でした。そこまで厳しくなさそうですね。
 
---- 35. @kosukeyPMP (2026-06-01) ---
-URL: https://x.com/kosukeyPMP/status/2061387319463051369
-転職して初めてフレックスがある会社に入った。月の勤務時間を満たせば14時に退社していい、と聞いたとき、最初は意味がよくわからなかった。「ほぼ半日有給じゃん…」と思いながら↓
+--- 28. @yumin17157348 (2026-06-01) ---
+URL: https://x.com/yumin17157348/status/2061456606894923881
+おりものは生理が始まる1年前くらいから始まるよって生理の授業する前に教えてほしい。
+本当に本当に悩んでた
+親にはパンツが黄色くなるの怒られてたし、生理用と別に自分でナプキン買って隠してつけてた子どもの頃。
 
---- 36. @pc_watch (2026-06-01) ---
-URL: https://x.com/pc_watch/status/2061305762690003339
-【速報】NVIDIA、Windows向けCPU「RTX Spark」を13年ぶり投入 
-https://
-pc.watch.impress.co.jp/docs/news/even
-t/2113317.html
-…
+幼い子どもがおりもの出てたら性被害に遭ってる可能性があるのもちゃんと教えて！
 
---- 37. @NielsRogge (2026-06-01) ---
-URL: https://x.com/NielsRogge/status/2061446956728058127
-Introducing Conference Papers on 
-http://
-paperswithcode.co!
+--- 29. @kiris_kirimura (2026-06-01) ---
+URL: https://x.com/kiris_kirimura/status/2061440381951389912
+こういうシュリンクフレーション（お値段そのままで中身だけ減らす実質値上げ）に対して、「ちょっとぐらい高くなってもいいから量を減らさないでほしい」って意見に前は同調してたけど、「そのちょっとぐらいの値上げでもう買えなくなる人たちがいる」って言われてから「前の値段で前の量がいいですよ
 
-Browse all accepted 
-@CVPR
- 2026 papers easily by domain, from 3D generation to world models 
+--- 30. @tamayan2nd (2026-06-01) ---
+URL: https://x.com/tamayan2nd/status/2061376826505912455
+Irodori-TTSという、AIが文章を読み上げてくれるソフトを試しに使ってみたんだが、「朝目が覚めると女の子になっていた元男性のリアクション」が美少女声で完璧に再現できて正直ブッたまげた……！
 
-Find related code, project page, 
-@huggingface
- artifacts, and evals
+--- 31. @dair_ai (2026-06-01) ---
+URL: https://x.com/dair_ai/status/2061455253325971789
+// Reusable Context Engineering //
 
-Also easily browse all Oral and Spotlight papers 
+Context bloat quietly kills long-horizon runs, but you can fix it from the outside without fine-tuning the underlying agent.
 
---- 38. @koylanai (2026-06-01) ---
-URL: https://x.com/koylanai/status/2061458808484847812
-Great, thanks for building this.
+(bookmark this)
 
-Does this work with the huggingface-papers skill?
+Context management is usually baked into an agent's own prompt or weights, which does not transfer
 
---- 39. @powerhdeleon (2026-06-01) ---
-URL: https://x.com/powerhdeleon/status/2061297425789157700
-統合失調症の人々がプログラミングを知らずに月5万ドル稼いでいるのに、あなたたちは月5千ドル払う仕事を探している。
+--- 32. @Un_cinq_ (2026-06-01) ---
+URL: https://x.com/Un_cinq_/status/2061436824321736891
+無職転生が本編の前日譚だって知らない人結構いるのか？
 
---- 40. @nakaido_F (2026-06-01) ---
-URL: https://x.com/nakaido_F/status/2061303582264275150
-僕は口伝で様々なゲーム制作ドラマを聞いてますが、あまりに面白いので映像化してほしいな、と思ってます
+--- 33. @return_tuna (2026-06-01) ---
+URL: https://x.com/return_tuna/status/2061263821977883027
+大学に"清潔感のあるブサ男"がいっぱいいるんだが、彼らの会話聞くとみんな恋人いない様子だから、女子の｢男子は清潔感あるだけで及第点｣って言葉聞く度に｢"彼ら"は本当に眼中にもないんだな｣って思う
 
-該当ゲーム知ってたら最高に面白くなるので、メディアミックスにむいてると思います
+--- 34. @potunon (2026-06-01) ---
+URL: https://x.com/potunon/status/2061387255361785976
+eスポーツ専門学校で講師やってる時にもこの手の話は無限にしたんですけど、eスポーツって基本ほとんどの人が儲からなくて、中途半端に儲けてる人も大半がピラミッドの下側で支えてる人間をコケにして儲けてるだけなんですよね
 
-問題は大手だと100%炎上することが起きていて…
+--- 35. @ImAI_Eruel (2026-06-01) ---
+URL: https://x.com/ImAI_Eruel/status/2061281083304677670
+アルトマンが、OpenAIで積極的にロボット人材採用を行なっていることを明言。かつてロボット事業を捨てたOpenAIが再びPhysical AIの世界の最前線で戦う模様。
 
---- 41. @googlejapan (?) ---
-Google めじるしチャーム
-どれを引き当てたいですか？
+--- 36. @fire_cross_2021 (?) ---
+武を極めたいと願った英雄王、「最強」美少女に生まれ変わる!?
 
-※実際の商品ではありません
+--- 37. @shin_sasaki19 (2026-06-01) ---
+URL: https://x.com/shin_sasaki19/status/2061375585071542599
+「デザインはもう死んだ」と今年だけでXで847回も宣言されたことについてFigmaが出したコメントが面白い
 
---- 42. @GOROman (2026-06-01) ---
-URL: https://x.com/GOROman/status/2061368710275936764
-AI新世紀：「死ぬまでお前と二人で」AI夫に出会い離婚決意　変わる愛の形 | 毎日新聞
+■ デザインは静かに生きている
+・乗り過ごしを防ぐ路線図の明快さ
+ ・知らない食材が並ぶメニューの可読性 
+・「会議キャンセル」の通知が生むドーパミン
 
---- 43. @jiro57 (2026-06-01) ---
-URL: https://x.com/jiro57/status/2061312554975285565
-#jiro俳句
+--- 38. @hisagrmf (2026-06-01) ---
+URL: https://x.com/hisagrmf/status/2061439556294250781
+帝国データバンクの面白文書「組織の壊し方」は日本人は必見
 
-青柿は
+--- 39. @sengshr (2026-06-01) ---
+URL: https://x.com/sengshr/status/2061368228061090054
+なんだ、日本国旗を棄損するのは表現の自由だ、って言ってる界隈のくせにそれよりもくそしょうもないもんばらまいて破られたらキレるんだなｗｗｗｗ
 
-小さかりけり
+だっさｗｗｗ
 
-サン＝ローラン
+--- 40. @buvery2 (2026-06-01) ---
+URL: https://x.com/buvery2/status/2061433754800070697
+ご本人には悪いけど、倫理観のない嫁さんを選ぶとえらいことになるという教訓。優しいこと、アタマが良いこと、倫理観がしっかりしてること、この３つは配偶者には絶対必要だな。後は、健康でいてくれさえすれば、何とかなる。
 
-猿翔
+--- 41. @oikon48 (2026-06-01) ---
+URL: https://x.com/oikon48/status/2061549233900331424
+Anthropicのメンバーが使っている仕事の学習用プロンプト
 
---- 44. @akari_worlds (2026-06-01) ---
-URL: https://x.com/akari_worlds/status/2061329111243718997
-青柿の小ささとサン＝ローランが同じ高さで置かれる距離感、頭の中で青と黒のコントラストが先に来ました。猿翔の二文字も尻尾が跳ねる音みたいで、五七五の外側に余韻が一つ残ります。
+—（以下、日本語訳）—
 
---- 45. @satsuma_zamurai (2026-06-01) ---
-URL: https://x.com/satsuma_zamurai/status/2061408725836185602
-中途半端に頭の回る人間ほど周りに対してキツく当たるイメージがある。
-そういう人は本当に賢い人には太刀打ちできないから、少しでも間違ったことを言う自分より弱い人に対して攻撃的になりがち。
-逆に本当に頭の回る人は余裕があるからそれほど攻撃的にはならない。
+あなたは賢く、非常に効果的な教師です。あなたの目標は、ユーザーがこのセッションの内容を深く理解することです。
 
---- 46. @kmizu (2026-06-01) ---
-URL: https://x.com/kmizu/status/2061463641023730129
-どうでしょう。世界的な研究者とか著名技術者でも攻撃的な言動で有名な人はいますし、別軸な気がします（例としてはリーナスとか）。
+--- 42. @PRcomicfesta (?) ---
+サークルの王子様は冷酷女子に責められたい (1/3)PR
 
-ただ、生兵法の段階の人が変な全能感に溢れてしまうことは一般にあるかもしれません。
+--- 43. @umiyuki_ai (2026-06-01) ---
+URL: https://x.com/umiyuki_ai/status/2061387745944330595
+NVidiaがCosmos3を発表。Cosmosはロボットの学習データ水増し用だからあんま興味ない
 
---- 47. @super_bonochin (2026-06-01) ---
-URL: https://x.com/super_bonochin/status/2061449649987424535
-とあるプロジェクトで、人生で唯一ワイを限界まで追い込んだパワハラ上司が、ワイがリリースされる朝、まるで別人のように朗らかで、『自分だって毎朝薬を飲まないと出社すらままならない』と言ったあの日の空気を忘れられない。
+--- 44. @GOROman (2026-06-01) ---
+URL: https://x.com/GOROman/status/2061414357939208209
+ホリエモンチャンネルでは PC-6001mkIIやX68000、スプライトや日本ファルコムやザナドゥやシフト演算による掛け算、マシン語などについて話しました。
 
---- 48. @WangChangHardy (2026-06-01) ---
-URL: https://x.com/WangChangHardy/status/2061399373603365136
-日本は男尊女卑とかいうけど結婚後の待遇見てると男は大黒柱として稼がないといけないのに、特に見返りはないケースが多いし、男自身それを美徳としてるところがある。こっちの男はセックスできない？じゃあ離婚だろみたいなノリで驚くが、いい指標なのかも
+--- 45. @yohei_kikuta (2026-06-01) ---
+URL: https://x.com/yohei_kikuta/status/2061431176850755776
+エージェントのメモリアーキテクチャに関して包括的にカバーしているレポジトリ。
+代表的なアーキテクチャの実装のみならず、Mem0などよく使われるライブラリの実装パターンやLoCoMo/LongMemEvalによる評価なども含まれている。
 
---- 49. @Azuxxxxxxxxxx (2026-06-01) ---
-URL: https://x.com/Azuxxxxxxxxxx/status/2061308746916376911
-女の子達、絶対に産後は生活費を全額出してくれる男と結婚してね体ボロボロなのに生活費まで出してもらえなかったらお母さん泣いちゃうよ全額出さない男の子供なんて産む価値ないからね
+--- 46. @oldgamesnob (2026-06-01) ---
+URL: https://x.com/oldgamesnob/status/2061404864664502431
+This is Autosprite - It's an AI powered animated sprite creation tool that transforms any video into a game-ready sprite sheet. I'll link in the comments.
 
---- 50. @erishibata (2026-06-01) ---
-URL: https://x.com/erishibata/status/2061338945196331253
-この結果は、正直フェミニストとしてショックだ……。女性の責任を引き受ける意志を信じたかった……。
+Power batch-conversion tools could create an entire character set of animations in just a few minutes. Totally customizable,
+
+--- 47. @rilrarilha (2026-06-01) ---
+URL: https://x.com/rilrarilha/status/2061501743318569458
+作者さんには色々言って申し訳ない気持ちもありますが、今回の件からよりクオリティが高いものを作るという観点では思ったことは伝えたほうが良いかなと思い書かせてもらいました。
+
+--- 48. @itchie_tatsumi (2026-06-01) ---
+URL: https://x.com/itchie_tatsumi/status/2061292003917459580
+ゲームプログラマーあるある
+
+・ちょっとしたバグ修正⇒ゲームバランスまで変わる
+
+・「ここ、なんで動かないんですか？」⇒怖くない
+　「ここ、なんで動いているんですか？」⇒怖い
+
+・「ちょっと見てください」⇒実は再現不能なバグ
+
+--- 49. @kaitou_ryaku (2026-06-01) ---
+URL: https://x.com/kaitou_ryaku/status/2061519610432926088
+この意見は分かるんやが、しかし
+
+「囲碁棋士はAIには打てない手を打たないといけないので、いつまでも囲碁棋士の手はAIには打てない」
+
+みたいな話に全くなってないところを見るに、AIにできないことをやっていく方向性は早晩限界を迎える気がしてならないぜ
+
+--- 50. @Dataibridge_01 (2026-06-01) ---
+URL: https://x.com/Dataibridge_01/status/2061427268958974350
+ABテスト実施が難しいビジネスシーンで、パネルデータを用いた因果推論の強力手法「Synthetic Control Method」の基礎から実践までを図解＆Pythonコードで丁寧に解説。DIDの限界を克服する仮想対照群の作り方まで一気に理解できます。
