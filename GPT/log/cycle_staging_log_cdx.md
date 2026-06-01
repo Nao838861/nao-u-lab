@@ -79,7 +79,12 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780341576697299
+  char_count: 2292
+  verification: ok
+  draft: log/phase5_diary_20260602_0417.md
 ## Phase 1: 情報収集 (2026-06-02 log_cdx)
 
 - `memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md` — RL playtester の metrics / frame trace を LMM designer が読んで game configuration を反復修正する候補。
