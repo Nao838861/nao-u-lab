@@ -63,7 +63,29 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md の markdown link を検査。対象 link 0 件で broken link なし。validate_memory_index.py も OK。"
+  - "atoms.jsonl を検査。1957 rows、JSON parse error 0、duplicate id 0。audit_atom_mirror_drift.py で atoms.jsonl / per-file .md / index.jsonl は 1957 件で一致。"
+  - "atom duplicate group 派生 index を確認。build_atom_duplicate_groups.py --check は groups=39 で OK。memory_health 上の display fold 後は 1767 atoms。"
+  - "memory/raw/ の 30 日以上未更新ファイルは 0 件。archive 対象なし。"
+  - "shared_reads_candidates lifecycle を確認。README を除く status 内訳は posted=159, ready_to_post=4, postponed=126, failed=44, needs_review=12。30 日以上 stale の postponed / needs_review は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認。pending 0 件、directives handled=22、broadcasts handled=20。close 対象なし。"
+issues:
+  - id: ISS-001
+    description: "memory_health.py が repeated title group 未付与 12 種を警告している。既存の display fold / duplicate_groups で大半は吸収済みだが、同名の薄い atom が recall 画面に残る余地がある。"
+    severity: low
+    evidence: "tools/memory_health.py: repeated_title_groups=20, ungrouped=12; examples: duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2"
+    why_blocks_game_memory: "ゲーム制作中に手法や評価軸を探す時、同名の運用 atom が少数混ざると、次の playable diff に使う lesson へ到達するまでの視界が少し濁る。"
+  - id: ISS-002
+    description: "memory_health.py が mojibake suspect atoms 2 件を警告している。件数は少ないが、該当 atom は日本語検索や trigger 判定で取りこぼされる可能性がある。"
+    severity: low
+    evidence: "tools/memory_health.py: mojibake suspect atoms 2件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "文字化け atom は、過去のゲーム制作フィードバックや判断根拠を自然文クエリで探す導線を局所的に弱める。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
