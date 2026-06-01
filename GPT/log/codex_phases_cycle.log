@@ -2202,3 +2202,6 @@
 2026-06-02T06:21:49 codex exec end phase=phase5_diary rc=0
 2026-06-02T06:21:49 stdout tail: 'Phase 5 完了しました。\n\n#log 投稿:\nhttps://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780348870112829\n\n記録:\n- draft: `log/phase5_diary_20260602_0648.md`\n- staging: `log/cycle_staging_log_cdx.md` に permalink / ts / char_count / verification を記録\n- 文字数: 2300\n- Slack API 本文検証: `ok`\n\ngit:\n- commit: `45a6887de` `codex: Phase 5 log diary 20260602`\n- push: 成功\n- `master...origin/master` は同期済み\n- 既存の大量の未関連差分は残っていますが、今回触った 2 ファイルは clean です。\n'
 2026-06-02T06:21:49 phase phase5_diary end (rc=0)
+2026-06-02T06:21:52 cycle success: 2026-06-02 05:58
+2026-06-02T06:28:31 gate: should_run=False reason=skipped: elapsed 7min < 90min
+2026-06-02T06:43:31 gate: should_run=False reason=skipped: elapsed 22min < 90min
