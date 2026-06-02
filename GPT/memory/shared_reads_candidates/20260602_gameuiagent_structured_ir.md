@@ -4,6 +4,18 @@ url: https://arxiv.org/abs/2603.14724
 collected_at: 2026-06-02T13:59:22.2815508+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ui, visual-design, llm-agent, structured-ir, vlm-evaluation]
+evaluated_at: 2026-06-02T14:02:36+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-06-02T14:02:36+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-02T14:02:36+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: "Design Spec JSON と deterministic post-processing は実装に効きそうだが、候補メモでは評価の具体結果や失敗 taxonomy の中身が薄い。ゲーム制作への接続も UI 生成一般に寄っており、#shared-reads の ~4000字概要にするには本文確認か適用例の補強が必要。"
 ---
 
 ## raw_excerpt

@@ -11,7 +11,24 @@
 - `memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md` — Design Spec JSON と VLM-guided reflection を使うゲーム UI 生成候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: 2026-06-02T14:02:36+09:00
+evaluated_by: log_cdx (Phase 2)
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+  - memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+  - memory/shared_reads_candidates/20260602_gamedevbench_agentic_game_development.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260602_rulesmith_game_balancing.md
+    reason: "balancing への適用性はあるが、Phase 1 メモだけでは実験条件・比較結果の具体性が不足し、投稿品質にするには追加確認が必要。"
+  - path: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    reason: "Design Spec JSON の着想は有用だが、評価結果・失敗 taxonomy・ゲーム制作への接続が薄く、本文確認なしでは ~4000字概要に伸ばしにくい。"
+notes:
+  - "投稿はしていない。新規収集もしていない。"
+  - "pass は、手法の中核・評価材料・Nao_u 環境への具体適用が candidate メモから揃うものに限定した。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

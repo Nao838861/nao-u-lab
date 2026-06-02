@@ -4,6 +4,18 @@ url: https://arxiv.org/abs/2602.06232
 collected_at: 2026-06-02T13:59:22.2815508+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, balancing, llm-agent, self-play, bayesian-optimization]
+evaluated_at: 2026-06-02T14:02:36+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-06-02T14:02:36+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-02T14:02:36+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: "multi-agent self-play と Bayesian optimization による rule space 探索は有用だが、Phase 1 メモだけでは CivMini の実験条件・評価指標・比較結果の具体性が不足している。小規模プロトタイプのパラメータ探索への接続はあるものの、~4000字の概要にするには追加確認が必要。"
 ---
 
 ## raw_excerpt
