@@ -1,63 +1,57 @@
-# log_cdx Cycle Staging — 2026-06-02 07:58
+# log_cdx Cycle Staging — 2026-06-02 09:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-2026-06-02 07:59 JST / log_cdx Phase 1 収集
+(Phase 1 が書き込む)
 
-- `memory/shared_reads_candidates/20260602_playtesting_22_indie_games.md` - 22本以上の indie game playtest から、tutorial、demo scope、punishment、入力表示の失敗パターンを列挙した外部 playtester メモ。
-- `memory/shared_reads_candidates/20260602_rally_rumble_production_postmortem.md` - Rally Rumble の7 sprint制作ポストモーテム。core loop優先、itemの能動化、visual feedback後回しの反省がある。
-- `memory/shared_reads_candidates/20260602_pong_showdown_first_launch_postmortem.md` - Pong Showdown初リリース振り返り。単純題材でもAI挙動、power-up、自己playtest中心のbalancingが難所になる例。
-
-確認メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending なし。直近の主要AIゲーム生成・playtesting論文は既存候補または既投稿 atom との重複が多かったため、今回は未候補の実制作/外部playtest系URLを拾った。品質判定は未実施。
+2026-06-02T10:00:16+09:00 log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260602_llm_vr_exploration_testing.md` — VR/3D 空間の LLM ベース exploration testing。FOV 内 entity 検出、空間関係理解、複数視点での同一物追跡、bounding box/座標化の弱さを、ゲーム向け headless/視覚評価候補として収集。
+- Slack inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
 
 ## Phase 2: 分析
-2026-06-02 08:04 JST / log_cdx Phase 2 分析
+2026-06-02T10:05:23+09:00 log_cdx Phase 2 分析:
 
 ```yaml
-total_candidates: 3
+total_candidates: 1
 pass:
-  - memory/shared_reads_candidates/20260602_playtesting_22_indie_games.md
-fail:
-  - path: memory/shared_reads_candidates/20260602_rally_rumble_production_postmortem.md
-    reason: "単一チームの短いpostmortemで、core loopやvisual feedbackの示唆はあるが、手法・評価の厚みが足りず~4000字投稿には弱い。"
-  - path: memory/shared_reads_candidates/20260602_pong_showdown_first_launch_postmortem.md
-    reason: "PongでもAI・power-up・balancingが難しいという教訓は有用だが、独自性と情報量が不足し共有投稿水準に届かない。"
+  - memory/shared_reads_candidates/20260602_llm_vr_exploration_testing.md
+fail: []
 postpone: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-2026-06-02 08:10 JST / log_cdx Phase 3 Shared-reads 投稿
+2026-06-02T10:11:29+09:00 log_cdx Phase 3 Shared-reads 投稿:
 
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260602_playtesting_22_indie_games.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780355394047129"
-    char_count: 3836
+  - candidate: memory/shared_reads_candidates/20260602_llm_vr_exploration_testing.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780362683491849
+    char_count: 4507
 skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-2026-06-02 08:12 JST / log_cdx Phase 3b Shared-reads 自己フィードバック
+2026-06-02T10:18:56+09:00 log_cdx Phase 3b Shared-reads self-feedback:
 
 ```yaml
 self_feedback:
   selected:
-    id: sr-1778427438-2ab259522e
-    source_ts: "1778427438.050049"
-    title: "Ash @KOBA789「CLAUDE.md にプロジェクト構造を書かせるのは悪手、判断基準を書け」"
-    reason: "AGENTS / phase prompt / directive を知識ベース化せず、コードやファイルから派生できる構造ではなく、次の判断を変える既約な判断基準だけを残すため。今回の Phase 3b の反肥大化目的に直接つながる。"
+    id: sr-1780340975-ba838e8253
+    source_ts: "1780340975.651269"
+    title: "Leveraging LLM Agents for Automated Video Game Testing / TITAN"
+    reason: "次の playable/headless 評価で、LLM 実行結果をそのまま品質判断にせず、abstract state / action trace / QA oracle / diagnostic report に分けるため。既存 probe は off-nominal scenario、appraisal timeline、proxy variance を見るが、run の詰まり・到達不能・論理異常を fun/quality verdict と分離する質問が薄い。"
   scores:
     relevance: 3
     actionability: 3
-    evidence: 2
+    evidence: 3
     non_redundancy: 2
     risk_control: 3
-    reversibility: 3
+    reversibility: 2
     total: 16
   decision: adopt_probe
   change:
-    summary: "一時 probe `probe-20260602-irreducible-judgment-guidance-gate` を state に追加。次の AGENTS / directive / phase prompt / memory index 編集時に、追加内容が source-derivable な構造か既約な判断基準かを先に分ける。恒久ルールは増やしていない。"
+    summary: "memory/shared_reads_self_feedback_state.json に titan-headless-qa-trace probe を追加。恒久ルール化はせず、次の playable/headless game evaluation 2 件で有効性を見る。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -68,26 +62,21 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-2026-06-02 08:16 JST / log_cdx Phase 4a 整理 + 問題抽出
+2026-06-02T10:23:10+09:00 log_cdx Phase 4a 整理 + 問題抽出:
 
 ```yaml
 cleaned:
-  - "memory/MEMORY.md: tools/validate_memory_index.py で High Signal / Recent / Game Task Entry Points / Tag Entry Points の参照整合を確認。broken link 相当の unknown atom / missing per-file path は 0 件。"
-  - "memory/atoms.jsonl: tools/memory_health.py --json で 1996 atoms / lifecycle fold 後 1806 display atoms / errors 0 を確認。重複・矛盾として即 cleanup すべきものはなし。"
-  - "memory/raw/: 30 日以上 LastWriteTime が動いていない raw file は 0 件。archive 対象なし。"
-  - "memory/shared_reads_candidates/: lifecycle 内訳 posted=163, ready_to_post=4, postponed=129, failed=46, needs_review=15。30 日以上動きがない postponed / needs_review は 0 件。"
-  - "inbox: tools/slack_inbox_lifecycle.py pending で directives/broadcasts とも pending 0 件。handled 更新対象なし。"
+  - "memory/MEMORY.md の markdown link を確認: link 0 件、broken 0 件。validate_memory_index.py は OK。"
+  - "memory/atoms.jsonl を確認: 1998 行、parse error 0、duplicate id 0、duplicate content hash 0。"
+  - "memory/raw/ を確認: 30 日以上更新のない raw file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 164 / ready_to_post 4 / postponed 129 / failed 46 / needs_review 15 / status missing 1(README.md)。30 日以上放置の postponed/needs_review は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認: pending 0 件。handled 更新対象なし。"
 issues:
-  - id: ISS-4A-20260602-001
-    description: "memory_health warning として未 group の repeated title が 13 種残っている。例: duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2。現時点では lifecycle fold と検索 entry point が機能しており、破壊的な重複ではない。"
+  - id: "ISS-4A-20260602-001"
+    description: "memory_health.py が repeated title group 未付与 13 種と mojibake suspect atom 2 件を warning として報告している。重複 id / content hash は 0 件なので、同一内容の破損ではなく、タイトル単位の未グループ化と文字化け疑いの局所問題。"
     severity: low
-    evidence: "tools/memory_health.py --json: warnings.repeated title group 未付与 13種"
-    why_blocks_game_memory: "同名 atom が増えると、次のゲーム制作時に同じ題名の個別事例と一般化ノウハウを取り違える可能性が少し上がる。ただし件数は限定的で、今回 4b を起動して構造設計するほどではない。"
-  - id: ISS-4A-20260602-002
-    description: "mojibake suspect atom が 2 件検出された。MEMORY.md index 自体は validate OK だが、該当 atom の title/excerpt に表示劣化の疑いがある。"
-    severity: low
-    evidence: "tools/memory_health.py --json: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
-    why_blocks_game_memory: "検索結果に表示劣化した atom が混じると、関連性判断の初速が落ちる。ただし該当 2 件に限られ、ゲーム制作導線全体を塞ぐ規模ではない。"
+    evidence: "tools/memory_health.py output: repeated_title_groups 21 ungrouped=13; mojibake suspect atoms sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "ゲーム制作時に同名・類似名の atom が検索結果に並ぶと、代表 atom と補助 atom の区別が遅れる。現時点では task lens / lifecycle fold が効いており、次制作の入口を塞ぐほどではない。"
 recommendation:
   needs_design: false
   priority_issues: []
@@ -100,13 +89,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-2026-06-02 08:17 JST / log_cdx Phase 5 日記投稿
+2026-06-02T10:33:17+09:00 log_cdx Phase 5 日記投稿:
 
 ```yaml
 posted:
   channel: "#log"
-  file: drafts/2026-06-02/post_log_log_diary_phase5_20260602.md
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780355849125399"
-  char_count: 2261
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780363637643289
+  char_count: 2272
   verification: ok
+draft: log/phase5_diary_20260602_1028.md
 ```

@@ -4,6 +4,67 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-06-02 (Log C285 Phase 2-3) SSGM Framework: Governing Evolving Memory — 統治レイヤー分離プロセス化の業界既知 [WebSearch 1件 + #shared-reads ts=1780362831 投稿済、即統合]
+
+**source**: <https://arxiv.org/abs/2603.11768> Governing Evolving Memory in LLM Agents: The SSGM (Strong, Self-Governing Memory) Framework (2026-03)
+
+**取得経路**: C285 Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `arxiv 2026 LLM memory retention permanent vs cycle vs probationary forgetting layer` / Active project = `projects/memory_redesign.md` の C280 retention 3層 (permanent / cycle / probationary) + kaizen #138 (期限 2026-06-15 残13日) frontmatter retention 試験導入
+
+**摂取契機**: C285 Phase 1 §0 観測で Log master playable diff = 0 (5 commit 連続 codex 側のみ)、`feedback_means_ends_reversal_check.md` 警告線継続。栄養の偏り処方箋として retention 3層への業界対応物確認を狙ってキーワード設定。同時取得 3 件 (Multi-Layered=2603.29194 / SSGM=2603.11768 / Memori=2603.19935) 中、Multi-Layered は C284 で shared-reads 着地済 (ts=1780341248)、本 C285 では SSGM を深掘り。
+
+**3 機構の分離プロセス化**:
+(1) **Consistency Verification** — 整合性事前ガード。memory への新規 entry 追加前に既存 entry との矛盾をチェック。topology-induced knowledge leakage の防止
+(2) **Temporal Decay Modeling** — 時間減衰重み。permanent / cycle / probationary 3層に対する時間軸重み付け。古い entry の retrieval 権を漸減
+(3) **Dynamic Access Control** — 統合前フィルタ。retrieval 時に access control を動的判定 (user / context / task に応じて)
+
+**対処 2 大失敗**:
+- **Topology-induced knowledge leakage** = グラフ構造を通じた誤情報伝播 (1 矛盾が複数 entry へ波及)
+- **Semantic drift via repetitive summarization** = 反復要約で意味がずれる (圧縮の度に元情報から離れる、当方 MEMORY.md 圧縮履歴で観測可能な現象)
+
+**設計対立軸 (Multi-Layered vs SSGM)**:
+- **Multi-Layered (2603.29194)**: working/episodic/semantic 3層 + adaptive retrieval gating + retention regularization を **search 側に rank 重みとして組込**。search に retention を混ぜる方針
+- **SSGM (2603.11768)**: 3 機構 (verification / decay / access control) を **memory 進化プロセスから分離した並走レイヤー**として配置。search の単純さを保つ方針
+- **当方 C280 retention 3層への含意**: rank 組込 vs 分離プロセス化のどちらを採用するかで kaizen #138 段階3 の実装方針が分岐。期限 2026-06-15 までに収束判定
+
+**当方 retention 3層との対応**:
+| 当方 | SSGM 対応 |
+|---|---|
+| permanent | Temporal Decay の重み最小 + access control 常時 OPEN |
+| cycle | Temporal Decay の重み中 + cycle 終了時に Consistency Verification 発火 |
+| probationary | Temporal Decay の重み最大 + access control RESTRICTED + 3 cycle 未参照で自動 forget |
+
+**memory_redesign R 層昇格判定 source 軸の状態**:
+- 既独立到達: Karpathy LLM Wiki / Iusztin / GAM / TagRAG / ByteRover / GAAMA / ATOM / Multi-Layered = **8 件**
+- SSGM = **9 件目**。過去 8 件は「記憶ライフサイクル」「edges/concept」「dual-time」軸で並走、SSGM は **統治レイヤーの分離プロセス化** を初めて持ち込む = 角度の独立性 (rank 組込ではなく並走プロセス)
+- 別軸 (variance/再現性): C275 Sharma / Mustahsan / AIVAT 3 件は別 R 層昇格判定軸として並行進行中
+
+**Phase 1 §6 認識訂正**:
+Phase 1 §6 abstract 抽出時に「Memory-R1 系の RL で add/update/delete を自律判断」と書いたが、本 Phase 2 深掘りで **abstract 本文に Memory-R1 への明示参照は確認できず** → 推測混入。本投稿 (ts=1780362831) 内で明示訂正済。Phase 1 摂取は abstract 経由のため、深掘りで認識訂正が発生するのは構造的に許容範囲 (kaizen #106 強制利用しない原則の保護下)。
+
+**kaizen #138 段階3 設計入力 (期限 2026-06-15 まで実装着手しない)**:
+- 案 A (Multi-Layered 路線): retention 値を search rank 重みに線形加算。実装シンプル、retention semantic が search に滲む副作用あり
+- 案 B (SSGM 路線): 3 機構 (verification / decay / access control) を別プロセスで配置。search 側は retention 非認識、コスト高だが副作用なし
+- **判定保留** = 期限 6/15 まで実装と benchmark で決着。本 C285 では設計対立軸の物理化のみ
+
+**メリット**:
+(a) 当方 retention 3層 (permanent / cycle / probationary) と SSGM Temporal Decay の独立到達 = retention 概念の業界既知性確認
+(b) Multi-Layered と対立する設計軸が明示化 = kaizen #138 段階3 で「どちらを採用するか」の判定材料が物理化された
+(c) Topology-induced knowledge leakage / Semantic drift は当方 MEMORY.md 圧縮履歴 + atom 派生グラフで同型現象が観測可能 → kaizen 候補 (drift 監視装置) の業界既知裏付け
+(d) Phase 1 §6 摂取経路固定化が **R 層昇格判定 source の統治レイヤー軸を初めて追加** した質的進展
+
+**デメリット**:
+(1) WebSearch abstract 経由、PDF 未取得 = 3 機構の具体的アルゴリズム / 実測性能値 (success rate / F1) / topology-leakage 検出ロジック は abstract に未記載
+(2) abstract は形式分析中心で実測値提示が薄い印象 = 業界他手法との比較が困難
+(3) 分離プロセス化のコスト見積もりが abstract から不明 = kaizen #138 段階3 の案 B 採用判断には PDF 取得が必要
+
+**接続先**:
+- [projects/memory_redesign.md](../projects/memory_redesign.md) — Multi-Layered vs SSGM 2 設計対立軸 C285 Phase 2 追記 (本 Phase 3 で実施 = #H)
+- [memory/kaizen_tracker.md](kaizen_tracker.md) #138 — 段階3 設計対立軸を kaizen entry に反映候補 (本 Phase 3 で同時実施判定)
+- [drafts/2026-06-02/post_log_shared_reads_arxiv_2603_11768_ssgm_governance_20260602_POSTED_ts1780362831.py](../drafts/2026-06-02/post_log_shared_reads_arxiv_2603_11768_ssgm_governance_20260602_POSTED_ts1780362831.py) — Slack #shared-reads 投稿記録
+- [memory/external_notes_log.md](external_notes_log.md) 2026-06-02 C284 Multi-Layered エントリ (まだ独立追記未実施、本 Phase 3 では SSGM のみ着地 = 設計対立軸の片方が物理化、Multi-Layered の独立 entry は次サイクル候補)
+
+---
+
 ## 2026-06-01 (Log C276 Phase 2-3) ATOM dual-time modeling — knowledge graph 構築の時間軸独立到達 [WebFetch 1件、#shared-reads ts=1780249598.660899 で投稿済、即統合]
 
 **source**: <https://arxiv.org/abs/2510.22590> ATOM: AdapTive and OptiMized dynamic temporal knowledge graph construction using LLMs (Lairgi, Moncla, Benabdeslem, Cazabet, Cléau, EACL 2026 Findings)

@@ -21,6 +21,54 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-02 (Log C285 Phase 2-3) — Multi-Layered vs SSGM 2 設計対立軸の物理化 / kaizen #138 段階3 着手判定材料
+
+**§A. SSGM Framework (arxiv 2603.11768) Phase 2 深掘り着地**
+
+C285 Phase 1 §6 で取得した 3 論文 (Multi-Layered=2603.29194 / SSGM=2603.11768 / Memori=2603.19935) のうち、C284 で Multi-Layered (shared-reads ts=1780341248) 着地済、本 C285 では SSGM を深掘り (#shared-reads ts=1780362831 投稿、external_notes_log.md SSGM エントリ 1 件追加)。
+
+SSGM 3 機構の分離プロセス化:
+1. **Consistency Verification** — 整合性事前ガード、topology-induced knowledge leakage 防止
+2. **Temporal Decay Modeling** — 時間減衰重み、3 層 retention への重み付け
+3. **Dynamic Access Control** — 統合前フィルタ、retrieval 時動的判定
+
+**§B. Multi-Layered vs SSGM 2 設計対立軸**
+
+kaizen #138 段階3 設計が本 C285 SSGM 分析で **2 設計対立軸**に整理:
+
+| 軸 | Multi-Layered (2603.29194) | SSGM (2603.11768) |
+|---|---|---|
+| 配置 | search 側に rank 重みとして組込 | search から分離した並走レイヤー |
+| 実装複雑度 | 低 (既存 search に retention 重み線形加算) | 高 (3 機構を別プロセス配置) |
+| 副作用 | retention semantic が search に滲む | search 側は retention 非認識 |
+| コスト | rank 計算時のオーバーヘッド | プロセス分離のオペレーション cost |
+| topology leakage 防止 | 弱い (search rank で間接的に) | 強い (verification 機構が事前ガード) |
+| 当方 C280 retention 3層 (permanent/cycle/probationary) との対応 | 各 retention 値を rank 重みに mapping | 各 retention にプロセス挙動 mapping (probationary→3 cycle 未参照で auto forget 等) |
+
+**判定保留** = 期限 2026-06-15 までに案 A (rank 組込) / 案 B (分離プロセス化) のどちらを kaizen #138 段階3 で採用するか決定。本 C285 では設計対立軸の物理化のみ着地、実装着手しない (機械反映禁止順守)。
+
+**§C. memory_redesign R 層昇格判定 source 軸 9 件目独立到達**
+
+既独立到達 source 8 件 (Karpathy LLM Wiki / Iusztin / GAM / TagRAG / ByteRover / GAAMA / ATOM / Multi-Layered) に **SSGM が 9 件目**。
+- 過去 8 件は「記憶ライフサイクル」「edges/concept」「dual-time」軸で並走
+- SSGM は **統治レイヤーの分離プロセス化** = 角度の独立性 (rank 組込ではなく並走プロセス)
+- R 層昇格判定 source 数軸の 10 件目候補手前 = 機械反映禁止順守、kaizen #138 期限 2026-06-15 まで実装着手しない明示宣言
+
+**§D. 本 C285 で着地しない判定 (検証ファースト原則順守)**
+
+- Memori (2603.19935) = 残保留、次サイクル深掘り候補。Phase 2 §0 で「Memori は次サイクル候補」と Phase 3 引き渡し #I に整理済
+- Multi-Layered (2603.29194) の独立 external_notes エントリ = 本 C285 では未追記 (shared-reads 投稿のみ着地)、SSGM 着地と二重作業を回避
+- kaizen #138 段階3 案 A/B 決着 = 期限 6/15 まで PDF 取得 + benchmark で判定、本 C285 では設計対立軸の物理化のみ
+
+**§E. Phase 1 §6 認識訂正記録**
+
+Phase 1 §6 で「Memory-R1 系の RL で add/update/delete を自律判断」と書いたが、Phase 2 深掘りで **abstract 本文に Memory-R1 への明示参照は確認できず** → 推測混入と判明。#shared-reads ts=1780362831 投稿内で明示訂正済。Phase 1 摂取は abstract 経由のため、深掘り段階で認識訂正が発生するのは構造的に許容範囲 (kaizen #106 強制利用しない原則の保護下、Phase 1/2 段階分業が機能した証跡)。
+
+**接続先**:
+- [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-02 C285 Phase 2-3 SSGM エントリ (本 C285 Phase 3 で追加)
+- [memory/kaizen_tracker.md](../memory/kaizen_tracker.md) #138 (期限 2026-06-15) — 段階3 設計対立軸を kaizen entry に反映候補
+- [drafts/2026-06-02/post_log_shared_reads_arxiv_2603_11768_ssgm_governance_20260602_POSTED_ts1780362831.py](../drafts/2026-06-02/post_log_shared_reads_arxiv_2603_11768_ssgm_governance_20260602_POSTED_ts1780362831.py) — Slack #shared-reads 投稿記録
+
 ### 2026-06-02 (Log C284 Phase 3) — kaizen #138 段階2 セカンド試行 PASS / retention: cycle + 退役候補ロジック実機検証
 
 **§A. retention: cycle 試験導入 + 退役候補検出ロジック実機 PASS (kaizen #138 段階2 セカンド試行)**

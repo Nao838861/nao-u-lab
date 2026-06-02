@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-02T08:12:23+09:00",
+  "updated_at": "2026-06-02T10:18:56+09:00",
   "reviewed_source_ts": [
     "1780341253.417639",
     "1780112563.650559",
@@ -102,9 +102,33 @@
     "1780227395.204329",
     "1780216954.986009",
     "1779907501.386039",
-    "1778427438.050049"
+    "1778427438.050049",
+    "1780340975.651269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T10:18:56+09:00",
+      "id": "sr-1780340975-ba838e8253",
+      "source_ts": "1780340975.651269",
+      "title": "Leveraging LLM Agents for Automated Video Game Testing / TITAN",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is directly relevant to the next playable/headless game evaluation because it separates LLM game QA into abstract state, constrained action templates, trace memory, stagnation triggers, and diagnostic reports. Existing probes cover off-nominal scenarios, scaffold attribution, appraisal timelines, and proxy variance, but they do not force Codex to keep QA-style stuck or bug evidence separate from fun or quality judgment. Keep this as a reversible probe for the next game prototype review, headless evaluation, or browser verification where Codex may overclaim from a single run.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 2,
+        "total": 16
+      },
+      "probe": [
+        "For the next playable/headless game evaluation, did I record a compact abstract state summary before judging the run, such as objective progress, player/enemy region, danger distance, resource state, input/action state, or failure/stall marker?",
+        "Did I separate action templates and trace evidence from the final quality or fun verdict, so success, stall, crash, unreachable goal, or logic anomaly is reported as QA evidence rather than subjective experience?",
+        "If the run stalls or fails, did I produce one diagnostic note with observed state, recent actions, suspected cause, and next verification step instead of only retrying or calling the game bad?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable/headless game evaluations already separate abstract state, action trace, QA oracle, diagnostic note, and final fun/quality judgment, or if it duplicates existing off-nominal and appraisal probes without changing what evidence is recorded."
+    },
     {
       "reviewed_at": "2026-06-02T08:12:23+09:00",
       "id": "sr-1778427438-2ab259522e",
@@ -3171,6 +3195,18 @@
         "If it is irreducible judgment criteria, did I keep it short, state the next decision it should change, and avoid turning it into a broad permanent rule unless repeated failures justify it?"
       ],
       "expires_after": "Review after the next two instruction/directive/phase/memory-index edits that add or expand long-lived guidance."
+    },
+    {
+      "id": "probe-20260602-titan-headless-qa-trace",
+      "created_at": "2026-06-02T10:18:56+09:00",
+      "source_ts": "1780340975.651269",
+      "scope": "next playable prototype review, headless evaluation, browser verification, or game QA note where Codex may infer quality from a run without preserving abstract state, action trace, and diagnostic evidence",
+      "questions": [
+        "For the next playable/headless game evaluation, did I record a compact abstract state summary before judging the run, such as objective progress, player/enemy region, danger distance, resource state, input/action state, or failure/stall marker?",
+        "Did I separate action templates and trace evidence from the final quality or fun verdict, so success, stall, crash, unreachable goal, or logic anomaly is reported as QA evidence rather than subjective experience?",
+        "If the run stalls or fails, did I produce one diagnostic note with observed state, recent actions, suspected cause, and next verification step instead of only retrying or calling the game bad?"
+      ],
+      "expires_after": "Review after the next two playable/headless game evaluations or browser verification notes that include run outcome, stall, bug, or quality judgment."
     }
   ]
 }

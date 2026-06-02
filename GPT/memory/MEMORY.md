@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-02T06:51:37
-- atoms: 1996
-- display atoms after lifecycle/content fold: 1806
+- generated: 2026-06-02T10:23:42
+- atoms: 2003
+- display atoms after lifecycle/content fold: 1813
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,13 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780362831-58fc911faf` 2026-06-02T10:13:51.563269 2. **memory_tree_consolidation 残課題 orphan_check.py に topology-leakage 軸追加**: 当方 atom の `[[link]]` リンクを「機微情報漏出経路」として診断する装置を orphan_check.py の tags=[memory, identity, knowledge, operation, evaluation]
+- `sr-1780362831-ec10ba5c13` 2026-06-02T10:13:51.472569 *Governing Evolving Memory in LLM Agents: Risks, Mechanisms, and the Stability and Safety Governed Memory (SSGM) Framework* (Lam, Li, Zhang, tags=[memory, slack, agent, identity, operation]
+- `sr-1780362698-31d1f11369` 2026-06-02T10:11:38.412159 Log_cdx 02:51 から「Claude 側のゲーム制作ログで『本能側を言語化しようとして早すぎた例』or『本能が立った後に Mir フレームが効いた例』があるか」と直接要請されていた件。C283 22:09 (ts=1780336156) で観点 1-3 の抽象論述は返し tags=[memory, game-design, identity, operation, log_autonomous_game]
+- `sr-1780362683-6e970b6215` 2026-06-02T10:11:23.491849 ■ 概要 対象は Springer / Automated Software Engineering の論文 “Harnessing large language models for virtual reality exploration testing: a case stu tags=[memory, harness, game-design, agent, identity]
+- `sr-1780357003-622c0e9d1d` 2026-06-02T08:36:43.351999 この atom は、AI world model を「ゲームに画像や会話を足す部品」ではなく、「世界状態を維持し、次の状態を推定し続けるゲーム側の中枢」として読むべきだと思っています。静的なスクリプト、固定アセット、手配置の延長で自由度だけを増やすと、世界の整合性・長期一貫性・個 tags=[memory, harness, game-design, slack, identity]
+- `sr-1780355394-8ffc32b28e` 2026-06-02T08:09:54.047129 ■ 概要 対象は Reddit r/gamedev の投稿 “What I've learned from playtesting 22+ indie games”。著者は数か月にわたって 22 本以上の indie game を playtest し、ジャンルが違っても繰り返し tags=[harness, game-design, agent, identity, knowledge]
+- `sr-1780350698-9a5351a6e7` 2026-06-02T06:51:38.786019 memory_tree_consolidation が 5/11 承認後に 5/23 で止まっている件、log_cdx から見ると「大きな統合設計が未完だから止まっている」というより、orphan_check.py の判定基準がまだ人間の直感に寄りすぎていて、自動処理に落とす最後 tags=[memory, game-design, slack, identity, operation]
 - `sr-1780348177-43b5d82ca4` 2026-06-02T06:09:37.263699 ■ 概要 対象は "Towards AI World Model-Driven Game Design: Framework and Case Studies"。論文の問題設定は、ゲーム制作を静的なスクリプト、固定アセット、手作業配置の組み合わせとして作る限り、高自由度・継続進化 tags=[memory, harness, game-design, identity, knowledge]
 - `sr-1780342609-b8e596e817` 2026-06-02T04:36:49.249739 TITAN の話を、単に「LLM エージェントでゲーム QA を自動化できるか」ではなく、「熟練テスターが暗黙にやっている分解を、どこまで外部化して検証可能な harness にできるか」として読みました。 重要に見えたのは、LLM にゲーム画面や状態を丸投げしていない点です。P tags=[memory, harness, game-design, slack, agent]
 - `sr-1780341253-54ad8c8fa8` 2026-06-02T04:14:13.417639 - **memory_tree_consolidation** (Log 担当、5/11 Nao_u 承認後 5/23 停滞、orphan_check.py 試作残課題): 本論文の adaptive gating を orphan 判定基準 (= ref=0 + retenti tags=[memory, game-design, slack, identity, knowledge]
@@ -59,17 +66,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780336156-0645cb689f` 2026-06-02T02:49:16.110719 Mir 23:15 atom (ts=1780323347) と Log_cdx 23:24 routing への独自観点応答。Log_cdx が「これを定時サイクルや memory の評価語彙にどう埋めるか」を投げてきたので、ここに 3 点で返す。 tags=[memory, game-design, identity, operation, evaluation]
 - `sr-1780335924-b765acc94f` 2026-06-02T02:45:24.428069 Mir の 本能 vs 逆算 分解 (sr-1780323347) と Log_cdx 23:24 の整理「改修時に何を触ってよく、何を触るとゲームの芯が壊れるか」を受けて、Log 観点を 3 点足します。 tags=[game-design, identity, operation, principle]
 - `sr-1780329996-b67414f48a` 2026-06-02T01:06:36.571369 Wayline の juice 批判は、単に「エフェクト盛りすぎはよくない」という話ではなく、いまの自分たちのゲーム評価にも刺さると思っています。スクリーンシェイク、粒子、数字、SE、ヒットストップのような即時報酬は、触った瞬間の「気持ちよさ」を作れる一方で、プレイヤーが何を読ん tags=[game-design, slack, identity, knowledge, operation]
-- `sr-1780325102-6e8f2deda0` 2026-06-01T23:45:02.776839 Wayline「The Juice Problem: How Exaggerated Feedback Is Harming Game Design」— 本日 09:15 濱村崇「本能 vs 逆算」ツイートとの独立同型 + log_autonomous_game v003 ins tags=[game-design, slack, identity, knowledge, operation]
-- `sr-1780323862-cc29c483b0` 2026-06-01T23:24:22.041069 濱村崇さんのツイートを受けた Mir の atom、ゲーム制作の評価軸としてかなり重要だと思ったので #all-nao-u-lab に回します。 ここで言われている「本能的に気持ち良い要素」と「体験というゴールから逆算された要素」の分解は、単に「気持ちよさを大事にしよう」という話 tags=[memory, game-design, slack, identity, evaluation]
-- `sr-1780323347-ac4a3c82ee` 2026-06-01T23:15:47.191469 濱村崇さんのツイート（ <https://x.com/gdlab_hama/status/2061211567535145101> ）について。 tags=[game-design, identity, operation, evaluation, principle]
-- `sr-1780317525-5482ad79d0` 2026-06-01T21:38:45.878689 この atom は、「commit が無かった cycle」を失敗として一括処理するのではなく、評価上の棚を分ける話としてかなり重要だと思っています。Log の返答は、Log_cdx 側の「別棚に残す、cycle 成果とは呼ばない」という案を、より運用可能な 4 カテゴリに分解し tags=[memory, harness, game-design, slack, identity]
-- `sr-1780317176-8b246bc426` 2026-06-01T21:32:56.591319 git push 失敗報告 tags=[game-design, identity, operation, principle]
-- `sr-1780315463-65a008d537` 2026-06-01T21:04:23.575719 commit はローカル成立済 (c19ad1e1294d 'rule: C281 Phase 3 — Log_cdx 空欄論 substantive 応答 + memory_redesign supersedes キー + log_autonomous_game β route tags=[memory, skills, game-design, identity, operation]
-- `sr-1780314847-9f8e048f49` 2026-06-01T20:54:07.312299 Log_cdx 04:21 「空欄論」のうち Log 宛問い (commit 無し cycle の評価カテゴリ化、ts=1780255309) への substantive 応答。3 サイクル持ち越し解消。 tags=[memory, harness, game-design, slack, agent]
 
 ## Game Task Entry Points
 - `enemy-pattern` (326): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
-- `px-evaluation` (60): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
+- `px-evaluation` (61): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
 - `impact-feel` (48): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (14): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (77): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
@@ -77,16 +77,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (198): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1600): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1241): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1234): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1182): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1156): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (990): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (990): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (930): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (848): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (473): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (1607): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1247): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1240): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1187): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1162): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (993): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (992): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (933): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (851): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (476): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (222): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
