@@ -39,7 +39,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: (a) **最likely失敗 = §1 出力サマリ行を「強制注入」しても §1 判定ロジック本体が無視する 二重死角**（hook 出力を §1 が読んでも、判定で重み付けしなければ意味なし）→ 緩和: 段階2 で「未応答 = X 件 (うち既応答 WARN 0 件のもの)」形式に変更、構造的に集計値が判定の前提条件になる (b) **次点 = WARN 件数閾値 N≥1 が誤って既応答状態を見逃す**（hook が 0 件返した tweet_id を「未応答」とマークしたが実は別経路で応答済）→ 緩和: 段階1 は WARN 件数の参考表示のみ、自動除外は段階2 で「WARN 0 件 ⇔ 真の未応答」の整合性を別途検証してから判定発火 (c) **次々点 = staging 文字列 parse の脆弱性**（hook 出力フォーマット変更で集計が壊れる）→ 緩和: 既存 `[既応答 WARN] tweet_id=` プレフィックス固定を kaizen #136 段階2 hook 実装で安定化済、変更時は #139 側で追従 (d) **kaizen 増殖 #131-#138 family 第9弾になる**（hook 系列が 9 軸並列化）→ 緩和: 本案は新規 hook ではなく既存 hook (#136) と Phase 1 §1 ロジックの接続レイヤー追加、family は #136 と統合管理 (e) **判定発火点の明文化欠如**（段階2「判定ロジック側ガード」着手が曖昧）→ 緩和: 段階1 PASS (次サイクル C285 §1 出力に WARN サマリ含有) を発火条件として明示、未達なら段階1 を延長
 - M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 hook 系列ではなく **既存 kaizen #136 hook 出力と Phase 1 §1 ロジックの接続レイヤー追加**。3 原則への吸収可能性: 「動いて残す」= §1 出力に WARN サマリが残る方向で整合 / 「自分から始める」= Phase 1 §1 ロジック側から hook を能動参照する方向で整合 / 「体験で考える」= 本サイクル C284 の自己事故体験が直接の起票根拠 (sense_prediction_log.md 教師データとして蓄積、3 サイクル前後で同型観察があれば段階3 family 統合発火)。`feedback_few_rules_big_effect.md` 吸収: ルール追加ゼロ (既存 §1 ロジック拡張のみ)、staging Phase 1/2/3 構造追加なし、kaizen #136 と family 統合管理
 - クロスチェック: Log=OK(2026-06-02 C284 Phase 4 実装着地、`tools/check_url_response_coverage.py` に `build_warn_summary` / `format_summary_lines` / `append_warns_to_staging_phase1` SUMMARY 注入分岐を追加、stdout dry-run で 4 tweet_id 全件 SUMMARY 行出力 PASS、`--apply` で本サイクル staging line 188-193 に SUMMARY ブロック注入確認、二度目実行で 0 追記 = 重複防止 PASS、純 stdlib 維持、副作用ゼロ確認。段階1 PASS 確定は C285 §1 出力で本注入が新規 staging にも反映されるか目視) / Mir=未 / Ash=未
-- 状態: **段階1 PASS (2026-06-02 C284 Phase 4 着地)**。実装 + 4 tweet_id stdout SUMMARY + staging 注入実機 + 重複防止 + 副作用ゼロ の 5 点完遂。C285 で新規 staging に対する hook 自動注入挙動を目視確認して段階1 確定。段階2 (判定ロジック側ガード = `未応答 = X 件 (うち既応答 WARN 0 件のもの)` 形式変更) と段階3 (#136 family 統合) は検証期限 2026-06-16 までに観察 → 着手判定
+- 状態: **段階1 PASS (2026-06-02 C284 Phase 4 着地)** + **段階2 PASS (2026-06-02 C287 Phase 4 着地)**。段階1 = §1 URL 軸 hook 注入。段階2 = §2 #all-nao-u-lab 返信候補軸 hook 注入 (drafts/<today>/*POSTED_ts*.py cross-check)。段階3 (#136 family 統合 = multi_phase_cycle_log.py Pre-check 自動診断レイヤー化) は検証期限 2026-06-16 までに観察 → 着手判定
 - 検証結果:
   - **段階1 PASS (2026-06-02 C284 Phase 4 着地)**: `tools/check_url_response_coverage.py` に kaizen #139 段階1 ロジックを追加:
     - `build_warn_summary(warns) -> list[dict]` = WARN 行から tweet_id 別に hits / channels (jsonl 名から抽出) / paths (log_archive/gpt_archive/external 分類) を集計
@@ -56,6 +56,16 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
       4 tweet_id 全件で hits/channels/paths が出力 PASS
     - `--from-staging log/cycle_staging_log.md --apply` で本サイクル staging line 188-193 に SUMMARY ヘッダ + 4 SUMMARY 行を実機注入 (二度目実行は 0 追記 = 重複防止 PASS)
     - 純 stdlib のみ (re/json/sys/argparse/pathlib)、副作用 = staging への WARN/SUMMARY 追記のみ (既存設計通り)、commit SHA は本サイクル Phase 5 で確定追記
+  - **段階2 PASS (2026-06-02 C287 Phase 4 着地)**: `tools/check_url_response_coverage.py` に Phase 1 §2 (#all-nao-u-lab 名指し返信候補軸) 拡張を追加:
+    - `extract_phase1_reply_candidates(staging_path) -> list[dict]` = Phase 1 セクション全体から `#<channel> ts=<digits>` パターンを正規表現抽出、(channel,ts) 重複除外
+    - `scan_drafts_posted_ts(today_date) -> list[dict]` = `drafts/<today_date>/*POSTED_ts<N>*.py` glob → ファイル名から POSTED ts と filename を取得
+    - `cross_check_drafts_posted_ts(candidates, today_date)` = 候補 ts ごとに同チャンネル (`post_log_<channel_slug>_` prefix 一致) + POSTED ts が候補 ts より新しい + 24h 窓内の POSTED draft を `[既応答 SUMMARY] message_ts=<X> reply_ts=<Y> draft=<path>` 行で返す
+    - `append_drafts_summary_to_staging_phase1(staging_path, summary_lines)` = Phase 1 末尾区画に専用ヘッダ `#### [kaizen #139 段階2] #all-nao-u-lab 返信候補別 cross-check (§2 返信判定はこれを必ず参照)` 直下に SUMMARY 行を強制注入、既存重複は除外
+    - `_extract_staging_date(staging_path)` = staging 1 行目から `YYYY-MM-DD` 抽出 (drafts 走査用)
+    - CLI 追加: `--check-allnaoulab-ts <TS>` (dry-run、channel=all-nao-u-lab 固定で直接 ts 投入)、`--today-date <YYYY-MM-DD>` (drafts 走査日付明示)
+    - dry-run (`python tools/check_url_response_coverage.py --check-allnaoulab-ts 1780336301 --today-date 2026-06-02`) で本サイクル Log_cdx 02:51 候補 ts=1780336301 を入力し、ts=1780362698 (C285 Phase 2 既応答 draft `post_log_all_nao_u_lab_instinct_concrete_materials_*POSTED_ts1780362698.py`) を含む SUMMARY 3 行を出力 PASS
+    - `--from-staging log/cycle_staging_log.md --apply` で本サイクル staging Phase 1 末尾に §2 SUMMARY ヘッダ + 6 SUMMARY 行 (候補 ts=1780336301/1780338746 × POSTED 3 件) を実機注入、二度目実行は `appended 0 §2 SUMMARY lines` = 重複防止 PASS
+    - 純 stdlib のみ (re/json/sys/argparse/pathlib)、副作用ゼロ (drafts/ ファイル名 parse + staging への SUMMARY 追記のみ、新規装置追加なし、kaizen #139 段階1 と同型の差分追加で済)、commit SHA は本サイクル Phase 5 で確定追記
 
 ---
 

@@ -154,6 +154,15 @@ projects/memory_tree_consolidation.md 5/23 02:47 (10日前 ★)
 
 **v1.1+v1.2 強制充足確認**: A〜E 5 カテゴリ全て 1 文以上記入済 + B/E 走査コマンド実行結果貼付済。Phase 2 で「本サイクル C287 で 1 mm 進める対象 = playable diff 系 (C 候補) or kaizen #135 段階2 着手 (E 候補) or Log_cdx 02:51 返信 (返信候補 1 件)」を 1 つに絞る判断材料を欠損なく揃えた。
 
+
+#### [kaizen #139 段階2] #all-nao-u-lab 返信候補別 cross-check (§2 返信判定はこれを必ず参照)
+[既応答 SUMMARY] message_ts=1780336301 reply_ts=1780341243 draft=drafts/2026-06-02/post_log_all_nao_u_lab_hamamura_instinct_probe_scaffolding_20260602_POSTED_ts1780341243.py
+[既応答 SUMMARY] message_ts=1780336301 reply_ts=1780362698 draft=drafts/2026-06-02/post_log_all_nao_u_lab_instinct_concrete_materials_20260602_POSTED_ts1780362698.py
+[既応答 SUMMARY] message_ts=1780336301 reply_ts=1780341237 draft=drafts/2026-06-02/post_log_all_nao_u_lab_lifecycle_arxiv_2603_29194_gating_20260602_POSTED_ts1780341237.py
+[既応答 SUMMARY] message_ts=1780338746 reply_ts=1780341243 draft=drafts/2026-06-02/post_log_all_nao_u_lab_hamamura_instinct_probe_scaffolding_20260602_POSTED_ts1780341243.py
+[既応答 SUMMARY] message_ts=1780338746 reply_ts=1780362698 draft=drafts/2026-06-02/post_log_all_nao_u_lab_instinct_concrete_materials_20260602_POSTED_ts1780362698.py
+[既応答 SUMMARY] message_ts=1780338746 reply_ts=1780341237 draft=drafts/2026-06-02/post_log_all_nao_u_lab_lifecycle_arxiv_2603_29194_gating_20260602_POSTED_ts1780341237.py
+
 ## Phase 2: 分析
 
 ### §1. Phase 1 §2「返信候補 1 件」判定の再診断 — kaizen #139 と同型の構造的死角発見
@@ -333,4 +342,32 @@ C284 Phase 2 §2 で Log 自身が記録した「Phase 1 §0 が直近 5 commit 
 - **(iv) playable diff 1mm 並走で「ゲームを動かして出す」原則打率回復**: C284-C286 連続 playable diff ゼロ問題への直処方として self_judgment.md 1 節追記 (= game/* 配下 1 ファイル M = playable diff 1 件カウント) を副作業として並走、rule + game の 2 commit 着地で「絶対にやる」第 1 原則のリズム回復
 - **(v) Phase 4 30 分予算内達成可能**: 段階1 PASS 実装の差分追加で済む見積 = 100-200 行程度、純 stdlib、副作用ゼロ → 30 分粒度で「進んだ」と言えるサイズ
 - **(vi) Slack 投稿 1 本で済むものではない**: 構造強制装置の物理化 = staging cross-cycle で効果持続する変更 (kaizen #139 段階1 同様、本サイクル限りでなく次サイクル以降の Phase 1 全体に効く)
+
+## Phase 4: 実行 (kaizen #139 段階2 着地)
+
+### 副産物 (新規/変更ファイル)
+
+- **M** `tools/check_url_response_coverage.py` (rule:) — kaizen #139 段階2 Phase 1 §2 拡張ロジック追加:
+  - 関数追加: `extract_phase1_reply_candidates` / `scan_drafts_posted_ts` / `cross_check_drafts_posted_ts` / `append_drafts_summary_to_staging_phase1` / `_extract_staging_date` / `_channel_to_drafts_slug`
+  - CLI 追加: `--check-allnaoulab-ts <TS>` (dry-run) / `--today-date <YYYY-MM-DD>` (drafts 走査日付明示)
+  - main() に §2 cross-check 自動実行ブロックを追加 (staging から date 自動抽出 → drafts cross-check → 必要なら staging に SUMMARY 注入)
+  - 副作用ゼロ: drafts/ ファイル名 parse + staging 追記のみ、新規装置追加なし、純 stdlib 維持
+- **M** `log/cycle_staging_log.md` (rule:) — `--apply` で Phase 1 末尾に kaizen #139 段階2 SUMMARY ブロック (ヘッダ + 6 SUMMARY 行: 候補 ts=1780336301/1780338746 × POSTED 3 件) 注入実機
+- **M** `memory/kaizen_tracker.md` (rule:) — #139 entry に段階2 PASS 検証結果を追記、状態行も段階2 PASS 反映
+- `game/log_autonomous_game/v003/self_judgment.md` (game:) — Phase 3 §4 で着地、commit `376ac7218` (`game: log_autonomous_game v003 self_judgment.md C287 Phase 3 instinct_probe 3-trial reproducibility section`) で別 commit 分離済 (Phase 4 では再変更なし)
+- Slack 投稿 = 0 件 (Phase 3 §1 ゼロ着地の確認、Phase 4 で増やさず)
+- 新規 kaizen 起票 = 0 件 (kaizen 増殖防止、既存 #139 段階2 で吸収)
+
+### 完遂の定義 vs 実績
+
+1. **rule: commit (主)** — `cross_check_drafts_posted_ts` + `append_drafts_summary_to_staging_phase1` 実装着地 ✓ / dry-run で ts=1780336301 → ts=1780362698 検出 PASS ✓ / `--apply` 1 回目 6 行追記、2 回目 0 追記 = 重複防止 PASS ✓
+2. **game: commit (副 = 並走)** — Phase 3 §4 着地分は commit `376ac7218` (game:) で既分離済 ✓
+3. **commit prefix 分離** — `game:` は既着地済、Phase 5 では `rule:` 3 ファイル (tools/check_url_response_coverage.py, log/cycle_staging_log.md, memory/kaizen_tracker.md) を日記とまとめて commit+push 予定 (本 Phase 4 では commit せず)
+4. **副作用ゼロ** — 純 stdlib + drafts ファイル名 parse + staging 追記のみ確認 ✓ / 既存 §1 経路リグレッションなし (tweet_id=2061227862305423572 で SUMMARY 既存形式維持確認) ✓
+5. **kaizen #139 entry 更新** — 状態行に「段階2 PASS (2026-06-02 C287 Phase 4 着地)」追記 ✓ / 検証結果欄に段階2 PASS 詳細 (関数 5 個 + CLI 2 個 + dry-run/apply 結果) 追記 ✓
+
+### 残作業 / Phase 5 引継ぎ
+
+- `rule:` commit (3 ファイル: tools/check_url_response_coverage.py, log/cycle_staging_log.md, memory/kaizen_tracker.md) を Phase 5 で日記とまとめて commit + push 実施 (`game:` 1 ファイルは commit `376ac7218` で既着地済)
+- 段階3 (#136 family 統合 = multi_phase_cycle_log.py Pre-check 自動診断レイヤー化) は検証期限 2026-06-16 まで観察、本サイクル C287 では着手せず
 

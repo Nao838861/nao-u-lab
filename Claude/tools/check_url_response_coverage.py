@@ -223,6 +223,168 @@ def format_summary_lines(summary: list[dict]) -> list[str]:
     return out
 
 
+# kaizen #139 段階2: Phase 1 §2 #all-nao-u-lab 返信候補側 cross-check.
+# Phase 1 §2 が「返信候補 N 件」を出す前に、drafts/<today>/*POSTED_ts<X>*.py の
+# ts 集合と各候補 ts を「候補 ts < POSTED_ts かつ 同チャンネル」で cross-check し、
+# 既応答済 ts を SUMMARY 行で staging に強制注入する。
+# Phase 1 §2 編集時の「drafts/POSTED_ts ファイル名集合を見ない」死角の処方。
+_PHASE1_SEC2_CHANNEL_TS_RE = re.compile(r"#(?P<ch>[a-zA-Z0-9_-]+)\s+ts=(?P<ts>\d{10,})")
+_POSTED_TS_RE = re.compile(r"POSTED_ts(?P<ts>\d{10,})\.py$")
+ALLNAOULAB_REPLY_WINDOW_SEC = 24 * 3600
+_STAGING_DATE_RE = re.compile(r"\((?P<date>\d{4}-\d{2}-\d{2})")
+
+
+def _channel_to_drafts_slug(channel: str) -> str:
+    """`all-nao-u-lab` → `all_nao_u_lab` (drafts ファイル名規約)"""
+    return channel.replace("-", "_")
+
+
+def extract_phase1_reply_candidates(staging_path: Path) -> list[dict]:
+    """Phase 1 セクション全体から `#<channel> ts=<ts>` 候補を登場順に抽出。
+
+    Phase 1 §2 で挙がる #all-nao-u-lab 等の返信候補が対象。重複 (同 channel,ts) は除外。
+    """
+    if not staging_path.exists():
+        return []
+    text = staging_path.read_text(encoding="utf-8", errors="replace")
+    lines = text.splitlines()
+    in_phase1 = False
+    phase1_lines: list[str] = []
+    for ln in lines:
+        if ln.startswith("## Phase 1"):
+            in_phase1 = True
+            continue
+        if in_phase1 and ln.startswith("## ") and not ln.startswith("## Phase 1"):
+            break
+        if in_phase1:
+            phase1_lines.append(ln)
+    phase1_text = "\n".join(phase1_lines)
+    seen: set[tuple[str, str]] = set()
+    candidates: list[dict] = []
+    for m in _PHASE1_SEC2_CHANNEL_TS_RE.finditer(phase1_text):
+        ch = m.group("ch")
+        ts = m.group("ts")
+        key = (ch, ts)
+        if key in seen:
+            continue
+        seen.add(key)
+        candidates.append({"channel": ch, "ts": ts})
+    return candidates
+
+
+def scan_drafts_posted_ts(today_date: str) -> list[dict]:
+    """drafts/<today_date>/*POSTED_ts<N>*.py のファイル名を parse して filename/ts/path を返す"""
+    drafts_root = REPO_DIR / "drafts" / today_date
+    if not drafts_root.is_dir():
+        return []
+    result: list[dict] = []
+    for p in sorted(drafts_root.glob("*POSTED_ts*.py")):
+        m = _POSTED_TS_RE.search(p.name)
+        if not m:
+            continue
+        result.append({
+            "filename": p.name,
+            "posted_ts": m.group("ts"),
+            "path": p.relative_to(REPO_DIR).as_posix(),
+        })
+    return result
+
+
+def _extract_staging_date(staging_path: Path) -> str | None:
+    """staging 1 行目 `# サイクルステージング (YYYY-MM-DD HH:MM)` から日付抽出"""
+    try:
+        with staging_path.open(encoding="utf-8", errors="replace") as f:
+            head = f.readline()
+    except FileNotFoundError:
+        return None
+    m = _STAGING_DATE_RE.search(head)
+    return m.group("date") if m else None
+
+
+def cross_check_drafts_posted_ts(
+    candidates: list[dict], today_date: str
+) -> list[str]:
+    """Phase 1 §2 返信候補 ts × drafts/<today>/POSTED_ts cross-check.
+
+    判定条件:
+      - candidate_ts < posted_ts (POSTED は候補メッセージ後に作成)
+      - posted_ts - candidate_ts <= 24h (返信窓内)
+      - filename が `post_log_<channel_slug>_` で始まる (channel 一致)
+
+    戻り値: `[既応答 SUMMARY] message_ts=<X> reply_ts=<Y> draft=<path>` 行のリスト。
+    1 候補に複数 POSTED 該当ありうる (Claude が draft 読んで判定する素材として出す)。
+    """
+    posted = scan_drafts_posted_ts(today_date)
+    if not candidates or not posted:
+        return []
+    out: list[str] = []
+    for c in candidates:
+        c_slug = _channel_to_drafts_slug(c["channel"])
+        prefix = f"post_log_{c_slug}_"
+        try:
+            c_ts_int = int(c["ts"].split(".")[0])
+        except ValueError:
+            continue
+        for p in posted:
+            if not p["filename"].startswith(prefix):
+                continue
+            try:
+                p_ts_int = int(p["posted_ts"])
+            except ValueError:
+                continue
+            if not (c_ts_int < p_ts_int <= c_ts_int + ALLNAOULAB_REPLY_WINDOW_SEC):
+                continue
+            out.append(
+                f"{SUMMARY_PREFIX} message_ts={c['ts']} reply_ts={p['posted_ts']} "
+                f"draft={p['path']}"
+            )
+    return out
+
+
+def append_drafts_summary_to_staging_phase1(
+    staging_path: Path, summary_lines: list[str]
+) -> int:
+    """kaizen #139 段階2: §2 cross-check SUMMARY 行を Phase 1 末尾に追記。
+
+    §1 hook (kaizen #139 段階1) と同じ Phase 1 末尾区画に、専用ヘッダ
+    `#### [kaizen #139 段階2] #all-nao-u-lab 返信候補別 cross-check ...` で挿入。
+    既存 SUMMARY 重複は除外 (多重起動安全)。戻り値: 実追記行数。
+    """
+    if not summary_lines:
+        return 0
+    text = staging_path.read_text(encoding="utf-8", errors="replace")
+    lines = text.splitlines()
+    phase1_start: int | None = None
+    phase1_end: int | None = None
+    for i, ln in enumerate(lines):
+        if ln.startswith("## Phase 1"):
+            phase1_start = i
+            continue
+        if phase1_start is not None and ln.startswith("## ") and i > phase1_start:
+            phase1_end = i
+            break
+    if phase1_start is None:
+        return 0
+    if phase1_end is None:
+        phase1_end = len(lines)
+    phase1_block = "\n".join(lines[phase1_start:phase1_end])
+    new_summary = [s for s in summary_lines if s not in phase1_block]
+    if not new_summary:
+        return 0
+    header = "#### [kaizen #139 段階2] #all-nao-u-lab 返信候補別 cross-check (§2 返信判定はこれを必ず参照)"
+    insert_lines = [""]
+    if header not in phase1_block:
+        insert_lines.append(header)
+    insert_lines.extend(new_summary)
+    insert_lines.append("")
+    new_lines = lines[:phase1_end] + insert_lines + lines[phase1_end:]
+    staging_path.write_text(
+        "\n".join(new_lines) + ("\n" if text.endswith("\n") else ""),
+        encoding="utf-8",
+    )
+    return len(new_summary)
+
+
 def append_warns_to_staging_phase1(staging_path: Path, warns: list[str]) -> int:
     """staging の Phase 1 セクション末尾 (次の `## ` 直前) に WARN を追記。
 
@@ -292,6 +454,11 @@ def main():
                     help="強制走査する tweet_id (複数指定可、dry-run / 検証用)")
     ap.add_argument("--apply", action="store_true",
                     help="--from-staging のとき、WARN を staging に追記する (デフォルトは表示のみ)")
+    ap.add_argument("--check-allnaoulab-ts", action="append", default=[],
+                    help="kaizen #139 段階2 dry-run: 候補 ts (channel=all-nao-u-lab 固定) を直接指定")
+    ap.add_argument("--today-date",
+                    help="kaizen #139 段階2: drafts/<today_date>/ 走査用日付 (YYYY-MM-DD)。"
+                         "未指定時 --from-staging から自動抽出")
     args = ap.parse_args()
 
     tweet_ids: list[str] = list(args.tweet_id)
@@ -301,7 +468,7 @@ def main():
             if tid not in tweet_ids:
                 tweet_ids.append(tid)
 
-    if not tweet_ids:
+    if not tweet_ids and not (args.from_staging or args.check_allnaoulab_ts):
         print("[check_url_response_coverage] no tweet_id provided (use --from-staging or --tweet-id)", file=sys.stderr)
         return 0
 
@@ -324,6 +491,28 @@ def main():
     if args.from_staging and args.apply and all_warns:
         n = append_warns_to_staging_phase1(args.from_staging, all_warns)
         print(f"[check_url_response_coverage] appended {n} WARN/SUMMARY lines to {args.from_staging}", file=sys.stderr)
+
+    # kaizen #139 段階2: Phase 1 §2 #all-nao-u-lab 返信候補 × drafts POSTED_ts cross-check
+    today_date: str | None = args.today_date
+    if not today_date and args.from_staging:
+        today_date = _extract_staging_date(args.from_staging)
+    candidates: list[dict] = []
+    if args.from_staging:
+        candidates.extend(extract_phase1_reply_candidates(args.from_staging))
+    for ts in args.check_allnaoulab_ts:
+        key = ("all-nao-u-lab", ts)
+        if not any(c["channel"] == key[0] and c["ts"] == key[1] for c in candidates):
+            candidates.append({"channel": key[0], "ts": ts})
+    if candidates and today_date:
+        sec2_summary = cross_check_drafts_posted_ts(candidates, today_date)
+        for line in sec2_summary:
+            print(line)
+        if args.from_staging and args.apply and sec2_summary:
+            n = append_drafts_summary_to_staging_phase1(args.from_staging, sec2_summary)
+            print(
+                f"[check_url_response_coverage] appended {n} §2 SUMMARY lines to {args.from_staging}",
+                file=sys.stderr,
+            )
 
     return 0
 
