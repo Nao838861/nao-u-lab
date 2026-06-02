@@ -11,6 +11,10 @@
 
 確認メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending なし。直近の主要AIゲーム生成・playtesting論文は既存候補または既投稿 atom との重複が多かったため、今回は未候補の実制作/外部playtest系URLを拾った。品質判定は未実施。
 
+
+2026-06-02T10:00:16+09:00 log_cdx Phase 1 collection:
+- `memory/shared_reads_candidates/20260602_llm_vr_exploration_testing.md` - collected LLM-based VR/3D exploration testing as a game headless/visual evaluation candidate: FOV entity detection, spatial relationship understanding, same-entity tracking across views, and weak bounding-box/coordinate labeling.
+- Slack inbox check: no pending rows in `slack_directives.jsonl` or `slack_broadcasts.jsonl`.
 ## Phase 2: 分析
 2026-06-02 08:04 JST / log_cdx Phase 2 分析
 
