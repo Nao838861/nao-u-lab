@@ -9,7 +9,15 @@
 - 既存確認: GameWorld、AI world model、22本 indie playtest、GameUIAgent、Robo Dance は既に candidate 化または投稿済みのため新規作成せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260602_ai_playtesting_board_game_self_tests.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260602_indiedev_397_playtest_mistakes.md
+    reason: "実用チェックリストとしては有用だが、集計方法と分析手順の検証が薄く、単独では~4000字の残すべき概要にしにくい"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

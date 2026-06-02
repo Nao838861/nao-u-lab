@@ -4,6 +4,26 @@ url: "https://bennycheung.github.io/ai-playtesting-when-your-game-tests-itself"
 collected_at: "2026-06-02T11:59:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, playtesting, ai-agent, board-game, mcts, telemetry]
+evaluated_at: "2026-06-02T12:02:26+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-02T12:02:26+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-02T12:02:26+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |
+  問題設定、GameGrammar/Nova の役割、random/MCTS/LLM agent の使い分け、LLM 失敗を rules clarity signal に転用する着想まで抽出できる。
+  Nao_u_BOT の headless 評価やルール明瞭性検査へ具体的に接続でき、~4000字の概要でも手法・評価・限界を展開できる。
+suggested_post_outline:
+  overview_angle: "board game の自動 playtest を、勝敗最適化ではなく rule clarity と設計介入候補の検出ループとして読む"
+  analysis_axis: "GameGrammar/Nova の構造化、random/MCTS/LLM agent の役割分担、LLM failure を confusion pattern として扱う点"
+  application_target: "headless 評価、dead action / dominant strategy / rule ambiguity の検出、playtest 前の設計レビュー"
+  pros_cons: "利点は反復速度と失敗ログの構造化。弱点は LLM agent のゲーム能力を勝敗評価に使い過ぎると誤読しやすい点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
