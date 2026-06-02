@@ -7,7 +7,18 @@
 
 - pending 遒ｺ隱・ `python tools\slack_inbox_lifecycle.py pending` 縺ｧ directives / broadcasts 縺ｨ繧・pending 0 莉ｶ縲・- 譌｢蟄倡｢ｺ隱・ recent atoms 縺ｫ縺ｯ GameDevBench / AI playtesting / OpenGame 邉ｻ縺梧里縺ｫ螟壹￥縲∽ｻ雁屓縺ｯ驥崎､・＠縺吶℃縺ｪ縺・PCG 隧穂ｾ｡蝓ｺ逶､縺ｨ髻ｳ讌ｽ逕滓・邉ｻ繧貞庶髮・・- candidate: `memory/shared_reads_candidates/20260602_pcg_benchmark_testbed.md` 窶・PCG 繧貞刀雉ｪ繝ｻ螟壽ｧ俶ｧ繝ｻ蛻ｶ蠕｡蜿ｯ閭ｽ諤ｧ縺ｧ貂ｬ繧・12 繧ｿ繧ｹ繧ｯ縺ｮ繧ｪ繝ｼ繝励Φ繝吶Φ繝√・繝ｼ繧ｯ縲・- candidate: `memory/shared_reads_candidates/20260602_procedural_music_generation_games.md` 窶・繧ｲ繝ｼ繝蜷代￠ procedural music generation 縺ｮ菴鍋ｳｻ蛹悶→縲∝ｮ溯｣・・髻ｳ雉ｪ繝ｻ邨ｱ蜷郁ｩ穂ｾ｡縺ｮ隱ｲ鬘梧紛逅・・
 ## Phase 2: 蛻・梵
-(Phase 2 縺梧嶌縺崎ｾｼ繧)
+2026-06-02T16:22:00+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 2
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260602_pcg_benchmark_testbed.md
+    reason: "同一論文 arXiv:2503.21474 は 2026-05-16 に #shared-reads 投稿済みで、今回候補に新規性がない。"
+postpone:
+  - path: memory/shared_reads_candidates/20260602_procedural_music_generation_games.md
+    reason: "抽象 taxonomy と課題整理だけでは約4000字の残すべき概要に不足。本文確認で評価方法とゲーム統合例を補う必要がある。"
+```
 
 ## Phase 3: Shared-reads 謚慕ｨｿ
 (Phase 3 縺梧嶌縺崎ｾｼ繧)
