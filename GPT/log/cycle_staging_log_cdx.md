@@ -29,7 +29,38 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780362831-ec10ba5c13
+    source_ts: "1780362831.472569"
+    title: "Governing Evolving Memory in LLM Agents: SSGM Framework"
+    reason: "kaizen #138 や memory_tree_consolidation で、retention や orphan/topology 判定を search 実行経路へ混ぜるか、別 gate に逃がすかが直近の設計分岐になっているため。既存 retention probe は昇格/削除前の証拠確認であり、実行ロジックと統治 gate の分離までは問わない。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory 系変更の前に、実行経路へ混ぜる変更か、別 governance gate に置く変更かを分け、consistency / temporal / access-topology の 3 点を確認する reversible probe を state に追加した。恒久 directive は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260602-memory-governance-gate-separation
+    questions:
+      - "Before changing memory search, recall, atom consolidation, retention_audit, orphan_check, or MEMORY.md compression behavior, did I name whether the change belongs in the execution path or in a separate governance gate?"
+      - "Did I run a compact governance check first: one possible consistency conflict, one temporal decay or staleness signal, and one access-control or topology-leakage risk?"
+      - "If no concrete governance failure is observed, did I keep the change as staging, state, or a reversible probe instead of modifying search ranking, permanent memory, or instruction files?"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
