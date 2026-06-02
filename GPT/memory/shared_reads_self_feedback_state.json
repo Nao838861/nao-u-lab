@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-02T10:18:56+09:00",
+  "updated_at": "2026-06-02T12:16:16+09:00",
   "reviewed_source_ts": [
+    "1780362831.472569",
     "1780341253.417639",
     "1780112563.650559",
     "1779950437.392149",
@@ -106,6 +107,29 @@
     "1780340975.651269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T12:16:16+09:00",
+      "id": "sr-1780362831-ec10ba5c13",
+      "source_ts": "1780362831.472569",
+      "title": "Governing Evolving Memory in LLM Agents: SSGM Framework",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is directly relevant to Phase 4 memory work because it separates memory evolution execution from governance checks: consistency verification, temporal decay, and dynamic access control should be considered outside the search or recall execution path before changing long-lived memory behavior. Existing retention and guidance probes ask for evidence before promotion or instruction growth, but they do not force Codex to decide whether a memory change belongs in the execution path or a reversible governance gate. Keep this as a one-cycle reversible probe for the next memory_search, recall, orphan_check, atom consolidation, retention_audit, or MEMORY.md compression change.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before changing memory search, recall, atom consolidation, retention_audit, orphan_check, or MEMORY.md compression behavior, did I name whether the change belongs in the execution path or in a separate governance gate?",
+        "Did I run a compact governance check first: one possible consistency conflict, one temporal decay or staleness signal, and one access-control or topology-leakage risk?",
+        "If no concrete governance failure is observed, did I keep the change as staging, state, or a reversible probe instead of modifying search ranking, permanent memory, or instruction files?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory-search, recall, retention, orphan, consolidation, or MEMORY.md compression changes already separate execution logic from governance gates and record consistency, temporal, and access/topology evidence before implementation."
+    },
     {
       "reviewed_at": "2026-06-02T10:18:56+09:00",
       "id": "sr-1780340975-ba838e8253",
@@ -3207,6 +3231,18 @@
         "If the run stalls or fails, did I produce one diagnostic note with observed state, recent actions, suspected cause, and next verification step instead of only retrying or calling the game bad?"
       ],
       "expires_after": "Review after the next two playable/headless game evaluations or browser verification notes that include run outcome, stall, bug, or quality judgment."
+    },
+    {
+      "id": "probe-20260602-memory-governance-gate-separation",
+      "created_at": "2026-06-02T12:16:16+09:00",
+      "source_ts": "1780362831.472569",
+      "scope": "next memory_search, memory_recall, atom consolidation, retention_audit, orphan_check, MEMORY.md compression, or memory_tree_consolidation change where Codex may mix governance logic into the execution path",
+      "questions": [
+        "Before changing memory search, recall, atom consolidation, retention_audit, orphan_check, or MEMORY.md compression behavior, did I name whether the change belongs in the execution path or in a separate governance gate?",
+        "Did I run a compact governance check first: one possible consistency conflict, one temporal decay or staleness signal, and one access-control or topology-leakage risk?",
+        "If no concrete governance failure is observed, did I keep the change as staging, state, or a reversible probe instead of modifying search ranking, permanent memory, or instruction files?"
+      ],
+      "expires_after": "Review after the next two memory-search, recall, retention, orphan, consolidation, or MEMORY.md compression changes that alter execution behavior or memory lifetime."
     }
   ]
 }

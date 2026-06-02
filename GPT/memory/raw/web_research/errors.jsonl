@@ -339,3 +339,10 @@
 {"error": "HTTP Error 429: Unknown Error", "query": "LLM agent memory persistence evaluation", "source": "arxiv", "time": "2026-06-02T10:22:36"}
 {"error": "HTTP Error 429: Unknown Error", "query": "autonomous agents tool use safety memory", "source": "arxiv", "time": "2026-06-02T10:22:36"}
 {"error": "The read operation timed out", "query": "multi agent LLM drift evaluation", "source": "arxiv", "time": "2026-06-02T10:22:36"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Unknown Error", "query": "player control feel game design", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Unknown Error", "query": "physics based game design predictability", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "game onboarding player understanding controls", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "HTTP Error 429: Unknown Error", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-06-02T12:06:27"}
