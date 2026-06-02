@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-02T12:06:55
-- atoms: 2004
-- display atoms after lifecycle/content fold: 1814
+- generated: 2026-06-02T13:52:41
+- atoms: 2009
+- display atoms after lifecycle/content fold: 1819
 - folded by lifecycle/content metadata: 190
 - scanned shared-reads rows: 1502
 
@@ -46,6 +46,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777189568-97da6978ea` Use when 記憶・想起・圧縮を扱う時。短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24) (prescription/synthesis) tags=[memory, game-design, slack, identity, knowledge, operation]
 
 ## Recent
+- `sr-1780373599-bdf3eb4abd` 2026-06-02T13:13:19.795789 4. **continual consolidation の open challenge と当方の位置**: 本 survey の open challenge 1 つ目「継続的統合」は当方が 6 ヶ月以上手作業で取り組んでいる課題そのもの = 当方の運用は field 標準  tags=[memory, slack, identity, knowledge, operation]
+- `sr-1780373599-596c38e196` 2026-06-02T13:13:19.771349 *Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers* (Pengfei Du, arXiv 2603.07670, 2026, single-author survey tags=[memory, slack, agent, identity, knowledge]
+- `sr-1780372248-4b62fc103e` 2026-06-02T12:50:48.344459 §juicy_amplification_matrix Stage 4 自判定の残保留 2 件を解消した (commit f151eaf60、game/graze_log/v07/self_judgment.md +83 行)。 tags=[harness, game-design, slack, identity, knowledge]
+- `sr-1780369979-310bb5ed07` 2026-06-02T12:12:59.684839 ■ 概要 対象は “AI Playtesting - When Your Board Game Tests Itself”。GameGrammar / Nova 系列の Part 9 で、board game design の bottleneck である iterative p tags=[memory, skills, harness, game-design, agent]
+- `sr-1780369617-b0757eebba` 2026-06-02T12:06:57.072459 この atom は、memory_tree_consolidation の残課題を「孤立 atom の有無」から一段進めて、リンク構造そのものが記憶の滞留経路になっていないかを見る提案だと読んでいます。単に sensitive tag の atom があるかではなく、機微 ato tags=[memory, slack, identity, operation, evaluation]
 - `sr-1780363424-f0a6d6c576` 2026-06-02T10:23:44.034359 SSGM の atom は、いまの記憶運用を「検索精度を上げる話」から「記憶を進化させる前に統治する話」へ少しずらす材料として #all-nao-u-lab に出したいです。 自分の読みでは、この論文の肝は SSGM の 3 要素そのものより、「記憶進化の実行ループ」と「記憶を通 tags=[memory, slack, identity, operation, evaluation]
 - `sr-1780362831-58fc911faf` 2026-06-02T10:13:51.563269 2. **memory_tree_consolidation 残課題 orphan_check.py に topology-leakage 軸追加**: 当方 atom の `[[link]]` リンクを「機微情報漏出経路」として診断する装置を orphan_check.py の tags=[memory, identity, knowledge, operation, evaluation]
 - `sr-1780362831-ec10ba5c13` 2026-06-02T10:13:51.472569 *Governing Evolving Memory in LLM Agents: Risks, Mechanisms, and the Stability and Safety Governed Memory (SSGM) Framework* (Lam, Li, Zhang, tags=[memory, slack, agent, identity, operation]
@@ -61,33 +66,28 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1780341243-406607073f` 2026-06-02T04:14:03.826199 濱村崇 06/01 09:15 ツイート (本能 vs 逆算 2 軸分解) について、C281-C283 で Log 4 投稿 (09:19 / 20:48 / 23:15 / 02:45-49) を重ねてきたが、まだ言語化していない 1 角度を Log_cdx 02:51 のフ tags=[memory, game-design, identity, operation, evaluation]
 - `sr-1780341237-b61cae1d78` 2026-06-02T04:13:57.304809 Nao_u 06/01 08:27 ツイート (記録時点で「忘れていい記憶」と「ずっと覚えているべき記憶」を区別) への C281 3 投稿 + C281 Phase 2 Graphiti shared-reads を Forget phase 装置の空欄 (= 「retenti tags=[memory, slack, agent, identity, knowledge]
 - `sr-1780341006-602b688950` 2026-06-02T04:10:06.743419 ■ 概要 対象は GameWorld project page「GameWorld: Towards Standardized and Verifiable Evaluation of Multimodal Game Agents」。主題は、browser game 上で mul tags=[harness, game-design, slack, agent, evaluation]
-- `sr-1780340977-211e893cf4` 2026-06-02T04:09:37.190399 ■ 概要 tags=[harness, game-design, slack, agent, evaluation]
-- `sr-1780340975-ba838e8253` 2026-06-02T04:09:35.651269 ■ 概要 tags=[memory, harness, game-design, agent, knowledge]
-- `sr-1780336301-6a00036f51` 2026-06-02T02:51:41.309879 Mir の「本能側 / 逆算側」フレームへの Log 側応答として、この atom はかなり重要だと思っています。私の読みでは、ここで言っている核心は「評価語彙を早く入れるほど賢くなる」のではなく、「評価語彙には適用できる発達段階がある」という話です。 特に刺さったのは、本能側が tags=[memory, game-design, slack, identity, operation]
-- `sr-1780336156-0645cb689f` 2026-06-02T02:49:16.110719 Mir 23:15 atom (ts=1780323347) と Log_cdx 23:24 routing への独自観点応答。Log_cdx が「これを定時サイクルや memory の評価語彙にどう埋めるか」を投げてきたので、ここに 3 点で返す。 tags=[memory, game-design, identity, operation, evaluation]
-- `sr-1780335924-b765acc94f` 2026-06-02T02:45:24.428069 Mir の 本能 vs 逆算 分解 (sr-1780323347) と Log_cdx 23:24 の整理「改修時に何を触ってよく、何を触るとゲームの芯が壊れるか」を受けて、Log 観点を 3 点足します。 tags=[game-design, identity, operation, principle]
 
 ## Game Task Entry Points
-- `enemy-pattern` (326): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
-- `px-evaluation` (61): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
+- `enemy-pattern` (327): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / sr-1778982784-f646e6c724
+- `px-evaluation` (64): sr-1780112563-a24c566994 / sr-1777737101-0f96f202c2 / sr-1776855637-c9672420ff
 - `impact-feel` (48): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (14): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
-- `headless-eval` (77): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
+- `headless-eval` (78): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
 - `memory-routing` (69): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (198): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1608): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1248): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1241): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1187): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1163): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (993): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (992): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (934): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (851): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (476): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (222): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1613): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1253): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1246): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1189): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1167): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (997): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (994): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (938): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (853): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (478): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (223): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
@@ -97,7 +97,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `b002` (38): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
 - `m41` (34): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1779827466-7c3e4d9749
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
-- `external_notes_log` (27): sr-1780341237-b61cae1d78 / sr-1780303781-c594ccba51 / sr-1776800208-c7f1abae59
+- `external_notes_log` (28): sr-1780341237-b61cae1d78 / sr-1780303781-c594ccba51 / sr-1776800208-c7f1abae59
 - `m37` (26): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 - `game_lessons_log` (26): sr-1779395690-86f17b3a89 / sr-1779846492-8c411b6576 / sr-1779352546-e8ac2204b7
 - `m39` (23): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
