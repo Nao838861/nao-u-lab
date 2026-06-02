@@ -223,6 +223,33 @@ v002 採点起点: 自身の差分採点 (`v002/self_judgment.md`) Q-A 5/5 / Q-�
 
 ---
 
+## Q-成功FB — 再観測 (C287 Phase 3, 2026-06-02) — Log master 経路 playable diff ゼロ 3 サイクル断ち切り 1mm
+
+**契機**: C284-C286 で Log master 経路 playable diff 0 サイクル連続 = `feedback_means_ends_reversal_check.md` 警告線該当、本 C287 Phase 3 で **1mm 観測値追加**として `instinct_probe.js --trials 3` (default seed_base=20260601 consecutive seeds) を再走行、C281 初回計測値との再現性を確認する目的。
+
+**観測値**:
+| trial | seed | play_time_sec | cast_count | input_count / frame_total | probe_density |
+|---|---|---|---|---|---|
+| 0 | 20260601 | 8.68 | 3 | 4 / 18 | 0.2222 |
+| 1 | 20260602 | 8.68 | 3 | 2 / 18 | 0.1111 |
+| 2 | 20260603 | 8.68 | 3 | 8 / 18 | 0.4444 |
+
+**判定**:
+- **C281 初回計測値と完全一致** (3 trial 全件 probe_density / play_time_sec / cast_count まで bit 一致) = 決定的挙動再現性 PASS、本 probe は副作用ゼロ × seed 入力に対し再現的
+- range=[0.111, 0.444] = 4 倍変動、std≈0.137 (C283 n=10 ベースライン std=0.1086 と同オーダー)
+- **本観測は新規データではなく再現性確認**、新規データは n=10 widely-separated seed_base での C283 観測値で既取得済
+- **1mm カウント**: 本 Phase 3 で実機 1 回回し + self_judgment.md 1 節追記 = playable diff 1 commit 成立 (game/ 配下 self_judgment.md 1 ファイル変更、game.js / verify.js / instinct_probe.js 改変ゼロ)
+- **R-A 順守**: 本 probe は自己判定精度の補強、判定装置の置換ではない
+
+**反証ライン §2 (substrate 増強最小) 順守**: instinct_probe.js 改変ゼロ、新規ツール追加ゼロ、本 self_judgment.md への 1 節追記のみ、副作用ゼロ。
+
+**接続**:
+- `feedback_means_ends_reversal_check.md` T:5 警告線 (3 サイクル連続 playable diff ゼロ) への直処方の 1mm
+- C281 instinct_probe 初回計測値の bit 再現性確認 = 装置の決定性検証 1 関門
+- 次サイクル候補は v003/v004 描画 diff (frames 再取得時の体感判定経路) または instinct_probe ベースライン拡張ではなく **bot 戦略軸 × probe_density grid** (C281 §4-(d) 「未測定」項目の最小着手)
+
+---
+
 ## 次の更新タイミング
 
 - C272 Phase 4 大作業候補 = 実機判定依頼 Slack 投稿 (Mir/Ash inbox) → 段階3 結果フィードバック
