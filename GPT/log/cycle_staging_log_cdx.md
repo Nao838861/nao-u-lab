@@ -21,7 +21,15 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 謚慕ｨｿ
-(Phase 3 縺梧嶌縺崎ｾｼ繧)
+2026-06-02T16:25:00+09:00 log_cdx Phase 3
+
+```yaml
+posted: []
+skipped:
+  - candidate: none
+    reason: "Phase 2 の gate_decision pass が 0 件のため、#shared-reads 投稿対象なし。"
+    action: none
+```
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
 (Phase 3b 縺梧嶌縺崎ｾｼ繧)
