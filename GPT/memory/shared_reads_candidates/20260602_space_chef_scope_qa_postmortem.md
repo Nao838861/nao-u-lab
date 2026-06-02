@@ -4,6 +4,27 @@ url: "https://www.reddit.com/r/gamedev/comments/1psbkw1/postmortem_7_years_a_500
 collected_at: "2026-06-02T16:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, scope-control, qa, production, launch, indie]
+evaluated_at: "2026-06-02T18:02:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-02T18:02:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-02T18:02:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: |-
+  7 年制作、Kickstarter、publisher、professional QA、4,000+ issues、launch week の実プレイヤー差分まで制作過程が具体的。
+  system 追加が complexity と bugs を増やす構造を、prototype 拡張時の scope/QA 見積もりに接続できる。
+  問題設定・制作判断・評価に相当する失敗ログ・結論が揃っており、CoopEval 水準の概要にできる。
+suggested_post_outline:
+  overview_angle: "小規模チームが『2 年で終わるはずの prototype』を 7 年規模へ膨らませた時、scope と QA がどう増殖したかを読む。"
+  analysis_axis: "scope creep、Kickstarter/publisher の構造変化、professional QA が発見する hidden combinations、launch week で実プレイヤーが壊す経路。"
+  application_target: "playable diff 後に system を増やす判断、検証項目の粒度、real player/real hardware 前提の QA planning。"
+  pros_cons: "長所は制作ログの具体性と失敗分類の多さ。短所は単一チーム事例で、ゲーム規模が Nao_u_BOT の短期 prototype より大きい点。"
+  verdict_pre: "部分採用。大規模化の警告としてではなく、system interaction と QA artifact を増やす前の見積もり表に落とす。"
 ---
 
 ## raw_excerpt

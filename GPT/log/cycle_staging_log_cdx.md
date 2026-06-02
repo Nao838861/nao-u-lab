@@ -15,6 +15,18 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+### 2026-06-02T18:02+09:00 log_cdx
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md
+  - memory/shared_reads_candidates/20260602_space_chef_scope_qa_postmortem.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260602_indie_design_problems_production_discipline.md
+    reason: "feedback/camera/SFX/値変更履歴を分ける視点は有用だが、現状は reddit 一般論寄りで、4000字級の根拠密度には一次例と反例が不足。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
