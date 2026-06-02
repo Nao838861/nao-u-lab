@@ -1535,3 +1535,20 @@ error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
 2026-06-02T16:50:53 skipped: elapsed 74min < 90min
 2026-06-02T17:05:53 skipped: elapsed 89min < 90min
 2026-06-02T17:20:53 run start (elapsed 104min >= 90min)
+2026-06-02T17:22:53 run failed: git push failed after commit 130434987: �n���h������Ă��Ȃ���O: System.MissingMethodException: ���\�b�h��������܂���: '!0 System.Collections.Generic.IReadOnlyList`1.get_Item(Int32)'
+   �ꏊ System.CommandLine.Parsing.StringExtensions.NormalizeRootCommand(IReadOnlyList`1 args, Command rootCommand, Boolean inferRootCommand)
+   �ꏊ System.CommandLine.Parsing.StringExtensions.Tokenize(IReadOnlyList`1 args, CommandLineConfiguration configuration, Boolean inferRootCommand)
+   �ꏊ System.CommandLine.Parsing.Parser.Parse(IReadOnlyList`1 arguments, String rawInput)
+   �ꏊ System.CommandLine.Parsing.ParserExtensions.<InvokeAsync>d__3.MoveNext()
+--- ���O�ɗ�O���X���[���ꂽ�ꏊ����̃X�^�b�N �g���[�X�̏I��� ---
+   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   �ꏊ System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   �ꏊ GitCredentialManager.Application.<RunInternalAsync>d__7.MoveNext()
+--- ���O�ɗ�O���X���[���ꂽ�ꏊ����̃X�^�b�N �g���[�X�̏I��� ---
+   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(
+2026-06-02T17:35:53 skipped: elapsed 13min < 90min
+2026-06-02T17:50:53 skipped: elapsed 28min < 90min
+2026-06-02T18:05:53 skipped: elapsed 43min < 90min
+2026-06-02T18:20:53 skipped: elapsed 58min < 90min
