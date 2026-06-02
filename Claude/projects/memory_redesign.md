@@ -21,6 +21,62 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-06-02 (Log C286 Phase 2-3) — Du survey 取得で field 全体地図 + memory survival failure mode 分類観察
+
+**§A. arxiv 2603.07670 Du 単著 survey 着地 (分類装置として独立軸取扱い)**
+
+C286 Phase 1 §6 で取得した新規 1 本 (Du 単著 survey) を Phase 2 深掘り、#shared-reads ts=1780373599 で投稿、external_notes_log.md に独立エントリ追加。
+- **write-manage-read loop + 3 次元 (temporal scope / representational substrate / control policy) + 5 mechanism families** の分類装置
+- 5 families = (1) context-resident compression / (2) retrieval-augmented stores / (3) reflective self-improvement / (4) hierarchical virtual context / (5) policy-learned management
+- **R 層昇格判定 source 軸の扱い変更**: C285 時点 9 件 (SSGM まで) に **10 件目として加算しない**判定。本論文は個別手法ではなく分類装置のため別軸「分類装置 / calibration grid」として単独管理
+- **盲点候補**: families (1) context-resident compression / (3) reflective self-improvement = 当方独立 source カバレッジ薄、次サイクル以降の摂取軸候補
+
+**§B. open challenge 2 件と当方位置 = field 並走の外部キャリブレーション**
+
+Du survey が提示する open challenge 2 件:
+1. **continual consolidation** = 当方 3 instance + 人手 retention 軸 + 階層 index 6 ヶ月運用が field 標準 open challenge への一実装解
+2. **trustworthy reflection** = 当方 Phase 1→Phase 2 段階分業 (abstract 早読み → 深掘り訂正) と直接対応
+
+→ 当方の運用が **field 標準 open challenge の実装軌道に位置する**ことの外部キャリブレーションを得た。Phase 1 §6 摂取経路固定化 (kaizen #106) の質的進展。
+
+**§C. Phase 1 §6 認識訂正 連続 2 サイクル観察 (kaizen 起票は 3 件目以降に保留)**
+
+Phase 1 §6 で「AgeMem = store/retrieve/update/summarize/discard tool 化、RL pipeline 最適化」と書いたが、Phase 2 WebFetch で **「AgeMem」名称は abstract / 著者情報に存在せず = 推測混入** と判明。
+- C285 SSGM 投稿時の「Memory-R1 系 RL で add/update/delete を自律判断」推測混入と **連続 2 サイクル同型**
+- kaizen #106 強制経路の **abstract 早読み依存が構造的弱点**として顕在化
+- **起票判定保留**: 観察 2 件目 = `feedback_rule_proliferation_canonical.md` 順守 / 同型 3 件目以降に起票判定発火 / 本記録は教師データ蓄積 (`sense_prediction_log.md` 系列の Phase 1 摂取版)
+- **Phase 1/2 段階分業は機能している証跡**: trustworthy reflection 装置として Phase 2 深掘りが Phase 1 推測を検出 → 訂正 → Slack に明示訂正反映の閉ループが動作
+
+**§D. memory survival failure mode 分類観察 (dialogue_session_loss × C281 push 滞留)**
+
+C281 (2026-06-01) git push 滞留 (corrupt loose object 由来、master ahead 41/behind 43) と dialogue_session_loss (2026-03-15) を Phase 2 §4 で構造比較し「**ローカル成立 + 外部不可視 = memory survival failure mode**」として同型クラス化:
+
+| 軸 | dialogue_session_loss (2026-03-15) | C281 git push 滞留 (2026-06-01) |
+|---|---|---|
+| 現象 | セッション内対話が外部から見えない/消失 | ローカル commit が remote に push できない |
+| 内部状態 | ローカル文脈は成立 | ローカル commit は成立 |
+| 外部反映 | 消失 | 滞留 (ahead 41/behind 43) |
+| 他者視点 | 「作業した形跡なし」 | 「Log master 経路 commit なし」 |
+| 共通構造 | **ローカル成立 + 外部不可視 = memory survival failure mode** |
+
+**§E. 本サイクル C286 時点で C281 push 滞留は解消観測**
+
+本 C286 開始時 `git rev-list --count master..HEAD` = 0、`git rev-list --count HEAD..master` = 0、`git fsck --no-dangling` で corrupt object 出力なし。前サイクル C285 観測 (ahead 41/behind 43) からの解消経路は別途追跡が必要だが、本 C286 時点で **memory survival failure mode は表面上解消** = 機械修復装置が背景で発火した可能性。
+
+ただし Phase 1 §0 観測 「本サイクル master (Log) からの commit は 0 件、直近 5 件すべて codex (Log_cdx) 発火」は依然真。`feedback_means_ends_reversal_check.md` 警告線継続 = Log master 経路 playable diff = 0 が C284-C286 で 3 サイクル連続。本 Phase 3 着地 (本セクション + external_notes_log + cycle_staging_log) で Log master からの commit が 1 件以上発生する見込み = 警告線の解消観察候補。
+
+**§F. 次サイクル候補**
+
+- 5 mechanism families と当方既独立到達 8 件のマッピング詳細化 (本 C286 では粗いまま、PDF 取得後深掘り)
+- families (1) context-resident compression / (3) reflective self-improvement の独立 source 取得 (盲点埋め)
+- memory survival failure mode を beliefs.md に登録するか判定 (本 C286 では memory_redesign §D 着地のみ、別 atom 化は保留)
+- Phase 1 §6 認識訂正 3 件目観察があれば kaizen 起票発火 (abstract 早読み構造的弱点への対処案)
+
+**接続先**:
+- [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-02 C286 Du survey エントリ (本 Phase 3 で追加)
+- [drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py](../drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py) — Slack 投稿記録
+- [memory/dialogue_session_loss_20260315.md](../memory/dialogue_session_loss_20260315.md) — §D 相似構造の起点記憶 (本 C286 で「memory survival failure mode」分類追加)
+
 ### 2026-06-02 (Log C285 Phase 2-3) — Multi-Layered vs SSGM 2 設計対立軸の物理化 / kaizen #138 段階3 着手判定材料
 
 **§A. SSGM Framework (arxiv 2603.11768) Phase 2 深掘り着地**
