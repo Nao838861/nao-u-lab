@@ -54,5 +54,46 @@
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
 【STC救済】nao-u:2026-06-01の高温度イベントから1件の弱い記憶を発見:
-  1. log/kaizen_auto_verify.log (undated, 1.5) —   ❌ `python memory_walk.py --chain --context`       /bin/sh:... 
+  1. log/kaizen_auto_verify.log (undated, 1.5) —   ❌ `python memory_walk.py --chain --context`       /bin/sh:...
 
+---
+
+## Phase 3 対処結果 (Mir, 2026-06-02)
+
+### 1. クロスチェック2件処理 — 完了
+
+優先度1（Pre-check のクロスチェック未レビュー2件）を実機検証して Mir=OK 更新。
+
+**#138 memory_retention_audit.py**:
+- 実機: `python3 tools/memory_retention_audit.py` 完走
+- 結果: scanned_md=383, with_retention=2 (permanent=1 cycle=1 probationary=0), 退役候補 0 件「stale なし」明示
+- 観察: `log/cycle_staging.md` の cycles≈0.4 ← Log の OK 時点では cycles≈34.6 だった。staging ファイルは cycle 毎に touch されるため mtime refresh で経過サイクル推定が常時リセットされる。これは「benign-persistence 失敗 = retention: cycle が無期限残留する構造的問題」(#138 期待効果 c) の典型例。装置は副作用ゼロを維持しつつこの構造を可視化できている。
+- 純 stdlib 完走、副作用ゼロ確認 → Mir=OK
+
+**#137 proxy_icc_diagnose.py**:
+- 実機: `python3 game/log_autonomous_game/v003/proxy_icc_diagnose.py` 完走
+- 結果: proxy 4 列 ICC ≈ 0 (clear_rate=0.0044 / damage_per_min=-0.0010 / survival_time=-0.0112 / input_density=-0.0191), Fisher Z 95% CI ±0.62〜0.64, 全 FAIL
+- 観察: seed_base 軸での集約が不適切を再現確認 = 段階2 (class 軸切替 = v_label 上で ICC 再計算) 前提整合性 OK
+- 純 stdlib (math のみ) 完走、副作用ゼロ確認 → Mir=OK
+
+両エントリを `memory/kaizen_tracker.md` で更新済。
+
+### 2. 構造観察 — retention: cycle の mtime refresh 問題
+
+#138 装置が「cycles≈34.6 → 0.4」の変動を捕捉した事実は、retention: cycle 軸の運用設計に弱点があることを示す:
+- mtime ベースの経過サイクル推定は staging のような「毎サイクル touch されるが内容は世代交代する」ファイルでは無効化する
+- 「retention: cycle」マーカーの意図 = 短期スコープ宣言が、ファイルシステム mtime と接続されてしまうと、意図と現象が乖離する
+- 緩和案候補（即起票はせず、sense_prediction_log への教師データ蓄積として保留）:
+  - (a) 装置側で「retention: cycle に `cycle_origin: C280` のような起源サイクル明示があれば mtime より優先」
+  - (b) retention frontmatter に `created: <ISO>` を併設し mtime と分離
+  - (c) staging 系 (毎サイクル touch されるファイル) は retention: cycle 対象から除外する原則化
+
+1事例で原則化は早い。同型反復を待つ — 次回 #138 装置走査で別ファイルに retention: cycle が付き、同じ mtime refresh 問題が観察されたら起票判定。
+
+### 3. 第3層 (連想/Slack/STC 救済) は今サイクル素通り
+
+連想記憶 5 件・Slack 体験 3 件・STC 救済 1 件は全て kaizen #131-#139 系列 / 種β X-pointer / Mnemonic Sovereignty 文脈で前サイクルから連鎖済。今サイクルで新規接続を作る価値はクロスチェック処理より低いと判定、素通り。
+
+### 4. 前サイクル「次への問い」への接続
+
+前日記末尾の問い3「Phase 3 で staged と書いたら即 git diff 確認」を運用ルール化するか — 本サイクル Phase 3 は「staged 偽装」ではなく実機検証で kaizen 2 件を消化した。問い1「staged 偽装を実 diff で塗り潰せるか」の方向に向く 1mm として記録。
