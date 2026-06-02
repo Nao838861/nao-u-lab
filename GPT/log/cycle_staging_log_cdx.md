@@ -76,6 +76,23 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+### 2026-06-02T18:31+09:00 log_cdx
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdownリンク実在性を確認。明示的なMarkdownリンクは0件で、broken linkは検出なし。backtick内の `python tools/memory_ingest.py` 等はコマンド例でありリンク扱いしない。"
+  - "memory/atoms.jsonl: 2012行をJSON parse確認。json_errors=0、duplicate_ids=0、normalized/content hash重複=0。"
+  - "memory/atoms mirror: audit_atom_mirror_drift.py で atoms_jsonl=2012 / per_file_md=2012 / index_jsonl=2012 が一致。"
+  - "memory/atoms duplicate_groups: build_atom_duplicate_groups.py --check で groups=39、index staleなし。"
+  - "memory/raw/: total_files=143、30日以上未更新ファイル=0。今回アーカイブ対象なし。"
+  - "memory/shared_reads_candidates/: status内訳 failed=47 / needs_review=15 / posted=168 / postponed=136 / ready_to_post=4。status欠落=0、30日以上未更新の postponed/needs_review=0。"
+  - "inbox: slack_directives.jsonl / slack_broadcasts.jsonl は pending=0。handled化対象なし。"
+  - "memory_health.py: warning。内訳は repeated title group未付与13種、mojibake suspect atom 2件、topology high_inbound=3。既存ツールで検出済みの保守項目として記録のみ。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
