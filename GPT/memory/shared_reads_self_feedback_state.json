@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-02T16:35:00+09:00",
+  "updated_at": "2026-06-02T18:28:00+09:00",
   "reviewed_source_ts": [
     "1780369979.684839",
     "1780373599.771349",
@@ -106,7 +106,8 @@
     "1780216954.986009",
     "1779907501.386039",
     "1778427438.050049",
-    "1780340975.651269"
+    "1780340975.651269",
+    "1780362683.491849"
   ],
   "reviews": [
     {
@@ -2089,6 +2090,29 @@
         "If the later signal changes the premise, did I update the action or narrow the conclusion instead of carrying the stale premise into a proposal, evaluation, or completion report?"
       ],
       "withdrawal_condition": "Drop this probe if the next memory/game/cross_review action already records current-premise fit clearly, or if it only duplicates memory-stage and aging probes without changing the action."
+    },
+    {
+      "reviewed_at": "2026-06-02T18:28:00+09:00",
+      "id": "sr-1780362683-6e970b6215",
+      "source_ts": "1780362683.491849",
+      "title": "Harnessing large language models for virtual reality exploration testing: a case study",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful for current browser, 3D, and playable-game verification because it breaks visual exploration into FOV/object detection, spatial localization, multi-view same-object judgment, navigation or interaction, and observed response. Existing probes cover off-nominal scenarios and game QA traces, but they do not force Codex to separate visual perception confidence from interaction evidence before saying an asset, scene, or UI is correct. Keep this as a reversible one-cycle probe for the next browser, 3D scene, visual-asset, or game verification note.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next browser, 3D scene, visual-asset, or playable-game verification, did I record what was visible in the current view before judging correctness?",
+        "If the target depends on space or viewpoint, did I separate object detection, approximate location, same-object-across-view confidence, and navigation or interaction evidence?",
+        "Before claiming the scene or UI works, did I preserve one observed response pointer, such as screenshot, console log, pixel/canvas check, interaction result, or state transition?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two visual/browser/3D/game verification notes already separate current-view perception, spatial or same-object confidence, interaction evidence, and observed response before final judgment."
     }
   ],
   "active_probes": [
@@ -3315,6 +3339,18 @@
         "If I propose a balance or rule intervention from the run, did I record the observed metric or trace, the intervention, and the minimal re-run or contrast needed to check whether the intervention helped?"
       ],
       "expires_after": "Review after the next two game-evaluation notes that use automated agents, scripted routes, LLM-as-player output, or manual playtest evidence."
+    },
+    {
+      "id": "probe-20260602-visual-exploration-evidence-split",
+      "created_at": "2026-06-02T18:28:00+09:00",
+      "source_ts": "1780362683.491849",
+      "scope": "next browser, 3D scene, visual-asset, playable-game, or UI verification where Codex may infer correctness from a single visual impression",
+      "questions": [
+        "For the next browser, 3D scene, visual-asset, or playable-game verification, did I record what was visible in the current view before judging correctness?",
+        "If the target depends on space or viewpoint, did I separate object detection, approximate location, same-object-across-view confidence, and navigation or interaction evidence?",
+        "Before claiming the scene or UI works, did I preserve one observed response pointer, such as screenshot, console log, pixel/canvas check, interaction result, or state transition?"
+      ],
+      "expires_after": "Review after the next two visual/browser/3D/game verification notes that include screenshots, rendered assets, canvas checks, or interaction outcomes."
     }
   ]
 }

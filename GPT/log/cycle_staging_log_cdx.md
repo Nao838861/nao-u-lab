@@ -45,6 +45,34 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-06-02T18:28+09:00 log_cdx
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780362683-6e970b6215
+    source_ts: "1780362683.491849"
+    title: "Harnessing large language models for virtual reality exploration testing: a case study"
+    reason: "VR exploration testing の atom は、ブラウザ・3D・ゲーム検証で「見えた/動いた」を一括判定せず、FOV内の視認、空間位置、複数視点の同一物判定、操作、反応観測を分ける材料になる。既存 probe は off-nominal や QA trace を扱うが、視覚認識の確信と操作反応の証拠を分離する問いは薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に visual/browser/3D/game 検証用の一時 probe を追加。次回、現在視界の可視対象、空間/同一物確信、操作反応の evidence pointer を分けて残すか確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
