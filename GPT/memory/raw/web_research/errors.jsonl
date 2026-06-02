@@ -346,3 +346,9 @@
 {"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-06-02T12:06:27"}
 {"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-06-02T12:06:27"}
 {"error": "HTTP Error 429: Unknown Error", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-06-02T12:06:27"}
+{"error": "The read operation timed out", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-06-02T17:22:42"}
+{"error": "The read operation timed out", "query": "LLM agent memory persistence evaluation", "source": "arxiv", "time": "2026-06-02T17:22:42"}
+{"error": "HTTP Error 429: Unknown Error", "query": "autonomous agents tool use safety memory", "source": "arxiv", "time": "2026-06-02T17:22:42"}
+{"error": "HTTP Error 429: Unknown Error", "query": "multi agent LLM drift evaluation", "source": "arxiv", "time": "2026-06-02T17:22:42"}
+{"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-06-02T17:22:42"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-06-02T17:22:42"}
