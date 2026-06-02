@@ -82,7 +82,30 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: validate_memory_index.py で High Signal / Recent / Game Task Entry Points / Tag Entry Points の参照を検証し、broken entry は 0 件だった。"
+  - "memory/atoms.jsonl: 2009 atoms、duplicate id 0、duplicate source_ts 0、duplicate title 21 groups を確認。memory_health は warning のみ。"
+  - "memory/raw/: 143 files、30 日以上動きがない raw file は 0 件だった。"
+  - "memory/shared_reads_candidates/: posted 165 / postponed 134 / failed 46 / needs_review 15 / ready_to_post 4。30 日以上動きがない postponed / needs_review は 0 件だった。"
+  - "inbox: slack_directives.jsonl / slack_broadcasts.jsonl の pending は 0 件で、handled 化すべき処理済み pending はなかった。"
+issues:
+  - id: ISS-4A-20260602-01
+    description: "memory_tree_consolidation の残課題が、孤立 atom 検出だけではなく「リンク構造が記憶を滞留させる経路」の診断に広がっている。現状の点検軸は ref=0 / orphan 寄りで、接続されすぎて残り続ける atom や、機微 atom が permanent 領域へ topology 経由で接続されるケースを拾う導線が未整理。"
+    severity: medium
+    evidence: "memory/MEMORY.md Recent: sr-1780369617-b0757eebba / sr-1780362831-58fc911faf / sr-1780350698-9a5351a6e7。atoms.jsonl に同 atom の本文と links/tags あり。"
+    why_blocks_game_memory: "ゲーム制作中の個別判断や一時評価が、後続ゲームの一般ルールとして想起され続けると、ゲーム X の局所事情がゲーム Y の設計判断に混入する。次回制作時に何を再利用し、何を忘れるべきかの境界が曖昧になる。"
+  - id: ISS-4A-20260602-02
+    description: "atom title の重複 21 groups のうち 13 groups が group_id 未付与。特に `■ 概要`、`■ メリット・デメリット`、`@`、URL だけの title など、Slack 投稿断片由来の汎用 title が残っている。"
+    severity: low
+    evidence: "memory_health.py --json warning: ungrouped repeated title groups 13。duplicate title inspection: `■ 概要`=2、`■ メリット・デメリット`=2、`@`=2、URL title groups など。"
+    why_blocks_game_memory: "ゲーム制作ノウハウを探す時、断片見出しや URL title が検索結果に混ざると、実際の手法・失敗・評価軸へ辿る効率が落ちる。現時点では件数が小さいため low。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260602-01
+    - ISS-4A-20260602-02
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
