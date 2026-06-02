@@ -4,6 +4,27 @@ url: https://link.springer.com/article/10.1007/s10515-025-00535-3
 collected_at: 2026-06-02T10:00:16+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-testing, vr, llm-agent, spatial-understanding, headless-eval]
+evaluated_at: 2026-06-02T10:05:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: 2026-06-02T10:05:23+09:00
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-02T10:05:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-02"
+supersedes: []
+gate_reason: >-
+  VR/3D の FOV 画像を LLM で読む探索テストとして、問題設定、prompt engineering による改善、
+  entity detection / spatial relationship / scene recognition / multi-FOV tracking の評価数値、座標化の弱点がそろっている。
+  一人称探索や 3D headless 評価で「何を LLM 視覚評価に任せてよいか」を切り分ける実装判断に直結する。
+suggested_post_outline:
+  overview_angle: "VR exploration testing を、3Dゲームの視覚評価ハーネス設計として読む。FOV 内 entity 検出、特徴記述、空間関係理解、複数視点での同一物追跡を順に説明する。"
+  analysis_axis: "精度が上がる部分と壊れる部分を分ける。prompt engineering で entity detection は改善するが、bounding box / 座標ラベル化は弱いという境界を中心に置く。"
+  application_target: "一人称/3D探索ゲームの自動テスト、画面理解ログ、視点移動後の同一物追跡、LLM評価を座標操作へ接続する前の検証ゲート。"
+  pros_cons: "メリットは、人間が見る FOV 単位の意味理解を headless 評価へ持ち込めること。デメリットは、座標精度や画像内 grounding が弱く、操作計画の正本にすると危ないこと。"
+  verdict_pre: "部分採用。意味理解と異常検知の評価補助には使うが、当たり判定や座標操作の判定器としては使わない。"
 ---
 
 ## raw_excerpt
