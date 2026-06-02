@@ -62,7 +62,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-06-02T10:23:10+09:00 log_cdx Phase 4a 整理 + 問題抽出:
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認: link 0 件、broken 0 件。validate_memory_index.py は OK。"
+  - "memory/atoms.jsonl を確認: 1998 行、parse error 0、duplicate id 0、duplicate content hash 0。"
+  - "memory/raw/ を確認: 30 日以上更新のない raw file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 164 / ready_to_post 4 / postponed 129 / failed 46 / needs_review 15 / status missing 1(README.md)。30 日以上放置の postponed/needs_review は 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認: pending 0 件。handled 更新対象なし。"
+issues:
+  - id: "ISS-4A-20260602-001"
+    description: "memory_health.py が repeated title group 未付与 13 種と mojibake suspect atom 2 件を warning として報告している。重複 id / content hash は 0 件なので、同一内容の破損ではなく、タイトル単位の未グループ化と文字化け疑いの局所問題。"
+    severity: low
+    evidence: "tools/memory_health.py output: repeated_title_groups 21 ungrouped=13; mojibake suspect atoms sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a"
+    why_blocks_game_memory: "ゲーム制作時に同名・類似名の atom が検索結果に並ぶと、代表 atom と補助 atom の区別が遅れる。現時点では task lens / lifecycle fold が効いており、次制作の入口を塞ぐほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
