@@ -125,6 +125,8 @@ const PLAYER_LV_MAX=4;
 // update tick / hit gate 2箇所の `||state.invincibleT>0` / onGraze Lv up 時 invincibleT セット /
 // draw() の buzz glow ring ブロックを削除。
 const BUZZ_INVINCIBLE_FRAMES=60;
+// v08 (d'): 無敵終了 5F fadeout (弾側 ring + player 周囲 ring 同期)。戻し方=定数 + state.invincibleFadeT 関連 6 箇所削除で v08 (a) 等価
+const INVINCIBLE_FADE_FRAMES=5;
 
 // === v06 A-6 (a): Psyvariar buzz chain extension — 無敵中の Lv up で無敵時間加算 (cap 180F) ===
 // Psyvariar 原典「Lv up ごとに数秒完全無敵 + 高密度なら multiple level-ups chain で長期無敵化」(2025-09 発表
@@ -204,6 +206,8 @@ const state={
   playerLv:0,
   // v06 A-5 (b)
   invincibleT:0,
+  // v08 (d'): 無敵終了 5F fadeout 残時間
+  invincibleFadeT:0,
   // v07 B-2: Hyper Activation Large Star フェード残時間
   hyperFlashT:0,
   // v07 観点7: 180F cap reached 大成功 flash 残時間
@@ -316,6 +320,8 @@ function startGame(){
   state.playerLv=0;
   // v06 A-5 (b) reset
   state.invincibleT=0;
+  // v08 (d') reset
+  state.invincibleFadeT=0;
   // v07 B-2 reset
   state.hyperFlashT=0;
   // v07 観点7 reset
@@ -512,7 +518,12 @@ function update(){
   // v03: active def 残時間
   if(state.activeDefT>0)state.activeDefT--;
   // v06 A-5 (b): buzz chain invincibility 残時間
-  if(state.invincibleT>0)state.invincibleT--;
+  if(state.invincibleT>0){
+    state.invincibleT--;
+    // v08 (d'): 1→0 遷移瞬間に fadeT セット (弾側 ring + player 周囲 ring の同期 fadeout 開始)
+    if(state.invincibleT===0)state.invincibleFadeT=INVINCIBLE_FADE_FRAMES;
+  }
+  if(state.invincibleFadeT>0)state.invincibleFadeT--;
   // v07 B-2: Hyper Activation Large Star フェード残時間
   if(state.hyperFlashT>0)state.hyperFlashT--;
   // v07 観点7: 180F cap reached 大成功 flash 残時間
@@ -832,8 +843,10 @@ function draw(){
     ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
     ctx.beginPath();ctx.arc(wx,wy,3,0,Math.PI*2);ctx.fill();
     // v07 観点3: 無敵中の高倍率対象 (2x graze) を弾側マーカー化 — 黄色細リング (描画のみ、当たり判定不変)
-    if(state.invincibleT>0){
-      ctx.strokeStyle='rgba(255,224,64,0.55)';
+    // v08 (d'): 無敵終了 5F fadeout (state.invincibleFadeT/INVINCIBLE_FADE_FRAMES で alpha 減衰)
+    if(state.invincibleT>0||state.invincibleFadeT>0){
+      const fa=state.invincibleT>0?1:state.invincibleFadeT/INVINCIBLE_FADE_FRAMES;
+      ctx.strokeStyle=`rgba(255,224,64,${0.55*fa})`;
       ctx.lineWidth=1;
       ctx.beginPath();ctx.arc(wx,wy,5,0,Math.PI*2);ctx.stroke();
     }
@@ -880,10 +893,12 @@ function draw(){
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
       }
       // v06 A-5 (b): buzz chain invincibility 中の橙色 glow ring (Lv up popup と同色 #ffa040)
-      if(state.invincibleT>0){
-        const iv=state.invincibleT/BUZZ_INVINCIBLE_FRAMES;
+      // v08 (d'): 無敵終了 5F fadeout (弾側 ring と同期、二重瞬時消失非対称副作用回避)
+      if(state.invincibleT>0||state.invincibleFadeT>0){
+        const iv=state.invincibleT>0?state.invincibleT/BUZZ_INVINCIBLE_FRAMES:0;
+        const fa=state.invincibleT>0?1:state.invincibleFadeT/INVINCIBLE_FADE_FRAMES;
         const pulse=0.5+0.5*Math.sin(state.t*0.35);
-        ctx.strokeStyle=`rgba(255,160,64,${0.35+0.55*iv*pulse})`;
+        ctx.strokeStyle=`rgba(255,160,64,${(0.35+0.55*iv*pulse)*fa})`;
         ctx.lineWidth=2.5;
         ctx.beginPath();ctx.arc(state.player.x,state.player.y,20,0,Math.PI*2);ctx.stroke();
       }

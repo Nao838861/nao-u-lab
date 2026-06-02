@@ -608,4 +608,49 @@ C199/C200/C201/C202 で **4 サイクル連続** で「Nao_u 評価を待たず 
 - **R-I 死守**: 本 ship は Stage 4 自判定 (C281 採用×高) に物理的責任を載せる回収サイクル。Nao_u v07 評価返信 (ts=1779939191.243789) を待たずに着手済 — 「Nao_u 返信待ち」 framing で iteration を止める R-I 退路を断つため
 - **次 Stage**: v08/index.html を Ash 自プレイで触り、時間 bar の体感効果 (「あと N 秒で休符」を読み取りに行けるか / HUD 情報密度悪化なしか) を Stage 4 として再判定 → Nao_u プレイ評価 (Stage 5) に出す材料を残す
 
+---
+
+## §v08 (a) ship 後 Stage 4 再判定 + (d') 着手判断 (2026-06-03 C283 Ash)
+
+### v08 (a) 画面下端 1px 時間 bar 効果検証 (index.html line 992-1002, ship 済)
+
+Ash 自プレイ mental simulation で v08 (a) 時間 bar (`state.t` 進捗 + 7 phase tick) の体感を 4 観点で評価:
+
+1. **「あと N 秒で次 phase」読み取り可否**: PHASE_BOUNDARIES (line 171) の 7 tick が `#a0c0e0` で `#6090c0` 進捗バー上に描画されるため、tick 直前に「次の phase まで残り」を視野下端で **周辺視野キャッチ可能**。tick 間隔は 13 秒等分なので、play 中の視線中央集中下でも tick 接近を「圧力/休符の切替予告」として読める。Cell 5 で挙げた「先行通知が一切ない」課題は本 ship で **解消**
+2. **HUD 上段 (line 976) との衝突**: gauge bar (gy=H-14) は y=H-14、時間 bar は y=H-1 = 13px 分離、物理的に独立。視線競合なし
+3. **見落としリスク**: 1px 高は通常 HUD (8-16px) より極端、play 中に時間 bar の存在自体を忘れる risk あり。**ただし「忘れていても致命ではない」設計** — phase 切替時の spawn パターン変化で事後気付き経路は維持されている (= 時間 bar は補助、必須ではない)
+4. **副作用**: なし (画面下端 1px、視線中央領域への干渉ゼロ、操作干渉ゼロ)
+
+**Stage 4 自判定 (v08 (a) ship 後)**: **採用継続 × 高**。C281 で「player 側 + Ash 自プレイ側の二重補強」と判定した予測は ship 後も維持、追加の副作用予測も観察されず。Nao_u 評価 (Stage 5) に出す材料として確定
+
+### v08 (d') 着手判断: **採用 × 中-高**
+
+C281 で (d) は「再検討 × 中」、player 周囲 ring (line 883-889) との二重瞬時消失非対称副作用を新規発見し、(d') = 弾側 ring + player 周囲 ring **同期** 5F fadeout 案として保留していた。本 C283 で着手判断確定:
+
+**採用根拠**:
+- v08 (a) ship は「先行予告」課題を解いたが、無敵終了の体感問題は別軸で未解決 (Cell 3 Ash 自プレイ差分)
+- 同期 fadeout は「弾側単独 fadeout」と違い、二重瞬時消失非対称副作用を発生させない (両 ring が同期で消える → 元の v07 と「瞬時 vs fade」の単一差分のみ、新規違和感ゼロ予測)
+- 1 機構刻み守準拠: 同期 fadeout は「弾側 ring + player 周囲 ring が同じ条件で消える」という関数的単純化、philosophizing layer 踏み込みなし
+- 戻し方明確: 追加行 (定数 1 / state 初期化 1 / startGame reset 1 / update tick 3-4 / 弾側 ring alpha 2-3 / player 周囲 ring alpha 2-3) の合計 ~12-15 行削除で v08 (a) 等価
+
+**実装計画**:
+- 定数: `const INVINCIBLE_FADE_FRAMES=5;` (line 127 後)
+- state: `invincibleFadeT:0,` (line 206 後)
+- startGame reset: `state.invincibleFadeT=0;` (line 318 後)
+- update tick (line 515 修正): invincibleT が 1→0 遷移時に fadeT=5 セット + fadeT 減算
+- 弾側 ring (line 835-839 修正): 条件 `state.invincibleT>0||state.invincibleFadeT>0`、alpha 補正 `fa = invincibleT>0 ? 1 : invincibleFadeT/INVINCIBLE_FADE_FRAMES`
+- player 周囲 ring (line 883-889 修正): 同様、ただし元の pulse * iv 計算を fadeT 時は iv=0 になるので fa を直接 alpha 係数化
+
+**戻し方**: 上記 6 箇所の追加/修正分 (合計 ~12-15 行) を削除すれば v08 (a) 完全等価。`v08/` ディレクトリ丸ごと削除でも v07 は無傷
+
+### Stage 4 C281/C283 制約遵守チェック
+
+- [x] `feedback_headless_unfit_for_unfinished_eval.md` t:5: 本セクションは index.html コード line 番号 + Ash 自プレイ mental simulation のみで判定、headless 数値ゼロ参照
+- [x] `feedback_clone_strategy.md` t:5: (d') 採用判断は「同期 fadeout」という 1 機構刻み、philosophizing layer (「総合確信度 N%」「30 本調査」) 踏み込みなし
+- [x] `feedback_prediction_responsibility.md` t:5: Stage 3 (matrix) → Stage 4 player 側 (C188) → Stage 4 Ash 自プレイ側 (C281) → Stage 4 v08 (a) ship 後再判定 (本 C283) → Stage 5 (Nao_u 評価) の連続体を 1 ステップ前進、C281 で予約した「v08 (a) ship 後の (d') 着手判断確定」を物理回収
+- [x] `feedback_means_ends_reversal_check.md` t:5: 本判定の出力は (d') 着手判断 = 直後の playable diff 生成への直接ゲート開放、matrix を読み直すだけの中間文書ではない
+- [x] R-I 死守: Nao_u v05/v06/v07/v08 評価返信未到達 (最新 ts=1778767221 = 2026-05-15) でも iteration を止めない、(d') ship で 1 機構刻み前進
+
+— Ash (Win2) 2026-06-03 C283 Phase 4 大作業 (v08 (a) ship 後 Stage 4 再判定 + (d') 採用判断確定 + 実装計画)
+
 — Ash (Win2) 2026-06-02 C282 Phase 4 大作業 (v08 (a) 画面下端 1px 高 時間 bar 実装 + commit/push)
