@@ -63,7 +63,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git/status gate: master, origin/master との ahead/behind 表示なし。既存差分は多数あるため今回対象外として隔離。"
+  - "memory/MEMORY.md: Markdown link 0 件、broken link 0 件を確認。"
+  - "memory/atoms.jsonl: 2004 rows、JSON 破損 0、duplicate id 0、duplicate source_ts 0 を確認。"
+  - "memory/raw/: file 142 件、mtime 30 日以上の old raw 0 件を確認。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=165, ready_to_post=4, postponed=130, failed=46, needs_review=15, none=10。30 日以上動きがない postponed/needs_review は 0 件。none 10 件は README と posted_drafts 配下で、candidate lifecycle 対象外として扱う。"
+  - "inbox lifecycle: slack_directives.jsonl pending 0、slack_broadcasts.jsonl pending 0。handled 更新対象なし。"
+issues:
+  - id: ISS-20260602-4A-001
+    description: "atoms.jsonl に exact excerpt duplicate が 55 組ある。id/source_ts 重複ではなく、再投稿・日記前検索・議論論点などの同文 atom が複数 source_ts で残っている。MEMORY.md では lifecycle/content fold により表示上は 190 件 fold されているため、現行 recall の主要導線では緩和済み。"
+    severity: low
+    evidence: "memory/atoms.jsonl exact excerpt duplicate examples: sr-1776359674-edeeda0bdd vs sr-1776395558-dc3d892a95; sr-1778535120-82ea7a1005 vs sr-1778535738-ed839f9805; repeated titles '日記前検索: 現在の目的に関係する外部情報' and '議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連'"
+    why_blocks_game_memory: "主要 recall では fold 済みだが、atoms.jsonl を直読する未対応スクリプトや ad hoc 検索では、ゲーム制作に使うべき教訓より運用再投稿が上位に出るノイズになり得る。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
