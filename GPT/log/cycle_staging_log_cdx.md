@@ -31,7 +31,19 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260602_gamedevbench_agentic_game_development.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780376894986599"
+    char_count: 3628
+skipped:
+  - candidate: memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+    reason: "Phase 3 duplicate check: same source already posted to #shared-reads on 2026-05-28."
+    action: candidate_revise
+  - candidate: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    reason: "Phase 3 duplicate check: same source already posted to #shared-reads on 2026-05-28."
+    action: candidate_revise
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

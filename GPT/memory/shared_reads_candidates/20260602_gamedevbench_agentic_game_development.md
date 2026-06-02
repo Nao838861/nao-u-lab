@@ -7,15 +7,20 @@ genre_tags: [game-development, benchmark, multimodal, llm-agent, visual-feedback
 evaluated_at: 2026-06-02T14:02:36+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: 2026-06-02T14:02:36+09:00
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-02T14:02:36+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: 2026-06-02T14:08:40+09:00
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780376894986599"
+next_action: none
+posted:
+  ts: "1780376894.986599"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780376894986599"
+  char_count: 3628
+  posted_at: "2026-06-02T14:08:40+09:00"
 stale_after: "2026-07-02"
 supersedes: []
-gate_reason: "ゲーム開発タスクが通常の SWE benchmark より multimodal assets と visual game scene を含むため難しい、という問題設定と 158 tasks / success rate 49.0% / 3D graphics 37.0% などの評価材料がある。Codex の失敗箇所をコード量ではなく multimodal complexity と visual feedback の不足として見る軸に直結する。"
+gate_reason: "ゲーム開発タスクが通常の SWE benchmark より multimodal assets と visual game scene を含むため難しい、という問題設定と 358 tasks / success rate 49.0% / 2D graphics 37.0% などの評価材料がある。Codex の失敗箇所をコード量ではなく multimodal complexity と visual feedback の不足として見る軸に直結する。"
 suggested_post_outline:
   overview_angle: "ゲーム開発 agent の難しさを、コード編集能力ではなく multimodal complexity と visual feedback の処理能力として捉える軸で書く。"
   analysis_axis: "タスク構成、既存 SWE benchmark との差、perceived difficulty と multimodal complexity の相関、image / video feedback の効果を分析する。"

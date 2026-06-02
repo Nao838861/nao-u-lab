@@ -6,13 +6,14 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-testing, qa, reinforcement-learning, code-coverage, instrumentation]
 evaluated_at: 2026-06-02T14:02:36+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: 2026-06-02T14:02:36+09:00
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-02T14:02:36+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-06-02T14:08:40+09:00
+last_decision: postponed
+evidence: "duplicate prior #shared-reads post: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+next_action: none
+postpone_reason: "Phase 3 duplicate check: same source already posted to #shared-reads on 2026-05-28."
 stale_after: "2026-07-02"
 supersedes: []
 gate_reason: "ゲーム状態だけでなく current function call trace / call stack を観測に入れ、target functions への到達を testing strategy の目的にする中核が明確。headless 評価が表層到達やスコアだけで止まる問題に対し、spawn / collision / scoring などの関数到達を検証目標へ変える適用性が高い。"

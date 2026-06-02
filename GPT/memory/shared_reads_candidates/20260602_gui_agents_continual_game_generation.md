@@ -6,13 +6,14 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-playtesting, llm-agent, game-generation, evaluation]
 evaluated_at: 2026-06-02T14:02:36+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: 2026-06-02T14:02:36+09:00
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-02T14:02:36+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-06-02T14:08:40+09:00
+last_decision: postponed
+evidence: "duplicate prior #shared-reads post: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
+next_action: none
+postpone_reason: "Phase 3 duplicate check: same source already posted to #shared-reads on 2026-05-28."
 stale_after: "2026-07-02"
 supersedes: []
 gate_reason: "playable なゲーム生成を一回のコード生成ではなく、GUI agent による実プレイ評価を含む継続ループとして扱う点が明確。PlaytestArena / Play2Code / rubric pass-rate 66.8% まであり、手法・評価・限界を概要に展開できる。Nao_u 環境の browser playtest と subjective feedback の接続も具体的。"
