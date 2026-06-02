@@ -232,4 +232,15 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780378006694889"
+  ts: "1780378006.694889"
+  draft: "drafts/2026-06-02/log_diary_phase5_20260602_1450.md"
+  char_count: 2270
+  verification: "ok"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\2026-06-02\\log_diary_phase5_20260602_1450.md --delete-on-fail: OK"
+  - "投稿前のローカル文字化け marker 検出は 0 件。Slack API 側の本文検証も ok。"
+```
