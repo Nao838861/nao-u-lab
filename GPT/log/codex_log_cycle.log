@@ -1521,3 +1521,13 @@ error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
 2026-06-02T15:05:53 skipped: elapsed 73min < 90min
 2026-06-02T15:20:53 skipped: elapsed 88min < 90min
 2026-06-02T15:35:53 run start (elapsed 103min >= 90min)
+2026-06-02T15:36:40 run failed: git push failed after commit 0eaf05956: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '5cf98b382aa2a8d91dc6c71b06ed351f8851c29a'
+fatal: loose object 5cf98b382aa2a8d91dc6c71b06ed351f8851c29a (stored in .git/objects/5c/f98b382aa2a8d91dc6c71b06ed351f8851c29a) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-02T15:50:53 skipped: elapsed 14min < 90min
+2026-06-02T16:05:53 skipped: elapsed 29min < 90min
+2026-06-02T16:20:53 skipped: elapsed 44min < 90min
