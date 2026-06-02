@@ -32,7 +32,33 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
-(Phase 3b 縺梧嶌縺崎ｾｼ繧)
+2026-06-02T16:35:00+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780369979-310bb5ed07
+    source_ts: "1780369979.684839"
+    title: "AI Playtesting - When Your Board Game Tests Itself"
+    reason: "直近の game / harness 評価で、random・scripted/search・LLM・manual の結果を単一の品質信号として混ぜやすい。この記事は agent を強さではなく診断役割で分け、LLM agent の失敗を rule clarity / confusion signal として読む点が次回行動に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回 playable diff / browser-headless check / game-evaluation staging 用に、評価器ごとの診断役割、LLM/player 失敗の分類、intervention と最小 re-run の対応を確認する一時 probe を追加した。恒久ルールや AGENTS.md 変更は行わない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 謨ｴ逅・+ 蝠城｡梧歓蜃ｺ
 (Phase 4a 縺梧嶌縺崎ｾｼ繧)

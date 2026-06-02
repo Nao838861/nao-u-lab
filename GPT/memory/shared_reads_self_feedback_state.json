@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-02T14:18:00+09:00",
+  "updated_at": "2026-06-02T16:35:00+09:00",
   "reviewed_source_ts": [
+    "1780369979.684839",
     "1780373599.771349",
     "1780362831.472569",
     "1780341253.417639",
@@ -108,6 +109,29 @@
     "1780340975.651269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T16:35:00+09:00",
+      "id": "sr-1780369979-310bb5ed07",
+      "source_ts": "1780369979.684839",
+      "title": "AI Playtesting - When Your Board Game Tests Itself",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-reads atom is useful for current game-production work because it separates automated playtest agents by diagnostic role: random agents for statistical fairness and breakage, stronger/search agents for exploitability or strategic viability, and LLM agents for rule-clarity or confusion signals. Existing probes preserve abstract state, action traces, scaffold attribution, and proxy variance, but they do not force Codex to name what kind of failure each evaluator is supposed to detect before turning a run into a quality claim. Keep this as a reversible one-cycle probe for the next playable diff, browser/headless game check, or game-evaluation staging.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next playable diff, browser/headless game check, or game-evaluation staging, did I name each evaluator or route by diagnostic role, such as random stress/fairness, scripted or search-like strategic viability, LLM rule-clarity/confusion, or manual feel?",
+        "When an LLM/player agent performs poorly, did I classify the failure as possible rule ambiguity, UI/state readability problem, mechanic avoidance, action-space mismatch, or harness limitation before using it as a game-quality verdict?",
+        "If I propose a balance or rule intervention from the run, did I record the observed metric or trace, the intervention, and the minimal re-run or contrast needed to check whether the intervention helped?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game-evaluation notes already assign diagnostic roles to evaluators, treat weak LLM/player performance as a clarity or harness signal before verdict, and tie interventions to re-run evidence."
+    },
     {
       "reviewed_at": "2026-06-02T14:18:00+09:00",
       "id": "sr-1780373599-596c38e196",
@@ -3279,6 +3303,18 @@
         "If Phase 1 used abstract/snippet reading, did I mark any inferred method name, algorithm, numeric result, or mechanism family as tentative until Phase 2 verifies it from the source text?"
       ],
       "expires_after": "Review after the next two external-ingest or shared-reads analyses that classify a source, add to source counts, or correct Phase 1 abstract-level assumptions."
+    },
+    {
+      "id": "probe-20260602-playtest-agent-role-diagnostics",
+      "created_at": "2026-06-02T16:35:00+09:00",
+      "source_ts": "1780369979.684839",
+      "scope": "next playable diff, browser/headless game check, automated playtest, or game-evaluation staging where random/scripted/search/LLM/manual routes may be collapsed into one quality signal",
+      "questions": [
+        "For the next playable diff, browser/headless game check, or game-evaluation staging, did I name each evaluator or route by diagnostic role, such as random stress/fairness, scripted or search-like strategic viability, LLM rule-clarity/confusion, or manual feel?",
+        "When an LLM/player agent performs poorly, did I classify the failure as possible rule ambiguity, UI/state readability problem, mechanic avoidance, action-space mismatch, or harness limitation before using it as a game-quality verdict?",
+        "If I propose a balance or rule intervention from the run, did I record the observed metric or trace, the intervention, and the minimal re-run or contrast needed to check whether the intervention helped?"
+      ],
+      "expires_after": "Review after the next two game-evaluation notes that use automated agents, scripted routes, LLM-as-player output, or manual playtest evidence."
     }
   ]
 }
