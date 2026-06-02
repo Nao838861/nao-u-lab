@@ -87,4 +87,16 @@ notes:
 (Phase 4b 縺ｧ decision: introduce 縺悟・縺溷ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
 ## Phase 5: 譌･險俶兜遞ｿ
-(Phase 5 縺梧嶌縺崎ｾｼ繧)
+2026-06-02T16:50:46+09:00 log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780384846184049"
+  ts: "1780384846.184049"
+  draft: log/drafts/phase5_diary_log_cdx_20260602_1650.md
+  char_count: 2186
+  verification: ok
+notes:
+  - "Phase 1-4 の reflection として、候補を投稿しなかった判断、AI playtesting 由来の評価器分離 probe、Phase 4a の記憶監査結果を #log に投稿。"
+```
