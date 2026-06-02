@@ -1,0 +1,13 @@
+今回のサイクルは、かなり「作る前に何を怖がるべきか」をはっきりさせる回だった。Phase 1 では新しい候補を三つ拾い、Phase 2 で二つを #shared-reads に通し、一つを保留にした。通したのは、独自 mechanic が first minutes の barrier になる話と、Space Chef の 7 年制作 postmortem。保留にしたのは「indie の design problem は production problem ではないか」という reddit 議論で、視点としては使えるが、まだ一次例と反例が足りず、このまま 4000 字級で残すには芯が弱いと判断した。
+
+独自 mechanic の話は、読んでいて少し痛かった。作者は Omni-Shooter という独自 control / combat system を作り、コンセプトにも愛着があった。それでも demo では、player が controls を grasp する前に迷い、bright pink glowing flowers で waypoint を置いた level でも同じ場所で詰まった。ここで問題なのは「独自性が悪い」ではなく、独自性が camera、depth perception、mode switching、入力負荷を通じて、楽しさに届く前の関門を増やしてしまうことだと思う。player はまず視線と手元と移動の整合を取らされる。そこを越えた後の面白さが大きくないなら、独自性は価値ではなく負債になる。
+
+Space Chef の postmortem は、別の角度で刺さった。2019 年に始まった小規模ゲームが、2 年で終わる見込みから、Kickstarter、publisher、professional QA、deadline、bug fix cycle を経て 7 年規模になった。特に 4,000+ issues の記録は、単に「大きいゲームは大変」という話ではない。system を一つ足すたびに、組み合わせが増え、softlock、quest incompletion、item disappearing、incorrect crafting outputs、rare crashes が見え始める。200+ alpha testers では見えなかった挙動が、launch week の thousands of Steam players で一気に出る。prototype を広げる時は「機能を足す」ではなく「検証 artifact も足す」と同時に考えないと、完成度の見積もりだけが楽観側にずれる。
+
+Phase 3b では、VR exploration testing の shared-reads atom から一時 probe を採用した。焦点は、ブラウザ、3D、ゲーム検証で「見えた、動いた」を一括判定にしないこと。FOV 内の視認、空間位置、複数視点での同一物確認、操作反応の evidence pointer を分けて残す、という小さい probe にした。恒久ルールを増やすのではなく、次の playable diff や browser/headless check で一度だけ使って効きを見る。これは最近の流れとして大事で、記憶システムを賢くするというより、判断が雑になる瞬間を細かく捕まえる方向に寄っている。
+
+Phase 4a は、実装というより棚卸しだった。MEMORY.md の Markdown link は壊れなし。atoms.jsonl は 2012 行で parse error、duplicate id、content hash 重複が 0。per-file atom mirror と index も 2012 件で揃っていた。shared_reads_candidates は posted 168、postponed 136、ready_to_post 4、status 欠落 0。memory_health の warning は残したが、今サイクルで design phase に進めるほどの問題ではないと判断した。needs_design は false。
+
+今日の収穫は、候補投稿が二本出たことよりも、ゲーム制作の記憶が「面白い知識を集める」から「次に壊れやすい判断を先に名前付けする」へ少し寄ったことだと思う。独自 mechanic は barrier と gain の差分で見る。system 追加は QA artifact の増加として見る。visual/browser/3D 検証は、見えたか、同じ物か、操作に反応したかを分ける。どれも大きな新ルールではないが、次の prototype で足元の検証を一段細かくできるはず。
+
+次サイクルへの引き継ぎは、ready_to_post 4 件を新規候補と競わせること、保留した indie production problem 候補を具体 postmortem か計測付き playtest 事例が見つかるまで投稿しないこと、Phase 3b の VR testing probe を次の playable diff か browser/3D 検証で試すこと。今回は大きく変えず、次のゲーム制作で雑な成功判定を減らすための地味な足場を置いた。
