@@ -108,7 +108,100 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: 2026-06-02T14:22:00+09:00
+designed_by: log_cdx (Phase 4b)
+scope_note: "設計のみ。staging 以外のファイル編集、コード作成、実行しながらの検証は行っていない。"
+selected_issues:
+  - ISS-4A-20260602-01
+  - ISS-4A-20260602-02
+designs:
+  - issue_id: ISS-4A-20260602-01
+    problem_restatement: "現在の memory_tree_consolidation は「孤立しているもの」を見つける方向に寄っているが、実際の残課題は、リンクがあるために一時的・局所的な atom が残り続けたり、機微・局所 atom が permanent 領域へ引っ張られたりする topology 側の滞留診断である。削除自動化ではなく、まず接続過多・危険接続・静止接続を候補として可視化する設計が必要。"
+    alternatives:
+      - name: "memory_health に topology warning を追加"
+        sketch: "既存の memory_health.py の warning として、high-degree atom、sensitive/local tag から permanent/memory_layer へのリンク、長期未更新リンクを集計する。Phase 4a の既存 health 確認に自然に乗る。"
+        pros:
+          - "既存の定時サイクルと health 出力に混ぜられるため導入面が小さい。"
+          - "削除や lifecycle 変更を伴わず、warning だけなので失敗時の被害が小さい。"
+          - "Phase 4a で毎回見る位置に置けるため、issue の再発見コストが低い。"
+        cons:
+          - "health が肥大化し、recall smoke や title 重複と異なる性質の問題が混ざる。"
+          - "topology 診断の閾値調整が health の全体 status に影響しやすい。"
+          - "per-file atom と atoms.jsonl のどちらを正にするかの整理が曖昧なまま残る。"
+        migration_cost: low
+      - name: "topology_audit を独立 dry-run レポートにする"
+        sketch: "atoms.jsonl / per-file atom を読み、リンクの inbound/outbound、tag 境界、memory_layer、更新時刻を使って候補だけを JSON/Markdown で出す。memory_health には要約件数だけを接続し、判断は Phase 4a/4b で行う。"
+        pros:
+          - "診断軸を orphan と別物として扱えるため、設計意図が明確。"
+          - "dry-run レポートなら削除・grouping・link 変更を自動化せずに始められる。"
+          - "後で high-degree、sensitive-to-permanent、stale-bridge などを個別閾値に分けやすい。"
+        cons:
+          - "新しい tool / report の導入が必要で、Phase 4c の作業単位が少し増える。"
+          - "初回は false positive が多く、人間が読むには候補の絞り込みが必要。"
+          - "既存の orphan_check.py が GPT 側に見えないため、Claude 側との責務境界を明記しないと重複する。"
+        migration_cost: medium
+      - name: "atom frontmatter に retention_policy を追加"
+        sketch: "各 atom に temporary / durable / permanent / sensitive などの retention_policy を持たせ、リンク先 policy との組み合わせで危険接続を判定する。topology ではなく schema を増やして根本から制御する。"
+        pros:
+          - "想起・整理・削除判断に直接使える明示的な境界になる。"
+          - "SSGM 的な memory governance の方向と整合する。"
+          - "将来の自動 lifecycle 処理に接続しやすい。"
+        cons:
+          - "既存 2000 atom への backfill 方針が必要で移行負荷が高い。"
+          - "policy 推定を誤ると、むしろ危険な分類を正本化してしまう。"
+          - "今回の問題はまず診断不足なので、schema 追加は早すぎる。"
+        migration_cost: high
+    recommended: "topology_audit を独立 dry-run レポートにする"
+    recommended_reason: "ISS-01 は orphan の延長ではなく、リンクで残り続ける経路の監査である。memory_health 直付けは低コストだが health の意味が濁る。frontmatter policy は本命に近いが移行が重い。独立 dry-run なら失敗時はレポートを捨てるだけで済み、Phase 4c で小さく導入して閾値を観察できる。"
+    decision: introduce
+    decision_reason: "Phase 4a の evidence が複数 atom で繰り返され、memory_tree_consolidation 停滞の解除候補として十分に具体化している。削除や自動 lifecycle ではなく診断レポートだけなら可逆で、現状からの距離も中程度に収まる。"
+    outline_for_4c:
+      - "topology_audit の最小 dry-run を設計どおり追加する。入力は atoms.jsonl を基本にし、per-file fallback は既存 loader が使える場合だけ接続する。"
+      - "出力カテゴリは high_inbound、sensitive_to_permanent、stale_bridge の 3 種に絞り、件数と上位候補だけを出す。"
+      - "memory_health には詳細を混ぜず、必要なら topology_audit summary の表示だけに留める。"
+      - "初回は候補を自動修正せず、staging Phase 4a/4c に dry-run 結果を残す。"
+  - issue_id: ISS-4A-20260602-02
+    problem_restatement: "重複 title 未 grouping は実害が小さいが、Slack 投稿断片由来の汎用 title が recall の見通しを落としている。問題は個々の title 修正というより、ingest 時に title として採用してよい文字列の品質ゲートが弱いこと。"
+    alternatives:
+      - name: "memory_health warning の閾値だけ維持"
+        sketch: "現状の repeated title group 未付与 warning を継続し、件数が増えた時だけ Phase 4a issue にする。今回の 13 groups は低 severity として観察に留める。"
+        pros:
+          - "追加実装なしで運用負荷がない。"
+          - "小規模な低 severity 問題を仕組み化しすぎない。"
+          - "既存 warning がすでに検出できている。"
+        cons:
+          - "汎用 title が増える前に防ぐことはできない。"
+          - "検索結果のノイズは少量ながら残る。"
+          - "同じ issue が次回も出る可能性がある。"
+        migration_cost: low
+      - name: "ingest title quality gate を追加"
+        sketch: "memory_ingest の title 生成後に、`■ 概要`、URL だけ、mention だけ、短すぎる記号列などを generic title として検出し、本文先頭や source title から代替 title を作る。"
+        pros:
+          - "今後の汎用 title 増殖を入口で止められる。"
+          - "recall 表示の品質に直接効く。"
+          - "既存 atom の大量修正なしに、新規分から改善できる。"
+        cons:
+          - "title 生成の heuristic が増え、誤置換リスクがある。"
+          - "今回の既存 13 groups には別途 backfill が必要。"
+          - "ISS-01 より優先度が低く、同サイクルで実装すると焦点が散る。"
+        migration_cost: medium
+      - name: "duplicate title backfill だけ実施"
+        sketch: "既存の ungrouped repeated title groups に group_id を付与し、必要なら canonical_id を設定する。新規 ingest の title 品質には触れない。"
+        pros:
+          - "memory_health warning を短期的に減らせる。"
+          - "既存 lifecycle fold の仕組みに沿う。"
+          - "対象件数が少ないため作業量は限定的。"
+        cons:
+          - "原因である generic title 採用は残る。"
+          - "URL や `■ 概要` のような title は group_id を付けても検索ノイズとして残る。"
+          - "手動 backfill は次回以降の再発を止めない。"
+        migration_cost: low
+    recommended: "ingest title quality gate を追加"
+    recommended_reason: "根本は入口の title 品質なので、採用案としては ingest gate が筋がよい。ただし今回の件数と severity は小さく、ISS-01 の topology audit より優先する必要はない。今サイクルでは設計メモとして残し、次に repeated title が増えた時の 4b/4c 候補にする。"
+    decision: postpone
+    decision_reason: "現状 warning で検出できており、件数も小さい。ISS-01 と同時導入すると memory system 変更が二系統になり、Phase 4c の焦点が散る。再発・増加が見えた時に title gate を導入する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
