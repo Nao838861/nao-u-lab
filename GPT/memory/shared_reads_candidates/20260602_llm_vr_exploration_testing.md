@@ -7,12 +7,17 @@ genre_tags: [game-testing, vr, llm-agent, spatial-understanding, headless-eval]
 evaluated_at: 2026-06-02T10:05:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: 2026-06-02T10:05:23+09:00
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-02T10:05:23+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: 2026-06-02T10:11:29+09:00
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780362683491849"
+next_action: none
+posted:
+  ts: "1780362683.491849"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780362683491849"
+  char_count: 4507
+  posted_at: "2026-06-02T10:11:29+09:00"
 stale_after: "2026-07-02"
 supersedes: []
 gate_reason: >-
