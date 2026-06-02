@@ -46,7 +46,40 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780373599-596c38e196
+    source_ts: "1780373599.771349"
+    title: "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers"
+    reason: "直近未レビューで memory / agent / operation / evaluation を持つ高スコア atom。個別手法ではなく taxonomy/calibration grid として扱うべき点と、Phase 1 の abstract 早読み推測混入を Phase 2 で訂正した点が、次回の外部摂取品質に直接効くため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/shared_reads_self_feedback_state.json に source-type / abstract-inference gate の reversible probe を追加。taxonomy source を implementation source count や直接 kaizen trigger に混ぜないこと、Phase 1 の abstract/snippet 推測を Phase 2 検証まで tentative と明示することを次回確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260602-source-type-and-abstract-inference-gate
+    questions:
+      - "For the next external research ingest or shared-reads analysis, did I label the source as taxonomy/calibration grid, implementation method, benchmark/evaluation, or operational anecdote before using it as evidence?"
+      - "If the source is a taxonomy or calibration grid, did I keep it separate from independent implementation-source counts and avoid turning it into a direct kaizen or rule trigger?"
+      - "If Phase 1 used abstract/snippet reading, did I mark any inferred method name, algorithm, numeric result, or mechanism family as tentative until Phase 2 verifies it from the source text?"
+    withdrawal_condition: "Drop this probe if the next two external-ingest or shared-reads analyses already separate taxonomy sources from implementation evidence and explicitly mark abstract-level inferences as tentative before Phase 2 verification."
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    conflict_note: "既存の retention gate / memory governance gate は memory lifetime や execution-governance 分離を扱う。本 probe は source type と abstract-level inference の扱いに限定し、恒久ルール・AGENTS・phase prompt は変更しない。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

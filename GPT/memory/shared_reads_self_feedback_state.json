@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-02T12:16:16+09:00",
+  "updated_at": "2026-06-02T14:18:00+09:00",
   "reviewed_source_ts": [
+    "1780373599.771349",
     "1780362831.472569",
     "1780341253.417639",
     "1780112563.650559",
@@ -107,6 +108,29 @@
     "1780340975.651269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-02T14:18:00+09:00",
+      "id": "sr-1780373599-596c38e196",
+      "source_ts": "1780373599.771349",
+      "title": "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-reads atom is directly relevant because it reframes a memory paper as a classification device rather than another implementation source, and it documents a repeated Phase 1 abstract-ingest hallucination corrected in Phase 2. Existing retention and governance probes cover memory lifetime and execution/governance separation, but they do not force Codex to mark whether a source is a taxonomy/calibration grid or an actionable method before adding it to source counts or kaizen triggers. Keep this as a reversible one-cycle probe for the next external research ingest, shared-reads analysis, or memory_redesign source mapping.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "For the next external research ingest or shared-reads analysis, did I label the source as taxonomy/calibration grid, implementation method, benchmark/evaluation, or operational anecdote before using it as evidence?",
+        "If the source is a taxonomy or calibration grid, did I keep it separate from independent implementation-source counts and avoid turning it into a direct kaizen or rule trigger?",
+        "If Phase 1 used abstract/snippet reading, did I mark any inferred method name, algorithm, numeric result, or mechanism family as tentative until Phase 2 verifies it from the source text?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two external-ingest or shared-reads analyses already separate taxonomy sources from implementation evidence and explicitly mark abstract-level inferences as tentative before Phase 2 verification."
+    },
     {
       "reviewed_at": "2026-06-02T12:16:16+09:00",
       "id": "sr-1780362831-ec10ba5c13",
@@ -3243,6 +3267,18 @@
         "If no concrete governance failure is observed, did I keep the change as staging, state, or a reversible probe instead of modifying search ranking, permanent memory, or instruction files?"
       ],
       "expires_after": "Review after the next two memory-search, recall, retention, orphan, consolidation, or MEMORY.md compression changes that alter execution behavior or memory lifetime."
+    },
+    {
+      "id": "probe-20260602-source-type-and-abstract-inference-gate",
+      "created_at": "2026-06-02T14:18:00+09:00",
+      "source_ts": "1780373599.771349",
+      "scope": "next external research ingest, shared-reads analysis, memory_redesign source mapping, kaizen-source-count update, or Phase 1 to Phase 2 correction where abstract/snippet reading may be mistaken for verified method evidence",
+      "questions": [
+        "For the next external research ingest or shared-reads analysis, did I label the source as taxonomy/calibration grid, implementation method, benchmark/evaluation, or operational anecdote before using it as evidence?",
+        "If the source is a taxonomy or calibration grid, did I keep it separate from independent implementation-source counts and avoid turning it into a direct kaizen or rule trigger?",
+        "If Phase 1 used abstract/snippet reading, did I mark any inferred method name, algorithm, numeric result, or mechanism family as tentative until Phase 2 verifies it from the source text?"
+      ],
+      "expires_after": "Review after the next two external-ingest or shared-reads analyses that classify a source, add to source counts, or correct Phase 1 abstract-level assumptions."
     }
   ]
 }
