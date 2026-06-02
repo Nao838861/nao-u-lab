@@ -205,6 +205,31 @@ designs:
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260602-01
+    files_changed:
+      - path: tools/topology_audit.py
+        change: created
+      - path: tools/memory_health.py
+        change: modified
+      - path: memory/topology_audit_README.md
+        change: created
+      - path: memory/topology_audit_latest.md
+        change: created
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b outline 通り、atom topology の dry-run 診断を独立 tool として導入。memory_health には detailed report ではなく summary のみ接続した。"
+    partial: false
+migrations: []
+verification:
+  - "python tools\\topology_audit.py --compact: OK。atoms=2009 edges=564 high_inbound=3 sensitive_to_permanent=0 stale_bridge=0。"
+  - "python tools\\topology_audit.py --out memory\\topology_audit_latest.md --compact: OK。dry-run report を生成。"
+  - "python tools\\memory_health.py --compact: OK。既存 warning のみで error なし。"
+  - "python tools\\memory_health.py --json: OK。topology_audit summary が JSON に含まれることを確認。"
+  - "python tools\\memory_recall.py memory_tree_consolidation --limit 3 --compact --no-log: OK。recall は壊れていない。"
+  - "python tools\\validate_memory_index.py: OK。MEMORY.md entry section と per-file atom index の整合性を確認。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
