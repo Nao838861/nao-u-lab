@@ -35,6 +35,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 FRONTMATTER_RETENTION_RE = re.compile(r"^retention:\s*([A-Za-z_]+)", re.MULTILINE)
+FRONTMATTER_SUPERSEDES_RE = re.compile(r"^supersedes:\s*(\S+)", re.MULTILINE)
+FRONTMATTER_SUPERSEDED_BY_RE = re.compile(r"^superseded_by:\s*(\S+)", re.MULTILINE)
 
 VALID_RETENTION = {"permanent", "cycle", "probationary"}
 
@@ -46,6 +48,13 @@ class RetentionRecord:
     mtime_epoch: float
     elapsed_days: float
     elapsed_cycles: float
+
+
+@dataclass
+class SupersedeRecord:
+    path: Path
+    supersedes: str | None
+    superseded_by: str | None
 
 
 def parse_frontmatter(text: str) -> str:
@@ -70,6 +79,25 @@ def extract_retention(path: Path) -> str | None:
         return None
     val = m.group(1).strip().lower()
     return val if val in VALID_RETENTION else None
+
+
+def extract_supersedes(path: Path) -> SupersedeRecord | None:
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    fm = parse_frontmatter(text)
+    if not fm:
+        return None
+    sup = FRONTMATTER_SUPERSEDES_RE.search(fm)
+    sby = FRONTMATTER_SUPERSEDED_BY_RE.search(fm)
+    if sup is None and sby is None:
+        return None
+    return SupersedeRecord(
+        path=path,
+        supersedes=sup.group(1).strip() if sup else None,
+        superseded_by=sby.group(1).strip() if sby else None,
+    )
 
 
 def walk_roots(roots: list[Path]) -> list[Path]:
@@ -164,6 +192,47 @@ def main(argv: list[str] | None = None) -> int:
     else:
         for r in stale:
             print(format_record(r, base))
+
+    sup_records: list[SupersedeRecord] = []
+    for p in paths:
+        sr = extract_supersedes(p)
+        if sr is not None:
+            sup_records.append(sr)
+
+    sup_only = [r for r in sup_records if r.supersedes is not None]
+    sby_only = [r for r in sup_records if r.superseded_by is not None]
+
+    print()
+    print(f"## supersedes / superseded_by 検出 (supersedes={len(sup_only)} superseded_by={len(sby_only)})")
+    if not sup_records:
+        print("  (該当ファイルなし。kaizen #138 段階2 残タスク = supersedes キー併設試験 が未着手の状態を反映)")
+    else:
+        for r in sup_records:
+            try:
+                rel = r.path.relative_to(base)
+            except ValueError:
+                rel = r.path
+            tag = []
+            if r.supersedes:
+                tag.append(f"supersedes={r.supersedes}")
+            if r.superseded_by:
+                tag.append(f"superseded_by={r.superseded_by}")
+            print(f"  {rel} ({' '.join(tag)})")
+
+    pairs: list[tuple[str, str]] = []
+    sup_index = {r.path.name: r for r in sup_records if r.supersedes}
+    sby_index = {r.path.name: r for r in sup_records if r.superseded_by}
+    for new_name, rec in sup_index.items():
+        old_name = rec.supersedes
+        if old_name in sby_index and sby_index[old_name].superseded_by == new_name:
+            pairs.append((old_name, new_name))
+    print()
+    print(f"## 双方向リンク確認 (旧→新 完全対応ペア = {len(pairs)} 組)")
+    if not pairs:
+        print("  双方向ペアなし")
+    else:
+        for old, new in pairs:
+            print(f"  {old} -> {new}")
 
     return 0
 

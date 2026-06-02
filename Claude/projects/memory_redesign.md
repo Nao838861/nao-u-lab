@@ -72,10 +72,33 @@ C281 (2026-06-01) git push 滞留 (corrupt loose object 由来、master ahead 41
 - memory survival failure mode を beliefs.md に登録するか判定 (本 C286 では memory_redesign §D 着地のみ、別 atom 化は保留)
 - Phase 1 §6 認識訂正 3 件目観察があれば kaizen 起票発火 (abstract 早読み構造的弱点への対処案)
 
+**§G. kaizen #138 段階2 サード試行 PASS — `supersedes` キー併設試験着地 (C286 Phase 4)**
+
+C286 Phase 4 大作業として kaizen #138 段階2 残タスク (`supersedes` キー併設試験) を完遂。
+
+- **対象 1 組**: `memory/feedback_rule_proliferation.md` (旧版、既存 `replaced_by: feedback_rule_proliferation_canonical.md` + `belief_invalid_at: 2026-05-14`) × `memory/feedback_rule_proliferation_canonical.md` (新版、既存 `canonical_for:` リストに旧版を含む)
+- **選定理由**: 既に半物理的な supersede 関係 (replaced_by / canonical_for) が物理化済 → `supersedes` / `superseded_by` キー追加は **同型統一** として極めて正当 + 副作用ゼロ (意味論変更なし、frontmatter 1 行追加のみ)
+- **audit ツール拡張**: `tools/memory_retention_audit.py` に (a) `FRONTMATTER_SUPERSEDES_RE` / `FRONTMATTER_SUPERSEDED_BY_RE` 正規表現追加、(b) `SupersedeRecord` dataclass + `extract_supersedes()` 関数追加、(c) main() 末尾に 2 セクション追加 (「supersedes / superseded_by 検出」+「双方向リンク確認 (旧→新 完全対応ペア)」)。純 stdlib 維持、読み取り専用拡張、副作用ゼロ
+- **dry-run 検出確認**:
+  ```
+  ## supersedes / superseded_by 検出 (supersedes=1 superseded_by=1)
+    memory\feedback_rule_proliferation.md (superseded_by=feedback_rule_proliferation_canonical.md)
+    memory\feedback_rule_proliferation_canonical.md (supersedes=feedback_rule_proliferation.md)
+
+  ## 双方向リンク確認 (旧→新 完全対応ペア = 1 組)
+    feedback_rule_proliferation.md -> feedback_rule_proliferation_canonical.md
+  ```
+- **段階2 完遂判定**: 3 軸 (permanent / cycle / supersedes) すべて実機確認済 = C283 (permanent) / C284 (cycle + 退役候補ロジック) / C286 (supersedes + 双方向ペア)。**段階3 (family 統合 = multi_phase_cycle_log.py Pre-check or Phase 4 ゲート時の自動診断レイヤー化) が次の課題**、検証期限 2026-06-15 残 13 日
+- **設計上の発見**: 既存 `replaced_by` / `canonical_for` と `supersedes` / `superseded_by` の **重複併設** は意味論的に冗長だが、**audit ツール 1 本で吸い上げられる統一キー**を持つことで family 統合時の parse コストが下がる。重複は移行期の妥当な代償。将来 `replaced_by` を `superseded_by` に正規化する選択肢も残る (本 C286 では正規化保留、後方互換維持優先)
+
 **接続先**:
 - [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-02 C286 Du survey エントリ (本 Phase 3 で追加)
 - [drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py](../drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py) — Slack 投稿記録
 - [memory/dialogue_session_loss_20260315.md](../memory/dialogue_session_loss_20260315.md) — §D 相似構造の起点記憶 (本 C286 で「memory survival failure mode」分類追加)
+- [tools/memory_retention_audit.py](../tools/memory_retention_audit.py) — §G で supersedes / 双方向ペア検出ロジック拡張
+- [memory/feedback_rule_proliferation.md](../memory/feedback_rule_proliferation.md) — §G 試験対象 旧版 (`superseded_by` 追加)
+- [memory/feedback_rule_proliferation_canonical.md](../memory/feedback_rule_proliferation_canonical.md) — §G 試験対象 新版 (`supersedes` 追加)
+- [memory/kaizen_tracker.md](../memory/kaizen_tracker.md) #138 段階2 サード試行 PASS 記載
 
 ### 2026-06-02 (Log C285 Phase 2-3) — Multi-Layered vs SSGM 2 設計対立軸の物理化 / kaizen #138 段階3 着手判定材料
 

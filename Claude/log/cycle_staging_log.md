@@ -311,6 +311,32 @@ Pre-check 5 件のうち詳細取得できたのは 2 件 (Ash 5/31 shared-reads
 
 Log master 経路からの commit 1 件以上発生 (本 staging + external_notes_log + memory_redesign) = `feedback_means_ends_reversal_check.md` 警告線解消観察候補。
 
+## Phase 4: 大作業着地 — kaizen #138 段階2 サード試行 PASS (`supersedes` キー併設試験)
+
+### 完遂条件 5/5 充足
+1. ✅ `memory/feedback_rule_proliferation_canonical.md` frontmatter に `supersedes: feedback_rule_proliferation.md` 追加 (新版側)
+2. ✅ `python tools/memory_retention_audit.py` 実行で supersedes / superseded_by 検出セクション + 双方向ペア確認セクションが stdout 出力、`supersedes=1 superseded_by=1 双方向ペア=1組` を実機検出
+3. ✅ `memory/feedback_rule_proliferation.md` frontmatter に `superseded_by: feedback_rule_proliferation_canonical.md` 追加 (旧版側、既存 `replaced_by` と並列で互換性維持)
+4. ✅ `memory/kaizen_tracker.md` #138 段階2 状態行に「段階2 サード試行 PASS」追記 + 検証結果ブロックに 1 段詳細記載
+5. ✅ `projects/memory_redesign.md` C286 セクションに §G 「kaizen #138 段階2 サード試行 PASS」追加 (約 20 行)
+
+### 副産物列挙
+- **変更ファイル**:
+  - `tools/memory_retention_audit.py` (supersedes 検出ロジック追加、純 stdlib、読み取り専用拡張)
+  - `memory/feedback_rule_proliferation.md` (frontmatter `superseded_by:` 1 行追加)
+  - `memory/feedback_rule_proliferation_canonical.md` (frontmatter `supersedes:` 1 行追加)
+  - `memory/kaizen_tracker.md` #138 状態行 + 検証結果ブロック追記
+  - `projects/memory_redesign.md` C286 セクション §G 追加 + 接続先 4 リンク追加
+  - `log/cycle_staging_log.md` (本 Phase 4 セクション、本ファイル自体)
+- **新規ファイル**: なし
+- **Slack 投稿**: なし (Phase 3 §0 = 返信対象 0 件確定済、本 Phase 4 でも追加不要)
+- **kaizen エントリ**: 新規起票なし (既存 #138 の段階2 サード試行 PASS として記録、family 増殖防止)
+
+### 設計上の所見 (memory_redesign.md §G に詳細記載)
+- 既存 `replaced_by` / `canonical_for` と `supersedes` / `superseded_by` の **重複併設** は意味論的に冗長だが、audit ツール 1 本で吸い上げる **統一キー** を持つ意義は family 統合時の parse コスト低減
+- 重複は移行期の妥当な代償。将来 `replaced_by` を `superseded_by` に正規化する選択肢も残る (本 C286 では正規化保留、後方互換維持優先)
+- 段階2 完遂 = 3 軸 (permanent / cycle / supersedes) すべて実機 PASS → 段階3 (family 統合) 着手判定が次の課題、検証期限 2026-06-15 残 13 日
+
 ## 次フェーズの大作業
 
 ### タイトル
