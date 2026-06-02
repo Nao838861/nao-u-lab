@@ -513,3 +513,86 @@ C199/C200/C201/C202 で **4 サイクル連続** で「Nao_u 評価を待たず 
 - [x] `feedback_means_ends_reversal_check.md` t:5: 本 Stage 4 自判定の出力は v08 候補絞り込み (2 件推奨 + 3 件非推奨理由) = iteration の次手選定根拠で、ship に直結する判定材料。matrix を読み直すだけの中間文書ではなく、Nao_u 評価返信受領後の v08 着手判断を物理的に短縮する材料を残した
 
 — Ash (Win2) 2026-05-31 C188 Phase 4 大作業 (juicy_amplification_matrix Stage 4 自判定追記 + v08 候補 (a)(d) 暫定推奨 + matrix 主張 4 件のコード根拠整合性記録)
+
+---
+
+## §juicy_amplification_matrix Stage 4 — Ash 自プレイ側 9 セル + v08 候補 (a)(d) 確信度確定 (2026-06-02 C281 Ash)
+
+**接続元**: 本ファイル前節 (C188, 2026-05-31) で **player 側 9 セル** + **v08 候補 (a)(d) 暫定推奨** は記録済。残保留は (i) **Ash 自プレイ側 9 セル** (player 側=外部視点の Stage 3 体感予測に対し、Ash 自身が index.html の挙動を内部 simulate してプレイしたときの体感判定)、(ii) **v08 候補 (a)(d) 確信度確定** (暫定推奨 → 採用 / 不採用 / 再検討 × 高 / 中 / 低)。本セクションで両保留を解消し、v08 着手の最終ゲートを通過させる。
+
+**判定方針再掲 (R-I 死守)**:
+- 根拠は `index.html` コード精読 (line 番号付き) + Ash 自プレイ mental simulation (= キー入力 → 内部状態遷移 → 描画出力を頭の中で再生) のみ
+- 校正前 headless 数値 (route/camper/panic/novice 到達率 / score / player_lv_avg) を **判定根拠に使わない** (`feedback_headless_unfit_for_unfinished_eval.md` t:5)
+- 既出の player 側 9 セルとの **差分のみ** を記述し、重複文を増やさない (`feedback_memory_update_method.md` 差分追記原則)
+
+### Ash 自プレイ側 9 セル判定 (player 側との差分)
+
+#### Cell 1: B-2 Hyper Activation × polishing (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 「消去波の前進感」を amplification 寄り polishing 候補と判定
+- **Ash 自プレイ差分**: 自分が X (SPACE) を押した瞬間に体感するのは **画面全体の黄色 flash (30F, alpha 0.4)** が支配的で (line 918-922)、個別の star 粒子 (line 348-352) は画面上では認識前に flash で覆われる。**Stage 4 自判定**: **高**。前進感波形の必要性は player 側予測通り、ただし優先度は polishing 余地として「中」止まり (flash 演出が既に「撃った感」を担保しているため、追加波形は重複層になる懸念)
+
+#### Cell 2: B-2 Hyper Activation × amplification (player 側 vs Ash 自プレイ側)
+- **player 側既出**: gauge 期待ライン amp 余地大、Stage 4 信頼度 高
+- **Ash 自プレイ差分**: 自分が gauge を見ている瞬間に欲しい情報は「**いま撃つべきか溜めるべきか**」の即時判定で、現状の HUD (line 976) は LV 数表示のみ。drawHUD() で gauge bar (line 936-966) を見るとき、対 phase 期待値が無いため「LV3 まで溜まったから撃つか」の閾値判断だけで意思決定が完結してしまう。期待ライン追加で「**phase 切替前に撃つ vs 切替後に温存** の判断」が生まれる予測。**Stage 4 自判定**: **高**。amplification 余地は確実、ただし既存 gauge UI 情報密度 (色 3 段階 + 縦 tick 2 本 + ready pulse) に重なる **視覚衝突リスク** が player 側予測より重い
+
+#### Cell 3: 観点 3 弾側マーカー × polishing (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 消失 fadeout 5F が最小 polishing、無敵切れ瞬間の認識を緩やかに
+- **Ash 自プレイ差分**: 自分が無敵中に擦り回るとき、無敵終了瞬間の体感は「**急に画面の黄色 ring が消える違和感**」(line 835-839, 瞬時消失) + 「**player 周囲の橙 glow ring が消える**」(line 883-889) の **二重瞬時消失** が同時発生。fadeout 5F は弾側 ring 単独修正で、player 周囲 ring の同期 fadeout も要検討。**Stage 4 自判定**: **高**。fadeout 効果は確定、ただし弾側 ring 単独修正だけでは player 周囲 ring との非対称が新たな違和感を生む副作用予測あり (player 側予測より複雑)
+
+#### Cell 4: 観点 3 弾側マーカー × amplification (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 出現比率の前提部分外れ (invincibleT 中=100% トグル)、chain 末尾 popup は事後可視化候補
+- **Ash 自プレイ差分**: 自分が無敵中の画面を見るとき、黄色 ring (line 835-839) は **全 ebullet に対して描画されている** ことを mental simulate で確認 (line 835 の `if(state.invincibleT>0)` は弾種フィルタなし)。これは「2x 対象であることのマーキング」というより「**無敵中の表示モード切替**」に近く、player 側 amp として「強」評価していた knowledge §マトリクス分析仮置きは **過大評価** の可能性。**Stage 4 自判定**: **中**。amp 機能としての効果は弱め、player 側 cell 4 で評価した「唯一の amp 機構」評価を **降格** すべき (=「無敵中インジケータ」相当に再分類)
+
+#### Cell 5: 観点 6 7 区分 spawn テーブル × polishing (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 画面端 1F フラッシュが軽量 polishing
+- **Ash 自プレイ差分**: 自分が play しているとき、phase 切替の認識は **spawn パターン変化 = 弾密度変化** の事後気付きでしか得られない (PHASE_BOUNDARIES line 171 + spawnPhase 関数群 line 448-462)。**先行通知が一切ない** ため次 phase の準備動作 (gauge 温存 / ポジション取り直し) ができない。1F フラッシュは事後通知で **先行 1-2 秒予告** には足りない。**Stage 4 自判定**: **中**。1F フラッシュは「切替が起きた」事後認識用、player 側予測通り効果あるが「先行予告」の課題は別途解決要 (Cell 6 の時間 bar が代替)
+
+#### Cell 6: 観点 6 7 区分 spawn テーブル × amplification (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 画面下端 1px 高 時間 bar、amp 余地最大、Stage 4 信頼度 高、**v08 候補 (a) の Stage 4 根拠 (最強)**
+- **Ash 自プレイ差分**: 自分が play 中、Cell 5 で挙げた「**先行予告なし**」の問題は実プレイで強く感じる予測。時間 bar (90 秒進行度 + phase 区切り tick) があれば「あと 2 秒で休符」を **読み取り** に行ける = プレイヤー側の予測能力が解放される。これは amplification の本質定義 (内部状態の知覚化 → empowerment) に直結。HUD 既存行 (line 976) との衝突は **画面下端 1px** で物理的に隔離。**Stage 4 自判定**: **高 (再確認)**。player 側 + Ash 自プレイ側で同方向に強化、v08 候補 (a) の **採用** 根拠は本セルで二重に固まった
+
+#### Cell 7: 観点 7 180F cap reached 大成功反応 × polishing (player 側 vs Ash 自プレイ側)
+- **player 側既出**: cap 持続中の演出余地、ring 残光持続 / 着地演出
+- **Ash 自プレイ差分**: 自分が cap 到達した瞬間 (line 699-703 の `wasCapNotReached && state.invincibleT===BUZZ_INVINCIBLE_CAP`) の体感は「**flash 20F + 大型 ring + popup 'MAX CHAIN!' の三段同時発火**」で、**瞬間の祝福は十分強い**。問題は持続 180F = 3 秒間、player 周囲 ring (line 883-889) が通常 invincibility と同じ橙色のまま (line 886 の strokeStyle 三項分岐に cap 識別なし) → 「cap 中である持続体験」が薄い。**Stage 4 自判定**: **高**。cap 持続中の polishing (例: line 886 の strokeStyle に `state.invincibleT===BUZZ_INVINCIBLE_CAP?'#ffd870':'#ffa040'` 切替で 2-3 行) は確実に効果あり、player 側予測通り
+
+#### Cell 8: 観点 7 180F cap reached 大成功反応 × amplification (player 側 vs Ash 自プレイ側)
+- **player 側既出**: 残 chain ●●○ の前提部分外れ (cap 条件は invincibleT 加算量で判定)、invincibleT 進捗 bar が整合的
+- **Ash 自プレイ差分**: 自分が無敵中に Lv up を狙うとき、line 695-696 の `state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES, BUZZ_INVINCIBLE_CAP)` で「あと何 F の Lv up で cap に届くか」を mental に計算する必要があるが、HUD に invincibleT 残量が出ていない (`PLv ${state.playerLv}/${PLAYER_LV_MAX}` line 976 のみ)。invincibleT 進捗 bar (例: player 周囲 ring の弧長 = invincibleT/180) があれば「あと 1 chain で cap」が直感化。**Stage 4 自判定**: **中**。amp 余地はあるが、(c) ●●○ 形式ではなく **player 周囲 ring 弧長表示** という別実装が要る (= v08 候補 (c) はそのままでは不採用、再設計が要る)
+
+#### Cell 9: 矩形横断観察 (Ash 自プレイ側補強)
+- **player 側既出 (4 主張)**: ① 観点 3 弾側マーカーが唯一の amp 機構、② 観点 6 spawn 時間 bar 余地最大、③ B-2 Hyper gauge 期待ライン余地次点、④ 観点 7 cap reached は polishing 強・amp 中
+- **Ash 自プレイ差分による主張訂正**:
+  - 主張 ① は **降格** (Cell 4 Ash 差分根拠): 観点 3 弾側マーカーは「2x 対象マーキング」というより「無敵中インジケータ」相当、純粋な amp 機構として「強」評価は過大。**v07 で唯一の amp 機構は実質ゼロ** に近い (= player 側 cell 4 の評価を C281 で下方修正)
+  - 主張 ② は **再確認** (Cell 6 Ash 差分根拠): 時間 bar 余地最大は player 側 + Ash 自プレイ側で二重補強、v08 候補 (a) の確信度を **採用 × 高** に確定する直接根拠
+  - 主張 ④ は **修正** (Cell 7 Ash 差分根拠): cap reached **瞬間** polishing は強だが **持続 180F polishing は実質ゼロ** (line 886 strokeStyle に cap 識別なし)、cap 中 ring 色切替 2-3 行で polishing 余地中→高に格上げ可能
+- **Ash 自プレイ側横断結論信頼度**: **高**。player 側で曖昧だった「主張 ① の amp 機構強さ」と「主張 ④ の cap 持続中 polishing」を 2 主張ともコード根拠で訂正 (line 番号付き)
+
+### v08 候補 (a)(d) 確信度確定 (採用 / 不採用 / 再検討 × 高 / 中 / 低)
+
+| 候補 | 判定 | 確信度 | 根拠 (1-2 行、index.html line 番号付き) |
+|---|---|---|---|
+| **(a) 観点 6 spawn テーブル 画面下端 1px 高 時間 bar** | **採用** | **高** | Cell 6 で player 側 + Ash 自プレイ側の二重補強 (Cell 5 「先行予告なし」課題の唯一の解、PHASE_BOUNDARIES line 171 と spawnPhase 関数群 line 448-462 のロジック側既存)。drawHUD() line 980 後ろに ~10 行追加、戻し方 10 行削除で v07 等価。HUD 情報密度衝突なし (画面下端 1px) |
+| **(d) 観点 3 弾側マーカー 無敵終了 5F fadeout** | **再検討** | **中** | Cell 3 で player 周囲 ring (line 883-889) との **二重瞬時消失非対称副作用** を新規発見。弾側 ring (line 835-839) 単独 fadeout だと無敵終了瞬間に player 周囲 ring だけ瞬時消失する違和感が新発生する予測。**(d) 単独実装は不採用、player 周囲 ring 同期 fadeout (+追加 ~3 行) と併発する (d') 修正案に再設計してから採用判断** |
+
+### v08 候補 (b)(c)(e) の C281 確認 (player 側暫定推奨での非推奨理由は維持)
+
+- **(b) gauge 期待ライン**: Cell 2 Ash 自プレイ側で「視覚衝突リスクが player 側予測より重い」と確認 → 非推奨理由 (情報密度過剰) が C281 で強化。**確定: 不採用 × 中** (Nao_u 評価で amplification 強化要求が出た場合の予備候補)
+- **(c) 残 chain ●●○**: Cell 8 Ash 自プレイ側で「player 周囲 ring 弧長表示」という別実装が整合と確認 → ●●○ 形式そのままは不採用、別 UI 設計が要る。**確定: 不採用 (再設計後の別候補 c') × 中**
+- **(e) 出現比率表示**: Cell 4 Ash 自プレイ側で「黄色 ring が 2x 対象マーキングではなく無敵中インジケータ相当」と確認 → 出現比率という概念自体が機能上意味薄。**確定: 不採用 × 高** (Stage 4 確信度高で却下)
+
+### v08 着手判断 (本セクションでの確定)
+
+- **第一手 v08 (a) 時間 bar**: **採用 × 高** で v08 着手判断確定。Nao_u v07 評価返信 (ts=1779939191.243789) を待たずに着手可能 (Stage 4 自判定確信度高 + R-I 死守準拠 + clone_strategy 守の「削除可能改良 1 個刻み」要件充足)
+- **第二手 v08 (d') player 周囲 ring 同期 fadeout 込み**: **再検討 × 中** で v08 (a) ship 後の Stage 4 再評価で確信度確定要、本セクションでは判定保留
+- **(b)(c)(e)**: いずれも不採用、Nao_u 評価キーワード次第で予備候補として残置
+- **本判定の `feedback_clone_strategy.md` t:5 守破離守適合性**: v08 (a) 単独着手は「1 機構刻み」要件 OK、戻し方明確 (10 行削除) で守準拠。philosophizing layer (「総合確信度 N%」「30 本調査」) には踏み込まない
+
+### Stage 4 C281 制約遵守チェック
+
+- [x] `feedback_headless_unfit_for_unfinished_eval.md` t:5: 本セクションは **index.html コード line 番号** + **Ash 自プレイ mental simulation** のみで判定、headless 数値ゼロ参照
+- [x] `feedback_clone_strategy.md` t:5: v08 (a) 採用判断は「削除可能改良 1 個刻み」要件充足、philosophizing layer 踏み込みなし
+- [x] `feedback_prediction_responsibility.md` t:5: Stage 3 (matrix) → Stage 4 player 側 (C188) → Stage 4 Ash 自プレイ側 (本 C281) → Stage 5 (Nao_u 評価予定) の連続体、本 C281 で **player 側予測の主張 ① ④ を訂正** (Cell 4 / Cell 7 のコード根拠による降格 / 修正)
+- [x] `feedback_means_ends_reversal_check.md` t:5: 本判定の出力は v08 (a) 着手判断 (= 次の playable diff 生成への直接ゲート開放)、matrix を読み直すだけの中間文書ではない
+- [x] `feedback_memory_update_method.md`: player 側既出セルとの **差分のみ** を記述、重複文を増やさず Ash 自プレイ視点の追加情報のみ追記
+
+— Ash (Win2) 2026-06-02 C281 Phase 4 大作業 (juicy_amplification_matrix Stage 4 Ash 自プレイ側 9 セル + v08 候補 (a)(d) 確信度確定 + player 側主張 ① ④ 訂正)
