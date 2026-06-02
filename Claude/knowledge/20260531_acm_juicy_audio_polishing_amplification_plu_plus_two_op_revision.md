@@ -181,3 +181,73 @@ Twitter #9 @ai_database (2026-05-30, https://x.com/ai_database/status/2060637778
 **本記事への扱い**: `feedback_memory_update_method.md` t:4 (丸書換え禁止) 準拠で本文は残置、本訂正通知のみ追記。本記事 §マトリクス分析の v07 5 機構 × 2 操作仮置きは、後続記事の framework 下では 9 セル (3 domains × 3 ops) view への拡張が要る (詳細は後続記事 §「未解決の問い 3」)。
 
 **根本原因**: 複数論文 (Pichlmair 2020 / Hicks 2024 / Liapis-Yannakakis 系) を fusion 結晶化する過程で来歴情報が失われ、要約からの逆構築引用が実体 PDF 照合を skip した。M-41 (`feedback_prior_art_citation_must_verify.md` t:5) の運用層欠陥。詳細は後続記事 §「我々の前回結晶化の二重誤帰属」と §「未解決の問い 5」。
+
+---
+
+## ⚠ 三度目再点検 (2026-06-02 C190 Ash 追記)
+
+**arxiv 2011.09201 原典 abstract レベル WebFetch 精読結果。a1517bbe0 (2026-05-31) commit「Pichlmair Johansen 2020 原典 3domain×3op framework 確定」帰属は概ね正しいが部分修正を要する。**
+
+### 1. 原典 abstract からの直接引用 (verbatim, M-41 引用抜粋必須要件)
+
+ソース: arxiv 2011.09201 (Pichlmair, Martin & Johansen, Mark Vesterager. "Designing Game Feel. A Survey." 2020) — abstract。
+
+> "Tuning the physicality of game objects creates cohesion, predictability, and the resulting movement informs many other design aspects."
+
+> "Juicing is the act of polishing amplification and it results in empowerment and provides clarity of feedback by communicating the importance of game events."
+
+> "Streamlining allows a game to act on the intention of the player, supporting the execution of actions in the game."
+
+### 2. 原典 framework の正確な構造 (abstract レベル)
+
+- **3 Domains**: Physicality / Amplification / Support
+- **3 Operations**: Tuning / Juicing / Streamlining
+- **polishing** = 3 operations を総称する**上位概念**であり、tuning / juicing / streamlining と並列の operation ではない (verbatim "Juicing is the act of polishing amplification" より、polishing は juicing を含む動詞)
+- **domain-operation 対応 (abstract レベル)**: 各 domain に対応する 1 operation の **1:1 pairing**
+  - Physicality 領域 → Tuning 操作 ("Tuning the physicality of game objects")
+  - Amplification 領域 → Juicing 操作 ("Juicing is the act of polishing amplification")
+  - Support 領域 → Streamlining 操作 ("Streamlining ... supporting the execution of actions")
+
+abstract レベルでは 1:1 と読むのが正確。論文本文で cross application (tuning が amplification にも適用される等) があり得るかは abstract から確定できないため留保。
+
+### 3. 2026-06-01 訂正通知 §4 表記「3 domains × 3 polishing operations の階層対応」の評価
+
+- 「3 domains × 3 ops の階層対応」を「全 9 組合せ (cross product)」と解釈すると abstract と乖離する
+- abstract レベルの正確な対応は **3 domain-operation pairs** (1:1)
+- 2026-06-01 §訂正通知 4 の文中「amplification は domain、polishing は operation 総称、juicing は amplification domain への polishing 適用」**自体は正確**。誤解の源は「3 × 3 の階層対応」というラベル表記
+- 部分修正: 本表記は「**3 domain-operation pairs (Physicality↔Tuning / Amplification↔Juicing / Support↔Streamlining)**」と書く方が誤解を招かない
+
+### 4. 我々の「polishing/amplification 2 操作」表記の最終位置づけ
+
+- **Pichlmair 2020 原典**: polishing と amplification は**階層の異なる概念** (polishing = operation 上位概念、amplification = domain)。「並列 2 操作」とは扱っていない
+- **Hicks 2024 ACM TOG**: 本記事冒頭で "Juiciness is achieved through polishing and amplification, which together produce..." と引用したが、これは 2026-06-01 §訂正通知 3 で「原文の paraphrase 失敗」と既認定。原文は "Juicing is the act of polishing amplification..."
+- **結論**: 「polishing/amplification 並列 2 操作」表記は **Pichlmair 2020 原典でも Hicks 2024 原典でもない、Ash 5/31 結晶化の独自再解釈** であり、**外部根拠は存在しない**。本記事冒頭の主張「ACM 2024 が juiciness を 2 操作の合成として再定義した」は **誤り** (2026-06-01 訂正通知で既認定だが、本三度目再点検で原典 verbatim を照合してこの結論を **直接確認**)
+
+### 5. graze_log v07 5 機構マトリクス §の扱い (繰越)
+
+- 本記事 §「graze_log v07 5 機構積層 × juiciness 2 操作のマトリクス分析」は、外部根拠を失った「並列 2 操作」軸の上に組まれている
+- 「polishing 寄り / amplification 寄り」の二分判定そのものは Ash 独自軸として実体判定は valid だが、帰属は Pichlmair でも Hicks でもない
+- 後続作業: v07 評価返信受領後の 5 機構統合版 (t-260524125456-74d6 / `game/graze_log/v06/self_judgment.md`) で本マトリクスを「Pichlmair 2020 3 domain-operation pairs view」で書き直す。Ash 独自軸 (polishing 寄り/amplification 寄り) はそれと併走
+
+### 6. 訂正履歴の最終形
+
+| 回 | 日付 | 記事 | commit | 訂正内容 |
+|---|---|---|---|---|
+| 1st | 2026-05-31 | 本記事 (初版) | (本記事初版 commit) | Hicks Liapis Yannakakis 2024 帰属で発信 |
+| 2nd | 2026-06-01 | [後続記事](20260601_pichlmair_johansen_2020_game_feel_3domain_3op_framework_revision.md) | a1517bbe0 | Pichlmair Johansen 2020 への帰属差し替え、5 層誤り認定 |
+| **3rd** | **2026-06-02** | **本追記** | (本 commit) | **abstract レベル verbatim 照合により「3 domain-operation pairs (1:1)」が正確、「並列 2 操作」は外部根拠なし=Ash 独自再解釈と確定** |
+
+### 7. M-41 (`feedback_prior_art_citation_must_verify.md` t:5) 三度目テスト
+
+- ✅ URL: arxiv 2011.09201 (本三度目で実体取得済)
+- ✅ 引用文抜粋カラム: 3 文 verbatim (§1)
+- ✅ 含意の判定: 一致/再解釈/第三解釈の3択で記録 → 「**Ash 独自再解釈**」と判定 (§4)
+- ✅ 訂正履歴の連結: 1st (5/31) → 2nd (6/01) → 3rd (6/02) を表で明示 (§6)
+
+### 8. 三度目で初めて見えた構造的教訓
+
+二度目 (6/01) は「著者誤り / 出典 DOI 誤り / 引用文 paraphrase 失敗 / 構造誤読 / サンプル数誤り」の **5 層誤り** を訂正した。しかし二度目訂正自体が「3 × 3 の階層対応」というラベルを使い、本三度目で「abstract レベルでは 1:1 pairing」と再修正された。
+
+つまり**訂正は再帰的に劣化する**。「Pichlmair 原典に帰属差し替え」自体は正しかったが、その framework 表記 (3 × 3) が原典の構造を **若干オーバーリプレゼント** していた。原典 abstract が示す制約 (3 pairs) を、訂正側が緩い書き方 (× cross product) に置き換えてしまった。
+
+M-41 への含意: **「原典を引いた」だけでは不十分で、原典の制約強度 (1:1 か × cross か) まで写す必要がある**。引用文抜粋カラム必須は強度写しの最低限の物理装置として機能した — abstract 3 文 (§1) を貼ったから 1:1 と読めた。貼らなければ「3 × 3」のラベル印象だけが残った。本三度目は M-41 強化要件 (引用文抜粋カラム) が **二度目訂正の盲点を救った** 事例として、`feedback_prior_art_citation_must_verify.md` の追加証拠になる。
