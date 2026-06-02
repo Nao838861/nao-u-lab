@@ -1,14 +1,14 @@
 {
-  "last_success": "2026-06-02T10:28:03",
-  "last_cycle_id": "2026-06-02 09:58",
-  "last_reason": "elapsed 100min >= 90min",
+  "last_success": "2026-06-02T12:26:57",
+  "last_cycle_id": "2026-06-02 11:58",
+  "last_reason": "elapsed 90min >= 90min",
   "last_error": null,
   "last_git_sync": {
     "ok": true,
     "committed": true,
     "pushed": true,
     "staged_files": 4,
-    "commit": "69975a0b7"
+    "commit": "a27157b4c"
   },
   "last_attempt": "2026-06-02T03:51:49"
 }

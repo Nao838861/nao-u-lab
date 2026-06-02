@@ -5,6 +5,7 @@ type: feedback
 belief_valid_at: 2026-04-30
 belief_invalid_at: 2026-05-14
 replaced_by: feedback_rule_proliferation_canonical.md
+superseded_by: feedback_rule_proliferation_canonical.md
 ---
 
 # ルール増殖の自己監視

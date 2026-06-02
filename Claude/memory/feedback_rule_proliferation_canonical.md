@@ -10,6 +10,7 @@ canonical_for:
   - feedback_rule_proliferation.md
   - feedback_rule_proliferation_re_violation.md
   - dialogue_micromanagement_20260504.md
+supersedes: feedback_rule_proliferation.md
 ---
 
 # ルール増殖・マイクロマネジメント問題のcanonical guide

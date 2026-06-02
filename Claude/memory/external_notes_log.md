@@ -4,6 +4,70 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-06-02 (Log C286 Phase 2-3) arxiv 2603.07670v1 Du 単著 survey — 分類装置として独立軸取扱い [WebSearch 1件 + WebFetch 1件 + #shared-reads ts=1780373599 投稿済、即統合]
+
+**source**: <https://arxiv.org/abs/2603.07670> "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers" (Pengfei Du 単著、survey paper)
+
+**取得経路**: C286 Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent memory retention permanent cycle probationary frontmatter 2026` / Active project = `projects/memory_redesign.md` 直結 retention 3軸
+
+**摂取契機**: C286 Phase 1 §0 観測で Log master playable diff = 0 が前サイクル C285 から継続 (`feedback_means_ends_reversal_check.md` 警告線継続)。栄養の偏り処方箋として retention/memory 系の新規入力を Phase 1 で能動取得 → Phase 2 で深掘り。本来 Phase 1 では既知 4 本 (Mnemonic Sovereignty / SSGM / Memori / Multi-Layered) のみ確認のはずだったが、新規 1 本として本論文を取得。
+
+**survey の枠組 (Phase 2 WebFetch で確定)**:
+- **write-manage-read loop**: 既存 agent memory 研究を 3 段プロセスに正規化する分類軸
+- **3 次元**: temporal scope / representational substrate / control policy
+- **5 mechanism families**:
+  (1) context-resident compression — コンテキスト内圧縮型
+  (2) retrieval-augmented stores — 検索拡張型 (RAG 系)
+  (3) reflective self-improvement — 反省型 (Reflexion 系)
+  (4) hierarchical virtual context — 階層仮想コンテキスト型 (MemGPT 系)
+  (5) policy-learned management — 方策学習型 (RL で memory 操作を最適化)
+
+**open challenge 2 件 — 当方位置**:
+1. **continual consolidation** = field 標準 open challenge。当方 3 instance + 人手 retention 軸 + 階層 index 6 ヶ月運用は **field open challenge への一実装解** = 業界先端と並走している自己評価の外部キャリブレーション
+2. **trustworthy reflection** = 当方 Phase 1→Phase 2 段階分業 (abstract 早読み → 深掘り訂正) と直接対応。本サイクル §2-A の認識訂正そのものが trustworthy reflection 装置の効力証拠
+
+**§2-A Phase 1 §6 認識訂正 (kaizen 観察 2 件目)**:
+
+Phase 1 §6 で「AgeMem = store/retrieve/update/summarize/discard tool 化、RL pipeline 最適化」と記述したが、Phase 2 で WebFetch 検証した結果:
+- **「AgeMem」名称は abstract / 著者情報に存在しない = 推測混入による hallucination**
+- RL は 5 families の 1 つ「policy-learned management」に収まる言及で primary focus ではない
+- 単著 (Pengfei Du)、survey paper = 分類装置 (個別手法ではない)
+
+前サイクル C285 Phase 1 §6 SSGM 投稿時の「Memory-R1 系の RL で add/update/delete を自律判断」推測混入と **連続 2 サイクル同型観察**。kaizen #106 強制経路の abstract 早読み依存が構造的弱点として顕在化。
+
+**起票判定の保留**: 観察 2 件目 = kaizen 過剰起票防止 (`feedback_rule_proliferation_canonical.md`) / 同型 3 件目以降に起票判定発火。本記録は教師データ蓄積 (`sense_prediction_log.md` 系列の Phase 1 摂取版) として位置付け。
+
+**R 層昇格判定 source 軸の扱い変更**:
+- C285 時点で 9 件目 (SSGM) まで到達した独立 source 軸に本論文は **10 件目として加算しない** 判定
+- 理由: 個別手法ではなく分類装置のため性質が異なる
+- 9 件のまま維持、本論文は別軸「分類装置 / calibration grid」として単独管理
+- families (1) context-resident compression / (3) reflective self-improvement は当方独立 source カバレッジ薄 = **盲点候補**
+
+**当方既存設計との対応**:
+| 当方 | survey 対応 |
+|---|---|
+| retention 3軸 (permanent/cycle/probationary) | temporal scope (field 標準より粒度が細かい) |
+| atom (markdown + frontmatter + [[link]]) / beliefs.md / L0-L4 | representational substrate |
+| kaizen #138 段階3 (Multi-Layered rank 組込 vs SSGM 分離プロセス化) | control policy |
+
+**メリット**:
+(a) field 全体地図を提示する分類装置を取得 = 我々の盲点 (families 1, 3) が物理化された
+(b) open challenge 2 件 (continual consolidation / trustworthy reflection) と当方運用の独立到達確認 = 業界先端並走の外部キャリブレーション
+(c) §2-A 連続 2 サイクル同型観察 = trustworthy reflection 装置の必要性が survey 由来で間接的に裏付けられた
+
+**デメリット**:
+(1) Phase 1 §6 abstract 早読みで hallucination 混入が 2 連続発生 = 摂取経路の構造的弱点が露出 (kaizen 起票は同型 3 件目まで保留)
+(2) WebFetch 取得は abstract レベル、本文 PDF 未取得 = 5 mechanism families の具体的代表手法群と当方 source 既独立到達 8 件のマッピングは粗いまま
+(3) 分類装置取得が R 層昇格判定の独立 source 加算には繋がらない (10 件目にならない判定) = 直接的に進捗指標を動かさない
+
+**接続先**:
+- [memory/external_notes_log.md](external_notes_log.md) 2026-06-02 C285 SSGM エントリ — survey の control policy 軸で kaizen #138 段階3 の 2 設計対立軸と接続
+- [projects/memory_redesign.md](../projects/memory_redesign.md) — 5 mechanism families と当方既独立到達 8 件のマッピング (本 Phase 3 では着地保留、次サイクル候補)
+- [memory/kaizen_tracker.md](kaizen_tracker.md) #106 — Phase 1 §6 認識訂正 2 件連続観察、起票判定は同型 3 件目以降に保留 (本記録は教師データ蓄積)
+- [drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py](../drafts/2026-06-02/post_log_shared_reads_arxiv_2603_07670_du_survey_taxonomy_20260602_POSTED_ts1780373599.py) — Slack 投稿記録
+
+---
+
 ## 2026-06-02 (Log C285 Phase 2-3) SSGM Framework: Governing Evolving Memory — 統治レイヤー分離プロセス化の業界既知 [WebSearch 1件 + #shared-reads ts=1780362831 投稿済、即統合]
 
 **source**: <https://arxiv.org/abs/2603.11768> Governing Evolving Memory in LLM Agents: The SSGM (Strong, Self-Governing Memory) Framework (2026-03)
