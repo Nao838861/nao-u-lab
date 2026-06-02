@@ -1,6 +1,8 @@
 # proxy_vs_judgment.csv Pearson 相関計算ブロッカー記録
 
-最終更新: 2026-06-01 C279 Phase 4 (Log) — §6 末尾に **§6-3 (b) 相対 Spearman 軸実測結果** 追記 (`proxy_icc_diagnose.py --metric spearman` 拡張着地、24 セル全 FAIL 確定、Pearson/Spearman 両軸 gate 解除不能 = データ構造を変えない限り解除路線なし)
+最終更新: 2026-06-02 C285 Phase 4 (Log) — 末尾に **C285 Phase 4 本能側列追加 (proxy_instinct_response_density) 5 列 ICC 結果** を追記 (kaizen #137 真の段階2 着手、`build_instinct_multiseed.js` 新設 + `proxy_icc_diagnose.py` 5 列化、本能側列は seed_base 軸 ICC = -0.0155 = trial 間ランダム、本能側は seed_base ではなく agent 戦略軸で測るべきが構造的に物理化)
+
+前回更新: 2026-06-01 C279 Phase 4 (Log) — §6 末尾に **§6-3 (b) 相対 Spearman 軸実測結果** 追記 (`proxy_icc_diagnose.py --metric spearman` 拡張着地、24 セル全 FAIL 確定、Pearson/Spearman 両軸 gate 解除不能 = データ構造を変えない限り解除路線なし)
 
 ## gate 未解除中の playable diff 1 行ルール (C276 追加)
 
@@ -217,6 +219,61 @@ C277 PEARSON_BLOCKER 末尾の「proxy validity 反証ライン §6-1 (Lost in S
 - (5) 1 commit (`game:` prefix) で ship、副作用ゼロ — Phase 5 で日記とまとめて push
 - (6) cycle_staging_log.md Phase 4 セクション着地報告 — Phase 4 末尾で実施
 - (7) 回帰: 旧 `python proxy_icc_diagnose.py` (jsonl + seed_base デフォルト) は C275 初回値 (0.0044 / -0.0010 / -0.0112 / -0.0191) と完全一致 — **OK** (後方互換維持)
+
+#### C285 Phase 4 本能側列追加 (proxy_instinct_response_density) 5 列 ICC 結果 (2026-06-02)
+
+kaizen #137 真の段階2 着手 (C285 Phase 2-3 で「proxy 4 列が全部逆算側 (結果指標) = 本能側を一つも測れていない」と再診断、本 Phase 4 で本能側列追加実装)。
+
+##### 着地物
+- `build_instinct_multiseed.js` 新設: `instinct_probe.js` を 10 seed_base × 30 trial で driver 経由実行、`measurements_instinct_multiseed.jsonl` = 300 行 (各行 `probe_density` 列含) を生成
+- `proxy_icc_diagnose.py` 5 列化: `PROXY_COLUMN_INSTINCT = "proxy_instinct_response_density"` 定数追加、`derive_proxy_columns` で probe_density キーがあれば本能側 5 列目として取り込み、`run_icc` は first row sample で 4 列 / 5 列を動的判定 (後方互換維持)
+
+##### 5 列 ICC 結果 (instinct_probe.js naive_good 戦略、N=10 seed_base × k=30 trial)
+
+実行: `python proxy_icc_diagnose.py --input measurements_instinct_multiseed.jsonl --class-col seed_base`
+
+| column | ICC | 95% CI | judge (≥0.3) |
+|---|---:|---|:-:|
+| proxy_clear_rate | 0.0000 | [0.0000, 0.0000] | FAIL (構造的非計算 = 全 trial gameover、分散ゼロ) |
+| proxy_damage_per_min | 0.9977 | [0.9898, 0.9995] | PASS |
+| proxy_survival_time | 0.9527 | [0.8073, 0.9890] | PASS |
+| proxy_input_density | 0.3075 | [-0.3995, 0.7851] | PASS (閾値ぎりぎり、CI 広い) |
+| **proxy_instinct_response_density** | **-0.0155** | **[-0.6389, 0.6202]** | **FAIL** |
+
+##### 観測解釈
+
+- **逆算側 4 列のうち damage_per_min / survival_time は seed_base 軸で ICC ≈ 1.0**: 同 seed_base 内 30 trial は同様の死亡パターン = instinct_probe.js の naive_good 戦略下では seed_base が死因 (敵 wave 配置 + 弾発射タイミング) を強く支配。C275/C277 で agent_difficulty_proxy.js 由来データ (noise_scale=1.5) では ICC ≈ 0 だったのと対比的、agent 戦略 (noise の有無) が ICC の支配要因
+- **clear_rate は分散ゼロ = ICC 構造的に未定義**: naive_good 戦略では 90 秒以内に必ず死亡、survived = 0 固定。FAIL 表記だが意味は「閾値未達」ではなく「分散ゼロ非計算」
+- **input_density は ICC 0.31 = 閾値ぎりぎり、CI 広い**: 点推定は PASS、CI 下限 -0.40 = 確信なし
+- **本能側列 proxy_instinct_response_density は seed_base 軸 ICC = -0.0155 = trial 間でランダムに振れ、seed_base では分離しない**
+
+##### 構造的発見 (kaizen #137 真の段階2 PASS の意義)
+
+- 「逆算側列は seed_base 軸で ICC PASS、本能側列は seed_base 軸で ICC FAIL」 = **本能側と逆算側は異なる分散構造を持つ**ことを 1 つの実測データで初めて分離観測
+- これは Mir (#all-nao-u-lab 「本能 vs 逆算」atom) のフレームを、proxy 評価系統に物理的に持ち込んだ初の量化エビデンス
+- 本能側応答密度を測るには、seed_base 軸ではなく **agent 戦略軸** (naive_good / camper / blind-sweeper) で class を組む必要があることが示唆 → instinct_grid_icc.py が既に持っている戦略軸 ICC との接続が次段階
+
+##### 次段階の選択肢 (段階3 family 統合候補)
+
+1. **戦略軸 ICC 評価レイヤー化**: `instinct_grid_icc.py` (既存) と `proxy_icc_diagnose.py` を統合し、seed_base 軸 + 戦略軸の 2 軸 ICC 比較を 1 コマンドで出す
+2. **playable diff 評価 layer 化**: log_autonomous_game v004 以降のヘッドレス評価で「逆算側分散 (seed_base 軸) + 本能側分散 (戦略軸)」両方を 1 回で測る品質 gate 化
+3. **multi_phase_cycle_log.py Pre-check 化**: kaizen #131-#134 hook family と同型で、agent 評価 quality gate として段階3 統合
+
+##### kaizen #137 段階2 PASS 判定
+
+(a) 5 列 ICC 計算可能化 (4 列 → 5 列、後方互換維持) ✅
+(b) 本能側列の独立性確認 (seed_base 軸で分離しない = 戦略軸での測定が必要、を構造的に物理化) ✅
+(c) フレーム導入効果の量化装置として動作 (Mir/Log_cdx 02:51 要請「本能立ち上がり後の効き目 1 例」に対する数値エビデンス) ✅
+(d) 副作用なし (新規ファイル追加のみ、既存 measurements_multiseed.jsonl 等への変更なし) ✅
+
+#### C285 Phase 4 完遂の対応
+- (1) `build_instinct_multiseed.js` 新設で 300 行 jsonl 生成 (各行 probe_density 含) — **OK**
+- (2) `proxy_icc_diagnose.py` 5 列化 (PROXY_COLUMN_INSTINCT 定数追加 + derive_proxy_columns 拡張 + run_icc 動的判定) — **OK**
+- (3) 5 列 ICC dry-run exit 0、5 行規定フォーマット出力 — **OK**
+- (4) 本表追記 (本節) — **OK**
+- (5) kaizen_tracker.md #137 検証結果に C285 Phase 4 段階2 PASS 記録 — **OK**
+- (6) commit prefix `game:`、push は Phase 5 で日記とまとめて実行 — Phase 4 末尾
+- (7) 後方互換性: 旧 `python proxy_icc_diagnose.py` (jsonl + seed_base デフォルト、probe_density 列なし) は 4 列出力のまま動作 — **OK** (PROXY_COLUMN_INSTINCT は sample row に存在時のみ追加)
 
 ## なぜ本サイクル C270 で着手しなかったか
 

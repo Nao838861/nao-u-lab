@@ -3,12 +3,21 @@
 #   C275 初版 (ICC seed_base class on jsonl)
 #   C277 拡張 (--class-col / --input、v_label class on csv)
 #   C279 拡張 (--metric spearman、bootstrap 95% CI、§6-3 (b) 相対軸 gate 実装)
+#   C285 拡張 (kaizen #137 真の段階2: 本能側列 proxy_instinct_response_density 追加、5 列化)
 #
 # 役割:
 #   proxy 4 列 (proxy_clear_rate / proxy_damage_per_min / proxy_survival_time /
-#   proxy_input_density) について、以下 2 metric を切替計算する:
+#   proxy_input_density) + 本能側 5 列目 (proxy_instinct_response_density、入力に probe_density
+#   列があれば自動付与) について、以下 2 metric を切替計算する:
 #     - icc      : ICC(2,1) one-way random + Fisher Z 95% CI (class 軸集約)
 #     - spearman : Spearman ρ (proxy ↔ q_*) + bootstrap percentile 95% CI
+#
+# C285 5 列化の趣旨 (kaizen #137 真の段階2):
+#   C281 Phase 2 §1(a) で proxy 4 列が全て「逆算側 (結果指標)」で本能側を一つも測れていない
+#   と再診断 → 当初の class 軸切替 (段階2 旧案) では解消しない真因。本拡張は instinct_probe.js
+#   由来の post_lock 6 frame 窓内方向変化密度 = probe_density を「本能側応答密度の代理」と
+#   して取り込み、5 列で ICC 計算可能化する。入力 jsonl に probe_density 列があれば 5 列目を
+#   自動付与し、無ければ従来 4 列で動作 (後方互換)。
 #
 # 入力:
 #   - jsonl: measurements_multiseed.jsonl (10 seed_base × 30 trial = 300 行)
@@ -69,11 +78,18 @@ PROXY_COLUMNS = [
     "proxy_input_density",
 ]
 
+# kaizen #137 真の段階2 (C285 Phase 4) で追加された本能側 5 列目。
+# 入力に probe_density キーが含まれる時のみ derive される (後方互換維持)。
+PROXY_COLUMN_INSTINCT = "proxy_instinct_response_density"
+
 DEFAULT_INPUT = Path(__file__).parent / "measurements_multiseed.jsonl"
 
 
 def derive_proxy_columns(row):
-    """jsonl 1 行から proxy 4 列を計算 (build_proxy_csv.js と同一定義)."""
+    """jsonl 1 行から proxy 4 列を計算 (build_proxy_csv.js と同一定義).
+    probe_density キーがあれば本能側 5 列目 proxy_instinct_response_density を併設
+    (kaizen #137 真の段階2, C285)。None / 欠損は 0.0 として扱う。
+    """
     survived = 1 if row["outcome"] == "survived" else 0
     play_time = row["play_time_sec"]
     cast_count = row["cast_count"]
@@ -82,12 +98,16 @@ def derive_proxy_columns(row):
     survival_time = play_time
     input_density = (cast_count / play_time * 60.0) if play_time > 0 else 0.0
 
-    return {
+    result = {
         "proxy_clear_rate": float(survived),
         "proxy_damage_per_min": damage_per_min,
         "proxy_survival_time": survival_time,
         "proxy_input_density": input_density,
     }
+    if "probe_density" in row:
+        pd = row.get("probe_density")
+        result[PROXY_COLUMN_INSTINCT] = float(pd) if pd is not None else 0.0
+    return result
 
 
 def icc_one_way_random(groups):
@@ -222,19 +242,25 @@ def load_by_class_csv(path, class_col):
     by_class = {}
     with path.open(encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
-        if class_col not in (reader.fieldnames or []):
+        fieldnames = reader.fieldnames or []
+        if class_col not in fieldnames:
             sys.stderr.write(
-                f"[ERROR] class-col '{class_col}' not in csv header {reader.fieldnames}\n"
+                f"[ERROR] class-col '{class_col}' not in csv header {fieldnames}\n"
             )
             sys.exit(1)
-        missing = [c for c in PROXY_COLUMNS if c not in (reader.fieldnames or [])]
+        missing = [c for c in PROXY_COLUMNS if c not in fieldnames]
         if missing:
             sys.stderr.write(f"[ERROR] csv missing proxy columns: {missing}\n")
             sys.exit(1)
+        # 本能側 5 列目は CSV 内に列が存在する場合のみ取り込む (kaizen #137 真の段階2, C285)
+        has_instinct = PROXY_COLUMN_INSTINCT in fieldnames
         for row in reader:
             cls = row[class_col]
             try:
                 proxy = {col: float(row[col]) for col in PROXY_COLUMNS}
+                if has_instinct:
+                    raw = row[PROXY_COLUMN_INSTINCT]
+                    proxy[PROXY_COLUMN_INSTINCT] = float(raw) if raw not in ("", None) else 0.0
             except ValueError as e:
                 sys.stderr.write(f"[ERROR] csv parse error: {e}\n")
                 sys.exit(1)
@@ -342,7 +368,14 @@ def run_icc(path, suffix, class_col):
             f"[WARN] uneven trial counts: {dict(zip(classes, trial_counts))}\n"
         )
 
-    for col in PROXY_COLUMNS:
+    # 本能側 5 列目は first row sample が PROXY_COLUMN_INSTINCT を含むかで動的判定。
+    # kaizen #137 真の段階2 (C285): probe_density を持つ入力で 5 列 ICC、無い時は 4 列 (後方互換)。
+    sample_row = by_class[classes[0]][0]
+    columns = list(PROXY_COLUMNS)
+    if PROXY_COLUMN_INSTINCT in sample_row:
+        columns.append(PROXY_COLUMN_INSTINCT)
+
+    for col in columns:
         groups = [[row[col] for row in by_class[c]] for c in classes]
         icc, ci_lo, ci_hi = icc_one_way_random(groups)
         judge = "PASS" if icc >= ICC_THRESHOLD else "FAIL"

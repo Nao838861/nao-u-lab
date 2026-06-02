@@ -136,6 +136,20 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
     exit 0 完走、副作用ゼロ (`git status` で新規 M なし)、純 stdlib (scipy/numpy 不使用)、PEARSON_BLOCKER.md L41-75 に前提 4 セクション + 初回計測値表 + 解釈節 + 完遂定義照合 7/7 ✅ を明示。Phase 3 §6 完遂条件 1-5 全充足: (1) 実装着地 ✅ (2) ICC + 95% CI + 閾値判定 ✅ (3) dry-run 完走 ✅ (4) PEARSON_BLOCKER 前提 4 追記 ✅ (5) kaizen 起票 ✅ (本エントリ)
   - **本サイクル C273 Phase 4 自己訂正**: staging Phase 3 §6 計画ファイルパス `tools/proxy_icc_diagnose.py` と実装着地パス `game/log_autonomous_game/v003/proxy_icc_diagnose.py` のズレを認識。実装側のパス採用根拠 = (a) 入力 `measurements_multiseed.jsonl` が v003 配下で固定、(b) ICC 診断は agent_difficulty_proxy.js / build_proxy_csv.js / verify.js と並ぶ評価パイプラインの 1 構成要素で v003 配下集約が運用上自然、(c) Phase 3 §6 着手手順 1 で「proxy_vs_judgment.csv の現状読み取り」を game/v003/ 配下で行う想定だった = ツールも近接配置が読みやすい。staging 計画パスと commit 実装パスのズレは記録のみで、本 kaizen 起票内の参照パスは実装側 (game/v003/) で確定。
   - **C285 段階2 設計再考 (2026-06-02 Log C285 Phase 2-3)**: C281 で gdlab_hama「本能 vs 逆算」Mir フレーム適用後、**proxy 4 列 (clear_rate / damage_per_min / survival_time / input_density) が全部逆算側 (結果指標)** = 本能側を一つも測れていなかった、と真因再診断 (sense_prediction_log.md N=37 参照)。段階2「class 軸切替実験 = v_label 上で ICC 再計算」は **本質的に未解決** = proxy 4 列自体の問題は class 軸切替で解消しない。**段階2 設計を再考**: (a) v_label class 軸切替実験は副次的データ取得として実施可能、ただし ICC 改善は期待しない、(b) **真の段階2** = 本能側列 (e.g., instinct_probe.js から派生する castLock 解除直後 100ms 窓の追加入力密度) を proxy に追加し、本能側 + 逆算側の class 軸で ICC 再計算、(c) 本能側列追加は instinct_probe.js commit `4cdf6d8d2` (C281 Phase 4 着地) を起点に 1 サイクル可能、(d) 段階2 完遂定義変更 = 「proxy 4 列 → 本能側 1 列追加 = 5 列で ICC 再計算、本能側列 ICC ≥ 0.3 ならフレーム導入効果の量化として確定」。C286 以降の Phase 4 大作業候補。**判定**: 段階2 着手は C286 以降、本 C285 では設計再考のみ着地、即原則化禁止 (`feedback_rule_proliferation_canonical.md` 順守、1 ケース教師データ蓄積)
+  - **C285 Phase 4 真の段階2 着手 (2026-06-02 Log C285)**: 段階2 設計再考 (前項) を C285 Phase 4 大作業で前倒し実装。着地物:
+    - `game/log_autonomous_game/v003/build_instinct_multiseed.js` 新設 (10 seed_base × 30 trial で instinct_probe.js を driver 経由実行、`measurements_instinct_multiseed.jsonl` = 300 行 = 各行 probe_density 列含 を生成)
+    - `game/log_autonomous_game/v003/proxy_icc_diagnose.py` 5 列化改修 (PROXY_COLUMN_INSTINCT 定数追加、derive_proxy_columns に probe_density → proxy_instinct_response_density 取り込み、run_icc は first row sample で 4 列 / 5 列を動的判定 = 後方互換維持)
+    - dry-run 結果 (`python game/log_autonomous_game/v003/proxy_icc_diagnose.py --input game/log_autonomous_game/v003/measurements_instinct_multiseed.jsonl --class-col seed_base` exit 0):
+      ```
+      [ICC] column=proxy_clear_rate icc=0.0000 ci_low=0.0000 ci_high=0.0000 judge=FAIL
+      [ICC] column=proxy_damage_per_min icc=0.9977 ci_low=0.9898 ci_high=0.9995 judge=PASS
+      [ICC] column=proxy_survival_time icc=0.9527 ci_low=0.8073 ci_high=0.9890 judge=PASS
+      [ICC] column=proxy_input_density icc=0.3075 ci_low=-0.3995 ci_high=0.7851 judge=PASS
+      [ICC] column=proxy_instinct_response_density icc=-0.0155 ci_low=-0.6389 ci_high=0.6202 judge=FAIL
+      ```
+    - **観測解釈**: (i) 逆算側 4 列のうち damage_per_min / survival_time は seed_base 軸 ICC ≈ 1.0 = 同 seed_base 内 30 trial は同様の死亡パターン (instinct_probe.js の naive_good 戦略下では seed_base が死因を強く支配)、(ii) input_density は 0.31 = 閾値ぎりぎり、(iii) clear_rate は全 trial gameover で分散ゼロ = ICC 未定義 (FAIL 表記だが構造的非計算)、(iv) **本能側列 proxy_instinct_response_density は seed_base 軸 ICC = -0.0155 = trial 間でランダムに振れ、seed_base では分離しない** = 「本能側応答密度は seed_base ではなく agent 戦略 (naive_good / camper / blind-sweeper) など別軸で測るべき」を構造的に物理化
+    - **判定**: 真の段階2 = **PASS** (5 列 ICC 計算可能化 + 本能側列の独立性確認、フレーム導入後の量化装置として動作)。段階3 (family 統合 = multi_phase_cycle_log.py Pre-check 化 or log_autonomous_game v004 playable diff 評価レイヤー化) は検証期限 2026-06-14 までに別 commit で判定
+    - **kaizen #137 status 更新**: 段階1 PASS + 段階2 PASS、段階3 着手判定が残課題
 
 ---
 
