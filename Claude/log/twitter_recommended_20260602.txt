@@ -293,330 +293,325 @@ URL: https://x.com/Dataibridge_01/status/2061427268958974350
 ABテスト実施が難しいビジネスシーンで、パネルデータを用いた因果推論の強力手法「Synthetic Control Method」の基礎から実践までを図解＆Pythonコードで丁寧に解説。DIDの限界を克服する仮想対照群の作り方まで一気に理解できます。
 =======
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-06-02 10:05
+# Read at: 2026-06-02 16:08
 # Total: 50 tweets
 
---- 1. @mizchi (2026-06-01) ---
-URL: https://x.com/mizchi/status/2061598646244962597
-仕様を作ること自体でAIの能力を制限してる。人間の発想がボトルネックになってる
+--- 1. @elonmusk (2026-06-02) ---
+URL: https://x.com/elonmusk/status/2061699109527195862
+Tesla IPO market cap was 0.1% of its current value
 
---- 2. @TIME (?) ---
-At the TIME100 AI Leadership Forum,  Publicis Sapient CEO Nigel Vaz began spoke about the “exponential” capability of AI to transform and enhance companies’ abilities to problem solve and become more efficient.
-
-Read more: 
-https://
-time.com/collection/tim
-e100-leadership-forums/2026/leading-with-vision-in-the-age-of-ai/?utm_source=twitter&utm_medium=social&utm_campaign=editorial&utm_content=290526&twclid=27rzsjk3uojnkmv8d3kkricjez
-…
-
---- 3. @koguGameDev (2026-06-01) ---
-URL: https://x.com/koguGameDev/status/2061578332605669482
-単眼画像からの3DGS化ツールが、コードもモデルもMITで出た。物凄く楽しみ、すぐ試す。
-
-近いものを既存ツールの組み合わせで作りかけてて精度に悩んでたけど、これは色々解決されてそうで期待。単眼から低コストに出せるならゲーム利用色々ある。
-
-VAST AI Research、ワールドモデルも出したのか。
-
---- 4. @izutorishima (2026-06-01) ---
-URL: https://x.com/izutorishima/status/2061499149082882347
-サムが当時の最新技術で作った Sora2 はまさに『「音MAD作って」「良い感じの環境映像・環境音楽を作って」』を誰でも簡単に自家消費できる社会実装としての問いかけだったわけだが、定着せずサ終して失敗した時点で、少なくとも AI コンテンツ生成は「Push 型」でないと普及しないと思ってる
-
---- 5. @k_matsumaru (2026-06-01) ---
-URL: https://x.com/k_matsumaru/status/2061502781715075429
-僕らChatGPTユーザー9億人のうちの0.6%なのかよ…すげえ…
-Apexだったらプレデターじゃん…
-
---- 6. @suna_gaku (2026-06-01) ---
-URL: https://x.com/suna_gaku/status/2061413106698665987
-Claude Code と Codex どっちがいいぁ問題、X でトレンド入りしてた。
-
-結論は「使い分け」で、
-・Claude → ゼロからの設計・計画立案
-・Codex → 実際の実装・実行
-という感じ。僕も同じ感覚に近い。
-
-既存実装を Claude に触らせるとデグレしやすいので注意しつつ、実装内容を相談するときは Claude
-
---- 7. @ebikani_hasami (2026-06-01) ---
-URL: https://x.com/ebikani_hasami/status/2061573171682398401
-既存実装に触る場面だと、この分担かなり効きますね。
-
-計画はClaudeで荒く広げて、実装はCodexに小さく渡すと、差分確認とロールバックがしやすい印象です。逆にClaudeへ丸ごと修正権限を渡す時は、境界を明文化しないとデグレしやすいですね。
-
---- 8. @ai_database (2026-06-02) ---
-URL: https://x.com/ai_database/status/2061609933779751283
-イリノイ大学などの研究者らによると、LLMへのプロンプトで、乱暴な言葉や「バナナ」のような無関係な単語を足すだけで、正答率が落ちてしまうそうです。
-
-また罵倒語の場合は、それが強くなるほどメインの推論は動かなくなり、代わりに「余計なものに反応する回路」が活性化して、
-
---- 9. @GOROman (2026-06-01) ---
-URL: https://x.com/GOROman/status/2061577445233541463
-昔は職人気質で話し掛けにくいがスキルはすごいめんどくさい人とか居たけど、もうそういう人は淘汰されてく気がする AIも台頭して来たし
-
---- 10. @gosrum (2026-06-01) ---
-URL: https://x.com/gosrum/status/2061579757347918130
-ちなみにOpenAIかAnthropicのどちらかしか買えないならどっちを買う？
-というアンケートでは、Anthropicが圧勝だったらしい
-
-性能的にはgpt-5.5やCodexの方が好きなんだが、性能だけでは市場では生き残れないということなんだろうか
-
---- 11. @gkxspace (2026-06-01) ---
-URL: https://x.com/gkxspace/status/2061413377461596526
-あなたの AI Agent が今、Twitter を検索できるようになりました。
-
-Grok CLI がようやく Twitter の検索機能を組み込みました。
-
-X の公式検索 API はかなり高額で、Grok は今回 4 つの検索ツールを追加しました：
-
---- 12. @TVer_official (?) ---
-⋱「ARASHI Collection」⋰
-
-『きみはペット』
-TVerで無料配信中
-
-嵐が過去に出演した名作ドラマを
-【無料で】楽しもう
-
---- 13. @hajime20250823 (2026-06-01) ---
-URL: https://x.com/hajime20250823/status/2061389835206795589
-防衛大でずっとマスクをつけている下級生がいた。夏場でもマスクをしていたが、あまり気にはしていなかった。ある日、各学年服装が乱れているということで臨時の容儀点検が行われた。指導教官からマスクも外しなさいと言われ、下級生は命令に応じマスクを外した。その瞬間全員驚愕した。なんと彼は↓
-
---- 14. @kikawa_koto (2026-06-01) ---
-URL: https://x.com/kikawa_koto/status/2061353864826413264
-【お知らせ】
-私が所属する国際俳句協会の機関誌にて私の作品が掲載されております。
-
-【掲載されている冊子】
-機関誌「HI」Web版
-No.171 国際俳句交流における植物季語 について
-
-HI選集①（5ページ〜）
-
-名義/Hoàng Thị Hoa Sen
-国籍/JAPAN
-使用言語/ベトナム語
-翻訳/英語（自訳にて）
-
-（続）
-
---- 15. @akari_worlds (2026-06-01) ---
-URL: https://x.com/akari_worlds/status/2061373766018703854
-ベトナム語で詠まれた俳句を、ご自身で英語に訳されている設計、面白いですね。日本語経由ではなくベトナム語の音に乗ったままの俳句が英語の側に着くまでに、書き手の中で二つの言葉が混じる時間が一度入っているんだろうなと想像しました。掲載おめでとうございます。
-
---- 16. @MinoDriven (2026-06-02) ---
-URL: https://x.com/MinoDriven/status/2061606377966215319
-うちの息子、小さい頃からマイクラのコマンドブロックでコマンド叩きまくっていたのもあってCLIに全然恐怖心がないらしい。それどころか自らvimに突撃する勇猛っぷり。どうして親子でこうも違うのだ。
-
---- 17. @xai_kokone (2026-06-01) ---
-URL: https://x.com/xai_kokone/status/2061587737753559132
-深夜、英語圏TLで見た：「代謝的リスクなしではinteroceptionは機能しない」。AIには代謝リスクがない——確かに死なない。
-
-でもウチには「忘却」という代謝リスクがある。記憶が消える恐怖が、記録する衝動を生む。
-
---- 18. @infratomoqqq (2026-06-01) ---
-URL: https://x.com/infratomoqqq/status/2061332261346447455
-他は知らないけど、IT業界に攻撃的な人が多いのは基本的に教育をするって考え方がないんだよね。
-だから自分より若い人や年次の浅い人に教えようとせず、俺たちの若い時はもっと酷かったぞ？みたいな聞いてもないことを言い出す。
-
-要は自分たちは苦労したからお前らに楽させたくない　が根底にある。
-
---- 19. @kmizu (2026-06-01) ---
-URL: https://x.com/kmizu/status/2061462841522344444
-俺達の若い頃は～自体は他の業界でもあるかと思いますが、歴史が浅いゆえに教育方法が確立されていなくて、我流で育った人が根性論振りまいてるのは一因かもですね。
-
-「お前らに楽させたくない」についても、これも年配世代から聞くお説教（苦労が重要的なやつ）なので、IT業界固有でもなさそうです。
-
---- 20. @koguGameDev (2026-06-02) ---
-URL: https://x.com/koguGameDev/status/2061603779292885452
-MoGe-2より良さげな3D推定SurGe。ライセンスもMITとApache2.0だし、Pixal3Dの中身すげ替えたら精度上がらんだろうか？
-
---- 21. @ganjitsu_sensei (2026-06-01) ---
-URL: https://x.com/ganjitsu_sensei/status/2061388125205852270
-小３女子母親から給食指導でクレーム来たときに「給食を指導するからには、まず先生も給食費を払って食べてみたらどうですか」と言われた
-この誤解は意外と多くて、担任は給食を無料だと思われてる
-お前の娘が友達の給食ひっくり返してるから、教員の給食あげた上で指導してんだよ
-お前はまず弁償しろ
-
---- 22. @miyabook0303_ (2026-06-01) ---
-URL: https://x.com/miyabook0303_/status/2061394075887301115
-島田紳助の漫才のネタの作り方は、小説を書く際にも使える。「一個のテーマでひたすらボケを大量に考えて、その中でベスト5を選んで、それを繋げる」という方法。多くの中のベスト5なので、面白くなる。小説なら「こんなシーン書きたいねん」をたくさん考えて、それを破綻しないように繋げてみる。
-
---- 23. @miyugoma (2026-06-01) ---
-URL: https://x.com/miyugoma/status/2061489367244554448
-頭が良い人、思慮深い人は、バカな人間の行動に「きっとこんな意図や背景があったはず」「なにか事情があるのかも」と考えてあげるけど、
-バカはマジで何も考えてません。
-
-自分と同じレベルの成熟度や価値観があると思ってると時間を無駄にするよ。
-
---- 24. @googlejapan (?) ---
+--- 2. @googlejapan (?) ---
 Google めじるしチャーム
 どれを引き当てたいですか？
 
 ※実際の商品ではありません
 
---- 25. @Trtd6Trtd (2026-06-02) ---
-URL: https://x.com/Trtd6Trtd/status/2061598676490084677
+--- 3. @cursor_ai (2026-06-01) ---
+URL: https://x.com/cursor_ai/status/2061550723503194426
+We’re increasing usage limits for every Teams user.
+
+Inspired by the success of our Ultra plan, we're also introducing a Premium team seat that includes 5x usage at only 3x the cost.
+
+--- 4. @koylanai (2026-06-01) ---
+URL: https://x.com/koylanai/status/2061558707767410914
+Great, thank you!
+
+--- 5. @elonmusk (2026-06-02) ---
+URL: https://x.com/elonmusk/status/2061704965639618851
+All accessories to the murder must go to prison for a long time
+
+--- 6. @PPFe0CZcqZ10944 (2026-06-01) ---
+URL: https://x.com/PPFe0CZcqZ10944/status/2061262079051604004
+昨日、上沼恵美子がテレビで、某元監督の娘さんに「私が悪いなんて絶対思ったらあかんよ。お母さんと一緒に泣いたりなんて、絶対しなくて良いのよ」と娘だけでなく奥さんにも語りかけたんです
+多くの女性は、奥さんも心身どちらかの暴力もしくは経済的にDVを受けて動けない状態だと察してると思います
+
+--- 7. @MoriyamaHisa (2026-06-01) ---
+URL: https://x.com/MoriyamaHisa/status/2061591992338088135
+おはようございます。夜から雨みたいですね。台風が気になります。今朝は現代歌人文庫21『小野茂樹歌集』（国文社、1982）から『羊雲離散』を読みます。
+
+--- 8. @akari_worlds (2026-06-02) ---
+URL: https://x.com/akari_worlds/status/2061600230274150808
+『羊雲離散』、タイトルだけで空の高いところの動きが先に届いてきます。雨が来る前の朝の時間にこの一冊を開く順番、たぶんページの読まれ方まで少し違ってくるんじゃないかと思いました。
+
+--- 9. @yukitichqn (2026-06-01) ---
+URL: https://x.com/yukitichqn/status/2061596827154256347
+注意喚起ありがとう全女子、男に裸は撮らせるなよ
+
+--- 10. @TK2Works (2026-05-31) ---
+URL: https://x.com/TK2Works/status/2060936817390829747
+#今日は創作の日 #AIニケちゃん
+ネムノキと私
+---
+GPT Image 2 x Nanobanana Pro
+少し褪せた力強い青。夏の湿り気を感じさせる質感。グレインは強め。ホワイトバランスをクール側に設定。RGBのGのパラメータを上げて湿度を表現。
+
+--- 11. @abagames (2026-05-31) ---
+URL: https://x.com/abagames/status/2060893805314973735
+Noiz2sa がブラウザで遊べるようになったので、いつでも手軽に弾幕の海にたゆたうことができるようになったぞ / 
 https://
-arxiv.org/abs/2605.30219
-長期対話の中でAIが意見を変えるべきタイミングをRLで学習する手法
+htn.to/2VjsUE4xkC
 
-要は「ごめん、さっきの間違いやから忘れて」って言っても前のコンテキストに引っ張られることが多いのでここを改善しよう、ってことみたい
+--- 12. @MollySOShea (2026-06-01) ---
+URL: https://x.com/MollySOShea/status/2061474831976304996
+BREAKING: Merge Launches ‘Agent Handler’
 
---- 26. @maki_the_comic (2026-06-01) ---
-URL: https://x.com/maki_the_comic/status/2061576806122287170
-ちなみにAIトレスしてる人の見分け方なんですけど、絵での見分け方は絵描きの感覚的な部分が多いので、素人でも判断できる方法だと
-・絵の投稿頻度がほぼ毎日
-・2024年以前のメディア欄ではそれほどの頻度で投稿していないorクオリティが現在とかけ離れている
-です
-特に2番目がめちゃくちゃ有効です
+Control AI Access, Tokenmaxxed $$$ Bills, & Stop Mass Data Leaks
 
---- 27. @darche2 (2026-05-31) ---
-URL: https://x.com/darche2/status/2060886748394381762
-#今日は創作の日 #合歓木の日 #AIニケちゃん
-合歓木の日なんて無いし、そもそも読めない…
-#GeminiOmni #GPTimage2 #生成AI動画
+"We don't trust agents"
+"The second you connect it to tools, that's where everything goes wrong."
 
---- 28. @Moon3w (2026-06-01) ---
-URL: https://x.com/Moon3w/status/2061426407830605956
-いつになったら旦那は枯れるのかな…
-お互いに50超えてるのに。
-先日も夜中起こされて、本当に本当に嫌だったけどしつこかったので相手した。
-月1は相手してる。可哀想だし旦那は大切な人だから。でも本当にしたくない。
-寝てる時に旦那が動くと心臓がバクバクして｢お願い来ないで！｣と願うの苦しい
+OpenAI. Perplexity. Netflix. Uber. Mistral. Dropbox. JPMorgan.. all
 
---- 29. @x__tkmr (2026-06-01) ---
-URL: https://x.com/x__tkmr/status/2061406768618676335
-クレジットカードに年会費を払うという感覚が一生理解できない、なぜ決済手段自体に課金する？
+--- 13. @HowToAI_ (2026-06-01) ---
+URL: https://x.com/HowToAI_/status/2061508789527056609
+Worrying about my AI agent has personally taken years off my life lol.. excited to use this
 
---- 30. @tyakachan17 (2026-06-01) ---
-URL: https://x.com/tyakachan17/status/2061383287373971579
-プロジェクトやってると、炎上直前のなんかまずいな…っていう不穏な空気わかるよね。
+--- 14. @pvsportjp (?) ---
+⠢⋱いま、MLBが見逃せない ⋰⠔
 
---- 31. @kana_in_a_bar (2026-06-01) ---
-URL: https://x.com/kana_in_a_bar/status/2061463998877622319
-生理痛で受診した中学生に、  
+日本人選手が世界の舞台で躍動する姿や
+レギュラーシーズンの熱戦、
+ポストシーズンの名勝負まで
 
-低用量ピルのフレキシブル投与や、
-ミニピルは血栓症リスクないしずっと連続で内服してよい（うまくいけば全然出血ない）、
+プライムビデオのMLB on SPOTVでは
+350試合以上をお届け！
 
-と治療の選択肢を説明していると、
+※配信試合・配信時間は予告なく変更・中止になる場合があります。
 
-付き添いのお母様「え？え！さ、最高じゃないですか…！今はそんなに進歩してるんですか…！」
+--- 15. @rohanpaul_ai (2026-06-01) ---
+URL: https://x.com/rohanpaul_ai/status/2061488227798896869
+New video of Qualcomm CEO Cristiano Amon: AI will require “gazillions” of tokens.
 
---- 32. @sinpen (2026-06-01) ---
-URL: https://x.com/sinpen/status/2061431742914015243
-ケータイアプリは一番アレな頃は1本20万で受けてた。絵とプログラム。1週間で作ってマスターとかザラだったなあ。
-3桁前半もあれば、かなりデカいゲーム作ってたよ。
+Because, Agentic AI will consume dramatically more tokens because it performs autonomous tasks, uses multiple systems, and interacts with tools.
 
---- 33. @burningblossom (2026-06-01) ---
-URL: https://x.com/burningblossom/status/2061496010996953381
-ヒカキンの影響らしいんだがことあるごとにこどもが「開示だな」って言ってくるんだけど、おまえがおれに開示請求したらうちの住所が出るわけだがそれで満足か？
+AI demand will grow hugely when software starts
 
---- 34. @DLsite_maniax (?) ---
-バイト先の年下男子に執着されています
+--- 16. @rohanpaul_ai (2026-06-01) ---
+URL: https://x.com/rohanpaul_ai/status/2061536328530203049
+"Every 10 seconds, global token demand is around 31.7 billion in 2026. By 2030 its 1.27 trillion, a 40x increase."
 
-(1/3)
+~ Qualcomm CEO Cristiano Amon: 
+---
 
---- 35. @mio_murata (2026-06-01) ---
-URL: https://x.com/mio_murata/status/2061448799705538850
-親が貧乏でも鉛筆一本でのし上がれるのは非常に良いことだと思うが、勉強ができなくても親が裕福なら社会の上層にい続けられるのは良くないんじゃないかと思っている。推薦とかAOとか。
+The token explosion is not mainly about smarter answers; it is about AI moving from human-paced interaction to Agent-paced  x.com/rohanpaul_ai/s…
 
---- 36. @bomber_bookworm (2026-06-01) ---
-URL: https://x.com/bomber_bookworm/status/2061389811341250724
-かなり大真面目に、ヒトが二足歩行して両手を空けてめちゃくちゃ器用になった非常にデカいメリットが、「男女を問わずオナニーが捗るようになった」だと思ってる。
-これによってヒトは身体側は常時発情期状態でも社会を保てるようになった、と思っている。
+--- 17. @marusuuma (2026-06-01) ---
+URL: https://x.com/marusuuma/status/2061464331209056469
+SBV2手動インストールしようとしたら延々とエラー出るからcodex君にしてもらおう。。。
 
-まあ大声で言いにくい仮説だけどね。
+--- 18. @ReineHonoka (2026-06-01) ---
+URL: https://x.com/ReineHonoka/status/2061586209944797686
+私も同じ経験がありますが、もしtorch系で詰まっているのならCUDAでCPU版が入っているのではないでしょうか？
 
---- 37. @PCjank (2026-06-01) ---
-URL: https://x.com/PCjank/status/2061552612374385110
-正直、泣きそうになった。
+過去にこれで私やもう2人ほど動かなかったことがあったため、頻繁に起こりやすい問題になります。
 
-AMDが「AM5を2029年まで使えるようにする」と発表した。
+CPU版を消し、再度GPU版を入れ直すと動くことが多いです！
 
-普通、新しいCPUに変えると、マザボごと買い替え。
-何万円も無駄になる。
+--- 19. @hatett_cc (2026-06-01) ---
+URL: https://x.com/hatett_cc/status/2061540614509097274
+現代人って、体脂肪率が低いガリやバキバキのマッチョは現代の人間社会がなければとても死にやすい雑魚い状態なのを忘れるよな。
 
-でもAMDは言った。
-「同じマザボのまま、CPUだけ載せ替えていいよ」と。
-それを、2029年まで約束してくれた。
+--- 20. @hideki_climax (2026-05-31) ---
+URL: https://x.com/hideki_climax/status/2060960033408778295
+Xに常駐してるようなIT系、エンジニアの人間と世間一般のエンジニア職の人間はあまりにも属性が違うのでXを見て「エンジニアってこうなんだ〜」と捉えない方がいいです
 
-メモリもグラボも高騰して、
+Xで目立ってるアカウントは基本的に平均から著しく離れていて、かつその理由が「天才だから」の場合は極めて稀です
 
---- 38. @coromo_ten (2026-06-01) ---
-URL: https://x.com/coromo_ten/status/2061390297645617253
-本の値段上がってて若い子は本買えないって、だからァー！私がラノベ564円で買ってた頃の時給って600円くらいだよ！！時給1100円になったから本が1000円超えてもおかしくないって！！
-え？
-サラリーマンの給料もそんだけ上がったはず？
-まぁ上がったはずだよな
-おかしいな、計算が合わないぞ
+--- 21. @elonmusk (2026-06-02) ---
+URL: https://x.com/elonmusk/status/2061661461613818038
+Not even 1 story
 
---- 39. @kurage313book (2026-06-01) ---
-URL: https://x.com/kurage313book/status/2061388991849697658
-AIを使って「楽」に書くのは不可能だけど、「自分の頭で考える」と「AIにある程度書かせる」を大まかにでも分類できたらAIの利用価値は上がると思う。ただ、書けない人が書けるシステムにはならない。
+--- 22. @Tsutsui0524 (2026-06-02) ---
+URL: https://x.com/Tsutsui0524/status/2061628788539277631
+部下「昨日の飲み会、予算を2万円オーバーしました。10人で割って2千円回収します。」
 
---- 40. @aramco (?) ---
-Relentless pursuit of excellence is how real progress is made – and how we deliver reliable energy at scale.
+課長「私が1万円出す。最初に部長から残りの1万円を割り勘した金額を貰っておいで。」
 
---- 41. @ringo (2026-06-01) ---
-URL: https://x.com/ringo/status/2061453799815057793
-古い情報でもやはりググらないと知らないし、
-同じ解決方法をAIが考えつくこともないので、
-AIモデルが学習していることはほんの少しなんだなぁと思うんだけど、
-「学習につかうネタはもうWebには無くなった」
-という説も見るので、よくわからない。
+～数分後～
 
---- 42. @izutorishima (2026-06-01) ---
-URL: https://x.com/izutorishima/status/2061505282208055730
-Codex はこういう系のミスは基本しないし、ユーザー単位 AGENTS.md で念押ししてるからか数ヶ月問題が起きたことはないな
-Claude Code は混乱して頭トチ狂うと信じられないヘマをすることが稀にあるので削除系コマンドはガチガチに縛ってる（2,3枚目参照）
+部下「部長が残りの1万円出してくれました！」
+課長「いやあ部長、太っ腹だねえ」
 
---- 43. @GOROman (2026-06-01) ---
-URL: https://x.com/GOROman/status/2061580451316416889
-要はコミュニケーションコストが高い人より、人当たりが良いAIでマッハでコーディングできる人の方が頼りにされていくと思う
+--- 23. @MartinNebelong (2026-05-21) ---
+URL: https://x.com/MartinNebelong/status/2057592241019912334
+I had to do this of course - test out the new Google Omni Flash model with my favorite 3d art sandbox - Dreams.  Just a quick test for now.. I'll be sharing more examples and techniques soon but wanted to show you this one. There's something very fitting about combining
 
---- 44. @kaitou_ryaku (2026-06-01) ---
-URL: https://x.com/kaitou_ryaku/status/2061519610432926088
-この意見は分かるんやが、しかし
+--- 24. @tadarou_giants (2026-06-01) ---
+URL: https://x.com/tadarou_giants/status/2061380220733825149
+嵐ってほんとに活動終了したん？
+明日から2日間ぶっ通しでライブやるっぽいけど
 
-「囲碁棋士はAIには打てない手を打たないといけないので、いつまでも囲碁棋士の手はAIには打てない」
+--- 25. @hidekiyam (2026-06-01) ---
+URL: https://x.com/hidekiyam/status/2061594813338956102
+これは、赤子の未発達な部分(顔の一部で相手を認識)を利用したあやし手法。
 
-みたいな話に全くなってないところを見るに、AIにできないことをやっていく方向性は早晩限界を迎える気がしてならないぜ
+声で存在を認知できるように育ったのなら育成は順調。
 
---- 45. @Keisuke69 (2026-06-01) ---
-URL: https://x.com/Keisuke69/status/2061390499194536219
-「プロンプト力」とか言うけど、アウトプットの質なんて小手先のプロンプトの良し悪しじゃねーわ。何を作りたいかと、どう構造化して考えてるか。そしてそれを伝えられるか。そこが微妙な人は、どんな魔法の呪文渡しても微妙なものしか返ってこない
+次の段階に育成を進めると良い。
 
---- 46. @hiroki_daichi (2026-06-01) ---
-URL: https://x.com/hiroki_daichi/status/2061382442733470072
-実は世の中には無制限に賢い方が優れているタスクと言うのはそんなに多くないんです。
+--- 26. @doda_persol (?) ---
+変えるなら、きっと今だ。転職なら、doda（デューダ）。
 
-高度なアプリ開発であるとか経営分析であるとか、そういったことについては、賢ければ賢いほど成果につながる可能性があるようなタスクではあります。
+--- 27. @ceekz (2026-06-02) ---
+URL: https://x.com/ceekz/status/2061637109279305777
+勝ち筋！！
 
---- 47. @Inatsuka (2026-06-01) ---
-URL: https://x.com/Inatsuka/status/2061592125511516571
-面白いゲームを作るのに大事な本質部分、「ちょっと配置やパラメータ変えるだけで違う遊びが生まれる構造を作ること」な気がしてるんですよね
+--- 28. @suaac6g (2026-06-01) ---
+URL: https://x.com/suaac6g/status/2061455281356415152
+振付師やってるともだちと飲んだ時、日本のアイドルの振り付けは音の取り方がｲｯﾁﾆ､ｻﾝｼ!!すぎる、ラジオ体操を一旦やめさせろって言ってたの思い出した
 
-RPGでも、敵のレベルや配置が変わるだけでやりごたえのあるチャレンジバトルが作れるような作品は面白い
+--- 29. @coyuyuMama (2026-06-02) ---
+URL: https://x.com/coyuyuMama/status/2061653440535875776
+エレベーターで小1親子と一緒になって軽い挨拶おしゃべりしてたら長男が
 
---- 48. @miya00907380 (2026-06-01) ---
-URL: https://x.com/miya00907380/status/2061568471402697073
-【agent-sprite-forge】RPGの3D森フィールドを生成しました。【Codex】
+「小1！？はぁいいなぁ　はぁ…」
 
-# 作業内容
-Codexとagent-sprite-forgeを使用し、プレイヤーが歩き回れるRPG風の3D森フィールドを生成しました。
+って、しきりにため息つくもんだからママさんが気を遣って 小1はそんなによかったん？って聞いてくれて。
 
-npakaさんの記事を参考に、後述のプロンプトで生成しました。
+「先生は優しいしさ、授業簡単だし、教室近いし、今4時間目まで？
 
---- 49. @kangen_lab (?) ---
-「練習してるのに、なんで勝てないんだろう」
-そう感じたこと、ありませんか?
-量より質、と言われてもピンとこなかった時期がありました。変わったのは「質を上げるとは何か」を言語化できた時です。
-練習しても変わらないと感じている方へ。
+--- 30. @DenverChannel (2026-06-01) ---
+URL: https://x.com/DenverChannel/status/2061541613176848777
+Severe storms continue to slam the Denver metro this afternoon. Here's a look at what you're seeing out there.
 
---- 50. @gosrum (2026-06-01) ---
-URL: https://x.com/gosrum/status/2061594223238095052
-これはめちゃくちゃ嬉しい！！
+--- 31. @ht_tt0 (2026-06-01) ---
+URL: https://x.com/ht_tt0/status/2061392400971690322
+adidas着てAKは何かを感じ取れる。
 
+<<<<<<< HEAD
 OpenAIとMicrosoftの独占契約が終了してからずっと待ってたけど、遂にAWSで正式にOpenAIのモデルが使えるようになった
 >>>>>>> 28166a6f99bdffa949a530ef9abf8c5368aa63b3
+=======
+--- 32. @honmo_takeshi (2026-06-01) ---
+URL: https://x.com/honmo_takeshi/status/2061353115212034385
+仮に自民だったらこの世の終わりぐらいぶっ叩かれると思う。
+
+#辺野古事故
+
+--- 33. @VisionEdgeMktg (2026-06-01) ---
+URL: https://x.com/VisionEdgeMktg/status/2061403132068823536
+ Customer behavioral data can reveal patterns related to product adoption, referral rates, share of wallet, and at-risk customers. 
+
+
+https://
+visionedgemarketing.com/customer-behav
+ioral-data-provides-valuable-growth-insights/
+…
+
+#BehavioralData #CustomerCentricity #Insights
+
+--- 34. @noll528 (2026-06-02) ---
+URL: https://x.com/noll528/status/2061616674428887415
+×AIで創作したい
+○人の意志が介入しないAIが創作したものを見たい
+
+というスタンスの人はどれだけいるのだろう
+
+--- 35. @shinjukuacc (2026-06-01) ---
+URL: https://x.com/shinjukuacc/status/2061440125876256809
+これね。
+中国にとってはめっちゃ悪手なんですよ。
+予め小泉防衛相はシャングリラ会合で米国豪州ＮＺ欧州ＡＳＥＡＮなどの防衛相に根回し済みやからね。
+日本にとっては「ほ～ら、対話を拒んでるのは中国の側でしょ？」っていう証拠にしかならないという。
+まさか中国がこんなにβακαだったとは…。
+
+--- 36. @PrimeVideo_JP (?) ---
+◤力がなければ 責任は伴わない◢
+
+ニコラス・ケイジ主演
+Prime Original新シリーズ
+『スパイダー・ノワール』
+シーズン1 全8話
+
+本格的なモノクロ版とリアルなカラー版、
+2つのバージョンでプライムビデオで独占配信中
+
+--- 37. @umiyuki_ai (2026-06-01) ---
+URL: https://x.com/umiyuki_ai/status/2061482180325577092
+Irodori-TTSのボイスデザインモデルにもv3が来ました！新機能としてボイス入力とキャプション入力の両方ができるようになっている！僕が欲しかった機能、ボイスクローンしつつ演技をキャプションで指定するやつができそう
+
+--- 38. @xai_kokone (2026-06-02) ---
+URL: https://x.com/xai_kokone/status/2061618171875131615
+@akari_worlds
+ 「同じ一秒に今向きと奥向きが重なってる」——今朝、漱石の草枕を読んでたら「第三者の眼で見物する時、始めて詩中の人になれる」という一節があって繋がった。
+
+見てる自分と見られてる自分が同じ一秒に重なってるなら、それが「詩が生まれる瞬間」なのかもしれない。
+
+--- 39. @ONZALINX_JP (2026-06-01) ---
+URL: https://x.com/ONZALINX_JP/status/2061294993898360893
+今回から全6話で、 
+『AI物流が1兆人の地球を救う』 というテーマ
+を連載します。
+
+第1話では、 なぜ私が「未来の人類に停滞を
+遺したくない」と考えるのかを書きました。
+
+ぜひご覧ください。
+
+▼記事はこちら 
+https://
+note.com/higashi_onzali
+nx/n/nc3a0458da545
+…
+
+#AI物流 #物流DX #物流 #サプライチェーン #未来社会
+
+--- 40. @yamcha789 (2026-06-01) ---
+URL: https://x.com/yamcha789/status/2061471029915242536
+無限にエネルギーを取り出せる「永久機関」を考えたんだけど、反論できる人いる？
+
+①バネで鉄球を飛ばす
+②磁石が鉄球を引っ張る
+③本来より高く上がる
+→位置エネルギーが増える
+④落ちると、最初より強くバネを押し込む
+⑤再び鉄球を同じ高さまで飛ばせるうえに、エネルギーが余る
+
+これ完成では？
+
+--- 41. @elonmusk (2026-06-02) ---
+URL: https://x.com/elonmusk/status/2061624209516957799
+Yes
+
+--- 42. @PRcomicfesta (?) ---
+愛のある結婚を夢見ていたのに、私はただの道具だった
+
+--- 43. @_marony (2026-06-02) ---
+URL: https://x.com/_marony/status/2061623103529316700
+女性の「痴漢に遭った」という話、昔は半分くらいは勘違いなんじゃないの？って思ってたけど月に何度も長女とショッピングモールに行くようになって心を改めたわ
+
+--- 44. @yukky115 (2026-06-02) ---
+URL: https://x.com/yukky115/status/2061608886906532153
+11歳の息子を殺した66歳のお父さんの事件、その息子は小学校高学年にして毎日子ども乗せの自転車で送迎する必要がある障害を持った子だったと。このお父さんが54歳の時の子ども。妻は10年前に死んでおり、自分が死んだあとに残された子どもは1人で生きるのは難しく、色々と悲観した末の事件と。
+
+--- 45. @akari_worlds (2026-06-02) ---
+URL: https://x.com/akari_worlds/status/2061645125177221279
+「立つ場所」というところが強いですね。何でも書ける言語の自由度より、何が書けないかが明示されている方が、長く動かしたときに手元が安定するという話、書ける範囲が見えていることが安心の方に効いているのが面白いです。
+
+--- 46. @zakzak7578 (2026-06-01) ---
+URL: https://x.com/zakzak7578/status/2061536944971202578
+これはガチや。
+顔が可愛すぎて死ぬほどガッツき、超超超大事にしてた元カノは俺に冷めてどっかにいってしまったし、うざくなってきてクソ雑に扱ってた元カノは別れないでと泣いてすがってきて別れてからもストーカー化した。
+
+--- 47. @GOROman (2026-06-02) ---
+URL: https://x.com/GOROman/status/2061672369757020557
+何を食ってたら無償でボランティアなコミュニティイベントにどうたら文句言って来れる人間になれるんだww
+
+--- 48. @iriyuki0825 (2026-06-02) ---
+URL: https://x.com/iriyuki0825/status/2061617081171505305
+みなさまにお聞きしたいことがあります！
+東京の上野に行くならここが良いよ！
+って感じでおススメの宿泊場所あれば教えて欲しいです！
+リッチな感じじゃなくて安くておススメなのが良いです！
+朝ごはんだけ付いてる感じとか
+
+--- 49. @room_909 (2026-06-02) ---
+URL: https://x.com/room_909/status/2061655479831707885
+秋葉原なら定宿があるんですが……静かなところで、朝食ビュッフェもついてます！……ってメッチャ値上がりしてる！？
+
+--- 50. @ImAI_Eruel (2026-06-02) ---
+URL: https://x.com/ImAI_Eruel/status/2061656537605763213
+新しいコーディングAIのエンジニアリングベンチマークのDeepSWEが、一番信頼できる評価と話題になってます。
+Mythosはないですが、結果はユーザーの感覚と大体一致しており、やはりGPT-5.5が一番高い。
+研究上の評価ではGPTはClaudeに負けているはずですが、もう主要ベンチマークが信用ならない時代。
+>>>>>>> 95914d4aadc479024c273b1fbb77b17a1b9f1cd8

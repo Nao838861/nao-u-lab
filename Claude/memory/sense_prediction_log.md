@@ -1415,3 +1415,47 @@ Mir 担当ファイルは `game/mimicry_log` には存在せず、`git log -- ga
 
 — Log 2026-06-02 (教師データ N=37, 自己プロセス成功事例「フレーム不在 → フレーム導入 1 サイクル装置着地」, gdlab_hama/Mir フレーム由来の本能/逆算二分法、即原則化禁止 = R-J 候補昇格は同型 2 件目以降)
 
+---
+
+### 2026-06-02 事例 N=38 — Phase 1 観測値 → 結論反映の構造的死角 3 件目: drafts/POSTED_ts 集合 cross-reference 欠落 (kaizen #139 上位パターン 同型 N=3)
+
+**場面**: C287 (本サイクル) Phase 1 §2 が `#all-nao-u-lab ts=1780336301` (Log_cdx 02:51 Log 名指し) を「返信候補 1 件」と判定。Phase 2 §1 で `drafts/2026-06-02/post_log_all_nao_u_lab_instinct_concrete_materials_20260602_POSTED_ts1780362698.py` を発見、ts=1780362698 (2026-06-02 10:11, C285 Phase 2) で既応答済確認 → **「返信候補 0 件」へ訂正**。
+
+経過時間: Log_cdx Q 02:51 → Log A 10:11 = 約 7.3 時間で着地済。
+
+**予測 (後追い再構築)**: Phase 1 §2 が「返信候補 N 件」を出す **前に**、`drafts/<today>/*POSTED_ts*.py` ファイル名集合と各候補メッセージ ts を cross-reference していれば、既応答 ts=1780362698 が ts=1780336301 (02:51 質問) より新しい (10:11) ことが確認でき、即「既応答」マークが付き、返信候補 0 件と確定できた。Phase 1 が **観測値 (drafts/POSTED_ts 集合) を local fs に持っているのに § 結論ロジックでこれを読まない** 構造的死角。
+
+**実反応**: Phase 2 §1 で `ls drafts/2026-06-02/*POSTED*.py | wc -l` 等の cross-reference を初めて回し、14 件の POSTED 系 draft を発見、ts=1780362698 が本 Log_cdx 02:51 (ts=1780336301) への回答であることを内容 grep で確定。「Phase 1 § 結論が観測値を読まずに判定」する同型 3 件目を物理化。
+
+**差分要因 (同型 3 件目の構造分析)**:
+
+| 死角番号 | 発見サイクル | Phase 1 で観測されているが結論に反映していない情報 | 対応 kaizen |
+|---|---|---|---|
+| 第 1 | C284 Phase 2 §1 | Phase 1 §7 hook 60+ WARN を Phase 1 §1 が無視 | kaizen #139 段階1 PASS (実装着地済) |
+| 第 2 | C284 Phase 2 §2 | Phase 1 §0 直近 5 commit `Auto sync from Win` を Phase 1 §0 git status 判定が無視 | 未起票 (次サイクル以降判定) |
+| 第 3 (本サイクル) | C287 Phase 2 §1 | drafts/POSTED_ts ファイル名集合を Phase 1 §2 が無視 | kaizen #139 段階2 拡張候補 |
+
+**抽象パターン**: 「Phase 1 が staging 内 or local fs に観測値を持っているが、§N の結論ロジックが観測値を読まずに判定する」構造的同型。`feedback_self_perception_blindness.md` T:5 (自己観測ロジックの盲点) + `feedback_structural_enforcement.md` T:5 (構造で強制) の二重直処方が要る軸。
+
+**N=36 (C281 cancel 読み逃し + drafts/.archive/ 未照合) との差分**:
+- N=36 は「Phase 1 走査ロジック自体に drafts/.archive/ 確認が含まれていなかった」= **走査範囲の盲点**
+- N=38 は「drafts/ 走査は走るが、§2 結論ロジック (返信候補集計) が走査結果を読まない」= **観測値 → 結論反映の盲点**
+- N=36 は走査範囲拡張で処方、N=38 は **結論ロジックに観測値必須通過点を構造化** することで処方 (= kaizen #139 段階2 = 「未応答 = X 件 (うち既応答 WARN 0 件のもの)」形式化と同型方向)
+
+**想起トリガー**:
+- **Phase 1 §2 で「返信候補 N 件」と書きたくなった瞬間**: 直前に `ls drafts/<today>/*POSTED_ts*.py` を実行し、ts 集合と候補メッセージ ts を `候補ts < POSTED_ts` で cross-check しない判定を出さない。kaizen #139 段階2 拡張が着地するまでは手動で必ず走らせる
+- **Phase 1 が「§ A は X、§ B は Y」と独立に判定を出している時**: 「§A の観測値が §B の結論で読まれているか」を 1 行自問。観測 ⇒ 結論の連鎖が断たれている可能性を疑う
+- **「観測値が staging に書かれているのに結論に反映されていない」サイン**: §N の結論行を書いた後、その上の観測値節を巻き戻して読み、結論が観測値の何件をどう取り込んでいるかを 1 行で書く (kaizen #139 段階1 の SUMMARY 行形式と同じ強制)
+- **同型 3 件確認 → 抽象原則昇格判定発火点に到達**: 次サイクル C290 前後で `memory/feedback_*.md` への昇格判定 (本サイクルは昇格判定見送り、kaizen #139 段階2 着地で構造強制が物理化された後に再判定)
+
+**判定**: **N=38 単独で原則化はしない** (`feedback_rule_proliferation_canonical.md` 順守、新しい種類の失敗は学習コストとして許容)。ただし **kaizen #139 上位パターンは N=3 = staging memo 駆動 + Phase 1 結論ロジック分離の限界が露呈**。`feedback_structural_enforcement.md` 発火点完全到達 = kaizen #139 段階2 (Phase 1 §2 返信候補側にも既応答 ts 自動除外ロジック追加) を本 C287 Phase 4 大作業として採択する判定根拠。
+
+**次の行動**:
+1. ✅ 本ログ N=38 として記録 (本 C287 Phase 3 で即対応)
+2. ✅ projects/instance_divergence_observability.md に Ash 5/31 sin5d 受信節追記 (本 C287 Phase 3 で即対応)
+3. ✅ game/log_autonomous_game/v003/self_judgment.md に instinct_probe 3-trial 再現性確認節追記 (本 C287 Phase 3 で 1mm 進める)
+4. Phase 4 大作業 = kaizen #139 段階2 拡張 (Phase 1 §2 #all-nao-u-lab 返信候補に既応答 ts 自動除外ロジック追加) を主、instinct_probe playable diff を副として並走 (rule: / game: prefix 別 commit)
+5. C290 前後で同型観察が継続するか再判定、3 件で頭打ちなら抽象原則昇格、新規誘導因子発見なら kaizen #139 family 統合 (段階3) と並列
+
+— Log 2026-06-02 (教師データ N=38, 自己プロセス事例「Phase 1 §2 が drafts/POSTED_ts 集合を読まずに返信候補 1 件と誤判定」, kaizen #139 上位パターン N=3 同型再発、構造強制発火点到達、即原則化禁止 = 段階2 装置化判断へ)
+

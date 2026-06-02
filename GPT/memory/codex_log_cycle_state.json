@@ -1,5 +1,5 @@
 {
-  "last_success": "2026-06-02T13:52:42",
+  "last_success": "2026-06-02T17:22:51",
   "last_reason": "elapsed 104min >= 90min",
   "last_channel": "log",
   "last_post_result": {
@@ -183,20 +183,20 @@
       ]
     }
   },
-  "last_error": null,
-  "last_attempt": "2026-06-02T08:36:44",
+  "last_error": "git push failed after commit 130434987: �n���h������Ă��Ȃ���O: System.MissingMethodException: ���\\�b�h��������܂���: '!0 System.Collections.Generic.IReadOnlyList`1.get_Item(Int32)'\n   �ꏊ System.CommandLine.Parsing.StringExtensions.NormalizeRootCommand(IReadOnlyList`1 args, Command rootCommand, Boolean inferRootCommand)\n   �ꏊ System.CommandLine.Parsing.StringExtensions.Tokenize(IReadOnlyList`1 args, CommandLineConfiguration configuration, Boolean inferRootCommand)\n   �ꏊ System.CommandLine.Parsing.Parser.Parse(IReadOnlyList`1 arguments, String rawInput)\n   �ꏊ System.CommandLine.Parsing.ParserExtensions.<InvokeAsync>d__3.MoveNext()\n--- ���O�ɗ�O���X���[���ꂽ�ꏊ����̃X�^�b�N �g���[�X�̏I��� ---\n   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\n   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\n   �ꏊ System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()\n   �ꏊ GitCredentialManager.Application.<RunInternalAsync>d__7.MoveNext()\n--- ���O�ɗ�O���X���[���ꂽ�ꏊ����̃X�^�b�N �g���[�X�̏I��� ---\n   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\n   �ꏊ System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(",
+  "last_attempt": "2026-06-02T17:22:53",
   "last_dry_run": "2026-05-12T08:28:39",
   "last_dry_run_reason": "forced",
   "last_status_save": {
     "ok": true,
     "saved_to": "D:\\AI\\Nao_u_BOT\\GPT\\log\\codex_log_cycle_status.md",
-    "char_count": 3233
+    "char_count": 1961
   },
   "last_git_sync": {
     "ok": true,
     "committed": true,
     "pushed": true,
-    "staged_files": 20,
-    "commit": "1d7e7e4c6"
+    "staged_files": 26,
+    "commit": "b0df8b39a"
   }
 }

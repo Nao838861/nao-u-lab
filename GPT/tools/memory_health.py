@@ -12,6 +12,7 @@ from typing import Any
 
 import memory_recall
 import memory_lifecycle
+import topology_audit
 from atom_quality import atom_quality_report
 
 
@@ -144,6 +145,14 @@ def build_health() -> dict[str, Any]:
         if row["hits"] == 0:
             errors.append(f"recall smoke failed: {row['query']}")
 
+    topology = topology_audit.build_audit(
+        atoms,
+        high_inbound_threshold=12,
+        permanent_score_threshold=10,
+        stale_days=45,
+        limit=5,
+    )
+
     status = "ok"
     if warnings:
         status = "warning"
@@ -165,6 +174,12 @@ def build_health() -> dict[str, Any]:
         "recall_queries": stats.get("queries", 0),
         "top_tags": tags.most_common(12),
         "recall_smoke": smoke,
+        "topology_audit": {
+            "edges": topology["edges"],
+            "edge_kinds": topology["edge_kinds"],
+            "summary": topology["summary"],
+            "thresholds": topology["thresholds"],
+        },
         "warnings": warnings,
         "errors": errors,
     }
@@ -187,6 +202,7 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
         f"- slack_last_run: {health.get('slack_last_run')}",
         f"- recall_queries: {health.get('recall_queries')}",
         f"- top_tags: {', '.join(f'{tag}={count}' for tag, count in health['top_tags'])}",
+        f"- topology_audit: edges={health['topology_audit']['edges']} summary={health['topology_audit']['summary']}",
         "- recall_smoke:",
     ]
     for row in health["recall_smoke"]:
