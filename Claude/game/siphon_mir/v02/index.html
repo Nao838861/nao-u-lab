@@ -286,7 +286,7 @@ function updateAbsorbs(){
     if(a.life<=0){
       absorbs.splice(i,1);
       // Tiny flash at player
-      particles.push({x:S.px,y:S.py,vx:0,vy:0,life:8,c:'#ffd870',r:5});  // v02 C255: r 4→5 (+25%), 快感軸 観測8（climax flash を空間軸で厚く — C253 capture life 12→15 の時間階層に空間階層を直交追加、C246 時間延伸/L252 capture sparkle と合わせて climax を 時間×空間 で被覆）
+      particles.push({x:S.px,y:S.py,vx:0,vy:0,life:10,c:'#ffd870',r:5});  // v02 C277: life 8→10 (+25%), 快感軸 観測11（climax flash 時間軸延伸 — C255 r4→5 の空間階層に時間階層を直交追加、C253 capture life 12→15 と同 +25% 比で対称、climax flash の 時間×空間 grid 完了）
     }
   }
 }
