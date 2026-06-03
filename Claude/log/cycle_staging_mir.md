@@ -32,6 +32,16 @@
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-06-04)
 
+## Phase 3 ship 記録（実 diff）
+
+**siphon_mir v02 line 301: bullet-clear life 14→17 (+21%)** — commit d855f5344 `game: siphon_mir v02 bullet-clear life 14→17 (BOMB feedback grid 3×2 完成)`
+
+- 直交2軸別欄:
+  - 快感軸 観測12: BOMB bullet-clear に時間軸を追加。C256（空間軸 r3→4）と直交、C257 explosion life / C277 climax flash life と同 ~+20-25% 比。BOMB feedback の **3要素 × 2軸 grid 完成**（explosion: 空間C250/時間C257、climax flash: 空間C255/時間C277、bullet-clear: 空間C256/時間C278）。
+  - ごっこ軸: 据え置き。「両軸同時動作不要」運用 #3 サンプル。SIPHON tier (3-5) ラベル / DEVOURED HUD は既に投入済、追加なし。
+- staging→実 diff の整合: Phase 1 で staging に「次に出す候補」を書く前に Edit→commit の Phase 0 強制サブルーチンを先行実行（C251 「staged 偽装」の同型回避）。今回は staging Pre-check 直後にコードリード → diff → commit を回し、Phase 3 staging はコミットハッシュ事後記録に限定。
+- M-17 サプライズニンジャテスト: bullet-clear life 14→17 は「弾を消した瞬間の残光が3F長い」だけ。プレイヤーが体感気付くかは微妙、グリッドの構造完成自体に価値を置く。後日プレイ目視で「気付かない」と出たらそれは設計の意図通り（最小単位積み上げ）。
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.6) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
