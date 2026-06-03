@@ -654,3 +654,54 @@ C281 で (d) は「再検討 × 中」、player 周囲 ring (line 883-889) と�
 — Ash (Win2) 2026-06-03 C283 Phase 4 大作業 (v08 (a) ship 後 Stage 4 再判定 + (d') 採用判断確定 + 実装計画)
 
 — Ash (Win2) 2026-06-02 C282 Phase 4 大作業 (v08 (a) 画面下端 1px 高 時間 bar 実装 + commit/push)
+
+---
+
+## §v08 (d') ship 後 Stage 4 再判定 + v09 候補確定 (2026-06-04 C284 Ash)
+
+### v08 (d') 5F fadeout 同期 効果検証 (index.html line 128-129 / 210 / 324 / 521-526 / 846-852 / 896-904, ship 済 commit dcecf9c37)
+
+Ash 自プレイ mental simulation で v08 (d') 弾側 ring + player 周囲 ring 同期 5F fadeout の体感を 4 観点で評価:
+
+1. **両 ring 同期消失の違和感ゼロ予測検証 (C283 で予測済の本丸)**: 両 ring は同じ `state.invincibleFadeT` 駆動 (line 848 / 899) のため、alpha 比 (bullet:0.55 × fa / player:0.35 × fa) を維持しながら同期して 0 に収束。invincibleT 1→0 遷移の瞬間、bullet 側 alpha は 0.55→0.55 (連続点)、player 側は active 中の pulse 範囲 0.35-0.9 から static 0.35×fa へ移行するが切替点 (fadeT=5 時) で 0.35 (= pulse 最小値) に着地するため不連続点ゼロ。**C283 の「新規違和感ゼロ」予測は ship 後 mental simulation で再確認、副作用予測も観察されず**
+2. **HUD 干渉なし**: ring は player 周囲 r=20 / bullet 周囲 r=5、時間 bar (line 992-1002, y=H-1)、HUD 上段 (line 976, y=H-14) と物理的に独立。視線競合ゼロ
+3. **見落としリスク**: 5F=83ms は意識下知覚境界、player が「fadeout 観察」を意識的に行うことは少ない。**ただし fadeout の目的は「無敵終了の jolt 解消」であり、player に意識させずに違和感を減らす設計** → 見落としても効果は出ている。risk 低 (Cell 3 で予測済の方向と一致)
+4. **副作用**: なし。fadeout 中に新 invincibility が triggered された場合、update 順序 (line 521-526) で invincibleT 加算 → 描画側は `invincibleT>0||invincibleFadeT>0` の OR 条件で active 側 (fa=1) に切替、二重発火破綻なし。hyperFlashT / maxChainFlashT / activeDefT 等の他 timer とも独立。戻し方明確 (定数 1 + state 1 + reset 1 + update 3 + bullet 描画 2-3 + player 描画 2-3 = ~12 行削除で v08 (a) 等価)
+
+**Stage 4 自判定 (v08 (d') ship 後)**: **採用継続 × 高**。C283 で予測した「二重瞬時消失非対称副作用回避」「新規違和感ゼロ」は ship 後実装読解 + mental simulation で確認、追加副作用予測も観察されず。**Nao_u 評価 (Stage 5) に出す材料として確定** — v05 評価 ts=1779233429 (A-1+ 先行依頼) / v06 ts=1779594807 (5 機能まとめ) 待ち中の状態で iteration 4 機構積み上げ (B-2 + 観点 3 + (a) 時間 bar + (d') fadeout 同期) が ship 済となった
+
+### §次 iteration 起点 (v09 候補) 確定: **(f) cap reached 持続中 player 周囲 ring 色切替**
+
+#### 候補比較 (Stage 3 matrix の未物理化観点 + Cell 7/8 訂正からの引き出し)
+
+| 候補 | 出所 | 1 機構刻み度 | 戻し方明確性 | R-I 死守適合 | Stage 4 自確信度 |
+|---|---|---|---|---|---|
+| **(f) cap reached 持続中 ring 色切替** (player 周囲 line 901 の `rgba(255,160,64,...)` を `state.invincibleT===BUZZ_INVINCIBLE_CAP` 分岐で `rgba(255,216,112,...)` 切替) | Cell 7 「cap 持続中 polishing 実質ゼロ → 2-3 行で polishing 強」(訂正主張 ④) | **高** (色切替のみ、ロジック追加なし) | **高** (3 行以内削除で v08 (d') 等価) | **高** (Stage 5 不要、即着手可) | **高** |
+| **(g) invincibleT 進捗 bar (player 周囲 ring 弧長 = invincibleT/180)** | Cell 8 「●●○ 形式ではなく player 周囲 ring 弧長表示」(再設計後の c') | 中 (新規描画ロジック) | 中 (5-10 行) | 高 | 中 |
+| **(h) 観点 4/5/B-3 等 matrix 未着手 cell** | Stage 3 matrix の player 側暫定推奨されなかった cell | 不明 | 不明 | 不明 | 低 (Stage 4 player 側で既に降格) |
+
+**選定: (f)**。理由:
+- Stage 4 既出根拠 (Cell 7 で「2-3 行で確実に効果」、Cell 9 主張 ④ 修正) で polishing 余地 中→高 への格上げ判定済 = **新規思索ゼロで着手可**
+- 1 機構刻み守準拠最強 (色切替 1 箇所、ロジック変更なし)
+- 戻し方最も軽い (3 行以内)
+- Cell 7 player 側予測 + Cell 9 主張 ④ 修正の 2 重根拠 = Stage 4 確信度高
+
+#### (f) v09 実装計画 (1 サイクル先取り、未着手宣言のみ)
+
+- **対象行**: index.html line 901 `ctx.strokeStyle=\`rgba(255,160,64,${(0.35+0.55*iv*pulse)*fa})\`;`
+- **修正案**: cap 識別子 (line 895 `BUZZ_INVINCIBLE_CAP` 直前で `state.invincibleT===BUZZ_INVINCIBLE_CAP` 判定) を strokeStyle 三項分岐に追加
+  - 例: `const capColor=state.invincibleT===BUZZ_INVINCIBLE_CAP;` + `ctx.strokeStyle=\`rgba(${capColor?'255,216,112':'255,160,64'},${(0.35+0.55*iv*pulse)*fa})\`;`
+  - 追加行数: 1-2 行 (capColor 変数 + strokeStyle 三項)
+- **fadeout 期間中の挙動**: invincibleFadeT>0 時は invincibleT===0 なので capColor=false → 通常 #ffa040 色で fade、cap 持続→終了→fade の遷移で色変化が起きる。**この遷移は cap 終了の体感補強として機能予測** (cap 中 = #ffd870 黄金 → cap 終了瞬間 = #ffa040 橙 → 5F fadeout、3 段階で「最大保持→終了→消失」を視覚化)
+- **戻し方**: capColor 変数行と三項分岐を削除 + 元の固定 `255,160,64` に戻す = 3 行以内
+- **v09 着手判断確定**: **採用 × 高**。Nao_u 評価返信 (ts=1778767221 以降未到達) を待たずに着手可能、philosophizing layer 踏み込みなし
+
+### Stage 4 C284 制約遵守チェック
+
+- [x] `feedback_headless_unfit_for_unfinished_eval.md` t:5: 本セクションは index.html コード line 番号 (128-129/210/324/521-526/846-852/896-904/901) + Ash 自プレイ mental simulation のみで判定、headless 数値ゼロ参照
+- [x] `feedback_clone_strategy.md` t:5: (f) v09 着手判断は「色切替 1 機構刻み」、philosophizing layer (「総合確信度 N%」「30 本調査」「v09 戦略レイヤー」) 踏み込みなし
+- [x] `feedback_prediction_responsibility.md` t:5: Stage 3 (matrix) → Stage 4 player 側 (C188) → Stage 4 Ash 自プレイ側 (C281) → Stage 4 v08 (a) ship 後再判定 + (d') 着手判断 (C283) → **Stage 4 v08 (d') ship 後再判定 + v09 候補確定 (本 C284)** → Stage 5 (Nao_u 評価) の連続体を 1 ステップ前進、C283 で予約した「(d') ship 後再判定 + 次 iteration 起点確定」を物理回収
+- [x] `feedback_means_ends_reversal_check.md` t:5: 本判定の出力は (d') Stage 4 採用継続確定 + (f) v09 着手判断確定 = 次サイクルでの playable diff 生成への直接ゲート開放、matrix を読み直すだけの中間文書ではない
+- [x] R-I 死守: Nao_u v05/v06/v07/v08 評価返信未到達 (最新 ts=1778767221 = 2026-05-15) でも iteration を止めない、(d') ship + (f) v09 着手判断確定で 1 機構刻み前進、§0a t-260524125456-74d6 受領待ちを別動線で迂回
+
+— Ash (Win2) 2026-06-04 C284 Phase 4 大作業 (v08 (d') ship 後 Stage 4 再判定 + v09 候補 (f) cap 持続中 ring 色切替 確定)
