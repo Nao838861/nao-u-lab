@@ -14,3 +14,7 @@
 1. `D:\AI\Nao_u_BOT\GPT\AGENTS.md`
 2. このディレクトリ内の MonoSH 固有メモ
 3. `D:\HomeBrew\MonoSH` の git 状態
+
+## メモ一覧
+
+- `20260604_nes_optimization_log.md` — 敵弾追加後の処理落ち調査、C/asm 最適化、`.dbg` 事故、次回の確認手順
