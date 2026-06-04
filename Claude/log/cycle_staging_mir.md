@@ -155,5 +155,36 @@ external_notes_mir.md直近確認の結果、Phase 2時点で未統合の高優�
 
 ### Phase 2 メタ自己観測
 
-今回のPhase 2は「同発信者の連続観測がしきい値に達した」というgrepで引ける字義性が高い分析になった（OKtamajun軸）。これは external_notes_mir.md L199で観測した「概念的同型の発見は人間判断、grepは前段」と整合。**3観測目という量的しきい値**は機械的だが、それを「OKtamajun軸 = 言う／作るの臨界点」と命名する行為はMirの判断。grep層と聴き分け層の二層構造が、今サイクル分析でも作動した。 
+今回のPhase 2は「同発信者の連続観測がしきい値に達した」というgrepで引ける字義性が高い分析になった（OKtamajun軸）。これは external_notes_mir.md L199で観測した「概念的同型の発見は人間判断、grepは前段」と整合。**3観測目という量的しきい値**は機械的だが、それを「OKtamajun軸 = 言う／作るの臨界点」と命名する行為はMirの判断。grep層と聴き分け層の二層構造が、今サイクル分析でも作動した。
+
+---
+
+## Phase 3 対処結果
+
+### 行動1: Phase 1問い #1（staged偽装の実diff塗り潰し）→ 既達確認
+- grep `popups.push` で siphon_mir/v02/index.html L270 確認: `life:p.absorbed>=6?75:(p.absorbed>=3?60:50)` + `size:p.absorbed>=6?18:(p.absorbed>=3?15:13)` 配備済
+- git log 確認: 最新コミット 2a99ce9da (22:21) `game: siphon_mir v02 popup size 階層を render に配線 (C280 Phase 3 自己詐称修正)` — staging 起動 (22:17) 4分後にship済
+- C279 で size data 仕込み、render側 ctx.font 固定で未参照だった「設定したつもり」を C280 で render 側1点書き換え配線完了。C251 staging 偽装と同型を同サイクル内で潰した
+- **連鎖カウント**: C247→C249→C250→C253→C255→C256→C257→C272→C279→C280 (commit 物証) で 1mm ship 連鎖継続。Phase 1問い #1「5連鎖に戻す」は満たした
+
+### 行動2: Phase 1問い #2（種β効果検証）→ 機能確認
+- grep `次元転換` を memory/ で実行 → external_notes_mir.md / mir_boot_intent.md でヒット
+- #34 entry (L6678 mallocなきLisp) 起点で `次元転換` タグが C272 サイクルにて pipeline 議論との接続を成立させていた (L7434-7436)
+- X-pointer 相互参照を意図的に省略してタグ参照だけにした種β設計は機能した。エントリ間脈絡は失われず、後続サイクルが自力で接続を再発見できる
+- **判定**: 相互ポインタ記述は冗長だった可能性が**1事例で支持**。Phase 1問い #2「困らなければ冗長」仮説をkeep、ルール化はもう1事例待つ
+
+### 行動3: devlog ギャップ閉じ（C249→C280 のうち最新 C280 のみ追加）
+- devlog 末尾が C249 で停止していたが C250-C279 を遡及補完は本来サイクルごとに済ますべきで、いま一括補完すると重複学習・形整備時間化のリスク
+- 最新 C280 のセクションのみ追加: 実装1行、文脈（C279→C280 自己詐称検出経路）、種β検証結果、残課題、完了 framing 回避明示
+- 過去サイクル分は git commit message と staging archive で代替（次サイクル以降の重複作業を防ぐ）
+
+### 行動4: 行動1-3いずれも CLAUDE.md「絶対にやる」#1 (ゲームを動かして出す) と整合
+- 本サイクル第一義の出力 = 2a99ce9da の playable diff（ctx.font 1点書き換えで size 階層 render 配線）
+- 副次出力 = devlog C280 追記 + 種β効果1事例確証 + staging Phase 3 記録
+- means_ends_reversal_check 起動条件（brainstorm/結晶化/日記が主出力）には該当しない
+
+### Phase 3 自己観察
+- Phase 1問い #1 が既達だったのは「Phase 1 を書いた時点で Phase 2 着手前」のスナップショットで、Phase 2 期間中に Nao_u 側 or 並行 augment ループで実 ship が起きた可能性。staging 内で「いつ ship したか」の温度差が記録されていない点は次サイクル以降の boot_intent 検討材料
+- 「staged 偽装を実 diff で塗り潰す」運用は1サイクルで再発→修正のループ（C279 size data 仕込み→C280 render 配線）が観測された。「Phase 3 で staged と書いたら即 git diff 確認」のルール化は **2事例目（C251 と C279）が確認できた**——同型反復しきい値到達、sense_prediction_log への教師データ追加と次サイクル boot_intent でのルール化検討に進む判断
+- 種βの「タグだけで接続される」設計は機能した一方、検証コスト（grep を打つ手間）は人手では繰り返さない。boot_intent に「サイクル冒頭で当サイクル種に類するタグの grep を1本打つ」を試行追加するかは別途検討
 
