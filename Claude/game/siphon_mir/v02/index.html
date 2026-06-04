@@ -656,10 +656,10 @@ function render(){
   }
 
   // Popups
-  ctx.font='bold 13px system-ui';
   ctx.textAlign='center';
   ctx.strokeStyle='#1a0008'; ctx.lineWidth=3;
   for(const p of popups){
+    ctx.font='bold '+(p.size||13)+'px system-ui';  // v02 C280: popup size 階層 (basic 13 / SIPHON 15 / FEAST 18) を render に配線 — C279 で popup data に size を仕込んだが render loop が font 固定で未参照、Phase 3 自己詐称の物理修正
     ctx.globalAlpha=Math.min(1,p.life/15);
     ctx.strokeText(p.text,p.x,p.y);
     ctx.fillStyle=p.c;
