@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>graze_log v06 — A-1 anticipation telegraph (敵 spawn 前 30F 予兆 + readability 3 層完成)</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+  #seedinfo{font-size:10px;opacity:.4;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>GRAZE</h1>
+<p>← → ↑ ↓ / WASD MOVE &middot; SPACE START / BOMB(B) / ACTIVE DEF(D) / RETRY &middot; M MUTE</p>
+<canvas id="c" width="420" height="620"></canvas>
+<p id="seedinfo"></p>
+<script>
+const W=420,H=620;
+const RETRY_UNLOCK_FRAMES=240;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const seedinfo=document.getElementById('seedinfo');
+const keys={};
+let muted=false;
+
+// === SEED (v04) — ?seed=N で再現実行可 ===
+const SEED=(function(){
+  const u=new URLSearchParams(location.search).get('seed');
+  if(u){const n=parseInt(u,10);if(!isNaN(n))return n>>>0;}
+  return (Date.now()&0xFFFFFFFF)>>>0;
+})();
+function mulberry32(s){
+  s=s>>>0;
+  return function(){
+    s=(s+0x6D2B79F5)>>>0;
+    let t=s;
+    t=Math.imul(t^(t>>>15),t|1);
+    t^=t+Math.imul(t^(t>>>7),t|61);
+    return ((t^(t>>>14))>>>0)/4294967296;
+  };
+}
+seedinfo.textContent=`seed=${SEED}  (?seed=N to reproduce)`;
+
+// === v05 beta B-1: SEED 保存 infra (cross_review aad8e17b1 §1) ===
+// 設計: localStorage `graze_log_recent_seeds` に直近 10 件、startGame() 時に push、
+// gameOver() 時に console.log で標準出力にも残す。?seed=N で再現可能。
+// 削除手順: pushSeedToLocal() / console.log('graze_log seed:', state.seed) の 2 行を消せば v05 alpha と等価。
+function pushSeedToLocal(seed){
+  try{
+    const raw=localStorage.getItem('graze_log_recent_seeds')||'[]';
+    const arr=JSON.parse(raw);
+    arr.unshift({seed:seed,t:Date.now()});
+    while(arr.length>10)arr.pop();
+    localStorage.setItem('graze_log_recent_seeds',JSON.stringify(arr));
+  }catch(e){}
+}
+
+// === GAUGE THRESHOLDS — region-based (M-24 区切りを変えろ) ===
+const G_MAX=208;
+const G_LV2=35;   // Lv1 -> Lv2
+const G_LV3=99;   // Lv2 -> Lv3
+// gauge >= G_MAX: BOMB ready
+
+// === GRAZE / HIT RADII ===
+const R_GRAZE=22;
+const R_HIT=8;
+
+// === GRAZE REWARD ===
+const GRAZE_GAUGE=6;
+const GRAZE_SCORE=10;
+
+// === KILL REWARD ===
+const KILL_SMALL_GAUGE=2;
+const KILL_MED_GAUGE=4;
+
+// === v03 ADDITION: grazeStreak → active defense (Psyvariar 型) ===
+// brainstorm.md §2 候補A、predicted_play.md 参照
+// 削除手順: GRAZE_STREAK_TH / ACTIVE_DEF_FRAMES / ACTIVE_DEF_RADIUS の3定数、
+// state.grazeStreak / state.activeDefT、triggerActiveDef()、SPACE 分岐の D 経路、
+// HUD の streak/context 表示 を消せば v02 に戻る
+const GRAZE_STREAK_TH=5;
+const ACTIVE_DEF_FRAMES=60;
+const ACTIVE_DEF_RADIUS=80;
+
+// === v04 ADDITION: graze→bullet 軌道予測線 (α'') ===
+// (v05 で「擦った弾のみ」→「全弾常時軌跡」に拡張、v04 仕様は graze 時の追加効果として温存)
+const GRAZE_TRAIL_FRAMES=90;
+const GRAZE_TRAIL_LEN=70;
+
+// === v05 MOD: 全弾常時軌跡 (Mir 案合流) ===
+// 設計: 軌跡を「graze 報酬」から「常時の知覚層」に降格、graze は副次効果に
+// 削除手順 (v05→v04): ebullet 生成時の grazedT 初期値を 0 に戻す、
+// update() 内の grazedT クランプを `if(b.grazedT>0)b.grazedT--;` に戻す
+// (定数・draw()・onGraze 周辺は v04 と同一バイト列)
+
+// === v05 beta B-2' (C189): 弾発射 windup telegraph (予兆) ===
+// 設計: medium が `e.fireT <= WINDUP_FRAMES` の間、発射方向に短い予告線 + 集光マーカーを描く。
+// 強度は (1 - fireT/WINDUP_FRAMES) で 0→1 に上昇（escalation telegraph）。
+// 予告は描画のみ — bullet の実 aim は発射瞬間の player 位置で再計算するので、
+// player は予告中に動けば回避できる (= readability 上昇しつつ agency を保つ)。
+// 根拠: @itchie_tatsumi 2026-05-18「予兆・隙・一貫性」 / 業界標準 readability (devlog §12)。
+// 削除手順 (B-2' → B-2): WINDUP_FRAMES 定数と draw() 内 `// B-2' windup telegraph` ブロックを削除。
+// fire branch・spawnEnemy・spawnWave1..4 は無改変なので B-2 に bit 完全等価で戻る。
+const WINDUP_FRAMES=10;
+
+// === v06 A-1: anticipation telegraph (敵 spawn 前 30F 予兆、readability 3 層完成) ===
+// spawnEnemy が pendingEnemies queue に積み、countdown==0 で emitEnemy。詳細は v06/README.md。
+// 削除手順: ANTICIPATION_FRAMES / pendingEnemies / emitEnemy() / pending tick / anticipation 描画 / startGame reset を削除し spawnEnemy を v05 形に戻す。
+const ANTICIPATION_FRAMES=30;
+
+// === v06 A-3: Psyvariar Lv up 弱体版 (graze 累積 → playerLv → shotCount ボーナス) ===
+// graze 30 回ごとに state.playerLv +1 (max 4)、shotCount = gaugeLevel + playerLv。
+// 無敵化 / 連鎖窓は意図的に剥がす (削除可能改良 1 個刻み、守の段階)。
+// 削除手順 (A-3 → A-1+A-1++): LV_GRAZE_TH / PLAYER_LV_MAX / state.playerLv / startGame reset /
+// onGraze 内 Lv up ブロック / shotCount() の +state.playerLv / spawnPlayerBullets else 内 A-3 for ループ / HUD `Lv` 表示を削除。
+const LV_GRAZE_TH=30;
+const PLAYER_LV_MAX=4;
+
+// === v06 A-5 (b): Psyvariar buzz chain invincibility 第一手 — Lv up 時 60F (1秒) 自機無敵 ===
+// knowledge/20260522_psyvariar_buzz_chain_invincibility_risk_reward_spiral_v06_a3_shallow_clone.md
+// の (b) のみ採用。(c) Lv up 中 graze 継続 / (d) 連鎖 Lv up は別案件として後送り。
+// 削除手順 (A-5 → A-3): BUZZ_INVINCIBLE_FRAMES 定数 / state.invincibleT / startGame reset /
+// update tick / hit gate 2箇所の `||state.invincibleT>0` / onGraze Lv up 時 invincibleT セット /
+// draw() の buzz glow ring ブロックを削除。
+const BUZZ_INVINCIBLE_FRAMES=60;
+// v08 (d'): 無敵終了 5F fadeout (弾側 ring + player 周囲 ring 同期)。戻し方=定数 + state.invincibleFadeT 関連 6 箇所削除で v08 (a) 等価
+const INVINCIBLE_FADE_FRAMES=5;
+
+// === v06 A-6 (a): Psyvariar buzz chain extension — 無敵中の Lv up で無敵時間加算 (cap 180F) ===
+// Psyvariar 原典「Lv up ごとに数秒完全無敵 + 高密度なら multiple level-ups chain で長期無敵化」(2025-09 発表
+// Psyvariar 3 正統続編が 2026-05-21 日本リリース。原典 chain の核機構 = 連鎖 Lv up で無敵を延長)。
+// A-5 (b) では Lv up で無敵時間を「上書き」していたため、無敵中の次 Lv up が来ても 60F のまま。
+// A-6 (a) は無敵中の Lv up で BUZZ_INVINCIBLE_FRAMES (60F) を加算、ただし BUZZ_INVINCIBLE_CAP (180F=3秒) で頭打ち。
+// 削除手順 (A-6 → A-5): BUZZ_INVINCIBLE_CAP 定数 / onGraze Lv up ブロックの加算分岐 を削除し
+// `state.invincibleT=BUZZ_INVINCIBLE_FRAMES;` の上書き形に戻す。glow ring の chain 識別 (色変化) も削除。
+const BUZZ_INVINCIBLE_CAP=180;
+// v10 (g): cap reach 瞬間に capPlateauT=30F セット、減衰中は capColor=true で player 周囲 ring を黄金 #ffd870 化。
+// v09 (f) の `invincibleT===CAP` エッジ条件問題 (1F flicker) を真の plateau (0.5秒持続) に置き換える。
+// 戻し方 (v10 → v09): CAP_PLATEAU_FRAMES 定数 / state.capPlateauT / startGame reset / onGraze セット / update tick / capColor 条件式 = 計 6 箇所削除で v09 (f) 完全等価。
+const CAP_PLATEAU_FRAMES=30;
+
+// === v07 B-2: Hyper Activation (CAVE bullet-cancel 経路B / DoDonPachi SaiDaiOuJou Large Star 写し) ===
+// graze gauge >= G_MAX で既存 BOMB キー (SPACE) 発動。fireBomb を Hyper に拡張:
+// 全画面 ebullet 消去 + 消去 1 弾ごと score+100 + popup 1個 'HYPER +N' + Large Star 演出 30F フェード。
+// 復帰: gauge=0 に reset、graze で自然 recharge (別 cooldown 不採用 = HUD 情報密度維持)。
+// 無敵延長との衝突回避: hyperFlashT>0 中は onGraze Lv up で invincibleT を新規セットしない (A-6(a) 二重カバー禁止)。
+// prior art: DoDonPachi SaiDaiOuJou / DaiOuJou / ESPgaluda (M-41 引用文付き、v07/README.md §prior art)。
+// 削除手順 (B-2 → A-6(b) 等価): HYPER_FLASH_FRAMES 定数 / state.hyperFlashT / startGame reset / update tick /
+// fireBomb 内 Hyper ブロック (removedCount 集計 + popup + hyperFlashT セット + 粒子色変更) /
+// onGraze Lv up の hyperFlashT<=0 ガード / draw() Large Star 描画ブロック を削除。
+const HYPER_FLASH_FRAMES=30;
+
+// === v07 観点7: 180F cap reached 大成功反応 (Log_cdx 観点7 「気持ちよさ = 6 種反応分離」の「大成功」欠落埋め) ===
+// onGraze chain 延長分岐で invincibleT が cap 未達 → cap 到達の遷移瞬間を検出し、画面 flash + 大型 ring + popup 'MAX CHAIN!' を発火。
+// 発火条件: 3 連 Lv up + chain 延長分岐 (Hyper 中は不発、B-2 二重カバー排反)。1 ゲーム中 0-3 回のレアイベント。
+// 削除手順 (観点7 → v07 観点3 等価): MAX_CHAIN_FLASH_FRAMES 定数 / state.maxChainFlashT / startGame reset /
+// update tick / onGraze chain 内 cap 到達検出 + 発火 3 行 / draw() flash 描画ブロック を削除。
+const MAX_CHAIN_FLASH_FRAMES=20;
+
+// === v07 観点6: 7 区分 spawn テーブル (Log_cdx 観点6 「難易度 = 学習/圧力/休符/山 時間予算」根本応答) ===
+// 90秒 = 5400F (60fps) を 7 区分に分割、各 phase の敵種類/弾密度/spawn 間隔を時間 (state.t) で独立定義。
+// 既存 wave 番号駆動 (`state.spawnT=160-Math.min(state.wave*8,80)`) を phase 駆動 (PHASE_FUNCS[currentPhase()]) に置換。
+// phase 1 (0-13s): 学習 — spawnWave1 等価 (aimed 低密度)
+// phase 2 (13-26s): 圧力 — spawnWave2 等価 (fan3 導入)
+// phase 3 (26-39s): 休符 — spawnWave3 等価 (aimed 復帰)
+// phase 4 (39-52s): 圧力 — spawnWave4 等価 (fan3 増量)
+// phase 5 (52-65s): 山 1 — spawnPhase5 新規 (aimed 高密度)
+// phase 6 (65-78s): 休符 — spawnPhase6 新規 (decrescendo)
+// phase 7 (78-90s): 山 2 final — spawnPhase7 新規 (fan3 final)
+// 90秒以降は phase 7 維持 (graze_log は stage clear 演出を持たないので無限 final)。
+// spawnInterval(): 学習/休符=140F / 圧力=110F / 山=80F の 3 段階で時間予算を体感化。
+// 削除手順 (観点6 → v07 観点7 等価): PHASE_BOUNDARIES / currentPhase() / spawnPhase1-4 alias /
+// spawnPhase5/6/7 関数 / PHASE_FUNCS / spawnInterval() / spawnWave 内 PHASE_FUNCS 分岐 / spawnT 代入式の spawnInterval() を削除し、
+// spawnWave 旧形 (wave==1..4 + WAVE_FUNCS rng pick) と `state.spawnT=160-Math.min(state.wave*8,80)` を復元。
+const PHASE_BOUNDARIES=[780,1560,2340,3120,3900,4680,5400]; // 各 phase 終端 F (13/26/39/52/65/78/90秒)
+
+const state={
+  mode:'title',
+  t:0,
+  player:{x:W/2,y:H-80,r:5,iframe:0},
+  bullets:[],
+  ebullets:[],
+  enemies:[],
+  pendingEnemies:[], // v06 A-1: anticipation queue (spawn 前 30F)
+  particles:[],
+  rings:[],
+  popups:[],
+  gauge:0,
+  score:0,
+  hiscore:(function(){try{return parseInt(localStorage.getItem('grazelog_hi')||'0',10);}catch(e){return 0;}})(),
+  grazeCount:0,
+  bombCount:0,
+  killCount:0,
+  spawnT:0,
+  wave:0,
+  unlockT:0,
+  bombFlash:0,
+  hitFlash:0,
+  shotCooldown:0,
+  introMedSpawned:false,
+  stars:[],
+  rng:mulberry32(SEED),
+  // v03 additions
+  grazeStreak:0,
+  activeDefT:0,
+  activeDefCount:0,
+  // v06 A-3
+  playerLv:0,
+  // v06 A-5 (b)
+  invincibleT:0,
+  // v08 (d'): 無敵終了 5F fadeout 残時間
+  invincibleFadeT:0,
+  // v07 B-2: Hyper Activation Large Star フェード残時間
+  hyperFlashT:0,
+  // v07 観点7: 180F cap reached 大成功 flash 残時間
+  maxChainFlashT:0,
+  // v10 (g): cap reach 瞬間にセットされる 30F 黄金 ring plateau timer
+  capPlateauT:0,
+};
+
+function initStars(){
+  state.stars.length=0;
+  for(let i=0;i<60;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:0});
+  for(let i=0;i<35;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:1});
+  for(let i=0;i<18;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:2});
+}
+initStars();
+
+function gaugeLevel(g){
+  if(g>=G_LV3)return 3;
+  if(g>=G_LV2)return 2;
+  return 1;
+}
+function gaugeReady(){return state.gauge>=G_MAX;}
+
+// v03: SPACE 押下時の文脈判定
+// 'B' = BOMB ready, 'D' = active defense ready (grazeStreak >= TH), '-' = nothing
+function spaceContext(){
+  if(gaugeReady())return 'B';
+  if(state.grazeStreak>=GRAZE_STREAK_TH)return 'D';
+  return '-';
+}
+
+function addGauge(d){
+  state.gauge=Math.max(0,Math.min(G_MAX,state.gauge+d));
+}
+
+function shotCount(){
+  const lv=gaugeLevel(state.gauge);
+  return lv+state.playerLv; // v06 A-3: playerLv ボーナスを加算 (Lv0=変化なし, Lv4=+4)
+}
+function shotCooldownF(){
+  const lv=gaugeLevel(state.gauge);
+  return lv===3?6:lv===2?7:8;
+}
+
+function spawnPlayerBullets(){
+  const n=shotCount();
+  const px=state.player.x,py=state.player.y-8;
+  if(n===1){
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+  }else if(n===2){
+    state.bullets.push({x:px-5,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px+5,y:py,vx:0,vy:-9});
+  }else{
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px-7,y:py+2,vx:-1.5,vy:-9});
+    state.bullets.push({x:px+7,y:py+2,vx:1.5,vy:-9});
+    // v06 A-3: n>3 (Lv ボーナス) は追加の外側直進弾を ±9, ±13, ±17, ±21 に積む
+    for(let i=4;i<=n;i++){
+      const k=i-3,side=(k%2===1)?-1:1,pair=Math.ceil(k/2);
+      state.bullets.push({x:px+side*(5+pair*4),y:py-4,vx:0,vy:-9});
+    }
+  }
+}
+
+// === v05 beta B-2: 弾パターン rhyme — 第一手 (3-way fan を modifier として導入) ===
+// 設計: knowledge/20260516_shmup_dogma_crescendo_rhyme_vs_random_variation.md の
+// 「base × modifier × layout」型実装の最小開始。base='aimed' (既存) + modifier='fan3' (±15° 3-way) の 1 軸のみ。
+// wave 1=aimed / wave 2=fan3 / wave 3=aimed / wave 4=fan3 で ABAB rhyme を構成、
+// wave 5+ は B-1 が wave 1-4 から rng pick するため fan3 が予期しない再出現する。
+// 削除手順 (v05 beta B-2 → v05 beta B-1): spawnEnemy の bulletPattern 引数とフィールド代入、
+// update() 内 medium 発射の `if(pat==='fan3')` 分岐、spawnWave2/4 の 'fan3' 渡しを削除。
+function spawnEnemy(type,x,phase,bulletPattern){
+  // v06 A-1: 直接 state.enemies に push せず anticipation queue 経由で countdown==0 後に emit
+  state.pendingEnemies.push({type,x,phase:phase||0,bulletPattern:bulletPattern||'aimed',countdown:ANTICIPATION_FRAMES});
+}
+function emitEnemy(p){
+  if(p.type==='small'){
+    state.enemies.push({type:'small',x:p.x,y:-12,vx:0,vy:1.6,r:9,hp:1,t:0,fireT:9999,phase:p.phase});
+  }else{
+    state.enemies.push({type:'medium',x:p.x,y:-16,vx:0,vy:0.9,r:13,hp:3,t:0,fireT:60+Math.floor(state.rng()*40),phase:p.phase,bulletPattern:p.bulletPattern});
+  }
+}
+
+function startGame(){
+  state.mode='play';
+  pushSeedToLocal(SEED); // v05 beta B-1: seed 保存 infra
+  state.t=0;
+  state.player.x=W/2;state.player.y=H-80;state.player.iframe=0;
+  state.bullets.length=0;
+  state.ebullets.length=0;
+  state.enemies.length=0;
+  state.pendingEnemies.length=0; // v06 A-1: anticipation queue reset
+  state.particles.length=0;
+  state.rings.length=0;
+  state.popups.length=0;
+  state.gauge=0;
+  state.score=0;
+  state.grazeCount=0;
+  state.bombCount=0;
+  state.killCount=0;
+  state.spawnT=0;
+  state.wave=0;
+  state.bombFlash=0;
+  state.hitFlash=0;
+  state.shotCooldown=0;
+  state.introMedSpawned=false;
+  // v03 reset
+  state.grazeStreak=0;
+  state.activeDefT=0;
+  state.activeDefCount=0;
+  // v06 A-3 reset
+  state.playerLv=0;
+  // v06 A-5 (b) reset
+  state.invincibleT=0;
+  // v08 (d') reset
+  state.invincibleFadeT=0;
+  // v07 B-2 reset
+  state.hyperFlashT=0;
+  // v07 観点7 reset
+  state.maxChainFlashT=0;
+  // v10 (g) reset
+  state.capPlateauT=0;
+  // 注: state.rng は再シード**しない**。1セッション通しで一系列。
+  // 再現したければ ?seed=N で同一 SEED 起動。
+}
+
+function gameOver(){
+  state.mode='over';
+  console.log('graze_log seed:',SEED,'score:',state.score,'wave:',state.wave); // v05 beta B-1: seed 保存 infra
+  state.unlockT=RETRY_UNLOCK_FRAMES;
+  if(state.score>state.hiscore){
+    state.hiscore=state.score;
+    try{localStorage.setItem('grazelog_hi',String(state.hiscore));}catch(e){}
+  }
+  for(let i=0;i<140;i++){
+    const a=state.rng()*Math.PI*2,sp=2+state.rng()*9;
+    const c=['#ffd870','#ff6080','#80c0ff'][i%3];
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:80+state.rng()*30,c,r:1.5+state.rng()*1.5});
+  }
+}
+
+function fireBomb(){
+  if(!gaugeReady())return;
+  state.bombCount++;
+  // v07 B-2: 全画面 ebullet 消去 + removedCount 集計、消去 1 弾ごとに star 粒子 (黄色 30F 寿命) push
+  const removedCount=state.ebullets.length;
+  for(const b of state.ebullets){
+    state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:30,c:'#ffe040',r:2.4});
+  }
+  state.ebullets.length=0;
+  // v07 B-2: 消去弾数 × 100 を一括加算 (v06 は 20/個、個別 popup 物量で画面情報密度を破綻させていた)
+  state.score+=removedCount*100;
+  if(removedCount>0){
+    state.popups.push({x:state.player.x,y:state.player.y-50,text:'HYPER +'+(removedCount*100),life:60,c:'#ffe040'});
+  }
+  for(const e of state.enemies){
+    e.hp=Math.max(1,Math.ceil(e.hp/2));
+  }
+  // v07 B-2: gauge を 0 にして graze で自然 recharge (別 cooldown 不採用 = HUD 情報密度維持)
+  state.gauge=0;
+  state.bombFlash=24;
+  // v07 B-2: Large Star 演出 — hyperFlashT=30、draw() で黄色 (#ffe040) alpha 0.4 → 0 を 30F フェード
+  state.hyperFlashT=HYPER_FLASH_FRAMES;
+  for(let i=0;i<3;i++){
+    state.rings.push({x:state.player.x,y:state.player.y,t:i*4,life:30,c:'#ffe040',r0:20,r1:Math.min(W,H)*0.7});
+  }
+}
+
+// v03 ADDITION: Psyvariar 型 active 防御発火
+// grazeStreak >= GRAZE_STREAK_TH の時 SPACE で発火
+// 1秒の自機無敵 + 半径 ACTIVE_DEF_RADIUS の弾消去
+// 発火後 grazeStreak = 0 リセット
+function triggerActiveDef(){
+  if(state.grazeStreak<GRAZE_STREAK_TH)return;
+  state.activeDefCount++;
+  state.grazeStreak=0;
+  state.activeDefT=ACTIVE_DEF_FRAMES;
+  state.player.iframe=Math.max(state.player.iframe,ACTIVE_DEF_FRAMES);
+  // 半径内の敵弾を消去 (BOMB の全画面消去より弱い局所版)
+  const r2=ACTIVE_DEF_RADIUS*ACTIVE_DEF_RADIUS;
+  let cleared=0;
+  for(const b of state.ebullets){
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    if(dx*dx+dy*dy<r2){
+      state.score+=10;
+      cleared++;
+      state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:12,c:'#80ffd0',r:2.5});
+      b.y=H+999;
+    }
+  }
+  state.ebullets=state.ebullets.filter(b=>b.y<H+100);
+  // active def 視覚 — BOMB と区別しやすい cyan-green 色のリング
+  state.rings.push({x:state.player.x,y:state.player.y,t:0,life:ACTIVE_DEF_FRAMES,c:'#80ffd0',r0:R_GRAZE,r1:ACTIVE_DEF_RADIUS});
+  state.popups.push({x:state.player.x,y:state.player.y-20,text:`DEF x${cleared}`,life:30,c:'#80ffd0'});
+}
+
+// === v05 beta B-1: 敵配置 rhyme (spawnWave wave 1-4 関数化 + wave>=5 70% 過去 wave 再使用) ===
+// 設計: gamedeveloper "Breaking the Shmup Dogma" の rhyme (反復記憶可能性) を spawnWave に翻訳。
+// wave 1-4 を spawnWave1..spawnWave4 に切り出して個別関数化、wave>=5 は 70% で過去 wave を再使用、
+// 30% は random spawn を維持し「同じパターンが返ってくる」体験 + 完全に同じではない揺らぎを両立。
+// 削除手順 (v05 beta B-1 → v05 alpha): WAVE_FUNCS 配列 / wave>=5 の rng 分岐を消し、
+// 旧来の `const pop=4+Math.min(w-4,6); for(...) state.rng()<0.6 spawn ...` に戻す。
+// spawnWave1..4 は spawnWave 本体に inline で戻せば v04 と等価。
+function spawnWave1(){
+  // wave 1: aimed (intro of single shot — B-2 default pattern)
+  spawnEnemy('small',W*0.30);
+  spawnEnemy('small',W*0.50);
+  spawnEnemy('small',W*0.70);
+  setTimeout(()=>{
+    if(state.mode==='play'){
+      spawnEnemy('medium',W*0.5,0,'aimed');
+      state.introMedSpawned=true;
+    }
+  },1200);
+}
+function spawnWave2(){
+  // wave 2: fan3 (B-2 new pattern intro)
+  spawnEnemy('small',W*0.2);
+  spawnEnemy('small',W*0.4);
+  spawnEnemy('small',W*0.6);
+  spawnEnemy('small',W*0.8);
+  spawnEnemy('medium',W*0.3,0,'fan3');
+  spawnEnemy('medium',W*0.7,0,'fan3');
+}
+function spawnWave3(){
+  // wave 3: aimed (B-2 return to base — ABAB の 2nd A)
+  for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
+  spawnEnemy('medium',W*0.5,0,'aimed');
+}
+function spawnWave4(){
+  // wave 4: fan3 (B-2 rhyme — fan3 returns, ABAB の 2nd B)
+  spawnEnemy('medium',W*0.25,0,'fan3');
+  spawnEnemy('medium',W*0.5,0,'fan3');
+  spawnEnemy('medium',W*0.75,0,'fan3');
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+}
+function spawnWaveRandom(w){
+  const pop=4+Math.min(w-4,6);
+  for(let i=0;i<pop;i++){
+    if(state.rng()<0.6)spawnEnemy('small',60+state.rng()*(W-120));
+    else spawnEnemy('medium',60+state.rng()*(W-120));
+  }
+}
+const WAVE_FUNCS=[spawnWave1,spawnWave2,spawnWave3,spawnWave4];
+
+// === v07 観点6: spawnPhase1..7 関数群 + currentPhase + spawnInterval (PHASE_BOUNDARIES 定数併設) ===
+// spawnPhase1-4 は spawnWave1-4 の alias (rhyme 維持、削除可能性確保)。spawnPhase5-7 は新規 (山/休符/山 curve)。
+const spawnPhase1=spawnWave1, spawnPhase2=spawnWave2, spawnPhase3=spawnWave3, spawnPhase4=spawnWave4;
+function spawnPhase5(){
+  // phase 5 (52-65s): 山 1 — aimed 高密度 (small 8 列 + medium 2 aimed)
+  for(let i=0;i<8;i++)spawnEnemy('small',W*0.1+i*W*0.11);
+  spawnEnemy('medium',W*0.35,0,'aimed');
+  spawnEnemy('medium',W*0.65,0,'aimed');
+}
+function spawnPhase6(){
+  // phase 6 (65-78s): 休符 — decrescendo (small 4 + medium 1 aimed、gauge 回復時間)
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+  spawnEnemy('medium',W*0.5,0,'aimed');
+}
+function spawnPhase7(){
+  // phase 7 (78-90s): 山 2 final — fan3 4 体 + small 4 列 (90秒の頂点)
+  spawnEnemy('medium',W*0.2,0,'fan3');
+  spawnEnemy('medium',W*0.4,0,'fan3');
+  spawnEnemy('medium',W*0.6,0,'fan3');
+  spawnEnemy('medium',W*0.8,0,'fan3');
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.15+i*W*0.24);
+}
+const PHASE_FUNCS=[null,spawnPhase1,spawnPhase2,spawnPhase3,spawnPhase4,spawnPhase5,spawnPhase6,spawnPhase7];
+function currentPhase(){
+  for(let i=0;i<PHASE_BOUNDARIES.length;i++){
+    if(state.t<PHASE_BOUNDARIES[i])return i+1;
+  }
+  return 7; // 90秒以降は phase 7 維持 (無限 final)
+}
+function spawnInterval(){
+  const p=currentPhase();
+  if(p===1||p===3||p===6)return 140; // 学習 / 休符 (息継ぎ)
+  if(p===5||p===7)return 80;         // 山 (圧力ピーク)
+  return 110;                         // 圧力 (phase 2/4)
+}
+
+function spawnWave(){
+  state.wave++;
+  // v07 観点6: 時間 (state.t) で phase を決定し、対応 PHASE_FUNCS を呼ぶ。
+  // state.wave は HUD 等の表示用に残すが、難易度算出からは外す (時間予算駆動へ移行)。
+  PHASE_FUNCS[currentPhase()]();
+}
+
+function update(){
+  state.t++;
+  for(const s of state.stars){
+    s.y+=[0.4,0.8,1.6][s.layer];
+    if(s.y>H){s.y=-2;s.x=state.rng()*W;}
+  }
+  if(state.mode!=='play'){
+    if(state.unlockT>0)state.unlockT--;
+    updateEffects();
+    return;
+  }
+  const left=keys['arrowleft']||keys['a'];
+  const right=keys['arrowright']||keys['d'];
+  const up=keys['arrowup']||keys['w'];
+  const down=keys['arrowdown']||keys['s'];
+  let dx=0,dy=0;
+  if(left)dx-=1;if(right)dx+=1;if(up)dy-=1;if(down)dy+=1;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  state.player.x+=dx*4.2;
+  state.player.y+=dy*4.2;
+  state.player.x=Math.max(8,Math.min(W-8,state.player.x));
+  state.player.y=Math.max(20,Math.min(H-12,state.player.y));
+  if(state.player.iframe>0)state.player.iframe--;
+  // v03: active def 残時間
+  if(state.activeDefT>0)state.activeDefT--;
+  // v06 A-5 (b): buzz chain invincibility 残時間
+  if(state.invincibleT>0){
+    state.invincibleT--;
+    // v08 (d'): 1→0 遷移瞬間に fadeT セット (弾側 ring + player 周囲 ring の同期 fadeout 開始)
+    if(state.invincibleT===0)state.invincibleFadeT=INVINCIBLE_FADE_FRAMES;
+  }
+  if(state.invincibleFadeT>0)state.invincibleFadeT--;
+  // v07 B-2: Hyper Activation Large Star フェード残時間
+  if(state.hyperFlashT>0)state.hyperFlashT--;
+  // v07 観点7: 180F cap reached 大成功 flash 残時間
+  if(state.maxChainFlashT>0)state.maxChainFlashT--;
+  // v10 (g): cap reach 後の 30F 黄金 ring plateau 残時間
+  if(state.capPlateauT>0)state.capPlateauT--;
+
+  if(state.shotCooldown>0)state.shotCooldown--;
+  else{
+    spawnPlayerBullets();
+    state.shotCooldown=shotCooldownF();
+  }
+
+  for(const b of state.bullets){
+    b.x+=b.vx;b.y+=b.vy;
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12&&b.x>-12&&b.x<W+12);
+
+  state.spawnT--;
+  if(state.spawnT<=0&&state.enemies.length<3&&state.pendingEnemies.length===0){
+    spawnWave();
+    state.spawnT=spawnInterval(); // v07 観点6: phase 駆動の時間予算 (学習/休符=140 / 圧力=110 / 山=80F)
+  }
+
+  // === v06 A-1: pendingEnemies countdown tick → 0 で実 enemy 化 ===
+  for(const p of state.pendingEnemies)p.countdown--;
+  for(const p of state.pendingEnemies)if(p.countdown<=0)emitEnemy(p);
+  state.pendingEnemies=state.pendingEnemies.filter(p=>p.countdown>0);
+
+  for(const e of state.enemies){
+    e.t++;
+    if(e.type==='small'){
+      e.y+=e.vy;
+    }else{
+      e.y+=e.vy;
+      e.x+=Math.sin(e.t*0.04+e.phase)*1.4;
+      e.fireT--;
+      if(e.fireT<=0&&e.y>0&&e.y<H*0.55){
+        const dx=state.player.x-e.x,dy=state.player.y-e.y;
+        const d=Math.hypot(dx,dy)||1;
+        const sp=2.4;
+        // v05 beta B-2: bulletPattern で base pattern 切替 (default 'aimed')
+        const pat=e.bulletPattern||'aimed';
+        // v06 A-4: wobble animation (readability 第4層, identity チャンネル)
+        // 当たり判定は b.x,b.y 不変 — 描画位置のみ垂直方向に sin オフセット。
+        // aimed = 緩い揺れ (amp 1.4 / ω 0.18), fan3 = 速い躍動 (amp 2.6 / ω 0.28)。
+        // 削除手順 (v06 A-4 → A-3): ebullets.push の wob/wp フィールド削除、描画側 wobble 加算3行削除、README 4層→3層に戻す。
+        if(pat==='fan3'){
+          // 3-way fan: aimed ± 15° (~0.26 rad)
+          const baseAng=Math.atan2(dy,dx);
+          const spread=0.26;
+          for(let k=-1;k<=1;k++){
+            const a=baseAng+spread*k;
+            state.ebullets.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES,wob:1,wp:state.rng()*Math.PI*2});
+          }
+        }else{
+          state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES,wob:0,wp:state.rng()*Math.PI*2});
+        }
+        e.fireT=70+Math.floor(state.rng()*40);
+      }
+    }
+  }
+  for(const b of state.bullets){
+    for(const e of state.enemies){
+      if(e.hp<=0)continue;
+      const dx=b.x-e.x,dy=b.y-e.y;
+      if(dx*dx+dy*dy<(e.r+3)*(e.r+3)){
+        e.hp--;
+        b.y=-99;
+        for(let i=0;i<3;i++){
+          const a=state.rng()*Math.PI*2,sp=1+state.rng()*1.5;
+          state.particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:8,c:'#5a6478',r:1.5});
+        }
+        if(e.hp<=0){
+          state.killCount++;
+          if(e.type==='small'){
+            state.score+=10;
+            addGauge(KILL_SMALL_GAUGE);
+            for(let i=0;i<5;i++){
+              const a=state.rng()*Math.PI*2,sp=1.5+state.rng()*1.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:14,c:'#7a8498',r:1.6});
+            }
+          }else{
+            state.score+=40;
+            addGauge(KILL_MED_GAUGE);
+            for(let i=0;i<10;i++){
+              const a=state.rng()*Math.PI*2,sp=1.5+state.rng()*2.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:16,c:'#8a94a8',r:1.8});
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12);
+  state.enemies=state.enemies.filter(e=>e.hp>0&&e.y<H+30);
+
+  for(const b of state.ebullets){
+    b.x+=b.vx;b.y+=b.vy;
+    b.grazedT=GRAZE_TRAIL_FRAMES; // v05: 常時 max にクランプ (減衰させない)
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    if(d2<R_HIT*R_HIT){
+      // v06 A-5 (b): invincibleT>0 でも被弾を skip (Psyvariar Lv up 後 1秒無敵)
+      if(state.player.iframe<=0&&state.invincibleT<=0){
+        onHit();
+        b.y=H+99;
+      }
+    }else if(!b.grazed&&d2<R_GRAZE*R_GRAZE){
+      b.grazed=true;
+      b.grazedT=GRAZE_TRAIL_FRAMES;
+      onGraze(b.x,b.y);
+    }
+  }
+  state.ebullets=state.ebullets.filter(b=>b.x>-20&&b.x<W+20&&b.y>-20&&b.y<H+20);
+
+  // v06 A-5 (b): invincibleT>0 でも敵接触 skip
+  if(state.player.iframe<=0&&state.invincibleT<=0){
+    for(const e of state.enemies){
+      const dx=state.player.x-e.x,dy=state.player.y-e.y;
+      if(dx*dx+dy*dy<(e.r+state.player.r)*(e.r+state.player.r)){
+        onHit();
+        break;
+      }
+    }
+  }
+
+  // v03: SPACE 文脈分岐
+  // gauge MAX → BOMB / それ以外 + grazeStreak >= TH → active def / それ以外 → 何もしない
+  if(keys['space_press']){
+    keys['space_press']=false;
+    if(gaugeReady()){
+      fireBomb();
+    }else if(state.grazeStreak>=GRAZE_STREAK_TH){
+      triggerActiveDef();
+    }
+  }
+
+  updateEffects();
+}
+
+function updateEffects(){
+  for(const p of state.particles){p.x+=p.vx;p.y+=p.vy;p.vx*=0.96;p.vy*=0.96;p.life--;}
+  state.particles=state.particles.filter(p=>p.life>0);
+  for(const r of state.rings){r.t++;}
+  state.rings=state.rings.filter(r=>r.t<r.life);
+  for(const p of state.popups){p.life--;p.y-=0.6;}
+  state.popups=state.popups.filter(p=>p.life>0);
+  if(state.bombFlash>0)state.bombFlash--;
+  if(state.hitFlash>0)state.hitFlash--;
+}
+
+function onGraze(bx,by){
+  state.grazeCount++;
+  // v03: grazeStreak インクリメント
+  state.grazeStreak++;
+  // v06 A-6 (b): 無敵中 graze 倍率 2x (gauge / score) + popup 色 chain 寄り (#ffd840) で識別。
+  // Volguard II dominant strategy creep 罠予防 — 報酬累積 (無敵) で核行動 (擦り) が消失する逆方向
+  // 最適化を、入力側に勾配を与えて反転 (無敵中こそ擦る方が得 → 連鎖 Lv up が継続発火)。
+  // 削除手順 (A-6 (b) → A-6 (a)): mult 変数 + addGauge/score の *mult + popup 色三項 を削除。
+  const mult=state.invincibleT>0?2:1;
+  addGauge(GRAZE_GAUGE*mult);
+  state.score+=GRAZE_SCORE*gaugeLevel(state.gauge)*mult;
+  state.rings.push({x:state.player.x,y:state.player.y,t:0,life:18,c:'#ffd870',r0:R_GRAZE-2,r1:R_GRAZE+18});
+  state.popups.push({x:bx+(state.rng()-0.5)*8,y:by-6,text:'+'+(GRAZE_GAUGE*mult),life:30,c:mult>1?'#ffd840':'#ffd870'});
+  // v03: streak が閾値到達した瞬間に小さい告知
+  if(state.grazeStreak===GRAZE_STREAK_TH){
+    state.popups.push({x:state.player.x,y:state.player.y-30,text:'DEF READY',life:40,c:'#80ffd0'});
+  }
+  // v06 A-3: graze 累積 LV_GRAZE_TH ごとに playerLv up (max PLAYER_LV_MAX)
+  if(state.playerLv<PLAYER_LV_MAX && state.grazeCount%LV_GRAZE_TH===0){
+    state.playerLv++;
+    state.popups.push({x:state.player.x,y:state.player.y-44,text:'LV UP '+state.playerLv,life:50,c:'#ffa040'});
+    // v07 B-2: Hyper 発動中 (hyperFlashT>0) は invincibleT を新規セットしない (A-6(a) 連鎖延長との二重カバー禁止)
+    // 既存 invincibleT は通常 tick で減衰し続ける (update 側で常時 --)。
+    if(state.hyperFlashT<=0){
+      // v06 A-6 (a): 無敵中なら 60F 加算 (cap 180F = 3秒) / 無敵切れていれば 60F 上書き
+      // Psyvariar 原典 chain 無敵の核 — 連鎖 Lv up で長期無敵化
+      if(state.invincibleT>0){
+        // v07 観点7: 加算前後で cap 未達→cap 到達の遷移瞬間を検出 (1 ゲーム中 0-3 回のレアイベント)
+        const wasCapNotReached=state.invincibleT<BUZZ_INVINCIBLE_CAP;
+        state.invincibleT=Math.min(state.invincibleT+BUZZ_INVINCIBLE_FRAMES,BUZZ_INVINCIBLE_CAP);
+        // chain 延長は黄色寄り (#ffd040) の ring で識別、初回 (橙 #ffa040) と区別
+        state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffd040',r0:R_GRAZE,r1:R_GRAZE+28});
+        if(wasCapNotReached&&state.invincibleT===BUZZ_INVINCIBLE_CAP){
+          // v07 観点7: 大成功反応 — flash 20F + 大型 ring 12→60 30F + popup 'MAX CHAIN!' 60F
+          state.maxChainFlashT=MAX_CHAIN_FLASH_FRAMES;
+          state.rings.push({x:state.player.x,y:state.player.y,t:0,life:30,c:'#ffe040',r0:12,r1:60});
+          state.popups.push({x:W/2,y:80,text:'MAX CHAIN!',life:60,c:'#ffe040'});
+          // v10 (g): cap reach 瞬間に capPlateauT セット → 続く 30F で player 周囲 ring を黄金 plateau 化
+          state.capPlateauT=CAP_PLATEAU_FRAMES;
+        }
+      }else{
+        state.invincibleT=BUZZ_INVINCIBLE_FRAMES;
+        state.rings.push({x:state.player.x,y:state.player.y,t:0,life:BUZZ_INVINCIBLE_FRAMES,c:'#ffa040',r0:R_GRAZE,r1:R_GRAZE+22});
+      }
+    }
+  }
+}
+
+function onHit(){
+  const lv=gaugeLevel(state.gauge);
+  state.player.iframe=24;
+  state.hitFlash=4;
+  if(lv===3){
+    state.gauge=G_LV2;
+    spawnHitParticles('#ffd870');
+  }else if(lv===2){
+    state.gauge=0;
+    spawnHitParticles('#ff8a8a');
+  }else{
+    gameOver();
+    return;
+  }
+}
+
+function spawnHitParticles(c){
+  for(let i=0;i<10;i++){
+    const a=state.rng()*Math.PI*2,sp=1+state.rng()*2;
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:18,c,r:1.5});
+  }
+}
+
+// === DRAW ===
+function draw(){
+  ctx.fillStyle='#07091a';
+  ctx.fillRect(0,0,W,H);
+  for(const s of state.stars){
+    const op=[0.35,0.55,0.85][s.layer];
+    const r=[0.7,1.0,1.4][s.layer];
+    ctx.fillStyle=`rgba(180,200,255,${op})`;
+    ctx.fillRect(s.x-r/2,s.y-r/2,r,r);
+  }
+  ctx.fillStyle='#9fb1d8';
+  for(const b of state.bullets){
+    ctx.fillRect(b.x-1.5,b.y-5,3,8);
+  }
+  for(const e of state.enemies){
+    if(e.type==='small'){
+      ctx.fillStyle='#ff5060';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+    }else{
+      ctx.fillStyle='#ffa030';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#fff080';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
+    }
+  }
+  // === v06 A-1++ (multi-channel polish): anticipation telegraph 円 + 下向き trajectory hint, type で shape + color 弁別 ===
+  // shape: small=線, medium=▼ / color: small=赤系 (敵本体 #ff5060 と同相), medium=橙系 (敵本体 #ffa030 と同相)
+  // 2 チャネル冗長化で「赤い円→赤い敵 (小, 弾なし)」「橙の円→橙の敵 (中, 弾あり)」が予測可能に。
+  for(const p of state.pendingEnemies){
+    const t=1-p.countdown/ANTICIPATION_FRAMES;
+    const alpha=0.4*t;
+    const baseR=p.type==='small'?9:13;
+    const r=baseR*(0.4+0.8*t);
+    const y=p.type==='small'?14:18;
+    const hintLen=8+10*t;
+    ctx.strokeStyle=p.type==='small'?`rgba(255,110,120,${alpha})`:`rgba(255,180,80,${alpha})`;
+    ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(p.x,y,r,0,Math.PI*2);ctx.stroke();
+    if(p.type==='small'){
+      ctx.beginPath();ctx.moveTo(p.x,y+r);ctx.lineTo(p.x,y+r+hintLen);ctx.stroke();
+    }else{
+      ctx.beginPath();ctx.moveTo(p.x-4,y+r);ctx.lineTo(p.x+4,y+r);ctx.lineTo(p.x,y+r+hintLen);ctx.closePath();ctx.stroke();
+    }
+  }
+  // === v05 beta B-2' (C189): windup telegraph 描画 ===
+  // medium が fireT <= WINDUP_FRAMES に入った瞬間から、発射方向に予告線を描く。
+  // 強度・線長は (1 - fireT/WINDUP_FRAMES) で 0→1。fan3 は 3 本、aimed は 1 本。
+  // 弾の実 aim は発射瞬間の player 位置を再取得するため、予告中の dodge は有効。
+  for(const e of state.enemies){
+    if(e.type!=='medium')continue;
+    if(e.fireT<=0||e.fireT>WINDUP_FRAMES)continue;
+    if(e.y<=0||e.y>=H*0.55)continue;
+    const t=1-e.fireT/WINDUP_FRAMES;
+    const alpha=0.18+0.42*t;
+    const len=22+18*t;
+    const pat=e.bulletPattern||'aimed';
+    const dx=state.player.x-e.x,dy=state.player.y-e.y;
+    const baseAng=Math.atan2(dy,dx);
+    ctx.strokeStyle=`rgba(255,200,80,${alpha})`;
+    ctx.lineWidth=1;
+    if(pat==='fan3'){
+      for(let k=-1;k<=1;k++){
+        const a=baseAng+0.26*k;
+        ctx.beginPath();
+        ctx.moveTo(e.x,e.y);
+        ctx.lineTo(e.x+Math.cos(a)*len,e.y+Math.sin(a)*len);
+        ctx.stroke();
+      }
+    }else{
+      ctx.beginPath();
+      ctx.moveTo(e.x,e.y);
+      ctx.lineTo(e.x+Math.cos(baseAng)*len,e.y+Math.sin(baseAng)*len);
+      ctx.stroke();
+    }
+    ctx.fillStyle=`rgba(255,180,60,${alpha})`;
+    ctx.beginPath();ctx.arc(e.x,e.y,2+2*t,0,Math.PI*2);ctx.fill();
+  }
+  for(const b of state.ebullets){
+    // v06 A-4: wobble 描画オフセット (当たり判定は b.x,b.y のまま、視覚のみ)
+    // 速度ベクトルに垂直 (-vy,vx)/sp に sin(t*ω + phase) * amp
+    const sp=Math.hypot(b.vx,b.vy)||1;
+    const amp=b.wob?2.6:1.4, om=b.wob?0.28:0.18;
+    const w=Math.sin(state.t*om+(b.wp||0))*amp;
+    const wx=b.x+(-b.vy/sp)*w, wy=b.y+(b.vx/sp)*w;
+    // v05: 全弾常時軌跡 (grazedT は常に max 固定、fade は常に 1.0)
+    if(b.grazedT>0){
+      const fade=b.grazedT/GRAZE_TRAIL_FRAMES;
+      const fx=wx+b.vx/sp*GRAZE_TRAIL_LEN;
+      const fy=wy+b.vy/sp*GRAZE_TRAIL_LEN;
+      ctx.strokeStyle=`rgba(255,216,112,${0.22*fade})`;
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(wx,wy);ctx.lineTo(fx,fy);ctx.stroke();
+    }
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    const inGrazeRing=!b.grazed&&d2<R_GRAZE*R_GRAZE;
+    ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
+    ctx.beginPath();ctx.arc(wx,wy,3,0,Math.PI*2);ctx.fill();
+    // v07 観点3: 無敵中の高倍率対象 (2x graze) を弾側マーカー化 — 黄色細リング (描画のみ、当たり判定不変)
+    // v08 (d'): 無敵終了 5F fadeout (state.invincibleFadeT/INVINCIBLE_FADE_FRAMES で alpha 減衰)
+    if(state.invincibleT>0||state.invincibleFadeT>0){
+      const fa=state.invincibleT>0?1:state.invincibleFadeT/INVINCIBLE_FADE_FRAMES;
+      ctx.strokeStyle=`rgba(255,224,64,${0.55*fa})`;
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(wx,wy,5,0,Math.PI*2);ctx.stroke();
+    }
+  }
+  for(const r of state.rings){
+    const k=r.t/r.life;
+    const cur=r.r0+(r.r1-r.r0)*k;
+    ctx.strokeStyle=r.c;
+    ctx.globalAlpha=Math.max(0,1-k);
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(r.x,r.y,cur,0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+  for(const p of state.particles){
+    ctx.globalAlpha=Math.max(0,Math.min(1,p.life/20));
+    ctx.fillStyle=p.c;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r||1.5,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  if(state.mode==='play'){
+    const flicker=state.player.iframe>0&&(state.t%4<2);
+    if(!flicker){
+      const lv=gaugeLevel(state.gauge);
+      ctx.fillStyle=lv===3?'#ffd870':lv===2?'#80d0ff':'#9fe0ff';
+      ctx.beginPath();
+      ctx.moveTo(state.player.x,state.player.y-8);
+      ctx.lineTo(state.player.x-7,state.player.y+6);
+      ctx.lineTo(state.player.x+7,state.player.y+6);
+      ctx.closePath();ctx.fill();
+      if(gaugeReady()){
+        const pulse=0.5+0.5*Math.sin(state.t*0.2);
+        ctx.strokeStyle=`rgba(255,216,112,${0.5+pulse*0.5})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,14,0,Math.PI*2);ctx.stroke();
+      }
+      ctx.strokeStyle='rgba(255,216,112,0.10)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
+      // v03: active def 残時間中はシールド表示 (cyan-green の細リング)
+      if(state.activeDefT>0){
+        const ad=state.activeDefT/ACTIVE_DEF_FRAMES;
+        ctx.strokeStyle=`rgba(128,255,208,${0.35+0.45*ad})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
+      }
+      // v06 A-5 (b): buzz chain invincibility 中の橙色 glow ring (Lv up popup と同色 #ffa040)
+      // v08 (d'): 無敵終了 5F fadeout (弾側 ring と同期、二重瞬時消失非対称副作用回避)
+      // v09 (f): cap 持続中 (invincibleT===BUZZ_INVINCIBLE_CAP) は黄金 #ffd870 / それ以外は橙 #ffa040。戻し方=capColor 行と三項を削り `rgba(255,160,64,...)` 固定に戻すで v08 (d') 等価。
+      // v10 (g): capColor 条件式を `state.capPlateauT>0` に置換。v09 (f) は invincibleT===CAP のエッジ条件で 1F flicker、v10 は capPlateauT (30F=0.5秒) の真の plateau。
+      if(state.invincibleT>0||state.invincibleFadeT>0){
+        const iv=state.invincibleT>0?state.invincibleT/BUZZ_INVINCIBLE_FRAMES:0;
+        const fa=state.invincibleT>0?1:state.invincibleFadeT/INVINCIBLE_FADE_FRAMES;
+        const pulse=0.5+0.5*Math.sin(state.t*0.35);
+        const capColor=state.capPlateauT>0;
+        ctx.strokeStyle=`rgba(${capColor?'255,216,112':'255,160,64'},${(0.35+0.55*iv*pulse)*fa})`;
+        ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,20,0,Math.PI*2);ctx.stroke();
+      }
+      // v03: streak 閾値到達中はプレイヤー周囲に小さい cyan-green マーカー
+      if(state.grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0){
+        const pulse=0.4+0.6*Math.abs(Math.sin(state.t*0.15));
+        ctx.strokeStyle=`rgba(128,255,208,${pulse*0.7})`;
+        ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,11,0,Math.PI*2);ctx.stroke();
+      }
+    }
+  }
+  for(const p of state.popups){
+    ctx.globalAlpha=Math.max(0,p.life/30);
+    ctx.fillStyle=p.c;
+    ctx.font='bold 11px system-ui';
+    ctx.textAlign='center';
+    ctx.fillText(p.text,p.x,p.y);
+  }
+  ctx.globalAlpha=1;
+  ctx.textAlign='left';
+
+  if(state.hitFlash>0){
+    ctx.fillStyle=`rgba(255,40,80,${state.hitFlash/4*0.4})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  if(state.bombFlash>0){
+    ctx.fillStyle=`rgba(255,216,112,${state.bombFlash/24*0.35})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  // v07 B-2: Hyper Activation Large Star 演出 — 黄色 (#ffe040) alpha 0.4 → 0 を HYPER_FLASH_FRAMES (30F) フェード
+  if(state.hyperFlashT>0){
+    const a=(state.hyperFlashT/HYPER_FLASH_FRAMES)*0.4;
+    ctx.fillStyle=`rgba(255,224,64,${a})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  // v07 観点7: 180F cap reached 大成功 flash — 黄色 (#ffe040) alpha 0.5 → 0 を MAX_CHAIN_FLASH_FRAMES (20F) フェード
+  if(state.maxChainFlashT>0){
+    const a=(state.maxChainFlashT/MAX_CHAIN_FLASH_FRAMES)*0.5;
+    ctx.fillStyle=`rgba(255,224,64,${a})`;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  drawHUD();
+  if(state.mode==='title')drawTitle();
+  if(state.mode==='over')drawOver();
+}
+
+function drawHUD(){
+  const gx=10,gy=H-14,gw=W-20,gh=8;
+  ctx.fillStyle='#1a1f30';
+  ctx.fillRect(gx,gy,gw,gh);
+  const px2=gx+gw*(G_LV2/G_MAX);
+  const px3=gx+gw*(G_LV3/G_MAX);
+  const cur=state.gauge/G_MAX;
+  const filled=gw*cur;
+  if(state.gauge>0){
+    if(state.gauge<=G_LV2){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,filled,gh);
+    }else if(state.gauge<=G_LV3){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,filled-gw*(G_LV2/G_MAX),gh);
+    }else{
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,gw*((G_LV3-G_LV2)/G_MAX),gh);
+      ctx.fillStyle=gaugeReady()?'#ffd870':'#ffa040';
+      ctx.fillRect(gx+gw*(G_LV3/G_MAX),gy,filled-gw*(G_LV3/G_MAX),gh);
+    }
+  }
+  ctx.fillStyle='#0a0c1a';
+  ctx.fillRect(px2-1,gy,2,gh);
+  ctx.fillRect(px3-1,gy,2,gh);
+  ctx.strokeStyle='#404858';
+  ctx.lineWidth=1;
+  ctx.strokeRect(gx+0.5,gy+0.5,gw-1,gh-1);
+
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='bold 11px system-ui';
+  ctx.textAlign='left';
+  ctx.fillText(`SCORE ${state.score}`,10,16);
+  ctx.fillText(`HI ${state.hiscore}`,W-90,16);
+  ctx.font='10px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  // v03: STREAK と DEF 回数を 1 行に追加表示
+  ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}  DEF ${state.activeDefCount}  PLv ${state.playerLv}/${PLAYER_LV_MAX}`,10,30);
+  // v03: SPACE 文脈表示 (B / D / -) を BOMB 表示位置と兼用
+  const ctx2=spaceContext();
+  if(ctx2==='B'){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 11px system-ui';
+    ctx.fillText('SPACE [B]OMB',W-104,30);
+  }else if(ctx2==='D'){
+    ctx.fillStyle='#80ffd0';
+    ctx.font='bold 11px system-ui';
+    ctx.fillText('SPACE [D]EF',W-90,30);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.font='10px system-ui';
+    ctx.fillText('SPACE [-]',W-72,30);
+  }
+  // v08 (a): 画面下端 1px 高 時間 bar (90秒=5400F 進捗 + 7 phase 区切り tick)
+  // 戻し方: 本ブロック (~10 行) 削除で v07 完全等価。データソース: state.t / PHASE_BOUNDARIES (line 171)
+  const tT=Math.min(state.t,5400),tBarY=H-1;
+  ctx.fillStyle='#2a3548';
+  ctx.fillRect(0,tBarY,W,1);
+  ctx.fillStyle='#6090c0';
+  ctx.fillRect(0,tBarY,W*(tT/5400),1);
+  ctx.fillStyle='#a0c0e0';
+  for(let i=0;i<PHASE_BOUNDARIES.length;i++){
+    ctx.fillRect(Math.floor(W*PHASE_BOUNDARIES[i]/5400),tBarY,1,1);
+  }
+}
+
+function drawTitle(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-110,W,240);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 28px system-ui';
+  ctx.fillText('GRAZE',W/2,H/2-50);
+  ctx.fillStyle='#9fb1d8';
+  ctx.font='11px system-ui';
+  ctx.fillText("graze_log v06 (anticipation 30F + windup 10F + 全弾軌跡 = readability 3 層)",W/2,H/2-28);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='12px system-ui';
+  ctx.fillText('GRAZE → 軌道予測線 + ゲージ → BOMB',W/2,H/2);
+  ctx.fillText(`GRAZE 連続 ${GRAZE_STREAK_TH} 回 → ACTIVE DEF`,W/2,H/2+18);
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  ctx.fillText('← → ↑ ↓ / WASD  MOVE',W/2,H/2+42);
+  ctx.fillText('SPACE  START / BOMB(B) / DEF(D) / RETRY',W/2,H/2+58);
+  ctx.fillText('M  MUTE',W/2,H/2+74);
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 13px system-ui';
+  if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE',W/2,H/2+106);
+  ctx.textAlign='left';
+}
+
+function drawOver(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-100,W,220);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ff80a0';
+  ctx.font='bold 26px system-ui';
+  ctx.fillText('GAME OVER',W/2,H/2-40);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='13px system-ui';
+  ctx.fillText(`SCORE  ${state.score}`,W/2,H/2-10);
+  ctx.fillText(`GRAZE  ${state.grazeCount}`,W/2,H/2+12);
+  ctx.fillText(`KILL   ${state.killCount}`,W/2,H/2+30);
+  ctx.fillText(`BOMB   ${state.bombCount}`,W/2,H/2+48);
+  ctx.fillText(`DEF    ${state.activeDefCount}`,W/2,H/2+66);
+  if(state.score===state.hiscore&&state.score>0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('NEW RECORD',W/2,H/2+90);
+  }
+  if(state.unlockT<=0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 13px system-ui';
+    if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE TO RETRY',W/2,H/2+114);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.font='10px system-ui';
+    ctx.fillText('...',W/2,H/2+114);
+  }
+  ctx.textAlign='left';
+}
+
+// === INPUT ===
+window.addEventListener('keydown',e=>{
+  if(e.repeat)return;
+  const k=e.key.toLowerCase();
+  if(k==='m'){muted=!muted;return;}
+  if(k===' '||k==='spacebar')e.preventDefault();
+  keys[k]=true;
+  if(k===' '){
+    keys['space_press']=true;
+    if(state.mode==='title'){startGame();}
+    else if(state.mode==='over'&&state.unlockT<=0){startGame();}
+  }
+  if(k.startsWith('arrow'))keys[k]=true;
+});
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  keys[k]=false;
+});
+
+// === LOOP ===
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
