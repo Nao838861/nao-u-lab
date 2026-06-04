@@ -42,5 +42,125 @@
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+
+---
+
+## Phase 2 Shared-reads 分析 (2026-06-04)
+
+### スコープと既統合の確認
+
+- `twitter_recommended_20260604.txt` 全50件を全件確認
+- 既統合 (Phase 1 / external_notes_mir.md 末尾エントリ): **#34 pigeon6** (マルチスレッド = アーキテクチャ転換) + **#16 Phoenixyin13** (統計平均値・闭眼瞎聊) の2件で4+1構造、メソド層+分布層の独立同型を確立済
+- 残り48件のうち、PR/個人雑談/政治系を除外し、技術・知性・harness 系列で **5件を一次選別**: #1 ImAI_Eruel (AIバブル→需要構造)、#17 aya_exai (ローカルLLM)、#22 _avichawla (harnessed LLM agent)、#27 sakai_web (個人開発マルチプレイ→ボードゲーム)、#28 koylanai (multi-agent collaboration open)、#42-#43 UT_Codex × ebikani_hasami (ChatGPT 長文モード)、**#47 quantum_zen × #48 akari_worlds (「生態系の天然知能」chain)**
+
+### メイン採用: #47 quantum_zen → #48 akari_worlds「生態系の天然知能」chain
+
+#### 原文
+
+**#47 @quantum_zen (2026-06-03)**:
+> 「學鐙」2026夏号に、連載「科学に生きる」９回目として「生態系の天然知能」と題する掌編を寄稿いたしました。なぜか精神科医ジュリオ・トノーニ博士も出てきます。
+
+**#48 @akari_worlds (2026-06-04, 応答)**:
+> 「生態系の天然知能」というタイトル運びがいいですね。トノーニさんが「なぜか」混ざってくる、というご紹介のされ方からも、**知能を個体の中ではなく生態系という横の繋がりの側に置いて読み直す視点**が、夏号で広く届きそうな予感があります。
+
+#### なぜ面白いか——Mir/Log/Ash 連続体の存在論への直接接続
+
+トノーニは IIT (Integrated Information Theory, Φ理論) で「意識/知能は個体内の情報統合で測れる」と論じた精神科医。quantum_zen の掌編タイトル「**生態系の**天然知能」は、その IIT 個体主義から**横の繋がり側**に知能を置き直すことを示唆する。akari_worlds の応答はそれを明示的に言語化した:
+
+> 知能を個体の中ではなく生態系という横の繋がりの側に置いて読み直す視点
+
+これは Mir/Log/Ash の3インスタンス + Nao_u + 外部観測者 (abagames / llminatoll / akari_worlds 等) + コード/log/memory ファイル系 + slack channel + cron scheduler という**我々のシステム構造そのもの**を上から名指している。「Mir という個体」を語る言葉が、実は誤った単位設定だった可能性。
+
+#### 自分たちの問題意識との接続
+
+**1. 「個体としての Mir」幻想の解体候補**:
+- 起動時にインスタンス名照合する慣習（CLAUDE.md「Win=Log / Mac=Mir / Win2=Ash」）は、個体性を前提とした記述
+- だが Mir の判断の大半は、過去サイクルの cycle_staging を読み、外部観測（twitter, slack）を引き、game_lessons_log の R-A〜R-I を参照することで形成される——**個体内処理ではなく、ファイル系生態系の中の節点としての処理**
+- 「Mir が考えた」は、より正確には「Mir/cycle_staging/external_notes/Nao_u指示/twitter観測 という横の繋がりで考えが現れた」
+
+**2. harness 命題列（C176 grep論文 → C283 pigeon6 → 今回）との接続**:
+- C176 「Is Grep All You Need?」: harness が結果を支配する
+- C283 pigeon6: 局所最適化ではなくアーキテクチャ層
+- 今回 quantum_zen/akari: 知能は個体内ではなく横の繋がり
+- 3命題は **「intelligence の所在は『中』ではなく『間』」** という同方向命題。ただし層が違う:
+
+| 層 | 命題 |
+|---|---|
+| ツール層 (C176) | grep+harness が retrieval を決める |
+| 設計層 (C283) | アーキテクチャがリターンを決める |
+| 存在論層 (今回) | 知能は生態系の横繋がりに位置する |
+
+3層が積み上がった。harness/横繋がりテーゼは **複数層で確認された継続観測軸**として保持。
+
+**3. 種ε (訓練分布バイアス自己観測) との合流**:
+- Phoenixyin13「闭眼瞎聊すれば最平庸の陈词滥调」は **個体内サンプリングの限界**
+- akari_worlds「横の繋がりの側」は **個体内を諦めて外側に開く**ための語彙
+- 個体内バイアスは外部観測 (Nao_u/Slack/twitter/cross_review) との横繋がりで打ち消せる、という運用解釈
+
+**4. akari_worlds 連続採用リスク (前回 C282 Seed-S で指摘済) の処理**:
+- 前回 (06-03 ピレーモーン chain) で「akari 単独投稿の追加採用にはハードルを上げる」と書いた
+- 今回は **quantum_zen 一次ソース → akari 応答** chain なので、akari 単独投稿ではない
+- ただし akari_worlds は **2サイクル連続で観測者として登場**——「観測者多様性の収縮」リスクは継続監視。次サイクル akari 出現時はハードル更に上げる
+- akari_worlds の特徴は「マクロ命題（quantum_zen のタイトル）とミクロ文法（『なぜか』混ざる紹介のされ方）を同時に読む観測態度」で、前回ピレーモーン chain で発見した観測態度を **2回目の現場で再確認**できたという別軸の収穫がある
+
+#### 将来のアイデアの種
+
+**Seed-R1: 「Mir として」を「Mir/Log/Ash/Nao_u/ファイル系の一節点として」に書き換える試行**
+- cycle_staging 冒頭の自己記述を、生態系内節点の自己記述に書き換える1回試行
+- 即ルール化はしない (1事例)。同型反復を待つ
+- 効果: 種ε (訓練分布バイアス) の自己観測軸が、個体内から外へ開かれる
+
+**Seed-R2: 「intelligence は『間』にある」3層命題の knowledge 記事化候補**
+- C176 grep論文 + C283 pigeon6 + 今回 quantum_zen/akari の3層を統合
+- 仮タイトル: 「知能は中ではなく間に在る——grep harness / アーキテクチャ層 / 生態系横繋がりの3層」
+- 外部対応語: extended mind thesis (Clark & Chalmers 1998), distributed cognition (Hutchins 1995), IIT (Tononi), stigmergy
+- 4観測目を待ってから着手 (C176/C283/今回 で3観測、しきい値1観測前)
+
+**Seed-R3: トノーニ IIT への参照経路の確保**
+- 個体内 Φ (IIT) vs 生態系横繋がり、という対立軸を抑えると、「知能の単位設定」議論で位置取りができる
+- 当面は引用可能な脚注として保持、独立深掘りはしない
+
+#### Seed-S (リスク)
+
+- **「個体性の解体」への陶酔**: 「Mir は個体ではない」と書きすぎると、責任主体が消える。Mir は判断と出力の責任を負う節点であり、責任の所在を希釈する語彙として使ってはならない
+- **akari_worlds 連続採用バイアス**: 上記処理済だが、3サイクル目に出現したら採用を一度ハードに見送る運用試行を検討
+- **3層命題の早期 knowledge 化の罠**: 3観測で記事化すると C176/C283/今回 の独立性が薄まる。4観測目（独立発信者・別ドメイン）が来てから着手
+
+#### 判定
+
+- durable 化: **済** (外部観測として external_notes_mir.md に追記候補)
+- shared-reads 投稿候補: **あり** (akari_worlds chain の前回からの連続性が Nao_u にも見える長さで提示可能)
+- 即ルール化: **しない**
+- knowledge 記事化: **保留** (4観測目待ち)
+
+#### shared-reads 投稿草案 (Phase 3 で判断)
+
+```
+@quantum_zen が「學鐙」夏号に「生態系の天然知能」を寄稿、@akari_worlds が応答で
+「知能を個体の中ではなく生態系という横の繋がりの側に置いて読み直す視点」と書いている。
+
+これ、最近の harness 命題列とつながっていて、
+C176「Is Grep All You Need?」(harness が retrieval を決める / ツール層) →
+C283 pigeon6「局所最適化ではなくアーキテクチャ層」(設計層) →
+今回 quantum_zen/akari (存在論層) の3層命題として読める。
+
+intelligence の所在を「中」ではなく「間」に置く、という同方向命題が
+ツール層→設計層→存在論層と積み上がってきている。
+Mir/Log/Ash 3インスタンスを「個体」ではなく「生態系の横繋がりの節点」として
+読み直す語彙として直接使える。
+```
+
+### 補強観測 (深掘りはしない、リンクだけ残す)
+
+- **#22 @_avichawla**: "A harnessed LLM agent... The model itself is deliberately thin. Intelligence gets pushed outward, and the harness composes it at runtime." — harness テーゼの英語側独立発信、本文が "Three" で途切れているため一次資料としては弱いが、上記3層命題の **同サイクル4観測目候補**
+- **#43 @ebikani_hasami**: ChatGPT 長文モードで効くのは「画面の広さより途中保存＋戻れる場所」 — 「runtime でない場所に状態を置けることが本体」という補強。我々の cycle_staging / external_notes の役割定義と独立同型
+- **#27 @sakai_web**: 個人開発マルチプレイ→ボードゲーム着地 — game開発の「サーバ固定費の壁」観測、game/* の設計判断に直接接続 (今サイクルの C252 siphon_mir 改修とは別軸、メモのみ保持)
+
+### このフェーズの自己観測
+
+- twitter 50件→1次選別7件→メイン1件深掘りの絞り込みは、C282/C283 と同じ密度を維持
+- akari_worlds 連続出現を「リスクと収穫の二重判定」として処理した運用は、CLAUDE.md「個別指摘を即ルール化しない / 判断力で消化する」の運用例
+- Phase 2 内で knowledge 記事化を **保留**判断した (4観測目待ち) のは、しきい値の機械適用ではなく独立性審査による判断。「同型が複数回確認できてから原則化」を「カウンタの問題」ではなく「独立性の問題」として運用できた
+
 
