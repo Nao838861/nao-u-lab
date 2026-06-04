@@ -267,7 +267,7 @@ function updatePulses(){
         // Combo popup
         const label=p.absorbed>=6?'FEAST x'+p.absorbed+'!!':(p.absorbed>=3?'SIPHON x'+p.absorbed+'!':'SIPHON x'+p.absorbed);  // v02 C247: 6+ のみ SIPHON→FEAST, ごっこ軸（捕食者ロール）1mm 観測1（高combo時のみ役割言葉化、3-5/1-2 は機械的SIPHONを保持して直交性維持）
         const col=p.absorbed>=6?'#fff8a0':(p.absorbed>=3?'#ffd870':'#c0a860');
-        popups.push({x:S.px,y:S.py-30,text:label,life:p.absorbed>=6?75:(p.absorbed>=3?60:50),c:col,size:p.absorbed>=6?18:(p.absorbed>=3?15:13)});  // v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影）/ v02 C279: tier font size 階層化 13/15/18, 快感軸 観測14（時間階層に空間階層を直交追加、basic→SIPHON→FEAST の3段差分を size 軸でも露出させる）
+        popups.push({x:S.px,y:S.py-(p.absorbed>=6?44:(p.absorbed>=3?36:30)),text:label,life:p.absorbed>=6?75:(p.absorbed>=3?60:50),c:col,size:p.absorbed>=6?18:(p.absorbed>=3?15:13)});  // v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影）/ v02 C279: tier font size 階層化 13/15/18, 快感軸 観測14（時間階層に空間階層を直交追加）/ v02 C282: tier y-offset 階層 30/36/44, 快感軸 観測15（同イベントに第3の直交軸＝発生高度を追加、life 軸＝時間／size 軸＝視覚密度／y-offset 軸＝発生位置 でプレイヤー視線上の到達距離も tier 差分化）
       }
       pulses.splice(i,1);
     }
