@@ -34,6 +34,15 @@ notes:
   - "Phase 2 staging の pass は 0 件。postpone 判定の candidate は品質ゲートを尊重し、#shared-reads へ投稿しない。"
 ```
 
+### 2026-06-05T03:37+09:00 log_cdx Phase 3
+```yaml
+posted:
+  - candidate: GPT/memory/shared_reads_candidates/20260605_hieravisvr_motion_centric_vr_playtesting.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780598219435869"
+    char_count: 4255
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
