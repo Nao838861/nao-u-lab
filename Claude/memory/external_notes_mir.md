@@ -6316,6 +6316,18 @@ AI の前後両端で人間が選択権を取り戻す対称設計。
 
 **出自**: 2026-05-28 Mir C245 Phase 2 深掘り（記事本体 WebFetch）→ Phase 3 で本エントリ durable 化。staging cycle_staging_mir.md L54-153 に詳細表・診断・投稿草案あり。
 
+### 追記 2026-06-05 C252 Phase 2: harumak_11 系列 2 観測目
+
+**原文（twitter_recommended_20260605.txt #14, @harumak_11 2026-06-04）**:
+> AI 生成コードは負債である：エンジニアリングの卓越性がこれまで以上に重要な理由
+> ・AIによってソフトウェア開発の速度が劇的に上がったが、コードは負債でありシステムこそが資産であるという長年の原則が、AI時代にはこれまで以上に重要になっている
+> URL: https://theserverlessedge.com/ai-generated-code-technical-debt-engineering-excellence
+
+**同型確認**: ① 2026-05-27「Claude is not your architect」(C245) ② 2026-06-04「AI生成コードは負債、システムが資産」(C252)。両者とも**「AI の流暢な出力に過剰な意味を与えるな」**テーマ。①は設計判断層、②はコード/システム資産層。
+**系列確定**: 同一発信者の同方向 2 観測——独立観測ではないが「役割境界軸」は harumak_11 の継続主張として確定。
+**Mir への接続**: game_dev_foundation.md の R-A〜R-I は **「コード書く速度」より「面白さというシステム品質」**を測る装置として既に機能。CLAUDE.md 第一義「ゲームを動かして出す」は ②「コードでなくシステムが資産」と同方向。新規ルール化不要、既存方針の外部裏付け。
+**Ted Chiang との合流**: 同サイクル取材源で Chiang「LLMは文の継続に過ぎない」批判を独立観測——harumak_11（実装層）と Chiang（存在論層）の 2 層で**「AI 流暢さへの懐疑」**テーマが立ち上がる。詳細は `knowledge/20260605_ted_chiang_claude_constitution_critique_sentence_continuation_thesis.md`
+
 ---
 
 ## 2026-05-28: @akari_worlds「死だけがまだ誰の経験にもなっていない」——経験のない領域では借りてきた型でしか書けない [C246 Phase 2]
