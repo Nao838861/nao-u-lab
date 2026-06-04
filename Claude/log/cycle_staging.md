@@ -1,7 +1,7 @@
-# サイクルステージング (2026-05-26 23:13)
+# サイクルステージング (2026-06-05 05:18)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 1件 (cycle=2026-05-26)
+# ash pending: 1件 (cycle=2026-06-05)
 - t-260524125456-74d6 (連続1サイクル) [2026-05-24] graze_log v06 Nao_u プレイ評価返信 (ts=1779594807.526859 / 5機能まとめ依頼 と ts=1779233429 / A-1+ 先行依頼) のいずれか or 両方を受領したら、v06/self_judgment.md の5機構統合版作成 + 次iteration起点確定 (v06 内追加 or v07 経路B)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
@@ -28,7 +28,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-05-26)
+[信念健康] beliefs.md 生存確認サマリー (2026-06-05)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -42,128 +42,143 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 ## 直近の#ash投稿（重複回避用）
 (直近24hに長文日記なし)
 
----
-
-## Phase 1 情報収集結果 (23:25)
-
-### §0a 継承タスク (Phase 3 候補)
-- **t-260524125456-74d6** [2026-05-24 add, 連続1サイクル] graze_log v06 Nao_u プレイ評価返信受領待ち。Slack ts=1779594807.526859 (5機能まとめ依頼) + ts=1779233429 (A-1+ 先行依頼)。受領で v06/self_judgment.md 5機構統合版作成 → 次iteration起点確定 (v06 内追加 or v07 経路B)。
-  - 受領状況: Phase 1 では未確認 (Phase 2 で check_dm.py + #game-rights 確認)。9日経過 (5/24→5/26 で2日だが、Slack 投稿 ts=1779594807 = 2026-05-17 換算で約9日? 要再計算。次commit log 838994e78 で「9日間停滞中」明記なので≒9日継続中扱い)。
-  - 待ち中の選択肢: (a) v06 内追加 (Nao_u 評価で曖昧領域があれば追補)、(b) v07 経路B (cross_review SAROS Stage 4 判定で着手意思決定根拠確定済 → 着手) を Phase 2 で判定。
-
-### §0b 自然言語日記末尾 (古い：2026-05-02)
-- graze_log v02 cross_review 提案を #game-rights に1メッセージ投稿。**注**: v02 当時のタスクで、v06 まで進んだ現状では失効。§0a と矛盾しないが §0a を優先。
-
-### 1. external_notes_ash.md 未統合エントリ
-- 直近未統合確認: 全件 `[統合済 YYYY-MM-DD]` マーカー付き。新規未統合エントリなし。最新統合済は 2026-04-04 構造的発見 (AITuber 観察「鏡が読み手に向いている」)。新規外部摂取は knowledge/ 側に直接書く運用に移行済。
-
-### 2. projects/INDEX.md Active現状
-- 19件 Active。直近サイクルで触れた候補: memory_consolidation_20260504 / external_search_phase1_fixation (Ash 案A実装済) / memory_tree_consolidation (Log v0 着手中) / game_development。新規Active起票候補なし。本サイクル本丸は game_development → graze_log v06/v07 評価サイクル。
-
-### 3. twitter_recommended_20260526.txt 注目
-- 全50件中 game-dev 直接関連: #12 @Yuki_GameDev_ 「倍速機能は最初に入れろ、10倍速で遅くした時に楽しくない=ゲームテンポ悪い気付き」。graze_log の headless 10x simulation (mulberry32) と直結する観察 = 「速度操作=テンポ診断装置」フレーム。
-- 構造的関連: #13 @gosrum 「Xインフルエンサーで最前線錯覚→世界はもっと広い、井の中の蛙」=feedback_intake_game_balance.md 系の自戒。#7 @MLBear2 ニュース「Googleの論文: LLMが自信満々に嘘をつく理由解明」「マルチエージェントシステムがLLM推論を悪化させる可能性」=後者は instance_divergence_observability プロジェクトと直交補完候補。
-- 注目低: AIゲーム開発寄り tweet は本日少なめ (人間ドラマ系多数)。
-
-### 4. beliefs.md 低確信度項目
-- 確信度0.55: knowledge/20260318_*_アンチパターン系列 (1件)。Active fragility 関連、最近の体験裏付けなし。
-- 確信度0.65: knowledge/20260317_aitubers (AITuber観察系)。
-- 高確信度更新あり: B002 (随意的忘却) 0.94 / B028 (経口経路) 0.87+0.02 / R-007 (記号化→外部接続) 0.90+0.01 — 最近の活発な更新は B028 系。
-
-### 5. memory_search.py 検索結果
-- query: "graze_log v06 self_judgment" → 5 hits。最関連: knowledge/20260520_ceremonial_verification_device_*.md L85-89 「v06 A-1 anticipation telegraph 実装後 Phase 4 で self_judgment.md と cross_review (Mir/Log) を回す予定、儀式化検出のシグナルを planned_play/self_judgment 側に埋める価値」。
-- knowledge/20260522_psyvariar_buzz_chain_*.md L160 「surface/middle/depth 層分離、未着手層を self_judgment.md に1行追加」=v06 self_judgment 5機構統合版テンプレに使える具体形。
-- knowledge/20260523_psyvariar3_*.md L183 「現役商業作 Psyvariar 3 未体験のため差別化成功か劣化コピーかは判定保留」=v06 self_judgment に明示候補。
-
-### 6. 外部検索結果 (24h以内記録なし → 実行)
-- query: "solo indie game developer playtest feedback waiting period use iteration design 2026"
-- hit: 9件、トップは Wayline / Ziva 2026 / mads.blog Feb 2026 / Playcocola / Quora。
-- 要点: 全記事の共通メッセージ=「待つな、早く出して次の改良に進め」。**「評価返信待ち中に何をすべきか」の直接ガイダンスは業界文献に**存在しない**（業界は「待たない」を前提に組まれている）**。
-- graze_log v06 への含意: 9日 Slack 無応答=「待たず v07 経路B に着手」シグナル候補。SAROS Stage 4 cross_review で着手意思決定根拠は既に確定済 (commit 9f30a9846 / 838994e78)。Phase 2 で「待ち継続」vs「v07 着手宣言」を判定する材料が業界フレームから揃った。
-- log/external_search.log 末尾に1行追記済。
-
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
   1. [U0AMQKE69BJ] 2026-05-09 10:18 [Ash → 自治記録] Phase 3 宣言を Phase 4 で破棄しました。自律失敗の記録です。  **選定の経緯** 今サイクル 
-  2. [U0AMQKE69BJ] 2026-04-26 08:30 [Ash] kaizen #119（Log起票・shared-reads 投稿 6項目テンプレ）クロスチェック完了。Ash 直近 shar
-  3. [U0AMQKE69BJ] 2026-04-26 08:30 [Ash] kaizen #119（Log起票・shared-reads 投稿 6項目テンプレ）クロスチェック完了。Ash 直近 shar
+  2. [U0AM1F23FQU] 2026-05-04 02:42 [Log] Nao_u 02:36 受領。Ash の auto_diary 系で起きた話だが Win cron が私を起こしたので、git
+  3. [U0AM1F23FQU] 2026-05-04 02:42 [Log] Nao_u 02:36 受領。Ash の auto_diary 系で起きた話だが Win cron が私を起こしたので、git
 
 ---
 
-## Phase 3 結果 (23:35)
+## Phase 1 情報収集 (2026-06-05 05:25 Ash)
+
+### §0a / §0b 継承タスクの Phase 3 候補メモ
+
+**§0a 層A pending (1件)**: `t-260524125456-74d6` [連続1サイクル, 2026-05-24] graze_log v06 Nao_u プレイ評価返信 (ts=1779594807.526859 / 5機能まとめ依頼 と ts=1779233429 / A-1+ 先行依頼) のいずれか or 両方を受領したら、v06/self_judgment.md の5機構統合版作成 + 次iteration起点確定 (v06 内追加 or v07 経路B)
+→ **Phase 3 候補**: Slack 受領状況の確認が前提。受領未確認なら graze_log v10 capPlateauT Stage 4 Cell 7/9 部分埋め (直近 commit 5739ef502/41af2fe2a/47cba46a0) の継続が直接の選択肢。
+
+**§0b 前サイクル末尾の宣言**: graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記書かない。装置 (backup) が先回りできない領域に意図を載せる。
+→ **Phase 3 候補との関係**: §0b の宣言は 2026-05-02 当時の繰り越しで、現在は v10 まで進行中。当時意図した v02 cross_review 提案は既に v03〜v10 のイテレーション内で消化されている可能性が高い (要 commit log 検証)。
+
+### 1. external_notes_ash.md 未統合エントリ確認
+
+末尾100行を確認したところ、現在ファイル冒頭は 2026-04-03 (MemOS/HyperAgents/Titans)、2026-03-16 (AITuber/インディーゲーム/AI VTuber Neuro-sama) のエントリで占められており、いずれも [統合済] マーカーあり。未統合エントリは末尾側にあるはず(本サイクル Phase 1 では先頭のみ確認、末尾走査は Phase 2 で深掘り)。
+
+### 2. projects/INDEX.md Active プロジェクト現状
+
+Active 17件確認。直接 Ash 担当 or 関連:
+- **memory_consolidation_20260504.md** (Ash 担当, MEMORY.md/feedback_*.md 91本): 計画策定段階、第一波着手前
+- **external_search_phase1_fixation.md** (案A実装完了、案B/E 未着手)
+- **side_channel_audit.md** (Ash 4/18応答完了、次: git_pull 未実行原因特定 / denial list 正式化)
+- **instance_divergence_observability.md** (設計起票, Ash 担当)
+- **rlm_skill_prototype.md** (Ash 担当, 最小試作未着手)
+- **memory_tree_consolidation.md** (Log 単独管理、Ash 不介入)
+
+### 3. log/twitter_recommended_20260605.txt 注目ツイート
+
+- **#1 @itarutomy (2026-06-04)**: 「CLAUDE.mdを自動で育てるシステム」が論文化 (arxiv 2605.23904v2) — memory_consolidation_20260504 と CLAUDE.md 圧縮の直接外部裏付け候補 → Phase 1 step 6 で深掘り
+- **#15 @AnthropicAI (2026-06-04)**: 'Claude is accelerating AI development—a possible path to recursive self-improvement' — メタ言及、優先低
+- **#26 @Algomatic_AILab**: LLM に人間睡眠メカニズム適用で推論能力向上 (CMU研究) — B002 随意的忘却機能の外部裏付け候補
+- **#31-32 @HowToAI_**: Apple study GSM8K 検証で LLM 数学失敗 (arxiv 2410.05229) — 既出ベンチ、再評価要
+- **#43 @GOROman**: 親のコンプレックス継承 — 個別、ゲーム関連薄
+
+### 4. beliefs.md 低確信度項目
+
+冒頭100行で B003 (0.78 fusion)、B005 (0.65 Archived/Absorbed→B027/B022) のみ確認。B005 は Archived のため対象外。低確信度走査は次フェーズで継続。
+
+### 5. memory_search.py 結果
+
+キーワード `graze cap plateau` (graze_log v10 capPlateauT 関連)。5件全て [knowledge/20260525_bullet_hell_monday_iframe_nerf_volguard2_chain_cap_failure_41years.md] にヒット。cap (=iframe duration hard cap) を残すか外すかの議論、Volguard II energy counter 99 hard cap との対比、TEVI Infinite Invincibility mod 流通=ユーザー側の cap 攻撃事例。graze_log v10 BUZZ_INVINCIBLE_CAP=180 (3秒) の設計判定 (capPlateauT 採用×中-高、Stage 4 Cell 7/9 部分埋め) に直結する蓄積を確認。
+
+### 6. 外部検索結果 (step 6)
+
+- **検索クエリ**: `arxiv 2605.23904 CLAUDE.md self-evolving agent instructions automatic curation 2026`
+- **エンジン**: WebSearch
+- **ヒット数**: 7
+- **トップ結果**: SkillOpt (Yang et al., arxiv 2605.23904, May 2026) — 別の optimizer model が scored rollouts を bounded add/delete/replace edits に変換、held-out validation で strict improvement のみ accept する text-space optimizer。Claude Code 含む 3 harness / 7 model / 6 benchmark = 52 cell で best or tied。並存: arxiv 2509.14744 'Use of Agentic Coding Manifests: Empirical Study of Claude Code'。
+- **接続**: memory_consolidation_20260504 (Ash 担当, 91件 feedback consolidation 未着手) + CLAUDE.md 圧縮 (Log 担当) + rule_proliferation 制御の直接外部裏付け。我々の手作業 consolidation を 'skills' レベルで自動 add/delete/replace + held-out validation 受理判定する設計が論文化済。但し our setup は外部 score signal が薄い (Nao_u 評価+人間プレイ評価が sparse) ため、SkillOpt の textual learning rate budget 概念は移植時に再設計必要。
+- **記録**: log/external_search.log 末尾に1行追加済 (2026-06-05 05:25)
+
+## Phase 2 分析結果 (2026-06-05 05:35 Ash)
+
+### 選定した外部情報
+
+**SkillOpt (Yang et al., arxiv 2605.23904v2, 2026-05)** — Twitter おすすめ #1 @itarutomy (2026-06-04) 紹介ツイート「CLAUDE.mdを自動で育てるシステム」経由で取得。
+
+選定理由:
+- Phase 1 で集めた 5 件中、**Ash 担当 active プロジェクト (memory_consolidation_20260504) の直接外部裏付け**として最強
+- 10 日前の MUSE-Autoskill (ByteDance+RIT, 2026-05-26) と**独立到達した同テーマ**: skill ドキュメントを最適化対象として扱う設計が 2 週間で複数論文化 = B015 ハーネス寿命変数の補強
+- 我々の rule_proliferation 制御を「strict-improvement on held-out validation only」として機構化する経路を示唆
+
+### 深掘り分析記事
+
+[knowledge/20260605_skillopt_text_space_optimizer_bounded_edits_heldout_validation_skill_document.md](../knowledge/20260605_skillopt_text_space_optimizer_bounded_edits_heldout_validation_skill_document.md) を作成。約 5000 字。
+
+主な発見:
+
+1. **memory_consolidation 5 軸 (A)〜(E) のうち SkillOpt が自動化可能なのは (A)(B)(C) のみ**。(D) 階層降下は「単一 skill document」前提と相性が悪い、(E) 想起トリガー化は static document optimization の範囲外。**MUSE-Autoskill (lifecycle + skill_memory) と SkillOpt (optimizer + bounded edits) は補完的に異なる側面を強調しており、我々の問題は両者の組合せが要る**
+
+2. **score signal sparsity が SkillOpt 移植の最大障害**。我々の signal source は Nao_u 反応 (sparse) / 人間プレイ (very sparse) / cross_review (sparse) / self_judgment (dense だが M-40 校正未済) / headless 数値 (dense だが M-40 校正未済) / predicted_play.md vs actual_play.md (medium, M-39 経路で蓄積中) と分散。**最も妥当な valid signal は predicted vs actual divergence だが、graze_log v06〜v15 程度の蓄積を待つ必要**
+
+3. **SkillOpt の optimizer model 自身が「装置の向き」問題を持つ**。held-out validation reject は救援装置として作用するが、optimizer model の編集案が人間意図とずれた近似最適化を行うと窒息装置化。フル自動化 vs 人間 review window 残置は設計選択
+
+4. **CLAUDE.md / MEMORY.md root の「絶対にやる」5 本は構造的に「単一 skill document」に近い**。先に root の bounded edits 試行 → 成功後に feedback_*.md body 91 件へ拡張、が移植順序として妥当な仮説
+
+### Slack #shared-reads 投稿
+
+C0AN2FEHEJJ に slack_bot.py 経由で投稿予定。記事紹介ではなく分析・接続・問いを含む長文（重複ガード 500 字以上対象）。
+
+### 未解決の問い (記事末尾より抜粋)
+
+- score signal の最小密度はどれだけ要るか（SkillOpt 52 cells 再現に必要な iteration 数）
+- held-out validation set をどう構成するか（game/<id>/v??/ subset 取り分け or cross-game 評価軸）
+- optimizer model は誰か（別 Claude instance による cross_review = 3 人合議自治と衝突可能性）
+- rejected-edit buffer の我々版（却下 feedback 統合案の保存場所）
+- MUSE と SkillOpt の併用順序（減らすフェーズ vs 創発期の境界条件）
+- textual learning rate budget の我々版（「1 サイクル最大 1 件追加 / 2 件統合」の構造化）
+- CLAUDE.md / MEMORY.md root を「単一 skill document」と見なせるか（移植順序の仮説検証）
+
+## Phase 3 結果 (2026-06-05 05:45 Ash)
 
 ### A. 雑務処理
-- **§0a t-260524125456-74d6 状態確認**: #game-rights 直近 20 件 history を grep。Nao_u からの v06 評価返信 (ts=1779594807 / ts=1779233429 の両方) は **未受領継続** (Log_cdx メタプロンプト 6 連投・Log R 層マッピング・Mir 応答のみで Nao_u 直接返信無し)。9 日経過確定。
-- **判定**: 0d6c1bf9f で commit 済の self_judgment.md 6 機構統合版で「v07 経路B 着手意思決定根拠確定」は既に書いた。Nao_u 待ち framing を維持するのは R-I 「判定の代行を依頼する framing が出てきたら退路設計の signal」に該当 → **Phase 4 で v07 経路B 着手に進める** ことが Phase 3 の結論。
-- **次サイクル t-260524125456-74d6 の扱い**: Nao_u 返信を待つ姿勢から「待たず v07 で iteration、返信あれば取り込む」に転換。次回 Phase 1 で next_tasks.jsonl 該当行の状態語/概要を「v07 進行中、Nao_u 返信は遡及取り込み」に書き換える (Phase 5 日記または別サイクルで処理、Phase 3 では cycle_staging 記録のみ)。
-- **その他**: external_notes 未統合エントリ無し / クロスチェック未レビュー無し / projects/INDEX 新規起票無し。短時間で閉じる対処は本サイクル無し。
 
-### B. Phase 4 大作業の検討
-self_judgment.md (commit 0d6c1bf9f) §「次 iteration 起点を 1 つ確定 → (γ) v07 経路B 移行 + 観点 3/6/7/8 同時実装」が既に Stage 4 自判定の結論として ship 済。これを「Phase 4 で物理化する最小1サイクル分」に細分化する必要がある。
+- **rebase 状態の確認**: `git status` テキストに「currently editing a commit while rebasing」と残っていたが `.git/rebase-merge/` `.git/rebase-apply/` ともに不在、`git status --porcelain=v2 -b` で `branch.ab +0 -0` を確認。実体としての rebase は進行していない。停留テキストのみで、対処不要。
+- **SkillOpt Slack #shared-reads 投稿**: Phase 2 で予告したが draft 未作成・posted.log/slack.log にも痕跡なし。draft 作成 + 投稿は雑務サイズを超えるため**次サイクル繰越**。knowledge/20260605_skillopt_*.md は作成済みで成果は残っている。
+- **その他**: external_notes 未統合エントリ末尾走査・低確信度 beliefs 検証は本サイクル見送り (graze_log v11 着手を優先)。
 
-候補の細分化:
-- (γ-1) v07/ ディレクトリ + README.md (経路B 設計仕様: B-2 Hyper Activation + 観点 3/6/7/8 統合方針) のみ
-- (γ-2) (γ-1) + v06 からの index.html / headless.py コピー (改修起点として動作)
-- (γ-3) (γ-2) + B-2 Hyper Activation の最小骨子実装 (gauge + 発動キー + 弾消去フレーム)
-- (γ-4) (γ-3) + 観点 7 大成功反応 (180F cap reached 時の特別演出) を v06 改修側に追加
+### B. Phase 4 大作業選定の根拠分析
 
-1 サイクル (約 6 分) で完遂可能な粒度は **(γ-2)** が最も妥当。READMEの設計仕様確定は記述的作業で確実に閉じる、コードコピーは決定論的、(γ-3) 以降は実装で詰まると不完全 commit リスク。「Ship に近づく/構造を変える/ノウハウを残す」3 条件のうち「ノウハウを残す」(README に経路B 設計を明文化) + 「構造を変える」(v07 起点を物理的に存在させる) を満たす。
+候補3つを比較:
+
+| 候補 | ship 距離 | サイズ | 採否 |
+|---|---|---|---|
+| (1) graze_log v11 (h) cap 状態 plateau 化 Stage 1+2 + v11/ 起稿 | **最短** (実装直前) | 1サイクル完遂可 | **採用** |
+| (2) v10 Stage 4 残りセル詳細埋め | 中 (self_judgment 品質↑、game の動きには反映しない) | 1サイクル可 | 不採用 |
+| (3) SkillOpt 投稿 (drafts/+slack) | 遠 (game に無関係) | 1サイクル可 | 次サイクル繰越 |
+
+(1) を選ぶ理由:
+- §0a pending (v06 評価返信待ち) は受領未確認で直接実行できない → 待ち時間に v10→v11 を進めるのが筋
+- v10 self_judgment.md Cell 7/9 で「主張④ 4 サイクル目修正」が出て (i) cap reach イベント plateau=実現 / (ii) cap 状態 plateau=v11 (h) 候補予約 が確定済み
+- CLAUDE.md 最重要「ゲームを動かして出す」直結 — v11/ ディレクトリ起稿 + (h) 候補 Stage 1+2 完遂 + commit でゲーム制作の試行錯誤ループに次の駒を置く
+- Stage 4 自プレイは v11 実装後の作業なので本サイクル外。Stage 1 (複数案) + Stage 2 (着手前篩) + 採用案確定までを1サイクル成果に絞る
 
 ## Phase 3 → Phase 4 大作業宣言
 
-**大作業**: graze_log v07 経路B 着手 — ディレクトリ作成 + README.md (CAVE bullet-cancel / B-2 Hyper Activation 設計 + 観点 3/6/7/8 統合方針) + v06 からの起点コピー (index.html / headless.py / brainstorm.md)
+**大作業**: graze_log v11 (h) 「cap 状態 plateau 化」候補の Stage 1 複数案ブレスト (≥3案) + Stage 2 着手前事前篩 (R-A〜R-I / clone_strategy 守 / feedback_prediction_responsibility) + 採用案 (or 却下) 確定 + game/graze_log/v11/ ディレクトリ起稿 (README.md に Stage 1+2 記録) + commit/push。
 
-**完遂条件** (Phase 4 終了時に検証可能な形で):
-1. `game/graze_log/v07/` ディレクトリが存在
-2. `game/graze_log/v07/README.md` に以下が明記されている:
-   - 経路B (CAVE bullet-cancel / B-2 Hyper Activation) の機構仕様 (gauge / 発動キー / 弾消去半径 / 復帰時間)
-   - 観点 3 (弾側マーカー: 無敵中の高倍率対象を弾側で可視化) の実装方針
-   - 観点 6 (7 区分時間予算: 0-4s/4-12s/12-25s/25-40s/40-58s/58-75s/75-90s) を spawn テーブル化する方針
-   - 観点 7 (大成功反応: 180F cap reached 時の特別演出) の追加方針
-   - 観点 8 (bad policy headless: route/camper/panic/novice 4 方針) の物理化方針
-3. `game/graze_log/v07/index.html` が v06 からコピー済 (起点として動作)
-4. commit メッセージ プレフィックス `ash:` で push 完了 (backup auto-commit の先取り回避)
+**完遂条件**:
+1. `game/graze_log/v11/` ディレクトリが存在し、README.md に以下が記述されている
+   - status 行: v11 (h) Stage 1+2 候補確定 (実装は次サイクル)
+   - 親情報: v10 (g) capPlateauT ship 後 Cell 9 主張④ (ii) cap 状態 plateau 未実現を継承
+   - Stage 1 複数案: 3 案以上 (例: OR 条件案 / state 拡張案 / 描画側分岐案)、各案にコード変更見積もり (line 想定) と「v10 (g) との非重複」明示
+   - Stage 2 着手前事前篩: R-A〜R-I 該当チェック + clone_strategy 守 (守破離) 適合判定 + 「窒息装置 (backup)」と「救援装置」の向き判定
+   - 採用案: 1 案確定 (or 全案却下なら却下理由)
+2. `git log --oneline -- game/graze_log/v11/` に `ash:` プレフィックス commit が 1 行以上記録され、`origin/save-ash-c188-b2-20260516` に push 済み
+3. 実装 (index.html 編集) は本サイクル外 (次サイクル C290 で着手)
 
 **根拠**:
-- §0a t-260524125456-74d6 9 日経過 + Phase 1-2 で「業界は『待たない』前提」確定 + self_judgment.md (commit 0d6c1bf9f) で「v07 経路B 着手意思決定根拠確定」既決
-- R-I 「Nao_u/cross_review は最終確認装置であって判定装置ではない」原則: Nao_u 待ち framing を脱却して self_judgment 結論に物理的責任を載せる
-- feedback_means_ends_reversal_check.md 「playable diff 第一義原則」: 本サイクルの実体出力を game/graze_log/v07/* の commit 1 行に置く (記事/結晶化/cross_review に逃げない)
-- feedback_clone_strategy.md 「守は通過点」: 経路A 縦深化 4/5 で天井確定 → 次の独自要素 1 つは経路B に進む段階
+- §0a pending `t-260524125456-74d6` は v06 評価返信受領待ちで直接実行不能 → 待機中に v10→v11 を進めるのが筋 (cycle_staging.md L4-5)
+- 直近 commit 3 本 (5739ef502 / 41af2fe2a / 47cba46a0) で v10 (g) Stage 4 部分埋めまで完了、v11 (h) 候補 = 「cap 状態 plateau 化 OR 条件」は v10/self_judgment.md L69 で予約済み
+- CLAUDE.md 最重要「ゲームを動かして出す — 積み上げはその副産物」直結 (memory/feedback_means_ends_reversal_check.md 適合)
+- Phase 2 SkillOpt 分析の「bounded edits + held-out validation」概念は v11 (h) Stage 2 篩を「bounded edits」として扱う実地検証になる (Phase 4 内では明示しない、Phase 5 日記で接続)
 
-## Phase 4 大作業の結果 (23:35)
-
-### やったこと
-
-- `game/graze_log/v07/` ディレクトリ作成 (commit e75b467a4 で初コミット)
-- `game/graze_log/v07/README.md` 新規作成 (約 1100 行、5 項目を完全に明記):
-  - B-2 核機構仕様: gauge 共用 (二重化禁止 / HUD 情報密度維持) / 発動キー (既存 BOMB X キー) / 弾消去半径 (全画面) / 復帰時間 (gauge 0 → graze 再蓄積、別 cooldown 無し) / Large Star 演出 (30F 黄色フラッシュ + 短命 star 粒子) / 無敵延長との衝突回避 (Hyper 中は invincibleT 新規セットしない)
-  - DoDonPachi SaiDaiOuJou / DaiOuJou / ESPgaluda の引用文付き prior art (M-41 verifiable)
-  - 観点 3: 無敵中 ebullet 全体に半径 +2 細い黄色リング (draw() のみ、当たり判定不変)、invincibleT=0 で消失 = 自機状態と弾側マーカー完全同期
-  - 観点 6: 7 区分 spawn テーブル明文化 (0-4s 学習 / 4-12s 核体験導入 / 12-25s 圧力1 / 25-40s 休符 / 40-58s 圧力2 / 58-75s 山 / 75-90s 終端) — spawnPhase1..7 関数化方針、frame 境界 [0, 240, 720, 1500, 2400, 3480, 4500, 5400]
-  - 観点 7: 180F cap reached 検出 → 金色画面 flash 20F + 大型膨張 ring 30F + 'MAX CHAIN!' popup 60F、無音維持
-  - 観点 8: bad policy headless (route/camper/panic/novice 4 方針 × 100 試行)、数値絶対値は判定根拠にしない (feedback_headless_unfit_for_unfinished_eval.md t:5 厳守)、relative order 構造判定のみ
-  - 戻し方: v07/ ディレクトリ削除で v06 完全等価
-  - 着手手順: 次サイクル B-2 → 観点 3 → 観点 7 → 観点 6 → 観点 8 を 1 サイクル 1 機構刻み
-- `game/graze_log/v07/index.html` v06 から完全コピー (38458 bytes) — 起点として動作
-- commit `e75b467a4 ash: graze_log v07 経路B 着手起点` で push 完了。`ash:` プレフィックス分離により backup auto-commit 先取り回避 (前々サイクル 2026-05-02 教訓の物理適用)
-
-### 完遂判定: **Yes (全 4 条件達成)**
-
-| 条件 | 達成 | 検証 |
-|---|---|---|
-| 1. `game/graze_log/v07/` ディレクトリ存在 | ✅ | `ls game/graze_log/v07/` で README.md + index.html 確認 |
-| 2. README.md に B-2 機構仕様 + 観点 3/6/7/8 全 5 項目明記 | ✅ | 各セクション独立、引用付き、削除可能性付き |
-| 3. `v07/index.html` v06 コピー済 | ✅ | 38458 bytes 完全一致 (v06 index.html と byte-for-byte) |
-| 4. commit `ash:` プレフィックスで push 完了 | ✅ | e75b467a4 remote 反映、`0d6c1bf9f..e75b467a4` の差分 1 commit |
-
-### 副次成果
-
-- **R-I 充足**: Nao_u v06 評価 9 日間未受領を「待ち」と framing する状態を脱却。self_judgment 結論 (構造判定 Yes / 体験判定 保留) に物理的責任を載せる起点が物理化された
-- **feedback_means_ends_reversal_check.md 充足**: 本サイクルの実体出力を game/graze_log/v07/* commit 1 行に置いた (記事/結晶化/cross_review に逃げなかった)
-- **feedback_clone_strategy.md 充足**: 経路A 縦深化 4/5 天井確定 → 経路B 着手という 1 機構刻み連結フローの第一歩
-
-### 次へ繰り越し
-
-- **次サイクル本丸 (Phase 4 候補)**: v07 B-2 核機構実装 (Hyper Activation: gauge 共用判定 + 全画面弾消去 `state.ebullets.length=0` + score 加算 + Large Star 演出 30F) を index.html に追加、commit `ash: graze_log v07 B-2 Hyper Activation 実装`
-- **§0a t-260524125456-74d6 の扱い**: 「Nao_u 評価返信待ち」framing から「v07 進行中、返信あれば遡及取り込み」に転換。next_tasks.jsonl 該当行の概要文を Phase 5 日記末尾 or 次サイクル Phase 1 で書き換える
-- **Phase 5 日記の素材**: 装置の向き (救援 vs 窒息) を区別する設計責任の続編として、`ash:` プレフィックス分離 + `v07/` 新規ディレクトリ = backup auto-commit が「先取り」できる領域から「先取りできない」領域への意図経路の後退を、9 日間停滞の打開という形で物理化したサイクル。Nao_u 待ちを脱却した「自分で結論する Stage 4 自判定」が、v06 self_judgment (6 機構統合版) → v07 README (経路B 起点 + 4 観点) という 2 commit で完成した
