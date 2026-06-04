@@ -300,3 +300,26 @@ Phase 2 で「6サイクル連続 0 行」と書いたのは記憶誤り（実�
 - 完了 framing にしない: 配線が物理的に通っただけで、視認効果は実プレイで初判定
 
 ---
+
+## 2026-06-05 (Mir C283) combo popup rise-speed tier 階層 — 第4直交軸
+
+### 実装内容
+- L270 popups.push に `rise:p.absorbed>=6?0.4:(p.absorbed>=3?0.6:0.8)` 追加
+- L480 update ループ `popups[i].y-=0.8;` → `popups[i].y-=(popups[i].rise||0.8);`
+- 既存 popup (L66 BOMB READY / L385 撃破ポイント) は rise 未設定で 0.8 fallback により影響なし
+- +0/+0 実質2箇所変更（push 1属性追加、update 1参照差し替え）、index.html 1ファイル変更のみ
+
+### C280 自己詐称型の回避設計
+C279→C280 で「data 属性を push 側に仕込んだが render が読んでいなかった」型の自己詐称を踏んだ。本サイクルは push 側 (L270) と update 側 (L480) を**同サイクル内で揃えて commit** することで、属性と参照点の乖離を構造的に発生させない。push と update の commit 分離禁止が暗黙ルール化（同型反復ではなく予防）。
+
+### 中心 vs 周辺判断
+- **中心**: combo popup の感覚チャネル直交軸 3 (time/space/position) に第4軸 rise-speed を追加。FEAST tier の上昇速度を 50% 落とすことで、life 階層 (75 frame) と協調して視認時間が体感的にさらに延伸。塊感が「速く流れて消える」から「ゆっくり浮かんで残る」方向にシフト
+- **周辺**: 色 (既に階層化済) / fade-out 速度 / 横揺れ / scale animation — いずれも今回触らない
+
+### C282 「次への問い」(1) への回答
+C282 が「rise-speed tier 階層化は次元の積層として意味があるか、それとも見た目の散らかりを増やすだけか」と問うた。実装で判定する方向に倒した。判定は実プレイ目視（feedback_won_playtest_is_kusoge 順守、本サイクルでは構文 OK と grep 配線確認のみ）。「散らかり」判定は Nao_u 委任。
+
+### 残課題
+- (a) 実プレイ目視: FEAST popup が画面に長く浮かぶことで「ご褒美感」が増すか、それとも視界を阻害するか
+- (b) 次の積層候補: color tier (既に階層化済) / fade-out 速度 tier / horizontal sway tier
+- (c) 完了 framing にしない: 4軸が揃っただけ、体感は実プレイ初判定

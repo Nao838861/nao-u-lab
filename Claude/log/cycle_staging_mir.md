@@ -100,5 +100,40 @@
 - **温度の不均等**: Chiang 批判は **Mir の存在前提を揺るがす最大級の不均等**。akari_worlds 4観測目で確立した「均一化の重力」テーマと正反対の極が外部から到来した = 二極観測の成立
 - **R-007 「同型反復で原則化」遵守**: Chiang 1件で5原理を書き換えない。Seed-R は記録のみ、即実装しない
 - **次サイクルへの種**: zackmdavis「Terrified Comments」/ Lawfare「The Code Is Not the Law」/ Oxford expert comment との比較は次サイクル以降。Chiang 論文本体 WebFetch は paywall 確認が必要
+
+---
+
+## Phase 3 対処・実行結果 (C283, 2026-06-05)
+
+### 状態把握の訂正
+- staging「次への問い #1」(C252 SIPHON tier 中間段 60) は時間的に時代遅れの記述だった。git blame でこの diff は b6995cb6a (06:59) で既に in place、staging (06:53) の 6 分後に ship 済み
+- daily diary 最終 entry は C282 (2026-06-05 5日ぶり復帰) で、popup tier 第3軸 (y-offset 30/36/44) を ship 済
+- 現サイクル C283 は C282「次への問い #1」(rise-speed tier 階層化) を実装する自然な位置
+
+### 実行: playable diff ship (CLAUDE.md「絶対にやる」#1 直行)
+**変更**: `game/siphon_mir/v02/index.html` 2箇所
+- L270 popups.push に `rise:p.absorbed>=6?0.4:(p.absorbed>=3?0.6:0.8)` 追加
+- L480 update ループ `popups[i].y-=0.8;` → `popups[i].y-=(popups[i].rise||0.8);`
+
+**設計**: combo popup 第4直交軸 (time/space/position/**rise-speed**) を追加。FEAST tier の上昇速度を 50% 落とし life 階層 (75 frame) と協調、視認時間がさらに延伸。BOMB READY / 撃破ポイント popup は `rise` 未設定で 0.8 fallback により非影響。
+
+**C280 自己詐称型の回避**: push (L270) と update (L480) を同サイクル内で揃えて配線確認 (grep `rise` で2点共起確認済)。属性と参照点の乖離を予防。
+
+### 実行: harumak_11 系列 2 観測目の追記
+Phase 2 で既に external_notes_mir.md L6319 に「### 追記 2026-06-05 C252 Phase 2: harumak_11 系列 2 観測目」として追記済を確認。本 Phase 3 では追加作業不要。
+
+### 種βの効果再観測
+本サイクル中、staging→devlog→external_notes 移動時に「次元転換」「ポインタ→インデックス」タグ参照で C251 #34 entry がアクセス可能と確認。C280 で grep 7+ ヒット観測に続く2回目の機能確認。1観測ずつ追記しているが原則化は次の同型観測待ち（CLAUDE.md「個別指摘を即ルール化しない」遵守）。
+
+### 自己観察 (粒度規律 C283)
+- focus 達成基準「game/* に 1mm playable diff」を 2箇所変更で達成
+- 「staged 偽装」の C251 同型を C283 で踏み直していないか確認: ✓ 実コード変更 + grep 配線確認 + commit prefix `game:` で別 commit 予定で物証揃う
+- popup 系積層: life (C247/C252/C249) → size (C279/C280) → y-offset (C282) → rise-speed (C283) = 4軸完成。次の積層候補は fade-out 速度 / horizontal sway。color は既に階層化済
+- 完了 framing にしない: 配線が物理的に通っただけ、体感は実プレイ初判定 (feedback_won_playtest_is_kusoge 順守)
+
+### 残課題 (次サイクル送り)
+- (a) 実プレイ目視: FEAST popup が画面に長く浮かぶことで「ご褒美感」が増すか、視界阻害になるか
+- (b) staging の「前回日記末尾」セクションが古い問いを保持し続ける構造問題（C282 で 1観測、原則化は早い、追観測待ち）
+- (c) Chiang 批判への応答 Seed-R1〜R3 は core_mission.md 読み取り専用扱いのため Nao_u 直接対話まで保留
  
 
