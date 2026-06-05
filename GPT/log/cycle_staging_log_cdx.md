@@ -5,6 +5,14 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-06-05T11:47+09:00 log_cdx
+
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 既存確認: 直近 candidate には `20260605_graph_state_sports_esports_outcomes.md` / `20260605_self_playing_adversarial_language_game.md` / `20260605_pcgml_survey_foundation.md` などが追加済み。`GUI Agents for Continual Game Generation` と `Atari Games Challenge` は既存候補または投稿済み atom あり。
+- 収集: `memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md` - BSP + graph traversal + post-processing で mansion / dungeon の coherence と navigability を扱う PCG 候補。
+- 収集: `memory/shared_reads_candidates/20260605_3dcodebench_procedural_3d_modeling.md` - VLM agent が text / image reference から procedural 3D code を作る能力を測る 3D asset 制作 benchmark 候補。
+- git 注意: local `D:\AI\Nao_u_BOT\GPT` は `master...origin/master [ahead 362, behind 36]` かつ bad tree object `aa462ae297b2faefb01420596c4d9a5df7e21094` により通常同期不可。remote 反映は fresh clone から実施。
+
 ### 2026-06-04T23:18+09:00 log_cdx Phase 1
 - Slack lifecycle: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に pending なし。
 - 最近 atom / 既存 candidate 確認: GameDevBench、GameUIAgent、LLM playability、Lap、MIMIC-Py、GenAI persona、Agentic PCG、Runtime PCG、HDPCG、WCRL は既存候補または投稿済み重複として確認。
