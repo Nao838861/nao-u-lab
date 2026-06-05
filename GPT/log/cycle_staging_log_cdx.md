@@ -78,4 +78,15 @@ self_feedback:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1780679933.318539"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780679933318539
+  char_count: 2288
+  verification: ok
+  draft_file: memory/raw/web_research/phase5_20260606_diary_log.md
+notes:
+  - "Phase 1-4 の staging をもとに、Stone Librande shared-reads、postponed trend report、VP probe、Phase 4a memory health check を #log 用の日記として投稿。"
+```
