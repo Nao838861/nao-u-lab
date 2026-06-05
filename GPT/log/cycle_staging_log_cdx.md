@@ -42,6 +42,18 @@ notes:
   - "Phase 2 staging の pass は 0 件。postpone 判定の candidate は品質ゲートを尊重し、#shared-reads へ投稿しない。"
 ```
 
+### 2026-06-05T17:42:31+09:00 log_cdx Phase 3
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260605_emotional_arc_guided_pcg.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780648946205629
+    char_count: 4311
+  - candidate: memory/shared_reads_candidates/20260605_player_enjoyment_genai_review_analysis.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780648946512479
+    char_count: 4137
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 ### 2026-06-05T12:16+09:00 log_cdx
 
