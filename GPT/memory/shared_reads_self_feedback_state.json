@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-05T12:16:00+09:00",
+  "updated_at": "2026-06-06T00:00:43+09:00",
   "reviewed_source_ts": [
+    "1780663946.116599",
     "1780620629.905689",
     "1780369979.684839",
     "1780373599.771349",
@@ -111,6 +112,29 @@
     "1780362683.491849"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-06T00:00:43+09:00",
+      "id": "sr-1780663946-02a5c15199",
+      "source_ts": "1780663946.116599",
+      "title": "Video Game Level Design as a Multi-Agent Reinforcement Learning Problem",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because the current game-production loop repeatedly needs small level, enemy-placement, room-connection, and hazard-placement changes, but a single large generator or a single aggregate quality score can hide which local edit actually improved the playable artifact. The shared-read argues for distributed local editors with shared proxy reward, while also warning that PCGRL domains are simple and proxy design remains human work. Existing probes cover attribution splits, proxy variance, dynamic stress, and read-to-action evidence; they do not require the next generator or repair pass to be decomposed into local editing passes with one shared deterministic proxy and an explicit proxy-overclaim check. Keep this as a reversible game-generation probe, not a permanent rule or RL implementation task.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next level, enemy-placement, room-connection, reward-item, or hazard generation/repair pass, did I split the change into at most three local editing passes instead of asking one broad generator to optimize the whole map at once?",
+        "Did each local pass name the shared deterministic proxy it is allowed to improve, such as unreachable tile count, start-to-goal distance, local enemy-density gradient, recovery-point risk distance, or invisible instant-death placement count?",
+        "Before calling the result better, did I check that the proxy is not being treated as fun, tension, or readability itself and name the remaining human/browser/headless evidence needed?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two level-generation or generated-layout repair notes already decompose edits into local passes, name one shared deterministic proxy per pass, and mark proxy limits before making player-experience claims."
+    },
     {
       "reviewed_at": "2026-06-05T12:16:00+09:00",
       "id": "sr-1780620629-fd5fb1ee24",
@@ -2140,6 +2164,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260606-local-editing-shared-proxy",
+      "created_at": "2026-06-06T00:00:43+09:00",
+      "source_ts": "1780663946.116599",
+      "scope": "next level, enemy-placement, room-connection, reward-item, or hazard generation/repair pass where Codex may ask one broad generator or one aggregate score to judge the whole playable artifact",
+      "questions": [
+        "Before the next level, enemy-placement, room-connection, reward-item, or hazard generation/repair pass, did I split the change into at most three local editing passes instead of asking one broad generator to optimize the whole map at once?",
+        "Did each local pass name the shared deterministic proxy it is allowed to improve, such as unreachable tile count, start-to-goal distance, local enemy-density gradient, recovery-point risk distance, or invisible instant-death placement count?",
+        "Before calling the result better, did I check that the proxy is not being treated as fun, tension, or readability itself and name the remaining human/browser/headless evidence needed?"
+      ],
+      "expires_after": "Review after the next two level-generation or generated-layout repair notes that use local editing passes, deterministic proxies, or generated map quality claims."
+    },
     {
       "id": "probe-20260602-event-appraisal-timeline",
       "created_at": "2026-06-02T04:13:12+09:00",

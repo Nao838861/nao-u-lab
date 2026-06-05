@@ -41,7 +41,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780663946-02a5c15199
+    source_ts: "1780663946.116599"
+    title: "Video Game Level Design as a Multi-Agent Reinforcement Learning Problem"
+    reason: "直近のゲーム制作では level / enemy placement / room connection / hazard placement を小さく生成・修正する場面が多い。multi-agent PCGRL 本体ではなく、局所 editing pass と共有 deterministic proxy という構造だけを次回行動へ移せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の level / enemy-placement / room-connection / reward-item / hazard generation or repair で、広い generator 1 個ではなく最大 3 個の局所 editing pass に分け、各 pass の共有 deterministic proxy と proxy の限界を確認する probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
