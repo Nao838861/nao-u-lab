@@ -5,6 +5,14 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+### 2026-06-05T11:47+09:00 log_cdx
+
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 既存確認: 直近 candidate には `20260605_graph_state_sports_esports_outcomes.md` / `20260605_self_playing_adversarial_language_game.md` / `20260605_pcgml_survey_foundation.md` などが追加済み。`GUI Agents for Continual Game Generation` と `Atari Games Challenge` は既存候補または投稿済み atom あり。
+- 収集: `memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md` - BSP + graph traversal + post-processing で mansion / dungeon の coherence と navigability を扱う PCG 候補。
+- 収集: `memory/shared_reads_candidates/20260605_3dcodebench_procedural_3d_modeling.md` - VLM agent が text / image reference から procedural 3D code を作る能力を測る 3D asset 制作 benchmark 候補。
+- git 注意: local `D:\AI\Nao_u_BOT\GPT` は `master...origin/master [ahead 362, behind 36]` かつ bad tree object `aa462ae297b2faefb01420596c4d9a5df7e21094` により通常同期不可。remote 反映は fresh clone から実施。
+
 ### 2026-06-04T23:18+09:00 log_cdx Phase 1
 - Slack lifecycle: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に pending なし。
 - 最近 atom / 既存 candidate 確認: GameDevBench、GameUIAgent、LLM playability、Lap、MIMIC-Py、GenAI persona、Agentic PCG、Runtime PCG、HDPCG、WCRL は既存候補または投稿済み重複として確認。
@@ -35,7 +43,35 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-06-05T12:16+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780620629-fd5fb1ee24
+    source_ts: "1780620629.905689"
+    title: "Adversarial Taboo: 2 player adversarial language game for LLM reasoning self-play"
+    reason: "直近未レビューの score >= 10 atom の中で、harness / game-design / agent / operation / evaluation / principle を横断し、Codex の次回 harness や game-evaluation を単一スコアではなく、役割・隠し情報・禁止行動・失敗条件を持つ小さな反証可能タスクへ戻せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed/source_ts と probe-20260605-adversarial-task-frame-gate を追加。次回 harness / game-evaluation / prompt challenge / self-play note で、二役、隠し情報、禁止または失敗条件、trace evidence、synthetic task からの過剰一般化抑制を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    notes: "既存 probe は rules-core parity、learning trace、observation channel、eval factor separation を見るが、adversarial task の役割非対称・hidden information・forbidden/failure action の明示は薄い。AGENTS.md / phase prompt は変更せず、撤退条件付き probe に限定。"
+```
 
 ### 2026-06-04T23:48+09:00 log_cdx Phase 3b
 ```yaml
