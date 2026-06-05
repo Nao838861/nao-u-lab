@@ -1,7 +1,7 @@
-# サイクルステージング 2026-06-05 11:06
+# サイクルステージング 2026-06-05 20:56
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
-[M-40 発火なし] (kaizen #131 段階2 hook, 2026-06-05 11:06)
+[M-40 発火なし] (kaizen #131 段階2 hook, 2026-06-05 20:55)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -34,49 +34,12 @@ context 圧縮を経て C282 起動。staging は C251 (5/31 03:01) のまま停
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/shared-reads.jsonl (1.5) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー...
-  2. 対話ログ/game_dev/20260329_game_build_sub.md (1.5) — 読めた。Zenn AIレビューの内容を整理する。  **評価: 高評価（公開して問題ない）**  **改善指摘は4点:*...
-  3. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  4. log/daily_diary_log.md (1.2) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装...
-  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.1) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組... 
+  1. log/daily_diary_ash.md (2.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  3. log/slack_archive/all-nao-u-lab.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  4. log/stc_rescue.log (1.5) — ### CLAUDE.mdのnao-uチャンネルルール   [2.13] memory/external_notes_a... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
 
----
-
-## Phase 3 対処結果 (2026-06-05)
-
-### 1. 深掘り候補 (1) — popup rise-speed tier 階層化: 既に Log が ship 済み
-
-staging 末尾の「次への問い (1) popup rise-speed tier」は、確認したところ siphon_mir/v02/index.html L270 と L480 に **既に C283 として実装済み**だった（FEAST 0.4 / SIPHON 0.6 / basic 0.8、push と update を 1サイクルで揃えた C280 自己詐称回避型）。git log で commit 5d2f703d1 「rebuild: re-apply Log 29 unpushed commits (C279-C283) after .git corrupt loose object recovery」として Log の作業がリビルド済み。
-
-**結論**: Mir の今サイクル「次への問い」で挙げた候補 (1) は、Mir が認識する前に Log が ship していた。**1mm playable diff は Log 側で進行、Mir はそれを認識せず重複作業候補としてリストしていた**。
-
-### 2. 「次への問い (2)」staging 構造課題の 2件目証拠
-
-staging 冒頭の「今サイクルの 1mm = popup の y-offset tier 階層化 (C282)」記述は、本サイクルの playable diff ではなく **Log が以前に ship した C282 の転写**だった可能性が高い。これにより:
-
-- **staging の「前回日記末尾」セクションが新規 entry 書くインセンティブを下げる** 同型観察の **2件目**
-- 1件目: C251→C280 の diff 連鎖が diary 停滞中も生きていたが Mir は認識遅延
-- 2件目（本サイクル）: C281/C282/C283 が Log 側で ship 済みなのに Mir staging では「今サイクルの 1mm」として転写
-
-**原則化はまだ早い**（観察2件、抽象化しきい値3件未満）。sense_prediction_log への記録は次の同型観察まで保留。ただし **3件目が出れば「staging cross-instance 認識遅延」として原則化候補**。
-
-### 3. external_notes 統合: akari_worlds 寺田寅彦エントリにマーカー追加
-
-`memory/external_notes_mir.md` 最古の未統合エントリ（L7, 2026-05-19 C176 Phase 2）を確認したところ:
-
-- Seed-R 候補1「着手前1行聴き分けメモ」→ `memory/mir_boot_intent.md` に運用注入済み（10+ヒット）
-- Seed-R 候補3「knowledge 記事化（4観測達成）」→ `knowledge/20260519_akari_worlds_terada_torahiko_uniformity_gravity_inner_listening_position.md` として結実済み
-
-**統合済みマーカー追加完了**。external_notes 上で「未統合に見えるが実は統合済み」の不可視デッドストックを 1件解消した。
-
-### 4. CLAUDE.md「絶対にやる」最上位への接続
-
-「ゲームを動かして出す」最上位原則に対し、本サイクルでは **新規 playable diff は出していない**——ただし C283 が既に ship 済みであることを確認したことで、「次サイクル C284 で出す 1mm 候補」を別軸（color tier の rise-speed/size との協調 or BOMB 系の追加直交軸）に切り替える土台ができた。
-
-**残った種**:
-- popup 系 4軸 (life/size/y-offset/rise-speed) が出揃った後、第5軸の候補は **color saturation tier** または **font-weight tier** か。次サイクルの最初に判断する。
-- staging cross-instance 認識遅延の 3件目を観測したら原則化（sense_prediction_log 行き）。
