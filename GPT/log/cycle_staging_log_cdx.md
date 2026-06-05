@@ -43,7 +43,35 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-06-05T12:16+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780620629-fd5fb1ee24
+    source_ts: "1780620629.905689"
+    title: "Adversarial Taboo: 2 player adversarial language game for LLM reasoning self-play"
+    reason: "直近未レビューの score >= 10 atom の中で、harness / game-design / agent / operation / evaluation / principle を横断し、Codex の次回 harness や game-evaluation を単一スコアではなく、役割・隠し情報・禁止行動・失敗条件を持つ小さな反証可能タスクへ戻せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed/source_ts と probe-20260605-adversarial-task-frame-gate を追加。次回 harness / game-evaluation / prompt challenge / self-play note で、二役、隠し情報、禁止または失敗条件、trace evidence、synthetic task からの過剰一般化抑制を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    notes: "既存 probe は rules-core parity、learning trace、observation channel、eval factor separation を見るが、adversarial task の役割非対称・hidden information・forbidden/failure action の明示は薄い。AGENTS.md / phase prompt は変更せず、撤退条件付き probe に限定。"
+```
 
 ### 2026-06-04T23:48+09:00 log_cdx Phase 3b
 ```yaml

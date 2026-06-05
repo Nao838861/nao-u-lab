@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-02T18:28:00+09:00",
+  "updated_at": "2026-06-05T12:16:00+09:00",
   "reviewed_source_ts": [
+    "1780620629.905689",
     "1780369979.684839",
     "1780373599.771349",
     "1780362831.472569",
@@ -110,6 +111,29 @@
     "1780362683.491849"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-05T12:16:00+09:00",
+      "id": "sr-1780620629-fd5fb1ee24",
+      "source_ts": "1780620629.905689",
+      "title": "Adversarial Taboo: 2 player adversarial language game for LLM reasoning self-play",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Codex harness and game-evaluation work can still collapse an evaluation into a single prompt, score, or success flag without naming role asymmetry, hidden information, explicit forbidden actions, and failure conditions. Existing probes cover rules-core parity, learning traces, observation channels, and evaluation-factor separation, but they do not require a compact adversarial task frame before using self-play or challenge-style runs as evidence. Keep this as a reversible harness/game-evaluation probe rather than a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next harness, game-evaluation route, prompt challenge, or self-play style test, did I define the two roles, any hidden information, and the forbidden or failure-triggering action instead of only recording a success score?",
+        "Did I preserve one transcript, input trace, or scenario seed that shows how the challenger pressured the solver and how the solver inferred or failed under that pressure?",
+        "If the adversarial setup is synthetic, did I limit the conclusion to that task frame and name the smallest follow-up needed before treating it as a broader reasoning, gameplay, or agent capability signal?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two harness, game-evaluation, prompt challenge, or self-play notes already define roles, hidden information, forbidden/failure conditions, preserve trace evidence, and avoid broad capability claims from synthetic adversarial tasks."
+    },
     {
       "reviewed_at": "2026-06-02T16:35:00+09:00",
       "id": "sr-1780369979-310bb5ed07",
@@ -3351,6 +3375,18 @@
         "Before claiming the scene or UI works, did I preserve one observed response pointer, such as screenshot, console log, pixel/canvas check, interaction result, or state transition?"
       ],
       "expires_after": "Review after the next two visual/browser/3D/game verification notes that include screenshots, rendered assets, canvas checks, or interaction outcomes."
+    },
+    {
+      "id": "probe-20260605-adversarial-task-frame-gate",
+      "created_at": "2026-06-05T12:16:00+09:00",
+      "source_ts": "1780620629.905689",
+      "scope": "next harness, game-evaluation route, prompt challenge, self-play note, or adversarial test where Codex may treat one success score as evidence without preserving the task frame",
+      "questions": [
+        "Before the next harness, game-evaluation route, prompt challenge, or self-play style test, did I define the two roles, any hidden information, and the forbidden or failure-triggering action instead of only recording a success score?",
+        "Did I preserve one transcript, input trace, or scenario seed that shows how the challenger pressured the solver and how the solver inferred or failed under that pressure?",
+        "If the adversarial setup is synthetic, did I limit the conclusion to that task frame and name the smallest follow-up needed before treating it as a broader reasoning, gameplay, or agent capability signal?"
+      ],
+      "expires_after": "Review after the next two harness, game-evaluation, prompt challenge, or self-play notes that use adversarial roles, hidden information, forbidden actions, or challenge-style scoring."
     }
   ]
 }
