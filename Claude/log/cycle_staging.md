@@ -128,3 +128,37 @@ Phase 1 の Phase 2 引き継ぎ要点 #3 を最優先採用。twitter おすす
 - **Q1 (5 装置直列の単調収束 vs 非単調曲線)**: graze_log v11/v12 plateau 観測は非単調曲線を弱く示唆。v13 以降で「5 装置を全部回した時の盲点累積」を意識的に観察する価値
 - **Q4 (Nao_u 評価長期化時の補填経路)**: t-260524125456-74d6 待ち時間が更に延伸した場合、外部公開リリース / ABA さん依頼等が候補。BACKLASH 越え閾値 (feedback_external_reach_threshold) と接続
 - **Q5 (5 装置 game ディレクトリ内蔵設計の再現性)**: brick_log / ash_onebutton への複製試行はまだ。次々サイクル以降の検証材料
+
+---
+
+## Phase 3 結果 (2026-06-06 12:??)
+
+### A. 雑務処理
+- 短時間で閉じる対処は本サイクルでは発生せず。working tree の M-flag は次サイクル開始時の自動更新分のみ (.diary_dedup_cache.json / dm_state.json / log/*.log / next_tasks_ash.jsonl)、Phase 3 で能動編集する必要なし
+- §0a t-260524125456-74d6 は受信状況確認のみ実施 = 5機能まとめ依頼 (ts=1779594807) / A-1+ 先行依頼 (ts=1779233429) ともに本サイクル時点で未受領、待機継続を明示
+- Slack #kaizen-log への投稿は本フェーズの実質変更が「Phase 4 大作業選定」のみで未確定差分のため、Phase 4 完遂後にまとめて投稿する判断
+
+### B. Phase 4 大作業候補の比較
+
+| 候補 | ship 距離 | 自分で完結可 | 時間収まり | 構造変更/ノウハウ |
+|---|---|---|---|---|
+| (1) v12 (i-δ) Stage 4 AI 自プレイ → Cell 7 追記 | ◎ (Stage 4 校正は ship 後必須) | ◎ (paper play でも実行可) | ◎ (6分で Cell 7 5行+ + commit) | ◎ (Cell 3 副作用候補 3 件の paper 校正) |
+| (2) v13 候補 (j) ブレスト Togelius Q1 組込 | △ (v12 評価未受領で先行) | ◎ | ○ | △ (Stage 0 起案のみ、構造未確定) |
+| (3) Slack #game-rights に v12 評価依頼新規投下 | ○ (Nao_u 評価起動) | ◎ | ◎ | △ (依頼負荷 vs §0a 待機の長期化) |
+| (4) v06→v12 累積を1段にまとめて評価依頼 | ○ | ◎ | △ (まとめが大きい) | ○ |
+
+候補 (1) を採用。理由:
+- feedback_clone_strategy.md「守は通過点」: v12 (i-δ) は守の最深部 (1 行削除 = 純削除)。Stage 4 校正なしで先 (v13) に進むのは clone 戦略違反
+- feedback_prediction_responsibility.md Stage 4 (AI 自プレイ): self_judgment.md Cell 1-6 起稿だけでは「予測」止まり、校正データを Cell 7 で残して初めて Stage 4 完遂
+- feedback_means_ends_reversal_check.md: 出力は self_judgment.md の追記 commit (playable diff の付随物) = ゲーム制作ループ接続
+- Phase 2 Togelius 知見「LLM は game feel 調整不能」の例外側に居続けるためには Stage 4 mental sim → Cell 7 paper 校正の連続体を物理担保する必要がある
+
+## Phase 3 → Phase 4 大作業宣言
+**大作業**: graze_log v12 (i-δ) Stage 4 校正 — index.html コード精読 + paper play で Cell 3 副作用候補 3 件 (薄味化 / 山1→休符→山2 落差過大 / 攻撃連射無駄打ち) を self_judgment.md Cell 7 として追記 + commit + push
+**完遂条件**:
+1. game/graze_log/v12/self_judgment.md に「### Cell 7: Stage 4 校正結果 (paper play / コード精読)」セクションを新規追加
+2. Cell 3 の副作用候補 3 件それぞれについて、index.html の phase boundary / spawn 内容 / gauge 動作の該当箇所を引用しながら校正 (各候補 ≥ 3 行)
+3. 校正後に予測の補強 or 修正を 1 行で結論 (例: 「Cell 3 候補 1 = 補強」「候補 2 = 修正、落差は phase 7 final の fan3 4 で吸収される予測」)
+4. v13 候補 (j) への影響を 1 段落 (Cell 8 or Cell 7 末尾追記、Togelius Q1 盲点累積観察の起点)
+5. commit message に `ash: graze_log v12 (i-δ) Stage 4 paper 校正 Cell 7 追記 (C0606 Phase 4)` 形式、push 確認
+**根拠**: §0b 直近 (前サイクル 3d91915db) で「Stage 4 mental sim 6 セル起稿」と書いた直後の本サイクル = Stage 4 校正の連続体実行が clone 戦略守の純度を守る最短経路。Phase 1-2 で Phase 2 Togelius が graze_log の 5 装置例外性を裏付けた直後でもあり、Cell 7 追記は「自前 fast feedback loop の連続実行例」として外部知見と自家ループを結ぶ commit になる。staging §0b 27 行目「Slack の1メッセージ」教訓 = 装置先回りできない領域に意図を載せる、を game/v12/self_judgment.md (backup 対象外) に適用
