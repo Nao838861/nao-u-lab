@@ -14,6 +14,11 @@ from typing import Any
 
 import memory_lifecycle
 from atom_quality import apply_memory_layer
+from atom_related_candidates import (
+    RELATED_CANDIDATES_PATH,
+    build_related_candidate_rows,
+    write_jsonl as write_related_jsonl,
+)
 from atoms_fileformat import sync_per_file_atoms
 from memory_game_task_facets import build_game_task_entry_points
 
@@ -87,6 +92,12 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as f:
         for row in rows:
             f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def sync_related_candidates(atoms: list[dict[str, Any]]) -> int:
+    rows = build_related_candidate_rows(atoms)
+    write_related_jsonl(RELATED_CANDIDATES_PATH, rows)
+    return len(rows)
 
 
 def load_state() -> dict[str, Any]:
@@ -387,12 +398,14 @@ def main() -> None:
 
     # Phase C dual-write: keep per-file .md + atoms/index.jsonl in sync
     per_file_changed, per_file_total = sync_per_file_atoms(all_atoms, ATOMS_DIR)
+    related_candidate_rows = sync_related_candidates(all_atoms)
 
     print(f"source rows: {len(rows)}")
     print(f"added atoms: {len(added)}")
     print(f"total atoms: {len(all_atoms)}")
     print(f"index: {INDEX_PATH}")
     print(f"per-file: changed={per_file_changed} total={per_file_total} dir={ATOMS_DIR}")
+    print(f"related-candidates: rows={related_candidate_rows} path={RELATED_CANDIDATES_PATH}")
 
 
 if __name__ == "__main__":

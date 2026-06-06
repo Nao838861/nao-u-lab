@@ -141,6 +141,7 @@ def ingest_slack_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             newline="\n",
         )
         sync_per_file_atoms(all_atoms, memory_ingest.ATOMS_DIR)
+        memory_ingest.sync_related_candidates(all_atoms)
         numeric_ts = []
         for atom in all_atoms:
             try:

@@ -198,6 +198,7 @@ def write_atoms(added: list[dict[str, Any]]) -> None:
         encoding="utf-8",
         newline="\n",
     )
+    memory_ingest.sync_related_candidates(all_atoms)
 
 
 def main() -> int:

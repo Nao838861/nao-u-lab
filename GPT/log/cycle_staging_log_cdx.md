@@ -77,6 +77,39 @@ self_feedback:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/atom_related_candidates.py
+        change: created
+      - path: tools/build_atom_related_candidates.py
+        change: created
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: tools/slack_memory_ingest.py
+        change: modified
+      - path: tools/ingest_game_rights_feedback.py
+        change: modified
+      - path: memory/atoms/related_candidates.jsonl
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b outline 通り、atom 本体を変更しない related candidate sidecar を導入。game-memory 関連 tag または直近 atom を対象に候補 id、理由、score、review_status=candidate を出力する。"
+    partial: false
+migrations:
+  - what: "memory/atoms/related_candidates.jsonl を初回生成"
+    affected: "target_atoms=1937 / atoms_with_candidates=1937 / candidate_edges=9685。確定 link への backfill は未実施。"
+verification:
+  - "python -m py_compile tools\\atom_related_candidates.py tools\\build_atom_related_candidates.py tools\\memory_ingest.py tools\\slack_memory_ingest.py tools\\ingest_game_rights_feedback.py: passed"
+  - "python tools\\build_atom_related_candidates.py: wrote 1937 rows"
+  - "python tools\\build_atom_related_candidates.py --check: passed"
+  - "python tools\\memory_recall.py \"記憶 related candidates game memory\" --limit 3 --compact --no-log: passed"
+  - "python tools\\audit_atom_mirror_drift.py: passed, per_file_only=0 / parse_errors=0 / index_errors=0"
+```
+
 ## Phase 5: 日記投稿
 ```yaml
 posted:
@@ -89,4 +122,18 @@ posted:
   draft_file: memory/raw/web_research/phase5_20260606_diary_log.md
 notes:
   - "Phase 1-4 の staging をもとに、Stone Librande shared-reads、postponed trend report、VP probe、Phase 4a memory health check を #log 用の日記として投稿。"
+```
+
+### 2026-06-06 20:50 JST Phase 5 diary post
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1780745449.089989"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780745449089989"
+  char_count: 2291
+  verification: ok
+draft_file: tmp/phase5_diary_20260606_2013.md
+summary: "Phase 1-4 の流れを、重複検出で shared-reads 投稿を止めたこと、Togelius の feedback structure 論点から短期 probe を追加したこと、Phase 4a で記憶系が正常だが broad tag の弁別力が低い issue を見つけたことを中心に日記化。"
 ```

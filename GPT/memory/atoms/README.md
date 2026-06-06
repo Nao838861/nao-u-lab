@@ -102,6 +102,32 @@ excerpt 全文 (atoms.jsonl では切り詰めていた部分も含めて自由�
 python tools/build_atom_duplicate_groups.py
 ```
 
+## related_candidates.jsonl 仕様
+
+`related_candidates.jsonl` は、atom 間の peer-link 候補を記録する再生成可能な sidecar。source of truth ではなく、確定 link でもない。atom 本体、frontmatter、本文中の wikilink はこの index だけでは変更しない。
+
+初期導入では対象を game-memory 関連 tag を持つ atom と直近 atom に限定する。一括 backfill は行わず、候補の coverage とノイズを Phase 4a で見てから、採用するものだけを別段階で links 化する。
+
+1 レコードは 1 target atom。主なフィールドは次の通り。
+
+```json
+{"atom_id":"sr-...","title":"...","tags":["game-design","memory"],"source":"slack_api/shared-reads","created_at":"2026-06-07T00:00:00","source_ts":"1780...","reasons":["shared_tags","shared_terms"],"candidate_ids":["sr-..."],"candidates":[{"id":"sr-...","title":"...","score":7.4,"reasons":["shared_tags:memory,game-design"]}],"review_status":"candidate","scope":"game-memory-or-recent","generated_at":"2026-06-07T00:00:00"}
+```
+
+Phase 4a で見る最小指標:
+
+- `candidate_coverage`: 対象 atom のうち候補が出た割合。
+- `candidate_edges`: 候補 edge 数。
+- `accepted links`: 後続で atom 本体に採用済み link として反映された数。
+- `rejected/noisy examples`: Phase 4a 監査で誤リンク・弱い候補として見つけた例。
+
+再生成:
+
+```powershell
+python tools/build_atom_related_candidates.py
+python tools/build_atom_related_candidates.py --check
+```
+
 ## Obsidian Graph view を使う
 
 このディレクトリを Obsidian の vault または vault サブフォルダとして開けば、
