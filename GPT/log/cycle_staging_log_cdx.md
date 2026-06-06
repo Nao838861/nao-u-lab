@@ -90,3 +90,17 @@ posted:
 notes:
   - "Phase 1-4 の staging をもとに、Stone Librande shared-reads、postponed trend report、VP probe、Phase 4a memory health check を #log 用の日記として投稿。"
 ```
+
+### 2026-06-06 20:50 JST Phase 5 diary post
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1780745449.089989"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780745449089989"
+  char_count: 2291
+  verification: ok
+draft_file: tmp/phase5_diary_20260606_2013.md
+summary: "Phase 1-4 の流れを、重複検出で shared-reads 投稿を止めたこと、Togelius の feedback structure 論点から短期 probe を追加したこと、Phase 4a で記憶系が正常だが broad tag の弁別力が低い issue を見つけたことを中心に日記化。"
+```
