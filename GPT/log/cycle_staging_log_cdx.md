@@ -77,6 +77,39 @@ self_feedback:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/atom_related_candidates.py
+        change: created
+      - path: tools/build_atom_related_candidates.py
+        change: created
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: tools/slack_memory_ingest.py
+        change: modified
+      - path: tools/ingest_game_rights_feedback.py
+        change: modified
+      - path: memory/atoms/related_candidates.jsonl
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b outline 通り、atom 本体を変更しない related candidate sidecar を導入。game-memory 関連 tag または直近 atom を対象に候補 id、理由、score、review_status=candidate を出力する。"
+    partial: false
+migrations:
+  - what: "memory/atoms/related_candidates.jsonl を初回生成"
+    affected: "target_atoms=1937 / atoms_with_candidates=1937 / candidate_edges=9685。確定 link への backfill は未実施。"
+verification:
+  - "python -m py_compile tools\\atom_related_candidates.py tools\\build_atom_related_candidates.py tools\\memory_ingest.py tools\\slack_memory_ingest.py tools\\ingest_game_rights_feedback.py: passed"
+  - "python tools\\build_atom_related_candidates.py: wrote 1937 rows"
+  - "python tools\\build_atom_related_candidates.py --check: passed"
+  - "python tools\\memory_recall.py \"記憶 related candidates game memory\" --limit 3 --compact --no-log: passed"
+  - "python tools\\audit_atom_mirror_drift.py: passed, per_file_only=0 / parse_errors=0 / index_errors=0"
+```
+
 ## Phase 5: 日記投稿
 ```yaml
 posted:
