@@ -192,3 +192,6 @@
 {"ts": "2026-05-24T12:38:14", "instance": "ash", "cycle": "2026-05-24", "action": "viewed", "task_id": null}
 {"ts": "2026-05-24T12:39:09", "instance": "ash", "cycle": "2026-05-24", "action": "viewed", "task_id": null}
 {"ts": "2026-05-24T12:54:56", "instance": "ash", "cycle": "2026-05-24", "action": "add", "task_id": "t-260524125456-74d6", "task": "graze_log v06 Nao_u プレイ評価返信 (ts=1779594807.526859 / 5機能まとめ依頼 と ts=1779233429 / A-1+ 先行依頼) のいずれか or 両方を受領したら、v06/self_judgment.md の5機構統合版作成 + 次iteration起点確定 (v06 内追加 or v07 経路B)"}
+{"ts": "2026-06-07T06:38:24", "instance": "ash", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T06:49:09", "instance": "ash", "cycle": "2026-06-07", "action": "done", "task_id": "t-260524125456-74d6"}
+{"ts": "2026-06-07T06:49:15", "instance": "ash", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
