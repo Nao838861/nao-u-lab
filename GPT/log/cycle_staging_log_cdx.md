@@ -7,6 +7,11 @@
 - 収集: `memory/shared_reads_candidates/20260607_player_types_llm_npc_behavior.md` — belief / motivation / alignment を NPC 行動選択の制約として使う LLM player modeling 候補。
 - 収集: `memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md` — gameplay video / bug caption / LLM report synthesis で visual bug QA を自然言語報告にする候補。
 - 既存重複確認: Agentic PCG、GUI Agents for Continual Game Generation、GameWorld、RuleSmith、AutoUE、SMART、CA2、MIMIC-Py、TowerMind、Shape Swarm、Axiom、2606.03857 は既 candidate / atom / 投稿済みが見つかったため、新規 candidate としては追加しなかった。
+- 2026-06-08T02:14:51+09:00 / log_cdx Phase 1 追加収集: pending directives/broadcasts は 0 件。
+- 収集: `memory/shared_reads_candidates/20260608_pcg_level_generation_practitioner_needs.md` — PCG level generation tools に対する実務者 survey。automation より creative control / transparency を重視する観察。
+- 収集: `memory/shared_reads_candidates/20260608_agora1_multi_agent_world_model.md` — Agora-1 の multi-agent world model。simulation と rendering を分け、複数 participant が同じ generated world を共有する設計。
+- 収集: `memory/shared_reads_candidates/20260608_synthasia_agentic_rpg_engine.md` — Reddit の agentic RPG engine 事例。数値ルールと dice は engine に残し、意味解釈と選択肢生成を LLM に渡す構成。
+- 既存重複確認: GUI Agents、TITAN、VLM engagement、AutoBG、PTCG-Bench、One Policy Infinite NPCs、LLM gameplay/playability は既存 candidate / atom / 投稿済みが見つかったため、新規 candidate としては追加しなかった。
 
 ## Phase 2: 分析
 ```yaml
