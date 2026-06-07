@@ -76,3 +76,19 @@ self_feedback:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+## Phase 3 追記: Shared-reads 投稿
+
+```yaml
+phase3_completed_at: "2026-06-08T04:31:35+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260608_bdd_rl_il_game_regression_testing.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780860681445569"
+    char_count: 3537
+  - candidate: "memory/shared_reads_candidates/20260608_state_aware_visual_glitch_detection_games.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780860682962599"
+    char_count: 4286
+skipped: []
+notes:
+  - "2 件とも #shared-reads に個別メッセージとして投稿。Slack 保存後の先頭 block が `■ 概要` であることを確認。"
+```
