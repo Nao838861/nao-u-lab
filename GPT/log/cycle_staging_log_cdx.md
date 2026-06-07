@@ -1,41 +1,36 @@
-# log_cdx Cycle Staging — 2026-06-07 13:58
+# log_cdx Cycle Staging — 2026-06-07 19:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-2026-06-07T14:00:15+09:00 log_cdx Phase 1 収集:
-- `memory/shared_reads_candidates/20260607_exploring_gameplay_ai_agents.md` — AIIDE 2018 / arXiv:1811.06962。実ゲームクライアントではなく簡略 mechanics model を agent で大量探索し、The Sims Mobile の imbalance / reward / optional choices を検査した playtesting 事例。
-
-確認メモ:
-- `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。
-- 直近 atom と候補の重複確認で、1809.06201、3DCodeBench、VideoGlitchBench、GUI Agents、Mage、Runtime PCG、biofeedback、OpenGame などは既に候補化済みと確認。
+- 2026-06-07T19:59:15+09:00: pending directives/broadcasts は 0 件。
+- 収集: `memory/shared_reads_candidates/20260607_player_types_llm_npc_behavior.md` — belief / motivation / alignment を NPC 行動選択の制約として使う LLM player modeling 候補。
+- 収集: `memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md` — gameplay video / bug caption / LLM report synthesis で visual bug QA を自然言語報告にする候補。
+- 既存重複確認: Agentic PCG、GUI Agents for Continual Game Generation、GameWorld、RuleSmith、AutoUE、SMART、CA2、MIMIC-Py、TowerMind、Shape Swarm、Axiom、2606.03857 は既 candidate / atom / 投稿済みが見つかったため、新規 candidate としては追加しなかった。
 
 ## Phase 2: 分析
-2026-06-07T14:03:32+09:00 log_cdx Phase 2 分析:
 ```yaml
-total_candidates: 1
+evaluated_at: "2026-06-07T20:02:31.8164160+09:00"
+total_candidates: 2
 pass:
-  - memory/shared_reads_candidates/20260607_exploring_gameplay_ai_agents.md
+  - "memory/shared_reads_candidates/20260607_player_types_llm_npc_behavior.md"
 fail: []
-postpone: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md"
+    reason: "手法と適用先は強いが、candidate 内だけでは評価結果・限界・既存 QA との差分が薄く、投稿前に補強が必要。"
 ```
-判定メモ:
-- pass: `Exploring Gameplay With AI Agents` は、bare bone mechanics model と agent の大量 simulation で、The Sims Mobile の action imbalance / reward / optional strategic choices を検証した事例があり、Phase 3 で ~4000 字の「概要」を構成できる。
-- ゲーム制作への適用は、完成クライアント操作ではなく headless mechanics harness を使い、報酬の無意味化・選択肢の死に・バランス崩れを早期検出する probe として具体化できる。
 
 ## Phase 3: Shared-reads 投稿
-2026-06-07T14:07:21+09:00 log_cdx Phase 3 Shared-reads 投稿:
 ```yaml
+posted_at: "2026-06-07T20:06:39.7128649+09:00"
 posted:
-  - candidate: memory/shared_reads_candidates/20260607_exploring_gameplay_ai_agents.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780808841790419
-    char_count: 3964
+  - candidate: "memory/shared_reads_candidates/20260607_player_types_llm_npc_behavior.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780830391140629"
+    char_count: 4148
 skipped: []
+notes:
+  - "初回 chat.postMessage が URL-only になったため ts=1780830348.755239 を削除し、blocks 明示で同一 candidate を 1 メッセージ再投稿した。"
 ```
-投稿メモ:
-- `Exploring Gameplay With AI Agents` を 1 candidate / 1 message で #shared-reads に投稿。
-- 本文は `■ 概要` から始まる必須フォーマットで作成し、実ゲームクライアント操作ではなく bare bone mechanics simulation + A* agent sweep として読んだ。
-- Slack helper の `chat.postMessage` は成功。`chat.getPermalink` は helper 経由で `invalid_arguments` だったため、channel `C0AN2FEHEJJ` と ts `1780808841.790419` から permalink を構成。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
