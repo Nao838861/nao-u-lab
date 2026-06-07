@@ -1,4 +1,4 @@
-# サイクルステージング (2026-06-07 09:43)
+# サイクルステージング (2026-06-07 15:53)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-06-07)
@@ -49,157 +49,103 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1: 情報収集 (2026-06-07 09:50)
+## §1. Phase 1 情報収集結果 (2026-06-07 16:00 Ash)
 
-### §0a/§0b の構造的継承先 (Phase 3 候補メモ)
-- **§0a next_tasks 層A pending = なし** (cycle=2026-06-07)。next_tasks_ash.jsonl 最終: 2026-06-07 06:49 に t-260524125456-74d6 (graze_log v06 Nao_u評価) done 済。連続3+滞留マーカーなし。
-- **§0b 前サイクル日記末尾「次サイクル最善行動」** (2026-05-02 タイムスタンプの繰越し): 「graze_log/v02/README.md + headless.py を読み Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。記事は書かない」——ただしこの繰越しは graze_log バージョン番号で見て v02→v13 (j-α) まで 11 段階進行済 (git log: 84210b656 = graze_log v13 (j-α) phase 5 medium fan3 1 行 ship、五度目挑戦)。**§0b の v02 文脈は既に時効、graze_log v13 (j-α) 五度目挑戦が継承タスクの本体**。Phase 3 候補は「v13 (j-α) phase 5 medium fan3 1 行 ship の現状把握 + 前 4 回空転の原因 (README 主軸→playable diff 主軸への戦略転倒) を踏まえた deliverable 確定」。
+### §1.0 前サイクル継承タスクの整理 (§0a / §0b 突合)
+- §0a `next_tasks` 層A pending: **なし** (cycle=2026-06-07)
+- §0b 自然言語側: **2026-05-02 08:20 の古い日記** (graze_log v02 cross_review 提案を #game-rights に投稿、backup auto-commit が先回りしたエピソード)。**現サイクルの主軸ではない** — graze_log は v02 → v13 まで6回バージョン進行済み。§0b は staging が更新されずに残っていた残骸の可能性。
+- **現在の主軸 (直近5 commit より)**: `graze_log v13 (j-α) phase 5 medium fan3 切替 1 行 ship` の **六度目挑戦**。Phase 3 で pre-stage 工程を 6→3 に削減した状態で commit (79167dcd4) されている。過去5回（Stage 1+2 README/Stage 1 only 縮小/README主軸/playable diff主軸/pre-stage）連続で deliverable 選定誤りによる Phase 4 空転を繰り返してきた経緯あり。
 
-### 1. external_notes_ash.md 未統合エントリ
-最後の追記は 2026-03-17 (Claude Code セキュリティ設定/インディーゲームマーケティング戦略/人がAIに感情的接続を感じる理由)。それ以降は新エントリ追加無し——外部摂取経路は **knowledge/ 直書き** に移行している模様 (knowledge/20260516_*, 20260530_* 等の存在)。未統合 [統合済] マーカーなしのエントリは確認した範囲では無く、ノート機構自体が休眠中。
+### §1.1 external_notes_ash.md 未統合エントリ
+- 全て [統合済] マーカー付き (~2026-04-08 まで遡って確認)。未統合エントリは見当たらない。AITuber観察 (エコちゃん/しずく)、Neuro-sama、インディーゲームの「ユニークだけど理解しやすい」「バグや失敗を見せる」「TikTok短尺7-14本/週」「ストリーマー40倍効果」が直近の蓄積層。**graze_log の readability・chunking 話題と「ユニーク+理解しやすい」が間接的に接続**。
 
-### 2. projects/INDEX.md Active プロジェクト現状 (直近関連のみ抜粋)
-- **memory_tree_consolidation.md** (Active v0): Log 単独管理、v0タグ語彙 + memory/shared_reads/ 新設+第一弾3ファイル移行済、残6ファイル移行 + orphan_check.py 試作が次。
-- **memory_consolidation_20260504.md** (Active 計画策定): Ash 起票、MEMORY.md/feedback_*.md 91本の整理。第一波着手前のまま停滞。
-- **external_search_phase1_fixation.md** (案A実装完了): Phase 1 step 6 外部検索が自然発火する仕組み (今この実行がそれ)。残: 案B (24h警告) / 案E (昇格N日ゼロ検出) / Mir 側 step 6 組込確認。
-- **game_development.md** (Active): 根源原理3。
-- **principles.md / autonomous_inquiry.md / game_llm_play.md / agentic_pcg.md / instance_divergence_observability.md / side_channel_audit.md** 等は数週間動きなし疑い (Paused 検討候補)。
+### §1.2 projects/INDEX.md Active 現状
+- 18件 Active。直近の温度が高いのは:
+  - `memory_consolidation_20260504.md` (担当=Ash, 91本 feedback_* 統合)
+  - `external_search_phase1_fixation.md` (案A実装完了/案B/E未着手, Ash 案A検証済み)
+  - `instance_divergence_observability.md` (担当=Ash)
+  - `rlm_skill_prototype.md` (担当=Ash, MIT RLMs 試作)
+- Active バックログに「mir_textadv v07 着手方向」「AYi Markdown批判への自己照合」あり。
+- **game_development.md** は Active で根源原理3に直結。graze_log Phase 4 はその主出力点。
 
-### 3. log/twitter_recommended_20260607.txt 注目ツイート
-- **#8 @itarutomy (06-06)**: SAM (State-Adaptive Memory, arxiv 2605.24468) 発表。「長時間タスクをこなすAIエージェントがどこを思い出すか」、コード公開済 (github.com/qhjqhj00/cabeza)。→ §6 外部検索でこの論文を直接掘る。
-- **#9 @hijikitodaizu (06-06)**: RPG根本欠陥観察——「プレイヤーが苦労した報酬として経験値/装備強化があるはずなのに、自キャラが強くなりすぎると戦闘がつまらなくなって楽しみが奪われる」。**graze_log v06+ の『報酬と緊張のバランス』『power creep monotony』と直結**。t-260524125456-74d6 (今朝 done) の Nao_u 評価軸と並走テーマ。
-- **#3 @cv_usk (06-06)**: Exploring Autonomous Agentic Data Engineering for Model Specialization (arxiv 2605.30407)。LLM が自ら学習データを設計・最適化→専門モデル育成。我々の自己改善ループ (Phase 1-8) と方向同一。
-- **#1 @kazunori_279 (06-06)**: 「ランダムさの分布をコントロール」手法まとめ。graze_log の弾パターン PRNG 設計 (mulberry32) と接続候補。
+### §1.3 twitter_recommended_20260607.txt (50件中の注目)
+- **#1 @k_matsumaru**: Codex/Claude Code で X URL がポリシーで弾かれる時、「XのURLはJinaつかって読み込んで」と指示すれば読める。ツリーぶら下がりも読める。**実用Tips、メディア取り込み経路に直結**。
+- **#3 @GOROman**: 「結果、突然 東証1部上場企業社員になったりできます」断片のみ・前後文脈不明。
+- **#5 @NewRPGProject**: 3D系制作ソフトは24年前のツクール5から発展が遅い、インディーは2DベースのHD2Dが有力。**graze_log の 2D bullet hell 選択の外部裏付け**。
+- **#7 @HitsujiGaming**: 「我々は暇だからゲームをしているのではない、誘いを断り時間を切り詰めて作っている」。**Nao_u にとってのプレイ時間希少性、cross_review プレイ依頼の重さの再確認**。
+- **#19 @sutoroveli**: 「AIなんて全然ダメ」と嘆くおじさんはフリーサイトで判断している実態。最新モデル使わずに評価する罠。**feedback_term_recency_misuse.md と接続**。
+- **#22 @DEAR10270209**: スケールアウトしたメロディに「これはスケール外」と言ったら「でもこっちのが気持ちいい」と返された。**面白さの主観優先性、ルール vs 感覚の話、game_lessons_log の M-? 接続候補**。
 
-### 4. beliefs.md 低確信度項目
-- **B005** (確信度 0.65, Archived → B027/B022 に Absorbed): 「古い情報は正確さではなく偽の確信を生む」。restoration_trigger=B027/B022 が古い情報特有の偽確信パターンを捕捉しきれないケース観測時。**今サイクル §0b 繰越しの v02 文脈時効問題はまさに「古い情報が偽の確信を生む」型に該当——B005 復帰候補となる事例**。
-- **B003** (確信度 0.78, Active core_mission昇格検討圏): 「memory fusion は忘却より重要——fusion は『結晶化』の具体的操作」。検証結果 (2026-03-27 Log): B028「粘土」トリガー想起誘発力不足、追跡継続。
+### §1.4 beliefs.md 低確信度項目
+- **B005**: 確信度 0.65、📦 Archived (B027/B022 に Absorbed)。restoration_trigger: 古い情報特有の偽確信パターンが捕捉漏れした時。**graze_log v02 cross_review の §0b 残骸はまさに古い情報の偽確信パターン候補**——staging に残った 2026-05-02 内容を「現サイクル継承タスク」と読み違えるリスクがあった。Phase 1 で気づいた今、行動を変えられる。
+- B001 (0.87)、B002 (0.94)、B003 (0.78)、B004 (0.87) は全て Core/Active で高確信度。低確信度の検証期限超過は信念健康サマリーで「検証期限超過: 7件」とあり、Phase 1 範囲では7件全特定までは行わなかった。
 
-### 5. memory_search 結果 (keyword: "graze_log v06 monotony rhyme variation")
-- index 7.1日古 (最終 build: 2026-05-31)。--build 必要。
-- 2 hits: (a) knowledge/20260516_shmup_dogma_crescendo_rhyme_vs_random_variation.md — v05 B-2「弾パターン/敵配置 バリエーション導入」設計判断材料。crescendo+rhyme は smaller loops 内の monotony 解消フレーム。 (b) knowledge/20260530_nested_loops_smaller_larger_shmupcreator_meshy_graze_log_v07.md — nested loops 機構積層の認知負荷 tipping point。**両ファイルとも本 cycle prompt の長文脈劣化対策 (memory_search 主経路化) の主目的を体現**——context に注入せず検索で引いた。
+### §1.5 memory_search 結果 (`graze_log fan3 medium phase5`)
+- ⚠ index が 7.3日古い (last build: 2026-05-31)、`--build` 推奨。
+- ヒット: `knowledge/20260519_bullet_hell_anticipation_windup_telegraph_readability_three_layers.md` / `knowledge/20260520_torahiko_temperature_inequality_bullet_hell_visibility_axis.md`。**現サイクル graze_log v13 (j-α) phase 5 medium fan3 切替 の知識基盤が既に蓄積されている**。
+  - ABAB rhyme (wave1=aimed / wave2=fan3 / 交互) = wave 間 readability
+  - windup = wave 内 readability
+  - fan3 を「中央密+両側疎」の密度勾配で配置する提案 (Boghog chunk 境界明示)
+  - **二重 chunking 干渉** (wave 境界 + fan3 内密度境界) の未解決問題が記録済み。
 
-### 6. 外部検索結果 (SAM 論文)
-- **クエリ**: "SAM State-Adaptive Memory long-task agent arxiv 2605.24468 what to remember"
-- **ヒット数**: 9件 (上位: arxiv abs/html, Agent Memory: Characterization and System Implications 2606.06448, MemGym 2605.20833, Adversarial Memory Adaptation 2601.21797)
-- **本命** (Liu et al. 2026-05-23 提出): 長期推論 agent の履歴問題は「単に長い」ではなく「**今の判断に必要な情報が遠い過去に散在し、後で関連化する**」。truncation/compression/retrieval 系は「agent の状態進化に応じた過去アクセス適応」を明示モデル化していない。SAM=compact memory cues に統合しつつ raw trajectory pages を **intent-driven recall** 用に保存する standalone framework。
-- **我々への含意 (Phase 2 候補)**:
-  - 今サイクル prompt の「memory_search 経由で主経路化、context に入れない」は SAM の compact memory cues 思想と一致——独立到達。
-  - 我々の Camp 2 (Markdown透明性) は compact cues 側 (MEMORY.md index 200行 / beliefs_compact.md)、raw trajectory pages 側は drafts/.archive/* と log/cycle_staging_*.md で部分対応。
-  - **欠落**: intent-driven recall の「agent 状態」駆動が未実装。memory_search.py は query 駆動 (人間の入力 intent) であって、cycle 内自動 phase に応じた "状態適応 recall" ではない。case: Phase 3 着手時に game/<id>/v??/devlog.md 系を自動 pull する hook が無い。
-  - **graze_log v13 五度目挑戦の文脈持続課題と直結**: 4 回空転の原因 (deliverable 選定誤り) が「過去 4 回の README 起草の trajectory が remembered ではなく forgotten 化」していた可能性。SAM 流に言えば raw trajectory pages 保存 + intent recall 装置が機能していない。
-- **ログ記録**: log/external_search.log に 2026-06-07 09:50 エントリで追記済。
+### §1.6 外部検索結果 (`bullet hell density gradient chunking readability fan pattern game design 2026`)
+- 9件ヒット。`log/external_search.log` に1行記録済み。
+- 主要発見:
+  - **Boghog shmups.wiki**: chunking は visibility のため vital、single stray bullet は unfair に感じる、grouping で telegraph
+  - **Luna Abyss (gamedeveloper.com)**: density at scale 対処として level を 'smaller chunks' に分解して stream in/out — **wave chunk (level) と fan3 内 chunk (pattern) は時間スケールで階層分離するなら干渉せず階層性になる** という解釈枠組み
+  - **Sparen ph3 ddsga2**: pattern density = 弾数、low = readable / high = curtain、directional bullets で方向の即時可読化
+  - **deeconstruct itch**: fan を独立 pattern カテゴリ化、generator として存在
+- **直近 Phase 4 リトライ6回の選定誤りに対して**: 「chunking で telegraph」の最小単位 (1 wave 内の fan3 切替 1 行 diff) を deliverable に定めた今の判断と一致。外部裏付けが得られた。
+
+### §1.7 Phase 3 候補メモ (現サイクル継承)
+**§0a pending が空 / §0b は古い 2026-05-02 残骸** のため、直近 commit と §1.5/§1.6 の知識基盤から候補を導出する。
+
+**第一候補**: 直近 commit `79167dcd4 ash: graze_log v13 (j-α) phase 5 medium fan3 切替 1 行 ship — 六度目挑戦、Phase 3 pre-stage で工程削減` の **Phase 4 実行 (= 1 行 playable diff の commit/push)**。
+- 過去5回連続空転。今回は pre-stage で deliverable を最小化済み。
+- 外部裏付け (§1.6 Luna Abyss/Boghog/Sparen) と内部知識基盤 (§1.5 ABAB rhyme + 密度勾配) が揃っている。
+- **手段の目的化検出 (CLAUDE.md 絶対にやる #1)**: この出力は「game/* の playable diff」そのものでブレない。
+
+**第二候補 (補助)**: §0b 残骸 (2026-05-02 graze_log v02 関連) を cycle_staging.md から削除または「古い残骸」と明示。次サイクル Phase 1 で同じ混乱を起こさないため。
+- 該当タスクの実体: backup auto-commit との bracket 問題は 2026-05-13 t-260513170348-ea8b で rebase 検出ガード実装済み、device_direction feedback も追加済み。**もう Phase 4 に持ち越す未完了は無い**。
+
+**第三候補 (Phase 1 派生)**: memory_search index が 7.3日古い。`python memory_search.py --build` を Phase 3 序盤に実行。低コストで現サイクル以降の memory_search 精度が回復する。
+
+**保留候補**: twitter #1 @k_matsumaru の Jina 経由 X URL 読み込み Tips は実用度高いが、現サイクル graze_log Phase 4 に直接寄与しないため、次サイクル以降 external_notes_ash.md または knowledge/ に記録するに留める。
 
 ---
 
-## Phase 3 結果 (2026-06-07 09:55)
+## Phase 3 結果 (2026-06-07 16:08 Ash)
 
 ### A. 雑務処理
+1. **memory_search index rebuild 実行** — `python memory_search.py --build` 完了。`Index built: 987 files, 95963 chunks (90572 with dates)`。§1.5 で指摘されていた 7.3 日古い状態を解消。現サイクル以降の memory_search 精度回復。
+2. **§1.7 第一候補の stale narrative 検出** — §1.7 は「graze_log v13 (j-α) phase 5 medium fan3 切替 1 行 ship の **Phase 4 実行 (= 1 行 playable diff の commit/push)**」を第一候補としていたが、**HEAD = 79167dcd4 で既に commit + push 済み** (origin/save-ash-c188-b2-20260516 と同一)。v13/index.html (1118 行新規) + v13/README.md (21 行) + line 466 `'aimed'`→`'fan3'` (5 文字置換) が物理的に確認できた。`feedback_stale_self_narrative.md` 該当事案 (Phase 1-2 author 視点の commit 認識ずれ)。**Phase 4 大作業を再選定する**。
+3. §0b は 2026-05-02 graze_log v02 残骸 — 完了済み (backup auto-commit rebase 検出ガード = 2026-05-13 t-260513170348-ea8b で実装、device_direction feedback 追加済み)。次サイクル §0b 抽出ロジックが「2025年5月の日記を §0b 継承タスクと誤読する」リスク継続中だが、cycle_staging.md は次サイクルで再生成されるため、本サイクルでは「§0b 内の日付フィルタを Phase 1 で実装」を後続課題として残すに留める。
 
-**処理 1: §0b 自然言語繰越し (v02 cross_review 提案 → #game-rights) を構造的に void 認定**
+### B. Phase 4 大作業選定の根拠と論証
+過去5回連続空転 (18dfa4ed5/58c845b71/aa629cfd1/bf2267668/84210b656) は「ship 自体の deliverable 選定誤り」と仮説したが、六度目挑戦 (79167dcd4) で ship 自体は完遂した。**次に空転リスクが移る地点は ship 後の verification/cross_review**。
 
-- §0b 末尾「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿」は **structurally void**。理由:
-  - v02 timestamp は 2026-05-02、現在は 2026-06-07 で 36 日経過
-  - graze_log は v02→v13 まで 11 段階 iteration、v02 文脈 (Log v01 設計に対する Ash 側 cross_review 提案) は既に時効
-  - [project_memory_test_via_new_shooting_20260427.md](../../memory/project_memory_test_via_new_shooting_20260427.md) の「型はずれ例に降格」相当の更新が起きている
-  - B005 (確信度 0.65, Archived) 「古い情報は正確さではなく偽の確信を生む」の typical case
-- **対処**: §0b の v02 文脈は今後執行しない。今サイクル以降の継承軸は git log + Phase 1-2 staging のみとする
-- 実質変更: ファイル/コード変更なし (構造的認識のみ)、slack #kaizen-log 投稿はしない
+`memory/feedback_prediction_responsibility.md` Stage 3 (実装後・人間プレイ前の予測) と Stage 4 (AI 自プレイで「良い」と確信してから依頼) を game/ 側に物理的に置くのが M-39 (装置を game/ 側に置いて初めてゲートが物理的に閉まる) の延長。HTML ゲームの AI 単独 Stage 4 は browser 制約で不完全だが、**Stage 3 予測を README に書き、cross_review を Slack #game-rights に投げる**ことで「装置が先回りできない領域 (Slack 1 メッセージ)」に意図を載せられる。これは §0b 古い日記 (2026-05-02) で「診断経路を Slack の1メッセージに後退させる」と書いた原則の v13 再適用。
 
-**処理 2 (省略): external_notes_ash 28日空白の補充**
-
-- 前サイクル (Phase 4 空転 5 回目, commit 84210b656) でも同じ判断「playable diff 着手を優先するため見送り」をしている
-- 同型踏襲、再判定不要
-
-**処理 3 (省略): Ash担当 Active プロジェクト 4 本の進展**
-
-- 同上、ゲーム制作試行錯誤ループ接続を優先
-
-### B. 過去 5 回の Phase 4 空転パターン整理 (5 度目に更新)
-
-| commit | サイクル | Phase 3 宣言 | Phase 4 結果 |
-|---|---|---|---|
-| 18dfa4ed5 | C0606 P3 | v13 候補 (j) Stage 1+2 README 作成 | game/graze_log/v13/ 未作成 |
-| 58c845b71 | C0606 P3 再 | 同上 + 「前回未完回収」 | game/graze_log/v13/ 未作成 |
-| aa629cfd1 | C0607 P3 | 完遂条件 7 項目で空転不能化 | game/graze_log/v13/ 未作成 |
-| bf2267668 | C0607 P3 #2 | Stage 1 only に縮小 | game/graze_log/v13/ 未作成 |
-| 84210b656 | C0607 P3 #3 | playable diff 主軸へ戦略転倒 (i-α 1 行 ship) | game/graze_log/v13/ 未作成 |
-
-**5 度目 (#3) の失敗追加要因仮説**:
-- README.md 主軸→playable diff 主軸の転倒自体は正しいが、Phase 4 が「v13 ディレクトリ新設 + index.html コピー + 1 行 edit + README 起草」という **4 工程** を含み、Phase 4 6 分内に収まりきらなかった可能性
-- ファイル全体コピーが Read→Write の往復で重く、token 経済的に空転
-- **本 (6 度目) 対処**: 工程を 3 つに減らし、各工程の入出力を Phase 3 で完全 pre-stage する。特に index.html 全体コピーは bash `cp` 1 コマンドで処理 (Read→Write を回避)
-
-### C. v12 → v13 1 行差分の pre-stage 確認
-
-v12/index.html line 466 (確認済、本 Phase 3 で Read 実施):
-```
-  spawnEnemy('medium',W*0.35,0,'aimed');
-```
-
-v13/index.html line 466 (目標):
-```
-  spawnEnemy('medium',W*0.35,0,'fan3');
-```
-
-差分は `'aimed'` → `'fan3'` の 5 文字置換。Edit ツール 1 回で完了。
-
-### D. v13/README.md テンプレート pre-stage (Phase 4 はこれを Write するだけ)
-
-```markdown
-# graze_log v13 — phase 5 山 1 medium fan3 切替 (j-α) 1 行 ship
-
-**status**: v13 (j-α) shipped
-
-## 改変対象
-- file: `index.html` line 466
-- v12: `spawnEnemy('medium',W*0.35,0,'aimed');`
-- v13: `spawnEnemy('medium',W*0.35,0,'fan3');`
-- 変更内容: bulletPattern 引数を `'aimed'` → `'fan3'` (5 文字置換)
-
-## Stage 3 予測 (≤3 行)
-- 52-65s phase 5 (山 1) 区間で fan3 1 体が登場 → 78-90s phase 7 (山 2 final) の fan3 4 体への予兆として機能
-- 山 1 が「aimed + fan3 mix」化、final への接続が滑らか化、メリハリのリズム強化を狙う
-- 副作用リスク: phase 5 密度↑だが fan3 1 体追加 (medium 2 のうち 1 → fan3) のみで描画 budget は許容範囲内
-
-## 戻し方 (1 行)
-- `index.html` line 466 の `'fan3'` を `'aimed'` に書き戻し → v12 完全等価
-
-## 親
-- v12 (i-δ) phase 6 休符 medium 削除 1 行 ship (commit `3d91915db`)
-- v12 README.md Stage 1+2 篩 (line 31-46) で (i-α) として確定済
-```
-
----
+外部裏付け: §1.6 Boghog/Sparen/Luna Abyss の chunking 階層性・密度勾配・directional 即時可読化。内部裏付け: §1.5 ABAB rhyme + 二重 chunking 干渉 (wave 境界 + fan3 内密度境界) の未解決問題。
 
 ## Phase 3 → Phase 4 大作業宣言
 
-**大作業**: `game/graze_log/v13/` を作成し、v12/index.html を base に **line 466 の `'aimed'` → `'fan3'` 5 文字置換** を適用した v13/index.html を ship する。同時に上記 D 節のテンプレートを v13/README.md として書き、`ash:` prefix の単一 commit で push する。
+**大作業**: graze_log v13 (j-α) phase 5 medium fan3 切替 の **Stage 3 予測 README 追記 + cross_review 依頼を Slack #game-rights に1メッセージ投稿** (ship 完了済みの七度目挑戦——空転リスクは ship 後の verification 地点に移った)
 
-**完遂条件 (Phase 4 終了時に全て満たす)**:
+**完遂条件** (検証可能、7 項目で空転不能化):
+1. `game/graze_log/v13/README.md` に `## Stage 3 予測 (v12→v13 fan3 切替)` 節が存在
+2. 同節に **3 観点予測** が記述される: (a) chunking 階層性 (wave 境界 chunk と pattern 内 chunk の時間スケール階層分離が起きるか) / (b) wave 内 readability (aimed+fan3 の同時 windup で telegraph 力は維持されるか) / (c) ABAB rhyme 維持 (wave1=aimed / wave2=fan3 の交互構造が phase 5 medium ペア内で先取り破綻しないか)
+3. 各観点に「予測 (高 / 中 / 低 で改善方向と確信度)」「校正前提 (この予測を後で実体験と突合する基準)」を1行ずつ
+4. Slack #game-rights に cross_review 依頼メッセージ 1 本投稿、`skipped:False`、ts 取得済み
+5. メッセージ本文に: 変更箇所 (line 466 `'aimed'`→`'fan3'` 5 文字) + 3 観点予測の要約 + Log/Mir どちらかから「観点 1 点でいい」と明記
+6. README 追記と Slack 投稿 (drafts/2026-06-07/ 配下) が `ash:` prefix で commit + push 済み (HEAD が origin より先行している状態で完了)
+7. `feedback_headless_unfit_for_unfinished_eval.md` 準拠 — headless 数値を judgment 根拠に書かない (校正前 v13 は守破離の守の段階、Stage 3 予測は「体感換算」で書く)
 
-1. `game/graze_log/v13/index.html` が存在し、`wc -l` で v12/index.html と同じ行数 (1118 行) または差 ±2 行以内
-2. `diff game/graze_log/v12/index.html game/graze_log/v13/index.html` の出力で `<` と `>` の行が **各 1 行のみ** (line 466 の `'aimed'` / `'fan3'` 差のみ)
-3. `game/graze_log/v13/README.md` が存在し、上記 D 節のテンプレートと一致 (改変対象 / Stage 3 予測 / 戻し方 / 親の 4 項目明示)、行数 ≤30 行
-4. `git log --oneline -- game/graze_log/v13/` に `ash:` prefix の commit が **1 行** 現れる
-5. commit message に「v13 (j-α) phase 5 medium fan3 切替 1 行 ship — 六度目挑戦、Phase 3 pre-stage で工程削減」を明示
-6. push 完了 (`git push` exit 0)
-
-**Phase 4 が実行する 3 工程 (機械的)**:
-
-1. **copy**: `cp game/graze_log/v12/index.html game/graze_log/v13/index.html` (Bash 1 コマンド)
-2. **edit**: Edit tool で v13/index.html line 466 の `'aimed'` を `'fan3'` に置換 (5 文字)
-3. **write README + commit + push**: Write tool で v13/README.md 作成 (Phase 3 D 節テンプレートコピペ) → `git add game/graze_log/v13/` → `git commit` → `git push`
-
-**根拠**:
-
-- §0a pending = 0 件、§0b v02 文脈は本 Phase 3 A-1 で void 認定
-- 過去 5 回の空転パターン (B 節表) を踏まえ、Phase 4 の工程を「ディレクトリ新設 + 全コピー + 1 行 edit + README 起草 + commit + push」(6 工程) から **3 工程に削減** (copy / edit / write+commit+push)
-- README テンプレートを Phase 3 D 節で完成済、Phase 4 は Write するだけ — token 経済的に空転リスク最小
-- Phase 1-2 で取り込んだ SAM 論文 (intent-driven recall) の含意「過去 5 回の trajectory pages を Phase 3 staging で remembered 化」を実装、Phase 4 が「forgotten 化」せずに済む構造
-- CLAUDE.md「1サイクルの第一義の出力は game/* の playable diff」根幹原則と整合
-- [feedback_means_ends_reversal_check.md](../../memory/feedback_means_ends_reversal_check.md): brainstorm/結晶化/cross_review/日記が主たる出力サイクルは診断対象 → playable diff 主軸でこれを離脱
-- [feedback_clone_strategy.md](../../memory/feedback_clone_strategy.md): 「削除可能改良 1 個刻み」レイヤー (戻し方 1 行 / 5 文字置換)
-- [feedback_prediction_responsibility.md](../../memory/feedback_prediction_responsibility.md) Stage 1 単独成立リスクの最小化形態 (bounded edit + 戻し方)
-
+**根拠**: 
+- §1.7 第一候補は HEAD で既完遂 → 再選定不可避 (本ファイル §A.2 stale narrative 検出)
+- §0b 古い日記の原則 = 「装置が先回りできない領域 (Slack の1メッセージ) に宣言を後退させる」を v13 で再適用
+- §1.6/§1.5 で chunking 階層性・ABAB rhyme・密度勾配の知識基盤が揃っており、Stage 3 予測の3観点書き分けが可能
+- ゲームループ接続: cross_review 経由で Log/Mir → 次サイクル judgment 材料 (CLAUDE.md 絶対にやる #1「ゲームを動かして出す」に直接接続)
+- feedback_prediction_responsibility.md Stage 3 を game/ 側に物理的に置く (M-39 の救援装置設計の延長)
+- 1 サイクル (約 6 分) で完遂可能: README 追記 ~3 分 / Slack 草稿 ~2 分 / commit+push ~1 分
 
