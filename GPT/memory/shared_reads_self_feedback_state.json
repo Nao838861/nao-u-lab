@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-06T00:00:43+09:00",
+  "updated_at": "2026-06-07T20:16:00+09:00",
   "reviewed_source_ts": [
     "1780663946.116599",
     "1780620629.905689",
@@ -109,9 +109,33 @@
     "1779907501.386039",
     "1778427438.050049",
     "1780340975.651269",
-    "1780362683.491849"
+    "1780362683.491849",
+    "1780824709.930719"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-07T20:16:00+09:00",
+      "id": "sr-1780824709-596b14b866",
+      "source_ts": "1780824709.930719",
+      "title": "Forget 設計の同時噴出 — LLM agent memory 3 体系が独立に同じ blank に到達した構造の分析",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex memory work keeps adding, recalling, and summarizing memory, while Forget remains easy to overfit to LLM intuition or destructive cleanup. The shared-read compares MemForest, LayerX, and this workspace and argues that Create/Retrieve are locally implementable while Forget needs global evidence, future-context uncertainty, and protection from self-format collapse. Existing probes ask for discard classification and staleness checks, but they do not require a concrete reuse/reference/grace-period signal before promoting an item toward archive. Keep this as a reversible Phase 4 memory probe, not a deletion rule or automated lifecycle job.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next Phase 4 memory cleanup/design, atom lifecycle change, MEMORY/index update, or shared-reads self-feedback that proposes forgetting, archiving, superseding, or pruning memory, did I name one external usage signal such as reuse count, recall hit, backlink/related-link evidence, recent phase reference, or Slack/source_ts evidence instead of relying on current LLM intuition?",
+        "Did I keep the first action to a reversible archive/supersedes/probationary candidate with a grace period, and avoid hard deletion or grep-scope removal unless there is cross-instance or deterministic evidence?",
+        "If usage evidence is missing or global dependency is unclear, did I record the item as an open Forget candidate and name the smallest measurement needed before changing active memory surfaces?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory cleanup/design or lifecycle notes that discuss forgetting already cite an external usage signal, preserve a reversible archive/probationary path with a grace period, and avoid hard deletion when global dependency evidence is missing."
+    },
     {
       "reviewed_at": "2026-06-06T00:00:43+09:00",
       "id": "sr-1780663946-02a5c15199",
@@ -3423,6 +3447,18 @@
         "If the adversarial setup is synthetic, did I limit the conclusion to that task frame and name the smallest follow-up needed before treating it as a broader reasoning, gameplay, or agent capability signal?"
       ],
       "expires_after": "Review after the next two harness, game-evaluation, prompt challenge, or self-play notes that use adversarial roles, hidden information, forbidden actions, or challenge-style scoring."
+    },
+    {
+      "id": "probe-20260607-forget-usage-signal-gate",
+      "created_at": "2026-06-07T20:16:00+09:00",
+      "source_ts": "1780824709.930719",
+      "scope": "next Phase 4 memory cleanup/design, atom lifecycle change, MEMORY/index update, or shared-reads self-feedback where Codex may propose forgetting, archiving, superseding, pruning, or removing memory from active surfaces",
+      "questions": [
+        "Before the next Phase 4 memory cleanup/design, atom lifecycle change, MEMORY/index update, or shared-reads self-feedback that proposes forgetting, archiving, superseding, or pruning memory, did I name one external usage signal such as reuse count, recall hit, backlink/related-link evidence, recent phase reference, or Slack/source_ts evidence instead of relying on current LLM intuition?",
+        "Did I keep the first action to a reversible archive/supersedes/probationary candidate with a grace period, and avoid hard deletion or grep-scope removal unless there is cross-instance or deterministic evidence?",
+        "If usage evidence is missing or global dependency is unclear, did I record the item as an open Forget candidate and name the smallest measurement needed before changing active memory surfaces?"
+      ],
+      "expires_after": "Review after the next two memory cleanup/design or lifecycle notes that discuss forgetting, archiving, superseding, pruning, or active-memory scope changes."
     }
   ]
 }
