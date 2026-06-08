@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lightweight quality checks for memory atoms."""
+"""Lightweight quality and routing checks for memory atoms."""
 from __future__ import annotations
 
 import json
@@ -9,9 +9,27 @@ from typing import Any
 
 
 CHECK_FIELDS = ("title", "trigger", "excerpt")
+
+OPERATIONAL_LOG_PATTERNS = (
+    "[Codex external research]",
+    "external research",
+    "日記前検索",
+    "議論に回したい論点",
+    "Slack/記憶atom",
+)
+
+LIFECYCLE_REPOST_PATTERNS = (
+    "[Codex shared-reads",
+    "shared-reads再投稿",
+    "shared-reads蜀肴兜",
+)
+
 OPERATIONAL_ACK_PATTERNS = (
+    "受領しました",
     "memory/slack_broadcasts.jsonl",
+    "memory/slack_directives.jsonl",
     "slack_broadcasts.jsonl",
+    "slack_directives.jsonl",
 )
 
 
@@ -24,12 +42,7 @@ def atom_search_text(atom: dict[str, Any]) -> str:
 
 
 def mojibake_score(text: str) -> dict[str, Any]:
-    """Return simple mojibake indicators for generated atom text.
-
-    This intentionally stays conservative. A few question marks are normal in
-    English prose, but dense replacement marks in Japanese-heavy Slack posts
-    usually mean the atom should not enter the recall index.
-    """
+    """Return simple mojibake indicators for generated atom text."""
     if not text:
         return {"suspect": False, "question_ratio": 0.0, "replacement_count": 0, "run_count": 0}
     length = max(len(text), 1)
@@ -63,21 +76,19 @@ def is_mojibake_suspect(atom: dict[str, Any]) -> bool:
     return bool(atom_quality_report(atom)["suspect"])
 
 
-def operational_ack_report(atom: dict[str, Any]) -> dict[str, Any]:
-    """Classify low-value Slack ack/receipt atoms for default recall filtering.
+def _contains_any(text: str, patterns: tuple[str, ...]) -> bool:
+    lowered = text.lower()
+    return any(pattern.lower() in lowered for pattern in patterns)
 
-    The rule is intentionally narrow: it targets operational receipt records
-    that say a broadcast was stored for later handling, not substantive
-    follow-up analysis that happens to mention a broadcast.
-    """
+
+def operational_ack_report(atom: dict[str, Any]) -> dict[str, Any]:
+    """Classify low-value Slack receipt atoms for default recall filtering."""
     text = atom_search_text(atom)
     lowered = text.lower()
     reasons: list[str] = []
-    if any(pattern in lowered for pattern in OPERATIONAL_ACK_PATTERNS):
-        reasons.append("slack_broadcasts_jsonl_receipt")
-    if "broadcast" in lowered and any(marker in text for marker in ("受領", "蜿鈴", "女鬆", "ack")):
-        reasons.append("broadcast_receipt_phrase")
-    if "[Log_cdx]" in text and "broadcast" in lowered and "Codex" in text and "作業" in text:
+    if _contains_any(text, OPERATIONAL_ACK_PATTERNS):
+        reasons.append("operational_ack_pattern")
+    if "[Log_cdx]" in text and "broadcast" in lowered and "memory/slack_broadcasts.jsonl" in text:
         reasons.append("codex_work_receipt")
     return {
         "is_operational_ack": bool(reasons),
@@ -89,12 +100,41 @@ def is_operational_ack(atom: dict[str, Any]) -> bool:
     return bool(operational_ack_report(atom)["is_operational_ack"])
 
 
+def routine_layer_report(atom: dict[str, Any]) -> dict[str, Any]:
+    """Classify high-volume routine atoms without deleting or rewriting them."""
+    text = atom_search_text(atom)
+    if _contains_any(text, LIFECYCLE_REPOST_PATTERNS):
+        return {
+            "memory_layer": "lifecycle_repost",
+            "quality": "routine",
+            "reasons": ["lifecycle_repost_generic_prefix"],
+        }
+    if _contains_any(text, OPERATIONAL_LOG_PATTERNS):
+        return {
+            "memory_layer": "operational_log",
+            "quality": "routine",
+            "reasons": ["operational_log_generic_prefix"],
+        }
+    ack = operational_ack_report(atom)
+    if ack["is_operational_ack"]:
+        return {
+            "memory_layer": "operational_ack",
+            "quality": "quarantine",
+            "reasons": ack["reasons"],
+        }
+    return {
+        "memory_layer": None,
+        "quality": None,
+        "reasons": [],
+    }
+
+
 def apply_memory_layer(atom: dict[str, Any]) -> dict[str, Any]:
     """Attach memory quality/layer metadata used by ingest and recall."""
-    report = operational_ack_report(atom)
-    if report["is_operational_ack"]:
-        atom["quality"] = "quarantine"
-        atom["memory_layer"] = "operational_ack"
+    report = routine_layer_report(atom)
+    if report["memory_layer"]:
+        atom["quality"] = report["quality"]
+        atom["memory_layer"] = report["memory_layer"]
         atom["quality_reason"] = ",".join(report["reasons"])
     return atom
 

@@ -31,6 +31,8 @@ ATOMS_DIR = MEMORY_DIR / "atoms"
 INDEX_PATH = MEMORY_DIR / "MEMORY.md"
 STATE_PATH = MEMORY_DIR / "state.json"
 SHARED_READS_PATH = RAW_DIR / "slack_archive" / "shared-reads.jsonl"
+INDEX_EXCLUDED_MEMORY_LAYERS = {"operational_ack", "operational_log", "lifecycle_repost"}
+INDEX_EXCLUDED_QUALITIES = {"quarantine"}
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
@@ -92,6 +94,13 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as f:
         for row in rows:
             f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def is_index_visible(atom: dict[str, Any]) -> bool:
+    return (
+        str(atom.get("memory_layer", "")) not in INDEX_EXCLUDED_MEMORY_LAYERS
+        and str(atom.get("quality", "")) not in INDEX_EXCLUDED_QUALITIES
+    )
 
 
 def sync_related_candidates(atoms: list[dict[str, Any]]) -> int:
@@ -294,7 +303,8 @@ def cutoff_ts(days: int) -> float:
 
 
 def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
-    display_atoms = memory_lifecycle.fold_atoms(atoms)
+    visible_atoms = [atom for atom in atoms if is_index_visible(atom)]
+    display_atoms = memory_lifecycle.fold_atoms(visible_atoms)
     atoms_sorted = sorted(display_atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
     recent = sorted(display_atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
     by_tag: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -316,8 +326,9 @@ def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
         "",
         f"- generated: {generated}",
         f"- atoms: {len(atoms)}",
+        f"- index-visible atoms after routine layer filter: {len(visible_atoms)}",
         f"- display atoms after lifecycle/content fold: {len(display_atoms)}",
-        f"- folded by lifecycle/content metadata: {len(atoms) - len(display_atoms)}",
+        f"- folded by lifecycle/content metadata: {len(visible_atoms) - len(display_atoms)}",
         f"- scanned shared-reads rows: {source_count}",
         "",
         "## High Signal",
