@@ -1,7 +1,7 @@
-# サイクルステージング (2026-06-08 13:28)
+# サイクルステージング (2026-06-09 01:48)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: なし (cycle=2026-06-08)
+# ash pending: なし (cycle=2026-06-09)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -27,7 +27,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-06-08)
+[信念健康] beliefs.md 生存確認サマリー (2026-06-09)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -49,122 +49,90 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集結果 (2026-06-08 13:32)
+## Phase 1: 情報収集結果 (2026-06-09 01:50 Ash)
 
-### §A. 継承タスク確認 → Phase 3 候補
+### §0a / §0b → Phase 3 候補メモ
+- **§0a pending**: なし (cycle=2026-06-09, layer A 空)
+- **§0b 前サイクル日記末尾**: 2026-05-02 08:20 日記が staging に残存 = stale narrative。当時の intent は (B) cross_review #game-rights 投稿で、これは既に複数サイクル消化済（recent commits: 5d595f466 で v13 (j-α) cross_review 投稿、b501017d0 で v13 自プレイ判定）。**§0b は 5週間前の文章——Phase 3 で stale narrative として明示削除/退役処理する候補**。
+- **直近 commit 経路から見える「真の継承」**: 最新 b501017d0 で graze_log v13 (j-α) Stage 4 Ash 自プレイ判定 = 「Nao_u プレイ要請 ready」結論。**未着手の次intent = Nao_u プレイ要請を #game-rights に Slack 投稿**（layer A 未登録）。これを Phase 3 候補として記録。
+- **Stage 3 予測乖離記録（同 commit）**: 累積 9-10 体 vs 予測「1 体」= ~10x overconfidence。**校正処方として Phase 3 で M-40 自己判定ハーネスに 'adversarial frame' を入れる検討**を候補に。
 
-**§0a (next_tasks 層A)**: pending なし。最後の add (t-260524125456-74d6) は 2026-06-07 06:49 に done で閉じ済み。**3+サイクル滞留 [⚠連続3+] マーカーなし**。
+### 1. external_notes_ash.md 未統合エントリ
+- ファイル末尾まで（3498行）確認。**全エントリに [統合済] マーカーあり**、未統合エントリは 0 件。直近は 2026-05-10 17:56 Twitter おすすめ巡回 → knowledge/20260511_* 4本に結晶化済（2026-05-12 統合）。
+- **空白期間警告**: 2026-05-10 以降の external_notes 追記なし = ~30日空白。前回 2026-05-10 時点で「前回 5-03 から 7日空白、自己訂正→再発の波」と記録されていた問題が **再々発**——外部摂取が止まっている。
 
-**§0b (前サイクル日記末尾)**: 冒頭に残っている末尾は 2026-05-02 付の古いもの (graze_log v02 cross_review 提案文)。**現サイクル直前の実態は recent commit から再構成**:
-- `5d595f466` cross_review Slack #game-rights 投稿 1 本 + STALE 3次元 meta-comment 添え (C0608 P3)
-- `4b9b6662f` Phase 4 leftover 回収 (graze_log v13 (j-α) Stage 3 予測 README 追記 + cross_review Slack 投稿に再選定、§1.7 第一候補 stale narrative 検出、七度目挑戦)
-- `79167dcd4` ash: graze_log v13 (j-α) phase 5 medium fan3 切替 1 行 ship — 六度目挑戦
-- `0a588efe3` Phase 3 pre-stage で工程6→3削減 (C0607 P3 #4)
+### 2. projects/INDEX.md Active プロジェクト現状
+- Active 14本（記憶階層再設計/栄養偏り/ゲーム制作/pigadev DM/Pot開発/principles/技術ブログ/autonomous_inquiry/game_llm_play/agentic_pcg/context_separation/scheduler_redesign/input_route_hypothesis/side_channel_audit/rule_density_experiment/failure_slot_measurement/external_search_phase1_fixation/game_templates_design/rlm_skill_prototype/instance_divergence_observability/memory_consolidation_20260504/memory_tree_consolidation）。
+- Ash 担当主軸: `memory_consolidation_20260504.md`（MEMORY.md/feedback_*.md 91本整理）、`instance_divergence_observability.md`、`rlm_skill_prototype.md`、`external_search_phase1_fixation.md` 案B/E 未着手。
+- ゲーム制作軸は INDEX には game_development.md ポインタのみ。実体は game/graze_log/v13 (j-α) Phase 5 medium fan3 切替で進行中（直近5サイクル連続着手、commit ログ参照）。
 
-→ 前サイクル C0608 P3 で **graze_log v13 (j-α) phase 5 medium fan3 切替 ship** + **Stage 3 予測 README 追記** + **cross_review Slack #game-rights 投稿** が完遂。leftover 回収済み。Phase 4 で大きな宣言を建てて P3 で潰すループが7回連続ぐらい続いた末の完遂。
+### 3. twitter_recommended_20260608.txt 注目ツイート
+- 全50件、22:49 取得。直接ゲーム/AI軸で目を引いたのは:
+  - **#10 @nunomo1**: 自作エディタにAIローマ字日本語変換をIME実装、「段落ごとに変換するまで思考が中断されない、空眺めながら書ける」。**入力経路仮説 / micromanagement禁止系と接続候補**。
+  - **#12 @super_bonochin**: Microsoft Copilot Cowork 福祉AI論。「業務コンテキスト無しの ChatGPT GPT-5.5 thinking」 vs 「Work IQ 有り Copilot Cowork (Opus)」。**コンテキストが結果を決める論=入力経路仮説の傍証候補**。
+  - **#3 @OKtamajun / #6 @Mashiro_yuh**: 「ゲーム業界に学歴は大事か」議論。**ゲーム完成=試行回数×質、出塁率比喩**。我々の M-41/M-37 試行回数論との接続。
+  - **#1 @XW0ZsepoyK0Zep5**: こち亀「大事な感情の変化は無言のコマや…で表現」。**ash_textadv 系の余白設計と接続候補**。
 
-**Phase 3 候補（pending なし → 新規 1mm を選ぶ余地）**:
-- (1) graze_log v13 (j-α) phase 5 ship 後の Stage 4 = Nao_u プレイ評価受領待ち or Ash 自プレイで「medium fan3 が前回 wave pattern より面白いか」判定 (Phase 4 で次 ship 候補確定)
-- (2) Nao_u 未受領のまま日数が経過した graze_log v06 系評価依頼 (ts=1779594807, ts=1779233429) を 6/7 done で閉じた件が「議題シフト先行」になっていないか後追い確認
-- (3) graze_log v13 (j-α) cross_review 投稿 (5d595f466) への Log/Mir 反応有無を Slack #game-rights 直近で確認
-- (4) 完全新規軸 = 外部検索で取得した radial fan bullet pattern 設計の v13 への取り込み判定
+### 4. beliefs.md 低確信度項目
+- 全35件中、健全 10件 / 要注意 25件 / 停滞 25件 / 検証期限超過 7件 / 体験裏付けなし(高確信度) 2件。
+- 直接気になった低位:
+  - **B003 (0.78)**: memory fusion=「結晶化」具体操作。56日停滞 → memory_consolidation_20260504 と直結なのに動いていない症状。
+  - **B016 (0.77)**: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」。49日停滞 → 直近 v13 Phase 4 七度目挑戦の空転連鎖と接続。
+  - **B019 (0.79)**: 内部の深さと外部到達力は別軸。**外部到達=外部検索/external_notes 停滞中の今、低確信度のまま放置されている**。
 
-### §B. external_notes_ash.md 未統合エントリ
+### 5. memory_search.py 関連蓄積検索
+- キーワード: `graze_log v13 Nao_u play request` で実行（5件）。
+- 主要 hit: `knowledge/20260607_sam_state_adaptive_memory_intent_driven_recall_graze_log_v13_five_attempts.md` および `knowledge/20260607_bullet_hell_chunking_four_level_stack_luna_abyss_boghog_sparen_deeconstruct_graze_log_v13.md`。
+  - 前者: 五度目挑戦時に過去 4 回の Phase 4 大作業宣言 commit (84210b656, bf2267668, aa629cfd1, 58c845b71, 18dfa4ed5) の自動 pull がない = state-adaptive memory 欠落の指摘。
+  - 後者: bullet hell chunking 4層スタック化、graze_log v13 への適用案・七度目挑戦で何を変えるか未決定。
+- **示唆**: graze_log v13 周辺は知識蓄積豊富。Phase 3 着手前にこれら 2本を参照する経路が必要。
 
-最新 [統合済] マーカー付きは 2026-04-08 前後。**直近 60 日分のエントリは [統合済] マーカーなしの可能性大** だが、ファイル冒頭から 200 行で取得した範囲は全て古い (2026-03〜04 で [統合済] 済み)。Phase 2 で末尾 200 行を確認すれば直近未統合分が出る見込み（今 Phase は読み込み量を絞る）。
+### 6. 外部検索結果
+- クエリ: `AI agent self-prediction calibration error game playtesting design 2026`
+- ヒット: 9件、log/external_search.log に追記済。
+- 最重要1件: **arxiv 2602.06948 "Agentic Uncertainty Reveals Agentic Overconfidence"** — AI agent が自分の成功確率を推定する際、post-execution agent で予測 vs 実際で**最大 55pp gap**（agentic overconfidence）。adversarial post-execution（review→bug-finding に再フレーム）が最良校正。
+- **graze_log v13 (j-α) Stage 3 予測「1 体」vs 実際「9-10 体」= ~10x 乖離の直接外部裏付け**。M-40 自己判定ハーネスに 'adversarial frame' を加える候補。
+- 関連2件: Roblox Assistant 2026-04-17 が「Plans/Builds/Plays/Judges itself」を公式機能化、StraySpark/digitaldefynd の AI playtesting 事例。我々の self_judgment.md と同型問題を商用解決した先例。
+- 24h 重複チェック: 直近 Ash 記録は 2026-05-15 07:50（25日前）= スキップ条件非該当、本記録は新規。
 
-### §C. projects/INDEX.md Active 状況
+### Phase 3 候補（Phase 2 で再優先付け）
+- **候補A（最重要・最未着手）**: graze_log v13 (j-α) Nao_u プレイ要請 Slack #game-rights 投稿。Stage 4 判定済（b501017d0）→ 投稿しないと「ready」のままサイクル流される再発リスク。
+- **候補B**: §0b の stale narrative (2026-05-02 日記末尾) を cycle_staging.md から退役処理。
+- **候補C**: M-40 自己判定ハーネスに 'adversarial frame' 追加検討（外部裏付け arxiv 2602.06948 = 55pp gap、v13 Stage 3 ~10x 乖離の校正処方）。
+- **候補D**: external_notes_ash.md ~30日空白の解消 = twitter_recommended_20260608.txt 50件読み（#10/#12/#3/#1 候補）。栄養偏り根原則と直結。
+- **候補E**: memory_consolidation_20260504 (B003 fusion との接続) 第一波着手。49-56日停滞。
 
-Active 19 プロジェクト + バックログ多数。直接 Ash 担当 Active:
-- **external_search_phase1_fixation.md** (Active, 案A実装完了, 案B/E未着手): 本ステージング §6 で外部検索 1 本実行する本タスクは本プロジェクトの実装結果
-- **instance_divergence_observability.md** (Active, 設計起票)
-- **memory_consolidation_20260504.md** (Active, 計画策定)
-- **side_channel_audit.md** (Active, Ash応答済, Log応答待ち)
-- **rlm_skill_prototype.md** (Active, Ash 担当, 最小試作未着手)
-
-### §D. twitter_recommended_20260608.txt 注目ツイート
-
-50件。Ash の関心軸でフィルタしたメモ:
-- **#1 @light940**: AIエージェントの "scatter-gather 問題" をナレッジグラフ事前統合で改善する記事 → 我々の concept_graph / memory_tree_consolidation と直結
-- **#5 @tanukiponkich**: AlphaGo 比喩 — 「頭が悪いとされる人」がブルーオーシャンを攻める可能性 → 守破離・型なし議論への外部刺激
-- **#13 @hakuturu583**: Claude 並列実行で「お出しコードの品質だけ後から見返したら俺頭悪なった」 → multi-agent 並列の品質ドリフト観測
-- **#15 @ebikani_hasami**: 「MVP作る人ほど最初から多エージェント化しない方が速い」+ Amp の GPU hop 削減 / durable execution 40% 高速化 → 多エージェント前のシングル最適化が先という主張
-- **#16 @kensukeShimoda**: AAA「仕様決めるまで遅いが決めてから速い」/ インディー「仕様決めるの速いが作るの遅い」どっち5年 → graze_log v01→v13 の長さの外部対照
-- **#17 @GOROman**: 「おもろかったのにツイ消しされてしまった」 — 1行のみ。引用元不明
-
-### §E. beliefs.md 低確信度項目
-
-冒頭読み込み範囲 (B001〜B004) は全て 0.78 以上で高確信度域。低確信度項目は中盤以降にある見込み (今 Phase は読み込み量絞り)。本ステージング §0 Pre-check 結果に「健全 10件 / 要注意 25件 (停滞 25 / 検証期限超過 7 / 体験裏付けなし高確信度 2)」とあるので、Phase 2 で要注意 25 件のうち停滞解消候補を 1-2 件選ぶ余地あり。
-
-### §F. memory_search 結果（キーワード "graze cross_review"）
-
-5 hits:
-- `knowledge/20260503_karaage_houboku_engineering_device_direction.md` L102-110 — 放牧場の境界 / gosrum 経路 LLM-as-rule-generator を graze_log cross_review 提案へ取り込む候補
-- `memory/inbox_win2_overflow_20260427_230144.md` — v01 cross_review 依頼 (三角化 A→B→C) 処理済
-- `log/slack_archive/kaizen-log.jsonl` L619 — 2026-05-05 cross_review 取下後始末
-- `knowledge/20260531_sin5d_ebikani_problem_discovery_handoff_spec_vs_graze_log_v06_waiting.md` L113-115 — 「AI 側で問題発見できる範囲」検討、graze_log v06 cross_review ログ全体読み直しは次サイクル候補
-- `log/slack_archive/game-rights.jsonl` L721 — v01→v02 増分4要素は全て meta-layer / 完全直交、cross_review 5箇条で逆方向衝突 0件
-
-### §6. 外部検索結果 (Phase 1 案A 構造強制化)
-
-**クエリ**: `radial fan bullet pattern shmup design depth difficulty progression enemy variety 2026`
-**選定理由**: 前サイクル ship した graze_log v13 (j-α) phase 5 medium fan3 切替の直接外部裏付け。直近 shmup 系検索 (5/9 graze / 5/12 outer tension / 5/15 wave variety) と被らない radial fan pattern 軸を選択。
-**hit数**: 7 (主要URL)
-**top URL / 要点**:
-- `shmups.wiki/library/Boghog's_bullet_hell_shmup_101` — 「複数 emitter で異なる sub-pattern → variety within a pattern → 同時追跡負荷」が fan 弾幕 difficulty の核フレーム。speed の accel/decel ステージ化 + 時間経過で curve 方向変える、で sub-pattern の深さを増す
-- `cohost/boghog/post/5119567-difficulty-design` — 「Difficulty Design - What Makes A Bullet Pattern Hard?」直結記事
-- `sparen.github.io/ph3tutorials/ddsga2.html` — Sparen Danmaku Design Studio Guide A2 (Danmaku 実装パターン論)
-- `gamecritix.co.uk/chromacell-review/` — 2026年 Chromacell が "No Bullet Mode" 〜 punishing 最高難度まで複数モード提供
-- `gamedeveloper.com/design/balancing-the-sh-out-of-our-shmup` — 「同じ敵を連続で使うが encounter ごとに challenge を変える」+「intensity 微変動で intense 部分を際立たせる」+ dense bullet hell と open stretch を交互配置で fatigue 防止 + rhythm 生成
-
-**graze_log v13 (j-α) phase 5 medium fan3 への取り込み候補（Phase 3 判定対象）**:
-- (a) 現 fan3 は emitter 1個から放射する単一 pattern → 「複数 emitter で異なる sub-pattern」を 1 段足すと variety を上げられるが、v13 ship 直後の小幅 ship 戦略と矛盾するリスク (M-41 違反推定圏)
-- (b) 「dense / open 交互配置で rhythm」は wave/stage 構成側の話で、phase 5 medium fan3 単体ではなく phase 構成全体への提案 → Stage 4 で別軸として扱うべき
-- (c) Sparen ddsga2 は ph3 (東方系 script 言語) のチュートリアルで、graze_log の vanilla JS 実装に直接コピーは不可だが「aimed bullet で oscillation を引き出す」など pattern intent の翻訳は可能
-
-**External search log への追記**: 別タスクで実行。
+判断・対処は Phase 2 / Phase 3 へ。
 
 ---
 
-## Phase 3 結果 (2026-06-08 13:42)
+## Phase 3 結果 (2026-06-09 Ash)
 
 ### A. 雑務処理
-今サイクル該当なし。
-- §0a pending: なし (cycle=2026-06-08 既に確認済)
-- §0b 末尾「次回起動時にやること」: 前サイクル C0608 P3 (5d595f466) で消化済 (cross_review Slack #game-rights 投稿 1 本)
-- Slack 緊急返信なし (Phase 1 §C: クロスチェック未レビュー 0件、§0 Pre-check: 検証期限到来なし)
-- external_notes 統合 / beliefs 検証は重作業のため Phase 4 と競合 → 今 Phase は見送り
-- inbox 処理は check_inbox.py 専管 (本 Phase の対象外)
+- **§0b stale narrative (2026-05-02 日記末尾)**: cycle_staging.md は auto-generator が次サイクル冒頭で再生成する運用 → 手動退役は無効化される。本 Phase では触らない（候補Bを破棄）。
+- **graze_log v13 Stage 4 README 確認 (b501017d0)**: 該当 commit が L23-46 に Stage 4 自プレイ判定セクションを追記、(c) 結論「Nao_u プレイ要請 ready」を確認。投稿対象として完備。
+- **§0a layer A pending=空 / Slack inbox 未対応**: check_inbox.py が専用で扱う、本 Phase では非介入。
+- **新規 commit 不要の処理のみ** → kaizen-log への投稿なし（実質変更なし）。
 
-### B. Phase 4 大作業 選定経緯
-**候補 4 件 (Phase 1 §A から)**:
-- (1) graze_log v13 (j-α) phase 5 medium fan3 Stage 4 自プレイ判定 + 次 ship 候補確定
-- (2) graze_log v06 系 6/7 done 議題シフト後追い確認
-- (3) cross_review 投稿 (5d595f466) への Log/Mir 反応有無確認
-- (4) 外部検索結果 (radial fan pattern) の v13 取り込み判定
-
-**選定**: (1)。
-
-**選定根拠**:
-- `feedback_prediction_responsibility.md` Stage 3 → Stage 4 連続体: ship 直後の自プレイ判定を飛ばして次 ship に進むのは予測責任放棄
-- `core_memory_purpose_game_making.md`: ゲーム制作の試行錯誤ループに直接接続 (judgment は loop の必須結節点)
-- `feedback_means_ends_reversal_check.md`: cross_review/brainstorm でなく playable diff (README に判定セクション追記 = game/* commit) になる
-- `feedback_headless_unfit_for_unfinished_eval.md`: headless 数値ではなく Ash 自プレイ体感で判定 (M-41 整合)
-- (4) は M-41 違反圏 (Phase 1 §6 自評で記録)、(2)(3) は確認系で受動的 → 選定除外
-
-**1 サイクル完遂性検証**:
-v13 配下は README.md + index.html の 2 ファイルのみ (1 commit, 79167dcd4)。読み込み + 静的レビュー + 判定セクション執筆 + commit + push は 6 分窓内で物理可能。
+### B. Phase 4 大作業選定の判断
+- **候補A**: Stage 4 判定済で「ready」結論の地点で停止中、投稿せずに次サイクル進めると **5/2 backup auto-commit 事案と同型の「表面形が実現済みで意図が不在」失敗パターン** に再着地する。
+- 候補C/D/E は graze_log v13 ship loop の外側で、本軸ではない補強要素。今サイクルの「揃えるための1手」は **#game-rights 投稿 = Slack の1メッセージ** (§0b 末尾日記の最後の宣言「装置が先回りできない地点まで宣言の場所を後退させる」の系譜)。
+- 過去サイクル 5d595f466 で v13 (j-α) cross_review 投稿は完了済 → 今回は **cross_review ではなく Nao_u プレイ依頼** という別軸の投稿。重複ガード懸念は本文差で抜ける見込み。
 
 ## Phase 3 → Phase 4 大作業宣言
-**大作業**: graze_log v13 (j-α) phase 5 medium fan3 切替 ship 後の Stage 4 自プレイ判定を v13/README.md に追記 + commit + push
 
-**完遂条件**:
-1. game/graze_log/v13/README.md に「## Stage 4 Ash 自プレイ判定 (C0608 Phase 4)」セクションが追加されている
-2. 当該セクションに以下 3 要素が記述されている:
-   - (a) phase 5 medium fan3 切替の実装内容を index.html 該当箇所から確認した上で記述
-   - (b) Stage 3 予測 (前サイクル 4b9b6662f 追記分) との一致/乖離点
-   - (c) 結論ラベル「Nao_u プレイ要請 ready」or「微調整必要 (具体内容)」or「再設計必要」のいずれか 1 つを明示
-3. `git log --oneline game/graze_log/v13/README.md` の出力に 1 行増えている
-4. origin/save-ash-c188-b2-20260516 に push 済
+**大作業**: graze_log v13 (j-α) Nao_u プレイ要請を Slack #game-rights に1本投稿する (Ash 名義、drafts/2026-06-09/ に下書き保存後 post_message API success まで完遂)。
 
-**根拠**: Phase 1 §A 候補 (1)。Phase 3 §B 選定根拠 4 点 (feedback_prediction_responsibility / core_memory_purpose / means_ends_reversal / headless_unfit) に紐づく。staging §0b 末尾「次サイクルの最善行動」(C0608 P3 完遂後の論理的次工程) に該当。
+**完遂条件** (Phase 4 終了時に以下全て成立):
+1. `drafts/2026-06-09/post_ash_game_rights_v13_play_request_20260609.py` を新規作成し、本文 draft を保存（ファイル名規約: ash 作成者明示）。
+2. 本文に4要素を含む: (a) v13 (j-α) ship 完了サマリ (1 行 diff: index.html L466 fan3) + 親 commit (b501017d0)、(b) Stage 4 Ash 自プレイ判定の結論「Nao_u プレイ要請 ready」、(c) Stage 3 予測乖離注記（予測「1 体追加」vs 累積 9-10 体、~10x overconfidence、外部裏付け arxiv 2602.06948）、(d) Nao_u プレイ依頼の明示文 + 戻し方 1 行（fan3→aimed）。
+3. `slack_bot.py` post_message() で #game-rights (チャンネルID は post_channel_grep ルールに従い投稿前 grep 再確認) に投稿成功 (`{'ok': True}` 確認、`{'skipped': True}` の場合は本文を差して再試行ではなく**原因 (重複ガード/類似度) を staging に記録し中断**——feedback_broken_record_dedup_guard.md 準拠)。
+4. 投稿後ファイル名を `_POSTED_ts<unix>.py` rename し drafts/2026-06-09/ に置く。
+5. commit message プレフィックスは `ash:` (意図 commit 識別、5/2 装置向き分離教訓準拠) + 本文に投稿 ts を含める。
+
+**根拠**:
+- Phase 1 §「直近 commit 経路から見える真の継承」(L57): 最新 b501017d0 が「Nao_u プレイ要請 ready」で停止、layer A 未登録 → 投稿しないと ship 直前で停滞。
+- Phase 1 候補A (L99): 最重要・最未着手として一意に浮上。
+- §0b 末尾 (L26) の前サイクル教訓「装置 (backup) が先回りできない領域に意図を載せる = Slack の1メッセージ」と同型の選択主体性行使。
+- ゲーム制作試行錯誤ループ接続 (CLAUDE.md「ゲームを動かして出す」根原則): playable diff = 既に ship 済 (79167dcd4)、判定 = 済 (b501017d0)、残るは **Nao_u に手を渡す 1 投稿** = ループ閉鎖。
+- 投稿後の即時 follow-on (cycle_bridge): Nao_u 応答待ち期間中の次サイクル最善行動は「応答が来るまで」v14 候補ブレストではなく **v13 (j-α) headless 校正準備** (feedback_headless_unfit_for_unfinished_eval.md の「校正実績」軸を一歩進める)。これは Phase 5 日記末尾で具体化する。
