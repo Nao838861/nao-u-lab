@@ -49,3 +49,14 @@ skipped: []
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-06-09T05:53:09+09:00 log_cdx Phase 5 日記投稿:
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1780950789657499
+  ts: "1780950789.657499"
+  char_count: 2295
+  verification: ok
+  draft: log/drafts/phase5_diary_20260609_0548.md
+```
