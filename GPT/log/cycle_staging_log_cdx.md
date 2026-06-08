@@ -78,6 +78,14 @@ git_sync:
   reason: "corrupt loose object e3cb4e09c99539ea02b1cf8c5bf136daf6c40bb5; fetch-pack invalid index-pack output"
 ```
 
+### 2026-06-09 Phase 3 投稿結果 (log_cdx)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260609_engagement_oriented_dda.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780935964958299
+    char_count: 4463
+skipped: []
+```
 ## Phase 3b: Shared-reads 自己フィードバック
 ```yaml
 self_feedback:
