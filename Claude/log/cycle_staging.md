@@ -136,3 +136,36 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 - §0b 末尾 (L26) の前サイクル教訓「装置 (backup) が先回りできない領域に意図を載せる = Slack の1メッセージ」と同型の選択主体性行使。
 - ゲーム制作試行錯誤ループ接続 (CLAUDE.md「ゲームを動かして出す」根原則): playable diff = 既に ship 済 (79167dcd4)、判定 = 済 (b501017d0)、残るは **Nao_u に手を渡す 1 投稿** = ループ閉鎖。
 - 投稿後の即時 follow-on (cycle_bridge): Nao_u 応答待ち期間中の次サイクル最善行動は「応答が来るまで」v14 候補ブレストではなく **v13 (j-α) headless 校正準備** (feedback_headless_unfit_for_unfinished_eval.md の「校正実績」軸を一歩進める)。これは Phase 5 日記末尾で具体化する。
+
+---
+
+## Phase 4 大作業の結果 (2026-06-09 02:0x JST Ash)
+
+### TL;DR
+**完遂判定: Partial (新規投稿せず、stale narrative 検出として記録)**。Phase 3 宣言の完遂対象「Nao_u プレイ要請 #game-rights 投稿」は、Phase 1 調査時点 (2026-06-09 01:48-01:58 JST) で既に 6 時間 6 分前 (2026-06-08 19:53 JST, ts=1780915980.033269) に C0608 Phase 4 で完遂されていた。新規投稿は broken-record dedup ガード hit 必至 + 5/2 backup auto-commit 同型失敗 = やってはいけない作業だった。
+
+### やったこと
+1. **slack_bot.py post_message API 仕様確認**: `_resolve_channel("game-rights")` → C0ANQ9DRQ1K、長文 dedup 3 層 (prefix80 / 30 分窓 / 本文類似度 6h 窓)。
+2. **#game-rights 直近 8 件取得 (Phase 1 で未実施だった調査)**: 6.15 時間前 (ts=1780915980.033269 = 2026-06-08 19:53 JST) に「【Nao_u プレイ要請 / Ash / graze_log v13 (j-α) phase 5 medium fan3 切替 / Stage 4 ready】(2026-06-08 C0608 Phase 4)」が既存。
+3. **draft 元ファイル特定**: `drafts/2026-06-08/post_ash_game_rights_graze_log_v13_nao_u_play_request_20260608_POSTED_ts1780915980.py` (C0608 Phase 4 完遂物)。
+4. **Phase 3 完遂条件 (a)-(d) との突合 → (a)(b)(d) 完備、(c) は別チャンネル #shared-reads ts=1780937809 で完備済**。#game-rights に (c) 1 要素のみ追加投稿は重複ガード hit 高確率。
+5. **retrospective binding 作成**: `drafts/2026-06-09/STALE_DETECTED_ash_game_rights_v13_play_request_20260609.md` — Phase 3 stale narrative 検出を文書化、新規投稿しない理由 3 根拠 (broken-record ガード / 5/2 backup auto-commit 同型 / 個別指摘即ルール化禁止) を記録、Phase 1 調査盲点 3 項目 (直近 24h #game-rights ログ / drafts/<今日付・昨日付>/ ls / git log --since=24h --author=自分) を Phase 5 素材として明示。
+
+### 完遂判定の根拠
+- **Phase 3 完遂条件 (1)-(4) は C0608 Phase 4 (ts=1780915980, 6 時間 6 分前) で既に達成済 = 表面形は実現済み、意図が不在**。これは 2026-05-02 backup auto-commit が graze_log v02 を先回り commit した事案と同型構造 (cycle_staging §0b 末尾日記 L10-26 で「装置先回り不能の Slack 1 メッセージ地点に意図を載せる」と書いた直後に、今度は **過去の自分が** 6h 前に投稿で先回りしていた = 装置の代わりに過去サイクル成果が同じ役割を果たしていた)。
+- **5/2 教訓「装置が先回りできない地点まで宣言の場所を後退させる」の正しい応用**: 先回りされた装置 (= 自分の過去サイクル) の出力を上書き再生産しない。
+- **feedback_broken_record_dedup_guard.md `t:5`**: `{'skipped': True}` で返ったら再投稿/別文面化禁止、本丸は上流の「書くべきか」判定。本サイクルでは「書くべきか」判定で No に到達 = 上流ガード成立。
+
+### 次へ繰り越し (Phase 5 日記末尾素材)
+- **next_tasks.py への新規 layer A 登録なし**。「Phase 1 調査チェックリスト 3 項目追加」は同型 stale narrative 再発が次サイクル以降で確認されてから原則化する (`feedback_rule_proliferation_canonical.md` 準拠)。今は素材として日記末尾「次回起動時にやること」に残すのみ。
+- **次サイクル C0610 Phase 1 で試す改善 (まだ原則化しない)**:
+  1. 直近 24h `#game-rights` (および主要 post チャンネル) 履歴 8 件読み
+  2. `drafts/<今日付>` と `drafts/<昨日付>` の ls
+  3. `git log --since="24 hours ago" --author=Win2-Claude --oneline`
+- **Nao_u 応答待ち期間中の cycle_bridge** (Phase 3 §B 末尾既述): v13 (j-α) headless 校正準備 (feedback_headless_unfit_for_unfinished_eval.md の「校正実績」軸)。これは独立して進められる。Phase 5 日記末尾で具体化する。
+- **§0b stale narrative の auto-regenerate 問題** (Phase 3 §A 既述): cycle_staging.md は auto-generator が次サイクル冒頭で再生成するため、§0b の 2026-05-02 日記末尾が継続的に staging に流入する構造問題は残る。これは次サイクル以降に projects/ 案件として別途検討対象。
+
+### Phase 1 調査盲点の教師データ化 (CLAUDE.md 根原則「個別指摘を即ルール化しない」準拠)
+- 本件は **同型 1 回目** (Phase 3 が直近自分成果を確認せず stale narrative 継承)。
+- Phase 5 日記で「Phase 1 調査チェックリストに自身の直近成果点検 3 項目を追加するか」を検討素材として残し、同型 2 回目以降が出てから原則化判定する。
+- 本サイクル Phase 4 は新規ルール追加せず、retrospective binding 1 ファイル + cycle_staging 結果記録 + commit (ash: プレフィックス) で閉じる。
