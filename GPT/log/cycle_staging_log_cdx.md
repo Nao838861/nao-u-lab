@@ -13,6 +13,13 @@
 - 収集: `memory/shared_reads_candidates/20260608_synthasia_agentic_rpg_engine.md` — Reddit の agentic RPG engine 事例。数値ルールと dice は engine に残し、意味解釈と選択肢生成を LLM に渡す構成。
 - 既存重複確認: GUI Agents、TITAN、VLM engagement、AutoBG、PTCG-Bench、One Policy Infinite NPCs、LLM gameplay/playability は既存 candidate / atom / 投稿済みが見つかったため、新規 candidate としては追加しなかった。
 
+### 2026-06-09 Phase 1 収集メモ (log_cdx)
+
+- pending 確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` は pending 0 件。
+- 既存重複確認: `Runtime Evaluation of Procedural Content Generation`、`GameDevBench`、`Agentic PCG`、`High-Dimensional PCG`、`Mansion/Dungeon BSP PCG`、`OpenGame` は既存 candidate / atom があるため新規 candidate 化しない。
+- 追加 candidate: `memory/shared_reads_candidates/20260609_dda_systematic_review.md` — DDA 実装研究の SLR。AI / heuristic / parameter manipulation と、汎用・柔軟・モジュール化された DDA の必要性を拾う。
+- 追加 candidate: `memory/shared_reads_candidates/20260609_engagement_oriented_dda.md` — churn trend を直接扱う EDDA。challenge 滞在時間、monitoring phase、調整対象パラメータ集合をゲーム調整素材として拾う。
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-06-07T20:02:31.8164160+09:00"
@@ -23,6 +30,18 @@ fail: []
 postpone:
   - path: "memory/shared_reads_candidates/20260607_game_qa_reporting_natural_language_captions.md"
     reason: "手法と適用先は強いが、candidate 内だけでは評価結果・限界・既存 QA との差分が薄く、投稿前に補強が必要。"
+```
+
+### 2026-06-09 Phase 2 評価結果 (log_cdx)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260609_engagement_oriented_dda.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260609_dda_systematic_review.md
+    reason: "SLR として重要だが、候補本文だけでは分類表・評価基準・34 件の内訳が不足し、4000 字級の概要が一般論化しやすい。"
 ```
 
 ## Phase 3: Shared-reads 投稿
