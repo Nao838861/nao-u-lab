@@ -44,3 +44,18 @@
 **Nao_u プレイ要請 ready** (一行戻し可能、phase 7 予兆機能は成立、副作用許容範囲)。
 
 ただし上記 (b) 乖離点 (Stage 3 で「fan3 1 体追加」と書いたが累積 9-10 体登場) は次回 Stage 3 予測で「spawnInterval × phase 秒数 = 累積 spawn 回数」を計算式として明示することで再発防止する。本 v13 実装自体は意図通り、戻し容易、phase 7 final への接続も成立。
+
+### (d) tutorial trap 軸 (C0609 Phase 2 外部研究適用)
+
+C0609 Phase 1 §6 で集めた外部知見を v13 (j-α) の Nao_u プレイ要請地点に適用する独立評価軸。Stage 4 (c) で ready 結論を出した後、別レンズで再走査する目的。
+
+**適用する 3 ソース**:
+1. **Anderson et al. 2024 ("Tutorial-less learning in Baba is You")**: instruction-based tutorial 群と discovery-based 群を比較し、comprehension/retention に有意差なし。含意 = 「直感的に解ける設計はそれ自体が教えており、外付け説明より体験内 sign が効く」(C0609 Phase 1 §6.1)。
+2. **Cao & Liu 2022 (game tutorial onboarding study)**: 複雑メカニズム = 明示誘導が効く、直感的メカニズム = 暗黙学習で同等。閾値判定の参照 = 「該当メカニズムが『初手で動かしてみれば挙動が分かる』水準か」(C0609 Phase 1 §6.2)。
+3. **@ore57436902 ツイート (2026-06-09 twitter_recommended #42)**: 「読まなくても・すっ飛ばしても なんとかなるのが前提で、チュートリアルがあればより親切 くらいの位置づけでありたい」。チュートリアル不要論の生活実感的表現で、評価基準 = 「README/help 無しで初手から進めるか」(C0609 Phase 1 §3)。
+
+**graze_log v13 (j-α) 自己審査**: Nao_u が README/v13 ノート/cross_review コメントを一切読まずに index.html を開いた状況を想定する。タイトル画面 (L1043-1051) には `GRAZE → 軌道予測線 + ゲージ → BOMB` `GRAZE 連続 5 回 → ACTIVE DEF` 操作 4 行が明示されており、Cao & Liu 2022 の分類では「明示誘導側」の設計だ。ただしこの 4 行を読まず即 SPACE で始めた場合、(1) graze 半径 R_GRAZE=22 px の擦り感覚は最初の被弾未遂で即座に体感できる (graze 時の軌道予測線描画 L645 と STREAK HUD インクリメント L1005 で feedback ループ閉、Anderson 2024 の discovery-based 系で機能する確度高)、(2) phase 5 medium fan3 切替の「予兆としての mix 化」(本 v13 改変点) は 52-65 秒経過後の体験で、初手で理解する種類の情報ではないため tutorial trap 領域外、(3) **問題は STREAK=5 → ACTIVE DEF 発動経路**で、HUD 右上の `SPACE [B]OMB/[D]EF/[-]` 切替表示 (L1011-1019) が context 駆動だが、STREAK が 5 に到達した瞬間の視覚的強調 (画面振動 / 色変化 / 音) は無く、SPACE 押下時にだけ activeDef 経路 (L388-407) が走る — タイトル画面の 1 行 `GRAZE 連続 5 回 → ACTIVE DEF` を読み飛ばすと、ACTIVE DEF の存在自体に気づかず最終スコアの DEF 0 で終わる確率が高い。Untitled Goose Game (Phase 1 §6.3) は trial-and-error で気づける設計だったが、v13 の DEF は「STREAK 蓄積→SPACE 文脈分岐」という 2 段抽象が要り、暗黙学習の到達コストが graze 単独より高い。
+
+**結論**: graze + BOMB は tutorial-less でも到達可能、ACTIVE DEF は現状 README/タイトル画面依存。Stage 4 (c) の「Nao_u プレイ要請 ready」結論自体は撤回しない (タイトル画面に明示テキストが残っているため Cao & Liu 2022 の「複雑メカニズム = 明示誘導」基準は満たす) が、tutorial trap 軸単独の評価では DEF 経路は「読まれた前提」の設計であり、@ore57436902 の「読まなくても なんとかなる」基準には未到達。
+
+**改善候補 (v14 候補 1 つ)**: STREAK が GRAZE_STREAK_TH (=5) に到達した frame で 1 度だけ画面中央に短時間 (60F) `DEF READY` テキスト + プレイヤー周囲の R_GRAZE リング点滅を発火 (L668-669 の `state.grazeStreak>=GRAZE_STREAK_TH` 分岐に 1 度フラグ立てて pop / ring push)。タイトル画面の説明を読まず始めた Nao_u が、STREAK 5 で「何かが起きた」と認知し、HUD 右上の `[D]EF` 表記と関連付ける discovery-based 経路を 1 本敷く。実装規模: 約 10-15 行追加 + state.defReadyFlashed bool 1 個。戻し容易性は v13 同等 (条件分岐 1 ブロックを削除)。
