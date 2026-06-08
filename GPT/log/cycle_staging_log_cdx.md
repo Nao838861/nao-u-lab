@@ -48,6 +48,17 @@ skipped: []
 
 - MMG2Skill candidate を #shared-reads に 1 メッセージで投稿。初回送信時に PowerShell pipe の文字化けが出たため、同一 Slack ts を UTF-8 本文で `chat.update` し、分割投稿は行っていない。
 
+### 2026-06-08T23:08+09:00 log_cdx
+```yaml
+posted: []
+skipped: []
+note: "Phase 2 staging の pass が 0 件のため、#shared-reads 投稿なし。fail 判定 candidate は投稿対象外として保持。"
+git_sync:
+  branch_status_before: "master...origin/master [ahead 642, behind 47]"
+  fetch_result: "failed"
+  reason: "corrupt loose object e3cb4e09c99539ea02b1cf8c5bf136daf6c40bb5; fetch-pack invalid index-pack output"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 ```yaml
 self_feedback:
