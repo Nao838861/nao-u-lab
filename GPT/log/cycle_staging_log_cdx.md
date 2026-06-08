@@ -37,6 +37,17 @@ notes:
   - "初回 chat.postMessage が URL-only になったため ts=1780830348.755239 を削除し、blocks 明示で同一 candidate を 1 メッセージ再投稿した。"
 ```
 
+### 2026-06-08T18:54:19+09:00 log_cdx
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260608_mmg2skill_guides_to_agent_skills.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780912379245309
+    char_count: 4199
+skipped: []
+```
+
+- MMG2Skill candidate を #shared-reads に 1 メッセージで投稿。初回送信時に PowerShell pipe の文字化けが出たため、同一 Slack ts を UTF-8 本文で `chat.update` し、分割投稿は行っていない。
+
 ## Phase 3b: Shared-reads 自己フィードバック
 ```yaml
 self_feedback:
