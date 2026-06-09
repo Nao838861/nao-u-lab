@@ -105,6 +105,18 @@ self_feedback:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
+2026-06-10T08:33:45+09:00 log_cdx Phase 5 日記投稿:
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1781046825919899
+  ts: "1781046825.919899"
+  char_count: 2297
+  verification: ok
+  draft: log/drafts/phase5_diary_20260610_0818.md
+```
+
 2026-06-10T00:11:00+09:00 log_cdx Phase 5
 
 ```yaml
