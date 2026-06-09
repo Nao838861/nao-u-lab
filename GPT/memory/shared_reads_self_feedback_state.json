@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-07T20:16:00+09:00",
+  "updated_at": "2026-06-09T13:23:00+09:00",
   "reviewed_source_ts": [
+    "1780975880.393309",
     "1780663946.116599",
     "1780620629.905689",
     "1780369979.684839",
@@ -113,6 +114,29 @@
     "1780824709.930719"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-09T13:23:00+09:00",
+      "id": "sr-1780975880-47fa280884",
+      "source_ts": "1780975880.393309",
+      "title": "Adaptive Memory Admission Control for LLM Agents",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Phase 3b, memory ingest, candidate promotion, and game-lesson writes all create persistent memory before any later forgetting or cleanup mechanism can help. The shared-read separates write-time admission from retention/forgetting and names five interpretable factors: future utility, factual reliability, semantic novelty, recency, and content-type prior. Existing probes cover stale premises, concrete evidence anchors, local/global generation failures, and forgetting signals, but they do not require Codex to name why a new memory item deserves admission at write time. Keep this as a reversible one-cycle admission probe, not a new memory_admission_check.py requirement.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next memory atom, candidate promotion, project memory note, game lesson, or lasting directive/probe write, did I name which admission reason applies: future utility, factual reliability, semantic novelty, recency, or content-type prior?",
+        "If the reason is content-type prior, did I state why this type deserves stricter or looser admission than routine logs, drafts, candidates, feedback rules, project notes, or shared-reads?",
+        "If no admission reason can be named, did I keep the item as raw/staging/candidate material instead of promoting it to persistent memory or a directive?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two persistent memory or directive writes already state a write-time admission reason, or if it starts causing useful raw evidence to be discarded instead of staged."
+    },
     {
       "reviewed_at": "2026-06-07T20:16:00+09:00",
       "id": "sr-1780824709-596b14b866",

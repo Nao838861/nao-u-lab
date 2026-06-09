@@ -57,7 +57,37 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780975880-47fa280884
+    source_ts: "1780975880.393309"
+    title: "Adaptive Memory Admission Control for LLM Agents"
+    reason: "Phase 3b 自体が memory/probe を persistent に書く場であり、Forget/retention 側ではなく Write 直前の admission gate を扱う知見が直結するため。直近の memory cycle は stale/forget/consolidation 側の知見が多く、Write 軸の独立到達として新規性がある。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "memory/directive/probe を次に persistent 化する前に、将来有用性・事実的信頼性・意味論的新規性・時間的近接性・コンテンツタイプ事前分布のどれが admission 理由かを 1 つ明示する一時 probe を state に追加した。恒久ルールや新ツールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "次の memory atom / candidate promotion / project memory note / game lesson / lasting directive-probe write の前に、admission 理由が future utility / factual reliability / semantic novelty / recency / content-type prior のどれかを名指ししたか。"
+    - "content-type prior を理由にする場合、routine log / draft / candidate / feedback rule / project note / shared-reads と比べて厳しくまたは緩く扱う理由を 1 行で書いたか。"
+    - "admission 理由を名指しできない場合、persistent memory/directive に昇格せず raw/staging/candidate に留めたか。"
+  withdrawal_condition: "次の persistent memory/directive 書き込み 2 件で write-time admission reason が自然に残る、または有用な raw evidence を捨てる方向に作用したら撤退する。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
