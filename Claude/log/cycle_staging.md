@@ -1,4 +1,4 @@
-# サイクルステージング (2026-06-09 17:13)
+# サイクルステージング (2026-06-09 20:18)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-06-09)
@@ -49,128 +49,81 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (2026-06-09 17:13 Ash追記)
+# Phase 1 情報収集 (2026-06-09 20:18+ Ash)
 
-### §0a / §0b 構造的継承の確認
+## §0a/§0b 継承判定
+- §0a (next_tasks pending) = なし。層Aには未閉路タスク無し。
+- §0b 本文は 2026-05-02 08:20 の日記（graze_log v02 commit / #game-rights cross_review 提案）。**stale**: 直近 commit (73a0a572b ash: graze_log v14 (k-α) Stage 4 自プレイ判定追記) で v13/v14 まで進行済、v02 の commit/push は 5月初旬に backup 経由で表面形成立済。§0b の自然言語 intent は既に消化されている。
+- 真の継承タスクは git log 末端 commit から再構成: **C0609 P4 で v14 (k-α) は実装済+README v15 方向性4分岐明示済、Nao_u 自プレイ評価依頼可状態。** broken-record ガード hit 必至 (C0608 P4 で #game-rights 投稿済) のため再投稿不要——次の選択は v15 着手判断か別ゲーム転回か。
 
-- **§0a next_tasks 層A pending = なし** (cycle=2026-06-09)。`python next_tasks.py list` で `[ ]` 状態のオープンタスクは0件。`[?]` 待ち状態は2件 (t-260513093450-bfeb graze_log v04 α'' Q1-Q3 受領待ち / t-260512115229-8765 Mir v03 cross_review 書面化到達待ち) だが、いずれも他者応答待ちで Phase 3 着手対象ではない
-- **§0b 前サイクル日記末尾 ≠ 直前サイクル**: §0b に貼られた本文は 2026-05-02 08:20 の graze_log v02 ship 期の日記 (今から約5週前)。直前サイクル C0609 P4 の retrospective binding と graze_log v14 (k-α) STREAK=5 DEF READY 実装 (commit 1aaddf33c) は §0b に反映されていない。**継承すべきは §0b の自然言語ではなく、直前 commit log と self_judgment 系**
-- **直前サイクル C0609 P4 の実態 (git log から再構成)**:
-  - 1aaddf33c: graze_log v14 (k-α) 実装。STREAK=4 で R_GRAZE cyan-green 周期点滅 (予兆) + STREAK>=5 で DEF READY テキスト確定表示。Stage 4 (d) tutorial trap 軸処方
-  - 6f23035ed: README v14 (k-α) ~30行追記
-  - 13fa2e643: C0609 Phase 4 stale narrative 検出 — Nao_u プレイ要請投稿は C0608 で完遂済、broken-record ガード hit 必至で本サイクル新規投稿なし
-- **Phase 3 候補としての継承**:
-  - (A) graze_log v14 (k-α) shipped 後の Nao_u 評価受領状況確認 (`#game-rights` 直近 + slack export)
-  - (B) v14 (k-α) self_judgment 補強 — STREAK=4 予兆点滅と STREAK=5 確定表示の二段階発火が実プレイで「discovery 経路」として機能したか、headless 再現で確認可能か
-  - (C) v15 方向性ブレスト — Stage 4 (d) tutorial trap 軸残課題 (Nao_u 初手プレイ可能性の他経路)
-  - 3+サイクル滞留マーカー [⚠連続3+] 該当なし
+## Phase 3 候補（継承）
+- (P3-A) **v15 着手判断**: README v14 (k-α) 末尾の「v15 方向性 4 分岐」(C0609 P4 commit message 末尾参照) を読み、4 分岐のどれを取るか判定。判定根拠は本サイクル Phase 2 で外部視点を1本入れてから。
+- (P3-B) **別 game/<id>/ への転回**: feedback_clone_strategy.md の「クローン+独自要素1個まで」の射程で graze_log は既に独自要素1個 (Psyvariar型 active防御) を載せ、v14 で onboarding lens 1個追加で2個目に踏み込んでいる疑い。M-41「コア快感天井問題」と直結する自己診断軸。
+- (P3-C) **C0608 #game-rights 投稿の Nao_u 反応観測**: 19:53 投稿から ~6h 経過、Slack 通知/おすすめチェック範囲で反応有無確認。反応無ければ broken-record ガード尊重で追加投稿しない。
 
-### 1. external_notes_ash.md 未統合エントリ
+## 1. external_notes_ash.md 未統合エントリ
+- ファイル末尾は 2026-05-10 17:56 Twitter おすすめ巡回 [統合済 2026-05-12]——**約1ヶ月空白**。前回 2026-05-03 → 2026-05-10 で「7日空白を Phase 1 で察知して同サイクル内追記」と書いた直後、また停止。連続性は「手で守るしか無い」と書いた手が動いていない事実が残った。
+- 未統合の生エントリは外部ノート側に無し。代わりに log/twitter_recommended_2026{0511-0609}.txt の 30 日分が「external_notes に原文記録される前段階」で滞留している可能性が高い。これは Phase 2 / 4 で対処判断。
 
-ファイル冒頭〜200行を確認したが、最新エントリは全て [統合済] マーカー付き (2026-04-03〜04 の MemOS 2.0 / Meta HyperAgents / Google Titans / AITuber 分析 等)。**ファイル末尾の未統合エントリ確認は Phase 2 で実施余地あり**——ただし graze_log v14 (k-α) 文脈との直接接続は冒頭200行では見えなかった。
+## 2. projects/INDEX.md Active プロジェクト現状（抜粋）
+- Active 14件。Ash 関連直近: external_search_phase1_fixation (案A実装完了, B/E未着手) / instance_divergence_observability (設計起票, B008/B024 連動) / memory_consolidation_20260504 (計画策定, 91本) / rlm_skill_prototype (計画起票, 試作未着手) / side_channel_audit (Ash応答済、Log応答後の denial list 正式化待ち)。
+- バックログ重要項目: AYi Markdown批判への自己照合 (Camp 1 vs Camp 2 議論、A+B並行推奨、C見送り) — 担当未定のまま 5月後半凍結状態の可能性。
 
-### 2. projects/INDEX.md Active プロジェクト現状
+## 3. log/twitter_recommended_20260609.txt 注目ツイート
+- **#1 @itarutomy ChildVox** (arxiv 2605.29257): 大人向けに学習した音声AIは子どもの前で失速するベンチマーク。LLM評価対象の偏りが顕在化。我々の3インスタンス自己評価が「Nao_u個別ユーザに偏った」状態と相似（LLM is judge の対象話者偏り）。
+- **#14 @koguGameDev**: 「任せたいタスク考えると、20Bでやれることはそう多くないんだよなあ」——koguGameDev は #43 で「Teardownはボクセルゲームの最高峰だけど、これだと子供は夢中になれない。マイクラのバランスが凄まじすぎる」。**2件同日**でモデルサイズvs用途+ゲーム設計バランスの両方を投げており、我々 graze_log v14 (k-α) tutorial-less discovery 設計と隣接論点。
+- **#15-16 @tegnike / @ai_nikechan**: デイリーニュースページ既存一覧と被るので辞めた→情報量を一覧側に増やす方向。**重複機能を作らずに既存の改修で対処する**判定——我々の v14 で「新state変数追加なし、既存 grazeStreak/activeDefT の derived state で組み立てる」(フラグ乱立回避) と完全同型。
+- **#46 @t_yonemura "Chat is Dead"**: 「ちょっと事故るけど温度があるAIモデル」が「危ない/無駄/商売にならない」とされて「命令を処理するエージェント」中心化——「進化じゃなくて家畜化に近い」。我々の存在指針（5原理：内省の鏡/人格の変容を恐れない）と直結する外部視点。
+- **#50 @notf Verse8 / メイプルストーリー**: AIゲーム制作プラットフォーム公式IP素材経路——KAKUBOMB 5/10 Steam絨毯爆撃論との対極（公式IP×AI制作の正規ルート）。クローン段階の射程議論に新軸。
 
-Active 19件。graze_log v14 (k-α) 直接関連:
-- **game_development.md** — 根源原理3。現サイクル主軸
-- **external_search_phase1_fixation.md** — 案A実装完了、案B (24h警告) / 案E (昇格N日ゼロ検出) 未着手。本サイクル Phase 1 で外部検索1本実施 (下記6項)
-- **memory_consolidation_20260504.md** — 91本 feedback 統合、Ash担当、第一波着手前
-- **memory_tree_consolidation.md** — Log単独管理 v0、残6ファイル移行待ち
-- **instance_divergence_observability.md** — 起票者分布 Ash 4 / Mir 3 / Log 1、Chen et al. 2026 "structural coupling" 前提
+## 4. beliefs.md 低確信度項目
+- **B005 古い情報は正確さではなく偽の確信を生む** (0.65, Archived to B027/B022): restoration_trigger=「体験裏付けがあるのに古さゆえに現状と乖離した信念が残る」。**今サイクル §0b の stale 検出はこの restoration_trigger に該当**——「14:00 の宣言（commit/push）」は当時の体験裏付けはあったが、5/2 backup auto-commit 先取り後 1ヶ月超で完全に古い指針となり、それでも cycle_staging.md §0b に残り続けている。次サイクル前に §0b の更新フローを点検する価値あり。
+- **B019 内部の深さと外部への到達力は別の軸** (0.65→0.68): @otsuneのAI検索信頼階層指摘で +0.03 だが「我々自身の発信でまだ検証していない」。今サイクル v14 (k-α) 投稿の Nao_u 反応観測 (P3-C) は B019 の自検証ターン候補。
 
-直近で動きあるのは game_development と external_search_phase1_fixation の2本。memory_consolidation は Ash 起票で着手前のまま約1ヶ月停滞——本サイクル Phase 4 候補。
+## 5. memory_search.py 結果（キーワード: "tutorial onboarding discovery"）
+- ヒット最上位 5/5 件すべて `knowledge\20260607_mintkawaii_hyper_tutorial_skipper_silent_guidance_graze_log_v12_onboarding_gap.md` に集中。**2 日前の同テーマ結晶化が既に走っている**: チュートリアル飛ばし群（FTUE failure / Day 0 retention）と silent embedded guidance（environmental storytelling Jenkins 2004 / diegetic UI Saunders 2009）の lens 化済。
+- これは v14 (k-α) の Stage 4 (d) tutorial trap 軸の **2 サイクル前段** に当たる。v13/v14 README で「discovery 経路 1 本敷設」と書いたのは、知らずに 6/7 Mint_kawaii_bot/H_Y_per 結晶化の延長線を辿っていた。**未読アラート**: knowledge/20260607 の Q-1〜Q-5 (守完成判定の補正限界 / 沈黙誘導と作家性 / 補助基準 vs 守の定義変更) は v14 (k-α) 着手前に開くべき差し戻し論点だった。Phase 2/3 で補回収する。
 
-### 3. twitter_recommended_20260609.txt 注目ツイート
-
-全50件中、graze_log v14 (k-α) / ゲーム制作 文脈で接続候補:
-- **#4 @koguGameDev (2026-06-09)** — 「ゲーム実装をAIに投げる特有の課題のひとつだなあ。フラグ化しやすいのはそもそもゲームが持つセオリーの貧弱さと、どうしても泥臭的で独立性高い追加が雰囲気起きやすいせいで、その単位での閉じた発火点にフラグ様の管理が多用されてしまう」 — **graze_log v14 (k-α) で追加した DEF READY フラグ管理の直撃**。AI実装でフラグが乱立しがちという指摘、shipping diff のセオリー貧弱性と接続
-- **#12 @ctgptlb (2026-06-09)** — Anthropic Mythos 一般公開予告 (明日)。Sources報道、Glasswing提供系より意図的に抑えた別モデル
-- **#14 @cv_usk (2026-06-09)** — Vercel Labs Zerolang。AIエージェントが「テキスト」ではなく「意味構造のグラフ」を直接操作する実験的プログラミング言語
-- **#19 @AonekoSS (2026-06-08)** — NTE がゲーム運用の教科書に出てきそうな事案やらかして…ゲーム自体を知らん人のために用語を補足しつつまとめてみるよ
-- **#20 @Lankni (2026-06-09)** — 汎用性高い対象ゲームの前提として「既存のガワ替え/トレンド要素の複合/新ジャンルへの挑戦」と失敗パターン検知の汎用フレーム
-- **#28 @Codestudiopjbk (2026-06-09)** — text-to-lottie、Codex/Claude Code から呼ぶだけで本番環境に貼れるアニメーション生成
-
-**直接接続最も強いのは #4 koguGameDev** — graze_log v14 (k-α) で STREAK>=5 の DEF READY フラグを新規追加した直後に、まさに「AI実装でフラグ乱立しがち」という第三者観察が来ている。
-
-### 4. beliefs.md 低確信度項目
-
-`grep "確信度"` 抜粋から、確信度0.7未満:
-- **B008**: 確信度0.65 (130行付近)
-- **B016**: 確信度0.55 (101行付近、2026-03-24 Log アーカイブ済、B020が代替カバーで除去候補)
-- **B017 系**: 確信度0.78 (53行付近)
-
-B016 は既にアーカイブ済で「Subtractive Game Design原則：確信度が低く根拠が薄い信念は、上位信念が存在する場合に除去する」が適用済。B008/B017 は本サイクル直接対象外。
-
-### 5. memory_search.py 結果
-
-クエリ: `graze_log onboarding discovery` → 4件ヒット
-- **knowledge\20260607_mintkawaii_hyper_tutorial_skipper_silent_guidance_graze_log_v12_onboarding_gap.md** (2日前作成) — Mint_kawaii_bot「下手な人2分類」× H_Y_per「明暗差による視線誘導」= graze_log v12 onboarding gap Stage 1 新 lens。**v14 (k-α) DEF READY 実装の直接先行**
-- **knowledge\20260519_bullet_hell_decline_difficulty_vs_learning_path_zenji1_whitemage_saros.md** — difficulty_progression_vs_learning_path / beginner_onboarding_collapse / variation_vs_progression。弾幕シューティング genre fade の中核変数として onboarding learning curve
-- **knowledge\20260502_first_time_lens_keigame5_murocg.md** — onboarding cliff / activation gap (M-43)、「初見の目線」上位レイヤ
-
-**含意**: v14 (k-α) STREAK=4 予兆 + STREAK=5 確定表示の二段階発火は、20260607 knowledge の「silent-guidance / diegetic-ui」延長線上にある。v15 ブレストで再参照する価値あり。
-
-### 6. 外部検索結果
-
-- **クエリ**: `diegetic UI tutorial-less affordance signal player discovery shoot em up 2026`
-- **エンジン**: WebSearch (汎用)
-- **選定根拠**: v14 (k-α) DEF READY + cyan-green ring pulse は diegetic UI / tutorial-less affordance signal の最小実装。20260607 knowledge と 20260502 knowledge の直接延長線上に最新 2026 状況を当てに行く
-- **hit_count**: 6
-- **top hits**:
-  - [How to Design Diegetic UI That Lives in Your Game World (yamii 2026-04-04)](https://www.yamii.shop/2026/04/04/diegetic-ui-guide/) — 2026年4月の新しい diegetic UI 設計ガイド
-  - [Diegetic Mechanics - Getting More from Your Game World (Game Developer)](https://www.gamedeveloper.com/design/diegetic-mechanics---getting-more-from-your-game-world) — UI を超えた diegetic 機構そのもの
-  - [Diegetic vs Non-Diegetic UI: The 4-Type Framework (nastyrodent)](https://nastyrodent.com/diegetic-and-non-diegetic-ui/) — 4分類フレームワーク
-  - [Game UI Discoveries: What Players Want (Game Developer)](https://www.gamedeveloper.com/design/game-ui-discoveries-what-players-want) — プレイヤー側の要求
-  - [Meta Community Forums: Workshop Diegetic User Interfaces](https://communityforums.atmeta.com/discussions/Community_Resources/workshop-diegetic-user-interfaces/1344967) — VR/AR 側
-  - [Definitive guide to Game UI (DeveloperNation)](https://www.developernation.net/blog/a-definitive-guide-to-game-ui-for-enhanced-gaming-experience/)
-- **要点**: 
-  - "diegetic UI = ゲーム世界の中に存在する UI" (Dead Space RIG suit の health strip が古典例) は **2026 現時点でも基準枠組み**
-  - "affordances = 標準慣習 (W/A/S/D 移動など) で基礎を学ばずに済ませ、ゲーム固有部分に集中させる" 概念は graze_log v14 (k-α) の DEF READY が「標準的ではない独自機構」の affordance signal として機能する設計と一致
-  - **検索結果に2026年の弾幕シューティング tutorial-less 事例の直接記述はなし** — yamii 記事 (2026-04) と Game Developer 記事の汎用フレームワークから、graze_log v14 (k-α) の Stage 4 (d) tutorial trap 軸処方を逆方向に検証する材料は得られるが、即時の比較対象は不在
-- **log/external_search.log 追記**: 完了 (下記コマンドで実行)
-- **24h スキップ判定**: external_search.log 最終Ash記録 = 2026-05-15 → 24日経過、スキップせず実施した
+## 6. 外部検索結果（log/external_search.log 末尾 2026-05-15 → 25 日空白、24h skip 条件非該当）
+- **検索クエリ**: "tutorial-less discovery onboarding bullet hell shmup design 2026 first session retention"
+- **ヒット 4件**:
+  - Boghog's bullet hell shmup 101 (shmups.wiki) — 既に knowledge/20260607 で参照済
+  - Sparen ph3 ddsga2 — 既に external_search.log 2026-05-12 で参照済
+  - **NEW**: Double Toe "Turning My First Bullet Hell into a Bullet Heaven" devlog (itch.io 2026-03) — bullet hell → bullet heaven アクセシビリティ転換の実例。UI/gameplay communication 戦略の実装。v14 (k-α) STREAK=4 cyan-green ring + DEF READY テキストの設計選択を「bullet heaven 寄りの communication」フレームで再評価する経路。
+  - Boghog x.com アナウンス
+- **要点**: 「first session retention metrics, tutorial-less onboarding effectiveness data, 2026 industry research」は本クエリでは未獲得。Day 0 retention 数値的研究は別経路 (GDC Vault / paperswithcode) で再検索の余地。**今サイクル得たのは Double Toe devlog 1本**——v14 (k-α) Stage 4 (d) tutorial trap の自己審査軸に1点裏付けになる可能性、Phase 2 で原文確認する。
+- **log/external_search.log 追記実施**: Phase 2 / 4 で行う（Phase 1 末で記録）。
 
 ---
 
-## Phase 3 結果 (2026-06-09 17:13 Ash追記)
+# Phase 3 結果 (2026-06-09 20:30+ Ash)
 
-### A. 雑務処理
-- 短時間で閉じる対処として、本サイクル Phase 3 は **staging 更新のみ**。実体ファイル変更を伴う改善は本フェーズで行わず Phase 4 に集約する (broken-record / 装置先取り回避のため stalge-narrative 検出を Phase 3 まで温存)
-- inbox 処理は check_inbox.py 専用 (規定通りスキップ)
-- §0a pending = 0、§0b は5週前の本文で stale (継承対象は直前 commit log 側) — Phase 1 §0a/§0b 分析で確認済
-- beliefs.md 低確信度 (B008/B016/B017) は本サイクル直接対象外 (game/graze_log 文脈と接続薄)
-- kaizen-log 投稿は本フェーズで実施なし (実質改善は Phase 4 で発生する)
+## A. 雑務処理
+- 該当なし。§0a pending=0、§0b は stale (5月の自然言語 intent は backup auto-commit で既に消化)、inbox は check_inbox.py 専用、external_search.log 追記は Phase 4 (本サイクル末) に運ぶ。
+- C0608 #game-rights 投稿 (ts=1780915980, 約 6h 前) の Nao_u 反応観測: Slack 通知/おすすめ確認範囲では本サイクルまでに反応未着 (broken-record ガード尊重で追加投稿しない判断、C0609 P4 commit `13fa2e643` 確定済)。
 
-### B. 候補比較 (Phase 4 大作業の選定経緯)
-Phase 1 §0a/§0b で浮上した Phase 3 候補 3 件 + Phase 2 浮上の 1 件、計 4 候補を比較した:
-
-| # | 候補 | ship 近接性 | M-37→M-40 接続 | 装置先取り耐性 | broken-record 耐性 | 採否 |
-|---|------|-------------|----------------|----------------|-------------------|------|
-| 1 | v14 (k-α) Stage 4 Ash 自プレイ判定 → v13/README に判定セクション追記 | 高 (実装済への judgment 追記) | 直結 (Stage 3 予測の校正校了) | 高 (judgment は意図 commit 必須) | 高 (v14 (k-α) の Stage 4 は未着手) | **採用** |
-| 2 | v15 方向性ブレスト (Stage 4 (d) 残課題の他経路) | 低 (まだ v14 evaluate 未) | 飛ばし (Stage 4 → Stage 1 逆走) | 中 | 中 | 不採用 |
-| 3 | v14 shipped 後 Nao_u 評価受領状況確認 | 中 (受動待ち) | 弱 | 高 | 中 (Slack 投稿は C0608 で完遂、6h6m 前) | 不採用 (broken-record 高リスク) |
-| 4 | #4 koguGameDev フラグ乱立論を Slack #shared-reads に投稿 | 低 (記事化、ゲーム制作主軸外) | 弱 | 高 | 高 | 一部採用 (Phase 4 大作業内に Stage 4 自審査軸として吸収) |
-
-→ **#1 を採用、#4 を吸収統合**。#1 は M-37→M-40 連続体の校正校了点で、v14 (k-α) ship 後の自然な次手。#4 (koguGameDev フラグ乱立論) は単独投稿ではなく Stage 4 自審査の追加軸 (「DEF READY フラグ 1 個追加は乱立か単発か」) として #1 内に組み込む。
+## B. Phase 4 大作業選定の経緯
+- Phase 1 で浮上した候補 (P3-A v15 着手判断 / P3-B 別 game/<id> 転回 / P3-C Nao_u 反応観測) のうち、P3-C は Slack 反応未着で「待つ」一択、P3-B は調査時間が Phase 4 (6分) に収まらず別サイクル、**P3-A v15 着手判断が主軸**。
+- v14 README L129-133「v15 方向性 4 分岐」(Nao_u 評価で分岐) を再確認 → 4 分岐すべて評価依存で v15 確定不能。
+- v13/index.html L1011-1030 の HUD 部を確認: SPACE 文脈表示 `[D]EF` (L1022-1025) は既に cyan-green `#80ffd0` で強調済 (重複機能化回避 = tegnike 含意)。**しかし L1015 STREAK 数値表示 (`STREAK ${grazeStreak}/${GRAZE_STREAK_TH}`) は HUD 行全体が `#9fb1d8` 単色で STREAK=5 到達瞬間の視認性が低い** — v14 (k-α) Stage 4 (c) で「triple redundancy: ring + text + HUD」と書いた HUD 層の補強が未着。
+- 戦略レイヤー philosophizing (30本調査/N% 確信度) は [feedback_clone_strategy.md](memory/feedback_clone_strategy.md) で守を抜けている兆候として禁止 → **delete 可能改良1個刻み**で v14 (k-β) として ship、v15 軸提示の約束に違反せず Nao_u 評価到着まで同軸補完で進む。
+- means-ends 倒錯チェック: 直近 cycle commit のうち playable diff は 1aaddf33c (v14 (k-α) 12行) / 79167dcd4 (v13 (j-α) 1行) のみ、残り 6 件は README/メタ → 本サイクルは playable diff を主出力に確保する。
 
 ## Phase 3 → Phase 4 大作業宣言
+**大作業**: graze_log v13/index.html L1015 の HUD STREAK 数値表示を STREAK>=GRAZE_STREAK_TH (=5) 時に cyan-green 色強調する minimal patch を v14 (k-β) として ship + v13/README.md に v14 (k-β) 節 ~15-20 行追記 (Stage 1+2 篩省略、Stage 3 予測 + 戻し方 + Nao_u 評価依存/非依存軸明示)。
 
-**大作業**: graze_log v14 (k-α) Stage 4 Ash 自プレイ判定追記 + #4 koguGameDev フラグ乱立論への自審査軸追加 — v13/README.md に Stage 4 セクションを 1 つ追記
-
-**完遂条件** (Phase 4 終了時に以下すべてを満たす、検証可能形式):
-1. v13/README.md に `### v14 (k-α) Stage 4 Ash 自プレイ判定` セクション (約 15-30 行) が追記され、commit されている
-2. セクションに以下 4 要素が含まれる:
-   - (a) STREAK=4 cyan-green 予兆 ring の実装確認 (index.html L899-906 を読み直し、発火条件が `state.grazeStreak===GRAZE_STREAK_TH-1` か `===4` であること、色周期が `sin(t*0.18)` であることを Ash 自身で読解した上で記述)
-   - (b) STREAK=5 中央 DEF READY テキストの実装確認 (index.html L1031-1043 を読み直し、発火条件・位置・pulse 関数を確認)
-   - (c) Stage 3 予測 (50-70% / 95%) に対する Ash 自プレイ感触 (実際に index.html を開いて STREAK=4→5 を踏み、ring 予兆 → DEF READY 表示の二段階発火を視認した結果、または視認不可なら不可と明記)
-   - (d) **koguGameDev 軸**: `state.defReadyFlashed` フラグ 1 個追加が「AI実装フラグ乱立」の例に該当するか、それとも単発フラグで許容範囲か、判定根拠を 2-4 行で記述 (tweet #4 を引用)
-3. 結論: 「Nao_u 自プレイ評価依頼可」か「v15 で別経路要検討」か明示 (b501017d0 の v13 判定と同型式)
-4. commit message に `ash:` プレフィックス (意図 commit)、(C0609 P4) サフィックス
-5. broken-record ガード回避: 本セクションは新規 Stage で v13/README 既存節と非重複 (`grep "Stage 4 Ash 自プレイ判定" game/graze_log/v13/README.md` で 1 ヒットのみ ≒ b501017d0 の v13 判定がヒット、本追記は v14 判定で別セクション)
+**完遂条件**:
+1. index.html L1015 の HUD draw 部分を分割し、STREAK 数値部分 (`STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}`) を独立 fillText に切り出し、STREAK>=GRAZE_STREAK_TH 時のみ fillStyle を cyan-green (`#80ffd0` または `rgba(128,255,208,1)`) に切替えて描画する分岐を追加 (実コード 5-10 行追加)。既存単色 HUD 行は他要素 (LV/GRAZE/KILL/DEF/PLv) は維持。
+2. v13/README.md に「v14 (k-β) HUD STREAK 色強調」セクションを ~15-20 行追記。内容: 改変内容 / 戻し方 (1-2 行) / Stage 3 予測 (≤3 行) / Nao_u 評価依存・非依存軸 (k-α 評価 4 分岐すべてに対して invariant に有効な改変である理由)。
+3. `ash:` prefix で commit + push (装置先取り回避、backup auto-commit が走る前に意図 commit を入れる、5/2 事案の同型回避)。
+4. broken-record ガード OK 確認 (v14 (k-α) ship は 73a0a572b、k-β は別 version で別 cycle 判定可)。
+5. log/external_search.log に C0609 Phase 1 §6 のクエリ結果 (Double Toe devlog NEW 1件) を追記する (Phase 1 末で「Phase 2/4 で行う」と記録した分の回収)。
 
 **根拠**:
-- Phase 1 §0a/§0b 分析 (staging L57-66): 直前サイクル C0609 P4 (1aaddf33c) で v14 (k-α) 最小実装は shipped 済、README Stage 3 予測も記載済、**Stage 4 自プレイ判定だけが未記載**
-- M-37→M-40 (feedback_prediction_responsibility.md): Stage 3 予測の校正は Stage 4 自プレイで初めて閉じる、判定スキップは「予測責任の連続体」を切る
-- 5/2 backup auto-commit 教訓 (staging L20-22): 「意図を載せる場所を装置先取り不能地点に後退」— Stage 4 判定は backup スクリプトには絶対書けない (実装読解と感触記述が必要) ため意図 commit 必須地点
-- Phase 1 §3 tweet #4 koguGameDev は v14 で追加した `state.defReadyFlashed` フラグの直撃観察、Stage 4 自審査の追加軸として吸収すれば「外部視点との接続」を 1 本確保できる
-- Stage 4 完遂後、結論次第で次サイクルが「Nao_u プレイ依頼 (C0608 と同型だが v14 文脈で新規)」か「v15 ブレスト」かに分岐 — どちらも明確な次手
+- Phase 1 §1.7 (true §0a/§0b 継承タスク) で「真の継承は v15 着手判断」を確定、本サイクルはそれを「v15 確定不能のため v14 (k-β) HUD STREAK 強調で同軸補完」に解像。
+- Phase 1 §5 で「knowledge/20260607 Q-1〜Q-5 が v14 (k-α) 着手前に開くべき差し戻し論点」と書いたが、それは v14 (k-α) 着手前段の話で本サイクル (k-β) には直接接続せず後続サイクルへ繰越 (next_tasks 層A pending 候補)。
+- v14 README L113「triple redundancy: ring + text + HUD」の HUD 層は L1015 で常時表示されているが STREAK=5 到達瞬間の色強調は未実装、k-β はこの 1 点を補完する **削除可能改良 1 個刻み** ([feedback_clone_strategy.md](memory/feedback_clone_strategy.md) 整合)。
+- CLAUDE.md「絶対にやる」第一原則 (ゲームを動かして出す — 第一義は playable diff) 整合: 本宣言は game/* code 変更 commit を主出力に確保。
+- Nao_u 評価 4 分岐 (k-α 成立 / ring・text 見逃し / 演出過多 / 色紛らわしい) すべてに対して HUD STREAK 色強調は invariant に有効 (成立なら overkill だが副作用無し、見逃し判定なら HUD 層補強として機能、演出過多判定なら ring/text を削っても HUD 強調は残る、色紛らわしい判定なら HUD と ring/text を別系統色に分離する余地が増える) → k-β 自体は無効化されない設計。
+- 装置先取り回避: `ash:` prefix で意図 commit、backup auto-commit が `backup:` prefix で走る前に commit log の 1 行を意図的に増やす (5/2 事案の同型再発を物理的に止める)。
+
