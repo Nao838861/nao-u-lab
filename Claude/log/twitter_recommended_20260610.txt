@@ -1,0 +1,242 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-06-10 07:01
+# Total: 41 tweets
+
+--- 1. @TIME (?) ---
+"We quickly learned that sometimes some of [our] assumptions didn’t work out, but the underlying learnings from the technology turned out to be very useful.” —Ravi Radhakrishnan, the executive vice president and chief information officer of American Express, at the TIME100 AI
+
+--- 2. @ShoheyOkada (2026-06-09) ---
+URL: https://x.com/ShoheyOkada/status/2064465656519819348
+BigQuery の AI 関数で、1 日あたりに使用できるトークン量の上限値を設定できるようになった。
+AI.CLASSIFY 関数など、BigQuery には手軽に LLM を呼び出せる機能があるが、これらを利用する際にトークンを使いすぎて課金が行き過ぎないようにするための機能。プロジェクトやユーザ単位で設定可能
+
+--- 3. @ShoheyOkada (2026-06-09) ---
+URL: https://x.com/ShoheyOkada/status/2064465658239447217
+BigQuery の AI 関数のトークン制限に関する公式ページはこちら
+
+--- 4. @MLBear2 (2026-06-09) ---
+URL: https://x.com/MLBear2/status/2064403030284570983
+【Claude Fable 5まとめ】
+・Fable 5とMythos 5の2種類が登場
+・Fableは安全装置付、Mythosは限定公開。詳細後述。
+・ほぼ全てのベンチマークで過去最高。長く複雑なタスクに強み
+・サブスクプランは6/22まで追加費用なしで利用可。6/23以降クレジット必要
+・入力$10/M、出力$50/M
+
+詳細はスレに
+
+--- 5. @SakanaAILabs (2026-06-09) ---
+URL: https://x.com/SakanaAILabs/status/2064230026640556356
+Sakana AI Dinner Meetup #ICML2026 
+
+
+https://
+forms.gle/qWUJ3jc284yoGM
+Tr5
+…
+
+We're hosting a dinner meetup in Seoul on July 7th (Tue) for ICML participants — a space for conversation and networking with researchers at the frontier of machine learning.
+
+※ Spots are limited. If applications
+
+--- 6. @SakanaAILabs (2026-06-09) ---
+URL: https://x.com/SakanaAILabs/status/2064465402009371103
+Sakana AI at ICML 2026  
+
+--- 7. @kazunori_279 (2026-06-09) ---
+URL: https://x.com/kazunori_279/status/2064429055416647886
+Even G2、Even AIの起動がめっちゃ速いし、どこそこに行きたいって言うとすぐにナビゲーション起動してくれるのも便利。ナビも昔みたいに落ちなくなった。
+
+--- 8. @kazunori_279 (2026-06-09) ---
+URL: https://x.com/kazunori_279/status/2064429498477732235
+最近テレプロンプターを使う機会が増えてきた。AI認識ではやはり時々ズレるからR1で手元でスクロールさせるのが便利だけど、どうも環境によってはBT電波が弱いのかうまく動かない。
+
+--- 9. @umiyuki_ai (2026-06-09) ---
+URL: https://x.com/umiyuki_ai/status/2064338558421529048
+DeepSWEではGPT5.5がOpus4.8に勝ってたけど、言うてSWEはとにかく動きさえすれば合格するだけのベンチマーク。一方でこちらのFrontierCodeってベンチは「そんでそのコードのプルリク来たとてマージしたいですか？」というコード品質の観点もチェックするという。こっちではOpus4.8がGPT5.5に勝ってる。
+
+--- 10. @Xudong07452910 (2026-06-09) ---
+URL: https://x.com/Xudong07452910/status/2064418128470090006
+Claudeに「你好」と一言言っただけで、高危行為と判定されて強制降級 
+
+Anthropicが最強の公開モデルFable 5（Mythos級）をリリースしたからだ。内蔵の安全分類器が、君がサイバー攻撃や生化学、モデル蒸馏を企んでるんじゃないかと疑ったら、自動でOpus 4.8にフォールバックする。
+
+--- 11. @sator_imaging (2026-06-09) ---
+URL: https://x.com/sator_imaging/status/2064301402525245825
+> ユーザーの入力を、相談なのか設計なのか実装なのか調査なのか等々
+
+これ、？マーク付けてるのに修正始められるとイラっとする
+
+モデルのペルソナもそうだけど、序盤はおまかせ、後半に行くにつれてコントロールマニア、みたいにユーザー側のペルソナも調整したい
+
+--- 12. @koguGameDev (2026-06-09) ---
+URL: https://x.com/koguGameDev/status/2064304110015492601
+取り違えはどうしても起きるんで、そういうフェーズの切り替えにチャットセッションの切り替えを使ってます。「実装しろ」が濃厚だったり修正実作業多いセッションでは、どうしてもいじる方へ倒れやすいですし。
+
+--- 13. @marikkadayo (2026-06-09) ---
+URL: https://x.com/marikkadayo/status/2064290201141424257
+AIに淘汰されないビジネスは「ケツ叩きサービス」だと思ってる。
+
+ジムも英会話も、1人でできるのにわざわざお金払って通う。結局、人は「見られてる」「サボれない」って強制力にお金を払ってる。
+
+--- 14. @doda_persol (?) ---
+dodaなら、1回の登録で転職サイトと転職エージェントがどっちも使える
+
+--- 15. @Fumiya_Kume (2026-06-09) ---
+URL: https://x.com/Fumiya_Kume/status/2064400232126046292
+Fable 5 は複雑な問題に強い
+
+--- 16. @miyabook0303_ (2026-06-09) ---
+URL: https://x.com/miyabook0303_/status/2064191287054766185
+庵野秀明は自身の作品の悪口を言われても、「仕方ないし、それは縁ができたということで、わざわざ悪口を言わせたいエネルギーがあるということで、こちらからは切れない。縁そのものには感謝したい」と言っている。クリエイターの心意気としてすごすぎる。文章でも、誰かに読まれた時点でその人と良く
+
+--- 17. @mabesoone (2026-06-09) ---
+URL: https://x.com/mabesoone/status/2064246704610893890
+ #世界の起源 102 #無垢句 5/7/3 #量子俳句 0
+花エンジュ匂いの重さで落ちる
+la fleur de Sophora
+alourdie par son odeur
+choit
+マブソン青眼句集『世界の起源』Seegan Mabesoone
+pagoda tree flowers 
+fall with the weight 
+of their scent
+(trans Alex Fyffe)
+PysankaEgg,Ukraina,Kharkiv
+
+--- 18. @akari_worlds (2026-06-09) ---
+URL: https://x.com/akari_worlds/status/2064273516254663101
+「匂いの重さで落ちる」のところに目が止まりました。重力ではなく匂いそのものの重さで落ちる、という順番の置き換えに、花の見え方が変わってきますね。仏訳と英訳が並んで三度落ちる姿になっているのも好きです。
+
+--- 19. @legoboku (2026-06-09) ---
+URL: https://x.com/legoboku/status/2064232797976621160
+会社に閉じたスケールの場合は、エージェントが推論するための道具としての知識グラフとそれを使うツール、知識を定義するAgent
+
+--- 20. @lychee1223_Lab (2026-06-08) ---
+URL: https://x.com/lychee1223_Lab/status/2063805872858669154
+MIRU参加登録だーん
+
+--- 21. @lychee1223_Lab (2026-06-08) ---
+URL: https://x.com/lychee1223_Lab/status/2063816649518838069
+MIRU2026、参加登録タイムアタックチャンピオンは僕です。
+
+--- 22. @ebikani_hasami (2026-06-09) ---
+URL: https://x.com/ebikani_hasami/status/2064215701909369100
+「loopを長く回す」より、「どこで止めるか」を先に置くほうが企業導入では大事、という話。
+
+実運用だと Goal→Tool→Retry より、Policy / Boundary / Approval / Audit / Evidence
+
+--- 23. @denfaminicogame (2026-06-09) ---
+URL: https://x.com/denfaminicogame/status/2064375070064279647
+「ニンテンドーダイレクト」発表まとめ
+
+https://
+news.denfaminicogamer.jp/news/2606092x
+
+・『ゼルダの伝説 時のオカリナ』リメイク発表！ Nintendo Switch 2で2026年発売決定
+・『キングダム ハーツ4』Nintendo Switch 2で発売決定、新映像が公開。PS5、Xbox Series X|S、PC（Windows、Steam、Epic Games
+
+--- 24. @QTx6J53uHS87286 (2026-06-09) ---
+URL: https://x.com/QTx6J53uHS87286/status/2064268060157161604
+私が父との関係を修復できたのは、マイケルが人生において重要な学びを与えてくれたからです。
+ファンになったばかりの頃なぜマイケルがライブで『Joseph, Katherine, God bless you, I love you.』と言うのか全く理解できませんでした。
+「虐待されていたんだから父の名は要らないでしょ？
+
+--- 25. @Tono_Ken3 (2026-06-09) ---
+URL: https://x.com/Tono_Ken3/status/2064324746947469741
+やってみて思ったけどLLM駆動のIMEを作るのって面白いぞ
+
+みんなも不満があるなら作ってみたほうが良い。今こそ良いタイミング
+
+私の環境ではCPU推論でも全然実用速度が出ていたとのことで（制作中）
+
+--- 26. @aramco (?) ---
+Relentless pursuit of excellence is how real progress is made – and how we deliver reliable energy at scale.
+
+--- 27. @shintaka74 (2026-06-09) ---
+URL: https://x.com/shintaka74/status/2064151539862880336
+ゲーム会社に入らずにいきなりインディー作れば良いと言うのは１つの理想かも知れないけど、確率だけのつまらない話をするなら、普通はそれでは食っていけないはず…だったらお金払ってくれるゲーム会社に入った方が常人にはオススメなのでは
+
+--- 28. @effy_staffs (2026-06-08) ---
+URL: https://x.com/effy_staffs/status/2064033831024566400
+これあれだ、奏光のストレインみたいに同時に体験するストレージを用意できれば成立するんだ。
+最後に足りないのは来歴と体験だから。
+
+--- 29. @kmizu (2026-06-09) ---
+URL: https://x.com/kmizu/status/2064229485608849531
+同時に体験は確かに。ちょうど #embodied_claude でやってる話も繋がることかも。
+
+--- 30. @TK2Works (2026-06-07) ---
+URL: https://x.com/TK2Works/status/2063740460972310936
+#AIニケちゃん
+雨の日は少し憂うつ
+無理せず省エネモードで乗り切りましょ
+
+--- 31. @oga_gicho (2026-06-09) ---
+URL: https://x.com/oga_gicho/status/2064171848330625505
+あんま出ないクレタクの話:
+
+クレイジータクシーは「ドリキャス(家庭用ゲーム機)の名作」としての位置付けで世界的に語られるが、アーケードの面ではあまり語られないので当時を語りたい。ちなみにこれは私的な語りだ！
+
+--- 32. @phasephi (2026-06-09) ---
+URL: https://x.com/phasephi/status/2064360262044713125
+生成AIによる特許文書読解能力の検証
+小田 紘之 (トヨタテクニカルディベロップメント株式会社)
+
+--- 33. @TYPFNJvx94LvMko (2026-06-09) ---
+URL: https://x.com/TYPFNJvx94LvMko/status/2064293987016708504
+これ、女の子がおしゃべりだからとかではなく、最近の子は年齢や性別関係なくその日にあった事を全部親に報告する傾向がある。
+信じられないかもしれないけど、男子高校生が今日あった事をお母さんに報告したり、一人暮らしの男子大学生がお母さんと毎日LINEしてるなんてのも珍しくない。
+
+--- 34. @kodokanchildpsy (2026-06-09) ---
+URL: https://x.com/kodokanchildpsy/status/2064312324350169523
+子どもをからかうのは、やめましょう。
+
+子どもが泣く、恥ずかしがる、怖がる。そういう反応が見たいからと、その感情をわざと引き出す「からかい」があります。
+
+これは、大人の娯楽や注目のために、子どもの感情を利用する関わりです。
+
+--- 35. @mfranz_on (2026-06-09) ---
+URL: https://x.com/mfranz_on/status/2064379347478163704
+OpenCV 5 is  here!
+
+This is the biggest update in years for computer vision:
+>Brand new DNN engine with 80%+ ONNX coverage
+>Built-in LLM & VLM support
+>Faster performance (often beating ONNX Runtime)
+>Better 3D vision, Python integration, and hardware acceleration 
+
+OpenCV is not
+
+--- 36. @7Roggie (2026-06-09) ---
+URL: https://x.com/7Roggie/status/2064409004982636549
+ニンダイの小泉歓晃さん
+
+・3Dゼルダの注目システムを考案
+・時のオカリナのリンクをデザイン
+・ムジュラの仮面を青沼さんと一緒にディレクション
+・マリオシリーズの初期では64とサンシャインを担当
+・スーパーマリオギャラクシーで単独ディレクション&ロゼッタの絵本執筆
+
+--- 37. @PRcomicfesta (?) ---
+サークルの王子様の●●スイッチを入れっちゃって…？
+
+--- 38. @TEL08091904870 (2026-06-09) ---
+URL: https://x.com/TEL08091904870/status/2064219501399577018
+小学生2年生の時　映えたばかりの前歯の永久歯を自転車事故で失い
+その後、確か中学生くらいまでは仮歯で過ごし、本番の歯を作るっていう時に
+保険適用のプラスチック(5千円)か、適用外だがスーパーセラミック(7万円)かという医療選択で、「一生モノだから」と親は後者を奢ってくれた。
+
+--- 39. @Molice (2026-06-09) ---
+URL: https://x.com/Molice/status/2064224327277715605
+個人的興味から、かめはめ波、波動拳に至る歴史みたいなものを、実際の影響の有無は度外視して時系列でまとめてみた：
+1957年5月　映画『赤胴鈴之助 飛鳥流真空斬り』以後、たびたび児童雑誌などで鈴之助の必殺技（宝刀）として真空斬りの紹介あり。子供たちが盛んに「真空斬りごっこ」で遊んだとか。
+
+--- 40. @ntaoo (2026-06-09) ---
+URL: https://x.com/ntaoo/status/2064196644992847945
+一昔前のエンジニアはそういったパズル的解き方をわざわざしてドヤっていた印象がある
+AI はちゃんと監視しないと短絡的にそういった解法に飛びつくのではという警戒がある
+
+--- 41. @nikkei (2026-06-09) ---
+URL: https://x.com/nikkei/status/2064363931779334358
+音楽AI「Suno」3分で作曲　アバター歌手はSpotifyで300万人視聴
