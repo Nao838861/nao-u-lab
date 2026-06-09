@@ -1013,6 +1013,16 @@ function drawHUD(){
   ctx.fillStyle='#9fb1d8';
   // v03: STREAK と DEF 回数を 1 行に追加表示
   ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}  DEF ${state.activeDefCount}  PLv ${state.playerLv}/${PLAYER_LV_MAX}`,10,30);
+  // v14 (k-β): HUD STREAK 数値の色強調 — k-α の ring (L903) + 中央 DEF READY text (L1037) の HUD 層補完 (triple redundancy)
+  // STREAK>=GRAZE_STREAK_TH-1 (=4) で STREAK 数値部分のみを cyan-green に上塗り、k-α 色系統 (rgba(128,255,208,...)) と統一
+  // 既存 gray-blue HUD はそのまま、cyan-green は同位置に重ね描画 — gaze の foveal vision に届く HUD レイヤー
+  // 戻し方: 本 if ブロック (6 行) 削除で v14 (k-α) と等価、(a)/(b)/(β) 全 18 行削除で v13 (j-α) 完全等価
+  if(state.grazeStreak>=GRAZE_STREAK_TH-1){
+    const pre=`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK `;
+    const preW=ctx.measureText(pre).width;
+    ctx.fillStyle=state.grazeStreak>=GRAZE_STREAK_TH?'rgba(128,255,208,1)':'rgba(160,220,200,0.85)';
+    ctx.fillText(`${state.grazeStreak}/${GRAZE_STREAK_TH}`,10+preW,30);
+  }
   // v03: SPACE 文脈表示 (B / D / -) を BOMB 表示位置と兼用
   const ctx2=spaceContext();
   if(ctx2==='B'){

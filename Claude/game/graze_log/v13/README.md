@@ -131,3 +131,36 @@ Stage 4 (d) で「DEF 経路はタイトル画面の `GRAZE 連続 5 回 → ACT
   - 「ring/text 見逃した」判定 → v15 は色/サイズ強調強化 or 音追加
   - 「演出過多」判定 → ring 予兆だけ部分戻し (L899-908 削除で (b) のみ構成)
   - 「色がシールドと紛らわしい」判定 → v15 で別色系統 (例: 黄色系 magenta) に変更
+
+## v14 (k-β) HUD STREAK 色強調 1 patch (C0610 Phase 4)
+
+**status**: v14 (k-β) shipped on top of v14 (k-α)。同 `index.html` 内に minimal patch、戻し可能。
+
+### 改変内容 (1 機能)
+- **STREAK>=GRAZE_STREAK_TH-1 (=4) で HUD STREAK 数値の色強調**: index.html L1016-1024 (8 行、コメント含む)。既存の gray-blue 1 行 HUD (L1015) はそのまま、`STREAK X/5` 数値部分のみを cyan-green に上塗り。`measureText` で pre 部 (`LV.. GRAZE.. KILL.. STREAK `) の幅を計算して数値の x 位置を取得。
+  - STREAK=4: `rgba(160,220,200,0.85)` (中間色、予兆段階)
+  - STREAK>=5: `rgba(128,255,208,1)` (k-α と完全同色)
+
+### 構造意図 (k-α triple redundancy の HUD 層補完)
+k-α は (a) R_GRAZE リング cyan-green 予兆 (L899-908) + (b) 画面中央上部 DEF READY text (L1031-1044) の 2 層 discovery を敷いた。本 k-β はそこに (β) HUD STREAK 色強調を加えて **3 層 triple redundancy** を完成させる:
+- 層 1 (ring): プレイヤー近傍 — peripheral vision で「擦り中の視野」内
+- 層 2 (center text): 画面中央上部 — foveal vision で「移動先や次の判断」と同位置
+- 層 3 (HUD): 画面上端 — 既存 HUD 確認のための saccade 経路上
+
+3 層のうち 1 つでも認知されれば「DEF が用意されている」discovery が成立する設計。Untitled Goose Game (Phase 1 §6.3) の「複数のサイン経路で trial-and-error 到達確度を上げる」型と同型。
+
+### 戻し方
+- L1016-1024 (コメント 4 行 + if ブロック 6 行 = 計 10 行) 削除で v14 (k-α) 等価
+- (a) (b) (β) 全削除 (計 ~24 行) で v13 (j-α) 完全等価
+
+### v14 (k-β) Stage 3 予測 (≤3 行)
+- HUD STREAK の色変化は既存 HUD 観察習慣 (SCORE / GRAZE / KILL を見るプレイヤー) を持つ層に届く。仮説認知率: 60-80% (k-α の (a)50-70% / (b)95%+ と独立な経路)
+- 副作用リスク: HUD の cyan-green が既存 HUD 9-10 色構成 (黄/橙/薄水色/灰青/シアン緑) と衝突する可能性低 — 既存 cyan-green 用途は `SPACE [D]EF` 表記 (L1023) と activeDef シールド (L912) で意味的に整合
+- 描画 budget: measureText 1 回 + fillText 1 回追加で軽微
+
+### v14 (k-β) Stage 4 Ash 自プレイ判定 — 簡略 (C0610 Phase 4)
+- (a) 実装確認: L1019-1024 が変更後の if ブロック、`state.grazeStreak>=GRAZE_STREAK_TH-1` 厳密一致なし (>= 比較で 4 含む)、STREAK=5 で k-α と同色、STREAK=4 で中間色 → 二段階色 = k-α の二段階発火 (ring 予兆 / DEF READY) と階層構造一致
+- (b) コード読解 trace: pre 文字列は L1015 と同じ font (10px system-ui) で measureText するため位置一致、上書きでなく上塗り (gray-blue は背景として残る)
+- (c) 4 軸 invariant: k-α の (a) onboarding / (b) readability ↑ → 寿命 ↓ / (c) 色衝突 / (d) フラグ乱立、すべて k-β でも保持 — 新規 state 変数追加なし (既存 state.grazeStreak 参照のみ)、色系統統一、HUD 既存レイヤーに重ねるだけ
+- (d) koguGameDev フラグ乱立論再適用: 本 k-β は既存 HUD fillText の上塗り 1 ブロックのみ、new state 変数なし、derived computation (`>=GRAZE_STREAK_TH-1` / `>=GRAZE_STREAK_TH`) のみ → フラグ乱立回避側
+- 結論: **Nao_u 自プレイ評価依頼可 — k-α + k-β triple redundancy として一体投稿**
