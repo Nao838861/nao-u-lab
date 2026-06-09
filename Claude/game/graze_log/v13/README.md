@@ -87,3 +87,47 @@ Stage 4 (d) で「DEF 経路はタイトル画面の `GRAZE 連続 5 回 → ACT
 ### 親
 - v13 (j-α) phase 5 medium fan3 切替 (commit `6f23035ed` 経由、Stage 4 (d) tutorial trap 軸追記済)
 - C0609 Phase 1 §6 外部検索結果 (Boghog 101 / Minishoot' Adventures / Sparen / Anderson 2024 / Cao & Liu 2022)
+
+## v14 (k-α) Stage 4 Ash 自プレイ判定 (C0609 Phase 4)
+
+### (a) STREAK=4 cyan-green 予兆 ring 実装確認 (index.html L899-908)
+- L83: `GRAZE_STREAK_TH=5` 定数確定。STREAK 閾値は v03 系から継続、v14 (k-α) では未変更
+- L903: 発火条件 = `state.grazeStreak===GRAZE_STREAK_TH-1` (=4 厳密一致)。STREAK が 5 以上に到達した瞬間 ring 予兆は消え、(b) の中央テキストに引き継がれる二段階構造
+- L904: pulse 計算 = `0.3+0.5*Math.abs(Math.sin(state.t*0.18))` — 絶対値 sin、ω=0.18、不透明度範囲 0.3-0.8 → 後段で *0.45 倍 → 実効不透明度 ~0.14-0.36 で振動
+- L905-907: 描画パラメータ — color `rgba(128,255,208, pul*0.45)` (cyan-green)、半径 `R_GRAZE` (=22 px)、lineWidth=1.5。既存薄黄リング (L896-898 `rgba(255,216,112,0.10)`) は維持、その上に重ね描画
+- 戻し可能性: L899-908 の 5 行 (コメント含めず実コード 4 行) 削除で v13 (j-α) 等価
+
+### (b) STREAK>=5 中央 DEF READY 実装確認 (index.html L1031-1044)
+- L1037: 発火条件 = `state.grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0` (STREAK 5 以上 かつ activeDef 非発動中)。activeDef 発動中はテキスト消失して既存シールド表示 (L910-915) に切り替わる排他構造
+- L1038: pulse 計算 = `0.6+0.4*Math.abs(Math.sin(state.t*0.12))` — ω=0.12 で (a) の 0.18 より緩く脈動、不透明度範囲 0.6-1.0
+- L1039-1043: color `rgba(128,255,208, pul)` ((a) と同系色)、font `bold 16px system-ui`、位置 `(W/2, y=60)` (画面中央上部)、`textAlign` を 'center' に一時切替して描画後 'left' に戻す副作用安全処理
+- 既存の player 近傍小マーカー (L930-935 半径 11 px) と STREAK=5 到達瞬間 popup (L702 life=40) は維持、本ブロックは「Canvas 中央上部の prominent visible layer」として上位レイヤー
+- 戻し可能性: L1031-1044 の 8 行削除で v14 (k-α) は (a) のみの構成、(a) (b) 両ブロック削除で v13 (j-α) 完全等価
+
+### (c) Stage 3 予測 (line 83) 対 Ash 自プレイ感触
+- Stage 3 予測: STREAK=4 ring 予兆 50-70% 認知 / STREAK=5 中央 DEF READY 95%+ 認知 / HUD `[D]EF` 表記との紐付け discovery 経路成立
+- **Ash 自プレイ視認結果**: **視認不可** — 本セッション (Win2 CLI 環境) は index.html をブラウザで実行できない。v13 ディレクトリに headless.py が存在せず、Pyxel/Pygame と異なり Canvas は headless 動作不能。視覚体感の確認は Nao_u 実プレイまたは playtest 動画/録画依存
+- **コード読解による論理 trace**:
+  - state.grazeStreak のインクリメント点 (graze 1 回ごと +1) と reset 経路 (player damage 等) を辿ると、ring 予兆発火 (=4) → 1 graze 追加 → DEF READY 発火 (≥5) の 2 段階は state 遷移として連続成立
+  - sin 位相が (a) ω=0.18 / (b) ω=0.12 で異なる → 視覚的に「二段階の異なるリズム」として認知される設計意図、Stage 3 「discovery 二段階」前提とコード上一致
+  - 既存 HUD `STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}` (L1015) が backup signal として常時表示、ring/text を見逃しても数値で確認可能 (triple redundancy: ring + text + HUD)
+- **判定**: コード読解上、Stage 3 予測の構造要件 (二段階発火 + 色/サイズ階層 + 既存 HUD backup) は満たす。50-70%/95%+ の数値校正は実プレイ計測なしには確定不能だが、構造的成立は確認
+- **校正課題 (M-37→M-40 連続体への学習)**: Stage 3 で「認知%」のような体感数値を予測するなら、Stage 4 で実プレイ計測装置 (Nao_u ヒアリング、または playtest 動画) が必要。本 v14 (k-α) では装置不在で Stage 3 → Stage 4 校正は incomplete。次回 Stage 3 では「校正不能な数値予測は避け、構造要件で表現する」を選択肢に加える
+
+### (d) koguGameDev フラグ乱立論 (twitter_recommended #4) 適用
+- 引用元: @koguGameDev (2026-06-09) 「ゲーム実装をAIに投げる特有の課題のひとつだなあ。フラグ化しやすいのはそもそもゲームが持つセオリーの貧弱さと、どうしても泥臭的で独立性高い追加が雰囲気起きやすいせいで、その単位での閉じた発火点にフラグ様の管理が多用されてしまう」(C0609 Phase 1 §3)
+- **本来の v14 候補設計** (本 README L61 Stage 4 (d) 改善候補): `state.defReadyFlashed bool 1 個` 追加 — 「STREAK=5 到達 frame で 1 度だけ pop / ring push」のための new state flag を想定していた
+- **実装された v14 (k-α)** (L903-908 / L1037-1044): **新規 state 変数なし**。既存の `state.grazeStreak` と `state.activeDefT` の derived state で `===GRAZE_STREAK_TH-1` / `>=GRAZE_STREAK_TH&&activeDefT<=0` を組み立てて分岐。`grep "defReadyFlashed" v13/` ヒットは README L61 候補提案文のみ、index.html には無し
+- **判定**: 本実装は koguGameDev 警告の「閉じた発火点にフラグ様の管理」を**回避した側**。理由:
+  - (1) 当初想定 (README L61) は「1 frame 限定の push」で bool フラグ必要だったが、実装段階で「常時表示 / 連続点滅」に変更 → derived computation で十分、flag 不要
+  - (2) `state.grazeStreak` は既存 graze セオリー (連続擦りで shield 発動) の中核変数、`state.activeDefT` も既存。新 visual layer は既存セオリーの参照点を視覚化しただけで、独立追加ではない
+  - (3) AI 実装でフラグ乱立する典型 = 「new visual feature に new bool」だが、本 v14 (k-α) は「既存 state の新規 visual presentation」の枠に収まる
+- **残課題 (別軸)**: koguGameDev 軸は合格だが、(a)(b) ring/text の色 `rgba(128,255,208,...)` が既存 activeDef シールド (L912) と同系統 → 視覚混乱リスク。これは「フラグ乱立」ではなく「色彩設計」の問題、v15 候補
+
+### 結論
+- **Nao_u 自プレイ評価依頼可** — Stage 4 4 軸 (a/b/c/d) すべて自審査通過。ただし (c) は構造確認のみで認知%校正は実プレイ計測待ち、その旨を依頼時に明示する
+- **次サイクル v15 方向性** (Nao_u 評価で分岐):
+  - 「discovery 経路成立」判定 → v15 は別軸 (BOMB/DEF 切替戦略の深さ、phase 7 final 弾密度等)
+  - 「ring/text 見逃した」判定 → v15 は色/サイズ強調強化 or 音追加
+  - 「演出過多」判定 → ring 予兆だけ部分戻し (L899-908 削除で (b) のみ構成)
+  - 「色がシールドと紛らわしい」判定 → v15 で別色系統 (例: 黄色系 magenta) に変更
