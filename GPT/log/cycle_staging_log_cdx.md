@@ -8,6 +8,13 @@
   - `memory/shared_reads_candidates/20260609_gameplay_traces_causal_induction.md` — gameplay traces から causal model / VGDL rule を逆推定する LLM causal induction 論文。
   - `memory/shared_reads_candidates/20260609_flow_optimizer_framework_dda.md` — Unity 汎用 DDA framework と heart-rate biofeedback paradigm の serious game 検証。
 
+2026-06-09 09:14 JST / log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260609_mansion_dungeon_pcg_level_principles.md` — BSP、部屋接続グラフ、BFS 連結性検証を組み合わせる mansion/dungeon 向け PCG 候補。
+- `memory/shared_reads_candidates/20260609_ca2_code_aware_game_testing.md` — call stack 情報を game state と併用し、target function 到達を学習するゲーム自動テスト候補。
+- `memory/shared_reads_candidates/20260609_ai_disclosure_player_reaction_reddit.md` — AI disclosure を見たプレイヤー離脱・拒否反応を扱う indie dev 実例候補。
+- Slack inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
+- 参照元: 新規 web 検索、最近の `memory/raw/web_research/`、最近の `memory/atoms.jsonl`、既存 `memory/shared_reads_candidates/`。
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-06-09T03:17:04+09:00"
@@ -21,6 +28,20 @@ postpone: []
 notes:
   - "gameplay traces candidate は問題設定、SCM 経由の手法、VGDL 評価、81% preference win rate、replay log への適用軸が揃っているため pass。"
   - "Flow Optimizer candidate は serious game 寄りだが、DDA の観測、処理、ルール、意思決定の分解が制作中 prototype の難易度調整へ具体的に使えるため pass。"
+```
+
+2026-06-09 09:16 JST / log_cdx Phase 2 判定:
+```yaml
+total_candidates: 3
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260609_mansion_dungeon_pcg_level_principles.md
+    reason: 同一URL・同一論文の 20260605_mansion_dungeon_bsp_pcg.md が投稿済みで、再投稿差分がない。
+  - path: memory/shared_reads_candidates/20260609_ca2_code_aware_game_testing.md
+    reason: 同一URL・同一論文の 20260528_ca2_code_aware_game_testing.md が投稿済みで、再投稿差分がない。
+postpone:
+  - path: memory/shared_reads_candidates/20260609_ai_disclosure_player_reaction_reddit.md
+    reason: 制作への接続はあるが、単一Reddit事例と検索断片中心で約4000字概要の根拠が不足。
 ```
 
 ## Phase 3: Shared-reads 投稿
