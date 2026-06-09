@@ -56,6 +56,9 @@ posted:
   - candidate: "memory/shared_reads_candidates/20260609_meta_agent_challenge_agent_development.md"
     permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781000962115899"
     char_count: 4387
+  - candidate: "memory/shared_reads_candidates/20260609_kogu_ai_flags_diegetic_state.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781008758399529"
+    char_count: 3504
 skipped: []
 ```
 
