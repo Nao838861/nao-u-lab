@@ -59,3 +59,31 @@ C0609 Phase 1 §6 で集めた外部知見を v13 (j-α) の Nao_u プレイ要�
 **結論**: graze + BOMB は tutorial-less でも到達可能、ACTIVE DEF は現状 README/タイトル画面依存。Stage 4 (c) の「Nao_u プレイ要請 ready」結論自体は撤回しない (タイトル画面に明示テキストが残っているため Cao & Liu 2022 の「複雑メカニズム = 明示誘導」基準は満たす) が、tutorial trap 軸単独の評価では DEF 経路は「読まれた前提」の設計であり、@ore57436902 の「読まなくても なんとかなる」基準には未到達。
 
 **改善候補 (v14 候補 1 つ)**: STREAK が GRAZE_STREAK_TH (=5) に到達した frame で 1 度だけ画面中央に短時間 (60F) `DEF READY` テキスト + プレイヤー周囲の R_GRAZE リング点滅を発火 (L668-669 の `state.grazeStreak>=GRAZE_STREAK_TH` 分岐に 1 度フラグ立てて pop / ring push)。タイトル画面の説明を読まず始めた Nao_u が、STREAK 5 で「何かが起きた」と認知し、HUD 右上の `[D]EF` 表記と関連付ける discovery-based 経路を 1 本敷く。実装規模: 約 10-15 行追加 + state.defReadyFlashed bool 1 個。戻し容易性は v13 同等 (条件分岐 1 ブロックを削除)。
+
+## v14 (k-α) 最小実装 — two-stage organic onboarding (C0609 Phase 4)
+
+**status**: v14 (k-α) shipped on top of v13 (j-α)。同 `index.html` 内に minimal patch、戻し可能。
+
+### 改変内容 (2 機能)
+1. **STREAK=4 (= GRAZE_STREAK_TH-1) で R_GRAZE リング予兆発光**: index.html L899-906 (5 行)。STREAK=4 時に R_GRAZE リング (半径 22 px) を低彩度 cyan-green (`rgba(128,255,208, pul*0.45)`) で周期点滅 (`Math.sin(state.t*0.18)`)。既存の `rgba(255,216,112,0.10)` 薄黄リング (L898) は維持、その上に重ねる。
+2. **STREAK>=5 (= GRAZE_STREAK_TH) かつ activeDef 非発動中で画面中央上部 `DEF READY` テキスト確定表示**: index.html L1031-1043 (7 行)。`W/2, y=60` に `bold 16px` で `DEF READY` を周期 pulse (`0.6+0.4*|sin(t*0.12)|`)。既存の player 近傍 popup (L702, life=40) と小マーカー (L920-925) は維持、本ブロックは prominent visible layer として上位レイヤーに追加。
+
+### 戻し方
+- 上記 2 ブロック (合計 12 行) を削除 → v13 (j-α) と完全等価。
+- 部分戻し可: STREAK=4 ring 予兆だけ削れば「STREAK=5 中央 DEF READY のみ」、中央テキストだけ削れば「STREAK=4 ring 予兆のみ」。
+
+### 構造意図 (Stage 4 (d) tutorial trap 軸の処方)
+Stage 4 (d) で「DEF 経路はタイトル画面の `GRAZE 連続 5 回 → ACTIVE DEF` を読まないとプレイヤーが ACTIVE DEF の存在に気づかず DEF 0 で終わる」と自己審査した。本 v14 (k-α) は tutorial-less discovery 経路を 1 本敷く処方:
+
+- **STREAK=4 ring 予兆 (premonition)**: Miyamoto/Zelda 型 organic onboarding (Minishoot' Adventures 2026-04 regionfree.net 評: 「players are taught new abilities, obstacles, and enemies in an organic and rewarding way」)。STREAK=5 確定の 1 手前で「何かが起きそう」を体感させる二段階点灯。
+- **STREAK=5 中央 DEF READY**: Boghog 'simple upfront game plan' (shmups.wiki Boghog 101: 「give the player a simple, easy to understand game plan upfront and then let them discover additional nuances」)。R_GRAZE リング近傍の小マーカー (L920) では「読まずに始めたプレイヤー」の foveal vision に届かないため、画面上部に大文字で「次の操作が用意されている」ことを明示。HUD 右上の `SPACE [D]EF` 表記と紐付ける discovery 経路を 1 本敷く。
+- **外部裏付け 3 ソース** (C0609 Phase 1 §6 で M-41 通過済): Boghog 101 / Miyamoto-Zelda 型 organic onboarding / Sparen ddsga2 「thoughtful use」。Anderson 2024 (tutorial-less learning) と Cao & Liu 2022 (intuitive mechanism = implicit learning sufficient) も Stage 4 (d) 適用済。
+
+### v14 (k-α) Stage 3 予測 (≤3 行)
+- 初手プレイで GRAZE を 4 回擦った時点で R_GRAZE リングが cyan-green に点滅し、プレイヤーが「次の擦りで何かが変わる」と認知する確度: 50-70%。STREAK=5 到達後の中央 `DEF READY` 大文字で 95% 以上が認知し、HUD 右上 `[D]EF` 表記と紐付ける discovery 経路が成立する仮説。
+- v13 (j-α) からの数値変更なし (定数追加なし、新規 state 変数なし)。描画 budget: ring 1 本 + text 1 行追加で許容範囲。
+- 副作用リスク: STREAK=4 ring 予兆の周期点滅 (`sin(t*0.18)`) が phase 5+ の medium fan3 telegraph と視覚的にぶつかる可能性 → 色は cyan-green で windup の白マーカーと別系統だが、Nao_u 自プレイで「演出過多」判定が出た場合は ring 予兆だけ削る部分戻しで対応。
+
+### 親
+- v13 (j-α) phase 5 medium fan3 切替 (commit `6f23035ed` 経由、Stage 4 (d) tutorial trap 軸追記済)
+- C0609 Phase 1 §6 外部検索結果 (Boghog 101 / Minishoot' Adventures / Sparen / Anderson 2024 / Cao & Liu 2022)

@@ -896,6 +896,16 @@ function draw(){
       ctx.strokeStyle='rgba(255,216,112,0.10)';
       ctx.lineWidth=1;
       ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
+      // v14 (k-α): STREAK=GRAZE_STREAK_TH-1 (=4) 予兆発光 — R_GRAZE リングを低彩度 cyan-green で周期点滅
+      // 構造意図: Boghog 'simple upfront game plan' + Miyamoto/Zelda organic onboarding。STREAK=5 確定の 1 手前で
+      // 「何かが起きそう」の感覚を視覚化、discovery-based 経路 (Anderson 2024) を 1 本敷く。
+      // 戻し方: 本 if ブロック (4 行) 削除で v13 (j-α) と等価。
+      if(state.grazeStreak===GRAZE_STREAK_TH-1){
+        const pul=0.3+0.5*Math.abs(Math.sin(state.t*0.18));
+        ctx.strokeStyle=`rgba(128,255,208,${pul*0.45})`;
+        ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
+      }
       // v03: active def 残時間中はシールド表示 (cyan-green の細リング)
       if(state.activeDefT>0){
         const ad=state.activeDefT/ACTIVE_DEF_FRAMES;
@@ -1017,6 +1027,20 @@ function drawHUD(){
     ctx.fillStyle='#506080';
     ctx.font='10px system-ui';
     ctx.fillText('SPACE [-]',W-72,30);
+  }
+  // v14 (k-α): STREAK>=GRAZE_STREAK_TH (=5) 到達中 → 画面中央上部に DEF READY テキスト確定表示
+  // 構造意図: 既存の player 近傍 popup (line 702, life=40) + 小マーカー (line 920-925) は STREAK=5 到達瞬間と
+  // 維持中の HUD レベルの discovery 情報、本ブロックは「Canvas 中央上部の大きな文字」として
+  // タイトル画面の `GRAZE 連続 5 回 → ACTIVE DEF` テキストを読み飛ばしたプレイヤーが
+  // SPACE 押下経路に到達するための prominent visible layer。Boghog 'simple upfront game plan' の最小実装。
+  // 戻し方: 本 if ブロック (7 行) 削除で v13 (j-α) と等価、その上の STREAK=4 ring 予兆も削れば v13 完全等価。
+  if(state.grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0){
+    const pul=0.6+0.4*Math.abs(Math.sin(state.t*0.12));
+    ctx.fillStyle=`rgba(128,255,208,${pul})`;
+    ctx.font='bold 16px system-ui';
+    ctx.textAlign='center';
+    ctx.fillText('DEF READY',W/2,60);
+    ctx.textAlign='left';
   }
   // v08 (a): 画面下端 1px 高 時間 bar (90秒=5400F 進捗 + 7 phase 区切り tick)
   // 戻し方: 本ブロック (~10 行) 削除で v07 完全等価。データソース: state.t / PHASE_BOUNDARIES (line 171)
