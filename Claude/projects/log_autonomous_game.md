@@ -64,6 +64,36 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-11 C326 Phase 4 着地 — [x] verify.js に `danger_over_time` 系列出力を追加 (M-43 §F-1 Atmaja+ 2020 採用 × §F-2 Shutshimi 10秒バースト 整合、actor 別時系列危険度を verify report に物理化)
+
+**着地内容**: C326 Phase 3 「次フェーズの大作業」予定通り、`game/log_autonomous_game/v003/verify.js` に **(1) `compute_danger_over_time(frame_series, window_sec)` 純 stdlib 関数追加** + **(2) runOne 内で per-frame `{frame, danger}` 系列 (danger = `max(0, 1 - frameMinDist / INSTINCT_TRIGGER_PX)` 0..1 連続値) を蓄積** + **(3) report 末尾に actor 全件の `danger_over_time_series` ブロック純追加** を実装。dry-run (`node verify.js`) exit 0 + 既存 bit 完全一致 (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545) + `pass: true` 維持 = 副作用ゼロ確証 (H-002〜H-007 同型論証 8 度目)。
+
+**完遂の定義 (C326 Phase 3 §次フェーズの大作業) 対応**:
+1. ✅ `compute_danger_over_time` 関数追加 (純 stdlib、`window_sec=10` default = F-2 Shutshimi 10秒バースト由来)
+2. ✅ verify.js report 出力に `actor=<name>: danger_over_time=[[t0,d0],[t1,d1],...]` 形式の系列が 13 actor 全件で 1 ブロック追加 (BAD 4 + good + N=8 追加 strategy)
+3. ✅ dry-run 完走 = exit 0 + stdout に新 series ブロック出力
+4. ✅ 副作用ゼロ = breakdown_per_strategy / pass / proxy_probe 全項目維持、既存判定不変
+5. ✅ 本節 (`projects/log_autonomous_game.md` C326 Phase 4 着地節) 追加
+6. (Phase 5 で記録) `memory/sense_prediction_log.md` F-1 採用予想は本 Phase 4 では時間切れで保留、次サイクル C327 観察時に併記候補
+
+**観察結果 (一次)**: BAD 4 方針は ≤ 9.08s (= 545F = nospecial 上限) で死亡するため `danger_over_time` 系列は各 1 window のみ。`good` (grazer mock) は 4162F (=69s) 生存で 7 windows (0/10/20/30/40/50/60s) 出力。BAD 4 方針の単一窓 danger 値は camper 0.0339 / lane-holder 0.0436 / blind-sweeper 0.0485 / nospecial 0.0172、`good` は 7 windows で 0.0011-0.034 帯 = BAD と同帯。**死亡直近 frame 局在は 1 window 解像度では見えない** (F-2 Shutshimi 10秒バースト窓は粗すぎる、F-1 RMSE × 理想曲線フィットには窓粒度の段階別検討が必要) = staging §6 「弾密度のみ or HP 減少率のみ のいずれか 1 つに絞って着地」の最小段階としては成立、RMSE × 理想曲線フィット (F-1 本格採用) と窓粒度可変化は次サイクル C327+ の段階に分離。
+
+**Active project 停滞解消寄与**: C326 Phase 1 §5 で「Jun 10 21:54 mtime、v004 vs 別軸 probe 判断保留中」と診断していた本ファイルを 1 mm 前進、保留中の判断軸を「v003 verify.js の F-1 由来拡張」で具体化。
+
+**kogu × yamii (Ash 由来) 軸との整合**: Ash 2026-06-09 17:21 #shared-reads の「フラグ駆動 → 世界状態化」軸の Log 側具体初手として、「単一 pass/fail フラグ → 時系列という世界状態への評価貼り直し」が verify.js 内で 1 ブロック分実現 (genre_study_shmup_M43.md §F-6 §5 末尾整理と整合)。
+
+**改修ファイル**:
+- `game/log_autonomous_game/v003/verify.js`: +52/-1 行 (`compute_danger_over_time` + `DANGER_WINDOW_SEC` + `dangerFrameSeries` 蓄積 + report `danger_over_time_series` ブロック + limits 末尾 1 行追加)
+
+**残課題 (本サイクル外)**:
+- (a) 窓粒度可変化 (window_sec=2/5/10 三段階切替、死亡直近 frame 局在の解像度向上)
+- (b) F-1 本格採用 = RMSE × 理想曲線フィット (本サイクルは系列出力のみ、フィット計算は次サイクル以降)
+- (c) actor 別 danger 系列の積分 (累積 cumulative danger) を `breakdown_per_strategy` に追加し proxy validity 軸の 5 本目候補化
+
+詳細: [game/log_autonomous_game/v003/verify.js](../game/log_autonomous_game/v003/verify.js)、[projects/genre_study_shmup_M43.md](genre_study_shmup_M43.md) §F-1 / §F-6。
+
+---
+
 ## 2026-06-10 C322 Phase 4 着地 — [x] verify.js wave-rider 軌跡再設計 (周波数 0.07/0.05 → 0.04/0.03, rng 振幅 0.2 → 0.5) + 130 cell sweep 再実行、中間帯移動 **逆方向** + no-good Pearson std **×1.51 悪化** = outlier 支配は構造的特性として確定
 
 **着地内容**: C322 Phase 3 「次フェーズの大作業」予定通り、`verify.js` L518-524 `strategyWaveRider` の周波数 (0.07/0.05 → 0.04/0.03) と rng 振幅 (0.2 → 0.5) を物理改造、130 cell multi-seed sweep (10 seed × 13 strategy) を再実行。**仮説 (低周波 + 振幅拡大で軌跡長を増やし中間帯 instinct/temporal 14-18 帯に着弾)** は**反証**: wave-rider (instinct mean, temporal mean) は (11.80, 10.60) → **(6.20, 10.30)** = instinct 軸で逆方向 (中間帯から低帯へ後退)、低周波軌跡が「弾の少ない safe pocket への長期滞在」を構造的に作り instinct trigger 機会を減らす作用が確証された。

@@ -399,6 +399,29 @@ function percentile(arr, p) {
   return Number(sorted[idx].toFixed(2));
 }
 
+// C326 Phase 4 (M-43 §F-1 採用): danger_over_time 系列
+// F-1 (Atmaja+ 2020 GA × RMSE × 理想曲線) 由来、F-2 (Shutshimi/Couture 2015 10秒バースト) と
+// 整合する window_sec=10 既定。actor 別の per-frame {frame, danger} 系列を非重複 10 秒窓に
+// 集約し、平均危険度の時系列 [[t_sec, mean_danger], ...] を返す純 stdlib 関数。
+// 副作用ゼロ: 既存 pass/fail/proxy_probe 判定は不変、報告 JSON 末尾の純追加ブロックに使う。
+const DANGER_WINDOW_SEC = 10;
+function compute_danger_over_time(frame_series, window_sec) {
+  const series = [];
+  if (!frame_series || frame_series.length === 0) return series;
+  const window_frames = Math.max(1, Math.floor(window_sec * FPS));
+  const max_frame = frame_series[frame_series.length - 1].frame;
+  for (let t_start = 0; t_start <= max_frame; t_start += window_frames) {
+    const t_end = t_start + window_frames;
+    let sum = 0, n = 0;
+    for (const s of frame_series) {
+      if (s.frame >= t_start && s.frame < t_end) { sum += s.danger; n += 1; }
+    }
+    if (n === 0) continue;
+    series.push([Number((t_start / FPS).toFixed(1)), Number((sum / n).toFixed(4))]);
+  }
+  return series;
+}
+
 function strategyCamper(_state, _frame, _rng) {
   return { dx: 0, dy: 0 };
 }
@@ -572,6 +595,10 @@ function runOne(name, strategyFn, seed) {
   let bulletFrameCount = 0;
   // C311 Phase 4: instinct trigger 発火数 (rising-edge bullet proximity)
   let instinctTriggerCount = 0;
+  // C326 Phase 4 (M-43 §F-1): per-frame {frame, danger} 系列 (弾存在 frame のみ push)。
+  // danger = max(0, 1 - frameMinDist / INSTINCT_TRIGGER_PX) (0..1 連続値)。
+  // 既存 frameMinDist 計算を再利用、副作用なし。
+  const dangerFrameSeries = [];
 
   for (let frame = 0; frame < MAX_FRAMES; frame++) {
     state.frame = frame;
@@ -619,6 +646,9 @@ function runOne(name, strategyFn, seed) {
       } else {
         currentGrazeStreak = 0;
       }
+      // C326 Phase 4 (M-43 §F-1): danger proxy (0..1 連続値) を frame 単位で蓄積
+      const danger = Math.max(0, 1 - frameMinDist / INSTINCT_TRIGGER_PX);
+      dangerFrameSeries.push({ frame, danger });
     } else {
       currentGrazeStreak = 0;
     }
@@ -658,6 +688,7 @@ function runOne(name, strategyFn, seed) {
         bullet_frame_count: bulletFrameCount,
         instinct_trigger_count: instinctTriggerCount,
         temporal_inconsistency_count: state._temporalInconsistencyCount,
+        _danger_frame_series: dangerFrameSeries,
       };
     }
   }
@@ -676,6 +707,7 @@ function runOne(name, strategyFn, seed) {
     bullet_frame_count: bulletFrameCount,
     instinct_trigger_count: instinctTriggerCount,
     temporal_inconsistency_count: state._temporalInconsistencyCount,
+    _danger_frame_series: dangerFrameSeries,
   };
 }
 
@@ -1208,6 +1240,16 @@ for (const name of Object.keys(STRATEGIES)) {
   results.push(runOne(name, STRATEGIES[name], SEED));
 }
 
+// C326 Phase 4 (M-43 §F-1): actor 別 danger_over_time 計算 + 内部系列を results から剥離
+// (剥離後の results を最終 report に載せる、JSON 肥大化回避 — 内部系列は actor あたり数千 frame ある)
+const danger_over_time_by_actor = Object.fromEntries(
+  results.map(r => [r.strategy, compute_danger_over_time(r._danger_frame_series, DANGER_WINDOW_SEC)])
+);
+const results_for_report = results.map(r => {
+  const { _danger_frame_series, ...rest } = r;
+  return rest;
+});
+
 // C306 Phase 4: pass 判定は悪手 4 方針 (BAD_STRATEGIES) 全 gameover に限定。
 // good (grazer) は proxy 計測専用 mock のため survival 結果は pass に影響させない。
 const badResults = results.filter(r => BAD_STRATEGIES.includes(r.strategy));
@@ -1251,7 +1293,7 @@ const report = {
       min_approach_p10: r.min_approach_p10,
     }])
   ),
-  results,
+  results: results_for_report,
   pass: allBadDied,
   survivors,
   proxy_probe: {
@@ -1277,7 +1319,16 @@ const report = {
     'phase 2 (50-90s, A+D+C) を 4 方針すべてが観測するとは限らない (early death 時)',
     'good (grazer) は castLock 不使用 mock = 真の最良戦略ではない、proxy validity 一次判定の対照群',
     'min_approach_p10 は 1 seed の単一観測値 = 統計的信頼性は seed × n_trial 拡張で確認要 (次サイクル候補)',
+    'danger_over_time_series は弾存在 frame のみ集計 (弾不在 frame は窓内に含めず) = 死亡直後の弾消滅で danger が下がる効果は出ない',
   ],
+  // C326 Phase 4 (M-43 §F-1 Atmaja+ 2020 採用 + §F-2 Shutshimi/Couture 2015 10秒窓): danger_over_time 系列
+  danger_over_time_series: {
+    window_sec: DANGER_WINDOW_SEC,
+    danger_proxy_definition: 'mean(max(0, 1 - frameMinDist / INSTINCT_TRIGGER_PX)) per non-overlapping ' + DANGER_WINDOW_SEC + 's window — closer to 1 = nearer-bullet exposure higher',
+    source: 'M-43 §F-1 (Atmaja+ 2020 Difficulty Curve GA × RMSE × ideal curve) × §F-2 (Shutshimi/Couture 2015 10秒バースト) = C326 Phase 4 着地 (projects/genre_study_shmup_M43.md §F-5(a) 直処方)',
+    purpose: 'actor 別の時系列危険度を可視化、BLOCKER actor (blind-sweeper/camper 等) の死亡近傍局在を粗く観察する一次 probe。RMSE × 理想曲線フィット (F-1 本格採用) は次サイクル以降の段階に分離。',
+    series: danger_over_time_by_actor,
+  },
 };
 
 console.log(JSON.stringify(report, null, 2));
