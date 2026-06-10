@@ -313,3 +313,36 @@ C315 Phase 3 で起票留保した残課題「N=3 条件明文化 (Log_cdx atom 
 - `completion_report.md` — C251 着地報告 (proxy 4 指標 Pearson 相関第 1 回計算が宿題)
 - `self_judgment.md` — Q-* 判定基準
 - `../projects/log_autonomous_game.md` — Active project 本体
+
+## C321 Phase 4 strategy 拡張結果 — verdict + kaizen #140 段階3 family 統合判定位置決め
+
+**起票**: 2026-06-10 C321 Phase 4 (Log)
+**親**: [multi_seed_correlation.md §9](multi_seed_correlation.md) (C321 Phase 4 節 N=5 → N=13 拡張結果)
+**目的**: C320 Phase 4 §6.6「kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で再評価」を実行、検証期限 2026-06-20 の判定位置を 1 段書面化。
+
+### verdict (4 段判定)
+
+| 軸 | 値 | 判定 |
+|---|---|---|
+| 形式 verdict (sweep JSON Pearson mean+std) | 0.9532 / 0.0319 | REDUNDANCY_CONFIRMED |
+| `good` outlier 除外時 Pearson (N=12) | mean=0.8198, std=0.1668 | **HOLD** (std≥0.1) |
+| Spearman 全体 (N=13) | mean=0.5463 | 中相関帯、強相関基準 ≥0.9 不充足 |
+| Spearman no-good (N=12) | mean=0.3970 | 弱-中相関帯 |
+
+**総合**: 形式単独 GO だが、outlier 耐性 + Spearman 二重基準で **HOLD** に着地。N=13 拡張で seed 軸変動 strategy 数は 1 → 4 (`blind-sweeper` + `random-rush` + `vertical-bounce` + `wave-rider`)、`wave-rider` (instinct 11.80, temporal 10.60) が `good` と他 12 strategy の中間ブリッジ点として加わったが、Pearson 線形回帰の slope 安定化は依然 `good`(22, 43) 1 点支配。
+
+### kaizen #140 段階3 family 統合 — 本サイクル発火しない
+
+- 形式単独基準では発火条件成立 (Pearson mean ≥ 0.9 && std < 0.1)
+- しかし [multi_seed_correlation.md §9.7 ギャップ定量化](multi_seed_correlation.md): `good` 除外時 Pearson mean 14% 低下 + std 5.2 倍拡大 = 強相関は outlier 依存
+- → **kaizen #140 段階3 「`instinct → temporal` 軸統合」発火は本サイクル保留継続**。検証期限 2026-06-20 まで残 10 日
+
+### C322 以降の判定材料拡充候補
+
+1. **第一候補: `good` 系列複数化** (推奨) — 現 grazer mock 1 種を 3-5 種類 (例: castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware) に拡張し N=15-17 strategy で再 sweep。`good` outlier 1 点支配 → outlier クラスタへの構造置換で Pearson 線形回帰の geometric 性質を変える
+2. **第二候補: outlier 耐性 verdict 拡張** — 現 `verdict_thresholds` (Pearson mean+std 単独) に `P_no_outlier_mean` と `pearson_spearman_gap` を追加し 3 軸 AND 基準化
+3. **退役候補: 単純 N seed 拡張** — 本サイクル N=10 が strategy 拡張に勝てないことが実証された (`wave-rider` の σ_sur=705F が示す通り、seed 軸変動 1 strategy が大きく動いても 13 strategy 内 Pearson 安定性は破れない)
+
+### gate 未解除中の playable diff 1 行ルール (C276 追加) — 本サイクル順守確認
+
+本 C321 Phase 4 改修は **仮説駆動**: `verify.js` への 8 strategy 追加 + `STRATEGIES`/`BAD_STRATEGIES` 拡張 = 「`good` outlier 支配下の Pearson 線形回帰が strategy 集合拡張で耐性化するか」の単一仮説検証用 diff。仮説欄に該当する明示 (`multi_seed_correlation.md §9.7` ギャップ定量化) が記録、Phase 4 着地節 (`projects/log_autonomous_game.md` C321 Phase 4 = 次サイクル更新) に判定材料蓄積。本ルール (C276) 順守済。

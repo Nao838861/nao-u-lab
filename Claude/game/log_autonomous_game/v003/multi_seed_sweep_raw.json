@@ -53,6 +53,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 435,
+        "instinct_trigger_count": 7,
+        "min_approach_p10": 32.73,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 2
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 283,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 62.09,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 415,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 33.17,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
       }
     },
     "seed_20260528": {
@@ -90,6 +146,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 343,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 29.67,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 589,
+        "instinct_trigger_count": 9,
+        "min_approach_p10": 28.67,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 6
       }
     },
     "seed_20260529": {
@@ -127,6 +239,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 474,
+        "instinct_trigger_count": 10,
+        "min_approach_p10": 20.21,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 3
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 285,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 50.54,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1819,
+        "instinct_trigger_count": 19,
+        "min_approach_p10": 30.61,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 18
       }
     },
     "seed_20260530": {
@@ -164,6 +332,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 375,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 24.68,
+        "cont_grazing_max": 11,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 272,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 104.86,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1816,
+        "instinct_trigger_count": 18,
+        "min_approach_p10": 32.34,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 18
       }
     },
     "seed_20260531": {
@@ -201,6 +425,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 494,
+        "instinct_trigger_count": 12,
+        "min_approach_p10": 45.16,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 4
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 285,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 50.96,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1816,
+        "instinct_trigger_count": 19,
+        "min_approach_p10": 31.18,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 18
       }
     },
     "seed_20260532": {
@@ -238,6 +518,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 341,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 56.62,
+        "cont_grazing_max": 7,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 271,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 105.1,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1818,
+        "instinct_trigger_count": 18,
+        "min_approach_p10": 30.25,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 18
       }
     },
     "seed_20260533": {
@@ -275,6 +611,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 333,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 35.52,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 58.84,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 469,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 31.49,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 3
       }
     },
     "seed_20260534": {
@@ -312,6 +704,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 291,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 45.5,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 54.91,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 468,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 33.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 3
       }
     },
     "seed_20260535": {
@@ -349,6 +797,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 273,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 70.01,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 282,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 63.83,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 468,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 34.58,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 3
       }
     },
     "seed_20260536": {
@@ -386,6 +890,62 @@
         "min_approach_p10": 93.05,
         "cont_grazing_max": 5,
         "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 417,
+        "instinct_trigger_count": 4,
+        "min_approach_p10": 28.54,
+        "cont_grazing_max": 17,
+        "temporal_inconsistency_count": 2
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 57.85,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1816,
+        "instinct_trigger_count": 17,
+        "min_approach_p10": 31.89,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 18
       }
     }
   },
@@ -441,6 +1001,86 @@
       "temporal_inconsistency_count": 2
     },
     {
+      "seed": 20260527,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "random-rush",
+      "survived_frames": 435,
+      "outcome": "gameover",
+      "instinct_trigger_count": 7,
+      "min_approach_p10": 32.73,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260527,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260527,
+      "strategy": "vertical-bounce",
+      "survived_frames": 283,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 62.09,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260527,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "wave-rider",
+      "survived_frames": 415,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 33.17,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
       "seed": 20260528,
       "strategy": "good",
       "survived_frames": 4162,
@@ -489,6 +1129,86 @@
       "min_approach_p10": 93.05,
       "cont_grazing_max": 5,
       "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260528,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "random-rush",
+      "survived_frames": 343,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 29.67,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "wave-rider",
+      "survived_frames": 589,
+      "outcome": "gameover",
+      "instinct_trigger_count": 9,
+      "min_approach_p10": 28.67,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 6
     },
     {
       "seed": 20260529,
@@ -541,6 +1261,86 @@
       "temporal_inconsistency_count": 2
     },
     {
+      "seed": 20260529,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "random-rush",
+      "survived_frames": 474,
+      "outcome": "gameover",
+      "instinct_trigger_count": 10,
+      "min_approach_p10": 20.21,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 3
+    },
+    {
+      "seed": 20260529,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "vertical-bounce",
+      "survived_frames": 285,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 50.54,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "wave-rider",
+      "survived_frames": 1819,
+      "outcome": "gameover",
+      "instinct_trigger_count": 19,
+      "min_approach_p10": 30.61,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 18
+    },
+    {
       "seed": 20260530,
       "strategy": "good",
       "survived_frames": 4162,
@@ -589,6 +1389,86 @@
       "min_approach_p10": 93.05,
       "cont_grazing_max": 5,
       "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260530,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "random-rush",
+      "survived_frames": 375,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 24.68,
+      "cont_grazing_max": 11,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "vertical-bounce",
+      "survived_frames": 272,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 104.86,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "wave-rider",
+      "survived_frames": 1816,
+      "outcome": "gameover",
+      "instinct_trigger_count": 18,
+      "min_approach_p10": 32.34,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 18
     },
     {
       "seed": 20260531,
@@ -641,6 +1521,86 @@
       "temporal_inconsistency_count": 2
     },
     {
+      "seed": 20260531,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "random-rush",
+      "survived_frames": 494,
+      "outcome": "gameover",
+      "instinct_trigger_count": 12,
+      "min_approach_p10": 45.16,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 4
+    },
+    {
+      "seed": 20260531,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260531,
+      "strategy": "vertical-bounce",
+      "survived_frames": 285,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 50.96,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260531,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "wave-rider",
+      "survived_frames": 1816,
+      "outcome": "gameover",
+      "instinct_trigger_count": 19,
+      "min_approach_p10": 31.18,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 18
+    },
+    {
       "seed": 20260532,
       "strategy": "good",
       "survived_frames": 4162,
@@ -689,6 +1649,86 @@
       "min_approach_p10": 93.05,
       "cont_grazing_max": 5,
       "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260532,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "random-rush",
+      "survived_frames": 341,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 56.62,
+      "cont_grazing_max": 7,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "vertical-bounce",
+      "survived_frames": 271,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 105.1,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "wave-rider",
+      "survived_frames": 1818,
+      "outcome": "gameover",
+      "instinct_trigger_count": 18,
+      "min_approach_p10": 30.25,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 18
     },
     {
       "seed": 20260533,
@@ -741,6 +1781,86 @@
       "temporal_inconsistency_count": 2
     },
     {
+      "seed": 20260533,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "random-rush",
+      "survived_frames": 333,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 35.52,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 58.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "wave-rider",
+      "survived_frames": 469,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 31.49,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 3
+    },
+    {
       "seed": 20260534,
       "strategy": "good",
       "survived_frames": 4162,
@@ -789,6 +1909,86 @@
       "min_approach_p10": 93.05,
       "cont_grazing_max": 5,
       "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260534,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "random-rush",
+      "survived_frames": 291,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 45.5,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 54.91,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "wave-rider",
+      "survived_frames": 468,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 33.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 3
     },
     {
       "seed": 20260535,
@@ -841,6 +2041,86 @@
       "temporal_inconsistency_count": 2
     },
     {
+      "seed": 20260535,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "random-rush",
+      "survived_frames": 273,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 70.01,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "vertical-bounce",
+      "survived_frames": 282,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 63.83,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "wave-rider",
+      "survived_frames": 468,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 34.58,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 3
+    },
+    {
       "seed": 20260536,
       "strategy": "good",
       "survived_frames": 4162,
@@ -889,305 +2169,385 @@
       "min_approach_p10": 93.05,
       "cont_grazing_max": 5,
       "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "random-rush",
+      "survived_frames": 417,
+      "outcome": "gameover",
+      "instinct_trigger_count": 4,
+      "min_approach_p10": 28.54,
+      "cont_grazing_max": 17,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 57.85,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "wave-rider",
+      "survived_frames": 1816,
+      "outcome": "gameover",
+      "instinct_trigger_count": 17,
+      "min_approach_p10": 31.89,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 18
     }
   ],
   "correlations_per_seed": [
     {
       "seed": 20260527,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.2275,
-        "instinct_x_cont_grazing_max": 0.5766,
-        "instinct_x_temporal_inconsistency": 0.9959,
-        "min_approach_p10_x_cont_grazing_max": 0.3518,
-        "min_approach_p10_x_temporal_inconsistency": -0.16,
-        "cont_grazing_max_x_temporal_inconsistency": 0.6317
+        "instinct_x_min_approach_p10": -0.1482,
+        "instinct_x_cont_grazing_max": 0.3258,
+        "instinct_x_temporal_inconsistency": 0.9667,
+        "min_approach_p10_x_cont_grazing_max": -0.5021,
+        "min_approach_p10_x_temporal_inconsistency": -0.0047,
+        "cont_grazing_max_x_temporal_inconsistency": 0.206
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.7182,
-        "instinct_x_cont_grazing_max": 0.2895,
-        "instinct_x_temporal_inconsistency": 0.5735,
-        "min_approach_p10_x_cont_grazing_max": 0.1539,
-        "min_approach_p10_x_temporal_inconsistency": 0.1118,
-        "cont_grazing_max_x_temporal_inconsistency": 0.803
+        "instinct_x_min_approach_p10": -0.4883,
+        "instinct_x_cont_grazing_max": 0.3626,
+        "instinct_x_temporal_inconsistency": 0.4581,
+        "min_approach_p10_x_cont_grazing_max": -0.5685,
+        "min_approach_p10_x_temporal_inconsistency": -0.0391,
+        "cont_grazing_max_x_temporal_inconsistency": 0.458
       }
     },
     {
       "seed": 20260528,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.2876,
-        "instinct_x_cont_grazing_max": 0.5569,
-        "instinct_x_temporal_inconsistency": 0.9777,
-        "min_approach_p10_x_cont_grazing_max": 0.2143,
-        "min_approach_p10_x_temporal_inconsistency": -0.1283,
-        "cont_grazing_max_x_temporal_inconsistency": 0.6066
+        "instinct_x_min_approach_p10": -0.1976,
+        "instinct_x_cont_grazing_max": 0.3608,
+        "instinct_x_temporal_inconsistency": 0.9531,
+        "min_approach_p10_x_cont_grazing_max": -0.5356,
+        "min_approach_p10_x_temporal_inconsistency": -0.0271,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2488
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.7182,
-        "instinct_x_cont_grazing_max": 0.2895,
-        "instinct_x_temporal_inconsistency": 0.7632,
-        "min_approach_p10_x_cont_grazing_max": 0.1539,
-        "min_approach_p10_x_temporal_inconsistency": -0.1539,
-        "cont_grazing_max_x_temporal_inconsistency": 0.7105
+        "instinct_x_min_approach_p10": -0.4461,
+        "instinct_x_cont_grazing_max": 0.3695,
+        "instinct_x_temporal_inconsistency": 0.5723,
+        "min_approach_p10_x_cont_grazing_max": -0.5563,
+        "min_approach_p10_x_temporal_inconsistency": -0.1587,
+        "cont_grazing_max_x_temporal_inconsistency": 0.4027
       }
     },
     {
       "seed": 20260529,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.3535,
-        "instinct_x_cont_grazing_max": 0.1683,
-        "instinct_x_temporal_inconsistency": 0.9983,
-        "min_approach_p10_x_cont_grazing_max": 0.0013,
-        "min_approach_p10_x_temporal_inconsistency": -0.3426,
-        "cont_grazing_max_x_temporal_inconsistency": 0.2244
+        "instinct_x_min_approach_p10": -0.3956,
+        "instinct_x_cont_grazing_max": 0.4746,
+        "instinct_x_temporal_inconsistency": 0.9059,
+        "min_approach_p10_x_cont_grazing_max": -0.662,
+        "min_approach_p10_x_temporal_inconsistency": -0.1426,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2455
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.527,
-        "instinct_x_cont_grazing_max": -0.1622,
-        "instinct_x_temporal_inconsistency": 0.6489,
-        "min_approach_p10_x_cont_grazing_max": 0.1026,
-        "min_approach_p10_x_temporal_inconsistency": -0.0513,
-        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+        "instinct_x_min_approach_p10": -0.5194,
+        "instinct_x_cont_grazing_max": 0.5276,
+        "instinct_x_temporal_inconsistency": 0.5715,
+        "min_approach_p10_x_cont_grazing_max": -0.5904,
+        "min_approach_p10_x_temporal_inconsistency": -0.157,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5227
       }
     },
     {
       "seed": 20260530,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.1713,
-        "instinct_x_cont_grazing_max": 0.5018,
-        "instinct_x_temporal_inconsistency": 0.999,
-        "min_approach_p10_x_cont_grazing_max": 0.0305,
-        "min_approach_p10_x_temporal_inconsistency": -0.1493,
-        "cont_grazing_max_x_temporal_inconsistency": 0.5352
+        "instinct_x_min_approach_p10": -0.2621,
+        "instinct_x_cont_grazing_max": 0.3313,
+        "instinct_x_temporal_inconsistency": 0.9485,
+        "min_approach_p10_x_cont_grazing_max": -0.6875,
+        "min_approach_p10_x_temporal_inconsistency": -0.1327,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2058
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.4472,
-        "instinct_x_cont_grazing_max": 0.5,
-        "instinct_x_temporal_inconsistency": 0.803,
-        "min_approach_p10_x_cont_grazing_max": -0.2236,
-        "min_approach_p10_x_temporal_inconsistency": -0.1539,
-        "cont_grazing_max_x_temporal_inconsistency": 0.803
+        "instinct_x_min_approach_p10": -0.5781,
+        "instinct_x_cont_grazing_max": 0.6464,
+        "instinct_x_temporal_inconsistency": 0.5723,
+        "min_approach_p10_x_cont_grazing_max": -0.7426,
+        "min_approach_p10_x_temporal_inconsistency": -0.0641,
+        "cont_grazing_max_x_temporal_inconsistency": 0.3184
       }
     },
     {
       "seed": 20260531,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.3088,
-        "instinct_x_cont_grazing_max": 0.5244,
-        "instinct_x_temporal_inconsistency": 0.9896,
-        "min_approach_p10_x_cont_grazing_max": 0.3606,
-        "min_approach_p10_x_temporal_inconsistency": -0.2052,
-        "cont_grazing_max_x_temporal_inconsistency": 0.6059
+        "instinct_x_min_approach_p10": -0.3558,
+        "instinct_x_cont_grazing_max": 0.5061,
+        "instinct_x_temporal_inconsistency": 0.8907,
+        "min_approach_p10_x_cont_grazing_max": -0.4769,
+        "min_approach_p10_x_temporal_inconsistency": -0.1626,
+        "cont_grazing_max_x_temporal_inconsistency": 0.37
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.7182,
-        "instinct_x_cont_grazing_max": 0.2895,
-        "instinct_x_temporal_inconsistency": 0.9211,
-        "min_approach_p10_x_cont_grazing_max": 0.1539,
-        "min_approach_p10_x_temporal_inconsistency": -0.5643,
-        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+        "instinct_x_min_approach_p10": -0.4847,
+        "instinct_x_cont_grazing_max": 0.4358,
+        "instinct_x_temporal_inconsistency": 0.7217,
+        "min_approach_p10_x_cont_grazing_max": -0.4791,
+        "min_approach_p10_x_temporal_inconsistency": -0.2522,
+        "cont_grazing_max_x_temporal_inconsistency": 0.371
       }
     },
     {
       "seed": 20260532,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.1169,
-        "instinct_x_cont_grazing_max": 0.0852,
-        "instinct_x_temporal_inconsistency": 0.9974,
-        "min_approach_p10_x_cont_grazing_max": -0.6378,
-        "min_approach_p10_x_temporal_inconsistency": -0.0577,
-        "cont_grazing_max_x_temporal_inconsistency": 0.0493
+        "instinct_x_min_approach_p10": -0.2961,
+        "instinct_x_cont_grazing_max": 0.1227,
+        "instinct_x_temporal_inconsistency": 0.948,
+        "min_approach_p10_x_cont_grazing_max": -0.6932,
+        "min_approach_p10_x_temporal_inconsistency": -0.1596,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0917
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.7182,
-        "instinct_x_cont_grazing_max": 0.6579,
-        "instinct_x_temporal_inconsistency": 0.7632,
-        "min_approach_p10_x_cont_grazing_max": -0.6669,
-        "min_approach_p10_x_temporal_inconsistency": -0.1539,
-        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+        "instinct_x_min_approach_p10": -0.5531,
+        "instinct_x_cont_grazing_max": 0.4292,
+        "instinct_x_temporal_inconsistency": 0.5162,
+        "min_approach_p10_x_cont_grazing_max": -0.6254,
+        "min_approach_p10_x_temporal_inconsistency": -0.0349,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1808
       }
     },
     {
       "seed": 20260533,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.1182,
-        "instinct_x_cont_grazing_max": 0.5907,
-        "instinct_x_temporal_inconsistency": 0.999,
-        "min_approach_p10_x_cont_grazing_max": 0.3911,
-        "min_approach_p10_x_temporal_inconsistency": -0.0972,
-        "cont_grazing_max_x_temporal_inconsistency": 0.6259
+        "instinct_x_min_approach_p10": -0.0753,
+        "instinct_x_cont_grazing_max": 0.2828,
+        "instinct_x_temporal_inconsistency": 0.9895,
+        "min_approach_p10_x_cont_grazing_max": -0.2878,
+        "min_approach_p10_x_temporal_inconsistency": 0.0038,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2829
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.4472,
-        "instinct_x_cont_grazing_max": 0.3441,
-        "instinct_x_temporal_inconsistency": 0.803,
-        "min_approach_p10_x_cont_grazing_max": 0.1539,
-        "min_approach_p10_x_temporal_inconsistency": -0.1539,
-        "cont_grazing_max_x_temporal_inconsistency": 0.7105
+        "instinct_x_min_approach_p10": -0.4055,
+        "instinct_x_cont_grazing_max": 0.1402,
+        "instinct_x_temporal_inconsistency": 0.4698,
+        "min_approach_p10_x_cont_grazing_max": -0.2129,
+        "min_approach_p10_x_temporal_inconsistency": -0.0842,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0745
       }
     },
     {
       "seed": 20260534,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.2465,
-        "instinct_x_cont_grazing_max": 0.1683,
-        "instinct_x_temporal_inconsistency": 0.9989,
-        "min_approach_p10_x_cont_grazing_max": -0.2012,
-        "min_approach_p10_x_temporal_inconsistency": -0.2358,
-        "cont_grazing_max_x_temporal_inconsistency": 0.2061
+        "instinct_x_min_approach_p10": -0.0994,
+        "instinct_x_cont_grazing_max": 0.1045,
+        "instinct_x_temporal_inconsistency": 0.9888,
+        "min_approach_p10_x_cont_grazing_max": -0.439,
+        "min_approach_p10_x_temporal_inconsistency": -0.0313,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1359
       },
       "spearman": {
-        "instinct_x_min_approach_p10": 0.0527,
-        "instinct_x_cont_grazing_max": -0.1622,
-        "instinct_x_temporal_inconsistency": 0.825,
-        "min_approach_p10_x_cont_grazing_max": -0.6669,
-        "min_approach_p10_x_temporal_inconsistency": 0.1118,
-        "cont_grazing_max_x_temporal_inconsistency": 0.2294
+        "instinct_x_min_approach_p10": -0.2308,
+        "instinct_x_cont_grazing_max": -0.0932,
+        "instinct_x_temporal_inconsistency": 0.4419,
+        "min_approach_p10_x_cont_grazing_max": -0.4608,
+        "min_approach_p10_x_temporal_inconsistency": -0.1022,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0646
       }
     },
     {
       "seed": 20260535,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.3773,
-        "instinct_x_cont_grazing_max": 0.1683,
-        "instinct_x_temporal_inconsistency": 0.9983,
-        "min_approach_p10_x_cont_grazing_max": 0.0551,
-        "min_approach_p10_x_temporal_inconsistency": -0.3635,
-        "cont_grazing_max_x_temporal_inconsistency": 0.2244
+        "instinct_x_min_approach_p10": -0.1783,
+        "instinct_x_cont_grazing_max": 0.1961,
+        "instinct_x_temporal_inconsistency": 0.9882,
+        "min_approach_p10_x_cont_grazing_max": -0.3733,
+        "min_approach_p10_x_temporal_inconsistency": -0.0964,
+        "cont_grazing_max_x_temporal_inconsistency": 0.217
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.527,
-        "instinct_x_cont_grazing_max": -0.1622,
-        "instinct_x_temporal_inconsistency": 0.6489,
-        "min_approach_p10_x_cont_grazing_max": 0.1026,
-        "min_approach_p10_x_temporal_inconsistency": -0.0513,
-        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+        "instinct_x_min_approach_p10": -0.3401,
+        "instinct_x_cont_grazing_max": 0.0466,
+        "instinct_x_temporal_inconsistency": 0.3779,
+        "min_approach_p10_x_cont_grazing_max": -0.3709,
+        "min_approach_p10_x_temporal_inconsistency": 0.0528,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1891
       }
     },
     {
       "seed": 20260536,
-      "n_strategies": 5,
+      "n_strategies": 13,
       "pearson": {
-        "instinct_x_min_approach_p10": -0.2136,
-        "instinct_x_cont_grazing_max": 0.2611,
-        "instinct_x_temporal_inconsistency": 0.9901,
-        "min_approach_p10_x_cont_grazing_max": -0.5292,
-        "min_approach_p10_x_temporal_inconsistency": -0.0965,
-        "cont_grazing_max_x_temporal_inconsistency": 0.1705
+        "instinct_x_min_approach_p10": -0.2695,
+        "instinct_x_cont_grazing_max": 0.2145,
+        "instinct_x_temporal_inconsistency": 0.9525,
+        "min_approach_p10_x_cont_grazing_max": -0.6429,
+        "min_approach_p10_x_temporal_inconsistency": -0.1027,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0894
       },
       "spearman": {
-        "instinct_x_min_approach_p10": -0.7182,
-        "instinct_x_cont_grazing_max": 0.6579,
-        "instinct_x_temporal_inconsistency": 0.8652,
-        "min_approach_p10_x_cont_grazing_max": -0.6669,
-        "min_approach_p10_x_temporal_inconsistency": -0.3689,
-        "cont_grazing_max_x_temporal_inconsistency": 0.703
+        "instinct_x_min_approach_p10": -0.5449,
+        "instinct_x_cont_grazing_max": 0.5975,
+        "instinct_x_temporal_inconsistency": 0.7612,
+        "min_approach_p10_x_cont_grazing_max": -0.7267,
+        "min_approach_p10_x_temporal_inconsistency": -0.2573,
+        "cont_grazing_max_x_temporal_inconsistency": 0.4848
       }
     }
   ],
   "pearson_distribution": {
     "instinct_x_min_approach_p10": {
       "n": 10,
-      "mean": -0.2421,
-      "std": 0.0862,
-      "min": -0.3773,
-      "max": -0.1169
+      "mean": -0.2278,
+      "std": 0.1008,
+      "min": -0.3956,
+      "max": -0.0753
     },
     "instinct_x_cont_grazing_max": {
       "n": 10,
-      "mean": 0.3602,
-      "std": 0.1953,
-      "min": 0.0852,
-      "max": 0.5907
+      "mean": 0.2919,
+      "std": 0.1287,
+      "min": 0.1045,
+      "max": 0.5061
     },
     "instinct_x_temporal_inconsistency": {
       "n": 10,
-      "mean": 0.9944,
-      "std": 0.0065,
-      "min": 0.9777,
-      "max": 0.999
+      "mean": 0.9532,
+      "std": 0.0319,
+      "min": 0.8907,
+      "max": 0.9895
     },
     "min_approach_p10_x_cont_grazing_max": {
       "n": 10,
-      "mean": 0.0036,
-      "std": 0.3441,
-      "min": -0.6378,
-      "max": 0.3911
+      "mean": -0.53,
+      "std": 0.1329,
+      "min": -0.6932,
+      "max": -0.2878
     },
     "min_approach_p10_x_temporal_inconsistency": {
       "n": 10,
-      "mean": -0.1836,
-      "std": 0.0982,
-      "min": -0.3635,
-      "max": -0.0577
+      "mean": -0.0856,
+      "std": 0.0618,
+      "min": -0.1626,
+      "max": 0.0038
     },
     "cont_grazing_max_x_temporal_inconsistency": {
       "n": 10,
-      "mean": 0.388,
-      "std": 0.2194,
-      "min": 0.0493,
-      "max": 0.6317
+      "mean": 0.2093,
+      "std": 0.0823,
+      "min": 0.0894,
+      "max": 0.37
     }
   },
   "spearman_distribution": {
     "instinct_x_min_approach_p10": {
       "n": 10,
-      "mean": -0.5487,
-      "std": 0.2295,
-      "min": -0.7182,
-      "max": 0.0527
+      "mean": -0.4591,
+      "std": 0.1024,
+      "min": -0.5781,
+      "max": -0.2308
     },
     "instinct_x_cont_grazing_max": {
       "n": 10,
-      "mean": 0.2542,
-      "std": 0.303,
-      "min": -0.1622,
-      "max": 0.6579
+      "mean": 0.3462,
+      "std": 0.2296,
+      "min": -0.0932,
+      "max": 0.6464
     },
     "instinct_x_temporal_inconsistency": {
       "n": 10,
-      "mean": 0.7615,
-      "std": 0.1022,
-      "min": 0.5735,
-      "max": 0.9211
+      "mean": 0.5463,
+      "std": 0.1152,
+      "min": 0.3779,
+      "max": 0.7612
     },
     "min_approach_p10_x_cont_grazing_max": {
       "n": 10,
-      "mean": -0.1404,
-      "std": 0.361,
-      "min": -0.6669,
-      "max": 0.1539
+      "mean": -0.5334,
+      "std": 0.1523,
+      "min": -0.7426,
+      "max": -0.2129
     },
     "min_approach_p10_x_temporal_inconsistency": {
       "n": 10,
-      "mean": -0.1428,
-      "std": 0.1938,
-      "min": -0.5643,
-      "max": 0.1118
+      "mean": -0.1097,
+      "std": 0.093,
+      "min": -0.2573,
+      "max": 0.0528
     },
     "cont_grazing_max_x_temporal_inconsistency": {
       "n": 10,
-      "mean": 0.617,
-      "std": 0.1615,
-      "min": 0.2294,
-      "max": 0.803
+      "mean": 0.3067,
+      "std": 0.1603,
+      "min": 0.0646,
+      "max": 0.5227
     }
   },
   "focus_pair": "instinct_x_temporal_inconsistency",
   "focus_pair_pearson_distribution": {
     "n": 10,
-    "mean": 0.9944,
-    "std": 0.0065,
-    "min": 0.9777,
-    "max": 0.999
+    "mean": 0.9532,
+    "std": 0.0319,
+    "min": 0.8907,
+    "max": 0.9895
   },
   "verdict_thresholds": {
     "redundancy_confirmed": "pearson mean >= 0.9 && std < 0.1",
@@ -1278,6 +2638,142 @@
         "temporal_bit_match": true,
         "sweep_min_approach_p10": 93.05,
         "baseline_min_approach_p10": 93.05,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "zig-zag-narrow": {
+        "sweep_survived_frames": 323,
+        "baseline_survived_frames": 323,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 55.25,
+        "baseline_min_approach_p10": 55.25,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 4,
+        "baseline_cont_grazing_max": 4,
+        "cont_grazing_bit_match": true
+      },
+      "random-rush": {
+        "sweep_survived_frames": 435,
+        "baseline_survived_frames": 435,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 7,
+        "baseline_instinct_trigger_count": 7,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 2,
+        "baseline_temporal_inconsistency_count": 2,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 32.73,
+        "baseline_min_approach_p10": 32.73,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 9,
+        "baseline_cont_grazing_max": 9,
+        "cont_grazing_bit_match": true
+      },
+      "corner-stay": {
+        "sweep_survived_frames": 337,
+        "baseline_survived_frames": 337,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 60.11,
+        "baseline_min_approach_p10": 60.11,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "mid-orbit": {
+        "sweep_survived_frames": 246,
+        "baseline_survived_frames": 246,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 1,
+        "baseline_temporal_inconsistency_count": 1,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 80.75,
+        "baseline_min_approach_p10": 80.75,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "vertical-bounce": {
+        "sweep_survived_frames": 283,
+        "baseline_survived_frames": 283,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 62.09,
+        "baseline_min_approach_p10": 62.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "triangle-loop": {
+        "sweep_survived_frames": 229,
+        "baseline_survived_frames": 229,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 1,
+        "baseline_temporal_inconsistency_count": 1,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 44.09,
+        "baseline_min_approach_p10": 44.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "spiral-out": {
+        "sweep_survived_frames": 227,
+        "baseline_survived_frames": 227,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 28.09,
+        "baseline_min_approach_p10": 28.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 8,
+        "baseline_cont_grazing_max": 8,
+        "cont_grazing_bit_match": true
+      },
+      "wave-rider": {
+        "sweep_survived_frames": 415,
+        "baseline_survived_frames": 415,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 3,
+        "baseline_instinct_trigger_count": 3,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 1,
+        "baseline_temporal_inconsistency_count": 1,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 33.17,
+        "baseline_min_approach_p10": 33.17,
         "min_approach_bit_match": true,
         "sweep_cont_grazing_max": 5,
         "baseline_cont_grazing_max": 5,

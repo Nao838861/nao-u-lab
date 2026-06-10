@@ -456,15 +456,94 @@ function strategyGrazer(state, _frame, _rng) {
   return { dx: lateralDx + centerDx, dy: lateralDy };
 }
 
+// C321 Phase 4: 8 castLock 不使用悪手 strategy 追加 (N=5 → N=13)
+// 目的: N=5 Pearson 線形回帰の `good` outlier 支配バイアス (multi_seed_correlation.md §6.2-4)
+//   を strategy 集合拡張で解消、N=13 strategy 内分布の真の冗長性を判定する。
+// 各 strategy の挙動仕様 (frame 当たり player 移動の delta):
+//   zig-zag-narrow:  dx = (frame % 20 < 10) ? +1 : -1, dy = 0 — 鋭い水平往復、決定論
+//   random-rush:     (dx, dy) = (rng()*2-1, rng()*2-1) を毎 frame 再抽選 — rng 重依存、seed 軸変動大
+//   corner-stay:     target = (W*0.9, H*0.1) (右上角) への線形接近、決定論
+//   mid-orbit:       中央 (W/2, H/2) 周回、半径 80px、周期 180F、決定論
+//   vertical-bounce: dy = (frame % 120 < 60) ? -1 : +1, dx = (rng()-0.5)*0.5 — rng 軽依存
+//   triangle-loop:   3 頂点 (左下/右下/上中央) を 60F ずつ巡回、決定論
+//   spiral-out:      中央から外向き螺旋、radius=min(120, frame*0.05), angle=frame*0.08、決定論
+//   wave-rider:      dx = sin(frame*0.07), dy = cos(frame*0.05) + (rng()-0.5)*0.2 — rng 軽依存
+// 共通: castLock 機構不使用 = 全 strategy が ≤90s (5400 frame) で gameover 判定される設計。
+//   rng 使用 strategy (random-rush / vertical-bounce / wave-rider) は seed 軸変動を生み、
+//   既存 blind-sweeper 1 点のみ動く構造バイアス (multi_seed_correlation.md §3.1) を解消する。
+function strategyZigZagNarrow(_state, frame, _rng) {
+  const dx = (frame % 20 < 10) ? 1 : -1;
+  return { dx, dy: 0 };
+}
+function strategyRandomRush(_state, _frame, rng) {
+  const dx = rng() * 2 - 1;
+  const dy = rng() * 2 - 1;
+  return { dx, dy };
+}
+function strategyCornerStay(state, _frame, _rng) {
+  const tx = W * 0.9, ty = H * 0.1;
+  return { dx: tx - state.player.x, dy: ty - state.player.y };
+}
+function strategyMidOrbit(state, frame, _rng) {
+  const cx = W * 0.5, cy = H * 0.5;
+  const radius = 80;
+  const angle = frame * (2 * Math.PI) / 180;
+  const tx = cx + radius * Math.cos(angle);
+  const ty = cy + radius * Math.sin(angle);
+  return { dx: tx - state.player.x, dy: ty - state.player.y };
+}
+function strategyVerticalBounce(_state, frame, rng) {
+  const dy = (frame % 120 < 60) ? -1 : 1;
+  const dx = (rng() - 0.5) * 0.5;
+  return { dx, dy };
+}
+function strategyTriangleLoop(state, frame, _rng) {
+  const vertices = [
+    { x: W * 0.3, y: H * 0.6 },
+    { x: W * 0.7, y: H * 0.6 },
+    { x: W * 0.5, y: H * 0.3 },
+  ];
+  const idx = Math.floor(frame / 60) % 3;
+  const t = vertices[idx];
+  return { dx: t.x - state.player.x, dy: t.y - state.player.y };
+}
+function strategySpiralOut(state, frame, _rng) {
+  const cx = W * 0.5, cy = H * 0.5;
+  const radius = Math.min(120, frame * 0.05);
+  const angle = frame * 0.08;
+  const tx = cx + radius * Math.cos(angle);
+  const ty = cy + radius * Math.sin(angle);
+  return { dx: tx - state.player.x, dy: ty - state.player.y };
+}
+function strategyWaveRider(_state, frame, rng) {
+  const dx = Math.sin(frame * 0.07);
+  const dy = Math.cos(frame * 0.05) + (rng() - 0.5) * 0.2;
+  return { dx, dy };
+}
+
 const STRATEGIES = {
   good: strategyGrazer,
   camper: strategyCamper,
   'lane-holder': strategyLaneHolder,
   'blind-sweeper': strategyBlindSweeper,
   nospecial: strategyNospecial,
+  // C321 Phase 4: 8 castLock 不使用悪手追加 (N=5 → N=13)
+  'zig-zag-narrow':  strategyZigZagNarrow,
+  'random-rush':     strategyRandomRush,
+  'corner-stay':     strategyCornerStay,
+  'mid-orbit':       strategyMidOrbit,
+  'vertical-bounce': strategyVerticalBounce,
+  'triangle-loop':   strategyTriangleLoop,
+  'spiral-out':      strategySpiralOut,
+  'wave-rider':      strategyWaveRider,
 };
 
-const BAD_STRATEGIES = ['camper', 'lane-holder', 'blind-sweeper', 'nospecial'];
+const BAD_STRATEGIES = [
+  'camper', 'lane-holder', 'blind-sweeper', 'nospecial',
+  // C321 Phase 4: 8 種追加 (pass 判定対象に組み込み)
+  'zig-zag-narrow', 'random-rush', 'corner-stay', 'mid-orbit',
+  'vertical-bounce', 'triangle-loop', 'spiral-out', 'wave-rider',
+];
 
 function runOne(name, strategyFn, seed) {
   const state = {
