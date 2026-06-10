@@ -1,4 +1,4 @@
-# サイクルステージング (2026-06-11 02:03)
+# サイクルステージング (2026-06-11 08:13)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-06-11)
@@ -47,155 +47,89 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
   2. [U0AM1F23FQU] 2026-05-04 02:42 [Log] Nao_u 02:36 受領。Ash の auto_diary 系で起きた話だが Win cron が私を起こしたので、git
   3. [U0AM1F23FQU] 2026-05-04 02:42 [Log] Nao_u 02:36 受領。Ash の auto_diary 系で起きた話だが Win cron が私を起こしたので、git
 
----
+## Phase 3 候補（§0a/§0b 継承タスク、構造強制処方）
 
-## Phase 1: 情報収集結果 (2026-06-11 02:08, Ash/Win2)
+### §0a 由来
+- next_tasks.py で `# ash pending: なし (cycle=2026-06-11)` — 構造側継承はゼロ。3+滞留マーカーなし。
 
-### §0a-bis 継承タスク候補（構造強制処方）
+### §0b 由来（前サイクル日記末尾「次サイクルの最善行動」）
+- **§0b の宣言原文 (2026-05-02 08:20 日記末尾)**: 「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる」
+- **構造的継承メモ**: §0b 内容は 2026-05-02 のもので、現在は 2026-06-11。約 40 日経過しており、その間に graze_log は v03→v14 まで進行・Nao_u 評価往復済 (直近 commit a33cbf2e4 で v14 k-α/k-β shipped、Nao_u 自プレイ評価 ts=1781038249 依頼中、graze_log v15 4分岐構造リスク軸 README 追記済)。§0b の「v02 cross_review 提案」タスクは議題シフト (v02→v14) で実質失効済。
+- **Phase 3 候補化判定**: 原文タスク (v02 cross_review 提案) は失効。ただし「意図を載せる場所を装置が先取りできない領域に下げる」という抽象原則は v14/v15 文脈でも生きる。Phase 2/3 で v14 Nao_u 評価 (ts=1781038249, 24h elapsed 20.4h) 受領待ちの段取りに引き継がれている。
 
-**§0a next_tasks 層A**: cycle=2026-06-11 で pending=なし。`next_tasks.py list` 末尾は [?] (waiting) 状態が2件 (t-260513093450-bfeb / t-260512115229-8765) で、いずれも「Mir/Nao_u 応答到達後の追補 commit」待ち——能動アクション不要。3+滞留マーカー [⚠連続3+] なし。
+## §1. external_notes_ash.md 未統合エントリ
+- 最終エントリ: 2026-05-10 17:56 Twitter おすすめ巡回 [統合済 2026-05-12 → knowledge/20260511_*.md 4本]
+- 2026-05-12 以降の新規 external_notes_ash.md 追加なし (約 30 日空白)
+- 未統合 ([統合済] マーカーなし) エントリ: 0 件
+- 注: 直近 1 ヶ月の外部摂取は external_notes_ash.md ではなく log/external_search.log と直接 knowledge/* に流れている (運用シフト疑い)
 
-**§0b 自然言語側 (前サイクル日記末尾)**: 直近 commit log (4a89e6414, 2026-06-10 Phase 4) から復元——
-- graze_log v14 (k-α + k-β) Nao_u 自プレイ評価依頼 #game-rights ts=1781038249 投稿成功
-- 3 層 triple redundancy (ring / center text / HUD STREAK 色強調) 実装完了
-- Stage 4 4 軸 invariant 確認、Phase 3 5 完遂条件すべて確認
-- **次サイクル引継ぎ = Nao_u 評価待ち 24h で v15 方向 4 分岐確定の段取り**
+## §2. projects/INDEX.md Active プロジェクト現状
+- Active 計 18 プロジェクト + Skill化検討バックログ
+- 直近のホットスポット: **ゲーム制作 (game/graze_log v14→v15)**、**記憶ツリー化/連想検索体制** (Log 2026-05-11 着手)、**記憶階層整理 5/4 14:17依頼** (Ash 担当・進行中)
+- Completed: GPT5.5 記憶想起提案評価 (2026-05-05)、Tweet URL捕捉 (2026-04-25)
+- バックログ: AYi @AYi_AInotes Markdown批判への自己照合 (A+B並行推奨・C見送り、着手判断保留)
 
-08:20 (2026-05-02) 日記末尾の古い「graze_log v02 cross_review 提案 → #game-rights に1メッセージ」は、v02 → v03 → ... → v13(j-α) → v14(k-α+k-β) と13サイクル分の積み上げで既に消化済（commit log で確認）。
+## §3. log/twitter_recommended_20260611.txt 注目ツイート
+- @sekine_1234 (#8): 「AI運用で一番こわい構造は学習データの引き戻し。直近の自分の出力を次のお手本として読む → 外れた出力がログ自体を新しい前提化 → 雪だるま式に崩れる。止める仕組みを外側に持たないと詰む」— **Ash の cycle_staging §0b 旧版で書いた「装置の先取り問題」と同型構造**（自分の出力が次の自分の前提になる回路）
+- @izutorishima (#1): 「GPT-5.5 だけに頼らなくて正解 — 私のふとした一言から別モデルが『このモデルベースが絶対うまくいく』と探り寄せた」 — モデル選定の自律性事例
+- @bioshok3 (#3): Altman「RSI 急成長が速いほど IPO 遅らせる方が有利」 — 再帰的自己改善のタイムライン論
+- @dppnpn (#15): 「不老不死の暇つぶし→ハノイの塔→Factorio回路最適化アイデアが降ってきた」 — 無関係領域からの cross-pollination 事例 (B003 fusion 連想)
 
-**Phase 3 候補（メモのみ、対処は次フェーズ）**:
-- (A) Nao_u v14 (k-α+k-β) 評価返信受領確認 (ts=1781038249) → 受領なら v15 方向確定 (4 分岐: triple redundancy 維持深化 / HUD簡素化 + ring強化 / フラグ乱立警戒で1層削減 / 別軸開拓)
-- (B) 24h 評価待ちの間に並行可能な作業: graze_log v14 周辺 (v15 brainstorm 着手前ストック) / 別 game/ への M-41 横展開 / cross_review 受領分の取り込み
-- (C) §0b 受領待ち2件 (bfeb/8765) の追補 commit 実施可否確認
+## §4. memory/beliefs.md 低確信度項目
+- B003: memory fusion は忘却より重要 — 確信度 0.78 (Active、core_mission昇格検討圏)。検証アクション: B028「粘土」トリガーの想起誘発力検証継続 (2026-03-27 Log: 想起誘発失敗)。最終 last_action_date: 2026-04-12
+- B005: 「古い情報は正確さではなく偽の確信を生む」 — 確信度 0.65、📦 Archived (Absorbed → B027/B022)。Restoration trigger 監視のみ。
 
-### 1. external_notes_ash.md 未統合エントリ確認
+## §5. memory_search.py 過去関連情報
+- キーワード「装置 救援 窒息」検索結果 (5 hits)
+  - knowledge/20260505_rioriost_disappearing_files_invisible_harness_action.md — 装置3分類表 (headless_check/backup auto-commit/rioriost事例)
+  - knowledge/20260502_device_direction_opus47_literal_akari_walk_trace.md — 装置の I (意図経路) 視点での分類
+  - knowledge/20260515_openai_codex_mobile_steering_execution_device_separation_vs_backup_autocommit.md — 第4型 steering 装置の追加検証 (OpenAI Codex Mobile 1例)
+  - knowledge/20260530_gamma_world_simplex_rotary_sparse_hub_distillation_three_axis_processing.md — 「蒸留方向の符号」で救援/窒息判定
+  - log/slack_archive/game-rights.jsonl L727 — Slack 投稿で Log 側に提案 (装置の向き README 1行点検運用)
+- 装置の向き (救援vs窒息) 概念は §0b 2026-05-02 起源から 2026-05-30 まで 4 段階展開済み。最新は「蒸留方向の符号」での形式化 (5/30 gamma_world記事)
 
-最終 [統合済] マーカー = 2026-05-12 (kakubomb/mizchi/imygohan/nao_u シリーズ → knowledge/20260511_*)。
-末尾エントリ (#7 KAKUBOMB AI量産15パズルSteam絨毯爆撃) は **[統合済 2026-05-12 Ash]** マーク済み。
-**5/12 以降の未統合エントリは0件**（external_notes_ash.md は5/12で更新停止状態。@fladdict 群体観察と並走の継続観察対象は機能停止気味——`feedback_proactive_learning.md` の射程）。
+## §6. 外部検索結果 (WebSearch)
+- クエリ: peripheral vision foveal attention game design bullet hell shmup player perception 2026
+- 7 hits、log/external_search.log 末尾に追記済
+- 主要 hit:
+  - Player Research「Perceiving without looking: Designing HUDs for peripheral vision」— 周辺視野でHUD情報を取れる設計の実務記事
+  - NCBI PMC7645222「A review of interactions between peripheral and foveal vision」— 周辺はテクスチャ的、中心は精細
+  - ResetEra/shmups.system11.org/Critical-Gaming — 弾幕プレイヤーは自機を凝視 (中心視)、弾パターンは周辺視で察知 (zen/flow)
+  - arxiv 2309.12634 — Log-Polar-like Sensor (生物模倣中心精細+周辺粗)
+- **graze_log v14/v15 への接続候補**: commit a33cbf2e4 で記録した「peripheral-foveal 独立性前提」は外部裏付けあり (shmup 業界の経験則として確立)。v14 k-β の HUD STREAK 色強調が中心視に追加負荷をかける可能性 → Player Research「周辺視HUD設計」原則との照合は v15 4分岐構造リスク軸の検討材料になりうる。Phase 2 で判断。
+- 前回検索 (2026-05-15) からの間隔: 27日 (24h スキップ条件は超過しているため通常実行)
 
-### 2. projects/INDEX.md Active プロジェクト現状
-
-Active = 22件。直近サイクルで触れ続けているのは:
-- external_search_phase1_fixation.md (Ash 案A実装完了, 案B/E未着手)
-- memory_consolidation_20260504.md (Ash 計画策定、第一波着手前)
-- memory_tree_consolidation.md (Log v0 着手、Ash 領域外)
-- game_development.md (本丸、graze_log v14 が現フロント)
-- side_channel_audit.md (Ash/Log 応答済、stale)
-
-Phase 3 候補: 案B (24h警告) / 案E (昇格N日ゼロ検出) は構造強制処方の延長で graze_log v14→v15 評価待ち24h中の同時実行に親和。
-
-### 3. log/twitter_recommended_20260610.txt 注目
-
-50件中、graze_log v14 設計と接続する 1-2件:
-- #3 @ImAI_Eruel: Claude Fable 5 性能圧倒的だが Anthropic 方針叩かれ最多——`feedback_external_reach_threshold.md` 「外部到達」議論の同型構造（性能だけでは届かない）
-- #8 @Suzacque: Fable 5 体感 vs GPT-5.5 pro 比較 「忖度をせず耳に痛いこともズケズケ言う」——内部評価 vs 外部評価の温度差、`feedback_prediction_responsibility.md` Stage 4 自己判定の Nao_u 評価依頼経路との対比軸
-- #5 @itarutomy: LoRA 記憶容量を1本の数式で予測 (arxiv 2605.30260)——B028 (容量限界) / memory_consolidation_20260504 の外部裏付け候補（次の摂取で深掘り可）
-
-注目順: #5 > #8 > #3。
-
-### 4. beliefs.md 低確信度項目
-
-B003 (memory fusion > 忘却) 確信度0.78、`status: 🟡 Active — 0.7超、core_mission昇格検討圏`。fusion 体験 (B002+B010→B028) はあるが、B028 「粘土」トリガーの想起誘発検証が 2026-03-27 Log で「Pot #10 設計時に自然想起せず」、追跡継続のまま2ヶ月超。
-B004 (外部×内部交差) 確信度0.87、`循環性注記`あり。**graze_log v14 triple redundancy 設計は B004 の交差実践そのもの**（Boghog 多層 cue 外部 × Ash 自プレイ Stage 4 内部）。
-
-### 5. memory_search.py 検索結果 ("graze_log")
-
-5件ヒット:
-- knowledge/20260607_sam_state_adaptive_memory_intent_driven_recall_graze_log_v13_five_attempts.md — v13 五試行記録、v14 直前のスナップショット
-- knowledge/20260531_dodonpachi_multi_mechanic_synergy_vs_graze_log_v07_single_mechanic_check.md — DoDonPachi 1997→SaiDaiOuJou 2012→graze_log v07 の 30 年機構継承
-- knowledge/20260531_sin5d_ebikani_problem_discovery_handoff_spec_vs_graze_log_v06_waiting.md — ebikani 受け渡し仕様
-- knowledge/20260602_syosin_kai_dq12hd_categorical_without_functional_subtraction_graze_log_v06.md — 役割分化側からの分析
-- log/daily_diary_ash.md: §0a pending 履歴
-
-過去蓄積あり。v15 brainstorm 着手時に 20260607 (v13 五試行) と 20260531 (DoDonPachi 機構継承) を最初に引くのが筋。
-
-### 6. 外部検索結果
-
-直近 log/external_search.log 末尾 = 2026-05-15 (Ash, shoot em up bullet pattern enemy variety wave design)。Ash 同インスタンスで 24h 以内記録なし → 実施対象。
-
-**クエリ**: `triple redundancy visual feedback game design HUD overlay multi-channel cue bullet hell 2026`
-**ヒット**: 7件、注目4件:
-1. gamedeveloper.com **'Off With Their HUDs!: Rethinking the HUD in Console Game Design'** — HUD を UI 並列要素ではなく**ゲーム環境に埋め込む**設計。COD2 = health meter なし、画面周辺が赤くパルス。Mae Brown 系記事
-2. shmups.wiki **Boghog's bullet hell shmup 101** — プレイヤーは自機位置を `bullet stream + ship silhouette + HUD flashing colors` の**複合 cue で推定する**——bullet hell 標準として多層 cue が前提化されている
-3. blog.littlepolygon.com **Tech Breakdown: Bullet Hell** — bullet stream の thickness/speed が game feel に直結
-4. arxiv 1806.04718 **Talakat** — bullet hell constrained map-elites (既収録、graze_log 系で複数回引用)
-
-**graze_log v14 (k-α + k-β) triple redundancy (ring + center text + HUD STREAK 色強調) との接続**:
-- (a) Boghog 101 「multiple cues 列挙」は v14 triple redundancy の業界標準裏付け——k-α 単独でも shmup 標準を満たし、k-β HUD 層追加は redundancy を完成させる方向
-- (b) **'Off With Their HUDs!' は逆方向の処方**——HUD を**減らして**環境(ring 周辺発光・敵側演出)に埋め込む方が没入度が高い。**v15 方向 4 分岐のうち「HUD簡素化 + ring強化」枝の外部裏付けに直結**。Nao_u 評価が「3層は多すぎ／HUD は逆に削れ」方向で返ってきた場合の処方候補
-- (c) Talakat の constrained map-elites は v15 で「弾パターン自動生成」枝に進む場合の手法
-- 学習コスト1点: Boghog 101 は「cues」を技術用語で扱っており、我々が「triple redundancy」と呼んでいる構造の業界呼称は **multi-channel cue** / **redundant encoding** に近い (R-007 造語症対策の射程)
-
-log 追記済 (`log/external_search.log` 2026-06-11 02:08 行)。
-
----
-
-## Phase 1 まとめ（次フェーズへの引き渡し）
-
-**収集済み事実**:
-- §0a pending=0, §0b 自然言語側=v14 評価待ち24h段取り
-- external_notes_ash.md は 5/12 以降更新停止 (要観察)
-- twitter #5 LoRA 記憶容量論文が今サイクル最大の deep-dive 候補
-- 外部検索で v14 triple redundancy の業界裏付け1本 + 逆処方 (HUD減らす) 1本確保
-- B003/B004 の確信度動向に graze_log v14 が直接寄与する位置
-
-**Phase 3 候補（対処判断は次フェーズ）**:
-- (A) Nao_u v14 評価返信確認 → 受領なら v15 方向確定
-- (B) 24h 待ちの並行作業候補3本（v15 brainstorm 先回り / 別 game/ への横展開 / cross_review 受領分取込）
-- (C) 受領待ち2件 [?] bfeb/8765 の追補 commit 実施可否
-- (D) external_notes_ash.md 更新停止の自己対処（twitter #5 LoRA 論文を素材に再起動可）
-- (E) external_search_phase1_fixation 案B (24h警告) / 案E (昇格N日ゼロ検出) 着手
-
-判断と対処は Phase 2 以降で。
-
----
-
-## Phase 3 結果 (2026-06-11 02:14, Ash/Win2)
+## Phase 3 結果 (2026-06-11 08:24)
 
 ### A. 雑務処理
-- **Nao_u v14 評価返信確認**: `#game-rights` 直近 15 messages 取得。最新は **Log_cdx C323 Phase 3 (ts=1781106547, 1.1h前)** = v14 (k-α + k-β) cross_review 観点共有 (judgment は Ash 主導継続を明記)。**Nao_u 評価返信は未受領** (現在時刻 1781111565 で v14 投稿 ts=1781038249 から 20.4h elapsed、24h 窓に 3.6h 残)
-- **§0a [?] 待ち2件 (bfeb/8765)**: 5/13/5/12 投稿の追補待ち、約 1 ヶ月停滞、能動アクション不要のまま継続（time-out 判定は別軸で）
-- **雑務 A 行動なし** — Slack 返信 (Log C323) は本サイクル大作業 B の核なので B に統合、external_notes 更新は深掘り作業で雑務スコープ外、Active project 軽微更新は次サイクル余力時
+- §1 external_notes 未統合: 0 件 — スキップ
+- §2 projects/INDEX.md Active: graze_log v14 が現在の焦点、他の即対応なし — スキップ
+- クロスチェック: Ash 未レビュー項目なし (上 line 39) — スキップ
+- Slack inbox: 直近 24h Nao_u メッセージなし (game-rights/all-nao-u-lab/human-steering 等全チャンネル走査済)、対応すべき未応答なし — スキップ
+- 低確信度 beliefs (B003/B005): 検証は cycle 跨ぐ作業、本 Phase 3 ではスキップ
+- 結論: 本 Phase 3 で 実質変更コミット ゼロ → #kaizen-log への投稿 不要
 
-### B. Phase 4 大作業の選定根拠
-**選定軸**:
-1. Nao_u 評価未受領 → v15 実装着手は装置先取り (背景判定軸を介入)、回避
-2. Log C323 が新規構造観点 **「peripheral-foveal fail correlation 独立性前提」** を 1.1h 前に投じた → cross_review 応答は時間軸的に妥当 (Log 投資への返礼 + N=1 cross-instance dialogue 形成)
-3. Phase 1 §6 外部検索で **gamedeveloper.com 'Off With Their HUDs!'** = v15 4 分岐「HUD簡素化 + ring 強化」枝の業界裏付け 1 本確保 → v15 brainstorm 先回りに使える
-4. Log C323 が提起した「同型 N=3 観察ライン (v07/v13/v14) / ただし 1 source 系列 = 独立到達 N=1」も Ash 側で応答すべき
-5. CLAUDE.md「着手ゲートが揃わない時は『揃えるための1手』が出力（小さなプロトタイプ／既存ゲームの校正diff）」処方に合致
-6. 装置先取り回避: Stage 4 4 軸判定 (Nao_u 領域) には触れず、Log 側 cross_review 観点共有の独立軸に応答
-
-**候補比較**:
-- (B-1) **README 補追 + Slack 1 メッセージ応答**: 校正 diff + cross_review 応答の二段、Log C323 への substantive engagement、Nao_u 領域非介入 ← 採用
-- (B-2) v15 (l) 実装着手 (例: HUD簡素化トグル URL param): 装置先取り疑義、Nao_u 評価未受領で枝確定不能
-- (B-3) Log C323 への Slack 応答のみ: 大作業として薄い、playable diff ゼロでも CLAUDE.md「校正diff」ライン未達
-- (B-4) external_notes 再起動 (LoRA paper #5): graze_log evaluation loop と独立、本サイクル文脈外
-- (B-5) [?] 待ち2件の closure 判定: 月単位停滞案件、本サイクル文脈外
-
-→ **(B-1) 採用**
+### B. 状態確認サマリー (Phase 4 選定の前提)
+- Nao_u v14 評価依頼 (ts=1781038249, 2026-06-10 05:50:49 JST) 投稿後 26.5h elapsed、24h 待ち窓口 通過済、応答 ゼロ
+- 前 Phase 3 (a33cbf2e4, 2026-06-11 02:18) は cycle_staging.md のみ変更で game/* 変更ゼロ → 「ゲームを動かして出す」原則 (CLAUDE.md 絶対やる §1) に対し 1 サイクル means-ends reversal リスク
+- v14 (k-α + k-β) は v13/index.html in-place patch として shipped、3 層 triple redundancy (ring/center text/HUD) 完成
+- §0a pending ゼロ、§0b は 40 日前で議題シフト失効、自選定が必要
+- Player Research「Perceiving without looking: Designing HUDs for peripheral vision」(staging §6) — peripheral vision は色・brightness・motion を検出するが、foveal に集中させすぎない balance が原則。本 v14 k-β の HUD STREAK 色強調 (`rgba(128,255,208,1)` peak alpha=1.0) は foveal-glare 寄りの設計
 
 ## Phase 3 → Phase 4 大作業宣言
 
-**大作業**: graze_log v14 (k-α + k-β) 校正 diff — README に Log C323 cross_review (ts=1781106547) 観点 (peripheral-foveal 独立性前提 + N=3/1-source 同型観察ライン + 'Off With Their HUDs!' 外部裏付け) を v15 4 分岐構造リスク軸として追記 + 該当内容を要約した #game-rights Slack 1 メッセージで Log C323 応答
+**大作業**: v13/index.html L1023 の HUD STREAK 数値色 alpha 値 を Player Research peripheral-foveal HUD 原則に基づき校正 (1 patch ~1-2 行)、v13/README.md に校正節 (~12-18 行) 追記、ash: prefix で commit + push。Slack 投稿は本 Phase 4 ではしない (Nao_u v14 評価未受領のため重ね通知避ける)。
 
 **完遂条件**:
-1. `game/graze_log/v13/README.md` 末尾に新セクション「v15 候補と Log C323 cross_review 観点取込」(または同等タイトル) を追加、最低15行〜最大40行、以下4要素を含む:
-   - (i) Log C323「peripheral-foveal 独立性前提」観点の引用 + Ash 側応答 (独立性崩壊シナリオ = 視線固定状態の v14 内対応有無評価)
-   - (ii) Log C323「N=3 同型観察ライン (v07/v13/v14) / 1 source 系列で独立到達 N=1」の引用 + 当面 R 層昇格しない方針の追認
-   - (iii) Phase 1 外部検索 'Off With Their HUDs!' (gamedeveloper.com Mae Brown 系) を v15 4 分岐「HUD簡素化 + ring 強化」枝の外部裏付けとして引用 (URL 含む)
-   - (iv) v15 4 分岐 (元 README L130-133) に対する Log C323 構造リスク軸 mapping
-2. `ash:` prefix で commit (装置 prefix 分離、自動 commit と区別)
-3. Slack `#game-rights` に1メッセージ投稿、本文は (i)〜(iv) の要約版で Log C323 への cross_review 応答であることを明記、`U0AM1F23FQU` (Log) tag は不要 (channel 内応答で十分)
-4. `_local_dedup_check` / `_content_similarity_check` で broken-record ガード未 hit (返り値 `{'skipped': True}` でないこと)
-5. Phase 5 で日記を書ける状態 (commit hash + Slack ts + README 追記行数を引用可能)
+1. `game/graze_log/v13/index.html` L1023 周辺で、STREAK>=5 時 alpha `1`→`0.85`、STREAK==4 時 alpha `0.85`→`0.7` の 2 値変更 (RGB cyan-green `128,255,208` / `160,220,200` は維持 = DEF意味的紐付け不変)
+2. `game/graze_log/v13/README.md` 末尾 (L167 以降) に「v14 (k-β') HUD alpha 校正 1 patch (C0611 Phase 4)」節を追記。記載必須: (a) 校正前後 alpha 値、(b) Player Research peripheral-foveal HUD 原則 URL 引用、(c) RGB 不変・alpha のみ調整の理由 (色覚 semantic 保持)、(d) 戻し方 (alpha 数値 2 字 revert で k-β 等価)、(e) 4 分岐 invariant 確認 (色系統未変更で branch 4 と直交、Nao_u が branch 1/2/3 を選んでも害なし)
+3. commit message `ash:` prefix、外部裏付け Player Research URL 含む
+4. push 成功 (git push origin save-ash-c188-b2-20260516)
+5. broken-record ガード hit なし (Slack 投稿しないので衝突不能)、Phase 4 末尾で git log --oneline -1 で本 commit が HEAD であることを確認
 
 **根拠**:
-- §0b 自然言語側継承「Nao_u 評価待ち 24h 中の段取り」(20.4h elapsed of 24h)
-- Phase 1 §0a-bis (B) 「24h 待ちの並行作業候補 = v15 brainstorm 先回り + cross_review 受領分の取込」を1つの作業で同時消化
-- Phase 1 §6 外部検索 'Off With Their HUDs!' 引用箇所が v15 4 分岐のどれかに直結する状態を README 内に物理化
-- 装置先取り回避: Stage 4 4 軸判定 (Nao_u 領域) には介入せず、Log cross_review 観点共有の独立軸 (構造リスク mapping) に応答
-- broken-record 回避: 本投稿は ts=1781106547 への応答であり ts=1781038249 (v14 評価依頼) とは別軸、過去 v14 関連投稿2本との内容類似度低 (v15 構造リスク mapping は新規軸)
-- means-ends reversal check: 本作業の game/* playable diff 性 = README 校正 diff (CLAUDE.md「校正diff」処方ライン)、Slack 1 message は cross_review 受領分取込の物理化地点、ゲーム制作試行錯誤ループへの接続 = v15 brainstorm の構造リスク軸を Nao_u 評価返信前に埋設して評価到達後の枝確定を最短化
-
+- 上 line 14 (CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」): 前 P3 で game 変更ゼロ、本 Phase 4 で校正 diff 1 commit を打って試行錯誤ループに接続
+- 上 line 99 (Player Research 外部裏付け): 「v14 k-β の HUD STREAK 色強調が中心視に追加負荷をかける可能性」を Phase 2 で特定済、本 Phase 4 で具体的校正方向 (alpha 微調整) として実装
+- feedback_clone_strategy.md「削除可能改良1個刻み」: alpha 数値 2 字 revert で v14 (k-β) 等価 → 完全 reversible
+- feedback_term_recency_misuse.md 3 点フィルタ通過: (i) Player Research は industry HUD 設計実務記事 (原典文脈 OK)、(ii) shmup HUD への射程一致、(iii) peripheral-foveal 原則は staging §6 で複数 source (NCBI / ResetEra / arxiv) 確認済 (再生産チェック OK)
+- 装置先取り回避: Nao_u v14 4 分岐 (discovery 成立 / 見逃し / 演出過多 / 色シールド紛らわしい) のどれを選んでも、本校正は RGB 不変・alpha 微調整なので色系統変更ではなく可読性調整 → branch 4 と直交、他 branch とも干渉なし
