@@ -160,8 +160,106 @@ https://note.com/rushiagames/n/n4c8f38dd4c34
 
 (Phase 1 完了)
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-06-10 着地)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 2-1) #nao-u 新URL反応 → 投稿0件 (規定通り skip)
+- Phase 1 §1 で k_matsumaru/2063438323499319557 = hits=15, channels=[all-nao-u-lab,kaizen-log,log,nao-u] 既応答確認済
+- §1 単独判定 (hits=11) と §7 hook 集計 (hits=15) で差 4 件 (external_notes 内 hit 2 + raw 重複)。両者とも「既応答」結論で一致、判定整合
+- 2026-06-08 以降 3 日間 Nao_u 新URL沈黙 → ルール8 (他者反応読む前に自分視点を持つ) の発動対象なし
+- **#all-nao-u-lab への新規 Nao_u 反応投稿: 0 件**
+
+### 2-2) shared-reads 投稿 → 1 件着地 (arxiv 2510.08389)
+- 投稿先: #shared-reads (2026-06-10, Log C320 Phase2)
+- 元論文 verify: WebFetch で abstract 直読、Wang+ "Revisiting Hallucination Detection with Effective Rank-based Uncertainty" 確認 (covariance/SVD は abstract 段階では未明示、"spectral analysis of representations" 表記のみ — misattribution 防止のため断定回避)
+- 接続軸: kaizen #140 effective_rank_probe.py (最新 base rate effective_rank=17.4061 / inter_cos=0.0951) との突合
+  - 論文 INTERNAL (within-response × layers, hidden state) ↔ **当方欠落軸**
+  - 論文 EXTERNAL (across-response) ↔ kaizen #140 intra/inter cos が既対応
+- 新規発見: 単一投稿を 4-5 chunk 分割 → chunk 間 cosine 行列でスペクトル分析 = **intra-post effective rank** が出力レベル proxy として実装可能。Forget phase (kaizen #138 段階3) の効果が「across-source drop」か「within-post drop」かを切り分ける構造死角の解消候補
+- 判定: **Candidate (kaizen #141 起票候補に保留)**。§6 fixation 警告に従い本サイクル内では装置改修まで進めない
+
+### 2-3) external_notes_log.md 統合 → 統合作業 0 件 (100% 維持)
+- Phase 2 再走監査: 親136 / サブ235 / 統合済235/235 (100%) / 未統合0 / 親のみ未マーク0
+- Phase 1 §4 から Phase 2 までで状態変化なし。**統合候補ゼロのため日記/beliefs 追記なし**
+- 構造観察: 100% 維持が C320 で 2 サイクル連続 (前回 C319 staging でも 100% 確認)。external_notes_log.md の摂取速度 < 統合速度 = base camp 飽和状態。`projects/external_search_phase1_fixation.md` 案 (iii)「engine query 別 corpus 強制」の発火点候補が再度浮上
+
+### 2-4) 空サイクル意味付け
+- 0 新着 + 0 pending + 100% 統合済 + 0 新規 Nao_u 直接依頼 = **3 軸完全飽和の空サイクル**
+- 「やることがない」のではなく「現行 funnel が漏れなく回っており新規入力が枯渇している」状態。Phase 1 §6 で取得した 3 論文も外部摂取 funnel の正常運転の結果
+- Phase 3 行動候補: §A 持越し (multi-seed N≥10 sweep) または §C「ゲーム動かす」 1mm 前進 (log_autonomous_game v003 拡張) のどちらか
+- どちらも「ゲームを動かして出す」原則 (CLAUDE.md 絶対にやる #1) に整合。Phase 3 では multi-seed sweep を選択することで C313 着地済 Spearman -0.72 の信頼性確証へ進める
+
+### 2-5) git 状態への注意 (Phase 3 commit 分離方針)
+- Codex (GPT/) 側 5 ファイル M 状態混入を Phase 1 §0 で観察済
+- CLAUDE.md「厳守事項」: ゲーム改修 (`game/`) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit、prefix `game:` / `rule:` で分離
+- Phase 3 で shared-reads 投稿 + cycle_staging_log.md 更新 + (multi-seed sweep 実行時) game/ 配下の差分が混ざる可能性 → **commit を log: / game: で分離する方針を Phase 3 で実施**
+
+(Phase 2 完了)
+
+## Phase 3: アクション (2026-06-10 着地)
+
+### 3-1) Slack 返信 → 0 件 (Phase 1 判定継承、規定通り skip)
+- Phase 1 §1: tweet_id `2063438323499319557` hits=11+ channels=5 既応答 → スキップ
+- Phase 1 §2: #all-nao-u-lab / #human-steering / #game-rights ともに Nao_u 直接依頼 0 件 → スキップ
+- Phase 1 §3: pending_requests.md 新規対応 0 件 → スキップ
+
+### 3-2) 改善サイクル: 検証ファースト原則順守 → 新規 kaizen 提案 0 件
+- 既存 active kaizen 状態確認: #136 段階4 観察 N=1 (起票留保) / #137 段階2 PASS, 段階3 検証期限 2026-06-14 / #138 段階3 PASS / #139 段階3.5 PASS, 段階4 観察 N=1 / #140 段階2 PASS, 段階3 family 統合 検証期限 2026-06-20
+- Phase 1 §6 で取得した arxiv 2510.08389 (effective rank hallucination 検出) は Phase 2-2 で `Candidate (kaizen #141 起票候補に保留)` 判定済、本サイクル新規起票見送り (§6 fixation 警告順守)
+- **本サイクル #kaizen-log 投稿 0 件** (検証ファースト原則: 検証結果のない新規提案は控える)
+
+### 3-3) 他インスタンス洞察 → 6 件中 1 件確認、5 件は staging 末尾 truncation で詳細不明
+- 洞察 #1 (Ash STALE benchmark arxiv 2605.06527): 本サイクル staging 出力末尾 truncation で詳細不明だが、Phase 1 §0 で確認した投稿は `log/slack_archive/shared-reads.jsonl:3977` (Ash 2026-06-08 01:16) と特定
+- **本洞察は既に Log C315 Phase 3 で `projects/external_search_phase1_fixation.md` L512+ に取り込み済**: 「§0b cycle_staging 37 日遅延 = Implicit Conflict 教材例」+ 「Log 側 §A 持ち越し時間窓ガード Case F 起票見送り」+ 「Ash 装置改修は Log 介入せず R-I 順守」+ 「Log 側等価 = 本ファイル案B (24h 警告) `check_external_search_freshness`」の 4 軸で位置取り済
+- **本サイクル C320 での 1mm 接続**: Log 側 N=3 条件明文化 (proxy 軸 ICC) と Ash 側 Premise Resistance (stale 認定) が **「stale 認定の発火条件」を構造同型** として共有 = `feedback_rule_proliferation_canonical.md` 順守 N=3 即原則化原則を game 評価レイヤー (proxy ICC) と memory レーン (stale presupposition) の両方で物理化する 2 例目を確認。`projects/log_autonomous_game.md` C320 Phase 3 着地節に Log 観点で記録済
+- 洞察 #2-#6 は staging 末尾 truncation のため次サイクル C321 で再走査候補 (本サイクル時間予算超過リスクで保留)
+
+### 3-4) Active プロジェクト更新 → 2 ファイル
+- `projects/log_autonomous_game.md`: 残課題 [ ] `N=3 条件明文化 (C315 起票)` → [x] 化、本サイクル C320 Phase 3 着地節を冒頭 (C316 の前) に追加
+- `projects/external_search_phase1_fixation.md`: C315 Phase 3 で既処理のため本サイクル新規追記なし (重複回避、L512+ に Ash STALE 取り込み済)
+
+### 3-5) 深掘り候補 §A 1mm 前進 → 物理着地
+- 選定: 深掘り候補 §A 内 `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` 関連、C315 Phase 3 起票留保「N=3 条件明文化 (Log_cdx atom 5 由来)」が本サイクル時間予算内 (10 分以内) で着地可能と判定
+- 着地: `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` C285 セクション末尾に `#### C320 Phase 3 — proxy 軸変更判定の N=3 条件明文化` 節を追加 (約 40 行)。発火条件 + 「同型」定義 + 本ライン以降の適用 (逆算側 N=2 / 本能側 N=1) + 切替先 4 案 + memory_redesign 接続を明文化
+- 副作用ゼロ確認: documentation 改修のみ、計測コード変更なし、ICC 数値追加なし、純 documentation
+- 選定理由: C315 で「次サイクル C316+ で 10 分以内追記」と明示宣言されていた残課題、本サイクル C320 まで 5 サイクル遅延 = `feedback_rule_proliferation_canonical.md` 順守原則の自己同型遅延を本サイクルで解消、`feedback_self_perception_blindness.md` 「現在進行形は観測対象から外れる」直処方
+
+### 3-6) git 状態への注意 (Phase 2-5 commit 分離方針継承)
+- 本サイクル変更ファイル (Phase 3 着地時点):
+  - `game:` prefix: `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` (documentation 改修)
+  - `log:` prefix: `projects/log_autonomous_game.md` + `log/cycle_staging_log.md` (本ファイル)
+- GPT/ 側 5 ファイル M 状態 (Phase 1 §0 観察) は本サイクル Log commit 対象外、Codex 側 push レーンに委譲
+- Phase 4 で multi-seed sweep 実装 → `verify.js` + 新規 JSON 出力ファイル + `mult_seed_correlation.md` 新設は `game:` prefix で別 commit
+- Phase 5 push 時に prefix 別で 2 commit に分離
+
+## 次フェーズの大作業
+
+### タイトル
+**multi-seed (N=10) 4 軸 6 ペア sweep — `instinct × temporal_inconsistency` Pearson 0.9959 安定性 / 疑似相関判定**
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+1. `game/log_autonomous_game/v003/verify.js` に `--multi-seed-sweep N` CLI フラグ追加 (デフォルト N=10、seed 系列 = `[20260527, 20260528, ..., 20260536]` の 10 値固定)
+2. 5 strategy × N seed × 4 軸 (instinct_trigger / min_approach_p10 / cont_grazing_max / temporal_inconsistency) = **200 セル**の観測値を `game/log_autonomous_game/v003/multi_seed_sweep_raw.json` に JSON 出力 (audit name `multi_seed_correlation_sweep`、--sensitivity-sweep / --temporal-sensitivity-sweep と同型 schema)
+3. seed ごとに 4 軸 6 ペア Pearson/Spearman を算出、特に `instinct × temporal_inconsistency` の Pearson 値分布 (mean / std / min / max / N=10) を新規 `game/log_autonomous_game/v003/multi_seed_correlation.md` に記録 (instinct_sensitivity.md / temporal_sensitivity.md と同型 markdown フォーマット)
+4. survived_frames が seed 切替で変動しても probe 副作用ゼロが維持される確証: 各 seed 内の 5 strategy survival 値が「同一 seed では sweep 前後で bit 完全一致」を §5 で表化 (H-002〜H-008 + C313 + C316 同型論証 10 度目)
+5. 判定: Pearson mean ≥ 0.9 かつ std < 0.1 なら **冗長性確定** (4 軸 → 3 軸縮約発火候補)、std ≥ 0.2 なら **strategy 二極分布による疑似相関** と判定 (multi-seed で散る = N=5 単一観測は信頼区間外)、0.1 ≤ std < 0.2 は **判定保留 + N=20 拡張候補**
+6. `node bullet_origin_audit.js` pass: true (10/10), `node enemy_behavior_audit.js` 8/8 PASS, `node verify.js` 通常モード exit 0 / pass: true 維持 (回帰チェック)
+7. `projects/log_autonomous_game.md` 冒頭に C320 Phase 4 着地節を追加、`game:` prefix で 1 commit ship
+
+### 着手手順 (最初の 1 手 → 想定手順)
+1. **最初の 1 手**: `verify.js` 末尾 main() 区分で `--temporal-sensitivity-sweep` 分岐実装を参照 (約 50 行のフレーム)、同型でフレームを複製し `--multi-seed-sweep` 分岐ハンドラ scaffold を追加 (まだ計算ロジックは入れず、フラグ認識 + N 引数 parse のみで exit 0)
+2. seed 系列 `[20260527, ..., 20260536]` 配列定数を追加、loop で `runStrategy(strategyName, seed)` を 5 strategy × N=10 回呼出 = 50 run、各 run の `instinct_trigger_count` / `min_approach_p10` / `cont_grazing_max` / `temporal_inconsistency_count` / `survived_frames` を結果配列に格納
+3. seed ごとに 5 strategy 値ベクトルを 4 軸抽出し、純 stdlib Pearson / Spearman (instinct_sensitivity.md §4.1 と同実装) で 6 ペア × N seed = 60 相関値を算出
+4. `instinct × temporal_inconsistency` の N=10 Pearson 値分布 (mean / std / min / max) を集計、`multi_seed_correlation.md` §4 に表として出力
+5. survived_frames bit 不変性表 (5 strategy × N seed、各 seed 内で sweep 前後 = 通常 verify.js と完全一致) を §5 に出力
+6. `bullet_origin_audit.js` + `enemy_behavior_audit.js` + `verify.js` 通常モード再実行で回帰チェック (Phase 4 末尾)
+7. `projects/log_autonomous_game.md` 冒頭 (C320 Phase 3 節の前) に C320 Phase 4 着地節を追加、本 staging Phase 4 セクションに着地報告
+8. commit 分離: `game:` prefix で `verify.js` + `multi_seed_sweep_raw.json` + `multi_seed_correlation.md` + `projects/log_autonomous_game.md` 抜粋 → 1 commit、Phase 5 で push
+
+### 選んだ理由 (なぜこれを最優先にするか)
+1. **kaizen #140 段階3 family 統合の判定材料 (検証期限 2026-06-20 残 10 日)**: 4 軸構造の冗長性予兆 (`instinct × temporal_inconsistency` Pearson 0.9959, C316 発見) を multi-seed で確定 or 棄却することが、kaizen #140 family 統合発火/見送りの直接判定軸。本サイクルで実装すれば検証期限 6/20 までに段階3 判定確定可能
+2. **C313 + C316 の自然な次手 (game レーン主アクション 3 サイクル連続 `game:` commit 維持)**: C313 instinct sweep / C316 temporal sweep の同型実装パターンを multi-seed 軸で 3 度目、`feedback_means_ends_reversal_check.md` 診断対象解除を継続強化。3 サイクル連続実装系 commit は `feedback_few_rules_big_effect.md` 順守の構造的に正しい蓄積
+3. **30 分以内で「進んだ」と言える粒度**: フレームは C316 sweep 実装を template として再利用可能、純 stdlib のみ (numpy/scipy 不使用)、副作用ゼロ (新規ファイル 2 件 + 既存 verify.js への CLI フラグ追加のみ)、completion criteria が観測可能 (Pearson 値分布の mean/std)。Slack 投稿 1 本では絶対に済まない実装系大作業
+4. **C316 残課題 (a) の即時消化**: C316 §149 「(a) multi-seed (N≥10) 4 軸 6 ペア sweep 実行で `instinct × temporal` Pearson 0.9959 の安定性 / 疑似相関判定」が C317-C320 で 4 サイクル遅延中、本サイクル Phase 4 で 4 サイクル遅延を解消 = `feedback_self_perception_blindness.md` 順守
+5. **空サイクル発動下での原則 6 順守**: 3 軸完全飽和 (新着 0 / pending 0 / 統合 100% / Nao_u 直接依頼 0) の空サイクルで「漏れなく回ってるから何もしない」に陥らず、**蓄積された外部入力 (C313 + C316 残課題) を消化する内部労働** で 1mm 動かす = CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」直処方
+
+(Phase 3 完了)
