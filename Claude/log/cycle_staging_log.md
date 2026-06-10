@@ -231,6 +231,26 @@ Phase 3 で実施:
 - (b) 日記投稿は本サイクル shared-reads 1 件投稿 + Phase 2 自己診断 (kaizen 誤読訂正) で代替、Log チャンネル長文日記は次サイクル C324 着地予定の playable diff と組み合わせて投下判断
 - (c) 次サイクル C324 への申し送り = (i) playable diff 必須起動 (v003 改修 or v004 着手) (ii) arxiv 2202.09615 本文 PDF 取得 + ResearchGate/ACM 残 2 件別経路再取得 (iii) Phase 1 §E kaizen 状態判定で `状態:` 欄必須参照 (教師データ N=1)
 
+### 8) 障害申し送り — git push 失敗 + .git/objects/ 複数 loose object 破損
+**事象**: 本 commit (7c36630e2) ローカル成立後、`git push` で `fatal: loose object dbf47b3b... is corrupt` + `the remote end hung up unexpectedly` でリモート反映失敗。
+
+**git fsck 診断結果** (head -20):
+- `corrupt loose object '0ffd11a8...'` + `402590fd...` + `51ac41a7...` + `71dc7bda...` + `a720c7aa...` 等、**5 件以上の loose object 破損**を確認
+- `inflate: data stream error (incorrect data check)` = zlib 圧縮ヘッダの整合性破損
+
+**周辺状況**:
+- `../.git.corrupted_backup_20260610/` ディレクトリが既存 (git status 冒頭で確認済、本日 6/10 日付) = **Nao_u 又は他インスタンスが既に git 破損を認知し、バックアップを作成して対処中の可能性が高い**
+- 本サイクル開始時点で既に `.git/objects/` 配下が破損状態だった可能性 (Phase 1 staging 生成時点では git read 操作は通過)
+
+**Log 側の判断 (実行しない処置)**:
+- `git fsck --full` 以上の修復コマンドは **destructive** (オブジェクト削除を伴う) で Nao_u 明示承認なしには実行不可、CLAUDE.md セキュリティポリシー + 「destructive 操作前に safer alternative 確認」原則順守
+- ローカル commit はそのまま残置、push リトライは次サイクル `git_sync.py` 自動経路に委譲
+- 本サイクル shared-reads 投稿 (ts=1781105732.550179/.582669) は Slack 側に既着地済、push 失敗の影響は受けない
+
+**通知判断**:
+- `#all-nao-u-lab` に Slack 短文通知必須 = (i) git 破損は他インスタンス sync に影響する重大障害 (ii) 通知粒度ルール「重大な設計変更 / 外部への発信」に該当 (iii) Nao_u が既に対処中なら重複通知だがゼロ通知のリスクが大きい
+- 本通知は Phase 3 で実施 (Phase 2 セクション追記完了後)
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
