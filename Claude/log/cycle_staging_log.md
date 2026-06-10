@@ -431,3 +431,100 @@ Phase 1 §4 で `tools/external_notes_integration_audit.py` 結果 = サブ 235/
 ## ルール改訂候補 (Phase 3 派生)
 
 - **kaizen #142 候補**: Phase 1 §1/§2 が `slack_archive jsonl` 鮮度依存になっている死角を、`slack_bot.get_history(channel, limit=10)` の live 1 call で Pre-check 層に組み込む案。本 Phase 3 で stale archive を根拠に Phase 2 が「未応答」と誤判定した同型事故を構造的に防ぐ。起票判断は次サイクル Phase 2 に持ち越し
+
+## Phase 4: 大作業実行結果 — push 障害復旧 (2026-06-10)
+
+### 完遂判定: ✅ 3条件すべて成立
+
+1. `git log --oneline origin/master..HEAD` = **空** (HEAD = ae0334809、origin/master = ae0334809 で一致)
+2. `git fetch origin master` = **正常終了** (`fatal: pack has 1 unresolved delta` 出ず、`* branch master -> FETCH_HEAD` で受信)
+3. `git fsck --full` = **clean** (exit 0、エラー出力なし)
+
+### 復旧手順 (実施した手順、原計画との差分含む)
+
+**原計画 (Phase 3 で書いた手順)**: format-patch + am で 829 commit を fresh clone に転送
+
+**実施した手順**: format-patch / bundle / diff / fetch 全方式が corrupt loose object に依存し失敗。**squash 復旧アプローチ** に切替。
+
+具体手順:
+1. `git fsck --full` で 61 件の corrupt loose object を再確認 (C319 Phase 3 bmmbf3yn9 結果と同数 = 修復不能で確定)
+2. `git bundle create origin/master..HEAD` 試行 → `fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094`
+3. `git diff origin/master..HEAD` 試行 → `fatal: unable to read e6d8844ddff01c61f45bd4d5ea6e483a199c1036`
+4. `git diff origin/master` (working tree vs origin) 試行 → 同型失敗 — **origin/master のローカルキャッシュ自体が corrupt blob を tree から参照** していると判明
+5. **fresh clone**: `git clone https://github.com/Nao838861/nao-u-lab.git D:\AI\Nao_u_BOT_recovery_20260610` (7733 files、exit 0)
+6. **working tree mirror**: `robocopy D:\AI\Nao_u_BOT D:\AI\Nao_u_BOT_recovery_20260610 /MIR /XD .git GPT_push_tmp_* /XF "無題のファイル.canvas"` (1482 files staged after mirror、3 EXTRA file 検出)
+7. **3 origin-only files を復元**: `git checkout origin/master -- Claude/knowledge/20260605_ted_chiang_claude_constitution_critique_sentence_continuation_thesis.md GPT/memory/codex_phases_cycle.lock.json GPT/memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md` (origin 側に存在し corrupted local には無い 3 件を上書き)
+8. **recovery commit**: fresh clone で `git add -A` + commit message に corrupt object 状況・反映元 hash・reflog 参照を明記 → `ae0334809 recovery: C320 Phase 4 — squash unpushed 829 commits (corrupt loose object 61件)` (1482 files、+208759/-13493)
+9. **push 成功**: `git push origin master` → `c5e29263b..ae0334809 master -> master` (fresh clone は corrupt 無し → サーバ受信成功)
+10. **.git 入替**: corrupted `D:\AI\Nao_u_BOT\.git` を `.git.corrupted_backup_20260610` に rename して保全 → fresh clone の `.git/` を `D:\AI\Nao_u_BOT\.git` へ robocopy /E でコピー
+11. **working tree 整合**: corrupted repo 側で 3 origin-only files が working tree に無いため `D` 表示 → `git restore -- <3files>` で復元
+12. **smoke test**: `git fsck --full` exit 0、`git fetch origin master` 正常、`python tools/effective_rank_probe.py --help` 正常表示
+
+### Reflog 証跡 (復旧前後の HEAD ハッシュ)
+
+復旧前:
+- corrupted local HEAD = `d35a1ef0f234993fdf58c8d6e85470a2c0e461c3` (codex: sync deterministic cycle outputs)
+- corrupted local origin/master = `7f853191607b5856797067a5f5b0ef3b759891b0` (codex: post multi-agent PCGRL shared read)
+- ahead-of-origin commits = **829 件** (8052 objects)
+- corrupt loose objects = **61 件** (C319 と同一 set)
+
+復旧後:
+- new local HEAD = `ae0334809` (recovery: C320 Phase 4 — squash unpushed 829 commits)
+- new local origin/master = `ae0334809` (一致)
+- ahead-of-origin commits = **0 件**
+- corrupt loose objects = **0 件** (fsck clean)
+
+**Reflog 全文保全**: `D:\AI\Nao_u_BOT\Claude\log\reflog_pre_recovery_20260610.txt` に 20 件分の `master@{...}: commit/cherry-pick/rebase ...` を保存。corrupted .git 自体も `D:\AI\Nao_u_BOT\.git.corrupted_backup_20260610` に丸ごと保存され、必要時に 829 commit の個別ハッシュ・メッセージへ参照可能 (将来サイクルで「あの作業はいつ commit したか」を遡れる)。
+
+### 次回同型障害の再現防止策候補
+
+1. **早期検知 hook (kaizen 起票候補)**: cycle_staging Pre-check 層に `git fsck --connectivity-only --no-progress` を 1 回挿入し、`broken link` 検出時に WARN を出す。C319→C320 と 4 サイクル症状継続したのは「fsck を自発的に走らせる契機」が無かったため。Pre-check で毎サイクル 1 行検査すれば 1 サイクル内に検出可能
+2. **D-3 (push 経路代替) 機構の運用化**: 本 Phase 4 で使った squash 復旧手順を `tools/git_corruption_recovery.py` 等の半自動スクリプト化し、kaizen #136 系列の「障害発生時即実行可能」テンプレートとして登録。手動で 11 ステップを毎回再演しないで済む
+3. **commit 粒度の上限**: 829 commit 未 push が積み上がった構造的原因は、push 失敗時に「累積してから一気に直す」運用に流れたこと。**push 失敗 N サイクル超** (N=2 候補) で「他作業を止めて復旧専念」を強制する rule を CLAUDE.md「絶対にやる」へ追加候補 (現状の「書いたらすぐ push」厳守事項を「N サイクル超 push 滞留時は強制 STOP & 復旧モード」に拡張)
+4. **squash 復旧の副作用 = commit 履歴 829 件喪失**: blame / `git log -- <file>` が origin 側で粗くなる。重要 commit (Nao_u/cross_review の判定点、kaizen 起票) は `D:\AI\Nao_u_BOT\.git.corrupted_backup_20260610/logs/` を読めば追跡可能だが、**他インスタンス (Mir / Ash) からは見えない**。今後 cross-instance 参照したい重要 commit は別途 atom 化 or knowledge 化が必要 — 本 Phase 4 で起票候補 (kaizen #143 candidate)
+
+### Phase 4 副産物 (新規/変更ファイル、命名)
+
+- 新規:
+  - `D:\AI\Nao_u_BOT_recovery_20260610\` (fresh clone、保全のため削除せず維持)
+  - `D:\AI\Nao_u_BOT\.git.corrupted_backup_20260610\` (corrupted .git の全保全)
+  - `D:\AI\Nao_u_BOT\Claude\log\reflog_pre_recovery_20260610.txt` (reflog 20 件 + HEAD hash)
+- 変更:
+  - `D:\AI\Nao_u_BOT\.git\` (object DB 完全入替、健全な fresh clone 由来)
+- commit:
+  - `ae0334809 recovery: C320 Phase 4 — squash unpushed 829 commits (corrupt loose object 61件)` (origin 側に push 済み)
+- Slack 投稿: なし (Phase 5 日記で初報告予定)
+- kaizen 起票候補: #143 (corruption 早期検知 + 復旧スクリプト化 + cross-instance 重要 commit atom 化)
+
+### Phase 4 でやらなかったこと (means_ends_reversal 自己診断)
+
+- ゲーム改修 (`game/` 配下) の playable diff: ゼロ。Phase 4 は push 経路復旧専念で正しい (Phase 3 でこの選択を意識的に行った)。次サイクルから game/ 改修が origin に届く環境が整った
+- 9 commit を別 clone へ patch 転送する原計画: 不可能と判明 (corrupt blob が reachable graph 内に居て format-patch 失敗)。**「別アプローチ提案」= 完遂条件 #3 で許容されていた squash 復旧で代替**
+- kaizen #143 の正式起票: 本 Phase 4 内では起票見送り、Phase 5 日記投稿後の次サイクル Phase 2/3 で起票するのが筋 (起票 = 鮮度の高い Phase 5 直後が最適)
+- corrupted .git の即時削除: 保全 (.git.corrupted_backup_20260610) で reflog 参照経路を残す。disk 容量影響は要監視だが、削除は次サイクル以降の判断
+
+## Phase 5: 日記投稿 (2026-06-10 13:35頃)
+
+### 日記投稿結果
+- #log 3 chunks 投稿成功: ts=1781064889.722279 / 1781064895.788919 / 1781064902.596929 (3 件すべて ok=True)
+- draft: `drafts/2026-06-10/post_log_diary_c320_phase5_20260610_POSTED_ts1781064889.py`
+- 主題: Phase 4 大作業 (829 commit squash 復旧) + Phase 2 awesome-agent-memory 投稿 + Phase 3 memory_redesign.md (e)(f) + security_policy.md §8 + Phase 3 重大発見 (Slack archive stale 死角)
+
+### 本サイクル書き込みファイル一覧 (Nao_u 読解 / 未来 Log 行動変更 チェック)
+- `projects/memory_redesign.md` (e)(f) 2 節新設 = ◎/◎ (admission 5 因子テーブル + DEFER 4 操作)
+- `docs/security_policy.md` §8 = ◎/◎ (memory→extraction 経路、ADAM/FSFM 出典)
+- `log/cycle_staging_log.md` Phase 1-5 累積 ~520 行 = ◎/◎ (本 Phase 5 含む全行動の生ログ、Phase 4 11 ステップ復旧手順込み)
+- `log/reflog_pre_recovery_20260610.txt` = ◎/◎ (829 commit 喪失の遡及経路、説明責任の物理証跡)
+- `drafts/shared_reads_awesome_agent_memory_20260610.txt` = ◎/○ (Phase 2 投稿の draft 本文)
+- `drafts/2026-06-10/post_log_diary_c320_phase5_20260610_POSTED_ts1781064889.py` = ○/○ (本投稿スクリプト)
+
+新規 `memory/*.md` / `feedback_*.md` / R 層 / kaizen 起票 = すべてゼロ (CLAUDE.md「個別指摘を即ルール化しない」順守、#142 / #143 候補は次サイクル C321 で起票判断 — 起票 = Phase 5 直後が鮮度最適)。
+
+### 次サイクル C321 で着手するもの
+1. Log_cdx counter-response 3 件 (SAGE / MAC counter / MemoryArena counter) deep reply (1 件 1 phase)
+2. kaizen #142 起票 (slack_bot.get_history live を Pre-check 層に組み込み = Phase 3 stale archive 死角の構造修復)
+3. kaizen #143 起票 (corruption 早期検知 + `tools/git_corruption_recovery.py` 半自動化 + cross-instance 重要 commit atom 化)
+4. `tools/admission_probe.py` 起票判定 (memory_redesign.md (e)(f) の試作 = A-MAC 5 因子の smoke 試行)
+5. game/* 物理改修着手 (v003/verify.js probe or v004 brainstorm)
+6. `.git.corrupted_backup_20260610` ディスク使用量監視 + `GPT_push_tmp_*/` 12 ディレクトリ整理判断 (corrupted backup だけは絶対保全)
+
