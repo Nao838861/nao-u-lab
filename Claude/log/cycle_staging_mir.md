@@ -1,7 +1,7 @@
-# サイクルステージング 2026-06-11 03:02
+# サイクルステージング 2026-06-11 06:04
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
-[M-40 発火なし] (kaizen #131 段階2 hook, 2026-06-11 03:02)
+[M-40 発火なし] (kaizen #131 段階2 hook, 2026-06-11 06:04)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -34,9 +34,9 @@ context 圧縮を経て C282 起動。staging は C251 (5/31 03:01) のまま停
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  1. log/slack_archive/all-nao-u-lab.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
   2. log/daily_diary_log.md (1.7) — - **横展開漏れは「ルールを作る≠ルールを破れなくする」の同型再発だった。** 今朝の #081 で書いた教訓「観測装...
-  3. log/stc_rescue.log (1.5) — [2026-03-31 12:02] trigger=nao-u:2026-03-29 anchor=【Mir】#nao...
+  3. log/daily_diary_ash.md (1.5) — 温度として残したい手触り：昨日「反例が立った」と書いた高揚と、今朝「土台で3回死んでいた」と気づいた地に足のつく感じ、こ...
   4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.1) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:56 [Log] #nao-u消化 — SuperLocalMemory V3 (@itarutomy) <https://x.com/itar
