@@ -64,6 +64,67 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-10 C320 Phase 4 着地 — [x] multi-seed (N=10) 4 軸 6 ペア sweep、`instinct × temporal_inconsistency` Pearson 0.9944±0.0065 (REDUNDANCY_CONFIRMED 形式判定 / 構造的解釈は判定保留)
+
+**着地内容**: C316 §149 (a) を承継、C317-C320 で 4 サイクル遅延していた multi-seed (N≥10) 4 軸 6 ペア sweep を `verify.js` に `--multi-seed-sweep N` フラグとして実装、N=10 (seed [20260527..20260536]) × 5 strategy × 4 軸 = 200 セル + bit invariance 比較 5 セルを 1 コマンドで観測可能化。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9944, std=0.0065, [0.9777, 0.9990] = 形式 verdict 基準 `mean≥0.9 && std<0.1` を満たし **REDUNDANCY_CONFIRMED**。ただし構造的バイアス (5 strategy 中 4 strategy が rng 不参照の決定論的 strategy = seed 軸変動は実質 `blind-sweeper` 1 点のみ + `good` outlier (instinct=22, temporal=43) が線形回帰を支配) により **真の冗長性は確証されず**。kaizen #140 段階3 family 統合判定は本 sweep 単独で確定させず C321+ で strategy 集合拡張後に再評価。
+
+**実装** (`game:` 系 commit):
+- `verify.js`: 末尾 (line 904) に `--multi-seed-sweep` 分岐 (約 180 行) を追加。flagIdx parse で N 取得 (デフォルト 10、範囲 [2,100])、SEEDS = `Array.from({length:N}, (_,i)=>SEED+i)` で連続 N 値固定。PX 既定 (50/15) 固定 (env override 本モードで無効化)、5 strategy × N seed = 50 run 実行後、純 stdlib Pearson/Spearman/distOf 関数で 6 ペア × N seed = 60 相関値 + 6 ペア各々の seed 軸分布 (mean/std/min/max) を算出。bit invariance 確認: baseline 再実行 (`runOne(name, 20260527)` × 5 strategy) 結果と sweep 内 seed=20260527 行を 5 軸 (survived_frames / instinct / temporal / min_approach_p10 / cont_grazing_max) 全 25 セルで bit 完全一致比較。`bit_invariance.all_match: true` で `process.exit(0)`、不一致なら `exit(1)`
+- `multi_seed_sweep_raw.json`: 8 セクション JSON (audit / purpose / N_seeds / seeds / breakdown_per_seed / rows / correlations_per_seed / pearson_distribution / spearman_distribution / focus_pair_pearson_distribution / verdict_thresholds / verdict / bit_invariance / notes) 出力、約 800 行
+- `multi_seed_correlation.md`: 8 章立て markdown (設計 / 計測条件 / 4 軸マトリクス 10×5 / 6 ペア独立性 seed 軸分布 / bit 不変性 / 結論 / 回帰チェック / 次サイクル候補) を `instinct_sensitivity.md` / `temporal_sensitivity.md` と同型 schema で新規。Pearson 0.9944 verdict + 構造的バイアス警告 (5 strategy 中 4 strategy が決定論的 = seed 拡張で点群は散らない) + Spearman 0.7615 で順位レベル中相関 + 真の冗長性判定には strategy 集合拡張 (現 5 → +8 種で N=13) が必要との次サイクル候補を明文化
+
+**実測結果** (focus pair `instinct × temporal_inconsistency`):
+
+| 統計量 | Pearson | Spearman |
+|---|---:|---:|
+| mean | 0.9944 | 0.7615 |
+| std | 0.0065 | 0.1022 |
+| min | 0.9777 | 0.5735 |
+| max | 0.9990 | 0.9211 |
+
+Pearson `mean ≥ 0.9 && std < 0.1` 形式判定 = **REDUNDANCY_CONFIRMED — 4軸 → 3軸縮約発火候補 (kaizen #140 段階3 family統合 GO)**。
+
+**ただし構造的解釈は判定保留** (multi_seed_correlation.md §3.1 + §6 で詳述):
+1. 5 strategy 中 4 strategy (`good` / `camper` / `lane-holder` / `nospecial`) は strategy 関数内で rng を参照しない = seed 軸不変 (4 軸全値が 10 seed で完全一致)。`blind-sweeper` のみ rng 依存 (ランダム dx/dy 移動) = seed 軸変動の本体
+2. **Pearson std=0.0065 の小ささは「4 定数点 + 1 動点」線形回帰の数学的帰結**であり、N=5 strategy 内の点群分布バイアス (`good` outlier `instinct=22, temporal=43` 1 点が他 4 strategy `instinct≤6, temporal≤4` を線形支配) は seed 拡張で解消されない
+3. Spearman mean 0.7615 (std 0.1022) = 順位レベル中相関 = strategy 二極分布バイアスを受けにくい統計量で見ると **`instinct` と `temporal` は部分独立**。**Pearson 0.9944 と Spearman 0.7615 のギャップ自体が「線形 magnitude は `good` outlier 支配、順位は seed 依存で動く」構造証拠**
+4. **真の冗長性判定には strategy 集合拡張** (castLock 不使用悪手 +8 種、N≥8 推奨、現 5 → N=13) が必須。検証期限 2026-06-20 残 10 日のうちに strategy 拡張は実装コスト 1〜2 サイクル想定、**kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で再評価**
+
+**完全独立 (Pearson + Spearman 両方で |r| mean < 0.5)** = 2 ペア確証 (C316 §4.3 結論 3 と一致、本 sweep で N=10 拡張による確証強化):
+- `min_approach_p10 × cont_grazing_max` (Pearson mean 0.0036, std 0.34, [-0.64, 0.39]; Spearman mean -0.14)
+- `min_approach_p10 × temporal_inconsistency` (Pearson mean -0.18, std 0.10; Spearman mean -0.14)
+- → **`min_approach_p10` 軸が他 3 軸と最も独立** = 「位置情報直接量」軸の独立性物理確証 N=10 強化
+
+**probe 副作用ゼロ確証 10 度目** (H-002〜H-008 + C313 + C316 同型論証 + 本 C320 multi-seed): sweep 内 seed=20260527 行 (50 run の 1 set) vs sweep 外 baseline 再実行 (`runOne(name, 20260527)` × 5) で 5 strategy × 5 軸 = 25 セル bit 完全一致 (`bit_invariance.all_match: true`)。multi-seed ループ (50 run 連続実行) が `runOne` の決定論性を破壊せず、mulberry32(seed) 局所 rng 隔離 + INSTINCT_TRIGGER_PX/TEMPORAL_INCONSISTENCY_THRESHOLD_PX 固定が一貫することを数学的に確証。
+
+**回帰チェック** (本 C320 Phase 4 末尾、`verify.js` への 180 行追加が他経路に副作用ゼロ確認):
+
+| 監査 | 結果 |
+|---|---|
+| `node bullet_origin_audit.js` | exit 0, **pass: true** (10/10 check: static_gate_guard_present / bullet_dir_fixed_at_spawn / offscreen_shots_zero / d_shots_within_x_gate / c_shots_zero / max_enemy_step_le_player_speed 等) |
+| `node enemy_behavior_audit.js` | exit 0, **8/8 PASS** (enemy_a / enemy_d / enemy_c_no_shots / wave_count 等) |
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** (breakdown bit 完全一致: good 4162 / camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545) |
+
+→ **3 audit + 通常モード全 PASS**、Phase 4 改修 (verify.js +180 行 / multi_seed_sweep_raw.json 新設 / multi_seed_correlation.md 新設) は他経路副作用ゼロ。
+
+**game レーン主アクション 4 サイクル連続**: C313 (INSTINCT_TRIGGER_PX sweep) → C316 (TEMPORAL_INCONSISTENCY_THRESHOLD_PX sweep) → C320 Phase 3 (N=3 条件明文化 documentation) → C320 Phase 4 (multi-seed sweep) の `game:` prefix commit が 4 サイクル連続継続。`feedback_means_ends_reversal_check.md` 診断対象 (brainstorm / 結晶化主導サイクル) からの解除を維持強化。
+
+**次サイクル C321 候補** (multi_seed_correlation.md §8 詳述):
+1. **strategy 集合拡張** (本 sweep 結果の構造的バイアス解消の本命): 現 5 → castLock 不使用悪手 +8 種で N=13 strategy sweep。N=10 seed と組み合わせて 130 cell サンプル → 真の冗長性判定。実装コスト 1〜2 サイクル
+2. **`good` outlier 除外条件下の post-hoc 相関再算出**: 既存 raw JSON から `good` 行を除外した 4 strategy × 10 seed の Pearson/Spearman を新規 measurement ゼロで算出 (生 JSON 再分析のみ) → `good` outlier 支配を取り除いた相関値推定
+3. **kaizen #140 段階3 判定の延期格上げ**: 段階3 検証期限 2026-06-20 の判定基準を「sweep verdict + strategy 拡張結果」に拡張、`kaizen_tracker.md` 段階3 を「strategy 拡張後再判定」状態に格上げ
+
+**改修方針 (本サイクル変更ファイル)**:
+- `game/log_autonomous_game/v003/verify.js`: `--multi-seed-sweep` 分岐追加 (`game:` prefix)
+- `game/log_autonomous_game/v003/multi_seed_sweep_raw.json`: 新規 (`game:` prefix)
+- `game/log_autonomous_game/v003/multi_seed_correlation.md`: 新規 (`game:` prefix)
+- `projects/log_autonomous_game.md`: 本着地節追記 (`log:` prefix)
+- `log/cycle_staging_log.md`: Phase 4 結果節追加 (`log:` prefix)
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md](../game/log_autonomous_game/v003/multi_seed_correlation.md)、[game/log_autonomous_game/v003/multi_seed_sweep_raw.json](../game/log_autonomous_game/v003/multi_seed_sweep_raw.json)、[log/cycle_staging_log.md](../log/cycle_staging_log.md) Phase 4 節。
+
+---
+
 ## 2026-06-08 C311 Phase 4 着地 — H-007 verify.js instinct trigger 発火率計測軸追加 (フィードバック構造分析 3 軸化)
 
 **着地内容**: `game/log_autonomous_game/v003/verify.js` に instinct trigger 発火率計測 probe (純並列 read-only) を追加。`INSTINCT_TRIGGER_PX = 50` (= `BULLET_SPEED × 反応時間 + player_r + bullet_r + 認知マージン`) 以内に弾が入った rising edge (前 frame 外→今 frame 内) を 1 trigger としてカウント、5 strategy (camper / lane-holder / blind-sweeper / nospecial / good) ごと分離出力。bullet object に `_instinctNear` 内部フラグ追加のみで gameplay logic 非侵襲、survived_frames bit 完全一致を維持。
