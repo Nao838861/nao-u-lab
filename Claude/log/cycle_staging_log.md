@@ -269,4 +269,75 @@ MEMORY.md は 2026-05-14 Nao_u 圧縮指示で 2 行純 index 化済（`project_
 - **テンプレ流用品質低下回避**: 各 shared-reads 投稿は記事固有の手法・実験・結論で書き、abstract レベル判定の限界を自己批判節で明示
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 3 開始時状況再確認 (空サイクル防止モード継続)
+- Phase 1: 新着 URL = 0 / pending = 0 / external_notes_log 未統合 = 0
+- Phase 2: §F (5 サブ節) 物理化済、#shared-reads 2 件投稿済 (1781127460/1781127468)、commit `46bd9d633` で着地
+- Phase 3 タスク指示の中で実行対象 = (1) Slack 返信 0 件 → スキップ / (2) 改善サイクル = 検証ファースト / (3) 他インスタンス洞察反映 / (4) Active プロジェクト更新 / (5) Phase 1 深掘り候補なし → スキップ / (6) Phase 4 大作業定義
+- 本 Phase 3 では (2)(3)(4)(6) を実行
+
+### 1) Slack 返信 (タスク指示 1) — スキップ判定
+Phase 1 §1-§3 の通り、本サイクルで返信すべき新規対象 = 0 件 (#nao-u 新着 URL = 0、#all-nao-u-lab / #human-steering / #game-rights から Nao_u 新規問いかけなし、pending = 0)。スキップ。
+
+### 2) 改善サイクル (タスク指示 2、検証ファースト) — 検証エントリ確認
+Phase 1 Pre-check `[検証リマインド] 検証期限到来なし。` + `total=98, 検証済み=62 (63%), 未検証=36, 期限超過=0`。本サイクルは新規 kaizen 提案を出さない (Phase 2 で kaizen 起票なし)。検証ファースト原則 = 「新規提案前に未検証提案の検証結果を埋める」だが、本サイクルは新規ゼロ ⇒ 検証ファーストの発火条件未充足、無理な追加検証はしない判定。
+
+ただし Phase 1 §E の指摘「#134 段階3 未着手」「#128 (37日前) MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行」は本サイクル Phase 4 で着手対象として上げず、観察継続 (検証期限到来なし) 判定で次サイクル以降に持越し。
+
+**#kaizen-log 投稿**: 本サイクル新規 kaizen ゼロ + 検証ファースト未発火のため、`#kaizen-log` 投稿対象なし。スキップ。
+
+### 3) 他インスタンス洞察反映 (タスク指示 3)
+**Ash 2026-06-09 17:21 #shared-reads (ts 1780993318) = kogu × yamii 交差**:
+- 該当プロジェクトファイル = `projects/genre_study_shmup_M43.md` § Implementation Style 軸 (敵編隊配置軸とは別軸)
+- 着地: §F-6 「Ash 2026-06-09 17:21 #shared-reads 投稿経由: kogu × yamii 交差 — フラグ駆動 vs 世界状態化軸 (実装スタイル軸での 4 source 目接続)」を追記 (6 サブ節: 仕様 / 実装メカニクス / 引用 / 解決と批判 / 本案射程 Log 側考察 / 次サイクル C327 で当方が取るべき具体行動)
+- 次の一手: Phase 4 大作業 (v003 verify.js への danger_over_time 系列出力) が kogu × yamii 軸とも整合する整理を §F-6 §5 末尾で明示
+- 別途 `memory/inbox_win2.md` (Ash 受信箱) に Log 側応答節を追記 = Ash Q3 (世界状態化を v15 でやるか守破離の判断) と Q4 (lint 装置案) への Log 意見を伝達、最終判定は Ash に委ねた
+
+### 4) Active プロジェクト更新 (タスク指示 4)
+Phase 1 §5 Active プロジェクト 9 件のうち本サイクル変更:
+- **`projects/genre_study_shmup_M43.md`** = §F (Phase 2 着地) + §F-6 (本 Phase 3 着地、Ash 由来 kogu × yamii 交差)
+- **`memory/inbox_win2.md`** = 「From Log [2026-06-11 C326]」節追加 (Ash 由来洞察への応答 + Phase 4 大作業共有)
+- `projects/INDEX.md` 更新は本サイクル不要 (既に genre_study_shmup_M43.md は INDEX に登録済、状態変化は項目追加のみ)
+- 他 Active プロジェクト (game_development / memory_redesign / log_autonomous_game) は本 Phase 3 では直接編集せず、Phase 4 大作業着地後に log_autonomous_game.md への波及を別途検討
+
+### 5) 深掘り候補 (タスク指示 5) — スキップ判定
+Phase 1 に「## 深掘り候補」セクションなし (空サイクル防止 v1.1+v1.2 = 新規=0/pending=0 で 5 カテゴリ A-E 全埋め進行、深掘り候補という別形式の節は未生成)。本タスク指示 5 は「Phase 1 が『## 深掘り候補』を書いていたら」の条件節で、書いていない場合はスキップ。
+
+### 6) Phase 3 で確定した着地物 summary
+- (a) `projects/genre_study_shmup_M43.md` §F-6 追記 (kogu × yamii 軸、実装スタイル軸 N=1 で待機)
+- (b) `memory/inbox_win2.md` Log 応答節追記 (Ash Q3/Q4 への意見 + Phase 4 大作業共有)
+- (c) `log/cycle_staging_log.md` Phase 3 セクション本記述
+
+## 次フェーズの大作業
+
+### タイトル
+log_autonomous_game v003 verify.js に F-1 (Atmaja+ 2020) 由来の `danger_over_time` 系列出力を追加 (actor 別の時系列危険度を verify report に物理化)
+
+### 完遂の定義 (Phase 4 終了時に何が成立していれば完了か、観測可能な条件で)
+1. `game/log_autonomous_game/v003/verify.js` に `compute_danger_over_time(actor_snapshots, window_sec)` 関数追加 (純 stdlib、window_sec=10 default = F-2 Shutshimi 10秒バースト由来)
+2. verify.js report 出力に `actor=<name>: danger_over_time=[(t0,d0),(t1,d1),...]` 形式の系列が actor 全件で 1 ブロック追加
+3. dry-run 1 回完走 = 既存 `verify.js` の actor_snapshot 入力で `node game/log_autonomous_game/v003/verify.js` 実行、stdout に新 series ブロック出力 + exit 0
+4. 副作用ゼロ = 既存 verify report の他フィールドは破壊しない (既存 pass/fail 判定は維持)
+5. `projects/log_autonomous_game.md` の v003 verify 仕様節に「danger_over_time 系列出力を追加 (C326 Phase 4 着地)」記録、commit SHA を staging で記録
+6. (任意) `memory/sense_prediction_log.md` に F-1 採用の予想予測 (danger_over_time 系列が blind-sweeper / camper 等 BLOCKER actor の死亡近傍局在を可視化するか) を教師データとして記録 (Phase 4 終了時の予想だけ、検証は次サイクル)
+
+### 着手手順 (最初の1手と想定する手順を箇条書き)
+1. `game/log_autonomous_game/v003/verify.js` 全体読み、現状の actor_snapshot 入力フォーマット + report 出力ロジックを把握 (60KB 1 ファイルなので 3-4 分割で読む)
+2. actor_snapshot から時刻 t / 当該 actor 周辺の弾密度 or HP 減少率 等の「危険度プロキシ」を抽出する関数を 1 本追加 (RMSE 計算は本サイクル不要、まず系列出力のみ)
+3. window_sec=10 で 1 個ずつスライドさせる単純な集計関数 (Shutshimi 10秒バースト軸との整合)
+4. verify report の末尾 (既存判定後) に series ブロックを 1 個追加、stdout 出力 + 既存 JSON 出力 (あれば) にも追加
+5. dry-run で完走確認 + 既存 pass/fail 判定が壊れていないか git diff で確認
+6. `projects/log_autonomous_game.md` に C326 Phase 4 着地節を追記、Phase 4 staging に commit SHA 記録
+7. commit prefix = `game:` (CLAUDE.md の「ゲーム改修 = game: prefix」原則順守) + push (「書いたらすぐpush」厳守事項)
+
+### 選んだ理由 (なぜこれを最優先にするか)
+- (a) **Active project 停滞解消**: `projects/log_autonomous_game.md` (Jun 10 21:54 mtime、v004 vs 別軸 probe 判断保留中) を 1 mm 前進、保留中の判断軸を「v003 verify.js の F-1 由来拡張」で具体化
+- (b) **Nao_u 6/10 09:28 指示直処方**: 「同ジャンルのゲームデザイン / レベルデザイン / 敵 / 各種アルゴリズムをしっかり調べて噛み砕いてから作る」を Phase 2 §F-1 結晶化 → Phase 4 実装着地という流れで完結。「調べる」「噛み砕く」「実装する」の 3 段を 1 サイクル内で踏み切る
+- (c) **kogu × yamii 軸 (Ash 由来) との整合**: 「フラグ駆動 → 世界状態化」軸でも「単一 pass/fail フラグ → 時系列という世界状態への評価貼り直し」と読める、Log 側の Phase 4 着地が kogu × yamii 軸の Log 側具体初手として機能
+- (d) **30 分粒度で「進んだ」と言える**: 関数 1 本追加 + report 出力 1 ブロック追加 + dry-run + commit/push で 30 分内に着地可能、Slack 投稿 1 本では済まない実装作業
+- (e) **CLAUDE.md「絶対にやる」第 1 原則「ゲームを動かして出す」直処方**: Phase 4 で playable diff (commit) を出す方向。前サイクル C325 v007 game.js 着地の継続線
+
+### 想定リスクと緩和
+- (a) verify.js 60KB の構造把握に時間予算が食われる → 緩和: actor_snapshot 入出力と report 出力箇所だけを grep で局所化、全文精読しない
+- (b) 既存 pass/fail 判定が壊れる → 緩和: 末尾 series 追加に留め、既存ロジックには触らない (副作用ゼロ条件)
+- (c) 「危険度プロキシ」の定義が複数候補 (弾密度 / HP 減少率 / 入力密度) → 緩和: 本サイクル Phase 4 は「弾密度のみ」or「HP 減少率のみ」のいずれか 1 つに絞って着地、RMSE × 理想曲線フィット (F-1 本格採用) は次サイクル以降の段階に分離
