@@ -278,3 +278,72 @@ brick_log (現在 v01_planning 段階) で「ブロック崩し × STG 混成」
 - 引用文抜粋の URL 裏取り (次サイクル WebSearch で「(URL未確認)」マークの全件を裏取り、最低 3 経路保証を完成)
 - §A〜§D 各カテゴリ末尾射程の v004 / v13 試作への具体的 issue 化 (採用候補強マークの 6 件: A-05 / A-06 / A-10 / B-04 / B-08 / B-10 / D-05) を `projects/game_development.md` 計画項目に転写
 - M-43「やらなかった」5本の Premise Resistance 軸評価 = Ash #shared-reads STALE 3 次元プロービング案との接続 (Phase 3 §3 次サイクル候補)
+
+---
+
+## §F 2026-06-11 結晶化追記 — 外部学術/事例 3 source の本案射程クロス分析
+
+**契機**: 本サイクル C326 Phase 1 §6 で「shmup enemy placement procedural generation level design 2026」WebSearch、Phase 2 で IOPscience / Game Developer の本文確認まで進めて結晶化。Nao_u 6/10 09:28 指示「同ジャンルのゲームデザイン / レベルデザイン / 敵 / 各種アルゴリズムをしっかり調べて噛み砕いてから作る」の継続消化。
+
+### F-1. Difficulty Curve-Based PG of Scrolling Shooter Enemy Formations (Atmaja+ 2020)
+
+**source**: Atmaja, Sugiarto, Mandyartha (2020) "Difficulty Curve-Based Procedural Generation of Scrolling Shooter Enemy Formations", *Journal of Physics: Conference Series* Vol. 1569, IOPscience `iopscience.iop.org/article/10.1088/1742-6596/1569/2/022049`
+
+**1) 仕様**: (a) 縦スクロール STG の敵編隊配置を遺伝的アルゴリズム (GA) で生成、(b) 遺伝子型 = 5×40 グリッド (敵ユニット遺伝子 + 空白遺伝子)、(c) 世代数 300 / 個体数 40 / 各世代 100 イテレーション。
+
+**2) 敵配置メカニクス**: GA の fitness 関数 = `(難易度曲線 RMSE) + (敵多様性)` の 2 軸合成。
+- 難易度曲線 = 「人間が設計した理想カーブ」と「アルゴリズム生成編隊の時系列危険度」を点ごと比較し RMSE で評価
+- 敵多様性 = 編隊内の敵ユニット種類の豊かさ
+- 「初期遺伝子型の敵ユニット数」が個体群の fitness 進化に影響する、という発見
+
+**3) 引用**: 「The fitness function combined a difficulty curve component (RMSE against an ideal human-authored curve, measuring on-screen enemy danger over time) and an enemy variety component」— IOPscience DOI `10.1088/1742-6596/1569/2/022049` (abstract + 関連抄録から再構成、本文 PDF 内文言は次サイクル PDF DL 後に直接引用へ昇格)
+
+**4) 解決と批判**: 「人間が描いた理想曲線」を GA の目的関数に明示的に置く設計は、暗黙評価 (Cave 系統の手作業バランス) を **transparent な目的関数化** した功績。批判は (a) 「理想曲線そのものを誰がどう設計するか」が依然人間任務、(b) 実運用検証データ (プレイヤーの実際の難度知覚) の論文内記述が薄い、(c) 5×40 グリッドという表現の制約で「敵の軌道」「弾発射パターン」が射程外。
+
+**5) 本案射程**:
+- log_autonomous_game v003 の **verify.js は現状「Q-成功 FB の難易度カーブ」を時系列で測れる軸がない** (C307 Phase 4 §3-2 で「Q-成功FB 3 状態 event 内訳が report に出ない」と指摘済の延長線)。本論文の RMSE × 理想曲線方式を借用し、「verify.js report に actor 毎の `danger_over_time` 系列を出力」する案 = v004 着手判断軸として **暫定採用**。
+- ただし当方は GA ループは持たない (Claude で生成 → verify で評価の 1 phase ループ) ため、「理想曲線」は **Nao_u が手描き** する位置取りで運用 (Cave 系統の手作業バランスと同型)。
+- **採用候補強** — v004 で `verify.js` に danger_over_time 時系列出力を追加する 1 mm 拡張案。
+
+### F-2. Shutshimi (Couture 2015 / Game Developer) — 10秒バースト × 手続き生成 × 金魚
+
+**source**: Joel Couture (2015-09-30) "What 10 seconds, procedural generation, and fish do for shoot-'em-up design", *Game Developer* `gamedeveloper.com/design/what-10-seconds-procedural-generation-and-fish-do-for-shoot--em-up-design`
+
+**1) 仕様**: (a) Shutshimi: Seriously Swole (2015, Neon Deity Games, PC/console)、(b) 金魚プレイヤーキャラの弾幕 STG、(c) 「10秒バースト」が全システムの設計単位 (敵 wave / ショップ画面 / パワーアップ説明 / ボス前ラッシュ 全て 10 秒)。
+
+**2) 敵配置メカニクス**: 10秒制約下での手続き生成。入力変数 = `(プレイヤー数, 撃破ボス数, wave番号, 敵種, パワーアップ)` を組み合わせて「段階的難度上昇を管理」(Garrett Varrin programmer 証言)。10秒という短時間で「敵出現タイミング / dead space 排除 / パワーアップ選択」を全て押し込む。
+
+**3) 引用**: 「Shutshimi: Seriously Swole turns standard shoot-'em-up gameplay into 10-second bursts of procedurally generated action」「Garrett Varrin: 'Iterative design adjusts the equation constantly. Calculating spawn intervals and frequency was the initial challenge'」— Game Developer 2015-09-30 / Joel Couture 著
+
+**4) 解決と批判**: 「10秒」が **pattern recognition の単位** として機能する点が革命的 = プレイヤーは「1 wave = 1 認識単位」で消化、長期難度曲線への疲弊を排除。ショップ画面の「長文説明 + カウントダウン」で「読解と決定のパニック」を意図的設計。批判は (a) 1セッションの累積疲労ではなく 10秒単位疲労が強く長時間プレイで脳負荷が高い、(b) 物語装置がほぼ排除される (バースト構造との両立不可)。
+
+**5) 本案射程**:
+- **graze_log v06b → v13 (Ash 主導) への直結**: 「擦り蓄積 → 発動 → 弾消し連鎖」を **10秒バースト単位** で設計する案。1 つの擦り発動サイクルを 10秒以内に閉じる設計 = Crimzon Clover Break (A-10) + Shutshimi 10秒制約のクロス結晶。**v13 採用候補強**。
+- **log_autonomous_game v003 への射程**: verify.js の判定単位を **10秒ウィンドウ** に分割する案 = 現状の actor_snapshot 全体評価 (連続プレイ全長で 1 評価) を「10秒スライス × N 個」に分けると、blind-sweeper / camper / lane-holder 等の BLOCKER 系統が「どの 10秒ウィンドウで顕在化したか」を局在化できる。C307 Phase 4 §3-3 「死亡近傍局在信号が薄い」への直処方 = **v005 候補**。
+- **brick_log への射程**: ブロック群を「10秒で必ず崩れる量」で動的調整する案 = Shutshimi の「入力変数で段階的難度上昇」を踏襲。**brick_log v01_planning に追記候補**。
+
+### F-3. MAP-Elites for SHMUP Enemies (arxiv 2202.09615) — **既出注記**
+
+**source**: Mendes, Togelius (2022) "Illuminating the Space of Enemies Through MAP-Elites", arxiv `2202.09615`
+
+**既出**: 本 arxiv ID は 2026-06-10 #all-nao-u-lab (ts 1781106084) + #shared-reads (ts 1781105732) で取り扱い済 (kaizen #136 段階1.5 既出 ARXIV WARN で hits=2 検出)。**本サイクル shared-reads 再投稿は行わない**。
+本ノートには「quality-diversity (QD) 法による敵パラメータ空間の網羅生成」という位置取りのみ残す:
+- F-1 (RMSE × 理想曲線) は **目的関数を 1 本** に絞る路線 = 「1 つの理想曲線へ最適化」
+- F-3 (MAP-Elites) は **多目的の網羅生成** 路線 = 「多様な敵を全部見せる」
+- 当方 v003 verify.js は「pass/fail 単一判定」=  F-1 寄り。F-3 風の網羅生成は v005 以降で「verify.js が複数 quality 軸を独立に出す」拡張時に再検討。
+
+### F-4. 3 source 独立到達観察 — game 軸 R 層昇格判定材料
+
+C312 Phase 2 で「game 側 3 source 独立到達カウンタ」が成立しつつあると位置取り済 (OpenGame-Bench / SLM Dynamic PCG / Distilling GameCWMs)。本サイクル F-1〜F-3 は **「敵編隊配置」軸での 3 source 独立到達** を追加:
+- F-1 Atmaja+ 2020 (GA × 難易度曲線)
+- F-2 Couture 2015 / Shutshimi (10秒バースト × 手続き生成)
+- F-3 Mendes+Togelius 2022 (MAP-Elites × QD)
+
+**判定**: 即 R 層化はしない (kaizen #135 観察継続原則順守)。本ノート §F が「敵編隊配置軸の 3 source 位置取り」として機能、N=3 で待機。次サイクル C327 以降で 4 source 目 (例: PCGRL / Constraint-based PCG / Wave-based difficulty learning) が独立到達したら R 層化検討。
+
+### F-5. 次サイクル C327 で当方が取るべき具体行動
+
+(a) **v004 着手判断軸に F-1 採用**: verify.js report に `danger_over_time` 系列出力を追加する案を `projects/log_autonomous_game.md` の v004 着手前 brainstorm に追記候補 (本サイクル Phase 3 でやるか判断)
+(b) **v13 (graze_log) 設計に F-2 採用**: 「擦り蓄積→発動→弾消し連鎖」を 10秒バースト単位で閉じる設計案を `projects/log_autonomous_game.md` の graze_log v13 仕様策定節に追記候補 (Ash 主導なので inbox_ash.md 経由で共有)
+(c) F-1 本文 PDF 取得 (RMSE 数式 / 5×40 グリッドの遺伝子型詳細 / 評価実験の被験者数) → 次サイクル余裕時
+(d) brick_log への F-2 (10秒で必ず崩れる量) 案 = brick_log v01_planning 着手時に再評価

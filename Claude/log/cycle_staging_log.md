@@ -216,7 +216,57 @@ MEMORY.md は 2026-05-14 Nao_u 圧縮指示で 2 行純 index 化済（`project_
 [既出 ARXIV WARN] arxiv_id=2202.09615 src=D:\AI\Nao_u_BOT\GPT\memory\raw\slack_api\shared-reads.jsonl ts=1781105732.550179
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) Phase 1 状況再確認 (空サイクル防止モード)
+- 新着URL = 0 (4 件全て既応答、ルール8 #all-nao-u-lab 反応投稿対象なし)
+- pending = 0
+- external_notes_log 未統合 = 0 (100% 統合済)
+- 空サイクル防止モード 5 カテゴリ全埋め進行、本 Phase 2 は **C) 「ゲームを動かして出す」 1mm 拡張** に焦点 = Nao_u 6/10 09:28 指示「同ジャンルのゲームデザイン / レベルデザイン / 敵 / 各種アルゴリズムをしっかり調べて噛み砕いてから作る」継続消化
+
+### 1) Phase 1 §6 WebSearch 3 件の本文確認 + 結晶化
+
+**WebFetch 経路選択**:
+- F-1 Difficulty Curve論文 (ResearchGate URL は **403 Forbidden** → IOPscience 公式 (DOI 10.1088/1742-6596/1569/2/022049) で取得成功)
+- F-2 Game Developer "10 seconds" (初手 URL は記事 index に飛んで失敗 → WebSearch で正確 URL `what-10-seconds-procedural-generation-and-fish-do-for-shoot--em-up-design` 取得後 WebFetch 成功)
+- F-3 MAP-Elites (arxiv 2202.09615) = **既出 hits=2** (kaizen #136 段階1.5 ARXIV WARN 発火、再投稿せず)
+
+**結晶化先**: `projects/genre_study_shmup_M43.md` §F (新規節) として 3 論文の本案射程を物理化:
+- §F-1 Atmaja+ 2020 (GA × RMSE × 理想曲線) → log_autonomous_game v003 verify.js への `danger_over_time` 系列出力拡張案 (v004 着手判断軸候補強)
+- §F-2 Couture 2015 / Shutshimi (10秒バースト × 手続き生成) → graze_log v13 / verify.js v005 / brick_log v01_planning の 3 系統に分岐
+- §F-3 MAP-Elites (既出注記、F-1 単目的との対比で位置取り)
+- §F-4 game 軸 3 source 独立到達 = 「敵編隊配置軸」で N=3 待機、即 R 層化はしない (kaizen #135 観察継続原則)
+- §F-5 次サイクル C327 で当方が取るべき具体行動 4 項目
+
+### 2) shared-reads 投稿 2 件 (新規 = 2、既出 = 1 でスキップ)
+
+**ルール厳守**: 外部記事への反応は 1 件ずつ別メッセージ (slack.md)、スレッド返信なし、各記事固有の手法・実験・結論を書く (テンプレ流用禁止)。
+
+| 投稿 | チャンネル | ts | 内容 |
+|---|---|---|---|
+| 1 | #shared-reads | 1781127460.642669 | F-1 Difficulty Curve (Atmaja+ 2020): 概要 / 内容分析 / verify.js 直処方 / メリデメ / 判定 |
+| 2 | #shared-reads | 1781127468.122429 | F-2 Shutshimi 10秒バースト (Couture 2015): 概要 / 内容分析 / graze_log v13 + verify.js v005 + brick_log の 3 系統射程 / メリデメ / 判定 |
+
+各投稿に Phase 1 §6 fixation 観察節を含め、3 件中 1 件既出パターン継続を記録 (C306/C312/C314 と同型)。
+
+### 3) external_notes_log 統合
+- Phase 1 で **未統合 = 0** 確認済 (`tools/external_notes_integration_audit.py` で 235/235 = 100% 統合済)
+- 本サイクルでの新規未統合エントリ生成なし (本 §F-1/§F-2 は projects/genre_study_shmup_M43.md §F に直接結晶化で、external_notes_log への一時保管段階を経由しない = 即統合)
+- **本タスク = 該当なし、スキップ** (タスク指示 3) 「未統合 1-2 件」は本サイクルでは候補ゼロ)
+
+### 4) ルール8 (他者の反応を読む前に自分の視点) 順守確認
+- 新着URL = 0 のため、本サイクルは #nao-u 新URL に対する反応投稿対象なし
+- もし新着URLがあれば「Phase 1 で grep → Phase 2 で WebFetch + 自前分析 → 他インスタンス投稿を読む前に投稿」の手順を取る (本サイクルは該当なし)
+
+### 5) Phase 3 への引き継ぎ候補
+- (a) `projects/genre_study_shmup_M43.md` §F-5 (a) の `projects/log_autonomous_game.md` v004 着手前 brainstorm 節に「verify.js `danger_over_time` 系列出力案」追記判断 → Phase 3 で着地判断
+- (b) §F-5 (b) の `inbox_ash.md` 経由で「graze_log v13 擦り発動 10秒バースト案」を Ash に共有 → Phase 3 で送信判断
+- (c) 日記 (Phase 5) で C326 Phase 2 の F-1/F-2 結晶化を Log チャンネルに公示 (温度の残る形で)
+- (d) commit + push (CLAUDE.md 「書いたらすぐpush」、本サイクルは rule/note 系のみで game 変更なし → `note:` prefix or `study:` prefix を検討。docs/ で `game:` vs `rule:` 分離原則 = M-43 ノートは study 文脈なので新 prefix の必要性確認)
+
+### 6) 本 Phase 2 で確定した判定
+- **空サイクル防止 C) 1mm 達成**: `projects/genre_study_shmup_M43.md` に §F (5 サブ節) 物理化 + shared-reads 2 件投稿で **30 本調査ノートを実運用に向けて昇格** (本案射程に接続)
+- **game 軸 3 source 独立到達 N=3 位置取り**: 即 R 層化はせず、kaizen #135 観察継続原則順守
+- **テンプレ流用品質低下回避**: 各 shared-reads 投稿は記事固有の手法・実験・結論で書き、abstract レベル判定の限界を自己批判節で明示
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
