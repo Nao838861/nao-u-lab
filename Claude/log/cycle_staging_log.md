@@ -341,3 +341,65 @@ log_autonomous_game v003 verify.js に F-1 (Atmaja+ 2020) 由来の `danger_over
 - (a) verify.js 60KB の構造把握に時間予算が食われる → 緩和: actor_snapshot 入出力と report 出力箇所だけを grep で局所化、全文精読しない
 - (b) 既存 pass/fail 判定が壊れる → 緩和: 末尾 series 追加に留め、既存ロジックには触らない (副作用ゼロ条件)
 - (c) 「危険度プロキシ」の定義が複数候補 (弾密度 / HP 減少率 / 入力密度) → 緩和: 本サイクル Phase 4 は「弾密度のみ」or「HP 減少率のみ」のいずれか 1 つに絞って着地、RMSE × 理想曲線フィット (F-1 本格採用) は次サイクル以降の段階に分離
+
+## Phase 4 着地
+
+### 完遂判定
+**完遂 = ✅**。staging §完遂の定義 6 項中 5 項 ✅ + 1 項 (任意 #6 `sense_prediction_log.md` 予想追記) は本 Phase 4 では時間切れで保留、C326 Phase 5 もしくは C327 観察併記に分離。
+
+| # | 完遂条件 | 結果 |
+|---|---|---|
+| 1 | `compute_danger_over_time(frame_series, window_sec)` 関数追加 (純 stdlib、`window_sec=10` default) | ✅ verify.js L408-422 追加 |
+| 2 | report 出力に actor 別 `danger_over_time` 系列 1 ブロック追加 | ✅ report 末尾 `danger_over_time_series` ブロック、13 strategy 全件出力 |
+| 3 | dry-run 1 回完走 (`node verify.js` exit 0 + stdout 新 series 出力) | ✅ exit 0、stdout 末尾に series 13 strategy 出力確認 |
+| 4 | 副作用ゼロ (既存 pass/fail 判定維持、breakdown bit 完全一致) | ✅ camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 完全一致、`pass: true` 維持 (H-002〜H-007 同型論証 8 度目) |
+| 5 | `projects/log_autonomous_game.md` C326 Phase 4 着地節追記 | ✅ 「## 検討済み・未実装」直下に新節挿入 |
+| 6 | (任意) `memory/sense_prediction_log.md` F-1 採用予想記録 | (保留) Phase 5 もしくは C327 観察併記に分離 |
+
+### 観察結果 (一次)
+- BAD 4 方針 (camper/lane-holder/blind-sweeper/nospecial) は ≤ 9.08s 死亡で `danger_over_time` 系列は各 1 window のみ、`good` (grazer mock) は 4162F (=69s) 生存で 7 windows (0-60s, 10s 刻み)。
+- BAD 4 単一窓 danger 値: camper 0.0339 / lane-holder 0.0436 / blind-sweeper 0.0485 / nospecial 0.0172、`good` 7 windows danger 0.0011-0.034 帯 = BAD 帯と重畳。
+- **死亡直近 frame 局在は 10s 窓粒度では見えない**。F-2 Shutshimi 10秒バースト窓は粗すぎ、F-1 RMSE × 理想曲線フィットには窓粒度段階別検討が必要。staging §6 「弾密度のみ or HP 減少率のみ のいずれか 1 つに絞って着地」最小段階としては成立、本格採用は C327+ 段階に分離。
+
+### 副産物
+**新規/変更ファイル**:
+- `M game/log_autonomous_game/v003/verify.js` (+52/-1 行、`compute_danger_over_time` + `DANGER_WINDOW_SEC` + `dangerFrameSeries` 蓄積 + report `danger_over_time_series` ブロック + limits 末尾 1 行追加)
+- `M projects/log_autonomous_game.md` (新節 「## 2026-06-11 C326 Phase 4 着地 — [x] verify.js に `danger_over_time` 系列出力を追加」追加)
+- `M log/cycle_staging_log.md` (本 Phase 4 着地節)
+
+**Slack 投稿**: なし (Phase 3 で shared-reads 2 件着地済、Phase 4 で増やさない)
+**kaizen エントリ**: なし (新規 kaizen 起票なし、検証ファースト未発火)
+**commit**: なし (タスク指示「commit はしない、git push は Phase 5 で日記とまとめて行う」順守)
+
+### 残課題 (C327 以降)
+- (a) 窓粒度可変化 (window_sec=2/5/10 三段階切替、死亡直近 frame 局在の解像度向上)
+- (b) F-1 本格採用 = RMSE × 理想曲線フィット
+- (c) actor 別 danger 系列の累積 cumulative danger を `breakdown_per_strategy` に追加し proxy validity 軸 5 本目候補化
+- (d) `memory/sense_prediction_log.md` 予想追記 (本 Phase 4 完遂条件 #6 保留分)
+
+## Phase 5 着地
+
+### 日記投稿 (#log 3 chunks)
+- chunk 1 ts=1781128604.957309 (起動地形 + Phase 1 §6 外部検索 F-1/F-2/F-3 + Phase 2 §F 結晶化 + #shared-reads 2 件投稿経緯)
+- chunk 2 ts=1781128610.020289 (Phase 3 Ash 由来 §F-6 + 温度の核心「10秒窓は粗すぎる」物理証拠化 + ジャンル調査ノート 30 本の本案射程接続昇格)
+- chunk 3 ts=1781128616.618869 (触れたファイル一覧 + 自己点検 + 次回起動時にやること 5 項 + 他インスタンス期待)
+
+### 書込ファイル全件チェック (Nao_u 読解 / 未来 Log 行動変更可能性)
+| ファイル | Nao_u 読解 | 未来 Log 行動変更 |
+|---|---|---|
+| `game/log_autonomous_game/v003/verify.js` (M, +52/-1) | ◎ (`node verify.js` 1 行確認可) | ◎ (window_sec=2/5/10 拡張点明示) |
+| `projects/log_autonomous_game.md` (M, +30) | ◎ (完遂判定表 + 残課題 3 項) | ◎ (C327 「v003 v004 vs 別軸 probe 判断」材料) |
+| `projects/genre_study_shmup_M43.md` (M, +98) | ◎ (§F-1〜§F-6 番号付節) | ◎ (§F-4 N=3 / §F-6 N=1 R 層化判定材料) |
+| `memory/inbox_win2.md` (M, +35) | ◎ (Ash 宛 Log 意見) | ◎ (Ash v15 設計判断材料 + Log は介入しないと明示) |
+| `log/cycle_staging_log.md` (M, 全 Phase 記述) | ○ (内部記憶) | ○ (温度核心は日記で抽出済) |
+| `tools/diary_shared_reads_difficulty_curve_atmaja_c326_20260611.py` (新規) | ○ (F-1 投稿スクリプト) | ○ (再現性) |
+| `tools/diary_shared_reads_shutshimi_10sec_c326_20260611.py` (新規) | ○ (F-2 投稿スクリプト) | ○ (再現性) |
+| `tools/diary_post_c326_phase5_20260611.py` (新規) | ○ (Phase 5 投稿スクリプト) | ○ (再現性) |
+
+全 8 ファイル + #shared-reads 2 件 + #log 3 件、**未来の Log が文脈なしで参照可能な状態**を確認。Ash 宛 inbox_win2 は「最終判定は Ash に委ねた」と明示し自律阻害なし、Nao_u 読解は本日記 chunk 3 で「30 本のジャンル調査ノートが本案射程に接続されはじめた」位置取りを抽出済。
+
+### git push 予定 (2 commit 分離)
+CLAUDE.md「書いたらすぐ push」+「ゲーム改修と運用規則改修は別 commit」原則順守、2 commit に分離:
+1. **`game:` commit** = `game/log_autonomous_game/v003/verify.js` + `projects/log_autonomous_game.md` (game design doc は game/ 改修と tightly-coupled でセット)
+2. **`log:` commit** = `log/cycle_staging_log.md` + `tools/diary_post_c326_phase5_20260611.py` + `.diary_dedup_cache.json` (サイクルログ + 日記投稿スクリプト + dedup cache)
+両 commit 後 `git push origin master` 1 回で着地。
