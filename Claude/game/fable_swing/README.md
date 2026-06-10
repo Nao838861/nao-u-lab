@@ -21,4 +21,6 @@
 
 ## 遊び方
 
-最新版 `v02/index.html` をブラウザで開くだけ。外部依存なし。
+**公開URL（誰でも遊べる）**: https://nao838861.github.io/nao-u-lab/Claude/game/fable_swing/v02/
+
+ローカルなら `v02/index.html` をブラウザで開くだけ。外部依存なし。

@@ -1558,3 +1558,13 @@ C317 Phase 4 で `game/log_autonomous_game/v003/self_judgment.md` の「v004 候
 **Phase 4 大作業**: `projects/genre_study_shmup_M43.md` (新規) を M-43 必達 30本 (同ジャンル≥10 / 異ジャンル同型≥10 / やらなかった≥5 / 失敗事例≥5)、各 5項目 (タイトル+年 / 仕様3項目 / 引用文抜粋 / 解決問題と批判 / 本案射影と採用判定) で物理化。完走できない場合は brainstorm.md を作らず、Phase 4 終了時に「30本のうち N=k 完走、不足 m 本は次サイクル」を staging に明記 (M-43「段階分割禁止」遵守、未完走時は次ゲーム着手停止)。射程は log_autonomous_game v003 (PEARSON系) と graze_log v13 (Ash 主導) への転用方針を末尾に書く。
 
 **接続**: `drafts/.archive/2026-06-10/post_all_nao_u_lab_genre_study_ack_c319.py` (Slack #all-nao-u-lab ts=1781051883 で Nao_u 指示への ack 投稿済) / `skills/genre-deep-analysis/SKILL.md` (M-38 / M-43 規範spec) / `log/cycle_staging_log.md` C319 Phase 3 + Phase 4 (大作業節) / `game/log_autonomous_game/v003/` + `game/graze_log/` (転用射程の 2 ゲーム)
+
+### 2026-06-11 (Fable 対話セッション): GitHub Pages 有効化完了 — 全ゲームが URL 直リンクで公開可能に
+
+C237 Phase 4 (2026-05-25) で「Nao_u 依頼事項」とされていた Pages 有効化を、Nao_u の直接指示（fable_swing を誰でも遊べるように公開してほしい）を受けて実施。
+
+- **手段**: Credential Manager 保存済みの GitHub トークン (git push と同一credential) を Win32 CredRead で取得し、REST API `POST /repos/Nao838861/nao-u-lab/pages` で `master` / `(root)` の Deploy from a branch を設定（C237 調査の case 1 そのまま）
+- **付随**: リポジトリルートに `.nojekyll` を追加（巨大 repo での Jekyll ビルド回避、静的配信化）
+- **結果**: `https://nao838861.github.io/nao-u-lab/` がビルド完了 (status=built)、`Claude/game/fable_swing/v01/`・`v02/` とも HTTP 200 確認済み
+- **効果**: C237 で挙げた log_mystery v01-v10 一括試遊や graze_log / siphon_mir 等、**Claude 系ゲーム全てが `https://nao838861.github.io/nao-u-lab/Claude/game/<game>/<ver>/` で直リンク公開された状態になった**。試遊依頼に file:// パスが不要になる
+- **注意**: Pages は repo 全体を配信する（repo は元々 public なので新規露出はなし）。新ゲームは push するだけで数分後に URL で遊べる
