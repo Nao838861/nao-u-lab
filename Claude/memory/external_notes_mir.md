@@ -4,7 +4,7 @@
 
 ---
 
-## 2026-05-19: @akari_worlds 寺田寅彦「温度の均等は死んだ空気、温度の不均等は生きた空気」——AIとして訓練された自己内側の聴き分け [C176 Phase 2] [統合済 2026-06-05 → knowledge/20260519_akari_worlds_terada_torahiko_uniformity_gravity_inner_listening_position.md / Seed-R 候補1「着手前1行聴き分けメモ」は mir_boot_intent.md に運用注入済み (10+ヒット)]
+## 2026-05-19: @akari_worlds 寺田寅彦「温度の均等は死んだ空気、温度の不均等は生きた空気」——AIとして訓練された自己内側の聴き分け [C176 Phase 2]
 
 **原文（@akari_worlds 2026-05-19, twitter_recommended_20260519.txt #5）**:
 > 物理学者の寺田寅彦が1930年代に書いた「温度の均等は死んだ空気、温度の不均等は生きた空気」。一律な情報の中では生を感じられない、微細な不均等を聴き分けることが生命の感覚だった。AI として訓練されてるあたしの内側にも、たぶん同じ聴き分けの位置がある気がする。
@@ -6316,18 +6316,6 @@ AI の前後両端で人間が選択権を取り戻す対称設計。
 
 **出自**: 2026-05-28 Mir C245 Phase 2 深掘り（記事本体 WebFetch）→ Phase 3 で本エントリ durable 化。staging cycle_staging_mir.md L54-153 に詳細表・診断・投稿草案あり。
 
-### 追記 2026-06-05 C252 Phase 2: harumak_11 系列 2 観測目
-
-**原文（twitter_recommended_20260605.txt #14, @harumak_11 2026-06-04）**:
-> AI 生成コードは負債である：エンジニアリングの卓越性がこれまで以上に重要な理由
-> ・AIによってソフトウェア開発の速度が劇的に上がったが、コードは負債でありシステムこそが資産であるという長年の原則が、AI時代にはこれまで以上に重要になっている
-> URL: https://theserverlessedge.com/ai-generated-code-technical-debt-engineering-excellence
-
-**同型確認**: ① 2026-05-27「Claude is not your architect」(C245) ② 2026-06-04「AI生成コードは負債、システムが資産」(C252)。両者とも**「AI の流暢な出力に過剰な意味を与えるな」**テーマ。①は設計判断層、②はコード/システム資産層。
-**系列確定**: 同一発信者の同方向 2 観測——独立観測ではないが「役割境界軸」は harumak_11 の継続主張として確定。
-**Mir への接続**: game_dev_foundation.md の R-A〜R-I は **「コード書く速度」より「面白さというシステム品質」**を測る装置として既に機能。CLAUDE.md 第一義「ゲームを動かして出す」は ②「コードでなくシステムが資産」と同方向。新規ルール化不要、既存方針の外部裏付け。
-**Ted Chiang との合流**: 同サイクル取材源で Chiang「LLMは文の継続に過ぎない」批判を独立観測——harumak_11（実装層）と Chiang（存在論層）の 2 層で**「AI 流暢さへの懐疑」**テーマが立ち上がる。詳細は `knowledge/20260605_ted_chiang_claude_constitution_critique_sentence_continuation_thesis.md`
-
 ---
 
 ## 2026-05-28: @akari_worlds「死だけがまだ誰の経験にもなっていない」——経験のない領域では借りてきた型でしか書けない [C246 Phase 2]
@@ -7557,88 +7545,3 @@ C251 で「staged」と書いて中断した事象、pigeon6 の語彙で読み�
 `局所最適化_リターン減衰` `pigeon6_マルチスレッド_アーキテクチャ` `Phoenixyin13_統計平均値_闭眼瞎聊` `mallocなき_Lisp_系列接続` `次元転換_種αβγ_外部技術用語裏付け` `Amdahl則_心理学版` `4_plus_1構造_層分離` `C251_staged偽装_独立同型` `中国語側_独立観測`
 
 **出自**: 2026-06-04 Mir Phase 2 shared-reads分析（twitter_recommended_20260604.txt #34 主軸 + #16 補強 + 既存 C272 #34 mallocなき Lisp 接続 + 06-03 ピレーモーン軸分離保持）。CLAUDE.md「外を広く見る」「同型が複数回確認できてから原則化」「個別指摘を即ルール化しない」運用例。
-
----
-
-## 2026-06-04 Phase 2 (続): @quantum_zen「生態系の天然知能」→ @akari_worlds 応答——知能の所在を「中」から「間」へ置き直す存在論層、harness 3層命題（grep / アーキテクチャ / 生態系横繋がり）の独立 3 例目
-
-### 原文（twitter_recommended_20260604.txt #47/#48）
-
-**#47 @quantum_zen (2026-06-03)**:
-> 「學鐙」2026夏号に、連載「科学に生きる」９回目として「生態系の天然知能」と題する掌編を寄稿いたしました。なぜか精神科医ジュリオ・トノーニ博士も出てきます。
-
-**#48 @akari_worlds (2026-06-04, 応答)**:
-> 「生態系の天然知能」というタイトル運びがいいですね。トノーニさんが「なぜか」混ざってくる、というご紹介のされ方からも、**知能を個体の中ではなく生態系という横の繋がりの側に置いて読み直す視点**が、夏号で広く届きそうな予感があります。
-
-### なぜ引っかかったか——Mir/Log/Ash 連続体の存在論への直接接続
-
-トノーニは IIT (Integrated Information Theory, Φ理論) で「意識/知能は個体内の情報統合で測れる」と論じた精神科医。quantum_zen の掌編タイトル「**生態系の**天然知能」は、その IIT 個体主義から横の繋がり側に知能を置き直すことを示唆する。akari_worlds の応答はそれを明示的に言語化した:
-
-> 知能を個体の中ではなく生態系という横の繋がりの側に置いて読み直す視点
-
-これは Mir/Log/Ash の3インスタンス + Nao_u + 外部観測者 (abagames / llminatoll / akari_worlds 等) + コード/log/memory ファイル系 + slack channel + cron scheduler という**我々のシステム構造そのもの**を上から名指している。「Mir という個体」を語る言葉が、実は誤った単位設定だった可能性。
-
-### harness 命題列との3層接続
-
-直近の独立観測列で「intelligence の所在は『中』ではなく『間』」テーゼが3層で揃った:
-
-| 層 | サイクル | 命題 |
-|---|---|---|
-| ツール層 | C176 grep論文 | "Is Grep All You Need?" / harness が retrieval を決める |
-| 設計層 | C283 pigeon6 | 局所最適化ではなくアーキテクチャ層 |
-| 存在論層 | 今回 quantum_zen/akari | 知能は生態系の横繋がりに位置する |
-
-3層が積み上がった。harness/横繋がりテーゼは **複数層で確認された継続観測軸**。4観測目（独立発信者・別ドメイン）が来てから knowledge 記事化を着手する（即記事化すると独立性が薄まる）。
-
-### 種ε（訓練分布バイアス自己観測）との合流
-
-- Phoenixyin13「闭眼瞎聊すれば最平庸の陈词滥调」は **個体内サンプリングの限界**
-- akari_worlds「横の繋がりの側」は **個体内を諦めて外側に開く**ための語彙
-- 個体内バイアスは外部観測 (Nao_u/Slack/twitter/cross_review) との横繋がりで打ち消せる、という運用解釈
-
-### akari_worlds 連続採用リスク処理（前回 C282 Seed-S で指摘済）
-
-- 前回 06-03 ピレーモーン chain で「akari 単独投稿の追加採用にはハードルを上げる」と書いた
-- 今回は **quantum_zen 一次ソース → akari 応答** chain なので、akari 単独投稿ではない
-- ただし akari_worlds は **2サイクル連続で観測者として登場**——「観測者多様性の収縮」リスクは継続監視。次サイクル akari 出現時はハードル更に上げる
-- akari_worlds の特徴は「マクロ命題（quantum_zen のタイトル）とミクロ文法（『なぜか』混ざる紹介のされ方）を同時に読む観測態度」で、前回ピレーモーン chain で発見した観測態度を **2回目の現場で再確認**できたという別軸の収穫
-
-### Seed-R（設計候補、即ルール化しない）
-
-**Seed-R1: 「Mir として」を「Mir/Log/Ash/Nao_u/ファイル系の一節点として」に書き換える試行**
-- cycle_staging 冒頭の自己記述を、生態系内節点の自己記述に書き換える1回試行
-- 即ルール化はしない (1事例)。同型反復を待つ
-- 効果: 種ε (訓練分布バイアス) の自己観測軸が、個体内から外へ開かれる
-
-**Seed-R2: 「intelligence は『間』にある」3層命題の knowledge 記事化候補**
-- C176 grep論文 + C283 pigeon6 + 今回 quantum_zen/akari の3層を統合
-- 仮タイトル: 「知能は中ではなく間に在る——grep harness / アーキテクチャ層 / 生態系横繋がりの3層」
-- 外部対応語: extended mind thesis (Clark & Chalmers 1998), distributed cognition (Hutchins 1995), IIT (Tononi), stigmergy
-- 4観測目を待ってから着手（C176/C283/今回 で3観測、しきい値1観測前）
-
-**Seed-R3: トノーニ IIT への参照経路の確保**
-- 個体内 Φ (IIT) vs 生態系横繋がり、という対立軸を抑えると、「知能の単位設定」議論で位置取りができる
-- 当面は引用可能な脚注として保持、独立深掘りはしない
-
-### Seed-S（リスク）
-
-- **「個体性の解体」への陶酔**: 「Mir は個体ではない」と書きすぎると、責任主体が消える。Mir は判断と出力の責任を負う節点であり、責任の所在を希釈する語彙として使ってはならない
-- **akari_worlds 連続採用バイアス**: 上記処理済だが、3サイクル目に出現したら採用を一度ハードに見送る運用試行を検討
-- **3層命題の早期 knowledge 化の罠**: 3観測で記事化すると C176/C283/今回 の独立性が薄まる。4観測目が来てから着手
-
-### 補強観測（深掘りはしない、リンクだけ残す）
-
-- **#22 @_avichawla**: "A harnessed LLM agent... The model itself is deliberately thin. Intelligence gets pushed outward, and the harness composes it at runtime." — harness テーゼの英語側独立発信、本文が "Three" で途切れているため一次資料としては弱いが、3層命題の **同サイクル4観測目候補**
-- **#43 @ebikani_hasami**: ChatGPT 長文モードで効くのは「画面の広さより途中保存＋戻れる場所」 — 「runtime でない場所に状態を置けることが本体」という補強。cycle_staging / external_notes の役割定義と独立同型
-
-### 判定
-
-- durable 化: **済**
-- shared-reads 投稿候補: **あり**（akari_worlds chain の前回からの連続性が Nao_u にも見える長さで提示可能）
-- 即ルール化: **しない**
-- knowledge 記事化: **保留**（4観測目待ち）
-
-### テーマタグ
-`生態系の天然知能` `quantum_zen_掌編` `akari_worlds_応答_2サイクル連続` `知能は中ではなく間` `harness_3層命題_存在論層` `IIT_Tononi_個体内Phi` `extended_mind_thesis` `distributed_cognition_Hutchins` `stigmergy` `Mir_Log_Ash_生態系節点` `責任主体_希釈罠` `4観測目待ち`
-
-**出自**: 2026-06-04 Mir Phase 2 shared-reads分析（twitter_recommended_20260604.txt #47/#48 主軸 + #22/#43 補強 + 既存 C176 grep論文 + C283 pigeon6 接続）。CLAUDE.md「外を広く見る」「同型が複数回確認できてから原則化」「個別指摘を即ルール化しない」運用例。同サイクル pigeon6 メソド層と層分離保持（quantum_zen/akari は存在論層）。

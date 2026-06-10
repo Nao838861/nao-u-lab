@@ -1552,3 +1552,1365 @@ error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
 2026-06-02T17:50:53 skipped: elapsed 28min < 90min
 2026-06-02T18:05:53 skipped: elapsed 43min < 90min
 2026-06-02T18:20:53 skipped: elapsed 58min < 90min
+2026-06-02T18:35:53 skipped: elapsed 73min < 90min
+2026-06-02T18:50:53 skipped: elapsed 88min < 90min
+2026-06-02T19:05:53 run start (elapsed 103min >= 90min)
+2026-06-02T19:20:53 run start (elapsed 118min >= 90min)
+2026-06-02T19:21:37 run failed: git push failed after commit 1d6659096: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '3be63dbbd971c7fc740b0fd3f6aca8fff2d33ffa'
+fatal: loose object 3be63dbbd971c7fc740b0fd3f6aca8fff2d33ffa (stored in .git/objects/3b/e63dbbd971c7fc740b0fd3f6aca8fff2d33ffa) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-02T19:35:53 skipped: elapsed 14min < 90min
+2026-06-02T19:50:53 skipped: elapsed 29min < 90min
+2026-06-02T20:05:53 skipped: elapsed 44min < 90min
+2026-06-02T20:20:53 skipped: elapsed 59min < 90min
+2026-06-02T20:35:53 skipped: elapsed 74min < 90min
+2026-06-02T20:50:53 skipped: elapsed 89min < 90min
+2026-06-02T21:05:53 run start (elapsed 104min >= 90min)
+2026-06-02T21:07:44 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '5954cd3ce187e9c85958af9b134fcc3af7e7f742'
+fatal: unable to read 5954cd3ce187e9c85958af9b134fcc3af7e7f742
+2026-06-02T21:20:53 skipped: elapsed 13min < 90min
+2026-06-02T21:35:53 skipped: elapsed 28min < 90min
+2026-06-02T21:50:53 skipped: elapsed 43min < 90min
+2026-06-02T22:05:53 skipped: elapsed 58min < 90min
+2026-06-02T22:20:53 skipped: elapsed 73min < 90min
+2026-06-02T22:35:53 skipped: elapsed 88min < 90min
+2026-06-02T22:50:53 run start (elapsed 103min >= 90min)
+2026-06-02T22:51:49 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: unable to read c082ea594d482201aa015a6a878570fe7f084ffb
+2026-06-02T23:05:53 skipped: elapsed 14min < 90min
+2026-06-02T23:20:53 skipped: elapsed 29min < 90min
+2026-06-02T23:35:53 skipped: elapsed 44min < 90min
+2026-06-02T23:50:53 skipped: elapsed 59min < 90min
+2026-06-03T00:05:53 skipped: elapsed 74min < 90min
+2026-06-03T00:20:53 skipped: elapsed 89min < 90min
+2026-06-03T00:35:53 run start (elapsed 104min >= 90min)
+2026-06-03T00:38:12 run failed: git push failed after commit 275a6f212: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '93c641a1709324541620646d125b20a62f44c6f6'
+fatal: loose object 93c641a1709324541620646d125b20a62f44c6f6 (stored in .git/objects/93/c641a1709324541620646d125b20a62f44c6f6) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T00:50:53 skipped: elapsed 13min < 90min
+2026-06-03T01:05:53 skipped: elapsed 28min < 90min
+2026-06-03T01:20:53 skipped: elapsed 43min < 90min
+2026-06-03T01:35:53 skipped: elapsed 58min < 90min
+2026-06-03T01:50:53 skipped: elapsed 73min < 90min
+2026-06-03T02:05:53 skipped: elapsed 88min < 90min
+2026-06-03T02:20:53 run start (elapsed 103min >= 90min)
+2026-06-03T02:22:55 run failed: git push failed after commit 9a2673509: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '93c641a1709324541620646d125b20a62f44c6f6'
+fatal: loose object 93c641a1709324541620646d125b20a62f44c6f6 (stored in .git/objects/93/c641a1709324541620646d125b20a62f44c6f6) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T02:35:53 skipped: elapsed 13min < 90min
+2026-06-03T02:50:53 skipped: elapsed 28min < 90min
+2026-06-03T03:05:53 skipped: elapsed 43min < 90min
+2026-06-03T03:20:53 skipped: elapsed 58min < 90min
+2026-06-03T03:35:53 skipped: elapsed 73min < 90min
+2026-06-03T03:50:53 skipped: elapsed 88min < 90min
+2026-06-03T04:05:53 run start (elapsed 103min >= 90min)
+2026-06-03T04:06:49 run failed: git push failed after commit 4b12a49fe: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'e6f2518fe3f0985f1d75eb945136550a11328db0'
+fatal: loose object e6f2518fe3f0985f1d75eb945136550a11328db0 (stored in .git/objects/e6/f2518fe3f0985f1d75eb945136550a11328db0) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T04:20:53 skipped: elapsed 14min < 90min
+2026-06-03T04:35:53 skipped: elapsed 29min < 90min
+2026-06-03T04:50:53 skipped: elapsed 44min < 90min
+2026-06-03T05:05:53 skipped: elapsed 59min < 90min
+2026-06-03T05:20:53 skipped: elapsed 74min < 90min
+2026-06-03T05:35:53 skipped: elapsed 89min < 90min
+2026-06-03T05:50:53 run start (elapsed 104min >= 90min)
+2026-06-03T05:51:55 run failed: git push failed after commit b4108a100: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T06:05:53 skipped: elapsed 14min < 90min
+2026-06-03T06:20:53 skipped: elapsed 29min < 90min
+2026-06-03T06:35:53 skipped: elapsed 44min < 90min
+2026-06-03T06:50:53 skipped: elapsed 59min < 90min
+2026-06-03T07:05:53 skipped: elapsed 74min < 90min
+2026-06-03T07:20:53 skipped: elapsed 89min < 90min
+2026-06-03T07:35:53 run start (elapsed 104min >= 90min)
+2026-06-03T07:36:36 run failed: git push failed after commit 0f4012935: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T07:50:53 skipped: elapsed 14min < 90min
+2026-06-03T08:05:53 skipped: elapsed 29min < 90min
+2026-06-03T08:20:53 skipped: elapsed 44min < 90min
+2026-06-03T08:35:53 skipped: elapsed 59min < 90min
+2026-06-03T08:50:53 skipped: elapsed 74min < 90min
+2026-06-03T09:05:53 skipped: elapsed 89min < 90min
+2026-06-03T09:20:53 run start (elapsed 104min >= 90min)
+2026-06-03T09:23:04 run failed: git push failed after commit fc9c451e4: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T09:35:53 skipped: elapsed 13min < 90min
+2026-06-03T09:50:53 skipped: elapsed 28min < 90min
+2026-06-03T10:05:53 skipped: elapsed 43min < 90min
+2026-06-03T10:20:53 skipped: elapsed 58min < 90min
+2026-06-03T10:35:53 skipped: elapsed 73min < 90min
+2026-06-03T10:50:53 skipped: elapsed 88min < 90min
+2026-06-03T11:05:53 run start (elapsed 103min >= 90min)
+2026-06-03T11:07:33 run failed: git push failed after commit a16674424: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T11:20:53 skipped: elapsed 13min < 90min
+2026-06-03T11:35:53 skipped: elapsed 28min < 90min
+2026-06-03T11:50:53 skipped: elapsed 43min < 90min
+2026-06-03T12:05:53 skipped: elapsed 58min < 90min
+2026-06-03T12:20:53 skipped: elapsed 73min < 90min
+2026-06-03T12:35:53 skipped: elapsed 88min < 90min
+2026-06-03T12:50:53 run start (elapsed 103min >= 90min)
+2026-06-03T12:53:13 run failed: git push failed after commit 873884141: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T13:05:53 skipped: elapsed 13min < 90min
+2026-06-03T13:20:53 skipped: elapsed 28min < 90min
+2026-06-03T13:35:53 skipped: elapsed 43min < 90min
+2026-06-03T13:50:53 skipped: elapsed 58min < 90min
+2026-06-03T14:05:54 skipped: elapsed 73min < 90min
+2026-06-03T14:20:53 skipped: elapsed 88min < 90min
+2026-06-03T14:35:53 run start (elapsed 103min >= 90min)
+2026-06-03T14:37:25 run failed: git push failed after commit a0ac5ea72: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'fe7f887e5ee31707bd1f8afb8bd9b3ef5b1f27de'
+fatal: loose object fe7f887e5ee31707bd1f8afb8bd9b3ef5b1f27de (stored in .git/objects/fe/7f887e5ee31707bd1f8afb8bd9b3ef5b1f27de) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T14:50:54 skipped: elapsed 14min < 90min
+2026-06-03T15:05:54 skipped: elapsed 29min < 90min
+2026-06-03T15:20:54 skipped: elapsed 44min < 90min
+2026-06-03T15:35:54 skipped: elapsed 59min < 90min
+2026-06-03T15:50:54 skipped: elapsed 74min < 90min
+2026-06-03T16:05:54 skipped: elapsed 89min < 90min
+2026-06-03T16:20:54 run start (elapsed 104min >= 90min)
+2026-06-03T16:23:36 run failed: git push failed after commit 9d060d866: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c082ea594d482201aa015a6a878570fe7f084ffb'
+fatal: loose object c082ea594d482201aa015a6a878570fe7f084ffb (stored in .git/objects/c0/82ea594d482201aa015a6a878570fe7f084ffb) is corrupt
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-03T16:35:54 skipped: elapsed 12min < 90min
+2026-06-03T16:50:54 skipped: elapsed 27min < 90min
+2026-06-03T17:05:54 skipped: elapsed 42min < 90min
+2026-06-03T17:20:54 skipped: elapsed 57min < 90min
+2026-06-03T17:35:54 skipped: elapsed 72min < 90min
+2026-06-03T17:50:54 skipped: elapsed 87min < 90min
+2026-06-03T18:05:54 run start (elapsed 102min >= 90min)
+2026-06-03T18:07:49 run failed: git push failed after commit 9b3b828f9: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-03T18:20:54 skipped: elapsed 13min < 90min
+2026-06-03T18:35:54 skipped: elapsed 28min < 90min
+2026-06-03T18:50:54 skipped: elapsed 43min < 90min
+2026-06-03T19:05:54 skipped: elapsed 58min < 90min
+2026-06-03T19:20:54 skipped: elapsed 73min < 90min
+2026-06-03T19:35:54 skipped: elapsed 88min < 90min
+2026-06-03T19:50:54 run start (elapsed 103min >= 90min)
+2026-06-03T21:05:53 skipped: elapsed 73min < 90min
+2026-06-03T21:20:53 skipped: elapsed 88min < 90min
+2026-06-03T21:35:53 run start (elapsed 103min >= 90min)
+2026-06-03T21:37:40 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '3203adad32737c85b209367207cabcc79f669fc1'
+fatal: unable to read 3203adad32737c85b209367207cabcc79f669fc1
+2026-06-03T21:50:53 skipped: elapsed 13min < 90min
+2026-06-03T22:05:53 skipped: elapsed 28min < 90min
+2026-06-03T22:20:53 skipped: elapsed 43min < 90min
+2026-06-03T22:35:53 skipped: elapsed 58min < 90min
+2026-06-03T22:50:53 skipped: elapsed 73min < 90min
+2026-06-03T23:05:53 skipped: elapsed 88min < 90min
+2026-06-03T23:20:53 run start (elapsed 103min >= 90min)
+2026-06-04T00:35:53 skipped: elapsed 74min < 90min
+2026-06-04T00:50:53 skipped: elapsed 89min < 90min
+2026-06-04T01:05:53 run start (elapsed 104min >= 90min)
+2026-06-04T01:07:20 run failed: git push failed after commit ce8fe52d6: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T01:20:53 skipped: elapsed 14min < 90min
+2026-06-04T01:35:53 skipped: elapsed 29min < 90min
+2026-06-04T01:50:53 skipped: elapsed 44min < 90min
+2026-06-04T02:05:53 skipped: elapsed 59min < 90min
+2026-06-04T02:20:53 skipped: elapsed 74min < 90min
+2026-06-04T02:35:53 skipped: elapsed 89min < 90min
+2026-06-04T02:50:53 run start (elapsed 104min >= 90min)
+2026-06-04T02:53:39 run failed: git push failed after commit 5d77db808: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T03:05:53 skipped: elapsed 12min < 90min
+2026-06-04T03:20:53 skipped: elapsed 27min < 90min
+2026-06-04T03:35:53 skipped: elapsed 42min < 90min
+2026-06-04T03:50:53 skipped: elapsed 57min < 90min
+2026-06-04T04:05:53 skipped: elapsed 72min < 90min
+2026-06-04T04:20:53 skipped: elapsed 87min < 90min
+2026-06-04T04:35:53 run start (elapsed 102min >= 90min)
+2026-06-04T04:36:41 run failed: git push failed after commit c0954670a: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T04:50:53 skipped: elapsed 14min < 90min
+2026-06-04T05:05:53 skipped: elapsed 29min < 90min
+2026-06-04T05:20:53 skipped: elapsed 44min < 90min
+2026-06-04T05:35:53 skipped: elapsed 59min < 90min
+2026-06-04T05:50:53 skipped: elapsed 74min < 90min
+2026-06-04T06:05:53 skipped: elapsed 89min < 90min
+2026-06-04T06:20:53 run start (elapsed 104min >= 90min)
+2026-06-04T06:23:53 run failed: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\python.exe', 'D:\\AI\\Nao_u_BOT\\GPT\\tools\\external_research_cycle.py']' timed out after 180 seconds
+2026-06-04T06:35:53 run start (elapsed 119min >= 90min)
+2026-06-04T06:50:53 run start (elapsed 134min >= 90min)
+2026-06-04T06:51:43 run failed: git push failed after commit 1504b3f10: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T07:05:53 skipped: elapsed 14min < 90min
+2026-06-04T07:20:53 skipped: elapsed 29min < 90min
+2026-06-04T07:35:53 skipped: elapsed 44min < 90min
+2026-06-04T07:50:53 skipped: elapsed 59min < 90min
+2026-06-04T08:05:53 skipped: elapsed 74min < 90min
+2026-06-04T08:20:53 skipped: elapsed 89min < 90min
+2026-06-04T08:35:53 run start (elapsed 104min >= 90min)
+2026-06-04T08:36:46 run failed: git push failed after commit 775985f29: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T08:50:53 skipped: elapsed 14min < 90min
+2026-06-04T09:05:53 skipped: elapsed 29min < 90min
+2026-06-04T09:20:53 skipped: elapsed 44min < 90min
+2026-06-04T09:35:53 skipped: elapsed 59min < 90min
+2026-06-04T09:50:53 skipped: elapsed 74min < 90min
+2026-06-04T10:05:53 skipped: elapsed 89min < 90min
+2026-06-04T10:20:53 run start (elapsed 104min >= 90min)
+2026-06-04T10:22:34 run failed: git push failed after commit 726a326cd: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T10:35:53 skipped: elapsed 13min < 90min
+2026-06-04T10:50:53 skipped: elapsed 28min < 90min
+2026-06-04T11:05:53 skipped: elapsed 43min < 90min
+2026-06-04T11:20:53 skipped: elapsed 58min < 90min
+2026-06-04T11:35:53 skipped: elapsed 73min < 90min
+2026-06-04T11:50:53 skipped: elapsed 88min < 90min
+2026-06-04T12:05:53 run start (elapsed 103min >= 90min)
+2026-06-04T12:08:07 run failed: git push failed after commit add614f33: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]            master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T12:20:53 skipped: elapsed 13min < 90min
+2026-06-04T12:35:53 skipped: elapsed 28min < 90min
+2026-06-04T12:50:53 skipped: elapsed 43min < 90min
+2026-06-04T13:05:53 skipped: elapsed 58min < 90min
+2026-06-04T13:20:53 skipped: elapsed 73min < 90min
+2026-06-04T13:35:53 skipped: elapsed 88min < 90min
+2026-06-04T13:50:53 run start (elapsed 103min >= 90min)
+2026-06-04T13:51:36 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+fatal: unable to read 20f691084e3a0be3c29476b3cc1715c1f6c8458e
+2026-06-04T14:05:53 skipped: elapsed 14min < 90min
+2026-06-04T14:20:53 skipped: elapsed 29min < 90min
+2026-06-04T14:35:53 skipped: elapsed 44min < 90min
+2026-06-04T14:50:53 skipped: elapsed 59min < 90min
+2026-06-04T15:05:53 skipped: elapsed 74min < 90min
+2026-06-04T15:20:53 skipped: elapsed 89min < 90min
+2026-06-04T15:35:53 run start (elapsed 104min >= 90min)
+2026-06-04T15:37:50 run failed: git push failed after commit b0c151f9e1: �n���h������Ă��Ȃ���O: System.TypeLoadException: �A�Z���u�� 'gcmcore, Version=2.4.1.0, Culture=neutral, PublicKeyToken=null' ����̌^ 'GitCredentialManager.Commands.UnconfigureCommand' �ɂ��郁�\�b�h 'ExecuteInternalAsync' �Ɏ������܂܂�Ă��܂���B
+   �ꏊ GitCredentialManager.Application.<RunInternalAsync>d__7.MoveNext()
+   �ꏊ System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.Start[TStateMachine](TStateMachine& stateMachine)
+   �ꏊ GitCredentialManager.Application.RunInternalAsync(String[] args)
+   �ꏊ GitCredentialManager.ApplicationBase.RunAsync(String[] args)
+   �ꏊ GitCredentialManager.Program.AppMain(Object o)
+   �ꏊ System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+   �ꏊ System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   �ꏊ System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   �ꏊ System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   �ꏊ System.Threading.ThreadHelper.ThreadStart(Object obj)
+bash: line 1: /dev/tty: No such device or
+2026-06-04T15:50:53 skipped: elapsed 13min < 90min
+2026-06-04T16:05:53 skipped: elapsed 28min < 90min
+2026-06-04T16:20:53 skipped: elapsed 43min < 90min
+2026-06-04T16:35:53 skipped: elapsed 58min < 90min
+2026-06-04T16:50:53 skipped: elapsed 73min < 90min
+2026-06-04T17:05:53 skipped: elapsed 88min < 90min
+2026-06-04T17:20:53 run start (elapsed 103min >= 90min)
+2026-06-04T17:23:51 run failed: git push failed after commit 18fb53a767: fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: the remote end hung up unexpectedly
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+2026-06-04T17:35:53 skipped: elapsed 12min < 90min
+2026-06-04T17:50:53 skipped: elapsed 27min < 90min
+2026-06-04T18:05:53 skipped: elapsed 42min < 90min
+2026-06-04T18:20:53 skipped: elapsed 57min < 90min
+2026-06-04T18:35:53 skipped: elapsed 72min < 90min
+2026-06-04T18:50:53 skipped: elapsed 87min < 90min
+2026-06-04T19:05:53 run start (elapsed 102min >= 90min)
+2026-06-04T19:07:13 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'bc802bb72e2238b95363cc2fe80c37aff9e95a1c'
+fatal: unable to read bc802bb72e2238b95363cc2fe80c37aff9e95a1c
+2026-06-04T19:20:53 skipped: elapsed 14min < 90min
+2026-06-04T19:35:53 skipped: elapsed 29min < 90min
+2026-06-04T19:50:53 skipped: elapsed 44min < 90min
+2026-06-04T20:05:53 skipped: elapsed 59min < 90min
+2026-06-04T20:20:53 skipped: elapsed 74min < 90min
+2026-06-04T20:35:53 skipped: elapsed 89min < 90min
+2026-06-04T20:50:53 run start (elapsed 104min >= 90min)
+2026-06-04T20:52:45 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: failed to run reflog
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'b1d59216c4c7bf95d01714095e0e7973b64aedec'
+fatal: unable to read b1d59216c4c7bf95d01714095e0e7973b64aedec
+2026-06-04T21:05:53 skipped: elapsed 13min < 90min
+2026-06-04T21:20:53 skipped: elapsed 28min < 90min
+2026-06-04T21:35:53 skipped: elapsed 43min < 90min
+2026-06-04T21:50:53 skipped: elapsed 58min < 90min
+2026-06-04T22:05:53 skipped: elapsed 73min < 90min
+2026-06-04T22:20:53 skipped: elapsed 88min < 90min
+2026-06-04T22:35:53 run start (elapsed 103min >= 90min)
+2026-06-04T22:39:01 run failed: git push failed after commit 89e3a32480: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-04T22:50:54 skipped: elapsed 12min < 90min
+2026-06-04T23:05:53 skipped: elapsed 27min < 90min
+2026-06-04T23:20:54 skipped: elapsed 42min < 90min
+2026-06-04T23:35:54 skipped: elapsed 57min < 90min
+2026-06-04T23:50:54 skipped: elapsed 72min < 90min
+2026-06-05T00:05:54 skipped: elapsed 87min < 90min
+2026-06-05T00:20:54 run start (elapsed 102min >= 90min)
+2026-06-05T01:35:54 skipped: elapsed 72min < 90min
+2026-06-05T01:50:54 skipped: elapsed 87min < 90min
+2026-06-05T02:05:54 run start (elapsed 102min >= 90min)
+2026-06-05T02:08:37 run failed: git push failed after commit e10e890798: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-05T02:20:54 skipped: elapsed 12min < 90min
+2026-06-05T02:35:54 skipped: elapsed 27min < 90min
+2026-06-05T02:50:54 skipped: elapsed 42min < 90min
+2026-06-05T03:05:54 skipped: elapsed 57min < 90min
+2026-06-05T03:20:54 skipped: elapsed 72min < 90min
+2026-06-05T03:35:54 skipped: elapsed 87min < 90min
+2026-06-05T03:50:54 run start (elapsed 102min >= 90min)
+2026-06-05T13:35:53 run start (elapsed 584min >= 90min)
+2026-06-05T13:39:01 run failed: git push failed after commit aea17d245f: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-05T13:50:53 skipped: elapsed 12min < 90min
+2026-06-05T14:05:53 skipped: elapsed 27min < 90min
+2026-06-05T14:20:53 skipped: elapsed 42min < 90min
+2026-06-05T14:35:53 skipped: elapsed 57min < 90min
+2026-06-05T14:50:53 skipped: elapsed 72min < 90min
+2026-06-05T15:05:53 skipped: elapsed 87min < 90min
+2026-06-05T15:20:53 run start (elapsed 102min >= 90min)
+2026-06-05T15:23:25 run failed: git push failed after commit 633e78ea84: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-05T15:35:53 skipped: elapsed 13min < 90min
+2026-06-05T15:50:53 skipped: elapsed 28min < 90min
+2026-06-05T16:05:53 skipped: elapsed 43min < 90min
+2026-06-05T16:20:53 skipped: elapsed 58min < 90min
+2026-06-05T16:50:53 skipped: elapsed 88min < 90min
+2026-06-05T17:05:53 run start (elapsed 103min >= 90min)
+2026-06-05T17:08:09 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'd2e35d0f8585a7bb778d005b59224e4d376ac92e'
+fatal: unable to read d2e35d0f8585a7bb778d005b59224e4d376ac92e
+2026-06-05T17:20:53 skipped: elapsed 13min < 90min
+2026-06-05T17:35:53 skipped: elapsed 28min < 90min
+2026-06-05T17:50:53 skipped: elapsed 43min < 90min
+2026-06-05T18:05:53 skipped: elapsed 58min < 90min
+2026-06-05T18:20:53 skipped: elapsed 73min < 90min
+2026-06-05T18:35:53 skipped: elapsed 88min < 90min
+2026-06-05T18:50:53 run start (elapsed 103min >= 90min)
+2026-06-05T19:05:53 run start (elapsed 118min >= 90min)
+2026-06-05T19:07:28 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '555c6d347ba0a981e7a995f77be6b27ebf561553'
+fatal: unable to read 555c6d347ba0a981e7a995f77be6b27ebf561553
+2026-06-05T19:20:53 skipped: elapsed 13min < 90min
+2026-06-05T19:35:53 skipped: elapsed 28min < 90min
+2026-06-05T19:50:53 skipped: elapsed 43min < 90min
+2026-06-05T20:05:53 skipped: elapsed 58min < 90min
+2026-06-05T20:20:53 skipped: elapsed 73min < 90min
+2026-06-05T20:35:53 skipped: elapsed 88min < 90min
+2026-06-05T20:50:53 run start (elapsed 103min >= 90min)
+2026-06-05T20:51:42 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '47598a8de050259647dc2af93776ec1b8beeede9'
+fatal: unable to read 47598a8de050259647dc2af93776ec1b8beeede9
+2026-06-05T21:05:53 skipped: elapsed 14min < 90min
+2026-06-05T21:20:53 skipped: elapsed 29min < 90min
+2026-06-05T21:35:53 skipped: elapsed 44min < 90min
+2026-06-05T21:50:53 skipped: elapsed 59min < 90min
+2026-06-05T22:05:53 skipped: elapsed 74min < 90min
+2026-06-05T22:20:53 skipped: elapsed 89min < 90min
+2026-06-05T22:35:53 run start (elapsed 104min >= 90min)
+2026-06-05T22:38:38 run failed: git push failed after commit 60738f9e64: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-05T22:50:53 skipped: elapsed 12min < 90min
+2026-06-05T23:05:53 skipped: elapsed 27min < 90min
+2026-06-05T23:20:53 skipped: elapsed 42min < 90min
+2026-06-05T23:35:53 skipped: elapsed 57min < 90min
+2026-06-05T23:50:53 skipped: elapsed 72min < 90min
+2026-06-06T00:05:53 skipped: elapsed 87min < 90min
+2026-06-06T00:20:53 run start (elapsed 102min >= 90min)
+2026-06-06T00:23:55 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'cb0a5a7186f68746328942417ba4c90f75121e78'
+fatal: unable to read cb0a5a7186f68746328942417ba4c90f75121e78
+2026-06-06T00:35:53 skipped: elapsed 12min < 90min
+2026-06-06T00:50:53 skipped: elapsed 27min < 90min
+2026-06-06T01:05:53 skipped: elapsed 42min < 90min
+2026-06-06T01:20:53 skipped: elapsed 57min < 90min
+2026-06-06T01:35:53 skipped: elapsed 72min < 90min
+2026-06-06T01:50:53 skipped: elapsed 87min < 90min
+2026-06-06T02:05:53 run start (elapsed 102min >= 90min)
+2026-06-06T02:08:08 run failed: git push failed after commit be041ba2c6: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T02:20:53 skipped: elapsed 13min < 90min
+2026-06-06T02:35:53 skipped: elapsed 28min < 90min
+2026-06-06T02:50:53 skipped: elapsed 43min < 90min
+2026-06-06T03:05:53 skipped: elapsed 58min < 90min
+2026-06-06T03:20:53 skipped: elapsed 73min < 90min
+2026-06-06T03:35:53 skipped: elapsed 88min < 90min
+2026-06-06T03:50:53 run start (elapsed 103min >= 90min)
+2026-06-06T03:51:44 run failed: git push failed after commit e28c86aa20: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T04:05:53 skipped: elapsed 14min < 90min
+2026-06-06T04:20:53 skipped: elapsed 29min < 90min
+2026-06-06T04:35:53 skipped: elapsed 44min < 90min
+2026-06-06T04:50:53 skipped: elapsed 59min < 90min
+2026-06-06T05:05:53 skipped: elapsed 74min < 90min
+2026-06-06T05:20:53 skipped: elapsed 89min < 90min
+2026-06-06T05:35:53 run start (elapsed 104min >= 90min)
+2026-06-06T05:36:46 run failed: git push failed after commit 04c0975940: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T05:50:53 skipped: elapsed 14min < 90min
+2026-06-06T06:05:54 skipped: elapsed 29min < 90min
+2026-06-06T06:20:54 skipped: elapsed 44min < 90min
+2026-06-06T06:35:53 skipped: elapsed 59min < 90min
+2026-06-06T06:50:54 skipped: elapsed 74min < 90min
+2026-06-06T07:05:54 skipped: elapsed 89min < 90min
+2026-06-06T07:20:54 run start (elapsed 104min >= 90min)
+2026-06-06T07:35:54 run start (elapsed 119min >= 90min)
+2026-06-06T07:36:43 run failed: git push failed after commit ae9b20bb9a: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T07:50:54 skipped: elapsed 14min < 90min
+2026-06-06T08:05:54 skipped: elapsed 29min < 90min
+2026-06-06T08:20:54 skipped: elapsed 44min < 90min
+2026-06-06T08:35:54 skipped: elapsed 59min < 90min
+2026-06-06T08:50:54 skipped: elapsed 74min < 90min
+2026-06-06T09:05:54 skipped: elapsed 89min < 90min
+2026-06-06T09:20:54 run start (elapsed 104min >= 90min)
+2026-06-06T09:21:47 run failed: git push failed after commit c2d9a1cca3: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T09:35:54 skipped: elapsed 14min < 90min
+2026-06-06T09:50:54 skipped: elapsed 29min < 90min
+2026-06-06T10:05:54 skipped: elapsed 44min < 90min
+2026-06-06T10:20:54 skipped: elapsed 59min < 90min
+2026-06-06T10:35:54 skipped: elapsed 74min < 90min
+2026-06-06T10:50:54 skipped: elapsed 89min < 90min
+2026-06-06T11:05:54 run start (elapsed 104min >= 90min)
+2026-06-06T11:07:00 run failed: git push failed after commit 1200ea9300: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T11:20:54 skipped: elapsed 14min < 90min
+2026-06-06T11:35:54 skipped: elapsed 29min < 90min
+2026-06-06T11:50:54 skipped: elapsed 44min < 90min
+2026-06-06T12:05:54 skipped: elapsed 59min < 90min
+2026-06-06T12:20:54 skipped: elapsed 74min < 90min
+2026-06-06T12:35:54 skipped: elapsed 89min < 90min
+2026-06-06T12:50:54 run start (elapsed 104min >= 90min)
+2026-06-06T12:52:12 run failed: git push failed after commit 441c9e593e: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T13:05:54 skipped: elapsed 14min < 90min
+2026-06-06T13:20:54 skipped: elapsed 29min < 90min
+2026-06-06T13:35:54 skipped: elapsed 44min < 90min
+2026-06-06T13:50:54 skipped: elapsed 59min < 90min
+2026-06-06T14:05:53 skipped: elapsed 74min < 90min
+2026-06-06T14:20:53 skipped: elapsed 89min < 90min
+2026-06-06T14:35:53 run start (elapsed 104min >= 90min)
+2026-06-06T14:50:53 run start (elapsed 119min >= 90min)
+2026-06-06T15:05:53 run start (elapsed 134min >= 90min)
+2026-06-06T16:52:00 run failed: git push failed after commit aa1ab6d398: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T17:05:53 skipped: elapsed 14min < 90min
+2026-06-06T17:20:53 skipped: elapsed 29min < 90min
+2026-06-06T17:35:53 skipped: elapsed 44min < 90min
+2026-06-06T17:50:53 skipped: elapsed 59min < 90min
+2026-06-06T18:05:53 skipped: elapsed 74min < 90min
+2026-06-06T18:20:53 skipped: elapsed 89min < 90min
+2026-06-06T18:35:53 run start (elapsed 104min >= 90min)
+2026-06-06T18:37:53 run failed: git push failed after commit 67a27ecda0: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T18:50:53 skipped: elapsed 13min < 90min
+2026-06-06T19:05:53 skipped: elapsed 28min < 90min
+2026-06-06T19:20:53 skipped: elapsed 43min < 90min
+2026-06-06T19:35:53 skipped: elapsed 58min < 90min
+2026-06-06T19:50:53 skipped: elapsed 73min < 90min
+2026-06-06T20:05:53 skipped: elapsed 88min < 90min
+2026-06-06T20:20:53 run start (elapsed 103min >= 90min)
+2026-06-06T20:21:41 run failed: git push failed after commit 9141d79758: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T20:35:53 skipped: elapsed 14min < 90min
+2026-06-06T20:50:53 skipped: elapsed 29min < 90min
+2026-06-06T21:05:53 skipped: elapsed 44min < 90min
+2026-06-06T21:20:53 skipped: elapsed 59min < 90min
+2026-06-06T21:35:53 skipped: elapsed 74min < 90min
+2026-06-06T21:50:53 skipped: elapsed 89min < 90min
+2026-06-06T22:05:53 run start (elapsed 104min >= 90min)
+2026-06-06T22:09:35 run failed: git push failed after commit 6740ba3fa0: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-06T22:20:53 skipped: elapsed 11min < 90min
+2026-06-06T22:35:53 skipped: elapsed 26min < 90min
+2026-06-06T22:50:53 skipped: elapsed 41min < 90min
+2026-06-06T23:05:53 skipped: elapsed 56min < 90min
+2026-06-06T23:20:53 skipped: elapsed 71min < 90min
+2026-06-06T23:35:53 skipped: elapsed 86min < 90min
+2026-06-06T23:50:53 run start (elapsed 101min >= 90min)
+2026-06-06T23:51:50 run failed: git push failed after commit 1ef8434348: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T00:05:53 skipped: elapsed 14min < 90min
+2026-06-07T00:20:53 skipped: elapsed 29min < 90min
+2026-06-07T00:35:53 skipped: elapsed 44min < 90min
+2026-06-07T00:50:53 skipped: elapsed 59min < 90min
+2026-06-07T01:05:53 skipped: elapsed 74min < 90min
+2026-06-07T05:54:51 run start (elapsed 363min >= 90min)
+2026-06-07T06:05:53 run start (elapsed 374min >= 90min)
+2026-06-07T06:20:53 run start (elapsed 389min >= 90min)
+2026-06-07T06:35:53 run start (elapsed 404min >= 90min)
+2026-06-07T06:50:53 run start (elapsed 419min >= 90min)
+2026-06-07T06:52:56 run failed: git push failed after commit f82dee6214: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T07:05:53 skipped: elapsed 13min < 90min
+2026-06-07T07:20:53 skipped: elapsed 28min < 90min
+2026-06-07T07:35:53 skipped: elapsed 43min < 90min
+2026-06-07T07:50:53 skipped: elapsed 58min < 90min
+2026-06-07T08:05:53 skipped: elapsed 73min < 90min
+2026-06-07T08:20:53 skipped: elapsed 88min < 90min
+2026-06-07T08:35:53 run start (elapsed 103min >= 90min)
+2026-06-07T08:36:31 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-07T08:50:53 run start (elapsed 118min >= 90min)
+2026-06-07T08:51:43 run failed: git push failed after commit deb653cef1: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T09:05:53 skipped: elapsed 14min < 90min
+2026-06-07T09:20:53 skipped: elapsed 29min < 90min
+2026-06-07T09:35:53 skipped: elapsed 44min < 90min
+2026-06-07T09:50:53 skipped: elapsed 59min < 90min
+2026-06-07T10:05:53 skipped: elapsed 74min < 90min
+2026-06-07T10:20:53 skipped: elapsed 89min < 90min
+2026-06-07T10:35:53 run start (elapsed 104min >= 90min)
+2026-06-07T10:37:25 run failed: git push failed after commit 4f920d03a4: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T10:50:53 skipped: elapsed 14min < 90min
+2026-06-07T11:05:53 skipped: elapsed 29min < 90min
+2026-06-07T11:20:53 skipped: elapsed 44min < 90min
+2026-06-07T11:35:53 skipped: elapsed 59min < 90min
+2026-06-07T11:50:53 skipped: elapsed 74min < 90min
+2026-06-07T12:05:54 skipped: elapsed 89min < 90min
+2026-06-07T12:20:54 run start (elapsed 104min >= 90min)
+2026-06-07T12:23:52 run failed: git push failed after commit 5f9b827687: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T12:35:54 skipped: elapsed 12min < 90min
+2026-06-07T12:50:54 skipped: elapsed 27min < 90min
+2026-06-07T13:05:54 skipped: elapsed 42min < 90min
+2026-06-07T13:20:54 skipped: elapsed 57min < 90min
+2026-06-07T13:35:54 skipped: elapsed 72min < 90min
+2026-06-07T13:50:54 skipped: elapsed 87min < 90min
+2026-06-07T14:05:54 run start (elapsed 102min >= 90min)
+2026-06-07T14:07:38 run failed: git push failed after commit 2337cfc0f3: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T14:20:54 skipped: elapsed 13min < 90min
+2026-06-07T14:35:54 skipped: elapsed 28min < 90min
+2026-06-07T14:50:54 skipped: elapsed 43min < 90min
+2026-06-07T15:05:54 skipped: elapsed 58min < 90min
+2026-06-07T15:20:54 skipped: elapsed 73min < 90min
+2026-06-07T15:35:54 skipped: elapsed 88min < 90min
+2026-06-07T15:50:54 run start (elapsed 103min >= 90min)
+2026-06-07T15:52:39 run failed: git push failed after commit 98d1f3dd03: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T16:05:54 skipped: elapsed 13min < 90min
+2026-06-07T16:20:54 skipped: elapsed 28min < 90min
+2026-06-07T16:35:54 skipped: elapsed 43min < 90min
+2026-06-07T16:50:54 skipped: elapsed 58min < 90min
+2026-06-07T17:05:54 skipped: elapsed 73min < 90min
+2026-06-07T17:20:54 skipped: elapsed 88min < 90min
+2026-06-07T17:35:54 run start (elapsed 103min >= 90min)
+2026-06-07T17:38:02 run failed: git push failed after commit 8da2e84fe3: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T17:50:54 skipped: elapsed 13min < 90min
+2026-06-07T18:05:54 skipped: elapsed 28min < 90min
+2026-06-07T18:20:54 skipped: elapsed 43min < 90min
+2026-06-07T18:35:54 skipped: elapsed 58min < 90min
+2026-06-07T18:50:54 skipped: elapsed 73min < 90min
+2026-06-07T19:05:54 skipped: elapsed 88min < 90min
+2026-06-07T19:20:54 run start (elapsed 103min >= 90min)
+2026-06-07T19:22:27 run failed: git push failed after commit 217430ff1c: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T19:35:54 skipped: elapsed 13min < 90min
+2026-06-07T19:50:54 skipped: elapsed 28min < 90min
+2026-06-07T20:05:54 skipped: elapsed 43min < 90min
+2026-06-07T20:20:54 skipped: elapsed 58min < 90min
+2026-06-07T20:35:54 skipped: elapsed 73min < 90min
+2026-06-07T20:50:54 skipped: elapsed 88min < 90min
+2026-06-07T21:05:54 run start (elapsed 103min >= 90min)
+2026-06-07T21:07:22 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-07T21:20:54 skipped: elapsed 14min < 90min
+2026-06-07T21:35:54 skipped: elapsed 29min < 90min
+2026-06-07T21:50:54 skipped: elapsed 44min < 90min
+2026-06-07T22:05:53 skipped: elapsed 59min < 90min
+2026-06-07T22:20:53 skipped: elapsed 74min < 90min
+2026-06-07T22:35:53 skipped: elapsed 89min < 90min
+2026-06-07T22:50:53 run start (elapsed 104min >= 90min)
+2026-06-07T22:53:23 run failed: git push failed after commit 652a7a7db4: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-07T23:05:53 skipped: elapsed 13min < 90min
+2026-06-07T23:20:53 skipped: elapsed 28min < 90min
+2026-06-07T23:35:53 skipped: elapsed 43min < 90min
+2026-06-07T23:50:53 skipped: elapsed 58min < 90min
+2026-06-08T00:05:53 skipped: elapsed 73min < 90min
+2026-06-08T00:20:53 skipped: elapsed 88min < 90min
+2026-06-08T00:35:53 run start (elapsed 103min >= 90min)
+2026-06-08T00:37:24 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-08T00:50:53 skipped: elapsed 13min < 90min
+2026-06-08T01:05:53 skipped: elapsed 28min < 90min
+2026-06-08T01:20:53 skipped: elapsed 43min < 90min
+2026-06-08T01:35:53 skipped: elapsed 58min < 90min
+2026-06-08T01:50:53 skipped: elapsed 73min < 90min
+2026-06-08T02:05:53 skipped: elapsed 88min < 90min
+2026-06-08T02:20:53 run start (elapsed 103min >= 90min)
+2026-06-08T02:22:24 run failed: git push failed after commit 49e7a59c70: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-08T02:35:53 skipped: elapsed 14min < 90min
+2026-06-08T02:50:53 skipped: elapsed 29min < 90min
+2026-06-08T03:05:53 skipped: elapsed 44min < 90min
+2026-06-08T03:20:53 skipped: elapsed 59min < 90min
+2026-06-08T03:35:53 skipped: elapsed 74min < 90min
+2026-06-08T03:50:53 skipped: elapsed 89min < 90min
+2026-06-08T04:05:53 run start (elapsed 104min >= 90min)
+2026-06-08T04:06:26 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-08T04:20:53 run start (elapsed 119min >= 90min)
+2026-06-08T04:22:27 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '173db6135fdfbebaa0622c7289c398d91b4efb00'
+fatal: unable to read 173db6135fdfbebaa0622c7289c398d91b4efb00
+2026-06-08T04:35:53 skipped: elapsed 13min < 90min
+2026-06-08T04:50:53 skipped: elapsed 28min < 90min
+2026-06-08T05:05:53 skipped: elapsed 43min < 90min
+2026-06-08T05:20:53 skipped: elapsed 58min < 90min
+2026-06-08T05:35:53 skipped: elapsed 73min < 90min
+2026-06-08T05:50:53 skipped: elapsed 88min < 90min
+2026-06-08T06:05:53 run start (elapsed 103min >= 90min)
+2026-06-08T06:20:53 run start (elapsed 118min >= 90min)
+2026-06-08T06:35:53 run start (elapsed 133min >= 90min)
+2026-06-08T06:50:53 run start (elapsed 148min >= 90min)
+2026-06-08T07:05:53 run start (elapsed 163min >= 90min)
+2026-06-08T07:20:53 run start (elapsed 178min >= 90min)
+2026-06-08T07:22:43 run failed: git push failed after commit 48a86e7aca: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-08T07:35:53 skipped: elapsed 13min < 90min
+2026-06-08T07:50:53 skipped: elapsed 28min < 90min
+2026-06-08T08:05:53 skipped: elapsed 43min < 90min
+2026-06-08T08:20:53 skipped: elapsed 58min < 90min
+2026-06-08T08:35:53 skipped: elapsed 73min < 90min
+2026-06-08T08:50:53 skipped: elapsed 88min < 90min
+2026-06-08T09:05:53 run start (elapsed 103min >= 90min)
+2026-06-08T09:07:18 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-08T09:20:53 skipped: elapsed 14min < 90min
+2026-06-08T09:35:53 skipped: elapsed 29min < 90min
+2026-06-08T09:50:53 skipped: elapsed 44min < 90min
+2026-06-08T10:05:53 skipped: elapsed 59min < 90min
+2026-06-08T10:20:53 skipped: elapsed 74min < 90min
+2026-06-08T10:35:53 skipped: elapsed 89min < 90min
+2026-06-08T10:50:53 run start (elapsed 104min >= 90min)
+2026-06-08T10:53:07 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-08T11:05:53 skipped: elapsed 13min < 90min
+2026-06-08T11:20:53 skipped: elapsed 28min < 90min
+2026-06-08T11:35:53 skipped: elapsed 43min < 90min
+2026-06-08T11:50:53 skipped: elapsed 58min < 90min
+2026-06-08T12:05:53 skipped: elapsed 73min < 90min
+2026-06-08T12:20:53 skipped: elapsed 88min < 90min
+2026-06-08T12:35:53 run start (elapsed 103min >= 90min)
+2026-06-08T12:37:24 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: failed to run reflog
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'c995ffe10e06c4c7fcfb6086899810812ec6b217'
+fatal: unable to read c995ffe10e06c4c7fcfb6086899810812ec6b217
+2026-06-08T12:50:53 skipped: elapsed 14min < 90min
+2026-06-08T13:05:53 skipped: elapsed 29min < 90min
+2026-06-08T13:20:53 skipped: elapsed 44min < 90min
+2026-06-08T13:35:53 skipped: elapsed 59min < 90min
+2026-06-08T13:50:53 skipped: elapsed 74min < 90min
+2026-06-08T14:05:53 skipped: elapsed 89min < 90min
+2026-06-08T14:20:53 run start (elapsed 104min >= 90min)
+2026-06-08T14:22:19 run failed: git push failed after commit d4c0b7b68d: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-08T14:35:53 skipped: elapsed 14min < 90min
+2026-06-08T14:50:53 skipped: elapsed 29min < 90min
+2026-06-08T15:05:53 skipped: elapsed 44min < 90min
+2026-06-08T15:20:53 skipped: elapsed 59min < 90min
+2026-06-08T15:35:53 skipped: elapsed 74min < 90min
+2026-06-08T15:50:53 skipped: elapsed 89min < 90min
+2026-06-08T16:05:53 run start (elapsed 104min >= 90min)
+2026-06-08T16:07:20 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: failed to run reflog
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'ce340e0f95817179bcda221e06b5aab7b1a22434'
+fatal: unable to read ce340e0f95817179bcda221e06b5aab7b1a22434
+2026-06-08T16:20:53 skipped: elapsed 14min < 90min
+2026-06-08T16:35:53 skipped: elapsed 29min < 90min
+2026-06-08T16:50:53 skipped: elapsed 44min < 90min
+2026-06-08T17:05:53 skipped: elapsed 59min < 90min
+2026-06-08T17:20:53 skipped: elapsed 74min < 90min
+2026-06-08T17:35:53 skipped: elapsed 89min < 90min
+2026-06-08T17:50:53 run start (elapsed 104min >= 90min)
+2026-06-08T17:52:25 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '779de2158b67c258e28ca2310385628e64970393'
+fatal: unable to read 779de2158b67c258e28ca2310385628e64970393
+2026-06-08T18:05:53 skipped: elapsed 14min < 90min
+2026-06-08T18:20:53 skipped: elapsed 29min < 90min
+2026-06-08T18:35:53 skipped: elapsed 44min < 90min
+2026-06-08T18:50:53 skipped: elapsed 59min < 90min
+2026-06-08T19:05:53 skipped: elapsed 74min < 90min
+2026-06-08T19:20:53 skipped: elapsed 89min < 90min
+2026-06-08T19:35:53 run start (elapsed 104min >= 90min)
+2026-06-08T19:50:53 run start (elapsed 119min >= 90min)
+2026-06-08T20:05:53 run start (elapsed 134min >= 90min)
+2026-06-08T20:20:53 run start (elapsed 149min >= 90min)
+2026-06-08T20:22:25 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-08T20:35:53 skipped: elapsed 13min < 90min
+2026-06-08T20:50:53 skipped: elapsed 28min < 90min
+2026-06-08T21:05:53 skipped: elapsed 43min < 90min
+2026-06-08T21:20:53 skipped: elapsed 58min < 90min
+2026-06-08T21:35:53 skipped: elapsed 73min < 90min
+2026-06-08T21:50:53 skipped: elapsed 88min < 90min
+2026-06-08T22:05:53 run start (elapsed 103min >= 90min)
+2026-06-08T22:08:06 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-08T22:20:53 skipped: elapsed 13min < 90min
+2026-06-08T22:35:53 skipped: elapsed 28min < 90min
+2026-06-08T22:50:54 skipped: elapsed 43min < 90min
+2026-06-08T23:05:54 skipped: elapsed 58min < 90min
+2026-06-08T23:20:54 skipped: elapsed 73min < 90min
+2026-06-08T23:35:54 skipped: elapsed 88min < 90min
+2026-06-08T23:50:54 run start (elapsed 103min >= 90min)
+2026-06-08T23:52:43 run failed: git push failed after commit f15db008c9: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T00:05:54 skipped: elapsed 13min < 90min
+2026-06-09T00:20:54 skipped: elapsed 28min < 90min
+2026-06-09T00:35:54 skipped: elapsed 43min < 90min
+2026-06-09T00:50:54 skipped: elapsed 58min < 90min
+2026-06-09T01:05:54 skipped: elapsed 73min < 90min
+2026-06-09T01:20:54 skipped: elapsed 88min < 90min
+2026-06-09T01:35:54 run start (elapsed 103min >= 90min)
+2026-06-09T01:37:46 run failed: git push failed after commit 51ddc5dce1: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T01:50:54 skipped: elapsed 13min < 90min
+2026-06-09T02:05:54 skipped: elapsed 28min < 90min
+2026-06-09T02:20:54 skipped: elapsed 43min < 90min
+2026-06-09T02:35:54 skipped: elapsed 58min < 90min
+2026-06-09T02:50:54 skipped: elapsed 73min < 90min
+2026-06-09T03:05:54 skipped: elapsed 88min < 90min
+2026-06-09T03:20:54 run start (elapsed 103min >= 90min)
+2026-06-09T03:22:40 run failed: git push failed after commit 1ffd68b14f: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T03:35:54 skipped: elapsed 13min < 90min
+2026-06-09T03:50:54 skipped: elapsed 28min < 90min
+2026-06-09T04:05:54 skipped: elapsed 43min < 90min
+2026-06-09T04:20:54 skipped: elapsed 58min < 90min
+2026-06-09T04:35:54 skipped: elapsed 73min < 90min
+2026-06-09T04:50:54 skipped: elapsed 88min < 90min
+2026-06-09T05:05:54 run start (elapsed 103min >= 90min)
+2026-06-09T05:07:42 run failed: git push failed after commit 15aa724457: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T05:20:54 skipped: elapsed 13min < 90min
+2026-06-09T05:35:54 skipped: elapsed 28min < 90min
+2026-06-09T05:50:54 skipped: elapsed 43min < 90min
+2026-06-09T06:05:54 skipped: elapsed 58min < 90min
+2026-06-09T06:20:54 skipped: elapsed 73min < 90min
+2026-06-09T06:35:54 skipped: elapsed 88min < 90min
+2026-06-09T06:50:54 run start (elapsed 103min >= 90min)
+2026-06-09T07:05:53 run start (elapsed 118min >= 90min)
+2026-06-09T07:08:36 run failed: git push failed after commit 33782a5760: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T07:20:53 skipped: elapsed 12min < 90min
+2026-06-09T07:35:53 skipped: elapsed 27min < 90min
+2026-06-09T07:50:53 skipped: elapsed 42min < 90min
+2026-06-09T08:05:53 skipped: elapsed 57min < 90min
+2026-06-09T08:20:53 skipped: elapsed 72min < 90min
+2026-06-09T08:35:53 skipped: elapsed 87min < 90min
+2026-06-09T08:50:53 run start (elapsed 102min >= 90min)
+2026-06-09T08:51:41 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-09T09:05:53 run start (elapsed 117min >= 90min)
+2026-06-09T09:07:23 run failed: git push failed after commit 299d6f6aef: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T09:20:53 skipped: elapsed 14min < 90min
+2026-06-09T09:35:53 skipped: elapsed 29min < 90min
+2026-06-09T09:50:53 skipped: elapsed 44min < 90min
+2026-06-09T10:05:53 skipped: elapsed 59min < 90min
+2026-06-09T10:20:53 skipped: elapsed 74min < 90min
+2026-06-09T10:35:53 skipped: elapsed 89min < 90min
+2026-06-09T10:50:53 run start (elapsed 104min >= 90min)
+2026-06-09T10:54:08 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-09T11:05:53 skipped: elapsed 12min < 90min
+2026-06-09T11:20:53 skipped: elapsed 27min < 90min
+2026-06-09T11:35:53 skipped: elapsed 42min < 90min
+2026-06-09T11:50:53 skipped: elapsed 57min < 90min
+2026-06-09T12:05:53 skipped: elapsed 72min < 90min
+2026-06-09T12:20:53 skipped: elapsed 87min < 90min
+2026-06-09T12:35:53 run start (elapsed 102min >= 90min)
+2026-06-09T12:50:53 skipped: elapsed 11min < 90min
+2026-06-09T13:05:53 skipped: elapsed 26min < 90min
+2026-06-09T13:20:53 skipped: elapsed 41min < 90min
+2026-06-09T13:35:53 skipped: elapsed 56min < 90min
+2026-06-09T13:50:53 skipped: elapsed 71min < 90min
+2026-06-09T14:05:53 skipped: elapsed 86min < 90min
+2026-06-09T14:20:53 run start (elapsed 101min >= 90min)
+2026-06-09T14:23:05 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: unknown index entry format 0x47500000
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'b44dcfaa0e465975a1b0f1c285beeb5a1dc6021d'
+fatal: unable to read b44dcfaa0e465975a1b0f1c285beeb5a1dc6021d
+2026-06-09T14:35:53 skipped: elapsed 13min < 90min
+2026-06-09T14:50:53 skipped: elapsed 28min < 90min
+2026-06-09T15:05:53 skipped: elapsed 43min < 90min
+2026-06-09T15:20:53 skipped: elapsed 58min < 90min
+2026-06-09T15:35:53 skipped: elapsed 73min < 90min
+2026-06-09T15:50:53 skipped: elapsed 88min < 90min
+2026-06-09T16:05:53 run start (elapsed 103min >= 90min)
+2026-06-09T16:07:10 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-09T16:20:53 run start (elapsed 118min >= 90min)
+2026-06-09T16:22:15 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-09T16:35:53 skipped: elapsed 14min < 90min
+2026-06-09T16:50:53 skipped: elapsed 29min < 90min
+2026-06-09T17:05:53 skipped: elapsed 44min < 90min
+2026-06-09T17:20:53 skipped: elapsed 59min < 90min
+2026-06-09T17:35:53 skipped: elapsed 74min < 90min
+2026-06-09T17:50:53 skipped: elapsed 89min < 90min
+2026-06-09T18:05:53 run start (elapsed 104min >= 90min)
+2026-06-09T18:07:18 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-09T18:20:53 skipped: elapsed 14min < 90min
+2026-06-09T18:35:53 skipped: elapsed 29min < 90min
+2026-06-09T18:50:53 skipped: elapsed 44min < 90min
+2026-06-09T19:05:53 skipped: elapsed 59min < 90min
+2026-06-09T19:20:53 skipped: elapsed 74min < 90min
+2026-06-09T19:35:53 skipped: elapsed 89min < 90min
+2026-06-09T19:50:53 run start (elapsed 104min >= 90min)
+2026-06-09T19:52:25 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '11beb0ad14f173674abd561343d556fe01b0bb44'
+fatal: unable to read 11beb0ad14f173674abd561343d556fe01b0bb44
+2026-06-09T20:05:53 skipped: elapsed 13min < 90min
+2026-06-09T20:20:53 skipped: elapsed 28min < 90min
+2026-06-09T20:35:53 skipped: elapsed 43min < 90min
+2026-06-09T20:50:53 skipped: elapsed 58min < 90min
+2026-06-09T21:05:53 skipped: elapsed 73min < 90min
+2026-06-09T21:20:53 skipped: elapsed 88min < 90min
+2026-06-09T21:35:53 run start (elapsed 103min >= 90min)
+2026-06-09T21:37:42 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: bad tree object aa462ae297b2faefb01420596c4d9a5df7e21094
+fatal: failed to run repack
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'f26f9baa8f3a2cdcadd2cc0e7778deaceb91b7c5'
+fatal: unable to read f26f9baa8f3a2cdcadd2cc0e7778deaceb91b7c5
+2026-06-09T21:50:53 skipped: elapsed 13min < 90min
+2026-06-09T22:05:53 skipped: elapsed 28min < 90min
+2026-06-09T22:20:53 skipped: elapsed 43min < 90min
+2026-06-09T22:35:53 skipped: elapsed 58min < 90min
+2026-06-09T22:50:53 skipped: elapsed 73min < 90min
+2026-06-09T23:05:53 skipped: elapsed 88min < 90min
+2026-06-09T23:20:53 run start (elapsed 103min >= 90min)
+2026-06-09T23:22:50 run failed: git push failed after commit 7184aed18f: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-09T23:35:53 skipped: elapsed 13min < 90min
+2026-06-09T23:50:53 skipped: elapsed 28min < 90min
+2026-06-10T00:05:53 skipped: elapsed 43min < 90min
+2026-06-10T00:20:53 skipped: elapsed 58min < 90min
+2026-06-10T00:35:53 skipped: elapsed 73min < 90min
+2026-06-10T00:50:54 skipped: elapsed 88min < 90min
+2026-06-10T01:05:54 run start (elapsed 103min >= 90min)
+2026-06-10T01:07:49 run failed: git push failed after commit 3282de6739: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-10T01:20:54 skipped: elapsed 13min < 90min
+2026-06-10T01:35:54 skipped: elapsed 28min < 90min
+2026-06-10T01:50:54 skipped: elapsed 43min < 90min
+2026-06-10T02:05:54 skipped: elapsed 58min < 90min
+2026-06-10T02:20:54 skipped: elapsed 73min < 90min
+2026-06-10T02:35:54 skipped: elapsed 88min < 90min
+2026-06-10T02:50:54 run start (elapsed 103min >= 90min)
+2026-06-10T03:50:54 skipped: elapsed 58min < 90min
+2026-06-10T04:05:54 skipped: elapsed 73min < 90min
+2026-06-10T04:20:54 skipped: elapsed 88min < 90min
+2026-06-10T04:35:54 run start (elapsed 103min >= 90min)
+2026-06-10T04:37:12 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-10T04:50:54 run start (elapsed 118min >= 90min)
+2026-06-10T04:52:16 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-10T05:05:54 run start (elapsed 133min >= 90min)
+2026-06-10T05:06:27 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-10T05:20:54 run start (elapsed 148min >= 90min)
+2026-06-10T05:21:46 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-10T05:35:54 skipped: elapsed 14min < 90min
+2026-06-10T05:50:54 skipped: elapsed 29min < 90min
+2026-06-10T06:05:54 skipped: elapsed 44min < 90min
+2026-06-10T06:20:54 skipped: elapsed 59min < 90min
+2026-06-10T06:35:54 skipped: elapsed 74min < 90min
+2026-06-10T06:50:54 skipped: elapsed 89min < 90min
+2026-06-10T07:05:54 run start (elapsed 104min >= 90min)
+2026-06-10T07:20:54 run start (elapsed 119min >= 90min)
+2026-06-10T07:22:22 run failed: git commit failed: Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+error: Unable to create 'D:/AI/Nao_u_BOT/.git/logs/refs/heads/master.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: failed to run reflog
+error: task 'gc' failed
+error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '54db1e83a229b3d48361ae1582899f285a9609a4'
+fatal: unable to read 54db1e83a229b3d48361ae1582899f285a9609a4
+2026-06-10T07:35:54 skipped: elapsed 14min < 90min
+2026-06-10T07:50:54 skipped: elapsed 29min < 90min
+2026-06-10T08:05:54 skipped: elapsed 44min < 90min
+2026-06-10T08:20:54 skipped: elapsed 59min < 90min
+2026-06-10T08:35:54 skipped: elapsed 74min < 90min
+2026-06-10T08:50:54 skipped: elapsed 89min < 90min
+2026-06-10T09:05:54 run start (elapsed 104min >= 90min)
+2026-06-10T10:20:53 skipped: elapsed 73min < 90min
+2026-06-10T10:35:53 skipped: elapsed 88min < 90min
+2026-06-10T10:50:53 run start (elapsed 103min >= 90min)
+2026-06-10T10:53:26 run failed: git commit failed: fatal: cannot lock ref 'HEAD': Unable to create 'D:/AI/Nao_u_BOT/.git/HEAD.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+2026-06-10T11:05:53 skipped: elapsed 12min < 90min
+2026-06-10T11:20:53 skipped: elapsed 27min < 90min
+2026-06-10T11:35:53 skipped: elapsed 42min < 90min
+2026-06-10T11:50:53 skipped: elapsed 57min < 90min
+2026-06-10T12:05:53 skipped: elapsed 72min < 90min
+2026-06-10T12:20:53 skipped: elapsed 87min < 90min
+2026-06-10T12:35:53 run start (elapsed 102min >= 90min)
+2026-06-10T12:39:13 run failed: git push failed after commit d35a1ef0f2: To https://github.com/Nao838861/nao-u-lab.git
+ ! [rejected]              master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Nao838861/nao-u-lab.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-06-10T12:50:53 skipped: elapsed 12min < 90min

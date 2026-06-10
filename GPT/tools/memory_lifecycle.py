@@ -81,8 +81,9 @@ def preferred_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
 def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
     """Pick a representative for same-content atoms.
 
-    Lifecycle metadata still wins first; among otherwise equal duplicate bodies,
-    prefer rows with stronger quality signals, then newer reposts/corrections.
+    Lifecycle metadata still wins first. Among otherwise equal duplicate bodies,
+    prefer the newest source_ts so corrected reposts surface without deleting
+    older provenance rows. The final hash/id tie keeps the choice stable.
     """
     explicit = [
         atom
@@ -92,7 +93,7 @@ def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
     candidates = explicit or atoms
     visible = [atom for atom in candidates if not is_hidden(atom)] or candidates
 
-    def key(atom: dict[str, Any]) -> tuple[int, int, int, int, int, float, str]:
+    def key(atom: dict[str, Any]) -> tuple[int, int, int, float, int, int, str, str]:
         try:
             source_ts = float(atom.get("source_ts") or 0)
         except (TypeError, ValueError):
@@ -109,10 +110,11 @@ def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
             lifecycle_rank,
             reviewed_rank,
             shared_reads_rank,
+            source_ts,
             int(atom.get("score", 0)),
             text_len,
-            source_ts,
             str(atom.get("datetime", "")),
+            str(atom.get("normalized_content_hash") or normalized_content_hash(atom) or atom_id(atom)),
         )
 
     return sorted(visible, key=key, reverse=True)[0]

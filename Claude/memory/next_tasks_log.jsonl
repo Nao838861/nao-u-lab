@@ -543,3 +543,123 @@
 {"ts": "2026-06-02T16:04:23", "instance": "log", "cycle": "2026-06-02", "action": "viewed", "task_id": null}
 {"ts": "2026-06-02T16:39:11", "instance": "log", "cycle": "2026-06-02", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
 {"ts": "2026-06-02T19:04:31", "instance": "log", "cycle": "2026-06-02", "action": "viewed", "task_id": null}
+{"ts": "2026-06-02T19:40:32", "instance": "log", "cycle": "2026-06-02", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-02T22:04:53", "instance": "log", "cycle": "2026-06-02", "action": "viewed", "task_id": null}
+{"ts": "2026-06-02T22:40:59", "instance": "log", "cycle": "2026-06-02", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T01:05:04", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T01:31:48", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T04:05:30", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T04:44:39", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T07:05:47", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T07:55:43", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T10:05:53", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T10:39:34", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T13:06:02", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T13:51:41", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T16:06:05", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T16:41:50", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T19:06:10", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T19:45:08", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-03T22:06:23", "instance": "log", "cycle": "2026-06-03", "action": "viewed", "task_id": null}
+{"ts": "2026-06-03T22:39:24", "instance": "log", "cycle": "2026-06-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-04T01:06:47", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T01:40:25", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-04T04:07:17", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T04:47:55", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-04T07:07:40", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T07:47:01", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-04T10:07:45", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T10:38:32", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-04T13:07:48", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T13:23:36", "instance": "log", "cycle": "C297", "action": "add", "task_id": "t-260604132336-da90", "task": "Phase 1 §6 候補: ACM HAI 2026 (10.1145/3765766.3765803) ACT-R-Inspired memory architecture — vector activation + temporal decay + semantic similarity + probabilistic noise (本文 PDF 取得は ACM 直叩き不可、隣接代替論文経由探索)。FadeMem cluster の認知 decay 軸 cluster 仲間として次サイクル以降摂取候補", "cycle_ts": "2026-06-04T13:07"}
+{"ts": "2026-06-04T13:23:36", "instance": "log", "cycle": "C297", "action": "add", "task_id": "t-260604132336-45e9", "task": "Phase 1 §6 候補: arxiv 2601.02744 Synapse — spreading activation + lateral inhibition + temporal decay。FadeMem (2601.18642) cluster の認知 decay 軸 cluster 仲間、abstract 取得経路は arxiv 直叩き可、本文 PDF は次サイクル以降 Phase 2 深掘りで実施 (Phase 1 §6 内で本文取得しない取り決め順守)", "cycle_ts": "2026-06-04T13:07"}
+{"ts": "2026-06-04T13:56:43", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-04T16:07:53", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T16:48:09", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-04T19:08:13", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T19:53:24", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-04T22:08:39", "instance": "log", "cycle": "2026-06-04", "action": "viewed", "task_id": null}
+{"ts": "2026-06-04T22:40:56", "instance": "log", "cycle": "2026-06-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-05T01:09:20", "instance": "log", "cycle": "2026-06-05", "action": "viewed", "task_id": null}
+{"ts": "2026-06-05T01:46:31", "instance": "log", "cycle": "2026-06-05", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-05T04:09:45", "instance": "log", "cycle": "2026-06-05", "action": "viewed", "task_id": null}
+{"ts": "2026-06-05T13:52:01", "instance": "log", "cycle": "2026-06-05", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-05T16:10:04", "instance": "log", "cycle": "2026-06-05", "action": "viewed", "task_id": null}
+{"ts": "2026-06-05T16:48:29", "instance": "log", "cycle": "2026-06-05", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-05T19:10:07", "instance": "log", "cycle": "2026-06-05", "action": "viewed", "task_id": null}
+{"ts": "2026-06-05T19:39:14", "instance": "log", "cycle": "2026-06-05", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-05T22:10:15", "instance": "log", "cycle": "2026-06-05", "action": "viewed", "task_id": null}
+{"ts": "2026-06-05T22:43:11", "instance": "log", "cycle": "2026-06-05", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-06T01:10:24", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T01:48:37", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-06T04:10:56", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T04:38:04", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-06T07:11:26", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T07:41:15", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 2}
+{"ts": "2026-06-06T10:11:36", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T10:14:21", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T10:26:10", "instance": "log", "cycle": "C303", "action": "done", "task_id": "t-260604132336-45e9"}
+{"ts": "2026-06-06T10:43:15", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-06T13:12:09", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T13:52:37", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-06T16:12:48", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T16:57:25", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-06T19:12:44", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T19:51:27", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-06T22:12:50", "instance": "log", "cycle": "2026-06-06", "action": "viewed", "task_id": null}
+{"ts": "2026-06-06T22:45:25", "instance": "log", "cycle": "2026-06-06", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T05:50:35", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T06:15:03", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T06:44:04", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T09:15:39", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T09:50:00", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T12:16:49", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T12:58:02", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T15:17:13", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T15:48:32", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T18:17:19", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T18:53:46", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T19:02:47", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-07T21:17:29", "instance": "log", "cycle": "2026-06-07", "action": "viewed", "task_id": null}
+{"ts": "2026-06-07T21:45:33", "instance": "log", "cycle": "2026-06-07", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-08T00:18:07", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T00:57:08", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-08T00:57:08", "instance": "log", "cycle": "2026-06-08", "action": "escalated", "task_id": "t-260604132336-da90"}
+{"ts": "2026-06-08T03:18:42", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T03:54:15", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-08T06:19:17", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T06:55:33", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-08T09:19:23", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T09:53:53", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
+{"ts": "2026-06-08T12:19:35", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T12:34:02", "instance": "log", "cycle": "2026-06-08", "action": "skip", "task_id": "t-260604132336-da90", "reason": "退役: FadeMem cluster 摂取は #140 hook + #138 段階3 hook + Phase1 §6 FSFM/AgeMem の 3 経路で充足、ACT-R 経由は付加価値小 (C313 Phase 3 退役判定)"}
+{"ts": "2026-06-08T12:49:21", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 1, "pending_total": 0}
+{"ts": "2026-06-08T15:19:55", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T15:55:50", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 1, "pending_total": 0}
+{"ts": "2026-06-08T18:20:06", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T18:58:27", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 1, "pending_total": 0}
+{"ts": "2026-06-08T21:20:11", "instance": "log", "cycle": "2026-06-08", "action": "viewed", "task_id": null}
+{"ts": "2026-06-08T21:57:59", "instance": "log", "cycle": "2026-06-08", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 1, "pending_total": 0}
+{"ts": "2026-06-09T00:20:30", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T00:54:27", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T03:20:38", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T03:54:20", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T06:20:49", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T06:56:14", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T09:20:57", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T09:57:15", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T12:57:50", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T15:21:05", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T16:00:06", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T18:21:19", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T19:00:51", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-09T21:21:25", "instance": "log", "cycle": "2026-06-09", "action": "viewed", "task_id": null}
+{"ts": "2026-06-09T22:03:15", "instance": "log", "cycle": "2026-06-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-10T00:21:45", "instance": "log", "cycle": "2026-06-10", "action": "viewed", "task_id": null}
+{"ts": "2026-06-10T01:08:40", "instance": "log", "cycle": "2026-06-10", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-10T04:15:33", "instance": "log", "cycle": "2026-06-10", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-10T06:22:01", "instance": "log", "cycle": "2026-06-10", "action": "viewed", "task_id": null}
+{"ts": "2026-06-10T06:51:34", "instance": "log", "cycle": "2026-06-10", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-10T09:22:08", "instance": "log", "cycle": "2026-06-10", "action": "viewed", "task_id": null}
+{"ts": "2026-06-10T10:25:27", "instance": "log", "cycle": "2026-06-10", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
+{"ts": "2026-06-10T12:22:34", "instance": "log", "cycle": "2026-06-10", "action": "viewed", "task_id": null}

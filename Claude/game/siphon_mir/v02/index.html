@@ -267,7 +267,7 @@ function updatePulses(){
         // Combo popup
         const label=p.absorbed>=6?'FEAST x'+p.absorbed+'!!':(p.absorbed>=3?'SIPHON x'+p.absorbed+'!':'SIPHON x'+p.absorbed);  // v02 C247: 6+ のみ SIPHON→FEAST, ごっこ軸（捕食者ロール）1mm 観測1（高combo時のみ役割言葉化、3-5/1-2 は機械的SIPHONを保持して直交性維持）
         const col=p.absorbed>=6?'#fff8a0':(p.absorbed>=3?'#ffd870':'#c0a860');
-        if(p.absorbed>=2) popups.push({x:S.px,y:S.py-(p.absorbed>=6?44:(p.absorbed>=3?36:30)),text:label,life:p.absorbed>=6?75:(p.absorbed>=3?60:50),c:col,size:p.absorbed>=6?18:(p.absorbed>=3?15:13),rise:p.absorbed>=6?0.4:(p.absorbed>=3?0.6:0.8)});  // v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影）/ v02 C279: tier font size 階層化 13/15/18, 快感軸 観測14（時間階層に空間階層を直交追加）/ v02 C282: tier y-offset 階層 30/36/44, 快感軸 観測15（同イベントに第3の直交軸＝発生高度を追加、life 軸＝時間／size 軸＝視覚密度／y-offset 軸＝発生位置 でプレイヤー視線上の到達距離も tier 差分化）/ v02 C283: tier rise-speed 階層 0.8/0.6/0.4, 快感軸 観測16（第4の直交軸＝上昇速度を追加。FEAST が最も遅く上がるため life 階層と協調して視認時間がさらに延伸、塊感が強まる方向）/ v02 C284: absorbed=1 silent gate, **制約軸** 観測1（Seed-R3 試行: ノイズフロア削除 — 単発吸引で popup を出さない。combo tier の境界＝チャンネル ON/OFF をそろえ、tier 階層の意味を強化。第5の独立軸＝存在/非存在 軸の試験。即外せる 1行 guard 実装、umiyuki_ai「縛りを入れると面白くなる」処方箋層の最初の実装）
+        popups.push({x:S.px,y:S.py-30,text:label,life:p.absorbed>=6?75:(p.absorbed>=3?60:50),c:col});  // v02 C252: SIPHON tier (3-5) life 50→60, ごっこ軸 観測5（basic 50 / SIPHON 60 / FEAST 75 の3段階階層を時間軸に投影、C247 ラベル分岐と C249 FEAST linger を中間段に橋渡し、役割階層を時間で可視化）
       }
       pulses.splice(i,1);
     }
@@ -477,7 +477,7 @@ function updateParticles(){
 // ========== POPUPS ==========
 function updatePopups(){
   for(let i=popups.length-1;i>=0;i--){
-    popups[i].y-=(popups[i].rise||0.8);  // v02 C283: combo popup のみ tier rise-speed 階層 (FEAST 0.4 / SIPHON 0.6 / basic 0.8) を参照、他 popup (BOMB READY, 撃破ポイント) は rise 未設定で 0.8 fallback — C280 の自己詐称（render が data 属性を読まない）と同型回避のため push と update を 1サイクルで揃える
+    popups[i].y-=0.8;
     popups[i].life--;
     if(popups[i].life<=0) popups.splice(i,1);
   }
@@ -656,10 +656,10 @@ function render(){
   }
 
   // Popups
+  ctx.font='bold 13px system-ui';
   ctx.textAlign='center';
   ctx.strokeStyle='#1a0008'; ctx.lineWidth=3;
   for(const p of popups){
-    ctx.font='bold '+(p.size||13)+'px system-ui';  // v02 C280: popup size 階層 (basic 13 / SIPHON 15 / FEAST 18) を render に配線 — C279 で popup data に size を仕込んだが render loop が font 固定で未参照、Phase 3 自己詐称の物理修正
     ctx.globalAlpha=Math.min(1,p.life/15);
     ctx.strokeText(p.text,p.x,p.y);
     ctx.fillStyle=p.c;

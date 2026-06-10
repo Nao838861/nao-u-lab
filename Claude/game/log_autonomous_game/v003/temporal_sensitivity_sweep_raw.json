@@ -1,0 +1,736 @@
+{
+  "audit": "temporal_inconsistency_px_sensitivity_sweep",
+  "purpose": "C316 Phase 4: TEMPORAL_INCONSISTENCY_THRESHOLD_PX 感度分析 + 4 軸 6 ペア独立性 (Pearson/Spearman) 検証",
+  "seed": 20260527,
+  "px_values": [
+    10,
+    15,
+    20,
+    30
+  ],
+  "baseline_px": 15,
+  "breakdown_per_strategy": {
+    "good": {
+      "px_10": {
+        "survived_frames": 4162,
+        "temporal_inconsistency_count": 43,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6
+      },
+      "px_15": {
+        "survived_frames": 4162,
+        "temporal_inconsistency_count": 43,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6
+      },
+      "px_20": {
+        "survived_frames": 4162,
+        "temporal_inconsistency_count": 43,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6
+      },
+      "px_30": {
+        "survived_frames": 4162,
+        "temporal_inconsistency_count": 43,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6
+      }
+    },
+    "camper": {
+      "px_10": {
+        "survived_frames": 319,
+        "temporal_inconsistency_count": 1,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5
+      },
+      "px_15": {
+        "survived_frames": 319,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5
+      },
+      "px_20": {
+        "survived_frames": 319,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5
+      },
+      "px_30": {
+        "survived_frames": 319,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5
+      }
+    },
+    "lane-holder": {
+      "px_10": {
+        "survived_frames": 284,
+        "temporal_inconsistency_count": 1,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2
+      },
+      "px_15": {
+        "survived_frames": 284,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2
+      },
+      "px_20": {
+        "survived_frames": 284,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2
+      },
+      "px_30": {
+        "survived_frames": 284,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2
+      }
+    },
+    "blind-sweeper": {
+      "px_10": {
+        "survived_frames": 378,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3
+      },
+      "px_15": {
+        "survived_frames": 378,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3
+      },
+      "px_20": {
+        "survived_frames": 378,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3
+      },
+      "px_30": {
+        "survived_frames": 378,
+        "temporal_inconsistency_count": 0,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3
+      }
+    },
+    "nospecial": {
+      "px_10": {
+        "survived_frames": 545,
+        "temporal_inconsistency_count": 3,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5
+      },
+      "px_15": {
+        "survived_frames": 545,
+        "temporal_inconsistency_count": 2,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5
+      },
+      "px_20": {
+        "survived_frames": 545,
+        "temporal_inconsistency_count": 2,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5
+      },
+      "px_30": {
+        "survived_frames": 545,
+        "temporal_inconsistency_count": 2,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5
+      }
+    }
+  },
+  "rows": [
+    {
+      "temporal_inconsistency_threshold_px": 10,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "temporal_inconsistency_threshold_px": 10,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "temporal_inconsistency_threshold_px": 10,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "temporal_inconsistency_threshold_px": 10,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 10,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 3
+    },
+    {
+      "temporal_inconsistency_threshold_px": 15,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "temporal_inconsistency_threshold_px": 15,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 15,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 15,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 15,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "temporal_inconsistency_threshold_px": 20,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "temporal_inconsistency_threshold_px": 20,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 20,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 20,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 20,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "temporal_inconsistency_threshold_px": 30,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "temporal_inconsistency_threshold_px": 30,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 30,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 30,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "temporal_inconsistency_threshold_px": 30,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    }
+  ],
+  "monotonic_check": {
+    "good": {
+      "sequence": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "nonincreasing": true,
+      "strictly_decreasing": false
+    },
+    "camper": {
+      "sequence": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "nonincreasing": true,
+      "strictly_decreasing": false
+    },
+    "lane-holder": {
+      "sequence": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "nonincreasing": true,
+      "strictly_decreasing": false
+    },
+    "blind-sweeper": {
+      "sequence": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "nonincreasing": true,
+      "strictly_decreasing": false
+    },
+    "nospecial": {
+      "sequence": [
+        3,
+        2,
+        2,
+        2
+      ],
+      "nonincreasing": true,
+      "strictly_decreasing": false
+    }
+  },
+  "monotonic_note": "temporal_inconsistency_count は PX 閾値超え件数なので PX 大 → 件数小 (非増加) が物理整合期待。strictly_decreasing は要件ではない (同値 plateau 許容)",
+  "survived_frames_invariance": {
+    "good": {
+      "sequence": [
+        4162,
+        4162,
+        4162,
+        4162
+      ],
+      "invariant": true
+    },
+    "camper": {
+      "sequence": [
+        319,
+        319,
+        319,
+        319
+      ],
+      "invariant": true
+    },
+    "lane-holder": {
+      "sequence": [
+        284,
+        284,
+        284,
+        284
+      ],
+      "invariant": true
+    },
+    "blind-sweeper": {
+      "sequence": [
+        378,
+        378,
+        378,
+        378
+      ],
+      "invariant": true
+    },
+    "nospecial": {
+      "sequence": [
+        545,
+        545,
+        545,
+        545
+      ],
+      "invariant": true
+    }
+  },
+  "survived_frames_invariant_all": true,
+  "other_probes_invariance": {
+    "good": {
+      "instinct_trigger_count": {
+        "sequence": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "invariant": true
+      },
+      "min_approach_p10": {
+        "sequence": [
+          52.24,
+          52.24,
+          52.24,
+          52.24
+        ],
+        "invariant": true
+      },
+      "cont_grazing_max": {
+        "sequence": [
+          6,
+          6,
+          6,
+          6
+        ],
+        "invariant": true
+      }
+    },
+    "camper": {
+      "instinct_trigger_count": {
+        "sequence": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "invariant": true
+      },
+      "min_approach_p10": {
+        "sequence": [
+          58.07,
+          58.07,
+          58.07,
+          58.07
+        ],
+        "invariant": true
+      },
+      "cont_grazing_max": {
+        "sequence": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "invariant": true
+      }
+    },
+    "lane-holder": {
+      "instinct_trigger_count": {
+        "sequence": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "invariant": true
+      },
+      "min_approach_p10": {
+        "sequence": [
+          55.33,
+          55.33,
+          55.33,
+          55.33
+        ],
+        "invariant": true
+      },
+      "cont_grazing_max": {
+        "sequence": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "invariant": true
+      }
+    },
+    "blind-sweeper": {
+      "instinct_trigger_count": {
+        "sequence": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "invariant": true
+      },
+      "min_approach_p10": {
+        "sequence": [
+          38.84,
+          38.84,
+          38.84,
+          38.84
+        ],
+        "invariant": true
+      },
+      "cont_grazing_max": {
+        "sequence": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "invariant": true
+      }
+    },
+    "nospecial": {
+      "instinct_trigger_count": {
+        "sequence": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "invariant": true
+      },
+      "min_approach_p10": {
+        "sequence": [
+          93.05,
+          93.05,
+          93.05,
+          93.05
+        ],
+        "invariant": true
+      },
+      "cont_grazing_max": {
+        "sequence": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "invariant": true
+      }
+    }
+  },
+  "other_probes_invariant_all": true,
+  "correlations_per_px": [
+    {
+      "px": 10,
+      "n_strategies": 5,
+      "sample_strategies": [
+        "good",
+        "camper",
+        "lane-holder",
+        "blind-sweeper",
+        "nospecial"
+      ],
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2275,
+        "instinct_x_cont_grazing_max": 0.5766,
+        "instinct_x_temporal_inconsistency": 0.9937,
+        "min_approach_p10_x_cont_grazing_max": 0.3518,
+        "min_approach_p10_x_temporal_inconsistency": -0.1442,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6378
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.2895,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": 0.3591,
+        "cont_grazing_max_x_temporal_inconsistency": 0.7632
+      }
+    },
+    {
+      "px": 15,
+      "n_strategies": 5,
+      "sample_strategies": [
+        "good",
+        "camper",
+        "lane-holder",
+        "blind-sweeper",
+        "nospecial"
+      ],
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2275,
+        "instinct_x_cont_grazing_max": 0.5766,
+        "instinct_x_temporal_inconsistency": 0.9959,
+        "min_approach_p10_x_cont_grazing_max": 0.3518,
+        "min_approach_p10_x_temporal_inconsistency": -0.16,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6317
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.5735,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": 0.1118,
+        "cont_grazing_max_x_temporal_inconsistency": 0.803
+      }
+    },
+    {
+      "px": 20,
+      "n_strategies": 5,
+      "sample_strategies": [
+        "good",
+        "camper",
+        "lane-holder",
+        "blind-sweeper",
+        "nospecial"
+      ],
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2275,
+        "instinct_x_cont_grazing_max": 0.5766,
+        "instinct_x_temporal_inconsistency": 0.9959,
+        "min_approach_p10_x_cont_grazing_max": 0.3518,
+        "min_approach_p10_x_temporal_inconsistency": -0.16,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6317
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.5735,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": 0.1118,
+        "cont_grazing_max_x_temporal_inconsistency": 0.803
+      }
+    },
+    {
+      "px": 30,
+      "n_strategies": 5,
+      "sample_strategies": [
+        "good",
+        "camper",
+        "lane-holder",
+        "blind-sweeper",
+        "nospecial"
+      ],
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2275,
+        "instinct_x_cont_grazing_max": 0.5766,
+        "instinct_x_temporal_inconsistency": 0.9959,
+        "min_approach_p10_x_cont_grazing_max": 0.3518,
+        "min_approach_p10_x_temporal_inconsistency": -0.16,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6317
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.5735,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": 0.1118,
+        "cont_grazing_max_x_temporal_inconsistency": 0.803
+      }
+    }
+  ],
+  "correlation_thresholds": {
+    "strong_abs": 0.9,
+    "weak_abs": 0.5,
+    "interpretation_note": "|r| ≥ 0.9 = 軸独立性なし(1 軸で代替可能), |r| < 0.5 = 真の独立 4 軸として feedback richness 物理化 (6 ペア × 2 統計量 × 4 PX = 48 値)"
+  },
+  "notes": [
+    "相関係数は 5 strategy (N=5) の少サンプル算出のため 95%CI は広い。値の方向性確認用。",
+    "good (grazer mock) は castLock 不使用の代理戦略。4 軸に挙動的に異なる影響を与える可能性",
+    "survived_frames_invariant_all=true + other_probes_invariant_all=true なら本 sweep の probe 副作用ゼロ確証 (H-002〜H-008 + C313 + 本軸の同型論証 9 度目)",
+    "PX 4 値 (10/15/20/30) 各々で 4 軸 6 ペア相関を独立算出 = 計 48 値 (Pearson 24 + Spearman 24)"
+  ]
+}

@@ -4,6 +4,29 @@ url: "https://publications.graphics.tudelft.nl/papers/848"
 collected_at: "2026-06-08T02:14:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, level-design, tooling, developer-workflow]
+evaluated_at: "2026-06-08T02:20:56+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+posted:
+  ts: "1780853278.343919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780853278343919"
+  char_count: 4454
+  posted_at: "2026-06-08T02:28:04.6958659+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-08T02:28:04.6958659+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780853278343919"
+next_action: none
+stale_after: "2026-07-08"
+supersedes: []
+gate_reason: "120人の実務者 survey で、職種差・採用障壁・AI/PCG tool preference が取れているため、問題設定、手法、評価、結論を概要化できる。ゲーム制作への適用も level generator / authoring tool の要件に直結し、automation ではなく control / transparency を設計軸に落とせる。"
+suggested_post_outline:
+  overview_angle: "PCG 研究の性能や自動化能力ではなく、実務者がなぜ採用しないか、どの職種が使い、何を重視するかを survey から整理する。"
+  analysis_axis: "職種別採用差、採用障壁、generative AI methods への preference、creative control と process transparency の位置づけを、tool design の要求として読む。"
+  application_target: "自作 level generator、game tool、AI-assisted editor を作る時の要件定義。生成結果だけでなく、制御可能なパラメータ、途中過程の可視化、designer が戻せる編集 loop に効く。"
+  pros_cons: "メリットは実務者の needs を直接参照でき、研究寄り PCG を制作 tool に翻訳しやすい点。デメリットは survey なので特定ジャンルや小規模個人制作にそのまま一般化しにくい点。"
+  verdict_pre: "採用。PCG/AI tool を作る時の評価軸として残す価値が高い。"
 ---
 
 ## raw_excerpt

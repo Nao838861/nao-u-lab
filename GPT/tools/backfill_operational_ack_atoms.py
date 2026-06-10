@@ -21,6 +21,12 @@ from atoms_fileformat import sync_per_file_atoms
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
 BACKFILL_LOG_PATH = MEMORY_DIR / "atom_operational_ack_quarantine.jsonl"
+TOOL_OWNED_REASONS = {
+    "broadcast_receipt_phrase",
+    "codex_work_receipt",
+    "phase4a_operational_routine_pattern",
+    "slack_broadcasts_jsonl_receipt",
+}
 
 
 def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -44,6 +50,29 @@ def backfill(atoms: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[di
     for atom in atoms:
         report = operational_ack_report(atom)
         if not report["is_operational_ack"]:
+            if atom.get("memory_layer") == "operational_ack" and atom.get("quality") == "quarantine":
+                reasons = {
+                    item
+                    for item in str(atom.get("quality_reason") or "").split(",")
+                    if item
+                }
+                if reasons and reasons <= TOOL_OWNED_REASONS:
+                    before_reason = atom.get("quality_reason")
+                    atom.pop("quality", None)
+                    atom.pop("memory_layer", None)
+                    atom.pop("quality_reason", None)
+                    changed.append(
+                        {
+                            "backfilled_at": now,
+                            "id": atom.get("id"),
+                            "source": atom.get("source"),
+                            "source_ts": atom.get("source_ts"),
+                            "title": atom.get("title"),
+                            "quality": None,
+                            "memory_layer": None,
+                            "reason": f"cleared_stale_operational_ack:{before_reason}",
+                        }
+                    )
             updated.append(atom)
             continue
         before = (

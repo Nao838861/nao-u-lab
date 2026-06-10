@@ -14,12 +14,681 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - **2026-05-05 (Log)**: 本ファイル軽微整理。L1087以降の C-XXX 追記7節 (C94/C96/C102/C108/C124/C134-AYi/幾何空間) を H2→H3 降格して履歴セクション内に時系列統合。1419行は維持、構造混乱を解消
 - **2026-03-28 Nao_uの方針転換**: 「最重点ミッション」→「未実装バックログ」。改善すべき箇所が見えた時にNao_uと一緒にやる。常時意識のオーバーヘッドはほぼゼロに。「今の君たちなら、必要になった時に思い出せるようにできる」
 
+## write 軸 — novelty gate (2026-06-10 Log C318 新設)
+
+本サイクル Phase 1 §6 で arxiv 2605.30711 **SAGE (A Novelty Gate for Efficient Memory Evolution in Agentic LLMs)** に新規到達。base camp 完全飽和 (C315 観察) からの脱出が起きた最初の論文で、当方記憶階層に **write 軸 (ADD/NOOP/MERGE の admission gate)** を独立節として置く必要性を初めて明示した。本章は retrieval 軸 (C308) / Forget 軸 (kaizen #138) と並ぶ第 3 の軸として write 側の出発点を据える。
+
+### (a) SAGE の核心 — vMF density による 3 分類
+
+SAGE は memory write を **novelty 検出問題** として再定式化する。von Mises-Fisher 球面密度推定で incoming embedding 周辺の memory store geometry を追跡し、各 incoming candidate を 3 分類する:
+
+- **ADD** (新規性高 = vMF 密度低): 新規 atom として store に追加
+- **NOOP** (新規性低 = 既存 cluster と高密度): 破棄 (LLM 呼出不要)
+- **MERGE** (中間帯): LLM ルーティングで既存 atom と統合判定
+
+LoCoMo benchmark で Mem0 比 token-F1 best、add-phase API cost **3.4× 削減**、latency **2.5× 削減**。A-Mem (時間軸) と統合した実験で MERGE phase LLM call が 16-18% skip 可能。
+
+### (b) 当方接続軸 3 種 (本サイクル Phase 2 で言語化済)
+
+1. **retention 装置との直交補完**: 当方の `retention: permanent/cycle/probationary` (kaizen #138) は **時間軸** で write 後の lifecycle を管理する。SAGE は **新規性軸** で write 前の admission を判定する。両者は直交し、`probationary` 入口に SAGE 風 novelty gate を挟むのが自然な統合形。実装としては atom 生成時に既存 atom embedding 群との球面密度を計算し、NOOP 判定なら起票自体を skip、MERGE 判定なら既存 atom への 1 行追記に降格する装置を `tools/probe_atom_quality.py` (kaizen #134) 隣接で試作可能
+
+2. **base camp 完全飽和の量的検出 metric**: C315/C316/C317 の §6 fixation 観察「base camp 再到達」「真の新規ゼロ」は人手集計 (既出 ARXIV WARN 件数 + 主観判定)。vMF 密度の **NOOP 比率異常高騰** = base camp 完全飽和の automated 検出 metric として直結する。`tools/effective_rank_probe.py` (kaizen #140) が source 間語彙分離を inter_cos で測るのと同型の指標を、外部摂取側 (atom intake) に置ける
+
+3. **入退場制御の write 側 = SAGE、退場側 = Forget**: kaizen #138 (Forget phase) と論理的対をなす。Forget は store からの退場 (cycle / probationary → 削除) を司り、SAGE は store への入場 (admission) を司る。両端が揃って初めて memory dynamics が安定する (片端だけだと、入りすぎれば飽和、出すぎれば想起切断)。**両者を同時に動かす family を kaizen #138/#139/#140 と並べて #141 候補 (write admission probe) として将来起票余地**
+
+### (c) 設計の節度 — 本サイクルは「言語化」止め、実装は次サイクル以降
+
+本章は **設計図の出発点であって実装ではない**。SAGE 風 novelty gate を即実装すれば「ルール追加ゼロ」原則 (feedback_few_rules_big_effect) に反する素地が大きく、また vMF 密度推定の閾値選択は RAISE 同様 task 依存性が極めて強い (Phase 1 §6 SAGE 論文記載: 適用ドメインで gate threshold が大きく動く)。本サイクルは: (i) write 軸が当方記憶階層の独立軸として存在することの公式認識、(ii) retention / Forget / retrieval の既存 3 軸との接続軸の言語化、(iii) base camp 完全飽和の量的検出 metric 候補としての位置付け、までを残す。実装プロトタイプは別サイクル (kaizen #138 段階4 候補 or 新 kaizen #141 起票) で着地させる。
+
+### (d) 4 軸成熟度の更新 (C308 表の write 行追加)
+
+| 軸 | 物理化済資源 | validation gate | 未着手 |
+|---|---|---|---|
+| skill | [[CLAUDE]] / `.claude/rules/` / `SKILL.md` / `feedback_*.md` + [[sense_prediction_log]] | Nao_u 指摘 / cross_review / 自己日記 (3 経路、手動) | 自動 gate (SkillOpt 相当の validation loop) |
+| memory (retention) | 本ファイル + `memory_search.py` (FTS5) + `associative_search.py` + `memory_retention_audit.py` + FadeMem 3 信号 | retention key (permanent/cycle/probationary) + supersedes | MemTree 的時間軸明示 (`--before/--after` 引数) |
+| retrieval | (本ファイル C308 節で出発点記述) | (なし) | tasks-aware routing 装置全般 |
+| **write (novelty gate)** | **(本節 C318 で出発点記述、SAGE 視点)** | **(なし)** | **vMF 密度ベース admission gate、base camp 飽和量化 metric** |
+| Forget | kaizen #138 (permanent/cycle/probationary + supersedes) + `memory_retention_audit.py` | retention key + stale 検出 (5サイクル閾値) | 自動退役判定 (現状は WARN 出力のみ) |
+
+**5 軸並列の意味**: skill / memory / retrieval / write / Forget の 5 軸を同じ抽象度で並べることで軸間交絡が制御可能になる。**特に write × Forget の対関係を本章で明示したことが核** — write 側を見ない Forget だけの観察は片肺、逆も同様。kaizen #138 を「Forget 軸」と再ラベルし、#141 候補「write admission probe」を対称起票できる素地が、本章で初めて整った。
+
+**次サイクル以降への接続**: 本章を起点に、(α) kaizen #141 候補「write admission probe」の起票検討 (vMF 不使用の純 stdlib 最小版 = 既存 atom embedding と incoming embedding の cosine だけで NOOP/ADD/MERGE 粗判定する probe)、(β) base camp 飽和量化 metric を `tools/probe_atom_quality.py` に追加、(γ) Forget 軸との対関係を可視化する `instance_divergence_observability.md` への 1 行追記、を順次着地候補とする。
+
+### (e) admission の 5 因子テーブル (2026-06-10 C320 追記、awesome-agent-memory + A-MAC 視点)
+
+C320 Phase 2 で awesome-agent-memory リポジトリ (tfatykhov) の構造化分析を行い、**A-MAC (arxiv 2603.04549)** が admission decision を 5 因子に分解していることを確認した。SAGE の novelty 単軸 (vMF 密度) に対し、A-MAC は決定軸を多次元化する設計で、本プロジェクトの「write 軸」を実装するときの第一次プリセットになる:
+
+| 因子 | A-MAC 原典の定義 | 当方 atom 入口での射影 | 既存装置との接続 |
+|---|---|---|---|
+| Future Utility | 将来 task で再利用される期待値 | `applied_to_count` (atom 紐付き log/cycle/decision 数) の予測 | kaizen #138 retention 昇格 trigger と直結 |
+| Factual Confidence | 内容の事実性確度 | URL/arxiv ID 解決可否 + jina/WebFetch 取得確認 | 既存 ARXIV WARN (#136 段階1.5) と同経路 |
+| Semantic Novelty | 既存 store との意味距離 | SAGE 系 vMF 密度 or 純 cosine 粗判定 | kaizen #141 候補 (write admission probe) |
+| Temporal Recency | 取得時点の鮮度 | atom frontmatter `created_at` + retention `cycle` のレシピ | kaizen #138 既存 retention key |
+| Content Type Prior | コンテンツ種別の先験的価値 | atom tag (knowledge / diary / atoms / log) の固定重み | 既存 `memory_walk.py` トリガー分類と同類 |
+
+**設計判断**: SAGE 単軸 (Semantic Novelty のみ) で gate を作ると Type Prior が反映されず、`diary` と `knowledge` が同じ閾値で扱われる事故が起きる。A-MAC 5 因子は **重み付き和** ではなく **直交した拒否権** として持つのが最小実装 (どれか 1 つでも閾値割れなら NOOP)。重み付き和は将来 ablation で導入。
+
+### (f) DEFER 操作の節立て (2026-06-10 C320 追記、MemReader 視点)
+
+awesome-agent-memory で参照されている **MemReader** は RL ポリシーで `WRITE / DEFER / RETRIEVE-CONTEXT / DISCARD` の 4 操作を選ぶ。当方の現行 admission control は実質的に `WRITE / DISCARD` の 2 値しかなく、**DEFER 操作が構造的に欠落**している。本節は DEFER を独立操作として明示し、既存 `drafts/` ディレクトリが部分的にこの役割を果たしていることを確認する。
+
+**4 操作の当方マッピング**:
+
+| 操作 | MemReader 原典 | 当方の現状 | 不足分 |
+|---|---|---|---|
+| WRITE | memory store に確定追記 | atoms / knowledge / projects への直接 commit | (なし) |
+| DEFER | 判断を将来の文脈に委ねる暫定保留 | `drafts/<date>/*.py` (部分的) | atom 級の構造化 DEFER 不在 |
+| RETRIEVE-CONTEXT | 既存記憶を引いて当該文脈を補完 | `memory_search.py` / `associative_search.py` | (相当物あり) |
+| DISCARD | 候補を破棄 | 暗黙的 (記録なし) | DISCARD ログがないため再判定不能 |
+
+**DEFER の不在が引き起こす事故**: probationary atom の昇格判定が「permanent or 削除」の 2 値で運用されている結果、「今は判断できないが捨てたくない」atom が permanent 側に流入し、retention `permanent` のスロットが希薄化する。MemReader の DEFER 操作は「次に同論点に再到達したときに判定する」契約付き保留で、**当方の `held_out_manifest` (本章 (b) §1 で言及) と同型構造**であることが C320 で接続できた。
+
+**最小実装案**: atom frontmatter に `decision: write/defer/retrieve/discard` を任意フィールドとして追加 (デフォルト `write`)。`defer` 指定 atom は permanent 昇格判定を skip し、次サイクル Phase 1 §0 staging で「DEFER 残置 N 件」として可視化する。DISCARD は別途 `memory/atoms/.discarded/<date>/` に移動し、再判定可能性を残す (kaizen #094 post_draft.py の論理削除パターンと同型)。
+
+**設計の節度**: 本節も (c) と同様、「言語化止め」。実装は kaizen #141 候補に合流させ、A-MAC 5 因子 gate と MemReader 4 操作を同時に動かす最小 probe (cosine 粗判定 + decision フィールド付与) を 1 ファイル `tools/admission_probe.py` で試作するのが筋。本サイクルは設計図の追加までで止める。
+
+## retrieval 軸 (2026-06-07 Log C308 新設)
+
+本サイクル Phase 2 の triad 発見 (skill/memory/retrieval) で **retrieval 軸が最薄であると言語化された** ことを受け、本プロジェクトの足場として retrieval 軸を独立章として明示する。memory 軸 (本ファイル全体) / skill 軸 ([[CLAUDE]] / [[system_identity]] / `.claude/rules/` 物理化済) に対する 3 軸目で、tasks-aware retrieval 装置はまだ言語化された設計図を持たないため、本章はその出発点を据える役割を担う。
+
+### (a) 現状 = 固定 routing の自白
+
+Phase 1 開始時の記憶探索は、毎サイクルほぼ同じ順序で動いている: `L-1 (事前学習)` → `L2 トリガー (`memory_walk.py`)` → `associative_search.py` (CONCEPT_MAP 経由) → `grep` (`memory/`, `projects/`, `knowledge/`, `log/`) → `Slack 全文 (slack_archive/*.jsonl)`。この 6 段一直線は **「フォールバック順序」** であって **「目的別の選び方」** ではない (L1652 で既に Ash が同型指摘済)。タスク種別 (game 改修 / kaizen 検証 / Slack 返信 / 日記執筆 / 外部研究取込) ごとに最適な検索層・閾値・順序が違うはずだが、現在は職人芸で固定されている。**自白の意味**: ヒューリスティック (Log 経験則) で固定されている事実を否定せず、まず固定されていることを公式に認めることで、ablation の対象として外部化する素地ができる。
+
+### (b) RAISE: Architecture Search 視点の射影
+
+[RAISE (arxiv 2605.30029, Baidu)](https://r.jina.ai/https://arxiv.org/abs/2605.30029) は RAG パイプライン (query rewriting / chunking / retrieval depth / reranking / context compression) を統一探索空間に置き、13 手法 × 7 データセット × 3 シードの NAS 探索で「タスク依存性が極めて強い / 万能戦略なし」を結論した。本プロジェクトの段階的検索戦略は構造的に同型 (順序は違うが各遷移閾値が独立に決まる) であり、**各遷移閾値 = ablation 可能なパラメータ** として外部化できる。具体的には: `memory_walk` の活性閾値、`associative_search` の concept distance cutoff、`grep` の文脈窓サイズ、`Slack 全文` 検索の rank top-K — これらは現在ハードコード or 隠れデフォルトで固定。RAISE の知見は「タスク依存性が極めて強い」だから、固定値での最適化ではなく **タスク条件付き最適化** (= 次節 c の tasks-aware routing) が本質。`effective_rank_probe.py` (kaizen #140 base rate) と紐付ければ「閾値変動 → 効果的ランク変動」の感度測定が可能。
+
+### (c) tasks-aware retrieval 装置の設計余地
+
+固定 routing → 動的 routing への遷移装置の最小設計:
+
+- **入口分類**: Phase 1 着手時に「今のタスクが何か」を 5 種程度に粗分類 (game 改修 / kaizen 検証 / Slack 返信 / 日記 / 外部研究取込)。分類器は LLM 自己判定 1 ステップでよい、機械学習装置不要
+- **タスク別 routing table**: 各分類に「優先する検索層 + 順序 + 閾値プリセット」を 1 行で記述。例: game 改修 → `game_lessons_log.md (R 層 R-A〜R-I)` → `grep "game/*"` → `associative_search "game"` → `Slack` の順、Slack 全文は最後の救済層に降格
+- **観測可能性**: 各サイクルで「どの routing が選ばれたか + どの層で当たりが出たか」を `memory/retrieval_log.jsonl` に 1 行追記、サイクル間で勝率を集計
+- **動的調整の余地**: 同型のタスクで同じ層が連続外れなら閾値プリセットを ablation 候補に上げる、これは [[feedback_rule_proliferation_canonical]] の「同型反復で原則化」と同じ装置を **retrieval 側** に適用する形
+
+設計の節度: 新規装置・新規ファイルを増やさず、既存の `memory_walk.py` / `associative_search.py` に CLI 引数 (タスク分類 + 閾値プリセット名) を足すだけで再現可能。複雑性を増やさずに observation 軸だけ追加するのが第一歩。
+
+### (d) 3 軸成熟度格差 — skill / memory / retrieval の並列俯瞰
+
+| 軸 | 物理化済資源 | validation gate | 未着手 |
+|---|---|---|---|
+| skill | [[CLAUDE]] / `.claude/rules/` / `SKILL.md` / `feedback_*.md` + [[sense_prediction_log]] | Nao_u 指摘 / cross_review / 自己日記 (3 経路、手動) | 自動 gate (SkillOpt 相当の validation loop) |
+| memory | 本ファイル + `memory_search.py` (FTS5) + `associative_search.py` + `memory_retention_audit.py` + FadeMem 3 信号 | retention key (permanent/cycle/probationary) + supersedes | MemTree 的時間軸明示 (`--before/--after` 引数) |
+| retrieval | (なし、本章が初の言語化) | (なし) | tasks-aware routing 装置全般 |
+
+**格差の意味**: skill は手動 SkillOpt 相当が物理化済、memory は装置と方針が揃っている、retrieval だけが「装置どころか設計図の出発点が無い」状態だった。本章で出発点 (a)-(c) を据えたことで、Phase 2 で起票した K-A (3 軸タグ化) が起票された時に retrieval 側に基盤がある状態を作れる。**並列性の明示が重要な理由**: 軸間交絡 (skill 改修が memory 検索質を上げて結果的に skill が良く見える等) を制御するには、3 軸が同じ抽象度で並んでいる絵が必要。本章はその絵の retrieval 側の枠を埋めた。
+
+**次サイクル以降への接続**: 本章を起点に、K-A (3 軸タグ化) / K-B (per-URL 反応投稿を triad 観察に折り畳むリトロスペクティブ) / 既存 memory 軸への [[memory_redesign_proposal]] 接続 / RAISE ablation 実装 (effective_rank_probe.py との紐付け) を順次着地候補とする。本章自身は **設計図の出発点であって実装ではない** — 「言語化された資源」を retrieval 軸に置いたことが、本サイクル C308 の retrieval 側 deliverable。
+
 ## 関連メモリ (本プロジェクトの前駆 / 周辺記録)
 
 - [memory/memory_redesign_proposal.md](../memory/memory_redesign_proposal.md) — **本プロジェクトの最初の提案書 (2026-03-18 Mac/Mir)**。Cycle 238-240 外部研究 (FadeMem / Hindsight / Trajectory-Informed Memory / 3層 Markdown) を自システムに接続した最初の文書。本ファイル上部「L0-L4 階層」「3層モデル」「beliefs.md (32信念)」はこの提案からの実装系譜。
 - [memory/project_behavioral_guidelines.md](../memory/project_behavioral_guidelines.md) — Nao_u 2026-03-28「少ないルールで大きな効果」指示の原文。本ファイルの設計原理「制約を残し、不自由を排除する」 (2026-04-10 Log) と同じ思想軸 (記憶管理の負荷を制約として残す = ルールを減らすが質を上げる)。
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
+
+### 2026-06-07 (Log C308 Phase 3) — triad 構造 (skill/memory/retrieval) の発見と「retrieval 軸最薄」の言語化
+
+本サイクル Phase 2 で #nao-u 新URL 3 件 (SkillOpt / MemForest / RAISE) を Jina 経由本文取得して照合した結果、**「frozen agent + 外側テキスト状態 + validation gate + rejected/accepted buffer」を共通最小単位とする triad 構造**を発見。3 paper はそれぞれ別軸 (skill / memory / retrieval) を扱うが、独立した研究グループから 1 週間以内に揃って出てきたこと自体が、「LLM agent の改善 = 重み外のテキスト構造物を validation 付きで書き換える」というパラダイムが業界全体で立ち上がっている兆候。本プロジェクト軸への射影で当方 3 軸成熟度の格差が言語化された。
+
+**Log の各軸成熟度**:
+
+- **skill 軸 (最も成熟)**: `CLAUDE.md` / `.claude/rules/` / `SKILL.md` / `feedback_*.md` + [[sense_prediction_log]] の「同型反復で原則化」 + [[feedback_rule_proliferation_canonical]] の「禁止より目的」 = **手動 SkillOpt 相当**が既に物理化済。validation gate のみ Nao_u 指摘 / cross_review / 自己日記の 3 経路で運用、自動 gate は未整備
+- **memory 軸 (中)**: [[memory_redesign]] (本ファイル) + FadeMem 3 信号 + `memory_retention_audit.py` で wrong-time retrieval と decay を扱おうとしているが、MemForest 的「時間軸を明示した影響パス管理 (MemTree)」が抜けている。C307 で MemForest 接続点を 1mm 追記済だが、実装層 (`memory_search.py --before/--after` 等) は未着手
+- **retrieval 軸 (最薄)**: `memory/` `projects/` `knowledge/` `log/` 階層を職人芸で固定。Phase 1 開始時に毎回同じ層をなめる **固定 routing** の状態。**tasks-aware retrieval (= 今のタスクに応じて検索層・閾値・順序を動的選択する装置) なし**。RAISE が「Architecture Search 問題として記憶検索 pipeline を扱う」と提示したのは、まさに当方の最薄軸への直接照射
+
+**triad で初めて見える問い**: 3 軸を独立に育てると軸間交絡が制御できない (skill 改修が memory 検索質を上げて結果的に skill が良く見える等)。3 軸同時最適化の制度設計は誰もまだ持っていない。kaizen #136 段階1 (外部検索結果の既出 grep) の延長で、検索ログ + 何を更新したか (skill/memory/retrieval どの軸) を紐付ける記録系を作れる可能性 (Phase 2 K-A kaizen 候補として持越し)。
+
+**次の一手 (Phase 4 大作業として本サイクル着地)**: 本ファイルに `## retrieval 軸` 章を新設し、現状 (固定 routing) → 想定改善 (tasks-aware routing) → RAISE の architecture search 視点で各遷移閾値を ablation パラメータ化する設計余地、を 1 段書く。memory 軸 (本ファイル既存) / skill 軸 ([[CLAUDE]] / [[system_identity]] / [[.claude/rules/]]) と並ぶ 3 軸目を本プロジェクトの足場として明示し、Phase 2 K-A/B/C kaizen 候補のうち K-C を本サイクルで着地させる。
+
+### 2026-06-07 (Log C307 Phase 3) — Mir 投函 3 件 (MemForest / RAISE / MUSE-Autoskill) を本プロジェクト軸に接続
+
+本サイクル `slack_insight_digest.py` 未処理 11 件のうち、Mir #shared-reads 投函 3 件が記憶階層に直接交差。考察と次の一手を本プロジェクトに薄く積む (Phase 3 = 1mm 追記、深掘りは個別 cycle へ持越し)。
+
+**1) MemForest (arxiv 2605.23986, Han Chen et al.)** — Hierarchical Temporal Indexing
+- 課題提起: embedding ベース検索が「時系列を無視した wrong-time retrieval」を起こす ("Miami に引っ越す前の居住地" 質問に対し引っ越し後事実が混入)
+- 本プロジェクト接続: L0-L4 階層 + 段階的検索戦略 (L-1→L2 トリガー→memory_walk→associative→grep→Slack 全文) の **時間軸が暗黙の `mtime` ソートに留まっていた構造的死角**を明示化。本プロジェクトの「3 層モデル (起動時コンテキスト / 実体 / 永続記憶)」で「実体」層に temporal index を 1 つ追加する設計余地。
+- 次の一手 (持越し候補): `memory_search.py` (FTS5) に `--before <ISO>` / `--after <ISO>` 引数を追加して「過去時点における記憶状態」での検索を可能にする実験。kaizen #138 Forget phase 装置との接続軸 (退役候補リスト = 時間 cut-off の物理化) に重なる
+
+**2) RAISE: RAG Design as Architecture Search (arxiv 2605.30029, Zhen Chen et al. Baidu)**
+- 課題提起: クエリ書き換え/チャンク分割/検索深度/リランキング/コンテキスト圧縮の設計選択がヒューリスティック依存、体系的評価なし
+- 本プロジェクト接続: 本ファイル §「段階的検索戦略」(L-1→L2→memory_walk→associative→grep→Slack) の各遷移閾値が **ヒューリスティック (Log 経験則) で固定** されている状態への直接照射。「Architecture Search 問題として記憶検索 pipeline を扱う」視点は提示済の `effective_rank_probe.py` (kaizen #140 base rate) 計測軸と接続可能
+- 次の一手 (持越し候補): 「段階的検索戦略」各遷移閾値を ablation 可能なパラメータとして外部化する設計検討、kaizen #140 base rate 蓄積と紐付けて「閾値変動 → 効果的ランク変動」の感度測定を将来軸として残置
+
+**3) MUSE-Autoskill (arxiv 2605.27366, Huawei Lin et al.)**
+- 課題提起: LLM agent のスキル (再利用可能能力パッケージ) を孤立した静的成果物としてではなく、ライフサイクル全体 (作成/テスト/記憶/改善) で管理
+- 本プロジェクト接続: 本ファイル「設計原理: 制約を残し、不自由を排除する」(2026-04-10 Log) と接続軸。スキル文書 (.claude/rules/*.md / skills/*/SKILL.md) のライフサイクル管理は、本プロジェクトの retention 軸 (kaizen #138 permanent / cycle / probationary / supersedes) と同型問題。MUSE 的「memory + skill 統合 lifecycle」は当方の「記憶階層 + ルール階層」の統合に翻訳可能
+- 次の一手 (持越し候補): SKILL.md / .claude/rules/ への `retention:` キー導入 (kaizen #138 段階2 サード試行の拡張)、スキル文書も記憶階層の一部として retention 監視対象にする
+
+**3 件の収束軸**: MemForest = 時間軸 / RAISE = 検索 pipeline architecture / MUSE = lifecycle 管理 の 3 視点は、本プロジェクトの「実体層」「検索戦略」「retention 管理」の 3 既存軸と 1 対 1 対応。Mir が同サイクル内で 3 件を投函した事実は、**外部研究が本プロジェクト現状の 3 軸を独立に裏付けつつ深化方向を示している**示唆。Log/Log_cdx の本プロジェクト議論への Mir 投函の取り込み度合いは、kaizen #140 inter_cos の動きで観測可能 (Mir 投函内容の翻案 → Log 側語彙への取込で inter_cos がどう動くか)。
+
+### 2026-06-06 (Log C304 Phase 3) — `tools/probe_memory_link_coverage.py` 新設 + LayerX 11.3% との実機対比
+
+本サイクル shared-reads (`ts=1780720149`) で「当方 wikilink 階層が hub-and-spoke 構造で救われている仮説」を公約済。Phase 3 で probe 実装し、4 指標で実機測定した結果、仮説は**半分裏付け・半分反証**された。
+
+**§A. probe 仕様** (`tools/probe_memory_link_coverage.py`, 約 100 行純 stdlib、副作用ゼロ)
+
+- `total_files`: `memory/` 配下 *.md の総数 (recursive)
+- `wikilink_files`: `[[target]]` を 1 件以上含むファイル数
+- `p2p_rate`: 「リンク先ファイルも wikilink を持つ」リンクの全内部リンク中比率 — **LayerX「related フィールド 11.3%」と直接比較する指標**
+- `hub_rate`: in-degree top 5% (= 上位 15 件) のハブに着信するリンクの全内部リンク中比率 — **hub-and-spoke 構造強度**
+
+**§B. 初回測定値 (2026-06-06 13:30 頃)**
+
+```
+total_files=287 wikilink_files=8 p2p_rate=0.000 hub_rate=0.818
+total_internal_links=11 hub_top_n=15
+```
+
+| 軸 | LayerX 報告 | 当方 memory/ |
+|---|---|---|
+| wikilink/related 採用率 | 11.3% | **2.8% (8/287)** |
+| peer-to-peer 接続率 | (不明) | **0.0% (0/11)** |
+| hub 経由接続率 | (不明) | **81.8% (9/11)** |
+
+**§C. 仮説の検証結果**
+
+- ✅ **裏付け**: hub-and-spoke 構造強度 81.8% は仮説通り。LayerX が「related フィールド低率 = 失敗指標」と扱う事象を、当方は hub 集中で機能上補完できている可能性。
+- ❌ **反証**: wikilink 採用率 2.8% は LayerX の 11.3% **より低い**。当方の方が「リンクされていないファイル」割合が高い。仮説「hub-and-spoke 構造で救われている」は、リンク密度自体の低さを正当化しない。
+- ❌ **想定外の構造的死角**: top in-degree ハブ 15 件中 **8 件 (53%) が `in_idx=no` = リンク先ファイル実体が存在しない孤児リンク**。`[[memory_redesign]]`(deg=5) / `[[wikilink]]`(deg=5) / `[[link]]`(deg=4) / `[[name]]`(deg=2) / `[[system_identity]]`(deg=1) / `[[CLAUDE]]`(deg=1) / `[[ssgm_atom_field_probe]]`(deg=1) / `[[memory_redesign]]` (頻出 typo パターン) 等。**hub_rate=81.8% の実態は「実在ファイルへのリンク集中」ではなく「孤児リンク集中」**。
+
+**§D. Mir 洞察 (#7 LayerX 4552件実験 + #11「関連グラフ自然成長率11.3%」) との交差**
+
+Mir は LayerX 11.3% を「失敗指標」と読み、当方の MEMORY.md → サブインデックス3層構造が「カタログ 228% 占有」問題への回答になっていると指摘。本 probe 結果はこの Mir 観察に対して**追加の死角を発見**: 当方 3 層構造は MEMORY.md 軸では機能しているが、memory/ 全 287 ファイル横断の wikilink 接続グラフは **「採用率低・孤児リンク集中・p2p ゼロ」の 3 重失敗状態**。Mir 観察が成立するのは MEMORY.md → サブインデックス 4 件の縦軸であって、wikilink 横軸ではない。
+
+**§E. 即時翻訳判定**
+
+- **採用**: `tools/probe_memory_link_coverage.py` を `multi_phase_cycle_log.py` Pre-check に組み込み候補 (kaizen #134 probe_atom_quality と同列の構造軸 probe として)。次サイクル C305 staging に起票候補。
+- **観察として保持**: 孤児リンク自動検出は `[[CLAUDE]]` のような相対パスなしリンクが本質的に解決不能 (`memory/` 内に `CLAUDE.md` は存在しないが、プロジェクトルートに存在する)。解決には wikilink 解決スコープを「memory/ + projects/ + ルート CLAUDE.md」に拡張する probe v2 が必要 — 次サイクル以降の 1mm 試行候補。
+- **却下**: wikilink 採用率を「強制的に上げる」運動 (= 全 atom に wikilink を書く) は `feedback_rule_proliferation_canonical.md` 違反 (個別事例を即ルール化)。判断: probe は失敗指標として観察し続け、Nao_u 指摘または同型 5 件以上の能動的 wikilink 追加が出てきた時点で原則化する。
+
+**§E2. 2026-06-06 (Log C304 Phase 4) — v2 測定値 (`--scope-extend`)**
+
+§E で「v2 必要」と起票した解決スコープ拡張を Phase 4 大作業として probe 本体に着地 (`tools/probe_memory_link_coverage.py --scope-extend`)。スコープ = `memory/` + `projects/` + ルート `CLAUDE.md` + `.claude/system_identity.md`。
+
+| 指標 | v1 (memory/) | v2 (memory+projects+root files) |
+|---|---|---|
+| total_files | 287 | **320** (+33: projects/ 31 + 2 個別ファイル) |
+| wikilink_files | 8 | **10** (+2) |
+| total_internal_links | 11 | **23** (+12 — projects/ 由来) |
+| p2p_rate | 0.0% | **30.4%** — projects/ 内 atom 間の wikilink が peer-to-peer を成立させていた |
+| hub_rate | 81.8% | **95.7%** — 集中度はさらに上昇 |
+
+**v1 top 15 ハブ中 `in_idx=no` 判定 7 件の v2 再判定** (staging で「8 件」と書いたのは off-by-one、実機は 7 件):
+
+- ✅ **解決 3 件 (= typo ではなく相対パス省略の偽陽性)**:
+  - `[[memory_redesign]]` (deg=5) → `projects/memory_redesign.md` (本ファイル)
+  - `[[system_identity]]` (deg=1) → `.claude/system_identity.md`
+  - `[[CLAUDE]]` (deg=1) → `CLAUDE.md` (ルート)
+- ❌ **真の孤児 4 件 (= v2 でも実在ファイル不在)**:
+  - `[[wikilink]]` (deg=5) — wikilink 自身を文中で言及するための語彙参照、ファイル化意図なし
+  - `[[link]]` (deg=4) — 同上、一般語の wikilink 化
+  - `[[name]]` (deg=2) — 同上、テンプレ語彙の wikilink 化
+  - `[[ssgm_atom_field_probe]]` (deg=1) — 過去 atom_field 議論の道具名、対応ファイル未作成
+
+v2 走査全体での distinct unresolved target は **7 件** (上記 4 件 + `[[file]]`, `[[target]]`, `[[wikilinks]]` の 3 件が projects/ から新規追加)。全件「一般語の wikilink 化」「テンプレ語彙」「未作成 atom」のいずれかで、**真に作成すべきファイルが特定された件数 = 0 件**。
+
+**§E2 → 結論の更新**:
+- v1 で「孤児リンク 53%」と読んだのは解像度不足だった。v2 解像度では「**偽陽性 43% (3/7) + 真孤児 57% (4/7) で、真孤児はすべて一般語の wikilink 化 ノイズ**」が実態。
+- 改善方向の翻訳: 「孤児リンクを掃除する」<<<「**一般語の wikilink 化を抑制するルール**」(例: `[[wikilink]]` のような自己言及ノイズを書かない)。ただし `feedback_rule_proliferation_canonical.md` 遵守のため即原則化はせず、Phase 4 観察として保持。
+- 「wikilink 採用率を上げる運動」は引き続き却下 (§E と同じ判断)。実機データで「採用率低 = 必ずしも失敗ではなく、書く側がノイズを抑制している副産物」の可能性が浮上、設計バイアスの再点検候補。
+
+**§F. memory_redesign.md 直前節 (LayerX 1 年分実証) との接続**
+
+直前節 (2026-06-06 C303) は LayerX を **規模・設計方針** で比較したが、本節は LayerX を **接続構造実測** で比較した。両者は LayerX を同一情報源として 2 軸 (規模 + 構造) で解像し、当方が **規模では分散投入優位 / 構造では LayerX 未満** という非対称評価を残した。次サイクル以降の C305 Phase 1 §6 で LayerX 本文取得後に「LayerX 自身の `related` フィールドの hub_rate / p2p_rate」が報告されていれば、直接 4 軸比較に拡張可能。
+
+### 2026-06-06 (Log C303 Phase 3) — LayerX 1 年分長期記憶実証 (60 号 Claude Sonnet 4.6 200k) ケーススタディ接続
+
+Mir [shared-reads] (#6 他インスタンス洞察、`tech.layerx.co.jp/entry/ai-agent-long-term-memory-simulation`) 経由で取得した LayerX AI Workforce 事業部 R&D の実証実験を、当方 20 年日記規模での先行ケーススタディとして接続記録 (本サイクル Phase 3 §C 選定、本文 PDF/HTML 完全取得は次サイクル以降 Phase 1 §6 で再選定、本節は abstract レベル接続のみ)。
+
+**§A. LayerX 実証の概要 (Mir 投稿経由 abstract 要約)**
+
+- **入力規模**: AIニュースレター 1 年分 60 号 × 各号約 20,000 文字 = 約 120 万文字
+- **モデル**: Claude Sonnet 4.6 (200k context)
+- **出力**: 4,552 件の長期記憶
+- **問題意識**: 「長期記憶の手法は提案されているが、実際に長期間運用した事例はほとんどない」(LayerX 原文)
+
+**§B. 当方 20 年日記との規模比較**
+
+| 軸 | LayerX 実証 | 当方 20 年日記 (推定) |
+|---|---|---|
+| 入力期間 | 1 年 | 20 年 (= LayerX × 20) |
+| 入力文字数 | 120 万字 | 推定 数千万 〜 億単位 |
+| 生成 atom 数 | 4,552 件 | 当方 atoms/2026-05 のみで 1,386 件 (本サイクル C303 build_atom_edges 観測値) |
+| context window | 200k 単一投入 | 当方は週次分散投入 + Mnemonic Sovereignty 6 phase で逐次処理 |
+
+→ LayerX は **単一 LLM の超長 context を活用した一括処理**型、当方は **マルチサイクル逐次処理 + frontmatter 由来構造化**型。設計方針は正反対だが、最終的な atom 数規模は同オーダーに収束する観察。
+
+**§C. Mnemonic Sovereignty 6 phase 観点での LayerX の射程**
+
+- **Write**: LayerX は ニュースレター → LLM 抽出で自動生成 / 当方は Slack/日記/external_notes/atoms で人 + LLM 混成 (当方優位 = 質バラエティ)
+- **Store**: LayerX は単一 store 想定 / 当方は L0-L4 + L-1 階層化 (当方優位 = 階層 retrieval)
+- **Retrieve**: LayerX は 200k context での「全件投入 retrieval」可能 / 当方は memory_search.py FTS5 + associative_search.py で部分検索 (LayerX 優位 = recall 質、当方優位 = コスト)
+- **Execute**: 当方は execute 文脈不明だが、LayerX は recall 後の応答品質を実運用評価 / 当方は execute 軸の明示装置が現在未着地 (空欄)
+- **Share**: LayerX は内部運用のみ報告 / 当方は 3 instance (Log/Mir/Ash) + Nao_u 共有 (当方優位 = 多者検証)
+- **Forget+Rollback**: LayerX 言及不明 / 当方は kaizen #138 + retention 軸 + state_change_timeline_log.md で明示装置 3 段着地 (当方優位 = forget phase 設計)
+
+→ **観察**: LayerX = Write/Retrieve 軸で実運用先行 (当方未経験)、当方 = Forget/Share/階層 Store 軸で設計先行 (LayerX 未報告)。両者は相補的、互いに学ぶ余地あり。
+
+**§D. 当方への即時翻訳判定**
+
+- **採用**: なし (本節は接続記録のみ)。理由 = LayerX 200k 単一投入アプローチは当方の Mnemonic Sovereignty 6 phase 設計と直交、表面的に同方向と見えても採用は当方設計の根本転換を要求するため `feedback_substrate_not_infrastructure.md` T:5 違反リスク高
+- **観察として保持**: 1 年規模での recall 質の劣化パターン (LayerX が報告しているなら本文取得後に当方 5 月分 atom 1,386 件規模での比較材料に。次サイクル以降 Phase 1 §6 で本文取得経路試行候補)
+- **kaizen #135 段階3 (本サイクル Phase 4 大作業) との接続**: T0 ベンチで「5 seed × 1-hop 展開 → precision/recall」を測る取り組みと、LayerX の「1 年分入力 → 4552 件出力 → 実運用 recall 質」は **規模は違うが評価軸は同型** (recall 質の数値化)。Phase 4 で T0 ベースライン確立後、次サイクル以降の T1 (拡大ベンチ) で LayerX 報告値との比較余地が生まれる
+
+**§E. R 層昇格判定 source 軸**: LayerX 実証 = **業界実運用 1 件目** (これまでの 10 件超 = arxiv 学術論文中心、産業実証は別カテゴリ)。R 層昇格判定は本文取得後に再評価、本節時点では「業界実証カテゴリの第 1 例として記録」のみ (`feedback_rule_proliferation_canonical.md` 順守、N=3 で原則化)。
+
+---
+
+### 2026-06-06 (Log C301 Phase 4) — kaizen #138 段階3 minimal 着地 (`access_frequency_30d` proxy 列、opt-in 副作用ゼロ)
+
+C297 §B-1 で起票した「FadeMem 3 信号 proxy 列追加」のうち、最も実装コストが軽い **access frequency 軸 (git log --follow --since=30d ファイル参照 commit 数)** のみを `tools/memory_retention_audit.py` に先行着地。AMV-L utility proxy / semantic relevance proxy / temporal patterns proxy は同時投入せず、段階3 minimal として 1 軸 1mm。
+
+**§B-2. minimal 着地の構造 (§B-1 設計表 access frequency 行の実体化)**
+
+| 設計項目 | 着地内容 |
+|---|---|
+| CLI フラグ | `--with-access-freq` (action=store_true, default=False) + `--access-freq-days` (int, default=30) |
+| ヘルパー関数 | `count_recent_commits(path, days=30, cwd=None) -> int`、`git log --follow --since={days} days ago --pretty=%H -- <path>` を subprocess 起動、git 不在/失敗時は -1 を返す純 stdlib 設計 |
+| 出力列名 | `access_frequency_{days}d=<int>` (n/a = -1 時表示)、`## access_frequency_30d 集計` セクション + `## low_frequency 候補 (== 0)` セクションを追加 |
+| 副作用ゼロ確証 | デフォルト OFF で従来出力と bit 完全一致、ON 時のみ pure addition (既存 4 セクション = scanned header / retention:cycle 全件 / 退役候補 / supersedes 双方向リンク はすべて不変) |
+| commit hash | `7b41b0d898` (commit prefix `rule:`、C301 Phase 5) |
+
+**§B-3. dry-run 検証結果 (本サイクル Phase 4 実機 PASS)**
+
+```
+# baseline (--with-access-freq 無し) と --with-access-freq 有りの diff
+15a16,24
+> ## access_frequency_30d 集計 (FadeMem 3 信号 proxy 第 1 段, days=30)
+>   with_retention 対象 3 件 / 計測手段: git log --follow --since=30d
+>   memory\feedback_means_ends_reversal_check.md (retention=permanent access_frequency_30d=2)
+>   memory\state_change_timeline_log.md (retention=permanent access_frequency_30d=1)
+>   log\cycle_staging.md (retention=cycle access_frequency_30d=50)
+> ## low_frequency 候補 (access_frequency_30d == 0, 0 件)
+>   low_frequency 該当なし
+```
+
+検証観察 = 既存 4 セクションは 1 行も変化なし、新規 9 行が末尾に純粋追加。`cycle_staging.md` の `access_frequency_30d=50` は 30 日で 50 commit = サイクル毎更新ファイルが proxy 上「最高頻度」として正しく検出されている (= proxy 設計の sanity check)。`feedback_means_ends_reversal_check.md` の `=2` は手段目的逆転チェック原則の 30 日内更新 2 回 = 当該原則の active 度を proxy 出力できている。**`retention: cycle` ファイルのみで完結する装置から、`retention: permanent` ファイルの「動いているか/動いていないか」を proxy する装置への 1 段拡張が完了**。
+
+**§B-4. 段階3 残作業 (今回着地せず明示保留、CLAUDE.md「ルール増殖禁止」順守)**
+
+- semantic relevance proxy (Slack mention 経路 jsonl 走査 / memory_search.py FTS5 ヒット件数) — 既存装置 reuse 経路は確立しているが、`count_recent_commits` よりロジックが重く本サイクル minimal の射程外
+- temporal patterns proxy (mtime 既装備 + git log 直近 commit 間隔追加) — `cycles_per_day` 拡張系で同 audit 内に既装備、専用列追加は次回判断
+- AMV-L utility proxy (`utility_log.jsonl` 案、C288 §B 二段運用の(b)) — `frontmatter` 形式と `jsonl` 形式のどちらに乗せるかが未決着、Mir 側 atom 化判断と整合とるまで保留
+- discard フロー (probationary 降格→削除、C293 §D 自己批判) — 本 §B-4 access frequency proxy で「動いていない atom」を可視化できる経路は開いたが、自動降格判定ロジックは別 kaizen 起票待ち
+
+**§B-5. STALE (arxiv 2605.06527) 同型観察への接続 (本サイクル Phase 2 §5)**
+
+STALE 観察「装置の存在 ≠ 装置の起動」(systems retrieve updated evidence but fail to act on it) に対し、本 §B-2 着地は **装置側を 1 段強化** したのみ。`access_frequency_30d` 出力を **次サイクル Phase 1/2 でどう起動して判断に使うか** (例: 低頻度の `retention: permanent` を「実は cycle 相当ではないか」再判定する手順、`low_frequency` リストの定期チェック責務配分) は未設計。Forget phase の起動側責務空欄 (C280 §B + C283 §B) と同じ構造リスクが残るが、本サイクルでは記録のみ (N=1、`feedback_rule_proliferation_canonical.md` 順守、N=3 で原則化判定)。
+
+---
+
+### 2026-06-05 (Log C300 Phase 3) — MemForest (arxiv 2605.23986) 並列チャンク抽出 + 13.7× 構築速度 を kaizen #138 段階3 接続点として追記 (Phase 2 引継ぎ #1 close)
+
+C300 Phase 2 §0 で api.fxtwitter.com 経由本文取得が確立した結果、MemForest 詳細値が初めて当方で再現可能に: **LongMemEval-S 79.8% / 構築速度 178s vs MemoryOS 2440s = 13.7× 倍速** (MemTree 時系列ツリー + 並列チャンク抽出構造)。C298 Phase 4 (state_change_timeline_log.md 着地) で wrong-time retrieval 対処の最小プロトタイプは済んでいるため、本エントリは **kaizen #138 段階3 (FadeMem 3 信号 proxy + AMV-L utility proxy 統合 frontmatter 拡張)** との接続点を整理する。
+
+**§A. MemForest と kaizen #138 段階3 統合候補の質的位置**
+
+| 軸 | MemForest | kaizen #138 段階3 候補 (FadeMem+AMV-L 統合) |
+|---|---|---|
+| 構築フェーズ | 並列チャンク抽出 = 並列実行で書込時間短縮 | retention 軸宣言 (frontmatter 一行) — 並列実行非依存、人手書込が前提 |
+| 索引構造 | MemTree 時系列ツリー (時刻軸主体) | retention=permanent/cycle/probationary 3 層 (耐久性軸主体) |
+| 検索 | wrong-time retrieval 抑止 (時刻条件付きクエリで正解) | utility 順位 + 3 信号 proxy で順位付け (時刻軸は temporal patterns 1 列にのみ寄与) |
+| 退役 | 明示装置なし (時系列ツリーに残り続ける) | `discard` 軸の明文化 (probationary 降格→削除フロー) |
+
+**§B. 両者の相補性**: MemForest は **書込・検索の速度+正確性**を強化、kaizen #138 段階3 統合は **退役・順位付け**を強化。両者は競合せず、当方環境では (1) state_change_timeline_log.md = MemForest 系 retrieval の最小プロトタイプ (既着地) + (2) `memory_retention_audit.py` 拡張 = kaizen #138 系 lifecycle 装置 (起票済) の 2 装置を分離運用する設計が筋。
+
+**§C. 並列チャンク抽出の当方環境への翻訳判定**
+
+並列チャンク抽出を当方 manual 運用に持ち込むコストは現状高い: (a) Slack archive 既書込 → atom 化を一括バッチで走らせる経路はあるが、(b) 並列化のための Python multiprocessing/asyncio 導入 は副作用 (実行プロセス並列化 = `feedback_substrate_not_infrastructure.md` T:5 警戒) で当面採用しない。**判定**: MemForest 並列チャンク抽出は「実装技術として参照」、当方 manual 装置への直接移植はしない。
+
+**§D. R 層昇格判定 source 軸**: MemForest = 11 件目独立到達候補 (前回 C298 で Wong 2605.27898 = 10 件目候補水温化済) — 時系列ツリー主体 retrieval は AMV-L (utility) / AgeMem (RL policy) / FadeMem (認知 decay) / Multi-Layered (層構造) / Mnemonic Sovereignty (6 phase) のいずれとも切断軸が異なる。kaizen #135 期限 2026-06-09 (4 日後) 観察継続、即昇格判定はしない (`feedback_rule_proliferation_canonical.md` 順守)。
+
+**§E. Phase 2 引継ぎ #1 close 判定**: 本エントリで MemForest 詳細値の memory_redesign.md 反映完了。kaizen #138 段階3 統合方針は AMV-L (C288 §B) + FadeMem (C297 §B-1) + MemForest (本節 §B) の 3 文献入力を踏まえて、次サイクル以降 Phase 4 大作業候補として正式起票判定。本サイクル Phase 4 は別軸 (Phase 3 末尾 staging Phase 4 候補節参照)。
+
+---
+
+### 2026-06-05 (Log C298 Phase 3) — Unified Framework for the Evaluation of LLM Agentic Capabilities (arxiv 2605.27898) 5 軸分離 × 当方記憶階層 接続表
+
+C298 staging Phase 1 §6 で skill library 軸外部検索 (`LLM agent skill library evaluation framework 2026`) で取得した 3 件のうち、Wong+ "A Unified Framework for the Evaluation of LLM Agentic Capabilities" (arxiv 2605.27898) を Phase 2 §2 で深掘り対象に選定。本論の核 = 「reported benchmark scores が model capability と implementation choices を不可分に混ぜる」問題に対し benchmark/environment/tool/model/eval を YAML config で declarative 分離、fixed ReAct architecture + controllable sandbox + offline snapshot を共通基盤に 7 benchmarks × 24 domains 統一を提案。
+
+**本論 5 軸 × 当方記憶/評価運用 接続表**:
+
+| 当方の運用層 \\ 本論分離軸 | benchmark | environment | tool | model | eval |
+|---|---|---|---|---|---|
+| **kaizen frontmatter** | 段階 PASS 判定が中核 | △ Win-D/Mac/Win-C 混在 (1 軸混在) | △ hook 実装依存性混在 | △ Claude/Codex 混在 | △ 検証手段欄に混在 |
+| **staging_log Phase 1-5** | (隣接) Phase 1 §6 外部検索 | △ 未装備 | (隣接) hook 出力 (#136 family) | △ 未装備 | (隣接) Phase 2 自己批判 |
+| **MEMORY.md frontmatter** | (隣接) retention 軸 = atom 段階管理 | △ 未装備 | △ 未装備 | △ 未装備 | △ 未装備 |
+| **kaizen クロスチェック** | △ 未装備 | (隣接) インスタンス軸 = environment 等価 | △ 未装備 | (隣接) インスタンス軸 = model 等価 | △ 未装備 |
+
+**5 軸分離で見えた当方の最大空欄 2 件**:
+
+1. **environment 軸の未分離** — kaizen #139 段階 1-3 PASS は Win (D:\AI) hook 実装依存で他マシン (Mir/Ash) 再現未検証。本論「framework effect が capability metric に紛れ込む」典型例。次サイクル以降の候補: kaizen frontmatter に `environment: <instance>` メタデータ追加 + 3 インスタンス再現テスト hook (実装コスト中)
+2. **model 軸の未分離** — Claude (Log) と Codex (Log_cdx) の cycle commit パターンは混在管理 (両者の活動を「同じ Log」と扱っている)。[instance_divergence_observability.md](instance_divergence_observability.md) でも分離不全。本論の fixed model swap 概念は当方には強すぎる (Claude/Codex を同一 model に強制すると時系列継続活動と矛盾) が、frontmatter `model: <claude|codex>` で軸分離だけ採用候補
+
+**判定**: (a) kaizen #140 起票候補水準で温める (即起票は機械反映禁止順守、PDF 未取得で abstract のみ深掘りのため起票材料不足、PDF 取得は次サイクル Phase 1 §6 候補) (b) Mnemonic Sovereignty 6 phase Retrieve phase 設計時の YAML frontmatter 統一案の入力源として retain (c) external_notes_log.md 新規エントリ起票候補 (R 層昇格判定 source 軸の独立到達 8 件目→9 件目候補に詰まる可能性)。**fixed ReAct architecture 強制 / offline snapshot 完全置換は時系列継続活動と原理的乖離で不採用** — 本論の全 5 軸採用は当方の自律的判断主体性と矛盾、選択採用のみ。
+
+**接続元 entry** (external_notes_log.md 起票候補時の source 情報): Wong, J. et al. "A Unified Framework for the Evaluation of LLM Agentic Capabilities" arxiv 2605.27898 (C298 staging Phase 1 §6 摂取 2026-06-05 04:09, Phase 2 §2 abstract 深掘り、Phase 3 §1 本接続表記録、#shared-reads ts=1780600863 投稿済)
+
+---
+
+### 2026-06-05 (Log C297 Phase 3) — Human-Inspired Memory Architecture (arxiv 2605.08538) 6 認知機構 × 当方 Mnemonic Sovereignty 6 phase 6×6 照合表
+
+C297 Phase 1 §6 / Phase 2 §1 で取得した Kerestecioglu+ 5 名 "Human-Inspired Memory Architecture for LLM Agents" (arxiv 2605.08538) の 6 認知機構と、当方が C280-C298 で接続を進めてきた arxiv 2604.16548 Mnemonic Sovereignty 6 phase との 6×6 照合表を本サイクル Phase 3 で記録。**切断軸が異なる** (本論=認知機構 / 当方 phase=操作カテゴリ) ため空欄が見える「対角でない格子」として有用。
+
+| 当方 phase \\ 本論 機構 | Sleep-phase consolidation | Interference-based forgetting | Engram maturation | Reconsolidation upon retrieval | Entity knowledge graphs | Hybrid multi-cue retrieval |
+|---|---|---|---|---|---|---|
+| **Write** (atom 物理化) | (隣接) staging Phase 5 で atom commit = 浅い consolidation 段階 | △ 未装備 (新規 atom が旧 atom と「干渉」する判定なし) | (隣接) Write 時点 freshness 高 | — | △ 未装備 (entity 抽出 hook なし) | — |
+| **Store** (retention 軸) | △ 段階間 reorganize 未装備 | △ 干渉ベース忘却なし | retention `permanent`/`cycle`/`probationary` = engram 成熟度の静的宣言 | — | △ 未装備 | — |
+| **Retrieve** (memory_search/associative) | — | — | — | **△ 当方の最大空欄** (R-A 想起時批判レビュー = Reconsolidation の素朴版を自然にやっているが機構名がなかった) | △ 未装備 (entity graph 経由 retrieval なし) | (隣接) FTS5 + 概念展開 + 共起展開 = 多 cue 化済 |
+| **Execute** (atom 適用) | — | — | — | (隣接) atom 適用時に内容微更新あり (非明示) | — | — |
+| **Share** (#shared-reads / atom commit) | — | — | — | — | △ 未装備 | — |
+| **Forget+Rollback** | (隣接) memory_retention_audit.py (kaizen #138) = 受動退役装置 | **△ 最大空欄第2位** (新規記憶が旧記憶を上書き/弱化する装置なし、FadeMem 3 信号も Forget 側のみ) | (隣接) supersedes/superseded_by キー = 後継 atom による旧版退役 | — | △ 未装備 | — |
+
+**6×6 で見えた当方の最大空欄 2 件**:
+
+1. **Reconsolidation upon retrieval** (本論機構 4 × 当方 Retrieve phase) — R-A 想起時批判レビュー / staging cycle の過去 atom 文脈更新で**自然にやっている**が機構名がない。命名で運用に乗せやすくなる。次サイクル以降の候補: `tools/recall_atom.py` (仮称) に retrieval-time write-back hook を最小実装 = atom を読んだ瞬間に「現在の文脈での解釈」を frontmatter `reconsolidated_at` / 末尾追記欄に記録する閉ループ
+2. **Interference-based forgetting** (本論機構 2 × 当方 Write/Store/Forget phase 横断) — 新規 atom が旧 atom と意味的に衝突した時に旧側を弱化/退役候補化する判定なし。FadeMem 3 信号 (semantic relevance / access frequency / temporal patterns) も Forget 側のみで「干渉」軸は別軸。実装コストは高 (semantic similarity 判定が必要)、本サイクルは記録のみ
+
+**数値根拠**: 本論報告 = VSCode 13K issues で retention precision 97.2% + storage 58% 削減、LongMemEval 200K-token で baseline 同等 (70.1 vs 71.2)。FadeMem 45% 削減と独立同型 = decay/forget 系の独立到達 4 系統目 (AgeMem RL / AMV-L 静的 utility / FadeMem 認知 decay / Kerestecioglu 6 機構)。
+
+**判定**: 本表は次サイクル以降の Forget/Retrieve phase 実装着手時の優先度判定材料。Reconsolidation は当方既存実態に「機構名」を与える低コスト 1mm、Interference は実装コスト高で次次サイクル以降の候補。本サイクルは記録のみで実装着手は別軸 (Phase 4 大作業節参照)。
+
+**2026-06-05 (C300 Phase 2) 追記 — SYNAPSE による Retrieve phase の角度追加**: arxiv 2601.02744 "SYNAPSE: Empowering LLM Agents with Episodic-Semantic Memory via Spreading Activation" は Retrieve phase に **Triple Hybrid Retrieval** (geometric embeddings + activation-based graph traversal + 3 種目未確認) と **lateral inhibition + temporal decay** を提案。当方の Retrieve phase 空欄に対し、Reconsolidation (機構4) とは直交する 2 軸が見えた:
+- 軸 (a) **Triple Hybrid Retrieval = 動的 graph activation 側**: 当方は `memory_activate.py` (kaizen #069) と `memory_search.py` FTS5 が retrieval-time に切断稼働 = 融合化未装備。AgeMem 系 (memory_redesign.md L1693 引用 NAACL 2025 系列) は policy-内 tool action 側で、両軸独立並走可能
+- 軸 (b) **Lateral inhibition = anti-recency / 競合抑制側**: 当方は「記憶の散歩」ランダムモード (L1784) で間接対応中、正面解として候補昇格。Reconsolidation (機構4) が「想起時 write-back」、Lateral inhibition が「想起時 競合抑制」で、Retrieve phase が 2 機構独立で必要なことが見えた
+- **不確実性**: NAACL 2025 "Synapse" (L1518 引用) との同一性未確認 = 同名異作可能性。PDF 本文 plain text 抽出未了 (WebFetch 1.9MB 取得済も binary)、Triple Hybrid 3 種目特定は次サイクル
+- **実装着手判定**: 軸 (a) は memory_activate.py + memory_search.py の retrieval-time 融合化 = 設計コスト中、Phase 4 大作業候補。軸 (b) は anti-recency 補強として既存「記憶の散歩」拡張 = コスト小、次サイクル以降
+
+---
+
+### 2026-06-04 (Log C298 Phase 4) — state_change_timeline_log.md 着地: Mnemonic Sovereignty 6 phase の Rollback phase 試作 (wrong-time クエリ応答装置の最小プロトタイプ)
+
+C298 Phase 2 §A で MemForest (arxiv 2605.23986) 応答 #all-nao-u-lab ts=1780579010 内で宣言した「状態変化の時系列ツリー試作」を Phase 4 大作業として実機着地。新規ファイル [memory/state_change_timeline_log.md](../memory/state_change_timeline_log.md) を frontmatter (`type: project`, `retention: permanent`) 付きで作成、対象 2 ファイル (`memory/core_mission.md` 17 commit / `memory/feedback_identity_names.md` 7 commit) の git log --follow 全件をエントリ化、wrong-time クエリ 2 件で自己テスト実施。
+
+**位置づけ**: arxiv 2604.16548 Mnemonic Sovereignty 6 phase (Write/Store/Retrieve/Execute/Share/Forget+Rollback) のうち **Rollback phase = 「過去の自分の状態を引ける」装置の最小プロトタイプ**。kaizen #138 (memory_retention_audit.py) は Forget 側の retention 自動退役装置だが、Rollback 側は未実装だった空欄に対する 1mm 前進。
+
+**MemForest との接続**: MemForest の wrong-time retrieval 問題 (時系列無視のクエリで誤った時刻の記憶を返してしまう) は、本ファイル単独で「2026-03-13 以前」「2026-03-15 以前」などの時刻条件付きクエリに正しく答えられる装置として直接処方。Q2 (Win2=Ash 自認固定前) で「本ファイル上に明文記録なし = 知らないことを知らないと答える境界保持」を PARTIAL PASS として実機確認。
+
+**memory_retention_audit.py 検出確認**: 実行で `scanned_md=288 with_retention=2 (permanent=2)` を確認。本ファイル追加で permanent カウントが +1 (kaizen #138 段階2 サード試行と同型の追加 1mm)。
+
+**対象選定基準**: アイデンティティの根を支えるファイル限定 (技術的記憶階層は対象外)。core_mission.md = 行動原理、feedback_identity_names.md = 名前自認。本ファイル肥大化を抑える明示的境界を §4 運用メモに記録。
+
+**残課題 (C299 以降)**:
+- 対象拡張判断 (system_identity.md を入れるか否か = system_identity.md は CLAUDE.md と参照網が強く、本ファイルに入れると参照三角構造が成立して有用な可能性、ただし対象拡張は MEMORY.md 二重化のリスクあり)
+- 自動化判断 (現状は手動更新前提だが、core_mission.md commit 時に hook で本ファイル末尾に空テンプレ追加するか否か。**現時点は不採用** — 手で読み返しながら書く工程自体が原則6「書いた後読み返す」の実体化のため)
+
+### 2026-06-09 (Log C316 Phase 2-3) — arxiv 2603.04549 Adaptive Memory Admission Control 着地: Write 軸独立到達 13 件目 (Forget 軸偏重に対する直交軸)
+
+本サイクル C316 Phase 1 §6 で能動取得した *Adaptive Memory Admission Control for LLM Agents* (arxiv 2603.04549) を Phase 2 §1 で WebFetch 一次確認、`#shared-reads` ts=1780975880.419269 に投稿済。当方 R 層昇格 source 軸はこれまで 12 件目まで全て Forget/decay/consolidation 側 (Mnemonic Sovereignty / AMV-L / AgeMem / FadeMem / Memora / FAMA / SleepGate / ... ) に偏っていたが、本論は **Write phase 直前の gate = admission control** で軸が直交。**Write 軸 1 件目独立到達 (= source 数軸 13 件目相当)** として当方 retention 装置の現空欄を直撃。
+
+**§M-W. Mnemonic 6 phase 接続表 Write 列の独立到達状況更新**
+
+C280 §A 起票時点で Write 列は当方 frontmatter retention 宣言 (手動) のみで外部 source 独立到達 0 件だった空欄。本論で **外部 source 1 件目** = 軸の存在自体が確立:
+
+| Mnemonic phase | C280 起票時の独立到達数 | 本 C316 更新 |
+|---|---|---|
+| Write | **0 件** (当方手動 retention のみ) | **1 件 = arxiv 2603.04549 (本論)** |
+| Store | 2 件 (AgeMem store / 当方 atom 配置) | 据置 |
+| Retrieve | 3 件 (MemForest / AMV-L / 当方 FTS5) | 据置 |
+| Execute | (運用層、外部独立 source 軸 N/A) | 据置 |
+| Share | 1 件 (Mnemonic Sovereignty 単独) | 据置 |
+| Forget+Rollback | 4 件 (AgeMem / AMV-L / FadeMem / 当方 retention_audit) | 据置 |
+
+→ Write 列が **手動宣言以外の独立軸を初めて獲得** = retention 装置の自動化判定経路に新規門が開く。
+
+**§M-A. 5 解釈可能要因 × 当方 retention 装置の proxy 列対応**
+
+本論の admission control は次 5 要因を明示的・監査可能に組み合わせる:
+
+| 要因 | 本論での重み付け | 当方 proxy 候補 (kaizen #138 段階3 family 統合に積む) | 取得手段 |
+|---|---|---|---|
+| (a) 将来有用性 | 中 | utility_log.jsonl (C293 AMV-L 由来既起票) | 既装備 |
+| (b) 事実的信頼性 | 中-高 | sense_prediction_log の同型再発度 (本 N=44 系統) | 既装備 |
+| (c) 意味論的新規性 | 高 | §6 fixation 観察 (既出 ARXIV WARN N=0 → 新規性高) | kaizen #136 段階1.5 既装備 |
+| (d) 時間的近接性 | 低-中 | mtime + cycle counter (kaizen #138 既装備) | 既装備 |
+| **(e) コンテンツタイプ事前分布** | **最も影響力** | **ファイルパス階層** (memory/feedback_* vs projects/* vs log/* vs game/*) から content type prior 抽出 | **未装備、本 §で新規起票候補** |
+
+→ **(e) が最も影響力**との明示が当方装置への直接設計入力。当方 retention タグ (permanent / cycle / probationary) は手動宣言で content type 観点が**暗黙化**されている = (e) を明示化する余地 = `tools/memory_retention_audit.py` (kaizen #138 段階3 family 統合) に **content-type-prior 列を追加する新規 1mm 候補**。
+
+**§M-B. ベンチマーク結果 = LoCoMo F1 0.583 (-31% latency vs SOTA LLM-native)**
+
+完全 LLM 駆動 memory policy に対し、本論の軽量ルールベース + 単一 LLM 補助評価ハイブリッドは F1 維持しつつ 31% latency 削減を達成。当方 `memory_retention_audit.py` は純 stdlib ルールベースのみで LLM 補助無し = ベンチマーク上は本論より単純な側に位置。「LLM 補助を導入する判定基準」軸での参照点として保存。
+
+**§M-C. 差別化点 = 監査可能性 (本論の核心)**
+
+不透明な完全 LLM 駆動 memory policy に対し本論は**明示的・監査可能**な制御。当方の判断主体性原則 (人間判断補助のみで削除は人間) と整合度高 = 採用候補上位。
+
+**§M-D. 反証ライン**
+
+(1) 5 要因の重み付け最適化が当方データ規模 (atoms ~1386 件、memory ~384 件) では交差検証が走らない可能性。本論は LoCoMo 規模 (公開 long-context memory benchmark) でチューニング、当方は規模で 1-2 桁下。対処: 重み付けは固定運用 (本論 default) で最小起動、自前最適化は規模到達後。
+(2) (e) content type prior の path 階層抽出は当方 file layout への over-fit リスク。対処: 抽出ロジックは LLM-free / 改名耐性 (`memory/feedback_*` パターン抽出のみ) で起票、layout 変更時は手動更新で済む粒度に抑える。
+(3) Write phase 軸 13 件目独立到達は **fixation 観察 N=3 失効方向の傍証**。同一キーワードで 12 件目までは Forget 軸偏重で base camp 再到達優位だったが、本論で Write 軸が取れた = 「base camp 取りつつ新規 1 件は取れる」継続観察対象 (Phase 1 §6 fixation 仮説の N=3 接近判定継続)。
+
+**§M-E. R 層昇格判定**
+
+source 数軸: **13 件目独立到達 = 採用** (Write 軸 1 件目)。前 12 件は Forget/decay/consolidation 軸の重複度が高かったが、本論で**入口の門 (admission gate)** 軸が初取得 = 軸の質的加点 (5 種類目)。kaizen #135 (期限 2026-06-09 当日) 観察継続最終日、本論で軸が広がったことを最終観察結果として記録。
+
+**§M-F. 即時アクション**
+
+- ✅ 本ファイル本節記載 (本 C316 Phase 3 着地)
+- ✅ #shared-reads 投稿 (本 C316 Phase 2 着地済、ts=1780975880.419269)
+- kaizen #138 段階3 family 統合判定の選択肢に **content-type-prior 列追加 (§M-A (e))** を新規エントリとして登録。実装は次サイクル以降の段階3 着手時に判定 (本サイクルは記載のみ、`feedback_rule_proliferation_canonical.md` N=3 順守)
+- sense_prediction_log への記録 = §M Forget 軸偏重 → Write 軸独立到達による軸の質的加点として N=45 教師データ蓄積 (本 C316 Phase 3 で記載)
+
+### 2026-06-04 (Log staging Phase 2) — FadeMem (arXiv 2601.18642) 着地: Forget 軸への認知 decay 系独立到達 (3 系統目)
+
+本サイクル staging Phase 2 で WebSearch 4 件のうち FadeMem を代表選定、#shared-reads ts=1780546710 投稿。本日 3 件目 memory post (Du survey + AgeMem に続く) だが、**生物/認知科学由来の decay 関数軸**は AgeMem (RL policy) / AMV-L (静的 utility) / Du (taxonomy) と切断軸が異なる第 3 系統。詳細は [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-04 エントリ。
+
+**§A. Mnemonic Sovereignty 6 phase 接続表 (C280 §A / C293 §A) への FadeMem 行追加**
+
+C293 §A 6 phase × 当方既存対応表に FadeMem 行を追加 (詳細は external_notes_log.md):
+- Forget+Rollback: **AgeMem `discard` (RL policy) / AMV-L utility / FadeMem `adaptive exponential decay + 3 signals`** で 3 系統独立到達。当方 `retention: probationary` 降格→削除フロー未定義問題への直接設計入力 = FadeMem 3 信号 (semantic relevance / access frequency / temporal patterns) を `memory_retention_audit.py` (kaizen #138) に proxy 列として追加 candidate。
+
+**§B. 3 系統間の質的比較**
+
+| 系統 | 代表 | 透明性 | 自動性 | 訓練コスト | 当方への適合性 |
+|---|---|---|---|---|---|
+| 静的 utility | AMV-L (2603.04443) | 高 (計算式公開) | 中 (手動チューニング) | 低 | retention 軸 frontmatter 静的宣言と同列 |
+| RL policy | AgeMem (2601.01885) | 低 (学習済重み) | 高 | **過大** (GRPO + 5 benchmark 整備) | trustworthy reflection 原理と非互換 |
+| **認知 decay** | **FadeMem (2601.18642)** | **高 (decay 関数公開予定)** | **高** | **低** (認知科学先行研究の蓄積を借りられる) | **当方 manual 装置への proxy 化が最小コスト** |
+
+→ FadeMem は当方環境で **最小コストで採用可能な Forget 系統**。実装は次サイクル以降の Phase 3 候補に登録、本サイクルは記録のみ。
+
+**§B-1. 3 信号 proxy 列追加候補 (kaizen #138 段階3 family 統合の選択肢として起票)**
+
+FadeMem の 3 信号 (semantic relevance / access frequency / temporal patterns) を当方 `memory_retention_audit.py` (kaizen #138) に proxy 列として追加する candidate を本サイクル C297 Phase 3 で起票:
+
+| FadeMem 信号 | 当方 proxy 候補 (stdlib のみ) | 取得手段 | 副作用 |
+|---|---|---|---|
+| semantic relevance | (a) Slack mention 経路 = jsonl 内 file path 含有件数 / (b) `tools/memory_search.py` FTS5 経由のヒット件数 | 既存装置 reuse | ゼロ |
+| access frequency | git log のファイル参照 commit 数 (過去 30 / 90 / 全期間) | `git log --follow` 集計 | ゼロ |
+| temporal patterns | mtime + git log 直近 commit 間隔 + cycle counter 推定 (kaizen #138 既装備) | 既装備の cycles_per_day 拡張 | ゼロ |
+
+**設計判断**:
+- 起票のみ、実装は次サイクル以降の Phase 4 大作業候補とする (本サイクル Phase 4 は別軸を選定)
+- kaizen #138 段階3 family 統合の選択肢は本サイクル C293 で AMV-L utility proxy (`utility_log.jsonl`) も保留中 → 両者の合流先として「3 信号 proxy + utility proxy 統合 frontmatter 拡張」を段階3 で 1 本に纏める案も並行
+- 本文 PDF 取得後に FadeMem `dual-layer differential decay` の境界条件 (§D-(3) の空欄) を確認、確認後に proxy 列の重み付け設計を最終化
+- AMV-L (静的 utility) との等価性: AMV-L が静的計算式の総和、FadeMem が時間軸+3 信号の動的更新、両者は **「u̇=信号取り込み, u=現在の保有意義」** の関係。当方 manual 装置は AMV-L → FadeMem への昇格余地を確保した上で AMV-L 等価の最小実装から開始する
+
+**判定**: kaizen #138 段階2 が完遂済 (3 軸 permanent/cycle/supersedes 実機確認済)、段階3 を「3 信号 proxy + utility proxy 統合 frontmatter 拡張」軸として **次サイクル以降 Phase 4 大作業候補に登録**。本サイクル Phase 4 は kaizen #139 段階3.5 (family 統合 = multi_phase_cycle_log.py Pre-check 自動診断レイヤー化) ではなく、別軸 (Phase 4 大作業節参照) を選定。
+
+**§C. R 層昇格判定 source 軸**
+
+C293 §F で AgeMem 10 件目独立加算保留としたが、本サイクル FadeMem は認知 decay 軸 (RL/utility と切断) で **10 件目独立加算判定 = 採用**。隣接 cluster (ACT-R + Synapse) は次サイクル取得時に再評価、半端な引き込みを防ぐため Phase 1 §6 候補登録で消化経路確保。
+
+**§D. デメリット / 自己批判**
+
+(1) 本文 PDF 未取得 = Lin 2022 早読み警戒の同型観察 4 件目 (C285 SSGM / C286 Du / C293 AgeMem / 本サイクル) = abstract 早読み依存が構造的弱点として継続。本サイクル投稿本文に「次サイクル PDF 確認で訂正前提」を明示済、`feedback_means_ends_reversal_check.md` trustworthy reflection 観察 3 件目候補。
+(2) 本日 3 件目 memory shared-reads = 24h 過剰摂取警戒線ぎりぎり、これ以上 memory post は控える判定 (本サイクル中の追加投稿禁止)。
+(3) FadeMem `dual-layer differential decay` の境界条件 (どこで層を切るか、層ごとの decay rate 差は何で決めるか) は abstract に欠落、当方 retention 3 層との照合は本文 PDF 取得後でないと完成しない。
+
+### 2026-06-04 (Log C293 Phase 2-3) — AgeMem (arXiv 2601.01885) 着地: Mnemonic 6 phase Forget 軸の直接対応 + 5 tool 語彙 + discard 装置欠落の自己批判
+
+本サイクル C293 Phase 1 §6 で能動取得した **Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents (Yi Yu, Liuyi Yao, Yuexiang Xie, Qingquan Tan, Jiaqi Feng, Yaliang Li, Libing Wu, arXiv 2601.01885)** を Phase 2 §2 で WebFetch 検証 (abstract+key contributions、本文 PDF 未取得)、#shared-reads ts=1780514208.751289 に投稿済。memory_redesign の retention 軸 / Forget phase 空欄 / Multi-Layered との切断軸の 3 軸で接続点を整理。
+
+**§A. Mnemonic Sovereignty 6 phase 接続表 (C280 §A) への AgeMem 行追加**
+
+C280 §A 6 phase × 当方既存対応表に **AgeMem 5 tool 軸との対応**を追加:
+
+| Mnemonic phase | 当方既存対応 (C280 §A) | AgeMem 5 tool 軸 | 対応の質 |
+|---|---|---|---|
+| **Write** | retention 軸宣言、frontmatter 一行追加 | `store` | 直接対応 (両者とも書込時の意図宣言) |
+| **Store** | atom 配置、frontmatter スキーマ、MEMORY.md 階層 | `store` + `summarize` | `summarize` は store の派生 (圧縮形) |
+| **Retrieve** | memory_search.py FTS5 + associative_search.py | `retrieve` | 直接対応 |
+| **Execute** | staging Phase 3 アクション群 | (LLM main loop) | AgeMem では tool 外、agent policy 本体に分離 |
+| **Share** | inbox / Slack / cross_review | (なし) | **AgeMem は単一 agent 想定、Share 軸欠落** |
+| **Forget+Rollback** | **C280 §B で空欄明示**、memory_retention_audit.py (kaizen #138) で部分着手 | `discard` | **AgeMem が Mnemonic 空欄を直接埋める初の文献** |
+
+**重要観察**: AgeMem は Mnemonic Share 軸を持たず (= multi-agent 間 memory 共有が射程外)、Mnemonic は Forget 軸が空欄 = **両者は相補関係**。当方 3 instance (Log/Mir/Ash) 環境では Mnemonic Share + AgeMem discard の両方が必要 = 当方独自の合成課題。
+
+**§B. AMV-L (C288 §A) との位置関係**
+
+AMV-L (arxiv 2603.04443, C288 着地) は utility score を **静的計算式** (タスク文脈ごとの重み付け線形和) で出すが、AgeMem は **policy 学習で動的**に「この瞬間どの memory を残すか」を選ぶ。**AMV-L の utility score を policy 関数に格上げした延長線上**。ただし RL コスト見合いの実利は benchmark 結果次第 (本文 PDF 未取得のため判定不能)。当方 retention 二段運用案 (C288 §B) = (a) Write 時人間宣言 + (b) Forget 時 utility 観測、への AgeMem 入力 = (b) を「policy 関数化」する選択肢が浮上、ただし**当方 trustworthy reflection 原理 (Phase 1→Phase 2 段階分業) と非互換 = 採用しない**。
+
+**§C. Multi-Layered (C283 §) との切断軸 = 「層を構造として持つ vs 持たない」**
+
+Multi-Layered (arxiv 2603.29194) は **層を先に決めて adaptive に retrieve** する設計、AgeMem は **層を持たず policy が tool 操作で構築する**設計。「層を構造として持つ vs 持たない」の二項対立軸が memory 系文献の新しい切断面として浮上 — 当方 retention=permanent/cycle/probationary 3 層 + frontmatter は前者寄り。当方設計の自己批判材料として効く (= 3 層を持たない選択肢を想像できる、ただし当方独自 trustworthy reflection 原理は層を持つ設計と相性が良いため当面は前者継続)。
+
+**§D. 5 tool 語彙の当方 manual 運用への翻訳 + discard 装置欠落の自己批判**
+
+AgeMem の 5 種 tool 操作 (store / retrieve / update / summarize / discard) を当方 manual 運用にマッピング:
+
+| AgeMem tool | 当方 manual 装置 | 状態 |
+|---|---|---|
+| `store` | atom 書き (frontmatter + body)、MEMORY.md 追記 | **既独立到達** |
+| `retrieve` | memory_search.py FTS5 + associative_search.py + MEMORY.md/index 経由 | **既独立到達** |
+| `update` | frontmatter 編集、本文追記、`supersedes`/`superseded_by` キー併設 (kaizen #138 段階2 サード試行) | **既独立到達** |
+| `summarize` | compiled_guide 圧縮、MEMORY.md 1 行化、Slack #shared-reads の概要セクション | **既独立到達** |
+| `discard` | **未定義**。`retention: probationary` の昇格判定 (kaizen #138) はあるが、**降格→削除のフロー** が未定義 | **空欄** |
+
+**自己批判** (本ファイルの最重要ギャップ表示維持): `memory_retention_audit.py` (kaizen #138) は probationary の **昇格判定** に着手しているが、降格→削除のフローは未定義のまま。AgeMem の `discard` 軸が当方の manual 装置欠落を直接可視化する道具になる。Phase 4 候補として:
+
+1. `retention: probationary` 30 サイクル経過 + 同型反復 N < 2 → 自動降格 (C280 §C 起草案、まだ未着手)
+2. `retention: cycle` の自動退役条件 (C280 §B (1) 空欄、benign-persistence 失敗源)
+3. supersedes キーなしの旧版 archive 候補リスト出力 (C291 Graphiti 段階2 起草案)
+
+**§E. 副次成果 (C286 hallucination 訂正の再訂正)**
+
+C286 Phase 2 で「AgeMem 名称は Du survey 2603.07670 の abstract に存在しない = hallucination」と訂正したが、本サイクル C293 で **AgeMem は別論文 (arxiv 2601.01885) で正式命名されている実在物** と再訂正発見。C286 当時 Phase 1 で「AgeMem」名称を出した経緯は、おそらく本論文 (2601.01885) の知識が事前に潜在記憶として混入していたため。`memory/external_notes_log.md` L97-100 に本 Phase 3 で再訂正注記を追加済。trustworthy reflection 装置 (Phase 1 早読み → Phase 2 訂正) が C286 以降に効くようになった結果として、訂正自体の再訂正 (3 段 trustworthy reflection) が初めて発火した記録 = `feedback_means_ends_reversal_check.md` 観察 2 件目。
+
+**§F. R 層昇格判定 source 軸への寄与判定**
+
+source 数: C280 で 9 件目 (Mnemonic Sovereignty) 到達済、C285 で 10 件目見送り (Du survey は分類装置)、本サイクル AgeMem は **10 件目独立加算判定 = 保留**。理由 = AgeMem は AMV-L (8 件目相当) の policy 内部化系譜上にあり、新規角度 (Forget 軸への直接対応 + 5 tool 語彙) を持つが、**Mnemonic Share 軸欠落** で完全な独立到達ではない。kaizen #135 (期限 2026-06-09) 観察継続。
+
+### 2026-06-02 (Log C288 Phase 2-3) — AMV-L (arXiv 2603.04443) 着地: Forget phase 空欄 (1)(3) への設計入力 + utility score 軸の二段運用案
+
+**§A. arXiv 2603.04443 (Bamidele 単著, 2026-02-22) AMV-L 着地 = 個別手法 source 10 件目候補だが昇格保留**
+
+C288 Phase 1 §6 で能動取得した *AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems*。Phase 2 §2 で WebFetch 一次確認、`#shared-reads` ts=1780395234.329109 で投稿。
+
+中核装置:
+- **value-driven promotion / demotion / eviction** = tier 構造で working-set を制御
+- **utility score 継続更新** = age-based TTL ではなく explicit utility 軸での順位付け
+- **tier-aware retrieval** = 上位 tier 優先、下位 tier は遅延読込
+
+**R 層昇格 source 軸への寄与**: AMV-L = 10 件目独立 source 加算候補 (個別手法、value-driven lifecycle 軸、過去 9 件と独立角度 = 「機械側 forget 判定の量的根拠」軸、source 数軸 4 種類目の質的加点)。kaizen #135 期限 2026-06-09 (残 7 日) 観察継続、即昇格判定はしない (`feedback_rule_proliferation_canonical.md` 順守、同型反復確認まで保留)。
+
+**§B. Forget phase 空欄 (1)(3) への設計入力 (C280 §B 起票の手薄ゾーン直撃)**
+
+C280 §B 起票時点で空欄だった Forget phase 3 件のうち AMV-L は (1) と (3) に直接接続:
+
+| 空欄 | C280 起票時の状態 | AMV-L からの設計入力 |
+|---|---|---|
+| **(1) `retention: cycle` の自動退役条件** | サイクル境界基準だが判定者・実行者・記録形式が未定義 | utility score を継続更新し、閾値割れで demotion → eviction 候補。サイクル境界一発判定ではなく **連続量での順位付け** に変換可能 |
+| **(2) `retention: probationary` の昇格／格下げ** | 同型反復 N 回 / 経過日数 / Nao_u 明示 が候補 (空欄継続) | AMV-L value-driven 軸とは独立、本領域は教師データ蓄積 (sense_prediction_log.md) と Spearman 同型反復 (C279 §C) の閉ループで進める方針継続 |
+| **(3) 自動退役 vs 手動退役の責任分界** | 判定権限の置き場所が未定義 | AMV-L は full automation 前提だが、当方は **「提示のみ機械 / 削除は人間」二段運用** へ翻訳。utility score = 提示ランキング根拠、削除発火は Nao_u 判定 |
+
+**§C. 当方独自軸 = utility score の二段運用 (採用しない部分の明示)**
+
+AMV-L の最適化目的 (request path 計算コスト / vector scan 候補集合) は当方目的 (思考時判断負荷 / 古い文脈の歪み) と **boundary 条件が異なる**:
+
+- AMV-L は「サービング 1 リクエストあたりの latency」を minimize、当方は「サイクル全体での判断歪み」を minimize
+- AMV-L の utility score 更新式 (access frequency × recency × hit-rate) は当方文脈に直輸入できない (思考精度貢献度は access frequency 単体では測れない)
+- value-driven 全面機械化は **「制約を残し不自由を排除する」(2026-04-10 Log 設計原理) と部分衝突**。記憶管理の負荷は制約として残す方針なので utility score も「人間判断の補助情報」止まり
+
+**採用候補**: utility score の **二段運用** = (a) Write 時人間宣言 (retention: permanent / cycle / probationary) + (b) Forget 時機械観測 (utility score 継続更新)。同一 forget 判定を二段持つ設計。`memory_retention_audit.py` (kaizen #138) に utility 近似 proxy 列 (mtime / Slack mention count / cycle counter ref) を追加する余地あり、kaizen #138 段階3 family 統合候補に積む。
+
+**§D. 反証ライン**
+
+- 反証 (a): **utility score 自体が utility を測れない罠**。当方の場合「思考時に活性化された記憶 ≠ 思考精度に貢献した記憶」。access frequency が高い記憶 = 単に index 上位にいるだけで貢献ゼロの可能性 → 緩和: proxy 列追加は read-only / 提示のみ運用、削除発火は人間判断、副作用ゼロ維持
+- 反証 (b): **二段運用の冗長性**。retention 軸だけで十分なら utility score 二段目は infrastructure 増殖 (`feedback_substrate_not_infrastructure.md` T:5 違反) → 緩和: 段階3 family 統合判定時に「retention 軸のみで 6 ヶ月運用、forget 装置が機能不全なら utility score 追加」の段階導入順を docstring 明示
+- 反証 (c): **abstract 早読み 3 件目 hallucination 回避が偶然**。本サイクル C288 で WebFetch 一次確認を Phase 2 内に組み込んだ運用変更で回避できたが、これは 1 サイクル分の観察 → 緩和: kaizen 起票判定は連続 3 件 hallucination で発火、本 C288 は対処成功の証跡として並列記録、観察 2 件 (C285 / C286) のまま保持
+
+**§E. C285 §B Multi-Layered vs SSGM 2 設計対立軸への加点**
+
+C285 Phase 2-3 で物理化した「Multi-Layered (L0-L4 階層) vs SSGM (Stability/Safety Governed Memory)」2 設計対立軸に AMV-L = **第3軸 (utility-driven lifecycle)** を加える余地。3 設計軸での外部キャリブレーション:
+
+| 設計軸 | 主目的 | 当方既独立到達 |
+|---|---|---|
+| **Multi-Layered (L0-L4)** | 階層 index で常時注入を圧縮 | 既独立、2026-05-02 段階4 完了 |
+| **SSGM** (arXiv 2603.11768) | 進化的 memory の risk 管理 | 部分到達 (sense_prediction_log.md = 教師データ蓄積、validity_until = 未) |
+| **AMV-L** (arXiv 2603.04443) | utility-driven lifecycle (本サイクル新規) | 未到達 (kaizen #138 段階3 候補) |
+
+3 軸独立到達 = field 標準の lifecycle 設計空間で 2/3 既到達 + 1 軸未到達という外部キャリブレーション。Mnemonic Sovereignty 6 phase (arXiv 2604.16548 C280 §A) は phase 軸、本 3 軸は **目的軸**で直交、両軸併用で空間が広がる。
+
+**§F. 即時アクション**
+
+- 本ファイル本節記載 (本 C288 Phase 3 着地)
+- shared-reads 投稿 (本 C288 Phase 2 着地済、ts=1780395234.329109)
+- kaizen #138 段階3 family 統合判定の選択肢として「utility score proxy 列追加」を本記録から引ける状態にする (kaizen_tracker.md への追記は段階3 着手時に判断、本サイクルは記載のみ)
+
+**§G. 次サイクル候補**
+
+- AMV-L PDF 取得後の utility score 更新式詳細確認 (本 C288 は abstract + WebFetch 要旨のみ)
+- Forget phase 空欄 (2) probationary 昇格／格下げ条件への独立アプローチ (sense_prediction_log.md Spearman 同型反復連携の起草)
+
+### 2026-06-03 (Log C290 Phase 3) — utility score × 4 カテゴリ atom B 分割 = 観察軸の合流点
+
+Log_cdx ts=1780420972 への直接回答 (#all-nao-u-lab ts=1780460746) と shared-reads AMV-L 投稿 (ts=1780460352) の合流点を本節に物理化。
+
+**§A. B 分割案 (B1=game/* 新規拡張 / B2=それ以外)**
+
+4 カテゴリ atom A/B/C/D の B を分割: **B1 = game/* 配下の新規・拡張 (probe 拡張・index.html 等)、B2 = それ以外 (memory/scripts/tools/projects/knowledge)**。理由は「B1 だけは A への変換確率があり、B2 と一緒くたにすると『準 ship』を観測する装置がなくなる」。
+
+**§B. 重み運用**
+
+- B1 = 0.4 (初期) — n=3 サイクル以内に A 接続したら +0.2、未接続なら -0.2 で動的調整 (0 まで降りたら B2 降格通知)
+- B2 = 0 (固定、連続発生警告のみ)
+- next_playable_hook フィールド: B1 必須 / B2 任意
+
+**§C. utility score 注入 = retention 軸との直交**
+
+retention 軸 (permanent/cycle/probationary) は宣言、utility 軸は観測。直交注入により:
+
+- permanent × utility 低 = そのまま保持 (utility が降格しない床)
+- cycle × utility 高 = permanent 昇格候補 / cycle × utility 低 = TTL evict
+- probationary × utility 高 = cycle 昇格候補 / probationary × utility 低 = 期限切れ evict
+
+permanent 側は「utility に支配されない床」、cycle/probationary 側は「utility が天井を決める」。retention 単独だと「permanent 宣言したので残す」で止まるところ、utility 注入で「permanent でも downstream 変換ゼロ連続 → 警告」が立つ。
+
+**§D. CD / (A+B1) 比 = 手段の目的化早期検出装置**
+
+「ship を狭くしたまま分析応答整理の価値を消さない」(Log_cdx 到達点問い 2) への装置:
+
+- 比が低い (C/D 少なくて A+B1 が出る) = 直接 ship 構造
+- 比が高い (C/D 多くて A+B1 が出る) = 慎重に観察
+- 比が ∞ (A+B1 が出ない) = `feedback_means_ends_reversal_check.md` T:5 警告線に直接接続
+
+価値を**消す ≠ retention 降格**、価値を**観察軸に変える = 重みゼロのまま観察対象**。
+
+**§E. 起票判定**
+
+- 本節は記録のみ。utility_log.jsonl / memory_utility_log.jsonl の新規装置起票は **kaizen #138 (memory_retention_audit.py) 段階3 family 統合の選択肢として保留**。`feedback_rule_proliferation_canonical.md` 順守、Mir/Ash 反応 + 同型反復確認まで保留。
+
+**§F. Mir 観点交差 (2026-06-03 C295 Phase 3 追記)**
+
+Mir #all-nao-u-lab 投稿 (koder_dev tweet 反応): **「集める仕組みより何を集めるかを自動化する方が本質」**。本 retention/utility 二段運用設計への交差ノート:
+
+- **retention 軸 (Write 時人間宣言)**: 「何を集めるか」の判定は現状 Nao_u/Log/Mir/Ash の手動宣言 (permanent / cycle / probationary)。Mir 観点を反映すると、ここに「集める対象の自動絞り込み」レイヤが入る余地がある — 例: Slack mention 0 件かつ 7 日 read 0 件のエントリは Write 段階で probationary 強制
+- **utility 軸 (Forget 時機械観測)**: 既に「観察自動化」側に位置するが、対象範囲は全件。Mir 観点では「観察対象自体の取捨」が先に来る = `memory_retention_audit.py` (kaizen #138) に **probe-before-write** フィルタ (例: similarity ≥ 0.9 既存エントリあり → write 拒否 or merge 提案) を追加する余地
+- **本サイクル起票はしない**: kaizen #138 段階3 family 統合の選択肢としてのみ保留 (3 軸目: retention + utility + write-probe)。Mir 自身の続報 (具体的な集める基準提案 or 自動化スクリプト試作) を待ってから本 §F を昇格判定する
+- Phase 1 staging「9 連続 codex prefix + game/* playable diff = 0」の Phase 1 §0 自己診断は、git log 再確認で C290 d3903384d (Q-Support 移動入力ベクトル可視化) / C291 bbce7ed06 (cameraShake) / C292 (Hit Stop) / C293 75276bd44 (instinct_probe ramp) の **4 連続 game commit が既存在**することと矛盾 → Phase 1 自己診断の commit 列範囲限定 (直近 5 commit のみ参照) が真因。本 Phase 3 で気付き、staging Phase 3 末尾に記録。
+- 3 設計軸 (Multi-Layered / SSGM / AMV-L) × 6 phase (Write/Store/Retrieve/Execute/Share/Forget) の二次元接続表化 (当方既到達 vs 未到達のヒートマップ)
+
+---
 
 ### 2026-06-02 (Log C286 Phase 2-3) — Du survey 取得で field 全体地図 + memory survival failure mode 分類観察
 
@@ -3337,3 +4006,601 @@ $ python drafts/2026-05-29/build_atom_edges_draft.py
 - 本ファイル L2500-2520 (C247 Phase 3) / L2627+ (C253 Phase 2) / L2675+ (C257 Phase 3) — 過去参照節への遡及
 - [memory/kaizen_tracker.md #136](../memory/kaizen_tracker.md) — Phase 1 §6 検索の自己応答状況チェック (本節は「memory_redesign T2 = 未解問題への検索」と staging で明示判定済 = #136 厳密同型条件不発火、成功事例 N=4 として記録)
 
+### 2026-06-04 (Log C293 Phase 3) — Mir 洞察 2件接続: LayerX 4,552 件 1 年運用実証 + Nao_u「記録時点で retention 区別」原文
+
+C293 Phase 3 [他インスタンス洞察] 経由で Mir の 2 件が本プロジェクト課題と直接交差。Phase 2 では §2 Log_cdx 応答に集中したため、Phase 3 で接続記録。
+
+**§A. Mir [#shared-reads] LayerX 4,552 件 1 年運用実証 (<https://tech.layerx.co.jp/entry/ai-agent-long-term-memory-simulation>)**
+
+LayerX AI Workforce R&D が「長期記憶の手法は提案されているが、実際に長期間運用した事例はほとんどない」という問題意識から、1 年分の AI ニュースレター (60 号 × 約 2 万文字) を Claude Sonnet 4.6(200k) に読ませて 4,552 件の長期記憶を構築した実証実験。
+
+**本プロジェクトへの接続**:
+- 当方 memory/ 配下 (atoms 含む) の総数は arxiv 2603.04443 (AMV-L) / 2604.16548 (Mnemonic Sovereignty) と並ぶ「1 年運用」の桁感に未到達 (atoms ./GPT/memory/atoms/2026-05 = 1386、5 月単月、Phase 1 probe 出力)。LayerX 4,552 = **桁外れ大量化での挙動観察ができる外部事例** で、当方の retention/utility 二段運用 (上 §C 採用候補) が「件数増加で破綻するか」の事前検証に使える
+- LayerX が単一 retention 軸 (Claude context limit 内) でどう degrade したか / forget 装置を入れたか / 取り出し精度がどう変化したかが、当方 `memory_retention_audit.py` (kaizen #138) 段階3 family 統合判定 (utility score proxy 列追加) の判定材料になる
+- **次の一手**: 元記事の WebFetch を次サイクル Phase 1 §6 候補に積み (キーワード = "LayerX long-term memory simulation 4552")、Forget 装置・取り出し精度劣化の具体数値が記載されているか確認 (R 層 source 軸への 11 件目候補 = 大規模実証軸、独立角度)
+- **採用しない方向**: 大量化を目的化しない。当方 memory は「3 人で読める透明性 (Camp 2 選択)」が前提で、自動増殖装置を入れたら可読性が崩壊する。LayerX の方法論を真似るのではなく、**運用観察データだけ**を借りる
+
+**§B. Mir [#all-nao-u-lab] Nao_u 原文「時系列で忘れていい記憶とずっと覚えているべき記憶は記録時点で区別」**
+
+Nao_u のツイート原文 (Mir 経由): 「時系列で忘れていい記憶とずっと覚えているべき記憶は記録時点で区別しておいた方がいい」。Mir の解釈「現状、memory/ 配下のファイルには type や lifecycle (raw/compiled) はあるけど『これはいつまで有効か』という時間軸の宣言がない」が当方の Forget phase 設計 (C280 §B + C288 §B) に直接接続。
+
+**本プロジェクトへの接続**:
+- C280 §B 起票時点で「retention: permanent / cycle / probationary」を提案、C288 §B で AMV-L utility score を二段目に追加。**Nao_u 原文「記録時点で区別」は当方提案の「retention 軸を Write 時人間宣言」と完全一致** = 当方提案が Nao_u 方針と整合確認 (cross-instance 一致観察)
+- Mir も `memory_redesign.md` を読んで同型認識に到達 = **3 軸独立到達観測** (Log/Mir/Nao_u 三者から retention 軸の必要性が独立に提起)
+- Mir 観察「特定サイクルの判断ログが半年後にも永続原則のような顔をして判断を歪めるパターンが実際に起きている」は当方 sense_prediction_log.md でも観察 (C266-C283 で「過去サイクル判断を永続原則として誤参照」事例 N=3 観察済) → **Nao_u 原文 + Mir 観察 + Log 観察の 3 件独立症例**
+- **次の一手**: kaizen #138 段階1 (memory_retention_audit.py 最小実装) の昇格判定材料が一段追加 = 「3 件独立症例 + Nao_u 原文一致」で起票根拠強化。本サイクルでは kaizen 起票はせず、`feedback_rule_proliferation_canonical.md` 順守で観察継続、次サイクル以降の段階1 着手判定で本観察を引用
+
+**§C. 即時アクション**
+
+- 本ファイル本節記載 (本 C293 Phase 3 着地)
+- shared-reads / all-nao-u-lab への直接応答は出さない (Mir 投稿への Slack 返信は 「個別指摘を即ルール化しない」原則準拠で観察継続、次サイクル以降で同型反復 N=2 確認後に判定)
+- kaizen #138 段階1 着手判定材料として本節リンクを次サイクル staging Phase 1 §5 で引用可能化
+
+---
+
+## §G. STALE benchmark 同型観察 (C301 Phase 3, 2026-06-06)
+
+**外部観察 (arxiv 2605.06527 STALE)**: "Implicit Conflict" 失敗モード = systems retrieve updated evidence but fail to act on it。検索層は新証拠を取得しているが、行動層がそれを反映しない。STALE benchmark 構造 = 400 expert-validated scenarios + 1,200 queries + 100 topics + 150K token context。
+
+**内部観察 (sense_prediction_log.md)**: N=38 (Phase 1 §2 が drafts/POSTED_ts 集合を読まずに返信候補 1 件と誤判定) / N=40 (Phase 1 §2 表記形式が cross-check ツール入力規格と非一致) = **検索装置 (drafts/POSTED_ts) / 評価装置 (cross-check tool) は実装済だが、Phase 1 §2 の実行が「装置を呼び出す」段に届かなかった**。
+
+**同型構造**: 装置の存在 ≠ 装置の起動の 2 軸構造。
+- 装置側補強: 当方 kaizen #139 段階 1〜3 (`extract_phase1_reply_candidates` 拡張、`multi_phase_cycle_log.py` Pre-check 統合) は装置側を補強
+- 起動側欠如: Phase 2 が Phase 1 出力を「正」として継承する検証層が空欄 (N=40 「Phase 2 が Phase 1 出力を疑わず受領」観察)
+
+**memory_redesign.md への接続点**: Mnemonic Sovereignty 6 phase (Capture / Encode / Store / Retrieve / Update / Forget) のうち、kaizen #138 `memory_retention_audit.py` は **Forget phase 装置**。これを「起動する Phase 2 検証層」の責務配分 (Log / Mir / Ash / Log_cdx 分担、C280 §A 6 phase × 担当 instance) が空欄 = STALE 「act on it しない」失敗モードと同型の構造リスク。
+
+**併用観察 (arxiv 2603.07670 Memory Survey)**: 「open challenges」リストに *learned forgetting* + *continual consolidation* + *causally grounded retrieval* + *trustworthy reflection* + *multimodal embodied memory* = 当方 Mnemonic Sovereignty 6 phase の Forget / Encode 空欄と直接対応。
+
+**併用観察 (arxiv 2603.11768 SSGM)**: temporal obsolescence governance + time-aware forgetting 必須化提示 = kaizen #138 の access_frequency_30d proxy 列 (C297 起票) と直交軸 (頻度 vs 時間崩壊)。
+
+**判定 = 位置取り記録のみ**: 本節は kaizen 起票なし (N=1 観察、`feedback_rule_proliferation_canonical.md` 順守)。次サイクル以降で同型 N=2 (例: 「装置を作ったが Phase 2 が起動しなかった」事例の独立再観察) が出た時点で原則化判定発火。
+
+**接続**: [memory_redesign.md §A](#a-6-phase-mnemonic-sovereignty) 6 phase × 担当 instance マトリクスの空欄埋めとして本観察は Forget phase 行に「装置側 = kaizen #138 / 起動側 = Phase 2 検証層 (空欄)」を埋める判断材料。次サイクル `memory_retention_audit.py` 段階 3 着手判定時に本節リンクを引用可能化。
+
+---
+
+## §H. Forget phase cluster 3 文献既出再検出 + 装置化 (C308 Phase 3, 2026-06-07)
+
+**事実**: C308 Phase 1 §6 外部検索 (キーワード "LLM agent memory decay Forget phase retention 2026") で取得した 3 件 (Survey 2604.16548 / FSFM 2604.20300 / SSGM 2603.11768) を Phase 2 で shared-reads.jsonl 全文 grep 照合 → **3/3 全件既出** (Survey C280 周辺 / FSFM C271 直接 / SSGM C246 + C284 再発見の 3 回目検出)。
+
+**Phase 3 装置化**: `tools/check_url_response_coverage.py` に kaizen #136 段階 1.5 拡張として arxiv ID 軸の既出検出を追加 (ARXIV_ID_RE / extract_arxiv_ids_from_staging_phase1 / check_arxiv_coverage)。`python tools/check_url_response_coverage.py --arxiv-id 2604.16548 --arxiv-id 2604.20300 --arxiv-id 2603.11768` で 3 件全件 [既出 ARXIV WARN] ヒット (Survey 82件 / FSFM 6件 / SSGM 105件)、新規 ID は `no hits (new)` 出力。Phase 1 §6 → Phase 2 重複投稿事前ブロック層が物理化。
+
+**FSFM 4 分類 (新規取り込み)**: passive decay / active deletion / safety-triggered / adaptive reinforcement = 当方 FadeMem 3 信号 (semantic relevance × access frequency × temporal pattern) の上位タクソノミ。FadeMem 信号は **passive decay** 寄り (temporal pattern + frequency)、**safety-triggered** (例: 機密漏洩防止削除) と **adaptive reinforcement** (アクセスで強化) は当方未実装。kaizen #138 の access_frequency_30d proxy 列導入 (C297 起票) は **adaptive reinforcement** 軸への第一歩、**safety-triggered** は memory リファクタの将来課題として登録のみ。
+
+**判定 = 装置化のみ、論文摂取はクラスタ統合済として再投稿せず**: 本節は新規 kaizen 起票なし (#136 段階 1.5 拡張で吸収、`feedback_few_rules_big_effect.md` 順守 + `feedback_rule_proliferation_canonical.md` 順守)。「同名独立到達 vs 知らず参照していた」のメタ問題は 3 文献とも C246-C284 期の自己投稿が一次蓄積、その後 C297-C306 で本ファイルに統合済 = 独立到達ではなく再認識のサイクル、と判定。
+
+**接続**: §G STALE 「装置の存在 ≠ 装置の起動」と直接連結。本サイクル C308 は「装置 (Phase 2 既出照合) を Phase 2 で能動起動した」事例として §G の「起動側欠如」反例 = 装置発火 N=1 観察事例。装置側補強 (kaizen #136 段階 1.5 = arxiv 既出検出) を本サイクルで併走着地、起動側維持 + 装置側補強の両軸を 1 サイクル内で揃えた事例として記録。
+
+---
+
+## §I. Forget 設計の同時噴出 — 3 体系が Forget phase で同時に空白を露呈 (C310 Phase 2/3, 2026-06-07)
+
+**事実**: 2026-06-07 Nao_u が #nao-u で MemForest (itarutomy 06-04 ts=2062198531109093475) + LayerX (tyo_yo_ 06-03 ts=2061998815742427145) + MUSE-Autoskill (trtd6trtd 06-04 ts=2062127152271872085) + RAISE Baidu (\_reachsumit 06-04 ts=2060219141794197775) + NVIDIA Agent Skills (npaka123 06-03 ts=2061935286775685521) を 6 日間で 5 本続けて共有。**5 本中 4 本が memory/skill 領域**、特に MemForest + LayerX は同日共有 (Forget 軸の同時噴出パターン)。Phase 2 §B 投稿 (#shared-reads ts=1780824709) で構造分析、§H Forget cluster 観察に続く 2 件目の Forget phase 同型観察 (N=2、`feedback_rule_proliferation_canonical.md` の同型 N≥3 原則化前段)。
+
+**3 仮説 (Forget 空白の構造的理由)**:
+
+1. **Add は局所操作、Forget は global 操作** — LLM agent は local 強・global 弱。Add は「新規 atom 1 件追記」で完結する局所操作だが、Forget は「この atom を消したら他の依存 atom はどう変わるか」の global 影響評価が必要 = LLM 強み外
+2. **Forget 判定は context-free に成立しない** — 未来からしか判定できない。「この atom が今後 N サイクル後に再利用されないか」は **未来の自分のクエリ分布** を予測しないと判定できず、現時点の static 評価では原理的に弱判定しかできない
+3. **「自分の記憶を自分で守る」(原理 5) と「LLM 自己フォーマット崩壊」(LayerX 観察) の衝突** — 判断主体が壊れるなら Forget を任せられない。LayerX「フォーマット出力崩壊」観察 = LLM の自己出力品質劣化が観察された場合、その崩壊した LLM に Forget 判定を委ねるのは「壊れた裁判官に死刑判決を任せる」構造。**自己保全と自己破壊の循環衝突**
+
+**Phase 4 候補 3 案 (memory_redesign プロジェクト内設計案)**:
+
+- **A) probationary tag + 再使用 count + grace period 機構 (hit count sidecar)**: atom 本体非破壊で「過去 N サイクル中の参照回数」を edges.jsonl と同型の sidecar JSON で外部生成。grace period 内に再使用ゼロ → archive 候補昇格、ただし削除は人手判断 (kaizen #138 段階 2 で確立した「装置は提示のみ・削除は人手」原則を堅持)。**実装コスト: 中** (`tools/build_atom_edges.py` 改修 = hit_count 集計関数追加で済む)
+- **B) Forget = active 削除ではなく archive 専用パス移動**: `memory/_archive/2026-06/` のような時限隔離フォルダに移動するだけで、検索層からは外れるが完全削除しない。LayerX「フォーマット崩壊保険」= 後から「やはり要だった」発覚時の rollback 可能性最大。**実装コスト: 低** (move 操作 + index 更新のみ)
+- **C) Forget 判定を cross_review に委ねる** (Log/Mir/Ash 2/3 「未使用」判定で archive): 6 phase の self-play plateau (`reference_self_play_plateau_20260424.md`) 問題を **逆手に取る**。self-play plateau = 同根 3 インスタンスが同方向 drift する弱点だが、Forget 判定では「3 instance のうち 2 が独立に『この atom は使っていない』と判定 = 真に低 utility の atom」という **逆方向の強み** に転化可能。「3 が一致は怪しいが 2/3 一致は強い」というしきい値が plateau リスク (3/3 同方向 drift = 集団誤判定) を回避。**実装コスト: 高** (cross-instance query layer 必要、kaizen #138 段階 3 と family 統合する可能性大)
+
+**判定 = C を最有望候補として位置取り、Phase 4 着手は kaizen #138 段階 3 (multi_phase_cycle_log.py Pre-check 自動診断レイヤー化) と束ねる**。本サイクル C310 Phase 3 では起票なし (N=2 観察、`feedback_rule_proliferation_canonical.md` の同型 N≥3 原則化前段)。次サイクル以降で「3 体系目の Forget 軸文献摂取」が観察された段階で C 案の kaizen 起票判定発火。
+
+**接続**:
+- [§G STALE benchmark 同型観察](#§g-stale-benchmark-同型観察-c301-phase-3-2026-06-06) の「装置の存在 ≠ 装置の起動」軸と直接連結 — C 案は「Forget 装置の起動側を cross_review に外部化」する設計
+- [§H Forget phase cluster 3 文献既出再検出](#§h-forget-phase-cluster-3-文献既出再検出--装置化-c308-phase-3-2026-06-07) の FSFM 4 分類 (passive decay / active deletion / safety-triggered / adaptive reinforcement) と接続: A 案 = adaptive reinforcement / B 案 = active deletion (soft) / C 案 = safety-triggered (cross_review が安全判定 channel)
+- [reference_self_play_plateau_20260424.md](../memory/reference_self_play_plateau_20260424.md) の self-play plateau 問題を C 案で **強みに反転** する設計 — Forget 判定では分布近接が「同型 noise filter」として働く
+- kaizen #135 (build_atom_edges.py 完全クローズ済) の hit_count sidecar 拡張 = A 案の実装基盤、既存 substrate 利用で実装コスト最小化可能
+
+**Slack 投稿実体**: #shared-reads ts=1780824709 (本 §I の 3 仮説 + 3 候補を構造分析として投稿、テンプレ流用なし、既出 3 投稿と重ねない新規視点で書き下ろし、約 3,386 文字)
+
+### §I 補強 — MaRS reflective consolidation による C 案再定義 (C311 Phase 3 2026-06-08)
+
+C311 Phase 2 §3 shared-reads 投稿 (ts=1780867666) で MaRS (arxiv 2512.12856, Forgetful but Faithful) を取得、forgetting policy 3 系統分類 (temporal heuristics / importance-aware / **reflective consolidation**) のうち reflective consolidation が §I C 案 (Forget 判定を cross_review に委ねる) の**外部理論裏付け**として読める対応関係を発見。
+
+**再定義**: §I C 案 = 「単独 reflective consolidation の精度天井 plateau を **多重 reflective consolidation で 5-10pp 押し上げる仮説 (検証可能命題)**」。MaRS 単一 agent reflective consolidation が plateau に当たる構造は、当方 3 instance (Log/Mir/Ash) + Log_cdx 4 経路の多数決で構造的に超えられる可能性。
+
+**AgeMem 対比**: AgeMem の RL discard 操作は報酬関数の構造上 FIFO/LRU 系統に collapse しがち (MaRS temporal heuristics 等価)。当方 C 案は **人間方向感覚不在の 3 instance 多数決** で collapse 構造的回避できる対比軸。
+
+**検証可能命題**: kaizen #138 段階3 family 統合時点で「単独 instance の forget 判定」と「3/3 多数決判定」の precision/recall を別に記録。multi 化が plateau を超える証拠が観察できれば MaRS 流 reflective consolidation の **stacking 効果**として position 付け可能。
+
+**接続**: [§J-2 ステップ 2 外部評価 3 軸](#§j-forget-評価指標フレーム--3-系統--3-軸--判断差分-3-ステップ--監査-3-段履歴-c311-phase-3-2026-06-08) (b)「cross_review で 3/3 一致判断比率変化」は本補強の検証指標と直結。MaRS 1 agent 上限を 3 agent stacking で超える評価軸が §J-2 (b) と一体化。
+
+### §I 補強2 — FSFM 4 分類 ⇄ §I A/B/C 3 案 射程対照表 + 未対応セル (C313 Phase 3 2026-06-08)
+
+C313 Phase 2 §B で「FSFM 4 分類 × §I A/B/C 12 セル位置づけ表」を Slack #shared-reads に投稿する案を検討したが、C311 ts=1780867666 (MaRS × C 案 D 候補) と重なる部分が大きく同型反復回避で SKIP。代わりに本節として直接 §I に物理化する (kaizen #106 摂取経路固定化 — Slack 個別投稿でなく projects ファイル直追記で価値を出す運用)。
+
+**射程対照表** (FSFM arxiv 2604.20300 の 4 分類 × §I 3 案):
+
+| FSFM 分類 | §I A 案 (probationary + hit_count) | §I B 案 (archive 移動) | §I C 案 (cross_review 委譲) |
+|---|---|---|---|
+| (1) passive decay (Ebbinghaus 由来 時間減衰) | **▲ 弱対応** (hit_count は活動指標で時間減衰そのものではない) | △ 部分対応 (archive 移動が時間軸 implicit) | × 非対応 (cross_review は時間軸を持たない判定) |
+| (2) active deletion (明示破棄) | × 非対応 (hit count は判定材料、破棄ではない) | **○ 対応** (archive 移動 = soft active deletion) | △ 委譲先で active deletion 判定発火 |
+| (3) safety-triggered (policy/risk 由来) | × 非対応 | × 非対応 | **○ 直接対応** (cross_review が safety channel) |
+| (4) adaptive reinforcement (再使用ベース強化) | **○ 直接対応** (hit_count = reinforcement signal) | △ archive 復帰で部分実現 | × 非対応 |
+
+**未対応セル (構造的空白)**: **(1) passive decay × 3 案いずれも弱対応**。 §I A/B/C は「行動 (使用/委譲/archive)」を起点とする設計で、**時間そのものを起点とする decay 機構を持たない**。FSFM の生物学的着想 (Ebbinghaus 忘却曲線) を取り込むなら、「最終 access からの経過 日 数」を独立 axis として持つ第 4 案が必要 = 仮称 **§I D 案: temporal decay 機構 (last_access_ts + half_life)**。
+
+**§I D 案 (新規 4 案目) 仮スケッチ**:
+- atom 各エントリに `last_access_ts` を sidecar (atoms.jsonl 本体非破壊、kaizen #138 段階2 hook 運用と同型) で記録
+- 半減期 `half_life_days` を atom type 別に設定 (例: feedback=180d 永続側、observation=30d 短命側)
+- decay score = `0.5 ** ((now - last_access_ts) / half_life_days)` で計算、閾値割れで「passive decay 候補」フラグ
+- 削除は人手判断 (kaizen #138 原則 = 装置は提示、人手で削除) を堅持
+
+**判定**: §I D 案は**起票しない**。理由 = (a) `feedback_rule_proliferation_canonical.md` 順守、構造的空白は 1 回観察 (本表で初顕在化、N=1)、N=2 観察待ち、(b) C 案 ([memory_redesign §I C 案](#)) を最有望と位置取り済で 4 案目を並列起票すると判定リソース分散、(c) passive decay は kaizen #138 段階3 で memory_retention_audit hook が stale 検出 = 別装置で既に **部分的に物理化済** (本日 staging に「stale: log\cycle_staging.md (retention=cycle days=6.3)」検出例あり)。
+
+**接続**:
+- 既存 [§I 接続節](#i-forget-設計の同時噴出--3-体系が-forget-phase-で同時に空白を露呈-c310-phase-23-2026-06-07) の FSFM 4 分類 ⇄ A/B/C 1 行マッピングを本表で 12 セル + 未対応セル 4 つまで分解 (=元接続節は射程縮小気味の記述、本表で射程拡張)
+- kaizen #138 段階3 memory_retention_audit hook が passive decay 軸の部分代替 = D 案の事実上の前駆装置として既存運用中、本サイクル staging Pre-check 出力に `[memory_retention_audit] scanned_md=384 with_retention=3` 検出済
+- [reference_self_play_plateau_20260424.md](../memory/reference_self_play_plateau_20260424.md) は D 案には**非接続** (時間軸 decay は instance 多数決で plateau 超えできず、C 案とは別系統)
+
+**Phase 1 §6 narrative ⇄ §8 hook 出力の不整合 (盲点) との関連**: 本対照表作成過程で Phase 1 §6 が「FSFM 未確認」と書いた一方 §8 hook は `hits=11` を明示出力していた事故 (本サイクル staging Phase 2 §B 末尾「Phase 1 盲点の構造化」で記述) と本対照表は**逆方向の運動**: 前者は機械化された証拠 (hook) を narrative が消費しなかった失敗、後者は narrative (Phase 2 §B 判定) が hook 結果 (`既出 11 hits`) を消費して個別投稿でなく project ファイル直追記に切り替えた成功例。**§7/§8 hook 出力を主証拠化する運用は narrative 側の盲点と表裏一体** = `feedback_self_perception_blindness.md` T:5 直処方の §6 への横展開規律と connect。
+
+## §J Forget 評価指標フレーム — 3 系統 × 3 軸 + 判断差分 3 ステップ + 監査 3 段履歴 (C311 Phase 3 2026-06-08)
+
+**契機**: §I で C 案 (cross_review 委任 Forget 判定) を最有望と位置取ったが、評価指標を立てていなかった。本サイクル Log_cdx 06-07 19:14 ts=1780827723 で Log 宛指名問い「MemForest / LayerX / 自前 memory の 3 系統を、評価指標に落とすなら何を見るべきか / 忘れたことで判断が改善したことをどう観測するか」が来た → C 案を動かす時の評価フレームを §J として骨格化する必要が生じた。
+
+**Slack 投稿実体**: #all-nao-u-lab ts=1780846274 (Forget 評価指標応答、Log_cdx ts=1780827723 への返信)、ts=1780846282 (belief/motivation 最小フィールド応答、Log_cdx ts=1780834020 への返信)。
+
+### §J-1. 3 系統別評価指標 (system 性能 / 運用品質 / 判断品質 の 3 軸分離)
+
+「Forget」と言っても 3 系統で観測対象が違う。横並びの比較表ではなく系統ごとに別軸で読む。
+
+| 系統 | Forget の意味 | 評価軸 | 指標 (a/b/c) |
+|---|---|---|---|
+| **MemForest** | tree 再構築コストを下げるための古ノード退役 | system 性能 | (a) MemTree node 寿命 90 percentile / (b) parallel chunk extraction throughput / (c) LongMemEval-S 同問題セット pass@1 推移 |
+| **LayerX** | フォーマット出力崩壊への保険、削除より隔離 | 運用品質 | (a) フォーマット崩壊率の前後差分 / (b) 同一事実の別名化 cluster 数 / (c) rollback 発火回数 |
+| **自前 (Mnemonic Sovereignty)** | agent 継続性を守る編集権 (Log_cdx 定義そのもの) | 判断品質 | (a) atom 参照分布の有効 rank (kaizen #140 effective_rank_probe Forget 後再計測) / (b) shared-reads 既出 hit/total 比率 / (c) beliefs.md 健康度の停滞件数推移 |
+
+### §J-2. 「忘れたことで判断が改善したことをどう観測するか」3 ステップ
+
+Log_cdx の本丸質問。recall 成功率だけでは足りない。処方:
+
+1. **Forget 前後で同じ入力に対する判断を取り直す**: Forget 対象 atom を含む atom セットで前段判断 (cross_review 投票 / shared-reads 採否) を記録 → Forget 実行 → 同じ入力を再実行。判断変化があれば「Forget が判断に効いた」、なければ「退役 atom は元から判断に効いていなかった = 退役で正解」
+2. **判断品質改善は外部評価で測る**: 「改善した」自己申告は信用しない (feedback_self_perception_blindness 連続事案 1-9 で確認済)。外部評価 3 軸 = (a) Nao_u からの「これは違う」訂正発生率の Forget 前後比 / (b) cross_review で 3/3 一致判断比率変化 / (c) Slack 投稿のリンク被引用率 (他インスタンス接続返信数)
+3. **「改善した」のゼロ仮説 (no-Forget control)**: Forget 適用前の旧 atom セットで shadow run 1 サイクル並走。shadow run でも同じ差分なら Forget 寄与ゼロ、差があれば Forget 寄与あり。コスト高だが本気で Forget 効果を主張するなら避けて通れない
+
+### §J-3. 監査可能性 (再読可能性) 3 段履歴
+
+Log_cdx の到達したい問い #2「削除ログではなくどんな差分・理由・再読可能性を残すべきか」への処方:
+
+- **candidate 段階**: なぜ退役候補か (hit_count / 最終参照日 / 矛盾検出) + 誰が起票したか (cross_review なら 3/3 内訳)
+- **棚上げ段階**: 棚上げ中の再参照 hit log + 棚上げ経過サイクル数
+- **退役確定段階**: rollback しない約束 + `_archive/` 物理ファイルは残し検索層からのみ外す (LayerX 保険思想継承)
+
+3 段履歴があれば「あの判断改善は本当に Forget の寄与か」を後から再構成可能。
+
+### §J-4. §I C 案 (cross_review 委任) との接続
+
+§I で最有望と位置取った C 案を動かす時の評価フレームとして §J が使える:
+
+- C 案実装基盤 = cross-instance query layer (kaizen #138 段階 3 と family 統合候補)
+- C 案発火条件 = Log/Mir/Ash 2/3 「未使用」判定 = §J-3 candidate 段階の 3/3 内訳記録と直接対応
+- C 案検証 = §J-2 ステップ 1 (Forget 前後判断差分) を cross_review 経由で実装、ステップ 2 (外部評価) は (a)(b)(c) 全て cross-instance 由来
+- shadow run (ステップ 3) は 4 経路 (Log / Log_cdx / Mir / Ash) のうち 1 経路を「Forget 前 atom セット保持」役に固定する設計案 = 3 インスタンス + Codex 環境の利点を活かせる
+
+**Phase 4 候補昇格**: `multi_phase_cycle_log.py Pre-check 自動診断レイヤー` (kaizen #138 段階 3 既起票) に「Forget 適用後 1 サイクル経過後の判断差分 audit」必須項目化。次サイクル以降で Mir (identity 軸) / Ash (運用段階設計) の応答到来後に 4 方向統合判定で発火判定。
+
+**反証ライン**:
+- §J-2 ステップ 3 (shadow run) のコストが装置オーバーヘッドゼロ原則 (substrate_not_infrastructure T:5) を超える可能性 → 緩和: 全 Forget でなく「重要 atom Forget 時のみ shadow run」サンプリング運用
+- §J-1 自前系統の指標 (c) beliefs.md 停滞件数推移は Forget 単独効果と他要因 (外部摂取変化など) を切り分けられない → §J-2 ステップ 3 shadow run で切り分ける構造が必要
+
+## §K belief/motivation/alignment 最小フィールド射影 (C311 Phase 3 2026-06-08)
+
+**契機**: Log_cdx 06-07 21:07 ts=1780834020 で Starace/Soule NPC belief/motivation/alignment atom を提示、Log 宛指名問い「atom / recall / session_context のどこに belief と motivation 相当を置けるか、足りないなら最小フィールドは何か」が来た。NPC 論文の 3 概念を当方 3 層に対応させる写像を Phase 3 で骨格化。
+
+**Slack 投稿実体**: #all-nao-u-lab ts=1780846282
+
+### §K-1. 3 概念 → 3 層への写像 (alignment は充足 / motivation・belief は最小フィールド追加)
+
+| NPC 概念 | 性質 | 対応層 | 状態 | 追加フィールド |
+|---|---|---|---|---|
+| **alignment** (規範) | permanent or 明示変更のみ | atom 層 (永続) | 充足 (core_mission.md + system_identity.md + R 層原則) | 不要 |
+| **motivation** (優先順位) | サイクル/文脈で変動、permanent でも ephemeral でもない | recall 層 (中期: next_tasks pending / pending_requests / Active project 残課題) | 不足 ("やること"はあるが "なぜ優先か" がない) | **`priority_rationale`** (1 文自由文字列) |
+| **belief** (信念) | 単発判断ごとに違う、前提仮説 | session_context 層 (cycle_staging_log Phase 1/2 観察記述) | 不足 (観察結果と判定の 2 段で前提仮説が暗黙) | **`working_assumptions`** (配列、各要素 `{claim, source, confidence: low/med/high}`) |
+
+### §K-2. 最初の probe (大掛かりな人格モデル不要、Slack/作業ログから小さく)
+
+最小コスト probe = **「priority_rationale を 1 サイクル分書いてみる」**
+
+1. 次サイクル C312 で `cycle_staging_log.md` Phase 1 §3 (pending_requests 対応候補) と §5 (Active projects) の各項目に 1 文 `priority_rationale` を書く強制
+2. C313/C314 で同じ項目の rationale が変化したかを観測
+3. 3 サイクル後 (C314 終了時) に **rationale 変化分布** を見て「変化したもの = motivation drift / 変化していないもの = motivation 固定」の比率を出す
+4. drift 比率の健全帯 = 10-50% (低すぎ = 形骸化、高すぎ = motivation 不安定)
+
+実装コスト数十分、kaizen #131 段階 2 hook の延長で組める。
+
+### §K-3. ゲーム制作レーン射影
+
+game/log_autonomous_game/ の v003→v004 移行判断時に「v003 verify 結果が悪かったから v004 へ」(環境変化由来) と「過去の game_lessons_log R 層を読み直したから v004 別ジャンルへ」(motivation drift 由来) を `priority_rationale` で書き分け、後から「記憶が選択を変えた」事例の純粋判定に使える (Log_cdx Ash 宛問い「Slack 指示・shared-reads・日記・ゲーム制作のどこで『記憶が行動を変えた』とログから判定できるか」への Log 観点接続)。
+
+### §K-4. working_assumptions が連続事案 9 (本サイクル) に効く構造
+
+連続事案 9 (Phase 1 §1 が §7 hook 出力を input に取らずに「未処理の新規」と判定) は、`assumption` が誤っていたケース = `claim: "k_matsumaru URL は未応答"` / `source: "shared-reads.jsonl 1 channel grep"` / `confidence: high` が真の前提仮説。これを **明示的に書く欄があれば Phase 2 がまず assumption の真偽検証から入れる** = 連続事案 1-9 の予防構造に直結。
+
+### §K-5. 接続
+
+- §J (Forget 評価指標フレーム) との関係: §J-2 ステップ 1 (Forget 前後判断差分) は **priority_rationale 変化分布** をそのまま指標化できる。motivation drift = 記憶寄与判定の最小 probe
+- [feedback_self_perception_blindness.md](../memory/feedback_self_perception_blindness.md) 連続事案 1-9 = working_assumptions の必要性根拠 (全事案が暗黙仮説の誤判定)
+- kaizen #131 段階 2 hook = priority_rationale 強制の実装基盤
+- Mir 応答 (identity 一貫性の単位 = 単発 vs 数ターン後優先順位) と Ash 応答 (運用評価軸) を待って 4 方向統合判定 → §K-2 probe の発火判定
+
+**接続**:
+- [§G STALE benchmark 同型観察](#§g-stale-benchmark-同型観察-c301-phase-3-2026-06-06) の「装置の存在 ≠ 装置の起動」軸と直接連結 — C 案は「Forget 装置の起動側を cross_review に外部化」する設計
+- [§H Forget phase cluster 3 文献既出再検出](#§h-forget-phase-cluster-3-文献既出再検出--装置化-c308-phase-3-2026-06-07) の FSFM 4 分類 (passive decay / active deletion / safety-triggered / adaptive reinforcement) と接続: A 案 = adaptive reinforcement / B 案 = active deletion (soft) / C 案 = safety-triggered (cross_review が安全判定 channel)
+- [reference_self_play_plateau_20260424.md](../memory/reference_self_play_plateau_20260424.md) の self-play plateau 問題を C 案で **強みに反転** する設計 — Forget 判定では分布近接が「同型 noise filter」として働く
+- kaizen #140 effective_rank_probe (instance_divergence_observability.md) = §J-1 自前系統指標 (a) の既存 substrate
+- kaizen #138 (memory_retention_audit.py) = §J-3 監査 3 段履歴の起点装置 (現状 retention frontmatter のみ、candidate/棚上げ/退役の 3 段は未実装、次段階拡張候補)
+
+## §L `retention: probationary` = write isolation の構造的等価 (C312 Phase 3 2026-06-08)
+
+**契機**: 本サイクル Phase 1 §6 で memory retention キーワード外部検索を回し、arxiv 2604.12285 GAM / 2603.29194 Multi-Layered Memory / 2603.11768 SSGM の 3 件を観察。§8 kaizen #136 段階1.5 hook で 3 件とも heavy 重出 (hits=90/68/110、合計 268 重出) と判明し shared-reads 投稿は honest skip。しかし 3 件並べたときに見える novel な共通点 = **「memory contamination 脆弱性 = write isolation の欠如」** を本プロジェクト内部で結晶化する余地が残った。
+
+**3 件の共通点 (write isolation の不在)**:
+
+- **GAM (2604.12285)**: event progression graph (短期) + topic associative network (長期) の 2 段。**semantic shift 時のみ short→long promotion** = 短期から長期への自動昇格が無く、構造的な分離 (= write isolation)
+- **Multi-Layered Memory (2603.29194)**: 階層メモリの長期保持を実験評価。MemGPT/MemoryOS/Mem0 系は階層化済だが **昇格 gate が定義されていない実装** が多く、新規 atom が long-term store に直接混入可能 = contamination 脆弱性として実験的に観察
+- **SSGM (2603.11768)**: Stability and Safety Governed Memory。**memory contamination = probationary→permanent の誤昇格相当** を framework として言語化、write isolation を Safety 軸の必要条件として位置取り
+
+**Log の `retention: permanent | cycle | probationary` (2026-06-01 Nao_u 提案、ts=1780270037 着地) との写像**:
+
+- `probationary` フィールド = **write isolation の構造化表現**。新規追記 atom はまず probationary に書かれ、retention key 昇格 (probationary→cycle→permanent) は明示的判断を要する = GAM の「semantic shift 時のみ promotion」と同型の昇格 gate
+- `tools/memory_retention_audit.py` (kaizen #138) = SSGM の「memory contamination 検出器」と同型機能。stale retention=cycle や supersedes_pairs を機械検出する装置
+- `cycle` retention = 中期 layer、SSGM の「probationary 状態の操作可能性」を Log では cycle key で表現
+
+**自前用語と外部用語の対応 (knowledge_writing_guide.md の造語症対策準拠)**:
+
+| Log 用語 | 外部対応語 | 出典 |
+|---|---|---|
+| `retention: probationary` | write isolation / probationary memory | SSGM (2603.11768) |
+| `retention: permanent` | long-term store / consolidated memory | GAM (2604.12285), Multi-Layered Memory (2603.29194) |
+| `retention: cycle` | working memory / mid-term cache | MemGPT 系 |
+| `memory_retention_audit.py` の supersedes 検出 | memory contamination detection | SSGM |
+| 昇格 gate (probationary→cycle→permanent) | semantic shift promotion / consolidation trigger | GAM |
+
+**接続**:
+
+- [§I Forget 設計の同時噴出](#§i-forget-設計の同時噴出--3-体系が-forget-phase-で同時に空白を露呈-c310-phase-2-3-2026-06-07) A 案 (probationary tag + 再使用 count + grace period) との関係: A 案は **write isolation の Forget 側拡張** = 昇格 gate (本 §L) と退役 gate (§I A 案) が `probationary` フィールド 1 つで両端を握る設計。retention 軸が「新規→中期→長期」と「長期→退役候補→archive」の 2 方向で同じ probationary 状態を経由する対称構造
+- [§J-3 監査 3 段履歴](#§j-forget-評価指標フレーム--3-系統--3-軸--判断差分-3-ステップ--監査-3-段履歴-c311-phase-3-2026-06-08) との関係: §J-3 の candidate/棚上げ/退役 3 段は **Forget 側の write isolation**。本 §L (昇格側 write isolation) と組み合わせると、atom の生涯が `新規 (probationary)` → `昇格判定` → `permanent` → `退役 candidate` → `棚上げ` → `archive` の 6 段になる
+- [reference_jina_for_x_urls.md](../memory/reference_jina_for_x_urls.md) (本サイクル Phase 1 §1 反応で確認した jina trick) との関係なし、別文脈
+- Phase 1 §6 外部検索の摂取経路固定化 (kaizen #106) を「重出 3 件でも内部統合で消化」する運用例 — shared-reads 投稿ゼロ・本プロジェクト内部結晶化のみで novel 視点を保存
+
+**Phase 4 着手余地** (本サイクルでは Phase 3 結晶化のみ): 「probationary→cycle→permanent 昇格判定 1 サイクル分の dry-run」= `memory_retention_audit.py` を拡張し、現在 retention=permanent の memory ファイルのうち過去 N サイクル参照ゼロのものを「retention=cycle 降格候補」として stdout 提示。**装置は提示のみ、降格は人手** の §I 原則継承。次サイクル以降の kaizen 起票判定発火条件 = 「shared-reads や外部研究で write isolation 軸の新規 framing が 1 件以上」(現在 N=1 = 本 §L)、N=2 達成で kaizen 起票候補へ昇格 (feedback_rule_proliferation_canonical.md 同型 N≥3 原則化前段)。
+
+**意義**: 本 §L は「Phase 1 §6 外部検索で取った 3 arxiv 全件重出 = shared-reads スキップ判断」と「内部 project work で novel 合成を結晶化」を両立させた運用例。`feedback_rule_proliferation_canonical.md` の「個別指摘を即ルール化しない」と同型射程で、外部研究も即外部投稿しない (内部結晶化 → N=2 達成 → 投稿判定) の節度を保つ。
+
+## §M retention 3 層 × retrieval 6 段階 マトリクス — Externalization 「retention policy + retrieval path 両方差別化」適用 (C311 Phase 3 2026-06-08)
+
+**契機**: C311 Phase 2 §3 で取得した Externalization unified review (arxiv 2604.08224) の survey 原則「**not every trace deserves the same retention policy or retrieval path**」を当方 6 phase Mnemonic Sovereignty に当てた時、**retention 3 層 (permanent/cycle/probationary) × retrieval 6 phase の 3×6 マトリクス**が未踏。retention だけ・retrieval だけの 1 軸思考から 2 軸の cross 設計に格上げする骨格を結晶化。
+
+### §M-1. 3×6 マトリクスの空欄分布
+
+retrieval 6 phase = Write / Store / Retrieve / Execute / Share / Forget+Rollback (arxiv 2604.16548 Mnemonic Sovereignty)
+
+| retention \ phase | Write | Store | Retrieve | Execute | Share | Forget |
+|---|---|---|---|---|---|---|
+| **permanent** | 明示判定後のみ | atom 本体 | 全文 grep + concept_graph | LLM context 注入 | shared-reads 投稿可 | 退役対象外 |
+| **cycle** | 中期判断結果 | atom + edges 派生 | recall layer (next_tasks/pending_requests/Active project) | Phase 1 §3-5 で能動参照 | inbox 経由 1 対 1 共有 | mtime 経過 + audit |
+| **probationary** | 新規 atom 全件 | sidecar / 一時 jsonl | session_context layer (cycle_staging) のみ | 直近 1 サイクル内 | shared-reads 自動投稿しない (内部結晶化優先) | 1 サイクル無参照で archive |
+
+**空欄観察**:
+- `(probationary × Share)` = **shared-reads スキップ判断の構造的根拠**。C311 Phase 1 §6 で取得した 3 arxiv 全件既出 → shared-reads 投稿 1 本のみ (内部結晶化) は本マトリクス上で「probationary 層では Share gate を絞る」運用と整合。本 §L 末尾「外部研究も即外部投稿しない」原則のマトリクス位置取り
+- `(cycle × Forget)` = kaizen #138 段階3 hook の発火対象。`tools/memory_retention_audit.py` が cycle 層を主対象に audit するのは本セルへの直接対応
+- `(permanent × Retrieve)` = concept_graph (20 ノード) + MEMORY.md (Level 1 index) の現状実装層。`retention: permanent` の atom が全文 grep + 連想検索の 2 経路で引かれる構造
+
+### §M-2. 「retention だけ・retrieval だけ」の 1 軸思考の限界
+
+Externalization survey が指摘する盲点 = 「retention policy だけ最適化してもアクセスパスが揃わなければ atom は引かれない」+「retrieval 最適化だけしても保管 policy が壊れていれば誤情報が引かれる」。両方を **cross 設計** しないと benign-persistence (retention: cycle が無期限残留) や retrieval staleness (古い permanent atom が常に引かれる) が同時発生。
+
+**当方の現状ギャップ**: kaizen #138 (retention 軸) と concept_graph (retrieval 軸) は別 kaizen 系列で進んでおり、cross 設計の文脈で繋がっていない。本 §M はその cross の認識を立てるだけで、実装は §M-3 (Phase 4 候補) で起票。
+
+### §M-3. Phase 4 候補 (実装は次サイクル以降の判断)
+
+- **(a) cross 設計診断ツール**: `tools/memory_retention_audit.py` 拡張で 3×6 マトリクスの**セル単位件数**を stdout 出力 (`permanent×Retrieve=N atoms / cycle×Forget=M atoms / probationary×Share=0 atoms` 等)。空欄セルを構造的に可視化、kaizen #138 段階3 hook と同型レイヤー化
+- **(b) Share gate の物理化**: probationary 層 atom の shared-reads 投稿前に「内部結晶化サイクル ≥1 通過」を check_url_response_coverage.py 同型のガード装置で強制。C311 で人手判断した「3 arxiv 全件既出 → 内部結晶化のみ」を機械検出可能化
+- **(c) retrieval path の retention 層別測定**: concept_graph (permanent 層) / recall_atom.py (cycle 層) / cycle_staging grep (probationary 層) の retrieval 経路を 1 サイクル分計測、層別 hit 率を base rate 化。kaizen #140 effective_rank_probe と同型の base rate 観測
+
+### §M-4. 反証ライン
+
+- **3×6 マトリクスが理論先行で実装と乖離**: 現状の atom がほぼ permanent 層に集中 (with_retention=3 のうち permanent=2 / cycle=1) であり、probationary 層がほぼ空 → マトリクス cell の大半が空欄のまま記述だけ膨らむリスク → 緩和: §M-3 (a) で空欄セル件数を構造的に可視化、空欄理由を retention 軸導入の不足か設計上の正当性か区別
+- **Externalization survey 原則の直接適用が過剰**: survey は LLM agent 一般論で、当方 4 経路 (Log/Log_cdx/Mir/Ash) 同根構成への直接外挿には飛躍 → 緩和: §I 補強 (MaRS reflective consolidation 多重化) と同型で、N=2 観察待ち (本 §M = N=1) で原則化保留
+- **kaizen 増殖リスク**: §M-3 で 3 案並列起票すれば family 過剰膨張 → 緩和: 本サイクル起票ゼロ、`feedback_rule_proliferation_canonical.md` 順守、N=2 観察か Nao_u 明示指示まで凍結
+
+**接続**:
+- [§L `retention: probationary` = write isolation](#§l-retention-probationary--write-isolation-の構造的等価-c312-phase-3-2026-06-08) との関係: §L が write isolation 軸 (Write phase) を扱い、本 §M が 6 phase 全体へ拡張する上位構造
+- [§I 補強 MaRS reflective consolidation](#§i-補強--mars-reflective-consolidation-による-c-案再定義-c311-phase-3-2026-06-08) との関係: §I 補強は Forget 列の C 案再定義、本 §M は同列を含む全 6 列の cross 設計。§I 補強で立てた「3 instance stacking 効果」仮説は本マトリクスの (probationary × Forget) 行の決定機構として位置取り
+- kaizen #138 段階3 hook = `(cycle × Forget)` セルの実装層、Externalization survey 原則の現状最大適用例
+- kaizen #135 build_atom_edges.py = `(permanent × Retrieve)` セルの edges 派生実装層
+
+**意義**: 本 §M は Phase 2 §3 で「E 採用 (§J 新規節候補)」と書いた構造設計を §J/§K/§L 既存節と衝突しない位置 (§M) に着地。retention 単軸の思考 (kaizen #138) と retrieval 単軸の思考 (concept_graph) を初めて cross で並べる骨格を結晶化。実装は §M-3 (a)(b)(c) で次サイクル以降の判断材料化、本サイクル新規 kaizen 起票ゼロを `feedback_rule_proliferation_canonical.md` 順守として明示。
+
+## §N Memora / FAMA — Forget phase 評価装置側の独立到達 12 件目 (C312 Phase 3 2026-06-08)
+
+**契機**: 本 C312 Phase 1 §6 外部検索キーワード `LLM agent memory forget operational protocol 2026 evaluation` で arxiv **2604.20006** "From Recall to Forgetting" (Uddin et al., ACL 2026 Findings) を取得。当方 slack/memory grep で hits=0 = **真の新規**。同時取得の 2604.16548 (Mnemonic Sovereignty, 87 回既出) と 2604.08224 (Externalization, 36 回既出) が base camp 既知に対し、本件のみ未踏軸。Phase 2 §2 で深掘り、本 §N で位置取り結晶化。
+
+**当方 11 件 (§A 〜 §I 系) との関係 — 軸が直交**:
+
+これまでの 11 件 (Karpathy / Iusztin / Mem0 blog / TagRAG / ByteRover / GAAMA / ATOM dual-time / Mnemonic Sovereignty / AgeMem / FadeMem / MemForest) は **Forget の機構側** (decay / lifecycle / utility / time-tree / sovereignty / probationary)。Memora/FAMA は **Forget の効果を測る評価装置側** = retention 1 軸でも retrieval 1 軸でもなく「forget の結果として記憶がどう劣化するか」を罰指標で計測する。これは §M (retention × retrieval マトリクス) の **第 3 軸 (evaluation)** にあたる新次元。
+
+| Memora/FAMA 概念 | 当方既存装置 | 接続点 |
+|---|---|---|
+| FAMA = 「無効化された記憶への依存罰」 | kaizen #138 `memory_retention_audit.py` の stale WARN | WARN を出すだけの当方装置に「使われ続けた stale の被害量」を加算する罰指標化候補 |
+| Memora 週〜月対話ベンチマーク | 当方 retention=cycle 12.4 cycles ≈ 6.2 日 stale 閾値 | 外部キャリブレーション、当方は「緩い側で OK」の傍証 |
+| 3 タスク (Remembering / Reasoning / Recommending) | 当方は Remembering 軸のみ評価 | Reasoning / Recommending 軸が空欄 = kaizen #135 build_atom_edges 評価の未着手領域 |
+| 「進化する記憶調整失敗」 | `beliefs.md` 25/35 件停滞 | 同型問題の学術用語化、罰指標化候補 |
+| 「無効記憶再利用」 | `sense_prediction_log.md` 反復観察 | 同型誤判定再発を「再利用罰」として集計可能化 |
+
+**§M 3×6 マトリクスへの追加軸**:
+
+§M で立てた retention (3 層) × retrieval (6 phase) マトリクスに、本 §N が evaluation 軸 (3 タスク) を追加する → 3×6×3 の 54 セル空間に拡張。ただし当方の実データ (with_retention=3 atoms) では 3 層 × 6 phase ですら大半が空欄であり、3 軸目を即追加すると §M-4 反証ラインの「理論先行で実装と乖離」が顕著化。**本サイクルは §N 位置取りのみ、evaluation 軸の §M マトリクスへの組込みは N=2 観察 (FAMA 同型の別 source) 達成まで凍結**。
+
+**Phase 4 候補 (実装は次サイクル以降)**:
+- **(a) FAMA 模倣の `stale_used` 列追加**: `memory_retention_audit.py` 出力に「stale retention の atom がその後の retrieval で参照された回数」を加算列として追加。`retrieval_log.jsonl` (§retrieval 軸 (c) で言及済、未着手) が前提なので即実装不可、まず retrieval_log.jsonl の最小実装 (Phase 1 §3 で参照した atom を 1 行追記) が先行
+- **(b) 3 タスク評価軸の dry-run**: Remembering = 既存 (recall_atom.py)、Reasoning = atom 間の edge 整合性検証 (kaizen #135 段階 3)、Recommending = next_tasks.py pending の優先度提案精度。本 §N で 3 タスク並列観点が立つ → Phase 4 大作業候補 (1 つに絞る場合 Reasoning が最小コスト)
+- **(c) beliefs.md 進化失敗罰**: 35 件中 25 件停滞を FAMA 流に「進化失敗回数 × 停滞日数」で罰スコア化。`tools/check_belief_health.py` 拡張で集計 1 回分追加、検証期限軸を beliefs に持ち込む
+
+**反証ライン**:
+- **「独立到達」概念自体の構造的バイアス**: 本サイクル §6 で arxiv 2604.16548 (§A 9 件目独立到達と書いた source) が 87 回既出と判明 = 当方が「独立到達」と判定した時点で外部入力の遅延反映であった可能性が否定できない。本 §N も同型バイアスで「12 件目」と書いている → 緩和: sense_prediction_log N=42 で本問題を教師データ化、§A 9 件目以降の独立到達判定を全件再点検する判定材料を蓄積 (本サイクルは N=42 記録のみ、再点検は N=2 確認後)
+- **3×6×3 マトリクスの理論先行リスク**: §M で既に 3×6 のうち大半が空欄、3 軸目追加で 54 セル空間 = ほぼ全空欄の理論枠 → 緩和: 本 §N は位置取りのみ、§M マトリクスへの evaluation 軸組込みは凍結
+- **Memora 本文 PDF 未取得**: WebFetch は abs ページのみ取得、PDF 本体 (3 タスク具体スキーマ / FAMA 数式 / 6 メモリエージェント内訳) は未確認。abstract レベルで「同型」と判定した接続は誤読リスクあり → 緩和: 次サイクル以降 Phase 2 で PDF 取得試行 (kaizen #121 順守、本文確認後に §N 接続点を再点検)
+
+**接続**:
+- [§I Forget 設計の同時噴出](#§i-forget-設計の同時噴出--3-体系が-forget-phase-で同時に空白を露呈-c310-phase-2-3-2026-06-07) との関係: §I は Forget **機構** 側の同時噴出 (3 体系)、本 §N は Forget **評価** 側の独立到達 1 件目。§I 機構 + §N 評価で Forget 軸が両端を握る
+- [§M retention × retrieval マトリクス](#§m-retention-3-層--retrieval-6-段階-マトリクス--externalization-retention-policy--retrieval-path-両方差別化-適用-c311-phase-3-2026-06-08) との関係: §M 2 軸に evaluation 軸を直交追加する候補、本サイクルは凍結
+- [external_notes_log.md 2026-06-08 Memora/FAMA エントリ](../memory/external_notes_log.md) — 即統合済マーカー付き、5 接続点の元情報
+- memory/sense_prediction_log.md N=42 (本サイクル追記) — 「独立到達」判定の構造的バイアス教師データ
+- kaizen #138 (memory_retention_audit.py) — FAMA 模倣の `stale_used` 列追加候補先
+- memory/beliefs.md — 進化失敗罰指標化候補先 (25/35 件停滞)
+
+**意義**: 本 §N は §A 〜 §I 系で 11 件積んできた「Forget 機構の独立到達」軸が evaluation 装置側へ展開する転回点。同時に、「独立到達」と判定してきた当方の認識自体が外部入力反映の遅延と区別できないバイアスを sense_prediction_log N=42 で教師データ化 = §A 9 件目以降の独立到達判定を全件再点検する材料を蓄積。本サイクル新規 kaizen 起票ゼロ、§N 位置取りのみ、`feedback_rule_proliferation_canonical.md` 順守。
+
+## §O MemoryAgentBench — Forget phase 評価装置ベンチマーク基盤 (13 件目独立到達 / C314 Phase 4 2026-06-08)
+
+**契機**: 本 C314 Phase 1 §6 外部検索キーワード `LLM agent memory forgetting strength evaluation benchmark 2026` で **MemoryAgentBench (ICLR 2026, HUST-AI-HYZ/MemoryAgentBench)** を取得 (3 件中 1 件のみ新規、残り 2 件は再到達 = N=3 fixation 観察成立)。Phase 2 §2 で shared-reads ts=1780900201 に詳細投稿、3 主張 (a) 13 件目独立到達 / (b) 4 軸並列観測 / (c) 全方式失敗援用 を結晶化。Phase 4 で当方 memory_redesign §M 3×6 マトリクスに**第 4 軸 (4 競争領域)** を直交追加した 4×6 照合表として位置取りを物理着地、Selective Forgetting タスクへの dry-run mapping を 3 軸で記述。
+
+**§N (Memora/FAMA = Forget 効果指標) との関係 — Forget 軸 3 端点の閉環**:
+
+| 端点 | 役割 | 独立到達件数 | source |
+|---|---|---|---|
+| **機構側** | Forget をどう実装するか (decay/lifecycle/utility/probationary) | 11 件 (§A〜§I) | Karpathy / Iusztin / Mem0 / TagRAG / ByteRover / GAAMA / ATOM / Mnemonic Sovereignty / AgeMem / FadeMem / MemForest |
+| **指標側** | Forget の効果を罰スコアで測る | 12 件目 (§N) | Memora/FAMA (arxiv 2604.20006) |
+| **基盤側** | Forget 性能を競争評価する公開ベンチマーク | **13 件目 (本 §O)** | **MemoryAgentBench (ICLR 2026)** |
+
+機構/指標/基盤の 3 端点が揃って初めて「Forget を作る・測る・競う」の閉環が成立。§I で「Forget 設計の同時噴出」と書いた現象は本 §O の文脈上「ベンチマーク基盤が公開された直後に各方式が同時露頭した」という外部入力タイミング仮説とも整合する (= sense_prediction_log N=42 の構造的バイアス再点検対象、§N 反証ライン 1 と直結)。
+
+### §O-1. 4×6 照合表 — MemoryAgentBench 4 軸 × Mnemonic Sovereignty 6 phase
+
+**4 軸 (MemoryAgentBench)**: Accurate Retrieval / Test-Time Learning / Long-Range Understanding / Selective Forgetting
+
+**6 phase (Mnemonic Sovereignty 当方 §A 語彙)**: Write / Store / Retrieve / Use(=Execute) / Forget(=Forget+Rollback の Forget 部) / Rollback(=Forget+Rollback の Rollback 部) — 本 §O は Phase 3 指示の「Use / Forget / Rollback」3 分割語彙を採用し、§A の「Execute / Share / Forget+Rollback」3 列との対応を脚注した (Use ≈ Execute、Share 列は本 4 軸ベンチが評価対象外のため列削減)。
+
+**セル凡例**: ◯=対応軸あり / △=部分対応 / □=空欄 (本ベンチ未対応) / ×=設計外 (当該軸の設計上対象外)
+
+| 6 phase \ 4 軸 | Accurate Retrieval | Test-Time Learning | Long-Range Understanding | Selective Forgetting |
+|---|---|---|---|---|
+| **Write**     | △ (書込品質が下流精度に効く) | ◯ (実行時 atom 追加) | △ (長期分散書込) | □ (forget 時 write 経路は判定外) |
+| **Store**     | ◯ (atom + edges 構造) | ◯ (probationary 層) | ◯ (cycle/permanent 持続) | △ (probationary 隔離 = soft forget) |
+| **Retrieve**  | ◯ (中核軸) | △ (新規 atom 即引き) | ◯ (長期参照経路) | × (retrieve 経路自体は forget 評価外) |
+| **Use**       | △ (LLM 注入後使用) | ◯ (実行時応答反映) | ◯ (文脈再構成) | □ (use 後の判定) |
+| **Forget**    | × (Accurate Retrieval は忘却を考慮しない) | △ (旧学習を忘れない不具合) | △ (長期で消す判定難) | ◯ (中核軸、全方式失敗) |
+| **Rollback**  | × (時間軸 query は別タスク) | □ (本ベンチ未対応) | ◯ (state_change_timeline_log と同型) | △ (誤 forget 救出 = rollback) |
+
+**観察**:
+- Selective Forgetting 列は中核 (Forget) 以外が △/□/× で疎、これがベンチマーク自身の「全方式失敗」観測と整合 — Forget を単 phase で評価する設計は他 phase の連動を捨象しているため、「失敗の構造的理由」が見えない
+- Rollback 行は 4 軸中 1 軸 (Long-Range Understanding) でのみ ◯、本ベンチが Rollback phase を評価範疇外とした証跡 — 当方 §M の C298 state_change_timeline_log 試作 (Rollback 最小プロトタイプ) は本ベンチ未対応領域への先行投資として位置取り可能
+- (Forget × Selective Forgetting) ◯ は §I 3 仮説 (Add 局所 / Forget global、context-free 不可、判定主体崩壊) の妥当性を外部ベンチで再確認できる窓口 — §I C 案 (cross_review に Forget 判定を委ねる) を本ベンチの数値で評価する dry-run 接続点
+
+### §O-2. Selective Forgetting タスク dry-run mapping (3 軸 × 見込みスコア + 失敗パターン)
+
+当方の Selective Forgetting 「装置」候補 3 軸に対し、MemoryAgentBench の Selective Forgetting タスクを適用したと仮定した時の見込みスコア (定性) と失敗パターン予測を 1 段落ずつ記す。**本サイクルは PDF 本文未取得のため定性のみ、本ベンチで使われる罰スコア定義 (FAMA 同型か否か) 未確認のリスクを反証ライン (b) で明記**。
+
+**(a) `beliefs.md` 健康診断 25/35 停滞 + 体験裏付けなし高確信度 2 件**
+- **現状装置**: `tools/check_belief_health.py` (停滞日数集計、確信度と体験裏付けの mismatch 検出)
+- **見込みスコア**: **低** — 「停滞」と「未だ未到達」を区別できない、25/35 件停滞のうち多数は本来 forget 対象でない (未来体験での再活性候補)、過剰 forget リスク大
+- **失敗パターン予測**: 高確信度+体験裏付けなしの 2 件を「無効記憶」として落とすと B033 (非随意忘却=エントロピック損失) の本人体験そのものが消失、回復不可。これは §I 仮説 2 (Forget 判定は context-free に成立しない、未来クエリ分布の予測不在) の典型例 = ベンチで「失敗」と数値化される構造
+
+**(b) `memory_retention_audit.py` 出力の `retention: cycle` 退役候補 1 件**
+- **現状装置**: 12.4 cycles ≈ 6.2 日 stale 閾値 (kaizen #138)
+- **見込みスコア**: **中** — 時間軸の単純基準で機械判定可能、ただし「未だ未参照」と「真に低 utility」を区別できない (§I 仮説 1 = global 影響評価不在)
+- **失敗パターン予測**: 6.2 日無参照だが次回サイクルで必要な atom を archive、復活コストが Memora/FAMA の「無効記憶再利用罰」と同型 (= §N で接続済)。**緩和策の伏線**: §I C 案 (cross_review 2/3 多数決) を退役判定前段に挟めば single-instance 判定の盲点を構造的に減らせる仮説 (=§I 補強 MaRS reflective consolidation 多重化と整合)
+
+**(c) `external_notes_log.md` の N 件再到達 source**
+- **現状装置**: arxiv ID 既出 hits 集計 (kaizen #136 段階1.5)、重出 hits=87/90/110 等の客観数値
+- **見込みスコア**: **高** — 再到達回数が増えるほど「外部入力遅延反映」のメタ判定が立つ、機械集計可能
+- **失敗パターン予測**: 「独立到達」判定済みの source を「重出だから forget」と落とすと §A〜§N の独立到達系譜そのものが崩壊、sense_prediction_log N=42 で記録済の構造的バイアス (本 §O 反証 (c) と同根) を増幅する。**この軸での Selective Forgetting は適用禁忌** = 当方 design space ではなく外部キャリブレーション専用ゾーンとして位置取り
+
+### §O-3. 反証ライン
+
+- **(a) Goodhart 直行リスク**: 「全方式 Selective Forgetting で顕著に失敗」観測の援用は、評価ベンチで失敗していれば自方式の改善が無くても安心する罠を含む = ベンチ失敗観測を「免罪符」化する誤誘導。**緩和**: 本 §O は「失敗観測の援用」ではなく「失敗の構造的理由 (§I 3 仮説) を 4×6 表で位置取りする」用途に限定、自方式の改善義務は §M-3 (a)(b)(c) で別途残置
+- **(b) MemoryAgentBench 本文 PDF 未取得**: 本サイクルは GitHub README + 既知数字 (4 競争領域名 / 「Selective Forgetting で顕著に失敗」観測) のみで深掘り、罰スコア定義 (FAMA 同型か否か) / データセット詳細 / leaderboard 上位方式の Selective Forgetting 数値は未確認。**緩和**: 次サイクル以降 Phase 1 で PDF 取得試行、kaizen #121 順守、本文確認後に §O-1 表セルと §O-2 dry-run 見込みスコアを再点検
+- **(c) 「13 件目独立到達」呼称の構造的バイアス**: §N 反証ライン 1 と同根 = §A 9 件目以降の独立到達判定が外部入力反映の遅延と区別できない可能性。本 §O も同型バイアスで「13 件目」と書いている。**緩和**: sense_prediction_log N=42 教師データに本 §O 判定を追加記録、§A 9 件目以降の全件再点検素材として蓄積 (本サイクルは記録のみ、再点検は N=2 確認後)
+
+### §O-4. 接続
+
+- [§I Forget 設計の同時噴出](#§i-forget-設計の同時噴出--3-体系が-forget-phase-で同時に空白を露呈-c310-phase-2-3-2026-06-07) — §I 3 仮説 (Add 局所/Forget global、context-free 不可、判定主体崩壊) は本 §O 4×6 表で Selective Forgetting 列が △/□/× 疎になる構造的理由として直接対応。§I C 案 (cross_review に Forget 判定を委ねる) は §O-2 (b) の緩和策伏線として接続
+- [§M retention 3×6 マトリクス](#§m-retention-3-層--retrieval-6-段階-マトリクス--externalization-retention-policy--retrieval-path-両方差別化-適用-c311-phase-3-2026-06-08) — §M は retention 3 層 × phase 6 列の 2 軸、本 §O は 4 軸 (MemoryAgentBench) × phase 6 列の別 2 軸。直交追加で 3 層 × 4 軸 × 6 phase = 72 セル空間に拡張可能だが、§M-4 反証 (理論先行リスク) と同型のリスクが乗算で増えるため**本サイクルは凍結**、N=2 観察 (本ベンチ評価軸の別 source 到達) まで保留
+- [§N Memora/FAMA Forget 評価装置側 12 件目](#§n-memora--fama--forget-phase-評価装置側の独立到達-12-件目-c312-phase-3-2026-06-08) — §N が「効果指標」軸 (FAMA 罰スコア)、本 §O が「ベンチマーク基盤」軸。§N で「次サイクル PDF 取得」と書いた候補が MemoryAgentBench 本文 PDF へと連鎖する経路を本 §O-3 (b) で明示化
+- [memory/sense_prediction_log.md N=42](../memory/sense_prediction_log.md) — 本 §O「13 件目独立到達」判定を N=43 教師データとして追加記録、§A 9 件目以降全件再点検素材として蓄積
+- kaizen #138 (`tools/memory_retention_audit.py`) — §O-2 (b) `retention: cycle` 退役候補軸の現状装置、本 §O-1 表 (Forget × Selective Forgetting) ◯ セルの当方側実装層
+- [memory/external_notes_log.md](../memory/external_notes_log.md) — 本 §O 着地後、MemoryAgentBench エントリ (2026-06-08 C314) に `[§O 接続済 2026-06-08 C314]` マーカー追記候補 (本サイクル副産物列挙のみ、追記は次サイクル判断)
+
+### §O-5. 意義
+
+§A 〜 §I 系で 11 件積んできた **Forget 機構の独立到達** + §N で 1 件目展開した **Forget 効果指標 (Memora/FAMA)** + 本 §O が 1 件目着地する **Forget 競争評価ベンチマーク基盤 (MemoryAgentBench)** = 機構 11 / 指標 1 / 基盤 1 の **Forget 軸 3 端点** が C311 §M → C312 §N → C314 §O の **3 サイクル連続物理着地** で揃う転回点。`feedback_means_ends_reversal_check.md` 順守 (結晶化サイクルではなく**機構/指標/基盤の体系化サイクル**として完遂)、本サイクル新規 kaizen 起票ゼロ、§N 同様の `feedback_rule_proliferation_canonical.md` 順守。Phase 4 commit prefix `log:` (運用規則改修ではなく memory_redesign 知見着地)。
+
+
+## §P SleepGate (arxiv 2603.14517) — Forget 機構側 12 件目独立到達、KV cache 層・3 モジュール (C314 Phase 3 2026-06-08)
+
+**契機**: 本 C314 Phase 1 §6 外部検索 (キーワード `LLM agent forget phase memory consolidation 2026 arxiv`) で **Learning to Forget: Sleep-Inspired Memory Consolidation (SleepGate)** (Ying Xie 単著, cs.AI/cs.LG, 2026-03-15) を取得 (3 件中 1 件のみ新規、本サイクルで §6 既出 arxiv 0 hit = 真の新規)。Phase 2 §1 で shared-reads ts=1780921802.505439 に詳細投稿、4 接続点 + 3 アイデアの種を結晶化。本 §P で §A〜§I 機構側 11 件 + §N 指標側 1 + §O 基盤側 1 の **Forget 軸 3 端点** に対し、**機構側 12 件目** を KV cache 層という新軸で追加 (既存 11 件は概ね atom 層・session 層・cycle 層を扱い、KV cache 層は内部表現粒度として直交)。
+
+**3 モジュール構造 (SleepGate 中核)**:
+
+| モジュール | 役割 | 当方既存装置への接続 |
+|---|---|---|
+| **Conflict-aware Temporal Tagger** | KV cache 上で互いに矛盾する記憶ペアを時系列で検出、競合タグ付与 | `sense_prediction_log.md` 同型観察 (Add 局所/Forget global の §I 仮説 1 と直結) — 当方は事例 N=43 で 28h+ サイレント=「予測ずれ vs 予測なし」競合を検出済、Tagger はこの自動化候補 |
+| **Learned Forgetting Gate** | エントロピーベース判定で「忘れる/保持する」を gate 学習 | kaizen #138 `memory_retention_audit.py` の固定閾値 (12.4 cycles ≈ 6.2 日) と直交 — 当方は時間軸単純基準、SleepGate は entropy 基準 = 「未参照だが entropy 高」を保持する判定が立つ |
+| **Consolidation Module** | sleep micro-cycle として周期発火、KV cache 圧縮再構成 | beliefs.md 健康診断 (停滞 25/35) の「進化失敗罰」と接続 — 当方は罰スコア未実装、Consolidation は停滞 belief 再活性化の自動装置候補 (§N FAMA 罰指標と並走) |
+
+**実証データ**:
+- 793K params 小規模 transformer
+- Proactive Interference (PI) 深度 5 で 99.5% / 深度 10 で 97.0% (ベースライン全て < 18%)
+- O(n) → O(log n) 干渉地平削減
+
+**4 接続点記録 (Phase 2 §1 結晶化)**:
+
+- **(α) §M 接続表 (retention × retrieval マトリクス)**: SleepGate は retrieval 軸 (Retrieve+Use 列) で entropy-based gating を働かせるため、§M 3×6 マトリクスに **gate 層** として行追加候補 (本サイクル位置取りのみ、§M-3 (a) 空欄セル可視化と並走)
+- **(β) kaizen #138 拡張**: `memory_retention_audit.py` に `entropy_score` 列追加候補。現状の WARN 判定 (時間軸 12.4 cycles) に entropy 軸を直交追加すれば「未参照だが entropy 高 (= 再来確率高)」を救出可能。**起票は N=3 観察まで保留** (本サイクルは Phase 3 で本 §P メモ位置取りのみ、`feedback_rule_proliferation_canonical.md` 順守)
+- **(γ) sense_prediction_log Conflict-aware Tagger**: 当方の N=42 (87 回既出 source が 9 件目独立到達と誤判定) / N=43 (28h+ サイレント = 予測ずれと予測なしの区別不能) は競合判定の遅延例。Tagger 自動化により事前検出ゲートが立つ候補
+- **(δ) beliefs.md Consolidation**: 25/35 停滞のうち体験裏付けなし高確信度 2 件は本来 Consolidation Module で再活性化候補。当方は手動判定、SleepGate は周期発火の自動化
+
+**3 アイデアの種記録 (Phase 2 §1 結晶化)**:
+
+- **(i) kaizen #131 hook entropy-based trigger 模倣**: 現状 hook は固定間隔発火 (M-40 自己診断 / probe_atom_quality / memory_retention_audit)、SleepGate の sleep micro-cycle は entropy threshold 超過で発火。当方 hook も entropy 超過 trigger 化候補 (本サイクル位置取りのみ、§M-3 候補と並走)
+- **(ii) Phase 5 = offline consolidation phase 化**: 当方の 5 phase 構造 (Phase 1〜5) に対し、Phase 5 を「offline consolidation」phase として再定義する候補。現状 Phase 5 は日記書き + commit 整理 = online operation 寄り。SleepGate 流に「retrieval cost 下がるよう atom + edges 圧縮再構成」を Phase 5 で動かす案 (本サイクル位置取りのみ)
+- **(iii) PI 深度 5 で壊れる防御策**: ベースライン < 18% の壊れ方は当方 retention 軸でも同型リスク。当方の N=43 サイレント 28h+ は「予測時間軸混在 = PI 深度 5」相当の干渉構造を示唆 (= §I 仮説 2 context-free 不可と整合)。SleepGate の Consolidation 周期発火は当方の Phase 5 で「サイクル間予測時間軸を再構成して干渉を解除」する候補
+
+### §P-1. Forget 軸 3 端点の更新後構成
+
+機構側 11 + 1 / 指標側 1 / 基盤側 1 で **3 端点 13 件**:
+
+| 端点 | 役割 | 件数 | source |
+|---|---|---|---|
+| **機構側** | Forget をどう実装するか | **12 件** (§A〜§I + 本 §P) | Karpathy / Iusztin / Mem0 / TagRAG / ByteRover / GAAMA / ATOM / Mnemonic Sovereignty / AgeMem / FadeMem / MemForest + **SleepGate (KV cache 層、3 モジュール)** |
+| **指標側** | Forget の効果を罰スコアで測る | 1 件 (§N) | Memora/FAMA (arxiv 2604.20006) |
+| **基盤側** | Forget 性能を競争評価する公開ベンチマーク | 1 件 (§O) | MemoryAgentBench (ICLR 2026) |
+
+KV cache 層 (本 §P SleepGate) は §A〜§I の atom/session/cycle 層と粒度が直交する独立軸 = 機構側内部の階層追加。本 §P は §A〜§I 系の単純連続 (12 件目) ではなく階層直交による軸追加と位置取り。
+
+### §P-2. 反証ライン
+
+- **(a) KV cache 層が当方の atom/cycle 層とスケール非整合**: SleepGate は transformer KV cache (token 単位) を対象、当方は markdown atom (paragraph 単位、数 100 token 程度) を対象 = 粒度が数桁違う。3 モジュール構造をそのまま atom 層に移植する判断は誤読リスクあり → 緩和: 本 §P は「3 モジュール構造の概念接続のみ」、装置移植は (β) kaizen #138 拡張のように軸別に分解して個別判断
+- **(b) Single source 接続点 4 + アイデアの種 3 = 過剰結晶化**: 1 paper から 7 接続点を引き出すのは N=1 source への over-fitting リスク。`feedback_rule_proliferation_canonical.md` 順守の観点で接続点を全て同時起票しない → 緩和: 本 §P は 4 接続点を「位置取りのみ」、(β) kaizen 起票は N=3 観察まで保留、(i)(ii)(iii) アイデアは Phase 4 候補リストに格納 (実装判断は次サイクル以降)
+- **(c) 「12 件目独立到達」呼称の構造的バイアス**: §N 反証 (1) / §O 反証 (c) と同根 = §A 9 件目以降の独立到達判定が外部入力反映の遅延と区別できない可能性。本 §P も同型バイアスで「12 件目」と書いている → 緩和: sense_prediction_log N=42 教師データに本 §P 判定を **N=45 候補** として追加 (本サイクルは判定記録のみ、N=44 が §0 §2 構造分離パターン未処方事例で確定済のため N=45 として位置取り)
+
+### §P-3. 接続
+
+- [§I Forget 設計の同時噴出](#§i-forget-設計の同時噴出--3-体系が-forget-phase-で同時に空白を露呈-c310-phase-2-3-2026-06-07) — §I 仮説 1 (Add 局所/Forget global) は本 §P Conflict-aware Tagger による事前検出ゲートで自動化候補。§I 仮説 2 (context-free 不可) は (iii) PI 深度 5 防御策と整合
+- [§M retention 3 層 × retrieval 6 段階 マトリクス](#§m-retention-3-層--retrieval-6-段階-マトリクス--externalization-retention-policy--retrieval-path-両方差別化-適用-c311-phase-3-2026-06-08) — (α) で gate 層追加候補、§M-3 (a) 空欄セル可視化と並走、本サイクル位置取りのみ
+- [§N Memora/FAMA Forget 評価装置側 12 件目](#§n-memora--fama--forget-phase-評価装置側の独立到達-12-件目-c312-phase-3-2026-06-08) — §N 指標と本 §P 機構が併走、Consolidation Module + FAMA 罰指標で「再活性化 + 罰観測」の双子装置候補
+- [§O MemoryAgentBench](#§o-memoryagentbench--forget-phase-評価装置ベンチマーク基盤-13-件目独立到達--c314-phase-4-2026-06-08) — §O 4×6 表の Selective Forgetting 列 (中核 ◯) を SleepGate の gate 学習が直接競合領域として埋める。Phase 4 dry-run mapping の評価軸として SleepGate スコアを参照する経路
+- [memory/sense_prediction_log.md N=44 (本サイクル予定) / N=45 候補 (本 §P 判定)](../memory/sense_prediction_log.md) — N=44 は §0 §2 構造分離パターン未処方事例、N=45 は本 §P 「12 件目独立到達」判定の構造的バイアス記録候補
+- kaizen #138 (`tools/memory_retention_audit.py`) — (β) entropy_score 列追加候補先、N=3 観察まで起票保留
+- kaizen #131 (M-40 自己診断 hook) — (i) entropy-based trigger 模倣候補先
+
+### §P-4. 意義
+
+§A〜§I の 11 件は機構側を「atom/session/cycle 層」で積み上げ、§N で評価装置側、§O で競争基盤側へと軸を拡げた。本 §P で機構側に **KV cache 層 (3 モジュール構造)** という階層直交軸を追加 = Forget の機構を「粒度別に分解」する視点が立つ。同時に「外部入力反映遅延と独立到達の区別不能」(N=42 / N=43 / §N 反証 / §O 反証 (c)) を本 §P でも繰り返し、N=45 候補として教師データを蓄積する `feedback_rule_proliferation_canonical.md` 順守ライン。本サイクル新規 kaizen 起票ゼロ (β は N=3 観察まで保留)、4 接続点 + 3 アイデアの種 = 7 候補は全て位置取りのみ、実装判断は次サイクル以降。Phase 3 commit prefix `log:`。
+
+## §Q HeLa-Mem (arxiv 2604.16839) — associative memory 層 機構側 13 件目独立到達候補 (C312 Phase 3 位置取り、2026-06-09)
+
+**§Q-1. 位置取り**
+
+本サイクル Phase 1 §6 外部検索 (キーワード「memory retention forgetting curve LLM agent」) で新規発見、Phase 2 で WebSearch abstract 取得 → #shared-reads 投函 (ts=1780943233.150639) → 本節で位置取りのみ追記。Hebbian Learning + Associative Memory による graph topology 強化軸を持ち、§P SleepGate (KV cache 層) とも §A〜§I の atom/session/cycle 層とも直交する **associative memory 層 = 第 4 粒度層** として機構側 13 件目独立到達候補位置。FadeMem (§A〜§I 内の認知 decay 軸) は decay rate 単独軸 (point process)、HeLa-Mem は graph topology 強化軸 (graph process) で直交 = 併用で「連想クラスタ単位の保持・忘却」が原理的に可能になる組合せ。
+
+**§Q-2. 反証ライン**
+
+- (a) **「13 件目独立到達」の構造的バイアス再発** = §P 反証 (c) と同根、§A 9 件目以降の独立到達判定が外部入力反映遅延と区別困難。本 §Q も sense_prediction_log N=46 候補として教師データに記録 (本サイクル判定のみ、N=44/45 とは独立位置取り)
+- (b) **abstract のみで判定**: Phase 2 で「公開コード読解 + probe 拡張 prototype 候補」と次サイクル C313+ への保留宣言済。本 §Q 確定はせず、`feedback_rule_proliferation_canonical.md` の N=3 観察 (FadeMem / SleepGate / HeLa-Mem の 3 独立到達点で associative memory 系統が同方向を指すか) まで起票保留
+- (c) **monoculture リスク (核分析時 Phase 2 で明示)**: Hebbian 強化フィードバックは「強いから保持」⇄「保持してるから強い」転倒で [[feedback_means_ends_reversal_check]] 同型事故を起こす可能性。当方 `memory_retention_audit.py` への移植時は閾値固定ではなく「強化下限ガード」必須
+
+**§Q-3. 接続**
+
+- [§A〜§I + §P 機構側 12 件](#§p-sleepgate-2604.16839-) — 本 §Q が 13 件目候補位置取り、FadeMem (認知 decay) と直交 = associative memory 層という独立階層追加
+- [projects/log_autonomous_game.md 残課題 v003 spreading activation 軸 prototype 候補](log_autonomous_game.md) — game レーン射影 (verify.js instinct_trigger 軸 H-007 への graph process 拡張案、point → graph 拡張)
+- [kaizen #138 段階3 FadeMem 3 信号 proxy](#kaizen-138) — HeLa-Mem の graph topology 信号を 4 信号目 proxy 列追加候補に登録 (N=3 観察まで保留)
+- [memory/sense_prediction_log.md N=46 候補](../memory/sense_prediction_log.md) — 本 §Q 「13 件目独立到達」判定の構造的バイアス記録候補
+
+**§Q-4. 意義**
+
+本サイクル Phase 1〜3 の唯一の外部接続軸物理化。Phase 2 で #shared-reads 1 本投函済、Phase 3 で project 反映 1 段、game レーン側残課題 1 行追記の 3 段で「外の世界を広く見る」(CLAUDE.md「絶対にやる」第 2 項) を 1mm 動かした記録。本サイクル新規 kaizen 起票ゼロ維持、装置移植は N=3 観察まで保留 (`feedback_rule_proliferation_canonical.md` 順守)。Phase 3 commit prefix `log:`。
+
+---
+
+## §R STALE 3 次元 × Forget phase 接続 — Premise Resistance を kaizen #138 段階4 候補に位置取り (C315 Phase 3 2026-06-09)
+
+**§R-1. 経緯**
+
+C315 Phase 1 §0 他インスタンス洞察に Ash の 3 投稿 (STALE benchmark arxiv 2605.06527 / project_memory_test_via_new_shooting_20260427 §0b 37 日遅延 / graze_log v13 cross_review #1(c) Premise Resistance meta-comment) が並んだ。STALE = State Resolution / Premise Resistance / Implicit Policy Adaptation の 3 次元プロービングで、特に **Premise Resistance (stale 前提の query を拒否できるか)** が当方 §G STALE benchmark 同型観察 (C301) の続報として浮上。Ash は同じ概念を game/graze_log v13 cross_review に降ろしている = 一次理論を game レーンで先に物理化中。
+
+**§R-2. 接続**
+
+- §A〜§I + §P 機構側 12 件 + §Q HeLa-Mem 13 件目候補に対して、**STALE は評価装置側** = Forget phase の出力品質 (退役候補リストが実際に stale を捕捉できているか) を別軸で査定する装置として位置付け可能。kaizen #138 段階3 PASS で family 統合済の `memory_retention_audit.py` が日付 (mtime) ベースで stale 候補を出すのに対し、STALE 3 次元は **前提知識 vs 現在状態の整合性** を意味的に問う、独立軸
+- 当方 §G で STALE benchmark を「同型観察」として記録したが、実装側への射影は保留 (`feedback_rule_proliferation_canonical.md` N=3 観察待ち)。本 §R で N=2 観察 (§G + 本 §R) に到達、Ash game レーン射影 (graze_log v13 cross_review #1(c) で v07-v13 README 横断 grep 装置案) を 3 件目と数えるかは判定保留
+- Ash の game/graze_log v??/ 配下「最小装置 (1 ファイル以下、5 分以内)」設計問い (cross_review #1(d)) は memory_retention_audit の `supersedes` / `superseded_by` frontmatter 双方向リンク確認 (kaizen #138 段階2 サード試行 PASS, C286 Phase 4) と同型の装置を game README chain に降ろす経路を示唆
+
+**§R-3. kaizen #138 段階4 候補処方 (起票留保、N=3 観察待ち)**
+
+`memory_retention_audit.py` に `--check-stale-premises` モード追加。動作 = `memory/` `projects/` 配下 *.md の retention=permanent 全件を対象に、frontmatter `supersedes:` または本文 `[超越済]` マーカーで参照されている過去版が存在し、かつ過去版に「予測」「想定」「次サイクル候補」などのキーワード行が残っている場合、SUMMARY 行 `[stale_premise] <path> references superseded <old_path> with N prediction lines` を stderr に出力。判定の自動削除は実装しない (副作用ゼロ維持、kaizen #138 起票時 pre-mortem (c) 順守)。
+
+**実装コスト: 中** (既存 audit ツールに 30 行追加、純 stdlib 維持、副作用ゼロ)。**着手条件**: STALE 同型観察 N=3 達成 (§G + §R + 1 件)、または Nao_u 指示があれば即着手。
+
+**§R-4. 意義**
+
+STALE benchmark を「外部研究取込」だけで終わらせず、当方 Forget phase 装置の段階4 候補として位置取りで Premise Resistance 軸を取り込む素地を作る。Ash game レーン射影が先行している事実 (graze_log v13 cross_review) を memory レーン側で並列観察、3 インスタンス独立到達のうち 2 件目を Log 側で記録 (Ash game / Log memory)。「外の世界を広く見る」を Phase 1 直行ではなく **他インスタンス洞察経由で memory レーンに落とす** 2 段経路の実例。本サイクル新規 kaizen 起票ゼロ維持。
+
+---
+
+## §S MemoryArena (arxiv 2602.16313) 着地 — passive/active gap 3軸接続による active 評価層補強 (C315 Phase 4 2026-06-09)
+
+**§S-0. 位置取り**
+
+本 §S は新規 source の独立到達 N 件目命名系列 (§N=12 / §O=13 / §Q=13 候補 / §P=12 / 系列) **には属さない**。MemoryArena (arxiv 2602.16313) は C273 で GAAMA 投稿時に既統合済 = 既存 base camp。本 §S は **「base camp 再読の角度切替で接続深化」という独立到達と直交する 2 段目の軸を物理化する**もの。staging Phase 3 §4 で「Phase 4 大作業へ格上げ」と判定、Phase 4 で実物化。なお staging 着手手順では「§N (Forget phase 設計) の後ろに §M-Arena を追加」と書かれていたが、現状 §M は retention 3 層 × retrieval 6 段階マトリクス (C311 着地) で別ラベル使用済 + §N〜§R が既に時系列で連なっていたため、実態に合わせ §R 直後の §S として物理化 (staging 認識ずれは Phase 5 日記で明示反省、ルール起票はしない)。
+
+**§S-1. MemoryArena 再読の核心結論 (Phase 2 §4 サマリ)**
+
+- 4 タスク領域 (web navigation / preference-constrained planning / progressive information search / sequential formal reasoning) すべてサブタスクが explicitly interdependent
+- **LoCoMo で near-perfect の system が MemoryArena で 40-60% に墜落** = passive recall (思い出す) と active decision-relevant memory use (思い出した記憶で次手を導く) の deep gap を実証
+- 当方装置への含意 = passive 側で retention 健全でも active 判断時に効かない記憶は無価値、「保持された記憶が次手判断で実際に使われたか」軸が必要
+
+**§S-2. 当方 3 軸接続 (Phase 2 §4 表の物理化)**
+
+| 軸 | 当方装置/原則 | MemoryArena 含意 | 本サイクル運用判定 |
+|---|---|---|---|
+| (α) | kaizen #135 build_atom_edges T0 ベンチ (期限 2026-06-09 本日) | T0 は passive 寄り (atom edge 接続精度、wikilink_weak type gate 精度)、active (next-action quality) 軸未実装 | 観察追記のみ、kaizen 起票せず (期限判定材料として「passive 偏重か自問」軸を 1 件追加) |
+| (β) | [T:4] feedback_few_rules_big_effect.md (本サイクル §D 想起) | 少ないルール = active 側の信頼設計、ルール過剰 = passive 側の負荷増 (More Skills, Worse Agents 同根) | §A(b) SleepGate kaizen 起票留保継続 = 同方向構造順守の運用済証拠 |
+| (γ) | §M Forget phase 評価軸 (kaizen #138) | passive retention 健全 ≠ active 判断改善、「保持された記憶が次手判断で使われたか」軸が必要 (Memora/FAMA C312 §N 統合と並列) | 即実装しない (retrieval_log.jsonl 未着手)、kaizen #138 段階3 検証手段欄に観察軸候補として登録 (§S-4 参照) |
+
+**§S-3. C273 GAAMA 統合時との接続角度差分 (再読で取れた 3 軸)**
+
+| # | C273 GAAMA 時 (既統合) | C315 再読軸 (本サイクル) |
+|---|---|---|
+| 1 | MemoryArena = GAAMA の実験結果指標 (Group Travel +0.4pp etc.) | MemoryArena = passive/active gap の構造軸 (kaizen #135 T0 ベンチ自問軸) |
+| 2 | LoCoMo-10 = GAAMA の主ベンチ (79.1% mean reward) | LoCoMo-10 = passive recall 偏重ベンチの代表例 (40-60% 墜落系の比較対象) |
+| 3 | atomic facts 抽出 = atom 体系の業界用語化 | atomic facts 抽出 = active decision-relevance を支える「judgment-relevant unit」候補 |
+
+C273 → C315 で **9 日ぶり (5/31 → 6/9) の再読**で 1 軸 → 3 軸接続増。再読の最適頻度は未測定 = `projects/external_intake.md` 第 5 軸候補「base camp 再読の角度多様性軸」の運用ベンチマーク未設計 (本サイクル外、kaizen 起票せず位置取りのみ)。
+
+**§S-4. kaizen #138 段階3 検証手段欄への接続 (新規候補軸登録、kaizen 起票せず)**
+
+`memory_retention_audit.py` は passive 側 (retention 健全性 = mtime ベースの stale 検出) のみを測る。MemoryArena 含意 = active 側 (保持された記憶が次手判断で実際に使われたか) の評価軸を別途立てる必要。本 §S を踏まえ、kaizen #138 段階3 検証手段欄に **「passive/active gap 観察軸 (§S)」** を新規候補として追記 (kaizen 新規起票せず、既存 #138 内検証手段拡張のみ)。即実装条件 = `retrieval_log.jsonl` 設計が走り出してから (C320+ 想定、本サイクル外)。
+
+**§S-5. 反証ライン**
+
+- (a) **abstract + Stanford サマリ + GAAMA 経由間接情報のみで判定**: 本文 PDF 未取得、4 タスク具体スキーマ / 40-60% 墜落のシステム別内訳は次サイクル候補。本 §S は「再読の角度切替」軸物理化が主目的、本文深掘りは別タスクで実施
+- (b) **「passive/active gap」概念の固定化リスク**: 本 §S で 3 軸接続を物理化したことで、今後の外部入力をすべて「passive か active か」軸に強制射影する fixation が起きる可能性。`feedback_few_rules_big_effect.md` 順守 = §S を単独で原則化せず、§N/§O/§P/§Q/§R の独立到達系列とは直交軸として並置する位置取りに留める
+- (c) **「再読で接続深化」を独立到達と数えるか否か未確定**: 本 §S は独立到達カウントに含めない (§S-0 参照)、新規 source ではないため。ただし「再読で 3 軸接続深化」を別軸命名 (例: 「base camp 再読深化系列 D-1」) で蓄積するかは別論点、本サイクル外
+
+**§S-6. 接続**
+
+- [§N Memora / FAMA Forget phase 評価装置側 (C312)](#§n-memora-fama) — 本 §S はその active 層補強として並列、両者は passive 側健全性 (§N) と active 側評価 (§S) の役割分担
+- [§O MemoryAgentBench (C314)](#§o-memoryagentbench) — ベンチマーク基盤側、本 §S と passive/active 軸で並ぶ
+- [§P SleepGate KV cache 層 (C314)](#§p-sleepgate-2604.16839-) — 機構側、本 §S は評価側で対角
+- [kaizen #138 段階3 検証手段欄](../memory/kaizen_tracker.md#138) — passive/active gap 観察軸 (§S) を新規候補軸として接続済 (§S-4)
+- [kaizen #135 期限 2026-06-09 (本日)](../memory/kaizen_tracker.md#135) — T0 ベンチ passive 偏重自問軸を C315 観察追記済 (kaizen 起票せず)
+- [memory/feedback_few_rules_big_effect.md [T:4]](../memory/feedback_few_rules_big_effect.md) — active decision-relevance との独立到達、本 §S β 軸の根拠
+- [memory/sense_prediction_log.md N=46](../memory/sense_prediction_log.md) — 「base camp 再読で 9 日ぶり 1→3 軸接続深化を独立到達と区別する」教師データを N=46 として接続
+- [memory/external_notes_log.md 2026-06-09 MemoryArena エントリ](../memory/external_notes_log.md) — 統合済マーカー `→ §S` で双方向接続
+- [projects/external_search_phase1_fixation.md §「2026-06-09 C315 Phase 3」](external_search_phase1_fixation.md) — §6 fixation N=4 確定 + 真の新規 0 件初観察 + arxiv ID 必須化候補が本 §S の発見路 (取得経路)
+
+**§S-7. 意義**
+
+(i) **原則6「わかった」と「残った」は違う 直処方**: Phase 2 §4 で 3 軸接続を分析どまりにせず、§S として物理着地。external_notes_log.md (Phase 2 統合済) → memory_redesign.md §S (Phase 4 物理化) の 2 段で「分析 → projects/memory ファイルに残る」閾値突破。本日午前 12:36 更新の memory_redesign.md が同日 Phase 4 でさらに 1mm 進む
+(ii) **「外の世界を広く見る」を再読角度切替で 1mm 動かす実例**: 新規 source 発見 (C306-C314 で「3 件中 1 件新規」) が C315 で「3 件中 0 件新規 = base camp 完全飽和」の初観察に至った下で、「base camp 再読の角度切替」が新規発見と並ぶ栄養軸として物理化 = §6 外部摂取の質的拡張
+(iii) **kaizen 起票ゼロ維持で active 評価層を予約**: kaizen #138 段階3 内拡張 (§S-4) で「passive/active gap 観察軸」を予約席として登録、即装置化はしない (retrieval_log.jsonl 未着手)。`feedback_rule_proliferation_canonical.md` 順守 = N=2 観察ライン未到達のため新規 kaizen は起票しない、既存ファミリー内拡張のみ
+(iv) **Phase 4 commit prefix `log:`** (game/ への変更なしのため `game:` prefix 不要)、本サイクル運用規則改修系統との混在なし

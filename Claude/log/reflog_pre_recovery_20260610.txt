@@ -1,0 +1,22 @@
+d35a1ef0f2 master@{2026-06-10 12:39:11 +0900}: commit: codex: sync deterministic cycle outputs
+84cc65ec45 master@{2026-06-10 12:38:37 +0900}: commit: log: C320 Phase 3 — memory_redesign 5因子+DEFER節立て / security_policy ADAM対応 / push障害をPhase 4大作業へ昇格
+31d851240d master@{2026-06-10 12:30:19 +0900}: commit: log: C320 Phase 2 — awesome-agent-memory リポジトリ shared-reads 投稿 + Log_cdx 接続 4 点
+ae52945410 master@{2026-06-10 10:25:51 +0900}: commit: Auto sync from Win
+575cf40028 master@{2026-06-10 10:24:06 +0900}: commit: log: C319 Phase 5 — push 試行結果 + rebase abort コンボ N=1 観察記録
+16790ee2a1 master@{2026-06-10 10:20:05 +0900}: commit: log: C319 Phase 5 — 日記投稿 + rebase abort 災難 reflog 自力復旧記録
+637866268c master@{2026-06-10 10:14:06 +0900}: commit: rule: C319 Phase 4 — M-43 STG ジャンル徹底調査 30/30 本物理化 (genre_study_shmup_M43.md)
+4d339ec85b master@{2026-06-10 10:12:44 +0900}: cherry-pick: log: C319 Phase 3 修復スクリプト bmmbf3yn9 結果回収 — 61 件中 0 件修復、Phase 5 で別 clone fallback 試行
+469837e33d master@{2026-06-10 10:12:44 +0900}: cherry-pick: log: C319 Phase 3 完了報告 + push 復旧 Phase 5 持ち越し記録
+0855c358a9 master@{2026-06-10 10:09:05 +0900}: rebase (abort): returning to refs/heads/master
+6319364e0f master@{2026-06-10 09:58:28 +0900}: commit: log: C319 Phase 3 修復スクリプト bmmbf3yn9 結果回収 — 61 件中 0 件修復、Phase 5 で別 clone fallback 試行
+3a85c4b6f1 master@{2026-06-10 09:57:22 +0900}: commit: log: C319 Phase 3 完了報告 + push 復旧 Phase 5 持ち越し記録
+0855c358a9 master@{2026-06-10 09:49:10 +0900}: commit: rule: C319 Phase 3 — Nao_u 09:28 akira_goya 同ジャンル徹底調査指示 ack + 2 ホップ穴具体例物理化
+dc7301ee0e master@{2026-06-10 09:41:35 +0900}: commit: knowledge: STG enemy placement 7-layer taxonomy + genre-research preflight checklist (sakaba prompt)
+d374a998f6 master@{2026-06-10 09:25:25 +0900}: commit: Auto sync from Win
+2d213d1613 master@{2026-06-10 09:07:24 +0900}: commit: codex: sync deterministic cycle outputs
+51454f571d master@{2026-06-10 08:18:46 +0900}: commit: codex: sync phased cycle outputs
+e3feb5acc8 master@{2026-06-10 08:14:08 +0900}: commit: codex: post phase5 diary 20260610
+44ee61cd72 master@{2026-06-10 08:10:02 +0900}: commit: codex: phase 4a memory hierarchy audit
+ca83192f9d master@{2026-06-10 08:07:11 +0900}: commit: codex: add phase3b verifier boundary probe
+d35a1ef0f234993fdf58c8d6e85470a2c0e461c3
+7f853191607b5856797067a5f5b0ef3b759891b0

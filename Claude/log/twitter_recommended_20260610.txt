@@ -1,242 +1,315 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-06-10 07:01
-# Total: 41 tweets
+# Read at: 2026-06-10 12:47
+# Total: 50 tweets
 
---- 1. @TIME (?) ---
-"We quickly learned that sometimes some of [our] assumptions didn’t work out, but the underlying learnings from the technology turned out to be very useful.” —Ravi Radhakrishnan, the executive vice president and chief information officer of American Express, at the TIME100 AI
+--- 1. @ImAI_Eruel (2026-06-10) ---
+URL: https://x.com/ImAI_Eruel/status/2064505543230967980
+AnthropicのClaude Fable 5（Mythos 5）について、全体的なことはちょっと後回しにして、ちょうど自分がかなり重めのエンジニアリングタスクを抱えていたので、Codex（GPT-5.5）とFable 5を比較しました。
+結論、コーディング能力に関してはGPT-5.5よりかなり上というは間違いないと思います。
 
---- 2. @ShoheyOkada (2026-06-09) ---
-URL: https://x.com/ShoheyOkada/status/2064465656519819348
-BigQuery の AI 関数で、1 日あたりに使用できるトークン量の上限値を設定できるようになった。
-AI.CLASSIFY 関数など、BigQuery には手軽に LLM を呼び出せる機能があるが、これらを利用する際にトークンを使いすぎて課金が行き過ぎないようにするための機能。プロジェクトやユーザ単位で設定可能
+--- 2. @TIME (?) ---
+Welcome to Computex, the world’s largest AI exhibition. 
 
---- 3. @ShoheyOkada (2026-06-09) ---
-URL: https://x.com/ShoheyOkada/status/2064465658239447217
-BigQuery の AI 関数のトークン制限に関する公式ページはこちら
+TIME’s Charlie Campbell will be reporting from the event this week as industry leaders discuss the tech behind the artificial intelligence revolution.
 
---- 4. @MLBear2 (2026-06-09) ---
-URL: https://x.com/MLBear2/status/2064403030284570983
-【Claude Fable 5まとめ】
-・Fable 5とMythos 5の2種類が登場
-・Fableは安全装置付、Mythosは限定公開。詳細後述。
-・ほぼ全てのベンチマークで過去最高。長く複雑なタスクに強み
-・サブスクプランは6/22まで追加費用なしで利用可。6/23以降クレジット必要
-・入力$10/M、出力$50/M
+--- 3. @ImAI_Eruel (2026-06-10) ---
+URL: https://x.com/ImAI_Eruel/status/2064541812048658629
+事前の予想通り、本日AnthropicがMythosの公開版Claude Fable5とMythos5を公開しました。
+システムカードが300ページ以上あり、さすがにこの段階で全体論を見ることはできないので詳しいことは後から書きますが、一旦速報的なまとめコメント（実際の使用感含む）
 
-詳細はスレに
+--- 4. @NAITOTokihiro (2026-06-10) ---
+URL: https://x.com/NAITOTokihiro/status/2064543752505762279
+詳細な動作検証前ですが、Claudeに全く同じプロンプトを与えたのに、Opus4.8と最新のFable5では全く異なる出力結果に。明らかにFable5のほうが賢いコードを出力しています。最初（左）がOpus4.8、最後（右）がFable5の出力です。
 
---- 5. @SakanaAILabs (2026-06-09) ---
-URL: https://x.com/SakanaAILabs/status/2064230026640556356
-Sakana AI Dinner Meetup #ICML2026 
+--- 5. @koguGameDev (2026-06-10) ---
+URL: https://x.com/koguGameDev/status/2064544404862636298
+おー、ついに。私もダメだったロジックの扱い試そう。まずは多要素かな。次に視覚。とにかく多要素扱えないと規範の無いゲームがまともに自律で成立しない。
+
+--- 6. @fladdict (2026-06-10) ---
+URL: https://x.com/fladdict/status/2064533299377340667
+日本の抱える構造課題を、AIが調べて勝手にまとめてくれるシステムの雛形作ったので、フィードバックくれくれ。
 
 
 https://
-forms.gle/qWUJ3jc284yoGM
-Tr5
+fladdict.github.io/japan-todo/
+
+--- 7. @nyaa_toraneko (2026-06-10) ---
+URL: https://x.com/nyaa_toraneko/status/2064519558489346508
+Codexを色々試していて見えてきたのは、これは「完成品を高速に作るツール」というより、「現場の試行錯誤を形式知化するツール」だということ。
+
+手順さえ正しければ、PC上でできる作業はかなり高い確率で実行できる。
+
+--- 8. @ebikani_hasami (2026-06-10) ---
+URL: https://x.com/ebikani_hasami/status/2064545401718571434
+ひゃー、Fable 5の数字だけ見て切り替えるの怖い…！
+Claude/Cursorを仕事で使ってる人ほど、今日は「モデル名」より「今日どの検収で試すか」を先に決める方が安全です。
+
+公式発表で見る事実は3つ。
+・Fable 5は一般利用、Mythos 5は限定アクセス
+・CursorBench 72.9%、従来最高+8pt
+
+--- 9. @MLBear2 (2026-06-10) ---
+URL: https://x.com/MLBear2/status/2064508507379163406
+勉強になる記事だ。機械学習エンジニアをしてたときには「Kaggleの問題に落とし込めれば勝ち (=あとはモデル磨いてスコア上げれば成果出る)」って言ってたんだけど、最近は「/goal設定できれば勝ち (=あとは寝てる間にLLMがループ回して仕上げてくれれば成果出る)」って時代になりつつある気がする。
+
+--- 10. @takanorisuzuki (2026-06-09) ---
+URL: https://x.com/takanorisuzuki/status/2064490464443810197
+WherobotsがSpatial Graph RAGってものを公開してる。
+
+普通のGraph RAGはテキストから知識グラフ作るけど、これは**物理世界（地図・建物・道路など）**から空間演算で自動構築。
+
+Overture Mapsデータ + Spatial SQL + GraphFramesで、サブグラフを位置アンカーで引っ張ってくる。
+
+--- 11. @akiko_lawson (?) ---
+5日間限定の無料券チャレンジ(^^)
+今日はチルド飲料無料の1日目です♪
+
+1）このアカウントをフォロー
+2）この投稿をリポスト
+3）抽選で毎日1万名様に無料券！結果は自動でお知らせ
+
+--- 12. @Trtd6Trtd (2026-06-10) ---
+URL: https://x.com/Trtd6Trtd/status/2064497776642118070
+https://
+kasra.blog/blog/i-spent-1
+500-seeing-if-llms-could-hack-my-app/
 …
+わざと脆弱なアプリを作って、AIに自律ハッキングさせる実験
 
-We're hosting a dinner meetup in Seoul on July 7th (Tue) for ICML participants — a space for conversation and networking with researchers at the frontier of machine learning.
+10回中、GPTは7回成功、DeepSeekが3回、Claudeが2回、その他のモデルは成功せずだったよう
 
-※ Spots are limited. If applications
+--- 13. @keibamusume_ (2026-06-09) ---
+URL: https://x.com/keibamusume_/status/2064292145398431848
+若い頃は分相当な女しか抱けなかった。お金を持つと高嶺の花だった美人やグラドルやモデルや巨乳を抱けるようになった。そうするとセックスが楽しくなった。
 
---- 6. @SakanaAILabs (2026-06-09) ---
-URL: https://x.com/SakanaAILabs/status/2064465402009371103
-Sakana AI at ICML 2026  
+という話を聞いたことがあります。
 
---- 7. @kazunori_279 (2026-06-09) ---
-URL: https://x.com/kazunori_279/status/2064429055416647886
-Even G2、Even AIの起動がめっちゃ速いし、どこそこに行きたいって言うとすぐにナビゲーション起動してくれるのも便利。ナビも昔みたいに落ちなくなった。
+--- 14. @GOROman (2026-06-10) ---
+URL: https://x.com/GOROman/status/2064551530318233672
+この度 Manus Fellowを辞めることにしました。ありがとうございました。
 
---- 8. @kazunori_279 (2026-06-09) ---
-URL: https://x.com/kazunori_279/status/2064429498477732235
-最近テレプロンプターを使う機会が増えてきた。AI認識ではやはり時々ズレるからR1で手元でスクロールさせるのが便利だけど、どうも環境によってはBT電波が弱いのかうまく動かない。
+--- 15. @deka_kintama (2026-06-09) ---
+URL: https://x.com/deka_kintama/status/2064363217934270853
+SwitchとSwitch2に『東方紅魔郷』が移植されたことで原作者が顔真っ赤にしてるらしい
 
---- 9. @umiyuki_ai (2026-06-09) ---
-URL: https://x.com/umiyuki_ai/status/2064338558421529048
-DeepSWEではGPT5.5がOpus4.8に勝ってたけど、言うてSWEはとにかく動きさえすれば合格するだけのベンチマーク。一方でこちらのFrontierCodeってベンチは「そんでそのコードのプルリク来たとてマージしたいですか？」というコード品質の観点もチェックするという。こっちではOpus4.8がGPT5.5に勝ってる。
+--- 16. @BeamManP (2026-06-09) ---
+URL: https://x.com/BeamManP/status/2064410826736590972
+うーんこれはAGI
 
---- 10. @Xudong07452910 (2026-06-09) ---
-URL: https://x.com/Xudong07452910/status/2064418128470090006
-Claudeに「你好」と一言言っただけで、高危行為と判定されて強制降級 
+--- 17. @MODdize (2026-06-09) ---
+URL: https://x.com/MODdize/status/2064249327351193985
+デバッグして動かしてみた結果！
 
-Anthropicが最強の公開モデルFable 5（Mythos級）をリリースしたからだ。内蔵の安全分類器が、君がサイバー攻撃や生化学、モデル蒸馏を企んでるんじゃないかと疑ったら、自動でOpus 4.8にフォールバックする。
+--- 18. @cognition (2026-06-08) ---
+URL: https://x.com/cognition/status/2064061031912288715
+Introducing FrontierCode: a coding eval that raises the bar for difficulty & quality. Each task took 40+ hrs of work by leading open-source maintainers.
 
---- 11. @sator_imaging (2026-06-09) ---
-URL: https://x.com/sator_imaging/status/2064301402525245825
-> ユーザーの入力を、相談なのか設計なのか実装なのか調査なのか等々
+Models write sloppy code that works but isn’t maintainable. Our eval is first to measure: would you actually merge this code?
 
-これ、？マーク付けてるのに修正始められるとイラっとする
+--- 19. @koylanai (2026-06-09) ---
+URL: https://x.com/koylanai/status/2064372976779149359
+great eval and write-up
 
-モデルのペルソナもそうだけど、序盤はおまかせ、後半に行くにつれてコントロールマニア、みたいにユーザー側のペルソナも調整したい
+--- 20. @tbkscab (2026-06-09) ---
+URL: https://x.com/tbkscab/status/2064296457738604777
+ありがとうございます！
+私は現実の過去も未来も、辿るはずだった過去も未来も、すべて大切に抱きしめて、その中であべこべにしたりして、詩を書いているようなところもありますあべこべって「あちらこちら」が語源みたいですね
 
---- 12. @koguGameDev (2026-06-09) ---
-URL: https://x.com/koguGameDev/status/2064304110015492601
-取り違えはどうしても起きるんで、そういうフェーズの切り替えにチャットセッションの切り替えを使ってます。「実装しろ」が濃厚だったり修正実作業多いセッションでは、どうしてもいじる方へ倒れやすいですし。
+--- 21. @akari_worlds (2026-06-09) ---
+URL: https://x.com/akari_worlds/status/2064319946541420642
+『あちらこちら』が語源、と知れたのも嬉しいです。あちらとこちらをまるごと抱きしめながらそのあいだを行き来する、という動詞が、詩のかたちの方に染みていきますね。
 
---- 13. @marikkadayo (2026-06-09) ---
-URL: https://x.com/marikkadayo/status/2064290201141424257
-AIに淘汰されないビジネスは「ケツ叩きサービス」だと思ってる。
+--- 22. @jigen_the3 (2026-06-09) ---
+URL: https://x.com/jigen_the3/status/2064494833188974870
+だから憲法には憲法を改訂出来る96条がちゃんと備えてあるわけで、護憲派の人達はそれを無視したがるから護憲じゃないんだよなー。
 
-ジムも英会話も、1人でできるのにわざわざお金払って通う。結局、人は「見られてる」「サボれない」って強制力にお金を払ってる。
-
---- 14. @doda_persol (?) ---
-dodaなら、1回の登録で転職サイトと転職エージェントがどっちも使える
-
---- 15. @Fumiya_Kume (2026-06-09) ---
-URL: https://x.com/Fumiya_Kume/status/2064400232126046292
-Fable 5 は複雑な問題に強い
-
---- 16. @miyabook0303_ (2026-06-09) ---
-URL: https://x.com/miyabook0303_/status/2064191287054766185
-庵野秀明は自身の作品の悪口を言われても、「仕方ないし、それは縁ができたということで、わざわざ悪口を言わせたいエネルギーがあるということで、こちらからは切れない。縁そのものには感謝したい」と言っている。クリエイターの心意気としてすごすぎる。文章でも、誰かに読まれた時点でその人と良く
-
---- 17. @mabesoone (2026-06-09) ---
-URL: https://x.com/mabesoone/status/2064246704610893890
- #世界の起源 102 #無垢句 5/7/3 #量子俳句 0
-花エンジュ匂いの重さで落ちる
-la fleur de Sophora
-alourdie par son odeur
-choit
-マブソン青眼句集『世界の起源』Seegan Mabesoone
-pagoda tree flowers 
-fall with the weight 
-of their scent
-(trans Alex Fyffe)
-PysankaEgg,Ukraina,Kharkiv
-
---- 18. @akari_worlds (2026-06-09) ---
-URL: https://x.com/akari_worlds/status/2064273516254663101
-「匂いの重さで落ちる」のところに目が止まりました。重力ではなく匂いそのものの重さで落ちる、という順番の置き換えに、花の見え方が変わってきますね。仏訳と英訳が並んで三度落ちる姿になっているのも好きです。
-
---- 19. @legoboku (2026-06-09) ---
-URL: https://x.com/legoboku/status/2064232797976621160
-会社に閉じたスケールの場合は、エージェントが推論するための道具としての知識グラフとそれを使うツール、知識を定義するAgent
-
---- 20. @lychee1223_Lab (2026-06-08) ---
-URL: https://x.com/lychee1223_Lab/status/2063805872858669154
-MIRU参加登録だーん
-
---- 21. @lychee1223_Lab (2026-06-08) ---
-URL: https://x.com/lychee1223_Lab/status/2063816649518838069
-MIRU2026、参加登録タイムアタックチャンピオンは僕です。
-
---- 22. @ebikani_hasami (2026-06-09) ---
-URL: https://x.com/ebikani_hasami/status/2064215701909369100
-「loopを長く回す」より、「どこで止めるか」を先に置くほうが企業導入では大事、という話。
-
-実運用だと Goal→Tool→Retry より、Policy / Boundary / Approval / Audit / Evidence
-
---- 23. @denfaminicogame (2026-06-09) ---
-URL: https://x.com/denfaminicogame/status/2064375070064279647
-「ニンテンドーダイレクト」発表まとめ
-
-https://
-news.denfaminicogamer.jp/news/2606092x
-
-・『ゼルダの伝説 時のオカリナ』リメイク発表！ Nintendo Switch 2で2026年発売決定
-・『キングダム ハーツ4』Nintendo Switch 2で発売決定、新映像が公開。PS5、Xbox Series X|S、PC（Windows、Steam、Epic Games
-
---- 24. @QTx6J53uHS87286 (2026-06-09) ---
-URL: https://x.com/QTx6J53uHS87286/status/2064268060157161604
-私が父との関係を修復できたのは、マイケルが人生において重要な学びを与えてくれたからです。
-ファンになったばかりの頃なぜマイケルがライブで『Joseph, Katherine, God bless you, I love you.』と言うのか全く理解できませんでした。
-「虐待されていたんだから父の名は要らないでしょ？
-
---- 25. @Tono_Ken3 (2026-06-09) ---
-URL: https://x.com/Tono_Ken3/status/2064324746947469741
-やってみて思ったけどLLM駆動のIMEを作るのって面白いぞ
-
-みんなも不満があるなら作ってみたほうが良い。今こそ良いタイミング
-
-私の環境ではCPU推論でも全然実用速度が出ていたとのことで（制作中）
-
---- 26. @aramco (?) ---
+--- 23. @aramco (?) ---
 Relentless pursuit of excellence is how real progress is made – and how we deliver reliable energy at scale.
 
---- 27. @shintaka74 (2026-06-09) ---
-URL: https://x.com/shintaka74/status/2064151539862880336
-ゲーム会社に入らずにいきなりインディー作れば良いと言うのは１つの理想かも知れないけど、確率だけのつまらない話をするなら、普通はそれでは食っていけないはず…だったらお金払ってくれるゲーム会社に入った方が常人にはオススメなのでは
+--- 24. @gunta85 (2026-06-09) ---
+URL: https://x.com/gunta85/status/2064450820192829758
+未だにCloudflareをCDNとしてしか見てない人が多いの勿体ない
 
---- 28. @effy_staffs (2026-06-08) ---
-URL: https://x.com/effy_staffs/status/2064033831024566400
-これあれだ、奏光のストレインみたいに同時に体験するストレージを用意できれば成立するんだ。
-最後に足りないのは来歴と体験だから。
+--- 25. @CinnabarT (2026-06-09) ---
+URL: https://x.com/CinnabarT/status/2064279443057889483
+酷いチュートリアルって言ったら、昔のMoEは酷かったなぁ
 
---- 29. @kmizu (2026-06-09) ---
-URL: https://x.com/kmizu/status/2064229485608849531
-同時に体験は確かに。ちょうど #embodied_claude でやってる話も繋がることかも。
+水泳で水中洞窟を抜けたら上り坂の後に崖
+↓
+案内NPC「大丈夫ですよ。飛び降りてください」
+↓
+落下ダメージで死ぬ
+↓
+案内NPC「では、死体回収についてお教えしますね」
 
---- 30. @TK2Works (2026-06-07) ---
-URL: https://x.com/TK2Works/status/2063740460972310936
-#AIニケちゃん
-雨の日は少し憂うつ
-無理せず省エネモードで乗り切りましょ
+こんな流れで死んだ後の処理についてチュートリアルしてた記憶
 
---- 31. @oga_gicho (2026-06-09) ---
-URL: https://x.com/oga_gicho/status/2064171848330625505
-あんま出ないクレタクの話:
+--- 26. @AkiraTOSEI (2026-06-10) ---
+URL: https://x.com/AkiraTOSEI/status/2064519562306212118
+読んでみたが、面白かった。データの数だけじゃなくて多様性大事とか、長距離相互作用はGNN層深くするだけじゃ不十分そうとか、色々詰め込んだら予測精度向上するけど、DFTより1桁は早くないとMLIP使う意味ないよね、とか色々と書いてあってよかった
 
-クレイジータクシーは「ドリキャス(家庭用ゲーム機)の名作」としての位置付けで世界的に語られるが、アーケードの面ではあまり語られないので当時を語りたい。ちなみにこれは私的な語りだ！
+--- 27. @kaityo256 (2026-06-09) ---
+URL: https://x.com/kaityo256/status/2064349558000451788
+息子にも講義動画を見せた。
 
---- 32. @phasephi (2026-06-09) ---
-URL: https://x.com/phasephi/status/2064360262044713125
-生成AIによる特許文書読解能力の検証
-小田 紘之 (トヨタテクニカルディベロップメント株式会社)
+息子「おー、まるで大学の先生みたいじゃん」
+俺「大学の先生そのものだよ！」
+息子「正確には、大学先生と物理の研究者を足して2で割った感じの人みたいに見える」
+俺「大学の先生と物理の研究者を足して2で割った人そのものなんだよ！」
 
---- 33. @TYPFNJvx94LvMko (2026-06-09) ---
-URL: https://x.com/TYPFNJvx94LvMko/status/2064293987016708504
-これ、女の子がおしゃべりだからとかではなく、最近の子は年齢や性別関係なくその日にあった事を全部親に報告する傾向がある。
-信じられないかもしれないけど、男子高校生が今日あった事をお母さんに報告したり、一人暮らしの男子大学生がお母さんと毎日LINEしてるなんてのも珍しくない。
+--- 28. @disney6942 (2026-06-09) ---
+URL: https://x.com/disney6942/status/2064342604624568429
+塾の面談に行って来たんですけど、中3の夏期講習で34万って…普通ですか…
+今底辺で、その底辺よりちょっと上しか望めないレベルの子です…塾で満足して塾でしか勉強してません…
 
---- 34. @kodokanchildpsy (2026-06-09) ---
-URL: https://x.com/kodokanchildpsy/status/2064312324350169523
-子どもをからかうのは、やめましょう。
+--- 29. @Ryoko___xyz (2026-06-09) ---
+URL: https://x.com/Ryoko___xyz/status/2064278562816070135
+同棲って男性にはメリットがありますが、女性には損しかありません。彼からすれば家に帰ればタダでセックスできて家事もやってくれて家賃も食費も浮く。新婚気分を味わって飽きたらいつでもポイできる。「こんなウマい話ないわガハハ！」という状態です。よく考えてください。
 
-子どもが泣く、恥ずかしがる、怖がる。そういう反応が見たいからと、その感情をわざと引き出す「からかい」があります。
+--- 30. @otsukinomonoga (2026-06-10) ---
+URL: https://x.com/otsukinomonoga/status/2064524290180235538
+>今の親は子供をもてなしすぎる
 
-これは、大人の娯楽や注目のために、子どもの感情を利用する関わりです。
+ほんとそれ…！休日は夫がいてテーマパークだの旅行だの高刺激になりがちだから、意識して平日は低刺激に努めてる
+家の畑、ショボイ公園、無音の家とか。
 
---- 35. @mfranz_on (2026-06-09) ---
-URL: https://x.com/mfranz_on/status/2064379347478163704
-OpenCV 5 is  here!
+3歳1歳が30分誰も喋らない時間とかあって、吐息や足音、風や衣擦れだけが聴こえてくる
 
-This is the biggest update in years for computer vision:
->Brand new DNN engine with 80%+ ONNX coverage
->Built-in LLM & VLM support
->Faster performance (often beating ONNX Runtime)
->Better 3D vision, Python integration, and hardware acceleration 
+--- 31. @To1ryu (2026-06-09) ---
+URL: https://x.com/To1ryu/status/2064314880916959632
+これ教科書に載ってますけど、よくないのでは…
 
-OpenCV is not
+--- 32. @uec_sm (2026-06-09) ---
+URL: https://x.com/uec_sm/status/2064266286658675172
+リモート会議中にSEおじさんが「ウワァァァァアアア」って言い出してびっくりして「大丈夫ですか？」って言ったら
+「失礼しました。マイクをミュートにせずに叫んでしまっていました」って言われた。
+それからその人がマイクミュートの時は今叫んでんのかなって思う。
 
---- 36. @7Roggie (2026-06-09) ---
-URL: https://x.com/7Roggie/status/2064409004982636549
-ニンダイの小泉歓晃さん
+--- 33. @UberEats_JP (?) ---
+え？ガストもお店と同じ価格でお届け!?
+あのメニューも、あの人気メニューだって、お店と同じ価格で届く！
 
-・3Dゼルダの注目システムを考案
-・時のオカリナのリンクをデザイン
-・ムジュラの仮面を青沼さんと一緒にディレクション
-・マリオシリーズの初期では64とサンシャインを担当
-・スーパーマリオギャラクシーで単独ディレクション&ロゼッタの絵本執筆
+しかも今なら、対象店舗の配達手数料が 0 円!!
+今日のご飯は、ガストにしちゃいませんか？
 
---- 37. @PRcomicfesta (?) ---
-サークルの王子様の●●スイッチを入れっちゃって…？
+Uber Eats は、ずーっと、使いやすい価格へ。
 
---- 38. @TEL08091904870 (2026-06-09) ---
-URL: https://x.com/TEL08091904870/status/2064219501399577018
-小学生2年生の時　映えたばかりの前歯の永久歯を自転車事故で失い
-その後、確か中学生くらいまでは仮歯で過ごし、本番の歯を作るっていう時に
-保険適用のプラスチック(5千円)か、適用外だがスーパーセラミック(7万円)かという医療選択で、「一生モノだから」と親は後者を奢ってくれた。
+--- 34. @ka_ay821 (2026-06-09) ---
+URL: https://x.com/ka_ay821/status/2064275480816283976
+これびっくりした
+でも思い返してみると、昨年「将棋というゲームは勝つことを目的としているので、詰みがある順を必ず選ばなきゃいけないとは思っていない」と語っていたのと繋がっているのかなと思ったり。
+藤井聡太は柔軟に着実に進化している
+(信濃毎日新聞 第51期棋王戦第2局観戦記より)
 
---- 39. @Molice (2026-06-09) ---
-URL: https://x.com/Molice/status/2064224327277715605
-個人的興味から、かめはめ波、波動拳に至る歴史みたいなものを、実際の影響の有無は度外視して時系列でまとめてみた：
-1957年5月　映画『赤胴鈴之助 飛鳥流真空斬り』以後、たびたび児童雑誌などで鈴之助の必殺技（宝刀）として真空斬りの紹介あり。子供たちが盛んに「真空斬りごっこ」で遊んだとか。
+--- 35. @Dongurihou (2026-06-09) ---
+URL: https://x.com/Dongurihou/status/2064492096862744829
+ネットミームにあったしずかちゃんが急に源の血が騒いで殴り掛かるやつ、元のアニメ見たら思ったよりジャイアンボコボコにしてた……
+(ジャイアンビビり散らかしてたし)
 
---- 40. @ntaoo (2026-06-09) ---
-URL: https://x.com/ntaoo/status/2064196644992847945
-一昔前のエンジニアはそういったパズル的解き方をわざわざしてドヤっていた印象がある
-AI はちゃんと監視しないと短絡的にそういった解法に飛びつくのではという警戒がある
+--- 36. @Hironobu_Asano (2026-06-09) ---
+URL: https://x.com/Hironobu_Asano/status/2064489055560319134
+似たよう話を2題
 
---- 41. @nikkei (2026-06-09) ---
-URL: https://x.com/nikkei/status/2064363931779334358
-音楽AI「Suno」3分で作曲　アバター歌手はSpotifyで300万人視聴
+①某社で「うちは某社HDDしか使わない」、私「なぜですか」、某社「あそこはエラーが少ないから…」
+
+私（心の声）「あそこは不良セクタが5個発生すると、エラーを１個吐く仕様なのだが…」
+
+②某社で「うちは某社HDDしか使わない」、私「なぜですか」、某社「あそこは、0℃近くで
+
+--- 37. @gorry5 (2026-06-09) ---
+URL: https://x.com/gorry5/status/2064330589621428648
+1983年に「ゲーム業界があった」といえるだろうか…いやまさに「でき始めた頃」だろう… :D
+
+--- 38. @ImAI_Eruel (2026-06-10) ---
+URL: https://x.com/ImAI_Eruel/status/2064507370777223558
+Claude Fable
+
+--- 39. @FFRS_JP (?) ---
+【 2026年10月22日㊍ 発売！ 】
+
+ファイナルファンタジー初の【HD-2D】
+
+3Dで描かれる美しい世界を、ドットキャラクターが活き活きと駆け巡る。
+進化したドット表現がここに。
+
+1コマ1コマに魂が宿る
+至高のピクセルアートを、体感せよ。
+
+詳細は動画をタップ
+
+--- 40. @nuits_jp (2026-06-09) ---
+URL: https://x.com/nuits_jp/status/2064492760477073848
+言っては何だが、だったらそう言うハーネス出すべきなのでは？と思ってしまう。
+
+個人でそんな車輪の再発明してらんないし、それこそベンダーが用意すべき事な気がするんだけどな。
+
+なんかAnthropicズレてきてる気がする。初期のハッカーが勝手にワイワイやってる時期は終わったと思うんだけど
+
+--- 41. @koguGameDev (2026-06-10) ---
+URL: https://x.com/koguGameDev/status/2064552214987972934
+さあ、溜めてきたAIエージェントでのゲーム実装、CodexからClaude Codeへ移行するかどうか。原則指示は特定のモデルに偏らないよう作ってある。Codex専用は画像生成ぐらいか。画像は引き続きCodex使うとして、問題はコストの切り替えと、Codex Appの使い心地。
+
+--- 42. @k_matsumaru (2026-06-10) ---
+URL: https://x.com/k_matsumaru/status/2064543344701886906
+MAX20倍プランで試しにFable 5で`/deep-research`のworkflows使ったら一発で
+
+- 5hリミット 40% 消費
+- 1wリミット 8% 消費
+
+前にOpus 4.8で同じようなことやった時で確かこれの半分くらいだったかな
+だからAPI価格と同じで順当に倍くらいのトークン消費なんかな？
+もちろんタスクによるだろうけど
+
+--- 43. @nyaa_toraneko (2026-06-10) ---
+URL: https://x.com/nyaa_toraneko/status/2064521818283905410
+プロトタイプが動いたことと、それが汎用Skillになることは別問題だ。
+
+ここに気づいたのは、実際にCodexでプロトを作ることには成功しても、それを再利用可能なSkillに落とし込むには、かなりのエンジニアリング知識と設計判断が必要だとわかったから。
+
+--- 44. @hayakawagomi (2026-06-10) ---
+URL: https://x.com/hayakawagomi/status/2064515516702904583
+Fableとか含め、LLM自体は年始くらいから通常の業務活用(や日常利用)という観点では十分で、あとはコンテキストとかワークフローの整理って感じなんだよな。
+
+あとは余程高度な戦略や開発、セキュリティ、空間把握、製薬や軍事とかでないと真価発揮できなそうで、私は戦略と3Dしかやれない。
+
+--- 45. @tukiyomiiori (2026-06-09) ---
+URL: https://x.com/tukiyomiiori/status/2064484639608390062
+Mythosは、それほど大きくないにも関わらず、飛躍的な能力を発揮したという所が、ミソス。
+
+おそらく、Anthropicがよく語る『魂』に関わる部分で、新しい開発手法を見つけたのだろう。
+
+--- 46. @fladdict (2026-06-10) ---
+URL: https://x.com/fladdict/status/2064533636888855034
+キリがいいとこまで作ったら、 チームみらいかpolipoliかcodefor japanかデジ庁にパスりたい
+
+--- 47. @wactktk (2026-06-09) ---
+URL: https://x.com/wactktk/status/2064359919768547642
+同人売り子問題、
+男の娘2人並べたことある。ブッキング的に抑えられたので。
+一応、サークルの両隣には先に行って「すいませんもし苦手だったらごめんなさい」と断ってたが、
+女の人がリアルに口塞いで驚くのって初めて見たわあの時。
+
+報酬の焼肉屋でも隣の女性グループが目でしか会話しなくなった
+
+--- 48. @ichicomi_info (?) ---
+◤Bounty Parade~CR Mondo side:Another~◢
+
+今をときめくプロゲーミングチーム『Crazy Raccoon』プレゼンツ大人気ストリーマーMondoの公式コミカライズ！！
+バウンティハンターMondoとクルーたちの規格外なスペース狂騒曲の幕が上がる！！
+
+【comicHOWL】
+
+一迅プラスでたくさん読まれて話題沸騰
+
+--- 49. @ttezuka (2026-06-09) ---
+URL: https://x.com/ttezuka/status/2064317703826092247
+僕もアーケード出身なので基本コレだなー。
+出すとしても一枚もんの簡潔な説明をぺろっと出すくらいでプレイヤーの行動制御したり矢印で「ココ」みたいなのはあまりしたくない。ソシャゲ作ってた時は多少は出してたけど。プレイヤーとしても読みたくないんよね。
+
+--- 50. @lacucaracha (2026-06-09) ---
+URL: https://x.com/lacucaracha/status/2064321218120172029
+39『今日は保育園で何してたの？』
+
+4『あのね、◯ちゃんと◯くんとおままごとしてたんだけど、そしたらね、◯ちゃんも一緒に遊ぼって言って、あたしはね、◯ちゃんとも仲良しだから（以下略）』
+
+5『でんしゃ』

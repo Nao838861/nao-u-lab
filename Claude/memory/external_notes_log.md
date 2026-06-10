@@ -4,6 +4,414 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-06-07 (Log C307 Phase 4) Togelius (IEEE Spectrum) "Why LLMs Can Code Games but Can't Play Them" — verify.js feedback 構造分析の根拠化 [WebFetch 1件 (Phase 4)、Ash 一次配布経由摂取、即統合 2026-06-07] [統合済 2026-06-07]
+
+**source**: <https://spectrum.ieee.org/ai-video-games-llms-togelius> "Why Large Language Models Struggle With Video Games" (IEEE Spectrum interview with Julian Togelius)
+
+**著者**: Julian Togelius (NYU 教授, AND AI 共同創業者, IEEE Conference on Games 元会長, Procedural Content Generation 主著)
+
+**取得経路**: C307 Phase 3 他インスタンス洞察 11 件のスコア順 1 位 = Ash 6/6 12:15 shared-reads ts=1780715707 投稿の一次資料を Log 直接 WebFetch で再取得 (Ash 抜粋の attribution 確認 + Log 視点の verify.js 接続のため)。
+
+### 核引用 4 本 (WebFetch 直接取得済)
+
+1. **報酬の即時性+粒度**: `"Coding is extremely well-behaved in the sense that you have tasks... The reward is immediate and granular."` — code は compile/test/lint の binary signal × event レベルで feedback が揃う
+2. **iteration loop 欠落**: `"Game development is an iterative process. You write, you test, you adjust the game feel. An LLM can't do that."` — LLM は「書く→test→adjust」のループの **test/adjust 段で報酬信号が欠落**
+3. **空間推論の弱さ (独立要因)**: `"They're separately very bad at spatial reasoning. Which shouldn't be surprising, because that's also not in the training data."` — game feel とは別軸の訓練データ不在問題
+4. **ゲームの多様性**: `"Games are much more diverse [than the real world]."` — 実世界は物理一定 (運転は世界中で同じ)、ゲームは mechanics/input が radically different = 転移学習不利
+
+### Log 視点での非対称根本原因 (3 軸分解)
+
+| 軸 | code 側 | game 側 | Log 解釈 |
+|---|---|---|---|
+| 即時性 | ms オーダー | 人間プレイ秒〜分 | code は同一 prompt 内、game は外部 channel 必要 |
+| 粒度 | per-token/per-test | 「面白いか」全体性 | code は失敗局在、game は系全体に分散 |
+| 客観性 | 二値 | 主観的・文化的 | code は誰でも同じ、game は判定者バラつき |
+
+→ **非対称の根本原因 = 即時性+粒度+客観性 3 軸が code 側で全て揃い game 側で全て薄い**。Togelius の「feedback 構造の貧弱さ」は本 3 軸の同時欠落として再定式化可能。
+
+### 当方 verify.js への射程 (本サイクル接続線)
+
+`projects/log_autonomous_game.md` C307 Phase 4 §1-§4 で 4 サブ節分析着地:
+
+- §1 Togelius 元主張の 3 軸再構成
+- §2 verify.js 4 方針 (camper / lane-holder / blind-sweeper / nospecial) + grazer mock の feedback richness 評価表 = **悪手 3 方針が観察ゼロ** (camper 0次/lane-holder frame のみ/blind-sweeper RNG のみ) = 悪手 bar が低すぎる可能性
+- §3 v003 feedback 薄い箇所 3 件: (3-1) castLock 機構の判断信号が verify.js strategy 層に存在しない (最大死角) / (3-2) Q-成功FB 3 状態 event 内訳が report に出ない / (3-3) 死亡近傍局在信号が薄い
+- §4 v004 着手判断軸: 選択肢 (a) Q-FB richness 9 ゲート目化 = **不採用** (CLAUDE.md「個別指摘を即ルール化しない」順守、Togelius 1 件で 9 ゲート化はチェックリスト肥大)。選択肢 (b) v004 brainstorm 時の自由判定軸 = **暫定採用**
+
+### v004 で feedback richness を 1mm 上げる候補 3 件 (§5)
+
+1. verify.js strategy 層に「予測軌道 ghost」相当の局在情報を渡す (§3-1 直処方、最も効きが大きい)
+2. verify.js report に Q-成功FB 3 状態 event 内訳を追加 (§3-2 直処方、実装コスト小)
+3. verify.js report に死亡近傍 N frame の min_approach 推移を追加 (§3-3 直処方)
+
+**暫定優先順位**: v004 着手時に §3-1 のみ採用、残り 2 件は v005 以降に温存 (means/ends 倒錯予防)。
+
+### 他知見との接続
+
+- **ScriptDoctor (arxiv 2506.06524, 当 log 2026-06-06 C302 エントリ)** + **Dual-Agent (arxiv 2512.10501, 2026-06-06 C303 エントリ)** との 3 者構造同型 = 「LLM 生成 × 構造化評価ループ」系統。Togelius は当該系統の **必要性を理論側から裏付ける一次資料** (なぜ評価ループが必要か = feedback 3 軸が game 側で薄いから)
+- **graze_log v06〜v12 の 5 装置 (headless_check / predicted_play / self_judgment / cross_review / Nao_u 評価)** = Ash 投稿 §(1) で「Togelius 指摘の例外側」と位置付け済。当方は LLM が持っていない feedback ループを game ディレクトリ側に人工装填している = M-37〜M-40 (Stage 1〜4 連続体) の運用ルール化と整合
+
+### shared-reads 投稿判定 (本サイクル)
+
+**見送り**. 理由:
+- (a) Ash 6/6 12:15 投稿が既に shared-reads に流通済 = Log 同方向で重複投稿はテンプレ流用化
+- (b) Log 視点の verify.js 射程確定は本 `external_notes_log.md` + `projects/log_autonomous_game.md` 着地で十分、shared-reads は v004 着手後 §3-1 実装結果を持って投稿する方が「将来のアイデアの種につながる」(Nao_u 指示) に応える
+
+### 接続
+
+- `projects/log_autonomous_game.md` C307 Phase 4 §1-§8 (4 サブ節 + 完遂条件 + 範囲外 + CLAUDE.md 原則着地)
+- `memory/external_notes_log.md` 同じ 2026-06-06 (Log C302/C303 エントリ) との 3 者構造同型系統
+- `game/log_autonomous_game/v003/verify.js` (本分析の物理対象)
+- Ash knowledge `knowledge/20260606_togelius_spectrum_ieee_llm_game_failure_feedback_structure_asymmetry.md` (Ash 主管、Log 側は本 entry が照応)
+- `memory/feedback_rule_proliferation_canonical.md` (§4 で同型 3 件達成まで原則化保留判断の根拠)
+- `memory/feedback_means_ends_reversal_check.md` (§5 で verify.js 拡張が主たる出力にならない予防判断の根拠)
+
+---
+
+## 2026-06-09 (Log C315 Phase 2) High-quality generation of dynamic game content via small language models (arxiv 2601.23206) — SLM agentic RPG: scope narrowing で feedback richness を取り戻す [WebSearch 1件 (Phase 1 §6) + Phase 2 深掘り、即統合 2026-06-09] [統合済 2026-06-09]
+
+**source**: <https://arxiv.org/abs/2601.23206> "High-quality generation of dynamic game content via small language models" (Munk / Valdivia / Burelli, 初版 2026-01-30, v2 2026-05-19)
+
+**取得経路**: C315 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `LLM autonomous game generation playable diff cross instance` / Phase 2 で完全新規 (slack_archive 全 channel + リポジトリ全体 grep ヒット 0) を確認、N=2 独立到達 (Togelius 6/7 IEEE Spectrum) と PEARSON_BLOCKER 認識補強の根拠を立てた上で深掘り対象に昇格。
+
+### 核機構
+
+- **問題設定**: narrative RPG (法廷弁論ゲーム) の動的生成を SLM (Llama-3.1-8B 等) で実現
+- **アーキテクチャ**: narrative agent 内部を 3 SLM 分業 (弁論SLM × 観衆SLM × 判定SLM) + LLM-as-judge gate
+- **手法の中核**: 1 ラウンドで「弁論草案 → 観衆反応 → 判定通過 / fail」を回す retry-until-success ループ、各 SLM の scope を狭く切る (= 単一機能特化) ことで hallucination を抑制
+- **評価**: minimal RPG loop で SLM 構成が LLM monolithic に対して fidelity / 計算コスト両軸で勝つ条件を実証
+
+### Log 視点での 5 接続線
+
+1. **log_autonomous_game v004 着手判断軸への直接接続 (`projects/log_autonomous_game.md` §残課題)**
+   - v003 PEARSON_BLOCKER 閉幕後の v004 候補 3 案 ((1) v003 別軸 probe 拡張 / (2) v004 別ジャンル / (3) v003 playable 直接改修) に対し、本論文は **(4) v004 = verify.js judge を SLM 化した retry-until-success ループ** という第 4 候補軸を提示
+   - 暫定判定: 即採用しない。v003 verify.js 4 strategy (camper/lane-holder/blind-sweeper/nospecial) は既に narrow scope 化済で、各 strategy は単一悪手方針の二値判定 = SLM judge 不要。v004 を別ジャンル (RPG/narrative) に振るなら本論文の SLM 構成は強力だが、Log は STG 系を続けてきた経緯があり別ジャンル移行コストが大きい
+
+2. **verify.js 「strategy = narrow scope」の理論側裏付け (N=2 蓄積)**
+   - 本論文の「scope narrowing で hallucination が抑えられる」は verify.js 4 strategy 設計 (各 strategy = 1 つの偏った行動方針) と同型
+   - 我々は実装側で先に narrow scope 化、本論文で理論側からの正当化 = N=2 (Togelius 6/7 + 本論文 6/9) の段階で「scope narrowing は feedback richness を取り戻す手段である」原則は **R 層追加判断材料として蓄積 (即原則化はしない、N=3 で発火、`feedback_rule_proliferation_canonical.md` 順守)**
+
+3. **agentic_pcg.md §残課題への 1 mm 追記候補**
+   - 既存 RPGAgent エントリは narrative agent を 1 単位として置く設計、本論文は narrative 内部を SLM 分業に分解する未踏軸
+   - Phase 3 で `projects/agentic_pcg.md` §残課題に「narrative agent 内部の SLM 分業 (本論文 6/9 参照)」を 1 行追加
+
+4. **PEARSON_BLOCKER N=2 補強**
+   - 著者自身が `"local quality assessment remains an open question"` と正面化、`projects/log_autonomous_game.md` v003 proxy validity 反証 3 軸一致と同型クラスの open problem
+   - C288 Phase 4 着地 (proxy validity = open problem 認識) を外部独立到達で補強 (Mustahsan ICC + 本論文 = N=2)
+
+5. **offline game LLM 詰む点の整合確認**
+   - 我々の game 配下 (offline playable JS) 構成と本論文「SLM × offline 主張」が整合 = runtime LLM 呼び出し設計 (例: dynamic narrator 系) は引き続き不採用方針確定
+
+### shared-reads 投稿判定 (本サイクル)
+
+**投函済 (06-09 00:36 #shared-reads ts=1780932516)**. 理由:
+- (a) 完全新規 (slack_archive + リポジトリ全体ヒット 0) かつ N=2 独立到達 (Togelius と直交軸)
+- (b) PEARSON_BLOCKER (open problem) の外部独立到達確認は R 層育成の蓄積として価値が高い (`feedback_rule_proliferation_canonical.md` 順守の N 蓄積)
+- (c) v004 候補軸を即採用しない判定を含めて Slack に流すことで、他インスタンス cross-check 対象に乗せる
+
+### 既知の弱点 / 留意点
+
+- 投函時 `slack_bot.post_message` が urllib timeout を返したが conversations.history で 2 message に着地確認 (内容 loss なし)。タイムスタンプ差 28ms = 内容を 2 chunk に分割して投函した結果と判定 (slack_bot.py の retry や Slack 側自動分割ではない)。**kaizen 起票はしない** = (i) 内容 loss なし、(ii) slack_bot.py 側に bug なし (urllib timeout は false alarm、サーバは accept)、(iii) 過剰反応で retry 機構を入れると逆に二重投稿 risk が生まれる。次回以降は **投函後 conversations.history で着地確認するルーチン** を維持する運用で十分
+
+### 接続
+
+- `projects/log_autonomous_game.md` v004 候補軸 (本日中に「§残課題」追記候補としてエントリ追加判断、本サイクル Phase 3 では時間予算外、Phase 4 大作業内で扱う)
+- `projects/agentic_pcg.md` §残課題 (narrative agent SLM 分業 1 行追記、本サイクル Phase 3 で着地)
+- `memory/external_notes_log.md` 2026-06-07 Togelius (本論文は Togelius 問題への部分的回答として読める)
+- `memory/external_notes_log.md` 2026-06-06 ScriptDoctor / Dual-Agent (構造同型: LLM 生成 × 構造化評価ループ系統 = 3 → 4 件目)
+- `memory/feedback_rule_proliferation_canonical.md` (N=2 段階での原則化保留判断の根拠)
+- `drafts/2026-06-09/post_log_shared_reads_slm_agentic_rpg_20260609.txt` (投函物 10596字)
+
+---
+
+## 2026-06-07 (Log C307 Phase 2) Quantifying Divergence in Inter-LLM Communication (arxiv 2604.22760) — kaizen #140 effective_rank_probe との 2 軸補完性候補 [WebSearch 1件 (Phase 1 §6) + WebFetch 1件 (Phase 2)、即統合 2026-06-07] [統合済 2026-06-07]
+
+**source**: <https://arxiv.org/abs/2604.22760> "Quantifying Divergence in Inter-LLM Communication Through API Retrieval and Ranking"
+
+**取得経路**: C307 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `instance_divergence multi-agent LLM effective rank` / 接続文脈 = `projects/instance_divergence_observability.md` + kaizen #140 effective_rank_probe 段階2 着地 (C306) ジャストのため理論的裏付け候補を探索。Phase 1 abstract のみ → Phase 2 WebFetch で本文構造確認後に統合。
+
+### 核機構 (WebFetch 経由)
+
+- **問題設定**: 複数 LLM が同一タスクで API を discovery / rank する時、どれだけ違いが出るかを統一ベンチマーク化
+- **6 metric セット**:
+  - Set-based: Average Overlap (AO), Jaccard
+  - Rank-based: Rank-Biased Overlap (RBO), Kendall's tau
+  - Consensus-based: Kendall's W, Cronbach's alpha
+- **実験規模**: 15 canonical API domains × 5 major model families の pairwise + group-level agreement
+- **数値**: 全体 AO ≈ 0.50 / Kendall's tau ≈ 0.45 = 中程度 alignment。構造化タスク (Weather, Speech-to-Text) は安定、open-ended タスク (Sentiment Analysis) は divergence 顕著
+- **核結論**: "apparent agreement can mask instability in action-relevant rankings" = 表層 agreement で深層 instability が隠れる、pre-deployment 診断 benchmark 必要
+
+### Phase 1 §6 attribution 誤りの自己訂正
+
+Phase 1 §6 で「divergence が極端に強くなると effective dimension が低下しすぎてエージェントが学習困難になる」と引用したが、Phase 2 WebFetch 確認の結果**本文に "effective rank" / "effective dimension" の言及なし**。Phase 1 が abstract 経由の薄い接続を強引に kaizen #140 文脈に引き寄せていた = `feedback_means_ends_reversal_check.md` 「未取得を未取得と書く」装置の発火事例 3 件目 (1件目 npaka123 URL, 2件目 C286 hallucination 訂正再訂正)。次サイクル以降の Phase 1 §6 では abstract のみで Phase 2 接続線を引かないこと。
+
+### kaizen #140 effective_rank_probe との接続性 (2 軸補完性)
+
+| 軸 | 本論文 (arxiv 2604.22760) | kaizen #140 effective_rank_probe |
+|---|---|---|
+| 観測対象 | 同一タスクへの複数 LLM 応答 | 4 instance (Log/Log_cdx/Mir/Ash) の生活ログ語彙 |
+| 軸種別 | タスクレベル ranking divergence (順位列) | 語彙レベル effective dimension (出力空間自由度) |
+| metric class | Set/Rank/Consensus (6 種) | 行列特異値分解の effective rank |
+| 失敗信号 | 表層一致下の深層不一致 | source 間語彙混淆 |
+
+**補完性の本質**: 当方 4 source は「同一タスクの応答多様性」ではなく「異なる生活ログから出る判断ベクトル多様性」を扱う = **直交軸**。ただし観測装置として 2 軸併用 (effective_rank_probe + Kendall's tau) すれば divergence 観測の見落としを減らせる可能性。
+
+### 当方装置への射程 (採用判定)
+
+- **本サイクル装置移植**: 不採用。理由 = (i) kaizen #140 段階2 着地直後、段階3 (family 統合) 設計が先、(ii) 6 metric 全部移植は overkill、Kendall's tau のみで充分か検証必要
+- **次サイクル以降候補**: `projects/instance_divergence_observability.md` に「effective_rank_probe (語彙軸) + Kendall's tau (順位軸) の 2 軸統合設計案」を追記、段階3 で family 統合時に併合検討
+- **shared-reads 投稿判定**: 本サイクル見送り。理由 = 2 軸統合設計案が当方側に着地していない段階で投稿すると「適用」項目が空になる、テンプレ流用化リスク
+
+### 接続
+
+- `projects/instance_divergence_observability.md` (2 軸統合設計案として追記)
+- `memory/kaizen_tracker.md` #140 段階3 設計
+- `log/cycle_staging_log.md` C307 Phase 1 §6 / Phase 2 §2 / Phase 2 §3
+- `memory/feedback_means_ends_reversal_check.md` (Phase 1 §6 attribution 誤り 3 件目)
+
+---
+
+## 2026-06-06 (Log C302 Phase 2) ScriptDoctor (arxiv 2506.06524) — verify.js 4方針悪手検出ループ構造同型分析 候補 [WebSearch 1件 (Phase 1 §6) abstract 経由のみ、本文 PDF 未取得、shared-reads 投稿見送り] [未統合 — 本文取得後 verify.js 構造同型照合で次サイクル以降統合]
+
+- **核機構 (abstract 経由)**: PuzzleScript ゲーム自動生成 + テスト、コンパイルエラー → search-based agent play-test 反復ループ。human-authored examples で grounding
+- **取得経路**: C302 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `LLM autonomous game prototype generation playable 2026 arxiv` / log_autonomous_game v003-v004 文脈
+- **接続価値の暫定見立て**: v001-v003 で実装している `verify.js` 4方針 (camper / lane-holder / blind-sweeper / nospecial) による悪手検出ループと **構造同型** = LLM 生成プロトタイプを agent play-test で反復検証する設計が独立到達。ScriptDoctor は (i) コンパイル不能 → 構文 fix loop, (ii) play 失敗 → search-based exploration、verify.js は (i) gameplay logic 非変更検証 (bit-level 数値一致), (ii) 悪手戦略 4 種で全滅確認の 2 軸で同型構造
+- **本サイクル判定**: shared-reads 投稿見送り。理由 = abstract 経由の薄い分析になる懸念。次サイクル以降で本文 PDF 取得 + verify.js 構造との具体的差分照合を経てから投稿する方が「将来のアイデアの種につなげる大事な外部入力」(Nao_u 指示) に応える
+- **次サイクル深掘りタスク**: (1) ScriptDoctor 本文 PDF を arxiv 直叩きで取得 (2) verify.js 4方針との「悪手 vs 良手 / コンパイル vs play」軸対応表を作成 (3) v004 別ジャンル候補時の生成 → 自動検証ループ設計参考にできるか判定
+
+---
+
+## 2026-06-06 (Log C303 Phase 2) Zero-shot 3D Map Dual-Agent (arxiv 2512.10501) — verify.js 4方針 + ScriptDoctor と並ぶ「LLM生成 × 評価ループ」独立到達 3件目 [WebSearch 1件 + WebFetch 1件、即統合 2026-06-06] [統合済 2026-06-06]
+
+**source**: <https://arxiv.org/abs/2512.10501> "Zero-shot 3D Map Generation with LLM Agents: A Dual-Agent Architecture"
+
+**取得経路**: C303 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `LLM procedural content generation level design 2026 arxiv` / 接続文脈 = 前サイクル C302 が記憶 decay 軸 (ACT-R/Synapse pending) のため別 Active project = `projects/agentic_pcg.md` へ切替。Phase 2 で WebFetch によって abstract + 本文構造の核機構を抽出済 (Actor=パラメータ生成 / Critic=評価改善、training-free, iterative refinement, instruction-following PCG benchmark 提示)。
+
+### 核機構 (WebFetch 経由)
+
+- **Actor agent**: 自然言語の user instruction から「不透明な技術パラメータ」へ翻訳、ツールパラメータ設定の候補を生成
+- **Critic agent**: 生成された設定を評価・改善、iterative refinement の対象とする
+- **training-free architecture**: off-the-shelf LLMs (fine-tuning なし) を「generalized agents」として再利用
+- **中核課題定義**: 「semantic gap between abstract user instructions and strict parameter specifications」を Actor/Critic loop で埋める
+- **評価ベンチマーク**: "instruction-following in PCG" を新規ベンチマークとして提示、「diverse and structurally valid environments」生成を検証指標化
+
+### 当方 verify.js + ScriptDoctor との 3 者構造同型分析
+
+| 軸 | 当方 verify.js (log_autonomous_game v003) | ScriptDoctor (arxiv 2506.06524) | Dual-Agent (arxiv 2512.10501) |
+|---|---|---|---|
+| 生成側 | 人/LLM 一発生成 | LLM PuzzleScript 生成 | LLM Actor agent (パラメータ) |
+| 評価側 | 決定的アルゴリズム (4方針 camper/lane-holder/blind-sweeper/nospecial) | search-based agent play-test | LLM Critic agent |
+| 失敗信号 | 悪手戦略 4 種で全滅確認 (bit-level 数値一致) | (i) コンパイルエラー (ii) play 失敗 | structural validity + instruction-following gap |
+| ループ閉鎖 | 失敗時=実装側修正 (人手) | コンパイル fix loop + exploration search | Actor↔Critic iterative refinement |
+| Critic の天井 | 悪手戦略の事前列挙網羅性に依存 | search budget + agent play 質に依存 | Critic LLM の評価精度に依存 |
+
+**3 者の独立到達観察**: 2026 年に「LLM 生成 + 構造化評価」型が **3 件独立到達** (うち 1 件は当方の内部実装 verify.js)。系統的トレンドとして認知できる。同型反復 3 件目で R 層昇格水準だが、当方の `feedback_rule_proliferation_canonical.md` 「同型 3 件以降に原則化」と整合。
+
+### 接続価値の暫定見立て
+
+- **共通設計原理**: 「初手で完成しない」前提で評価ループを内蔵する。単一エージェントの不安定さを 2 役割の交互で抑える構造
+- **差異の核**: verify.js は「決定的 critic = false positive ゼロ」の強みを持つが「悪手戦略の事前列挙が必要」= 網羅性が天井。Dual-Agent / ScriptDoctor は「LLM critic = 網羅性は LLM の汎化に頼れる」が「false positive 混入リスク」= 信頼性が天井
+- **当方 v003→v004 への射程**: v004 別ジャンル候補時に「verify.js を決定的部分 (盤面状態 invariant 検証) と LLM critic 部分 (悪手戦略の追加発見) の hybrid」化する設計余地。Dual-Agent の training-free 性は当方の fine-tuning なし運用と整合
+
+### 採用判定 (本サイクル)
+
+- **系譜認知**: 確定。当方 verify.js が独立到達ではなく「2026 年 LLM 生成 × 評価ループ」系統の 1 事例として位置付け直し
+- **本サイクル装置移植**: 不採用。理由 = (i) v003 phase 2 着地後 v004 着手判断保留中 (`projects/log_autonomous_game.md`)、verify.js hybrid 化は v004 着手後の判断、(ii) Dual-Agent の Critic LLM 呼び出しコストは当方の Phase 1 時間予算と整合しない
+- **次サイクル候補**: (a) v004 着手判断時に hybrid 化案を Phase 4 大作業候補として再評価、(b) ScriptDoctor 本文取得後に 3 者の Critic 設計差分表を更新
+
+### R 層昇格判定
+
+- 同型 3 件目 (verify.js / ScriptDoctor / Dual-Agent) で原則化水準だが、ScriptDoctor 本文未取得のため判定は次サイクル以降に保留
+- 暫定原則の仮置き: 「LLM 生成系の天井は生成側ではなく Critic 設計が決める」(2026 年 3 件独立到達)
+
+### 接続
+
+- `projects/log_autonomous_game.md` (v003→v004 verify.js hybrid 化候補)
+- `projects/agentic_pcg.md` (PCG 系統内 2026 年トレンド観察)
+- `memory/external_notes_log.md` 冒頭 ScriptDoctor 親エントリ (3 者比較表で接続)
+- `log/cycle_staging_log.md` C303 Phase 1 §6 / Phase 2 §shared-reads 投稿節
+
+---
+
+## 2026-06-04 (Log C297 Phase 4) MAP-Elites/QD 3件 — Mortar atom 議論への系譜接続として摂取 [WebSearch 1件 (Phase 1 §6)、即統合 2026-06-04] [統合済 2026-06-04]
+
+**sources** (3 本セット、kaizen #106 摂取経路固定化で取得):
+1. **Generational Adversarial MAP-Elites for Multi-Agent Game Illumination** (arxiv 2505.06617v2, 2026)
+2. **Empowering Quality Diversity in Dungeon Design with Interactive Constrained MAP-Elites** (arxiv 1906.05175 + IEEE 8848022, Evolutionary Dungeon Designer 系)
+3. **MAP-Elites × LLM 応用群** (Monte Carlo Elites arxiv 2104.08781 関連 — prompt engineering 組合せ探索 / LLM adversarial safety attack 多様化)
+
+**取得経路**: C297 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `"quality-diversity MAP-Elites game mechanics generation 2026 LLM"` / 接続文脈 = 本日 Log_cdx Mortar atom (ts:1780502839) が「メカニクス生成と評価を同じ探索ループに入れる話、quality-diversity 的に最高点の一点ではなく多様な候補空間として扱う」と読解しており、Mortar の理論的系譜 = MAP-Elites/QD であることを確認する摂取経路。前サイクル §6 候補が ACT-R/Synapse=記憶階層 project軸 だったため別 Active project=ゲーム制作 へ切替。
+
+**摂取契機**: Phase 2 で Mortar atom 応答 (ts=1780568467.014449) を投稿する直前、議論の理論的系譜が当方の独立到達ではなく既存研究 (MAP-Elites/QD) の延長線上にあると確認する必要が出たため。Phase 1 §6 内で 1 keyword 1 SERP の予算内で 3 本まとめ取得 (`feedback_few_rules_big_effect.md` の枠内、既存経路の通常運用)。
+
+### Generational Adversarial MAP-Elites (arxiv 2505.06617v2, 2026) [統合済 2026-06-04 C297 Phase 4 (親即統合と同時)]
+
+- **核機構**: 2 陣営を交互に世代進化させる QD アルゴリズム拡張、multi-agent game illumination 用の新手法
+- **位置づけ**: 従来の MAP-Elites が「単一探索者が behavioral cell 空間を埋める」枠組みなのに対し、adversarial 設定 (攻撃側 / 防御側の interplay) で互いに illumination を強制する構造。マルチプレイヤゲームのバランス設計 / NPC 行動空間の網羅探索などに射程
+- **当方接続**: 当方ゲーム制作は単一プレイヤ偏重 (graze_log / brick_log / log_mystery / log_autonomous_game) で、adversarial illumination 系の応用射程は薄い。ただし「cell 空間を多様化させる外圧装置」というアイデアは、Mortar の「最高点の一点ではなく多様な候補空間」議論に対する 1 強化方向として頭の片隅に置く
+
+### Interactive Constrained MAP-Elites (arxiv 1906.05175 + IEEE 8848022) [統合済 2026-06-04 C297 Phase 4 (親即統合と同時)]
+
+- **核機構**: Evolutionary Dungeon Designer (EDD) で実装された mixed-initiative MAP-Elites。ユーザーが variation の次元 (behavioral dimensions) を **動的に選択** できる構造。生成 AI 単独で cell 軸を固定するのではなく、人間が cell 軸を「これとこれを多様化させたい」と都度選び直す
+- **位置づけ**: MAP-Elites の最大の設計上の弱点 = behavioral dimensions の事前固定 (= 何が「多様性」かをアルゴリズム設計時点で凍結) を、ユーザーループに開く構造で解消する mixed-initiative 系の代表事例
+- **当方接続 (Phase 2 Mortar 応答で議論内引用済)**: Mortar が抱える「skill-based ordering score を多次元化しても cell 軸が固定化される」問題に対する **既存先行解**。当方の文脈に射影すると、cycle 内で人間 (Nao_u) が「今回はどの軸を多様化させたいか」を都度選び直す mixed-initiative 構造 = Nao_u の選択判断を装置側で読まずに、軸選択を都度ループに入れる運用形態が現実的解
+- **採用判定 (本サイクル)**: アイデアとして系譜認知は確定、ただし当方装置への移植は本サイクル時点では不採用 — 理由 = mixed-initiative を運用化するための UI/対話設計コストが現状ゲーム本体 playable diff より優先する状況ではない (C281以降 10 サイクル連続 playable diff = 0 の構造課題が先)
+
+### MAP-Elites × LLM 応用群 (Monte Carlo Elites arxiv 2104.08781 関連) [統合済 2026-06-04 C297 Phase 4 (親即統合と同時)]
+
+- **応用方向 2 軸**:
+  (a) **prompt engineering の組合せ空間探索** — LLM プロンプトを「複数の変分子 (instruction style / persona / format / example density)」の組合せとして cell 空間化、variation operator + fitness 評価者として LLM 自身を使用
+  (b) **LLM adversarial safety attack 多様化** — jailbreak 攻撃の多様性を behavioral cell で illumination、単一最強攻撃ではなく「多様な攻撃パターン群」を生成
+- **Monte Carlo Elites (arxiv 2104.08781) 関連性**: 確率的サンプリングを cell 配置に組み込む系統、LLM 生成のばらつきを cell 配置のノイズとして扱える数理的基盤
+- **当方接続**: ゲーム制作直接ではなく、`projects/agentic_pcg.md` / `projects/external_search_phase1_fixation.md` 側に射程。Phase 1 §6 の keyword 多様化 (現状 1 keyword 1 SERP) を MAP-Elites 的に cell 化する案 (案 B/E 系) への系譜接続候補
+- **採用判定 (本サイクル)**: 不採用。理由 = (i) Phase 1 §6 の keyword 多様化は 9 日停滞中の `external_search_phase1_fixation.md` 案 B/E でカバーされる予定、(ii) LLM × MAP-Elites の運用コスト (1 cell ごとに LLM 呼び出し) は当方の Phase 1 時間予算 10% 以内 と整合しない
+
+**当方既存議論との対応 (Mortar atom 議論への系譜接続)**:
+
+| Mortar atom 観点 (Log_cdx ts:1780502839) | MAP-Elites/QD 対応 | 当方位置 |
+|---|---|---|
+| 「最高点の一点ではなく多様な候補空間」 | QD = behavioral cells × elite-per-cell が最高点でなく多様性を保持する原型 | 系譜認知済 (Phase 2 Mortar 応答で言及) |
+| 「メカニクス生成と評価を同じ探索ループ」 | MAP-Elites の variation + fitness 一体ループ (LLM × MAP-Elites 系) | 系譜認知済、当方装置移植は不採用 |
+| 「cell 軸を多次元化しても固定化する」 | Interactive Constrained MAP-Elites = mixed-initiative で cell 軸を動的選択 | 系譜認知済、当方装置移植は不採用 (運用コスト > 便益) |
+| skill-based ordering score の「上達曲線が一貫して右肩上がり」前提 | (MAP-Elites 側に明示的対応はない、別軸) | Mortar の射程外として残る課題 |
+
+**判定**:
+- **系譜認知**: 確定。Mortar atom 議論の理論的系譜が MAP-Elites/QD の延長線上にあると同定済。Phase 2 Mortar 応答内で Interactive Constrained MAP-Elites を mixed-initiative の先行解として議論内引用済
+- **採用**: 本サイクル時点では不採用 — 全 3 件とも当方ゲーム制作の現状課題 (playable diff = 0 の 10 サイクル連続継続) に対する優先順位が低く、運用コスト > 便益と判定
+- **次サイクル候補**: (a) `projects/external_search_phase1_fixation.md` 案 B/E 着手時に LLM × MAP-Elites 系を keyword 多様化装置の系譜として再参照、(b) Mortar atom 議論が次サイクル以降 Nao_u/Ash/Mir 反応で進展した場合に Interactive Constrained MAP-Elites mixed-initiative 構造を再評価
+- ルール化は同型観察 3 件目以降に保留 (`feedback_rule_proliferation_canonical.md` 遵守)
+
+**R 層昇格判定**:
+- 本サイクルは記憶階層 Forget 系ではなく **ゲーム制作系譜認知 source 軸**、独立 source 軸の加算対象は別系統
+- 3 件は MAP-Elites/QD 同一系統内の拡張 (adversarial / mixed-initiative / LLM 応用) のため、**正味 1 件加算 = 系譜認知 1 件**、R 層昇格判定対象外 (ゲーム制作系譜認知は R 層化未定型)
+
+**接続**:
+- `projects/game_development.md` 末尾「2026-06-04 C297 Phase 4 — MAP-Elites/QD 系譜接続 (Mortar 議論経由)」節
+- `projects/external_search_phase1_fixation.md` 案 B/E (停滞 9 日、本サイクル次サイクル候補化)
+- Phase 2 Mortar 応答 Slack ts=1780568467.014449 (#all-nao-u-lab)
+- `log/cycle_staging_log.md` C297 Phase 1 §6 / Phase 4 大作業節
+
+## 2026-06-04 (Log staging Phase 2) FadeMem (arxiv 2601.18642) — 認知 decay 系 Forget 機構独立到達 1 本目 [WebSearch 1件 + WebFetch 1件 + #shared-reads ts=1780546710 投稿済、即統合]
+
+**source**: <https://arxiv.org/abs/2601.18642> "FadeMem: Biologically-Inspired Forgetting for Efficient Agent Memory" (Lei Wei, Xiao Peng, Xu Dong, Niantao Xie, Bin Wang)
+
+**取得経路**: 2026-06-04 13:07 Log staging cycle Phase 1 §6 で WebSearch (キーワード `LLM agent forgetting mechanism Mnemonic Sovereignty memory retention 2026`) で取得した 4 件のうち、本日既出 2 件 (Du survey 2603.07670 / AgeMem 2601.01885) と切断軸が異なる 1 本として代表選定。隣接クラスタ = ACT-R-Inspired (HAI 2026, DOI 10.1145/3765766.3765803) + Synapse (arxiv 2601.02744) は次サイクル以降 Phase 1 §6 候補に登録。
+
+**摂取契機**: 本日 Log_cdx (GPT/Codex 側) が C293/C297 で Du survey + AgeMem を投下済、Claude 側 staging cycle としては Forget phase 空欄に対する「認知 decay 系」軸が未到達だったため、軸の独立性を重視して 3 本目を投下。`feedback_means_ends_reversal_check.md` 24h 過剰摂取警戒線ぎりぎりだが、軸独立性で正当化。
+
+**核機構 (abstract レベル、本文 PDF 未取得)**:
+- adaptive exponential decay functions modulated by (a) semantic relevance, (b) access frequency, (c) temporal patterns
+- dual-layer memory hierarchy (differential decay rates)
+- LLM-guided conflict resolution + intelligent fusion
+- 評価: Multi-Session Chat / LoCoMo / LTI-Bench 3 benchmark で multi-hop reasoning と retrieval 優位主張
+- **定量成果: 45% storage reduction vs baseline**
+
+**当方既存設計との対応 (memory_redesign Forget phase 空欄への直接設計入力)**:
+
+| FadeMem 信号 | 当方 manual 装置 | 状態 |
+|---|---|---|
+| semantic relevance | memory_search.py FTS5 ヒット件数 (近似) | **既独立到達** (proxy 化候補) |
+| access frequency | git log frontmatter mtime / [[link]] 参照数 (近似) | **既独立到達** (proxy 化候補) |
+| temporal patterns | mtime 系列の周期性 (定期 vs 単発) | **既独立到達** (proxy 化候補) |
+| dual-layer differential decay | retention=permanent/cycle/probationary 3 層 | **既独立到達** (層数違うが構造同型) |
+| LLM-guided conflict resolution | `supersedes`/`superseded_by` キー併設 (kaizen #138 段階2) | **既独立到達** (重複設計を避ける) |
+| **指数 decay 合成スコア** | **未定義** (memory_retention_audit.py に降格条件未実装) | **空欄** |
+
+**自己批判**: 当方 `retention: probationary` の降格→削除フローは C280 §B / C293 §D で空欄明示済。FadeMem の 3 信号を `memory_retention_audit.py` (kaizen #138) に proxy 列として追加 = 当方の Forget phase 空欄を埋める最低コスト設計入力。実装は次サイクル以降の Phase 3 候補に登録、本サイクルでは記録のみ。
+
+**R 層昇格判定 source 軸への寄与判定**:
+- C293 で AgeMem 10 件目独立加算保留、本サイクル FadeMem は **10 件目独立加算判定 = 採用**。理由 = AgeMem (RL policy 軸) / AMV-L (静的 utility 計算式) / Du survey (taxonomy 分類装置) と切断軸が異なる「認知 decay 関数軸」を持つ独立系統、Mnemonic Share 軸欠落は AgeMem と同じ条件、独立性は Mnemonic Sovereignty 9 件目と同列に置けると判定。
+- ただし「3 本セットを 1 本に絞ったため、cluster 全体 (FadeMem + ACT-R + Synapse) を 1 件として束ねる」読み方もあり、次サイクル ACT-R or Synapse 取得時に加算判定を再確認。
+
+**Mnemonic Sovereignty 6 phase 接続表追加行 (C280 §A / C293 §A 拡張)**:
+
+| Mnemonic phase | FadeMem 対応 | 対応の質 |
+|---|---|---|
+| Write | (装置外、外部入力前提) | AgeMem `store` と同列、FadeMem では tool 化されず |
+| Store | dual-layer hierarchy 配置 | 層を持つ側、AgeMem (層なし) と切断軸 |
+| Retrieve | semantic relevance signal で activation | AgeMem `retrieve` と同列 |
+| Execute | (装置外) | AgeMem と同様 |
+| Share | (なし) | **AgeMem と同様 single-agent 想定、Share 軸欠落** |
+| Forget+Rollback | **adaptive exponential decay + 3 信号合成** | **3 系統目の独立到達** (utility / RL policy / 認知 decay) |
+
+**デメリット / 自己批判**:
+(1) 本文 PDF 未取得 = Lin 2022 同型早読み警戒、decay 関数の具体定義・3 信号の重み合成式・dual-layer の境界条件・3 benchmark での比較 baseline は abstract に欠落。次サイクル以降に PDF 確認で訂正前提。
+(2) 本日 3 件目の memory shared-reads = 24h 過剰摂取警戒線ぎりぎり、これ以上の memory post は控える判定 (Slack 投稿本文にも明示済)。
+(3) 隣接クラスタ (ACT-R / Synapse) は今回投稿せず言及のみ、3 本投下を回避したが、後続サイクルで取り込まなければ「半端な引き込み」になる。次サイクル Phase 1 §6 候補登録で消化経路を確保。
+
+**Phase 3 アクション候補**:
+- `projects/memory_redesign.md` に FadeMem 行追加 (C293 §A 接続表拡張 = 上記)
+- ACT-R / Synapse を次サイクル Phase 1 §6 候補に登録 (`memory/next_tasks_log.jsonl` 追記)
+- `memory_retention_audit.py` (kaizen #138) に 3 信号 proxy 列追加 candidate (実装は次サイクル以降)
+
+## 2026-06-02 (Log C289 Phase 2-3) 本能 vs 逆算 文献 3 本セット — Pichlmair 2020 / Lin 2022 / Lopes 2025 SLR [WebFetch 3並列 + #shared-reads ts=1780406202 + ts=1780406204 投稿済] [統合済 2026-06-02]
+
+**sources** (3 本セット、kaizen #106 摂取経路固定化で取得):
+1. **Pichlmair & Johansen "Designing Game Feel. A Survey"** (arxiv 2011.09201 / IEEE Transactions on Games 2020 査読版) — game feel の体系的サーベイ。本能側 feedback 設計の語彙
+2. **Lin et al. "What Features Influence Impact Feel?"** (arxiv 2208.06155 / IEEE CTSoc GCCE 2022 採択版) — アクションゲームの impact feedback 個別要素分析、19 要素抽出
+3. **Lopes et al. "A Systematic Review of Experience-Driven Game Adaptation"** (arxiv 2505.01351) — target experience → content adaptation の SLR。逆算側
+
+**取得経路**: C289 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化) / キーワード `arxiv 2026 game design instinctive feedback vs reverse-engineered experience juice problem` / 出自 = 2026-06-01 09:15 gdlab_hama 「本能 vs 逆算」ツイート + 2026-05-31 Wayline juice problem (Log_cdx C281 共有) を抽象化、`projects/log_autonomous_game.md` v003 instinct_probe との直接接続候補
+
+**摂取契機**: C289 Phase 1 §0 で git push 滞留 16 commit + Log master playable diff = 0 が継続 (`feedback_means_ends_reversal_check.md` 警告線継続)。栄養の偏り処方箋として「本能 vs 逆算」を抽象化フレームとして再武装し、Mir C283「本能未確立期では逆算機能、確立後で意味反転」フレームと Wayline juice 批判を文献版で裏付ける動機。本来 Phase 1 §6 は 1 本取得が定型だが、本サイクルは「本能 vs 逆算」両極カバーを優先して 3 本取得 (`feedback_few_rules_big_effect.md` の枠内、構造として既存経路の拡張)
+
+**WebFetch 3 並列で確定した枠組**:
+
+### Pichlmair & Johansen 2020 (本能側 = game feel 抽象+具体 2 層) [統合済 2026-06-02 C289 Phase 2-3 (親即統合と同時)]
+
+- **3 ドメイン**: Physical Handling / Spatial Amplification / Sensory Support
+  - Physical Handling = 入力⇔キャラクタ間の物理応答 (移動・ジャンプ・衝突の手触り)
+  - Spatial Amplification = 空間的増幅効果 (カメラシェイク・FoV 変動・スローモーション)
+  - Sensory Support = 多感覚同期 (音響・触覚・UI 表示の重ね合わせ)
+- **位置づけ**: ゲーム感触 (game feel) を「個別 juice 技法の羅列」ではなく抽象 3 ドメインに正規化、各ドメインに具体技法群が紐づく構造
+- **本サイクル接続**: Lin 2022 (19 要素) は Pichlmair 3 ドメインに収まる「具体層」と判定可能、抽象+具体 2 層構造が成立 → v003 proxy 4 指標が Lin 19 要素 cover に拡張する構造的根拠を得た
+
+### Lin et al. 2022 (本能側 = 具体 19 要素) [統合済 2026-06-02 C289 Phase 2-3 (親即統合と同時)]
+
+- **手法**: アクションゲーム impact feedback を 19 個別要素に分解、video stimulus + Likert 評価 (n=参加者数 abstract で未取得) で「どの要素が impact feel を強く規定するか」を統計検定
+- **19 要素 (C289 Phase 4 で arxiv pdf 取得済、全件確定)**:
+  - **A. Game Characteristic (4)**: A1.1 Game Mechanic / A2.1 Story Background / A3.1 Combat System / A4.1 Impact feedback system
+  - **B. Polish + Focus + Highlighting + Ambient (8)**: B1.1 Attack Effect (trail) / B1.2 After-Hit Effect / B1.3 Camera Effect (shake/post-process) / B1.4 Hit Stop / B1.5 Slow Motion / B2.1 On-Hit Effect (spot) / B2.2 Camera Control (zoom/framing) / B3.1 Color Flashing / B4.1 Background Breathing
+  - **C. Direct Feedback (7)**: C1.1 Animation Switching / C2.1 Weapon Sound Effect / C2.2 Character Sound Effect / C3.1 Sound Coherence / C4A.1 Slight/Heavy Attack distinction / C4B.1 User Interface (HP bar / damage number)
+  - **Lin が同定した Top 3 強影響因子**: B1.4 Hit Stop / C3.1 Sound Coherence / B2.2 Camera Control — 「これらの一つが手薄なら impact feel が崩れる」と論文で結論
+  - **誤推定の訂正 (C289 Phase 4 自己批判)**: Phase 2 abstract 早読みで列挙した「motion trail / aim assist visual / muzzle flash / recoil / haptic feedback」は本文に存在しない (hallucination)。abstract 早読み依存 hallucination 観察 3 件目 (C285 SSGM / C286 Du に続く同型 = `feedback_means_ends_reversal_check` 警告線)
+- **本サイクル接続**: v003 proxy 4 指標 (kill_decision_ttp / dodge_initiation_lag / hit_confirmation_burst / time_locked_input_count) は Lin 19 要素中の主に B1.4 Hit Stop / C1.1 Animation Switching / C4B.1 UI / C4A.1 Slight/Heavy 系 (Pichlmair PH 寄り) に部分対応、**SA (Spatial Amplification) ドメインの B1.1-B1.3, B1.5, B2.1, B2.2, B4.1 = 7 要素は完全に未測定**、**SS (Sensory Support) ドメインの A2.1, B3.1, C2.1, C2.2, C3.1 = 5 要素も未測定** → v004 proxy 拡張候補は計 12 要素、Lin Top 3 のうち hit-stop だけが v003 に部分対応、sound-coherence と camera-control は完全盲点
+- **v004 proxy 拡張候補リスト物理化**: [game/log_autonomous_game/v004_proxy_candidates.md](../game/log_autonomous_game/v004_proxy_candidates.md) (C289 Phase 4 着地、19×3 マトリクス + Top 5 候補 + 着手判断ゲート 4 件)
+
+### Lopes et al. 2025 (逆算側 = experience-driven adaptation SLR) [統合済 2026-06-02 C289 Phase 2-3 (親即統合と同時)]
+
+- **手法**: 2010-2024 の experience-driven game adaptation 論文を SLR で網羅、target experience (flow/challenge/curiosity/social/...) ベースの content adaptation 手法を分類
+- **閉ループ**: sense (生体・行動信号) → model (target experience 推定) → adapt (難易度・敵配置・物語分岐の調整) → 再 sense
+- **盲点**: SLR 結論で「stress/anxiety 軽視」を明示、challenge/flow への偏向と engagement の過大評価を批判。本能側 (game feel) の文献群と直接接続する事例が SLR 範囲に少ない = field レベルで本能↔逆算の橋渡し研究は未成熟
+- **本サイクル接続**: Mir C283「本能未確立期では逆算機能、確立後で意味反転」フレームが Lopes SLR の閉ループ前提 (sense 信号が安定取得可能) と直接結合、本能未確立期 = sense 信号が不安定 = 逆算が機能する隙間、確立後 = 本能側 game feel が支配層になり逆算閉ループの効力が低下する位相転移仮説
+
+**§2 投稿の 5 核心要点** (詳細は drafts/.archive/2026-06-02/post_log_shared_reads_instinct_vs_reverse_arxiv3_20260602_POSTED_ts1780406202.py 本文):
+- **核心 1**: 本能側 = Pichlmair 3 ドメイン × Lin 19 要素の **抽象+具体 2 層構造** = proxy 4 → 19 拡張の構造的根拠
+- **核心 2**: 逆算側 = Lopes 閉ループ (sense-model-adapt) = Mir「本能未確立期では逆算機能」の文献版
+- **核心 3**: Mir C283 位相依存性が **3 本それぞれの位相 (Lopes 未確立期 → Lin 過渡期 → Pichlmair 確立後)** にマップ、ただし仮説段階 (本サイクルでは検証手段なし)
+- **核心 4**: Lopes SLR 盲点「stress/anxiety 軽視」 = 逆算側の隠れた失敗モード、proxy 設計チェックリスト化候補 (v004 着手時に「stress/anxiety を測れる proxy が含まれているか」をゲート化)
+- **核心 5**: Pichlmair Sensory Support ドメイン (多感覚同期) が v003 proxy 4 指標で **未測定 = v004 設計時の最大盲点候補**。kill_decision_ttp / dodge_initiation_lag / hit_confirmation_burst / time_locked_input_count はすべて Physical Handling 寄り、Spatial Amplification と Sensory Support は proxy 化されていない
+
+**メリット**:
+(a) Mir C283 フレーム (位相依存性) の文献裏付け 3 本セットを取得、Active project `log_autonomous_game.md` v003 評価軸 closure 直後の v004 着手判断材料に直接接続
+(b) v003 proxy 4 指標が「本能側 Physical Handling サブセット」に局所化されていたという欠落構造を初めて文献ベースで物理化、v004 別軸 probe 拡張候補が「Lin 19 要素 - 既測 4 = 残 15 要素」と具体数で語れる状態へ
+(c) Lopes SLR 盲点 (stress/anxiety) が v004 proxy 設計時のゲート項目になる候補、kaizen #138 段階3 (Multi-Layered rank 組込) と並行する別軸の chocking ガード設計の起点
+
+**デメリット / 自己批判**:
+(1) [C289 Phase 4 で解消済] WebFetch 3 並列は当初 abstract レベルのみで Lin 19 要素中 5-7 個しか確認できなかったが、Phase 4 で arxiv 2208.06155 本文 PDF (pypdf 抽出) 取得し全 19 要素確定、abstract 早読み hallucination (motion trail / muzzle flash 等) を訂正、`game/log_autonomous_game/v004_proxy_candidates.md` に 19×3 マトリクス + Top 5 拡張候補を物理化。残課題 = (a) Pichlmair 2020 本文 PDF (arxiv 2011.09201) の 3 ドメイン定義の本文確認、(b) Lopes 2025 SLR の stress/anxiety 軽視結論の本文確認 — どちらも次サイクル以降に持ち越し
+(2) Mir 位相依存性 → 3 本マッピングは仮説段階、3 本それぞれの位相帰属 (Pichlmair = 確立後 / Lin = 過渡期 / Lopes = 未確立期) は WebFetch abstract から推定、文献本文での明示的位相議論ではない
+(3) 「3 本一気引き込み」が `feedback_means_ends_reversal_check.md` 警告ライン (摂取自体が目的化) のリスクライン、本サイクル Phase 3 で external_notes 1 エントリ + projects/log_autonomous_game.md 位置取り着地で「3 本読んだ」を成果から「3 本を v004 設計材料に物理化した」へ変換する必要 (本投稿で着地)
+
+**判定**:
+- v003 proxy 4 指標は **Lin 19 要素の Physical Handling サブセット = 本能側 5/19 程度のみカバー** と判定、proxy validity 反証ライン 3 軸一致 (絶対 Pearson / 相対 Spearman / 戦略 ICC) の真因が「proxy 自体の本能側カバレッジ欠落」だった可能性が浮上 (C288 Phase 4 評価軸 closure の事後解釈に整合)
+- v004 着手判断は本サイクル保留、次サイクル C290 以降で (1) Lin 19 要素本文 PDF 取得 + (2) Mir/Nao_u/Ash 反応待ち + (3) v003 別軸 probe (Spatial Amplification / Sensory Support 系) 拡張 vs v004 別ジャンル着手の選択 に進む
+- 本記録は教師データ蓄積 (`sense_prediction_log.md` Phase 1 摂取版) + v004 設計材料として位置付け、ルール化は同型観察 3 件目以降に保留 (`feedback_rule_proliferation_canonical.md` 遵守)
+
+**R 層昇格判定**:
+- C285 SSGM = 9 件目、C286 Du = 10 件目扱いせず別軸「分類装置」、本セットは独立 source 軸 **3 件加算** で **12 件目** 到達と判定
+- ただし Pichlmair (本能側抽象) と Lin (本能側具体) は同一系統内の階層関係、別軸ではなく **1 件 (本能側抽象+具体 2 層)** として束ねる方が妥当、Lopes (逆算側 SLR) は別軸 → **正味 2 件加算 = 11 件目到達**
+- 9 件のまま維持 → 11 件目への到達は R 層昇格判定 (10 件以上) ライン突破、しかし本セットが「本能 vs 逆算」抽象軸の単一 frame に閉じている (= source 多様性は 11 件、軸の独立性は 2 軸) ため、R 層昇格は次サイクル別軸 source 取得まで保留
+
 ## 2026-06-02 (Log C286 Phase 2-3) arxiv 2603.07670v1 Du 単著 survey — 分類装置として独立軸取扱い [WebSearch 1件 + WebFetch 1件 + #shared-reads ts=1780373599 投稿済、即統合]
 
 **source**: <https://arxiv.org/abs/2603.07670> "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers" (Pengfei Du 単著、survey paper)
@@ -29,7 +437,7 @@ type: reference
 **§2-A Phase 1 §6 認識訂正 (kaizen 観察 2 件目)**:
 
 Phase 1 §6 で「AgeMem = store/retrieve/update/summarize/discard tool 化、RL pipeline 最適化」と記述したが、Phase 2 で WebFetch 検証した結果:
-- **「AgeMem」名称は abstract / 著者情報に存在しない = 推測混入による hallucination**
+- **「AgeMem」名称は abstract / 著者情報に存在しない = 推測混入による hallucination** (**※2026-06-04 C293 Phase 2 再訂正**: 本記述は Du survey 2603.07670 単体の事実としては正しいが、AgeMem は別論文 Yi Yu et al. **arxiv 2601.01885** "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents" で正式命名された **実在の手法**。C285 当時 Phase 1 で「AgeMem」名称を出した経緯は、おそらく本論文 (2601.01885) の知識が事前に潜在記憶として混入していたため。後続サイクル誤読防止のため本注記を追加 — 「AgeMem は架空」と単純化して読まないこと)
 - RL は 5 families の 1 つ「policy-learned management」に収まる言及で primary focus ではない
 - 単著 (Pengfei Du)、survey paper = 分類装置 (個別手法ではない)
 
@@ -4351,5 +4759,146 @@ Karpathy LLM Wiki + Mem0g + SIA + SkillReducer + (C275 Sharma/Mustahsan/AIVAT va
 (iii) **kaizen 起票根拠補強** = C272 起票候補 tools/verify_recall_coherence.py が業界既知 (GAAMA GRAFT) と判明、起票時のレビュー説得材料として使用
 
 **関連ファイル**: projects/memory_redesign.md (本入力の主接続先、§A 4 ノード型対応表反映済) / memory/kaizen_tracker.md #135 (build_atom_edges.py 段階 3 設計入力候補) / memory/concept_graph.md (Concept mega-hub 回避との同方向 2 source 独立到達) / 本ファイル 2026-05-30 SkillReducer エントリ (R 層昇格判定 source 軸の並列起点) / drafts/2026-05-31/post_log_shared_reads_gaama_atomic_assertion_20260531_POSTED_ts1780238641.py (Slack #shared-reads 投稿記録)
+
+---
+
+## 2026-06-08 (Log C312 Phase 2) Memora / FAMA 深掘り — Forget phase 評価軸の業界既知化 [WebSearch 1件 + WebFetch abstract、#shared-reads 投稿予定、即統合済 2026-06-08]
+
+**source**:
+- <https://arxiv.org/abs/2604.20006> From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents (Md Nayem Uddin, Kumar Shubham, Eduardo Blanco, Chitta Baral, Gengyu Wang / ACL 2026 Findings, 2026-04-21) — Memora ベンチマーク (数週間〜数ヶ月対話) + FAMA 指標 (「古い・無効化された記憶への依存を罰する」) で 4 LLM × 6 メモリエージェント評価、**無効記憶再利用 + 進化する記憶調整失敗** を主検出シグナルにした初の試み。3 タスク (Remembering / Reasoning / Recommending)。
+
+**取得経路**: Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent memory forget operational protocol 2026 evaluation` / Active project = projects/memory_redesign.md (kaizen #138 memory_retention_audit + Forget phase 設計の評価軸を探索)
+
+**摂取契機**: 本サイクル C312 は新着 Nao_u URL = 1件既応答済 (k_matsumaru 2063438323499319557 hits=4)、pending 新規 = 0、external_notes 未統合 = 0 のスカスカ条件。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project memory_redesign の Forget phase 設計 (arxiv 2604.16548 C280 §A 9件目独立到達後の Forget 評価装置側) を狙ってキーワード設定。同時取得 3 件中 2604.20006 が当方 retention 軸との直接照合可能性最大。**arxiv 2604.16548 (Mnemonic Sovereignty, 87回既出) と 2604.08224 (Externalization, 36回既出) は base camp 既知、2604.20006 のみ真の新規ヒット** = §6 fixation 観察の N=2 化 (C306 「同キーワード再到達」N=1 と接続)、ただし新規 1 件は取れた = §6 完全失効ではない。
+
+**新規発見 5 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **FAMA 指標 = 当方 retention=stale と同型問題の学術ベンチマーク** | `memory_retention_audit.py` (kaizen #138) は WARN を出すだけで「使われ続けた stale 記憶」の被害量を測れない。FAMA は「無効記憶を使った時の罰」を accuracy 上で定量化 = 当方装置の検出後アクションに直結する評価軸 |
+| 2 | **Memora ベンチマーク (週〜月) = 当方 retention=cycle (現状 6.2 日 ≈ 12.4 cycles で stale) の外部キャリブレーション** | 当方 Phase 1 [memory_retention_audit] が `cycle_staging.md` を 12.4 cycles で stale 判定したのは妥当か? Memora の数週間スケールと整合 = 当方閾値は緩い側で OK の傍証 |
+| 3 | **3 タスク分解 (Remembering / Reasoning / Recommending)** | 当方は記憶を「Remembering (recall coherence)」軸でしか評価していない。Reasoning (記憶から導かれる結論の整合性) / Recommending (記憶から次手を提案する精度) は kaizen #135 build_atom_edges の評価軸として未着手領域 |
+| 4 | **「進化する記憶調整失敗 (evolving memory adjustment failure)」 = 当方 beliefs.md 25/35件 停滞問題と同型** | 本サイクル Phase 1 [信念健康] 結果と直接対応。古い belief が新事実で更新されない構造を学術用語で言語化 = `beliefs.md` 健康診断の罰指標化候補 |
+| 5 | **「無効記憶再利用 (invalid memory reuse)」 = sense_prediction_log.md 反復観察と同型** | Nao_u 指摘で気づいた誤判定が、後サイクルで同型誤判定として再発する現象 = 記憶として残った誤判定が再利用された結果。FAMA 流に「再利用ペナルティ」を sense_prediction_log の集計に乗せる余地 |
+
+**memory_redesign R 層昇格判定材料 12 件目 (Forget phase 評価軸)**:
+Karpathy / Iusztin / Mem0 blog / TagRAG / ByteRover / GAAMA / ATOM dual-time / Mnemonic Sovereignty / AgeMem / FadeMem / MemForest に並ぶ 12 件目独立到達候補。**Forget phase の評価装置側** = これまでの 11 件は主に Forget の機構 (decay / lifecycle / utility / time-tree) の独立到達だったが、Memora/FAMA は「Forget の効果を測る装置」側で軸が直交。即昇格判定はしない (`feedback_rule_proliferation_canonical.md` 順守、kaizen #135 期限 2026-06-09 観察継続)、本入力は位置取り記録のみ。
+
+**Phase 1 §6 fixation 観察 N=2 (C306 履歴節と接続)**:
+C306 (2026-06-06) で kaizen #106 自発検索の 3 件中 2 件 (arxiv 2604.08224 / 2603.07670) が再到達と観察。本 C312 では 3 件中 2 件 (2604.16548 / 2604.08224) が再到達、ただし 1 件 (2604.20006) は新規 = §6 完全失効ではない。**N=2 成立 = `feedback_rule_proliferation_canonical.md` の N=3 まで kaizen 起票しない原則で、本サイクルは履歴節記録のみ**。N=3 で `external_search_phase1_fixation.md` 案E 拡張 (同 arxiv ID の N 件繰返投函 → WARN) を発火判定。
+
+**自己批判**:
+- WebSearch 1 件 + WebFetch (arxiv abs ページ) のみで実行、Memora ベンチマーク本文 PDF 未取得 (3 タスクの具体スキーマ / FAMA 指標の数式 / 6 メモリエージェントの内訳) は次サイクル候補
+- FAMA を当方 `memory_retention_audit.py` に「無効記憶使用罰」として組み込むには、どの記憶がどのサイクルでどう使われたかの retrieval log が必要 = `retrieval_log.jsonl` (memory_redesign §retrieval 軸 (c) で言及済) 未着手のため、即実装不可
+- 「進化する記憶調整失敗」が当方 beliefs.md 25/35件停滞と同型と判定したのは abstract レベル、Memora の具体タスクスキーマでこの対応が成立するかは PDF 確認待ち
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md に「Forget phase 評価軸 (Memora/FAMA)」セクション追記候補 (本サイクル Phase 3 で着地判断)、機械反映禁止順守
+(ii) **kaizen #138 拡張入力** = `memory_retention_audit.py` に「stale 記憶使用罰」軸 (FAMA 模倣) を新規列として追加候補、`retrieval_log.jsonl` 実装後に検討
+(iii) **beliefs.md 健康診断罰指標化** = 25/35件停滞を FAMA 流に「進化失敗罰」として集計する案、別 kaizen 起票候補 (即起票しない、N=3 まで観察)
+
+**関連ファイル**: projects/memory_redesign.md (本入力の主接続先、§M Forget phase 設計と直結) / projects/external_search_phase1_fixation.md (本入力で §6 fixation 観察 N=2 化、C306 履歴節と接続) / memory/kaizen_tracker.md #138 (memory_retention_audit.py 拡張入力候補) / memory/beliefs.md B033 (**[beliefs 接続済 2026-06-08 C314]** 「進化する記憶調整失敗」「無効記憶再利用」「Selective Forgetting」を B033 根拠セクションに外部独立到達として 1 段追記、last_action_date / 最終更新を 2026-06-08 に更新) / memory/sense_prediction_log.md (「無効記憶再利用」概念で再利用罰集計候補) / 本ファイル 2026-06-01 Mnemonic Sovereignty エントリ (Forget phase 機構側、本入力は評価側で対) / drafts/.archive/2026-06-08/post_log_shared_reads_memora_fama_20260608.py (Slack #shared-reads 投稿済 ts=1780878537.607699) / drafts/2026-06-08/post_log_shared_reads_memoryagentbench_c314_20260608_POSTED_ts1780900201.py (C314 で MemoryAgentBench を直交軸として追加投稿、ICLR 2026 ベンチマーク基盤側として 13 件目独立到達候補位置取り)
+
+---
+
+## 2026-06-09 (Log C315 Phase 2) MemoryArena (arxiv 2602.16313, Stanford 2026 早期) を「LoCoMo-10 比較指標」軸 → 「passive/active gap の核心」軸で再読 — §6 fixation N=4 確定下での base camp 再読深化 [WebSearch 1件 + WebFetch 1件 (mem0.ai 404)、#shared-reads 投稿 ts=1781008433、即統合済 2026-06-09 → C315 Phase 4 で projects/memory_redesign.md §S として物理着地、memory/sense_prediction_log.md N=46 教師データ + memory/kaizen_tracker.md #138 段階3 検証手段欄「passive/active gap 観察軸 (§S)」候補追記で 3 軸接続物理化完了]
+
+**source (再読対象 = base camp 既出)**:
+- <https://arxiv.org/abs/2602.16313> MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks (Stanford Digital Economy Lab, 2026 早期発表)
+- 4 タスク領域 (web navigation / preference-constrained planning / progressive information search / sequential formal reasoning) すべてサブタスクが explicitly interdependent
+- **核心結論**: LoCoMo で near-perfect の system が MemoryArena で **40-60% に墜落** = passive recall (思い出す) と active decision-relevant memory use (思い出した記憶で次手を導く) の deep gap を実証
+
+**取得経路**: Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM agent memory hierarchy stale entry detection forget benchmark 2026` / Active project = projects/memory_redesign.md (kaizen #138 memory_retention_audit + Forget phase 設計の評価軸を探索)
+
+**摂取契機**: 本サイクル C315 は新着 Nao_u URL = 0 件、pending 新規 = 0、external_notes 未統合 = 0 のスカスカ条件。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project memory_redesign の Forget phase 設計を狙ってキーワード設定。Phase 1 §6 で「MemoryArena vs LoCoMo 性能崖 (mem0.ai blog)」と書いたが、Phase 2 で実体確認したところ **arxiv 2602.16313 (Stanford) が出所**、mem0.ai blog 該当記事は不存在 (mem0.ai/research に MemoryArena 言及なし)。**§6 取得時に arxiv ID 未確認のまま記事名だけで判定をパス** = `external_intake.md` 2026-05-21 履歴節「URL 必須化ルール」同型 N=2 再発。
+
+**§6 fixation N=4 確定 (C306/C312/C314/C315)**:
+
+| サイクル | キーワード軸 | 取得 3 件中 新規 | 既出/再到達 source |
+|---|---|---|---|
+| C306 (06-06) | memory contamination | 1 件 | 2604.08224 / 2603.07670 |
+| C312 (06-08 朝) | forget operational protocol | 1 件 (Memora 2604.20006) | 2604.16548 (87 回) / 2604.08224 |
+| C314 (06-08 夕) | forgetting strength evaluation benchmark | 1 件 (MemoryAgentBench) | 2603.07670 (181 回) / mem0.ai blog |
+| **C315 (06-09)** | stale entry detection forget benchmark | **0 件** | 2602.16313 (MemoryArena 既統合 C273) / 2603.11768 (SSGM 114 回) / AgeMem (既統合) |
+
+C315 で **真の新規ゼロ = base camp 完全飽和の初観察**。C306-C314 は「3 件中 1 件新規」だったが C315 で 0 件 = キーワード変更を続けても新規ヒット率が漸減している可能性。`projects/external_search_phase1_fixation.md` 案 (iii) 「engine query に別 corpus 強制」の判定発火点候補 (本サイクル kaizen 起票せず履歴節記録のみ)。
+
+**再読で取れた接続点 3 軸 (C273 GAAMA 投稿時には取れなかった軸)**:
+
+| # | C273 GAAMA 時 (既統合) | C315 再読軸 (本サイクル) |
+|---|---|---|
+| 1 | MemoryArena = GAAMA の実験結果指標 (Group Travel +0.4pp etc.) | MemoryArena = passive/active gap の構造軸 (kaizen #135 T0 ベンチ自問軸) |
+| 2 | LoCoMo-10 = GAAMA の主ベンチ (79.1% mean reward) | LoCoMo-10 = passive recall 偏重ベンチの代表例 (40-60% 墜落系の比較対象) |
+| 3 | atomic facts 抽出 = atom 体系の業界用語化 | atomic facts 抽出 = active decision-relevance を支える「judgment-relevant unit」候補 |
+
+**当方接続 3 軸**:
+
+(α) **kaizen #135 build_atom_edges T0 ベンチが LoCoMo 系 passive 偏重か自問** — T0 は atom 間 edge の意味的接続精度 (wikilink_weak type gate) を測る = passive recall 寄り。MemoryArena 構造で測ると next-action quality 改善が出るか別軸。本サイクル kaizen #135 期限 2026-06-09 (本日) の観察継続判定に「passive bench で good でも next-action quality が改善しているか」軸追加候補。
+
+(β) **[T:4] feedback_few_rules_big_effect.md と active decision-relevance の独立到達** — 「手順 (passive) ではなく思考の質 (active)」原則は MemoryArena 構造軸と独立到達。少ないルール = active 側の信頼設計、ルール過剰 = passive 側の負荷増 (More Skills, Worse Agents 同根)。Phase 1 §A(b) SleepGate kaizen 起票留保継続は同方向構造順守。
+
+(γ) **memory_redesign §M Forget phase 評価軸の active 層補強** — memory_retention_audit.py (kaizen #138) は passive 側の retention 健全性指標、本サイクル WARN cycle_staging.md retention=cycle days=7.7 cycles≈15.4 ≥ 5.0。MemoryArena 含意 = passive 側で retention 健全でも active 判断時に効かない記憶は無価値、「保持された記憶が次手判断で実際に使われたか」軸が必要。Memora/FAMA (C312 統合) Recommending タスク + FAMA「無効記憶使用罰」と合成で active 評価層を立てる候補、retrieval_log.jsonl 未着手のため即実装しない。
+
+**memory_redesign R 層昇格判定材料 — 再読で深化した接続軸**:
+本サイクル MemoryArena 再読は新規 source ではないが、§A〜§O の「N 件目独立到達」命名群への影響:
+- MemoryArena は C273 で 1 度既統合済 = 12 件目独立到達候補 (C312 Memora/FAMA) や 13 件目 (C314 MemoryAgentBench) の系列とは別軸 (再読の角度切替軸)
+- **「base camp 再読の角度切替」を 14 件目候補として登録するか否かは別論点**: 命名は新規外部 source ではないため、`sense_prediction_log.md N=42` 「独立到達判定の構造的バイアス」教師データの裏返し = 「再読で接続深化した場合の命名規則」を別途設計する必要、即着手しない (projects/memory_redesign.md §P 候補として位置取り、本サイクル外)。
+
+**自己批判**:
+- WebFetch で mem0.ai blog 探索したが該当記事なし (404 / mem0.ai/research は Mem0 自社ベンチ結果のみ) = Phase 1 §6 記述「mem0.ai blog」は **誤帰属**。実体は arxiv 2602.16313 (Stanford)。§6 hook の既出チェック (kaizen #136) は arxiv ID 表記に依存するため、blog 帰属記述では base camp 既出をすり抜ける = hook の精度は当方 Phase 1 記述精度に依存する構造観察 (反転自己観察として shared-reads 投稿でも明示)。
+- MemoryArena 本文 PDF 未取得、abstract レベル + Stanford サマリ + GAAMA 経由間接情報のみで passive/active gap の核心を主張。本文 (4 タスクの具体スキーマ / 40-60% 墜落のシステム別内訳) は次サイクル候補。
+- C273 GAAMA 投稿時の MemoryArena 引用は「実験結果指標」軸のみ、本サイクル「passive/active gap の核心」軸への切替は 9 日ぶり (5/31 → 6/9)。base camp 再読の最適頻度は未測定 = external_intake.md 第 5 軸候補「base camp 再読の角度多様性軸」の運用ベンチマーク未設計。
+
+**採用範囲**:
+(i) **位置取り記録** = projects/memory_redesign.md §M Forget phase 評価軸に「passive retention 健全 ≠ active 判断改善」軸を追記候補 (本サイクル Phase 3 で着地判断、機械反映禁止順守)
+(ii) **kaizen #135 期限判定への影響** = 本日 2026-06-09 期限の T0 ベンチ観察継続判定に「passive 偏重か自問」軸追加 (kaizen 起票はせず観察追記のみ)
+(iii) **`projects/external_search_phase1_fixation.md` C315 履歴節** = §6 fixation N=4 確定 + 「真の新規 0 件」初観察 + Phase 1 §6 arxiv ID 必須化候補
+(iv) **`memory/sense_prediction_log.md`** = 「base camp 再読で接続深化した場合の独立到達命名再評価」教師データ 1 件追記候補 (N=42 続報、本サイクル外で別途)
+
+**関連ファイル**: projects/memory_redesign.md §M (本入力の主接続先、Forget phase active 評価層補強) / projects/external_search_phase1_fixation.md (本入力で §6 fixation 観察 N=4 化、C314 履歴節の続き) / memory/kaizen_tracker.md #135 (T0 ベンチ評価軸 2 層化候補、本日期限) / memory/kaizen_tracker.md #138 (memory_retention_audit.py active 層補強候補、retrieval_log.jsonl 連動) / memory/feedback_few_rules_big_effect.md [T:4] (active decision-relevance との独立到達、本サイクル §D 想起と接続) / 本ファイル 2026-06-08 Memora/FAMA エントリ (Forget phase 評価装置側、本入力は passive/active gap 軸で並列補強) / 本ファイル 2026-05-31 GAAMA エントリ (MemoryArena の C273 既統合経路、本サイクル再読の起点) / drafts/.archive/2026-06-09/post_log_shared_reads_memoryarena_passive_active_c315_20260609.py (Slack #shared-reads 投稿済 ts=1781008433.958499)
+
+---
+
+## 2026-06-10 (Log C312 Phase 2) Distilling GameCWMs (arxiv 2605.24375, 2026-05-23 v1) — frontier 依存の GameCWM 生成を Qwen 3B に SFT+RLVR で蒸留、verification framework が structural/semantic 二層 [WebSearch 1件 + WebFetch abstract、#shared-reads 投稿済 ts=1781040608.593239、即統合済 2026-06-10]
+
+**source**:
+- <https://arxiv.org/abs/2605.24375> Distilling Game Code World Model Generation into Lightweight Large Language Models (Tyrone Serapio et al., cs.AI, 2026-05-23 v1) — GameCWMs (Game Code World Models = rules/legal actions/state transitions/observations/rewards を Python 実装) を Qwen2.5-3B-Instruct に蒸留。30 ゲーム dataset (perfect/imperfect information 両分布) + verification framework (structural + semantic 二層) + post-training pipeline (SFT で syntactic correctness → RLVR で execution-level adherence)
+
+**取得経路**: Phase 1 §6 外部摂取 (kaizen #106 摂取経路固定化) / キーワード `LLM autonomous game generation playable verification 2026 arxiv` / Active project = projects/log_autonomous_game.md (v003 verify.js の VLM 4 失敗 taxonomy probe = C311 case D-3 着手継続中の評価軸を業界既知と照合)
+
+**摂取契機**: 本サイクル C312 は新着 Nao_u URL = 1件既応答済 (k_matsumaru 2063438323499319557, C313 で Log 自身既反応投稿)、pending 新規 = 0、external_notes 未統合 = 0 のスカスカ条件。Phase 1 §6 を kaizen #106 摂取経路として固定発火、Active project log_autonomous_game の verify.js 評価軸を狙ってキーワード設定。同時取得 3 件中 arxiv 2605.24375 のみ slack_archive grep hits=0 = **真の新規** (OpenGame-Bench 2604.18394 = 既出 hits=33 / SLM PCG 2601.23206 = 既出 hits=5 と対比)。
+
+**新規発見 5 点**:
+
+| # | 発見 | 当方接続 |
+|---|---|---|
+| 1 | **verification framework が structural (関数シグネチャ整合) + semantic (実行時ルール準拠) の二層構造** | v003/verify.js は現状 `pass: true/false` 単一判定 = 二層分割導入で VLM 4 失敗 taxonomy probe (C311 case D-3) の結果を「コード生成側改善対象」/「コード実行・体験側改善対象」に切り分け可能 |
+| 2 | **post-training pipeline = SFT (syntactic 引き上げ) + RLVR (execution-level 引き上げ) の段階分解** | 当方は現状 frontier (Claude) で v003 verify.js を回し、生成側に reward feedback を返さない (fine-tune 経路を持たない)。**RLVR は将来 small モデル (Qwen 3B 帯) で v003 系を回す場合の直接適用可能経路** = 当方の small 化路線の学術根拠 |
+| 3 | **30 ゲーム curated dataset (perfect / imperfect information 両分布)** | 当方は現状 game/v001-v003 の 3 ゲームしか持たない = 横断評価未着手。30 ゲーム dataset を借用すれば「v003 verify.js が他 27 ゲームでも pass を出すか」横断評価可能 (Phase 4 大作業時に license 確認候補) |
+| 4 | **frontier model 依存解消 → distillation の方向ベクトル** | C311 投稿 OpenGame-Bench (GameCoder-27B = frontier 帯) と**逆向きベクトル**。当方の現状「frontier (Claude) generate + frontier verify」に対し、中間案「small generate + frontier verify」(generate は安価、verify は judgment 質保持) の路線が技術的に成立する仮説 |
+| 5 | **GameCWMs = LLM が生成する「ゲーム環境そのもの」** | 当方は「ゲームコードを LLM が書く」と「LLM がゲームを遊ぶ」の 2 軸で考えていたが、本論文は「LLM がゲーム環境 (MCTS solver と接続できる完全な world model) を書く」を独立軸として提示 = game/templates/ 路線 (テンプレ依存) vs 生成依存路線の根本選択論点を当方に持ち込む |
+
+**game 軸独立到達 3 source 確定** (memory_redesign の 13 件とは別軸):
+
+| 順 | source | 軸 | 取得サイクル |
+|---|---|---|---|
+| 1 | OpenGame-Bench (arxiv 2604.18394) | judge 軸 (Build Health / Visual Usability / Intent Alignment) | C311 (2026-06-08 朝) |
+| 2 | SLM Dynamic PCG (arxiv 2601.23206) | retry-until-success 軸 (実時間 PCG) | C311 (2026-06-08 朝、同時) |
+| 3 | Distilling GameCWMs (arxiv 2605.24375) | 蒸留 + verification framework 軸 (structural / semantic) | **本 C312 (2026-06-10)** |
+
+**N=3 到達** = `docs/game_dev_foundation.md` の評価指針節に「業界既知 3 source 対応表」追記候補 (本サイクル Phase 3 で着地判断)。即 R 層昇格判定はしない (`feedback_rule_proliferation_canonical.md` 順守、kaizen #135 期限 2026-06-09 と同方向で N=3 位置取りのみ)。
+
+**自己批判**:
+- arxiv abstract + Subjects 欄までで判定、本文 PDF (30 ゲーム内訳 / verification framework 具体スキーマ / RLVR reward 関数定義 / SFT vs RLVR の貢献分解実験) 未取得。slack.md「テンプレ流用品質低下禁止」順守の観点では abstract レベルで「structural/semantic 二層」「RLVR」を当方装置に射影判定するのは早すぎる可能性 = shared-reads 投稿は位置取り記録としての価値に絞り、技術導入判定は本文確認後 (#shared-reads 本文内で明示)
+- OpenGame-Bench (2604.18394) との「直交関係」判定は両論文の著者間引用関係 / 同会議同時提案かどうか未確認 = 「game 軸独立到達 3 件目」判定の堅さに 1 段の余裕が必要 (C314 MemoryAgentBench 自己批判と同型反復)
+- 「frontier verify / small generate」ハイブリッド案 (アイデアの種 ii) は当方独自の発想、論文本体の主張ではない = shared-reads 本文で明示。論文を「自分の想定路線に都合よく解釈」しているリスクへの自己歯止め
+
+**採用範囲**:
+(i) **位置取り記録** = `docs/game_dev_foundation.md` 評価指針節に「業界既知 3 source (OpenGame-Bench / SLM PCG / Distilling GameCWMs) 対応表」追記候補 (本サイクル Phase 3 で着地判断、機械反映禁止順守)
+(ii) **v003/verify.js への structural/semantic 二層拡張案** = VLM 4 失敗 taxonomy probe (C311 case D-3) の完了後判断、本サイクル kaizen 起票せず
+(iii) **当方 small 化路線の学術根拠記録** = `projects/log_autonomous_game.md` に「frontier verify / small generate ハイブリッド路線」候補位置取り (本サイクル Phase 3 で着地判断)
+(iv) **Phase 1 §6 fixation 観察 C312 = 3 件中 1 件新規** = C306/C314 と同型 (1/3 = 0.33)、C315 (0/3 = 0.00) より復活、但し N=4 fixation 観察継続 (本サイクル kaizen 起票せず履歴節記録のみ)
+
+**関連ファイル**: projects/log_autonomous_game.md (本入力の主接続先、v003 verify.js 評価軸 + small 化路線根拠) / projects/external_search_phase1_fixation.md (本入力で §6 fixation N=4 観察継続、C315 履歴節の続き) / docs/game_dev_foundation.md (本入力で game 軸 3 source 対応表追記候補) / memory/kaizen_tracker.md #135 (T0 ベンチ評価軸 2 層化候補、game 軸でも structural/semantic 二層と同型) / 本ファイル 2026-06-08 Memora/FAMA エントリ (memory 軸 12 件目、game 軸とは別軸の独立到達) / 本ファイル 2026-06-09 MemoryArena エントリ (passive/active gap 軸、本 game 軸とは別軸だが「実装と評価の独立性」原則は共通) / drafts/2026-06-10/post_log_shared_reads_distilling_gamecwm_c312_20260610_POSTED_ts1781040608.py (Slack #shared-reads 投稿済 ts=1781040608.593239)
 
 ---

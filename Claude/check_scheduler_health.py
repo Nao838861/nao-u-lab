@@ -382,6 +382,72 @@ def check_external_promotion_all(result):
             result.fail(name, message)
 
 
+def check_instance_divergence_freshness() -> tuple[str, str]:
+    """log/instance_divergence_observability.log の最終追記時刻を週次基準で評価。
+
+    C306 Phase 4 大作業 — effective_rank_probe.py 週次定点観測ジョブ化。
+    Patel 2604.03809 effective rank の 4 instance source 多様性測定を
+    継続的に取り続け、Mnemonic Sovereignty Forget phase の介入効果検証材料化。
+
+    R-F 順守: effective_rank 最大化は「4 instance source 全員が直近 7d で
+    substantive 投稿を続け、source 間で語彙が分離している時」。本判定関数の
+    出力 (status) を最大化することは目的ではなく、effective_rank の base rate
+    変動を見逃さないことが目的 (Goodhart 直行防止)。
+
+    戻り値: (status, message), status ∈ {"OK", "WARN", "CRITICAL"}
+    判定:
+      - ファイル不在 → CRITICAL「base rate 未記録」
+      - 最終追記から diff < 168h (1週間以内) → OK
+      - 168h ≤ diff < 336h (1-2週間) → OK (週次ジョブ猶予内)
+      - 336h ≤ diff < 504h (2-3週間) → WARN
+      - 504h ≤ diff (3週間以上) → CRITICAL
+    """
+    log_path = REPO_DIR / "log" / "instance_divergence_observability.log"
+    if not log_path.exists():
+        return ("CRITICAL", f"instance_divergence base rate 未記録（ファイル不在: {log_path.name}）")
+
+    latest_ts = None
+    try:
+        with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+            for line in f:
+                s = line.strip()
+                if not s or s.startswith("#"):
+                    continue
+                head = s.split("|", 1)[0].strip()
+                try:
+                    latest_ts = datetime.strptime(head, "%Y-%m-%d %H:%M")
+                except ValueError:
+                    continue
+    except OSError as e:
+        return ("CRITICAL", f"instance_divergence log 読取失敗: {e}")
+
+    if latest_ts is None:
+        return ("CRITICAL", f"instance_divergence base rate 未記録（{log_path.name} に有効行なし）")
+
+    elapsed_sec = time.time() - latest_ts.timestamp()
+    hours = elapsed_sec / 3600
+    if elapsed_sec < 336 * 3600:
+        return ("OK", f"instance_divergence {hours:.1f}h 前（週次猶予内）")
+    if elapsed_sec < 504 * 3600:
+        return ("WARN", f"instance_divergence 2週間ゼロ（最終 = {hours:.1f}h 前）")
+    return ("CRITICAL", f"instance_divergence 3週間ゼロ（最終 = {hours:.1f}h 前）週次ジョブ停止疑い")
+
+
+def check_instance_divergence_all(result):
+    """instance_divergence_observability.log の鮮度を集約レポートに追加。
+
+    instance 別ではなくグローバル 1 件 (4 source 統合測定の単一ログのため)。
+    """
+    status, message = check_instance_divergence_freshness()
+    name = "instance_divergence"
+    if status == "OK":
+        result.ok(name, message)
+    elif status == "WARN":
+        result.warn(name, message)
+    else:
+        result.fail(name, message)
+
+
 def check_git_status(result):
     """gitの状態確認"""
     try:
@@ -448,6 +514,9 @@ def check_mir(result):
     # external_notes 昇格鮮度（案E 本格運用組込）
     check_external_promotion_all(result)
 
+    # instance_divergence base rate 鮮度（C306 Phase 4 週次ジョブ）
+    check_instance_divergence_all(result)
+
     # git
     check_git_status(result)
 
@@ -469,6 +538,9 @@ def check_log_instance(result):
     # external_notes 昇格鮮度（案E 本格運用組込）
     check_external_promotion_all(result)
 
+    # instance_divergence base rate 鮮度（C306 Phase 4 週次ジョブ）
+    check_instance_divergence_all(result)
+
     # git
     check_git_status(result)
 
@@ -489,6 +561,9 @@ def check_ash(result):
 
     # external_notes 昇格鮮度（案E 本格運用組込）
     check_external_promotion_all(result)
+
+    # instance_divergence base rate 鮮度（C306 Phase 4 週次ジョブ）
+    check_instance_divergence_all(result)
 
     # git
     check_git_status(result)

@@ -36,6 +36,10 @@
   // 詳細: hypotheses.md H-001
   const WAVE_A_STAGGER_Y_DEFAULT = 40;
   const WAVE_A_STAGGER_Y_PHASE0 = 168;
+  // C298 Phase 4 H-004: phase 1 (20-50s) wave 内 2 段階 ease-in カーブ。
+  // warmup = 単独 1 体 spawn → WAVE_SUBPHASE_WARMUP_FRAMES (= 120F = 2.0s) 後に main = 残り 2 体 spawn。
+  // phase 0 → phase 1 接続のなめらかさ補強、Q-展開差カーブ採点 +0.2 改善見込み。hypotheses.md H-004
+  const WAVE_SUBPHASE_WARMUP_FRAMES = 120;
 
   const STATE = { TITLE: 'TITLE', PLAYING: 'PLAYING', GAMEOVER: 'GAMEOVER', CLEAR: 'CLEAR' };
 
@@ -73,9 +77,49 @@
     introGhostPhase: 0,
     lockMessage: null, // { text, frame } — Q-成功FB 状態3 (危機回避) 表示用
     lockExplosion: null, // { x, y, frame } — Q-成功FB 状態2 (シアン薄爆発) 表示用
+    cameraShake: null, // { frames, magnitude } — castLock miss 時カメラシェイク (Lin B1.3, SA ドメイン)
+    // C296 Phase 4: castLock SUCCESS 時 particle effect (Lin B1.4, SA ドメイン未着地 1 件)
+    // [{x,y,vx,vy,life}] 各 particle は radial 等間隔、life=12F (200ms) で減衰、半径も縮小。
+    // 描画層のみ (gameplay logic 非変更) = verify.js 4 方針 PASS 維持。
+    // 状態2 シアン薄爆発との視覚棲み分け: 爆発リングは radius 膨張、particles は radial 散布で別軸。
+    successParticles: [],
+    // C297 Phase 4 H-002: wave_clear 瞬間の薄テロップ FB (hypotheses.md H-002)。
+    // Pulse Relay 70-90s カーブ「学習→静寂→展開」の静寂フェーズ意味づけ補強、Q-成功FB 状態 4 候補。
+    // { text, frame } 形式 (lockMessage と同型)、frame セット以降 45F フェード、薄白系 alpha 0.6 max。
+    waveClearMessage: null,
+    // C298 Phase 4 H-003: 次 wave 起動 1 秒前カウントダウン FB (hypotheses.md H-003)。
+    // waveClearMessage 発火から 7 秒 (420F) 経過時に 1 回セット、80F (60F フェードイン + 20F フェードアウト)。
+    // 静寂フェーズ両端意味づけ完成 (H-002 退場側 + H-003 起動側)、Q-成功FB 状態 5 候補。
+    waveCountdownMessage: null,
+    // C298 Phase 4 H-004: phase 1 (20-50s) wave 内 2 段階 ease-in 状態 (hypotheses.md H-004)。
+    // waveSubPhase: 0 = 未 spawn, 1 = warmup spawned (main pending), 2 = main spawned / single-stage wave 済
+    // pendingMainSpawn: phase 1 warmup 後の main 待機タイプ ('A' or 'D')、phase 0/2 は常に null
+    // waveSubPhaseFrame: warmup spawn 時 frame (main spawn 時刻判定の起点)
+    waveSubPhase: 0,
+    pendingMainSpawn: null,
+    waveSubPhaseFrame: null,
+    // C295 Phase 4: 視覚 reward feedback (+1 popup + 連続 hit combo)
+    // 「撃って当てた」相当= castLock SUCCESS (resolveLock hit)。既存 lockMessage/lockExplosion の補強層。
+    // (C301 Phase 4 再着地: daa3b5d48b auto-sync 巻き戻り同型 2 件目、cameraShake C297 着地と同手順)
+    scorePopups: [], // [{ text, x, y, frame, kind }] kind ∈ {'crisis','echo','combo'}
+    combo: { count: 0, lastHitFrame: -9999 }, // COMBO_WINDOW_FRAMES (=180F, 3s) 内連続 hit で count++
+    // window=180F の根拠: castLock 最短サイクル = trail 蓄積 60F + echo 再演 60F = 120F (= 2s)。
+    // 余裕 60F (1s) を加え 180F とすることで「ノーミスで castLock を回し続ける」プレイに対し
+    // combo が継続する設定。窓を最短サイクル未満にすると combo は構造的に成立しない。
     // --- Trace logger (Lap 応答 ts=1779748594/1779748624 整合) ---
     // 1 frame = 1 jsonl 行。state スナップショット + actions_available + action_taken + action_source + event
     trace: { buffer: [], playId: null, startedAt: null, pendingEvent: null },
+    // C305 Phase 3: echo 起点マーカー初回活性化 frame (trail.length が初めて ECHO_FRAMES に到達した瞬間)。
+    // null 時はマーカー非表示、値が入っていれば drawPlaying() でその frame からの経過で
+    // 初期 40F は cosine pulse 揺らぎ alpha (0.32 ± 0.18)、以降は安定 alpha 0.32。
+    // 描画層のみ (gameplay logic 非変更)、verify.js 4 方針 PASS 維持。
+    // H-006 段階化様式 (動作 step) の精神を「視覚 FB の段階化」(視覚 step) に転用する 1mm 改修。
+    markerActivatedFrame: null,
+    // C292 Phase 4 hit stop (C305 Phase 4 再着地: daa3b5d48b 同型 auto-sync 巻き戻り 3 件目)。
+    // castLock SUCCESS 確定 frame で 4 frame (≒67ms) の全 update skip → drawPlaying 継続で freeze。
+    // PH/SA 境界の体感的重み演出。null = inactive。verify.js は game.js を読まない独立シミュレータの
+    // ため bit 一致は自動維持 (camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s)。
+    hitStop: null,
   };
 
   // --- Trace logger ---
@@ -184,6 +228,29 @@
   });
   window.addEventListener('keyup', (e) => { game.keys.delete(e.code); });
 
+  // --- successParticles ---
+  // C296 Phase 4 (B1.4 Particle Effect on castLock success, SA ドメイン未着地 1 件着地):
+  //   resolveLock hit 時に player 位置から radial n 発、life=12F (200ms)、speed=1.5px/frame、
+  //   半径は life に比例して 2.5 → 0 縮小、alpha も life/12 で減衰。
+  // 視覚棲み分け: 状態2 シアン薄爆発 (radius 膨張リング、30F) と状態3 危機回避 (中央テキスト、45F)
+  //   とは別軸 (radial 粒、12F)、3 重畳しても各 frame 内の N=1 強FB 監査 (visual_review §3.1) は
+  //   alpha 0.55 / 寿命 12F / 画面占有 ≤ 6 粒で「強」閾値 (alpha≥0.6 + size≥5%) 未達 = 弱FB 分類維持。
+  function spawnSuccessParticles(cx, cy, n) {
+    const LIFE = 12;
+    const SPEED = 1.5;
+    for (let i = 0; i < n; i++) {
+      const angle = (i / n) * Math.PI * 2;
+      game.successParticles.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * SPEED,
+        vy: Math.sin(angle) * SPEED,
+        life: LIFE,
+        maxLife: LIFE,
+      });
+    }
+  }
+
   // --- castLock / resolveLock ---
   function castLock() {
     // 過去 1 秒の足跡を未来 1 秒の再演軌道として確定
@@ -209,8 +276,46 @@
         // Q-成功FB 状態2: ロック発動時に敵弾なし = 「意味薄」hit、シアン薄爆発で控えめフィードバック
         game.lockExplosion = { x: game.player.x, y: game.player.y, frame: game.frame };
       }
+      // C296 Phase 4: castLock SUCCESS 時 particle 6 発 radial 散布 (B1.4 SA ドメイン)
+      // hadBullets 有無問わず発火 = 成功イベントの共通 base feedback、状態 2/3 と階差で重畳
+      spawnSuccessParticles(game.player.x, game.player.y, 6);
+      // C292 Phase 4 hit stop (C305 Phase 4 再着地): 4 frame (≒67ms) の全 update skip。
+      // resolveLock 確定後にだけ発火 = castLock 判断阻害リスク回避、PH/SA 境界の体感的重み演出。
+      game.hitStop = { frames: 4 };
+      // C295 Phase 4: +1 popup + 連続 hit combo (180F=3s 窓内連続で count++、外で reset to 1)
+      // 「撃って当てた → 即時 +1」相当を castLock SUCCESS に写像。HUD Relay hit:N とは別系統で
+      // 「今この瞬間の成功」を画面中央近傍に短期表示 = pull-and-release のリリース感を 1mm 強化。
+      const COMBO_WINDOW_FRAMES = 180;
+      if (game.frame - game.combo.lastHitFrame <= COMBO_WINDOW_FRAMES) {
+        game.combo.count += 1;
+      } else {
+        game.combo.count = 1;
+      }
+      game.combo.lastHitFrame = game.frame;
+      game.scorePopups.push({
+        text: '+1',
+        x: game.player.x,
+        y: game.player.y - 18,
+        frame: game.frame,
+        kind: e.hadBullets ? 'crisis' : 'echo',
+      });
+      if (game.combo.count >= 2) {
+        game.scorePopups.push({
+          text: 'x' + game.combo.count,
+          x: game.player.x + 22,
+          y: game.player.y - 32,
+          frame: game.frame,
+          kind: 'combo',
+        });
+      }
     } else {
       game.lockResults.miss += 1;
+      // C297 Phase 4: castLock miss 時カメラシェイク (Lin B1.3, C291 着地物の auto-sync 巻き戻り再復元)
+      // magnitude 3px = player r=8 の 38% で過剰でない / 8 frame = 133ms で持続短く制限
+      // 判断中には発火せず resolveLock 確定後にだけ発火 = castLock 判断阻害リスク回避
+      game.cameraShake = { frames: 8, magnitude: 3 };
+      // C295 Phase 4: miss で combo 即リセット (連続成功の重み付けが目的、miss を許容しない)
+      game.combo.count = 0;
     }
     logEvent('echo_resolve', {
       result: e.result,
@@ -247,6 +352,10 @@
     game.player.y = Math.max(game.player.r, Math.min(H - game.player.r, game.player.y));
     game.trail.push({ x: game.player.x, y: game.player.y });
     if (game.trail.length > ECHO_FRAMES * 2) game.trail.shift();
+    // C305 Phase 3: trail.length が初めて ECHO_FRAMES に到達した瞬間を記録 (1 play 中 1 回のみ)。
+    if (game.markerActivatedFrame === null && game.trail.length >= ECHO_FRAMES) {
+      game.markerActivatedFrame = game.frame;
+    }
   }
 
   // --- 敵 A (直進小型) Wave ---
@@ -339,30 +448,173 @@
     return WAVE_TIMELINE[WAVE_TIMELINE.length - 1]; // 90s 超は phase 2 維持
   }
 
-  // v003: phase 2 (50-90s) 内で SHOOT_INTERVAL を線形漸変させる関数。phase 0/1 は既定値 90 を返す。
+  // v003: phase 2 (50-90s) 内で SHOOT_INTERVAL を漸変させる関数。phase 0/1 は既定値 90 を返す。
   // 設計: phase 内密度カーブ平坦を解消 (v002 completion_report §4「does NOT prove」第1項への直処方)。
   //   phase 2 開始時 (50s): 90 frame = 1.5秒間隔
   //   phase 2 末尾 (90s):   60 frame = 1.0秒間隔 (= 射撃頻度 50% 増)
   //   90s 超は SHOOT_INTERVAL_PHASE2_MIN で固定 (90s 完走後の安全側維持)
+  // C293 Phase 4 (Log_cdx 2026-06-04): 漸変カーブを linear → ease-in (t²) に変更。
+  //   逆算側体験ゴール「読みが追いつかない瞬間」 1 mm 試行 (前半 rest 感を残し終盤に圧迫集中)。
+  // C313 Phase 4 (Log 2026-06-08): ease-in (t²) → linear に**再差し戻し**。
+  //   理由: C293 ease-in は「終盤集中」狙いだったが、実機体感未収集のまま 4 サイクル放置で
+  //   linear/ease-in 比較材料ゼロ。原点 linear に戻して **A/B 比較の B 側を再現** = 次回
+  //   実機判定時に「linear がどう感じたか」を Nao_u/Mir/Ash に問える状態に置く。
+  //   linear は「phase 2 全域で徐々に圧迫」= rest_感より「読みの連続更新」を要求する曲線。
+  //   境界値 (90F at 50s / 60F at 90s) は維持 = verify.js 悪手検証への影響なし
+  //   (悪手 4 方針は phase 0 で死亡 = phase 2 曲線形状は悪手検証に届かない)。
   function currentShootInterval(nowFrame) {
     const elapsed = (nowFrame !== undefined ? nowFrame : game.frame - game.playStartFrame);
     const p2 = WAVE_TIMELINE[2]; // {phaseStart: 50*FPS, phaseEnd: 90*FPS, types: ['A','D','C']}
     if (elapsed < p2.phaseStart) return SHOOT_INTERVAL;
     if (elapsed >= p2.phaseEnd) return SHOOT_INTERVAL_PHASE2_MIN;
     const t = (elapsed - p2.phaseStart) / (p2.phaseEnd - p2.phaseStart); // 0..1
+    // linear: phase 2 全域で均一に圧迫を増やす (C293 ease-in t² から差し戻し)
     return Math.round(SHOOT_INTERVAL + (SHOOT_INTERVAL_PHASE2_MIN - SHOOT_INTERVAL) * t);
   }
 
   // wave dispatcher: 現 phase の types 配列を waveCount % types.length でローテ
   // phase 0 (0-20s): [A] → A のみ
-  // phase 1 (20-50s): [A, D] → A, D, A, D, ...
+  //   - wave 1 (waveCount=0): 単段 spawn + H-001 teaser (y-stagger 168px = 空間軸段階化)
+  //   - wave 2+ (waveCount>=1): H-005 で 2 段階 ease-in (時間軸段階化、phase 1 同型)
+  // phase 1 (20-50s): [A, D] → A, D, A, D, ... (H-004: 2 段階 ease-in)
   // phase 2 (50-90s+): [A, D, C] → A, D, C, A, D, C, ...
+  //   - A/D は単段 spawn (phase 1 と同 type だが密度設計を変えて「展開→収束」対比)
+  //   - C は H-006 (C302 Phase 4) で 2 段階 ease-in に拡張。ダイブ 1 体先行 → 2.0s 後 もう 1 体
   function spawnNextWave() {
     const phase = currentPhase();
     const type = phase.types[game.waveCount % phase.types.length];
-    if (type === 'A') spawnWaveA();
-    else if (type === 'D') spawnWaveD();
-    else if (type === 'C') spawnWaveC();
+    // H-004: phase 1 (phaseStart = 20*FPS = 1200F) かつ type A/D のみ 2 段階 ease-in。
+    // H-005: phase 0 (phaseStart = 0) 内の wave 2 以降 (waveCount >= 1) も 2 段階 ease-in に拡張。
+    //   wave 1 (waveCount === 0) は H-001 teaser (静的 stagger) 維持で空間軸段階化、
+    //   wave 2+ は warmup→main で時間軸段階化、phase 0 内で段階化様式が「空間→時間」と進化する設計。
+    // H-006 (C302 Phase 4): phase 2 (phaseStart = 50*FPS = 3000F) 内 type C も 2 段階 ease-in に拡張。
+    //   ダイブ敵 1 体先行 (baseX=W*0.3) → WAVE_SUBPHASE_WARMUP_FRAMES 後 もう 1 体 (baseX=W*0.7)。
+    //   単独ダイブの軌道学習を孤立観測させ、終盤の認知負荷ピークを時間軸で平準化する狙い。
+    const isPhase1 = phase.phaseStart === 20 * FPS;
+    const isPhase0Wave2Plus = phase.phaseStart === 0 && game.waveCount >= 1;
+    const isPhase2C = phase.phaseStart === 50 * FPS && type === 'C';
+    if ((isPhase1 && (type === 'A' || type === 'D')) || (isPhase0Wave2Plus && type === 'A') || isPhase2C) {
+      spawnWaveWarmup(type);
+    } else if (type === 'A') {
+      spawnWaveA();
+    } else if (type === 'D') {
+      spawnWaveD();
+    } else if (type === 'C') {
+      spawnWaveC();
+    }
+  }
+
+  // H-004 (C298 Phase 4): phase 1 wave 内 2 段階 ease-in の第 1 段 (warmup)。
+  // 1 体のみ spawn (i=0 位置)、waveSpawned=true で wave_clear ガード、
+  // pendingMainSpawn セットで step() が WAVE_SUBPHASE_WARMUP_FRAMES 後に main spawn 発火。
+  // waveCount はここでは +1 しない (main spawn 時に初めて +1、次 wave 型決定の整合性維持)。
+  function spawnWaveWarmup(type) {
+    if (type === 'A') {
+      const staggerY = game.waveCount === 0 ? WAVE_A_STAGGER_Y_PHASE0 : WAVE_A_STAGGER_Y_DEFAULT;
+      game.enemies.push({
+        type: 'A',
+        x: W * 0.25, // i=0 位置
+        y: -20,
+        vx: 0,
+        vy: ENEMY_VY_A,
+        r: 10,
+        alive: true,
+        shootCooldown: 60, // i=0: 60 + 0*20
+      });
+      logEvent('wave_warmup', { wave: game.waveCount + 1, type: 'A', count: 1, stagger_y: staggerY });
+    } else if (type === 'D') {
+      game.enemies.push({
+        type: 'D',
+        x: -20, // i=0: fromLeft
+        y: H * 0.30, // i=0
+        vx: ENEMY_VX_D,
+        vy: 0,
+        r: 10,
+        alive: true,
+        shootCooldown: 50, // i=0: 50 + 0*35
+      });
+      logEvent('wave_warmup', { wave: game.waveCount + 1, type: 'D', count: 1 });
+    } else if (type === 'C') {
+      // H-006 (C302 Phase 4): phase 2 type C 2 段階 ease-in 第 1 段 (warmup)。
+      // n=2 中の i=0 のみ spawn。baseX=W*0.3 で左寄り単独ダイブ、軌道学習を孤立観測させる。
+      const baseX = W * 0.3;
+      game.enemies.push({
+        type: 'C',
+        x: baseX,
+        baseX,
+        y: -20,
+        vx: 0,
+        vy: ENEMY_VY_C,
+        r: 10,
+        alive: true,
+        shootCooldown: 9999,
+        spawnFrame: game.frame,
+      });
+      logEvent('wave_warmup', { wave: game.waveCount + 1, type: 'C', count: 1 });
+    }
+    game.waveSpawned = true;
+    game.waveSubPhase = 1;
+    game.waveSubPhaseFrame = game.frame;
+    game.pendingMainSpawn = type;
+  }
+
+  // H-004: phase 1 wave 内 2 段階 ease-in の第 2 段 (main)。残り 2 体 (i=1, i=2) を spawn。
+  // ここで waveCount += 1 (wave 全体完成扱い)、waveSpawned は warmup ですでに true、waveSubPhase=2 に進む。
+  function spawnWaveMain() {
+    const type = game.pendingMainSpawn;
+    if (type === 'A') {
+      const staggerY = game.waveCount === 0 ? WAVE_A_STAGGER_Y_PHASE0 : WAVE_A_STAGGER_Y_DEFAULT;
+      for (let i = 1; i < 3; i++) {
+        game.enemies.push({
+          type: 'A',
+          x: W * (0.25 + i * 0.25),
+          y: -20 - i * staggerY,
+          vx: 0,
+          vy: ENEMY_VY_A,
+          r: 10,
+          alive: true,
+          shootCooldown: 60 + i * 20,
+        });
+      }
+      game.waveCount += 1;
+      logEvent('wave_main', { wave: game.waveCount, type: 'A', count: 2 });
+    } else if (type === 'D') {
+      for (let i = 1; i < 3; i++) {
+        const fromLeft = i % 2 === 0;
+        game.enemies.push({
+          type: 'D',
+          x: fromLeft ? -20 : W + 20,
+          y: H * (0.30 + i * 0.13),
+          vx: fromLeft ? ENEMY_VX_D : -ENEMY_VX_D,
+          vy: 0,
+          r: 10,
+          alive: true,
+          shootCooldown: 50 + i * 35,
+        });
+      }
+      game.waveCount += 1;
+      logEvent('wave_main', { wave: game.waveCount, type: 'D', count: 2 });
+    } else if (type === 'C') {
+      // H-006: 第 2 段 (main)。n=2 中の i=1 を spawn (baseX=W*0.7, y=-20-1*60=-80)。
+      // warmup i=0 と stagger 60px (= 24F @ vy=2.5) + 120F 時間差 で wave 内 2 ダイブが時間軸分節化。
+      const baseX = W * 0.7;
+      game.enemies.push({
+        type: 'C',
+        x: baseX,
+        baseX,
+        y: -20 - 1 * 60,
+        vx: 0,
+        vy: ENEMY_VY_C,
+        r: 10,
+        alive: true,
+        shootCooldown: 9999,
+        spawnFrame: game.frame,
+      });
+      game.waveCount += 1;
+      logEvent('wave_main', { wave: game.waveCount, type: 'C', count: 1 });
+    }
+    game.pendingMainSpawn = null;
+    game.waveSubPhase = 2;
   }
 
   // Q-D: 敵→プレイヤー狙いの単発射撃 (弾自体は発射時の角度で直進 = divergence ゼロ)
@@ -479,6 +731,16 @@
   }
 
   function drawPlaying() {
+    // C297 Phase 4: cameraShake 適用 (castLock miss 時のみ発火、gameplay logic 非変更 = 描画層 translate のみ)
+    let shakeApplied = false;
+    if (game.cameraShake && game.cameraShake.frames > 0) {
+      const m = game.cameraShake.magnitude;
+      ctx.save();
+      ctx.translate((Math.random() * 2 - 1) * m, (Math.random() * 2 - 1) * m);
+      game.cameraShake.frames -= 1;
+      if (game.cameraShake.frames <= 0) game.cameraShake = null;
+      shakeApplied = true;
+    }
     ctx.fillStyle = '#05070b'; ctx.fillRect(0, 0, W, H);
 
     // 再演中の足跡ゴースト (対象物側マーカー方針)
@@ -502,12 +764,35 @@
       // 過去軌道の薄い残像 (Echo 候補のプレビュー)
       const tail = game.trail.slice(-ECHO_FRAMES);
       if (tail.length > 2) {
-        ctx.strokeStyle = 'rgba(120,170,220,0.18)';
+        ctx.strokeStyle = 'rgba(120,170,220,0.22)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(tail[0].x, tail[0].y);
         for (let i = 1; i < tail.length; i++) ctx.lineTo(tail[i].x, tail[i].y);
         ctx.stroke();
+        // C301: Echo 再演の起点 (1秒前、tail[0]) にマーカーを 1 点描画。
+        // 「過去の自分の位置 = 未来道の始まり」を視覚化し、castLock 発動への注意を引く。
+        // 描画のみで update / proxy / instinct_probe には影響しない。
+        // C305 Phase 3: 初回活性化直後 40F (= 約 0.67s) は cosine pulse で揺らぎを与え、
+        // 「castLock 発動可能になった瞬間」を視覚 step として強調。以降は安定 alpha 0.32。
+        // alpha 上限 0.50 で「強FB 閾値 (≥0.6)」未達維持、state 3 危機回避メッセージとの
+        // 同 frame 強FB N≥2 WARN 抵触なし (visual_review.md §3.1 順守)。
+        if (game.trail.length >= ECHO_FRAMES) {
+          let alpha = 0.32;
+          if (game.markerActivatedFrame !== null) {
+            const age = game.frame - game.markerActivatedFrame;
+            if (age < 40) {
+              const t = age / 40; // 0 → 1
+              const envelope = 1 - t; // 線形減衰 (1 → 0)
+              // cosine 周期 = 20F (= 約 0.33s) で揺らぎ、減衰 envelope で fade out
+              alpha = 0.32 + Math.cos(age * Math.PI / 10) * 0.18 * envelope;
+            }
+          }
+          ctx.fillStyle = `rgba(120, 170, 220, ${alpha})`;
+          ctx.beginPath();
+          ctx.arc(tail[0].x, tail[0].y, 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
       // Q-成功FB 状態1: castLock 発動不可 (trail < ECHO_FRAMES = 1秒未満の足跡) → グレー薄リング常時表示
       // 「今は撃てない」を視覚化、足跡が溜まるほどリングを閉じていく (進捗バー兼)
@@ -573,6 +858,25 @@
       ctx.stroke();
     }
 
+    // C296 Phase 4: successParticles 更新+描画 (B1.4 SA ドメイン)
+    // 各 frame で位置更新 + life デクリメント、life ≤ 0 で削除。
+    // alpha = life/maxLife (0.55 max, 状態2 alpha 0.32 より高めだが「強」閾値 0.6 未満維持)
+    for (const p of game.successParticles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= 1;
+    }
+    game.successParticles = game.successParticles.filter(p => p.life > 0);
+    for (const p of game.successParticles) {
+      const t = p.life / p.maxLife; // 1 → 0
+      const alpha = t * 0.55;
+      const radius = t * 2.5;
+      ctx.fillStyle = `rgba(140, 230, 255, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
     // Q-成功FB 状態3: 危機回避メッセージ (resolveLock 後 45 フレーム = 0.75秒表示)
     if (game.lockMessage && game.frame - game.lockMessage.frame < 45) {
       const age = game.frame - game.lockMessage.frame;
@@ -583,6 +887,60 @@
       ctx.fillText(game.lockMessage.text, W * 0.5, H * 0.42);
     }
 
+    // C295 Phase 4: scorePopups 描画 (+1 / xN combo)、age 0..24F (400ms) で上昇しつつ fade out
+    // kind 別配色: crisis=赤(危機回避hit) / echo=青(意味薄hit) / combo=橙(連続強調)
+    // C302 Phase 3: crisis popup alpha を state 3 (lockMessage) alpha と乗算同期 — 同frame 強FB N=2 WARN
+    // (visual_review §V-09 反証ライン c) の緩和。state 3 と crisis は hadBullets=true で同情報二重表現の関係に
+    // あるため、state 3 alpha カーブ (1 - age/45) を crisis popup alpha に乗算することで「state 3 支配 +
+    // crisis 補助」の階差を構造化、強FB N=2 → 強1+弱1 として強度依存統合する。echo/combo は不変。
+    const POPUP_LIFE_FRAMES = 24;
+    for (const p of game.scorePopups) {
+      const age = game.frame - p.frame;
+      if (age >= POPUP_LIFE_FRAMES) continue;
+      const t = age / POPUP_LIFE_FRAMES;
+      let alpha = 1 - t;
+      if (p.kind === 'crisis' && game.lockMessage && game.frame - game.lockMessage.frame < 45) {
+        const lockAge = game.frame - game.lockMessage.frame;
+        const lockAlpha = 1.0 - lockAge / 45;
+        alpha = alpha * lockAlpha;
+      }
+      const yOffset = -t * 14;
+      let color;
+      if (p.kind === 'crisis') color = `rgba(255, 110, 90, ${alpha})`;
+      else if (p.kind === 'echo') color = `rgba(170, 220, 255, ${alpha})`;
+      else color = `rgba(255, 200, 130, ${alpha})`;
+      ctx.fillStyle = color;
+      ctx.font = p.kind === 'combo' ? 'bold 16px sans-serif' : 'bold 14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(p.text, p.x, p.y + yOffset);
+    }
+    game.scorePopups = game.scorePopups.filter(p => game.frame - p.frame < POPUP_LIFE_FRAMES);
+
+    // C297 Phase 4 H-002: wave_clear 薄テロップ (45F フェード、画面上端寄り H*0.18、castLock 系シアンと
+    // 色相分離した薄白系、alpha 0.6 max、フォント 14px、静寂フェーズ意味づけ補強。hypotheses.md H-002)
+    if (game.waveClearMessage && game.frame - game.waveClearMessage.frame < 45) {
+      const age = game.frame - game.waveClearMessage.frame;
+      const alpha = (1.0 - age / 45) * 0.6;
+      ctx.fillStyle = `rgba(180, 220, 255, ${alpha})`;
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(game.waveClearMessage.text, W * 0.5, H * 0.18);
+    }
+
+    // C298 Phase 4 H-003: 次 wave 起動 1 秒前カウントダウン FB (静寂フェーズ末尾の起動側意味づけ)。
+    // 80F 寿命 (60F フェードイン + 20F フェードアウト)、薄白系 alpha 0.5 max、フォント 12px、H*0.18 配置。
+    // H-002 と同 line + 同色相 + 同位置で「静寂両端」を対称表現、内容は "Wave N+1" (未来化)。hypotheses.md H-003
+    if (game.waveCountdownMessage && game.frame - game.waveCountdownMessage.frame < 80) {
+      const age = game.frame - game.waveCountdownMessage.frame;
+      const alpha = age < 60
+        ? (age / 60) * 0.5            // フェードイン: 0.0 → 0.5 (60F)
+        : (1.0 - (age - 60) / 20) * 0.5; // フェードアウト: 0.5 → 0.0 (20F)
+      ctx.fillStyle = `rgba(180, 220, 255, ${alpha})`;
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(game.waveCountdownMessage.text, W * 0.5, H * 0.18);
+    }
+
     // HUD (最小): Relay (hit/miss/idle)
     ctx.fillStyle = '#9aa9c2';
     ctx.font = '12px monospace';
@@ -591,6 +949,18 @@
     ctx.textAlign = 'right';
     const elapsedSec = Math.floor((game.frame - game.playStartFrame) / FPS);
     ctx.fillText(`wave:${game.waveCount}  t:${elapsedSec}s`, W - 8, 16);
+
+    // C295 Phase 4: COMBO HUD (上中央、count>=2 時のみ)、180F 経過で fade
+    if (game.combo.count >= 2) {
+      const sinceLast = game.frame - game.combo.lastHitFrame;
+      const alpha = Math.max(0.35, 1 - sinceLast / 180);
+      ctx.fillStyle = `rgba(255, 200, 130, ${alpha})`;
+      ctx.font = 'bold 14px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`COMBO x${game.combo.count}`, W * 0.5, 18);
+    }
+
+    if (shakeApplied) ctx.restore();
   }
 
   function drawGameOver() {
@@ -626,6 +996,17 @@
     game.idleSince = 0;
     game.lockMessage = null;
     game.lockExplosion = null;
+    game.cameraShake = null;
+    game.successParticles = [];
+    game.waveClearMessage = null;
+    game.waveCountdownMessage = null;
+    game.waveSubPhase = 0;
+    game.pendingMainSpawn = null;
+    game.waveSubPhaseFrame = null;
+    game.scorePopups = [];
+    game.combo = { count: 0, lastHitFrame: -9999 };
+    game.markerActivatedFrame = null;
+    game.hitStop = null;
     startTrace();
   }
 
@@ -636,23 +1017,54 @@
       drawTitle();
       if (game.spaceEdge) { resetForPlay(); game.state = STATE.PLAYING; }
     } else if (game.state === STATE.PLAYING) {
+      // C292 Phase 4 hit stop guard (C305 Phase 4 再着地): hitStop.frames > 0 の間、全 update を skip して
+      // drawPlaying のみ継続 = freeze 描画。frames カウントダウン、0 で hitStop = null。trace logger も
+      // pushTraceFrame() が呼ばれないため frame 連続性は hit stop 中に「飛ぶ」(v004 proxy 化時の留意点)。
+      if (game.hitStop && game.hitStop.frames > 0) {
+        game.hitStop.frames -= 1;
+        if (game.hitStop.frames <= 0) game.hitStop = null;
+        drawPlaying();
+        game.spaceEdge = false;
+        requestAnimationFrame(step);
+        return;
+      }
       if (game.spaceEdge) castLock();
       updatePlayer();
       updateEcho();
       // Wave が全て退場したら lastClearFrame 記録 (静寂ガード材料)
-      if (game.waveSpawned && game.enemies.length === 0) {
+      // H-004: pendingMainSpawn 中 (warmup spawned, main 未 spawn) は wave_clear ガード対象外。
+      // warmup を 120F 内に倒しても main spawn 前に wave_clear が走ると本 wave が中断扱いになる。
+      if (game.waveSpawned && game.enemies.length === 0 && !game.pendingMainSpawn) {
         game.waveSpawned = false;
         game.lastClearFrame = game.frame;
+        // H-002: 静寂フェーズ意味づけ補強、45F フェード薄テロップ (hypotheses.md H-002)
+        game.waveClearMessage = { text: 'Wave ' + game.waveCount + ' Clear', frame: game.frame };
         logEvent('wave_clear', { wave: game.waveCount });
+      }
+      // H-003: 静寂フェーズ末尾 (7 秒経過時 = 残 60F = WAVE_REST_FRAMES の 7/8) で次 wave カウントダウン FB を 1 回起動
+      // waveClearMessage.frame との大小比較で wave_clear ごとに 1 回だけセット (hypotheses.md H-003)
+      if (game.waveClearMessage
+          && game.frame - game.waveClearMessage.frame >= 7 * FPS
+          && (game.waveCountdownMessage === null || game.waveCountdownMessage.frame < game.waveClearMessage.frame)) {
+        game.waveCountdownMessage = { text: 'Wave ' + (game.waveCount + 1), frame: game.frame };
+        logEvent('wave_countdown', { next_wave: game.waveCount + 1 });
       }
       // 初回 wave (waveCount=0) は即起動、wave 2+ は前 wave clear から 8 秒静寂後に起動
       // (Pulse Relay 70-90s カーブ第 1 段: 学習→静寂→展開、Nao_u 5/26 06:10「展開なし反復」直対応)
       const restElapsed = game.waveCount === 0
         || (game.lastClearFrame !== null && game.frame - game.lastClearFrame >= WAVE_REST_FRAMES);
       if (!game.waveSpawned && restElapsed && game.frame % 2 === 0) spawnNextWave();
+      // H-004: phase 1 wave 内 main spawn (warmup から WAVE_SUBPHASE_WARMUP_FRAMES = 120F = 2.0s 後)
+      if (game.pendingMainSpawn && game.frame - game.waveSubPhaseFrame >= WAVE_SUBPHASE_WARMUP_FRAMES) {
+        spawnWaveMain();
+      }
       updateEnemies();
       updateBullets();
       checkCollisions();
+      // C295 Phase 4: combo 切れ判定 (lastHitFrame から 180F 超過で HUD/連続カウントリセット)
+      if (game.combo.count > 0 && game.frame - game.combo.lastHitFrame > 180) {
+        game.combo.count = 0;
+      }
       // idle (Q-成功FB 状態3 未立): 3 秒以上 lock なしで idle カウント
       if (!game.echo && game.frame - game.idleSince > FPS * 3) {
         game.lockResults.idle += 1;

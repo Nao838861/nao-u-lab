@@ -24,6 +24,15 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定)]
 4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。30 日以上動きがない `postponed` / `needs_review` candidate は fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
 
+## encoding-safe audit contract
+
+日本語 `.md` の文字化けを issue 化する前に、source file の破損と表示・tooling 経路の mojibake を切り分ける。
+
+- 対象 `.md` は UTF-8 を明示して読む。PowerShell や staging 表示だけの mojibake を source file 破損として扱わない。
+- mojibake を見つけた場合、staging には `source_file_status` と `display_or_tooling_status` を分けて書く。
+- `memory/MEMORY.md` を疑う場合は、代表語 probe として `記憶`, `ゲーム設計`, `敵パターン`, `評価軸` が UTF-8 読みで取得できるか確認する。
+- UTF-8 読みで代表語が取得できる場合、`memory/MEMORY.md` 本文の再生成や手修復を Phase 4a issue にしない。必要なら表示経路の問題として記録する。
+
 ## やること (問題抽出)
 
 ゲーム制作の経験を次の制作に活かせるかという観点で issue を列挙:
@@ -45,6 +54,8 @@ issues:
     description: <問題の内容>
     severity: low | medium | high
     evidence: <具体的な file/atom の参照>
+    source_file_status: <source file 自体の状態。encoding 問題では UTF-8 明示読みの結果を書く>
+    display_or_tooling_status: <表示経路・shell・staging などの状態。該当しなければ none>
     why_blocks_game_memory: <次のゲーム制作にどう影響するか>
 recommendation:
   needs_design: true | false  # Phase 4b を起動すべきか

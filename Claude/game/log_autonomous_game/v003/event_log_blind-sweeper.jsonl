@@ -1,0 +1,12 @@
+{"t":0,"kind":"spawn","actor_id":"W1-A0","payload":{"type":"A","x":160,"y":-20}}
+{"t":0,"kind":"spawn","actor_id":"W1-A1","payload":{"type":"A","x":320,"y":-188}}
+{"t":0,"kind":"spawn","actor_id":"W1-A2","payload":{"type":"A","x":480,"y":-356}}
+{"t":73,"kind":"spawn","actor_id":"b0","payload":{"type":"bullet","x":160,"y":83.60000000000004,"from":"W1-A0"}}
+{"t":163,"kind":"spawn","actor_id":"b1","payload":{"type":"bullet","x":160,"y":209.60000000000053,"from":"W1-A0"}}
+{"t":213,"kind":"spawn","actor_id":"b2","payload":{"type":"bullet","x":320,"y":111.6000000000006,"from":"W1-A1"}}
+{"t":253,"kind":"spawn","actor_id":"b3","payload":{"type":"bullet","x":160,"y":335.59999999999945,"from":"W1-A0"}}
+{"t":303,"kind":"spawn","actor_id":"b4","payload":{"type":"bullet","x":320,"y":237.6000000000011,"from":"W1-A1"}}
+{"t":343,"kind":"spawn","actor_id":"b5","payload":{"type":"bullet","x":160,"y":461.5999999999974,"from":"W1-A0"}}
+{"t":353,"kind":"spawn","actor_id":"b6","payload":{"type":"bullet","x":480,"y":139.59999999999937,"from":"W1-A2"}}
+{"t":378,"kind":"collide","actor_id":"player","payload":{"by":"bullet","with":"b3","x":327.7188640703963,"y":523.6807875221043}}
+{"t":378,"kind":"state_change","actor_id":"player","payload":{"prev":"alive","next":"dead"}}

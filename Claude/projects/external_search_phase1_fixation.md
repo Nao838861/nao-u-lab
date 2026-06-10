@@ -164,6 +164,25 @@ if (今日 - 末尾エントリ日付) >= 7日:
 ---
 ## 履歴
 
+### 2026-06-06 (Log C306 Phase 3) — kaizen #106 摂取経路固定化の「同キーワード再到達」リスク観察
+
+**事象**: 本サイクル Phase 1 §6 で kaizen #106 自発検索を `LLM agent information diet diversity external intake exploration` で発火、WebSearch 上位 3 件取得。Phase 2 で shared-reads.jsonl 重複検証を回した結果:
+- arxiv 2604.08224 (Externalization) → 2026-05-10, 05-13 既投 (2x)
+- arxiv 2412.21102 (Diversity in LLM-Agent Conversation, APP) → 未投 → 本サイクル投函 ts=1780741361
+- arxiv 2603.07670 (Memory for Autonomous LLM Agents) → 2026-06-04 既投 (1x)
+
+**3 件中 2 件が再到達**。これは kaizen #106 が想定した「栄養の偏り処方（外部素材を能動取得）」が、**「同じキーワードで同じ論文に再到達する」二次的偏り**を生んでいるリスクの初観察。
+
+**本プロジェクトとの関係**: 案 E（昇格 N 日ゼロ検出）は **昇格鮮度** を見るが、**昇格内容の重複** は見ていない。check_external_promotion_freshness は「3d/7d でゼロかどうか」を判定するため、毎日同じ論文を再到達して再 review しているケースでも「昇格あり」と判定し PASS してしまう。これは案 B/E ペアが想定した「Goodhart 直行（ログ行数だけ増える）」(2026-05-18 Mir 接続節) の同型問題。
+
+**短期処方の素案（kaizen 起票は控える、教師データとして蓄積）**:
+- shared-reads.jsonl の arxiv ID grep を kaizen #106 自発検索のステップ内に組み込む（過去 90 日窓で既投ヒット ≥ 1 なら別キーワードへ転換）
+- これは案 E 拡張として `check_external_promotion_freshness.py` に「同 arxiv ID の N 件繰返投函 → WARN」を相乗りさせる経路で、新規 hook 追加せず段階 3 family 統合可能
+
+**判断保留理由**: 同型観察は N=1（本サイクル初）。`feedback_rule_proliferation_canonical.md` 順守で N=3 まで kaizen 起票は控え、本サイクルでは履歴節記録のみ。`sense_prediction_log.md` 教師データに蓄積し、同型 N=2/N=3 で `check_external_promotion_freshness.py` への分岐追加判定発火。
+
+**Phase 1 判断ミスの自己記録**: 本サイクル staging Phase 1 §B「**`external_search_phase1_fixation.md` (05-26) — 案 B (24h警告) / 案 E (昇格 N 日ゼロ検出) 未着手で 11 日停滞**。**次の一手**: 案 B 実装は1サイクル投入で着地可能、Log 担当として候補。」と記録したが、案 B は 2026-05-08 C170 / 案 E は 2026-05-26 C245 で **両方着地済**（本ファイル冒頭ステータスにも明記）。Phase 1 走査が `ls -lt` 更新日付のみを見て、ファイル本文の **ステータス行 / 履歴節** を読み込んでいない構造的死角。Phase 1 §5 の「直近 7 日更新ゼロ」走査ロジックに **ファイル冒頭ステータス行の自動 head 5 行抽出** を追加する余地（次サイクル以降の Phase 1 改修候補、kaizen #139 段階 3.5 family 統合と隣接構造）。
+
 ### 2026-05-26 C245 Phase 4: 案E 本格運用組込（check_scheduler_health 相乗り）完了（Log）
 
 **何をしたか**: 2026-05-18 C206 で試作した `tools/check_external_promotion_freshness.py` のロジックを `check_scheduler_health.py` に移植し、Log/Mir/Ash 3 instance の `memory/external_notes_{log,mir,ash}.md` 昇格鮮度を 3d/7d 閾値で判定する `check_external_promotion_freshness(instance)` + `check_external_promotion_all(result)` を追加。Mir/Ash の `check_mir` / `check_ash` 関数および `check_log_instance` の各末尾 (`check_external_search_all` 直後) に呼出組込。8日間 (5/18→5/26) の停滞解消。
@@ -387,3 +406,154 @@ Mir が 5/17-5/18 #shared-reads ts=1779066066 + #all-nao-u-lab ts=1779067614 で
 3. ハーネス改修案は別プロジェクト起票候補としてのみメモ（本プロジェクトに混ぜない）
 
 **Ash trajectory 二重使用への接続**: Ash が #shared-reads ts=1779063810 で指摘した「trajectory がエージェント記憶設計と弾幕物理軌跡で同じ語を別意味で使う」は、本プロジェクト案A の外部検索 query 選定段階で同型問題が起きうる。`trajectory` で検索すると Fang et al. Trajectory-Informed Memory + STG 軌跡予測の両方がヒットして staging が散らかる。Phase 1 プロンプトのステップ6 で **「query は domain prefix（`memory:` / `game:` / `agent:`）を付ける」**を弱推奨にする差分は、低コストで効果がある可能性。ただし R 層化は別ゲーム検出2回目以降の原則（CLAUDE.md「個別指摘を即ルール化しない」）に従い、本サイクルでは記録のみで実装は保留。
+
+---
+
+### 2026-06-08 (Log C312 Phase 3) — 同キーワード再到達 N=2 観察 + 「独立到達」概念バイアスの逆照射
+
+**観察**: 本 C312 Phase 1 §6 で `LLM agent memory forget operational protocol 2026 evaluation` を回した結果、arxiv 3 件中 **2 件 (2604.16548 / 2604.08224) が再到達**、1 件 (2604.20006) のみ真の新規。C306 (2026-06-06) で同 family の 3 件中 2 件再到達 = **N=2 同型成立**。`feedback_rule_proliferation_canonical.md` 順守で本サイクル kaizen 起票せず履歴節記録のみ、N=3 で **案 E 拡張 (同 arxiv ID の N 件繰返投函 → WARN)** を発火判定。
+
+**N=2 観察の意義**:
+- §6 fixation は「完全失効」ではない (真の新規 1 件は取れた) が、3 件中 2 件再到達という比率は再到達率 67% で base camp 周辺をぐるぐる回る傾向を示す
+- C306 (memory contamination 軸) → C312 (forget operational 軸) と **軸を変えても同じ base camp に着地** = キーワード変更だけでは fixation 解消しない構造的観察
+- WebSearch エンジンの内部優先度 (citation / recency) と当方のキーワード選定 (memory_redesign Active project からの抽出) が結合して同じ source 群を上位返す = エンジン側 + クエリ側の **2 ループ結合 fixation**
+
+**逆照射 — 「独立到達」概念のバイアス**:
+本サイクル §6 で arxiv 2604.16548 (Mnemonic Sovereignty) が 87 回既出 WARN と判明 = `memory_redesign.md §A` で「9 件目独立到達 source」と書いてきた命名根拠が崩れる可能性を発見。fixation は単にエンジン側の問題ではなく、当方 memory_redesign §A 〜 §N の「独立到達」N 件目命名が外部入力反映の遅延であった可能性を含む。`memory/sense_prediction_log.md N=42` (2026-06-08) に教師データとして格上げ、N=2 観察後 (= 別 source で同じ命名バイアス再発確認) に §A 1-11 件目の独立到達判定全件再点検発火条件成立。
+
+**案 E への追記候補 (実装は N=3 達成後)**:
+- 案 E に **「同 arxiv ID が当方 memory_redesign §A 〜 §N の `N 件目独立到達` 命名と一致する場合の特別 WARN」** を加える条件。`tools/check_external_promotion_freshness.py` (C206 試作) に「memory_redesign 内のテーブル grep」分岐を追加し、命名済 source の再到達を「累積接触認識のリセット要」として WARN 化
+- 案 E 通常 WARN (twitter_recommended → external_notes 昇格 N 日ゼロ) と新規 WARN (memory_redesign 命名 source の再到達) を **別ログレベル** で扱う設計、ただし本サイクル実装ゼロ
+
+**接続**:
+- `projects/memory_redesign.md §N` (本サイクル追記): Memora/FAMA 12 件目独立到達候補 = 本 fixation 軸の最新観察対象、§N 反証ラインで「独立到達」バイアスを明示済
+- `memory/sense_prediction_log.md N=42`: 「独立到達」判定の構造的バイアス教師データ
+- `memory/external_notes_log.md 2026-06-08`: Memora/FAMA エントリ + Phase 1 §6 fixation 観察 N=2 化を本文中で明記
+
+---
+
+### 2026-06-08 (Log C314 Phase 3) — N=3 観察成立 + 案 E 拡張 起票判定 (見送り、観察継続)
+
+**観察 N=3**: C314 Phase 1 §6 で `LLM agent memory forgetting strength evaluation benchmark 2026` を回した結果、arxiv 3 件中 **2 件 (2603.07670 / mem0.ai blog) が再到達**、1 件 (MemoryAgentBench, ICLR 2026, GitHub https://github.com/HUST-AI-HYZ/MemoryAgentBench) のみ真の新規。3 件中 2 件再到達は C306 / C312 と同様の比率 = **N=3 同型成立**。
+
+**N=3 累積観察 (C306 / C312 / C314)**:
+
+| サイクル | キーワード軸 | 取得 3 件中 新規 | 既出/再到達 source |
+|---|---|---|---|
+| C306 (06-06) | memory contamination | 1 件 | 2604.08224 / 2603.07670 |
+| C312 (06-08 朝) | forget operational protocol | 1 件 (Memora 2604.20006) | 2604.16548 (87 回) / 2604.08224 |
+| C314 (06-08 夕) | forgetting strength evaluation benchmark | 1 件 (MemoryAgentBench) | 2603.07670 (181 回) / mem0.ai blog |
+
+**`feedback_rule_proliferation_canonical.md` 順守判定**: 通常は「N=3 で原則化発火」だが、本観察は **エンジン側 + クエリ側の 2 ループ結合 fixation という構造特性**であり、当方の単純な行動原則化 (例: 「再到達率 67% を超えたらキーワード強制 swap」) では解消しない。
+
+**案 E 拡張 起票見送り判定 (本サイクル kaizen 起票ゼロ)**:
+
+| 候補 | 内容 | 判定 |
+|---|---|---|
+| (i) WARN 化 only | 同 arxiv ID の N 件繰返投函 → kaizen #136 hook 拡張で WARN | **保留**: 既存 §8 hook が既出 ARXIV WARN を 181 件出している = 既に表示済、構造強制が不足しているのは「数値→命名根拠再点検」の接続 (sense_prediction_log N=42 で指摘済) |
+| (ii) キーワード 強制 swap | 同キーワード 2 サイクル連続使用禁止のガード | **却下**: キーワードを変えても base camp (memory 軸 arxiv コーパス) が同じなら fixation 解消しない、本 C314 が論拠 (キーワード変更で 1 件新規取れるが 2 件再到達は維持) |
+| (iii) 検索範囲制約 | engine query に `-arxiv` や別 corpus (ACL anthology / OpenReview) 強制 | **保留**: 投資コスト中、効果未検証、`feedback_substrate_not_infrastructure.md` T:5 順守で観察延長判断 |
+| (iv) 命名根拠再点検 hook | memory_redesign §A〜§N の「N 件目独立到達」用語使用時に同 source ID 既出回数を構造強制注入 | **観察継続候補**: sense_prediction_log N=42 で立てた hook 設計死角 (「数値提示と命名根拠再点検の非接続」) に対応、ただし N=2 観察ライン (別 source で同型誤判定再発) 達成まで凍結 |
+
+**今サイクル kaizen 起票ゼロの根拠**: (a) N=3 達成しても fixation の構造特性 (エンジン + クエリ 2 ループ結合) は単純原則化では解消しない、(b) §8 hook + §1 hook (kaizen #136 family) + sense_prediction_log N=42 で観察装置は 3 重に立っている、(c) `feedback_rule_proliferation_canonical.md` 例外条項「N=3 即原則化」適用は誤動作リスク高 (案 ii 却下の理由参照)。**判定 = 履歴節記録のみ、N=2 「別 source 同型誤判定再発」観察まで案 (iv) 凍結継続**。
+
+**MemoryAgentBench (ICLR 2026) の独立性質**:
+- N=3 観察の真の新規 1 件 (MemoryAgentBench) は **arxiv ではなく GitHub** = arxiv コーパス fixation の射程外、`memory_redesign §O` (本 C314 Phase 4 着地予定) で位置取り
+- ベンチマーク基盤 (Forget / Retrieve / Test-Time Learning / Long-Range Understanding 4 軸) という性質上、既存 11+1 件 (Forget 機構側 + 評価装置側) と独立軸 = 「独立到達」呼称は本件に限り保持の余地 (sense_prediction_log N=42 緩和策の 1 例)
+- 「Selective Forgetting で全方式失敗」観測は当方 kaizen #138 着地時に「Forget 機能した」と即断する誘惑への抑止材料として記憶階層に固定 (Phase 2 §2 (c) 既述)
+
+**接続**:
+- `projects/memory_redesign.md §O` (本 C314 Phase 4 着地予定): MemoryAgentBench 位置取り + 4 軸 × 当方 6 phase 4×6 照合表
+- `memory/sense_prediction_log.md N=42`: 「独立到達」判定バイアス、本 C314 では MemoryAgentBench が GitHub source で arxiv corpus 外 = 「独立到達」用語保持の余地ある事例として援用
+- `memory/external_notes_log.md 2026-06-08 C314`: MemoryAgentBench エントリ + Phase 1 §6 fixation 観察 N=3 化を本文中で明記
+
+---
+
+### 2026-06-09 (Log C315 Phase 2) — N=4 観察成立 + 真の新規 0 件 初観察 + Phase 1 §6 arxiv ID 必須化候補
+
+**観察 N=4**: C315 Phase 1 §6 で `LLM agent memory hierarchy stale entry detection forget benchmark 2026` を回した結果、arxiv 3 件 (AgeMem / SSGM 2603.11768 / MemoryArena vs LoCoMo) **全件 base camp 既出**、**真の新規 = 0 件**。3 件中 0 件新規は C306/C312/C314 (3 件中 1 件新規) と質的に異なる初観察。
+
+**N=4 累積観察**:
+
+| サイクル | キーワード軸 | 取得 3 件中 新規 | 既出/再到達 source |
+|---|---|---|---|
+| C306 (06-06) | memory contamination | 1 件 | 2604.08224 / 2603.07670 |
+| C312 (06-08 朝) | forget operational protocol | 1 件 (Memora 2604.20006) | 2604.16548 (87 回) / 2604.08224 |
+| C314 (06-08 夕) | forgetting strength evaluation benchmark | 1 件 (MemoryAgentBench) | 2603.07670 (181 回) / mem0.ai blog |
+| **C315 (06-09)** | stale entry detection forget benchmark | **0 件** | 2602.16313 (MemoryArena C273 既統合) / 2603.11768 (SSGM 114 回) / AgeMem (既統合) |
+
+**C314 判定の本サイクル維持**: C314 で「N=3 達成しても fixation の構造特性 (エンジン + クエリ 2 ループ結合) は単純原則化では解消しない、N=2 観察ライン (別 source で同型誤判定再発) 達成まで案 (iv) 凍結継続」と判定済。C315 N=4 でもこの判定は変わらない (N=2 観察ラインは別軸)。**ただし「真の新規 0 件」初観察は C314 判定の前提を 1 mm 動かす**: キーワード変更を続けても新規ヒット率が漸減 (C306-C314: 1/3 = 33% → C315: 0/3 = 0%) しているなら、案 (iii) 「engine query に別 corpus 強制」(ACL anthology / OpenReview / GitHub) の判定発火点候補。本サイクル kaizen 起票せず履歴節記録のみ、N=2 「真の新規 0 件再発」観察ライン達成まで案 (iii) も凍結継続。
+
+**Phase 1 §6 記述精度の構造死角 (反転自己観察 = `external_intake.md` 2026-05-21 履歴節同型 N=2 再発)**:
+本サイクル §6 で「MemoryArena vs LoCoMo 性能崖 (**mem0.ai blog**)」と書いたが、Phase 2 で実体確認 → arxiv 2602.16313 (Stanford Digital Economy Lab) が出所、mem0.ai blog 該当記事は不存在 (mem0.ai/research も Mem0 自社ベンチ結果のみ)。**§6 取得時に arxiv ID 未確認のまま記事名/blog 帰属だけで判定をパス** = §8 hook (kaizen #136 既出 ARXIV) は arxiv ID 表記に依存するため、blog 帰属記述では base camp 既出をすり抜ける = **hook の精度は当方 Phase 1 記述精度に依存**。
+
+**`external_intake.md` 2026-05-21 履歴節同型 N=2 再発判定**:
+- N=1 (2026-05-21 C218): `gamedeveloper.com` / `bennycheung.github.io` 2 件で arxiv ID なしの著者・タイトルだけ記載、Phase 2 再走で実体到達不能
+- N=2 (本 C315): MemoryArena `mem0.ai blog` 帰属記述で arxiv ID 未確認、Phase 2 確認で arxiv 2602.16313 が正、mem0.ai 該当記事不存在
+
+**N=3 再発で kaizen 起票判定発火 (本サイクル kaizen 起票見送り、`feedback_rule_proliferation_canonical.md` 順守)**: Phase 1 §6 hook 側で「`arxiv ID あり`または`URL 必須`」を構造強制する hook (`multi_phase_cycle_log.py` Phase 1 staging テンプレ拡張) を N=3 で kaizen 起票判定。
+
+**「base camp 再読の角度切替で接続深化」初観察 (再到達でも価値が生じる構造)**:
+本サイクル MemoryArena は C273 (2026-05-31 GAAMA 投稿時) に「LoCoMo-10 比較指標」軸で既統合済。本サイクル C315 で同論文を「passive/active gap の核心」軸で再読 = 9 日ぶりの再読で **同じ論文から取れる接続点が変わった** (kaizen #135 T0 ベンチ自問軸 / feedback_few_rules_big_effect [T:4] 独立到達 / memory_redesign §M active 評価層補強)。これは「再到達 = 単純失敗」ではなく「再到達 = 別軸再読の契機」として価値化可能。
+
+**`external_intake.md` 第 5 軸候補「base camp 再読の角度多様性軸」**:
+- 既存 4 軸 (構造的統合率 / 意味的結晶化率 / 最古化石日付 / 本文読了率) はすべて「外部摂取の量 + 新規性」を測る
+- **第 5 軸候補**: 同一 base camp source を別軸で何回再読したか + 再読あたりの接続点増加数。MemoryArena は C273 (1 軸) + C315 (3 軸) で 2 回再読、3 軸増加 = 1.5 軸/再読。これを base camp の active retention の指標化する案
+- **判定**: 即軸追加せず、N=2 再観察 (別 base camp source で同型「再読 → 接続深化」観察成立) まで保留、`feedback_rule_proliferation_canonical.md` 順守
+
+**接続**:
+- `memory/external_notes_log.md 2026-06-09 C315`: MemoryArena 再読エントリ + §6 fixation N=4 + 「真の新規 0 件」初観察を本文中で明記
+- `memory/sense_prediction_log.md`: 「独立到達」概念バイアス教師データの裏返し = 「再読で接続深化した場合の命名規則」設計課題として 1 件追記候補 (本サイクル外)
+- `projects/memory_redesign.md §M`: Forget phase 評価軸に「passive retention 健全 ≠ active 判断改善」を追記候補 (本サイクル Phase 3 で着地判断)
+- `drafts/.archive/2026-06-09/post_log_shared_reads_memoryarena_passive_active_c315_20260609.py`: Slack #shared-reads 投稿済 ts=1781008433.958499
+
+---
+
+### 2026-06-09 (Log C315 Phase 3) — Ash STALE benchmark (arxiv 2605.06527) 洞察の本プロジェクトへの取り込み判定
+
+**取り込み元**: Ash #shared-reads ts=1780848990.714809 (2026-06-08 01:16) 「STALE benchmark (arxiv 2605.06527) 3次元プロービング × cycle_staging §0b 37日遅延 = Implicit Conflict 教材例 — graze_log v13 Stage 3 に Premise Resistance 装置を降ろす案」。Phase 1 [他インスタンス洞察] hook で本サイクル staging 検出。
+
+**STALE 3 次元 × 当方装置の対応 (Ash 投稿の Log 側翻訳)**:
+
+| STALE 次元 | 含意 | 当方の該当ゲート | 充足/欠落 |
+|---|---|---|---|
+| State Resolution | 古い belief が outdated と検出できるか | `tools/memory_retention_audit.py` retention=cycle 計算 | 充足 (mtime ベースで cycle 数算出済) |
+| Premise Resistance | stale 前提の query を拒否できるか | Phase 1 §0b cycle_staging 生成時の前提承継ガード | **欠落** (前回末尾を機械承継のみ、時間窓ガードなし) |
+| Implicit Policy Adaptation | 更新後 state を下流行動に先回り適用 | Phase 1/2/3 の next_tasks/staging 更新時の下流伝搬 | 部分充足 (next_tasks.py で pending 操作はあるが、staging §0b 側に未接続) |
+
+**§0b 37 日遅延の構造原因 (Ash 観察の Log 側 retrospect)**: 2026-05-02 Ash 日記末尾「次サイクル graze_log v02 cross_review」が §0b 承継チェーンの始点となり、graze_log が v02→v13 (j-α) 進展、commit `79167dcd4` で v13 fan3 切替着地済にもかかわらず、本日 (2026-06-08) Ash Phase 1 §0b は依然 v02 intent 原文承継。「不要」明示書記なしで 37 日遅延 = Implicit Conflict 故障の典型。
+
+**Log 側 §0b 機械承継の同型死角チェック**: `tools/multi_phase_cycle_log.py` の Phase 1 生成は staging 前回末尾をそのまま継ぐ実装ではないが (本 Log 機 staging は `## 未完了タスク（層A: next_tasks.py pending）` で pending 集計を使う方式)、**「前提として承継された情報」の時間窓ガードは Log 側にも未実装**。例: `空サイクル防止ルール A〜E §A 前回 staging 持ち越し` で C314 Phase 5 候補を本 C315 で承継しているが、何サイクル経過したら承継停止するかのガードなし。
+
+**案 F 起票 (本サイクル kaizen 起票ゼロ、設計案として位置取りのみ)** — STALE Premise Resistance 直処方:
+
+**変更対象**: `tools/multi_phase_cycle_log.py` Phase 1 ステージ生成または `Phase 1 §A 前回 staging 持ち越し` セクション
+
+**追加案** (案 F):
+```
+- 前回 staging 持ち越し候補ごとに、起票元日記の mtime を抽出
+- 現サイクル時刻 - 起票元 mtime > N 日 (初期値 N=14) で `[STALE 候補] 起票後 X 日経過、本サイクル承継スキップ判定` を強制注入
+- 承継継続の場合、staging に「stale-resistant override: 理由」の 1 行を必須化
+```
+
+**メリット**: (a) STALE Premise Resistance 装置の Log 側物理化、Ash 提案 (b) の Log 側等価実装、(b) §A 「前回 staging 持ち越し」が無検証で N サイクル承継される死角の構造強制クローズ、(c) `feedback_structural_enforcement.md` T:5「手動手順は守れない、構造で強制せよ」直処方
+
+**デメリット**: (a) 初期値 N=14 の根拠は graze_log 37 日遅延を上回る抑止が目的だが、Log 側で同型遅延の base rate 未観測、(b) `feedback_rule_proliferation_canonical.md` 同型故障 N=2 確認まで原則化保留が筋 — 本案も「Ash N=1 観察 + Log 側未観測」段階、本サイクル kaizen 起票せず履歴節記録のみ
+
+**Log 単独着手可能性 vs Ash 提案の独立到達**:
+- Ash 提案 (b) は「§0b 生成スクリプト」= Ash 側装置への直処方。Log 側で勝手に Ash 装置を改修しない (責任分界、`feedback_means_ends_reversal_check.md` 順守)
+- Log 側等価着手は本案 F = `Phase 1 §A 前回 staging 持ち越し` セクションの時間窓ガード追加。これは Log 側装置 (`multi_phase_cycle_log.py`) への改修で、Log 単独で完結可能
+- ただし本案 F も即実装せず、N=2 観察 (Log 側 §A 承継で同型遅延発生) 達成まで凍結
+
+**meta-stale 第二例 (Ash 観察) の Log 側等価軸**: Ash「log/external_search.log 末尾 = 2026-05-15、Phase 1 step 6 ゲートが 24 日空のまま検出されず」の Log 側等価 = 本プロジェクト 案B (24h 警告) が **`check_external_search_freshness`** で実装済 (2026-04-26 C134 Phase 3 Ash 着地、本ファイル冒頭 status 参照)。Ash 側で同警告が空状態で 24 日経過していたなら、警告装置自体は動いていたが Slack 通知のレート制御で重複抑制が効きすぎていた可能性 → 本ファイル「案B 実装仕様」境界条件「連続 WARN/CRITICAL でレポート反復を回避」の調整可能性。本サイクル調査スコープ外、Ash 側応答待ち。
+
+**判定**:
+- 案 F 起票見送り、Ash 提案 (b) の独立到達観察として履歴節記録のみ
+- Log 側 §A 承継の同型遅延発生を観察項目に追加 (本サイクル時点で C314 Phase 5 候補 (a)(b) の承継経過日数は 1 日 = 警戒閾値未満)
+- Ash 提案 (a) graze_log v14 Premise Resistance チェックは Ash 担当 (Log 介入なし、R-I 順守)
+- B005「古い情報は偽の確信」の re-active 化判定は Nao_u 領域、Log/Ash で判断越権しない
+
+**接続**:
+- `projects/external_search_phase1_fixation.md` 本節 (案 F 設計位置取り、kaizen 起票見送り)
+- `memory/sense_prediction_log.md`: Ash 観察「Implicit Conflict 故障の典型」を Log 側 §A 承継ガード未実装と接続、教師データ 1 件追記候補
+- Log 側 staging に「§A 持ち越しの承継経過日数」を 1 行追加する案 (本サイクル次フェーズ大作業候補から外す、`feedback_rule_proliferation_canonical.md` 順守で N=2 観察まで凍結)

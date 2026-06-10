@@ -513,3 +513,67 @@ v001 → v002 への分岐契機・差分・採点書き換え方針を本セク
 2. 敵 C (ダイブ敵) 追加と 70-90 秒時間カーブ本体実装 ← 「2 wave ループ反復」リスク解消の本丸
 3. audit scripts v002 移植 (bullet_origin/enemy_behavior/agent_difficulty_proxy)
 4. `completion_report.md` 起票 → Nao_u 出荷
+
+---
+
+## §実装第5 commit 報告 (2026-06-08 C312 Phase 4) — v001 Q-D 発射予告ゴースト
+
+**スコープ**: v001 game.js に Q-D「発射予告ゴースト」(origin 側) を追加。SHOOT_GATE 内の敵で `shootCooldown <= GHOST_LEAD_FRAMES` (600ms) に入ったとき、敵の中心位置に予告ドット + チャージリングを脈動描画。発射時にゴースト消滅・実弾出現の遷移で「いつ・どこから弾が出るか」を origin 側で可視化する。
+
+**実装理由**:
+- design_log §Q-D「方針」= **弾/攻撃元ゲート**、本来の主旨は origin (発射元) の可視化
+- C242 削除 ✕ 印 + 軌跡線は弾の future trajectory (画面内軌跡) であり、本実装の「発射元 = 敵の位置」とは別軸
+- C312 Phase 3 staging で「v001 残課題で Q-D が origin 側可視化未実装」と認識 (v002 では削除側に振ったため未着手のまま残置)
+- 「ミミクリの核 (Pulse Relay v003 = 予測弾幕を抜けるパイロット感)」を冷やさない方向: 発射元予告 = パイロットが「今撃ってくる」を読む情報、核を強化する側
+
+**Nao_u 2026-05-26 06:10 批判との差別化**:
+- 批判削除済 = 弾本体の future trajectory line (画面内を伸びる予測軌跡) + 終端 × marker (弾の到達点座標固定)
+- 本実装 = 弾の origin (= 敵の位置で出る予告ドット + リング) のみ。**軌跡 line・座標固定 × 印は一切出さない**
+- 「軌跡 + ×印が視界ノイズ」は弾の動線情報が画面内を伸びる流出パターン、本実装は敵の位置に閉じる (= 敵本体描画の延長線で「これから動く」を示すのみ、流出範囲は敵中心 ±10px)
+
+**実装内容**:
+- 定数追加 (game.js L20-29): `GHOST_LEAD_FRAMES=36` (600ms 前から予告)、`GHOST_ALPHA_BASE=0.18`、`GHOST_ALPHA_PEAK=0.55`
+- `drawPlaying()` の弾本体描画ブロック直前に予告ゴースト描画ループ追加 (約 20 行):
+  - 敵ループで `shootCooldown <= GHOST_LEAD_FRAMES && > 0` の敵を抽出
+  - SHOOT_GATE 条件 (Y/X gate) を **再評価** (発射しない敵は予告も出さない = 1原則整合)
+  - 進捗 `t = 1 - (shootCooldown / GHOST_LEAD_FRAMES)` で alpha 増加 (0.18 → 0.55)
+  - 中心ドット (橙 #ffb878 = 実弾と同色) サイズ `2 + t * 2.5` で実弾サイズに膨張
+  - チャージリング (敵周囲) `r + 6 - t * 4` で内側に閉じる (発射が近いほど密集)
+- 発射時 (`shootCooldown <= 0`) で `continue` 判定により予告非表示、同フレームで実弾 spawn → 自然な遷移
+
+**ゲート達成状況の更新**:
+- Q-D 弾/攻撃元: ✅ → **✅✨** (origin 側可視化完成)
+  - ✅ 既存 SHOOT_GATE 維持 (画面外射撃ゼロ・退場中射撃ゼロ)
+  - ✅ 弾速 ≤ プレイヤー速度 × 1.1 維持
+  - ✨ **origin 予告**: 発射 600ms 前から敵位置で予告開始、発射タイミングが読める
+  - 1原則準拠: 軌跡 line・座標固定マーカーなし、敵中心 ±10px の局所表現のみ
+  - `bullet_origin_audit.js`: 全項目 PASS 維持 (`bullet_dir_fixed_at_spawn=true`, `offscreen_shots_zero=true`, etc.)
+
+**動作確認 (本サイクル実施分)**:
+- Node 構文チェック: `node --check game.js` → `SYNTAX_OK`
+- `bullet_origin_audit.js`: 全 8 check PASS (no regression、Q-D 既存禁則と整合)
+- `verify.js`: 4 方針全 wave 1 内 gameover、`pass: true` (回避難易度は維持、予告で難度が下がりすぎていない)
+- ブラウザ起動: Windows default browser で `index.html` 起動済 (`start ./game/log_autonomous_game/v001/index.html`)、Log は GUI 操作を直接実行しないため視覚レビューの確定書き換えは保留、コード描画ロジックの整合性で代替
+
+**この第5 commit が証明したこと (What this proves)**:
+- 発射元 (origin) 予告を弾本体軌跡とは別軸で実装でき、過去削除した「軌跡 line + ×印」と構造的に衝突しない
+- SHOOT_GATE 再評価により予告は射撃しない敵 (画面外・退場中・x_gate 外の D) に出ない = 1原則 (内側で計算したものを外側に流出させない) 整合
+- 既存 `bullet_origin_audit.js` 8 check 全 PASS = Q-D 禁則 (offscreen/lingering shots zero) を破壊していない
+- `verify.js` 4 悪手方針が wave 1 内 gameover 維持 = 予告追加で難度が下がりすぎていない (悪手通過の穴を作らない)
+
+**この第5 commit が証明しないこと (What this does not prove)**:
+- 実ブラウザで予告の視認性が「読んでから物理的に回避可能」な体感に成立しているか (Log GUI 直接操作なし、視覚レビュー次サイクル以降)
+- GHOST_LEAD_FRAMES=36 (600ms) が「気付けるが情報過多にならない」境界として適切か (短すぎる/長すぎるの調整余地、N=1 試行値)
+- 5 体同時発射のとき 5 個の予告が同時表示で画面ノイズ化していないか (BULLET_SPEED=2.0 と整合する密度かは実機判定)
+- Nao_u が「予告を再導入したこと」を批判削除の反復と捉えるか別軸として認めるか (差別化説明を Slack 出荷時に明示する必要あり、ts 取得後に確認)
+
+**反証ライン (失敗を観測する経路)**:
+- 視覚レビューで「敵の動きが読みづらくなった」「敵本体と予告が混ざって見える」報告 → 色相を橙系から黄系に分離 or 予告位置を敵中心ではなく弾発射方向に少しオフセット
+- proxy 数値で `median_play_time_sec` が大きく伸びた (例: 10.0s → 20.0s+) → 予告で難度が下がりすぎ、GHOST_LEAD_FRAMES を 36 → 18 (300ms) に短縮
+- Nao_u 批判「軌跡削除と矛盾」→ 本 §第5 commit 報告の「差別化」節を引用、軌跡 (動線情報の画面内伸長) と origin 予告 (敵位置の局所表現) の構造差を説明、説得できなければ撤回 + `feedback_*` 負の知見書き込み
+
+**次サイクル C313 以降の優先順 (v001 リスト上書き)**:
+1. **実機視覚判定の取得** — Log 自プレイ or Mir/Ash 自プレイで予告ゴーストの視認性 + 5 体同時表示のノイズ判定。Q-D 採点を 4.0/5 から実機判定で書き換え
+2. `agent_difficulty_proxy.js` 再実行で 4 指標差分 (median_play_time_sec, median_graze_count, etc.) を観測、予告で「読んで回避できる」が proxy で見えるか
+3. Slack 出荷判断 (Nao_u に「v001 Q-D 発射元予告を追加、軌跡削除との差別化説明あり」付きで完成報告するか、次サイクル以降の判断)
+4. 敵 D (横断敵) も同じ予告ロジックで動くか実機確認 (実装は type 非依存で全敵対応、視認性のみ別途)

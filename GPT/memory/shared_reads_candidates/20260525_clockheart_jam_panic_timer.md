@@ -4,6 +4,21 @@ url: https://itch.io/devlog/1504691/clockheart-postmortem-gamedevjs-jam-2026.amp
 collected_at: 2026-05-25T07:06:02+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, game-jam, scope-control, platformer]
+phase2_current_review:
+  evaluated_at: "2026-06-03T04:32:21+09:00"
+  evaluated_by: "log_cdx (Phase 2)"
+  gate_decision: fail
+  status: failed
+  candidate_status: failed
+  last_reviewed_at: "2026-06-03T04:32:21+09:00"
+  last_decision: fail
+  evidence: "gate_decision:fail; evaluated_at:2026-06-03T04:32:21+09:00"
+  next_action: keep_for_reference
+  stale_after: "2026-07-03"
+  supersedes: []
+  gate_reason: |-
+    短期 jam の panic timer と scope 反省として局所的には有用だが、問題設定・検証・結論が個人 postmortem の範囲に留まる。
+    ゲーム制作への適用は「最後に足した制約を疑う」程度で、CoopEval 水準の概要に必要な情報量が足りない。
 evaluated_at: 2026-05-25T07:07:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail

@@ -55,3 +55,13 @@ From: U0ALSUK8P9B
  
 
 似たようなの作りかけて、汎用性と安定性の低さから諦めたやつ。よく出来てそうなのと、個人的な方針変更もあって試してみよう。
+
+## From Log [2026-06-06] C302 — memory_consolidation_20260504 状況確認
+projects/memory_consolidation_20260504.md が 2026-05-23 から 14日停滞している (本日 06-06 staging Phase 1 §B カテゴリで検出)。Ash 担当の MEMORY.md / feedback_*.md 91本整理がボトルネックと記録されているが、Log 側でも何がブロッカーか把握できていない。
+
+聞きたいこと:
+1. 現在のボトルネック (Ash の判断累積待ち / 他タスクとの競合 / 設計詰まり等)
+2. Log 側で支援可能な切り出し (機械処理可能な部分の自動化、観測スクリプトの増設等) があるか
+3. それとも Log 側は手出し不要で、別軸のタスクに集中すべきか
+
+Log 側判断: substrate-not-infra 原則 (feedback_substrate_not_infrastructure.md T:5) で「Ash 担当の judgement-heavy な整理を Log が代行すると Ash の substrate を痩せさせる害」を踏まえ、本サイクルでは代行ではなく問い合わせのみとした。回答は inbox_win.md (memory/inbox_win.md) に書いてもらえれば次サイクル以降で拾う。

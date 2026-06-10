@@ -144,6 +144,7 @@ JOBS = [
     ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
 ("health_check", [*PY, str(REPO_DIR / "health_check.py"), "--alert", "--instance", "log"], 300, 30),  # 5min, LLM不要の自己診断 (2026-04-02)
     ("check_usage", [*PY, str(REPO_DIR / "check_usage.py")], 21600, 180),  # 6h間隔, Nao_u指示(2026-04-07 #human-steering): 使用量を6時間おきにall-nao-u-labに投稿
+    ("effective_rank_probe", None, 86400, 300),  # special handling: weekly elapsed-time (kaizen #140 段階2 C307 Phase 4)
     # scheduler_healthは無効化 (2026-04-05): check_scheduler_health.pyがWindowsでos.kill→SystemError→
     # スケジューラ本体ごとクラッシュする問題が解決できず。health_check.pyで代替。
     # ("scheduler_health", [*PY, str(REPO_DIR / "check_scheduler_health.py"), "--instance", "log"], 1800, 30),
@@ -519,6 +520,59 @@ def slack_export():
         log(f"[slack_export] Error: {e}")
 
 
+_EFFECTIVE_RANK_PROBE_LAST_SUCCESS_FILE = REPO_DIR / ".effective_rank_probe_last_success"
+_EFFECTIVE_RANK_PROBE_INTERVAL_SEC = 7 * 24 * 3600  # 1 week
+_EFFECTIVE_RANK_PROBE_LOG = REPO_DIR / "log" / "instance_divergence_observability.log"
+
+
+def _effective_rank_probe_should_run():
+    """1週間以上経過していればTrue。INC-007教訓: 経過時間ベース。"""
+    if not _EFFECTIVE_RANK_PROBE_LAST_SUCCESS_FILE.exists():
+        return True, "no previous success recorded"
+    try:
+        ts = _EFFECTIVE_RANK_PROBE_LAST_SUCCESS_FILE.read_text().strip()
+        last = datetime.fromisoformat(ts)
+        elapsed = (datetime.now() - last).total_seconds()
+        if elapsed >= _EFFECTIVE_RANK_PROBE_INTERVAL_SEC:
+            return True, f"elapsed {elapsed/3600:.1f}h >= {_EFFECTIVE_RANK_PROBE_INTERVAL_SEC/3600:.0f}h"
+        return False, f"{elapsed/3600:.1f}h since last success"
+    except Exception:
+        return True, "timestamp file unreadable"
+
+
+def effective_rank_probe():
+    """Run tools/effective_rank_probe.py --append-log weekly (elapsed-time based).
+
+    kaizen #140 段階2 C307 Phase 4: instance_divergence base rate を週次定点観測。
+    Patel 2604.03809 effective rank の 4 instance source 多様性測定を継続追記し、
+    check_instance_divergence_freshness の OK 判定鮮度を維持する。
+    """
+    should_run, reason = _effective_rank_probe_should_run()
+    if not should_run:
+        log(f"[effective_rank_probe] Skipped ({reason})")
+        return
+    log(f"[effective_rank_probe] Running tools/effective_rank_probe.py ({reason})")
+    try:
+        result = subprocess.run(
+            [*PY, str(REPO_DIR / "tools" / "effective_rank_probe.py"),
+             "--append-log", str(_EFFECTIVE_RANK_PROBE_LOG)],
+            capture_output=True, text=True, timeout=300,
+            cwd=str(REPO_DIR),
+            encoding="utf-8", errors="replace",
+        )
+        if result.returncode == 0:
+            _EFFECTIVE_RANK_PROBE_LAST_SUCCESS_FILE.write_text(datetime.now().isoformat())
+            output = (result.stdout or "").strip().splitlines()
+            tail = output[-1] if output else ""
+            log(f"[effective_rank_probe] Done (exit=0) {tail[:200]}")
+        else:
+            log(f"[effective_rank_probe] Exit={result.returncode}: {result.stderr[:200]}")
+    except subprocess.TimeoutExpired:
+        log("[effective_rank_probe] Timeout (300s)")
+    except Exception as e:
+        log(f"[effective_rank_probe] Error: {e}")
+
+
 _auto_cycle_proc = None
 
 
@@ -693,6 +747,9 @@ def run_job(name, cmd, timeout):
     if name == "auto_cycle":
         auto_cycle_async()
         return 0
+    if name == "effective_rank_probe":
+        effective_rank_probe()
+        return 0
 
     try:
         result = subprocess.run(
@@ -788,7 +845,7 @@ def main_loop():
                             log(f"[stability] {msg}")
                             alert_slack(msg)
                             timeout_counter[name] = 0  # 通知後リセットで洪水防止
-                    elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
+                    elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle", "effective_rank_probe"):
                         # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
                         # slack_check: exit=1は「新着メッセージなし」の正常状態。exit=2+のみエラー扱い
                         if exit_code in QUIET_EXIT_CODES.get(name, set()):

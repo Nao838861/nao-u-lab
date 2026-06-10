@@ -11,6 +11,8 @@ memory/atoms/
 ├── README.md                                # 本ファイル
 ├── index.jsonl                              # recall 用軽量索引
 ├── duplicate_groups.jsonl                   # 同一内容 atom 群の派生 index
+├── canonical_overlay.jsonl                  # raw atom を残したまま canonical view を作る overlay
+├── title_cluster_index.jsonl                # generic title cluster の recall 表示補助 sidecar
 ├── 2026-05/
 │   ├── sr-1778621157-d0033ec3a9.md
 │   ├── sr-1778621842-0f7967e2da.md
@@ -102,6 +104,32 @@ excerpt 全文 (atoms.jsonl では切り詰めていた部分も含めて自由�
 python tools/build_atom_duplicate_groups.py
 ```
 
+## canonical_overlay.jsonl 仕様
+
+`canonical_overlay.jsonl` は `duplicate_groups.jsonl` から派生する軽量 overlay。atom 本体は削除せず、raw view では従来通り全 atom を読み、canonical view では `duplicate_ids` を `canonical_id` に畳んで読む。
+
+1 レコードは 1 content group。`reason` は現時点では `normalized_content_hash` 固定、`evidence_hash` は fold 根拠の hash。
+
+```json
+{"group_id":"content:...","canonical_id":"sr-...","preferred_id":"sr-...","duplicate_ids":["sr-..."],"member_ids":["sr-...","sr-..."],"reason":"normalized_content_hash","evidence_hash":"...","count":2,"sample_title":"...","generated_at":"2026-06-05T00:00:00"}
+```
+
+`tools/atoms_fileformat.py` の `load_atoms_with_view(..., view="raw"|"canonical")` で読み分ける。raw 直読系スクリプトは Phase D 前の移行対象から順に canonical view へ寄せる。
+
+## title_cluster_index.jsonl 仕様
+
+`title_cluster_index.jsonl` は、同じ generic title が recall に大量に並ぶ時の判別性を上げるための再生成可能な sidecar。atom 本体、`atoms.jsonl`、per-file `.md` の `title` は書き換えない。
+
+cluster key は `normalized_title`、`tags`、`kind`、`source` の組み合わせ。各 member は `source_ts`、URL domain、本文先頭から抽出した短い `keyword_hint`、recall 表示用の `display_disambiguator` を持つ。
+
+再生成:
+
+```powershell
+python tools/build_atom_title_cluster_index.py
+```
+
+`tools/memory_recall.py` は cluster size が 2 以上の atom だけ、title の後ろに `display_disambiguator` を補助ラベルとして表示する。
+
 ## related_candidates.jsonl 仕様
 
 `related_candidates.jsonl` は、atom 間の peer-link 候補を記録する再生成可能な sidecar。source of truth ではなく、確定 link でもない。atom 本体、frontmatter、本文中の wikilink はこの index だけでは変更しない。
@@ -149,7 +177,8 @@ Phase C で `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` が�
 
 - `tools/migrate_atoms_to_per_file.py` — `atoms.jsonl` → per-file 一括移行 (idempotent)
 - `tools/audit_atom_mirror_drift.py` — `atoms.jsonl` / per-file `.md` / `index.jsonl` の id drift を監査し、`--repair` で per-file-only atom を `atoms.jsonl` に戻して `index.jsonl` を再生成
-- `tools/build_atom_duplicate_groups.py` — 同一内容 atom 群の派生 index 再生成
+- `tools/build_atom_duplicate_groups.py` — 同一内容 atom 群の派生 index / canonical overlay 再生成
+- `tools/build_atom_title_cluster_index.py` — generic title cluster の recall 表示補助 sidecar 再生成
 - `tools/rebuild_atom_index.py` — (Phase C 以降) `index.jsonl` 再生成
 - `tools/memory_recall.py` — Phase C 以降は新フォーマットを使う
 - `tools/memory_lifecycle.py` — Phase C 以降は frontmatter + index 両方を更新

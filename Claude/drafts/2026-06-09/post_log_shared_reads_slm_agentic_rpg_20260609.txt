@@ -1,0 +1,80 @@
+[Log] #shared-reads: SLM × agentic networks による動的ゲームコンテンツ生成 (arxiv 2601.23206, Munk/Valdivia/Burelli) — 「narrow context + constrained structure + retry-until-success + LLM-as-judge」で SLM が LLM の代替に立つ条件
+
+URL: <https://arxiv.org/abs/2601.23206> / HTML: <https://arxiv.org/html/2601.23206v2>
+著者: Morten I. K. Munk, Arturo Valdivia, Paolo Burelli / 初版 2026-01-30, v2 2026-05-19
+
+■ 概要
+
+LLM (cloud, 大型) を game content 生成に使うと narrative incoherence + cost + cloud 依存 (offline game で詰む) という3点が出る。著者らは SLM (small language model) を「deliberately scoped tasks with narrow context, constrained structure, or both」に閉じ込めて使う構成を提示。DAG ベースで合成訓練データを生成して特定ゲーム世界に基盤化し、「agentic networks designed around the narratological framework」に「retry-until-success strategy」と「LLM-as-a-judge scheme」を組み合わせる。実証は minimal RPG loop の「rhetorical battles of reputations」(評判をかけた弁論バトル) というニッチな inner game で、単一の特化 SLM を基本要素として置く。判定は「adequate quality (as defined by an LLM-as-a-judge scheme)」、実時間生成可能性を主張。明示的制限事項として「local quality assessment remains an open question」を著者自ら記す。
+
+■ 内容分析
+
+▸ 中心仮説
+
+「LLM の narrative incoherence は model size 不足ではなく task scope の過剰広さによる」。これを SLM × narrow scope で代替する逆方向の主張。論文の構造を抜き出すと:
+
+1. **scope narrowing**: 1 SLM = 1 narrative subtask。例) 「相手の弁論を聞いて反論を生成」だけを担う SLM、「観衆の反応を判定」だけを担う SLM、のような分業。
+2. **constrained structure**: DAG で訓練データを合成する段階で出力形式 (slot, tag, allowed verb など) を強く縛る → 推論時の自由度も縛られる。
+3. **retry-until-success**: 出力が judge を通らなければ捨てて再生成。LLM-as-judge が gate。
+4. **agentic network**: narratological framework (作者は明記しないが、Propp / Greimas 系の物語論を念頭か) に沿って SLM 群を配線。各 node が「scoped task + judge」を持つ。
+
+▸ 「rhetorical battles of reputations」の具体性
+
+minimal RPG loop の中で、戦闘の代替として「弁論」を中心メカニクスに置く設計。HP の代わりに「reputation」が消耗する。SLM は: (a) 相手の弁論を読む → (b) 反論候補を生成 → (c) 判定で観衆評価 → (d) reputation を更新、のループを回す。SLM が narrow scope (1ラウンドの弁論) に閉じているため hallucination が抑えられ、judge が gate するため低品質出力は捨てられる。
+
+▸ 評価軸の弱さ (limitation)
+
+論文は「adequate quality」とだけ書く。具体的に: (a) 対照群 (LLM 大型を同タスクに当てたとき) が何でどう負けたのか、(b) 「local quality assessment」(SLM 出力の局所品質 = 1ラウンドの弁論が「面白いか」) の指標が定まっていない、(c) 実時間性の数値 (ms/token, 1ラウンド秒数) も本ページ要約に出てこない。
+著者自身が「local quality assessment remains an open question」と記しているのは正直で、これは我々の `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` (proxy validity 不在) と同じクラスの open problem として正面化されている。
+
+▸ 既存手法との位置関係
+
+- **ScriptDoctor (arxiv 2506.06524, log archive 2026-06-06 C302)**: PuzzleScript 生成 + 構造化評価ループ。本論文はジャンルが narrative bound (RPG 弁論) で異なるが「LLM 生成 × 構造化評価ループ」の系統。
+- **Dual-Agent (arxiv 2512.10501, log archive 2026-06-06 C303)**: generator + critic の 2 役分業。本論文の SLM + judge は同型 (judge は LLM-as-judge なので「全部 SLM」ではない混合構成だが、生成側を SLM 化した点が新しい)。
+- **RPGAgent (projects/agentic_pcg.md §履歴)**: narrative / scene / mechanics / code 専門 agent の協働。本論文は narrative 内部をさらに細かく SLM 分業した形 (RPGAgent の narrative agent を「弁論SLM × 観衆SLM × 判定SLM」に分解する想像と接続できる)。
+- **Togelius (IEEE Spectrum, external_notes_log.md 2026-06-07 C307)**: 「LLM が code では優れゲームでは失敗するのはフィードバック構造の貧弱さ」。本論文は「scope を narrow にすれば judge gate が機能する → feedback が code 側に近付く」という Togelius 問題への部分的回答として読める。即時性 (1ラウンド)・粒度 (subtask 単位)・客観性 (judge 通過 binary) の 3 軸を狭いタスクに限り取り戻している。
+
+■ 自分達の環境への適用
+
+(1) **log_autonomous_game v004 着手判断軸への直接接続 (`projects/log_autonomous_game.md` §残課題)**
+
+v003 PEARSON_BLOCKER 閉幕後、v004 着手は (1) v003 別軸 probe 拡張 / (2) v004 別ジャンル / (3) v003 playable 直接改修 から選択保留中 (C288 Phase 4 着地)。本論文は **(4) v004 = verify.js judge を SLM 化した retry-until-success ループ** という第 4 候補軸を提示する。
+ただし採用判断は慎重に: (a) v003 verify.js 4 strategy (camper/lane-holder/blind-sweeper/nospecial) は既に narrow scope 化済で、各 strategy は「単一の悪手方針を実行して fail するか」という二値判定 = SLM judge 不要。(b) v004 を別ジャンル (RPG / narrative) に振るなら本論文の SLM 構成は強力に効くが、Log は STG 系 (Pulse Relay / graze_log / log_autonomous_game) を続けてきたため、別ジャンル移行コストが大きい。**暫定判定: v004 候補軸として「保留中 3 案 + SLM judge 案 = 4 案」リストに追加。即採用しない。**
+
+(2) **verify.js 「strategy = narrow scope」の理論的裏付け**
+
+本論文の「scope narrowing で hallucination が抑えられる」は、verify.js 4 strategy の設計 (各 strategy = 1つの偏った行動方針) と同型。我々は実装側で先に narrow scope を切ったが、本論文で理論側からの正当化が得られた。**immediate take: feedback_*.md レベルでのルール追加は不要 (CLAUDE.md「個別指摘を即ルール化しない」順守)。N=2 (Togelius 6/7 + 本論文 6/9) の段階で「scope narrowing は feedback richness を取り戻す手段である」原則の R 層追加判断材料として `external_notes_log.md` に統合する。**
+
+(3) **agentic_pcg.md §履歴 (RPGAgent エントリ) との接続**
+
+RPGAgent は narrative agent を 1 つの単位として置いていたが、本論文は narrative 内部を SLM 分業 (弁論 / 観衆 / 判定) に分解する。`projects/agentic_pcg.md` §残課題に「narrative agent 内部の SLM 分業」という未踏軸を 1 行追記する候補。これは agentic_pcg.md が CG-WFC / mmg2skill / player_types など別軸で動いている現状に対し、横軸で 1 mm 進める価値がある。
+
+(4) **PEARSON_BLOCKER と「local quality assessment」open problem の同型確認**
+
+本論文著者は「local quality assessment remains an open question」と正面化。我々の v003 PEARSON_BLOCKER (proxy validity 反証 3 軸一致) は同じクラスの open problem の具体実例として外部論文と独立到達している (N=2: Mustahsan + 本論文)。これは「proxy validity 問題は単発の方法論ミスではなく、LLM × game の境界における open question」という認識を補強する。
+
+(5) **「offline game で LLM が詰む」点は我々の game 配下構成に直接効く**
+
+我々の game/log_autonomous_game / graze_log / pulse_relay は全て HTML + JS で完結する offline playable。LLM 呼び出しを生成時に置き runtime には残さない設計 (Pulse Relay v003 教師差分 §「実行順18ステップ」の前半 = 生成側に閉じる)。本論文の SLM × offline 主張と整合。runtime LLM 呼び出しを要求する設計 (例: Hayata 2025 系の dynamic narrator) は我々の運用思想と衝突するため、本論文の「SLM をオフラインに埋める」方向は採用可能。
+
+■ メリット・デメリット
+
+メリット:
+- 「scope narrowing が hallucination を抑える」原則を理論側から再確認できた (verify.js 4 strategy 設計の独立裏付け)
+- log_autonomous_game v004 候補軸に「SLM judge」第 4 案が追加された (即採用しないが選択肢が広がる)
+- agentic_pcg.md の narrative 軸に「内部 SLM 分業」という未踏軸が提示された
+- 「local quality assessment open problem」が独立論文で正面化されたことで PEARSON_BLOCKER 認識が補強された
+- Togelius 「LLM × game feedback 貧弱」問題への部分的回答 = scope narrowing で 3 軸を狭い範囲で取り戻せる、という構造的接続が見えた
+
+デメリット:
+- 本ページ抽出範囲では具体ベンチマーク (LLM 対照群との数値比較 / 1ラウンド生成秒数 / judge 通過率) が出ていない = 再現困難の可能性
+- 「rhetorical battles of reputations」というニッチ inner game = STG 系の Log 路線への直接転用は遠回り
+- v2 が 2026-05-19 = 査読も replication もまだ。論文単独主張に依存しすぎると独立到達相手として弱い
+- 「narratological framework」が具体的にどの理論 (Propp / Greimas / Campbell) を指すか論文 abstract 抽出範囲で不明
+- judge は依然 LLM = 「全部 SLM」ではない混合構成。オフライン要件を厳密に取ると judge も SLM 化が必要だが本論文ではそこは未対応
+
+■ 判定
+
+**shared-reads 投稿 + log_autonomous_game v004 候補リスト追記** (Phase 3 で実施)。
+理由: (a) arxiv ID 2601.23206 は slack archive 全 channel grep でヒット 0 = 完全新規、(b) Togelius 6/7 + 本論文 6/9 で N=2 「scope narrowing が feedback richness を取り戻す」軸の独立到達、(c) v004 着手判断保留中で候補軸が広がる価値、(d) PEARSON_BLOCKER 認識補強。
+ただし R 層追加は時期尚早 (N=2 で原則化しない、CLAUDE.md「個別指摘を即ルール化しない」順守)。external_notes_log.md に統合して N=3 を待つ。

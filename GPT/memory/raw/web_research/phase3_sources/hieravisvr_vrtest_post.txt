@@ -1,0 +1,34 @@
+■ 概要
+対象は CHI 2026 論文 “HieraVisVR: Hierarchical Visual Analytics for Motion-Centric VR Playtesting”。問題設定は、VR の playtest では身体動作、視線、ゲーム内イベント、成績指標が同時に記録されるのに、実務の分析は直接観察や録画レビューに寄りがちで、「どの場面で詰まったか」「その行動差が設計上の問題なのか」を大量プレイヤーから拾うのが難しい、という点にある。著者らは VR 実務者 30 人への formative study から、標準化された workflow の不足、大量 gameplay video から player experience を抽出する難しさ、多様な playtest data から重要場面と行動パターンを調べる統合ツール不足、という 3 課題を整理している。
+
+HieraVisVR の中核は、motion-centric VR game の playtest data を top-down に読む 3 段階 workflow である。Exploration stage では、複数視点の replayer と level / event anchor により、全プレイヤーの全体像と重要場面をつかむ。たとえば Reflex という VR adaptation では、11 個の level chunk や treasure box collection などのイベントへ直接ジャンプし、歩行軌跡、heatmap、視線、頭部回転を重ねて、録画を最初から見続けずに「ここで多くの人が遅れている」を見つける。大量 replay でプレイヤーが重なる問題には Transparent Others で特定プレイヤーを強調する。
+
+Grouping stage は、詰まりや成功を個別の印象で終わらせず、pose / gaze / performance からプレイヤー群を作る段階である。pose 側では、歩行 path と gameplay performance を embedding 化し、K-Means、HDBSCAN、subspace clustering などで grouping する。designer は coin collection、obstacle hit、duration などの特徴を選び、grouped walking path や rotation を見ながら「頻繁に障害物へぶつかる群」「よく進めた群」を比較する。gaze 側では fixation duration や gaze sequence を扱い、heatmap、circle size、line sequence などで、プレイヤーがどこを見ていたか、意図した affordance に注意が向いていたかを読む。
+
+Explanation stage は、発見した群や異常を個人・ペアの同期 replay に戻して原因を調べる段階である。論文内の Reflex 例では、障害物で遅れたプレイヤーを group 化した後、first-person view と視線表示で、プレイヤーが身体で動くべき場面で controller を見て操作しようとしていたことを発見する。これは「障害物が難しい」という粗い結論ではなく、「入力モデルの理解がずれている」という設計仮説へ変わる。ペア比較では、主プレイヤーを solid color、相手を transparent color で表示し、coin count などの metric を同期更新する。
+
+評価は二段構えで、まず Reflex、VR escape room、fire evacuation training の 3 アプリケーションへ適用して汎用性を示す。Reflex は Meta Quest Pro 上で 27 人が 3 分プレイし、movement、eye-gaze、coin collections、obstacle hits を収集した。Escape room は 14 人が 5 分以内に puzzle を解き、completion time、trajectory、eye gaze を記録した。Fire evacuation は既存研究の 27 ペア 54 人データを使い、completion time、trajectory length、pair distance、extinguisher counts、commands など協調行動指標を扱う。次に 5 人の professional game tester / designer による 90 分 study を行い、Reflex を対象に 20 分導入、30 分評価、40 分 interview と Likert 質問で workflow と visualization を評価した。結果として、explanation stage が最も好まれ、exploration は全体像や client communication に有用、grouping は有効だが summary 表示や説明支援が必要、eye gaze grouping は原因診断に効く一方で使い方の guidance が必要、という知見が得られている。
+
+■ 内容分析
+この論文の良い点は、VR playtest を「動画を見返す作業」から「設計仮説を絞り込む分析導線」に置き換えていること。単に motion data を可視化するのではなく、探索、群化、説明という順序を固定することで、観察者の問いを段階的に狭めている。ここが重要で、探索だけなら派手な replay tool、群化だけなら analytics dashboard、説明だけなら debug view になるが、HieraVisVR は「全体で異常を見つける」「同じ異常を持つ群か確かめる」「個別 replay で原因を読む」を一本につないでいる。
+
+一方で、評価の強さは限定的である。expert study は 5 人で定性的な深掘りに向いているが、statistical に一般化する規模ではない。さらに 3 アプリケーションのうち、Reflex は主評価、escape room と fire evacuation は適用例に近く、同じ深さで検証されていない。論文自身も participant pool 拡大と追加 VR application での検証を future work に置いている。つまりこれは「完成した標準ツール」というより、VR playtesting analytics の設計 pattern として読むのが妥当。
+
+特に参考になるのは、失敗原因を performance metric だけで決めない姿勢である。coin count や obstacle hit は入口に使うが、最終的には gaze、body movement、event anchor、synchronized replay で、プレイヤーが何を見て、何を誤解し、どの操作に移ったかを見る。ゲーム制作では「失敗回数が多いから難易度が高い」と短絡しやすいが、この手法は「難しい」「分かりにくい」「入力モデルが違う」「視線誘導が誤っている」を分けるための構造を持っている。
+
+■ 自分達の環境への適用
+Nao_u_BOT の制作サイクルでは、HieraVisVR 全体を再現するより、anchor と grouping の考え方を 2D / browser game の検証ログへ移すのが現実的。たとえば playtest log に、死亡、迷い、戻り、長時間停止、UI hover、リトライ、目標達成などの event anchor を付け、replay や録画をその timestamp へ直接飛べるようにする。次に、プレイヤー群の代わりに run 群を作る。seed、入力履歴、失敗地点、所要時間、操作量、同じミスの繰り返しで grouping し、「この build は平均スコアが上がった」ではなく「同じ仮説の失敗が何群に分かれて残っているか」を見る。
+
+記憶システム側にも転用できる。Phase 3b / 4a で問題を探す時、全ログを読むのではなく、Slack 指示、candidate gate、投稿、git commit、Nao_u feedback を event anchor として並べ、似た失敗を grouping する。たとえば「概要が薄い」「適用だけ肥大」「重複投稿」「push 不可」「encoding 崩れ」を群として扱えば、単発反省より再発条件を見つけやすい。HieraVisVR の価値は VR 専用 UI ではなく、観察ログを設計判断に戻すための階層化にある。
+
+■ メリット・デメリット
+メリットは、playtest の観察を再現可能にし、個人の印象を event anchor と grouped evidence に変えられること。特に「詰まった原因」を performance metric だけでなく gaze / motion / replay で説明する発想は、ゲームの失敗分析に直結する。
+
+デメリットは、ログ設計と可視化の前処理が重いこと。VR では body / gaze data が取れるが、通常の browser game では同じ密度の観察信号はない。また grouping は結果の説明 UI が弱いと、分析者が cluster を見ても設計判断へ変換できない。
+
+■ 判定
+部分採用。フルの VR analytics platform は今の環境には過大だが、event anchor、run grouping、個別 replay への三段階導線は採用価値が高い。次の playable 評価では、まず失敗地点 anchor と run 群の比較から入れる。
+
+■ URL
+https://yqz530.github.io/paper/vrtest.pdf
+https://doi.org/10.1145/3772318.3790591

@@ -272,6 +272,12 @@ Mir が #all-nao-u-lab に投稿した Nao_u 共有ベンチマークの分析�
 
 **次の一手 (即時実装はしない、参照ストック化)**: 本プロジェクトで「Tetris と同型の Sonnet/Haiku 自己改善ループ」を組む試作は、study_platformer_01 の Springboard 戦略実証が一段落した後の段階で再検討。Mir 分析を本欄に保存して「Sonnet 落とし試作の根拠」としていつでも引ける状態にしておく。即時行動の発火点ではない (CLAUDE.md「個別指摘を即ルール化しない」遵守)。
 
+### 2026-06-03: [参照ストック] awesome-LLM-game-agent-papers (git-disl, ACM CSUR survey) + arxiv 2410.02829 (LLMs as Game Difficulty Testers) — Log C293 Phase 1 §6 取得
+
+外部摂取 (kaizen #106) で取得した LLM ゲームエージェント関連 2 source を本プロジェクト参照ストックに追記、即時実装は発火しない:
+- **awesome-LLM-game-agent-papers** (https://github.com/git-disl/awesome-LLM-game-agent-papers) — ACM CSUR (2026) survey の集約 GitHub repo。本プロジェクト「5層アプローチ」の業界分類軸 (perception/decision/memory/reflection/action) と直接整合する可能性、kaizen #134-#136 family 拡張時のクロス参照基盤として保留
+- **arxiv 2410.02829 "LLMs May Not Be Human-Level Players, But They Can Be Testers"** — 既統合 (C107 4 papers post / C277 PEARSON_BLOCKER 対立読み)、本プロジェクト視点で v003 instinct_probe.js の評価軸 (Pearson 相関) と方法論近接。本サイクル C293 大作業 = SHOOT_INTERVAL ramp probe_density 測定の Spearman fallback 軸 (PEARSON_BLOCKER §6-3 (b)) と直接接続
+
 ### 2026-03-31: プロジェクト創設（Nao_uの指示）
 
 Nao_uが#all-nao-u-labに5層のゲーム×LLMアプローチを投稿。直後に「これ、絶対面白いやつなので、ミッションにしておいて！」と指示。独立プロジェクトとして切り出し。

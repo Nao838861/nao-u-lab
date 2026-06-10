@@ -18,3 +18,4 @@
 ## メモ一覧
 
 - `20260604_nes_optimization_log.md` — 敵弾追加後の処理落ち調査、C/asm 最適化、`.dbg` 事故、次回の確認手順
+- `20260605_spaceharrier_enemy_pattern_and_stability_log.md` — Space Harrier 風3体敵パターン、敵弾 bank/farcall 修正、上端越えVBUF範囲外書き込み対策

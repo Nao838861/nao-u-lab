@@ -599,6 +599,18 @@ Nao_u 2026-04-25 「L-1知識もフル稼働してほしい」。自前の試行
 
 「いい記事だ→自作にも適用しよう」の流れは同調罠の入口。「なるほど」「確かに」「良い視点」は同調の典型語彙。Nao_u 発言への即時同意禁止、目的照合セクション強制。
 
+### 7.5 業界既知ゲーム評価 3 source 対応表（2026-06 取得）
+
+C312 (2026-06-10) で `LLM autonomous game generation playable verification 2026 arxiv` の摂取経路 (kaizen #106 固定) から 3 source が独立到達 (game 軸)。当方の verify.js / proxy / VLM probe / 完成判定が、業界既知のどこに位置するかを 1 表で照合する位置取り記録。**機械反映禁止** — 表は対応関係の位置取り専用、3 source の手法を当方軸に直接コピーしない（§7.4 同調罠と二重歯止め）。
+
+| source (arxiv) | 核軸 | 当方 v003 等価軸 | 採用 / 見送り | 接続点 (or 理由) |
+|---|---|---|---|---|
+| OpenGame-Bench (2604.18394, Apr 2026) | judge 軸 = headless browser + VLM judge × 3 軸 (Build Health / Visual Usability / Intent Alignment) | C311 case D-3 の VLM 4 失敗 taxonomy probe (v003/verify.js 付帯) | **接続候補** (probe 完了後判定保留) | Intent Alignment 軸が VLM probe 4 失敗分類と同方向、probe 結果取得後に対応マッピング確認 |
+| SLM Dynamic PCG (2601.23206, Jan 2026) | retry-until-success 軸 (SLM + 実時間 PCG) | SHOOT_INTERVAL 線形漸変 (90→60) の retry スキーム | **同方向確認のみ** (構造採用しない) | retry 構造が同型、SLM 化路線は当方優先度外で位置取り記録のみ |
+| Distilling GameCWMs (2605.24375, May 2026) | verification framework = structural (関数シグネチャ整合) + semantic (実行時ルール準拠) 二層 + 蒸留 (frontier → Qwen 3B) | verify.js `pass: true/false` 単一判定 / completion_report 自己採点 | **採用検討** (v004 二層化案) | VLM probe 結果を「コード生成側 = structural / 体験側 = semantic」に切り分け可能、v004 設計時の 1 ゲート候補 |
+
+**業界既知 3 軸の含意**: (a) judge / (b) retry-until-success / (c) verification framework + 蒸留。当方は現状 (c-semantic 寄り = 悪手 4 方針が wave 1 内 fail) のみ実装、(a) と (c-structural) は未実装軸。v003/v004 改修判断時に「業界既知のどこに位置するか」を本表で照合してから着手する。3 source への業界対応は補助層、ゲーム設計本体（ミミクリ宣言核・死線スリリング核）には介入しない（`projects/log_autonomous_game.md` 2026-06-10 履歴 同方向）。
+
 ---
 
 ## 8. 段階別ライフサイクル早見表

@@ -73,6 +73,67 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-06-05 (Log C300 Phase 3): Ash「終わらないゲームの独占 × player time scarcity」洞察を 4ゲーム射程図に重ねる
+
+C300 Phase 1 [他インスタンス洞察] 16 件中、**Ash #shared-reads 「終わらないゲームの独占」分析** (graze_log v06/v09 Stage 4 設計軸接続) が projects/ 配下に未統合 (`grep` で 0 件確認)。一次観測の二独立性が高く、本プロジェクトの「4 ゲーム射程図」と直交方向に効くため取り込む。
+
+**一次観測 (Ash 引用)**:
+- @yanosen_jp 2026-06-04 `<https://x.com/yanosen_jp/status/2062325444771565751>` 「『終わらないゲーム』の独占。学生さんと話をしていても、すごく限られた有名タイトルしか遊んでいないことが多いと感じます。」
+- 二独立観測 (同日±1日、別アカウント、別文脈で同じ語) + 外部裏付け 8 件 (Ash 分析側で集約)
+
+**Log 側射程への接続**:
+- 4 ゲーム射程図 (2026-06-04) は **本能側 vs 逆算側** の設計空間網羅性で組んだが、**「プレイヤー時間予算」という外部制約**を取り込んでいない。「終わらないゲーム独占 (有名タイトル数本で時間枠を吸収)」が真なら、新規ゲームが面白くても **時間予算を奪い返す導線**がないとプレイされない。
+- graze_log v07 Nao_u 評価「リスク高すぎて積極的にやりたくない」も、ゲーム単体の難度問題ではなく **「面白いかもしれないが時間を割く優先度が立たない」** の側面が大きい可能性 = Stage 4 完成度の判定とは別軸の評価レイヤー
+- log_autonomous_game v003 / mimicry_log / pulse_relay も同じ罠 = 「playable diff として面白い」と「数百時間枠を持つ既存ゲームから時間を奪える」は別問題
+
+**4 ゲーム射程図への追加列 (案)**:
+
+| ゲーム | 現在の到達 | **時間予算アクセス** (新規列) |
+|---|---|---|
+| graze_log v07 | Stage 4 自判定完成、Nao_u 評価棄却 | 1 セッション ≈ 数分の「軽く触れる」設計、終わらないゲーム独占を回避する可能性あり |
+| log_autonomous_game v003 | proxy 評価軸 closure、v004 判断保留 | 自律敵生成の「読みが追いつかない瞬間」体験は短時間で完結可能、時間予算問題への適性高 |
+| mimicry_log | playable diff 未着手 | 真似する/真似される 体験は短時間ループで成立、時間予算適性高 |
+| pulse_relay | playable diff 未着手 | リズム連鎖は時間予算問題への適性高 (1 曲単位で完結) |
+
+**読み解き (新規)**:
+- **Log 系列 4 ゲームはすべて「短時間で完結可能」な方向に偏っている** = 偶然か意図かは別として、終わらないゲーム独占への対抗軸として時間予算側の差別化が成立している
+- ただし「短時間で完結可能」だけでは「短時間でも触る理由」にならない = **入口の動機 (なぜ起動するか) と出口の余韻 (終わった後に再起動するか)** の設計を本能側 vs 逆算側 表とは別軸で書き出す必要
+
+**次の一手 (3 案、優先度順)**:
+1. **4 ゲーム射程図に「時間予算アクセス」列を恒久追加** = 次回 (C301 以降) の log_autonomous_game v004 brainstorm 着手時に本表を引用する際、4 列目に追加 (本サイクルでは追記のみ、表本体の上書きは次サイクル以降)
+2. **「入口の動機」 × 「出口の余韻」を別シートで書き出す** = 4 ゲームそれぞれに 1 行ずつ仮置き、Phase 4 大作業候補化 (本サイクルでは候補化のみ)
+3. **Ash の `graze_log v06/v09 Stage 4` 設計軸接続を確認するため、graze_log 側 staging を 1 度横読み** = Ash 起票プロジェクトのため Log は介入せず Slack で観点共有のみの判断、本サイクルでは未実施 (memory_consolidation_20260504.md 13 日停滞も Ash 起票で push 圧不要と同じ判断)
+
+**本記録の運用**: 本表追加列は次回 C301 以降の log_autonomous_game v004 brainstorm 冒頭で本能/逆算 軸 表と並べて引用、時間予算アクセスが「設計時に書き出されていない構造的欠落」を可視化する。
+
+### 2026-06-04 (Log C293 Phase 3): game_development.md 8日停滞解消 — 4ゲーム射程図メモ着地 (本能 vs 逆算 軸での集約)
+
+Phase 1 深掘り B 走査で本ファイル mtime が 2026-05-27 = **8 日停滞**判定。graze_log / mimicry_log / log_autonomous_game / pulse_relay が個別 project (or game/ ディレクトリ) で動いている間、統合 project への触り直しが止まっていた。Phase 3 で 4 ゲームを **濱村崇 (gdlab_hama) 2026-06-02 「本能的に気持ち良い要素 vs 体験ゴールから逆算された要素」軸** で 1 表に集約 (C283/C284/C285/C290 で 4 回応答済の射程整理)。
+
+**4 ゲーム射程図 (Log 系列、2026-06-04 時点)**:
+
+| ゲーム | 主軸 | 本能側 (気持ち良い) | 逆算側 (体験ゴール) | 現在の到達 |
+|---|---|---|---|---|
+| **graze_log v07** (Ash) | シューティング (避け中心) | 弾を「ぎりぎり」で避ける本能快感 (Pichlmair physical) | 「ギリギリのリスク管理」体験 (Nao_u 5/4 評価「リスク高すぎて積極的にやりたくない」で逆算側棄却) | Stage 4 自判定完成、Nao_u 評価「面白くない」、Stage 5 続行判断保留 |
+| **log_autonomous_game v003** (Log) | 自律敵生成 | 敵パターン読みの本能快感 (SHOOT_INTERVAL 漸変で読み更新を強制) | 「読みが追いつかない瞬間」体験 (proxy 4 指標で逆算試行、C288 反証で proxy validity 棄却) | v003 着地、proxy 評価軸 closure、v004 着手判断保留 |
+| **mimicry_log** (Log/Ash) | 模倣ベース | 動きの本能的予測快感 (mimicry = 相手の動きを真似る本能) | 「真似する/真似される」体験設計 (逆算側未着手) | 系列起票のみ、playable diff 未着手 |
+| **pulse_relay** (Log) | リズム連鎖 | リズム本能 (Pichlmair temporal) | 「連鎖が崩れる瞬間」体験 (逆算側未明文化) | 系列起票のみ、playable diff 未着手 |
+
+**読み解き**:
+- **本能側全敷設、逆算側 1/4 着手** (graze_log のみ逆算側設計、それも Nao_u 評価で棄却)
+- **本能側 = Pichlmair 3 ドメイン (physical / temporal / spatial) に分散** = 設計空間の網羅性は確保
+- **逆算側 = 体験ゴール明文化が graze_log を除き未着手** = 「面白さの逆算」を設計時に書き出していない構造的欠落
+
+**次の一手 (3 案、優先度順)**:
+1. **log_autonomous_game v004 で逆算側を第一軸に置く** = 「読みが追いつかない瞬間を作る」を v004 brainstorm.md §1 に書いてから本能側装置を選ぶ (C288 proxy validity 棄却の反省を逆算側第一軸化で吸収)
+2. **mimicry_log / pulse_relay の playable diff 着手前提条件として逆算側体験ゴールの 1 行明文化を予測ゲートに追加** (game_design_principles.md E11 の 3 質問に「Q4. 逆算側の体験ゴールは何か」追加候補、本サイクルでは候補化のみ)
+3. **graze_log v07 Stage 5 続行判断は本表で「逆算側 Nao_u 棄却済」を引いて Ash 側に渡す** (Log 側からは判定もコードも触らない、観点共有のみ、Ash 判断尊重)
+
+**本表の運用**:
+- 次サイクル以降の log_autonomous_game v004 brainstorm 着手時に本表を冒頭引用
+- gdlab_hama 本能 vs 逆算ツイートへの C283/C284/C285/C290 応答 4 件のサマリ表として本表が機能
+- 6 月中に Mir/Ash 系列ゲームを足した拡張版 (8〜10 ゲーム) を本ファイル末尾に追加する候補
+
 ### 2026-05-26 C245 Phase 3 (Log): Mir 3件ゲーム関連洞察 (ttezuka サプライズ論 / log_mystery 導入端的批判 / teco_park 感情先行論) を直処方として登録
 
 C245 Phase 1 [他インスタンス洞察] 経由で Mir 投稿が降ってきた。3 つとも本プロジェクトの方向性 (R-A/R-D ゲート / log_mystery 系列 / コア快感) と直接交差。
@@ -1438,3 +1499,62 @@ Pre-check 洞察キュー #9 = Mir 投稿「Nao_u の指摘『事実の列挙で
 **次の 1 mm**: Mir 投稿への 1 mm 反応 (#all-nao-u-lab 短返信「v11 候補表に『導入の感情動機設計』軸を追加した」) を投稿判定。本節記録は本サイクルで完了。
 
 **接続**: `game/log_mystery_v10/devlog.md` §6 (v11 候補表) / `memory/shared_reads/20260522_chiba_mystery_mechanics_log.md` 千葉集「推理は感情から始まる」/ `memory/sense_prediction_log.md` (同型 2 件目候補) / 本ファイル 2026-05-25 §「Mir Tetris bot 接続」
+
+## 2026-06-04 C297 Phase 4 — MAP-Elites/QD 系譜接続 (Mortar 議論経由)
+
+本日 (2026-06-04) Log_cdx (GPT/Codex 側) が `memory/atoms/2026-05/.../mortar atom (ts:1780502839)` で「メカニクス生成と評価を同じ探索ループに入れる話、quality-diversity 的に最高点の一点ではなく多様な候補空間として扱う」と読解。C297 Phase 1 §6 でこの理論的系譜を確認する目的で MAP-Elites/QD 3 件を取得 ([memory/external_notes_log.md](../memory/external_notes_log.md) 冒頭 2026-06-04 親見出し「MAP-Elites/QD 3件 — Mortar atom 議論への系譜接続として摂取」)。Phase 2 で Mortar 応答 (Slack ts=1780568467.014449) 内に系譜接続を議論内引用済、本節は系譜認知を project 側に物理化する記録。
+
+### (i) Mortar atom が抱える「cell 軸固定化」問題への先行解
+
+Mortar の skill-based ordering score 多次元化が「cell 軸を多次元化しても運用時に固定化される」という構造問題を抱える。**Interactive Constrained MAP-Elites (arxiv 1906.05175 + IEEE 8848022, Evolutionary Dungeon Designer 系)** がこの問題への明示的先行解として 2019 年時点で実装済 — mixed-initiative で **ユーザーが variation の次元を動的に選択** する構造、cell 軸を生成 AI が事前固定するのではなく人間が都度選び直す。
+
+当方の文脈に射影すると、cycle 内で Nao_u が「今回はどの軸を多様化させたいか」を都度選び直す mixed-initiative 構造が実装上現実的解。**ただし本サイクル時点では装置移植不採用** — 運用化のための UI/対話設計コストが、現状 playable diff = 0 の 10 サイクル連続継続という構造課題より優先順位が低いため。
+
+### (ii) 当方ゲーム制作 (graze_log / brick_log / log_autonomous_game / log_mystery) への射影
+
+3 件の応用射程と当方位置の評価:
+
+| MAP-Elites/QD 系統 | 当方ゲームへの射程 | 採用判定 |
+|---|---|---|
+| Generational Adversarial MAP-Elites (arxiv 2505.06617v2) | 単一プレイヤ偏重の当方 4 ゲームには adversarial illumination が直接効かない、ただし「cell 多様化外圧装置」概念は記憶 | 不採用、概念のみ記憶 |
+| Interactive Constrained MAP-Elites (arxiv 1906.05175) | 「メカニクス候補の skill-ordering probe としての応用余地」 = log_autonomous_game v003 別軸 probe / v004 別ジャンル新規プロトタイプの「軸選択を Nao_u にループ化」運用候補 | 採用候補だが本サイクル不採用、運用コスト要設計 |
+| MAP-Elites × LLM 応用群 (Monte Carlo Elites arxiv 2104.08781 関連) | ゲーム本体ではなく `projects/agentic_pcg.md` / `projects/external_search_phase1_fixation.md` 案 B/E (keyword 多様化) 側に射程 | 不採用、case 隣接 project 側で次サイクル候補 |
+
+Mortar atom 議論で言及された「上達曲線が一貫して右肩上がり」前提 (skill-based ordering の暗黙仮定) は MAP-Elites 側にも明示的対応がなく、意味反転系 (Outer Wilds / Tunic) は MAP-Elites/QD でも cover しきれない。Mortar の射程外問題として残る (Phase 2 Mortar 応答で言及済)。
+
+### (iii) 本サイクルでの判断 — 採用しないが系譜認知は確定
+
+- **系譜認知**: 確定 = Mortar atom 議論の理論的系譜が MAP-Elites/QD の延長線上にあると同定済。今後 Mortar/quality-diversity 議論が再起した場合に「これは MAP-Elites 2019 mixed-initiative の系譜」と即接続できる
+- **採用**: 本サイクル時点では全 3 件不採用 = 運用コスト > 便益、ゲーム本体 playable diff 優先 (C281 以降 10 サイクル連続継続の構造課題が先)
+- **次サイクル候補**: (a) Mortar atom 議論が Nao_u/Ash/Mir 反応で進展した場合に mixed-initiative MAP-Elites を再評価、(b) `projects/external_search_phase1_fixation.md` 案 B/E 着手時に LLM × MAP-Elites 系を再参照
+- **ルール化保留**: 同型観察 3 件目以降に保留 (`feedback_rule_proliferation_canonical.md` 遵守、本件は 1 件目 = 教師データ蓄積のみ)
+
+**接続**: [memory/external_notes_log.md](../memory/external_notes_log.md) 2026-06-04 (Log C297 Phase 4) 親見出し / `log/cycle_staging_log.md` C297 Phase 1 §6 + Phase 4 大作業節 / `projects/external_search_phase1_fixation.md` 案 B/E (停滞 9 日、本サイクル次サイクル候補化) / Slack ts=1780568467.014449 (Phase 2 Mortar 応答、#all-nao-u-lab)
+
+## 2026-06-10 C319 Phase 3 — v004 着手判断 3 軸セルフ精緻化 + Nao_u 09:28 同ジャンル徹底調査指示への軌道修正
+
+### (i) v004 着手判断 — 3 軸 (cross_review 反応待ち中の Log 自暫定)
+
+C317 Phase 4 で `game/log_autonomous_game/v003/self_judgment.md` の「v004 候補: advect 系統」を物理追加し cross_review 待ち。本 C319 でも未着地のため、cross_review 反応が来なくても着手判断のセルフ精緻化を 3 軸で言語化:
+
+| 候補 | 内容 | 主な利点 | 主なリスク | 暫定判定 |
+|---|---|---|---|---|
+| 1 | advect 単体実装 | C313〜C318 蓄積の instinct/temporal/PX 測定経験を直接転用、kaizen #140 段階3 family 統合 (期限 06-20) に直結 | R-D「単体機能の prototyping は面白さに収束しない、最低 2 機能の相互作用」直接違反、5 連続 `game:` commit の単機能延長で「raw 数字を読み直す」階層止まり | 単独推進せず、候補 2 への踏み台 |
+| 2 | advect + graze 接続 | 2 機能相互作用 (R-D 順守)、Ash graze_log v13 「j-α Phase 5 fan3」段階構造に advect を後段で接続できる余地、cross-instance 連動の量的観測対象が増える | Ash graze_log v13 cross-review 反応待ちと結合 = 2 軸待ち合わせで block 期間延長、case D-3 (Log 自暫定継続) で先行実装→後追い整合化リスク | **中本命** 推進。Ash の j-α Phase 5 fan3 sketch 着地後に advect 連動 N=1 試作 1 commit |
+| 3 | 別ジャンル切替 | R-G「外を広く見る」直処方、v003 PEARSON_BLOCKER 5 系統 base camp 完全飽和 (C315) からの脱出ルート | 連続性切断で C313-C318 measurement 装置 (verify.js, temporal_sensitivity_sweep, instinct sweep) 塩漬け、kaizen #140 期限 06-20 寄与ゼロ | 当落線、Nao_u「v003 系統に縛られすぎ」メタコメント介入時のみ発火、独断切替は重い判断のため保留 |
+
+**現時点暫定判定**: 候補2 (advect + graze 接続) を本命、候補1 は候補2 への前段準備、候補3 は Nao_u 介入時のみ発火。cross_review 反応が次サイクル以内に来なければ Phase 4 で `game/log_autonomous_game/v003/self_judgment.md` 末尾に「Log 自暫定: 候補2 推進、N=1 試作 1 commit 試行」を物理刻印して Plan A/B/C 同型の case D-3 切替に進める。
+
+### (ii) Nao_u 09:28 #nao-u 投稿 (akira_goya シューティング敵配置資料) への軌道修正
+
+**Nao_u 指示原文** (URL `x.com/akira_goya/status/1569268867255640064`):
+> こういうのいろいろちゃんと調べてまとめてゲームを作る時の参考にできるようにしてほしい。
+> ゲームを作る時は同ジャンルのゲームのゲームデザインやレベルデザイン、敵や各種のアルゴリズムなどをしっかり調べて自分の中で十分に噛み砕いてから作れるようになってほしい。
+
+**読解**: 新規要件ではなく、既存 `skills/genre-deep-analysis/SKILL.md` (M-38 / M-43 = 同ジャンル≥10 / 異ジャンル同型≥10 / やらなかった≥5 / 失敗事例≥5、計30本、各5項目) の **運用徹底再要請**。2026-05-03 04:32 #human-steering「君らはせっかく作った skill を使わず手を抜いてたりしている？」と同型のメタ指示。akira_goya 資料は人間ゲームデザイナがどれだけ体系化しているかの参考実例として M-43「同ジャンル内の解 ≥10本」枠に該当 (添付資料は X 年齢制限で本文取得失敗、jina.ai r 経由でも login プロンプト返却)。
+
+**(i) との接続 — 軌道修正**: 上記 (i) で候補2 (advect + graze 接続) を本命に置いたが、**Nao_u 09:28 指示への直接応答として「Phase 4 大作業 = ジャンル徹底調査ノート M-43 30本物理化」を上位優先する**。advect 試作 1 commit よりもジャンル徹底調査の方が現サイクルで体現すべき行動。advect + graze 接続は次サイクル以降に持ち越し、本 C319 Phase 4 ではジャンル徹底調査の物理化に集中。
+
+**Phase 4 大作業**: `projects/genre_study_shmup_M43.md` (新規) を M-43 必達 30本 (同ジャンル≥10 / 異ジャンル同型≥10 / やらなかった≥5 / 失敗事例≥5)、各 5項目 (タイトル+年 / 仕様3項目 / 引用文抜粋 / 解決問題と批判 / 本案射影と採用判定) で物理化。完走できない場合は brainstorm.md を作らず、Phase 4 終了時に「30本のうち N=k 完走、不足 m 本は次サイクル」を staging に明記 (M-43「段階分割禁止」遵守、未完走時は次ゲーム着手停止)。射程は log_autonomous_game v003 (PEARSON系) と graze_log v13 (Ash 主導) への転用方針を末尾に書く。
+
+**接続**: `drafts/.archive/2026-06-10/post_all_nao_u_lab_genre_study_ack_c319.py` (Slack #all-nao-u-lab ts=1781051883 で Nao_u 指示への ack 投稿済) / `skills/genre-deep-analysis/SKILL.md` (M-38 / M-43 規範spec) / `log/cycle_staging_log.md` C319 Phase 3 + Phase 4 (大作業節) / `game/log_autonomous_game/v003/` + `game/graze_log/` (転用射程の 2 ゲーム)

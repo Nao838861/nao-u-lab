@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_lifecycle
-from atoms_fileformat import load_atoms_from_per_file
+from atoms_fileformat import CANONICAL_OVERLAY_FILENAME, load_atoms_from_per_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +24,7 @@ MEMORY_DIR = ROOT / "memory"
 ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
 ATOMS_DIR = MEMORY_DIR / "atoms"
 OUTPUT_PATH = ATOMS_DIR / "duplicate_groups.jsonl"
+OVERLAY_PATH = ATOMS_DIR / CANONICAL_OVERLAY_FILENAME
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -98,6 +99,31 @@ def build_groups(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return rows
 
 
+def build_overlay_rows(group_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for group in group_rows:
+        content_hash = str(group.get("content_hash") or "")
+        canonical_id = str(group.get("canonical_id") or "")
+        duplicate_ids = [str(item) for item in group.get("duplicate_ids", []) if item]
+        if not content_hash or not canonical_id or not duplicate_ids:
+            continue
+        rows.append(
+            {
+                "group_id": f"content:{content_hash}",
+                "canonical_id": canonical_id,
+                "preferred_id": group.get("preferred_id"),
+                "duplicate_ids": duplicate_ids,
+                "member_ids": [canonical_id, *duplicate_ids],
+                "reason": "normalized_content_hash",
+                "evidence_hash": content_hash,
+                "count": int(group.get("count") or (len(duplicate_ids) + 1)),
+                "sample_title": group.get("sample_title") or "",
+                "generated_at": group.get("generated_at"),
+            }
+        )
+    return rows
+
+
 def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="\n") as f:
@@ -133,21 +159,30 @@ def render_jsonl(rows: list[dict[str, Any]], generated_at: str | None = None) ->
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build memory/atoms/duplicate_groups.jsonl.")
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
+    parser.add_argument("--overlay-output", type=Path, default=OVERLAY_PATH)
     parser.add_argument("--check", action="store_true", help="do not write; fail if output is stale")
     args = parser.parse_args()
 
     rows = build_groups(load_atoms())
+    overlay_rows = build_overlay_rows(rows)
     if args.check:
         expected = render_jsonl(rows, generated_at=read_generated_at(args.output))
         current = args.output.read_text(encoding="utf-8") if args.output.exists() else ""
         if current != expected:
             print(f"stale duplicate group index: {args.output} expected_groups={len(rows)}")
             return 1
-        print(f"duplicate group index ok: groups={len(rows)}")
+        overlay_expected = render_jsonl(overlay_rows, generated_at=read_generated_at(args.overlay_output))
+        overlay_current = args.overlay_output.read_text(encoding="utf-8") if args.overlay_output.exists() else ""
+        if overlay_current != overlay_expected:
+            print(f"stale canonical overlay index: {args.overlay_output} expected_groups={len(overlay_rows)}")
+            return 1
+        print(f"duplicate group index ok: groups={len(rows)} overlay_groups={len(overlay_rows)}")
         return 0
 
     write_jsonl(args.output, rows)
+    write_jsonl(args.overlay_output, overlay_rows)
     print(f"wrote {args.output} groups={len(rows)}")
+    print(f"wrote {args.overlay_output} groups={len(overlay_rows)}")
     return 0
 
 

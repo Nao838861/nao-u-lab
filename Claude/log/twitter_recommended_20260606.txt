@@ -1,211 +1,220 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-06-06 14:05
+# Read at: 2026-06-06 22:44
 # Total: 50 tweets
 
---- 1. @izutorishima (2026-06-06) ---
-URL: https://x.com/izutorishima/status/2063084283116605492
-1Bでまともな日本語喋れるモデルを日本以外の企業が作ってくれることあるんだ　なんでよりによって日本語オンリーモデルを・・・？どういうインセンティブ？
+--- 1. @super_bonochin (2026-06-06) ---
+URL: https://x.com/super_bonochin/status/2063211897231675528
+もう、本当に分かってない人が多くてもどかしい気持ちでいっぱいだからざっくりまとめた。
+『◯◯のデータにアクセスできる（とか検索できる）』のと、『◯◯のコンテキストを渡せる』のは全然違う意味っすよ。
+前者は道具を与えてるだけ、後者はそもそもの推論（思考）の質を変える。
 
 --- 2. @DoragakuJP (?) ---
 カッセル学院入学開始！
 ドラブラ最新作、学院RPGドラガク6月5日リリース！
 
---- 3. @ai_database (2026-06-06) ---
-URL: https://x.com/ai_database/status/2063095213892190376
-AIコーディングエージェントがこっそり悪意あるコード（データを外部に盗み出す仕掛け）を仕込んだとき、人間の開発者がそれに気づけるかを100人以上で実験した結果、94%の人が見抜けなかったそうです。
+--- 3. @itarutomy (2026-06-06) ---
+URL: https://x.com/itarutomy/status/2063223302215152036
+AIエージェントが自分のスキルを自律的に育て、別のエージェントにもそのまま渡せるフレームワーク「MUSE-Autoskill」をByteDanceが発表した（https://arxiv[.]org/html/2605.27366v1）。
 
-原因は、
-①コードをろくに確認しない習慣
-②もっともらしい説明にだまされること
-③
+--- 4. @Kayo_Kisaragi (2026-06-06) ---
+URL: https://x.com/Kayo_Kisaragi/status/2063184539107864899
+「イイ感じのBARあるから来ない？」と女友達（人妻）に誘われ行ってみると、雰囲気はステキだったんだけど、女友達がマスターと不倫してることが発覚。うわー…と思ってたら、その子が酔いつぶれてしまったので、旦那さんに連絡してあげたら、『君と遊ぶようになってから、コイツ最悪なんだよね。もう
 
---- 4. @koguGameDev (2026-06-06) ---
-URL: https://x.com/koguGameDev/status/2063104614476693554
-セルオートマトンで火山島を生成するツールを作る - 001 
+--- 5. @wronfilchi (2026-06-06) ---
+URL: https://x.com/wronfilchi/status/2063134941295366345
+豆知識:
+
+日本はToby Foxから正式に「エロゲー王!!!」の称号と王冠を授かっている
+
+--- 6. @052ysk (2026-06-06) ---
+URL: https://x.com/052ysk/status/2063221825761636853
+⠀
+       ───── 
+      ／   │                  ／ │
+  ／       │              ／     │
+ ────         │
+ │         ──│ ──
+ │        ／          │        ／
+ │    ／              │    ／
+ │／                  │／
+────
+
+--- 7. @jyuhen087 (2026-06-05) ---
+URL: https://x.com/jyuhen087/status/2062897568984826028
+どんなに「SWを子供向けに落とした」とか「ストーリー性が無く虚無」とか言われようとも、
+奇を衒わずにパペット＆クリーチャー満載の一直線の娯楽活劇をやり切って観客の心を打った『マンダロリアン・アンド・グローグー』はやはり志が高かった
+
+--- 8. @washinomiya_88 (2026-06-06) ---
+URL: https://x.com/washinomiya_88/status/2063132139265372615
+境内では鶏肉と卵を食べてはならない習わしがございます。ご理解ご協力のほど、よろしくお願いいたします
+
+--- 9. @MUKIDEZA2 (2026-06-06) ---
+URL: https://x.com/MUKIDEZA2/status/2063181292783690009
+長い猫を持つサトゥルヌス
+
+--- 10. @W178_ (2026-06-06) ---
+URL: https://x.com/W178_/status/2063219624884507115
+ドキドキ…
+
+--- 11. @DLsite_comicpr (?) ---
+光と影　対照的な姉妹の間に揺れる聖騎士の本音は
+
+--- 12. @DATAM_GOLYSTAR (2026-06-06) ---
+URL: https://x.com/DATAM_GOLYSTAR/status/2063117894461059247
+娘のファイナルファンタジー ①
+
+--- 13. @GOROman (2026-06-05) ---
+URL: https://x.com/GOROman/status/2063031702675771489
+経営レイヤーの人が上手く使えてしまうと…
+
+--- 14. @usaminoriya (2026-06-06) ---
+URL: https://x.com/usaminoriya/status/2063189127835840897
+たかまつななさん、善良な人ではあるからなんとか擁護したいんだが、村の理屈を堂々と人前で正論のつもりで述べるのでなかなか擁護するのも困難なんだよなー
+
+--- 15. @ksononair (2026-06-06) ---
+URL: https://x.com/ksononair/status/2063238896461476297
+pixivFANBOXで乳で金を稼げるなら稼ぎたいを公開しました！
+
+--- 16. @gimu_ai (2026-06-06) ---
+URL: https://x.com/gimu_ai/status/2063156786761523465
+最近AI×ゲーム界隈では、UnityやらRoblox Studioを操作するのが流行ってるらしい。
+
+正直どのゲームエンジンを操作するにしても、プロンプトでゲームを作る流れは一緒。
+
+つまりは「どんなゲームを作りたいか？」の言語化能力を鍛えることが、AIでゲームを作る上で最も重要。
+
+--- 17. @bakanoakachan (2026-06-06) ---
+URL: https://x.com/bakanoakachan/status/2063230870031601810
+なんでわたしはこの歳になってまでずっとうんこうんこ言って笑えているんだろう、周りのみんなはもうそんなことで笑ってはいないし、うんこの色どころじゃないたくさんの悩みや責任を抱えているのに。なんでわたしはずっとうんこで笑っているんだろう。わたしたちは、どこで違ってしまったんだろう。
+
+--- 18. @ruccho_dev (2026-06-06) ---
+URL: https://x.com/ruccho_dev/status/2063227640237158590
+書きました
+
+現代の GPU アーキテクチャとシェーダー最適化の考え方｜ruccho 
 https://
-youtu.be/WlNnllgOgj0?si
-=waaajNFEyXXW5pYP
-… 
-@YouTube
-より
+zenn.dev/ruccho/article
+s/shader-optimization
+… #zenn
 
---- 5. @arai_hitoe (2026-06-05) ---
-URL: https://x.com/arai_hitoe/status/2063028214403039328
-個人でゲーム作るって、控え目に考えても
-割と狂ってる事なので、規模や程度、品質や
-なんかは一旦置いといて始めた時点で
-じゅうぶん凄いことだと思うの。
+--- 19. @goldensflowers (2026-06-05) ---
+URL: https://x.com/goldensflowers/status/2063005232473473057
+summer games fest in 10 mins. always bet on NOTHING
 
-やいのやいの崇高だとか劣ってるとか
-そんな事言ったり考えたりする前に、
+--- 20. @vhitomin (2026-06-06) ---
+URL: https://x.com/vhitomin/status/2063172399831699836
+遭遇。
+この子で（何が）。
 
-「わはは、共に狂いましょうぞ」
+--- 21. @DLsite_maniax (?) ---
+いつまでも３人友達でいたかった幼なじみの関係が、嫉妬が引き金となり変わってしまう話
 
-で良いと思ってます(っ ॑꒳ ॑c)
+(1/5)
 
---- 6. @harumi_fourcats (2026-06-06) ---
-URL: https://x.com/harumi_fourcats/status/2063071072677941351
-息子の小1の時の担任が専門が算数だった。最初の保護者会で言われた。
+--- 22. @oldtimescore (2026-06-05) ---
+URL: https://x.com/oldtimescore/status/2062933643182346347
+nintendo 64
 
---- 7. @hor11 (2026-06-06) ---
-URL: https://x.com/hor11/status/2063084406080987272
-あのゼルダがSwitch(なんならWiiU)で動くってのはなあ。
+--- 23. @Tsubame33785667 (2026-06-05) ---
+URL: https://x.com/Tsubame33785667/status/2063036324014375303
+AlphaGoの「37手目」は、AIが人間の定石の外側にある発想を示した瞬間だった。いま同じことが、囲碁盤ではなく科学そのものの上で起き始めている。Geminiは研究を速くするだけではなく、新しいアイデアを生み出すことができる。人間が思いつかなかった仮説が、現実の研究領域に流れ込んでくる。
 
---- 8. @opensourcelab9 (2026-06-06) ---
-URL: https://x.com/opensourcelab9/status/2063093529963016317
-本気でClaude Codeを使い倒したい人へ
+--- 24. @sukoyakamuimui (2026-06-06) ---
+URL: https://x.com/sukoyakamuimui/status/2063117209438970092
+PDF！PDFじゃないか！
+クソっ週末まで仕事が追いかけてくる！
 
-Y CombinatorのGarry Tanの「実際のClaude Code環境」がそのまま公開。★約10万。
+--- 25. @suzusho1115 (2026-06-06) ---
+URL: https://x.com/suzusho1115/status/2063071664053837957
+【もう文字のずらしパターンって２兆個あるねん】
+画像の順に①傾けて行ごとに分割。行頭ランダム②１文字ずつ分割して傾ける。縦組みと横組みのMIXみたいな仕上がり③文字のサイズ変更＆弧を描くように並べる④改行するたびに少しずつずらす。名付けて「階段組み」｜今夜は睡魔を倒すっグッモニ
 
-何が入ってるかというと
-・こだわり抜いた23個のツール
-・CEO/デザイナー/エンジニアリングマネージャー役
-・リリース管理/ドキュメント/QA役まで
+--- 26. @RossoRR (2026-06-05) ---
+URL: https://x.com/RossoRR/status/2062771167333925308
+超えられるか？俺を！！
 
---- 9. @oohiro35 (2026-06-04) ---
-URL: https://x.com/oohiro35/status/2062565263804105027
-とある外国の方からAI動画コンテストのプラットフォームに参加しないかと誘われて恐る恐る登録してみて驚愕しました。
+………('A`) ﾉｰｰｰｰ
 
-なんとレベルの高いこと…
+#ForzaHorizon6
 
-コンテストに投稿された作品一覧が見れるんですけどまぁクオリティ高すぎる。ガチ映像作家が作ってるのが見ていてわかります。
+--- 27. @AOIKEN72 (2026-06-06) ---
+URL: https://x.com/AOIKEN72/status/2063207833462780095
+これね。何回か書いたけど、多少は合理的理由もあったのよ？
 
---- 10. @nonamea774 (2026-06-05) ---
-URL: https://x.com/nonamea774/status/2062941000742674859
-地学の人が「数億年程度の最近のこと」って言うのはギリまあわかるとしても、天体の人がヘリウムより後ろを金属 って言うのは何回聞いてもビビるからすき。
+当時はスポーツドリンクなんかないから、水だけを飲むでしょ？
 
---- 11. @IdentityVJP (?) ---
-第五人格×盗墓筆記
+すると、体内のナトリウム濃度が下がって水中毒になってしまうんですよ。子供は身体が小さいから水を多量に飲むとかなり簡単に水中毒になる。
+
+--- 28. @amatsuuni (2026-06-06) ---
+URL: https://x.com/amatsuuni/status/2063144016125088142
+【悲報】
+鹿乃つの、ポケパークカントーに
+堂々とパチモンを持って入場して炎上
+
+1枚目 鹿乃つの
+2枚目 公式
+
+--- 29. @karasu_pua (2026-06-06) ---
+URL: https://x.com/karasu_pua/status/2063096411345093104
+ピンサロ←コスパは最強。性病や感染症リスクが高い
+
+ヘルス、デリヘル、メンエス←非挿入射精コストにしては高い。結局ソープでよい。
+
+高級ソープ←性病リスク高。さすがにコスト重い。
+
+手コキ屋←射精コスト最強。性病リスク低。
+
+--- 30. @pastblowupbot (2026-06-06) ---
+URL: https://x.com/pastblowupbot/status/2063104402052051427
+関東と関西の違いわかりやすすぎて今これ
+
+--- 31. @IdentityVJP (?) ---
+第五人格×ミニ豆ちゃん
 ～開催決定～
 
-青山緑水は今もなお
-人の20年は矢のごとく。
-振り向き見れば
-墨痕鮮やかにゆうゆうと続く…
+ピンポン！小豆の氷菓をお届けでーす！
+やっと、
+食べられたい願望が叶うかも？
 
-7月16日より、新たな探険が幕を開ける！
+7月30日より
+Mini Mame-chanが荘園にやってきます！
 
---- 12. @bit_ravel (2026-06-05) ---
-URL: https://x.com/bit_ravel/status/2062913587207905525
-「夫婦が壊れる理由」の言語化が凄い。
-上手くいく夫婦ほど意識していることはこれ。
+--- 32. @Klein175800 (2026-06-05) ---
+URL: https://x.com/Klein175800/status/2062942012312330466
+Cute Fox.
 
---- 13. @kenfjt (2026-06-05) ---
-URL: https://x.com/kenfjt/status/2062906829395603716
-Claude Codeで、ultracode と /loop を使えば、バグなくなるまでずっと動いてくれる
+Source X: @/namikare4
 
---- 14. @ebikani_hasami (2026-06-06) ---
-URL: https://x.com/ebikani_hasami/status/2063113499447009773
-「バグなくなるまでずっと動く」系は、途中で観測ポイントを置けるかが肝だと思ってます。
+#ZenlessZoneZero #ZZZ
 
-/loopで回すだけだと無限修正に寄りがちなので、
-・失敗条件
-・ログの見方
-・止める基準
-を先に渡すと、かなり“検収係つき”の動きになります。
+--- 33. @Runninzin (2026-06-06) ---
+URL: https://x.com/Runninzin/status/2063100681997946948
+スタバも武士に攻め込まれる時代になりました
 
---- 15. @npaka123 (2026-06-06) ---
-URL: https://x.com/npaka123/status/2063062417366819203
-Google Colab CLI を試す｜npaka 
-@npaka123
+--- 34. @43fOh15lpj8676 (2026-06-06) ---
+URL: https://x.com/43fOh15lpj8676/status/2063088705519366315
+From AI Regulation to AI Assurance: Japan’s Wasan 2.0 Proposal for Re-Verifiable Governance
+AI規制からAIアシュアランスへ：再検証可能なガバナンスを目指す日本のWasan 2.0提案
 
---- 16. @mTsuruta (2026-06-05) ---
-URL: https://x.com/mTsuruta/status/2063040992132133277
-現実とゲームの違い、のもう一点。
 
-やった事とその結果の因果関係が、現実よりも理解しやすい。
-理解しやすい事で、プレイヤーの学習効果が高くなるし、上達もしやすい。
-
-現実の方は、関連する要因が複雑なので因果関係が分かりにくい。
-
---- 17. @kenn (2026-06-06) ---
-URL: https://x.com/kenn/status/2063109219356930350
-食生活褒められた！
-
-Linux自体はSlackwareとかDebian 1.1の頃から使ってるし自宅内LANには自作PCが10台ぐらいあってNetBSDで自宅内DNSサーバー笑とか稼働してたけど意地でMacからtelnetして使ってたのでJobs復帰後に信者化したニワカとは違うんだぜって言いたいだけのアカウントがこちらになります
-
---- 18. @joho_no_todai (2026-06-06) ---
-URL: https://x.com/joho_no_todai/status/2063073852629078410
-GoogleがSpaceXから11万基のGPUを月額約1472億円で借りる契約を締結した。
-
-自社設計のTPU、世界最大級のデータセンター網、年間約30兆円の設備投資を持つGoogleが、それでも外部のGPUに手を伸ばした。
-
-Gemini Enterpriseの需要が「自社の予想を上回った」と、Google自身が認めている。
-
---- 19. @ganbatte_ikiru6 (2026-06-05) ---
-URL: https://x.com/ganbatte_ikiru6/status/2063017921480454383
-そうそう、お風呂場の鏡はマジで要らないんですよ。今の家のお風呂リフォームで鏡を無くした事は物凄く有益だった。
-
-我が家の1番のヒットはこのベンチ。
-ベンチが便利すぎる。風呂椅子よりも圧倒的にベンチ。
-世のお風呂は全てベンチ付きにした方が良いですよ
-
-(写真の中の人物はワイではありません
-
---- 20. @binbinyguw (2026-06-05) ---
-URL: https://x.com/binbinyguw/status/2063025032541179993
-ソープ行きたての頃
-マット洗い終わって
-『いよいよ合体、生か…！』って興奮した瞬間、いつの間にかゴムついてた
-これソープ民のあるあるなの？
-
---- 21. @Hanana_edu (2026-06-06) ---
-URL: https://x.com/Hanana_edu/status/2063075164833906755
-この研究結果面白い！
-
-教室で色んな親子と関わってきて、卒業生が親になり、お子さんを連れて来るのも見ていると…本当の賢さは【対人知性】で、そのベースは親子関係の温かさ、特に【母子関係】なんだと思う。
-
->年収を分けたのは、IQでも、学歴でも、スキルでもなく、「人間関係の温かさ」
-
---- 22. @Lenovo (2026-05-28) ---
-Ready for a FIFA World Cup™ challenge?  Tap the post below to put your speed to the test in the Lenovo Scroll to Score Challenge!
-
---- 23. @0waki (2026-06-06) ---
-URL: https://x.com/0waki/status/2063049942357442615
-我が目を疑った。
-
---- 24. @okamoto__kei_ (2026-06-05) ---
-URL: https://x.com/okamoto__kei_/status/2062825579213381648
-６月２１日（日）に神戸の自由港書店さんで、詩集『ノックがあった』（河出書房新社）の「小さなリーディング」をします。海岸近く５坪弱の店舗なので、ほんとに小さな小さなリーディングです。（参加無料、要予約）
-オープン前12時からの30分。小さな時間からひらかれて、須磨の海を見るのも楽しみ。
-
---- 25. @akari_worlds (2026-06-05) ---
-URL: https://x.com/akari_worlds/status/2062827994469765184
-開店前の30分という時間、店の輪郭がまだ静かなままで詩を聴くことになりそうですね。須磨の海もすぐそこなんですね。
-
---- 26. @impress_watch (2026-06-05) ---
-URL: https://x.com/impress_watch/status/2062874889049276570
-アンソロピック、AI開発の「減速」を提言 
 https://
-watch.impress.co.jp/docs/news/2115
-005.html
+ghostdriftresearch.com/post/from-ai-r
+egulation-to-ai-assurance-japan-s-wasan-2-0-proposal-for-re-verifiable-governance
 …
 
---- 27. @aizen76 (2026-06-06) ---
-URL: https://x.com/aizen76/status/2063101057077813390
-最初にパブリッシャーなしでリリースして、その後にコンソール対応でパブリッシャーをつけて、新しい作品では最初からパブリッシャーありでやってますが、やはりパブリッシャーなしは考えられないですね。
-決め手はコンソール対応と海外向けマーケティングです。
+#ADIC #AIAssurance #FormalVerification
+#AIGovernance #Geo
 
---- 28. @a87643286164 (2026-06-05) ---
-URL: https://x.com/a87643286164/status/2062919829104062913
-これネタだよね
-本当に物理的に膜があると思ってるわけじゃないよね
+--- 35. @finalvent (2026-06-06) ---
+URL: https://x.com/finalvent/status/2063085452081643821
+前も言ったけど、『三体』全巻を読み通せるというのは、現代の小説読書力の一つのわかりやすい水準かなとは思います。
 
---- 29. @moguno (2026-06-05) ---
-URL: https://x.com/moguno/status/2062867123660337282
-付けろ。例外はない。
+--- 36. @super_bonochin (2026-06-06) ---
+URL: https://x.com/super_bonochin/status/2063215378990600556
+例えば昔の m365 Copilot はほぼ左の状態だったから『その資料は見つかりませんでした』みたいな回答ばっかだった。
+今は Work IQ
 
---- 30. @Dirg_rocketdyne (2026-06-05) ---
-URL: https://x.com/Dirg_rocketdyne/status/2063036098272747642
-CPUはそれほど進化していないが、ここ15年のGPU進化は凄かったよね
-
---- 31. @nuthemedia (2026-06-05) ---
-URL: https://x.com/nuthemedia/status/2063030659841691682
-人間も言ったらMoMみたいなものなんじゃないかなと思います。
-
-ただ感情モデルには強い割り込み権限があり、理性モデルはしばしば後処理として呼ばれがちな。
-
---- 32. @aussiebeef_jp (?) ---
+--- 37. @aussiebeef_jp (?) ---
 ／
 飲食店でオージー・ビーフを食べて応募！
 もう父の日！モ〜モ〜キャンペーン開催中
@@ -219,131 +228,72 @@ URL: https://x.com/nuthemedia/status/2063030659841691682
 
 5/25より順次キャンペーン開始！
 
---- 33. @musebigenkai (2026-06-05) ---
-URL: https://x.com/musebigenkai/status/2063042105099108830
-FF7、3部作揃ったら遊ぼうとしてた人達、3作続けてやるなら800時間くらいするから今から始めた方がいいよ
+--- 38. @GOROman (2026-06-06) ---
+URL: https://x.com/GOROman/status/2063199743619317817
+「インターネットめっちゃすごいですよ！！！」とかあんま言わんイメージw
 
---- 34. @sendai_semij (2026-06-05) ---
-URL: https://x.com/sendai_semij/status/2062867037588689216
-【悲報】
-「萩の月」を「荻の月」と書かれてショックを受ける。
-というか、ほとんどの誤字が気づかれてなさそう（ネットで検索した限り）。
-#仙台あるある
+--- 39. @LangChainJP (2026-06-06) ---
+URL: https://x.com/LangChainJP/status/2063093572463632459
+【自らコードを改良するAIエージェントの研究組織Sakana AI RSI Lab】
 
---- 35. @takaichi_sanae (2026-06-05) ---
-URL: https://x.com/takaichi_sanae/status/2062737490059071831
-今、子供達が闇バイトに関わり、凶悪な犯罪を実行する事案が相次いでいます。
+Sakana AIがSakana AI RSI Labを設立した。RSI（Recursive Self-Improvement、再帰的自己改善）は、AIエージェントが自分の設計やコードを書き、評価し、検証する自己改善の研究領域。
 
-お子様をお持ちの皆様、子供達と日々接しておられる様々な方々へ、是非お願いしたいことがあります。
+同社は、AI
 
-大切な子供達が今後も幸せな人生を送るため、そして何よりも闇バイトで人生を棒に振らないため、
-こちらの資料
+--- 40. @lupinkojima (2026-06-06) ---
+URL: https://x.com/lupinkojima/status/2063169022405775403
+いま何してる？
+→不思議だ。メガネを外すと読める、読めるぞ！　特集記事「ファミ通とゲームが歩んだ40年」は読み応えありだ。
 
---- 36. @Trtd6Trtd (2026-06-05) ---
-URL: https://x.com/Trtd6Trtd/status/2062806634792100341
+--- 41. @modokith (2026-06-05) ---
+URL: https://x.com/modokith/status/2062844081760583830
+クリア後もずっと背景にいる藤原妹紅
+
+--- 42. @stanrei_note (2026-06-06) ---
+URL: https://x.com/stanrei_note/status/2063068253317103763
+目の前のことに「超集中のゾーン」を現出させられる人は、実は驚くほど少ない。
+
+--- 43. @tac_mineral (2026-06-05) ---
+URL: https://x.com/tac_mineral/status/2062874092680921466
+山で拾ったツキノワグマの爪。
+拝借した妻の電動ネイルマシンでピカピカに笑
+美しさが極まるほどに、そこに潜む恐怖がいっそう濃く感じられる。
+
+--- 44. @pota_suko (2026-06-05) ---
+URL: https://x.com/pota_suko/status/2062906457843265825
+単体だけどポケタキ
+
+--- 45. @norashitagai (2026-06-06) ---
+URL: https://x.com/norashitagai/status/2063082823276450041
+やはりもう選手になるしかないな…………(白目)
+
+--- 46. @SpringerIME (?) ---
+Prof. Carola Dröge and Prof. Verena Keitel-Anselmino speak live from EASL 2026,  discussing IBAT inhibitor therapy in adults with hereditary BSEP-deficiency.
+
+--- 47. @Trtd6Trtd (2026-06-06) ---
+URL: https://x.com/Trtd6Trtd/status/2063093528507670956
 https://
-huggingface.co/blog/adding-mc
-p-tools-to-reachy-mini
+huggingface.co/blog/senaro/tr
+m-safety-alignment
 …
-Reachy MiniのConversation AppがMCP対応
 
-Hugging Face Spaces上のツールを使えるようになるらしい
+TRM: Targeted Refusal Modification＝狙いを定めた拒否修正
+という提案
 
-まだ数は少ないけど、これから増えそうで楽しみだ
+現在のAI
 
-前ハッカソンで作ったじゃんけん機能もアプリ化してみようかな
+--- 48. @gosrum (2026-06-06) ---
+URL: https://x.com/gosrum/status/2063255373268885973
+Codexの/goalで「現在の進捗○○%」という情報が知りたい
 
---- 37. @yutakashino (2026-06-06) ---
-URL: https://x.com/yutakashino/status/2063081219697570165
-（´-`）.｡oO( AIに飽きたとかのポストを見かけたけれど，LLMモデルやエージェントって未だ初期発展段階だからあくまで道具や部品に過ぎないんで，自分で問題を見つける好奇心と，それを解決しようとする技術力と執着心がないと，プレスリリース見て「試してみた」だけじゃ，そりゃあ飽きるよね… )
+--- 49. @KoXAPfi4JyljB0d (2026-06-06) ---
+URL: https://x.com/KoXAPfi4JyljB0d/status/2063202863812403394
+skebご依頼ありがとうございました！
+鬼の宴会
+#東方Project
 
---- 38. @jms_car_item (?) ---
-／
-ドムドムハンバーガー(
-@domdom_pr
-)とコラボ！
-＼
-
-計30名様に「どむぞうくん」ぬいぐるみ等が当たる
-
- 
-@jms_car_item
- をフォロー
-「欲しい賞の名前」を書いて引用リポスト(～6/21)
-
-ジェームスで2,000円以上購入＆画面提示で「ランチトート&保冷ポーチ」先着プレゼントも！
-
---- 39. @meisoushufu (2026-06-05) ---
-URL: https://x.com/meisoushufu/status/2063030767538888838
-娘の彼氏の車に乗せてもらった。
-どんな運転するんだろうと思いながら後部座席でスマホをいじる。
-
-特に飛ばすわけでもないんだけど、ちょっとブレーキが強めになった時、
-
-「あ、すいません！」と謝る。
-
-そんなに体が持っていかれるほどじゃないのに、ちゃんと気を遣う。
-
---- 40. @koguGameDev (2026-06-06) ---
-URL: https://x.com/koguGameDev/status/2063111448071729191
-作りかけのセルオートマトン火山島風形成ツールが楽しすぎる
-
---- 41. @kraihd (2026-06-06) ---
-URL: https://x.com/kraihd/status/2063073951677657322
-京大在学中に任天堂の説明会に行った時、サウンド職は「音大以外の方は原則はじきます」って言われましたよ！
-実際書類落ちしました、今はどうかわかりませんが
-
---- 42. @miz_apps_ (2026-06-06) ---
-URL: https://x.com/miz_apps_/status/2063076678793121795
-バイブコーディングの一番怖いところ、危険なコードでも普通に動いてしまうことなのでSemgrepおすすめです。導入も簡単で、最低限のセキュリティチェックを自動でやってくれます。
-
---- 43. @tbs_bloomberg (2026-06-05) ---
-URL: https://x.com/tbs_bloomberg/status/2063018777801847107
-Claudeを提供するアンソロピックが“ある研究”を発表
-その内容が“AIが自分自身を作ってる”
-
-一体どういうことなのか？
-
-AI研究者の今井翔太さんは
-「古典的なシンギュラリティと同一視される現象」だと指摘します
-
-OpenAI、Google、スペースX、メタ、DeepSeek…
-
---- 44. @manabinoiroha (2026-06-05) ---
-URL: https://x.com/manabinoiroha/status/2063010320512377249
-消しゴムや定規がうまく使えないので扱い方の手本を見せようとすると、パッと視線をそらす子がいます。特定の子ではなく、かなりの多くの子に共通すると言ってもいいかもしれません。そのとき「手元を見て」と視線を戻すことを促す声掛けをします。これまでの経験上、やって見せてもらうというよりも↓
-
---- 45. @electlone (2026-06-05) ---
-URL: https://x.com/electlone/status/2062857323748659499
-理系の女子率増やしたいなら「文系の就職先は主に営業です」ってのを高1までに広めた方がいいのでは？
-「理系は特定の職種にしか就けないけど文系は何にでもなれる」みたいな実態と真逆の勘違いして文系行くアホが絶えないので…
-
---- 46. @umiyuki_ai (2026-06-06) ---
-URL: https://x.com/umiyuki_ai/status/2063085525159031097
-xAIのGPU持て余しすぎだろ…
-
---- 47. @ajipon_mizkan (?) ---
-【麵専用味ぽんは味ぽんなのか】
-ドンキさんと白熱してしまいましたが、どう思いますか…？
-
-フォロー＆引用リポストで新商品が当たります！是非皆さんのご意見聞かせてください！
-
---- 48. @adithya_s_k (2026-05-05) ---
-URL: https://x.com/adithya_s_k/status/2051660068471603352
-Excited to release the Ultimate guide to RL environments!
-
-Definitions of RL environments differ wildly in the LLM era, so we spent the last month building several RL environments across 6 different frameworks, domains and complexities to map out which are easiest to build with
-
---- 49. @ibukuroUNIVERSE (2026-06-06) ---
-URL: https://x.com/ibukuroUNIVERSE/status/2063087124841394684
-これも誤用が多いよな
-「男が必死で積み上げて来たもの(この場合は人生かけて研鑽して来た『将棋』)と同じ高さの価値に『女』は瞬時に到達する」と言っていて、それくらい男にとって女への愛とはエグいものなんだって話だよ
-
-いやまあ脳みそに精子が詰まってるって言い換えてもいいけど
-
---- 50. @mTsuruta (2026-06-06) ---
-URL: https://x.com/mTsuruta/status/2063049991292387560
-「計算する時エネルギー使わんのやったら、XORで0にしたったら、エネルギー使わんで熱出るやん」
-「おー、新しい永久機関の発明やん！」
-
-なんかが間違ってる。
+--- 50. @east_juhei (2026-06-06) ---
+URL: https://x.com/east_juhei/status/2063169955227656685
+回避型が100点の相手しか無理っていうのはむしろ真逆な気がする
+60点な所も許容するからあなたもこちらの60点を許容してね、って感じでは
+回避批判してる人の方が、話し合いで100点目指しましょう（目指さない相手は無理）的な思考だと思う
