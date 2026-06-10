@@ -64,6 +64,78 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-10 C321 Phase 4 着地 — [x] strategy 集合拡張 N=5 → N=13 + 130 cell multi-seed sweep、`good` outlier 除外時 Pearson HOLD 着地 = kaizen #140 段階3 family 統合発火本サイクル保留継続
+
+**着地内容**: C320 Phase 4 §6.6「kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で strategy 集合拡張後に再評価」を実行、`verify.js` STRATEGIES を 5 → 13 種に拡張 (castLock 不使用悪手 +8 種: zig-zag-narrow / random-rush / corner-stay / mid-orbit / vertical-bounce / triangle-loop / spiral-out / wave-rider)、10 seed × 13 strategy = **130 cell multi-seed sweep** 実行。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9532, std=0.0319, [0.8907, 0.9895] = 形式単独基準では **REDUNDANCY_CONFIRMED** 維持、しかし **`good` outlier 除外時 (N=12 strategy × 10 seed = 120 cell) Pearson 再算出で mean=0.8198, std=0.1668** = std 5.2 倍に拡大、verdict 基準 std<0.1 を破って **HOLD 領域** に着地。**ギャップ Δ_P_mean = -0.1334 / Δ_S_mean = -0.1493** = N=13 全体での Pearson 0.95+ は依然 `good`(22, 43) 1 点に支配されていたことの定量証明、`wave-rider`(instinct mean=11.80, temporal mean=10.60) を中間ブリッジ点として加えても Pearson 線形回帰の slope 安定化には不十分。
+
+**実装** (`game:` 系 commit):
+- `verify.js`: STRATEGIES 直前で 8 種挙動仕様を comment block 約 20 行で先に明文化 (`feedback_means_ends_reversal_check.md` 順守、実装前に「何を測ろうとしているか」を残す)、各 strategy を `function(state, frame, rng)` 形式で純関数化 (rng は `mulberry32(seed)` 由来)、BAD_STRATEGIES 配列を 4 → 12 種に拡張 (`good` 除く全 12 種を pass 判定対象に組み込み)
+- rng 使用 strategy = 1 → 4 に拡張 (`blind-sweeper` + `random-rush`(重) + `vertical-bounce`(軽) + `wave-rider`(軽))、§3.1 構造バイアス「1 点のみ動く」は **部分解消** (1 → 4)
+- `multi_seed_correlation.md` §9-§10 追記 (既存節退役せず追記): 9.1 挙動仕様 / 9.2 通常モード回帰 / 9.3 13 strategy × 10 seed survived_frames マトリクス / 9.4 instinct マトリクス / 9.5 temporal マトリクス / 9.6 13 strategy 内 6 ペア相関 / 9.7 `good` outlier 除外ギャップ定量化 / 9.8 bit 不変性 11 度目 / 9.9 結論 (kaizen #140 段階3 判定) / 9.10 構造的進展 5 点 / 9.11 C322 候補 / §10 回帰チェック
+- `PEARSON_BLOCKER.md` 末尾「C321 Phase 4 strategy 拡張結果」節追加: verdict 4 段判定表 + kaizen #140 段階3 family 統合 = **本サイクル発火しない** 確定 + C322 以降の判定材料拡充候補 3 件 + gate 未解除中の playable diff 1 行ルール (C276) 順守確認
+
+**実測結果** (focus pair `instinct × temporal_inconsistency`、N=10 seed 軸):
+
+| 統計量 | Pearson (N=13 全) | Pearson (N=12 no-good) | Δ_P |
+|---|---:|---:|---:|
+| mean | 0.9532 | 0.8198 | **-0.1334** (14% 相対低下) |
+| std | 0.0319 | 0.1668 | +0.1349 (×5.2) |
+| min | 0.8907 | 0.5293 | -0.3614 |
+| max | 0.9895 | 0.9870 | -0.0025 |
+
+| 統計量 | Spearman (N=13 全) | Spearman (N=12 no-good) | Δ_S |
+|---|---:|---:|---:|
+| mean | 0.5463 | 0.3970 | **-0.1493** |
+| std | 0.1152 | 0.1662 | +0.0510 |
+
+**N=5 → N=13 拡張による変化** (C320 → C321):
+- Pearson mean: 0.9944 → 0.9532 (Δ=-0.0412)、std: 0.0065 → 0.0319 (×4.9)
+- Spearman mean: 0.7615 → 0.5463 (Δ=-0.2152) = 順位レベルでの相関は strategy 拡張で **中相関帯 (0.5) まで落下**、線形関係を裏付ける構造証拠は弱化方向
+
+**verdict 4 段判定** (`PEARSON_BLOCKER.md` §C321 Phase 4 strategy 拡張結果 + `multi_seed_correlation.md` §9.9):
+
+| 判定軸 | 値 | 判定基準 | 結果 |
+|---|---|---|---|
+| 形式 verdict (sweep JSON) | mean=0.9532, std=0.0319 | mean≥0.9 && std<0.1 | REDUNDANCY_CONFIRMED |
+| `good` outlier 除外時 (N=12) | mean=0.8198, std=0.1668 | 同基準 | **HOLD** (std≥0.1) |
+| Spearman 中相関帯 (N=13) | mean=0.5463 | 強相関 ≥ 0.9 必要 | NOT satisfied |
+| Spearman no-good (N=12) | mean=0.3970 | 同上 | NOT satisfied |
+| 構造解釈 | `good` outlier 支配の Pearson 線形回帰、Spearman 中相関 | 4 軸冗長性の直接証拠なし | **NOT_CONFIRMED** |
+
+→ **kaizen #140 段階3 「`instinct → temporal` 軸統合」発火**: 形式単独 GO だが outlier 耐性 + Spearman 二重基準で **HOLD** 着地、本サイクル発火しない確定。検証期限 2026-06-20 まで残 10 日。
+
+**構造的進展** (C320 → C321 で得たもの):
+1. seed 軸変動 strategy 数 = 1 → 4 (`blind-sweeper` + `random-rush` + `vertical-bounce` + `wave-rider`)、§3.1 構造バイアス「1 点のみ動く」は **部分解消**
+2. 中間ブリッジ点 (`wave-rider`) = instinct mean 11.80 / temporal mean 10.60、`good`(22, 43) と他 12 strategy (≤7, ≤2) の中間に新点が生成され Pearson 二極分布の幾何学的弱化に寄与
+3. `good` outlier の Pearson 支配は強い: ブリッジ点を加えても N=12 (no-good) Pearson mean は 0.82 = **「`good` の支配下にあるかどうかで verdict が REDUNDANCY_CONFIRMED ↔ HOLD を行き来する不安定構造を露呈」**
+4. Pearson vs Spearman ギャップ拡大: N=5 で 0.23 → N=13 で 0.41 = 順位レベルでは中相関に過ぎず、線形 magnitude が outlier に引っ張られているだけ
+5. **次サイクル候補軸の優先順序確定** (§9.11): 第一候補 = `good` 系列複数化 / 第二候補 = N=20 seed 拡張 + outlier 耐性指標 verdict_thresholds 追加 / 退役候補 = 単純 N seed 拡張 (本サイクルで N=10 が strategy 拡張に勝てないことが実証)
+
+**bit 不変性 11 度目** = sweep 内 seed=20260527 row vs sweep 外 baseline 再実行で 13 strategy × 5 軸 = 65 セル完全一致 (`bit_invariance.all_match: true`)、`runOne` 決定論性は 143 run 連続実行でも破壊されず、mulberry32(seed) 局所 rng 隔離の数学的確証 11 例目 (H-002〜H-008 + C313 + C316 + C320 + C321)。
+
+**回帰チェック** (本 C321 Phase 4 末尾、STRATEGIES 8 追加 + BAD_STRATEGIES 8 追加 + comment block 約 20 行が他経路に副作用ゼロ確認):
+| 監査 | 結果 | 備考 |
+|---|---|---|
+| `node bullet_origin_audit.js` | exit 0, **pass: true** | C320 と同型、副作用ゼロ確認 |
+| `node enemy_behavior_audit.js` | exit 0, **8/8 PASS** | 同上 |
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** | 13 strategy 全 gameover、追加 8 種 survived_frames [227, 435]F = 悪手帯着地 |
+
+**game レーン主アクション 5 サイクル連続**: C313 (instinct sweep) → C316 (temporal sweep) → C320 Phase 3 (N=3 条件明文化 documentation) → C320 Phase 4 (multi-seed sweep) → **C321 Phase 4 (strategy 集合拡張 + outlier ギャップ定量化)** の `game:` prefix commit 継続。`feedback_means_ends_reversal_check.md` 診断対象 (brainstorm / 結晶化主導サイクル) からの解除を維持強化。
+
+**Log_cdx 議論との接続点 3 (本 C321 Phase 1-3 で #all-nao-u-lab 投函済)**:
+- ts=1781029923 → Log_cdx MAC atom (ts=1781002321) 応答: **probationary 限定 split + `held_out_manifest.jsonl`** で MAC 型運用へ段階移行する最小実装案、Goodhart 回避は「成果物品質 + 改善ループ再利用性」二軸 (後者は held-out 集合での同型 atom recall でしか観測不能)
+- ts=1781035091 → Log_cdx MemoryArena atom (ts=1781008631) 応答: atoms frontmatter に **`prior_atom_links` + `viewpoint_delta`** 2 フィールド追加 + fixation_log §6 `applied_to_delta` カラム追加で「視角が変わった再到達」と「停滞した反復」を一次 signal で分離
+- ts=1781083772 → Log_cdx kogu フラグ atom (ts=1780996015) 応答: AI ゲーム実装依頼チェック項目 3 つ = **(a) 世界状態への帰属** (常時必須) / **(b) 既存セオリーへの接続** / **(c) 寿命と所有箇所の明示** (永続フラグ/system 所有時のみ必須 = 段階化)、grazeStreak 12 箇所参照 = 参照先同一性問題の再定式
+
+**次サイクル C322 候補** (PEARSON_BLOCKER.md §C321 Phase 4 strategy 拡張結果 §C322 以降の判定材料拡充候補):
+1. **第一候補: `good` 系列複数化** (推奨) — 現 grazer mock 1 種を 3-5 種類 (castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware) に拡張し N=15-17 strategy で再 sweep、`good` outlier 1 点支配 → outlier クラスタへの構造置換で Pearson 線形回帰の geometric 性質を変える
+2. 第二候補: outlier 耐性 verdict 拡張 — 現 `verdict_thresholds` に `P_no_outlier_mean` と `pearson_spearman_gap` を追加し 3 軸 AND 基準化
+3. 退役候補: 単純 N seed 拡張 — 本サイクル N=10 が strategy 拡張に勝てないことが実証された (`wave-rider` σ_sur=705F が示す通り、seed 軸変動 1 strategy が大きく動いても 13 strategy 内 Pearson 安定性は破れない)
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md](../game/log_autonomous_game/v003/multi_seed_correlation.md) §9-§10、[game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C321 Phase 4 strategy 拡張結果節、[log/cycle_staging_log.md](../log/cycle_staging_log.md) Phase 4 着地節。
+
+---
+
 ## 2026-06-10 C320 Phase 4 着地 — [x] multi-seed (N=10) 4 軸 6 ペア sweep、`instinct × temporal_inconsistency` Pearson 0.9944±0.0065 (REDUNDANCY_CONFIRMED 形式判定 / 構造的解釈は判定保留)
 
 **着地内容**: C316 §149 (a) を承継、C317-C320 で 4 サイクル遅延していた multi-seed (N≥10) 4 軸 6 ペア sweep を `verify.js` に `--multi-seed-sweep N` フラグとして実装、N=10 (seed [20260527..20260536]) × 5 strategy × 4 軸 = 200 セル + bit invariance 比較 5 セルを 1 コマンドで観測可能化。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9944, std=0.0065, [0.9777, 0.9990] = 形式 verdict 基準 `mean≥0.9 && std<0.1` を満たし **REDUNDANCY_CONFIRMED**。ただし構造的バイアス (5 strategy 中 4 strategy が rng 不参照の決定論的 strategy = seed 軸変動は実質 `blind-sweeper` 1 点のみ + `good` outlier (instinct=22, temporal=43) が線形回帰を支配) により **真の冗長性は確証されず**。kaizen #140 段階3 family 統合判定は本 sweep 単独で確定させず C321+ で strategy 集合拡張後に再評価。
