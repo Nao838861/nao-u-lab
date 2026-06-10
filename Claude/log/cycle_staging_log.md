@@ -263,3 +263,57 @@ https://note.com/rushiagames/n/n4c8f38dd4c34
 5. **空サイクル発動下での原則 6 順守**: 3 軸完全飽和 (新着 0 / pending 0 / 統合 100% / Nao_u 直接依頼 0) の空サイクルで「漏れなく回ってるから何もしない」に陥らず、**蓄積された外部入力 (C313 + C316 残課題) を消化する内部労働** で 1mm 動かす = CLAUDE.md「絶対にやる #1 = ゲームを動かして出す」直処方
 
 (Phase 3 完了)
+
+## Phase 4: アクション (2026-06-10 着地) — multi-seed (N=10) sweep 大作業
+
+### 4-1) 着地サマリー — verdict: REDUNDANCY_CONFIRMED (形式) / 判定保留 (構造的解釈)
+
+- 完遂の定義 1〜7 全達成。`verify.js --multi-seed-sweep 10` exit 0、bit invariance 25 セル完全一致、回帰 3 audit 全 PASS
+- focus pair `instinct × temporal_inconsistency` Pearson 分布 (N=10 seed):
+  - **mean=0.9944, std=0.0065, [0.9777, 0.9990]** = 判定基準 `mean≥0.9 && std<0.1` 形式満たし → **verdict: REDUNDANCY_CONFIRMED**
+  - Spearman 分布: mean=0.7615, std=0.1022, [0.5735, 0.9211] = 順位レベルでは中相関 (部分独立)
+- **構造的バイアス警告 (本サイクル新規発見)**: 5 strategy 中 4 strategy (`good`/`camper`/`lane-holder`/`nospecial`) は strategy 関数内 rng 不参照 = seed 軸不変。`blind-sweeper` 1 strategy のみ seed 依存変動。**Pearson std=0.0065 の小ささは「4 定数点 + 1 動点」線形回帰の数学的帰結**であり、N=5 strategy 内の `good` outlier (`instinct=22, temporal=43`) 支配バイアスは seed 拡張で解消されない
+- **kaizen #140 段階3 family 統合判定** (検証期限 2026-06-20 残 10 日): 本 sweep 結果単独で確定させず、C321+ で strategy 集合拡張 (現 5 → +8 種で N=13) 後に再評価。本 sweep verdict は形式 GO 信号としては記録するが、真の冗長性は未確証
+
+### 4-2) 副産物 (本サイクル変更/新規ファイル)
+
+#### 新規ファイル (`game:` prefix commit 対象)
+- **`game/log_autonomous_game/v003/multi_seed_sweep_raw.json`** (約 800 行 JSON): audit / purpose / N_seeds=10 / seeds=[20260527..20260536] / breakdown_per_seed (10 seed × 5 strategy × 4 軸 + survived_frames) / rows / correlations_per_seed (10 entry × 6 pair × 2 統計量) / pearson_distribution / spearman_distribution / focus_pair_pearson_distribution / verdict / bit_invariance (5 strategy × 5 軸 = 25 セル比較 = all_match: true) / notes 全 8 セクション
+- **`game/log_autonomous_game/v003/multi_seed_correlation.md`** (約 200 行): 8 章立て (設計 / 計測条件 / 4 軸マトリクス 10×5 / 6 ペア独立性 seed 軸分布 / bit 不変性 / 結論 / 回帰チェック / 次サイクル候補)。`instinct_sensitivity.md` / `temporal_sensitivity.md` と同型 schema、`good` outlier 支配バイアスの言語化 + Spearman vs Pearson ギャップの構造解釈 + strategy 集合拡張による次サイクル真冗長性判定方針
+
+#### 変更ファイル (`game:` prefix commit 対象)
+- **`game/log_autonomous_game/v003/verify.js`** (+約 180 行、line 904 付近に挿入): 末尾 normal-mode `const results = []` 直前に `--multi-seed-sweep` 分岐追加。flagIdx parse で N 取得 (デフォルト 10、範囲 [2,100])、SEEDS 連続値固定、PX 既定 (50/15) 強制固定 (env override 本モード無効化)、N×5 run + baseline 再実行 5 run = 計 (N+1)×5 run 実行、純 stdlib Pearson/Spearman/distOf 関数で 6 ペア × N seed = 60 相関値 + 6 ペア各々の seed 軸分布算出、focus pair `instinct × temporal_inconsistency` Pearson 分布で 3-way verdict 判定 (REDUNDANCY_CONFIRMED / PSEUDO_CORRELATION / HOLD)、bit invariance 確認後 process.exit(0 or 1)
+
+#### 変更ファイル (`log:` prefix commit 対象)
+- **`projects/log_autonomous_game.md`** (line 65 直後に新規節挿入): 「## 2026-06-10 C320 Phase 4 着地 — [x] multi-seed (N=10) 4 軸 6 ペア sweep、`instinct × temporal_inconsistency` Pearson 0.9944±0.0065 (REDUNDANCY_CONFIRMED 形式判定 / 構造的解釈は判定保留)」節 (約 60 行)。着地内容 + 実装ファイル一覧 + 実測 Pearson/Spearman 統計量表 + 構造的バイアス警告 4 点 + 完全独立 2 ペア物理確証 + probe 副作用ゼロ確証 10 度目 + 回帰チェック 3 項目 + game レーン 4 サイクル連続記録 + 次サイクル C321 候補 3 件
+- **`log/cycle_staging_log.md`** (本ファイル、Phase 4 セクション = 本節): Phase 4 着地サマリー + 副産物列挙 + 回帰チェック実測値 + Phase 5 commit 分離方針
+
+### 4-3) 回帰チェック実測値
+
+| 監査 | 結果 | 備考 |
+|---|---|---|
+| `node bullet_origin_audit.js` | exit 0, **pass: true** | 10/10 check (static_gate_guard / bullet_dir_fixed / offscreen_zero / d_shots_within_gate / c_shots_zero / max_enemy_step ≤ player_speed 等) |
+| `node enemy_behavior_audit.js` | exit 0, **8/8 PASS** | enemy_a / enemy_d / enemy_c_no_shots 等 |
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** | breakdown bit 完全一致: good 4162 / camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 = sweep seed=20260527 行と一致 |
+| `node verify.js --multi-seed-sweep 10` | exit 0, **bit_invariance.all_match: true** | 5 strategy × 5 軸 = 25 セル baseline 一致、verdict: REDUNDANCY_CONFIRMED (形式) |
+
+**回帰確証**: `verify.js` への 180 行追加 (`--multi-seed-sweep` 分岐) は通常モード + 既存 sweep モード (`--sensitivity-sweep` / `--temporal-sensitivity-sweep`) + 3 audit 系列に副作用ゼロ。改修品質 PASS。
+
+### 4-4) commit 分離方針 (Phase 5 で実行)
+
+Phase 2-5 + 3-6 の方針継承、本サイクル変更ファイルを 2 commit に分離:
+- **`game:` commit**: `verify.js` + `multi_seed_sweep_raw.json` + `multi_seed_correlation.md` の game/* 配下 3 ファイル。コミットメッセージ案: `game: C320 Phase 4 — multi-seed (N=10) 4 軸 6 ペア sweep、instinct × temporal Pearson 0.9944±0.0065 (REDUNDANCY_CONFIRMED 形式 / 構造バイアス警告付き)`
+- **`log:` commit**: `projects/log_autonomous_game.md` (C320 Phase 4 節追加) + `log/cycle_staging_log.md` (Phase 4 節追加 = 本ファイル) + Phase 5 で生成する daily_diary_log.md。コミットメッセージ案 (Phase 5 で確定): `log: C320 Phase 5 — diary post + projects/log_autonomous_game.md 更新`
+
+GPT/ 側 5 ファイル M 状態 (Phase 1 §0 観察) は本サイクル Log commit 対象外、Codex 側 push レーンに委譲。
+
+### 4-5) Phase 4 で増やさない原則順守確認
+
+- Slack 投稿: 0 件 (Phase 3 で 0 件継承、Phase 4 で増加なし)
+- 新規 kaizen 起票: 0 件 (Phase 3 で 0 件継承、Phase 4 で増加なし)
+- external_notes 統合: 0 件 (100% 維持、Phase 4 で増加なし)
+- 他インスタンス洞察追加: 0 件 (Phase 3 で #1 取り込み済、Phase 4 で増加なし)
+
+**Phase 4 単独成果**: multi-seed sweep 1 件 (実装系大作業)。「Slack 投稿 1 本では絶対に済まない」粒度の 1mm 前進、staging §選んだ理由 3 の自己宣言を完遂。
+
+(Phase 4 完了)

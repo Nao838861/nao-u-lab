@@ -1,0 +1,1297 @@
+{
+  "audit": "multi_seed_correlation_sweep",
+  "purpose": "C320 Phase 4: multi-seed (N=10) 4 軸 6 ペア sweep — instinct × temporal Pearson 0.9959 (C316 N=5 単一観測) の信頼性確証 / 疑似相関判定",
+  "N_seeds": 10,
+  "seeds": [
+    20260527,
+    20260528,
+    20260529,
+    20260530,
+    20260531,
+    20260532,
+    20260533,
+    20260534,
+    20260535,
+    20260536
+  ],
+  "baseline_seed": 20260527,
+  "instinct_trigger_px": 50,
+  "temporal_inconsistency_threshold_px": 15,
+  "breakdown_per_seed": {
+    "seed_20260527": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 378,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260528": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 348,
+        "instinct_trigger_count": 6,
+        "min_approach_p10": 32.37,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260529": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 313,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 59.17,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260530": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 372,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 35.42,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260531": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 508,
+        "instinct_trigger_count": 6,
+        "min_approach_p10": 36.82,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 4
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260532": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 383,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 20.17,
+        "cont_grazing_max": 11,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260533": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 328,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 27.43,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260534": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 314,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 47.79,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260535": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 273,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 61.93,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    },
+    "seed_20260536": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 459,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 24.16,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 2
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "seed": 20260527,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260527,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260528,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260528,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "blind-sweeper",
+      "survived_frames": 348,
+      "outcome": "gameover",
+      "instinct_trigger_count": 6,
+      "min_approach_p10": 32.37,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260529,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260529,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "blind-sweeper",
+      "survived_frames": 313,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 59.17,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260530,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260530,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "blind-sweeper",
+      "survived_frames": 372,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 35.42,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260531,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260531,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "blind-sweeper",
+      "survived_frames": 508,
+      "outcome": "gameover",
+      "instinct_trigger_count": 6,
+      "min_approach_p10": 36.82,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 4
+    },
+    {
+      "seed": 20260531,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260532,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260532,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "blind-sweeper",
+      "survived_frames": 383,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 20.17,
+      "cont_grazing_max": 11,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260533,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260533,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "blind-sweeper",
+      "survived_frames": 328,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 27.43,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260534,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260534,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "blind-sweeper",
+      "survived_frames": 314,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 47.79,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260535,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260535,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "blind-sweeper",
+      "survived_frames": 273,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 61.93,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260536,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "blind-sweeper",
+      "survived_frames": 459,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 24.16,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    }
+  ],
+  "correlations_per_seed": [
+    {
+      "seed": 20260527,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2275,
+        "instinct_x_cont_grazing_max": 0.5766,
+        "instinct_x_temporal_inconsistency": 0.9959,
+        "min_approach_p10_x_cont_grazing_max": 0.3518,
+        "min_approach_p10_x_temporal_inconsistency": -0.16,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6317
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.5735,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": 0.1118,
+        "cont_grazing_max_x_temporal_inconsistency": 0.803
+      }
+    },
+    {
+      "seed": 20260528,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2876,
+        "instinct_x_cont_grazing_max": 0.5569,
+        "instinct_x_temporal_inconsistency": 0.9777,
+        "min_approach_p10_x_cont_grazing_max": 0.2143,
+        "min_approach_p10_x_temporal_inconsistency": -0.1283,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6066
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.7632,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": -0.1539,
+        "cont_grazing_max_x_temporal_inconsistency": 0.7105
+      }
+    },
+    {
+      "seed": 20260529,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.3535,
+        "instinct_x_cont_grazing_max": 0.1683,
+        "instinct_x_temporal_inconsistency": 0.9983,
+        "min_approach_p10_x_cont_grazing_max": 0.0013,
+        "min_approach_p10_x_temporal_inconsistency": -0.3426,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2244
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.527,
+        "instinct_x_cont_grazing_max": -0.1622,
+        "instinct_x_temporal_inconsistency": 0.6489,
+        "min_approach_p10_x_cont_grazing_max": 0.1026,
+        "min_approach_p10_x_temporal_inconsistency": -0.0513,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+      }
+    },
+    {
+      "seed": 20260530,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1713,
+        "instinct_x_cont_grazing_max": 0.5018,
+        "instinct_x_temporal_inconsistency": 0.999,
+        "min_approach_p10_x_cont_grazing_max": 0.0305,
+        "min_approach_p10_x_temporal_inconsistency": -0.1493,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5352
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4472,
+        "instinct_x_cont_grazing_max": 0.5,
+        "instinct_x_temporal_inconsistency": 0.803,
+        "min_approach_p10_x_cont_grazing_max": -0.2236,
+        "min_approach_p10_x_temporal_inconsistency": -0.1539,
+        "cont_grazing_max_x_temporal_inconsistency": 0.803
+      }
+    },
+    {
+      "seed": 20260531,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.3088,
+        "instinct_x_cont_grazing_max": 0.5244,
+        "instinct_x_temporal_inconsistency": 0.9896,
+        "min_approach_p10_x_cont_grazing_max": 0.3606,
+        "min_approach_p10_x_temporal_inconsistency": -0.2052,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6059
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.2895,
+        "instinct_x_temporal_inconsistency": 0.9211,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": -0.5643,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+      }
+    },
+    {
+      "seed": 20260532,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1169,
+        "instinct_x_cont_grazing_max": 0.0852,
+        "instinct_x_temporal_inconsistency": 0.9974,
+        "min_approach_p10_x_cont_grazing_max": -0.6378,
+        "min_approach_p10_x_temporal_inconsistency": -0.0577,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0493
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.6579,
+        "instinct_x_temporal_inconsistency": 0.7632,
+        "min_approach_p10_x_cont_grazing_max": -0.6669,
+        "min_approach_p10_x_temporal_inconsistency": -0.1539,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+      }
+    },
+    {
+      "seed": 20260533,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1182,
+        "instinct_x_cont_grazing_max": 0.5907,
+        "instinct_x_temporal_inconsistency": 0.999,
+        "min_approach_p10_x_cont_grazing_max": 0.3911,
+        "min_approach_p10_x_temporal_inconsistency": -0.0972,
+        "cont_grazing_max_x_temporal_inconsistency": 0.6259
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4472,
+        "instinct_x_cont_grazing_max": 0.3441,
+        "instinct_x_temporal_inconsistency": 0.803,
+        "min_approach_p10_x_cont_grazing_max": 0.1539,
+        "min_approach_p10_x_temporal_inconsistency": -0.1539,
+        "cont_grazing_max_x_temporal_inconsistency": 0.7105
+      }
+    },
+    {
+      "seed": 20260534,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2465,
+        "instinct_x_cont_grazing_max": 0.1683,
+        "instinct_x_temporal_inconsistency": 0.9989,
+        "min_approach_p10_x_cont_grazing_max": -0.2012,
+        "min_approach_p10_x_temporal_inconsistency": -0.2358,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2061
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": 0.0527,
+        "instinct_x_cont_grazing_max": -0.1622,
+        "instinct_x_temporal_inconsistency": 0.825,
+        "min_approach_p10_x_cont_grazing_max": -0.6669,
+        "min_approach_p10_x_temporal_inconsistency": 0.1118,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2294
+      }
+    },
+    {
+      "seed": 20260535,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.3773,
+        "instinct_x_cont_grazing_max": 0.1683,
+        "instinct_x_temporal_inconsistency": 0.9983,
+        "min_approach_p10_x_cont_grazing_max": 0.0551,
+        "min_approach_p10_x_temporal_inconsistency": -0.3635,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2244
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.527,
+        "instinct_x_cont_grazing_max": -0.1622,
+        "instinct_x_temporal_inconsistency": 0.6489,
+        "min_approach_p10_x_cont_grazing_max": 0.1026,
+        "min_approach_p10_x_temporal_inconsistency": -0.0513,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5526
+      }
+    },
+    {
+      "seed": 20260536,
+      "n_strategies": 5,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2136,
+        "instinct_x_cont_grazing_max": 0.2611,
+        "instinct_x_temporal_inconsistency": 0.9901,
+        "min_approach_p10_x_cont_grazing_max": -0.5292,
+        "min_approach_p10_x_temporal_inconsistency": -0.0965,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1705
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.7182,
+        "instinct_x_cont_grazing_max": 0.6579,
+        "instinct_x_temporal_inconsistency": 0.8652,
+        "min_approach_p10_x_cont_grazing_max": -0.6669,
+        "min_approach_p10_x_temporal_inconsistency": -0.3689,
+        "cont_grazing_max_x_temporal_inconsistency": 0.703
+      }
+    }
+  ],
+  "pearson_distribution": {
+    "instinct_x_min_approach_p10": {
+      "n": 10,
+      "mean": -0.2421,
+      "std": 0.0862,
+      "min": -0.3773,
+      "max": -0.1169
+    },
+    "instinct_x_cont_grazing_max": {
+      "n": 10,
+      "mean": 0.3602,
+      "std": 0.1953,
+      "min": 0.0852,
+      "max": 0.5907
+    },
+    "instinct_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.9944,
+      "std": 0.0065,
+      "min": 0.9777,
+      "max": 0.999
+    },
+    "min_approach_p10_x_cont_grazing_max": {
+      "n": 10,
+      "mean": 0.0036,
+      "std": 0.3441,
+      "min": -0.6378,
+      "max": 0.3911
+    },
+    "min_approach_p10_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": -0.1836,
+      "std": 0.0982,
+      "min": -0.3635,
+      "max": -0.0577
+    },
+    "cont_grazing_max_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.388,
+      "std": 0.2194,
+      "min": 0.0493,
+      "max": 0.6317
+    }
+  },
+  "spearman_distribution": {
+    "instinct_x_min_approach_p10": {
+      "n": 10,
+      "mean": -0.5487,
+      "std": 0.2295,
+      "min": -0.7182,
+      "max": 0.0527
+    },
+    "instinct_x_cont_grazing_max": {
+      "n": 10,
+      "mean": 0.2542,
+      "std": 0.303,
+      "min": -0.1622,
+      "max": 0.6579
+    },
+    "instinct_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.7615,
+      "std": 0.1022,
+      "min": 0.5735,
+      "max": 0.9211
+    },
+    "min_approach_p10_x_cont_grazing_max": {
+      "n": 10,
+      "mean": -0.1404,
+      "std": 0.361,
+      "min": -0.6669,
+      "max": 0.1539
+    },
+    "min_approach_p10_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": -0.1428,
+      "std": 0.1938,
+      "min": -0.5643,
+      "max": 0.1118
+    },
+    "cont_grazing_max_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.617,
+      "std": 0.1615,
+      "min": 0.2294,
+      "max": 0.803
+    }
+  },
+  "focus_pair": "instinct_x_temporal_inconsistency",
+  "focus_pair_pearson_distribution": {
+    "n": 10,
+    "mean": 0.9944,
+    "std": 0.0065,
+    "min": 0.9777,
+    "max": 0.999
+  },
+  "verdict_thresholds": {
+    "redundancy_confirmed": "pearson mean >= 0.9 && std < 0.1",
+    "pseudo_correlation": "pearson std >= 0.2",
+    "hold": "0.1 <= pearson std < 0.2"
+  },
+  "verdict": "REDUNDANCY_CONFIRMED — 4軸 → 3軸縮約発火候補 (kaizen #140 段階3 family統合 GO)",
+  "bit_invariance": {
+    "baseline_seed": 20260527,
+    "per_strategy": {
+      "good": {
+        "sweep_survived_frames": 4162,
+        "baseline_survived_frames": 4162,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 22,
+        "baseline_instinct_trigger_count": 22,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 43,
+        "baseline_temporal_inconsistency_count": 43,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 52.24,
+        "baseline_min_approach_p10": 52.24,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 6,
+        "baseline_cont_grazing_max": 6,
+        "cont_grazing_bit_match": true
+      },
+      "camper": {
+        "sweep_survived_frames": 319,
+        "baseline_survived_frames": 319,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 58.07,
+        "baseline_min_approach_p10": 58.07,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "lane-holder": {
+        "sweep_survived_frames": 284,
+        "baseline_survived_frames": 284,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 55.33,
+        "baseline_min_approach_p10": 55.33,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "blind-sweeper": {
+        "sweep_survived_frames": 378,
+        "baseline_survived_frames": 378,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 3,
+        "baseline_instinct_trigger_count": 3,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 38.84,
+        "baseline_min_approach_p10": 38.84,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 3,
+        "baseline_cont_grazing_max": 3,
+        "cont_grazing_bit_match": true
+      },
+      "nospecial": {
+        "sweep_survived_frames": 545,
+        "baseline_survived_frames": 545,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 2,
+        "baseline_temporal_inconsistency_count": 2,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 93.05,
+        "baseline_min_approach_p10": 93.05,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      }
+    },
+    "all_match": true,
+    "note": "sweep 内 seed=20260527 行と sweep 外 baseline 再実行が bit 完全一致 = multi-seed ループが state を汚染しない (H-002〜H-008 + C313 + C316 同型論証 10 度目)"
+  },
+  "notes": [
+    "N=10 seed × 5 strategy = 50 run + baseline 再実行 5 run = 合計 55 run",
+    "seed ごとの 6 ペア相関は 5 strategy (N=5) 内算出 = 少サンプル、相関値の方向性確認用",
+    "pearson_distribution は seed 軸分布 (N=10) = focus 軸 instinct × temporal の安定性判定対象",
+    "判定基準: mean ≥ 0.9 && std < 0.1 → 冗長性確定 / std ≥ 0.2 → 疑似相関 / それ以外 → 判定保留",
+    "PX 既定 (50 / 15) 固定 — env override は本モードで無効化 (sweep 軸を seed 単一に絞る)"
+  ]
+}

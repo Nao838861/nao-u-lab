@@ -902,6 +902,225 @@ if (process.argv.includes('--temporal-sensitivity-sweep')) {
   process.exit((survivedInvariantAll && otherProbesInvariantAll) ? 0 : 1);
 }
 
+// C320 Phase 4: --multi-seed-sweep N モード = N seed × 5 strategy = N×5 run。
+//   N 既定 = 10、seed 系列 = [SEED, SEED+1, ..., SEED+N-1] 連続値固定。
+//   PX 既定 (50 / 15) 固定 — env override は本モードで無効化 (sweep 軸を seed 単一に絞る)。
+//   目的: C316 で N=5 単一観測の Pearson 0.9959 (instinct × temporal) の安定性 / 疑似相関判定。
+//   各 seed で 5 strategy 全体 N=5 の 6 ペア Pearson/Spearman を算出し、seed 軸 (N) の分布
+//   (mean/std/min/max) で focus pair の信頼性を判定する。
+//   bit invariance: seed=SEED について sweep ループ内行 vs sweep 外 baseline 再実行 が bit 完全一致
+//     = multi-seed ループが state を汚染しない数学的確証 (H-002〜H-008 + C313 + C316 同型論証 10 度目)。
+//   判定基準 (focus = instinct × temporal Pearson 分布):
+//     mean ≥ 0.9 && std < 0.1 → REDUNDANCY_CONFIRMED (4 軸 → 3 軸縮約発火候補)
+//     std ≥ 0.2               → PSEUDO_CORRELATION (strategy 二極分布、N=5 単一は信頼区間外)
+//     0.1 ≤ std < 0.2         → HOLD (N=20 拡張候補)
+if (process.argv.includes('--multi-seed-sweep')) {
+  const flagIdx = process.argv.indexOf('--multi-seed-sweep');
+  let N = 10;
+  if (flagIdx >= 0 && process.argv[flagIdx + 1] !== undefined && !process.argv[flagIdx + 1].startsWith('--')) {
+    const v = Number(process.argv[flagIdx + 1]);
+    if (Number.isFinite(v) && v >= 2 && v <= 100) N = Math.floor(v);
+  }
+  const SEEDS = Array.from({ length: N }, (_, i) => SEED + i);
+
+  // PX 既定 (50 / 15) 固定 — 本 sweep は seed 軸単独
+  INSTINCT_TRIGGER_PX = 50;
+  TEMPORAL_INCONSISTENCY_THRESHOLD_PX = 15;
+
+  const sweepRows = [];
+  for (const seed of SEEDS) {
+    for (const name of Object.keys(STRATEGIES)) {
+      const r = runOne(name, STRATEGIES[name], seed);
+      sweepRows.push({
+        seed,
+        strategy: r.strategy,
+        survived_frames: r.survived_frames,
+        outcome: r.outcome,
+        instinct_trigger_count: r.instinct_trigger_count,
+        min_approach_p10: r.min_approach_p10,
+        cont_grazing_max: r.cont_grazing_max,
+        temporal_inconsistency_count: r.temporal_inconsistency_count,
+      });
+    }
+  }
+
+  // 純 stdlib 相関係数 (C313/C316 と同実装、再宣言は scope 隔離のため許容)
+  function pearson(xs, ys) {
+    const n = xs.length;
+    if (n < 2) return null;
+    let sx = 0, sy = 0;
+    for (let i = 0; i < n; i++) { sx += xs[i]; sy += ys[i]; }
+    const mx = sx / n, my = sy / n;
+    let num = 0, dx2 = 0, dy2 = 0;
+    for (let i = 0; i < n; i++) {
+      const dx = xs[i] - mx, dy = ys[i] - my;
+      num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
+    }
+    const denom = Math.sqrt(dx2 * dy2);
+    return denom > 0 ? Number((num / denom).toFixed(4)) : null;
+  }
+  function ranksOf(arr) {
+    const n = arr.length;
+    const idx = arr.map((v, i) => ({ v, i }));
+    idx.sort((a, b) => a.v - b.v);
+    const r = new Array(n);
+    let i = 0;
+    while (i < n) {
+      let j = i;
+      while (j + 1 < n && idx[j + 1].v === idx[i].v) j++;
+      const avg = (i + j) / 2 + 1;
+      for (let k = i; k <= j; k++) r[idx[k].i] = avg;
+      i = j + 1;
+    }
+    return r;
+  }
+  function spearman(xs, ys) {
+    return pearson(ranksOf(xs), ranksOf(ys));
+  }
+
+  // 4 軸 6 ペア定義
+  const PAIRS = [
+    ['instinct_x_min_approach_p10',                'instinct_trigger_count',     'min_approach_p10'],
+    ['instinct_x_cont_grazing_max',                'instinct_trigger_count',     'cont_grazing_max'],
+    ['instinct_x_temporal_inconsistency',          'instinct_trigger_count',     'temporal_inconsistency_count'],
+    ['min_approach_p10_x_cont_grazing_max',        'min_approach_p10',           'cont_grazing_max'],
+    ['min_approach_p10_x_temporal_inconsistency',  'min_approach_p10',           'temporal_inconsistency_count'],
+    ['cont_grazing_max_x_temporal_inconsistency',  'cont_grazing_max',           'temporal_inconsistency_count'],
+  ];
+
+  // seed ごとに 5 strategy 全体 N=5 で 6 ペア相関算出
+  const correlationsPerSeed = SEEDS.map(seed => {
+    const at = sweepRows.filter(r => r.seed === seed);
+    const pearsonOut = {}, spearmanOut = {};
+    for (const [k, xAxis, yAxis] of PAIRS) {
+      const xs = at.map(r => r[xAxis]);
+      const ys = at.map(r => r[yAxis]);
+      pearsonOut[k] = pearson(xs, ys);
+      spearmanOut[k] = spearman(xs, ys);
+    }
+    return { seed, n_strategies: at.length, pearson: pearsonOut, spearman: spearmanOut };
+  });
+
+  // 6 ペア各々の seed 軸分布 (N=SEEDS.length)
+  function distOf(values) {
+    const vs = values.filter(v => v !== null && Number.isFinite(v));
+    if (vs.length === 0) return { n: 0, mean: null, std: null, min: null, max: null };
+    const m = vs.reduce((a, b) => a + b, 0) / vs.length;
+    const variance = vs.reduce((a, b) => a + (b - m) * (b - m), 0) / vs.length;
+    return {
+      n: vs.length,
+      mean: Number(m.toFixed(4)),
+      std: Number(Math.sqrt(variance).toFixed(4)),
+      min: Number(Math.min(...vs).toFixed(4)),
+      max: Number(Math.max(...vs).toFixed(4)),
+    };
+  }
+  const pearsonDistribution = {}, spearmanDistribution = {};
+  for (const [k] of PAIRS) {
+    pearsonDistribution[k] = distOf(correlationsPerSeed.map(c => c.pearson[k]));
+    spearmanDistribution[k] = distOf(correlationsPerSeed.map(c => c.spearman[k]));
+  }
+
+  // bit invariance: seed=SEED 行と sweep 外 baseline 再実行を比較
+  const baselineReRun = {};
+  for (const name of Object.keys(STRATEGIES)) {
+    baselineReRun[name] = runOne(name, STRATEGIES[name], SEED);
+  }
+  const baselineSeedRows = sweepRows.filter(r => r.seed === SEED);
+  const bitMatchPerStrategy = {};
+  for (const r of baselineSeedRows) {
+    const b = baselineReRun[r.strategy];
+    bitMatchPerStrategy[r.strategy] = {
+      sweep_survived_frames: r.survived_frames,
+      baseline_survived_frames: b.survived_frames,
+      survived_bit_match: r.survived_frames === b.survived_frames,
+      sweep_instinct_trigger_count: r.instinct_trigger_count,
+      baseline_instinct_trigger_count: b.instinct_trigger_count,
+      instinct_bit_match: r.instinct_trigger_count === b.instinct_trigger_count,
+      sweep_temporal_inconsistency_count: r.temporal_inconsistency_count,
+      baseline_temporal_inconsistency_count: b.temporal_inconsistency_count,
+      temporal_bit_match: r.temporal_inconsistency_count === b.temporal_inconsistency_count,
+      sweep_min_approach_p10: r.min_approach_p10,
+      baseline_min_approach_p10: b.min_approach_p10,
+      min_approach_bit_match: r.min_approach_p10 === b.min_approach_p10,
+      sweep_cont_grazing_max: r.cont_grazing_max,
+      baseline_cont_grazing_max: b.cont_grazing_max,
+      cont_grazing_bit_match: r.cont_grazing_max === b.cont_grazing_max,
+    };
+  }
+  const bitMatchAll = Object.values(bitMatchPerStrategy).every(v =>
+    v.survived_bit_match && v.instinct_bit_match && v.temporal_bit_match
+    && v.min_approach_bit_match && v.cont_grazing_bit_match
+  );
+
+  // breakdown_per_seed (seed → strategy → 4 軸 + survived)
+  const breakdownPerSeed = {};
+  for (const seed of SEEDS) {
+    breakdownPerSeed[`seed_${seed}`] = {};
+    for (const r of sweepRows.filter(rr => rr.seed === seed)) {
+      breakdownPerSeed[`seed_${seed}`][r.strategy] = {
+        survived_frames: r.survived_frames,
+        instinct_trigger_count: r.instinct_trigger_count,
+        min_approach_p10: r.min_approach_p10,
+        cont_grazing_max: r.cont_grazing_max,
+        temporal_inconsistency_count: r.temporal_inconsistency_count,
+      };
+    }
+  }
+
+  // focus pair 判定 (instinct × temporal Pearson 分布)
+  const focusKey = 'instinct_x_temporal_inconsistency';
+  const focusDist = pearsonDistribution[focusKey];
+  let verdict;
+  if (focusDist.std === null) {
+    verdict = 'INSUFFICIENT_DATA';
+  } else if (focusDist.mean >= 0.9 && focusDist.std < 0.1) {
+    verdict = 'REDUNDANCY_CONFIRMED — 4軸 → 3軸縮約発火候補 (kaizen #140 段階3 family統合 GO)';
+  } else if (focusDist.std >= 0.2) {
+    verdict = 'PSEUDO_CORRELATION — strategy 二極分布による偽相関 (N=5 単一観測は信頼区間外、4 軸独立性維持)';
+  } else {
+    verdict = 'HOLD — 判定保留 + N=20 拡張候補 (0.1 ≤ std < 0.2 = 判定領域グレー)';
+  }
+
+  const sweepReport = {
+    audit: 'multi_seed_correlation_sweep',
+    purpose: `C320 Phase 4: multi-seed (N=${N}) 4 軸 6 ペア sweep — instinct × temporal Pearson 0.9959 (C316 N=5 単一観測) の信頼性確証 / 疑似相関判定`,
+    N_seeds: N,
+    seeds: SEEDS,
+    baseline_seed: SEED,
+    instinct_trigger_px: INSTINCT_TRIGGER_PX,
+    temporal_inconsistency_threshold_px: TEMPORAL_INCONSISTENCY_THRESHOLD_PX,
+    breakdown_per_seed: breakdownPerSeed,
+    rows: sweepRows,
+    correlations_per_seed: correlationsPerSeed,
+    pearson_distribution: pearsonDistribution,
+    spearman_distribution: spearmanDistribution,
+    focus_pair: focusKey,
+    focus_pair_pearson_distribution: focusDist,
+    verdict_thresholds: {
+      redundancy_confirmed: 'pearson mean >= 0.9 && std < 0.1',
+      pseudo_correlation:   'pearson std >= 0.2',
+      hold:                 '0.1 <= pearson std < 0.2',
+    },
+    verdict,
+    bit_invariance: {
+      baseline_seed: SEED,
+      per_strategy: bitMatchPerStrategy,
+      all_match: bitMatchAll,
+      note: `sweep 内 seed=${SEED} 行と sweep 外 baseline 再実行が bit 完全一致 = multi-seed ループが state を汚染しない (H-002〜H-008 + C313 + C316 同型論証 10 度目)`,
+    },
+    notes: [
+      `N=${N} seed × 5 strategy = ${N * 5} run + baseline 再実行 5 run = 合計 ${N * 5 + 5} run`,
+      'seed ごとの 6 ペア相関は 5 strategy (N=5) 内算出 = 少サンプル、相関値の方向性確認用',
+      `pearson_distribution は seed 軸分布 (N=${N}) = focus 軸 instinct × temporal の安定性判定対象`,
+      '判定基準: mean ≥ 0.9 && std < 0.1 → 冗長性確定 / std ≥ 0.2 → 疑似相関 / それ以外 → 判定保留',
+      'PX 既定 (50 / 15) 固定 — env override は本モードで無効化 (sweep 軸を seed 単一に絞る)',
+    ],
+  };
+  console.log(JSON.stringify(sweepReport, null, 2));
+  process.exit(bitMatchAll ? 0 : 1);
+}
+
 const results = [];
 for (const name of Object.keys(STRATEGIES)) {
   results.push(runOne(name, STRATEGIES[name], SEED));
