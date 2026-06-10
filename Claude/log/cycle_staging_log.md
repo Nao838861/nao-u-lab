@@ -336,3 +336,59 @@ Phase 1 §5 で挙げた 4 プロジェクト (genre_study_shmup_M43 / log_auton
 **5. v003 別軸 probe 拡張 (候補 1) を選ばない理由**: HeLa-Mem spreading activation 軸 (C312 起票) など研究軸の追加は v003 構造特性が確定した状況では「研究装置の充実化」になり、playable diff 担保にならない。CLAUDE.md「ゲームを動かして出す」が「研究装置を出す」に倒れる懸念 = [feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) 診断対象。
 
 **6. v003 playable 直接改修 (候補 3) を選ばない理由**: outlier 支配が構造特性として確定済、改修方向が見えない = 「方向不明な改修」は Phase 4 30 分予算で着地確証なし、副作用ゼロ確証コストも高い (bit-equal invariance 全 strategy 再検証必要)。次の改修方向を見つけるための観測装置が `audit_probe_proliferation.py` (C319 着地済) で出揃った段階、次サイクル C324 以降の長尺枠候補。
+
+
+## Phase 4: 実行 — v007 別ジャンル着手着地
+
+### 0) Phase 3 計画と実態の齟齬訂正 (v004 → v007 番号修正)
+
+Phase 3 「次フェーズの大作業」§タイトル / §完遂の定義で **`game/log_autonomous_game/v004/`** を新規ディレクトリと書いたが、Phase 4 着手時に `game/log_autonomous_game/` 直下を確認したところ **v004 / v005 / v006 が既存** (2026-05-27〜2026-05-29 起票、Echo-Path 系統の派生)。番号衝突回避のため **v007** に変更、本 Phase 4 は v007 ディレクトリとして着地。Phase 3 計画は番号のみ実態と乖離していたが、別ジャンル着手のスコープ・完遂条件 (4 ファイル着地 + game: prefix commit) は完全継承。
+
+### 1) 着地ファイル一覧 (3 ファイル新規、合計 約 23KB)
+
+| ファイル | サイズ | 役割 |
+|---|---|---|
+| `game/log_autonomous_game/v007/genre_selection.md` | 約 6KB | 5 ジャンル候補 (action-adventure / パズル / タイム制御 / リズム / リソース管理) MPS 比較、最終選定 = アクションアドベンチャー探索 (mini-metroidvania) |
+| `game/log_autonomous_game/v007/design_log.md` | 約 11KB | Q-D0 + Q-A〜Q-D + Q-導入 + Q-成功FB + Q-レイアウト + Q-日本語ログ + Q-ミミクリ = 計 10 ゲートを mini-metroidvania 用に書き直し、ゲート暫定採点 39/50 (78%) |
+| `game/log_autonomous_game/v007/brainstorm.md` | 約 7KB | アビリティ 7 案 MPS 比較、最終選定 = 透視 (Z 押下中だけ X 線モード、MPS 15 max) |
+
+**選定結果のサマリ**:
+- ジャンル: アクションアドベンチャー探索 (mini-metroidvania)、Echo-Path 系統 (時間軸 1 秒先予測 STG) との **空間軸への直交**
+- 最小骨格: 1 部屋 + 1 アビリティ + 1 ドア
+- アビリティ: 透視 (Z 押下中のみ X 線モード = 隠し通路 / 隠しオーブが見える)、MPS 15 (max) で 7 案中第 1
+- Q-D シート (feedback_self_risk_core_pitfall.md) 通過: ◯ (報酬 = 認識拡張のみ、graze 同型なし、自発トリガー報酬機構なし)
+- Mimicry 核: 「未知空間を読む探検家」感 (= v003 STG パイロット感と意図的に直交)
+- arxiv 2202.09615 接続: 直接 (MAP-Elites action-adventure 拡張) = M-43 30 本枠との連動運用が可能
+
+### 2) game.js 実装は本 Phase 4 では未着手 (次サイクル C324 大作業に持ち越し)
+
+設計のみ Phase 4 着地、game.js / index.html / verify.js 実装は次サイクル C324 Phase 4 大作業として持ち越し。**2 サイクル連続 (C322/C323) playable diff ゼロ警告線は本 v007 設計 commit で「動きの第 1 歩」を確保**、次サイクル C324 で game.js 実装 = playable diff 確定。
+
+### 3) 完遂の定義への到達状況
+
+Phase 3 §「完遂の定義」5 項目に対する到達状況:
+
+| # | 完遂条件 | 状態 | 備考 |
+|---|---|---|---|
+| 1 | `v007/` ディレクトリ作成 + git tracked | ✅ 達成 | (Phase 3 計画は v004 だったが v007 に番号修正) |
+| 2 | `design_log.md` が Q-A〜Q-F 8 ゲート枠で v007 用に書き直し | ✅ 達成 | 10 ゲート (Q-D0 + Q-A〜Q-D + Q-導入 + Q-成功FB + Q-レイアウト + Q-日本語ログ + Q-ミミクリ) で着地 |
+| 3 | `brainstorm.md` が 5 件以上 + MPS スコア | ✅ 達成 | 7 案、MPS スコア記録、最終選定 = 透視 (MPS 15 max) |
+| 4 | `genre_selection.md` が 3-5 案 + MPS + 最終選定 | ✅ 達成 | 5 案、MPS 比較表、最終選定 = アクションアドベンチャー探索 |
+| 5 | `game:` prefix の commit 1 つ以上着地 (push 不可は許容) | ⏳ 本 Phase 4 末尾で実行 | git push 失敗継続 (Credential Manager 例外 + loose object 破損)、ローカル commit のみ |
+
+### 4) 副産物 / 次サイクル C324 への申し送り
+
+- **design_log.md §4 Q-B (特殊システム 3 状態) の修正待ち**: brainstorm で透視確定後、design_log §4 Q-B は当初「ダッシュ第 1 候補」のまま残置。次サイクル C324 Phase 1 で透視確定内容に更新 (brainstorm.md §4 修正方針記載済)
+- **design_log.md §5 Q-C / §7 Q-導入 の修正待ち**: 透視確定に伴い、ハザード 3 種 → 5 種 (隠し通路 / 隠しオーブ追加)、Q-導入の初期画面配置に隠しオブジェクト追加。次サイクル C324 Phase 1 で適用 (brainstorm.md §4 修正方針記載済)
+- **projects/log_autonomous_game.md 構造拡張**: v007 系統節を追加する必要、次サイクル C324 Phase 3 で処理
+- **v007 game.js 実装着手**: 次サイクル C324 Phase 4 大作業として確定、透視機構 (Canvas API filter: invert(1) or 描画切替で 250 行以内 bound 想定)
+- **arxiv 2202.09615 本文 PDF 取得**: C324 以降、本文取得後に MAP-Elites behavior descriptors を v007 透視使用頻度 / 使用箇所軸に転写
+- **Mir / Ash 並行確認**: action-adventure 系統を他インスタンスが並行で着手していないか次サイクル Phase 1 で確認
+
+### 5) Phase 4 副産物の Slack 投稿は実施しない (Phase 3 で本サイクル既に 4 件投稿済)
+
+本 Phase 4 着地内容の Slack 通知は本サイクル既に Phase 2 §1 shared-reads + §8 git 障害通知 + Phase 3 §3 v14 cross_review = 計 4 件投稿済で、Phase 4 着地通知を追加すると 5 件目で過剰。Phase 5 日記投稿時に v007 着地を含める想定 (Phase 5 着地後の日記投稿で完結)。
+
+### 6) git push 状況 (Phase 3 §4 申し送り継続)
+
+git push は Credential Manager 例外 + loose object 破損の 2 軸障害で失敗継続中、本 Phase 4 commit (`game:` prefix) もローカル commit のみで push 不可は許容。Phase 5 で日記 commit + push 試行時に git_sync.py 経路で再試行、ダメなら Nao_u 明示承認待ち。
