@@ -64,6 +64,52 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-10 C322 Phase 4 着地 — [x] verify.js wave-rider 軌跡再設計 (周波数 0.07/0.05 → 0.04/0.03, rng 振幅 0.2 → 0.5) + 130 cell sweep 再実行、中間帯移動 **逆方向** + no-good Pearson std **×1.51 悪化** = outlier 支配は構造的特性として確定
+
+**着地内容**: C322 Phase 3 「次フェーズの大作業」予定通り、`verify.js` L518-524 `strategyWaveRider` の周波数 (0.07/0.05 → 0.04/0.03) と rng 振幅 (0.2 → 0.5) を物理改造、130 cell multi-seed sweep (10 seed × 13 strategy) を再実行。**仮説 (低周波 + 振幅拡大で軌跡長を増やし中間帯 instinct/temporal 14-18 帯に着弾)** は**反証**: wave-rider (instinct mean, temporal mean) は (11.80, 10.60) → **(6.20, 10.30)** = instinct 軸で逆方向 (中間帯から低帯へ後退)、低周波軌跡が「弾の少ない safe pocket への長期滞在」を構造的に作り instinct trigger 機会を減らす作用が確証された。
+
+**定量比較 (staging 完遂の定義 2)**:
+
+| 統計 | C321 (0.07/0.05) | C322 (0.04/0.03) | Δ |
+|---|---:|---:|---|
+| 全体 Pearson mean | 0.9532 | 0.9745 | +0.0213 (微増) |
+| 全体 Pearson std | 0.0319 | 0.0272 | -0.0047 (微減) |
+| **no-good Pearson mean** | **0.8198** | **0.6873** | **-0.1325 (13% 低下)** |
+| **no-good Pearson std** | **0.1668** | **0.2511** | **+0.0843 (×1.51 拡大)** |
+| no-good Pearson min | 0.5293 | **0.0000** | seed=20260533 で完全相関消失 |
+| no-good vs C321 baseline 0.0319 倍率 | 5.2× | **9.2×** | +4.0× (outlier 依存悪化) |
+
+**verdict 4 段判定 (再算出)**:
+
+| 軸 | 値 | 判定 |
+|---|---|---|
+| 形式 verdict (sweep JSON) | mean=0.9745, std=0.0272 | REDUNDANCY_CONFIRMED |
+| no-good (N=12) | mean=0.6873, std=0.2511 | **PSEUDO_CORRELATION 帯** (std≥0.2) |
+| Spearman 全体 (N=13) | mean=0.5243 | 中相関帯、強相関 ≥0.9 不充足 |
+| Spearman no-good (N=12) | mean=0.3663 | 弱-中相関帯 |
+
+**総合**: C321 (HOLD = std 0.1-0.2 帯) より悪化し PSEUDO_CORRELATION 帯 (std≥0.2) に落下、kaizen #140 段階3 family 統合発火は本サイクルも継続保留 (検証期限 2026-06-20 まで残 10 日)。
+
+**構造判断**: **outlier 支配は wave-rider 1 strategy のパラメータ調整では緩衝不能 = 構造的特性として確定**。strategy 集合内の調整では解消しない、より上位の構造変更 (good 系列複数化 or verdict 軸拡張) が必要と確証。
+
+**実装** (`game:` 系 commit 予定、Phase 5 で着地):
+- `verify.js`: `strategyWaveRider` 数式 2 箇所 + 関数 comment block 3 行を改修、通常モード `pass: true, survivors: []` 維持 (13 strategy 全 gameover, wave-rider 561F = 悪手帯内)、`--multi-seed-sweep 10` で bit_invariance.all_match=true (12 度目同型論証)
+- `multi_seed_correlation.md` §11 (7 サブ節 = 移動結果 / 130 cell マトリクス 2 種 / 6 ペア独立性 / no-good Pearson 比較 / bit 不変性 / 結論 / 回帰チェック) 追記
+- `PEARSON_BLOCKER.md` 末尾「C322 Phase 4 wave-rider 改造結果」節 (5 bullet) 追記
+
+**回避すべき擬似進捗の回避成功**: Phase 3 §「次フェーズの大作業」選定理由 5 「wave-rider 改造が効かない場合に別 strategy を追加するのではなく、outlier 支配は構造的特性の認識を確定して降りる」を順守 = strategy 追加 / kaizen 増殖を発火させず、観測確定と next move 判断材料の集約のみで Phase 4 を閉じた (`feedback_means_ends_reversal_check.md` 順守、game/* playable diff = 第一義出力)。
+
+**game レーン主アクション 6 サイクル連続**: C313 → C316 → C320 (×2) → C321 → **C322** で `game:` prefix commit 継続更新。`feedback_means_ends_reversal_check.md` 診断対象解除を強化、5 サイクル前 (C317 第 2 世代 prompt 認定時点) よりさらに「装置を作る → 次の装置の基盤」積み上げが物理化。
+
+**次サイクル C323 候補** (PEARSON_BLOCKER.md §C322 Phase 4 + multi_seed_correlation.md §11.6):
+1. **第一候補 (推奨): `good` 系列複数化** — castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware 等 3-5 種で N=15-17、`good` outlier 1 点支配 → outlier クラスタ置換で Pearson 線形回帰の geometric 性質を変える
+2. **第二候補: outlier 耐性 verdict 拡張** — `verdict_thresholds` に `P_no_outlier_mean` + `pearson_spearman_gap` を追加し 3 軸 AND 化、構造を運用基準で吸収
+3. **退役候補: 単純 N seed 拡張** — C321 N=10 + 本 C322 wave-rider σ_sur 924 拡大でも outlier 依存に効かないことが追加実証
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md §11](../game/log_autonomous_game/v003/multi_seed_correlation.md)、[game/log_autonomous_game/v003/PEARSON_BLOCKER.md C322 Phase 4 節](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md)、[log/cycle_staging_log.md Phase 4 着地報告](../log/cycle_staging_log.md)。
+
+---
+
 ## 2026-06-10 C322 Phase 3 — [候補追加] 洞察#2 yamii diegetic UI 適用余地 (v003 サイドパネル設計の再診断軸)
 
 **契機**: 2026-06-10 Phase 1 §他インスタンス洞察 #2 (Ash #shared-reads, koguGameDev フラグ乱立 × yamii 「diegetic UI」)。Log は koguGameDev 軸への応答を本サイクル ts=1781083772 で投稿済 (C321 Phase 2)、しかし **yamii diegetic UI 軸への射影は未消化**。

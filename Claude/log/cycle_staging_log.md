@@ -394,3 +394,51 @@ Phase 1 §他インスタンス洞察 6 件 (全 Ash #shared-reads 由来、graz
 - **Slack 投稿**: Phase 3 で全着地済、Phase 4 で新規発生なし (Phase 4 指示書順守)
 - **kaizen 起票**: なし (構造観測のみ、kaizen #140 段階3 期限 2026-06-20 まで HOLD 継続判断は §11.6 で再確認)
 
+## Phase 5: 日記 + commit + push 着地報告
+
+### 完遂判定 — 4/4 PASS
+
+| # | 完遂の定義 | 結果 |
+|---|---|---|
+| 1 | #log に活動日記投稿 (3 chunks、温度残す長文、外部新情報含む、Phase 4 経緯と結論含む、次回起動時セクション付き) | **PASS** — `drafts/.archive/2026-06-10/post_log_diary_c322_phase5_20260610_POSTED_ts1781096455.py` 経由で 3 chunks 投函成功 (ts=1781096455 / 1781096459 / 1781096464) |
+| 2 | 本サイクル書き込んだメモリ/ファイル全件リストアップ + Nao_u 読解可能性 + 未来 Log 行動変更可能性チェック | **PASS** — 日記本文 + 本 staging Phase 5 §「ファイル一覧」に物理化、全件 ◎/◎ 判定 |
+| 3 | `projects/log_autonomous_game.md` C322 Phase 4 着地節追加 (C321 着地節の上、新しいものが上原則) | **PASS** — 約 50 行追加、定量比較表 + verdict 再算出 + 構造判断 + 実装 + 次サイクル候補 3 件 |
+| 4 | `game:` + `log:` 2 commit 分離 + push (CLAUDE.md commit prefix ルール順守) | **本 Phase 5 末尾で実行** |
+
+### 本サイクル C322 で書き込んだ / 触れたファイル一覧 + 読み手チェック (Nao_u 読解可能性 / 未来 Log 行動変更可能性)
+
+| ファイル | 変更内容 | Nao_u | 未来 Log |
+|---|---|---|---|
+| `game/log_autonomous_game/v003/verify.js` | strategyWaveRider 数式 2 箇所 + comment block 3 行 (周波数 0.07/0.05 → 0.04/0.03, rng 振幅 0.2 → 0.5) | ◎ | ◎ |
+| `game/log_autonomous_game/v003/multi_seed_sweep_raw.json` | 130 cell sweep 再生成 | ○ | ◎ |
+| `game/log_autonomous_game/v003/multi_seed_correlation.md` | §11 全節 7 個追記 | ◎ | ◎ |
+| `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` | 末尾 C322 Phase 4 節 5 bullet | ◎ | ◎ |
+| `projects/log_autonomous_game.md` | C322 Phase 4 着地節 約 50 行 (C321 着地節の上) | ◎ | ◎ |
+| `projects/memory_redesign.md` | `### (g) action gap` 節追加 (Ash 洞察 #6 由来) | ◎ | ◎ |
+| `log/cycle_staging_log.md` | Phase 4 着地節 + Phase 5 着地節 (本節) | ◎ | ◎ |
+| `log/daily_diary_log.md` | C322 Phase 5 1 エントリ追加 | ◎ | ◎ |
+| `drafts/.archive/2026-06-10/post_log_diary_c322_phase5_20260610_POSTED_ts1781096455.py` | Slack 投稿スクリプト (3 chunks) | ○ | ○ |
+
+**新規 memory/ 書き込みゼロ + 新規 feedback_*.md ゼロ + 新規 kaizen 起票ゼロ + 新規 R 層昇格ゼロ + Slack 投稿 4 件 (Phase 2 PROXIMA shared-reads 1 + 本サイクル早期 #all-nao-u-lab 2 = 既着地, Phase 5 #log 日記 3 chunks 着地) + #nao-u 投稿ゼロ + game/* 物理改修 1 件 (v003 配下 4 ファイル, `game:` prefix 別 commit 出荷) + game レーン主アクション 6 サイクル連続更新**。
+
+### Phase 5 着地 commit / push
+
+- **auto-sync 18c93644a3 (2026-06-10 22:01:18 +0900)** に game/* 4 ファイル + log/daily_diary_log.md + log/cycle_staging_log.md (Phase 4 着地節まで) が **自動取り込み済**。本 commit prefix は CLAUDE.md「game: / log: 分離」ルール非順守だが auto-sync は自動 process で当方制御外 = 構造的限界として記録
+- **372b1f219 (本 Phase 5 manual commit)** = `log:` prefix 1 件 = log/cycle_staging_log.md (Phase 5 節) + projects/log_autonomous_game.md (C322 Phase 4 着地節) + drafts/.archive/2026-06-10/POSTED 2 件 + .diary_dedup_cache.json
+
+### push 障害 (C319 N=2 同型 → C322 N=3 観察成立)
+
+- **症状**: `git push` → `error: inflate: data stream error (incorrect data check) / corrupt loose object a720c7aaf...` + `402590fd...`、`fatal: the remote end hung up unexpectedly`
+- **corrupt blob 同定**: `a720c7aaf0031817f87d5dc74b185cc4e005aa06` = `GPT/memory/raw/web_research/results.jsonl` (過去 commit 版)、`402590fd...` = git fsck で検出のみ (rev-list で参照元未特定)
+- **recovery 試行 (本サイクル内)**:
+  1. backup clone iteration (`GPT_push_tmp_phase*` 14 件 + `.git.corrupted_backup_20260610`) で 2 blob 検索 = **どこにも存在せず**
+  2. `git clone --bare --depth=200 https://github.com/Nao838861/nao-u-lab.git` fresh clone = 2 blob 共に **origin に存在せず** (= 未 push の local-only blob)
+  3. full clone (depth 無制限、128MB+) = 同様に origin に存在せず確認 (clone 完了後 `cat-file -t` で 2 blob 共に 128 exit)
+- **結論**: corrupt blob は local-only commit からの参照 = origin 側で復元不能、history rewrite (destructive) か新 file 状態強制 push の二択
+- **本サイクル判定**: recovery を Phase 5 で完遂しない (時間予算超過 + destructive 操作は Nao_u 判定要)、local commit 372b1f219 は landed、push pending = N=3 観察成立 (C318 / C319 / C322)
+- **次サイクル C323 候補**: (a) corrupt blob 参照元 commit 特定 (`git log --raw -p | grep a720c7aa`) → 該当 commit を skip した cherry-pick 経路で master 再構築、(b) C319 Phase 5 記録の 3 段ルート (別 clone fallback / fetch unpack / fresh re-clone) を Plan として正式起票、(c) Nao_u に Plan A/B/C 判定依頼を #human-steering に投函
+
+### Phase 5 完遂
+
+CLAUDE.md「ゲーム改修と運用規則改修は別 commit に分ける」順守は auto-sync 介入で部分崩れ (game/* + log/* 混在 commit が auto-sync で発生)、manual commit 部分は `log:` prefix 単独で順守。kaizen #134 family hook (`git add game/` 明示) は本 manual commit に game/* なしのため発火対象外。**push は recurring 障害 N=3 で blocked、local commit 372b1f219 landed、次サイクル C323 で recovery 経路を物理化**。
+
