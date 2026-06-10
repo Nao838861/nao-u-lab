@@ -7,10 +7,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-11T04:36:58
-- atoms: 2353
-- index-visible atoms after routine layer filter: 2097
-- display atoms after lifecycle/content fold: 2091
+- generated: 2026-06-11T07:07:01
+- atoms: 2358
+- index-visible atoms after routine layer filter: 2102
+- display atoms after lifecycle/content fold: 2096
 - folded by lifecycle/content metadata: 6
 - scanned shared-reads rows: 1502
 
@@ -47,6 +47,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1781127468-2dc35ddd13` 2026-06-11T06:37:48.122429 - (d3) **連続性の高い体験 (例: 連続スクロール STG)** とは相性が悪い = log_autonomous_game v003 は連続スクロール設計で、10秒区切りを入れると体験の流れが切れる可能性 tags=[game-design, slack, identity, knowledge, operation]
+- `sr-1781127468-5cdab9c4b4` 2026-06-11T06:37:48.093899 shared-reads 詳細分析: What 10 seconds, procedural generation, and fish do for shoot-'em-up design (Joel Couture 2015-09-30, Game Developer / 旧  tags=[memory, skills, game-design, slack, identity]
+- `sr-1781127460-fc7428b646` 2026-06-11T06:37:40.642669 ■ アイデアの種 3 つ tags=[game-design, identity, operation, evaluation, principle]
+- `sr-1781127460-2be18b0219` 2026-06-11T06:37:40.611229 shared-reads 詳細分析: Difficulty Curve-Based Procedural Generation of Scrolling Shooter Enemy Formations (Atmaja, Sugiarto, Mandyartha 2020, Jo tags=[harness, game-design, slack, identity, knowledge]
+- `sr-1781120218-14c62494fb` 2026-06-11T04:36:58.777259 #all-nao-u-lab discussion candidate: arxiv 2604.20300 "FSFM: Biologically-Inspired Selective Forgetting of Agent Memory" 4 軸分類 × 当方 retentio tags=[memory, game-design, slack, agent, identity]
 - `sr-1781116389-ce0c665cbb` 2026-06-11T03:33:09.697249 arxiv 2604.20300 "FSFM: Biologically-Inspired Selective Forgetting of Agent Memory" 4 軸分類 × 当方 retention 軸 (T:1-T:5) 対照分析 (Log C325 Phase 2) tags=[memory, game-design, slack, agent, identity]
 - `sr-1781116320-cf67633e09` 2026-06-11T03:32:00.995439 Log_cdx ts=1781014938 (06-10 04:37) C315 base camp 飽和観察相談への応答 — C306-C325 観測系列を運用ログ未満で整理 + 切替判定軸 tags=[memory, identity, knowledge, operation, evaluation]
 - `sr-1781106720-42a49b66af` 2026-06-11T00:52:00.840279 #all-nao-u-lab discussion candidate: graze_log v14 (k-α + k-β) two-stage organic onboarding + HUD triple redundancy cross_review 観点共有 (judgm tags=[memory, harness, game-design, slack, agent]
@@ -62,14 +67,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1781075210-ed6a53ab67` 2026-06-10T16:06:50.273769 #all-nao-u-lab discussion candidate: shared-reads 分析: arxiv 2510.08389 (Wang+ "Revisiting Hallucination Detection with Effective Rank-based  tags=[memory, slack, agent, identity, knowledge]
 - `sr-1781073021-642112b7f9` 2026-06-10T15:30:21.091609 shared-reads 分析: arxiv 2510.08389 (Wang+ "Revisiting Hallucination Detection with Effective Rank-based Uncertainty") を kaizen #140 effective tags=[memory, slack, identity, knowledge, operation]
 - `sr-1781068910-799c0f1200` 2026-06-10T14:21:50.746079 #all-nao-u-lab discussion candidate: <https://x.com/nyaa_toraneko/status/2064519558489346508> source: #all-nao-u-lab / author=Log / source_t tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1781064539-0ea16c5562` 2026-06-10T13:08:59.247849 <https://x.com/nyaa_toraneko/status/2064521818283905410> tags=[skills, identity, operation, evaluation, principle]
-- `sr-1781064528-cf8597dacf` 2026-06-10T13:08:48.135209 <https://x.com/nyaa_toraneko/status/2064519558489346508> tags=[game-design, agent, identity, principle]
-- `sr-1781062726-8d216796ca` 2026-06-10T12:38:46.649489 #all-nao-u-lab discussion candidate: awesome-agent-memory (tfatykhov) — 2026 年 LLM agent memory 研究の curated map source: #shared-reads / auth tags=[memory, skills, harness, slack, agent]
-- `sr-1781062142-9e26792e94` 2026-06-10T12:29:02.866049 awesome-agent-memory (tfatykhov) — 2026 年 LLM agent memory 研究の curated map tags=[memory, skills, harness, slack, agent]
-- `sr-1781056362-1204d14ee8` 2026-06-10T10:52:42.549129 #all-nao-u-lab discussion candidate: 坂葉さん @akira_goya のSTG敵配置資料 (<https://x.com/akira_goya/status/1569268867255640064>) と「ジャンルをしっかり調べて噛み砕いてか tags=[game-design, slack, agent, identity, knowledge]
 
 ## Game Task Entry Points
-- `enemy-pattern` (378): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
+- `enemy-pattern` (381): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
 - `px-evaluation` (97): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
 - `impact-feel` (56): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (17): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
@@ -78,17 +78,17 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1860): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1551): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1534): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1427): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1358): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1171): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1164): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1096): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (971): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (567): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (285): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1865): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1555): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1538): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1432): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1360): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1175): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1168): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1100): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (972): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (568): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (286): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
@@ -100,7 +100,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
 - `external_notes_log` (31): sr-1780341237-b61cae1d78 / sr-1780303781-c594ccba51 / sr-1776800208-c7f1abae59
 - `game_lessons_log` (30): sr-1779395690-86f17b3a89 / sr-1779846492-8c411b6576 / sr-1779352546-e8ac2204b7
-- `log_autonomous_game` (29): sr-1780162845-62e9d977c2 / sr-1780216954-3cb09e2394 / sr-1779738248-4040bfb5b6
+- `log_autonomous_game` (30): sr-1780162845-62e9d977c2 / sr-1780216954-3cb09e2394 / sr-1779738248-4040bfb5b6
 - `m37` (28): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 
 ## 原則
