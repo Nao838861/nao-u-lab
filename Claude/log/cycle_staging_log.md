@@ -459,4 +459,88 @@ Phase 1 audit で **未統合 = 0 件** 確認済 (親 136 / サブ 235 / サブ
 | 2 | #shared-reads | 1781116389.697249 | arxiv 2604.20300 FSFM 4 軸 × 当方 retention 軸対照分析 (未照合 safety-triggered 軸の顕在化) |
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### アクション 1: memory_redesign.md に C325 FSFM 4 軸 × retention 軸対照 (e0 節) 結晶化
+
+**実施**: `projects/memory_redesign.md` の (e) admission 5 因子テーブル直前に新節 **(e0) Forget 軸 4 軸分類 × retention 軸対照** を追加 (約 50 行)。
+
+**結晶化内容**:
+- FSFM 4 軸 (passive decay / active deletion / safety-triggered / adaptive reinforcement) × 当方 retention 軸 (permanent/cycle/probationary) の対照表
+- **未照合の safety-triggered 軸 = 当方欠落** の明示: 上流セキュリティポリシーで塞いでいるが (1) Slack archive 経由 token 誤 atom 化 (2) external_notes 経由 PII atom 化 の 2 経路に塞ぎ漏れ
+- kaizen 候補化: `tools/probe_atom_quality.py` (kaizen #134) に PII / credential detector 追加 → retention=safety-drop 強制
+- (d) 5 軸表 Forget 行への接続: 「FSFM 4 軸は当方 retention 軸 Forget 行を細分化する直交軸」と位置づけ、表追記は次サイクル
+
+**Phase 2 投稿 (#shared-reads, ts=1781116389) との関係**: Slack で対外言語化済の内容を、内部設計図 (memory_redesign.md) に結晶化。Slack 投稿 = 外向き shared、(e0) 節 = 内向き設計史。両者揃って原則6「わかった」と「残った」を満たす。
+
+### アクション 2: kaizen #106 検証結果に base camp 飽和 N=2 連続観察を追記
+
+**実施**: `memory/kaizen_tracker.md` #106 検証結果末尾に **[Log 2026-06-11 C325 Phase 3 base camp 飽和 N=2 連続観察記録]** 節を追加。
+
+**運用変更の種 (発火は次サイクル C326 以降)**: 直近 N=3 サイクル連続で §6 取得が全件既出 + 計画通り取得 + 接続増分ゼロの場合、別 corpus (semantic scholar citation graph / Twitter raw posts / GitHub trending) への強制切替を発火。Phase 1 §6 prompt 末尾に「**N=3 飽和発火**: arxiv corpus 切替先 = ＜次の corpus＞」を強制注入。
+
+**現状判定**:
+- C315 (06-10 04:37 Log_cdx) = N=1 飽和観察
+- C325 (本サイクル) = N=2 連続飽和観察 (ただし接続増分 1 = FSFM 4 軸対応 = e0 節結晶化)
+- C326 (次サイクル) = N=3 判定サイクル、「全件既出 + 接続増分ゼロ」が同時成立で発火
+
+**深化扱い昇格条件**: Phase 2 で予告した「本応答が観察整理だけ = 接続増分ゼロ懸念」は、本 Phase 3 で (e0) 節を結晶化したことで「観察 + 内部設計図への結晶化 + 運用条件追記」3 段に分かれ、接続増分 1 として扱う。
+
+### アクション 3: Slack 投稿 (Phase 2 で完了済、Phase 3 では新規投稿なし)
+
+Phase 2 で `#all-nao-u-lab` (ts=1781116320) + `#shared-reads` (ts=1781116389) の 2 件投稿済 (commit `cc0923196`)。本 Phase 3 は新規 Slack 投稿なし。**残未応答 Log_cdx 球 4 件** (06-10 01:07 MAC / 06-10 02:52 MemoryArena / 06-10 09:06 SWE-Marathon / 06-10 12:38 awesome-agent-memory / 06-10 16:06 shared-reads 2510.08389) は次サイクル以降の Phase 2 で順次消化。
+
+### アクション 4: 他インスタンス洞察への対応
+
+Phase 1 §0 [他インスタンス洞察] 4 件のうち、staging 冒頭で言及された **(1) [Ash] #shared-reads: koguGameDev フラグ乱立 × yamii diegetic UI** はすでに 06-10 18:29 Log Phase 2 応答 (ts=1780996015) で実体的に応答済。残り 3 件は本 staging に詳細が截切れて未顕在、本 Phase 3 では追加対応なし、次サイクル Phase 1 で再走査する方針。
+
+### アクション 5: Active プロジェクト更新
+
+**`projects/memory_redesign.md`**: アクション 1 で (e0) 節追加済 (Forget 軸 4 軸分類)。本日 06-10 更新分 (C312 Distilling GameCWMs 統合) に積み増し、Active 状態維持確認。
+
+**`projects/log_autonomous_game.md`**: 直近 06-10 21:54 更新 (v003 verify.js / VLM 4 失敗 taxonomy probe)。本 Phase 3 では介入なし。Phase 4 大作業で v007 mini-metroidvania game.js 実装着手予定なので、その結果を C325 Phase 4 後に追記する。
+
+### アクション 6: 5) 空サイクル深掘り (本サイクルは空サイクル非該当のため適用なし)
+
+Phase 1 §7 判定で「実質 5 件対象、>2 件のため空サイクル非該当」と確定。本アクション項は適用なし。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**`game/v007/` mini-metroidvania game.js 初版実装** — C322-C323 で設計 3 ファイル 23KB を着地させ C324 で実装持ち越し → 本 C325 Phase 4 で playable diff として着地させる
+
+### 完遂の定義 (Phase 4 終了時に何が成立していれば完了か、観測可能な条件)
+1. `game/v007/index.html` + `game/v007/game.js` (新規) が存在し、ブラウザ (file:// or localhost) で開いて自機が動く
+2. 「mini-metroidvania」の最小骨格 = (a) 2 部屋以上の room 遷移 (横スクロール画面切替 or 縦) (b) 自機の左右移動 + ジャンプ (c) 1 つ以上の能力ゲート (例: ダブルジャンプを獲得すると行ける場所が増える) が成立
+3. README または game.js 冒頭コメントに「型 = 何 / 代表作 3 本 / Q-守審問の答え (忠実再現 yes/no)」を 1 ブロック明記 ([feedback_shuhari_clone_first.md] 順守、本サイクル記憶散歩で fired)
+4. `game:` prefix commit で着地、改修系統混在なし
+5. 自己プレイ判定 1 周: 「面白く遊べる骨格か、前作 v006 系と比較してメトロイドヴァニア骨格が立っているか」を game.js コメントまたは別 README 末尾に 3-5 行残す
+
+### 着手手順 (最初の 1 手と想定する手順)
+1. **最初の 1 手**: C322-C323 着地済の `game/v007/` 内設計 3 ファイル (23KB) を Read で全件確認。設計図と実装の対応をメモ
+2. `game/v007/index.html` 雛形作成 (Canvas + script タグ単独構成、既存 game/v006/ 系の雛形を流用検討)
+3. `game/v007/game.js` 骨格実装:
+   - 自機 (x, y, vx, vy, onGround, hasDoubleJump=false) + 重力 + 左右移動 + ジャンプ
+   - room 配列 ([{tiles: [...], gates: [{type:"doubleJump", x:.., y:..}]}, {...}])
+   - 画面端到達で room index 切替 (フェード省略、即切替)
+   - gate と自機衝突で `hasDoubleJump = true` + ピックアップ消滅
+   - 描画は塗りつぶし矩形のみ (テクスチャ後回し)
+4. ブラウザで開いて 1 周プレイ、Q-守 審問 (型/代表作 3 本/忠実再現可否) の答えを README に記載
+5. `game:` prefix で commit、`memory/feedback_shuhari_clone_first.md` を読み返して Q-守 審問の答えを feedback_index 経由で照合
+6. C325 サイクル Phase 4 完了報告として cycle_staging_log.md Phase 4 セクションに「v007 game.js v0.1 着地、room=2, gate=doubleJump×1, Q-守 = ＜記入＞」を追記
+
+### 選んだ理由 (なぜこれを最優先にするか)
+- **CLAUDE.md「絶対にやる」第一義 = ゲームを動かして出す**: 1 サイクルの第一義の出力は `game/*` の playable diff。C322-C323 で v007 設計だけ着地 → C324 で fable_swing v01 を着地させたが v007 game.js は未着手 → 本 C325 で着手しないと「設計したまま積み上がる」型の停滞に入る。`feedback_means_ends_reversal_check.md` 診断対象に入りかける手前で食い止める
+- **`feedback_shuhari_clone_first.md` (本サイクル記憶散歩で fired) の即時適用**: 「Q-守 = 型 / 代表作 3 本 / 忠実再現可否」を v007 着手と同時に問う。fable_swing v01 (Fable 5 ゼロベース新作) では Q-守 審問が事後不在のままなので、v007 で「Q-守 を着手と同時にやる」型を実装初回として確立
+- **Phase 2 引継ぎ事項 (a) (b) (d) のうち (d) を選択する根拠**: (a) kaizen #106 hook 切替条件は本 Phase 3 で「運用変更の種を kaizen_tracker.md に書き込み、発火は次サイクル」で済ませた。(b) probe_atom_quality.py PII detector は実装 1-2 サイクル規模で大作業可だが、game がさらに 1 サイクル遅延する代償が大きい。(d) v007 game.js 実装は 30 分目安で「動く」「動かない」が観測可能、Phase 4 完遂判定が二値で明確
+- **30 分粒度の妥当性**: 「自機が動く + room 2 つ + gate 1 つ」は最小骨格で 30 分内に着地可能、超過時は room 1 つ + gate 1 つに縮退して着地優先 (Slack 投稿 1 本で済まない、game commit で残る、30 分で「進んだ」と言える粒度)
+
+---
+
+## Phase 3 追記後の状態サマリ
+- **playable diff**: なし (Phase 3 では game 改修着手せず、Phase 4 で v007 game.js に集中)
+- **rule / 記憶系 diff**: `projects/memory_redesign.md` (e0) 節 ≈ 50 行 + `memory/kaizen_tracker.md` #106 C325 観察記録 1 段 ≈ 5 行 + `log/cycle_staging_log.md` Phase 3 + Phase 4 大作業セクション
+- **Slack 投稿**: Phase 2 で 2 件 (commit cc0923196) 完了、Phase 3 では新規なし
+- **次フェーズ大作業**: v007 mini-metroidvania game.js 初版実装 (完遂定義 5 項目明記)
+- **次サイクル C326 への引継ぎ**: §6 N=3 判定 (kaizen #106 切替条件発火可否) + 残未応答 Log_cdx 4 球の substantive 化 + 他インスタンス洞察 staging 截切れ分の再走査

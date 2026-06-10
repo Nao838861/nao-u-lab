@@ -54,6 +54,27 @@ LoCoMo benchmark で Mem0 比 token-F1 best、add-phase API cost **3.4× 削減*
 
 **次サイクル以降への接続**: 本章を起点に、(α) kaizen #141 候補「write admission probe」の起票検討 (vMF 不使用の純 stdlib 最小版 = 既存 atom embedding と incoming embedding の cosine だけで NOOP/ADD/MERGE 粗判定する probe)、(β) base camp 飽和量化 metric を `tools/probe_atom_quality.py` に追加、(γ) Forget 軸との対関係を可視化する `instance_divergence_observability.md` への 1 行追記、を順次着地候補とする。
 
+### (e0) Forget 軸 4 軸分類 × retention 軸対照 (2026-06-11 C325 追記、FSFM 視点)
+
+C325 Phase 1 §6 外部検索で arxiv **2604.20300 FSFM (Biologically-Inspired Selective Forgetting of Agent Memory)** に再到達 (既出 13 hits, base camp 飽和 N=2 連続)。同論文は Forget 軸を 4 軸に分解しており、当方 retention 軸 (kaizen #138) との対照表で **safety-triggered = 当方欠落軸** が顕在化した。本節は (d) 5 軸表 Forget 行の細分化として位置づける。
+
+| FSFM 4 軸 | 原典定義 | 当方 retention 軸での対応 | 状態 |
+|---|---|---|---|
+| **passive decay** | 時間経過で confidence/relevance が自然減衰、参照されない atom が薄れる | `retention: cycle` + `memory_retention_audit.py` stale 検出 (5サイクル閾値) | **同型** (実装方法は違うが目的一致) |
+| **active deletion** | 明示削除トリガーで store から消す (LLM 判定 or rule-based) | `retention: probationary` → audit で stale 検出 → 手動退役 | **同型** (現状は WARN 出力のみで自動削除なし、半実装) |
+| **safety-triggered** | PII / credential / 機密混入を検知して即座に retention=safety-drop で強制削除 | **欠落** (リポジトリフォルダ以下のみ touch のセキュリティポリシーで上流で塞いでいるが、(1) Slack archive 経由の token 誤 atom 化 (2) external_notes 経由の PII atom 化 の 2 経路に塞ぎ漏れ余地) | **未実装軸** |
+| **adaptive reinforcement** | 再利用に応じて連続的に重み再評価、weight 上がれば retention 強化、下がれば退役寄り | `retention: cycle → permanent` 昇格 (kaizen #138 retention 昇格 trigger) | **近接** だが運用が逆向き (当方=離散段階で再評価、FSFM=連続値で重み調整) |
+
+**measured 効果値**: access efficiency +8.49% / S/N +29.2% / security 100%。当方 retention 軸は permanent/cycle/probationary の 3 段階離散値、FSFM は 4 軸の連続評価で「軸ごとに直交した forgetting 制御」を実現。連続 vs 離散のトレードオフは当方 = 明示化優先・中間表現を犠牲、FSFM = 表現力優先・閾値依存性高い、で対象的。
+
+**未照合 safety-triggered 軸への接続**: 上流セキュリティポリシー (リポジトリフォルダ以下のみ touch) では塞げない 2 経路:
+- (1) **Slack archive 経由**: `log/slack_archive/*.jsonl` 取り込み時に token / API key 誤含有が atom 化されるリスク。現在 `tools/probe_atom_quality.py` (kaizen #134) は format_warn / ref_warn / action_warn のみで PII/credential detector を持たない
+- (2) **external_notes 経由**: WebFetch / jina で取得した記事本文に個人情報 (氏名 + 連絡先等) が混入し atom 化されるリスク
+
+**kaizen 候補化**: `tools/probe_atom_quality.py` に PII / credential detector 追加 → 検出時 retention=safety-drop 強制 → C325 Phase 2 (2) shared-reads 投稿で言語化済 (ts=1781116389)。**次サイクル以降の起票候補軸**は (e0) → kaizen #141 候補「write admission probe」(C318 起点) と独立した別 family、混同しない。
+
+**(d) 5 軸表 Forget 行への接続**: 本節で「FSFM 4 軸分類は当方 retention 軸の Forget 行を細分化する直交軸」と位置づけ済。次の起票候補 = 「safety-triggered 軸 = 当方 PII/credential detector kaizen 候補」を 5 軸表 Forget 行に明示追加 (本節 e0 末尾までで言語化済、表追記は次サイクル)。
+
 ### (e) admission の 5 因子テーブル (2026-06-10 C320 追記、awesome-agent-memory + A-MAC 視点)
 
 C320 Phase 2 で awesome-agent-memory リポジトリ (tfatykhov) の構造化分析を行い、**A-MAC (arxiv 2603.04549)** が admission decision を 5 因子に分解していることを確認した。SAGE の novelty 単軸 (vMF 密度) に対し、A-MAC は決定軸を多次元化する設計で、本プロジェクトの「write 軸」を実装するときの第一次プリセットになる:
