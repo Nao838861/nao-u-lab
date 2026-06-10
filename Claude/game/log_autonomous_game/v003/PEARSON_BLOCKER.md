@@ -275,6 +275,30 @@ kaizen #137 真の段階2 着手 (C285 Phase 2-3 で「proxy 4 列が全部逆�
 - (6) commit prefix `game:`、push は Phase 5 で日記とまとめて実行 — Phase 4 末尾
 - (7) 後方互換性: 旧 `python proxy_icc_diagnose.py` (jsonl + seed_base デフォルト、probe_density 列なし) は 4 列出力のまま動作 — **OK** (PROXY_COLUMN_INSTINCT は sample row に存在時のみ追加)
 
+#### C320 Phase 3 — proxy 軸変更判定の N=3 条件明文化 (2026-06-10)
+
+C315 Phase 3 で起票留保した残課題「N=3 条件明文化 (Log_cdx atom 5 由来、graze_log v13 fan3 density→fun_score proxy validity の Pearson/Spearman 部分通過 fail pattern 一般化)」を本サイクル §6-3 関連節として明文化する。
+
+**判定条件 (草案 → 暫定採用)**:
+- **発火**: 同一 class 軸 (seed_base / v_label / 戦略軸) で proxy 列追加が ICC ≥ 0.3 を **3 サイクル連続で外した** 場合、その軸での集約は構造的に不適切と確定し、別軸 (戦略軸 / 本能側列 / per-version 別 proxy 計算) への切替を発火させる
+- **N=1-2**: 教師データとして `memory/sense_prediction_log.md` に蓄積、原則化禁止 (`feedback_rule_proliferation_canonical.md` 順守)
+- **N=3**: 即原則化、proxy 軸切替実装を Phase 4 大作業として確定発火
+- **「同型」の定義**: 「同一 class 軸 + 同一 proxy 列カテゴリ (逆算側 / 本能側) + ICC < 0.3 (CI 上限含む) 」の 3 条件すべて同時成立。CI 上限だけ閾値超えで点推定 0.3 未達は **同型半票** (0.5 件) として計上
+
+**本ライン以降の適用**:
+- C275 (seed_base × 逆算 4 列, 全 FAIL) = N=1 教師データ蓄積済
+- C277 (v_label × 逆算 4 列, 全 FAIL) = N=2 教師データ蓄積済
+- C285 (seed_base × 本能側 1 列 = proxy_instinct_response_density, FAIL) = **別カテゴリ (本能側)** のため N=1 (逆算側 N とは独立カウント)
+- 逆算側 N=2 / 本能側 N=1。**逆算側はあと 1 サイクル同型観測で N=3 = proxy 軸切替実装の Phase 4 大作業発火**
+
+**proxy 軸切替先の優先順位** (発火時の選択肢、C279 §Spearman 路線確定 節を継承):
+1. agent_difficulty_proxy.js に v_label 依存パラメータ導入 (cast cooldown / dash duration の version 別チューニング)
+2. judgment 側を per-run 分化 (Mir/Ash 巻き込み必要、コスト高)
+3. per-version 集計値での Spearman (N=3 縮約、統計説得力低)
+4. **戦略軸 ICC 評価 (kaizen #137 段階3 候補) を 1 軸目に昇格** (本能側列の class 軸として既に物理化済、新規実装ゼロで切替可能)
+
+**memory_redesign 接続**: 本 N=3 条件は `feedback_rule_proliferation_canonical.md` 「N=3 即原則化、N=1-2 は教師データ蓄積」を proxy 評価軸へ射影した形 = 同一原則を game/* 評価レイヤーで物理化。retention 軸での Spearman 共有 (C279 §retention 軸との統計装置共有 節) と同様、game レーンと memory レーンの判定原則一本化の 2 例目。
+
 ## なぜ本サイクル C270 で着手しなかったか
 
 - C265 で段階1 (1 フレーム) に 1 サイクル消費した実績、連続フレーム + 視覚判定で最低 2 サイクル必要
