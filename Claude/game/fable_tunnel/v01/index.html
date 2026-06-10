@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>FABLE TUNNEL</title>
+<style>
+  html,body{margin:0;padding:0;background:#05070f;overflow:hidden;height:100%;
+    font-family:ui-monospace,Consolas,monospace;}
+  canvas{display:block;touch-action:none;cursor:pointer;}
+  .ov{position:fixed;left:0;right:0;text-align:center;color:#eaf6ff;pointer-events:none;
+    text-shadow:0 0 12px rgba(125,249,255,.8),0 0 40px rgba(125,249,255,.35);}
+  #hud{top:18px;left:24px;right:auto;text-align:left;font-size:30px;font-weight:800;display:none;}
+  #hud .sub{font-size:17px;color:#ff7ce5;text-shadow:0 0 10px rgba(255,124,229,.8);}
+  #best{top:18px;right:24px;left:auto;text-align:right;font-size:17px;font-weight:700;opacity:.65;display:none;}
+  #title{top:26vh;}
+  #title h1{font-size:min(9vw,68px);font-weight:800;letter-spacing:.08em;margin:0 0 18px;}
+  #title p{font-size:min(3.4vw,21px);margin:8px 0;color:#7df9ff;}
+  #title .blink{color:#fff;animation:bl 1.2s infinite;}
+  #result{top:30vh;display:none;}
+  #result h2{font-size:min(7vw,46px);color:#ff8c3b;text-shadow:0 0 14px rgba(255,140,59,.8);margin:0 0 14px;}
+  #result p{font-size:min(3.6vw,24px);margin:6px 0;}
+  #result .nb{color:#ffd23b;font-weight:800;font-size:min(4.4vw,28px);animation:bl .8s infinite;}
+  #result .blink{animation:bl 1.2s infinite;}
+  #hint{bottom:7vh;font-size:min(3.4vw,20px);font-weight:700;display:none;}
+  #flash{top:38vh;font-size:min(6vw,40px);font-weight:800;color:#ffd23b;opacity:0;
+    text-shadow:0 0 16px rgba(255,210,59,.9);transition:opacity .15s;}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.25}}
+</style>
+</head>
+<body>
+<div id="hud" class="ov">0m<div class="sub">✦ 0</div></div>
+<div id="best" class="ov"></div>
+<div id="title" class="ov">
+  <h1>FABLE TUNNEL</h1>
+  <p>←→ / A D / ドラッグ : 壁を回り込む</p>
+  <p>赤いゲートの隙間を抜けろ。スレスレで抜けると加速</p>
+  <p class="blink">クリック / SPACE で開始</p>
+</div>
+<div id="result" class="ov">
+  <h2>激突</h2>
+  <p id="rstats"></p>
+  <p class="nb" id="rnew" style="display:none">NEW BEST!</p>
+  <p class="blink">クリック / R でもう一度</p>
+</div>
+<div id="hint" class="ov">←→ で回り込んで、すき間を抜けろ</div>
+<div id="flash" class="ov"></div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+/* ============================================================
+   FABLE TUNNEL v01 — ねじれるネオントンネルの内壁を回り込み、
+   ゲートの隙間を縫って加速し続ける 3D ランナー。
+   一番気持ちいい瞬間 = 細い隙間をスレスレで抜けて加速する。
+   ============================================================ */
+
+// ---- 基本セットアップ ----
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x05070f);
+scene.fog = new THREE.Fog(0x05070f, 40, 280);
+const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 500);
+addEventListener('resize', () => {
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+});
+
+// ---- 定数 ----
+const R       = 6;     // トンネル半径
+const PRAD    = 5.2;   // プレイヤーの壁からの半径
+const SPEED0  = 14;    // 初速
+const SPEEDMX = 55;    // 最高速
+const RING_N  = 64, RING_SP = 6;
+const TAU = Math.PI * 2;
+
+// ---- トンネル中心線（重ねた正弦でねじれを作る） ----
+function centerAt(s, v) {
+  v.set(
+    18 * Math.sin(s * 0.013) + 12 * Math.sin(s * 0.0071),
+    14 * Math.sin(s * 0.011 + 2) + 9 * Math.sin(s * 0.0053 + 1),
+    s
+  );
+  return v;
+}
+function tangentAt(s, v) {
+  v.set(
+    18 * 0.013 * Math.cos(s * 0.013) + 12 * 0.0071 * Math.cos(s * 0.0071),
+    14 * 0.011 * Math.cos(s * 0.011 + 2) + 9 * 0.0053 * Math.cos(s * 0.0053 + 1),
+    1
+  );
+  return v.normalize();
+}
+// スクラッチベクトル（毎フレーム確保しない）
+const _c = new THREE.Vector3(), _t = new THREE.Vector3();
+const _n1 = new THREE.Vector3(), _n2 = new THREE.Vector3();
+const _v1 = new THREE.Vector3(), _v2 = new THREE.Vector3(), _v3 = new THREE.Vector3();
+const _m = new THREE.Matrix4(), _m2 = new THREE.Matrix4();
+const YUP = new THREE.Vector3(0, 1, 0);
+function frameAt(s) { // _n1/_n2/_t を更新
+  tangentAt(s, _t);
+  _n1.crossVectors(YUP, _t).normalize();
+  _n2.crossVectors(_t, _n1).normalize();
+}
+function wallPos(s, th, out, rr = PRAD) {
+  frameAt(s);
+  centerAt(s, _c);
+  return out.copy(_c)
+    .addScaledVector(_n1, Math.cos(th) * rr)
+    .addScaledVector(_n2, Math.sin(th) * rr);
+}
+function angNorm(a) { a %= TAU; if (a < 0) a += TAU; return a; }
+
+// ---- リング（トンネルの骨格） ----
+const ringPts = [];
+for (let i = 0; i <= 48; i++) {
+  const a = i / 48 * TAU;
+  ringPts.push(new THREE.Vector3(Math.cos(a) * R, Math.sin(a) * R, 0));
+}
+const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
+const ringMatA = new THREE.LineBasicMaterial({ color: 0x7df9ff });
+const ringMatB = new THREE.LineBasicMaterial({ color: 0x24417a });
+const rings = [];
+for (let i = 0; i < RING_N; i++) {
+  const r = new THREE.LineLoop(ringGeo, (i % 4 === 0) ? ringMatA : ringMatB);
+  r.matrixAutoUpdate = false;
+  scene.add(r);
+  rings.push(r);
+}
+function placeRing(r, s) {
+  frameAt(s); centerAt(s, _c);
+  _m.makeBasis(_n1, _n2, _t).setPosition(_c);
+  r.matrix.copy(_m);
+}
+
+// ---- ダスト（速度感を作る浮遊粒子） ----
+const DUST_N = 350;
+const dust = []; // {s, th, r}
+const dustGeo = new THREE.BufferGeometry();
+const dustPos = new Float32Array(DUST_N * 3);
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+const dustMat = new THREE.PointsMaterial({ color: 0x9fd8ff, size: 0.22, sizeAttenuation: true,
+  transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false });
+scene.add(new THREE.Points(dustGeo, dustMat));
+function dustReset(d, sBase) {
+  d.s = sBase + Math.random() * 300;
+  d.th = Math.random() * TAU;
+  d.r = Math.random() * 4.5;
+}
+for (let i = 0; i < DUST_N; i++) { dust.push({ s: 0, th: 0, r: 0 }); dustReset(dust[i], 0); }
+
+// ---- グロー用スプライトテクスチャ ----
+function makeGlowTex() {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,255,255,1)');
+  gr.addColorStop(0.35, 'rgba(255,255,255,0.45)');
+  gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+}
+const glowTex = makeGlowTex();
+
+// ---- プレイヤー ----
+const player = new THREE.Group();
+const shipGeo = new THREE.ConeGeometry(0.5, 1.7, 8);
+shipGeo.rotateX(Math.PI / 2); // 先端を +Z（進行方向）へ
+const ship = new THREE.Mesh(shipGeo, new THREE.MeshBasicMaterial({ color: 0xffffff }));
+player.add(ship);
+const pGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0x7df9ff,
+  transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false }));
+pGlow.scale.set(3.2, 3.2, 1);
+player.add(pGlow);
+player.matrixAutoUpdate = false;
+scene.add(player);
+
+// ---- トレイル ----
+const TRAIL_N = 34;
+const trail = [];
+for (let i = 0; i < TRAIL_N; i++) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0x7df9ff,
+    transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  sp.scale.set(1.4, 1.4, 1);
+  scene.add(sp);
+  trail.push({ sp, life: 0 });
+}
+let trailIdx = 0;
+
+// ---- 爆発パーティクル ----
+const BOOM_N = 70;
+const boom = [];
+for (let i = 0; i < BOOM_N; i++) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xff8c3b,
+    transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  scene.add(sp);
+  boom.push({ sp, vel: new THREE.Vector3(), life: 0 });
+}
+function explode(pos) {
+  for (const b of boom) {
+    b.life = 0.7 + Math.random() * 0.5;
+    b.max = b.life;
+    b.sp.position.copy(pos);
+    b.vel.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
+      .multiplyScalar(8 + Math.random() * 26);
+    b.sp.material.color.setHex(Math.random() < 0.5 ? 0xff8c3b : 0xffd23b);
+    const sc = 1 + Math.random() * 2.2;
+    b.sp.scale.set(sc, sc, 1);
+  }
+}
+
+// ---- 障害物（ゲート）と結晶 ----
+const obstMat = new THREE.MeshBasicMaterial({ color: 0xff3355 });
+const orbGeo = new THREE.SphereGeometry(0.45, 10, 8);
+const orbMat = new THREE.MeshBasicMaterial({ color: 0xff7ce5 });
+let obstacles = []; // {s, start, arc, mesh, passed}
+let orbs = [];      // {s, th, mesh, ph}
+
+let lastGapCenter = -Math.PI / 2; // 初回の隙間はプレイヤー初期位置の真下
+function spawnGate(s, gap) {
+  const arc = TAU - gap;
+  // 隙間は前のゲートから連続的にドリフトさせる（高速時に届かない配置を出さない）
+  lastGapCenter += (Math.random() * 2 - 1) * (2.2 - 1.0 * diff01());
+  const start = angNorm(lastGapCenter + gap / 2);
+  const geo = new THREE.TorusGeometry(R, 0.55, 8, 48, arc);
+  const mesh = new THREE.Mesh(geo, obstMat);
+  mesh.matrixAutoUpdate = false;
+  frameAt(s); centerAt(s, _c);
+  _m.makeBasis(_n1, _n2, _t).setPosition(_c);
+  _m2.makeRotationZ(start);
+  _m.multiply(_m2);
+  mesh.matrix.copy(_m);
+  scene.add(mesh);
+  obstacles.push({ s, start, arc, mesh, passed: false });
+  // 結晶はゲートの隙間へ誘導するように並べる
+  const gapCenter = start + arc + gap / 2;
+  for (let k = 0; k < 4; k++) {
+    const os = s - 30 + k * 7;
+    if (os < 40) continue;
+    const m = new THREE.Mesh(orbGeo, orbMat);
+    wallPos(os, gapCenter, m.position);
+    scene.add(m);
+    orbs.push({ s: os, th: gapCenter, mesh: m, ph: Math.random() * 6 });
+  }
+}
+
+// ---- サウンド（WebAudio 直叩き） ----
+let ac = null, windGain = null, windFilter = null;
+function initAudio() {
+  if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
+  try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+  const len = ac.sampleRate * 1.5;
+  const buf = ac.createBuffer(1, len, ac.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  const src = ac.createBufferSource();
+  src.buffer = buf; src.loop = true;
+  windFilter = ac.createBiquadFilter();
+  windFilter.type = 'bandpass'; windFilter.Q.value = 0.8;
+  windGain = ac.createGain(); windGain.gain.value = 0;
+  src.connect(windFilter); windFilter.connect(windGain); windGain.connect(ac.destination);
+  src.start();
+}
+function tone(f, d, type, v, f2) {
+  if (!ac) return;
+  const t = ac.currentTime;
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = type;
+  o.frequency.setValueAtTime(f, t);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+  g.gain.setValueAtTime(v, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  o.connect(g); g.connect(ac.destination);
+  o.start(t); o.stop(t + d);
+}
+const SCALE = [523, 587, 659, 784, 880, 1046, 1175, 1318];
+
+// ---- HUD ----
+const $ = id => document.getElementById(id);
+const elHud = $('hud'), elBest = $('best'), elTitle = $('title'),
+      elResult = $('result'), elHint = $('hint'), elFlash = $('flash'),
+      elStats = $('rstats'), elNew = $('rnew');
+let flashT = 0;
+function flash(txt, col) {
+  elFlash.textContent = txt;
+  elFlash.style.color = col;
+  elFlash.style.opacity = 1;
+  flashT = 0.6;
+}
+
+// ---- 状態 ----
+let mode = 'title'; // title | play | dead
+let S = 0, prevS = 0, TH = -Math.PI / 2, speed = 10;
+let steerL = false, steerR = false, dragging = false, lastX = 0, steerVel = 0, userSteered = false;
+let nextGateS = 160, orbsGot = 0, combo = 0, comboT = 0, bestCombo = 0;
+let deadT = 0, shake = 0, time = 0;
+let best = 0, newBest = false;
+try { best = +(localStorage.getItem('fable_tunnel_best') || 0); } catch (e) {}
+
+function meters() { return Math.floor(S / 4); }
+
+function clearWorld() {
+  for (const o of obstacles) { scene.remove(o.mesh); o.mesh.geometry.dispose(); }
+  for (const o of orbs) scene.remove(o.mesh);
+  obstacles = []; orbs = [];
+}
+
+function startGame() {
+  clearWorld();
+  S = 0; prevS = 0; TH = -Math.PI / 2; speed = SPEED0;
+  nextGateS = 160; lastGapCenter = -Math.PI / 2;
+  orbsGot = 0; combo = 0; comboT = 0; bestCombo = 0;
+  newBest = false; userSteered = false; shake = 0;
+  for (const d of dust) dustReset(d, 0);
+  player.visible = true;
+  mode = 'play';
+  elTitle.style.display = 'none';
+  elResult.style.display = 'none';
+  elHud.style.display = 'block';
+  elBest.style.display = 'block';
+  elHint.style.display = 'block';
+  tone(440, 0.1, 'triangle', 0.12, 660);
+}
+
+function die() {
+  if (mode !== 'play') return;
+  mode = 'dead'; deadT = 0; shake = 1;
+  wallPos(S, TH, _v1);
+  explode(_v1);
+  player.visible = false;
+  tone(110, 0.7, 'sawtooth', 0.25, 36);
+  tone(55, 0.9, 'sine', 0.22, 28);
+  const m = meters();
+  if (m > best) {
+    best = m; newBest = true;
+    try { localStorage.setItem('fable_tunnel_best', String(best)); } catch (e) {}
+    setTimeout(() => tone(660, 0.12, 'triangle', 0.15), 300);
+    setTimeout(() => tone(880, 0.12, 'triangle', 0.15), 430);
+    setTimeout(() => tone(1320, 0.25, 'triangle', 0.15), 560);
+  }
+  elStats.textContent = m + 'm ／ ✦ ' + orbsGot + ' ／ 最高コンボ ×' + Math.max(bestCombo, 1);
+  elNew.style.display = newBest ? 'block' : 'none';
+  setTimeout(() => { if (mode === 'dead') elResult.style.display = 'block'; }, 450);
+  elHud.style.display = 'none';
+  elHint.style.display = 'none';
+}
+
+// ---- 入力 ----
+function press(x) {
+  initAudio();
+  if (mode === 'title') { startGame(); return; }
+  if (mode === 'dead') { if (deadT > 0.6) startGame(); return; }
+  dragging = true; lastX = x;
+}
+addEventListener('pointerdown', e => { e.preventDefault(); press(e.clientX); });
+addEventListener('pointermove', e => {
+  if (dragging && mode === 'play') {
+    TH += (e.clientX - lastX) * 0.006;
+    lastX = e.clientX;
+    userSteered = true;
+  }
+});
+addEventListener('pointerup', () => { dragging = false; });
+addEventListener('keydown', e => {
+  if (e.repeat) return;
+  if (e.code === 'ArrowLeft' || e.code === 'KeyA') { steerL = true; userSteered = true; }
+  if (e.code === 'ArrowRight' || e.code === 'KeyD') { steerR = true; userSteered = true; }
+  if (e.code === 'Space') { e.preventDefault(); if (mode !== 'play') press(0); }
+  if (e.code === 'KeyR' && mode === 'dead') startGame();
+});
+addEventListener('keyup', e => {
+  if (e.code === 'ArrowLeft' || e.code === 'KeyA') steerL = false;
+  if (e.code === 'ArrowRight' || e.code === 'KeyD') steerR = false;
+});
+
+// ---- 更新 ----
+const diff01 = () => Math.min(1, S / 3200);
+function update(dt) {
+  time += dt;
+  shake = Math.max(0, shake - dt * 2.2);
+  if (flashT > 0) { flashT -= dt; if (flashT <= 0) elFlash.style.opacity = 0; }
+
+  if (mode === 'title') {
+    S += 10 * dt;
+    TH += 0.25 * dt;
+  } else if (mode === 'dead') {
+    deadT += dt;
+    speed = Math.max(0, speed - 60 * dt);
+    S += speed * dt;
+  } else {
+    // 加速（上限つき）
+    speed = Math.min(SPEEDMX, speed + (0.8 + 1.6 * (1 - diff01())) * dt);
+    // 操作
+    const dir = (steerR ? 1 : 0) - (steerL ? 1 : 0);
+    steerVel += (dir * 3.4 - steerVel) * Math.min(1, 12 * dt);
+    TH += steerVel * dt;
+    prevS = S;
+    S += speed * dt;
+    comboT -= dt;
+    if (comboT <= 0) combo = 0;
+
+    // ゲート生成
+    while (nextGateS < S + 380) {
+      const gap = 2.4 - 1.1 * diff01();      // 隙間は徐々に狭く
+      spawnGate(nextGateS, gap);
+      nextGateS += 42 - 15 * diff01();       // 間隔は徐々に詰める
+    }
+
+    // 通過判定
+    for (const o of obstacles) {
+      if (!o.passed && prevS < o.s && o.s <= S) {
+        o.passed = true;
+        const d = angNorm(TH - o.start);
+        if (d < o.arc) { die(); return; }
+        const margin = Math.min(d - o.arc, TAU - d);
+        if (margin < 0.38) {
+          // スレスレ通過 → 加速ボーナス
+          speed = Math.min(SPEEDMX, speed + 2.5);
+          flash('スレスレ！ +SPEED', '#ffd23b');
+          tone(900, 0.1, 'sine', 0.14, 1700);
+          shake = Math.max(shake, 0.35);
+        }
+        if (elHint.style.display !== 'none' && userSteered) elHint.style.display = 'none';
+      }
+    }
+
+    // 結晶取得
+    for (let i = orbs.length - 1; i >= 0; i--) {
+      const o = orbs[i];
+      if (Math.abs(o.s - S) < 2.6) {
+        let d = angNorm(TH - o.th); d = Math.min(d, TAU - d);
+        if (d < 0.5) {
+          scene.remove(o.mesh);
+          orbs.splice(i, 1);
+          combo++; comboT = 2.0; orbsGot++;
+          if (combo > bestCombo) bestCombo = combo;
+          tone(SCALE[Math.min(combo - 1, SCALE.length - 1)], 0.14, 'triangle', 0.16);
+        }
+      }
+    }
+
+    // 掃除
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+      if (obstacles[i].s < S - 40) {
+        scene.remove(obstacles[i].mesh);
+        obstacles[i].mesh.geometry.dispose();
+        obstacles.splice(i, 1);
+      }
+    }
+    for (let i = orbs.length - 1; i >= 0; i--) {
+      if (orbs[i].s < S - 30) { scene.remove(orbs[i].mesh); orbs.splice(i, 1); }
+    }
+
+    // HUD
+    elHud.firstChild.textContent = meters() + 'm';
+    elHud.querySelector('.sub').textContent = '✦ ' + orbsGot + (combo > 1 ? '  ×' + combo : '');
+    elBest.textContent = 'BEST ' + best + 'm';
+  }
+
+  // 風音
+  if (windGain) {
+    windGain.gain.value = mode === 'play' ? 0.04 + 0.1 * (speed / SPEEDMX) : 0.015;
+    windFilter.frequency.value = 200 + speed * 11;
+  }
+}
+
+// ---- 描画 ----
+function render() {
+  // リング再配置
+  const base = Math.floor((S - 30) / RING_SP) * RING_SP;
+  for (let i = 0; i < RING_N; i++) placeRing(rings[i], base + i * RING_SP);
+
+  // ダスト
+  for (let i = 0; i < DUST_N; i++) {
+    const d = dust[i];
+    if (d.s < S - 8) dustReset(d, S + 30);
+    wallPos(d.s, d.th, _v1, d.r);
+    dustPos[i * 3] = _v1.x; dustPos[i * 3 + 1] = _v1.y; dustPos[i * 3 + 2] = _v1.z;
+  }
+  dustGeo.attributes.position.needsUpdate = true;
+
+  // 結晶の回転・浮遊
+  for (const o of orbs) {
+    o.mesh.rotation.y = time * 2 + o.ph;
+    const bobR = PRAD + Math.sin(time * 2.4 + o.ph) * 0.25;
+    wallPos(o.s, o.th, o.mesh.position, bobR);
+  }
+
+  // プレイヤー配置（接線方向を向き、操作でバンクする）
+  if (player.visible) {
+    wallPos(S, TH, _v1);
+    frameAt(S); centerAt(S, _c);
+    _v2.copy(_c).sub(_v1).normalize();           // 内向き = 機体の上
+    _v3.crossVectors(_v2, _t).normalize();       // 右
+    _m.makeBasis(_v3, _v2, _t).setPosition(_v1);
+    _m2.makeRotationZ(-steerVel * 0.35);
+    _m.multiply(_m2);
+    player.matrix.copy(_m);
+
+    // トレイル
+    const tr = trail[trailIdx = (trailIdx + 1) % TRAIL_N];
+    tr.sp.position.copy(_v1);
+    tr.life = 1;
+  }
+  for (const t of trail) {
+    t.life = Math.max(0, t.life - 0.04);
+    t.sp.material.opacity = t.life * 0.5;
+  }
+
+  // 爆発
+  for (const b of boom) {
+    if (b.life > 0) {
+      b.life -= 1 / 60;
+      b.sp.position.addScaledVector(b.vel, 1 / 60);
+      b.sp.material.opacity = Math.max(0, b.life / b.max);
+    } else b.sp.material.opacity = 0;
+  }
+
+  // カメラ
+  wallPos(S, TH, _v1);                      // プレイヤー位置
+  centerAt(S, _c);
+  _v2.copy(_c).sub(_v1).normalize();        // 内向き
+  wallPos(S - 9, TH, _v3);
+  centerAt(S - 9, _c);
+  _v3.lerp(_c, 0.45);                       // 後方・中心寄り
+  if (shake > 0) {
+    _v3.x += (Math.random() - 0.5) * shake;
+    _v3.y += (Math.random() - 0.5) * shake;
+  }
+  camera.position.copy(_v3);
+  camera.up.copy(_v2);
+  wallPos(S + 16, TH, _v1);
+  centerAt(S + 16, _c);
+  _v1.lerp(_c, 0.5);
+  camera.lookAt(_v1);
+  camera.fov = 68 + (speed / SPEEDMX) * 18;
+  camera.updateProjectionMatrix();
+
+  renderer.render(scene, camera);
+}
+
+// ---- メインループ ----
+let last = performance.now();
+function loop(now) {
+  let dt = Math.min((now - last) / 1000, 1 / 30);
+  last = now;
+  if (mode === 'dead' && deadT < 0.5) dt *= 0.3; // 死亡直後スローモーション
+  update(dt);
+  render();
+  requestAnimationFrame(loop);
+}
+if (best > 0) { elBest.textContent = 'BEST ' + best + 'm'; elBest.style.display = 'block'; }
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
