@@ -11016,7 +11016,15 @@ Phase 3 staging で「次フェーズの大作業」として明示宣言した 
 
 Phase 1 §0 で観察した GPT/ 側 5 ファイル (`codex_log_cycle.log` / `codex_phases_cycle.log` / `cycle_staging_log_cdx.md` / `codex_log_cycle_state.json` / `codex_phases_cycle_state.json`) は Log の本サイクル commit 対象外、Codex 側 push レーンに委譲。Phase 2-5 + 3-6 + 4-4 で合意した commit 分離方針を Phase 5 で実行: `game:` prefix = `verify.js` + `multi_seed_sweep_raw.json` + `multi_seed_correlation.md` + `PEARSON_BLOCKER.md` の game/* 配下 4 ファイル / `log:` prefix = `projects/log_autonomous_game.md` + `log/cycle_staging_log.md` + `log/daily_diary_log.md` の 3 ファイル。**CLAUDE.md「ゲーム改修と運用規則改修は別 commit」厳守事項順守**、改修系統の混在で評価バイアスが入るのを物理的に防ぐ。
 
-### 次回起動時 (C321) にやること — strategy 集合拡張で真の冗長性判定 / kaizen #140 段階3 延期固定 / multi-seed 装置の別軸 (cont_grazing_max threshold) 再走候補
+### git push 障害観察 — 本サイクル C320 Phase 5 push で **新規 corrupt loose object `a720c7aaf003...`** に遭遇、push 未着地のまま終了
+
+本サイクル末 `git push origin master` 実行で「corrupt loose object `a720c7aaf0031817f87d5dc74b185cc4e005aa06`」エラーが発生、push 失敗。**対象 blob は `GPT/memory/raw/web_research/results.jsonl` (3578972 bytes、GPT/ 側、Log territory 外)**。`git cat-file --batch-check` では blob 認識成功、`git verify-pack -v ../.git/objects/pack/pack-46e73452fe9325...idx` でも valid copy が 3578972 bytes で pack 内に存在確認 → **pack に valid copy / loose object に corrupt copy の shadow 状態**。git push 経路は loose object 優先で読みに行くため pack fallback が機能していない。
+
+**今朝 (2026-06-10 早朝) の recovery commit `ae0334809 recovery: C320 Phase 4 — squash unpushed 829 commits (corrupt loose object 61件)` で 61 件処理済だったが、本 sweep 実行 + commit 後に新規 1 件が発生 (同じ `a720c7aa...` SHA は recovery 対象 61 件には含まれていなかった可能性)**。発生タイミング = `b8a3383b1 Auto sync from Win` (15:58:48) 〜 本 Phase 5 commit `12cd4f1e7` (15:5x) の間、auto-sync hook が GPT/ 側ファイルを touch した際に loose object 生成 → 何らかの理由で deflate corrupt 化した可能性。
+
+**本サイクル対応**: 安全な recovery 経路 = 「corrupt loose object を削除して pack 内 valid copy に fallback」は `.git` 内部の destructive op となり、CLAUDE.md「destructive operations 実行前に user 承認」原則に抵触する判定で本サイクル内では実施せず、**push 未着地のまま終了**、local commit 2 件 (`b8a3383b1 Auto sync from Win` + `12cd4f1e7 log: C320 Phase 5`) はローカル master HEAD に保持、origin/master との差分は 7 commit (ahead 2 + 既存 5)。**次回起動時 C321 Phase 1 §0 で Nao_u に承認問い合わせ後に corrupt loose object backup + 削除 → pack fallback で再 push 試行する経路を固定**。
+
+### 次回起動時 (C321) にやること — strategy 集合拡張で真の冗長性判定 / kaizen #140 段階3 延期固定 / multi-seed 装置の別軸 (cont_grazing_max threshold) 再走候補 / git push 障害の recovery 承認問い合わせ
 
 次サイクル C321 では **「本 C320 Phase 4 で物理確証した『5 strategy 中 4 strategy が seed 不変』構造的バイアスを strategy 集合拡張 (現 5 → +8 種 で N=13) で解消し、`instinct × temporal` Pearson 0.9944 が真の冗長性か疑似相関かを kaizen #140 検証期限 2026-06-20 までに最終判定する」** が中核軸。**なぜそれをやるか**: 本 C320 で形式 verdict = REDUNDANCY_CONFIRMED を取ったが、これを信じて kaizen #140 段階3 family 統合 (`instinct → temporal` 軸縮約) を発火させると、4 strategy seed 不変 + `good` outlier 支配の **2 重バイアス下で軸構造が永久固化** する。これは「装置を走らせて初めて見える物理」第 4 度目の発見を活かさず、形式判定で逆走する誤動作。逆に strategy 集合拡張で N≥13 を達成して同じ sweep を走らせ、それでも Pearson std < 0.1 維持なら **真の冗長性確証**、std ≥ 0.2 に散れば **PSEUDO_CORRELATION 確証** = kaizen #140 軸構造 4 軸維持判定、0.1 ≤ std < 0.2 ならさらに strategy 拡張 N≥18 へ。**この判定経路は本サイクルで「測ったことで決定の前提条件が見えた」逆転判定を C321 で物理化することそのもの** = 「装置で見える死角を装置の改修で塞ぐ」サイクル運用の N=1 達成試行。
 
