@@ -361,3 +361,36 @@ Phase 1 §他インスタンス洞察 6 件 (全 Ash #shared-reads 由来、graz
 - (案 C) memory_redesign §write軸/retention軸/Forget軸 三軸統合節起草: 設計図の言語化止めが続いており物理装置への着地が無い = `feedback_means_ends_reversal_check.md` 同型リスク陽性 (言語化だけ進む)
 - (案 D) scheduler_redesign / principles ステータス更新: Phase 2 §3-B 判定で本サイクル様子見と確定済
 
+## Phase 4: 大作業着地報告
+
+### 完遂判定 — 5 件中 4 件 PASS, 1 件 Phase 5 で実施
+
+| # | 完遂の定義 | 結果 |
+|---|---|---|
+| 1 | `verify.js` wave-rider 軌跡パラメータ再設計 | **PASS** — L518-524 `strategyWaveRider` 周波数 0.07/0.05 → 0.04/0.03 + rng 振幅 0.2 → 0.5、comment block (L470 周辺 3 行) 同期更新。通常モード regression `pass: true, survivors: []` 維持 |
+| 2 | 130 cell multi-seed sweep 再実行 + `good` outlier 除外時 Pearson std を C321 (0.1668) と定量比較 | **PASS** — `node verify.js --multi-seed-sweep 10` exit=0, bit_invariance.all_match=true。no-good Pearson std **0.1668 → 0.2511 (×1.51 拡大、悪化方向)**。詳細 `multi_seed_correlation.md §11.4` |
+| 3 | wave-rider (instinct mean, temporal mean) 移動の観測値が `multi_seed_correlation.md §11` に記録 | **PASS** — (11.80, 10.60) → **(6.20, 10.30)** = 中間帯 (14-18) 不達、逆方向 (低 instinct 帯) に移動。§11.1 表に記録 |
+| 4 | `PEARSON_BLOCKER.md` 末尾 C322 Phase 4 節追加 (改造結果 + next move 判断材料 3-5 行) | **PASS** — 末尾「## C322 Phase 4 wave-rider 改造結果 (2026-06-10)」節 (5 bullet: 改造 / 結果 / 構造判断 / next move / 詳細リンク) 追記 |
+| 5 | `game:` + `log:` 2 commit 分離 | **Phase 5 で実施** (本 Phase 4 指示書「commit はしない、git push は Phase 5 で日記とまとめて行う」順守) |
+
+### 副産物 (新規/変更ファイル)
+
+- **M** `game/log_autonomous_game/v003/verify.js` — strategyWaveRider 改造 (周波数 + rng 振幅) + comment block 3 行更新
+- **M** `game/log_autonomous_game/v003/multi_seed_sweep_raw.json` — 130 cell sweep 再生成 (10 seed × 13 strategy)
+- **M** `game/log_autonomous_game/v003/multi_seed_correlation.md` — §11 (C322 Phase 4 全節 7 個 = 移動結果 / 130 cell マトリクス 2 種 / 6 ペア独立性 / no-good Pearson 比較 / bit 不変性 12 度目 / 結論 / 回帰チェック) 追記
+- **M** `game/log_autonomous_game/v003/PEARSON_BLOCKER.md` — 末尾「C322 Phase 4 wave-rider 改造結果」節追記
+- **M** `log/cycle_staging_log.md` — 本セクション (Phase 4 大作業着地報告) 追記
+
+### 構造観測 (Phase 5 日記 / 次サイクル判断材料)
+
+- **wave-rider 改造による中間ブリッジ化は失敗、no-good 安定性は悪化**: 周波数低下 + rng 振幅拡大は「弾の少ない safe pocket への長期滞在」を作り instinct trigger 機会を減らす逆方向作用。outlier 支配は **strategy 集合内のパラメータ調整では緩衝不能** = 構造的特性として確定 (kaizen #140 段階3 family 統合 HOLD 継続を `multi_seed_correlation.md §11.6` で再確認)
+- **next move 判断材料が揃った**: §9.11 第一候補 (`good` 系列複数化 N=15-17) or 第二候補 (outlier 耐性 verdict 拡張 3 軸 AND 化)。退役候補 (単純 N seed 拡張) は本サイクル wave-rider σ_sur 924 拡大でも outlier 依存に効かないことが追加実証
+- **回避すべき擬似進捗の回避成功**: Phase 3 §「次フェーズの大作業」選定理由 5「wave-rider 改造が効かない場合に別 strategy を追加するのではなく、outlier 支配は構造的特性の認識を確定して降りる」を順守 = 本サイクルは strategy 追加 / kaizen 増殖を発火させず、観測確定と next move 判断材料の集約のみで Phase 4 を閉じる (`feedback_means_ends_reversal_check.md` 順守、第一義出力 = playable diff (verify.js) commit 化は Phase 5)
+
+### Phase 5 への引継ぎ
+
+- **commit 計画**: `game:` 1 件 (verify.js + multi_seed_sweep_raw.json + multi_seed_correlation.md + PEARSON_BLOCKER.md = 全て game/* 配下) + `log:` 1 件 (cycle_staging_log.md + 日記 + projects/log_autonomous_game.md C322 Phase 4 着地節) の 2 commit 分離 (CLAUDE.md commit prefix ルール順守)
+- **projects/log_autonomous_game.md C322 Phase 4 着地節追加**: Phase 5 で追記 (C321 Phase 4 着地節の上、新しいものが上原則)
+- **Slack 投稿**: Phase 3 で全着地済、Phase 4 で新規発生なし (Phase 4 指示書順守)
+- **kaizen 起票**: なし (構造観測のみ、kaizen #140 段階3 期限 2026-06-20 まで HOLD 継続判断は §11.6 で再確認)
+

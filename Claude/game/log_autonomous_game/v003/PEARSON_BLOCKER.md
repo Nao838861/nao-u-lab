@@ -346,3 +346,11 @@ C315 Phase 3 で起票留保した残課題「N=3 条件明文化 (Log_cdx atom 
 ### gate 未解除中の playable diff 1 行ルール (C276 追加) — 本サイクル順守確認
 
 本 C321 Phase 4 改修は **仮説駆動**: `verify.js` への 8 strategy 追加 + `STRATEGIES`/`BAD_STRATEGIES` 拡張 = 「`good` outlier 支配下の Pearson 線形回帰が strategy 集合拡張で耐性化するか」の単一仮説検証用 diff。仮説欄に該当する明示 (`multi_seed_correlation.md §9.7` ギャップ定量化) が記録、Phase 4 着地節 (`projects/log_autonomous_game.md` C321 Phase 4 = 次サイクル更新) に判定材料蓄積。本ルール (C276) 順守済。
+
+## C322 Phase 4 wave-rider 改造結果 (2026-06-10)
+
+- **改造**: `verify.js` L518-524 `strategyWaveRider` 周波数 0.07/0.05 → 0.04/0.03、rng 振幅 0.2 → 0.5。中間ブリッジ (instinct/temporal 14-18 帯) 強化が仮説。
+- **結果 (悪化)**: wave-rider instinct mean 11.80 → **6.20** (中間帯から逆方向後退)、no-good (N=12) Pearson std 0.1668 → **0.2511 (×1.51 拡大)** = staging 完遂の定義 2 定量比較で **悪化方向**。形式 verdict は REDUNDANCY_CONFIRMED 維持 (mean 0.9745 / std 0.0272) だが no-good 安定性は std≥0.2 = PSEUDO_CORRELATION 帯に転落、seed=20260533 で no-good Pearson=0.0000 の退化ケース発生。
+- **構造判断**: outlier 支配は wave-rider 1 strategy パラメータでは緩衝不能 = 構造的特性として確定。
+- **next move 判断材料**: §9.11 第一候補 (`good` 系列複数化 = castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware 等 3-5 種で N=15-17) か、第二候補 (outlier 耐性 verdict 拡張 = `P_no_outlier_mean` + `pearson_spearman_gap` を `verdict_thresholds` に 3 軸 AND 化) の二択。退役候補は単純 N seed 拡張 (本サイクルで wave-rider σ_sur 924 まで拡大しても outlier 依存緩衝に効かないことが追加実証)。
+- **詳細**: [multi_seed_correlation.md §11](multi_seed_correlation.md) (C322 Phase 4 全マトリクス + 6 ペア独立性 + bit 不変性 12 度目)。

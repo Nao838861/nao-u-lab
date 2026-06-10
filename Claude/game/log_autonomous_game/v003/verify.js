@@ -467,7 +467,9 @@ function strategyGrazer(state, _frame, _rng) {
 //   vertical-bounce: dy = (frame % 120 < 60) ? -1 : +1, dx = (rng()-0.5)*0.5 — rng 軽依存
 //   triangle-loop:   3 頂点 (左下/右下/上中央) を 60F ずつ巡回、決定論
 //   spiral-out:      中央から外向き螺旋、radius=min(120, frame*0.05), angle=frame*0.08、決定論
-//   wave-rider:      dx = sin(frame*0.07), dy = cos(frame*0.05) + (rng()-0.5)*0.2 — rng 軽依存
+//   wave-rider:      dx = sin(frame*0.04), dy = cos(frame*0.03) + (rng()-0.5)*0.5 — rng 中依存
+//                    C322 Phase 4 改造: 周波数 0.07/0.05 → 0.04/0.03 (軌跡周期延長 1.5-1.7倍)
+//                    + rng 振幅 0.2 → 0.5 (seed 軸変動拡大) で中間ブリッジ点 (instinct/temporal 14-18 帯) 移動を試行
 // 共通: castLock 機構不使用 = 全 strategy が ≤90s (5400 frame) で gameover 判定される設計。
 //   rng 使用 strategy (random-rush / vertical-bounce / wave-rider) は seed 軸変動を生み、
 //   既存 blind-sweeper 1 点のみ動く構造バイアス (multi_seed_correlation.md §3.1) を解消する。
@@ -516,8 +518,9 @@ function strategySpiralOut(state, frame, _rng) {
   return { dx: tx - state.player.x, dy: ty - state.player.y };
 }
 function strategyWaveRider(_state, frame, rng) {
-  const dx = Math.sin(frame * 0.07);
-  const dy = Math.cos(frame * 0.05) + (rng() - 0.5) * 0.2;
+  // C322 Phase 4: 周波数 0.07/0.05 → 0.04/0.03 + rng 振幅 0.2 → 0.5
+  const dx = Math.sin(frame * 0.04);
+  const dy = Math.cos(frame * 0.03) + (rng() - 0.5) * 0.5;
   return { dx, dy };
 }
 

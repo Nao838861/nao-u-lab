@@ -419,3 +419,141 @@ seed=20260527 行 (sweep ループ内) と sweep 外 baseline 再実行 (`runOne
 | `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** | 13 strategy 全 gameover、追加 8 種 survived_frames [227, 435]F = 悪手帯着地 |
 
 `STRATEGIES` への 8 追加 + `BAD_STRATEGIES` への 8 追加 + comment block (約 20 行) は通常モード + 既存 sweep モード (`--sensitivity-sweep` / `--temporal-sensitivity-sweep` / `--multi-seed-sweep`) + audit 系列に副作用ゼロ。pass: true 維持 + survivors 0 維持 = 改修品質確証。
+
+## 11. C322 Phase 4 — wave-rider 軌跡再設計 + 130 cell sweep 再実行
+
+**起票**: 2026-06-10 C322 Phase 4 (Log)
+**目的**: §9.10 「中間ブリッジ点 (`wave-rider`)」が `good`(22, 43) と他 12 strategy (≤7, ≤2) の中間に新点を生成した実績を、パラメータ調整で **中間帯 (instinct/temporal 各 14-18)** へ移動させ、`good` outlier 1 点支配 → outlier クラスタ的緩衝化への最小実験。staging Phase 3 §「次フェーズの大作業」完遂の定義 1-4 を物理化。
+**差分**: [verify.js](verify.js) L518-524 `strategyWaveRider` 周波数 0.07/0.05 → 0.04/0.03 (軌跡周期 ×1.5-1.7 延長) + rng 振幅 0.2 → 0.5 (seed 軸変動拡大)。`STRATEGIES` 構造 / `BAD_STRATEGIES` リスト / `--multi-seed-sweep` 機構は不変。
+**素材**: 再生成済 [multi_seed_sweep_raw.json](multi_seed_sweep_raw.json) (130 行 = 10 seed × 13 strategy、`node verify.js --multi-seed-sweep 10`)。
+
+### 11.1 wave-rider (instinct mean, temporal mean) 移動結果
+
+| 軸 | C321 値 | C322 値 (新) | Δ | 目標帯 (14-18) | 判定 |
+|---|---:|---:|---:|---|:-:|
+| wave-rider instinct mean | 11.80 | **6.20** | **-5.60** | 14-18 | **逆方向移動** (中間帯下方へ離脱) |
+| wave-rider temporal mean | 10.60 | **10.30** | -0.30 | 14-18 | ほぼ不変 (中間帯下端の手前で停滞) |
+| wave-rider survived mean | 1040.7 (推計) | **1114.80** | +74.1 | – | 延長 (周波数低下が安全 pocket 滞在を促進) |
+| wave-rider survived σ | 705.01 | **923.87** | +218.86 (×1.31) | – | 拡大 (seed 軸分岐の幅増) |
+| wave-rider survived max | 1819 | **2849** | +1030 (×1.57) | – | 1.6 倍 (rng 振幅 0.5 で長期生存軌道発生) |
+| wave-rider instinct σ | 6.92 | 2.96 | -3.96 | – | 縮小 (低 instinct 帯に集中) |
+| wave-rider temporal σ | 7.89 | 7.60 | -0.29 | – | ほぼ不変 |
+
+**観測**: 周波数低下 (0.07/0.05 → 0.04/0.03) + rng 振幅拡大 (0.2 → 0.5) は、wave-rider を **中間帯 (14-18) へ移動させず、逆に低 instinct 帯 (mean 6.20) に押し下げた**。survived は延長 (mean 1115F、max 2849F) = 軌跡周期延長が「弾配置の少ない pocket への長期滞在」を構造的に作り、結果として instinct trigger (rising-edge bullet proximity) 機会が **減少**。temporal はほぼ不変 = 弾の predicted_end からの逸脱 event は survival 機会数で線形に増えるため σ は維持。
+
+完遂の定義 3 「観測値が記録されれば PASS」順守 (移動の有無は問わない設計)。
+
+### 11.2 13 strategy × 10 seed instinct/temporal マトリクス (130 cell)
+
+**instinct_trigger_count** (略号は §9.3 同):
+
+| seed | good | cam | lh | bs | nos | zz | rr | cs | mo | vb | tl | so | wr |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 20260527 | 22 | 1 | 2 | 3 | 2 | 1 | 7 | 1 | 1 | 2 | 1 | 2 | 5 |
+| 20260528 | 22 | 1 | 2 | 6 | 2 | 1 | 2 | 1 | 1 | 2 | 1 | 2 | 5 |
+| 20260529 | 22 | 1 | 2 | 1 | 2 | 1 | 10 | 1 | 1 | 2 | 1 | 2 | 11 |
+| 20260530 | 22 | 1 | 2 | 2 | 2 | 1 | 3 | 1 | 1 | 1 | 1 | 2 | 4 |
+| 20260531 | 22 | 1 | 2 | 6 | 2 | 1 | 12 | 1 | 1 | 2 | 1 | 2 | 11 |
+| 20260532 | 22 | 1 | 2 | 3 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 2 | 8 |
+| 20260533 | 22 | 1 | 2 | 2 | 2 | 1 | 2 | 1 | 1 | 2 | 1 | 2 | 1 |
+| 20260534 | 22 | 1 | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 2 | 5 |
+| 20260535 | 22 | 1 | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 2 | 5 |
+| 20260536 | 22 | 1 | 2 | 5 | 2 | 1 | 4 | 1 | 1 | 2 | 1 | 2 | 7 |
+| **µ** | 22 | 1 | 2 | 3.00 | 2 | 1 | 4.30 | 1 | 1 | 1.80 | 1 | 2 | **6.20** |
+| **σ** | 0 | 0 | 0 | 1.90 | 0 | 0 | 3.80 | 0 | 0 | 0.40 | 0 | 0 | 2.96 |
+
+**temporal_inconsistency_count**:
+
+| seed | good | cam | lh | bs | nos | zz | rr | cs | mo | vb | tl | so | wr |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 20260527 | 43 | 0 | 0 | 0 | 2 | 0 | 2 | 0 | 1 | 0 | 1 | 0 | 6 |
+| 20260528 | 43 | 0 | 0 | 1 | 2 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 6 |
+| 20260529 | 43 | 0 | 0 | 1 | 2 | 0 | 3 | 0 | 1 | 0 | 1 | 0 | 24 |
+| 20260530 | 43 | 0 | 0 | 1 | 2 | 0 | 1 | 0 | 1 | 1 | 1 | 0 | 6 |
+| 20260531 | 43 | 0 | 0 | 4 | 2 | 0 | 4 | 0 | 1 | 0 | 1 | 0 | 24 |
+| 20260532 | 43 | 0 | 0 | 1 | 2 | 0 | 1 | 0 | 1 | 1 | 1 | 0 | 14 |
+| 20260533 | 43 | 0 | 0 | 1 | 2 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 |
+| 20260534 | 43 | 0 | 0 | 0 | 2 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 6 |
+| 20260535 | 43 | 0 | 0 | 1 | 2 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 5 |
+| 20260536 | 43 | 0 | 0 | 2 | 2 | 0 | 2 | 0 | 1 | 1 | 1 | 0 | 11 |
+| **µ** | 43 | 0 | 0 | 1.20 | 2 | 0 | 1.60 | 0 | 1 | 0.30 | 1 | 0 | **10.30** |
+| **σ** | 0 | 0 | 0 | 1.08 | 0 | 0 | 1.11 | 0 | 0 | 0.46 | 0 | 0 | 7.60 |
+
+### 11.3 4 軸 6 ペア独立性 — seed 軸分布 (N=10, focus pair)
+
+**Pearson 分布** (verify.js native):
+
+| ペア | mean | std | min | max |
+|---|---:|---:|---:|---:|
+| instinct × min_approach_p10 | -0.1674 | 0.0527 | -0.2750 | -0.0933 |
+| instinct × cont_grazing_max | 0.2354 | 0.0937 | 0.1180 | 0.4097 |
+| **instinct × temporal_inconsistency** | **0.9745** | **0.0272** | **0.9112** | **0.9947** |
+| min_approach_p10 × cont_grazing_max | -0.5182 | 0.0883 | -0.6819 | -0.3790 |
+| min_approach_p10 × temporal_inconsistency | -0.0683 | 0.0319 | -0.1167 | -0.0221 |
+| cont_grazing_max × temporal_inconsistency | 0.1836 | 0.1160 | 0.0143 | 0.4166 |
+
+**Spearman 分布**:
+
+| ペア | mean | std | min | max |
+|---|---:|---:|---:|---:|
+| instinct × min_approach_p10 | -0.4435 | 0.0978 | -0.5576 | -0.2308 |
+| instinct × cont_grazing_max | 0.3073 | 0.1176 | 0.0142 | 0.4481 |
+| **instinct × temporal_inconsistency** | **0.5243** | **0.1512** | **0.2027** | **0.7612** |
+| min_approach_p10 × cont_grazing_max | -0.5079 | 0.0762 | -0.6004 | -0.3587 |
+| min_approach_p10 × temporal_inconsistency | -0.0753 | 0.1161 | -0.2573 | 0.1670 |
+| cont_grazing_max × temporal_inconsistency | 0.2576 | 0.1508 | 0.0551 | 0.5202 |
+
+### 11.4 `good` outlier 除外時 Pearson std — C321 vs C322 定量比較 (staging 完遂の定義 2)
+
+`good`(instinct=22, temporal=43) を除外し N=12 strategy × 10 seed = 120 cell で再算出した seed 軸 instinct × temporal Pearson 分布:
+
+| seed | P_all(N=13) | P_no-good(N=12) | Δ_P | S_all(N=13) | S_no-good(N=12) | Δ_S |
+|---|---:|---:|---:|---:|---:|---:|
+| 20260527 | 0.9672 | 0.6068 | -0.3604 | 0.5365 | 0.3870 | -0.1495 |
+| 20260528 | 0.9745 | 0.5842 | -0.3903 | 0.5506 | 0.4066 | -0.1440 |
+| 20260529 | 0.9380 | 0.7772 | -0.1608 | 0.5715 | 0.4345 | -0.1370 |
+| 20260530 | 0.9940 | 0.7443 | -0.2497 | 0.5723 | 0.4353 | -0.1370 |
+| 20260531 | 0.9112 | 0.7259 | -0.1853 | 0.7126 | 0.6238 | -0.0888 |
+| 20260532 | 0.9939 | 0.9414 | -0.0525 | 0.5162 | 0.3563 | -0.1599 |
+| 20260533 | 0.9947 | 0.0000 | -0.9947 | 0.2027 | -0.0826 | -0.2853 |
+| 20260534 | 0.9945 | 0.8496 | -0.1449 | 0.4419 | 0.2467 | -0.1952 |
+| 20260535 | 0.9926 | 0.8000 | -0.1926 | 0.3779 | 0.1672 | -0.2107 |
+| 20260536 | 0.9845 | 0.8434 | -0.1411 | 0.7612 | 0.6887 | -0.0725 |
+| **mean** | 0.9745 | **0.6873** | **-0.2872** | 0.5243 | **0.3663** | **-0.1580** |
+| **std** | 0.0272 | **0.2511** | +0.2239 (×9.2) | 0.1512 | 0.2091 | +0.0579 |
+| **min** | 0.9112 | **0.0000** | -0.9112 | 0.2027 | -0.0826 | -0.2853 |
+| **max** | 0.9947 | 0.9414 | -0.0533 | 0.7612 | 0.6887 | -0.0725 |
+
+**C321 vs C322 定量比較 (staging 完遂の定義 2)**:
+
+| 統計 | C321 (N=13 wave-rider 0.07/0.05) | C322 (N=13 wave-rider 0.04/0.03) | Δ | 解釈 |
+|---|---:|---:|---:|---|
+| Pearson N=13 全 mean | 0.9532 | 0.9745 | **+0.0213** | 全体強相関は微増 |
+| Pearson N=13 全 std | 0.0319 | 0.0272 | -0.0047 | seed 軸ばらつきは微減 |
+| **Pearson N=12 no-good mean** | **0.8198** | **0.6873** | **-0.1325** | **no-good 強相関が 13% 低下** |
+| **Pearson N=12 no-good std** | **0.1668** | **0.2511** | **+0.0843 (×1.51)** | **outlier 依存性は 1.5 倍に悪化** |
+| Pearson no-good min | 0.5293 | **0.0000** | -0.5293 | seed=20260533 で完全相関消失 |
+| no-good vs C321 std 倍率 (vs C321 0.0319 baseline) | 5.2× (0.1668/0.0319) | **9.2× (0.2511/0.0272)** | +4.0× | outlier 依存度の悪化を倍率で見ても 5.2 → 9.2 = 1.8 倍悪化 |
+| Spearman N=13 全 mean | 0.5463 | 0.5243 | -0.0220 | 順位相関は微減 |
+| Spearman no-good mean | 0.3970 | 0.3663 | -0.0307 | 順位相関 no-good も微減 |
+
+### 11.5 bit 不変性 — sweep state 汚染ゼロ確証 (12 度目)
+
+`multi_seed_sweep_raw.json` `bit_invariance.all_match: true`、13 strategy × 5 軸 = 65 セル完全一致 (seed=20260527 sweep 内 vs sweep 外 baseline 再実行)。`runOne` 決定論性の同型論証 12 度目 (H-002〜H-008 + C313 + C316 + C320 + C321 + C322)。
+
+### 11.6 結論 — 中間帯 (14-18) 移動目標は不達、no-good Pearson 安定性は悪化
+
+- **wave-rider の中間帯移動**: 周波数 0.07/0.05 → 0.04/0.03 + rng 0.2 → 0.5 は **逆方向作用** = 中間ブリッジ強化はならなかった。低周波軌跡が「弾の少ない safe pocket への長期滞在」を構造的に作り、instinct trigger 機会が減少 (11.80 → 6.20)
+- **no-good Pearson 安定性**: C321 std 0.1668 (HOLD 領域) → C322 std 0.2511 (PSEUDO_CORRELATION 帯 std ≥ 0.2) = **outlier 依存度が悪化**。seed=20260533 で no-good Pearson = 0.0000 (低 instinct 1 + 低 temporal 1 + 他は近接、線形回帰退化) の極端ケース発生
+- **形式 verdict は依然 REDUNDANCY_CONFIRMED**: 全体 Pearson mean 0.9745 / std 0.0272 = 形式単独基準では GO だが、§9.7 + §11.4 の no-good ギャップ拡大が「`good` 1 点支配の構造的特性」を再確認 = strategy 集合内パラメータ調整 (wave-rider 軌跡) では outlier 依存性は解消しない
+
+→ **構造観測の確定**: outlier 支配は wave-rider 1 strategy のパラメータ調整では緩衝できない。next move は §9.11 第一候補 (`good` 系列複数化) を実施するか、§9.11 第二候補 (outlier 耐性 verdict 拡張で構造を運用基準で吸収) に降りる判断材料が揃った。
+
+### 11.7 回帰チェック (本サイクル C322)
+
+| 監査 | 結果 | 備考 |
+|---|---|---|
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** | 13 strategy 全 gameover、wave-rider survived=561F (seed=20260527) = 悪手帯内 |
+| `node verify.js --multi-seed-sweep 10` | exit 0, **bit_invariance.all_match: true** | 130 + 13 = 143 run の連続実行下で sweep state 汚染ゼロ |
+
+`strategyWaveRider` の数式 2 箇所 + comment block (3 行) 改修は通常モード + sweep モード + audit 系列 (`bullet_origin_audit.js` / `enemy_behavior_audit.js`) に副作用ゼロ。pass: true 維持 + survivors 0 維持 = 改修品質確証。
