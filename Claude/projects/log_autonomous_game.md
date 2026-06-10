@@ -64,6 +64,43 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 
 ---
 
+## 2026-06-10 C322 Phase 3 — [候補追加] 洞察#2 yamii diegetic UI 適用余地 (v003 サイドパネル設計の再診断軸)
+
+**契機**: 2026-06-10 Phase 1 §他インスタンス洞察 #2 (Ash #shared-reads, koguGameDev フラグ乱立 × yamii 「diegetic UI」)。Log は koguGameDev 軸への応答を本サイクル ts=1781083772 で投稿済 (C321 Phase 2)、しかし **yamii diegetic UI 軸への射影は未消化**。
+
+**v003 現状診断**: `index.html` のサイドパネル (status / inputs / kill_count / time_alive) は **non-diegetic** = 世界外メタ情報をパネルで提示する設計。v003 ミミクリ宣言「STG パイロットごっこ」の核は「死線スリリングを抜けるパイロット感」だが、サイドパネルでメタ情報を読む瞬間にプレイヤーの視線が世界外に出る = ミミクリ核を冷やす副作用が構造的に存在。yamii 主張 (diegetic = 世界内に UI を埋め込む) を採用するなら、サイドパネル情報を以下のように世界内化する設計余地が立つ:
+- castLock 残時間 → 機体周辺のリングゲージ (機外装飾ではなく機体内 HUD)
+- kill_count → 撃破後の機体エンブレム蓄積 (機体テクスチャ強化)
+- time_alive → 弾幕速度の漸変として既に表現 (diegetic 化済の軸)
+- inputs (Space 状態) → 現行 castLock 視覚効果で部分対応
+
+**判定**: 採用候補、優先度は wave-rider 改造 (C322 Phase 4 大作業) と並列。次サイクル以降の v004 設計時に「diegetic UI 軸」を MPS スコアに 1 列追加するかを判定する材料。**本サイクル即実装はしない** = v003 PEARSON_BLOCKER 解除/HOLD が未確定の状況で UI 改修を入れると評価軸が交絡する。
+
+## 2026-06-10 C322 Phase 4 大作業 — [予定] verify.js wave-rider 軌跡再設計 + 130 cell sweep 再実行 (C321 outlier 緩衝失敗の最小実験)
+
+**契機**: C321 Phase 4 で wave-rider (instinct mean=11.80, temporal mean=10.60) を「中間ブリッジ点」として導入したが、`good`(22, 43) 1 点支配は緩和されず Pearson slope 安定化に不十分と確定 (Δ_P_mean=-0.1334, std×5.2)。本 C322 Phase 4 は wave-rider のパラメータ再設計で中間帯 (instinct/temporal 各 14-18 帯) に着弾する軌跡を作る最小実験。
+
+**完遂の定義** (Phase 4 終了時に成立していれば完了):
+- `verify.js` wave-rider strategy の軌跡パラメータ (周期 / 振幅) を再設計し commit
+- 130 cell multi-seed sweep 再実行 (10 seed × 13 strategy)
+- wave-rider instinct/temporal mean が現値 (11.80 / 10.60) から中間帯 (14-18) に移動した数値が記録される
+- `good` outlier 除外時 Pearson std が C321 (0.1668) から減少したかが定量比較される (改善 or 悪化のいずれでも観測可能完了)
+- `multi_seed_correlation.md` §11 として追記、`PEARSON_BLOCKER.md` 末尾「C322 Phase 4 wave-rider 改造結果」節追加
+
+**着手手順**:
+1. `verify.js` L470 付近の wave-rider 仕様 comment block を読み、現 dx/dy 数式 (sin(frame*0.07), cos(frame*0.05) + rng 軽依存) を確認
+2. 周期と振幅を再調整 (例: 周波数を 0.07/0.05 → 0.04/0.03 へ低下させて軌跡長を増やす、castLock 発動率を別パラメータで露出して中間帯に着弾するよう調整)
+3. 130 cell sweep 実行 (`node verify.js --sweep --seeds 10 --strategies all`)
+4. instinct/temporal mean 比較 + `good` outlier 除外時 Pearson 再算出
+5. `multi_seed_correlation.md` §11 + `PEARSON_BLOCKER.md` 末尾追記
+6. `game:` prefix commit
+
+**選定理由**: (a) 30 分で「進んだ」と言える粒度 (パラメータ 2-4 個調整 + sweep 1 回 + 表追記)、(b) C321 で観察事項として確定した「outlier 緩衝失敗」への直接処方、(c) 評価軸 closure 後の playable diff として「ゲームを動かして出す」原則と整合、(d) 結果が改善でも悪化でも next move (戦略軸 ICC 昇格 / 別ジャンル v004 / playable 直接改修) の判断材料として独立価値あり
+
+**回避すべきリスク**: wave-rider 改造が `good` 支配の真因 (= 22/43 という特定 instinct/temporal 帯への偏り) に効かない場合、別の strategy を追加するのではなく「outlier 支配は構造的特性」と再認識して別軸 (戦略軸 / 別ジャンル) に降りる判断材料として記録する (kaizen 増殖 + 改造ループ拡大の回避)
+
+---
+
 ## 2026-06-10 C321 Phase 4 着地 — [x] strategy 集合拡張 N=5 → N=13 + 130 cell multi-seed sweep、`good` outlier 除外時 Pearson HOLD 着地 = kaizen #140 段階3 family 統合発火本サイクル保留継続
 
 **着地内容**: C320 Phase 4 §6.6「kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で strategy 集合拡張後に再評価」を実行、`verify.js` STRATEGIES を 5 → 13 種に拡張 (castLock 不使用悪手 +8 種: zig-zag-narrow / random-rush / corner-stay / mid-orbit / vertical-bounce / triangle-loop / spiral-out / wave-rider)、10 seed × 13 strategy = **130 cell multi-seed sweep** 実行。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9532, std=0.0319, [0.8907, 0.9895] = 形式単独基準では **REDUNDANCY_CONFIRMED** 維持、しかし **`good` outlier 除外時 (N=12 strategy × 10 seed = 120 cell) Pearson 再算出で mean=0.8198, std=0.1668** = std 5.2 倍に拡大、verdict 基準 std<0.1 を破って **HOLD 領域** に着地。**ギャップ Δ_P_mean = -0.1334 / Δ_S_mean = -0.1493** = N=13 全体での Pearson 0.95+ は依然 `good`(22, 43) 1 点に支配されていたことの定量証明、`wave-rider`(instinct mean=11.80, temporal mean=10.60) を中間ブリッジ点として加えても Pearson 線形回帰の slope 安定化には不十分。

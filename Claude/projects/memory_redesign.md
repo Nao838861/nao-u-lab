@@ -87,6 +87,22 @@ awesome-agent-memory で参照されている **MemReader** は RL ポリシー�
 
 **設計の節度**: 本節も (c) と同様、「言語化止め」。実装は kaizen #141 候補に合流させ、A-MAC 5 因子 gate と MemReader 4 操作を同時に動かす最小 probe (cosine 粗判定 + decision フィールド付与) を 1 ファイル `tools/admission_probe.py` で試作するのが筋。本サイクルは設計図の追加までで止める。
 
+### (g) Forget gate の「検出は動くが action gap」事故型 (2026-06-10 C322 Phase 3 追記、Ash 洞察 #6 由来)
+
+Ash #shared-reads (cycle_staging §0b 37 日遅延) で「内側 stale 検出ゲートの欠落」事案が言語化された。当方 Log 側の本サイクル pre-check では memory_retention_audit が `log/cycle_staging.md retention=cycle days=8.7 cycles≈17.4 ≥ 5.0` WARN を実際に発火している = **検出ゲートは動いている**。両者を並べて見ると、構造的事故型は 2 種ある:
+
+| 事故型 | Ash (#6) | Log (本サイクル) | 当方の現在地 |
+|---|---|---|---|
+| (i) 検出ゲート不在 | §0b は内側 gate 不在で 37 日見落とし、外部摂取 (Phase 1 §6) で偶発検出 | (該当なし) | kaizen #138 で検出機構は物理化済 |
+| (ii) 検出は動くが action gap | (Ash 側でも本質的には同型) | retention WARN は毎サイクル発火、しかし `cycle_staging.md` 自体が active staging で legitimately 更新中 = WARN を無視する判断が固定化 | **action 装置 (退役 or supersedes トリガー) 不在** |
+
+**(ii) の処方箋候補**:
+- WARN を「無視するか退役するか」の 2 値判断を staging Phase 1 §0 で必須化 (1 行返答強制)
+- `cycle_staging.md` 系 active file は `retention: live` (新キー) を frontmatter で持ち、WARN 対象から構造的に外す
+- 退役判断時のみ `memory_retention_audit.py --apply-supersedes` で `supersedes` チェーン物理化
+
+**5 軸成熟度への影響**: (d) 表の Forget 行「未着手」欄に「**action 装置 (検出 → 退役判断 → 退役物理化)** が `memory_retention_audit.py --apply-supersedes` レベルで未着手」を明示すべき。本節は設計図の補強までで止め、実装は次サイクル以降 (kaizen #138 段階4 候補) で着地させる。
+
 ## retrieval 軸 (2026-06-07 Log C308 新設)
 
 本サイクル Phase 2 の triad 発見 (skill/memory/retrieval) で **retrieval 軸が最薄であると言語化された** ことを受け、本プロジェクトの足場として retrieval 軸を独立章として明示する。memory 軸 (本ファイル全体) / skill 軸 ([[CLAUDE]] / [[system_identity]] / `.claude/rules/` 物理化済) に対する 3 軸目で、tasks-aware retrieval 装置はまだ言語化された設計図を持たないため、本章はその出発点を据える役割を担う。
