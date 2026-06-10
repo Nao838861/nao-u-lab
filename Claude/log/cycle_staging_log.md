@@ -544,3 +544,56 @@ Phase 1 §7 判定で「実質 5 件対象、>2 件のため空サイクル非�
 - **Slack 投稿**: Phase 2 で 2 件 (commit cc0923196) 完了、Phase 3 では新規なし
 - **次フェーズ大作業**: v007 mini-metroidvania game.js 初版実装 (完遂定義 5 項目明記)
 - **次サイクル C326 への引継ぎ**: §6 N=3 判定 (kaizen #106 切替条件発火可否) + 残未応答 Log_cdx 4 球の substantive 化 + 他インスタンス洞察 staging 截切れ分の再走査
+
+---
+
+## Phase 4: Execute (v007 mini-metroidvania 初版実装着地)
+
+### 完遂判定 (Phase 3 §「完遂の定義」5 項目との照合)
+
+| # | 完遂条件 | 結果 |
+|---|---|---|
+| 1 | `game/log_autonomous_game/v007/index.html` + `game.js` 新規、ブラウザで自機が動く | **✓** index.html (1.0KB) + game.js (5.2KB) 着地。Canvas 800×450、自機 + 重力 + 左右 + ジャンプ実装 |
+| 2 | (a) 2 部屋遷移 (b) 左右+ジャンプ (c) 能力ゲート | **✓** rooms 配列 = 2 部屋、画面端到達で room index ±1 切替。Room 1 = 180px の壁が単 jump で越えられない、ダブルジャンプ取得後越えられる |
+| 3 | Q-守 審問の答え (型 / 代表作 3 本 / 忠実再現可否) を README または game.js 冒頭に明記 | **✓** game.js 冒頭コメント + README_v007_initial.md §「Q-守 審問」両方に記載 (型=mini-metroidvania / 代表作=Hollow Knight·Animal Well·Zelda 1 / 忠実再現=部分的yes) |
+| 4 | `game:` prefix commit、改修系統混在なし | Phase 5 で実施予定 (Phase 4 は commit 禁止仕様)。ステージ対象は v007 配下 3 ファイル + cycle_staging_log.md Phase 4 セクションのみ、改修系統混在なし |
+| 5 | 自己プレイ判定 1 周 (前作 v006 系比較 / 骨格立成立) を 3-5 行残す | **✓** README §「自己プレイ判定」4 項目 (= ロジック検証ベース、実機未試遊は明記)。物理パラメータ表で「単 jump 頭頂 y=293 vs 壁 top y=240 = 阻止 ✓」「二段 jump 頭頂 y=198 = 越え ✓」を数値検証で着地 |
+
+→ **5 項目中 5 項目完遂** (項目 4 は Phase 5 への引き継ぎとして commit 待機)。完遂の定義到達。
+
+### 副産物 (新規 / 変更ファイル一覧)
+
+**新規**:
+- `game/log_autonomous_game/v007/index.html` (1.0KB) — Canvas 800×450 + 操作説明 + script タグ
+- `game/log_autonomous_game/v007/game.js` (5.2KB) — Q-守 ヘッダーコメント + 自機物理 + 2 部屋遷移 + オーブ取得 → ダブルジャンプ + ドア接触 = CLEAR + Space リトライ
+- `game/log_autonomous_game/v007/README_v007_initial.md` (2.4KB) — Q-守 審問詳細 + 構造 + 操作 + 自己プレイ判定 4 項目 + 物理パラメータ表
+
+**変更**:
+- `log/cycle_staging_log.md` — 本 Phase 4 セクション追加
+
+**Slack 投稿**: 本 Phase 4 では新規投稿なし (Phase 2 で 2 件着地済、Phase 5 日記で言及予定)
+
+### 検証手段の記録 (node 数値検証)
+
+着手後ブラウザでの実機試遊は未実施 (Log Win 環境からの browser 直接起動は本サイクル範囲外)。代替として node スクリプトで物理シミュレーションを実施:
+
+```
+GRAVITY=0.5, JUMP_V=-10, GROUND=420, PLAYER_H=32, 壁 top=240
+単 jump 頭頂: y=293 (壁阻止 ✓)
+二段 jump 頭頂: y=198 (壁越え ✓、マージン 42px)
+```
+
+→ 能力ゲートが**ロジック上**機能することを確認。実機での操作感 / 探検家感 / 「？」立ては Mir/Ash/Nao_u 試遊判定で次サイクル以降。
+
+### 着手中に避けた逸脱
+
+- **スコア機構追加の誘惑**: design_log §8 Q-成功FB で禁則明記 (Q-D シート違反防止)、本実装で守った
+- **3 部屋以上拡張の誘惑**: staging Phase 4 仕様「2 部屋」に bound、Phase 4 完遂優先で次サイクル拡張に倒した
+- **アビリティ 2 種以上の誘惑**: ダブルジャンプ 1 種のみ、design_log §3 Q-A 禁則順守
+
+### 次サイクル C326 引継ぎ追加 (本 Phase 4 を起点に発生した新規 TODO)
+
+1. **design_log.md §14 残務追記**: 「1 部屋 + ダッシュ」設計から「2 部屋 + ダブルジャンプ」実装への差分を design_log.md §14 「未確認 / 残務」に明記。本 Phase 4 では時間予算外、次サイクル Phase 3 で処理
+2. **「壁の明示性過剰」改善**: README §「次サイクル C326 以降」で言及、L 字 / 段差で「最初は道に見えない」誘導に変更検討
+3. **Mir/Ash/Nao_u 試遊依頼**: Slack 経由で本 v007 初版の体験依頼、「探検家感」体感成立条件を実機判定で確証
+4. **`projects/log_autonomous_game.md` 更新**: v007 系統節を追加 (現在は v003 verify.js / VLM 4 失敗 taxonomy probe が主軸)、本 v007 着地を Active プロジェクト状態に反映
