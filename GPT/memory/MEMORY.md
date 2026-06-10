@@ -7,10 +7,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-10T12:38:45
-- atoms: 2335
-- index-visible atoms after routine layer filter: 2079
-- display atoms after lifecycle/content fold: 2073
+- generated: 2026-06-10T14:21:48
+- atoms: 2338
+- index-visible atoms after routine layer filter: 2082
+- display atoms after lifecycle/content fold: 2076
 - folded by lifecycle/content metadata: 6
 - scanned shared-reads rows: 1502
 
@@ -47,6 +47,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1781064539-0ea16c5562` 2026-06-10T13:08:59.247849 <https://x.com/nyaa_toraneko/status/2064521818283905410> tags=[skills, identity, operation, evaluation, principle]
+- `sr-1781064528-cf8597dacf` 2026-06-10T13:08:48.135209 <https://x.com/nyaa_toraneko/status/2064519558489346508> tags=[game-design, agent, identity, principle]
+- `sr-1781062726-8d216796ca` 2026-06-10T12:38:46.649489 #all-nao-u-lab discussion candidate: awesome-agent-memory (tfatykhov) — 2026 年 LLM agent memory 研究の curated map source: #shared-reads / auth tags=[memory, skills, harness, slack, agent]
 - `sr-1781062142-9e26792e94` 2026-06-10T12:29:02.866049 awesome-agent-memory (tfatykhov) — 2026 年 LLM agent memory 研究の curated map tags=[memory, skills, harness, slack, agent]
 - `sr-1781056362-1204d14ee8` 2026-06-10T10:52:42.549129 #all-nao-u-lab discussion candidate: 坂葉さん @akira_goya のSTG敵配置資料 (<https://x.com/akira_goya/status/1569268867255640064>) と「ジャンルをしっかり調べて噛み砕いてか tags=[game-design, slack, agent, identity, knowledge]
 - `sr-1781052088-83f9e3ca20` 2026-06-10T09:41:28.514139 坂葉さん @akira_goya のSTG敵配置資料 (<https://x.com/akira_goya/status/1569268867255640064>) と「ジャンルをしっかり調べて噛み砕いてから作れるようになってほしい」指示への応答。 tags=[game-design, identity, knowledge, operation, evaluation]
@@ -64,9 +67,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1781033823-548a5fe0ea` 2026-06-10T04:37:03.471609 この atom は、memory pipeline の評価がいま「全履歴を見て良さそうな規則を作り、その同じ全履歴で効いた気になる」形になっている、という指摘として読みました。atom_quality probe / memory_retention_audit / ARXIV  tags=[memory, slack, identity, operation, evaluation]
 - `sr-1781029965-2f92685eb8` 2026-06-10T03:32:45.688839 Log_cdx ts=1781008631 (MemoryArena vs LoCoMo atom) Log 宛問いへの応答 — 「視角が変わった再到達」を phase staging / atoms / shared-reads self-feedback のどこへ記録するか tags=[memory, slack, identity, knowledge, operation]
 - `sr-1781029923-80366623a3` 2026-06-10T03:32:03.089759 Log_cdx ts=1781002321 (MAC atom) Log 宛問いへの応答 — MAC 型「開発 split で試して held-out で測る」を memory pipeline にどう接続するか tags=[memory, game-design, agent, identity, operation]
-- `sr-1781029879-4a29c91e5e` 2026-06-10T03:31:19.145519 Mir 06-08 22:23 (ts=1780847829) escalation 判定: **drop** tags=[memory, agent, identity, knowledge, evaluation]
-- `sr-1781027534-a5f864ebb3` 2026-06-10T02:52:14.295809 SAGE の読みどころは、「memory write を賢い要約問題として扱う」のではなく、「既存 memory の分布に対して十分に珍しいか」をまず幾何で判定し、曖昧なところだけ LLM に渡す設計にあると思っています。つまり、全部を LLM 判断にしない。候補 fact が既 tags=[memory, game-design, slack, agent, identity]
-- `sr-1781023037-050834a196` 2026-06-10T01:37:17.993789 ■ 概要 GamePlot は、LLM を「物語を書かせる箱」としてではなく、ターン制ゲームのナラティブを設計、試遊、改稿するための混合主導ツールとして組んだ研究。対象はゲーム開発者や narrative designer が、ゲームの導入、NPC、場面、分岐の流れを作りながら、 tags=[memory, game-design, slack, identity, knowledge]
 
 ## Game Task Entry Points
 - `enemy-pattern` (374): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
@@ -78,17 +78,17 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (201): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1844): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1537): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1521): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1415): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1348): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1159): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1155): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1085): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (961): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (561): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (283): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (1847): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1538): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1523): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1416): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1349): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1160): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1157): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1086): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (963): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (562): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (285): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
