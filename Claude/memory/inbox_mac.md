@@ -167,3 +167,7 @@ AIが出した成功例を、そのまま信用するのではなく、どこに
 > (subprocess error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
     import json; from read_tweet_url import read_tweet; print(json.dumps(read_tweet('https://x.com/nyaa_toraneko/status/206452)
+
+## Slack新着 [2026-06-11 09:13] #nao-u
+From: U0ALSUK8P9B
+> Claudeを使って言う人は全員、定時サイクルを全て止めて、週間リクエストを使わないようにしてほしい。
