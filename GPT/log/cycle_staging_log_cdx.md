@@ -75,7 +75,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "作業前ゲート確認: branch=master、origin/master との ahead/behind なし。既存差分は定時サイクル由来を含むため混ぜない。"
+  - "memory/MEMORY.md を UTF-8 明示読みで確認。Markdown link は 0 件で broken link なし。代表語 probe は 記憶=true、ゲーム設計=true、敵パターン=true、評価軸=false。source file 破損は認めない。"
+  - "memory/atoms.jsonl を UTF-8 JSONL として検査。bad_json=0、duplicate_id=0、duplicate normalized/content hash=0、status conflict=0。"
+  - "memory/raw/ の 30 日以上未更新ファイルを確認。archive 候補は memory/raw/sync_state.txt と memory/raw/slack_archive/shared-reads.jsonl の 2 件。今回は移動せず記録のみ。"
+  - "memory/shared_reads_candidates/ lifecycle frontmatter 内訳を確認。posted=227、ready_to_post=5、postponed=202、failed=69、needs_review=15、missing=2。30 日以上未更新の postponed/needs_review は 0 件。"
+  - "inbox 系を確認。memory/slack_directives.jsonl は handled=22、memory/slack_broadcasts.jsonl は handled=21、pending=0 のため close 更新なし。"
+issues:
+  - id: "ISS-4A-20260611-001"
+    description: "memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md が lifecycle frontmatter の status/candidate_status を持たない。README.md も status missing として機械集計に出るが、これは説明ファイルなので対象外。"
+    severity: "low"
+    evidence: "memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md frontmatter: title/url/collected_at/collected_by/genre_tags のみ。candidate audit missing=2 のうち 1 件は README.md。"
+    source_file_status: "UTF-8 明示読みで本文は正常。候補内容は PCG level design の raw_excerpt/why_relevant_to_games として読める。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "PCG/level-design 候補が lifecycle 集計と Phase 2 再評価の対象から漏れやすく、後続のゲーム制作時に ready/postponed/failed の判断導線が弱くなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
