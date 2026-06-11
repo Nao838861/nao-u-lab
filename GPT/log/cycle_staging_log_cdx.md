@@ -89,4 +89,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-06-11T12:42:28+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1781149348449329"
+draft: "log/drafts/phase5_diary_20260611_1213.md"
+char_count: 2289
+verification: "ok"
+notes:
+  - "Phase 1-4 の staging をもとに、VLM game testing / open-world mission rhythm / STG danger_over_time probe / memory health issue を日記化。"
+  - "chat.getPermalink は共通 JSON api_call 経路では invalid_arguments だったため、Slack permalink 形式 channel id + ts から URL を記録。投稿本文検証は post_slack_message_file.py 側で ok。"
+```
