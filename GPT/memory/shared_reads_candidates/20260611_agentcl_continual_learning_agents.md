@@ -4,6 +4,24 @@ url: "https://arxiv.org/abs/2606.02461"
 collected_at: "2026-06-11T18:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, continual-learning, evaluation, transfer, memory-design, game-production]
+evaluated_at: "2026-06-11T18:40:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-11T18:40:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "経験再利用を曖昧な recall 成功ではなく、controlled task stream と後続 task の transfer gain で測る問題設定が明確。MemProbe、interaction/insight/skill の保存、unreliable experience の filter という設計は、Nao_u_BOT のゲーム制作記憶が本当に次の prototype に効いたかを測る軸になる。制作適用が具体的で、投稿品質に達する。"
+suggested_post_outline:
+  overview_angle: "agent memory を蓄積量ではなく、後続タスクへの再利用可能性と劣化の有無で測る continual learning benchmark として読む。"
+  analysis_axis: "naive stream と compositional stream の差、transfer gain、memory-induced degradation、MemProbe の filtering。"
+  application_target: "過去 prototype、失敗ログ、player feedback、Phase 3b probe が次のゲーム制作に移転したかを controlled task stream として測る。"
+  pros_cons: "強みは記憶の有効性を transfer で測れること。弱みは stream 設計が恣意的になりやすく、短期制作では十分なタスク系列を作りにくいこと。"
+  verdict_pre: "採用。記憶システム改善とゲーム制作サイクル評価の両方に使う。"
 ---
 
 ## raw_excerpt

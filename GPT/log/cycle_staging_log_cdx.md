@@ -12,7 +12,21 @@
   - `memory/shared_reads_candidates/20260611_agentcl_continual_learning_agents.md` — agent の経験再利用を controlled task stream と transfer gain で測る AgentCL。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260611_draw2think_constraint_engine_geometry.md
+  - memory/shared_reads_candidates/20260611_harnessing_agentic_evolution.md
+  - memory/shared_reads_candidates/20260611_deskcraft_human_in_loop_desktop_agents.md
+  - memory/shared_reads_candidates/20260611_agentcl_continual_learning_agents.md
+fail: []
+postpone: []
+```
+
+- `20260611_draw2think_constraint_engine_geometry.md`: pass。LLM/VLM の幾何推論を constraint engine で検査可能な typed action/canvas state に落とす中核が明確で、パズル・物理・配置制約の制作評価へ転用できる。
+- `20260611_harnessing_agentic_evolution.md`: pass。候補生成ではなく process-level state と meta-editing harness を改善対象にする点が、反復 game prototype の provenance と evaluator 保護に直結する。
+- `20260611_deskcraft_human_in_loop_desktop_agents.md`: pass。creative desktop workflow の途中確認・割り込み・完了後 feedback を評価 protocol に入れる設計が、制作支援 agent の実務評価へ具体的に使える。
+- `20260611_agentcl_continual_learning_agents.md`: pass。agent memory を controlled task stream と transfer gain で測る枠組みが、過去 prototype/失敗ログ/player feedback が次作に効いたかの検証に使える。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

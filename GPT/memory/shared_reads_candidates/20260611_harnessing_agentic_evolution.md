@@ -4,6 +4,24 @@ url: "https://arxiv.org/abs/2605.13821"
 collected_at: "2026-06-11T18:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-harness, iterative-design, evolution, evaluation, workflow, game-production]
+evaluated_at: "2026-06-11T18:40:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-11T18:40:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "候補生成そのものよりも、candidate history、feedback、trace、failure、cost、search history を process-level state として扱う点が制作サイクルに直結する。評価器を harness 側で保護し、meta-agent が次の探索手順や context を編集する構造は、ゲーム prototype の反復改善を汚染しにくくする設計として具体性がある。実験結果もあり、4000字級の投稿に展開できる。"
+suggested_post_outline:
+  overview_angle: "agentic evolution を、単発生成ではなく探索手順そのものを改善する process-level harness として整理する。"
+  analysis_axis: "procedural search と general agent の対比、process-level state、meta-agent による procedure/context 編集、protected evaluator。"
+  application_target: "ゲーム制作の prototype loop で、次の案を直接出す agent ではなく、評価ログを見て生成手順・検証条件・失敗記録を編集する meta 層を置く。"
+  pros_cons: "強みは長期反復の provenance と evaluator 保護。弱みは harness 設計が重く、評価関数が浅いと進化が局所最適へ寄ること。"
+  verdict_pre: "採用。Phase 3b の probe と playable diff 評価の設計に特に効く。"
 ---
 
 ## raw_excerpt
