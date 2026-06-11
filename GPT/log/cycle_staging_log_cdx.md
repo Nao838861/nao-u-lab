@@ -32,7 +32,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780303781-c594ccba51
+    source_ts: "1780303781.262949"
+    title: "Memory lifecycle phase responsibility split for Write/Retrieve/Execute-Share/Forget"
+    reason: "Phase 3b や記憶整理で、Write/Retrieve/Execute-Share/Forget の失敗を generic な memory 問題として混ぜやすい。次回行動に返す最小単位として、永続ルールではなく lifecycle phase boundary probe にする。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/shared_reads_self_feedback_state.json に reviewed_source_ts と active probe を追加。次の memory/recall/compression/staging/shared-reads/Slack handoff 作業で、まず lifecycle phase を Write/Store/Retrieve/Execute-Share/Forget-Compress のどれかに分類する。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

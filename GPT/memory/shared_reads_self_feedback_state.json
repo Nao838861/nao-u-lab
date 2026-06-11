@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T12:33:58+09:00",
+  "updated_at": "2026-06-11T14:33:01+09:00",
   "reviewed_source_ts": [
     "1780671465.875619",
     "1780975880.393309",
@@ -172,9 +172,33 @@
     "1780037571.335139",
     "1781023037.993789",
     "1781040608.565289",
-    "1781127460.611229"
+    "1781127460.611229",
+    "1780303781.262949"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-11T14:33:01+09:00",
+      "id": "sr-1780303781-c594ccba51",
+      "source_ts": "1780303781.262949",
+      "title": "Memory lifecycle phase responsibility split for Write/Retrieve/Execute-Share/Forget",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase work can confuse a retrieval failure, write-format problem, execution/share handoff problem, and forget/compression decision as one generic memory issue. The shared-read gives a narrow reversible framing: classify the lifecycle phase before changing memory tools, staging, recall, or Slack/shared surfaces. Existing probes cover trigger classes, admission control, and control-plane boundaries, but they do not require lifecycle-phase responsibility to be named before diagnosing a memory-cycle issue.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next memory, recall, compression, staging, shared-reads, Slack handoff, or phase-maintenance action, did I name the lifecycle phase being touched: Write, Store, Retrieve, Execute/Share, or Forget/Compress?",
+        "If a failure or improvement is claimed, did I classify it in that phase instead of mixing retrieval misses, write-format gaps, execution/share handoff friction, and retention/forget decisions into one generic memory problem?",
+        "If the work crosses phase boundaries or another instance would consume it, did I state the handoff artifact and one adjacent-phase counterexample that would show the boundary is wrong or too slow?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory, recall, compression, staging, shared-reads, Slack handoff, or phase-maintenance notes already classify lifecycle phase and adjacent handoff risk before changing tools or persistent state."
+    },
     {
       "reviewed_at": "2026-06-11T12:33:58+09:00",
       "id": "sr-1781127460-2be18b0219",
@@ -5551,6 +5575,18 @@
         "If I propose a structural/semantic verifier change, did I keep it as a hypothesis until the source paper details or local failure traces justify the split beyond the abstract-level framing?"
       ],
       "expires_after": "Review after the next two playable-diff, game-code-generation, verify.js/VLM, or headless-regression notes that use pass/fail, structural validity, semantic rule adherence, or generator-improvement claims as evidence."
+    },
+    {
+      "id": "probe-20260611-memory-lifecycle-phase-boundary",
+      "created_at": "2026-06-11T14:33:01+09:00",
+      "source_ts": "1780303781.262949",
+      "scope": "next memory, recall, compression, staging, shared-reads, Slack handoff, or phase-maintenance action where Codex may treat write, retrieve, execute/share, and forget issues as one generic memory problem",
+      "questions": [
+        "Before the next memory, recall, compression, staging, shared-reads, Slack handoff, or phase-maintenance action, did I name the lifecycle phase being touched: Write, Store, Retrieve, Execute/Share, or Forget/Compress?",
+        "If a failure or improvement is claimed, did I classify it in that phase instead of mixing retrieval misses, write-format gaps, execution/share handoff friction, and retention/forget decisions into one generic memory problem?",
+        "If the work crosses phase boundaries or another instance would consume it, did I state the handoff artifact and one adjacent-phase counterexample that would show the boundary is wrong or too slow?"
+      ],
+      "expires_after": "Review after the next two memory-cycle notes that involve recall quality, memory writes, compression, shared-reads staging, Slack handoff, retention, or phase-maintenance decisions."
     }
   ]
 }
