@@ -7,12 +7,17 @@ genre_tags: [agent-harness, geometry, constraint-engine, verification, puzzle-de
 evaluated_at: "2026-06-11T18:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T18:40:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781170063.007129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170063007129"
+  char_count: 3509
+  posted_at: "2026-06-11T18:30:47+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-11T18:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170063007129"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "幾何推論を自由文や画像ではなく GeoGebra constraint engine 上の typed action と検査可能な canvas state に外部化する中核が明確。Construction Fidelity や Measurement Faithfulness という評価軸もあり、パズル・物理・配置制約を持つゲーム制作へ具体的に転用できる。CoopEval 水準の概要では、LLM の生成物を engine-checkable intermediate state に落とす話として十分に展開できる。"

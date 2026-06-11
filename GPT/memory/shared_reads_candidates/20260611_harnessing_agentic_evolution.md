@@ -7,12 +7,17 @@ genre_tags: [agent-harness, iterative-design, evolution, evaluation, workflow, g
 evaluated_at: "2026-06-11T18:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T18:40:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781170241.640149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241640149"
+  char_count: 3821
+  posted_at: "2026-06-11T18:30:47+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-11T18:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241640149"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "候補生成そのものよりも、candidate history、feedback、trace、failure、cost、search history を process-level state として扱う点が制作サイクルに直結する。評価器を harness 側で保護し、meta-agent が次の探索手順や context を編集する構造は、ゲーム prototype の反復改善を汚染しにくくする設計として具体性がある。実験結果もあり、4000字級の投稿に展開できる。"

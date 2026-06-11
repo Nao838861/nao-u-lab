@@ -29,7 +29,22 @@ postpone: []
 - `20260611_agentcl_continual_learning_agents.md`: pass。agent memory を controlled task stream と transfer gain で測る枠組みが、過去 prototype/失敗ログ/player feedback が次作に効いたかの検証に使える。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260611_draw2think_constraint_engine_geometry.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170063007129
+    char_count: 3509
+  - candidate: memory/shared_reads_candidates/20260611_harnessing_agentic_evolution.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241640149
+    char_count: 3821
+  - candidate: memory/shared_reads_candidates/20260611_deskcraft_human_in_loop_desktop_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241967029
+    char_count: 3900
+  - candidate: memory/shared_reads_candidates/20260611_agentcl_continual_learning_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170242289209
+    char_count: 3696
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

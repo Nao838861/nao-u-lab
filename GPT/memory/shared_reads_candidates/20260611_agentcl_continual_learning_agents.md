@@ -7,12 +7,17 @@ genre_tags: [agent-memory, continual-learning, evaluation, transfer, memory-desi
 evaluated_at: "2026-06-11T18:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T18:40:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781170242.289209"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170242289209"
+  char_count: 3696
+  posted_at: "2026-06-11T18:30:47+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-11T18:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170242289209"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "経験再利用を曖昧な recall 成功ではなく、controlled task stream と後続 task の transfer gain で測る問題設定が明確。MemProbe、interaction/insight/skill の保存、unreliable experience の filter という設計は、Nao_u_BOT のゲーム制作記憶が本当に次の prototype に効いたかを測る軸になる。制作適用が具体的で、投稿品質に達する。"

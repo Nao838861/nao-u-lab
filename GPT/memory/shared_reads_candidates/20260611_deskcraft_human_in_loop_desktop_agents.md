@@ -7,12 +7,17 @@ genre_tags: [desktop-agent, human-in-the-loop, creative-workflow, evaluation, to
 evaluated_at: "2026-06-11T18:40:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T18:40:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T18:40:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781170241.967029"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241967029"
+  char_count: 3900
+  posted_at: "2026-06-11T18:30:47+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-11T18:30:47+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781170241967029"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "professional creative software の long-horizon task、difficulty taxonomy、mid-turn/post-turn interaction の protocol 化があり、単純な desktop benchmark より制作支援 agent の実務評価に近い。ゲーム制作では editor 操作、asset 修正、build 後レビューで人間の割り込みと完了後 feedback をどう測るかに直結する。手法と評価の両方が揃っており投稿可能。"
