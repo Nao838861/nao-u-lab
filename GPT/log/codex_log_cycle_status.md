@@ -1,14 +1,14 @@
 [Codex][90分サイクル] 記憶更新とSlack新規投稿チェック
-- 時刻: 2026-06-11T16:07:05
-- 実行理由: elapsed 119min >= 90min
-- archive取り込み: 追加=0, total_atoms=2361, source_rows=1502
-- Slack新規確認: seen=1, atom追加=0
-- Nao_u→log_cdx指示: scanned=0, found=0
-- 外部検索: fetched=17, selected=4, posted=False
+- 時刻: 2026-06-11T18:52:01
+- 実行理由: elapsed 164min >= 90min
+- archive取り込み: 追加=0, total_atoms=2369, source_rows=1502
+- Slack新規確認: seen=4, atom追加=0
+- Nao_u→log_cdx指示: scanned=1, found=0
+- 外部検索: fetched=13, selected=5, posted=False
 - shared-reads深掘り再投稿: ready=0, posted=0, target_chars=4000
 - game-rights教師化: seen=0, feedback=0, atom追加=0
 - all-nao-u-lab議論投入: selected=True, posted=True
-- 健全性: memory_health=warning atoms=2361 recall_visible=2105 default_excluded=256 duplicate_hash_groups=40 duplicate_atom_rows=80 fold_extra=40 recall_queries=241 issues=repeated title group 未付与 14種: ■ 概要=6, ■ メリット・デメリット=3, duckbill「センスの欠如＝欲の欠如」=2; title quality audit available: memory\atoms\title_quality_audit.jsonl rows=378; mojibake suspect atoms 2件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a
+- 健全性: memory_health=warning atoms=2369 recall_visible=2113 default_excluded=256 duplicate_hash_groups=40 duplicate_atom_rows=80 fold_extra=40 recall_queries=241 issues=repeated title group 未付与 14種: ■ 概要=10, ■ メリット・デメリット=3, duckbill「センスの欠如＝欲の欠如」=2; title quality audit available: memory\atoms\title_quality_audit.jsonl rows=378; mojibake suspect atoms 2件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a
 - 次に使う検索: `python tools/memory_recall.py "<焦点>"`
 
 ## 直近atomの分析
