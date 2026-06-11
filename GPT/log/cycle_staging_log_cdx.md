@@ -85,7 +85,58 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-06-12T03:05+09:00"
+selected_issues:
+  - ISS-4A-001
+skipped_priority_issues: []
+items:
+  - issue_id: ISS-4A-001
+    problem_restatement: "atoms の id や JSONL 構文は壊れていないが、title+trigger+excerpt が完全一致する再投稿・補正版が 40 グループ残っている。現行 fold は lifecycle metadata と normalized_content_hash が中心で、links などの差分を含むため、本文が同じ atom を recall 表示から十分に畳めない場合がある。"
+    alternatives:
+      - name: "案A: 現行 fold の閾値を緩める"
+        sketch: "memory_lifecycle.normalized_content() から links を外し、title+trigger+excerpt だけを content hash にする。既存 recall と MEMORY.md の fold 件数が即座に変わる。"
+        pros:
+          - "実装箇所が少なく、recall への効き方が直接的。"
+          - "duplicate_groups / overlay の追加概念を増やさずに済む。"
+        cons:
+          - "links の違いが意味を持つ atom まで同一視する可能性がある。"
+          - "既存 normalized_content_hash の意味が変わり、過去ログや sidecar の比較がしにくくなる。"
+          - "Phase D 前の dual-read 状態で影響範囲が広い。"
+        migration_cost: medium
+      - name: "案B: secondary duplicate key を sidecar/overlay に追加する"
+        sketch: "既存の duplicate_groups.jsonl / canonical_overlay.jsonl の枠に、normalized_content_hash とは別理由として title_trigger_excerpt_exact を追加する。atom 本体は書き換えず、canonical view と health 表示だけがこの補助 key を参照する。"
+        pros:
+          - "非破壊で、失敗時は sidecar を再生成または無視すれば戻せる。"
+          - "既存の canonical_overlay 設計と合い、raw view の provenance を保持できる。"
+          - "reason 別に件数を出せるため、リンク差分を畳んだ影響を監査しやすい。"
+        cons:
+          - "overlay を読む経路以外には即効しない。"
+          - "duplicate key が 2 種類になり、README と health 出力の説明更新が必要。"
+          - "canonical_id 選定規則を reason ごとに明示しないと後続が迷う。"
+        migration_cost: low
+      - name: "案C: atom lifecycle fields を backfill する"
+        sketch: "該当 40 グループの canonical_id / superseded_by / duplicate_reason を atoms.jsonl と per-file .md に書き戻す。現行 lifecycle fold に乗せる。"
+        pros:
+          - "recall、MEMORY.md、per-file 表示の全経路で同じ canonical 情報を使える。"
+          - "明示 metadata なので後から人間が Obsidian 上でも追いやすい。"
+        cons:
+          - "多数の atom 本体を書き換えるため diff が大きい。"
+          - "誤判定時の巻き戻しが sidecar より重い。"
+          - "atoms.jsonl retire 前の dual-write 整合確認が増える。"
+        migration_cost: high
+    recommended: "案B: secondary duplicate key を sidecar/overlay に追加する"
+    recommended_reason: "今回の問題は source 破損ではなく表示・recall の重複なので、atom 本体を書き換える必要はまだない。既存の duplicate_groups / canonical_overlay は非破壊 sidecar として設計済みで、そこに reason=title_trigger_excerpt_exact を足すのが現状から最短距離。失敗しても sidecar 再生成で戻せ、Phase D 前の dual-read/dual-write 状態にも干渉しにくい。"
+    decision: introduce
+    decision_reason: "Phase 4a の priority は recall 枠が同一内容で埋まること。案Bなら canonical view と health の改善を小さく導入でき、案Aの hash 意味変更や案Cの本体 backfill より失敗時のコストが低い。"
+    outline_for_4c:
+      - "tools/build_atom_duplicate_groups.py の設計を拡張し、normalized_content_hash に加えて title+trigger+excerpt の正規化完全一致グループを検出する。"
+      - "canonical_overlay.jsonl に reason=title_trigger_excerpt_exact の group を出す。ただし normalized_content_hash group と重なる場合は既存 group を優先して二重 fold を避ける。"
+      - "canonical_id は provenance anchor として最古 source_ts、preferred_id は確認入口として最新 source_ts を維持する。"
+      - "memory/atoms/README.md に secondary duplicate key の意味、非破壊 sidecar であること、raw view では全 atom が残ることを追記する。"
+      - "memory_health または Phase 4a の確認項目で reason 別 duplicate group 件数を出せるようにする。"
+      - "導入後は memory_recall の代表表示で folded_count / folded_ids / overlay_reason が確認できる smoke test を行う。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
