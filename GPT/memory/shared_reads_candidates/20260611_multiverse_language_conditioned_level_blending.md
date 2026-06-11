@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2603.26782"
 collected_at: "2026-06-11T20:14:21+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, level-design, text-to-level, mixed-initiative]
+evaluated_at: "2026-06-11T20:18:55+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-11T20:18:55+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-11T20:18:55+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "cross-game level blending と shared representation は PCG/mixed-initiative 制作に直結するが、現 candidate は latent interpolation と contrastive supervision の概要止まり。既存の同名候補も postponed で、今回の材料だけでは評価設計、データ表現、失敗例、実制作での制約指定の厚みが足りない。投稿候補に戻すには論文本文から実験条件と blend quality の解釈を補う。"
 ---
 
 ## raw_excerpt
