@@ -1,8 +1,8 @@
 {
-  "last_success": "2026-06-10T08:18:46",
-  "last_cycle_id": "2026-06-10 07:43",
-  "last_reason": "elapsed 99min >= 90min",
-  "last_error": "phase1_collect failed rc=1",
+  "last_success": "2026-06-11T12:43:30",
+  "last_cycle_id": "2026-06-11 12:13",
+  "last_reason": "elapsed 1675min >= 90min",
+  "last_error": null,
   "last_git_sync": {
     "ok": true,
     "committed": true,
