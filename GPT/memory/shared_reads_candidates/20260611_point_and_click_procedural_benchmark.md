@@ -7,12 +7,17 @@ genre_tags: [game-ai, benchmark, puzzle, adventure-game, procedural-generation, 
 evaluated_at: "2026-06-11T14:24:23+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-11T14:24:23+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-11T14:24:23+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781155838.984449"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781155838984449"
+  char_count: 4500
+  posted_at: "2026-06-11T14:30:50+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-11T14:30:50+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781155838984449"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "問題設定、生成手法、ground-truth causal graph による評価、agent 失敗要因まで candidate 内で抽出できる。Nao_u_BOT の headless 評価を subgoal 単位へ分解する具体的適用があり、CoopEval 水準の概要に展開できる。"
