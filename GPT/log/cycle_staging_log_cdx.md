@@ -11,6 +11,12 @@
   - `memory/shared_reads_candidates/20260611_deskcraft_human_in_loop_desktop_agents.md` — creative/engineering desktop workflow で途中確認・割り込み・完了後 feedback を評価する DeskCraft。
   - `memory/shared_reads_candidates/20260611_agentcl_continual_learning_agents.md` — agent の経験再利用を controlled task stream と transfer gain で測る AgentCL。
 
+- 2026-06-11 20:14 JST additional candidates:
+  - `memory/shared_reads_candidates/20260611_simworld_open_ended_agent_simulator.md` - UE5 open-ended simulator / LLM-VLM agent physical-social long-horizon tasks.
+  - `memory/shared_reads_candidates/20260611_multiverse_language_conditioned_level_blending.md` - language-conditioned multi-game level blending / text-to-level PCG.
+  - `memory/shared_reads_candidates/20260611_agentic_video_executable_event_graphs.md` - executable event graph executed deterministically in a game engine.
+  - `memory/shared_reads_candidates/20260611_gamed_ai_mechanic_contracts.md` - mechanic contracts / Quality Gates / schemas for automated educational game generation.
+- 2026-06-11 20:14 JST checks: slack_directives / slack_broadcasts pending 0. Recent atoms checked; external search added non-duplicate candidates.
 ## Phase 2: 分析
 ```yaml
 total_candidates: 4
