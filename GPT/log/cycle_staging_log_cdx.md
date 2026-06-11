@@ -61,7 +61,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: master...origin/master で ahead/behind なしを確認。開始時の既存差分はログ/state/退避ディレクトリ中心で Phase 4a 対象外として保持。"
+  - "memory/MEMORY.md: validate_memory_index.py は OK。UTF-8 明示読みで代表語 probe `記憶` `ゲーム設計` `敵パターン` `評価軸` を取得できた。source 本文の再生成・手修復は不要。"
+  - "memory/atoms.jsonl: memory_health.py --json を実行。atoms=2360、recall_visible_after_lifecycle_fold=2098、recall_visible normalized duplicate は 3 groups / 6 rows。lifecycle/content fold 済みで致命的重複なし。"
+  - "memory/raw/: 30 日超の LastWriteTime は memory/raw/slack_archive/shared-reads.jsonl と memory/raw/sync_state.txt のみ。shared-reads.jsonl は archive_last_run=2026-06-11T12:21:14 の現用 raw、sync_state.txt は同期状態であり今回 archive 対象にしない。"
+  - "memory/shared_reads_candidates/: lifecycle status 内訳は posted=224、ready_to_post=5、postponed=196、failed=68、needs_review=15。LastWriteTime 30 日超の candidate は 0 件のため降格・明示保持・Phase 2 再評価指定は今回なし。"
+  - "inbox: directives pending=0、broadcast pending=1 を確認。broadcast-1781136799-ee2ee7c797 は operations 指示であり、本 Phase 4a では実装せず、staging 証跡として別対応へ割り振る。"
+issues:
+  - id: ISS-001
+    description: "memory_health.py が mojibake suspect atoms 2 件を検出。このうち sr-1776127289-4d9239b255 は per-file atom の title / heading / Use when / excerpt に U+FFFD を含み、`AIエージェント` が `AIエ��ジェント` として保存されている。gr-1777083728-44d444ab7a は UTF-8 明示読みの先頭確認と mojibake pattern probe では表示上の破損を再現せず、現時点では detector 側の過検知扱い。"
+    severity: low
+    evidence: "memory_health.py --json warnings; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+    source_file_status: "UTF-8 読みは成功。sr-1776127289-4d9239b255 は source file 自体に U+FFFD が保存済み。gr-1777083728-44d444ab7a は代表範囲では source 破損を確認できず。memory/MEMORY.md は代表語 probe 成功。"
+    display_or_tooling_status: "PowerShell / rg 表示経路では日本語本文を取得可能。今回の issue は MEMORY.md 表示文字化けではなく、特定 atom の保存済み replacement char。"
+    why_blocks_game_memory: "該当 sr atom は記憶アーキテクチャ系でゲーム制作直結ではないが、`AIエージェント` のような基本語の検索一致を落とし、将来の memory-routing / skill 化判断で関連事例が漏れる可能性がある。単発のデータ修復問題であり、階層設計を止めるほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
