@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2603.18398"
 collected_at: "2026-06-11T12:15:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mission-design, open-world, pacing, analysis-tool]
+evaluated_at: "2026-06-11T12:30:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-11T12:30:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-11T12:30:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: |-
+  MAQV と action block grammar により、問題設定・中核手法・corpus 規模・mixed-methods evaluation・結論が揃っている。
+  Open-world 専用に見えるが、短い prototype の移動、戦闘、休止、報酬、会話を block 列として可視化し、pacing / variation を点検する用途へ転用できる。
+suggested_post_outline:
+  overview_angle: "mission を物語要約ではなく action block と品質ベクトルの列として読む方法として概要化する。"
+  analysis_axis: "MAQV の 6 次元、walkthrough text から action sequence への変換、dashboard を reflection probe として使う点を軸にする。"
+  application_target: "STG や小規模 prototype の encounter sequence、peak-valley rhythm、報酬配置、verb set の偏り診断。"
+  pros_cons: "構造の偏りを見つけやすい一方、objective quality score として使うと作品固有の狙いを潰す。"
+  verdict_pre: "部分採用。評価点ではなく、制作後レビュー用の可視化 probe として使う。"
 ---
 
 ## raw_excerpt
