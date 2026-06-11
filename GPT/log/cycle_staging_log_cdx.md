@@ -34,7 +34,31 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781127460-2be18b0219
+    source_ts: "1781127460.611229"
+    title: "Difficulty Curve-Based Procedural Generation of Scrolling Shooter Enemy Formations"
+    reason: "STG enemy placement / verify.js-style balance checks can collapse into a single pass/fail or subjective difficulty claim. This shared-read gives a narrow next-action probe: separate intended difficulty curve source from observed danger_over_time before claiming a wave or formation is balanced."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a reversible STG difficulty-curve / danger-over-time probe to shared_reads_self_feedback_state.json. No permanent rule added."
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

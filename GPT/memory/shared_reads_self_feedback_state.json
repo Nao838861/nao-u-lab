@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-10T08:04:29+09:00",
+  "updated_at": "2026-06-11T12:33:58+09:00",
   "reviewed_source_ts": [
     "1780671465.875619",
     "1780975880.393309",
@@ -171,9 +171,33 @@
     "1781015897.493199",
     "1780037571.335139",
     "1781023037.993789",
-    "1781040608.565289"
+    "1781040608.565289",
+    "1781127460.611229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-11T12:33:58+09:00",
+      "id": "sr-1781127460-2be18b0219",
+      "source_ts": "1781127460.611229",
+      "title": "Difficulty Curve-Based Procedural Generation of Scrolling Shooter Enemy Formations",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because STG enemy placement and verify.js-style checks can reduce balance to a single pass/fail or a hand-waved difficulty feeling, while the shared-read gives a narrow reversible framing: compare an intended difficulty curve with observed danger_over_time, then keep player fun/readiness outside that proxy. Existing DDA and local/global probes cover proxy boundaries and generator layers, but they do not require Codex to name the source of an ideal curve and the observed danger trace before claiming a wave or formation is balanced.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next STG enemy wave, formation, spawn table, scrolling segment, or balance verification, did I name the intended difficulty curve or proxy source before changing placement values?",
+        "Did I record at least one observed danger_over_time signal or surrogate trace, such as enemy density, bullet pressure, death-nearby spike, survival window, or route pressure, before claiming the formation is balanced?",
+        "If I use an ideal curve, did I state whether it came from explicit Nao_u input, an existing graze_log/template, or my own hypothesis, and keep fun/readiness claims separate from RMSE or curve fit?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two STG enemy-wave, formation, spawn-table, scrolling-segment, or balance-verification notes already separate intended difficulty curve source from observed danger trace before claiming balance."
+    },
     {
       "reviewed_at": "2026-06-10T05:55:55+09:00",
       "id": "sr-1781023037-050834a196",
