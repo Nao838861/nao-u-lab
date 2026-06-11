@@ -47,7 +47,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781162534-692f2ea111
+    source_ts: "1781162534.693969"
+    title: "Online Agent-as-a-Judge: Situation-Generating Evaluation for Interactive Agents"
+    reason: "NPC、tutorial dialogue、support character、memory-continuity などは、受動ログに conflict / support request / promise follow-through が出ていなければ採点不能になる。既存 probe は proxy 境界や structural/semantic validity を扱うが、採点前の evidence acquisition を明示するものは薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の NPC/social interaction/interactive-agent 評価で、designer criterion と「受動ログに存在しない可能性がある状況」を先に名指しし、数値 endpoint 優先か generated situation trace が必要かを分け、judge/probe は read-only inspection と follow-through evidence 分離に留める一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

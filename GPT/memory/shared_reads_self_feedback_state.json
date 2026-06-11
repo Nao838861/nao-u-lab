@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T16:26:39+09:00",
+  "updated_at": "2026-06-11T18:45:00+09:00",
   "reviewed_source_ts": [
     "1780671465.875619",
     "1780975880.393309",
@@ -174,9 +174,33 @@
     "1781040608.565289",
     "1781127460.611229",
     "1780303781.262949",
-    "1778643356.915999"
+    "1778643356.915999",
+    "1781162534.693969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-11T18:45:00+09:00",
+      "id": "sr-1781162534-692f2ea111",
+      "source_ts": "1781162534.693969",
+      "title": "Online Agent-as-a-Judge: Situation-Generating Evaluation for Interactive Agents",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex can judge NPC, tutorial, social-interaction, or memory-continuity behavior from whatever log happens to exist, even when the critical conflict, support request, promise follow-through, or role-consistency situation never occurred. Existing probes cover proxy boundaries, structural/semantic validity, and clean versus corrupted GUI runs, but they do not require evidence acquisition before scoring an interactive/social criterion. Keep this as a reversible situation-generation probe rather than a new benchmark or permanent judge workflow.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next NPC, social interaction, tutorial dialogue, support character, memory-continuity, or interactive-agent evaluation, did I name the designer criterion and the missing situation that an ordinary passive log may not contain?",
+        "Did I state whether the criterion should be judged by a deterministic outcome metric first, or by a generated situation trace because the target behavior is social, contextual, or otherwise non-endpoint?",
+        "If I use a judge NPC, probe script, or staged interaction, did I keep hidden-state inspection read-only and separate induced dialogue evidence from follow-through action evidence before giving pass, fail, or insufficient?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two NPC/social-interaction, tutorial-dialogue, support-character, memory-continuity, or interactive-agent evaluation notes already name the missing situation and separate outcome metrics, generated trace evidence, and follow-through action evidence before scoring."
+    },
     {
       "reviewed_at": "2026-06-11T16:26:39+09:00",
       "id": "sr-1778643356-30a0a0e7e9",
@@ -5623,6 +5647,18 @@
         "If the work crosses phase boundaries or another instance would consume it, did I state the handoff artifact and one adjacent-phase counterexample that would show the boundary is wrong or too slow?"
       ],
       "expires_after": "Review after the next two memory-cycle notes that involve recall quality, memory writes, compression, shared-reads staging, Slack handoff, retention, or phase-maintenance decisions."
+    },
+    {
+      "id": "probe-20260611-situation-generating-evidence-acquisition",
+      "created_at": "2026-06-11T18:45:00+09:00",
+      "source_ts": "1781162534.693969",
+      "scope": "next NPC, social interaction, tutorial dialogue, support character, memory-continuity, or interactive-agent evaluation where Codex may score whatever passive log exists even though the critical situation never occurred",
+      "questions": [
+        "Before the next NPC, social interaction, tutorial dialogue, support character, memory-continuity, or interactive-agent evaluation, did I name the designer criterion and the missing situation that an ordinary passive log may not contain?",
+        "Did I state whether the criterion should be judged by a deterministic outcome metric first, or by a generated situation trace because the target behavior is social, contextual, or otherwise non-endpoint?",
+        "If I use a judge NPC, probe script, or staged interaction, did I keep hidden-state inspection read-only and separate induced dialogue evidence from follow-through action evidence before giving pass, fail, or insufficient?"
+      ],
+      "expires_after": "Review after the next two NPC/social-interaction, tutorial-dialogue, support-character, memory-continuity, or interactive-agent evaluation notes that use passive logs, generated situations, judge NPCs, probe scripts, outcome metrics, or follow-through action evidence."
     }
   ]
 }
