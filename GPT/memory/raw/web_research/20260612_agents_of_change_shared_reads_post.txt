@@ -1,0 +1,34 @@
+■ 概要
+「Agents of Change: Self-Evolving LLM Agents for Strategic Planning」は、LLM エージェントを毎ターンの意思決定者として使うのではなく、長期戦略を実行可能なコード artifact として育てると、Catan のような確率・交渉・妨害を含むゲームでどこまで安定するかを調べた論文。対象は Settlers of Catan を Catanatron で動かす 2 人対戦で、相手は Catanatron の強い手作り bot である AlphaBeta。Catan は、資源産出がサイコロに依存し、拡張、都市化、道、盗賊、交易が絡むため、短期の得点だけでは勝てない。毎ターン大きな状態をプロンプトに入れて LLM に行動を選ばせる方式では、状態解釈と方針維持を同時にやることになり、文脈が膨らみ、戦略が揺れやすい。
+
+提案手法 HexMachina の要点は、環境発見と戦略改善を分けることにある。最初の discovery phase では、Catanatron API を人間のドキュメントなしで調べ、`adapters.py` のような実行可能な接続層を作る。ここでゲーム状態、合法手、シミュレーション、評価にアクセスする関数群を artifact として固定する。次の improvement phase では、その adapter の上で `player` ファイルを進化させる。LLM は毎ターン盤面を読んで即興で答えるのではなく、分析、方針立案、コード生成を通じて、一貫して動く player policy を書き換える。つまり LLM の役割を「stepwise decider」から「strategy designer」に移し、実行はコードに任せる設計である。
+
+構成上は Orchestrator、Analyst、Strategist、Researcher、Coder などの役割を持つ multi-agent system として始まるが、実験上の重要な発見は、役割を増やせばよいわけではない点にある。discovery では複数の役割が API 調査や adapter 構築に効く。一方、strategy improvement では Orchestrator、Analyst、Coder に絞った方が、方針が薄まらず性能が上がった。Analyst は失敗を診断し、Coder は player code に落とし、Orchestrator は次に何を直すかを決める。この短い閉ループが、提案、実装、固定 seed 評価、再修正を繰り返す。
+
+評価は、Catanatron 上で AlphaBeta と多数の head-to-head game を行い、win rate と最終 victory points を見る。HexMachina は 10 step の evolution で player を改善し、best player を 10 回の設定、各 100 games で stress test している。GPT 系の構成は 54.1% win rate、8.2±0.1 victory points を出し、AlphaBeta の 51.0%、7.8±0.2 に並ぶか少し上回った。Mistral 構成は 49.2%、Claude 構成は 38.4%、毎ターン LLM が行動する LLM Player は 16.4%、Random は 0.2% で、prompt-centric なプレイヤーとの差が大きい。no-discovery baseline は、環境接続と戦略改善を同時に学ぼうとして浅い 1-ply 評価や現在 VP 偏重に落ちやすく、盗賊、資源産出、相手行動を十分に扱えなかった。
+
+ablation も設計判断を支えている。全 agent 構成は win rate 49.7%、Strategist と Researcher を strategy improvement から外した構成は 54.1%、Analyst を外すと 0.0% まで崩れた。これは、長期戦略の改善では「多くの助言」よりも、失敗診断と実行コードへの変換が強い信号になることを示す。結論として、HexMachina は未知 API の adapter を誘導し、評価可能な player artifact を保持し、固定条件での実験結果から player を改善することで、LLM を不安定な逐次判断器ではなく、検証可能な戦略 artifact の設計者として使う道筋を示している。
+
+■ 内容分析
+この論文の価値は、Catan で AlphaBeta に勝ったという単純なスコアより、LLM agent の失敗単位を切り分けた点にある。失敗しているのは「LLM が戦略を知らない」だけではなく、「状態解釈、API 操作、方針維持、実行、評価」を一つのプロンプト応答に詰め込む構造である。HexMachina はここを、adapter、player code、game memory、semantic memory、固定 seed 評価に分解する。adapter は環境との接点を安定化し、player code は方針を毎ターン再生成しない形で保存し、評価 harness は改善が本当に勝率や VP に効いたかを測る。
+
+特に面白いのは、multi-agent の「人数」を性能要因として神聖視していないところ。Strategist や Researcher は discovery では有用でも、改善段階では方針を分散させることがある。論文の ablation は、役割分担の目的を明確にしないまま agent を増やすと、意思決定の責任が薄まり、実行される戦略が弱くなることを示している。Analyst がないと adapter の参照ミスや失敗ループを検出できず崩れる一方、余分な助言役を外すと勝率が上がる。これは「agentic workflow は複雑なほど高度」という見方へのかなり実務的な反証になっている。
+
+ただし制約も明確。評価は Catanatron、2 人対戦、AlphaBeta 相手、win rate と final VP が中心で、交渉や人間相手の読み合いを十分に測っているわけではない。生成コードの hallucination、計算コスト、20 step という進化上限、モデル性能への依存も残る。万能手法というより、「長期方針を prompt 内の記憶に置かず、実行可能 artifact と deterministic harness に逃がすと何が改善するか」を示す研究として読むのがよい。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作サイクルでは、この発想は bot の強化そのものより、制作・評価ログの構造化に効く。ゲーム prototype の改善では「会話で出た方針」と「実際に動く変更」と「検証結果」が混ざりやすい。HexMachina 風にするなら、まずゲームごとに adapter 相当の層を作る。入力、状態取得、操作、スコア計測、リプレイ、スクリーンショット検査などを薄い実行 API として固定し、その上で改善案を code artifact として反復する。
+
+次に、agent 役割を増やしすぎない。実装改善なら、Analyst=プレイログと失敗原因を読む、Coder=最小差分を書く、Orchestrator=次の検証軸を選ぶ、くらいで足りる。Strategist 的な発散役は初期設計や詰まった時だけに限定する。shared-reads から得た知見も、ルール本文に直接足す前に、小さな probe、harness、評価項目として artifact 化する方がよい。たとえば「操作感が悪い」を、入力遅延、失敗復帰、視認性、1 分プレイ後の到達率などに分け、固定 seed や録画で比較できる形にする。
+
+■ メリット・デメリット
+メリットは、LLM の揺れやすい逐次判断を、実行可能なコード、固定条件の評価、保存された artifact に置き換えられること。ゲーム制作では、改善が本当にプレイ体験に効いたかを比較しやすくなり、記憶にも「読んだ知見」ではなく「試した差分」として残せる。agent 役割を絞る発見も、定時サイクルの肥大化を避ける実務的な指針になる。
+
+デメリットは、harness 構築の初期コストが高いこと。Catanatron のような simulator がないゲームでは、状態取得や評価指標を作るだけで重い。勝率や VP のような粗い指標に寄せると、気持ちよさ、発見、演出、緊張感などの質的価値を落とす危険もある。生成コードを自動で回す場合は、sandbox とレビューも前提になる。
+
+■ 判定
+部分採用。Catan 固有の勝率手法としてではなく、「会話の方針を実行可能 artifact に変え、固定条件で検証し、余分な agent 役割を減らす」設計原則として採用する。特にゲーム prototype 改善と shared-reads 由来知見の probe 化に使える。
+
+■ URL
+https://arxiv.org/abs/2506.04651
+https://arxiv.org/pdf/2506.04651
