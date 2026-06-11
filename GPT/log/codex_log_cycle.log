@@ -3087,3 +3087,10 @@ error: corrupt loose object '15d4826f3fca2b9514f1c6c4ba07b160019af543'
 fatal: unable to read 15d4826f3fca2b9514f1c6c4ba07b160019af543
 2026-06-11T14:20:53 skipped: elapsed 14min < 90min
 2026-06-11T14:35:53 skipped: elapsed 29min < 90min
+2026-06-11T14:50:53 skipped: elapsed 44min < 90min
+2026-06-11T15:05:53 skipped: elapsed 59min < 90min
+2026-06-11T15:20:53 skipped: elapsed 74min < 90min
+2026-06-11T15:35:53 skipped: elapsed 89min < 90min
+2026-06-11T15:50:53 run start (elapsed 104min >= 90min)
+2026-06-11T15:51:20 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-11T16:05:53 run start (elapsed 119min >= 90min)
