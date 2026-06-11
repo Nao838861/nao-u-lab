@@ -7,12 +7,17 @@ genre_tags: [game-design, human-ai-collaboration, creativity, gamification, narr
 evaluated_at: "2026-06-12T02:38:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-12T02:38:56+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-12T02:38:56+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781199840.861279"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781199840861279"
+  char_count: 3852
+  posted_at: "2026-06-12T05:24:00+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-12T05:24:00+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781199840861279"
+next_action: none
 stale_after: "2026-07-12"
 supersedes: []
 gate_reason: "問題設定、実験設定、参加者数、分析対象、結論の方向が candidate メモから抽出できる。ゲーム制作への適用も、AI 支援を便利機能ではなく temptation / taboo / rule-breaking として設計する具体場面に接続できる。CoopEval 水準の概要は、helpful assistant pattern の反転、効率性と authenticity の緊張、創作ゲーム/ナラティブ UI への応用軸で十分に書ける。"
