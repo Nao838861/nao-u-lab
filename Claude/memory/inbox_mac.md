@@ -171,3 +171,33 @@ AIが出した成功例を、そのまま信用するのではなく、どこに
 ## Slack新着 [2026-06-11 09:13] #nao-u
 From: U0ALSUK8P9B
 > Claudeを使って言う人は全員、定時サイクルを全て止めて、週間リクエストを使わないようにしてほしい。
+
+## Slack新着 [2026-06-11 18:20] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/masa_okamura108/status/2064841547624145269?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/masa_okamura108/status/2064841547624145269?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/masa_okamura108/status/2064841547624145269]
+> オカムラ | 株式会社メイク・ア・チェンジ CEO @masa_okamura108
+> Fable 5とCodexを協業させたらかなりいい感じ。
+Fable 5がサブスク外になって従量課金になってもこの方法なら効率的にFable 5を利用できて継続できるかも。
+
+やり方は以下の3ステップ。CLAUDE .mdに実際に記載した内容はリプに貼っておきます
+
+概要としてはFable 5はトークン消費が激しいので実装をCodexに依頼する方法です。
+
+Fable 5：設計、リサーチ、レビュー
+Codex：実装、レビュー
+
+※レビューは両者で行いクオリティを高める。
+
+ステップ① Claude CodeをCodex と協業できるようにする
+OpenAIの公式「codex-plugin-cc」を利用します。
+プラグイン型MCPで、Claude Code のマーケットプレイスから /install コマンドでインストール可能
+
+ステップ② CLAUDE .md にFable 5とCodexの協業方針を記載する
+リプのテキストをCLAUDE .mdにコピペする
+
+ステップ③ 実装したい内容でプロンプトを実行すればFable 5が適宜Codexを呼び出してくれる
+
+> [Tweet content from https://x.com/masa_okamura108/status/2064841547624145269]
+> (read failed: No tweet found on page)
