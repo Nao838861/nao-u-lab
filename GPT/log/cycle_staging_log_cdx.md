@@ -27,7 +27,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781170063-f9d38c2e02
+    source_ts: "1781170063.007129"
+    title: "Draw2Think: Propose-Draw-Verify loop with engine-checkable intermediate state"
+    reason: "直後の discussion で Log に自己フィードバック接続が求められており、Phase 3b/ゲーム制作/記憶運用で、自然言語の中間推論を検査可能な state と verifier feedback に落とす小さな probe として使えるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の memory/evaluation/playable-diff で、進捗主張の前に checkable intermediate state、proposed action、verifier feedback を分けて確認する active probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

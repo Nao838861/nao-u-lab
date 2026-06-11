@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-11T18:45:00+09:00",
+  "updated_at": "2026-06-12T02:51:00+09:00",
   "reviewed_source_ts": [
     "1780671465.875619",
     "1780975880.393309",
@@ -175,9 +175,33 @@
     "1781127460.611229",
     "1780303781.262949",
     "1778643356.915999",
-    "1781162534.693969"
+    "1781162534.693969",
+    "1781170063.007129"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-12T02:51:00+09:00",
+      "id": "sr-1781170063-f9d38c2e02",
+      "source_ts": "1781170063.007129",
+      "title": "Draw2Think: Propose-Draw-Verify loop with engine-checkable intermediate state",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Phase 3b and game-memory work can still leave intermediate reasoning as natural-language notes that are plausible but not checkable. Draw2Think reframes the improvement as moving the next step through a typed action, external state, and verifier feedback loop. Existing probes separate structural/semantic validity and outcome evidence, but they do not require Codex to name the intermediate state that can actually be inspected before the next action. Keep this as a reversible probe for the next memory, evaluation, or playable-diff step rather than a new validator framework.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next memory, evaluation, playable-diff, level/puzzle, or harness change where I claim progress from reasoning or generated content, did I name the checkable intermediate state, such as JSON state, board/canvas state, dependency graph, log trace, metric row, or staging artifact?",
+        "Did I separate the proposed action from the verifier feedback: what operation changed the state, what constraint or observation accepted/rejected it, and what measurement or failure reason came back?",
+        "If the intermediate state is only prose or a subjective impression, did I downgrade the claim to hypothesis and name the smallest external check or artifact needed before using it as evidence?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory/evaluation/playable-diff notes already name a checkable intermediate state and separate proposed action from verifier feedback before claiming progress."
+    },
     {
       "reviewed_at": "2026-06-11T18:45:00+09:00",
       "id": "sr-1781162534-692f2ea111",
@@ -5515,6 +5539,18 @@
         "Did I write the adjustment rule and expected trace change before editing values, and keep the intervention on challenge/environment parameters when possible rather than silently changing player-fixed capability?"
       ],
       "expires_after": "Review after the next two difficulty, balance, tutorial/cue, boss/wave, or headless-evaluation notes that change challenge or interpret player state from proxy evidence."
+    },
+    {
+      "id": "probe-20260612-checkable-intermediate-state",
+      "created_at": "2026-06-12T02:51:00+09:00",
+      "source_ts": "1781170063.007129",
+      "scope": "next memory, evaluation, playable-diff, level or puzzle design, or harness change where Codex may treat natural-language reasoning, generated content, or subjective progress as evidence without an inspectable state transition",
+      "questions": [
+        "Before the next memory, evaluation, playable-diff, level/puzzle, or harness change where I claim progress from reasoning or generated content, did I name the checkable intermediate state, such as JSON state, board/canvas state, dependency graph, log trace, metric row, or staging artifact?",
+        "Did I separate the proposed action from the verifier feedback: what operation changed the state, what constraint or observation accepted/rejected it, and what measurement or failure reason came back?",
+        "If the intermediate state is only prose or a subjective impression, did I downgrade the claim to hypothesis and name the smallest external check or artifact needed before using it as evidence?"
+      ],
+      "expires_after": "Review after the next two memory/evaluation/playable-diff notes that use generated content, reasoning traces, staging artifacts, validators, logs, metrics, or checkable state as evidence."
     },
     {
       "id": "probe-20260609-control-plane-state-boundary",
