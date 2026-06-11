@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.08340"
 collected_at: "2026-06-11T16:14:28.9042554+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, coordination, benchmark, survival-game, communication]
+evaluated_at: "2026-06-11T16:27:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-11T16:27:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-11T16:27:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: |-
+  個体能力と協調能力を分ける benchmark という軸はゲーム制作に有用で、communication / memory / reasoning の切り分けも適用可能。
+  ただし候補本文のモデル比較、normalized return、ablation の具体値は投稿前に一次情報で確認が必要で、現状のメモだけでは責任ある4000字概要にするには根拠が薄い。
+  Phase 3 投稿候補にはせず、該当節と評価表を読み直してから再判定する。
 ---
 
 ## raw_excerpt

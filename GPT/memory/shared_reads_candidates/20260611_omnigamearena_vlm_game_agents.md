@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2606.09826"
 collected_at: "2026-06-11T16:14:28.9042554+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, vlm, benchmark, ue5, reflection]
+evaluated_at: "2026-06-11T16:27:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-11T16:27:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-11T16:27:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: |-
+  問題設定が single-attempt / Solo 偏重 benchmark の限界に絞られ、UE5 12 ゲーム、Solo/PvP/Coop、統一 action interface、Improvement Dynamics Curve まで手法の芯が揃っている。
+  初回スコアだけでなく reflection round ごとの改善と held-out variant への転移を見るため、Nao_u_BOT の replay / seed 変種 / 反復修正評価に具体接続できる。
+  4000字概要では、agent の強さではなく「改善過程を評価対象にする」設計として十分展開できる。
+suggested_post_outline:
+  overview_angle: "ゲーム agent benchmark を cold-start leaderboard から、反復改善と転移を測る Improvement Dynamics Curve へ拡張する話として整理する。"
+  analysis_axis: "UE5 実時間環境、Solo/PvP/Coop の分布、tool-using reflector による bounded skill prompt 更新、held-out variant 転移を分けて読む。"
+  application_target: "Nao_u_BOT の headless / screenshot / replay 評価で、単発クリア可否ではなく、同一 seed 反復と別 seed 変種への改善転移を測る評価設計。"
+  pros_cons: "利点は改善曲線、協力/対戦、転移を同じ枠で扱える点。弱点は UE5 環境構築と reflector 依存、skill prompt 更新が本当に汎化か暗記かを追加確認する必要がある点。"
+  verdict_pre: "部分採用。大規模 UE5 benchmark そのものではなく、改善曲線と held-out 変種評価を制作サイクルへ取り込む。"
 ---
 
 ## raw_excerpt
