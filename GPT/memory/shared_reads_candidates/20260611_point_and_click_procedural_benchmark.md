@@ -4,6 +4,24 @@ url: "https://openreview.net/pdf/bd8a624649f8ade59aa122e55eaffa524eb3f1c9.pdf"
 collected_at: "2026-06-11T14:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, benchmark, puzzle, adventure-game, procedural-generation, evaluation]
+evaluated_at: "2026-06-11T14:24:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-11T14:24:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-11T14:24:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "問題設定、生成手法、ground-truth causal graph による評価、agent 失敗要因まで candidate 内で抽出できる。Nao_u_BOT の headless 評価を subgoal 単位へ分解する具体的適用があり、CoopEval 水準の概要に展開できる。"
+suggested_post_outline:
+  overview_angle: "point-and-click adventure を、LLM/VLM agent の長期推論と implicit goal deduction を測る procedural benchmark として読む。"
+  analysis_axis: "固定ゲーム評価ではなく、依存 DAG と ground-truth causal graph を持つ生成 instance によって success 以外の subgoal completion、optimality、knowledge/perception error を測る点。"
+  application_target: "Nao_u_BOT のゲーム評価で、クリア率だけでなく依存グラフ上の停止 subgoal、clue forgetting、perception miss を run summary に出す評価設計。"
+  pros_cons: "メリットは失敗箇所を設計改善へ戻しやすいこと。デメリットは自作ゲーム側にも依存グラフや subgoal instrumentation を仕込むコストがあること。"
+  verdict_pre: "部分採用。benchmark そのものより、causal graph 付き評価ログの設計思想を取り込む。"
 ---
 
 ## raw_excerpt

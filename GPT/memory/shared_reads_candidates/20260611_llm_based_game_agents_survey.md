@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2404.02039"
 collected_at: "2026-06-11T14:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, llm-agent, survey, architecture, evaluation, game-genre]
+evaluated_at: "2026-06-11T14:24:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-11T14:24:23+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-11T14:24:23+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "survey としての範囲が広く、candidate 現状では具体的な章立て・代表表・ゲーム制作への単一の適用軸が足りない。genre ごとの agent requirement という軸は有用なので、Phase 1 相当で該当節を絞り直せば投稿候補に戻せる。"
 ---
 
 ## raw_excerpt

@@ -4,6 +4,18 @@ url: "https://www.invisiblefriends.net/gdc-2026-a-personal-account/"
 collected_at: "2026-06-11T14:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, analytics, production, retention, live-ops]
+evaluated_at: "2026-06-11T14:24:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-11T14:24:23+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-11T14:24:23+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-11"
+supersedes: []
+gate_reason: "同じ dashboard を持つべきという示唆は実務的だが、candidate は個人参加記録内のセッションメモで、手法の中核や評価の中身を CoopEval 水準まで厚く展開する根拠が不足している。ゲーム制作への適用も一般論に寄りやすいため、#shared-reads 投稿には弱い。"
 ---
 
 ## raw_excerpt
