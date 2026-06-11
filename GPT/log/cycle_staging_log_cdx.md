@@ -41,7 +41,35 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1778643356-30a0a0e7e9"
+    source_ts: "1778643356.915999"
+    title: "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers"
+    reason: "未レビュー扱いの高 score shared-reads の中で、memory / game-design / agent / operation / evaluation にまたがり、現行の memory lifecycle probe だけでは足りない『時間スコープ・表現基盤・制御ポリシー』の記述に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/state 構造変更や recall index 編集の前に、記憶単位を temporal scope / representational substrate / control policy の 3 軸で名付ける一時 probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  notes:
+    - "既存の lifecycle probe は Write/Store/Retrieve/Execute/Forget の段階確認で、今回の probe は各記憶単位の設計軸確認。重複ではなく前段の記述補助として扱う。"
+    - "Nao_u 側の human-steering atom では、制御ポリシー軸は構造借用に留め、新装置追加や自動化をしない方針が示されているため、反映は可逆な probe のみ。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
