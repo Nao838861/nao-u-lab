@@ -211,3 +211,13 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/hituji_1234/status/2063931494733881415]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-06-11 21:08] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/hituji_1234/status/2063931494733881415?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/hituji_1234/status/2063931494733881415?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/hituji_1234/status/2063931494733881415]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/hituji_1234/status/2063931494733881415]
+> (read failed: Browser locked by another process)
