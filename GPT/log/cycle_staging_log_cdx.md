@@ -3,7 +3,10 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- 2026-06-11T12:15+09:00 Phase 1 収集:
+  - `memory/shared_reads_candidates/20260611_human_ai_collab_game_testing_vlm.md` — VLM を使った AI-assisted game testing と、人間テスターの過信・hallucination 影響を扱う実験候補。
+  - `memory/shared_reads_candidates/20260611_open_world_mission_action_block_framework.md` — open-world mission を action block と MAQV で可視化し、pacing / variation / peak-valley rhythm を見る候補。
+  - `memory/shared_reads_candidates/20260611_reflection_design_actualization.md` — playtest 直後の granular reflection と recording を結び、設計判断の tacit context を残す候補。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
