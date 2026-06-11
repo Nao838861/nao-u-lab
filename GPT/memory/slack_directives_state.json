@@ -2,59 +2,59 @@
   "channels": {
     "C0ALRK28Y1H": {
       "last_ts": "1781128616.618869",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ALT7HJPMH": {
       "last_ts": "1780664939.304129",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ALVUSHK8E": {
       "last_ts": "1781122354.899909",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ALVUTKK2A": {
-      "last_ts": "1781136799.724549",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_ts": "1781141806.838219",
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ALWBRNJ66": {
       "last_ts": "1781137118.547349",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0AM1JCNBNY": {
       "last_ts": "1778373641.000000",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0AMSJCTTC4": {
       "last_ts": "1781116870.012089",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0AN2FEHEJJ": {
       "last_ts": "1781127468.122429",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0AND2M2804": {
       "last_ts": "1781083368.277799",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ANECNV5DK": {
       "last_ts": "1781029879.145519",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0ANQ9DRQ1K": {
       "last_ts": "1781106547.981569",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0APNTEN56G": {
       "last_ts": "1778373641.000000",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0APSD48BHU": {
       "last_ts": "1778373641.000000",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     },
     "C0B17GVQC9H": {
       "last_ts": "1781136485.616799",
-      "last_checked": "2026-06-11T10:36:45"
+      "last_checked": "2026-06-11T12:21:11"
     }
   },
   "acked_ids": [
@@ -89,8 +89,8 @@
     "log-cdx-1779668181-d295d8ddd5",
     "log-cdx-1780027275-ab93155518"
   ],
-  "last_run": "2026-06-11T10:36:45",
+  "last_run": "2026-06-11T12:21:11",
   "last_seen_directives": 0,
   "last_errors": [],
-  "last_seen_broadcasts": 1
+  "last_seen_broadcasts": 0
 }
