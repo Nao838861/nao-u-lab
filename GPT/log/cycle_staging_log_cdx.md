@@ -60,7 +60,32 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで確認。代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）は取得可能で、source file 破損なし。"
+  - "memory/MEMORY.md の atom 参照 50 件を確認。broken atom ref 0 件、markdown link 0 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認。pending 0 件のため status 更新なし。"
+  - "memory/shared_reads_candidates の lifecycle 内訳を確認。posted 224 / postponed 197 / failed 69 / ready_to_post 5 / needs_review 15 / status 欠落 3。30 日以上動きがない postponed / needs_review は 0 件。"
+  - "memory/raw の 30 日超過ファイルを確認。sync_state.txt と slack_archive/shared-reads.jsonl の 2 件のみで、原文アーカイブ本体に近いため移動なし。"
+issues:
+  - id: ISS-4A-001
+    description: "shared_reads_candidates に lifecycle status が欠けたファイルが少数ある。README.md は説明文書なので除外候補だが、20260518_biped_rational_design_postmortem.md は candidate_status: posted と status 空欄が併存し、20260605_mansion_dungeon_pcg_level_design.md は lifecycle status 自体がない。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_biped_rational_design_postmortem.md; memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md; memory/shared_reads_candidates/README.md"
+    source_file_status: "UTF-8 読み可能。frontmatter の lifecycle metadata 欠落または空欄で、文字化けではない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "candidate の再評価・投稿済み判定が status だけで完結せず、Phase 2/3 の候補棚卸し時に手動確認が混じる。ゲーム制作知見そのものの想起はまだ大きく阻害しない。"
+  - id: ISS-4A-002
+    description: "atoms.jsonl に duplicate id はないが、title/excerpt/trigger を含む exact duplicate text が 40 件ある。多くは 2026-05-12 の Codex shared-reads 再投稿・補正版ブロックで、同一内容が複数 atom として残っている。"
+    severity: low
+    evidence: "memory/atoms.jsonl duplicate sample: sr-1778535738-ed839f9805 vs sr-1778535120-82ea7a1005; sr-1778535739-5d8bc5482b vs sr-1778535121-92a63ad529; sr-1776395558-dc3d892a95 vs sr-1776359674-edeeda0bdd"
+    source_file_status: "UTF-8 読み可能。JSONL parse 可能、duplicate id 0 件、exact duplicate text 40 件。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "検索・recall のランキングに再投稿ノイズが混ざる可能性はあるが、MEMORY.md には lifecycle/content fold の表示があり、現時点では設計フェーズを起動するほどの阻害ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
