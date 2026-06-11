@@ -3,7 +3,10 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- 2026-06-12T02:30+09:00 / pending確認: `slack_directives.jsonl` と `slack_broadcasts.jsonl` は pending 0 件。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260612_nonslop_gamified_human_ai_creativity.md` — AI 支援を「禁止された誘惑」として扱う gamified writing 実験。AI 共作・創造性・プレイヤー自律性のメカニクス化候補。
+- 重複確認メモ: procedural personas、snappable meshes、JAMEL、GameDevBench、GUI Agents for Continual Game Generation、GameWorld、PCG Benchmark、Let’s! Revolution!、AutoBG、Grounding Machine Creativity、Ink Splotch、Lap、OpenGame、GameUIAgent、LLM difficulty tester は既存 candidate / atom / 投稿済みとして検出。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
