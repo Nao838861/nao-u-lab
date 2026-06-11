@@ -25,7 +25,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-06-11T16:22:27.6725002+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769"
+    char_count: 3518
+  - candidate: "memory/shared_reads_candidates/20260611_online_agent_as_judge_social_eval.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534693969"
+    char_count: 3809
+skipped: []
+notes:
+  - "Slack chat.postMessage succeeded for both pass candidates; conversations.history verified both messages exist and start with '■ 概要'."
+  - "chat.getPermalink returned ok:false, so permalinks were constructed with the standard Slack archive p<ts-without-dot> format."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
