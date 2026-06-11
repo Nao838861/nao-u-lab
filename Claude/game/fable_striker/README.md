@@ -6,7 +6,9 @@
 
 ## 公開URL（誰でも遊べる）
 
-**https://nao838861.github.io/nao-u-lab/Claude/game/fable_striker/v01/**
+**最新 v02（絵・音リッチ化版）: https://nao838861.github.io/nao-u-lab/Claude/game/fable_striker/v02/**
+
+初版 v01: https://nao838861.github.io/nao-u-lab/Claude/game/fable_striker/v01/
 
 ## 操作
 
@@ -33,6 +35,7 @@
 
 | バージョン | 日付 | 内容 |
 |---|---|---|
+| [v02](v02/index.html) | 2026-06-11 | 絵と音を全面リッチ化（ネオングロー／金属グラデ／多層爆発／面別奥行き背景、リバーブ＋ディレイ＋コンプ＋スーパーソウの厚いBGM/SE）。ロジックはv01不変 |
 | [v01](v01/index.html) | 2026-06-11 | 初版。全3面・ボス3体・パワーアップ・コンボ・ボム・コンティニュー・合成BGM6曲 |
 
 ## 品質保証
