@@ -8,6 +8,7 @@ schema.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import defaultdict
@@ -63,6 +64,25 @@ def preferred_atom(group: list[dict[str, Any]]) -> dict[str, Any]:
     return sorted(group, key=lambda atom: (parse_source_ts(atom), int(atom.get("score", 0)), atom_id(atom)), reverse=True)[0]
 
 
+def normalize_text(value: Any) -> str:
+    return " ".join(str(value or "").lower().split())
+
+
+def title_trigger_excerpt_key(atom: dict[str, Any]) -> str:
+    parts = [
+        normalize_text(atom.get("title")),
+        normalize_text(atom.get("trigger")),
+        normalize_text(atom.get("excerpt")),
+    ]
+    if not any(parts):
+        return ""
+    return "\n".join(parts)
+
+
+def short_hash(text: str) -> str:
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:16]
+
+
 def build_groups(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for atom in atoms:
@@ -72,6 +92,7 @@ def build_groups(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     generated_at = datetime.now().isoformat(timespec="seconds")
     rows: list[dict[str, Any]] = []
+    already_grouped_ids: set[str] = set()
     for content_hash, group in grouped.items():
         if len(group) < 2:
             continue
@@ -84,6 +105,44 @@ def build_groups(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
         rows.append(
             {
                 "content_hash": content_hash,
+                "duplicate_key": content_hash,
+                "reason": "normalized_content_hash",
+                "canonical_id": canonical_id,
+                "preferred_id": atom_id(preferred),
+                "duplicate_ids": [item for item in all_ids if item != canonical_id],
+                "count": len(group),
+                "source_ts_min": min(source_ts_values) if source_ts_values else None,
+                "source_ts_max": max(source_ts_values) if source_ts_values else None,
+                "sample_title": canonical.get("title") or preferred.get("title") or "",
+                "generated_at": generated_at,
+            }
+        )
+        already_grouped_ids.update(all_ids)
+
+    secondary_grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for atom in atoms:
+        aid = atom_id(atom)
+        if aid in already_grouped_ids:
+            continue
+        key = title_trigger_excerpt_key(atom)
+        if key:
+            secondary_grouped[key].append(atom)
+
+    for duplicate_key, group in secondary_grouped.items():
+        if len(group) < 2:
+            continue
+        canonical = canonical_atom(group)
+        preferred = preferred_atom(group)
+        sorted_group = sorted(group, key=lambda atom: (parse_source_ts(atom), atom_id(atom)))
+        source_ts_values = [parse_source_ts(atom) for atom in group if parse_source_ts(atom) > 0]
+        all_ids = [atom_id(atom) for atom in sorted_group if atom_id(atom)]
+        canonical_id = atom_id(canonical)
+        key_hash = short_hash(duplicate_key)
+        rows.append(
+            {
+                "content_hash": key_hash,
+                "duplicate_key": key_hash,
+                "reason": "title_trigger_excerpt_exact",
                 "canonical_id": canonical_id,
                 "preferred_id": atom_id(preferred),
                 "duplicate_ids": [item for item in all_ids if item != canonical_id],
@@ -95,27 +154,28 @@ def build_groups(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
             }
         )
 
-    rows.sort(key=lambda row: (-int(row["count"]), float(row["source_ts_min"] or 0), row["content_hash"]))
+    rows.sort(key=lambda row: (str(row.get("reason") or ""), -int(row["count"]), float(row["source_ts_min"] or 0), row["content_hash"]))
     return rows
 
 
 def build_overlay_rows(group_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for group in group_rows:
-        content_hash = str(group.get("content_hash") or "")
+        duplicate_key = str(group.get("duplicate_key") or group.get("content_hash") or "")
         canonical_id = str(group.get("canonical_id") or "")
         duplicate_ids = [str(item) for item in group.get("duplicate_ids", []) if item]
-        if not content_hash or not canonical_id or not duplicate_ids:
+        reason = str(group.get("reason") or "normalized_content_hash")
+        if not duplicate_key or not canonical_id or not duplicate_ids:
             continue
         rows.append(
             {
-                "group_id": f"content:{content_hash}",
+                "group_id": f"{reason}:{duplicate_key}",
                 "canonical_id": canonical_id,
                 "preferred_id": group.get("preferred_id"),
                 "duplicate_ids": duplicate_ids,
                 "member_ids": [canonical_id, *duplicate_ids],
-                "reason": "normalized_content_hash",
-                "evidence_hash": content_hash,
+                "reason": reason,
+                "evidence_hash": duplicate_key,
                 "count": int(group.get("count") or (len(duplicate_ids) + 1)),
                 "sample_title": group.get("sample_title") or "",
                 "generated_at": group.get("generated_at"),

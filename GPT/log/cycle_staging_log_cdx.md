@@ -139,7 +139,35 @@ items:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-001
+    files_changed:
+      - path: tools/build_atom_duplicate_groups.py
+        change: modified
+      - path: tools/atoms_fileformat.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: memory/atoms/README.md
+        change: modified
+      - path: memory/atoms/duplicate_groups.jsonl
+        change: modified
+      - path: memory/atoms/canonical_overlay.jsonl
+        change: modified
+    summary: "Phase 4b outline 通り、atom 本体を変更しない secondary duplicate key 対応を sidecar/overlay に導入。canonical view の代表表示で folded_count / folded_ids / overlay_reason を確認できるようにした。"
+    partial: false
+migrations:
+  - what: "memory/atoms/duplicate_groups.jsonl と memory/atoms/canonical_overlay.jsonl を再生成"
+    affected: "atoms.jsonl / per-file .md は非変更。overlay は normalized_content_hash group を優先し、title_trigger_excerpt_exact は重複しない時だけ出る。今回の現データでは overlay 40 groups すべて reason=normalized_content_hash。"
+verification:
+  - "python -m py_compile tools\\build_atom_duplicate_groups.py tools\\atoms_fileformat.py tools\\memory_health.py tools\\memory_recall.py: passed"
+  - "python tools\\build_atom_duplicate_groups.py --check: duplicate group index ok: groups=40 overlay_groups=40"
+  - "python tools\\memory_health.py --compact: warning 終了相当だが既存の repeated title / title_quality / mojibake warnings のみ。overlay_groups=40 を確認。"
+  - "python tools\\memory_recall.py \"compassinai 2本目ペア論文\" --limit 3 --no-log: top result に folded_count=1 / folded_ids / overlay_reason=normalized_content_hash を確認。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

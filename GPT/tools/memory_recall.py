@@ -19,7 +19,7 @@ from typing import Any
 
 import memory_lifecycle
 from atom_title_clusters import load_title_cluster_map
-from atoms_fileformat import load_atoms_from_per_file
+from atoms_fileformat import load_atoms_from_per_file, load_atoms_with_view
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +50,10 @@ def load_atoms() -> list[dict[str, Any]]:
                     atoms.append(json.loads(line))
         return atoms
     return load_atoms_from_per_file(ATOMS_DIR)
+
+
+def load_atoms_for_recall() -> list[dict[str, Any]]:
+    return load_atoms_with_view(ATOMS_PATH, ATOMS_DIR, view="canonical")
 
 
 def tokenize(text: str) -> list[str]:
@@ -177,16 +181,16 @@ def annotate_display_labels(
 
 
 def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
-    all_atoms = load_atoms()
+    raw_atoms = load_atoms()
     title_cluster_map = load_title_cluster_map()
-    exact_matches = exact_reference_matches(all_atoms, query)
+    exact_matches = exact_reference_matches(raw_atoms, query)
     if exact_matches:
-        duplicate_title_counts = title_counts(all_atoms)
+        duplicate_title_counts = title_counts(raw_atoms)
         return annotate_display_labels(exact_matches[:limit], title_cluster_map, duplicate_title_counts)
     if looks_like_reference_query(query):
         return []
 
-    atoms = all_atoms
+    atoms = load_atoms_for_recall()
     if not include_operational:
         atoms = [atom for atom in atoms if not is_default_excluded(atom)]
     duplicate_title_counts = title_counts(atoms)
@@ -236,6 +240,7 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "folded_ids": atom.get("folded_ids", [])[:20],
             "grouped_count": atom.get("grouped_count", 1),
             "grouped_ids": atom.get("grouped_ids", [])[:20],
+            "overlay_reason": atom.get("overlay_reason"),
             "representative_reason": atom.get("representative_reason"),
             "normalized_content_hash": atom.get("normalized_content_hash"),
         }
@@ -272,6 +277,7 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     folded_ids = [str(aid) for aid in atom.get("folded_ids", []) if aid]
     grouped_count = int(atom.get("grouped_count") or (folded_count + 1 if folded_count else 1))
     grouped_ids = [str(aid) for aid in atom.get("grouped_ids", folded_ids) if aid]
+    overlay_reason = str(atom.get("overlay_reason") or "")
     representative_reason = str(atom.get("representative_reason") or "")
     if compact:
         suffix = ""
@@ -299,6 +305,8 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
         print(f"grouped_ids: {', '.join(grouped_ids)}")
         if representative_reason:
             print(f"representative_reason: {representative_reason}")
+        if overlay_reason:
+            print(f"overlay_reason: {overlay_reason}")
         if atom.get("normalized_content_hash"):
             print(f"normalized_content_hash: {atom.get('normalized_content_hash')}")
     print(f"excerpt: {atom.get('excerpt', '')}")

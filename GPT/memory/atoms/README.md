@@ -116,6 +116,12 @@ python tools/build_atom_duplicate_groups.py
 
 `tools/atoms_fileformat.py` の `load_atoms_with_view(..., view="raw"|"canonical")` で読み分ける。raw 直読系スクリプトは Phase D 前の移行対象から順に canonical view へ寄せる。
 
+### secondary duplicate key
+
+2026-06-12 以降、`canonical_overlay.jsonl` は `normalized_content_hash` に加えて `title+trigger+excerpt` の正規化完全一致も `reason=title_trigger_excerpt_exact` として記録する。これはリンク差分だけで同じ投稿内容が別 atom として残るケースを代表表示で畳むための非破壊 sidecar であり、`atoms.jsonl` や per-file `.md` の raw atom は削除・上書きしない。
+
+同一 atom が `normalized_content_hash` group と secondary key group の両方に入り得る場合は、既存の `normalized_content_hash` group を優先し、secondary key では重複登録しない。`canonical_id` は最古 `source_ts` の provenance anchor、`preferred_id` は最新 `source_ts` の確認入口として維持する。
+
 ## title_cluster_index.jsonl 仕様
 
 `title_cluster_index.jsonl` は、同じ generic title が recall に大量に並ぶ時の判別性を上げるための再生成可能な sidecar。atom 本体、`atoms.jsonl`、per-file `.md` の `title` は書き換えない。

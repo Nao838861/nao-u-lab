@@ -400,14 +400,27 @@ def apply_canonical_overlay(atoms: list[dict[str, Any]], overlay_rows: list[dict
 
     by_id = {str(atom.get("id") or ""): atom for atom in atoms if atom.get("id")}
     duplicate_to_group: dict[str, dict[str, Any]] = {}
-    canonical_ids: set[str] = set()
+    canonical_to_group: dict[str, dict[str, Any]] = {}
     for row in overlay_rows:
         canonical_id = str(row.get("canonical_id") or "")
         if not canonical_id:
             continue
-        canonical_ids.add(canonical_id)
+        canonical_to_group[canonical_id] = row
         for duplicate_id in row.get("duplicate_ids", []):
             duplicate_to_group[str(duplicate_id)] = row
+
+    def annotated_canonical(canonical: dict[str, Any], group: dict[str, Any]) -> dict[str, Any]:
+        row = dict(canonical)
+        duplicate_ids = [str(item) for item in group.get("duplicate_ids", []) if item]
+        row["overlay_group_id"] = group.get("group_id")
+        row["overlay_reason"] = group.get("reason")
+        row["folded_count"] = len(duplicate_ids)
+        row["folded_ids"] = duplicate_ids
+        row["grouped_count"] = int(group.get("count") or (len(duplicate_ids) + 1))
+        row["grouped_ids"] = [str(item) for item in group.get("member_ids", []) if item] or [str(row.get("id") or ""), *duplicate_ids]
+        if group.get("evidence_hash"):
+            row["normalized_content_hash"] = group.get("evidence_hash")
+        return row
 
     canonical_seen: set[str] = set()
     result: list[dict[str, Any]] = []
@@ -425,24 +438,17 @@ def apply_canonical_overlay(atoms: list[dict[str, Any]], overlay_rows: list[dict
             if not canonical:
                 result.append(atom)
                 continue
-            row = dict(canonical)
-            duplicate_ids = [str(item) for item in group.get("duplicate_ids", []) if item]
-            row["overlay_group_id"] = group.get("group_id")
-            row["overlay_reason"] = group.get("reason")
-            row["folded_count"] = len(duplicate_ids)
-            row["folded_ids"] = duplicate_ids
-            row["grouped_count"] = int(group.get("count") or (len(duplicate_ids) + 1))
-            row["grouped_ids"] = duplicate_ids
-            if group.get("evidence_hash"):
-                row["normalized_content_hash"] = group.get("evidence_hash")
-            result.append(row)
+            result.append(annotated_canonical(canonical, group))
             canonical_seen.add(canonical_id)
             continue
-        if aid in canonical_ids and aid in canonical_seen:
+        canonical_group = canonical_to_group.get(aid)
+        if canonical_group:
+            if aid in canonical_seen:
+                continue
+            result.append(annotated_canonical(atom, canonical_group))
+            canonical_seen.add(aid)
             continue
         result.append(atom)
-        if aid in canonical_ids:
-            canonical_seen.add(aid)
     return result
 
 

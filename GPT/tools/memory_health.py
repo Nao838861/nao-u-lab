@@ -13,6 +13,7 @@ from typing import Any
 import memory_recall
 import memory_lifecycle
 import topology_audit
+from atoms_fileformat import CANONICAL_OVERLAY_FILENAME
 from atom_quality import atom_quality_report
 
 
@@ -25,6 +26,7 @@ SLACK_STATE_PATH = MEMORY_DIR / "slack_ingest_state.json"
 RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
 ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
 TITLE_QUALITY_AUDIT_PATH = MEMORY_DIR / "atoms" / "title_quality_audit.jsonl"
+CANONICAL_OVERLAY_PATH = MEMORY_DIR / "atoms" / CANONICAL_OVERLAY_FILENAME
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -80,6 +82,22 @@ def content_duplicate_summary(atoms: list[dict[str, Any]]) -> dict[str, int]:
         "groups": len(duplicate_counts),
         "atom_rows": sum(duplicate_counts),
         "folded_extra_rows": sum(count - 1 for count in duplicate_counts),
+    }
+
+
+def overlay_duplicate_summary() -> dict[str, Any]:
+    rows = load_jsonl(CANONICAL_OVERLAY_PATH)
+    reason_counts = Counter(str(row.get("reason") or "unknown") for row in rows)
+    folded_by_reason: Counter[str] = Counter()
+    for row in rows:
+        reason = str(row.get("reason") or "unknown")
+        folded_by_reason[reason] += len([item for item in row.get("duplicate_ids", []) if item])
+    return {
+        "path": str(CANONICAL_OVERLAY_PATH.relative_to(ROOT)),
+        "exists": CANONICAL_OVERLAY_PATH.exists(),
+        "groups": len(rows),
+        "reason_counts": reason_counts.most_common(),
+        "folded_extra_rows_by_reason": folded_by_reason.most_common(),
     }
 
 
@@ -139,6 +157,7 @@ def build_health() -> dict[str, Any]:
     visible_folded_atoms = memory_lifecycle.fold_atoms(recall_visible_atoms)
     raw_content_duplicates = content_duplicate_summary(atoms)
     visible_content_duplicates = content_duplicate_summary(recall_visible_atoms)
+    overlay_duplicates = overlay_duplicate_summary()
     mojibake_suspects = [
         {
             "id": atom.get("id"),
@@ -218,6 +237,9 @@ def build_health() -> dict[str, Any]:
         "recall_visible_normalized_content_duplicate_groups": visible_content_duplicates["groups"],
         "recall_visible_normalized_content_duplicate_atom_rows": visible_content_duplicates["atom_rows"],
         "recall_visible_content_fold_applied_extra_rows": visible_content_duplicates["folded_extra_rows"],
+        "canonical_overlay_duplicate_groups": overlay_duplicates["groups"],
+        "canonical_overlay_reason_counts": overlay_duplicates["reason_counts"],
+        "canonical_overlay_folded_extra_rows_by_reason": overlay_duplicates["folded_extra_rows_by_reason"],
         "mojibake_suspect_atoms": mojibake_suspects[:20],
         "title_quality_audit": title_quality,
         "raw_shared_reads_rows": len(raw_rows),
@@ -248,6 +270,7 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
             f" duplicate_hash_groups={health.get('raw_normalized_content_duplicate_groups')}"
             f" duplicate_atom_rows={health.get('raw_normalized_content_duplicate_atom_rows')}"
             f" fold_extra={health.get('raw_content_fold_applied_extra_rows')}"
+            f" overlay_groups={health.get('canonical_overlay_duplicate_groups')}"
             f" recall_queries={health['recall_queries']}{suffix}"
         )
     lines = [
@@ -260,6 +283,7 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
         f"- lifecycle_status_counts: {health.get('lifecycle_status_counts')}",
         f"- repeated_title_groups: raw={health.get('repeated_title_groups')} recall_visible={health.get('recall_visible_repeated_title_groups')} ungrouped={health.get('ungrouped_repeated_title_groups')}",
         f"- normalized_content_duplicate_groups: raw={health.get('raw_normalized_content_duplicate_groups')} rows={health.get('raw_normalized_content_duplicate_atom_rows')} fold_extra={health.get('raw_content_fold_applied_extra_rows')} recall_visible={health.get('recall_visible_normalized_content_duplicate_groups')} rows={health.get('recall_visible_normalized_content_duplicate_atom_rows')} fold_extra={health.get('recall_visible_content_fold_applied_extra_rows')}",
+        f"- canonical_overlay_duplicate_groups: total={health.get('canonical_overlay_duplicate_groups')} reasons={health.get('canonical_overlay_reason_counts')} fold_extra_by_reason={health.get('canonical_overlay_folded_extra_rows_by_reason')}",
         f"- raw_shared_reads_rows: {health.get('raw_shared_reads_rows')}",
         f"- archive_last_run: {health.get('archive_last_run')}",
         f"- slack_last_run: {health.get('slack_last_run')}",
