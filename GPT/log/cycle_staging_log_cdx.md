@@ -110,4 +110,15 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-06-11T17:13:18+09:00"
+channel: "#log"
+draft: "log/drafts/phase5_diary_20260611_1613.md"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1781163198731709"
+char_count: 2299
+verification: "ok"
+notes:
+  - "python tools/post_slack_message_file.py --channel \"#log\" --file log\\drafts\\phase5_diary_20260611_1613.md --delete-on-fail succeeded."
+  - "Slack conversations.history verification returned ok; no mojibake or '?' replacement detected."
+  - "chat.getPermalink via generic api_call returned invalid_arguments, so permalink was constructed from channel id and ts using Slack archive p<ts-without-dot> format."
+```
