@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "error": "invalid_arguments",
+  "response_metadata": {
+    "messages": [
+      "[ERROR] missing required field: channel",
+      "[ERROR] missing required field: message_ts"
+    ]
+  }
+}

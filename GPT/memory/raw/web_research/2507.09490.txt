@@ -1,0 +1,760 @@
+
+
+--- page 1 ---
+Towards LLM-Based Automatic Playtest
+Yan Zhao
+yzhao19@emich.edu
+Eastern Michigan University
+Ann Arbor, Michigan, USA
+Chiawei Tang
+cwtang@vt.edu
+Virginia Tech
+Blacksburg, Virginia, USA
+Abstract
+Playtest is the process in which people play a video game for testing.
+It is critical for the quality assurance of gaming software. Manual
+playtest is time-consuming and expensive. However, automating
+this process is challenging, as playtest typically requires for the do-
+main knowledge and problem-solving skills that most conventional
+testing tools lack. Recent advancements in artificial intelligence
+(AI) have opened up new possibilities of applying Large Language
+Models (LLMs) to playtest. However, significant challenges remain:
+current LLMs cannot visually perceive game environments; most
+existing research focuses on text-based games or games with ro-
+bust API; While many non-text games lack APIs to provide textual
+descriptions of game states, making it almost impossible to naïvely
+apply LLMs for playtest.
+This paper introduces Lap, our novel approach of LLM-based
+Automatic Playtest, which uses ChatGPT to test match-3 games—a
+category of games where players match three or more identical
+tiles in a row or column to earn points. Lap encompasses three key
+phrases: processing of game environments, prompting-based action
+generation, and action execution. Given a match-3 game, Lap takes
+a snapshot of the game board and converts it to a numeric matrix;
+it then prompts ChatGPT-O1-mini API to suggest moves based on
+that matrix; finally, Lap tentatively applies the suggested moves to
+earn points and trigger changes in the game board. It repeats the
+above-mentioned three steps iteratively until timeout.
+For evaluation, we conducted a case study by applying Lap to
+an open-source match-3 game—CasseBonbons, and empirically
+compared Lap with three existing tools. Our results are promising:
+Lap outperformed existing tools by achieving higher code coverage
+and triggering more program crashes. Our research will shed light
+on future research of automatic testing and LLM application.
+CCS Concepts
+•Software and its engineering → Empirical software valida-
+tion.
+Keywords
+Research, automated game testing, LLM, few-shot prompting
+ACM Reference Format:
+Yan Zhao and Chiawei Tang. 2025. Towards LLM-Based Automatic Playtest.
+In 33rd ACM International Conference on the Foundations of Software Engi-
+neering (FSE Companion ’25), June 23–28, 2025, Trondheim, Norway. ACM,
+New York, NY, USA, 7 pages. https://doi.org/10.1145/3696630.3728700
+This work is licensed under a Creative Commons Attribution 4.0 International License.
+FSE Companion ’25, Trondheim, Norway
+© 2025 Copyright held by the owner/author(s).
+ACM ISBN 979-8-4007-1276-0/2025/06
+https://doi.org/10.1145/3696630.3728700
+1 Introduction
+Playtest or game testing is an essential phase in the game develop-
+ment process, ensuring seamless gameplay, validating mechanics,
+and identifying potential bugs. Despite its significance, playtest
+remains considerably challenging. Unlike conventional software
+testing, game testing demands dynamic reasoning, an understand-
+ing of spatial relationships, and the ability to simulate diverse player
+strategies. Traditional testing tools often fall short in mimicking
+human-like reasoning and adaptability that game testing necessi-
+tates. While reinforcement learning (RL) frameworks offer a promis-
+ing alternative, their practical adoption faces significant challenges,
+particularly due to the extensive computational resources and time
+required for training RL agents.
+The rapid advancement of artificial intelligence (AI) has trans-
+formed multiple industries. Among these developments, Large Lan-
+guage Models (LLMs), such as OpenAI’s GPT series, have emerged
+as powerful tools capable of natural language processing, code gen-
+eration, and even image-based reasoning. This growing intelligence
+opens new avenues for automating tasks traditionally requiring
+human cognition, including complex game testing.
+In this research, we focus on leveraging Large Language Mod-
+els (LLMs) for automated play-testing of a typical mobile game
+genre—Match-3 games[ 1], exemplified by the globally popular Candy
+Crush Saga[23]. These games present a matrix-like board where
+players swap adjacent tiles to create matches of three or more iden-
+tical elements, leading to cascading effects and score generation.
+Despite their apparent simplicity, testing match-3 games involves
+complex challenges, such as human-like decision-making, spatial
+reasoning, and adaptive strategies.
+However, substantial obstacles persist. Current LLMs struggle
+with accurate icon positioning in game images due to limited vision
+capabilities, hindering their spatial reasoning and effectiveness in
+visually complex tasks like play-testing. Much research has been
+conducted on text-based games or games with robust API, but these
+approaches has limited applications. Many non-text games lack
+APIs that provide text-based game states, making direct interac-
+tion challenging, especially in mobile game area. These limitations
+highlight the need for innovative approaches to bridge this gap and
+enable LLMs to engage meaningfully in mobile game testing.
+In this paper, we present LLM-based Automatic Playtest tool-
+Lap, the first framework that applies LLMs to play-testing mobile
+match-3 games. Our approach comprises three key phases:
+• Automated Preprocessing: Converts visual game board
+states into structured, interpretable inputs for LLMs.
+• Automatic Prompting Mechanism: Integrates game rules,
+examples, and contextual information to guide LLMs in gen-
+erating valid gameplay actions.
+arXiv:2507.09490v1  [cs.SE]  13 Jul 2025
+
+
+--- page 2 ---
+FSE Companion ’25, June 23–28, 2025, Trondheim, Norway Yan Zhao and Chiawei Tang
+Figure 1: A screenshot
+of Match-3 Game: Casse-
+Bonbons
+Figure 2: A solution gen-
+erated by the LLM using
+vision capabilities
+• Solution Execution: The outputs of the LLM are translated
+into executable actions that are evaluated for their validity
+and impact on gameplay objectives.
+To evaluate the efficacy of LLM-based LIT, we conduct experiments
+using CasseBonbons[8], an open-source match-3 game inspired by
+Candy Crush Saga as shown in Figure 1. Our framework achieves
+higher code coverage, game scores, game levels and trigger more
+crushes compared to baseline tools, demonstrating its potential as
+a robust solution for automated game testing.
+This paper is organized as follows: Section II provides a back-
+ground on match-3 games, the vision capabilities of LLMs and few-
+shot learning techniques. Section III details the proposed approach,
+including preprocessing, prompting mechanisms, and solution ex-
+ecution. Section IV presents experimental results and conducting
+ablation studies. Finally, Section VI discusses future research direc-
+tions and concludes the study.
+2 Background
+In this secion, we present the basic concepts of the game, LLM
+vision capabilities and few-shot learning approach.
+2.1 Match-3 Game
+Match-3 puzzle game[1] is a type of puzzle game where the objective
+is to match three or more identical items, usually in a row or column,
+to clear them from the game board. These games typically involve
+swapping adjacent objects (like candies, gems, or fruits) to create
+matches on a grid of 𝑚 × 𝑛 tiles. A well-known example of this
+genre is Candy Crush Saga developed by King 1, which has since
+been downloaded over 3 billion times as of September 2023, making
+it one of the most popular mobile games worldwide.[23].
+In this study, we chose a match-3 game as the basis for our
+experiments due to its widespread popularity and well-documented
+gameplay mechanics. And we utilize CasseBonbons [8], an open-
+source implementation inspired by Candy Crush Saga as shown
+in Figure 1, which allowed us to effectively collect test results and
+evaluate the efficiency and validity of our testing methodologies.
+1https://www.king.com/game/candycrush
+2.2 LLM VISION
+Modern LLMs, such as OpenAI’s GPT-4[ 20], incorporate multi-
+modal capabilities that enable visual content processing and under-
+standing. While these models excel at general image comprehension
+and object identification, they exhibit notable limitations in spatial
+reasoning tasks. According to OpenAI’s technical documentation2,
+the models perform well when answering broad questions about
+image content and understanding object relationships. However,
+they demonstrate reduced accuracy when processing queries that
+require precise spatial localization. For instance, while the model
+can reliably identify object attributes (e.g., the color of a vehicle)
+or suggest contextual actions (e.g., meal recommendations based
+on refrigerator contents), it struggles with spatial queries such as
+determining the specific location of furniture within a room layout.
+To evaluate these capabilities, we conducted a preliminary test
+by providing multiple screenshots of a Match-3 game board to
+OpenAI’s GPT-4. We provide the model with rules and ask it to
+generate a solution for playtesting. However, the model did not pro-
+duce accurate responses as expected. This limitation aligns with the
+observations detailed in the OpenAI’s technical documentation2.
+Figure 2 illustrates a representative case where GPT-4 was tasked
+with identifying optimal candy-swapping moves given a game
+board configuration and rule set. The model exhibited consistent
+difficulty in both precise candy localization and strategic move gen-
+eration, underscoring fundamental limitations in its spatial reason-
+ing capabilities. These constraints substantially impact the model’s
+ability to autonomously analyze complex game states and generate
+optimal gameplay strategies based solely on visual input, suggest-
+ing that current vision-language models may require additional
+architectural innovations to handle spatially-dependent decision-
+making tasks effectively.
+2.3 Few-Shot Learning Approach
+To address these limitations, we leverage few-shot learning[28], a
+machine learning paradigm that enables models to generalize from
+a small set of examples. Our methodology applies this principle
+by providing the LLM with human-generated examples of optimal
+candy-crushing moves. These carefully curated examples serve to
+demonstrate game mechanics and valid move patterns, enabling
+the model to generate contextually appropriate actions based on
+the current game state. More details about the few-shot learning
+application in this work will be discussed in the Approach chapter.
+3 Approach
+In this section, we present Lap to address these limitations. Specif-
+ically, we outline a method to leverage LLMs for playing mobile
+games by employing a combination of automated preprocessing,
+autoprompting mechanism, and soluciton execution.
+3.1 Automated Preprocessing
+Lap begins by capturing a screenshot of the game board using the
+command-line tool Android Debug Bridge (ADB) [ 13] from the
+Android device. For each screenshot, Lap sequentially recognizes
+the specified candy icons using OpenCV (Open Source Computer
+Vision Library) [7], which outputs their corresponding coordinates
+2OpenAI Vision Documentation
+
+
+--- page 3 ---
+Towards LLM-Based Automatic Playtest FSE Companion ’25, June 23–28, 2025, Trondheim, Norway
+ 
+ 
+                  
+ 
+1 1 2 3 4 4 5 
+4 3 5 1 1 2 1 
+1 3 2 3 5 1 3 
+4 4 5 5 2 5 5 
+2 1 4 1 4 2 3 
+2 1 1 4 1 5 1 
+4 2 4 1 3 3 5 
+Submatrix: [ [1, 1,*,1 ]] 
+Action: Swipe ‘1’ at 
+position (0,2) with ‘*’ 
+adjacent (1,2) 
+Submatrix: [ [1, *, 1],  
+[*,1, *] ] 
+Action: Swipe ‘1’ at 
+position (0,2) with ‘*’ 
+adjacent (1,2) 
+Automated Preprocessing 
+Submatrix: [ [1, 1, *],  
+[*,*, 1] ] 
+Action: Swipe ‘1’ at 
+position (0,2) with ‘*’ 
+adjacent (1,2) 
+The following are the 
+game objectives and 
+rules: You are a highly 
+experienced game 
+tester with deep 
+knowledge of mobile 
+game mechanics, 
+strategies, and testing 
+  
+ 
+Auto Prompting Mechanism 
+Here is the output listing the potential swaps: 
+Swap (1,6) with (1, 5) 
+Swap (2,5) with (2,6) 
+……  
+LLM 
+ADB 
+Game Environmental Context Examples and Strategies Game Objectives and Rules 
+Solutions Solution Execution 
+Figure 3: Framework of LAP
+on the board. Based on the positions and counts of the detected
+candy icons, the match-3 game board is represented as an 𝑚 × 𝑛
+matrix, where each cell corresponds to a position occupied by a
+candy of a specific color. As illustrated in Step 1 of Figure 3, the
+raw game scene is decomposed into multiple feature matrix layers,
+with each layer corresponding to a specific candy color.
+For each game-playing iteration, every candy’s color is repre-
+sented by a unique number. The corresponding feature layer for the
+candy color is converted into a numerical matrix. After processing
+all layers, as shown in Step 2 of Figure 3: The game board will be
+transformed into a 2D matrix, in which each cell is assigned the
+number corresponding to the candy’s color.
+The action of swapping two adjacent candies on the game board
+is abstracted as the exchange of values between two adjacent cells
+in the 2D matrix. This abstraction simplifies the representation of
+moves, making it more interpretable for downstream processing.
+In addition to regular candies, Match-3 games usually incorpo-
+rate special candies and blocker candies (see 4) . Special candies
+are generated by matching at least four candies of the same color.
+And each special candy has a distinct effect that can be activated
+upon being smashed. The leftmost special candy is the color bomb
+(represented by number 0), which can be swapped with any adja-
+cent candy to eliminate all candies of the same color. The rightmost
+special candy is the blocker candy in Casse-Bonbons (represented
+by -1), which cannot be swapped.
+Figure 4: Example of Special Candies and Blocker Candies
+in Match-3 Game CasseBonbons
+3.2 Automatic Prompting Mechanism
+The prompt framework provided to the LLM is structured as follows.
+For the game being tested, we replace the placeholders accordingly:
+"You are given a game to play. The game’s environmental con-
+text is: { Game Environmental Context }. Here are examples and
+strategies you can refer to while playing the game: { Examples and
+Strategies }. The following are the game objectives and rules: { Game
+Objectives and Rules }. "
+As shown in Step 3 of Figure 3, we will demonstrate how to
+define the placeholders using the game CasseBonbons.
+(1) Game Environmental Context This part of the prompt
+contains the game board context, preprocessed using the
+framework described in the previous section. Our tool con-
+tinuously updates the LLM with current game state.
+1 [ { ' role ' : ' user ' , ' content ' : " < task > The game 's
+environmental context is a 2 D matrix as follows :
+2 [[3 , 1 , 3 , 5 , 1 , 1 , 3 , 3 , 1] ,
+3 [1 , 3 , 4 , 3 , 3 , 1 , 5 , 3 , 5] ,
+4 ...
+5 </ task > " } ]
+Listing 1: Game Environmental Context Prompt
+(2) Examples and Strategies The middle part of the prompt
+provides specific examples to the LLM as part of a few-shot
+learning approach to module new solutions. In this paper,
+we supplied 15 sets of sub-matrices and corresponding ac-
+tions. We define an action as swapping two adjacent candy
+of the game board. Each example demonstrates an action
+performed on a submatrix that results in the crushing of
+candies.
+For instance, one set of submatrix and action provided in the
+example prompt is as follows (All matrices are 0-indexed.).
+The symbol * serve as a wild card that can represent any
+types of candy, and does not need to remain the same in one
+sub matrix. The symbol 1 must consistently represent the
+same letter (regardless of case) corresponding to one specific
+candy color throughout the submatrix.
+• Submatrix: 
+∗ 1 ∗
+1 ∗ 1
+
+• Action: Swipe the value 1 at position (0, 1) with the adja-
+cent * at position (1, 1).
+After the swipe action, the submatrix is transformed into:
+
+
+--- page 4 ---
+FSE Companion ’25, June 23–28, 2025, Trondheim, Norway Yan Zhao and Chiawei Tang
+∗ ∗ ∗
+1 1 1
+
+In the transformed submatrix, the second row will crush as
+it contains three candies of the same color in a row.
+These structured example sets will be fed into the LLM to
+illustrate the rules of candy crushing.
+1 [ { ' role ' : ' user ' , ' content ' : " The < example > tag provides
+examples of the game playtest , showing a specific
+submatrix pattern of candies and an exact swipe action
+. Please reference those submatrix pattern in the game
+test . And make sure the entire submatrix must be
+matched as it appears in the examples in the game
+matrix . Moreover , because actions in examples use
+coordinates based on the submatrix ... " } ]
+2 [ { ' role ' : ' user ' , ' content ' : "
+3 < example > Submatrix :[[ '1 ' , '1 ', '* ', '1 ']] , Action :
+swipe '1' at position (0 ,3) with adjacent '*' at
+position (0 ,2) ) </ example >
+4 < example > Submatrix :[[ '* ' , '1 ', '1 '] , [ '1 ' , '* ', '* ']] ,
+Action : swipe '1' at position (1 ,0) with
+adjacent '* ' at position (0 ,0) ) </ example >
+5 ...}] "
+Listing 2: Game Example Prompt
+(3) Game Objectives and Rules: The final part of the prompt
+poses rule queries.
+1 [ { ' role ' : ' user ' , ' content ' : " You are a highly experienced
+game tester with deep knowledge of mobile game
+mechanics , strategies , and testing methodologies . Your
+role is to follow game rules and meet specific testing
+requirements to help assess the game 's functionality
+and enjoyment ... " } ]
+2 [ { ' role ' : ' user ' , ' content ' : ' The < rule > tag provides all
+game rules . These rules define the game mechanics ,
+objectives , constraints , and any special actions
+allowed in the game .
+3 < rule > You are testing a game based on the mechanics of
+Match -3 games . Players swap adjacent candies to
+form horizontal or vertical lines of three or more
+candies of the same color . A match of three or
+more clears those candies from the board . </ rule >
+4 < rule > The game board has been preprocessed and
+represented as a 2 D matrices , with numbers
+representing candies of specific colors and types
+. </ rule >
+5 < rule > Color bombs ( represented by 0) are special candies
+and should be swapped with any adjacent candy to
+amximize the effect . These should be prioritiezed
+for swaps where possible </ rule >
+6 ... ' } ]
+Listing 3: Rule Prompt
+Ultimately, Lap will prompt the LLM to recommend action sets
+based on the provided game matrix, rules, and examples.
+3.3 Solution Execution
+We process the set of actions provided by the LLM and convert them
+into executable commands to control the game. Specifically, we use
+ADB [13] to control the Android device. ADB provides access to a
+Unix shell, allowing us to execute various commands on an Android
+device. First, we transform the matrix coordinates generated by the
+LLM into game screen coordinates that ADB can interpret to control
+the phone screen. For example, the action swipe(1,6) with (1,5) is
+converted into swipe(123px,1098px) with (123px,1370px). Then, we
+issue the corresponding swipe command via ADB to interact with
+the Android phone:
+1 adb s h e l l i n p u t swipe 123 1098 123 1370
+4 Experiments
+In this section, we first describe the experimental settings and then
+explain the conducted experiments and analyze the results.
+4.1 Experimental Settings
+We leverage OpenAI’s GPT-O1-mini APIs for playtesting. The API
+was called using Python 3.10 in a Linux-based environment with
+the openai Python package. We configured the model with a tem-
+perature of 0.5 to prioritize response consistency, and limited the
+output using max_tokens = 500 and num_samples = 1 to control
+response length and determinism. Our simulation environment is
+built on top of Android Emulator provided by Android Studio and
+leverages ADB toolset for mobile game control.
+4.2 Baseline
+Due to the absence of LLM-based testing tools for playtesting mobile
+games, we selected a number of rule-based, randomness-based test-
+ing and Reinforcement Learning-based tools as baseline approaches
+for comparison.
+• Monkey Tool[4] is a randomness-based testing framework
+commonly used in mobile game and application testing. It
+generates random input events, such as touches, gestures,
+and presses, and sends them to the application under test.
+• LIT Tool[31] is a rule-based Lightweight Approach of Human-
+Like Playtest, which could generalize playtest tactics from
+manual testing, and to adopt the tactics for automatic testing
+Android Apps. Given the match-3 game G, the first author
+manually played G for eight minutes in LIT’s demo mode,
+and then switched to LIT’s test mode to automatically play
+G. We use the tool as baseline in our experiment, but test
+the match-3 game for 150 iterations instead of one hour in
+the original paper.
+• RLT[31] is a vanilla Reinforcement Learning-based tool built
+in LIT paper and we refer to it as RLT. We trained RLT for
+eight minutes (i.e., the same length with the LIT demo time)
+aligning its training duration with the LIT demo time to
+ensure consistency across all tools.
+4.3 Metric
+We evaluated the effectiveness of various testing tools by measur-
+ing code coverage and bug detection during execution. The general
+assumption is that a testing tool’s effectiveness increases as it ex-
+ecutes more code. To quantify coverage, we used line coverage
+obtained by JaCoCo [10].
+Since our experiment target is mobile games, we introduced
+two additional metrics: Game Score and Game Level. The Game
+Score represents the points earned by a testing tool after it interacts
+with the game for a set period. And the Game Level indicates the
+number of levels the tool achieves before the testing time expires; a
+higher score and level suggests a tool unlock more game scenarios
+and therefore, more thorough testing.
+4.4 Experiment Results
+We systematically evaluate Lap and baselines on their play-testing
+performance across 150 iterations.
+
+
+--- page 5 ---
+Towards LLM-Based Automatic Playtest FSE Companion ’25, June 23–28, 2025, Trondheim, Norway
+Figure 5: Game Scores Across Iteration Rounds
+Figure 6: Game Levels Across Iteration Rounds
+Extensive Testing Scope: The game score results are summa-
+rized in figure 5, which shows the scores achieved by each tool over
+iterations. The game level progress are shown in 6.
+In our experiments, Lap achieves the highest score of 27,520 and
+highest level of 8, which demonstrates steady growth across itera-
+tions. The "LIT" tool shows consistent improvement over iterations
+but at a slower pace, reaching a peak score of 14,560 and level of 5.
+"RLT" starts at 0 and remains low for the majority of iterations. As
+explained in LIT paper[31], "As we trained RLT for only eight min-
+utes (i.e., the same length with the LIT demo time), it is possible that
+RLT was not trained sufficiently and it worked less effectively". The
+"Monkey" category remains constant at 0 throughout all iterations
+because it does not know how to enter the game, and spent lots
+of time clicking random pixels on the display before accidentally
+hitting the start button.
+This result highlights Lap, which use the LLM as the cognitive
+engine, can understand game mechanics, generate targeted game
+testing scenarios, and conduct effective game testing.
+Enhanced Code Exploration: The code coverage results are
+Figure 7: Line Code Coverage Across Iteration Rounds
+summarized in Figure 7, which shows the line coverage percentage
+achieved by each tool. In our experiments, Lap shows continuous
+improvement in coverage initially and achieved the highest values
+79%. The "LIT" series shows consistent growth over iterations but at
+a slower pace. it stable at 75% until the final iteration. "RLT" starts at
+46% and shows steady progress but achieves a lower final coverage
+compared to LIT and LLM. The "Monkey" category maintains an
+almost constant coverage of 3-5% across all iterations, exhibiting a
+flatline with negligible improvement.
+This comprehensive exploration ensures that most of the code-
+base is exercised during testing, minimizing blind spots where
+potential bugs might hide.
+Improved Vulnerability Discovery: During testing of Casse-
+bonbons with Lap, the game crashed as shown in Table 1, indicating
+its ability to uncover previously hidden vulnerabilities.
+These crashes suggest that the LLM tool explores deep and un-
+expected paths in the application. By uncovering these crashes, the
+LLM tool provides developers with actionable insights to improve
+the robustness and stability of their applications.
+Table 1: Crash Triggering Results
+Number of crush triggering
+LAP 5
+LIT 1
+Monkey 0
+RLT 0
+4.5 Ablation Studies of Lap
+We ablate 3 input prompt choices, Lap with rule prompt only, Lap
+with example prompt only and Lap with both rule prompt and
+examples as Few-shot Learning prompt. We study their impact on
+playtesting performances within 150 prompting iterations. Results
+are show in 8 and 9. X-axis denotes the number of prompting
+iterations. We highlight the key findings below:
+Figure 8: Game Scores Across Iteration Rounds
+Figure 9: Line Code Coverage Across Iteration Rounds
+• Lap with rule prompt alone enables game play-testing but
+lacks efficiency. The overall game progression is relatively
+slow.
+
+
+--- page 6 ---
+FSE Companion ’25, June 23–28, 2025, Trondheim, Norway Yan Zhao and Chiawei Tang
+• Lap with Few-shot Learning alone provides a notable im-
+provement, demonstrating the importance of examples in
+enhancing play-testing performance.
+• The combination of Rule Prompt and Few-shot Learning sig-
+nificantly proves to be the most effective for both short-term
+progress and long-term optimization, highlighting the syn-
+ergy between rule prompts and few-shot learning, where the
+structured guidance from rules complements the adaptability
+of few-shot learning.
+5 Related Work
+5.1 Automated Testing for Android Apps
+Various tools were proposed to automate testing for Android apps.
+Specifically, random-based approaches (e.g., DynoDroid [18] and
+Monkey [4]) tests app by generating random UI events and system
+events. Given an app to test, model-based approaches (e.g. GUIRip-
+per [2], Time travel [9], EvoDrodi [19] and PUMA [15]) use static
+or dynamic program analysis to build a model for the app as a
+finite-state machine (FSM). Record-and-replay tools (e.g., RERAN
+[12] and Mobi- Play [ 22]) record inputs and program execution
+when users manually test apps, and then replay the recorded data
+to automatically repeat the testing scripts.
+However, these approaches are not well-suited for mobile game
+testing due to the complexity of game interactions, real-time execu-
+tion constraints, high state variability, performance dependencies,
+and the lack of standardized UI components. These unique chal-
+lenges require specialized testing tools tailored for game apps.
+5.2 Automated Game Testing
+Several approaches were introduced to automate game testing.
+Specifically, online testing (e.g., TorX [26] and Spec Explorer [27])
+relies on model-based testing to detect discrepancies between the
+implementation under test (IUT) and a formal specification. How-
+ever, these methods require informal specification languages of
+expertise, while Lap does not.
+Deeplearning-based approaches use large-scale player data to
+train models that predict human-like actions in gameplay. Specifi-
+cally, Bergdahl et al. (2021)[6] proposed a framework that utilizes
+DRL to explore and exploit game mechanics based on user-defined
+reward signals. Reinforcement learning-based approaches utilize re-
+ward systems to teach agents through trial and error, allowing them
+to learn optimal strategies by interacting with the game environ-
+ment and receiving feedback on their actions. Wuji [32] integrates
+evolutionary algorithms, DRL, and multi-objective optimizations
+for automated game testing. However, DL-based [21],[6],[14], [25]
+or RL-based tools [17] [32] cannot be directly applied to new games
+without significant retraining, requiring extensive data and compu-
+tational resources. In contrast, Lap leverages LLM as its core engine,
+eliminating the need for vast datasets and intensive training, mak-
+ing it more adaptable and efficient for game testing.
+5.3 LLM-Driven Game Playing
+Large language models (LLMs)-driven automated game playing has
+emerged as a transformative approach. We identify two general
+classes of games to which LLM players are well suited:
+(a) Games where the main input and output modalities are natu-
+ral language. For instance, HuMAL[24] trains agents to improved
+decision-making and planning for text-based game. CALM [30] is a
+GPT-2 system finetuned on a dataset of human gameplay transcripts
+collected from a variety of text adventure games. The GALAD sys-
+tem [3] uses a pre-trained LLM to guide an agent towards morally
+acceptable actions in text games from the Jericho suite [16].
+(b) Games for which external programs can control player actions
+via an API. VOYAGER [29] leverages the code generation abilities
+of GPT-4 to play Minecraft (Mojang Studios, 2011) by interacting
+with the popular Mineflayer API. MineDojo [11] and VPT [5] utilize
+YouTube videos for large-scale pre-training to play games through
+API.
+However, many non–text-based games, including mobile games,
+do not offer robust API support for retrieving game states and con-
+trolling gameplay. This limitation significantly restricts the direct
+application of existing approaches, motivating alternative solutions
+such as the one proposed in Lap.
+6 Limitation and Future Research Directions
+Hallucinations:Large Language Models (LLMs) can sometimes
+generate invalid solutions, failing to make further progress. To
+mitigate the impact of hallucinations, we provide LLMs with as
+much game information as possible, enabling them to return the
+most extensive set of potential results.
+Time Sensitivity:Some games require players to provide a so-
+lution within a specific time limit, such as a car racing game. Since
+LLMs require time to think and generate responses, they may not
+be well-suited for tasks with strict time constraints.
+Scalability: Although we implemented mechanisms to trans-
+form the match-3 game environment and state into a format un-
+derstandable by LLMs and enable LLMs to play-test the match-3
+game effectively. However, whether similar transformations and
+effective testing can be achieved for other mobile games remains a
+topic for further research.
+7 Conclusion
+In this study, we introduced Lap, a novel framework to automate
+play testing in match-3 mobile games using LLMs. Using automated
+pre-processing, a structured prompting mechanism, and solution
+execution, our framework enables LLMs to interpret game states,
+generate valid actions, and achieve predefined gameplay objectives.
+Experimental results demonstrated that Lap outperforms con-
+ventional baseline tools in terms of code coverage, game score, and
+vulnerability discovery. Furthermore, our ablation studies high-
+lighted the synergy between rule prompts and few-shot learning,
+showcasing how combining structured guidance with adaptive ex-
+amples enhances performance.
+In conclusion, Lap demonstrates the potential of AI in decision-
+making and actions within complex game environments, bridges
+the gap between advanced artificial intelligence and automated
+play-testing, provide a robust and innovative solution for mobile
+game testing. This work paves the way for future research into
+LLM-driven frameworks for other game genres and complex testing
+environments, contributing to the broader adoption of AI in game
+testing.
+
+
+--- page 7 ---
+Towards LLM-Based Automatic Playtest FSE Companion ’25, June 23–28, 2025, Trondheim, Norway
+References
+[1] Match 3 games, 2024. URL https://www.match3games.com. Accessed: October
+2024.
+[2] Domenico Amalfitano, Anna Rita Fasolino, Porfirio Tramontana, Salvatore
+De Carmine, and Atif M. Memon. Using gui ripping for automated testing
+of android applications. In 2012 Proceedings of the 27th IEEE/ACM Interna-
+tional Conference on Automated Software Engineering , pages 258–261, 2012. doi:
+10.1145/2351676.2351717.
+[3] Prithviraj Ammanabrolu, Liwei Jiang, Maarten Sap, Hannaneh Hajishirzi, and
+Yejin Choi. Aligning to social norms and values in interactive narratives. In
+Marine Carpuat, Marie-Catherine de Marneffe, and Ivan Vladimir Meza Ruiz,
+editors, Proceedings of the 2022 Conference of the North American Chapter of
+the Association for Computational Linguistics: Human Language Technologies ,
+pages 5994–6017, Seattle, United States, July 2022. Association for Computational
+Linguistics. doi: 10.18653/v1/2022.naacl-main.439. URL https://aclanthology.org/
+2022.naacl-main.439/.
+[4] Android Developers. Monkey: Ui/application exerciser, 2020. URL https:
+//developer.android.com/studio/test/. Accessed: October 2024.
+[5] Bowen Baker, Ilge Akkaya, Peter Zhokhov, Joost Huizinga, Jie Tang, Adrien
+Ecoffet, Brandon Houghton, Raul Sampedro, and Jeff Clune. Video pretraining
+(vpt): learning to act by watching unlabeled online videos. In Proceedings of the
+36th International Conference on Neural Information Processing Systems , NIPS ’22,
+Red Hook, NY, USA, 2022. Curran Associates Inc. ISBN 9781713871088.
+[6] Joakim Bergdahl, Camilo Gordillo, Konrad Tollmar, and Linus Gisslén. Augment-
+ing automated game testing with deep reinforcement learning. In 2020 IEEE
+Conference on Games (CoG), pages 600–603, 2020. doi: 10.1109/CoG47356.2020.
+9231552.
+[7] Intel Corporation, Willow Garage, and Itseez. OpenCV. https://opencv.org, 2020.
+Accessed March 27, 2025.
+[8] Ismael Cussac. Cassebonbons, 2020. URL https://github.com/IsmaelCussac/.
+Accessed: October 2014.
+[9] Zhen Dong, Marcel Böhme, Lucia Cojocaru, and Abhik Roychoudhury. Time-
+travel testing of android apps. In Proceedings of the ACM/IEEE 42nd International
+Conference on Software Engineering , ICSE ’20, page 481–492, New York, NY,
+USA, 2020. Association for Computing Machinery. ISBN 9781450371216. doi:
+10.1145/3377811.3380402. URL https://doi.org/10.1145/3377811.3380402.
+[10] EclEmma. JaCoCo, 2023. URL https://www.eclemma.org/jacoco/. Accessed:
+2023-12-17.
+[11] Linxi Fan, Guanzhi Wang, Yunfan Jiang, Ajay Mandlekar, Yuncong Yang, Haoyi
+Zhu, Andrew Tang, De-An Huang, Yuke Zhu, and Anima Anandkumar. Mine-
+dojo: Building open-ended embodied agents with internet-scale knowledge. In
+Thirty-sixth Conference on Neural Information Processing Systems Datasets and
+Benchmarks Track, 2022.
+[12] Lorenzo Gomez, Iulian Neamtiu, Tanzirul Azim, and Todd Millstein. Reran:
+Timing- and touch-sensitive record and replay for android. In 2013 35th In-
+ternational Conference on Software Engineering (ICSE) , pages 72–81, 2013. doi:
+10.1109/ICSE.2013.6606553.
+[13] Google. Adb - android debug bridge, 2024. URL https://developer.android.com/
+studio/command-line/adb. Accessed: February 14, 2025.
+[14] Stefan Freyr Gudmundsson, Philipp Eisen, Erik Poromaa, Alex Nodet, Sami
+Purmonen, Bartlomiej Kozakowski, Richard Meurling, and Lele Cao. Human-
+like playtesting with deep learning. In 2018 IEEE Conference on Computational
+Intelligence and Games (CIG) , page 1–8. IEEE Press, 2018. doi: 10.1109/CIG.2018.
+8490442. URL https://doi.org/10.1109/CIG.2018.8490442.
+[15] Shuai Hao, Bin Liu, Suman Nath, William G.J. Halfond, and Ramesh Govindan.
+Puma: programmable ui-automation for large-scale dynamic analysis of mobile
+apps. In Proceedings of the 12th Annual International Conference on Mobile Systems,
+Applications, and Services, MobiSys ’14, page 204–217, New York, NY, USA, 2014.
+Association for Computing Machinery. ISBN 9781450327930. doi: 10.1145/
+2594368.2594390. URL https://doi.org/10.1145/2594368.2594390.
+[16] M. Hausknecht, P. Ammanabrolu, M.-A. Côté, and X. Yuan. Interactive fiction
+games: A colossal adventure. In Proceedings of the AAAI Conference on Artificial
+Intelligence, 2020.
+[17] Sara Karimi, Sahar Asadi, Francesco Lorenzo, and Amir H. Payberah. Candyrl: A
+hybrid reinforcement learning model for gameplay. In2022 21st IEEE International
+Conference on Machine Learning and Applications (ICMLA) , pages 567–572, 2022.
+doi: 10.1109/ICMLA55696.2022.00098.
+[18] Aravind Machiry, Rohan Tahiliani, and Mayur Naik. Dynodroid: an input gener-
+ation system for android apps. In Proceedings of the 2013 9th Joint Meeting on
+Foundations of Software Engineering , ESEC/FSE 2013, page 224–234, New York,
+NY, USA, 2013. Association for Computing Machinery. ISBN 9781450322379. doi:
+10.1145/2491411.2491450. URL https://doi.org/10.1145/2491411.2491450.
+[19] Riyadh Mahmood, Nariman Mirzaei, and Sam Malek. Evodroid: segmented
+evolutionary testing of android apps. In Proceedings of the 22nd ACM SIGSOFT
+International Symposium on Foundations of Software Engineering , FSE 2014, page
+599–609, New York, NY, USA, 2014. Association for Computing Machinery. ISBN
+9781450330565. doi: 10.1145/2635868.2635896. URL https://doi.org/10.1145/
+2635868.2635896.
+[20] OpenAI. GPT-4 Technical Report. arXiv preprint arXiv:2303.08774, 2023. URL
+https://arxiv.org/abs/2303.08774.
+[21] Thuy Pham, Nhu Nguyen, Tien Dang, Linh Nguyen, and Binh Nguyen. ATGW:
+A Machine Learning Framework for Automation Testing in Game Woody. In
+Proceedings of the 2020 Conference , September 2020. ISBN 9781643681146. doi:
+10.3233/FAIA200586.
+[22] Zhengrui Qin, Yutao Tang, Ed Novak, and Qun Li. Mobiplay: a remote execution
+based record-and-replay tool for mobile applications. In Proceedings of the 38th
+International Conference on Software Engineering , ICSE ’16, page 571–582, New
+York, NY, USA, 2016. Association for Computing Machinery. ISBN 9781450339001.
+doi: 10.1145/2884781.2884854. URL https://doi.org/10.1145/2884781.2884854.
+[23] Mobile Marketing Reads. Candy crush saga revenue and usage statistics 2020,
+September 2023. URL https://mobilemarketingreads.com/candy-crush-saga-
+revenue-and-usage-statistics-2020/. Accessed: 2024-09-01.
+[24] Zijing Shi, Meng Fang, Ling Chen, Yali Du, and Jun Wang. Human-guided moral
+decision making in text-based games. In Proceedings of the Thirty-Eighth AAAI
+Conference on Artificial Intelligence and Thirty-Sixth Conference on Innovative
+Applications of Artificial Intelligence and Fourteenth Symposium on Educational
+Advances in Artificial Intelligence, AAAI’24/IAAI’24/EAAI’24. AAAI Press, 2024.
+ISBN 978-1-57735-887-9. doi: 10.1609/aaai.v38i19.30155. URL https://doi.org/10.
+1609/aaai.v38i19.30155.
+[25] Samira Shirzadehhajimahmood, I. S. W. B. Prasetya, Frank Dignum, Mehdi
+Dastani, and Gabriele Keller. Using an agent-based approach for robust au-
+tomated testing of computer games. In Proceedings of the 12th International
+Workshop on Automating TEST Case Design, Selection, and Evaluation , A-TEST
+2021, page 1–8, New York, NY, USA, 2021. Association for Computing Ma-
+chinery. ISBN 9781450386234. doi: 10.1145/3472672.3473952. URL https:
+//doi.org/10.1145/3472672.3473952.
+[26] G.J. Tretmans and Hendrik Brinksma. Torx: Automated model-based testing. In
+A. Hartman and K. Dussa-Ziegler, editors, First European Conference on Model-
+Driven Software Engineering, pages 31–43, December 2003. ISBN not assigned.
+First European Conference on Model-Driven Software Engineering ; Conference
+date: 11-12-2003 Through 12-12-2003.
+[27] Margus Veanes, Colin Campbell, Wolfram Schulte, and Nikolai Tillmann. Online
+testing with model programs. In Proceedings of the 10th European Software Engi-
+neering Conference Held Jointly with 13th ACM SIGSOFT International Symposium
+on Foundations of Software Engineering , ESEC/FSE-13, page 273–282, New York,
+NY, USA, 2005. Association for Computing Machinery. ISBN 1595930140. doi:
+10.1145/1081706.1081751. URL https://doi.org/10.1145/1081706.1081751.
+[28] Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and
+Daan Wierstra. Matching networks for one shot learning. In Advances in neural
+information processing systems, pages 3630–3638, 2016.
+[29] Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke
+Zhu, Linxi Fan, and Anima Anandkumar. Voyager: An open-ended embodied
+agent with large language models. arXiv preprint arXiv: Arxiv-2305.16291, 2023.
+[30] Shunyu Yao, Rohan Rao, Matthew Hausknecht, and Karthik Narasimhan. Keep
+CALM and explore: Language models for action generation in text-based games.
+In Bonnie Webber, Trevor Cohn, Yulan He, and Yang Liu, editors, Proceed-
+ings of the 2020 Conference on Empirical Methods in Natural Language Pro-
+cessing (EMNLP) , pages 8736–8754, Online, November 2020. Association for
+Computational Linguistics. doi: 10.18653/v1/2020.emnlp-main.704. URL https:
+//aclanthology.org/2020.emnlp-main.704/.
+[31] Yan Zhao, Enyi Tang, Haipeng Cai, Xi Guo, Xiaoyin Wang, and Na Meng. A
+lightweight approach of human-like playtest for android apps. In 2022 IEEE Inter-
+national Conference on Software Analysis, Evolution and Reengineering (SANER) ,
+pages 309–320, 2022. doi: 10.1109/SANER53432.2022.00047.
+[32] Yan Zheng, Xiaofei Xie, Ting Su, Lei Ma, Jianye Hao, Zhaopeng Meng, Yang
+Liu, Ruimin Shen, Yingfeng Chen, and Changjie Fan. Wuji: Automatic online
+combat game testing using evolutionary deep reinforcement learning. In 2019
+34th IEEE/ACM International Conference on Automated Software Engineering (ASE),
+pages 772–784, 2019. doi: 10.1109/ASE.2019.00077.

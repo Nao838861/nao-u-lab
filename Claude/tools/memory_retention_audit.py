@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -100,6 +101,28 @@ def extract_supersedes(path: Path) -> SupersedeRecord | None:
     )
 
 
+def count_recent_commits(path: Path, days: int = 30, cwd: Path | None = None) -> int:
+    """git log --follow --since=<days> days ago で path に触れた commit 数を返す。
+
+    FadeMem 3 信号 proxy のうち access frequency に対応する measure。
+    git 不在 / 履歴なし / subprocess 失敗時は -1 を返す (副作用ゼロ・呼び元で除外可能)。
+    """
+    try:
+        r = subprocess.run(
+            ["git", "log", "--follow", f"--since={days} days ago", "--pretty=%H", "--", str(path)],
+            capture_output=True,
+            text=True,
+            cwd=str(cwd) if cwd is not None else None,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return -1
+    if r.returncode != 0:
+        return -1
+    lines = [ln for ln in r.stdout.splitlines() if ln.strip()]
+    return len(lines)
+
+
 def walk_roots(roots: list[Path]) -> list[Path]:
     out: list[Path] = []
     for root in roots:
@@ -154,6 +177,14 @@ def main(argv: list[str] | None = None) -> int:
                     help="経過日数→経過サイクル数換算 (近似値、default: 2.0)")
     ap.add_argument("--base", default=".",
                     help="出力パスの基準ディレクトリ (default: カレント)")
+    ap.add_argument("--with-access-freq", action="store_true",
+                    help="FadeMem 3 信号 proxy 第 1 段: with_retention 対象に access_frequency_30d (git log --follow 30 日 commit 数) を集計 (default: off, 従来挙動完全保持)")
+    ap.add_argument("--access-freq-days", type=int, default=30,
+                    help="--with-access-freq の集計期間 (日数、default: 30)")
+    ap.add_argument("--hook-summary", action="store_true",
+                    help="multi_phase_cycle_log.py Pre-check hook 用 (kaizen #138 段階3): "
+                         "stdout 全抑止し stderr に 1 行サマリ + 退役候補時の WARN 行のみを出力。"
+                         "従来挙動 (default: off) は完全維持。")
     args = ap.parse_args(argv)
 
     base = Path(args.base).resolve()
@@ -166,6 +197,11 @@ def main(argv: list[str] | None = None) -> int:
     by_ret: dict[str, list[RetentionRecord]] = {k: [] for k in VALID_RETENTION}
     for r in records:
         by_ret[r.retention].append(r)
+
+    if args.hook_summary:
+        import io
+        _orig_stdout = sys.stdout
+        sys.stdout = io.StringIO()
 
     print(f"[memory_retention_audit] roots={args.roots} scanned_md={len(paths)} "
           f"with_retention={len(records)} "
@@ -233,6 +269,59 @@ def main(argv: list[str] | None = None) -> int:
     else:
         for old, new in pairs:
             print(f"  {old} -> {new}")
+
+    if args.with_access_freq:
+        days = args.access_freq_days
+        access_freqs: dict[Path, int] = {}
+        for r in records:
+            access_freqs[r.path] = count_recent_commits(r.path, days=days, cwd=base)
+
+        print()
+        print(f"## access_frequency_30d 集計 (FadeMem 3 信号 proxy 第 1 段, days={days})")
+        print(f"  with_retention 対象 {len(records)} 件 / 計測手段: git log --follow --since={days}d")
+        for r in records:
+            try:
+                rel = r.path.relative_to(base)
+            except ValueError:
+                rel = r.path
+            cnt = access_freqs.get(r.path, -1)
+            cnt_str = "n/a" if cnt < 0 else str(cnt)
+            print(f"  {rel} (retention={r.retention} access_frequency_{days}d={cnt_str})")
+
+        low = [r for r in records if access_freqs.get(r.path, -1) == 0]
+        print()
+        print(f"## low_frequency 候補 (access_frequency_{days}d == 0, {len(low)} 件)")
+        if not low:
+            print("  low_frequency 該当なし")
+        else:
+            for r in low:
+                try:
+                    rel = r.path.relative_to(base)
+                except ValueError:
+                    rel = r.path
+                print(f"  {rel} (retention={r.retention})")
+
+    if args.hook_summary:
+        sys.stdout = _orig_stdout
+        sys.stderr.write(
+            f"[memory_retention_audit] scanned_md={len(paths)} "
+            f"with_retention={len(records)} "
+            f"(permanent={len(by_ret['permanent'])} "
+            f"cycle={len(by_ret['cycle'])} "
+            f"probationary={len(by_ret['probationary'])}) "
+            f"stale={len(stale)} supersedes_pairs={len(pairs)} "
+            f"max_cycles={args.max_cycles}\n"
+        )
+        for r in stale:
+            try:
+                rel = r.path.relative_to(base)
+            except ValueError:
+                rel = r.path
+            sys.stderr.write(
+                f"[memory_retention_audit WARN] stale: {rel} "
+                f"(retention={r.retention} days={r.elapsed_days:.1f} "
+                f"cycles≈{r.elapsed_cycles:.1f} ≥ {args.max_cycles})\n"
+            )
 
     return 0
 

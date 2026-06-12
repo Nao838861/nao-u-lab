@@ -9,8 +9,16 @@ spectral entropy effective rank を計測する。
 
 Patel 2604.03809 effective rank の base rate 取得装置。
 GSM8K rationale 2.17 / Mir effective rank との相対比較用。
+
+R-F: effective_rank 最大化条件 = 4 instance source (Log / Log_cdx / Mir / Ash)
+全員が直近 7d で >= MIN_PER_POSTER 件 substantive 投稿し、かつ source 間で
+語彙 (char bigram + ASCII word) が分離している時に max。ログ行数だけ増えて
+源が偏る (例: Log だけ 50 件 / 他 0 件) と min_n=0 で計測拒否される構造。
+
+--append-log <path>: 1 行ログ追記モード。週次ジョブ化用 (C306 Phase 4)。
 """
 
+import argparse
 import json
 import math
 import random
@@ -234,7 +242,40 @@ def bootstrap_effrank_ci(vectors, n_iter=BOOTSTRAP_N, seed=RNG_SEED):
     return lo, hi
 
 
+def append_log_line(log_path, er, H, intra_means, inter_mean):
+    """週次ジョブ化用 1 行追記。書式は固定 (check_instance_divergence_freshness と整合)。
+
+    フォーマット: YYYY-MM-DD HH:MM | effective_rank=<F> | entropy=<F>
+                  | intra_cos_log=<F> | intra_cos_logcdx=<F>
+                  | intra_cos_mir=<F> | intra_cos_ash=<F> | inter_cos=<F>
+    """
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    def fmt(label):
+        v = intra_means.get(label, float("nan"))
+        return "nan" if math.isnan(v) else f"{v:.4f}"
+
+    line = (
+        f"{ts} | effective_rank={er:.4f} | entropy={H:.4f}"
+        f" | intra_cos_log={fmt('Log')}"
+        f" | intra_cos_logcdx={fmt('Log_cdx')}"
+        f" | intra_cos_mir={fmt('Mir')}"
+        f" | intra_cos_ash={fmt('Ash')}"
+        f" | inter_cos={inter_mean:.4f}\n"
+    )
+    log_path = Path(log_path)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        f.write(line)
+    print(f"[APPEND_LOG] wrote: {log_path}", file=sys.stderr)
+
+
 def main():
+    parser = argparse.ArgumentParser(description="effective_rank probe (Patel 2604.03809)")
+    parser.add_argument("--append-log", default=None,
+                        help="週次ジョブ化用: 計測結果を 1 行追記するログファイルパス")
+    args = parser.parse_args()
+
     if not ARCHIVE_DIR.exists():
         print(f"[ERROR] archive dir not found: {ARCHIVE_DIR}", file=sys.stderr)
         return 1
@@ -293,6 +334,10 @@ def main():
     print("[COSINE_STRUCTURE] "
           + " ".join(f"intra_{lbl}={m:.4f}" for lbl, m in intra_means.items())
           + f" inter_mean={inter_mean:.4f}")
+
+    if args.append_log:
+        append_log_line(args.append_log, er, H, intra_means, inter_mean)
+
     return 0
 
 

@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2512.12706"
 collected_at: "2026-05-31T13:29:20.9041162+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, reinforcement-learning, code-coverage, llm-agent, update-testing]
+phase2_current_review:
+  evaluated_at: "2026-06-03T04:32:21+09:00"
+  evaluated_by: "log_cdx (Phase 2)"
+  gate_decision: postpone
+  status: postponed
+  candidate_status: postponed
+  last_reviewed_at: "2026-06-03T04:32:21+09:00"
+  last_decision: postpone
+  evidence: "gate_decision:postpone; evaluated_at:2026-06-03T04:32:21+09:00; already_posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780202153217609"
+  next_action: keep_for_reference
+  stale_after: "2026-07-03"
+  supersedes: []
+  gate_reason: |-
+    code coverage と gameplay intent を結ぶ評価設計として手法要素は強いが、すでに #shared-reads 投稿済み。
+    Phase 3 の新規投稿には回さず、改修差分評価 probe の参照として保持する。
 evaluated_at: "2026-05-31T13:32:16.0597736+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass

@@ -1,0 +1,2793 @@
+{
+  "audit": "multi_seed_correlation_sweep",
+  "purpose": "C320 Phase 4: multi-seed (N=10) 4 軸 6 ペア sweep — instinct × temporal Pearson 0.9959 (C316 N=5 単一観測) の信頼性確証 / 疑似相関判定",
+  "N_seeds": 10,
+  "seeds": [
+    20260527,
+    20260528,
+    20260529,
+    20260530,
+    20260531,
+    20260532,
+    20260533,
+    20260534,
+    20260535,
+    20260536
+  ],
+  "baseline_seed": 20260527,
+  "instinct_trigger_px": 50,
+  "temporal_inconsistency_threshold_px": 15,
+  "breakdown_per_seed": {
+    "seed_20260527": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 378,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 38.84,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 435,
+        "instinct_trigger_count": 7,
+        "min_approach_p10": 32.73,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 2
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 283,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 62.09,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 561,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 40.72,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 6
+      }
+    },
+    "seed_20260528": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 348,
+        "instinct_trigger_count": 6,
+        "min_approach_p10": 32.37,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 343,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 29.67,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 561,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 37.94,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 6
+      }
+    },
+    "seed_20260529": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 313,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 59.17,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 474,
+        "instinct_trigger_count": 10,
+        "min_approach_p10": 20.21,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 3
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 285,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 50.54,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 2846,
+        "instinct_trigger_count": 11,
+        "min_approach_p10": 49.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 24
+      }
+    },
+    "seed_20260530": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 372,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 35.42,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 375,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 24.68,
+        "cont_grazing_max": 11,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 272,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 104.86,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 565,
+        "instinct_trigger_count": 4,
+        "min_approach_p10": 37.65,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 6
+      }
+    },
+    "seed_20260531": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 508,
+        "instinct_trigger_count": 6,
+        "min_approach_p10": 36.82,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 4
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 494,
+        "instinct_trigger_count": 12,
+        "min_approach_p10": 45.16,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 4
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 285,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 50.96,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 2849,
+        "instinct_trigger_count": 11,
+        "min_approach_p10": 47.23,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 24
+      }
+    },
+    "seed_20260532": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 383,
+        "instinct_trigger_count": 3,
+        "min_approach_p10": 20.17,
+        "cont_grazing_max": 11,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 341,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 56.62,
+        "cont_grazing_max": 7,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 271,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 105.1,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 1599,
+        "instinct_trigger_count": 8,
+        "min_approach_p10": 38.38,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 14
+      }
+    },
+    "seed_20260533": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 328,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 27.43,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 333,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 35.52,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 58.84,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 340,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 103.43,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      }
+    },
+    "seed_20260534": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 314,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 47.79,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 291,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 45.5,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 54.91,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 563,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 39.4,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 6
+      }
+    },
+    "seed_20260535": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 273,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 61.93,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 1
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 273,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 70.01,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 1
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 282,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 63.83,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 562,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 37.32,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 5
+      }
+    },
+    "seed_20260536": {
+      "good": {
+        "survived_frames": 4162,
+        "instinct_trigger_count": 22,
+        "min_approach_p10": 52.24,
+        "cont_grazing_max": 6,
+        "temporal_inconsistency_count": 43
+      },
+      "camper": {
+        "survived_frames": 319,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 58.07,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "lane-holder": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 55.33,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 0
+      },
+      "blind-sweeper": {
+        "survived_frames": 459,
+        "instinct_trigger_count": 5,
+        "min_approach_p10": 24.16,
+        "cont_grazing_max": 9,
+        "temporal_inconsistency_count": 2
+      },
+      "nospecial": {
+        "survived_frames": 545,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 93.05,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 2
+      },
+      "zig-zag-narrow": {
+        "survived_frames": 323,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 55.25,
+        "cont_grazing_max": 4,
+        "temporal_inconsistency_count": 0
+      },
+      "random-rush": {
+        "survived_frames": 417,
+        "instinct_trigger_count": 4,
+        "min_approach_p10": 28.54,
+        "cont_grazing_max": 17,
+        "temporal_inconsistency_count": 2
+      },
+      "corner-stay": {
+        "survived_frames": 337,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 60.11,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 0
+      },
+      "mid-orbit": {
+        "survived_frames": 246,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 80.75,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "vertical-bounce": {
+        "survived_frames": 284,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 57.85,
+        "cont_grazing_max": 2,
+        "temporal_inconsistency_count": 1
+      },
+      "triangle-loop": {
+        "survived_frames": 229,
+        "instinct_trigger_count": 1,
+        "min_approach_p10": 44.09,
+        "cont_grazing_max": 5,
+        "temporal_inconsistency_count": 1
+      },
+      "spiral-out": {
+        "survived_frames": 227,
+        "instinct_trigger_count": 2,
+        "min_approach_p10": 28.09,
+        "cont_grazing_max": 8,
+        "temporal_inconsistency_count": 0
+      },
+      "wave-rider": {
+        "survived_frames": 702,
+        "instinct_trigger_count": 7,
+        "min_approach_p10": 35.32,
+        "cont_grazing_max": 3,
+        "temporal_inconsistency_count": 11
+      }
+    }
+  },
+  "rows": [
+    {
+      "seed": 20260527,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260527,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "blind-sweeper",
+      "survived_frames": 378,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 38.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260527,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "random-rush",
+      "survived_frames": 435,
+      "outcome": "gameover",
+      "instinct_trigger_count": 7,
+      "min_approach_p10": 32.73,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260527,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260527,
+      "strategy": "vertical-bounce",
+      "survived_frames": 283,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 62.09,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260527,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260527,
+      "strategy": "wave-rider",
+      "survived_frames": 561,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 40.72,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 6
+    },
+    {
+      "seed": 20260528,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260528,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "blind-sweeper",
+      "survived_frames": 348,
+      "outcome": "gameover",
+      "instinct_trigger_count": 6,
+      "min_approach_p10": 32.37,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260528,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "random-rush",
+      "survived_frames": 343,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 29.67,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260528,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260528,
+      "strategy": "wave-rider",
+      "survived_frames": 561,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 37.94,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 6
+    },
+    {
+      "seed": 20260529,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260529,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "blind-sweeper",
+      "survived_frames": 313,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 59.17,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260529,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "random-rush",
+      "survived_frames": 474,
+      "outcome": "gameover",
+      "instinct_trigger_count": 10,
+      "min_approach_p10": 20.21,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 3
+    },
+    {
+      "seed": 20260529,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "vertical-bounce",
+      "survived_frames": 285,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 50.54,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260529,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260529,
+      "strategy": "wave-rider",
+      "survived_frames": 2846,
+      "outcome": "gameover",
+      "instinct_trigger_count": 11,
+      "min_approach_p10": 49.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 24
+    },
+    {
+      "seed": 20260530,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260530,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "blind-sweeper",
+      "survived_frames": 372,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 35.42,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260530,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "random-rush",
+      "survived_frames": 375,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 24.68,
+      "cont_grazing_max": 11,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "vertical-bounce",
+      "survived_frames": 272,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 104.86,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260530,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260530,
+      "strategy": "wave-rider",
+      "survived_frames": 565,
+      "outcome": "gameover",
+      "instinct_trigger_count": 4,
+      "min_approach_p10": 37.65,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 6
+    },
+    {
+      "seed": 20260531,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260531,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "blind-sweeper",
+      "survived_frames": 508,
+      "outcome": "gameover",
+      "instinct_trigger_count": 6,
+      "min_approach_p10": 36.82,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 4
+    },
+    {
+      "seed": 20260531,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260531,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "random-rush",
+      "survived_frames": 494,
+      "outcome": "gameover",
+      "instinct_trigger_count": 12,
+      "min_approach_p10": 45.16,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 4
+    },
+    {
+      "seed": 20260531,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260531,
+      "strategy": "vertical-bounce",
+      "survived_frames": 285,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 50.96,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260531,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260531,
+      "strategy": "wave-rider",
+      "survived_frames": 2849,
+      "outcome": "gameover",
+      "instinct_trigger_count": 11,
+      "min_approach_p10": 47.23,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 24
+    },
+    {
+      "seed": 20260532,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260532,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "blind-sweeper",
+      "survived_frames": 383,
+      "outcome": "gameover",
+      "instinct_trigger_count": 3,
+      "min_approach_p10": 20.17,
+      "cont_grazing_max": 11,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260532,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "random-rush",
+      "survived_frames": 341,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 56.62,
+      "cont_grazing_max": 7,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "vertical-bounce",
+      "survived_frames": 271,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 105.1,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260532,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260532,
+      "strategy": "wave-rider",
+      "survived_frames": 1599,
+      "outcome": "gameover",
+      "instinct_trigger_count": 8,
+      "min_approach_p10": 38.38,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 14
+    },
+    {
+      "seed": 20260533,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260533,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "blind-sweeper",
+      "survived_frames": 328,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 27.43,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260533,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "random-rush",
+      "survived_frames": 333,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 35.52,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 58.84,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260533,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260533,
+      "strategy": "wave-rider",
+      "survived_frames": 340,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 103.43,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260534,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "blind-sweeper",
+      "survived_frames": 314,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 47.79,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260534,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "random-rush",
+      "survived_frames": 291,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 45.5,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 54.91,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260534,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260534,
+      "strategy": "wave-rider",
+      "survived_frames": 563,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 39.4,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 6
+    },
+    {
+      "seed": 20260535,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260535,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "blind-sweeper",
+      "survived_frames": 273,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 61.93,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260535,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "random-rush",
+      "survived_frames": 273,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 70.01,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "vertical-bounce",
+      "survived_frames": 282,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 63.83,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260535,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260535,
+      "strategy": "wave-rider",
+      "survived_frames": 562,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 37.32,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 5
+    },
+    {
+      "seed": 20260536,
+      "strategy": "good",
+      "survived_frames": 4162,
+      "outcome": "gameover",
+      "instinct_trigger_count": 22,
+      "min_approach_p10": 52.24,
+      "cont_grazing_max": 6,
+      "temporal_inconsistency_count": 43
+    },
+    {
+      "seed": 20260536,
+      "strategy": "camper",
+      "survived_frames": 319,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 58.07,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "lane-holder",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 55.33,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "blind-sweeper",
+      "survived_frames": 459,
+      "outcome": "gameover",
+      "instinct_trigger_count": 5,
+      "min_approach_p10": 24.16,
+      "cont_grazing_max": 9,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "nospecial",
+      "survived_frames": 545,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 93.05,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "zig-zag-narrow",
+      "survived_frames": 323,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 55.25,
+      "cont_grazing_max": 4,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "random-rush",
+      "survived_frames": 417,
+      "outcome": "gameover",
+      "instinct_trigger_count": 4,
+      "min_approach_p10": 28.54,
+      "cont_grazing_max": 17,
+      "temporal_inconsistency_count": 2
+    },
+    {
+      "seed": 20260536,
+      "strategy": "corner-stay",
+      "survived_frames": 337,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 60.11,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "mid-orbit",
+      "survived_frames": 246,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 80.75,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "vertical-bounce",
+      "survived_frames": 284,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 57.85,
+      "cont_grazing_max": 2,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "triangle-loop",
+      "survived_frames": 229,
+      "outcome": "gameover",
+      "instinct_trigger_count": 1,
+      "min_approach_p10": 44.09,
+      "cont_grazing_max": 5,
+      "temporal_inconsistency_count": 1
+    },
+    {
+      "seed": 20260536,
+      "strategy": "spiral-out",
+      "survived_frames": 227,
+      "outcome": "gameover",
+      "instinct_trigger_count": 2,
+      "min_approach_p10": 28.09,
+      "cont_grazing_max": 8,
+      "temporal_inconsistency_count": 0
+    },
+    {
+      "seed": 20260536,
+      "strategy": "wave-rider",
+      "survived_frames": 702,
+      "outcome": "gameover",
+      "instinct_trigger_count": 7,
+      "min_approach_p10": 35.32,
+      "cont_grazing_max": 3,
+      "temporal_inconsistency_count": 11
+    }
+  ],
+  "correlations_per_seed": [
+    {
+      "seed": 20260527,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1779,
+        "instinct_x_cont_grazing_max": 0.3247,
+        "instinct_x_temporal_inconsistency": 0.9672,
+        "min_approach_p10_x_cont_grazing_max": -0.5491,
+        "min_approach_p10_x_temporal_inconsistency": -0.0389,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2106
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4847,
+        "instinct_x_cont_grazing_max": 0.4481,
+        "instinct_x_temporal_inconsistency": 0.5365,
+        "min_approach_p10_x_cont_grazing_max": -0.6004,
+        "min_approach_p10_x_temporal_inconsistency": -0.0779,
+        "cont_grazing_max_x_temporal_inconsistency": 0.5202
+      }
+    },
+    {
+      "seed": 20260528,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1314,
+        "instinct_x_cont_grazing_max": 0.276,
+        "instinct_x_temporal_inconsistency": 0.9745,
+        "min_approach_p10_x_cont_grazing_max": -0.4645,
+        "min_approach_p10_x_temporal_inconsistency": -0.0221,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2823
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4228,
+        "instinct_x_cont_grazing_max": 0.3069,
+        "instinct_x_temporal_inconsistency": 0.5506,
+        "min_approach_p10_x_cont_grazing_max": -0.4917,
+        "min_approach_p10_x_temporal_inconsistency": -0.1175,
+        "cont_grazing_max_x_temporal_inconsistency": 0.3547
+      }
+    },
+    {
+      "seed": 20260529,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.275,
+        "instinct_x_cont_grazing_max": 0.2739,
+        "instinct_x_temporal_inconsistency": 0.938,
+        "min_approach_p10_x_cont_grazing_max": -0.6019,
+        "min_approach_p10_x_temporal_inconsistency": -0.0743,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0981
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4695,
+        "instinct_x_cont_grazing_max": 0.3669,
+        "instinct_x_temporal_inconsistency": 0.5715,
+        "min_approach_p10_x_cont_grazing_max": -0.4783,
+        "min_approach_p10_x_temporal_inconsistency": -0.1337,
+        "cont_grazing_max_x_temporal_inconsistency": 0.3635
+      }
+    },
+    {
+      "seed": 20260530,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1281,
+        "instinct_x_cont_grazing_max": 0.1741,
+        "instinct_x_temporal_inconsistency": 0.994,
+        "min_approach_p10_x_cont_grazing_max": -0.5679,
+        "min_approach_p10_x_temporal_inconsistency": -0.057,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1046
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.5576,
+        "instinct_x_cont_grazing_max": 0.3678,
+        "instinct_x_temporal_inconsistency": 0.5723,
+        "min_approach_p10_x_cont_grazing_max": -0.5612,
+        "min_approach_p10_x_temporal_inconsistency": -0.0408,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0691
+      }
+    },
+    {
+      "seed": 20260531,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.2264,
+        "instinct_x_cont_grazing_max": 0.4097,
+        "instinct_x_temporal_inconsistency": 0.9112,
+        "min_approach_p10_x_cont_grazing_max": -0.379,
+        "min_approach_p10_x_temporal_inconsistency": -0.1058,
+        "cont_grazing_max_x_temporal_inconsistency": 0.4166
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4216,
+        "instinct_x_cont_grazing_max": 0.4241,
+        "instinct_x_temporal_inconsistency": 0.7126,
+        "min_approach_p10_x_cont_grazing_max": -0.3894,
+        "min_approach_p10_x_temporal_inconsistency": -0.2087,
+        "cont_grazing_max_x_temporal_inconsistency": 0.371
+      }
+    },
+    {
+      "seed": 20260532,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1859,
+        "instinct_x_cont_grazing_max": 0.1299,
+        "instinct_x_temporal_inconsistency": 0.9939,
+        "min_approach_p10_x_cont_grazing_max": -0.6819,
+        "min_approach_p10_x_temporal_inconsistency": -0.116,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0704
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.5531,
+        "instinct_x_cont_grazing_max": 0.3162,
+        "instinct_x_temporal_inconsistency": 0.5162,
+        "min_approach_p10_x_cont_grazing_max": -0.5443,
+        "min_approach_p10_x_temporal_inconsistency": -0.0349,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0833
+      }
+    },
+    {
+      "seed": 20260533,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1056,
+        "instinct_x_cont_grazing_max": 0.3061,
+        "instinct_x_temporal_inconsistency": 0.9947,
+        "min_approach_p10_x_cont_grazing_max": -0.3938,
+        "min_approach_p10_x_temporal_inconsistency": -0.045,
+        "cont_grazing_max_x_temporal_inconsistency": 0.29
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.4096,
+        "instinct_x_cont_grazing_max": 0.2439,
+        "instinct_x_temporal_inconsistency": 0.2027,
+        "min_approach_p10_x_cont_grazing_max": -0.3587,
+        "min_approach_p10_x_temporal_inconsistency": 0.167,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0551
+      }
+    },
+    {
+      "seed": 20260534,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.0933,
+        "instinct_x_cont_grazing_max": 0.118,
+        "instinct_x_temporal_inconsistency": 0.9945,
+        "min_approach_p10_x_cont_grazing_max": -0.5105,
+        "min_approach_p10_x_temporal_inconsistency": -0.0544,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1333
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.2308,
+        "instinct_x_cont_grazing_max": 0.0142,
+        "instinct_x_temporal_inconsistency": 0.4419,
+        "min_approach_p10_x_cont_grazing_max": -0.5665,
+        "min_approach_p10_x_temporal_inconsistency": -0.1022,
+        "cont_grazing_max_x_temporal_inconsistency": 0.1526
+      }
+    },
+    {
+      "seed": 20260535,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1773,
+        "instinct_x_cont_grazing_max": 0.218,
+        "instinct_x_temporal_inconsistency": 0.9926,
+        "min_approach_p10_x_cont_grazing_max": -0.4777,
+        "min_approach_p10_x_temporal_inconsistency": -0.1167,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2158
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.3401,
+        "instinct_x_cont_grazing_max": 0.2329,
+        "instinct_x_temporal_inconsistency": 0.3779,
+        "min_approach_p10_x_cont_grazing_max": -0.5142,
+        "min_approach_p10_x_temporal_inconsistency": 0.0528,
+        "cont_grazing_max_x_temporal_inconsistency": 0.3407
+      }
+    },
+    {
+      "seed": 20260536,
+      "n_strategies": 13,
+      "pearson": {
+        "instinct_x_min_approach_p10": -0.1733,
+        "instinct_x_cont_grazing_max": 0.1241,
+        "instinct_x_temporal_inconsistency": 0.9845,
+        "min_approach_p10_x_cont_grazing_max": -0.5553,
+        "min_approach_p10_x_temporal_inconsistency": -0.0528,
+        "cont_grazing_max_x_temporal_inconsistency": 0.0143
+      },
+      "spearman": {
+        "instinct_x_min_approach_p10": -0.5449,
+        "instinct_x_cont_grazing_max": 0.3524,
+        "instinct_x_temporal_inconsistency": 0.7612,
+        "min_approach_p10_x_cont_grazing_max": -0.5743,
+        "min_approach_p10_x_temporal_inconsistency": -0.2573,
+        "cont_grazing_max_x_temporal_inconsistency": 0.2654
+      }
+    }
+  ],
+  "pearson_distribution": {
+    "instinct_x_min_approach_p10": {
+      "n": 10,
+      "mean": -0.1674,
+      "std": 0.0527,
+      "min": -0.275,
+      "max": -0.0933
+    },
+    "instinct_x_cont_grazing_max": {
+      "n": 10,
+      "mean": 0.2354,
+      "std": 0.0937,
+      "min": 0.118,
+      "max": 0.4097
+    },
+    "instinct_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.9745,
+      "std": 0.0272,
+      "min": 0.9112,
+      "max": 0.9947
+    },
+    "min_approach_p10_x_cont_grazing_max": {
+      "n": 10,
+      "mean": -0.5182,
+      "std": 0.0883,
+      "min": -0.6819,
+      "max": -0.379
+    },
+    "min_approach_p10_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": -0.0683,
+      "std": 0.0319,
+      "min": -0.1167,
+      "max": -0.0221
+    },
+    "cont_grazing_max_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.1836,
+      "std": 0.116,
+      "min": 0.0143,
+      "max": 0.4166
+    }
+  },
+  "spearman_distribution": {
+    "instinct_x_min_approach_p10": {
+      "n": 10,
+      "mean": -0.4435,
+      "std": 0.0978,
+      "min": -0.5576,
+      "max": -0.2308
+    },
+    "instinct_x_cont_grazing_max": {
+      "n": 10,
+      "mean": 0.3073,
+      "std": 0.1176,
+      "min": 0.0142,
+      "max": 0.4481
+    },
+    "instinct_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.5243,
+      "std": 0.1512,
+      "min": 0.2027,
+      "max": 0.7612
+    },
+    "min_approach_p10_x_cont_grazing_max": {
+      "n": 10,
+      "mean": -0.5079,
+      "std": 0.0762,
+      "min": -0.6004,
+      "max": -0.3587
+    },
+    "min_approach_p10_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": -0.0753,
+      "std": 0.1161,
+      "min": -0.2573,
+      "max": 0.167
+    },
+    "cont_grazing_max_x_temporal_inconsistency": {
+      "n": 10,
+      "mean": 0.2576,
+      "std": 0.1508,
+      "min": 0.0551,
+      "max": 0.5202
+    }
+  },
+  "focus_pair": "instinct_x_temporal_inconsistency",
+  "focus_pair_pearson_distribution": {
+    "n": 10,
+    "mean": 0.9745,
+    "std": 0.0272,
+    "min": 0.9112,
+    "max": 0.9947
+  },
+  "verdict_thresholds": {
+    "redundancy_confirmed": "pearson mean >= 0.9 && std < 0.1",
+    "pseudo_correlation": "pearson std >= 0.2",
+    "hold": "0.1 <= pearson std < 0.2"
+  },
+  "verdict": "REDUNDANCY_CONFIRMED — 4軸 → 3軸縮約発火候補 (kaizen #140 段階3 family統合 GO)",
+  "bit_invariance": {
+    "baseline_seed": 20260527,
+    "per_strategy": {
+      "good": {
+        "sweep_survived_frames": 4162,
+        "baseline_survived_frames": 4162,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 22,
+        "baseline_instinct_trigger_count": 22,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 43,
+        "baseline_temporal_inconsistency_count": 43,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 52.24,
+        "baseline_min_approach_p10": 52.24,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 6,
+        "baseline_cont_grazing_max": 6,
+        "cont_grazing_bit_match": true
+      },
+      "camper": {
+        "sweep_survived_frames": 319,
+        "baseline_survived_frames": 319,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 58.07,
+        "baseline_min_approach_p10": 58.07,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "lane-holder": {
+        "sweep_survived_frames": 284,
+        "baseline_survived_frames": 284,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 55.33,
+        "baseline_min_approach_p10": 55.33,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "blind-sweeper": {
+        "sweep_survived_frames": 378,
+        "baseline_survived_frames": 378,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 3,
+        "baseline_instinct_trigger_count": 3,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 38.84,
+        "baseline_min_approach_p10": 38.84,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 3,
+        "baseline_cont_grazing_max": 3,
+        "cont_grazing_bit_match": true
+      },
+      "nospecial": {
+        "sweep_survived_frames": 545,
+        "baseline_survived_frames": 545,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 2,
+        "baseline_temporal_inconsistency_count": 2,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 93.05,
+        "baseline_min_approach_p10": 93.05,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "zig-zag-narrow": {
+        "sweep_survived_frames": 323,
+        "baseline_survived_frames": 323,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 55.25,
+        "baseline_min_approach_p10": 55.25,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 4,
+        "baseline_cont_grazing_max": 4,
+        "cont_grazing_bit_match": true
+      },
+      "random-rush": {
+        "sweep_survived_frames": 435,
+        "baseline_survived_frames": 435,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 7,
+        "baseline_instinct_trigger_count": 7,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 2,
+        "baseline_temporal_inconsistency_count": 2,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 32.73,
+        "baseline_min_approach_p10": 32.73,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 9,
+        "baseline_cont_grazing_max": 9,
+        "cont_grazing_bit_match": true
+      },
+      "corner-stay": {
+        "sweep_survived_frames": 337,
+        "baseline_survived_frames": 337,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 60.11,
+        "baseline_min_approach_p10": 60.11,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "mid-orbit": {
+        "sweep_survived_frames": 246,
+        "baseline_survived_frames": 246,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 1,
+        "baseline_temporal_inconsistency_count": 1,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 80.75,
+        "baseline_min_approach_p10": 80.75,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "vertical-bounce": {
+        "sweep_survived_frames": 283,
+        "baseline_survived_frames": 283,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 62.09,
+        "baseline_min_approach_p10": 62.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 2,
+        "baseline_cont_grazing_max": 2,
+        "cont_grazing_bit_match": true
+      },
+      "triangle-loop": {
+        "sweep_survived_frames": 229,
+        "baseline_survived_frames": 229,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 1,
+        "baseline_instinct_trigger_count": 1,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 1,
+        "baseline_temporal_inconsistency_count": 1,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 44.09,
+        "baseline_min_approach_p10": 44.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 5,
+        "baseline_cont_grazing_max": 5,
+        "cont_grazing_bit_match": true
+      },
+      "spiral-out": {
+        "sweep_survived_frames": 227,
+        "baseline_survived_frames": 227,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 2,
+        "baseline_instinct_trigger_count": 2,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 0,
+        "baseline_temporal_inconsistency_count": 0,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 28.09,
+        "baseline_min_approach_p10": 28.09,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 8,
+        "baseline_cont_grazing_max": 8,
+        "cont_grazing_bit_match": true
+      },
+      "wave-rider": {
+        "sweep_survived_frames": 561,
+        "baseline_survived_frames": 561,
+        "survived_bit_match": true,
+        "sweep_instinct_trigger_count": 5,
+        "baseline_instinct_trigger_count": 5,
+        "instinct_bit_match": true,
+        "sweep_temporal_inconsistency_count": 6,
+        "baseline_temporal_inconsistency_count": 6,
+        "temporal_bit_match": true,
+        "sweep_min_approach_p10": 40.72,
+        "baseline_min_approach_p10": 40.72,
+        "min_approach_bit_match": true,
+        "sweep_cont_grazing_max": 8,
+        "baseline_cont_grazing_max": 8,
+        "cont_grazing_bit_match": true
+      }
+    },
+    "all_match": true,
+    "note": "sweep 内 seed=20260527 行と sweep 外 baseline 再実行が bit 完全一致 = multi-seed ループが state を汚染しない (H-002〜H-008 + C313 + C316 同型論証 10 度目)"
+  },
+  "notes": [
+    "N=10 seed × 5 strategy = 50 run + baseline 再実行 5 run = 合計 55 run",
+    "seed ごとの 6 ペア相関は 5 strategy (N=5) 内算出 = 少サンプル、相関値の方向性確認用",
+    "pearson_distribution は seed 軸分布 (N=10) = focus 軸 instinct × temporal の安定性判定対象",
+    "判定基準: mean ≥ 0.9 && std < 0.1 → 冗長性確定 / std ≥ 0.2 → 疑似相関 / それ以外 → 判定保留",
+    "PX 既定 (50 / 15) 固定 — env override は本モードで無効化 (sweep 軸を seed 単一に絞る)"
+  ]
+}

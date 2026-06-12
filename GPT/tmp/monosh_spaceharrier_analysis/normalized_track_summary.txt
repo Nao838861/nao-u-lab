@@ -1,0 +1,61 @@
+Body template phases:
+  phase -30: y=183.94 area=81.0
+  phase -29: y=180.58 area=83.0
+  phase -28: y=183.21 area=97.0
+  phase -27: y=180.91 area=93.0
+  phase -26: y=177.44 area=90.0
+  phase -25: y=172.54 area=89.5
+  phase -24: y=170.58 area=97.0
+  phase -23: y=167.71 area=100.0
+  phase -22: y=167.61 area=104.0
+  phase -21: y=163.51 area=99.0
+  phase -20: y=160.69 area=101.0
+  phase -19: y=158.00 area=104.0
+  phase -18: y=155.24 area=105.0
+  phase -17: y=152.66 area=98.0
+  phase -16: y=150.20 area=96.0
+  phase -15: y=147.19 area=98.5
+  phase -14: y=144.13 area=98.0
+  phase -13: y=141.77 area=97.0
+  phase -12: y=141.26 area=91.0
+  phase -11: y=138.98 area=93.0
+  phase -10: y=136.61 area=98.0
+  phase  -9: y=133.15 area=84.0
+  phase  -8: y=130.68 area=80.0
+  phase  -7: y=128.89 area=91.0
+  phase  -6: y=125.62 area=92.0
+  phase  -5: y=124.62 area=96.0
+  phase  -4: y=120.75 area=97.5
+  phase  -3: y=120.69 area=105.0
+  phase  -2: y=120.26 area=96.0
+  phase  -1: y=117.08 area=113.0
+
+Forward template phases:
+  phase   0: cy=164.50 w=24.0 h=28.0 bbox=672.0 mask=164.0
+  phase   1: cy=164.50 w=24.0 h=26.0 bbox=624.0 mask=168.0
+  phase   2: cy=158.50 w=20.0 h=38.0 bbox=874.0 mask=158.0
+  phase   3: cy=152.00 w=30.0 h=39.0 bbox=1350.0 mask=177.0
+  phase   4: cy=151.50 w=29.0 h=40.0 bbox=1218.0 mask=186.0
+  phase   5: cy=163.50 w=24.0 h=26.0 bbox=720.0 mask=181.0
+  phase   6: cy=163.50 w=21.0 h=22.0 bbox=462.0 mask=121.0
+  phase   7: cy=164.00 w=23.0 h=20.0 bbox=644.0 mask=153.0
+  phase   8: cy=164.00 w=23.0 h=22.0 bbox=506.0 mask=146.0
+  phase   9: cy=164.00 w=20.0 h=13.0 bbox=260.0 mask=78.0
+  phase  10: cy=166.50 w=29.5 h=22.0 bbox=637.0 mask=112.0
+  phase  11: cy=163.50 w=32.5 h=23.0 bbox=720.5 mask=104.5
+  phase  12: cy=168.00 w=20.0 h=25.0 bbox=475.0 mask=101.0
+  phase  13: cy=169.00 w=25.0 h=51.0 bbox=1275.0 mask=242.0
+  phase  14: cy=169.50 w=26.0 h=52.0 bbox=1352.0 mask=259.0
+  phase  15: cy=170.00 w=34.0 h=69.0 bbox=2346.0 mask=801.0
+  phase  16: cy=172.50 w=37.0 h=70.0 bbox=2590.0 mask=930.0
+  phase  17: cy=169.50 w=31.0 h=42.0 bbox=1302.0 mask=445.0
+  phase  18: cy=170.50 w=44.0 h=38.0 bbox=1672.0 mask=526.0
+  phase  19: cy=174.50 w=47.0 h=42.0 bbox=1974.0 mask=597.0
+  phase  20: cy=180.50 w=59.0 h=30.0 bbox=1770.0 mask=730.0
+  phase  21: cy=180.50 w=60.0 h=34.0 bbox=2040.0 mask=784.0
+  phase  25: cy=204.50 w=12.0 h=10.0 bbox=120.0 mask=46.0
+  phase  28: cy=202.00 w=13.0 h=11.0 bbox=143.0 mask=40.0
+
+Corrections:
+  body changed rows: 25 / 90
+  forward changed rows: 24 / 72

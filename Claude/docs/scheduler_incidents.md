@@ -8,6 +8,23 @@
 
 ---
 
+## INC-023: loose object 破損で git push 不能 → 追記型ファイルのプレフィックス照合で全件復元 (2026-06-11)
+
+**症状**: `git push` が `error: inflate: data stream error (incorrect data check)` / `fatal: loose object XXXX is corrupt` で失敗。C323 時点から観測されていた2軸障害のうち loose object 破損側
+**影響**: Win — master の未 push コミットが溜まり続ける。一時クローン（GPT_push_tmp_*）にも破損がコピー済みで、クローンからの回収は不可だった
+**検出**: push 失敗メッセージ + `git fsck`（全8件の破損 loose object を列挙）
+**根本原因**: loose object ファイルの zlib ストリーム末尾破損（incorrect data check = チェックサム不一致）。書き込み中の電源断/ディスク障害系と推定。破損8件中6件が到達可能 blob、2件は到達不能（push に無関係）
+**復元手法（重要・再利用可能）**:
+1. `git rev-list --objects origin/master..master | grep <id>` で破損 blob のファイルパスを特定
+2. 破損していたのは全て**追記型 jsonl**（slack_archive/*.jsonl, web_research/results.jsonl）。当時の blob は現在のファイルの**プレフィックス**として残っている
+3. Node で改行境界ごとのプレフィックスを総当たりし `sha1("blob <len>\0" + content)` が目的 ID に一致する長さを探索（CRLF→LF 変換版も試す。今回6件はほぼ LF 変換側で一致）
+4. 破損オブジェクトを `.git_corrupt_bak/` に退避 → `git hash-object -w --no-filters <復元ファイル>` で再生成 → ID 完全一致を確認 → push 成功
+**修正**: 全6件復元、`01e0fcb46..508dee689` を push 完了。破損オブジェクトの原本は `D:\AI\Nao_u_BOT\.git_corrupt_bak\` に保管（問題なければ後日削除可）
+**教訓**: **追記型ログファイルの過去 blob は作業ツリーから復元できる**。git 破損 = clone やり直し、ではなく、まず fsck で破損リストを取り、blob→パス対応を引いて、追記型ならプレフィックス照合を試す。一時クローンは破損ごとコピーされるので回収源にならない
+**パターン**: 新規（ディスク層の破損）。check_git_health 系のジョブで `git fsck --connectivity-only` を定期実行する価値あり
+
+---
+
 ## INC-022: check_inbox.pyの二重トリガーで並行起動し重複Slack投稿 (2026-04-15)
 
 **症状**: Nao_uの#human-steering質問に対して、Logが5.55秒差でほぼ同内容のメッセージを2件Slackに投稿（`p1776182566748999`と`p1776182572299999`）

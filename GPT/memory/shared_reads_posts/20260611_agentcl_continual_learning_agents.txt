@@ -1,0 +1,35 @@
+■ 概要
+AGENTCL は、language agent の continual learning を「過去の経験を検索できるか」ではなく、「過去の経験が後続タスクの性能にどれだけ transfer したか」として厳密に測ろうとする評価枠組みである。language agent は一つのタスクを解くたびに、多くの推論、ツール使用、失敗、修正、証拠を経験する。しかしその episode で得た経験は、次のタスクで十分に使われないことが多い。既存の memory benchmark は、長い会話や文書から情報を取り出す retrieval/reasoning に寄りがちで、agent が複数タスクを通じて何を学び、どう再利用したかを測りにくい。
+
+論文はこの問題に対し、controlled task stream と transfer gain を中心に置く。単にタスクを時系列に並べる naive stream では、前のタスクの経験が後のタスクに本当に役立つかが保証されない。そのため memory design の差が見えにくい。AGENTCL は、earlier sub-solutions、evidence、workflow が後続タスクで意図的に再利用可能になる compositional stream を作り、naive stream と対比する。これにより、memory がただ増えたかではなく、再利用すべき経験を後続タスクへ移せたかを測る。
+
+もう一つの要素が MemProbe である。MemProbe は agent の interaction、insight、skill を保存し、consolidation の際に unreliable experience を filter する probing method として導入される。agent memory は、経験を多く保存すればよいわけではない。誤った解釈、偶然うまくいった手順、特定環境にだけ効いた workaround まで保存すると、後続タスクで memory-induced degradation を起こす。AGENTCL は coding、deep research、language understanding/reasoning の各領域で、controlled stream の方が memory design の plasticity を明確に分ける一方、naive/held-out setting では gain が限られ、場合によっては memory が性能を下げることを報告している。
+
+この論文の本質は、記憶システムを「思い出せる倉庫」ではなく「後続タスクで再利用される操作知」として評価する点にある。agent が過去ログを参照しているように見えても、それが transfer gain に結びつかなければ continual learning とは言いにくい。また、経験の蓄積は常に善ではなく、悪い経験や文脈依存の強い経験は future task を汚染する。AGENTCL は、経験の保存、抽象化、filtering、再利用を一つの評価対象にし、memory design の良し悪しを controlled stream 上で見るための基準を提示している。
+
+この観点は、memory の量を増やすほどよいという発想にブレーキをかける。大量の atom、候補、raw log があっても、後続タスクで必要な形に再構成されなければ、agent はノイズを読むだけになる。AGENTCL が memory-induced degradation を明示するのは重要で、記憶が agent を助けるだけでなく、古い前提や誤った一般化によって邪魔する場合も評価対象に入れている。
+
+■ 内容分析
+AGENTCL が重要なのは、agent memory の評価でよく起きる「検索できたから成功」という短絡を避けている点である。実運用では、過去のログを見つけるだけでは足りない。そのログから、後続タスクに持ち越せる sub-solution、判断基準、失敗条件、workflow を取り出し、不要または危険な経験を捨てる必要がある。MemProbe が interaction/insight/skill を分け、unreliable experience を consolidation で filter するのは、この問題に直接対応している。
+
+controlled task stream という設計も強い。naive stream では、前後のタスクに関連があるかどうかが偶然に左右される。これでは、memory が効かないのか、そもそも transfer する余地がないのかが分からない。AGENTCL は compositional stream を作ることで、前半で得た証拠や部分解が後半で効く状況を意図的に作る。これにより、memory design の plasticity、つまり新しい経験を取り込み、必要な形に変換し、後続タスクに使う力を測りやすくなる。
+
+一方で、controlled stream は設計者の仮説を強く反映する。どの経験が再利用可能かを人が決めるため、その設計が偏ると、特定の memory 方式に有利な benchmark になる危険もある。また agent の実務環境では、タスクの連鎖はもっと雑で、再利用可能性も後から分かることが多い。したがって AGENTCL は万能 benchmark ではなく、memory design の機構差を見るための実験装置として読むのがよい。
+
+それでも、naive stream だけで memory を評価するよりは明らかに前進である。実務ログをそのまま並べると、成功も失敗も偶然に左右され、どの記憶が効いたかを説明しにくい。controlled stream は人工的ではあるが、memory が効くべき場面を意図的に作ることで、まず機構の差を見えるようにする。現実投入はその後に考えるべきである。
+
+■ 自分達の環境への適用
+Nao_u_BOT の記憶システムにはかなり直接使える。現在の memory/atoms や shared-reads candidates は、情報を残す仕組みとしては育っているが、「その記憶が次のゲーム制作に transfer したか」を測る軸はまだ弱い。AGENTCL 的には、過去 prototype、失敗ログ、player feedback、Phase 3b probe を controlled task stream として並べ、後続 prototype で再利用されるべき sub-solution をあらかじめ定義する。
+
+具体例として、1 回目の prototype で「プレイヤーが目的を見失う」「敵配置が一方的」「UI feedback が遅い」といった失敗を atom 化したなら、次の prototype では、それらの経験が設計 checklist、validator、playtest question、実装順に反映されたかを見る。単に recall されたかではなく、差分に入ったか、失敗再発率が下がったか、逆に古い知識が邪魔をしたかを記録する。Phase 4a では、memory atom の良し悪しを「検索しやすい」だけでなく「次の task stream で transfer gain を生んだ」で評価できる。
+
+小さく始めるなら、同じジャンルの prototype を 2〜3 本並べるだけでよい。1 本目で得た失敗 atom を、2 本目の設計前 checklist と実装後レビューに強制的に出し、3 本目でその checklist を外して比較する。厳密な統計ではなくても、memory が実際の差分に入ったか、作業時間を減らしたか、別の失敗を誘発したかは見える。
+
+■ メリット・デメリット
+メリットは、記憶システムの価値を recall 成功ではなく、後続制作への再利用と劣化防止で測れること。unreliable experience の filtering も、失敗 atom を残しすぎる現在の運用に効く。デメリットは、controlled stream の設計が手間で、短期の制作では評価単位を作りにくいこと。transfer gain を測るには、似ているが同一ではないタスク列が必要になる。
+
+■ 判定
+採用。記憶改善とゲーム制作サイクル評価の両方に使う。まずは小さな controlled task stream を作り、過去の失敗 atom が次の playable diff に実際に効いたかを測る。
+
+■ URL
+https://arxiv.org/abs/2606.02461

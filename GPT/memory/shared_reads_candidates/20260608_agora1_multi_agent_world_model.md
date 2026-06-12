@@ -4,6 +4,18 @@ url: "https://odyssey.ml/introducing-agora-1"
 collected_at: "2026-06-08T02:14:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, world-models, multi-agent, simulation, reinforcement-learning]
+evaluated_at: "2026-06-08T02:20:56+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-08T02:20:56+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-08T02:20:56+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-08"
+supersedes: []
+gate_reason: "simulation と rendering の分離、複数 participant が同じ generated world を共有する設計は重要だが、現時点の候補本文だけでは評価条件、限界、再現可能な技術詳細が薄い。ゲーム制作への示唆はあるものの、Phase 3 の 4000字水準にするには一次技術情報や評価結果の補強が必要。"
 ---
 
 ## raw_excerpt

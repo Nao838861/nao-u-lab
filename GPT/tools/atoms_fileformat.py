@@ -44,6 +44,8 @@ FRONTMATTER_KEYS = [
     "datetime",
 ]
 
+CANONICAL_OVERLAY_FILENAME = "canonical_overlay.jsonl"
+
 
 def shard_for(atom: dict[str, Any]) -> str:
     ts_raw = atom.get("source_ts")
@@ -361,6 +363,105 @@ def load_atoms_from_per_file(atoms_dir: Path) -> list[dict[str, Any]]:
                     continue
             # Fall back to stub data
             atoms.append(stub)
+    return atoms
+
+
+def load_atoms_jsonl(atoms_path: Path) -> list[dict[str, Any]]:
+    atoms: list[dict[str, Any]] = []
+    if not atoms_path.exists():
+        return atoms
+    with atoms_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                atoms.append(json.loads(line))
+    return atoms
+
+
+def load_canonical_overlay(atoms_dir: Path) -> list[dict[str, Any]]:
+    overlay_path = atoms_dir / CANONICAL_OVERLAY_FILENAME
+    if not overlay_path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    with overlay_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return rows
+
+
+def apply_canonical_overlay(atoms: list[dict[str, Any]], overlay_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return one atom per overlay group without deleting raw atom rows."""
+    if not overlay_rows:
+        return atoms
+
+    by_id = {str(atom.get("id") or ""): atom for atom in atoms if atom.get("id")}
+    duplicate_to_group: dict[str, dict[str, Any]] = {}
+    canonical_to_group: dict[str, dict[str, Any]] = {}
+    for row in overlay_rows:
+        canonical_id = str(row.get("canonical_id") or "")
+        if not canonical_id:
+            continue
+        canonical_to_group[canonical_id] = row
+        for duplicate_id in row.get("duplicate_ids", []):
+            duplicate_to_group[str(duplicate_id)] = row
+
+    def annotated_canonical(canonical: dict[str, Any], group: dict[str, Any]) -> dict[str, Any]:
+        row = dict(canonical)
+        duplicate_ids = [str(item) for item in group.get("duplicate_ids", []) if item]
+        row["overlay_group_id"] = group.get("group_id")
+        row["overlay_reason"] = group.get("reason")
+        row["folded_count"] = len(duplicate_ids)
+        row["folded_ids"] = duplicate_ids
+        row["grouped_count"] = int(group.get("count") or (len(duplicate_ids) + 1))
+        row["grouped_ids"] = [str(item) for item in group.get("member_ids", []) if item] or [str(row.get("id") or ""), *duplicate_ids]
+        if group.get("evidence_hash"):
+            row["normalized_content_hash"] = group.get("evidence_hash")
+        return row
+
+    canonical_seen: set[str] = set()
+    result: list[dict[str, Any]] = []
+    for atom in atoms:
+        aid = str(atom.get("id") or "")
+        if not aid:
+            result.append(atom)
+            continue
+        group = duplicate_to_group.get(aid)
+        if group:
+            canonical_id = str(group.get("canonical_id") or "")
+            if canonical_id in canonical_seen:
+                continue
+            canonical = by_id.get(canonical_id)
+            if not canonical:
+                result.append(atom)
+                continue
+            result.append(annotated_canonical(canonical, group))
+            canonical_seen.add(canonical_id)
+            continue
+        canonical_group = canonical_to_group.get(aid)
+        if canonical_group:
+            if aid in canonical_seen:
+                continue
+            result.append(annotated_canonical(atom, canonical_group))
+            canonical_seen.add(aid)
+            continue
+        result.append(atom)
+    return result
+
+
+def load_atoms_with_view(atoms_path: Path, atoms_dir: Path, view: str = "raw") -> list[dict[str, Any]]:
+    """Load atoms from Phase C source and optionally apply overlay canonicalization."""
+    if atoms_path.exists():
+        atoms = load_atoms_jsonl(atoms_path)
+    else:
+        atoms = load_atoms_from_per_file(atoms_dir)
+    if view == "canonical":
+        return apply_canonical_overlay(atoms, load_canonical_overlay(atoms_dir))
+    if view != "raw":
+        raise ValueError(f"unknown atom view: {view}")
     return atoms
 
 

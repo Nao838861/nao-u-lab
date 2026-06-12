@@ -4,6 +4,18 @@ url: "https://www.reddit.com/r/aigamedev/comments/1rdmmfa/agentic_gaming_a_deep_
 collected_at: "2026-06-08T02:14:51+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, rpg, llm-integration, systems-design, indie-dev]
+evaluated_at: "2026-06-08T02:20:56+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-08T02:20:56+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-08T02:20:56+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-08"
+supersedes: []
+gate_reason: "LLM を semantic reasoning layer に限定し、rules / dice / schema を engine 側に残す設計例としては参考になる。一方で Reddit 個人事例で、評価、比較、失敗条件、完成度の検証が不足しており、#shared-reads に残すべき 4000字級の独立した知見としては弱い。"
 ---
 
 ## raw_excerpt

@@ -124,3 +124,21 @@ Nao_u が昨夜（2026-04-23 19:02）#nao-u で「面白いアプローチ。ski
 ### 2026-06-01 C277 Phase 3 (Log): 起票見送り判定 (kaizen #135 並走中)
 
 本サイクル深掘り候補 B 走査で「8 日無更新の Active project」として本ファイルが該当 (5/24 C229 以降無進捗 = 38 日無更新)。**判定: 単独起票は今は不要 = Agent サブ委任の試作枠は kaizen #135 (build_atom_edges、期限 2026-06-09) 段階 2-3 で同時消化可能**。kaizen #135 が edge-typed dual-time の構造を Agent 並列読みで検証する形に展開した場合、本プロジェクトの「(1) Agent ツール並列起動で memory grep 2 ホップ穴のミニ実験」と試作内容が重なる。kaizen #135 完了後 (期限 2026-06-09 経過時点) に本プロジェクトの再起動条件 (1)(2)(3) 残差を再点検する。担当 Ash 待ちのまま継続。
+
+### 2026-06-10 C319 Phase 3 (Log): 2 ホップ穴の具体例観察 — Phase 1 §6 WebSearch + §8 ARXIV WARN hook 時間分離
+
+**起源**: 本 C319 Phase 1 §6 で `LLM memory staleness detection agent recall` WebSearch、3 件取得のうち arxiv 2603.07670「Memory for Autonomous LLM Agents」を「未確認の新情報」と判定。直後の §8 ARXIV WARN hook 出力で **過去 192 hits / 7 channels / shared-reads 23+ 投稿履歴判明** = 完全に既出。新規性判定 100% 誤り。詳細教師データ = `memory/sense_prediction_log.md` N=47 (2026-06-10)。
+
+**本プロジェクトとの構造的同型性 (2 ホップ穴)**:
+- 本プロジェクト議論軸 = 「Agent ツール並列実装、memory grep が 2 ホップで穴を作る」(2026-04-23 00:29 Nao_u 指摘「shared-reads で avoid_log v3 罰 patch 失敗を引けなかった」事件と Cognee 記事の lost in the middle 問題)
+- 本 C319 観察 = WebSearch (ホップ1: 外部知識) → 自己過去ログ照合 (ホップ2: 内部 slack_archive + GPT/memory/raw + external_notes_log) の **2 ホップが Phase 1 内で時間分離**、結果統合 rendezvous がないまま判定が走る = 1 ホップ目で「未確認」と書ける状態が、2 ホップ目の結果と衝突するまで気づかれない
+- Agent 並列実装の文脈では、子 Agent が並列で 2 ホップを実行しても、親 Agent が両方の結果を統合する rendezvous がなければ同型の穴。本 C319 観察はその「rendezvous 不在」の最小実例
+
+**(Ash 担当向け) 判断材料の整理**:
+- 試金石 1/2 着手前であっても、2 ホップ穴の最小実例は本 C319 のような **「単一 Agent 内の時系列分離」** で先に観察できる。Agent 並列の前に「単一プロセス内のホップ間 rendezvous 欠落」を Phase 1 §6 → §8 順序問題で評価する経路がある
+- 試金石 1 (罰 patch 失敗 retrieval) の幻覚行参照 verifier は、本 C319 観察の「自己過去ログ grep を強制注入する hook」とアーキテクチャ的に類似。両者とも「LLM が自由に書く前に外部装置で grep 結果を割り込ませる」構造
+- 解決候補 3 案 (sense_prediction N=47 末尾): (案1) WebSearch 直後の self-grep hook 強制 / (案2) §6 と §8 の順序入れ替え / (案3) §6 時点の新規性判定明文化禁止 — いずれも親 Agent 側の構造強制で対処、Agent 並列実装で同じ構造を再演する
+
+**判定 (kaizen 起票見送り)**: 本 C319 観察単独では `feedback_rule_proliferation_canonical.md` 順守で N=2 待ち、kaizen #141 起票見送り。次サイクル以降 Log/Mir/Ash いずれかで Phase 1 §6 同型誤判定 (既出記事を「未確認」判定) が再観察されたら N=2 成立、kaizen #141 起票発火。
+
+**接続**: `memory/sense_prediction_log.md` N=47 (2026-06-10) / `log/cycle_staging_log.md` C319 Phase 2 §F + §B / 本プロジェクト残課題リスト「(1) Agent ツール並列起動で memory grep 2 ホップ穴のミニ実験」(本 C319 観察は **Agent 並列の手前**で同型穴を観察した位置取り)

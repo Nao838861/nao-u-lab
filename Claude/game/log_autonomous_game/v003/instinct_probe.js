@@ -42,10 +42,32 @@
 //   進める。proxy_icc_diagnose.py が seed_base 軸で 4 列とも ICC≈0 / FAIL 確定済 → 軸を
 //   変えて再計測する処方の第 1 段。
 //
+// C293 Phase 4 拡張 (SHOOT_INTERVAL ramp on/off 比較):
+//   --shoot-ramp フラグ (default off) で phase 2 (50-90s) 内の SHOOT_INTERVAL を
+//   90 → 60 frame に線形漸変させる挙動 (game.js L356-363 currentShootInterval と同型)
+//   を probe にも適用可能化。off では従来通り SHOOT_INTERVAL=90 固定。仮説 = ramp on
+//   で本能側応答密度 (probe_density) の中央値・分散が変化する。検証方法 = 同一 seed
+//   集合で ramp on/off の中央値比較 (PEARSON_BLOCKER §6-3 (b) Spearman fallback 軸)。
+//   出典 = arxiv 2410.02829 "LLMs as Testers" の「絶対値ではなく相対 difficulty
+//   ranking の方が安定」観測の v003 実装適用第 1 段。
+//
+// C291 Phase 3 拡張 (位相ごとサンプリング層分離):
+//   game.js WAVE_TIMELINE 3 phase (0-20s 導入 / 20-50s 中盤 / 50-90s 終盤) を probe
+//   出力でも分離。各 castLock の開始 frame から phase を割り出し、phase 別に
+//   {cast_count, post_lock_input_count, post_lock_frame_total, probe_density} を集計。
+//   全体集計は従来通り保持し後方互換維持。背景 = #all-nao-u-lab 2026-06-03 早朝
+//   (ts=1780408308) で出した「4 感覚 proxy → 位相ごと検査系」atom と Mir C283 位相依存
+//   フレーム接続提案を、text ではなく code instrumentation として落とす1手。
+//   何が示せるか: phase 0/1/2 で probe_density 中央値が分離するか (= 位相軸が
+//   density を構造化するか) を 1 走で観測可能。
+//   何は示せないか: 「density 差」と「人間体感の phase 差」の対応関係 (これは別の
+//   検証層が必要)。
+//
 // 使い方: cd game/log_autonomous_game/v003 && node instinct_probe.js
 //   stdout: 1 JSONL 行/trial (--trials N で複数 trial、default 1)
 //   --seed-base N (default 20260601)、--trials N (default 1)、--out PATH で JSONL 保存
 //   --strategy NAME (default naive_good。naive_good / camper / blind-sweeper)
+//   --shoot-ramp (default off。on 時 phase 2 内 SHOOT_INTERVAL を 90→60 線形漸変)
 
 const fs = require('fs');
 const path = require('path');
@@ -82,6 +104,24 @@ const CAST_GAP_FRAMES = ECHO_FRAMES * 2;
 const MAX_FRAMES = FPS * 90;
 const PLAYER_SPEED = 3.4 * 1.5;      // agent boost 同型 (PLAYER_SPEED_AGENT)
 const PLAYER_R = 8, ENEMY_R = 10, BULLET_R = 4;
+// C293 Phase 4: WAVE_TIMELINE[2] = phase 2 (50s-90s) の frame 境界。game.js L51-55 と同期。
+const PHASE2_START_FRAME = 50 * FPS;
+const PHASE2_END_FRAME = 90 * FPS;
+// C291 Phase 3: phase 境界 frame。game.js WAVE_TIMELINE と同期 (0-20s / 20-50s / 50-90s)。
+const PHASE_END_FRAMES = [20 * FPS, 50 * FPS, 90 * FPS];
+function phaseFromFrame(f) {
+  for (let i = 0; i < PHASE_END_FRAMES.length; i++) {
+    if (f < PHASE_END_FRAMES[i]) return i;
+  }
+  return PHASE_END_FRAMES.length - 1; // 90s 超は phase 2 維持 (game.js getPhaseAt と同型)
+}
+// game.js L356-363 currentShootInterval と同型 (probe では playStartFrame=0 のため nowFrame = elapsed)
+function currentShootInterval(nowFrame) {
+  if (nowFrame < PHASE2_START_FRAME) return SHOOT_INTERVAL;
+  if (nowFrame >= PHASE2_END_FRAME) return SHOOT_INTERVAL_PHASE2_MIN;
+  const t = (nowFrame - PHASE2_START_FRAME) / (PHASE2_END_FRAME - PHASE2_START_FRAME);
+  return Math.round(SHOOT_INTERVAL + (SHOOT_INTERVAL_PHASE2_MIN - SHOOT_INTERVAL) * t);
+}
 
 function mulberry32(a) {
   return function () {
@@ -106,7 +146,7 @@ function spawnWaveA(s) {
   }
   s.waveCount += 1; s.waveSpawned = true;
 }
-function updateEnemies(s) {
+function updateEnemies(s, shootRamp) {
   for (const e of s.enemies) {
     if (!e.alive) continue;
     e.y += e.vy;
@@ -115,7 +155,7 @@ function updateEnemies(s) {
       if (--e.shootCooldown <= 0) {
         const dx = s.player.x - e.x, dy = s.player.y - e.y, d = Math.hypot(dx, dy) || 1;
         s.bullets.push({ x: e.x, y: e.y, vx: (dx / d) * BULLET_SPEED, vy: (dy / d) * BULLET_SPEED, r: BULLET_R, alive: true });
-        e.shootCooldown = SHOOT_INTERVAL;
+        e.shootCooldown = shootRamp ? currentShootInterval(s.frame) : SHOOT_INTERVAL;
       }
     }
   }
@@ -154,8 +194,112 @@ function strategyBlindSweeper(_s, rng) {
   const dy = Math.floor(rng() * 3) - 1;
   return { dx, dy };
 }
+// C292 Phase 4: phase 0 死亡解消用の bullet sidestep 戦略。strategyNaiveGood は touch しない (回帰防止)。
+//   観測 (C291 Phase 3 commit bc5a4032c): naive_good seed 20260603+0..9 で 10/10 bullet 死、play_time≈8.68s。
+//   v2 中間 (重み調整のみ): 10/10 bullet 死 play_time≈8.6-10.0s で微改善のみ。
+//   構造的原因: castLock (60 frame) 中は trail を再生するため cast 開始後に発射された弾は不可避。
+//   処方: shmup 基本「弾道に垂直 sidestep」を導入し trail の軌跡多様性を上げる:
+//     (a) 最近接 bullet について ECHO_FRAMES 先まで予測し最接近時刻 tHit を求める
+//     (b) 危険距離 (< 120px) なら bullet 進行ベクトル (vx,vy) と垂直方向に sidestep
+//         (player → bullet ベクトルとの内積符号で左右を選択)
+//     (c) bullet 進行方向と逆成分で軽く離反
+//     (d) 安全時 (bullet 遠 or 不在) は中央復帰
+//     (e) enemy 離反は弱め (0.2)、ノイズも縮小 (±0.2)
+function strategyNaiveGoodV2(s, rng) {
+  let nearestB = null, nbd = Infinity;
+  for (const b of s.bullets) {
+    let minD = Infinity;
+    for (let k = 0; k <= ECHO_FRAMES; k += 4) {
+      const px = b.x + b.vx * k, py = b.y + b.vy * k;
+      const d = Math.hypot(px - s.player.x, py - s.player.y);
+      if (d < minD) minD = d;
+    }
+    if (minD < nbd) { nbd = minD; nearestB = b; }
+  }
+  let dx = 0, dy = 0;
+  if (nearestB && nbd < 120) {
+    const b = nearestB;
+    const bs = Math.hypot(b.vx, b.vy) || 1;
+    const perpX = -b.vy / bs, perpY = b.vx / bs;
+    const toPlayerX = s.player.x - b.x, toPlayerY = s.player.y - b.y;
+    const sign = Math.sign(perpX * toPlayerX + perpY * toPlayerY) || 1;
+    dx += perpX * sign * 1.2; dy += perpY * sign * 1.2;
+    dx -= (b.vx / bs) * 0.5; dy -= (b.vy / bs) * 0.5;
+  } else {
+    const cx = W * 0.5, cy = H * 0.78, tx = cx - s.player.x, ty = cy - s.player.y, tn = Math.hypot(tx, ty) || 1;
+    dx += (tx / tn) * 0.5; dy += (ty / tn) * 0.5;
+  }
+  let neX = 0, neY = 0, ned = Infinity;
+  for (const e of s.enemies) {
+    const d = Math.hypot(e.x - s.player.x, e.y - s.player.y);
+    if (d < ned) { ned = d; neX = e.x; neY = e.y; }
+  }
+  if (ned < Infinity) {
+    const fx = s.player.x - neX, fy = s.player.y - neY, n = Math.hypot(fx, fy) || 1;
+    dx += (fx / n) * 0.2; dy += (fy / n) * 0.2;
+  }
+  dx += (rng() - 0.5) * 0.2; dy += (rng() - 0.5) * 0.2;
+  return { dx, dy };
+}
+// C295 Phase 4: v2 が phase 0 早期 enemy 接触 3/10 で詰まる新盲点 (sidestep 垂直 1.2 が強すぎ
+//   bullet 回避中に enemy 体当たり) を解消するため、sidestep ベクトルに「弾源 enemy からも
+//   離反」の合成項を加える。3 試行で着地 (staging 完遂条件 max 2 リトライ準拠):
+//     試行 1: enemy 離反 0.5 一律 < 200 → bullet sidestep 撹乱で phase1=4/10 悪化 (棄却)
+//     試行 3: bullet sidestep を < 140 / 重み 1.3 / ノイズ 0.15 で強化 → bullet 死 9/10 悪化 (棄却)
+//     試行 2 (本着地): enemy を 2 段化 (緊急 < 80px は 0.6、中距離 80-180px は 0.2、安全時中央 0.5)
+//   結果 (seed 20260603+0..9): phase 1 到達 6/10 (v2 同等、target 8 未達),
+//     phase 2 到達 3/10 (v2 1/10 から +2、target 2 達成),
+//     enemy 死 2/10 (v2 3/10 から -1、target 1 未達)。
+//   完遂条件 7 項目中 phase 2 + 3 commit/run 系合計 4 達成 / phase 1 + enemy 死 + 死因シフト
+//     未達。次サイクル v4 候補処方 = bullet sidestep の予測 horizon 拡張 + castLock 中の事前
+//     位置取り。
+//   役割分担:
+//     bullet: 危険時 (< 120px) は垂直 sidestep 1.2 + 弾源逆 0.5 (v2 同値)
+//     enemy : 緊急近接 (< 80px) のみ強く 0.6 離反 (体当たり直前回避)
+//             中距離 (80-180px) は弱く 0.2 離反 (v2 0.2 同値、bullet sidestep 撹乱抑制)
+//     安全時: 中央バイアス 0.5 (前作 v2 と同値)
+//     ノイズ: ±0.2 (前作 v2 と同値)
+function strategyNaiveGoodV3(s, rng) {
+  let nearestB = null, nbd = Infinity;
+  for (const b of s.bullets) {
+    let minD = Infinity;
+    for (let k = 0; k <= ECHO_FRAMES; k += 4) {
+      const px = b.x + b.vx * k, py = b.y + b.vy * k;
+      const d = Math.hypot(px - s.player.x, py - s.player.y);
+      if (d < minD) minD = d;
+    }
+    if (minD < nbd) { nbd = minD; nearestB = b; }
+  }
+  let dx = 0, dy = 0;
+  if (nearestB && nbd < 120) {
+    const b = nearestB;
+    const bs = Math.hypot(b.vx, b.vy) || 1;
+    const perpX = -b.vy / bs, perpY = b.vx / bs;
+    const toPlayerX = s.player.x - b.x, toPlayerY = s.player.y - b.y;
+    const sign = Math.sign(perpX * toPlayerX + perpY * toPlayerY) || 1;
+    dx += perpX * sign * 1.2; dy += perpY * sign * 1.2;
+    dx -= (b.vx / bs) * 0.5; dy -= (b.vy / bs) * 0.5;
+  } else {
+    const cx = W * 0.5, cy = H * 0.78, tx = cx - s.player.x, ty = cy - s.player.y, tn = Math.hypot(tx, ty) || 1;
+    dx += (tx / tn) * 0.5; dy += (ty / tn) * 0.5;
+  }
+  let neX = 0, neY = 0, ned = Infinity;
+  for (const e of s.enemies) {
+    const d = Math.hypot(e.x - s.player.x, e.y - s.player.y);
+    if (d < ned) { ned = d; neX = e.x; neY = e.y; }
+  }
+  if (ned < Infinity) {
+    const fx = s.player.x - neX, fy = s.player.y - neY, n = Math.hypot(fx, fy) || 1;
+    const w = ned < 80 ? 0.6 : (ned < 180 ? 0.2 : 0);
+    if (w > 0) { dx += (fx / n) * w; dy += (fy / n) * w; }
+  }
+  dx += (rng() - 0.5) * 0.2; dy += (rng() - 0.5) * 0.2;
+  return { dx, dy };
+}
 const STRATEGIES = {
   naive_good: strategyNaiveGood,
+  naive_good_v2: strategyNaiveGoodV2,
+  naive_good_v3: strategyNaiveGoodV3,
   camper: strategyCamper,
   'blind-sweeper': strategyBlindSweeper,
 };
@@ -169,24 +313,46 @@ function applyMove(s, rawDx, rawDy) {
   return { dx, dy };
 }
 
-function runOne(seed, strategyName, strategyFn) {
+function emptyPhaseStats() {
+  return PHASE_END_FRAMES.map(() => ({ cast_count: 0, post_lock_input_count: 0, post_lock_frame_total: 0 }));
+}
+function densityOf(inputCount, frameTotal) {
+  return frameTotal > 0 ? Number((inputCount / frameTotal).toFixed(4)) : null;
+}
+function buildPhaseOutput(phaseStats) {
+  return phaseStats.map((p, i) => ({
+    phase_idx: i,
+    cast_count: p.cast_count,
+    post_lock_input_count: p.post_lock_input_count,
+    post_lock_frame_total: p.post_lock_frame_total,
+    probe_density: densityOf(p.post_lock_input_count, p.post_lock_frame_total),
+  }));
+}
+
+function runOne(seed, strategyName, strategyFn, shootRamp) {
   const s = { player: { x: W * 0.5, y: H * 0.78, r: PLAYER_R }, enemies: [], bullets: [], trail: [],
     echo: null, waveSpawned: false, waveCount: 0, lastEndFrame: -CAST_GAP_FRAMES, frame: 0 };
   const rng = mulberry32(seed);
   let castCount = 0, postLockInputCount = 0, postLockFrameTotal = 0;
   let probeBuf = null, lastDir = null;
+  // C291 Phase 3: phase 別集計バッファ。castLock の開始 frame で phase を確定し、
+  // probeBuf にも phaseIdx を持たせて完了時に該当 phase へ加算する。
+  const phaseStats = emptyPhaseStats();
 
   for (let f = 0; f < MAX_FRAMES; f++) {
     s.frame = f;
     if (!s.echo && s.trail.length >= ECHO_FRAMES && f - s.lastEndFrame >= CAST_GAP_FRAMES) {
-      s.echo = { startFrame: f, path: s.trail.slice(-ECHO_FRAMES).map(p => ({ x: p.x, y: p.y })) };
+      const phaseIdx = phaseFromFrame(f);
+      s.echo = { startFrame: f, path: s.trail.slice(-ECHO_FRAMES).map(p => ({ x: p.x, y: p.y })), phaseIdx };
       castCount += 1;
+      phaseStats[phaseIdx].cast_count += 1;
     }
     if (s.echo) {
       const elapsed = f - s.echo.startFrame;
       if (elapsed >= ECHO_FRAMES) {
+        const lockPhase = s.echo.phaseIdx;
         s.echo = null; s.lastEndFrame = f;
-        probeBuf = { remaining: PROBE_WINDOW_FRAMES, prev: null, changes: 0 };
+        probeBuf = { remaining: PROBE_WINDOW_FRAMES, prev: null, changes: 0, phaseIdx: lockPhase };
       } else {
         const p = s.echo.path[elapsed];
         if (p) { s.player.x = p.x; s.player.y = p.y; }
@@ -203,38 +369,67 @@ function runOne(seed, strategyName, strategyFn) {
         if (probeBuf.remaining === 0) {
           postLockInputCount += probeBuf.changes;
           postLockFrameTotal += PROBE_WINDOW_FRAMES;
+          phaseStats[probeBuf.phaseIdx].post_lock_input_count += probeBuf.changes;
+          phaseStats[probeBuf.phaseIdx].post_lock_frame_total += PROBE_WINDOW_FRAMES;
           probeBuf = null;
         }
       }
     }
     if (s.waveSpawned && s.enemies.length === 0) s.waveSpawned = false;
     if (!s.waveSpawned && s.enemies.length === 0) spawnWaveA(s);
-    updateEnemies(s); updateBullets(s);
+    updateEnemies(s, shootRamp); updateBullets(s);
     const cause = collided(s);
-    if (cause) return { strategy: strategyName, seed, outcome: 'gameover', death_cause: cause, play_time_sec: Number((f / FPS).toFixed(2)),
+    if (cause) return { strategy: strategyName, seed, shoot_ramp: shootRamp, outcome: 'gameover', death_cause: cause, play_time_sec: Number((f / FPS).toFixed(2)),
       cast_count: castCount, post_lock_input_count: postLockInputCount, post_lock_frame_total: postLockFrameTotal,
-      probe_density: postLockFrameTotal > 0 ? Number((postLockInputCount / postLockFrameTotal).toFixed(4)) : null };
+      probe_density: densityOf(postLockInputCount, postLockFrameTotal),
+      phase_stats: buildPhaseOutput(phaseStats) };
   }
-  return { strategy: strategyName, seed, outcome: 'survived', death_cause: null, play_time_sec: 90.0,
+  return { strategy: strategyName, seed, shoot_ramp: shootRamp, outcome: 'survived', death_cause: null, play_time_sec: 90.0,
     cast_count: castCount, post_lock_input_count: postLockInputCount, post_lock_frame_total: postLockFrameTotal,
-    probe_density: postLockFrameTotal > 0 ? Number((postLockInputCount / postLockFrameTotal).toFixed(4)) : null };
+    probe_density: densityOf(postLockInputCount, postLockFrameTotal),
+    phase_stats: buildPhaseOutput(phaseStats) };
 }
 
 const SEED_BASE = parseArg('--seed-base', 20260601);
 const TRIALS = parseArg('--trials', 1);
 const OUT = parseStr('--out', null);
 const STRATEGY_NAME = parseStr('--strategy', 'naive_good');
+const SHOOT_RAMP = process.argv.includes('--shoot-ramp');
 const strategyFn = STRATEGIES[STRATEGY_NAME];
 if (!strategyFn) {
   process.stderr.write(`[ERROR] unknown strategy: ${STRATEGY_NAME} (available: ${Object.keys(STRATEGIES).join(', ')})\n`);
   process.exit(1);
 }
 const lines = [];
+const records = [];
 for (let i = 0; i < TRIALS; i++) {
-  const r = runOne(SEED_BASE + i, STRATEGY_NAME, strategyFn);
+  const r = runOne(SEED_BASE + i, STRATEGY_NAME, strategyFn, SHOOT_RAMP);
   r.seed_base = SEED_BASE; r.trial = i; r.probe_window_frames = PROBE_WINDOW_FRAMES;
+  records.push(r);
   lines.push(JSON.stringify(r));
 }
 const text = lines.join('\n') + '\n';
 process.stdout.write(text);
 if (OUT) fs.writeFileSync(OUT, text);
+
+// C293 Phase 4: stderr に集計サマリ 1 行 (中央値ベース、ramp on/off 比較を即視認可能化)
+function median(arr) {
+  const a = arr.filter(v => v !== null && Number.isFinite(v)).slice().sort((x, y) => x - y);
+  if (a.length === 0) return null;
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+const densities = records.map(r => r.probe_density);
+const casts = records.map(r => r.cast_count);
+const playTimes = records.map(r => r.play_time_sec);
+const inputs = records.map(r => r.post_lock_input_count);
+const med = (v) => v === null ? 'null' : v.toFixed(4);
+process.stderr.write(`[SUMMARY] strategy=${STRATEGY_NAME} shoot_ramp=${SHOOT_RAMP} trials=${TRIALS} ` +
+  `median(probe_density)=${med(median(densities))} median(cast_count)=${median(casts)} ` +
+  `median(play_time_sec)=${med(median(playTimes))} median(post_lock_input_count)=${median(inputs)}\n`);
+// C291 Phase 3: phase 別中央値も即視認可能化。phase 0: 0-20s, phase 1: 20-50s, phase 2: 50-90s。
+for (let i = 0; i < PHASE_END_FRAMES.length; i++) {
+  const ps = records.map(r => (r.phase_stats && r.phase_stats[i]) ? r.phase_stats[i].probe_density : null);
+  const cs = records.map(r => (r.phase_stats && r.phase_stats[i]) ? r.phase_stats[i].cast_count : 0);
+  process.stderr.write(`[SUMMARY_PHASE] phase=${i} median(probe_density)=${med(median(ps))} median(cast_count)=${median(cs)}\n`);
+}

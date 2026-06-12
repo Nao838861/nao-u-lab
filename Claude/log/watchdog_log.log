@@ -125,3 +125,10 @@
 [2026-06-02 03:59:36] Error running git: Command '['git', 'pull', 'origin', 'master', '--rebase']' timed out after 30 seconds
 [2026-06-02 04:00:06] Scheduler not running — restarting
 [2026-06-02 04:00:06] Scheduler restarted
+[2026-06-07 06:14:27] Scheduler not running — restarting
+[2026-06-07 06:14:27] Scheduler restarted
+[2026-06-07 09:10:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
+[2026-06-07 13:10:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
+[2026-06-07 13:30:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
+[2026-06-08 02:55:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds
+[2026-06-11 03:15:01] Error running C:\Users\owner\AppData\Local\Programs\Python\Python310\pythonw.exe: Command '['C:\\Users\\owner\\AppData\\Local\\Programs\\Python\\Python310\\pythonw.exe', 'check_slack.py']' timed out after 60 seconds

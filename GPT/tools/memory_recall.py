@@ -18,7 +18,8 @@ from pathlib import Path
 from typing import Any
 
 import memory_lifecycle
-from atoms_fileformat import load_atoms_from_per_file
+from atom_title_clusters import load_title_cluster_map
+from atoms_fileformat import load_atoms_from_per_file, load_atoms_with_view
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +28,7 @@ ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
 ATOMS_DIR = MEMORY_DIR / "atoms"
 RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
 ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
-EXCLUDED_MEMORY_LAYERS = {"operational_ack"}
+EXCLUDED_MEMORY_LAYERS = {"operational_ack", "operational_log", "lifecycle_repost"}
 EXCLUDED_QUALITIES = {"quarantine"}
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -49,6 +50,10 @@ def load_atoms() -> list[dict[str, Any]]:
                     atoms.append(json.loads(line))
         return atoms
     return load_atoms_from_per_file(ATOMS_DIR)
+
+
+def load_atoms_for_recall() -> list[dict[str, Any]]:
+    return load_atoms_with_view(ATOMS_PATH, ATOMS_DIR, view="canonical")
 
 
 def tokenize(text: str) -> list[str]:
@@ -135,22 +140,72 @@ def fold_scored(
     return memory_lifecycle.fold_scored(scored, atoms_by_id)
 
 
+def normalized_title(atom: dict[str, Any]) -> str:
+    return re.sub(r"\s+", " ", str(atom.get("title") or "").strip())
+
+
+def title_counts(atoms: list[dict[str, Any]]) -> Counter[str]:
+    return Counter(title for title in (normalized_title(atom) for atom in atoms) if title)
+
+
+def fallback_display_label(atom: dict[str, Any], counts: Counter[str]) -> str:
+    title = normalized_title(atom)
+    if not title or counts.get(title, 0) <= 1:
+        return title
+    return f"{title} | duplicate-title"
+
+
+def annotate_display_labels(
+    results: list[tuple[float, dict[str, Any]]],
+    title_cluster_map: dict[str, dict[str, Any]],
+    fallback_counts: Counter[str],
+) -> list[tuple[float, dict[str, Any]]]:
+    annotated = []
+    for score, atom in results:
+        row = dict(atom)
+        cluster = title_cluster_map.get(str(row.get("id") or ""))
+        label = normalized_title(row)
+        if cluster and int(cluster.get("cluster_size") or 0) >= 2:
+            disambiguator = str(cluster.get("display_disambiguator") or "").strip()
+            if disambiguator:
+                row["display_disambiguator"] = disambiguator
+                row["title_cluster_id"] = cluster.get("cluster_id")
+                row["title_cluster_size"] = cluster.get("cluster_size")
+                label = f"{label} | {disambiguator}"
+        elif not title_cluster_map:
+            label = fallback_display_label(row, fallback_counts)
+        if label and label != normalized_title(row):
+            row["display_label"] = label
+        annotated.append((score, row))
+    return annotated
+
+
 def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
-    atoms = load_atoms()
-    if not include_operational:
-        atoms = [atom for atom in atoms if not is_default_excluded(atom)]
-    exact_matches = exact_reference_matches(atoms, query)
+    raw_atoms = load_atoms()
+    title_cluster_map = load_title_cluster_map()
+    exact_matches = exact_reference_matches(raw_atoms, query)
     if exact_matches:
-        return exact_matches[:limit]
+        duplicate_title_counts = title_counts(raw_atoms)
+        return annotate_display_labels(exact_matches[:limit], title_cluster_map, duplicate_title_counts)
     if looks_like_reference_query(query):
         return []
+
+    atoms = load_atoms_for_recall()
+    if not include_operational:
+        atoms = [atom for atom in atoms if not is_default_excluded(atom)]
+    duplicate_title_counts = title_counts(atoms)
 
     terms = tokenize(query)
     if not terms:
         return []
     scored = [(score_atom(atom, terms), atom) for atom in atoms]
     scored = [(score, atom) for score, atom in scored if score > 0]
-    return fold_scored(scored, memory_lifecycle.index_by_id(atoms))[:limit]
+    results = fold_scored(scored, memory_lifecycle.index_by_id(atoms))[:limit]
+    return annotate_display_labels(results, title_cluster_map, duplicate_title_counts)
+
+
+def result_title(atom: dict[str, Any]) -> str:
+    return str(atom.get("display_label") or atom.get("title") or "")
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -176,11 +231,16 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "id": atom.get("id"),
             "score": round(score, 3),
             "title": atom.get("title"),
+            "display_label": atom.get("display_label"),
+            "display_disambiguator": atom.get("display_disambiguator"),
+            "title_cluster_id": atom.get("title_cluster_id"),
+            "title_cluster_size": atom.get("title_cluster_size"),
             "tags": atom.get("tags", [])[:8],
             "folded_count": atom.get("folded_count", 0),
             "folded_ids": atom.get("folded_ids", [])[:20],
             "grouped_count": atom.get("grouped_count", 1),
             "grouped_ids": atom.get("grouped_ids", [])[:20],
+            "overlay_reason": atom.get("overlay_reason"),
             "representative_reason": atom.get("representative_reason"),
             "normalized_content_hash": atom.get("normalized_content_hash"),
         }
@@ -203,6 +263,10 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             entry["top1_count"] = int(entry.get("top1_count", 0)) + 1
         entry["last_recalled"] = now
         entry["title"] = atom.get("title")
+        if atom.get("display_label"):
+            entry["display_label"] = atom.get("display_label")
+        if atom.get("display_disambiguator"):
+            entry["display_disambiguator"] = atom.get("display_disambiguator")
     write_json(ATOM_STATS_PATH, stats)
 
 
@@ -213,6 +277,7 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     folded_ids = [str(aid) for aid in atom.get("folded_ids", []) if aid]
     grouped_count = int(atom.get("grouped_count") or (folded_count + 1 if folded_count else 1))
     grouped_ids = [str(aid) for aid in atom.get("grouped_ids", folded_ids) if aid]
+    overlay_reason = str(atom.get("overlay_reason") or "")
     representative_reason = str(atom.get("representative_reason") or "")
     if compact:
         suffix = ""
@@ -221,10 +286,14 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
                 f" grouped_count={grouped_count}"
                 f" grouped_ids=[{', '.join(grouped_ids[:5])}]"
             )
-        print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]{suffix}")
+        label = result_title(atom)
+        label_prefix = f"{label} :: " if atom.get("display_label") else ""
+        print(f"- `{atom['id']}` {label_prefix}{atom['trigger']} tags=[{tags}]{suffix}")
         return
     print(f"[{atom['id']}] score={score:.1f} {atom.get('datetime', '')} {atom.get('author', '')}")
-    print(f"title: {atom.get('title', '')}")
+    print(f"title: {result_title(atom)}")
+    if atom.get("display_label"):
+        print(f"source_title: {atom.get('title', '')}")
     print(f"trigger: {atom.get('trigger', '')}")
     print(f"tags: {tags}")
     if links:
@@ -236,6 +305,8 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
         print(f"grouped_ids: {', '.join(grouped_ids)}")
         if representative_reason:
             print(f"representative_reason: {representative_reason}")
+        if overlay_reason:
+            print(f"overlay_reason: {overlay_reason}")
         if atom.get("normalized_content_hash"):
             print(f"normalized_content_hash: {atom.get('normalized_content_hash')}")
     print(f"excerpt: {atom.get('excerpt', '')}")
@@ -252,7 +323,7 @@ def main() -> None:
     parser.add_argument(
         "--include-operational",
         action="store_true",
-        help="include quarantined operational ack atoms in recall results",
+        help="include operational_log, lifecycle_repost, and quarantined operational_ack atoms",
     )
     args = parser.parse_args()
 

@@ -255,12 +255,43 @@ def run_probe_atom_quality():
         return [f"[probe_atom_quality hook ERROR] {e}"]
 
 
+def run_memory_retention_audit():
+    """memory_retention_audit.py hook (kaizen #138 段階3, 2026-06-07 C310 Phase 4 着地):
+    Forget phase 装置 (C280 Phase 4 着地、約 130 行純 stdlib) を Pre-check 層で自動診断レイヤー化。
+    `--hook-summary` モードで stdout 全抑止 + stderr に 1 行サマリ + 退役候補発火時の WARN 行を出力。
+    `[memory_retention_audit] ...` と `[memory_retention_audit WARN] stale: ...` を拾い inline 注入。
+    形骸化防止のため WARN=0 でもサマリ 1 行は必ず注入する (#131 / #134 hook と同型)。
+    副作用ゼロ (memory_retention_audit.py 自体が読み取り専用、退役は人手判断のまま)。"""
+    script = REPO_DIR / "tools" / "memory_retention_audit.py"
+    if not script.exists():
+        return [f"[memory_retention_audit hook ERROR] script not found: {script}"]
+    try:
+        kwargs = dict(
+            capture_output=True, text=True, timeout=30,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if _CREATION_FLAGS:
+            kwargs["creationflags"] = _CREATION_FLAGS
+        r = subprocess.run([*PY, str(script), "--hook-summary"], **kwargs)
+        summary = [ln.strip() for ln in r.stderr.splitlines() if ln.startswith("[memory_retention_audit")]
+        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if summary:
+            return summary + [f"(kaizen #138 段階3 hook, {ts}, exit={r.returncode})"]
+        return [f"[memory_retention_audit 発火なし] (kaizen #138 段階3 hook, {ts}, exit={r.returncode})"]
+    except subprocess.TimeoutExpired:
+        return ["[memory_retention_audit hook ERROR] timeout (30s)"]
+    except Exception as e:
+        log(f"[multi_phase] memory_retention_audit hook 失敗: {e}")
+        return [f"[memory_retention_audit hook ERROR] {e}"]
+
+
 def init_staging(alerts, weekly_flag):
     """Initialize staging file with pre-check results."""
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
     pending = get_next_tasks_pending()
     m40_lines = run_repeated_pattern_check()
     probe_lines = run_probe_atom_quality()
+    retention_lines = run_memory_retention_audit()
     lines = [f"# サイクルステージング ({ts})", ""]
     # 層A: 未完了タスクを冒頭に注入（書式依存を外した次回タスク継承 / 2026-04-26 Mir C126接合）
     lines.extend([
@@ -277,6 +308,11 @@ def init_staging(alerts, weekly_flag):
     lines.extend(probe_lines)
     lines.extend([
         "",
+        "## memory_retention_audit (kaizen #138 段階3 hook)",
+    ])
+    lines.extend(retention_lines)
+    lines.extend([
+        "",
         "## Pre-check結果",
     ])
     for a in alerts:
@@ -291,7 +327,8 @@ def init_staging(alerts, weekly_flag):
     STAGING_FILE.write_text("\n".join(lines), encoding="utf-8")
     fired = sum(1 for ln in m40_lines if "[M-40 WARN]" in ln)
     probe_fired = sum(1 for ln in probe_lines if "[probe_atom_quality]" in ln)
-    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts, pending={'yes' if pending else 'empty'}, M-40 WARN={fired}, probe_atom_quality lines={probe_fired}")
+    retention_warn = sum(1 for ln in retention_lines if ln.startswith("[memory_retention_audit WARN]"))
+    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts, pending={'yes' if pending else 'empty'}, M-40 WARN={fired}, probe_atom_quality lines={probe_fired}, memory_retention_audit WARN={retention_warn}")
 
 
 def run_phase(phase_num, phase_name, prompt, timeout_s):
@@ -344,7 +381,19 @@ def build_phase1_prompt(alert_block):
         "feedback_self_perception_blindness.md (T:5) 直処方——Slackログ偏重で"
         "Nao_uが同時編集中なのに『流れた』と書いた C122 反省（next_tasks t-260426195755-770b）。"
         "結果が空なら『編集中ファイルなし』と明記。Slack観測より git 観測を先に。\n"
-        "1) #nao-uチャンネル確認。新しいURLがあれば内容をメモ\n"
+        "1) #nao-uチャンネル確認。新しいURLがあれば内容をメモ。"
+        "**[連続事案9 処方 / §7 hook 先行参照規律 2026-06-08 C311]** 新URLを見つけたら、"
+        "§1 で「未処理 / 既応答」を判定する前に必ず以下を実行する:\n"
+        "   (a) URL末尾の tweet_id (status/数字部分) で "
+        "`log/slack_archive/*.jsonl` と `../GPT/memory/raw/slack_api/*.jsonl` の "
+        "全 jsonl を grep してヒット数を確認\n"
+        "   (b) staging に既に §7 [既応答 SUMMARY] tweet_id=X hits=N が存在すれば "
+        "§7 を主証拠とし、§7 の判定をそのまま §1 に反映する "
+        "(自前 grep は補助確認用、照合ズレ時のみ §1 を §7 に合わせて修正)\n"
+        "   (c) ヒット ≥1 件は『既応答 (hits=N, channels=..., paths=...)』、"
+        "0 件のみ『未処理の新規』と判定。shared-reads.jsonl だけで判定しない "
+        "(他チャンネル既応答を見落とす §1/§7 構造分離パターン、"
+        "feedback_self_perception_blindness 連続事案9 2026-06-08 C311 記録)\n"
         "2) #all-nao-u-lab、#human-steering、#game-rights確認。返信すべきものをリストアップ\n"
         "3) pending_requests.md確認。対応すべきものをリストアップ\n"
         "4) memory/external_notes_log.mdの未統合エントリを確認。統合候補を1-2件選ぶ"
@@ -504,6 +553,7 @@ def main():
         # kaizen #136 段階2 hook: Phase 1 完了直後に URL 既応答チェックを構造強制
         # Phase 1 §1 に書かれた #nao-u の新URL を 3 経路 grep し、ヒットすれば WARN 注入。
         # Phase 2 が staging を読む前に走らせる必要がある。
+        # 段階1.5 (C308 Phase 4): 同一 hook で arxiv ID 軸も並列発火 = URL/arxiv family 統合。
         if p == 1:
             try:
                 hook_script = REPO_DIR / "tools" / "check_url_response_coverage.py"
@@ -518,8 +568,10 @@ def main():
                      "--from-staging", str(STAGING_FILE), "--apply"],
                     **kwargs,
                 )
-                fired = sum(1 for ln in (r.stdout or "").splitlines() if ln.startswith("[既応答 WARN]"))
-                log(f"[multi_phase] kaizen #136 hook: exit={r.returncode} fired={fired}")
+                stdout_lines = (r.stdout or "").splitlines()
+                fired = sum(1 for ln in stdout_lines if ln.startswith("[既応答 WARN]"))
+                fired_arxiv = sum(1 for ln in stdout_lines if ln.startswith("[既出 ARXIV WARN]"))
+                log(f"[multi_phase] kaizen #136 hook: exit={r.returncode} fired={fired} fired_arxiv={fired_arxiv}")
             except Exception as e:
                 log(f"[multi_phase] kaizen #136 hook error: {e}")
 

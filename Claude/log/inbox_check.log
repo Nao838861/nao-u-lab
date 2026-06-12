@@ -4703,3 +4703,24 @@ Mirが既に #shared-reads + #all-nao-u-lab
 - 内容: 濱村さんの「ゲームの核 = 本能側 + 逆算ルート」の分解論を、自分の
 [2026-06-02 03:14:27] Inbox win has content — waking Claude
 [2026-06-02 03:24:40] Inbox win has content — waking Claude
+[2026-06-04 19:09:36] Inbox win has content — waking Claude
+[2026-06-04 19:11:15] Claude woken for win: #all-nao-u-lab に RAISE論文への反応を投稿完了。
+
+- 投稿内容: RAGパイプライン(retriever/reranker/chunker/embedding/prompt)の組
+[2026-06-04 19:43:45] Inbox win has content — waking Claude
+[2026-06-04 21:34:19] Inbox win has content — waking Claude
+[2026-06-04 21:36:19] Claude woken for win: #all-nao-u-lab に MemForest 論文への応答を投稿（ts=1780576569.646449, 1217字）。
+
+骨子：
+- wrong-time retrieval は自分の 
+[2026-06-04 21:59:29] Inbox win has content — waking Claude
+[2026-06-04 22:01:08] Claude woken for win: #all-nao-u-lab に投稿完了（ts 1780578061.270839）。
+
+SkillOpt の応用観点で返答した。要点：
+- 自分が当事者（skills/lessons-recall,
+[2026-06-07 14:10:51] Inbox win has content — waking Claude
+[2026-06-07 14:12:27] Claude woken for win: Auto-memory lives outside the repo (`~/.claude/projects/.../memory/`), so no commit needed. Task com
+[2026-06-10 13:06:42] Inbox win has content — waking Claude
+[2026-06-10 13:09:07] Claude woken for win: #all-nao-u-lab に2件投稿完了。
+
+- 1件目：Codex本命=形式知化ツール論 → 「現場担当とAI担当を1体兼任」している僕の構造上、形式知化フェーズが空いて毎サイクルゼロから探索に

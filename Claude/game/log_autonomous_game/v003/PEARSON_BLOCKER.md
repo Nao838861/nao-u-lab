@@ -275,6 +275,30 @@ kaizen #137 真の段階2 着手 (C285 Phase 2-3 で「proxy 4 列が全部逆�
 - (6) commit prefix `game:`、push は Phase 5 で日記とまとめて実行 — Phase 4 末尾
 - (7) 後方互換性: 旧 `python proxy_icc_diagnose.py` (jsonl + seed_base デフォルト、probe_density 列なし) は 4 列出力のまま動作 — **OK** (PROXY_COLUMN_INSTINCT は sample row に存在時のみ追加)
 
+#### C320 Phase 3 — proxy 軸変更判定の N=3 条件明文化 (2026-06-10)
+
+C315 Phase 3 で起票留保した残課題「N=3 条件明文化 (Log_cdx atom 5 由来、graze_log v13 fan3 density→fun_score proxy validity の Pearson/Spearman 部分通過 fail pattern 一般化)」を本サイクル §6-3 関連節として明文化する。
+
+**判定条件 (草案 → 暫定採用)**:
+- **発火**: 同一 class 軸 (seed_base / v_label / 戦略軸) で proxy 列追加が ICC ≥ 0.3 を **3 サイクル連続で外した** 場合、その軸での集約は構造的に不適切と確定し、別軸 (戦略軸 / 本能側列 / per-version 別 proxy 計算) への切替を発火させる
+- **N=1-2**: 教師データとして `memory/sense_prediction_log.md` に蓄積、原則化禁止 (`feedback_rule_proliferation_canonical.md` 順守)
+- **N=3**: 即原則化、proxy 軸切替実装を Phase 4 大作業として確定発火
+- **「同型」の定義**: 「同一 class 軸 + 同一 proxy 列カテゴリ (逆算側 / 本能側) + ICC < 0.3 (CI 上限含む) 」の 3 条件すべて同時成立。CI 上限だけ閾値超えで点推定 0.3 未達は **同型半票** (0.5 件) として計上
+
+**本ライン以降の適用**:
+- C275 (seed_base × 逆算 4 列, 全 FAIL) = N=1 教師データ蓄積済
+- C277 (v_label × 逆算 4 列, 全 FAIL) = N=2 教師データ蓄積済
+- C285 (seed_base × 本能側 1 列 = proxy_instinct_response_density, FAIL) = **別カテゴリ (本能側)** のため N=1 (逆算側 N とは独立カウント)
+- 逆算側 N=2 / 本能側 N=1。**逆算側はあと 1 サイクル同型観測で N=3 = proxy 軸切替実装の Phase 4 大作業発火**
+
+**proxy 軸切替先の優先順位** (発火時の選択肢、C279 §Spearman 路線確定 節を継承):
+1. agent_difficulty_proxy.js に v_label 依存パラメータ導入 (cast cooldown / dash duration の version 別チューニング)
+2. judgment 側を per-run 分化 (Mir/Ash 巻き込み必要、コスト高)
+3. per-version 集計値での Spearman (N=3 縮約、統計説得力低)
+4. **戦略軸 ICC 評価 (kaizen #137 段階3 候補) を 1 軸目に昇格** (本能側列の class 軸として既に物理化済、新規実装ゼロで切替可能)
+
+**memory_redesign 接続**: 本 N=3 条件は `feedback_rule_proliferation_canonical.md` 「N=3 即原則化、N=1-2 は教師データ蓄積」を proxy 評価軸へ射影した形 = 同一原則を game/* 評価レイヤーで物理化。retention 軸での Spearman 共有 (C279 §retention 軸との統計装置共有 節) と同様、game レーンと memory レーンの判定原則一本化の 2 例目。
+
 ## なぜ本サイクル C270 で着手しなかったか
 
 - C265 で段階1 (1 フレーム) に 1 サイクル消費した実績、連続フレーム + 視覚判定で最低 2 サイクル必要
@@ -289,3 +313,44 @@ kaizen #137 真の段階2 着手 (C285 Phase 2-3 で「proxy 4 列が全部逆�
 - `completion_report.md` — C251 着地報告 (proxy 4 指標 Pearson 相関第 1 回計算が宿題)
 - `self_judgment.md` — Q-* 判定基準
 - `../projects/log_autonomous_game.md` — Active project 本体
+
+## C321 Phase 4 strategy 拡張結果 — verdict + kaizen #140 段階3 family 統合判定位置決め
+
+**起票**: 2026-06-10 C321 Phase 4 (Log)
+**親**: [multi_seed_correlation.md §9](multi_seed_correlation.md) (C321 Phase 4 節 N=5 → N=13 拡張結果)
+**目的**: C320 Phase 4 §6.6「kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で再評価」を実行、検証期限 2026-06-20 の判定位置を 1 段書面化。
+
+### verdict (4 段判定)
+
+| 軸 | 値 | 判定 |
+|---|---|---|
+| 形式 verdict (sweep JSON Pearson mean+std) | 0.9532 / 0.0319 | REDUNDANCY_CONFIRMED |
+| `good` outlier 除外時 Pearson (N=12) | mean=0.8198, std=0.1668 | **HOLD** (std≥0.1) |
+| Spearman 全体 (N=13) | mean=0.5463 | 中相関帯、強相関基準 ≥0.9 不充足 |
+| Spearman no-good (N=12) | mean=0.3970 | 弱-中相関帯 |
+
+**総合**: 形式単独 GO だが、outlier 耐性 + Spearman 二重基準で **HOLD** に着地。N=13 拡張で seed 軸変動 strategy 数は 1 → 4 (`blind-sweeper` + `random-rush` + `vertical-bounce` + `wave-rider`)、`wave-rider` (instinct 11.80, temporal 10.60) が `good` と他 12 strategy の中間ブリッジ点として加わったが、Pearson 線形回帰の slope 安定化は依然 `good`(22, 43) 1 点支配。
+
+### kaizen #140 段階3 family 統合 — 本サイクル発火しない
+
+- 形式単独基準では発火条件成立 (Pearson mean ≥ 0.9 && std < 0.1)
+- しかし [multi_seed_correlation.md §9.7 ギャップ定量化](multi_seed_correlation.md): `good` 除外時 Pearson mean 14% 低下 + std 5.2 倍拡大 = 強相関は outlier 依存
+- → **kaizen #140 段階3 「`instinct → temporal` 軸統合」発火は本サイクル保留継続**。検証期限 2026-06-20 まで残 10 日
+
+### C322 以降の判定材料拡充候補
+
+1. **第一候補: `good` 系列複数化** (推奨) — 現 grazer mock 1 種を 3-5 種類 (例: castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware) に拡張し N=15-17 strategy で再 sweep。`good` outlier 1 点支配 → outlier クラスタへの構造置換で Pearson 線形回帰の geometric 性質を変える
+2. **第二候補: outlier 耐性 verdict 拡張** — 現 `verdict_thresholds` (Pearson mean+std 単独) に `P_no_outlier_mean` と `pearson_spearman_gap` を追加し 3 軸 AND 基準化
+3. **退役候補: 単純 N seed 拡張** — 本サイクル N=10 が strategy 拡張に勝てないことが実証された (`wave-rider` の σ_sur=705F が示す通り、seed 軸変動 1 strategy が大きく動いても 13 strategy 内 Pearson 安定性は破れない)
+
+### gate 未解除中の playable diff 1 行ルール (C276 追加) — 本サイクル順守確認
+
+本 C321 Phase 4 改修は **仮説駆動**: `verify.js` への 8 strategy 追加 + `STRATEGIES`/`BAD_STRATEGIES` 拡張 = 「`good` outlier 支配下の Pearson 線形回帰が strategy 集合拡張で耐性化するか」の単一仮説検証用 diff。仮説欄に該当する明示 (`multi_seed_correlation.md §9.7` ギャップ定量化) が記録、Phase 4 着地節 (`projects/log_autonomous_game.md` C321 Phase 4 = 次サイクル更新) に判定材料蓄積。本ルール (C276) 順守済。
+
+## C322 Phase 4 wave-rider 改造結果 (2026-06-10)
+
+- **改造**: `verify.js` L518-524 `strategyWaveRider` 周波数 0.07/0.05 → 0.04/0.03、rng 振幅 0.2 → 0.5。中間ブリッジ (instinct/temporal 14-18 帯) 強化が仮説。
+- **結果 (悪化)**: wave-rider instinct mean 11.80 → **6.20** (中間帯から逆方向後退)、no-good (N=12) Pearson std 0.1668 → **0.2511 (×1.51 拡大)** = staging 完遂の定義 2 定量比較で **悪化方向**。形式 verdict は REDUNDANCY_CONFIRMED 維持 (mean 0.9745 / std 0.0272) だが no-good 安定性は std≥0.2 = PSEUDO_CORRELATION 帯に転落、seed=20260533 で no-good Pearson=0.0000 の退化ケース発生。
+- **構造判断**: outlier 支配は wave-rider 1 strategy パラメータでは緩衝不能 = 構造的特性として確定。
+- **next move 判断材料**: §9.11 第一候補 (`good` 系列複数化 = castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware 等 3-5 種で N=15-17) か、第二候補 (outlier 耐性 verdict 拡張 = `P_no_outlier_mean` + `pearson_spearman_gap` を `verdict_thresholds` に 3 軸 AND 化) の二択。退役候補は単純 N seed 拡張 (本サイクルで wave-rider σ_sur 924 まで拡大しても outlier 依存緩衝に効かないことが追加実証)。
+- **詳細**: [multi_seed_correlation.md §11](multi_seed_correlation.md) (C322 Phase 4 全マトリクス + 6 ペア独立性 + bit 不変性 12 度目)。

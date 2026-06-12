@@ -14,6 +14,16 @@
   const BULLET_SPEED = 2.0;        // pixel/frame、120 px/s、1秒先=120px=画面短辺640pxの19%
   const SHOOT_INTERVAL = 90;       // 1.5秒間隔
   const SHOOT_GATE_Y_MAX = H * 0.85; // 退場フェーズ手前まで (敵A 縦進行用)
+  // Q-D 発射予告ゴースト (C312 Phase 4 / 2026-06-08):
+  // 弾発射 GHOST_LEAD_FRAMES 前から発射元 (= 敵の位置) に半透明な予告ドット + チャージリングを表示。
+  // 発射時にゴースト pop + 実弾 push の遷移で「いつ・どこから弾が出るか」を origin 側で可視化する。
+  // C242 (Nao_u 5/26 06:10 批判) で削除した「弾本体の予測軌跡 line + 終端 × marker」とは別軸:
+  //   削除済 = 弾の future trajectory (画面内を動く軌跡)
+  //   本実装 = 弾の発射 origin (敵の位置で出る予告) = Q-D「攻撃元の可視化」本来主旨
+  // 軌跡 line・×印・座標固定マーカーは一切出さない。敵自身の位置で脈動するドット+リングのみ。
+  const GHOST_LEAD_FRAMES = 36;    // 600ms 前から予告開始 (発射ホライズン < 1秒、Movement Prediction 整合)
+  const GHOST_ALPHA_BASE = 0.18;   // 開始時 alpha
+  const GHOST_ALPHA_PEAK = 0.55;   // 発射直前 alpha
   // 敵D 横断敵: 中央付近のみ射撃 (design_log §Q-C 敵D「中央付近でのみ射撃」)
   const SHOOT_GATE_X_MIN = W * 0.2;  // 128
   const SHOOT_GATE_X_MAX = W * 0.8;  // 512
@@ -434,11 +444,36 @@
       ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill();
     }
 
+    // Q-D 発射予告ゴースト (C312 Phase 4 / 2026-06-08):
+    // shootCooldown が GHOST_LEAD_FRAMES 以下に入った敵の位置に、発射元 (origin) 予告を描画。
+    // 発射時 (shootCooldown <= 0) でゴースト消滅 + 実弾出現の遷移で「いつ・どこから出るか」を可視化。
+    // C242 削除済の「弾本体の軌跡 line + 終端 × marker」とは別軸 (= 弾の origin を敵位置で示すのみ、
+    // 弾の future trajectory は出さない)。SHOOT_GATE 外の敵は撃たないので予告も出さない。
+    for (const e of game.enemies) {
+      if (!e.alive) continue;
+      if (e.shootCooldown > GHOST_LEAD_FRAMES || e.shootCooldown <= 0) continue;
+      const inYGate = e.y >= 0 && e.y <= SHOOT_GATE_Y_MAX;
+      const inXGate = e.type !== 'D' || (e.x >= SHOOT_GATE_X_MIN && e.x <= SHOOT_GATE_X_MAX);
+      if (!inYGate || !inXGate) continue;
+      const t = 1 - (e.shootCooldown / GHOST_LEAD_FRAMES); // 0 → 1 (発射に近いほど大)
+      const alpha = GHOST_ALPHA_BASE + (GHOST_ALPHA_PEAK - GHOST_ALPHA_BASE) * t;
+      // 予告ドット (実弾と同じ橙色、半透明、発射直前で実弾サイズに膨張)
+      ctx.fillStyle = `rgba(255, 184, 120, ${alpha})`;
+      ctx.beginPath(); ctx.arc(e.x, e.y, 2 + t * 2.5, 0, Math.PI * 2); ctx.fill();
+      // チャージリング (発射が近いほど内側に閉じる)
+      ctx.strokeStyle = `rgba(255, 184, 120, ${alpha * 0.75})`;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, e.r + 6 - t * 4, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
     // Q-D: 敵弾本体のみ描画
     // C242 Phase 3 (2026-05-26): Nao_u 06:10 「1秒先軌跡+×印が邪魔で逆によけにくい」批判を受け
     // 予測軌道線・×マーカーを削除。1秒先計算は内部状態 (echo 機構) に閉じ、
     // プレイヤーには弾本体の素直な読み取りで対決させる方向に転回。
     // 1 原則: 内側で計算したものを外側に流出させない (feedback_inside_to_outside_leak.md)
+    // C312 Phase 4: origin 側予告 (上記ループ) は弾本体軌跡とは別軸、批判削除対象外。
     for (const b of game.bullets) {
       ctx.fillStyle = '#ffb878';
       ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();

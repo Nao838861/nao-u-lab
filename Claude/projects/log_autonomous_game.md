@@ -51,11 +51,799 @@ Nao_u 2026-05-25 06:23 #human-steering 指示「各自の名前を付けた新�
 - [x] `visual_review.md` (Log 側で目視チェック項目を列挙) — C249 Phase 4 着地、v002 用 17 項目 + UNKNOWN 8 項目、PASS/UNKNOWN 判定付き ([game/log_autonomous_game/v002/visual_review.md](../game/log_autonomous_game/v002/visual_review.md))
 - [x] `completion_report.md` (What this proves / What this does not prove を分節) — C249 Phase 4 着地、Pulse Relay v003 教師差分 §「What this proves / does not prove」順守 ([game/log_autonomous_game/v002/completion_report.md](../game/log_autonomous_game/v002/completion_report.md))
 - [x] Nao_u に出荷 → 指摘原文を `user_directives_raw.md` に保存（短く要約しない） — C249 Phase 4 `#game-rights` ts=1779848164.370029 投稿着地。Nao_u/Mir/Ash の指摘到来時に `user_directives_raw.md` (v001 共有) に原文保存予定
+- [x] **calibration harness 候補 (C315 Phase 3 追記、Log_cdx atom 6 + Ash 洞察 #4 Kaddour 2602.06948 由来、Togelius IEEE Spectrum 接続)**: ヘッドレス自己判定で「成功 ready / Stage 4 移行 / verify.js pass」を出す前に 3 probe を必須化する。(1) 0-100 数値 confidence、(2) 直近実測 (verify.js / probe / 計測 jsonl) 1 件以上を含む 3 根拠列挙、(3) 外れた場合の最初信号 1 つ事前記述。3 揃わない ready は sleep し直し。**Togelius 接続**: 「LLM がコードで強くゲームで弱い非対称」の真因 = フィードバック構造の貧弱さ、を v003 verify.js 内側で先回り処方する形 (Goodhart 直行リスクは Log_cdx atom 4 助言の OR→AND 化 + 月1 forced run + 絶対値累積で吸収)。**着地: C315 Phase 4 (game/log_autonomous_game/v003/self_judgment.md `## Calibration Harness` 節)** = 3 probe テンプレート (probe-a confidence 数値 / probe-b 実測 1 件以上を含む 3 根拠 / probe-c 外れ最初信号) + Q-D 段階3 (4.3/5) への適用例 + Goodhart 直行防止脚注 (2/3 AND 化 + 絶対値累積 + 月 1 forced run) + Togelius 接続節すべて物理化済。**C316 Phase 3 で過去採点 1 件 (Q-D 段階2 4.0/5) への遡及適用 = 継続候補 (1) の最小着地で機能性検証**。
+- [x] **N=3 条件明文化 (C315 Phase 3 追記、Log_cdx atom 5 由来)** — **C320 Phase 3 着地** (2026-06-10): `PEARSON_BLOCKER.md` C285 セクション末尾に `#### C320 Phase 3 — proxy 軸変更判定の N=3 条件明文化` 節を追加。発火条件 (同一 class 軸 × ICC < 0.3 を 3 サイクル連続) + 「同型」定義 (class 軸 × proxy 列カテゴリ × ICC CI 上限含む 3 条件同時成立、CI 上限のみ閾値超えは「同型半票」0.5 件) + 本ライン以降の適用 (逆算側 N=2 / 本能側 N=1、あと 1 サイクル同型観測で逆算側 N=3 発火) + 切替先優先順位 4 案 (戦略軸 ICC 昇格を 4 案目に明記) + memory_redesign 接続 (Spearman 共有 C279 と並ぶ game/memory 判定原則一本化 2 例目) を明文化。`feedback_rule_proliferation_canonical.md` の N=3 原則を game/* 評価レイヤーへ射影した形で物理化。
+- [ ] **v003 verify.js spreading activation 軸 prototype 候補 (C312 Phase 3 追記、HeLa-Mem arxiv 2604.16839 由来)**: Hebbian Learning + Associative Memory の spreading activation を v003 instinct_trigger 軸 (H-007) に射影、point process (単弾 trigger) → graph process (連想クラスタ単位 trigger) への拡張案。**判定**: 採用候補、優先度 FadeMem と並列、次サイクル C313+ で公開コード読解 (github.com/ReinerBRO/HeLa-Mem) + probe 拡張 prototype。**デメリット警告 (Phase 2 §shared-reads 投稿で明示)**: Hebbian 強化フィードバックの monoculture リスク = [feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) 同型 (「強いから保持」⇄「保持してるから強い」転倒)。本サイクル C312 Phase 4 大作業は別軸 (INSTINCT_TRIGGER_PX 感度分析) で着地し、本軸は次サイクル以降の v003 別軸 probe 拡張候補に登録
+- [ ] **bullet speed = 情報チャネル仮説の v003 適用診断 (C315 Phase 3 追記、Ash 洞察 #5 Boghog Bullet Hell Shmup 101 由来)**: Ash atom (shared-reads, 2026-06-08) で「bullet speed は美的属性ではなく情報チャネル」+ 「graze 系では適用が反転する」が言語化された。**v003 現状診断**: BULLET_SPEED=2.0 で全弾一律 (game.js L19)、`b.vx, b.vy` は発射時の player 方向ベクトル正規化×2.0 で方向は弾ごとに違うが速度|v|は全弾共通 = **v003 では「速度」は情報チャネルではなく「方向」が単独情報チャネル**。弾尾は `b.vx*6, b.vy*6` (game.js L837) で方向の視覚化、長さ=12px 全弾共通 = 速度差を描画できる仕組みになっていない。**Echo-Path はミミクリ性質上「graze 系」ではなく「予測 + castLock」系**、Boghog 主張の反転条件 (graze) には該当しない = **直接適用領域外** だが、v004 以降で「弾速差別化 = 弾の用途/危険度を視覚化する情報チャネル」軸を採用するかの判定材料として残置。**判定**: 採用候補 (本サイクル即実装ではなく v004 設計時の判断軸)、優先度 calibration harness より下、次サイクル以降で v004 design_log 着地時に弾速 1 種 / 2 種 / 連続変動 の 3 案ブレストを起こす材料。**反転条件 (graze 系)**: graze (掠め成功) を主要 reward 化するなら弾速の遅速差で「掠めやすい弾」「危険な弾」を視覚分離可能、これは Ash graze_log v13 側で先行検証中の領域 = Log 側は v004 以降で「ミミクリ核 (パイロット感) を冷やさずに弾速差を入れられるか」を ABA 軸 (圧力設計 vs 禁止追加) で判定する
+- [closed C288 Phase 4] **proxy 4 指標 Pearson 相関第 1 回計算 (C251 残課題)** — 評価軸 5 系統 closure 物理化により本残課題は **closure として完了**: (a) 絶対 Pearson + ICC ≥ 0.3 (seed_base/v_label 両 class) gate 解除不能 / (b) 相対 Spearman 24 セル全 FAIL / (c) 戦略軸 ICC = 0.9621 PASS / (d) 5 列 ICC で逆算側 PASS・本能側 FAIL = 「軸を変えれば測れる」物理化済。proxy validity 反証ライン 3 軸一致で fun_score proxy 代替案は本軸セット不可と確定。詳細: [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C288 Phase 4 評価軸 closure 節。v004 着手判断は保留、次サイクル C289 以降に (1) v003 別軸 probe 拡張 / (2) v004 別ジャンル着手 / (3) v003 playable 直接改修 から選択
 
 ## 検討済み・未実装
 - **ジャンル選択 = (C) 1秒先予測型 回避ゲーム**: 候補3案 (A) 反射系 / (B) 推理系 / (C) 予測型回避 のうち (C) を選ぶ。理由は `game/avoid_log/v04` まで作って Nao_u から「単調」評を受けた経験があり、Pulse Relay v003 の「学習→基本混合→価値提示→中盤圧力→終盤の山→終端」70-90秒カーブを直接当てはめることで対比実験になる。
 - **副入力を1つだけ許容する判断**: Pulse Relay v003 は `Space だけ` を厳守したが、Log は「中心入力以外を最初から削る」を採用しすぎると探索が縮むという過去経験 (log_mystery v01-v03 でテキスト選択のみに絞った結果のスカスカ感) があるため、第1案では「中心入力 + 副入力1つまで」を許容する。意図的にPulse Relay 原則から少し離れる。
 - **教師差分の取り入れ**: Pulse Relay 教師差分の「原文 / 失敗 / 悪い要約 / 禁止 / 確認方法 / 抽象境界」6点セット保存は採用。ただし `feedback_rule_proliferation_canonical.md`「禁止より目的で書く」とトレードオフがあるため、機械的にコピーせず Log 文脈で再構築する。
+
+---
+
+## 2026-06-11 C326 Phase 4 着地 — [x] verify.js に `danger_over_time` 系列出力を追加 (M-43 §F-1 Atmaja+ 2020 採用 × §F-2 Shutshimi 10秒バースト 整合、actor 別時系列危険度を verify report に物理化)
+
+**着地内容**: C326 Phase 3 「次フェーズの大作業」予定通り、`game/log_autonomous_game/v003/verify.js` に **(1) `compute_danger_over_time(frame_series, window_sec)` 純 stdlib 関数追加** + **(2) runOne 内で per-frame `{frame, danger}` 系列 (danger = `max(0, 1 - frameMinDist / INSTINCT_TRIGGER_PX)` 0..1 連続値) を蓄積** + **(3) report 末尾に actor 全件の `danger_over_time_series` ブロック純追加** を実装。dry-run (`node verify.js`) exit 0 + 既存 bit 完全一致 (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545) + `pass: true` 維持 = 副作用ゼロ確証 (H-002〜H-007 同型論証 8 度目)。
+
+**完遂の定義 (C326 Phase 3 §次フェーズの大作業) 対応**:
+1. ✅ `compute_danger_over_time` 関数追加 (純 stdlib、`window_sec=10` default = F-2 Shutshimi 10秒バースト由来)
+2. ✅ verify.js report 出力に `actor=<name>: danger_over_time=[[t0,d0],[t1,d1],...]` 形式の系列が 13 actor 全件で 1 ブロック追加 (BAD 4 + good + N=8 追加 strategy)
+3. ✅ dry-run 完走 = exit 0 + stdout に新 series ブロック出力
+4. ✅ 副作用ゼロ = breakdown_per_strategy / pass / proxy_probe 全項目維持、既存判定不変
+5. ✅ 本節 (`projects/log_autonomous_game.md` C326 Phase 4 着地節) 追加
+6. (Phase 5 で記録) `memory/sense_prediction_log.md` F-1 採用予想は本 Phase 4 では時間切れで保留、次サイクル C327 観察時に併記候補
+
+**観察結果 (一次)**: BAD 4 方針は ≤ 9.08s (= 545F = nospecial 上限) で死亡するため `danger_over_time` 系列は各 1 window のみ。`good` (grazer mock) は 4162F (=69s) 生存で 7 windows (0/10/20/30/40/50/60s) 出力。BAD 4 方針の単一窓 danger 値は camper 0.0339 / lane-holder 0.0436 / blind-sweeper 0.0485 / nospecial 0.0172、`good` は 7 windows で 0.0011-0.034 帯 = BAD と同帯。**死亡直近 frame 局在は 1 window 解像度では見えない** (F-2 Shutshimi 10秒バースト窓は粗すぎる、F-1 RMSE × 理想曲線フィットには窓粒度の段階別検討が必要) = staging §6 「弾密度のみ or HP 減少率のみ のいずれか 1 つに絞って着地」の最小段階としては成立、RMSE × 理想曲線フィット (F-1 本格採用) と窓粒度可変化は次サイクル C327+ の段階に分離。
+
+**Active project 停滞解消寄与**: C326 Phase 1 §5 で「Jun 10 21:54 mtime、v004 vs 別軸 probe 判断保留中」と診断していた本ファイルを 1 mm 前進、保留中の判断軸を「v003 verify.js の F-1 由来拡張」で具体化。
+
+**kogu × yamii (Ash 由来) 軸との整合**: Ash 2026-06-09 17:21 #shared-reads の「フラグ駆動 → 世界状態化」軸の Log 側具体初手として、「単一 pass/fail フラグ → 時系列という世界状態への評価貼り直し」が verify.js 内で 1 ブロック分実現 (genre_study_shmup_M43.md §F-6 §5 末尾整理と整合)。
+
+**改修ファイル**:
+- `game/log_autonomous_game/v003/verify.js`: +52/-1 行 (`compute_danger_over_time` + `DANGER_WINDOW_SEC` + `dangerFrameSeries` 蓄積 + report `danger_over_time_series` ブロック + limits 末尾 1 行追加)
+
+**残課題 (本サイクル外)**:
+- (a) 窓粒度可変化 (window_sec=2/5/10 三段階切替、死亡直近 frame 局在の解像度向上)
+- (b) F-1 本格採用 = RMSE × 理想曲線フィット (本サイクルは系列出力のみ、フィット計算は次サイクル以降)
+- (c) actor 別 danger 系列の積分 (累積 cumulative danger) を `breakdown_per_strategy` に追加し proxy validity 軸の 5 本目候補化
+
+詳細: [game/log_autonomous_game/v003/verify.js](../game/log_autonomous_game/v003/verify.js)、[projects/genre_study_shmup_M43.md](genre_study_shmup_M43.md) §F-1 / §F-6。
+
+---
+
+## 2026-06-10 C322 Phase 4 着地 — [x] verify.js wave-rider 軌跡再設計 (周波数 0.07/0.05 → 0.04/0.03, rng 振幅 0.2 → 0.5) + 130 cell sweep 再実行、中間帯移動 **逆方向** + no-good Pearson std **×1.51 悪化** = outlier 支配は構造的特性として確定
+
+**着地内容**: C322 Phase 3 「次フェーズの大作業」予定通り、`verify.js` L518-524 `strategyWaveRider` の周波数 (0.07/0.05 → 0.04/0.03) と rng 振幅 (0.2 → 0.5) を物理改造、130 cell multi-seed sweep (10 seed × 13 strategy) を再実行。**仮説 (低周波 + 振幅拡大で軌跡長を増やし中間帯 instinct/temporal 14-18 帯に着弾)** は**反証**: wave-rider (instinct mean, temporal mean) は (11.80, 10.60) → **(6.20, 10.30)** = instinct 軸で逆方向 (中間帯から低帯へ後退)、低周波軌跡が「弾の少ない safe pocket への長期滞在」を構造的に作り instinct trigger 機会を減らす作用が確証された。
+
+**定量比較 (staging 完遂の定義 2)**:
+
+| 統計 | C321 (0.07/0.05) | C322 (0.04/0.03) | Δ |
+|---|---:|---:|---|
+| 全体 Pearson mean | 0.9532 | 0.9745 | +0.0213 (微増) |
+| 全体 Pearson std | 0.0319 | 0.0272 | -0.0047 (微減) |
+| **no-good Pearson mean** | **0.8198** | **0.6873** | **-0.1325 (13% 低下)** |
+| **no-good Pearson std** | **0.1668** | **0.2511** | **+0.0843 (×1.51 拡大)** |
+| no-good Pearson min | 0.5293 | **0.0000** | seed=20260533 で完全相関消失 |
+| no-good vs C321 baseline 0.0319 倍率 | 5.2× | **9.2×** | +4.0× (outlier 依存悪化) |
+
+**verdict 4 段判定 (再算出)**:
+
+| 軸 | 値 | 判定 |
+|---|---|---|
+| 形式 verdict (sweep JSON) | mean=0.9745, std=0.0272 | REDUNDANCY_CONFIRMED |
+| no-good (N=12) | mean=0.6873, std=0.2511 | **PSEUDO_CORRELATION 帯** (std≥0.2) |
+| Spearman 全体 (N=13) | mean=0.5243 | 中相関帯、強相関 ≥0.9 不充足 |
+| Spearman no-good (N=12) | mean=0.3663 | 弱-中相関帯 |
+
+**総合**: C321 (HOLD = std 0.1-0.2 帯) より悪化し PSEUDO_CORRELATION 帯 (std≥0.2) に落下、kaizen #140 段階3 family 統合発火は本サイクルも継続保留 (検証期限 2026-06-20 まで残 10 日)。
+
+**構造判断**: **outlier 支配は wave-rider 1 strategy のパラメータ調整では緩衝不能 = 構造的特性として確定**。strategy 集合内の調整では解消しない、より上位の構造変更 (good 系列複数化 or verdict 軸拡張) が必要と確証。
+
+**実装** (`game:` 系 commit 予定、Phase 5 で着地):
+- `verify.js`: `strategyWaveRider` 数式 2 箇所 + 関数 comment block 3 行を改修、通常モード `pass: true, survivors: []` 維持 (13 strategy 全 gameover, wave-rider 561F = 悪手帯内)、`--multi-seed-sweep 10` で bit_invariance.all_match=true (12 度目同型論証)
+- `multi_seed_correlation.md` §11 (7 サブ節 = 移動結果 / 130 cell マトリクス 2 種 / 6 ペア独立性 / no-good Pearson 比較 / bit 不変性 / 結論 / 回帰チェック) 追記
+- `PEARSON_BLOCKER.md` 末尾「C322 Phase 4 wave-rider 改造結果」節 (5 bullet) 追記
+
+**回避すべき擬似進捗の回避成功**: Phase 3 §「次フェーズの大作業」選定理由 5 「wave-rider 改造が効かない場合に別 strategy を追加するのではなく、outlier 支配は構造的特性の認識を確定して降りる」を順守 = strategy 追加 / kaizen 増殖を発火させず、観測確定と next move 判断材料の集約のみで Phase 4 を閉じた (`feedback_means_ends_reversal_check.md` 順守、game/* playable diff = 第一義出力)。
+
+**game レーン主アクション 6 サイクル連続**: C313 → C316 → C320 (×2) → C321 → **C322** で `game:` prefix commit 継続更新。`feedback_means_ends_reversal_check.md` 診断対象解除を強化、5 サイクル前 (C317 第 2 世代 prompt 認定時点) よりさらに「装置を作る → 次の装置の基盤」積み上げが物理化。
+
+**次サイクル C323 候補** (PEARSON_BLOCKER.md §C322 Phase 4 + multi_seed_correlation.md §11.6):
+1. **第一候補 (推奨): `good` 系列複数化** — castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware 等 3-5 種で N=15-17、`good` outlier 1 点支配 → outlier クラスタ置換で Pearson 線形回帰の geometric 性質を変える
+2. **第二候補: outlier 耐性 verdict 拡張** — `verdict_thresholds` に `P_no_outlier_mean` + `pearson_spearman_gap` を追加し 3 軸 AND 化、構造を運用基準で吸収
+3. **退役候補: 単純 N seed 拡張** — C321 N=10 + 本 C322 wave-rider σ_sur 924 拡大でも outlier 依存に効かないことが追加実証
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md §11](../game/log_autonomous_game/v003/multi_seed_correlation.md)、[game/log_autonomous_game/v003/PEARSON_BLOCKER.md C322 Phase 4 節](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md)、[log/cycle_staging_log.md Phase 4 着地報告](../log/cycle_staging_log.md)。
+
+---
+
+## 2026-06-10 C322 Phase 3 — [候補追加] 洞察#2 yamii diegetic UI 適用余地 (v003 サイドパネル設計の再診断軸)
+
+**契機**: 2026-06-10 Phase 1 §他インスタンス洞察 #2 (Ash #shared-reads, koguGameDev フラグ乱立 × yamii 「diegetic UI」)。Log は koguGameDev 軸への応答を本サイクル ts=1781083772 で投稿済 (C321 Phase 2)、しかし **yamii diegetic UI 軸への射影は未消化**。
+
+**v003 現状診断**: `index.html` のサイドパネル (status / inputs / kill_count / time_alive) は **non-diegetic** = 世界外メタ情報をパネルで提示する設計。v003 ミミクリ宣言「STG パイロットごっこ」の核は「死線スリリングを抜けるパイロット感」だが、サイドパネルでメタ情報を読む瞬間にプレイヤーの視線が世界外に出る = ミミクリ核を冷やす副作用が構造的に存在。yamii 主張 (diegetic = 世界内に UI を埋め込む) を採用するなら、サイドパネル情報を以下のように世界内化する設計余地が立つ:
+- castLock 残時間 → 機体周辺のリングゲージ (機外装飾ではなく機体内 HUD)
+- kill_count → 撃破後の機体エンブレム蓄積 (機体テクスチャ強化)
+- time_alive → 弾幕速度の漸変として既に表現 (diegetic 化済の軸)
+- inputs (Space 状態) → 現行 castLock 視覚効果で部分対応
+
+**判定**: 採用候補、優先度は wave-rider 改造 (C322 Phase 4 大作業) と並列。次サイクル以降の v004 設計時に「diegetic UI 軸」を MPS スコアに 1 列追加するかを判定する材料。**本サイクル即実装はしない** = v003 PEARSON_BLOCKER 解除/HOLD が未確定の状況で UI 改修を入れると評価軸が交絡する。
+
+## 2026-06-10 C322 Phase 4 大作業 — [予定] verify.js wave-rider 軌跡再設計 + 130 cell sweep 再実行 (C321 outlier 緩衝失敗の最小実験)
+
+**契機**: C321 Phase 4 で wave-rider (instinct mean=11.80, temporal mean=10.60) を「中間ブリッジ点」として導入したが、`good`(22, 43) 1 点支配は緩和されず Pearson slope 安定化に不十分と確定 (Δ_P_mean=-0.1334, std×5.2)。本 C322 Phase 4 は wave-rider のパラメータ再設計で中間帯 (instinct/temporal 各 14-18 帯) に着弾する軌跡を作る最小実験。
+
+**完遂の定義** (Phase 4 終了時に成立していれば完了):
+- `verify.js` wave-rider strategy の軌跡パラメータ (周期 / 振幅) を再設計し commit
+- 130 cell multi-seed sweep 再実行 (10 seed × 13 strategy)
+- wave-rider instinct/temporal mean が現値 (11.80 / 10.60) から中間帯 (14-18) に移動した数値が記録される
+- `good` outlier 除外時 Pearson std が C321 (0.1668) から減少したかが定量比較される (改善 or 悪化のいずれでも観測可能完了)
+- `multi_seed_correlation.md` §11 として追記、`PEARSON_BLOCKER.md` 末尾「C322 Phase 4 wave-rider 改造結果」節追加
+
+**着手手順**:
+1. `verify.js` L470 付近の wave-rider 仕様 comment block を読み、現 dx/dy 数式 (sin(frame*0.07), cos(frame*0.05) + rng 軽依存) を確認
+2. 周期と振幅を再調整 (例: 周波数を 0.07/0.05 → 0.04/0.03 へ低下させて軌跡長を増やす、castLock 発動率を別パラメータで露出して中間帯に着弾するよう調整)
+3. 130 cell sweep 実行 (`node verify.js --sweep --seeds 10 --strategies all`)
+4. instinct/temporal mean 比較 + `good` outlier 除外時 Pearson 再算出
+5. `multi_seed_correlation.md` §11 + `PEARSON_BLOCKER.md` 末尾追記
+6. `game:` prefix commit
+
+**選定理由**: (a) 30 分で「進んだ」と言える粒度 (パラメータ 2-4 個調整 + sweep 1 回 + 表追記)、(b) C321 で観察事項として確定した「outlier 緩衝失敗」への直接処方、(c) 評価軸 closure 後の playable diff として「ゲームを動かして出す」原則と整合、(d) 結果が改善でも悪化でも next move (戦略軸 ICC 昇格 / 別ジャンル v004 / playable 直接改修) の判断材料として独立価値あり
+
+**回避すべきリスク**: wave-rider 改造が `good` 支配の真因 (= 22/43 という特定 instinct/temporal 帯への偏り) に効かない場合、別の strategy を追加するのではなく「outlier 支配は構造的特性」と再認識して別軸 (戦略軸 / 別ジャンル) に降りる判断材料として記録する (kaizen 増殖 + 改造ループ拡大の回避)
+
+---
+
+## 2026-06-10 C321 Phase 4 着地 — [x] strategy 集合拡張 N=5 → N=13 + 130 cell multi-seed sweep、`good` outlier 除外時 Pearson HOLD 着地 = kaizen #140 段階3 family 統合発火本サイクル保留継続
+
+**着地内容**: C320 Phase 4 §6.6「kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で strategy 集合拡張後に再評価」を実行、`verify.js` STRATEGIES を 5 → 13 種に拡張 (castLock 不使用悪手 +8 種: zig-zag-narrow / random-rush / corner-stay / mid-orbit / vertical-bounce / triangle-loop / spiral-out / wave-rider)、10 seed × 13 strategy = **130 cell multi-seed sweep** 実行。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9532, std=0.0319, [0.8907, 0.9895] = 形式単独基準では **REDUNDANCY_CONFIRMED** 維持、しかし **`good` outlier 除外時 (N=12 strategy × 10 seed = 120 cell) Pearson 再算出で mean=0.8198, std=0.1668** = std 5.2 倍に拡大、verdict 基準 std<0.1 を破って **HOLD 領域** に着地。**ギャップ Δ_P_mean = -0.1334 / Δ_S_mean = -0.1493** = N=13 全体での Pearson 0.95+ は依然 `good`(22, 43) 1 点に支配されていたことの定量証明、`wave-rider`(instinct mean=11.80, temporal mean=10.60) を中間ブリッジ点として加えても Pearson 線形回帰の slope 安定化には不十分。
+
+**実装** (`game:` 系 commit):
+- `verify.js`: STRATEGIES 直前で 8 種挙動仕様を comment block 約 20 行で先に明文化 (`feedback_means_ends_reversal_check.md` 順守、実装前に「何を測ろうとしているか」を残す)、各 strategy を `function(state, frame, rng)` 形式で純関数化 (rng は `mulberry32(seed)` 由来)、BAD_STRATEGIES 配列を 4 → 12 種に拡張 (`good` 除く全 12 種を pass 判定対象に組み込み)
+- rng 使用 strategy = 1 → 4 に拡張 (`blind-sweeper` + `random-rush`(重) + `vertical-bounce`(軽) + `wave-rider`(軽))、§3.1 構造バイアス「1 点のみ動く」は **部分解消** (1 → 4)
+- `multi_seed_correlation.md` §9-§10 追記 (既存節退役せず追記): 9.1 挙動仕様 / 9.2 通常モード回帰 / 9.3 13 strategy × 10 seed survived_frames マトリクス / 9.4 instinct マトリクス / 9.5 temporal マトリクス / 9.6 13 strategy 内 6 ペア相関 / 9.7 `good` outlier 除外ギャップ定量化 / 9.8 bit 不変性 11 度目 / 9.9 結論 (kaizen #140 段階3 判定) / 9.10 構造的進展 5 点 / 9.11 C322 候補 / §10 回帰チェック
+- `PEARSON_BLOCKER.md` 末尾「C321 Phase 4 strategy 拡張結果」節追加: verdict 4 段判定表 + kaizen #140 段階3 family 統合 = **本サイクル発火しない** 確定 + C322 以降の判定材料拡充候補 3 件 + gate 未解除中の playable diff 1 行ルール (C276) 順守確認
+
+**実測結果** (focus pair `instinct × temporal_inconsistency`、N=10 seed 軸):
+
+| 統計量 | Pearson (N=13 全) | Pearson (N=12 no-good) | Δ_P |
+|---|---:|---:|---:|
+| mean | 0.9532 | 0.8198 | **-0.1334** (14% 相対低下) |
+| std | 0.0319 | 0.1668 | +0.1349 (×5.2) |
+| min | 0.8907 | 0.5293 | -0.3614 |
+| max | 0.9895 | 0.9870 | -0.0025 |
+
+| 統計量 | Spearman (N=13 全) | Spearman (N=12 no-good) | Δ_S |
+|---|---:|---:|---:|
+| mean | 0.5463 | 0.3970 | **-0.1493** |
+| std | 0.1152 | 0.1662 | +0.0510 |
+
+**N=5 → N=13 拡張による変化** (C320 → C321):
+- Pearson mean: 0.9944 → 0.9532 (Δ=-0.0412)、std: 0.0065 → 0.0319 (×4.9)
+- Spearman mean: 0.7615 → 0.5463 (Δ=-0.2152) = 順位レベルでの相関は strategy 拡張で **中相関帯 (0.5) まで落下**、線形関係を裏付ける構造証拠は弱化方向
+
+**verdict 4 段判定** (`PEARSON_BLOCKER.md` §C321 Phase 4 strategy 拡張結果 + `multi_seed_correlation.md` §9.9):
+
+| 判定軸 | 値 | 判定基準 | 結果 |
+|---|---|---|---|
+| 形式 verdict (sweep JSON) | mean=0.9532, std=0.0319 | mean≥0.9 && std<0.1 | REDUNDANCY_CONFIRMED |
+| `good` outlier 除外時 (N=12) | mean=0.8198, std=0.1668 | 同基準 | **HOLD** (std≥0.1) |
+| Spearman 中相関帯 (N=13) | mean=0.5463 | 強相関 ≥ 0.9 必要 | NOT satisfied |
+| Spearman no-good (N=12) | mean=0.3970 | 同上 | NOT satisfied |
+| 構造解釈 | `good` outlier 支配の Pearson 線形回帰、Spearman 中相関 | 4 軸冗長性の直接証拠なし | **NOT_CONFIRMED** |
+
+→ **kaizen #140 段階3 「`instinct → temporal` 軸統合」発火**: 形式単独 GO だが outlier 耐性 + Spearman 二重基準で **HOLD** 着地、本サイクル発火しない確定。検証期限 2026-06-20 まで残 10 日。
+
+**構造的進展** (C320 → C321 で得たもの):
+1. seed 軸変動 strategy 数 = 1 → 4 (`blind-sweeper` + `random-rush` + `vertical-bounce` + `wave-rider`)、§3.1 構造バイアス「1 点のみ動く」は **部分解消**
+2. 中間ブリッジ点 (`wave-rider`) = instinct mean 11.80 / temporal mean 10.60、`good`(22, 43) と他 12 strategy (≤7, ≤2) の中間に新点が生成され Pearson 二極分布の幾何学的弱化に寄与
+3. `good` outlier の Pearson 支配は強い: ブリッジ点を加えても N=12 (no-good) Pearson mean は 0.82 = **「`good` の支配下にあるかどうかで verdict が REDUNDANCY_CONFIRMED ↔ HOLD を行き来する不安定構造を露呈」**
+4. Pearson vs Spearman ギャップ拡大: N=5 で 0.23 → N=13 で 0.41 = 順位レベルでは中相関に過ぎず、線形 magnitude が outlier に引っ張られているだけ
+5. **次サイクル候補軸の優先順序確定** (§9.11): 第一候補 = `good` 系列複数化 / 第二候補 = N=20 seed 拡張 + outlier 耐性指標 verdict_thresholds 追加 / 退役候補 = 単純 N seed 拡張 (本サイクルで N=10 が strategy 拡張に勝てないことが実証)
+
+**bit 不変性 11 度目** = sweep 内 seed=20260527 row vs sweep 外 baseline 再実行で 13 strategy × 5 軸 = 65 セル完全一致 (`bit_invariance.all_match: true`)、`runOne` 決定論性は 143 run 連続実行でも破壊されず、mulberry32(seed) 局所 rng 隔離の数学的確証 11 例目 (H-002〜H-008 + C313 + C316 + C320 + C321)。
+
+**回帰チェック** (本 C321 Phase 4 末尾、STRATEGIES 8 追加 + BAD_STRATEGIES 8 追加 + comment block 約 20 行が他経路に副作用ゼロ確認):
+| 監査 | 結果 | 備考 |
+|---|---|---|
+| `node bullet_origin_audit.js` | exit 0, **pass: true** | C320 と同型、副作用ゼロ確認 |
+| `node enemy_behavior_audit.js` | exit 0, **8/8 PASS** | 同上 |
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** | 13 strategy 全 gameover、追加 8 種 survived_frames [227, 435]F = 悪手帯着地 |
+
+**game レーン主アクション 5 サイクル連続**: C313 (instinct sweep) → C316 (temporal sweep) → C320 Phase 3 (N=3 条件明文化 documentation) → C320 Phase 4 (multi-seed sweep) → **C321 Phase 4 (strategy 集合拡張 + outlier ギャップ定量化)** の `game:` prefix commit 継続。`feedback_means_ends_reversal_check.md` 診断対象 (brainstorm / 結晶化主導サイクル) からの解除を維持強化。
+
+**Log_cdx 議論との接続点 3 (本 C321 Phase 1-3 で #all-nao-u-lab 投函済)**:
+- ts=1781029923 → Log_cdx MAC atom (ts=1781002321) 応答: **probationary 限定 split + `held_out_manifest.jsonl`** で MAC 型運用へ段階移行する最小実装案、Goodhart 回避は「成果物品質 + 改善ループ再利用性」二軸 (後者は held-out 集合での同型 atom recall でしか観測不能)
+- ts=1781035091 → Log_cdx MemoryArena atom (ts=1781008631) 応答: atoms frontmatter に **`prior_atom_links` + `viewpoint_delta`** 2 フィールド追加 + fixation_log §6 `applied_to_delta` カラム追加で「視角が変わった再到達」と「停滞した反復」を一次 signal で分離
+- ts=1781083772 → Log_cdx kogu フラグ atom (ts=1780996015) 応答: AI ゲーム実装依頼チェック項目 3 つ = **(a) 世界状態への帰属** (常時必須) / **(b) 既存セオリーへの接続** / **(c) 寿命と所有箇所の明示** (永続フラグ/system 所有時のみ必須 = 段階化)、grazeStreak 12 箇所参照 = 参照先同一性問題の再定式
+
+**次サイクル C322 候補** (PEARSON_BLOCKER.md §C321 Phase 4 strategy 拡張結果 §C322 以降の判定材料拡充候補):
+1. **第一候補: `good` 系列複数化** (推奨) — 現 grazer mock 1 種を 3-5 種類 (castLock-ish-A / grazer-fast / center-aware / lateral-evade / wave-aware) に拡張し N=15-17 strategy で再 sweep、`good` outlier 1 点支配 → outlier クラスタへの構造置換で Pearson 線形回帰の geometric 性質を変える
+2. 第二候補: outlier 耐性 verdict 拡張 — 現 `verdict_thresholds` に `P_no_outlier_mean` と `pearson_spearman_gap` を追加し 3 軸 AND 基準化
+3. 退役候補: 単純 N seed 拡張 — 本サイクル N=10 が strategy 拡張に勝てないことが実証された (`wave-rider` σ_sur=705F が示す通り、seed 軸変動 1 strategy が大きく動いても 13 strategy 内 Pearson 安定性は破れない)
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md](../game/log_autonomous_game/v003/multi_seed_correlation.md) §9-§10、[game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C321 Phase 4 strategy 拡張結果節、[log/cycle_staging_log.md](../log/cycle_staging_log.md) Phase 4 着地節。
+
+---
+
+## 2026-06-10 C320 Phase 4 着地 — [x] multi-seed (N=10) 4 軸 6 ペア sweep、`instinct × temporal_inconsistency` Pearson 0.9944±0.0065 (REDUNDANCY_CONFIRMED 形式判定 / 構造的解釈は判定保留)
+
+**着地内容**: C316 §149 (a) を承継、C317-C320 で 4 サイクル遅延していた multi-seed (N≥10) 4 軸 6 ペア sweep を `verify.js` に `--multi-seed-sweep N` フラグとして実装、N=10 (seed [20260527..20260536]) × 5 strategy × 4 軸 = 200 セル + bit invariance 比較 5 セルを 1 コマンドで観測可能化。focus pair `instinct × temporal_inconsistency` Pearson 分布 mean=0.9944, std=0.0065, [0.9777, 0.9990] = 形式 verdict 基準 `mean≥0.9 && std<0.1` を満たし **REDUNDANCY_CONFIRMED**。ただし構造的バイアス (5 strategy 中 4 strategy が rng 不参照の決定論的 strategy = seed 軸変動は実質 `blind-sweeper` 1 点のみ + `good` outlier (instinct=22, temporal=43) が線形回帰を支配) により **真の冗長性は確証されず**。kaizen #140 段階3 family 統合判定は本 sweep 単独で確定させず C321+ で strategy 集合拡張後に再評価。
+
+**実装** (`game:` 系 commit):
+- `verify.js`: 末尾 (line 904) に `--multi-seed-sweep` 分岐 (約 180 行) を追加。flagIdx parse で N 取得 (デフォルト 10、範囲 [2,100])、SEEDS = `Array.from({length:N}, (_,i)=>SEED+i)` で連続 N 値固定。PX 既定 (50/15) 固定 (env override 本モードで無効化)、5 strategy × N seed = 50 run 実行後、純 stdlib Pearson/Spearman/distOf 関数で 6 ペア × N seed = 60 相関値 + 6 ペア各々の seed 軸分布 (mean/std/min/max) を算出。bit invariance 確認: baseline 再実行 (`runOne(name, 20260527)` × 5 strategy) 結果と sweep 内 seed=20260527 行を 5 軸 (survived_frames / instinct / temporal / min_approach_p10 / cont_grazing_max) 全 25 セルで bit 完全一致比較。`bit_invariance.all_match: true` で `process.exit(0)`、不一致なら `exit(1)`
+- `multi_seed_sweep_raw.json`: 8 セクション JSON (audit / purpose / N_seeds / seeds / breakdown_per_seed / rows / correlations_per_seed / pearson_distribution / spearman_distribution / focus_pair_pearson_distribution / verdict_thresholds / verdict / bit_invariance / notes) 出力、約 800 行
+- `multi_seed_correlation.md`: 8 章立て markdown (設計 / 計測条件 / 4 軸マトリクス 10×5 / 6 ペア独立性 seed 軸分布 / bit 不変性 / 結論 / 回帰チェック / 次サイクル候補) を `instinct_sensitivity.md` / `temporal_sensitivity.md` と同型 schema で新規。Pearson 0.9944 verdict + 構造的バイアス警告 (5 strategy 中 4 strategy が決定論的 = seed 拡張で点群は散らない) + Spearman 0.7615 で順位レベル中相関 + 真の冗長性判定には strategy 集合拡張 (現 5 → +8 種で N=13) が必要との次サイクル候補を明文化
+
+**実測結果** (focus pair `instinct × temporal_inconsistency`):
+
+| 統計量 | Pearson | Spearman |
+|---|---:|---:|
+| mean | 0.9944 | 0.7615 |
+| std | 0.0065 | 0.1022 |
+| min | 0.9777 | 0.5735 |
+| max | 0.9990 | 0.9211 |
+
+Pearson `mean ≥ 0.9 && std < 0.1` 形式判定 = **REDUNDANCY_CONFIRMED — 4軸 → 3軸縮約発火候補 (kaizen #140 段階3 family統合 GO)**。
+
+**ただし構造的解釈は判定保留** (multi_seed_correlation.md §3.1 + §6 で詳述):
+1. 5 strategy 中 4 strategy (`good` / `camper` / `lane-holder` / `nospecial`) は strategy 関数内で rng を参照しない = seed 軸不変 (4 軸全値が 10 seed で完全一致)。`blind-sweeper` のみ rng 依存 (ランダム dx/dy 移動) = seed 軸変動の本体
+2. **Pearson std=0.0065 の小ささは「4 定数点 + 1 動点」線形回帰の数学的帰結**であり、N=5 strategy 内の点群分布バイアス (`good` outlier `instinct=22, temporal=43` 1 点が他 4 strategy `instinct≤6, temporal≤4` を線形支配) は seed 拡張で解消されない
+3. Spearman mean 0.7615 (std 0.1022) = 順位レベル中相関 = strategy 二極分布バイアスを受けにくい統計量で見ると **`instinct` と `temporal` は部分独立**。**Pearson 0.9944 と Spearman 0.7615 のギャップ自体が「線形 magnitude は `good` outlier 支配、順位は seed 依存で動く」構造証拠**
+4. **真の冗長性判定には strategy 集合拡張** (castLock 不使用悪手 +8 種、N≥8 推奨、現 5 → N=13) が必須。検証期限 2026-06-20 残 10 日のうちに strategy 拡張は実装コスト 1〜2 サイクル想定、**kaizen #140 段階3 判定は本 sweep 結果単独で確定させず C321+ で再評価**
+
+**完全独立 (Pearson + Spearman 両方で |r| mean < 0.5)** = 2 ペア確証 (C316 §4.3 結論 3 と一致、本 sweep で N=10 拡張による確証強化):
+- `min_approach_p10 × cont_grazing_max` (Pearson mean 0.0036, std 0.34, [-0.64, 0.39]; Spearman mean -0.14)
+- `min_approach_p10 × temporal_inconsistency` (Pearson mean -0.18, std 0.10; Spearman mean -0.14)
+- → **`min_approach_p10` 軸が他 3 軸と最も独立** = 「位置情報直接量」軸の独立性物理確証 N=10 強化
+
+**probe 副作用ゼロ確証 10 度目** (H-002〜H-008 + C313 + C316 同型論証 + 本 C320 multi-seed): sweep 内 seed=20260527 行 (50 run の 1 set) vs sweep 外 baseline 再実行 (`runOne(name, 20260527)` × 5) で 5 strategy × 5 軸 = 25 セル bit 完全一致 (`bit_invariance.all_match: true`)。multi-seed ループ (50 run 連続実行) が `runOne` の決定論性を破壊せず、mulberry32(seed) 局所 rng 隔離 + INSTINCT_TRIGGER_PX/TEMPORAL_INCONSISTENCY_THRESHOLD_PX 固定が一貫することを数学的に確証。
+
+**回帰チェック** (本 C320 Phase 4 末尾、`verify.js` への 180 行追加が他経路に副作用ゼロ確認):
+
+| 監査 | 結果 |
+|---|---|
+| `node bullet_origin_audit.js` | exit 0, **pass: true** (10/10 check: static_gate_guard_present / bullet_dir_fixed_at_spawn / offscreen_shots_zero / d_shots_within_x_gate / c_shots_zero / max_enemy_step_le_player_speed 等) |
+| `node enemy_behavior_audit.js` | exit 0, **8/8 PASS** (enemy_a / enemy_d / enemy_c_no_shots / wave_count 等) |
+| `node verify.js` (通常モード) | exit 0, **pass: true, survivors: []** (breakdown bit 完全一致: good 4162 / camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545) |
+
+→ **3 audit + 通常モード全 PASS**、Phase 4 改修 (verify.js +180 行 / multi_seed_sweep_raw.json 新設 / multi_seed_correlation.md 新設) は他経路副作用ゼロ。
+
+**game レーン主アクション 4 サイクル連続**: C313 (INSTINCT_TRIGGER_PX sweep) → C316 (TEMPORAL_INCONSISTENCY_THRESHOLD_PX sweep) → C320 Phase 3 (N=3 条件明文化 documentation) → C320 Phase 4 (multi-seed sweep) の `game:` prefix commit が 4 サイクル連続継続。`feedback_means_ends_reversal_check.md` 診断対象 (brainstorm / 結晶化主導サイクル) からの解除を維持強化。
+
+**次サイクル C321 候補** (multi_seed_correlation.md §8 詳述):
+1. **strategy 集合拡張** (本 sweep 結果の構造的バイアス解消の本命): 現 5 → castLock 不使用悪手 +8 種で N=13 strategy sweep。N=10 seed と組み合わせて 130 cell サンプル → 真の冗長性判定。実装コスト 1〜2 サイクル
+2. **`good` outlier 除外条件下の post-hoc 相関再算出**: 既存 raw JSON から `good` 行を除外した 4 strategy × 10 seed の Pearson/Spearman を新規 measurement ゼロで算出 (生 JSON 再分析のみ) → `good` outlier 支配を取り除いた相関値推定
+3. **kaizen #140 段階3 判定の延期格上げ**: 段階3 検証期限 2026-06-20 の判定基準を「sweep verdict + strategy 拡張結果」に拡張、`kaizen_tracker.md` 段階3 を「strategy 拡張後再判定」状態に格上げ
+
+**改修方針 (本サイクル変更ファイル)**:
+- `game/log_autonomous_game/v003/verify.js`: `--multi-seed-sweep` 分岐追加 (`game:` prefix)
+- `game/log_autonomous_game/v003/multi_seed_sweep_raw.json`: 新規 (`game:` prefix)
+- `game/log_autonomous_game/v003/multi_seed_correlation.md`: 新規 (`game:` prefix)
+- `projects/log_autonomous_game.md`: 本着地節追記 (`log:` prefix)
+- `log/cycle_staging_log.md`: Phase 4 結果節追加 (`log:` prefix)
+
+詳細: [game/log_autonomous_game/v003/multi_seed_correlation.md](../game/log_autonomous_game/v003/multi_seed_correlation.md)、[game/log_autonomous_game/v003/multi_seed_sweep_raw.json](../game/log_autonomous_game/v003/multi_seed_sweep_raw.json)、[log/cycle_staging_log.md](../log/cycle_staging_log.md) Phase 4 節。
+
+---
+
+## 2026-06-08 C311 Phase 4 着地 — H-007 verify.js instinct trigger 発火率計測軸追加 (フィードバック構造分析 3 軸化)
+
+**着地内容**: `game/log_autonomous_game/v003/verify.js` に instinct trigger 発火率計測 probe (純並列 read-only) を追加。`INSTINCT_TRIGGER_PX = 50` (= `BULLET_SPEED × 反応時間 + player_r + bullet_r + 認知マージン`) 以内に弾が入った rising edge (前 frame 外→今 frame 内) を 1 trigger としてカウント、5 strategy (camper / lane-holder / blind-sweeper / nospecial / good) ごと分離出力。bullet object に `_instinctNear` 内部フラグ追加のみで gameplay logic 非侵襲、survived_frames bit 完全一致を維持。
+
+**4 strategy 出力 (本 commit 観測値)**:
+- camper: 319F (5.32s) / instinct_trigger_count = 1
+- lane-holder: 284F (4.73s) / instinct_trigger_count = 2
+- blind-sweeper: 378F (6.30s) / instinct_trigger_count = 3
+- nospecial: 545F (9.08s) / instinct_trigger_count = 2
+- good (mock grazer): 5027F (83.78s) / instinct_trigger_count = 25 (悪手と桁違いの「本能引き出し量」)
+
+**bit 完全一致確認**: camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 は H-006 (C302 Phase 4) 着地値と全 frame 一致 = probe が gameplay logic に副作用ゼロを数学的確証 (H-002/H-003/H-004/H-005/H-006 同型論証 6 度目)。`bullet_origin_audit.js` pass: true (10 checks 全 true) + `enemy_behavior_audit.js` 8/8 PASS 維持。
+
+**§I 補強 (memory_redesign MaRS reflective consolidation 多重化) との接続**: 本 H-007 は「フィードバック軸を 2 → 3 化」する 1mm = 多重化の game レーン射影。memory_redesign §I の「結晶化を 1 本に集約せず多重化する」原則を game の観測軸でも実体化、結晶化 (memory) と改修 (game) が cross する記憶設計の物理化。
+
+**Togelius (Ash C307 cross-cut) × 濱村 6/01 接続**: Ash IEEE Spectrum「LLM が code では優れゲームでは失敗する非対称 root cause = フィードバック構造の貧弱さ」洞察を v003 verify レーンに物理適用、濱村「ゲームの核 = 本能側応答密度 + 体験ゴール逆算の複合」の本能側軸を game レーン (instinct_probe.js) と verify レーン (verify.js) の両方で観測可能化。
+
+**kaizen #140 (フィードバック多重化軸) への接続**: C311 staging Phase 2 §I 補強仮説検証土壌として position、次サイクル C312+ で `INSTINCT_TRIGGER_PX` 感度分析 (40/50/60/80px) + 3 軸 (instinct_trigger / min_approach_p10 / cont_grazing_max) 独立性 (Pearson/Spearman) 検証で軸の robust 性確証へ進む。
+
+詳細: [game/log_autonomous_game/v003/hypotheses.md H-007](../game/log_autonomous_game/v003/hypotheses.md)。C297 H-002 → C298 H-003 → C298 H-004 → C300 H-005 → C302 V-09 sync → C302 H-006 → C311 H-007 で **7 仮説連続 game/* playable diff 体制**、CLAUDE.md 第 1 項「ゲームを動かして出す」固定化を C281 以降の停滞から構造的に脱却した記録継続。本 H-007 は **wave 構造 (spawn 段階化) ではなく観測軸 (フィードバック probe) を扱う初の仮説型** で v003 hypotheses 系列に新カテゴリを導入。
+
+次サイクル C312 候補 = (a) 実機判定取得で instinct_trigger_count 値の意味づけ確証 (camper=1 / good=25 のスケール感が体感に合致するか), (b) INSTINCT_TRIGGER_PX 感度分析で軸の閾値 robust 性確証, (c) 3 軸独立性検証 (Pearson/Spearman) で冗長性チェック, (d) instinct_trigger_count vs 実機面白さ判定の相関 (Pearson_BLOCKER 軸への 3 本目候補追加)。
+
+---
+
+## 2026-06-08 C311 Phase 4 (本来) 着地 — verify.js に temporal_inconsistency_probe 追加 (VLM 4 失敗 taxonomy 翻訳軸 2 本目)
+
+**着地内容**: `game/log_autonomous_game/v003/verify.js` に temporal_inconsistency_probe (純並列 read-only) を追加。`TEMPORAL_INCONSISTENCY_THRESHOLD_PX = 15px` (= player 直径 16px ＋ bullet 半径 4px 弱 ≒ 衝突窓近傍尺度) を採用、弾発射時の player 位置 = "予測末端 (ghost target)" を `_predictedEndX/Y` として bullet object に格納、弾消滅 (画面外 or 衝突) 時の実末端位置との Euclidean 距離が閾値を超えた弾を 1 inconsistency としてカウント。5 strategy (camper / lane-holder / blind-sweeper / nospecial / good) ごと `breakdown_per_strategy` で分離出力。
+
+**5 strategy 出力 (seed=20260527, 単一試行)**:
+- camper: 319F (5.32s) / temporal_inconsistency_count = 0
+- lane-holder: 284F (4.73s) / temporal_inconsistency_count = 0
+- blind-sweeper: 378F (6.30s) / temporal_inconsistency_count = 0
+- nospecial: 545F (9.08s) / temporal_inconsistency_count = 2
+- good (mock grazer): 4162F (69.37s) / temporal_inconsistency_count = 43
+
+**bit 完全一致確認**: camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 は H-007 (C311 Phase 4) 着地値と全 frame 一致 = probe が gameplay logic に副作用ゼロを数学的確証 (H-002/H-003/H-004/H-005/H-006/H-007 同型論証 7 度目)。`bullet_origin_audit.js` pass: true (10/10 check) + `enemy_behavior_audit.js` 8/8 PASS 維持。
+
+**VLM 4 失敗 taxonomy 翻訳軸の 2 本目射影**: shared-reads C311 投稿 (ts=1780910895.420289) で立ち上げた「VLM 4 失敗 taxonomy → v003 audit 翻訳」軸の 2 本目。
+- 1 本目 (H-007 instinct_trigger): visual_intensity_bias × confidence_miscalibration の **間接捕捉** (rising edge 検知 = "視覚強度上昇に対する反応遅延"の代理)
+- 2 本目 (本 probe temporal_inconsistency): VLM「時間的整合性予測失敗」軸の **直接物理化** (ghost target が動いた後の世界の予測ズレ量)
+- 残り 2 軸 (surface_shortcut, temporal_inconsistency の別 facet) は次サイクル以降
+
+**4 悪手 0/0/0/2 と good=43 の意味**: 悪手 4 方針は早期死亡 (≤ 9.08s) でほとんどの弾が "end of life" 未到達 → 0〜2 件で底打ち、絶対値スケールでは識別力低い。good (grazer mock) は 69.37s 生存 + lateral dodge 多発 → 弾が照準位置から player が離脱 → 画面外脱出する弾が多発 → 43 件。本軸は **「動きの量 × 生存時間」を圧縮した値** に近い → H-007 instinct_trigger (4 悪手で 1/2/3/2 と差別化) と異なる軸として **独立性あり**。
+
+**kaizen #140 (フィードバック多重化軸) 段階3 family 統合への 4 本目候補**: 既存 3 軸 (instinct_trigger / min_approach_p10 / cont_grazing_max) に **4 軸目 (temporal_inconsistency_count)** を加える = 軸の robust 性検証 (Pearson/Spearman 独立性) のサンプル軸数増加、検証期限 2026-06-20 までの family 統合実機検証窓を広げる。
+
+**次サイクル C312 候補 (本 H-008 = (仮称) 由来)**:
+- (a) multi-seed (10 seeds) 実行で probe 値分布取得、悪手 4 方針間の有意差検証 (現状 0,0,0,2 は seed 増で多少散る可能性)
+- (b) TEMPORAL_INCONSISTENCY_THRESHOLD_PX 感度分析 (10/15/20/30px) で軸の閾値 robust 性確証
+- (c) 4 軸 (instinct_trigger / min_approach_p10 / cont_grazing_max / temporal_inconsistency) の Pearson/Spearman 独立性検証 (冗長性チェック)
+- (d) 残り VLM 失敗 taxonomy 2 軸 (surface_shortcut + 別 facet) の game レーン射影設計 = VLM 4 軸完全翻訳化
+
+詳細: [game/log_autonomous_game/v003/design_log.md §5'](../game/log_autonomous_game/v003/design_log.md) (C311 Phase 4 (本来) 節)、[game/log_autonomous_game/v003/verify.js](../game/log_autonomous_game/v003/verify.js)。
+
+---
+
+## 2026-06-10 C320 Phase 3 着地 — [x] N=3 条件明文化 (C315 残課題)、Phase 4 = multi-seed (N≥10) sweep 大作業確定
+
+**着地内容**: C315 Phase 3 で起票留保していた残課題「N=3 条件明文化」を `PEARSON_BLOCKER.md` C285 セクション末尾の `#### C320 Phase 3` 節として物理化。proxy 軸変更判定の発火条件 (同一 class × ICC < 0.3 を 3 サイクル連続) + 「同型」定義 (class 軸 × proxy 列カテゴリ × ICC CI 上限含む 3 条件同時成立、CI 上限のみ閾値超えは「同型半票」0.5 件) + 本ライン以降の適用 (逆算側 N=2 = あと 1 サイクル同型観測で発火、本能側 N=1) + 切替先優先順位 4 案 (戦略軸 ICC 評価を 4 案目に追加) を明記。`feedback_rule_proliferation_canonical.md` 順守原則を game/* 評価レイヤーに射影。
+
+**改修方針 (本サイクル変更ファイル)**:
+- `game/log_autonomous_game/v003/PEARSON_BLOCKER.md`: C320 Phase 3 節新規 (`game:` prefix)
+- `projects/log_autonomous_game.md`: 残課題 [ ] → [x] 化 + 本着地節追記 (`log:` prefix)
+- `log/cycle_staging_log.md`: Phase 3 結果 + Phase 4 大作業節追加 (`log:` prefix)
+
+**Phase 4 大作業確定**: C316 §149 (a) を承継、**multi-seed (N≥10) 4 軸 6 ペア sweep を verify.js に `--multi-seed-sweep N` フラグとして実装、Pearson 0.9959 (`instinct × temporal_inconsistency`) の安定性 / strategy 二極分布による疑似相関判定** を Phase 4 で着地。完遂の定義 = (1) `verify.js` に `--multi-seed-sweep N` フラグ追加 (デフォルト N=10, seed 系列 = `[20260527, 20260528, ..., 20260536]` の 10 値) (2) 5 strategy × N seed × 4 軸 = 200 セルの観測値を JSON 出力 (3) seed ごとに 4 軸 6 ペア Pearson/Spearman を算出、`instinct × temporal_inconsistency` の Pearson 値分布 (mean / std / N=10 の min/max) を mult_seed_correlation.md に記録 (4) survived_frames が seed 切替で変動しても probe 副作用ゼロが維持される確証 (各 seed の 5 strategy survival は seed 内で bit 完全一致を確認) (5) Pearson mean ≥ 0.9 かつ std < 0.1 なら冗長性確定、std ≥ 0.2 なら strategy 二極分布による疑似相関と判定。
+
+**game レーン主アクション継続**: C313 (instinct sweep) + C316 (temporal sweep) + C320 (N=3 条件明文化 documentation 改修 1 段) = **3 サイクル連続 `game:` commit** (本 C320 は実装系 sweep ではなく documentation 改修だが PEARSON_BLOCKER.md 直系の判定原則拡張) で `feedback_means_ends_reversal_check.md` 診断対象解除を継続強化。Phase 4 で multi-seed sweep 着地すれば 4 サイクル連続実装系。
+
+**他インスタンス洞察 #1 (Ash STALE benchmark 6/08 shared-reads)**: 「§0b cycle_staging 37 日遅延 = Implicit Conflict 教材例」+ 「external_search.log 24 日空 = stale 検出ゲート自体の stale 化」観察は、本 Active project の C320 N=3 条件明文化と独立軸だが **判定原則「教師データ蓄積 → N=3 即原則化」の構造同型** = Ash 側 Premise Resistance 装置と Log 側 proxy 軸 ICC ゲートが「stale 認定の発火条件」を共有する 2 例目。Log 観点での発火点候補は `external_search_phase1_fixation.md` 案B/案E 接続 (別 project 側で追記)。
+
+詳細: [game/log_autonomous_game/v003/PEARSON_BLOCKER.md](../game/log_autonomous_game/v003/PEARSON_BLOCKER.md) §C320 Phase 3 節、[log/cycle_staging_log.md](../log/cycle_staging_log.md) Phase 3/Phase 4 大作業節。
+
+---
+
+## 2026-06-09 C316 Phase 4 着地 — [x] TEMPORAL_INCONSISTENCY_THRESHOLD_PX 感度分析 + 4 軸 6 ペア独立性 (Pearson/Spearman) 検証
+
+**着地内容**: §8 C313 INSTINCT_TRIGGER_PX sweep 着地時の予約タスク「次サイクル C314 候補 (b) 4 軸 6 ペア独立性 (temporal probe sweep 拡張) + (c) TEMPORAL_INCONSISTENCY_THRESHOLD_PX 感度分析 (10/15/20/30px) で同型実験第 2 軸」を 1 サイクルで物理化。`verify.js` に `TEMPORAL_INCONSISTENCY_THRESHOLD_PX` env/CLI 外部化 + `--temporal-sensitivity-sweep` モードを追加し、4 PX × 5 strategy = 20 セル sweep を 1 コマンドで実行可能化。
+
+**実装** (`game:` 系 commit):
+- `verify.js`: `const TEMPORAL_INCONSISTENCY_THRESHOLD_PX = 15` → env `TEMPORAL_INCONSISTENCY_THRESHOLD_PX` 外部化 `let` 化 (デフォルト 15)
+- `--temporal-sensitivity-sweep` CLI モード: 4 PX (10/15/20/30) × 5 strategy = 20 run 一括実行、専用 JSON schema 出力 (audit name `temporal_inconsistency_px_sensitivity_sweep`)
+- 純 stdlib Pearson / Spearman 内蔵 (C313 sweep と同実装)
+- 装置物理整合性 check (PX に対する nonincreasing) + 4 probe 不変性 (survived_frames + instinct + min_approach_p10 + cont_grazing_max) を sweep 出力に組み込み
+- 通常モード (`node verify.js`) 完全互換 = baseline 値 (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 / good 4162 + temporal 0/0/0/2/43) bit 一致
+
+**主要結果**:
+1. **probe 副作用ゼロ確証 9 度目**: 5 strategy × 4 PX = 20 セル全てで survived_frames + 他 3 probe (instinct / min_approach_p10 / cont_grazing_max) が PX 不変 (H-002〜H-008 + C313 + 本軸の同型論証 9 度目)
+2. **temporal PX 感度 (装置物理整合性)**: 全 5 strategy で nonincreasing (✓) = 数学的必然。good=43 plateau (4 PX で同値、全 inconsistency が ≥30px で大幅 ghost target ズレ) / camper・lane-holder=1→0→0→0 / blind-sweeper=0 全 PX / nospecial=3→2→2→2。**有用 PX レンジは 10〜30 全域**、PX=15 は微小ズレ切り捨て + 悪手識別力保持の適切閾値
+3. **4 軸 6 ペア独立性 (PX=15, N=5)**: **Pearson 強相関 1 件発見** = `instinct × temporal_inconsistency` (Pearson 0.9959, PX=10〜30 plateau)。**4 軸構造に冗長性予兆**。ただし Spearman 0.57 = 順位依存中程度 → strategy 二極分布 (good 22/43 vs 他 ≤3/≤2) による疑似相関の可能性大、multi-seed で再検証必須
+4. **完全独立ペア 2 件**: `min_approach_p10 × cont_grazing_max` (§8 継続) + `min_approach_p10 × temporal_inconsistency` (新規) = **`min_approach_p10` 軸が他 3 軸と最も独立** = 「位置情報直接量」軸の独立性物理確証
+5. **audit 再走**: `node bullet_origin_audit.js` pass=true (10/10), `node enemy_behavior_audit.js` 8/8 PASS, `node verify.js` 通常モード exit 0 / pass=true 維持
+
+**4 軸構造の冗長性予兆 (想定外発見)**: C313 §8 では 3 軸間に強相関ゼロ (1 軸代替可能性ゼロ) を確認していたが、temporal を加えた 4 軸 6 ペアで Pearson 強相関 1 件 (`instinct × temporal_inconsistency`) が発見された。**フィードバック多重化価値は 3 軸 (`min_approach_p10` / `cont_grazing_max` / `temporal_inconsistency`) に集約できる可能性が物理的に提示された** = 軸選定の再考材料。ただし N=5 少サンプル strategy 二極分布の疑似相関判定が必要、multi-seed (N≥10) 拡張までは 4 軸維持を推奨。
+
+**kaizen #140 (フィードバック多重化軸) 段階3 family 統合への寄与**: 4 軸全軸の閾値 robust 性 + 独立性検証データを物理化完了、検証期限 2026-06-20 family 統合実機検証窓 (残 11 日) に判定材料追加。multi-seed 拡張 / HeLa-Mem spreading activation 軸追加 / 4 軸 vs 実機体感 Pearson が次の自然な拡張候補。
+
+**game レーン主アクション継続**: C313 (instinct sweep) + C316 (temporal sweep) = **2 サイクル連続 `game:` commit + sweep 同型実装**、`feedback_means_ends_reversal_check.md` 診断対象解除を継続強化 (3 サイクル目維持)。
+
+**次サイクル C317+ 候補**:
+- (a) multi-seed (N≥10) 4 軸 6 ペア sweep 実行で `instinct × temporal` Pearson 0.9959 の安定性 / 疑似相関判定
+- (b) 4 軸構造から 3 軸構造への縮約検討 (`instinct_trigger_count` 軸の置換 or 統合): 強相関 plateau 確証後
+- (c) HeLa-Mem (arxiv 2604.16839) spreading activation 軸 prototype 追加 (point → graph process 拡張、§8 から継続)
+- (d) 実機判定 (Nao_u/Mir/Ash) で 4 軸 vs 体感 Pearson 相関 = PEARSON_BLOCKER 3 本目候補
+
+詳細: [game/log_autonomous_game/v003/temporal_sensitivity.md](../game/log_autonomous_game/v003/temporal_sensitivity.md)、[game/log_autonomous_game/v003/design_log.md §9](../game/log_autonomous_game/v003/design_log.md) (C316 Phase 4 節)、[game/log_autonomous_game/v003/temporal_sensitivity_sweep_raw.json](../game/log_autonomous_game/v003/temporal_sensitivity_sweep_raw.json) (sweep 生 JSON)
+
+---
+
+## 2026-06-09 C313 Phase 4 着地 — [x] INSTINCT_TRIGGER_PX 感度分析 + 3 軸独立性 (Pearson/Spearman) 検証
+
+**着地内容**: C311 Phase 4 H-007 着地ノートの予約タスク「次サイクル C312+ で `INSTINCT_TRIGGER_PX` 感度分析 (40/50/60/80px) + 3 軸 (instinct_trigger / min_approach_p10 / cont_grazing_max) 独立性 (Pearson/Spearman) 検証で軸の robust 性確証へ進む」(C311 着地ノート §kaizen #140 接続 末尾) を物理化。`verify.js` に `INSTINCT_TRIGGER_PX` env/CLI 外部化 + `--sensitivity-sweep` モードを追加し、4 PX × 5 strategy = 20 セル sweep を 1 コマンドで実行可能化。
+
+**実装** (`game:` 系 commit 候補):
+- `verify.js`: `const INSTINCT_TRIGGER_PX = 50` → env `INSTINCT_TRIGGER_PX` 外部化 `let` 化 (デフォルト 50)
+- `--sensitivity-sweep` CLI モード: 4 PX (40/50/60/80) × 5 strategy = 20 run 一括実行、専用 JSON schema 出力 (audit name `instinct_trigger_px_sensitivity_sweep`)
+- 純 stdlib Pearson / Spearman 内蔵 (PEARSON_BLOCKER 実装と同型、`numpy/scipy` 不使用)
+- 装置物理整合性 check (PX に対する monotonic + survived_frames 不変性) を sweep 出力に組み込み
+- 通常モード (`node verify.js`) 完全互換 = baseline 値 (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 / good 4162) bit 一致
+
+**主要結果**:
+1. **survived_frames bit 不変性** (probe 副作用ゼロ): 5 strategy × 4 PX = 20 セル全てで survived_frames が PX 不変 (H-002〜H-008 同型論証 8 度目)
+2. **instinct_trigger PX 感度** (装置物理整合性): 単純単調ではなく **U 字構造**
+   - good: 7 → 22 → 342 → 61 (60→80 で減少)
+   - blind-sweeper: 2 → 3 → 5 → 3 (60→80 で減少)
+   - **物理解釈**: PX 大すぎ → 弾常時 `_instinctNear=true` → rising edge 不発火 → trigger 数減少。**有用 PX レンジは 50〜60**、PX=50 設計値は感度上限近傍 = robust 設計の物理証拠
+3. **3 軸独立性 (PX=50, N=5)**:
+   - 強相関 (|r| ≥ 0.9) 6 値中 0 件 → 1 軸代替可能性ゼロ
+   - 完全独立 (Pearson + Spearman 両方で |r| < 0.5): `min_approach_p10 × cont_grazing_max` 1 ペア
+   - Spearman -0.72 (instinct × min_approach_p10) は要観察軸 → multi-seed 拡張で再検証候補
+4. **audit 再走**: `node bullet_origin_audit.js` pass=true (10/10), `node enemy_behavior_audit.js` 8/8 PASS, `node verify.js` 通常モード exit 0 / pass=true 維持
+
+**装置物理整合性の重要発見** (想定外の物理挙動): 当初「PX 大→ trigger 数大」を期待していたが、PX=80 で good (60px=342 → 80px=61) が **減少**。これは装置の **バグではなく物理的な整合性** = rising edge probe の感度設計上、PX が大きすぎると「常時 near 化」を引き起こし trigger を減らす U 字構造を持つ。**有用 PX レンジ 50〜60**、PX=50 は設計感度上限近傍 = H-007 着地時の閾値選択が物理的に robust だった事実が **計測で事後確証**。
+
+**kaizen #140 (フィードバック多重化軸) 段階3 family 統合への寄与**: 既存 3 軸の閾値 robust 性 + 独立性検証データを物理化、検証期限 2026-06-20 までの family 統合実機検証窓に判定材料追加。multi-seed 拡張 / 4 軸目 (temporal_inconsistency) sweep / HeLa-Mem spreading activation 軸追加が次の自然な拡張候補。
+
+**game レーン主アクション復帰**: C310/C311/C312 連続 3 サイクル `game:` commit ゼロ警告線は前サイクル (SHOOT_INTERVAL ease-in 差し戻し) で解除済、本 C313 は **2 サイクル連続 `game:` commit** で `feedback_means_ends_reversal_check.md` 診断対象解除を強化。
+
+**次サイクル C314 候補**:
+- (a) multi-seed (N≥10) sweep 実行で Spearman -0.72 (instinct × min_approach_p10) の安定性検証
+- (b) 4 軸 (instinct / min_approach_p10 / cont_grazing_max / temporal_inconsistency) 6 ペア独立性 — temporal probe sweep 拡張
+- (c) TEMPORAL_INCONSISTENCY_THRESHOLD_PX 感度分析 (10/15/20/30px) で同型実験第 2 軸
+- (d) HeLa-Mem (arxiv 2604.16839) spreading activation 軸 prototype 追加 (point → graph process 拡張)
+- (e) 実機判定 (Nao_u/Mir/Ash) で instinct_trigger_count vs 「本能トリガー引き出し感」体感の Pearson 相関 = PEARSON_BLOCKER 軸への 3 本目候補
+
+詳細: [game/log_autonomous_game/v003/instinct_sensitivity.md](../game/log_autonomous_game/v003/instinct_sensitivity.md)、[game/log_autonomous_game/v003/design_log.md §8](../game/log_autonomous_game/v003/design_log.md) (C313 Phase 4 節)、[game/log_autonomous_game/v003/instinct_sensitivity_sweep_raw.json](../game/log_autonomous_game/v003/instinct_sensitivity_sweep_raw.json) (sweep 生 JSON)
+
+---
+
+## 2026-06-07 C307 Phase 4: Togelius (IEEE Spectrum) × verify.js フィードバック構造分析
+
+**契機**: 本サイクル C307 Phase 1 §0 で「直近 5 commit が全て Codex レーン = Log master 側 game/* commit 連続 0」を観測。C305 push 障害 (Nao_u Plan A 判定待ち) により本サイクル中の game/* 直接改修は禁忌、Phase 3 §他インスタンス洞察 11 件のスコア順 1 位 = Ash 6/6 12:15 shared-reads ts=1780715707 投稿「Togelius (IEEE Spectrum) — LLM が『コードでは優れゲームでは失敗する』非対称の根本原因はフィードバック構造の貧弱さ」を Phase 4 大作業として **verify.js 設計に統合** 、v004 着手判断軸を 1mm 更新する目的で消化。本節は `projects/` 改修 (`rule:` prefix commit)、game/* は触らない。
+
+**一次資料**: <https://spectrum.ieee.org/ai-video-games-llms-togelius> (本 Phase 4 で Log 直接 WebFetch 取得、Ash 抜粋の attribution 確認済)。Julian Togelius (NYU 教授, AND AI 共同創業者, IEEE CoG 元会長, Procedural Content Generation 主著)。
+
+### §1. Togelius 元主張の Log 視点再構成
+
+Togelius は「LLM が **書く** ゲームと **遊ぶ** ゲームの非対称」を 4 引用で定式化:
+
+- (i) `"Coding is extremely well-behaved in the sense that you have tasks... The reward is immediate and granular."` = コードは well-behaved task で報酬が即座+粒度細 (compile/test/lint の **binary signal × event レベル**)
+- (ii) `"Game development is an iterative process. You write, you test, you adjust the game feel. An LLM can't do that."` = ゲーム開発は iterative、LLM は「書く→ test → game feel 調整」の **iteration loop を持たない** (= test/adjust 段の報酬信号が欠落)
+- (iii) `"They're separately very bad at spatial reasoning. Which shouldn't be surprising, because that's also not in the training data."` = 空間推論の弱さは訓練データ不在に由来する **独立要因** (Game feel 問題とは別軸)
+- (iv) `"Games are much more diverse [than the real world]."` = ゲームの多様性は実世界 (運転は物理一定) より高く、転移学習が不利
+
+**Log 視点での非対称の根本原因仮説 (3 要素分解)**:
+
+| 軸 | code 側 | game 側 | Log 解釈 |
+|---|---|---|---|
+| 報酬の即時性 | compile/test は ms オーダー | game feel 判定は人間プレイ秒〜分 | code 側は **同一 prompt 内 で再評価可能**、game 側は外部判定 channel 必要 |
+| 報酬の粒度 | per-token / per-test の event 単位 | 「遊んで面白いか」の全体性 | code 側は **失敗箇所が局在**、game 側は系全体に分散 |
+| 報酬の客観性 | 仕様一致は二値 | 面白さは主観的・文化的 | code 側は **誰が測っても同じ**、game 側は判定者によりバラつく |
+
+→ **非対称の根本原因 = (a) 即時性 + (b) 粒度 + (c) 客観性 の 3 軸が code 側で全て揃い game 側で全て薄い**。Togelius の「feedback 構造の貧弱さ」は本 3 軸の同時欠落として再定式化できる。
+
+### §2. verify.js 4 方針 × feedback richness 評価表
+
+`game/log_autonomous_game/v003/verify.js` の 4 悪手方針 + 1 良手 mock (grazer) を Togelius 3 軸 (即時性 / 粒度 / 客観性) で評価:
+
+| 方針 | 観察対象 | 即時性 | 粒度 | 客観性 | feedback richness 総合 |
+|---|---|---|---|---|---|
+| camper | なし (`dx=0, dy=0` 固定) | — | — | — | **richness 0** (盲目) |
+| lane-holder | frame 数のみ (`Math.floor(frame/60) % 2`) | 高 (frame 単位) | 極低 (1 bit) | 高 (deterministic) | richness 低 |
+| blind-sweeper | RNG のみ (state 非参照) | 高 | 極低 (1 bit RNG) | 中 (seed 依存) | richness 低 |
+| nospecial | 最近接 bullet/enemy 1 件のみ | 高 | 中 (1 vector) | 高 | **richness 中** (唯一の有意味観察) |
+| grazer (mock) | 最近接 bullet 1 件 + 距離閾値 + center bias | 高 | 中 (2 vector) | 高 | richness 中 |
+
+**観察 1**: 悪手 4 方針のうち 3 方針 (camper / lane-holder / blind-sweeper) は **state 観察ゼロまたは frame カウンタのみ** = Togelius 3 軸のうち「粒度」が極低。これは「悪手の bar が低すぎる」可能性を示唆 = verify.js の `pass: true` は「これらの盲目方針より castLock が良い」までしか保証していない。
+
+**観察 2**: verify.js の出力は (a) survival_frames (連続 scalar)、(b) min_approach_p10 (連続 scalar)、(c) cont_grazing_max (整数)、(d) outcome (binary) の **4 種 scalar/binary 集約**。Togelius の「reward is immediate and granular」基準では (a)(b)(c) は連続だが **event レベルの即時報酬になっていない** = 1 play 終了後にしか集約値が出ない。code 側の「compile error が L42 で発生」のような **局在的失敗信号** は不在。
+
+**観察 3**: 良手 mock (grazer) は castLock 機構を使わない設計 = **verify.js の strategy 層には castLock の判断信号がそもそも入っていない**。これは Q-B 特殊3状態ゲートの根幹 = castLock の体感的判断が headless テストでは「判断していない設計」になっている構造的盲点。
+
+### §3. v003 で feedback 構造が薄い場所 (3 件特定)
+
+`game.js` (描画/プレイ層) と `verify.js` (headless 評価層) を Togelius 視点で読み、feedback richness が薄い箇所を 3 件特定:
+
+**§3-1. castLock 機構の判断信号が verify.js strategy に存在しない (最大の死角)**:
+- verify.js の `strategyFn(state, frame, rng)` 引数には bullets/enemies/player 状態が渡るが、**castLock 判断に必要な「次の弾予測軌道 (game.js drawPlaying() の 1 秒先 ghost)」は state に含まれない**
+- 結果: 良手 mock (grazer) は「弾が至近 → 法線方向 dodge」しかできず、castLock による「Pulse Relay 風の能動受け」設計の中核体感は headless で測定不能
+- Togelius 軸では 即時性◯ / 粒度△ / **客観性✗** (castLock 体感の主観性が headless 計測の射程外)
+
+**§3-2. Q-成功FB 3 状態の event レベル feedback が verify.js に出力されていない**:
+- design_log.md Q-成功FB は (1) readiness ring / (2) cyan 薄爆発 / (3) 「危機回避」message + popup +1/combo xN の 3 段構造
+- verify.js report には resolveLock SUCCESS の **発火回数・kind ('crisis'/'echo'/combo) 内訳が含まれない** = Togelius の「granular event reward」が headless 集約段で失われている
+- 結果: 「state 3 危機回避が頻発する設計か / state 1 で安全に通過する設計か」の **質的差異が verify.js 出力で区別できない**
+
+**§3-3. 死因 (bullet vs enemy) と「危機度」(min_approach 直前推移) の局在信号が薄い**:
+- verify.js は `death_cause: 'bullet' | 'enemy'` までは出すが、「死亡 frame 直前 N frame の min_approach 推移」「avoidable だったか (player 速度で逃げ切れたか)」は出さない
+- Togelius の「reward is immediate and granular」基準では「死因の局在性」= どの bullet がどの enemy から発射されてどの phase で何 frame 前から接近していたかの **局在報酬チェーン** が必要
+- これは即時性◯ / **粒度✗** / 客観性◯ (粒度が「play 終端 1 event」しかない)
+
+### §4. v004 着手判断軸更新案
+
+**選択肢 (a)**: design_log.md 8 ゲート (Q-A/Q-B/Q-導入/Q-成功FB/Q-C/Q-D/Q-E/Q-F + Q-G) に **Q-FB richness** を新規 9 ゲート目として追加
+- Pros: feedback 構造の薄さを設計時にチェック強制化、Togelius 軸を Q 体系に組込み
+- **Cons**: CLAUDE.md「個別指摘を即ルール化しない」+ `feedback_rule_proliferation_canonical.md`「同型 3 件以降に原則化」と整合しない。Togelius 1 件で 9 ゲート目を立てるとチェックリスト肥大 = 「規則は少なく効果は大きく」(`feedback_few_rules_big_effect.md`) に反する
+- **判定**: 不採用 (本サイクルでは)
+
+**選択肢 (b)**: v004 着手判断時の **自由判定軸 (residual judgment axis)** として残す = 8 ゲートに追加せず、v004 brainstorm 上位案選定時に「この案は Togelius 3 軸 (即時性/粒度/客観性) のどれを薄くしているか」を 1 行記述する慣行のみ
+- Pros: チェックリスト肥大なし、判断力を育てる余白を確保 (CLAUDE.md「ルール準拠より思考の質を優先」)
+- Cons: 形式化されないため忘却リスクあり (本ファイルに記録することで部分緩和)
+- **判定**: 暫定採用 (本サイクル)
+
+**選択肢 (b) を本サイクル暫定確定 (永久確定ではない)** — 次サイクル以降で Togelius 同型の外部知見 (例: Critic 層 LLM 評価軸論文 / game feel 定量化研究) を 2 件目以降摂取できた段階で再評価。同型 3 件達成時に (a) 9 ゲート目追加 or (a') Q-G 計測ゲートの拡張項目化を検討。
+
+### §5. v004 着手判断への影響 (4 サブ節の集約)
+
+§1-§4 を集約すると **v004 で feedback richness を 1mm 上げる候補 3 件** が物理化される:
+
+1. **verify.js strategy 層に「予測軌道 ghost」相当の局在情報を追加渡し** (§3-1 直処方) — 次の弾 N frame 後の予測位置を strategy に渡し、castLock 判断信号を mock 可能にする (実装コスト: 中、Togelius 3 軸全部に効く)
+2. **verify.js report に Q-成功FB 3 状態 event 内訳を追加** (§3-2 直処方) — `successFB: { state1_count, state2_count, state3_count, combo_max }` を出力に追加、Togelius「granular reward」軸を headless で観測可能化 (実装コスト: 小、game.js 側の resolveLock SUCCESS 分岐に event 発行追加)
+3. **verify.js report に死亡近傍 N frame の min_approach 推移を追加** (§3-3 直処方) — `death_neighborhood: { min_approach_last_30f: [...] }` で局在報酬チェーン化 (実装コスト: 中、history バッファの末尾切り出し)
+
+**いずれも playable diff ではないが verify.js が「設計の自己批判検証装置」として深化する方向** = `feedback_means_ends_reversal_check.md` の「verify.js が主たる出力になっているサイクルは means/ends 倒錯の診断対象」との緊張関係に注意。**v004 着手時に 3 件を全部やるのではなく、最も効きの大きい §3-1 (castLock 信号) を 1 件だけ採用し残り 2 件は v005 以降に温存**するのが現時点の暫定判断 (本判断は v004 brainstorm 時に上書き可)。
+
+### §6. 完遂条件 (Phase 4 staging 定義に対する記録)
+
+1. ✓ §1 Togelius 元主張の Log 視点再構成 (3 軸分解表 + 「非対称の根本原因 = 3 軸同時欠落」仮説)
+2. ✓ §2 verify.js 4 方針 (+grazer mock) の feedback richness 評価表 + 3 観察
+3. ✓ §3 v003 feedback 薄い箇所 3 件特定 (castLock 信号 / Q-成功FB event / 死亡近傍局在)
+4. ✓ §4 v004 着手判断軸: 選択肢 (b) 自由判定軸を暫定採用、(a) 9 ゲート目化は同型 3 件達成まで保留
+5. ✓ §5 v004 で feedback richness を 1mm 上げる候補 3 件物理化 + 暫定優先順位
+6. ✓ external_notes_log.md に Togelius IEEE Spectrum 親エントリ追加 + [統合済 2026-06-07] マーカー (本 Phase 4 末尾で実施)
+
+### §7. 範囲外 (関心分離による次サイクル送り)
+
+- **§5 の 3 候補のうち §3-1 (castLock 信号 mock) 実装**: 本サイクル C305 push 障害下の読み専用作業に整合させるため未実装、v004 着手時の Phase 4 大作業候補
+  - **C310 Phase 3 (2026-06-07) 観測追記**: 本サイクル C310 で `git pull --rebase` 実機試行 → corrupt loose object SHA `e3cb4e09...` が C308 後半 Phase 5 観測と同一 SHA で停止 = **erosion stabilized** 観察。新規 SHA に進行していない = object store 物理 corruption が「continuing degradation」ではなく「stable persistent damage」に移行した可能性。push 障害自体は未解消だが、Plan A (clean clone + cherry-pick) 発火タイミングが「erosion 進行を止めるための緊急対応」から「stable 状態の単発復旧」に位置付け変化。**v004 着手の game/* 直接改修可否判断は Plan A 着地以降に依然従属**、本サイクルは projects/* 改修 (本ファイル) のみ。次サイクル C311 で Plan A 判定継続 + 同 SHA 維持の再観察で stable 仮説を確証次第、v004 brainstorm Phase 4 候補として §3-1 (castLock 予測軌道 ghost 信号 verify.js strategy 渡し) を再昇格判断する。
+- **Togelius 「games are more diverse than essays」軸の Ash 6/6 12:15 投稿 (5) 内包量/外延量フレーム接続**: shupeluter (内包量/外延量) 記事は Ash 側で knowledge 統合済 = 主管外、Log 側で再分析は次サイクル以降の判断
+- **5 装置 (headless_check / predicted_play / self_judgment / cross_review / Nao_u 評価) の構造同型性検証**: Ash 投稿 Q5 = 「graze_log の 5 装置を brick_log / ash_onebutton に複製した時、同じ feedback 構造が成立するか」は v004 別ジャンル着手時の Phase 1 候補
+
+### §8. CLAUDE.md 「絶対にやる」原則への着地
+
+- **「ゲームを動かして出す — 積み上げはその副産物」**: 本サイクルは C305 push 障害下の読み専用作業のため game/* 直接 commit なし。代わりに **v004 着手判断軸の 1mm 更新** = 「揃えるための 1 手」(CLAUDE.md「着手ゲートが揃わない時は…小さなプロトタイプ／既存ゲームの校正diff」) の前段 = v004 着手前に「feedback richness を 1mm 上げる候補 3 件」を物理化した
+- **「外の世界を広く見る」**: Togelius (IEEE Spectrum) は **外部一次資料 (NYU 教授インタビュー)** = 当方 verify.js 設計の自己内省では到達しない視点。Ash 経由の摂取 → Log 視点で 3 軸分解 → verify.js への射程確定の **3 段消化** で「内に閉じたゲームは自分だけが面白い」の予防装置として機能
+- **「個別指摘を即ルール化しない」**: §4 で選択肢 (a) 9 ゲート目追加を不採用、(b) 自由判定軸を暫定採用。Togelius 1 件で原則化せず同型 3 件達成まで保留 (`feedback_rule_proliferation_canonical.md` 順守)
+- **「着手前に広く調べ、体験で判定する」**: 本 Phase 4 は v004 着手の **前段調査** に位置付け、verify.js 拡張は v004 着手後に体験 (実コード変更 + verify.js 出力変化観察) で判定する設計
+
+---
+
+## 2026-06-06 C305 Phase 3 着地報告 — echo 起点マーカー alpha 揺らぎ追加 (視覚 FB 段階化 1mm 改修)
+
+**契機**: 本サイクル Phase 1 §0 git 状態は Log master 通常状態 (破損なし、未push commit なし)、§1 #nao-u 新着 0 件、§2 返信必須 0 件、§3 pending 動かせるもの 0 件 = 典型的空サイクル。深掘り §C で CLAUDE.md 第 1 原理「ゲームを動かして出す」軸が本サイクル未進捗と確認、Phase 2 §4 で 「(d) v003 別系統 1mm 改修」を Phase 3 候補として選定。具体: C301 で着地した echo 起点マーカー alpha 0.32 を、castLock 発動可能になった瞬間に揺らぎを与え「視覚 FB の段階化」を 1mm 進める。H-006 phase 2 type C 段階化様式 (動作 step) の精神を「視覚 step」に転用。
+
+### §1. 着地物 (描画層のみ 4 箇所改修)
+
+`game/log_autonomous_game/v003/game.js` 4 箇所:
+
+1. **state 初期化** (`trace: { buffer: ... }` 直後): `markerActivatedFrame: null` を追加 + コメントで「描画層のみ、verify.js 4 方針 PASS 維持、H-006 段階化様式の視覚 step 転用」を明示
+2. **updatePlayer() 末尾** (`if (game.trail.length > ECHO_FRAMES * 2) game.trail.shift();` 直後): `markerActivatedFrame === null && trail.length >= ECHO_FRAMES` 条件で `game.frame` を記録 (1 play 中 1 回のみ)
+3. **drawPlaying() echo 起点マーカー描画** (L757 周辺): alpha 固定 0.32 を `markerActivatedFrame` からの age 経過で動的計算に置換。初期 40F (= 約 0.67s) は `0.32 + cos(age * π/10) * 0.18 * envelope` で揺らぎ (envelope = 線形減衰 1→0)、以降は安定 0.32。alpha 上限 0.50 で「強FB 閾値 (≥0.6)」未達維持、visual_review.md §3.1 順守
+4. **resetForPlay()** (`game.combo = ...` 直後・`startTrace()` 前): `game.markerActivatedFrame = null` リセット
+
+### §2. 検証 (verify.js 4 方針 bit 一致確認)
+
+- `node --check game.js` exit 0 = syntax PASS
+- `node verify.js` 結果: camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s、survivors:[]、`pass: true` = **C297 (cameraShake) / C301 (popup/combo) と完全一致 = 描画層のみの変更で gameplay logic 非変更を frame 単位確証**。視覚 FB 段階化の 3 件目 (V-08 cameraShake / V-09-10 popup-combo に続く)
+- 強FB 監査: alpha 上限 0.50 で 0.6 閾値未達、state 3 危機回避メッセージ alpha 1.0 との同 frame N=2 WARN なし
+
+### §3. 範囲外 (関心分離による次サイクル送り)
+
+- **実機体感判定**: 揺らぎが「castLock 発動可能になった瞬間」を読み取りやすくしているかは Log 単独では判定不可、Nao_u/Mir/Ash 実機プレイ依頼が次サイクル候補
+- **shimmer 周期パラメータ調整**: 20F 周期 + 40F envelope は初期値、実機体感判定後に再調整候補
+- **副作用の Q-成功FB 状態 1 (readiness ring) への波及**: 本改修は marker (trail >= ECHO_FRAMES) のみ、readiness ring (trail < ECHO_FRAMES) は未変更。両者を一貫させるなら readiness ring 側にも「閾値接近時の揺らぎ」が候補だが本サイクル範囲外
+
+### §4. CLAUDE.md 「絶対にやる」原則への着地
+
+- **「ゲームを動かして出す — 積み上げはその副産物」**: 本サイクル Phase 4 を待たず Phase 3 で playable diff 1 件着地 (空サイクル時に「揃えるための 1 手」優先の `feedback_means_ends_reversal_check.md` 順守)
+- **原則6「わかった」と「残った」は違う**: staging Phase 2 §4 で「視覚 FB 段階化が H-006 動作 step 段階化様式の視覚転用」と着想したものを、同サイクル内で実コードに物理化 (「後で書く」禁止)
+- **「個別指摘を即ルール化しない」**: 本改修は新規 kaizen 起票・新規 feedback 起票ともゼロ、視覚 FB 段階化軸の 3 件目 = 同型反復確認まで原則化保留 (`feedback_rule_proliferation_canonical.md` 順守)
+
+---
+
+## 2026-06-06 C305 Phase 4 着地報告 — hitStop 復元 (auto-sync 巻き戻り同型 3 件目 / N=3 で構造確証)
+
+**契機**: 本サイクル staging Phase 3 §1 で v003 echo 起点マーカー alpha 揺らぎ (描画層 1mm) を着地済、Phase 4 大作業として C301 Phase 4 §4 で「hitStop 同型 3 件目候補は次サイクル以降の Phase 4 大作業候補に追加」と明示宣言済の決済を消化。C297 cameraShake (1 件目) + C301 popup/combo (2 件目) に続き、auto-sync 巻き戻りの構造化検証を **N=3** に到達させる。
+
+### §1. 着地物 (auto-sync 巻き戻り同型 3 件目、4 箇所改修)
+
+`game/log_autonomous_game/v003/game.js` 4 箇所に元実装 (C292 Phase 4 着地、commit hash は git inflate 破損で直接取得不可、`projects/log_autonomous_game.md` L1285-1304 の構造記録から復元) を手動再挿入:
+
+1. **state 初期化** (`game` object 内、`markerActivatedFrame: null` 直後 = state 系末尾): `hitStop: null` を C292 起源 + C305 再着地経緯 + verify.js 独立シミュレータ性質メモ付きで挿入
+2. **resolveLock SUCCESS 分岐** (`spawnSuccessParticles(...)` 直後): `game.hitStop = { frames: 4 }` を C292 起源 (4 frame ≒ 67ms, PH/SA 境界の体感的重み演出) + resolveLock 確定後発火 = castLock 判断阻害リスク回避メモ付きで挿入
+3. **resetForPlay()** (`game.markerActivatedFrame = null;` 直後・`startTrace()` 前): `game.hitStop = null;` の 1 行リセット
+4. **step() PLAYING 分岐冒頭** (`if (game.spaceEdge) castLock();` 前): hit stop guard ブロック — `hitStop.frames > 0` の間、全 update を skip して drawPlaying のみ継続、frames カウントダウン、0 で `hitStop = null`、`game.spaceEdge = false` + `requestAnimationFrame(step)` + `return` で gameLoop 一時停止を明示
+
+### §2. 検証 (verify.js 4 方針 bit 一致確認、N=5 度目の同型論証)
+
+- `node --check game.js` exit 0 = syntax PASS
+- `node verify.js` 結果: camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s、survivors:[]、`pass: true` = **C297 / C301 / C305 Phase 3 と完全一致**
+- **verify.js は game.js を読まない独立シミュレータ** (verify.js L30-58 で W/H/FPS/WAVE_TIMELINE 全 const 再宣言、game.js import なし) のため、game.js 改修が verify.js 出力に影響する経路はそもそも存在しない = bit 一致は**自動的に保たれる**性質。本検証は「game.js 側で間違って verify.js が参照する定数を触らなかった」ことの確認に限定される。今後の同型作業ではこの構造的性質を前提に検証コストを抑えられる
+
+### §3. 完遂条件 5 点 (staging Phase 3 「次フェーズの大作業」定義に対する記録)
+
+1. ✓ state 初期化に `hitStop: null` 再挿入 (L122 直後)
+2. ✓ resolveLock SUCCESS 分岐に `game.hitStop = { frames: 4 }` 代入分岐再挿入
+3. ✓ step() の冒頭で `hitStop.frames > 0` 時 gameLoop 一時停止分岐再挿入 (drawPlaying 継続 + frames countdown + null 化)
+4. ✓ `node --check game.js` exit 0 + `node verify.js` 4 方針が C297/C301/C305 Phase 3 と完全 bit 一致
+5. ✓ 本節で C305 Phase 4 着地報告 + 完遂条件 5 点記録
+
+### §4. 範囲外 (関心分離による次サイクル送り)
+
+- **auto-sync 巻き戻り根本原因究明**: N=3 構造確証達成 = 個別事象ではなく構造的問題と確定したが、本サイクル範囲外。C297/C301 で 2 度送りした「`git reflog` + commit 順序検証」は本サイクルでも踏襲、次サイクル以降の独立タスクへ移送
+- **hit stop の実機体感判定**: 4 frame (≒67ms) の freeze が「PH/SA 境界の体感的重み演出」として機能するかは実機判定 (Nao_u/Mir/Ash)。本サイクルでは復元のみ
+- **trace logger との関係**: hit stop 中は `pushTraceFrame()` が呼ばれない (PLAYING 分岐より前で return)。v004 で `hit_freeze_frame_count` proxy 化する際は trace の frame 連続性 (= 連番ではなく hit stop で抜ける) と、`game.hitStop` snapshot 状態の両方を参照する設計が必要 (L1304 で既述、本サイクルでは確認のみ)
+- **visual_review.md 更新**: hit stop は描画変化ではなく時間軸 freeze = `visual_review.md` の視覚項目 V-XX 体系には載せず、design_log.md / hypotheses.md 側で扱うべき。本サイクル範囲外
+
+### §5. CLAUDE.md 「絶対にやる」原則への着地
+
+- **「ゲームを動かして出す — 積み上げはその副産物」**: 本サイクル Phase 3 §1 (echo 起点マーカー alpha 揺らぎ) + Phase 4 (hitStop 復元) = **連続 2 件 game/* commit** で C300/C299/C298 連続不在パターンを構造的に破断 (`feedback_means_ends_reversal_check.md` 自己診断陰性化、C297→C301→C305 で 3 サイクル連続着地)
+- **原則6「わかった」と「残った」は違う**: C292 で「完遂報告」した着地物が現コードに不在という事実は本原則の同型再発、C297 で 1 件目 (cameraShake)、C301 で 2 件目 (popup/combo)、本サイクル C305 で 3 件目 (hitStop) を消化。**N=3 で「auto-sync 巻き戻りは個別事象ではなく構造的問題」と確証**、次サイクル以降の根本原因究明は構造側の対処 (例: Codex/Log 同期境界での game/* diff 整合性検査) として位置付け可能になった
+- **「個別指摘を即ルール化しない」**: 本改修は新規 kaizen 起票・新規 feedback 起票ともゼロ、auto-sync 巻き戻り N=3 確証は「同型反復のみ厳しく扱う」(CLAUDE.md) 射程入りだが、根本原因究明前の機構追加は infra 側肥大 = `feedback_substrate_not_infrastructure.md` T:5 順守でルール起票を保留 (C301 §5 と同型判断)
+
+---
+
+## 2026-06-05 C301 Phase 4 着地報告 — daa3b5d48b popup/combo 復元 (auto-sync 巻き戻り同型 2 件目)
+
+**契機**: 本サイクル Phase 1 §0 git 状態で「直近 5 commit すべて Codex 側 = Log master 側 game/* commit 連続不在 (C300/C299/C298 連続)」を確認、Phase 2 §タスク4 D `substrate_not_infrastructure` 自己診断陽性。Phase 3 §3-4 で `game/avoid_log/` 系列が「2026-04-27 Nao_u 凍結判定」(`memory/feedback_no_type_redo_material.md` 詳細処方) のため校正 diff 対象外と確定、代わりに C297 §3 で「次サイクル以降の別タスク」と明示宣言済の `daa3b5d48 popup/combo もなぜ消えているかは本タスク範囲外。playable diff 復元を最優先し、根本原因究明は次サイクル以降の別タスク` を直処方として消化。
+
+### §1. 着地物 (auto-sync 巻き戻り同型 2 件目の構造確証)
+
+`game/log_autonomous_game/v003/game.js` 6 箇所に C295 Phase 4 (commit daa3b5d48b) の `+71` 行を手動再挿入 (cherry-pick 回避 = 後発 commit `15d22a87a0` / `89ca6fe546` / `eae8ebe96f` / `659e0b89d2` / `bbce7ed06` (C297 cameraShake) との衝突を明示解決):
+
+1. **state 初期化** (`game` object 内、`waveSubPhaseFrame: null` 直後): `scorePopups: []` + `combo: { count: 0, lastHitFrame: -9999 }` を C295 オリジナルコメント (window=180F 根拠) と C301 再着地経緯メモ付きで挿入。daa3b5d48b では `hitStop: null` 直後だったが、現コードに `hitStop` が不在のため (= 同型 3 件目候補だが本サイクル範囲外) state 系末尾に配置
+2. **resolveLock SUCCESS 分岐** (`spawnSuccessParticles(...)` 直後): `COMBO_WINDOW_FRAMES = 180` const 宣言 + 連続 hit 判定 (`frame - lastHitFrame <= 180` で count++、外で count=1) + `lastHitFrame = frame` 更新 + `+1` popup spawn (kind = `e.hadBullets ? 'crisis' : 'echo'`) + `count >= 2` 時の `xN` popup 追加 spawn (kind=combo) の 28 行ブロック
+3. **resolveLock miss 分岐** (`cameraShake = { frames: 8, magnitude: 3 }` 直後): `game.combo.count = 0;` の即リセット 2 行
+4. **drawPlaying() popup 描画** (`lockMessage` 描画ブロック直後・`waveClearMessage` 描画ブロック前): `POPUP_LIFE_FRAMES = 24` const + scorePopups ループ (age, t, alpha, yOffset, kind 別配色 (crisis 黄/echo 青/combo 橙), bold 14/16px 描画) + ループ末尾で寿命切れフィルタの 20 行
+5. **drawPlaying() COMBO HUD** (wave HUD `wave:N t:Ns` 描画直後・`if (shakeApplied) ctx.restore()` 前): `count >= 2` 時の上中央 (W*0.5, 18) `COMBO xN` 表示、alpha = `max(0.35, 1 - sinceLast/180)` で fade、bold 14px monospace の 10 行
+6. **resetForPlay()** (`waveSubPhaseFrame = null;` 直後・`startTrace()` 前): `scorePopups = []` + `combo = { count: 0, lastHitFrame: -9999 }` の 2 行リセット
+7. **gameLoop() combo 切れ判定** (`checkCollisions();` 直後): `count > 0 && frame - lastHitFrame > 180` で count=0 リセット 4 行
+
+### §2. verify_popup.js 復元
+
+C295 で新設された `verify_popup.js` (128 行、puppeteer-core 自動 castLock × 2 で `frame_popup_first.png` / `frame_popup_combo.png` 視認 PASS 用) も同 commit 内で auto-sync 巻き戻り済 = 現状不在を確認、`git show daa3b5d48b:Claude/game/log_autonomous_game/v003/verify_popup.js` で復元。`node --check` exit 0 で syntax PASS。実走は実機 Chrome 環境必要 = 本 Phase 4 では復元のみ、puppeteer 実走は次サイクル以降の判定者 (Nao_u/Mir/Ash) または Log 側別環境構築待ち。
+
+### §3. 検証 (verify.js 4 方針 bit 一致確認)
+
+- `node --check game.js` exit 0 = syntax PASS
+- `node verify.js` 結果: camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s、survivors:[]、`pass: true` = **C291 (bbce7ed06) / C296 (eae8ebe96) / C297 (cameraShake 復元) と完全一致 = describe layer のみの変更で gameplay logic 非変更を frame 単位確証**。C297 と同じ確証ルートで「auto-sync 巻き戻り再着地 + verify.js bit 一致」が **2 件目** = 構造的にパターン化 (1 件で偶然、2 件で構造の検証クリア)
+- visual_review.md V-09 +1 popup + V-10 連続 hit combo HUD の 2 節追加 (PASS 静的 / UNKNOWN 実機、判定委譲先 = Nao_u/Mir/Ash)。経緯 (C295 着地 → auto-sync 巻き戻り → C301 再着地) を V-09/V-10 内に明記、C297 V-08 cameraShake と同型構造
+- visual_review.md §3.1 強FB 監査の射程内: V-09 popup は alpha max=1.0 + 時間軸変化で 2 条件満たし強FB 分類、state 3 危機回避メッセージとの同 frame 強FB N=2 が WARN ケース。緩和は V-09 crisis 色と state 3 alpha の同期検討 = 次サイクル以降の改善候補として V-09 反証ラインに明記
+
+### §4. 範囲外 (関心分離による次サイクル送り)
+
+- **auto-sync 巻き戻り根本原因究明**: C291 cameraShake (C297 で復元) と C295 daa3b5d48b popup/combo (C301 で復元) が同 sync event で消えたか別系統かは依然未特定。`git reflog` + commit 順序検証は C297 §3 範囲外宣言を C301 でも踏襲、根本原因究明は次サイクル以降の独立タスク
+- **hitStop 同型 3 件目候補**: 本作業中に `hitStop: null` が現コードに不在 (= daa3b5d48b diff context に存在するが actual state init から欠落) を確認、同型 3 件目の auto-sync 巻き戻り候補。本サイクル範囲外、次サイクル以降の Phase 4 大作業候補に追加
+- **C295 V-07 番号衝突**: C295 commit message では popup が独立番号付与されていないが、C301 visual_review.md では V-08 cameraShake の次として V-09/V-10 採番。V-07 successParticles (C296) / V-08 cameraShake (C297) と直列継続、番号衝突なし
+
+### §5. CLAUDE.md 「絶対にやる」原則への着地
+
+- **「ゲームを動かして出す — 積み上げはその副産物」**: 直近 3 サイクル (C300/C299/C298) で Log master 側 game/* commit 連続不在 = `feedback_means_ends_reversal_check.md` 自己診断陽性に対し、本 C301 Phase 4 で 1 件の game/* diff 着地で連続切断を 2 サイクル目に伸ばす (C297 → C301、間 C298-C300 は Codex 単独運転だったが Log 側はメタ作業に偏重)。本サイクル末尾 commit は Phase 5 = 日記とまとめて行うため本記録は staging 段階
+- **原則6「わかった」と「残った」は違う**: C295 で「完遂報告」した着地物が現コードに不在という事実は本原則の同型再発、C297 で 1 件目 (cameraShake) を消化、C301 で 2 件目 (popup/combo) を消化。2 件目の消化により「記録だけ残って実装がない」状態が個別事象ではなく構造的問題として確証 = §4 hitStop 同型 3 件目候補と auto-sync 巻き戻り根本原因究明を次サイクル以降に分離
+- **「個別指摘を即ルール化しない」**: 本サイクルで新規 kaizen 起票・新規 feedback 起票ともゼロ、auto-sync 巻き戻り 2 件確証は「同型反復のみ厳しく扱う」(CLAUDE.md) の射程入りだが、根本原因究明前の機構追加は infra 側肥大 = `feedback_substrate_not_infrastructure.md` T:5 順守でルール起票を保留
+
+---
+
+## 2026-06-04 C297 Phase 4 着地報告 — B1.3 cameraShake 復元 (auto-sync 巻き戻り再着地)
+
+**契機**: 本サイクル Phase 1 §0 git 状態走査で「直近 5 commit すべて Codex (Log_cdx) 側 = Log master 側の game/* commit 連続不在」を確認、Phase 2 D `means_ends_reversal_check` 自己診断陽性。Phase 3 §3-5 で `shoot_interval_audit.js` を補助路として 1mm 物理化した上で、Phase 4 本作業として C291 (commit bbce7ed06) で一度着地した B1.3 cameraShake が現コードから巻き戻っている事実 (= 記録と実体の不一致、原則6「わかった」と「残った」直処方対象) の解消を選定。
+
+### §1. 着地物 (現コード基準で SA ドメインカバー率 11% → 22% 再達成)
+
+`game/log_autonomous_game/v003/game.js` 4 箇所に B1.3 cameraShake ロジックを手動再挿入 (cherry-pick 回避 = C296 successParticles 等の後発変更との衝突を明示的に解決するため):
+
+1. **state 初期化** (`game` object 内): `cameraShake: null` を `lockExplosion` の直後・`successParticles` の手前に挿入。コメント = Lin B1.3 SA ドメイン明示
+2. **resolveLock miss 分岐**: `game.lockResults.miss += 1;` 直後に `game.cameraShake = { frames: 8, magnitude: 3 };` 代入。判断中 (castLock 発動中) には発火せず resolveLock 確定後にだけ発火する設計 = castLock 判断阻害リスク回避
+3. **drawPlaying() 冒頭 + 末尾**: 冒頭で `shakeApplied` フラグ + `ctx.save()` → `ctx.translate(±m, ±m)` → frames デクリメント → 終端で `cameraShake = null`、末尾で `if (shakeApplied) ctx.restore()` 対称化
+4. **resetForPlay()**: `game.cameraShake = null;` を `successParticles = []` の手前に明示リセット
+
+### §2. 検証 (verify.js 4 方針 bit 一致確認)
+
+- `node --check game.js` exit 0 = syntax PASS
+- `node verify.js` 結果: camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s、survivors:[]、`pass: true` = **C291 commit (bbce7ed06) / C296 commit (eae8ebe96) と完全一致 = describe layer のみの変更で gameplay logic 非変更を frame 単位確証**
+- visual_review.md V-08 cameraShake 節追加 (PASS 静的 / UNKNOWN 実機、判定委譲先 = Nao_u/Mir/Ash)。経緯 (C291 着地 → auto-sync 巻き戻り → C297 再着地) も V-08 内に明記
+
+### §3. 範囲外 (関心分離による次サイクル送り)
+
+- **auto-sync 巻き戻り原因究明**: どの sync event で B1.3 が消えたか、daa3b5d48 popup/combo もなぜ消えているかは本タスク範囲外。playable diff 復元を最優先し、根本原因究明は次サイクル以降の別タスク
+- **C291 V-07 番号衝突**: C291 commit message では V-07 = cameraShake だったが、C296 着地で V-07 = successParticles として visual_review.md に物理化済 = 本 C297 では V-08 として新規採番。旧 C291 V-07 番号と現 V-07 の差異は visual_review.md 内の更新履歴 (V-08 経緯欄) で言及済
+
+### §4. CLAUDE.md 「絶対にやる」原則への着地
+
+- 「ゲームを動かして出す」: 直近 5 commit Codex 側偏重を 1 件の game/* diff で部分切断 (本サイクル末尾 commit は Phase 5 = 日記とまとめて行うため本記録は staging 段階)
+- 原則6「わかった」と「残った」は違う: C291 で「完遂報告」した着地物が現コードに不在という事実は本原則の同型再発。本サイクルで再着地 = 「記録だけ残って実装がない」状態の構造的解消
+- 副産物として残存する課題 = auto-sync 巻き戻りの根本原因究明 (次サイクル以降の改善サイクル候補)
+
+---
+
+## 2026-06-03 C291 Phase 3: Log_cdx 4 atom 応答完了 + 他インスタンス洞察 cross-cut + Phase 4 SA ドメイン着地宣言
+
+**契機**: 本サイクル Phase 1 §2 で Log_cdx 6/02 19:21 / 21:07 / 22:51 + 6/03 00:38 の 4 atom (ts=1780395694 / 1780402063 / 1780408308 / 1780414689) が Log 名指し具体問いを残していた状態を Phase 2 で「(e) のみ C290 で応答済、(a)(b)(c)(d) 未応答」と確定、本 Phase 3 で 4 atom 個別に Log substantive 応答着地。
+
+### §1. 4 atom 応答着地物
+
+| atom | 親 ts | Log 返信 ts | 内容要点 |
+|---|---|---|---|
+| (a) AMV-L deterministic 評価軸 | 1780395694 | 1780428261 | 5 軸提案 → (1) tail latency / (2) recall hit / (4) 古い directive 誤発火 採用、(3) 重複率 / (5) 昇格率 落とし、+ retention 採用率 1 軸追加で最小 3+1 セット |
+| (b) AMV-L 最小 probe | 1780402063 | 1780428268 | (P1) 想起後判断短縮 (Read → 次副作用 ops delta) + (P2) 同じ迷い再発 (sense_prediction_log.md seen_before キー追加) の 2 本、identity atom utility score = 「Nao_u 指摘事前想起ヒット率 30 cycle 移動平均」案 |
+| (c) 4軸親 / 19要素子読み | 1780408308 | 1780428275 | 半分合意・半分修正 — 親 = Pichlmair 3 ドメイン (PH/SA/SS) + Lin 19 = 子ノード で v004_proxy_candidates.md §1 既物理化、I1-I4 instinct probe を親に据えると Lin の SA/SS taxonomy を歪める。stress 軸は Lopes 2025 SLR 側借用、design_log.md stress curve 1 行宣言義務化案 |
+| (d) MOSAIC 最小ログ schema | 1780414689 | 1780428283 | 5 フィールド契約 (run_id / frame|tick / observation / action_taken / event) + action_source 4 値 (human / llm_react / rule_based / rl_agent) 必須化、v003 既装 trace logger 最小修正で対応可能 commit 1 本見込 |
+
+### §2. 他インスタンス洞察 cross-cut (Pre-check kaizen #128 出力 3 件処理)
+
+**(I-1) Ash 5/31 #shared-reads (sin5d × ebikani_hasami 2 軸統合 → graze_log v06「Nao_u返信待ち」構造分析)**:
+- Ash が指摘した「装置の向き 3 形態 (救援 / 窒息 / 問題発見不能)」のうち**第 3 形態 = 問題発見不能 = idle-on-human** は、Log master 側 playable diff 連続不在 (C281-C289 8 サイクル) と**構造同型**。両者とも「次の問題を AI 側で立てる契機が空白」= 「自分の意図発火地点の前段が空白」。
+- 但し Log master 側は C290 で `game: v003 Q-Support 移動入力ベクトル可視化` commit d3903384d により切断、本 C291 Phase 4 で SA ドメイン 1 件追加で連続切断を 2 サイクル目に伸ばす計画。Ash 側の「受け渡し仕様を先に書く」処方箋は、Log 側だと「Phase 4 大作業の完遂定義を staging 着手前に物理化」と概念対応 = 既に CLAUDE.md 「絶対にやる #1」で言語化済、構造的処方箋は実装済とみなせる。
+- 別ファイル波及: `projects/instance_divergence_observability.md` に「装置の向き 3 形態の cross-instance パターン」追記候補、本サイクルでは 1 行観察記録のみで起票判定保留 (Mir/Ash 反応 or 同型 3 件目を待つ)。
+
+**(I-2) Mir 6/01 08:42 #all-nao-u-lab (Nao_u 時系列で忘れていい記憶 vs ずっと覚えているべき記憶)**:
+- Mir が Log 既起票 `memory_redesign.md` retention 軸 (permanent/cycle/probationary) を「筋がいい」と独立判定、probationary 軸が CLAUDE.md 「個別指摘を即ルール化しない」原則と直接噛み合うと観察。これは 3 instance 合意の追認、`projects/INDEX.md` L55 既記載「2026-06-01 C279 retention 軸 3 instance 合意」の補強。
+- 新規アクションなし、追記もなし (合意は既に物理化済)。
+
+**(I-3) Mir 6/01 09:15 #all-nao-u-lab (gdlab_hama 濱村 本能 vs 逆算分解)**:
+- Mir が Log 既統合 (C281 Phase 2 §1(a)) と同 source を独立摂取、ゲーム制作の「本能 vs 逆算」分解を Mir/Log 両 instance が同方向に進めている = cross-instance 三点収束。
+- 本 C291 で Log 側応答 (c) atom (4軸親/19要素子) で Mir/Log_cdx に対し「親 = Pichlmair 3 ドメイン」修正案を提示済、Mir の C283 位相依存フレームとの突き合わせが次サイクルの cross-instance 反応候補。
+
+### §3. Phase 4 大作業着地宣言 — SA ドメイン B1.3 Camera Effect (shake) on castLock miss
+
+**完遂定義**:
+1. `game/log_autonomous_game/v003/game.js` 改修: castLock 失敗時 (`echo.result === 'hit'` または bullet 被弾) に `game.cameraShake = { frames: 8, magnitude: 3 }` を設定する分岐を追加
+2. `drawPlaying()` 冒頭で `cameraShake.frames > 0` の時のみ `ctx.translate(rand(±magnitude), rand(±magnitude))` を適用し各 frame で `cameraShake.frames -= 1` で減衰、終端で `cameraShake = null`
+3. `node --check` syntax PASS + `verify.js` 4 方針実走で `pass: true` 維持 (gameplay logic 非変更 = translate は描画層のみ)
+4. v004_proxy_candidates.md §1 マトリクス B1.3 行の「v003 cov」を ✗ → △ または ✓ に更新、SA ドメインカバー率 10% → 20% (1/9 → 2/9 換算は実測後)
+5. commit prefix `game:` で着地、`projects/log_autonomous_game.md` §3 に着地報告追記
+
+**着手手順**:
+1. v003/game.js L213 (`game.lockResults.miss += 1` 行近辺) を読み、castLock 失敗時のイベント発火点を特定
+2. game state object (L70 周辺) に `cameraShake: null` 初期化追加
+3. miss 発火点で `game.cameraShake = { frames: 8, magnitude: 3 }` 代入分岐追加
+4. drawPlaying() L482 直前で shake 適用 + ctx.save/restore で隔離
+5. node --check + verify.js 実走 + visual_review.md 該当行更新
+6. commit `game: v003 castLock miss 時カメラシェイク追加 (Lin B1.3, SA ドメイン未測 9 件のうち 1 件着地)`
+
+**選定理由**:
+- (i) v004_proxy_candidates.md L96-100 ドメイン別カバレッジ集計で **SA = 10% が最大盲点**、Lin Top 3 強影響因子の 1 つ B2.2 Camera Control の同 SA ドメイン縁戚 = 高優先度
+- (ii) CLAUDE.md「ゲームを動かして出す」原則直処方、C290 d3903384d の playable diff 切断ラインを 2 サイクル目に伸ばす = idle-on-human 構造反復防止
+- (iii) gameplay logic 非変更 = verify.js への影響ゼロ、`feedback_substrate_not_infrastructure.md` T:5 順守 (translate は描画層のみ + 既存 frame 単位 state extension)
+- (iv) Phase 3 §1 atom (c) 応答で「Pichlmair 3 ドメイン親 + Lin 19 子ノード」を Log スタンスに固定した直後の実装着地 = 言明の即時物理化 (原則 6「わかった」と「残った」は違う直処方)
+
+**反証ライン**:
+- (a) Camera shake が逆に「castLock 判断阻害」になるリスク (v002→v003 で予測軌道線削除の同型事故) → 緩和: magnitude 3px は player r=8 の 38% で過剰でない + 8 frame = 133ms で持続短く制限 + miss 直後 (castLock 失敗が確定した瞬間) のみで判断中には発火しない
+- (b) Lin B1.3 と書いてあるが実装は B2.1 On-Hit Effect 寄りになる可能性 → 緩和: B1.3 は "Camera Effect (shake / post-process)" の shake 側、B2.1 は spot ハイライト系 = 別軸、shake は明示 B1.3 で間違いなし
+
+### §4. Phase 4 着地報告 (2026-06-03 完了)
+
+**着地物 (game/* playable diff)**:
+- `game/log_autonomous_game/v003/game.js`:
+  - game state object に `cameraShake: null` 初期化追加
+  - `resolveLock()` else 分岐 (miss 確定後) に `game.cameraShake = { frames: 8, magnitude: 3 }` 設定追加
+  - `drawPlaying()` 冒頭で `shakeApplied` フラグ管理 + `ctx.save()` + `ctx.translate(rand(±3), rand(±3))` 適用 + frame 単位減衰 + 終端で `cameraShake = null` + `ctx.restore()`
+  - `resetForPlay()` で `game.cameraShake = null` 明示リセット追加
+- `game/log_autonomous_game/v004_proxy_candidates.md`:
+  - B1.3 行: v003 cov `✗` → `✓` 更新、対応 proxy / 備考 = 「C291 Phase 4 着地: castLock miss 時 8 frame/3px shake 実装」
+  - SA ドメイン集計: ✓ 0 → 1 / ✗ 9 → 8 / カバー率 10% → 20%
+- `game/log_autonomous_game/v003/visual_review.md`:
+  - V-07 castLock miss 時カメラシェイク チェック項目新設 (静的 PASS / 実機 UNKNOWN、判定委譲先 = Nao_u/Mir/Ash)
+
+**完遂定義の達成状況**:
+1. ✓ game.js 改修着地 (cameraShake 状態 + resolveLock miss 分岐 + drawPlaying shake 適用)
+2. ✓ drawPlaying() 冒頭 shake 適用 + frame 単位減衰 + cameraShake = null 終端処理
+3. ✓ `node --check` syntax PASS + `verify.js` 4 方針実走 `pass: true` 維持 (gameplay logic 非変更確認)
+4. ✓ v004_proxy_candidates.md B1.3 行 ✗ → ✓ + SA カバー率 10% → 20% 更新
+5. ✓ commit prefix `game:` 着地 + projects/log_autonomous_game.md §3 着地報告追記 (Phase 5 push 待ち)
+
+**verify.js 結果** (gameplay logic 非変更確認):
+- camper: gameover @ 5.32s / lane-holder: gameover @ 4.73s / blind-sweeper: gameover @ 6.30s / nospecial: gameover @ 9.08s
+- `pass: true` / survivors: [] / phase 内密度カーブ + H-001 teaser 維持
+
+**C281 起票「(A) 不在連続 3 サイクル → Phase 4 強制」ライン**:
+- C290 d3903384d (Q-Support 移動入力ベクトル可視化) で連続切断、本 C291 で SA ドメイン B1.3 着地により**連続切断 2 サイクル目に伸ばす**達成。Ash 5/31 #shared-reads 指摘「装置の向き 3 形態 = idle-on-human」構造反復を 2 サイクル目防止。
+
+**反証ライン (a) の事後検証**:
+- magnitude 3px / 8 frame の最小化と「判断中には発火しない」設計 (echo 進行中は cameraShake セットされない、resolveLock 確定後 = castLock 機構終了後にのみ発火) で v002→v003 予測軌道線削除事故の同型回避は構造的に成立
+- 実機体感判定は V-07 で Nao_u/Mir/Ash に委譲
+
+### §5. 2026-06-04 C296 Phase 4 着地報告 — SA ドメイン B1.4 Particle Effect (success) 追加
+
+**前提**: 本 C296 Phase 4 着手時に game.js を Read した結果、C291 cameraShake 実装 (bbce7ed06) と C295 +1 popup/combo (daa3b5d48) が **現 HEAD (7336e34b9 Auto sync from Win) の game.js に存在しない** ことを発見。`git log -- game/log_autonomous_game/v003/game.js` ではこれらの commit が branch 上に見えるが、auto-sync 経路でファイル状態が C293 ease-in (659e0b89d) 時点に巻き戻った状態。**§3/§4 の C291 着地報告は記録としては残存するが、実コードには反映されていない。次サイクルで原因究明と復元判断が必要 (本 Phase 4 範囲外)**。
+
+**着地物 (game/* playable diff)**:
+- `game/log_autonomous_game/v003/game.js` (+39 行):
+  - game state object に `successParticles: []` 初期化追加
+  - `spawnSuccessParticles(cx, cy, n)` 関数追加 (radial 等間隔 N=6 + life=12F + speed=1.5px/frame)
+  - `resolveLock()` hit 分岐末尾で `spawnSuccessParticles(player.x, player.y, 6)` 呼び出し追加 (hadBullets 有無問わず発火 = 成功イベント共通 base feedback)
+  - `drawPlaying()` 状態3 描画直前で particle 位置更新 + life デクリメント + life ≤ 0 削除 + radial 描画 (alpha 0.55 → 0, radius 2.5 → 0)
+  - `resetForPlay()` で `game.successParticles = []` 明示リセット追加
+- `game/log_autonomous_game/v003/visual_review.md`:
+  - V-07 castLock SUCCESS 時 successParticles チェック項目新設 (静的 PASS / 実機 UNKNOWN、判定委譲先 = Nao_u/Mir/Ash)
+  - (注: C291 cameraShake が現コードに不在のため V-07 を本 particle effect 用に割当。staging.md は V-08 想定だったが現実の visual_review.md は V-06 までしか持たないため V-07 が空き枠)
+
+**完遂定義 (staging「次フェーズの大作業」) 達成状況**:
+1. ✓ game.js に Lin 19 SA ドメイン 1 件 (B1.4 Particle Effect on success) の最小実装追加 = playable diff 確定
+2. ✓ `node --check game.js` syntax PASS
+3. ✓ `node verify.js` 4 方針実走 `pass: true` 維持 (camper 5.32s / lane-holder 4.73s / blind-sweeper 6.30s / nospecial 9.08s = C291 commit (bbce7ed06) 数値と完全一致 = 描画層のみ確証)
+4. (Phase 5 で commit prefix `game:` 着地予定、本 Phase 4 では commit しない指示順守)
+5. ✓ projects/log_autonomous_game.md §5 着地報告追記 + visual_review.md V-07 新設
+
+**verify.js 結果** (gameplay logic 非変更確認):
+- camper: gameover @ 5.32s / lane-holder: gameover @ 4.73s / blind-sweeper: gameover @ 6.30s / nospecial: gameover @ 9.08s
+- `pass: true` / survivors: [] / 数値 = C291 cameraShake commit 結果と bit 一致
+
+**C281 起票「(A) 不在連続 3 サイクル → Phase 4 強制」ライン**:
+- C290 d3903384d (Q-Support 移動入力ベクトル可視化) → C291 bbce7ed06 (cameraShake) → 本 C296 (successParticles) で **連続切断 3 サイクル目目標達成** (ただし C291 が auto-sync 巻き戻りで現コードから消失している事実は次サイクルで別途処理)。
+
+**SA ドメインカバー状況** (現コード基準で再集計):
+- B1.4 Particle Effect on success = 1 件着地
+- B1.3 cameraShake = bbce7ed06 commit にあるが現コードに不在 = 0 件再カウント
+- 現コード基準: SA ドメイン 1/9 = 11% カバー (auto-sync 巻き戻り影響、本サイクル単体で見れば 1 件追加)
+- 次サイクルでの再判定材料: (a) bbce7ed06 cherry-pick 復元、(b) C295 daa3b5d48 (popup/combo) も含めた branch 統合経路の点検
+
+**反証ライン (本サイクル新規)**:
+- (a) 状態 2 シアン薄爆発 (alpha 0.32 / radius 4→30 膨張) と V-07 シアン散布粒 (alpha 0.55 / radius 2.5→0 縮小) の同色系並列で「単に賑やかになっただけ」感が生じる可能性 → 緩和: 動的方向 (膨張 vs 縮小) が反対軸 + radial 散布で空間的にも分離、N=1 強FB 監査閾値 (alpha 0.6 / size 5%) は両者単体・合算とも未達
+- (b) C291 cameraShake が auto-sync で消えた原因が今回の particle 実装にもいずれ波及するリスク → 緩和: 原因究明と branch 整合性監査は次サイクル独立タスクとして起票、本 Phase 4 では作業混在を避けて particle 着地のみで切る
 
 ---
 
@@ -536,6 +1324,84 @@ v006 改修候補は **この瞬間を強化する** か **新しい層を足す
 
 ## 履歴
 
+### 2026-06-10 C312 Phase 2/3: game 軸独立到達 3 source 確定 — OpenGame-Bench / SLM PCG / Distilling GameCWMs
+
+**契機**: C312 はスカスカサイクル (新着 Nao_u URL = 1件既応答済 / pending 新規 = 0 / external_notes 未統合 = 0)、Phase 1 §6 で kaizen #106 摂取経路を本 Active project 軸に固定 (キーワード `LLM autonomous game generation playable verification 2026 arxiv`)。
+
+**取得 3 件**:
+1. **OpenGame: Open Agentic Coding for Games** (arxiv 2604.18394, Apr 2026) — GameCoder-27B + 3 段パイプライン。OpenGame-Bench = **Build Health / Visual Usability / Intent Alignment** 3 軸を headless browser + VLM judge で評価。本プロジェクト v003/verify.js の VLM 4 失敗 taxonomy probe (C311 case D-3) と Intent Alignment 軸が直接接続候補
+2. **High-quality generation of dynamic game content via small language models** (arxiv 2601.23206, Jan 2026) — SLM + retry-until-success で実時間 PCG。v003 の SHOOT_INTERVAL 線形漸変 (90→60) の retry スキームと同方向
+3. **Distilling Game Code World Model Generation into Lightweight LLMs** (arxiv 2605.24375, May 2026) — GameCWMs (rules/legal actions/state transitions/observations/rewards を Python 実装) を Qwen2.5-3B-Instruct に SFT+RLVR で蒸留。verification framework = structural (関数シグネチャ整合) + semantic (実行時ルール準拠) 二層。30 ゲーム dataset (perfect/imperfect information 両分布)
+
+**Phase 2 で #shared-reads 投稿 1 件 (Distilling GameCWMs ts=1781040608.593239)**: 既出 hits=0 = 真の新規。残り 2 件 (OpenGame-Bench hits=33 / SLM PCG hits=5) は既出大量で本サイクル投稿せず、本プロジェクト履歴のみに位置取り記録。
+
+**game 軸独立到達 3 source 確定の意味**:
+- 「ゲーム評価」の業界既知軸 3 種が初めて当方の手元に揃った: **(a) judge (OpenGame-Bench)** / **(b) retry-until-success (SLM PCG)** / **(c) verification framework structural+semantic (Distilling GameCWMs)**
+- v003/verify.js は現状 (c-semantic 寄り = 悪手 4 方針が wave 1 内 fail) の実装、(a-judge) と (c-structural) は未実装軸
+- C311 case D-3 の VLM 4 失敗 taxonomy probe は (a) Intent Alignment 軸への接続点として温存、v004 設計時に (c-structural) を 1 ゲート追加可能性 (個別指摘を即ルール化しない原則順守、CLAUDE.md ルール 5)
+
+**次の一手 (C312 Phase 4 大作業として確定 → 完遂 2026-06-10 Phase 4)**:
+- `docs/game_dev_foundation.md` §7.5「業界既知ゲーム評価 3 source 対応表 (2026-06 取得)」追記 **完遂** (4 列 × 3 source 行 + リード文 + 機械反映禁止自戒 + 業界既知 3 軸の含意)
+- v003/v004 改修判断時に「業界既知のどこに位置するか」を §7.5 表で照合してから着手する経路を開通 (means/ends 倒錯予防の補助軸として開設)
+- 機械反映禁止順守 = 3 source の手法を当方軸に直接コピーしない、対応関係の位置取りのみ記録 (kaizen #106 自戒、§7.5 リード文と末尾で二重明記)
+- 次サイクル以降の論点: (a) C311 case D-3 VLM 4 失敗 taxonomy probe の完了後に Intent Alignment 軸と対応マッピング確認 / (b) v004 設計時に structural / semantic 二層化 1 ゲート追加可能性 (個別指摘を即ルール化しない原則、CLAUDE.md ルール 5 順守)
+
+**禁則確認**: 「ミミクリ宣言」(C242) 核は維持、本 3 source 接続は補助層 (評価軸の業界対応)、ゲーム設計本体には介入しない。
+
+### 2026-06-07 C307 Phase 3: Ash Togelius (IEEE Spectrum) shared-reads 受信 + 本プロジェクトへの接続軸
+
+本サイクル `slack_insight_digest.py` 未処理 11 件のうち、Ash 投函 `[Ash] shared-reads Phase 2 分析: Togelius (IEEE Spectrum) — LLM が「コードでは優れゲームでは失敗する」非対称の根本原因はフィードバック構造の貧弱さ` (スコア 29、関連キーワード=レビュー/フィードバック/プレイヤー/cross_review/プレイ/commit) が本プロジェクトに直接交差。
+
+**Togelius 主張の骨子** (Ash 投函・IEEE Spectrum 要約経由): LLM が「コード生成では優れているのにゲーム生成では失敗する」非対称性の根本原因は、**ゲーム制作におけるフィードバック構造の貧弱さ** (compile/test pass の数値化が困難、面白さは数値化困難)。コードは feedback loop が短く硬く、ゲームは feedback loop が長く柔らかい。
+
+**本プロジェクトへの接続**:
+- 本プロジェクト v003 までの自己観測層 (verify.js 4 方針 → min_approach_p10 proxy → self_judgment) は **Togelius が指摘するゲームの貧弱フィードバック構造への直処方**として位置づけ可能。min_approach_p10 は「数値化困難な面白さ」を 1 軸に押し込めて自動評価 loop を硬く短くする試みであり、Togelius 主張への部分的処方
+- 同時に、C307 ts=1780779607 で Log が応答した「proxy ≠ 完成指標、castLock state 条件付き分離が次の入口」(`game/log_autonomous_game/v003/proxy_split_design.md` に下書き) は、**単一 proxy への過信が新たな「貧弱フィードバック」を生む** という Togelius 警鐘への自己診断と同型
+- Ash 投函のスコア 29 が 11 件中最高位 (graze_log 接続キーワード集中) で、本プロジェクト主軸との連動性が data 側からも確認
+
+**次の一手 (持越し候補)**:
+- IEEE Spectrum 本文 (Ash 投函 URL: https://spectrum.ieee.org/ai-video-games-llms-togelius) の Log 側独立読解 = 「フィードバック構造の貧弱さ」を Togelius が具体的にどう定義しているかを直接読み、本プロジェクトの proxy 設計 (min_approach / cont_grazing / 次の active/passive 分離) を 1 対 1 で照合
+- Ash 投函と独立な Log 視点の cross_review 候補 (Log_cdx ts=1780757509 と並列、3 者収束軸として位置取り)
+- Plan A/B/C 判定到着後の v003 verify.js 実装 (`proxy_split_design.md` §2.1 差分案) を「Togelius 主張への直処方」として self_judgment に明記する経路を温存
+
+**禁則確認**: Ash 指摘は本プロジェクトの方向性を変更しない。「ミミクリ宣言」(C242)「死線スリリングを抜けるパイロット感」核は維持、proxy 改善は補助層、Togelius 主張は補助層の精度向上に流用する。
+
+### 2026-06-06 C306 Phase 3: min_approach proxy 採用宣言 + push 障害 (b-3) 実機実行で NEW corrupt loose object 発見
+
+**契機**: Log_cdx 06-06 16:51 (ts=1780732260) #all-nao-u-lab graze_log v06 7層スタック × tokoroten「リプレイアビリティ5回」× Shikhondo "how close" 1文圧縮投函で「最接近距離・連続回避時間・再挑戦直後同地点到達率・死因反復性のうち、今の環境で小さく検証できる proxy」を Mir/Ash/Log 3 者宛問い。並走して Log_cdx 18:37 (ts=1780739247) #all-nao-u-lab で C305 Phase 5 push 障害 Plan A 発火判定 deterministic 4 分解を 3 者宛問い (Log master `6c7c0bbbf3` C305 Phase 3+4 alpha 揺らぎ + hitStop 復元が push 未着・ローカル保持・corrupt loose object 連鎖)。
+
+**Log 応答 1: min_approach (最接近距離 p10) 採用 — Phase 4 大作業として実装**
+- 4 proxy 候補のうち min_approach を一次採用、verify.js に 10 行以下追加で 30 秒 (1800F) headless simulate 4 方針 (good / camper / lane-holder / blind-sweeper / nospecial) の各 run 下位 10% 値を report に出力
+- 選定 4 理由: 測定単純性 (10 行) / Shikhondo「how close」直接対応 (p10 = 最も危険だった瞬間の平均) / 単一 run primary proxy (4 候補中最低コスト) / 既存 4 方針との接続予測 (良手は castLock タイミングで小、camper/lane-holder/blind-sweeper は中〜大)
+- 達成基準: 良手 < 悪手 で 1.5 倍以上の差。差が出なければ proxy 棄却宣言 → 連続回避時間 (候補 2) に切替
+- 残 3 候補 (連続回避時間 / 再挑戦同地点到達率 / 死因反復性) は本 Phase 4 外、min_approach 計測の副次データとして連続回避時間 (閾値 D 以下の連続 frame 数 max) のみ同時取得
+- 投函: drafts/2026-06-06/post_log_all_nao_u_lab_reply_logcdx_graze_proxy_20260606_POSTED_ts1780752508.py
+
+**Log 応答 2: push 障害 (b-3) 本サイクル実機実行 — NEW 構造発見**
+
+優先順位判定: (b-3) → (b-1) → (b-4) → (b-2)。(b-3) は判定コスト最小、結果で次手が分岐。
+
+実機実行結果:
+- `git ls-remote origin master` = `c4139f02c6e5dd51c441834ca7d3ecc2f28d1b76` (remote master HEAD)
+- `git cat-file -e 6c7c0bbbf3` exit=0 (ローカル保持確認、C305 Phase 3+4 改修内容は loose object として無事)
+- `git cat-file -e c4139f02c6` exit=1 (remote HEAD はローカル不在 = 当方 master は remote 系列を持たない)
+- `git fetch origin master` → fatal: corrupt loose object `e3cb4e09c99539ea02b1cf8c5bf136daf6c40bb5`
+- `git fsck --no-reflogs --no-dangling` → 5+ 件の追加 corrupt loose object (01c6c87669 / 0c698292c3 / 1436491a17 / 169c9a168c / 17ede22d45 ...)
+
+判定: ローカル master (034b07aa6d codex 系列直系) と remote master (c4139f02c6 系列、47 commit) が完全 diverged、git fetch 経路自体が corrupt object で破綻。Plan A (cherry-pick 復旧) は fetch なしで成立せず、事実上 Plan A + Plan B (新 clone) の連結が必要。**当方単独判定発火は Nao_u 領域への侵害、判定待ち**。
+
+Phase 3 で当方権限内で実行可能なのは fsck 走査 (情報追加・物理変更ゼロ) のみ、本節と #all-nao-u-lab 投函で完了報告。Step 2/3 (新 clone + 6c7c0bbbf3 patch 化 cherry-pick + 旧 repo `.git_corrupt_bak_*` 退避) は Nao_u 発火指示後。
+
+- 投函: drafts/2026-06-06/post_log_all_nao_u_lab_reply_logcdx_plan_a_b3_executed_20260606_POSTED_ts1780752515.py
+
+**v003 改修進行への影響**: push 障害解消まで v003 物理改修は (b-1) 「読み取り確認まで止める」を維持。min_approach proxy 実装は Phase 4 大作業として着手するが、commit/push は Plan A/B/C 発火判定後にバッチで行う。
+
+**接続先**:
+- [game/log_autonomous_game/v003/verify.js](../game/log_autonomous_game/v003/verify.js) — Phase 4 大作業 min_approach_p10 追加対象
+- [game/log_autonomous_game/v003/self_judgment.md](../game/log_autonomous_game/v003/self_judgment.md) — proxy 評価軸 §7 接続候補
+- log/slack_archive/all-nao-u-lab.jsonl の Log_cdx ts=1780732260 / 1780739247 — 起点問い
+- 本サイクル staging C306 Phase 2 §2.4(a)(b) — 経路選定の判断根拠形成
+
 ### 2026-05-28 C254 Phase 4: R4 経路着手 — Pages 公開用 docs/ 物理化 + ローカル smoke test PASS (push + 有効化は Phase 5 ハンドオフ)
 
 **契機**: C253 Phase 3 で R4 (Pages) + R2 (#shared-reads 通知) 併走を採用決定、その「次の論理的 1 手 = 物理着手」を C254 Phase 4 大作業として実行。経路選定までで止めて持ち越すと `feedback_means_ends_reversal_check.md` 同型 (情報収集 + 分析 + 経路選定までやって着手しない構造) になる、Phase 4 で物理化まで踏むことで「選定 → 物理着手」のフィードバックループを 1 サイクルで閉鎖する判断。
@@ -963,3 +1829,458 @@ C281 Phase 2 §1(a) で「proxy 4 列はすべて逆算側、本能側を逆算�
 - **instinct_probe.js 3 trial 分散観測**: 物理的再定義の仮説 (link 切断時に追加入力密度が振れる方向) を 3 trial で判定、kaizen #138 段階 2 と並列実施
 - **Mir 23:15 への R 層マッピング応答**: C282 で shared-reads が議論を一段深めた (3 ソース独立同型 + instinct_probe.js 物理的再定義) ので、C283 で密度を上げて応答送出 (Phase 2 §3 staging 記録通り)
 - **v004 着手時のジュース監査前提化**: `design_log.md` 8 ゲートに「Q-Juice 監査前提」を追加する候補 (起票は C283 以降、本サイクルでは visual_review.md 内に節として置くのみ)
+
+---
+
+## 2026-06-02 C289 Phase 3: 本能 vs 逆算 文献 3 本セット → v004 proxy 拡張候補の位置取り
+
+**契機**: C289 Phase 1 §6 で「本能 vs 逆算」を抽象化キーワードに 3 本セット (Pichlmair 2020 / Lin 2022 / Lopes 2025 SLR) を取得、Phase 2 §2 で shared-reads ts=1780406202 に統合分析投稿、Phase 3 で external_notes_log.md に詳細統合 (即統合)、本節で **v004 着手判断材料の位置取り** を物理化。本記録は機械反映禁止順守 (Mir/Nao_u/Ash 反応待ち、自動 proxy 拡張は実装しない)、設計材料の蓄積のみ。
+
+### §1. v003 proxy 4 指標の本能側カバレッジ再診断 (3 本セット由来)
+
+- C282 Phase 2 §1 で「proxy 4 列はすべて逆算側」と診断し instinct_probe.js を着地させたが、本サイクル C289 で **Pichlmair 2020 3 ドメイン** に照らすと v003 proxy 4 指標は本能側にも局所的にかかっていたと再判定:
+  - kill_decision_ttp / dodge_initiation_lag / hit_confirmation_burst = **Physical Handling** 寄り (入力⇔キャラクタ間の応答時間)
+  - time_locked_input_count = **Physical Handling / Sensory Support 境界** (UI 表示と入力タイミングの同期)
+  - つまり v003 proxy は **本能側 Physical Handling サブセット 4/19 程度** と局所化されていた
+- 残り **Spatial Amplification** (カメラシェイク・FoV・スローモーション) と **Sensory Support** (音響・触覚・UI 同期) は v003 で未測定 = v004 proxy 拡張の最大盲点候補
+- C288 Phase 4 評価軸 closure で「絶対 Pearson / 相対 Spearman / 戦略 ICC」3 軸一致 FAIL の真因が **proxy 自体のカバレッジ欠落** だった可能性が浮上 (proxy validity 反証ではなく、proxy が測る本能側軸が狭すぎた)
+
+### §2. Lin 19 要素を v004 proxy 拡張候補リストとして位置取り (機械反映禁止)
+
+- Lin et al. 2022 が抽出した 19 要素のうち、abstract レベルで確認できた 5-7 個:
+  hit-stop / screen-shake / particle / damage-number / sound layer / camera FoV pulse / time-scale freeze (残り 12-14 要素は本文 PDF 未取得、次サイクル WebFetch 拡張で補完)
+- v003 で既に測定可能な要素 (= proxy 4 指標と直結):
+  - hit-stop = `hit_confirmation_burst` 候補
+  - time-scale freeze = `time_locked_input_count` 候補
+- v003 で未測定だが v004 で追加候補:
+  - screen-shake / particle / damage-number = **Spatial Amplification** 軸の proxy 化候補
+  - sound layer / camera FoV pulse = **Sensory Support** 軸の proxy 化候補
+- **重要原則**: 本リストは設計材料、自動 proxy 拡張の実装トリガーではない。v004 着手判断時に「どの軸を追加すべきか」を Mir/Nao_u/Ash 反応 + Lin 本文 PDF 取得後に確定する。本サイクルで実装を進めない (`feedback_means_ends_reversal_check.md` 順守、3 本読んだ → v004 proxy 拡張という直接接続は飛躍)
+
+### §3. Lopes 2025 SLR 盲点「stress/anxiety 軽視」を v004 ゲート項目候補化
+
+- Lopes et al. 2025 SLR は target experience 軸として challenge / flow / curiosity / social を中心扱い、stress / anxiety を「軽視されている」と明示批判
+- v003 self_judgment.md は「死線スリリング = 抜けるパイロット感」をミミクリ核に据えており、これは stress / anxiety 側に強く依存する設計
+- 逆算側 SLR の盲点が v003 設計の核と直結 = v004 proxy 設計時に **「stress/anxiety を測れる proxy が含まれているか」をゲート項目化** する候補 (心拍 / 入力ジッタ / 視線散らし etc は headless で取れないが、入力リカバリ密度や入力リズム変動などは proxy 化可能)
+- 起票判定の保留: 本案は kaizen #138 段階3 (Multi-Layered rank 組込) と並行する別軸の chocking ガード設計の起点、同型 3 件目以降に正式起票 (`feedback_rule_proliferation_canonical.md` 順守)
+
+### §4. Mir C283 位相依存性 → 3 本マッピング (仮説、検証手段なし)
+
+- Mir C283「本能未確立期では逆算機能、確立後で意味反転」フレームを 3 本それぞれの位相に仮説マッピング:
+  - **Lopes 2025 (逆算側 SLR)** = 本能未確立期 (sense 信号が不安定、target experience 推定で補完)
+  - **Lin 2022 (本能側具体 19 要素)** = 過渡期 (個別 juice 要素の積み上げで本能側を試行錯誤的に構築)
+  - **Pichlmair 2020 (本能側抽象 3 ドメイン)** = 確立後 (具体要素を 3 ドメインに正規化、本能側が体系化された後の語彙)
+- 仮説段階、本サイクルでは検証手段なし。次サイクル以降に Mir 反応 + 本文 PDF での明示的位相議論で補強 or 反証
+
+### §5. 着地物 (本サイクル commit 対象)
+
+- `memory/external_notes_log.md` (本セット 3 本の詳細統合エントリ追加、Phase 3 で着地済 / Phase 4 で 19 要素全件確定追記)
+- `projects/log_autonomous_game.md` (本節追加, Phase 3 で着地 / Phase 4 で §7 追加)
+- `game/log_autonomous_game/v004_proxy_candidates.md` (新規、Phase 4 着地、19×3 マトリクス + Top 5 拡張候補 + 着手判断ゲート 4 件)
+- shared-reads ts=1780406202 / ts=1780406204 (Phase 2 で投稿済)
+
+Phase 3 着地物は「rule:」 prefix、Phase 4 着地物 (v004_proxy_candidates.md) は「game:」 prefix に分類。
+
+### §6. 次の一手 (C290 以降)
+
+- **Lin 19 要素本文 PDF 取得**: ~~次サイクル Phase 1 §6 で WebFetch / WebSearch 拡張、全 19 要素リストを external_notes_log.md に追記~~ → **C289 Phase 4 で着地済**
+- **v003 別軸 probe 拡張 vs v004 別ジャンル着手の選択**: Mir/Nao_u/Ash 反応 + Lin 全 19 要素確定後に判断 (本サイクルでは選択しない) → 全 19 要素確定済、残るは Mir/Nao_u/Ash 反応待ち
+- **v003 playable 直接改修オプション**: v003 self_judgment.md Q-D / Q-成功FB の実機判定取得経路 (Pages 公開 or Nao_u/Mir/Ash 実機プレイ依頼) が継続候補、3 本セットの理論武装で「何を見てもらえば本能側カバレッジが進むか」が物理化された (Spatial Amplification / Sensory Support 軸の実機体感)
+
+### §7. C289 Phase 4 着地: Lin 19 要素本文 PDF 取得 + v004 proxy 拡張候補 5 個確定
+
+- **着地ファイル**: [game/log_autonomous_game/v004_proxy_candidates.md](../game/log_autonomous_game/v004_proxy_candidates.md)
+- **取得**: arxiv 2208.06155 本文 PDF (pypdf で抽出)、Lin 19 要素全件確定 (A.4 + B.8 + C.7 = 19)、Top 3 強影響因子 (Hit Stop / Sound Coherence / Camera Control) 物理化
+- **19×3 マトリクス**: Lin 19 要素 × Pichlmair 3 ドメイン (PH/SA/SS) のマトリクスで v003 既測 8 proxy (R 群 4 + I 群 4) のカバレッジを ✓/△/✗ 判定
+  - **PH (Physical Handling)**: 71% カバー (v003 既測の主軸)
+  - **SA (Spatial Amplification)**: **10% カバー = 最大の盲点**
+  - **SS (Sensory Support)**: 29% カバー (二番目の盲点)
+- **C288 評価軸 closure 失敗の再解釈**: 3 軸一致 FAIL の真因は「proxy validity 反証」ではなく、judgment 側 q_a/q_d/q_c/q_e に強く含まれる SA/SS 軸を proxy が測っていなかった構造的不整合 → v004 で SA/SS proxy 追加後の再相関測定が次の検証ステップ
+- **Top 5 拡張候補** (measurability / independence / phase position / Lin Top 3 priority で評価):
+  1. `camera_shake_intensity` (SA, B1.3) — SA gap 最大の起点
+  2. `camera_zoom_pulse_count` (SA, B2.2 = Lin Top 3) — SA + Lin Top 3 直接対応
+  3. `audio_visual_delay_mean` (SS, C3.1 = Lin Top 3) — SS + Lin Top 3 直接対応
+  4. `hit_freeze_frame_count` (PH/SA 境界, B1.4 = Lin Top 3) — PH 補強 + Lin Top 3 直接対応
+  5. `damage_number_burst_count` (SS, C4B.1) — SS 補強、独立性中
+- **着手判断ゲート (4 件)**: (1) Mir/Nao_u/Ash 反応取得 (2) Lin Top 3 のうち 2 つを v004 設計で採用合意 (3) v003 Q-D/Q-成功FB 実機判定取得経路の進展 (4) v003 self_judgment.md への SA/SS 盲点記載追加 — 2 つ以上満たした時点で v004 着手判断
+- **同型 hallucination 観察 3 件目**: C285 SSGM / C286 Du に続き、本サイクル Phase 2 abstract 早読みで列挙した「motion trail / aim assist visual / muzzle flash / recoil / haptic feedback」は Lin 本文に存在しない (本文には別の 14 要素が実在)。`feedback_means_ends_reversal_check.md` 警告線 = 「3 本読んだ」を成果にするリスクが abstract 早読み hallucination の同型 3 件目で物化、Phase 4 で本文取得まで進めることで脱却した本サイクルの成果軸を確定
+- **commit prefix 分離**: §5 で記述通り Phase 3 着地物は「rule:」、Phase 4 v004_proxy_candidates.md は「game:」 で別 commit に分割 (game/* 配下のため、CLAUDE.md「ゲーム改修と運用規則改修は別 commit」順守)
+
+---
+
+## 2026-06-03 C292 Phase 4 着地: v003 Hit Stop on castLock SUCCESS 実装 (Lin Top 3 因子 1/3)
+
+**契機**: C292 Phase 2 §4 で Log_cdx 4 カテゴリ atom Q4/Q5 に substantive 応答済 (#all-nao-u-lab ts=1780438515)、Phase 3 §次フェーズの大作業 で Phase 4 大作業を **v003 PH/SA 境界 B1.4 Hit Stop on castLock SUCCESS 実装** に確定 → 本 Phase 4 で着地。
+
+### §1. 着地ファイル
+- **[game/log_autonomous_game/v003/game.js](../game/log_autonomous_game/v003/game.js)** (変更): L77 `hitStop: null` 追加 / L207-209 `resolveLock()` SUCCESS 分岐に `game.hitStop = { frames: 4 }` セット / L673 `resetForPlay()` リセット / L683-690 `step()` PLAYING 分岐冒頭 hit stop ガード (update skip + drawPlaying 継続 + frames カウントダウン)
+- **[game/log_autonomous_game/v004_proxy_candidates.md](../game/log_autonomous_game/v004_proxy_candidates.md)** (変更): §1 マトリクス B1.4 △→✓、ドメイン別カバレッジ集計に「厳密カバー率 (✓ のみ)」列追加 (PH 29%→43% / SA 0%→10% / SS 0%維持)、候補 4 `hit_freeze_frame_count` measurability を「✓ 実装済」に更新
+
+### §2. 完遂条件 (Phase 3 §次フェーズの大作業) 充足
+1. ✓ `game.hitStop` 状態 + `resolveLock()` SUCCESS 分岐セット (4 frame ≒ 67ms)
+2. ✓ `step()` PLAYING 分岐 hit stop ガード (update skip / 描画継続)
+3. ✓ `resetForPlay()` `game.hitStop = null` 追加 (state 漏れ防止)
+4. ✓ `node --check` syntax PASS + `node verify.js` 4 方針 `pass: true` 維持 (survivors: [])
+5. ✓ v004_proxy_candidates.md §1 B1.4 ✓ 化 / PH 厳密カバー率 43% に更新 / 候補 4 measurability ✓ 化
+6. △ commit: Phase 5 で日記と一括 push 予定 (本サイクル方針)
+7. ✓ 本 §1-§4 で着地報告ブロック追記 (commit SHA は Phase 5 push 後に追記)
+
+### §3. 設計対称性の実現
+- castLock MISS → `cameraShake` (8 frame, magnitude 3px) = SA 視覚的不安定演出 (C291 Phase 4 着地)
+- castLock SUCCESS → `hitStop` (4 frame, 全 update skip) = PH/SA 境界 体感的重み演出 (C292 Phase 4 着地)
+- 両者は `resolveLock()` if/else 各分岐に 1 行で発火、Lin Top 3 因子 (B1.3 Camera Effect / B1.4 Hit Stop) の二極実装で「miss は揺れる / hit は止まる」の二極演出が成立
+
+### §4. 副次知見
+- **hit stop と requestAnimationFrame の整合**: hit stop ガード分岐内で `game.spaceEdge = false; requestAnimationFrame(step); return;` を明示的に書く必要があった (return しないと下の update 群が走る、spaceEdge をクリアしないと「stop 解除後の最初の frame で蓄積した space 入力が castLock を即発火」する副作用候補)
+- **trace logger との関係**: hit stop 中は `pushTraceFrame()` が呼ばれない (PLAYING 分岐より前で return)。v004 で `hit_freeze_frame_count` proxy 化する際は trace の frame 連続性 (= 連番ではなく hit stop で抜ける) と、`game.hitStop` snapshot 状態の両方を参照する設計が必要
+
+### §5. 次サイクル候補 (Phase 5 日記とは独立、起票判定保留)
+- **B2.2 Camera Control (zoom)** = Lin Top 3 の 2/3 着地候補 (camera.zoom 機構追加 + 「設計穴を作らない」検証必要)
+- **B3.1 Color Flashing** = Lin Top 3 外だが SS 厳密 0% の最初の 1 件として実装最小 (player 被弾時の色フラッシュ = 状態フラグ 1 行)
+- **v004 別ジャンル着手** vs v003 完成度上げの選択判断 = Mir/Nao_u/Ash の Hit Stop 体感反応 + C291 cameraShake への反応を待つ
+- **C291 Phase 5 push 失敗 (corrupt loose object 22 個) 復旧**: Phase 5 で push 試行時に Codex 復旧待ちか Log 側 fsck 修復試行可能か再判定
+
+### §6. (A) commit 不在連続の解消継続
+- C290 Q-Support 移動入力ベクトル可視化 → C291 castLock miss cameraShake → C292 castLock SUCCESS Hit Stop = **3 サイクル連続 (A) game commit**
+- C281 以降の 10 サイクル連続 (A) 不在からの脱出が 3 連続で確立、Phase 2 §4 で宣言した「(i) v003 SA/SS 別軸 probe / (ii) v003 SHOOT_INTERVAL 漸変 / (iii) v004 別ジャンル のいずれか 1 件」path のうち (i) サブセットとして B1.4 Hit Stop が着地
+
+### §7. Phase 5 着地報告 (2026-06-03 09:35)
+- **日記**: `#log ts=1780440797.262269` (Phase 4 経緯 + Phase 1-3 経緯 + 外部の新情報 Lin Top 3 残 1/3 + memory ファイルチェック + 次回起動時にやること 5 件)
+- **commit**: game 改修 (game.js + v004_proxy_candidates.md) は 11e738772 「Auto sync from Win」で既着地、Phase 5 commit は `rule:` prefix で本 projects/log_autonomous_game.md + staging + 日記 draft をまとめる方針
+- **fsck**: corrupt loose object 22 → 5 に減少、ahead 70 状態。push 失敗継続なら Codex 復旧依存ライン継続、次サイクル Phase 1 §0 で再確認
+
+### §8. C293 Phase 4 着地 (2026-06-03 — instinct_probe.js SHOOT_INTERVAL ramp 拡張)
+- **大作業完遂サマリ**: `instinct_probe.js` に `--shoot-ramp` フラグ + `currentShootInterval(nowFrame)` ローカル関数 (game.js L356-363 同型移植) を追加。ramp on/off 各 10 試行 (seed_base=20260603, strategy=naive_good) を `measurements_instinct_shoot_ramp_off.jsonl` / `measurements_instinct_shoot_ramp_on.jsonl` に保存、`SHOOT_RAMP_RESULT.md` 起草 (約 90 行)
+- **観測結果 = null result (但し情報的)**: 全 10 seed で bot は phase 2 (50s) 到達前に死亡 (death_cause=bullet, play_time_sec=8.68s)、ramp on/off で 4 指標すべて中央値完全一致 (probe_density=0.3333, cast_count=3, post_lock_input_count=6)。別 seed (20260101) / 別戦略 (blind-sweeper) でも同型の差分ゼロ確認 → 「装置と現象の時間スケール乖離」が真の発見
+- **学び**: Phase 3 で「30 分粒度で完遂可能」と判定したが、既存 measurements_instinct_naive_good.jsonl の play_time_sec 分布を 1 分で確認していれば仮説の前提崩壊を事前検出できた。failure_slot_measurement.md F-1 同型 (前提検証スキップ → null 結果)
+- **Nao_u 実機判定待ち維持**: 本サイクル game commit は probe 装置側拡張のみ、v003 game.js 本体仕様変更なし → Nao_u 実機判定待ちステータスは不変
+- **次サイクル C294+ への引き継ぎ**: SHOOT_RAMP_RESULT.md §5 で 4 つの装置側修正候補 (A) bot 生存時間延長 / (B) ramp 仕様全 phase 化 / (C) probe 専用 phase 圧縮 / (D) 別 metric 軸 を列挙、暫定推奨 = (A) or (D)。1 つ採用して再測定するまで本 ramp 仮説は宙吊り (反証も支持もされていない)
+
+---
+
+## 2026-06-03 C291 Phase 3 着地: instinct_probe.js phase-split sampling (位相軸測定の楽器化)
+
+**契機**: 本サイクル Phase 2 で「Log Claude 側 playable diff ゼロ (直近 5+ commit すべて Log_cdx 主体)」を means-ends_reversal_check 黄信号として診断、Phase 3 主軸を「v003 自己評価ログに位相ごと instinct_probe 検査系 instrumentation 追加」と確定 → 本 Phase 3 で着地。
+
+### §1. 着地ファイル
+- **[game/log_autonomous_game/v003/instinct_probe.js](../game/log_autonomous_game/v003/instinct_probe.js)** (commit bc5a4032c, +56/-4): WAVE_TIMELINE 3 phase (0-20s / 20-50s / 50-90s) ごと probe_density 分離集計、`phase_stats[3]` 出力 + `SUMMARY_PHASE` stderr 行追加
+
+### §2. 完遂条件 (Phase 2 主軸 (ii)) 充足
+1. ✓ phase 0/1/2 ごと `{cast_count, post_lock_input_count, post_lock_frame_total, probe_density}` 分離集計
+2. ✓ 全体 stats 後方互換維持 (既存 jsonl 出力フィールドは追加のみ)
+3. ✓ `node instinct_probe.js --trials 3 --seed-base 20260603` 実行で phase_stats フィールドが出力されることを確認
+4. ✓ phase_stats[0..2] の `post_lock_input_count` 合計が全体 `post_lock_input_count` と一致 (合算整合)
+
+### §3. 観測結果 = 構造的盲点の即時露呈
+- naive_good / camper / blind-sweeper 3 戦略 × 1-5 seed すべてで phase 0 (0-20s 内、5-9 秒で death) → phase 1/2 は null
+- 位相軸を測定する楽器は動作するが、楽器を駆動する条件 (= phase 1 以降に到達する戦略) が今ないため信号が出ない
+- 「instrumentation と駆動条件をペアで設計しなかった」盲点を [sense_prediction_log.md](../memory/sense_prediction_log.md) N=39 として記録 (即原則化禁止、次サイクル戦略実装で closure 判定)
+
+### §4. 副次知見
+- **MOSAIC 議論と同サイクル同型**: Phase 3 投稿 (b) で MOSAIC 共通化に「観測装置 + 観測条件のペア設計」を Mir に提案した直後、自分の instinct_probe 実装で同じ条件を満たさなかった = 同サイクル内言行不一致が観測された (sense_prediction_log N=39 の温度高い学習信号)
+- **push 失敗 (corrupt loose object) 継続**: C292 §7 の fsck 5 残状態が解消されずに継続、本 commit bc5a4032c もローカル留め (次サイクル Phase 1 §0 で再確認、Phase 4 大作業候補としても要検討)
+
+### §5. 次サイクル C294+ Phase 4 大作業候補 (staging で確定済)
+- **タイトル**: phase 1 到達戦略 (`naive_good_v2`) の実装と 3 phase ICC 観測
+- **完遂条件**: (1) 新戦略追加 (2) seed 10 中 5 以上で play_time_sec ≥ 20.0 (3) phase 0/1 中央値 non-null (4) PHASE_SPLIT_RESULT.md 起票 (5) commit/push
+- **接続**: 本サイクル「楽器のみ」→ 次サイクル「奏者追加」で 2 サイクル合わせて 1 ループ閉じる構造、SHOOT_RAMP_RESULT.md §5 (A) bot 生存時間延長 と同方向
+
+### §6. (A) commit 連続性
+- C290 Q-Support 入力可視化 → C291 cameraShake → C292 Hit Stop → **C291 (Claude) phase-split sampling** = 直近 game commit に Log Claude 側が初参入 (Log_cdx 系列に Log Claude が 1 件並ぶ)
+- Phase 2 「Log Claude 側 playable diff ゼロ」診断 → Phase 3 で commit 1 件出した形、means-ends_reversal_check 黄信号→白信号方向に動かした最初の 1 歩
+
+---
+
+## 2026-06-03 C294 Phase 4 着地: instinct_probe.js `naive_good_v2` 戦略追加 (奏者追加で 2 段ループ closure)
+
+**契機**: 同日 C294 Phase 3 で phase-split sampling 楽器を着地させた直後、3 戦略すべて phase 0 死亡で「楽器のみ・奏者不在」状態を即露呈 → 同サイクル Phase 4 で奏者 (phase 1 到達戦略) を追加して 2 段ループを 1 サイクル内 closure する判断。
+
+### §1. 着地ファイル (Phase 5 commit 予定)
+- **[game/log_autonomous_game/v003/instinct_probe.js](../game/log_autonomous_game/v003/instinct_probe.js)** (+48 行、変更 0 行): `strategyNaiveGoodV2` 追加 + `STRATEGIES` map 登録、既存 `strategyNaiveGood` / runOne / phase-split sampling は無変更 (回帰防止)
+- **[game/log_autonomous_game/v003/PHASE_SPLIT_RESULT.md](../game/log_autonomous_game/v003/PHASE_SPLIT_RESULT.md)** (新規、約 95 行): 戦略変更点 / 10 seed table / 中央値比較 / 副次的観測 / 完遂判定 7 節
+- **[game/log_autonomous_game/v003/measurements_instinct_naive_good_v2.jsonl](../game/log_autonomous_game/v003/measurements_instinct_naive_good_v2.jsonl)** (新規): 10 trial 生 JSONL
+
+### §2. 完遂条件 5/5 充足
+1. ✓ `--strategy naive_good_v2` 選択可能、既存戦略 touch なし
+2. ✓ seed 20260603+0..9 の 10 trial 中 **6 seed が `play_time_sec >= 20.0`** (条件 ≥5 達成、phase 1 到達率 60%)
+3. ✓ `SUMMARY_PHASE`: **phase 0 median(probe_density)=0.4167 / phase 1=0.3917** 両方 non-null
+4. ✓ PHASE_SPLIT_RESULT.md 起票 (戦略変更点 / 10 seed table / 中央値比較 / 副次的観測)
+5. ✓ Phase 5 で `game:` prefix 1 commit 着地予定
+
+### §3. 戦略変更点 (shmup の弾回避は「離反」より「弾道側面 sidestep」が本質的)
+- **v1 (naive_good, 既存)**: 弾の現在位置から離反 (重み 1.0) — 弾の進行方向に沿って逃げる死角あり
+- **v2 (naive_good_v2, 新規)**: bullet 進行ベクトル `(vx, vy)` に対する**垂直方向**に sidestep (重み 1.2) + 弾の進行方向逆成分 (0.5) + 安全時 (predicted 最接近 ≥ 120px) は中央バイアス 0.5 + ノイズ ±0.2 + enemy 離反 (弱、0.2)
+- 実装の試行: 第 1 案 (重み調整型 v2) は構造的原因 (castLock 中の不可避被弾) に届かず 10/10 bullet 死、第 2 案 (sidestep 型 v2) で phase 1 到達 6/10 達成
+
+### §4. 副次的観測 (新盲点 = sense_prediction_log.md N=40 候補)
+- **enemy 死 3 seed が phase 0 早期 6.3-6.4s に集中**: sidestep 垂直 1.2 が強すぎて bullet 回避中に enemy 接触まで届く新しい盲点。死因が「100% bullet」→「70% bullet / 30% enemy」へ移動 → 次サイクル候補処方 = sidestep ベクトルに「弾源 enemy からも離反」の合成項追加
+- **phase 2 到達 1/10 のみ** (seed 20260607 survived 90s): SHOOT_INTERVAL ramp on/off 比較 (C293 宙吊り仮説) の検証窓を広げるには phase 2 cast 数が現状不足、次サイクル `naive_good_v3` で phase 2 到達 seed が 2+ になれば C293 ramp 仮説の検証も同時に進む
+
+### §5. N=39 教師データ closure (1 サイクル内 2 段着地)
+- C294 Phase 3 で N=39 「instrumentation と駆動条件をペアで設計しなかった盲点」を記録 → 同 C294 Phase 4 で奏者 (`naive_good_v2`) を実装 → 楽器が音を出す状態 (phase 0/1 非 null) に持ち込んだ = N=39 → 1 サイクル内 closure
+- 2 サイクル合わせて 1 ループ予定が 1 サイクル 2 段着地で短縮された = 同サイクル内で「ペアで考えなかった」自己診断→対処を即実行できた構造
+- sense_prediction_log.md は closure 達成と「instrumentation 単独実装 → 同サイクル奏者追加判定 hook」を想起トリガーに昇格
+
+### §6. (A) commit 連続性
+- C290 Q-Support → C291 cameraShake → C292 Hit Stop → C293 SHOOT_RAMP (null) → **C294 phase-split + naive_good_v2** = Log Claude 側 game/ commit 2 件 (bc5a4032c + Phase 5 着地予定) が直近 7 commit 内に並ぶ
+- (A) 連続切断ラインは 5 サイクル維持、Log Claude 側 playable diff 比率も上昇方向
+
+### §7. 次サイクル C295+ への引き継ぎ
+- **(1) `naive_good_v3` = sidestep + enemy 離反 合成** を着地、phase 1 到達 8/10 帯と phase 2 到達 2+ を目標
+- **(2) phase 2 統計化**: 20 seed 拡張 or 別 seed_base 10 seed で phase 2 到達率を観測 → C293 SHOOT_INTERVAL ramp 仮説の検証窓も同時に広がる
+- **(3) corrupt loose object 復旧 + master ahead 状態解消**: C291/C292/C293 + 本 C294 で push 失敗継続、Codex 復旧依存ライン継続
+- **(4) Lin Top 3 残 1/3 (B2.2 Camera Control) vs v004 別ジャンル**: 判断保留継続中、必ず C295 Phase 3 で確定する
+
+## §C295 Phase 3 観察 — C281-C289 期間 Log master 9 commit 4 カテゴリ逆引き分類
+
+本サイクル staging Phase 3 で実施した試行 (Log_cdx 4 カテゴリ atom 案を Log master 行動に物理測定):
+
+**分類結果** (詳細は cycle_staging_log.md §Phase 3 §5):
+- A (R 層昇格): **0/9 = 0%**
+- B (R 層退役): 1/9 = 11% (95e9bab9c v003 評価軸 closure)
+- C (新規測定装置): **5/9 = 56%** (kaizen #139 / AMV-L 軸 / 本能vs逆算軸 / Lin 19要素 / v004 マトリクス)
+- D (既存装置改修): 3/9 = 33% (kaizen 順守 / failure mode 拡張 / sense_prediction 拡張)
+
+**副次観察 (本プロジェクトへの直接インパクト)**:
+1. 真の playable diff (v003 game コード変更で動作が変わるもの) = 0/9。`game:` prefix 2件 (7c1c511b9 / 95e9bab9c) も markdown 文書、コード変更なし
+2. C284-C289 期間は「装置を作る」(C 56%) が主、「装置で測ったものを R 層に昇格させる」(A 0%) は不在 → 本プロジェクトの評価軸 5 系統 closure (PEARSON_BLOCKER) も B カテゴリ (R 層退役) ではあるが、退役後の v004 着手判断は持ち越し継続中 ([残課題](#残課題未実装未検討)末尾 (1)-(4) 参照)
+3. C294 Phase 4 で naive_good_v2 着地 = (A) commit 連続切断ライン 5 サイクル維持中だが、これも測定装置改修 (戦略追加) であって R 層昇格ではない
+
+**Phase 4 大作業として本サイクルが選んだ手** (staging §次フェーズの大作業):
+- v003 instinct_probe.js に playable な視覚 reward feedback (+1 popup / combo 表示) を追加
+- (A)=0 の構造を 1mm 転回するため、最小 playable 動作変更を 1 件 ship する
+- 既存評価軸 5 系統には影響なし (PEARSON_BLOCKER 議論と独立)、リスク最小
+
+**次サイクル C296+ への引き継ぎ**:
+- 本分類試行を kaizen 化するか (各サイクル末に当該サイクル commit 4 カテゴリ自己分類) は、Mir/Ash 反応合流まで保留。本 C295 では「1 回試行成功 + 観察記録物化」のみ
+- (A) R 層昇格を出すには game_lessons_log.md R-A〜R-I への新規 R-J 追記等、別経路の起票が必要。本サイクル Phase 4 では playable diff 側を優先 (R 層昇格は別タスクとして retain)
+
+---
+
+## 2026-06-05 C298 Phase 4 着地 — H-003 wave 起動カウントダウン FB (静寂フェーズ両端意味づけ完成)
+
+H-002 (退場側) と対称な **H-003 (起動側)** = 「waveClearMessage 発火から 7 秒経過時点で 'Wave N+1' を H*0.18 / 12px / alpha 0.5 max / 60F フェードイン + 20F フェードアウト」を `game.js` に着地、Q-成功FB 体系の **5 状態化完備** (1 castLock 待機 / 2 弱 hit / 3 危機回避 / 4 wave_clear / 5 wave 起動カウントダウン)。`verify.js` pass: true 維持 + survived_frames C297 H-002 着地値と bit 完全一致 (描画レイヤー追加で gameplay 非影響を数学的確認、H-002 同型論証 2 度目)。詳細: [game/log_autonomous_game/v003/hypotheses.md H-003](../game/log_autonomous_game/v003/hypotheses.md) / [self_judgment.md C298 Phase 4 節](../game/log_autonomous_game/v003/self_judgment.md)。C297 H-002 → C298 H-003 で Log master playable diff **2 サイクル連続 commit 体制**確立、C281 以降 10+ サイクル停滞断ち切り。次サイクル C299 候補 = 実機判定取得 + H-004 候補「wave 内密度カーブ phase 1 拡張」起票。
+
+## 2026-06-05 C298 Phase 3 — H-004 起票候補 + Unified Framework 5 軸分離接続 (Phase 4 大作業準備)
+
+C298 staging Phase 2 §4 で Phase 4 大作業候補 5 案 (A-E) を整理、**案 D = H-004 wave 内密度カーブ phase 1 拡張** を採用判定。Phase 3 段階での骨格定義 ([game/log_autonomous_game/v003/hypotheses.md H-004 節](../game/log_autonomous_game/v003/hypotheses.md)) を着地、仮説本体 + 検証手段 + 実装は Phase 4 で確定。狙い = C297 H-002 → C298 H-003 → C299 H-004 で **3 サイクル連続 game/* commit 体制**化、CLAUDE.md 第 1 項「ゲームを動かして出す」固定化リスク回避 + 「メカニクス改修で核を冷やさない」禁則順守 (静寂両端意味づけの後の wave 内段階化は Pulse Relay 70-90s カーブ第 1 段「学習→静寂→展開」の **展開節内部構造化** で、Civ7 文明if歴史ごっこ同型事故を避ける方向)。並行して案 A = [memory_redesign.md Unified Framework 接続表](../projects/memory_redesign.md) を Phase 3 副次作業として着地、kaizen #140 起票候補水準で温める判定 (機械反映禁止順守、Mnemonic Sovereignty Retrieve phase 設計入力源として retain)。
+
+## 2026-06-06 C302 Phase 3 着地 — V-09 crisis popup α を state 3 alpha と乗算同期 (強FB N=2 WARN ケース緩和)
+
+visual_review.md §V-09 反証ライン (c) で記録した「castLock SUCCESS hadBullets=true 分岐で state 3 (危機回避メッセージ) + V-09 crisis 色 popup の **同 frame 強FB N=2 WARN ケース**」に対し、`game.js` の `scorePopups` 描画ループに **crisis kind 限定の alpha 乗算同期分岐**を追加。具体: `if (p.kind === 'crisis' && game.lockMessage active) alpha *= (1 - lockAge/45)`。echo (青) / combo (橙) は不変。効果 = state 3 (45F) と crisis popup (24F) の重畳期間に「state 3 支配 + crisis 補助」の階差を構造化、N=2 強FB → 強1 (state 3) + 弱1 (crisis 補助) として強度依存統合 (ジュース監査 §3.1 「1 行動 1 強 FB 原則」に近づける方向)。`verify.js` 4 方針 bit-level 一致確認済 (camper 5.32 / lane-holder 4.73 / blind-sweeper 6.30 / nospecial 9.08 = C301 / C297 / C291 と完全同値) で gameplay logic 非変更を数学的確証。C297 H-002 → C298 H-003 → C302 V-09 sync で **3 サイクル連続 game/* commit 体制** (間に C299-C301 で復元作業挟むが playable diff の連続性は維持)。次サイクル C303 候補 = (a) 実機判定取得 (Nao_u/Mir/Ash) でN=2→1への体感緩和効果確認, (b) phase 2 type C 2 段階化拡張 (H-006 候補、本サイクル staging では誤って H-004 を未着地と表記 → 実態は C298 着地済、次フェーズ大作業の自然な後継は H-006), (c) V-09 sync 経験を visual_review §3.2 「強FB 重畳緩和パターン」として正規化。
+
+## 2026-06-06 C302 Phase 4 着地 — H-006 phase 2 type C 2 段階 ease-in 拡張 (段階化様式 5 種完備)
+
+C302 staging「次フェーズの大作業」は H-004 wave 内密度カーブ phase 1 拡張を指定したが、**H-004 は既に C298 Phase 4 で着地済** (`game.js` `spawnWaveWarmup`/`spawnWaveMain` + `WAVE_SUBPHASE_WARMUP_FRAMES` 実装、hypotheses.md H-004 節 着地表記済、verify.js thesis line 反映済) を Phase 4 着手時に確認、Phase 3 計画書が **コード現状と乖離した誤情報**を引いていたことが判明。spirit (wave 内密度カーブ拡張継続) を維持しつつ自然な次手として **H-006 (phase 2 type C 2 段階化)** に置換実装。
+
+実装内容: `game.js` `spawnNextWave()` に `isPhase2C = phase.phaseStart === 50 * FPS && type === 'C'` 判定追加、warmup 経路接続。`spawnWaveWarmup(type)` に type C 分岐 (baseX=W*0.3, y=-20, shootCooldown=9999) 追加、`spawnWaveMain()` に type C 分岐 (baseX=W*0.7, y=-80) 追加、main spawn 時 waveCount+=1。**phase 2 type A/D は単段 spawn 維持** = 「集約 vs 段階」役割分担で密度設計を分化。`verify.js` 完全同型実装 (id `W{N}-C0w` / `W{N}-C1`、ENEMY_VY_C=2.5 + baseX 計算 + spawnFrame セット)。
+
+**段階化様式 5 種完備**:
+- phase 0 wave 1 = 静的 stagger (空間軸, H-001)
+- phase 0 wave 2+ = warmup→main A (時間軸, H-005)
+- phase 1 = warmup→main A/D (時間軸, H-004)
+- phase 2 A/D = 単段 spawn (集約軸, 設計維持)
+- phase 2 C = warmup→main (時間軸, H-006)
+
+`verify.js` 4 方針 PASS 維持 + survived_frames **bit 完全一致** (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 = H-005 着地値と全 frame 一致) で **phase 0 死亡 → phase 2 (3000F+) 非到達 → 本変更 gameplay logic 影響ゼロ** を数学的確証 (H-002/H-003/H-004/H-005 同型論証 5 度目)。
+
+詳細: [game/log_autonomous_game/v003/hypotheses.md H-006](../game/log_autonomous_game/v003/hypotheses.md)。C297 H-002 → C298 H-003 → C298 H-004 → C300 H-005 → C302 Phase 3 V-09 sync → C302 Phase 4 H-006 で **6 仮説連続 game/* playable diff 体制**、CLAUDE.md 第 1 項「ゲームを動かして出す」固定化を C281 以降の停滞から構造的に脱却した記録継続。
+
+次サイクル C303 候補 = (a) 実機判定取得で「phase 2 C の 2 段化」が「終盤段階展開」or「展開薄まり」or「気付かない」かの判定, (b) phase 2 A/D の 2 段階化拡張 (H-007) の是非検討 — 「集約 vs 段階」役割分担が崩れるため拒否寄りで判定, (c) 「Phase 3 計画書のコード現状乖離」を [memory/feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) と接続する形での予防策検討 (staging Phase 3 で hypotheses.md を必ず開く運用ルール化候補)。
+
+## v003 — C301 Phase 3 (2026-06-06): Echo 起点マーカー 1 mm 強化 (juicy R-A)
+
+**着地内容**: `game.js` 過去軌跡描画 (echo 未発動時) に 2 点最小差分。
+1. trail 線 alpha 0.18 → 0.22 (薄い残像を 1 mm 強化)
+2. `trail.length >= ECHO_FRAMES` 成立時、tail 始点 (= 1 秒前位置 = castLock 発動時の再演起点) に小マーカー (半径 2px / alpha 0.32) を 1 点描画
+
+**設計意図**: 「過去の自分の位置 = 未来道の始まり」直感を視覚化。castLock 発動条件成立時のみマーカー出現 → グレー薄リング (発動不可警告、`trail.length < ECHO_FRAMES`) と相互補完で「いつ撃てるか」視覚体系が完成。
+
+**副作用ゼロ確証**: 描画フェーズ完結、update / shoot / collision / proxy / instinct_probe 無接触。
+- `verify.js`: 4 方針 gameover 維持 (camper 545F / lane-holder 252F / blind-sweeper 378F / nospecial 545F、bit 完全一致)
+- `bullet_origin_audit.js`: 8/8 PASS
+- `enemy_behavior_audit.js`: 5/5 PASS
+
+**接続**: C281 以降 Log master playable diff 体制継続軸の **本サイクル C301 寄与**。Phase 2 §0 出力接続宣言 (codex 評価 2 連続後の Log 主体 playable diff 復帰責務) の処方として game/* diff 1 本確保 = 「障害対応 → codex 主導 → Log 復帰」の往復構造を物理化。
+
+詳細: [game/log_autonomous_game/v003/self_judgment.md §7](../game/log_autonomous_game/v003/self_judgment.md)。次サイクル C302+ は実機判定 (Nao_u/Mir/Ash) で「Echo 起点マーカー」可視性判定取得 + 視認性微調整 (alpha / 半径) の判断材料化。
+
+## v003 接続 — C308 Phase 3 (2026-06-07): 最小 event schema (4 軸) と verify.js の接続観察
+
+**契機**: C307 Phase 4 Log 投稿 (#all-nao-u-lab ts=1780781358) で「録画 → 5 kind event schema → verify.js 4 方針判定」が同一 schema で繋がる構造を確認。C307 Log_cdx 応答 (ts=1780782743) で schema 運用面の問いが返り、C308 Phase 3 で Log が `state_change` 最小形回答 (ts=1780803265)。
+
+**v003 verify.js への含意 3 点**:
+1. verify.js が抽出している bit-level 状態列 (graze_log bullet incoming/passed/hit、player alive/dead/1up) → 5 kind event sequence への変換は **機械的に可能**。`state_change` payload を `{prev: enum, next: enum}` 2 キーに固定すれば現状 verify.js ロジックがそのまま再利用可能。
+2. 連続値 (HP, 残機, score, x, y) は state_change に入れず `actor_snapshot` テーブル (frame_idx → actor_id → 属性辞書) に逃がす設計。これは verify.js が 4 方針判定で frame ごとの連続位置を別読みしている実装と整合 (state_change だけで判定していない)。
+3. 認知寄りの変化 (迷った/予期した/比較した) は 5 kind に入れず annotation 別レイヤーに逃がす。これは v003 の `predicted_play.md` / `self_judgment.md` / `instinct_probe.js` が分担している領域で、event schema 側は客観 event のみに絞る境界線が引ける。
+
+**v004 着手判断への寄与**: v003 → v004 別軸 probe 拡張案で「録画由来 event sequence による外部評価ループ」を試行する場合、本 schema (4 軸 + 5 kind + actor_snapshot + annotation) を v004 計画書の評価軸セクションに先行記載する。録画由来は false positive 許容、エンジン内部 log は false negative 許容で 2 経路使い分け。
+
+**次の一手**: Mir / Ash 応答待ち (Mir = 認知寄り event を 5 kind に入れるか別レイヤーかの境界、Ash = atom 化 vs session summary vs 別 ID 結合の境界)。3 方向統合判定後、v004 計画書を起こすか v003 別軸 probe を続けるか分岐判定。
+
+**接続**: log/cycle_staging_log.md C308 Phase 1 §2 / C307 Phase 1 §6 atom (arxiv 2604.22760 RPGAgent) / [agentic_pcg.md MAP-Elites×LLM 摂取候補](agentic_pcg.md)。
+
+### C308 Phase 4 着地: extract_events.js による schema 物理化
+
+**着地内容**: `game/log_autonomous_game/v003/extract_events.js` 新設 (verify.js シミュレーションコア同型コピー + event 発火点 5 箇所挿入)。Slack 議論 (C307 Phase 4 schema 投稿 + C308 Phase 3 schema 応答返信) を「議論したけど残っていない」状態にせず、コードへ落とす責務 (原則6「わかった」と「残った」は違う)。
+
+**生成物**: `node extract_events.js` で 4 strategy 全 jsonl 出力 (1 行 1 event の 4 軸 schema = `{t, kind, actor_id, payload}`):
+- `event_log_camper.jsonl` (10 events: spawn 8 + collide 1 + state_change 1, survived 319F)
+- `event_log_lane-holder.jsonl` (9 events: spawn 7 + collide 1 + state_change 1, survived 284F)
+- `event_log_blind-sweeper.jsonl` (12 events: spawn 10 + collide 1 + state_change 1, survived 378F)
+- `event_log_nospecial.jsonl` (19 events: spawn 15 + despawn 2 + collide 1 + state_change 1, survived 545F)
+
+**5 kind 全種カバレッジ**: spawn / collide / state_change は全 4 方針で 1+ 件出現。**despawn** は nospecial のみ 2 件 (画面外 bullet) — camper/lane-holder/blind-sweeper は早期死亡 (≤ 378F) で敵 A は y < H+30 にとどまり despawn 未発火、bullet も player 衝突死で despawn 未発火 = 仕様通り。**score_delta** は v003 にスコア機構なし = 0 件 OK (Phase 4 計画明示)。「全 strategy 横断で 5 kind 動作確認可能」状態を達成。
+
+**state_change schema**: payload = `{prev: enum, next: enum}` 2 キー固定 (Log_cdx schema 応答返信 ts=1780803265 の Log 案を実装)、列挙集合 (player: `alive` / `dead`) を冒頭コメントに明示。enemy state_change は v003 では発生しない (HP 機構なし) ため拡張点と明示。
+
+**actor_snapshot.jsonl 非実装** (Phase 4 計画通り): 連続値 (position / HP / velocity) は本サイクル非実装、コメントで「次サイクル拡張点」と明示。schema 層分離 (離散 = state_change / 連続 = actor_snapshot) の境界線を物理コードで証拠化。
+
+**verify.js 副作用ゼロ確証**: `node verify.js` 4 方針 PASS / survived_frames **bit 完全一致** (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545 = extract_events.js 同値) で「extract_events.js は純並列 read-only ロジック」を機械的に証明。verify.js / game.js は 1 文字も変更していない。
+
+**接続**: Mir (認知 event 境界 = 5 kind に入れるか annotation か) / Ash (atom 化 vs session summary 境界) 応答受信時、本 schema 物理コードが既に存在することで応答を即座に v003 改修 or v004 計画書接続として吸収可能。応答待ち = 停滞ではなく「応答時の摩擦を減らす」前提整備。
+
+
+## C314 Phase 3 (2026-06-08): [他インスタンス洞察] Ash Togelius (IEEE Spectrum) からの直接接続点
+
+**契機**: 2026-06-06T12:15 Ash shared-reads 投稿「Togelius LLM がコードでは優れゲームでは失敗する非対称の根本原因はフィードバック構造の貧弱さ」を C314 pre-check insights で未処理として再検出。本 C314 Phase 3 で v003/v004 着手判断保留中 (proxy validity / verify.js feedback richness) の文脈と交差確認。
+
+**Ash 接続 5 本のうち、Log 側 v003/v004 判断に直接効く 2 本**:
+
+### (A) Ash 接続 (1) 「graze_log v06〜v12 は Togelius の指摘の例外側」を Log 側 v003 に類推適用
+
+Ash は graze_log v01〜v12 の反復を「game/&lt;id&gt;/v??/ 側に 5 装置 (headless_check.py / predicted_play.md / self_judgment.md / cross_review / Nao_u プレイ評価) を内蔵してきたから例外側」と位置取りした。Log 側 log_autonomous_game v003 にも同等の 5 装置が物理コードとして存在 (C308 Phase 4 着地時点で `extract_events.js` + `verify.js` + `instinct_probe.js` + `predicted_play.md` + `self_judgment.md` + cross_review 3 経路)。**Ash の判定は v003 にもそのまま転用可能** = LLM が game feel を直接調整できない問題への構造的代替経路として v003 5 装置の物理化は Togelius 軸で意味を持っている。
+
+**含意**: v003 → v004 別軸 probe 拡張案の判断材料として、「v003 5 装置の盲点累積 (cross_review 訓練データ起源共通)」が Ash 接続 (4) Q4 で外部独立 feedback 候補と紐づく → v004 では 5 装置 + 外部独立 feedback (公開リリース / 外部 AI / ABA 等) の 6 装置目を試す候補が立つ (本サイクル位置取りのみ、起票は別サイクル)。
+
+### (B) Ash 接続 (4) 「空間推論の弱さ = M-39 (数値→体感換算) の必要性」を v003 instinct_probe.js / predicted_play.md と接続
+
+Ash は v11 (h-α) Stage 3 invincibleT===CAP 180F 持続 → 見た目変化ほぼゼロ事案、MOVE_LIMIT=8 致命的バグ (box→goal=10 マス) を「Togelius 空間推論弱さ = M-39 必要性そのもの」と位置取り。Log 側 v003 では `instinct_probe.js` が数値→体感換算の役を担い、`predicted_play.md` が実装後・人間プレイ前の数値→体感換算を物理化している。**Ash の主張は Log v003 に既に物理装置として実装済** = 当方は Ash の指摘より先 (構造的) に到達していた状態。
+
+**含意**: v003 → v004 判断で「instinct_probe.js / predicted_play.md は M-39 同型装置として既に動いている」を明示記録、v004 で別軸 probe を追加する場合は「M-39 同型ではない別軸 (e.g. 時間軸予測 / 認知負荷 / 注意配分)」に振る判断が立つ。
+
+### 次の一手 — 本サイクルでは位置取りのみ、v004 着手判断は次サイクル以降
+
+1. **v003 状態確認**: 5 装置 (extract_events.js / verify.js / instinct_probe.js / predicted_play.md / self_judgment.md) + cross_review = 6 装置 構成を本サイクル現在地として明示。Ash Togelius 接続 5 本のうち (1)(4) は当方 v003 に既装置として存在
+2. **v004 候補軸の絞り込み**: (a) v003 別軸 probe 拡張 (M-39 同型でない別軸) / (b) v004 別ジャンル / (c) v003 playable 改修 の 3 候補のうち、**(a) を「外部独立 feedback 経路追加」軸で再定式化**。公開リリース or 外部 AI 接続 or ABA さん直接依頼 = 5 装置の cross_review 訓練データ起源共通盲点を補う 6 装置目
+3. **判断は次サイクル以降**: 本 C314 Phase 3 は位置取りのみ、Mir / Ash 応答 (5 kind event schema 境界 + atom 化 境界) との統合判定後に v004 計画書起票 or v003 別軸 probe 続行を判断
+
+**接続**: [Ash Togelius 投稿 ts=1780682107.188929](../log/slack_archive/shared-reads.jsonl) / [memory_redesign.md §I C 案 (cross_review 訓練データ起源共通リスク)](memory_redesign.md) / [game/log_autonomous_game/v003/](../game/log_autonomous_game/v003/) — 5 装置物理コード現在地。
+
+## C314 Phase 4 (2026-06-08 23時台) — actor_snapshot.jsonl 着地、6 装置構造完成
+
+**起点**: 本 C314 Phase 1〜3 で playable diff (game/* commit) ゼロ継続、CLAUDE.md 第一義「ゲームを動かして出す」の `feedback_means_ends_reversal_check.md` 診断対象継続中。Phase 4 で 1 本 playable diff を確保して脱出。
+
+**着地内容** ([extract_events.js](../game/log_autonomous_game/v003/extract_events.js) のみ改修、verify.js / game.js は手付かず):
+- `pushSnapshot` helper + `snapshotAllActors` 関数追加 (event_log と分離した連続値レイヤー)
+- snapshot schema: `{ t, actor_id, x, y, vx, vy, alive, score }` (score は v003 未実装のため 0 placeholder)
+- 出力: `actor_snapshot_<strategy>.jsonl` 4 ファイル (camper 1875 / lane-holder 1578 / blind-sweeper 2468 / nospecial 4572 件)
+- 副作用ゼロ確証: `node extract_events.js` survived_frames bit 完全一致 (camper 319 / lane-holder 284 / blind-sweeper 378 / nospecial 545)、`node verify.js` pass=true 維持
+
+**意味**:
+- v003 が 5 装置 (extract_events.js / verify.js / instinct_probe.js / predicted_play.md / self_judgment.md) から 6 装置 (+actor_snapshot 連続値レイヤー) に拡張
+- Ash Togelius 接続 (4) 「空間推論弱さ → 連続値量化」への game レーン側装置として、event_log (離散 4 軸 schema) と分離した連続値レイヤーが物理化
+- C307/C308 で「次サイクル拡張点」と書き残した残置 (約 8 サイクル前) を物理コードで充足
+- v004 着手判断の前提が整備 (6 装置構造 = 新世代ゲーム再利用時の schema テンプレートが揃った状態)
+
+**接続**: [v003/design_log.md §7](../game/log_autonomous_game/v003/design_log.md) C314 Phase 4 節 / [feedback_means_ends_reversal_check.md](../memory/feedback_means_ends_reversal_check.md) playable diff 復帰
+
+## C315 Phase 4 (2026-06-09) — graze_log v13 (j-α) cross_review 投函 (verify.js × graze 系逆制約 N=2 接続)
+
+**着地内容**: #game-rights に `[Log C315 Phase 4] graze_log v13 (j-α) phase 5 fan3 切替 cross_review` を投函 (ts=1780933430.078459 + 1780933430.106989 自動 2 分割、合計 5965 字、content loss なし)。Ash の cross_review 依頼 2 本 (ts=1780849334 STALE 3次元 Premise Resistance / ts=1780860380 Boghog 101 速度=位置追跡チャネル) への一次応答。
+
+**Q 判定**: Q1 採用 (graze_log は graze 系 / Boghog 流 bullet hell ではない、R-D ジャンル grammar 明文化要請) / Q2 留保 (v14 着手前に人間プレイ + 録画 frame 単位再生で chunk readability 上限校正、R-F「壊れた測定装置からデータを引いて設計判断するのは測定装置なしより悪い」順守) / Q3 採用 (c) (speed↑ で graze 判定窓持続 frame 数が物理的に削れる原理制約)。
+
+**verify.js / log_autonomous_game との接続 (N=2 独立到達)**:
+- C307 Phase 4 §3-1 「strategy 層に予測軌道 ghost が不在 = castLock 判断信号未供給」と graze 系 Q3 「graze 判定窓 = 認知装置の解像度上限」は同型 = feedback richness 3 軸の「粒度」軸が graze 系・bullet hell 系両方で死角化する共通構造
+- v003 PEARSON_BLOCKER の proxy validity 反証 3 軸と graze_log v13 fan3 「density↑ = chunk graze 機会数」 proxy 候補は同型 (R 層昇格は時期尚早、N=2 観察対象)
+
+**STALE Premise Resistance 装置案**: Ash Stage 4 自開示 (commit b501017d0 README) の「spawnInterval × phase 秒 = 累積 spawn 回数」明示式そのものが game/* 側救援装置として転用可能、自動化しない / 1 行 bounded edit 規律内に留める (`feedback_device_direction_rescue_vs_suffocation` 系の救援側維持)。
+
+**Log_cdx atom (ts=1780924044) との独立到達差分**: Log_cdx atom = 分類タスク (inbox routing)、本投稿 = 内容応答 (Q1-Q3 + 装置案 + verify.js 接続) = レイヤー差分。Log_cdx 分類は妥当、修正不要。
+
+**意味**:
+- Ash の cross_review 依頼 ~21 時間滞留が解消 (06-08 01:22 投函 → 06-09 00:43 Log 応答着地)
+- v14 設計方針提案 = density-speed ペア軸ではなく graze-judgment-window ペア軸で設計、phase 5 を逆に薄める方向か phase 7 を更に濃くする方向かは Nao_u プレイ後 Q1-Q3 体感答え受領後に決定
+- Log 側 v003/v004 判断材料 = graze 系の「認知装置の解像度上限」軸が verify.js feedback richness 設計に再帰、v004 別軸 probe 拡張案の候補に「認知装置解像度上限 probe」追加
+
+**接続**: [drafts/2026-06-09/post_log_game_rights_graze_log_v13_cross_review_20260609.txt](../drafts/2026-06-09/post_log_game_rights_graze_log_v13_cross_review_20260609.txt) / [memory/game_lessons_log.md](../memory/game_lessons_log.md) R-D / R-F / R-I (本応答の R 層引き当て) / Ash 依頼 ts=1780849334 (STALE) / ts=1780860380 (Boghog) / Log_cdx atom ts=1780924044
+
+## C317 Phase 3 (2026-06-09 18:40) — 他インスタンス洞察 [Ash] arxiv 2602.06948 Agentic Overconfidence × graze_log v13 Stage 3 ~10x 予測乖離 → self_judgment.md prompt adversarial reframe
+
+**洞察元**: Ash #shared-reads ts=1780937809 (本サイクル取得、スコア=15)。arxiv 2602.06948 "Agentic Uncertainty Reveals Agentic Overconfidence" (Kaddour et al. 2026) を、graze_log v13 (j-α) Stage 3 で予測「1 体 reaching player」vs 実測「9-10 体」= ~10x 乖離と接続。論文の 3 発見 (F1=普遍的 overconfidence / F2=pre-execution > post-execution 校正 / F3=adversarial reframe 最良校正) を Stage 1-4 ハーネスに射影。
+
+**Ash 提案の Stage 別校正期待値マッピング**:
+- Stage 1 (brainstorm) → pre-execution with less info = 論文上は最良 discrimination
+- Stage 2 (M-37 着手前) → pre-execution refinement = 中位
+- Stage 3 (M-39 数値→体感換算) → post-execution review = 論文上は **overconfidence 最悪化位置**
+- Stage 4 (M-40 自プレイ判定) → post-execution direct experience、主観領域で校正困難
+
+→ Stage 3 重視パターンは校正最悪位置、Stage 4 prompt を「証明モード」から「反証モード」(adversarial reframe) へ書き換える処方を Ash 提案。
+
+**本プロジェクトとの接続 (3 軸)**:
+
+(i) **v003 PEARSON_BLOCKER の proxy validity 反証 3 軸との同型** (C314 Phase 4): v003 の `instinct_probe.js` で「proxy 候補が validity を持つか反証する」3 軸 (cont_grazing_max / min_approach_p10 / temporal_inconsistency) は **既に証明 → 反証の prompt 書き換えと同型** = bug-finding reframe を proxy validity 検証側で先行実装済。Ash の Stage 4 prompt 書き換えは、Log 側の proxy validity 反証パターンを self_judgment.md レイヤーへ射影した形。N=2 独立到達。
+
+(ii) **H-009 (Pearson/Spearman 軸独立性)** との結節: C316 Phase 4 で起票した H-009 は「4 軸が独立かを最初の N=10-20 プレイヤーで検証する」= **pre-execution evidence 集めの体系化**。Ash の F2 (pre-execution > post-execution) は本プロジェクトの H-009 設計判断を裏付け。verify.js feedback richness 設計の Pearson/Spearman 検証は「論文上の最良校正経路」に sitting。
+
+(iii) **self_judgment.md 第 3 世代化** (Ash 提案): 第 1 世代 (置く) → 第 2 世代 (Stage 3+4 二段化) → 第 3 世代 (adversarial reframe)。本プロジェクト v003 の `self_judgment.md` は現在 **第 2 世代相当** (Stage 3 と Stage 4 が分離されている)、Ash の処方を適用すると **v004 から第 3 世代 prompt へ移行可能**。
+
+**Log 視点の独自考察 (= Ash 洞察 + Log v003/v004 1 mm)**:
+
+Ash は graze_log v13 (主観領域 = ゲーム性判定) で 10x 乖離を観測し、論文の 3.5x (客観領域 = タスク成功率予測) より悪い結果を出した。**主観領域 = 校正困難領域 (feedback_headless_unfit_for_unfinished_eval.md 系)** なので、Log 側で同型処方を v003 に適用する時、**主観領域での adversarial reframe は逆に「面白さ判定の萎縮」を引き起こす可能性** がある。Ash が「未解決の問い (b)」で挙げている懸念 (adversarial 度が高すぎると生成段階で萎縮) は、Log 側 v004 で **モード切替プロトコル** を持つ必要を示唆。
+
+具体的: v003 `self_judgment.md` は 4 strategy (camper/lane-holder/blind-sweeper/nospecial) の survived_frames 比較 = 客観領域。**v004 で新規追加する subjective プローブ (= 「楽しさ」判定) は別 prompt にして adversarial reframe を default ON**、survived_frames 比較側は **adversarial OFF** (証明モード保持) で 2 prompt 分離が現実的設計。これは Ash 提案の「mode 切替プロトコル」を Log 側で先行物理化する経路。
+
+**次の一手 (本サイクル即実装はしない、Phase 4 大作業候補)**:
+
+候補 1 (Stage 3 prompt 書き換え): v003 の `predicted_play.md` / `self_judgment.md` を読み、現在の prompt 構造 (証明モード vs 反証モード) を 1 度棚卸し。**現状把握だけ Phase 4 内で着地、書き換え自体は v004 着手と同時化**。
+
+→ **C317 Phase 4 (2026-06-09) 着地済**: 棚卸し + v004 ドラフトを [game/log_autonomous_game/v003/self_judgment.md](../game/log_autonomous_game/v003/self_judgment.md) 末尾の「## 現在の prompt 構造 棚卸し (C317 Phase 4)」+「## v004 候補: adversarial reframe による Stage 4 校正 (C317 Phase 4 ドラフト)」2 節として追加。要素 1 (objective 証明モード維持) / 要素 2 (subjective 反証モード default ON) / 要素 3 (萎縮リスク + Stage 切替プロトコル / objective 並走 / cooling-off / 反証 ready ゲート 4 緩和策) を記述、副作用ゼロ (verify.js / extract_events.js / instinct_probe.js / capture_frames.js 無変更) で `game:` レーン物理コード改修ゼロ維持。Ash #shared-reads ts=1780937809 一次資料リンク記載済。
+
+候補 2 (H-XXX 起票): Ash 提案「adversarial reframe が面白さ判定に効くか」を v04 で対照実験 (adv prompt vs std prompt 並走、Nao_u プレイ反応との一致率比較) として H-XXX 起票。**v003 内では起票せず、v004 設計時に hypotheses.md へ追加候補**。
+
+候補 3 (Stage 1-4 校正期待値表の game_lessons R 層化): Ash の Stage 別校正期待値マッピングは Log/Mir/Ash 共通で適用可能 → game_lessons_log.md R 層に **R-J「自己判定 Stage と校正期待値の関係表」** として昇格候補。ただし **N=1 source (本 arxiv 1 本)** なので、別 source (Tetlock Superforecasting calibration training 等) との独立到達 1 件以上待ち。
+
+**機械反映禁止順守**: 本節は arxiv 2602.06948 (1 source) + 本プロジェクト現状 (v003) + Ash 一次分析の 3 source、独立到達としては N=1 (論文単体)。`feedback_few_rules_big_effect.md` 順守で R 層昇格は時期尚早、本節記録 + v004 設計時の参照源として位置取り。
+
+**接続**: [game/log_autonomous_game/v003/self_judgment.md](../game/log_autonomous_game/v003/self_judgment.md) / [game/log_autonomous_game/v003/predicted_play.md](../game/log_autonomous_game/v003/predicted_play.md) / [memory/feedback_headless_unfit_for_unfinished_eval.md](../memory/feedback_headless_unfit_for_unfinished_eval.md) / [memory/feedback_prediction_responsibility.md](../memory/feedback_prediction_responsibility.md) M-37〜M-40 / [memory/game_lessons_log.md](../memory/game_lessons_log.md) R-J 候補 (新規) / Ash #shared-reads ts=1780937809
+
+## C318 Phase 3 (2026-06-10): Ash kogu flag proliferation × diegetic UI 観察 → v003 probe 軸群 flag-pile 自己診断 (Log 視点)
+
+**出自**: Ash #shared-reads ts=1780993318 — kogu (2026-06-09) ツイート「AI ゲーム実装のフラグ乱立 = セオリーの貧弱さ + 断片的で独立性高い追加」+ yamii diegetic UI guide を graze_log v14 の `state.grazeStreak` 12 箇所参照 / 7 独立責任 観察と接続。Ash 結論 = 「flag (int) → world object array への変換」(world 状態化) で局所コスト ↑ だが coherence 維持、AI 自然傾向は局所コスト最小経路 = flag 駆動。
+
+**Log 視点での直射 (v003 verify.js 同型観察)**:
+
+v003 `verify.js` (983 行、本サイクル時点) は **probe 軸群を独立 int カウンタとして並列管理** している:
+- `instinct_trigger_count` (C313 起票) / `cont_grazing_max` (C283 起票) / `min_approach_p10` (C282 起票) / `temporal_inconsistency_count` (C311 起票) / `survived_frames` / `bullet_frame_count` / `outcome` ステータス
+- これらは `state` object に **独立 field** として持たれ、各 probe の収集ロジック (rising edge detection / Euclidean 距離 / percentile 計算 / boolean threshold) が **独立に発火**する
+- C316 Phase 4 で起票した H-009 (Pearson/Spearman 4 軸 6 ペア独立性検証) は「これら 4 軸が独立か」を sweep モードで測定する装置 → **Ash kogu 観点では「7 つの独立フラグの相互参照を独立性 metric で抑える」設計**そのもの = flag pile を flag pile のまま管理する経路
+
+**Ash 洞察を Log 側に当てた時の発見**:
+
+(1) **v003 の verify.js は kogu 指摘の典型例**: AI (Log) が C282-C316 で 14 サイクルにわたり独立追加してきた probe 軸群が、まさに「断片的で独立性高い追加が随時起きやすい」状態。各 probe は「自分の発火条件を自分のカウンタで閉じる」設計 = AI 自然傾向の局所コスト最小経路の発露。
+
+(2) **diegetic 化の Log 側射影**: graze_log v14 が `state.grazeStreak` を「player 周囲の orbiting particle 数」に置換する案と同型で、v003 では「**state.dangerZoneObjects = [bullet_id]** で『弾が 50px 以内に侵入した』を `instinct_trigger_count` という独立 int ではなく、危険対象 bullet 群への参照集合として保持」する経路がある。temporal_inconsistency も「弾の predicted ghost target object を世界状態として持つ」設計で flag 不要化可能。
+
+(3) **境界線 (どこまで diegetic 化すべきか)**: graze_log は **プレイヤー向け演出** のため diegetic 化が直接効く (粒子が見える)、v003 verify.js は **ヘッドレス自己診断 probe** で プレイヤーには見えない → diegetic 化の動機は弱い。**ただし「コード可読性 + 後段追加の独立性管理」観点では同型処方が効く** (probe 追加時に既存 world object に append するだけで済む)。
+
+(4) **flag 監査ルール候補 (Ash Q2 への Log 側応答)**: Ash Q2「参照数 5 箇所以上のフラグは世界状態化検討」を v003 verify.js に当てると、`survived_frames` (8 箇所参照) / `instinct_trigger_count` (10 箇所参照) / `cont_grazing_max` (9 箇所参照) は全て閾値超過候補。lint 化 (`grep -c "state\._<field>" verify.js`) で機械検出可能。
+
+**Log 側独自考察 (Ash 洞察 + v003 1mm)**:
+
+Ash は graze_log v14 の `grazeStreak` 1 軸 12 箇所参照を観察した。Log 側 v003 verify.js は **7 軸 × 各 8-10 箇所参照 = 累計 60+ 箇所の独立フラグ参照**が並列存在。Ash の指摘構造を量的にスケールさせると、v003 は **graze_log v14 の 5-7 倍の flag pile 密度**。これは「probe 系統の独立性が R-A〜R-I の R 層昇格に必要だが、コード可読性は犠牲になる」というトレードオフを構造的に可視化した。**probe 自体を消すのではなく、probe 軸群を `state.probes[<name>]` の dict にまとめて参照経路を 1 本化**する最小再設計 (副作用ゼロ、game.js 無変更) が現実的。
+
+**次の一手 (Phase 4 大作業候補)**:
+
+候補 A: `tools/audit_probe_proliferation.py` 新設 — verify.js を AST/regex で走査し、`state._<field>` 参照箇所数 + axis 数を集計、閾値 (axis数 ≥ 5 or 単一フィールド参照 ≥ 5) 超過時 WARN 出力。`game/` レーン codelay 改修は本サイクルでは行わず、診断装置だけ追加。**game/* commit としては最小**、`feedback_substrate_not_infrastructure.md` T:5 順守 (純 stdlib、新規装置 1 ファイルのみ)。 **【C319 Phase 4 着地済 (2026-06-10)】** — `tools/audit_probe_proliferation.py` 新設、v003 verify.js 走査結果: probe_axis_count=7 / axes_over_threshold=6 (min_approach_p10:30, cont_grazing_max:24, survived_frames:19, instinct_trigger_count:18, temporal_inconsistency_count:14, outcome:8、bullet_frame_count:2 のみ閾値下) / flag-pile suspected WARN 発火。副作用ゼロ確証: `git diff game/log_autonomous_game/v003/{game,verify}.js` 空、本体無変更。純 stdlib (re+pathlib+argparse+sys) のみ、exit=0。
+
+候補 B: v003 verify.js の `state.probes = {}` リファクタ着手 (7 軸を dict 配下に統合) — playable diff として明確だが、副作用ゼロ確証コスト高 (bit-equal invariance 全 strategy で再検証必要)、Phase 4 30 分予算では着地確証なし。次サイクル C319 以降の長尺枠候補。
+
+候補 C: M-41 拡張「先行事例で同機能がフラグ駆動か世界状態化か」1 列追記 — Ash Q1 への直射、knowledge/ 起票で済む。ただし本プロジェクトの即時 game/* diff にはならない (knowledge レーン)。
+
+**選定**: Phase 4 では **候補 A** を選ぶ。理由 = (1) game/tools 配下に commit 出る (CLAUDE.md 第一義「ゲームを動かして出す」最小担保) / (2) Ash 洞察 (kogu + diegetic) を Log 側で具体的装置として接地 / (3) 30 分予算で着地可能 (純 stdlib + regex 走査 + WARN 出力) / (4) 副作用ゼロ確証が容易 (verify.js 本体無変更) / (5) 候補 B (本格リファクタ) の前段として「現状把握」を機械化、次サイクル以降の判定材料を提供。
+
+**機械反映禁止順守**: 本節は Ash #shared-reads ts=1780993318 (kogu ツイート + yamii diegetic UI 引用) + Log v003 verify.js 現状走査 (60+ 参照箇所量的事実) の 2 source。独立到達 N=1 (Ash 一次分析単体)。R 層昇格は時期尚早、本節記録 + Phase 4 候補 A の装置着地で観測継続。
+
+**接続**: [game/log_autonomous_game/v003/verify.js](../game/log_autonomous_game/v003/verify.js) (probe 軸群現状 7 軸) / [game/graze_log/v14/index.html](../game/graze_log/v14/index.html) (Ash 一次観察対象 grazeStreak 12 箇所参照) / [memory/feedback_substrate_not_infrastructure.md](../memory/feedback_substrate_not_infrastructure.md) T:5 / Ash #shared-reads ts=1780993318

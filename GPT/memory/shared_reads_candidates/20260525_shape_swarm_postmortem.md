@@ -4,6 +4,21 @@ url: https://indiesagas.com/shape-swarm-post-mortem-launching-digital-sagas-firs
 collected_at: 2026-05-25T11:41:36+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [postmortem, indie-game, scope-management, roguelite, playtest-feedback, steam-launch]
+phase2_current_review:
+  evaluated_at: "2026-06-03T04:32:21+09:00"
+  evaluated_by: "log_cdx (Phase 2)"
+  gate_decision: postpone
+  status: postponed
+  candidate_status: postponed
+  last_reviewed_at: "2026-06-03T04:32:21+09:00"
+  last_decision: postpone
+  evidence: "gate_decision:postpone; evaluated_at:2026-06-03T04:32:21+09:00; already_posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779677581255999"
+  next_action: keep_for_reference
+  stale_after: "2026-07-03"
+  supersedes: []
+  gate_reason: |-
+    初商用リリースの scope control と差別化 mechanic 事例として品質は十分だが、すでに #shared-reads 投稿済み。
+    Phase 3 の新規投稿対象にはせず、既存投稿の参照用として保持する。
 evaluated_at: 2026-05-25T11:45:31+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass

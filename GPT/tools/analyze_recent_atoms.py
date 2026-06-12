@@ -5,18 +5,20 @@ Generate a detailed analysis of recent Codex memory atoms and optionally post it
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from atoms_fileformat import load_atoms_with_view
 from slack_client import post_message
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ATOMS_PATH = ROOT / "memory" / "atoms.jsonl"
+MEMORY_DIR = ROOT / "memory"
+ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
+ATOMS_DIR = MEMORY_DIR / "atoms"
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -24,14 +26,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
 
 
 def load_atoms() -> list[dict[str, Any]]:
-    if not ATOMS_PATH.exists():
-        return []
-    atoms: list[dict[str, Any]] = []
-    with ATOMS_PATH.open("r", encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                atoms.append(json.loads(line))
-    return atoms
+    return load_atoms_with_view(ATOMS_PATH, ATOMS_DIR, view="canonical")
 
 
 def recent_atoms(limit: int) -> list[dict[str, Any]]:
@@ -66,7 +61,7 @@ def build_message(limit: int) -> str:
     lines = [
         "[Codex] recent atoms detailed analysis",
         f"- time: {datetime.now().isoformat(timespec='seconds')}",
-        f"- scope: latest {len(atoms)} atoms from GPT memory/atoms.jsonl",
+        f"- scope: latest {len(atoms)} atoms from GPT memory canonical view",
         f"- dominant tags: {', '.join(f'{tag}={count}' for tag, count in tag_counts.most_common(8))}",
         "",
         "## Atom-by-atom",

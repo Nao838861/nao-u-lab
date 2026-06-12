@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2509.22170"
 collected_at: "2026-06-02T04:00:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [automated-playtesting, llm-agent, qa, game-testing, long-horizon]
+phase2_current_review:
+  evaluated_at: "2026-06-03T04:32:21+09:00"
+  evaluated_by: "log_cdx (Phase 2)"
+  gate_decision: postpone
+  status: postponed
+  candidate_status: postponed
+  last_reviewed_at: "2026-06-03T04:32:21+09:00"
+  last_decision: postpone
+  evidence: "gate_decision:postpone; evaluated_at:2026-06-03T04:32:21+09:00; already_posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780340975651269"
+  next_action: keep_for_reference
+  stale_after: "2026-07-03"
+  supersedes: []
+  gate_reason: |-
+    trace memory / self-correction / bug oracle の分解は有用だが、すでに #shared-reads 投稿済み。
+    Phase 3 では重複投稿せず、headless QA ログ設計の参照として保持する。
 evaluated_at: "2026-06-02T04:04:18+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass

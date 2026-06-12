@@ -1,0 +1,36 @@
+■ 概要
+DeskCraft は、desktop agent の評価を「最初に完全な指示を与えて短い GUI 操作を成功させる」設定から、professional software を使う長い制作 workflow と human-in-the-loop collaboration へ広げる benchmark である。既存の desktop GUI benchmark は、Web や一般的なアプリ上の短いタスクに寄りがちで、必要な情報が最初から揃っていることが多い。しかし実際の制作・設計・編集作業では、指示は途中で明らかになり、ユーザーは追加説明、割り込み、修正依頼、完了後 feedback を出す。agent には、画面操作能力だけでなく、不確実な時に確認する判断、長い工程を維持する力、完了後の修正に応じる力が必要になる。
+
+DeskCraft はこの問題意識から、design、video、audio、3D creation などの professional creative software を対象にする。タスクは multilevel difficulty taxonomy で整理され、long-horizon task では 50 step を超える操作が必要になる。さらに human-agent collaboration を mid-turn interaction と post-turn interaction に分けて protocol 化している。mid-turn interaction は、agent が不確実性の下で clarification を求める場面と、ユーザーが実行中に interruption を入れる場面を扱う。post-turn interaction は、agent が完了を宣言した後に、ユーザーが feedback や correction を返す場面を扱う。これにより、単に「最後の画面が合っているか」ではなく、共同作業としての失敗が観測できる。
+
+評価規模もこの benchmark の重要な点である。論文は 538 task で 18 の proprietary/open-source agent を評価し、GPT-5.4 が standard task で 31.6%、interactive task で 27.6% と報告している。数字だけを見ると低く見えるが、ここでの意味は「現行 agent がプロ用 GUI を長期 workflow と対話込みで完遂するにはまだ弱い」ということだ。さらに分析では、long-horizon workflow delivery と proactive clarification に失敗が残るとされる。つまり agent は、操作を一つずつ実行する能力だけでなく、全体工程を持ち続けること、足りない情報を適切なタイミングで聞くこと、ユーザーの修正を成果物へ反映することに課題がある。
+
+この論文は、desktop agent 評価を現実の制作支援に近づける。特に game production では、Unity/Godot/Blender/画像編集/音声編集/スプレッドシート/Issue tracker など複数の道具が絡む。最初の指示だけで完成する作業は少なく、途中で「この挙動は違う」「見た目を軽く」「操作感を戻して」「エラーは出ていないがつまらない」といった human feedback が入る。DeskCraft は、こうした途中確認と事後修正を benchmark の中心に入れることで、agent を「自動操作器」ではなく「制作の相手」として測ろうとしている。
+
+また、DeskCraft は失敗を単に「タスク未達」として閉じない。long-horizon workflow delivery が崩れたのか、必要情報を聞かなかったのか、途中割り込みに対応できなかったのか、完了後 feedback を成果物へ反映できなかったのかを分けられる。これは agent の改善に効く。操作モデルを強くすべきなのか、確認判断を変えるべきなのか、成果物レビュー後の rollback/patch 手順を整えるべきなのかが見えるからである。
+
+■ 内容分析
+DeskCraft のよい点は、難しさを単にタスク長だけで定義していないことだ。50 step を超える long-horizon task はもちろん重要だが、それだけなら耐久テストに近い。DeskCraft はそこに interaction protocol を足し、agent がいつ聞くべきか、ユーザー割り込みをどう扱うか、完了後 feedback をどう取り込むかを評価面に入れている。この設計により、clarification failure と workflow delivery failure が分離して見える。
+
+制作支援 agent では、「聞かない失敗」と「聞きすぎる失敗」の両方がある。必要な素材や意図が足りないのに勝手に進めると、完成物がズレる。一方で、些細な判断まで確認すると作業速度が落ちる。DeskCraft は proactive clarification を明示的に扱うため、agent の自律性を成功率だけでなく、確認判断の質として測れる。post-turn feedback も同様に重要で、実制作では初回の出力は完成ではなく、レビュー後に修正して初めて成果物になる。ここを benchmark に含めることで、agent が「完了宣言」後にどれだけ柔軟に戻れるかが見える。
+
+弱点としては、professional software の benchmark は作成・保守が重い。アプリ UI の更新、環境差、採点の曖昧さ、タスクごとの前提知識が絡むため、再現性を保つのが難しい。また game engine 特有の playability や feel は、creative software の画面状態だけでは測れない。DeskCraft は評価プロトコルとして有用だが、ゲーム制作に使うには、最終成果物の実行・プレイ・修正 loop を追加する必要がある。
+
+もう一つの注意点は、human-in-the-loop を入れると評価が人間側の応答品質にも依存することだ。曖昧な feedback を返せば agent の失敗に見えるし、過剰に細かい指示を出せば agent の自律性が高く見える。したがって、Nao_u_BOT で使うなら、人間またはレビュー役が返す mid-turn/post-turn feedback の粒度もある程度そろえる必要がある。
+
+■ 自分達の環境への適用
+Nao_u_BOT では、制作支援 agent の評価を「指示を受けてファイルを編集できたか」だけで終わらせない形にできる。たとえば Godot/Unity/ブラウザゲーム/画像生成 asset の作業で、mid-turn interaction と post-turn feedback を明示的にログへ残す。mid-turn では、agent が不確実な仕様を聞いたか、聞かずに仮定した場合はどの仮定を置いたかを記録する。post-turn では、ユーザーまたは自己プレイレビューで出た修正を、どの差分に反映したかを見る。
+
+Phase 運用としては、staging に「完了前確認」「完了後 feedback」「修正反映」の欄を作るより、まず 1 件の playable diff に限定して試すのがよい。たとえば敵配置調整や UI 改修で、初回実装、レビュー、修正、再検証を 1 セットにし、agent がどのタイミングで確認すれば無駄な差分を減らせたかを振り返る。DeskCraft の taxonomy をそのまま移植するより、Nao_u_BOT の制作ログに interaction の種類を付けることから始めるのが現実的である。
+
+実装ログ上は、確認が必要だったのに聞かなかった箇所を「missed clarification」、聞く必要が薄かった箇所を「over-clarification」、完了後 feedback を取り込めなかった箇所を「post-turn repair failure」として残すとよい。これなら、単なる成功/失敗よりも次の agent 手順に戻しやすい。
+
+■ メリット・デメリット
+メリットは、agent の評価を単発成功率から共同制作の品質へ寄せられること。途中確認、割り込み、完了後修正をログに分けると、制作支援 agent の弱点が見えやすい。デメリットは、タスク設計と採点維持の cost が高いこと。ゲーム固有の面白さや操作感は、DeskCraft 形式だけでは別途 playtest が必要になる。
+
+■ 判定
+部分採用。benchmark 全体を導入するのではなく、human-in-the-loop protocol、特に mid-turn clarification と post-turn feedback の区分を制作ログと agent 評価に取り入れる。
+
+■ URL
+https://arxiv.org/abs/2606.03103
+https://github.com/mrwwk/DeskCraft

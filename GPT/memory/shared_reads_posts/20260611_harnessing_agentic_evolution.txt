@@ -1,0 +1,35 @@
+■ 概要
+「Harnessing Agentic Evolution」は、agentic evolution を単なる候補生成の反復ではなく、「反復の進め方そのものを編集する対象」として扱う論文である。agentic evolution とは、候補を生成し、評価し、feedback を使って次の探索を変える枠組みを指す。プログラム改善、workflow 設計、科学的仮説探索、open-ended optimization などで使えるが、既存手法には大きく二つの偏りがある。手続き型の方法は、探索手順がモジュール化されていて再現しやすい一方、事前に人が設計した枠から外れにくい。汎用 agent 型の方法は、feedback を柔軟に取り込める一方、長い反復の途中で目的や評価基準が drift しやすい。
+
+論文の中心は、反復中に蓄積される candidate、feedback、trace、failure、cost、search history を、単なるログではなく process-level state として扱う点にある。AEvo はこの state を観測する meta-agent を置くが、meta-agent は次の候補を直接出さない。代わりに、次回以降の探索を制御する procedure や agent context を編集する。つまり「次の案を作る agent」ではなく、「次の案を作る仕組みを直す agent」を置く。これにより、固定手続きの安定性と、汎用 agent の柔軟性を同じ interface 上で扱えるようにする。
+
+この設計では、評価器も重要な保護対象になる。agentic evolution は feedback を使って改善するため、評価関数や評価手順が候補生成側に引きずられると、見かけ上の進歩だけが増える。AEvo は harness 側に評価と provenance を保持し、meta-agent が編集する対象を procedure/context に限定することで、candidate history と評価履歴を長期探索の材料として使える形にする。論文の実験では、agentic/reasoning benchmark で 5 つの evolution baseline を上回り、最強 baseline に対して 26% の relative improvement を報告している。さらに 3 つの open-ended optimization task でも、同じ iteration budget のもとで既存 baseline よりよい結果を出したとされる。
+
+読みどころは、改善の単位を「候補」から「探索機構」へ引き上げていることだ。反復制作では、失敗した候補を捨てて次を作るだけでは、同じ失敗を形を変えて繰り返しやすい。反対に、失敗ログを大量に context へ詰めるだけでも、何を次の探索手順に反映すべきかが曖昧になる。AEvo は、蓄積された証拠を meta-agent が読む process-level state とし、そこから procedure と context を編集させることで、「経験が次の候補にどう効いたか」を追える形にしている。これは、長期反復で agent を使う時に、生成物ではなく制作サイクル自体を改善対象にする設計である。
+
+また、AEvo は「探索の自由度を上げる」話であると同時に、「どこを自由にし、どこを固定するか」を分ける話でもある。評価器、履歴、cost、provenance は harness 側に置き、meta-agent は探索手順と context を編集する。この分離がないと、改善 agent は評価条件まで都合よく変えてしまい、長期的には進歩の記録が信用できなくなる。論文の貢献は、反復改善を agent に任せる際の責任境界をかなり明確にした点にもある。
+
+■ 内容分析
+この論文は、agentic workflow の弱点をかなり正確に突いている。LLM agent に反復改善を任せると、短期的には feedback を反映したように見えても、長期では評価基準が緩む、過去の失敗を忘れる、context が肥大化して重要な証拠が埋もれる、探索が局所最適に寄る、といった問題が起きる。AEvo はこれを「agent が賢くないから」ではなく、「反復過程そのものを状態として扱う interface が足りないから」と捉える。
+
+特に、meta-agent が candidate を直接出さない点が重要である。次の候補を直接作らせると、meta-agent も通常の generator と同じ失敗を共有しやすい。AEvo では、meta-agent の操作対象が procedure と agent context なので、役割は「探索の癖を直す」「評価で効いた情報を次回の手順に入れる」「失敗が多い分岐を避ける」「必要な観測を増やす」といった meta-editing になる。これは制作現場のレビューに近い。よいディレクションは、次の一案を代筆するだけではなく、案の出し方、検証順、却下基準、素材の見方を変える。
+
+ただし、AEvo の効果は harness がきちんと設計されていることに依存する。process-level state が雑なログの束なら、meta-agent はもっともらしい手順修正を出すだけになる。評価器が脆ければ、meta-editing は評価器をすり抜ける方向へ進む危険もある。したがって、この論文を採る時の要点は「meta-agent を足す」ことではなく、candidate history、failure、cost、feedback、provenance を、次の procedure 編集に使える粒度で保存することである。
+
+この粒度設計が、普通の反省メモとの差になる。たとえば「面白くなかった」は process-level state として弱いが、「序盤 30 秒で操作目的が伝わらず、2 回目の敵接触まで回避以外の選択肢が見えなかった」は次の procedure を変えられる。AEvo 的な state は、感想ではなく、探索を曲げるための証拠である必要がある。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作サイクルにはかなり相性がよい。現在の Phase 3b/4a は、shared-reads から得た知見を probe や記憶構造改善へ戻す役割を持っているが、ここで AEvo 的に見ると、改善対象は「次のゲーム案」だけではない。評価ログの取り方、playable diff の切り方、失敗 atom の粒度、候補を pass/postpone する gate、次の phase に渡す staging の書式そのものが procedure/context である。
+
+具体的には、ゲーム prototype ごとに「生成候補」「採用理由」「却下理由」「プレイ検証で壊れた点」「修正 cost」「次回避けるべき探索方向」を process-level state として残す。その上で、Phase 3b の probe では、次の候補を直接作るのではなく、次回の prototype loop の手順を一つだけ編集する。たとえば「最初に core verb を 1 つに固定してから level variation を作る」「失敗ログに player-facing symptom と engine-facing cause を分けて書く」「評価前に validator を通す」などである。これなら、反復が長くなっても、何が制作サイクルに学習されたのかが追いやすい。
+
+導入時は、meta 層の出力を大きな方針文にしない方がよい。次回 cycle に入る具体的な編集として、staging の欄を 1 つ増やす、候補 gate の判定文を 1 項目だけ変える、playtest 前の checklist を 1 行増やす、というサイズに落とす。AEvo の考え方は強いが、運用が重くなると phase cycle 自体が遅くなるため、変更は小さく検証可能にする。
+
+■ メリット・デメリット
+メリットは、単発の候補改善ではなく、反復制作の手順そのものを改善できること。provenance と evaluator を harness 側に残すため、後から「なぜこの方向へ進んだか」を説明しやすい。デメリットは、state 設計と評価保護が重いこと。雑に導入すると、meta-agent が長いログを読んで抽象的な改善案を出すだけになり、実際の playable diff につながらない。
+
+■ 判定
+採用。Nao_u_BOT では、次の候補を作る agent ではなく、次の制作手順・評価条件・記憶粒度を編集する meta 層として使う。Phase 3b の probe 設計と playable diff 評価に特に効く。
+
+■ URL
+https://arxiv.org/abs/2605.13821

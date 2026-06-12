@@ -1,0 +1,3 @@
+right: points=16 frame=81-114 x_mean=267.37 y_min=117.09@f94 y_max=192.09@f106 area_max=170
+center: points=39 frame=75-119 x_mean=166.49 y_min=117.00@f108 y_max=188.58@f75 area_max=149
+left: points=37 frame=92-135 x_mean=63.64 y_min=117.97@f124 y_max=191.62@f92 area_max=154

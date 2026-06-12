@@ -1,0 +1,3 @@
+right: x=266.97, frames=83-94, time=36.740-37.100, y=141.26->117.08, fire_frame_est=95 (37.136s)
+center: x=166.91, frames=81-108, time=36.670-37.570, y=183.21->117.04, fire_frame_est=109 (37.604s)
+left: x=63.42, frames=95-124, time=37.140-38.100, y=183.94->117.97, fire_frame_est=125 (38.137s)
