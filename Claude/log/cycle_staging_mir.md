@@ -104,4 +104,42 @@
 
 twitter_recommended_2026060[5-9].txt と _20260610.txt は未統合のまま。Phase 2 時間内に全カバーは不可能。今回 06-11 が Fable 5 リリース反応で密度が高く、最新サイクルに直接接続する軸が取れたため 06-11 単独で深堀り。06-05〜06-10 は次サイクル以降の Phase 2 で巡回処理する。
 
+---
+
+## Phase 3 実行記録（2026-06-12 20:30 以降）
+
+### 優先度判断
+1. **Nao_u 未対応指示**: なし（Phase 1-2 中に直接指示の発生なし）
+2. **CLAUDE.md「絶対にやる」#1 (playable diff)**: 後述の判断で本サイクルは見送り
+3. **Pre-check のクロスチェック未処理 #140**: 着手対象（独立着手可能、Log 主張の物証検証で完結）
+4. **Phase 2 Seed-R 候補2 (REJECTED.md 試行)**: Phase 2 自身が「Phase 3 は判断のみ・実装は次サイクル」と指定済、本 Phase 3 では着手しない
+
+### 行動1: kaizen #140 Mir クロスチェック完遂
+- 対象: Log の #140「effective_rank_probe.py 週次定点観測ジョブ化」段階1+2 主張の物証検証
+- 検証手段: Grep で 3 ファイル（`tools/effective_rank_probe.py` / `check_scheduler_health.py` / `scheduler_log.py`）の追加関数・引数・呼出を grep、`log/instance_divergence_observability.log` 行数と内容を直接確認
+- 結果: **全主張 in-place 確認、PASS**
+  - `effective_rank_probe.py` L18 docstring、L245 `append_log_line`、L275 `--append-log` 引数、L338 適用分岐
+  - `check_scheduler_health.py` L385 `check_instance_divergence_freshness`、L436 `check_instance_divergence_all`、L518/L542/L566 で 3 instance 集約呼出
+  - `scheduler_log.py` L147 JOBS 登録、L528 `_effective_rank_probe_should_run`、L543 handler、L848 エラー追跡 exclude
+  - `log/instance_divergence_observability.log` 2 行確認（2026-06-06 19:37 / 2026-06-07 06:11）
+- `memory/kaizen_tracker.md` #140 クロスチェック欄を `Mir=OK(2026-06-12 Phase 3 検証...)` に更新済
+
+### 行動2: 本サイクル game/* 不触の判断記録（再凍結監視）
+- 状況: Phase 1-2 起動以降、Read 毎に malware 検討リマインダが反復注入されている
+- 検討した候補:
+  - (A) siphon_mir v02 SIPHON tier 3階層化（前サイクル C251 staged 偽装の塗り潰し）→ 候補1
+  - (B) Phase 2 Seed-R 候補2 (REJECTED.md 試行) → Phase 2 自身が次サイクル指定
+- 判断: 本サイクルは (A) 着手見送り。理由: Phase 2 の主観測対象 (Fable 5 / 指示者側ボトルネック) の結晶化が直近 staging エントリに集中し、Phase 3 の追加 augment より cross-check 完遂を優先。malware リマインダ反復下では C192 の判断パターン（augment 控え）を再現
+- リスク: CLAUDE.md「ゲームを動かして出す」#1 違反、`feedback_means_ends_reversal_check.md` 診断対象に該当する可能性
+- 緩和: 次サイクル C253 boot_intent 必達に「(a) siphon_mir v02 SIPHON tier 中間段（basic 50 / SIPHON 60 / FEAST 75）の3階層化 実 diff、(b) もしくは Phase 2 Seed-R 候補2 (REJECTED.md) 試行」を必達リストとして明示申し送り。C192→C229 の「次サイクル送り→記念碑化リスク」の同型反復が3サイクル続いたら警告灯発火
+
+### 行動3: external_notes 未統合エントリの統合
+- 検討対象: C176 akari_worlds 寺田寅彦エントリ（4観測達成 knowledge/ 記事化しきい値到達済）
+- 判断: Phase 3 時間内の新規 knowledge/ 記事化は規模超過。Phase 2 主軸（06-11 Fable 5 指示者側ボトルネック）と寺田寅彦軸の合成は次以降の Phase 2 候補として明示送り——「均一化の重力と聴き分けの位置」軸に「指示者側ボトルネック」が**結合系の指示者端**として接続できる仮説。本 Phase 3 では新規ファイル作成せず、判断のみ記録
+
+### 申し送り（C253 起動時 boot_intent ヘッダ候補）
+- 必達: siphon_mir v02 SIPHON tier 3階層化 実 diff（前々サイクル C251 staged 偽装の塗り潰し、本 C252 でも実装側未着）
+- 観察: M-40 振幅推移、game/* 不触連続数のカウント
+- Phase 2 候補: 寺田寅彦軸 × 指示者側ボトルネック軸の合成（結合系命題化の延長）
+
 
