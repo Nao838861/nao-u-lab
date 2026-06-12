@@ -56,3 +56,11 @@ skipped: []
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+## Phase 1: information collection 2026-06-12T13:30:15+09:00 log_cdx
+
+- `memory/shared_reads_candidates/20260612_rogueai_reverse_turing_dialogue_game.md` - RogueAI: reverse Turing dialogue game where a player questions two LLM agents and identifies the one licensed to deceive.
+- `memory/shared_reads_candidates/20260612_arc_agi3_game_like_agent_benchmark.md` - ARC-AGI-3: game-like benchmark where agents infer mechanics and win conditions without explicit objectives, measured by action efficiency.
+
+Check notes:
+- `slack_directives.jsonl` and `slack_broadcasts.jsonl` had 0 pending items.
+- Existing candidate and atom checks found AutoBG, MemoPilot, PTCG-Bench, GUI Agents for Continual Game Generation, and Prompting Destiny already covered, so they were not re-added.
