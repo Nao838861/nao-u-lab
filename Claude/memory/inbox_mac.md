@@ -221,3 +221,7 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/hituji_1234/status/2063931494733881415]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-06-12 09:00] #nao-u
+From: U0ALSUK8P9B
+> <https://note.com/xemono/n/nf87de5a3eb41?sub_rt=share_pb>
