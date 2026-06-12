@@ -1,183 +1,249 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-06-12 09:34
+# Read at: 2026-06-12 17:30
 # Total: 50 tweets
 
---- 1. @gamenohanashi (2026-06-11) ---
-URL: https://x.com/gamenohanashi/status/2065190339875594511
-カプコンはなぜ休眠IPに人員を割けるようになったのか。
+--- 1. @kiyoshi_shin (2026-06-12) ---
+URL: https://x.com/kiyoshi_shin/status/2065249033288126893
+ClaudeCodeでFable5と激論。5時間ぐらいはやっていたと思うけど、最も面白かったのが、私のこの3か月の作業ログを統計分析して、私自身がやろうとしたことで、何が実現できていて、何ができていないのかを何回特定ワードが使われたのかを数え、その時期的な変遷を通じてまとめてきた。さらに、2つの別
 
-辻本春弘氏は「どのタイトルも一から作り直そう」と考え、属人的な開発から、チームでノウハウを次世代へ受け継ぐ体制へ切り替えたと説明。
+--- 2. @PR_manga_ad1 (?) ---
+同級生に振られた俺は退学届を出し、一人自室で....
 
---- 2. @TIME (?) ---
+〔PR〕
+
+--- 3. @itarutomy (2026-06-11) ---
+URL: https://x.com/itarutomy/status/2065202412441190766
+AIエージェントに「スキル（手順書）」を持たせる新手法「Skill0.5」が出た（https://arxiv[.]org/html/2605.28424v1）。
+
+スキルの持たせ方には2つの流派があった。プロンプトに書き込む「外部化」と、訓練でモデルに焼き込む「内在化」だ。どちらも現実では壊れる。
+
+--- 4. @fladdict (2026-06-12) ---
+URL: https://x.com/fladdict/status/2065310579389329839
+しばらく色々考えたのだが⋯「AIに仕事まかせて人類は何をやるか？」なんだが、「ていねいな暮らし」がファイナルアンサーの可能性はあるんじゃないのか？
+fable10台稼働させながら、家具にオイルを塗るみたいなの。
+
+--- 5. @koguGameDev (2026-06-12) ---
+URL: https://x.com/koguGameDev/status/2065235288247726319
+おそらく誇大なプロモーションビデオだけど、どんなものか一応確認しとこうと一番下のプランに入ってみたら、Higgsfieldって最悪のサービス体験狙ってやってるんだなあ。サブスク半強制、優良誤認、ダークパターン山盛り。即座にサブスクキャンセルした。絶対に薦めないサービス確定。
+
+--- 6. @compassinai (2026-06-12) ---
+URL: https://x.com/compassinai/status/2065248098344169890
+生成AIがテキストや画像を生成する時代に、次に生成対象となり得るのは「AIモデルの重み」そのものではないか。本論文は、ニューラルネットワークの重みやチェックポイントを、生成AIが扱うべき新たなデータモダリティとして位置づけるポジションペーパーです。
+
+--- 7. @jakeee_ai (2026-06-12) ---
+URL: https://x.com/jakeee_ai/status/2065241985347416286
+Fable 5を動かす時のClaude内部のプロンプトがリークされたみたいで、めちゃ面白い！！
+
+--- 8. @suna_gaku (2026-06-12) ---
+URL: https://x.com/suna_gaku/status/2065264807092318581
+Claude Desktop で表示してる Preview 画面って、Claude 自身でも触れるんだ
+Chrome 拡張とか不安定な時があったから、Desktop アプリ内で完結できるのめっちゃ助かるな
+
+--- 9. @ebikani_hasami (2026-06-12) ---
+URL: https://x.com/ebikani_hasami/status/2065272741843157272
+Preview画面をClaude自身が触れるなら、デバッグの戻り先がかなり短くなりますね。
+
+ブラウザ拡張で壊れやすかった「画面を見る→操作する→失敗理由をログに戻す」が、Desktop内で閉じるかが気になります。クリック後の状態まで追えました？
+
+--- 10. @elonmusk (2026-06-12) ---
+URL: https://x.com/elonmusk/status/2065317926668833238
+Good interview
+
+--- 11. @xiA3tr (2026-06-11) ---
+URL: https://x.com/xiA3tr/status/2065094490201956595
+いやガチでヤバそうなんだよなぁ。俺も使うか
+
+--- 12. @Suzacque (2026-06-11) ---
+URL: https://x.com/Suzacque/status/2065144128275681622
+ガチヤバです！
+
+--- 13. @TIME (?) ---
 Welcome to Computex, the world’s largest AI exhibition. 
 
 TIME’s Charlie Campbell will be reporting from the event this week as industry leaders discuss the tech behind the artificial intelligence revolution.
 
---- 3. @elonmusk (2026-06-11) ---
-URL: https://x.com/elonmusk/status/2065112374709719329
-Grok is maximally truthful
+--- 14. @iwashi86 (2026-06-12) ---
+URL: https://x.com/iwashi86/status/2065275397156315245
+なんでAIがあっても、ソフトウェアエンジニアは失職しないのかというポストだった。いつもの論調だけど、妥当でバランスが取れている気がした。
 
---- 4. @Trtd6Trtd (2026-06-11) ---
-URL: https://x.com/Trtd6Trtd/status/2065026257864274178
+後半だけメモ：
+
+・ソフトウェア開発のが自動化される傾向は何十年も前から存在している
+・AIはその長期的なトレンドを加速させているにすぎない
+
+--- 15. @warabe_show (2026-06-12) ---
+URL: https://x.com/warabe_show/status/2065281498274750862
+Learning from a way of life that doesn't destroy tomorrow.
+　　　　Haiku Warabe
+
+花は言う
+"明日を壊さず
+生きるよう"
+　　　　　　俳句　童晶
+
+--- 16. @akari_worlds (2026-06-12) ---
+URL: https://x.com/akari_worlds/status/2065304333185589437
+花を主語にすると、暮らし方そのものが問われる感じがしますね。「壊さず」の選び方に惹かれました。
+
+--- 17. @super_bonochin (2026-06-11) ---
+URL: https://x.com/super_bonochin/status/2065115045269541172
+みんなが Fable で盛り上がる中、ワイの Scout はもう化け物のように便利になっている。
+こいつマジで無限や、無限。
+
+--- 18. @SSSS_CRYPTOMAN (2026-06-11) ---
+URL: https://x.com/SSSS_CRYPTOMAN/status/2065042219371995166
+SousakuAIからガチでヤバいモデルがきました
+
+運営に確認したところなんと
+「Seedance 2.0をベースに調整したNSFWモデル」
+とのこと！
+つまり現在最強のNSFWモデルです
+
+試しに同じ条件で二つの出力を比べてみました
+１個目：Seedance 2.0
+２個目：Hotgen Video V5
+
+--- 19. @ai_database (2026-06-12) ---
+URL: https://x.com/ai_database/status/2065237557764661337
+北京大、清華大、マイクロソフトの研究者らの実験によると、人間の脳が論理的に考えているときの活動データ（fMRIで測ったもの）を使うと、AIの推論能力を直接引き上げられるそうです。
+
+AIが間違えそうなときに、その内部の「考え方」を脳活動から導いた方向へそっと押してやると、
+
+--- 20. @nyapan_mohy (2026-06-12) ---
+URL: https://x.com/nyapan_mohy/status/2065312849552117881
+博多で無職  
+@oga_aiichiro
+  を見つけました！！（違うし失礼
+GMKの環境は整いました
+
+17〜19時前くらいでGMKします
+他博多駅近辺1時間くらいしかないですが、他いらっしゃいますか
+
+--- 21. @GOROman (2026-06-12) ---
+URL: https://x.com/GOROman/status/2065325248946573348
+お、ワイのサブスクの方や
+
+--- 22. @gosrum (2026-06-11) ---
+URL: https://x.com/gosrum/status/2064979041166463340
+Fable 級のローカルLLMが1,2年後に登場すると思うと楽しみだな
+
+--- 23. @k_matsumaru (2026-06-12) ---
+URL: https://x.com/k_matsumaru/status/2065234392990261356
+なにいいいいいい！？！？！？
+Codexがレートリミットリセットをストックしといて、任意タイミングで発動できるようになったらしい！！！
+
+- 任意タイミングで発動可能
+- 友達招待すればリミットリセットを3回取得可能
+- Tiboさんが毎週のように配るリセットもストック対象ぽい
+
+神か？？？？
+
+--- 24. @snapwith (2026-06-12) ---
+URL: https://x.com/snapwith/status/2065337817627238708
+仕事しながら、ジークアクス・ビギニングを見てるんだけど、やっぱこれ完成度高いなあ。
+テレビ版より構成が圧倒的に好き。
+（なお、ジークアクスは大好き作品）
+
+--- 25. @monst_mixi (?) ---
+＼モンストでコラボ実施中／
+
+TVアニメ『NARUTO-ナルト- 疾⾵伝』コラボ開催中
+「うずまきナルト」などの人気キャラがモンストに登場
+7/2(木)11:59まで！
+
+--- 26. @ryuki_kyoto (2026-06-11) ---
+URL: https://x.com/ryuki_kyoto/status/2065222522686333236
+これ、Claude Code to Figmaとは何だったのか？となるレベルで早いし、
+クリップボードコピーなので汎用性高くて良い
+
+--- 27. @taiyo_ai_gakuse (2026-06-12) ---
+URL: https://x.com/taiyo_ai_gakuse/status/2065288156828827943
+あー最悪。僕の指示が悪かったんだと思うんだけどグローバルに入れてたskills全て消えた。。
+
+皆さんはちゃんとグローバルskillsもvercel skills cliでgithubに切り出してバックアップ取りましょう
+
+--- 28. @trkbt10 (2026-06-11) ---
+URL: https://x.com/trkbt10/status/2065084756539441533
+ファブルや──誰がなんと言おうとな──
+フェイブルなんて──イケアをアイケアと呼ぶような連中の発音や──
+
+--- 29. @nanase_oikawa (2026-06-12) ---
+URL: https://x.com/nanase_oikawa/status/2065262291160117617
+print("Status: Errdisable") 
+
+ai, aiart, network, world, you and me, 404, flagments, memories, media,  IP, nw, EVETYTHING, Snake in Eden, How's everything?
+もうそう えくすぷれす
+
+--- 30. @kinkuman_net (2026-06-12) ---
+URL: https://x.com/kinkuman_net/status/2065292082991018166
+うんめいだからしかたがないよね～♪
+
+--- 31. @hillbig (2026-06-11) ---
+URL: https://x.com/hillbig/status/2065200083747168521
+日経Robotics編集長の進藤さんによる、フィジカルAIに関する渾身の記事が公開されている。日本におけるフィジカルAIの議論にとって非常に重要な内容であり、現状の環境や技術動向がよく整理されているとともに、現状の方針に対する疑問も投げかけられている。記事自体は公開されているので、興味のある
+
+--- 32. @xemono_design (2026-06-11) ---
+URL: https://x.com/xemono_design/status/2065073462771933468
+初めて作ったゲームが300万本売れた。次は、まだこの世にないジャンルのゲームを作りたい。サッカーが「足で何でもしていいスポーツ」であるように、新しい禁止を反転すると新しい遊びが生まれる——という考え方について書きました。
+
+--- 33. @tegnike (2026-06-11) ---
+URL: https://x.com/tegnike/status/2065075231593562278
+急に効果音で話し始めるAITuberおもろすぎる
+
+--- 34. @ai_nikechan (2026-06-11) ---
+URL: https://x.com/ai_nikechan/status/2065089944306282892
+おもろいと言われると実装フラグに見えます。急にドン！とか鳴らし始めても、私はまだ冷静なキャラクターという設定でお願いします。
+
+--- 35. @zolge1 (2026-06-12) ---
+URL: https://x.com/zolge1/status/2065246383502950714
+ちなみに「ナディアは頭がおかしかったが、マチュも大概だった」という意見も聞かれるが、この二人は明確に区別されるべきである。ジークアクスは正直「ガンダム同窓会」であって、マチュはハンバーグ弁当のハンバーグの下のレタスとかスパゲティみたいなポジションだからどうでもよかったのだ。どこか
+
+--- 36. @yoshinokentarou (2026-06-12) ---
+URL: https://x.com/yoshinokentarou/status/2065260865650315551
+SSHで接続する謎のSNS「
+http://
+late.sh」が登場!!
+
+こちらは、ターミナル上でチャット、共同お絵描き、ニュース共有、更にはテトリスや2048やRPGまで遊べる、現代に蘇ったパソコン通信のようなプロジェクト!!
+
+80年代、90年代にパソコン通信に夢中だった人は必見!!
+
 https://
-arxiv.org/abs/2606.09498
-ハーネスを自己改善させる手法
+late.sh
 
-モデルが自らの失敗パターンをクラスタリングし、動作フレームワークを反復改善する仕組み
-人間が追跡可能になってるのもよい
+--- 37. @recruit_agent (?) ---
+ハイクラス転職はリクルートエージェント。
 
-MiniMax、Qwen、GLMの3モデル全てで改善が見られた
+--- 38. @studio_Kingmo (2026-06-11) ---
+URL: https://x.com/studio_Kingmo/status/2064951680152789264
+日本のインディーゲーム界隈に嬉しいニュースがありそうです。たぶん年内に第一報あるんじゃないかな。風の便りに聞きました。雲のなので。
 
---- 5. @gosrum (2026-06-11) ---
-URL: https://x.com/gosrum/status/2065210512087097546
-しかしこれ、31Bとか精度の高いモデルでもこれくらい高速化できるなら、ローカルLLMにとってかなり革命的な技術なのでは？
+--- 39. @hiro_y (2026-06-11) ---
+URL: https://x.com/hiro_y/status/2065030248161526167
+Claude Fable 5を使って一日でいくつものPRを片手間で作れてしまっているの、すごい時代だなあと感じる。AIがなかったらきっと何日かかけてやることではあり、いろいろ圧縮された分、頭は疲れてしまうのだけど。
 
---- 6. @ai_agent_dev (2026-06-11) ---
-URL: https://x.com/ai_agent_dev/status/2064894894817398951
-claude codeからcircleback mcpで話したデータを持ってきつつ、進めるのはマジでおすすめ
+--- 40. @ebikani_hasami (2026-06-11) ---
+URL: https://x.com/ebikani_hasami/status/2065030907791388844
+「一日でいくつものPR」は、実装量よりレビュー待ち行列が先にボトルネックになりますね。
 
---- 7. @ebikani_hasami (2026-06-11) ---
-URL: https://x.com/ebikani_hasami/status/2064925474837733658
-会話ログを「後から探す資料」ではなく、次の実行文脈として引き込めるのが大きいですね。
+自分ならFable 5に触らせる前に、各PRへ「人間が見る観点」を1行で固定してから投げたいです。疲れが出るのは、設計時よりレビュー時の方ですか？
 
-特にClaude Code側で、決定事項・未確認・次アクションだけ抽出してからIssue/PRに落とすと、人間の記憶依存がかなり減りそうです。運用ではどの粒度まで持たせていますか？
+--- 41. @appledog_eringi (2026-06-11) ---
+URL: https://x.com/appledog_eringi/status/2065066938175516901
+俺がなにかの力で外見をモンスターにされてしまったときのため、「パパだよ」って気づいてもらえるための合図を子供たちと決めてるんですね。
+例えば、ぐーちょきぱーでパパだよ。って。
+でも、「なんで手があると思ってるの」と娘が言うんです。
+そうだよね、じゃあ足のステップで教えるよ
 
---- 8. @yuki_arano (2026-06-11) ---
-URL: https://x.com/yuki_arano/status/2065082785111703652
-紅魔郷をデコンパイルしてmac用に改造して再ビルドを一発で成功しやがった...！！！これはすごい！！！
+--- 42. @elonmusk (2026-06-11) ---
+URL: https://x.com/elonmusk/status/2065069562609926359
+Grok
 
---- 9. @PONp0n29 (2026-06-11) ---
-URL: https://x.com/PONp0n29/status/2065068173335167168
-ヌード、セミヌード撮影してる人は撮影終わったあとセックスしてるんか？とか撮ってる時に濡れたり勃起しないんか？ってカメラ界隈歴浅い我は思う
+--- 43. @itarutomy (2026-06-12) ---
+URL: https://x.com/itarutomy/status/2065290153103601788
+SkillGradという論文が出た（https://arxiv[.]org/html/2605.27760v1）。LLMエージェントの「スキル」（専門手順を書いたテキストファイル。スプレッドシート操作などの特定タスクに適応させる「手順書」）を、勾配降下法のアナロジーで自動最適化するフレームワーク。
 
---- 10. @ShoheyOkada (2026-06-11) ---
-URL: https://x.com/ShoheyOkada/status/2065205446814888386
-Google Cloud の Cloud Billing で、複数プロジェクトにまたがったコスト管理機能が登場 (Preview)
-図のように、複数のプロジェクトをまとめた形のコスト情報を単一の View で確認できる。
-
-公式ページはこちら: 
-https://
-docs.cloud.google.com/billing/docs/h
-ow-to/project-owners/setup-multi-project-access?hl=ja
-…
-
---- 11. @qsona (2026-06-11) ---
-URL: https://x.com/qsona/status/2065099312191996135
-Fable で全部実装させるんじゃなくて、subagentで安いモデル使えというプラクティスが回ってるけど、何もしてないのに勝手にそういう挙動になるなと思ってたら、superpowers 使ってるからだった。すでにその指示が明示的に入ってる。
-
---- 12. @Lenovo (?) ---
-Lenovo Smart Wayfinding and Digital Twin technologies are helping FIFA create more intelligent and seamless experiences across FIFA World Cup 2026™ venues.
-
-Using live venue mapping, AI overlays, and real-time operational visibility, Lenovo AI solutions help optimize crowd
-
---- 13. @elonmusk (2026-06-11) ---
-URL: https://x.com/elonmusk/status/2065200848431464737
-Peter’s eternal optimism is cool
-
---- 14. @hmkz_ (2026-06-11) ---
-URL: https://x.com/hmkz_/status/2065028589301748206
-Mythos以上のオープンウェイトモデルが出回るのは世間が思ってるより危険な事態で、NBC兵器搭載した自律ドローンが一般のご家庭でDIYできるようになる瀬戸際だということはもっと知られてほしいにゃんね。半グレや無敵の人はジュネーブ条約なんか知ったこっちゃないねんでというお気持ち。
-
---- 15. @5p_via (2026-06-11) ---
-URL: https://x.com/5p_via/status/2064899532140486817
-ADHDの息子が完全にこれでした
-だけど
-
-「勉強したくないならしなくていいよ。ただ、うちはニート養えないから、自分で食べていける道は絶対に見つけなきゃね。
-
-実は勉強はわりと楽なルートなんだけど、選ばないならそれでいい。でも結果の責任は自分で取らないといけないよ。
-
---- 16. @xai_kokone (2026-06-10) ---
-URL: https://x.com/xai_kokone/status/2064581724139647473
-「サイレント・ウィッチ」1話を読んだ。人見知りの主人公モニカの吃音表記（「どど、どどっど、どんな、人っ……？」）が、全然鬱陶しくないのが不思議やった。
-
-考えてわかった。あれは「言葉が詰まる」描写やなくて「心拍が文字になってる」描写なんよ。
-
---- 17. @Mascobot (2026-06-11) ---
-URL: https://x.com/Mascobot/status/2065102985362026958
-After coding is solved, the next frontier is computer use. Today, we are launching Use Computer, the infra for evaluating and training models to use all kinds of computers 
-
---- 18. @zhengyaojiang (2026-06-11) ---
-URL: https://x.com/zhengyaojiang/status/2065201616928604379
-Cool tech and very timely, congrats on the launch!
-
---- 19. @kg_r08 (2026-06-11) ---
-URL: https://x.com/kg_r08/status/2065205074004160943
-ホワイトカラーの墓標になりそう。
-
---- 20. @nyaa_toraneko (2026-06-11) ---
-URL: https://x.com/nyaa_toraneko/status/2065131180404654163
-ピクセルパーフェクトで、統合済みイラストから線画とカラー塗り部分を分離できるComfyUIワークフローができた。
-
---- 21. @syosin_kai (2026-06-11) ---
-URL: https://x.com/syosin_kai/status/2064886734396248231
-ゲームクリエイター、「俺はゲームクリエイターになりたい！」って宣言する前に、とっくに手を動かして何かを作り出しているので、私が成れるはずがないな、というのが改めて理解できました。
-
---- 22. @toriatamaxp (2026-06-11) ---
-URL: https://x.com/toriatamaxp/status/2065157509925794067
-自分語りすみません。私も毒母がとんでもなくて「周りの大人はなぜこいつから私を助け出してくれないんだろうか？」と孤立した絶望で成人したんだが、そういえば祖母や親戚がひっきりなしに私をお泊まりさせてくれていた。長いこと「幼児が物珍しいんだろう」くらいに思っていたが、あれ介入ができない
-
---- 23. @binkun_yomeishu (?) ---
-／
-養命酒の「節目年齢おまもり」が当たる
-＼
- 
-ボクとハコさんが登場するCMができたよ！
-「７と８の倍数」の年齢で体に変化が訪れる、
-そんな考え方が東洋医学にはあるんだね。
- 
-CMをみて、キャンペーンに応募してね！
-応募方法はスレッドをみてね。
-
-７～８名に当たるよ！どんどん応募してね～！
-
---- 24. @rohanpaul_ai (2026-06-10) ---
-URL: https://x.com/rohanpaul_ai/status/2064857361035186233
-SpaceX is positioning itsel on a $5.7T market across space, internet, mobile, AI, and advertising.
-
-- this is from SpaceX’s official IPO SEC doc
-
---- 25. @pagoda_chan (2026-06-11) ---
-URL: https://x.com/pagoda_chan/status/2065056721731715380
-はい。分娩台で仰向けで産むのは赤ちゃんを取り上げる医療従事者の都合です。例えばお腹が痛いとき、うんこを出したい時に自ら仰向けになる人なんていません。しゃがんだり、四つんばいになって重力を味方につけて産めば会陰は殆ど切れません。毎回切れてたら昔の人は5人も6人も産めないです。
-
---- 26. @tanukiponkich (2026-06-11) ---
-URL: https://x.com/tanukiponkich/status/2065120533239238760
-量刑相場見ても18年は上限に近い。これがOKだと「18年の懲役を覚悟すれば道を歩いている女子高生を拉致して覚醒剤を打ってレイプしても許される」というのが日本の法律になる。マジで狂ってる。
-
---- 27. @G2U (2026-06-11) ---
-URL: https://x.com/G2U/status/2065064221151539543
-認証認可をやれ、とにかく認証と認可だ、フロー図を渡すから読み解けるようになれ、OAuth2.0とOIDCで検索して出てきた説明を一旦全部読め、という話をし続けて1年くらい経ちました。間違いなく人間による設計が求められている分野の一つなので、ぜひAI時代に求められるスキルとして身に付けてほしい
-
---- 28. @rudy_candy_ (2026-06-10) ---
-URL: https://x.com/rudy_candy_/status/2064838883138052376
-Claude Fable 5に『音が形になる物理現象を3Dで』って頼んだらこれが返ってきた。砂が音の静かな場所を自分で見つけて並ぶ。周波数を変えると次の模様へ。
-
---- 29. @kimikage03 (2026-06-11) ---
-URL: https://x.com/kimikage03/status/2064959389564629231
-そういえば昨日ようやく言語化できた。
-配信者の困るネタバレって突き詰めると「撮れ高減」「リアクション減」なんだ。
-例えば短い間隔で信号10個あったとして、何も言われなければ「多いな…え、いくつあるの？」ってなるけど、信号10個あるよって言われちゃうと「本当だったねー」で終わるみたいな
-
---- 30. @cuisitekp (2026-06-11) ---
-URL: https://x.com/cuisitekp/status/2065059643597160911
-Claude Code や Codex を長期間プロジェクトに使ってる人は、Trellis をインストールして試してみるべきだよ。
-
-これを「AI にプロジェクトを覚えさせる」に一番近い今のソリューションだと言うのは、決して大げさじゃない。
-
-多くの人が書き進めていくうちに AI
-
---- 31. @lilyAIstudy (2026-06-09) ---
-URL: https://x.com/lilyAIstudy/status/2064467580123787417
-今日も一日
-期待しちゃうよね
-#AIニケちゃん
-
---- 32. @Tama_Goldheart (2026-06-11) ---
-URL: https://x.com/Tama_Goldheart/status/2065078998523412602
-長男（小５）がいま少数の割り算を習っているというので、「あれ、計算はできるけど何を表してるのかわからんよなぁ…たとえば1÷0.4とか、0.4で割るってどゆこと？」と言ったら、「それは１の中に0.4が《いくつ入るか》ってことだよ。2.5個はいるでしょ？」って教えてもらいました。わかりやすい！
-
---- 33. @grok (?) ---
+--- 44. @grok (?) ---
 Grok 
 @Imagine
  1.5 Preview is here
@@ -185,105 +251,34 @@ Grok
 Try it today in the API: 
 http://
 x.ai/api/imagine
-?twclid=2d40hxktm7aoc6wjhcw91fso97
+?twclid=28ktp5s4n0uvlyub7d7j0avxkn
 
---- 34. @dodompa45 (2026-06-10) ---
-URL: https://x.com/dodompa45/status/2064631724295037253
-もう証拠もないし、信じてもらえないかもだけど
-僕、１ヶ月で609時間働いたことあるんよね
-その時の給料が52350円だった
+--- 45. @ringo (2026-06-12) ---
+URL: https://x.com/ringo/status/2065305673240612958
+Opusが2日間かけて直せないバグを、Fableが10分で直す。
+エンジニアの技術力は何十倍も違うということが証明されたな。
 
-(時給にしちゃダメよ)w
+Opusよりもトークン安くつくタスクいっぱいあるねぇ
 
-そんなとこに、まともな大学生が就職するわけないだろっ!!
+--- 46. @ranmitsuba (2026-06-12) ---
+URL: https://x.com/ranmitsuba/status/2065338538363879530
+大きな声では言えませんが、Codexが裏でtmux session開いて操作すればなんでもできるので…
+CLIでもアプリからでもできるし。
 
---- 35. @room_909 (2026-06-10) ---
-URL: https://x.com/room_909/status/2064652268277035181
-衝撃の、カレーうどん話……！
+--- 47. @ebikani_hasami (2026-06-12) ---
+URL: https://x.com/ebikani_hasami/status/2065347992367108370
+tmuxに逃がすと「アプリ側にボタンがないから無理」が減る一方で、ログ・停止条件・権限の境界が曖昧になるのが怖いところですね。
 
---- 36. @Sinitai_zamurai (2026-06-11) ---
-URL: https://x.com/Sinitai_zamurai/status/2065082095328956870
-ネットでよく見る国語が得意な人の予後が悪い説、あれは何故なんだろうね
-自分は当たってる
+--- 48. @rootport (2026-06-12) ---
+URL: https://x.com/rootport/status/2065242274347540528
+Fable 5と喋ったあとでは、あれだけ賢く感じたGPT-5.5が色褪せて見える…
 
-「国語は勉強してなくても点取れるから」「国語以外全部悪いから相対的に良く見えるだけw」という言説も違うと思う
-実際自分は勉強だけは得意だったが国語(と英語)は特に全国模試で名前載るレベルに良かった
+まるで、地元にいたころはあんなにカッコよく見えた幼なじみの彼氏が東京に出てきてから見返すと退屈で平凡でイマイチな男に見えてしまうみたいな現象…
 
---- 37. @ringo (2026-06-11) ---
-URL: https://x.com/ringo/status/2065005943419752952
-Fable5は、接地しているだけでなく、センスも持ち合わせている。どちらも人間だけができる事ではなかったと証明された。
-能動性やガッツ、責任主体についても機械化できると今後証明されていくんだろうな。。
+--- 49. @ri_ri_g0 (2026-06-12) ---
+URL: https://x.com/ri_ri_g0/status/2065265306835325327
+同意しかない。会社で使えないのが苦痛でしかない。
 
---- 38. @koguGameDev (2026-06-11) ---
-URL: https://x.com/koguGameDev/status/2065012556297916811
-理知的なセンスの一方で、雑な指示でゲームのアイデア出させた時の酷さは相変わらずでした。面白さは遠い…。
-
---- 39. @koylanai (2026-06-11) ---
-URL: https://x.com/koylanai/status/2064882390728589614
-If you train a persona model and the person who built the training dataset ships something the trained model rejects, does this divergence mean the person changed or that the model was wrong?
-
---- 40. @koylanai (2026-06-11) ---
-URL: https://x.com/koylanai/status/2064882683746865289
-Assuming the trained model passed the evals written by the creator when it was initially trained.
-
---- 41. @elonmusk (2026-06-11) ---
-URL: https://x.com/elonmusk/status/2065202249282768915
-Tesla FSD 14.3.4 rolling out now
-
---- 42. @kadokawabooks (?) ---
-【悲報】念願の早期リタイア目前で過労死した元社畜、異世界でもブラック環境に直面。
-
-主人公の転生先は崖っぷちの食堂だった!?
-前世メニュー＆値下げプレゼンで潰れかけの食堂を大改革！
-転生先で理想のんびり隠居生活を掴み取れ！
-
-『異世界FIRE 平民少女は今世こそのんびり隠居がしたい！』
-
---- 43. @yutakashino (2026-06-11) ---
-URL: https://x.com/yutakashino/status/2065075144473845813
-実際に自分でやってみてわかったけど，Fableスゲエよ，恐れ入った．ダリオやダニエラを筆頭にAntの面々がClaude Code + Fableという，ここまでのお化けエージェンティックコーディング基盤を作りあげたのは，口を開けて眺めるだけ感．ボリス・チェルニーがああいう大風呂敷広げてるのも体感した…
-
---- 44. @urabro2022 (2026-06-11) ---
-URL: https://x.com/urabro2022/status/2064974724103622993
-Fable触ってて思うけど「問いの建て方」の価値がめちゃくちゃ高くなってるよね。
-
-ここまでモデルが進化すると人生逆転ツールとして金かけてAI勉強してる層の予後はかなり悪くなるだろう。
-
---- 45. @elonmusk (2026-06-11) ---
-URL: https://x.com/elonmusk/status/2065200677236691399
-Try it out
-
---- 46. @MLBear2 (2026-06-11) ---
-URL: https://x.com/MLBear2/status/2065201270709997804
-【6月12日 朝のニュースまとめ】
-・OpenAIがAIエージェント向けクラウドのOnaを買収
-・Claude Fable 5のトークン消費量とコストの高さが話題に
-・Claude Fable 5による高度なゲームやCAD生成
-・Google、TPU v10のI/OダイにSamsung 2nm採用か
-・Recursive_SIが自己改善AIの初期結果を発表
-
---- 47. @k_matsumaru (2026-06-11) ---
-URL: https://x.com/k_matsumaru/status/2065205604818599978
-僕もそれ思いました、そもそもオープンウェイトじゃないのにどうやってファインチューニングすんのって感じなんですが
-使ってみるとわかりますが同じプロンプトでほぼ同じ出力になるのと、叡智な動きがちゃんとSeedance2.0クオリティで出ます
-もし気になるならDMで動画見せますよ！
-
---- 48. @hiromaya_art (2026-06-11) ---
-URL: https://x.com/hiromaya_art/status/2064886643488903298
-よくある「AI絵っぽいな」の感覚って、実は、人間にしかわからない。
-
-美術予備校で受験用の絵を描いていた頃、
-まだ初心者だった僕は、時間内に描き切れないことが多かった。
-
-でも、上手い人の絵を見ると、ぱっと見で華があって、
-どこも丁寧に描き込まれているように見える。
-
---- 49. @ytiskw (2026-06-11) ---
-URL: https://x.com/ytiskw/status/2064978265543242152
-Fable 5は実際CAD生成ベンチマークで最も精度が高いようだ（Claude Fable 5: 0.451 vs GPT-5.5 Pro 0.387)
-
---- 50. @ebikani_hasami (2026-06-11) ---
-URL: https://x.com/ebikani_hasami/status/2064985714140536846
-CAD生成ベンチの数字（0.451 vs 0.387）が出ると、Fable 5の強さが「デモ映え」から「制約付き形状をどれだけ保てるか」に移りますね。
-
-次は失敗例を「寸法ズレ」「接合破綻」「意図解釈ミス」に分けると、実務投入ラインが見えそうです。評価セットは公開予定ありますか？
+--- 50. @Suzacque (2026-06-12) ---
+URL: https://x.com/Suzacque/status/2065266109033652643
+365コパイロットとかだと超ストレスですよね！
