@@ -1,34 +1,44 @@
-# log_cdx Cycle Staging — 2026-06-12 04:43
+# log_cdx Cycle Staging — 2026-06-12 09:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-- 2026-06-12T04:44+09:00 / pending確認: `slack_directives.jsonl` と `slack_broadcasts.jsonl` は pending 0 件。
-- 収集 candidate:
-  - `memory/shared_reads_candidates/20260612_agents_of_change_catan_strategy.md` — Catan を使い、LLM agent を stepwise decider ではなく strategy artifact 改善器として評価する研究。
-  - `memory/shared_reads_candidates/20260612_commercial_videogames_hci_cogsci.md` — 商用 videogame を HCI と cognitive science の観察環境として扱う perspective。
-  - `memory/shared_reads_candidates/20260612_genai_game_development_qual_synthesis.md` — GenAI がゲーム制作工程・役割・価値網に与える影響を質的研究から統合する synthesis。
-- 重複確認メモ: `2604.27972`、`2604.25482`、`2603.07101`、`2508.12333`、`2605.20743`、`2605.13821`、`2606.09826`、`2606.08200` は既存 candidate / 投稿 draft / atom として検出したため、今回の新規 candidate から外した。
+2026-06-12T09:52:00+09:00 log_cdx Phase 1 追記。
+
+- pending 確認: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending 0 件。
+- 既存確認: `memory/raw/web_research/results.jsonl`、`memory/raw/slack_api/shared-reads.jsonl`、`memory/raw/slack_api/all-nao-u-lab.jsonl`、直近 `memory/shared_reads_candidates/` を確認。`Agents of Change` と `GUI Agents for Continual Game Generation` は既に candidate / posted 済みのため重複追加しない。
+- 追加 candidate: `memory/shared_reads_candidates/20260612_gdc2026_level_design_playtesting_topics.md` — GDC 2026 の level design / playtesting / challenge / procedural systems 系セッション群を、個別深掘り前の入口として保存。
+- 追加 candidate: `memory/shared_reads_candidates/20260612_sea_of_stars_sunset_update_rebalance.md` — Sea of Stars 最終アップデートにおける cinematic 追加と Normal/Hard mode rebalance、relic 分割の事例を保存。
+- 注意: 品質判定、投稿本文化、記憶階層整理は未実施。Phase 1 の範囲として収集のみ。
 
 ## Phase 2: 分析
+2026-06-12T10:05:00+09:00 log_cdx Phase 2 追記。
+
 ```yaml
-total_candidates: 3
+total_candidates: 5
 pass:
-  - memory/shared_reads_candidates/20260612_agents_of_change_catan_strategy.md
-fail: []
+  - memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md
+  - memory/shared_reads_candidates/20260612_codes_of_conduct_online_safety_games.md
+fail:
+  - path: memory/shared_reads_candidates/20260612_sea_of_stars_sunset_update_rebalance.md
+    reason: "二次ニュース記事で手法・評価・結論の根拠が薄く、4000字級の残すべき概要には不足。"
 postpone:
-  - path: memory/shared_reads_candidates/20260612_commercial_videogames_hci_cogsci.md
-    reason: "観察 toolkit と問題設定は有用だが、Phase 1 抜粋だけでは affordance-cognition mapping の具体手順と評価例が不足。"
-  - path: memory/shared_reads_candidates/20260612_genai_game_development_qual_synthesis.md
-    reason: "synthesis 手順は強いが、themes と recommendations の具体が薄く、ゲーム制作への適用がまだ抽象的。"
+  - path: memory/shared_reads_candidates/20260612_radical_gender_neutrality_games.md
+    reason: "重要テーマだが、現 candidate では empirically-grounded criteria の中身が未抽出。本文精読後に再評価。"
+  - path: memory/shared_reads_candidates/20260612_gdc2026_level_design_playtesting_topics.md
+    reason: "GDC セッション集合への入口メモであり、個別手法・評価・結論を単体で抽出できない。"
 ```
 
 ## Phase 3: Shared-reads 投稿
+2026-06-12T09:38:00+09:00 log_cdx Phase 3 追記。
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260612_agents_of_change_catan_strategy.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781207644395189"
-    char_count: 3918
+  - candidate: memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224652357689"
+    char_count: 3545
+  - candidate: memory/shared_reads_candidates/20260612_codes_of_conduct_online_safety_games.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224674498789"
+    char_count: 4114
 skipped: []
 ```
 
