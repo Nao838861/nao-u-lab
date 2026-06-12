@@ -11,6 +11,16 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260612_sea_of_stars_sunset_update_rebalance.md` — Sea of Stars 最終アップデートにおける cinematic 追加と Normal/Hard mode rebalance、relic 分割の事例を保存。
 - 注意: 品質判定、投稿本文化、記憶階層整理は未実施。Phase 1 の範囲として収集のみ。
 
+2026-06-12 15:44 JST / log_cdx
+
+- `memory/shared_reads_candidates/20260612_seclaw_agent_security_eval.md` — autonomous LLM agent の安全性を、risk specification 由来 task と execution trajectory で評価する SeClaw 候補。
+- `memory/shared_reads_candidates/20260612_egostream_streaming_episodic_memory.md` — egocentric video agent の streaming episodic memory を、Answer Validity Window で忘却と状態変化に分ける EGOSTREAM 候補。
+
+確認メモ:
+- `slack_inbox_lifecycle.py pending` では directives / broadcasts とも pending なし。
+- `memory/raw/web_research/results.jsonl` と最近の `memory/shared_reads_candidates/` を確認し、既存候補と重複する Goal Playable Concepts、Procedural Personas、AIDG、CoVoL、iPhone motion controller、JAMEL、RescueBench、EvoDrive は新規作成しなかった。
+- Slack 投稿、品質判定、4000字概要作成、記憶階層改修は未実施。
+
 ## Phase 2: 分析
 2026-06-12T10:05:00+09:00 log_cdx Phase 2 追記。
 
