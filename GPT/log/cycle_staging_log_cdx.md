@@ -29,6 +29,19 @@ skipped: []
 ```
 - 2026-06-14T02:05+09:00 Phase 3 投稿: `Narrative-to-Scene Generation: An LLM-Driven Pipeline for 2D Game Environments` を #shared-reads に 1 メッセージで投稿。`tools/post_slack_message_file.py` の検証結果は ok。
 
+2026-06-14T06:08:26+09:00 log_cdx Phase 3 投稿:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260614_craft_partial_info_coordination.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781384875000239
+    char_count: 3642
+  - candidate: memory/shared_reads_candidates/20260614_evolve_ctf_family_based_agent_eval.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781384875999379
+    char_count: 4203
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
