@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-12T02:51:00+09:00",
+  "updated_at": "2026-06-13T20:07:04+09:00",
   "reviewed_source_ts": [
+    "1781224674.498789",
     "1780671465.875619",
     "1780975880.393309",
     "1778049662.327289",
@@ -179,6 +180,29 @@
     "1781170063.007129"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-13T20:07:04+09:00",
+      "id": "sr-1781224674-3e1badfd6f",
+      "source_ts": "1781224674.498789",
+      "title": "Analyzing Codes of Conduct for Online Safety in Video Games at Scale",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Nao_u_BOT game prototypes can add rankings, shared scores, UGC, public AI-generated content, user names, or cooperative logs before treating those as safety-relevant social surfaces. The atom's practical claim is not that Codex should write a full CoC, but that mechanics and community context should drive a lightweight risk and moderation check before social features harden. Existing probes cover agent/tool safety and game evaluation evidence, but they do not ask whether a new social surface creates mechanics-derived harm such as spoofing, score fraud, report abuse, privacy leakage, or moderation workload. Keep this as a reversible social-surface probe rather than a permanent policy rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next game prototype spec, playable diff, or evaluation note that adds or judges a social surface such as shared score, ranking, UGC, public AI-generated content, user name, chat, invite, trade, cooperative log, or report flow, did I name the exact player-to-player or player-to-public interaction created by the mechanic?",
+        "For that surface, did I list one mechanics-derived risk and one moderation or recovery affordance, such as spoofing, boosting, score fraud, harassment, privacy leakage, inappropriate generated content, report abuse, hide/delete, appeal, or visibility control?",
+        "If no social surface is present, did I explicitly mark the probe as not applicable instead of inventing a CoC checklist or slowing a single-player prototype?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game prototype specs, playable diffs, or evaluation notes with social surfaces already name the interaction, mechanics-derived risk, and moderation/recovery affordance without requiring a broader CoC rule."
+    },
     {
       "reviewed_at": "2026-06-12T02:51:00+09:00",
       "id": "sr-1781170063-f9d38c2e02",
@@ -5695,6 +5719,18 @@
         "If I use a judge NPC, probe script, or staged interaction, did I keep hidden-state inspection read-only and separate induced dialogue evidence from follow-through action evidence before giving pass, fail, or insufficient?"
       ],
       "expires_after": "Review after the next two NPC/social-interaction, tutorial-dialogue, support-character, memory-continuity, or interactive-agent evaluation notes that use passive logs, generated situations, judge NPCs, probe scripts, outcome metrics, or follow-through action evidence."
+    },
+    {
+      "id": "probe-20260613-social-surface-safety-check",
+      "created_at": "2026-06-13T20:07:04+09:00",
+      "source_ts": "1781224674.498789",
+      "scope": "next game prototype spec, playable diff, or evaluation note where Codex adds or judges rankings, shared scores, UGC, public AI-generated content, user names, chat, invites, trades, cooperative logs, or report flows",
+      "questions": [
+        "Before the next game prototype spec, playable diff, or evaluation note that adds or judges a social surface, did I name the exact player-to-player or player-to-public interaction created by the mechanic?",
+        "For that surface, did I list one mechanics-derived risk and one moderation or recovery affordance, such as spoofing, boosting, score fraud, harassment, privacy leakage, inappropriate generated content, report abuse, hide/delete, appeal, or visibility control?",
+        "If no social surface is present, did I explicitly mark the probe as not applicable instead of inventing a CoC checklist or slowing a single-player prototype?"
+      ],
+      "expires_after": "Review after the next two game prototype specs, playable diffs, or evaluation notes that involve shared scores, rankings, UGC, public AI-generated content, user names, chat, invites, trades, cooperative logs, report flows, or explicit no-social-surface decisions."
     }
   ]
 }

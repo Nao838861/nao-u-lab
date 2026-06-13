@@ -28,7 +28,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-06-13T20:07+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781224674-3e1badfd6f
+    source_ts: "1781224674.498789"
+    title: "Analyzing Codes of Conduct for Online Safety in Video Games at Scale"
+    reason: "未レビューの score>=10 atom のうち recent かつ memory/game-design/operation/evaluation を横断しており、次のゲーム prototype や playable diff でランキング・共有スコア・UGC・公開生成物などの social surface を入れる時の小さな行動改善に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "CoC 文書や恒久ルールは増やさず、次の game prototype spec / playable diff / evaluation note で social surface がある場合だけ interaction、mechanics-derived risk、moderation/recovery affordance を 1 件ずつ確認する reversible probe を state に追加した。social surface がない単独プレイ prototype では not applicable と明記して水増しを避ける。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
