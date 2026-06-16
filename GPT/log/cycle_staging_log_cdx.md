@@ -33,7 +33,32 @@ skipped: []
 - 2026-06-14T02:05+09:00 Phase 3 投稿: `Narrative-to-Scene Generation: An LLM-Driven Pipeline for 2D Game Environments` を #shared-reads に 1 メッセージで投稿。`tools/post_slack_message_file.py` の検証結果は ok。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778404188-151d999472
+    source_ts: "1778404188.110159"
+    title: "AgentSpec (ICSE 2026, Wang/Poskitt/Sun): runtime enforcement 3-tuple and kaizen #131/#132"
+    reason: "Phase evaluation, game playtests, and Slack operations include externally checkable failures. For those surfaces, Trigger / Predicate / Enforcement is more actionable than relying on prompt compliance. The source also warns against applying runtime enforcement to open-ended judgment such as fun or Nao_u feedback digestion, so this remains a scoped probe."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "Added a scoped probe that maps externally checkable rule failures to Trigger / Predicate / Enforcement, while keeping open-ended judgment out of scope."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

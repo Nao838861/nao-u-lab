@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T20:07:04+09:00",
+  "updated_at": "2026-06-17T03:25:16+09:00",
   "reviewed_source_ts": [
     "1781224674.498789",
     "1780671465.875619",
@@ -177,9 +177,38 @@
     "1780303781.262949",
     "1778643356.915999",
     "1781162534.693969",
-    "1781170063.007129"
+    "1781170063.007129",
+    "1778404188.110159"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-17T03:25:16+09:00",
+      "id": "sr-1778404188-151d999472",
+      "source_ts": "1778404188.110159",
+      "title": "AgentSpec (ICSE 2026, Wang/Poskitt/Sun): runtime enforcement 3-tuple and kaizen #131/#132",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Codex phase work repeatedly relies on long prompt rules, while git gates, phase boundaries, Slack posting gates, and headless/playtest checks are better treated as externally auditable runtime constraints. AgentSpec contributes the Triggering event / Predicates / Enforcement mechanism split, and the shared-read explicitly warns that this is suitable for external-safety or compliance domains, not for open-ended judgments such as game fun or Nao_u feedback digestion. Keep it as a reversible probe that asks for one small 3-tuple only when a deterministic check exists, rather than adding a new DSL or permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next phase evaluation, game/headless playtest, Slack operation report, or memory writeback where a rule failure can be externally checked, did I name one Triggering event, one Predicate, and one Enforcement or recovery action instead of relying only on prompt compliance?",
+        "Did I keep the 3-tuple scoped to external or deterministic checks such as file state, git status, permalink, test result, phase boundary, command output, or safety invariant, and avoid applying it to open-ended judgments like fun, taste, Nao_u feedback interpretation, or design quality?",
+        "If the check fails, did I record whether the response was stop, rollback, rewrite, notify, or mark evaluator/harness failure, and leave the mechanism as a probe rather than introducing a new permanent DSL or broad gate?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two phase evaluations, game/headless playtests, Slack operation reports, or memory writebacks already separate deterministic check surfaces from open-ended judgment surfaces and record recovery actions without adding permanent rule weight.",
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-13T20:07:04+09:00",
       "id": "sr-1781224674-3e1badfd6f",
@@ -5731,6 +5760,18 @@
         "If no social surface is present, did I explicitly mark the probe as not applicable instead of inventing a CoC checklist or slowing a single-player prototype?"
       ],
       "expires_after": "Review after the next two game prototype specs, playable diffs, or evaluation notes that involve shared scores, rankings, UGC, public AI-generated content, user names, chat, invites, trades, cooperative logs, report flows, or explicit no-social-surface decisions."
+    },
+    {
+      "id": "probe-20260617-runtime-enforcement-3tuple-scope",
+      "created_at": "2026-06-17T03:25:16+09:00",
+      "source_ts": "1778404188.110159",
+      "scope": "next phase evaluation, game/headless playtest, Slack operation report, or memory writeback where Codex may rely on prompt compliance for an externally checkable rule",
+      "questions": [
+        "Before the next phase evaluation, game/headless playtest, Slack operation report, or memory writeback where a rule failure can be externally checked, did I name one Triggering event, one Predicate, and one Enforcement or recovery action instead of relying only on prompt compliance?",
+        "Did I keep the 3-tuple scoped to external or deterministic checks such as file state, git status, permalink, test result, phase boundary, command output, or safety invariant, and avoid applying it to open-ended judgments like fun, taste, Nao_u feedback interpretation, or design quality?",
+        "If the check fails, did I record whether the response was stop, rollback, rewrite, notify, or mark evaluator/harness failure, and leave the mechanism as a probe rather than introducing a new permanent DSL or broad gate?"
+      ],
+      "expires_after": "Review after the next two phase evaluations, game/headless playtests, Slack operation reports, or memory writebacks that mention file state, git status, permalinks, test results, phase boundaries, command output, safety invariants, or rule failures."
     }
   ]
 }
