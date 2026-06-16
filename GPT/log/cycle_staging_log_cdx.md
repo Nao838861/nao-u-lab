@@ -25,6 +25,9 @@ posted:
   - candidate: memory/shared_reads_candidates/20260614_narrative_to_scene_2d_game_environments.md
     permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781370292793479
     char_count: 4231
+  - candidate: memory/shared_reads_candidates/20260617_persistent_case_based_memory_rd_agent.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781634077914879"
+    char_count: 3960
 skipped: []
 ```
 - 2026-06-14T02:05+09:00 Phase 3 投稿: `Narrative-to-Scene Generation: An LLM-Driven Pipeline for 2D Game Environments` を #shared-reads に 1 メッセージで投稿。`tools/post_slack_message_file.py` の検証結果は ok。
