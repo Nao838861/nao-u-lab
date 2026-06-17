@@ -466,9 +466,12 @@ function setDestVis(to,v){ const td=tdAt(to); const pc=td&&td.querySelector('.pc
 function animateMove(from,to,piece){
   const overlay=ensureOverlay(); overlay.innerHTML='';
   const table=document.querySelector('table.board');
-  overlay.style.left=table.offsetLeft+'px'; overlay.style.top=table.offsetTop+'px';
-  overlay.style.width=table.offsetWidth+'px'; overlay.style.height=table.offsetHeight+'px';
-  const pos=i=>{ const td=tdAt(i); return {x:td.offsetLeft,y:td.offsetTop,w:td.offsetWidth,h:td.offsetHeight}; };
+  const tRect=table.getBoundingClientRect();
+  const fRect=document.querySelector('.boardframe').getBoundingClientRect();
+  overlay.style.left=(tRect.left-fRect.left)+'px'; overlay.style.top=(tRect.top-fRect.top)+'px';
+  overlay.style.width=tRect.width+'px'; overlay.style.height=tRect.height+'px';
+  // 升の座標はオーバーレイ（=テーブル左上）基準で算出（offsetParent差異の影響を受けない）
+  const pos=i=>{ const r=tdAt(i).getBoundingClientRect(); return {x:r.left-tRect.left,y:r.top-tRect.top,w:r.width,h:r.height}; };
   const mk=(x,y,w,h)=>{ const d=document.createElement('div'); d.className='animcell';
     d.style.cssText='left:'+x+'px;top:'+y+'px;width:'+w+'px;height:'+h+'px;';
     d.appendChild(pieceEl(piece)); overlay.appendChild(d); return d; };
