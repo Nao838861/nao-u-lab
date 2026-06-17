@@ -47,6 +47,10 @@
   /* 移動アニメ用オーバーレイ（盤の升範囲でクリップ→端をまたぐ手はここで消えて反対端から出る） */
   #anim{position:absolute;pointer-events:none;overflow:hidden;z-index:10;}
   .animcell{position:absolute;}
+  /* ループ表示モード */
+  .board.repeat{ --cell:40px; }
+  td.outer{ background:rgba(20,12,0,.14); }
+  #redframe{ position:absolute;pointer-events:none;border:3px solid #d8392b;box-shadow:0 0 7px rgba(216,57,43,.55);z-index:5;border-radius:2px; }
 
   /* 五角形の駒: 木目+面取り+落ち影 */
   .pc{position:absolute;inset:7%;z-index:2;filter:drop-shadow(1.5px 2.5px 1.6px rgba(0,0,0,.5));}
@@ -124,6 +128,7 @@
     </label>
     <button class="ctl" id="newgame">新規対局</button>
     <button class="ctl" id="undo">待った</button>
+    <button class="ctl" id="repeatBtn">ループ表示: OFF</button>
 
     <div class="rules">
       <b>ルール</b><br>
@@ -440,6 +445,7 @@ function bestMove(b,h,o,maxDepth,limit){
 
 // ---- game state / UI ----
 let board, hands, turn, playerSide, gameOver, lastMove, sel, legalForSel, pendingMove, history;
+let repeatMode=false;
 const DIFF={easy:{d:2,t:500}, normal:{d:3,t:1500}, hard:{d:5,t:4000}};
 
 function startGame(){
@@ -460,9 +466,23 @@ function ensureOverlay(){
   if(!o){ o=document.createElement('div'); o.id='anim'; document.querySelector('.boardframe').appendChild(o); }
   return o;
 }
-function tdAt(i){ return document.getElementById('grid').querySelector('td[data-i="'+i+'"]'); }
-function setDestVis(to,v){ const td=tdAt(to); const pc=td&&td.querySelector('.pc'); if(pc)pc.style.visibility=v; }
-// 移動の補間アニメ。盤端をまたぐ手は exit/entry の2枚でクリップ表示し、反対端から現れる
+function setDestVis(to,v){ document.querySelectorAll('#grid td[data-i="'+to+'"] .pc').forEach(pc=>pc.style.visibility=v); }
+// ループ表示モードの本来9x9を示す赤枠
+function positionRedFrame(M,DN){
+  let rf=document.getElementById('redframe');
+  if(!repeatMode){ if(rf) rf.style.display='none'; return; }
+  if(!rf){ rf=document.createElement('div'); rf.id='redframe'; document.querySelector('.boardframe').appendChild(rf); }
+  rf.style.display='block';
+  const grid=document.getElementById('grid');
+  const tl=grid.querySelector('td[data-d="'+(M*DN+M)+'"]');
+  const br=grid.querySelector('td[data-d="'+((M+8)*DN+(M+8))+'"]');
+  if(!tl||!br) return;
+  const f=document.querySelector('.boardframe').getBoundingClientRect();
+  const a=tl.getBoundingClientRect(), b=br.getBoundingClientRect();
+  rf.style.left=(a.left-f.left)+'px'; rf.style.top=(a.top-f.top)+'px';
+  rf.style.width=(b.right-a.left)+'px'; rf.style.height=(b.bottom-a.top)+'px';
+}
+// 移動の補間アニメ。通常は盤端を exit/entry の2枚で表現。ループ表示モードは外周が見えるので1枚で連続スライド
 function animateMove(from,to,piece){
   const overlay=ensureOverlay(); overlay.innerHTML='';
   const table=document.querySelector('table.board');
@@ -470,30 +490,42 @@ function animateMove(from,to,piece){
   const fRect=document.querySelector('.boardframe').getBoundingClientRect();
   overlay.style.left=(tRect.left-fRect.left)+'px'; overlay.style.top=(tRect.top-fRect.top)+'px';
   overlay.style.width=tRect.width+'px'; overlay.style.height=tRect.height+'px';
-  // 升の座標はオーバーレイ（=テーブル左上）基準で算出（offsetParent差異の影響を受けない）
-  const pos=i=>{ const r=tdAt(i).getBoundingClientRect(); return {x:r.left-tRect.left,y:r.top-tRect.top,w:r.width,h:r.height}; };
+  const M=repeatMode?4:0, DN=9+2*M;
+  const grid=document.getElementById('grid');
+  const posD=d=>{ const el=grid.querySelector('td[data-d="'+d+'"]'); const r=el.getBoundingClientRect();
+    return {x:r.left-tRect.left,y:r.top-tRect.top,w:r.width,h:r.height}; };
   const mk=(x,y,w,h)=>{ const d=document.createElement('div'); d.className='animcell';
     d.style.cssText='left:'+x+'px;top:'+y+'px;width:'+w+'px;height:'+h+'px;';
     d.appendChild(pieceEl(piece)); overlay.appendChild(d); return d; };
   const DUR=190;
   setDestVis(to,'hidden');
   const done=()=>{ overlay.innerHTML=''; setDestVis(to,'visible'); };
+  const tr=rowOf(to), tc=colOf(to);
   if(from==null){ // 駒打ち: ポップ
-    const t=pos(to); const d=mk(t.x,t.y,t.w,t.h);
+    const t=posD((M+tr)*DN+(M+tc)); const d=mk(t.x,t.y,t.w,t.h);
     d.style.transition='transform '+DUR+'ms ease-out,opacity '+DUR+'ms';
     d.style.transform='scale(.5)'; d.style.opacity='0';
     requestAnimationFrame(()=>{ d.style.transform='scale(1)'; d.style.opacity='1'; });
     setTimeout(done,DUR+30); return;
   }
-  const a=pos(from), b=pos(to);
-  const dr=wrapDelta(rowOf(from),rowOf(to)), dc=wrapDelta(colOf(from),colOf(to));
-  const rowWrap=(rowOf(from)+dr<0||rowOf(from)+dr>8), colWrap=(colOf(from)+dc<0||colOf(from)+dc>8);
+  const fr=rowOf(from), fc=colOf(from);
+  const dr=wrapDelta(fr,tr), dc=wrapDelta(fc,tc);
+  const sD=(M+fr)*DN+(M+fc);
+  if(repeatMode){ // 外周が見えるので端をまたぐ手も1枚で連続スライド
+    const a=posD(sD), b=posD((M+fr+dr)*DN+(M+fc+dc));
+    const d=mk(a.x,a.y,a.w,a.h);
+    requestAnimationFrame(()=>{ d.style.transition='transform '+DUR+'ms ease-out';
+      d.style.transform='translate('+(b.x-a.x)+'px,'+(b.y-a.y)+'px)'; });
+    setTimeout(done,DUR+40); return;
+  }
+  const a=posD(sD), b=posD(tr*9+tc);
+  const rowWrap=(fr+dr<0||fr+dr>8), colWrap=(fc+dc<0||fc+dc>8);
   if(!rowWrap && !colWrap){ // 盤内スライド
     const d=mk(a.x,a.y,a.w,a.h);
     requestAnimationFrame(()=>{ d.style.transition='transform '+DUR+'ms ease-out';
       d.style.transform='translate('+(b.x-a.x)+'px,'+(b.y-a.y)+'px)'; });
   } else { // 端をまたぐ: 出ていく駒と入ってくる駒
-    const sx=pos(at(0,1)).x-pos(at(0,0)).x, sy=pos(at(1,0)).y-pos(at(0,0)).y;
+    const sx=posD(1).x-posD(0).x, sy=posD(9).y-posD(0).y;
     const vx=dc*sx, vy=dr*sy;
     const ex=mk(a.x,a.y,a.w,a.h), en=mk(b.x-vx,b.y-vy,b.w,b.h);
     requestAnimationFrame(()=>{
@@ -505,13 +537,18 @@ function animateMove(from,to,piece){
 }
 function render(){
   const grid=document.getElementById('grid');
+  const table=document.querySelector('table.board');
+  const M=repeatMode?4:0, DN=9+2*M;
+  table.classList.toggle('repeat', repeatMode);
   grid.innerHTML='';
   const checkSide = inCheck(board,turn)?turn:-1;
   const kIdx = checkSide>=0? findKing(board,checkSide):-1;
-  for(let r=0;r<N;r++){
+  for(let dr=0;dr<DN;dr++){
     const tr=document.createElement('tr');
-    for(let c=0;c<N;c++){
-      const i=at(r,c); const td=document.createElement('td'); td.dataset.i=i;
+    for(let dc=0;dc<DN;dc++){
+      const r=((dr-M)%9+9)%9, c=((dc-M)%9+9)%9, i=r*9+c;
+      const td=document.createElement('td'); td.dataset.i=i; td.dataset.d=dr*DN+dc;
+      if(dr<M||dr>=M+9||dc<M||dc>=M+9) td.classList.add('outer');
       const p=board[i];
       if(p) td.appendChild(pieceEl(p));
       if(lastMove && (i===lastMove.to || i===lastMove.from)) td.classList.add('last');
@@ -525,6 +562,7 @@ function render(){
   }
   renderHand('komadaiS',0,'あなた（先手）持ち駒');
   renderHand('komadaiG',1,'COM（後手）持ち駒');
+  positionRedFrame(M,DN);
   updateStatus();
 }
 function renderHand(id,o,label){
@@ -636,6 +674,11 @@ function undo(){
 
 document.getElementById('newgame').onclick=startGame;
 document.getElementById('undo').onclick=undo;
+document.getElementById('repeatBtn').onclick=()=>{
+  repeatMode=!repeatMode;
+  document.getElementById('repeatBtn').textContent='ループ表示: '+(repeatMode?'ON':'OFF');
+  clearSel(); render();
+};
 document.getElementById('promoYes').onclick=()=>resolvePromo(true);
 document.getElementById('promoNo').onclick=()=>resolvePromo(false);
 startGame();
