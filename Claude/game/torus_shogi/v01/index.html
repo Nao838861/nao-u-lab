@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トーラス将棋 v01</title>
+<style>
+  :root{
+    --cell: 46px;
+    --bg:#f3ecd8; --line:#9c8b66; --sel:#ffe58a; --mv:#bfe6b0; --cap:#f0b0a0;
+    --last:#bcd6f0; --check:#f08a8a;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;margin:0;padding:16px;background:#2c2a26;color:#eee;}
+  h1{font-size:20px;margin:0 0 4px;}
+  .sub{font-size:12px;color:#bbb;margin-bottom:12px;}
+  .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;}
+  .boardarea{display:inline-block;}
+  .komadai{min-height:54px;background:#3a372f;border:1px solid #555;border-radius:6px;padding:6px;margin:6px 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .komadai .label{font-size:11px;color:#aaa;width:100%;}
+  .hbtn{background:#5a513c;border:1px solid #7d7355;color:#fff;border-radius:4px;padding:4px 6px;font-size:15px;cursor:pointer;min-width:30px;}
+  .hbtn.sel{background:var(--sel);color:#222;}
+  .hbtn .cnt{font-size:10px;vertical-align:super;}
+  table.board{border-collapse:collapse;background:var(--bg);box-shadow:0 0 0 3px var(--line);}
+  table.board td{
+    width:var(--cell);height:var(--cell);border:1px solid var(--line);text-align:center;
+    vertical-align:middle;font-size:23px;cursor:pointer;position:relative;color:#222;user-select:none;
+  }
+  td.mv{background:var(--mv);}
+  td.cap{background:var(--cap);}
+  td.sel{background:var(--sel);}
+  td.last{box-shadow:inset 0 0 0 3px var(--last);}
+  td.check{background:var(--check);}
+  .pc{display:inline-block;font-weight:600;}
+  .pc.g{transform:rotate(180deg);color:#7a1f1f;}
+  .pc.s{color:#1a1a1a;}
+  .panel{background:#3a372f;border:1px solid #555;border-radius:6px;padding:12px;min-width:230px;}
+  .panel h2{font-size:14px;margin:0 0 8px;}
+  .panel label{display:block;font-size:13px;margin:6px 0;}
+  select,button.ctl{font-size:13px;padding:4px 8px;border-radius:4px;border:1px solid #777;background:#5a513c;color:#fff;cursor:pointer;}
+  #status{font-size:14px;margin:8px 0;min-height:22px;font-weight:600;}
+  .think{color:#ffd75e;}
+  .win{color:#9fe89f;}
+  .rules{font-size:11px;color:#bbb;line-height:1.6;margin-top:10px;}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;}
+  .modal.show{display:flex;}
+  .modalbox{background:#3a372f;border:1px solid #888;border-radius:8px;padding:20px;text-align:center;}
+  .modalbox button{margin:10px 8px 0;padding:8px 16px;font-size:15px;}
+</style>
+</head>
+<body>
+<h1>トーラス将棋 <span style="font-size:13px;color:#999;">v01</span></h1>
+<div class="sub">上下・左右がつながった盤の将棋。駒を選ぶと、利きが反対側へ回り込むのが見えます。</div>
+
+<div class="wrap">
+  <div class="boardarea">
+    <div id="status">　</div>
+    <div class="komadai" id="komadaiG"><span class="label">COM（後手）持ち駒</span></div>
+    <table class="board"><tbody id="grid"></tbody></table>
+    <div class="komadai" id="komadaiS"><span class="label">あなた（先手）持ち駒</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>設定</h2>
+    <label>強さ:
+      <select id="diff">
+        <option value="easy">弱（深さ2）</option>
+        <option value="normal" selected>中（深さ3）</option>
+        <option value="hard">強（深さ5・最長4秒）</option>
+      </select>
+    </label>
+    <label>あなたの手番:
+      <select id="side">
+        <option value="0" selected>先手（下・先攻）</option>
+        <option value="1">後手（上）</option>
+      </select>
+    </label>
+    <button class="ctl" id="newgame">新規対局</button>
+    <button class="ctl" id="undo">待った</button>
+
+    <div class="rules">
+      <b>ルール</b><br>
+      ・初期配置は通常将棋を敵方向へ1段寄せたもの。<br>
+      ・成りは「移動後の相手陣3段」に入る/出る/動く時（任意）。<br>
+      ・飛・角・香はラップし、最初にぶつかった駒で止まる（自分自身は取れない＝一周して全マスに利く）。<br>
+      ・二歩は禁止。行き所のない駒・打ち歩詰めの制約は無し（簡易版）。<br>
+      ・千日手判定は未実装。
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="promoModal">
+  <div class="modalbox">
+    <div>成りますか？</div>
+    <button class="ctl" id="promoYes">成る</button>
+    <button class="ctl" id="promoNo">成らず</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+const N=9, SIZE=81;
+const mod=x=>((x%N)+N)%N;
+const at=(r,c)=>mod(r)*N+mod(c);
+const rowOf=i=>Math.floor(i/N), colOf=i=>i%N;
+
+// ---- piece values ----
+const BASE={P:90,L:280,N:300,S:440,G:520,B:640,R:720,K:0};
+function pieceVal(p){
+  if(p.t==='K') return 0;
+  if(p.pr){ if(p.t==='B')return 840; if(p.t==='R')return 880; return 520; }
+  return BASE[p.t];
+}
+const KANJI={P:'歩',L:'香',N:'桂',S:'銀',G:'金',B:'角',R:'飛',K:'玉'};
+const KANJI_PR={P:'と',L:'杏',N:'圭',S:'全',B:'馬',R:'龍'};
+function glyph(p){
+  if(p.pr && KANJI_PR[p.t]) return KANJI_PR[p.t];
+  if(p.t==='K') return p.o===1?'王':'玉';
+  return KANJI[p.t];
+}
+
+// ---- movement offset sets ----
+const ALL8=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+const ORTH=[[1,0],[-1,0],[0,1],[0,-1]];
+const DIAG=[[1,1],[1,-1],[-1,1],[-1,-1]];
+const gold=f=>[[f,-1],[f,0],[f,1],[0,-1],[0,1],[-f,0]];
+const silver=f=>[[f,-1],[f,0],[f,1],[-f,-1],[-f,1]];
+const goldHas=(dr,dc,f)=>gold(f).some(o=>o[0]===dr&&o[1]===dc);
+const silverHas=(dr,dc,f)=>silver(f).some(o=>o[0]===dr&&o[1]===dc);
+const fwd=o=>o===0?-1:1;
+const promotable=p=>!p.pr && ['P','L','N','S','R','B'].includes(p.t);
+function inZone(idx,o){ const r=rowOf(idx); return o===0 ? (r>=1&&r<=3) : (r>=5&&r<=7); }
+
+// ---- board setup ----
+function newBoard(){
+  const b=new Array(SIZE).fill(null);
+  const back=['L','N','S','G','K','G','S','N','L'];
+  for(let c=0;c<N;c++){
+    b[at(7,c)]={t:back[c],pr:false,o:0};   // sente back (shifted from 8)
+    b[at(1,c)]={t:back[c],pr:false,o:1};   // gote back (shifted from 0)
+    b[at(5,c)]={t:'P',pr:false,o:0};       // sente pawns (from 6)
+    b[at(3,c)]={t:'P',pr:false,o:1};       // gote pawns (from 2)
+  }
+  b[at(6,1)]={t:'B',pr:false,o:0}; b[at(6,7)]={t:'R',pr:false,o:0};
+  b[at(2,1)]={t:'R',pr:false,o:1}; b[at(2,7)]={t:'B',pr:false,o:1};
+  return b;
+}
+const newHands=()=>[{P:0,L:0,N:0,S:0,G:0,B:0,R:0},{P:0,L:0,N:0,S:0,G:0,B:0,R:0}];
+
+// ---- move generation ----
+function genPiece(b,i,p,o,out){
+  const r=rowOf(i), c=colOf(i), f=fwd(o);
+  const push=(from,to)=>{
+    if(promotable(p) && (inZone(from,o)||inZone(to,o))){
+      out.push({from,to,promo:true}); out.push({from,to,promo:false});
+    } else out.push({from,to,promo:false});
+  };
+  // step offsets
+  let steps=null;
+  const goldLike=(p.pr&&['P','L','N','S'].includes(p.t))||p.t==='G';
+  if(goldLike) steps=gold(f);
+  else if(p.t==='K') steps=ALL8;
+  else if(p.t==='S') steps=silver(f);
+  else if(p.t==='N'&&!p.pr) steps=[[2*f,-1],[2*f,1]];
+  else if(p.t==='P'&&!p.pr) steps=[[f,0]];
+  else steps=[];
+  if(p.t==='R'&&p.pr) steps=steps.concat(DIAG);   // dragon: +1 diagonals
+  if(p.t==='B'&&p.pr) steps=steps.concat(ORTH);   // horse: +1 orthogonals
+  for(const [dr,dc] of steps){
+    const to=at(r+dr,c+dc); const q=b[to];
+    if(!q||q.o!==o) push(i,to);
+  }
+  // slider dirs
+  let dirs=[];
+  if(p.t==='R') dirs=dirs.concat(ORTH);
+  if(p.t==='B') dirs=dirs.concat(DIAG);
+  if(p.t==='L'&&!p.pr) dirs=[[f,0]];
+  for(const [dr,dc] of dirs){
+    for(let k=1;k<N;k++){
+      const to=at(r+dr*k,c+dc*k);
+      if(to===i) break;            // wrapped back to self
+      const q=b[to];
+      if(!q){ push(i,to); }
+      else { if(q.o!==o) push(i,to); break; }
+    }
+  }
+}
+function nifu(b,o,c){
+  for(let r=0;r<N;r++){ const q=b[at(r,c)]; if(q&&q.o===o&&q.t==='P'&&!q.pr) return true; }
+  return false;
+}
+function pseudoMoves(b,h,o){
+  const out=[];
+  for(let i=0;i<SIZE;i++){ const p=b[i]; if(p&&p.o===o) genPiece(b,i,p,o,out); }
+  for(const t of ['R','B','G','S','N','L','P']){
+    if(h[o][t]<=0) continue;
+    for(let i=0;i<SIZE;i++){
+      if(b[i]) continue;
+      if(t==='P'&&nifu(b,o,colOf(i))) continue;
+      out.push({drop:t,to:i});
+    }
+  }
+  return out;
+}
+
+// ---- attack detection (ray + step based) ----
+function matchesSlide(p,type){
+  if(type==='R') return p.t==='R';
+  if(type==='B') return p.t==='B';
+  if(type==='L') return p.t==='L'&&!p.pr;
+  return false;
+}
+function rayHits(b,r,c,dr,dc,by,type){
+  const origin=at(r,c);
+  for(let k=1;k<N;k++){
+    const ni=at(r+dr*k,c+dc*k);
+    if(ni===origin) break;
+    const p=b[ni];
+    if(!p) continue;
+    return p.o===by && matchesSlide(p,type);
+  }
+  return false;
+}
+function attacksStep(p,dr,dc,f){
+  const t=p.t,pr=p.pr;
+  if(t==='K') return true;
+  const goldLike=(pr&&['P','L','N','S'].includes(t))||t==='G';
+  if(goldLike) return goldHas(dr,dc,f);
+  if(t==='S'&&!pr) return silverHas(dr,dc,f);
+  if(t==='P'&&!pr) return dr===f&&dc===0;
+  if(t==='R'&&pr) return Math.abs(dr)===1&&Math.abs(dc)===1; // dragon diag step
+  if(t==='B'&&pr) return (dr===0)!==(dc===0);                // horse orth step
+  return false;
+}
+function isAttacked(b,r,c,by){
+  const f=fwd(by);
+  for(const [dr,dc] of ALL8){
+    const p=b[at(r+dr,c+dc)];
+    if(p&&p.o===by&&attacksStep(p,-dr,-dc,f)) return true;
+  }
+  for(const kc of [c-1,c+1]){
+    const p=b[at(r-2*f,kc)];
+    if(p&&p.o===by&&p.t==='N'&&!p.pr) return true;
+  }
+  if(rayHits(b,r,c,-f,0,by,'L')) return true;
+  for(const [dr,dc] of ORTH) if(rayHits(b,r,c,dr,dc,by,'R')) return true;
+  for(const [dr,dc] of DIAG) if(rayHits(b,r,c,dr,dc,by,'B')) return true;
+  return false;
+}
+function findKing(b,o){ for(let i=0;i<SIZE;i++){ const p=b[i]; if(p&&p.o===o&&p.t==='K') return i; } return -1; }
+function inCheck(b,o){ const k=findKing(b,o); return k>=0 && isAttacked(b,rowOf(k),colOf(k),1-o); }
+
+// ---- apply / undo (mutates b,h) ----
+function applyMove(b,h,o,m){
+  if(m.drop){ h[o][m.drop]--; b[m.to]={t:m.drop,pr:false,o}; return {drop:m.drop,to:m.to}; }
+  const prev=b[m.from], cap=b[m.to];
+  b[m.to]={t:prev.t,pr:m.promo?true:prev.pr,o};
+  b[m.from]=null;
+  if(cap) h[o][cap.t]++;
+  return {from:m.from,to:m.to,prev,cap};
+}
+function undoMove(b,h,o,m,u){
+  if(u.drop){ b[u.to]=null; h[o][u.drop]++; return; }
+  b[u.from]=u.prev; b[u.to]=u.cap||null;
+  if(u.cap) h[o][u.cap.t]--;
+}
+function legalMoves(b,h,o){
+  const res=[];
+  for(const m of pseudoMoves(b,h,o)){
+    const u=applyMove(b,h,o,m);
+    if(!inCheck(b,o)) res.push(m);
+    undoMove(b,h,o,m,u);
+  }
+  return res;
+}
+
+// ---- evaluation ----
+function dangerCount(b,kidx,enemy){
+  if(kidx<0) return 0;
+  const r=rowOf(kidx),c=colOf(kidx); let n=0;
+  for(const [dr,dc] of ALL8) if(isAttacked(b,r+dr,c+dc,enemy)) n++;
+  return n;
+}
+function evalAbs(b,h){
+  let s=0;
+  for(let i=0;i<SIZE;i++){ const p=b[i]; if(!p) continue; s+= p.o===0? pieceVal(p) : -pieceVal(p); }
+  for(const t in h[0]) s+= Math.round(BASE[t]*0.9)*h[0][t];
+  for(const t in h[1]) s-= Math.round(BASE[t]*0.9)*h[1][t];
+  s -= dangerCount(b,findKing(b,0),1)*25;
+  s += dangerCount(b,findKing(b,1),0)*25;
+  return s;
+}
+const INF=1e9, MATE=1e6;
+function staticEval(b,h,o){ return (o===0?1:-1)*evalAbs(b,h); }
+function orderMoves(b,moves){
+  for(const m of moves){
+    let k=0;
+    if(!m.drop && b[m.to]) k=pieceVal(b[m.to])*10;
+    if(m.promo) k+=300;
+    m._k=k;
+  }
+  moves.sort((a,b2)=>b2._k-a._k);
+}
+function search(b,h,o,depth,alpha,beta,start,limit){
+  if(performance.now()-start>limit) return staticEval(b,h,o);
+  if(depth<=0) return staticEval(b,h,o);
+  const moves=legalMoves(b,h,o);
+  if(!moves.length) return -MATE-depth;
+  orderMoves(b,moves);
+  let best=-INF;
+  for(const m of moves){
+    const u=applyMove(b,h,o,m);
+    const sc=-search(b,h,1-o,depth-1,-beta,-alpha,start,limit);
+    undoMove(b,h,o,m,u);
+    if(sc>best) best=sc;
+    if(best>alpha) alpha=best;
+    if(alpha>=beta) break;
+  }
+  return best;
+}
+function bestMove(b,h,o,maxDepth,limit){
+  let moves=legalMoves(b,h,o);
+  if(!moves.length) return null;
+  for(let i=moves.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [moves[i],moves[j]]=[moves[j],moves[i]]; }
+  const start=performance.now();
+  let best=moves[0];
+  for(let d=1;d<=maxDepth;d++){
+    let alpha=-INF, localBest=null, aborted=false;
+    orderMoves(b,moves);
+    for(const m of moves){
+      const u=applyMove(b,h,o,m);
+      const sc=-search(b,h,1-o,d-1,-INF,-alpha,start,limit);
+      undoMove(b,h,o,m,u);
+      m._s=sc;
+      if(sc>alpha){ alpha=sc; localBest=m; }
+      if(performance.now()-start>limit){ aborted=true; break; }
+    }
+    if(localBest) best=localBest;
+    moves.sort((a,b2)=>(b2._s??-INF)-(a._s??-INF));
+    if(aborted || alpha>MATE-1000) break;
+  }
+  return best;
+}
+
+// ---- game state / UI ----
+let board, hands, turn, playerSide, gameOver, lastMove, sel, legalForSel, pendingMove, history;
+const DIFF={easy:{d:2,t:500}, normal:{d:3,t:1500}, hard:{d:5,t:4000}};
+
+function startGame(){
+  board=newBoard(); hands=newHands(); turn=0; gameOver=false; lastMove=null;
+  sel=null; legalForSel=null; pendingMove=null; history=[];
+  playerSide=parseInt(document.getElementById('side').value,10);
+  render();
+  if(turn!==playerSide) setTimeout(comTurn,80);
+}
+function render(){
+  const grid=document.getElementById('grid');
+  grid.innerHTML='';
+  const checkSide = inCheck(board,turn)?turn:-1;
+  const kIdx = checkSide>=0? findKing(board,checkSide):-1;
+  for(let r=0;r<N;r++){
+    const tr=document.createElement('tr');
+    for(let c=0;c<N;c++){
+      const i=at(r,c); const td=document.createElement('td'); td.dataset.i=i;
+      const p=board[i];
+      if(p){ const sp=document.createElement('span'); sp.className='pc '+(p.o===0?'s':'g'); sp.textContent=glyph(p); td.appendChild(sp); }
+      if(lastMove && (i===lastMove.to || i===lastMove.from)) td.classList.add('last');
+      if(sel && sel.kind==='board' && sel.idx===i) td.classList.add('sel');
+      if(legalForSel && legalForSel.has(i)) td.classList.add(board[i]?'cap':'mv');
+      if(i===kIdx) td.classList.add('check');
+      td.onclick=()=>onCell(i);
+      tr.appendChild(td);
+    }
+    grid.appendChild(tr);
+  }
+  renderHand('komadaiS',0,'あなた（先手）持ち駒');
+  renderHand('komadaiG',1,'COM（後手）持ち駒');
+  updateStatus();
+}
+function renderHand(id,o,label){
+  const el=document.getElementById(id); el.innerHTML='';
+  const lab=document.createElement('span'); lab.className='label'; lab.textContent=label; el.appendChild(lab);
+  for(const t of ['R','B','G','S','N','L','P']){
+    if(hands[o][t]<=0) continue;
+    const btn=document.createElement('button'); btn.className='hbtn';
+    btn.innerHTML=KANJI[t]+(hands[o][t]>1?'<span class="cnt">'+hands[o][t]+'</span>':'');
+    if(sel && sel.kind==='drop' && sel.piece===t && o===playerSide) btn.classList.add('sel');
+    if(o===playerSide && !gameOver && turn===playerSide) btn.onclick=()=>onHand(t);
+    el.appendChild(btn);
+  }
+}
+function updateStatus(){
+  const st=document.getElementById('status');
+  if(gameOver){ st.className='win'; st.textContent=gameOver; return; }
+  if(turn!==playerSide){ st.className='think'; st.textContent='COM 考え中…'; return; }
+  st.className=''; st.textContent=(inCheck(board,turn)?'王手！ ':'')+'あなたの手番';
+}
+function clearSel(){ sel=null; legalForSel=null; }
+
+function onCell(i){
+  if(gameOver || turn!==playerSide) return;
+  const p=board[i];
+  // drop
+  if(sel && sel.kind==='drop'){
+    if(legalForSel.has(i)){ doMove({drop:sel.piece,to:i}); return; }
+    clearSel(); render(); return;
+  }
+  // move to highlighted target
+  if(sel && sel.kind==='board' && legalForSel.has(i)){
+    const from=sel.idx;
+    const canP = legalForSel.has(i+'p'); // promotion available marker
+    if(canP) askPromo(from,i); else doMove({from,to:i,promo:false});
+    return;
+  }
+  // select own piece
+  if(p && p.o===playerSide){
+    sel={kind:'board',idx:i};
+    legalForSel=new Set();
+    for(const m of legalMoves(board,hands,playerSide)){
+      if(m.from===i){ legalForSel.add(m.to); if(m.promo) legalForSel.add(m.to+'p'); }
+    }
+    render(); return;
+  }
+  clearSel(); render();
+}
+function onHand(t){
+  if(gameOver || turn!==playerSide) return;
+  sel={kind:'drop',piece:t};
+  legalForSel=new Set();
+  for(const m of legalMoves(board,hands,playerSide)) if(m.drop===t) legalForSel.add(m.to);
+  render();
+}
+function askPromo(from,to){
+  pendingMove={from,to};
+  document.getElementById('promoModal').classList.add('show');
+}
+function resolvePromo(yes){
+  document.getElementById('promoModal').classList.remove('show');
+  const m=pendingMove; pendingMove=null;
+  doMove({from:m.from,to:m.to,promo:yes});
+}
+function doMove(m){
+  history.push({board:board.map(x=>x&&{...x}), hands:hands.map(h=>({...h})), turn, lastMove});
+  applyMove(board,hands,turn,m);
+  lastMove={from:m.from??null,to:m.to};
+  clearSel();
+  turn=1-turn;
+  if(checkEnd()){ render(); return; }
+  render();
+  if(turn!==playerSide) setTimeout(comTurn,60);
+}
+function checkEnd(){
+  if(legalMoves(board,hands,turn).length===0){
+    const loser= turn===playerSide?'あなた':'COM';
+    const winner= turn===playerSide?'COM':'あなた';
+    gameOver=`詰み — ${winner}の勝ち（${loser}に合法手なし）`;
+    return true;
+  }
+  return false;
+}
+function comTurn(){
+  if(gameOver) return;
+  const cfg=DIFF[document.getElementById('diff').value];
+  const m=bestMove(board,hands,turn,cfg.d,cfg.t);
+  if(!m){ checkEnd(); render(); return; }
+  applyMove(board,hands,turn,m);
+  lastMove={from:m.from??null,to:m.to};
+  turn=1-turn;
+  if(checkEnd()){ render(); return; }
+  render();
+}
+function undo(){
+  if(gameOver && history.length===0) return;
+  // undo back to player's turn (undo COM + player, or just last)
+  let steps = (turn===playerSide)?2:1;
+  while(steps-->0 && history.length){
+    const s=history.pop();
+    board=s.board; hands=s.hands; turn=s.turn; lastMove=s.lastMove;
+  }
+  gameOver=false; clearSel(); render();
+}
+
+document.getElementById('newgame').onclick=startGame;
+document.getElementById('undo').onclick=undo;
+document.getElementById('promoYes').onclick=()=>resolvePromo(true);
+document.getElementById('promoNo').onclick=()=>resolvePromo(false);
+startGame();
+</script>
+</body>
+</html>
