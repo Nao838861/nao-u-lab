@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>トーラス将棋 v01</title>
 <style>
-  :root{ --cell:52px; }
+  /* セルは正方形のまま画面幅に追従（PCは従来サイズ上限）。狭い画面で縦長になるのを防ぐ */
+  :root{ --cell: min(52px, calc((100vw - 84px) / 9)); }
   *{box-sizing:border-box;}
   body{
     font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;margin:0;padding:20px;color:#eee;min-height:100vh;
@@ -53,7 +54,7 @@
   #anim{position:absolute;pointer-events:none;overflow:hidden;z-index:10;}
   .animcell{position:absolute;}
   /* ループ表示モード */
-  .board.repeat{ --cell:40px; }
+  .board.repeat{ --cell: min(40px, calc((100vw - 94px) / 17)); }
   td.outer{ background:rgba(20,12,0,.14); }
   #redframe{ position:absolute;pointer-events:none;border:3px solid #d8392b;box-shadow:0 0 7px rgba(216,57,43,.55);z-index:5;border-radius:2px; }
 
