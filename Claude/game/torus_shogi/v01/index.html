@@ -292,29 +292,77 @@ function evalAbs(b,h){
 }
 const INF=1e9, MATE=1e6;
 function staticEval(b,h,o){ return (o===0?1:-1)*evalAbs(b,h); }
-function orderMoves(b,moves){
+const moveKey=m=> m.drop ? ('d'+m.drop+'_'+m.to) : (m.from+'_'+m.to+'_'+(m.promo?1:0));
+let KILL=[];
+function orderMoves(b,moves,ply){
+  const kl=(ply!=null && KILL[ply])||null;
   for(const m of moves){
     let k=0;
-    if(!m.drop && b[m.to]) k=pieceVal(b[m.to])*10;
-    if(m.promo) k+=300;
+    if(!m.drop && b[m.to]) k=1000000 + pieceVal(b[m.to])*16 - pieceVal(b[m.from]); // MVV-LVA
+    else if(m.promo) k=500000;
+    else if(kl){ const key=moveKey(m); if(kl[0]===key)k=400000; else if(kl[1]===key)k=390000; }
     m._k=k;
   }
   moves.sort((a,b2)=>b2._k-a._k);
 }
-function search(b,h,o,depth,alpha,beta,start,limit){
+function capturesPseudo(b,o){
+  const out=[];
+  for(let i=0;i<SIZE;i++){ const p=b[i]; if(p&&p.o===o) genPiece(b,i,p,o,out); }
+  return out.filter(m=>b[m.to]); // captures only (drops land on empty squares → excluded)
+}
+// 静止探索: 葉局面で駒の取り合いが収まるまで延長（水平線効果でタダ取りされるのを防ぐ）
+function qsearch(b,h,o,alpha,beta,start,limit,qd){
   if(performance.now()-start>limit) return staticEval(b,h,o);
-  if(depth<=0) return staticEval(b,h,o);
-  const moves=legalMoves(b,h,o);
-  if(!moves.length) return -MATE-depth;
+  const checked=inCheck(b,o);
+  if(!checked){
+    const stand=staticEval(b,h,o);
+    if(stand>=beta) return stand;
+    if(stand>alpha) alpha=stand;
+    if(qd>16) return alpha;
+  }
+  let moves;
+  if(checked){ moves=legalMoves(b,h,o); if(!moves.length) return -MATE-qd; }
+  else moves=capturesPseudo(b,o);
   orderMoves(b,moves);
-  let best=-INF;
+  let best= checked? -INF : alpha;
   for(const m of moves){
     const u=applyMove(b,h,o,m);
-    const sc=-search(b,h,1-o,depth-1,-beta,-alpha,start,limit);
+    if(!checked && inCheck(b,o)){ undoMove(b,h,o,m,u); continue; } // 自王が王手放置になる手は非合法
+    const sc=-qsearch(b,h,1-o,-beta,-alpha,start,limit,qd+1);
     undoMove(b,h,o,m,u);
     if(sc>best) best=sc;
     if(best>alpha) alpha=best;
     if(alpha>=beta) break;
+  }
+  return best;
+}
+function search(b,h,o,depth,alpha,beta,ply,canNull,start,limit){
+  if(performance.now()-start>limit) return staticEval(b,h,o);
+  if(depth<=0) return qsearch(b,h,o,alpha,beta,start,limit,0);
+  const checked=inCheck(b,o);
+  // null-move枝刈り（将棋は持ち駒があり zugzwang がほぼ無いので安全）
+  if(canNull && !checked && depth>=2 && beta<MATE-1000){
+    const R=2;
+    const sc=-search(b,h,1-o,depth-1-R,-beta,-beta+1,ply+1,false,start,limit);
+    if(sc>=beta) return beta;
+  }
+  const moves=legalMoves(b,h,o);
+  if(!moves.length) return -MATE-depth;
+  orderMoves(b,moves,ply);
+  let best=-INF;
+  for(const m of moves){
+    const u=applyMove(b,h,o,m);
+    const sc=-search(b,h,1-o,depth-1,-beta,-alpha,ply+1,true,start,limit);
+    undoMove(b,h,o,m,u);
+    if(sc>best) best=sc;
+    if(best>alpha) alpha=best;
+    if(alpha>=beta){
+      if(!u.cap){ // 駒を取らない手の beta カット → キラー手として記録
+        KILL[ply]=KILL[ply]||[]; const key=moveKey(m);
+        if(KILL[ply][0]!==key){ KILL[ply][1]=KILL[ply][0]; KILL[ply][0]=key; }
+      }
+      break;
+    }
   }
   return best;
 }
@@ -324,12 +372,13 @@ function bestMove(b,h,o,maxDepth,limit){
   for(let i=moves.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [moves[i],moves[j]]=[moves[j],moves[i]]; }
   const start=performance.now();
   let best=moves[0];
+  KILL=[];
   for(let d=1;d<=maxDepth;d++){
     let alpha=-INF, localBest=null, aborted=false;
-    orderMoves(b,moves);
+    orderMoves(b,moves,0);
     for(const m of moves){
       const u=applyMove(b,h,o,m);
-      const sc=-search(b,h,1-o,d-1,-INF,-alpha,start,limit);
+      const sc=-search(b,h,1-o,d-1,-INF,-alpha,1,true,start,limit);
       undoMove(b,h,o,m,u);
       m._s=sc;
       if(sc>alpha){ alpha=sc; localBest=m; }
