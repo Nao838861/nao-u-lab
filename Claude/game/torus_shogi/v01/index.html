@@ -5,47 +5,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>トーラス将棋 v01</title>
 <style>
-  :root{
-    --cell: 46px;
-    --bg:#f3ecd8; --line:#9c8b66; --sel:#ffe58a; --mv:#bfe6b0; --cap:#f0b0a0;
-    --last:#bcd6f0; --check:#f08a8a;
-  }
+  :root{ --cell:52px; }
   *{box-sizing:border-box;}
-  body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;margin:0;padding:16px;background:#2c2a26;color:#eee;}
-  h1{font-size:20px;margin:0 0 4px;}
-  .sub{font-size:12px;color:#bbb;margin-bottom:12px;}
-  .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;}
-  .boardarea{display:inline-block;}
-  .komadai{min-height:54px;background:#3a372f;border:1px solid #555;border-radius:6px;padding:6px;margin:6px 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-  .komadai .label{font-size:11px;color:#aaa;width:100%;}
-  .hbtn{background:#5a513c;border:1px solid #7d7355;color:#fff;border-radius:4px;padding:4px 6px;font-size:15px;cursor:pointer;min-width:30px;}
-  .hbtn.sel{background:var(--sel);color:#222;}
-  .hbtn .cnt{font-size:10px;vertical-align:super;}
-  table.board{border-collapse:collapse;background:var(--bg);box-shadow:0 0 0 3px var(--line);}
-  table.board td{
-    width:var(--cell);height:var(--cell);border:1px solid var(--line);text-align:center;
-    vertical-align:middle;font-size:23px;cursor:pointer;position:relative;color:#222;user-select:none;
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;margin:0;padding:20px;color:#eee;min-height:100vh;
+    background:radial-gradient(120% 90% at 50% 0%,#4a4334 0%,#2a261e 55%,#17150f 100%);
   }
-  td.mv{background:var(--mv);}
-  td.cap{background:var(--cap);}
-  td.sel{background:var(--sel);}
-  td.last{box-shadow:inset 0 0 0 3px var(--last);}
-  td.check{background:var(--check);}
-  .pc{display:inline-block;font-weight:600;}
-  .pc.g{transform:rotate(180deg);color:#7a1f1f;}
-  .pc.s{color:#1a1a1a;}
-  .panel{background:#3a372f;border:1px solid #555;border-radius:6px;padding:12px;min-width:230px;}
-  .panel h2{font-size:14px;margin:0 0 8px;}
-  .panel label{display:block;font-size:13px;margin:6px 0;}
-  select,button.ctl{font-size:13px;padding:4px 8px;border-radius:4px;border:1px solid #777;background:#5a513c;color:#fff;cursor:pointer;}
-  #status{font-size:14px;margin:8px 0;min-height:22px;font-weight:600;}
-  .think{color:#ffd75e;}
-  .win{color:#9fe89f;}
-  .rules{font-size:11px;color:#bbb;line-height:1.6;margin-top:10px;}
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;}
+  h1{font-size:21px;margin:0 0 4px;letter-spacing:.04em;}
+  .sub{font-size:12px;color:#b8ac90;margin-bottom:16px;}
+  .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+  .boardarea{display:inline-block;}
+
+  /* 厚みのある盤 */
+  .boardframe{
+    display:inline-block;padding:14px;border-radius:6px;
+    background:linear-gradient(150deg,#c79a55,#a9763c);
+    box-shadow:
+      inset 0 2px 3px rgba(255,235,190,.55), inset 0 -4px 6px rgba(80,45,10,.5),
+      0 10px 0 #6f4c20, 0 16px 28px rgba(0,0,0,.55);
+  }
+  table.board{
+    border-collapse:collapse;
+    background:
+      repeating-linear-gradient(92deg, rgba(150,95,30,.05) 0 3px, transparent 3px 10px),
+      repeating-linear-gradient(2deg, rgba(120,70,20,.04) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg,#f3d89e 0%,#e4c07e 100%);
+    box-shadow:inset 0 0 0 2px rgba(90,55,15,.8), inset 0 0 18px rgba(120,70,20,.35);
+  }
+  table.board td{
+    width:var(--cell);height:var(--cell);border:1px solid rgba(70,40,5,.45);
+    text-align:center;vertical-align:middle;cursor:pointer;position:relative;user-select:none;
+  }
+  /* 合法手インジケータ */
+  td::after{content:"";position:absolute;pointer-events:none;}
+  td.mv::after{left:50%;top:50%;width:34%;height:34%;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(30,80,30,.6),rgba(30,80,30,.18));z-index:3;}
+  td.cap::after{inset:7%;border:3px solid rgba(200,55,40,.85);border-radius:7px;z-index:4;box-shadow:0 0 6px rgba(200,55,40,.5);}
+  td.last{box-shadow:inset 0 0 0 3px rgba(110,165,230,.7);}
+  td.check{box-shadow:inset 0 0 14px rgba(225,45,45,.95);}
+  td.sel{box-shadow:inset 0 0 0 3px rgba(255,205,70,.95);}
+
+  /* 五角形の駒: 木目+面取り+落ち影 */
+  .pc{position:absolute;inset:7%;z-index:2;filter:drop-shadow(1.5px 2.5px 1.6px rgba(0,0,0,.5));}
+  .pcin{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    clip-path:polygon(50% 2%,80% 22%,92% 100%,8% 100%,20% 22%);
+    background:
+      repeating-linear-gradient(118deg, rgba(120,70,20,.05) 0 2px, transparent 2px 7px),
+      linear-gradient(155deg,#f8e6b6 0%,#edcd8c 52%,#d9a85d 100%);
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -4px 5px rgba(120,60,10,.4);
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-weight:700;line-height:1;
+    font-size:calc(var(--cell)*.46);color:#3a2410;text-shadow:0 1px 0 rgba(255,255,255,.45);padding-top:8%;
+  }
+  .pcin.g{transform:rotate(180deg);}
+  .pc.pr .pcin{color:#b62020;text-shadow:0 1px 0 rgba(255,255,255,.35);}
+
+  /* 駒台（木のトレイ）と持ち駒 */
+  .komadai{
+    min-height:52px;border-radius:6px;padding:8px;margin:8px 0;display:flex;gap:7px;flex-wrap:wrap;align-items:center;
+    background:linear-gradient(160deg,#9c7138,#7d5628);
+    box-shadow:inset 0 2px 6px rgba(40,22,5,.6), inset 0 -1px 0 rgba(255,220,160,.2), 0 2px 5px rgba(0,0,0,.4);
+  }
+  .komadai .label{font-size:11px;color:#f0e0c0;width:100%;opacity:.85;}
+  .hbtn{
+    position:relative;border:1px solid rgba(90,55,15,.5);cursor:pointer;min-width:32px;height:34px;padding:0 7px;border-radius:5px;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-weight:700;font-size:18px;color:#3a2410;
+    background:linear-gradient(155deg,#f6e2af,#dfae62);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 3px rgba(120,60,10,.35), 0 2px 3px rgba(0,0,0,.4);
+  }
+  .hbtn.sel{background:linear-gradient(155deg,#ffe9a8,#ffc23e);box-shadow:0 0 0 2px rgba(255,205,70,.95), 0 2px 3px rgba(0,0,0,.4);}
+  .hbtn .cnt{font-size:10px;vertical-align:super;color:#7a1010;font-weight:700;}
+
+  .panel{background:linear-gradient(160deg,#3b362c,#2c281f);border:1px solid #5a513c;border-radius:8px;padding:14px;min-width:235px;box-shadow:0 6px 16px rgba(0,0,0,.4);}
+  .panel h2{font-size:14px;margin:0 0 8px;color:#e8d9b0;}
+  .panel label{display:block;font-size:13px;margin:7px 0;}
+  select,button.ctl{font-size:13px;padding:5px 9px;border-radius:5px;border:1px solid #7d7355;color:#fff;cursor:pointer;background:#5a513c;}
+  button.ctl{background:linear-gradient(#6b5f44,#4f462f);}
+  button.ctl:hover{filter:brightness(1.12);}
+  #status{font-size:15px;margin:6px 0 2px;min-height:22px;font-weight:700;color:#f0e6cc;}
+  .think{color:#ffd75e !important;}
+  .win{color:#9fe89f !important;}
+  .rules{font-size:11px;color:#b8ac90;line-height:1.7;margin-top:12px;}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
   .modal.show{display:flex;}
-  .modalbox{background:#3a372f;border:1px solid #888;border-radius:8px;padding:20px;text-align:center;}
-  .modalbox button{margin:10px 8px 0;padding:8px 16px;font-size:15px;}
+  .modalbox{background:linear-gradient(160deg,#3b362c,#2c281f);border:1px solid #8a7a55;border-radius:10px;padding:22px;text-align:center;color:#eee;box-shadow:0 10px 30px rgba(0,0,0,.6);}
+  .modalbox button{margin:12px 8px 0;padding:8px 18px;font-size:15px;}
 </style>
 </head>
 <body>
@@ -56,7 +100,7 @@
   <div class="boardarea">
     <div id="status">　</div>
     <div class="komadai" id="komadaiG"><span class="label">COM（後手）持ち駒</span></div>
-    <table class="board"><tbody id="grid"></tbody></table>
+    <div class="boardframe"><table class="board"><tbody id="grid"></tbody></table></div>
     <div class="komadai" id="komadaiS"><span class="label">あなた（先手）持ち駒</span></div>
   </div>
 
@@ -412,7 +456,11 @@ function render(){
     for(let c=0;c<N;c++){
       const i=at(r,c); const td=document.createElement('td'); td.dataset.i=i;
       const p=board[i];
-      if(p){ const sp=document.createElement('span'); sp.className='pc '+(p.o===0?'s':'g'); sp.textContent=glyph(p); td.appendChild(sp); }
+      if(p){
+        const sp=document.createElement('span'); sp.className='pc'+(p.pr?' pr':'');
+        const inner=document.createElement('span'); inner.className='pcin '+(p.o===0?'s':'g');
+        inner.textContent=glyph(p); sp.appendChild(inner); td.appendChild(sp);
+      }
       if(lastMove && (i===lastMove.to || i===lastMove.from)) td.classList.add('last');
       if(sel && sel.kind==='board' && sel.idx===i) td.classList.add('sel');
       if(legalForSel && legalForSel.has(i)) td.classList.add(board[i]?'cap':'mv');
