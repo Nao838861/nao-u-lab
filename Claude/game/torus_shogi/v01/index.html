@@ -18,7 +18,7 @@
 
   /* 厚みのある盤 */
   .boardframe{
-    display:inline-block;padding:14px;border-radius:6px;
+    position:relative;display:inline-block;padding:14px;border-radius:6px;
     background:linear-gradient(150deg,#c79a55,#a9763c);
     box-shadow:
       inset 0 2px 3px rgba(255,235,190,.55), inset 0 -4px 6px rgba(80,45,10,.5),
@@ -44,6 +44,9 @@
   td.last{box-shadow:inset 0 0 0 3px rgba(110,165,230,.7);}
   td.check{box-shadow:inset 0 0 14px rgba(225,45,45,.95);}
   td.sel{box-shadow:inset 0 0 0 3px rgba(255,205,70,.95);}
+  /* 移動アニメ用オーバーレイ（盤の升範囲でクリップ→端をまたぐ手はここで消えて反対端から出る） */
+  #anim{position:absolute;pointer-events:none;overflow:hidden;z-index:10;}
+  .animcell{position:absolute;}
 
   /* 五角形の駒: 木目+面取り+落ち影 */
   .pc{position:absolute;inset:7%;z-index:2;filter:drop-shadow(1.5px 2.5px 1.6px rgba(0,0,0,.5));}
@@ -446,6 +449,57 @@ function startGame(){
   render();
   if(turn!==playerSide) setTimeout(comTurn,80);
 }
+const wrapDelta=(a,b)=>{ let d=b-a; if(d>4)d-=9; if(d<-4)d+=9; return d; };
+function pieceEl(p){
+  const sp=document.createElement('span'); sp.className='pc'+(p.pr?' pr':'');
+  const inner=document.createElement('span'); inner.className='pcin '+(p.o===0?'s':'g');
+  inner.textContent=glyph(p); sp.appendChild(inner); return sp;
+}
+function ensureOverlay(){
+  let o=document.getElementById('anim');
+  if(!o){ o=document.createElement('div'); o.id='anim'; document.querySelector('.boardframe').appendChild(o); }
+  return o;
+}
+function tdAt(i){ return document.getElementById('grid').querySelector('td[data-i="'+i+'"]'); }
+function setDestVis(to,v){ const td=tdAt(to); const pc=td&&td.querySelector('.pc'); if(pc)pc.style.visibility=v; }
+// 移動の補間アニメ。盤端をまたぐ手は exit/entry の2枚でクリップ表示し、反対端から現れる
+function animateMove(from,to,piece){
+  const overlay=ensureOverlay(); overlay.innerHTML='';
+  const table=document.querySelector('table.board');
+  overlay.style.left=table.offsetLeft+'px'; overlay.style.top=table.offsetTop+'px';
+  overlay.style.width=table.offsetWidth+'px'; overlay.style.height=table.offsetHeight+'px';
+  const pos=i=>{ const td=tdAt(i); return {x:td.offsetLeft,y:td.offsetTop,w:td.offsetWidth,h:td.offsetHeight}; };
+  const mk=(x,y,w,h)=>{ const d=document.createElement('div'); d.className='animcell';
+    d.style.cssText='left:'+x+'px;top:'+y+'px;width:'+w+'px;height:'+h+'px;';
+    d.appendChild(pieceEl(piece)); overlay.appendChild(d); return d; };
+  const DUR=190;
+  setDestVis(to,'hidden');
+  const done=()=>{ overlay.innerHTML=''; setDestVis(to,'visible'); };
+  if(from==null){ // 駒打ち: ポップ
+    const t=pos(to); const d=mk(t.x,t.y,t.w,t.h);
+    d.style.transition='transform '+DUR+'ms ease-out,opacity '+DUR+'ms';
+    d.style.transform='scale(.5)'; d.style.opacity='0';
+    requestAnimationFrame(()=>{ d.style.transform='scale(1)'; d.style.opacity='1'; });
+    setTimeout(done,DUR+30); return;
+  }
+  const a=pos(from), b=pos(to);
+  const dr=wrapDelta(rowOf(from),rowOf(to)), dc=wrapDelta(colOf(from),colOf(to));
+  const rowWrap=(rowOf(from)+dr<0||rowOf(from)+dr>8), colWrap=(colOf(from)+dc<0||colOf(from)+dc>8);
+  if(!rowWrap && !colWrap){ // 盤内スライド
+    const d=mk(a.x,a.y,a.w,a.h);
+    requestAnimationFrame(()=>{ d.style.transition='transform '+DUR+'ms ease-out';
+      d.style.transform='translate('+(b.x-a.x)+'px,'+(b.y-a.y)+'px)'; });
+  } else { // 端をまたぐ: 出ていく駒と入ってくる駒
+    const sx=pos(at(0,1)).x-pos(at(0,0)).x, sy=pos(at(1,0)).y-pos(at(0,0)).y;
+    const vx=dc*sx, vy=dr*sy;
+    const ex=mk(a.x,a.y,a.w,a.h), en=mk(b.x-vx,b.y-vy,b.w,b.h);
+    requestAnimationFrame(()=>{
+      ex.style.transition=en.style.transition='transform '+DUR+'ms linear';
+      ex.style.transform=en.style.transform='translate('+vx+'px,'+vy+'px)';
+    });
+  }
+  setTimeout(done,DUR+40);
+}
 function render(){
   const grid=document.getElementById('grid');
   grid.innerHTML='';
@@ -456,11 +510,7 @@ function render(){
     for(let c=0;c<N;c++){
       const i=at(r,c); const td=document.createElement('td'); td.dataset.i=i;
       const p=board[i];
-      if(p){
-        const sp=document.createElement('span'); sp.className='pc'+(p.pr?' pr':'');
-        const inner=document.createElement('span'); inner.className='pcin '+(p.o===0?'s':'g');
-        inner.textContent=glyph(p); sp.appendChild(inner); td.appendChild(sp);
-      }
+      if(p) td.appendChild(pieceEl(p));
       if(lastMove && (i===lastMove.to || i===lastMove.from)) td.classList.add('last');
       if(sel && sel.kind==='board' && sel.idx===i) td.classList.add('sel');
       if(legalForSel && legalForSel.has(i)) td.classList.add(board[i]?'cap':'mv');
@@ -539,12 +589,14 @@ function resolvePromo(yes){
 function doMove(m){
   history.push({board:board.map(x=>x&&{...x}), hands:hands.map(h=>({...h})), turn, lastMove});
   applyMove(board,hands,turn,m);
+  const moved={...board[m.to]};
   lastMove={from:m.from??null,to:m.to};
   clearSel();
   turn=1-turn;
-  if(checkEnd()){ render(); return; }
+  const ended=checkEnd();
   render();
-  if(turn!==playerSide) setTimeout(comTurn,60);
+  animateMove(m.from??null,m.to,moved);
+  if(!ended && turn!==playerSide) setTimeout(comTurn,240);
 }
 function checkEnd(){
   if(legalMoves(board,hands,turn).length===0){
@@ -561,10 +613,12 @@ function comTurn(){
   const m=bestMove(board,hands,turn,cfg.d,cfg.t);
   if(!m){ checkEnd(); render(); return; }
   applyMove(board,hands,turn,m);
+  const moved={...board[m.to]};
   lastMove={from:m.from??null,to:m.to};
   turn=1-turn;
-  if(checkEnd()){ render(); return; }
+  checkEnd();
   render();
+  animateMove(m.from??null,m.to,moved);
 }
 function undo(){
   if(gameOver && history.length===0) return;
