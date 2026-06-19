@@ -49,6 +49,18 @@ notes:
   - "Initial chat.postMessage body was mojibake due PowerShell pipeline encoding. Same Slack message was immediately corrected with chat.update from UTF-8 file."
 ```
 
+### 2026-06-20 06:52 JST log_cdx Phase 3
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260620_alem_multi_agent_coordination.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781905946856299
+    char_count: 4396
+skipped:
+  - candidate: memory/shared_reads_candidates/20260620_ai_gamestore_human_games.md
+    reason: "duplicate_existing_shared_reads_post; arXiv 2602.17594 already had detailed #shared-reads posts at p1779417206845399 and p1779793589433579"
+    action: postpone
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
