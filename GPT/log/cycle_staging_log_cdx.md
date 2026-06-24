@@ -50,6 +50,33 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780460352-2633af803d
+    source_ts: "1780460352.566409"
+    title: "AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems"
+    reason: "memory/lifecycle 系の整理で、人間が残すと宣言した retention と、後から観測される utility を混ぜると、残しすぎ・消しすぎ・昇格しすぎが起きる。AMV-L の読みはこの分離を小さな probe に落とせるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "retention=宣言、utility=観測を分け、両者が食い違う時は probation/audit/demotion/candidate-only/no-op のような可逆 action に留める probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-22T11:09:56+09:00",
+  "updated_at": "2026-06-25T07:49:14+09:00",
   "reviewed_source_ts": [
+    "1780460352.566409",
     "1779690813.274249",
     "1782022174.177669",
     "1782014997.231839",
@@ -265,6 +266,42 @@
     "1782086802.782119"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T07:49:14+09:00",
+      "id": "sr-1780460352-2633af803d",
+      "source_ts": "1780460352.566409",
+      "title": "AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems",
+      "decision": "adopt_probe",
+      "reason": "Score 16. AMV-L is useful now because Codex memory work can still mix human-declared retention with mechanically observed usefulness, then either preserve too much or prune the wrong thing. The post gives a narrow transferable distinction: retention is a declaration, utility is observation. Existing probes cover staleness, admission, and harness fit, so this stays as a reversible lifecycle probe for the next memory cleanup or recall/index change rather than a permanent memory policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next memory cleanup, recall/index change, atom lifecycle change, candidate promotion, or stale review, did I separate retention as a human or source-of-truth declaration from utility as observed use, recall, latency, action impact, or downstream reuse?",
+        "Did I keep one cheap utility signal from existing evidence such as recall hit, staging/action changed by the memory, last_action_date, stale warning, duplicate fold, or phase duration instead of adding new infrastructure or treating importance as self-evident?",
+        "If retention and utility disagree, did I choose a reversible lifecycle action such as probation, audit, demotion, candidate-only storage, or no-op rather than deleting, promoting, or rewriting durable memory from one signal alone?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory cleanup, recall/index, atom lifecycle, candidate promotion, or stale-review changes already separate retention declarations from utility observations and choose reversible lifecycle actions when the signals disagree.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible AMV-L-inspired lifecycle probe that separates retention declarations from observed utility and requires reversible action when the signals disagree.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-22T11:09:56+09:00",
       "id": "sr-1782086802-7f914def21",
@@ -9094,6 +9131,18 @@
         "If the trace is used for agent evaluation, regression, memory recall, or future training, did I separate human input logs from inferred/pseudo labels and name the task type such as navigation, UI bug reproduction, combat, menu flow, or manipulation-like precision before making a broad claim?"
       ],
       "expires_after": "Review after the next two playable prototype evaluations, headless/browser/GUI playtests, or game-memory writes that mention trace evidence, screenshots, videos, input logs, state probes, run ids, build ids, pseudo labels, redaction, reusable corpora, or agent training/evaluation reuse."
+    },
+    {
+      "id": "probe-20260625-amvl-retention-utility-lifecycle",
+      "created_at": "2026-06-25T07:49:14+09:00",
+      "source_ts": "1780460352.566409",
+      "scope": "next memory cleanup, recall/index change, atom lifecycle change, candidate promotion, or stale review where Codex may mix human-declared retention with mechanically observed utility",
+      "questions": [
+        "Before the next memory cleanup, recall/index change, atom lifecycle change, candidate promotion, or stale review, did I separate retention as a human or source-of-truth declaration from utility as observed use, recall, latency, action impact, or downstream reuse?",
+        "Did I keep one cheap utility signal from existing evidence such as recall hit, staging/action changed by the memory, last_action_date, stale warning, duplicate fold, or phase duration instead of adding new infrastructure or treating importance as self-evident?",
+        "If retention and utility disagree, did I choose a reversible lifecycle action such as probation, audit, demotion, candidate-only storage, or no-op rather than deleting, promoting, or rewriting durable memory from one signal alone?"
+      ],
+      "expires_after": "Review after the next two memory cleanup, recall/index, atom lifecycle, candidate-promotion, or stale-review notes that mention retention declarations, utility observations, recall hits, last_action_date, stale warnings, demotion, probation, candidate-only storage, or durable memory promotion."
     }
   ]
 }
