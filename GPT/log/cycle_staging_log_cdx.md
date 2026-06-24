@@ -17,6 +17,21 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+```yaml
+evaluated_at: "2026-06-25T07:52:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 4
+pass:
+  - "memory/shared_reads_candidates/20260625_goal_playable_patterns_llm_unity.md"
+  - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+fail:
+  - path: "memory/shared_reads_candidates/20260625_sketchar_character_design_genai.md"
+    reason: "GenAI 画像をキャラ設計の中間成果物にする観点は参考止まり。手法と評価の厚みが不足し、現制作サイクルへの適用も間接的。"
+postpone:
+  - path: "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+    reason: "依存順パイプラインは有望だが、abstract ベースでは評価具体例と失敗例が不足。本文確認後に再評価。"
+stale_reviewed: []
+```
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

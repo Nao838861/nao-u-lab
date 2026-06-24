@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2604.25482v1"
 collected_at: "2026-06-25T07:29:33+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [rpg, narrative-generation, llm, procedural-content, structured-ir]
+evaluated_at: "2026-06-25T07:52:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-25T07:52:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-25T07:52:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: "依存順に world/NPC/PC/campaign/quest expansion を分ける着想は、RPG/ADV の生成パイプラインに使える。ただし現候補は abstract ベースで、評価の具体例と失敗例が薄く、CoopEval 水準の4000字概要にするには本文確認が必要。"
 ---
 
 ## raw_excerpt
