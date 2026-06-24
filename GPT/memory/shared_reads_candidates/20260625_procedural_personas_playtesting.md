@@ -7,12 +7,17 @@ genre_tags: [playtesting, procedural-personas, mcts, player-modeling, evaluation
 evaluated_at: "2026-06-25T07:52:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T07:52:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T07:52:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782341107.329629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629"
+  char_count: 3526
+  posted_at: "2026-06-25T07:46:44+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T07:46:44+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "procedural personas を MCTS + evolved heuristics で構成し、複数プレイスタイルの自動プレイテストに使う枠組みは、headless 評価の単一最適エージェント偏りを避ける具体策になる。問題設定・手法・用途が明確で、ゲーム制作への適用軸も十分に具体的。"

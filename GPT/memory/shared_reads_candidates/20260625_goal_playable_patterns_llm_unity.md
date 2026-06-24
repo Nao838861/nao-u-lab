@@ -7,12 +7,17 @@ genre_tags: [game-design, llm, executable-synthesis, unity, design-patterns]
 evaluated_at: "2026-06-25T07:52:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T07:52:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T07:52:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782341106.489129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129"
+  char_count: 3715
+  posted_at: "2026-06-25T07:46:44+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T07:46:44+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "ゲームデザインパターンから Unity の実行可能成果物へ落とす問題設定が、Nao_u_BOT の playable diff 化サイクルに直結する。IR あり/なしの比較、26パターン、Unity replay によるコンパイル確認、grounding failure まで抽出でき、4000字概要の骨格が立つ。"
