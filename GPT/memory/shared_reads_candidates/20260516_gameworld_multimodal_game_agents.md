@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2604.07429
 collected_at: 2026-05-16T17:29:29+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, multimodal-agent, benchmark, playtesting, evaluation]
-evaluated_at: 2026-05-16T17:32:15+09:00
+evaluated_at: 2026-06-20T17:10:00+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-16T17:32:15+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T17:32:15+09:00"
-stale_after: "2026-06-15"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-20T17:10:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-20T17:10:00+09:00"
+stale_after: "2026-07-20"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  ゲーム画面理解を含むエージェント評価という適用先は明確だが、現候補は arXiv 要旨メモと短い断片のみ。
-  ベンチマークの環境数、タスク設計、評価指標、比較結果が未確認で、CoopEval 水準の概要を書く材料が不足している。
+  multimodal game agent 評価という方向は有用だが、候補本文は要旨断片に留まり、環境数、タスク構成、評価指標、比較結果が確認できない。
+  2026-06-20 の stale 再評価時点でも CoopEval 水準の概要に必要な証拠が不足しているため、投稿候補ではなく参照止まりにする。
 
 ---
 

@@ -8,7 +8,7 @@ index or append-only log.
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import json
 import re
 from pathlib import Path
@@ -32,6 +32,8 @@ NEXT_ACTION_BY_STATUS = {
     "failed": "keep_for_reference",
     "needs_review": "evaluate_in_phase2",
 }
+REASSESSMENT_STATUSES = {"postponed", "needs_review"}
+CANONICAL_QUEUE_STATUSES = {"postponed", "needs_review", "ready_to_post"}
 
 
 def parse_frontmatter(text: str) -> tuple[str, str, str] | None:
@@ -164,6 +166,21 @@ def infer_next_action(status: str) -> str:
     return NEXT_ACTION_BY_STATUS.get(status, "evaluate_in_phase2")
 
 
+def parse_date(value: str) -> date | None:
+    if not value:
+        return None
+    normalized = value.strip().strip('"').strip("'")
+    try:
+        return date.fromisoformat(normalized)
+    except ValueError:
+        return None
+
+
+def is_overdue_for_reassessment(status: str, stale_after: str, today: date) -> bool:
+    stale_date = parse_date(stale_after)
+    return status in REASSESSMENT_STATUSES and stale_date is not None and stale_date <= today
+
+
 def set_or_insert_scalar(frontmatter: str, key: str, value: str, after_keys: list[str]) -> str:
     lines = frontmatter.splitlines()
     for index, line in enumerate(lines):
@@ -222,7 +239,7 @@ def should_backfill(fields: dict[str, str], has_posted: bool, include_unreviewed
     return has_posted or bool(fields.get("gate_decision") or fields.get("evaluated_at"))
 
 
-def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed: bool) -> dict[str, object]:
+def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed: bool, today: date) -> dict[str, object]:
     text = path.read_text(encoding="utf-8")
     parsed = parse_frontmatter(text)
     if parsed is None:
@@ -244,6 +261,13 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
             "gate_decision": fields.get("gate_decision"),
             "has_posted": has_posted,
             "has_phase3_skip": has_phase3_skip,
+            "stale_after": fields.get("stale_after", ""),
+            "missing_stale_after": not bool(fields.get("stale_after", "")),
+            "overdue_for_reassessment": is_overdue_for_reassessment(
+                fields.get("status") or fields.get("candidate_status", ""),
+                fields.get("stale_after", ""),
+                today,
+            ),
             "anomalies": [],
         }
 
@@ -292,23 +316,25 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
         frontmatter = set_or_insert_scalar(frontmatter, "last_reviewed_at", f'"{inferred_last_reviewed_at}"', ["status", "candidate_status", "evaluated_at"])
         changed = True
 
-    if not current_last_decision:
+    should_fill_queue_metadata = inferred_status in CANONICAL_QUEUE_STATUSES
+
+    if should_fill_queue_metadata and not current_last_decision:
         frontmatter = set_or_insert_scalar(frontmatter, "last_decision", inferred_last_decision, ["last_reviewed_at", "gate_decision"])
         changed = True
 
-    if not current_evidence:
+    if should_fill_queue_metadata and not current_evidence:
         frontmatter = set_or_insert_scalar(frontmatter, "evidence", f'"{inferred_evidence}"', ["last_decision"])
         changed = True
 
-    if not current_next_action:
+    if should_fill_queue_metadata and not current_next_action:
         frontmatter = set_or_insert_scalar(frontmatter, "next_action", inferred_next_action, ["evidence"])
         changed = True
 
-    if not current_stale_after and inferred_stale_after:
+    if should_fill_queue_metadata and not current_stale_after and inferred_stale_after:
         frontmatter = set_or_insert_scalar(frontmatter, "stale_after", f'"{inferred_stale_after}"', ["evaluated_at", "candidate_status", "status"])
         changed = True
 
-    if not has_supersedes:
+    if should_fill_queue_metadata and not has_supersedes:
         frontmatter = set_or_insert_scalar(frontmatter, "supersedes", "[]", ["stale_after"])
         changed = True
 
@@ -326,6 +352,12 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
         "last_reviewed_at": current_last_reviewed_at or inferred_last_reviewed_at,
         "last_decision": current_last_decision or inferred_last_decision,
         "stale_after": current_stale_after or inferred_stale_after,
+        "missing_stale_after": not bool(current_stale_after or inferred_stale_after),
+        "overdue_for_reassessment": is_overdue_for_reassessment(
+            current_lifecycle_status or inferred_status,
+            current_stale_after or inferred_stale_after,
+            today,
+        ),
         "has_supersedes": has_supersedes or changed,
         "anomalies": anomalies,
     }
@@ -345,11 +377,17 @@ def main() -> int:
         help="also mark candidate files without Phase 2/3 evidence as needs_review",
     )
     parser.add_argument("--dir", type=Path, default=DEFAULT_CANDIDATES_DIR)
+    parser.add_argument(
+        "--today",
+        default=date.today().isoformat(),
+        help="audit date for stale_after overdue checks, in YYYY-MM-DD",
+    )
     args = parser.parse_args()
 
     candidate_dir = args.dir.resolve()
+    today = date.fromisoformat(args.today)
     results = [
-        audit_file(path, args.apply, args.fix_conflicts, args.include_unreviewed)
+        audit_file(path, args.apply, args.fix_conflicts, args.include_unreviewed, today)
         for path in sorted(candidate_dir.glob("*.md"))
         if path.name != "README.md"
     ]
@@ -366,6 +404,13 @@ def main() -> int:
         "skipped_unreviewed": sum(1 for item in results if item["status"] == "skipped_unreviewed"),
         "no_frontmatter": sum(1 for item in results if item["status"] == "no_frontmatter"),
         "status_counts": dict(sorted(status_counts.items())),
+        "missing_stale_after": sum(1 for item in results if item.get("missing_stale_after")),
+        "overdue_for_reassessment": sum(1 for item in results if item.get("overdue_for_reassessment")),
+        "overdue_paths": [
+            item["path"]
+            for item in results
+            if item.get("overdue_for_reassessment")
+        ],
         "anomalies": [item for item in results if item.get("anomalies")],
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))

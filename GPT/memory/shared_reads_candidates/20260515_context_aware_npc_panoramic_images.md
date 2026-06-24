@@ -4,21 +4,31 @@ url: https://arxiv.org/abs/2604.19192
 collected_at: 2026-05-15T15:15:12+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, spatial-context, dialogue, playtesting]
-evaluated_at: 2026-05-15T15:19:33+09:00
+evaluated_at: "2026-06-19T18:37:00+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T15:19:33+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T15:19:33+09:00"
-stale_after: "2026-06-14"
+gate_decision: pass
+posted:
+  ts: "1781862296.833879"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781862296833879"
+  char_count: 4170
+  posted_at: "2026-06-19T18:45:01+09:00"
+candidate_status: posted
+status: posted
+last_reviewed_at: "2026-06-19T18:45:01+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781862296833879"
+stale_after: "2026-07-19"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
   panoramic image、semantic segmentation、scene graph JSON による環境文脈注入という着想は明確で、
-  小型ゲームの状態構造化にも転用できる。ただし候補メモだけでは評価指標・比較条件・失敗例の密度が薄く、
-  Phase 3 の単独投稿にするには追加読解が必要。
+  expert interview と user study まで評価の筋がある。小規模ゲームでも画面/状態を structured JSON に落として NPC 発話へ渡す設計に転用でき、4000字概要を具体例つきで書ける。
+suggested_post_outline:
+  overview_angle: "LLM NPC に人格設定だけでなく、周辺環境を panoramic image から scene graph JSON 化して渡す手法として説明する。"
+  analysis_axis: "panoramic capture、semantic segmentation、object/spatial position、directional vector、structured prompt、expert interview と user study の役割を見る。"
+  application_target: "2D/3D プロトタイプで画面内オブジェクトや位置関係を構造化し、NPC 会話や評価エージェントがゲーム状態に根ざして発話する導線。"
+  pros_cons: "利点は環境に接地した会話と状態参照。弱点は vision pipeline のコスト、誤検出、会話品質が scene graph 粒度に縛られる点。"
+  verdict_pre: "部分採用。まずは画像認識ではなく、既存 game state から scene graph 風 JSON を作る軽量 probe に落とす。"
 
 ---
 

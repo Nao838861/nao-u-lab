@@ -4,14 +4,20 @@ url: https://www.tandfonline.com/doi/full/10.1080/10447318.2026.2632170
 collected_at: 2026-05-18T05:59:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-tools, asset-generation, pipeline, game-production, user-study]
-candidate_status: needs_review
-status: needs_review
-last_reviewed_at: "2026-05-18T05:59:17+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260518_ai_graphical_asset_generation_heuristics.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-06-17"
+evaluated_at: "2026-06-17T14:00:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-17T14:00:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-17T14:00:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-17"
 supersedes: []
+gate_reason: >
+  16名のゲーム開発者・デザイナー調査から、AI asset generation を inspiration、placeholder、refinement、user-made content のどこに置くかを考えられる点は具体的。
+  一方で heuristic の一覧、調査設計、推奨事項の優先度が candidate メモだけでは不足し、Phase 3 投稿には本文からの補強が必要。
 
 ---
 

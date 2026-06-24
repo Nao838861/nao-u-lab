@@ -3,9 +3,15 @@ phase: 2
 name: 分析
 focus: candidate の品質判定 + ゲーム制作への適用性評価
 estimated_time: 15-30 min
-inputs: [Phase 1 staging, shared_reads_candidates/]
+inputs: [Phase 1 staging, Phase 4a stale_review_batch, shared_reads_candidates/]
 outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクション]
 ---
+
+## stale_review_batch 再評価契約 (2026-06-19)
+
+Phase 4a が staging に `stale_review_batch` を残している場合、Phase 2 は通常の新規 candidate 評価より先にその batch を処理する。batch は最大 5 件を目安に、game production に直結する候補を優先する。`status: posted` / `status: failed` は再評価対象から外し、`postponed` / `needs_review` だけを扱う。
+
+再評価後は staging の `stale_reviewed` だけでなく、該当 candidate の frontmatter も閉じる。`pass` は `ready_to_post`、`fail` は `failed`、`postpone` は `postponed` に更新し、`last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` を合わせて更新する。永続 queue index は作らず、正本は per-file frontmatter と staging handoff に限定する。
 
 # Phase 2: 分析
 
@@ -18,6 +24,7 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 ## やること
 
 1. staging file の Phase 1 セクションを読み、収集された candidate を確認
+   - Phase 4a が `stale_review_batch` を残している場合は、通常の新規 candidate 評価の前に少数だけ再評価する。`status` が `posted` / `failed` のものは除外する。candidate 本体の frontmatter は、この Phase 2 の再評価結果が出るまで変更しない。
 2. 各 candidate について以下を判定:
    - **手法の重要要素** (問題設定・着想・手法の中核・評価の中身・結論) が抽出できるか
    - **ゲーム制作の具体場面で適用できるか** (抽象すぎず、こじつけすぎず)
@@ -49,6 +56,11 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
    pass: [<path>, ...]
    fail: [{path: <path>, reason: <短く>}, ...]
    postpone: [{path: <path>, reason: <短く>}, ...]
+   stale_reviewed:
+     - path: <path>
+       previous_status: postponed | needs_review
+       decision: pass | fail | postpone
+       updated_stale_after: "YYYY-MM-DD"
    ```
 
 ## やらないこと

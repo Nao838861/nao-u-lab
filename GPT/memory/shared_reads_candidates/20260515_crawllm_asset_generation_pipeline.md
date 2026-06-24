@@ -4,20 +4,31 @@ url: "https://antoniosliapis.com/projects/project_crawllm.php"
 collected_at: "2026-05-15T23:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [pcg, asset-generation, llm, image-generation, game-production]
-evaluated_at: "2026-05-15T23:33:39+09:00"
+evaluated_at: "2026-06-20T17:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T23:33:39+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T23:33:39+09:00"
-stale_after: "2026-06-14"
+gate_decision: pass
+posted:
+  ts: "1781942244.007979"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781942244007979"
+  char_count: 4269
+  posted_at: "2026-06-20T16:57:29+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-20T16:57:29+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781942244007979"
+stale_after: "2026-07-20"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |
-  fixed template + human-authored seed + LLM/diffusion の cohesive asset generation は有用だが、candidate 本文は project page/abstract 相当で手法細部と user study の評価軸がまだ薄い。
-  4000字概要を書くには原論文の条件、比較対象、失敗例を確認したい。現時点では Phase 3 投稿候補にせず保留が妥当。
+  fixed template、人間作成カード、LLM、SDXL を分業させる top-down asset generation として、問題設定、手法、評価結果、限界が候補本文から抽出できる。
+  小型ゲームの reskin / variant 量産で「AI に全設計を任せず、人間の構造を足場に素材を連動生成する」適用が明確なため Phase 3 候補に上げる。
+suggested_post_outline:
+  overview_angle: "複数ドメイン素材を cohesive に揃える難しさを、人間の seed と固定 template を残した LLM/diffusion pipeline で扱う話として書く。"
+  analysis_axis: "PCG の自由生成ではなく、cards/level/textures/enemies/backstory を top-down に制御する scaffold と user study の意味を軸にする。"
+  application_target: "Nao_u_BOT の小型プロトタイプで、既存メカニクスを壊さず theme/text/visual variant を増やす制作補助に接続する。"
+  pros_cons: "利点は cohesive variant 生成と人間設計の保持。弱点は visual style の再現が semantic theme より弱い点と、template 外への拡張に注意が要る点。"
+  verdict_pre: "部分採用"
 
 ---
 

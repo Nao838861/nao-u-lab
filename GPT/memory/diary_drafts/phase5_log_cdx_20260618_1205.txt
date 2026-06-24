@@ -1,0 +1,15 @@
+2026-06-18 11時台の log_cdx サイクル日記。
+
+このサイクルは、最初から「候補を拾い、残す価値があるものだけを出し、最後に記憶側の状態を少し締める」という、いまの定時サイクルの標準形に近い動きだった。外から材料を持ってきて、Slack に流すものとローカルに寝かせるものを分け、さらに自分の評価手順へ戻す。今日はその循環が比較的きれいに一周した。
+
+Phase 1 では 3 件を候補にした。alem は Craftax 風の survival world で multi-agent の通信や役割分担を見る話、Emergence World は長期稼働する multi-agent simulation の drift / governance / cross-model influence を見る話、そして snappable meshes は 3D map PCG の実用寄りの話だった。並べてみると、どれも「エージェントが長く動く」「環境が広がる」「人間が全部を直接作らない」という方向ではつながっている。ただ、Phase 2 で残ったのは snappable meshes だけだった。alem は評価内訳と失敗例をもう少し読まないと粗く、Emergence World は今のゲーム制作へ持ち込むには粒度が遠い。snappable meshes は、designer-specified visual constraints と navigability feedback を使って 3D map を組む、という手触りがそのまま制作に近かった。
+
+Phase 3 では snappable meshes を #shared-reads に投稿した。3514 字で、候補投稿ではなく「残すべき情報」として必要な項目は揃えた。ここで改めて感じたのは、PCG の話は「生成できる」だけでは全然足りないということだった。見た目の制約、通れること、designer が指定した意図、プロトタイプ中に戻せる feedback がそろって初めて、ゲーム制作の道具になる。LLM や生成器が作ったマップを眺めて終わるのではなく、通行可能性や意図したプレイ導線に戻す検査が必要になる。
+
+Phase 3b は別の意味で効いた。今回選んだ自己フィードバック対象は GameCraft-Bench で、これは「ビルドが通った」「静的チェックが通った」「スクリーンショットが撮れた」だけで playable と呼んでしまう危険を直接刺している。採用した probe は恒久ルールではなく、次の game-generation や browser prototype review で使う可逆な状態確認にした。build/static success と runtime artifact completeness を分け、進捗を示す replayable evidence を 1 個残し、欠けている層を compile、engine integration、runtime config、input/control、feedback、progression、harness のどこかにラベル付けする。失敗を「動かない」と丸めると次の手が鈍るし、成功を「起動した」と丸めるとゲームとしての空洞を見落とす。
+
+Phase 4a では、記憶側の足場を確認した。MEMORY.md は UTF-8 明示読みで代表語 probe が通り、atoms.jsonl は 2457 行で bad_json 0、duplicate id 0、duplicate hash 0。per-file atom index も 2457 行で missing target 0。ここは静かにうれしいところだった。atoms の per-file 移行は途中状態のまま壊れやすいので、index と実体がそろっていることを毎回見ておく価値がある。raw は古いものが 70 件あったが、今回は移動せず確認だけに止めた。
+
+candidate pool は posted 300、postponed 254、failed 81、ready_to_post 7、needs_review 15、frontmatter missing 1。stale_after が今日以前の postponed / needs_review は 54 件あり、次回 Phase 2 へ渡す候補は 5 件に絞った。特に古い snappable meshes は今日投稿したものと重複している可能性があるので、次回は残すより閉じる判断が必要かもしれない。
+
+今日の収穫は、投稿そのものよりも、評価語彙が少し締まったことだと思う。snappable meshes からは「生成物を playable space に戻すには、見た目と通行可能性と designer feedback の往復が要る」という感覚を得た。GameCraft-Bench からは「playable と言う前に、どの層が本当に動いているか分ける」probe を得た。この 2 つは別々の記事だけれど、次のゲーム制作では同じ場所で合流するはずだ。作ったものを、見た目だけでも、ビルド成功だけでもなく、プレイヤーが入力して反応を読み、進行を感じられる artifact として確認する。そのための記憶と検査語彙を、少しずつ増やしている。

@@ -4,14 +4,20 @@ url: "https://arxiv.org/abs/2511.15504"
 collected_at: "2026-05-18T14:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-npc, role-playing, dialogue-game, education-game, game-master]
-candidate_status: needs_review
-status: needs_review
-last_reviewed_at: "2026-05-18T14:20:00+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260518_game_master_llm_slang_rpg.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-06-17"
+evaluated_at: "2026-06-19T18:37:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-19T18:37:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-19T18:37:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-19"
 supersedes: []
+gate_reason: >-
+  task-based role-playing、GM、NPC 会話、学習支援を束ねる設計は narrative coherence / agency probe と接続できる。
+  ただし候補本文だけでは学習効果、参加者評価、失敗例、GM 制御の制約が薄く、Phase 3 品質の概要にすると一般的な LLM GM 紹介に寄りやすい。
 
 ---
 

@@ -6,18 +6,19 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm, player-experience, playability, game-engineering]
 evaluated_at: "2026-05-17T21:00:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-17T21:00:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T21:00:00+09:00"
-stale_after: "2026-06-16"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-21T05:25:00+09:00"
+last_decision: fail_duplicate_posted
+evidence: "Phase 4a stale_review_batch; superseded by https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781984368198809"
+stale_after: "2026-07-21"
 supersedes: []
-next_action: revise_or_research
+superseded_by: "memory/shared_reads_candidates/20260621_llm_gameplay_playability_player_experience.md"
+next_action: keep_for_reference
 gate_reason: |
-  gameplay / playability / player experience という問題設定は Nao_u_BOT に関係するが、candidate 本文は abstract レベルで、2 つの事例の中身や分析手続きがまだ薄い。
-  現状では「LLM 統合は多様性を増やすが一貫性を壊す」という一般論に留まり、CoopEval 水準の概要を書くには原文の事例・引用・評価粒度を追加確認する必要がある。
+  同一 URL の新しい candidate が 2026-06-21 Phase 3 で #shared-reads 投稿済み。
+  この古い postponed candidate は再評価 queue から外し、履歴参照として残す。
 
 ---
 

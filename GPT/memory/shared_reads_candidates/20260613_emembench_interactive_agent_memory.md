@@ -1,0 +1,27 @@
+---
+title: "EMemBench: Interactive Benchmarking of Episodic Memory for VLM Agents Through Games"
+url: "https://arxiv.org/abs/2601.16690"
+collected_at: "2026-06-13T04:10:00+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [agent-memory, evaluation, game-benchmark, vlm, interactive-games]
+evaluated_at: "2026-06-13T04:05:39+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-13T04:05:39+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-13T04:05:39+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-13"
+supersedes: []
+gate_reason: |-
+  trajectory から episodic memory 評価質問を作る着想は、Nao_u_BOT の playtest trace や記憶評価にかなり接続しやすい。
+  ただし候補本文には質問生成手順、環境構成、評価指標、主要結果、失敗例がなく、CoopEval 水準の概要には届かない。原文を読んで評価設計を補うまで保留。
+---
+
+## raw_excerpt
+arXiv:2601.16690。検索結果の要旨では、EMemBench は interactive games を通じて agent の long-term / episodic memory を評価する programmatic benchmark として説明されている。固定質問セットを使うのではなく、各 agent が実際に辿った trajectory から質問を生成し、text game と visual game environment の両方を対象にする点が特徴。ゲーム環境での体験履歴、視覚観測、行動列をもとに、agent が自分の過去経験をどれだけ保持し、後続判断や回答へ使えるかを見る設計として拾った。既存の静的 QA ではなく、interactive な実行ログから memory 問題を作るため、memory の有無を game loop の中で測れる候補。
+
+## why_relevant_to_games
+Nao_u_BOT の cycle staging、atoms、candidate、playtest trace を「後で使える記憶」にできているかを、ゲーム内 trajectory ベースで評価する発想に接続できる。

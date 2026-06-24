@@ -9,16 +9,15 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-17T14:20:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T14:20:00+09:00"
-stale_after: "2026-06-16"
+last_reviewed_at: "2026-06-21T05:25:00+09:00"
+last_decision: postpone_stale_batch
+evidence: "Phase 4a stale_review_batch; keep for minority Phase 2 reevaluation"
+stale_after: "2026-07-21"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
-  問題設定、procedural personas の着想、MCTS + evolved heuristics という中核、
-  level corpus 上で複数プレイスタイルを比較する評価、PCG/playtest への結論が分離している。
-  Nao_u_BOT の headless playtest に直接落とせるため、Phase 3 の CoopEval 水準概要にできる。
+  procedural personas / automated playtesting は headless 評価に近く、Phase 4a stale_review_batch では少数再評価対象。
+  ただし投稿済み候補や 20260616 版との重複があるため、次回 Phase 2 で新規差分と本文密度を確認してから扱う。
 phase3_postpone_reason: >-
   Phase 3 で重複確認したところ、同論文は 2026-05-15T05:08:59+09:00 に
   Log_cdx が #shared-reads へ概要版を投稿済みだった

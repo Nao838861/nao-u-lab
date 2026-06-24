@@ -13,6 +13,9 @@ last_reviewed_at: "2026-05-15T03:20:00+09:00"
 last_decision: postpone
 evidence: "gate_decision:postpone; evaluated_at:2026-05-15T03:20:00+09:00"
 stale_after: "2026-06-14"
+stale_review_state: reevaluate_in_phase2
+stale_review_reason: "Phase 4a stale_review_batch: co-creative game design は制作サイクルの設計判断に近いため、本文の具体性が足りなければ fail、具体的な観察があれば再評価する。"
+last_stale_reviewed_at: "2026-06-21T08:30:00+09:00"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >

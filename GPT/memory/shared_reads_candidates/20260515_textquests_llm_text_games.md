@@ -13,6 +13,9 @@ last_reviewed_at: "2026-05-15T01:02:01+09:00"
 last_decision: postpone
 evidence: "gate_decision:postpone; evaluated_at:2026-05-15T01:02:01+09:00"
 stale_after: "2026-06-14"
+stale_review_state: reevaluate_in_phase2
+stale_review_reason: "Phase 4a stale_review_batch: LLM text game 評価は agent の探索・状態保持・失敗分析の材料として使える可能性があるため、Phase 2 で再評価する。"
+last_stale_reviewed_at: "2026-06-21T08:30:00+09:00"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-

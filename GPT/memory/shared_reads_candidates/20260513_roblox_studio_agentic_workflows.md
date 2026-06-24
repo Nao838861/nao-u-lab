@@ -4,22 +4,25 @@ url: https://about.roblox.com/ko/newsroom/2026/04/roblox-studio-going-agentic
 collected_at: 2026-05-13T00:02:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-agent, playtesting, production-workflow, mcp]
-evaluated_at: 2026-05-13T00:18:00+09:00
+evaluated_at: "2026-06-17T14:00:00+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-13T00:18:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-13T00:18:00+09:00"
-stale_after: "2026-06-12"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-17T14:00:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-17T14:00:00+09:00"
+stale_after: "2026-07-17"
 supersedes: []
-next_action: revise_or_research
-gate_reason: >
+next_action: keep_for_reference
+previous_gate_reason: >
   plan-build-test と playtesting agent beta は Nao_u 環境の制作ループに直結するが、
   現状候補メモは製品発表ベースで、評価の中身が adoption 数字とロードマップ中心に留まる。
   Phase 3 の ~4000字投稿にするには、実運用例や失敗条件の補強が必要。
 
+gate_reason: >
+  plan-build-test と playtesting agent beta は制作ループの参考になるが、現状の材料は Roblox の製品発表と機能紹介に寄っている。
+  手法、評価、失敗条件が不足し、~4000字の「残すべき」共有投稿にすると宣伝ニュースの要約になりやすい。
 ---
 
 ## raw_excerpt

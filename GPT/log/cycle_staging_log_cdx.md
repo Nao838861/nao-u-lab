@@ -1,27 +1,12 @@
-# log_cdx Cycle Staging — 2026-06-20 18:43
+# log_cdx Cycle Staging — 2026-06-25 07:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-### 2026-06-20 18:44 JST
-- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
-- 既存確認: `memory/raw/web_research/results.jsonl` の直近 arXiv 収集と、`memory/atoms.jsonl` / Slack raw の直近 shared-reads 済み URL を確認。
-- 収集 candidate:
-  - `memory/shared_reads_candidates/20260620_autobg_board_game_design_assistant.md` — AutoBG。ボードゲーム制作を ideation / rulebook generation / MDA critic / persona feedback に分ける AI-assisted design workflow。
-  - `memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md` — pcsp。自然言語 persona を frozen embedding にし、shared RL policy で多数 NPC を real-time に制御する研究。
+(Phase 1 が書き込む)
 
 ## Phase 2: 分析
-### 2026-06-20 18:46 JST
-```yaml
-total_candidates: 2
-pass:
-  - memory/shared_reads_candidates/20260620_autobg_board_game_design_assistant.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
-    reason: "手法要素は強いが、RL substrate/training pipeline 前提が重く、現行制作サイクルへ直接落とすには軽量 probe 化の追加確認が必要。"
-stale_reviewed: []
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

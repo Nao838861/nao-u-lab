@@ -19,7 +19,7 @@ from atom_related_candidates import (
     build_related_candidate_rows,
     write_jsonl as write_related_jsonl,
 )
-from atoms_fileformat import sync_per_file_atoms
+from atoms_fileformat import apply_canonical_overlay, load_canonical_overlay, sync_per_file_atoms
 from memory_game_task_facets import build_game_task_entry_points
 
 
@@ -304,7 +304,8 @@ def cutoff_ts(days: int) -> float:
 
 def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
     visible_atoms = [atom for atom in atoms if is_index_visible(atom)]
-    display_atoms = memory_lifecycle.fold_atoms(visible_atoms)
+    display_source_atoms = apply_canonical_overlay(visible_atoms, load_canonical_overlay(ATOMS_DIR))
+    display_atoms = memory_lifecycle.fold_atoms(display_source_atoms)
     atoms_sorted = sorted(display_atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
     recent = sorted(display_atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
     by_tag: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -327,8 +328,10 @@ def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
         f"- generated: {generated}",
         f"- atoms: {len(atoms)}",
         f"- index-visible atoms after routine layer filter: {len(visible_atoms)}",
-        f"- display atoms after lifecycle/content fold: {len(display_atoms)}",
-        f"- folded by lifecycle/content metadata: {len(visible_atoms) - len(display_atoms)}",
+        f"- atoms after canonical overlay fold: {len(display_source_atoms)}",
+        f"- display atoms after canonical overlay + lifecycle/content fold: {len(display_atoms)}",
+        f"- folded by canonical overlay metadata: {len(visible_atoms) - len(display_source_atoms)}",
+        f"- folded by lifecycle/content metadata: {len(display_source_atoms) - len(display_atoms)}",
         f"- scanned shared-reads rows: {source_count}",
         "",
         "## High Signal",

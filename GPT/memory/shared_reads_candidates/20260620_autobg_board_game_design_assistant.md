@@ -7,12 +7,17 @@ genre_tags: [game-design, board-game, ai-assisted-design, playtesting, rulebook,
 evaluated_at: "2026-06-20T18:46:26+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-20T18:46:26+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-20T18:46:26+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1781744311.743629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744311743629"
+  char_count: 3535
+  posted_at: "2026-06-18T09:58:31+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-20T19:07:00+09:00"
+last_decision: posted_existing_duplicate
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744311743629"
+next_action: none
 stale_after: "2026-07-20"
 supersedes: []
 gate_reason: |-

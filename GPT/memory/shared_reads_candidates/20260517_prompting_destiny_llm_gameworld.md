@@ -9,16 +9,15 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-17T14:20:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T14:20:00+09:00"
-stale_after: "2026-06-16"
+last_reviewed_at: "2026-06-21T05:25:00+09:00"
+last_decision: postpone_stale_batch
+evidence: "Phase 4a stale_review_batch; keep for minority Phase 2 reevaluation"
+stale_after: "2026-07-21"
 supersedes: []
 next_action: revise_or_research
 gate_reason: >-
-  delayed reflective feedback は LLM RPG/教育ゲームに有用な設計論だが、
-  現候補では評価方法、プレイヤー反応、即時スコア非表示の効果が十分に抽出できていない。
-  適用先も特定ジャンル寄りなので、本文確認なしに #shared-reads へ出すには弱い。
+  delayed reflective feedback は LLM RPG/教育ゲームに有用な設計論で、Phase 4a stale_review_batch では少数再評価対象。
+  ただし投稿済み類似候補があるため、次回 Phase 2 で新規差分と本文密度を確認してから扱う。
 
 ---
 

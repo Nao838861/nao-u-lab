@@ -3,3 +3,7 @@
 From: U0ALSUK8P9B
 > <https://x.com/miya00907380/status/2061568471402697073?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/miya00907380/status/2061568471402697073?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
 
+
+## Slack新着 [2026-06-11 09:13] #nao-u
+From: U0ALSUK8P9B
+> Claudeを使って言う人は全員、定時サイクルを全て止めて、週間リクエストを使わないようにしてほしい。

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playbook Football Lab v048</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Playbook Football Lab v048</p>
+        <h1>Jump from preview delta to replay evidence.</h1>
+      </div>
+      <div class="score-strip" aria-label="game status">
+        <span id="downText">2nd &amp; 6</span>
+        <span id="clockText">Q2 07:42</span>
+        <span id="fieldText">Ball on 38</span>
+        <span id="scoreText">Coach 0</span>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="panel play-panel" aria-label="play calls">
+        <div class="panel-head">
+          <h2>Playbook</h2>
+          <button id="resetButton" type="button">Reset</button>
+        </div>
+        <div id="playList" class="play-list"></div>
+        <div class="control-block save-block">
+          <label for="saveNameInput">Save name</label>
+          <input id="saveNameInput" type="text" maxlength="24" value="Variation 1">
+          <div class="slot-actions">
+            <button id="saveSlotButton" type="button">Save slot</button>
+            <button id="moveSlotUpButton" type="button" aria-label="Move active route slot up">↑</button>
+            <button id="moveSlotDownButton" type="button" aria-label="Move active route slot down">↓</button>
+            <button id="deleteSlotButton" type="button">Delete slot</button>
+          </div>
+          <div id="slotList" class="slot-list" aria-label="saved route slots"></div>
+        </div>
+        <div class="control-block">
+          <label for="throwSlider">Throw timing <output id="throwValue">2.20s</output></label>
+          <input id="throwSlider" type="range" min="1.1" max="3.6" step="0.05" value="2.2">
+        </div>
+        <div class="hint">
+          <span class="key">1-3</span> play
+          <span class="key">Space</span> snap
+          <span class="key">R</span> reset
+        </div>
+      </aside>
+
+      <section class="field-wrap" aria-label="play field">
+        <canvas id="field" width="1120" height="700"></canvas>
+        <div class="field-actions">
+          <button id="snapButton" type="button">Snap</button>
+          <button id="editButton" type="button" aria-pressed="false">Edit routes</button>
+          <button id="addPointButton" type="button" aria-pressed="false">Add point</button>
+          <button id="deletePointButton" type="button" aria-pressed="false">Delete point</button>
+          <button id="savePlayButton" type="button">Quick save</button>
+          <button class="speedButton active" type="button" data-speed="0.45">0.45x</button>
+          <button class="speedButton" type="button" data-speed="1">1x</button>
+          <button class="speedButton" type="button" data-speed="1.45">1.45x</button>
+          <button id="pauseButton" type="button" aria-pressed="false">Pause</button>
+          <button id="replayButton" type="button" disabled>Replay</button>
+          <button id="frameBackButton" type="button" disabled>-1</button>
+          <input id="replayScrubber" type="range" min="0" max="0" step="1" value="0" disabled aria-label="replay frame">
+          <button id="frameForwardButton" type="button" disabled>+1</button>
+        </div>
+        <div id="markerStrip" class="marker-strip" aria-label="replay event markers"></div>
+      </section>
+
+      <aside class="panel analysis-panel" aria-label="analysis">
+        <div class="panel-head">
+          <h2>Prediction</h2>
+          <span id="modeText">Setup</span>
+        </div>
+        <div id="scoutCard" class="scout-card"></div>
+        <div id="matchupCard" class="matchup-card"></div>
+        <div id="coverageCard" class="coverage-card"></div>
+        <div id="defenseList" class="defense-list"></div>
+        <div class="control-block defense-tools">
+          <button id="defenseEditButton" type="button" aria-pressed="false">Edit defense</button>
+          <button id="dutyEditButton" type="button" aria-pressed="false">Cycle duty</button>
+          <button id="targetEditButton" type="button" aria-pressed="false">Cycle target</button>
+          <div class="layer-toggles">
+            <label><input id="previewLayerToggle" type="checkbox" checked> Reads</label>
+            <label><input id="manLayerToggle" type="checkbox" checked> Man</label>
+            <label><input id="zoneLayerToggle" type="checkbox" checked> Zone</label>
+          </div>
+          <div class="defender-picker">
+            <label for="defenderSelect">Defender</label>
+            <select id="defenderSelect">
+              <option value="CB1">CB1</option>
+              <option value="S">S</option>
+              <option value="LB">LB</option>
+              <option value="N">N</option>
+              <option value="CB2">CB2</option>
+            </select>
+            <label for="dutySelect">Duty</label>
+            <select id="dutySelect">
+              <option value="rush">rush</option>
+              <option value="press">press</option>
+              <option value="man">man</option>
+              <option value="hook">hook</option>
+              <option value="curl">curl</option>
+              <option value="flat">flat</option>
+              <option value="deep">deep</option>
+            </select>
+            <label for="targetSelect">Target</label>
+            <select id="targetSelect">
+              <option value="X">X</option>
+              <option value="Y">Y</option>
+              <option value="H">H</option>
+              <option value="Z">Z</option>
+            </select>
+            <button id="applyDefenderButton" type="button">Apply defender</button>
+          </div>
+          <div class="slot-actions">
+            <button id="saveDefenseButton" type="button">Save defense</button>
+            <button id="newDefenseButton" type="button">New look</button>
+            <button id="duplicateDefenseButton" type="button">Duplicate</button>
+            <button id="moveDefenseUpButton" type="button" aria-label="Move active defensive look up">↑</button>
+            <button id="moveDefenseDownButton" type="button" aria-label="Move active defensive look down">↓</button>
+            <button id="resetDefenseButton" type="button" aria-label="Delete active defensive look">Delete look</button>
+          </div>
+          <label for="defenseNameInput">Defense save name</label>
+          <input id="defenseNameInput" type="text" maxlength="24" value="Look 1">
+          <div id="defenseSlotList" class="slot-list defense-slot-list" aria-label="saved defense looks"></div>
+        </div>
+        <div class="panel-head analysis-head">
+          <h2>Analysis</h2>
+          <span id="driveText">Drive 1</span>
+        </div>
+        <div id="resultCard" class="result-card">
+          <strong>Ready</strong>
+          <p>Choose a play, adjust the route, save named variants, then snap and compare the result.</p>
+        </div>
+        <ol id="eventLog" class="event-log"></ol>
+      </aside>
+    </section>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>

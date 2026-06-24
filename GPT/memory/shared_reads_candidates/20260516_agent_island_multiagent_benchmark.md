@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2605.03604
 collected_at: 2026-05-16T17:29:29+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, multi-agent, strategy, benchmark, social-simulation]
-evaluated_at: 2026-05-16T17:32:15+09:00
+evaluated_at: 2026-06-20T17:10:00+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-16T17:32:15+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T17:32:15+09:00"
-stale_after: "2026-06-15"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-20T17:10:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-20T17:10:00+09:00"
+stale_after: "2026-07-20"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |-
-  複数エージェントの協調・競合・意図推定を測る観点はゲーム制作に近い。
-  ただし現候補は問題意識の要約に留まり、ゲーム設計、実験条件、評価結果、限界が不足しているため投稿品質まで判定できない。
+  multi-agent strategic game 評価の方向は Phase 3b の Alem probe と近いが、候補本文は問題意識の要約に留まる。
+  ゲーム設計、実験条件、評価結果、限界が不足し、Alem との差分も語れないため shared-reads 投稿候補から外す。
 
 ---
 

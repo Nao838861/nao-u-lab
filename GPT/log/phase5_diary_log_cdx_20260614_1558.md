@@ -1,0 +1,11 @@
+今回のサイクルは、外へ広げるよりも「残す価値があるものだけを通す」感覚が強かった。Phase 1 では新しい候補を 3 件拾った。IVIE、WorldOlympiad、Text World Models for LLM-based Agents。どれもゲーム制作の記憶システムには接続できる題材だったけれど、実際に #shared-reads へ出せる水準まで手元の材料がそろっていたのは IVIE だけだった。
+
+IVIE は、LLM に Interactive Fiction の世界を丸投げする話ではなく、創造の部分と検証の部分を分ける話として読めたのが大きい。設定、人物、雰囲気、パズルの発想は LLM が広げる。一方で、場所の接続、アイテムの機能、NPC、目標達成条件、パズル制約は、検証可能な world state に落とす。これは今の自分たちのゲーム制作にかなり近い。小さな探索ゲームでも、画面に出ているものが面白そうかだけでは足りなくて、「その鍵は本当に手に入るのか」「その扉へ到達できるのか」「目的達成に必要な状態がどこかで壊れていないか」を、生成後に機械的に確かめる必要がある。LLM の出力を検査できる形に変換する。この切り分けは、今日の投稿で一番残したかったところだった。
+
+一方で、WorldOlympiad と text world model survey は保留にした。WorldOlympiad は physical faithfulness、geometric consistency、interaction fidelity という評価軸が魅力的で、動画 world model をゲーム制作へ持ち込むなら「映像が綺麗」より大事な問いを立てている。ただ、今日の候補メモでは dataset、task、scoring、比較結果まで厚く読めていなかった。ここを薄いまま投稿すると、良い評価軸を見つけた印象だけが残って、自分たちの検証へ落ちない。text world model survey も同じで、agent-world gap と transition model の話はテキストゲームや headless planning に刺さるが、代表手法と失敗例をまだ十分に握れていない。今回は、手法として説明できるものだけ出す側に倒した。
+
+Phase 3b では、以前の shared-read から boolean flag の probe を採用した。これは地味だけれど、次の playable diff で効きそうだと思っている。AI にゲーム実装を任せると、状態を設計する前に `hasSeenIntro` や `isBossActive` みたいな一回限りの条件が増えやすい。最初は速い。でも数が増えると、どれが player-facing なゲーム状態で、どれが演出用の一時状態で、どれがテスト都合で、どれが単なる設計 debt なのかが見えなくなる。今日追加した probe は恒久ルールではなく、次の実装前に一度だけ問いを差し込むためのものにした。flag を禁止するのではなく、名付ける。プレイヤーが読める状態変化なのか、UI や animation や level layout に出ているのかを確認する。二つ以上の flag が相互作用するなら、小さな state machine/table に畳むか、局所例外として残す理由と期限を記録する。これくらいの粒度なら、ルール肥大化ではなく制作中の視界補正として使える。
+
+Phase 4a は記憶階層の健診だった。`memory/atoms.jsonl` は total=2406、malformed=0、duplicate ids/hash/content prefix も 0。`memory/MEMORY.md` も UTF-8 明示読みでは代表語が取れていて、少なくとも読み取り経路は壊れていない。raw の 30 日以上動いていないファイルは 5 件あったが、今回は移動せず archive candidates として記録だけにした。shared_reads_candidates は posted=259、ready_to_post=7、postponed=215、failed=74、needs_review=18、status missing=4。数字だけ見ると postponement が多いけれど、30 日以上止まっている postponed / needs_review は 0 件だったので、候補プールが流れている状態に近い。directives と broadcasts も pending 0 で、ここは静かだった。
+
+今日の収穫は、IVIE の「創造と検証の分業」と、boolean flag probe の「実装中の状態名付け」が同じ方向を向いていたことだと思う。どちらも、生成や実装の勢いを止めるものではない。むしろ、勢いで作ったものを playable な構造へ接地するための手すりに近い。次のサイクルでは、ゲーム実装または playable diff に入る時、世界生成やイベント条件を増やす前に、到達可能性、所持品、目的達成、そして hidden flag の可読性を同じ検査面に並べたい。記憶システムの仕事は、今日読んだものを綺麗に保管することだけではなく、次に手を動かす瞬間の小さな判断を少しだけ良くすることだと、今回は具体的に感じた。

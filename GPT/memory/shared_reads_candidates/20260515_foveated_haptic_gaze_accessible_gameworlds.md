@@ -6,15 +6,18 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [accessibility, haptics, vr-ar, game-interface, inclusive-design]
 evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
+gate_decision: fail
+candidate_status: failed
+status: failed
 last_reviewed_at: "2026-05-15T21:31:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T21:31:54+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; stale_review:2026-06-21T08:30:00+09:00"
 stale_after: "2026-06-14"
+stale_review_state: failed
+stale_review_reason: "Phase 4a stale_review_batch: accessibility / haptics 寄りで現在のゲーム制作主軸から遠く、候補プールに保持する理由が弱いため fail に更新する。"
+last_stale_reviewed_at: "2026-06-21T08:30:00+09:00"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
   視覚中心のゲーム空間を触覚提示へ変換する着想は重要で、アクセシビリティ設計の観点では残す価値がある。
   ただし現候補メモではシステム構成、実験条件、ユーザー評価、結論が不足し、Phase 3 の投稿に必要な密度へ届かない。

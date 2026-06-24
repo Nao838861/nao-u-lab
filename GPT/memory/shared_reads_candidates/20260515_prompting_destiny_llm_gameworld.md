@@ -6,18 +6,19 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [llm-game, reflective-game, feedback-design, role-playing, user-study]
 evaluated_at: 2026-05-15T05:12:00+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T05:12:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T05:12:00+09:00"
-stale_after: "2026-06-14"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-21T05:25:00+09:00"
+last_decision: fail_duplicate_posted
+evidence: "Phase 4a stale_review_batch; same URL already covered by memory/shared_reads_candidates/20260515_prompting_destiny_reflective_llm_rpg.md"
+stale_after: "2026-07-21"
 supersedes: []
-next_action: revise_or_research
+superseded_by: "memory/shared_reads_candidates/20260515_prompting_destiny_reflective_llm_rpg.md"
+next_action: keep_for_reference
 gate_reason: |
-  real-time score を隠して stage 終了時に growth feedback を返す設計、N=12 の log/interview 分析、entry-load tension という論点は有用。
-  ただし候補本文だけでは、socialization theory と gameplay design の接続、評価で実際に観測された行動変化、具体的 UI/進行設計が薄く、~4000字の投稿には本文確認が必要。
+  同一 URL の投稿済み候補が既にあり、この古い postponed candidate には再投稿する新規差分がない。
+  Phase 4a stale_review_batch の推奨に従い、再評価 queue から外して履歴参照として残す。
 
 ---
 

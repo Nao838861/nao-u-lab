@@ -21,7 +21,7 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定)]
 1. `memory/MEMORY.md` の index 行で broken link 確認
 2. `memory/atoms.jsonl` の重複・矛盾の有無を確認
 3. `memory/raw/` の古いファイルでアーカイブすべきもの (30 日以上動きがない原文等)
-4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。30 日以上動きがない `postponed` / `needs_review` candidate は fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する
+4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。`postponed` / `needs_review` candidate は mtime や filename date ではなく `stale_after` を優先し、`stale_after <= 今日` のものを fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する。`posted` / `failed` は原則として再評価 queue から外す。再評価に送る場合は、最大 5 件程度を `stale_review_batch` として staging に残し、Phase 2 が少数処理できる handoff にする
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
 
 ## encoding-safe audit contract
@@ -60,6 +60,12 @@ issues:
 recommendation:
   needs_design: true | false  # Phase 4b を起動すべきか
   priority_issues: [<id>, ...]  # 4b で扱うべき issue (多くても 1-3 件)
+stale_review_batch:
+  - path: <memory/shared_reads_candidates/...md>
+    status: postponed | needs_review
+    stale_after: "YYYY-MM-DD"
+    priority_reason: <Phase 2 に送る理由>
+    recommended_review_action: reevaluate_in_phase2 | explicit_keep | fail
 ```
 
 ## やらないこと

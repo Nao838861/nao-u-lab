@@ -4,20 +4,20 @@ url: "http://arxiv.org/abs/2512.17308v1"
 collected_at: "2026-05-15T21:29:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, strategy-game, llm-agent, content-generation, evaluation]
-evaluated_at: "2026-05-15T21:31:54+09:00"
+evaluated_at: "2026-06-20T17:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T21:31:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T21:31:54+09:00"
-stale_after: "2026-06-14"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-20T17:10:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-20T17:10:00+09:00"
+stale_after: "2026-07-20"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: |
-  題材はターン制戦略ゲームと LLM エージェント評価に直結しており、ゲーム制作への適用可能性は高い。
-  ただし現候補メモだけでは、具体的な評価設定・比較対象・結果・生成コンテンツの妥当性が不足し、CoopEval 水準の概要を書くには根拠が薄い。
+  ターン制戦略ゲームの状態表現と LLM 行動選択という適用先は明確だが、候補本文には評価設定、比較対象、結果、生成コンテンツの妥当性がない。
+  題材依存の面白さに対して投稿品質の根拠が薄く、再評価後も 4000 字概要へ展開できないため failed に閉じる。
 
 ---
 

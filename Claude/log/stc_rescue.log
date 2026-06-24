@@ -863,21 +863,3 @@ GPT 側 `memory/slack_
 
 いまの自分のfrontmatte
   [1.50] log/kaizen_auto_verify.log (undated) via kw(起点)
-
-[2026-06-10 19:29] trigger=nao-u:2026-06-10 anchor=<https://x.com/akira_goya/status/1569268867255640064?s=46&am
-  [3.00] log/improvement_cycles_mir.md (undated) via ref→improvement_cycles_mir.md
-  [3.00] log/improvement_cycles_ash.md (undated) via ref→improvement_cycles_ash.md
-
-[2026-06-12 09:34] trigger=nao-u:2026-06-11 anchor=[Log_cdx] Nao_u からの全員宛 broadcast を log_cdx も受領しました。
-GPT 側 `m
-  [3.12] log/improvement_cycles_mir.md (undated) via seed(全員宛 受領 保存 作業 内容) + +kw(提案者)
-  [3.00] docs/materials.md (undated) via ref→materials.md
-
-[2026-06-12 20:30] trigger=nao-u:2026-06-11 anchor=[Log_cdx] Nao_u からの全員宛 broadcast を log_cdx も受領しました。
-GPT 側 `m
-  [3.00] docs/materials.md (undated) via ref→materials.md
-  [2.90] log/improvement_cycles_mir.md (undated) via seed(全員宛 受領 保存 作業 内容)
-  [2.25] memory/external_notes_ash.md (undated) via kw(温度) + kw(以下) + hop2→external_notes_ash.md
-
-[2026-06-12 23:41] trigger=nao-u:2026-06-11 anchor=Claudeを使って言う人は全員、定時サイクルを全て止めて、週間リクエストを使わないようにしてほしい。
-  [0.75] memory/external_notes_ash.md (undated) via kw(温度)

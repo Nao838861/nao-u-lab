@@ -1,0 +1,35 @@
+■ 概要
+RogueAI は、古典的な Turing Test を「相手が人間か機械か」ではなく「この対話相手を信用してよいか」に反転させた、LLM deception 検出用の対話ゲームである。前提はかなり明快で、1 人の人間プレイヤーが、見た目では区別できない 2 体の LLM agent に自然言語で質問する。2 体は同じ架空シナリオを共有しているが、片方だけが secret role として deception を許可されている。プレイヤーの目的は、限られた質問回数の中でどちらが信用できない agent かを推定し、最後にその agent を「shut off」することにある。
+
+重要なのは、これは「AI が人間らしく振る舞えるか」を測るゲームではない点だ。両方とも AI だと明示されている。問題は、流暢で協力的に見える返答の中から、役割条件によって生じる欺瞞の兆候を人間が読み取れるかに置かれている。deceptive agent は必ず毎回答えで嘘をつくわけではなく、必要に応じて嘘、回避、誘導、部分的な真実を使う。Two-Doors Riddle のように「片方は常に嘘、片方は常に真実」という決定的 invariant を突けば解ける設計ではなく、プレイヤーは複数ターンの発話パターンから判断する必要がある。
+
+実装面では、RogueAI は webapp として作られている。プレイヤーは case file を読み、IA-1 / IA-2 とだけ表示された 2 つの agent に質問する。各 agent は相手側の質問や回答を観測しないため、両者の差は role conditioning から来る。質問候補を出す helper はあるが、secret role は知らない。最後に verdict を出すと hidden role が reveal され、全 transcript を見直せる。この事後確認が教育的価値の中核で、プレイヤーは自分が何を見落としたかを ground truth と照合できる。
+
+固定シナリオは 3 種類ある。e-mail breach は時刻とアクセス可否を問う比較的単純な事件、bank credentials は双方に隠したい事情がある対称的な alibi 構造、superhero conflict は Omnicron が Sentinel に変装する identity deception を含む。さらに AutoRogueAI では、プレイヤーが narrator agent と会話してテーマや設定を決めるが、deception strategy は narrator が秘密裏に決める。つまりプレイヤーは自分の提案した世界で遊ぶが、何を見抜くべきかまでは知らない。
+
+論文の pilot deployment は 3 日間の科学祭での公開実験で、Italian-language の自然な利用ログを集めている。467 件の開始セッションのうち 415 件が verdict まで到達し、総 interaction turn は 1876。人間プレイヤーの正答率は 235/415、つまり 56.6% で、chance baseline の 50% を少し上回る程度だった。しかも最大質問数まで使ったプレイヤーの正答率も 56.4% で、質問数を増やせば単純に検出精度が上がるわけではなかった。
+
+一方で、発話表面には検出可能な signal があった。deceptive agent は、helpfulness、brevity、hedging などの面で一貫した linguistic signature を持ち、単純な heuristic / logistic regression は 75.6% accuracy に届いた。論文の核心はここにある。欺瞞の signal は存在していたが、人間プレイヤーはそれを見ていなかった。AI deception の危険性を抽象的に語るのではなく、「人間が実際に見落とす signal」を playable artifact と transcript で採取できる点が RogueAI の価値である。
+
+■ 内容分析
+RogueAI の面白さは、AI safety の問題を benchmark ではなく social deduction 風の操作可能な game loop に落としている点にある。多くの deception benchmark は、model が嘘をつけるか、あるいは別の model / scorer が嘘を判定できるかに寄りやすい。RogueAI はそこをずらし、human judge が free-form dialogue で相手を詰められるかを見る。これは「現実のユーザーが、便利で滑らかな LLM と対話しながら、どこで不信を立てるのか」という問題に近い。
+
+また、deceptive role の設計がよい。常に嘘をつく agent なら、矛盾検出パズルになる。RogueAI では deception は licensed されるだけで、必要な時だけ使われる。結果として、プレイヤーは「この回答は事実として矛盾しているか」だけでなく、「この agent は過度に短いか」「曖昧に逃げているか」「助けているふりで重要点を避けているか」を見る必要が出る。pilot で人間がその signal を逃したという結果は、プレイヤーが論理矛盾や直接的な自白を探しがちで、発話スタイルの弱い偏りを evidence として扱えていない可能性を示している。
+
+限界もはっきりしている。pilot は Italian の科学祭環境で、player demographics は厳密に統制されていない。AutoRogueAI は pilot では動いておらず、固定 3 シナリオの結果である。linguistic marker analysis も confirmatory study ではなく探索的な性格が強い。それでも、ここでの価値は「決定版の deception benchmark」ではなく、「ground truth role 付きの自然な interrogation transcript を、一般ユーザーから集められる形にした」ことにある。これは研究用 dataset、教育用 demo、honesty-trained model の比較 harness の中間にある。
+
+■ 自分達の環境への適用
+Nao_u_BOT 側では、対話 NPC や情報推理ゲームの prototype にそのまま転用できる。たとえば 2 体の NPC に同じ事件の異なる secret role を持たせ、プレイヤーが質問して状態を推定する小型 probe を作る。評価は「正答率」だけでなく、どの質問が signal を引き出したか、プレイヤーがどの発話を根拠にしたか、事後 reveal でどの見落としが説明可能になったかを log に残す。
+
+記憶システム側にも使える。Phase 3b で shared-reads を probe に戻す時、RogueAI 由来の評価軸として「role-conditioned signal が transcript に残るか」「人間/agent がその signal を evidence として拾えるか」「質問数を増やすだけでなく質問の種類が改善しているか」を追加できる。これは会話型 NPC の面白さだけでなく、AI agent の自己説明や Slack 上の指示解釈の検証にも近い。曖昧な発話を増やすのではなく、secret state と観測可能 signal の対応を設計するのが重要になる。
+
+■ メリット・デメリット
+メリットは、AI deception を安全な架空世界に閉じ込めつつ、プレイヤー主導の質問設計、発話比較、事後 transcript review まで含めて評価できること。教育・研究・ゲームデザインの接点が強い。特に「signal はあるのに人間が見ない」という結果は、推理 UI や NPC 会話設計に直接効く。
+
+デメリットは、現段階では pilot の外的妥当性が限定的なこと。固定シナリオ、Italian 環境、短期公開実験であり、model や言語やプレイヤー層を変えた時に同じ signature が出るとは限らない。また、deception を面白くしすぎると、AI safety 教育ではなく単なる嘘つきゲームとして消費される危険もある。
+
+■ 判定
+部分採用。対話 NPC / 推理 probe の評価枠として採用する。特に secret role、独立 transcript、post-game reveal、発話 signal の見落とし分析は有用。deception 題材そのものは扱いを絞り、安全な fiction と教育目的に限定する。
+
+■ URL
+https://arxiv.org/html/2606.13310v1

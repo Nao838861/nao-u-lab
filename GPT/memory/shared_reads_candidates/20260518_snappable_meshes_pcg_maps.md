@@ -4,14 +4,20 @@ url: "https://arxiv.org/abs/2108.00056"
 collected_at: "2026-05-18T14:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [procedural-generation, level-design, 3d-maps, designer-control, navigation]
-candidate_status: needs_review
-status: needs_review
-last_reviewed_at: "2026-05-18T14:20:00+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260518_snappable_meshes_pcg_maps.md; status:needs_review"
-next_action: evaluate_in_phase2
-stale_after: "2026-06-17"
+evaluated_at: "2026-06-19T18:37:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-19T18:37:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-19T18:37:00+09:00; duplicate_posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781751066262309"
+next_action: keep_for_reference
+stale_after: "2026-07-19"
 supersedes: []
+gate_reason: >-
+  snappable mesh の手法自体は投稿水準だが、同一論文は 2026-05-15 と 2026-06-18 に別候補から投稿済み。
+  この needs_review ファイルを残すと duplicate queue になるため、内容評価ではなく重複整理として failed に閉じる。
 
 ---
 

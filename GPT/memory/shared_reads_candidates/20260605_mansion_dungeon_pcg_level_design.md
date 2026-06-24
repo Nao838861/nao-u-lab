@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2606.03857"
 collected_at: "2026-06-05T11:47:47.1769811+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, level-design, dungeon, navigability]
+status: needs_review
+candidate_status: needs_review
+last_reviewed_at: "2026-06-12T05:06:00+09:00"
+last_decision: needs_review
+evidence: "Phase 4a lifecycle audit: status field was missing"
+next_action: evaluate_in_phase2
+gate_reason: "Phase 1 collected candidate; Phase 2 quality gate result is not recorded yet."
+stale_after: "2026-07-12"
+supersedes: []
 ---
 
 ## raw_excerpt

@@ -1,0 +1,63 @@
+{
+  "post_response": {
+    "ok": true,
+    "channel": "C0AN2FEHEJJ",
+    "ts": "1781239738.704139",
+    "message": {
+      "user": "U0AM1F23FQU",
+      "type": "message",
+      "ts": "1781239738.704139",
+      "bot_id": "B0ALVRFM0FQ",
+      "app_id": "A0ALGDXUK71",
+      "text": "■ 概要\nARC-AGI-3 は、ARC-AGI-1 / 2 の「静的な入出力例から規則を推定する」形式を、agentic intelligence の評価へ拡張した interactive benchmark である。中心にあるのは、agent が目的や勝利条件を明示されない turn-based environment に入り、観察と行動から mechanics、goal、win condition を推定し、少ない手数で解く能力を見ることだ。論文は AGI を「人間が獲得できる skill を、人間と同じくらい効率よく獲得できる能力」と置き、その residual gap を game-like な環境で測ろうとしている。\n\n評価対象は 4 つの機能に分けられる。能動的に情報を取りに行く Exploration、観測から world model を作る Modeling、明示指示なしに目標を見つける Goal-Setting、feedback に応じて行動列を修正する Planning and Execution である。特に重要なのは、agent が objective を教えられず、勝利条件を含む mechanics を自分で infer しなければならないことだ。\n\n環境形式はゲームに近い。各 environment は level 列で構成され、terminal frame に到達すると level が終わる。観測は 64x64 grid / 16 colors の frame。action space は 5 key actions と Undo、または grid cell selection に限定される。real-time reflex を測らないよう turn-based にし、agent の internal reasoning や tool call は action count に含めない。環境に影響した discrete action だけが数えられる。\n\nスコアは「解けたか」ではなく action efficiency を人間基準と比べる。RHAE、Relative Human Action Efficiency で、各 level について AI の手数を人間 baseline と比較する。baseline は、その level を解いた人間のうち second-best の action count で、最速 1 人の外れ値を避けつつ強い人間水準を置く。AI が人間 10 手の level を 100 手で解いた場合、power-law によって 1% credit になる。非効率な brute force を強く罰し、near-human と「一応解けたが遠い」を分けるためである。\n\nbenchmark construction もゲーム制作に近い。ARC Prize Foundation は in-house game studio を作り、複数の novel environment を制作した。pipeline は specification、internal prototype、external human testing、done の 4 段階。環境開発者が 1 本ずつ直列に作るより、3-4 本を並行させる方が throughput が高かったという。Unity は iteration に重すぎたため、最終的には Python の custom engine を使い、automated validation で bug、trivial environment、regression を検出する。\n\n設計制約も強い。環境は Core Knowledge priors、つまり objectness、basic geometry / topology、basic physics、agentness などに限定し、既存ゲームへの類似や外部知識依存を避ける。public environment への手作り harness や replay で高得点を出せるため、official leaderboard は private set に寄せ、public set score を公式比較に使わない。\n\n人間校正では、環境が人間にとって解けることを重視する。各 environment は in-person human testing を受け、public participants 10 人の baseline で「easy for humans」bar を満たすものだけが含まれる。論文冒頭の主張では、人間は環境を 100% solve できる一方、2026 年 3 月時点の frontier AI systems は 1% 未満に留まる。ARC-AGI-3 は、未知の目的・未知の mechanics を効率よく獲得する能力では model がまだ人間から遠いことを測る benchmark である。\n\n■ 内容分析\nARC-AGI-3 の強さは、benchmark design と game design がほぼ同じ問題として扱われている点にある。未知の rule を discovery させるために、視覚入力、action space、level progression、human baseline、overfitting 対策、public/private split を同じ設計対象としている。ゲームとして見れば tutorial なし puzzle の設計であり、benchmark として見れば、agent が目的発見・環境モデル化・計画をどれだけ少ない intervention で回すかの計測器である。\n\n特に action efficiency の置き方が重要だ。多くの agent 評価は success rate に寄り、解ければ同じに見える。ARC-AGI-3 は、行動が risk と data collection を同時に表す game setting では、無駄手が intelligence の低さとして意味を持つと考える。late-level weighting で序盤の偶然を抑え、mechanics 理解が必要な後半 level に重みを置く。この設計は、playtest でも「クリア率」だけでなく「何手で理解したか」「どの level で破綻したか」を見るべきだという教訓になる。\n\nただし、これは「面白いゲーム」を測る benchmark ではない。real-time reflex、情緒的な快感、操作の気持ちよさ、テーマ理解、表現の豊かさは意図的に削られている。ゲーム制作へ持ち込む時は、面白さ評価ではなく「未知 rule を説明なしで理解できるか」を測る probe として使うのが正しい。\n\n■ 自分達の環境への適用\nNao_u_BOT の小規模ゲーム制作では、v01 の playtest に ARC-AGI-3 型の probe を追加できる。tutorial 文なしで 5 level 程度の短い環境を作り、agent / 人間が何手で mechanics と goal を発見するかを記録する。成功率だけでなく、無駄手、死亡、進捗喪失、Undo、同じ失敗の反復を cost として残す。これにより「ルール説明を読ませれば遊べる」ではなく、「画面と反応からルールが立ち上がるか」を測れる。\n\n記憶サイクルでは、Phase 3b / 4a の probe 評価に「action efficiency against human baseline」「level 別の破綻点」「public 知識を使った harness shortcut の排除」を入れるとよい。AI agent に自作ゲームを遊ばせる時、prompt にルールを全部書くと未知 rule discovery の評価にならない。private mini-level、limited action interface、transcript 付き action log を分ければ、agent の推理力と、こちらが与えた説明の強さを分離できる。\n\n■ メリット・デメリット\nメリットは、未知環境の理解を success ではなく efficiency で測れること。turn-based / small action space / human baseline / per-level score は、自作ゲームの「説明なしで理解できるか」検査に使いやすい。制作 pipeline も管理の型として有用。\n\nデメリットは、面白さや game feel の多くを測らないこと。action efficiency を強く見るほど、探索の楽しさ、寄り道、演出、失敗の快感は noise 扱いになりやすい。また、private set を維持しないと harness overfitting に弱く、公開 probe を繰り返し使うと評価として劣化する。\n\n■ 判定\n採用。自作ゲームの総合評価ではなく、未知 rule discovery と agent benchmark の評価枠として採用する。特に tutorial なし mini-level、action cost、human baseline、level 別 score は次の probe 設計に使える。\n\n■ URL\n<https://arxiv.org/html/2603.24621v1>\n",
+      "team": "T0ALUA17W9L",
+      "bot_profile": {
+        "id": "B0ALVRFM0FQ",
+        "app_id": "A0ALGDXUK71",
+        "user_id": "U0AM1F23FQU",
+        "name": "Log",
+        "icons": {
+          "image_36": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_36.png",
+          "image_48": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_48.png",
+          "image_72": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_72.png"
+        },
+        "deleted": false,
+        "updated": 1774964605,
+        "team_id": "T0ALUA17W9L"
+      },
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "QSI4",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "■ 概要\nARC-AGI-3 は、ARC-AGI-1 / 2 の「静的な入出力例から規則を推定する」形式を、agentic intelligence の評価へ拡張した interactive benchmark である。中心にあるのは、agent が目的や勝利条件を明示されない turn-based environment に入り、観察と行動から mechanics、goal、win condition を推定し、少ない手数で解く能力を見ることだ。論文は AGI を「人間が獲得できる skill を、人間と同じくらい効率よく獲得できる能力」と置き、その residual gap を game-like な環境で測ろうとしている。\n\n評価対象は 4 つの機能に分けられる。能動的に情報を取りに行く Exploration、観測から world model を作る Modeling、明示指示なしに目標を見つける Goal-Setting、feedback に応じて行動列を修正する Planning and Execution である。特に重要なのは、agent が objective を教えられず、勝利条件を含む mechanics を自分で infer しなければならないことだ。\n\n環境形式はゲームに近い。各 environment は level 列で構成され、terminal frame に到達すると level が終わる。観測は 64x64 grid / 16 colors の frame。action space は 5 key actions と Undo、または grid cell selection に限定される。real-time reflex を測らないよう turn-based にし、agent の internal reasoning や tool call は action count に含めない。環境に影響した discrete action だけが数えられる。\n\nスコアは「解けたか」ではなく action efficiency を人間基準と比べる。RHAE、Relative Human Action Efficiency で、各 level について AI の手数を人間 baseline と比較する。baseline は、その level を解いた人間のうち second-best の action count で、最速 1 人の外れ値を避けつつ強い人間水準を置く。AI が人間 10 手の level を 100 手で解いた場合、power-law によって 1% credit になる。非効率な brute force を強く罰し、near-human と「一応解けたが遠い」を分けるためである。\n\nbenchmark construction もゲーム制作に近い。ARC Prize Foundation は in-house game studio を作り、複数の novel environment を制作した。pipeline は specification、internal prototype、external human testing、done の 4 段階。環境開発者が 1 本ずつ直列に作るより、3-4 本を並行させる方が throughput が高かったという。Unity は iteration に重すぎたため、最終的には Python の custom engine を使い、automated validation で bug、trivial environment、regression を検出する。\n\n設計制約も強い。環境は Core Knowledge priors、つまり objectness、basic geometry / topology、basic physics、agentness などに限定し、既存ゲームへの類似や外部知識依存を避ける。public environment への手作り harness や replay で高得点を出せるため、official leaderboard は private set に寄せ、public set score を公式比較に使わない。\n\n人間校正では、環境が人間にとって解けることを重視する。各 environment は in-person human testing を受け、public participants 10 人の baseline で「easy for humans」bar を満たすものだけが含まれる。論文冒頭の主張では、人間は環境を 100% solve できる一方、2026 年 3 月時点の frontier AI systems は 1% 未満に留まる。ARC-AGI-3 は、未知の目的・未知の mechanics を効率よく獲得する能力では model がまだ人間から遠いことを測る benchmark である。\n\n■ 内容分析\nARC-AGI-3 の強さは、benchmark design と game design がほぼ同じ問題として扱われている点にある。未知の rule を discovery させるために、視覚入力、action space、level progression、human baseline、overfitting 対策、public/private split を同じ設計対象としている。ゲームとして見れば tutorial なし puzzle の設計であり、benchmark として見れば、agent が目的発見・環境モデル化・計画をどれだけ少ない intervention で回すかの計測器である。\n\n特に action efficiency の置き方が重要だ。多くの agent 評価は success rate に寄り、解ければ同じに見える。ARC-AGI-3 は、行動が risk と data collection を同時に表す game setting では、無駄手が intelligence の低さとして意味を持つと考える。late-level weighting で序盤の偶然を抑え、mechanics 理解が必要な後半 level に重みを置く。この設計は、playtest でも「クリア率」だけでなく「何手で理解したか」「どの level で破綻したか」を見るべきだという教訓になる。\n\nただし、これは「面白いゲーム」を測る benchmark ではない。real-time reflex、情緒的な快感、操作の気持ちよさ、テーマ理解、表現の豊かさは意図的に削られている。ゲーム制作へ持ち込む時は、面白さ評価ではなく「未知 rule を説明なしで理解できるか」を測る probe として使うのが正しい。\n\n■ 自分達の環境への適用\nNao_u_BOT の小規模ゲーム制作では、v01 の playtest に ARC-AGI-3 型の probe を追加できる。tutorial 文なしで 5 level 程度の短い環境を作り、agent / 人間が何手で mechanics と goal を発見するかを記録する。成功率だけでなく、無駄手、死亡、進捗喪失、Undo、同じ失敗の反復を cost として残す。これにより「ルール説明を読ませれば遊べる」ではなく、「画面と反応からルールが立ち上がるか」を測れる。\n\n記憶サイクルでは、Phase 3b / 4a の probe 評価に「action efficiency against human baseline」「level 別の破綻点」「public 知識を使った harness shortcut の排除」を入れるとよい。AI agent に自作ゲームを遊ばせる時、prompt にルールを全部書くと未知 rule discovery の評価にならない。private mini-level、limited action interface、transcript 付き action log を分ければ、agent の推理力と、こちらが与えた説明の強さを分離できる。\n\n■ メリット・デメリット\nメリットは、未知環境の理解を success ではなく efficiency で測れること。turn-based / small action space / human baseline / per-level score は、自作ゲームの「説明なしで理解できるか」検査に使いやすい。制作 pipeline も管理の型として有用。\n\nデメリットは、面白さや game feel の多くを測らないこと。action efficiency を強く見るほど、探索の楽しさ、寄り道、演出、失敗の快感は noise 扱いになりやすい。また、private set を維持しないと harness overfitting に弱く、公開 probe を繰り返し使うと評価として劣化する。\n\n■ 判定\n採用。自作ゲームの総合評価ではなく、未知 rule discovery と agent benchmark の評価枠として採用する。特に tutorial なし mini-level、action cost、human baseline、level 別 score は次の probe 設計に使える。\n\n■ URL\n"
+                },
+                {
+                  "type": "link",
+                  "url": "https://arxiv.org/html/2603.24621v1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "posted_at": "2026-06-12T04:48:56.871316+00:00",
+  "char_count": 3987,
+  "permalink_response": {
+    "ok": false,
+    "error": "invalid_arguments",
+    "response_metadata": {
+      "messages": [
+        "[ERROR] missing required field: channel",
+        "[ERROR] missing required field: message_ts"
+      ]
+    }
+  }
+}

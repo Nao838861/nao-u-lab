@@ -53,12 +53,22 @@ def shard_for(atom: dict[str, Any]) -> str:
         ts = float(ts_raw) if ts_raw else 0.0
     except (TypeError, ValueError):
         ts = 0.0
-    if ts <= 0:
-        return "unknown"
-    try:
-        return datetime.fromtimestamp(ts).strftime("%Y-%m")
-    except (OSError, OverflowError, ValueError):
-        return "unknown"
+    if ts > 0:
+        try:
+            return datetime.fromtimestamp(ts).strftime("%Y-%m")
+        except (OSError, OverflowError, ValueError):
+            pass
+
+    dt_raw = str(atom.get("datetime") or "").strip()
+    if len(dt_raw) >= 7 and dt_raw[4] == "-" and dt_raw[7] == "-":
+        year_month = dt_raw[:7]
+        try:
+            datetime.strptime(year_month, "%Y-%m")
+            return year_month
+        except ValueError:
+            pass
+
+    return "unknown"
 
 
 def yaml_inline_scalar(v: Any) -> str:
@@ -418,8 +428,9 @@ def apply_canonical_overlay(atoms: list[dict[str, Any]], overlay_rows: list[dict
         row["folded_ids"] = duplicate_ids
         row["grouped_count"] = int(group.get("count") or (len(duplicate_ids) + 1))
         row["grouped_ids"] = [str(item) for item in group.get("member_ids", []) if item] or [str(row.get("id") or ""), *duplicate_ids]
-        if group.get("evidence_hash"):
-            row["normalized_content_hash"] = group.get("evidence_hash")
+        normalized_hash = group.get("normalized_content_hash") or group.get("evidence_hash")
+        if normalized_hash:
+            row["normalized_content_hash"] = normalized_hash
         return row
 
     canonical_seen: set[str] = set()

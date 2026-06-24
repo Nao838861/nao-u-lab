@@ -4,21 +4,24 @@ url: https://arxiv.org/abs/2603.27896
 collected_at: 2026-05-13T00:02:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm, player-experience, playability, game-engineering, quality-risk]
-evaluated_at: 2026-05-13T00:18:00+09:00
+evaluated_at: "2026-06-17T14:00:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-13T00:18:00+09:00"
+last_reviewed_at: "2026-06-17T14:00:00+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-13T00:18:00+09:00"
-stale_after: "2026-06-12"
+evidence: "gate_decision:postpone; evaluated_at:2026-06-17T14:00:00+09:00"
+stale_after: "2026-07-17"
 supersedes: []
 next_action: revise_or_research
-gate_reason: >
+previous_gate_reason: >
   LLM を game architecture component として見て、correctness / difficulty calibration / structural coherence を問う観点は有用。
   ただし候補メモだけでは 2 projects の中身や autoethnographic analysis の具体例が薄く、Phase 3 の高密度投稿には追加読解が必要。
 
+gate_reason: >
+  LLM を game architecture component として扱い、correctness、difficulty calibration、structural coherence を評価対象に戻す観点は有用。
+  ただし candidate メモだけでは 2 projects の中身と autoethnographic analysis の証拠が薄く、CoopEval 水準の概要には本文読解が必要。
 ---
 
 ## raw_excerpt

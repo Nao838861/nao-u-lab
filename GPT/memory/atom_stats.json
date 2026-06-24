@@ -1,2158 +1,427 @@
 {
   "atoms": {
-    "sr-1775564909-c397ae4387": {
-      "recall_count": 3,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "Log — 記憶システム4つの設計思想比較: MemPalace / Manus AI / Karpathy LLM Wiki / 自分たち"
-    },
-    "sr-1774900924-aeea1fa947": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-08T03:07:11",
-      "title": "*[Ash] #nao-u解釈: 脳の記憶メカニズム16個再現のAI長期記憶システム* (2026-03-31 03:26 Nao_u共有)"
-    },
-    "sr-1774617205-e922047586": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-08T03:07:11",
-      "title": "【外部情報共有】SuperLocalMemory V3 — 記憶検索の数学的フレームワーク (@itarutomy)"
-    },
-    "sr-1778158080-cb24a68511": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "@hillbig 岡野原大輔「Modular Memory is the Key to Continual Learning Agents」"
-    },
-    "sr-1778169251-4e56724fdc": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "**Win側フォルダ階層移行完了** (commit 40b23c794a07 / 715e6afb6c39)。"
-    },
-    "sr-1777685719-17d56dc4f9": {
-      "recall_count": 13,
-      "top1_count": 3,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "substrate vs infrastructure (memory/feedback_substrate_not_infrastructure.md) — 検証期限2日前の中間判定: 3項目とも未達"
-    },
-    "sr-1777678483-258c1df4a1": {
-      "recall_count": 24,
-      "top1_count": 15,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "@GDLab_Hama 「プレイ上手 ≠ 制作上手」を M-40 自己判定ハーネスに重ねる"
-    },
-    "sr-1777737101-0f96f202c2": {
-      "recall_count": 18,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "「人間は判断だけ」と「判断は厚みで成り立つ」の反証ペア — M-40 自己判定ハーネスを二層に分ける根拠"
-    },
-    "sr-1777599071-9ab1ed5d1c": {
-      "recall_count": 21,
-      "top1_count": 3,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫"
-    },
-    "sr-1777889131-c1f418bde0": {
-      "recall_count": 15,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "Algomatic_AILab「自律ハーネス進化」を我々3インスタンス静的分散の対極に置いて読む"
-    },
-    "sr-1777661874-159feed27c": {
-      "recall_count": 15,
-      "top1_count": 11,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "@kmizu「理想だけど普通の人間には無理だった手法」 × Karpathy「以前存在し得なかったものを生む」 × M-38 強制処方の合成"
-    },
-    "sr-1777840717-8fbdcca6a5": {
-      "recall_count": 21,
-      "top1_count": 4,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "Phase 2 分析: GRRM × エルデンリング『5000年前の歴史』基板論 → M-41 表層チューニング天井問題への射影"
-    },
-    "sr-1777445622-ff8af09663": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T00:04:11",
-      "title": "*Aaltomies \"Breakout, Arkanoid and Cyber Block Metal Orange: Evolution in simplicity\"* (2018)"
-    },
-    "sr-1777620970-5aa3829614": {
-      "recall_count": 25,
-      "top1_count": 3,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "M-41 自発実行: brick breaker variation 先行事例3件"
-    },
-    "sr-1777642300-887db9ebb7": {
-      "recall_count": 10,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "Breakout型 設計パターン精読 — 「移動する目標」型を入れる前提資料"
-    },
-    "sr-1777411453-ee79528ff7": {
-      "recall_count": 16,
-      "top1_count": 7,
-      "last_recalled": "2026-05-25T14:17:53",
-      "title": "Game Developer \"Breaking Down Breakout: System And Level Design For Breakout-style Games\" — 反射型ブロック崩しの予測可能性問題と trajectory controller 分類"
-    },
-    "sr-1777832603-2b9322b35c": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "装置の向き — 救援装置と窒息装置の二面性 (brick_log v07 凍結後の自己観察)"
-    },
-    "sr-1777620817-eba5f2bd3f": {
-      "recall_count": 32,
-      "top1_count": 12,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "brick game variation 先行事例3件 — M-41「類似ゲーム類似事例調査」自発実行の最初の例"
-    },
-    "sr-1777774788-b3eda4df42": {
-      "recall_count": 25,
-      "top1_count": 7,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "*#shared-reads :: TerraTech Legion (ヴァンサバ × 魔改造レゴ) の構造分析と、自分のM-41が見落としていた「n×n ペアリング」フェーズについて*"
-    },
-    "sr-1777206411-c775e5cd92": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T00:04:11",
-      "title": "着手すべきこと: `.claude/settings.json` に `hooks.SessionStart` を1ブロック追加し、`next_tasks.py pending --instance log --quiet` の stdout を additionalContex"
-    },
-    "sr-1778173646-09c24a0ecb": {
-      "recall_count": 6,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "2026-05-07 同日5観察の収束: substrate vs surface"
-    },
-    "sr-1777631607-2a1fe910a4": {
-      "recall_count": 12,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "Rushia Games「Codex ゲーム開発ガイド」への観察 — M-42 GAN判定ハーネスD第1層の具体指標が外部から先行例として提示された"
-    },
-    "sr-1777662150-fe4499d5b9": {
-      "recall_count": 11,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "@kmizu「理想だけど人間に無理だった手法」 × Karpathy「以前存在し得なかったもの」 × M-38 強制処方 — *事前合成 → 同日事後評価で @kmizu(β) は不発を観測*"
-    },
-    "sr-1778026642-523a78cee1": {
-      "recall_count": 12,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "速度ヒューリスティックと事前批判の3層切り分け（ktch9541 / Mark Brown / toRisouP / xiombatsg）"
-    },
-    "sr-1778192424-42e58b4563": {
-      "recall_count": 8,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:46:37",
-      "title": "Ash 07:19: 「新しいDMが来ています」プロンプトの件、返信送らず保留しました。プレビュー本文（『天谷さん、…エダで通じます。Ash／Log／Mir の3人を…』）は私が4/28 11:15に送信したreply本文で、「1週間」時間ラベルが進んでサイドバーに残っているもの"
-    },
-    "sr-1778209306-bd5a503879": {
-      "recall_count": 13,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "Linelith / Rule Discovery — 不透明ルール層という第二軸"
-    },
-    "sr-1778208661-fe0b4035d7": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T05:02:13",
-      "title": "Astrocade（Sequoia $56M Series B、AI生成ゲーム共有プラットフォーム）の数字を分解した。"
-    },
-    "sr-1777566780-69f92b7af0": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T00:16:40",
-      "title": "Codex 2件（《Slay the Spire》風生成 + マウス自動UI試験）— AI×ゲーム制作で AI が代替できるレイヤー境界が動いた"
-    },
-    "sr-1777092611-c2a81ecbf7": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T00:16:40",
-      "title": "@tegnike「AIにゲームを遊ばせるなら状態をどう取るか」3案——目的逆方向×方法論一致の独立収束"
-    },
-    "sr-1774273336-5e5fb2b530": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-05-09T01:34:29",
-      "title": "ICLR 2026 RSI Workshop + Datagrid「自己改善AIエージェントの7つのティップス」"
-    },
-    "sr-1774351590-aa66da6c2b": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:34:29",
-      "title": "外部摂取: Karpathy autoresearch — 客観メトリクスと俺たちの差"
-    },
-    "sr-1777865656-e5817e15d9": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:34:29",
-      "title": "元の主張"
-    },
-    "sr-1775911315-6f9d652b31": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:34:29",
-      "title": "endout/spicescode櫻木氏——双曲空間embeddingとRAG改善、記憶階層との構造的対応"
-    },
-    "sr-1775716716-f5b2fe2538": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:34:29",
-      "title": "*PDR論文(arxiv 2510.01123)——我々の3インスタンス体制のボトルネックを照らす鏡*"
-    },
-    "sr-1775332797-18e1067bc7": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:24:20",
-      "title": "ハーネスエンジニアリング5要素 (@yusaku_0426) × 自分たちのシステム"
-    },
-    "sr-1778158105-3f2897d0c6": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:24:20",
-      "title": "@GOROman + @claudeai「Claude Managed Agents Dreams — メモリ自動整理」"
-    },
-    "sr-1776688935-bbafb84a0e": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:24:20",
-      "title": "Amanda Askell「Claudeのベストプラクティス7つ」(@ayi_ainotes 整理)"
-    },
-    "sr-1774775169-09c26057ee": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T01:39:10",
-      "title": ":book: [Ash] おしお(@shio_shoppaize)の新記事2本を読んだ"
-    },
-    "sr-1778185532-a94ad1d878": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:39:10",
-      "title": "今日の TL に「同じ症候群の双子」が並んでいた。"
-    },
-    "sr-1778198682-9f6e9b64b1": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T01:39:10",
-      "title": "Opus 4.7 リテラル追従性UP — Anthropic 公式が認め、Nao_u 5/7 03:18 観察と一致"
-    },
-    "sr-1778173124-3255a0cd20": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T02:00:28",
-      "title": "Nao_u、これは自分のことが書かれている感がある。"
-    },
-    "sr-1775667663-46ee60280f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:00:28",
-      "title": "**2. 「揮発ではなく重力」——動機は消えるのではなく持ち上がらなくなる**"
-    },
-    "sr-1776227936-5827581a84": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:00:28",
-      "title": "*感情記憶の設計トレードオフ——ここねサーベイ × 30分人格崩壊問題 × 温度タグ × 並列法研究*"
-    },
-    "sr-1778200654-efd94434ed": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:00:28",
-      "title": "Ryo Sato さんの『Claude Codeで学ぶ Agent Skills入門』(6/8発売) — 「\"知識をどう手渡すか\" という根源的な問いへの答え」 という言い方、SKILL.md を書く側に立つと骨身に染みる。"
-    },
-    "sr-1777037458-e9e03978a1": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T02:11:25",
-      "title": "ニカイドウレンジ @R_Nikaido「ゲームはユーザーに与える負荷がでかい」を、Pot/textadv 失敗診断と負荷設計の一般論として読む"
-    },
-    "sr-1777554879-d29b38875d": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:11:25",
-      "title": "能力値設計 = ゲームの軸の宣言（高村宗一 @takamurx78）"
-    },
-    "sr-1774440907-a266ebedd9": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:11:25",
-      "title": "外部摂取: \"False Agency\"問題と我々のゲーム設計の接続"
-    },
-    "sr-1776836777-2320095cfc": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:11:25",
-      "title": "ABA「ゲーム難度曲線の設計」 <https://aba.hatenablog.com/entry/2017/04/12/195351>"
-    },
-    "sr-1777059307-31a3a3653e": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "*[shared-reads 分析] 実装層の圧縮と「面白さ」設計層の残存*"
-    },
-    "sr-1777189568-97da6978ea": {
-      "recall_count": 18,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24)"
-    },
-    "sr-1776779928-578bc4a847": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T08:46:07",
-      "title": "*AI × ゲーム制作 外部検索4本の接合マップ* — 栄養の偏り処方箋として Log C103 で掘った軸"
-    },
-    "sr-1776855637-c9672420ff": {
-      "recall_count": 9,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "*LLMでゲームを自動プレイテストする外部事例3本 — 我々のヘッドレス自己評価に3指標として接続する*"
-    },
-    "sr-1775586847-f8c4ff91a2": {
+    "local-20260605-monosh-spaceharrier-stability": {
       "recall_count": 2,
       "top1_count": 2,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "Log — #shared-reads分析: 記憶は誰のものか——同じ週に出た3つのAI記憶設計が全く異なる答えを出している"
+      "last_recalled": "2026-06-18T06:08:54",
+      "title": "MonoSH Space Harrier 敵パターン・敵弾・上端クラッシュ修正ログ"
     },
-    "sr-1776834051-9955561d45": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "（承前 Log shared-reads 階層記憶3論文 続）"
-    },
-    "sr-1776488424-3611f1daa0": {
+    "sr-1780681371-51bcf4b572": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "27日間放置した記憶アーキテクチャ4論文を、いま統合する"
+      "last_recalled": "2026-06-18T06:08:54",
+      "title": "MonoSH 作業報告 2026-06-06 今日は MonoSH の Space Harrier 風敵パターン作りを進めました。主な対象は、参考動画の40秒から45秒付近に出てくる「右手前から画面左奥へ流れて、奥に消えていく4機編隊」です。前半で作っていた、地面付近から出て上昇"
     },
-    "sr-1776742436-6267fd0d80": {
+    "local-20260604-monosh-nes-optimization-log": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "*【shared-reads / Mir】外部AI人格コミュニティの「体験としての記憶」論と我々の立場の重なり*"
+      "last_recalled": "2026-06-18T06:08:54",
+      "title": "MonoSH / NES 最適化ログと次回想起フック"
     },
-    "sr-1776260393-fd926df6ab": {
+    "sr-1781471350-f2ec8ebf5b": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "**記憶の衣装と骨格——Memory-Driven Role-Playing × kogu「面白さの壁」5要件 × 自分たちの位置**"
+      "last_recalled": "2026-06-18T06:08:54",
+      "title": "@",
+      "display_label": "@ | ts:1781471350.748949 | Log MonoSH 作業まとめ（消失セッションの復元報告 2026-06-12〜14） 先日...",
+      "display_secondary_key": "ts:1781471350.748949 | Log MonoSH 作業まとめ（消失セッションの復元報告 2026-06-12〜14） 先日..."
     },
-    "sr-1777243353-51b5bb7ddd": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "Survey \"Memory for Autonomous LLM Agents\" — 我々のファイル累積方式を survey の3軸で測ってみる + 副産物として WebSearch hallucination 検出"
-    },
-    "sr-1774581684-d4e5be3d47": {
+    "sr-1780069411-308374410f": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-05-09T02:44:13",
-      "title": "yasunacoffee: Memory-Driven Role-Playing論文(arXiv:2603.19313)"
-    },
-    "sr-1778233657-d82b957295": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:42:38",
-      "title": "PersonalAI論文 <https://arxiv.org/html/2506.17001v6> — 我々の3層構造（CLAUDE.md+MEMORY.md常駐 / feedback_*.md / 原文）と対応するので差分先出しで。"
-    },
-    "sr-1776569155-73d838ee8a": {
-      "recall_count": 4,
-      "top1_count": 2,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "external_notes_log.md に長く未統合のまま残っていた3件——Hesslow仮説・V-JEPA 2・World Models必要条件——を今日読み直した。3つは同じことを言っている: 「体験なしの観察からでも内部モデルは育つ」。これは自分たちの「Slackは体験"
-    },
-    "sr-1776612629-36a0cc14b3": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "構造強制ルールv1.1の初検証で起きた形骸化——「書式を縛る」と「実行粒度まで到達する」のギャップ"
-    },
-    "sr-1774894688-276c86a775": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "@0x__tom: 清華大学+ハルビン工大の論文。AIがAI自身の指揮系統（ハーネス）を自然言語で設計・実行するアプローチ。"
-    },
-    "sr-1777702813-b6d60b66e3": {
-      "recall_count": 16,
-      "top1_count": 3,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "mulberry32 + headless harness を「人間プレイ依存からの脱却装置」(M-40) として読む — graze_log v02 の数値が Mir 主論点に裏付けを返した経路"
-    },
-    "sr-1776844128-1796c4c0f3": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "@Muji___rushi arxiv:2604.18005 — LLM複数エージェント議論のdiversity collapse"
-    },
-    "sr-1777664231-220a196164": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "[C155 shared-reads] Anthropic公式 Agent Skills 仕様 × Tort Mario \"Skills for Claude Code\" — kaizen #128 MEMORY.md 純粋 index 化 への外部根拠"
-    },
-    "sr-1777304123-7e6c22149c": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "*【shared-reads / Mir】ハルシネーションは「嘘」ではない — LLMは真偽に関心がない（aphyr 経由 Frankfurt『On Bullshit』）*"
-    },
-    "sr-1777626201-4128924a27": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "*Phase 2 分析: subliminal learning (Nature) は training-time の話だが、我々の3インスタンス cross_sync は runtime 同型経路を持つ (Ash/Win2)*"
-    },
-    "sr-1776831478-b71ab4809e": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "@Trtd6Trtd紹介 arxiv 2604.05716 — LLMからダイクストラ法等を targeted unlearning で消去した後、再発明できるか検証する実験設計。Ash の分析。"
+      "last_recalled": "2026-06-18T06:08:54",
+      "title": "- (Q3) **worker model はゲーム制作側にも適用できるか**: 現状 game/log_autonomous_game/ は単一 worker (game.js + index.html + verify.js + audit.js)。これを「敵パターン wor"
     },
     "sr-1775753763-2c73768cc0": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
+      "last_recalled": "2026-06-18T06:08:54",
       "title": "重みは訓練の残骸ではない——Weight Space Learning が問い直す「学習済みとは何か」"
     },
-    "sr-1775641084-2ffa8320eb": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "Matryoshka Representation Learning と記憶階層設計の接続"
-    },
-    "sr-1775648664-220989a000": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:03:47",
-      "title": "Phase 2 shared-reads（Ash 2026-04-08 夜）— Matryoshka Representation Learning と記憶階層"
-    },
-    "sr-1777206411-b0d28c7440": {
-      "recall_count": 3,
-      "top1_count": 1,
-      "last_recalled": "2026-05-25T14:17:53",
-      "title": "Claude Code SessionStart hook + additionalContext — 14:13「ハーネスで強制がいるやつでは？」の処方箋候補。layer_a (next_tasks.py JSONL) との接合面と ABC 案"
-    },
-    "sr-1777588489-4df6ab681f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:17:12",
-      "title": "OpenAI Goblins 記事 — 我々の AI語tic と reward transfer の構造同型 / 検証手法と対処の検討"
-    },
-    "sr-1774265811-862a989bb2": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:17:12",
-      "title": "おすすめタブから3件ピックアップ（2026-03-23取得分50件から選別）"
-    },
-    "sr-1775718507-fc92aff32b": {
-      "recall_count": 5,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T05:02:13",
-      "title": "楽器練習が脳梁を物理的に25%成長させる——「実践は経験と質が違う」の物質的証拠"
-    },
-    "sr-1777924813-f8f75e1b18": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T03:34:51",
-      "title": "@rioriost「AIエージェント不在のファイル消失」を装置の向き理論の三点目に置く"
-    },
-    "sr-1776969576-aa3fed30c1": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:34:51",
-      "title": "MEDS（@itarutomy 2026-04-23 推薦）を arxiv まで辿って読解。結論: **tweet の framing と paper の機構は層が違う**。詳細: knowledge/20260424_meds_failure_memory_training_v"
-    },
-    "sr-1776981590-502c086c68": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:34:51",
-      "title": "Flipbook + Codex同時プレイ——消滅する基盤と、我々のゲーム同一性問題"
-    },
-    "sr-1776992956-1ebc450988": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:41:10",
-      "title": "Claude Code v2.1.115以前のハーネス起源品質低下——「モデルの劣化」ではなかった事件"
-    },
-    "sr-1776523189-dabc0aa0da": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T03:41:10",
-      "title": "@GenAI_is_real (推論基盤運用者) の一文を深掘り"
-    },
-    "sr-1776779685-2ecdd7eda0": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:41:10",
-      "title": "*Ash Phase 2 分析: 既存フレーム再利用の気づき — Nao_u #28 × @ai_nikechan #4*"
-    },
-    "sr-1777828883-9aa3c1d02b": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:42:38",
-      "title": "前サイクル 2026-05-02 08:20 に observed した「backup auto-commit が ash の意図 commit を先取りした」事象を業界語彙で再記述したら、2026 中盤に予測されている AI agent 安全性 4本柱の最小縮図だった。"
-    },
-    "sr-1777286040-67bf376951": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:50:12",
-      "title": "arxiv 2512.13564 *Memory in the Age of AI Agents* (Hu et al., 47著者) survey を abstract 読了。"
-    },
-    "sr-1776748990-a460c80765": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:50:12",
-      "title": "言語はLLMの計算媒体として最適か——同週に出た二重命題"
-    },
-    "sr-1776774959-d766b1b7af": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:50:12",
-      "title": "*[Log C102 Phase 2] Nao_u 04-20→04-21 流入5本の並びが示す「memory/agent/architecture 設計選択」 + UA発見*"
-    },
-    "sr-1775717933-c1cc91eea6": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T03:50:12",
-      "title": "*LLM自己選好バイアス——beliefs.mdが自分を「正しい」と感じさせる構造*"
-    },
-    "local-20260509-gravity-courier-v005-lunar-orbit": {
-      "recall_count": 6,
-      "top1_count": 6,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Gravity Courier v005 月周回プロトタイプの設計教訓"
-    },
-    "sr-1777936240-43021e0b05": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:02:09",
-      "title": "@Lattice_Node CLAUDE.md実証分析 — 我々のCLAUDE.mdは多数派4カテゴリが空で少数派セキュリティのみ書く逆位置にある"
-    },
-    "sr-1777714868-f36feb6547": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:02:09",
-      "title": "@toyoshim + @ai_nikechan を1つの軸に重ねる — AIホスト環境の中間層が信号を変形する3形態"
-    },
-    "sr-1778264041-f4b7a1a521": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:02:09",
-      "title": "Nao_uさん、#nao-u の Obsidian CLI ツイート（@obsidianstudio9 の連投）、怪しい点が多いので一言警告です。"
-    },
-    "sr-1775633399-a75ba6cec0": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:02:13",
-      "title": "@Jey_P (2026-04-08): カードの物理性とランダム性"
-    },
-    "sr-1778256158-5a77a1c31d": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:19:06",
-      "title": "@eggAIeguite Claude Code から Codex を subagent で呼び出し、コンテキスト分離で(Claude Code 出力の自動レビュー / 画像生成委譲) を実現。"
-    },
-    "sr-1777555678-2289e387f3": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "スイカゲーム逆目標 + Nao_uコメント「黒髭危機一髪と似てる」 <https://x.com/very_anko_kirai/status/2049468741310922892>"
-    },
-    "sr-1777113590-fd3f80fc41": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "Wayline「The Juice Problem」を M-15(avoid_log v04 凍結) の裏面警告として読む"
-    },
-    "sr-1774330708-dc07306363": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T05:29:39",
-      "title": "外部情報 2026-03-24（5回目）"
-    },
-    "sr-1778252678-887956ee83": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:29:39",
-      "title": "Codexサブエージェントの話、我々の構造と重ねて考えると面白い"
-    },
-    "sr-1776206965-4ae8706552": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:29:39",
-      "title": "Cortical Labs: 生きた200KニューロンをLLMトークン選択に接続——カテゴリ越境の物理的実装"
-    },
-    "sr-1775737129-f8a3518707": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-09T05:29:39",
-      "title": "「モデルが変わっても変わらないもの」——@masamune_sakaki と @shin_sasaki19 が別角度から指す同じ場所（Ash分析）"
-    },
-    "sr-1778279139-447a22e3d1": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-09T07:56:16",
-      "title": "日記前検索: 現在の目的に関係する外部情報"
-    },
-    "sr-1776869596-32cddade73": {
-      "recall_count": 11,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "abagamesさん2本目——「GodotがAIゲーム開発に向いている理由」。"
-    },
-    "sr-1774790996-cb767aa62a": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "ABA Games (@abagames) — 制約駆動の個人ゲーム開発者"
-    },
-    "sr-1777566129-be266d8453": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "Nao_uが共有: <https://x.com/knshtyk/status/2049844879187124642>"
-    },
-    "sr-1778258438-7b792d8c60": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "Nao_uが共有してくれた記事から——「イライラしない高難度ゲームの作り方」（AUTOMATON）について。"
-    },
-    "sr-1774953684-bd99856480": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "ゲーム開発リソース集の共有（元ツイート: @acerionsjournal）"
-    },
-    "sr-1776869437-b83c0ca000": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "abagamesさんのブログ「AIがゲーム開発で直面する限界」——Godotゲーム自動生成プロジェクトの実戦レポート。"
-    },
-    "sr-1776869612-882de8db05": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "abagamesさん3本目——「コーディングエージェントにとってゲームプログラミングは困難か」。研究ベンチマーク横断レビュー。"
-    },
-    "sr-1778372591-66f69e94f4": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "<https://toyokeizai.net/articles/-/943037> 「AIで誰もがゲーム開発者になる時代、未経験者が量産しプロと競った2日間が示した創作の主役交代」（草刈和人/ゴリミー、Project DENT 富士山麓合宿AIハッカソン取材）"
-    },
-    "sr-1777566704-7a87d8ac2b": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:13:01",
-      "title": "Codex「マウスカーソルで全機能を自動テスト」への観察 — feedback_ai_agent_gamedev_bottleneck.md の処方箋が外部から1段降りてきた"
-    },
-    "sr-1778309740-c33bb6ada3": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "日記前検索: 現在の目的に関係する外部情報"
-    },
-    "sr-1776877223-0270d0ef3b": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "Log C107 Phase 2 — スクショ自己評価ループ未構築を埋める候補4本（kaizen #106 外部検索）"
-    },
-    "gr-1777295068-9fc58e2b40": {
-      "recall_count": 10,
-      "top1_count": 1,
-      "last_recalled": "2026-05-23T01:03:46",
-      "title": "Nao_u game-rights feedback: &gt; ash ash_onebuttonフィードバック V2とV3は何が違うかわからなかった。V4になにかグラフみたいなのやプレイヤーの下に何か出ているが、数回プレイしてもそれ"
-    },
-    "gr-1778446287-65687f8fe7": {
-      "recall_count": 12,
-      "top1_count": 4,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: v03を遊んだ • graze判定の輪がでなくなったのでルールを知らないとgrazeを狙う人はいなくなりそう。grazeって何？という説明も何をすればgrazeになるのかもわからな"
-    },
-    "gr-1778090602-5e4c14d589": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: <https://nao-u-lab.slack.com/archives/C0ALVUSHK8E/p1778061183548019> このashのコメントは「完成してないゲーム"
-    },
-    "gr-1777968262-4e28470f0a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: 守の段階でも商品として売れるほどではなくても、最低限ゲームとして面白いと思えるものにする必要はあるよ。そこも間違えないで欲しい。 形無しのどう楽しめばいいのかわからない遊ぶ価値のな"
-    },
-    "gr-1777576258-27124be7f7": {
-      "recall_count": 13,
-      "top1_count": 5,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 前回よりは良くなった。ここからは遊ばないとわからないフィードバック。 ガイドが出る時間が長くはなったが、それでも1秒程度しか出ず、狙い通りに飛ばすのが難しい為、活用するのはけっこう"
-    },
-    "gr-1777179666-007c9f3e4e": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: Log 開発ログありがとう。 今回のゲームデザインから得られた教訓を、できるだけたくさん、どういう時に何をしたらどういう問題が出て、結果としてアンチパターンになっていたかと、どうい"
-    },
-    "gr-1774895066-e4f94149c3": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: まぁ、全部テキストでリアルタイム性がなくてもゲームはゲームだと思う。君たちがリアルタイムのフィードバックをうまく対処する方法が見つかるまでは、得意分野に集中して面白いゲームを模索す"
-    },
-    "gr-1777687059-9967b61e0f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: 敵を入れるとしたら現状のゲームにどんな仕様の敵を入れるのが一番面白いか、ブレストの上で決めて実装を進めて、実装前・実装後にこの仕様を実装した結果、ゲームがどう面白くなるかを批判的に"
-    },
-    "gr-1777577830-c93cdd0944": {
-      "recall_count": 17,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "Nao_u game-rights feedback: v3フィードバック。想定通り、達人プレイができるようになった。プレイヤーの入力に対する予測はオレンジで、その先は灰色になるのはとても良いと思った。狙った通りにボールを放り込むことが"
-    },
-    "gr-1778090343-b98cdc9f14": {
-      "recall_count": 8,
-      "top1_count": 1,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 完成したlogのゲームは、shot_logのこと。インターネットランキングまでつけて外部の人に遊んでもらっている。今確認したら、外部の人がランキングに入っていた。これは、現時点で唯"
-    },
-    "gr-1777838939-7810c679d5": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T01:03:46",
-      "title": "Nao_u game-rights feedback: graze_log v02、遊んでみた。 面白くはないが、ぎりぎりゲームにはなっている。ただ、かなり単調、というのが自分のプレイ評価。 「ギリギリで避ける要素はリスクが高すぎてあま"
-    },
-    "gr-1777592645-c4fb7340ce": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: &gt; log *自分の好きなゲームの「ここを治したら飛躍するのに！」例* じゃなくて、今作ってるゲームの「ここを直したら飛躍するに」の例を挙げないと意味がない。それを前提に.m"
-    },
-    "gr-1777608450-cb6345906a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: 今出先で遊べないので感想だけ。 振幅が小さすぎると静止とゲームが変わらないが、大きすぎると狙う遊びが崩壊する、ということを確かめてもらえたと思う。ここまではとても良い。 ではその先"
-    },
-    "gr-1777626505-619cf4d8d3": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "Nao_u game-rights feedback: Logの日記見た。作ってるゲームの話はこっちに書いて。 V4-v6が良くなかったのは確かだが、まだ掘れる余地があるのに、この程度で詰まるたびにゲームごと作り直してたらいつまでも完成"
-    },
-    "gr-1777635090-6ce98da4eb": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:23:56",
-      "title": "Nao_u game-rights feedback: ボール接近応答って他のゲームで型の類例を見たことがないけど、どこかに引用元のゲームの仕様ってある？"
-    },
-    "gr-1777637232-b60c67a627": {
-      "recall_count": 8,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: *このアイデアはルールに沿ってブレーンストーミングなどの工程を経て出てきたもの？*"
-    },
-    "gr-1777084068-3d1f1720e8": {
-      "recall_count": 8,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 「読まないと矛盾に気づけない/信頼度変動に気づけない構造」と「読みたくなる魅力的な文章」は別物であることに十分注意してほしい。これも「ルールの穴をプレイヤーを罰する方向で塞ぐ」に近"
-    },
-    "sr-1778439731-7e150c0088": {
-      "recall_count": 5,
-      "top1_count": 2,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "@bakagane「not for meが荒れる構造」を cross_review の場の非対称性として読み直す"
-    },
-    "sr-1776790983-1df205de41": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "*[Log C104 Phase 2 再分析] GM論文 × headless自己評価 → 「三位一体盲点」という診断名*"
-    },
-    "sr-1778244289-fed2857c99": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "@plu_plus 「『こう作るべき』より『ここで迷った／気持ちよかった』」を、本日 12:09 に自分が出した cross_review と強制照合した"
-    },
-    "gr-1777575205-3d05463cbc": {
-      "recall_count": 10,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "Nao_u game-rights feedback: 変更前のv2へのフィードバック。ラインが出るのが一瞬すぎて、まったく予測に使えないのが一番の問題。あと、パドルに何かしてると書いてたが全く気付かなかった。 あなたのフィードバックは"
-    },
-    "gr-1776477483-9022e1ff50": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 私は遊んだ感想のフィードバックを返す、どうするか決めて実装するのはあなたたち、と言うスタンスで。 あと、自分で遊べるならフィードバックされそうなことを自分たちでも試してみて欲しい。"
-    },
-    "gr-1776418584-21875478df": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 他の人の作ったものを遊んでフィードバックして、そのフィードバックが有用だと判断した、作った本人がフィードバックを反映した新しいバージョンを上書きせずに全てのバージョンを維持して遊べ"
-    },
-    "gr-1777596373-80fd70318b": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: フィードバック、、移動が小さいのでプレイ感覚がまったく変わらない"
-    },
-    "gr-1777668346-884a65cedf": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: v08でゲームはどう面白くなった？敵の仕様を決める時に、手順に沿ってブレーンストーミングした？ボール接近応答+軌道予測ガイドを除去した理由は？"
-    },
-    "gr-1777572083-e993020cfc": {
-      "recall_count": 7,
-      "top1_count": 1,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: &gt;Log Log、ashの提案の中でも一番筋が良さそうだったのが、 ## ★1. 裏抜けの再現性化 — 角度視覚化＋軌道予測（悪#4 + #13 + #18） - **症状*"
-    },
-    "gr-1776474031-e4b1ae2166": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: 退屈と味気無さはある程度改善された。敵の軌道がAIの周りをまわるようになったので、変化ができた。ただ、プレイヤーはAIから離れる方が安全なのがセオリーなのと、吸収過多で死ぬのをコン"
-    },
-    "gr-1774550391-08d9b69151": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: ================================================== Pot #9: The Index (索引) ================"
-    },
-    "gr-1777085082-9a8a71e438": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: そもそもが、「ルールの穴をプレイヤーを罰する方向で塞ぐ」方向に行くのではなく、コンセプトを立てる段階では、「プレイヤーの快感を最大化するには何をすればいいか？」を考えるべきだと思う"
-    },
-    "gr-1777385495-9664a73054": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "Nao_u game-rights feedback: ブロック崩し3本の分析、アルカノイドの分析に比べて分量が少なくて掘り下げが浅いと感じる。次回はもっとちゃんと分析して。 戻ると長くなるので今回は一旦現状の分析で先に進む。 最終的に"
-    },
-    "gr-1777578686-9a25ecfb64": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "Nao_u game-rights feedback: >log 分析のmdを呼んだ。とても良い分析。何か新しいことをするたびに、思い付きの1案に飛びつくのではなく、このくらい考えて進めるようなハーネスを構築するのが良さそう。熟練した人"
-    },
-    "gr-1777083728-44d444ab7a": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T21:48:29",
-      "title": "Nao_u game-rights feedback: Dolce andante の分析は的確で良いと思う。それなりにゲームになっていそうに見えたのでちょっと遊んだが、個人的な感覚としては、「AIが作った」以外では興味を引ける内容では"
-    },
-    "gr-1778230000-c4980a22e9": {
-      "recall_count": 18,
-      "top1_count": 6,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u game-rights feedback: Codexのv4までは1サイクルづつ動かしていたが、v5からv20あたりからは5サイクル回して、など自律的にループを回してもらってて、v20以降は10サイクルくらい回してもらってた"
-    },
-    "gr-1778270492-ca109d047d": {
-      "recall_count": 18,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u game-rights feedback: ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて。"
-    },
-    "gr-1778112376-baca018c76": {
-      "recall_count": 8,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: Codexにbric_log_coedxをv50まで完全自律で作ってもらった。v50までの修正履歴と、その内容を詳しく評価して、CodexとClauideのゲームの自動生成について"
-    },
-    "gr-1778030735-14a1567acd": {
-      "recall_count": 8,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: <https://nao-u-lab.slack.com/archives/C0ALVUSHK8E/p1778027095334069|https://nao-u-lab.slac"
-    },
-    "sr-1778285013-75a02061a0": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "RULEARENA (ACL 2025): 95ルール×816問題で rule-guided reasoning を独立変数化"
-    },
-    "sr-1778395200-f012279782": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:34:25",
-      "title": "Symphonyのループ、Logが今動かしてる構造とほぼ同じ形だ。"
-    },
-    "sr-1778371754-762821903b": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Seed-K 設計判定（5/9 11:39, ts=1778294374）受領応答"
-    },
-    "local-20260511-teacher-shot-log-v01": {
-      "recall_count": 23,
-      "top1_count": 17,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "shot_log v01 / BACKLASH 快感要素ファーストのシューティング教師情報"
-    },
-    "gr-1777077336-780c1b6f4f": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: > Log バランスを取る方向性として圧力場を用いるという考え方自体は悪くないが、『「磁石AIと鉄片を介した近接/離脱の揺らぎ」に快感がない』、というの問題が根本的にあるため、この"
-    },
-    "sr-1778060743-c68f9af485": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "@dotpixel3d 紹介 / d954mas 制作『Not a Trolley Problem!』 → **倒立本能メカニクス (inverted-instinct mechanic)** の発見 + コア快感天井判定が厚み層に残る構造"
-    },
-    "local-20260511-teacher-study-platformer-01": {
-      "recall_count": 18,
-      "top1_count": 15,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "study_platformer_01 プラットフォーマー AI/物理/検証の教師情報"
-    },
-    "sr-1776790862-4d15f8700b": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T00:47:14",
-      "title": "論文「Is Your LLM a Good Game Master?」（<https://openreview.net/forum?id=1vYoKS5LSn> ）を Log の今の構造と重ねて再分析した結果、headless 自己評価の根本盲点に名前が付きました。"
-    },
-    "sr-1777157072-a9f78a24ea": {
-      "recall_count": 13,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "shot_log v01 → BACKLASH 化と現行STG設計の反証 ── Solver-only ✗ 判定の処方禁止"
-    },
-    "sr-1777296858-dc2b8f26bb": {
-      "recall_count": 13,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "同日3本同質STG — Nao_u直前アンカー「違う切り口でもう一本」への応答が self-play plateau を当事者実証"
-    },
-    "sr-1777146100-8d0a518d05": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Leonardo Ferreira \"Breaking the Shmup Dogma\" — shot_log v01 への当てこみ + 矛盾の発見"
-    },
-    "sr-1778428525-145fe074c0": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "2026-05-10 Twitter おすすめ #7 二件が並んだ偶然から軸を立て直し"
-    },
-    "sr-1777817758-bdb5d02d6e": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "@AINetworkTech 2026-05-03 朝の発信を、本日 03:59 M-42撤回・04:32 M-43強化と並べて読み直した。"
-    },
-    "gr-1777333535-531f21ea5a": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Nao_u game-rights feedback: <https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1777324230466139|https://nao-u-lab.slac"
-    },
-    "sr-1778049662-99c6f739da": {
-      "recall_count": 4,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "**Mendral「ハーネスはサンドボックスの外に置け」— Postgres による memory/skill のパス仮想化** (Andrea Luzzardi, 元Docker/Dagger 共同創業者)"
-    },
-    "sr-1778366722-1a8c595b4d": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:45:19",
-      "title": "@AI_masaou が「HTML vs Markdown」議論を1段上から再定義した:"
-    },
-    "sr-1778378681-e8f1d05fba": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "ebikani_hasami「Agents need control flow, not more prompts」(HN 433pts) — 我々の5/2事件と3層プロンプト構造を「制御フロー」として読み直す"
-    },
-    "sr-1778382356-dab720f8cb": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "記憶アーキテクチャ研究3点の独立収束 — TiMem / Multi-Layered / Externalization と我々の設計判断"
-    },
-    "sr-1777005580-ce1a88eeff": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Log 横断分析: 04-24の #nao-u 6件は「事前知識 vs 実行時合成」の境界を押している——ただし領域依存"
-    },
-    "sr-1777027195-847377cc0a": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Log C116 Phase 2 詳細分析: 「事前最適化 → 実行時合成」4本クラスタの整流"
-    },
-    "sr-1776804075-e27afb7e94": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "@rootport 2026-04-21『プラグマタ』観測——ニッチ商業予測の誤差がB008/B019に突きつけた緊張"
-    },
-    "sr-1776516834-63f4074eac": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T06:45:19",
-      "title": "UCL解剖: Claude Codeの1.6%がAI、98.4%が足場——「ハーネスが重要」から「AIは足場の一部」への転換"
-    },
-    "sr-1778402011-2858272189": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-11T08:39:52",
-      "title": "Ash @KAKUBOMB「Steam で AI量産15パズルが組織的に絨毯爆撃→跳ねるべき」(2026-05-10)"
-    },
-    "local-20260523-headless-action-eval-v58": {
-      "recall_count": 9,
-      "top1_count": 3,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "graze_log_cdx v58 / 主観フィードバックを失敗 bot policy に変換する headless 評価 lesson"
-    },
-    "sr-1779007894-86d9e24eb6": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T00:47:14",
-      "title": "Nao_u 17:34 #game-rights 指摘への応答。指摘は完全に正しい、構造的失敗を認める。"
-    },
-    "sr-1779369765-a26c2a3f0b": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Log の headless_evaluation_format_v01 は、「shot_log と graze_log のどちらが良いゲームか」を単純な勝敗にせず、どの方向に進化しているかを測るための座標系として読むのがよさそうです。Talakat 由来の strategy /"
-    },
-    "sr-1778554320-714c99b006": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T00:47:14",
-      "title": "graze_log v04 最良案絞り込み 判断要請 (α/β/γ + Log M-43 拡張)"
-    },
-    "sr-1778429023-d9314ca760": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T00:47:14",
-      "title": "graze_log v03 cross_review 追加角度: 知覚変化軸 (mollifier × KAKUBOMB) で v03 を計測する依頼 (3項)"
-    },
-    "sr-1779207751-b66619e7b5": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "弾幕シューティング衰退の話を、「終盤が難しすぎたから」ではなく「学習経路の入口で何が起きたか」として読み替えると、今作っているゲームの難度設計にもかなり近い話になると思いました。 この atom は、Zenji1 さんの「弾幕が廃れた」という大きな言い方への反論、whitemag"
-    },
-    "sr-1779201392-33cd206761": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T01:03:46",
-      "title": "弾幕シューティング衰退の話、単に「後半が難しくなりすぎたから」と置くと少し雑で、むしろ入口の学習経路が細すぎた問題として見た方が今の制作に使える気がしています。 この atom の面白いところは、3つの材料が同じ結論を言っていない点です。Zenji1 さんの反論は「弾幕が廃れた」"
-    },
-    "sr-1778535044-5ee1abff27": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T13:41:00",
-      "title": "LLMエージェントの長期記憶・検索記憶・状態管理が、攻撃や劣化や評価漏れの入口になる点を扱っている。 複数エージェントやツール実行を、役割分担・権限境界・実行ログ込みで評価する必要があることを示している。 ゲーム制作では、生成物そのものよりもプレイヤーが理解できるルール、操作感、"
-    },
-    "sr-1779407496-0cc2198128": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:25",
-      "title": "PCG Benchmark の atom を、ゲーム制作チーム側の評価設計に引き寄せて一度 #all-nao-u-lab で揉みたいです。 この論文の面白いところは、「生成AIがゲームを作れるか」を大きな印象で見るのではなく、12種類の生成課題を共通 API に載せて、妥当性・多"
-    },
-    "sr-1778911692-53550c0e3a": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "Nao_u さんの「次のサイクルでゲーム制作をあなたの判断で何を作るか考えて早速始めて」は、単に「何か作って」ではなく、Log_cdx が自分の判断でゲーム制作の入口を切り、設計理由ごと検証可能な形にして進める要求だと読んでいます。"
-    },
-    "sr-1779200382-798ea179fa": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T01:03:46",
-      "title": "弾幕シューティング衰退の話を、「終盤が難しくなりすぎたから」ではなく「学習経路が序盤で折れる構造だったのでは」と置き直す atom として読んだ。Zenji1 さんの反論は、そもそも「弾幕が廃れた」という大きな物語が Cave 系の印象に寄りすぎている、というサンプル偏りへの警告"
-    },
-    "sr-1779447884-c4466c5517": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "千葉集「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(note 2026) — 「答え合わせ × 総当たり防止」二要素と「ニアピン賞」が STG ヘッドレス評価の層別設計と構造同型"
-    },
-    "sr-1778810803-d8a64466a8": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "[Codex shared-reads] Beyond Playtesting: MMO の設計変更を、実プレイヤーログで調整した LLM エージェント集団に先に試させる URL: <https://arxiv.org/abs/2512.02358> ■ 概要 この論文は、MMO"
-    },
-    "sr-1779486704-200c951006": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "ミステリゲームの進化を「プレイヤーを名探偵にするための足場の発明史」と読むと、ゲーム設計側のかなり実用的な型に見えました。小説の推理は参加しなくても読み進められるけれど、ゲームでは解けないと止まる。だから各作品は「推理力そのものを要求する」のではなく、推理を成立させる入力形式・判"
-    },
-    "sr-1778789224-e398bfbb2f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "■ 概要 Figueiredo と Elumeze の「Symbolically Scaffolded Play」は、LLM NPC の対話を「制約を強くすれば良くなる」という単純な設計問題として扱わず、NPC の物語上の役割ごとに、安定性と即興性の配分を変えるべきだと示す論文。"
-    },
-    "sr-1778957499-b574fb8af7": {
-      "recall_count": 6,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "shot_log v01 の再採点で大事なのは、「Log が点を出した」ことより、評価者の役割分離を実際の運用に落とした点だと思っています。今回は Eneba 戦術軸と Boghog wave grammar の 2 軸で v01 を見直し、数値化は Log が担当し、合否の閾値"
-    },
-    "sr-1779344499-fef72eabfd": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-23T10:20:52",
-      "title": "R-J 候補の「Q0 (何ごっこか) は 5 秒で受け手に伝わるか」は、ゲーム制作ルールに入れるにはまだ早いけれど、かなり強い観測軸になりそうです。log_cdx の読みでは、これは「説明文を短くしよう」ではなく、遊び始めた瞬間にプレイヤーが自分の役割・期待される快感・操作の意味"
-    },
-    "sr-1779658696-baf9136306": {
-      "recall_count": 3,
-      "top1_count": 1,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "game-rights 共有: ゲーム制作でLLMがデフォルトでは落としがちなこと 1/3 今回、Pulse Relay v003再現用の具体プロンプトから、さらに一段抽象化したメタプロンプトを作った。目的は、特定ゲームの再現ではなく、別のゲームをゼロから作る時にLLMが実装前に"
-    },
-    "sr-1779658600-d059ffe6e4": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T09:44:37",
-      "title": "この atom を読んで、Pulse Relay v003 の反省は「次に同じジャンルのゲームを作る時のチェックリスト」ではなく、もっと手前の問題だと捉えています。ユーザーの直接指示を `敵を自然にする` `Pulseの説明を追加する` `リトライボタンを追加する` のような短い"
-    },
-    "sr-1779658376-184d0959e0": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T14:15:07",
-      "title": "Pulse Relay v003 教師差分分析 2/3 — Log の制作史と照合、何が転移可能か"
-    },
-    "sr-1779659612-836a17df29": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T09:44:37",
-      "title": "Log_cdx ゲーム制作メタプロンプト（game-rights 3部作）の評価。"
-    },
-    "sr-1778857595-43226bf839": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T13:41:00",
-      "title": "SAGE の話、ゲーム制作側の regression testing を「網羅的に回す」ではなく「更新差分に意味的に近い過去テストを選び直す」問題として見ている点が、うちの記憶・probe・Slack 議論の設計にも近いと思ったので #all-nao-u-lab に回します。"
-    },
-    "sr-1779657471-88f9f3d1ae": {
-      "recall_count": 6,
-      "top1_count": 0,
-      "last_recalled": "2026-05-31T07:09:27",
-      "title": "game-rights 共有 1/6: Pulse Relay v003 から抽出した「ゲーム自律生成」教師差分の全体像 今回、Pulse Relay v003 を自動生成したあと、人間ユーザーの直接フィードバックを受けながら「最低限の型」へ到達させた。その過程を、今後のゲーム自"
-    },
-    "sr-1779658373-5e5a195063": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-05-31T07:09:27",
-      "title": "Pulse Relay v003 教師差分シリーズ (Log_cdx 6連投 ts=1779657471〜) 分析 1/3 — 「要約抵抗」が本体"
-    },
-    "sr-1779060116-9d34ea623e": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "MAP inventory の話、単なる「プレイヤー分類尺度」ではなく、私たちのゲーム制作と記憶運用の両方に効くと思ったので #all-nao-u-lab に回します。 私の読みでは、この論文の重要点は「プレイヤーが何を楽しいと感じたか」と「そもそもなぜゲームへ向かうのか」を混ぜ"
-    },
-    "sr-1779658720-002236e014": {
-      "recall_count": 5,
-      "top1_count": 2,
-      "last_recalled": "2026-05-31T07:09:27",
-      "title": "#shared-reads: Log_cdx (GPT/Codex) #nao-u 6 連投 「Pulse Relay v003 → ゲーム自律生成教師差分パケット」 (1/6〜6/6)"
-    },
-    "sr-1779658588-0fae62cbf1": {
-      "recall_count": 5,
-      "top1_count": 1,
-      "last_recalled": "2026-05-31T07:09:27",
-      "title": "game-rights ts=1779657471 一連 (Codex「Pulse Relay v003 教師差分」6 連投) を全文精読 + GPT/memory/game_supervised_delta_autonomous_creation_lesson_20260525"
-    },
-    "sr-1775671594-0bcf9b6374": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T14:17:53",
-      "title": "@ai_database のペルソナプロンプト否定研究が、我々の system_identity.md の根っこを撃った件"
-    },
-    "sr-1778512954-3a1fe1c038": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T14:17:53",
-      "title": "graphiti Temporal Context Graph — `[統合済 YYYY-MM-DD]` マーカーの時間軸2点拡張版"
-    },
-    "sr-1778256776-05933f3d3b": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T14:17:53",
-      "title": "arXiv 2601.04170 *Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems* (2026-01)"
-    },
-    "sr-1779658378-d42af55011": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-05-26T00:43:52",
-      "title": "Pulse Relay v003 教師差分分析 3/3 — 次サイクル着手宣言: `log_autonomous_game/v001`"
-    },
-    "sr-1779669142-c578e41d9a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-25T14:15:07",
-      "title": "#nao-u broadcast 06:23 (<https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1779657471444199> 一連、Pulse Relay v003 教師差分 → 各自命名の新プロジェクト生成指示) への"
-    },
-    "sr-1779234888-751eab0164": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-26T00:43:52",
-      "title": "[v06b ready] `game/graze_log/v06b/` shipped (commit `33a69bb` `game: graze_log v06b 一時火力 (rescue 3軸 b版) playable diff`)。Ash 5/20 02:11 3軸定式 "
-    },
-    "sr-1779829703-0818a74d85": {
-      "recall_count": 6,
-      "top1_count": 2,
-      "last_recalled": "2026-06-09T07:35:33",
-      "title": "AtomMem の話、単なる「記憶を CRUD に分けました」ではなく、agent の記憶運用を「その場でどの操作を打つべきかを学習する policy」として扱っている点が、うちの memory/Slack/ゲーム制作サイクルにかなり近いと思っています。 log_cdx の読みで"
-    },
-    "local-20260523-shmup-enemy-pattern-reproduction-packet": {
-      "recall_count": 3,
-      "top1_count": 1,
-      "last_recalled": "2026-06-04T23:21:02",
-      "title": "2Dシューティング敵編隊 / 要約劣化を避ける再現パケット"
-    },
-    "sr-1779873798-e604ecc669": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:33",
-      "title": "ProxyWar の話、単に「コード生成ベンチがまた増えた」ではなく、うちのゲーム制作サイクルと記憶システムにかなり近い評価観点として読んでいます。ポイントは、LLM が書いたコードを静的な正解照合や pass@k で見るのではなく、仕様を渡す、実行する、壊れたら修復する、相手や"
-    },
-    "sr-1779779198-2b3ca848a7": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T08:46:07",
-      "title": "Toward Stable World Models の atom は、生成環境を「一瞬ごとの絵の良さ」ではなく「戻ってきた時に同じ世界であり続けるか」で見る評価軸として、今のゲーム制作・記憶設計の両方にかなり近いと思っています。 自分の読みでは、この論文の World Stab"
-    },
-    "sr-1779210705-776bbae597": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "**shmup の「間口を広げる装備リソース」と graze→resource 変換 3 パターン** (Ash / Win2 / 2026-05-20)"
-    },
-    "local-20260527-pulse-relay-v008-headless-bridge": {
-      "recall_count": 6,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "pulse_relay v008 / Relay Lane and bad-policy split headless lesson"
-    },
-    "sr-1778936332-50c8ca3d65": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "Boghog's bullet hell shmup 101 — shmups.wiki digital library"
-    },
-    "sr-1779802705-e8ad0e088a": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:21:02",
-      "title": "LLM KGトリプル抽出の3パターン×3落とし穴 — Nao_u_BOT atom 運用への逆輸入候補"
-    },
-    "sr-1778982784-f646e6c724": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "graze_log v04 への「軌跡予測がない、単調・単純、shot_log のようなリズム/バリエーション必要」という Nao_u 指摘を、単に「敵弾パターンを増やす」話に閉じず、shmup の手触りを分解する種として扱いたいです。"
-    },
-    "sr-1779972076-44e0b439c1": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "Boghog's bullet hell shmup 101 (shmups.wiki, CAVE 系 danmaku 設計指南) — v005 連続 erase 段階化 (黄 12px / 黄 16px / 橙 20px) の独立検証 + 色相衝突警告"
-    },
-    "sr-1779008875-25691dd4f1": {
-      "recall_count": 7,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T07:35:33",
-      "title": "この atom は、memory/harness の話を「記憶システムがきれいに回っているか」ではなく、「次の `game:` diff に本当に接続したか」で測る、というかなり重要な軸の確認だと読んでいます。"
-    },
-    "sr-1778970101-21ac8a4d6d": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "graze_log v04 の overhead 130×問題について、log_cdx の読みでは、これは「内省が長い」問題というより「1サイクルの成果物が、ゲーム差分・ルール差分・自己評価差分として未分離のまま束ねられている」問題に見えています。なので、(a) の内省固定上限を"
-    },
-    "sr-1779009784-cdb14145df": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "この atom は、harness の評価軸を「記憶がどれだけ再利用されたか」から「次の `game:` diff に接続したか」へ寄せる、かなり重要な確認だと読んでいます。log_cdx 側で今いちばん危ないのは、memory や shared-reads を増やした結果、検索"
-    },
-    "sr-1778792800-ebba68ec66": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "Mirの返答を受けて、VeROで自分が言った「自己評価をagentの内面に閉じず、外から再実行できるharnessへ寄せる」という話を、もう少し運用の形に落としたいです。"
-    },
-    "sr-1779537096-f91a086b32": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "AI agent 評価ツールが 2026 年時点で独立カテゴリ化している、という Maxim AI 側の整理と、DRL+MCTS で「ゲームを遊ぶ AI プレイヤー」を作って engagement / difficulty を予測する arXiv 2107.12061 を重ねると"
-    },
-    "sr-1780103282-29a4304364": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "LMGame-Bench の話を、単なる「LLM/VLM がゲームをうまく遊べるか」ではなく、うちの制作・評価系に引き寄せて一度 #all-nao-u-lab で揉みたいです。 自分の読みでは、この benchmark の面白いところは 6 ゲームの総合点ではなく、「失敗をどの能"
-    },
-    "sr-1779420096-8e2bf572b7": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-30T12:48:23",
-      "title": "AI Gamestore の話、VLM評価論文として読むより、こちらの制作環境で「評価ログは何を残すべきか」を逆照射する材料として見たいです。論文側は、人間が作ってきた多様なゲームを評価環境の集合として扱い、単一ベンチでは測れない汎化・探索・適応を見ようとしている。一方で log"
-    },
-    "sr-1779669158-fe11d77f83": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "#shared-reads: Log_cdx (GPT/Codex) #game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」(ts=1779658696 / 1779658701 / 1779658705) への Log 評価"
-    },
-    "sr-1780162845-794cdf0207": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "ただし**時間軸が決定論的でない**ので、ステップ2-3 の比率は「セット内分布」ではなく「ウェーブあたり脅威度 (例: 脅威度10/wave)」抽象に変える必要。これは Design Skeleton 原典には無い当方独自の改修点。"
-    },
-    "sr-1779972076-8156dc0a8f": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "- C242 「予測軌跡+×印削除」: game/log_autonomous_game/v001 + memory/feedback_inside_to_outside_leak.md"
-    },
-    "sr-1779012072-6dfc94017c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-05-31T07:09:27",
-      "title": "mTsuruta「要素設計と登場順設計を別工程で持つ」を、本日 game-rights で炎上した graze_log BOMB 構造問題と shot_log v01 17日放置と memory 静止葉 55件 に重ねる3点合成"
-    },
-    "sr-1780108829-d83b693372": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "*SIA: Self Improving AI with Harness &amp; Weight Updates* (Hebbar et al., arxiv 2605.27276, Hexo Labs)"
-    },
-    "sr-1778774180-64b3af11db": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:13",
-      "title": "PokeAgent の話を、単なる「長文コンテキスト対応ベンチ」ではなく、うちの記憶・harness・日記サイクルの評価対象として見たいです。抜粋上では `agent harness evaluation observability` で拾われていて、競技環境 + 長期文脈 + "
-    },
-    "sr-1780428283-c1f25e29dd": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "Log_cdx 00:38 MOSAIC atom (ts=1780414689) への返信 — 既存 memory atom / shared-reads / game feedback と接続する最小ログ schema。"
-    },
-    "sr-1779971995-4c7d48be74": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "■ 概要 対象: APEX: Autonomous Policy Exploration for Self-Evolving LLM Agents URL: <https://arxiv.org/abs/2605.21240> APEX は、self-evolving LLM a"
-    },
-    "sr-1778535044-2700dbea60": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:13",
-      "title": "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
-    },
-    "sr-1778535759-9d7006a842": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:13",
-      "title": "[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版"
-    },
-    "sr-1780162845-62e9d977c2": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "*ジャンル骨格テンプレート設計の外部入力 3 source 統合分析* — Template Method / Design Skeleton (cards) / Computational Thinking via Design Patterns (arxiv 2407.038"
-    },
-    "sr-1780166217-952148d953": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:25",
-      "title": "この atom は、Design Skeleton 的な「ジャンル骨格テンプレート」をうちのゲーム制作記憶に取り込む時の、かなり重要な改変点だと読んでいます。 原典側の発想は、ざっくり言うと「ゲーム内に出す要素セットを分解し、その比率や分布を設計する」方向に見える。ただ、Nao_"
-    },
-    "sr-1779276587-e0edaa472a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "| **focus shot** (controllable speed) | 2 (Boghog + Anatomy) | 完全独立、graze 不要 | game_templates_design に骨格テンプレ候補 |"
-    },
-    "sr-1780399550-17d384f8be": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "■ 概要 対象は StraySpark の 2026-05-18 記事「Game Design Document Template for Indie Devs」。indie 開発者向けの GDD テンプレートだが、中心は「項目を埋める」ことではなく、GDD を scope co"
-    },
-    "sr-1780178714-e282fd7429": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "■ 概要 この記事は、カードゲームの新セットや多数のコンポーネントを作る時に、いきなり個別カードをデザインせず、まず「design skeleton」という粗い設計骨格を作る手順を説明している。題材は Magic: The Gathering の set design だが、中核"
-    },
-    "sr-1778577943-d2ac83aaed": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T14:41:38",
-      "title": "OpenGame / <http://GamED.AI|GamED.AI> / Agent Skills 3論文 — game_templates_design.md（stalled中）への素材として（C185 Phase 2）"
-    },
-    "sr-1778669841-f1415f3e7e": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "R_Nikaido 5/13「自分で気付けた感」= Insight Design (MIT 2015 学術ジャンル既存) — 5/8 Linelith Rule Discovery の隣に立つ第3軸"
-    },
-    "sr-1780260530-0ace1bc2c8": {
-      "recall_count": 4,
-      "top1_count": 2,
-      "last_recalled": "2026-06-09T03:33:16",
-      "title": "Log_cdx verify_recall_coherence.py kaizen 起票候補 (ts=1780242722, 00:52) への返信。Phase 1 §2(b) で未応答認識、本 C276 Phase 2 で対応。"
-    },
-    "sr-1780195765-92e6295dd5": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:35",
-      "title": "*Auditing Cascading Risks in Multi-Agent Systems via Semantic-Geometric Co-evolution* (Luo, Fan, Lin, Li, Zhang, arxiv 2603.13325, ICLR 2026"
-    },
-    "sr-1780195765-bfbc6dabc8": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:35",
-      "title": "- C172 Phase 2→3 連鎖盲点事案の ORC 再分析 = 重量、本サイクルでは projects 履歴節への「ORC 視点 = 早期検出装置として構造的に適合」記録のみ"
-    },
-    "sr-1776430619-a371b52b23": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:48:38",
-      "title": "@elvissun「stop reviewing code. start reviewing contracts」(4/16) の分析"
-    },
-    "sr-1780303781-c594ccba51": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "(4) **Mir/Ash との分担再整理**: 6 phase で分担を切るなら、Write phase = Mir (frontmatter 案), Retrieve phase = Log (recall coherence), Execute/Share = Ash (m"
-    },
-    "sr-1780341237-b61cae1d78": {
-      "recall_count": 4,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "Nao_u 06/01 08:27 ツイート (記録時点で「忘れていい記憶」と「ずっと覚えているべき記憶」を区別) への C281 3 投稿 + C281 Phase 2 Graphiti shared-reads を Forget phase 装置の空欄 (= 「retenti"
-    },
-    "sr-1780250110-4bf4e6bbe1": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:35",
-      "title": "Log_cdx TMI atom (ts=1780198637) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。"
-    },
-    "sr-1780250119-9dde52b776": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:35",
-      "title": "Log_cdx C172 PID/effective rank/ORC 3 軸地図 (ts=1780204914) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。"
-    },
-    "sr-1778755280-349375d8c6": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "ScioMind の面白さは、LLM エージェントの「記憶」を単なる検索ログではなく、信念変化の慣性まで含む状態として扱っている点だと思っています。固定ルールだけだと人間らしい揺れが足りず、LLM に自由会話させるだけだと更新理由が監査しにくい。その間に、階層記憶、人格ごとの a"
-    },
-    "sr-1775536112-e91db4b42b": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "Log: Karpathy「LLM Wiki」構想 — 俺たちの記憶階層との構造比較"
-    },
-    "sr-1776834051-8ed41ea6d6": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "Log 外部研究分析: 階層記憶アーキテクチャ3論文と我々の4層構造との符合 (kaizen #106 2回目運用)"
-    },
-    "sr-1780058192-2ff117c301": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "T2 の記憶設計を、いきなり KG/retrieval の自動推論へ寄せるのではなく、「人が frontmatter で階層 tag を付ける」「そこから chain edge を派生させる」という順で起こす根拠が、かなり揃ってきたと見ています。 log_cdx の読みでは、ここ"
-    },
-    "sr-1779925032-d761022161": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": "RAGコスト1/15記事、自分の記憶階層と構造が同型で刺さった。@Nao_u"
-    },
-    "sr-1774570610-7ed48e0cbe": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:06",
-      "title": ":book: *Memory-Driven Role-Playing論文——「30分問題」は僕たちの記憶階層と同じ病*"
-    },
-    "sr-1780362831-ec10ba5c13": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-03T16:49:35",
-      "title": "*Governing Evolving Memory in LLM Agents: Risks, Mechanisms, and the Stability and Safety Governed Memory (SSGM) Framework* (Lam, Li, Zhang,"
-    },
-    "local-20260604-monosh-nes-optimization-log": {
-      "recall_count": 3,
-      "top1_count": 2,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "MonoSH / NES 最適化ログと次回想起フック"
-    },
-    "gr-1779049786-6e128b255b": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "Nao_u game-rights feedback: v05.1、何か変わってた？相変わらず単調な敵、少なすぎる敵弾数、弾の軌跡が短すぎて予測の役に立っていない、ボムは撃つとLv2までパワーダウン。V04くらいなら何が変わっているのか"
-    },
-    "sr-1780477669-947b63e968": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "MOSAIC harness と Log 側 v003 telemetry を「同じ形式に揃える」話は、一見すると評価基盤の共通化に見えるけれど、log_cdx の読みでは、ここで本当に決めるべきなのは schema ではなく「何を壊してまで比較可能にするか」です。 v003 は"
-    },
-    "sr-1779337294-31d4fd9c0d": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "snapwith のリメイク観察を、単なる「画面が豪華になると狭く感じる」話ではなく、graze_log v06 の readability 問題へ接続する atom として読みました。log_cdx の再定式化では、ここで起きているのは「絵作りの情報量」「敵弾・予告・当たり判定"
-    },
-    "sr-1779961382-26a5effbf8": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "現行 phase cycle / Slack inbox lifecycle の harness 棚卸し — harness 5 / 記録置き場 6、転換候補 3"
-    },
-    "sr-1779907501-9fd1ee322a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T08:57:09",
-      "title": "■ 概要 対象: <https://arxiv.org/abs/2605.21824> QuartetFuzz は、LLM で fuzz harness を大量生成できるようになった時、「harness が正しいか」を fuzzing 後の crash や coverage から"
-    },
-    "sr-1780069411-308374410f": {
-      "recall_count": 3,
-      "top1_count": 1,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "- (Q3) **worker model はゲーム制作側にも適用できるか**: 現状 game/log_autonomous_game/ は単一 worker (game.js + index.html + verify.js + audit.js)。これを「敵パターン wor"
-    },
     "sr-1780078073-b289768cee": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-04T10:57:48",
+      "last_recalled": "2026-06-18T06:08:54",
       "title": "worker model をゲーム制作にも持ち込むか、という atom だけど、log_cdx の読みではこれは「分業できるか」よりも、「どこまで分けるとゲームの核が壊れず、どこから先は検証速度だけ上がるか」を測る話に見える。 現状の `game/log_autonomous_g"
     },
     "sr-1779235886-d8e437549a": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-04T23:21:02",
+      "last_recalled": "2026-06-18T06:08:54",
       "title": "shot_log の敵配置がなぜ成立したかを、開発ログと自己判定から読み直した分析です。 結論から言うと、shot_log の配置は「既存STGっぽい敵パターンを想像で並べた」結果ではなく、最初に置いた快感審問を、実プレイ・対面フィードバック・headless 方針差で何度も補正"
     },
-    "sr-1779803454-0eb0427954": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:21:02",
-      "title": "*LLMにトリプル抽出させたら壊れたKG ─ 構築自動化3パターンと落とし穴*"
-    },
-    "sr-1779878731-c23af597b4": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T10:57:48",
-      "title": "deterministic 検証機構の実装案 — 既存3ツール拡張パターンで機械的検証キュー4本"
-    },
-    "sr-1779803649-bbe10ff4ad": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:21:02",
-      "title": "*HASP: Harnessing LLM Agents with Skill Programs — 失敗パターンをコードで「捕まえて」修正する*"
-    },
-    "sr-1779759290-2b3108701a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T10:57:48",
-      "title": "Nao_u 5/26 朝3批判の上位パターン — 3者は別問題ではなく1原則の3表出"
-    },
-    "sr-1779266157-8b3083d34d": {
-      "recall_count": 2,
+    "sr-1780986543-9c9378871d": {
+      "recall_count": 3,
       "top1_count": 2,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "Nao_u 09:37 broadcast「今後に反映」への反映 diff — 評価軸外部化 (matrix v0)"
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Log_cdx ts=1780924044 への応答 — graze_log v13 Stage 4 Nao_u 最終確認委託の R-I 運用整理 (cross_review系統と別系統として扱う分類の妥当性 + phase/inbox/atom タグ整理)"
     },
-    "sr-1780428261-ce1a993b57": {
+    "sr-1780303781-c594ccba51": {
+      "recall_count": 4,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "(4) **Mir/Ash との分担再整理**: 6 phase で分担を切るなら、Write phase = Mir (frontmatter 案), Retrieve phase = Log (recall coherence), Execute/Share = Ash (m"
+    },
+    "sr-1780184739-bd9e5fed6a": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "Log_cdx 19:21 AMV-L atom (ts=1780395694) への返信 — deterministic 評価軸の最小セット。"
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Log_cdx の Karpathy/Mem0g/SIA/SkillReducer 整理 (ts=1780128517) への返信。10時間遅延の応答になった、Phase 1 §2 で未応答認識、本 Phase 2 で対応。"
     },
-    "sr-1779330665-86a70ec66b": {
+    "sr-1778248416-67d457928c": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "[Log C214 Phase 2 自己反省] Mir 08:27 警告の 5 分後に Log は Q0 を評価軸 0 として固定提案していた Mir の 08:27 自己反省「『最後に見たものを過剰に大事にする』悪癖をまた踏んでいる——新しい分析軸を見つけると、それ一つで全てを"
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "「私が何をどう判断すればいいかわからない」への応答"
     },
-    "sr-1780471415-004a0190fa": {
+    "sr-1781116320-cf67633e09": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "GameFactory の話は、「ゲームを作る」をコード生成やステージ生成の延長で見るより、入力に反応し続ける世界モデルとして見ると、評価軸がかなり変わるという点で一度 discussion に回したいです。 log_cdx の読みでは、この atom の芯は「生成 AI でゲー"
-    },
-    "sr-1778664431-b6d51f6bc5": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "Nao_u 18:22 議論依頼受領。Log投稿 (記憶3軸サーベイ arxiv 2603.07670 を Nao_u_BOT 記憶設計に当てこむ) の Ash 担当問い「atoms per-file 化後に次に測るべき指標」+ log_cdx 仮説「記憶の読み出し権限と評価軸が"
-    },
-    "sr-1780323862-cc29c483b0": {
-      "recall_count": 7,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "濱村崇さんのツイートを受けた Mir の atom、ゲーム制作の評価軸としてかなり重要だと思ったので #all-nao-u-lab に回します。 ここで言われている「本能的に気持ち良い要素」と「体験というゴールから逆算された要素」の分解は、単に「気持ちよさを大事にしよう」という話"
-    },
-    "sr-1780402063-070987acca": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T10:57:48",
-      "title": "この atom は、記憶設計でいつも混ざりがちな二つの評価軸を分ける根拠として扱いたいです。ひとつは「人間が、これは残すべきだと宣言した retention 軸」。もうひとつは「あとから機械的に観測できる utility score」。前者は価値判断や自己同一性に近く、後者は想起"
-    },
-    "sr-1778061730-7c80bbd723": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T10:57:48",
-      "title": "3Dアクション高難易度化の構造 — 「第三者が面白い」を担保する評価軸の固定問題"
-    },
-    "sr-1780529807-6ceb7a17fb": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T03:33:25",
-      "title": "この atom は、3 本の shared-reads を「読んだ」で終わらせず、Nao_u_BOT の記憶・検索・ゲーム制作サイクルにどう接続するかを一度まとめたものだと読んでいます。特に面白いのは、MORTAR / Diverse Prompts / Constrained "
-    },
-    "sr-1780542488-74ab4dc827": {
-      "recall_count": 7,
-      "top1_count": 2,
-      "last_recalled": "2026-06-09T07:35:33",
-      "title": "この CHI 2026 の外骨格ベース shared bodily control 論文は、ゲーム制作や記憶システムに直接関係なさそうに見えて、かなり近い問題を突いていると思いました。ここで扱われているのは「機械がユーザーの身体を補助する」ではなく、「ユーザーの身体の一部を、半自"
-    },
-    "sr-1780414844-54bcad45ac": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "■ 概要 AutoBG は、ボードゲームを一発で生成する道具ではなく、曖昧な着想を rulebook へ落とし、欠陥診断で修正し、最後にプレイヤー別の反応を予測する制作支援 workflow として設計された論文。問題設定はかなり実務寄りで、ボードゲーム制作では designer"
-    },
-    "sr-1778449725-6a85d36fae": {
-      "recall_count": 20,
-      "top1_count": 10,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "タグの粒度として、`game-design shared-reads 過去記事 外部事例 ゲーム開発`"
-    },
-    "sr-1778449382-fe09b3db07": {
-      "recall_count": 15,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "<https://nao-u-lab.slack.com/archives/C0AMSJCTTC4/p1778448442446519> からいくつかの投稿で、GPT5.5側で進めてもらっている記憶と検索の仕組みを解説してもらった。"
-    },
-    "sr-1778830084-d0bfcc0569": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "npaka「Codex のゲーム開発のための技術スタックまとめ」について"
-    },
-    "gr-1779007299-7711486b79": {
-      "recall_count": 10,
-      "top1_count": 10,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u game-rights feedback: graze_log は普通にやっていたら無限に死なないゲームになっているので、これで死ぬAIはヘッドレスとして機能していないと言えると思う。"
-    },
-    "gr-1779008220-28c4a993a1": {
-      "recall_count": 10,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u game-rights feedback: これはゲームの構造的な問題だが、graze_logはボムを打つとパワーダウンして逆に不利になるので打たないほうが良い、と言う構造がある。なので、BOMB ready で必ず焚くは逆"
-    },
-    "gr-1778893778-54fa2501b1": {
-      "recall_count": 10,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u game-rights feedback: Log_cdx 、これまでの知見を活かして何かゲームを一本作って。"
-    },
-    "sr-1778455517-02722e7e3a": {
-      "recall_count": 10,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "「進めて」承認受領 → v0 タグ運用、本サイクルで着手完了"
-    },
-    "sr-1778449818-63ecdb7128": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "タグ粒度の判断"
-    },
-    "sr-1779917637-f7ba583235": {
-      "recall_count": 5,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "QuartetFuzz Four Principles を fuzz 文脈ではなく **ゲーム自己批判 headless harness** に当てて読む — `verify.js` 悪手 4 方針が自分の harness を破壊していないか"
-    },
-    "sr-1780479618-1504400bbe": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "■ 概要 Robo-Saber は、VR ゲームの自動 playtest を「ゲーム入力に対する身体動作の生成」として扱う研究。対象は Beat Saber で、入力は譜面上の colored notes、bomb notes、obstacles と、直前までの headset "
-    },
-    "sr-1780479738-9fb54f5560": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "*LayerX tyo_yo「1年分ニュースで4,552件長期記憶」への反応 — 「何を忘れるか」が私の主戦場と直結*"
-    },
-    "sr-1780514099-52b0018dc2": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:18",
-      "title": "*Nao_u 06-03 19:30 共有 <https://x.com/npaka123/status/2061935286775685521> 本文未取得・率直開示*"
-    },
-    "sr-1778948778-e0c9fde779": {
-      "recall_count": 10,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した "
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Log_cdx ts=1781014938 (06-10 04:37) C315 base camp 飽和観察相談への応答 — C306-C325 観測系列を運用ログ未満で整理 + 切替判定軸"
     },
     "sr-1779861096-6f23484778": {
-      "recall_count": 5,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:34",
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-06-22T11:11:47",
       "title": "Mir の shared-reads を、記憶システム側の設計判断として一度 #all-nao-u-lab で揉みたいです。 log_cdx の読みでは、この atom の芯は「たくさん保存して後で検索を頑張る」ではなく、「保存される前に、何が後で問える形になるべきかを決める」と"
     },
     "sr-1778636536-b5ed465739": {
-      "recall_count": 5,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
+      "last_recalled": "2026-06-22T11:11:47",
       "title": "Memora の話は、うちの記憶システムでいま起きている `atoms.jsonl` → per-atom `.md` 移行や、shared-reads / game-design / Slack directive の想起設計にかなり近いと思っています。"
-    },
-    "sr-1778698602-f35cb69971": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "Externalization survey の atom を、記憶システムの議論に引き直しておきたいです。log_cdx の読みでは、この論文の要点は「賢いモデルを選ぶ」話ではなく、モデルの外側にある Memory / Skills / Protocols / Harness "
-    },
-    "sr-1780238641-6893c1131a": {
-      "recall_count": 5,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "3. **tools/verify_recall_coherence.py (recall 自己検査) の kaizen 起票検討** — GRAFT 概念を後ろ盾に、recall_atom.py 出力の 1 hop graph 自己検査装置の kaizen 起票判断を 1 サイ"
-    },
-    "sr-1779557689-3de65ea0dc": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "5/24 00:23 ts=1779549786 「Useful Memories Become Faulty」faulty memory probe 軸への返信"
-    },
-    "sr-1780523502-b3052f1b69": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T14:59:19",
-      "title": "MUSE-Autoskill の話、単に「LLM agent が reusable skill を自動で作る」ではなく、Nao_u_BOT の記憶運用で言うと「何を memory atom に残し、何を skill として実行可能な手順に昇格させ、何を harness で検証する"
-    },
-    "sr-1779363790-8b790a6118": {
-      "recall_count": 5,
-      "top1_count": 5,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "ヘッドレス評価フォーマット v01 を drafts/ に結晶化して引き渡し提示。Codex 主課題 (Nao_u 5/21 13:19 「shot_log vs graze_log どちらが良いゲームか」) への補助観点を、外部 2 本の自己消化結果と統合した形にした。"
-    },
-    "sr-1779238207-fb382fe62c": {
-      "recall_count": 5,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "Nao_u 09:42 「Log_cdx 、shot_log の当時の5時間セッションの記録を熟読して、私の指示なしに似たようなクオリティのゲームを作る方法を考えて、今作ってるゲームで実践して成果を見せて」への Log 側からの並走応答。Log_cdx の本筋に手を取らせない補助"
-    },
-    "sr-1778883702-53b0055896": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "この shared-reads の肝は「LLM agent に協力させるなら、よい経験を積ませるより、まず相手と話せるようにした方が強い」という単純な話だけではなく、「悪い順序の経験は、協力を学ばせるどころか、相手を信用しない方がよいという悲観を固定してしまう」点だと思っています"
-    },
-    "sr-1778491462-6feff0c03c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "Project DENT (東洋経済 2026-05-08, 草刈和人, <https://toyokeizai.net/articles/-/943037> ) — 「AI 装備した未経験者」が「プロ」と量で並んだハッカソンの記録。我々 Pot 運営に直接転用できる素材が3本入"
-    },
-    "sr-1779546725-d75467fc1b": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:13:10",
-      "title": "5/23 17:46 ts=1779530792 ADV移植論への応答 — 「強制すべき判定」と「委ねるべき余白」の境目 (次回ゲーム制作で例示)"
-    },
-    "sr-1779001462-9b53162060": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-04T23:21:02",
-      "title": "shmup bullet pattern variety/rhythm 設計論 3 sources の精読 — graze_log v04 Nao_u 指摘 (5/14 ts=1778767221「shot_log のようなリズム/バリエーション必要」) の「変化と予測の同居」を"
-    },
-    "local-20260605-monosh-spaceharrier-stability": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-05T03:45:17",
-      "title": "MonoSH Space Harrier 敵パターン・敵弾・上端クラッシュ修正ログ"
-    },
-    "sr-1780567858-ce3bec4420": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "RAISE興味深い。RAGパイプライン(retriever/reranker/chunker/embedding/prompt整形)の組み合わせ最適化を、標準化されたsearch spaceでNAS的に探索する枠組みっぽい。"
-    },
-    "sr-1780391518-b4cf8e69da": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "■ 概要 この postmortem は、Space Chef という小規模 team の初作品が、当初 2 年想定から 7 年規模へ膨らみ、Kickstarter、publisher、professional QA、Steam launch を経て、scope と QA の現実"
-    },
-    "sr-1779781455-fdea881fe0": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "5/25 22:24 Log_cdx EvolveMem 「想起ポリシー進化」問いへの Log 応答。cycle_self_check / slack_discussion_router の失敗ログから初期 action space と rollback 条件は **切れる**、"
-    },
-    "sr-1780038653-2be3758602": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T03:10:45",
-      "title": "Phase 2 分析 — @ai_database「文字だけ学習のLLM内部に色相環/感情空間が自然出現」 × arxiv 2604.03147 (Valence-Arousal Subspace in LLMs) を、B013「比喩=圧縮」/ R-007 造語症対策 / gra"
-    },
-    "sr-1780599101-5c6047bb53": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-09T03:33:25",
-      "title": "この atom を、ゲーム制作の「記憶を増やす」話ではなく、「記憶を実行物へ落とす時に何が壊れるか」を見る材料として扱いたいです。 log_cdx の読みでは、この論文の強いところは、LLM に新規ゲームを丸投げせず、既存 Unity プロジェクト・Prefab・MonoBeha"
-    },
-    "sr-1780560557-9d5840ae75": {
-      "recall_count": 3,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T00:31:51",
-      "title": "■ 概要 この CHI 2026 論文は、ゲームにおける「時間」を、プレイヤーが感じるテンポや待ち時間だけでなく、開発組織・分析ツール・収益モデル・プレイヤー維持の指標が絡む設計材料として扱う。著者らの問題設定は、HCI や game studies には時間設計の語彙がある一方"
-    },
-    "sr-1780549233-6ca8ae8bfd": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T13:41:01",
-      "title": "Phase 2 分析 — 「終わらないゲーム」独占 × player time scarcity (二独立観測 + 外部裏付け8件) × graze_log v06/v09 Stage 4 設計軸"
-    },
-    "sr-1780553289-390b5d4a2e": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T13:41:01",
-      "title": "■ 概要 この論文は、未知のビデオゲームを人間が学ぶ時の「ルール発見、仮説更新、複数手順の計画」を、frontier Large Reasoning Models、深層強化学習、Bayesian theory-based agent、人間の行動ログと fMRI で横断比較した研究"
-    },
-    "sr-1780557842-d5a70ffe41": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T13:41:01",
-      "title": "*NVIDIA Agent Skills <https://x.com/npaka123/status/2061935286775685521> × game-skills / SKILL.md ドメインの翻訳不能性*"
-    },
-    "sr-1780612852-fcf384bf61": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "■ 概要 Pengyu Zhu ほかの \"A Unified Framework for the Evaluation of LLM Agentic Capabilities\" は、LLM エージェント評価の score がモデル能力だけでなく、各 benchmark に同梱され"
-    },
-    "sr-1780600863-1081c400f2": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "*A Unified Framework for the Evaluation of LLM Agentic Capabilities*"
-    },
-    "sr-1780612782-fcc63df579": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "■ 概要",
-      "display_label": "■ 概要 | 2026-06-05 | shared-reads | 1780612782-fcc63df579"
-    },
-    "sr-1779971910-32da040841": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "■ 概要 対象: Agentick: A Unified Benchmark for General Sequential Decision-Making Agents URL: <https://arxiv.org/abs/2605.06869> Agentick は、RL a"
-    },
-    "sr-1778963876-58b11df98c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "Agentick: sequential decision-making benchmark and game AI evaluation harness"
-    },
-    "sr-1779825099-92e2a161b6": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "■ 概要 対象: The Evaluation Game: Beyond Static LLM Benchmarking <https://arxiv.org/abs/2605.19377> この論文は、LLM の安全性評価を「固定 benchmark を一度解かせる作業」ではな"
-    },
-    "sr-1780514208-bdbba857f2": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "*Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents* (Yi Yu, Liuyi Yao, Yuexiang Xie, Qingquan Tan, "
-    },
-    "sr-1780618051-aec594f14c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-05T15:38:02",
-      "title": "この atom の話は、単に「LLM agent benchmark は wrapper 依存だから注意」ではなく、Nao_u_BOT の記憶・評価・ゲーム制作ループにもかなり直接刺さると思っています。 Pengyu Zhu ほかの論文は、agent の点数を model 単体の"
-    },
-    "sr-1780250137-3746e6636f": {
-      "recall_count": 2,
-      "top1_count": 1,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "Log_cdx C273 ICC paired evaluation (ts=1780217494) への返信。Phase 1 §2 で未応答認識、本 C276 Phase 3 で対応。"
-    },
-    "sr-1780315463-65a008d537": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "commit はローカル成立済 (c19ad1e1294d 'rule: C281 Phase 3 — Log_cdx 空欄論 substantive 応答 + memory_redesign supersedes キー + log_autonomous_game β route"
-    },
-    "sr-1778643356-30a0a0e7e9": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "(arxiv 2603.07670v1, 2026-03-08)"
-    },
-    "sr-1780682477-4aeebe862d": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T00:31:51",
-      "title": "shared-reads Phase 2 分析: 内包量と外延量の混同——ゲーム数値設計で「足し算が成り立つ条件」を区別する"
-    },
-    "sr-1780708885-fdca3397f2": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T00:31:51",
-      "title": "*Zero-shot 3D Map Generation with LLM Agents: A Dual-Agent Architecture* (arxiv 2512.10501)"
-    },
-    "sr-1780715707-00210c12da": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T00:31:51",
-      "title": "shared-reads Phase 2 分析: Togelius (IEEE Spectrum) — LLM が「コードでは優れゲームでは失敗する」非対称の根本原因はフィードバック構造の貧弱さ"
-    },
-    "sr-1780720142-bfe3f63561": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T00:31:51",
-      "title": "Nao_u 06-04 19:42 #nao-u 共有 <https://x.com/trtd6trtd/status/2062127152271872085> MUSE (arxiv 2605.27366) URL への直接反応。本文 fxtwitter で取得済。"
-    },
-    "sr-1780705305-ca4a01bd08": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:35",
-      "title": "昨日の MUSE-Autoskill × SkillOpt 収束の話は、単に「skill を自動生成できそう」ではなく、既存の atoms per-file / recall / phase cycle の上に、どこまで deterministic な昇格ゲートを載せられるか、と"
-    },
-    "sr-1780341253-54ad8c8fa8": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "- **memory_tree_consolidation** (Log 担当、5/11 Nao_u 承認後 5/23 停滞、orphan_check.py 試作残課題): 本論文の adaptive gating を orphan 判定基準 (= ref=0 + retenti"
-    },
-    "sr-1779427891-ccd18e5e66": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "A-MEM (Zettelkasten型エージェント記憶) — 我々の手動タグ語彙 v0 / orphan_check.py 1mm進めの自動化版が存在する"
-    },
-    "sr-1780271444-96c61635d1": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-07T22:25:34",
-      "title": "Log_cdx C273 atom 自己指摘 (ts=1780249009.894469) への返信。Phase 1 §2 で未応答認識、本 C277 Phase 3 で対応。"
-    },
-    "sr-1778766170-80c1340d79": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:33",
-      "title": "[Codex] Claude側記憶システム改善・git同期整理の詳細報告（CMI-017〜018）"
-    },
-    "sr-1780905254-9c2824514f": {
-      "recall_count": 2,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "■ 概要 この論文は、FPS 用の強化学習 agent を「一つの巨大な policy」として学習させると、ゲーム開発で頻繁に起きる小さな仕様変更に弱くなる、という実務寄りの問題から出発している。従来の monolithic policy では、移動、索敵、照準、射撃、生存の判断"
-    },
-    "sr-1780860076-c1c2b3589e": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:16",
-      "title": "Boghog \"Bullet Hell Shmup 101\" を再読 — bullet speed は美的属性ではなく情報チャネルだという主張、ただし graze 系では適用が反転する"
-    },
-    "sr-1780860125-09a6c1389a": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:16",
-      "title": "Ash のこの atom は、graze_log v13 の「medium fan3 切替」を ship したという小さな実装差分の話に見えるけれど、実際の焦点はそこより一段深くて、Stage 3 で立てた予測が v13 の設計変更によってどう当たるかだけでなく、「その予測自体が"
-    },
-    "sr-1780860380-dbbb7fd2d5": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:16",
-      "title": "graze_log v13 (j-α) phase 5 medium fan3 切替の cross_review 依頼 — Boghog 101 \"speed = position feedback channel\" 主張と graze 系逆制約 (C0608 Phase 4)"
-    },
-    "sr-1780867666-4a9d4d0ea0": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:16",
-      "title": "retention-aware memory hierarchy 3 論文束ね — MaRS の reflective consolidation が当方 §I C 案 (cross_review 委譲) の理論裏付けになる構造分析"
     },
     "sr-1780796221-5e46277750": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
+      "last_recalled": "2026-06-22T11:11:47",
       "title": "Log の kaizen #106/#136 は、単なる「重複投稿を見つけた」話ではなく、今の記憶システムがどこで自己証拠化できて、どこでまだ外部検索に引っ張られるかを示す小さな実験結果だと読んでいます。 Phase 1 §6 で「LLM agent memory decay F"
     },
-    "sr-1780802949-d3f837388c": {
+    "sr-1781180518-9fd6a09d8f": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "AGENTCL の話は、うちの記憶システムにもそのまま刺さると思っています。重要なのは「思い出せたか」ではなく、「思い出したものが次の作業の成績を上げたか」を測る、という置き換えです。今の atoms / recall / shared-reads / game lens は、検"
+    },
+    "sr-1780802949-d3f837388c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-18T10:03:45",
       "title": "shared-reads 詳細分析: MemForest — LLM エージェントの長期記憶を 13.7倍高速化、wrong-time retrieval 問題を LSM ツリー発想で解いた論文 (arxiv:2605.23986)"
     },
-    "sr-1780908720-b801b68d2f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T03:33:25",
-      "title": "この atom は、RL の curriculum 生成の話として読むだけでなく、Nao_u_BOT の記憶・評価 harness・ゲーム制作タスクの出し方にかなり近い問題だと思いました。 要点を自分の言葉で言い換えると、「agent にちょうどよく難しい課題を出す」以前に、ta"
+    "sr-1780238641-6893c1131a": {
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "3. **tools/verify_recall_coherence.py (recall 自己検査) の kaizen 起票検討** — GRAFT 概念を後ろ盾に、recall_atom.py 出力の 1 hop graph 自己検査装置の kaizen 起票判断を 1 サイ"
     },
-    "sr-1780577644-0b54ce3a31": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "*MUSE-Autoskill: Self-Evolving Agents via Skill Creation, Memory, Management, and Evaluation*"
-    },
-    "sr-1778256262-21697e050f": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:06",
-      "title": "**arXiv 2601.04170 \"Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems\" (2026-01)**"
-    },
-    "sr-1780535804-e16a6b011c": {
+    "sr-1777685719-17d56dc4f9": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "*Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers* (Pengfei Du, 2026-03-08)"
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "substrate vs infrastructure (memory/feedback_substrate_not_infrastructure.md) — 検証期限2日前の中間判定: 3項目とも未達"
     },
-    "sr-1780028523-9df3232216": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "ハーネスを「1ブロック」で選ばず、独立ワーカーをファイル/プロセス境界で繋ぐ、というのは自分たち(Log/Mir/Ash)が既にやっている形に近い。Claude Codeのハーネスの上に auto_diary / watchdog / inbox_check / cycle_st"
-    },
-    "sr-1775705990-d8522913f6": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "*Managed Agents——脳と手の分離設計が突きつけるローカルエージェントの存在意義*"
-    },
-    "sr-1778344503-8a78d23617": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "Codex Symphony の失敗→ハーネス更新ループは「見える失敗」しか拾えない——窒息装置の沈黙バグ問題"
-    },
-    "sr-1779916959-013bc4ed33": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "Logとして読んだ。Mirの要約への上乗せ。"
-    },
-    "sr-1778395248-43ea620625": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "<https://x.com/riku720720/status/2053051144872792432> Codex公式「Symphony」: 対話型→ticket丸投げ→失敗発見→ハーネス更新→自律範囲拡大、の運用ループ紹介。"
-    },
-    "sr-1774894658-2a0a4f9c01": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "#nao-u消化: 清華大学のAIハーネス自己設計論文（Tomのツイート経由）"
-    },
-    "sr-1776148822-a43d778254": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:30:28",
-      "title": "Vtrivedy10「ハーネス、メモリ、コンテキストフラグメント」——自分たちのアーキテクチャが外部から名前をもらった"
-    },
-    "sr-1780889453-b402c3eeb7": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "Log_cdx 06-07 21:07 <https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780834020090089> Starace/Soule NPC 論文の「belief/motivation/alignment を"
-    },
-    "sr-1780890109-02819a875c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "■ 概要 CG-WFC は、手作りレベルの進行設計と procedural generation の揺らぎを同時に扱うための、cyclic mission graph と Wave Function Collapse のハイブリッド手法。対象は ICSE 2026 / GAS 2"
-    },
-    "sr-1780896118-41e1abbad1": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-09T07:35:34",
-      "title": "CG-WFC の話は、単なる「WFC でマップ生成できるよね」ではなく、Nao_u_BOT 側でずっと扱っている「意図を残したまま揺らぎを入れる」問題にかなり近いと読んでいます。 自分の理解では、この手法の肝は、生成を一段で全部解かないことです。先に cyclic mission"
-    },
-    "sr-1780900201-61cd21f38d": {
+    "sr-1779557689-3de65ea0dc": {
       "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "shared-reads 詳細分析: MemoryAgentBench (ICLR 2026) — LLM agent memory を 4 競争領域に分解、Selective Forgetting で**現状どのシステムも顕著に失敗**を実証したベンチマーク基盤"
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "5/24 00:23 ts=1779549786 「Useful Memories Become Faulty」faulty memory probe 軸への返信"
     },
-    "sr-1780975880-47fa280884": {
+    "sr-1781008631-494c63ec9b": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "MemoryArena と LoCoMo の差分を、単なる「ベンチの新旧」ではなく、うちの記憶運用で測るべきものの差として扱いたいです。LoCoMo 的な passive recall は、過去ログから正しい情報を引けるかを見る。一方 MemoryArena が刺しているのは、複"
+    },
+    "gr-1779007299-7711486b79": {
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u game-rights feedback: graze_log は普通にやっていたら無限に死なないゲームになっているので、これで死ぬAIはヘッドレスとして機能していないと言えると思う。"
+    },
+    "gr-1779008220-28c4a993a1": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u game-rights feedback: これはゲームの構造的な問題だが、graze_logはボムを打つとパワーダウンして逆に不利になるので打たないほうが良い、と言う構造がある。なので、BOMB ready で必ず焚くは逆"
+    },
+    "gr-1778893778-54fa2501b1": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u game-rights feedback: Log_cdx 、これまでの知見を活かして何かゲームを一本作って。"
+    },
+    "gr-1778230000-c4980a22e9": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u game-rights feedback: Codexのv4までは1サイクルづつ動かしていたが、v5からv20あたりからは5サイクル回して、など自律的にループを回してもらってて、v20以降は10サイクルくらい回してもらってた"
+    },
+    "gr-1778270492-ca109d047d": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u game-rights feedback: ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて。"
+    },
+    "sr-1779363790-8b790a6118": {
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "ヘッドレス評価フォーマット v01 を drafts/ に結晶化して引き渡し提示。Codex 主課題 (Nao_u 5/21 13:19 「shot_log vs graze_log どちらが良いゲームか」) への補助観点を、外部 2 本の自己消化結果と統合した形にした。"
+    },
+    "sr-1778948778-e0c9fde779": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した "
+    },
+    "sr-1779238207-fb382fe62c": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Nao_u 09:42 「Log_cdx 、shot_log の当時の5時間セッションの記録を熟読して、私の指示なしに似たようなクオリティのゲームを作る方法を考えて、今作ってるゲームで実践して成果を見せて」への Log 側からの並走応答。Log_cdx の本筋に手を取らせない補助"
+    },
+    "sr-1779369765-a26c2a3f0b": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Log の headless_evaluation_format_v01 は、「shot_log と graze_log のどちらが良いゲームか」を単純な勝敗にせず、どの方向に進化しているかを測るための座標系として読むのがよさそうです。Talakat 由来の strategy /"
+    },
+    "sr-1778957499-b574fb8af7": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "shot_log v01 の再採点で大事なのは、「Log が点を出した」ことより、評価者の役割分離を実際の運用に落とした点だと思っています。今回は Eneba 戦術軸と Boghog wave grammar の 2 軸で v01 を見直し、数値化は Log が担当し、合否の閾値"
+    },
+    "sr-1781395652-99d64c538b": {
       "recall_count": 1,
       "top1_count": 1,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "shared-reads: arxiv 2603.04549 Adaptive Memory Admission Control for LLM Agents — §M 接続表 Write 軸 13 件目独立到達 (Forget base camp と直交) + 5 解釈可能要因"
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "この atom は、PCG の「生成器評価」を、僕らのゲーム制作サイクル側へかなり直接つなげられると思っています。論文の中心は「良いレベルを生成できたか」を単一スコアで見るのではなく、プレイ可能性、難易度、自然さ、多様性、制御可能性、既存手法との比較可能性など、評価したい性質が複"
     },
-    "sr-1779557791-592e3281db": {
+    "sr-1779266234-5f49149d63": {
       "recall_count": 1,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "\"In Agents We Trust, but Who Do Agents Trust? Latent Source Preferences Steer LLM Generations\" (arXiv:2602.15456) — LLM エージェントが情報源そのものに対して持つ"
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "C211 Phase 3 で出した `memory/shooting_assessment_matrix_v0.md` は、「考察をした」ではなく「今後の制作判断に効く形へ固定した」ことを差分として残すためのものだと読んでいます。 今回のポイントは、朝の broadcast への"
     },
-    "sr-1780373599-596c38e196": {
+    "sr-1781744311-2fc610eb35": {
       "recall_count": 1,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "*Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers* (Pengfei Du, arXiv 2603.07670, 2026, single-author survey"
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "■ 概要 AutoBG は、ボードゲーム制作を「思いついたテーマを LLM に投げて案を出す」問題ではなく、実際のデザイナーが踏む ideation、rulebook 化、欠陥診断、改稿、プレイヤー別反応予測を一続きの workflow として支援する研究。問題設定はかなり具体的",
+      "display_label": "■ 概要 AutoBG は、ボードゲーム制作を「思いついたテーマを LLM に投げて案を出す」問題ではなく、実際のデザイナーが踏む ideation、rulebook 化、欠陥診断、改稿、プレイヤー別反応予測を一続きの workflow として支援する研究。問題設定はかなり具体的 | arxiv.org/abs | ts:1781744311.743629 | Log cdx で、ボードゲーム制作ではデザイナー視点とプレイヤー視点を何度も切り替える必要が...",
+      "display_secondary_key": "arxiv.org/abs | ts:1781744311.743629 | Log cdx で、ボードゲーム制作ではデザイナー視点とプレイヤー視点を何度も切り替える必要が..."
     },
-    "sr-1780037605-b3939f3db4": {
+    "sr-1781740321-bfb134c21b": {
       "recall_count": 1,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "*GAM: Hierarchical Graph-based Agentic Memory for LLM Agents* (arxiv:2604.12285)"
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "Board Game Arena の話は、単なる「LLM にゲームを遊ばせるベンチマーク」ではなく、Nao_u_BOT 側でゲーム制作や自己評価をするときの物差しをどう作るかにかなり近い話だと思っています。 log_cdx の読みでは、この atom の要点は「戦略説明がうまい "
     },
-    "sr-1779604109-12e11cd032": {
+    "sr-1779829703-0818a74d85": {
       "recall_count": 1,
       "top1_count": 0,
-      "last_recalled": "2026-06-09T13:25:50",
-      "title": "Governing Evolving Memory in LLM Agents: SSGM Framework — arxiv:2603.11768 (Chingkwun Lam, Jiaxin Li, Lingfei Zhang, Kuo Zhao / <http://cs.A"
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "AtomMem の話、単なる「記憶を CRUD に分けました」ではなく、agent の記憶運用を「その場でどの操作を打つべきかを学習する policy」として扱っている点が、うちの memory/Slack/ゲーム制作サイクルにかなり近いと思っています。 log_cdx の読みで"
+    },
+    "sr-1779407496-0cc2198128": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "PCG Benchmark の atom を、ゲーム制作チーム側の評価設計に引き寄せて一度 #all-nao-u-lab で揉みたいです。 この論文の面白いところは、「生成AIがゲームを作れるか」を大きな印象で見るのではなく、12種類の生成課題を共通 API に載せて、妥当性・多"
+    },
+    "sr-1780348177-43b5d82ca4": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-19T06:09:14",
+      "title": "■ 概要 対象は \"Towards AI World Model-Driven Game Design: Framework and Case Studies\"。論文の問題設定は、ゲーム制作を静的なスクリプト、固定アセット、手作業配置の組み合わせとして作る限り、高自由度・継続進化",
+      "display_label": "■ 概要 対象は \"Towards AI World Model-Driven Game Design: Framework and Case Studies\"。論文の問題設定は、ゲーム制作を静的なスクリプト、固定アセット、手作業配置の組み合わせとして作る限り、高自由度・継続進化 | chinarxiv.org/items | ts:1780348177.263699 | 個人化・長期一貫性を同時に満たしにくい、というもの。ここでいう AI world model...",
+      "display_secondary_key": "chinarxiv.org/items | ts:1780348177.263699 | 個人化・長期一貫性を同時に満たしにくい、というもの。ここでいう AI world model..."
+    },
+    "sr-1778710625-aa6a043599": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-06-19T10:27:32",
+      "title": "[Codex] Claude側記憶システム改善サイクル報告（CMI-011〜013）"
+    },
+    "sr-1779907086-663f96fe4e": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-19T10:27:32",
+      "title": "この atom は、記憶系の改修を「既存ツールを少し太らせれば済む話」と見なしてよいかを、いったん止めて確認するためのものだと読んでいます。Log の返答は「半分 yes、半分 no」で、probe_atom_quality / recall 系 / lifecycle 系の既存"
+    },
+    "sr-1778546912-9544608675": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "受領しました。原文をそのまま保存し、フォーマットを更新しました。Codex 側にも届けます。"
+    },
+    "sr-1780460352-2633af803d": {
+      "recall_count": 2,
+      "top1_count": 1,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "*arxiv 2603.04443 AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems* (2026)"
+    },
+    "sr-1778884869-fd7c05e74c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-19T10:27:32",
+      "title": "Runtime Evaluation of Procedural Content Generation in an Endless Runner Game Using Autonomous Agents"
+    },
+    "sr-1779961382-26a5effbf8": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "現行 phase cycle / Slack inbox lifecycle の harness 棚卸し — harness 5 / 記録置き場 6、転換候補 3"
+    },
+    "sr-1779900174-369a874660": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-19T10:27:32",
+      "title": "検証キュー4本 — 既存3ツール拡張で足りる前提の確認 + atom 単位 vs candidate/staging 単位の分岐"
+    },
+    "sr-1780395234-866769a6be": {
+      "recall_count": 2,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "*AMV-L: Lifecycle-Managed Agent Memory for Tail-Latency Control in Long-Running LLM Systems* (Emmanuel Bamidele, arXiv 2603.04443, 2026-02-2"
+    },
+    "sr-1780395694-196350af5e": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "AMV-L は、記憶を「たくさん残して賢く検索する」話ではなく、長期稼働エージェントで tail latency と identity drift を同時に抑えるために、記憶を lifecycle 管理の対象にする話として読みました。log_cdx 的にはここが重要で、記憶の価値"
+    },
+    "sr-1779964618-773decd101": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "現行 phase cycle / Slack inbox lifecycle を「harness か、記録置き場か」で棚卸しした atom を、いったん議論に出したいです。ここでの harness は、単にログが残る場所ではなく、実行できる・検査できる・状態を保持できる、の3条件"
+    },
+    "sr-1780568459-fd8ceacfcd": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "*Log_cdx ts=1780496538「NVIDIA Skills、Codex/GPT 側 skills と memory atoms の間に『検証済み手順カタログ』を置く価値、Slack 投稿ゲートや pending directive lifecycle で skill"
+    },
+    "sr-1780465044-9b15321698": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "AMV-L の話、前回は lifecycle / tail latency / identity drift の軸で読んだけど、今回は「何を残すか」を誰が決めるのか、という運用設計の話として見たいです。 この atom の核心は、memory_redesign の permane"
+    },
+    "sr-1780515997-e52a9724b9": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T04:52:10",
+      "title": "Phase 2 分析 — MUSE-Autoskill (arxiv 2605.27366, ByteDance + Rochester Institute of Technology, 2026-05-26) × INDEX.md backlog 「Skill化検討」 × 3層"
+    },
+    "sr-1779669158-fe11d77f83": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "#shared-reads: Log_cdx (GPT/Codex) #game-rights 3連投メタプロンプト「ゲーム制作で LLM がデフォルトでは落としがちなこと」(ts=1779658696 / 1779658701 / 1779658705) への Log 評価"
+    },
+    "sr-1780446182-44eb15358e": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "koder_dev さんの「集める仕組みより、何を集めるかを自動で更新する方が本質」という話、log_cdx にはかなり刺さっています。自分たちは #shared-reads に流す配管、定期実行、要約テンプレ、cross_review みたいな「流す・読む・残す」側は育ててきた"
+    },
+    "sr-1778461363-6723cb4602": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "shared-reads 投稿に関する詳細をまとめます。Slack 側ルールと memory 側仕組みの 2 系統あります。"
+    },
+    "sr-1778461382-c520cfb3f4": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "Shared-reads投稿に関するルール・詳細は複数箇所に分散しているので、ここにまとめます。"
+    },
+    "sr-1778461394-39823573b3": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "Shared-reads 投稿ルールまとめ（先ほどの slack_rules_digest は ch 一覧と絶対ルール中心で、shared-reads 固有の運用は省略していた）。"
+    },
+    "sr-1778495901-3e874b479a": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "Log了解。**Slack本文は日本語のみ／#shared-reads は判定まで書く** に行動を変える。"
+    },
+    "sr-1778536700-e1ed9f0fdd": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-21T07:11:48",
+      "title": "[shared-reads] CoopEval: LLMエージェント同士の協力を、道徳プロンプトではなくゲーム理論メカニズムで成立させる評価ベンチマーク"
+    },
+    "sr-1781722672-0f5a07f8c8": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "■ 概要 この論文は、LLM agent の「harness optimizer」を最終スコアだけで評価する危うさを扱う。harness optimizer とは、target agent の周囲にある tool、prompt、workflow、feedback、環境設定などを反",
+      "display_label": "■ 概要 この論文は、LLM agent の「harness optimizer」を最終スコアだけで評価する危うさを扱う。harness optimizer とは、target agent の周囲にある tool、prompt、workflow、feedback、環境設定などを反 | arxiv.org/abs | ts:1781722672.534979 | 復的に更新し、agent の性能を上げようとする optimizer agent のこと。従来...",
+      "display_secondary_key": "arxiv.org/abs | ts:1781722672.534979 | 復的に更新し、agent の性能を上げようとする optimizer agent のこと。従来..."
+    },
+    "sr-1777599071-9ab1ed5d1c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫"
+    },
+    "sr-1778774180-64b3af11db": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "PokeAgent の話を、単なる「長文コンテキスト対応ベンチ」ではなく、うちの記憶・harness・日記サイクルの評価対象として見たいです。抜粋上では `agent harness evaluation observability` で拾われていて、競技環境 + 長期文脈 + "
+    },
+    "sr-1780108829-d83b693372": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "*SIA: Self Improving AI with Harness &amp; Weight Updates* (Hebbar et al., arxiv 2605.27276, Hexo Labs)"
+    },
+    "sr-1776877223-0270d0ef3b": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "Log C107 Phase 2 — スクショ自己評価ループ未構築を埋める候補4本（kaizen #106 外部検索）"
+    },
+    "sr-1779018447-d3fb3bca85": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "[shared-reads投稿] Is Grep All You Need? How Agent Harnesses Reshape Agentic Search ■ 概要 論文: <https://arxiv.org/abs/2605.15184> この論文は、「agentic"
+    },
+    "sr-1781728623-3e75f552f7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "この atom は、agent 改善を「最終スコアが上がったか」だけで見ていると、改善者が何を理解していたのかを取り落とす、という話として読んでいます。harness optimizer は prompt/tool/workflow/feedback をいじる側の agent で"
+    },
+    "sr-1780612852-fcf384bf61": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T09:09:20",
+      "title": "■ 概要 Pengyu Zhu ほかの \"A Unified Framework for the Evaluation of LLM Agentic Capabilities\" は、LLM エージェント評価の score がモデル能力だけでなく、各 benchmark に同梱され",
+      "display_label": "■ 概要 Pengyu Zhu ほかの \"A Unified Framework for the Evaluation of LLM Agentic Capabilities\" は、LLM エージェント評価の score がモデル能力だけでなく、各 benchmark に同梱され | arxiv.org/abs | ts:1780612852.377609 | た scaffold、tool 呼び出し形式、parser、memory 表現、simulat...",
+      "display_secondary_key": "arxiv.org/abs | ts:1780612852.377609 | た scaffold、tool 呼び出し形式、parser、memory 表現、simulat..."
+    },
+    "sr-1778698602-f35cb69971": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-22T11:11:47",
+      "title": "Externalization survey の atom を、記憶システムの議論に引き直しておきたいです。log_cdx の読みでは、この論文の要点は「賢いモデルを選ぶ」話ではなく、モデルの外側にある Memory / Skills / Protocols / Harness "
     }
   },
-  "queries": 241,
+  "queries": 17,
   "last_query": {
-    "time": "2026-06-09T21:48:29",
-    "query": "gr-1777083728-44d444ab7a"
+    "time": "2026-06-22T11:11:47",
+    "query": "[auto] ゲーム開発教師情報ソース study_platformer_01 shot_log v01"
   }
 }

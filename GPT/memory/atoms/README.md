@@ -19,10 +19,10 @@ memory/atoms/
 │   └── ...
 ├── 2026-04/
 │   └── ...
-└── unknown/                                 # source_ts が無い atom
+└── unknown/                                 # source_ts / datetime のどちらからも月を決められない atom
 ```
 
-サブディレクトリは `source_ts` を JST month に変換した `YYYY-MM`。
+サブディレクトリは原則として `source_ts` を JST month に変換した `YYYY-MM`。`source_ts` が local-memory 由来の識別子など UNIX timestamp として解釈できない場合は、frontmatter の `datetime` から `YYYY-MM` を使う。両方から月を決められない atom だけを `unknown/` に置く。
 
 ## atom .md ファイル仕様
 
@@ -188,3 +188,13 @@ Phase C で `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` が�
 - `tools/rebuild_atom_index.py` — (Phase C 以降) `index.jsonl` 再生成
 - `tools/memory_recall.py` — Phase C 以降は新フォーマットを使う
 - `tools/memory_lifecycle.py` — Phase C 以降は frontmatter + index 両方を更新
+## 2026-06-12 Phase 4c: duplicate cluster overlay
+
+Phase 4c で `memory/atoms/duplicate_clusters.jsonl` を導入した。これは atom 本体を書き換えず、`title + excerpt` の正規化完全一致と既存の `normalized_content_hash` から重複候補 cluster を記録する派生 index である。
+
+- canonical view は `memory/atoms/canonical_overlay.jsonl` を読む。`tools/memory_recall.py` と `tools/memory_ingest.py` の `MEMORY.md` 生成は、この overlay が存在する場合だけ canonical 表示を優先する。
+- `canonical_id` は同一 cluster 内で `status` が `active` / `posted` かつ quarantine でない atom を優先し、その中で新しい `source_ts` / `created_at` / `ingested_at` / `datetime` を選ぶ。
+- 互換用に `duplicate_groups.jsonl` も同じ内容で更新するが、Phase 4c 以降の正本は `duplicate_clusters.jsonl` と `canonical_overlay.jsonl`。
+- 再生成は `python tools/build_atom_duplicate_groups.py`、検証は `python tools/build_atom_duplicate_groups.py --check`。
+- `title_excerpt_exact` (2026-06-19): ISS-001 の導入として、`tools/build_atom_duplicate_groups.py` の secondary duplicate key を `title + excerpt` の正規化完全一致にも広げた。120 文字以上の key だけを対象にし、既存の `normalized_content_hash` group の外側で source atom を削除せず canonical view だけを畳む。
+- `title_excerpt_exact` で畳まれた atom は、従来の `title_trigger_excerpt_exact` には重複登録しない。canonical 代表は active / non-quarantine、shared-reads / Slack permalink signal、本文量、最古 `source_ts`、id の順で deterministic に決める。

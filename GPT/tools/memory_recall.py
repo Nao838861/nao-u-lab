@@ -16,6 +16,7 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import memory_lifecycle
 from atom_title_clusters import load_title_cluster_map
@@ -148,11 +149,83 @@ def title_counts(atoms: list[dict[str, Any]]) -> Counter[str]:
     return Counter(title for title in (normalized_title(atom) for atom in atoms) if title)
 
 
+GENERIC_TITLE_PREFIXES = (
+    "[Codex external research]",
+    "[Codex shared-reads",
+    "■ 概要",
+    "笆",
+)
+
+
+def is_generic_title(title: str) -> bool:
+    return any(title.startswith(prefix) for prefix in GENERIC_TITLE_PREFIXES)
+
+
+def first_url_hint(atom: dict[str, Any]) -> str:
+    links = atom.get("links", [])
+    if not isinstance(links, list):
+        return ""
+    for link in links:
+        parsed = urlparse(str(link).strip("<>"))
+        if not parsed.netloc:
+            continue
+        host = parsed.netloc.lower().removeprefix("www.")
+        path_parts = [part for part in parsed.path.split("/") if part]
+        if path_parts:
+            return f"{host}/{path_parts[0][:32]}"
+        return host
+    return ""
+
+
+def content_head_hint(atom: dict[str, Any], title: str, max_len: int = 48) -> str:
+    text = " ".join(
+        str(atom.get(key) or "").strip()
+        for key in ("excerpt", "trigger")
+        if str(atom.get(key) or "").strip()
+    )
+    if title:
+        text = text.replace(title, " ")
+    text = re.sub(r"^Use when\s+[^。.\n]+[。.]\s*", " ", text)
+    text = re.sub(r"\((?:prescription|observation|synthesis)[^)]+\)", " ", text)
+    text = re.sub(r"https?://\S+", " ", text)
+    text = re.sub(r"[<>\[\]`*_#|]+", " ", text)
+    text = re.sub(r"\s+", " ", text).strip(" -:。、「」・")
+    if not text:
+        return ""
+    if len(text) <= max_len:
+        return text
+    return text[: max_len - 1].rstrip() + "..."
+
+
+def display_secondary_key(atom: dict[str, Any]) -> str:
+    """Build a deterministic display-only key from existing atom fields."""
+    title = normalized_title(atom)
+    parts = []
+    url_hint = first_url_hint(atom)
+    if url_hint:
+        parts.append(url_hint)
+    source_ts = str(atom.get("source_ts") or "").strip()
+    if source_ts:
+        parts.append(f"ts:{source_ts}")
+    hint = content_head_hint(atom, title)
+    if hint:
+        parts.append(hint)
+    return " | ".join(parts)
+
+
 def fallback_display_label(atom: dict[str, Any], counts: Counter[str]) -> str:
     title = normalized_title(atom)
-    if not title or counts.get(title, 0) <= 1:
+    if not title or (counts.get(title, 0) <= 1 and not is_generic_title(title)):
         return title
-    return f"{title} | duplicate-title"
+    secondary_key = display_secondary_key(atom)
+    if not secondary_key:
+        return f"{title} | duplicate-title"
+    return f"{title} | {secondary_key}"
+
+
+def should_add_secondary_key(atom: dict[str, Any], counts: Counter[str]) -> bool:
+    title = normalized_title(atom)
+    return bool(title and (counts.get(title, 0) > 1 or is_generic_title(title)))
 
 
 def annotate_display_labels(
@@ -174,6 +247,12 @@ def annotate_display_labels(
                 label = f"{label} | {disambiguator}"
         elif not title_cluster_map:
             label = fallback_display_label(row, fallback_counts)
+        if should_add_secondary_key(row, fallback_counts):
+            secondary_key = display_secondary_key(row)
+            if secondary_key:
+                row["display_secondary_key"] = secondary_key
+                if secondary_key not in label:
+                    label = f"{label} | {secondary_key}"
         if label and label != normalized_title(row):
             row["display_label"] = label
         annotated.append((score, row))
@@ -232,12 +311,15 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "score": round(score, 3),
             "title": atom.get("title"),
             "display_label": atom.get("display_label"),
+            "display_secondary_key": atom.get("display_secondary_key"),
             "display_disambiguator": atom.get("display_disambiguator"),
             "title_cluster_id": atom.get("title_cluster_id"),
             "title_cluster_size": atom.get("title_cluster_size"),
             "tags": atom.get("tags", [])[:8],
             "folded_count": atom.get("folded_count", 0),
             "folded_ids": atom.get("folded_ids", [])[:20],
+            "duplicate_count": atom.get("duplicate_count", atom.get("folded_count", 0)),
+            "duplicate_ids": atom.get("duplicate_ids", atom.get("folded_ids", []))[:20],
             "grouped_count": atom.get("grouped_count", 1),
             "grouped_ids": atom.get("grouped_ids", [])[:20],
             "overlay_reason": atom.get("overlay_reason"),
@@ -265,6 +347,8 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
         entry["title"] = atom.get("title")
         if atom.get("display_label"):
             entry["display_label"] = atom.get("display_label")
+        if atom.get("display_secondary_key"):
+            entry["display_secondary_key"] = atom.get("display_secondary_key")
         if atom.get("display_disambiguator"):
             entry["display_disambiguator"] = atom.get("display_disambiguator")
     write_json(ATOM_STATS_PATH, stats)
@@ -275,6 +359,8 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     links = atom.get("links", [])
     folded_count = int(atom.get("folded_count") or 0)
     folded_ids = [str(aid) for aid in atom.get("folded_ids", []) if aid]
+    duplicate_count = int(atom.get("duplicate_count") or folded_count)
+    duplicate_ids = [str(aid) for aid in atom.get("duplicate_ids", folded_ids) if aid]
     grouped_count = int(atom.get("grouped_count") or (folded_count + 1 if folded_count else 1))
     grouped_ids = [str(aid) for aid in atom.get("grouped_ids", folded_ids) if aid]
     overlay_reason = str(atom.get("overlay_reason") or "")
@@ -294,6 +380,8 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     print(f"title: {result_title(atom)}")
     if atom.get("display_label"):
         print(f"source_title: {atom.get('title', '')}")
+    if atom.get("display_secondary_key"):
+        print(f"display_secondary_key: {atom.get('display_secondary_key')}")
     print(f"trigger: {atom.get('trigger', '')}")
     print(f"tags: {tags}")
     if links:
@@ -301,6 +389,8 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     if folded_count:
         print(f"folded_count: {folded_count}")
         print(f"folded_ids: {', '.join(folded_ids)}")
+        print(f"duplicate_count: {duplicate_count}")
+        print(f"duplicate_ids: {', '.join(duplicate_ids)}")
         print(f"grouped_count: {grouped_count}")
         print(f"grouped_ids: {', '.join(grouped_ids)}")
         if representative_reason:

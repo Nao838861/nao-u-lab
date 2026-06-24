@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2511.02534"
 collected_at: "2026-05-15T06:59:16+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [automated-playtesting, game-qa, knowledge-graph, llm, regression-testing]
-evaluated_at: "2026-05-15T07:02:42+09:00"
+evaluated_at: "2026-06-19T18:37:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T07:02:42+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T07:02:42+09:00"
-stale_after: "2026-06-14"
+gate_decision: fail
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-06-19T18:37:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-19T18:37:00+09:00; duplicate_posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169"
+stale_after: "2026-07-19"
 supersedes: []
-next_action: revise_or_research
+next_action: keep_for_reference
 gate_reason: >-
   update log、Knowledge Graph、multi-hop reasoning、test case 生成という骨格は有用だが、
-  候補内の情報だけでは KG スキーマや評価結果の具体性が薄く、4000字の概要が概念説明に寄りやすい。
+  同一テーマは 2026-05-30 と 2026-06-09 に別候補から投稿済み。未投稿 queue に残すと重複投稿リスクが高いため、この古い候補は参照用として閉じる。
 
 ---
 

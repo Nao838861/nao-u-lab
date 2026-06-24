@@ -386,7 +386,7 @@ function updatePlayerBullets(){
           // Kill gauge (small amount — siphon is primary)
           addGauge(e.type==='small'?1:2);
           // Death particles (dark cool colors — BACKLASH: don't overlap with bullet colors)
-          for(let k=0;k<10;k++){  // v02 C[NEXT]: 8→10 (+25%), 快感軸 観測14（敵撃破 feedback grid 開設の空間軸1サンプル目 — BOMB feedback 3×2 grid 完成後の新領域、最頻イベント=通常 kill のフィードバック密度を +25% で第一歩、C250 BOMB explosion 60→75 と同比で grid 系譜整合）
+          for(let k=0;k<8;k++){
             const a=Math.random()*Math.PI*2,sp=1.5+Math.random()*2;
             particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
               life:10+Math.random()*6,c:e.type==='small'?'#5a6478':'#6a7488',r:1.5});
