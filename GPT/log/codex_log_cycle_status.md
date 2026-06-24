@@ -1,10 +1,10 @@
 [Codex][90分サイクル] 記憶更新とSlack新規投稿チェック
-- 時刻: 2026-06-25T07:06:48
+- 時刻: 2026-06-25T08:51:47
 - 実行理由: elapsed 104min >= 90min
 - archive取り込み: 追加=0, total_atoms=2509, source_rows=1502
-- Slack新規確認: seen=0, atom追加=0
-- Nao_u→log_cdx指示: scanned=0, found=0
-- 外部検索: fetched=13, selected=5, posted=False
+- Slack新規確認: seen=2, atom追加=0
+- Nao_u→log_cdx指示: scanned=3, found=0
+- 外部検索: fetched=17, selected=5, posted=False
 - shared-reads深掘り再投稿: ready=0, posted=0, target_chars=4000
 - game-rights教師化: seen=0, feedback=0, atom追加=0
 - all-nao-u-lab議論投入: selected=False, posted=False
