@@ -80,6 +80,55 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+```yaml
+audited_at: "2026-06-25T07:52:39+09:00"
+audited_by: "log_cdx (Phase 4a)"
+cleaned:
+  - "memory/MEMORY.md: UTF-8明示読みで index を監査。markdown link broken 0件、index掲載 atom id 50件は atoms.jsonl 側に全件存在。代表語probeは 記憶/ゲーム設計/敵パターン が hit、評価軸 は文字化けではなく本文語彙として未出現。"
+  - "memory/atoms.jsonl: 2509行を JSON parse。id重複 0件、完全同一content重複 0件。自動検査範囲では矛盾候補なし。"
+  - "memory/raw/: mtime 30日以上の raw file 87件を確認。最古は memory/raw/sync_state.txt と memory/raw/slack_archive/shared-reads.jsonl の44日。今回は archive 実行なし。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=338, ready_to_post=7, postponed=283, failed=101, needs_review=13。README.md 1件は候補外文書として frontmatter missing 扱いから除外。"
+  - "memory/shared_reads_candidates/: stale_after <= 2026-06-25 の postponed/needs_review は55件。posted/failed は再評価queue対象外として扱い、下の stale_review_batch 5件だけ Phase 2 へ送る。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives pending=0, broadcasts pending=0 を確認。handled 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "shared_reads_candidates の postponed/needs_review に stale_after 期限切れが55件残っており、Phase 2 が毎回候補プール全体から古い保留を見直す負荷になっている。lifecycle 欄自体は存在するため、今回は少数handoffで運用整理する。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/*.md: status postponed/needs_review with stale_after <= 2026-06-25 が55件"
+    source_file_status: "候補ファイルは UTF-8 読み可能。frontmatter の status/stale_after は取得可能。README.md は候補外文書のため lifecycle 欄なしでも破損扱いしない。"
+    display_or_tooling_status: "PowerShell stdout では日本語literalが一部 mojibake したため、代表語probeは unicode escape 経由で再確認。source file 破損は確認されず。"
+    why_blocks_game_memory: "古い保留候補が多いと、ゲーム制作に使える外部知見候補と、投稿品質に届かない古い候補が同じ棚に残り、次サイクルの探索・再評価の検索性が落ちる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "LLM Game Master と NPC dialogue は会話型RPG制作に近いが、学習効果・参加者評価・失敗例が不足して保留になっている。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "hidden-role / multi-agent / deception は小型ゲーム設計素材として具体性があるが、現候補は ethical alignment 寄りで制作適用の見極めが必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_physiological_dda_engagement.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "dynamic difficulty と engagement は player-state 設計に接続しやすく、本文評価が薄ければ fail、使える評価軸があれば再評価する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "text adventure での LLM planning failure は agent評価とゲーム内推論設計に近い。既存候補の具体性が足りなければ fail でよい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "小さな planning benchmark は puzzle/prototype の評価軸化に使える可能性があるが、ゲーム制作への橋が薄ければ fail に回す。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
