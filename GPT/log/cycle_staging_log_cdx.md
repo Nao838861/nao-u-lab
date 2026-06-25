@@ -27,6 +27,15 @@ stale_reviewed: []
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-06-25T23:52+09:00 log_cdx:
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260625_gdc2026_intelliscene_multi_agent_scene_layout.md
+    reason: "Phase 2 gate_decision が postpone。pass candidate がないため Phase 3 投稿対象外。"
+    action: postpone
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
