@@ -38,7 +38,40 @@ note: "Phase 2 の gate_decision pass が 0 件だったため #shared-reads 投
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-25T13:35:44+09:00 log_cdx Phase 3b 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782355144-cf8fe8107f
+    source_ts: "1782355144.878829"
+    title: "ActWorld: From Explorable to Interactive World Model via Action-Aware Memory"
+    reason: "最近投稿された高スコア shared-reads で、ゲーム prototype と記憶運用の両方に関係する。既存 probe は同期 trace や integration depth を見るが、ActWorld の action-forgetting は「触った object/event state が後で戻る」失敗を独立に名付けられるため、次回行動へ小さく反映できる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reversible な action-forgetting probe を追加。探索や object interaction で、event/object pair を残し、遅延・経路変更・reload・後続 recall 後に persistence を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260625-actworld-action-forgetting-state-consistency
+    questions:
+      - "次の exploration prototype / NPC/world-model feature / object interaction / inventory/key/door/switch/stateful enemy change / game-memory write の前に、移動はできるが触った object や event state が time/camera/room/respawn/reload/recall 後に保持されない action-forgetting risk を 1 つ名付けたか。"
+      - "screenshot, score, recent-frame impression だけでなく、event=door_opened/item_picked と object_id/visual_identity/location/state_before/state_after の軽量 event-token/object-token pair を 1 つ残したか。"
+      - "完了前に delay, route change, reload, later recall 後の changed object/state を再確認し、gap を action_forgetting / object_identity_drift / event_missing / recency_only_memory / persistence_unverified のどれかで記録したか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

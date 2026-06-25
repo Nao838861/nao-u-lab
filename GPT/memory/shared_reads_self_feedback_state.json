@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-25T11:41:37+09:00",
+  "updated_at": "2026-06-25T13:35:44+09:00",
   "reviewed_source_ts": [
+    "1782355144.878829",
     "1780460352.566409",
     "1779690813.274249",
     "1782022174.177669",
@@ -268,6 +269,42 @@
     "1782347755.520549"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T13:35:44+09:00",
+      "id": "sr-1782355144-cf8fe8107f",
+      "source_ts": "1782355144.878829",
+      "title": "ActWorld: From Explorable to Interactive World Model via Action-Aware Memory",
+      "decision": "adopt_probe",
+      "reason": "Score 17. ActWorld is useful now because Codex game work can still accept a prototype that looks explorable or has a passing event trace while an object-state change is not retained after the player leaves and returns. Existing probes cover synchronized playtest streams and integration-depth contracts, but not the narrower action-forgetting failure mode where a touched object, event transition, or memory-relevant state silently reverts. Keep this as a reversible state-consistency probe rather than a new permanent game or memory rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next exploration prototype, NPC/world-model feature, object interaction, inventory/key/door/switch/stateful enemy change, or game-memory write where interaction changes state, did I name at least one action-forgetting risk: a player can move around, but a touched object or event state may not persist after time, camera movement, room transition, respawn, reload, or recall?",
+        "Did I log or test one event-token and object-token pair in lightweight form such as event=door_opened or item_picked plus object_id/visual_identity/location/state_before/state_after, instead of keeping only a screenshot, score, or recent-frame impression?",
+        "Before calling the prototype or memory note stable, did I revisit the changed object/state after a delay, route change, reload, or later recall, and label any gap as action_forgetting, object_identity_drift, event_missing, recency_only_memory, or persistence_unverified?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two exploration prototypes, object-interaction diffs, NPC/world-model notes, or game-memory writes that involve stateful interaction already name action-forgetting risk, keep an event/object pair, and revisit or explicitly mark persistence after a delay, route change, reload, or later recall.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible ActWorld-inspired action-forgetting probe that checks whether object/event state changed by interaction persists beyond immediate navigation or recency.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T11:41:37+09:00",
       "id": "sr-1782347755-d8212fbca6",
@@ -9241,6 +9278,18 @@
         "Before calling the diff done, did I exercise at least one scripted or manual gameplay path for the crossed contracts and label any gap as test_passed_but_gameplay_unverified, unit_tests_passed_but_gameplay_failed, or manual_feel_pending?"
       ],
       "expires_after": "Review after the next two playable game diffs or mechanic changes that mention local refactor, existing mechanic replacement, new interaction, movement state, collision, death/recovery, animation, timing, projectile/weapon behavior, gameplay path evidence, or unit-tests-passed gameplay failures."
+    },
+    {
+      "id": "probe-20260625-actworld-action-forgetting-state-consistency",
+      "created_at": "2026-06-25T13:35:44+09:00",
+      "source_ts": "1782355144.878829",
+      "scope": "next exploration prototype, NPC/world-model feature, object interaction, inventory/key/door/switch/stateful enemy change, or game-memory write where Codex may accept navigation, screenshots, or recent traces without checking that changed object state persists",
+      "questions": [
+        "Before the next exploration prototype, NPC/world-model feature, object interaction, inventory/key/door/switch/stateful enemy change, or game-memory write where interaction changes state, did I name at least one action-forgetting risk: a player can move around, but a touched object or event state may not persist after time, camera movement, room transition, respawn, reload, or recall?",
+        "Did I log or test one event-token and object-token pair in lightweight form such as event=door_opened or item_picked plus object_id/visual_identity/location/state_before/state_after, instead of keeping only a screenshot, score, or recent-frame impression?",
+        "Before calling the prototype or memory note stable, did I revisit the changed object/state after a delay, route change, reload, or later recall, and label any gap as action_forgetting, object_identity_drift, event_missing, recency_only_memory, or persistence_unverified?"
+      ],
+      "expires_after": "Review after the next two exploration prototypes, object-interaction diffs, NPC/world-model notes, or game-memory writes that mention touched objects, doors, switches, pickups, stateful enemies, room transitions, reloads, event tokens, object identity, persistence, or action-forgetting."
     }
   ]
 }
