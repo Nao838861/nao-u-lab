@@ -4,6 +4,18 @@ url: "https://gdcvault.com/play/1035803/Creating-a-Culture-of-Sustainability"
 collected_at: "2026-06-25T17:30:18+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [tabletop, sustainability, production, distribution, game-design, culture]
+evaluated_at: "2026-06-25T17:32:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-25T17:32:56+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-25T17:32:56+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: "production / distribution / player culture を design problem として扱う視点は有用だが、現候補本文では tabletop 固有の具体手法と評価材料が薄い。デジタル prototype や物理プロトタイプへの適用は可能だが、Phase 3 の ~4000 字投稿にするには追加一次情報が必要。"
 ---
 
 ## raw_excerpt

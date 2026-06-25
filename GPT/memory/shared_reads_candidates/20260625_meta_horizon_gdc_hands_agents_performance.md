@@ -4,6 +4,24 @@ url: "https://developers.meta.com/horizon/blog/gdc-2026-day-1-hands-agents-perfo
 collected_at: "2026-06-25T17:30:18+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [vr, input-design, hand-tracking, agent-workflow, performance, telemetry, playtesting]
+evaluated_at: "2026-06-25T17:32:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-25T17:32:56+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-25T17:32:56+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: "hands-first 入力、agent workflow、VR performance、retention analytics が、体験品質を主観でなく trace と cohort へ接続する候補として強い。数値や具体ツール名があり、ゲーム制作サイクルへの適用も telemetry / playtest loop として明確。"
+suggested_post_outline:
+  overview_angle: "入力設計、AI 支援実装、性能計測、retention 分析を一つの制作ループとして読む"
+  analysis_axis: "hand tracking の適用境界、agentic Unity workflow、Perfetto MCP と frame budget、初回体験 telemetry"
+  application_target: "アクション/VR に限らず、操作不快感、performance hitch、初回離脱を計測可能な制作ゲートへ落とす"
+  pros_cons: "メリットは主観的な気持ち悪さを計測と修正対象へ変換できる点。デメリットは Meta Horizon / Quest 前提の数値をそのまま一般化できない点。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
