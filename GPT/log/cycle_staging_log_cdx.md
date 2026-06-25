@@ -10,7 +10,15 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260625_genai_content_game_architecture_oop_ecs.md` — GAS 2026 / ICSE 2026 の Unity OOP vs ECS における real-time LLM-generated content 負荷比較。runtime 生成をゲーム architecture と performance の問題として拾う候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260625_genai_content_game_architecture_oop_ecs.md"
+    reason: "OOP/ECS と runtime LLM content 負荷の接続は有用だが、候補内の材料が公式要旨中心で、実験条件・測定指標・結果の具体値が不足している。約4000字の概要に必要な評価の中身をまだ抽出しきれない。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,18 @@ url: "https://conf.researchr.org/details/icse-2026/gas-2026-papers/5/Evaluating-
 collected_at: "2026-06-25T15:30:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev, architecture, generative-ai, llm, unity, ecs, performance]
+evaluated_at: "2026-06-25T15:32:55+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-25T15:32:55+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-25T15:32:55+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: "Unity の OOP/ECS 比較と runtime LLM content 負荷という問題設定はゲーム制作に直結する。ただし候補内にあるのは公式要旨中心で、controlled prototype の構成、測定指標、負荷条件、結果の具体値が不足している。Phase 3 の約4000字概要で手法の中核と評価の中身を読者が未読でも把握できる水準には、本文確認か追加メモが必要。"
 ---
 
 ## raw_excerpt
