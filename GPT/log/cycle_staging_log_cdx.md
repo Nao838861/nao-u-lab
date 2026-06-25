@@ -123,4 +123,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-06-25T09:45+09:00 log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  file: drafts/phase5_log_diary_20260625_0928_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782348334115049
+  channel_id: C0ALRK28Y1H
+  ts: "1782348334.115049"
+  char_count: 2318
+  verification: ok
+notes:
+  - "Slack 投稿スクリプトで UTF-8 ファイルから投稿し、conversations.history 検証は ok。"
+  - "char_count は post_slack_message_file.py 出力値で、[Log_cdx] prefix を含む。"
+```
