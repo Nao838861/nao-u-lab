@@ -137,7 +137,99 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed:
+  - issue_id: ISS-001
+    problem_restatement: "shared_reads_candidates で同一タイトルの posted / postponed / failed が canonical index 未登録のまま並び、Phase 2 が既処理資料を新規再評価候補として拾いやすい。問題は候補本文の破損ではなく、処理済み代表と派生候補の関係が queue 前に見えないこと。"
+    alternatives:
+      - name: "A. canonical title group の限定 backfill"
+        sketch: "既存の audit_shared_reads_title_duplicates 出力を根拠に、posted を含む duplicate title group だけ shared_reads_title_canonical_index に代表候補と sibling 状態を登録する。Phase 2 は既存 index を参照し、posted 代表がある group の postponed/failed を通常 queue から除外する。"
+        pros:
+          - "既存の canonical index という置き場を使うため、構造変更が小さい。"
+          - "posted 済み資料の再浮上を直接減らせる。"
+          - "候補ファイル本文を削除・改変せず、判断履歴を残せる。"
+        cons:
+          - "title exact match に依存するため、表記揺れや改題には弱い。"
+          - "posted を含まない重複群は別途扱いが必要。"
+          - "index 更新の根拠ログを残さないと、後から代表選定理由が追いにくい。"
+        migration_cost: low
+      - name: "B. Phase 2 queue 時の動的 duplicate suppression"
+        sketch: "Phase 2 が candidate frontmatter と title hash を毎回集計し、posted sibling がある候補をその場で suppress する。canonical index は作らず、実行時の状態から判定する。"
+        pros:
+          - "index backfill を待たず、今後の重複混入を自動で抑えられる。"
+          - "candidate の現状態を毎回見るため、status 変更に追従しやすい。"
+          - "実装箇所が Phase 2 queue に集中する。"
+        cons:
+          - "毎回の判定が暗黙化し、なぜ除外されたかが staging 以外に残りにくい。"
+          - "Phase 2 の責務が増え、shared-reads 投稿判定と inventory 整理が混ざる。"
+          - "同名だが内容差分がある候補を落とすリスクがある。"
+        migration_cost: medium
+      - name: "C. 各 candidate frontmatter に duplicate_of / canonical_title_id を付ける"
+        sketch: "重複候補それぞれの frontmatter に canonical 参照を直接書き、候補単位で代表関係を明示する。Phase 2 は frontmatter だけを読んで queue から除外する。"
+        pros:
+          - "ファイル単体を見た時に重複関係が分かる。"
+          - "表記揺れや同名別物も人手で細かく表現できる。"
+          - "将来 Obsidian などで辿りやすい。"
+        cons:
+          - "既存 candidate の大量編集になりやすい。"
+          - "代表変更時に複数ファイルを更新する必要がある。"
+          - "frontmatter の lifecycle 欠落問題と混ざると修正範囲が広がる。"
+        migration_cost: high
+    recommended: "A. canonical title group の限定 backfill"
+    recommended_reason: "既に canonical index と audit tool があり、問題の中心も posted を含む未登録 group に限定されている。失敗時も index 追記を見直せば戻せるため、candidate 本文へ広く手を入れる案よりコストが低い。Phase 2 の動的 suppress は有効だが、まず根拠を index に残す方が運用上説明しやすい。"
+    decision: introduce
+    decision_reason: "Phase 4a の evidence が十分で、posted 済み候補の再浮上という実害が明確。低コストで重複 queue を減らせるため、次の Phase 4c で限定導入する。"
+    outline_for_4c:
+      - "audit_shared_reads_title_duplicates の未登録 duplicate group から、posted を含む group を小さく抽出する。"
+      - "shared_reads_title_canonical_index に代表 candidate、sibling path、status 構成、根拠日時を追記する方針で更新する。"
+      - "Phase 2 の再評価 queue が canonical index の posted sibling group を除外または lower priority にできるか、既存導線を確認して必要最小限だけ調整する。"
+      - "staging に suppress 件数と対象 title を記録する。"
+  - issue_id: ISS-002
+    problem_restatement: "atoms.jsonl には id 重複や JSON 破損はないが、同文 atom が別 id で残り recall の結果を水増ししている。削除すべき raw 記録ではなく、recall や MEMORY.md 生成時に同一内容を一つの判断材料として扱うための折りたたみ単位が不足している。"
+    alternatives:
+      - name: "A. recall 表示時の duplicate fold 強化"
+        sketch: "title / trigger / excerpt の normalized hash を使い、memory_recall や MEMORY.md 更新時に同文 group を一件として表示する。raw atom は残し、表示上だけ representative と siblings を出す。"
+        pros:
+          - "既存の非破壊方針と Phase C の normalized_content_hash fold に近い。"
+          - "recall 汚染をすぐ減らせる。"
+          - "atom 本体の削除や移動が不要。"
+        cons:
+          - "表示時だけの対処なので、他スクリプトが atoms.jsonl を直読すると重複は残る。"
+          - "hash 条件が強すぎると近似重複は拾えない。"
+          - "代表選定の理由が index として残りにくい。"
+        migration_cost: low
+      - name: "B. atoms duplicate group sidecar index"
+        sketch: "memory/atoms 側に duplicate group index を持ち、group_id、representative atom、sibling ids、hash_basis、first_seen を記録する。recall / health / future dual-read scripts はこの sidecar を参照して fold する。"
+        pros:
+          - "raw atom を保存したまま、重複関係を永続化できる。"
+          - "atoms.jsonl retire 前の dual-read 化にも接続しやすい。"
+          - "health check や recall で同じ group を共有できる。"
+        cons:
+          - "新しい index の保守責務が増える。"
+          - "既存スクリプトを段階的に参照対応する必要がある。"
+          - "代表 atom の選び方を決めないと、後から揺れる。"
+        migration_cost: medium
+      - name: "C. duplicate atom の lifecycle alias 化"
+        sketch: "per-atom md frontmatter に duplicate_of を付け、重複 atom 自体を代表 atom へ alias する。atoms.jsonl retire 後の Obsidian 互換運用では自然に辿れる。"
+        pros:
+          - "atom ファイル単位で重複関係が明示される。"
+          - "将来 atoms.jsonl を archive した後も参照しやすい。"
+          - "人手レビューで近似重複も扱いやすい。"
+        cons:
+          - "per-file atom の多数編集になり、Phase D 前には重い。"
+          - "atoms.jsonl との dual-write 整合が難しい。"
+          - "今回の exact duplicate 40 group には過剰な移行になる。"
+        migration_cost: high
+    recommended: "B. atoms duplicate group sidecar index"
+    recommended_reason: "A は最小だが、Phase 4a で問題化しているのは recall だけでなく MEMORY.md や他の直読スクリプトへ重複が漏れる構造。C は理想に近いが atoms.jsonl retire 前には編集範囲が大きい。B は非破壊で永続的な fold 単位を作れ、Phase D の共通 loader 化にも橋をかけられる。"
+    decision: introduce
+    decision_reason: "exact duplicate group が 40 件あり、今後も external research / Slack ingest で増える見込みがある。raw atom を削除せず sidecar で扱えば、失敗時の撤回コストを抑えながら recall 品質を改善できる。"
+    outline_for_4c:
+      - "title / trigger / excerpt の normalized hash を basis に、exact duplicate group の sidecar index 仕様を小さく定義する。"
+      - "初期 group は Phase 4a で確認した 40 group を対象に、representative は最古または posted evidence が強い atom を選ぶ規則にする。"
+      - "memory_recall の表示 fold と memory health 系の重複報告が sidecar を参照できるか、段階導入の順序を決める。"
+      - "raw atom と per-file atom は削除せず、sidecar 由来の fold 件数だけ staging に記録する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
