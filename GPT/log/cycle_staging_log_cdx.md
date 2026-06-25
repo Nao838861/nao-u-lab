@@ -12,6 +12,11 @@
   - `memory/shared_reads_candidates/20260626_hierarchical_llm_rl_multi_agent_games.md` — 2v2 King of the Hill で LLM が低頻度戦術、RL skill が高頻度操作を担う階層制御。
   - `memory/shared_reads_candidates/20260626_differentiable_atari_vcs_xai_ground_truth.md` — Atari 2600 VCS を bit/pixel exact な differentiable 実装にして XAI の既知 ground truth とする研究。
 
+2026-06-26T07:45:27+09:00 Phase 1 収集メモ:
+- memory/shared_reads_candidates/20260626_mind_studio_executable_world_models.md — Atari 系の replay から executable world model を合成し、lookahead preview と実環境 rollout を比較する候補。
+- memory/shared_reads_candidates/20260626_promptmn_game_spec_directives.md — ゲーム制作 prompt を機能要求・非機能要求・検証・trace に分ける pseudo prompting DSL の候補。
+- memory/shared_reads_candidates/20260626_select_to_act_language_guided_rl.md — 状態に応じて relevant な自然言語 instruction を選ぶ hierarchical RL。bot policy / tutorial hint 分解の候補。
+
 ## Phase 2: 分析
 ### 2026-06-26T05:56+09:00 log_cdx
 
