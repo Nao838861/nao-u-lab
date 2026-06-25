@@ -6082,3 +6082,10 @@ fatal: unable to read f11f33e657f99c332aef042c540e496650dbb5c9
 2026-06-26T07:05:53 run start (elapsed 224min >= 90min)
 2026-06-26T07:06:25 run failed: memory_ingest.py failed exit=3221225477: 
 2026-06-26T07:20:53 run start (elapsed 239min >= 90min)
+2026-06-26T07:22:07 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '129a5a5e03adfef2fa61814c3fbddd0e5efd6228'
+fatal: unable to read 129a5a5e03adfef2fa61814c3fbddd0e5efd6228
+2026-06-26T07:30:29 skipped: elapsed 8min < 90min
+2026-06-26T07:30:51 skipped: elapsed 9min < 90min
+2026-06-26T07:35:53 skipped: elapsed 14min < 90min
+2026-06-26T07:50:53 skipped: elapsed 29min < 90min
