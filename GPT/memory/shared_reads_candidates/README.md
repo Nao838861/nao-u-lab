@@ -95,7 +95,13 @@ summary の `missing_stale_after` と `overdue_for_reassessment` を Phase 4a/4c
 
 `memory/shared_reads_title_canonical_index.jsonl` は、同一 title の候補が複数残った時に「この title group は既に posted / failed として閉じている」と Phase 2 の再評価 queue へ伝える lightweight sidecar である。candidate 本体や lifecycle frontmatter の正本ではない。
 
-1 行 1 `title_key` で、最低限 `title_key` / `canonical_path` / `best_status` / `duplicate_paths` / `source_url` / `decision_note` / `updated_at` を持つ。誤結合を避けるため、title だけで確定せず、`source_url` と candidate path を人間が確認できる形で残す。
+1 行 1 `title_key` で、最低限 `title_key` / `canonical_path` / `best_status` / `duplicate_paths` / `source_url` / `decision_note` / `updated_at` を持つ。2026-06-25 Phase 4c 以降は `siblings` と `status_counts` も持ち、同一 title group 内の path/status/url を sidecar 上で確認できる。誤結合を避けるため、title だけで確定せず、`source_url` と candidate path を人間が確認できる形で残す。
+
+再生成:
+
+```powershell
+python tools\build_shared_reads_title_canonical_index.py
+```
 
 Phase 4a で duplicate title group を監査する時は、未登録 group を次で確認できる。
 

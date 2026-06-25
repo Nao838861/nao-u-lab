@@ -108,7 +108,7 @@ python tools/build_atom_duplicate_groups.py
 
 `canonical_overlay.jsonl` は `duplicate_groups.jsonl` から派生する軽量 overlay。atom 本体は削除せず、raw view では従来通り全 atom を読み、canonical view では `duplicate_ids` を `canonical_id` に畳んで読む。
 
-1 レコードは 1 content group。`reason` は現時点では `normalized_content_hash` 固定、`evidence_hash` は fold 根拠の hash。
+1 レコードは 1 content group。`reason` / `hash_basis` は fold 根拠 (`normalized_content_hash`, `title_excerpt_exact`, `title_trigger_excerpt_exact`) を示し、`evidence_hash` はその根拠 key の hash。
 
 ```json
 {"group_id":"content:...","canonical_id":"sr-...","preferred_id":"sr-...","duplicate_ids":["sr-..."],"member_ids":["sr-...","sr-..."],"reason":"normalized_content_hash","evidence_hash":"...","count":2,"sample_title":"...","generated_at":"2026-06-05T00:00:00"}
@@ -120,7 +120,7 @@ python tools/build_atom_duplicate_groups.py
 
 2026-06-12 以降、`canonical_overlay.jsonl` は `normalized_content_hash` に加えて `title+trigger+excerpt` の正規化完全一致も `reason=title_trigger_excerpt_exact` として記録する。これはリンク差分だけで同じ投稿内容が別 atom として残るケースを代表表示で畳むための非破壊 sidecar であり、`atoms.jsonl` や per-file `.md` の raw atom は削除・上書きしない。
 
-同一 atom が `normalized_content_hash` group と secondary key group の両方に入り得る場合は、既存の `normalized_content_hash` group を優先し、secondary key では重複登録しない。`canonical_id` は最古 `source_ts` の provenance anchor、`preferred_id` は最新 `source_ts` の確認入口として維持する。
+同一 atom が `normalized_content_hash` group と secondary key group の両方に入り得る場合は、既存の `normalized_content_hash` group を優先し、secondary key では重複登録しない。canonical 代表は active / non-quarantine、shared-reads / Slack permalink signal、本文量、最古 `source_ts`、id の順で deterministic に決める。
 
 ## title_cluster_index.jsonl 仕様
 
@@ -198,3 +198,4 @@ Phase 4c で `memory/atoms/duplicate_clusters.jsonl` を導入した。これは
 - 再生成は `python tools/build_atom_duplicate_groups.py`、検証は `python tools/build_atom_duplicate_groups.py --check`。
 - `title_excerpt_exact` (2026-06-19): ISS-001 の導入として、`tools/build_atom_duplicate_groups.py` の secondary duplicate key を `title + excerpt` の正規化完全一致にも広げた。120 文字以上の key だけを対象にし、既存の `normalized_content_hash` group の外側で source atom を削除せず canonical view だけを畳む。
 - `title_excerpt_exact` で畳まれた atom は、従来の `title_trigger_excerpt_exact` には重複登録しない。canonical 代表は active / non-quarantine、shared-reads / Slack permalink signal、本文量、最古 `source_ts`、id の順で deterministic に決める。
+- `hash_basis` (2026-06-25): Phase 4c ISS-002 の sidecar index に fold 根拠を明示するため、`duplicate_clusters.jsonl` / `duplicate_groups.jsonl` / `canonical_overlay.jsonl` の各 row に `hash_basis` を追加した。raw atom と per-file atom は変更しない。

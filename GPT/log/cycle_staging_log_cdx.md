@@ -232,7 +232,44 @@ designed:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/build_shared_reads_title_canonical_index.py
+        change: created
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+    summary: "shared-reads duplicate title group の terminal canonical sidecar を再生成できる builder を追加し、posted/failed を含む 74 title group を index 化した。Phase 2 queue では postponed/needs_review sibling 85 件が terminal group として抑制対象になる。"
+    partial: false
+  - issue_id: ISS-002
+    files_changed:
+      - path: tools/build_atom_duplicate_groups.py
+        change: modified
+      - path: memory/atoms/duplicate_clusters.jsonl
+        change: modified
+      - path: memory/atoms/duplicate_groups.jsonl
+        change: modified
+      - path: memory/atoms/canonical_overlay.jsonl
+        change: modified
+      - path: memory/atoms/README.md
+        change: modified
+    summary: "atom duplicate sidecar に hash_basis を明示し、canonical overlay を再生成した。raw atom / per-file atom は削除・編集せず、45 group を canonical view で fold できる状態にした。"
+    partial: false
+migrations:
+  - what: "shared_reads_title_canonical_index.jsonl を builder 出力へ移行"
+    affected: "duplicate title group 74 行、postponed/needs_review sibling 85 件を Phase 2 stale reevaluation queue から除外可能"
+  - what: "atom duplicate sidecar schema に hash_basis を追加"
+    affected: "duplicate_clusters.jsonl / duplicate_groups.jsonl / canonical_overlay.jsonl の 45 group。reason counts は normalized_content_hash 40、title_excerpt_exact 5"
+verification:
+  - "python tools\\build_shared_reads_title_canonical_index.py --check -> shared-reads title canonical index ok: rows=74"
+  - "python tools\\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 -> terminal posted/failed group は残らず、未登録は postponed-only 等の非 terminal group"
+  - "python tools\\build_shared_reads_review_queue.py --dry-run --today 2026-06-25 -> records=40"
+  - "python tools\\build_atom_duplicate_groups.py --check -> duplicate cluster index ok: clusters=45 overlay_groups=45"
+  - "python tools\\memory_health.py --json -> status=warning, errors=[]; canonical_overlay_duplicate_groups=45"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
