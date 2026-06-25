@@ -67,7 +67,54 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-06-25T09:45+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe (`記憶`, `ゲーム設計`, `敵パターン`, `評価軸`) が取得できることを確認。source file 破損なし。"
+  - "memory/MEMORY.md の markdown link は 0 件で broken link なし。index entry 81 件のうち atom 参照は存在確認済み、tag/task entry は atom id ではないため missing 扱いから除外。"
+  - "memory/atoms.jsonl 2509 件を集計し、duplicate id 0 件、同一本文重複 0 件、URL/status 矛盾 0 件を確認。"
+  - "memory/raw/ は mtime 30 日超の原文 93 件を archive 候補として確認したが、Phase 4a では移動しない。"
+  - "memory/shared_reads_candidates/ lifecycle 内訳を確認: posted 339 / ready_to_post 7 / postponed 284 / failed 101 / needs_review 13。README.md の status 欠落は candidate 本体ではないため対象外。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-20260625-4A-STALE-CANDIDATES
+    description: "postponed / needs_review candidate のうち stale_after <= 2026-06-25 が 55 件あり、候補 pool が再評価待ちを溜めている。既存の stale_after 運用で処理可能だが、少数 batch として Phase 2 に戻さないと posted/failed 以外の滞留が検索時のノイズになる。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/: stale_due_count=55; latest due examples include 20260526_designing_game_feel_survey.md, 20260526_grounding_machine_creativity_game_design_patterns.md, 20260526_visual_complexity_information_game_ux.md"
+    source_file_status: "候補 markdown は UTF-8 読みで frontmatter を取得可能。source file 破損は確認されていない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "ゲーム制作向けの候補が postponed のまま増えると、Phase 2 が再評価すべき手法・評価軸・制作事例を見つけにくくなり、次の制作時に古い未判定候補へ寄り道しやすい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260526_designing_game_feel_survey.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "game feel は次のプロトタイプ評価軸へ直結し、古い survey 候補を残す価値があるか早めに判定したい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "LLM 生成を game design pattern 表現に接続する候補で、記憶から制作手法へ落とす観点に近い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_visual_complexity_information_game_ux.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "画面情報量と UX の関係はブラウザ試作・headless 評価だけでは落ちやすい視点で、再評価の実益がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_sphinx2_narrative_puzzles_open_world.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "narrative puzzle / open world PCG はゲーム制作知見として抽象化できる可能性がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_monolith_bullet_hell_roguelike.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "bullet hell と roguelike の混合事例で、敵パターン・弾幕設計の記憶入口に接続しやすい。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
