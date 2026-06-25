@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2606.08656
 collected_at: 2026-06-25T13:29:30+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, llm-agent, memory, evaluation, sequential-games, test-time-learning]
+evaluated_at: "2026-06-25T13:32:13+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-25T13:32:13+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-25T13:32:13+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: |-
+  memory update を multi-turn decision problem として扱う中核は有用だが、同論文は 2026-06-10 に shared-reads 投稿済みで、後続候補も保留理由を残している。
+  今回の candidate は turn-wise reward や advantage 推定の詳細を既投稿以上に補強しておらず、再投稿価値がないため fail とする。
 ---
 
 ## raw_excerpt
