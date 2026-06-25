@@ -132,6 +132,61 @@ stale_review_batch:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+```yaml
+designed_at: "2026-06-25T18:22:00+09:00"
+selected_priority_issues:
+  - ISS-001
+designs:
+  - issue_id: ISS-001
+    problem_restatement: "shared_reads_candidates は file 単位では lifecycle status を持っているが、同じ外部知見を指す title 単位の正本がない。そのため posted / failed / postponed が同居した時、Phase 2 が再投稿不要な題材を拾い直し、ゲーム制作に使う新規知見の評価時間を削っている。"
+    alternatives:
+      - name: "候補 frontmatter へ canonical_title_key を直書き"
+        sketch: "各 candidate の frontmatter に正規化 title key と canonical_of / duplicate_of を追加する。Phase 2 は candidate 自身の metadata だけで重複判定する。"
+        pros:
+          - "候補ファイル単体を開いた時に重複関係が見える"
+          - "外部 index なしで Obsidian 上の確認もしやすい"
+          - "posted / failed / postponed の理由を候補本文へ近づけられる"
+        cons:
+          - "既存 756 件への frontmatter 更新が大きく、差分が汚れやすい"
+          - "title 正規化ロジックを変更すると全候補の再書き換えが必要"
+          - "同名だが別版・別記事の誤結合を各ファイルに焼き込みやすい"
+        migration_cost: high
+      - name: "shared_reads_title_canonical_index を追加"
+        sketch: "candidate とは別に title_key ごとの canonical entry を持つ軽量 index を置く。entry は canonical_path / best_status / duplicate_paths / decision_note を持ち、Phase 2 は候補評価前に index を参照して posted / failed 済み title を除外する。"
+        pros:
+          - "既存 candidate 本文を大きく書き換えずに導入できる"
+          - "誤結合が見つかっても index の 1 entry を直せば戻せる"
+          - "Phase 4a の audit 結果と Phase 2 の queue 制御を直接つなげられる"
+        cons:
+          - "candidate と index の二重管理になる"
+          - "index 更新漏れがあると古い判定を参照する"
+          - "title だけでは同名別資料を完全には区別できない"
+        migration_cost: medium
+      - name: "Phase 2 内で毎回 title 重複を動的検出"
+        sketch: "永続 index は作らず、Phase 2 の開始時に candidates 全体を scan して title group を作る。posted / failed を含む group はその場で reevaluation queue から外す。"
+        pros:
+          - "新しい記憶ファイルを増やさない"
+          - "常に最新の candidates から判定できる"
+          - "導入時の手作業 migration が少ない"
+        cons:
+          - "毎サイクル 700 件超を読み直し、Phase 2 の責務が重くなる"
+          - "判定履歴や誤結合の根拠が staging に残りにくい"
+          - "将来の stale_review や manual triage と共有しにくい"
+        migration_cost: low
+    recommended: "shared_reads_title_canonical_index を追加"
+    recommended_reason: "frontmatter 直書きは正本判定を各候補へ焼き込みすぎ、失敗時の修正範囲が広い。動的検出だけでは Phase 4a で見つけた lifecycle 問題を次サイクルへ安定して渡しにくい。別 index なら candidate を削除せず、誤判定も 1 entry 単位で戻せるため、現状からの距離と失敗時コストのバランスがよい。"
+    decision: introduce
+    decision_reason: "ISS-001 は priority_issues の唯一の項目で、posted 済み title の再評価を減らす効果がすぐ出る。導入は新規 index と既存 Phase 2 / audit 参照の小変更に留められ、candidate 本体の大規模 migration を避けられる。"
+    outline_for_4c:
+      - "memory/shared_reads_title_canonical_index.jsonl などの軽量 index 形式を定義する。1 行 1 title_key、canonical_path、best_status、duplicate_paths、decision_note、updated_at を持たせる。"
+      - "初回 seed は Phase 4a の重複例と stale_review_batch の fail 推奨 title に限定し、全 81 group の一括確定は避ける。"
+      - "Phase 2 の候補評価前に index を読む導線を追加し、best_status が posted または failed の title_key は reevaluation queue から除外する設計にする。"
+      - "Phase 4a audit が duplicate title group を見つけた時、index 未登録 group を priority issue または review batch に出せるようにする。"
+      - "誤結合対策として title_key だけで確定せず、source_url / candidate path / note を人間が確認できる entry にする。"
+notes:
+  - "この Phase 4b では staging への設計記録のみ。コード、index file、candidate frontmatter は未編集。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
