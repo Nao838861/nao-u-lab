@@ -70,6 +70,69 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-06-26T00:18+09:00 log_cdx:
+```yaml
+cleaned:
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe を実施。記憶/ゲーム設計/敵パターンは取得可、評価軸は現index本文に出現なし。source file破損ではない。"
+  - "memory/MEMORY.md: markdown link は 0 件。inline command の `python tools/memory_ingest.py` を broken link 扱いしないことを確認。"
+  - "memory/atoms.jsonl: 2523 rows、JSON parse error 0、duplicate id 0、exact duplicate content 0。"
+  - "memory/raw/: 227 files / 84,167,022 bytes。30日以上 mtime が動いていない raw は 91 files。今回はアーカイブ候補として記録のみ。"
+  - "memory/shared_reads_candidates/: status 内訳 posted=347, ready_to_post=7, postponed=290, failed=105, needs_review=13。README.md は candidate ではないため missing status 1 件をissue扱いしない。"
+  - "shared-reads title canonical index audit: unindexed duplicate title group 11 件を確認。posted/failedのみのgroupは再評価queueから外す前提で扱う。"
+  - "slack inbox: directives pending 0、broadcasts pending 0。handled更新対象なし。"
+issues:
+  - id: ISS-20260626-STALE-CANDIDATES
+    description: "postponed/needs_review のうち stale_after <= 2026-06-25 の candidate が 55 件残っている。mtime や filename date ではなく stale_after 優先で見ると、再評価・明示保持・fail降格の判断待ちが溜まっている。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md; lifecycle audit: stale_due_count=55, status_counts posted=347 ready_to_post=7 postponed=290 failed=105 needs_review=13"
+    source_file_status: "UTF-8 read ok。frontmatterのstatus/stale_afterは取得可能。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "期限切れcandidateが多いと、Phase 2が古い候補と新規収集を同じ温度で扱いやすく、次のゲーム制作に効く外部知見の再評価導線が薄まる。"
+  - id: ISS-20260626-DUP-TITLE-QUEUE-NOISE
+    description: "memory/shared_reads_title_canonical_index.jsonl 未登録の duplicate title group が残っている。多くはpostponedのみだが、ready_to_post/postponed混在のgroupがあり、Phase 2の再評価queueを濁す可能性がある。"
+    severity: low
+    evidence: "tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20: 11 groups; mixed example: 20260529_slm_dynamic_game_content_generation.md + 20260614_slm_dynamic_game_content.md, status_counts postponed=1 ready_to_post=1"
+    source_file_status: "UTF-8 read ok。candidate frontmatterとcanonical indexは読み取り可能。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "同一タイトルの候補が別状態で残ると、posted/failedを除外する判断や、どれをゲーム制作の参照元にするかが手作業依存になる。"
+  - id: ISS-20260626-DISPLAY-MOJIBAKE-PROBE
+    description: "PowerShell経由の最初の代表語probe出力が文字化けし、UTF-8 source破損のように見える表示経路ノイズが出た。Unicode escapeで再確認するとsource fileは壊れていなかった。"
+    severity: low
+    evidence: "memory/MEMORY.md representative probe: 記憶=True, ゲーム設計=True, 敵パターン=True, 評価軸=False by UTF-8 read with escaped literals"
+    source_file_status: "memory/MEMORY.md source is UTF-8 readable。評価軸は文字化けではなく現indexに語が存在しないだけ。"
+    display_or_tooling_status: "PowerShell/tool output path can mojibake Japanese probe strings; audit should prefer escaped literals or UTF-8-aware scripts."
+    why_blocks_game_memory: "表示経路の文字化けをsource破損と誤認すると、MEMORY.mdの不要な再生成・手修復に流れ、実際の記憶整理時間を奪う。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "duplicate title groupで同系candidateがもう1件あり、視覚接地interactive planningはゲームAI評価導線に近い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_textquests_llm_text_games.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "duplicate title groupかつTextQuestsはLLMゲーム評価系で、lmgame-Bench自己フィードバック後の比較材料になる。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260525_textquests_llm_video_games.md"
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "同一TextQuests groupの新しい候補。片方だけで判断すると重複状態が残るため、上記と合わせて統合判断する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "duplicate title group。RPG/role-play設計に関係するが、後続candidateのstale_afterは未到来なので旧候補のfailまたは明示保持判断を先に行う。"
+    recommended_review_action: fail
+  - path: "memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "duplicate title group。co-creative game designer系は制作記憶と近いが、古い候補がqueueに残っているため明示判断が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
