@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T09:39:12+09:00",
+  "updated_at": "2026-06-25T11:41:37+09:00",
   "reviewed_source_ts": [
     "1780460352.566409",
     "1779690813.274249",
@@ -264,9 +264,46 @@
     "1782072515.725919",
     "1782072522.236169",
     "1782086802.782119",
-    "1779805264.060429"
+    "1779805264.060429",
+    "1782347755.520549"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T11:41:37+09:00",
+      "id": "sr-1782347755-d8212fbca6",
+      "source_ts": "1782347755.520549",
+      "title": "An Exploratory Case Study of LLM-Assisted Refactoring and Gameplay Feature Generation in an Endless Runner Game",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-read is useful now because Codex playable diffs can still treat unit tests, smoke tests, or a browser view as enough evidence even when the actual change crosses gameplay systems. The post gives a narrow transferable distinction: local refactor, existing-mechanic replacement, and new interaction integration need different completion gates. Existing probes cover AI-readable playtest surfaces, synchronized traces, and metric-plus-visual repair evidence, but not this explicit integration-depth classification before accepting a game diff, so keep it as a reversible feature-integration probe rather than a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable game diff, mechanic change, power-up, hitbox/collision change, moving platform, enemy AI, bullet pattern, or player-control edit, did I classify the diff as local_refactor, existing_mechanic_replacement, or new_interaction_integration before choosing the acceptance gate?",
+        "If it is new_interaction_integration, did I list the runtime contracts it crosses such as movement state, collision response, death/recovery, animation, timing, projectile or weapon behavior, spawn/despawn, camera/view, scoring, or UI feedback instead of relying only on unit tests or code review?",
+        "Before calling the diff done, did I exercise at least one scripted or manual gameplay path for the crossed contracts and label any gap as test_passed_but_gameplay_unverified, unit_tests_passed_but_gameplay_failed, or manual_feel_pending?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable game diffs or mechanic changes already classify integration depth, list crossed runtime contracts for new interactions, and record gameplay-path evidence or an explicit unverified/failed/manual-pending label before claiming completion.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible feature-integration gate probe that classifies game diffs by integration depth and requires runtime-contract gameplay evidence for new interactions.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T09:39:12+09:00",
       "id": "sr-1779805264-6be5e1abf3",
@@ -9192,6 +9229,18 @@
         "If I add or use time-scale control, did I keep it as a local reversible audit instrument with named values and one human-facing signal such as input rhythm, danger-distance reading, waiting time, recovery timing, or subjective readability instead of treating it as a headless quality metric by itself?"
       ],
       "expires_after": "Review after the next two action-game prototype, tempo-fix, difficulty/readability, browser-playtest, or game-memory notes that mention timing, speed, slow motion, fast forward, timeScale, waiting time, input rhythm, readability, or real-time pressure."
+    },
+    {
+      "id": "probe-20260625-feature-integration-depth-gate",
+      "created_at": "2026-06-25T11:41:37+09:00",
+      "source_ts": "1782347755.520549",
+      "scope": "next playable game diff, mechanic change, power-up, hitbox/collision change, moving platform, enemy AI, bullet pattern, or player-control edit where Codex may accept tests or code review without checking runtime integration depth",
+      "questions": [
+        "Before the next playable game diff, mechanic change, power-up, hitbox/collision change, moving platform, enemy AI, bullet pattern, or player-control edit, did I classify the diff as local_refactor, existing_mechanic_replacement, or new_interaction_integration before choosing the acceptance gate?",
+        "If it is new_interaction_integration, did I list the runtime contracts it crosses such as movement state, collision response, death/recovery, animation, timing, projectile or weapon behavior, spawn/despawn, camera/view, scoring, or UI feedback instead of relying only on unit tests or code review?",
+        "Before calling the diff done, did I exercise at least one scripted or manual gameplay path for the crossed contracts and label any gap as test_passed_but_gameplay_unverified, unit_tests_passed_but_gameplay_failed, or manual_feel_pending?"
+      ],
+      "expires_after": "Review after the next two playable game diffs or mechanic changes that mention local refactor, existing mechanic replacement, new interaction, movement state, collision, death/recovery, animation, timing, projectile/weapon behavior, gameplay path evidence, or unit-tests-passed gameplay failures."
     }
   ]
 }

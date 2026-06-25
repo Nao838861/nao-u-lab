@@ -47,7 +47,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-25T11:43+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782347755-d8212fbca6
+    source_ts: "1782347755.520549"
+    title: "An Exploratory Case Study of LLM-Assisted Refactoring and Gameplay Feature Generation in an Endless Runner Game"
+    reason: "直近の playable diff で unit test や smoke test を完了根拠にしがちな箇所へ、refactor と新規 interaction の gate 差を小さく戻せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "local_refactor / existing_mechanic_replacement / new_interaction_integration を先に分類し、新規 interaction では crossed runtime contracts と gameplay-path evidence を要求する reversible probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
