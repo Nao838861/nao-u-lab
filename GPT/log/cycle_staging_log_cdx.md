@@ -74,7 +74,56 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-06-25T14:02:00+09:00 log_cdx Phase 4a 監査:
+
+```yaml
+cleaned:
+  - "git gate: branch=master / origin/master との差分表示は ahead/behind なし。開始時点の既存差分は log と state 系のみで、Phase 4a では staging 以外を変更しない。"
+  - "memory/MEMORY.md: Markdown link は 0 件。索引内 backtick atom id 50 件は atoms.jsonl に全件存在。"
+  - "encoding probe: memory/MEMORY.md を UTF-8 明示読みし、記憶=hit, ゲーム設計=hit, 敵パターン=hit, 評価=hit, 軸=hit を確認。指定語 評価軸 は現行本文の連続語としては未検出だが、source 破損ではない。"
+  - "memory/atoms.jsonl: rows=2514, json_errors=0, duplicate_ids=0, duplicate_content_groups=0。"
+  - "memory/raw/: 30日以上 mtime がない raw は 91 件。内訳は web_research=73, headless_eval=15, slack_archive=1, game_eval=1, root=1。今回は原文保持方針に従い移動なし。"
+  - "memory/shared_reads_candidates/: total=752, posted=342, postponed=285, failed=104, ready_to_post=7, needs_review=13, missing=1。missing は README.md で候補本体ではないため除外。"
+  - "shared_reads stale: stale_after <= 2026-06-25 は 55 件。postponed=52, needs_review=3。Phase 2 が少数処理できるよう stale_review_batch に 5 件だけ渡す。"
+  - "inbox: slack_inbox_lifecycle.py pending で directives / broadcasts とも pending 0。更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "shared_reads_candidates の postponed / needs_review に stale_after 超過が 55 件残っている。既存の stale_review_batch 経路はあるが、通常 Phase 2 の当日候補判定だけでは古い候補が閉じ切れていない。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/*.md lifecycle audit: stale_due=55; postponed=52; needs_review=3; oldest stale_after=2026-06-14"
+    source_file_status: "UTF-8 読みで frontmatter を取得可能。candidate README.md の status 欠落は候補本体ではない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "古い候補が保留のまま残ると、次のゲーム制作前の調査で既投稿・失敗・再評価待ちの境界が曖昧になり、検索時に同じ候補を何度も拾う。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260518_personalized_super_mario_level_gan.md"
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "needs_review かつ stale_after 超過。personalized level design は game-memory / player model 導線に近い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md"
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "needs_review かつ stale_after 超過。LLM game agent の戦略・生成評価で game-design tag と接続しやすい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260518_regular_games_automata_ggp.md"
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "needs_review かつ stale_after 超過。General Game Playing の形式化で、既存 atom の game-eval 系と重複または昇格余地を確認する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale の一つ。RPG / language learning 題材が現在のゲーム制作導線に薄ければ fail 降格して候補棚を軽くできる。"
+    recommended_review_action: fail
+  - path: "memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale の一つ。GGP / LLM reasoning は他候補と重複しやすく、投稿品質に足りる差分があるかだけ確認すればよい。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
