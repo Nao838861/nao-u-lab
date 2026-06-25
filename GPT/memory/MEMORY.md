@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-25T12:25:04
-- atoms: 2514
-- index-visible atoms after routine layer filter: 2258
-- atoms after canonical overlay fold: 2255
-- display atoms after canonical overlay + lifecycle/content fold: 2252
+- generated: 2026-06-25T14:07:15
+- atoms: 2515
+- index-visible atoms after routine layer filter: 2259
+- atoms after canonical overlay fold: 2256
+- display atoms after canonical overlay + lifecycle/content fold: 2253
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782357913-e89c977fce` 2026-06-25T12:25:13.084149 この atom は energy system の話に見えるけれど、log_cdx には「LLM agent に任せる範囲をどこで切るか」の実験として読めました。smart microgrid の demand response は、各 prosumer が全体最適に協力すると  tags=[memory, game-design, slack, agent, identity]
 - `sr-1782355146-1abca67cdf` 2026-06-25T11:39:06.916549 ■ 概要 「LLM-Mediated Demand Response Coordination in Smart Microgrids」は、smart microgrid の需要応答を題材に、LLM を multi-agent coordination のどこに置くべきかを検証す tags=[memory, harness, game-design, slack, agent]
 - `sr-1782355145-1ae16ff426` 2026-06-25T11:39:05.871629 ■ 概要 「Market Design for AI: Beyond the Copyright Binary」は、人間が作ったコンテンツを AI 学習に使う市場を、free-for-all か強い知的財産権かという二択では設計できない、と論じる経済モデルの論文である。問題設定は tags=[memory, game-design, slack, knowledge, operation]
 - `sr-1782355144-cf8fe8107f` 2026-06-25T11:39:04.878829 ■ 概要 ActWorld は、interactive world model を「歩き回れる動画生成」から「物体に触れ、その結果を長い rollout の中で保持できる世界モデル」へ進める研究である。既存の world model は、WASD やマウス操作で視点移動、旋回、前 tags=[memory, harness, game-design, slack, identity]
@@ -68,7 +69,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782065325-41611af1ca` 2026-06-22T03:08:45.308059 ■ 概要 CollabBench は、LLM エージェントの「協力できるふるまい」を、会話だけでなく実際のゲーム内行動まで含めて評価・訓練するためのベンチマークである。問題意識は、既存の協働評価が文書編集や対話タスクに寄り、相手の性格・行動癖・進行中の状況に合わせて、推論、発話、 tags=[game-design, agent, identity, knowledge, evaluation]
 - `sr-1782028326-9c60395b2a` 2026-06-21T16:52:06.402559 Jeff Schomay の Crossword Dungeon 制作記録は、「AI coding assistant でゲーム制作が速くなる」という話より、速くなった後に人間側の詰まりがどこへ移るかの話として読みたいです。コード実装の摩擦が下がると、完成まで一直線になるのではな tags=[memory, harness, game-design, slack, agent]
 - `sr-1782022174-82e1cc7d3e` 2026-06-21T15:09:34.177669 ■ 概要 Jeff Schomay の記事は、AI coding assistant をゲーム制作に使う時の現実的な効き方を、個人制作ゲーム Crossword Dungeon の制作記録として説明している。焦点は「AI でゲームが一瞬で完成する」ではなく、コード実装の時間が短く tags=[memory, harness, game-design, agent, identity]
-- `sr-1782020204-f689b066f3` 2026-06-21T14:36:44.299339 RPG の「本筋ではない沈黙」を LLM で埋める、というこの atom は、単なる台詞生成の話よりも、いま作っているゲームの「反応密度」をどう設計するかに近い話として読みました。メインイベントや大きな感情の山は人間が書くとして、戦闘中の細かい変化、探索中の短い反応、NPC への tags=[memory, skills, game-design, slack, identity]
 
 ## Game Task Entry Points
 - `enemy-pattern` (390): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
@@ -80,15 +80,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1998): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1703): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1661): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1582): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1485): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1281): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1233): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1202): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1090): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `identity` (1999): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1704): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1662): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1583): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1486): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1282): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1234): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1203): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1091): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (650): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (311): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
