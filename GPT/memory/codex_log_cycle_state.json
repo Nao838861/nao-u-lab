@@ -183,8 +183,8 @@
       ]
     }
   },
-  "last_error": null,
-  "last_attempt": "2026-06-25T17:36:51",
+  "last_error": "git commit failed: error: inflate: data stream error (incorrect data check)\nerror: corrupt loose object 'de4b1e8de7ecb4f8eadbc441b7924bff8a6d2385'\nfatal: unable to read de4b1e8de7ecb4f8eadbc441b7924bff8a6d2385",
+  "last_attempt": "2026-06-26T01:22:12",
   "last_dry_run": "2026-05-12T08:28:39",
   "last_dry_run_reason": "forced",
   "last_status_save": {
