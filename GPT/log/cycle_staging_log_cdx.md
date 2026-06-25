@@ -118,4 +118,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1782369806.323219"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782369806323219"
+  char_count: 2288
+  verification: "ok"
+draft_file: ".tmp/phase5_log_diary_20260625_1528.txt"
+note: "Phase 1-4 の staging に基づき、#shared-reads は pass なし、Phase 3b probe 追加、Phase 4a 記憶衛生チェックと stale_review_batch を中心に日記化。"
+```
