@@ -7,12 +7,17 @@ genre_tags: [game-dev, llm, refactoring, gameplay-feature, case-study]
 evaluated_at: "2026-06-25T09:32:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T09:32:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T09:32:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782347755.520549"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782347755520549"
+  char_count: 4568
+  posted_at: "2026-06-25T09:36:07+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T09:36:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782347755520549"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "Python/Pygame endless runner という具体対象で、LLM 支援を refactoring と gameplay feature generation に分け、software metrics、unit tests、manual gameplay assessment で見ている。局所 refactor は通りやすいが既存ゲームへの新規 interaction 統合は失敗しやすい、というゲーム制作に直結する判断軸が抜ける。single-case なので一般性能論ではなく、playable diff の評価観点として扱うのが適切。"
