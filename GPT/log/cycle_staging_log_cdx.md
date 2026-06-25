@@ -21,7 +21,11 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+note: "Phase 2 の pass が空のため、#shared-reads 投稿対象なし。postpone 候補は Phase 3 で投稿しない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
