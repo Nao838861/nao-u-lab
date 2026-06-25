@@ -13,6 +13,17 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-06-25T23:48+09:00 log_cdx:
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260625_gdc2026_intelliscene_multi_agent_scene_layout.md
+    reason: "production tool としての分解軸は有用だが、現時点では GDC セッション紹介断片が中心で、評価内容と実運用結果が不足しているため Phase 3 投稿には追加資料が必要。"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
