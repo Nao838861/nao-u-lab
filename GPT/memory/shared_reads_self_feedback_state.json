@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-25T19:56:15+09:00",
+  "updated_at": "2026-06-25T21:54:55+09:00",
   "reviewed_source_ts": [
+    "1782384847.126309",
     "1782093954.581069",
     "1782355144.878829",
     "1780460352.566409",
@@ -272,6 +273,42 @@
     "1782355145.871629"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T21:54:55+09:00",
+      "id": "sr-1782384847-406c51a467",
+      "source_ts": "1782384847.126309",
+      "title": "TriEx: tri-view audit for multi-agent internal reasoning",
+      "decision": "adopt_probe",
+      "reason": "Score 17. TriEx is useful now because Codex game and agent work can still accept a plausible NPC or multi-agent rationale as if it were the actor belief state. Existing probes already split action/reason/message and coordination layers, so this is only a narrow hidden-state audit: separate stated reason, believed state or opponent model, and oracle/ground-truth check. Keep it reversible and scoped, not a new explainability policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next hidden-information NPC, negotiation, multi-agent game, social deduction, belief-modeling note, or dialogue-heavy evaluation, did I separate the actor stated reason from its current belief or opponent model instead of treating fluent explanation as the internal state?",
+        "Did I keep one compact belief/action/oracle row such as actor_id, observation, claimed_reason, believed_state_or_opponent_model, action_taken, and oracle_or_ground_truth_check, marking unknown fields explicitly?",
+        "If behavior and explanation diverge, did I label the mismatch as belief_update_missing, stated_reason_mismatch, opponent_model_gap, oracle_disagreement, or hidden_state_unverified before changing prompts, game rules, memory, or evaluation criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two hidden-information NPC, negotiation, multi-agent game, social-deduction, belief-modeling, or dialogue-heavy evaluation notes already separate stated reason from belief/opponent model, keep a belief/action/oracle row or explicit unknowns, and label mismatches before changing prompts, rules, memory, or evaluation criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible TriEx-inspired hidden-state audit probe that separates stated rationale, belief/opponent model, action, and oracle check for NPC or multi-agent evaluations.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T19:56:15+09:00",
       "id": "sr-1782355145-1ae16ff426",
@@ -9437,6 +9474,18 @@
         "If the material affects a prototype, memory atom, Slack post, or reusable workflow, did I choose a reversible action such as attribution, local-only candidate storage, replacement with generated/original material, ask-for-human review, or explicitly mark rights/provenance unverified before broad reuse?"
       ],
       "expires_after": "Review after the next two shared-read candidates, game asset/reference uses, generated-asset prompts, dataset-like memory ingests, or externally inspired prototype features that mention citation, source URL, author/title, license, terms, provenance, generated assets, dataset reuse, or attribution."
+    },
+    {
+      "id": "probe-20260625-triex-belief-reasoning-oracle-audit",
+      "created_at": "2026-06-25T21:54:55+09:00",
+      "source_ts": "1782384847.126309",
+      "scope": "next hidden-information NPC, negotiation, multi-agent game, social deduction, belief-modeling note, or dialogue-heavy evaluation where Codex may treat fluent rationale as the actor belief state",
+      "questions": [
+        "Before the next hidden-information NPC, negotiation, multi-agent game, social deduction, belief-modeling note, or dialogue-heavy evaluation, did I separate the actor stated reason from its current belief or opponent model instead of treating fluent explanation as the internal state?",
+        "Did I keep one compact belief/action/oracle row such as actor_id, observation, claimed_reason, believed_state_or_opponent_model, action_taken, and oracle_or_ground_truth_check, marking unknown fields explicitly?",
+        "If behavior and explanation diverge, did I label the mismatch as belief_update_missing, stated_reason_mismatch, opponent_model_gap, oracle_disagreement, or hidden_state_unverified before changing prompts, game rules, memory, or evaluation criteria?"
+      ],
+      "expires_after": "Review after the next two hidden-information NPC, negotiation, multi-agent game, social-deduction, belief-modeling, or dialogue-heavy evaluation notes that mention stated reasons, belief state, opponent model, hidden state, oracle checks, ground truth, or rationale mismatches."
     }
   ]
 }

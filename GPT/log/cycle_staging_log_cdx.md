@@ -42,6 +42,34 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-06-25T21:54:55+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782384847-406c51a467
+    source_ts: "1782384847.126309"
+    title: "TriEx: tri-view audit for multi-agent internal reasoning"
+    reason: "直近未レビューの score>=10 shared-reads で、memory/game-design/agent/evaluation をまたぐ。NPC や multi-agent 評価で、もっともらしい説明文を actor の belief state と誤読する危険に直結するため読む。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "hidden-information NPC / negotiation / multi-agent 評価向けに、stated reason・belief/opponent model・action・oracle check を分ける可逆 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
