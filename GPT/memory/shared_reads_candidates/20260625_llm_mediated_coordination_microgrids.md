@@ -7,12 +7,17 @@ genre_tags: [multi-agent, simulation, coordination, game-theory, agent-design]
 evaluated_at: "2026-06-25T11:33:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T11:33:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T11:33:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782355146.916549"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355146916549"
+  char_count: 4219
+  posted_at: "2026-06-25T11:39:07+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T11:39:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355146916549"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "対象は microgrid だが、repeated Prisoner's Dilemma on a social network として整理され、game-theoretic base probability、neighbour imitation、exploitation memory、LLM narrative evaluation を分ける設計が明確。NPC faction や協力・裏切りの群衆シミュレーションに、LLM を直接意思決定者にしない設計原則として適用できる。"

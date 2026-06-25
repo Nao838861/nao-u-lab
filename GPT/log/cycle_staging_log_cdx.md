@@ -30,7 +30,21 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-06-25T11:39+09:00 log_cdx Phase 3
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260625_actworld_action_aware_memory.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355144878829"
+    char_count: 4305
+  - candidate: memory/shared_reads_candidates/20260625_market_design_ai_originality_penalty.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355145871629"
+    char_count: 3761
+  - candidate: memory/shared_reads_candidates/20260625_llm_mediated_coordination_microgrids.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355146916549"
+    char_count: 4219
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

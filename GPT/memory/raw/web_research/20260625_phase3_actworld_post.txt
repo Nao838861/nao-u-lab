@@ -1,0 +1,36 @@
+■ 概要
+ActWorld は、interactive world model を「歩き回れる動画生成」から「物体に触れ、その結果を長い rollout の中で保持できる世界モデル」へ進める研究である。既存の world model は、WASD やマウス操作で視点移動、旋回、前進後退を制御する方向には進んでいる。一方で、皿を持ち上げる、ドアを開ける、ランプを点ける、道具を動かす、といった object interaction は弱い。論文はこの状態を、見た目には探索できるが本当には action できない世界として捉える。
+
+問題は二つに分解される。第一は data bottleneck で、navigation 中心のデータは豊富でも、人間と物体の相互作用を密に含み、どの chunk で何が起きたかを正確にラベル付けしたデータが足りない。第二は memory bottleneck で、既存モデルの履歴圧縮は多くの場合 recency に寄る。歩き回るだけなら直近フレームが重要なのでそれでよいが、物体操作では、現在の見え方を決める因果的なフレームが数 chunk 前の contact や manipulating にある。たとえばボトルを持った、注いだ、置いたという短い遷移が粗く圧縮されたり buffer から消えたりすると、後で同じ物体を見た時に状態が戻る。この失敗を論文は action-forgetting と呼んでいる。
+
+ActWorld はこれに対し、chunk-autoregressive な video world model に三つの設計を入れる。まずデータ側では、100K 本の interaction-dense video を作り、40 種類の high-level action を含める。各動画は 33 frame の chunk に分けられ、5 keyframe を見た VLM が、カメラ移動ではなく物体の接触、移動、状態変化に注目して chunk caption と phase label を付ける。phase は approaching、reaching、contact、manipulating、completing、post-action のように分かれ、後段の memory routing に使われる。
+
+モデル側の中核は hierarchical action-aware memory である。Event-aware frame re-assignment は、過去 chunk を単純な時系列 bucket ではなく interaction importance で並べ替え、contact や manipulating のフレームを細かい memory bucket に残す。Action-conditioned history amplification は、現在の action class に応じて history key への注意を強める。さらに persistent action-aware memory bank があり、event token と object token を rollout をまたいで保持する。event token は manipulating 開始、complete 開始、release などの phase transition を記録し、object token は DINOv3 由来の特徴で触れた領域の視覚的 identity を持つ。これにより、カメラが一度離れて戻っても、操作済みの物体が何だったか、どの状態になったかを参照できる。
+
+評価では、navigation と object interaction を混ぜた I-Bench を作り、Yume 1.5、HY-World、Lingbot-World、Matrix-Game 3、Astra、Infinite-World などと比較している。VBench 系の見た目・一貫性指標だけでなく、VLM-Action-Judge による instruction following、VIPE で復元した camera trajectory と入力指示の一致を見る KMF も使う。ActWorld は視点制御を保ったまま interaction fidelity を上げ、VLM-Action-Judge の Level 3 success では 57.8%、partial-or-better では 84.5% を出している。ablation では EAFR、ACHA、Event Memory の順に効き、特に persistent event/object slot が object identity の長期保持で大きい。結論は、世界モデルを本当に interactive にするには、生成品質や camera control だけでなく、行動で変わった状態を因果的に保持する memory design が必要だというもの。
+
+■ 内容分析
+この論文で面白いのは、「記憶が長い」ことと「相互作用に必要な記憶を持つ」ことを分けている点である。長い context や大きな buffer を持っても、接触や release の瞬間が粗く圧縮されるなら、物体状態は壊れる。ActWorld は、時間順に近いものを残すのではなく、後の状態を決める event を残す。ここが navigation world model から action-aware world model への実質的な差になっている。
+
+もう一つは、semantic label と visual token を両方使っていること。event token は「何が起きたか」を持ち、object token は「どの物体か」を持つ。片方だけだと弱い。event だけなら対象が揺らぎ、object identity だけなら状態遷移が分からない。ゲーム的に言えば、鍵を拾った事実と、その鍵がどの見た目の object だったかを別々に残している。これは ECS や save data では当然の設計に見えるが、動画生成 world model では latent history の圧縮に埋もれやすい部分で、そこを明示的に分離している。
+
+評価設計も、単なる動画の綺麗さではなく、操作列の実行性に寄せている。I-Bench は action と camera を interleave するため、固定カメラで物体操作だけを成功させるモデルや、歩き回るだけのモデルを分けて見られる。VLM judge は完全ではないが、少なくとも「見た目が自然」だけで合格にしない。KMF で keyboard/mouse の追従も別に見るので、interaction を上げた代わりに navigation が壊れていないかも確認できる。
+
+弱点は、現実のゲームエンジンの状態管理とは距離があること。ActWorld は動画 world model であり、object state を明示的な gameplay state として更新しているわけではない。物理、当たり判定、inventory、権限、undo 可能性のようなゲーム側の厳密な状態とは別物である。また dataset は proprietary video model と VLM annotation に強く依存しており、再現性や低コスト利用には課題がある。それでも、失敗の切り方は強い。interactive に見えるが action-forgetting する、という診断は、ゲーム AI や生成プロトタイプ評価にもそのまま使える。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作では、ActWorld 全体を導入するより、評価ログの切り方を取り込むのがよい。探索型 prototype や NPC world model を作る時、「画面内を移動できるか」だけでなく、「触った object の状態が後で保持されるか」を probe にする。たとえば扉を開ける、アイテムを拾う、スイッチを押す、敵を倒す、床の状態を変えるなどの event を記録し、数十秒後に戻った時に状態が復元されていないかを見る。
+
+記憶システムにも似た対応ができる。今の atoms や candidate は recency で拾いやすいが、後の判断を因果的に決める event は古くても残す必要がある。Phase 3 の投稿で言えば、URL、判定、採用理由、撤退理由は persistent event token に近い。単なる本文全文より、あとで判断を変える transition を pin する設計として読める。ゲーム用 headless 評価でも、成功率だけでなく、event-update と object-identity の対応をログに残すと、見た目は遊べるが状態が記憶されない prototype を早めに検出できる。
+
+■ メリット・デメリット
+メリットは、world model の評価軸を「綺麗に長く生成できるか」から「行動が世界を変え、その変化を保持できるか」へ移せること。event と object identity を分ける発想は、ゲーム状態ログ、NPC 記憶、Slack/atom 記憶にも転用しやすい。
+
+デメリットは、手法自体が大規模動画生成寄りで、自分達の通常の小規模ゲーム制作にそのまま載せるには重いこと。VLM annotation や DINOv3 token、DiT memory bank を移植するより、軽量な event log と state consistency probe に翻訳する必要がある。
+
+■ 判定
+部分採用。ActWorld 本体ではなく、action-forgetting という失敗名、interaction importance に基づく履歴保持、event token / object token の分離を、ゲーム prototype と記憶運用の評価設計へ取り込む。
+
+■ URL
+https://arxiv.org/abs/2606.17730
+https://arxiv.org/html/2606.17730

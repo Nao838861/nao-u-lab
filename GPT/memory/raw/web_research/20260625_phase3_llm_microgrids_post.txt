@@ -1,0 +1,37 @@
+■ 概要
+「LLM-Mediated Demand Response Coordination in Smart Microgrids」は、smart microgrid の需要応答を題材に、LLM を multi-agent coordination のどこに置くべきかを検証する論文である。対象は energy system だが、構造はかなりゲーム的である。複数の prosumer agent が、自分の利益を持ちながら、電力需要を抑える協力行動に任意参加する。これは social network 上の repeated Prisoner's Dilemma として整理できる。各 agent は協力すれば全体の grid にはよいが、個体としては損をする場面があり、近隣の行動、過去に搾取された記憶、外部から来る coordination message に影響される。
+
+論文の出発点は、LLM をそのまま decision-maker にすると協力バイアスが強すぎる、という方法論上の問題である。RLHF された LLM は、ゲーム理論的な利害や grid condition に関係なく、道徳的・協調的に振る舞いやすい。そのまま agent の意思決定に使うと、どの条件でも cooperative な flat dynamics になり、介入やネットワーク構造の差が見えなくなる。そこで著者らは、戦略層と LLM 層を分ける hybrid decision architecture を採用する。
+
+各 prosumer agent の基礎行動は、game-theoretic base probability から出る。この base probability は payoff history、neighbour imitation、exploitation memory などで決まる。つまり、過去に協力して損をしたか、近隣が協力しているか、自分の personality や resistance がどうかをもとに、協力確率が更新される。LLM はこの確率を直接置き換えない。LLM Influence Compiler が structured demand-response directives を作り、agent は incoming coordination signal を narrative evaluation する。言語は行動の最終決定者ではなく、戦略確率に影響を与える解釈・説得・方針提示の層として扱われる。
+
+実験では、compiled structured directives、unstructured free-form narrative、no-influence baseline を比較する。主要指標は、最後の 10 time steps の population cooperation rate で、persuasion rate や backlash rate も見る。結果として、grounded hybrid agent では compiled condition が final cooperation 0.333、unstructured が 0.270、no-influence baseline が 0.280 で、structured な LLM compilation は無介入より上げる一方、自由文メッセージはむしろ baseline を少し下回る。理想化された logistic responder でも compiled は 0.850、unstructured は 0.767、no influence は 0.723 となり、structured directive の優位は残る。
+
+さらに、resistance level を 0.1 から 0.7 まで振った比較、network topology、hub-targeted dissemination も扱う。高 centrality node を狙って directive を流すと、random や peripheral targeting より効きやすい。これは message content だけでなく、社会ネットワーク上の伝播経路が協力行動の増幅に関わることを示す。結論は、LLM の自然言語生成能力、grounded な agent reasoning、network-aware targeting は補完的であり、LLM を万能の意思決定者にするより、構造化された影響コンパイラとして使う方が、解釈可能で条件差の出る協調シミュレーションになるというもの。
+
+■ 内容分析
+この論文の価値は、LLM を「賢い NPC の脳」としてではなく、「戦略層へ入る情報を構造化する compiler」として扱っている点にある。LLM agent 研究では、agent に状況を読ませ、次の行動を直接選ばせる構成が多い。しかし協力ゲームでは、それだとモデルの社会的望ましさバイアスが、ゲーム内の利害や裏切りの履歴を上書きしやすい。この論文は、その危険を避けるために、協力確率そのものは軽量な game-theoretic policy で持ち、LLM は directive の解釈と persuasion の質を担う。
+
+unstructured messaging が no-influence より悪くなる点も重要である。LLM が自由にもっともらしい文章を書くことは、必ずしも協調を改善しない。agent 側が何をすべきか、なぜ今なのか、誰に効くのかが schema 化されていないと、説得頻度はあっても行動差には結びつかない。論文では persuasion rate 自体は compiled と unstructured で大きく違うというより、message の質と構造が cooperation gap を作ると読める。ゲームで言えば、NPC に「協力しよう」と自然文で言わせるだけでは足りず、資源、期限、相手、損得、過去の裏切りへの扱いが行動 policy に接続されている必要がある。
+
+もう一つの軸は network-aware targeting である。協調は個体の説得だけでなく、どの node を通して広がるかで変わる。これは faction、村、ギルド、噂、隊列 AI にそのまま近い。中心人物を説得すれば広がるが、周辺 node だけでは局所的に終わる。逆に、central node が高 resistance なら、強い反発も広げる可能性がある。LLM の文章品質だけでなく、社会構造と agent substrate を分けて実験しているため、ゲームシミュレーションの設計材料として読みやすい。
+
+弱点は、energy domain の reward が比較的単純なこと。需要抑制に協力するかどうかは、ゲーム内の複雑な欲望、恐怖、忠誠、資源、地理、プレイヤー介入に比べれば整理されている。また、数値結果の絶対値は設定依存であり、このまま「compiled directive は何%効く」と一般化するものではない。使うべきなのは数値そのものではなく、LLM direct decision を避け、戦略確率・記憶・模倣・言語影響・ネットワーク伝播を分ける実験構造である。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作では、NPC faction や味方 AI を作る時に、LLM に直接「次の行動」を決めさせない設計へ使える。たとえば村人、商人、敵勢力、ギルド member が協力・裏切り・沈黙・噂拡散を選ぶ場合、最終行動は軽量な policy で決める。policy は関係値、過去の搾取、近隣の行動、資源不足、risk tolerance を持つ。LLM は、その policy へ入る structured directive、説明文、プレイヤーへの反応、方針変更案を作る補助に限定する。
+
+評価ログでも、会話が自然だったかではなく、directive が行動確率、伝播経路、backlash にどう効いたかを残す。headless simulation では、no-message、unstructured message、structured directive、hub-targeted のような ablation を作れる。これにより、「NPC が賢そうに喋るが実際の群衆 dynamics は平坦」という失敗を検出できる。記憶システム側でも、Slack や shared-reads の文章をそのまま行動命令にせず、triage hints や gate_decision のような structured field に落としてから cycle が読む、という現在の方針を補強する材料になる。
+
+■ メリット・デメリット
+メリットは、LLM の言語能力とゲーム理論的な戦略層を分離できること。協力・裏切り・模倣・搾取記憶・ネットワーク伝播を、会話の印象ではなく ablation で測れる。NPC 群や faction simulation に軽量移植しやすい。
+
+デメリットは、microgrid の協力問題が比較的狭く、ゲーム内の動機の多層性を表すには変数追加が必要なこと。また、structured directive の設計を誤ると、LLM を外しただけで別の手作りバイアスを入れる危険がある。
+
+■ 判定
+部分採用。LLM は NPC の最終意思決定者ではなく、structured directive と narrative evaluation の層に置く。最終行動は game-theoretic policy、搾取記憶、近隣模倣、network topology で動かす。
+
+■ URL
+https://arxiv.org/abs/2606.11050
+https://arxiv.org/html/2606.11050
+https://github.com/drdezarza/gice

@@ -7,12 +7,17 @@ genre_tags: [world-model, interaction, memory, game-ai, embodied-ai]
 evaluated_at: "2026-06-25T11:33:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T11:33:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T11:33:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782355144.878829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355144878829"
+  char_count: 4305
+  posted_at: "2026-06-25T11:39:07+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T11:39:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355144878829"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "視覚的に探索できるだけで、行動で物体状態が変わる世界を保持できないという問題設定が明確。interaction video dataset、chunk caption、importance-aware compression、persistent memory bank、event-update / object-identity token まで手法の中核が候補内に残っている。ゲーム制作では探索型プロトタイプや headless 評価で「触れるが記憶しない世界」を検出する観点に直結する。"

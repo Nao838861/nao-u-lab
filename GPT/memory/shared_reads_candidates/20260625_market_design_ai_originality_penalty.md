@@ -7,12 +7,17 @@ genre_tags: [ai-creation, economics, originality, creative-pipeline, risk]
 evaluated_at: "2026-06-25T11:33:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T11:33:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T11:33:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782355145.871629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355145871629"
+  char_count: 3761
+  posted_at: "2026-06-25T11:39:07+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T11:39:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782355145871629"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "AI 支援創作の市場設計を、free-for-all と強い知的財産権の二分法では扱えないという問題設定が明確。originality penalty、curse of precision、人間生成コンテンツを AI 学習へ戻す時の均質化ループという中核があり、ゲーム素材生成の多様性管理に自然に接続できる。"
