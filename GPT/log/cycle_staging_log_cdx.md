@@ -13,6 +13,20 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-06-26T01:50+09:00 log_cdx:
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md
+fail: []
+postpone: []
+stale_reviewed: []
+notes:
+  - "stale_review_batch は staging に存在しないため、新規 candidate のみ評価。"
+  - "title canonical index に同一 title の terminal 判定は見当たらないため、再評価除外なし。"
+  - "RevengeBench は hidden policy recovery を custom opponent probes と executable code hypothesis で扱い、headless playtest / opponent modeling に具体適用できるため pass。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
