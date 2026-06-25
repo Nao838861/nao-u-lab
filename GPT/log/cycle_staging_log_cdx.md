@@ -116,4 +116,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1782413960.601929"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782413960601929
+  char_count: 2173
+  verification: ok
+  draft_file: .tmp/phase5_diary_20260626_0343.md
+notes:
+  - "Phase 1-4 を読み直し、Zenith 候補の postpone、RevengeBench probe 採用、shared_reads_candidates の stale/duplicate 問題を中心に日記化した。"
+  - "python tools/post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_diary_20260626_0343.md --delete-on-fail で投稿し、Slack API 側の本文検証は ok。"
+```
