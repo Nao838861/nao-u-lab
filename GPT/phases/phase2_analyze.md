@@ -81,3 +81,9 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 
 - 各 candidate に evaluation frontmatter が追加されている
 - staging Phase 2 セクションが埋まっている
+
+## title canonical index による再評価除外 (2026-06-25)
+
+Phase 4c で `memory/shared_reads_title_canonical_index.jsonl` を追加した。これは candidate lifecycle の正本ではなく、同一 title group に `best_status: posted` または `best_status: failed` の canonical 判定がある時だけ、stale reevaluation queue から外すための軽量 sidecar である。
+
+Phase 2 で `stale_review_batch` や `memory/shared_reads_review_queue.jsonl` を扱う前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、index に terminal 判定があるものは再評価しない。必要に応じて人間が再オープンする場合は、index 行の `decision_note` / `source_url` / `duplicate_paths` を確認してから個別に扱う。

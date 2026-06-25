@@ -90,3 +90,15 @@ summary の `missing_stale_after` と `overdue_for_reassessment` を Phase 4a/4c
 
 - `../directive_shared_reads_overview_20260512.md` — 要約→概要、CoopEval ポスト品質基準
 - `../directive_shared_reads_candidate_gate_20260512.md` — 候補ゲート、~4000字バー
+
+## title canonical index (2026-06-25)
+
+`memory/shared_reads_title_canonical_index.jsonl` は、同一 title の候補が複数残った時に「この title group は既に posted / failed として閉じている」と Phase 2 の再評価 queue へ伝える lightweight sidecar である。candidate 本体や lifecycle frontmatter の正本ではない。
+
+1 行 1 `title_key` で、最低限 `title_key` / `canonical_path` / `best_status` / `duplicate_paths` / `source_url` / `decision_note` / `updated_at` を持つ。誤結合を避けるため、title だけで確定せず、`source_url` と candidate path を人間が確認できる形で残す。
+
+Phase 4a で duplicate title group を監査する時は、未登録 group を次で確認できる。
+
+```powershell
+python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
+```

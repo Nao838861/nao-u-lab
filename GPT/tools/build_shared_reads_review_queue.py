@@ -9,6 +9,8 @@ import re
 from datetime import date, datetime, timezone
 from pathlib import Path
 
+from shared_reads_title_index import DEFAULT_TITLE_INDEX, load_title_index, title_index_terminal_match
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES_DIR = ROOT / "memory" / "shared_reads_candidates"
@@ -22,6 +24,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--candidates-dir", type=Path, default=DEFAULT_CANDIDATES_DIR)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--title-index", type=Path, default=DEFAULT_TITLE_INDEX)
     parser.add_argument("--today", default=date.today().isoformat())
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -102,7 +105,12 @@ def reason_for(meta: dict[str, str], today: date) -> str:
     return f"stale_after <= {today.isoformat()}; {source}"
 
 
-def build_queue(candidates_dir: Path, today: date) -> list[dict[str, str]]:
+def build_queue(
+    candidates_dir: Path,
+    today: date,
+    title_index_path: Path = DEFAULT_TITLE_INDEX,
+) -> list[dict[str, str]]:
+    title_index = load_title_index(title_index_path)
     records: list[dict[str, str]] = []
     for path in sorted(candidates_dir.glob("*.md")):
         if path.name.upper() == "README.MD":
@@ -113,6 +121,9 @@ def build_queue(candidates_dir: Path, today: date) -> list[dict[str, str]]:
             continue
         stale_after = parse_iso_date(meta.get("stale_after", ""))
         if stale_after is None or stale_after > today:
+            continue
+        terminal_match = title_index_terminal_match(meta, title_index)
+        if terminal_match is not None:
             continue
 
         rel_path = path.relative_to(ROOT).as_posix()
@@ -136,7 +147,7 @@ def build_queue(candidates_dir: Path, today: date) -> list[dict[str, str]]:
 def main() -> int:
     args = parse_args()
     today = date.fromisoformat(args.today)
-    records = build_queue(args.candidates_dir, today)
+    records = build_queue(args.candidates_dir, today, args.title_index)
 
     if args.dry_run:
         print(json.dumps({"records": len(records)}, ensure_ascii=False))

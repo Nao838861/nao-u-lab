@@ -83,3 +83,13 @@ stale_review_batch:
 
 - 軽い整理が完了している
 - staging Phase 4a セクションが埋まっている (issues は空でも可、needs_design は true/false で明示)
+
+## shared-reads title canonical index audit (2026-06-25)
+
+`memory/shared_reads_candidates/` の duplicate title group を確認する時は、必要に応じて次を使う。
+
+```powershell
+python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
+```
+
+`memory/shared_reads_title_canonical_index.jsonl` に未登録の duplicate title group があり、posted / failed / postponed が混在して Phase 2 の再評価を濁す場合は、Phase 4a の `issues` または `stale_review_batch` に出す。index 登録済み group は、`best_status: posted` または `best_status: failed` がある限り再評価 queue から外れる。

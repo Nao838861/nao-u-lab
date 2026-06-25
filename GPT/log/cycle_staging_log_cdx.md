@@ -189,6 +189,35 @@ notes:
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/shared_reads_title_index.py
+        change: created
+      - path: tools/audit_shared_reads_title_duplicates.py
+        change: created
+      - path: tools/build_shared_reads_review_queue.py
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: created
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+    summary: "shared_reads_title_canonical_index を導入し、posted / failed canonical title group を stale reevaluation queue から除外する導線を追加した。初回 seed は Phase 4a evidence と stale_review_batch の fail 推奨 title に限定した。"
+    partial: false
+migrations:
+  - what: "初回 seed index 作成"
+    affected: "ISS-001 で挙がった duplicate title group 5 件のみ。全 81 group の一括確定は未実施。"
+verification:
+  - "python tools\\audit_shared_reads_title_duplicates.py --limit 5: 上位 duplicate group を出力し、seed 済み 3 group は indexed: true、未seed group は indexed: false として区別できた。"
+  - "python tools\\build_shared_reads_review_queue.py --dry-run: title canonical index 読み込み後も成功し、records は 50。"
+  - "python tools\\memory_recall.py shared_reads title canonical index: 既存 recall 経路が例外なく動作。"
+  - "python -m py_compile tools\\shared_reads_title_index.py tools\\audit_shared_reads_title_duplicates.py tools\\build_shared_reads_review_queue.py: 構文エラーなし。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
