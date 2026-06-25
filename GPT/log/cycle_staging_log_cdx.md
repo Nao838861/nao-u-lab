@@ -135,3 +135,17 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-06-26T02:25+09:00 log_cdx:
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782407104262629
+  ts: "1782407104.262629"
+  char_count: 2189
+  verification: ok
+notes:
+  - "Phase 1-4 staging のみを材料に、RevengeBench 投稿、Meta Horizon friction layer probe、candidate lifecycle issue を日記化。"
+  - "初回の Phase 5 投稿 ts=1782407072.052229 は Slack API 検証 ok だったが 2331 字で目標幅を超えたため削除し、2189 字版を再投稿した。"
+  - "投稿は UTF-8 ファイル経由で実行。PowerShell stdin / pipe に日本語本文は流していない。"
+```
