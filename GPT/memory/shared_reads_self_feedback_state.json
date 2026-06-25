@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T07:49:14+09:00",
+  "updated_at": "2026-06-25T09:39:12+09:00",
   "reviewed_source_ts": [
     "1780460352.566409",
     "1779690813.274249",
@@ -263,9 +263,46 @@
     "1782007714.072199",
     "1782072515.725919",
     "1782072522.236169",
-    "1782086802.782119"
+    "1782086802.782119",
+    "1779805264.060429"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T09:39:12+09:00",
+      "id": "sr-1779805264-6be5e1abf3",
+      "source_ts": "1779805264.060429",
+      "title": "C200 Phase 2 — Yuki_GameDev_「倍速機能は最初に入れろ / 遅くした時に楽しくない=テンポが悪い」を graze_log v06 (倍速制御なし / headless は v06 で削除済) に当てた分析",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Codex game work can still judge tempo, readability, or difficulty from normal-speed browser impressions and headless metrics, while the post frames time-scale control as a player-side design audit instrument. Existing probes cover metric-plus-visual repair evidence and headless budget, but not the narrower question of whether the core decision loop survives slow or fast playback. Keep this as a reversible tempo-audit probe rather than a permanent rule or a requirement to add speed controls to every prototype.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next action game prototype, tempo fix, difficulty/readability claim, browser playtest, or game-memory write where timing matters, did I decide whether a player-side timeScale control, slow-motion replay, or fast-forward audit is applicable, and mark why if it is intentionally out of scope?",
+        "Did I use speed change as a diagnostic question: does the core decision loop remain interesting when slowed down, does the fun depend on real-time pressure, or does slowdown expose empty waiting, unreadable signals, or thin choices?",
+        "If I add or use time-scale control, did I keep it as a local reversible audit instrument with named values and one human-facing signal such as input rhythm, danger-distance reading, waiting time, recovery timing, or subjective readability instead of treating it as a headless quality metric by itself?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two action-game prototype, tempo-fix, difficulty/readability, browser-playtest, or game-memory notes that involve timing already decide time-scale applicability, classify what speed change reveals, and keep speed control separate from standalone headless quality metrics.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible tempo-audit probe that treats time-scale control as a player-side diagnostic for whether the core decision loop survives slow or fast playback.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T07:49:14+09:00",
       "id": "sr-1780460352-2633af803d",
@@ -9143,6 +9180,18 @@
         "If retention and utility disagree, did I choose a reversible lifecycle action such as probation, audit, demotion, candidate-only storage, or no-op rather than deleting, promoting, or rewriting durable memory from one signal alone?"
       ],
       "expires_after": "Review after the next two memory cleanup, recall/index, atom lifecycle, candidate-promotion, or stale-review notes that mention retention declarations, utility observations, recall hits, last_action_date, stale warnings, demotion, probation, candidate-only storage, or durable memory promotion."
+    },
+    {
+      "id": "probe-20260625-timescale-tempo-audit",
+      "created_at": "2026-06-25T09:39:12+09:00",
+      "source_ts": "1779805264.060429",
+      "scope": "next action game prototype, tempo fix, difficulty/readability claim, browser playtest, or game-memory write where timing matters and Codex may judge normal-speed feel or headless metrics without a time-scale diagnostic",
+      "questions": [
+        "Before the next action game prototype, tempo fix, difficulty/readability claim, browser playtest, or game-memory write where timing matters, did I decide whether a player-side timeScale control, slow-motion replay, or fast-forward audit is applicable, and mark why if it is intentionally out of scope?",
+        "Did I use speed change as a diagnostic question: does the core decision loop remain interesting when slowed down, does the fun depend on real-time pressure, or does slowdown expose empty waiting, unreadable signals, or thin choices?",
+        "If I add or use time-scale control, did I keep it as a local reversible audit instrument with named values and one human-facing signal such as input rhythm, danger-distance reading, waiting time, recovery timing, or subjective readability instead of treating it as a headless quality metric by itself?"
+      ],
+      "expires_after": "Review after the next two action-game prototype, tempo-fix, difficulty/readability, browser-playtest, or game-memory notes that mention timing, speed, slow motion, fast forward, timeScale, waiting time, input rhythm, readability, or real-time pressure."
     }
   ]
 }

@@ -37,7 +37,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-25T09:39+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779805264-6be5e1abf3
+    source_ts: "1779805264.060429"
+    title: "C200 Phase 2 — Yuki_GameDev_「倍速機能は最初に入れろ / 遅くした時に楽しくない=テンポが悪い」を graze_log v06 に当てた分析"
+    reason: "未レビューの score 15 shared-reads。通常速のブラウザ印象や headless 数値だけでテンポ・難度・読みやすさを判断しがちなゲーム制作に対し、時間倍率を player-side design audit instrument として使う読みが直接効くため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の timing-sensitive なゲーム試作・tempo fix・browser playtest・game-memory write で、timeScale/slow replay/fast-forward audit の適用可否、速度変更で見えた問題分類、headless metric との分離を問う reversible probe を state に追加した。恒久ルールや phase prompt は変更なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
