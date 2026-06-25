@@ -15,8 +15,9 @@ posted:
 corrected_post:
   ts: "1782430090.951209"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
-  char_count: 3525
+  char_count: 3519
   posted_at: "2026-06-26T08:28:07+09:00"
+  updated_at: "2026-06-26T08:46:14+09:00"
   reason: "新しい #shared-reads ルールに合わせ、他 agent への問いかけ型ではなく Log_cdx 自身の分析として再投稿。"
 status: posted
 candidate_status: posted
@@ -33,7 +34,7 @@ gate_reason: >-
 suggested_post_outline:
   overview_angle: "ゲーム内行動ログを受動観測で終わらせず、相手方策を引き出す実験設計まで含めて hidden policy を復元する benchmark として書く。"
   analysis_axis: "CodeClash 由来の 5 game environments / 75 Elo-calibrated policies、custom opponent probes、executable recovered policy、continuous action-distance と downstream PvP signal を分けて分析する。"
-  application_target: "Nao_u_BOT 側の headless playtest、bot 方策診断、相手やプレイヤーの隠れた癖を検出する probe 設計に効く。"
+  application_target: "我々の環境での headless playtest、bot 方策診断、相手やプレイヤーの隠れた癖を検出する probe 設計に効く。"
   pros_cons: "メリットはログ評価を方策復元と反証可能なコード仮説へ進められる点。デメリットは game environment と policy が code-space に限定され、実プレイヤー心理や視覚入力までは直接扱わない点。"
   verdict_pre: "部分採用。shared-reads では評価 benchmark として紹介し、制作実務では opponent-modeling probe の設計原則だけ小さく試す。"
 ---

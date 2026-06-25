@@ -11,7 +11,14 @@ import json
 import sys
 from pathlib import Path
 
-from slack_client import api_call, post_message
+from slack_client import (
+    _blocks_for_text,
+    _trim_fallback_text,
+    api_call,
+    ensure_log_cdx_prefix,
+    post_message,
+    resolve_channel,
+)
 
 
 MOJIBAKE_MARKERS = ("縺", "譁", "繧", "蜊", "謚", "ã", "Â")
@@ -63,22 +70,37 @@ def verify_message(channel: str, ts: str, source: str) -> tuple[bool, str]:
     return not corrupt, reason
 
 
+def update_message(channel: str, ts: str, text: str) -> dict:
+    channel_id = resolve_channel(channel)
+    prefixed = ensure_log_cdx_prefix(text)
+    payload = {
+        "channel": channel_id,
+        "ts": ts,
+        "text": _trim_fallback_text(prefixed),
+    }
+    if len(prefixed) > 500:
+        payload["text"] = "[Log_cdx] shared-reads post updated; full body is in message blocks."
+        payload["blocks"] = _blocks_for_text(prefixed)
+    return api_call("chat.update", payload)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Post a UTF-8 file to Slack.")
     parser.add_argument("--channel", required=True, help="Slack channel name or id")
     parser.add_argument("--file", required=True, help="UTF-8 text file to post")
+    parser.add_argument("--update-ts", help="update an existing Slack message instead of posting a new one")
     parser.add_argument("--delete-on-fail", action="store_true", help="delete the posted message if verification fails")
     args = parser.parse_args()
 
     path = Path(args.file)
     text = path.read_text(encoding="utf-8")
-    result = post_message(args.channel, text)
+    result = update_message(args.channel, args.update_ts, text) if args.update_ts else post_message(args.channel, text)
     if not result.get("ok"):
         print(json.dumps(result, ensure_ascii=False))
         return 1
 
-    channel = str(result.get("channel", ""))
-    ts = str(result.get("ts", ""))
+    channel = str(result.get("channel") or resolve_channel(args.channel))
+    ts = str(result.get("ts") or args.update_ts or "")
     ok, reason = verify_message(channel, ts, text)
     if not ok and args.delete_on_fail and channel and ts:
         api_call("chat.delete", {"channel": channel, "ts": ts})
