@@ -6025,3 +6025,10 @@ error: corrupt loose object 'de4b1e8de7ecb4f8eadbc441b7924bff8a6d2385'
 fatal: unable to read de4b1e8de7ecb4f8eadbc441b7924bff8a6d2385
 2026-06-26T01:35:53 skipped: elapsed 14min < 90min
 2026-06-26T01:50:53 skipped: elapsed 29min < 90min
+2026-06-26T02:05:53 skipped: elapsed 44min < 90min
+2026-06-26T02:20:53 skipped: elapsed 59min < 90min
+2026-06-26T02:35:53 skipped: elapsed 74min < 90min
+2026-06-26T02:50:53 skipped: elapsed 89min < 90min
+2026-06-26T03:05:53 run start (elapsed 104min >= 90min)
+2026-06-26T03:07:52 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-26T03:20:53 run start (elapsed 119min >= 90min)

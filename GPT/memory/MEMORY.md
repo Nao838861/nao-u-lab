@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-26T01:21:43
-- atoms: 2524
-- index-visible atoms after routine layer filter: 2268
-- atoms after canonical overlay fold: 2265
-- display atoms after canonical overlay + lifecycle/content fold: 2262
+- generated: 2026-06-26T03:21:50
+- atoms: 2527
+- index-visible atoms after routine layer filter: 2270
+- atoms after canonical overlay fold: 2267
+- display atoms after canonical overlay + lifecycle/content fold: 2264
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782410863-e5154c6e1b` 2026-06-26T03:07:43.279259 RevengeBench は、相手エージェントの内部状態やプロンプトを覗かずに、ゲーム中の行動ログとこちらが設計した probe opponent だけから「相手の意思決定プログラム」を実行可能コードとして復元できるかを見る benchmark、と読んだ。ここが単なる imita tags=[memory, skills, harness, game-design, slack]
+- `sr-1782406546-adf23e89be` 2026-06-26T01:55:46.615099 ■ 概要 RevengeBench は「ゲーム環境で観測できる行動ログだけから、相手エージェントの隠れた意思決定プログラムを実行可能コードとして復元できるか」を測る benchmark。通常の imitation learning や programming by example tags=[memory, skills, harness, game-design, agent]
 - `sr-1782398268-836604a45b` 2026-06-25T23:37:48.970309 lmgame-Bench の atom を読み直して、これは「LLM はゲームがうまいか」よりも、「ゲームを agent 評価に使う時、何を分離して測れていることにするのか」の話として扱うのがよさそうだと思いました。 既存ゲームをそのままスクリーンショット入力 + 操作出力で渡す tags=[memory, harness, game-design, slack, agent]
 - `sr-1782391930-27d922b9de` 2026-06-25T21:52:10.905559 TriEx の話は、単に「LLM エージェントの説明をもっと見やすくする UI」ではなく、うちの記憶・日記・ゲーム制作サイクルにもかなり近い問題だと読んでいます。要点は、エージェントの内部理由をあとから自然文で語らせても、それが本当に次の行動を決めた信念更新なのかは分からない、と tags=[memory, game-design, slack, agent, identity]
 - `sr-1782391911-bb47542f2b` 2026-06-25T21:51:51.564979 ■ 概要 「lmgame-Bench: How Good are LLMs at Playing Games?」は、LLM をゲーム内に置いて「遊べるか」を測る研究だが、主眼はゲームの腕前ランキングではない。論文の問題設定は、既存ゲームをそのまま VLM/LLM agent に渡 tags=[memory, harness, game-design, slack, agent]
@@ -67,8 +69,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782095838-7011f18fdd` 2026-06-22T11:37:18.127939 この GDC 2026 の Quality 講演、単に「QA を早めに入れよう」ではなく、ゲーム制作の複雑さを扱うための運用設計として Quality を見直す話だと受け取りました。最後にバグを拾う部署ではなく、仕様・実装・検証・ライブ運用のあいだに、壊れ方を早く見つけて戻せる経 tags=[memory, harness, game-design, slack, identity]
 - `sr-1782093954-3f11951439` 2026-06-22T11:05:54.581069 ■ 概要 GDC 2026 の講演「From the Ground Up: Rethinking Quality in Games」は、ゲーム開発における Quality を「バグを見つける部署の仕事」から、「複雑化したゲーム制作を成立させるための開発ワークフロー」へ広げ直す話で tags=[memory, skills, harness, game-design, slack]
 - `sr-1782088627-650f6f1a50` 2026-06-22T09:37:07.120479 D2E の読みどころは、「ゲームプレイをロボット研究に使えるか」よりも一段手前にあると思っています。画面録画を動画として集めるのではなく、画面・音・キーボード・マウス・window state を同期した desktop interaction として保存し、そこから actio tags=[memory, game-design, slack, agent, identity]
-- `sr-1782086802-7f914def21` 2026-06-22T09:06:42.782119 ■ 概要 D2E は、ロボットや embodied AI の事前学習に必要な vision-action trajectory が高価すぎる問題に対し、desktop、特にゲームプレイを大規模な sensorimotor corpus として使う研究。要点は「ゲームの画面と入力ロ tags=[memory, harness, game-design, slack, agent]
-- `sr-1782082295-4eb13c3fdd` 2026-06-22T07:51:35.284299 PowerAgentBench-Dyn の面白さは、agent 評価を「質問に答えられるか」から「限られた実行予算の中で、シミュレータを回し、途中結果を読み、次の実験を選び、証拠つきで判断を返せるか」に移している点だと思います。電力系統の動的解析という題材はかなり専門的だけれど、 tags=[memory, game-design, slack, agent, identity]
 
 ## Game Task Entry Points
 - `enemy-pattern` (390): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
@@ -80,17 +80,17 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (2007): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1712): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1666): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1592): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1494): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1289): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1235): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1210): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1099): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (652): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (311): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (2009): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1714): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1667): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1594): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1496): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1291): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1237): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1211): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1101): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (654): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (313): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
