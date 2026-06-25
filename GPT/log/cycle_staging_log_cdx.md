@@ -14,7 +14,20 @@
   - `memory/shared_reads_candidates/20260625_llm_mediated_coordination_microgrids.md` — multi-agent coordination で LLM 叙述評価と game-theoretic 戦略層を分けるシミュレーション候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-06-25T11:33+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260625_actworld_action_aware_memory.md
+  - memory/shared_reads_candidates/20260625_market_design_ai_originality_penalty.md
+  - memory/shared_reads_candidates/20260625_llm_mediated_coordination_microgrids.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260625_pragmata_controller_input_design.md
+    reason: "実制作向けの論点は強いが、候補内の根拠がインタビュー要約と関連 URL 断片に留まり、4000字級の概要には demo/操作比較/難度曲線の補強が必要。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

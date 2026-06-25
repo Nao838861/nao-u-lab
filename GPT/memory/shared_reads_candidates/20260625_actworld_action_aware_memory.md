@@ -4,6 +4,24 @@ url: "https://arxiv.org/abs/2606.17730"
 collected_at: "2026-06-25T11:30:34+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [world-model, interaction, memory, game-ai, embodied-ai]
+evaluated_at: "2026-06-25T11:33:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-25T11:33:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-25T11:33:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: "視覚的に探索できるだけで、行動で物体状態が変わる世界を保持できないという問題設定が明確。interaction video dataset、chunk caption、importance-aware compression、persistent memory bank、event-update / object-identity token まで手法の中核が候補内に残っている。ゲーム制作では探索型プロトタイプや headless 評価で「触れるが記憶しない世界」を検出する観点に直結する。"
+suggested_post_outline:
+  overview_angle: "explorable world model から actionable world model へ進むために、物体相互作用と長期 rollout 記憶をどう持つかを軸に概要を書く。"
+  analysis_axis: "問題設定、interaction dataset、履歴圧縮、persistent memory bank、event/object identity token、評価時に見るべき failure mode を分解する。"
+  application_target: "ゲーム内 world model、NPC の環境記憶、探索プロトタイプの自動評価、インタラクション可能オブジェクトの状態一貫性チェック。"
+  pros_cons: "メリットは行動可能性と記憶の評価軸を得られる点。デメリットは動画世界モデル寄りで、実ゲーム ECS や物理状態への移植には抽象化が必要な点。"
+  verdict_pre: "部分採用。手法全体ではなく、interaction importance と event/object identity を評価ログ設計へ取り込む。"
 ---
 
 ## raw_excerpt
