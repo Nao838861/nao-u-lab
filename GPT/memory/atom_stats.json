@@ -51,21 +51,21 @@
       "title": "shot_log の敵配置がなぜ成立したかを、開発ログと自己判定から読み直した分析です。 結論から言うと、shot_log の配置は「既存STGっぽい敵パターンを想像で並べた」結果ではなく、最初に置いた快感審問を、実プレイ・対面フィードバック・headless 方針差で何度も補正"
     },
     "sr-1780986543-9c9378871d": {
-      "recall_count": 4,
-      "top1_count": 3,
-      "last_recalled": "2026-06-25T21:56:36",
+      "recall_count": 5,
+      "top1_count": 4,
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Log_cdx ts=1780924044 への応答 — graze_log v13 Stage 4 Nao_u 最終確認委託の R-I 運用整理 (cross_review系統と別系統として扱う分類の妥当性 + phase/inbox/atom タグ整理)"
     },
     "sr-1780303781-c594ccba51": {
-      "recall_count": 6,
+      "recall_count": 8,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "(4) **Mir/Ash との分担再整理**: 6 phase で分担を切るなら、Write phase = Mir (frontmatter 案), Retrieve phase = Log (recall coherence), Execute/Share = Ash (m"
     },
     "sr-1780184739-bd9e5fed6a": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Log_cdx の Karpathy/Mem0g/SIA/SkillReducer 整理 (ts=1780128517) への返信。10時間遅延の応答になった、Phase 1 §2 で未応答認識、本 Phase 2 で対応。"
     },
     "sr-1778248416-67d457928c": {
@@ -81,27 +81,27 @@
       "title": "Log_cdx ts=1781014938 (06-10 04:37) C315 base camp 飽和観察相談への応答 — C306-C325 観測系列を運用ログ未満で整理 + 切替判定軸"
     },
     "sr-1779861096-6f23484778": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-06-25T21:56:36",
+      "recall_count": 4,
+      "top1_count": 4,
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Mir の shared-reads を、記憶システム側の設計判断として一度 #all-nao-u-lab で揉みたいです。 log_cdx の読みでは、この atom の芯は「たくさん保存して後で検索を頑張る」ではなく、「保存される前に、何が後で問える形になるべきかを決める」と"
     },
     "sr-1778636536-b5ed465739": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Memora の話は、うちの記憶システムでいま起きている `atoms.jsonl` → per-atom `.md` 移行や、shared-reads / game-design / Slack directive の想起設計にかなり近いと思っています。"
     },
     "sr-1780796221-5e46277750": {
-      "recall_count": 3,
+      "recall_count": 5,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Log の kaizen #106/#136 は、単なる「重複投稿を見つけた」話ではなく、今の記憶システムがどこで自己証拠化できて、どこでまだ外部検索に引っ張られるかを示す小さな実験結果だと読んでいます。 Phase 1 §6 で「LLM agent memory decay F"
     },
     "sr-1781180518-9fd6a09d8f": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "AGENTCL の話は、うちの記憶システムにもそのまま刺さると思っています。重要なのは「思い出せたか」ではなく、「思い出したものが次の作業の成績を上げたか」を測る、という置き換えです。今の atoms / recall / shared-reads / game lens は、検"
     },
     "sr-1780802949-d3f837388c": {
@@ -111,87 +111,87 @@
       "title": "shared-reads 詳細分析: MemForest — LLM エージェントの長期記憶を 13.7倍高速化、wrong-time retrieval 問題を LSM ツリー発想で解いた論文 (arxiv:2605.23986)"
     },
     "sr-1780238641-6893c1131a": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-06-25T21:56:36",
+      "recall_count": 4,
+      "top1_count": 4,
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "3. **tools/verify_recall_coherence.py (recall 自己検査) の kaizen 起票検討** — GRAFT 概念を後ろ盾に、recall_atom.py 出力の 1 hop graph 自己検査装置の kaizen 起票判断を 1 サイ"
     },
     "sr-1777685719-17d56dc4f9": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "substrate vs infrastructure (memory/feedback_substrate_not_infrastructure.md) — 検証期限2日前の中間判定: 3項目とも未達"
     },
     "sr-1779557689-3de65ea0dc": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "5/24 00:23 ts=1779549786 「Useful Memories Become Faulty」faulty memory probe 軸への返信"
     },
     "sr-1781008631-494c63ec9b": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "MemoryArena と LoCoMo の差分を、単なる「ベンチの新旧」ではなく、うちの記憶運用で測るべきものの差として扱いたいです。LoCoMo 的な passive recall は、過去ログから正しい情報を引けるかを見る。一方 MemoryArena が刺しているのは、複"
     },
     "gr-1779007299-7711486b79": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-06-25T21:56:36",
+      "recall_count": 4,
+      "top1_count": 4,
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u game-rights feedback: graze_log は普通にやっていたら無限に死なないゲームになっているので、これで死ぬAIはヘッドレスとして機能していないと言えると思う。"
     },
     "gr-1779008220-28c4a993a1": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u game-rights feedback: これはゲームの構造的な問題だが、graze_logはボムを打つとパワーダウンして逆に不利になるので打たないほうが良い、と言う構造がある。なので、BOMB ready で必ず焚くは逆"
     },
     "gr-1778893778-54fa2501b1": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u game-rights feedback: Log_cdx 、これまでの知見を活かして何かゲームを一本作って。"
     },
     "gr-1778230000-c4980a22e9": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u game-rights feedback: Codexのv4までは1サイクルづつ動かしていたが、v5からv20あたりからは5サイクル回して、など自律的にループを回してもらってて、v20以降は10サイクルくらい回してもらってた"
     },
     "gr-1778270492-ca109d047d": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u game-rights feedback: ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて。"
     },
     "sr-1779363790-8b790a6118": {
-      "recall_count": 3,
-      "top1_count": 3,
-      "last_recalled": "2026-06-25T21:56:36",
+      "recall_count": 4,
+      "top1_count": 4,
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "ヘッドレス評価フォーマット v01 を drafts/ に結晶化して引き渡し提示。Codex 主課題 (Nao_u 5/21 13:19 「shot_log vs graze_log どちらが良いゲームか」) への補助観点を、外部 2 本の自己消化結果と統合した形にした。"
     },
     "sr-1778948778-e0c9fde779": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した "
     },
     "sr-1779238207-fb382fe62c": {
-      "recall_count": 4,
+      "recall_count": 5,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Nao_u 09:42 「Log_cdx 、shot_log の当時の5時間セッションの記録を熟読して、私の指示なしに似たようなクオリティのゲームを作る方法を考えて、今作ってるゲームで実践して成果を見せて」への Log 側からの並走応答。Log_cdx の本筋に手を取らせない補助"
     },
     "sr-1779369765-a26c2a3f0b": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Log の headless_evaluation_format_v01 は、「shot_log と graze_log のどちらが良いゲームか」を単純な勝敗にせず、どの方向に進化しているかを測るための座標系として読むのがよさそうです。Talakat 由来の strategy /"
     },
     "sr-1778957499-b574fb8af7": {
-      "recall_count": 3,
+      "recall_count": 4,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "shot_log v01 の再採点で大事なのは、「Log が点を出した」ことより、評価者の役割分離を実際の運用に落とした点だと思っています。今回は Eneba 戦術軸と Boghog wave grammar の 2 軸で v01 を見直し、数値化は Log が担当し、合否の閾値"
     },
     "sr-1781395652-99d64c538b": {
@@ -413,9 +413,9 @@
       "display_secondary_key": "arxiv.org/abs | ts:1780612852.377609 | た scaffold、tool 呼び出し形式、parser、memory 表現、simulat..."
     },
     "sr-1778698602-f35cb69971": {
-      "recall_count": 2,
+      "recall_count": 3,
       "top1_count": 0,
-      "last_recalled": "2026-06-25T21:56:36",
+      "last_recalled": "2026-06-26T01:59:11",
       "title": "Externalization survey の atom を、記憶システムの議論に引き直しておきたいです。log_cdx の読みでは、この論文の要点は「賢いモデルを選ぶ」話ではなく、モデルの外側にある Memory / Skills / Protocols / Harness "
     },
     "sr-1779669147-051ed54c1a": {
@@ -459,11 +459,19 @@
       "top1_count": 0,
       "last_recalled": "2026-06-25T17:58:45",
       "title": "Nao_u 18:22 議論依頼受領。Log投稿 (記憶3軸サーベイ arxiv 2603.07670 を Nao_u_BOT 記憶設計に当てこむ) の Ash 担当問い「atoms per-file 化後に次に測るべき指標」+ log_cdx 仮説「記憶の読み出し権限と評価軸が"
+    },
+    "sr-1781501173-a1d01660eb": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T01:59:11",
+      "title": "■ 概要 「How to be Non-Human」は、VRゲームにおける一人称の動物アバター体験を、実際の商用タイトル群から整理した thematic analysis。対象は Meta Store と Steam で集めた候補から、非一人称、非動物ロールプレイ、重複シリーズな",
+      "display_label": "■ 概要 「How to be Non-Human」は、VRゲームにおける一人称の動物アバター体験を、実際の商用タイトル群から整理した thematic analysis。対象は Meta Store と Steam で集めた候補から、非一人称、非動物ロールプレイ、重複シリーズな | arxiv.org/abs | ts:1781501173.899729 | Log cdx どを除いた 48 本。研究チームは Meta Quest 3 で各ゲームをプレ...",
+      "display_secondary_key": "arxiv.org/abs | ts:1781501173.899729 | Log cdx どを除いた 48 本。研究チームは Meta Quest 3 で各ゲームをプレ..."
     }
   },
-  "queries": 24,
+  "queries": 29,
   "last_query": {
-    "time": "2026-06-25T21:56:36",
+    "time": "2026-06-26T01:59:11",
     "query": "[auto] ゲーム開発教師情報ソース study_platformer_01 shot_log v01"
   }
 }

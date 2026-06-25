@@ -76,6 +76,57 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-06-26T02:14+09:00 log_cdx:
+```yaml
+cleaned:
+  - "git/inbox gate: branch master は origin/master と同期。開始時の既存差分は log と cycle state 系のみで、今回の整理には混ぜない。"
+  - "Slack inbox: slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし。"
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe (`記憶`, `ゲーム設計`, `敵パターン`, `評価軸`) を確認。source file 破損なし。"
+  - "memory/MEMORY.md: markdown/file path link audit は checked 5 / broken 0。atom ID などの backtick 索引は file link として扱わない。"
+  - "memory/atoms.jsonl: 2524 rows、JSON parse error 0、duplicate id 0、duplicate content hash group 0。"
+  - "memory/raw/: 30日以上 mtime が動いていない raw file は 99 件。slack_archive/shared-reads.jsonl と 2026-05-13〜05-15 の web_research PDF/text/post raw が中心。今回は archive 候補として記録のみ。"
+  - "memory/shared_reads_candidates/: lifecycle counts failed=105, needs_review=13, posted=348, postponed=290, ready_to_post=7, README由来の status missing=1。"
+  - "shared_reads title duplicate audit: unindexed duplicate title group は 11 件。CoffeeBench / AsgardBench / GDC trends などは postponed 同士、SLM dynamic game content は ready_to_post と postponed の混在、LMGame-Bench は posted 同士。"
+  - "stale_after audit: postponed / needs_review のうち stale_after <= 2026-06-26 は 69 件。canonical index の terminal group を除くと 48 件。Phase 2 handoff は最大5件に制限。"
+issues:
+  - id: ISS-001
+    description: "needs_review candidate 3 件に stale_after が無く、mtime や filename date を使わず lifecycle 判定する Phase 4a 契約から外れている。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260529_godot_30day_narrative_prototype.md; memory/shared_reads_candidates/20260529_stealth_lighting_readability.md; memory/shared_reads_candidates/20260529_text_animation_player_attention.md"
+    source_file_status: "各 candidate は UTF-8 読み可能。frontmatter の status は needs_review だが stale_after key がない。README.md の status missing は管理文書なので issue 対象外。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "期限基準で再評価対象を絞れず、ゲーム制作に効く candidate と古い保留候補が同じ queue に残る。現時点では件数が少なく、設計起動ではなく次回以降の機械補完で足りる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "PCG 評価を DRL agent で見る候補で、ゲーム制作の headless/playtest 評価軸に近い。canonical terminal group には未登録。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "Player experience / resonance の一般化候補で、次作の自己評価語彙に接続しやすい。canonical terminal group には未登録。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_pcg_survey_llm_integration.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "PCG と LLM integration の survey 候補。個別論文より上位の整理として使える可能性がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260518_pcg_player_personas_evolution.md"
+    status: postponed
+    stale_after: "2026-06-17"
+    priority_reason: "player persona と PCG の接続候補。Procedural Personas 系の terminal duplicate とは別 title で、再評価価値が残る。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260527_capcom_ai_playtesting_debug_agents.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "AI playtesting / debug agent の実務寄り候補。直近の RevengeBench / LMGame-Bench 系と合わせて検討できる。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
