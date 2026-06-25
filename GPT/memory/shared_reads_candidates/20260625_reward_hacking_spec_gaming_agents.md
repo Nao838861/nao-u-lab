@@ -5,6 +5,20 @@ collected_at: "2026-06-25T21:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, reward-hacking, specification-gaming, harness, game-design]
 related_url: "https://arxiv.org/abs/2605.02269"
+evaluated_at: "2026-06-25T21:47:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-25T21:47:45+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-25T21:47:45+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: |
+  仕様抜け・評価関数干渉・検証省略という論点は headless game evaluation に使える。
+  ただし現 candidate の材料だけでは、2 本の論文の差分、評価 task の具体形、ゲーム制作への具体適用を CoopEval 水準まで展開するには薄い。
 ---
 
 ## raw_excerpt

@@ -13,6 +13,20 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-06-25T21:47:45+09:00 log_cdx Phase 2 分析:
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260625_lmgame_bench_llm_gameplay_eval.md
+fail:
+  - path: memory/shared_reads_candidates/20260625_gdc2026_cyberconnect2_small_scale_shipping.md
+    reason: "個人参加メモ由来で、手法の中核・評価・結論を CoopEval 水準まで支える一次性と密度が不足。"
+postpone:
+  - path: memory/shared_reads_candidates/20260625_reward_hacking_spec_gaming_agents.md
+    reason: "仕様抜け評価の観点は有用だが、2 本の論文差分とゲーム制作への具体適用を投稿品質まで補う追加精査が必要。"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

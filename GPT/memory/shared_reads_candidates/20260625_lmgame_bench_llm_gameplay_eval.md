@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2505.15146"
 collected_at: "2026-06-25T21:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-agent, gameplay-evaluation, harness, playtesting]
+evaluated_at: "2026-06-25T21:47:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-25T21:47:45+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-25T21:47:45+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: |
+  LLM をゲーム内で評価する際の問題設定、Gym 風 API、perception / memory scaffold、prompt variance と contamination への対処が抽出できる。
+  自作ゲームの AI playtest harness 設計に直結し、評価対象と入力表現を分離する実装判断へ落とせる。
+suggested_post_outline:
+  overview_angle: "LLM がゲームを遊べるかではなく、ゲームを LLM agent 評価として成立させる条件を整理する"
+  analysis_axis: "perception・memory・planning の分解、Gym 風 API、prompt variance と contamination 対策、既存ゲーム評価の限界"
+  application_target: "自作ゲームの自動プレイテスト、LLM bot 評価、ログ設計、観測表現の標準化"
+  pros_cons: "評価ハーネス設計の観点は強い一方、個別ゲームの面白さ評価へは直接転用しにくい"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

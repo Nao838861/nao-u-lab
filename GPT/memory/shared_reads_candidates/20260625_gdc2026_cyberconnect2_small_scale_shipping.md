@@ -4,6 +4,20 @@ url: "https://www.invisiblefriends.net/gdc-2026-a-personal-account/"
 collected_at: "2026-06-25T21:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [postmortem, production, indie-development, training, publishing]
+evaluated_at: "2026-06-25T21:47:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-25T21:47:45+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-25T21:47:45+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: |
+  小規模出荷経験、若手支援、価格設定などの実務論点は参考になる。
+  ただし個人参加メモ由来で、手法の中核・評価・結論を 4000 字級の shared-reads 品質で支えるには一次性と密度が不足している。
 ---
 
 ## raw_excerpt
