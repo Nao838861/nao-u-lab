@@ -30,6 +30,18 @@ notes:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-06-26T01:55+09:00 log_cdx:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782406546615099
+    char_count: 4494
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿は文字化けしたため ts=1782406481.267569 を削除し、UTF-8 ファイル経由で同一本文を再投稿した。"
+  - "投稿本文は 1 candidate 1 message、項目順固定、URL 末尾配置。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
