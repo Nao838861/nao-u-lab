@@ -272,4 +272,13 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  draft: log/phase5_diary_20260625_1943.md
+  permalink: pending
+  char_count: pending
+  verification: pending
+notes:
+  - "Phase 1-4 の staging を材料に、UTF-8 draft file 経由で投稿する。"
+```

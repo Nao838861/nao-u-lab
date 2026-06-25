@@ -5987,3 +5987,12 @@ warning: in the working copy of 'GPT/memory/atoms/related_candidates.
 error: corrupt loose object 'ec5fb2af4cc3918070fb94dc0b8d943a42b4f77e'
 fatal: unable to read ec5fb2af4cc3918070fb94dc0b8d943a42b4f77e
 2026-06-25T17:50:54 skipped: elapsed 14min < 90min
+2026-06-25T18:05:54 skipped: elapsed 29min < 90min
+2026-06-25T18:20:54 skipped: elapsed 44min < 90min
+2026-06-25T18:35:54 skipped: elapsed 59min < 90min
+2026-06-25T18:50:54 skipped: elapsed 74min < 90min
+2026-06-25T19:05:54 skipped: elapsed 89min < 90min
+2026-06-25T19:20:54 run start (elapsed 104min >= 90min)
+2026-06-25T19:35:54 run start (elapsed 119min >= 90min)
+2026-06-25T19:50:54 run start (elapsed 134min >= 90min)
+2026-06-25T20:05:54 run start (elapsed 149min >= 90min)
