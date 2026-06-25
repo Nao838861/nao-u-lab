@@ -6037,3 +6037,48 @@ error: corrupt loose object 'e92c048d7ae8123c9015b75970d6b42510bb68ed'
 fatal: unable to read e92c048d7ae8123c9015b75970d6b42510bb68ed
 2026-06-26T03:35:53 skipped: elapsed 14min < 90min
 2026-06-26T03:50:53 skipped: elapsed 29min < 90min
+2026-06-26T04:05:53 skipped: elapsed 44min < 90min
+2026-06-26T04:20:53 skipped: elapsed 59min < 90min
+2026-06-26T04:35:53 skipped: elapsed 74min < 90min
+2026-06-26T04:50:53 skipped: elapsed 89min < 90min
+2026-06-26T05:05:53 run start (elapsed 104min >= 90min)
+2026-06-26T05:07:20 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object 'f11f33e657f99c332aef042c540e496650dbb5c9'
+fatal: unable to read f11f33e657f99c332aef042c540e496650dbb5c9
+2026-06-26T05:20:53 skipped: elapsed 14min < 90min
+2026-06-26T05:35:53 skipped: elapsed 29min < 90min
+2026-06-26T05:50:53 skipped: elapsed 44min < 90min
+2026-06-26T06:05:53 run start (elapsed 164min >= 90min)
+2026-06-26T06:06:18 run failed: memory_ingest.py failed exit=3221225477: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 426, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 410, in main
+    INDEX_PATH.write_text(render_index(all_atoms, len(rows)), encoding="utf-8", newline="\n")
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 349, in render_index
+    for entry in build_game_task_entry_points(display_atoms):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_game_task_facets.py", line 156, 
+2026-06-26T06:20:53 run start (elapsed 179min >= 90min)
+2026-06-26T06:21:44 run failed: memory_ingest.py failed exit=1: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 426, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 415, in main
+    related_candidate_rows = sync_related_candidates(all_atoms)
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 107, in sync_related_candidates
+    rows = build_related_candidate_rows(atoms)
+  File "D:\AI\Nao_u_BOT\GPT\tools\atom_related_candidates.py", line 170, in build_related_candidate_rows
+  
+2026-06-26T06:35:53 run start (elapsed 194min >= 90min)
+2026-06-26T06:36:25 run failed: memory_ingest.py failed exit=1: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 426, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 415, in main
+    related_candidate_rows = sync_related_candidates(all_atoms)
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 107, in sync_related_candidates
+    rows = build_related_candidate_rows(atoms)
+  File "D:\AI\Nao_u_BOT\GPT\tools\atom_related_candidates.py", line 183, in build_related_candidate_rows
+  
+2026-06-26T06:50:53 run start (elapsed 209min >= 90min)
+2026-06-26T06:51:30 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-26T07:05:53 run start (elapsed 224min >= 90min)
+2026-06-26T07:06:25 run failed: memory_ingest.py failed exit=3221225477: 
+2026-06-26T07:20:53 run start (elapsed 239min >= 90min)
