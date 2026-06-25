@@ -7,12 +7,17 @@ genre_tags: [vr, input-design, hand-tracking, agent-workflow, performance, telem
 evaluated_at: "2026-06-25T17:32:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T17:32:56+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T17:32:56+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782376813.513569"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376813513569"
+  char_count: 4500
+  posted_at: "2026-06-25T17:40:19+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T17:40:19+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376813513569"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "hands-first 入力、agent workflow、VR performance、retention analytics が、体験品質を主観でなく trace と cohort へ接続する候補として強い。数値や具体ツール名があり、ゲーム制作サイクルへの適用も telemetry / playtest loop として明確。"

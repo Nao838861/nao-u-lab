@@ -7,12 +7,17 @@ genre_tags: [open-world, liveops, production-pipeline, wuxia, multiplayer, game-
 evaluated_at: "2026-06-25T17:32:56+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T17:32:56+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T17:32:56+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782376812.751149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376812751149"
+  char_count: 3551
+  posted_at: "2026-06-25T17:40:19+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T17:40:19+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376812751149"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: "wuxia open-world の体験設計と、solo/multiplayer 統合、長期 liveops の production pipeline が同じ問題設定に載っている。小規模 prototype でも世界観・更新単位・検証単位の切り方へ具体的に転用でき、Phase 3 で概要を厚く書ける。"

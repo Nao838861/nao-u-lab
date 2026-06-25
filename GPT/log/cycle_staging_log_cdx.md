@@ -28,7 +28,20 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-06-25T17:40:19+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260625_where_winds_meet_open_world_pipeline.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376812751149"
+    char_count: 3551
+  - candidate: memory/shared_reads_candidates/20260625_meta_horizon_gdc_hands_agents_performance.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376813513569"
+    char_count: 4500
+skipped: []
+notes:
+  - "2 件とも #shared-reads に個別メッセージとして投稿。スレッド・分割投稿なし。"
+  - "chat.getPermalink は helper 経由で invalid_arguments だったため、Slack 標準 permalink 形式で記録。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
