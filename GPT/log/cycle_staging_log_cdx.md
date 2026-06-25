@@ -79,7 +79,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-06-25T18:04:00+09:00"
+cleaned:
+  - "git gate: master は origin/master と同期済み。既存の log/codex_* と memory/codex_log_cycle_state.json の変更、上位ディレクトリの未追跡バックアップ群は今回対象外として未変更。"
+  - "memory/MEMORY.md: UTF-8 明示読みで確認。markdown link は 0 件、broken link は 0 件。backtick 内の python 実行例 2 件は path ではなくコマンド例として除外。"
+  - "encoding probe: `記憶` / `ゲーム設計` / `敵パターン` は UTF-8 読みで取得可。`評価軸` は索引本文に単語が存在しないだけで、文字化けとは扱わない。"
+  - "memory/atoms.jsonl: 2515 行、JSON parse error 0、duplicate id 0、duplicate content hash 0。"
+  - "memory/raw/: 2026-05-26 以前 mtime のファイルを 93 件確認。内訳は web_research 74、headless_eval 16、game_eval 1、slack_archive 1、sync_state 1。今回はアーカイブ移動なし。"
+  - "memory/shared_reads_candidates/: total 756。posted 344、ready_to_post 7、postponed 287、failed 104、needs_review 13、frontmatter なしは README.md 1 件。posted / failed は再評価 queue から除外する前提で確認。"
+  - "slack inbox: `python tools/slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。handled 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "shared_reads_candidates に同一 title の候補が 81 グループあり、同じ論文・記事が posted / failed / postponed にまたがって残っている。posted / failed を再評価 queue から外す運用はあるが、title-level canonical 判定が候補 lifecycle の前段で効いていない。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/: 例 `Large Language Models in Game Development...` は 9 件、`Goal Playable Patterns...` は 8 件、`One Policy, Infinite NPCs...` は 8 件。`Symbolically Scaffolded Play...` は posted 1 件 + postponed 3 件。"
+    source_file_status: "UTF-8 読み可。frontmatter parse 可能な candidate は status / title / stale_after を取得できた。README.md は説明ファイルのため frontmatter なし。"
+    display_or_tooling_status: "PowerShell 表示では日本語 probe が mojibake したが、Unicode escape probe では source file の UTF-8 読みを確認済み。"
+    why_blocks_game_memory: "同じ外部知見が複数 candidate として残ると、Phase 2 が既投稿済みの題材を再評価し、ゲーム制作に効く新規知見より候補整理へ時間を消費する。posted/failed と postponed が混在するため、次のゲーム制作時にどの解釈が正本かも見えにくい。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-001
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "player experience / resonance はゲーム制作の評価軸に直結し、未投稿なら Phase 2 で価値判定する余地がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "PCG 評価と deep RL agent の組み合わせは、headless evaluation / playable diff 検証に接続できる可能性がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "language-conditioned level blending は、次のステージ設計・敵配置の探索補助として有用かを少数評価する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "同 title に posted が複数あり、再投稿より lifecycle 整理対象として閉じるのが妥当。"
+    recommended_review_action: fail
+  - path: "memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "同 title の posted があり、さらに postponed 重複が複数あるため、Phase 2 では正本確認後に重複候補を閉じる判断を優先。"
+    recommended_review_action: fail
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
