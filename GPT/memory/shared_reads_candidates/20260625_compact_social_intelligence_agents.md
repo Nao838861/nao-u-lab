@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2604.08727"
 collected_at: "2026-06-25T19:44:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, social-games, llm-agent, evaluation, player-modeling]
+evaluated_at: "2026-06-25T19:48:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-25T19:48:04+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-25T19:48:04+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: >-
+  発話・予測・行動 trace を分ける着想はゲーム制作に近いが、候補本文だけでは
+  arena の設計、評価指標、主要結果の粒度が不足している。Phase 3 の概要を
+  CoopEval 水準まで厚くするには、一次論文側で benchmark 構造と結果表を確認したい。
 ---
 
 ## raw_excerpt

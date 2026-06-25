@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2605.23949"
 collected_at: "2026-06-25T19:44:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multiagent, social-dynamics, llm-agent, evaluation]
+evaluated_at: "2026-06-25T19:48:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-25T19:48:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-25T19:48:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-25"
+supersedes: []
+gate_reason: >-
+  reciprocity、reputation、group dynamics の 3 軸と、instruction-tuned /
+  reasoning model の崩れ方という結果があり、協力ゲームや AI 仲間 NPC の
+  評価へ具体的に転用できる。概要・分析・適用の各項目を十分な密度で書ける。
+suggested_post_outline:
+  overview_angle: "LLM agent の社会性を平均スコアではなく、直接互恵・間接互恵・集団力学の崩れ方として評価する枠として紹介する。"
+  analysis_axis: "短期最適化、passive compliance、long-horizon framing が協力維持に与える差を見る。"
+  application_target: "協力ゲーム、AI パーティメンバー、評判や恩義を扱う NPC 関係システムの評価観点。"
+  pros_cons: "メリットは協力崩壊の原因を分類できること。デメリットはゲーム固有の報酬設計に合わせた scenario 化が必要なこと。"
+  verdict_pre: "採用寄りの部分採用。AI 仲間 NPC の評価で、長期協力と評判反応を別ログに分ける。"
 ---
 
 ## raw_excerpt

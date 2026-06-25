@@ -10,7 +10,17 @@
 確認メモ: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。既存 candidate には GDC/Meta 系の 2026-06-25 追加分と、ARES / Mindgames / Orak / RuleSmith / Goal Playable Patterns などの重複候補があったため、未収集の arXiv 一次情報を優先して拾った。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260625_triex_multiview_llm_reasoning_games.md
+  - memory/shared_reads_candidates/20260625_sode_social_dynamics_llm_agents.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260625_compact_social_intelligence_agents.md
+    reason: "発話・予測・行動 trace の着想は有用だが、候補本文だけでは評価設計と主要結果の粒度が足りず、Phase 3 前に一次論文確認が必要。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
