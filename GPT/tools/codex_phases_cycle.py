@@ -84,6 +84,18 @@ def save_state(state: dict[str, Any]) -> None:
     )
 
 
+def is_process_running(pid: int | None) -> bool:
+    if not pid or pid <= 0:
+        return False
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    except Exception:
+        return True
+    return True
+
+
 def acquire_lock() -> bool:
     MEMORY_DIR.mkdir(parents=True, exist_ok=True)
     lock = {
@@ -93,14 +105,22 @@ def acquire_lock() -> bool:
     try:
         fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
     except FileExistsError:
+        existing_pid = None
         try:
             existing = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+            existing_pid = int(existing.get("pid") or 0)
             started_at = datetime.fromisoformat(str(existing.get("started_at", "")))
         except Exception:
             started_at = None
-        if started_at and datetime.now() - started_at < LOCK_STALE_AFTER:
+        if (
+            started_at
+            and datetime.now() - started_at < LOCK_STALE_AFTER
+            and is_process_running(existing_pid)
+        ):
             log(f"lock exists; skipping overlapping run: {LOCK_PATH}")
             return False
+        if started_at and datetime.now() - started_at < LOCK_STALE_AFTER:
+            log(f"stale lock pid not running: pid={existing_pid} path={LOCK_PATH}")
         stale_path = LOCK_PATH.with_suffix(f".stale-{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
         try:
             LOCK_PATH.replace(stale_path)
