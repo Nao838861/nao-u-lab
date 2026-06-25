@@ -7,12 +7,17 @@ genre_tags: [game-design, llm-agent, hidden-information, explainability, evaluat
 evaluated_at: "2026-06-25T19:48:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T19:48:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T19:48:04+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782384847.126309"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782384847126309"
+  char_count: 3822
+  posted_at: "2026-06-25T19:53:58+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T19:53:58+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782384847126309"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
 gate_reason: >-

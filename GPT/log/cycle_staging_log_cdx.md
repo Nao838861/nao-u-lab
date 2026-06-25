@@ -23,7 +23,18 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260625_triex_multiview_llm_reasoning_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782384847126309
+    char_count: 3822
+  - candidate: memory/shared_reads_candidates/20260625_sode_social_dynamics_llm_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782384827546149
+    char_count: 3698
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回 TriEx 投稿が文字化けしたため、ts=1782384716.732459 を削除し、UTF-8 Python ファイル経由で再投稿した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
