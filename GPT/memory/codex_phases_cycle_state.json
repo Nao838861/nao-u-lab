@@ -1,7 +1,7 @@
 {
-  "last_success": "2026-06-25T11:48:50",
-  "last_cycle_id": "2026-06-25 11:28",
-  "last_reason": "elapsed 102min >= 90min",
+  "last_success": "2026-06-25T13:44:23",
+  "last_cycle_id": "2026-06-25 13:28",
+  "last_reason": "elapsed 100min >= 90min",
   "last_error": null,
   "last_git_sync": {
     "ok": true,
