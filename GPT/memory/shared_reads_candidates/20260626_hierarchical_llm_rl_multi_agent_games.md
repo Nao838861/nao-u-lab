@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2606.20014"
 collected_at: "2026-06-26T05:46:31.3483119+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, multi-agent, rl, llm-planning, tactics, combat]
+evaluated_at: "2026-06-26T05:56:01+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-26T05:56:01+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-26T05:56:01+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: "LLM の低頻度戦術判断と RL skill の高頻度実行という制作適用性は高い。ただし現メモでは評価結果の勝率・失敗例・behavior tree / Flat RL との差が薄く、Phase 3 の 4000 字概要に必要な結論密度がまだ足りない。"
 ---
 
 ## raw_excerpt

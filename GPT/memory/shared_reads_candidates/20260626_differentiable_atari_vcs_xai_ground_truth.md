@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2606.22447"
 collected_at: "2026-06-26T05:46:31.3483119+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, xai, emulator, atari, verification, differentiable-simulation]
+evaluated_at: "2026-06-26T05:56:01+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-26T05:56:01+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-26T05:56:01+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: "XAI 検証基盤としての問題設定・bit/pixel exact 評価は明確だが、主眼が Atari emulator と説明可能性評価で、現在のゲーム制作サイクルへ直結する具体場面が弱い。投稿化すると制作適用より基盤技術紹介に寄りやすいため、参照候補に留める。"
 ---
 
 ## raw_excerpt

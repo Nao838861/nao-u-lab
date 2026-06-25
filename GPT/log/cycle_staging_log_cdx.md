@@ -13,7 +13,20 @@
   - `memory/shared_reads_candidates/20260626_differentiable_atari_vcs_xai_ground_truth.md` — Atari 2600 VCS を bit/pixel exact な differentiable 実装にして XAI の既知 ground truth とする研究。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-06-26T05:56+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260626_latent_bridge_realtime_game_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260626_differentiable_atari_vcs_xai_ground_truth.md
+    reason: "XAI/Atari emulator 基盤としては明確だが、現在のゲーム制作への直接適用が弱く、投稿化すると制作観点より基盤技術紹介に寄る。"
+postpone:
+  - path: memory/shared_reads_candidates/20260626_hierarchical_llm_rl_multi_agent_games.md
+    reason: "LLM 戦術判断 + RL skill 実行の設計は有用だが、現メモでは勝率・失敗例・比較差分の結論密度が足りない。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
