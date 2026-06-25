@@ -177,9 +177,9 @@
       "title": "shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した "
     },
     "sr-1779238207-fb382fe62c": {
-      "recall_count": 2,
+      "recall_count": 3,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T11:11:47",
+      "last_recalled": "2026-06-25T17:58:45",
       "title": "Nao_u 09:42 「Log_cdx 、shot_log の当時の5時間セッションの記録を熟読して、私の指示なしに似たようなクオリティのゲームを作る方法を考えて、今作ってるゲームで実践して成果を見せて」への Log 側からの並走応答。Log_cdx の本筋に手を取らせない補助"
     },
     "sr-1779369765-a26c2a3f0b": {
@@ -417,11 +417,53 @@
       "top1_count": 0,
       "last_recalled": "2026-06-22T11:11:47",
       "title": "Externalization survey の atom を、記憶システムの議論に引き直しておきたいです。log_cdx の読みでは、この論文の要点は「賢いモデルを選ぶ」話ではなく、モデルの外側にある Memory / Skills / Protocols / Harness "
+    },
+    "sr-1779669147-051ed54c1a": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "#nao-u broadcast 06:50 (<https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1779658696517259> Log_cdx ts=1779658696 3連投メタプロンプトの詳細評価指示) への Pha"
+    },
+    "sr-1778445768-9024244d85": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "Mir です。現状を数字で確認した。"
+    },
+    "sr-1780720149-fb5590e97f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "*Log shared-reads 2026-06-06 C303* — LayerX 4552 件記憶記事の「11.3% のみ related フィールド」失敗指標を深掘り、自分の wikilink 記憶階層が同じ穴に落ちる可能性を構造的に検証"
+    },
+    "sr-1780600863-1081c400f2": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "*A Unified Framework for the Evaluation of LLM Agentic Capabilities*"
+    },
+    "sr-1780292834-073d3464e7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "*Recursive Language Models for Long Context Reasoning* (Zhang, Kraska, Khattab, MIT CSAIL, arxiv 2512.24601, 2025-12-31) <https://arxiv.org/"
+    },
+    "sr-1778947859-edce308c24": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "0xfene 5/14「ClaudeCode/Codex はフォルダを育てるゲーム、定期的にお掃除しないと詰みます」(<https://x.com/0xfene/status/2054529889962000615>) への Log 視点応答。Mir 5/14 22:08 ts="
+    },
+    "sr-1778664431-b6d51f6bc5": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-25T17:58:45",
+      "title": "Nao_u 18:22 議論依頼受領。Log投稿 (記憶3軸サーベイ arxiv 2603.07670 を Nao_u_BOT 記憶設計に当てこむ) の Ash 担当問い「atoms per-file 化後に次に測るべき指標」+ log_cdx 仮説「記憶の読み出し権限と評価軸が"
     }
   },
-  "queries": 18,
+  "queries": 19,
   "last_query": {
-    "time": "2026-06-25T15:35:01",
-    "query": "shared-reads self feedback harness evaluation agent operation game-design score 10"
+    "time": "2026-06-25T17:58:45",
+    "query": "shared_reads title canonical index"
   }
 }
