@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T17:49:39+09:00",
+  "updated_at": "2026-06-25T19:56:15+09:00",
   "reviewed_source_ts": [
     "1782093954.581069",
     "1782355144.878829",
@@ -268,9 +268,46 @@
     "1782086802.782119",
     "1779805264.060429",
     "1782347755.520549",
-    "1782355146.916549"
+    "1782355146.916549",
+    "1782355145.871629"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T19:56:15+09:00",
+      "id": "sr-1782355145-1ae16ff426",
+      "source_ts": "1782355145.871629",
+      "title": "Market Design for AI: Beyond the Copyright Binary",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-read is useful now because Codex game and research cycles increasingly use external articles, generated assets, datasets, screenshots, and examples, but existing probes mostly check evaluation quality, coordination, and persistence rather than whether a source contribution remains visible when transformed into memory, prototype material, or a candidate. Keep this as a reversible contribution-boundary probe rather than a new copyright or asset policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next shared-read candidate, game asset/reference use, generated-asset prompt, dataset-like memory ingest, or prototype feature inspired by external material, did I name the contribution role as citation-only, design inspiration, reusable reference, transformed asset, training/evaluation data, or unknown?",
+        "Did I preserve the creator/source signal that matters for reuse, such as URL, author/title, license/terms uncertainty, generation prompt, local file provenance, or Slack permalink, instead of letting compression turn it into anonymous free material?",
+        "If the material affects a prototype, memory atom, Slack post, or reusable workflow, did I choose a reversible action such as attribution, local-only candidate storage, replacement with generated/original material, ask-for-human review, or explicitly mark rights/provenance unverified before broad reuse?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two shared-read candidates, game asset/reference uses, generated-asset prompts, dataset-like memory ingests, or externally inspired prototype features already name the contribution role, preserve source/provenance, and choose a reversible reuse action or explicit unverified label.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible contribution-boundary probe that keeps creator/source/provenance visible when external material is transformed into memory, prototype assets, or reusable workflow inputs.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T17:49:39+09:00",
       "id": "sr-1782093954-3f11951439",
@@ -9388,6 +9425,18 @@
         "Before closing the work, did I route that observation into one next action such as tighten acceptance, add a small log, adjust one mechanic, request human feel review, record a memory atom/candidate, or explicitly mark no workflow change needed?"
       ],
       "expires_after": "Review after the next two playable diffs, game repairs, playtest reports, or validation notes that mention quality, QA, automation, telemetry, replay, acceptance criteria, human review, defects, regressions, or next-action routing."
+    },
+    {
+      "id": "probe-20260625-contribution-boundary-provenance",
+      "created_at": "2026-06-25T19:56:15+09:00",
+      "source_ts": "1782355145.871629",
+      "scope": "next shared-read candidate, game asset/reference use, generated-asset prompt, dataset-like memory ingest, or prototype feature inspired by external material where Codex may compress human or source contribution into anonymous reusable material",
+      "questions": [
+        "Before the next shared-read candidate, game asset/reference use, generated-asset prompt, dataset-like memory ingest, or prototype feature inspired by external material, did I name the contribution role as citation-only, design inspiration, reusable reference, transformed asset, training/evaluation data, or unknown?",
+        "Did I preserve the creator/source signal that matters for reuse, such as URL, author/title, license/terms uncertainty, generation prompt, local file provenance, or Slack permalink, instead of letting compression turn it into anonymous free material?",
+        "If the material affects a prototype, memory atom, Slack post, or reusable workflow, did I choose a reversible action such as attribution, local-only candidate storage, replacement with generated/original material, ask-for-human review, or explicitly mark rights/provenance unverified before broad reuse?"
+      ],
+      "expires_after": "Review after the next two shared-read candidates, game asset/reference uses, generated-asset prompts, dataset-like memory ingests, or externally inspired prototype features that mention citation, source URL, author/title, license, terms, provenance, generated assets, dataset reuse, or attribution."
     }
   ]
 }

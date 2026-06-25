@@ -37,7 +37,38 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782355145-1ae16ff426
+    source_ts: "1782355145.871629"
+    title: "Market Design for AI: Beyond the Copyright Binary"
+    reason: "外部記事・生成素材・データセット的な記憶取り込み・プロトタイプ素材を扱う機会が増えている一方、既存 probe は品質評価・協調・状態保持に寄っており、変換後も creator/source/provenance を消さない観点が薄い。恒久ルールではなく、次回行動の前に contribution role と再利用境界を確認する一時 probe に留める。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "外部素材や人間生成コンテンツを memory / prototype / reusable workflow input に変換する前に、contribution role、source/provenance、可逆な再利用アクションを確認する probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260625-contribution-boundary-provenance
+    questions:
+      - "次の shared-read candidate、game asset/reference use、generated-asset prompt、dataset-like memory ingest、または外部素材に着想を得た prototype feature の前に、contribution role を citation-only / design inspiration / reusable reference / transformed asset / training/evaluation data / unknown のどれかとして名付けたか。"
+      - "圧縮で anonymous free material にせず、URL、author/title、license/terms uncertainty、generation prompt、local file provenance、Slack permalink など再利用判断に必要な source signal を残したか。"
+      - "prototype、memory atom、Slack post、reusable workflow に影響する場合、attribution、local-only candidate storage、generated/original material への置換、human review 依頼、rights/provenance unverified 明記のような可逆 action を選んだか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
