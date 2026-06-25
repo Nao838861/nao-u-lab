@@ -276,9 +276,9 @@ verification:
 posted:
   channel: "#log"
   draft: log/phase5_diary_20260625_1943.md
-  permalink: pending
-  char_count: pending
-  verification: pending
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782385724477849
+  char_count: 2300
+  verification: ok
 notes:
-  - "Phase 1-4 の staging を材料に、UTF-8 draft file 経由で投稿する。"
+  - "Phase 1-4 の staging を材料に、UTF-8 draft file 経由で #log に投稿した。"
 ```
