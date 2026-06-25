@@ -4,6 +4,22 @@ url: "https://schedule.gdconf.com/session/zenith-diffusion-model-driven-map-gene
 collected_at: "2026-06-26T03:44:26+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-tools, map-generation, diffusion-models, technical-art, production-workflow]
+evaluated_at: "2026-06-26T03:50:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-26T03:50:54+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-26T03:50:54+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: >-
+  制作適用性は高く、3D 環境から walkable area と地図用 stylized layers を作る発想は
+  探索型プロトタイプの道具化に直結する。ただし現候補は GDC セッション概要ベースで、
+  実際の出力例、評価、artist feedback の具体、失敗条件が不足しており、CoopEval 水準の
+  4000 字概要を信頼して書くには根拠が薄い。
 ---
 
 ## raw_excerpt

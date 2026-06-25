@@ -9,7 +9,15 @@
 - collected: `memory/shared_reads_candidates/20260626_zenith_diffusion_map_generation.md` — GDC 2026 の Blizzard 講演。3D 環境から top-down map の walkable area と stylized layers を生成する diffusion + procedural geometry pipeline の候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260626_zenith_diffusion_map_generation.md
+    reason: "制作適用性は高いが、GDC セッション概要のみで実出力・評価・artist feedback の具体が不足し、4000 字級の概要根拠が薄い。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
