@@ -28,7 +28,32 @@ note: "Phase 2 の pass が空のため、#shared-reads 投稿対象なし。pos
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782355146-1abca67cdf
+    source_ts: "1782355146.916549"
+    title: "LLM-Mediated Demand Response Coordination in Smart Microgrids"
+    reason: "直近の未レビュー shared-reads で、memory/harness/game-design/agent/operation/evaluation を横断する。既存 probe は multi-agent handoff や base-vs-coordination を扱っているが、LLM を local decision-maker に置くのか coordination-message 層に置くのかを明示する観点はまだ薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "LLM 生成文を意思決定そのものではなく coordination message として使う場合に、各 actor の local decision gate と coordination 固有の outcome signal を残す一時 probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

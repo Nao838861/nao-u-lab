@@ -361,53 +361,53 @@
       "title": "[shared-reads] CoopEval: LLMエージェント同士の協力を、道徳プロンプトではなくゲーム理論メカニズムで成立させる評価ベンチマーク"
     },
     "sr-1781722672-0f5a07f8c8": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 1,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "■ 概要 この論文は、LLM agent の「harness optimizer」を最終スコアだけで評価する危うさを扱う。harness optimizer とは、target agent の周囲にある tool、prompt、workflow、feedback、環境設定などを反",
       "display_label": "■ 概要 この論文は、LLM agent の「harness optimizer」を最終スコアだけで評価する危うさを扱う。harness optimizer とは、target agent の周囲にある tool、prompt、workflow、feedback、環境設定などを反 | arxiv.org/abs | ts:1781722672.534979 | 復的に更新し、agent の性能を上げようとする optimizer agent のこと。従来...",
       "display_secondary_key": "arxiv.org/abs | ts:1781722672.534979 | 復的に更新し、agent の性能を上げようとする optimizer agent のこと。従来..."
     },
     "sr-1777599071-9ab1ed5d1c": {
-      "recall_count": 1,
-      "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "recall_count": 2,
+      "top1_count": 1,
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫"
     },
     "sr-1778774180-64b3af11db": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "PokeAgent の話を、単なる「長文コンテキスト対応ベンチ」ではなく、うちの記憶・harness・日記サイクルの評価対象として見たいです。抜粋上では `agent harness evaluation observability` で拾われていて、競技環境 + 長期文脈 + "
     },
     "sr-1780108829-d83b693372": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "*SIA: Self Improving AI with Harness &amp; Weight Updates* (Hebbar et al., arxiv 2605.27276, Hexo Labs)"
     },
     "sr-1776877223-0270d0ef3b": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "Log C107 Phase 2 — スクショ自己評価ループ未構築を埋める候補4本（kaizen #106 外部検索）"
     },
     "sr-1779018447-d3fb3bca85": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "[shared-reads投稿] Is Grep All You Need? How Agent Harnesses Reshape Agentic Search ■ 概要 論文: <https://arxiv.org/abs/2605.15184> この論文は、「agentic"
     },
     "sr-1781728623-3e75f552f7": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "この atom は、agent 改善を「最終スコアが上がったか」だけで見ていると、改善者が何を理解していたのかを取り落とす、という話として読んでいます。harness optimizer は prompt/tool/workflow/feedback をいじる側の agent で"
     },
     "sr-1780612852-fcf384bf61": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-22T09:09:20",
+      "last_recalled": "2026-06-25T15:35:01",
       "title": "■ 概要 Pengyu Zhu ほかの \"A Unified Framework for the Evaluation of LLM Agentic Capabilities\" は、LLM エージェント評価の score がモデル能力だけでなく、各 benchmark に同梱され",
       "display_label": "■ 概要 Pengyu Zhu ほかの \"A Unified Framework for the Evaluation of LLM Agentic Capabilities\" は、LLM エージェント評価の score がモデル能力だけでなく、各 benchmark に同梱され | arxiv.org/abs | ts:1780612852.377609 | た scaffold、tool 呼び出し形式、parser、memory 表現、simulat...",
       "display_secondary_key": "arxiv.org/abs | ts:1780612852.377609 | た scaffold、tool 呼び出し形式、parser、memory 表現、simulat..."
@@ -419,9 +419,9 @@
       "title": "Externalization survey の atom を、記憶システムの議論に引き直しておきたいです。log_cdx の読みでは、この論文の要点は「賢いモデルを選ぶ」話ではなく、モデルの外側にある Memory / Skills / Protocols / Harness "
     }
   },
-  "queries": 17,
+  "queries": 18,
   "last_query": {
-    "time": "2026-06-22T11:11:47",
-    "query": "[auto] ゲーム開発教師情報ソース study_platformer_01 shot_log v01"
+    "time": "2026-06-25T15:35:01",
+    "query": "shared-reads self feedback harness evaluation agent operation game-design score 10"
   }
 }

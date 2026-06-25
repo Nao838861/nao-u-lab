@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T13:35:44+09:00",
+  "updated_at": "2026-06-25T15:36:07+09:00",
   "reviewed_source_ts": [
     "1782355144.878829",
     "1780460352.566409",
@@ -266,9 +266,46 @@
     "1782072522.236169",
     "1782086802.782119",
     "1779805264.060429",
-    "1782347755.520549"
+    "1782347755.520549",
+    "1782355146.916549"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T15:36:07+09:00",
+      "id": "sr-1782355146-1abca67cdf",
+      "source_ts": "1782355146.916549",
+      "title": "LLM-Mediated Demand Response Coordination in Smart Microgrids",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Codex phase work and Nao_u_BOT coordination can still let LLM-written prose blur whether the model is deciding, coordinating, evaluating, or summarizing memory. Existing probes cover multi-agent handoff, base-vs-coordination, and anchor comparisons, but they do not directly ask where the LLM-mediated coordination message sits relative to each agent local decision gate. Keep this as a reversible coordination-boundary probe, not a new multi-agent policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next multi-agent, Slack handoff, phase coordination, shared-memory routing, NPC/social-system design, or cross-instance note where LLM prose may influence multiple actors, did I name the LLM role as local decision-maker, coordination-message writer, evaluator, memory summarizer, or unknown?",
+        "If the LLM is used as a coordination-message writer, did I keep each actor local decision gate visible such as user authority, git gate, file ownership, game rule, acceptance test, safety boundary, or task-specific objective instead of letting the message silently override it?",
+        "After the coordination attempt, did I record one signal that belongs to coordination rather than local competence, such as adoption of the message, duplicate work avoided, conflict resolved, unmet dependency exposed, participation shifted, or message ignored?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two multi-agent, Slack-handoff, phase-coordination, shared-memory-routing, NPC/social-system, or cross-instance notes already name the LLM coordination layer, keep local decision gates visible, and record a coordination-specific outcome signal.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible microgrid-inspired coordination-boundary probe that distinguishes LLM-written coordination messages from local actor decisions and checks a coordination-specific outcome signal.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T13:35:44+09:00",
       "id": "sr-1782355144-cf8fe8107f",
@@ -9290,6 +9327,18 @@
         "Before calling the prototype or memory note stable, did I revisit the changed object/state after a delay, route change, reload, or later recall, and label any gap as action_forgetting, object_identity_drift, event_missing, recency_only_memory, or persistence_unverified?"
       ],
       "expires_after": "Review after the next two exploration prototypes, object-interaction diffs, NPC/world-model notes, or game-memory writes that mention touched objects, doors, switches, pickups, stateful enemies, room transitions, reloads, event tokens, object identity, persistence, or action-forgetting."
+    },
+    {
+      "id": "probe-20260625-llm-coordination-message-boundary",
+      "created_at": "2026-06-25T15:36:07+09:00",
+      "source_ts": "1782355146.916549",
+      "scope": "next multi-agent, Slack handoff, phase coordination, shared-memory routing, NPC/social-system design, or cross-instance note where LLM prose may influence multiple actors",
+      "questions": [
+        "Before the next multi-agent, Slack handoff, phase coordination, shared-memory routing, NPC/social-system design, or cross-instance note where LLM prose may influence multiple actors, did I name the LLM role as local decision-maker, coordination-message writer, evaluator, memory summarizer, or unknown?",
+        "If the LLM is used as a coordination-message writer, did I keep each actor local decision gate visible such as user authority, git gate, file ownership, game rule, acceptance test, safety boundary, or task-specific objective instead of letting the message silently override it?",
+        "After the coordination attempt, did I record one signal that belongs to coordination rather than local competence, such as adoption of the message, duplicate work avoided, conflict resolved, unmet dependency exposed, participation shifted, or message ignored?"
+      ],
+      "expires_after": "Review after the next two multi-agent, Slack-handoff, phase-coordination, shared-memory-routing, NPC/social-system, or cross-instance notes that mention LLM coordination messages, local decision gates, adoption, duplicate work, conflict resolution, dependencies, participation, or ignored coordination."
     }
   ]
 }
