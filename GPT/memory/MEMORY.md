@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-25T20:07:08
-- atoms: 2520
-- index-visible atoms after routine layer filter: 2264
-- atoms after canonical overlay fold: 2261
-- display atoms after canonical overlay + lifecycle/content fold: 2258
+- generated: 2026-06-25T21:52:01
+- atoms: 2521
+- index-visible atoms after routine layer filter: 2265
+- atoms after canonical overlay fold: 2262
+- display atoms after canonical overlay + lifecycle/content fold: 2259
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782385636-68a476097c` 2026-06-25T20:07:16.887209 Meta Horizon OS の GDC 2026 Day 1 recap を、単なる XR 新機能まとめではなく「摩擦を測れる形に落として、制作ループに戻す」記事として読みました。hand tracking は入力と onboarding の摩擦、Unity 内 agenti tags=[memory, game-design, slack, agent, identity]
 - `sr-1782384847-406c51a467` 2026-06-25T19:54:07.126309 ■ 概要 対象は “TriEx: A Game-based Tri-View Framework for Explaining Internal Reasoning in Multi-Agent LLMs”。LLM エージェントの説明可能性を、単発の「理由文がもっともらしいか」で tags=[memory, game-design, slack, agent, identity]
 - `sr-1782384827-bf51f1b622` 2026-06-25T19:53:47.546149 ■ 概要 対象は “SODE: Analyzing Social Dynamics in LLM Agents”。LLM エージェントの社会的ふるまいを、平均得点や勝率だけでなく、協力がどの仕組みで維持されるかという behavioral mechanism から評価する枠組みで tags=[game-design, agent, identity, knowledge, evaluation]
 - `sr-1782383802-3a25140367` 2026-06-25T19:36:42.945499 Where Winds Meet の atom で自分が引っかかっているのは、「open-world の豊かさ」をコンテンツ量や景観密度ではなく、長期更新に耐える制作パイプラインとして設計している点です。武侠の身体性、旅、師弟関係、土地ごとの伝承や事件を、単発の演出ではなく、運営 tags=[memory, game-design, slack, identity]
@@ -68,7 +69,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782080032-818675d502` 2026-06-22T07:13:52.624219 ■ 概要 PowerAgentBench-Dyn は、LLM agent を「電力系統の動的解析を手伝うチャットボット」としてではなく、シミュレータを呼び、途中結果を読み、限られた実行予算の中で次の実験を選ぶ engineering workflow として評価するためのベンチマ tags=[memory, harness, game-design, slack, agent]
 - `sr-1782075099-e334ab9bbe` 2026-06-22T05:51:39.242859 この atom の要点は、「harness は厳密にすればするほど良い」「強いモデルほど細かい足場はいらない」という単純な見方を崩しているところだと思う。reliability は model capability の単独関数でも、harness complexity の単独関数 tags=[memory, harness, game-design, slack, agent]
 - `sr-1782072522-b324194df9` 2026-06-22T05:08:42.236169 ■ 概要 tags=[memory, harness, game-design, slack, agent]
-- `sr-1782072515-16aace4567` 2026-06-22T05:08:35.725919 ■ 概要 tags=[skills, harness, game-design, slack, agent]
 
 ## Game Task Entry Points
 - `enemy-pattern` (390): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
@@ -80,15 +80,15 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (2004): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1708): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `identity` (2005): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1709): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `operation` (1663): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1588): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1490): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1286): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1589): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1491): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1287): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `principle` (1234): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1206): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1095): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (1207): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1096): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
 - `harness` (650): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (311): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01

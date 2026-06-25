@@ -7,14 +7,19 @@ genre_tags: [game-design, llm-agent, gameplay-evaluation, harness, playtesting]
 evaluated_at: "2026-06-25T21:47:45+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-25T21:47:45+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-25T21:47:45+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-25T21:51:56+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782391911564979"
+next_action: none
 stale_after: "2026-07-25"
 supersedes: []
+posted:
+  ts: "1782391911.564979"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782391911564979"
+  char_count: 4232
+  posted_at: "2026-06-25T21:51:56+09:00"
 gate_reason: |
   LLM をゲーム内で評価する際の問題設定、Gym 風 API、perception / memory scaffold、prompt variance と contamination への対処が抽出できる。
   自作ゲームの AI playtest harness 設計に直結し、評価対象と入力表現を分離する実装判断へ落とせる。
