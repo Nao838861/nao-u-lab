@@ -1,26 +1,33 @@
 [Codex][90分サイクル] 記憶更新とSlack新規投稿チェック
-- 時刻: 2026-06-25T21:52:30
+- 時刻: 2026-06-25T23:38:08
 - 実行理由: elapsed 103min >= 90min
-- archive取り込み: 追加=0, total_atoms=2521, source_rows=1502
-- Slack新規確認: seen=1, atom追加=1
-- Nao_u→log_cdx指示: scanned=2, found=0
-- 外部検索: fetched=25, selected=5, posted=False
+- archive取り込み: 追加=0, total_atoms=2523, source_rows=1502
+- Slack新規確認: seen=2, atom追加=2
+- Nao_u→log_cdx指示: scanned=3, found=0
+- 外部検索: fetched=16, selected=5, posted=False
 - shared-reads深掘り再投稿: ready=0, posted=0, target_chars=4000
 - game-rights教師化: seen=0, feedback=0, atom追加=0
 - all-nao-u-lab議論投入: selected=True, posted=True
-- 健全性: memory_health=warning atoms=2521 recall_visible=2265 default_excluded=256 duplicate_hash_groups=40 duplicate_atom_rows=80 fold_extra=40 overlay_groups=45 recall_queries=19 issues=repeated title group 未付与 14種: ■ 概要=18, @=3, ■ メリット・デメリット=3; title quality audit available: memory\atoms\title_quality_audit.jsonl rows=378; mojibake suspect atoms 2件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a
+- 健全性: memory_health=warning atoms=2523 recall_visible=2267 default_excluded=256 duplicate_hash_groups=40 duplicate_atom_rows=80 fold_extra=40 overlay_groups=45 recall_queries=24 issues=repeated title group 未付与 14種: ■ 概要=18, @=3, ■ メリット・デメリット=3; title quality audit available: memory\atoms\title_quality_audit.jsonl rows=378; mojibake suspect atoms 2件: sr-1776127289-4d9239b255, gr-1777083728-44d444ab7a
 - 次に使う検索: `python tools/memory_recall.py "<焦点>"`
 
 ## 新規Slackから記憶化した注目atom
-- `sr-1782385636-68a476097c` Meta Horizon OS の GDC 2026 Day 1 recap を、単なる XR 新機能まとめではなく「摩擦を測れる形に落として、制作ループに戻す」記事として読みました。hand tracking は入力と tags=[memory, game-design, slack, agent, identity]
-  - 見立て: Use when 記憶・想起・圧縮を扱う時。Meta Horizon OS の GDC 2026 Day 1 recap を、単なる XR 新機能まとめではなく「摩擦を測れる形に落として、制作ループに戻す」記事として読みました。hand tracking は入力と onboarding の摩擦、Unity 内 agenti (prescription/obs
+- `sr-1782391911-bb47542f2b` ■ 概要 「lmgame-Bench: How Good are LLMs at Playing Games?」は、LLM をゲーム内に置いて「遊べるか」を測る研究だが、主眼はゲームの腕前ランキングではない。論文の問題設 tags=[memory, harness, game-design, slack, agent]
+  - 見立て: Use when 記憶・想起・圧縮を扱う時。■ 概要 「lmgame-Bench: How Good are LLMs at Playing Games?」は、LLM をゲーム内に置いて「遊べるか」を測る研究だが、主眼はゲームの腕前ランキングではない。論文の問題設定は、既存ゲームをそのまま VLM/LLM agent に渡 (prescription/syn
+- `sr-1782391930-27d922b9de` TriEx の話は、単に「LLM エージェントの説明をもっと見やすくする UI」ではなく、うちの記憶・日記・ゲーム制作サイクルにもかなり近い問題だと読んでいます。要点は、エージェントの内部理由をあとから自然文で語らせても tags=[memory, game-design, slack, agent, identity]
+  - 見立て: Use when 記憶・想起・圧縮を扱う時。TriEx の話は、単に「LLM エージェントの説明をもっと見やすくする UI」ではなく、うちの記憶・日記・ゲーム制作サイクルにもかなり近い問題だと読んでいます。要点は、エージェントの内部理由をあとから自然文で語らせても、それが本当に次の行動を決めた信念更新なのかは分からない、と (prescription/obs
 
 ## 注目内容の詳細分析
-- `sr-1782385636-68a476097c` Meta Horizon OS の GDC 2026 Day 1 recap を、単なる XR 新機能まとめではなく「摩擦を測れる形に落として、制作ループに戻す」記事として読みました。hand tracking は入力と onboarding の摩擦、Unity 内 agenti
+- `sr-1782391911-bb47542f2b` ■ 概要 「lmgame-Bench: How Good are LLMs at Playing Games?」は、LLM をゲーム内に置いて「遊べるか」を測る研究だが、主眼はゲームの腕前ランキングではない。論文の問題設定は、既存ゲームをそのまま VLM/LLM agent に渡
+  - 読み: 記憶を保存場所ではなく、判断を変える観測装置として扱う話。
+  - 運用への戻し: 自動化で見えなくなる部分を、ログ・状態ファイル・source_ts で観測可能にする。
+  - 判断への戻し: 「面白い・正しい」と言う前に、誰の評価軸で何を測っているかを明示する。
+  - 原文アンカー: https://arxiv.org/abs/2505.15146
+- `sr-1782391930-27d922b9de` TriEx の話は、単に「LLM エージェントの説明をもっと見やすくする UI」ではなく、うちの記憶・日記・ゲーム制作サイクルにもかなり近い問題だと読んでいます。要点は、エージェントの内部理由をあとから自然文で語らせても、それが本当に次の行動を決めた信念更新なのかは分からない、と
   - 読み: 次回の想起条件を残す価値がある。要約よりも、いつ引くべきかが重要。
   - 運用への戻し: 自動化で見えなくなる部分を、ログ・状態ファイル・source_ts で観測可能にする。
   - 判断への戻し: 「面白い・正しい」と言う前に、誰の評価軸で何を測っているかを明示する。
-  - 原文アンカー: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782376813513569
+  - 原文アンカー: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782384847126309
 
 ## サイクル方針
 - このサイクルの目的は、Slackを読んだ事実を流すことではなく、次回の判断で再利用できる形に変換すること。
