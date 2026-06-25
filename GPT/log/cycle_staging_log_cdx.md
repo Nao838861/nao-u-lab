@@ -45,6 +45,34 @@ notes:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-06-26T02:04+09:00 log_cdx:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782376813-9e8b2b5adc
+    source_ts: "1782376813.513569"
+    title: "Meta Horizon OS GDC 2026 Day 1: hands, agents, performance, retention analytics"
+    reason: "未レビューの high-score shared-reads のうち、入力摩擦・開発摩擦・実機 performance・retention/operations を同じ開発ループで見る点が、次回の game prototype / browser playtest / performance note の質を小さく改善できるため。PowerAgentBench-Dyn と alem は既存 probe と重複が強いため今回は見送った。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "player input/onboarding、developer workflow/setup、runtime performance、content/update pipeline、operations/retention signal を混ぜず、prototype 観測を friction layer ごとに 1 cue + 1 reversible next action へ戻す一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

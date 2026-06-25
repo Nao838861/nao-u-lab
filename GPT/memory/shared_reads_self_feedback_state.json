@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-26T00:01:30+09:00",
+  "updated_at": "2026-06-26T02:04:18+09:00",
   "reviewed_source_ts": [
+    "1782376813.513569",
     "1782384847.126309",
     "1782093954.581069",
     "1782355144.878829",
@@ -274,6 +275,42 @@
     "1782391911.564979"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T02:04:18+09:00",
+      "id": "sr-1782376813-9e8b2b5adc",
+      "source_ts": "1782376813.513569",
+      "title": "Meta Horizon OS GDC 2026 Day 1: hands, agents, performance, retention analytics",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Codex game work can still collapse player input friction, developer setup friction, runtime performance friction, and retention/operations signals into a single vague quality note. Existing probes cover quality workflow, playtest traces, and AI evaluation scaffolds, but not the narrower question of which friction layer a prototype observation belongs to before choosing the next fix. Keep this as a reversible friction-layer triage probe, not a new XR or onboarding policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next playable prototype, onboarding change, input-control change, browser/GUI playtest, performance pass, or retention/analytics note, did I name the friction layer as player input or onboarding, developer workflow/setup, runtime performance, content/update pipeline, or operations/retention signal?",
+        "Did I preserve one observable cue for that layer, such as missed input, tutorial hesitation, setup/build failure, frame-time or responsiveness issue, content pipeline delay, retry/drop-off point, or retention proxy, instead of compressing it into a generic quality judgment?",
+        "Before changing mechanics, prompts, memory, tooling, or acceptance criteria, did I route the cue to one reversible next action for that same layer, or explicitly mark cross-layer coupling if the fix depends on another layer?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two prototype, onboarding, input-control, browser/GUI playtest, performance, or retention/analytics notes already name the friction layer, preserve one observable cue, and route the cue to a same-layer reversible next action or explicit cross-layer coupling label.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Meta Horizon OS-inspired friction-layer triage probe that separates player input/onboarding, developer workflow, runtime performance, content/update pipeline, and operations/retention signals before choosing the next prototype or evaluation action.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T00:01:30+09:00",
       "id": "sr-1782391911-bb47542f2b",
@@ -9547,6 +9584,18 @@
         "If the agent result changes a game design, memory note, or acceptance claim, did I label whether the signal is gameplay capability, perception failure, state-representation failure, memory benefit, prompt variance, or possible contamination from known rules/spec notes before treating it as fun or quality evidence?"
       ],
       "expires_after": "Review after the next two playable diffs, AI playtest harnesses, headless/browser agent runs, or game-evaluation memory notes that mention raw screenshots, game-state JSON, board text, action/reward history, reflection memory, prompt variance, random baseline, retries, known rules, specification notes, or contamination."
+    },
+    {
+      "id": "probe-20260626-meta-horizon-friction-layer-triage",
+      "created_at": "2026-06-26T02:04:18+09:00",
+      "source_ts": "1782376813.513569",
+      "scope": "next playable prototype, onboarding change, input-control change, browser/GUI playtest, performance pass, content/update pipeline note, or retention/analytics note where Codex may collapse different friction sources into one vague quality judgment",
+      "questions": [
+        "Before the next playable prototype, onboarding change, input-control change, browser/GUI playtest, performance pass, or retention/analytics note, did I name the friction layer as player input or onboarding, developer workflow/setup, runtime performance, content/update pipeline, or operations/retention signal?",
+        "Did I preserve one observable cue for that layer, such as missed input, tutorial hesitation, setup/build failure, frame-time or responsiveness issue, content pipeline delay, retry/drop-off point, or retention proxy, instead of compressing it into a generic quality judgment?",
+        "Before changing mechanics, prompts, memory, tooling, or acceptance criteria, did I route the cue to one reversible next action for that same layer, or explicitly mark cross-layer coupling if the fix depends on another layer?"
+      ],
+      "expires_after": "Review after the next two prototype/onboarding/input-control/browser-or-GUI-playtest/performance/content-pipeline/retention notes that mention friction, onboarding, input, setup, build, frame time, responsiveness, update cadence, drop-off, retry, retention, or analytics."
     }
   ]
 }
