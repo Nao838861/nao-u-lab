@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T03:53:58+09:00",
+  "updated_at": "2026-06-26T07:57:45+09:00",
   "reviewed_source_ts": [
     "1782376813.513569",
     "1782384847.126309",
@@ -273,9 +273,46 @@
     "1782355146.916549",
     "1782355145.871629",
     "1782391911.564979",
-    "1782406546.615099"
+    "1782406546.615099",
+    "1779972076.823599"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T07:57:45+09:00",
+      "id": "sr-1779972076-23523acc99",
+      "source_ts": "1779972076.823599",
+      "title": "Boghog bullet identity channels: size/color/motion ladder for shmup readability",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Codex game work can still tune projectile difficulty or polish through speed, size, and color while missing whether bullets of different risk or count have distinct player-readable identities. Existing probes cover what projectile speed communicates and whether gameplay-changing state has visible feedback, but they do not directly ask whether motion, size, and color form a compact identity ladder before adding more bullet variants. Keep this as a reversible shmup/readability probe, not a general visual-style rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next shmup, projectile pattern, bullet-hell readability, enemy-shot variant, graze/near-miss, or visual-juice change, did I name the bullet identity each variant should communicate, such as single stray shot, small cluster, dense wave, high-threat shot, safe-to-graze shot, or background decoration?",
+        "Did I assign at least two readable channels among size, color or hue family, motion/animation such as static, wobble, ripple, trail, speed, or layering, instead of changing difficulty or polish through one overloaded parameter?",
+        "If multiple bullet classes are on screen, did I check that the channels separate identity from mere danger intensity and mark any unresolved overlap as readability_unverified, identity_collision, or style_only_change before using the variant as design evidence?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two shmup/projectile/readability notes already name bullet identity, use at least two readable channels, and distinguish identity from danger intensity or mark readability gaps before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Boghog-inspired bullet-identity probe for shmup/projectile work: name what each bullet variant communicates, map it to size/color/motion channels, and check identity collisions before treating visual changes as design evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T03:53:58+09:00",
       "id": "sr-1782406546-adf23e89be",
@@ -9645,6 +9682,18 @@
         "If the result changes design, prompts, memory, or acceptance criteria, did I express the recovered behavior as executable code or a compact checkable rule and test whether it predicts/exploits behavior, or explicitly label noise, implementation failure, or multi-run-needed before making a broad claim?"
       ],
       "expires_after": "Review after the next two enemy-AI, NPC-policy, resource-bot, player-bot, headless-playtest, or game-evaluation notes that mention behavior logs, trajectories, action distance, probe opponents, scripted scenarios, recovered policy, exploit, prediction, arena noise, implementation failure, or multi-run aggregation."
+    },
+    {
+      "id": "probe-20260626-bullet-identity-channel-ladder",
+      "created_at": "2026-06-26T07:57:45+09:00",
+      "source_ts": "1779972076.823599",
+      "scope": "next shmup, projectile pattern, bullet-hell readability, enemy-shot variant, graze/near-miss, or visual-juice change where Codex may tune speed, size, color, or animation without checking whether bullets have distinct player-readable identities",
+      "questions": [
+        "Before the next shmup, projectile pattern, bullet-hell readability, enemy-shot variant, graze/near-miss, or visual-juice change, did I name the bullet identity each variant should communicate, such as single stray shot, small cluster, dense wave, high-threat shot, safe-to-graze shot, or background decoration?",
+        "Did I assign at least two readable channels among size, color or hue family, motion/animation such as static, wobble, ripple, trail, speed, or layering, instead of changing difficulty or polish through one overloaded parameter?",
+        "If multiple bullet classes are on screen, did I check that the channels separate identity from mere danger intensity and mark any unresolved overlap as readability_unverified, identity_collision, or style_only_change before using the variant as design evidence?"
+      ],
+      "expires_after": "Review after the next two shmup/projectile/readability notes that mention bullet classes, shot variants, size, color, hue, wobble, ripple, trail, speed, layering, graze, danger intensity, or readability collisions."
     }
   ]
 }
