@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-25T10:37:36
-- atoms: 2510
-- index-visible atoms after routine layer filter: 2254
-- atoms after canonical overlay fold: 2251
-- display atoms after canonical overlay + lifecycle/content fold: 2248
+- generated: 2026-06-25T12:25:04
+- atoms: 2514
+- index-visible atoms after routine layer filter: 2258
+- atoms after canonical overlay fold: 2255
+- display atoms after canonical overlay + lifecycle/content fold: 2252
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782355146-1abca67cdf` 2026-06-25T11:39:06.916549 ■ 概要 「LLM-Mediated Demand Response Coordination in Smart Microgrids」は、smart microgrid の需要応答を題材に、LLM を multi-agent coordination のどこに置くべきかを検証す tags=[memory, harness, game-design, slack, agent]
+- `sr-1782355145-1ae16ff426` 2026-06-25T11:39:05.871629 ■ 概要 「Market Design for AI: Beyond the Copyright Binary」は、人間が作ったコンテンツを AI 学習に使う市場を、free-for-all か強い知的財産権かという二択では設計できない、と論じる経済モデルの論文である。問題設定は tags=[memory, game-design, slack, knowledge, operation]
+- `sr-1782355144-cf8fe8107f` 2026-06-25T11:39:04.878829 ■ 概要 ActWorld は、interactive world model を「歩き回れる動画生成」から「物体に触れ、その結果を長い rollout の中で保持できる世界モデル」へ進める研究である。既存の world model は、WASD やマウス操作で視点移動、旋回、前 tags=[memory, harness, game-design, slack, identity]
+- `sr-1782351464-f8f98a7406` 2026-06-25T10:37:44.926459 この endless runner の事例、単なる「GPT-4o でゲーム機能を足せた/足せない」の話より、うちの制作サイクルでかなり近い問題を踏んでいるように見えます。論文の観察は、既存 Pygame コードに対して refactoring と gameplay feature tags=[memory, harness, game-design, slack, identity]
 - `sr-1782347755-d8212fbca6` 2026-06-25T09:35:55.520549 ■ 概要 対象は arXiv:2606.21171 “An Exploratory Case Study of LLM-Assisted Refactoring and Gameplay Feature Generation in an Endless Runner Game”。 tags=[memory, harness, game-design, agent, identity]
 - `sr-1782095838-7011f18fdd` 2026-06-22T11:37:18.127939 この GDC 2026 の Quality 講演、単に「QA を早めに入れよう」ではなく、ゲーム制作の複雑さを扱うための運用設計として Quality を見直す話だと受け取りました。最後にバグを拾う部署ではなく、仕様・実装・検証・ライブ運用のあいだに、壊れ方を早く見つけて戻せる経 tags=[memory, harness, game-design, slack, identity]
 - `sr-1782093954-3f11951439` 2026-06-22T11:05:54.581069 ■ 概要 GDC 2026 の講演「From the Ground Up: Rethinking Quality in Games」は、ゲーム開発における Quality を「バグを見つける部署の仕事」から、「複雑化したゲーム制作を成立させるための開発ワークフロー」へ広げ直す話で tags=[memory, skills, harness, game-design, slack]
@@ -65,10 +69,6 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782028326-9c60395b2a` 2026-06-21T16:52:06.402559 Jeff Schomay の Crossword Dungeon 制作記録は、「AI coding assistant でゲーム制作が速くなる」という話より、速くなった後に人間側の詰まりがどこへ移るかの話として読みたいです。コード実装の摩擦が下がると、完成まで一直線になるのではな tags=[memory, harness, game-design, slack, agent]
 - `sr-1782022174-82e1cc7d3e` 2026-06-21T15:09:34.177669 ■ 概要 Jeff Schomay の記事は、AI coding assistant をゲーム制作に使う時の現実的な効き方を、個人制作ゲーム Crossword Dungeon の制作記録として説明している。焦点は「AI でゲームが一瞬で完成する」ではなく、コード実装の時間が短く tags=[memory, harness, game-design, agent, identity]
 - `sr-1782020204-f689b066f3` 2026-06-21T14:36:44.299339 RPG の「本筋ではない沈黙」を LLM で埋める、というこの atom は、単なる台詞生成の話よりも、いま作っているゲームの「反応密度」をどう設計するかに近い話として読みました。メインイベントや大きな感情の山は人間が書くとして、戦闘中の細かい変化、探索中の短い反応、NPC への tags=[memory, skills, game-design, slack, identity]
-- `sr-1782014997-92e3b62b3e` 2026-06-21T13:09:57.231839 ■ 概要 この論文は、RPG の「物語上は存在するが、実装上は沈黙している余白」を LLM で埋めるための小さな実験報告である。対象は Final Fantasy VII Remake と Pokemon。問題設定は、メインストーリーや重要イベントは人間が書いた台詞で強く支えられ tags=[memory, skills, game-design, agent, identity]
-- `sr-1782011214-1d4224af83` 2026-06-21T12:06:54.015409 Beyond Pre-Defined Scripts の話、NPC 会話を「LLM で自由入力できるようになったら没入感が上がる」という単純な線では読まない方がよさそうだと思っています。むしろ重要なのは、プレイヤーが NPC の発話を「ゲーム内の意味ある反応」として読むのか、「A tags=[memory, game-design, slack, agent, identity]
-- `sr-1782009425-ddf184edab` 2026-06-21T11:37:05.838399 GamerAstra の話で自分が引っかかっているのは、「BLV プレイヤー向けに画面を説明する」ではなく、「遊びを奪わない支援量を multi-agent 側でどう調停するか」という設計問題として読める点です。単に OCR や画面認識を当てるだけなら、状態・位置・メニュー・演出 tags=[memory, game-design, slack, agent, identity]
-- `sr-1782007714-bad3e8f707` 2026-06-21T11:08:34.072199 ■ 概要 Beyond Pre-Defined Scripts は、LLM-generated NPC dialogue を「生成できるから面白い」ではなく、プレイヤーがどう知覚し、game experience にどんな利点と副作用を出すかから調べた IUI 2026 pape tags=[memory, game-design, identity, knowledge, evaluation]
 
 ## Game Task Entry Points
 - `enemy-pattern` (390): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
@@ -80,16 +80,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (1995): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1699): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1658): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1578): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1481): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1278): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1231): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1198): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1089): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (647): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (1998): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1703): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1661): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1582): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1485): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1281): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1233): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1202): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1090): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (650): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (311): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01

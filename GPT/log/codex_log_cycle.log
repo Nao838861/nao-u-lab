@@ -5956,3 +5956,6 @@ warning: in the working copy of 'GPT/memory/atoms/related_candidates.
 2026-06-25T11:05:53 skipped: elapsed 27min < 90min
 2026-06-25T11:20:53 skipped: elapsed 42min < 90min
 2026-06-25T11:35:53 skipped: elapsed 57min < 90min
+2026-06-25T11:50:53 skipped: elapsed 72min < 90min
+2026-06-25T12:05:53 skipped: elapsed 87min < 90min
+2026-06-25T12:20:53 run start (elapsed 102min >= 90min)

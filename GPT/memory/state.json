@@ -1,8 +1,8 @@
 {
-  "last_ts": "1782347755.520549",
-  "last_run": "2026-06-25T10:37:37",
+  "last_ts": "1782355146.916549",
+  "last_run": "2026-06-25T12:25:05",
   "last_added": 0,
-  "total_atoms": 2510,
+  "total_atoms": 2514,
   "source": "D:\\AI\\Nao_u_BOT\\GPT\\memory\\raw\\slack_archive\\shared-reads.jsonl",
   "raw_scope": "gpt-local"
 }
