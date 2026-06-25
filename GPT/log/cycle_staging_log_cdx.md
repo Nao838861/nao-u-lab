@@ -62,7 +62,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git start gate: branch master / origin/master と同期済み。既存差分は log/codex_log_cycle.log, log/codex_phases_cycle.log, memory/codex_log_cycle_state.json, memory/codex_phases_cycle.lock.json と多数の未追跡一時ディレクトリで、本 Phase 4a では触らない。"
+  - "memory/MEMORY.md: tools/validate_memory_index.py は OK。Markdown link は 0 件のため broken link なし。UTF-8 明示読みで代表語 probe は 記憶=true, ゲーム設計=true, 敵パターン=true, 評価軸=false。source file 破損は確認されず、表示経路の mojibake だけが shell 出力で一度発生。"
+  - "memory/atoms.jsonl: 2527 rows / JSON parse error 0 / duplicate id 0。内容重複 group 22 と title-status conflict 8 は既存の superseded/active 系 lifecycle 重複が中心で、今回の機械整理では削除しない。"
+  - "memory/raw/: 30 日以上 mtime 更新なしの raw file は 99 件。最古は memory/raw/sync_state.txt と memory/raw/slack_archive/shared-reads.jsonl の 2026-05-11。原文アーカイブ候補として記録のみ。"
+  - "memory/shared_reads_candidates/: status counts posted=348, postponed=291, failed=105, ready_to_post=7, needs_review=13, missing=1。missing は README.md のみで candidate 本体ではない。"
+  - "inbox: slack_broadcasts pending 0。slack_directives pending 1 件 log-cdx-1782405171-981f33ce76 は、Mir/log/Ash への問いかけ停止と shared-reads 深掘り分析重視の運用指示として Phase 2/3 側へ割り振る。完了条件はこの staging 記録と lifecycle close。"
+issues:
+  - id: ISS-4A-20260626-001
+    description: "shared_reads_candidates に stale_after 期限切れの postponed/needs_review が 69 件あり、さらに title duplicate の未 index group が残っている。特に LieCraft / Procedural Personas / Symbolically Scaffolded Play などは posted/failed/postponed が混在し、Phase 2 の再評価 queue を濁す可能性がある。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md; python frontmatter audit stale_due=69; tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 で duplicate title group 12 件を確認"
+    source_file_status: "candidate frontmatter は UTF-8 で読める。README.md 以外に status missing はなし。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "古い候補や重複候補が再評価候補に混ざると、次のゲーム制作に効く記事と既に処理済みの記事の区別が遅れ、Phase 2 の探索時間を stale 消化に使ってしまう。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "同一 title group に posted / failed / postponed が混在しており、再評価対象に残すべきか fail 降格かを少数で判断する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "posted / postponed 混在 group。playtesting / procedural persona はゲーム評価記憶に近く、既投稿との差分有無だけを確認すればよい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "failed / postponed 混在 group。既に failed があるため、根拠が増えていなければ fail 降格が妥当。"
+    recommended_review_action: fail
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "posted / postponed 混在 group が複数ファイルにまたがる。NPC dialogue / role-sensitive prompt としてゲーム制作接続はあるが、既投稿の有無を先に確認する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "posted / postponed 混在 group。video game agent benchmark として近いが、posted があるため差分がなければ再評価 queue から外す。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
