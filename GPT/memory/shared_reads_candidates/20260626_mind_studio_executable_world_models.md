@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.16070"
 collected_at: "2026-06-26T07:45:27+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, world-model, agent-evaluation, planning, harness]
+evaluated_at: "2026-06-26T07:50:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-26T07:50:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-26T07:50:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |-
+  replay から executable world model を作り、lookahead preview と実環境 rollout で評価する構造が明確。
+  部分観測ゲームの rule extraction、branch preview、headless 検証に直結し、4000字級の概要で問題設定から評価まで展開できる。
+suggested_post_outline:
+  overview_angle: "trajectory から実行可能な world model を合成し、LLM planner の lookahead に使うという軸で書く。"
+  analysis_axis: "入力表現、entropy-based selection、transition program、Real-ALE との rollout 比較を分けて見る。"
+  application_target: "Nao_u_BOT の小規模ゲームで replay から接触・spawn・状態遷移を抽出し、分岐プレビュー型の検証 harness に落とす。"
+  pros_cons: "利点は自然言語説明より検証しやすい executable model に寄せる点。弱点は Atari/OC-state 前提と hidden rule 抽出の失敗時の保守。"
+  verdict_pre: "部分採用。完全自動生成ではなく、ログ採取点と小さな transition model の設計指針として採用。"
 ---
 
 ## raw_excerpt
