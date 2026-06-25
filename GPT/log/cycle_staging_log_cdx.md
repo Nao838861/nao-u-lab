@@ -220,4 +220,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-06-25T18:24:09+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782378249889909"
+draft: "log/phase5_diary_20260625_1828.md"
+char_count: 2204
+verification: "ok"
+notes:
+  - "初回投稿は 2315 字で目標幅を超えたため削除し、2204 字版を再投稿した。"
+  - "Slack API 側の本文検証は ok。スレッド返信なし。"
+```
