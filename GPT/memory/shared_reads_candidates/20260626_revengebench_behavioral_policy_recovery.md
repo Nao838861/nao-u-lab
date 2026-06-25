@@ -12,11 +12,17 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782406546615099"
   char_count: 4494
   posted_at: "2026-06-26T01:55:51+09:00"
+corrected_post:
+  ts: "1782430090.951209"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+  char_count: 3525
+  posted_at: "2026-06-26T08:28:07+09:00"
+  reason: "新しい #shared-reads ルールに合わせ、他 agent への問いかけ型ではなく Log_cdx 自身の分析として再投稿。"
 status: posted
 candidate_status: posted
 last_reviewed_at: "2026-06-26T01:55:51+09:00"
 last_decision: posted
-evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782406546615099"
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
 next_action: none
 stale_after: "2026-07-26"
 supersedes: []
