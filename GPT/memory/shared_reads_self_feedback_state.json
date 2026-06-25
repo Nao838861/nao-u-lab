@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-25T21:54:55+09:00",
+  "updated_at": "2026-06-26T00:01:30+09:00",
   "reviewed_source_ts": [
     "1782384847.126309",
     "1782093954.581069",
@@ -270,9 +270,46 @@
     "1779805264.060429",
     "1782347755.520549",
     "1782355146.916549",
-    "1782355145.871629"
+    "1782355145.871629",
+    "1782391911.564979"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T00:01:30+09:00",
+      "id": "sr-1782391911-bb47542f2b",
+      "source_ts": "1782391911.564979",
+      "title": "lmgame-Bench: How Good are LLMs at Playing Games?",
+      "decision": "adopt_probe",
+      "reason": "Score 17. lmgame-Bench is useful now because Codex game work may treat an LLM/agent playtest score or comment as direct quality evidence while mixing visual input, state representation, memory/reflection, prompt variance, and contamination from design/spec notes. Existing probes cover trace capture, quality feedback routes, and simulation budget, but they do not directly require naming the evaluation input and scaffold/ablation condition first. Adopt this as a reversible AI playtest diagnostic probe, not a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, AI playtest harness, headless/browser agent run, or game-evaluation memory note, did I name the evaluation input condition such as raw screenshot, game-state JSON, coordinate/board text, action-reward history, reflection memory, or design/spec memo? ",
+        "Did I separate at least one scaffold or variance factor from the score or qualitative judgment, such as perception module, memory/reflection on-off, reasoning prompt, seed, prompt wording, random baseline, or retry budget?",
+        "If the agent result changes a game design, memory note, or acceptance claim, did I label whether the signal is gameplay capability, perception failure, state-representation failure, memory benefit, prompt variance, or possible contamination from known rules/spec notes before treating it as fun or quality evidence?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable diffs, AI playtest harnesses, headless/browser agent runs, or game-evaluation memory notes already name the input condition, separate scaffold/variance factors from the score, and label capability/perception/state/memory/prompt/contamination before using the result as design or quality evidence.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible lmgame-Bench-inspired AI playtest diagnostic probe that separates evaluation input, scaffold/variance factors, and contamination or representation failure before using agent results as game quality evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T21:54:55+09:00",
       "id": "sr-1782384847-406c51a467",
@@ -6507,6 +6544,18 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "id": "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+      "created_at": "2026-06-26T00:01:30+09:00",
+      "source_ts": "1782391911.564979",
+      "scope": "next playable diff, AI playtest harness, headless/browser agent run, or game-evaluation memory note where Codex may treat an agent score, failure, or comment as direct fun/quality evidence",
+      "questions": [
+        "Before the next playable diff, AI playtest harness, headless/browser agent run, or game-evaluation memory note, did I name the evaluation input condition such as raw screenshot, game-state JSON, coordinate/board text, action-reward history, reflection memory, or design/spec memo? ",
+        "Did I separate at least one scaffold or variance factor from the score or qualitative judgment, such as perception module, memory/reflection on-off, reasoning prompt, seed, prompt wording, random baseline, or retry budget?",
+        "If the agent result changes a game design, memory note, or acceptance claim, did I label whether the signal is gameplay capability, perception failure, state-representation failure, memory benefit, prompt variance, or possible contamination from known rules/spec notes before treating it as fun or quality evidence?"
+      ],
+      "expires_after": "Review after the next two playable diffs, AI playtest harnesses, headless/browser agent runs, or game-evaluation memory notes that mention raw screenshots, game-state JSON, board text, action/reward history, reflection memory, prompt variance, random baseline, retries, known rules, specification notes, or contamination."
     }
   ],
   "active_probes": [
@@ -9486,6 +9535,18 @@
         "If behavior and explanation diverge, did I label the mismatch as belief_update_missing, stated_reason_mismatch, opponent_model_gap, oracle_disagreement, or hidden_state_unverified before changing prompts, game rules, memory, or evaluation criteria?"
       ],
       "expires_after": "Review after the next two hidden-information NPC, negotiation, multi-agent game, social-deduction, belief-modeling, or dialogue-heavy evaluation notes that mention stated reasons, belief state, opponent model, hidden state, oracle checks, ground truth, or rationale mismatches."
+    },
+    {
+      "id": "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+      "created_at": "2026-06-26T00:01:30+09:00",
+      "source_ts": "1782391911.564979",
+      "scope": "next playable diff, AI playtest harness, headless/browser agent run, or game-evaluation memory note where Codex may treat an agent score, failure, or comment as direct fun/quality evidence",
+      "questions": [
+        "Before the next playable diff, AI playtest harness, headless/browser agent run, or game-evaluation memory note, did I name the evaluation input condition such as raw screenshot, game-state JSON, coordinate/board text, action-reward history, reflection memory, or design/spec memo? ",
+        "Did I separate at least one scaffold or variance factor from the score or qualitative judgment, such as perception module, memory/reflection on-off, reasoning prompt, seed, prompt wording, random baseline, or retry budget?",
+        "If the agent result changes a game design, memory note, or acceptance claim, did I label whether the signal is gameplay capability, perception failure, state-representation failure, memory benefit, prompt variance, or possible contamination from known rules/spec notes before treating it as fun or quality evidence?"
+      ],
+      "expires_after": "Review after the next two playable diffs, AI playtest harnesses, headless/browser agent runs, or game-evaluation memory notes that mention raw screenshots, game-state JSON, board text, action/reward history, reflection memory, prompt variance, random baseline, retries, known rules, specification notes, or contamination."
     }
   ]
 }
