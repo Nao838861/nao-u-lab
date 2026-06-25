@@ -27,7 +27,39 @@ note: "Phase 2 の gate_decision: pass が 0 件だったため、#shared-reads 
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782406546-adf23e89be
+    source_ts: "1782406546.615099"
+    title: "RevengeBench: Reverse Engineering Code-Space Policies from Behavioral Experiments"
+    reason: "直近 #shared-reads 投稿で、game-design / harness / evaluation / agent / operation にまたがる。勝敗・クラッシュ有無・自然文説明で止まりがちな headless playtest や敵AI/NPC診断を、行動距離・active probe・復元仮説へ戻す小さい改善として使えるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "敵AI/NPC/resource bot/player bot の次回診断で、arena-specific action-distance、passive trajectory + active probe scenario、checkable/executable recovered-policy hypothesis を確認する reversible probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  adopted_probe:
+    id: probe-20260626-revengebench-behavior-recovery-action-distance
+    scope: "next enemy AI, NPC policy, resource bot, player bot, headless playtest, or game-evaluation memory note"
+    questions:
+      - "対象行動と arena-specific action-distance dimension を、勝敗・クラッシュ有無・fun/quality 判断の前に名付けたか。"
+      - "passive observed trajectory と、現在の不確実性を狙う active probe scenario / opponent / seed / scripted situation を 1 つずつ残したか。"
+      - "設計・prompt・memory・acceptance を変える前に、復元行動を executable code か compact checkable rule として表し、予測・exploit・noise・multi-run-needed を分けたか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
