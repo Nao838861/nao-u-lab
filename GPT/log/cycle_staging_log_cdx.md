@@ -44,7 +44,39 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782093954-3f11951439
+    source_ts: "1782093954.581069"
+    title: "From the Ground Up: Rethinking Quality in Games"
+    reason: "Quality を最終 QA 判定ではなく、automation/data/human review を次の playable diff に戻す workflow として扱う視点が、Codex のゲーム制作・検証・記憶化に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の playable diff / 修正 / playtest で、品質シグナルを合否判定で終わらせず、原因分類・低コスト観測・次アクションへ戻す一時 probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260625-quality-workflow-feedback-route
+    questions:
+      - "品質改善を主張する前に、問題の出所を specification ambiguity / implementation regression / missing instrumentation / weak acceptance criteria / review handoff loss / player-experience uncertainty のどれかとして名付けたか。"
+      - "automation を最終判定にせず、次に見るべきものを選ぶ replay path / state transition log / failure screenshot / event timeline / subjective friction note / changed metric のどれかを残したか。"
+      - "閉じる前に、その観測を acceptance tightening / small log / one mechanic adjustment / human feel review / memory atom-candidate / explicit no-op のどれかへ戻したか。"
+    withdrawal_condition: "次の2件の playable diff / game repair / playtest report / validation note が、失敗源・低コスト観測・次アクション接続を自然に満たすなら撤退。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

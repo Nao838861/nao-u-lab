@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-25T15:36:07+09:00",
+  "updated_at": "2026-06-25T17:49:39+09:00",
   "reviewed_source_ts": [
+    "1782093954.581069",
     "1782355144.878829",
     "1780460352.566409",
     "1779690813.274249",
@@ -270,6 +271,42 @@
     "1782355146.916549"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-25T17:49:39+09:00",
+      "id": "sr-1782093954-3f11951439",
+      "source_ts": "1782093954.581069",
+      "title": "From the Ground Up: Rethinking Quality in Games",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-read is useful now because Codex game work can still treat quality as a final pass/fail check after a playable diff, while the post frames quality as a workflow that connects automation, data, human judgment, and collaboration. Existing probes cover acceptance criteria, traces, and feature integration depth, but not the narrower question of whether a defect or weak playtest signal is routed back to the next design or implementation decision. Keep this as a reversible workflow-feedback probe rather than a new QA policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, game repair, playtest report, headless/browser validation, or memory note that claims quality improved, did I name whether the issue came from specification ambiguity, implementation regression, missing instrumentation, weak acceptance criteria, review handoff loss, or player-experience uncertainty?",
+        "Did I keep one low-cost observation that helps select what matters next, such as replay path, state transition log, failure screenshot, event timeline, subjective friction note, or changed metric, instead of treating automation as the final quality verdict?",
+        "Before closing the work, did I route that observation into one next action such as tighten acceptance, add a small log, adjust one mechanic, request human feel review, record a memory atom/candidate, or explicitly mark no workflow change needed?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable diffs, game repairs, playtest reports, or validation notes already identify the quality failure source, preserve one observation that selects what matters next, and route it into a concrete next action or explicit no-op.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible quality-workflow feedback probe that checks whether validation evidence is routed back into the next game design or implementation decision instead of being treated as a final QA verdict.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-25T15:36:07+09:00",
       "id": "sr-1782355146-1abca67cdf",
@@ -9339,6 +9376,18 @@
         "After the coordination attempt, did I record one signal that belongs to coordination rather than local competence, such as adoption of the message, duplicate work avoided, conflict resolved, unmet dependency exposed, participation shifted, or message ignored?"
       ],
       "expires_after": "Review after the next two multi-agent, Slack-handoff, phase-coordination, shared-memory-routing, NPC/social-system, or cross-instance notes that mention LLM coordination messages, local decision gates, adoption, duplicate work, conflict resolution, dependencies, participation, or ignored coordination."
+    },
+    {
+      "id": "probe-20260625-quality-workflow-feedback-route",
+      "created_at": "2026-06-25T17:49:39+09:00",
+      "source_ts": "1782093954.581069",
+      "scope": "next playable diff, game repair, playtest report, headless/browser validation, or memory note where Codex may treat quality as a final pass/fail check instead of a workflow feedback route",
+      "questions": [
+        "Before the next playable diff, game repair, playtest report, headless/browser validation, or memory note that claims quality improved, did I name whether the issue came from specification ambiguity, implementation regression, missing instrumentation, weak acceptance criteria, review handoff loss, or player-experience uncertainty?",
+        "Did I keep one low-cost observation that helps select what matters next, such as replay path, state transition log, failure screenshot, event timeline, subjective friction note, or changed metric, instead of treating automation as the final quality verdict?",
+        "Before closing the work, did I route that observation into one next action such as tighten acceptance, add a small log, adjust one mechanic, request human feel review, record a memory atom/candidate, or explicitly mark no workflow change needed?"
+      ],
+      "expires_after": "Review after the next two playable diffs, game repairs, playtest reports, or validation notes that mention quality, QA, automation, telemetry, replay, acceptance criteria, human review, defects, regressions, or next-action routing."
     }
   ]
 }
