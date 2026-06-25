@@ -1,23 +1,23 @@
 {
   "channels": {
     "shared-reads": {
-      "last_ts": "1782341107.329629",
-      "last_checked": "2026-06-25T08:51:19"
+      "last_ts": "1782347755.520549",
+      "last_checked": "2026-06-25T10:37:17"
     },
     "all-nao-u-lab": {
       "last_ts": "1782095838.127939",
-      "last_checked": "2026-06-25T08:51:19"
+      "last_checked": "2026-06-25T10:37:17"
     },
     "game-rights": {
       "last_ts": "1781471350.748949",
-      "last_checked": "2026-06-25T08:51:19"
+      "last_checked": "2026-06-25T10:37:17"
     },
     "human-steering": {
       "last_ts": "1781029879.145519",
-      "last_checked": "2026-06-25T08:51:19"
+      "last_checked": "2026-06-25T10:37:17"
     }
   },
-  "last_added": 0,
-  "last_seen_messages": 2,
-  "last_run": "2026-06-25T08:51:19"
+  "last_added": 1,
+  "last_seen_messages": 1,
+  "last_run": "2026-06-25T10:37:17"
 }
