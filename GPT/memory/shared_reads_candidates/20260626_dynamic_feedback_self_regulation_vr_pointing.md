@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.26925"
 collected_at: "2026-06-26T15:45:03+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-feedback, ux, telemetry, playtesting, vr, interaction-design]
+evaluated_at: "2026-06-26T15:49:17+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-26T15:49:17+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-26T15:49:17+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |
+  VR pointing における feedback metric と提示タイミングの分解は、ゲーム内 feedback と telemetry を結びつける素材として有用。
+  ただし現候補は要旨レベルの保存に留まり、実験条件・測定設計・個人差/逆効果の扱いを CoopEval 水準の概要へ展開するには根拠が不足している。
+  Phase 3 投稿ではなく、本文確認または追加メモ化後に再評価する。
 ---
 
 ## raw_excerpt
