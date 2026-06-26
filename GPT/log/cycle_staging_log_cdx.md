@@ -8,6 +8,11 @@
 - 既存 candidate 重複確認: AutoBG、PCG practitioner needs、SLM dynamic content、Augmenting Game AI with Deep RL、LLM-assisted endless runner、GameCraft-Bench、OmniGameArena、WorldOlympiad、AgentOdyssey、Yea­sierAgent は既存 candidate または posted draft を確認。
 - 追加 candidate: `memory/shared_reads_candidates/20260626_dynamic_feedback_self_regulation_vr_pointing.md` — VR pointing task で dynamic feedback の metric と提示タイミングがプレイヤー行動・知覚へ与える影響を測る研究。ゲーム内 feedback と telemetry を結びつける素材。
 
+
+- 2026-06-26T17:45+09:00 log_cdx Phase 1:
+  - Slack pending: tools/slack_inbox_lifecycle.py pending returned 0 directives and 0 broadcasts.
+  - candidate: memory/shared_reads_candidates/20260626_player_behavior_gray_area_detection.md - MMORPG telemetry and human-in-the-loop gray-area behavior detection.
+  - candidate: memory/shared_reads_candidates/20260626_gdcvault_2026_ai_game_production_index.md - GDC Vault 2026 AI liveops player-understanding and anti-cheat session index.
 ## Phase 2: 分析
 ```yaml
 total_candidates: 1
