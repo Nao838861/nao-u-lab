@@ -71,7 +71,66 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-06-26T12:03:00+09:00 log_cdx Phase 4a:
+```yaml
+cleaned:
+  - "git gate: branch master / origin/master と同期済み。開始時点の既存差分は log/codex_log_cycle.log、log/codex_phases_cycle.log、memory/codex_log_cycle_state.json と上位退避フォルダ群。"
+  - "Slack inbox: tools/slack_inbox_lifecycle.py pending で directives 23 rows / broadcasts 21 rows とも pending 0 件。handled 更新対象なし。"
+  - "memory/MEMORY.md: markdown link 0 件、broken link 0 件。UTF-8 明示読みで代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。source file 破損は見えない。"
+  - "memory/atoms.jsonl: 2530 rows、JSON parse error 0、duplicate id 0。内容/タイトル重複候補は 22 groups だが、null content + generic title 起因を含むため削除対象にはしない。"
+  - "memory/raw/: mtime 30日以上の file は 99 件。最古は memory/raw/slack_archive/shared-reads.jsonl と memory/raw/sync_state.txt 約46日、phase3_pdfs / web_research に約42-44日の原文あり。今回は archive 実行なし。"
+  - "memory/shared_reads_candidates/: status counts posted=350 / ready_to_post=8 / postponed=295 / failed=109 / needs_review=13 / missing=1(README.md)。postponed/needs_review かつ stale_after<=2026-06-26 は 69 件。"
+  - "duplicate title audit: unindexed terminal duplicate group 0、unindexed mixed duplicate group 66。terminal group は登録対象なし、mixed group は自動 close せず Phase 2 通常評価または stale_review_batch に残す。"
+issues:
+  - id: ISS-4A-20260626-01
+    description: "shared_reads_candidates の stale backlog が 69 件あり、さらに未登録 mixed duplicate title group が 66 件ある。posted/failed が混じる題名でも postponed が残っているため、Phase 2 が新規候補と古い再評価候補を同じ平面で扱いやすい。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md; tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20; stale_after<=2026-06-26 count=69; unindexed mixed duplicate group count=66; terminal duplicate group count=0"
+    source_file_status: "UTF-8 frontmatter 読み取り可能。candidate source の破損は確認していない。"
+    display_or_tooling_status: "PowerShell 表示経路では日本語リテラルが mojibake する場面あり。Unicode escape probe では memory/MEMORY.md UTF-8 読み自体は成立。"
+    why_blocks_game_memory: "ゲーム制作向けの外部知見を探す時、既に投稿済み・失敗済みの同題材と未判断候補が混ざり、Phase 2 の少数精読枠を古い重複確認に使ってしまう。"
+  - id: ISS-4A-20260626-02
+    description: "atoms.jsonl に duplicate id はないが、content=null かつ title が generic な古い Slack archive atom が複数あり、title/content ベースの重複検出では 22 groups が出る。"
+    severity: low
+    evidence: "memory/atoms.jsonl rows=2530; duplicate id=0; duplicate content/title candidate groups=22; sample includes title='投稿者: Log' with content=null"
+    source_file_status: "UTF-8 JSONL parse OK、JSON parse error 0。source file 破損ではない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "検索時に一般的すぎる title が残ると、ゲーム制作 lesson や external research atom の導線として弱く、関連 atom の順位づけを薄める。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "既存の stale_review_batch と title canonical index の運用で捌ける範囲。4b で新設計を起動するほどの新しい構造問題はない。"
+stale_review_backlog:
+  total_due: 69
+  handoff_count: 5
+  selection_note: "last_stale_reviewed_at が空で、ゲーム制作・agent 評価・player-state に近い古い postponed を優先。posted / failed は再評価 queue から除外。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "LLM Game Master / NPC dialogue / role-playing は会話型ゲーム制作に直結するが、学習効果と参加者評価が薄いまま stale。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "hidden-role / deception / multi-agent の報酬設計が小型ゲーム設計に近く、本文確認で使えるか fail かを決めやすい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_physiological_dda_engagement.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "player-state proxy と DDA は次の playable evaluation 軸に使える可能性がある一方、N=10 と sensor 前提の弱さを確認したい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "LLM を headless playtest /攻略 agent として使う時の限界事例で、説明増量や履歴保持の効かなさが検証軸になる。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "短い検証可能ルールの planning benchmark は、ミニゲーム設計と自動評価 probe に転用可能。本文結果が薄ければ fail 判断。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
