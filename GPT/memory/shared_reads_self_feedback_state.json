@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T14:02:56+09:00",
+  "updated_at": "2026-06-26T15:52:43+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -277,7 +277,8 @@
     "1782406546.615099",
     "1779972076.823599",
     "1778542776.395559",
-    "1780610351.404229"
+    "1780610351.404229",
+    "1782449733.810609"
   ],
   "reviews": [
     {
@@ -6778,6 +6779,42 @@
         "If the agent result changes a game design, memory note, or acceptance claim, did I label whether the signal is gameplay capability, perception failure, state-representation failure, memory benefit, prompt variance, or possible contamination from known rules/spec notes before treating it as fun or quality evidence?"
       ],
       "expires_after": "Review after the next two playable diffs, AI playtest harnesses, headless/browser agent runs, or game-evaluation memory notes that mention raw screenshots, game-state JSON, board text, action/reward history, reflection memory, prompt variance, random baseline, retries, known rules, specification notes, or contamination."
+    },
+    {
+      "reviewed_at": "2026-06-26T15:52:43+09:00",
+      "id": "sr-1782449733-7e58b602fa",
+      "source_ts": "1782449733.810609",
+      "title": "Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-read is useful now because Phase 3b is already converting shared-read knowledge into small probes, but Codex can still treat memory as post-hoc recall rather than a pre-action model with an expected outcome and update path. Existing probes cover branch previews, state-action-next-state rows, behavior recovery, and load strategy, but not the narrower L1/L2/L3 plus law classification and expected-vs-actual update label before using a memory or evaluation result. Keep it reversible and scoped to playable diffs, game evaluation, shared-read candidates, memory routing, and phase notes; L3 must only propose the next check, not rewrite intent or durable rules.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless/browser game evaluation, shared-read candidate, memory routing change, or phase note, did I classify the claim as L1 one-step prediction, L2 multi-step rollout, or L3 model-update proposal and name the relevant law as physical, digital, social, scientific, or mixed?",
+        "Did I write one small pre-action expectation: this change or probe should improve which observable next-run signal, while preserving which constraint or prior lesson, instead of only recalling related atoms after the fact?",
+        "After evidence arrives, did I label expected versus actual as prediction_hit, prediction_miss_model_update, evidence_gap, or no_update, and keep any L3 action to the next probe/check proposal rather than silently changing game intent or durable rules?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two scoped notes already classify L1/L2/L3 and law, state one pre-action expectation with a preserved constraint, and label expected-vs-actual evidence before proposing any model update.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Agentic World Modeling-inspired pre-action prediction probe: classify L1/L2/L3 and law, state one expected next-run signal plus preserved constraint, and label expected-vs-actual evidence before proposing model updates.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -9841,6 +9878,18 @@
         "If the edit is not adopted or validation is weak, did I record the rejected direction and reason in state, staging, or a local note so the same tempting rule expansion is not rediscovered next cycle?"
       ],
       "expires_after": "Review after the next two directive/AGENTS/phase-prompt/skill/checklist/probe edits that mention add/delete/replace, held-out validation, counterexample, regression, rejected edit, rule expansion, durable instruction, or withdrawal condition."
+    },
+    {
+      "id": "probe-20260626-agentic-world-modeling-preaction-prediction-law",
+      "created_at": "2026-06-26T15:52:43+09:00",
+      "source_ts": "1782449733.810609",
+      "scope": "next playable diff, headless/browser game evaluation, shared-read candidate, memory routing change, or phase note where Codex may recall prior knowledge without making a small pre-action prediction and later updating it from evidence",
+      "questions": [
+        "Before the next playable diff, headless/browser game evaluation, shared-read candidate, memory routing change, or phase note, did I classify the claim as L1 one-step prediction, L2 multi-step rollout, or L3 model-update proposal and name the relevant law as physical, digital, social, scientific, or mixed?",
+        "Did I write one small pre-action expectation: this change or probe should improve which observable next-run signal, while preserving which constraint or prior lesson, instead of only recalling related atoms after the fact?",
+        "After evidence arrives, did I label expected versus actual as prediction_hit, prediction_miss_model_update, evidence_gap, or no_update, and keep any L3 action to the next probe/check proposal rather than silently changing game intent or durable rules?"
+      ],
+      "expires_after": "Review after the next two playable diffs, game-evaluation notes, shared-read candidates, memory-routing changes, or phase notes that mention world model, prediction, rollout, L1/L2/L3, physical/digital/social/scientific law, expectation, evidence gap, or model update."
     }
   ]
 }

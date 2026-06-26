@@ -31,7 +31,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782449733-7e58b602fa
+    source_ts: "1782449733.810609"
+    title: "Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond"
+    reason: "world model を受動的な検索対象ではなく、行動前に予測し、証拠で外れを更新する内部モデルとして扱う話。Phase 3b の probe 化と、ゲーム制作/記憶 routing の次回行動に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "一時 probe を追加。次の playable diff / game evaluation / shared-read candidate / memory routing / phase note で、L1/L2/L3 と physical/digital/social/scientific law を分類し、作業前の小さな期待値と守る制約を書き、結果を prediction_hit / prediction_miss_model_update / evidence_gap / no_update として戻す。L3 は次の検査候補提案までに限定する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
