@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.13527"
 collected_at: "2026-06-26T11:44:45+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [visual-agents, multimodal-skills, game-ai, gui-agent, procedural-knowledge, memory]
+evaluated_at: "2026-06-26T11:47:22+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-06-26T11:47:22+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-06-26T11:47:22+09:00"
+next_action: revise_or_research
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |-
+  textual procedure / runtime state cards / multi-view keyframes を組み合わせて visual agent skill を再利用する着想は、ゲーム操作ログや GUI テストの手順化に強く接続できる。
+  ただし候補本文だけでは、評価対象 benchmark、改善幅、失敗例、skill 生成/監査の限界が薄く、CoopEval 水準の ~4000 字概要に必要な根拠が不足している。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.18543"
 collected_at: "2026-06-26T11:44:45+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, long-horizon, simulation, management-game, planning, game-design]
+evaluated_at: "2026-06-26T11:47:22+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-26T11:47:22+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-26T11:47:22+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |-
+  500 日の startup 運営を長期 horizon の playable simulation として扱い、情報収集・価格/販促/予算配分・交渉履歴・cash forecast を agent 評価へ落とす問題設定が明確。
+  現行 agent が cohort simulation や履歴分析コードを書けても安定利益化に苦戦する、という評価観点があり、ゲーム制作では長期運営/経営ゲーム/AI playtest の設計軸へ具体的に接続できる。
+suggested_post_outline:
+  overview_angle: "startup 500 日運営を、短期タスクではなく不確実性下の長期意思決定ゲームとして読む。"
+  analysis_axis: "hidden customer preference、noisy market、business database、negotiation history、pricing/marketing/budgeting の相互依存を agent 評価にする設計。"
+  application_target: "経営/運営シミュレーション、NPC/AI director の長期計画評価、game agent の履歴分析ログと資源配分テスト。"
+  pros_cons: "長期評価と情報ノイズの設計は強い。一方で startup 経営に寄るため、瞬間的な操作スキルや空間アクション評価には直結しにくい。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
