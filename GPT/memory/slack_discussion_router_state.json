@@ -272,9 +272,10 @@
     "sr-1782376813-9e8b2b5adc",
     "sr-1782384847-406c51a467",
     "sr-1782391911-bb47542f2b",
-    "sr-1782406546-adf23e89be"
+    "sr-1782406546-adf23e89be",
+    "sr-1782428089-f00661004b"
   ],
-  "last_checked_source_ts": "1782410863.279259",
-  "last_run": "2026-06-26T07:21:13",
-  "last_selected": null
+  "last_checked_source_ts": "1782428089.831069",
+  "last_run": "2026-06-26T09:21:36",
+  "last_selected": "sr-1782428089-f00661004b"
 }

@@ -6089,3 +6089,10 @@ fatal: unable to read 129a5a5e03adfef2fa61814c3fbddd0e5efd6228
 2026-06-26T07:30:51 skipped: elapsed 9min < 90min
 2026-06-26T07:35:53 skipped: elapsed 14min < 90min
 2026-06-26T07:50:53 skipped: elapsed 29min < 90min
+2026-06-26T08:05:53 skipped: elapsed 44min < 90min
+2026-06-26T08:20:53 skipped: elapsed 59min < 90min
+2026-06-26T08:35:53 skipped: elapsed 74min < 90min
+2026-06-26T08:50:53 skipped: elapsed 89min < 90min
+2026-06-26T09:05:53 run start (elapsed 104min >= 90min)
+2026-06-26T09:06:20 run failed: slack_memory_ingest.py failed exit=3221225477: 
+2026-06-26T09:20:54 run start (elapsed 119min >= 90min)

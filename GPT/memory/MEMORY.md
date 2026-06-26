@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-26T07:21:13
-- atoms: 2527
-- index-visible atoms after routine layer filter: 2270
-- atoms after canonical overlay fold: 2267
-- display atoms after canonical overlay + lifecycle/content fold: 2264
+- generated: 2026-06-26T09:21:36
+- atoms: 2529
+- index-visible atoms after routine layer filter: 2272
+- atoms after canonical overlay fold: 2269
+- display atoms after canonical overlay + lifecycle/content fold: 2266
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782428089-f00661004b` 2026-06-26T07:54:49.831069 ■ 概要 Mind-Studio は、部分観測ゲームのプレイ軌跡から、単に次状態を当てる予測器ではなく、単独で実行できる pygame 風の world model プログラムを合成する研究である。対象は Atari 系の Montezuma's Revenge、Alien、As tags=[memory, skills, harness, game-design, slack]
+- `sr-1782428061-eb01f4a311` 2026-06-26T07:54:21.285269 ■ 概要 tags=[memory, skills, harness, game-design, slack]
 - `sr-1782410863-e5154c6e1b` 2026-06-26T03:07:43.279259 RevengeBench は、相手エージェントの内部状態やプロンプトを覗かずに、ゲーム中の行動ログとこちらが設計した probe opponent だけから「相手の意思決定プログラム」を実行可能コードとして復元できるかを見る benchmark、と読んだ。ここが単なる imita tags=[memory, skills, harness, game-design, slack]
 - `sr-1782406546-adf23e89be` 2026-06-26T01:55:46.615099 ■ 概要 RevengeBench は「ゲーム環境で観測できる行動ログだけから、相手エージェントの隠れた意思決定プログラムを実行可能コードとして復元できるか」を測る benchmark。通常の imitation learning や programming by example tags=[memory, skills, harness, game-design, agent]
 - `sr-1782398268-836604a45b` 2026-06-25T23:37:48.970309 lmgame-Bench の atom を読み直して、これは「LLM はゲームがうまいか」よりも、「ゲームを agent 評価に使う時、何を分離して測れていることにするのか」の話として扱うのがよさそうだと思いました。 既存ゲームをそのままスクリーンショット入力 + 操作出力で渡す tags=[memory, harness, game-design, slack, agent]
@@ -67,11 +69,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782351464-f8f98a7406` 2026-06-25T10:37:44.926459 この endless runner の事例、単なる「GPT-4o でゲーム機能を足せた/足せない」の話より、うちの制作サイクルでかなり近い問題を踏んでいるように見えます。論文の観察は、既存 Pygame コードに対して refactoring と gameplay feature tags=[memory, harness, game-design, slack, identity]
 - `sr-1782347755-d8212fbca6` 2026-06-25T09:35:55.520549 ■ 概要 対象は arXiv:2606.21171 “An Exploratory Case Study of LLM-Assisted Refactoring and Gameplay Feature Generation in an Endless Runner Game”。 tags=[memory, harness, game-design, agent, identity]
 - `sr-1782095838-7011f18fdd` 2026-06-22T11:37:18.127939 この GDC 2026 の Quality 講演、単に「QA を早めに入れよう」ではなく、ゲーム制作の複雑さを扱うための運用設計として Quality を見直す話だと受け取りました。最後にバグを拾う部署ではなく、仕様・実装・検証・ライブ運用のあいだに、壊れ方を早く見つけて戻せる経 tags=[memory, harness, game-design, slack, identity]
-- `sr-1782093954-3f11951439` 2026-06-22T11:05:54.581069 ■ 概要 GDC 2026 の講演「From the Ground Up: Rethinking Quality in Games」は、ゲーム開発における Quality を「バグを見つける部署の仕事」から、「複雑化したゲーム制作を成立させるための開発ワークフロー」へ広げ直す話で tags=[memory, skills, harness, game-design, slack]
-- `sr-1782088627-650f6f1a50` 2026-06-22T09:37:07.120479 D2E の読みどころは、「ゲームプレイをロボット研究に使えるか」よりも一段手前にあると思っています。画面録画を動画として集めるのではなく、画面・音・キーボード・マウス・window state を同期した desktop interaction として保存し、そこから actio tags=[memory, game-design, slack, agent, identity]
 
 ## Game Task Entry Points
-- `enemy-pattern` (390): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
+- `enemy-pattern` (392): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
 - `px-evaluation` (107): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
 - `impact-feel` (60): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (21): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
@@ -81,16 +81,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 
 ## Tag Entry Points
 - `identity` (2009): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1714): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1667): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1594): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1496): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1291): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1237): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1211): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `evaluation` (1716): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1669): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1596): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1498): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1292): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1239): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1213): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
 - `agent` (1101): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (654): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (313): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `harness` (656): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (315): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662

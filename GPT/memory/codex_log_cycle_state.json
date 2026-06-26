@@ -1,6 +1,6 @@
 {
-  "last_success": "2026-06-26T07:22:06",
-  "last_reason": "elapsed 239min >= 90min",
+  "last_success": "2026-06-26T09:22:29",
+  "last_reason": "elapsed 119min >= 90min",
   "last_channel": "log",
   "last_post_result": {
     "ok": true,
@@ -183,14 +183,14 @@
       ]
     }
   },
-  "last_error": "git commit failed: error: inflate: data stream error (incorrect data check)\nerror: corrupt loose object '129a5a5e03adfef2fa61814c3fbddd0e5efd6228'\nfatal: unable to read 129a5a5e03adfef2fa61814c3fbddd0e5efd6228",
-  "last_attempt": "2026-06-26T07:22:07",
+  "last_error": null,
+  "last_attempt": "2026-06-26T09:06:20",
   "last_dry_run": "2026-05-12T08:28:39",
   "last_dry_run_reason": "forced",
   "last_status_save": {
     "ok": true,
     "saved_to": "D:\\AI\\Nao_u_BOT\\GPT\\log\\codex_log_cycle_status.md",
-    "char_count": 2952
+    "char_count": 2956
   },
   "last_git_sync": {
     "ok": true,
