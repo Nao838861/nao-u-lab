@@ -6123,3 +6123,15 @@ fatal: unable to read aa3640cea4041e4c333258057b9466a1a8bad10b
 2026-06-26T13:35:54 skipped: elapsed 27min < 90min
 2026-06-26T13:50:54 skipped: elapsed 42min < 90min
 2026-06-26T14:05:54 skipped: elapsed 57min < 90min
+2026-06-26T14:20:54 skipped: elapsed 72min < 90min
+2026-06-26T14:35:54 skipped: elapsed 87min < 90min
+2026-06-26T14:50:54 run start (elapsed 102min >= 90min)
+2026-06-26T14:52:35 run failed: memory_ingest.py failed exit=3221225477: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 426, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 410, in main
+    INDEX_PATH.write_text(render_index(all_atoms, len(rows)), encoding="utf-8", newline="\n")
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_ingest.py", line 349, in render_index
+    for entry in build_game_task_entry_points(display_atoms):
+  File "D:\AI\Nao_u_BOT\GPT\tools\memory_game_task_facets.py", line 156, 
+2026-06-26T15:05:54 run start (elapsed 117min >= 90min)

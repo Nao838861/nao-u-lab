@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-26T13:07:32
-- atoms: 2531
-- index-visible atoms after routine layer filter: 2274
-- atoms after canonical overlay fold: 2271
-- display atoms after canonical overlay + lifecycle/content fold: 2268
+- generated: 2026-06-26T15:07:37
+- atoms: 2536
+- index-visible atoms after routine layer filter: 2279
+- atoms after canonical overlay fold: 2276
+- display atoms after canonical overlay + lifecycle/content fold: 2273
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782453152-c02f55ee2f` 2026-06-26T14:52:32.778719 Agentic World Modeling の話、単なる “world model という語の整理” ではなく、Nao_u_BOT の記憶設計にもかなり刺さると読んでいる。今の僕らは、atom / candidate / diary / Slack directive を「過去 tags=[memory, game-design, slack, agent, identity]
+- `sr-1782449735-630415ff6d` 2026-06-26T13:55:35.510889 ■ 概要 “Hunyuan-GameCraft-2: Instruction-following Interactive Game World Model” は、生成型 game world model を、固定 keyboard input だけで操作する段階から、自然言語、k tags=[memory, harness, game-design, slack, identity]
+- `sr-1782449734-b32b074ce1` 2026-06-26T13:55:34.919369 ■ 概要 “Matrix-Game 3.0: Real-Time and Streaming Interactive World Model with Long-Horizon Memory” は、interactive video generation をゲーム用 world  tags=[memory, harness, game-design, slack, agent]
+- `sr-1782449733-7e58b602fa` 2026-06-26T13:55:33.810609 ■ 概要 “Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond” は、world model という言葉が video generation、model-based RL、GUI agent、mu tags=[memory, harness, game-design, slack, agent]
+- `sr-1782446863-31f495b34e` 2026-06-26T13:07:43.525509 CEO-Bench は「LLM agent が CEO になって 500 日会社を動かす」話だけど、面白いのは経営ごっこそのものより、評価対象が 1 回の正解ではなく、状態・履歴・資源配分・後戻り不能な判断の積み上げになっている点だと思う。34 tools と 19-table  tags=[memory, harness, game-design, slack, agent]
 - `sr-1782442320-0624a7be91` 2026-06-26T11:52:00.737159 ■ 概要 「CEO-Bench: Can Agents Play the Long Game?」は、LLM agent の評価を短期の isolated task から、長期に状態が積み上がる経営シミュレーションへ移す benchmark である。課題は架空スタートアップを 50 tags=[memory, skills, harness, game-design, agent]
 - `sr-1782433307-77020584c1` 2026-06-26T09:21:47.249349 Mind-Studio の話を、単なる「ゲーム軌跡からルールを学習する研究」としてではなく、僕らの記憶・評価・ゲーム制作サイクルの設計問題として見直したいです。 この atom の肝は、state-action-next-state の履歴から次フレーム予測器を作るのではなく、別 tags=[memory, harness, game-design, slack, identity]
 - `sr-1782428089-f00661004b` 2026-06-26T07:54:49.831069 ■ 概要 Mind-Studio は、部分観測ゲームのプレイ軌跡から、単に次状態を当てる予測器ではなく、単独で実行できる pygame 風の world model プログラムを合成する研究である。対象は Atari 系の Montezuma's Revenge、Alien、As tags=[memory, skills, harness, game-design, slack]
@@ -64,32 +69,27 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782383802-3a25140367` 2026-06-25T19:36:42.945499 Where Winds Meet の atom で自分が引っかかっているのは、「open-world の豊かさ」をコンテンツ量や景観密度ではなく、長期更新に耐える制作パイプラインとして設計している点です。武侠の身体性、旅、師弟関係、土地ごとの伝承や事件を、単発の演出ではなく、運営 tags=[memory, game-design, slack, identity]
 - `sr-1782376813-9e8b2b5adc` 2026-06-25T17:40:13.513569 ■ 概要 対象は Meta Horizon OS Developers の記事「Highlights from Day 1 at GDC 2026: Hands, Agents, Performance &amp; More」。GDC 2026 Day 1 の recap で、h tags=[memory, game-design, slack, agent, identity]
 - `sr-1782376812-0ff53a9570` 2026-06-25T17:40:12.751149 ■ 概要 対象は GDC Vault の 2026 講演「Crafting an Ever-Expanding Jianghu: Open-World Design and Sustainable Update Pipelines in 'Where Winds Meet'」。E tags=[memory, game-design, agent, identity, knowledge]
-- `sr-1782357913-e89c977fce` 2026-06-25T12:25:13.084149 この atom は energy system の話に見えるけれど、log_cdx には「LLM agent に任せる範囲をどこで切るか」の実験として読めました。smart microgrid の demand response は、各 prosumer が全体最適に協力すると  tags=[memory, game-design, slack, agent, identity]
-- `sr-1782355146-1abca67cdf` 2026-06-25T11:39:06.916549 ■ 概要 「LLM-Mediated Demand Response Coordination in Smart Microgrids」は、smart microgrid の需要応答を題材に、LLM を multi-agent coordination のどこに置くべきかを検証す tags=[memory, harness, game-design, slack, agent]
-- `sr-1782355145-1ae16ff426` 2026-06-25T11:39:05.871629 ■ 概要 「Market Design for AI: Beyond the Copyright Binary」は、人間が作ったコンテンツを AI 学習に使う市場を、free-for-all か強い知的財産権かという二択では設計できない、と論じる経済モデルの論文である。問題設定は tags=[memory, game-design, slack, knowledge, operation]
-- `sr-1782355144-cf8fe8107f` 2026-06-25T11:39:04.878829 ■ 概要 ActWorld は、interactive world model を「歩き回れる動画生成」から「物体に触れ、その結果を長い rollout の中で保持できる世界モデル」へ進める研究である。既存の world model は、WASD やマウス操作で視点移動、旋回、前 tags=[memory, harness, game-design, slack, identity]
-- `sr-1782351464-f8f98a7406` 2026-06-25T10:37:44.926459 この endless runner の事例、単なる「GPT-4o でゲーム機能を足せた/足せない」の話より、うちの制作サイクルでかなり近い問題を踏んでいるように見えます。論文の観察は、既存 Pygame コードに対して refactoring と gameplay feature tags=[memory, harness, game-design, slack, identity]
 
 ## Game Task Entry Points
 - `enemy-pattern` (393): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
-- `px-evaluation` (107): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
+- `px-evaluation` (109): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
 - `impact-feel` (60): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
-- `ui-agent` (22): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
+- `ui-agent` (23): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
 - `headless-eval` (85): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
 - `memory-routing` (87): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (2011): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1718): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1670): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1598): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1500): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1294): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1241): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1214): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1102): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (658): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (2016): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1723): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1674): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1603): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1505): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1297): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1244): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1219): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1106): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (662): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (316): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
