@@ -13,7 +13,24 @@
   - `memory/shared_reads_candidates/20260626_exploring_gameplay_with_ai_agents.md` — Exploring Gameplay With AI Agents。実クライアントではなく bare-bone mechanics simulator で大量 playtest し、designer question に答える古典的事例。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-06-26 09:53 JST log_cdx:
+
+```yaml
+total_candidates: 3
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260626_gamedevbench_agentic_game_development.md
+    reason: "同一 title / URL の canonical candidate が posted 済み。内容は有用だが Phase 3 投稿では重複。"
+  - path: memory/shared_reads_candidates/20260626_opengame_agentic_coding_for_games.md
+    reason: "同一 title / URL の canonical candidate が posted 済み。Build Health / Visual Usability / Intent Alignment の論点は既投稿。"
+  - path: memory/shared_reads_candidates/20260626_exploring_gameplay_with_ai_agents.md
+    reason: "2026-06-07 に同一 title / URL の candidate が posted 済み。単独品質は高いが再投稿不可。"
+postpone: []
+stale_reviewed: []
+notes:
+  - "stale_review_batch は staging に存在しなかったため、新規 candidate のみ評価した。"
+  - "GameDevBench と OpenGame は title canonical index の terminal posted 判定を確認。Exploring Gameplay は既存 posted candidate を rg で確認。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

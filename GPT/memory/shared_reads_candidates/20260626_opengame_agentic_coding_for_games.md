@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2604.18394"
 collected_at: "2026-06-26T09:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev, ai-agent, code-generation, benchmark, browser-game]
+evaluated_at: "2026-06-26T09:53:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-26T09:53:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-26T09:53:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |
+  OpenGame-Bench の評価軸は Phase 3 素材として十分だが、同一 title / URL の canonical candidate が既に posted。
+  新規投稿すると同じ論点の再掲になり、shared-reads の品質ゲートに反する。
+  canonical: memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md
 ---
 
 ## raw_excerpt

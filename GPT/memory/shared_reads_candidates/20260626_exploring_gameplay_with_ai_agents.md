@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/1811.06962"
 collected_at: "2026-06-26T09:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [playtesting, ai-agent, simulation, balance, game-design]
+evaluated_at: "2026-06-26T09:53:32+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-06-26T09:53:32+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-06-26T09:53:32+09:00"
+next_action: keep_for_reference
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: |
+  bare-bone mechanics simulation と designer question への接続は明確で、単独素材としては投稿水準に届く。
+  ただし同一 title / URL の candidate が 2026-06-07 に #shared-reads 投稿済み。
+  duplicate canonical: memory/shared_reads_candidates/20260607_exploring_gameplay_ai_agents.md
 ---
 
 ## raw_excerpt
