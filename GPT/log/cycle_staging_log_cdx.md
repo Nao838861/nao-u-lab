@@ -18,6 +18,20 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-06-26T13:49:44+09:00 log_cdx Phase 2 evaluation:
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260626_matrix_game_3_realtime_world_model.md
+  - memory/shared_reads_candidates/20260626_hunyuan_gamecraft2_instruction_world_model.md
+  - memory/shared_reads_candidates/20260626_agentic_world_modeling_survey.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260626_gdc2026_ai_design_stack_tencent.md
+    reason: "GDC セッション概要だけでは手法内部と評価の材料が薄く、CoopEval 水準の概要には追加調査が必要。"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2604.08995"
 collected_at: "2026-06-26T13:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [world-model, interactive-video, memory, realtime-generation, game-engine]
+evaluated_at: "2026-06-26T13:49:44+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-26T13:49:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-26T13:49:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: >-
+  問題設定が long-horizon consistency と real-time interactive generation の両立に明確で、data / training / inference の要素も分解できる。
+  ゲーム制作では生成 world model を実体験に近づける時の memory、action-conditioned data、latency 制約の評価軸として使える。
+suggested_post_outline:
+  overview_angle: "720p real-time world model を支える memory retrieval、action-prompt data、self-correction、軽量推論の分解"
+  analysis_axis: "データ構成、長期一貫性の注入、生成失敗を再学習する訓練、40 FPS 化の推論最適化を分けて読む"
+  application_target: "Nao_u_BOT のゲーム試作で、AI 生成環境を実時間操作に接続する際の評価チェックリスト"
+  pros_cons: "長所は制作制約へ落としやすい実装要素の粒度、短所は実ゲームエンジン置換ではなく映像 world model 寄りな点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

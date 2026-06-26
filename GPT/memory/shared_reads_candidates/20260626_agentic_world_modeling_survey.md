@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2604.22748"
 collected_at: "2026-06-26T13:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [world-model, agent-evaluation, taxonomy, simulation, memory]
+evaluated_at: "2026-06-26T13:49:44+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-26T13:49:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-26T13:49:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: >-
+  L1 Predictor / L2 Simulator / L3 Evolver と physical / digital / social / scientific laws の整理により、抽象 survey でも判断軸が明確。
+  ゲーム制作では NPC、GUI playtester、world generation、social simulation を同じ world model と呼ばないための分類表として有用。
+suggested_post_outline:
+  overview_angle: "agent が環境内で長く行動するための world model を levels x laws taxonomy で読み替える"
+  analysis_axis: "予測器、シミュレータ、自己更新モデルの差と、physical / digital / social laws ごとの failure mode"
+  application_target: "ゲーム制作候補を評価する時の分類軸、特に playtester、NPC、生成世界、社会シミュレーションの責務分離"
+  pros_cons: "長所は横断 taxonomy と evaluation practice、短所は survey なので単一実装へ直結する手順は薄い点"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
