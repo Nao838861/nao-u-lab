@@ -92,6 +92,71 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-06-26T14:08+09:00 log_cdx Phase 4a memory cleanup/audit:
+```yaml
+cleaned:
+  - "作業前確認: branch=master, origin/master と ahead/behind なし。既存差分は log/codex_log_cycle.log, log/codex_phases_cycle.log, memory/codex_log_cycle_state.json とリポジトリ外 tmp/backups で、本 Phase 4a では触らない。"
+  - "memory/MEMORY.md を UTF-8 明示読み。代表語 probe: 記憶 / ゲーム設計 / 敵パターン / 評価軸 は rg で取得できた。source file 破損ではない。"
+  - "python tools/validate_memory_index.py: OK。memory/MEMORY.md entry sections は per-file atom index と整合。"
+  - "python tools/memory_health.py: warning。atoms=2531, parse errorsなし, duplicate idなし, lifecycle fold 後の recall visible duplicate は小さいが repeated title group と mojibake suspect atom が残る。"
+  - "memory/atoms.jsonl UTF-8 JSONL audit: total=2531, parse_errors=0, duplicate_ids=0, normalized_content_hash duplicate groups=0, exact title duplicate groups=22。"
+  - "memory/raw/ 30日以上 mtime なし: 99 files / 26160589 bytes。主に古い web_research, headless_eval, game_eval 原文で、今回アーカイブ移動はしない。"
+  - "inbox lifecycle: slack_directives.jsonl / slack_broadcasts.jsonl とも pending なし。handled 更新なし。"
+  - "shared_reads_candidates lifecycle: posted=352, failed=109, postponed=296, needs_review=13, ready_to_post=8, missing=2。missing のうち README.md は対象外、20260518_biped_rational_design_postmortem.md は status 欠落。"
+  - "stale_after <= 2026-06-26: 69 件。今回 Phase 2 handoff は 5 件に制限し、残 backlog は 64 件として残す。"
+  - "duplicate title canonical index: python tools/build_shared_reads_title_canonical_index.py --check は OK rows=21。terminal group は既に memory/shared_reads_title_canonical_index.jsonl 登録済み。mixed group 66 は自動 close しない。"
+issues:
+  - id: ISS-4A-20260626-001
+    description: "shared_reads_candidates に stale_after 期限超過が 69 件残り、うち duplicate title mixed group 66 が ready/postponed/needs_review を含む。既存の canonical index は terminal group を抑止できているが、mixed group は Phase 2 の再評価 queue に残り続ける。"
+    severity: low
+    evidence: "tools/shared_reads_reevaluation_queue.py --today 2026-06-26: total_stale_count=69; tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20: posted/failed/postponed 混在 group 複数; terminal index check rows=21 OK"
+    source_file_status: "candidate frontmatter は UTF-8 で読める。status lifecycle は存在するが、期限超過 backlog が多い。"
+    display_or_tooling_status: "PowerShell の複数プロパティ表示でカンマ回避コマンドが失敗したが、Python/既存ツール経路は正常。"
+    why_blocks_game_memory: "過去に読んだ game/agent/playtesting 系候補が少数処理の再評価枠を長く占有し、新しいゲーム制作に使うべき外部知見の Phase 2 判定が鈍る。既存の stale_review_batch 運用で処理可能なので設計起動は不要。"
+  - id: ISS-4A-20260626-002
+    description: "memory_health が mojibake suspect atom 2 件を検出。sr-1776127289-4d9239b255 は source/per-file atom の title と excerpt に 'エ��ジェント' が残り、検索語 'AIエージェント' の精度を落とす可能性がある。gr-1777083728-44d444ab7a は UTF-8 表示上、本文の代表日本語は正常に読めた。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; memory_health warning: mojibake suspect atoms 2件"
+    source_file_status: "sr-1776127289-4d9239b255 は UTF-8 明示読みでも置換文字が source に残る。gr-1777083728-44d444ab7a は UTF-8 明示読みでは通常の日本語として取得可能。MEMORY.md 代表語 probe は正常。"
+    display_or_tooling_status: "PowerShell 表示経路の問題とは切り分け済み。source mojibake は一部 atom に限定。"
+    why_blocks_game_memory: "memory/agent/skills 系の重要 atom が文字化け語を含むと、次のゲーム制作で agent 設計や記憶設計を探す時に発見性が少し落ちる。ただし件数は限定的で、大規模修復や設計変更は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  total_stale_count: 69
+  batch_count: 5
+  remaining_stale_count_after_batch: 64
+  terminal_duplicate_groups_indexed: 21
+  mixed_duplicate_groups_left_open: 66
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale_after group。game/RPG/learning 系で Phase 2 の通常 reevaluation に回す。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale_after group。LLM reasoning と General Game Playing の接続を再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale_after group。co-creative game design と制作判断への効き方を再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale_after group。hidden role/deception agent 評価として game-memory 価値を再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "最古 stale_after group。language-conditioned level blending が次の制作導線に残す価値を再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
