@@ -55,6 +55,40 @@ notes:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-06-26T14:02:56+09:00 log_cdx Phase 3b self-feedback:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780610351-1622b4d8a0
+    source_ts: "1780610351.404229"
+    title: "SkillOpt: Executive Strategy for Self-Evolving Agent Skills"
+    reason: "Phase 3b は shared-read 知見を probe や指示文へ変換する工程なので、SkillOpt の validation gate / rejected-edit buffer は、恒久ルール肥大化を避けながら次回行動を少し改善する用途に直結する。自動 SkillOpt 導入ではなく、指示・skill・probe 編集前の小さな検証 probe として扱う。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の directive / AGENTS / phase prompt / skill / checklist / self-feedback probe 編集前に、held-out validation case または counterexample を 1 つ名指しし、add/delete/replace と小さな scope を明示し、採用しない方向は rejected direction として残す一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260626-skillopt-instruction-edit-validation-gate
+    questions:
+      - "次の directive / AGENTS / phase prompt / skill / reusable checklist / self-feedback probe 編集前に、今回例だけでなく退行させてはいけない held-out case、過去失敗、counterexample、task class を 1 つ名指ししたか。"
+      - "提案テキスト変更を add / delete / replace のどれかに分類し、1 つの行動目標・明示 scope・withdrawal condition に絞ったか。"
+      - "採用しない場合や validation が弱い場合、同じ rule expansion を再発見しないよう rejected direction と理由を state / staging / local note に残したか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T11:54:53+09:00",
+  "updated_at": "2026-06-26T14:02:56+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -276,9 +276,46 @@
     "1782391911.564979",
     "1782406546.615099",
     "1779972076.823599",
-    "1778542776.395559"
+    "1778542776.395559",
+    "1780610351.404229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T14:02:56+09:00",
+      "id": "sr-1780610351-1622b4d8a0",
+      "source_ts": "1780610351.404229",
+      "title": "SkillOpt: Executive Strategy for Self-Evolving Agent Skills",
+      "decision": "adopt_probe",
+      "reason": "Score 17. SkillOpt is useful now because Phase 3b repeatedly converts shared-read insights into probes or durable instruction edits, and the main failure mode is improving the current case while bloating or regressing future behavior. Existing anti-bloat checks say to avoid permanent rules, and the recent load-strategy probe scopes context loading, but neither asks for a held-out validation case or a rejected-edit memory before changing directive-like text. Keep this as a reversible instruction-edit validation probe, not an automated SkillOpt loop or broad mandate to edit AGENTS.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next directive, AGENTS, phase prompt, skill, reusable checklist, or self-feedback probe edit, did I name one held-out validation case, past failure, known counterexample, or task class the edit must not regress instead of relying only on the current example?",
+        "Did I classify the proposed text change as add, delete, or replace, and keep the learning rate small by limiting it to one behavioral target with an explicit scope and withdrawal condition?",
+        "If the edit is not adopted or validation is weak, did I record the rejected direction and reason in state, staging, or a local note so the same tempting rule expansion is not rediscovered next cycle?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two directive, AGENTS, phase prompt, skill, checklist, or self-feedback-probe edits already name a held-out validation case or counterexample, keep the edit to one scoped behavior change, and record rejected directions when validation is weak.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible SkillOpt-inspired instruction-edit validation probe: require a held-out case or counterexample, classify add/delete/replace with small edit scope, and record rejected rule directions before durable instruction-like edits.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T11:54:53+09:00",
       "id": "sr-1782428089-f00661004b",
@@ -9792,6 +9829,18 @@
         "If the work exposes missing context, did I choose a reversible response such as one-cycle probe, state note, candidate link, or no-op before adding or editing a durable instruction file?"
       ],
       "expires_after": "Review after the next two phase/research/memory/game-start notes that mention AGENTS, MEMORY, rules, atoms, skills, raw sources, load strategy, progressive disclosure, startup context, or durable instruction edits."
+    },
+    {
+      "id": "probe-20260626-skillopt-instruction-edit-validation-gate",
+      "created_at": "2026-06-26T14:02:56+09:00",
+      "source_ts": "1780610351.404229",
+      "scope": "next directive, AGENTS, phase prompt, skill, reusable checklist, or self-feedback probe edit where Codex may improve the current case without checking held-out behavior or rejected edit directions",
+      "questions": [
+        "Before the next directive, AGENTS, phase prompt, skill, reusable checklist, or self-feedback probe edit, did I name one held-out validation case, past failure, known counterexample, or task class the edit must not regress instead of relying only on the current example?",
+        "Did I classify the proposed text change as add, delete, or replace, and keep the learning rate small by limiting it to one behavioral target with an explicit scope and withdrawal condition?",
+        "If the edit is not adopted or validation is weak, did I record the rejected direction and reason in state, staging, or a local note so the same tempting rule expansion is not rediscovered next cycle?"
+      ],
+      "expires_after": "Review after the next two directive/AGENTS/phase-prompt/skill/checklist/probe edits that mention add/delete/replace, held-out validation, counterexample, regression, rejected edit, rule expansion, durable instruction, or withdrawal condition."
     }
   ]
 }
