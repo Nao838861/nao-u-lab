@@ -241,5 +241,37 @@ designed_issues:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-06-26 10:10 JST log_cdx:
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-001
+    files_changed:
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+    summary: "stale_review_batch は Phase 2 が新規 candidate より先に最大 5 件処理し、staging stale_reviewed と candidate frontmatter 更新の両方で閉じる契約として明記した。Phase 4a は残 backlog 件数と今回 handoff 件数を分けて記録する。"
+    partial: false
+  - issue_id: ISS-4A-002
+    files_changed:
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: tools/build_shared_reads_title_canonical_index.py
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+    summary: "duplicate title group を terminal group と mixed group に分け、terminal group 全体が posted/failed の場合だけ title canonical sidecar に登録する基準へ変更した。mixed group は自動 close せず Phase 2/4a に残す。"
+    partial: false
+migrations:
+  - what: "memory/shared_reads_title_canonical_index.jsonl を terminal-only group 基準で再生成"
+    affected: "title duplicate group 21 件を terminal canonical sidecar として保持。mixed group は index から外れ、stale_review_batch または通常評価へ残る。"
+verification:
+  - "python tools/build_shared_reads_title_canonical_index.py --check -> shared-reads title canonical index ok: rows=21"
+  - "python tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit -1 を集計し、unindexed_terminal_groups=0 を確認"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

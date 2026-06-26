@@ -93,3 +93,8 @@ python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 ```
 
 `memory/shared_reads_title_canonical_index.jsonl` に未登録の duplicate title group があり、posted / failed / postponed が混在して Phase 2 の再評価を濁す場合は、Phase 4a の `issues` または `stale_review_batch` に出す。index 登録済み group は、`best_status: posted` または `best_status: failed` がある限り再評価 queue から外れる。
+## stale_review_batch / duplicate title handoff 記録 (2026-06-26)
+
+`postponed` / `needs_review` の `stale_after <= 今日` を見る時は、残 backlog 件数と今回 `stale_review_batch` に渡す件数を分けて staging に書く。Phase 2 に渡すのは最大 5 件を目安にし、処理契約は Phase 2 の `stale_reviewed` と candidate frontmatter 更新で閉じる。
+
+duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group と、`ready_to_post` / `postponed` / `needs_review` を含む mixed group に分けて扱う。terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` に `source_url` / `duplicate_paths` / `status_counts` / `decision_note` 付きで登録し、mixed group は自動 close せず `stale_review_batch` または Phase 2 の通常評価に残す。

@@ -87,3 +87,8 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 Phase 4c で `memory/shared_reads_title_canonical_index.jsonl` を追加した。これは candidate lifecycle の正本ではなく、同一 title group に `best_status: posted` または `best_status: failed` の canonical 判定がある時だけ、stale reevaluation queue から外すための軽量 sidecar である。
 
 Phase 2 で `stale_review_batch` や `memory/shared_reads_review_queue.jsonl` を扱う前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、index に terminal 判定があるものは再評価しない。必要に応じて人間が再オープンする場合は、index 行の `decision_note` / `source_url` / `duplicate_paths` を確認してから個別に扱う。
+## stale_review_batch / title canonical 運用確認 (2026-06-26)
+
+Phase 4a が `stale_review_batch` を staging に残している時は、Phase 2 は新規 candidate より先に最大 5 件を処理する。処理後は staging の `stale_reviewed` と、該当 candidate frontmatter の `status` / `candidate_status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` の両方を確認する。片方だけでは完了扱いにしない。
+
+duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` で再評価除外する。`ready_to_post` / `postponed` / `needs_review` を含む mixed group は自動 close せず、Phase 2 の個別評価か Phase 4a の `stale_review_batch` に残す。

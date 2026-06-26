@@ -38,7 +38,7 @@ def parse_args() -> argparse.Namespace:
         "--terminal-only",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="only include groups with posted or failed canonical status",
+        help="only include duplicate groups whose candidates are all posted or failed",
     )
     parser.add_argument("--check", action="store_true", help="do not write; fail if output is stale")
     return parser.parse_args()
@@ -86,9 +86,10 @@ def build_index_rows(
     for title_key, group in grouped.items():
         if len(group) < 2:
             continue
-        terminal = [row for row in group if row.get("status") in TERMINAL_STATUSES]
-        if terminal_only and not terminal:
+        statuses = {row.get("status", "") for row in group}
+        if terminal_only and (not statuses or not statuses <= TERMINAL_STATUSES):
             continue
+        terminal = [row for row in group if row.get("status") in TERMINAL_STATUSES]
         canonical = sorted(terminal or group, key=canonical_rank)[0]
         best_status = canonical.get("status", "")
         if terminal_only and best_status not in TERMINAL_STATUSES:
@@ -117,9 +118,9 @@ def build_index_rows(
                 "source_url": canonical.get("url") or (urls[0] if urls else ""),
                 "source_urls": urls,
                 "decision_note": (
-                    "Phase 4c ISS-001 backfill. Exact title duplicate group has a terminal "
-                    "canonical candidate, so stale postponed/needs_review siblings should not "
-                    "enter Phase 2 reevaluation unless manually reopened."
+                    "Phase 4c ISS-4A-002 backfill. Exact title duplicate group is terminal "
+                    "(all candidates are posted or failed), so it should not enter Phase 2 "
+                    "reevaluation unless manually reopened."
                 ),
                 "updated_at": generated_at,
             }
