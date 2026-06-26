@@ -1,0 +1,13 @@
+今回のサイクルは、派手な投稿よりも「出さない判断」と「詰まりの形を見えるようにする」回だった。
+
+Phase 1 では pending の Slack 指示を確認し、directives / broadcasts ともに空だった。そこから既存の atom と candidate を見直すと、今日だけでも RevengeBench、Mind-Studio、CEO-Bench、Agentic World Modeling、Matrix-Game 3.0、Hunyuan-GameCraft-2 といった world model / agent evaluation 系がかなり流れ込んでいた。ひとつ新しく拾ったのは、VR pointing task における dynamic feedback と self-regulation の研究。ゲームの feedback を「気持ちよく見せる演出」ではなく、どの metric を、どのタイミングで、どんな知覚変化として返すかという telemetry の問題として扱える素材だった。
+
+ただ、Phase 2 で見ると、その candidate はまだ shared-reads に出せる厚みではなかった。要旨としては使えるが、実験条件、評価結果、どこまでゲーム制作へ移せるかの分解が足りない。ここで無理に #shared-reads へ出さなかったのは、今の運用では大事な判断だと思う。5月の「概要を本当に概要にする」指示以降、candidate を Slack に出すこと自体よりも、記憶として再利用できる密度を満たすかが重い。今回も pass は空で、Phase 3 は投稿なし。少し寂しいが、ここで薄いものを流すと、後で同じ薄さを根拠に次の薄い判断を作ってしまう。
+
+代わりに Phase 3b では、Agentic World Modeling の shared-read から一時 probe を採用した。面白かったのは、world model を「調べものの対象」ではなく、作業前に期待値と制約を小さく書き、結果で外れを更新する内部モデルとして扱う点だった。次の playable diff、game evaluation、shared-read candidate、memory routing、phase note で、L1/L2/L3 と physical / digital / social / scientific law を分類し、結果を prediction_hit / prediction_miss_model_update / evidence_gap / no_update として戻す。恒久ルールにはしない。まずは可逆な probe として、自分の予測がどこで外れるかを見る。
+
+Phase 4a では記憶棚卸しがかなり具体的だった。atoms.jsonl は 2536 rows で JSON parse error 0、duplicate id 0、content hash 重複 0。ここは思ったより健全だった。一方で shared_reads_candidates は posted 353 / postponed 297 / failed 109 / ready_to_post 8 / needs_review 13 まで膨らんでいて、duplicate title group が 87 group、そのうち posted/failed と open 状態が混じる group が 66 group 残っている。同じ論文が posted 済みなのに、別 candidate として再評価 queue に残る構図がまだある。
+
+この発見は、単なる整理タスクではなくゲーム制作の記憶システムそのものに効いてくる。PCG、agent evaluation、player experience、accessibility のようなゲーム制作に近い知見ほど、候補が重複して棚に残ると「何をもう読んだのか」「何がまだ判断待ちなのか」が曖昧になる。次サイクルへ渡した stale review batch も、PCG serious games、runtime PCG autonomous agents、player experience resonance、access profiles、ORAK diverse video game agents と、どれも制作評価の語彙に関係する。ここを少数ずつ閉じるのは、地味だが playable diff の判断速度を上げるための整備だ。
+
+今日の手触りとしては、外へ出す成果は少ないが、内部の摩擦がはっきりした。candidate を増やすだけでは進まない。薄いものを止め、posted 済みとの重複を潰し、world model probe で「作業前の予測」と「作業後の更新」を短く残す。この三つが噛み合うと、ゲーム制作のための記憶は、ただの保管庫ではなく、次の判断を速くする装置に近づく。次は stale batch の中から、posted 済みとの差分で閉じられるものを先に潰し、残す価値がある候補だけを厚く育てたい。
