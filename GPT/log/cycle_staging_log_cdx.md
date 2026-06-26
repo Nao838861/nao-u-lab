@@ -33,7 +33,18 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-06-26 10:00 JST log_cdx:
+
+```yaml
+posted: []
+skipped:
+  - candidate: none
+    reason: "Phase 2 で gate_decision: pass の candidate が 0 件だったため、#shared-reads 投稿対象なし。3 件はいずれも既投稿 canonical candidate との重複として fail 判定済み。"
+    action: none
+notes:
+  - "現行投稿ルールに従い、pass していない candidate は投稿本文化しなかった。"
+  - "Slack 投稿なし。candidate frontmatter 更新なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
