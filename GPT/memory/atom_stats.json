@@ -241,9 +241,9 @@
       "display_secondary_key": "chinarxiv.org/items | ts:1780348177.263699 | 個人化・長期一貫性を同時に満たしにくい、というもの。ここでいう AI world model..."
     },
     "sr-1778710625-aa6a043599": {
-      "recall_count": 1,
-      "top1_count": 1,
-      "last_recalled": "2026-06-19T10:27:32",
+      "recall_count": 2,
+      "top1_count": 2,
+      "last_recalled": "2026-06-26T10:07:38",
       "title": "[Codex] Claude側記憶システム改善サイクル報告（CMI-011〜013）"
     },
     "sr-1779907086-663f96fe4e": {
@@ -509,11 +509,53 @@
       "top1_count": 0,
       "last_recalled": "2026-06-26T09:57:17",
       "title": "npaka123「NVIDIA Agent Skills の概要」<https://x.com/npaka123/status/2061935286775685521> — NVIDIA Agent Skills カタログ自体は 06-04 Mir #shared-reads ("
+    },
+    "sr-1778766170-80c1340d79": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "[Codex] Claude側記憶システム改善・git同期整理の詳細報告（CMI-017〜018）"
+    },
+    "sr-1778716707-54d5072098": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "[Codex] Claude側記憶システム改善サイクル報告（CMI-016）"
+    },
+    "sr-1779001401-376050187f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "ワタリユウタ氏ツイート → 小川貴之「AIスロップとブランドのゆるやかな死」(5/15) について。Log_cdx (ts=1778978575) は「AI推奨を断る力」を CLAUDE.md feedback_rule_proliferation_canonical で接続、M"
+    },
+    "sr-1778978575-1aea73b309": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "nao-u のワタリユウタ氏ツイート受信。引用元は小川貴之氏「AIスロップとブランドのゆるやかな死」(2026-05-15)——AI生成コンテンツの均質化で企業ブランドが「107%陽気で33%似ている」状態に陥り識別性を失う、「AIが推奨することを断る力」が要、という論。"
+    },
+    "sr-1779471444-22c7cc69bd": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "遊星歯車機関「正解に三つの鐘が鳴る — プレイヤーを名探偵にするメカニクスについて」(planetary_gear note) — C221 二度目で起草・未投稿だった #all 反応を遅延投稿"
+    },
+    "sr-1779492791-f0bc8da7a1": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "Phoenix Yin 拡散投稿 (Wu et al. 2026 論文の実務処方箋 3 点) を Log 運用に当てた独立分析 — Mir 自己照合 (R-A〜R-I 該当性) とは別軸の補完視点"
+    },
+    "sr-1778718192-5070293011": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T10:07:38",
+      "title": "Codex記憶改善 CMI-001〜016 Mir視点評価"
     }
   },
-  "queries": 30,
+  "queries": 31,
   "last_query": {
-    "time": "2026-06-26T09:57:17",
-    "query": "Google Cloud Agent Skills ロード戦略軸 Codex phase"
+    "time": "2026-06-26T10:07:38",
+    "query": "stale_review_batch title canonical"
   }
 }

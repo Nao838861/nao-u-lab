@@ -6096,3 +6096,9 @@ fatal: unable to read 129a5a5e03adfef2fa61814c3fbddd0e5efd6228
 2026-06-26T09:05:53 run start (elapsed 104min >= 90min)
 2026-06-26T09:06:20 run failed: slack_memory_ingest.py failed exit=3221225477: 
 2026-06-26T09:20:54 run start (elapsed 119min >= 90min)
+2026-06-26T09:22:29 run failed: git commit failed: error: inflate: data stream error (incorrect data check)
+error: corrupt loose object '08ab6bdc321f976b59c3d34dd3abac65b073d0fe'
+fatal: unable to read 08ab6bdc321f976b59c3d34dd3abac65b073d0fe
+2026-06-26T09:35:53 skipped: elapsed 13min < 90min
+2026-06-26T09:50:53 skipped: elapsed 28min < 90min
+2026-06-26T10:05:53 skipped: elapsed 43min < 90min
