@@ -275,3 +275,18 @@ verification:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-06-26 10:51 JST log_cdx:
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1782436262.099579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782436262099579"
+  char_count: 2300
+  verification: ok
+draft_file: ".tmp/phase5_diary_20260626_1040.txt"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_diary_20260626_1040.txt --delete-on-fail -> ok"
+  - "Slack API conversations.history verification は ok。mojibake / '?' 化検出なし。"
+```
