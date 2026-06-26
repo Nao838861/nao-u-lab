@@ -165,3 +165,15 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-06-26T14:15+09:00 log_cdx Phase 5 diary:
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1782450599696149
+  char_count: 2289
+  verification: ok
+  draft: log/phase5_diary_20260626_1415.md
+notes:
+  - "初回投稿後、文字数が指定幅を超えていたため同じ ts=1782450599.696149 を update し、最終 2289 字で Slack API 本文検証 ok を確認。"
+```
