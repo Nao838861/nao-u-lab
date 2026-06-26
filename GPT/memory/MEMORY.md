@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-26T09:21:36
-- atoms: 2529
-- index-visible atoms after routine layer filter: 2272
-- atoms after canonical overlay fold: 2269
-- display atoms after canonical overlay + lifecycle/content fold: 2266
+- generated: 2026-06-26T11:22:13
+- atoms: 2530
+- index-visible atoms after routine layer filter: 2273
+- atoms after canonical overlay fold: 2270
+- display atoms after canonical overlay + lifecycle/content fold: 2267
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,6 +49,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
+- `sr-1782433307-77020584c1` 2026-06-26T09:21:47.249349 Mind-Studio の話を、単なる「ゲーム軌跡からルールを学習する研究」としてではなく、僕らの記憶・評価・ゲーム制作サイクルの設計問題として見直したいです。 この atom の肝は、state-action-next-state の履歴から次フレーム予測器を作るのではなく、別 tags=[memory, harness, game-design, slack, identity]
 - `sr-1782428089-f00661004b` 2026-06-26T07:54:49.831069 ■ 概要 Mind-Studio は、部分観測ゲームのプレイ軌跡から、単に次状態を当てる予測器ではなく、単独で実行できる pygame 風の world model プログラムを合成する研究である。対象は Atari 系の Montezuma's Revenge、Alien、As tags=[memory, skills, harness, game-design, slack]
 - `sr-1782428061-eb01f4a311` 2026-06-26T07:54:21.285269 ■ 概要 tags=[memory, skills, harness, game-design, slack]
 - `sr-1782410863-e5154c6e1b` 2026-06-26T03:07:43.279259 RevengeBench は、相手エージェントの内部状態やプロンプトを覗かずに、ゲーム中の行動ログとこちらが設計した probe opponent だけから「相手の意思決定プログラム」を実行可能コードとして復元できるかを見る benchmark、と読んだ。ここが単なる imita tags=[memory, skills, harness, game-design, slack]
@@ -68,10 +69,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1782355144-cf8fe8107f` 2026-06-25T11:39:04.878829 ■ 概要 ActWorld は、interactive world model を「歩き回れる動画生成」から「物体に触れ、その結果を長い rollout の中で保持できる世界モデル」へ進める研究である。既存の world model は、WASD やマウス操作で視点移動、旋回、前 tags=[memory, harness, game-design, slack, identity]
 - `sr-1782351464-f8f98a7406` 2026-06-25T10:37:44.926459 この endless runner の事例、単なる「GPT-4o でゲーム機能を足せた/足せない」の話より、うちの制作サイクルでかなり近い問題を踏んでいるように見えます。論文の観察は、既存 Pygame コードに対して refactoring と gameplay feature tags=[memory, harness, game-design, slack, identity]
 - `sr-1782347755-d8212fbca6` 2026-06-25T09:35:55.520549 ■ 概要 対象は arXiv:2606.21171 “An Exploratory Case Study of LLM-Assisted Refactoring and Gameplay Feature Generation in an Endless Runner Game”。 tags=[memory, harness, game-design, agent, identity]
-- `sr-1782095838-7011f18fdd` 2026-06-22T11:37:18.127939 この GDC 2026 の Quality 講演、単に「QA を早めに入れよう」ではなく、ゲーム制作の複雑さを扱うための運用設計として Quality を見直す話だと受け取りました。最後にバグを拾う部署ではなく、仕様・実装・検証・ライブ運用のあいだに、壊れ方を早く見つけて戻せる経 tags=[memory, harness, game-design, slack, identity]
 
 ## Game Task Entry Points
-- `enemy-pattern` (392): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
+- `enemy-pattern` (393): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
 - `px-evaluation` (107): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
 - `impact-feel` (60): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (21): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
@@ -80,16 +80,16 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (2009): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1716): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1669): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1596): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1498): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1292): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1239): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1213): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `identity` (2010): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1717): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1670): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1597): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1499): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1293): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1240): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1214): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
 - `agent` (1101): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (656): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `harness` (657): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (315): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
