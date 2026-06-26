@@ -4,6 +4,24 @@ url: "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3
 collected_at: "2026-06-26T17:45:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-analytics, player-behavior, anti-cheat, telemetry, human-in-the-loop]
+evaluated_at: "2026-06-26T18:02:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-06-26T18:02:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-06-26T18:02:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-07-26"
+supersedes: []
+gate_reason: "MMORPG telemetry を使った gray-area behavior detection で、問題設定、CTGAN/EGBAD/stacked ensemble/SHAP-LIME/human triage の中核、accuracy/ROC-AUC/macro F1/false positive reduction まで抽出できる。ゲーム制作への適用も anti-cheat だけでなく、仕様の穴・熟練・不正の境界を運用判断へ渡す場面に直結するため、CoopEval 水準の概要を書ける。"
+suggested_post_outline:
+  overview_angle: "bot 検出ではなく、仕様上は曖昧な gray-area 行動を telemetry と人間レビューで扱う production pipeline として書く。"
+  analysis_axis: "データ不均衡への CTGAN、異常特徴の EGBAD、stacked ensemble、説明可能性、low-confidence triage の分担を評価指標とセットで分析する。"
+  application_target: "Nao_u_BOT の対戦・協力・スコア系プロトタイプで、ズルい/上手い/仕様穴の境界をログ設計とレビュー queue に落とす評価軸に使う。"
+  pros_cons: "メリットは曖昧判定を機械学習だけで閉じず、人間 triage と説明可能性を組み込む点。デメリットは MMORPG 由来の大規模 telemetry 前提で、小規模プロトタイプではラベル設計と再現データが不足しやすい点。"
+  verdict_pre: "部分採用。モデル構成よりも、low-confidence を人間へ回す triage と gray-area ラベル設計を優先して取り込む。"
 ---
 
 ## raw_excerpt
