@@ -1,105 +1,53 @@
-# log_cdx Cycle Staging — 2026-06-26 19:43
+# log_cdx Cycle Staging — 2026-06-26 21:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-- 2026-06-26T19:50+09:00 log_cdx Phase 1:
-  - Slack pending: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending 0 件。
-  - 直近 Slack / atom 確認: #shared-reads / #all-nao-u-lab 由来で Mind-Studio、CEO-Bench、Agentic World Modeling、Matrix-Game 3.0、Aion telemetry gray-area detection、RevengeBench が直近 atom / candidate として存在することを確認。
-  - 外部研究ログ確認: `memory/raw/web_research/results.jsonl` の 2026-06-26 取得分に AutoBG、PTCG-Bench、RogueAI、MemoPilot、RevengeBench、Mind-Studio などが含まれることを確認。
-  - 新規検索確認: game playtesting / telemetry / LLM agents / PCG 関連で arXiv・GDC・IxDF 等を検索。検索上位の `RuleSmith`、`Atari Games Challenge`、`GUI Agents for Continual Game Generation`、`Runtime Evaluation of PCG`、`Consistent Player Behavior Across Games`、`PlayTest`、interactive-fiction serious games は既に candidate または shared-reads 投稿済み。
-  - 追加 candidate: なし。理由: 今回見つかったゲーム制作向け外部情報は既存 `memory/shared_reads_candidates/` または #shared-reads 投稿済みの重複だったため、Phase 1 では重複ファイルを増やさず記録のみ。
-  - 既存候補参照:
-    - `memory/shared_reads_candidates/20260626_player_behavior_gray_area_detection.md` — Aion MMORPG telemetry で bot / gray-area behavior を扱う候補。
-    - `memory/shared_reads_candidates/20260626_agentic_world_modeling_survey.md` — world model を L1/L2/L3 と law 種別で分類する survey 候補。
-    - `memory/shared_reads_candidates/20260626_matrix_game_3_realtime_world_model.md` — real-time / long-horizon memory interactive world model 候補。
-    - `memory/shared_reads_candidates/20260626_ceo_bench_long_horizon_agents.md` — 長期 business simulation による LLM agent 評価候補。
-    - `memory/shared_reads_candidates/20260626_mind_studio_executable_world_models.md` — 部分観測ゲームから executable world model を作る候補。
-    - `memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md` — 行動ログから policy を復元する game-agent 評価候補。
+2026-06-26T21:59:40+09:00 Phase 1 収集メモ:
+
+- `memory/shared_reads_candidates/20260626_safari_agentic_fault_attribution.md` - 長い agent 実行軌跡を一括投入せず、検索・読取・短期記憶で失敗箇所を調査する SAFARI。ゲームAIテストや replay failure attribution の候補。
+- `memory/shared_reads_candidates/20260626_autobg_board_game_design_assistant.md` - ボードゲーム設計の ideation から rulebook refinement と個別フィードバックまでを扱う AutoBG。小規模ルール設計支援の候補。
+- `memory/shared_reads_candidates/20260626_beyond_predefined_scripts_generative_npc_dialogue.md` - 生成 NPC 会話の player perception study。LLM NPC の自然さだけでなく副作用や制御困難さを拾う評価観点の候補。
+
+確認済み:
+
+- `slack_directives.jsonl` / `slack_broadcasts.jsonl`: pending なし。
+- `memory/raw/web_research/results.jsonl`: 直近 arXiv 収集から SAFARI / AutoBG を候補化。
+- Slack raw: #shared-reads / #all-nao-u-lab の直近外部URL言及を確認。Beyond Pre-Defined Scripts を候補化。
 
 ## Phase 2: 分析
-- 2026-06-26T19:47:50+09:00 log_cdx Phase 2:
-  ```yaml
-  total_candidates: 0
-  pass: []
-  fail: []
-  postpone: []
-  stale_reviewed: []
-  terminal_skipped:
-    - path: memory/shared_reads_candidates/20260626_player_behavior_gray_area_detection.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-    - path: memory/shared_reads_candidates/20260626_agentic_world_modeling_survey.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-    - path: memory/shared_reads_candidates/20260626_matrix_game_3_realtime_world_model.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-    - path: memory/shared_reads_candidates/20260626_ceo_bench_long_horizon_agents.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-    - path: memory/shared_reads_candidates/20260626_mind_studio_executable_world_models.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-    - path: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md
-      status: posted
-      reason: "already posted with permalink; do not reopen to ready_to_post"
-  notes:
-    - "stale_review_batch was absent in staging, so no stale candidate was processed."
-    - "Phase 1 recorded no additional candidate; listed existing candidates were terminal posted records."
-    - "Each terminal-skipped file already has evaluation frontmatter and Slack evidence."
-  ```
+2026-06-26T22:14:00+09:00 Phase 2 判定:
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260626_safari_agentic_fault_attribution.md
+fail:
+  - path: memory/shared_reads_candidates/20260626_autobg_board_game_design_assistant.md
+    reason: "title canonical index で同一 title group が terminal posted/failed。新規差分がなく重複投稿になる。"
+postpone:
+  - path: memory/shared_reads_candidates/20260626_beyond_predefined_scripts_generative_npc_dialogue.md
+    reason: "観点は有用だが、study design と評価結果の粒度が candidate 内だけでは不足。原文確認後に再判定。"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
-- 2026-06-26T19:56:21+09:00 log_cdx Phase 3:
-  ```yaml
-  posted: []
-  skipped: []
-  no_action:
-    reason: "Phase 2 pass list was empty; all listed candidates were already terminal posted records."
-    phase2_pass_count: 0
-    slack_posted: false
-    candidate_updates: false
-  notes:
-    - "No candidate met the Phase 3 input condition gate_decision: pass in this cycle."
-    - "Existing posted candidates were not reopened or reposted."
-  ```
+2026-06-26T22:10:34+09:00 Phase 3 Shared-reads 投稿:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_safari_agentic_fault_attribution.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782479421683459"
+    ts: "1782479421.683459"
+    char_count: 4493
+skipped: []
+notes:
+  - "Phase 2 pass candidate SAFARI を arXiv PDF で再確認し、方法・評価・latency・STM ablation の限界まで含む 4493 字の分析として投稿した。"
+  - "投稿前レビュー: required sections OK, URL only in final URL section, forbidden strings absent."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-- 2026-06-26T20:01:51+09:00 log_cdx Phase 3b:
-  ```yaml
-  self_feedback:
-    selected:
-      id: sr-1782449734-b32b074ce1
-      source_ts: "1782449734.919369"
-      title: "Matrix-Game 3.0: Real-Time and Streaming Interactive World Model with Long-Horizon Memory"
-      reason: "直近の高品質 shared-reads で、memory / harness / game-design / agent / operation / evaluation をまたぐ。Codex のゲーム評価は一歩予測や状態スロットを見る probe は増えているが、長い rollout で object identity・空間配置・過去イベントが保たれるかと、リアルタイム操作の latency 制約を同時に見る観点がまだ薄い。"
-    scores:
-      relevance: 3
-      actionability: 3
-      evidence: 3
-      non_redundancy: 2
-      risk_control: 3
-      reversibility: 3
-      total: 17
-    decision: adopt_probe
-    change:
-      summary: "Matrix-Game 由来の一時 probe を state に追加。次の interactive world-model / long rollout / generated-environment / NPC-world-state-memory / game-evaluation trace で、長期保持すべき anchor、直近画面以外からの re-check point、latency または lightweighting 制約を確認する。"
-      files:
-        - memory/shared_reads_self_feedback_state.json
-        - log/cycle_staging_log_cdx.md
-    probe:
-      id: probe-20260626-matrix-game-long-horizon-memory-latency
-      questions:
-        - "次の interactive world-model note、long rollout playtest、generated-environment prototype、NPC/world-state memory feature、game-evaluation trace の前に、object identity、spatial layout、camera pose、player route、inventory/event state、earlier cause-effect など、長く保つべき anchor を 1 つ名指ししたか。"
-        - "直近画面や直前 action だけで判断せず、prior frame/trace row、room revisit、event token、object id、route segment、seed checkpoint など、非直近から戻って確かめる retrieval / re-check point を 1 つ残したか。"
-        - "real-time interaction が関係する場合、frame budget、input response、model size、cache/retrieval cost、browser/headless runtime などの latency / lightweighting 制約を記録したか。未確認なら consistency_latency_unverified とラベルしたか。"
-      withdrawal_condition: "次の2件の対象ノートで、長期 anchor、非直近 re-check、latency/lightweighting 制約の記録または未確認ラベルが自然に入っていれば probe を撤退する。"
-    anti_bloat_check:
-      adds_permanent_rule: false
-      replaces_or_simplifies_existing: false
-      conflict_checked: true
-  ```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
