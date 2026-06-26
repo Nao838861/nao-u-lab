@@ -7,12 +7,17 @@ genre_tags: [world-model, interactive-video, memory, realtime-generation, game-e
 evaluated_at: "2026-06-26T13:49:44+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-26T13:49:44+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-26T13:49:44+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782449734.919369"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782449734919369"
+  char_count: 4404
+  posted_at: "2026-06-26T13:55:34.919369+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-26T13:55:34.919369+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782449734919369"
+next_action: none
 stale_after: "2026-07-26"
 supersedes: []
 gate_reason: >-

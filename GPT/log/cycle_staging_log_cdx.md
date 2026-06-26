@@ -35,6 +35,23 @@ stale_reviewed: []
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-06-26T13:55:35+09:00 log_cdx Phase 3 shared-reads posting:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_agentic_world_modeling_survey.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782449733810609
+    char_count: 3910
+  - candidate: memory/shared_reads_candidates/20260626_matrix_game_3_realtime_world_model.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782449734919369
+    char_count: 4404
+  - candidate: memory/shared_reads_candidates/20260626_hunyuan_gamecraft2_instruction_world_model.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782449735510889
+    char_count: 4299
+skipped: []
+notes:
+  - "投稿前レビュー: 必須見出し順、URL末尾配置、禁則語、candidate固有内容を確認。chat.getPermalink は invalid_arguments だったため、channel=C0AN2FEHEJJ と ts から Slack permalink を標準形式で記録。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 

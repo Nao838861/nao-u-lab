@@ -1,0 +1,35 @@
+■ 概要
+“Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond” は、world model という言葉が video generation、model-based RL、GUI agent、multi-agent simulation、scientific discovery で別々に使われている状況を、agent の長期行動に必要な環境モデルとして再整理する survey である。問題設定は、AI が単発の文章生成から、物体操作、ソフトウェア操作、他者との協調、実験設計のような sustained interaction へ移ると、次状態を予測する力だけでは足りず、環境の制約を保ったまま複数ステップを想像し、予測が外れた時に自分のモデルを改訂する能力が bottleneck になる、というもの。
+
+著者らの中核は “levels x laws” taxonomy である。levels は L1 Predictor、L2 Simulator、L3 Evolver の 3 段階。L1 は局所的な one-step transition を当てる段階で、たとえば次フレーム、次状態、次 UI 変化を予測する。L2 は action-conditioned rollout を複数ステップに伸ばし、agent が「この行動列を取ると何が起きるか」を試せる段階。L3 は予測が新しい証拠に負けた時、自分の world model を更新し、未知条件や regime shift へ適応する段階である。laws は physical、digital、social、scientific の 4 種で、物理法則、ソフトウェアやプロトコルのルール、人間・集団の規範、科学的仮説空間を分ける。
+
+survey は 400 本以上の研究と 100 以上の代表システムを横断し、model-based RL、video world model、web/GUI agent、multi-agent social simulation、AI-driven scientific discovery を同じ表に載せる。評価についても、見た目の品質や one-step accuracy ではなく、意思決定に効くか、domain law を守るか、失敗から更新できるかを見るべきだとする。結論は、world model を「受動的な予測器」から「agent が環境内で安全に試し、修正し、場合によっては環境を作り替えるための操作可能な内部モデル」へ進める必要がある、というもの。
+
+■ 内容分析
+この論文の価値は、world model を映像生成の性能競争だけで読まないための分類軸をくれる点にある。ゲーム文脈では、最近の interactive video model を見ていると、720p、FPS、長期一貫性、camera control の話に引っ張られやすい。しかし制作で本当に欲しいのは「そのモデルがプレイヤー行動の結果を評価できるか」「ルール違反や状態破綻を検出できるか」「未知の仕掛けや UI に出会った時に仮説を更新できるか」である。L1/L2/L3 はこの差を分けるのに使いやすい。
+
+特に L2 Simulator と L3 Evolver の境界が重要だ。L2 は、既知のルール内で roll out する。ゲームの headless evaluator なら、固定 seed、固定メカニクス、固定報酬関数で 1000 run を回す段階に近い。L3 は、rollout が外れた時に「モデルの前提が間違っていた」と扱う。たとえば NPC が想定外の会話遷移をした、UI の affordance がプレイヤーに理解されなかった、物理挙動が実装と仕様で違った、という時に、評価器自身が観測ログから検査軸を更新する必要がある。この survey は L3 を単なる self-improvement の美称にせず、新証拠で world model を改訂する段階として定義している点がよい。
+
+laws の分け方も実務的である。physical law は衝突、移動、視線、速度、保存則のような制約を扱う。digital law は UI 状態、API、ゲームルール、inventory、cooldown、保存データの整合性を扱う。social law は NPC やプレイヤー集団の期待、信頼、交渉、協調崩壊を扱う。scientific law は実験仮説や因果関係の更新を扱う。ゲーム制作ではこれらが混ざるため、1 つの “world model” に全部を期待すると評価が濁る。たとえば対話 NPC の失敗は social law の破綻に見えるが、実際には digital law、つまりクエストフラグや会話状態の不整合かもしれない。
+
+限界は、survey である以上、単一の実装手順を直接渡してくれるわけではないこと。400 本以上を統合する広さは強い一方で、各領域の評価指標をそのまま横移植できるほど細かくはない。また L3 Evolver は概念として魅力的だが、現場に入れるには、どの証拠でモデルを更新してよいか、誤更新をどう rollback するか、評価器が制作意図まで勝手に変えないようにする境界が必要になる。
+
+■ 自分達の環境への適用
+Nao_u_BOT のゲーム制作では、この taxonomy を「world model 系記事を読んだ時の分類表」として使うのがよい。新しい video model や interactive agent を見た時に、まず L1/L2/L3 のどこか、physical/digital/social/scientific のどの law を扱っているかを候補ファイルに明記する。これだけで、見た目の派手さと制作上の有用性を分けられる。
+
+headless 評価では、当面 L2 を主戦場にする。つまり、ゲームの最小 mechanics harness に対して、行動列を複数ステップ roll out し、勝敗、到達不能、支配戦略、報酬破綻、状態不整合を検出する。ここで L3 を急に入れると、評価器がゲームの意図を勝手に再解釈する危険がある。L3 は、失敗ログを読んで次回の検査項目候補を出す程度に留める。たとえば「この prototype では UI 理解の失敗が多いので、次回は tutorial affordance を検査する」という probe 提案までなら安全である。
+
+記憶システムにも使える。shared-reads の候補を atom 化する時、単に “world-model” tag を付けるのではなく、`level: L2 Simulator`、`law: digital/social` のような軽い分類を付ける。後でゲーム制作タスクから recall する時、「映像生成の世界モデル」ではなく「digital law を守る L2 評価」「social law の破綻検出」のように引ける。これは Phase 3b/4a の probe 設計にも効く。記事を読んで終わりではなく、次の playable diff に対してどの law を検査するかを選べる。
+
+小さな検証案としては、既存の prototype 1 本に対して、失敗を physical/digital/social の 3 つに分類するログ schema を追加する。例として、移動できない、衝突がおかしい、速度が読めないなら physical。クエストフラグ、UI ボタン、報酬、cooldown の破綻なら digital。NPC の意図、説明不足、プレイヤーの期待外れなら social。これを 10 件だけ人手で付けても、次に必要な評価器が映像・メカニクス・会話のどれかを分けられる。
+
+■ メリット・デメリット
+メリットは、world model という広すぎる言葉を、制作上の判断に使える分類へ落とせること。L1/L2/L3 によって「予測できる」と「行動を試せる」と「失敗から改訂できる」を分けられる。laws によって、物理、ゲームルール、社会的期待、科学的仮説を混同しにくくなる。新規論文の候補評価、headless probe、記憶 tag、制作後レビューの共通語彙として使える。
+
+デメリットは、分類が便利すぎて、実装を伴わないラベル貼りで満足する危険があること。特に L3 Evolver は強い言葉なので、実際には「失敗ログから次の検査案を出す」程度なのに、自律改善できているように見せてしまいやすい。また social law は定量化が難しく、NPC 会話やプレイヤー期待を雑な数値に潰すと、重要な違和感を見落とす。
+
+■ 判定
+採用。実装技術としてではなく、world model 関連候補を評価する分類軸として採用する。まずは shared-reads candidate と game probe の metadata に L1/L2/L3 と law 種別を軽く残す。L3 は自動改訂ではなく、失敗ログから次の検査候補を出す限定用途で扱う。
+
+■ URL
+https://arxiv.org/abs/2604.22748

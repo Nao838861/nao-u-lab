@@ -1,0 +1,37 @@
+■ 概要
+“Hunyuan-GameCraft-2: Instruction-following Interactive Game World Model” は、生成型 game world model を、固定 keyboard input だけで操作する段階から、自然言語、keyboard、mouse を同じ制御面に載せる段階へ進めようとする technical report である。問題設定は、既存の open-ended game environment 生成が static scene synthesis から dynamic interactive simulation へ進んでいる一方で、操作 schema が硬く、annotation cost も高いため、多様な in-game interaction や player-driven dynamics を扱いにくい、というもの。
+
+提案は instruction-driven interaction である。ユーザーは自然言語 prompt、keyboard signal、mouse signal を通じて、生成された game video content 内の camera motion、character behavior、environment dynamics を制御する。たとえば “open the door”、 “draw a torch”、 “trigger an explosion” のような free-form instruction に対して、世界側が時間的に一貫し、因果的にそれらしい反応を返すことを狙う。固定 action id ではなく、意味を持つ指示と低レベル操作を併用する点が特徴である。
+
+データ面では、interactive video data という概念を定義し、大規模な unstructured text-video pairs から causally aligned interactive datasets を自動構築する手順を入れる。モデル面では、14B image-to-video Mixture-of-Experts foundation model を土台に、text-driven interaction injection mechanism を組み込む。評価面では InterBench を導入し、camera motion、character behavior、environment dynamics が自由形式の instruction にどう応答するかを見る。結論は、game world model の評価では、映像の自然さだけでなく、指示と結果の因果対応を測る必要がある、というもの。
+
+■ 内容分析
+この論文で重要なのは、interaction を keyboard schema に閉じないことだ。従来の interactive video/game world model は、前進、後退、左旋回、右旋回のような固定入力に合わせて映像を変える形になりやすい。これは navigation には向くが、ゲーム内で起きる多くの出来事、扉を開ける、火をつける、何かを拾う、NPC を反応させる、爆発を起こす、道具を使う、といった意味的行為を表しにくい。Hunyuan-GameCraft-2 は、自然言語 instruction を制御信号として入れることで、この硬さを崩そうとしている。
+
+ただし、自然言語で操作できることは、そのままゲームとして成立することではない。free-form instruction に映像が反応しても、ゲームルール上の状態が保存されるか、失敗条件があるか、報酬やリスクと結びつくかは別である。“open the door” に対して扉が開く映像を生成できても、その扉が鍵を要求したのか、開いた状態が後で参照されるのか、敵 AI の経路が変わるのか、セーブデータに残るのかは、video world model 単体では保証しにくい。この論文の成果は、interaction semantics の表現力を上げる方向にあり、ゲームロジックの整合性は別レイヤーとして残る。
+
+InterBench の見方もそこに注意がいる。camera、character、environment の応答を見る benchmark は、interactive generation の評価としてはかなり有用である。見た目だけの VBench 系評価では、指示に従ったか、因果的に妥当か、環境が反応したかが抜けやすい。しかし InterBench が測るのは、主に生成された video が instruction に対応しているかであって、プレイヤー体験全体ではない。ゲーム制作で使うなら、instruction following と rule consistency を分けて評価する必要がある。
+
+causally aligned interactive dataset の自動構築も面白い。大規模 text-video pairs から、ただ caption と動画を対応させるのではなく、「この指示や操作がこの変化を起こした」と読める形へ変換する。これは我々の制作ログにも近い。プレイログを残す時、入力列と結果だけではなく、設計者が期待した因果、プレイヤーが試した意図、実際に起きた状態変化を対応させると、後の評価が強くなる。
+
+限界は、自然言語 instruction が柔らかすぎることだ。自由形式は表現力を上げるが、評価時には曖昧さも増える。“make it scary” や “help the player” のような指示は、どの状態変化が成功かを定義しにくい。ゲーム制作では、自然言語で広く入力を受けつつ、内部では typed action、precondition、postcondition、failure reason に落とさないと、検証不能になる。
+
+■ 自分達の環境への適用
+Nao_u_BOT の prototype では、自然言語 instruction をそのまま実行する generator としてではなく、interaction evaluation の軸として使うのがよい。たとえば NPC、環境イベント、カメラ演出、tutorial hint に対して、「プレイヤーが自然語で表す意図」と「ゲーム内で許可された action schema」を対応させる。これにより、固定コマンドでは表しにくい遊びの期待を、検査可能な形に変換できる。
+
+具体的には、各 prototype に `instruction_probe` を 5 件だけ作る。例は「扉を開けたい」「敵から隠れたい」「松明で暗い場所を照らしたい」「NPC に助けを求めたい」「爆発で障害物を壊したい」のような自然文でよい。それぞれに expected precondition、accepted actions、observable result、failure reason を付ける。headless 評価では自然文を直接理解させる必要はなく、対応する action schema を実行し、結果が observable result に届くかを見る。
+
+記憶システム側では、shared-reads や game feedback を「自然文の願望」から「検査可能な interaction」に変換する訓練として使える。Nao_u のフィードバックには、操作感、予測可能性、プレイヤーの意図の通りやすさに関する自然文が多い。それをそのままルールにするのではなく、`player_intent`、`action_schema`、`expected_world_response`、`failure_signal` に分ける。この変換は Hunyuan-GameCraft-2 の instruction-driven interaction を、小規模制作向けに落とした形になる。
+
+Phase 3b の probe としては、次の playable diff で「自然文 instruction 5 件に対する応答表」を作るだけで十分である。実装済みなら replay で確認し、未実装なら feature gap として記録する。重要なのは、AI が自然文を処理することではなく、プレイヤーが自然に期待する行為とゲーム内 action がずれていないかを見ること。たとえば「隠れたい」と思った時に crouch しかなく、視線判定や遮蔽物がないなら、instruction は通っていない。
+
+■ メリット・デメリット
+メリットは、interaction を固定入力列ではなく、意味を持つ player intent として扱えること。これは NPC 会話、環境ギミック、チュートリアル、カメラ演出、イベント生成に効く。InterBench 的な評価発想を使えば、映像や演出の自然さだけでなく、「指示に応答したか」「環境が因果的に変わったか」を分けて見られる。
+
+デメリットは、自然言語 instruction をそのまま採用すると、成功条件が曖昧になりやすいこと。ゲームでは、できること、できないこと、失敗する理由が面白さの一部なので、何でもそれらしく映像化する world model は、ルールの手触りを薄める危険がある。また video generation ベースの評価は、内部状態や再現性を保証しないため、deterministic な headless 検査と併用しないと制作判断には使いにくい。
+
+■ 判定
+部分採用。自然言語でゲーム世界を直接動かす基盤としては採用しない。採用するのは、player intent を instruction として列挙し、action schema、precondition、postcondition、failure reason に落とす評価手順である。次の prototype では 5 件の `instruction_probe` を作り、操作と世界応答のずれを見る。
+
+■ URL
+https://arxiv.org/abs/2511.23429
