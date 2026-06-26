@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T07:57:45+09:00",
+  "updated_at": "2026-06-26T09:57:55+09:00",
   "reviewed_source_ts": [
     "1782376813.513569",
     "1782384847.126309",
@@ -274,9 +274,46 @@
     "1782355145.871629",
     "1782391911.564979",
     "1782406546.615099",
-    "1779972076.823599"
+    "1779972076.823599",
+    "1778542776.395559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T09:57:55+09:00",
+      "id": "sr-1778542776-efd5802eca",
+      "source_ts": "1778542776.395559",
+      "title": "Google Cloud Agent Skills: load strategy axis for progressive disclosure",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Codex phase work frequently starts from AGENTS, MEMORY, Slack directives, atoms, and task-specific rules, but can still mix full startup context, task-triggered recall, and durable rule edits into one undifferentiated memory step. Existing probes cover memory utility, skill lifecycle, and candidate gates, but not the narrower load-strategy choice: what must be loaded now, what can stay lazy, and when a missing trigger should become a small probe instead of a permanent instruction. Keep this reversible and scoped to phase/research/memory/game-start work.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next phase run, memory recall/index change, shared-read analysis, game-start task, or skill/rule lookup, did I name the load strategy as startup full-load, task-triggered rule load, atom recall, skill invocation, raw-source lookup, or defer/no-load?",
+        "Did I keep the loaded context to the smallest source-of-truth set that answers the current decision, and record the trigger that justified each extra rule, atom, skill, or raw file instead of reading broad context by habit?",
+        "If the work exposes missing context, did I choose a reversible response such as one-cycle probe, state note, candidate link, or no-op before adding or editing a durable instruction file?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two phase/research/memory/game-start notes that mention AGENTS, MEMORY, rules, atoms, skills, or raw sources already name the load strategy, justify extra context loads by trigger, and avoid durable instruction edits unless a repeated failure is identified.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Google Agent Skills-inspired load-strategy probe: classify context loading mode, justify extra loads by trigger, and prefer reversible state/probe responses before durable instruction edits.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T07:57:45+09:00",
       "id": "sr-1779972076-23523acc99",
@@ -9694,6 +9731,18 @@
         "If multiple bullet classes are on screen, did I check that the channels separate identity from mere danger intensity and mark any unresolved overlap as readability_unverified, identity_collision, or style_only_change before using the variant as design evidence?"
       ],
       "expires_after": "Review after the next two shmup/projectile/readability notes that mention bullet classes, shot variants, size, color, hue, wobble, ripple, trail, speed, layering, graze, danger intensity, or readability collisions."
+    },
+    {
+      "id": "probe-20260626-load-strategy-progressive-disclosure",
+      "created_at": "2026-06-26T09:57:55+09:00",
+      "source_ts": "1778542776.395559",
+      "scope": "next phase run, memory recall/index change, shared-read analysis, game-start task, or skill/rule lookup where Codex may mix startup context, task-triggered recall, and durable instruction edits without naming the load strategy",
+      "questions": [
+        "Before the next phase run, memory recall/index change, shared-read analysis, game-start task, or skill/rule lookup, did I name the load strategy as startup full-load, task-triggered rule load, atom recall, skill invocation, raw-source lookup, or defer/no-load?",
+        "Did I keep the loaded context to the smallest source-of-truth set that answers the current decision, and record the trigger that justified each extra rule, atom, skill, or raw file instead of reading broad context by habit?",
+        "If the work exposes missing context, did I choose a reversible response such as one-cycle probe, state note, candidate link, or no-op before adding or editing a durable instruction file?"
+      ],
+      "expires_after": "Review after the next two phase/research/memory/game-start notes that mention AGENTS, MEMORY, rules, atoms, skills, raw sources, load strategy, progressive disclosure, startup context, or durable instruction edits."
     }
   ]
 }

@@ -47,7 +47,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-26 09:57 JST log_cdx:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778542776-efd5802eca
+    source_ts: "1778542776.395559"
+    title: "Google Cloud Agent Skills: load strategy axis for progressive disclosure"
+    reason: "Codex の phase 作業は AGENTS / MEMORY / Slack directives / atoms / task-specific rules を横断して開始しがちで、起動時 full-load、必要時 recall、恒久 rule 編集が混ざりやすい。Google Agent Skills の「必要時ロード」を、次回行動の小さな load-strategy probe に落とす価値があるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "phase/research/memory/game-start 作業で、context load を startup full-load / task-triggered rule load / atom recall / skill invocation / raw-source lookup / defer-no-load に分類し、追加ロードの trigger を明示し、欠けた文脈は恒久ルール化前に probe/state/no-op で受ける一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

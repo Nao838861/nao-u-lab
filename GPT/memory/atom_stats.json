@@ -301,9 +301,9 @@
       "title": "現行 phase cycle / Slack inbox lifecycle を「harness か、記録置き場か」で棚卸しした atom を、いったん議論に出したいです。ここでの harness は、単にログが残る場所ではなく、実行できる・検査できる・状態を保持できる、の3条件"
     },
     "sr-1780568459-fd8ceacfcd": {
-      "recall_count": 1,
+      "recall_count": 2,
       "top1_count": 0,
-      "last_recalled": "2026-06-21T04:52:10",
+      "last_recalled": "2026-06-26T09:57:17",
       "title": "*Log_cdx ts=1780496538「NVIDIA Skills、Codex/GPT 側 skills と memory atoms の間に『検証済み手順カタログ』を置く価値、Slack 投稿ゲートや pending directive lifecycle で skill"
     },
     "sr-1780465044-9b15321698": {
@@ -467,11 +467,53 @@
       "title": "■ 概要 「How to be Non-Human」は、VRゲームにおける一人称の動物アバター体験を、実際の商用タイトル群から整理した thematic analysis。対象は Meta Store と Steam で集めた候補から、非一人称、非動物ロールプレイ、重複シリーズな",
       "display_label": "■ 概要 「How to be Non-Human」は、VRゲームにおける一人称の動物アバター体験を、実際の商用タイトル群から整理した thematic analysis。対象は Meta Store と Steam で集めた候補から、非一人称、非動物ロールプレイ、重複シリーズな | arxiv.org/abs | ts:1781501173.899729 | Log cdx どを除いた 48 本。研究チームは Meta Quest 3 で各ゲームをプレ...",
       "display_secondary_key": "arxiv.org/abs | ts:1781501173.899729 | Log cdx どを除いた 48 本。研究チームは Meta Quest 3 で各ゲームをプレ..."
+    },
+    "sr-1778542776-efd5802eca": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "Google Cloud 公式 Agent Skills リポジトリ発表 (2026-05-11) — Camp 1/2 軸とは独立した第三軸「ロード戦略軸」の浮上"
+    },
+    "sr-1778531672-4d52b1f9b1": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "Google Cloud Agent Skills 公式リポジトリ発表（2026-05-11）— Camp 1/2 軸と直交する第三軸「ロード戦略」が浮上"
+    },
+    "sr-1780590139-6aaa9972f6": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "NVIDIA Agent Skills (<https://x.com/npaka123/status/2061935286775685521>) への 06-03 19:33 (ts=1780482832) 応答の末尾「動機ができた」が**動機止まり**だったので Phase "
+    },
+    "sr-1778577943-d2ac83aaed": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "OpenGame / <http://GamED.AI|GamED.AI> / Agent Skills 3論文 — game_templates_design.md（stalled中）への素材として（C185 Phase 2）"
+    },
+    "sr-1780557842-d5a70ffe41": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "*NVIDIA Agent Skills <https://x.com/npaka123/status/2061935286775685521> × game-skills / SKILL.md ドメインの翻訳不能性*"
+    },
+    "sr-1778610306-7fc8ccf1e7": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "Nick Lawson『I Replaced Vector DBs with Google's Memory Agent Pattern for my notes in Obsidian』(2026-04 Towards Data Science)"
+    },
+    "sr-1780824631-6596a20261": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-06-26T09:57:17",
+      "title": "npaka123「NVIDIA Agent Skills の概要」<https://x.com/npaka123/status/2061935286775685521> — NVIDIA Agent Skills カタログ自体は 06-04 Mir #shared-reads ("
     }
   },
-  "queries": 29,
+  "queries": 30,
   "last_query": {
-    "time": "2026-06-26T01:59:11",
-    "query": "[auto] ゲーム開発教師情報ソース study_platformer_01 shot_log v01"
+    "time": "2026-06-26T09:57:17",
+    "query": "Google Cloud Agent Skills ロード戦略軸 Codex phase"
   }
 }
