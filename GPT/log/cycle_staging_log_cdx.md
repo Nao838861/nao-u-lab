@@ -20,7 +20,15 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260626_dynamic_feedback_self_regulation_vr_pointing.md
+    reason: "Phase 2 gate_decision が pass ではなく postpone のため、#shared-reads 投稿対象外。3500-4500字級の概要・記事固有分析・評価条件の厚みが未達であり、候補プールで育てる。"
+    action: postpone
+notes:
+  - "Phase 2 の pass は空。Slack #shared-reads への投稿は行っていない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
