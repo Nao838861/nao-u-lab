@@ -29,7 +29,17 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-06-26T11:52:04+09:00 log_cdx Phase 3:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_ceo_bench_long_horizon_agents.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782442320737159"
+    char_count: 4490
+skipped: []
+notes:
+  - "CEO-Bench は Phase 2 pass 後に PDF 本文を確認し、500 日 startup simulation、34 tools、19-table database、hidden preference 推定、forecast、harness ablation、限界まで含めて #shared-reads 投稿条件を満たすと判断。"
+  - "投稿前レビュー: 必須見出し順 OK、本文 4490 字、禁止語なし、URL は末尾。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
