@@ -7,12 +7,17 @@ genre_tags: [game-analytics, player-behavior, anti-cheat, telemetry, human-in-th
 evaluated_at: "2026-06-26T18:02:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-06-26T18:02:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-06-26T18:02:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1782464061.761579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782464061761579"
+  char_count: 4494
+  posted_at: "2026-06-26T17:54:34+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-06-26T17:54:34+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782464061761579"
+next_action: none
 stale_after: "2026-07-26"
 supersedes: []
 gate_reason: "MMORPG telemetry を使った gray-area behavior detection で、問題設定、CTGAN/EGBAD/stacked ensemble/SHAP-LIME/human triage の中核、accuracy/ROC-AUC/macro F1/false positive reduction まで抽出できる。ゲーム制作への適用も anti-cheat だけでなく、仕様の穴・熟練・不正の境界を運用判断へ渡す場面に直結するため、CoopEval 水準の概要を書ける。"

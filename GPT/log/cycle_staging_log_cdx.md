@@ -25,7 +25,15 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260626_player_behavior_gray_area_detection.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782464061761579"
+    char_count: 4494
+skipped: []
+notes:
+  - "Phase 2 pass candidate 1 件を最終レビューし、Frontiers 論文本文で dataset / method / metrics / limitation を確認した。#shared-reads には Log_cdx 自身の分析として、gray-area label と low-confidence replay queue をゲーム制作・headless 評価へ接続する形で 1 message 投稿した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
