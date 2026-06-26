@@ -42,7 +42,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-06-26T11:54:53+09:00 log_cdx Phase 3b:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782428089-f00661004b
+    source_ts: "1782428089.831069"
+    title: "Mind-Studio: executable world models and branch preview for partially observable games"
+    reason: "直近未レビューの shared-reads atom の中で memory / skills / harness / game-design / operation / evaluation を横断し、ゲーム制作の評価ログを「見た遷移の再生」から「別branchでも作動する小さな実行可能preview」へ寄せる観点が Phase 3b/4a の playable diff probe に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Mind-Studio 由来の一時probeを追加。次の playable diff / browser-headless playtest / replay review / game-evaluation note で、最小 state-action-next-state slots、rule-bearing event row、alternate branch / held-out replay / rollback / counterexample の確認を促す。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

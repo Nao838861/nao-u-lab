@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-06-26T09:57:55+09:00",
+  "updated_at": "2026-06-26T11:54:53+09:00",
   "reviewed_source_ts": [
+    "1782428089.831069",
     "1782376813.513569",
     "1782384847.126309",
     "1782093954.581069",
@@ -278,6 +279,42 @@
     "1778542776.395559"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-06-26T11:54:53+09:00",
+      "id": "sr-1782428089-f00661004b",
+      "source_ts": "1782428089.831069",
+      "title": "Mind-Studio: executable world models and branch preview for partially observable games",
+      "decision": "adopt_probe",
+      "reason": "Score 17. Mind-Studio is useful now because Codex game work can still treat screenshots, replay snippets, or next-state matches as enough evidence that a prototype behavior is understood. The transferable point is narrower: keep a minimal state-action-next-state row, choose rule-bearing events, and test whether the inferred mechanism survives a different branch or initial state before using it as design or evaluation evidence. Existing probes cover AI playtest inputs, action forgetting, behavior recovery, and workflow routing, but not this executable-preview check for playable diffs and headless traces. Keep this reversible and scoped to game prototype evaluation, not a general world-modeling rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, browser/headless playtest, replay review, or game-evaluation memory note, did I name the minimal state-action-next-state slots needed for the claim, such as player xy, hazard, contact flag, pickup or door state, death or win flag, score, timer, or seed?",
+        "Did I preserve at least one rule-bearing event row or short trace where the mechanism is exposed, such as contact, spawn, pickup, boundary, death, checkpoint, rare enemy behavior, or state flag change, instead of relying only on a screenshot, video impression, or aggregate score?",
+        "Before using the trace as design evidence, did I test or describe one alternate branch, held-out replay row, rollback point, or counterexample and label the result as branch_preview_ok, replay_only, model_gap, extractor_gap, or branch_unverified?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-diff, browser/headless playtest, replay-review, or game-evaluation notes already name minimal state slots, preserve rule-bearing event rows, and check an alternate branch or explicitly label branch/extractor gaps before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Mind-Studio-inspired executable-preview probe: record minimal state-action-next-state slots, keep one rule-bearing event row, and check a held-out branch or label the gap before treating prototype traces as design evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T09:57:55+09:00",
       "id": "sr-1778542776-efd5802eca",
@@ -6707,6 +6744,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260626-mindstudio-executable-branch-preview",
+      "created_at": "2026-06-26T11:54:53+09:00",
+      "source_ts": "1782428089.831069",
+      "scope": "next playable diff, browser/headless playtest, replay review, or game-evaluation memory note where Codex may treat screenshots, replay snippets, next-state matches, or aggregate scores as enough evidence that a prototype behavior is understood",
+      "questions": [
+        "Before the next playable diff, browser/headless playtest, replay review, or game-evaluation memory note, did I name the minimal state-action-next-state slots needed for the claim, such as player xy, hazard, contact flag, pickup or door state, death or win flag, score, timer, or seed?",
+        "Did I preserve at least one rule-bearing event row or short trace where the mechanism is exposed, such as contact, spawn, pickup, boundary, death, checkpoint, rare enemy behavior, or state flag change, instead of relying only on a screenshot, video impression, or aggregate score?",
+        "Before using the trace as design evidence, did I test or describe one alternate branch, held-out replay row, rollback point, or counterexample and label the result as branch_preview_ok, replay_only, model_gap, extractor_gap, or branch_unverified?"
+      ],
+      "expires_after": "Review after the next two playable-diff, browser/headless-playtest, replay-review, or game-evaluation notes that mention screenshots, video, replay, state-action-next-state, contact, spawn, pickup, boundary, death, checkpoint, rare events, branch preview, rollback, held-out rows, extractor gaps, or aggregate scores."
+    },
     {
       "id": "probe-20260621-ares-ai-counterpart-trace",
       "created_at": "2026-06-21T11:33:00+09:00",
