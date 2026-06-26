@@ -59,7 +59,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe を確認。rg でも `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` が取得でき、source file 破損なし。index 内の `memory/atoms.jsonl` / `memory/raw/` 参照は存在。"
+  - "memory/atoms.jsonl: 2536 rows。JSON parse error 0、duplicate id 0、normalized_content_hash/content_hash の重複 0、URL duplicate group 0。矛盾 issue なし。"
+  - "memory/raw/: 30 日以上 mtime がない raw は 93 files。原文アーカイブ用途の既存 raw が中心のため、今回は移動せず棚卸しのみ。"
+  - "memory/shared_reads_candidates/: lifecycle frontmatter counts = posted 353 / postponed 297 / failed 109 / ready_to_post 8 / needs_review 13 / missing status 1 (README.md)。"
+  - "stale backlog: postponed/needs_review かつ stale_after <= 2026-06-26 は 69 件。今回 Phase 2 へ渡す stale_review_batch は 5 件。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl: `python tools\\slack_inbox_lifecycle.py pending` で pending 0。handled 更新対象なし。"
+issues:
+  - id: ISS-20260626-4A-001
+    description: "shared_reads_candidates の duplicate title group が 87 group あり、そのうち posted/failed と postponed/ready_to_post/needs_review が混在する open group が 66 group 残っている。`audit_shared_reads_title_duplicates.py --unindexed-only --limit 20` でも未登録混在 group が上位に出ており、同一論文が posted 済みでも別 candidate として再評価 queue に残りやすい。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/; examples: `Large Language Models in Game Development...` count 9 status_counts posted 3 / failed 2 / postponed 4, `Automated Playtesting with Procedural Personas...` count 6 status_counts posted 2 / postponed 4, `GameDevBench...` count 4 status_counts posted 2 / failed 1 / ready_to_post 1"
+    source_file_status: "UTF-8 read OK。candidate frontmatter の status/title/stale_after は parse 可能。README.md の status 欠落は候補本文ではないため除外可能。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "Phase 2 が同じ外部知見を何度も候補として扱うと、ゲーム制作で使うべき評価・PCG・agent 設計の記憶が重複候補に埋もれ、posted 済み知見と未評価候補の境界が曖昧になる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "canonical title index と duplicate audit tool は既にあり、必要なのは新設計ではなく terminal group の機械登録と mixed/open group の少数再評価 handoff。今回の issue は Phase 2/通常 cleanup で閉じられる範囲。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "PCG 評価と DRL agent の組み合わせで、ゲーム制作の自動評価導線に近い。stale backlog 内で game/evaluation 関連度が高い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "endless runner の runtime PCG evaluation。duplicate mixed group にも関係し、posted 済みとの差分確認で再評価 queue を縮められる可能性がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "player experience / game design の概念整理候補。次のゲーム制作で自己評価語彙として残す価値があるかを少数評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "accessibility と game designer-developer の接点があり、制作判断の評価軸として残すか fail するかを明示したい。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "LLM agents on diverse video games の benchmark 候補。現在の world model / agent evaluation 系の流入と接続できるか確認する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
