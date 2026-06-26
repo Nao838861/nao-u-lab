@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T15:52:43+09:00",
+  "updated_at": "2026-06-26T17:57:01+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -278,7 +278,8 @@
     "1779972076.823599",
     "1778542776.395559",
     "1780610351.404229",
-    "1782449733.810609"
+    "1782449733.810609",
+    "1779210705.074359"
   ],
   "reviews": [
     {
@@ -6815,6 +6816,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-06-26T17:57:01+09:00",
+      "id": "sr-1779210705-776bbae597",
+      "source_ts": "1779210705.074359",
+      "title": "**shmup の「間口を広げる装備リソース」と graze→resource 変換 3 パターン** (Ash / Win2 / 2026-05-20)",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work often adjusts graze, assist, BOMB, DEF, or reward systems as local balance patches, while the shared-read frames them as access-widening resources with distinct roles: static stock, positive feedback, and dynamic rank. Existing probes cover bullet identity, friction layers, branch evidence, and quality routing, but not the narrower question of what rescue/resource role a mechanic is meant to play and whether it preserves expert depth. Keep this reversible and scoped to shmup/graze/rescue-resource changes, especially because the surrounding records include a prior attribution-confirmation failure for this same 3-axis topic.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next shmup, graze/reward mechanic, rescue resource, assist item, comeback tool, or difficulty-relief change, did I name which access-widening role the resource should play: static stock, positive-feedback reward, dynamic-rank stabilizer, or intentionally none?",
+        "Did I keep the resource comparison on one shared encounter or route and name the preserved constraint, such as enemy layout, bullet identity, route contract, survival floor, score ceiling, or novice readability, instead of mixing relief tuning with unrelated difficulty changes?",
+        "Before treating the mechanic as better, did I check whether it widens access without erasing expert depth and label any gap as relief_role_unclear, stock_too_passive, feedback_snowball, rank_noise, or access_depth_unverified?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two shmup/graze/rescue-resource notes already name the resource role, compare on a shared encounter with preserved constraints, and explicitly check access widening versus expert-depth loss before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible shmup rescue-resource role probe: classify static stock, positive feedback, dynamic rank, or none; compare on a shared encounter with preserved constraints; and check access widening against expert-depth loss.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -9890,6 +9927,18 @@
         "After evidence arrives, did I label expected versus actual as prediction_hit, prediction_miss_model_update, evidence_gap, or no_update, and keep any L3 action to the next probe/check proposal rather than silently changing game intent or durable rules?"
       ],
       "expires_after": "Review after the next two playable diffs, game-evaluation notes, shared-read candidates, memory-routing changes, or phase notes that mention world model, prediction, rollout, L1/L2/L3, physical/digital/social/scientific law, expectation, evidence gap, or model update."
+    },
+    {
+      "id": "probe-20260626-shmup-rescue-resource-role-axis",
+      "created_at": "2026-06-26T17:57:01+09:00",
+      "source_ts": "1779210705.074359",
+      "scope": "next shmup, graze/reward mechanic, rescue resource, assist item, comeback tool, or difficulty-relief change where Codex may tune relief as a local balance patch without naming whether it is static stock, positive feedback, dynamic rank, or no resource role",
+      "questions": [
+        "Before the next shmup, graze/reward mechanic, rescue resource, assist item, comeback tool, or difficulty-relief change, did I name which access-widening role the resource should play: static stock, positive-feedback reward, dynamic-rank stabilizer, or intentionally none?",
+        "Did I keep the resource comparison on one shared encounter or route and name the preserved constraint, such as enemy layout, bullet identity, route contract, survival floor, score ceiling, or novice readability, instead of mixing relief tuning with unrelated difficulty changes?",
+        "Before treating the mechanic as better, did I check whether it widens access without erasing expert depth and label any gap as relief_role_unclear, stock_too_passive, feedback_snowball, rank_noise, or access_depth_unverified?"
+      ],
+      "expires_after": "Review after the next two shmup/graze/reward/rescue-resource notes that mention static stock, positive feedback, dynamic rank, assist items, comeback tools, BOMB, DEF, graze reward, access widening, expert depth, survival floor, or score ceiling."
     }
   ]
 }

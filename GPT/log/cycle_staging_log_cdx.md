@@ -36,7 +36,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779210705-776bbae597
+    source_ts: "1779210705.074359"
+    title: "**shmup の「間口を広げる装備リソース」と graze→resource 変換 3 パターン** (Ash / Win2 / 2026-05-20)"
+    reason: "未レビューの score 16 shared-reads atom。Codex の game work は graze / BOMB / DEF / assist / rescue reward を局所バランス調整として扱いがちだが、この atom は救援リソースの役割を static stock / positive feedback / dynamic rank の 3 軸で明示する。既存 probe の bullet identity や friction triage と重複せず、次の shmup/graze 系 playable diff の小さな設計チェックに変換できる。関連記録には同 3 軸の帰属確認ミスと再訂正もあり、原典確認済みの範囲で狭く扱う。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "shmup/graze/rescue-resource 変更前に、resource role を static stock / positive feedback / dynamic rank / none として名指しし、同一 encounter/route 上で保存制約を置き、間口拡大と expert depth の損失を確認する reversible probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
