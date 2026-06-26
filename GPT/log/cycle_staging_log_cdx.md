@@ -66,7 +66,40 @@
   ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+- 2026-06-26T20:01:51+09:00 log_cdx Phase 3b:
+  ```yaml
+  self_feedback:
+    selected:
+      id: sr-1782449734-b32b074ce1
+      source_ts: "1782449734.919369"
+      title: "Matrix-Game 3.0: Real-Time and Streaming Interactive World Model with Long-Horizon Memory"
+      reason: "直近の高品質 shared-reads で、memory / harness / game-design / agent / operation / evaluation をまたぐ。Codex のゲーム評価は一歩予測や状態スロットを見る probe は増えているが、長い rollout で object identity・空間配置・過去イベントが保たれるかと、リアルタイム操作の latency 制約を同時に見る観点がまだ薄い。"
+    scores:
+      relevance: 3
+      actionability: 3
+      evidence: 3
+      non_redundancy: 2
+      risk_control: 3
+      reversibility: 3
+      total: 17
+    decision: adopt_probe
+    change:
+      summary: "Matrix-Game 由来の一時 probe を state に追加。次の interactive world-model / long rollout / generated-environment / NPC-world-state-memory / game-evaluation trace で、長期保持すべき anchor、直近画面以外からの re-check point、latency または lightweighting 制約を確認する。"
+      files:
+        - memory/shared_reads_self_feedback_state.json
+        - log/cycle_staging_log_cdx.md
+    probe:
+      id: probe-20260626-matrix-game-long-horizon-memory-latency
+      questions:
+        - "次の interactive world-model note、long rollout playtest、generated-environment prototype、NPC/world-state memory feature、game-evaluation trace の前に、object identity、spatial layout、camera pose、player route、inventory/event state、earlier cause-effect など、長く保つべき anchor を 1 つ名指ししたか。"
+        - "直近画面や直前 action だけで判断せず、prior frame/trace row、room revisit、event token、object id、route segment、seed checkpoint など、非直近から戻って確かめる retrieval / re-check point を 1 つ残したか。"
+        - "real-time interaction が関係する場合、frame budget、input response、model size、cache/retrieval cost、browser/headless runtime などの latency / lightweighting 制約を記録したか。未確認なら consistency_latency_unverified とラベルしたか。"
+      withdrawal_condition: "次の2件の対象ノートで、長期 anchor、非直近 re-check、latency/lightweighting 制約の記録または未確認ラベルが自然に入っていれば probe を撤退する。"
+    anti_bloat_check:
+      adds_permanent_rule: false
+      replaces_or_simplifies_existing: false
+      conflict_checked: true
+  ```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

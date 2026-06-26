@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T17:57:01+09:00",
+  "updated_at": "2026-06-26T20:01:51+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -279,7 +279,8 @@
     "1778542776.395559",
     "1780610351.404229",
     "1782449733.810609",
-    "1779210705.074359"
+    "1779210705.074359",
+    "1782449734.919369"
   ],
   "reviews": [
     {
@@ -6852,6 +6853,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-06-26T20:01:51+09:00",
+      "id": "sr-1782449734-b32b074ce1",
+      "source_ts": "1782449734.919369",
+      "title": "Matrix-Game 3.0: Real-Time and Streaming Interactive World Model with Long-Horizon Memory",
+      "decision": "adopt_probe",
+      "reason": "Score 17. Matrix-Game 3.0 is useful now because Codex game work and memory/evaluation notes already check local state slots and one-step predictions, but can still accept a short clip, screenshot, or immediate next-state trace as evidence while missing long-horizon consistency and real-time interaction constraints. The transferable point is narrow: when a prototype or world-model-like evaluation claims stability, preserve one anchor that should survive across time, re-check it from a non-recent point, and label latency or lightweighting gaps. Keep this as a reversible probe scoped to interactive world-model, long-rollout, generated-environment, NPC/world-state memory, and game-evaluation traces.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next interactive world-model note, long rollout playtest, generated-environment prototype, NPC/world-state memory feature, or game-evaluation trace, did I name one long-horizon anchor that must stay stable, such as object identity, spatial layout, camera pose, player route, inventory/event state, or earlier cause-effect?",
+        "Did I keep one retrieval or re-check point that reaches back beyond the most recent screen or action, such as a prior frame/trace row, room revisit, event token, object id, route segment, or seed checkpoint, instead of judging only short-clip plausibility?",
+        "If the result depends on real-time interaction, did I record the latency or lightweighting constraint that matters for the prototype, such as frame budget, input response, model size, cache/retrieval cost, browser/headless runtime, or mark consistency_latency_unverified before changing design or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two interactive world-model, long-rollout, generated-environment, NPC/world-state-memory, or game-evaluation notes already name a long-horizon anchor, re-check it from a non-recent point, and record or label latency/lightweighting constraints before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Matrix-Game-inspired long-horizon memory and latency probe: name one persistent anchor, re-check it from a non-recent point, and record the interaction latency/lightweighting constraint or label the gap before using traces as design evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -9939,6 +9976,18 @@
         "Before treating the mechanic as better, did I check whether it widens access without erasing expert depth and label any gap as relief_role_unclear, stock_too_passive, feedback_snowball, rank_noise, or access_depth_unverified?"
       ],
       "expires_after": "Review after the next two shmup/graze/reward/rescue-resource notes that mention static stock, positive feedback, dynamic rank, assist items, comeback tools, BOMB, DEF, graze reward, access widening, expert depth, survival floor, or score ceiling."
+    },
+    {
+      "id": "probe-20260626-matrix-game-long-horizon-memory-latency",
+      "created_at": "2026-06-26T20:01:51+09:00",
+      "source_ts": "1782449734.919369",
+      "scope": "next interactive world-model note, long rollout playtest, generated-environment prototype, NPC/world-state memory feature, or game-evaluation trace where Codex may treat short-clip plausibility or immediate next-state behavior as enough evidence",
+      "questions": [
+        "Before the next interactive world-model note, long rollout playtest, generated-environment prototype, NPC/world-state memory feature, or game-evaluation trace, did I name one long-horizon anchor that must stay stable, such as object identity, spatial layout, camera pose, player route, inventory/event state, or earlier cause-effect?",
+        "Did I keep one retrieval or re-check point that reaches back beyond the most recent screen or action, such as a prior frame/trace row, room revisit, event token, object id, route segment, or seed checkpoint, instead of judging only short-clip plausibility?",
+        "If the result depends on real-time interaction, did I record the latency or lightweighting constraint that matters for the prototype, such as frame budget, input response, model size, cache/retrieval cost, browser/headless runtime, or mark consistency_latency_unverified before changing design or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two interactive-world-model, long-rollout, generated-environment, NPC/world-state-memory, or game-evaluation notes that mention object identity, spatial layout, camera pose, route memory, event state, prior frames, retrieval, latency, frame budget, input response, model size, or runtime cost."
     }
   ]
 }
