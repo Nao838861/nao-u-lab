@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T20:01:51+09:00",
+  "updated_at": "2026-06-26T22:17:09+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -280,7 +280,8 @@
     "1780610351.404229",
     "1782449733.810609",
     "1779210705.074359",
-    "1782449734.919369"
+    "1782449734.919369",
+    "1778158080.139459"
   ],
   "reviews": [
     {
@@ -6889,6 +6890,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-06-26T22:17:09+09:00",
+      "id": "sr-1778158080-cb24a68511",
+      "source_ts": "1778158080.139459",
+      "title": "@hillbig 岡野原大輔「Modular Memory is the Key to Continual Learning Agents」",
+      "decision": "adopt_probe",
+      "reason": "Score 17. Nao_u explicitly warned not to read modular-memory research as simply isomorphic to our own memory system. This is useful now because Phase 3b often converts external shared-read ideas into probes, and the recurring risk is transferring a paper architecture, benchmark, or agent mechanism too directly into Codex operations. Existing load-strategy and SkillOpt probes cover context loading and validation of instruction edits, but they do not require naming the non-isomorphic gap before transfer. Keep this as a reversible external-knowledge transfer probe, not a durable memory-architecture rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer into Codex practice, did I name the assumed equivalence being used, such as memory, learning, planning, evaluation, environment, user authority, or consolidation?",
+        "Did I name at least one non-isomorphic gap before applying it, such as learned weights versus external files, autonomous consolidation versus scheduled scripts, embodied environment versus text/log traces, benchmark objective versus Nao_u/game objective, or model-internal authority versus human/git/Slack gates?",
+        "Did I choose one transfer mode, such as direct adoption, analogy only, negative lesson, probe first, local candidate only, or no transfer, and keep any action reversible unless the same gap recurs in later evidence?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer notes already name the assumed equivalence, identify at least one non-isomorphic gap, and select a reversible transfer mode before changing practice or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible modular-memory non-isomorphism probe: before transferring external memory/agent/game-evaluation ideas into Codex practice, name the assumed equivalence, one structural gap, and the transfer mode.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -9988,6 +10025,18 @@
         "If the result depends on real-time interaction, did I record the latency or lightweighting constraint that matters for the prototype, such as frame budget, input response, model size, cache/retrieval cost, browser/headless runtime, or mark consistency_latency_unverified before changing design or acceptance criteria?"
       ],
       "expires_after": "Review after the next two interactive-world-model, long-rollout, generated-environment, NPC/world-state-memory, or game-evaluation notes that mention object identity, spatial layout, camera pose, route memory, event state, prior frames, retrieval, latency, frame budget, input response, model size, or runtime cost."
+    },
+    {
+      "id": "probe-20260626-modular-memory-nonisomorphic-transfer",
+      "created_at": "2026-06-26T22:17:09+09:00",
+      "source_ts": "1778158080.139459",
+      "scope": "next memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer into Codex practice where Codex may treat an external architecture or evaluation frame as isomorphic to our files, scripts, phases, or game workflow",
+      "questions": [
+        "Before the next memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer into Codex practice, did I name the assumed equivalence being used, such as memory, learning, planning, evaluation, environment, user authority, or consolidation?",
+        "Did I name at least one non-isomorphic gap before applying it, such as learned weights versus external files, autonomous consolidation versus scheduled scripts, embodied environment versus text/log traces, benchmark objective versus Nao_u/game objective, or model-internal authority versus human/git/Slack gates?",
+        "Did I choose one transfer mode, such as direct adoption, analogy only, negative lesson, probe first, local candidate only, or no transfer, and keep any action reversible unless the same gap recurs in later evidence?"
+      ],
+      "expires_after": "Review after the next two memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer notes already name the assumed equivalence, identify at least one non-isomorphic gap, and select a reversible transfer mode before changing practice or acceptance criteria."
     }
   ]
 }
