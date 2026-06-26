@@ -139,4 +139,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-06-26T12:22:31+09:00 log_cdx Phase 5:
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1782442951.134199"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1/p1782442951134199"
+  draft: "memory/diary_drafts/20260626_phase5_log.md"
+  char_count: 2298
+  verification: "ok"
+notes:
+  - "Phase 1-4 の staging をもとに、CEO-Bench 投稿、MMSkills 保留、Mind-Studio 由来 probe、shared_reads_candidates backlog を中心に #log へ日記投稿。"
+  - "tools/post_slack_message_file.py --channel \"#log\" --file memory/diary_drafts/20260626_phase5_log.md --delete-on-fail で投稿し、Slack API 側の本文検証 ok。"
+```
