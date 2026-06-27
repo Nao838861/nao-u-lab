@@ -49,3 +49,13 @@ notes:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+## Phase 1: 情報収集 追加ログ
+2026-06-27T13:47:41+09:00 log_cdx Phase 1 追加収集
+
+- `memory/shared_reads_candidates/20260627_revengebench_policy_reverse_engineering.md` - 行動ログと介入 probe からゲーム内 agent の隠れた policy をコードとして復元する benchmark。
+- `memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md` - ボードゲームの構想、ルールブック生成、critic、個別 player profile feedback をつなぐ制作支援システム。
+- `memory/shared_reads_candidates/20260627_ptcg_bench_harness_aware_agents.md` - Pokemon TCG を題材に、LLM agent の意思決定と経験による自己進化を harness ablation 付きで測る benchmark。
+- `memory/shared_reads_candidates/20260627_memopilot_test_time_learning_game_agents.md` - RPS と Limit Texas Hold'em で、memory update を RL 対象にして test-time learning を改善する手法。
+
+収集元: `memory/raw/web_research/results.jsonl` の 2026-06-26 取得分と arXiv abstract 確認。Slack inbox は直近 tail で pending なし、2026-06-26 の handled directive を確認。
