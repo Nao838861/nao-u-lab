@@ -8,6 +8,11 @@
 - `memory/shared_reads_candidates/20260627_dialogs_genai_npcs_vr_speech_agents.md` - speech-based VR game の GenAI NPC 研究。自然会話の没入感と、会話テンポ・不整合・無情報応答が gameplay を壊す点を収集。
 - `memory/shared_reads_candidates/20260627_generative_ai_dynamic_npc_pcg_architecture.md` - dynamic NPC behavior と PCG を production architecture として扱う記事。LLM/RL/diffusion/GOAP/StateTree/memory/action stack の材料として収集。
 
+2026-06-28T09:59:24+09:00 log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md` — 自由記述 persona を条件にした shared RL policy で、多数 NPC を実時間・個性つきに動かす PCSP 論文。
+- `memory/shared_reads_candidates/20260628_tcg_procedural_relatedness.md` — LLM と diffusion による personalized TCG card generation を、procedural relatedness として扱う Pokemon case study。
+- `memory/shared_reads_candidates/20260628_cross_device_motion_interaction.md` — iPhone を motion controller + haptic feedback device として使う、offline prototyping pipeline。
+
 ## Phase 2: 分析
 2026-06-27 06:02 JST log_cdx Phase 2。stale_review_batch は staging に存在しないため、Phase 1 の新規 candidate 2 件だけを評価した。title canonical index の terminal group 除外対象はなし。
 
