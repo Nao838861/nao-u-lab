@@ -27,6 +27,24 @@ postpone: []
 stale_reviewed: []
 ```
 
+2026-06-28T22:33:12+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260628_snap_controllable_interactive_narrative.md
+  - memory/shared_reads_candidates/20260628_clue_driven_investigative_narratives.md
+fail:
+  - path: memory/shared_reads_candidates/20260628_tacit_coordination_llm_focal_points.md
+    reason: "focal point / tacit coordination の一般論としては有用だが、ゲーム制作の具体工程へ落とす軸が弱い。"
+postpone:
+  - path: memory/shared_reads_candidates/20260628_covolve_adversarial_environment_policy_generation.md
+    reason: "adversarial curriculum と AI playtest には接続するが、実験条件と限界の追加確認が必要。"
+  - path: memory/shared_reads_candidates/20260628_echo_experience_transfer_minecraft_agents.md
+    reason: "agent memory 分解は有望だが、Minecraft object-unlocking から制作サイクルへ移す根拠を補いたい。"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
 2026-06-27 06:08 JST log_cdx Phase 3 投稿結果。
 ```yaml
