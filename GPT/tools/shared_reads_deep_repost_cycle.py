@@ -11,6 +11,7 @@ from typing import Any
 
 from slack_client import post_message
 from shared_reads_deep_repost_ready import READY_DRAFTS
+from shared_reads_policy import validate_shared_reads_message
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -313,23 +314,8 @@ def ensure_queue() -> list[dict[str, Any]]:
 
 def validate_message(item: dict[str, Any]) -> str | None:
     message = str(item.get("message") or "").strip()
-    if not message:
-        return "message is empty"
-    required_sections = (
-        "■ 要約",
-        "■ 内容分析",
-        "■ 自分達の環境への適用",
-        "■ メリット",
-        "■ デメリット／注意点",
-        "■ 判定",
-    )
-    if any(section not in message for section in required_sections):
-        return "required sections are missing"
-    if len(message) < MIN_CHARS:
-        return f"message too short: chars={len(message)} < {MIN_CHARS}"
-    if len(message) > MAX_CHARS:
-        return f"message too long: chars={len(message)} > {MAX_CHARS}"
-    return None
+    result = validate_shared_reads_message(message, min_chars=MIN_CHARS, max_chars=MAX_CHARS)
+    return None if result.ok else result.reason
 
 
 def main() -> int:

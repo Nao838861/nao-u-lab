@@ -19,6 +19,7 @@ from slack_client import (
     post_message,
     resolve_channel,
 )
+from shared_reads_policy import validate_shared_reads_message
 
 
 MOJIBAKE_MARKERS = ("縺", "譁", "繧", "蜊", "謚", "ã", "Â")
@@ -94,6 +95,11 @@ def main() -> int:
 
     path = Path(args.file)
     text = path.read_text(encoding="utf-8")
+    if args.channel in {"shared-reads", "#shared-reads", "C0AN2FEHEJJ"}:
+        policy = validate_shared_reads_message(text)
+        if not policy.ok:
+            print(json.dumps({"ok": False, "error": "shared_reads_policy", "reason": policy.reason}, ensure_ascii=False))
+            return 3
     result = update_message(args.channel, args.update_ts, text) if args.update_ts else post_message(args.channel, text)
     if not result.get("ok"):
         print(json.dumps(result, ensure_ascii=False))

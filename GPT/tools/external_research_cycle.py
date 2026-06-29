@@ -18,6 +18,7 @@ from urllib import error, parse, request
 from xml.etree import ElementTree
 
 from slack_client import post_message
+from shared_reads_policy import validate_shared_reads_message
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -537,7 +538,7 @@ def format_shared_reads_item(row: dict[str, Any], index: int | None = None, *, r
     merits, demerits = merits_demerits(row)
     lines += [
         "",
-        "■ 要約",
+        "■ 概要",
         summary_ja,
         "",
         "■ 内容分析",
@@ -546,10 +547,8 @@ def format_shared_reads_item(row: dict[str, Any], index: int | None = None, *, r
         "■ 自分達の環境への適用",
         environment_application(row),
         "",
-        "■ メリット",
+        "■ メリット・デメリット",
         "\n".join(f"- {item}" for item in merits),
-        "",
-        "■ デメリット／注意点",
         "\n".join(f"- {item}" for item in demerits),
     ]
     if row.get("weak_candidate"):
@@ -558,6 +557,11 @@ def format_shared_reads_item(row: dict[str, Any], index: int | None = None, *, r
             "■ 判定",
             "厳格な閾値には届いていない。共有価値を断定せず、次回以降の検索語調整と比較のために残す。",
         ]
+    lines += [
+        "",
+        "■ URL",
+        str(row.get("url") or ""),
+    ]
     return "\n".join(lines)
 
 
@@ -567,7 +571,7 @@ def build_shared_reads_message(candidates: list[dict[str, Any]]) -> str:
         "",
         "目的: 記憶システム、自律運用、ゲーム設計、操作感評価に後で効く情報を探す。単なるニュースではなく、リンク先が消えても判断材料が残る粒度で shared-reads に流す。",
         "",
-        "記録方針: ■ 要約 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット / ■ デメリットを基本形にする。英語要約はそのまま貼らず、日本語の分析として残す。",
+        "記録方針: ■ 概要 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット・デメリット / ■ 判定 / ■ URL を基本形にする。英語要約はそのまま貼らず、日本語の分析として残す。",
     ]
     for i, row in enumerate(candidates, 1):
         lines += [
@@ -590,8 +594,6 @@ def build_shared_reads_messages(candidates: list[dict[str, Any]]) -> list[str]:
             "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
             "",
             f"候補 {i}/{total}",
-            "記録方針: ■ 要約 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット / ■ デメリットを基本形にする。英語要約はそのまま貼らず、日本語の分析として残す。",
-            "",
             format_shared_reads_item(row, i),
         ]
         messages.append("\n".join(header))
@@ -633,6 +635,11 @@ def main() -> int:
         else:
             posted_results = []
             for message in messages:
+                policy = validate_shared_reads_message(message)
+                if not policy.ok:
+                    result["post_error"] = f"shared_reads_policy: {policy.reason}"
+                    print(json.dumps(result, ensure_ascii=False, indent=2))
+                    return 2
                 post_result = post_message(args.channel, message)
                 if not post_result.get("ok"):
                     raise RuntimeError(f"Slack post failed: {post_result}")

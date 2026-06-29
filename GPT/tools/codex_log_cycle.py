@@ -20,6 +20,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from git_sync_guard import sync_gpt_outputs
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS_DIR = ROOT / "tools"
@@ -90,66 +92,7 @@ def run_command(args: list[str], timeout: int) -> subprocess.CompletedProcess[st
 
 def run_git_sync(message: str) -> dict[str, Any]:
     """Commit and push GPT-owned outputs produced by the cycle."""
-    repo_root = ROOT.parent
-    git_base = ["git", "-c", "safe.directory=D:/AI/Nao_u_BOT", "-C", str(repo_root)]
-
-    add = subprocess.run(
-        [*git_base, "add", "--", "GPT"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=120,
-    )
-    if add.returncode != 0:
-        raise RuntimeError(f"git add failed: {(add.stderr or add.stdout).strip()[:800]}")
-
-    staged = subprocess.run(
-        [*git_base, "diff", "--cached", "--name-only"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=60,
-    )
-    if staged.returncode != 0:
-        raise RuntimeError(f"git diff --cached failed: {(staged.stderr or staged.stdout).strip()[:800]}")
-    staged_files = [line for line in staged.stdout.splitlines() if line.strip()]
-    if not staged_files:
-        return {"ok": True, "committed": False, "pushed": False, "staged_files": 0}
-
-    commit = subprocess.run(
-        [*git_base, "commit", "-m", message],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=180,
-    )
-    if commit.returncode != 0:
-        raise RuntimeError(f"git commit failed: {(commit.stderr or commit.stdout).strip()[:1200]}")
-
-    rev = subprocess.run(
-        [*git_base, "rev-parse", "--short", "HEAD"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=60,
-    )
-    commit_hash = rev.stdout.strip() if rev.returncode == 0 else ""
-
-    push = subprocess.run(
-        [*git_base, "push", "--no-verify"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=300,
-    )
-    if push.returncode != 0:
-        raise RuntimeError(f"git push failed after commit {commit_hash}: {(push.stderr or push.stdout).strip()[:1200]}")
-    return {"ok": True, "committed": True, "pushed": True, "staged_files": len(staged_files), "commit": commit_hash}
+    return sync_gpt_outputs(message, paths=["GPT"])
 
 
 def run_ingest() -> dict[str, Any]:

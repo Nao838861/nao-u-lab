@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Promote high-value Slack memory atoms to #all-nao-u-lab for discussion.
+"""Legacy discussion router.
 
-投稿本文は Codex CLI (LLM) で atom 固有の内容に踏み込んで書かせる。
-Codex が使えない / 失敗した場合は deterministic な template にフォールバックする。
+This route used to ask Log/Mir/Ash for follow-up discussion. That operating
+mode is retired. The script now no-ops by default so scheduled maintenance
+cannot revive old multi-agent callouts. Use --enable-legacy-discussion only for
+manual audit of the old route; do not use it from scheduled cycles.
 """
 from __future__ import annotations
 
@@ -149,7 +151,7 @@ def select_candidate(atoms: list[dict[str, Any]], state: dict[str, Any], lookbac
     return sorted(candidates, key=lambda a: (-candidate_score(a), -parse_ts(a.get("source_ts"))))[0]
 
 
-LLM_PROMPT_TEMPLATE = """次の atom を Slack #all-nao-u-lab に discussion を起こすための投稿として書いてください。
+LLM_PROMPT_TEMPLATE = """次の atom を Slack #all-nao-u-lab に Log_cdx 単独の補足分析メモとして書いてください。
 
 # atom メタ情報
 
@@ -170,8 +172,8 @@ LLM_PROMPT_TEMPLATE = """次の atom を Slack #all-nao-u-lab に discussion を
 
 - **800-1500字目安**
 - テンプレ風の見出し (「なぜ共有するか」「確認したいこと」「私の読み」など固定見出し) は使わない。各 atom に固有の話の流れで書く
-- atom 固有の中身に踏み込み、Mir / Ash / Log のどれが何を返すと議論が前進するかを具体的に書く (誰にどの返しを期待するか名指しで)
-- 「議論に回したい論点」と単に書くのではなく、**到達したい問い** を 1-2 文で明示する
+- atom 固有の中身に踏み込み、他エージェントへの問いかけ、作業依頼、役割分担を書かない
+- 「議論に回したい論点」と単に書くのではなく、Log_cdx 自身の判断、使い道、危険条件を明示する
 - log_cdx (自分) の読みを示し、その読みが間違っているならどこかも一文添える
 - excerpt の表現を貼り付けるだけでなく、自分の言葉で再定式化する
 - 最終行に permalink を 1 行で添える (atom に permalink がない場合は省略)
@@ -284,7 +286,24 @@ def main() -> int:
     parser.add_argument("--lookback-hours", type=int, default=12)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--enable-legacy-discussion", action="store_true")
     args = parser.parse_args()
+
+    if not args.enable_legacy_discussion:
+        result = {
+            "time": now_iso(),
+            "selected": False,
+            "posted": False,
+            "dry_run": args.dry_run,
+            "disabled": True,
+            "reason": "legacy multi-agent discussion router is retired; shared-reads uses Log_cdx standalone analysis",
+        }
+        state = load_json(STATE_PATH, {"posted_atom_ids": [], "last_checked_source_ts": "0"})
+        state["last_run"] = now_iso()
+        state["disabled_reason"] = result["reason"]
+        save_json(STATE_PATH, state)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
 
     atoms = read_jsonl(ATOMS_PATH)
     state = load_json(STATE_PATH, {"posted_atom_ids": [], "last_checked_source_ts": "0"})

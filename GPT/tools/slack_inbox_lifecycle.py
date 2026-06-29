@@ -88,6 +88,12 @@ def close(args: argparse.Namespace) -> int:
         raise SystemExit("--evidence is required when closing an inbox row")
     if not args.reason:
         raise SystemExit("--reason is required when closing an inbox row")
+    evidence_text = "\n".join(str(x) for x in args.evidence)
+    reason_text = str(args.reason)
+    if args.require_rule_update:
+        rule_markers = ("commit", "diff", ".md", ".py", "phase", "rule", "prompt")
+        if not any(marker in evidence_text or marker in reason_text for marker in rule_markers):
+            raise SystemExit("--require-rule-update needs evidence that a future-facing rule/script/prompt was changed")
 
     path = select_path(args.inbox)
     rows = read_jsonl(path)
@@ -106,6 +112,10 @@ def close(args: argparse.Namespace) -> int:
         row["handled_by"] = args.handled_by
         row["handled_reason"] = args.reason
         row["evidence"] = args.evidence
+        if args.supersedes:
+            row["supersedes"] = args.supersedes
+        if args.superseded_by:
+            row["superseded_by"] = args.superseded_by
         changed += 1
 
     missing = sorted(ids - found)
@@ -134,6 +144,9 @@ def main() -> int:
     p_close.add_argument("--handled-at")
     p_close.add_argument("--reason", required=True)
     p_close.add_argument("--evidence", action="append", required=True)
+    p_close.add_argument("--require-rule-update", action="store_true")
+    p_close.add_argument("--supersedes", action="append")
+    p_close.add_argument("--superseded-by")
     p_close.add_argument("--dry-run", action="store_true")
     p_close.set_defaults(func=close)
 

@@ -33,10 +33,8 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
 
 BOILERPLATE_PATTERNS = [
     "■ 概要",
-    "■ 要約",
     "■ 内容分析",
-    "■ メリット",
-    "■ デメリット",
+    "■ メリット・デメリット",
     "笆",
     "讎りｦ",
     "繝｡繝ｪ繝・ヨ",

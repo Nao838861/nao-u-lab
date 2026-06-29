@@ -29,7 +29,7 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
    - **手法の重要要素** (問題設定・着想・手法の中核・評価の中身・結論) が抽出できるか
    - **ゲーム制作の具体場面で適用できるか** (抽象すぎず、こじつけすぎず)
    - **CoopEval ポスト水準 ~4000字 の概要が書けるか**
-3. 各 candidate ファイルに以下を追記:
+3. 各 candidate ファイルの evaluation frontmatter を更新する。古い評価欄と矛盾する場合は、現行判断で置換し、旧判断を本文へ積み増さない:
    ```yaml
    evaluated_at: <ISO>
    evaluated_by: log_cdx (Phase 2)
@@ -50,6 +50,8 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
      pros_cons: <ざっくり>
      verdict_pre: <採用/部分採用/棄却/保留の予想>
    ```
+   - `application_target` や `analysis_axis` は Log_cdx 自身の適用先として書く。Mir / Ash / Log への問いかけ、役割分担、返答依頼を pass 理由に含めない。
+   - 旧運用の multi-agent 相談前提で `ready_to_post` になっている candidate は、現行フォーマットに書き換えられるまで `postponed` に戻す。
 4. staging file の `## Phase 2: 分析` セクションに判定結果を追記:
    ```yaml
    total_candidates: <数>
@@ -92,3 +94,32 @@ Phase 2 で `stale_review_batch` や `memory/shared_reads_review_queue.jsonl` �
 Phase 4a が `stale_review_batch` を staging に残している時は、Phase 2 は新規 candidate より先に最大 5 件を処理する。処理後は staging の `stale_reviewed` と、該当 candidate frontmatter の `status` / `candidate_status` / `last_reviewed_at` / `last_decision` / `evidence` / `next_action` / `stale_after` の両方を確認する。片方だけでは完了扱いにしない。
 
 duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` で再評価除外する。`ready_to_post` / `postponed` / `needs_review` を含む mixed group は自動 close せず、Phase 2 の個別評価か Phase 4a の `stale_review_batch` に残す。
+
+## mixed duplicate queue 運用 (2026-06-27)
+
+Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した。Phase 2 が `stale_review_batch` を処理する時、同じ `title_key` の候補を複数同時に評価しない。Phase 4a から `recommended_representative` が渡っている場合は、その 1 件を group 代表として評価し、評価後に group 全体が terminal 化した場合だけ `memory/shared_reads_title_canonical_index.jsonl` の再生成候補にする。candidate 本体の status は評価した代表ファイルだけ更新し、queue は report / handoff 用 sidecar として再生成可能に保つ。
+
+## 評価前 terminal-title preflight (2026-06-29)
+
+Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` を確認する。
+
+同じ `title_key` に `status: posted` の terminal sibling が見つかった場合、その candidate は Phase 3 投稿対象にしない。本文評価を作る前に、対象 candidate だけ frontmatter を次の形で閉じる:
+
+```yaml
+status: postponed
+candidate_status: postponed
+last_reviewed_at: <ISO>
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: <terminal_paths/permalinks>"
+next_action: none
+stale_after: "YYYY-MM-DD"  # last_reviewed_at から約 30 日後
+```
+
+staging Phase 2 には `pass` ではなく `postpone` または `stale_reviewed` として記録し、理由に `posted duplicate title sibling` と terminal path / permalink を残す。判定確認には必要に応じて次を使う。
+
+```powershell
+python tools\shared_reads_duplicate_preflight.py memory\shared_reads_candidates\<candidate>.md
+python tools\shared_reads_duplicate_preflight.py memory\shared_reads_candidates\<candidate>.md --apply
+```
+
+`--apply` は対象 candidate の frontmatter だけを更新する。mixed duplicate queue は引き続き派生 sidecar として扱い、group 全体の自動 close や sibling candidate の一括更新はしない。

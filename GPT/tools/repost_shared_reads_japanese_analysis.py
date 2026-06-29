@@ -11,6 +11,7 @@ from typing import Any
 
 from external_research_cycle import format_shared_reads_item
 from slack_client import post_message
+from shared_reads_policy import validate_shared_reads_message
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -154,7 +155,7 @@ def build_repost_message(post: dict[str, Any]) -> str:
         "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版",
         "",
         f"対象: shared-reads ts={ts} / {dt}",
-        "理由: 旧投稿には英語abstractをそのまま含む要約があったため、リンク先が消えても判断材料が残るように、■ 要約 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット / ■ デメリットの形で再掲する。",
+        "理由: 旧投稿には英語abstractをそのまま含む概要不足があったため、リンク先が消えても判断材料が残るように、現行フォーマットで再掲する。",
     ]
     for index, item in enumerate(enrich_items(list(post.get("items") or [])), 1):
         lines += ["", format_shared_reads_item(item, index, repost_from_ts=ts)]
@@ -172,7 +173,7 @@ def build_repost_item_message(post: dict[str, Any], item: dict[str, Any], index:
         "[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版",
         "",
         f"対象: shared-reads ts={ts} / {dt} / 項目 {index}/{total}",
-        "理由: 旧投稿には英語abstractをそのまま含む要約があったため、リンク先が消えても判断材料が残るように、項目単位で再掲する。長文切れを避けるため、1投稿1項目に分割する。",
+        "理由: 旧投稿には英語abstractをそのまま含む概要不足があったため、リンク先が消えても判断材料が残るように、現行フォーマットで項目単位に再掲する。",
         "",
         format_shared_reads_item(item, index, repost_from_ts=ts),
     ]
@@ -217,6 +218,10 @@ def main() -> int:
             if not args.force and key in posted_items:
                 continue
             message = build_repost_item_message(post, item, index, total)
+            policy = validate_shared_reads_message(message)
+            if not policy.ok:
+                result.setdefault("skipped", []).append({"key": key, "reason": f"shared_reads_policy: {policy.reason}"})
+                continue
             if args.dry_run:
                 result.setdefault("messages", []).append(message)
                 continue

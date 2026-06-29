@@ -86,6 +86,15 @@ stale_review_batch:
 
 ## shared-reads title canonical index audit (2026-06-25)
 
+## Slack directive close gate
+
+Slack directive を `handled` にする時は、受領や staging への割り振りだけを完了根拠にしない。指示が既存運用を変える内容なら、次のどちらかを evidence に含める。
+
+- 現行ルール・phase prompt・投稿スクリプト・candidate frontmatter のうち、実際に未来の出力を変える場所を置換した commit / diff。
+- 実装しない場合は、実装しない理由と、旧指示を維持する明示判断。
+
+新しい指示が以前の指示を上書きする場合は、旧指示の後ろに追記して併存させない。旧文面を削るか、`superseded_by` / `supersedes` を inbox row に残して、検索や再投稿で旧運用が復活しない状態にしてから close する。
+
 `memory/shared_reads_candidates/` の duplicate title group を確認する時は、必要に応じて次を使う。
 
 ```powershell
@@ -98,3 +107,15 @@ python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 `postponed` / `needs_review` の `stale_after <= 今日` を見る時は、残 backlog 件数と今回 `stale_review_batch` に渡す件数を分けて staging に書く。Phase 2 に渡すのは最大 5 件を目安にし、処理契約は Phase 2 の `stale_reviewed` と candidate frontmatter 更新で閉じる。
 
 duplicate title group は、group 全体が `posted` / `failed` で閉じている terminal group と、`ready_to_post` / `postponed` / `needs_review` を含む mixed group に分けて扱う。terminal group だけを `memory/shared_reads_title_canonical_index.jsonl` に `source_url` / `duplicate_paths` / `status_counts` / `decision_note` 付きで登録し、mixed group は自動 close せず `stale_review_batch` または Phase 2 の通常評価に残す。
+
+## mixed duplicate queue (2026-06-27)
+
+Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した。これは terminal status と open status が混在する duplicate title group を、group 単位で Phase 2 に渡すための再生成可能な sidecar である。candidate frontmatter は正本のまま変更しない。
+
+再生成:
+
+```powershell
+python tools\build_shared_reads_mixed_duplicate_queue.py
+```
+
+Phase 4a で mixed duplicate を handoff する時は、この queue の上位から最大 5 件を見て、同じ `title_key` の candidate を複数同時に `stale_review_batch` へ入れない。`recommended_representative` を基本に選び、`priority_reason` / `status_counts` / `terminal_paths` / `open_paths` を staging に根拠として残す。terminal group は従来通り `memory/shared_reads_title_canonical_index.jsonl` 側で扱う。

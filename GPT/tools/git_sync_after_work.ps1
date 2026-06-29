@@ -15,6 +15,13 @@ Set-Location $RepoRoot
 
 git -c safe.directory=D:/AI/Nao_u_BOT status --short
 
+$Guard = Join-Path $GptRoot "tools\git_sync_guard.py"
+python $Guard --preflight
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Git sync preflight failed. Refusing to commit into a corrupt, diverged, or unreachable repository."
+  exit $LASTEXITCODE
+}
+
 foreach ($Path in $Paths) {
   git -c safe.directory=D:/AI/Nao_u_BOT add -- $Path
 }

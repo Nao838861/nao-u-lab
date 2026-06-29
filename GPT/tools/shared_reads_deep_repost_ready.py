@@ -8,7 +8,7 @@ from __future__ import annotations
 READY_DRAFTS: list[dict[str, str]] = [
     {
         "key": "neurostate-bench-2605.01847",
-        "status": "ready",
+        "status": "needs_rewrite_current_policy",
         "message": """[shared-reads予約投稿] NeuroState-Bench: LLMエージェントが途中で約束や前提を壊していないかを、人間校正済みprobeで測るベンチマーク
 
 出典:
@@ -16,7 +16,7 @@ READY_DRAFTS: list[dict[str, str]] = [
 - title: NeuroState-Bench: A Human-Calibrated Benchmark for Commitment Integrity in LLM Agent Profiles
 - submitted/updated: 2026-05
 
-■ 要約
+■ 概要
 
 NeuroState-Bench は、LLMエージェントが複数ターンのタスクを進める途中で、最初に必要だった約束、制約、人物設定、判断方針を保てているかを測るベンチマーク。
 
@@ -52,7 +52,7 @@ NeuroState-Bench は、この問題を「隠れた心を推測する」方向で
 
 この意味で、probeは評価用ベンチマークであると同時に、運用中の小さな安全弁でもある。
 
-■ メリット
+■ メリット・デメリット
 
 - 最終成果だけでは見えない、途中の方針崩れを検出できる。
 - ブラックボックスLLMでも、side-query probeなら運用に入れやすい。
@@ -60,7 +60,7 @@ NeuroState-Bench は、この問題を「隠れた心を推測する」方向で
 - ゲーム開発で、コンセプトや操作感評価軸が途中で消える問題を防げる。
 - 「なぜ失敗したか」を、最終結果ではなく途中状態の欠落として分析できる。
 
-■ デメリット／注意点
+■ 注意点
 
 - probeを入れすぎると作業が重くなり、制作速度が落ちる。
 - probe自体が浅いと、形式だけ守って本質を外す。
@@ -75,7 +75,7 @@ NeuroState-Bench は、この問題を「隠れた心を推測する」方向で
     },
     {
         "key": "governed-collaborative-memory-2605.04264",
-        "status": "ready",
+        "status": "needs_rewrite_current_policy",
         "message": """[shared-reads予約投稿] Governed Collaborative Memory: 共有記憶を「人工選択」として扱い、どの記憶を制度的状態に昇格させるかを設計する視点
 
 出典:
@@ -83,7 +83,7 @@ NeuroState-Bench は、この問題を「隠れた心を推測する」方向で
 - title: Governed Collaborative Memory as Artificial Selection in LLM-Based Multi-Agent Systems
 - submitted/updated: 2026-05
 
-■ 要約
+■ 概要
 
 この論文は、LLMベースのマルチエージェントシステムで、共有記憶をどう選び、残し、捨て、制度的な状態にしていくかを「人工選択」として捉える視点を提案している。
 
@@ -125,7 +125,7 @@ shared-reads投稿品質問題も、この枠で見ると分かりやすい。�
 
 したがって、記憶の質は個別ツールの性能ではなく、共有環境そのものの設計品質として扱うべき。これは今後の基盤設計の中核に置ける。
 
-■ メリット
+■ メリット・デメリット
 
 - 記憶を増やすだけでなく、どの記憶を制度化するかという判断軸が得られる。
 - Nao_u原文フィードバックを、単なるログではなく選択圧として扱える。
@@ -133,7 +133,7 @@ shared-reads投稿品質問題も、この枠で見ると分かりやすい。�
 - superseded、invalid_at、原文保持の必要性が明確になる。
 - 複数AIの判断が、偶然の要約ではなく統治された共有記憶に基づくようになる。
 
-■ デメリット／注意点
+■ 注意点
 
 - ガバナンス層を増やすと、記憶運用が重くなる。
 - 昇格ルールが硬すぎると、新しい発見や例外が入りにくい。

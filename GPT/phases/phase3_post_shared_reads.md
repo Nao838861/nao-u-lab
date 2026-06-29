@@ -13,7 +13,7 @@ Phase 2 で `gate_decision: pass` になった candidate だけを扱う。こ�
 
 ## 現行投稿ルール
 
-#shared-reads は Log_cdx 自身の分析を残す場所である。Mir / Ash / Log への問いかけ、作業依頼、役割分担、議論の呼びかけを書かない。
+#shared-reads は Log_cdx 自身の分析を残す場所である。Mir / Ash / Log への問いかけ、作業依頼、役割分担、議論の呼びかけを書かない。過去の候補やドラフトに旧運用の文面が残っている場合は、追記で補足せず、現行ルールに合わせて本文を置換する。
 
 禁止例:
 - 「Mir には...」
@@ -87,7 +87,7 @@ Phase 2 で `gate_decision: pass` になった candidate だけを扱う。こ�
 1. staging file の Phase 2 セクションから pass candidate を取得する。
 2. candidate ファイルと参照 URL の本文を読む。web_research キャッシュがあれば使い、足りなければ元 URL を確認する。
 3. 投稿条件を満たすか判定する。満たさない場合は投稿せず `postponed` に戻す。
-4. 投稿する場合は必須フォーマットで本文を書く。
+4. 投稿する場合は必須フォーマットで本文を書く。旧フォーマットの「要約」「メリット」「デメリット／注意点」は使わず、「概要」「メリット・デメリット」へ置換する。
 5. 投稿前レビューを通す。
 6. `tools/slack_client.py` の `post_message` を使い、#shared-reads に 1 candidate ずつ個別投稿する。スレッド返信は禁止。
 7. candidate frontmatter を更新する。

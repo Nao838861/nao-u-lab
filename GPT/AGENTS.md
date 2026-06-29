@@ -95,8 +95,9 @@ Codex で作業を始める時は、`slack_directives.jsonl` と並んでこの�
 
 - `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_overview_20260512.md` — 要約→概要、品質基準
 - `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_candidate_gate_20260512.md` — 候補ゲート、~4000字バー
+- `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_log_cdx_standalone_20260626.md` — Mir/Log/Ash への問いかけ停止、Log_cdx 自身の深い分析へ上書き
 
-両 directive とも `status: active`。Codex 作業時に必ず確認する。
+3 directive とも `status: active`。Codex 作業時に必ず確認する。後続 directive が旧い投稿スタイルを上書きする場合、旧文面に追記して併存させず、現行ルールへ置換する。
 
 ## ルール読み分け
 

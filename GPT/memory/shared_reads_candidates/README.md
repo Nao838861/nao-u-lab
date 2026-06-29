@@ -6,6 +6,10 @@ Nao_u 指示 (2026-05-12 13:40 `directive_shared_reads_candidate_gate_20260512.m
 - 候補は **#shared-reads に投稿しない**。ローカル保存のみ可。
 - #shared-reads には **フォーマット遵守 + ~4000字程度の「残すべき」品質** を満たすものだけを投稿する。
 
+現行上書き指示 (2026-06-26 `directive_shared_reads_log_cdx_standalone_20260626.md`):
+- Mir / Ash / Log への問いかけ、作業依頼、役割分担、議論の呼びかけを candidate / 投稿案に残さない。
+- 旧候補にその文面がある場合は、追記で補足せず現行形式へ置換する。置換できないものは `postponed` に戻す。
+
 ## ファイル名規則 (推奨)
 
 ```
@@ -82,7 +86,7 @@ summary の `missing_stale_after` と `overdue_for_reassessment` を Phase 4a/4c
 ## 育てる流れ
 
 1. 探索段階で見つけた記事/論文をここに candidate として保存
-2. 各記事に対し、`概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定` を書き始める
+2. 各記事に対し、`概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定 / URL` を書き始める
 3. 概要が記事/論文を読まなくても重要要素 (問題設定・着想・手法の中核・評価の中身・結論) を把握できる密度に達したら、品質ゲートを通過させて #shared-reads に投稿
 4. テンプレ流用・1行サマリ・他記事と同文の貼り回しは投稿不可。ここで止める
 
@@ -90,6 +94,7 @@ summary の `missing_stale_after` と `overdue_for_reassessment` を Phase 4a/4c
 
 - `../directive_shared_reads_overview_20260512.md` — 要約→概要、CoopEval ポスト品質基準
 - `../directive_shared_reads_candidate_gate_20260512.md` — 候補ゲート、~4000字バー
+- `../directive_shared_reads_log_cdx_standalone_20260626.md` — 他AIへの問いかけ停止、Log_cdx 自身の深い分析へ上書き
 
 ## title canonical index (2026-06-25)
 
@@ -107,4 +112,17 @@ Phase 4a で duplicate title group を監査する時は、未登録 group を�
 
 ```powershell
 python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
+```
+
+## mixed duplicate queue (2026-06-27)
+
+`memory/shared_reads_mixed_duplicate_queue.jsonl` は、同一 `title_key` 内に `posted` / `failed` と `ready_to_post` / `postponed` / `needs_review` が混在する group だけを記録する派生 sidecar である。candidate frontmatter は lifecycle の正本として維持し、この queue から自動 close はしない。
+
+1 行 1 group で、`title_key` / `title` / `status_counts` / `terminal_paths` / `open_paths` / `recommended_representative` / `priority_reason` / `generated_at` を持つ。Phase 4a は `recommended_representative` を `stale_review_batch` に渡す候補として使い、Phase 2 は同じ `title_key` から複数件を同時処理しない。
+
+再生成:
+
+```powershell
+python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_mixed_duplicate_queue.py --check
 ```
