@@ -17,6 +17,14 @@
 
 **Title: MMC5 (mapper 5): $5113 PRG-RAM bank 1 aliases bank 0 with legacy iNES headers (N8 Pro fw v25.1123)**
 
+First, thank you for the EverDrive. For NES/Famicom homebrew there is really
+nothing else like it — being able to run my own code on real hardware, exactly
+as it will run for anyone else, is what makes this hobby possible for me. I'm
+grateful for the work you put into it.
+
+I found a small compatibility issue and wanted to share a clean minimal repro
+in case it's useful.
+
 **Cartridge:** EverDrive N8 Pro (72-pin / Famicom: FILL IN), firmware v25.1123
 **Affected:** mapper 5 (MMC5) ROMs with legacy iNES headers (no PRG-RAM size declared)
 **Works correctly on:** Mesen, original EverDrive N8
@@ -75,6 +83,9 @@ switched $5114 PRG bank. The only failing element was $5113 double-buffering,
 and only with the legacy header. Patching just the header of the full game to
 NES 2.0 (bytes 7/10 = $08/$90) fixes it on N8 Pro — confirmed on hardware.
 
+Thank you again for everything you make. And from Japan — I hope peace returns
+to your country as soon as possible.
+
 --- POST END ---
 
 ---
@@ -82,6 +93,14 @@ NES 2.0 (bytes 7/10 = $08/$90) fixes it on N8 Pro — confirmed on hardware.
 ## 日本語訳（参考・投稿はしない）
 
 **タイトル: MMC5 (mapper 5): 旧iNESヘッダのROMで $5113 のPRG-RAMバンク1がバンク0にエイリアスする（N8 Pro fw v25.1123）**
+
+まず、EverDrive をありがとうございます。NES/ファミコンの自作にとって、これは
+本当に代え難いものです — 自分のコードを、他の誰の環境でもそのまま動くのと同じ
+形で実機で動かせること。それがこの趣味を私にとって成り立たせてくれています。
+作り込みに込められた仕事に感謝しています。
+
+小さな互換性の問題を見つけたので、役に立つかもしれないと思い、きれいな最小
+再現をお送りします。
 
 **カート:** EverDrive N8 Pro（72-pin / Famicom: 記入）、ファーム v25.1123
 **影響:** 旧iNESヘッダ（PRG-RAMサイズ無宣言）の mapper 5 (MMC5) ROM
@@ -138,3 +157,6 @@ $5113 で届く8バンク全部にしてください。NES 2.0 ヘッダは宣�
 バンクからの転送実行。唯一失敗したのは $5113 のダブルバッファで、しかも
 旧iNESヘッダのときだけ。本編のヘッダを NES 2.0（byte7/10 = $08/$90）に
 するだけで N8 Pro で直りました（実機確認済み）。
+
+改めて、いつも素晴らしいものを作ってくれてありがとうございます。そして日本
+から — あなたたちの国に一日でも早く平穏が戻ることを祈っています。
