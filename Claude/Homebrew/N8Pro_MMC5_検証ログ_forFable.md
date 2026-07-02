@@ -112,11 +112,17 @@ MonoBitmap の表示方式:
 
 ## 6. 次のステップ（原因確定後）
 
-1. **パッチ版本編の実機確認**: `MonoSH_nes2.nes` / `NesLaser3_nes2.nes`（ヘッダのみNES2.0化、
-   repro フォルダに生成済み）を N8 Pro で実行し、ビッグコアが化けないことを確認。
-2. **本編ソースの恒久修正**: MonoSH リポジトリ `sys/header.s` を NES2.0 対応に
-   （§10 の差分。NesLaser3 も同系）。
-3. **krikzz へ報告**: `krikzz_bug_report.md`（書き直し済み・最終版）を送る。
+1. ✅ **パッチ版本編の実機確認 完了（2026-07-03）**: `MonoSH_nes2.nes` / `NesLaser3_nes2.nes`
+   （ヘッダのみNES2.0化）を N8 Pro で実行 → **ビッグコアが化けず完全正常**。原因確定。
+2. ✅ **MonoSH ソース恒久修正 完了・push済み**: `sys/header.s` を `.ifdef MAPPER_MMC5` で
+   NES2.0ヘッダ出力に（byte7=$08, byte10=$90）。他マッパーは旧iNESのまま無影響。
+   MonoSH `main` commit `17fce78`。**次の `make`（デフォルトmmc5）から正しいROMが出る**。
+   単体アセンブル（`-DMAPPER_MMC5=1 -DINES_MIRROR=1`）でMMC5=`...5308 0000 90...`／
+   非MMC5=`...5300...`を実際に検証済み（§10）。
+   ※ **NesLaser3 はリポジトリがバイナリのみ**（`NesLaser3.nes`+READMEだけ・ソース非公開）。
+   直し方はバイナリパッチのみ（byte7=$08, byte10=$90）＝ `NesLaser3_nes2.nes` が実機確認済みの完成品。
+   恒久化するなら NesLaser3 repo の `.nes` をこのパッチ版で差し替える（Nao_u判断・外部push要承認）。
+3. **krikzz へ報告**: `krikzz_bug_report.md`（最終版・英文＋日本語訳・HW確定済み）を送る。カート種別のみ記入待ち。
    09/11 のペアが最小再現。要点は「iNES の mapper5 は WRAM 8KB では足りないタイトルが
    多い（ETROM=16KB, EWROM=32KB の市販作も旧iNESダンプが流通）。Mesen・無印N8 は
    多めに確保するので互換差になる。iNES の mapper5 はデフォルト 64KB を推奨」。
@@ -166,24 +172,37 @@ MonoBitmap の表示方式:
 
 ---
 
-## 10. 本編の恒久修正（MonoSH リポジトリ `sys/header.s`）
+## 10. 本編の恒久修正（MonoSH `sys/header.s`）— 実装済み commit `17fce78`
 
-ヘッダを NES 2.0 化して PRG-NVRAM 32KB（64<<9）を宣言する。battery ビット(INES_SRAM)は既に立っている。
+`header.s` はエンジン共通（nrom/mmc3等でも使う）ので、**`.ifdef MAPPER_MMC5` で分岐**し
+MMC5ビルドのときだけ NES 2.0 ヘッダ（PRG-NVRAM 32KB=64<<9）を出力する。makefile が
+`-D MAPPER_MMC5=1` を ca65 に渡すため `.ifdef` が効く（`INES_MIRROR` も makefile が
+`FIXED_MIRRORING=vertical` → `-D INES_MIRROR=1` で供給）。他マッパーは旧iNESのまま。
 
 ```asm
 .byte 'N', 'E', 'S', $1A ; ID
 .byte <INES_PRG_BANKS
 .byte <INES_CHR_BANKS
 .byte <INES_MIRROR | (<INES_SRAM << 1) | ((<INES_MAPPER & $f) << 4)
-.byte (<INES_MAPPER & %11110000) | $08  ; ← NES 2.0 identifier (bits2-3 = 10)
-.byte $0                                 ; byte8: submapper / mapper hi
-.byte $0                                 ; byte9: ROM size hi (PRG64/CHR64は8bitに収まる)
-.byte $90                                ; ← byte10: PRG-NVRAM = 64<<9 = 32KB
-.byte $0, $0, $0, $0, $0                 ; byte11-15
+.ifdef MAPPER_MMC5
+.byte (<INES_MAPPER & %11110000) | $08 ; flags7: NES 2.0 id (bits2-3=10) | mapper hi
+.byte $00                               ; byte8: submapper / mapper hi
+.byte $00                               ; byte9: PRG/CHR ROM size MSB（64は8bit内）
+.byte $90                               ; byte10: PRG-NVRAM = 64<<9 = 32KB（battery）
+.byte $00, $00, $00, $00, $00           ; byte11-15
+.else
+.byte (<INES_MAPPER & %11110000)
+.byte $0, $0, $0, $0, $0, $0, $0, $0    ; padding（従来通り）
+.endif
 ```
 
-注意: `header.s` はエンジン共通（nrom/mmc3等でも使われる）なので、無条件変更なら
-他マッパーにも NVRAM 32KB が付く。気になるなら `INES_PRGRAM_SHIFT` のような
-import を足してマッパー別レイアウトから渡すのがきれい。
-検証済みバイナリパッチ（ビルド不要）: byte7 = $08, byte10 = $90 の2バイトのみ
-（`MonoSH_nes2.nes` / `NesLaser3_nes2.nes` はこの方法で生成）。
+検証（単体アセンブル・テストcfgで INES_* を weak 供給）— **実際に実行して確認済み**:
+- `ca65 -DMAPPER_MMC5=1 -DINES_MIRROR=1` → `4e45531a 4040 5308 0000 9000 0000 0000`
+  （実機で緑の `MonoSH_nes2.nes` のヘッダと完全一致）
+- `ca65 -DINES_MIRROR=1`（MMC5未定義）→ `4e45531a 4040 5300 0000 0000 0000 0000`（旧iNES・元通り）
+
+この環境は pwsh 無しで CHR辞書生成(gen_chr_dict.ps1)が動かずフルビルド不可。ヘッダ
+ロジックは上記の実アセンブルで確定。Nao_u の Win 環境で `make` すれば正しいROMが出る。
+
+（バイナリパッチ版の作り方: 既存 .nes の byte7=$08, byte10=$90 の2バイトのみ書換。
+`MonoSH_nes2.nes` / `NesLaser3_nes2.nes` はこの方法で生成し実機確認済み。）

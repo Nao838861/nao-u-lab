@@ -2,8 +2,8 @@
 
 ## 送信前チェック（Nao_u用・投稿前に記入/確認）
 - [ ] カート種別を記入: **72-pin (NES)** or **Fami**
-- [ ] ファーム **v25.1123**（Device Info で確認）
-- [ ] **パッチ版本編（MonoSH_nes2.nes）の実機確認結果を最終段落に反映**
+- [x] ファーム **v25.1123**（Device Info で確認）
+- [x] 実機確認済み（2026-07-03）: `MonoSH_nes2.nes` / `NesLaser3_nes2.nes`（ヘッダのみNES2.0化）は N8 Pro で完全正常。最小ペア 09=赤 / 11=緑 も確定
 - [ ] 送り先: krikzz フォーラム（krikzz.com のサポート/フォーラム）に投稿
 - [ ] 添付: `09_wram_bankflip.nes`（赤=旧iNES） + `11_wram_bankflip_nes2.nes`（緑=NES2.0）
       （任意で `09_wram_bankflip.s` — 1ソースでヘッダ差のみと分かる）
@@ -73,6 +73,68 @@ strided / during rendering, ExRAM sequential, WRAM<->ExRAM alternating copies,
 ExRAM writes inside a mid-frame forced-blank band, transfers executed from a
 switched $5114 PRG bank. The only failing element was $5113 double-buffering,
 and only with the legacy header. Patching just the header of the full game to
-NES 2.0 (bytes 7/10 = $08/$90) fixes it on N8 Pro. (CONFIRM AFTER HW TEST)
+NES 2.0 (bytes 7/10 = $08/$90) fixes it on N8 Pro — confirmed on hardware.
 
 --- POST END ---
+
+---
+
+## 日本語訳（参考・投稿はしない）
+
+**タイトル: MMC5 (mapper 5): 旧iNESヘッダのROMで $5113 のPRG-RAMバンク1がバンク0にエイリアスする（N8 Pro fw v25.1123）**
+
+**カート:** EverDrive N8 Pro（72-pin / Famicom: 記入）、ファーム v25.1123
+**影響:** 旧iNESヘッダ（PRG-RAMサイズ無宣言）の mapper 5 (MMC5) ROM
+**正常動作:** Mesen、無印 EverDrive N8
+
+### 概要
+
+N8 Pro では、旧iNESヘッダ（byte7 = $00、RAMサイズ欄なし）の MMC5 ROM に
+PRG-RAM が 8KB しか割り当てられないようで、$5113 で WRAM バンク1を選ぶと
+バンク0と同じ 8KB が見えます（バンク1がバンク0のエイリアス）。データを
+2つの WRAM バンクにダブルバッファするゲームは、単一バンクのRAMテストは
+すべて通るのに、動きに依存した分かりにくい壊れ方をします。
+
+まったく同一のバイナリでも、NES 2.0 ヘッダで 32KB の PRG-NVRAM を宣言すると
+完璧に動きます。これは MMC5 レジスタのエミュレーションではなく、RAM の
+割り当てが原因であることを示します。
+
+### 最小テストROM（添付）
+
+2本のROMは中身のプログラムが完全に同一で、16バイトのヘッダだけが異なります。
+ExRAM拡張属性の背景を表示しながら、WRAMバンク0（$5113=0）に値Vを、バンク1
+（$5113=1）に補数~Vを $6000-$6BFF へ書き続け、両バンクを読み戻して照合します。
+緑=全一致、赤（ラッチ）=不一致。
+
+| ROM | ヘッダ | Mesen | N8 Pro v25.1123 |
+|---|---|---|---|
+| `09_wram_bankflip.nes` | 旧iNES（mapper5, battery, RAMサイズ無宣言） | 緑 | **即・赤** |
+| `11_wram_bankflip_nes2.nes` | NES 2.0, PRG-NVRAM = 32KB（byte10 = $90） | 緑 | **緑** |
+
+09が即・赤になるのは「バンク1=バンク0エイリアス」そのもので、バンク1経由で
+書いた~Vが読み戻しでバンク0に見えています。
+
+### homebrew に限らない理由
+
+ライセンス品の MMC5 基板は 8KB を超える PRG-RAM を積むものが多く、ETROM は
+16KB（2×8KB）、EWROM は 32KB あります。これらのダンプの多くが RAMサイズ
+無宣言の旧iNESヘッダで流通しているため、N8 Pro では同じエイリアスを踏むはず
+です。Mesen と無印N8 のマッパーパックは mapper5 に大きめのデフォルトを確保
+するので、同じファイルでも機種によって挙動が変わります。
+
+### 修正案
+
+旧iNESヘッダの mapper 5 では、PRG-RAM のデフォルトを（Mesen 同様）64KB＝
+$5113 で届く8バンク全部にしてください。NES 2.0 ヘッダは宣言サイズを使う
+現状のままで問題ありません（そちらは N8 Pro でも正しく動作します）。
+
+### 発見の経緯（参考）
+
+自作の MMC5 ゲームは 1bpp フレームバッファを WRAM バンク0/1 でダブルバッファ
+し、ExRAM拡張属性で描画しています。N8 Pro でのみ、動く物体が2フレーム分の
+絵の行が交互に混ざった状態で化けました（静止画は完璧）。単一メモリの負荷
+テストはすべて緑でした — WRAM連続/ストライド/描画中、ExRAM連続、WRAM↔ExRAM
+交互コピー、フレーム内強制ブランク帯でのExRAM書き、$5114で切り替えたPRG
+バンクからの転送実行。唯一失敗したのは $5113 のダブルバッファで、しかも
+旧iNESヘッダのときだけ。本編のヘッダを NES 2.0（byte7/10 = $08/$90）に
+するだけで N8 Pro で直りました（実機確認済み）。
