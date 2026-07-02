@@ -1,10 +1,12 @@
-# EverDrive N8 Pro — MMC5 バグ報告（投稿用）
+# EverDrive N8 Pro — MMC5 バグ報告（投稿用・2026-07-03 原因確定版）
 
 ## 送信前チェック（Nao_u用・投稿前に記入/確認）
 - [ ] カート種別を記入: **72-pin (NES)** or **Fami**
 - [ ] ファーム **v25.1123**（Device Info で確認）
+- [ ] **パッチ版本編（MonoSH_nes2.nes）の実機確認結果を最終段落に反映**
 - [ ] 送り先: krikzz フォーラム（krikzz.com のサポート/フォーラム）に投稿
-- [ ] 添付: `repro.nes`（＋実機で化けたバリアント / 本編2本）
+- [ ] 添付: `09_wram_bankflip.nes`（赤=旧iNES） + `11_wram_bankflip_nes2.nes`（緑=NES2.0）
+      （任意で `09_wram_bankflip.s` — 1ソースでヘッダ差のみと分かる）
 - [ ] 動画URL（任意）: https://www.youtube.com/watch?v=s4W4xk-zi1E
 
 投稿時は下の `--- POST FROM HERE ---` 以降をコピペ。（カート種別だけ埋める）
@@ -13,71 +15,64 @@
 
 --- POST FROM HERE ---
 
-**Title:** EverDrive N8 Pro — MMC5 (mapper 5) ExRAM extended-attribute background corrupts with 8×16 sprites (fw v25.1123)
+**Title: MMC5 (mapper 5): $5113 PRG-RAM bank 1 aliases bank 0 with legacy iNES headers (N8 Pro fw v25.1123)**
 
-Hi, I think I found an MMC5 bug on the EverDrive N8 Pro. I'm a homebrew developer and one of my games renders correctly on Mesen and on the original EverDrive N8, but is corrupted only on the N8 Pro. I made a minimal repro ROM (attached).
+**Cartridge:** EverDrive N8 Pro (72-pin / Famicom: FILL IN), firmware v25.1123
+**Affected:** mapper 5 (MMC5) ROMs with legacy iNES headers (no PRG-RAM size declared)
+**Works correctly on:** Mesen, original EverDrive N8
 
-**Environment**
-- Cartridge: EverDrive N8 Pro ( **[fill in: 72-pin / Fami]** )
-- Firmware: **v25.1123** (latest)
-- Console: Famicom/NES, real hardware (NTSC)
+## Summary
 
-**Where it happens**
-- ✅ Mesen (I develop and verify on it): correct
-- ✅ Original EverDrive N8 (real hardware): correct
-- ❌ EverDrive N8 Pro, firmware v25.1123: corrupted
+On N8 Pro, an MMC5 ROM with a legacy iNES header (byte 7 = $00, no RAM size
+fields) appears to get only 8KB of PRG-RAM: selecting WRAM bank 1 via $5113
+silently maps the same 8KB as bank 0 (bank 1 is an alias of bank 0). Games that
+double-buffer data across two WRAM banks break in subtle, motion-dependent ways,
+while simple single-bank RAM tests all pass.
 
-**Symptom**
-My game draws a large object (a boss) as a bitmap using **MMC5 ExRAM extended-attribute mode**, on top of a normal tiled background.
-- The normal tiled background is always fine.
-- The extended-attribute object is corrupted: black lines appear on **alternate scanlines**, giving a "half vertical resolution" look.
-- It gets **worse as more sprites are on screen** — with one object it is slightly wrong, and with several objects (more sprites per scanline) most of the object ends up with a black line on every other line.
+The identical binary with a NES 2.0 header declaring 32KB PRG-NVRAM works
+perfectly, which confirms it is the RAM allocation, not the MMC5 register
+emulation.
 
-**MMC5 features the game uses**
-- ExRAM **extended-attribute mode** (`$5104`: switched to mode 2 to write the attribute bytes into ExRAM, then mode 1 to display). Each 8×8 background cell selects its own 4KB CHR bank from ExRAM.
-- **8×16 sprite mode** (so MMC5 uses its sprite-vs-background CHR fetch-phase detection).
-- MMC5 scanline IRQ + sprite-0 hit (used for a scroll split).
-- CHR mode 3.
+## Minimal test ROMs (attached)
 
-**Minimal reproduction (attached)**
-`repro.nes` isolates the trigger with the smallest setup:
-- MMC5 mapper 5, ExRAM extended-attribute background built from **solid tiles** (so any per-scanline CHR fetch dropout shows up immediately as black horizontal lines). The background looks like a diagonal grid of white/red/green solid blocks.
-- **8×16 sprite mode**, 64 sprites placed as **8 sprites per scanline** over a horizontal band.
-- **Hold the A button to move all sprites off-screen.**
+Both ROMs contain the *identical* program; only the 16-byte header differs.
+While displaying an ExRAM extended-attribute background, the test continuously
+writes value V to $6000-$6BFF in WRAM bank 0 ($5113=0) and complement ~V to the
+same range in bank 1 ($5113=1), then reads both banks back and verifies.
+Green screen = all reads match. Red screen (latched) = mismatch.
 
-What I see:
-- On **Mesen and the original N8**: a clean grid of solid blocks with a band of white sprites, **no black lines**.
-- On the **N8 Pro (v25.1123)**: the extended-attribute background gets black lines / dropout. **Holding A (removing the sprites) makes the corruption disappear**, and releasing A (sprites back) brings it back.
+| ROM | Header | Mesen | N8 Pro v25.1123 |
+|---|---|---|---|
+| `09_wram_bankflip.nes` | legacy iNES (mapper 5, battery, no RAM size) | green | **red (immediately)** |
+| `11_wram_bankflip_nes2.nes` | NES 2.0, PRG-NVRAM = 32KB (byte 10 = $90) | green | **green** |
 
-That A-button behavior is the key point: the background corruption is directly tied to how many sprites are being fetched, which points at the **sprite / background CHR fetch-phase detection** in the N8 Pro's MMC5 core, in combination with extended-attribute background fetches.
+The immediate red on 09 is exactly what bank-1-aliases-bank-0 produces: the ~V
+written through "bank 1" is found in bank 0 on read-back.
 
-**Extra repro variants (in case the base one doesn't trigger it on your unit)**
-- `repro_dense.nes` — 8×16 sprites, more than 8 per scanline (sprite overflow)
-- `repro_8x8.nes` — 8×8 sprites, 8 per scanline
-- `repro_8x8_dense.nes` — 8×8 sprites, overflow
+## Why this matters beyond homebrew
 
-**Also reproducible with the full games**
-- `NesLaser3.nes` (mapper 5, PRG 256KB / CHR 512KB) — video: https://www.youtube.com/watch?v=s4W4xk-zi1E
-- `MonoSH.nes` (mapper 5, PRG 1MB / CHR 512KB)
+Licensed MMC5 boards commonly carry more than 8KB of PRG-RAM: ETROM has 16KB
+(2 x 8KB) and EWROM has 32KB. Many dumps of those games circulate with legacy
+iNES headers that declare no RAM size, so they would hit the same aliasing on
+N8 Pro. Mesen and the original N8 mapper pack allocate a larger default for
+mapper 5, which is why the same files behave differently across devices.
 
-Both are correct on Mesen and on the original N8, and corrupted only on the N8 Pro.
+## Suggested fix
 
-**Steps to reproduce**
-1. Put `repro.nes` on the SD card and run it on the N8 Pro (fw v25.1123).
-2. Look at the background blocks — you should see black lines on alternate scanlines.
-3. Hold A → sprites disappear and the background becomes clean; release A → the corruption returns.
+For mapper 5 with a legacy iNES header, default PRG-RAM to 64KB (all 8 banks
+reachable via $5113), as Mesen does. NES 2.0 headers should keep using the
+declared size — that path already works correctly on N8 Pro.
 
-**Expected:** extended-attribute background renders correctly regardless of sprite count (as on Mesen and the original N8).
-**Actual:** extended-attribute background corrupts on alternate scanlines, scaling with sprite count.
+## Background (how this was found)
 
-Thanks a lot for looking into it — happy to provide more info, source, or other test builds.
+My homebrew MMC5 game double-buffers a 1bpp framebuffer in WRAM banks 0/1 and
+renders it through ExRAM extended attributes. On N8 Pro only, moving objects
+showed interleaved rows of two different animation frames (static screens were
+pixel-perfect). Every single-memory stress test was green — WRAM sequential /
+strided / during rendering, ExRAM sequential, WRAM<->ExRAM alternating copies,
+ExRAM writes inside a mid-frame forced-blank band, transfers executed from a
+switched $5114 PRG bank. The only failing element was $5113 double-buffering,
+and only with the legacy header. Patching just the header of the full game to
+NES 2.0 (bytes 7/10 = $08/$90) fixes it on N8 Pro. (CONFIRM AFTER HW TEST)
 
 --- POST END ---
-
----
-
-## メモ（自分用・日本語）
-- 要点: MMC5拡張属性(背景) ＋ 8x16スプライト多数 で **N8 Proだけ背景が1ラインおき黒線**。Mesen・無印N8は正常。ファーム25.1123。
-- 決め手: **Aでスプライトを消すと黒線が消える** → スプライト/BGフェッチ位相検出の問題を示唆。
-- 添付候補: `repro.nes`（本命）＋実機で化けたバリアント。だめなら本編 `NesLaser3.nes`/`MonoSH.nes`。
-- 投稿先: krikzz.com のフォーラム（要アカウント）またはサポート窓口。

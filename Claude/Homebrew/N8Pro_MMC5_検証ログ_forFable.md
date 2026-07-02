@@ -5,15 +5,20 @@
 
 ---
 
-## 0. いま何を追っているか（1分）
+## 0. 結論（2026-07-03 原因確定）
 
-Nao_u の自作NES `MonoSH` / `NesLaser3`（mapper5=MMC5）が、
-**Mesen ◯ / 無印EverDrive N8 ◯ / N8 Pro（fw v25.1123）だけ描画が化ける**。
-原因を特定して krikzz に報告するため、**N8 Proでだけ化ける最小再現ROM**を作っている。
+Nao_u の自作NES `MonoSH` / `NesLaser3`（mapper5=MMC5）が
+**Mesen ◯ / 無印EverDrive N8 ◯ / N8 Pro（fw v25.1123）だけ描画が化ける**問題、原因確定:
 
-**現状: 単体の書き込みストレスは全て緑（再現せず）。本編ソース精読により未再現要素を特定し、切り分けROM 08/09/10/11 を作成・カード配置済み（§6の判定マトリクス参照）。**
+**N8 Pro は旧iNESヘッダ（WRAMサイズ無宣言）のmapper5にWRAMを8KBしか確保せず、
+$5113 のバンク1がバンク0にエイリアスする。** 本編はVBUFをWRAMバンク0/1でダブル
+バッファしているため、読みバッファ=書きバッファとなり移動中のExRAM描画が化ける。
 
-**次にやること: 実機で 08→09→10 の順に確認（11は09が赤のときのみ）。§6参照。**
+**実機判定結果（2026-07-03）**: `09_wram_bankflip.nes`（旧iNESヘッダ）= Mesen緑/**N8 Pro赤**、
+`11_wram_bankflip_nes2.nes`（同一コード+NES2.0ヘッダでPRG-NVRAM 32KB宣言）= **両方緑**。
+08（フレーム内黒帯ExRAM書き）・10（切替バンク実行転送）は両環境とも緑=無罪。
+
+**対処: 本編ヘッダのNES2.0化（byte7=$08, byte10=$90）で自衛可能（§10）。krikzzへの報告文は `krikzz_bug_report.md`。**
 
 ---
 
@@ -62,10 +67,10 @@ MonoBitmap の表示方式:
 | `combo.nes` | 描画中(ext-attrレンダ中)にWRAM書き | ストライド + レンダON | ON | **緑** |
 | `exram.nes` | ExRAM連続書き（本命だった） | `sta $5C00+I` 連続 最大速 | OFF | **緑** |
 | `xfer.nes` | **WRAM読み↔ExRAM書き 交互コピー**（転送再現） | `lda $6000+I : sta $5C00+I` | OFF | **未検証（カードに配置済み・結果待ち）** |
-| `08_exram_midframe.nes` | **フレーム内黒帯でのExRAM書き**（本編のIRQ黒帯構造を再現） | ext-attrレンダ→line192 IRQ→$2001=0→$5104=2→768B書き→照合 | ON(帯) | **未検証（配置済み）** |
-| `09_wram_bankflip.nes` | **$5113 WRAMバンク切替/エイリアス**（本編ヘッダ同等=旧iNES無宣言） | 64BごとにBank0=V0/Bank1=~V0交互書き→両バンク照合 | ON | **未検証（配置済み）** |
-| `10_bankexec_xfer.nes` | **切替PRGバンク($5114)から実行する転送**（exram_phase忠実版・PRG32KB） | IRQ黒帯で$5114=$80へ切替→`lda $6010+128R+I : sta $5C80+32R+I` | ON(帯) | **未検証（配置済み）** |
-| `11_wram_bankflip_nes2.nes` | 09と同一コード＋**NES2.0ヘッダ(PRG-NVRAM 32KB宣言)** | 同上 | ON | **未検証（09が赤の時のみ実行）** |
+| `08_exram_midframe.nes` | **フレーム内黒帯でのExRAM書き**（本編のIRQ黒帯構造を再現） | ext-attrレンダ→line192 IRQ→$2001=0→$5104=2→768B書き→照合 | ON(帯) | **緑**（Mesenと同挙動: 上格子/中点滅/下帯緑） |
+| `09_wram_bankflip.nes` | **$5113 WRAMバンク切替/エイリアス**（本編ヘッダ同等=旧iNES無宣言） | 64BごとにBank0=V0/Bank1=~V0交互書き→両バンク照合 | ON | **★Mesen緑 / N8 Pro赤 — 原因これ** |
+| `10_bankexec_xfer.nes` | **切替PRGバンク($5114)から実行する転送**（exram_phase忠実版・PRG32KB） | IRQ黒帯で$5114=$80へ切替→`lda $6010+128R+I : sta $5C80+32R+I` | ON(帯) | **緑**（Mesenと同挙動） |
+| `11_wram_bankflip_nes2.nes` | 09と同一コード＋**NES2.0ヘッダ(PRG-NVRAM 32KB宣言)** | 同上 | ON | **両方緑 — ヘッダ宣言で直ることを実証** |
 
 → **単一メモリへの書き込みはどのパターンでも取りこぼさない（緑）**。08以降は「本編の複合文脈」を1変数ずつ加える連番シリーズ。判定は従来同様 緑=OK/赤=不一致ラッチ（08/10は黒帯の背景色、09/11は画面全体の色）。
 
@@ -105,7 +110,18 @@ MonoBitmap の表示方式:
 
 ---
 
-## 6. 次のステップ: 実機判定マトリクス（08→09→10の順）
+## 6. 次のステップ（原因確定後）
+
+1. **パッチ版本編の実機確認**: `MonoSH_nes2.nes` / `NesLaser3_nes2.nes`（ヘッダのみNES2.0化、
+   repro フォルダに生成済み）を N8 Pro で実行し、ビッグコアが化けないことを確認。
+2. **本編ソースの恒久修正**: MonoSH リポジトリ `sys/header.s` を NES2.0 対応に
+   （§10 の差分。NesLaser3 も同系）。
+3. **krikzz へ報告**: `krikzz_bug_report.md`（書き直し済み・最終版）を送る。
+   09/11 のペアが最小再現。要点は「iNES の mapper5 は WRAM 8KB では足りないタイトルが
+   多い（ETROM=16KB, EWROM=32KB の市販作も旧iNESダンプが流通）。Mesen・無印N8 は
+   多めに確保するので互換差になる。iNES の mapper5 はデフォルト 64KB を推奨」。
+
+### （参考）実行前に立てた判定マトリクス — 結果は「09が赤」の行が的中
 
 カード `/Volumes/NO NAME/MMC5_REPRO/` に配置済み。各ROMともMesenでは緑になるはず（要確認）。
 
@@ -147,3 +163,27 @@ MonoBitmap の表示方式:
 - 「同一パターン静止」の自己検証は失敗を見逃す。必ず値を変えて検証する。
 - Mesen/MMC5をこの環境で実行する手段は無い（GUIのfceux.appのみ）。**描画・再現の最終確認はNao_uの実機/Mesen頼み**。作る側はヘッダ/ビルド/論理の正しさまで担保する。
 - nao-u-lab は公開リポジトリ。自動同期でファイルが落ちることがある（過去にtorusが未追跡化）。push後は origin で `git cat-file -e` 確認。
+
+---
+
+## 10. 本編の恒久修正（MonoSH リポジトリ `sys/header.s`）
+
+ヘッダを NES 2.0 化して PRG-NVRAM 32KB（64<<9）を宣言する。battery ビット(INES_SRAM)は既に立っている。
+
+```asm
+.byte 'N', 'E', 'S', $1A ; ID
+.byte <INES_PRG_BANKS
+.byte <INES_CHR_BANKS
+.byte <INES_MIRROR | (<INES_SRAM << 1) | ((<INES_MAPPER & $f) << 4)
+.byte (<INES_MAPPER & %11110000) | $08  ; ← NES 2.0 identifier (bits2-3 = 10)
+.byte $0                                 ; byte8: submapper / mapper hi
+.byte $0                                 ; byte9: ROM size hi (PRG64/CHR64は8bitに収まる)
+.byte $90                                ; ← byte10: PRG-NVRAM = 64<<9 = 32KB
+.byte $0, $0, $0, $0, $0                 ; byte11-15
+```
+
+注意: `header.s` はエンジン共通（nrom/mmc3等でも使われる）なので、無条件変更なら
+他マッパーにも NVRAM 32KB が付く。気になるなら `INES_PRGRAM_SHIFT` のような
+import を足してマッパー別レイアウトから渡すのがきれい。
+検証済みバイナリパッチ（ビルド不要）: byte7 = $08, byte10 = $90 の2バイトのみ
+（`MonoSH_nes2.nes` / `NesLaser3_nes2.nes` はこの方法で生成）。
