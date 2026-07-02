@@ -1,23 +1,27 @@
 ; ============================================================
-; MMC5 ExRAM 拡張属性モード + 8x16スプライト  N8 Pro 再現ROM
+; MMC5 ExRAM 拡張属性モード  N8 Pro 再現ROM (スプライト無し・静止画面)
 ; ------------------------------------------------------------
-;  背景 : ExRAM拡張属性モード(mode1)。各8x8セルがExRAMのバイトで
-;         4KB CHRバンクを選び、solidタイルの白/赤/緑ブロックを表示。
-;  スプライト : 8x16モードで各ラインに8枚（Y=40..168の帯）。
-;               → MMC5のスプライト/BGフェッチ位相検出を負荷。
-;  期待 : Mesen / 無印N8 では、斜めの白赤緑ブロック＋白いスプライト帯が
-;         きれいに出る。黒い横線は出ない。
-;  バグ : N8 Pro では拡張属性の背景ブロックに1ラインおきの黒線が入る想定。
-;  操作 : Aボタンを押している間はスプライトを画面外へ隠す
-;         → スプライトが無いと黒線が消える＝スプライト依存を実証。
+;  背景を ExRAM拡張属性モード(mode1) で描く。各8x8セルがExRAMのバイトで
+;  4KB CHRバンクを選び、solidタイルの白/赤/緑ブロックを斜めに並べる。
+;  solidタイルなので、CHRフェッチが1ラインでも欠けると黒い横線として見える。
+;
+;  期待: Mesen / 無印N8 では 斜めの白赤緑ブロックがきれいに出る（黒線なし）。
+;  バグ: N8 Pro で拡張属性の描画が化ける想定。
+;
+;  ビルド定義:
+;    (無し)      : ExRAM拡張属性モードのテスト（本命）
+;    -D SANITY=1 : 拡張属性を使わず通常描画（基本描画の動作確認用。全面白になるはず）
+;
+;  ※ 重要: コードは固定バンク($E000-$FFFF)に配置。MMC5は電源投入時この領域を
+;    最終バンクに固定するので、起動直後から確実に実行できる（$8000配置は起動不能）。
 ; ============================================================
 
 .segment "HEADER"
     .byte "NES", $1A
-    .byte $02          ; PRG 2 x 16KB = 32KB
-    .byte $04          ; CHR 4 x 8KB  = 32KB
+    .byte $01          ; PRG 1 x 16KB
+    .byte $04          ; CHR 4 x 8KB = 32KB
     .byte $50          ; flags6: mapper low nibble = 5 ($50), horizontal mirror
-    .byte $00          ; flags7: mapper high nibble = 0  -> mapper 5 (MMC5)
+    .byte $00          ; flags7 -> mapper 5 (MMC5)
     .byte $00,$00,$00,$00,$00,$00,$00,$00
 
 .segment "CODE"
@@ -25,7 +29,6 @@
 ptrlo = $10
 ptrhi = $11
 row   = $12
-pad   = $13
 
 reset:
     sei
@@ -39,44 +42,24 @@ reset:
     stx $2001
     stx $4010
     bit $2002
-@vw1:
+@w1:
     bit $2002
-    bpl @vw1
-@vw2:
+    bpl @w1
+@w2:
     bit $2002
-    bpl @vw2
+    bpl @w2
 
-    ; ---- MMC5 init ----
+    ; ---- MMC5 base ----
     lda #$03
-    sta $5100          ; PRG mode 3 (8KB banks)
+    sta $5100          ; PRG mode 3
     lda #$03
-    sta $5101          ; CHR mode 3 (1KB banks, for sprite CHR)
-    lda #$02
-    sta $5102
-    lda #$01
-    sta $5103          ; enable PRG-RAM writes (harmless)
+    sta $5101          ; CHR mode 3 (1KB banks)
     lda #$00
-    sta $5105          ; all nametables -> CIRAM page 0
+    sta $5105          ; nametables -> CIRAM page 0
     sta $5130          ; CHR upper bits = 0
-    lda #$80
-    sta $5114          ; $8000 = PRG bank0 (ROM)
-    lda #$81
-    sta $5115          ; $A000 = bank1
-    lda #$82
-    sta $5116          ; $C000 = bank2
-    lda #$03
-    sta $5117          ; $E000 = bank3 (fixed ROM)
-    ldx #$00
-@chr:
-    txa
-    sta $5120,x        ; sprite CHR 1KB banks 0..7 = first 8KB of CHR
-    inx
-    cpx #$08
-    bne @chr
-    lda #$02
-    sta $5104          ; ExRAM = writable RAM (to fill it)
 
     ; ---- palette ----
+    lda $2002
     lda #$3F
     sta $2006
     lda #$00
@@ -89,127 +72,84 @@ reset:
     cpx #$20
     bne @pal
 
-    ; ---- nametable fill: tile $00, 1024 bytes ($2000..$23FF) ----
+    ; ---- nametable + attr fill: tile $00, 1024 bytes ($2000..$23FF) ----
+    lda $2002
     lda #$20
     sta $2006
     lda #$00
     sta $2006
     lda #$00
     ldx #$04
-@ntp:
+@np:
     ldy #$00
-@ntb:
+@nb:
     sta $2007
     iny
-    bne @ntb
+    bne @nb
     dex
-    bne @ntp
+    bne @np
 
-    ; ---- fill ExRAM ($5C00..) : byte = (row+col) & 7  (4KB bank), pal bits 0 ----
+.ifdef SANITY
+    ; --- 通常描画（拡張属性を使わない）: CHRバンク0..7 を $0000-$1FFF に。
+    ;     全セル tile$00 = bank0 の solid色1 → 画面全体が白になるはず ---
+    lda #$00
+    sta $5104          ; ExRAM off (RAM as extra, unused)
+    ldx #$00
+@cb:
+    txa
+    sta $5120,x
+    inx
+    cpx #$08
+    bne @cb
+.else
+    ; --- ExRAM拡張属性モード ---
+    lda #$02
+    sta $5104          ; ExRAM writable
     lda #$00
     sta ptrlo
     lda #$5C
     sta ptrhi
     lda #$00
     sta row
-@exrow:
+@er:
     ldy #$00
-@excol:
+@ec:
     tya
     clc
     adc row
-    and #$07
+    and #$07           ; bank 0..7 (solid色が循環)
     sta (ptrlo),y
     iny
     cpy #$20
-    bne @excol
+    bne @ec
     lda ptrlo
     clc
     adc #$20
     sta ptrlo
-    bcc @noc
+    bcc @nc
     inc ptrhi
-@noc:
+@nc:
     inc row
     lda row
-    cmp #$1E           ; 30 rows
-    bne @exrow
-
+    cmp #$1E
+    bne @er
     lda #$01
-    sta $5104          ; ExRAM = extended attribute mode
+    sta $5104          ; extended attribute mode
+.endif
 
-    jsr copy_oam
-
-    ; ---- enable ----
+    ; ---- scroll + enable BG ----
     bit $2002
     lda #$00
     sta $2005
     sta $2005
-.ifdef SPR8X8
-    lda #$80           ; NMI on, 8x8 sprites
-.else
-    lda #$A0           ; NMI on, 8x16 sprites
-.endif
-    sta $2000
-    lda #$1E           ; show BG + sprites (incl. left column)
+    lda #$00
+    sta $2000          ; no NMI, BG pattern $0000, NT0
+    lda #$0A           ; show BG (+ left column)
     sta $2001
 main:
     jmp main
 
-copy_oam:
-    ldx #$00
-@l:
-    lda oam_init,x
-    sta $0200,x
-    inx
-    bne @l
-    rts
-
 nmi:
-    pha
-    txa
-    pha
-    tya
-    pha
-    ; read controller 1
-    lda #$01
-    sta $4016
-    lda #$00
-    sta $4016
-    ldx #$08
-@rp:
-    lda $4016
-    lsr a
-    rol pad
-    dex
-    bne @rp
-    lda pad
-    and #$80           ; A button
-    bne @hide
-    jsr copy_oam       ; A not held -> sprites visible
-    jmp @dma
-@hide:
-    ldx #$00
-    lda #$FF
-@hl:
-    sta $0200,x        ; A held -> push all sprite Y offscreen
-    inx
-    inx
-    inx
-    inx
-    bne @hl
-@dma:
-    lda #$00
-    sta $2003
-    lda #$02
-    sta $4014
-    pla
-    tay
-    pla
-    tax
-    pla
-    rti
-
 irq:
     rti
 
@@ -219,32 +159,10 @@ palette:
     .byte $0F,$0F,$0F,$0F
     .byte $0F,$0F,$0F,$0F
     .byte $0F,$0F,$0F,$0F
-    .byte $0F,$30,$16,$2A    ; SPR0: black, white, red, green
     .byte $0F,$0F,$0F,$0F
     .byte $0F,$0F,$0F,$0F
     .byte $0F,$0F,$0F,$0F
-
-.ifdef SPR8X8
-YSTEP = 8
-.else
-YSTEP = 16
-.endif
-
-; 64 sprites (fills OAM). default: 8 per scanline.
-; -D DENSE=1 : rows overlap so >8 sprites share scanlines (sprite-overflow stress).
-oam_init:
-.repeat 8, R
-.repeat 8, C
-.ifdef DENSE
-    .byte 40 + (R .mod 4) * YSTEP   ; Y (overlapped -> overflow)
-.else
-    .byte 40 + R * YSTEP            ; Y
-.endif
-    .byte $00                        ; tile 0 (8x16 -> tiles 0/1, pattern $0000)
-    .byte $00                        ; attr: sprite palette 0
-    .byte C*32 + 4                   ; X
-.endrepeat
-.endrepeat
+    .byte $0F,$0F,$0F,$0F
 
 .segment "VECTORS"
     .word nmi

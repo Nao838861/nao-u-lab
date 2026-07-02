@@ -10,12 +10,8 @@ build() {  # name  defines...
     echo "  built $name.nes"
 }
 
-# default: 8x16 sprites, 8 per scanline (the primary repro)
-build repro
-# variants for "next a hand" if the primary doesn't repro on hardware
-build repro_dense       -D DENSE=1               # 8x16, >8 sprites/line (overflow)
-build repro_8x8         -D SPR8X8=1              # 8x8 sprites, 8/line
-build repro_8x8_dense   -D SPR8X8=1 -D DENSE=1   # 8x8 sprites, overflow
+build repro                       # ExRAM extended-attribute test (the real repro)
+build sanity      -D SANITY=1     # basic-rendering sanity check (should be a solid white screen)
 
 echo "done:"
-ls -1 *.nes
+ls -1 repro.nes sanity.nes
