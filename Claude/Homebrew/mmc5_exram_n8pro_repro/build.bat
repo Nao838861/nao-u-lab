@@ -8,7 +8,10 @@ echo   built repro.nes
 ca65 repro.s -D SANITY=1 -o sanity.o || goto :err
 ld65 -C nes.cfg sanity.o -o sanity.nes || goto :err
 echo   built sanity.nes
-dir repro.nes sanity.nes
+ca65 wram_test.s -o wram.o || goto :err
+ld65 -C nes.cfg wram.o -o wram.nes || goto :err
+echo   built wram.nes
+dir repro.nes sanity.nes wram.nes
 goto :eof
 :err
 echo BUILD FAILED

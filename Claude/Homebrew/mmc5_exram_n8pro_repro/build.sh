@@ -10,8 +10,13 @@ build() {  # name  defines...
     echo "  built $name.nes"
 }
 
-build repro                       # ExRAM extended-attribute test (the real repro)
-build sanity      -D SANITY=1     # basic-rendering sanity check (should be a solid white screen)
+build repro                       # ExRAM extended-attribute test
+build sanity      -D SANITY=1     # basic-rendering sanity check (solid white screen)
+
+# WRAM ($6000-$67FF) write-integrity test (self-verifying: green=all OK, red=any mismatch)
+ca65 wram_test.s -o wram.o
+ld65 -C nes.cfg wram.o -o wram.nes
+echo "  built wram.nes"
 
 echo "done:"
-ls -1 repro.nes sanity.nes
+ls -1 repro.nes sanity.nes wram.nes
