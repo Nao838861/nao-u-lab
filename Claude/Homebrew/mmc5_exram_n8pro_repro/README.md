@@ -20,9 +20,21 @@ krikzzへのバグ報告用の添付を想定。
 ## ビルド
 cc65 (ca65/ld65) と python3 が必要。
 ```
-./build.sh
+./build.sh        # Mac/Linux
+build.bat         # Windows
 ```
-→ `repro.nes` が生成される（mapper5 / PRG32KB / CHR32KB / 65,552バイト）。
+→ 4つのROMが生成される（すべて mapper5 / PRG32KB / CHR32KB / 65,552バイト）。
+
+## バリアント（実機で「どれかが化ける」確率を上げるため）
+まず `repro.nes` を試し、化けなければ他も試す。**化けたものを報告に添付**。
+| ファイル | スプライト | 密度 |
+|---|---|---|
+| `repro.nes` | 8x16 | 8枚/ライン（基本） |
+| `repro_dense.nes` | 8x16 | 9枚以上/ライン（オーバーフロー） |
+| `repro_8x8.nes` | 8x8 | 8枚/ライン |
+| `repro_8x8_dense.nes` | 8x8 | オーバーフロー |
+
+本編MonoSHは8x16なので `repro.nes` / `repro_dense.nes` が本命。どれも同様に「Aボタンでスプライトを隠すと黒線が消える」で切り分けできる。
 
 ## テスト手順
 1. **まず Mesen で `repro.nes` を実行** → 黒線が出ずきれいに出ることを確認（＝本来クリーンであるべきベースライン）。

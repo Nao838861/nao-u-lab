@@ -145,7 +145,11 @@ reset:
     lda #$00
     sta $2005
     sta $2005
-    lda #$A0           ; NMI on, 8x16 sprites, patterns $0000, NT0
+.ifdef SPR8X8
+    lda #$80           ; NMI on, 8x8 sprites
+.else
+    lda #$A0           ; NMI on, 8x16 sprites
+.endif
     sta $2000
     lda #$1E           ; show BG + sprites (incl. left column)
     sta $2001
@@ -220,14 +224,25 @@ palette:
     .byte $0F,$0F,$0F,$0F
     .byte $0F,$0F,$0F,$0F
 
-; 8 rows x 8 cols = 64 sprites (fills OAM). 8 sprites per scanline over Y=40..168.
+.ifdef SPR8X8
+YSTEP = 8
+.else
+YSTEP = 16
+.endif
+
+; 64 sprites (fills OAM). default: 8 per scanline.
+; -D DENSE=1 : rows overlap so >8 sprites share scanlines (sprite-overflow stress).
 oam_init:
 .repeat 8, R
 .repeat 8, C
-    .byte 40 + R*16    ; Y
-    .byte $00          ; tile 0 (8x16 -> tiles 0/1, pattern $0000)
-    .byte $00          ; attr: sprite palette 0
-    .byte C*32 + 4     ; X
+.ifdef DENSE
+    .byte 40 + (R .mod 4) * YSTEP   ; Y (overlapped -> overflow)
+.else
+    .byte 40 + R * YSTEP            ; Y
+.endif
+    .byte $00                        ; tile 0 (8x16 -> tiles 0/1, pattern $0000)
+    .byte $00                        ; attr: sprite palette 0
+    .byte C*32 + 4                   ; X
 .endrepeat
 .endrepeat
 
