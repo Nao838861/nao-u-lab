@@ -126,3 +126,18 @@ python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 python tools\build_shared_reads_mixed_duplicate_queue.py
 python tools\build_shared_reads_mixed_duplicate_queue.py --check
 ```
+## stale triage queue (2026-07-06)
+
+Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を追加した。これは `postponed` / `needs_review` かつ `stale_after <= today` の candidate だけを、mixed duplicate、game production への転用価値、古さの順で並べる再生成可能 sidecar である。candidate frontmatter は正本のまま維持し、この queue から自動 fail や一括更新はしない。
+
+1 行 1 candidate で、schema は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` に固定する。Phase 4a はこの queue の上位 5 件を `stale_review_batch` に引用し、Phase 2 が代表 candidate のみを評価して frontmatter を更新する。
+
+再生成:
+
+```powershell
+python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
+python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD> --check
+```
+
+2026-07-06 現在の mixed duplicate queue schema は `group_key` / `title` / `status_counts` / `representative_paths` / `evidence` / `recommended_action` を正とする。古い説明に出る `title_key` / `terminal_paths` / `open_paths` / `recommended_representative` は、現在は `group_key` と `evidence` / `representative_paths` に畳み込まれている。

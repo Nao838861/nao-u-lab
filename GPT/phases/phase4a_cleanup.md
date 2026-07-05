@@ -119,3 +119,13 @@ python tools\build_shared_reads_mixed_duplicate_queue.py
 ```
 
 Phase 4a で mixed duplicate を handoff する時は、この queue の上位から最大 5 件を見て、同じ `title_key` の candidate を複数同時に `stale_review_batch` へ入れない。`recommended_representative` を基本に選び、`priority_reason` / `status_counts` / `terminal_paths` / `open_paths` を staging に根拠として残す。terminal group は従来通り `memory/shared_reads_title_canonical_index.jsonl` 側で扱う。
+## stale triage queue (2026-07-06)
+
+Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を導入した。Phase 4a が `stale_review_batch` を作る時は、まず次を再生成する。
+
+```powershell
+python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
+```
+
+`shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用し、`duplicate_group_key` があるものは mixed duplicate 解消候補として扱う。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
