@@ -31,7 +31,17 @@ decision_notes:
 ```
 
 ## Phase 3: Shared-reads 謚慕ｨｿ
-(Phase 3 縺梧嶌縺崎ｾｼ繧)
+### 2026-07-06 06:42 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669
+    char_count: 4467
+skipped: []
+review_notes:
+  - "投稿前レビュー: 必須見出し順、末尾 URL、URL 1 件、禁止表現なしを確認。AI-native game survey は取り外し試験、G/N taxonomy、mechanical invariants がゲーム制作と headless 評価に直接使えるため投稿。"
+```
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
 (Phase 3b 縺梧嶌縺崎ｾｼ繧)

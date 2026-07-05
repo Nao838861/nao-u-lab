@@ -7,12 +7,17 @@ genre_tags: [game-design, ai-native-games, generative-ai, mechanics, taxonomy, e
 evaluated_at: "2026-07-06T06:36:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-06T06:36:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-06T06:36:06+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783287766.520669"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669"
+  char_count: 4467
+  posted_at: "2026-07-06T06:42:59+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-06T06:42:59+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669"
+next_action: none
 stale_after: "2026-08-05"
 supersedes: []
 gate_reason: >-
