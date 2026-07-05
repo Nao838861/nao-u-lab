@@ -279,6 +279,7 @@
     "sr-1782449735-630415ff6d"
   ],
   "last_checked_source_ts": "1782453152.778719",
-  "last_run": "2026-06-26T15:07:37",
-  "last_selected": "sr-1782449735-630415ff6d"
+  "last_run": "2026-07-06T06:36:18",
+  "last_selected": "sr-1782449735-630415ff6d",
+  "disabled_reason": "legacy multi-agent discussion router is retired; shared-reads uses Log_cdx standalone analysis"
 }

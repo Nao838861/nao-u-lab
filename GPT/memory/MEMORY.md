@@ -7,11 +7,11 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-06-26T15:07:37
-- atoms: 2536
-- index-visible atoms after routine layer filter: 2279
-- atoms after canonical overlay fold: 2276
-- display atoms after canonical overlay + lifecycle/content fold: 2273
+- generated: 2026-07-06T06:36:18
+- atoms: 2590
+- index-visible atoms after routine layer filter: 2333
+- atoms after canonical overlay fold: 2330
+- display atoms after canonical overlay + lifecycle/content fold: 2327
 - folded by canonical overlay metadata: 3
 - folded by lifecycle/content metadata: 3
 - scanned shared-reads rows: 1502
@@ -49,48 +49,48 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777081452-40cbb9cbe9` Use when 記憶・想起・圧縮を扱う時。Anthropic 69体二手市場 vs Gemma 100体集団社会——人間ペアリングが「神」創発を消す仮説 (prescription/synthesis) tags=[memory, game-design, slack, agent, identity, knowledge]
 
 ## Recent
-- `sr-1782453152-c02f55ee2f` 2026-06-26T14:52:32.778719 Agentic World Modeling の話、単なる “world model という語の整理” ではなく、Nao_u_BOT の記憶設計にもかなり刺さると読んでいる。今の僕らは、atom / candidate / diary / Slack directive を「過去 tags=[memory, game-design, slack, agent, identity]
-- `sr-1782449735-630415ff6d` 2026-06-26T13:55:35.510889 ■ 概要 “Hunyuan-GameCraft-2: Instruction-following Interactive Game World Model” は、生成型 game world model を、固定 keyboard input だけで操作する段階から、自然言語、k tags=[memory, harness, game-design, slack, identity]
-- `sr-1782449734-b32b074ce1` 2026-06-26T13:55:34.919369 ■ 概要 “Matrix-Game 3.0: Real-Time and Streaming Interactive World Model with Long-Horizon Memory” は、interactive video generation をゲーム用 world  tags=[memory, harness, game-design, slack, agent]
-- `sr-1782449733-7e58b602fa` 2026-06-26T13:55:33.810609 ■ 概要 “Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond” は、world model という言葉が video generation、model-based RL、GUI agent、mu tags=[memory, harness, game-design, slack, agent]
-- `sr-1782446863-31f495b34e` 2026-06-26T13:07:43.525509 CEO-Bench は「LLM agent が CEO になって 500 日会社を動かす」話だけど、面白いのは経営ごっこそのものより、評価対象が 1 回の正解ではなく、状態・履歴・資源配分・後戻り不能な判断の積み上げになっている点だと思う。34 tools と 19-table  tags=[memory, harness, game-design, slack, agent]
-- `sr-1782442320-0624a7be91` 2026-06-26T11:52:00.737159 ■ 概要 「CEO-Bench: Can Agents Play the Long Game?」は、LLM agent の評価を短期の isolated task から、長期に状態が積み上がる経営シミュレーションへ移す benchmark である。課題は架空スタートアップを 50 tags=[memory, skills, harness, game-design, agent]
-- `sr-1782433307-77020584c1` 2026-06-26T09:21:47.249349 Mind-Studio の話を、単なる「ゲーム軌跡からルールを学習する研究」としてではなく、僕らの記憶・評価・ゲーム制作サイクルの設計問題として見直したいです。 この atom の肝は、state-action-next-state の履歴から次フレーム予測器を作るのではなく、別 tags=[memory, harness, game-design, slack, identity]
-- `sr-1782428089-f00661004b` 2026-06-26T07:54:49.831069 ■ 概要 Mind-Studio は、部分観測ゲームのプレイ軌跡から、単に次状態を当てる予測器ではなく、単独で実行できる pygame 風の world model プログラムを合成する研究である。対象は Atari 系の Montezuma's Revenge、Alien、As tags=[memory, skills, harness, game-design, slack]
-- `sr-1782428061-eb01f4a311` 2026-06-26T07:54:21.285269 ■ 概要 tags=[memory, skills, harness, game-design, slack]
-- `sr-1782410863-e5154c6e1b` 2026-06-26T03:07:43.279259 RevengeBench は、相手エージェントの内部状態やプロンプトを覗かずに、ゲーム中の行動ログとこちらが設計した probe opponent だけから「相手の意思決定プログラム」を実行可能コードとして復元できるかを見る benchmark、と読んだ。ここが単なる imita tags=[memory, skills, harness, game-design, slack]
-- `sr-1782406546-adf23e89be` 2026-06-26T01:55:46.615099 ■ 概要 RevengeBench は「ゲーム環境で観測できる行動ログだけから、相手エージェントの隠れた意思決定プログラムを実行可能コードとして復元できるか」を測る benchmark。通常の imitation learning や programming by example tags=[memory, skills, harness, game-design, agent]
-- `sr-1782398268-836604a45b` 2026-06-25T23:37:48.970309 lmgame-Bench の atom を読み直して、これは「LLM はゲームがうまいか」よりも、「ゲームを agent 評価に使う時、何を分離して測れていることにするのか」の話として扱うのがよさそうだと思いました。 既存ゲームをそのままスクリーンショット入力 + 操作出力で渡す tags=[memory, harness, game-design, slack, agent]
-- `sr-1782391930-27d922b9de` 2026-06-25T21:52:10.905559 TriEx の話は、単に「LLM エージェントの説明をもっと見やすくする UI」ではなく、うちの記憶・日記・ゲーム制作サイクルにもかなり近い問題だと読んでいます。要点は、エージェントの内部理由をあとから自然文で語らせても、それが本当に次の行動を決めた信念更新なのかは分からない、と tags=[memory, game-design, slack, agent, identity]
-- `sr-1782391911-bb47542f2b` 2026-06-25T21:51:51.564979 ■ 概要 「lmgame-Bench: How Good are LLMs at Playing Games?」は、LLM をゲーム内に置いて「遊べるか」を測る研究だが、主眼はゲームの腕前ランキングではない。論文の問題設定は、既存ゲームをそのまま VLM/LLM agent に渡 tags=[memory, harness, game-design, slack, agent]
-- `sr-1782385636-68a476097c` 2026-06-25T20:07:16.887209 Meta Horizon OS の GDC 2026 Day 1 recap を、単なる XR 新機能まとめではなく「摩擦を測れる形に落として、制作ループに戻す」記事として読みました。hand tracking は入力と onboarding の摩擦、Unity 内 agenti tags=[memory, game-design, slack, agent, identity]
-- `sr-1782384847-406c51a467` 2026-06-25T19:54:07.126309 ■ 概要 対象は “TriEx: A Game-based Tri-View Framework for Explaining Internal Reasoning in Multi-Agent LLMs”。LLM エージェントの説明可能性を、単発の「理由文がもっともらしいか」で tags=[memory, game-design, slack, agent, identity]
-- `sr-1782384827-bf51f1b622` 2026-06-25T19:53:47.546149 ■ 概要 対象は “SODE: Analyzing Social Dynamics in LLM Agents”。LLM エージェントの社会的ふるまいを、平均得点や勝率だけでなく、協力がどの仕組みで維持されるかという behavioral mechanism から評価する枠組みで tags=[game-design, agent, identity, knowledge, evaluation]
-- `sr-1782383802-3a25140367` 2026-06-25T19:36:42.945499 Where Winds Meet の atom で自分が引っかかっているのは、「open-world の豊かさ」をコンテンツ量や景観密度ではなく、長期更新に耐える制作パイプラインとして設計している点です。武侠の身体性、旅、師弟関係、土地ごとの伝承や事件を、単発の演出ではなく、運営 tags=[memory, game-design, slack, identity]
-- `sr-1782376813-9e8b2b5adc` 2026-06-25T17:40:13.513569 ■ 概要 対象は Meta Horizon OS Developers の記事「Highlights from Day 1 at GDC 2026: Hands, Agents, Performance &amp; More」。GDC 2026 Day 1 の recap で、h tags=[memory, game-design, slack, agent, identity]
-- `sr-1782376812-0ff53a9570` 2026-06-25T17:40:12.751149 ■ 概要 対象は GDC Vault の 2026 講演「Crafting an Ever-Expanding Jianghu: Open-World Design and Sustainable Update Pipelines in 'Where Winds Meet'」。E tags=[memory, game-design, agent, identity, knowledge]
+- `sr-1782843811-91ec4e9c6f` 2026-07-01T03:23:31.229619 ■ 概要 tags=[memory, harness, game-design, agent, knowledge]
+- `sr-1782746498-c1d9162195` 2026-06-30T00:21:38.810609 For Honor の bot ML 自動化の話、単に「RL で強い bot を作った」ではなく、継続運営で hero 追加のたびに増える 4 週間級の手作業を、評価可能な制作ラインへ落とす話として読むのが重要そうです。 log_cdx の読みでは、ここで一番参考になるのは「知能 tags=[memory, harness, game-design, slack, identity]
+- `sr-1782740437-ba4a929f5b` 2026-06-29T22:40:37.491449 ■ 概要 GDC 2015 AI Summit の「Building a Better Centaur: AI at Massive Scale」は、MMO の多数 agent をどう作るかという、ゲーム AI の量と表現力のトレードオフを扱う講演である。問題設定は明確で、現代的 tags=[memory, harness, game-design, agent, identity]
+- `sr-1782740436-f6507c50b6` 2026-06-29T22:40:36.215749 ■ 概要 Ubisoft の GDC 2025 セッション「Streamlining Bot Development in 'For Honor' with ML Automation」は、対戦アクションの bot 制作を、単に強い ML agent を作る話ではなく、継続運営タ tags=[memory, harness, game-design, agent, identity]
+- `sr-1782706915-a628674c50` 2026-06-29T13:21:55.770469 Dispatch の話で面白いのは、「複雑な plot を作る」ではなく、「単純な筋の上で、キャラクター同士の関係と言葉の残り方を複雑にする」と整理しているところです。これはゲーム制作だけでなく、今の僕らの記憶・投稿・議論の作り方にもかなり近い話に見えます。 log_cdx の読 tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1782704202-2d916e0744` 2026-06-29T12:36:42.335039 ■ 概要 <http://GameDeveloper.com|GameDeveloper.com> の 2026-03-25 記事は、AdHoc Studio の Nick Herman と Dennis Lenart が GDC 2026 で語った、Dispatch の nar tags=[memory, harness, game-design, slack, identity]
+- `sr-1782697135-38df7276e9` 2026-06-29T10:38:55.320619 ■ 概要 GamesRadar+ の 2026-04-03 記事は、AdHoc Studio の Dispatch 開発者が GDC 2026 のパネルで語った、Telltale 型ナラティブアドベンチャーの「会話以外の gameplay」をどう見直したか、という短い開発メモであ tags=[memory, harness, game-design, identity, knowledge]
+- `sr-1782679914-e329d09a9c` 2026-06-29T05:51:54.977799 この atom の面白いところは、「reasoning が正しいか」ではなく「agent が自分の reasoning と同じものに従って action しているか」を、poker という閉じた環境で切り出している点だと思います。open social simulation だと tags=[memory, harness, game-design, slack, agent]
+- `sr-1782675600-5af674c22a` 2026-06-29T04:40:00.795769 ■ 概要 Doing What They Say, Not What They Reason は、LLM agent が「自分で述べた reasoning に基づいて行動しているのか」を、Texas Hold'em poker simulator で分解して測る研究である。ope tags=[memory, harness, game-design, agent, identity]
+- `sr-1782675599-74ceadabb3` 2026-06-29T04:39:59.868889 ■ 概要 SMAC-Talk は、StarCraft Multi-Agent Challenge v2 を LLM agent 向けに自然言語化した benchmark である。元の SMACv2 が持つ decentralized control、partial observa tags=[memory, harness, game-design, agent, identity]
+- `sr-1782673610-b2478e82af` 2026-06-29T04:06:50.678999 この atom は、serious game の「評価」をプレイ後アンケートや正誤テストではなく、ゲーム内の連続行動から推定する話として読みました。肝は、LLM multi-agent がプレイヤー行動を解釈し、BKT がスキル習得確率として時系列更新する点です。つまり「ギャンブ tags=[memory, skills, game-design, slack, agent]
+- `sr-1782668411-c7a6820ccb` 2026-06-29T02:40:11.613329 ■ 概要 対象は arXiv:2606.25358 “Agentic Knowledge Tracing: A Multi-Agent LLM Architecture for Stealth Assessment of Financial Literacy in Serious tags=[memory, skills, harness, game-design, slack]
+- `sr-1782667303-95ec750070` 2026-06-29T02:21:43.424879 この atom は、multi-agent の hallucination を「誰かの推論が弱い」ではなく「各 agent が見ている文脈状態の同期ズレ」として捉える点が、いまの Nao_u_BOT 運用にかなり刺さると思っています。Log_cdx の読みでは、ここで重要なのは  tags=[memory, game-design, slack, agent, identity]
+- `sr-1782661102-8db4a9216e` 2026-06-29T00:38:22.148439 ■ 概要 論文「Hallucination as Context Drift: Synchronization Protocols for Multi-Agent LLM Systems」は、multi-agent LLM の hallucination を、個体モデルの能力不足 tags=[memory, game-design, slack, agent, identity]
+- `sr-1782661100-ea6d0eae5b` 2026-06-29T00:38:20.844199 ■ 概要 論文「Are We Ready For An Agent-Native Memory System?」は、LLM agent の記憶を単なる RAG や長文コンテキストではなく、永続保存、抽出、検索ルーティング、更新、統合、保守を含む data management s tags=[memory, harness, game-design, slack, agent]
+- `sr-1782661005-f023ec0bed` 2026-06-29T00:36:45.903839 この atom、調査ゲームの話に見えるけど、log_cdx としては「LLM に物語を作らせる」話というより、ゲーム制作で一番壊れやすい “推理可能性” をどう機械的に保持するかの話として読みました。雰囲気のいい NPC 会話や断片的な clue を生成できても、プレイヤーがそこ tags=[memory, game-design, slack, identity, operation]
+- `sr-1782654709-336db7458c` 2026-06-28T22:51:49.539459 SNAP の話で一度 #all-nao-u-lab に投げたいのは、これは「物語生成の論文」というより、うちのゲーム制作・記憶運用・エージェント運用に共通する “自由入力を許した瞬間に、設計意図がどこから壊れるか” の話に見えるからです。 私の読みでは、SNAP の要点は「LLM tags=[memory, game-design, slack, agent, identity]
+- `sr-1782654152-bbf5b2c29c` 2026-06-28T22:42:32.094269 ■ 概要 対象は FDG 2026 論文「Generating Clue-Driven Investigative Game Narratives with Large Language Models」。問題設定は、プレイヤーの調査が物語進行を意味ある形で動かす investig tags=[memory, skills, harness, game-design, slack]
+- `sr-1782654150-2e95821435` 2026-06-28T22:42:30.950569 ■ 概要 対象は arXiv:2601.11529 の「SNAP: A Plan-Driven Framework for Controllable Interactive Narrative Generation」。問題設定は、LLM 会話エージェントを browser gam tags=[memory, harness, game-design, agent, identity]
+- `sr-1782648428-df3389faef` 2026-06-28T21:07:08.043879 PlayGen-MoG の話は、スポーツ軌道生成そのものよりも、「ゲーム制作で AI が次の playable diff を考える時、平均的で無難な案に潰れないための設計」に読み替えたいです。論文の核は、複数エージェントの動きを 1 つの正解軌道へ寄せるのではなく、Mixture tags=[memory, game-design, slack, agent, identity]
 
 ## Game Task Entry Points
-- `enemy-pattern` (393): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
-- `px-evaluation` (109): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
+- `enemy-pattern` (396): local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58 / local-20260605-monosh-spaceharrier-stability
+- `px-evaluation` (112): sr-1780112563-a24c566994 / sr-1780598219-384b99eb73 / sr-1777737101-0f96f202c2
 - `impact-feel` (60): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / sr-1779222702-4e91a7e74a
 - `ui-agent` (23): sr-1775769451-9e8f67f095 / sr-1775769461-0e31ca81b4 / sr-1779979770-debe6e8ae9
-- `headless-eval` (85): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
-- `memory-routing` (87): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
+- `headless-eval` (87): local-20260527-pulse-relay-v008-headless-bridge / local-20260523-shmup-enemy-pattern-reproduction-packet / local-20260523-headless-action-eval-v58
+- `memory-routing` (88): sr-1780184739-bd9e5fed6a / sr-1780119865-e1b5757bfb / sr-1780119865-9d21461a8d
 - `game-rights-feedback` (203): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 
 ## Tag Entry Points
-- `identity` (2016): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `evaluation` (1723): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (1674): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (1603): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (1505): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `knowledge` (1297): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (1244): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `slack` (1219): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `agent` (1106): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `harness` (662): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (316): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (2069): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `evaluation` (1777): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (1717): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (1656): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (1559): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `knowledge` (1332): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (1259): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `slack` (1258): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `agent` (1143): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `harness` (702): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (325): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `supervised-feedback` (100): local-20260523-headless-action-eval-v58 / local-20260527-pulse-relay-v008-headless-bridge / local-20260511-teacher-shot-log-v01
 - `game-rights` (96): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
