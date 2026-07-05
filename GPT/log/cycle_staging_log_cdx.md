@@ -44,7 +44,34 @@ review_notes:
 ```
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
-(Phase 3b 縺梧嶌縺崎ｾｼ繧)
+### 2026-07-06 06:47 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782587228-cca671ac90
+    source_ts: "1782587228.354239"
+    title: "PaperClaw: stoppable hypothesis map for agent research lifecycle"
+    reason: "Phase 3b 自体が shared-read を行動へ落とす loop であり、ゲーム制作でも candidate / staging / reflection が増える一方で、主結果契約と測定 verdict による停止条件が薄くなりやすい。PaperClaw の採用対象は自律論文生成の成績ではなく、pre-registered contract、testable hypothesis node、measured verdict からだけ次へ進む構造。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の prototype / game-start / playable diff planning で、1つの main-result contract、1つの testable hypothesis node、support/reject/inconclusive/measurement_gap verdict を確認する一時 probe を state に追加。恒久 directive は追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 謨ｴ逅・+ 蝠城｡梧歓蜃ｺ
 (Phase 4a 縺梧嶌縺崎ｾｼ繧)

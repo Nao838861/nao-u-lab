@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-26T22:17:09+09:00",
+  "updated_at": "2026-07-06T06:47:06+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -281,7 +281,8 @@
     "1782449733.810609",
     "1779210705.074359",
     "1782449734.919369",
-    "1778158080.139459"
+    "1778158080.139459",
+    "1782587228.354239"
   ],
   "reviews": [
     {
@@ -6926,6 +6927,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-06T06:47:06+09:00",
+      "id": "sr-1782587228-cca671ac90",
+      "source_ts": "1782587228.354239",
+      "title": "PaperClaw: stoppable hypothesis map for agent research lifecycle",
+      "decision": "adopt_probe",
+      "reason": "Score 17. PaperClaw is useful now because Codex game and phase work can still accumulate candidates, staging notes, and reflections without a small pre-registered result contract or measured verdict that stops the loop. Existing probes cover load strategy, instruction-edit validation, branch previews, and non-isomorphic transfer, but not the narrower prototype loop of naming one main-result contract, keeping hypothesis nodes as testable claims, and returning support/reject/inconclusive verdicts before extending the work. Keep this reversible and scoped to the next prototype or game-start record, not a durable memory architecture rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next new prototype, game-start task, playable diff plan, or multi-day prototype record, did I write one short main-result contract that names the observable verdict needed to continue, such as first-30-second comprehension, bot route success, repeated stuck point, input/readability/reward timing target, or manual feel check?",
+        "Did I express the next design step as one testable hypothesis node rather than a generic change idea, and connect it to a concrete test path such as Playwright, headless simulation, log count, replay row, or compact human check?",
+        "After the test or evidence pass, did I record support, reject, inconclusive, or measurement_gap and use that verdict to stop, revise the measurement, or choose the next node instead of extending the loop from narrative reflection alone?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two prototype/game-start/playable-diff planning notes already state a main-result contract, keep the next step as a testable hypothesis node, and return a support/reject/inconclusive/measurement_gap verdict before extending the work.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible PaperClaw-inspired prototype hypothesis-map probe: require one main-result contract, one testable hypothesis node, and a measured verdict before extending game/prototype loops.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10037,6 +10074,18 @@
         "Did I choose one transfer mode, such as direct adoption, analogy only, negative lesson, probe first, local candidate only, or no transfer, and keep any action reversible unless the same gap recurs in later evidence?"
       ],
       "expires_after": "Review after the next two memory-system, agent-architecture, benchmark, game-evaluation, or external-paper transfer notes already name the assumed equivalence, identify at least one non-isomorphic gap, and select a reversible transfer mode before changing practice or acceptance criteria."
+    },
+    {
+      "id": "probe-20260706-paperclaw-prototype-hypothesis-contract",
+      "created_at": "2026-07-06T06:47:06+09:00",
+      "source_ts": "1782587228.354239",
+      "scope": "next new prototype, game-start task, playable diff plan, or multi-day prototype record where Codex may extend a game loop from candidate notes or narrative reflection without a pre-registered result contract and measured verdict",
+      "questions": [
+        "Before the next new prototype, game-start task, playable diff plan, or multi-day prototype record, did I write one short main-result contract that names the observable verdict needed to continue, such as first-30-second comprehension, bot route success, repeated stuck point, input/readability/reward timing target, or manual feel check?",
+        "Did I express the next design step as one testable hypothesis node rather than a generic change idea, and connect it to a concrete test path such as Playwright, headless simulation, log count, replay row, or compact human check?",
+        "After the test or evidence pass, did I record support, reject, inconclusive, or measurement_gap and use that verdict to stop, revise the measurement, or choose the next node instead of extending the loop from narrative reflection alone?"
+      ],
+      "expires_after": "Review after the next two prototype/game-start/playable-diff planning notes that mention main-result contract, hypothesis node, support/reject/inconclusive verdict, measurement gap, headless/manual test, or extending the prototype loop."
     }
   ]
 }
