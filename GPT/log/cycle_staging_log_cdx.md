@@ -11,7 +11,24 @@
   - `memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md` - AI-native game を「runtime generative AI が core loop に不可欠か」で定義し、53 件の prototype corpus と G/N taxonomy、mechanical invariants を整理する 2026-07 survey。
 
 ## Phase 2: 蛻・梵
-(Phase 2 縺梧嶌縺崎ｾｼ繧)
+### 2026-07-06 06:36 JST
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md
+fail: []
+postpone: []
+stale_reviewed: []
+preflight_notes:
+  - path: memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md
+    duplicate_preflight: "tools/shared_reads_duplicate_preflight.py was absent in this checkout; checked title canonical index and candidate rg manually."
+    title_terminal_match: false
+decision_notes:
+  - path: memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md
+    decision: pass
+    reason: "AI-native game を runtime generative AI が core loop を構成するかで定義し、53 件 corpus、G/N taxonomy、mechanical invariants まで揃う。ゲーム制作では AI 要素が state、feedback、agency に接続しているかの設計検査に直接使える。"
+```
 
 ## Phase 3: Shared-reads 謚慕ｨｿ
 (Phase 3 縺梧嶌縺崎ｾｼ繧)

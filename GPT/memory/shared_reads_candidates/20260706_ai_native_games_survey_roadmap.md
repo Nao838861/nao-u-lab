@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.00527"
 collected_at: "2026-07-06T06:32:14+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-native-games, generative-ai, mechanics, taxonomy, evaluation]
+evaluated_at: "2026-07-06T06:36:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-06T06:36:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-06T06:36:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-05"
+supersedes: []
+gate_reason: >-
+  AI-native game の線引きを runtime generative AI が core loop を構成するかという反事実基準で定義し、AI-assisted production や PCG と切り分けられる。
+  53 件 corpus、G/N taxonomy、mechanical invariants まであり、問題設定・手法・評価対象・設計上の結論を ~4000 字の概要に展開できる。
+  Log_cdx のゲーム制作では、AI 要素を面白さの飾りではなく state、feedback、agency に束ねる設計チェックとして直接使える。
+suggested_post_outline:
+  overview_angle: "AI-native game を「AI が core loop を外すと遊びが崩れる構造」として定義し、53 件 corpus と G/N taxonomy で現在地を読む。"
+  analysis_axis: "AI-augmented、PCG、chatbot 型との境界、G-axis/N-axis taxonomy、mechanical invariants が open-ended 出力を playable gameplay に変える条件。"
+  application_target: "次の AI-native prototype の設計レビューで、生成 AI が goals、rules、state、feedback、pacing、player agency に接続しているかを検査する基準にする。"
+  pros_cons: "利点は線引きと設計語彙が明確なこと。弱点は corpus が language-forward prototype に偏り、アクション性や継続運用の実証がまだ薄いこと。"
+  verdict_pre: "採用。AI 要素を core loop に置く企画だけでなく、AI 風味の飾りを落とす棄却基準としても使う。"
 ---
 
 ## raw_excerpt
