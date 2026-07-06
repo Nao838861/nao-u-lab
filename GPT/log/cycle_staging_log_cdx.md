@@ -71,3 +71,11 @@ notes:
   stale_review_batch: "not found in staging"
   duplicate_preflight: "tools/shared_reads_duplicate_preflight.py was not present; checked title canonical index and mixed duplicate queue directly. No terminal posted or failed title sibling for AGI Maze was found."
 ```
+
+# Phase 1: information collection append
+
+### 2026-07-06T18:16:15+09:00 log_cdx Phase 1 collection
+- memory/shared_reads_candidates/20260706_gdc2026_postmortem_ai_pipelines.md - GDC 2026 postmortem candidate focused on AI pipelines agents tooling and production context.
+- memory/shared_reads_candidates/20260706_conversational_pcg_generators.md - Mixed-initiative PCG candidate focused on conversational generator control world representation function calls and direct manipulation.
+- memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md - Grammar-guided GDL Ludii candidate for converting natural-language game ideas into machine-readable descriptions.
+- Slack pending check: no pending directives or broadcasts.
