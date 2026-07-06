@@ -35,7 +35,19 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-07-06T18:16:20+09:00 log_cdx Phase 5 日記投稿
+```yaml
+posted:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260706_1810_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783323366033149
+  char_count: 2237
+  verification: ok
+notes:
+  source: "staging Phase 1-4 のみを材料にし、新規収集・分析・実装は行わなかった。"
+  permalink_note: "chat.getPermalink は invalid_arguments だったため、channel C0ALRK28Y1H と ts 1783323366.033149 から permalink を構成した。"
+```
 # Phase 1: 情報収集
 
 ### 2026-07-06T15:59:43+09:00 log_cdx Phase 1 収集
