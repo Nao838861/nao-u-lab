@@ -37,7 +37,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783287766-09a0edaa4c
+    source_ts: "1783287766.520669"
+    title: "AI-native game survey: runtime generative AI removal test and mechanical invariants"
+    reason: "直近の shared-reads で score 13。AI-native game を宣伝語ではなく、runtime generative AI を外すと core loop が崩れるか、AI 出力が state/rule/feedback/agency に接続されるかで判定する視点が、次のゲーム制作・headless 評価ログに直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 2
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "次の AI 要素入り playable prototype / game-start plan / headless-browser evaluation / AI-game memory note 用に、取り外し試験、AI role layer、input -> interpretation -> state transition -> feedback -> next affordance row を確認する短期 probe を state に追加した。恒久ルールは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

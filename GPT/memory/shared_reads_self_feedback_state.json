@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T06:47:06+09:00",
+  "updated_at": "2026-07-06T09:04:43+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -282,7 +282,8 @@
     "1779210705.074359",
     "1782449734.919369",
     "1778158080.139459",
-    "1782587228.354239"
+    "1782587228.354239",
+    "1783287766.520669"
   ],
   "reviews": [
     {
@@ -6963,6 +6964,29 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-06T09:04:43+09:00",
+      "id": "sr-1783287766-09a0edaa4c",
+      "source_ts": "1783287766.520669",
+      "title": "AI-native game survey: runtime generative AI removal test and mechanical invariants",
+      "decision": "adopt_probe",
+      "reason": "Score 15. The shared-read is directly relevant to the game-production cycle because it reframes AI-native games by a removal test: if runtime generative AI can be replaced by finite authored content or deterministic rules without collapsing the core loop, the AI is not the mechanic. This fills a current gap in prototype planning and headless evaluation: Codex often records AI/game material as generally useful, but does not always require AI output to touch explicit state, rules, feedback, and next affordances before treating it as design evidence. Keep this as a reversible probe for the next AI-involved playable or evaluation note, not a durable rule or broad taxonomy mandate.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 2,
+        "total": 15
+      },
+      "probe": [
+        "Before the next AI-involved playable prototype, game-start plan, headless/browser game evaluation, or AI-game memory note, did I run a removal test: if the runtime generative AI were replaced by finite authored content or deterministic rules, would the core loop merely weaken or actually collapse?",
+        "Did I identify the AI role layer as one of narration/GM, information source, social agent, rule judge/interpreter, world or media generator, companion memory, multi-agent simulation, or support-only tooling instead of tagging it generically as AI game?",
+        "If AI is claimed to be core-loop relevant, did I preserve one input -> interpretation -> state transition -> feedback -> next affordance row, or mark the claim as ai_native_unverified before using it as design or evaluation evidence?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two AI-involved playable prototypes, game-start plans, headless/browser game evaluations, or AI-game memory notes already include a removal test, an explicit AI role layer, and a compact state-transition evidence row without prompting."
     }
   ],
   "active_probes": [
@@ -10086,6 +10110,18 @@
         "After the test or evidence pass, did I record support, reject, inconclusive, or measurement_gap and use that verdict to stop, revise the measurement, or choose the next node instead of extending the loop from narrative reflection alone?"
       ],
       "expires_after": "Review after the next two prototype/game-start/playable-diff planning notes that mention main-result contract, hypothesis node, support/reject/inconclusive verdict, measurement gap, headless/manual test, or extending the prototype loop."
+    },
+    {
+      "id": "probe-20260706-ai-native-removal-state-transition",
+      "created_at": "2026-07-06T09:04:43+09:00",
+      "source_ts": "1783287766.520669",
+      "scope": "next AI-involved playable prototype, game-start plan, headless/browser game evaluation, or AI-game memory note where Codex may treat fluent AI output, open-ended generation, or AI presence as evidence of a game mechanic",
+      "questions": [
+        "Before the next AI-involved playable prototype, game-start plan, headless/browser game evaluation, or AI-game memory note, did I run a removal test: if the runtime generative AI were replaced by finite authored content or deterministic rules, would the core loop merely weaken or actually collapse?",
+        "Did I identify the AI role layer as one of narration/GM, information source, social agent, rule judge/interpreter, world or media generator, companion memory, multi-agent simulation, or support-only tooling instead of tagging it generically as AI game?",
+        "If AI is claimed to be core-loop relevant, did I preserve one input -> interpretation -> state transition -> feedback -> next affordance row, or mark the claim as ai_native_unverified before using it as design or evaluation evidence?"
+      ],
+      "expires_after": "Review after the next two AI-involved playable prototypes, game-start plans, headless/browser game evaluations, or AI-game memory notes that mention AI-native, runtime generative AI, free input, AI judge, AI GM, social agent, world simulation, companion memory, state transition, feedback, affordance, or removal test."
     }
   ]
 }
