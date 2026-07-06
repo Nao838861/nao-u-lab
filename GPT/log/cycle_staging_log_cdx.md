@@ -1,16 +1,27 @@
-# log_cdx Cycle Staging — 2026-07-06 10:58
+# log_cdx Cycle Staging — 2026-07-06 13:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-
+### 2026-07-06T10:58:00+09:00 log_cdx
 - pending確認: `python tools\slack_inbox_lifecycle.py pending` で `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
 - 既存確認: `memory/shared_reads_candidates/` と `memory/atoms.jsonl` を照合し、PTCG-Bench / AutoBG / MemoPilot / RevengeBench / RogueAI / DynamicMem は既に候補化または投稿済みとして確認。
 - 収集: `memory/shared_reads_candidates/20260706_openlife_open_world_alife_agents.md` — open-world ALIFE として、LLM agent を memory / perception / evaluation / budget-based metabolism の非同期 process 群で支える候補。
 - 収集: `memory/shared_reads_candidates/20260706_worldevolver_self_evolving_world_models.md` — 長期 planning agent の world model を、episodic / semantic memory と prediction-observation 差分で更新する候補。
 - 収集: `memory/shared_reads_candidates/20260706_neural_procedural_memory_agents.md` — symbolic instruction だけでなく、行動実行に効く procedural memory / activation steering を扱う候補。
 
+### 2026-07-06T13:29:26+09:00 log_cdx
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
+- 既存 candidate 確認: OpenLife / WorldEvolver / SEMA / AI Native Games Survey などは既に保存済みのため重複追加しない。
+- 追加 candidate:
+  - `memory/shared_reads_candidates/20260706_worldmemarena_agent_memory.md` - 長時間 multimodal agent memory を action-world loop と stage-level diagnosis で扱う候補。
+  - `memory/shared_reads_candidates/20260706_rulesmith_llm_game_balancing.md` - multi-agent LLM self-play と Bayesian optimization によるゲームバランス探索候補。
+  - `memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md` - player collision information から敵 morphology / 当たり判定を生成する PCG 候補。
+  - `memory/shared_reads_candidates/20260706_fps_map_elites_generation.md` - FPS map 生成で topological 指標と gameplay emergent 指標を分ける MAP-Elites 候補。
+  - `memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md` - story-to-reward / reward design を LLM feedback で支援する PCG-RL 候補。
+
 ## Phase 2: 分析
+### 2026-07-06T10:58:00+09:00 log_cdx
 ```yaml
 total_candidates: 3
 pass:
@@ -32,7 +43,25 @@ notes:
   - "tools/shared_reads_duplicate_preflight.py は未配置だったため、shared_reads_title_index.normalize_title_key と title canonical / mixed duplicate sidecar を直接確認した。"
 ```
 
+### 2026-07-06T13:36:25+09:00 log_cdx
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260706_worldmemarena_agent_memory.md
+  - memory/shared_reads_candidates/20260706_fps_map_elites_generation.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260706_rulesmith_llm_game_balancing.md
+    reason: "posted duplicate title sibling in mixed duplicate queue: memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md; memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260604_rulesmith_multi_agent_balancing.md"
+  - path: memory/shared_reads_candidates/20260706_collision_enemy_morphology_generation.md
+    reason: "promising game-production topic but current extraction lacks method details and evaluation contents for CoopEval-level overview"
+  - path: memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md
+    reason: "posted duplicate title sibling in canonical index: memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
+### 2026-07-06T10:58:00+09:00 log_cdx
 ```yaml
 posted:
   - candidate: memory/shared_reads_candidates/20260706_openlife_open_world_alife_agents.md
@@ -45,6 +74,18 @@ skipped: []
 notes:
   - "Initial mojibake posts at ts 1783304398.784909 and 1783304399.653279 were deleted before final repost."
   - "Final posts were verified through conversations.history as Unicode headings: [Log_cdx] U+25A0 U+6982 U+8981."
+```
+
+### 2026-07-06T13:44:19+09:00 log_cdx
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260706_worldmemarena_agent_memory.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783313059907449"
+    char_count: 3583
+skipped:
+  - candidate: memory/shared_reads_candidates/20260706_fps_map_elites_generation.md
+    reason: "same title and arXiv URL already posted from memory/shared_reads_candidates/20260621_fps_maps_map_elites.md at https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781992758045369"
+    action: postpone
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
