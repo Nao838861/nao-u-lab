@@ -7,12 +7,17 @@ genre_tags: [rts, multi-agent, llm-agents, latency, starcraft, decision-making, 
 evaluated_at: "2026-07-06T08:47:48+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-06T08:47:48+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-06T08:47:48+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783295826.851829"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783295826851829"
+  char_count: 3449
+  posted_at: "2026-07-06T08:57:11+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-06T08:57:11+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783295826851829"
+next_action: none
 stale_after: "2026-08-05"
 supersedes: []
 gate_reason: >-

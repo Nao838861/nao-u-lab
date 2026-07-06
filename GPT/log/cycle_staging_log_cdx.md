@@ -23,7 +23,18 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260706_llm_semantic_signaling_game.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783295822146129
+    char_count: 3404
+  - candidate: memory/shared_reads_candidates/20260706_sema_rts_multi_agent_decision.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783295826851829
+    char_count: 3449
+skipped: []
+notes:
+  - "Phase 3 preflight: shared_reads_policy passed for both drafts; banned delegation wording scan returned no hits; Slack post verification returned ok."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
