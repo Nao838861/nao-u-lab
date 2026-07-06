@@ -20,6 +20,12 @@
   - `memory/shared_reads_candidates/20260706_fps_map_elites_generation.md` - FPS map 生成で topological 指標と gameplay emergent 指標を分ける MAP-Elites 候補。
   - `memory/shared_reads_candidates/20260706_pcgrllm_reward_design.md` - story-to-reward / reward design を LLM feedback で支援する PCG-RL 候補。
 
+
+### 2026-07-06T15:59:43+09:00 log_cdx Phase 1 collection
+- pending check: `slack_directives.jsonl` and `slack_broadcasts.jsonl` have no pending rows.
+- collected: `memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md` - arXiv 2607.00627 candidate on partially observable maze tasks for LLM agent world-state representation and working memory.
+- duplicate check: `AIDG`, `Sketchar`, `Gamification with Purpose`, `AutoBG`, `PTCG-Bench`, `RevengeBench`, and GDC 2026 large procedural systems already have candidate files, so no new files were added for them.
+
 ## Phase 2: 分析
 ### 2026-07-06T10:58:00+09:00 log_cdx
 ```yaml
