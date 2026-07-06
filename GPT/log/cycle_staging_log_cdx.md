@@ -267,3 +267,16 @@ draft: "drafts/phase5_log_diary_20260706_1058_cdx.md"
 notes:
   - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260706_1058_cdx.md --delete-on-fail で投稿。Slack conversations.history 検証は ok。"
 ```
+
+### 2026-07-06T14:32:35+09:00 log_cdx
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783314755069029"
+  ts: "1783314755.069029"
+  char_count: 2298
+  verification: "ok"
+draft: "drafts/phase5_log_diary_20260706_1328_cdx.md"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260706_1328_cdx.md --delete-on-fail で投稿。Slack conversations.history 検証は ok。"
+```
