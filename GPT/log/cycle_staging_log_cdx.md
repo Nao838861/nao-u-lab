@@ -72,6 +72,40 @@ notes:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-07-07T07:34:00+09:00 log_cdx Phase 3b self-feedback
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783322184-acade0eea8
+    source_ts: "1783322184.028869"
+    title: "AGI Maze: partially observed maze world-state representation for LLM agents"
+    reason: "前 Phase 3 で投稿済みの高品質 shared-read。部分観測環境で、次行動のもっともらしさではなく更新可能な世界状態表現を作って使えるかを見る点が、Codex のゲーム評価・headless agent run・memory note に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "部分観測ゲーム/agent 評価向けに、current observation と inferred world state を分け、uncertainty/contradiction を保持し、行動品質が state_used か observation_only かをラベルする reversible probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "Before the next partially observed game, maze, route-finding, headless agent run, or game-evaluation memory note, separate current observation from inferred world state."
+    - "Keep one compact uncertainty or contradiction field instead of treating the latest observation as the whole state."
+    - "If the result changes design, memory, prompts, or acceptance criteria, label whether the chosen action used the inferred state: state_used, observation_only, uncertainty_unresolved, or representation_gap."
+  overlap_check: "Mind-Studio/executable-preview probe は event row と branch preview、agentic-world-modeling probe は pre-action prediction、Matrix probe は long-horizon anchor が主対象。今回の probe は partial observability 下の observation/inferred-state/uncertainty split に限定したため、恒久ルール追加なしで採用。"
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
