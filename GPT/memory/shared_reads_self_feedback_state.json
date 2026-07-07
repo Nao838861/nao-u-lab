@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T05:55:40+09:00",
+  "updated_at": "2026-07-08T08:03:30+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -287,7 +287,8 @@
     "1783322184.028869",
     "1783417724.862039",
     "1783331249.464489",
-    "1783435919.805469"
+    "1783435919.805469",
+    "1783449745.791319"
   ],
   "reviews": [
     {
@@ -7135,6 +7136,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T08:03:30+09:00",
+      "id": "sr-1783449745-732d07a5cc",
+      "source_ts": "1783449745.791319",
+      "title": "HarnessFix: trace-grounded agent harness failure diagnosis and scoped repair",
+      "decision": "adopt_probe",
+      "reason": "Score 17. HarnessFix is useful now because Codex game and phase work often treats a failed browser/headless/probe run as either model weakness or a generic workflow issue. Existing probes ask for state traces, branch checks, observability layers, and failure types, but they do not force the repair target to be separated among game code, test harness, probe script, prompt/instruction, logging, or orchestration. Keep this as a reversible failure-log probe scoped to playtest/probe failures, not an automated repair loop or broad HTIR adoption.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next failed playable prototype, browser/headless game evaluation, canvas/DOM probe, Slack/memory automation probe, or phase-quality validation note, did I name the failed_step that exposed the problem, such as input action, screenshot, state dump, tool call, validator, finalization, or scheduled script step?",
+        "Did I record expected_effect and observed_effect as a concrete state delta or missing artifact, instead of accepting success status, no console error, or a prose failure label as the whole evidence?",
+        "Before choosing a fix, did I assign one primary harness_layer and repair_scope among game code, test harness, probe script, prompt/instruction, logging, orchestration, or external dependency, and mark unresolved cases as harness_anchor_unverified or repair_scope_unclear?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two failed playtest/probe/automation validation notes already name failed_step, expected versus observed effect, and a primary harness_layer plus repair_scope before changing code, prompts, or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible HarnessFix-inspired failure-log probe: failed runs must name the responsible step, expected/observed state effect, and repair scope before selecting a fix.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10318,6 +10355,18 @@
         "If reflection suggests a fix, did I freeze one next experimental condition for retry, such as same seed, same route, same milestone, or same input script, and label any unsupported reflection as reflection_pollution_unverified or taxonomy_overreach?"
       ],
       "expires_after": "Review after the next two game/headless/cross_review notes that mention oracle trace, milestone, failed run, perception, reasoning, execution, latency, retry condition, seed, route, reflective advice, reflection pollution, or taxonomy overreach."
+    },
+    {
+      "id": "probe-20260708-harnessfix-failure-anchor-repair-scope",
+      "created_at": "2026-07-08T08:03:30+09:00",
+      "source_ts": "1783449745.791319",
+      "scope": "next failed playable prototype, browser/headless game evaluation, canvas/DOM probe, Slack/memory automation probe, or phase-quality validation note where Codex may blame the model, prompt, or workflow without anchoring the failed step and repair target",
+      "questions": [
+        "Before the next failed playable prototype, browser/headless game evaluation, canvas/DOM probe, Slack/memory automation probe, or phase-quality validation note, did I name the failed_step that exposed the problem, such as input action, screenshot, state dump, tool call, validator, finalization, or scheduled script step?",
+        "Did I record expected_effect and observed_effect as a concrete state delta or missing artifact, instead of accepting success status, no console error, or a prose failure label as the whole evidence?",
+        "Before choosing a fix, did I assign one primary harness_layer and repair_scope among game code, test harness, probe script, prompt/instruction, logging, orchestration, or external dependency, and mark unresolved cases as harness_anchor_unverified or repair_scope_unclear?"
+      ],
+      "expires_after": "Review after the next two failed playtest/probe/automation validation notes that mention failed_step, expected_effect, observed_effect, state delta, validator, finalization, harness layer, repair scope, or anchor verification."
     }
   ]
 }
