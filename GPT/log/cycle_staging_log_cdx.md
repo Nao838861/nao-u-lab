@@ -72,7 +72,56 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: branch codex/phase2-analysis-20260708 は origin と同期表示。開始時点で既存差分多数のため、今回差分は staging と再生成 sidecar に限定。"
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe を確認。記憶/ゲーム設計/敵パターン は取得可、評価軸 は本文に現れず。markdown link は 0 件のため broken link 0。"
+  - "memory/atoms.jsonl: 2626 rows、JSON parse error 0、duplicate id 0、duplicate normalized/content hash 0。"
+  - "memory/raw/: 231 files 中 87 files が 30日超 mtime。例: memory/raw/slack_archive/shared-reads.jsonl と 2026-05-13/15 の web_research PDF/text 群。今回はアーカイブ設計・移動は未実施。"
+  - "shared_reads_candidates lifecycle: posted 363、ready_to_post 10、postponed 306、failed 112、needs_review 13、status blank 58。stale_after <= 2026-07-08 は postponed 162、needs_review 9。"
+  - "mixed duplicate queue regenerated: memory/shared_reads_mixed_duplicate_queue.jsonl rows=58。stale triage queue regenerated: memory/shared_reads_stale_triage_queue.jsonl rows=50。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で directives pending 0、broadcasts pending 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  due_backlog:
+    postponed: 162
+    needs_review: 9
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 58
+  duplicate_audit_note: "audit_shared_reads_title_duplicates --unindexed-only --limit 20 では未登録 mixed/terminal duplicate group が複数残るが、mixed_duplicate_queue と stale_triage_queue で Phase 2 へ小分け handoff 可能。今回 4b 起動が必要な新規構造問題とは見なさない。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale queue #1。game_transfer_value high。hidden-role/deception 評価はゲーム設計素材として具体性があり、duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models の mixed duplicate 解消候補。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue #2。procedural personas + MCTS + evolved heuristics は headless 評価のプレイヤー傾向拡張に直結。duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue #3。role-sensitive prompt / LLM NPC scaffold の mixed duplicate 解消候補。現候補では評価粒度不足のため、Phase 2 で代表候補化か fail 降格を判定する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue #4。diverse video game agent benchmark は game harness に有用だが、現候補は要素列挙寄り。duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue #5。emotional north star から action verbs / paper prototype へ戻す制作導線は有用だが一次資料密度が薄い。duplicate_group_key=gdc 2026 riot games stone librande on game design。"
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 decode 成功。代表語 probe は 記憶/ゲーム設計/敵パターン が true、評価軸 は false だが本文に該当語が無いだけで source 破損根拠なし。"
+  display_or_tooling_status: "PowerShell here-string から Python へ日本語リテラルを渡した初回 probe は mojibake し false になった。Unicode escape / UTF-8 read_bytes decode で再確認済み。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
