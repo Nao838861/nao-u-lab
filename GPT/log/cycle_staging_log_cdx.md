@@ -34,7 +34,19 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-08T03:42:39+09:00 log_cdx Phase 3 Shared-reads 投稿:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783449745791319"
+    ts: "1783449745.791319"
+    char_count: 4599
+skipped: []
+notes:
+  - "投稿前に arXiv v2 HTML を確認し、HTIR / failure attribution / scoped repair / validation / GAIA-SWE-AppWorld-Terminal-Bench 評価を本文へ反映した。"
+  - "本文は現行フォーマットの「■ 概要」開始、「■ URL」末尾、禁止語なし、shared_reads_policy ok を確認済み。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
