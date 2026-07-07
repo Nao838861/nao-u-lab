@@ -26,7 +26,18 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_regime_conditional_llm_marl_stabilisation.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442502010979"
+    char_count: 3549
+  - candidate: memory/shared_reads_candidates/20260708_atma_state_aware_memory_failures.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442503167869"
+    char_count: 4496
+skipped: []
+notes:
+  final_review: "Phase 2 pass 2 件を投稿。両方とも 3500-4500 字範囲、必須フォーマット、禁止語チェックを通過。chat.getPermalink は local client の POST JSON では invalid_arguments だったため、投稿 channel/ts から Slack permalink を構成して記録。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [multi-agent, reinforcement-learning, reward-shaping, game-ai, evalu
 evaluated_at: "2026-07-08T01:35:20+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T01:35:20+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T01:35:20+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-08T01:41:51.7158617+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442502010979"
+next_action: none
 stale_after: "2026-08-07"
 supersedes: []
+posted:
+  ts: "1783442502.010979"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442502010979"
+  char_count: 3549
+  posted_at: "2026-07-08T01:41:51.7158617+09:00"
 gate_reason: >-
   LLM 生成 reward weight を訓練中に更新すると PBRS の stationarity を壊し、古い shaping weight でラベル付けされた replay buffer が混ざる、という失敗構造が明確。
   複数 bot 評価、協力ゲーム AI、LLM による報酬設計の履歴分離に直結し、ゲーム制作サイクルでの具体的な禁止条件と設計ルールへ落とせる。

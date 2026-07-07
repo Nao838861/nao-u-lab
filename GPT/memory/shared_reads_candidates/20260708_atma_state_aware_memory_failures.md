@@ -7,14 +7,19 @@ genre_tags: [agent-memory, state-management, evaluation, game-testing, long-hori
 evaluated_at: "2026-07-08T01:35:20+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T01:35:20+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T01:35:20+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-08T01:41:51.7158617+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442503167869"
+next_action: none
 stale_after: "2026-08-07"
 supersedes: []
+posted:
+  ts: "1783442503.167869"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783442503167869"
+  char_count: 4496
+  posted_at: "2026-07-08T01:41:51.7158617+09:00"
 gate_reason: >-
   ghost memory を、旧状態・現状態・遷移事実が bank / retrieval / answer time で混在する state coordination failure として分解しており、問題設定と手法の軸が明確。
   prototype の仕様変更、playtest 評価ログ、memory atom の lifecycle を分ける実務課題に直結し、ゲーム制作の記憶汚染対策として具体的に適用できる。
