@@ -24,7 +24,15 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-08T07:58:27+09:00 log_cdx Phase 3 投稿結果:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_gameenginebench_unreal_cpp_runtime.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783465097949229"
+    char_count: 4493
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
