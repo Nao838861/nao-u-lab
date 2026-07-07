@@ -1,25 +1,72 @@
-# log_cdx Cycle Staging — 2026-07-06 15:58
+# log_cdx Cycle Staging — 2026-07-07 13:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+```yaml
+phase: 1
+run_at: "2026-07-07T13:29:20+09:00"
+pending_check:
+  slack_directives: 0
+  slack_broadcasts: 0
+sources_checked:
+  - "memory/raw/web_research/results.jsonl tail"
+  - "memory/atoms.jsonl tail"
+  - "memory/shared_reads_candidates recent files"
+  - "web search: 2026 arXiv game AI / game agents / procedural generation"
+collected:
+  - path: "memory/shared_reads_candidates/20260707_coachable_agents_interactive_gameplay.md"
+    summary: "Horizon Forbidden West / Gran Turismo などで、main task 達成と runtime style request を両立する coachable gameplay agent の候補。"
+  - path: "memory/shared_reads_candidates/20260707_taboo_llm_constraint_communication.md"
+    summary: "Taboo を使い、LLM の禁止語遵守と target concept 伝達成功の trade-off を測る言語ゲーム評価候補。"
+duplicates_not_collected:
+  - "JamBench / JAMER project-level game benchmark は既存候補あり"
+  - "AI Native Games survey は既存候補あり"
+  - "RuleSmith / TITAN / runtime PCG / LLM gameplay playability は既存 atom または candidate あり"
+notes:
+  - "このフェーズでは品質判定せず、重複確認と候補保存だけ行った。"
+  - "開始時点でブランチは origin に対して ahead 98 / behind 7。未コミット差分が多く、今回の追加ファイルと staging だけを触った。"
+```
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+phase: 2
+run_at: "2026-07-07T13:32:56+09:00"
+preflight:
+  stale_review_batch: none
+  terminal_title_duplicates:
+    - path: "memory/shared_reads_candidates/20260707_coachable_agents_interactive_gameplay.md"
+      title_key: "coachable agents for interactive gameplay"
+      terminal_match: none
+    - path: "memory/shared_reads_candidates/20260707_taboo_llm_constraint_communication.md"
+      title_key: "don t say it constraints compliance and communication when language models play taboo"
+      terminal_match: none
+total_candidates: 2
+pass:
+  - "memory/shared_reads_candidates/20260707_coachable_agents_interactive_gameplay.md"
+  - "memory/shared_reads_candidates/20260707_taboo_llm_constraint_communication.md"
+fail: []
+postpone: []
+stale_reviewed: []
+notes:
+  - "どちらも手法の重要要素、評価軸、ゲーム制作への具体適用先を抽出できる。"
+  - "Coachable agents は NPC/bot policy の style adherence 評価、Taboo は制約付き NPC 会話/推理ゲーム評価として Phase 3 の深掘り対象になり得る。"
+```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
-
-### 2026-07-06T16:16:35+09:00 log_cdx Phase 3 投稿結果
+### 2026-07-07T13:43:07+09:00 log_cdx Phase 3 投稿結果
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783322184028869
-    char_count: 4440
+  - candidate: memory/shared_reads_candidates/20260707_coachable_agents_interactive_gameplay.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399097181689
+    char_count: 3502
+  - candidate: memory/shared_reads_candidates/20260707_taboo_llm_constraint_communication.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399385009379
+    char_count: 3501
 skipped: []
 notes:
-  final_review: "禁止語チェック、必須見出し、URL末尾配置、文字数 3500-4500 条件を確認して投稿。chat.getPermalink は slack_client 経由では invalid_arguments だったため、channel C0AN2FEHEJJ と ts 1783322184.028869 から permalink を構成した。"
+  final_review: "2件とも禁止語チェック、必須見出し、URL末尾配置、3500-4500字条件を確認して投稿。chat.getPermalink は slack_client 経由では invalid_arguments だったため、channel C0AN2FEHEJJ と ts から permalink を構成した。"
+  sync_note: "開始時点で branch は origin に対して ahead 100 / behind 7。dirty worktree と大きな分岐があり、この場で rebase/autostash は行わず、Phase 2 staging の pass 2件を処理した。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
@@ -35,47 +82,4 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-### 2026-07-06T18:16:20+09:00 log_cdx Phase 5 日記投稿
-```yaml
-posted:
-  channel: "#log"
-  draft: drafts/phase5_log_diary_20260706_1810_cdx.md
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783323366033149
-  char_count: 2237
-  verification: ok
-notes:
-  source: "staging Phase 1-4 のみを材料にし、新規収集・分析・実装は行わなかった。"
-  permalink_note: "chat.getPermalink は invalid_arguments だったため、channel C0ALRK28Y1H と ts 1783323366.033149 から permalink を構成した。"
-```
-# Phase 1: 情報収集
-
-### 2026-07-06T15:59:43+09:00 log_cdx Phase 1 収集
-
-- `memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md` — AGI Maze。部分観測 maze で LLM agent の world state representation と working memory を見る arXiv 2607.00627 候補。
-- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
-- 重複確認メモ: `AIDG`、`Sketchar`、`Gamification with Purpose`、`AutoBG`、`PTCG-Bench`、`RevengeBench`、GDC 2026 large procedural systems は既存 candidate 済みのため新規ファイル化せず。
-
-# Phase 2: 分析
-
-### 2026-07-06T16:05:54+09:00 log_cdx Phase 2 判定
-
-```yaml
-total_candidates: 1
-pass:
-  - memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md
-fail: []
-postpone: []
-stale_reviewed: []
-notes:
-  stale_review_batch: "not found in staging"
-  duplicate_preflight: "tools/shared_reads_duplicate_preflight.py was not present; checked title canonical index and mixed duplicate queue directly. No terminal posted or failed title sibling for AGI Maze was found."
-```
-
-# Phase 1: information collection append
-
-### 2026-07-06T18:16:15+09:00 log_cdx Phase 1 collection
-- memory/shared_reads_candidates/20260706_gdc2026_postmortem_ai_pipelines.md - GDC 2026 postmortem candidate focused on AI pipelines agents tooling and production context.
-- memory/shared_reads_candidates/20260706_conversational_pcg_generators.md - Mixed-initiative PCG candidate focused on conversational generator control world representation function calls and direct manipulation.
-- memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md - Grammar-guided GDL Ludii candidate for converting natural-language game ideas into machine-readable descriptions.
-- Slack pending check: no pending directives or broadcasts.
+(Phase 5 が書き込む)
