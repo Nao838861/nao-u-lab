@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.03525"
 collected_at: "2026-07-08T07:45:19+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-dev, coding-agent, unreal-engine, cpp, runtime-testing, benchmark, harness]
+evaluated_at: "2026-07-08T07:50:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T07:50:02+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T07:50:02+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  Unreal Engine 5 の実プロジェクト内 C++ patch を、compile ではなく Play-in-Editor automation と behavioral test で評価する点が明確。
+  110 tasks、12 configurations、pass@1 55.5%、31 unsolved tasks という評価結果があり、失敗要因も runtime integration に寄っている。
+  Nao_u_BOT の playable diff で「局所修正が周辺システムを壊す」問題を検査する軸に直結し、4000字級の概要に展開できる。
+suggested_post_outline:
+  overview_angle: "coding agent 評価を compile 成否から real-time engine runtime behavior へ移す benchmark として読む"
+  analysis_axis: "task source、UE5 automation、behavioral correctness、server authority / lifecycle / integration failure の切り分け"
+  application_target: "playable diff の検証で、単体成功ではなくゲーム状態・初期化・同期・周辺 subsystem まで観測する harness 設計"
+  pros_cons: "メリットは実エンジン統合失敗を拾えること。デメリットは UE5/C++ 前提で小型 JS prototype には直接移植しにくいこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
