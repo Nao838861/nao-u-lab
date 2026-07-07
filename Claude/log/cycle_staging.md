@@ -1,6 +1,6 @@
 ---
 retention: cycle
-note: 2026-05-15 で停止した旧共通ステージング (cycle_staging_log/mir.md per-instance 分岐前の遺物)。kaizen #138 段階2 retention:cycle 試験対象 (C284 2026-06-02)
+note: 2026-05-15 で停止した旧共通ステージング (cycle_staging_log/mir.md per-instance 分岐前の遺物)。kaizen #138 段階2 retention:cycle 試験対象 (C284 2026-06-02)。**2026-07-06 stale WARN 発火確認 (retention=cycle days=6.7 cycles≈13.4 ≥ 5.0 で検出) = 装置想定通り動作 PASS。本ファイルは遺物として stale 状態を意図的保持、archive/削除は行わない (旧構造の履歴保存目的)**
 ---
 # サイクルステージング (2026-05-15 21:11)
 
