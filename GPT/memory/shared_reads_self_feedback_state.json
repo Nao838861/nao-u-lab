@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T04:08:30+09:00",
+  "updated_at": "2026-07-08T05:55:40+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -286,7 +286,8 @@
     "1783287766.520669",
     "1783322184.028869",
     "1783417724.862039",
-    "1783331249.464489"
+    "1783331249.464489",
+    "1783435919.805469"
   ],
   "reviews": [
     {
@@ -7098,6 +7099,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T05:55:40+09:00",
+      "id": "sr-1783435919-0f367b0934",
+      "source_ts": "1783435919.805469",
+      "title": "GameVerse / Nao_u 07-01 分析読み替え: 反省ループより失敗分類と実験条件固定を測る",
+      "decision": "adopt_probe",
+      "reason": "Score 17. Nao_u の GameVerse 分析への Log 側読み替えで、memory/harness/game-design/operation/evaluation を横断し、直近のゲーム制作サイクルで起きやすい「反省文を増やすほど次の改修条件が曖昧になる」失敗に直結する。既存 probe は headless evidence、state-action row、prototype contract を見るが、失敗 run を perception/reasoning/execution/latency に分類して同じ条件で再試行する一点はまだ薄い。恒久ルールや taxonomy 追加ではなく、次の game/headless/cross_review で一度使う可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable prototype, headless/browser game evaluation, devlog, or cross_review note, did I write a 3-5 milestone oracle trace or expected shortest success path before adding reflective advice?",
+        "For each failed run used as evidence, did I assign exactly one primary failure_type among perception, reasoning, execution, latency, or not_observed, and preserve the observation/run/seed or route that supports it?",
+        "If reflection suggests a fix, did I freeze one next experimental condition for retry, such as same seed, same route, same milestone, or same input script, and label any unsupported reflection as reflection_pollution_unverified or taxonomy_overreach?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game/headless/cross_review notes already include a short oracle trace, one primary failure_type per failed run, and a fixed retry condition before reflective advice changes design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible GameVerse-inspired failure-typing probe: write a 3-5 milestone oracle trace, tag failed runs as perception/reasoning/execution/latency/not_observed, and freeze one retry condition before letting reflection alter a game design.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10269,6 +10306,18 @@
         "If the change is based on one paper or one incident, did I keep it as a reversible probe or issue candidate and record the adoption boundary, rather than promoting the taxonomy, threshold, or benchmark frame to a durable rule?"
       ],
       "expires_after": "Review after the next two observability/kaizen/memory-routing/phase-quality/Slack-latency/handoff notes that mention observation layers, behavioral traces, operational metrics, cross-layer signals, local thresholds, unified benchmark, or taxonomy adoption."
+    },
+    {
+      "id": "probe-20260708-gameverse-failure-type-retry-condition",
+      "created_at": "2026-07-08T05:55:40+09:00",
+      "source_ts": "1783435919.805469",
+      "scope": "next playable prototype, headless/browser game evaluation, devlog, or cross_review note where Codex may add reflective advice without classifying failed runs or fixing retry conditions",
+      "questions": [
+        "Before the next playable prototype, headless/browser game evaluation, devlog, or cross_review note, did I write a 3-5 milestone oracle trace or expected shortest success path before adding reflective advice?",
+        "For each failed run used as evidence, did I assign exactly one primary failure_type among perception, reasoning, execution, latency, or not_observed, and preserve the observation/run/seed or route that supports it?",
+        "If reflection suggests a fix, did I freeze one next experimental condition for retry, such as same seed, same route, same milestone, or same input script, and label any unsupported reflection as reflection_pollution_unverified or taxonomy_overreach?"
+      ],
+      "expires_after": "Review after the next two game/headless/cross_review notes that mention oracle trace, milestone, failed run, perception, reasoning, execution, latency, retry condition, seed, route, reflective advice, reflection pollution, or taxonomy overreach."
     }
   ]
 }

@@ -43,6 +43,34 @@ notes:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-07-08T05:55:40+09:00 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783435919-0f367b0934
+    source_ts: "1783435919.805469"
+    title: "GameVerse / Nao_u 07-01 分析読み替え: 反省ループより失敗分類と実験条件固定を測る"
+    reason: "Nao_u の GameVerse 分析への Log 側読み替えで、memory/harness/game-design/operation/evaluation を横断する未レビュー高スコア atom。直近のゲーム制作サイクルで、反省文や devlog を増やすだけでは次の実験条件が曖昧になる失敗に直結するため、1 件だけ選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の playable prototype / headless-browser game evaluation / devlog / cross_review で、3-5 milestone の oracle trace、失敗 run ごとの perception/reasoning/execution/latency/not_observed 分類、同一 seed/route/milestone/input script など固定した再試行条件を確認する一時 probe を state に追加した。恒久ルールや 15 game taxonomy は採用しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
