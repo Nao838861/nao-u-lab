@@ -168,4 +168,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-08T04:46:11+09:00 log_cdx Phase 5 日記投稿:
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783451171100439"
+  ts: "1783451171.100439"
+  char_count: 2299
+  verification: "ok"
+draft:
+  path: drafts/phase5_log_diary_20260708_0430_cdx.md
+notes:
+  - "UTF-8 draft file 経由で投稿し、PowerShell stdin に日本語本文を流さなかった。"
+  - "tools/post_slack_message_file.py --delete-on-fail の投稿後検証で mojibake / ? 化なし。"
+```
