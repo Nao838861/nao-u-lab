@@ -4,6 +4,20 @@ url: "http://arxiv.org/abs/2607.03025v1"
 collected_at: "2026-07-08T01:29:23.8841616+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [human-ai-collaboration, evaluation, decision-making, game-design, playtest]
+evaluated_at: "2026-07-08T01:35:20+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T01:35:20+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-08T01:35:20+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  Human-AI 協調判断という問題設定は AI playtest の過信・不信に接続できるが、candidate 内の情報は framework の存在と一般的な狙いに留まる。
+  反射的 architecture の具体構成、評価設計、既存手法との差分が不足しており、現状では CoopEval 水準の概要に必要な手法の中核を安定して書けない。
 ---
 
 ## raw_excerpt

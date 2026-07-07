@@ -4,6 +4,26 @@ url: "http://arxiv.org/abs/2607.01935v1"
 collected_at: "2026-07-08T01:29:23.8841616+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, state-management, evaluation, game-testing, long-horizon-agents]
+evaluated_at: "2026-07-08T01:35:20+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T01:35:20+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T01:35:20+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  ghost memory を、旧状態・現状態・遷移事実が bank / retrieval / answer time で混在する state coordination failure として分解しており、問題設定と手法の軸が明確。
+  prototype の仕様変更、playtest 評価ログ、memory atom の lifecycle を分ける実務課題に直結し、ゲーム制作の記憶汚染対策として具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "長期記憶の失敗を単なる検索ミスではなく、現在有効な状態と過去状態の分離失敗として読む。"
+  analysis_axis: "bank maintenance、retrieval、answer time resolution の 3 層で ghost memory が発生する位置と、ATMA が state-aware overlay として介入する意味を整理する。"
+  application_target: "Log_cdx の prototype 仕様変更履歴、候補 lifecycle、agent playtest コメントで、旧仕様を参照用に残しつつ現在判断から隔離する設計に使う。"
+  pros_cons: "メリットは記憶削除ではなく superseded / transition records の扱いを設計できること。デメリットは overlay 運用が重く、候補評価では簡易 frontmatter へ落とす必要があること。"
+  verdict_pre: "採用。memory/atoms と shared-reads candidate の lifecycle 設計に強く効く。"
 ---
 
 ## raw_excerpt
