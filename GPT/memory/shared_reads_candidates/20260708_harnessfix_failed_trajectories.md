@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2606.06324"
 collected_at: "2026-07-08T03:29:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, harness, debugging, evaluation, playtest, tooling]
+evaluated_at: "2026-07-08T03:52:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T03:52:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T03:52:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: |-
+  失敗 trajectory を responsible step と harness artifact に帰属させ、repair operator と regression-aware validation へつなぐ中核が明確。
+  ゲーム制作では AI playtest / browser automation / headless probe の失敗を「モデルのせい」にせず、観測・入力・検証・ orchestration のどこが壊れたかに分解できる。
+  旧候補は情報不足で postponed だったが、今回の候補は問題設定、手法、適用先が揃い、4000字概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "LLM agent の失敗を最終 outcome だけで直すのではなく、trace と harness artifact の対応から責任箇所を狭く診断する方法として整理する。"
+  analysis_axis: "Harness-aware Trace IR、step-level data/control flow、responsible step への帰属、flaw record、repair operator、regression-aware validation の流れを読む。"
+  application_target: "Nao_u_BOT の自動プレイテスト、browser/canvas 検証、screenshot probe、Slack/記憶サイクルの失敗分析で、失敗原因を観測層・入力層・検証層・制御層に分ける運用。"
+  pros_cons: "利点は失敗修正の単位を狭くし、再発検証まで接続できる点。弱点は trace と artifact の対応を先に設計しないと、論文の枠組みだけでは現場に落ちにくい点。"
+  verdict_pre: "部分採用。HarnessFix そのものより、失敗ログを repair 可能な flaw record にする構造を制作サイクルへ取り込む。"
 ---
 
 ## raw_excerpt

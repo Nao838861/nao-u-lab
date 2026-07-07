@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2603.27896"
 collected_at: "2026-07-08T03:29:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-game-development, player-experience, playability, production]
+evaluated_at: "2026-07-08T03:52:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T03:52:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260621_llm_gameplay_playability_player_experience.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781984368198809"
+next_action: none
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: |-
+  mixed duplicate queue に同一 title_key の posted sibling があり、20260621 候補は posted permalink 付きで閉じている。
+  本文は有用だが、同じ論文の再投稿候補としては扱わず、Phase 3 対象から外す。
 ---
 
 ## raw_excerpt
