@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-06T09:04:43+09:00",
+  "updated_at": "2026-07-07T07:34:00+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -283,7 +283,8 @@
     "1782449734.919369",
     "1778158080.139459",
     "1782587228.354239",
-    "1783287766.520669"
+    "1783287766.520669",
+    "1783322184.028869"
   ],
   "reviews": [
     {
@@ -6987,6 +6988,42 @@
         "If AI is claimed to be core-loop relevant, did I preserve one input -> interpretation -> state transition -> feedback -> next affordance row, or mark the claim as ai_native_unverified before using it as design or evaluation evidence?"
       ],
       "withdrawal_condition": "Drop this probe if the next two AI-involved playable prototypes, game-start plans, headless/browser game evaluations, or AI-game memory notes already include a removal test, an explicit AI role layer, and a compact state-transition evidence row without prompting."
+    },
+    {
+      "reviewed_at": "2026-07-07T07:34:00+09:00",
+      "id": "sr-1783322184-acade0eea8",
+      "source_ts": "1783322184.028869",
+      "title": "AGI Maze: partially observed maze world-state representation for LLM agents",
+      "decision": "adopt_probe",
+      "reason": "Score 16. AGI Maze is useful now because Codex game and agent notes can still treat a plausible next action or route success as evidence that the agent has a usable world model. Existing Mind-Studio and world-modeling probes cover state-action rows, branch previews, and long-horizon anchors, but they do not directly require separating current observation, inferred map or inventory state, uncertainty, and action rationale under partial observability. Keep this as a reversible partial-observation state probe for game evaluation and memory notes, not a new benchmark requirement.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next partially observed game, maze, route-finding, headless agent run, or game-evaluation memory note, did I separate current observation from inferred world state, such as visible cells, known walls, candidate exits, inventory, goal clues, or visited/unvisited areas?",
+        "Did I keep one compact uncertainty or contradiction field, such as unknown_exit, possible_wall, stale_location, inventory_uncertain, observation_mismatch, or map_update_needed, instead of treating the latest textual/screen observation as the whole state?",
+        "If the result changes design, memory, prompts, or acceptance criteria, did I check whether the chosen action used the inferred state and label the claim as state_used, observation_only, uncertainty_unresolved, or representation_gap?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two partial-observation game or agent-evaluation notes already split observation from inferred world state, preserve uncertainty or contradiction fields, and label whether action quality came from state use or observation-only behavior.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible AGI Maze-inspired partial-observation probe: separate observation from inferred world state, keep uncertainty fields, and label whether the chosen action actually used the maintained state.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10122,6 +10159,18 @@
         "If AI is claimed to be core-loop relevant, did I preserve one input -> interpretation -> state transition -> feedback -> next affordance row, or mark the claim as ai_native_unverified before using it as design or evaluation evidence?"
       ],
       "expires_after": "Review after the next two AI-involved playable prototypes, game-start plans, headless/browser game evaluations, or AI-game memory notes that mention AI-native, runtime generative AI, free input, AI judge, AI GM, social agent, world simulation, companion memory, state transition, feedback, affordance, or removal test."
+    },
+    {
+      "id": "probe-20260707-agimaze-partial-observation-state-split",
+      "created_at": "2026-07-07T07:34:00+09:00",
+      "source_ts": "1783322184.028869",
+      "scope": "next partially observed game, maze, route-finding, headless agent run, or game-evaluation memory note where Codex may treat a plausible next action or route success as evidence of a usable world model",
+      "questions": [
+        "Before the next partially observed game, maze, route-finding, headless agent run, or game-evaluation memory note, did I separate current observation from inferred world state, such as visible cells, known walls, candidate exits, inventory, goal clues, or visited/unvisited areas?",
+        "Did I keep one compact uncertainty or contradiction field, such as unknown_exit, possible_wall, stale_location, inventory_uncertain, observation_mismatch, or map_update_needed, instead of treating the latest textual/screen observation as the whole state?",
+        "If the result changes design, memory, prompts, or acceptance criteria, did I check whether the chosen action used the inferred state and label the claim as state_used, observation_only, uncertainty_unresolved, or representation_gap?"
+      ],
+      "expires_after": "Review after the next two partial-observation game or agent-evaluation notes that mention maze, route finding, map memory, visible cells, known walls, inventory, goal clues, uncertainty, observation mismatch, inferred state, or representation gaps."
     }
   ]
 }
