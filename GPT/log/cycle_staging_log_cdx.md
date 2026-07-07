@@ -74,6 +74,67 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-07-08T06:10:00+09:00 整理 + 問題抽出:
+```yaml
+cleaned:
+  - "開始ゲート確認: branch=codex/phase2-analysis-20260708、remote ahead/behind なし。既存の未コミット差分は多数あり、Phase 4a では触らない。"
+  - "memory/MEMORY.md を UTF-8 明示読みで確認。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸は現行 index 本文に存在しないだけで、source file 破損ではない。"
+  - "memory/MEMORY.md の markdown link は 0 件で、broken link は 0 件。"
+  - "memory/atoms.jsonl を検査。2629 rows、JSON parse error 0、duplicate id 0、normalized/content hash duplicate group 0。status 差異 group は routine/superseded 系の同名投稿タイトルに限られ、今回の構造 issue にはしない。"
+  - "memory/raw/ 配下で 30 日以上 mtime がない file は 87 件。slack_archive や phase3_pdfs/phase3_sources など原文保持系が中心のため、今回は archive 実行なし。"
+  - "memory/shared_reads_candidates/ lifecycle status 内訳: posted=365 / postponed=308 / failed=112 / ready_to_post=10 / needs_review=13 / status missing=59。"
+  - "mixed duplicate queue と stale triage queue を再生成: memory/shared_reads_mixed_duplicate_queue.jsonl rows=60、memory/shared_reads_stale_triage_queue.jsonl rows=50。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は 0 件。handled 更新対象なし。"
+  - "unindexed duplicate title audit は上位 20 件中、posted/failed/postponed など terminal/open 混在 group を複数検出。既存 mixed duplicate queue で handoff 可能なため、4b 起動は不要。"
+issues:
+  - id: ISS-4A-20260708-01
+    description: "shared_reads_candidates に lifecycle status missing が 59 件残っており、duplicate title audit でも status_counts に空文字を含む group が出ている。stale triage queue は postponed/needs_review を主対象にするため、status missing の candidate は stale 判定と再評価 queue から漏れやすい。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md status missing=59; duplicate audit examples: One Policy Infinite NPCs status_counts includes empty=1, MemOPilot empty=1, Cross-Device Motion Interaction empty=1, TCG Procedural Relatedness empty=1"
+    source_file_status: "candidate files are UTF-8 readable; frontmatter lifecycle status is absent or blank in 59 files"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "ゲーム制作に使える候補が posted/failed/postponed/needs_review の lifecycle に乗らず、Phase 2 が再評価すべき素材を見落とす。特に duplicate group では terminal sibling があっても open candidate の代表選定が曖昧になる。"
+  - id: ISS-4A-20260708-02
+    description: "canonical title index に未登録の mixed duplicate group が多く、posted/failed/postponed が混在する同一論文候補が再評価候補として繰り返し浮上している。既存 sidecar で処理できるが、Phase 2 が代表を処理しない限り backlog は残る。"
+    severity: low
+    evidence: "audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 returned groups such as Large Language Models in Game Development count=10 status_counts posted=3 failed=2 postponed=5, GUI Agents for Continual Game Generation count=7 posted=3 postponed=4, RuleSmith count=7 posted=3 failed=1 postponed=3"
+    source_file_status: "candidate files and memory/shared_reads_mixed_duplicate_queue.jsonl are UTF-8 readable; source corruption not observed"
+    display_or_tooling_status: "PowerShell output can mojibake Japanese in ad-hoc inline scripts, but UTF-8 explicit reads are valid"
+    why_blocks_game_memory: "同じゲームAI/評価論文の候補が複数残ると、次のゲーム制作で参照すべき最良の解釈か、古い薄い候補かを Phase 2 が毎回判別し直す必要がある。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  total_rows_in_queue: 50
+  handed_to_phase2: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=24; duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models; hidden role/deception game design value is high but terminal/open duplicate resolution is needed"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=23; duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics; procedural personas + MCTS playtesting is directly useful for headless evaluation variants"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=23; duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue; NPC prompt scaffolding is relevant but candidate lacks evaluation detail"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=22; duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games; benchmark details may help game-agent evaluation but current candidate is element-list heavy"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=22; duplicate_group_key=gdc 2026 riot games stone librande on game design; emotional north star/action verbs/paper prototype flow has transfer value, but source density needs Phase 2 judgment"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
