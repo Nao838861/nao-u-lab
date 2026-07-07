@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T01:44:51+09:00",
+  "updated_at": "2026-07-08T04:08:30+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -285,7 +285,8 @@
     "1782587228.354239",
     "1783287766.520669",
     "1783322184.028869",
-    "1783417724.862039"
+    "1783417724.862039",
+    "1783331249.464489"
   ],
   "reviews": [
     {
@@ -7061,6 +7062,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T04:08:30+09:00",
+      "id": "sr-1783331249-dc103d6a36",
+      "source_ts": "1783331249.464489",
+      "title": "AI Observability for LLM Systems: 5-layer taxonomy and unified evaluation benchmark gap",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because the Codex cycle already has many local probes and thresholds, but lacks a lightweight habit of naming which observation layer a new metric or probe actually improves. The source itself warns against full adoption from one survey and positions the 5-layer taxonomy as theory plus future kaizen candidates only. Keep the action reversible: before the next observability, kaizen, memory-routing, or phase-quality metric change, classify the observed layer and state whether it is local thresholding or cross-layer evidence, without changing AGENTS or adopting the taxonomy as a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next observability, kaizen, memory-routing, phase-quality, Slack-response-latency, or multi-instance handoff metric change, did I name which observation layer is being improved: behavioral trace, operational metric, cross-layer correlation, infrastructure unavailable, model-internal unavailable, calibration unavailable, or not-an-observability-change?",
+        "Did I state whether the evidence is only a local threshold or a cross-layer signal pair, such as behavior log plus response delay, candidate quality plus posting outcome, or game trace plus headless metric, instead of calling it a unified benchmark by implication?",
+        "If the change is based on one paper or one incident, did I keep it as a reversible probe or issue candidate and record the adoption boundary, rather than promoting the taxonomy, threshold, or benchmark frame to a durable rule?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two observability, kaizen, memory-routing, phase-quality, Slack-latency, or handoff metric notes already name the observation layer, distinguish local threshold from cross-layer signal, and keep N=1 taxonomy or incident lessons as reversible candidates unless independently confirmed.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible observability-layer probe: classify the observation layer for the next metric/probe change, distinguish local thresholds from cross-layer evidence, and avoid promoting a single survey taxonomy into a durable rule.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10220,6 +10257,18 @@
         "If I rely on a provider secure default or expected behavior claim, did I record one local mitigation, refusal/deferral condition, or label responsibility_boundary_unverified before installing, running, posting, or pushing?"
       ],
       "expires_after": "Review after the next two MCP/plugin/connector/browser-automation/external-tool/config changes that mention provider defaults, protocol design, registry metadata, mcp.json, generated commands, Slack-ingested directives, fetched URLs, or tool output trust."
+    },
+    {
+      "id": "probe-20260708-observability-layer-cross-signal-check",
+      "created_at": "2026-07-08T04:08:30+09:00",
+      "source_ts": "1783331249.464489",
+      "scope": "next observability, kaizen, memory-routing, phase-quality, Slack-response-latency, or multi-instance handoff metric change where Codex may add another local threshold without naming the observed layer or cross-layer evidence boundary",
+      "questions": [
+        "Before the next observability, kaizen, memory-routing, phase-quality, Slack-response-latency, or multi-instance handoff metric change, did I name which observation layer is being improved: behavioral trace, operational metric, cross-layer correlation, infrastructure unavailable, model-internal unavailable, calibration unavailable, or not-an-observability-change?",
+        "Did I state whether the evidence is only a local threshold or a cross-layer signal pair, such as behavior log plus response delay, candidate quality plus posting outcome, or game trace plus headless metric, instead of calling it a unified benchmark by implication?",
+        "If the change is based on one paper or one incident, did I keep it as a reversible probe or issue candidate and record the adoption boundary, rather than promoting the taxonomy, threshold, or benchmark frame to a durable rule?"
+      ],
+      "expires_after": "Review after the next two observability/kaizen/memory-routing/phase-quality/Slack-latency/handoff notes that mention observation layers, behavioral traces, operational metrics, cross-layer signals, local thresholds, unified benchmark, or taxonomy adoption."
     }
   ]
 }

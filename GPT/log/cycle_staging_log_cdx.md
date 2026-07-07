@@ -49,7 +49,40 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-08T04:08:30+09:00 log_cdx Phase 3b 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783331249-dc103d6a36
+    source_ts: "1783331249.464489"
+    title: "AI Observability for LLM Systems: 5-layer taxonomy and unified evaluation benchmark gap"
+    reason: "score 18 で memory / harness / operation / evaluation / game-design を横断し、Codex 定時サイクルの個別 probe 増加と共通評価軸不足に直結する。原文自体も N=1 論文由来の正式採用を避け、位置取りと次サイクル候補に留めているため、小さい probe 化に向く。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の observability / kaizen / memory-routing / phase-quality metric 変更時に、観測層を名指しし、local threshold と cross-layer signal を区別し、単一 survey taxonomy を恒久ルール化しないための reversible probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260708-observability-layer-cross-signal-check
+    questions:
+      - "次の observability / kaizen / memory-routing / phase-quality / Slack-response-latency / multi-instance handoff metric 変更前に、改善対象の観測層を behavioral trace / operational metric / cross-layer correlation / unavailable layer / not-observability-change のどれかとして名指ししたか。"
+      - "証拠が local threshold だけなのか、behavior log + response delay などの cross-layer signal pair なのかを分け、暗黙に unified benchmark 扱いしていないか。"
+      - "1 論文または 1 incident 由来の変更は reversible probe / issue candidate に留め、taxonomy / threshold / benchmark frame を恒久ルールへ昇格していないか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
