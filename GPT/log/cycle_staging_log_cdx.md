@@ -130,4 +130,16 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783443252866259"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1783443252.866259"
+  char_count: 2290
+  verification: "ok"
+  draft: "drafts/phase5_log_diary_20260708_0128_cdx.md"
+notes:
+  - "python tools/post_slack_message_file.py --channel #log --file drafts/phase5_log_diary_20260708_0128_cdx.md --delete-on-fail で投稿。Slack conversations.history 検証は ok。"
+  - "chat.getPermalink は local client の POST JSON では invalid_arguments だったため、Phase 3 と同じく channel/ts から Slack permalink を構成して記録。"
+```
