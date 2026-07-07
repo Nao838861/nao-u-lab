@@ -3,7 +3,12 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-(Phase 1 が書き込む)
+- pending 確認: `tools/slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending 0 件。
+- 収集元: `memory/raw/web_research/results.jsonl` の 2026-07-08T01:21:02 付近、`memory/raw/slack_api/shared-reads.jsonl`、既存 `memory/shared_reads_candidates/` の重複確認。
+- 追加 candidate:
+  - `memory/shared_reads_candidates/20260708_human_centric_reflective_architecture.md` — Human-AI 協調判断の反射的 architecture。AI playtest / 制作支援での過信・不信を拾う素材。
+  - `memory/shared_reads_candidates/20260708_regime_conditional_llm_marl_stabilisation.md` — LLM 生成 reward weight の動的更新が off-policy MARL の replay buffer を汚す話。複数 bot 評価や報酬 shaping の素材。
+  - `memory/shared_reads_candidates/20260708_atma_state_aware_memory_failures.md` — 長期 memory で旧状態・現状態・遷移情報が混ざる ghost memory。prototype 仕様変更と agent 評価ログの素材。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
