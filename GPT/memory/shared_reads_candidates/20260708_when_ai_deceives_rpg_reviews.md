@@ -7,12 +7,17 @@ genre_tags: [game-design, player-experience, rpg, deception, steam-reviews, eval
 evaluated_at: "2026-07-08T05:48:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T05:48:16+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T05:48:16+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783457597.332759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783457597332759"
+  char_count: 4115
+  posted_at: "2026-07-08T05:53:23+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-08T05:53:23+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783457597332759"
+next_action: none
 stale_after: "2026-08-07"
 supersedes: []
 gate_reason: |-

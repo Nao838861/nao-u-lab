@@ -29,6 +29,17 @@ notes:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-07-08T05:53:23+09:00 投稿結果:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_when_ai_deceives_rpg_reviews.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783457597332759
+    char_count: 4115
+skipped: []
+notes:
+  - "投稿前レビュー: 必須見出し順、URL末尾、禁止表現なし、4115字。arXiv本文と抽出テキストで DDI/PDA、BERT classifier、fixed effects、robustness、limitations を確認済み。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
