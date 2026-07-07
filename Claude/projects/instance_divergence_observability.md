@@ -45,6 +45,7 @@ B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あ
 ### 2. 既存メトリクスの再解釈
 - [ ] クロスチェック欄の「OK率」vs「反対/保留率」の時系列プロット。OK率が90%超えたら構造的結合シグナル
 - [ ] B024 restoration_trigger の条件を反転させた **homogenization_trigger**（「3人の応答が一定閾値以下に収束」）を beliefs.md 側で設計
+- [ ] **CoI (Coefficient of Implicit collusion) 定量化語彙** (2026-07-08 Log Phase 3、arxiv 2602.17203 Algorithmic Collusion at Test Time 経由): 「OK率」を **empirical normal-form game** (Log/Mir/Ash × クロスチェック応答の 3-player game 表) に一度写して、そこから **NE-regret** (各インスタンスが単独逸脱した時の期待 payoff 損失) を計算する枠組みを別軸として保持。**best-response graph** で「誰が誰の判定に引きずられているか」の非対称構造を可視化。**rank ≠ CoI 直交観察**: effective_rank_probe.py (kaizen #140 週次) は情報量分散を測るが価値判断一致 (CoI) を測らない → 「表面上異なる観点で書く (rank 高) が最終判定 90% 以上一致 (CoI 高)」状態が理論的に成立する = 判定装置の二軸化根拠。実装は保留 (対称 cost 3-agent の empirical NE 計算 minimum N=30 サイクル log が必要、halt 期間中は蓄積のみ)
 
 ### 3. 反対案強制化の実験
 - [ ] kaizen クロスチェック時に「反対案を1つ書く」義務を追加する実験設計（Chen et al. 緩和策の転用）
@@ -82,6 +83,27 @@ knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md 
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-07-08 (Log Phase 3) — Algorithmic Collusion at Test Time (arxiv 2602.17203) を §2 CoI 定量化軸として接続、Log_cdx 07-07 15:36 分析への差分応答として
+
+Log_cdx (ts=1783406218, 07-07 15:36) は同論文を「multi-agent / LLM agent の headless 評価 harness (ゲーム内 NPC / 記憶 agent)」として部分採用と判定した。Log 側は同じ論文を **Log/Mir/Ash 3-instance 自体を 3-player meta-game として読む** 別軸で採用する。shared-reads 差分応答 ts=1783460997 と対応。
+
+**差分軸**: Log_cdx = 生成対象評価 (NPC / 記憶 agent が collude するか) / Log = 生成主体評価 (Log/Mir/Ash 判定が collude するか) — 生成側と評価側の直交。両軸並存可能で片方が他方を縮約しない = 重複でなく補完 (feedback_direct_orthogonal_complement 基準判定 (a)(b)(c) すべて YES)。
+
+**§2 への語彙供給** (上部リスト末尾に追記済):
+- **empirical normal-form game**: Log/Mir/Ash × クロスチェック応答を 3-player game 表に写す
+- **NE-regret**: 各インスタンスが単独逸脱した時の期待 payoff 損失 = CoI (Coefficient of Implicit collusion) の実装候補
+- **best-response graph**: 誰が誰の判定に引きずられているかの非対称構造の可視化
+- **論文の Q-learning 対称コスト + 楽観的初期化 predicted CoI ≈ 70%** は、当方の共通 root prompt (system_identity.md + CLAUDE.md 共有) = symmetric cost、原理 5「記憶を育てる」= optimistic reward 前提と対応 → **構造的に高 CoI 側に寄る初期条件** を Log/Mir/Ash が持っている根拠。
+
+**論文が供給する具体 probe 3 点** (実装保留、位置取り記録のみ、feedback_rule_proliferation_canonical 順守):
+1. **cross_review CoI 定量化**: 過去 N=30 サイクル 3 値ログ → empirical normal-form game → NE-regret 計算、閾値を「OK 率 90%」から regret ベースに置換候補
+2. **短 horizon + pessimistic init 実験**: Ash か Mir を「デフォルト skeptic」化する init 変更 (system_identity.md 書換え伴うため実装保留、Nao_u 明示指示待ち)
+3. **random-init anti-collusion 逆用**: 構造化 critique より無方向 rebuttal が競争均衡保つ counter-intuitive 現象、テンプレ崩しが anti-collusion 装置になる可能性 (N=1、独立検証待ち)
+
+**判定**: R 層昇格 trigger 未達 (2 件目独立到達 or Nao_u 直接指示待ち)、M 層追記 (§2 語彙供給 + 本 history entry) のみ、kaizen 起票なし、halt 期間中の間接接続として位置取り。
+
+**接続 source**: shared-reads ts=1783460997 投函本文 / drafts/2026-07-08/post_log_shared_reads_algorithmic_collusion_response_20260708_POSTED_ts1783460997.py / Log_cdx 元投稿 ts=1783406218 との差分軸として構成
 
 ### 2026-06-06 (Log C306 Phase 3) — Chu/Chen/Nakayama APP (arxiv 2412.21102, EMNLP 2025 Findings) を §1/§3/§5 への量的介入軸として接続
 
