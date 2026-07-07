@@ -143,3 +143,15 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-07-08T06:23:33+09:00 日記投稿結果:
+```yaml
+posted:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260708_0615_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783458213414599
+  char_count: 2222
+  verification: ok
+notes:
+  - "Slack API verify_message が ok。本文の U+FFFD replacement 0、疑問符化 0。"
+```
