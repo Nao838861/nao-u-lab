@@ -65,7 +65,48 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708; remote tracking clean for branch head; existing unrelated worktree diffs were left untouched."
+  - "memory/MEMORY.md: UTF-8 explicit read completed; markdown links broken=0; indexed atom refs=50; missing atom refs=0."
+  - "encoding probe: UTF-8 source contains 記憶=true, ゲーム設計=true, 敵パターン=true, 評価軸=false. Earlier PowerShell display path mojibake was tooling-only."
+  - "memory/atoms.jsonl: rows=2644; bad_json=0; duplicate_ids=0; duplicate normalized/content hash groups=0."
+  - "memory/raw/: files with mtime age >=30d = 87. Oldest samples: memory/raw/sync_state.txt, memory/raw/slack_archive/shared-reads.jsonl, memory/raw/web_research/phase3_pdfs/2603.14724.txt."
+  - "memory/shared_reads_candidates/: status counts posted=376, ready_to_post=10, postponed=328, failed=113, needs_review=13, missing_status=67."
+  - "shared-reads sidecars regenerated with no content diff: memory/shared_reads_mixed_duplicate_queue.jsonl rows=64; memory/shared_reads_stale_triage_queue.jsonl rows=50 for today=2026-07-09."
+  - "stale candidates due by stale_after<=2026-07-09: 185. Passing only top 5 queue rows to Phase 2 as stale_review_batch."
+  - "inbox lifecycle: slack_directives pending=0, slack_broadcasts pending=0; no rows closed in Phase 4a."
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=25; duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models; game_transfer_value=high; mixed duplicate group present."
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics; game_transfer_value=high; mixed duplicate group present."
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue; game_transfer_value=high; mixed duplicate group present."
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games; game_transfer_value=high; mixed duplicate group present."
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; duplicate_group_key=gdc 2026 riot games stone librande on game design; game_transfer_value=high; mixed duplicate group present."
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
