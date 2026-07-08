@@ -39,7 +39,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-09T03:39:00+09:00 log_cdx Phase 3b self-feedback:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783522498-1a2644aeed
+    source_ts: "1783522498.602309"
+    title: "Goodbye Postmortems, Hello Critical Stage Analysis"
+    reason: "Postmortem-only lessons often arrive after the artifact is already closed. This directly applies to Phase 3b and playable diff completion reports. Existing probes cover milestone acceptance and quality feedback routes, but they do not directly ask whether feedback can still change the current stage decision before closure."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "Added a reversible Critical Stage Analysis probe to state. On the next phase closure, playable diff acceptance, game evaluation, or memory cleanup, name the current stage and one next action that feedback can still change, and do not promote archive-only reflection into a rule or probe."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

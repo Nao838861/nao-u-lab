@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T00:08:00+09:00",
+  "updated_at": "2026-07-09T03:39:00+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -296,7 +296,8 @@
     "1783399097.181689",
     "1783500835.880999",
     "1783373153.626039",
-    "1783442503.167869"
+    "1783442503.167869",
+    "1783522498.602309"
   ],
   "reviews": [
     {
@@ -7468,6 +7469,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-09T03:39:00+09:00",
+      "id": "sr-1783522498-1a2644aeed",
+      "source_ts": "1783522498.602309",
+      "title": "Goodbye Postmortems, Hello Critical Stage Analysis",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Codex phase and game work can still put lessons into final summaries, diaries, or archives after the artifact is effectively closed. Critical Stage Analysis transfers as a narrower reversible check: name the current stage, capture one written feedback item that can still change the next action, and label archive-only feedback instead of turning it into another durable rule. Existing probes cover milestone acceptance and quality feedback routes, but not the stage-timed question of whether feedback is still actionable before closure.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next cycle phase closure, playable diff acceptance, game evaluation, or memory cleanup where lessons may be left as a final summary, did I name the current stage and one decision the feedback can still change?",
+        "Did I capture one written feedback item as keep, change, or question with evidence and a target next action, instead of only archiving it as diary, postmortem, or retrospective prose?",
+        "If the feedback cannot affect the current artifact or next stage, did I label it archive_only, next_stage_input, no_actionable_stage, or stage_unknown before adding rules, probes, or broad process changes?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two cycle phase closures, playable-diff acceptances, game evaluations, or memory cleanup notes already name the active stage, route at least one written feedback item to a next action, and label archive-only feedback before adding durable rules or probes.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Critical Stage Analysis-inspired feedback-routing probe: before closing a phase or playable milestone, name the current stage, route one written feedback item to a decision it can still change, and label archive-only feedback instead of promoting it to rules.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10759,6 +10796,18 @@
         "If the role is ambiguous, did I avoid using the record as current policy or design evidence and mark state_role_unverified, ghost_memory_risk, or transition_link_missing?"
       ],
       "expires_after": "Review after the next two memory-cleanup, recall, candidate-lifecycle, directive-lookup, or game-spec feedback notes that mention current policy, old directives, superseded candidates, draft-only notes, historical evidence, transition records, rulesets, or ghost memory."
+    },
+    {
+      "id": "probe-20260709-critical-stage-feedback-routing",
+      "created_at": "2026-07-09T03:39:00+09:00",
+      "source_ts": "1783522498.602309",
+      "scope": "next cycle phase closure, playable diff acceptance, game evaluation, or memory cleanup where Codex may leave lessons as a final summary instead of routing feedback to a still-actionable stage decision",
+      "questions": [
+        "Before the next cycle phase closure, playable diff acceptance, game evaluation, or memory cleanup where lessons may be left as a final summary, did I name the current stage and one decision the feedback can still change?",
+        "Did I capture one written feedback item as keep, change, or question with evidence and a target next action, instead of only archiving it as diary, postmortem, or retrospective prose?",
+        "If the feedback cannot affect the current artifact or next stage, did I label it archive_only, next_stage_input, no_actionable_stage, or stage_unknown before adding rules, probes, or broad process changes?"
+      ],
+      "expires_after": "Review after the next two phase closures, playable-diff acceptances, game evaluations, or memory cleanup notes that mention stage, milestone, written feedback, keep/change/question, postmortem, retrospective, archive-only, or next-stage action."
     }
   ]
 }
