@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/1802.06881
 collected_at: 2026-07-09T03:44:18+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automated-playtesting, player-modeling, procedural-content-generation, ai-agent]
+evaluated_at: 2026-07-09T03:47:41+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-09T03:47:41+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  同一 title group に posted sibling があり、Phase 3 の新規投稿対象にはしない。
+  本文自体は自動 playtesting の player-modeling 軸として有用だが、現行 preflight 契約では duplicate close を優先する。
 ---
 
 ## raw_excerpt

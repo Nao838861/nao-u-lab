@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2108.00056
 collected_at: 2026-07-09T03:44:18+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [level-design, procedural-generation, 3d, prototyping, designer-tool]
+evaluated_at: 2026-07-09T03:47:41+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-09T03:47:41+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md; memory/shared_reads_candidates/20260618_snappable_meshes_3d_map_pcg.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  同一 title group に posted sibling があり、Phase 3 の新規投稿対象にはしない。
+  designer constraint と navigability feedback の軸は有用だが、既投稿内容の duplicate として扱う。
 ---
 
 ## raw_excerpt

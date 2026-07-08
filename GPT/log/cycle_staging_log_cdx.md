@@ -11,7 +11,21 @@
 - pending 確認: `slack_directives.jsonl` と `slack_broadcasts.jsonl` は pending 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-07-09T03:47:41+09:00 log_cdx Phase 2:
+
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    reason: posted duplicate title sibling; terminal paths memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md and memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+  - path: memory/shared_reads_candidates/20260709_snappable_meshes_3d_map_generation.md
+    reason: posted duplicate title sibling; terminal paths memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md and memory/shared_reads_candidates/20260618_snappable_meshes_3d_map_pcg.md
+  - path: memory/shared_reads_candidates/20260709_ink_splotch_llm_cocreative_game_design.md
+    reason: abstract-level candidate; method and user-study results are not yet dense enough for CoopEval-level overview
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
