@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.27845"
 collected_at: "2026-07-09T07:44:17.1550622+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-theory, llm-agents, behavioural-games, strategy, evaluation]
+evaluated_at: "2026-07-09T08:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T08:08:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T08:08:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  LLM を人間プレイヤー stand-in として扱う際の static level-k / belief updating 欠落という論点は有用だが、現候補の情報だけでは実験設定と結果の粒度が投稿水準に少し足りない。
+  Log_cdx のゲーム制作への適用は、AI playtester やNPC評価で「分布が似る」と「戦略更新ができる」を分ける注意点として明確。
+  Phase 3 投稿に回すには、P-beauty contest / public goods game の具体結果と、どの設計判断を変えるかをもう一段補足したい。
 ---
 
 ## raw_excerpt
