@@ -22,7 +22,13 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260708_revengebench_behavioral_policy_recovery.md
+    reason: "same arXiv URL and same RevengeBench topic were already posted to #shared-reads on 2026-06-26; canonical=memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

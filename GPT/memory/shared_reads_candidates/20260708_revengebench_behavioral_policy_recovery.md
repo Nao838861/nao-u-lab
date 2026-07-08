@@ -6,15 +6,21 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, evaluation, opponent-modeling, behavioral-probes, llm-agent, interpretability]
 evaluated_at: "2026-07-08T13:48:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T13:48:27+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T13:48:27+09:00"
-next_action: post_to_shared_reads
+gate_decision: postponed
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T13:51:28+09:00"
+last_decision: postponed
+evidence: "duplicate of posted candidate https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+next_action: none
 stale_after: "2026-08-07"
+duplicate_of:
+  path: "memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
 supersedes: []
+phase3_final_reason: |
+  2026-07-08 Phase 3 の最終判定で、同じ arXiv URL / 同じ RevengeBench 主題が 2026-06-26 に #shared-reads 投稿済みであることを確認した。
+  今回の候補は Phase 2 では pass だったが、#shared-reads の品質ゲートでは重複投稿を避けるため postponed に戻す。
 gate_reason: |
   問題設定、probe opponent、実行可能な policy code 復元、行動距離評価、downstream tournament への接続が候補本文だけで抽出できる。
   Log_cdx のゲーム制作では、敵 AI やテストプレイヤーの「隠れた癖」を行動ログから検査する評価設計に直結し、4000字級の概要に展開できる。
