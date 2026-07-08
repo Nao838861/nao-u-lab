@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T15:53:40+09:00",
+  "updated_at": "2026-07-08T17:57:10+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -292,7 +292,8 @@
     "1783460997.942239",
     "1783472249.093829",
     "1783472248.439359",
-    "1783309730.622339"
+    "1783309730.622339",
+    "1783399097.181689"
   ],
   "reviews": [
     {
@@ -7320,6 +7321,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T17:57:10+09:00",
+      "id": "sr-1783399097-b6ff284a06",
+      "source_ts": "1783399097.181689",
+      "title": "Coachable agents for interactive gameplay",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work can still judge bot, enemy, NPC, or headless agent behavior by task success, clear rate, or crash-free execution while missing whether the run followed the intended play style. Existing probes cover failure type, scenario replay, causal explanations, and harness repair, but not the narrower split between task_success and style_adherence or the paired-run check where only the style flag changes. Keep this as a reversible game-agent evaluation probe, not a mandate to add RL, UVFA, or a durable style taxonomy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next bot, enemy, NPC, companion, racing, combat, or headless game-agent evaluation, did I name one runtime style flag or behavior mode being tested, such as aggressive, defensive, safe, fast, readable, supportive, cinematic, pressure, or restraint, instead of judging only task success?",
+        "Did I record task_success and style_adherence as separate evidence fields, such as clear rate, time, damage, survival, or objective completion versus distance kept, retreat timing, repetition rate, screen obstruction, pressure window, support interference, or readability cue?",
+        "If the style claim changes design, acceptance criteria, or memory, did I preserve a paired run, same seed, same route, same scenario, or mark style_tradeoff_unverified when only prose impression or one aggregate score exists?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two bot/enemy/NPC/headless-agent evaluation notes already name a style flag, separate task_success from style_adherence, and preserve a paired run or explicitly label style trade-off gaps before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Coachable Agents-inspired game-agent style probe: name the intended behavior mode, separate task success from style adherence, and keep a paired-run or same-scenario comparison before treating bot/NPC behavior as design evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10563,6 +10600,18 @@
         "Before implementation or recommendation, did I name the cost/write/auth/security boundary and one fallback, rollback, or approval gate, or label the proposal channel_migration_unverified before using it to change scripts, memory routing, Slack posting, or phase expectations?"
       ],
       "expires_after": "Review after the next two external-input-channel migration notes that mention X/Twitter, MCP, API replacement, browser scraping, jina/WebFetch/nitter, Slack ingestion, RSS/search connector, read/write operations, cost tier, auth boundary, fallback, rollback, or approval gate."
+    },
+    {
+      "id": "probe-20260708-coachable-agent-style-task-split",
+      "created_at": "2026-07-08T17:57:10+09:00",
+      "source_ts": "1783399097.181689",
+      "scope": "next bot, enemy, NPC, companion, racing, combat, or headless game-agent evaluation where Codex may treat task success, clear rate, or crash-free execution as enough evidence without checking the intended behavior style",
+      "questions": [
+        "Before the next bot, enemy, NPC, companion, racing, combat, or headless game-agent evaluation, did I name one runtime style flag or behavior mode being tested, such as aggressive, defensive, safe, fast, readable, supportive, cinematic, pressure, or restraint, instead of judging only task success?",
+        "Did I record task_success and style_adherence as separate evidence fields, such as clear rate, time, damage, survival, or objective completion versus distance kept, retreat timing, repetition rate, screen obstruction, pressure window, support interference, or readability cue?",
+        "If the style claim changes design, acceptance criteria, or memory, did I preserve a paired run, same seed, same route, same scenario, or mark style_tradeoff_unverified when only prose impression or one aggregate score exists?"
+      ],
+      "expires_after": "Review after the next two bot/enemy/NPC/headless-agent evaluation notes that mention runtime style, behavior mode, aggressive, defensive, safe, fast, readable, supportive, cinematic, task success, style adherence, paired run, same seed, same route, or style trade-off."
     }
   ]
 }
