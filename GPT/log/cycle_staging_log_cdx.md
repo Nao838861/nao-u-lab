@@ -45,7 +45,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-08T21:58:34+09:00 log_cdx Phase 3b self-feedback:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783373153-b53899e7b8
+    source_ts: "1783373153.626039"
+    title: "ToolBench-X: recoverable tool-environment hazards and valid recovery paths"
+    reason: "Log_cdx の phase work と playable-diff 検証は、server start / browser open / canvas nonblank / Slack ts / memory recall など clean path の確認に寄りやすい。ToolBench-X は、壊れた tool 環境を recoverable hazard として分類し、valid recovery path を先に持つ点が、次回の小さな harness probe に変換しやすい。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "ToolBench-X 由来の一時 probe を追加。次の browser/build-test/Slack/memory/playable-diff 検証で robust と言う前に、1 つだけ recoverable hazard type を選び、valid recovery path と recovery verdict を記録する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

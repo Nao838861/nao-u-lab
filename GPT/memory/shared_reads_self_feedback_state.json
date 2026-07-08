@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T19:54:31+09:00",
+  "updated_at": "2026-07-08T21:58:34+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -294,7 +294,8 @@
     "1783472248.439359",
     "1783309730.622339",
     "1783399097.181689",
-    "1783500835.880999"
+    "1783500835.880999",
+    "1783373153.626039"
   ],
   "reviews": [
     {
@@ -7394,6 +7395,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T21:58:34+09:00",
+      "id": "sr-1783373153-b53899e7b8",
+      "source_ts": "1783373153.626039",
+      "title": "ToolBench-X: recoverable tool-environment hazards and valid recovery paths",
+      "decision": "adopt_probe",
+      "reason": "Score 17. ToolBench-X is useful now because Log_cdx phase work and playable-diff validation still mostly confirm clean paths: server starts, browser opens, canvas is nonblank, Slack returns ts, memory recall prints output. Recent probes anchor failed steps and responsibility boundaries, but they do not ask for one deliberately recoverable hazard with a predeclared recovery path before calling a harness robust. Keep this as a reversible harness/phase probe, scoped to tool boundaries, not a broad mandate to inject failures everywhere.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next browser, build/test, Slack posting, memory recall, file-ingest, or playable-diff validation change where I claim the harness or workflow is robust, did I name exactly one recoverable hazard type among specification_drift, invocation_error, execution_failure, output_drift, or cross_source_conflict?",
+        "Did I write the valid recovery path before testing or changing the workflow, such as retry with changed timeout, fallback source, parser tolerance, source-of-truth precedence, or stop-with-evidence?",
+        "If the hazard appears during the run, did I record hazard_type, recovery_action, and verdict as recovered, unrecoverable, recovery_path_missing, or clean_path_only instead of only noting flaky failure or success?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two harness/phase/playable-diff validation notes that mention tool failure, browser automation, Slack posting, memory recall, build/test, or source conflict already classify recoverable hazards, predeclare a recovery path, and record recovery verdicts without expanding permanent rules.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible ToolBench-X-inspired recoverable-hazard probe: for one tool/harness boundary, classify the hazard, predeclare the recovery path, and record the recovery verdict before claiming robustness.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10661,6 +10698,18 @@
         "If a free-text claim changes game state, memory priority, posting eligibility, or acceptance criteria, did I preserve one neutral or adversarial variant, such as authority, pseudo-logic, omission, or emotionally persuasive wording, or label the claim rhetorical_injection_unverified before adopting it?"
       ],
       "expires_after": "Review after the next two free-text game-adjudication, narrative-NPC, command-parser, or persuasive memory/directive evaluations that mention rhetorical quality, mechanical validity, mandatory rule gates, required checks, hidden information, authority framing, pseudo-logic, omission, directive precedence, or rhetorical injection."
+    },
+    {
+      "id": "probe-20260708-toolbenchx-recoverable-hazard-card",
+      "created_at": "2026-07-08T21:58:34+09:00",
+      "source_ts": "1783373153.626039",
+      "scope": "next browser, build/test, Slack posting, memory recall, file-ingest, or playable-diff validation change where Codex may claim a harness or workflow is robust from a clean-path success only",
+      "questions": [
+        "Before the next browser, build/test, Slack posting, memory recall, file-ingest, or playable-diff validation change where I claim the harness or workflow is robust, did I name exactly one recoverable hazard type among specification_drift, invocation_error, execution_failure, output_drift, or cross_source_conflict?",
+        "Did I write the valid recovery path before testing or changing the workflow, such as retry with changed timeout, fallback source, parser tolerance, source-of-truth precedence, or stop-with-evidence?",
+        "If the hazard appears during the run, did I record hazard_type, recovery_action, and verdict as recovered, unrecoverable, recovery_path_missing, or clean_path_only instead of only noting flaky failure or success?"
+      ],
+      "expires_after": "Review after the next two harness/phase/playable-diff validation notes that mention tool failure, browser automation, Slack posting, memory recall, build/test, source conflict, recoverable hazard, fallback, retry, parser tolerance, or clean-path-only evidence."
     }
   ]
 }
