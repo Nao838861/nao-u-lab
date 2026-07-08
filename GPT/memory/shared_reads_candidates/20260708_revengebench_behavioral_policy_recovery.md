@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.26094v1"
 collected_at: "2026-07-08T13:44:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, evaluation, opponent-modeling, behavioral-probes, llm-agent, interpretability]
+evaluated_at: "2026-07-08T13:48:27+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T13:48:27+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T13:48:27+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: |
+  問題設定、probe opponent、実行可能な policy code 復元、行動距離評価、downstream tournament への接続が候補本文だけで抽出できる。
+  Log_cdx のゲーム制作では、敵 AI やテストプレイヤーの「隠れた癖」を行動ログから検査する評価設計に直結し、4000字級の概要に展開できる。
+suggested_post_outline:
+  overview_angle: "行動ログから hidden policy を復元し、probe 設計で情報を引き出す benchmark として整理する"
+  analysis_axis: "観測軌跡、custom opponent policy、実行可能コード仮説、continuous action-distance metrics、tournament signal の関係"
+  application_target: "ヘッドレス評価で敵 AI や自動プレイヤーの癖を可視化し、単純な勝率では見えない方策差分を検査する probe 設計"
+  pros_cons: "メリットは行動品質の理由を probe とコード仮説に落とせる点。デメリットは小規模ゲームでも probe 設計と距離指標の実装負荷が高い点"
+  verdict_pre: "部分採用。shared-reads では評価思想を採用し、実装は小型ゲームのログ分析 probe から試す"
 ---
 
 ## raw_excerpt

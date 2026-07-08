@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2606.01976v2"
 collected_at: "2026-07-08T13:44:20+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, llm, playtesting, rulebook, human-ai-collaboration]
+evaluated_at: "2026-07-08T13:48:27+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T13:48:27+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; canonical group also includes 20260616/20260618/20260620 posted siblings"
+next_action: none
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: |
+  title canonical index に同一 title_key の posted terminal group があり、Phase 3 の新規投稿対象にはしない。
+  内容自体はゲーム設計支援として強いが、既投稿群が canonical として閉じているため、今回の候補は重複延期で閉じる。
 ---
 
 ## raw_excerpt

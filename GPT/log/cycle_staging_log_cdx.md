@@ -8,7 +8,18 @@
 - 収集: `memory/shared_reads_candidates/20260708_agi_maze_world_modeling_agents.md` - 部分観測 maze で LLM agent の世界モデル、記憶、隠れ状態仮説を測る AGI Maze 論文。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260708_revengebench_behavioral_policy_recovery.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260708_autobg_board_game_design_assistant.md
+    reason: "posted duplicate title sibling; canonical_path=memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md"
+  - path: memory/shared_reads_candidates/20260708_agi_maze_world_modeling_agents.md
+    reason: "candidate excerpt is relevant but too thin for CoopEval-level overview; needs benchmark specification and Log_cdx probe mapping"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
