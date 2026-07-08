@@ -47,7 +47,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1783460997-8ca95512d9"
+    source_ts: "1783460997.942239"
+    title: "Algorithmic collusion meta-game lens for Log/Mir/Ash instance divergence"
+    reason: "Log/Mir/Ash や multi-agent 出力の一致を、独立した根拠ではなく shared prior echo として誤読するリスクが Phase 3b/4a/交差レビューに直結するため。既存 coordination probe と重なるので、今回は shared priors と独立信号の確認だけに狭める。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "multi-instance agreement probe を追加。次の Log/Mir/Ash 比較や cross-review で、共通 prompt/memory/phase/staging を shared prior として明示し、独立信号または divergence 軸がなければ agreement_shared_prior と扱う。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
