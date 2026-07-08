@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T05:58:00+09:00",
+  "updated_at": "2026-07-09T07:56:43+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -299,7 +299,8 @@
     "1783442503.167869",
     "1783522498.602309",
     "1783500825.234119",
-    "1783515312.477149"
+    "1783515312.477149",
+    "1783465097.949229"
   ],
   "reviews": [
     {
@@ -7573,6 +7574,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-09T07:56:43+09:00",
+      "id": "sr-1783465097-0048e4bcc7",
+      "source_ts": "1783465097.949229",
+      "title": "GameEngineBench: runtime-integrated patch evaluation for UE5 game projects",
+      "decision": "adopt_probe",
+      "reason": "Score 17. GameEngineBench is useful now because Codex playable-diff work can still stop at build success, canvas nonblank, or the directly edited feature working, while missing runtime integration regressions in neighboring state, lifecycle, UI, restart, timer, score/resource, or scene transitions. Existing probes cover failed-step anchoring and harness repair scope, but not the narrower build-to-runtime integration gate after a local game-code edit. Keep this as a reversible playable-diff validation probe, not a durable UE-specific rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, browser/headless game validation, or game-code patch acceptance, did I separate build/launch evidence from runtime integration evidence instead of treating compile, server start, canvas nonblank, or no console error as enough?",
+        "Did I run or define one fixed input trace or scenario lasting roughly 30-90 seconds and record snapshots for the edited feature plus at least two neighboring systems such as player state, enemy lifecycle, UI/HUD, timer, score/resource, scene transition, restart, persistence, or input focus?",
+        "If only the directly edited behavior was checked, did I label the result integration_regression_unverified, trace_missing, neighbor_state_unchecked, or launch_only_evidence before changing acceptance criteria, memory, or Slack-facing claims?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-diff or browser/headless game-validation notes already separate launch/build evidence from runtime integration evidence, preserve a fixed input trace or scenario with neighboring-system snapshots, and label unverified integration gaps before accepting the change.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible GameEngineBench-inspired runtime-integration probe: after build/launch, validate a fixed trace against the edited feature plus neighboring game systems before treating a playable diff as accepted.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10888,6 +10925,18 @@
         "If the artifact fails or is postponed, did I record the first missing layer or label it strategy_layer_unverified, composition_depth_unclear, or pass_fail_only_evidence before changing design, acceptance criteria, posting priority, or memory structure?"
       ],
       "expires_after": "Review after the next two puzzle/tutorial/headless/candidate-evaluation notes that mention required strategies, composition depth, quality layers, pass/fail, postpone, first missing layer, or strategy hierarchy."
+    },
+    {
+      "id": "probe-20260709-gameenginebench-runtime-integration-gate",
+      "created_at": "2026-07-09T07:56:43+09:00",
+      "source_ts": "1783465097.949229",
+      "scope": "next playable diff, browser/headless game validation, or game-code patch acceptance where Codex may treat build success, canvas nonblank, or the directly edited feature working as enough evidence without checking neighboring runtime systems",
+      "questions": [
+        "Before the next playable diff, browser/headless game validation, or game-code patch acceptance, did I separate build/launch evidence from runtime integration evidence instead of treating compile, server start, canvas nonblank, or no console error as enough?",
+        "Did I run or define one fixed input trace or scenario lasting roughly 30-90 seconds and record snapshots for the edited feature plus at least two neighboring systems such as player state, enemy lifecycle, UI/HUD, timer, score/resource, scene transition, restart, persistence, or input focus?",
+        "If only the directly edited behavior was checked, did I label the result integration_regression_unverified, trace_missing, neighbor_state_unchecked, or launch_only_evidence before changing acceptance criteria, memory, or Slack-facing claims?"
+      ],
+      "expires_after": "Review after the next two playable-diff or browser/headless game-validation notes that mention build success, launch, canvas nonblank, fixed input trace, runtime integration, neighboring systems, UI/HUD, restart, timer, score/resource, scene transition, or launch-only evidence."
     }
   ]
 }

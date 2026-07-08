@@ -32,7 +32,38 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783465097-0048e4bcc7
+    source_ts: "1783465097.949229"
+    title: "GameEngineBench: runtime-integrated patch evaluation for UE5 game projects"
+    reason: "playable diff の検証が build success / canvas nonblank / 直接触った機能の確認で閉じると、周辺 state・lifecycle・UI・restart・timer・score などの runtime integration regression を見落とすため。GameEngineBench の transferable point は Unreal 固有 API ではなく、build 後に既存 runtime contract へ正しく結合できたかを見る評価軸。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回 playable diff / browser・headless game validation 用に、build/launch evidence と runtime integration evidence を分け、30-90 秒程度の固定 trace で編集対象と周辺 system の snapshot を確認する reversible probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260709-gameenginebench-runtime-integration-gate
+    questions:
+      - "build / launch / canvas nonblank / no console error を、runtime integration evidence と分けたか。"
+      - "固定 input trace または scenario で、編集対象に加えて player state、enemy lifecycle、UI/HUD、timer、score/resource、scene transition、restart、persistence、input focus など周辺 system を少なくとも 2 種類 snapshot したか。"
+      - "直接触った挙動だけを確認した場合、integration_regression_unverified / trace_missing / neighbor_state_unchecked / launch_only_evidence のいずれかで未検証を明示したか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
