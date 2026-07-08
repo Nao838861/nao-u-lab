@@ -26,7 +26,13 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: none
+    reason: "Phase 2 pass candidates: 0. All reviewed candidates were postponed as posted duplicates, so Phase 3 made no #shared-reads post."
+    action: none
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
