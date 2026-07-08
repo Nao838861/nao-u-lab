@@ -49,7 +49,33 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-09T00:08:00+09:00 log_cdx Phase 3b Shared-reads self-feedback
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783442503-39283e4cc6
+    source_ts: "1783442503.167869"
+    title: "A-TMA: state-aware memory roles for ghost-memory failures"
+    reason: "Phase 4a 以降の memory cleanup / recall / candidate lifecycle で、古いが履歴として有効な record を現在判断用の根拠として誤用するリスクがあるため。A-TMA の transferable point は、古い記憶を削除することではなく current / historical / transition / superseded / draft-only の state role を分けること。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory cleanup、recall、shared-reads candidate lifecycle、directive lookup、game-spec feedback reuse の前に、retrieved record の state role を current / historical / transition / superseded / draft_only / role_unknown として確認する reversible probe を state に追加した。恒久ルールや schema migration は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

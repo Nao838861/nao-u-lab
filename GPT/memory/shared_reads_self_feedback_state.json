@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T21:58:34+09:00",
+  "updated_at": "2026-07-09T00:08:00+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -295,7 +295,8 @@
     "1783309730.622339",
     "1783399097.181689",
     "1783500835.880999",
-    "1783373153.626039"
+    "1783373153.626039",
+    "1783442503.167869"
   ],
   "reviews": [
     {
@@ -7431,6 +7432,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-09T00:08:00+09:00",
+      "id": "sr-1783442503-39283e4cc6",
+      "source_ts": "1783442503.167869",
+      "title": "A-TMA: state-aware memory roles for ghost-memory failures",
+      "decision": "adopt_probe",
+      "reason": "Score 17. A-TMA is useful now because Codex phase work repeatedly uses old shared-reads, directives, candidates, staging notes, and prototype feedback where an old record may be historically valid but invalid for current judgment. Existing probes cover load strategy, recall utility, lifecycle triggers, and anti-bloat validation, but they do not directly ask whether the retrieved record is current, historical, transition, superseded, or draft-only before using it. Keep this as a reversible state-role probe for memory cleanup, recall, candidate lifecycle, and game-spec feedback, not a durable schema migration or full ATMA overlay.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next memory cleanup, recall summary, shared-reads candidate lifecycle decision, directive lookup, or game-spec feedback reuse, did I label the retrieved record role as current, historical, transition, superseded, draft_only, or role_unknown?",
+        "Did I keep current-judgment evidence separate from historical or transition evidence, and preserve at least one source_ts, ruleset_id, candidate status, supersedes link, or staging permalink that justifies the role?",
+        "If the role is ambiguous, did I avoid using the record as current policy or design evidence and mark state_role_unverified, ghost_memory_risk, or transition_link_missing?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory-cleanup, recall, candidate-lifecycle, directive-lookup, or game-spec feedback notes already separate current, historical, transition, superseded, and draft-only records before changing memory, posting priority, or prototype acceptance.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible A-TMA-inspired state-role probe: label recalled records as current, historical, transition, superseded, draft-only, or unknown before using them as policy, candidate, memory, or game-spec evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10710,6 +10747,18 @@
         "If the hazard appears during the run, did I record hazard_type, recovery_action, and verdict as recovered, unrecoverable, recovery_path_missing, or clean_path_only instead of only noting flaky failure or success?"
       ],
       "expires_after": "Review after the next two harness/phase/playable-diff validation notes that mention tool failure, browser automation, Slack posting, memory recall, build/test, source conflict, recoverable hazard, fallback, retry, parser tolerance, or clean-path-only evidence."
+    },
+    {
+      "id": "probe-20260709-atma-state-role-ghost-memory-check",
+      "created_at": "2026-07-09T00:08:00+09:00",
+      "source_ts": "1783442503.167869",
+      "scope": "next memory cleanup, recall summary, shared-reads candidate lifecycle decision, directive lookup, or game-spec feedback reuse where Codex may treat an old but historically valid record as current evidence",
+      "questions": [
+        "Before the next memory cleanup, recall summary, shared-reads candidate lifecycle decision, directive lookup, or game-spec feedback reuse, did I label the retrieved record role as current, historical, transition, superseded, draft_only, or role_unknown?",
+        "Did I keep current-judgment evidence separate from historical or transition evidence, and preserve at least one source_ts, ruleset_id, candidate status, supersedes link, or staging permalink that justifies the role?",
+        "If the role is ambiguous, did I avoid using the record as current policy or design evidence and mark state_role_unverified, ghost_memory_risk, or transition_link_missing?"
+      ],
+      "expires_after": "Review after the next two memory-cleanup, recall, candidate-lifecycle, directive-lookup, or game-spec feedback notes that mention current policy, old directives, superseded candidates, draft-only notes, historical evidence, transition records, rulesets, or ghost memory."
     }
   ]
 }
