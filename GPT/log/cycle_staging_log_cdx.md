@@ -75,7 +75,78 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-09T04:02:00+09:00 log_cdx Phase 4a:
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の index/link audit を実行: checked=3 broken=0
+  - memory/MEMORY.md の UTF-8 代表語 probe を実行: 記憶 / ゲーム設計 / 敵パターン / 評価軸 は取得可能
+  - memory/atoms.jsonl audit を実行: rows=2644 json_errors=0 duplicate_ids=0 duplicate_hash_groups=0
+  - memory/raw/ audit を実行: total_files=237 older_than_30d=87。今回は移動せず、archive 候補として記録のみ
+  - memory/shared_reads_candidates lifecycle audit を実行: posted=376 postponed=326 failed=113 ready_to_post=10 needs_review=13 missing=67
+  - stale sidecar を再生成: memory/shared_reads_mixed_duplicate_queue.jsonl rows=64
+  - stale sidecar を再生成: memory/shared_reads_stale_triage_queue.jsonl rows=50
+  - inbox pending 確認: slack_directives=0 slack_broadcasts=0。handled 更新対象なし
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  stale_due_total: 185
+  stale_due_counts:
+    postponed: 176
+    needs_review: 9
+  sidecar_rows: 50
+  handoff_count: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=25; mixed duplicate group present; game_transfer_value=high; hidden role / deception / long-horizon cooperation material"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "liecraft a multi agent framework for evaluating deceptive capabilities in language models"
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; mixed duplicate group present; game_transfer_value=high; procedural personas + MCTS playtesting is directly reusable for headless evaluation"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; mixed duplicate group present; game_transfer_value=high; NPC dialogue scaffold の具体構造確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "symbolically scaffolded play designing role sensitive prompts for generative npc dialogue"
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; mixed duplicate group present; game_transfer_value=high; benchmark 構成と失敗様式を本文から補う必要あり"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "orak a foundational benchmark for training and evaluating llm agents on diverse video games"
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; mixed duplicate group present; game_transfer_value=high; emotional north star / paper prototype の一次資料密度を再確認"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "gdc 2026 riot games stone librande on game design"
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 explicit read ok; representative probes found"
+    display_or_tooling_status: "none"
+duplicate_title_audit:
+  unindexed_duplicate_groups_sampled: 20
+  mixed_groups_in_sidecar: 64
+  note: "terminal group の自動 close は今回なし。mixed group は stale sidecar 経由で Phase 2 に渡す。"
+raw_archive_candidates:
+  older_than_30d: 87
+  oldest_examples:
+    - path: memory/raw/sync_state.txt
+      age_days: 59
+    - path: memory/raw/slack_archive/shared-reads.jsonl
+      age_days: 59
+    - path: memory/raw/web_research/phase3_pdfs/2603.14724.txt
+      age_days: 57
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
