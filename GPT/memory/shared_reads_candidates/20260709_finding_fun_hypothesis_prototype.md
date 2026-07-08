@@ -4,6 +4,18 @@ url: "https://www.gamedeveloper.com/design/finding-the-fun-in-game-design"
 collected_at: "2026-07-09T01:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, iteration, design-process]
+evaluated_at: "2026-07-09T01:48:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T01:48:19+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T01:48:19+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: "prototype を仮説として扱い、初期案を捨てながら spirit を残す観点はゲーム制作に有用。ただし現 candidate の材料は Subnautica / Natural Selection 2 の逸話と反復回数のメモが中心で、手法の中核や評価の中身を CoopEval 水準まで具体化するには原文の追加読解が必要。"
 ---
 
 ## raw_excerpt

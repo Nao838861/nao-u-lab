@@ -4,6 +4,18 @@ url: "https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-p
 collected_at: "2026-07-09T01:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, core-loop, prototyping, ux]
+evaluated_at: "2026-07-09T01:48:19+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T01:48:19+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T01:48:19+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: "core loop と early prototyping の接続は Nao_u_BOT の playable diff 評価に適用しやすいが、現 candidate は紹介記事の要約に留まり、独自の問題設定・評価結果・設計手順の厚みが不足している。Phase 3 投稿には、core loop 分解を実際の制作ログへどう落とすかの材料を追加してから再評価する。"
 ---
 
 ## raw_excerpt
