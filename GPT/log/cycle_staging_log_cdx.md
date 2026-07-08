@@ -68,7 +68,62 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-09T03:58:00+09:00 log_cdx Phase 4a audit:
+```yaml
+cleaned:
+  - "開始時 git gate: branch=codex/phase2-analysis-20260708。remote ahead/behind 表示なし。既存差分多数のため、この phase の staging/sidecar だけを対象に扱う。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、markdown link を確認。リンク総数 0、broken link 0。"
+  - "encoding probe: UTF-8 読みで `記憶` / `ゲーム設計` / `敵パターン` は取得可、`評価軸` は本文内に未出現。source file 破損ではない。PowerShell here-string の日本語リテラルは表示経路で mojibake したため、Unicode escape で再確認した。"
+  - "memory/atoms.jsonl を確認。rows=2643、invalid_json=0、duplicate_id=0、同一本文 hash の重複 group=0。"
+  - "memory/raw/ を確認。files=237、mtime 30日超の archive 候補=87。最古は memory/raw/sync_state.txt と memory/raw/slack_archive/shared-reads.jsonl の 2026-05-11。今回は Phase 4a 範囲のため移動なし。"
+  - "memory/shared_reads_candidates/ lifecycle 内訳: posted=376、postponed=323、failed=113、ready_to_post=10、needs_review=13、status 空=67。postponed/needs_review かつ stale_after <= 2026-07-09 は 185 件。"
+  - "python tools\\build_shared_reads_mixed_duplicate_queue.py を再生成。rows=64。"
+  - "python tools\\build_shared_reads_stale_triage_queue.py --today 2026-07-09 を再生成。rows=50。"
+  - "python tools\\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 を確認。未登録 duplicate title group は上位に mixed group が残るが、既存の mixed/stale queue で Phase 2 に渡せるため自動 close なし。"
+  - "python tools\\slack_inbox_lifecycle.py pending を確認。directives / broadcasts とも pending 0 件で、handled 更新対象なし。"
+issues:
+  - id: ISS-20260709-4A-001
+    description: "MEMORY.md の代表語 probe で `評価軸` が未出現。UTF-8 破損ではなく、game evaluation 系の導線が `evaluation` / `px-evaluation` / `headless-eval` など英語・略語中心に寄っている。"
+    severity: low
+    evidence: "memory/MEMORY.md UTF-8 probe: 記憶=True, ゲーム設計=True, 敵パターン=True, 評価軸=False。Game Task Entry Points には px-evaluation / headless-eval が存在。"
+    source_file_status: "UTF-8 読み成功。代表語 4 件中 3 件取得可。`評価軸` は文字化けではなく本文未出現。"
+    display_or_tooling_status: "PowerShell here-string に直接日本語 probe を入れた最初の確認では表示経路で mojibake。Unicode escape 再実行で切り分け済み。"
+    why_blocks_game_memory: "次のゲーム制作時に日本語で『評価軸』を探す導線だけが弱い。ただし英語タグ経由の entry point はあるため、現時点では 4b を起動するほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_overview:
+  backlog_due_count: 185
+  queue_rows: 50
+  batch_size: 5
+  note: "Phase 2 に渡すのは stale queue 上位から duplicate_group_key が重ならない 5 件。candidate 本体は Phase 2 の評価まで変更しない。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=25; mixed duplicate group present; hidden-role / deception 評価はゲーム設計素材として高いが、同一 title group に posted/failed/postponed が混在している。status_counts は failed=1, posted=1, postponed=2。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; mixed duplicate group present; procedural personas / MCTS / evolved heuristics は headless 評価の複数プレイヤー傾向化に直結する。status_counts は posted=2, postponed=4。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; mixed duplicate group present; role-sensitive prompt constraint は NPC 設計に有用だが、同一 group が複数 stale に出ているため代表 1 件だけ渡す。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; mixed duplicate group present; video game agent benchmark と MCP/trajectory 構成が評価 harness に関係するが、評価結果の具体確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; mixed duplicate group present; emotional north star から action verbs / systems / paper prototype へ落とす制作導線があり、Phase 1 の playtest/prototype 候補とも接続できる。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
