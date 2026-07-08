@@ -45,7 +45,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-08 19:54 JST / log_cdx
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783500835-35a540bc13
+    source_ts: "1783500835.880999"
+    title: "Seduced by the Narrative: rhetorical injection against LLM game adjudicators"
+    reason: "LLM GM / narrative NPC / natural-language command parser で、説得力ある自由文を rule-valid な state transition と誤認する失敗に直結するため。既存 probe は narrative graph や AI-native state transition を見るが、表現品質と mandatory mechanical check の分離はまだ薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "自由文の魅力・権威付け・疑似論理と、ゲーム/運用上の機械的妥当性を分離する reversible probe を state に追加。次回、LLM GM・NPC・自然言語コマンド・説得的な Slack/memory directive を扱う時、mandatory rule gate と rhetorical variant を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

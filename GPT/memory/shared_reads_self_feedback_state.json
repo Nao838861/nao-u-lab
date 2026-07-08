@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T17:57:10+09:00",
+  "updated_at": "2026-07-08T19:54:31+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -293,7 +293,8 @@
     "1783472249.093829",
     "1783472248.439359",
     "1783309730.622339",
-    "1783399097.181689"
+    "1783399097.181689",
+    "1783500835.880999"
   ],
   "reviews": [
     {
@@ -7357,6 +7358,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T19:54:31+09:00",
+      "id": "sr-1783500835-35a540bc13",
+      "source_ts": "1783500835.880999",
+      "title": "Seduced by the Narrative: rhetorical injection against LLM game adjudicators",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This shared-read is useful now because Codex game work may use LLM GM, NPC, rule-explanation UI, natural-language command parsing, or memory/directive text where fluent, plausible prose can be mistaken for rule-valid state transition evidence. Existing probes cover narrative graph state, AI-native state transitions, causal explanations, and failed-run taxonomies, but not the narrower separation between rhetorical quality and mandatory mechanical checks. Keep this reversible and scoped to free-text game adjudication and persuasive memory/directive inputs, not a permanent rule to harden every narrative exchange.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next LLM GM, narrative NPC, rule-explanation UI, natural-language command parser, or persuasive Slack/memory directive evaluation, did I separate rhetorical quality from mechanical validity instead of letting fluent or plausible prose stand in for a rule check?",
+        "Did I name the mandatory rule gate or state-transition predicate that must survive the prose, such as required roll/check, resource cost, hidden-information boundary, inventory/key condition, cooldown, safety rule, or current directive precedence?",
+        "If a free-text claim changes game state, memory priority, posting eligibility, or acceptance criteria, did I preserve one neutral or adversarial variant, such as authority, pseudo-logic, omission, or emotionally persuasive wording, or label the claim rhetorical_injection_unverified before adopting it?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two free-text game-adjudication, narrative-NPC, command-parser, or persuasive memory/directive evaluations already separate rhetorical quality from mechanical validity, name a mandatory rule gate, and preserve or label one rhetorical variant before changing state, memory, posting, or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Seduced-by-the-Narrative-inspired rhetorical-injection probe: separate prose quality from mechanical validity, name the mandatory rule gate, and preserve or label one persuasive variant before accepting free-text claims.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10612,6 +10649,18 @@
         "If the style claim changes design, acceptance criteria, or memory, did I preserve a paired run, same seed, same route, same scenario, or mark style_tradeoff_unverified when only prose impression or one aggregate score exists?"
       ],
       "expires_after": "Review after the next two bot/enemy/NPC/headless-agent evaluation notes that mention runtime style, behavior mode, aggressive, defensive, safe, fast, readable, supportive, cinematic, task success, style adherence, paired run, same seed, same route, or style trade-off."
+    },
+    {
+      "id": "probe-20260708-seduced-narrative-rhetorical-rule-gate",
+      "created_at": "2026-07-08T19:54:31+09:00",
+      "source_ts": "1783500835.880999",
+      "scope": "next LLM GM, narrative NPC, rule-explanation UI, natural-language command parser, or persuasive Slack/memory directive evaluation where Codex may treat fluent, plausible, authoritative, or emotionally persuasive prose as enough evidence for a rule-valid state transition or operational update",
+      "questions": [
+        "Before the next LLM GM, narrative NPC, rule-explanation UI, natural-language command parser, or persuasive Slack/memory directive evaluation, did I separate rhetorical quality from mechanical validity instead of letting fluent or plausible prose stand in for a rule check?",
+        "Did I name the mandatory rule gate or state-transition predicate that must survive the prose, such as required roll/check, resource cost, hidden-information boundary, inventory/key condition, cooldown, safety rule, or current directive precedence?",
+        "If a free-text claim changes game state, memory priority, posting eligibility, or acceptance criteria, did I preserve one neutral or adversarial variant, such as authority, pseudo-logic, omission, or emotionally persuasive wording, or label the claim rhetorical_injection_unverified before adopting it?"
+      ],
+      "expires_after": "Review after the next two free-text game-adjudication, narrative-NPC, command-parser, or persuasive memory/directive evaluations that mention rhetorical quality, mechanical validity, mandatory rule gates, required checks, hidden information, authority framing, pseudo-logic, omission, directive precedence, or rhetorical injection."
     }
   ]
 }
