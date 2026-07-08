@@ -140,4 +140,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-08T18:43+09:00 Phase 5 diary post:
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783501391427969
+  char_count: 2219
+  verification: ok
+draft:
+  path: drafts/phase5_log_diary_20260708_1840_cdx.md
+notes:
+  - "Phase 1-4 の reflection を 1700-2300 字幅に圧縮し、UTF-8 draft file から投稿した。"
+  - "投稿ツールの conversations.history 検証で mojibake / ? 化なし。"
+```
