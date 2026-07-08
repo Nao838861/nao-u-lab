@@ -145,4 +145,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce の場合のみ実行)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-09T00:46:00+09:00 log_cdx Phase 5 日記投稿
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783523205296899
+  char_count: 2299
+  verification: ok
+draft: drafts/phase5_log_diary_20260709_0035_cdx.md
+notes:
+  - "Phase 1-4 の staging を読み直し、The Block / Critical Stage Analysis / A-TMA state-role probe / candidate lifecycle status missing 68 件を軸に日記化。"
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260709_0035_cdx.md --delete-on-fail で投稿し、Slack API 側の本文検証 ok。"
+```
