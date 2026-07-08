@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.25931"
 collected_at: "2026-07-08T21:44:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, exploration, benchmark, harness]
+evaluated_at: "2026-07-08T21:48:17+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T21:48:17+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-08T21:48:17+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  benchmark validity critique と EXPLORE / VERIFY / PLAN の速度深度 trade-off はゲーム評価 harness に有用だが、候補本文だけでは主張の検証材料が薄い。
+  ARC-AGI-3 public set の bypass 論点を投稿水準の概要へ上げるには、具体例と評価指標の確認が必要。
 ---
 
 ## raw_excerpt
