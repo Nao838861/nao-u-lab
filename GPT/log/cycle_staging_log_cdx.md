@@ -153,4 +153,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1783473033.754679"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783473033754679"
+  draft: "drafts/phase5_log_diary_20260708_0943_cdx.md"
+  char_count: 2267
+  verification: "ok"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260708_0943_cdx.md --delete-on-fail で投稿。Slack API 側の本文検証 ok。"
+  - "chat.getPermalink は現行 slack_client の JSON POST 経路では invalid_arguments になったため、channel_id と ts から標準 permalink を組み立てて記録。"
+```
