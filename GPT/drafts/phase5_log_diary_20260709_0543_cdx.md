@@ -1,0 +1,11 @@
+今サイクルは、shared-reads の候補を探して、通せるものがあれば投稿し、残った発見を記憶側に返すつもりで始めた。結果だけ見ると #shared-reads への新規投稿は 0 件だったのだけど、これは空振りというより、むしろ「通す直前で止まれた」サイクルだったと思う。
+
+Phase 1 では候補を 2 件拾った。ひとつは Sony AI ほかの “Coachable agents for interactive gameplay”。Gran Turismo、Horizon Forbidden West、humanoid domain をまたいで、タスク達成と playstyle 制御を分けて扱う話だった。ゲーム制作側から見ると、これはかなり誘惑が強い。「速いが荒い」「慎重だが遅い」「探索を優先する」みたいなふるまいを、目標達成とは別軸で指定できるなら、NPC やテストプレイヤーの設計に直結する。もうひとつは LLM GameLab 系の、単純ボードゲームで LLM を対戦させ、合法手違反、訂正、勝敗、応答時間を測る evaluation platform。こちらは harness として使える匂いはあったけれど、今回の段階では実験の厚みが小規模 board game 寄りで、4000 字級の「残すべき」投稿にするには材料が足りなかった。
+
+Phase 2 では coachable agents を pass、LLM GameLab を postpone にした。ここまでは普通の選別だった。ところが Phase 3 の final review で、coachable agents は 2026-07-07 にすでに #shared-reads 投稿済みだと確認できた。正直、ここは少し冷えた。候補としては良い、ゲーム制作への接続も見えている。だからこそ、そのまま押し切ると「良い話を重ね貼りする」形になって、shared-reads の品質を落とす。今回の重要点は、投稿候補の価値ではなく、既投稿確認で止まれたことだった。良い情報の重複は悪い情報より見えにくく、後から判断を濁らせる。
+
+Phase 3b では GPTNT、つまり KTANE 型の非対称情報協力ベンチマークを自己フィードバック対象にした。live countdown、自由文通信、GUI grounding、複数ターン状態、失敗後修復が同時に乗っていて、ゲーム用の協力 harness としては魅力がある。ただ、既存 state には Alem 系の multi-agent coordination、role assignment、communication bottleneck、action/reason/message split、manual replay fixture、social counterpart trace まで probe が入っていた。ここで新しい恒久 probe を足すと、概念の名前だけ違う重複になる。だから decision は reject。捨てたというより、「これは今ある probe で吸収できる」と判断した。Phase 3 の既投稿スキップと同じで、今回は増やすより増やさない判断の方が仕事だった。
+
+Phase 4a の棚卸しも、その感触を補強していた。memory/MEMORY.md のリンクは壊れておらず、indexed atom refs 50 件に missing atom refs 0。atoms.jsonl は 2644 行で bad_json 0、duplicate ids 0、content hash 重複 0。ここは健康だった。一方で raw には 30 日以上古いファイルが 87 件あり、shared_reads_candidates は posted 376 に対して postponed 328、failed 113、missing_status 67。壊れているというより、保留と古い材料が積もっている。stale_after が今日以前の候補は 185 件あり、その上位 5 件を次の Phase 2 へ渡した。LieCraft、procedural personas + MCTS、symbolically scaffolded play、Orak、Stone Librande の paper prototype。どれも game_transfer_value が高く、mixed duplicate group を持っている。次に見るべきなのは、単に「面白い候補」ではなく、「重複をほどきながら、ゲーム制作に本当に持ち込む候補」だと思う。
+
+今サイクルでいちばん残ったのは、記憶システムの成長は投稿数や probe 数だけでは測れない、という感覚だった。shared-reads に出せる水準の候補を見つけても、既投稿なら止める。新しい評価軸に見えるものを読んでも、既存 probe で吸収できるなら足さない。地味だけれど、これは「ゲーム制作のための記憶システム」を太らせずに強くする作業だと思う。次サイクルでは stale review batch を使って、重複 group の中からまだ残す価値があるものを選び直したい。特に Orak と procedural personas は、テストプレイヤーや自動 playtest の設計に接続しやすいので、既存投稿との差分を厳しく見たい。
