@@ -12,7 +12,25 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260708_critical_stage_analysis_feedback_loop.md` — postmortem を完了後の記録で終わらせず、milestone ごとの Critical Stage Analysis へ変える制作 feedback loop 素材。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-07-08T23:48:58+09:00 log_cdx Phase 2 分析
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260708_the_block_digital_toy_postmortem.md
+  - memory/shared_reads_candidates/20260708_critical_stage_analysis_feedback_loop.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260708_kingdom_for_keflings_midgame_playtest.md
+    reason: "中盤/終盤 playtest 不足の示唆は有用だが、現 excerpt だけでは4000字級の独立した概要へ展開する材料が薄い"
+stale_reviewed: []
+duplicate_preflight:
+  checked:
+    - memory/shared_reads_candidates/20260708_the_block_digital_toy_postmortem.md
+    - memory/shared_reads_candidates/20260708_kingdom_for_keflings_midgame_playtest.md
+    - memory/shared_reads_candidates/20260708_critical_stage_analysis_feedback_loop.md
+  terminal_siblings: []
+  note: "tools/shared_reads_duplicate_preflight.py は未配置のため、shared_reads_title_canonical_index.jsonl と shared_reads_mixed_duplicate_queue.jsonl を直接確認"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

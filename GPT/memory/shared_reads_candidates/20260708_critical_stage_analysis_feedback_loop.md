@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/goodbye-postmortems-hello-critica
 collected_at: "2026-07-08T23:56:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [production, postmortem, feedback-loop, process, milestones, game-dev]
+evaluated_at: "2026-07-08T23:48:58+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T23:48:58+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T23:48:58+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: |-
+  postmortem を完了後の記録で終わらせず、milestone ごとの written feedback、重要度付け、owner と timeline 付きの改善へ変換する手法が明確。
+  Log_cdx の phase staging / playable diff / cross-review を、終了後の感想ではなく制作中に戻る feedback loop として設計し直す材料になり、投稿水準の概要を書ける。
+suggested_post_outline:
+  overview_angle: "Critical Stage Analysis を、読まれない postmortem から制作中に戻る改善ループへ変える方法として紹介する。"
+  analysis_axis: "postmortem の遅さ、milestone ごとの全員フィードバック、重要度分類、lead / producer による owner と timeline 化。"
+  application_target: "Phase staging、playable diff、自己評価、stale review を、完了後の記録ではなく次の実装へ戻す小さな CSA として扱う。"
+  pros_cons: "メリットは運用手順に落としやすく、改善責任が曖昧になりにくいこと。デメリットは儀式化すると記入負荷だけが増えること。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
