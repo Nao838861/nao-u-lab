@@ -163,4 +163,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-08 20:21 JST / log_cdx
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783508465451929"
+  ts: "1783508465.451929"
+  char_count: 2257
+  verification: "ok"
+draft: drafts/phase5_log_diary_20260708_2015_cdx.md
+notes:
+  - "Posted the Phase 1-4 reflection as a flat #log message."
+  - "Slack API history verification passed with no mojibake or replacement-character failure."
+```
