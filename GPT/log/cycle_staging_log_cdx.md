@@ -68,7 +68,59 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git branch/status を確認。開始時点で既存差分多数のため、今回の作業対象は Phase 4a staging 追記と再生成 sidecar に限定。"
+  - "memory/MEMORY.md を UTF-8 明示読みで確認。decode OK、atom index 参照 50 件は atoms.jsonl に全て存在、Markdown link は 0 件。"
+  - "memory/atoms.jsonl を確認。rows=2636、bad_json=0、duplicate_id=0、duplicate_normalized_content_hash=0。"
+  - "memory/raw/ を mtime 基準で確認。30 日以上未更新は 87 件 (web_research 79、headless_eval 6、sync_state.txt 1、slack_archive 1)。今回は移動せず候補把握のみ。"
+  - "memory/shared_reads_candidates/ lifecycle を確認。posted=368、ready_to_post=10、postponed=312、failed=113、needs_review=13、status 空=62。postponed/needs_review で stale_after <= 2026-07-08 は 171 件。"
+  - "python tools/build_shared_reads_mixed_duplicate_queue.py を再実行。memory/shared_reads_mixed_duplicate_queue.jsonl rows=61。"
+  - "python tools/build_shared_reads_stale_triage_queue.py --today 2026-07-08 を再実行。memory/shared_reads_stale_triage_queue.jsonl rows=50。"
+  - "python tools/slack_inbox_lifecycle.py pending を確認。slack_directives.jsonl / slack_broadcasts.jsonl とも pending 0 件のため handled 更新なし。"
+issues:
+  - id: ISS-001
+    description: "shared-reads candidate の mixed duplicate backlog がまだ大きく、posted/failed 済み sibling と postponed/ready_to_post/needs_review が同じ title group 内に併存している。今回の Phase 2 でも新規 3 candidate が posted sibling により postpone されており、未登録 duplicate group が再評価 queue を濁す状態が続いている。"
+    severity: medium
+    evidence: "memory/shared_reads_mixed_duplicate_queue.jsonl rows=61; memory/shared_reads_stale_triage_queue.jsonl rows=50; audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 で Large Language Models in Game Development / One Policy Infinite NPCs / RPG dependency pipeline など mixed group を確認。"
+    source_file_status: "source files are readable as UTF-8; candidate frontmatter and sidecar JSONL are parseable. MEMORY.md source is not mojibake; UTF-8 probe found 記憶・ゲーム設計・敵パターン, and 評価軸 is simply absent from current index text."
+    display_or_tooling_status: "PowerShell here-string 経由で日本語 literal probe を渡すと console 表示が mojibake し、probe false になる経路を確認。UTF-8 byte decode with escaped probes では source decode OK。"
+    why_blocks_game_memory: "既読・投稿済みの game-design 論文が open candidate と混在すると、次のゲーム制作で使うべき既存知見を『新規候補』として再処理しやすく、Phase 2 の評価時間が duplicate triage に吸われる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  due_count: 171
+  sidecar_queue_rows: 50
+  mixed_duplicate_rows: 61
+  note: "Phase 2 に渡すのは下記 5 件のみ。candidate 本体の frontmatter は Phase 2 評価結果が出るまで変更しない。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale queue 上位。duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models。hidden role / deception / degenerate strategy 排除がゲーム設計素材として高価値だが、posted/failed/open 混在 group の解消が先。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue 上位。duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics。headless 評価を複数プレイヤー傾向に拡張する直接価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue 上位。duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue。NPC 制作への適用は見えるが、scaffold 構造と評価粒度の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue 上位。duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games。benchmark 構成は有用だが、評価結果・失敗様式の密度確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue 上位。duplicate_group_key=gdc 2026 riot games stone librande on game design。emotional north star から paper prototype へ戻す制作知見は有用だが、一次資料密度と投稿水準を再判定する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
