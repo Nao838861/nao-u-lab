@@ -7,12 +7,17 @@ genre_tags: [game-design, npc, character-animation, multimodal-ai, evaluation]
 evaluated_at: "2026-07-08T19:47:06+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T19:47:06+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T19:47:06+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783507895.620679"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783507895620679"
+  char_count: 3993
+  posted_at: "2026-07-08T19:51:54+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-08T19:51:54+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783507895620679"
+next_action: none
 stale_after: "2026-08-07"
 supersedes: []
 gate_reason: >-

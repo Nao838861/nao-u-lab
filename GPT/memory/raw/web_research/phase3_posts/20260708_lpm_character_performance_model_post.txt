@@ -1,0 +1,28 @@
+■ 概要
+LPM 1.0 は、会話キャラクターを「音声に合わせて口を動かす顔」ではなく、話す、聞く、反応する、感情を出す、同じ人物として長時間保たれる、という performance の問題として定義し直した論文。問題設定は明確で、既存の video avatar / talking head 系は表現力、リアルタイム推論、長時間の identity stability を同時に満たしにくい。この三すくみを performance trilemma と呼び、会話を最も厳しい試験場に置いている。会話では発話中の lip-sync だけでなく、沈黙中の視線、うなずき、聞いている時の微表情、ターン遷移、相手の音声への反応まで必要になるから。
+
+手法は 3 層構成。第一に、人間中心の動画データを厳しくフィルタし、speaking / listening / idle をフレーム単位で分け、音声と映像の整合、会話意味、identity reference を付ける。第二に、14B の image-to-video 基盤に speak/listen audio cross-attention を足した 17B Diffusion Transformer の Base LPM を訓練し、音声、テキスト指示、複数参照画像から人物の動きと同一性を制御する。第三に、Base LPM を causal streaming generator の Online LPM へ蒸留し、backbone-refiner 構成と chunk cache でリアルタイムかつ長時間の生成に落とす。評価として LPM-Bench を作り、speaking、listening、conversation、diverse human motion、character generalization の 1000 ケースで、motion dynamics、identity consistency、text controllability、audio-video synchronization を人間評価する。結果は Base LPM が Kling-Avatar-2 / OmniHuman-1.5 に、Online LPM が LiveAvatar / SoulX に概ね選好され、Online 化しても一部品質を保つことを示している。
+
+■ 内容分析
+この論文の固有性は、NPC の見た目生成を「高画質動画」ではなく「参加しているように見えるか」へ寄せている点にある。特に listening を独立した対象にしたのが重要。多くの音声駆動 avatar は発話時の口形と顔運動を中心に見るが、ゲームの会話相手としては、プレイヤーが話している間にどこを見て、どの程度うなずき、いつ反応を抑え、いつ表情を変えるかの方が破綻しやすい。LPM はここをデータ処理から作っている。active speaker detection だけでは「誰が話しているか」は取れても、聞いている人物が本当に音声へ反応しているか、ただ背後音声が鳴っているだけかは分からないため、LR-ASD の fine-tune、話者と聞き手の音声分離、Qwen3-Omni 系の audio-video semantic verification を重ねている。ここは model scaling より評価設計に近い知見として使える。
+
+評価の作りも参考になる。LPM-Bench は 1000 ケースで、外見、performance、音声の多様性を分け、さらに 10% を 3 分から 1 時間の long-form に割いて temporal consistency と identity stability を見る。指標も overall realism だけではなく、motion dynamics、identity consistency、text controllability、audio-video synchronization に分解している。結果の読み方も単純な勝敗ではない。Online LPM は LiveAvatar に overall 82.5%、SoulX に 64.1% で選好される一方、SoulX には identity consistency で負ける場面がある。Base と Online の比較でも、Speak はほぼ競るが Base の方が identity に強い場面があり、Listen では Online の temporal regularization が低振幅の反応を抑えて motion dynamics を落とす。Conversation では Online が長期 identity に強く、Base は motion dynamics でやや有利。つまりリアルタイム化は一様な劣化ではなく、聞き動作の繊細さ、長期安定性、発話時の滑らかさの間で品質が再配分される。
+
+限界もはっきりしている。対象は単一人物、カメラ正面寄り、社会・物理・物語構造に弱く、複数人の addressee tracking、環境内の接触、任意視点、長期 discourse memory は未解決。これはゲーム NPC へ読む時に重要で、LPM は「世界内で行動するキャラクター」そのものではなく、「会話相手として知覚される映像 performance layer」の論文である。
+
+■ 自分達の環境への適用
+直接 17B video model を導入するのではなく、評価軸を借りるのが現実的。会話 NPC プロトタイプでは、LLM の台詞品質だけを headless 評価しても、プレイヤーから見た参加感は測れない。まず小さな replay script を作り、NPC が idle、listening、speaking、turn-transition の各状態を持つようにログ化する。その上で、発話中の lip-sync ではなく、沈黙中の視線、反応遅延、表情の過剰反応、同一 persona の維持、長い会話後の見た目・態度の drift を別項目にする。映像生成がなくても、状態ログと lightweight な animation tag で「聞いている演技が発火したか」「発話に割り込んでいないか」「長い会話で同じ人物らしさが保たれたか」は検査できる。
+
+記憶システムにも移せる点がある。LPM の identity-aware multi-reference は、1 枚絵から全てを推測しないための設計であり、我々の制作記憶では「キャラの単一紹介文だけで personality を保持しようとしない」ことに対応する。NPC の persona、口調、拒否条件、プレイヤーとの関係、過去イベント、表情タグを別 reference として保持し、会話生成と演技生成の両方が参照する形にした方が drift に強い。小さな検証としては、同じ NPC に 30 ターン会話させ、5 ターンごとに persona summary、gesture tag、relationship state を比較し、台詞内容だけでなく listening / speaking state の一貫性を採点する。
+
+■ メリット・デメリット
+メリットは、NPC 表現の評価を「自然な台詞」から「参加して見える performance」へ拡張できること。listening を独立評価する、identity を単一画像や単一 persona 文に閉じない、long-form を最初から試験に入れる、Base と Online のように品質を用途別に比較する、という四点はすぐ使える。特に headless では、motion dynamics を animation tag の多様性、audio-video synchronization を発話状態と表情状態の同期、identity consistency を persona / stance / visual tag の drift と読み替えられる。
+
+デメリットは、論文の成功条件が非常に重いこと。数千万 clip、1.7 兆 multimodal tokens、17B model、human preference 評価、合成人物での安全配慮が前提なので、制作サイクルへそのまま移植すると過剰投資になる。また、LPM は単一人物の会話映像に最適化されており、ゲームで必要な移動、接触、戦闘、複数 NPC、遮蔽、環境物との相互作用、クエスト状態とは別問題。さらに human preference は「本物らしい映像」へ寄りやすく、ゲーム内で必要な読みやすさ、プレイヤー入力への公平な反応、低スペック実行、デバッグ可能性を保証しない。
+
+■ 判定
+部分採用。モデル本体ではなく、評価設計を採用する。次の会話 NPC 試作では、speaking / listening / transition / long-form identity の 4 区分をログと replay に入れ、台詞評価とは別に performance 評価を作る。映像生成導入は保留。まずは animation tag と状態ログで、聞く演技と persona drift を検査できる最小 probe に落とすのが妥当。
+
+■ URL
+https://arxiv.org/abs/2604.07823
+https://arxiv.org/html/2604.07823

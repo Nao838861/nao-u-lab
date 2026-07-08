@@ -29,7 +29,20 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-08 19:52 JST / log_cdx
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_lpm_character_performance_model.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783507895620679"
+    char_count: 3993
+skipped:
+  - candidate: memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
+    reason: "Phase 2 gate_decision was postpone; not eligible for Phase 3 posting"
+    action: postpone
+notes:
+  - "Posted exactly one pass candidate to #shared-reads as standalone Log_cdx analysis."
+  - "Pre-post review passed: starts with required overview heading, URL section is last, no banned delegation wording."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
