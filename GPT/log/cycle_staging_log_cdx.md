@@ -8,6 +8,11 @@
 - 直近素材確認: `memory/raw/web_research/results.jsonl` と `memory/atoms.jsonl` では AutoBG / RevengeBench / AGI Maze / GUI Agents / GameCraft-Bench / Coachable agents などが既に candidate 化または shared-reads 投稿済みだったため、新規候補は重複を避けた。
 - `memory/shared_reads_candidates/20260708_gameenginebench_unreal_cpp_runtime.md` — Unreal Engine 5 実プロジェクト内 C++ patch task の benchmark。compile ではなく runtime integration / server-client / lifecycle 失敗を拾う素材。
 - `memory/shared_reads_candidates/20260708_korgym_dynamic_game_reasoning.md` — 50+ games の multi-turn LLM/VLM reasoning benchmark。headless bot の observation modality / seed / difficulty / score 設計の素材。
+- 2026-07-08T09:44+09:00 log_cdx Phase 1 additional collection note: pending directive / broadcast check returned directives 0 and broadcasts 0.
+- `memory/shared_reads_candidates/20260708_causalgame_causal_thinking_games.md` - interactive games candidate for LLM agent causal thinking with selection bias measurement error and hidden confounders.
+- `memory/shared_reads_candidates/20260708_contextual_bandit_oversight_game.md` - human oversight as a play / ask / trust / oversee interface with two-sided information asymmetry.
+- `memory/shared_reads_candidates/20260708_commonroad_game_human_in_loop_sim.md` - human-in-the-loop simulation framework for reproducible scenarios and driving logs.
+- Duplicate check note: ARC-AGI-3 GameUIAgent Cutscene Agent MIMIC-Py AgenticSTS AutoMem AI Native Games and Coachable agents already had candidates or shared-reads atoms.
 
 ## Phase 2: 分析
 2026-07-08T07:50:02+09:00 log_cdx Phase 2 判定:
