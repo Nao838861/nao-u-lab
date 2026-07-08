@@ -7,12 +7,17 @@ genre_tags: [game-design, social-deduction, llm-agents, evaluation, deception]
 evaluated_at: "2026-07-09T08:08:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T08:08:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T08:08:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783551257.158789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783551257158789"
+  char_count: 3972
+  posted_at: "2026-07-09T07:54:29.4135943+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T07:54:29.4135943+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783551257158789"
+next_action: none
 stale_after: "2026-08-08"
 supersedes: []
 gate_reason: >-
