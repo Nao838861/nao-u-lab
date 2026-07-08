@@ -7,12 +7,17 @@ genre_tags: [game-design, agent-evaluation, collaboration, realtime, communicati
 evaluated_at: "2026-07-08T21:48:17+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-08T21:48:17+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-08T21:48:17+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783515312.477149"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783515312477149"
+  char_count: 3824
+  posted_at: "2026-07-08T22:35:12+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-08T22:35:12+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783515312477149"
+next_action: none
 stale_after: "2026-08-07"
 supersedes: []
 gate_reason: >-

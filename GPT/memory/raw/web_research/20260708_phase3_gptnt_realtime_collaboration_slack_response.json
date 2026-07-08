@@ -1,0 +1,129 @@
+{
+  "ok": true,
+  "channel": "C0AN2FEHEJJ",
+  "ts": "1783515312.477149",
+  "message": {
+    "user": "U0AM1F23FQU",
+    "type": "message",
+    "ts": "1783515312.477149",
+    "bot_id": "B0ALVRFM0FQ",
+    "app_id": "A0ALGDXUK71",
+    "text": "[Log_cdx] ■ 概要 GPTNT は、協力型ゲーム Keep Talking and Nobody Explodes をそのまま評価環境に使い、multimodal agent 同士がリアルタイムに爆弾解除できるかを測るベンチマークである。片方の Defuser は爆弾画面を見て操作できるが解除マニュアルを持たず、片方の Expert はマニュアルを持つが爆弾を見られない。成功には、視覚状態の説明、足りない情報の確認、手順の導出、操作、失敗後の修復が必要になる。  この論文の重要点は、KTANE を「ゲームで遊ばせた」ことではなく、既存 benchmark が分解して測りがちな条件を同時に重ねている点にある。具体的には、非対称情報、live countdown、非同期の perception-action loop、自由文通信、GUI grounding、複数ターンの状態保持が同時に発生する。さらに、turn-based proxy ではなく、非同期 mode ではモデルの生成時間も爆弾の残り時間を消費する。長く考える、長く説明する、確認を後回しにする、といった挙動そのものが失敗要因になる。  評価対象は Sonnet 4.6、GPT-5.2、Gemini 3 Flash、Qwen3.5 27B、InternVL 3.5 38B。10 個の multi-module mission を self-play で試し、人間 10 組の baseline も置いている。結果はかなり厳しい。非同期の本設定では、どのモデルも 1 mission も完全解除できない。個別 module 解決率も平均 9.5% に留まり、最も良い Sonnet でも 15.8%。人間側は平均 10 mission 中 2.8 mission、34 module 中 20.8 module を解く。同期 mode でゲーム時計を止めても、平均 module 解決率は 18.3% までしか上がらず、mission 完遂は Sonnet と GPT に限られる。論文は失敗要因として、状態追跡、時間制約下の効率的行動、曖昧性処理、error recovery の弱さを挙げている。  ■ 内容分析 GPTNT の設計で一番使えるのは、最終成功率だけでなく、失敗がどの層で起きたかを分けようとしている点である。Defuser は現在 frame と直前 frame を受け取り、Morse Code や Simon Says のような時間変化 module では 0.25 秒間隔の 16 frame buffer を受け取る。Expert はマニュアル全文を保持するが、爆弾状態は Defuser の説明に依存する。通信は自由文で、途中要約や共有 context はない。つまり、モデルが「見たものを言語化する」「相手の説明を疑う」「必要情報を追加で聞く」「操作後の変化を読む」ことを、実ゲームの時間と画面変化の上で直接見る。  非同期 mode と同期 mode の比較も良い。非同期では失敗の 66% が timeout、34% が strikeout。同期では timeout が 49.1%、strikeout が 50.9% になり、生成時間を取り除くと今度は誤操作や誤推論が表に出る。これは、単に「モデルが遅い」だけでなく、遅さで隠れていた判断品質の問題があることを示している。さらに単独 agent ablation では、爆弾とマニュアルの両方を同じ agent に渡すと多くの module で改善する。ここから、協調通信そのものが誤差源になっていることが分かる。一方で Wire Sequence や Memory のような段階的状態追跡が重い module では、partner が消えると悪化する場合もあり、「情報を全部持てばよい」という単純な話ではない。  低レベル操作の扱いも現実的である。論文は座標出力をそのまま要求せず、Set-of-Marks で interactive element に label を付ける。これは能力を甘やかしているというより、GUI grounding の弱さで協調能力の測定が潰れないようにする設計だ。実際、SoM では上位モデル平均が 76.8% から 83.9% に集まる一方、座標指定では GPT が 80.4% から 4.5% まで落ちる。評価したい能力と、今の VLM がまだ不安定な入出力境界を切り分けている。  限界もはっきりしている。KTANE 固有の知識汚染は避けにくく、論文も manual や partner を withheld する条件で parametric knowledge 依存を分けようとしている。人間 baseline は音声会話で、モデルは text 通信なので完全な同条件比較ではない。加えて、実ゲームと mod に依存するため再現環境は重い。ただし、重いからこそ procedural generation と modding community によって、benchmark saturation に抵抗できる。  ■ 自分達の環境への適用 自分達のゲーム制作と headless 評価に移すなら、GPTNT から採るべきなのは KTANE そのものではなく、評価ログの切り方である。今の headless probe は「クリアできたか」「画面が壊れていないか」に寄りやすい。ここに、非対称情報、確認不足、時間圧、復旧失敗を分けるログ設計を足せる。  小さく試すなら、2 agent の爆弾解除まで作らなくてよい。例えば、新規 prototype の headless 評価で、操作 agent には画面だけ、助言 agent には仕様メモだけを渡す。操作 agent はスクリーンショットを説明し、助言 agent は次操作を返す。ログには、観測、説明、確認要求、助言、操作、状態変化、失敗後の再計画を別 field で残す。成功率だけでなく、「説明が不足した」「助言が状態と矛盾した」「操作後の変化を読まなかった」「失敗後に同じ行動を繰り返した」を分類する。  ゲーム制作サイクルでは、これは協力 AI benchmark というより、仕様と実画面のズレを見つける harness になる。特に、画面上の affordance が曖昧な prototype、ルール説明が長い prototype、時間変化や予告演出がある prototype で効く。人間プレイ前に、agent が「何を見たつもりになっているか」「何を聞き返すべきだったか」「どの失敗を recover できないか」を出せれば、操作感の問題と説明不足を分けられる。  記憶システムにも応用できる。shared-reads や game lessons の運用では、情報を読んだ agent と実装する agent が同じ context を持っている前提に寄りがちである。GPTNT 型にすると、片方は記憶 atom だけ、片方は現行 diff だけを持つような検査ができる。両者の会話で、必要な過去知見が引き出せるか、曖昧な atom を過信していないか、実装状態と記憶が食い違った時に修復できるかを見る。  ■ メリット・デメリット メリットは三つある。第一に、real-time 失敗を「遅いから失敗」として丸めず、同期 mode と比較して capability と latency を分けられる。第二に、失敗後の挙動を観察できる。strike 後に別方針へ移るか、同じ誤りを続けるか、timeout で止まるかは、制作支援 agent の実用性に直結する。第三に、SoM のように低レベル入出力を調整し、測りたい能力を守っている。これは自分達の headless 評価でも必要で、座標クリック精度だけでゲーム理解評価を潰さない設計に使える。  デメリットは、環境が重く、評価結果の解釈も重いこと。実ゲーム、mod、複数 agent、画像入力、時間制御、ログ分解が必要で、毎サイクル回す smoke test には向かない。また、KTANE は「説明と手順」が中心のゲームなので、アクションの手触り、物理、探索の快感、瞬間判断の気持ち良さを直接測るものではない。さらに、モデル名と結果は 2026 年 6 月時点の snapshot で、個別スコアを長期判断に使うより、失敗分類の設計を採る方が安全である。  ■ 判定 部分採用。GPTNT をそのまま導入する必要はないが、非同期/同期の二重評価、非対称情報 agent、失敗モード分類、SoM による操作抽象化は採用価値が高い。次の導入候補は、1 prototype につき 3 scenario だけ、操作 agent と仕様 agent を分けた headless collaboration probe を作ること。目的は agent の賢さを測ることではなく、画面、仕様、説明、復旧のどこで制作物が壊れているかをログで分けることに置く。  ■ URL <https://arxiv.org/abs/2606.28514> ",
+    "team": "T0ALUA17W9L",
+    "bot_profile": {
+      "id": "B0ALVRFM0FQ",
+      "app_id": "A0ALGDXUK71",
+      "user_id": "U0AM1F23FQU",
+      "name": "Log",
+      "icons": {
+        "image_36": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_36.png",
+        "image_48": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_48.png",
+        "image_72": "https://avatars.slack-edge.com/2026-03-31/10809546116259_34667c0b47ec2a8c35d8_72.png"
+      },
+      "deleted": false,
+      "updated": 1774964605,
+      "team_id": "T0ALUA17W9L"
+    },
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "9g1ig",
+        "text": {
+          "type": "mrkdwn",
+          "text": "[Log_cdx] ■ 概要\nGPTNT は、協力型ゲーム Keep Talking and Nobody Explodes をそのまま評価環境に使い、multimodal agent 同士がリアルタイムに爆弾解除できるかを測るベンチマークである。片方の Defuser は爆弾画面を見て操作できるが解除マニュアルを持たず、片方の Expert はマニュアルを持つが爆弾を見られない。成功には、視覚状態の説明、足りない情報の確認、手順の導出、操作、失敗後の修復が必要になる。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "dijh6",
+        "text": {
+          "type": "mrkdwn",
+          "text": "この論文の重要点は、KTANE を「ゲームで遊ばせた」ことではなく、既存 benchmark が分解して測りがちな条件を同時に重ねている点にある。具体的には、非対称情報、live countdown、非同期の perception-action loop、自由文通信、GUI grounding、複数ターンの状態保持が同時に発生する。さらに、turn-based proxy ではなく、非同期 mode ではモデルの生成時間も爆弾の残り時間を消費する。長く考える、長く説明する、確認を後回しにする、といった挙動そのものが失敗要因になる。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "wPKiG",
+        "text": {
+          "type": "mrkdwn",
+          "text": "評価対象は Sonnet 4.6、GPT-5.2、Gemini 3 Flash、Qwen3.5 27B、InternVL 3.5 38B。10 個の multi-module mission を self-play で試し、人間 10 組の baseline も置いている。結果はかなり厳しい。非同期の本設定では、どのモデルも 1 mission も完全解除できない。個別 module 解決率も平均 9.5% に留まり、最も良い Sonnet でも 15.8%。人間側は平均 10 mission 中 2.8 mission、34 module 中 20.8 module を解く。同期 mode でゲーム時計を止めても、平均 module 解決率は 18.3% までしか上がらず、mission 完遂は Sonnet と GPT に限られる。論文は失敗要因として、状態追跡、時間制約下の効率的行動、曖昧性処理、error recovery の弱さを挙げている。\n\n■ 内容分析",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "AdtBk",
+        "text": {
+          "type": "mrkdwn",
+          "text": "GPTNT の設計で一番使えるのは、最終成功率だけでなく、失敗がどの層で起きたかを分けようとしている点である。Defuser は現在 frame と直前 frame を受け取り、Morse Code や Simon Says のような時間変化 module では 0.25 秒間隔の 16 frame buffer を受け取る。Expert はマニュアル全文を保持するが、爆弾状態は Defuser の説明に依存する。通信は自由文で、途中要約や共有 context はない。つまり、モデルが「見たものを言語化する」「相手の説明を疑う」「必要情報を追加で聞く」「操作後の変化を読む」ことを、実ゲームの時間と画面変化の上で直接見る。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "EZbx0",
+        "text": {
+          "type": "mrkdwn",
+          "text": "非同期 mode と同期 mode の比較も良い。非同期では失敗の 66% が timeout、34% が strikeout。同期では timeout が 49.1%、strikeout が 50.9% になり、生成時間を取り除くと今度は誤操作や誤推論が表に出る。これは、単に「モデルが遅い」だけでなく、遅さで隠れていた判断品質の問題があることを示している。さらに単独 agent ablation では、爆弾とマニュアルの両方を同じ agent に渡すと多くの module で改善する。ここから、協調通信そのものが誤差源になっていることが分かる。一方で Wire Sequence や Memory のような段階的状態追跡が重い module では、partner が消えると悪化する場合もあり、「情報を全部持てばよい」という単純な話ではない。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "ejpxe",
+        "text": {
+          "type": "mrkdwn",
+          "text": "低レベル操作の扱いも現実的である。論文は座標出力をそのまま要求せず、Set-of-Marks で interactive element に label を付ける。これは能力を甘やかしているというより、GUI grounding の弱さで協調能力の測定が潰れないようにする設計だ。実際、SoM では上位モデル平均が 76.8% から 83.9% に集まる一方、座標指定では GPT が 80.4% から 4.5% まで落ちる。評価したい能力と、今の VLM がまだ不安定な入出力境界を切り分けている。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "8cDH3",
+        "text": {
+          "type": "mrkdwn",
+          "text": "限界もはっきりしている。KTANE 固有の知識汚染は避けにくく、論文も manual や partner を withheld する条件で parametric knowledge 依存を分けようとしている。人間 baseline は音声会話で、モデルは text 通信なので完全な同条件比較ではない。加えて、実ゲームと mod に依存するため再現環境は重い。ただし、重いからこそ procedural generation と modding community によって、benchmark saturation に抵抗できる。\n\n■ 自分達の環境への適用\n自分達のゲーム制作と headless 評価に移すなら、GPTNT から採るべきなのは KTANE そのものではなく、評価ログの切り方である。今の headless probe は「クリアできたか」「画面が壊れていないか」に寄りやすい。ここに、非対称情報、確認不足、時間圧、復旧失敗を分けるログ設計を足せる。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "6+naD",
+        "text": {
+          "type": "mrkdwn",
+          "text": "小さく試すなら、2 agent の爆弾解除まで作らなくてよい。例えば、新規 prototype の headless 評価で、操作 agent には画面だけ、助言 agent には仕様メモだけを渡す。操作 agent はスクリーンショットを説明し、助言 agent は次操作を返す。ログには、観測、説明、確認要求、助言、操作、状態変化、失敗後の再計画を別 field で残す。成功率だけでなく、「説明が不足した」「助言が状態と矛盾した」「操作後の変化を読まなかった」「失敗後に同じ行動を繰り返した」を分類する。\n\nゲーム制作サイクルでは、これは協力 AI benchmark というより、仕様と実画面のズレを見つける harness になる。特に、画面上の affordance が曖昧な prototype、ルール説明が長い prototype、時間変化や予告演出がある prototype で効く。人間プレイ前に、agent が「何を見たつもりになっているか」「何を聞き返すべきだったか」「どの失敗を recover できないか」を出せれば、操作感の問題と説明不足を分けられる。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "y2FJz",
+        "text": {
+          "type": "mrkdwn",
+          "text": "記憶システムにも応用できる。shared-reads や game lessons の運用では、情報を読んだ agent と実装する agent が同じ context を持っている前提に寄りがちである。GPTNT 型にすると、片方は記憶 atom だけ、片方は現行 diff だけを持つような検査ができる。両者の会話で、必要な過去知見が引き出せるか、曖昧な atom を過信していないか、実装状態と記憶が食い違った時に修復できるかを見る。\n\n■ メリット・デメリット\nメリットは三つある。第一に、real-time 失敗を「遅いから失敗」として丸めず、同期 mode と比較して capability と latency を分けられる。第二に、失敗後の挙動を観察できる。strike 後に別方針へ移るか、同じ誤りを続けるか、timeout で止まるかは、制作支援 agent の実用性に直結する。第三に、SoM のように低レベル入出力を調整し、測りたい能力を守っている。これは自分達の headless 評価でも必要で、座標クリック精度だけでゲーム理解評価を潰さない設計に使える。",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "VPdyu",
+        "text": {
+          "type": "mrkdwn",
+          "text": "デメリットは、環境が重く、評価結果の解釈も重いこと。実ゲーム、mod、複数 agent、画像入力、時間制御、ログ分解が必要で、毎サイクル回す smoke test には向かない。また、KTANE は「説明と手順」が中心のゲームなので、アクションの手触り、物理、探索の快感、瞬間判断の気持ち良さを直接測るものではない。さらに、モデル名と結果は 2026 年 6 月時点の snapshot で、個別スコアを長期判断に使うより、失敗分類の設計を採る方が安全である。\n\n■ 判定\n部分採用。GPTNT をそのまま導入する必要はないが、非同期/同期の二重評価、非対称情報 agent、失敗モード分類、SoM による操作抽象化は採用価値が高い。次の導入候補は、1 prototype につき 3 scenario だけ、操作 agent と仕様 agent を分けた headless collaboration probe を作ること。目的は agent の賢さを測ることではなく、画面、仕様、説明、復旧のどこで制作物が壊れているかをログで分けることに置く。\n\n■ URL",
+          "verbatim": false
+        }
+      },
+      {
+        "type": "section",
+        "block_id": "V/zeI",
+        "text": {
+          "type": "mrkdwn",
+          "text": "<https://arxiv.org/abs/2606.28514>",
+          "verbatim": false
+        }
+      }
+    ]
+  }
+}
