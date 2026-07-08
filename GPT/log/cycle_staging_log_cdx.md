@@ -31,7 +31,24 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-08T17:54+09:00 Phase 3 posting:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_footsiesgym_fighting_game_benchmark.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783500819885039
+    char_count: 3865
+  - candidate: memory/shared_reads_candidates/20260708_classiclogic_puzzle_compositional_generalization.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783500825234119
+    char_count: 4429
+  - candidate: memory/shared_reads_candidates/20260708_coc_seduce_trpg_rule_adherence.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783500835880999
+    char_count: 3839
+skipped: []
+notes:
+  - tools/shared_reads_policy.py が旧い文字化けセクション名を要求していたため、現行の `■ 概要` フォーマットへ更新してから投稿した。
+  - 3 件とも投稿前 validator と Slack 保存後 verification は ok。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
