@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T13:53:34+09:00",
+  "updated_at": "2026-07-08T15:53:40+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -291,7 +291,8 @@
     "1783449745.791319",
     "1783460997.942239",
     "1783472249.093829",
-    "1783472248.439359"
+    "1783472248.439359",
+    "1783309730.622339"
   ],
   "reviews": [
     {
@@ -7283,6 +7284,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T15:53:40+09:00",
+      "id": "sr-1783309730-2b427ab166",
+      "source_ts": "1783309730.622339",
+      "title": "X official MCP server as a replacement candidate for fragile Twitter input channels",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This shared-read is useful now because Codex/Log phase work depends on external input channels such as X/Twitter scraping, jina/WebFetch fallbacks, Slack ingestion, and MCP/API candidates, but can drift from a concrete channel failure into a generic integration project. The transferable point is narrower than the existing MCP responsibility-boundary probe: before replacing an input path, preserve the failure pressure, constrain the operation subset and cost/write surface, and define fallback or rollback conditions. Keep this reversible and scoped to external input-channel migrations, not a standing instruction to adopt X MCP.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next external input-channel change, such as X/Twitter ingestion, MCP/API replacement, browser scraping fallback, RSS/search connector, or Slack-derived ingestion path, did I name the current failure pressure with evidence such as error code, blocked URL, timeout, stale response, T_response delay, missing source class, or repeated manual workaround?",
+        "Did I constrain the proposed path to a minimal operation subset and name any excluded generic surface, such as read-only search/timeline/bookmarks versus write/post/link-post, instead of wrapping every available API or tool operation by default?",
+        "Before implementation or recommendation, did I name the cost/write/auth/security boundary and one fallback, rollback, or approval gate, or label the proposal channel_migration_unverified before using it to change scripts, memory routing, Slack posting, or phase expectations?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two external input-channel migration notes already preserve failure evidence, constrain operation subset and excluded surfaces, and name cost/write/auth/security plus fallback or approval gates before changing scripts, routing, posting, or phase expectations.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible X-MCP-inspired input-channel migration probe: record concrete failure pressure, keep the replacement to a minimal operation subset, and name cost/write/auth/security plus fallback or approval gates before changing ingestion or posting paths.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10514,6 +10551,18 @@
         "Before changing design, acceptance criteria, posting priority, or memory structure, did I preserve one intervention, counterexample, alternate seed, ablation, evidence table row, or label the claim as causal_explanation_unverified or outcome_only_success?"
       ],
       "expires_after": "Review after the next two game-evaluation, shared-read candidate, or memory-routing notes that mention outcome score, clear rate, successful route, recall frequency, causal explanation, confounder, intervention, counterexample, alternate seed, ablation, or outcome-only success."
+    },
+    {
+      "id": "probe-20260708-external-input-channel-migration-subset",
+      "created_at": "2026-07-08T15:53:40+09:00",
+      "source_ts": "1783309730.622339",
+      "scope": "next external input-channel change, X/Twitter ingestion, MCP/API replacement, browser scraping fallback, RSS/search connector, Slack-derived ingestion path, or phase expectation where Codex may treat a new connector as generally better without preserving the current failure pressure and operation boundary",
+      "questions": [
+        "Before the next external input-channel change, such as X/Twitter ingestion, MCP/API replacement, browser scraping fallback, RSS/search connector, or Slack-derived ingestion path, did I name the current failure pressure with evidence such as error code, blocked URL, timeout, stale response, T_response delay, missing source class, or repeated manual workaround?",
+        "Did I constrain the proposed path to a minimal operation subset and name any excluded generic surface, such as read-only search/timeline/bookmarks versus write/post/link-post, instead of wrapping every available API or tool operation by default?",
+        "Before implementation or recommendation, did I name the cost/write/auth/security boundary and one fallback, rollback, or approval gate, or label the proposal channel_migration_unverified before using it to change scripts, memory routing, Slack posting, or phase expectations?"
+      ],
+      "expires_after": "Review after the next two external-input-channel migration notes that mention X/Twitter, MCP, API replacement, browser scraping, jina/WebFetch/nitter, Slack ingestion, RSS/search connector, read/write operations, cost tier, auth boundary, fallback, rollback, or approval gate."
     }
   ]
 }

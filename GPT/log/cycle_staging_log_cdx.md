@@ -35,7 +35,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783309730-2b427ab166
+    source_ts: "1783309730.622339"
+    title: "X official MCP server as a replacement candidate for fragile Twitter input channels"
+    reason: "Nao_u 07-01 指示由来で score 18。X/Twitter 入力経路の Playwright+jina/nitter/WebFetch fragility、T_response 遅延、MCP/API 置換候補、費用/投稿/認証境界が同じ投稿内で扱われており、Codex の次回外部入力チャンネル変更に直接使える。ただし既存の MCP responsibility-boundary probe と重複しないよう、責任境界一般ではなく channel migration 前の failure evidence / minimal operation subset / fallback gate に限定する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a reversible input-channel migration probe: before replacing X/Twitter, scraping, MCP/API, RSS/search, or Slack ingestion paths, preserve concrete failure pressure, constrain the replacement to a minimal operation subset, and name cost/write/auth/security plus fallback or approval gates."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
