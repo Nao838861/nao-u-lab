@@ -37,7 +37,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783515312-b065f578ef
+    source_ts: "1783515312.477149"
+    title: "GPTNT: asymmetric-information KTANE benchmark for multimodal cooperative agents"
+    reason: "未レビューの score>=10 shared-reads。非対称情報、live countdown、自由文通信、GUI grounding、複数ターン状態、失敗後修復を同時に重ねる協力型 game harness として、次回の game/headless/coordination 評価に接続できるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存 state には Alem 系 multi-agent coordination、role assignment、communication bottleneck、action/reason/message split、manual replay fixture、social counterpart trace の probe があり、GPTNT から新 probe を足すと重複が大きい。読了と reject 理由だけ state に残した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T03:52:05+09:00",
+  "updated_at": "2026-07-09T05:58:00+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -298,7 +298,8 @@
     "1783373153.626039",
     "1783442503.167869",
     "1783522498.602309",
-    "1783500825.234119"
+    "1783500825.234119",
+    "1783515312.477149"
   ],
   "reviews": [
     {
@@ -7532,6 +7533,36 @@
       "change": {
         "type": "probe",
         "summary": "Added a reversible ClassicLogic-inspired composition-layer probe: name required primitive strategies or candidate quality layers, distinguish primitive success from composition depth, and record the first missing layer before design, posting, or memory changes.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-09T05:58:00+09:00",
+      "id": "sr-1783515312-b065f578ef",
+      "source_ts": "1783515312.477149",
+      "title": "GPTNT: asymmetric-information KTANE benchmark for multimodal cooperative agents",
+      "decision": "reject",
+      "reason": "Score 13. GPTNT is relevant to game/harness evaluation because it combines asymmetric information, live countdown, free-text communication, GUI grounding, multi-turn state, and recovery after failure. The actionable lesson would be to separate role-private observations, communication turns, and final operations in cooperative evaluations. However the current state already has overlapping probes for multi-agent coordination, role assignment, communication bottlenecks, action/reason/message splits, shared priors, manual replay fixtures, and social counterpart traces. Adding another communication-role probe would mostly restate existing checks, so this cycle records the read and rejects adoption to avoid probe bloat.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "Marked GPTNT as reviewed and rejected because existing coordination and communication probes already cover the actionable behavior.",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
