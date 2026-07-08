@@ -11,7 +11,22 @@
   - `memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md` — LLM x VR の 62 研究レビュー。NPC、storytelling、adaptive systems、accessibility、real-time/memory/ethics 制約の入口。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-07-08 19:47 JST / log_cdx
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260708_lpm_character_performance_model.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
+    reason: "broad survey map; insufficient single-method core for CoopEval-level Phase 3 post without representative-paper followup"
+stale_reviewed: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260708_lpm_character_performance_model.md
+    result: "no terminal duplicate title sibling found; preflight script absent in checkout so title index search was reproduced manually"
+  - path: memory/shared_reads_candidates/20260708_llms_future_virtual_reality_review.md
+    result: "no terminal duplicate title sibling found; preflight script absent in checkout so title index search was reproduced manually"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

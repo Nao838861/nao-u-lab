@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2604.07823"
 collected_at: "2026-07-08T19:44:40+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc, character-animation, multimodal-ai, evaluation]
+evaluated_at: "2026-07-08T19:47:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T19:47:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T19:47:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  Character NPC の視覚表現について、問題設定、dataset、model、online generator、LPM-Bench まで
+  要素が揃っており、単なる生成モデル紹介ではなくゲーム内会話キャラクターの実装評価に落とせる。
+  4000字級の概要でも、performance trilemma と benchmark 軸を中心に密度を出せる。
+suggested_post_outline:
+  overview_angle: "会話 NPC を台詞生成から、聞く・話す・反応する・同一人物性を保つ video performance 問題へ拡張する論文として読む"
+  analysis_axis: "performance trilemma、identity-aware references、Online LPM、LPM-Bench が何を測れるようにしたか"
+  application_target: "Log_cdx の NPC/会話キャラクター評価で、台詞品質だけでなく表情・待機反応・低遅延・identity drift を headless/目視評価項目にする"
+  pros_cons: "メリットは NPC 表現の評価軸が具体化する点。デメリットは 17B video model 前提で直接導入は重く、当面は評価設計と小規模プロトタイプの参照に留まる点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
