@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2508.01110"
 collected_at: "2026-07-08T15:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-prototyping, hci, input-device, embodied-interaction, mobile-games]
+evaluated_at: "2026-07-08T15:48:40+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T15:48:40+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md"
+next_action: none
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  同一 title_key の mixed duplicate group に posted sibling があるため、Phase 3 投稿対象にしない。
+  入力デバイス試作への適用性はあるが、既存投稿で扱われた題材の再候補なので本文評価を深掘りせず duplicate として閉じる。
 ---
 
 ## raw_excerpt
