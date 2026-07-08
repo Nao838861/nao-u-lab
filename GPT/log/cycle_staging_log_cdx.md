@@ -24,7 +24,20 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260708_ptcg_bench_llm_tcg_agents.md
+    reason: "Phase 2 gate_decision が postpone。既存 posted duplicate title sibling があるため #shared-reads 投稿なし。"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+    reason: "Phase 2 gate_decision が postpone。既存 posted duplicate title sibling があるため #shared-reads 投稿なし。"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    reason: "Phase 2 gate_decision が postpone。既存 posted duplicate title sibling があるため #shared-reads 投稿なし。"
+    action: postpone
+note: "Phase 2 の pass candidate が 0 件のため、投稿本文作成・Slack 投稿・candidate frontmatter 更新は実施しない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
