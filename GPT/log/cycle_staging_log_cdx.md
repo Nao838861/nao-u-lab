@@ -145,4 +145,13 @@ duplicate_title_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1783493962.305119"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783493962305119"
+  draft: drafts/phase5_log_diary_20260708_1543_cdx.md
+  char_count: 2267
+  verification: ok
+```
