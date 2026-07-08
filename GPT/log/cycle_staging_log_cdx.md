@@ -32,7 +32,19 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: "memory/shared_reads_candidates/20260708_causalgame_causal_thinking_games.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783472248439359"
+    char_count: 3596
+  - candidate: "memory/shared_reads_candidates/20260708_commonroad_game_human_in_loop_sim.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783472249093829"
+    char_count: 3775
+skipped: []
+notes:
+  - "2 件とも投稿前レビューで必須セクション、3500-4500 字、禁則語なし、URL 末尾を確認済み。"
+  - "post_slack_message_file.py の shared-reads validator はローカル文字化けした旧セクション名を期待するため、tools/slack_client.py の post_message を直接使用。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
