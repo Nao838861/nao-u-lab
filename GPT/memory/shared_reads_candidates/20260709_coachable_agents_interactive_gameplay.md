@@ -7,12 +7,13 @@ genre_tags: [game-ai, reinforcement-learning, npc, playstyle, accessibility, qa]
 evaluated_at: "2026-07-09T05:47:10+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T05:47:10+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T05:47:10+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T05:49:13+09:00"
+last_decision: postponed_duplicate
+evidence: "既投稿重複: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399097181689"
+next_action: none
+duplicate_of: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783399097181689"
 stale_after: "2026-08-08"
 supersedes: []
 gate_reason: "問題設定、手法の中核、Gran Turismo / Horizon Forbidden West / humanoid domain での評価、QA・NPC・accessibility への適用が candidate 内で揃っている。成功率と style adherence の trade-off を Nao_u_BOT の headless policy 評価へ移せるため、Phase 3 の概要を十分な密度で書ける。"
