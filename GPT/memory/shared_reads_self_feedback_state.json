@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-09T03:39:00+09:00",
+  "updated_at": "2026-07-09T03:52:05+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -297,7 +297,8 @@
     "1783500835.880999",
     "1783373153.626039",
     "1783442503.167869",
-    "1783522498.602309"
+    "1783522498.602309",
+    "1783500825.234119"
   ],
   "reviews": [
     {
@@ -7505,6 +7506,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-09T03:52:05+09:00",
+      "id": "sr-1783500825-52850d6eaf",
+      "source_ts": "1783500825.234119",
+      "title": "ClassicLogic: compositional generalization benchmark for logic puzzles",
+      "decision": "adopt_probe",
+      "reason": "Score 17. ClassicLogic is useful now because Codex game and candidate-evaluation work can still collapse difficulty, article quality, or playtest success into a single pass/fail result. The transferable point is narrower: name the required primitive strategies, check their composition depth, and record the first missing layer when a puzzle, tutorial, headless run, or shared-reads candidate fails. Existing probes cover outcome/mechanism splits and harness failure anchors, but not strategy hierarchy or failure-layer attribution. Keep this reversible and scoped to puzzle/tutorial/headless/candidate-evaluation notes, not a general rule for all game design.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next puzzle, tutorial, logic mechanic, headless game evaluation, or shared-reads candidate gate where success or quality may be compressed into pass/fail, did I name the required primitive strategies or quality layers, such as recognize_entity, build_relation, apply_local_rule, combine_constraints, plan_sequence, overview_density, method_understanding, evaluation_understanding, application_design, or limitation_analysis",
+        "Did I separate primitive-layer success from composition-depth success, such as single mechanic versus two-constraint combination, isolated clue versus relational graph, or article summary versus method-plus-evaluation understanding?",
+        "If the artifact fails or is postponed, did I record the first missing layer or label it strategy_layer_unverified, composition_depth_unclear, or pass_fail_only_evidence before changing design, acceptance criteria, posting priority, or memory structure?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two puzzle/tutorial/headless/candidate-evaluation notes already name required primitive strategies or quality layers, distinguish primitive success from composition depth, and record the first missing layer instead of only pass/fail or postpone.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible ClassicLogic-inspired composition-layer probe: name required primitive strategies or candidate quality layers, distinguish primitive success from composition depth, and record the first missing layer before design, posting, or memory changes.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10808,6 +10845,18 @@
         "If the feedback cannot affect the current artifact or next stage, did I label it archive_only, next_stage_input, no_actionable_stage, or stage_unknown before adding rules, probes, or broad process changes?"
       ],
       "expires_after": "Review after the next two phase closures, playable-diff acceptances, game evaluations, or memory cleanup notes that mention stage, milestone, written feedback, keep/change/question, postmortem, retrospective, archive-only, or next-stage action."
+    },
+    {
+      "id": "probe-20260709-classiclogic-composition-layer-failure",
+      "created_at": "2026-07-09T03:52:05+09:00",
+      "source_ts": "1783500825.234119",
+      "scope": "next puzzle, tutorial, logic mechanic, headless game evaluation, or shared-reads candidate gate where Codex may compress difficulty, success, or quality into a single pass/fail or postpone label without naming the required strategy composition layer",
+      "questions": [
+        "Before the next puzzle, tutorial, logic mechanic, headless game evaluation, or shared-reads candidate gate where success or quality may be compressed into pass/fail, did I name the required primitive strategies or quality layers, such as recognize_entity, build_relation, apply_local_rule, combine_constraints, plan_sequence, overview_density, method_understanding, evaluation_understanding, application_design, or limitation_analysis",
+        "Did I separate primitive-layer success from composition-depth success, such as single mechanic versus two-constraint combination, isolated clue versus relational graph, or article summary versus method-plus-evaluation understanding?",
+        "If the artifact fails or is postponed, did I record the first missing layer or label it strategy_layer_unverified, composition_depth_unclear, or pass_fail_only_evidence before changing design, acceptance criteria, posting priority, or memory structure?"
+      ],
+      "expires_after": "Review after the next two puzzle/tutorial/headless/candidate-evaluation notes that mention required strategies, composition depth, quality layers, pass/fail, postpone, first missing layer, or strategy hierarchy."
     }
   ]
 }

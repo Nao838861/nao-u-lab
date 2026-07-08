@@ -39,7 +39,40 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-09T03:52:05+09:00 log_cdx Phase 3b:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783500825-52850d6eaf
+    source_ts: "1783500825.234119"
+    title: "ClassicLogic: compositional generalization benchmark for logic puzzles"
+    reason: >
+      未レビューの shared-reads atom の中で score 12、memory/harness/game-design/agent/evaluation を跨ぐ。
+      今回の Phase 2/3 が pass/fail/postpone の分類だけで閉じた直後なので、
+      「どの primitive strategy / quality layer が足りないか」を次回行動に残す probe として使いやすい。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: >
+      ClassicLogic 由来の reversible probe を state に追加。
+      puzzle/tutorial/headless/candidate 評価で pass/fail や postpone に圧縮する前に、
+      required primitive strategies / quality layers、composition depth、first missing layer を記録する。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
