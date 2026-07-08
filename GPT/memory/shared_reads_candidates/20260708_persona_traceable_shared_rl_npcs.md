@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.23652v1"
 collected_at: "2026-07-08T11:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc, rl, persona, simulation]
+evaluated_at: "2026-07-08T11:47:22+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T11:47:22+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md; memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md"
+next_action: none
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  mixed duplicate queue に同一 title_key の posted terminal sibling があり、PCSP/One Policy Infinite NPCs
+  は既に投稿済み。NPC persona conditioning の適用性は高いが、今回の候補単体は再投稿しない。
 ---
 
 ## raw_excerpt

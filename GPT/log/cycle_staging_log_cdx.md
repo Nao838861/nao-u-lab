@@ -9,7 +9,19 @@
 - `memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md` — RPG 生成を world / NPC / PC / campaign / quest expansion に分け、JSON 中間表現で依存関係を維持する prompt pipeline。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260708_ptcg_bench_llm_tcg_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+  - path: memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md; memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md"
+  - path: memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

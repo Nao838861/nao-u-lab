@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.29653v1"
 collected_at: "2026-07-08T11:44:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-agent, benchmark, card-game, self-evolution]
+evaluated_at: "2026-07-08T11:47:22+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-08T11:47:22+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+next_action: none
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  title canonical index に同一 title_key の posted sibling があり、同一 arXiv:2605.29653 は既に
+  #shared-reads 投稿済み。本文の手法要素は抽出可能だが、Phase 3 の新規投稿対象にはしない。
 ---
 
 ## raw_excerpt
