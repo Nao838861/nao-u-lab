@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.02802"
 collected_at: "2026-07-08T17:45:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [trpg, narrative-game, rule-adherence, llm-judge, game-master]
+evaluated_at: "2026-07-08T17:48:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T17:48:30+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T17:48:30+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  semi-open textual sandbox で、魅力的な自然言語表現と機械的な rule validity を切り離せるかを測る問題設定が強い。
+  LLM GM、narrative NPC、裁定 UI の安全弁として、表現品質に流されない rule check 設計へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "TRPG 風の自由入力で、よい物語に釣られずルールを守る adjudicator 評価として書く"
+  analysis_axis: "CoC 風設定、mandatory rule checks、tiered rhetorical attacks、5,376 samples、frontier model 評価で見えた robustness の限界"
+  application_target: "LLM GM / narrative NPC / ルール裁定 UI で、生成文の魅力とゲーム上の可否を別レイヤーで検査する設計"
+  pros_cons: "文章裁定の危険条件を明確化できる一方、CoC 的な skill check 前提なので作品固有ルールへの移植時は rule oracle が要る"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

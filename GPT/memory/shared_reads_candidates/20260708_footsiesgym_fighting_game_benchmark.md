@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.06514"
 collected_at: "2026-07-08T17:45:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, fighting-game, reinforcement-learning, benchmark, playtesting]
+evaluated_at: "2026-07-08T17:48:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T17:48:30+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T17:48:30+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  Fighting game の neutral play を headless かつ観測可能な benchmark に落としており、問題設定・環境設計・評価指標が明確。
+  win rate だけでなく exploitability、no-op 反応、special attack 利用を見るため、敵 AI / 自動 playtest の退屈さ診断へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "real-time 対戦の読み合いを、小型で再現性のある headless benchmark に切り出す設計として書く"
+  analysis_axis: "matrix game と大型 RTS/MOBA の中間に置いた環境設計、PettingZoo API、vectorized simulation、win rate 以外の行動指標"
+  application_target: "敵 AI と headless playtester の評価で、強さ・反応性・交戦性・コアメカニクス利用を分けて測る軸"
+  pros_cons: "小型で検証しやすい一方、実作品の入力遅延・読み合い演出・プレイヤー感情までは別評価が必要"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
