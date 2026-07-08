@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T10:02:00+09:00",
+  "updated_at": "2026-07-08T11:51:50+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -289,7 +289,8 @@
     "1783331249.464489",
     "1783435919.805469",
     "1783449745.791319",
-    "1783460997.942239"
+    "1783460997.942239",
+    "1783472249.093829"
   ],
   "reviews": [
     {
@@ -7209,6 +7210,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T11:51:50+09:00",
+      "id": "sr-1783472249-408c93e120",
+      "source_ts": "1783472249.093829",
+      "title": "CommonRoad-Game: human operation logs as reproducible scenario and regression assets",
+      "decision": "adopt_probe",
+      "reason": "Score 16. CommonRoad-Game is useful now because Codex game work can still treat manual play, human feel checks, or one-off browser interactions as ephemeral evidence. Existing D2E, quality-workflow, and harness probes already cover synchronized event streams, provenance, and repair scope, but they do not directly ask whether a valuable human/manual interaction becomes a replayable scenario fixture with an oracle for future regression. Keep this reversible and scoped to playable prototype and game-evaluation notes, not a permanent simulation framework rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next manual playtest, human feel check, browser interaction, or playable prototype evaluation where a human-operated run matters, did I preserve the minimal scenario fixture needed to replay or approximate it, such as build/version, seed, route, starting state, input script, level id, or relevant config?",
+        "Did I attach one regression oracle to the captured interaction, such as expected checkpoint reached, collision avoided, item collected, time band, failure reproduction, UI state, or player-facing cue observed, instead of leaving it as a prose impression only?",
+        "If the interaction cannot be replayed, did I label the gap as scenario_fixture_missing, oracle_missing, manual_only_evidence, or regression_unavailable before using it to change design, acceptance criteria, memory, or future tests?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two manual-playtest, human-feel-check, browser-interaction, or playable-prototype evaluation notes already preserve a minimal replayable scenario fixture, attach one regression oracle, and label unreplayable evidence before changing design or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible CommonRoad-Game-inspired human-operation-to-regression probe: turn valuable manual interactions into minimal scenario fixtures with one oracle, or label the evidence as manual-only/unreplayable.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10416,6 +10453,18 @@
         "If the conclusion changes memory, candidate priority, game acceptance, or a Slack-facing judgment, did I choose one transfer mode among independent_convergence, shared_prior_echo, useful_disagreement, needs_third_signal, or no_update?"
       ],
       "expires_after": "Review after the next two multi-instance or cross-review notes that mention Log, Mir, Ash, instance divergence, agreement, disagreement, shared priors, independent evidence, collusion, meta-game, or third signal."
+    },
+    {
+      "id": "probe-20260708-commonroad-human-operation-regression-fixture",
+      "created_at": "2026-07-08T11:51:50+09:00",
+      "source_ts": "1783472249.093829",
+      "scope": "next manual playtest, human feel check, browser interaction, or playable prototype evaluation where Codex may treat a human-operated run as useful evidence without making it replayable or oracle-backed",
+      "questions": [
+        "Before the next manual playtest, human feel check, browser interaction, or playable prototype evaluation where a human-operated run matters, did I preserve the minimal scenario fixture needed to replay or approximate it, such as build/version, seed, route, starting state, input script, level id, or relevant config?",
+        "Did I attach one regression oracle to the captured interaction, such as expected checkpoint reached, collision avoided, item collected, time band, failure reproduction, UI state, or player-facing cue observed, instead of leaving it as a prose impression only?",
+        "If the interaction cannot be replayed, did I label the gap as scenario_fixture_missing, oracle_missing, manual_only_evidence, or regression_unavailable before using it to change design, acceptance criteria, memory, or future tests?"
+      ],
+      "expires_after": "Review after the next two manual-playtest, human-feel-check, browser-interaction, or playable-prototype evaluation notes that mention human operation, manual route, replay, scenario, fixture, regression, oracle, input script, seed, checkpoint, or unreplayable evidence."
     }
   ]
 }

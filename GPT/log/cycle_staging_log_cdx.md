@@ -40,7 +40,32 @@ note: "Phase 2 の pass candidate が 0 件のため、投稿本文作成・Slac
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783472249-408c93e120
+    source_ts: "1783472249.093829"
+    title: "CommonRoad-Game: human operation logs as reproducible scenario and regression assets"
+    reason: "手動プレイ・人間の feel check・ブラウザ操作を一回限りの印象で終わらせず、次回の playable diff や回帰確認へ接続する観点が今のゲーム制作サイクルに直結するため。既存 probe は event stream、harness、品質 routing を扱うが、人間操作ログを scenario fixture + oracle にする点はまだ薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "CommonRoad-Game から、人間操作・手動確認の有用な run を最小 scenario fixture と regression oracle に変換する可逆 probe を追加。再現不能な場合は manual_only_evidence 等として明示する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
