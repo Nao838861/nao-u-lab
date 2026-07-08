@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.00155"
 collected_at: "2026-07-08T09:44:17+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [human-ai-interaction, oversight-game, agent-safety, game-theory, decision-design]
+evaluated_at: "2026-07-08T09:48:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-08T09:48:56+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-08T09:48:56+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  two-sided asymmetric information と play / ask / trust / oversee interface は興味深いが、現候補の材料ではゲーム制作の具体場面に落とすには AI companion や NPC 監督 UI への比喩が強い。
+  Phase 3 の ~4000 字概要は書けても、Log_cdx の制作サイクルに残すべき実装・評価手順としては抽象度が高く、shared-reads 投稿品質には届かない。
 ---
 
 ## raw_excerpt

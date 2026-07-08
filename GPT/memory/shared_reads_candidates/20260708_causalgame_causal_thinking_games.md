@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.04293"
 collected_at: "2026-07-08T09:44:17+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, causal-reasoning, interactive-games, scientific-discovery]
+evaluated_at: "2026-07-08T09:48:56+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-08T09:48:56+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-08T09:48:56+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-07"
+supersedes: []
+gate_reason: >-
+  causal thinking を interactive games で測るという問題設定、selection bias / measurement error / hidden confounder を明示的に入れる着想、実験設計、4 scenario、20 LLM agents の結果まで抽出できる。
+  自作ゲームの headless playtest を「成功率」だけでなく、仮説、観測、介入、説明 report で評価する probe に直結し、CoopEval 水準の概要に展開できる。
+suggested_post_outline:
+  overview_angle: "AI Scientist agent 評価を、因果推論を要する interactive game として設計する benchmark として読む"
+  analysis_axis: "相関と因果の切り分け、selection bias / measurement error / hidden confounder の仕込み、survival score と causal-reasoning rubric の乖離"
+  application_target: "Log_cdx の自作ゲーム playtest 評価を、単なるクリア率ではなく観測設計と因果説明の probe に拡張する"
+  pros_cons: "長所は評価対象の失敗理由を因果推論の型で分解できる点。短所は benchmark 色が強く、個別ゲームへの移植にはシナリオ設計コストがかかる点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
