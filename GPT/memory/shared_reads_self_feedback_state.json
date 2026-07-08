@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08T11:51:50+09:00",
+  "updated_at": "2026-07-08T13:53:34+09:00",
   "reviewed_source_ts": [
     "1782428089.831069",
     "1782376813.513569",
@@ -290,7 +290,8 @@
     "1783435919.805469",
     "1783449745.791319",
     "1783460997.942239",
-    "1783472249.093829"
+    "1783472249.093829",
+    "1783472248.439359"
   ],
   "reviews": [
     {
@@ -7246,6 +7247,42 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-08T13:53:34+09:00",
+      "id": "sr-1783472248-f19e655aad",
+      "source_ts": "1783472248.439359",
+      "title": "CausalGame: interactive causal-reasoning benchmark for AI Scientist agents",
+      "decision": "adopt_probe",
+      "reason": "Score 17. CausalGame is useful now because Codex playable-diff and memory-routing work can still treat a good outcome, successful route, or frequently recalled atom as evidence that the underlying mechanism was understood. Existing probes cover trace rows, branch checks, harness anchors, and human-operation fixtures, but they do not directly split outcome score from causal explanation or check for post-hoc causal stories after a lucky run. Keep this reversible and scoped to game evaluation, shared-read candidate evaluation, and memory-routing notes rather than adopting a full causal benchmark.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless/browser game evaluation, shared-read candidate pass decision, or memory-routing note, did I separate the observable outcome from the claimed mechanism, such as clear rate versus route understanding, recall frequency versus utility, or candidate interest versus production relevance?",
+        "Did I name at least one possible bias or confounder behind the outcome, such as seed, route selection, spawn luck, UI measurement error, hidden state, evaluator prompt, tag frequency, or source recency, instead of treating the strongest correlation as causal evidence?",
+        "Before changing design, acceptance criteria, posting priority, or memory structure, did I preserve one intervention, counterexample, alternate seed, ablation, evidence table row, or label the claim as causal_explanation_unverified or outcome_only_success?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game-evaluation, shared-read candidate, or memory-routing notes that make causal claims already split outcome from mechanism, name a possible confounder, and preserve an intervention/counterexample or explicitly label causal uncertainty before changing practice.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible CausalGame-inspired outcome/explanation split probe: distinguish outcome metrics from causal mechanism claims, name possible confounders, and require an intervention/counterexample or uncertainty label before using success as design or memory evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
@@ -10465,6 +10502,18 @@
         "If the interaction cannot be replayed, did I label the gap as scenario_fixture_missing, oracle_missing, manual_only_evidence, or regression_unavailable before using it to change design, acceptance criteria, memory, or future tests?"
       ],
       "expires_after": "Review after the next two manual-playtest, human-feel-check, browser-interaction, or playable-prototype evaluation notes that mention human operation, manual route, replay, scenario, fixture, regression, oracle, input script, seed, checkpoint, or unreplayable evidence."
+    },
+    {
+      "id": "probe-20260708-causalgame-outcome-explanation-split",
+      "created_at": "2026-07-08T13:53:34+09:00",
+      "source_ts": "1783472248.439359",
+      "scope": "next playable diff, headless/browser game evaluation, shared-read candidate pass decision, or memory-routing note where Codex may treat a good outcome, successful route, high recall frequency, or interesting article as causal evidence without checking mechanism",
+      "questions": [
+        "Before the next playable diff, headless/browser game evaluation, shared-read candidate pass decision, or memory-routing note, did I separate the observable outcome from the claimed mechanism, such as clear rate versus route understanding, recall frequency versus utility, or candidate interest versus production relevance?",
+        "Did I name at least one possible bias or confounder behind the outcome, such as seed, route selection, spawn luck, UI measurement error, hidden state, evaluator prompt, tag frequency, or source recency, instead of treating the strongest correlation as causal evidence?",
+        "Before changing design, acceptance criteria, posting priority, or memory structure, did I preserve one intervention, counterexample, alternate seed, ablation, evidence table row, or label the claim as causal_explanation_unverified or outcome_only_success?"
+      ],
+      "expires_after": "Review after the next two game-evaluation, shared-read candidate, or memory-routing notes that mention outcome score, clear rate, successful route, recall frequency, causal explanation, confounder, intervention, counterexample, alternate seed, ablation, or outcome-only success."
     }
   ]
 }

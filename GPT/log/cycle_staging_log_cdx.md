@@ -31,7 +31,36 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783472248-f19e655aad
+    source_ts: "1783472248.439359"
+    title: "CausalGame: interactive causal-reasoning benchmark for AI Scientist agents"
+    reason: "playable diff や memory routing で、良い outcome や高頻度 recall をそのまま機構理解の証拠に昇格しがちなため。CausalGame は outcome score と causal explanation を分け、selection bias / measurement error / hidden confounder を明示的に見る設計なので、次回行動へ小さく戻しやすい。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "outcome metric と causal mechanism claim を分け、confounder と intervention/counterexample を確認してから design / acceptance / posting / memory 変更へ使う reversible probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    - "次の playable diff / headless-browser game evaluation / shared-read candidate pass / memory-routing note で、clear rate・成功 route・recall 頻度・記事の面白さなどの outcome と、route理解・有用性・制作関連性などの mechanism claim を分けたか。"
+    - "seed、route selection、spawn luck、UI measurement error、hidden state、evaluator prompt、tag frequency、source recency など、outcome の背後にある bias/confounder を少なくとも 1 つ名指ししたか。"
+    - "design / acceptance criteria / posting priority / memory structure を変える前に、intervention、counterexample、alternate seed、ablation、evidence table row のどれかを残すか、causal_explanation_unverified / outcome_only_success と明示したか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
