@@ -33,7 +33,20 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-08T23:55:03+09:00 log_cdx Phase 3 shared-reads 投稿
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260708_the_block_digital_toy_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783522497522889
+    char_count: 3573
+  - candidate: memory/shared_reads_candidates/20260708_critical_stage_analysis_feedback_loop.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783522498602309
+    char_count: 3614
+skipped: []
+review:
+  - "2 件とも Phase 2 gate_decision: pass の candidate。元記事を確認し、概要/内容分析/自分達の環境への適用/メリット・デメリット/判定/URL の固定順で投稿。"
+  - "投稿前に禁止語、先頭見出し、URL 末尾集約、字数、URL 数を確認済み。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
