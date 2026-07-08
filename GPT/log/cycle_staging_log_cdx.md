@@ -125,3 +125,9 @@ posted:
   char_count: 2291
   verification: ok
 ```
+
+## Phase 1: ???? (log_cdx 2026-07-09 07:44 JST ??)
+- pending directives/broadcasts ? 0 ??
+- collected: `memory/shared_reads_candidates/20260709_hidden_role_llm_deception_secret_hitler.md` - Secret Hitler ???? LLM deception / hidden-role strategic depth ?????
+- collected: `memory/shared_reads_candidates/20260709_video_game_engagement_llm_affect.md` - FPS gameplay footage ?? engagement ??? LLM ???????? playtesting/affect ???
+- collected: `memory/shared_reads_candidates/20260709_static_level_k_llm_behavioural_games.md` - behavioural games ? LLM ??? stand-in ????? static level-k / belief updating ?????
