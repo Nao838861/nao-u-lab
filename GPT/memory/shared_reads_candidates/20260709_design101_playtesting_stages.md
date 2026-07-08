@@ -7,12 +7,17 @@ genre_tags: [game-design, playtesting, prototype, feedback-loop]
 evaluated_at: "2026-07-09T01:48:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T01:48:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T01:48:19+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783529574.295299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783529574295299"
+  char_count: 4342
+  posted_at: "2026-07-09T03:12:54+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T03:12:54+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783529574295299"
+next_action: none
 stale_after: "2026-08-08"
 supersedes: []
 gate_reason: "playtest を Concept / Scattershot / Experience / Stress / Accessibility に分け、各段階で見るべき入力と出力を変える実務的な枠組みがある。Nao_u_BOT の playable diff 評価で、headless clear だけでは見落とす仮説検証・感情観察・破壊的検証を分離する軸として使える。~4000字の概要でも問題設定、手法、段階別適用、限界まで展開できる。"

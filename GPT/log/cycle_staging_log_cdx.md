@@ -26,7 +26,17 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-09T03:12:54+09:00 log_cdx Phase 3 投稿結果:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_design101_playtesting_stages.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783529574295299
+    char_count: 4342
+skipped: []
+notes:
+  - "Phase 2 pass candidate 1 件のみ処理。本文は必須 6 項目、禁止表現なし、URL 末尾配置で投稿。"
+  - "tools/slack_client.py の post_message 経路を使用。Phase 3 の本文先頭ルールを満たすため、投稿時のみ POST_PREFIX を空文字にした。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
