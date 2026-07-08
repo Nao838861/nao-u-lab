@@ -10,7 +10,22 @@
 - 既存確認メモ: GameDevBench / Orak / PlaytestArena / Mage / GBQA / SmartPlay / AutoBG / PTCG-Bench / RevengeBench / PCSP は既存 candidate または posted draft があり、今回の新規 candidate にはしなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260709_coachable_agents_interactive_gameplay.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_llm_gamelab_board_game_eval.md
+    reason: "評価 harness としては有用だが、candidate 内の実験材料が小規模 board game 中心で、4000字級の概要にするには評価結果と拡張性の確認が不足。"
+stale_reviewed: []
+preflight:
+  duplicate_tool: "tools/shared_reads_duplicate_preflight.py was unavailable in this checkout"
+  checked_indexes:
+    - memory/shared_reads_title_canonical_index.jsonl
+    - memory/shared_reads_mixed_duplicate_queue.jsonl
+  terminal_title_duplicates: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

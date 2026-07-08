@@ -4,6 +4,24 @@ url: "https://arxiv.org/abs/2607.00642"
 collected_at: "2026-07-09T05:44:26+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, reinforcement-learning, npc, playstyle, accessibility, qa]
+evaluated_at: "2026-07-09T05:47:10+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-09T05:47:10+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-09T05:47:10+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: "問題設定、手法の中核、Gran Turismo / Horizon Forbidden West / humanoid domain での評価、QA・NPC・accessibility への適用が candidate 内で揃っている。成功率と style adherence の trade-off を Nao_u_BOT の headless policy 評価へ移せるため、Phase 3 の概要を十分な密度で書ける。"
+suggested_post_outline:
+  overview_angle: "タスク達成だけでなく、実行時に指定された playstyle に従う agent を作るという二軸制御の論文として書く。"
+  analysis_axis: "universal value function approximators、training scenarios、style rewards、data augmentation が style adherence と performance の Pareto 調整をどう作るか。"
+  application_target: "Nao_u_BOT の headless bot policy、NPC 行動設計、QA 用代理プレイヤーで、成功率とは別に撮影向き・控えめ・部位狙い・支援寄りなどの style 指標を持つ評価へ適用する。"
+  pros_cons: "メリットは agent 行動を実用的な制作要求へ寄せられる点。デメリットは style reward 設計と大量評価環境が重く、小規模プロトタイプでは簡略版に落とす必要がある点。"
+  verdict_pre: "部分採用。RL 全体ではなく、style weight と成功率を分けて測る評価設計を採用する。"
 ---
 
 ## raw_excerpt
