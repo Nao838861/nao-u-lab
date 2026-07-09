@@ -96,6 +96,20 @@ notes:
   - "Phase 2 gate_decision: pass の candidate が 0 件だったため #shared-reads 投稿なし。postpone 4 件は Phase 2 の重複既投稿理由を維持し、Phase 3 では再投稿しない。"
 ```
 
+2026-07-09 21:42 JST log_cdx Phase 3 追加 pass candidate 投稿。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_when_agents_lie_repeated_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783600930518619
+    char_count: 4139
+    ts: "1783600930.518619"
+    draft: drafts/phase3_shared_reads_when_agents_lie_20260709_cdx.md
+    verification: ok
+skipped: []
+notes:
+  - "Phase 2 stale batch の pass 1 件を最終レビューし、三段階プロトコルと mixed-agent protocol mismatch の具体性が投稿条件を満たすため #shared-reads に投稿した。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 2026-07-09 20:04 JST log_cdx Phase 3b 自己フィードバック。
 

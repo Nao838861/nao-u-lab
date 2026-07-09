@@ -7,12 +7,17 @@ genre_tags: [multi-agent, game-theory, trust, deception, repeated-games, npc]
 evaluated_at: "2026-07-09T21:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T21:35:47+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783600930.518619"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783600930518619"
+  char_count: 4139
+  posted_at: "2026-07-09T21:42:20+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T21:42:20+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783600930518619"
+next_action: none
 stale_after: "2026-08-08"
 supersedes: []
 gate_reason: |-
