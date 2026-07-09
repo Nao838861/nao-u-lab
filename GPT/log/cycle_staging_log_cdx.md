@@ -75,7 +75,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-07-10T08:40:00+09:00"
+cleaned:
+  - "git gate: branch codex/phase2-analysis-20260708、origin への ahead/behind なしを確認。開始時点の未コミット差分は既存ログ/記憶生成物が多数あり、今回差分は Phase 4a staging に限定。"
+  - "MEMORY.md index refs: `sr-*` / `local-*` / `gr-*` 参照 50 件を atoms.jsonl + atoms/index.jsonl の id と照合し、missing 0 件。UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` は取得可、`評価軸` は現索引本文に語として存在しない。"
+  - "atoms.jsonl: 2657 rows、JSON parse error 0、duplicate id 0。excerpt exact duplicate は 59 groups あるが、主に再投稿/同文抜粋由来で、id 衝突や parse 破損ではない。"
+  - "raw audit: memory/raw/ は 237 files、30 日以上 mtime がない原文 87 files。今回は archive 移動せず、対象規模のみ記録。"
+  - "shared_reads lifecycle: candidate 890 件。status 内訳 posted 390 / postponed 350 / failed 116 / ready_to_post 10 / needs_review 12 / missing 12。postponed/needs_review かつ stale_after <= 2026-07-10 は 178 件。"
+  - "mixed duplicate queue を再生成確認: memory/shared_reads_mixed_duplicate_queue.jsonl rows 68。stale triage queue を 2026-07-10 기준で再生成確認: memory/shared_reads_stale_triage_queue.jsonl rows 50。"
+  - "Slack inbox lifecycle: directives 23 rows pending 0、broadcasts 21 rows pending 0。handled 化すべき pending は無し。"
+  - "duplicate title audit: unindexed duplicate title group が存在。posted/failed/postponed 混在 group は自動 close せず、stale_review_batch で Phase 2 へ少数 handoff。"
+issues:
+  - id: "ISS-20260710-SR-LIFECYCLE-BACKLOG"
+    description: "shared_reads_candidates に stale_after 期限切れの postponed/needs_review が 178 件残り、さらに status 欠落 candidate が 12 件ある。queue は存在するが、Phase 2 が少数処理しない限り open candidate が蓄積し続ける。"
+    severity: "medium"
+    evidence: "memory/shared_reads_candidates/**/*.md; memory/shared_reads_stale_triage_queue.jsonl rows=50; lifecycle count posted=390 postponed=350 failed=116 ready_to_post=10 needs_review=12 missing=12"
+    source_file_status: "UTF-8 read ok。candidate frontmatter の status/stale_after 欠落または期限切れであり、source file 文字化けではない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "古い候補が再評価 queue に残ると、ゲーム制作に転用できる新しい知見と、既に投稿/失敗済みの同名候補が混ざり、Phase 2 の判断時間を消費する。"
+  - id: "ISS-20260710-SR-MIXED-DUPLICATES"
+    description: "duplicate title audit で未indexの mixed duplicate group が複数残る。特に posted/failed/postponed が混在する group は、同じ論文・記事が別候補として Phase 2 に戻りやすい。"
+    severity: "medium"
+    evidence: "tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20; memory/shared_reads_mixed_duplicate_queue.jsonl rows=68"
+    source_file_status: "UTF-8 read ok。candidate 本文破損ではなく lifecycle/canonical index の未整理。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "同一資料の重複候補が残ると、ゲーム制作に使える要点が title group 単位で統合されず、同じ資料の再読解が増える。"
+  - id: "ISS-20260710-ATOM-EXCERPT-DUPLICATES"
+    description: "atoms.jsonl に id 衝突はないが、excerpt exact duplicate が 59 groups ある。再投稿や同文抜粋由来と見られるため破損ではないが、想起時に同じ内容が複数 atom として出る余地がある。"
+    severity: "low"
+    evidence: "memory/atoms.jsonl rows=2657 parse_error=0 duplicate_id=0 duplicate_excerpt_groups=59"
+    source_file_status: "UTF-8 read ok。JSON と id は正常。内容重複のみ。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "ゲーム制作時の recall で同じ教訓が複数 atom として出ると、別観点が多いように錯覚しやすい。現時点では高リスクではなく、既存 fold/canonical overlay の改善余地として記録に留める。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "stale / mixed duplicate は既に sidecar queue と Phase 2 handoff 契約があるため、4b の新設計ではなく少数再評価で処理するのが妥当。atom excerpt duplicate も破損や id 衝突ではないため、今回 4b を起動しない。"
+stale_review_summary:
+  due_total: 178
+  queue_rows: 50
+  batch_size: 5
+  selection_rule: "memory/shared_reads_stale_triage_queue.jsonl の上位から、同じ duplicate_group_key を重複させず最大 5 件。posted/failed terminal group は除外。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md"
+    status: "postponed"
+    stale_after: "2026-06-24"
+    priority_reason: "mixed duplicate group present; role-sensitive prompt constraint は NPC 対話設計に直接転用可能。"
+    recommended_review_action: "reevaluate_in_phase2"
+    duplicate_group_key: "symbolically scaffolded play designing role sensitive prompts for generative npc dialogue"
+    status_counts: {posted: 1, postponed: 3}
+    terminal_paths: ["memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md"]
+    open_paths: ["memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md", "memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md", "memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md"]
+  - path: "memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md"
+    status: "postponed"
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; Goal Playable Patterns は playable diff へ落とす制作導線に近い。"
+    recommended_review_action: "reevaluate_in_phase2"
+    duplicate_group_key: "grounding machine creativity in game design knowledge representations empirical probing of llm based executable synthesis of goal playable patterns under structural constraints"
+    status_counts: {failed: 2, posted: 5, postponed: 2}
+    terminal_paths: ["memory/shared_reads_candidates/20260515_goal_playable_patterns_llm.md", "memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md", "memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md", "memory/shared_reads_candidates/20260530_goal_playable_patterns_llm_synthesis.md", "memory/shared_reads_candidates/20260605_goal_playable_patterns_llm_synthesis.md", "memory/shared_reads_candidates/20260618_goal_playable_patterns_llm_executable_synthesis.md", "memory/shared_reads_candidates/20260625_goal_playable_patterns_llm_unity.md"]
+    open_paths: ["memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md", "memory/shared_reads_candidates/20260708_goal_playable_patterns_llm_unity.md"]
+  - path: "memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md"
+    status: "postponed"
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; procedural relatedness はカード/スキル生成の一貫性評価に使えるが、本文追加確認が必要。"
+    recommended_review_action: "reevaluate_in_phase2"
+    duplicate_group_key: "from llm driven trading card generation to procedural relatedness a pokemon case study"
+    status_counts: {"": 1, failed: 1, posted: 1, postponed: 1}
+    terminal_paths: ["memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md", "memory/shared_reads_candidates/20260527_llm_tcg_procedural_relatedness.md"]
+    open_paths: ["memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md"]
+  - path: "memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md"
+    status: "postponed"
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; dependency-aware RPG prompt pipeline は ADV/RPG 制作に有用だが評価内容の厚み確認が必要。"
+    recommended_review_action: "reevaluate_in_phase2"
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    status_counts: {failed: 1, posted: 1, postponed: 4}
+    terminal_paths: ["memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md", "memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md"]
+    open_paths: ["memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md", "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md", "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md", "memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md"]
+  - path: "memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md"
+    status: "postponed"
+    stale_after: "2026-06-26"
+    priority_reason: "mixed duplicate group present; persona-traceable shared RL policy は大量 NPC / 群衆行動設計への転用価値が高い。"
+    recommended_review_action: "reevaluate_in_phase2"
+    duplicate_group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    status_counts: {"": 1, failed: 3, posted: 2, postponed: 5}
+    terminal_paths: ["memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md", "memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md", "memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md", "memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md", "memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md"]
+    open_paths: ["memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md", "memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md", "memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md", "memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md", "memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md"]
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
