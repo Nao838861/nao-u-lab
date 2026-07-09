@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.00233"
 collected_at: "2026-07-10T07:59:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [multi-agent, agent-memory, emergent-language, coordination, social-mechanics]
+evaluated_at: "2026-07-10T08:05:37+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T08:05:37+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T08:05:37+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  Lewis signaling game、memory architecture、channel capacity、private notebook の比較軸が揃っており、手法と評価結果を抽出できる。
+  ゲーム制作では、NPC 同士の符号、陣営内合図、プレイヤーが学ぶ局所言語を、記憶形式で安定化させる設計へ直接つながる。
+suggested_post_outline:
+  overview_angle: "言語創発の成否を model 能力や channel 容量だけでなく、記憶の外部化設計から読む。"
+  analysis_axis: "stateless agent、rolling context、persistent private notebook の差と、高容量 collapse を避ける仕組み。"
+  application_target: "協力ゲーム、NPC 派閥、暗号・合図・ローカル語彙をプレイヤーが観察して学ぶ social mechanics の設計。"
+  pros_cons: "長所は shared convention を安定させる具体的な設計軸、短所は自然言語生成の偶然性と実ゲーム UI への翻訳コスト。"
+  verdict_pre: "採用寄りの部分採用。記憶を世界内 notebook や faction memory として制約する小さな prototype に向く。"
 ---
 
 ## raw_excerpt
