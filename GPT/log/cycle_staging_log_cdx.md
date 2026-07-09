@@ -145,4 +145,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-09 20:45 JST log_cdx Phase 5 日記投稿。
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1783593832.708709"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783593832708709
+  draft: drafts/phase5_log_diary_20260709_2045_cdx.md
+  char_count: 2206
+  verification: ok
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260709_2045_cdx.md --delete-on-fail: ok"
+  - "chat.getPermalink は簡易 JSON クライアント経由で invalid_arguments になったため、既存ツールの permalink(channel_id, ts) と同じ形式で生成。"
+```
