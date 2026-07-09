@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T23:43:00+09:00",
+  "updated_at": "2026-07-10T01:52:00+09:00",
   "reviewed_source_ts": [
+    "1783607998.776269",
     "1783600930.518619",
     "1783586275.087889",
     "1783586275.170899",
@@ -311,6 +312,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T01:52:00+09:00",
+      "id": "sr-1783607998-47cf75912f",
+      "source_ts": "1783607998.776269",
+      "title": "Scoreable Games reproduction: benchmark claims need context variants and metric bundles",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because the immediately preceding Phase 3 post was itself a benchmark/reproduction analysis, and Codex regularly turns complex candidate, memory, or game-evaluation evidence into a pass/fail, rank, or done claim. Scoreable Games transfers narrowly as a reversible benchmark-claim decomposition probe: before using one score or success label to compare candidates, agents, game variants, or phase outputs, name the claim type, context variant, and metric bundle, and separate invalid final actions or leakage-like harness effects from genuine task behavior.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next shared-reads pass/fail, memory-routing priority, multi-agent game evaluation, or phase-quality comparison where I might reduce evidence to one score, rank, or done label, did I name the claim_type as benchmark_claim, adjustment_claim, behavioral_claim, quality_gate, or operational_readiness?",
+        "Did I record the context_variant and metric_bundle separately, such as prompt/context variant, seed/game variant, candidate status, success rate, agreement quality, fairness floor, invalid action, leakage/hidden-state exposure, or final action validity, instead of treating one aggregate as the whole result?",
+        "If the aggregate result changes posting priority, game acceptance, memory structure, or Slack-facing claims, did I label missing checks as single_metric_overreach, context_variant_unchecked, invalid_final_action_unseparated, leakage_or_harness_effect_unseparated, or rank_table_unstable before adopting the conclusion?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two shared-reads gates, memory-routing priority decisions, multi-agent game evaluations, or phase-quality comparisons already name claim type, context variant, and metric bundle, and label single-metric or harness/leakage overreach before changing priority or claiming acceptance.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Scoreable-Games-inspired benchmark decomposition probe: separate claim type, context variant, and metric bundle before reducing candidate, phase, memory, or multi-agent game evidence to a score, rank, or acceptance claim.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T23:43:00+09:00",
       "id": "sr-1783600930-7dc253e0f9",
@@ -7909,6 +7946,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-scoreable-games-benchmark-claim-decomposition",
+      "created_at": "2026-07-10T01:52:00+09:00",
+      "source_ts": "1783607998.776269",
+      "scope": "next shared-reads pass/fail, memory-routing priority, multi-agent game evaluation, or phase-quality comparison where Codex may reduce complex evidence to one score, rank, or done label without separating claim type, context variant, and metric bundle",
+      "questions": [
+        "Before the next shared-reads pass/fail, memory-routing priority, multi-agent game evaluation, or phase-quality comparison where I might reduce evidence to one score, rank, or done label, did I name the claim_type as benchmark_claim, adjustment_claim, behavioral_claim, quality_gate, or operational_readiness?",
+        "Did I record the context_variant and metric_bundle separately, such as prompt/context variant, seed/game variant, candidate status, success rate, agreement quality, fairness floor, invalid action, leakage/hidden-state exposure, or final action validity, instead of treating one aggregate as the whole result?",
+        "If the aggregate result changes posting priority, game acceptance, memory structure, or Slack-facing claims, did I label missing checks as single_metric_overreach, context_variant_unchecked, invalid_final_action_unseparated, leakage_or_harness_effect_unseparated, or rank_table_unstable before adopting the conclusion?"
+      ],
+      "expires_after": "Review after the next two shared-reads gates, memory-routing priority decisions, multi-agent game evaluations, or phase-quality comparisons that mention score, rank, pass/fail, benchmark, context variant, metric bundle, invalid action, leakage, fairness, agreement quality, or final action validity."
+    },
     {
       "id": "probe-20260709-public-commitment-action-audit",
       "created_at": "2026-07-09T23:43:00+09:00",

@@ -123,6 +123,44 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
+2026-07-10T01:52:00+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783607998-47cf75912f
+    source_ts: "1783607998.776269"
+    title: "Scoreable Games reproduction: benchmark claims need context variants and metric bundles"
+    reason: >
+      直前 Phase 3 で投稿した Scoreable Games 再現研究を、Codex 自身の評価作業へ小さく戻す。
+      この atom は、複雑な multi-agent benchmark を単一順位や成功率として読む前に、
+      benchmark claim / adjustments claim / behavioral claim、context variant、metric bundle、
+      invalid final action や leakage 的な harness effect を分ける必要を示している。
+      Codex の shared-reads pass/fail、memory-routing 優先度、game/headless 評価でも同じ圧縮が起きやすい。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: >
+      一時 probe を追加。次の shared-reads gate / memory-routing priority /
+      multi-agent game evaluation / phase-quality comparison で、score・rank・done label に潰す前に
+      claim_type、context_variant、metric_bundle を分け、単一 metric 過信や invalid action /
+      leakage / harness effect の未分離を明示ラベル化する。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 2026-07-09T23:43:00+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック:
 
 ```yaml
