@@ -12,6 +12,14 @@
 - `memory/shared_reads_candidates/20260709_rulesmith_automated_game_balancing.md` — multi-agent LLM と rollout / optimization を使うゲームバランス調整研究。
 - `memory/shared_reads_candidates/20260709_human_ai_collaborative_game_testing_vlm.md` — VLM 補助ゲームテストで、人間検証と AI hallucination の影響まで扱う実験報告。
 
+2026-07-09 21:30 JST log_cdx Phase 1 追加収集メモ。
+
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending なし。
+- 既存候補・atom 重複確認: GUI Agents / MeepleLM / AutoBG / RuleSmith / GameGen-Verifier / Game Design Pillars / LLM gameplay-playability-PX / AGI Maze などは既存 candidate または shared-reads 投稿済み。
+- `memory/shared_reads_candidates/20260709_gdc2026_ai_3d_game_prototyping_engine_integration.md` - GDC 2026 Tencent Games AI の 3D game prototyping / engine integration / TDD / token-friendly adapter 講演。
+- `memory/shared_reads_candidates/20260709_gdc2026_agentic_live_ops_player_data.md` - GDC 2026 AWS の player telemetry を agentic live ops analysis と segmentation へ変える講演。
+- `memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md` - GDC 2025 Inworld / Little Umbrella / Wishroll の AI game production 制約、latency / cost / reliability / on-device AI 講演。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 4
