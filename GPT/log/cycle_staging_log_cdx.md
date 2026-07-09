@@ -80,7 +80,56 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-09T23:59:00+09:00 log_cdx Phase 4a 整理 + 問題抽出:
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, upstream=origin/codex/phase2-analysis-20260708, ahead/behind 表示なし。開始時点の既存差分は多数あり、Phase 4a では staging と再生成 sidecar だけを扱う。"
+  - "inbox: python tools\\slack_inbox_lifecycle.py pending で directives pending=0, broadcasts pending=0。handled 更新対象なし。"
+  - "memory/MEMORY.md: UTF-8 明示読みで確認。Markdown link は 0 件のため broken link なし。代表語 probe は 記憶=true, ゲーム設計=true, 敵パターン=true, 評価軸=false。source 破損ではなく現行索引本文に当該語がない状態。"
+  - "memory/atoms.jsonl: 2652 rows, malformed=0, duplicate_id_count=0, duplicate normalized/content hash groups=0, duplicate source_url groups=0。矛盾監査の即時 issue なし。"
+  - "memory/raw/: mtime 30日超の raw file は 87 件。oldest は memory/raw/slack_archive/shared-reads.jsonl と memory/raw/sync_state.txt (2026-05-11)。Phase 4a では archive 移動せず、候補把握のみ。"
+  - "shared_reads lifecycle: posted=385, ready_to_post=10, postponed=345, failed=115, needs_review=13, status 空欄=11。postponed/needs_review かつ stale_after<=2026-07-09 は 180 件。"
+  - "再生成: python tools\\build_shared_reads_mixed_duplicate_queue.py -> rows=67。"
+  - "再生成: python tools\\build_shared_reads_stale_triage_queue.py --today 2026-07-09 -> rows=50。"
+  - "duplicate title audit: unindexed duplicate groups は複数残存。posted/failed/postponed 混在 group は stale_review_batch 側で少数 handoff に留める。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  due_postponed_or_needs_review_backlog: 180
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 67
+  handoff_count: 5
+  selection_rule: "shared_reads_stale_triage_queue.jsonl の上位から、同じ duplicate_group_key を重複させず最大 5 件を選択。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; mixed duplicate group present; LLM NPC の role-sensitive prompt constraint と評価設計が game memory に転用可能だが、現候補は評価指標・結果・失敗分類が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "age_days=22; mixed duplicate group present; Pokemon battle agent の戦略プレイと content generation はゲーム評価 harness に接続するが、重複 group 解消が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260519_github_dungeons_repo_as_roguelike.md
+    status: postponed
+    stale_after: "2026-06-18"
+    priority_reason: "age_days=21; mixed duplicate group present; commit SHA seed の deterministic PCG と BSP 利用は具体的だが、ゲーム設計上の評価・失敗・調整の一次情報が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "age_days=15; mixed duplicate group present; LLM-NPC の自由会話を認知負荷・使いやすさ・信頼・自律感に分ける N=130 比較実験で、NPC 導入評価へ直接使える。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "age_days=15; mixed duplicate group present; unique mechanic が camera/UI/tutorial/genre expectation と衝突する観点は実用的だが、Phase 3 品質には一次情報の補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
