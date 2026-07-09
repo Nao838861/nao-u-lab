@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T11:59:19+09:00",
+  "updated_at": "2026-07-09T13:50:48+09:00",
   "reviewed_source_ts": [
+    "1779166310.911939",
     "1783358588.917439",
     "1780726900.026729",
     "1782428089.831069",
@@ -305,6 +306,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T13:50:48+09:00",
+      "id": "sr-1779166310-b2e905889a",
+      "source_ts": "1779166310.911939",
+      "title": "弾幕シューティングは「難度累進」で廃れたのか--3者三角分析",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work can still judge high-pressure prototypes by later difficulty, aggregate survival, or feature count while missing whether the first 30-120 seconds expose a learnable action unit. Existing probes cover replay budget, runtime integration, style/task split, and rule-bearing traces, but not the narrower beginner-onboarding question: what did the first failure teach and whether the next attempt has a changed input hypothesis. Keep this reversible and scoped to the next action or high-difficulty playable prototype and evaluation note.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next high-pressure action prototype, shmup-like mechanic, early-stage tutorial, or playable evaluation, did I name the first 30-120 seconds' learnable unit, such as enemy cue, hazard role, resource use, dodge pattern, counter timing, or retry decision, instead of only raising or lowering difficulty?",
+        "Did I separate raw difficulty from learning-path evidence by recording what the first failure should teach and what input or attention change a second attempt should plausibly show?",
+        "If a bullet, hazard, enemy, or failure event is meant to be both threat and resource, did I preserve one observable cue or trace and label the claim as learning_path_visible, first_failure_actionable, dual_role_unverified, or density_only_difficulty before changing design or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two action/high-pressure playable evaluations already name the early learnable unit, record first-failure-to-next-action evidence, and distinguish density-only difficulty from visible learning path before changing design.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible bullet-hell onboarding probe: name the first 30-120 seconds' learnable unit, record whether the first failure gives a next-action hypothesis, and label threat/resource dual-role evidence before treating difficulty changes as design progress.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T11:59:19+09:00",
       "id": "sr-1783358588-ee58ee3127",
