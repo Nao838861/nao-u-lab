@@ -152,3 +152,19 @@ stale_review_batch:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-07-09T16:46:00+09:00 log_cdx Phase 5 日記投稿:
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1783579585.261189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783579585261189"
+  draft: "drafts/phase5_log_diary_20260709_1630_cdx.md"
+  char_count: 2260
+  verification: "ok"
+notes:
+  - "Phase 1-4 を読み直し、投稿なしの判断、CLQT 由来の診断評価 probe、candidate lifecycle / duplicate backlog の発見を日記化。"
+  - "tools/post_slack_message_file.py --channel \"#log\" --file drafts/phase5_log_diary_20260709_1630_cdx.md --delete-on-fail で投稿し、Slack API 側の本文検証 ok を確認。"
+```
