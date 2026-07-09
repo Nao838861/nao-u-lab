@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T09:54:34+09:00",
+  "updated_at": "2026-07-09T11:59:19+09:00",
   "reviewed_source_ts": [
+    "1783358588.917439",
     "1780726900.026729",
     "1782428089.831069",
     "1782376813.513569",
@@ -304,6 +305,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T11:59:19+09:00",
+      "id": "sr-1783358588-ee58ee3127",
+      "source_ts": "1783358588.917439",
+      "title": "AgenticSTS: A Bounded-Memory Testbed for Long-Horizon LLM Agents",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game and memory work can still treat long run transcripts as useful memory without fixing what each future decision is allowed to see. The transferable point is narrow: compare no-store, full transcript accumulation, and bounded typed retrieval as decision input contracts, and preserve condition tags, frozen snapshots, and prompt records so later cycles can tell whether memory helped or only accumulated context. Existing probes cover load strategy and trace evidence, but not this bounded-memory contract for headless/playable evaluation. Keep it reversible and scoped to game-memory evaluation and memory-probe notes.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless/browser game evaluation, or memory-probe note where prior run evidence may be reused, did I name the decision input contract as no_store, full_transcript_accumulation, bounded_typed_retrieval, or raw_replay_only instead of mixing them implicitly?",
+        "Did I preserve the minimal comparison metadata, such as condition_tag, seed or route, frozen memory or skill snapshot, prompt record, retrieval type, observation summary, available actions, selected action, result state, and failure tag?",
+        "If memory appears to improve or harm the result, did I label the evidence as debug_contract_ok, performance_directional_only, transcript_accumulation_confounded, typed_retrieval_unverified, extraction_dominant, or action_validity_dominant before changing design, memory, or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-diff, headless/browser game-evaluation, or memory-probe notes already name the decision input contract, preserve condition/snapshot/prompt metadata, and label whether the observed memory effect is debuggable or confounded before changing design or memory.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible AgenticSTS-inspired bounded-memory contract probe: name no-store/full-transcript/bounded-typed-retrieval conditions, preserve comparison metadata, and label memory effects as debuggable or confounded before using them as design evidence.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T09:54:34+09:00",
       "id": "sr-1780726900-0e0713d0ae",
@@ -7650,6 +7687,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-agenticsts-bounded-memory-contract",
+      "created_at": "2026-07-09T11:59:19+09:00",
+      "source_ts": "1783358588.917439",
+      "scope": "next playable diff, headless/browser game evaluation, or memory-probe note where Codex may reuse prior run evidence without separating no-store, full transcript accumulation, and bounded typed retrieval contracts",
+      "questions": [
+        "Before the next playable diff, headless/browser game evaluation, or memory-probe note where prior run evidence may be reused, did I name the decision input contract as no_store, full_transcript_accumulation, bounded_typed_retrieval, or raw_replay_only instead of mixing them implicitly?",
+        "Did I preserve the minimal comparison metadata, such as condition_tag, seed or route, frozen memory or skill snapshot, prompt record, retrieval type, observation summary, available actions, selected action, result state, and failure tag?",
+        "If memory appears to improve or harm the result, did I label the evidence as debug_contract_ok, performance_directional_only, transcript_accumulation_confounded, typed_retrieval_unverified, extraction_dominant, or action_validity_dominant before changing design, memory, or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two playable-diff, headless/browser game-evaluation, or memory-probe notes that mention no-store, full transcript, bounded typed retrieval, condition tags, frozen snapshots, prompt records, retrieval type, memory effect, debug contract, or transcript accumulation."
+    },
     {
       "id": "probe-20260709-replayability-budget-core-depth",
       "created_at": "2026-07-09T09:54:34+09:00",

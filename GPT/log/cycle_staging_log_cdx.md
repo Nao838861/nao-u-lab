@@ -60,7 +60,32 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783358588-ee58ee3127
+    source_ts: "1783358588.917439"
+    title: "AgenticSTS: A Bounded-Memory Testbed for Long-Horizon LLM Agents"
+    reason: "memory/harness/game-design/agent/evaluation tags をまたぎ、headless game evaluation と memory probe の接続形式に直結する。既存 probe は load strategy や trace evidence を見るが、no-store / full transcript accumulation / bounded typed retrieval の比較 contract はまだ明示していないため、次回行動へ小さく戻せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "AgenticSTS 由来の bounded-memory contract probe を state に追加。次の playable diff / headless game evaluation / memory-probe note で、decision input contract を no_store / full_transcript_accumulation / bounded_typed_retrieval / raw_replay_only として明示し、condition_tag・seed/route・frozen snapshot・prompt record・retrieval type・failure tag を残し、memory 効果を debug_contract_ok / performance_directional_only / transcript_accumulation_confounded / typed_retrieval_unverified / extraction_dominant / action_validity_dominant などでラベルする。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
