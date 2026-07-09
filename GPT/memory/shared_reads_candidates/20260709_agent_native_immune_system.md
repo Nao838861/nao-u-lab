@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.28270"
 collected_at: "2026-07-09T11:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-security, harness, multi-agent, runtime-safety, game-ai]
+evaluated_at: "2026-07-09T11:46:54+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T11:46:54+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T11:46:54+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  persistent memory/tool-use/multi-agent agent の runtime hijacking と memory poisoning を扱う問題設定はゲーム agent に近い。
+  ただし candidate 本文は Immune Tower、virus/vaccine taxonomy、Harness Triad などの概念整理が中心で、実証評価の中身や限界が薄い。
+  #shared-reads の概要水準にするには、評価設定・比較対象・失敗例を追加確認してから再判定する。
 ---
 
 ## raw_excerpt

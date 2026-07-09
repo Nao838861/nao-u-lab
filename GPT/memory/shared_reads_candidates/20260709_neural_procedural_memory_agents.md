@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2606.29824"
 collected_at: "2026-07-09T11:44:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-memory, procedural-memory, harness, game-ai, automated-playtesting]
+evaluated_at: "2026-07-09T11:46:54+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-09T11:46:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-09T11:46:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  問題設定は「明示テキスト手順だけでは継続的 agent の procedural skill が行動へ接続しない」という点で明確。
+  contrastive experience から activation steering vector を抽出する中核手法、複数 benchmark と表現分析の評価、明示 workflow との併用結論まで candidate 本文から追える。
+  headless playtester や game bot に、過去ログから暗黙のプレイ手順を持たせる具体的な応用先がある。
+suggested_post_outline:
+  overview_angle: "symbolic memory/RAG ではなく activation steering として procedural memory を持たせる agent 設計として整理する"
+  analysis_axis: "text-action disconnect、contrastive experience からの vector 抽出、training-free steering、explicit workflow 併用時の robustness を分解する"
+  application_target: "ゲーム用 bot と headless playtester の失敗ログから、避ける・待つ・資源温存などの暗黙手順を再利用する評価 probe"
+  pros_cons: "prompt 追加より行動に近い一方、モデル内部表現依存で移植性・可観測性・安全な解除条件が課題"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

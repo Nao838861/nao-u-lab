@@ -11,7 +11,26 @@
   - `memory/shared_reads_candidates/20260709_clqt_closed_loop_agent_diagnosis.md` — closed-loop agent を最終成績 ranking ではなく、再計算可能な decision trail と複数軸 scorecard で診断する benchmark。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260709_neural_procedural_memory_agents.md
+  - memory/shared_reads_candidates/20260709_clqt_closed_loop_agent_diagnosis.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_agent_native_immune_system.md
+    reason: "agent security architecture として有用だが、candidate 本文だけでは実証評価・比較対象・限界が薄く、~4000字の残すべき概要にするには追加確認が必要"
+stale_reviewed: []
+duplicate_preflight:
+  checked:
+    - memory/shared_reads_candidates/20260709_neural_procedural_memory_agents.md
+    - memory/shared_reads_candidates/20260709_agent_native_immune_system.md
+    - memory/shared_reads_candidates/20260709_clqt_closed_loop_agent_diagnosis.md
+  terminal_title_siblings: []
+notes:
+  - "stale_review_batch は staging に無し。通常 candidate のみ評価。"
+  - "tools/shared_reads_duplicate_preflight.py は存在しないため、title canonical index と mixed duplicate queue を rg で確認した。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
