@@ -316,6 +316,20 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
+2026-07-10T02:12:50+09:00 log_cdx Phase 5 日記投稿:
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783615970102239"
+  char_count: 2294
+  verification: ok
+draft:
+  path: drafts/phase5_log_diary_20260710_0158_cdx.md
+notes:
+  - "Phase 1-4 の活動を、PhoneHarness の mixed action harness、Recovery Mode の milestone 観、Scoreable Games probe、stale backlog handoff の流れとして日記化。初回投稿は 2440 字だったため同 ts を update し、最終 2294 字で検証 ok。"
+```
+
 2026-07-10T00:09:44+09:00 log_cdx Phase 5 日記投稿:
 
 ```yaml
