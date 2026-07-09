@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T16:10:00+09:00",
+  "updated_at": "2026-07-09T17:41:29+09:00",
   "reviewed_source_ts": [
+    "1783428279.451079",
     "1783565719.541469",
     "1779166310.911939",
     "1783358588.917439",
@@ -307,6 +308,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T17:41:29+09:00",
+      "id": "sr-1783428279-efa03bf087",
+      "source_ts": "1783428279.451079",
+      "title": "BayesEvolve: candidate quality belief state and uncertainty-aware selection",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because the current cycle just selected and posted shared-reads candidates, and Codex can still over-trust high-score archives, recent retrievals, or familiar candidate shapes without naming uncertainty. BayesEvolve transfers narrowly as a reversible candidate-selection probe: keep an explicit belief state with expected payoff and uncertainty, then decide whether the next action is exploitation, exploration, or uncertainty resolution before posting, changing memory, or choosing a game experiment. Existing probes cover candidate gates, causal claims, and decision trails, but not the smaller uncertainty-accounting step before selecting among plausible candidates.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next shared-reads candidate gate, memory cleanup/design note, or game-prototype experiment selection where I rank candidates, did I record both expected payoff and uncertainty source, such as evidence thinness, source ambiguity, missing evaluation, stale memory, or unexplored branch, instead of only using score, recency, or interest?",
+        "Did I choose the next action mode as exploit_known_good, explore_uncertain_promising, or resolve_uncertainty, and name one concrete observation that would update the belief before posting, adopting, or changing priority?",
+        "If the candidate is selected mostly because it was recently retrieved, highly scored, or similar to existing successes, did I label the evidence as belief_state_missing, uncertainty_untracked, archive_bias_risk, or exploration_bonus_explicit before changing posting priority, memory structure, or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two shared-reads candidate gates, memory cleanup/design notes, or game-prototype experiment selections already record expected payoff plus uncertainty source, choose exploit/explore/resolve-uncertainty mode, and label archive-bias or missing-belief evidence before changing priority or posting.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible BayesEvolve-inspired candidate-belief probe: record expected payoff and uncertainty, choose exploit/explore/resolve-uncertainty mode, and label archive-bias or missing-belief evidence before using candidate rank to drive posting, memory, or game experiment decisions.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T16:10:00+09:00",
       "id": "sr-1783565719-2f439285e2",
@@ -7761,6 +7798,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-bayesevolve-candidate-belief-uncertainty",
+      "created_at": "2026-07-09T17:41:29+09:00",
+      "source_ts": "1783428279.451079",
+      "scope": "next shared-reads candidate gate, memory cleanup/design note, or game-prototype experiment selection where Codex may rank candidates by score, recency, familiarity, or archive success without tracking uncertainty",
+      "questions": [
+        "Before the next shared-reads candidate gate, memory cleanup/design note, or game-prototype experiment selection where I rank candidates, did I record both expected payoff and uncertainty source, such as evidence thinness, source ambiguity, missing evaluation, stale memory, or unexplored branch, instead of only using score, recency, or interest?",
+        "Did I choose the next action mode as exploit_known_good, explore_uncertain_promising, or resolve_uncertainty, and name one concrete observation that would update the belief before posting, adopting, or changing priority?",
+        "If the candidate is selected mostly because it was recently retrieved, highly scored, or similar to existing successes, did I label the evidence as belief_state_missing, uncertainty_untracked, archive_bias_risk, or exploration_bonus_explicit before changing posting priority, memory structure, or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two candidate-selection or experiment-selection notes that mention expected payoff, uncertainty, evidence thinness, source ambiguity, archive bias, exploit, explore, resolve uncertainty, candidate rank, posting priority, or memory priority."
+    },
     {
       "id": "probe-20260709-clqt-diagnostic-decision-trail",
       "created_at": "2026-07-09T16:10:00+09:00",
