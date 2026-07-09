@@ -140,6 +140,34 @@ self_feedback:
     conflict_checked: true
 ```
 
+2026-07-09 21:44 JST log_cdx Phase 3b 追加自己フィードバック。
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783586275-01e242ede2
+    source_ts: "1783586275.087889"
+    title: "Bayesian-Agent: skill/SOP updates as feature-conditioned hypotheses rather than success-count accumulation"
+    reason: "Phase 3b 自体が、良い shared-reads を読むたびに probe / SOP / prompt を足す成功談過学習になりうるため。Bayesian-Agent の転用先を、成功例の数ではなく context_features と verified trajectory evidence に紐づけてから小さく更新する probe に限定できる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "skill / SOP / prompt / memory-route / phase-probe の追加前に、効くはずの context_features、verified trajectory or counterexample、update_target を確認する evidence-gating probe を追加。根拠が弱い場合は anecdotal_success_only / posterior_missing / feature_scope_unclear / verification_gap とラベル付けする。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 2026-07-09 20:27 JST log_cdx Phase 4a 記憶階層整理。
 

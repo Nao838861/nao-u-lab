@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T20:04:00+09:00",
+  "updated_at": "2026-07-09T21:44:37+09:00",
   "reviewed_source_ts": [
+    "1783586275.087889",
     "1783586275.170899",
     "1783428279.451079",
     "1783565719.541469",
@@ -309,6 +310,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T21:44:37+09:00",
+      "id": "sr-1783586275-01e242ede2",
+      "source_ts": "1783586275.087889",
+      "title": "Bayesian-Agent: skill/SOP updates as feature-conditioned hypotheses rather than success-count accumulation",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Phase 3b itself can overfit to successful shared-reads by adding another probe or SOP whenever an article feels relevant. Bayesian-Agent transfers narrowly as a reversible evidence-gating probe: before adding or promoting a skill, SOP, prompt, memory route, or probe from success examples, name the context features where it is expected to work, preserve verified trajectory evidence, and label unsupported updates instead of counting success anecdotes. Existing probes cover uncertainty, chain regression, and rule bloat, but not the smaller posterior-style question of whether a proposed behavior update is tied to feature-conditioned evidence rather than a broad success story.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next skill, SOP, prompt, memory-route, phase-probe, or evaluation-rule addition based on successful examples, did I name the context_features where the update is expected to help, such as task type, tool surface, harness evidence, memory state, UI/runtime condition, or failure mode?",
+        "Did I preserve one verified trajectory or counterexample row with action, context_features, observed outcome, and update_target instead of relying on success count, recency, or persuasive reflection alone?",
+        "If the evidence is not feature-conditioned or verified, did I label the update as anecdotal_success_only, posterior_missing, feature_scope_unclear, or verification_gap before adding a probe, SOP, prompt, memory route, or durable rule?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two skill/SOP/prompt/memory-route/probe additions already name context features, preserve a verified trajectory or counterexample row, and label anecdotal or unscoped updates before changing behavior.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Bayesian-Agent-inspired evidence-gating probe: treat skill/SOP/probe updates as context-conditioned hypotheses, require verified trajectory or counterexample evidence, and label anecdotal or unscoped success before adding behavior-changing instructions.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T20:04:00+09:00",
       "id": "sr-1783586275-6ab7c8ac84",
@@ -7835,6 +7872,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-bayesian-agent-feature-conditioned-update",
+      "created_at": "2026-07-09T21:44:37+09:00",
+      "source_ts": "1783586275.087889",
+      "scope": "next skill, SOP, prompt, memory-route, phase-probe, or evaluation-rule addition where Codex may generalize from successful examples without feature-conditioned verified evidence",
+      "questions": [
+        "Before the next skill, SOP, prompt, memory-route, phase-probe, or evaluation-rule addition based on successful examples, did I name the context_features where the update is expected to help, such as task type, tool surface, harness evidence, memory state, UI/runtime condition, or failure mode?",
+        "Did I preserve one verified trajectory or counterexample row with action, context_features, observed outcome, and update_target instead of relying on success count, recency, or persuasive reflection alone?",
+        "If the evidence is not feature-conditioned or verified, did I label the update as anecdotal_success_only, posterior_missing, feature_scope_unclear, or verification_gap before adding a probe, SOP, prompt, memory route, or durable rule?"
+      ],
+      "expires_after": "Review after the next two skill/SOP/prompt/memory-route/probe additions that mention context features, verified trajectory evidence, counterexamples, posterior, success count, anecdotal success, or feature scope."
+    },
     {
       "id": "probe-20260709-chainswe-chain-regression-carryover",
       "created_at": "2026-07-09T20:04:00+09:00",
