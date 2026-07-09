@@ -46,8 +46,33 @@ notes:
   - "投稿前に tools/shared_reads_policy.py の必須セクション、文字数、禁止表現チェックを通過。post_slack_message_file.py の Slack 取得検証も ok。"
 ```
 
-## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+## Phase 3b: Shared-reads self-feedback
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783565718-8d7aef9023
+    source_ts: "1783565718.920909"
+    title: "Neural Procedural Memory: text-action disconnect and contrastive experience"
+    reason: "This maps directly to Codex failures where a rule or workflow is read but not converted into posting, headless, browser, or memory-action behavior. Adopt only a contrastive trace probe, not a permanent rule."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a reversible probe: split failed traces into effective_step and degenerate_step, assign one degenerate cause, and verify any derived skill_note or workflow patch under the same condition."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

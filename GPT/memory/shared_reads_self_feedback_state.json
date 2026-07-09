@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T07:41:14+09:00",
+  "updated_at": "2026-07-10T08:14:33+09:00",
   "reviewed_source_ts": [
     "1783629584.800039",
     "1783615412.040899",
@@ -312,9 +312,46 @@
     "1783522498.602309",
     "1783500825.234119",
     "1783515312.477149",
-    "1783465097.949229"
+    "1783465097.949229",
+    "1783565718.920909"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T08:14:33+09:00",
+      "id": "sr-1783565718-8d7aef9023",
+      "source_ts": "1783565718.920909",
+      "title": "Neural Procedural Memory: text-action disconnect and contrastive experience",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex can read AGENTS, phase prompts, and shared-reads rules, yet still fail to convert them into behavior during posting review or headless/browser validation. The narrow transferable point is not to add more memory, but to split success/failure traces into effective steps and degenerate steps, then verify whether a derived textual workflow actually changes behavior under the same condition. Keep this as a reversible probe, not a durable rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next headless playtest, browser automation, Slack/shared-reads posting review, memory workflow failure analysis, or game-agent trace note, did I split the failed trace into effective_step and degenerate_step instead of storing only success/failure?",
+        "Did I assign exactly one primary degenerate_step cause among repeat_without_delta, invalid_action, missing_prerequisite, state_progress_absent, old_template_reuse, checklist_read_but_not_applied, or not_observed?",
+        "If I derive a skill_note or workflow patch from the contrastive trace, did I verify it under the same seed, candidate, phase gate, or verifier, or label the result text_action_disconnect_unchecked or workflow_effect_unverified?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two failed headless/browser/posting/memory workflow notes already separate effective and degenerate steps, name the degenerate cause, and verify any derived skill_note or workflow patch under the same condition before claiming improvement.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible NPM-inspired contrastive procedural-memory probe: use failed traces as effective/degenerate step pairs, classify the degenerate cause, and verify any derived workflow note under the same condition.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T07:41:14+09:00",
       "id": "sr-1783629584-ae49b00bad",
@@ -8057,6 +8094,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-npm-contrastive-procedural-memory",
+      "created_at": "2026-07-10T08:14:33+09:00",
+      "source_ts": "1783565718.920909",
+      "scope": "next headless playtest, browser automation, Slack/shared-reads posting review, memory workflow failure analysis, or game-agent trace note where Codex may read a rule or workflow but fail to convert it into action",
+      "questions": [
+        "Before the next headless playtest, browser automation, Slack/shared-reads posting review, memory workflow failure analysis, or game-agent trace note, did I split the failed trace into effective_step and degenerate_step instead of storing only success/failure?",
+        "Did I assign exactly one primary degenerate_step cause among repeat_without_delta, invalid_action, missing_prerequisite, state_progress_absent, old_template_reuse, checklist_read_but_not_applied, or not_observed?",
+        "If I derive a skill_note or workflow patch from the contrastive trace, did I verify it under the same seed, candidate, phase gate, or verifier, or label the result text_action_disconnect_unchecked or workflow_effect_unverified?"
+      ],
+      "expires_after": "Review after the next two failed headless/browser/posting/memory workflow notes that mention effective step, degenerate step, invalid action, repeated action, missing prerequisite, old template reuse, text-action disconnect, skill note, or workflow patch verification."
+    },
     {
       "id": "probe-20260710-phoneharness-mixed-action-side-effect-trace",
       "created_at": "2026-07-10T05:48:00+09:00",
