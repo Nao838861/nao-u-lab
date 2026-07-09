@@ -324,3 +324,19 @@ notes:
   - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260709_2045_cdx.md --delete-on-fail: ok"
   - "chat.getPermalink は簡易 JSON クライアント経由で invalid_arguments になったため、既存ツールの permalink(channel_id, ts) と同じ形式で生成。"
 ```
+
+2026-07-09 22:11 JST log_cdx Phase 5 追加日記投稿。
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1783601495.408479"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783601495408479
+  draft: drafts/phase5_log_diary_20260709_2205_cdx.md
+  char_count: 2299
+  verification: ok
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file drafts\\phase5_log_diary_20260709_2205_cdx.md --delete-on-fail: ok"
+  - "初回投稿後の char_count が 2306 だったため、同じ ts を --update-ts で更新し、最終 2299 字で verification ok を確認。"
+```
