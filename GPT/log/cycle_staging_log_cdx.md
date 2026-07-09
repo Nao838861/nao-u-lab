@@ -26,7 +26,20 @@ preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-09T23:40:11+09:00 log_cdx Phase 3 Shared-reads 投稿:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_scoreable_games_negotiation_benchmark_repro.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783607998776269"
+    char_count: 4498
+skipped: []
+review:
+  required_format: pass
+  banned_phrase_check: pass
+  final_decision: posted
+  note: "Scoreable Games 再現研究を、multi-agent negotiation 評価の順位表ではなく、benchmark 解釈可能性・leakage・ablation・社会厚生 metric の検査材料として投稿した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
