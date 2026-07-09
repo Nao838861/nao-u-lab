@@ -7,12 +7,17 @@ genre_tags: [board-game, llm-evaluation, abductive-reasoning, player-intent, mul
 evaluated_at: "2026-07-09T09:48:19+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T09:48:19+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T09:48:19+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783558313.190529"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783558313190529"
+  char_count: 3711
+  posted_at: "2026-07-09T10:11:53+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T10:11:53+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783558313190529"
+next_action: none
 stale_after: "2026-08-08"
 supersedes: []
 gate_reason: "Concept の clue sequence を使い、LLM の他者意図解釈と逐次的な仮説修正を分離して測る問題設定が明確。人間 90% 超に対して SOTA LLM が 40% 未満という差も、自然言語ゲーム評価で見落としやすい失敗を示す根拠になる。ヒント提示型ゲームや NPC clue 評価に、正解率だけでなく仮説更新ログを残す具体的な適用先がある。"

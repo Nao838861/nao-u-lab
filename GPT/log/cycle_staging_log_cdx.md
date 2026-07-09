@@ -25,7 +25,14 @@ notes:
   - "pass 理由: Concept の clue sequence を用いた他者意図解釈と逐次仮説修正の評価が、ヒント提示型ゲームや NPC clue 生成の headless 評価へ具体的に転用できる。"
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+executed_at: "2026-07-09T10:11:53+09:00"
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_concept_hint_board_game_llm.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783558313190529"
+    char_count: 3711
+skipped: []
+notes:
+  - "投稿前レビュー: 必須セクション順序、URL 末尾、禁止語、文字数 3711 を確認。Slack 投稿後の本文検証も ok。"
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
