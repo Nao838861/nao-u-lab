@@ -9,15 +9,16 @@ evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-25T07:07:52+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-25T07:07:52+09:00"
-stale_after: "2026-06-24"
+last_reviewed_at: "2026-07-10T01:35:18+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md"
+stale_after: "2026-08-09"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
-  unique mechanic が camera/UI/tutorial/genre expectation と衝突する観点は実用的だが、現候補の材料は Reddit postmortem とコメント要約に寄っている。
-  Phase 3 品質にするには、失敗デモの具体構造や反応パターンをもう少し一次情報から固める必要があるため保留する。
+  mixed duplicate queue で同一 title_key の posted sibling
+  memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md を確認した。
+  camera/UI/tutorial/genre expectation の論点は既投稿側で扱うため、本候補は Phase 3 投稿対象にしない。
 
 ---
 

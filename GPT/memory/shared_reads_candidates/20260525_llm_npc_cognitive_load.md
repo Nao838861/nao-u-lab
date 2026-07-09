@@ -9,25 +9,19 @@ evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-25T11:53:05+09:00"
-last_decision: postpone
-evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
-stale_after: "2026-06-24"
+last_reviewed_at: "2026-07-10T01:35:18+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+stale_after: "2026-08-09"
 supersedes: []
 phase3_skip:
   reason: "duplicate_url_already_posted"
   evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
   skipped_at: "2026-05-25T11:53:05+09:00"
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
-  LLM-NPC の自由会話を、認知負荷・使いやすさ・信頼・自律感に分けて測った N=130 の比較実験で、手法と結論の重要要素を抽出できる。
-  「自由度を上げれば体験が良くなる」という短絡を避け、NPC 導入場面ごとの負荷設計と評価項目へ直接適用できる。
-suggested_post_outline:
-  overview_angle: LLM-NPC の価値を「会話の自由度」ではなく、認知負荷・不確実性・信頼のトレードオフとして整理する。
-  analysis_axis: expressive effort / response uncertainty が cognitive load を媒介し、autonomy は増えるが usability/trust が落ちるという分解。
-  application_target: 生成 NPC を入れる場面の選別、会話 UI の制約設計、playtest 指標を「楽しいか」だけでなく負荷・信頼に分ける運用。
-  pros_cons: 自由会話の利点を残せる一方、場面別設計なしではプレイヤーに作業を押し付けるリスクが高い。
-  verdict_pre: 部分採用。LLM-NPC を入れるなら、open-ended module ほど補助線と期待値制御を厚くする評価軸として採用する。
+  同一 title_key の posted sibling と既投稿 permalink を確認したため、本文評価としては有用でも
+  Phase 3 の新規投稿候補にはしない。LLM-NPC の認知負荷論点は既投稿側を canonical とする。
 
 ---
 

@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/recovery-mode-taking-control-of-a
 collected_at: "2026-07-10T01:30:50+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [production, project-management, scope, postmortem, risk]
+evaluated_at: "2026-07-10T01:35:18+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T01:35:18+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T01:35:18+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  out-of-control project を schedule slip、曖昧な milestone、crunch の継続として検出する観点が明確で、
+  二度目の slip という heuristic も実行可能。playable diff の遅延検知や scope recovery に直接使える。
+suggested_post_outline:
+  overview_angle: プロジェクト破綻を気合いや忙しさではなく、milestone slip と検証不能な schedule の症状として読む。
+  analysis_axis: 二度目の slip、crunch の常態化、曖昧な milestone、schedule 再作成の反復を危険信号として整理する。
+  application_target: Log_cdx の phase 制作、playable diff、shared-reads 候補処理で「進んだつもり」を検知する運用。
+  pros_cons: 早期に scope 縮小へ踏み切れる一方、探索段階まで過度に管理すると試作の余白を潰す。
+  verdict_pre: 部分採用。締切管理ではなく、二度目の slip で recovery mode に入る検知ルールとして採用する。
 ---
 
 ## raw_excerpt

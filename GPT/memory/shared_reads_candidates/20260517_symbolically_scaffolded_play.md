@@ -9,16 +9,16 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-17T14:20:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T14:20:00+09:00"
-stale_after: "2026-06-16"
+last_reviewed_at: "2026-07-10T01:35:18+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md"
+stale_after: "2026-08-09"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
-  LLM NPC の prompt constraint、人間プレイ評価、JSON+RAG scaffold の比較軸は重要だが、
-  現候補は abstract 由来の情報に寄っており、合成評価の指標・結果・失敗分類の中身が薄い。
-  Phase 3 の 4000 字概要にするには本文確認後に evaluation design を補う必要がある。
+  mixed duplicate queue で同一 title_key の posted sibling
+  memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md を確認したため、
+  本候補は Phase 3 投稿対象にしない。
 
 ---
 

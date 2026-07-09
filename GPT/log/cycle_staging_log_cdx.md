@@ -17,6 +17,61 @@
 - 既存照合: RuleSmith / OmniGameArena / Runtime PCG / AutoUE / TITAN / AI Gamestore / Lap などは既存 candidate または atom があり、今回の新規候補から除外。
 
 ## Phase 2: 分析
+2026-07-10T01:35:18+09:00 log_cdx Phase 2 分析:
+
+```yaml
+total_candidates: 8
+pass:
+  - memory/shared_reads_candidates/20260710_phoneharness_mixed_action_agent_harness.md
+  - memory/shared_reads_candidates/20260710_recovery_mode_out_of_control_project.md
+fail:
+  - path: memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    reason: "戦術 agent 評価の発想は有用だが、現候補だけでは実験設定・結果・失敗例が薄く、4000字概要へ伸ばせない。"
+postpone:
+  - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md"
+  - path: memory/shared_reads_candidates/20260519_github_dungeons_repo_as_roguelike.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md"
+  - path: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+  - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md"
+  - path: memory/shared_reads_candidates/20260710_last_humble_bee_solo_dev_sanity.md
+    reason: "solo dev 実務論点はあるが、現候補は助言リスト寄りで、固有の制作判断・結果・失敗の密度が足りない。"
+stale_reviewed:
+  - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-09"
+  - path: memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    previous_status: needs_review
+    decision: fail
+    updated_stale_after: "2026-08-09"
+  - path: memory/shared_reads_candidates/20260519_github_dungeons_repo_as_roguelike.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-09"
+  - path: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-09"
+  - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-09"
+preflight:
+  duplicate_terminal_excluded:
+    - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+      terminal_path: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md
+    - path: memory/shared_reads_candidates/20260519_github_dungeons_repo_as_roguelike.md
+      terminal_path: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md
+    - path: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+      terminal_path: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md
+    - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+      terminal_path: memory/shared_reads_candidates/20260602_unique_mechanics_onboarding_barrier.md
+  note: "tools/shared_reads_duplicate_preflight.py は checkout に存在しなかったため、shared_reads_title_index.py の normalize_title_key と canonical/mixed queue を直接確認した。"
+```
+
 2026-07-09T23:52:00+09:00 log_cdx Phase 2 分析:
 
 ```yaml
