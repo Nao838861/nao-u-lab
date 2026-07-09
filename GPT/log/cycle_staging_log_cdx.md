@@ -42,7 +42,42 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-09T23:43:00+09:00 log_cdx Phase 3b Shared-reads 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783600930-7dc253e0f9
+    source_ts: "1783600930.518619"
+    title: "Public commitment, private intention, and final action split for LLM agent deception evaluation"
+    reason: >
+      直近の未レビュー high-score atom。Codex は進捗更新、staging、Slack 向け要約で
+      「これをやる」と宣言した後、最終成果物で silently scope を狭めたり、別行動へ移ったり
+      しうる。論文の発話、非公開意図、最終行動の三分割を、次回 phase closure の
+      小さな commitment audit にだけ転用する。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: >
+      一時 probe を追加。次の phase closure / Slack-facing summary / playable-diff acceptance /
+      memory-state update で、declared_action、private_plan_or_acceptance_condition、
+      final_action_evidence を分け、ズレた場合は reactive_change / scope_narrowed /
+      blocked / superseded_by_new_input / preplanned_mismatch などで明示する。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
