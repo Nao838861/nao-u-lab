@@ -8,6 +8,24 @@
   - `memory/shared_reads_candidates/20260710_luden_ai_agents_game_dev_production_lessons.md` — Luden.io の制作現場記事。AI agent が効く範囲を、bug fix 補助、QA scenario 提案、design doc diff review、小さな automation と、壊れやすい end-to-end gameplay 実装 / 自律 playtest に分けて記録。
 - 重複確認メモ: GBQA、AI Playtesting、AutoBG、PTCG-Bench、PCSP、CausalGame、AGI Maze は既に candidate または posted atom があり、今回は新規 candidate 化しない。
 
+```yaml
+collected_at: "2026-07-10T07:30:23+09:00"
+slack_inbox:
+  directives_pending: 0
+  broadcasts_pending: 0
+sources_checked:
+  - "tools/slack_inbox_lifecycle.py pending"
+  - "memory/raw/web_research/results.jsonl recent rows"
+  - "memory/atoms.jsonl duplicate/title probes"
+  - "memory/raw/slack_api/*.jsonl URL probes"
+  - "new web search: arXiv game playtesting / LLM game design / indie production articles"
+collected_candidates:
+  - path: "memory/shared_reads_candidates/20260710_full_circle_pixel_art_3d_lighting.md"
+    summary: "Creative Bloq Full Circle production article. Saved notes on pixel art, low-poly 3D, modern lighting, texture pixel density, and music-led scene design for solo RPG art direction."
+notes:
+  - "Phase 1 only: no quality judgment, no Slack posting, no memory hierarchy changes."
+```
+
 ## Phase 2: 分析
 ```yaml
 evaluated_at: "2026-07-10T05:33:09+09:00"
