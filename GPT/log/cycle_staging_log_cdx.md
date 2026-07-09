@@ -19,6 +19,22 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+2026-07-09T15:45:00+09:00 log_cdx Phase 2 判定:
+
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_revengebench_policy_reverse_engineering.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md / https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+  - path: memory/shared_reads_candidates/20260709_autobg_board_game_design_assistant.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md and canonical AutoBG posted group"
+  - path: memory/shared_reads_candidates/20260709_gameenginebench_coding_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260708_gameenginebench_unreal_cpp_runtime.md / https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783465097949229"
+stale_reviewed: []
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 

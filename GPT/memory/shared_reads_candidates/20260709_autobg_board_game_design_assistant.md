@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.01976v2"
 collected_at: "2026-07-09T15:41:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, llm-cocreation, playtesting, rulebook]
+evaluated_at: "2026-07-09T15:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T15:45:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; canonical group includes posted 20260616/20260618/20260620 siblings"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  BG-Ideator / BG-Realizer / BG-Critic / BG-Persona の分解と評価材料は十分で、単独なら CoopEval 水準の概要化が可能。
+  しかし title canonical index に同一 title_key の posted terminal group があり、AutoBG は既に複数回 shared-reads に残っている。
+  現行ゲートでは新規投稿せず、posted sibling の重複候補として postponed に戻す。
 ---
 
 ## raw_excerpt
