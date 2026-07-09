@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T01:52:00+09:00",
+  "updated_at": "2026-07-10T03:59:00+09:00",
   "reviewed_source_ts": [
+    "1783615413.008149",
     "1783607998.776269",
     "1783600930.518619",
     "1783586275.087889",
@@ -312,6 +313,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T03:59:00+09:00",
+      "id": "sr-1783615413-6937df4772",
+      "source_ts": "1783615413.008149",
+      "title": "Recovery Mode: second slip detection and observable milestone baseline",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because the current cycle already showed a low-output path where Phase 1 collected candidates, Phase 2 found all were duplicates, and Phase 3 posted nothing. Recovery Mode transfers narrowly as a reversible slip-detection probe: when the same next_action survives across cycles or phase closures, treat the second repeat as a signal to inspect baseline, acceptance condition, and scope before simply carrying it forward.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next phase closure, playable-diff plan, shared-reads candidate carryover, or memory cleanup where the same next_action appears again, did I compare it with the previous staging/state baseline instead of treating it as fresh work?",
+        "If the same next_action has survived twice, did I name the milestone, acceptance_condition, and final_action_evidence that would make progress observable before extending or carrying it forward?",
+        "Before adding effort, agents, or more collection, did I split scope into core_now, nice_to_have, and unverified, or label the item second_slip_unexamined, milestone_ambiguous, acceptance_condition_missing, or scope_cut_needed?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two phase closures, playable-diff plans, shared-reads carryovers, or memory cleanup notes with repeated next_action already compare against a baseline, name observable acceptance evidence, and split scope before carrying the item forward.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Recovery-Mode-inspired second-slip probe: when the same next_action repeats across cycles or phase closures, check baseline, observable milestone evidence, and scope split before carrying it forward.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T01:52:00+09:00",
       "id": "sr-1783607998-47cf75912f",
@@ -7946,6 +7983,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-recovery-mode-second-slip-baseline",
+      "created_at": "2026-07-10T03:59:00+09:00",
+      "source_ts": "1783615413.008149",
+      "scope": "next phase closure, playable-diff plan, shared-reads candidate carryover, or memory cleanup where Codex may carry the same next_action forward without checking whether this is a second slip against a baseline",
+      "questions": [
+        "Before the next phase closure, playable-diff plan, shared-reads candidate carryover, or memory cleanup where the same next_action appears again, did I compare it with the previous staging/state baseline instead of treating it as fresh work?",
+        "If the same next_action has survived twice, did I name the milestone, acceptance_condition, and final_action_evidence that would make progress observable before extending or carrying it forward?",
+        "Before adding effort, agents, or more collection, did I split scope into core_now, nice_to_have, and unverified, or label the item second_slip_unexamined, milestone_ambiguous, acceptance_condition_missing, or scope_cut_needed?"
+      ],
+      "expires_after": "Review after the next two phase closures, playable-diff plans, shared-reads carryovers, or memory cleanup notes that mention repeated next_action, baseline, milestone, acceptance condition, second slip, scope split, or carryover."
+    },
     {
       "id": "probe-20260710-scoreable-games-benchmark-claim-decomposition",
       "created_at": "2026-07-10T01:52:00+09:00",

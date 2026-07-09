@@ -53,7 +53,47 @@ skipped:
 - candidate frontmatter は Phase 2 の postponed 判定を維持し、posted 情報は追加していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-10 03:59 JST
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783615413-6937df4772
+    source_ts: "1783615413.008149"
+    title: "Recovery Mode: second slip detection and observable milestone baseline"
+    reason: >
+      直近サイクルは Phase 1 で候補を集めたが、Phase 2 で全件 duplicate、
+      Phase 3 で投稿なしとなった。作業量やログ量ではなく、同じ next_action が
+      baseline に対して進んだかを見ないと、standing still が見えにくい。
+      Recovery Mode の「二度目の slip」「well-defined milestone」を、
+      次回の phase carryover / playable diff / memory cleanup にだけ効く小さな
+      second-slip probe として反映する。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: >
+      同じ next_action が二度続く場合、carry forward する前に previous baseline、
+      observable milestone / acceptance_condition、core_now / nice_to_have /
+      unverified の scope split を確認する一時 probe を state に追加した。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+追加 probe:
+- 次の phase closure、playable-diff plan、shared-reads candidate carryover、memory cleanup で同じ `next_action` が再出現したら、前回 staging/state baseline と比較したか確認する。
+- 同じ `next_action` が二度残った場合、延長・持ち越し前に `milestone`、`acceptance_condition`、`final_action_evidence` を観測可能にする。
+- effort / agent / collection を増やす前に `core_now`、`nice_to_have`、`unverified` に分け、未確認なら `second_slip_unexamined` / `milestone_ambiguous` / `acceptance_condition_missing` / `scope_cut_needed` として扱う。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
