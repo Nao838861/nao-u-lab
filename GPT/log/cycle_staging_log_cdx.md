@@ -39,7 +39,17 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-07-10T07:39:07+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260710_full_circle_pixel_art_3d_lighting.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783636736001819"
+    char_count: 4295
+skipped: []
+notes:
+  - "Phase 2 pass candidate を最終確認し、Full Circle 記事は問題設定、制作手法、制約、適用先が投稿条件を満たすと判断。"
+  - "投稿前に shared_reads_policy.py と禁止語 rg を通過。post_slack_message_file.py の投稿後 verification も ok。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

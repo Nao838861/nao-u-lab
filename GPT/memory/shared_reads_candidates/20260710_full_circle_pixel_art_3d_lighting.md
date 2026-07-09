@@ -7,12 +7,17 @@ genre_tags: [game-design, art-direction, indie-dev, pixel-art, production]
 evaluated_at: "2026-07-10T07:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-10T07:44:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-10T07:44:00+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783636736.001819"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783636736001819"
+  char_count: 4295
+  posted_at: "2026-07-10T07:39:07+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-10T07:39:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783636736001819"
+next_action: none
 stale_after: "2026-08-09"
 supersedes: []
 gate_reason: "古典JRPGの表層再現ではなく、記憶の再構成、pixel sprite と low-poly 3D の整合、texture pixel density、64px sprite の差別化、非対称デザインの工数リスクまで制作判断として抽出できる。評価実験型の記事ではないが、小規模RPGの art direction と asset pipeline に直接適用でき、CoopEval 水準の概要を書く材料がある。"
