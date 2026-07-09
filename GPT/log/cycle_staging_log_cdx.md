@@ -13,7 +13,21 @@
 - `memory/shared_reads_candidates/20260709_human_ai_collaborative_game_testing_vlm.md` — VLM 補助ゲームテストで、人間検証と AI hallucination の影響まで扱う実験報告。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 4
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_gui_agents_continual_game_generation.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md; memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md; memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md"
+  - path: memory/shared_reads_candidates/20260709_meeplelm_virtual_playtester.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_meeplelm_virtual_playtester.md; memory/shared_reads_candidates/20260620_meeplelm_virtual_playtester.md"
+  - path: memory/shared_reads_candidates/20260709_rulesmith_automated_game_balancing.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md; memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260604_rulesmith_multi_agent_balancing.md"
+  - path: memory/shared_reads_candidates/20260709_human_ai_collaborative_game_testing_vlm.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260611_human_ai_collab_game_testing_vlm.md"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

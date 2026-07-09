@@ -4,6 +4,20 @@ url: https://arxiv.org/html/2602.06232v1
 collected_at: 2026-07-09T19:29:15+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, balancing, llm-agents, simulation, pcg]
+evaluated_at: 2026-07-09T19:32:52+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-09T19:32:52+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md; memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260604_rulesmith_multi_agent_balancing.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  title_key が posted sibling を含む mixed duplicate group に一致する。
+  バランス調整への適用性はあるが、同一主題の投稿済み候補があるため Phase 3 には送らない。
 ---
 
 ## raw_excerpt

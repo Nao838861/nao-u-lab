@@ -4,6 +4,20 @@ url: https://arxiv.org/html/2601.07251v2
 collected_at: 2026-07-09T19:29:15+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, board-games, virtual-playtesting, player-persona, mda]
+evaluated_at: 2026-07-09T19:32:52+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-09T19:32:52+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_meeplelm_virtual_playtester.md; memory/shared_reads_candidates/20260620_meeplelm_virtual_playtester.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  title canonical index で best_status: posted の terminal duplicate group に一致する。
+  既投稿済みのため、本文評価を積み増さず postponed duplicate として閉じる。
 ---
 
 ## raw_excerpt
