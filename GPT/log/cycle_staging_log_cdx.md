@@ -4,6 +4,14 @@
 
 ## Phase 1: 情報収集
 
+2026-07-10 03:43 JST 収集:
+- `memory/shared_reads_candidates/20260710_autobg_board_game_design_assistant.md` — ボードゲーム制作を ideation、rulebook 生成、critic 改訂、persona feedback まで統合する AutoBG 論文。
+- `memory/shared_reads_candidates/20260710_agi_maze_world_modeling_agents.md` — 部分観測迷路で LLM agent の世界状態表現と memory を測る AGI Maze 論文。
+- `memory/shared_reads_candidates/20260710_causalgame_llm_agents_in_games.md` — ドローン設計ゲームで causal thinking、観測バイアス、tool-use shortcut を測る CausalGame 論文。
+
+確認メモ:
+- `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。
+- 既存 `web_research` の最近行と新規 web 検索から候補化。品質判定と投稿判断は未実施。
 2026-07-09T23:48+09:00 log_cdx Phase 1 収集:
 
 - `memory/shared_reads_candidates/20260709_scoreable_games_negotiation_benchmark_repro.md` — Scoreable Games 交渉 benchmark の再現性・metric 妥当性を扱う arXiv 論文。multi-agent negotiation 評価の候補材料。
