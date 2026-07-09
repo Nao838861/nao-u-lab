@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.29653"
 collected_at: "2026-07-09T13:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, card-game, self-evolving-agent, harness]
+evaluated_at: "2026-07-09T13:47:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T13:47:38+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  title canonical index に同一 title_key の posted canonical 判定があり、Phase 3 投稿対象にしない。
+  harness ablation と self-evolution 評価は重要だが、既存投稿済み group の重複候補として閉じる。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2606.09826"
 collected_at: "2026-07-09T13:44:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, agent-evaluation, vlm-agent, ue5, playtesting, harness]
+evaluated_at: "2026-07-09T13:47:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T13:47:38+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md"
+next_action: none
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  mixed duplicate queue に同一 title_key の posted sibling があり、Phase 3 投稿対象にしない。
+  IDC と held-out variant の論点は有用だが、既に posted draft があるため今回候補は重複として保留する。
 ---
 
 ## raw_excerpt

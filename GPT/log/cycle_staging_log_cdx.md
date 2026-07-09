@@ -10,7 +10,23 @@
   - pending確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に pending 行なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-07-09T13:47:38+09:00"
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260709_omnigamearena_vlm_game_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md"
+  - path: memory/shared_reads_candidates/20260709_ptcg_bench_self_evolving_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+  - path: memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md; memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md; memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md; memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md"
+stale_reviewed: []
+notes:
+  - "stale_review_batch は staging に存在しなかったため、新規 candidate 3 件だけを評価した。"
+  - "tools/shared_reads_duplicate_preflight.py は存在しなかったため、title canonical index と mixed duplicate queue を直接照合した。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
