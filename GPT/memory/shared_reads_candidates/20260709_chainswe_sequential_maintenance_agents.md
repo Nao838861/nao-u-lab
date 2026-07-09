@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.02606v1"
 collected_at: "2026-07-09T17:29:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, coding-agent, workflow, maintenance, game-dev-process]
+evaluated_at: "2026-07-09T17:32:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-09T17:32:45+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-09T17:32:45+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  単発 issue benchmark が実運用の保守連鎖を消してしまうという問題設定が強く、
+  sequential / dependent bug fix で agent 性能が崩れる評価結果も投稿水準に足る。
+  playable diff を積み重ねるゲーム制作サイクルの regression 評価へ直接転用できる。
+suggested_post_outline:
+  overview_angle: "coding agent 評価を isolated bug fix から、同じ codebase 上で続く保守連鎖へ移す論文として読む。"
+  analysis_axis: "shared codebase、issue chain、cumulative dependencies、chain length に対する性能劣化を軸に整理する。"
+  application_target: "game/ の v001 から v0xx までの playable diff が、前回修正の副作用で落ちていないかを見る連続評価設計。"
+  pros_cons: "利点は長期保守の劣化を測れる点。制約は issue chain 作成コストと、ゲームの感触品質を数値化する追加 harness が必要な点。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2607.04470v1"
 collected_at: "2026-07-09T17:29:02+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, reinforcement-learning, reward-design, multi-agent, evaluation]
+evaluated_at: "2026-07-09T17:32:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T17:32:45+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T17:32:45+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: >-
+  LLM 生成 reward の drift と stationarity 破壊という論点は有用だが、中心は
+  cooperative MARL training の安定化で、現在の Log_cdx の playable diff / headless
+  evaluator へは一段抽象化が必要。関連候補と束ねて reward-freeze 運用として再評価する。
 ---
 
 ## raw_excerpt
