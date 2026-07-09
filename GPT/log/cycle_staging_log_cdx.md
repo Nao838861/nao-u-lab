@@ -89,6 +89,24 @@ preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
+2026-07-10T01:43:38+09:00 log_cdx Phase 3 Shared-reads 投稿:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_phoneharness_mixed_action_agent_harness.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783615412040899"
+    char_count: 3949
+  - candidate: memory/shared_reads_candidates/20260710_recovery_mode_out_of_control_project.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783615413008149"
+    char_count: 3512
+skipped: []
+review:
+  required_format: pass
+  banned_phrase_check: pass
+  final_decision: posted
+  note: "PhoneHarness は mixed action surface と observable side effects の harness 設計、Recovery Mode は二度目の slip と well-defined milestone による制作遅延検知として、それぞれ Log_cdx 自身の分析に置換して投稿した。"
+```
+
 2026-07-09T23:40:11+09:00 log_cdx Phase 3 Shared-reads 投稿:
 
 ```yaml
