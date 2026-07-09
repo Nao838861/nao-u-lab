@@ -7,14 +7,19 @@ genre_tags: [agent-memory, procedural-memory, harness, game-ai, automated-playte
 evaluated_at: "2026-07-09T11:46:54+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T11:46:54+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T11:46:54+09:00"
-next_action: post_to_shared_reads
 stale_after: "2026-08-08"
 supersedes: []
+posted:
+  ts: "1783565718.920909"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565718920909"
+  char_count: 4086
+  posted_at: "2026-07-09T11:55:46+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T11:55:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565718920909"
+next_action: none
 gate_reason: >-
   問題設定は「明示テキスト手順だけでは継続的 agent の procedural skill が行動へ接続しない」という点で明確。
   contrastive experience から activation steering vector を抽出する中核手法、複数 benchmark と表現分析の評価、明示 workflow との併用結論まで candidate 本文から追える。

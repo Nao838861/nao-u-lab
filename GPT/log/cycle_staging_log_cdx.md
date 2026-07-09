@@ -33,7 +33,31 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260709_neural_procedural_memory_agents.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565718920909"
+    ts: "1783565718.920909"
+    char_count: 4086
+    final_decision: posted
+    source_checked:
+      - "https://arxiv.org/abs/2606.29824"
+      - "https://arxiv.org/pdf/2606.29824"
+  - candidate: memory/shared_reads_candidates/20260709_clqt_closed_loop_agent_diagnosis.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565719541469"
+    ts: "1783565719.541469"
+    char_count: 4495
+    final_decision: posted
+    source_checked:
+      - "https://arxiv.org/abs/2606.29771"
+      - "https://arxiv.org/pdf/2606.29771"
+skipped: []
+review:
+  format: "passed: starts with 概要 section and ends with URL section"
+  forbidden_terms: "passed: no Mir/Ash/Log には/みんな/問いかけ/検討してほしい/返してほしい in draft body"
+  url_placement: "passed: one URL only in final URL section for each post"
+  note: "chat.getPermalink via current JSON POST helper returned invalid_arguments, so permalinks were constructed from channel C0AN2FEHEJJ and returned ts."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

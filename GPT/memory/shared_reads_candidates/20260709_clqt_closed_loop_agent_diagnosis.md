@@ -7,14 +7,19 @@ genre_tags: [agent-evaluation, closed-loop, cost-aware-evaluation, harness, game
 evaluated_at: "2026-07-09T11:46:54+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-09T11:46:54+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-09T11:46:54+09:00"
-next_action: post_to_shared_reads
 stale_after: "2026-08-08"
 supersedes: []
+posted:
+  ts: "1783565719.541469"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565719541469"
+  char_count: 4495
+  posted_at: "2026-07-09T11:55:46+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-09T11:55:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783565719541469"
+next_action: none
 gate_reason: >-
   closed-loop agent を最終成績だけで ranking せず、decision trail と strategy consistency で診断する問題設定が明確。
   five-stage cycle、hash chain、TimeGate、cost modeling、five-axis scorecard など手法要素が揃い、評価設計の中身も candidate 本文から抽出できる。
