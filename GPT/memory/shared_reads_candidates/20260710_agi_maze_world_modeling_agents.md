@@ -4,6 +4,21 @@ url: "https://arxiv.org/pdf/2607.00627"
 collected_at: "2026-07-10T03:43:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, world-model, maze, memory, game-benchmark]
+evaluated_at: "2026-07-10T03:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-10T03:45:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783322184028869"
+next_action: none
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  部分観測 maze、world state representation、working memory baseline、step budget の失敗分析は、ゲーム制作の headless probe に接続できる。
+  しかし同一 title の 20260706 候補が既に posted で、mixed duplicate queue も terminal posted sibling を示している。
+  新規の Phase 3 投稿には回さず、posted duplicate title sibling として postponed にする。
 ---
 
 ## raw_excerpt

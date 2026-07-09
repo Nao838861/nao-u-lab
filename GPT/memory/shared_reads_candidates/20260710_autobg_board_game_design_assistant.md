@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2606.01976"
 collected_at: "2026-07-10T03:43:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, llm, playtesting, human-ai-collaboration]
+evaluated_at: "2026-07-10T03:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-10T03:45:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; canonical posted group includes 20260616/20260618/20260620 siblings"
+next_action: none
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  BG-Ideator / BG-Realizer / BG-Critic / BG-Persona の分解、2.2K rulebooks、180K reviews、207 held-out games という材料は単独なら十分に概要化できる。
+  ただし title canonical index に同一 title_key の posted terminal sibling があり、AutoBG は既に #shared-reads に残っている。
+  Phase 3 の新規投稿対象にはせず、今回の候補は posted duplicate title sibling として postponed に閉じる。
 ---
 
 ## raw_excerpt

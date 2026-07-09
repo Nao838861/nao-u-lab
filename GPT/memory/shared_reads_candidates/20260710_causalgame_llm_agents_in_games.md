@@ -4,6 +4,21 @@ url: "https://arxiv.org/html/2607.04293v1"
 collected_at: "2026-07-10T03:43:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, causal-reasoning, game-benchmark, llm, tool-use]
+evaluated_at: "2026-07-10T03:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-10T03:45:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260708_causalgame_causal_thinking_games.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783472248439359"
+next_action: none
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  selection bias / measurement error / hidden confounders をゲーム内実験に入れ、outcome と causal-reasoning rubric を分ける設計は有用で、概要化も可能。
+  ただし同一 title の 20260708 候補が既に posted で、posted draft も残っている。
+  Phase 3 の再投稿は避け、posted duplicate title sibling として postponed に閉じる。
 ---
 
 ## raw_excerpt
