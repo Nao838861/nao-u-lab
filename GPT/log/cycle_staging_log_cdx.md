@@ -80,7 +80,54 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "git gate: branch codex/phase2-analysis-20260708 は origin と ahead/behind なし。開始時点の既存差分は多数あり、今回の対象外として保持。"
+  - "memory/MEMORY.md を UTF-8 明示読みで確認。代表語 probe は 記憶 / ゲーム設計 / 敵パターン が FOUND、評価軸 は現行 index 本文に語として存在せず MISSING。source file の mojibake 破損は確認されなかった。"
+  - "memory/MEMORY.md の index link を確認。実ファイル参照 memory/atoms.jsonl と memory/raw/ は存在。backtick 内の command/tag 由来の擬似リンクを除き、broken file link は検出なし。"
+  - "memory/atoms.jsonl を確認。atoms=2649、duplicate id=0、duplicate normalized/content hash=0。"
+  - "memory/raw/ で mtime 30日以上の raw file は 87 件。主な対象は sync_state.txt、slack_archive/shared-reads.jsonl、web_research/phase3_* の旧一次資料。今回は archive 実施なし。"
+  - "memory/shared_reads_candidates/ lifecycle 内訳: posted=381, postponed=333, failed=113, ready_to_post=10, needs_review=13, status missing=14。postponed/needs_review かつ stale_after<=2026-07-09 は 185 件。"
+  - "tools/build_shared_reads_mixed_duplicate_queue.py を再実行。memory/shared_reads_mixed_duplicate_queue.jsonl は 64 group。"
+  - "tools/build_shared_reads_stale_triage_queue.py --today 2026-07-09 を再実行。memory/shared_reads_stale_triage_queue.jsonl は 50 rows。"
+  - "tools/slack_inbox_lifecycle.py pending を確認。slack_directives.jsonl / slack_broadcasts.jsonl とも pending 0 件のため handled 更新対象なし。"
+  - "tools/audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 を確認。未登録 duplicate group は mixed status が中心で、terminal-only group の自動 close 対象としては扱わない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  overdue_open_candidates: 185
+  regenerated_queue_rows: 50
+  handoff_count: 5
+  note: "Phase 2 で少数処理できるよう、stale triage queue の上位 5 件だけを渡す。いずれも duplicate_group_key を持つため mixed duplicate 解消候補として扱う。candidate 本体は Phase 2 の評価結果まで変更しない。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "age_days=25; game_transfer_value=high; mixed duplicate group present; hidden-role / deception / degenerate strategy 排除がゲーム設計素材として具体的。status_counts={failed:1, posted:1, postponed:2}; terminal_paths=[20260528_liecraft_deception_game_benchmark.md, 20260605_liecraft_hidden_role_llm_eval.md]; open_paths=[20260515_liecraft_deception_hidden_role.md, 20260708_liecraft_deception_hidden_role_agents.md]"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; game_transfer_value=high; mixed duplicate group present; procedural personas / MCTS / synthetic playtester が headless 評価の複数プレイヤー傾向拡張に直結。status_counts={posted:2, postponed:5}; terminal_paths=[20260515_automated_playtesting_procedural_personas.md, 20260625_procedural_personas_playtesting.md]; open_paths は同 group に 5 件。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "age_days=24; game_transfer_value=high; mixed duplicate group present; role-sensitive prompt scaffold は NPC 制作へ接続するが、評価粒度確認が必要。status_counts={posted:1, postponed:3}; terminal_paths=[20260515_symbolically_scaffolded_play.md]; open_paths=[20260516_symbolically_scaffolded_play.md, 20260517_symbolically_scaffolded_play.md, 20260525_symbolically_scaffolded_play.md]"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; game_transfer_value=high; mixed duplicate group present; 12 game / MCP / trajectories / leaderboard / battle arena の要素列挙から、実験設計と失敗様式を本文確認で補う必要がある。status_counts={posted:1, postponed:1}; terminal_paths=[20260618_orak_diverse_video_game_agents.md]; open_paths=[20260517_orak_diverse_video_game_agents.md]"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "age_days=23; game_transfer_value=high; mixed duplicate group present; emotional north star / action verbs / paper prototype の流れは制作に使いやすいが、一次資料密度と投稿価値の再判定が必要。status_counts={posted:1, postponed:1}; terminal_paths=[20260606_gdc2026_stone_librande_game_design_workshop.md]; open_paths=[20260517_stone_librande_paper_prototype_emotional_goal.md]"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
