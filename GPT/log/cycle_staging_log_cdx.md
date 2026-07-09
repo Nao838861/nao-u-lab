@@ -92,6 +92,58 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-07-09T17:53:40+09:00 Phase 4a 整理 + 問題抽出:
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, remote tracking は ahead/behind なし。開始時点の既存差分は多数あり、Phase 4a では戻さない。"
+  - "memory/MEMORY.md を UTF-8 明示で読み、代表語 probe は 記憶/ゲーム設計/敵パターン が取得可、評価軸 は本文に該当語なし。source file mojibake ではない。"
+  - "memory/MEMORY.md の atom id 参照 50 件を memory/atoms.jsonl と照合し、missing は 0 件。"
+  - "memory/atoms.jsonl 2649 行を JSON parse し、JSON error 0、duplicate id 0、rough content duplicate group 0。"
+  - "python tools/build_shared_reads_mixed_duplicate_queue.py を再生成し、memory/shared_reads_mixed_duplicate_queue.jsonl は 66 rows。"
+  - "python tools/build_shared_reads_stale_triage_queue.py --today 2026-07-09 を再生成し、memory/shared_reads_stale_triage_queue.jsonl は 50 rows。"
+  - "shared_reads candidate lifecycle 内訳: posted=382, postponed=337, failed=113, ready_to_post=10, needs_review=13, status空欄=74。postponed/needs_review かつ stale_after <= 2026-07-09 は 185 件。"
+  - "raw old file scan: memory/raw 配下で mtime 30日以上は 87 件。内訳は web_research=79, headless_eval=6, slack_archive=1, sync_state=1。今回は archive 実施なし。"
+  - "inbox lifecycle: slack_directives.jsonl pending=0, slack_broadcasts.jsonl pending=0。handled 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "memory/shared_reads_candidates/ 配下に lifecycle frontmatter の status 空欄が 74 件残っており、duplicate title audit の status_counts に空文字が混ざる。posted/failed/postponed の混在判定自体は sidecar で進められるが、open/terminal の分類根拠が読みづらい。"
+    severity: medium
+    evidence: "candidate lifecycle audit: status空欄=74。audit_shared_reads_title_duplicates の未登録 group 例では One Policy Infinite NPCs と MemoPilot に status_counts の空文字が混在。"
+    source_file_status: "UTF-8 parse 可能。candidate 本体の破損ではなく、frontmatter lifecycle 欄の未記入。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "Phase 2 が stale/duplicate candidate を少数再評価する時、既に閉じた候補か再評価対象かの判定が濁り、ゲーム制作へ転用すべき高価値候補の優先順位が下がる可能性がある。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale queue top。duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models。age_days=25、game_transfer_value=high、recommended_review_action=merge_duplicate。隠れ役職/欺瞞/協力と裏切りの評価素材としてゲーム設計転用価値が高い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue top。duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics。age_days=24、game_transfer_value=high、recommended_review_action=merge_duplicate。headless 評価を player persona 別に拡張する判断へ直結する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale queue top。duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue。age_days=24、game_transfer_value=high、recommended_review_action=merge_duplicate。NPC role prompt と制約 scaffold の具体確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue top。duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games。age_days=23、game_transfer_value=high、recommended_review_action=merge_duplicate。MCP/trajectories/leaderboard の評価設計を本文確認して転用可否を切る。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md"
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale queue top。duplicate_group_key=gdc 2026 riot games stone librande on game design。age_days=23、game_transfer_value=high、recommended_review_action=merge_duplicate。emotional north star と紙プロトタイプ導線は有用だが一次資料密度確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
