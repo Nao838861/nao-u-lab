@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T07:56:43+09:00",
+  "updated_at": "2026-07-09T09:54:34+09:00",
   "reviewed_source_ts": [
+    "1780726900.026729",
     "1782428089.831069",
     "1782376813.513569",
     "1782384847.126309",
@@ -303,6 +304,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T09:54:34+09:00",
+      "id": "sr-1780726900-0e0713d0ae",
+      "source_ts": "1780726900.026729",
+      "title": "tokoroten replayability 5-play threshold and Shikhondo one-sentence core tension",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work can still stack mechanics, evaluation layers, and replay-depth assumptions before naming how many plays a normal player or validation route is expected to survive. The transferable point is narrow: separate run-1 core readability from optional depth that only emerges after several repeats, and avoid treating designer-depth as player-facing evidence. Existing probes cover runtime integration, traces, composition depth, and style adherence, but not the assumed replayability budget that determines whether deeper layers are reachable. Keep this reversible and scoped to playable prototypes and game evaluation notes.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 3,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable prototype, game README or design note, headless/browser evaluation, or game acceptance note, did I name the expected replayability budget N, such as one run, three attempts, five attempts, or practice-heavy, instead of assuming infinite designer replay?",
+        "Did I separate the run-1 core experience from optional depth that requires N+1 or repeated mastery, such as combo layers, resource loops, hidden scoring, advanced movement, or late-stage strategy?",
+        "If a mechanic, acceptance criterion, or memory claim depends on repeated play, did I mark whether the evidence is within_budget, optional_depth, replayability_unverified, or designer_depth_only before using it to justify added complexity?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-prototype or game-evaluation notes already name expected replayability budget N, separate run-1 core from optional repeat-play depth, and label repeated-play assumptions before adding mechanics or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible replayability-budget probe: name expected play-count N, separate first-run core from optional repeat-play depth, and label mechanics that rely on repeated play before accepting added complexity.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-06-26T14:02:56+09:00",
       "id": "sr-1780610351-1622b4d8a0",
@@ -7613,6 +7650,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-replayability-budget-core-depth",
+      "created_at": "2026-07-09T09:54:34+09:00",
+      "source_ts": "1780726900.026729",
+      "scope": "next playable prototype, game README or design note, headless/browser evaluation, or game acceptance note where Codex may assume infinite designer replay or justify added complexity with depth that normal players may not reach",
+      "questions": [
+        "Before the next playable prototype, game README or design note, headless/browser evaluation, or game acceptance note, did I name the expected replayability budget N, such as one run, three attempts, five attempts, or practice-heavy, instead of assuming infinite designer replay?",
+        "Did I separate the run-1 core experience from optional depth that requires N+1 or repeated mastery, such as combo layers, resource loops, hidden scoring, advanced movement, or late-stage strategy?",
+        "If a mechanic, acceptance criterion, or memory claim depends on repeated play, did I mark whether the evidence is within_budget, optional_depth, replayability_unverified, or designer_depth_only before using it to justify added complexity?"
+      ],
+      "expires_after": "Review after the next two playable-prototype or game-evaluation notes that mention replayability, repeated play, run-1 core, optional depth, mastery, combo layers, advanced mechanics, hidden scoring, acceptance criteria, or designer-depth assumptions."
+    },
     {
       "id": "probe-20260626-mindstudio-executable-branch-preview",
       "created_at": "2026-06-26T11:54:53+09:00",
