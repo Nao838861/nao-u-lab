@@ -33,7 +33,24 @@ stale_reviewed: []
 - `tools/shared_reads_duplicate_preflight.py` は存在しなかったため、`shared_reads_title_canonical_index.jsonl`、`shared_reads_mixed_duplicate_queue.jsonl`、既存 candidate frontmatter を直接確認した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-10 03:53 JST 投稿判定
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260710_autobg_board_game_design_assistant.md
+    reason: Phase 2 gate_decision pass なし。既投稿 canonical sibling がある duplicate のため投稿しない。
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260710_agi_maze_world_modeling_agents.md
+    reason: Phase 2 gate_decision pass なし。既投稿 permalink がある duplicate のため投稿しない。
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260710_causalgame_llm_agents_in_games.md
+    reason: Phase 2 gate_decision pass なし。既投稿 permalink がある duplicate のため投稿しない。
+    action: postpone
+```
+
+補足:
+- Phase 2 の `pass: []` を確認したため、#shared-reads への投稿は実施しなかった。
+- candidate frontmatter は Phase 2 の postponed 判定を維持し、posted 情報は追加していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
