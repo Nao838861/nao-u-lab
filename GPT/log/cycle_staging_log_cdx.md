@@ -238,6 +238,70 @@ stale_review_batch:
     status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
 ```
 
+2026-07-09 21:47 JST log_cdx Phase 4a 再監査。
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, origin 同期済み。開始時点の既存差分・未追跡ファイル多数を確認し、今回の変更対象は staging と再生成 sidecar queue に限定。"
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得。source file 破損なし。"
+  - "memory/MEMORY.md: index 行の atom 参照 50 件を memory/atoms/index.jsonl と照合し missing 0 件。Markdown local link は 0 件で broken link なし。"
+  - "memory/atoms.jsonl: 2651 行、JSON parse error 0、duplicate id 0、normalized/content hash duplicate group 0。"
+  - "memory/raw/: 30 日以上 mtime がない file は 87 件。例: memory/raw/slack_archive/shared-reads.jsonl, memory/raw/web_research/1811.06962.pdf, memory/raw/headless_eval/*.jsonl。Phase 4a では archive 実行せず候補確認のみ。"
+  - "shared_reads lifecycle: posted=383, postponed=344, failed=115, ready_to_post=10, needs_review=13, blank=12。README.md を除く status 空欄 candidate は 11 件。postponed/needs_review かつ stale_after <= 2026-07-09 は 180 件。"
+  - "sidecar 再生成: tools/build_shared_reads_mixed_duplicate_queue.py -> 67 rows, tools/build_shared_reads_stale_triage_queue.py --today 2026-07-09 -> 50 rows。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で slack_directives / slack_broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260709-03
+    description: "shared_reads_candidates に lifecycle status が空の candidate が 11 件残っている。Phase 2 未処理または評価途中の候補が stale / terminal queue の集計で blank として混ざる。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260518_biped_rational_design_postmortem.md, memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md, memory/shared_reads_candidates/20260627_memopilot_test_time_learning_game_agents.md, memory/shared_reads_candidates/20260628_cross_device_motion_interaction.md, memory/shared_reads_candidates/20260706_conversational_pcg_generators.md ほか。candidate_status_counts blank=12 including README.md。"
+    source_file_status: "UTF-8 読み取り OK。frontmatter の破損ではなく status / candidate_status 未設定。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "status 未設定の候補は posted/failed/postponed/needs_review の lifecycle から外れ、ゲーム制作に使える資料を Phase 2 が再評価すべきかどうか曖昧になる。"
+  - id: ISS-4A-20260709-04
+    description: "shared-reads の duplicate title group が mixed status のまま残り、unindexed duplicate audit で posted / failed / postponed / blank が混在する大 group が複数ある。"
+    severity: medium
+    evidence: "memory/shared_reads_mixed_duplicate_queue.jsonl rows=67。audit_shared_reads_title_duplicates --unindexed-only --limit 20 で One Policy Infinite NPCs count=11 status_counts={blank:1, failed:3, posted:2, postponed:5}; LLM Game Development PX count=10; GUI Agents count=8; RuleSmith count=8。"
+    source_file_status: "UTF-8 読み取り OK。candidate source 破損ではなく lifecycle/canonical index と duplicate queue の未整理。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "同じ論文・記事の候補が複数回 open backlog に残ると、Phase 2 の少数再評価枠が重複処理に使われ、次のゲーム制作へ転用すべき新規知見への導線が埋もれる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "status 空欄と mixed duplicate は既存の stale_triage_queue / mixed_duplicate_queue で少数 handoff できる運用課題。新しい仕組みの検討より Phase 2 での再評価と terminal 化が先。"
+stale_review_backlog:
+  total_due_postponed_or_needs_review: 180
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 67
+  handoff_count: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue。NPC prompt constraint / 人間プレイ評価 / synthetic evaluation の比較軸は有用だが、評価指標・結果・失敗分類の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    status: needs_review
+    stale_after: "2026-06-17"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=large language models as pokemon battle agents strategic play and content generation。戦略プレイと content generation の両面を持つが mixed duplicate group の代表確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260519_github_dungeons_repo_as_roguelike.md
+    status: postponed
+    stale_after: "2026-06-18"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=dungeons desktops building a procedurally generated roguelike with github copilot cli。commit SHA seed / deterministic PCG / BSP は具体的だが、ゲーム設計上の評価と調整の本文補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260525_llm_npc_cognitive_load.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=the double edged sword of open ended interaction how llm driven npcs affect players cognitive load and gaming experience。LLM-NPC の自由会話を認知負荷・信頼・自律感へ分けて測る導線があり、NPC 導入判断に直結。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260525_unique_mechanics_barrier.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=the more unique or complicated your mechanics are the more barriers you make the player have to clear to enjoy your game。独自 mechanics と camera/UI/tutorial/genre expectation の衝突を整理できるが、一次情報から失敗構造を補強する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
