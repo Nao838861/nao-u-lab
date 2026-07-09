@@ -49,6 +49,35 @@ reason: "Phase 2 の gate_decision: pass が 0 件のため、#shared-reads 投�
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+2026-07-09T16:10:00+09:00 log_cdx Phase 3b 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783565719-2f439285e2
+    source_ts: "1783565719.541469"
+    title: "CLQT: closed-loop agent evaluation as diagnosis rather than final-return ranking"
+    reason: "最終 clear/pass/post 結果や aggregate score だけで評価を閉じる癖を抑え、後からどの判断 round / process axis が成功・失敗を作ったかを再計算できる形に寄せるため。既存 probe は runtime integration や causal outcome 分離を扱うが、評価ログ自体の診断可能性はまだ薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "CLQT 由来の診断評価 probe を追加。final score / pass-fail / posted-skipped の前に、最小 decision trail と process axis を残し、結果だけしかない場合は outcome_only_ranking 等でラベルする。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

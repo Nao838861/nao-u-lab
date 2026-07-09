@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T13:50:48+09:00",
+  "updated_at": "2026-07-09T16:10:00+09:00",
   "reviewed_source_ts": [
+    "1783565719.541469",
     "1779166310.911939",
     "1783358588.917439",
     "1780726900.026729",
@@ -306,6 +307,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T16:10:00+09:00",
+      "id": "sr-1783565719-2f439285e2",
+      "source_ts": "1783565719.541469",
+      "title": "CLQT: closed-loop agent evaluation as diagnosis rather than final-return ranking",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game and shared-reads work can still treat a final clear/pass/post result, aggregate score, or high recall as enough evidence. CLQT transfers narrowly as a diagnostic-evaluation probe: preserve a recomputable decision trail and separate outcome from process axes before changing design, posting priority, memory, or acceptance criteria. Existing probes cover runtime integration and causal outcome claims, but not the smaller question of whether the evaluation log itself can localize which round or axis produced the success or failure. Keep it reversible and scoped to evaluations that would otherwise collapse to one score or pass/fail.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless/browser game evaluation, shared-reads candidate gate, or memory-routing note that reports a final score, pass/fail, posted/skipped result, or aggregate quality label, did I preserve a minimal decision trail for at least one decisive round: visible_state or input evidence, available_options, chosen_action or judgment, reason_short, state_delta or outcome, cost or constraint, and failure_tag if any?",
+        "Did I separate the final outcome from at least one process diagnostic axis, such as state-action coherence, signal acuity, post-failure composure, constraint discipline, or seed/route reliability, instead of treating the aggregate result as the whole evaluation?",
+        "If only the final result is available, did I label the evidence as outcome_only_ranking, decision_trail_missing, process_axis_unverified, or recompute_unavailable before changing design, posting priority, memory structure, or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-diff, headless/browser evaluation, shared-reads candidate, or memory-routing notes that report final outcomes already preserve a minimal decision trail and at least one process diagnostic axis before changing design, posting priority, memory, or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible CLQT-inspired diagnostic-evaluation probe: preserve a minimal decision trail, separate aggregate outcomes from process axes, and label outcome-only evidence before using a score or pass/fail result to drive changes.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T13:50:48+09:00",
       "id": "sr-1779166310-b2e905889a",
@@ -7724,6 +7761,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-clqt-diagnostic-decision-trail",
+      "created_at": "2026-07-09T16:10:00+09:00",
+      "source_ts": "1783565719.541469",
+      "scope": "next playable diff, headless/browser game evaluation, shared-reads candidate gate, or memory-routing note where Codex may treat a final score, pass/fail, posted/skipped result, or aggregate quality label as enough evidence without localizing the process that produced it",
+      "questions": [
+        "Before the next playable diff, headless/browser game evaluation, shared-reads candidate gate, or memory-routing note that reports a final score, pass/fail, posted/skipped result, or aggregate quality label, did I preserve a minimal decision trail for at least one decisive round: visible_state or input evidence, available_options, chosen_action or judgment, reason_short, state_delta or outcome, cost or constraint, and failure_tag if any?",
+        "Did I separate the final outcome from at least one process diagnostic axis, such as state-action coherence, signal acuity, post-failure composure, constraint discipline, or seed/route reliability, instead of treating the aggregate result as the whole evaluation?",
+        "If only the final result is available, did I label the evidence as outcome_only_ranking, decision_trail_missing, process_axis_unverified, or recompute_unavailable before changing design, posting priority, memory structure, or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two evaluation notes that mention final score, pass/fail, posted/skipped, aggregate quality, decision trail, process axis, recompute, outcome-only ranking, coherence, acuity, composure, discipline, or reliability."
+    },
     {
       "id": "probe-20260709-agenticsts-bounded-memory-contract",
       "created_at": "2026-07-09T11:59:19+09:00",
