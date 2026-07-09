@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T05:48:00+09:00",
+  "updated_at": "2026-07-10T07:41:14+09:00",
   "reviewed_source_ts": [
+    "1783629584.800039",
     "1783615412.040899",
     "1783615413.008149",
     "1783607998.776269",
@@ -314,6 +315,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T07:41:14+09:00",
+      "id": "sr-1783629584-ae49b00bad",
+      "source_ts": "1783629584.800039",
+      "title": "AI agents in game development: real production lessons and failed experiments",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game-cycle work can still drift toward broad agent delegation or screenshot/browser/headless validation claims without first shaping the task into an LLM-readable artifact. The transferable point is narrow and reversible: before asking an agent, headless harness, or browser validation to judge a playable diff, separate the artifact type, task boundary, and stale-check for the scenario or representation.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless/browser game validation, design-doc review, QA scenario proposal, or bug-fix delegation, did I name the primary artifact_type as text_state, diff, replay, log, profiler_output, save_file, bug_packet, screenshot, or isolated_module?",
+        "Did I keep the agent task bounded to inspect, reproduce, propose_scenarios, review_diff, localize_fault, or verify_state_delta, instead of handing over open-ended gameplay design, scene editing, production art, or end-to-end feature implementation?",
+        "If a scenario, replay, fake input layer, or text representation is used as evidence, did I record source_diff_or_milestone, expected_state_delta, and stale_check, or label the result artifact_boundary_missing, open_ended_delegation, screenshot_overclaim, or scenario_staleness_unchecked?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable/headless/browser/design-doc validation notes already name artifact type, bounded task, and stale-check before claiming agent-assisted evidence or delegating work.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible Luden.io-inspired artifact-boundary probe: before agent-assisted game validation or delegation, name the LLM-readable artifact, bounded task, and scenario staleness check.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T05:48:00+09:00",
       "id": "sr-1783615412-bf71780655",

@@ -52,7 +52,38 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: "sr-1783629584-ae49b00bad"
+    source_ts: "1783629584.800039"
+    title: "AI agents in game development: real production lessons and failed experiments"
+    reason: "直近未レビューの score 13 atom。game-design / harness / agent / operation / evaluation を横断し、今回の Phase 1-3 が game production 記事を扱った直後なので、playable diff や headless 評価の delegation boundary に小さく反映しやすい。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "恒久ルールは増やさず、次の playable diff / headless-browser validation / design-doc review / QA scenario / bug-fix delegation で、agent に渡す artifact_type、bounded_task、scenario stale_check を分けて確認する probe を state に追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  adopted_probe:
+    questions:
+      - "次の playable diff、headless/browser game validation、design-doc review、QA scenario proposal、bug-fix delegation の前に、artifact_type を text_state / diff / replay / log / profiler_output / save_file / bug_packet / screenshot / isolated_module のどれかとして明示したか。"
+      - "agent task を inspect / reproduce / propose_scenarios / review_diff / localize_fault / verify_state_delta に bounded し、open-ended gameplay design、scene editing、production art、end-to-end feature implementation を丸投げしていないか。"
+      - "scenario、replay、fake input layer、text representation を evidence にする時、source_diff_or_milestone、expected_state_delta、stale_check を残したか。欠ける場合は artifact_boundary_missing / open_ended_delegation / screenshot_overclaim / scenario_staleness_unchecked とラベルする。"
+    withdrawal_condition: "次の 2 回の playable/headless/browser/design-doc validation notes が artifact type、bounded task、stale-check を自然に記録できていれば probe を撤退する。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
