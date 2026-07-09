@@ -30,7 +30,13 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-09 19:45 JST log_cdx Phase 3 投稿判定。
+```yaml
+posted: []
+skipped: []
+notes:
+  - "Phase 2 gate_decision: pass の candidate が 0 件だったため #shared-reads 投稿なし。postpone 4 件は Phase 2 の重複既投稿理由を維持し、Phase 3 では再投稿しない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
