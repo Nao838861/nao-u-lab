@@ -23,6 +23,13 @@ notes:
   - "Phase 1 のため品質判定、投稿文作成、記憶階層整理は行っていない。"
 ```
 
+
+2026-07-10 Phase 1 収集メモ (log_cdx):
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+- 既存 web_research / atoms / candidate を確認。PTCG-Bench、One Policy Infinite NPCs、Goal Playable Patterns、Procedural Personas、GUI Agents、MeepleLM、RuleSmith、GameGen-Verifier などは既に候補化または shared-reads 化済みだったため新規 candidate にはしない。
+- 追加 candidate: `memory/shared_reads_candidates/20260710_llm_urban_mobility_sim_decision_layer.md` - LLM を経路探索の置換ではなく、multi-agent simulation の replanning decision layer として使う候補。
+- 追加 candidate: `memory/shared_reads_candidates/20260710_memory_architecture_language_emergence.md` - signaling game で memory architecture が shared convention の安定性を左右する候補。
+- 追加 candidate: `memory/shared_reads_candidates/20260710_causalsteward_divide_conquer_causal_discovery.md` - 高次元ログから causal model を分割・分析・結合する human-in-the-loop agentic workflow 候補。
 ## Phase 2: 分析
 ```yaml
 analyzed_at: "2026-07-10T07:44:00+09:00"
