@@ -3,10 +3,18 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
+
 2026-07-09T23:48+09:00 log_cdx Phase 1 収集:
 
 - `memory/shared_reads_candidates/20260709_scoreable_games_negotiation_benchmark_repro.md` — Scoreable Games 交渉 benchmark の再現性・metric 妥当性を扱う arXiv 論文。multi-agent negotiation 評価の候補材料。
 - `memory/shared_reads_candidates/20260709_2026_game_design_manifesto.md` — KPI / UA funnel 主導の制作批判と、制作労働の可視化・indie-like discovery を掲げるゲームデザイン記事。
+
+### 2026-07-10T01:30:50+09:00 log_cdx Phase 1
+- `memory/shared_reads_candidates/20260710_phoneharness_mixed_action_agent_harness.md` - GUI/CLI/tool を混在させ、observable side effects と auditable trace で agent harness を評価する論文。
+- `memory/shared_reads_candidates/20260710_last_humble_bee_solo_dev_sanity.md` - solo dev の二作目 postmortem。制作継続、asset 活用、early demo、Steam page などの実務メモ。
+- `memory/shared_reads_candidates/20260710_recovery_mode_out_of_control_project.md` - out-of-control project を schedule slip と milestone 定義から検知する古典的 production 記事。
+- pending 確認: `tools/slack_inbox_lifecycle.py pending` で directives/broadcasts とも 0 件。
+- 既存照合: RuleSmith / OmniGameArena / Runtime PCG / AutoUE / TITAN / AI Gamestore / Lap などは既存 candidate または atom があり、今回の新規候補から除外。
 
 ## Phase 2: 分析
 2026-07-09T23:52:00+09:00 log_cdx Phase 2 分析:
