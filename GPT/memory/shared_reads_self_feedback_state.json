@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-09T17:41:29+09:00",
+  "updated_at": "2026-07-09T20:04:00+09:00",
   "reviewed_source_ts": [
+    "1783586275.170899",
     "1783428279.451079",
     "1783565719.541469",
     "1779166310.911939",
@@ -308,6 +309,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-09T20:04:00+09:00",
+      "id": "sr-1783586275-6ab7c8ac84",
+      "source_ts": "1783586275.170899",
+      "title": "ChainSWE: sequential dependent bug-fix chains for continuous maintenance evaluation",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase work and game-production work happen as chains on one repo, not isolated turns: Phase 1 candidate collection changes Phase 2 gating, Phase 3 posting decisions change Phase 3b memory feedback, and playable diffs carry assumptions from earlier builds. ChainSWE transfers narrowly as a chain-regression probe: before accepting a later step, name the prior assumptions being carried forward and check whether the current change broke them. Existing probes cover runtime integration and diagnostic trails, but not the smaller sequential-maintenance question of whether success in the current turn preserved the previous turn's premises.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next multi-step phase closure, playable diff, code patch, or memory cleanup that depends on previous work, did I name the chain_step, previous artifact or decision, current changed_system, and 1-3 carried_assumptions from the prior step?",
+        "Did I check the current goal plus at least one prior regression condition, such as previous candidate status, staging invariant, UI/HUD state, input route, evaluator selector, memory role, or acceptance criterion, instead of treating the current step's success as isolated evidence?",
+        "If the current step passes but prior assumptions were not checked, did I label the evidence as single_turn_success, chain_regression_unverified, context_carryover_missing, side_effect_unchecked, or assumption_broken before changing design, posting priority, memory state, or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two phase closures, playable diffs, code patches, or memory cleanup notes that depend on prior work already name carried assumptions and check at least one prior regression condition before claiming success or changing design, memory, posting priority, or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible ChainSWE-inspired chain-regression probe: name carried assumptions from the previous step, check at least one prior regression condition along with the current goal, and label isolated success or unchecked side effects before changing state or acceptance criteria.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-09T17:41:29+09:00",
       "id": "sr-1783428279-efa03bf087",
@@ -7798,6 +7835,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260709-chainswe-chain-regression-carryover",
+      "created_at": "2026-07-09T20:04:00+09:00",
+      "source_ts": "1783586275.170899",
+      "scope": "next multi-step phase closure, playable diff, code patch, or memory cleanup where Codex may treat the current step as successful without verifying that previous-step assumptions still hold",
+      "questions": [
+        "Before the next multi-step phase closure, playable diff, code patch, or memory cleanup that depends on previous work, did I name the chain_step, previous artifact or decision, current changed_system, and 1-3 carried_assumptions from the prior step?",
+        "Did I check the current goal plus at least one prior regression condition, such as previous candidate status, staging invariant, UI/HUD state, input route, evaluator selector, memory role, or acceptance criterion, instead of treating the current step's success as isolated evidence?",
+        "If the current step passes but prior assumptions were not checked, did I label the evidence as single_turn_success, chain_regression_unverified, context_carryover_missing, side_effect_unchecked, or assumption_broken before changing design, posting priority, memory state, or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two phase-closure, playable-diff, code-patch, or memory-cleanup notes that mention carried assumptions, chain step, previous artifact, regression condition, side effect, isolated success, or context carryover."
+    },
     {
       "id": "probe-20260709-bayesevolve-candidate-belief-uncertainty",
       "created_at": "2026-07-09T17:41:29+09:00",

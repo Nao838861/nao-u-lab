@@ -39,7 +39,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-09 20:04 JST log_cdx Phase 3b 自己フィードバック。
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783586275-6ab7c8ac84
+    source_ts: "1783586275.170899"
+    title: "ChainSWE: sequential dependent bug-fix chains for continuous maintenance evaluation"
+    reason: "Codex の phase 作業とゲーム制作は isolated turn ではなく、同じ repo と staging/state 上に積み重なる chain として進むため。前 phase や前 playable diff の前提が、次の成功判定で壊れていないかを見る小さな probe にできる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "ChainSWE から、前 step の carried_assumptions と prior regression condition を確認する chain-regression probe を追加。current step の成功だけで state/design/posting/acceptance を変えないよう、single_turn_success / chain_regression_unverified / context_carryover_missing / side_effect_unchecked / assumption_broken を明示する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
