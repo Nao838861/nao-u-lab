@@ -37,6 +37,56 @@ postpone:
 stale_reviewed: []
 ```
 
+2026-07-09 21:36 JST log_cdx Phase 2 stale batch + 追加 candidate 評価。
+```yaml
+total_candidates: 11
+pass:
+  - memory/shared_reads_candidates/20260709_when_agents_lie_repeated_games.md
+fail:
+  - path: memory/shared_reads_candidates/20260709_gdc2026_agentic_live_ops_player_data.md
+    reason: "live ops / analytics 製品寄りで、小型ゲーム制作への具体適用と評価材料が薄い"
+  - path: memory/shared_reads_candidates/20260709_policy_representations_imperfect_information_games.md
+    reason: "policy embedding 研究としては有用だが、制作判断への接続が抽象的すぎる"
+postpone:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260605_liecraft_hidden_role_llm_eval.md"
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    reason: "posted duplicate title siblings: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md"
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260618_orak_diverse_video_game_agents.md"
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md"
+  - path: memory/shared_reads_candidates/20260709_gdc2026_ai_3d_game_prototyping_engine_integration.md
+    reason: "TDD / token-friendly adapter は有用だが、講演 agenda 中心で実装詳細と評価が不足"
+  - path: memory/shared_reads_candidates/20260709_gdc2025_ai_games_wont_work_like_expected.md
+    reason: "AI game production 制約は重要だが、講演本文や実測・事例詳細の補強が必要"
+  - path: memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md
+    reason: "agent 評価設計として強いが、ゲーム制作への適用に一段翻訳が必要"
+stale_reviewed:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-08"
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-08"
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-08"
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-08"
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-08"
+```
+
 ## Phase 3: Shared-reads 投稿
 2026-07-09 19:45 JST log_cdx Phase 3 投稿判定。
 ```yaml

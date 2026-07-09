@@ -4,6 +4,21 @@ url: "https://gdcvault.com/play/1035393/AI-in-Games-Won-t"
 collected_at: "2026-07-09T21:30:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [ai-game-development, production, latency, cost, reliability, on-device-ai]
+evaluated_at: "2026-07-09T21:35:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-09T21:35:47+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-09T21:35:47+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-08"
+supersedes: []
+gate_reason: |-
+  latency、cost、reliability、on-device AI は AI game prototype を制作物へ近づける時の重要制約として具体的。
+  ただし現候補は講演ページと紹介文の要点で、実測値・設計判断・トレードオフの中身が不足している。
+  transcript や事例詳細を補強できれば投稿候補、現時点では保留。
 ---
 
 ## raw_excerpt

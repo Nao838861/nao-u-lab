@@ -5,20 +5,20 @@ collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, player-experience, mechanics]
 candidate_status: postponed
-evaluated_at: "2026-05-17T01:32:24+09:00"
-stale_after: "2026-06-16"
+evaluated_at: "2026-07-09T21:35:47+09:00"
+stale_after: "2026-08-08"
 supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
-last_reviewed_at: "2026-05-17T01:32:24+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T01:32:24+09:00"
-next_action: revise_or_research
+last_reviewed_at: "2026-07-09T21:35:47+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md"
+next_action: none
 gate_reason: |-
-  emotional north star から action verbs、systems、紙プロトタイプへ戻す流れはゲーム制作に使いやすいが、候補は workshop 記録であり一次資料としての密度がやや薄い。
-  playtest で advance action の見落としが露出した点は有用だが、4000字級の概要に必要な評価手順・比較・限界の材料が不足している。
-  Phase 3 投稿に回すなら、Librande の原資料や GFF/MDA との関係を補強した別 candidate として再評価したい。
+  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
+  terminal sibling: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md。
+  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
 
 ---
 

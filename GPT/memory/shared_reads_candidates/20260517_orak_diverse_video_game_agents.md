@@ -4,21 +4,21 @@ url: "https://openreview.net/forum?id=H1ncX6O6Yh"
 collected_at: "2026-05-17T09:44:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-agent, benchmark, mcp, evaluation, fine-tuning]
-evaluated_at: "2026-05-17T10:05:00+09:00"
+evaluated_at: "2026-07-09T21:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-17T10:05:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-17T10:05:00+09:00"
-stale_after: "2026-06-16"
+last_reviewed_at: "2026-07-09T21:35:47+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260618_orak_diverse_video_game_agents.md"
+stale_after: "2026-08-08"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
-  問題設定と benchmark 構成は面白いが、candidate 内では 12 game / MCP / trajectories /
-  leaderboard / battle arena という要素列挙が中心で、評価結果・失敗様式・具体的な結論が薄い。
-  CoopEval 水準の概要へ伸ばすには、本文から実験設計と結果の中身を追加確認してからにする。
+  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
+  terminal sibling: memory/shared_reads_candidates/20260618_orak_diverse_video_game_agents.md。
+  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
 
 ---
 

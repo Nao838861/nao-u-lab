@@ -4,21 +4,21 @@ url: "https://arxiv.org/abs/2510.25820"
 collected_at: "2026-05-16T19:43:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc-dialogue, llm, player-experience, prompt-scaffolding]
-evaluated_at: "2026-05-16T19:44:00+09:00"
+evaluated_at: "2026-07-09T21:35:47+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-16T19:44:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T19:44:00+09:00"
-stale_after: "2026-06-15"
+last_reviewed_at: "2026-07-09T21:35:47+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md"
+stale_after: "2026-08-08"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
-  役割ごとに制約プロンプトの効果が変わるという結論は有用だが、現 candidate だけでは
-  scaffold の具体構造、被験者評価、LLM judge 評価の粒度が不足している。
-  NPC 制作への適用は見えるが、CoopEval 水準の概要を書くには原文確認後に回すべき。
+  posted duplicate title sibling があるため Phase 3 投稿対象から外す。
+  terminal sibling: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md。
+  本文再評価は行わず、代表 candidate だけ lifecycle を postponed_duplicate として閉じる。
 
 ---
 
