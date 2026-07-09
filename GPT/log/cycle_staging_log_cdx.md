@@ -69,7 +69,74 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-09 20:27 JST log_cdx Phase 4a 記憶階層整理。
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, remote 同期済み、開始時点で既存の自動生成差分・未追跡ファイル多数を確認。"
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得。source file 破損なし。"
+  - "memory/MEMORY.md: index-visible atom 参照 50 件を memory/atoms/index.jsonl と照合し、missing 0 件。Markdown link 形式の外部/相対リンクは検出なし。"
+  - "memory/atoms.jsonl: 2651 行、JSON parse error 0、duplicate id 0、normalized/content hash duplicate group 0。title 重複 group は 22 件だが content 重複ではないため削除対象なし。"
+  - "memory/raw/: 30 日以上 mtime がない file は 87 件。例: memory/raw/slack_archive/shared-reads.jsonl, memory/raw/web_research/phase3_pdfs/*.txt。Phase 4a では archive 実行せず候補確認に留めた。"
+  - "shared_reads lifecycle: posted=382, postponed=341, failed=113, ready_to_post=10, needs_review=13, status blank=15。postponed/needs_review かつ stale_after <= 2026-07-09 は 185 件。"
+  - "sidecar 再生成: tools/build_shared_reads_mixed_duplicate_queue.py -> 67 rows, tools/build_shared_reads_stale_triage_queue.py --today 2026-07-09 -> 50 rows。"
+  - "inbox: tools/slack_inbox_lifecycle.py pending で slack_directives / slack_broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260709-01
+    description: "shared_reads_candidates に lifecycle status が空の candidate が 14 件ある（README.md 除外）。2026-07-09 収集の 3 件も含まれ、Phase 2 を通る前の候補が stale / terminal queue の集計で空 status として混ざる。"
+    severity: low
+    evidence: "memory/shared_reads_candidates/20260709_agentic_model_discovery_word_games.md, memory/shared_reads_candidates/20260709_policy_representations_imperfect_information_games.md, memory/shared_reads_candidates/20260709_when_agents_lie_repeated_games.md ほか。candidate_status_counts blank=15 including README.md。"
+    source_file_status: "UTF-8 読み取り OK。frontmatter 自体は存在するが status / candidate_status が未設定の候補がある。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "status 未設定の候補は posted/failed/postponed/needs_review の lifecycle から外れ、後続の stale 判定や duplicate terminal 判定で再評価優先度が曖昧になる。ゲーム制作に使える資料が open backlog に残り続ける。"
+  - id: ISS-4A-20260709-02
+    description: "shared-reads の duplicate title group が mixed status のまま大きく残り、Phase 1/2 が既投稿 sibling を持つ候補を再収集・postpone している。unindexed duplicate audit でも posted / failed / postponed が混在する大 group が複数残る。"
+    severity: medium
+    evidence: "memory/shared_reads_mixed_duplicate_queue.jsonl rows=67。audit_shared_reads_title_duplicates --unindexed-only で One Policy Infinite NPCs count=11 status_counts={blank:1, failed:3, posted:2, postponed:5}; LLM Game Development PX count=10; GUI Agents count=8; RuleSmith count=8。Phase 2 でも 20260709_gui_agents_continual_game_generation.md / 20260709_rulesmith_automated_game_balancing.md など 4 件を posted duplicate sibling 理由で postpone。"
+    source_file_status: "UTF-8 読み取り OK。candidate source は破損ではなく、lifecycle/canonical index と duplicate queue の状態不整合。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "同じ論文・記事の候補が複数回 open backlog に残ると、Phase 2 の少数再評価枠が重複処理に吸われ、ゲーム制作へ転用すべき新規知見や過去判断への導線が埋もれる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "ISS-4A-20260709-01 は次の Phase 2/収集評価で frontmatter を閉じる運用問題、ISS-4A-20260709-02 は既存の mixed_duplicate_queue と stale_triage_queue で少数 handoff 可能。現時点では新設計より backlog triage が先。"
+stale_review_backlog:
+  total_due_postponed_or_needs_review: 185
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 67
+  handoff_count: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=liecraft a multi agent framework for evaluating deceptive capabilities in language models。隠れ役職/欺瞞評価はゲーム設計素材になるが mixed duplicate group present。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
+  - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=automated playtesting with procedural personas through mcts with evolved heuristics。headless 評価を複数 player persona へ広げる判断に直結。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue。NPC 制作への適用は見えるが本文確認不足。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=orak a foundational benchmark for training and evaluating llm agents on diverse video games。benchmark 構成は有用だが評価結果・失敗様式の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "stale_triage_queue 上位。game_transfer_value=high、duplicate_group_key=gdc 2026 riot games stone librande on game design。emotional north star から action verbs / paper prototype へ戻す制作判断素材。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts: "mixed duplicate group; queue recommended_review_action=merge_duplicate"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
