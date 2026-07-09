@@ -199,6 +199,65 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
+2026-07-10T01:58:00+09:00 log_cdx Phase 4a 整理 + 問題抽出:
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, upstream=origin/codex/phase2-analysis-20260708, ahead/behind 表示なし。開始時点で既存差分・未追跡ファイル多数あり。今回の Phase 4a では staging と再生成 sidecar だけを自分の作業対象として扱う。"
+  - "inbox: python tools\\slack_inbox_lifecycle.py pending で directives pending=0, broadcasts pending=0。handled 更新対象なし。"
+  - "memory/MEMORY.md: UTF-8 明示読みで確認。代表語 probe は 記憶=true, ゲーム設計=true, 敵パターン=true, 評価軸=true。rg による Markdown link 検出は 0 件。python tools\\validate_memory_index.py は OK。"
+  - "memory/atoms.jsonl: python tools\\memory_health.py は warning。atoms=2653, lifecycle active=2465, superseded=188, normalized_content_duplicate_groups raw=40 rows=80 だが recall_visible では 3 groups rows=6 まで fold。repeated_title_groups raw=22 recall_visible=15。即時の矛盾としては扱わず既存 canonical/lifecycle fold の監査値として記録。"
+  - "encoding-safe audit: memory_health の mojibake suspect atoms 2 件を UTF-8 明示読みで確認。gr-1777083728-44d444ab7a の per-file atom は本文・title とも日本語が読め、source file 破損扱いにしない。sr-1776127289-4d9239b255 は per-file atom と raw slack_archive の両方に置換文字が残る。"
+  - "memory/raw/: mtime 30日超の raw file は 87 件。Phase 4a では archive 移動せず候補把握のみ。"
+  - "shared_reads lifecycle: posted=387, ready_to_post=10, postponed=346, failed=116, needs_review=12, status 空欄=10, template/status説明行=1。postponed/needs_review かつ stale_after<=2026-07-10 は 178 件。"
+  - "再生成: python tools\\build_shared_reads_mixed_duplicate_queue.py -> rows=67。"
+  - "再生成: python tools\\build_shared_reads_stale_triage_queue.py --today 2026-07-10 -> rows=50。"
+  - "duplicate title audit: python tools\\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20 で unindexed mixed groups が残存。terminal group ではなく open status を含むため、自動 close せず stale_review_batch へ少数 handoff。"
+issues:
+  - id: ISS-20260710-001
+    description: "active atom sr-1776127289-4d9239b255 の title/excerpt に置換文字が残り、raw slack_archive 側にも同じ文字列がある。単発のデータ品質問題で、現時点では記憶階層の設計問題には拡大しない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みは可能だが、source raw と per-file atom の内容自体に replacement characters が含まれる。"
+    display_or_tooling_status: "none; PowerShell 表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "AIエージェント/agent memory 系の想起で、日本語 title の一部一致や人間の目視判断が少し弱くなる。ただし links と tags は残っており、単独では次回ゲーム制作の導線を塞がない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  due_postponed_or_needs_review_backlog: 178
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 67
+  handoff_count: 5
+  selection_rule: "shared_reads_stale_triage_queue.jsonl の上位から、同じ duplicate_group_key を重複させず最大 5 件を選択。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "age_days=16; mixed duplicate group present; role-sensitive prompt constraint と探偵ゲームでの usability study / synthetic evaluation が残っており、NPC 制約設計へ転用可能。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=15; mixed duplicate group present; GPC/design patterns/Unity IR、26 pattern instantiations、automated replay 評価、grounding/hygiene failure が playable diff 化の導線に近い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=15; mixed duplicate group present; procedural relatedness は武器・仲間・スキルの個別化に効くが、現メモでは Pokemon card case study の評価結果が薄い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=15; mixed duplicate group present; dependency-aware JSON pipeline は RPG/ADV 制作の一貫性に効くが、評価と既存構造化 prompt 実践との差分確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=14; mixed duplicate group present; persona 条件付き共有 RL policy、300 persona benchmark、semantic-behavioral alignment は大量 NPC 行動の導線として優先度が高い。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
 2026-07-09T23:59:00+09:00 log_cdx Phase 4a 整理 + 問題抽出:
 
 ```yaml
