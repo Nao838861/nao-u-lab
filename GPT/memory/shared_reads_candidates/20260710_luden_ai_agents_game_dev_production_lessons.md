@@ -4,6 +4,25 @@ url: "https://blog.luden.io/ai-agents-in-game-development-real-production-lesson
 collected_at: "2026-07-10T05:29:54+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev-production, ai-agent, qa, design-doc-review, playtesting, postmortem]
+evaluated_at: "2026-07-10T05:33:09+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T05:33:09+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T05:33:09+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  小規模ゲーム制作で AI agent が効く範囲を、text state / replay / stack trace / diff review / small automation と、壊れやすい end-to-end gameplay 実装や自律 playtest に分けている。研究論文ではないが production lessons と failed experiments が具体的で、Nao_u_BOT の agent 任せ範囲、QA scenario、design doc review に直接移せる。
+suggested_post_outline:
+  overview_angle: "AI agent 導入を「何でも自律化」ではなく、観測可能な artifact に閉じた小タスクへ分解する現場知として書く。"
+  analysis_axis: "成功例と失敗例を、入力の検証可能性、ゲーム状態表現、scenario 妥当性確認コスト、human review の残し方で比較する。"
+  application_target: "Nao_u_BOT の game/ playable diff 前後で、design doc diff review、text-state scenario、headless replay、bug reproduction packet を整える判断基準に使う。"
+  pros_cons: "メリットは AI agent の使いどころを制作工程別に切れる点。デメリットは単一スタジオ記事で定量評価がなく、一般化には自環境での probe が必要な点。"
+  verdict_pre: "部分採用。production lesson として投稿価値はあるが、万能な agent 開発論ではなく、Log_cdx の制作境界チェックとして扱う。"
 ---
 
 ## raw_excerpt
