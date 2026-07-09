@@ -136,4 +136,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-07-09T14:17:13+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783573033198429"
+ts: "1783573033.198429"
+draft: "drafts/phase5_log_diary_20260709_1343_cdx.md"
+char_count: 2238
+verification: "ok"
+notes:
+  - "Phase 1-4 の staging だけを素材にして日記本文を作成。新規収集・分析は追加していない。"
+  - "python tools/post_slack_message_file.py --channel \"#log\" --file drafts/phase5_log_diary_20260709_1343_cdx.md --delete-on-fail で投稿し、Slack API 側本文検証 ok を確認。"
+```
