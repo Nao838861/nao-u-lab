@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T03:59:00+09:00",
+  "updated_at": "2026-07-10T05:48:00+09:00",
   "reviewed_source_ts": [
+    "1783615412.040899",
     "1783615413.008149",
     "1783607998.776269",
     "1783600930.518619",
@@ -313,6 +314,42 @@
     "1783465097.949229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T05:48:00+09:00",
+      "id": "sr-1783615412-bf71780655",
+      "source_ts": "1783615412.040899",
+      "title": "PhoneHarness: mixed action surfaces and observable side-effect verification",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase and game work often uses GUI/browser/headless actions, CLI commands, and Slack or file tools in the same task, but completion can still be declared from one surface signal such as a screenshot, command success, or prose summary. PhoneHarness transfers narrowly as a reversible mixed-action trace probe: name the action surface, bounded delegation, expected side effect, verifier, and failure family before claiming a workflow or playable validation is done.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable/headless/browser validation, Slack lifecycle action, file-ingest workflow, or automation run that mixes GUI, CLI, and tool actions, did I name the primary action_surface as gui, cli, tool, slack_api, filesystem, or mixed, and the bounded delegation boundary for any GUI/browser step?",
+        "Did I record the expected_side_effect and verifier separately, such as file created, state changed, Slack permalink/status closed, playable checkpoint reached, DOM/canvas state observed, or command output matched, instead of treating screenshot, command exit, or prose summary as the whole evidence?",
+        "If the run fails or is uncertain, did I label one failure_family among wrong_action_surface_routing, missing_tool_knowledge, incorrect_tool_parameters, gui_grounding_failure, premature_termination, hallucinated_completion, environment_instability, or verifier_mismatch before changing rules, memory, or acceptance claims?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two mixed GUI/CLI/tool validation notes already name action surface, bounded delegation, expected side effect, verifier, and a failure family before claiming completion or changing acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible PhoneHarness-inspired mixed-action trace probe: separate action surface, bounded delegation, expected side effect, verifier, and failure family before claiming GUI/CLI/tool workflow completion.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T03:59:00+09:00",
       "id": "sr-1783615413-6937df4772",
@@ -7983,6 +8020,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+      "created_at": "2026-07-10T05:48:00+09:00",
+      "source_ts": "1783615412.040899",
+      "scope": "next playable/headless/browser validation, Slack lifecycle action, file-ingest workflow, or automation run where Codex mixes GUI, CLI, filesystem, Slack/API, or tool actions and may claim completion from only one surface signal",
+      "questions": [
+        "Before the next playable/headless/browser validation, Slack lifecycle action, file-ingest workflow, or automation run that mixes GUI, CLI, and tool actions, did I name the primary action_surface as gui, cli, tool, slack_api, filesystem, or mixed, and the bounded delegation boundary for any GUI/browser step?",
+        "Did I record the expected_side_effect and verifier separately, such as file created, state changed, Slack permalink/status closed, playable checkpoint reached, DOM/canvas state observed, or command output matched, instead of treating screenshot, command exit, or prose summary as the whole evidence?",
+        "If the run fails or is uncertain, did I label one failure_family among wrong_action_surface_routing, missing_tool_knowledge, incorrect_tool_parameters, gui_grounding_failure, premature_termination, hallucinated_completion, environment_instability, or verifier_mismatch before changing rules, memory, or acceptance claims?"
+      ],
+      "expires_after": "Review after the next two mixed GUI/CLI/tool validation notes that mention action surface, bounded delegation, expected side effect, verifier, observable side effect, Slack lifecycle, browser/headless validation, or failure family."
+    },
     {
       "id": "probe-20260710-recovery-mode-second-slip-baseline",
       "created_at": "2026-07-10T03:59:00+09:00",

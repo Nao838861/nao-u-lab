@@ -37,7 +37,39 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783615412-bf71780655
+    source_ts: "1783615412.040899"
+    title: "PhoneHarness: mixed action surfaces and observable side-effect verification"
+    reason: "未 reviewed の high-score shared-reads のうち、memory/harness/game-design/agent/operation/evaluation を持ち、Codex の browser/headless/CLI/Slack/file 操作が混在する現状に直結するため。既存 probe の screenshot-only 回避とは重なるが、action surface と verifier の分離に限定すれば小さく可逆に試せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "GUI/CLI/tool/Slack/filesystem が混在する次回 validation で、action_surface、bounded delegation、expected_side_effect、verifier、failure_family を分けて残す一時 probe を追加した。"
+    files:
+      - "memory/shared_reads_self_feedback_state.json"
+      - "log/cycle_staging_log_cdx.md"
+  probe:
+    id: "probe-20260710-phoneharness-mixed-action-side-effect-trace"
+    questions:
+      - "GUI、CLI、tool、Slack/API、filesystem が混ざる validation で primary action_surface と GUI/browser の bounded delegation boundary を名付けたか。"
+      - "screenshot、command exit、prose summary だけでなく expected_side_effect と verifier を別々に残したか。"
+      - "失敗や不確実性がある場合、wrong_action_surface_routing / missing_tool_knowledge / incorrect_tool_parameters / gui_grounding_failure / premature_termination / hallucinated_completion / environment_instability / verifier_mismatch のどれかを付けたか。"
+    withdrawal_condition: "次の mixed GUI/CLI/tool validation note 2件で、完了主張前に action surface、bounded delegation、expected side effect、verifier、failure family が自然に残るなら撤退する。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
