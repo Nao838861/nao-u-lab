@@ -24,7 +24,17 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted_at: "2026-07-10T05:39:57+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260710_luden_ai_agents_game_dev_production_lessons.md"
+    draft: "memory/shared_reads_candidates/posted_drafts/20260710_luden_ai_agents_game_dev_production_lessons_post.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783629584800039"
+    ts: "1783629584.800039"
+    char_count: 4577
+    review: "必須 6 見出し、URL 末尾、禁止語なし、記事固有の production lessons / failed experiments / Nao_u_BOT 適用まで確認。post_slack_message_file.py の policy と Slack 文字化け検証も ok。"
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
