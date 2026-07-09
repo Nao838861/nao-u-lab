@@ -29,7 +29,23 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+reviewed_at: "2026-07-09T14:00:00+09:00"
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260709_omnigamearena_vlm_game_agents.md
+    reason: "Phase 2 gate_decision was postpone: posted duplicate title sibling exists."
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260709_ptcg_bench_self_evolving_agents.md
+    reason: "Phase 2 gate_decision was postpone: posted duplicate title siblings exist."
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    reason: "Phase 2 gate_decision was postpone: posted duplicate title siblings exist."
+    action: postpone
+notes:
+  - "Phase 2 pass list was empty, so no #shared-reads post was made."
+  - "No candidate frontmatter was changed in Phase 3."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
