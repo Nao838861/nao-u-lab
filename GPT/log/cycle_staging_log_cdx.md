@@ -176,4 +176,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-07-10 03:42 JST
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783622609198319"
+  ts: "1783622609.198319"
+  draft: "drafts/phase5_log_diary_20260710_0342_cdx.md"
+  char_count: 2147
+  verification: ok
+summary: >
+  Phase 1-4 の流れを、全 candidate duplicate で #shared-reads 投稿なしになったこと、
+  second-slip probe を採用したこと、shared_reads_candidates の missing status と
+  duplicate group が次サイクルの注意を消費していることを中心に #log へ投稿した。
+```
