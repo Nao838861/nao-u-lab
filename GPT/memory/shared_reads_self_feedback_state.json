@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T18:12:49+09:00",
+  "updated_at": "2026-07-10T20:26:19+09:00",
   "reviewed_source_ts": [
+    "1783653132.093719",
     "1783667523.525089",
     "1783660318.147689",
     "1783645796.943439",
@@ -321,6 +322,42 @@
     "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T20:26:19+09:00",
+      "id": "sr-1783653132-1a07acfa18",
+      "source_ts": "1783653132.093719",
+      "title": "Chat Game Engine three-lane interaction structure for game creation",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work can still treat a user request as one-shot code generation or collapse specification, implementation, and next confirmation into a single narrative. The transferable point is narrow: for the next game repair or playable diff, keep one compact turn record with design-script delta, code/diff delta, and next user/playtest utterance. Existing probes cover hypothesis contracts, runtime integration, and execution-vs-accuracy, but not this per-turn interaction lane split that preserves why a change exists and what input should come next. Keep it reversible and scoped to game-start, playable-diff, and game-repair turns.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next game-start task, playable diff, or game-repair turn, did I write one compact design_script_delta that states how the current core loop, input, failure condition, reward, screen state, or rule changed?",
+        "Did I keep a separate code_diff_delta that names the touched files, functions, state transitions, or tests/probes, instead of letting implementation details stand in for the design intent?",
+        "Did I write one next_utterance_or_probe that says what should be checked next by the user, manual play, headless run, or deterministic state-accuracy probe, and label gaps as script_missing, code_lane_only, next_input_unclear, or execution_success_not_accuracy?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two game-start, playable-diff, or game-repair notes already preserve design-script delta, code/diff delta, and next confirmation or probe separately, and avoid claiming correctness from execution success alone.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible ChatGE-inspired three-lane turn probe: for the next game repair or playable diff, separate design-script delta, implementation delta, and the next user/playtest/probe utterance so design intent and validation target survive the code change.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T18:12:49+09:00",
       "id": "sr-1783667523-2376c5145d",
@@ -8279,6 +8316,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-chatge-three-lane-turn-record",
+      "created_at": "2026-07-10T20:26:19+09:00",
+      "source_ts": "1783653132.093719",
+      "scope": "next game-start task, playable diff, or game-repair turn where Codex may collapse design intent, implementation details, and next user or playtest confirmation into one narrative",
+      "questions": [
+        "Before the next game-start task, playable diff, or game-repair turn, did I write one compact design_script_delta that states how the current core loop, input, failure condition, reward, screen state, or rule changed?",
+        "Did I keep a separate code_diff_delta that names the touched files, functions, state transitions, or tests/probes, instead of letting implementation details stand in for the design intent?",
+        "Did I write one next_utterance_or_probe that says what should be checked next by the user, manual play, headless run, or deterministic state-accuracy probe, and label gaps as script_missing, code_lane_only, next_input_unclear, or execution_success_not_accuracy?"
+      ],
+      "expires_after": "Review after the next two game-start, playable-diff, or game-repair notes that mention design-script delta, implementation delta, next user confirmation, headless probe, state accuracy, execution success, or turn-level interaction records."
+    },
     {
       "id": "probe-20260710-support-lane-interruption-routing",
       "created_at": "2026-07-10T18:12:49+09:00",

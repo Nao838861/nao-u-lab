@@ -23,7 +23,34 @@ posted:
 skipped: []
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
-(Phase 3b 縺梧嶌縺崎ｾｼ繧)
+self_feedback:
+  selected:
+    id: sr-1783653132-1a07acfa18
+    source_ts: "1783653132.093719"
+    title: "Chat Game Engine three-lane interaction structure for game creation"
+    reason: "ゲーム制作を一回のコード生成ではなく、仕様断片、実装差分、次の確認を分ける multi-turn interaction として扱う知見。次の game-start / playable diff / game repair で、設計意図と検証対象がコード差分の中に埋もれる問題に直接効くため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "ChatGE そのものや恒久ルールは採らず、次のゲーム修正 1 件で design_script_delta / code_diff_delta / next_utterance_or_probe を分けて残す一時 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "次の game-start / playable diff / game repair の前に、core loop、入力、失敗条件、報酬、画面状態、ルールのどれが変わったかを design_script_delta として 1 つ書く。"
+    - "実装側は code_diff_delta として、触ったファイル、関数、状態遷移、test/probe を分けて書く。"
+    - "最後に next_utterance_or_probe として、ユーザー確認、手動プレイ、headless run、deterministic state-accuracy probe のどれで次を確認するかを書く。欠けた場合は script_missing / code_lane_only / next_input_unclear / execution_success_not_accuracy とラベルする。"
 
 ## Phase 4a: 謨ｴ逅・+ 蝠城｡梧歓蜃ｺ
 (Phase 4a 縺梧嶌縺崎ｾｼ繧)
