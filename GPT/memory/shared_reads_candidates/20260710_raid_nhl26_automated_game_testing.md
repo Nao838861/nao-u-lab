@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.07498"
 collected_at: "2026-07-10T09:59:51.8262829+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-testing, automated-playtesting, reinforcement-learning, exploit-discovery, sports-game]
+evaluated_at: "2026-07-10T10:06:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T10:06:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T10:06:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  問題設定、RAID の中核、単一 exploit への overfit を避ける population 型探索、
+  6 種類の goalie exploit 発見という評価結果まで揃っている。
+  headless 評価で「勝つ bot」ではなく「壊れた悪用戦略群」を探す用途に直結する。
+suggested_post_outline:
+  overview_angle: "NHL26 の goalie AI exploit 探索を、手作業の再テスト負荷を下げる automated game testing case study として読む。"
+  analysis_axis: "単一最適化ではなく、多様な高品質 exploit policy を反復発見する RAID の設計と評価結果を軸にする。"
+  application_target: "Nao_u_BOT の headless 評価で、正常攻略 route だけでなく悪用可能な policy population を探索する検査系に接続する。"
+  pros_cons: "メリットは実ゲーム開発版での exploit 発見実績と評価軸の明確さ。デメリットはスポーツゲーム固有の reward 設計依存と、再現には環境統合コストが高い点。"
+  verdict_pre: "部分採用。すぐに大規模 RL を入れるより、まず exploit taxonomy と複数 bot 探索の評価ログ設計へ落とす。"
 ---
 
 ## raw_excerpt
