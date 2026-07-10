@@ -38,6 +38,20 @@ duplicate_preflight:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-07-10 10:10 JST Phase 3 投稿結果:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_raid_nhl26_automated_game_testing.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783645796943439"
+    char_count: 4091
+skipped: []
+review:
+  format_start: "■ 概要"
+  url_at_tail: true
+  banned_terms_found: []
+  decision: posted
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
