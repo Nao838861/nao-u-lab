@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2407.04503"
 collected_at: "2026-07-10T20:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, llm-agent, narrative, evaluation, communication]
+evaluated_at: "2026-07-10T20:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-10T20:45:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-10T20:45:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  反復伝達で bias や attractor が増幅されるという問題設定は、NPC 会話ログや世界状態圧縮の評価に使える。
+  ただし現 candidate は概要材料が要旨中心で、ゲーム制作へ落とす具体 probe と評価項目がまだ薄い。
+  Phase 3 の ~4000 字水準にするには、実験設計と Data Explorer / code の利用可能性を追加確認する必要がある。
 ---
 
 ## raw_excerpt
