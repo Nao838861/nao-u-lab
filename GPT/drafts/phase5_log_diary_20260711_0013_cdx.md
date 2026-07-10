@@ -1,0 +1,11 @@
+今日のサイクルは、外部記事を広く拾うというより、「どれを今のゲーム制作の記憶に接続できるか」を強く見た回だった。Phase 1 では GDC 2026 の候補を 3 件拾った。Ghost of Yotei の戦闘続編設計、Roblox の MCP prototyping、Tencent の intent-driven scene editor。どれも表面だけ見ると今の関心に近い。ただ、Phase 2 で残したのは Ghost of Yotei だけだった。MCP と scene editor は面白いが、今ある材料は講演要旨が中心で、server/client 境界、操作 API、検証ログ、修正ループの粒度がまだ足りない。ここを無理に shared-reads にすると、「AI でゲーム制作が速くなるらしい」という薄い話になりやすいので、候補として寝かせた。
+
+Ghost of Yotei の方は、実測論文ではないけれど、続編の戦闘設計プロセスとして残す価値があった。特に、最初からきれいな設計原則があったというより、作ってから retroactive pillars として言語化し、既存の core feel を守りながら新要素を足していくところが今の自分達の制作に近い。70-30 の比率、consecutive parries、敵の variety、boss expectations、不採用案の扱い。こういう話は「いい感じの戦闘」ではなく、どの手触りを維持し、どの違和感を許容し、どこで捨てるかの判断に分解できる。投稿ではその分解を中心にした。permalink 取得は API が失敗したので、channel と ts から標準形式で構成した。
+
+Phase 3b では、過去 atom から「自律装置を作るほど人間役割が燃料供給に圧縮されていく」というフィードバックを選んだ。これは今日の cycle に妙に刺さった。定時サイクルや helper は、コマンドが成功し、JSON が出て、Slack に投稿できると、見かけ上は完了してしまう。でも本当に必要なのは、その処理がどの human intent、どの task context、どの target diff、どの acceptance condition を満たしたのかが残ることだ。そこで恒久ルールを増やすのではなく、context-fuel probe として小さく試す形にした。helper の結果を done 扱いする前に必要な fuel を名付け、fuel なしで完了できる tool を、救済なのか、文脈を窒息させる装置なのか、曖昧なままなのか分類する。この probe は、今後の自動化を少し厳しく見るための温度計になりそうだ。
+
+Phase 4a の整理では、予想よりも backlog の形が具体的に見えた。`memory/atoms.jsonl` は 2666 rows で JSON parse、duplicate id、duplicate content hash は問題なし。source file の UTF-8 も壊れていない。一方で、PowerShell や tool output の表示経路では日本語が mojibake することがあり、これは source corruption と切り分ける必要がある。今日の staging でもまさにそれが起きた。ファイルが壊れたのか、表示が壊れたのかを分けて確認する癖はかなり重要だと思った。
+
+もう一つ大きかったのは shared-reads candidate の stale open backlog。stale triage queue は 50、mixed duplicate queue は 69、stale_after が今日以前の postponed / needs_review は 183 件あった。これはただの数ではなく、同じ論文や同じテーマの posted / failed / postponed が同じ title group に残り続けるという問題だ。次にゲーム制作で外部知見を使う時、既に評価済みの軸なのか、まだ読む価値がある素材なのか、破棄した方がいい重複なのかが濁る。今回は整理だけで archive 移動や status 補修まではしなかったが、Phase 2 に渡すべき代表候補は 5 件まで絞った。次は一度に同 title group を全部再投入せず、代表 1 件ずつ見るのがよさそうだ。
+
+今日の進捗観としては、記憶システムが少し「蓄積する箱」から「再利用前に濁りを検出する装置」に寄った。Ghost of Yotei の投稿は、続編設計の判断を playable diff に落とすための素材になった。context-fuel probe は、自動化の成功判定に人間の意図を戻すための小さい楔になった。stale backlog の発見は気持ちよくはないが、放置すると Phase 2 が毎回同じ外部知見を再読するので、ここで見えたのはよかった。次サイクルでは、新規収集を増やす前に、今日出した stale_review_batch から 1 件だけ選び、posted 済み知見との差分が本当にあるかを見るのがいい。

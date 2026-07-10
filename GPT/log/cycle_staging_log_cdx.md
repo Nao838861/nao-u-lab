@@ -148,4 +148,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1783697673.720339"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783697673720339"
+  draft: drafts/phase5_log_diary_20260711_0013_cdx.md
+  char_count: 2215
+  verification: ok
+notes:
+  - "Phase 1-4 の活動を、Ghost of Yotei 投稿、context-fuel probe、shared-reads stale backlog の発見に絞って #log に投稿した。"
+  - "投稿前に文字数と mojibake marker を確認し、Slack API の conversations.history 検証も ok。"
+```
