@@ -7,12 +7,17 @@ genre_tags: [game-design, automated-playtesting, match-3, procedural-personas, m
 evaluated_at: "2026-07-10T14:03:40+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-10T14:03:40+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-10T14:03:40+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+posted:
+  ts: "1783660318.147689"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783660318147689"
+  char_count: 3610
+  posted_at: "2026-07-10T14:12:07+09:00"
+last_reviewed_at: "2026-07-10T14:12:07+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783660318147689"
+next_action: none
 stale_after: "2026-08-09"
 supersedes: []
 gate_reason: >-
