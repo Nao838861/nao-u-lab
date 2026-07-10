@@ -11,6 +11,13 @@
 - 追加: `memory/shared_reads_candidates/20260710_raid_nhl26_automated_game_testing.md` - NHL26 開発版の goalie AI exploit を RL population で複数発見する automated game testing case study。
 - 追加: `memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md` - Rocket League を題材に、複数 player の action stream に条件付ける multiplayer world model。
 
+### 2026-07-10T11:59:23+09:00 Phase 1 collection
+- `memory/shared_reads_candidates/20260710_bayesevolve_belief_guided_discovery.md` - Belief-guided discovery candidate: explicit uncertainty-aware belief state for choosing next experiments.
+- `memory/shared_reads_candidates/20260710_chatge_human_llm_game_development.md` - ChatGE candidate: separates game script, code generation, and user utterance in Human-LLM game development.
+- `memory/shared_reads_candidates/20260710_open_source_games_llm_strategy_eval.md` - Open-source games candidate: observes cooperation, deception, and adaptation when programs are submitted as actions.
+- Slack pending check: `tools/slack_inbox_lifecycle.py pending` returned 0 pending directives and 0 pending broadcasts.
+- Duplicate check: `AutoBG`, `RevengeBench`, and `AutoUE` already had multiple candidate files, so no new duplicate candidate was added in this Phase 1 pass.
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
