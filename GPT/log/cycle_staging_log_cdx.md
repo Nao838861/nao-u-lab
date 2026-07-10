@@ -34,6 +34,22 @@ preflight:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-07-10T12:52:12+09:00 Phase 3 shared-reads posting
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_chatge_human_llm_game_development.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783653132093719"
+    char_count: 4210
+skipped:
+  - candidate: memory/shared_reads_candidates/20260710_bayesevolve_belief_guided_discovery.md
+    reason: "same URL was already posted to #shared-reads at https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783428279451079"
+    action: postpone
+review:
+  format_start: "■ 概要"
+  url_section_at_end: true
+  prohibited_terms_found: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
