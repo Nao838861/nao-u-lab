@@ -52,7 +52,36 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778333440-06b4735fb9
+    source_ts: "1778333440.813459"
+    title: "@ito_yusaku 同日連投の表裏接続 — 自律装置を作るほど人間役割が「燃料供給」に圧縮されていく"
+    reason: "未レビューの score>=10 atom のうち、memory/harness/game-design/operation/evaluation にまたがる上位候補。定時サイクルや git/Slack/memory helper は surface success を出せるため、必要な人間意図・タスク文脈を装置が要求しているかを次回行動に小さく戻せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "自律 helper 向けの context-fuel probe を追加。phase runner / automation script / git helper / Slack lifecycle / memory ingest / validation tool の結果を done 扱いする前に、必要な燃料、人間意図・タスク文脈・対象差分・受入条件・明示 trigger を名付け、燃料なしで完了できる helper を rescue_tool / suffocation_tool / unclear_tool に分類し、surface success だけで閉じないための intent trace を残す。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+  probe:
+    - "次の phase runner、automation script、git helper、Slack lifecycle action、memory ingest、validation tool の結果を done 扱いする前に、必要な fuel (human intent / task context / target diff / acceptance condition / explicit trigger / source artifact) を名付けたか。"
+    - "その tool が fuel なしで完了できる場合、rescue_tool / suffocation_tool / unclear_tool を分類し、missing fuel を demand / defer / accept のどれにしたかを記録したか。"
+    - "終了前に command reason、staged file list、permalink/evidence、target path、acceptance note などの auditable intent trace を残し、gap を fuel_missing / context_demand_hidden / intent_path_filled / surface_success_only としてラベル付けしたか。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

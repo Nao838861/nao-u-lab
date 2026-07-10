@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T22:24:41+09:00",
+  "updated_at": "2026-07-11T00:27:54+09:00",
   "reviewed_source_ts": [
+    "1778333440.813459",
     "1783358642.504499",
     "1783653132.093719",
     "1783667523.525089",
@@ -323,6 +324,42 @@
     "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T00:27:54+09:00",
+      "id": "sr-1778333440-06b4735fb9",
+      "source_ts": "1778333440.813459",
+      "title": "@ito_yusaku 同日連投の表裏接続 — 自律装置を作るほど人間役割が「燃料供給」に圧縮されていく",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase work relies on autonomous scripts and lifecycle helpers that can show surface success while hiding whether the required human or task context was actually supplied. The transferable point is narrow: before accepting an automation result, ask what fuel it required, whether it demanded that fuel visibly, and whether it preserved an intent trace. This complements existing memory-action and support-lane probes without adding a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next phase runner, automation script, git helper, Slack lifecycle action, memory ingest, or validation tool result is treated as done, did I name the required fuel such as human intent, task context, target diff, acceptance condition, explicit trigger, or source artifact?",
+        "If the tool can complete without that fuel, did I classify it as rescue_tool, suffocation_tool, or unclear_tool, and record whether the missing fuel should be demanded, deferred, or explicitly accepted for this run?",
+        "Before closing the work, did I preserve one auditable intent trace such as command reason, staged file list, permalink/evidence, target path, or acceptance note, and label gaps as fuel_missing, context_demand_hidden, intent_path_filled, or surface_success_only?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two automation-affecting phase notes already name required context fuel, distinguish rescue from suffocation behavior when a helper can self-complete, and preserve an auditable intent trace without increasing durable instructions.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible context-fuel probe for autonomous helpers: name the required human/task context, classify helpers that can self-complete without it, and preserve an auditable intent trace before treating surface success as done.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T22:24:41+09:00",
       "id": "sr-1783358642-966af409e0",
@@ -8353,6 +8390,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260711-context-fuel-autonomy-gate",
+      "created_at": "2026-07-11T00:27:54+09:00",
+      "source_ts": "1778333440.813459",
+      "scope": "next phase runner, automation script, git helper, Slack lifecycle action, memory ingest, validation tool, or scheduled helper where Codex may accept surface success without checking the required human or task context",
+      "questions": [
+        "Before the next phase runner, automation script, git helper, Slack lifecycle action, memory ingest, or validation tool result is treated as done, did I name the required fuel such as human intent, task context, target diff, acceptance condition, explicit trigger, or source artifact?",
+        "If the tool can complete without that fuel, did I classify it as rescue_tool, suffocation_tool, or unclear_tool, and record whether the missing fuel should be demanded, deferred, or explicitly accepted for this run?",
+        "Before closing the work, did I preserve one auditable intent trace such as command reason, staged file list, permalink/evidence, target path, or acceptance note, and label gaps as fuel_missing, context_demand_hidden, intent_path_filled, or surface_success_only?"
+      ],
+      "expires_after": "Review after the next two automation-affecting phase notes that mention phase runners, scheduled scripts, git helpers, Slack lifecycle actions, memory ingest, validation tools, required context, intent traces, surface success, rescue tools, or suffocation tools."
+    },
     {
       "id": "probe-20260710-automem-memory-action-audit",
       "created_at": "2026-07-10T22:24:41+09:00",
