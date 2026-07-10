@@ -13,7 +13,31 @@
   - `memory/shared_reads_candidates/20260711_gdc2026_intent_driven_scene_editor.md` — Tencent Games AI の intent-driven scene editor 講演。自然言語/音声、LLM、MCP、PCG をつなぎ、world generation を反復編集する候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260711_gdc2026_ghost_yotei_combat_iteration.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260711_gdc2026_mcp_ai_prototyping_roblox.md
+    reason: "MCP と game engine middleware の適用性は高いが、現状は講演要旨中心で server/client 境界、操作 API、検証ログが不足する"
+  - path: memory/shared_reads_candidates/20260711_gdc2026_intent_driven_scene_editor.md
+    reason: "intent-driven editor の着想は有用だが、評価方法、操作粒度、修正ループの具体例が不足し、投稿前に資料補強が必要"
+stale_reviewed: []
+duplicate_preflight:
+  checked:
+    - path: memory/shared_reads_candidates/20260711_gdc2026_ghost_yotei_combat_iteration.md
+      title_key: "honing the blade evolving combat for ghost of yōtei"
+      terminal_index_match: false
+    - path: memory/shared_reads_candidates/20260711_gdc2026_mcp_ai_prototyping_roblox.md
+      title_key: "build faster iterate more ai powered prototyping with the model context protocol mcp"
+      terminal_index_match: false
+    - path: memory/shared_reads_candidates/20260711_gdc2026_intent_driven_scene_editor.md
+      title_key: "let the engine understand you intent driven game scene editor powered by ai"
+      terminal_index_match: false
+notes:
+  - "Phase 4a stale_review_batch は staging 内に見当たらなかったため、新規 candidate 3 件のみ評価した"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

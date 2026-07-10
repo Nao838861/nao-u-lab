@@ -4,6 +4,26 @@ url: "https://schedule.gdconf.com/session/honing-the-blade-evolving-combat-for-g
 collected_at: "2026-07-11T00:14:55+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, combat-design, sequel-design, systems-design, gdc2026]
+evaluated_at: "2026-07-11T00:18:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-11T00:18:30+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-11T00:18:30+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  続編で「前作の中核を壊さずに何を増やすか」という問題設定、retroactive pillars、70/30 配分、disarm / melee weapons / stance integration / boss expectations まで判断材料がある。
+  実験論文ではないが、戦闘感触を数値調整ではなく attack timing と sequence variation に落とす設計論として、ゲーム制作への適用先が具体的。
+suggested_post_outline:
+  overview_angle: "前作の成功感を retroactive pillars として言語化し、70/30 の配分で新要素を足す続編戦闘設計として読む"
+  analysis_axis: "core fantasy を守る制約、敵 variation と parry 依存の解消、weapon / stance / boss の期待管理を分けて分析する"
+  application_target: "Nao_u_BOT の既存プロトタイプ改修で、成功感を先に固定し、追加メカニクスを感触・攻撃順序・敵行動の変化として検証する時の評価軸"
+  pros_cons: "強みは小規模制作にも使える変更配分と feel 保護の言語化。弱みは講演要旨ベースで実測評価や失敗例の細部が不足する点"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

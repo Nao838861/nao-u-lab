@@ -4,6 +4,20 @@ url: "https://schedule.gdconf.com/session/let-the-engine-understand-you-intent-d
 collected_at: "2026-07-11T00:14:55+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, procedural-generation, scene-editor, ai-agent, ugc, gdc2026]
+evaluated_at: "2026-07-11T00:18:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-11T00:18:30+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-11T00:18:30+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  intent を editor action に変換し、LLM / MCP / PCG / voice interaction を同じ作業ループに入れる観点はゲーム制作へ接続できる。
+  ただし現状では production-quality worlds という主張に対する評価方法、操作粒度、修正ループの具体例が薄く、投稿前に講演資料やデモ情報の補強が必要。
 ---
 
 ## raw_excerpt
