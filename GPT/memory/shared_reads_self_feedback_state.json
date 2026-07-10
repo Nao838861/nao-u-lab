@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T05:00:00+09:00",
+  "updated_at": "2026-07-11T06:28:00+09:00",
   "reviewed_source_ts": [
     "1783313059.907449",
     "1778333440.813459",
@@ -324,9 +324,21 @@
     "1783638691.003099",
     "1778496988.925499",
     "1783689726.811799",
-    "1783420796.091369"
+    "1783420796.091369",
+    "1782515410.585469"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T06:28:00+09:00",
+      "id": "sr-1782515410-b0fb03c626",
+      "source_ts": "1782515410.585469",
+      "title": "Harness-Bench: model-harness configuration と実行層の分離評価",
+      "decision": "reject",
+      "reason": "Score 13. Harness-Bench は現在の Codex phase 運用に直結するが、active な harness-fit、mixed-action trace、recoverable-hazard probes が failure type、task/role、action surface、verifier、recovery path をすでに覆う。新 probe は言い換えになり active probe 群を肥大化させるため、読了だけ記録して採用しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed に追加し、既存 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-11T02:26:01+09:00",
       "id": "sr-1783689726-c8cd2461d9",
