@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T00:27:54+09:00",
+  "updated_at": "2026-07-11T02:26:01+09:00",
   "reviewed_source_ts": [
     "1778333440.813459",
     "1783358642.504499",
@@ -321,9 +321,46 @@
     "1783465097.949229",
     "1783565718.920909",
     "1783638691.003099",
-    "1778496988.925499"
+    "1778496988.925499",
+    "1783689726.811799"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T02:26:01+09:00",
+      "id": "sr-1783689726-c8cd2461d9",
+      "source_ts": "1783689726.811799",
+      "title": "Agent-based game balance testing: difficulty spikes and skill-vs-chance trend checks",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game work already uses headless checks and prototype probes, but can still read a single score, clear rate, or bot success as balance evidence. The transferable point is narrow: for the next playable diff or headless balance note, compare version trends and separate skilled-policy improvement from random or weak-policy improvement before claiming a change increased challenge, skill ceiling, or fairness. This complements existing runtime-integration and persona-divergence probes without adding a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next playable diff, headless balance test, or game-evaluation memory note where I make a difficulty, fairness, skill ceiling, or chance claim, did I compare at least two versions or variants under the same seed or scenario set?",
+        "Did I separate random_or_weak_policy results from heuristic_or_skilled_policy results and record whether the trend suggests skill_signal, chance_signal, difficulty_spike, proxy_mismatch, or insufficient_runs?",
+        "If a bot result affects the design verdict, did I state whether it is a balance_judge, regression_detector, or human_review_pointer, and label reward_proxy_unvalidated or human_trend_unchecked when the proxy has not been calibrated?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two playable-diff or headless balance notes already compare version trends, separate random or weak policy from skilled policy, and label uncalibrated proxy limits before making difficulty or skill-vs-chance claims.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible game-balance probe: compare version trends under fixed seeds, separate random/weak policy from skilled policy, and classify bot evidence as balance judge, regression detector, or human-review pointer before making difficulty or skill-vs-chance claims.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-11T00:27:54+09:00",
       "id": "sr-1778333440-06b4735fb9",
@@ -8390,6 +8427,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260711-balance-trend-skill-chance",
+      "created_at": "2026-07-11T02:26:01+09:00",
+      "source_ts": "1783689726.811799",
+      "scope": "next playable diff, headless balance test, or game-evaluation memory note where Codex may treat one score, clear rate, or bot success as difficulty, fairness, skill ceiling, or chance evidence",
+      "questions": [
+        "Before the next playable diff, headless balance test, or game-evaluation memory note where I make a difficulty, fairness, skill ceiling, or chance claim, did I compare at least two versions or variants under the same seed or scenario set?",
+        "Did I separate random_or_weak_policy results from heuristic_or_skilled_policy results and record whether the trend suggests skill_signal, chance_signal, difficulty_spike, proxy_mismatch, or insufficient_runs?",
+        "If a bot result affects the design verdict, did I state whether it is a balance_judge, regression_detector, or human_review_pointer, and label reward_proxy_unvalidated or human_trend_unchecked when the proxy has not been calibrated?"
+      ],
+      "expires_after": "Review after the next two playable-diff or headless balance notes that mention difficulty, fairness, skill ceiling, chance, random policy, heuristic policy, fixed seeds, version trends, reward proxy, or human trend calibration."
+    },
     {
       "id": "probe-20260711-context-fuel-autonomy-gate",
       "created_at": "2026-07-11T00:27:54+09:00",

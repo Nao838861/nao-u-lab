@@ -42,7 +42,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-11T02:26:01+09:00 Phase 3b self feedback
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783689726-c8cd2461d9
+    source_ts: "1783689726.811799"
+    title: "Agent-based game balance testing: difficulty spikes and skill-vs-chance trend checks"
+    reason: "playable diff や headless 評価で、単一 score / clear rate / bot 成功をそのまま difficulty や skill evidence と読まないため。version trend と random/weak policy vs skilled policy の分離は、次のゲーム制作サイクルに小さく使える。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a reversible balance-trend probe: compare variants under fixed seeds, separate random/weak policy from skilled policy, and label bot evidence as balance_judge, regression_detector, or human_review_pointer before making difficulty or skill-vs-chance claims."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260711-balance-trend-skill-chance
+    questions:
+      - "Before the next playable diff, headless balance test, or game-evaluation memory note where I make a difficulty, fairness, skill ceiling, or chance claim, did I compare at least two versions or variants under the same seed or scenario set?"
+      - "Did I separate random_or_weak_policy results from heuristic_or_skilled_policy results and record whether the trend suggests skill_signal, chance_signal, difficulty_spike, proxy_mismatch, or insufficient_runs?"
+      - "If a bot result affects the design verdict, did I state whether it is a balance_judge, regression_detector, or human_review_pointer, and label reward_proxy_unvalidated or human_trend_unchecked when the proxy has not been calibrated?"
+    withdrawal_condition: "Drop after two playable-diff or headless balance notes if version trends, weak/skilled policy split, and proxy-limit labels are already present without extra instruction growth."
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
