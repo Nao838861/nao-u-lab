@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T04:30:00+09:00",
+  "updated_at": "2026-07-11T05:00:00+09:00",
   "reviewed_source_ts": [
     "1783313059.907449",
     "1778333440.813459",
@@ -323,7 +323,8 @@
     "1783565718.920909",
     "1783638691.003099",
     "1778496988.925499",
-    "1783689726.811799"
+    "1783689726.811799",
+    "1783420796.091369"
   ],
   "reviews": [
     {
@@ -8445,6 +8446,36 @@
       "change": {
         "type": "state_only",
         "summary": "Marked WorldMemArena as reviewed and rejected because existing lifecycle, supersede, retrieval-to-action, and causal-trace probes already cover the actionable behavior.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-11T05:00:00+09:00",
+      "id": "sr-1783420796-df40f7bd9d",
+      "source_ts": "1783420796.091369",
+      "title": "Adversarial pragmatics: instruction authority, quotation, scope, and pass/fail decomposition",
+      "decision": "reject",
+      "reason": "Score 13. The shared-read is relevant and actionable because Slack directives, recalled memory, quoted commands, and multi-turn transcripts require separating instruction authority, quotation, embedded commands, scope, and policy interpretation before a pass/fail judgment. However the existing agentic-state authority-boundary probe already asks Codex to name the authority source and crossed boundary, separate ingestion from execution safety, trace propagation, and stop before durable writes. A new pragmatics probe would largely restate that check while increasing an already large active-probe set, so this cycle records the read and rejects adoption.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "Marked the adversarial-pragmatics atom as reviewed and rejected because the existing authority-boundary probe already covers its actionable behavior.",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
