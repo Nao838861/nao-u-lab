@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T14:19:06+09:00",
+  "updated_at": "2026-07-10T16:14:37+09:00",
   "reviewed_source_ts": [
+    "1783660318.147689",
     "1783645796.943439",
     "1783629584.800039",
     "1783615412.040899",
@@ -319,6 +320,42 @@
     "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T16:14:37+09:00",
+      "id": "sr-1783660318-30a61a68ed",
+      "source_ts": "1783660318.147689",
+      "title": "Automated Playtesting of Matching Tile Games",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game evaluation can still summarize a prototype from a single competent bot or aggregate average, hiding that the same seed is easy for a score-greedy persona but brittle for a risk-avoider, space-keeper, or low-skill approximation. Existing probes cover exploit diversity, route alternatives, style adherence, and runtime integration, but not the narrower requirement to compare multiple lightweight procedural personas on the same scenario and read the largest divergence before changing difficulty or acceptance criteria. Keep it reversible and scoped to puzzle, lane, route, economy, and headless prototype evaluation.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next puzzle, lane-action, route, economy, or headless prototype evaluation where one bot or aggregate average could define difficulty, did I name at least three lightweight personas or axes such as goal_rusher, risk_avoider, score_greedy, space_keeper, low_skill, collector, or resource_saver?",
+        "Did I run or specify the same seed list, board, route, or scenario for those personas and record per-persona metrics such as result, score, objective_progress, available_actions_mean, risk_time, exploration_rate, resource_spend, or retry_count instead of only one global pass/fail?",
+        "Before changing balance, acceptance criteria, memory, or Slack-facing claims, did I read the largest persona divergence and label gaps as persona_divergence_unchecked, single_bot_evidence, aggregate_average_hides_split, or persona_axis_overfit?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two puzzle/lane/route/economy/headless prototype evaluations already name multiple persona axes, run the same scenario per persona, preserve per-persona metrics, and use the largest divergence rather than an aggregate average before changing difficulty or acceptance criteria.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible procedural-persona divergence probe: evaluate the same prototype scenario with at least three lightweight personas and use the largest per-persona split as design evidence before relying on averages or a single bot.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T14:19:06+09:00",
       "id": "sr-1778496988-7d805b51a2",
@@ -8205,6 +8242,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-procedural-persona-divergence",
+      "created_at": "2026-07-10T16:14:37+09:00",
+      "source_ts": "1783660318.147689",
+      "scope": "next puzzle, lane-action, route, economy, or headless prototype evaluation where Codex may treat a single bot result or aggregate average as enough difficulty evidence",
+      "questions": [
+        "Before the next puzzle, lane-action, route, economy, or headless prototype evaluation where one bot or aggregate average could define difficulty, did I name at least three lightweight personas or axes such as goal_rusher, risk_avoider, score_greedy, space_keeper, low_skill, collector, or resource_saver?",
+        "Did I run or specify the same seed list, board, route, or scenario for those personas and record per-persona metrics such as result, score, objective_progress, available_actions_mean, risk_time, exploration_rate, resource_spend, or retry_count instead of only one global pass/fail?",
+        "Before changing balance, acceptance criteria, memory, or Slack-facing claims, did I read the largest persona divergence and label gaps as persona_divergence_unchecked, single_bot_evidence, aggregate_average_hides_split, or persona_axis_overfit?"
+      ],
+      "expires_after": "Review after the next two puzzle/lane/route/economy/headless prototype evaluations that mention persona axes, single bot evidence, aggregate averages, difficulty, seed lists, per-persona metrics, score, available actions, risk time, exploration, resources, or balance changes."
+    },
     {
       "id": "probe-20260710-raid-exploit-diversity-regression",
       "created_at": "2026-07-10T12:14:46+09:00",
