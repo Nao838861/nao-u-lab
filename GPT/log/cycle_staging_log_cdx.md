@@ -77,7 +77,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-10T18:24:00+09:00 log_cdx Phase 4a:
+
+```yaml
+cleaned:
+  - "git gate: branch=codex/phase2-analysis-20260708, remote 同期済み。開始時点の既存差分は多いが、今回の整理は staging と再生成 sidecar の確認に限定。"
+  - "pending inbox: python tools\\slack_inbox_lifecycle.py pending で directives / broadcasts とも pending なし。handled 更新対象なし。"
+  - "MEMORY.md: UTF-8 明示読みで代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）取得可。index atom ID 参照 50 件は atoms.jsonl 内に全件存在。Markdown link 形式の broken link は検出なし。"
+  - "atoms.jsonl: 2664 rows, bad_json_lines=0, duplicate_ids=0, duplicate_content_hashes=0。title 重複 22 件はあるが content hash / id 重複ではなく、今回の 4b 起動要因にはしない。"
+  - "raw archive candidates: 30 日超 mtime の raw file は 87 件（web_research 79, headless_eval 6, slack_archive 1, sync_state.txt 1）。原文保持方針と再現性に関わるため、Phase 4a では移動せず記録のみ。"
+  - "shared_reads lifecycle: root candidates は posted=398, postponed=355, failed=117, ready_to_post=10, needs_review=12, missing_status=10。README の status enum 行は候補として数えられるが運用上の正本ではない。"
+  - "stale queue regenerated: build_shared_reads_mixed_duplicate_queue.py -> 68 rows, build_shared_reads_stale_triage_queue.py --today 2026-07-10 -> 50 rows。stale due backlog は postponed=170, needs_review=8。"
+  - "duplicate title audit: unindexed duplicate groups は存在するが、mixed duplicate queue / stale triage queue で Phase 2 handoff 可能。terminal group 登録や candidate frontmatter 変更は今回は行わない。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md"
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "stale queue top。duplicate_group_key=symbolically scaffolded play designing role sensitive prompts for generative npc dialogue。mixed duplicate 解消候補で、role-sensitive prompt constraint と探偵ゲーム UX 検証への転用価値が高い。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md"
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "duplicate_group_key=grounding machine creativity in game design knowledge representations empirical probing of llm based executable synthesis of goal playable patterns under structural constraints。26 pattern instantiations と automated replay 評価があり、playable diff 変換導線に効く。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md"
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "duplicate_group_key=from llm driven trading card generation to procedural relatedness a pokemon case study。procedural relatedness は個別化武器・仲間・スキル設計に接続しうるが、現候補は評価詳細が薄いため Phase 2 で fail/keep/追加読解を判定する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md"
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "duplicate_group_key=from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation。同 group の候補を複数同時投入しないため代表 1 件のみ。RPG/ADV 制作導線はあるが評価具体性の確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "duplicate_group_key=one policy infinite npcs persona traceable shared rl policies for scalable game agents。300 persona benchmark と shared policy の評価軸があり、大量 NPC/群衆行動への転用価値が高い。"
+    recommended_review_action: reevaluate_in_phase2
+notes:
+  - "source_file_status: MEMORY.md は UTF-8 明示読みで正常。mojibake issue なし。"
+  - "display_or_tooling_status: PowerShell 表示経路での文字化けは今回観測なし。"
+  - "needs_design=false 理由: 問題は stale backlog と mixed duplicate の処理待ちであり、既存 sidecar と Phase 2 handoff 契約で扱える。新設計より少数バッチ処理が妥当。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
