@@ -30,7 +30,16 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-11T02:23:45+09:00 Phase 3 shared-reads result
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260711_tempus_fugit_temporal_logic_game.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783704212614159
+    ts: "1783704212.614159"
+    char_count: 3579
+    note: "Tempus fugit / temporal logic game. Log_cdx standalone analysis format, no thread reply."
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

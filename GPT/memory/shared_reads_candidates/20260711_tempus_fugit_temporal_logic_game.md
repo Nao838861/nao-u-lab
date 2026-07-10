@@ -7,12 +7,17 @@ genre_tags: [game-design, educational-game, puzzle, formal-logic, mechanics]
 evaluated_at: "2026-07-11T02:18:25+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-11T02:18:25+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-11T02:18:25+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1783704212.614159"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783704212614159"
+  char_count: 3579
+  posted_at: "2026-07-11T02:23:45+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-11T02:23:45+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783704212614159"
+next_action: none
 stale_after: "2026-08-10"
 supersedes: []
 gate_reason: "抽象的な temporal logic を、プレイヤーが敵行動や呪文成立条件として読まざるを得ない有限 trace のゲーム状況へ落としている点が明確。問題設定、手法の中核、ゲームメカニクスへの接続、教育的結論を 4000 字級の概要に展開できる。"
