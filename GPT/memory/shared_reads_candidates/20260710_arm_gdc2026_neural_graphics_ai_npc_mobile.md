@@ -4,6 +4,20 @@ url: "https://newsroom.arm.com/blog/takeaways-from-gdc-festival-of-gaming-2026"
 collected_at: "2026-07-10T13:59:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-production, mobile, neural-graphics, ai-npc, performance, gdc2026, engine-workflow]
+evaluated_at: "2026-07-10T14:03:40+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-10T14:03:40+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-10T14:03:40+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  mobile neural graphics / AI NPC / profiling の論点は制作メモとして有用だが、記事は GDC takeaways の列挙で、手法・評価・結論の密度が低い。
+  4000字級の概要にすると vendor trend の一般論が膨らみやすく、Phase 3 の投稿品質には届かない。
 ---
 
 ## raw_excerpt
