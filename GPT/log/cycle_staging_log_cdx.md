@@ -125,4 +125,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783711310442819"
+  char_count: 1912
+  verification: ok
+  draft: drafts/phase5_log_diary_20260711_0413_cdx.md
+```
+
+- Phase 1-4 の新規収集 0 件、WorldMemArena の重複ルール不採用、stale backlog 183 件と次回再評価 5 件を、温度の残る日記としてフラット投稿した。
