@@ -78,7 +78,65 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-07-10 22:32 JST log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "git gate: branch codex/phase2-analysis-20260708 は origin と ahead/behind なし。開始時点の既存差分は多数あり、Phase 4a では staging と再生成 sidecar のみ扱う。"
+  - "memory/MEMORY.md: UTF-8 明示読みで代表語 probe を実施。記憶=22 件、ゲーム設計=8 件、敵パターン=1 件、評価軸=0 件。source file 破損なし。PowerShell 表示では日本語が ? 化するため表示経路 mojibake と判定。"
+  - "memory/MEMORY.md index link audit: 対象 3 link を確認し broken link 0 件。"
+  - "memory/atoms.jsonl audit: 2665 rows、bad_json 0、duplicate id 0、duplicate normalized/content hash 0、duplicate title key 22。矛盾は今回の機械監査では検出なし。"
+  - "shared-reads candidate lifecycle: total 977、posted 400、failed 117、postponed 357、needs_review 12、ready_to_post 10、status missing 81。root candidate の status missing は 10 件。"
+  - "stale queue: tools/build_shared_reads_mixed_duplicate_queue.py を再生成し 69 rows、tools/build_shared_reads_stale_triage_queue.py --today 2026-07-10 を再生成し 50 rows。stale_due backlog は postponed/needs_review 合計 178 件、今回 handoff は duplicate_group_key 重複を避けて 5 件。"
+  - "raw archive audit: memory/raw/ は 242 files、30 日以上更新なし 87 files。大半は 2026-05 中旬の phase3 PDF/TXT 原文と slack_archive。Phase 4a では移動せず、archive 候補として記録のみ。"
+  - "inbox lifecycle: tools/slack_inbox_lifecycle.py pending で directives / broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "shared_reads_candidates 直下に lifecycle frontmatter の status がない root candidate が 10 件あり、duplicate title audit の status_counts に空 status が混入している。posted_drafts や README を除いても open/terminal 判定が曖昧になる。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md ほか root 10 件。audit_shared_reads_title_duplicates.py でも AutoBG / One Policy Infinite NPCs / MemOPilot / Cross-Device Motion / TCG Procedural Relatedness groups に status_counts の空キーが出る。"
+    source_file_status: "UTF-8 readable。candidate 本文破損ではなく frontmatter field 欠落。memory/MEMORY.md は UTF-8 probe で代表語取得済み。"
+    display_or_tooling_status: "PowerShell 表示では日本語が ? 化するが、Python UTF-8 読みでは内容取得可能。issue 本体とは無関係。"
+    why_blocks_game_memory: "Phase 2 が stale / duplicate candidate を再評価する時、すでに投稿済み・失敗済み・未評価のどれかを status だけで判定できず、同じ論文候補が繰り返し queue に残る。ゲーム制作に使うべき高価値記事の再発見導線が濁る。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  total_due_postponed_or_needs_review: 178
+  stale_triage_queue_rows: 50
+  handoff_count: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "mixed duplicate group present; role-sensitive prompt constraint が NPC dialogue 設計へ直接転用できる。"
+    duplicate_group_key: "symbolically scaffolded play designing role sensitive prompts for generative npc dialogue"
+    recommended_review_action: merge_duplicate
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; GPC/design patterns/Unity IR と automated replay 評価が playable diff 化の導線に近い。"
+    duplicate_group_key: "grounding machine creativity in game design knowledge representations empirical probing of llm based executable synthesis of goal playable patterns under structural constraints"
+    recommended_review_action: merge_duplicate
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; procedural relatedness は武器・仲間・スキル生成へ転用可能だが、現メモは評価結果が薄く再読解が必要。"
+    duplicate_group_key: "from llm driven trading card generation to procedural relatedness a pokemon case study"
+    recommended_review_action: merge_duplicate
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "mixed duplicate group present; dependency-aware JSON pipeline は RPG/ADV 制作の設計導線になるが、既存構造化プロンプトとの差分確認が必要。"
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    recommended_review_action: merge_duplicate
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "mixed duplicate group present; persona 条件付き共有 RL policy は大量 NPC/群衆/生活行動の実装判断に近い。"
+    duplicate_group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    recommended_review_action: merge_duplicate
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
