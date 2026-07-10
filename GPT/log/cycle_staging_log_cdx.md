@@ -45,6 +45,36 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+
+
+2026-07-10T14:19:06+09:00 Log_cdx Phase 3b self-feedback:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778496988-7d805b51a2
+    source_ts: "1778496988.925499"
+    title: "Gemini mercury thermometer over-rescue and feedback-device amplitude axis"
+    reason: "High score and many priority tags, not yet reviewed. The atom maps directly to game support, memory cleanup, and Slack lifecycle work because help can point in the right direction while becoming too strong and removing user or player choice."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "Added a temporary probe for assist, hint, automation cleanup, memory pruning, and player support: check intervention amplitude, minimum effective strength, preserved choice, and over-rescue risk."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

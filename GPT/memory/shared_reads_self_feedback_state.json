@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T12:14:46+09:00",
+  "updated_at": "2026-07-10T14:19:06+09:00",
   "reviewed_source_ts": [
     "1783645796.943439",
     "1783629584.800039",
@@ -315,9 +315,46 @@
     "1783515312.477149",
     "1783465097.949229",
     "1783565718.920909",
-    "1783638691.003099"
+    "1783638691.003099",
+    "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T14:19:06+09:00",
+      "id": "sr-1778496988-7d805b51a2",
+      "source_ts": "1778496988.925499",
+      "title": "Gemini mercury thermometer over-rescue and feedback-device amplitude axis",
+      "decision": "adopt_probe",
+      "reason": "Score 16. This atom is useful now because Codex can make the direction of assistance, hinting, cleanup, or automation correct while making the intervention too strong: deleting user choice, over-correcting a workflow, or turning feedback into suffocation. Existing probes cover assist role, shared-control handoff, and rescue-resource roles, but not the narrower amplitude question: minimum effective intervention versus over-rescue. Keep it reversible and scoped to assist, hint, automation, feedback, or cleanup changes.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "probe": [
+        "Before the next assist, hint, tutorial intervention, automation cleanup, memory pruning, Slack/memory lifecycle action, or player-support feature where the direction of help seems correct, did I name the intended intervention amplitude as observe_only, nudge, suggest, require_confirm, auto_apply_once, or continuous_control?",
+        "Did I state the minimum effective amplitude and the user or player choice it must preserve, such as route choice, timing, resource spend, expression, recovery attempt, manual override, or human git/Slack gate?",
+        "If I choose a stronger intervention than the minimum, did I record the concrete failure risk such as over_rescue, suffocation, agency_loss, hidden_deletion, feedback_ignored, or automation_overreach before changing rules, prompts, memory, or game balance?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two assist, hint, automation-cleanup, memory-pruning, lifecycle, or player-support notes already name intervention amplitude, minimum effective strength, preserved user/player choice, and over-rescue risk before accepting the change.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible feedback-device amplitude probe: when help points in the right direction, check whether its strength is the minimum effective intervention and whether it preserves user/player choice instead of becoming over-rescue.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T12:14:46+09:00",
       "id": "sr-1783645796-75c7a5917b",
@@ -11648,6 +11685,18 @@
         "Before claiming improvement, did I compare against a heuristic baseline and at least one cost or stability metric such as call count, latency, oscillation, invalid output, stuck time, replan rate, or fallback count, or label the result bounded_decision_layer_unverified?"
       ],
       "expires_after": "Review after the next two NPC route/crowd/patrol/evacuation, headless-agent, or automation-delegation notes that mention deterministic solver authority, bounded schemas, trigger conditions, heuristic baselines, LLM call cost, oscillation, invalid output, stuck time, replan rate, or fallback counts."
+    },
+    {
+      "id": "probe-20260710-feedback-device-amplitude-axis",
+      "created_at": "2026-07-10T14:19:06+09:00",
+      "source_ts": "1778496988.925499",
+      "scope": "next assist, hint, tutorial intervention, automation cleanup, memory pruning, Slack/memory lifecycle action, or player-support feature where Codex may make the direction of help correct but the intervention too strong",
+      "questions": [
+        "Before the next assist, hint, tutorial intervention, automation cleanup, memory pruning, Slack/memory lifecycle action, or player-support feature where the direction of help seems correct, did I name the intended intervention amplitude as observe_only, nudge, suggest, require_confirm, auto_apply_once, or continuous_control?",
+        "Did I state the minimum effective amplitude and the user or player choice it must preserve, such as route choice, timing, resource spend, expression, recovery attempt, manual override, or human git/Slack gate?",
+        "If I choose a stronger intervention than the minimum, did I record the concrete failure risk such as over_rescue, suffocation, agency_loss, hidden_deletion, feedback_ignored, or automation_overreach before changing rules, prompts, memory, or game balance?"
+      ],
+      "expires_after": "Review after the next two assist/hint/automation-cleanup/memory-pruning/lifecycle/player-support notes that mention intervention strength, nudge, auto-apply, continuous control, manual override, over-rescue, suffocation, agency loss, or automation overreach."
     }
   ]
 }
