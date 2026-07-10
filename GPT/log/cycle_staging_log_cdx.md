@@ -30,7 +30,21 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-10T18:08:29+09:00 log_cdx Phase 3:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_design_doubt_scientific_method.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783674507756779
+    char_count: 3464
+  - candidate: memory/shared_reads_candidates/20260710_irregular_paper_playtesting_npc_roleplay.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783674508667119
+    char_count: 3667
+skipped: []
+notes:
+  - "2 件とも最終レビューで投稿条件を満たすと判断。本文は ■ 概要 から開始し、■ URL を末尾に集約。Mir/Ash/Log への問いかけ型表現なし。"
+  - "tools/shared_reads_policy.py は文字化けした必須見出しを期待しており現行日本語フォーマット検査に使えなかったため、Unicode コードポイント指定の独立チェックで見出し順、URL 位置、禁止語、字数を確認してから slack_client.post_message で投稿。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
