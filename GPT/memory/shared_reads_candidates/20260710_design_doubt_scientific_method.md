@@ -4,11 +4,26 @@ url: "https://www.gamedeveloper.com/design/design-doubt-the-scientific-method"
 collected_at: "2026-07-10T17:59:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, playtesting, prototyping, iteration, design-process]
-status: needs_review
-candidate_status: needs_review
-next_action: evaluate_in_phase2
+evaluated_at: "2026-07-10T18:02:47+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T18:02:47+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T18:02:47+09:00"
+next_action: post_to_shared_reads
 stale_after: "2026-08-09"
 supersedes: []
+gate_reason: >-
+  問題設定、着想、観察データの扱い、次 iteration への戻し方が明確で、プロトタイプを「仮説の束」として扱う手法を抽出できる。
+  Nao_u_BOT の playable diff で、全問題同時解決を避けて検証仮説を少数に絞る運用へ直接適用できるため、CoopEval 水準の概要に展開できる。
+suggested_post_outline:
+  overview_angle: "設計不安を感覚論ではなく、壊れたプロトタイプとプレイテストから仮説更新する科学的方法として読む。"
+  analysis_axis: "仮説の束、実験としてのプレイテスト、観察ログと自己報告、少数課題への絞り込み、未解決を残す判断。"
+  application_target: "次の game prototype / playable diff で、修正対象を一つか二つの検証仮説に絞り、観察結果を次差分の根拠にする設計サイクル。"
+  pros_cons: "メリットは迷いを検証単位へ分解できること。デメリットは仮説設計が粗いと単なる後付け整理になり、面白さの探索幅を狭めること。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
