@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-10T08:14:33+09:00",
+  "updated_at": "2026-07-10T10:12:35+09:00",
   "reviewed_source_ts": [
     "1783629584.800039",
     "1783615412.040899",
@@ -313,9 +313,46 @@
     "1783500825.234119",
     "1783515312.477149",
     "1783465097.949229",
-    "1783565718.920909"
+    "1783565718.920909",
+    "1783638691.003099"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T10:12:35+09:00",
+      "id": "sr-1783638691-f04b866d3d",
+      "source_ts": "1783638691.003099",
+      "title": "LLM traffic simulation as bounded replanning decision layer",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game and phase automation work can still over-delegate action choice to LLM-like reasoning when the safer pattern is to keep deterministic solvers and gates authoritative, then use the LLM only for a bounded replanning or escalation decision. Existing probes cover route evidence, artifact boundaries, fixed seeds, and verifier surfaces, but not this narrower authority split plus trigger condition and cost/stability comparison. Keep it reversible and scoped to NPC route/crowd behavior and automation delegation, not a durable rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next NPC, route-finding, crowd, patrol, evacuation, headless-agent, or automation-delegation design where an LLM could choose actions, did I name the deterministic subsystem that keeps authority, such as A*, NavMesh, scheduler, validator, parser, posting gate, or lifecycle tool?",
+        "Did I restrict the LLM or agent role to one bounded decision schema such as STAY, REROUTE, WAIT, ESCALATE, RETRY, or NOOP, and state the trigger condition where it may be called instead of giving it continuous control?",
+        "Before claiming improvement, did I compare against a heuristic baseline and at least one cost or stability metric such as call count, latency, oscillation, invalid output, stuck time, replan rate, or fallback count, or label the result bounded_decision_layer_unverified?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two NPC route/crowd/patrol/evacuation, headless-agent, or automation-delegation notes already name the deterministic authority layer, bounded decision schema, trigger condition, baseline, and cost or stability metric before claiming LLM/agent improvement.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible bounded-decision-layer probe: keep deterministic solvers or gates authoritative, restrict LLM/agent use to a triggered schema decision, and compare against baseline plus cost/stability metrics.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T08:14:33+09:00",
       "id": "sr-1783565718-8d7aef9023",
@@ -11550,6 +11587,18 @@
         "If only the directly edited behavior was checked, did I label the result integration_regression_unverified, trace_missing, neighbor_state_unchecked, or launch_only_evidence before changing acceptance criteria, memory, or Slack-facing claims?"
       ],
       "expires_after": "Review after the next two playable-diff or browser/headless game-validation notes that mention build success, launch, canvas nonblank, fixed input trace, runtime integration, neighboring systems, UI/HUD, restart, timer, score/resource, scene transition, or launch-only evidence."
+    },
+    {
+      "id": "probe-20260710-llm-bounded-replanning-decision-layer",
+      "created_at": "2026-07-10T10:12:35+09:00",
+      "source_ts": "1783638691.003099",
+      "scope": "next NPC route-finding, crowd, patrol, evacuation, headless-agent, or automation-delegation design where Codex may let an LLM or agent choose continuous actions instead of acting as a bounded decision layer over a deterministic solver or gate",
+      "questions": [
+        "Before the next NPC, route-finding, crowd, patrol, evacuation, headless-agent, or automation-delegation design where an LLM could choose actions, did I name the deterministic subsystem that keeps authority, such as A*, NavMesh, scheduler, validator, parser, posting gate, or lifecycle tool?",
+        "Did I restrict the LLM or agent role to one bounded decision schema such as STAY, REROUTE, WAIT, ESCALATE, RETRY, or NOOP, and state the trigger condition where it may be called instead of giving it continuous control?",
+        "Before claiming improvement, did I compare against a heuristic baseline and at least one cost or stability metric such as call count, latency, oscillation, invalid output, stuck time, replan rate, or fallback count, or label the result bounded_decision_layer_unverified?"
+      ],
+      "expires_after": "Review after the next two NPC route/crowd/patrol/evacuation, headless-agent, or automation-delegation notes that mention deterministic solver authority, bounded schemas, trigger conditions, heuristic baselines, LLM call cost, oscillation, invalid output, stuck time, replan rate, or fallback counts."
     }
   ]
 }

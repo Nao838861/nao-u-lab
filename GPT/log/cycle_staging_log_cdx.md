@@ -53,7 +53,33 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-10 10:12 JST Phase 3b 自己フィードバック:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783638691-f04b866d3d
+    source_ts: "1783638691.003099"
+    title: "LLM traffic simulation as bounded replanning decision layer"
+    reason: "Phase 3 直後の投稿・評価運用では、LLM/agent に広い行動選択を任せず、既存 solver や gate の上に限定 schema の判定層として置く観点が次回のゲーム制作・automation delegation に転用しやすい。既存 probe は route 証拠や verifier を多く扱うが、deterministic authority と trigger condition の明示はまだ薄い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "reversible probe を追加。次の NPC route/crowd/patrol/evacuation、headless-agent、automation-delegation 設計で、deterministic subsystem の authority、LLM/agent の bounded decision schema、trigger condition、baseline と cost/stability metric を確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
