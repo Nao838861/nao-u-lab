@@ -40,7 +40,16 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260711_gdc2026_ghost_yotei_combat_iteration.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783697066614029"
+    char_count: 3777
+skipped: []
+notes:
+  - "GDC 公式アジェンダに加えて Invisible Friends の現地レポートを確認。実測論文ではなく続編戦闘設計プロセス事例として、retroactive pillars / 70-30 / consecutive parries / 不採用案の判断を中心に投稿した。"
+  - "chat.getPermalink は invalid_arguments だったため、channel=C0AN2FEHEJJ と ts=1783697066.614029 から Slack 標準形式の permalink を構成した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
