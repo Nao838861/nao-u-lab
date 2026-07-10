@@ -11,6 +11,14 @@
   - `memory/shared_reads_candidates/20260710_design_doubt_scientific_method.md` — プロトタイプを仮説、プレイテストを実験として扱い、次 iteration で解く課題を少数に絞る設計プロセス記事。
   - `memory/shared_reads_candidates/20260710_irregular_paper_playtesting_npc_roleplay.md` — VR ミステリーを紙プロトタイプと NPC ロールプレイで検証し、論理破綻・難易度・理解根拠を実装前に拾った UX research 事例。
 
+2026-07-10T20:35:00+09:00 log_cdx Phase 1:
+
+- pending check: no pending rows in `memory/slack_directives.jsonl` or `memory/slack_broadcasts.jsonl`.
+- duplicate check: recent `memory/raw/web_research/results.jsonl` plus `memory/atoms.jsonl` and `memory/atoms/index.jsonl` were checked. Existing candidate or atom: AutoBG, PTCG-Bench, PCSP, TITAN, Bounded Autonomy, Design Pillars, Taboo-family items.
+- collected candidates:
+  - `memory/shared_reads_candidates/20260710_llm_negotiation_rlvr_bargaining.md` - RLVR paper on LLM seller exploration and closing behavior in multi-buyer bargaining.
+  - `memory/shared_reads_candidates/20260710_llm_telephone_game_cultural_attractors.md` - LLM telephone-game study on repeated-transmission bias and attractors.
+
 ## Phase 2: 分析
 2026-07-10T18:02:47+09:00 log_cdx Phase 2:
 
