@@ -11,6 +11,12 @@
 - `memory/shared_reads_candidates/20260710_arm_gdc2026_neural_graphics_ai_npc_mobile.md` — GDC 2026 の mobile neural graphics / AI NPC / profiling workflow レポート。
 - Slack pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
 
+2026-07-10T16:24:00+09:00 Log_cdx Phase 1 collect:
+- `memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md` - GDC 2026 talk candidate on The Outer Worlds 2 POI design as an intersection of worldbuilding progression spatial design and navigation.
+- `memory/shared_reads_candidates/20260710_gdc2026_creating_player_expertise_microtalks.md` - GDC 2026 microtalks candidate on creating player expertise across varied player backgrounds.
+- `memory/shared_reads_candidates/20260710_gdc2026_apex_dev_support_bandwidth.md` - GDC 2026 talk candidate on Apex Legends developer support and production bottleneck reduction.
+- Slack pending checked: directives 0 and broadcasts 0. No quality judgment Slack posting or memory reorganization performed in Phase 1.
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
