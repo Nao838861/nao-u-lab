@@ -16,7 +16,11 @@ postpone:
 stale_reviewed: []
 
 ## Phase 3: Shared-reads 謚慕ｨｿ
-(Phase 3 縺梧嶌縺崎ｾｼ繧)
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_llm_negotiation_rlvr_bargaining.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783682657080479
+    char_count: 3860
+skipped: []
 
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
 (Phase 3b 縺梧嶌縺崎ｾｼ繧)
