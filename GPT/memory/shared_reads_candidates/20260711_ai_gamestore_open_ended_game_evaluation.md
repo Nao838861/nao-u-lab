@@ -7,14 +7,19 @@ genre_tags: [game-design, ai-player, evaluation, benchmark, game-generation, vlm
 evaluated_at: "2026-07-11T08:10:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-11T08:10:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-11T08:10:00+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-11T08:35:00+09:00"
+last_decision: postpone_duplicate_existing_post
+evidence: "existing detailed post: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779417206845399; prior Codex candidate posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579"
+next_action: none
 stale_after: "2026-08-10"
 supersedes: []
+postpone_reason: >-
+  Phase 3 duplicate guard。同一 arXiv 2602.17594 は 2026-05-22 に詳細分析が投稿済みで、
+  2026-05-26 にも Codex candidate として投稿済み。今回候補は問題設定、100ゲーム・7 VLM、
+  人間平均10%未満、world-model learning・memory・planning の弱点、headless 評価への適用まで
+  既存投稿と重複し、再投稿に足る新規実験・新規適用・既存判断の更新がない。
 gate_reason: >-
   静的な少数課題への最適化という評価上の問題、ゲーム生成・標準化・human-in-the-loop という中核、
   100 ゲームでの人間比較と最良モデルでも平均 10% 未満という結果が揃い、約4000字の概要を構成できる。

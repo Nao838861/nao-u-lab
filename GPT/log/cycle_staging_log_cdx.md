@@ -20,7 +20,16 @@ stale_reviewed: []
 - 判定根拠: 問題設定、基盤の中核、100ゲームでの人間比較、主要結果、ゲーム試作評価への具体的適用を一貫して説明でき、CoopEval 水準の概要へ展開可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260711_ai_gamestore_open_ended_game_evaluation.md
+    reason: >-
+      同一 arXiv 2602.17594 は 2026-05-22 に詳細分析が投稿済みで、2026-05-26 にも
+      Codex candidate として投稿済み。今回候補には再投稿に足る新規実験・新規適用・
+      既存判断の更新がなく、duplicate guard と「残すべき品質」ゲートを満たさない。
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
