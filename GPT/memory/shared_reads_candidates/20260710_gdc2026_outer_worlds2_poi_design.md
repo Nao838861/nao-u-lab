@@ -7,14 +7,17 @@ genre_tags: [game-design, level-design, worldbuilding, navigation, production-ta
 evaluated_at: "2026-07-10T16:35:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-10T16:35:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-10T16:35:00+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-10T17:10:00+09:00"
+last_decision: postponed
+evidence: "Phase 3 final review: public abstract is useful but too thin for a 3500-4500 char standalone shared-reads analysis without over-generalizing."
+next_action: collect_talk_body_or_more_sources
 stale_after: "2026-08-09"
 supersedes: []
+phase3_reason: >-
+  公式概要で worldbuilding / progression / spatial design / navigation の 4 軸は取れるが、講演本文や追加資料なしでは評価内容、production example の実体、失敗条件を十分に書けない。
+  現状の材料で投稿すると POI 設計一般論に寄り、candidate 固有の 4000 字級分析として弱いため延期する。
 gate_reason: >-
   POI を worldbuilding / gameplay systems / player progression の交点として扱い、spatial design / navigation まで分解する軸が明確。
   Nao_u_BOT の探索型プロトタイプで、説明文ではなく視線誘導・進行状態・ギミック露出で「行きたくなる場所」を作る評価軸に直結する。

@@ -32,7 +32,23 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-07-10 Phase 3 Shared-reads 投稿:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260710_gdc2026_apex_dev_support_bandwidth.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783667523525089
+    ts: "1783667523.525089"
+    char_count: 4131
+    reason: "公式 agenda に issue 件数、平均応答時間、平均解決時間、エスカレーション率があり、developer support model を Nao_u_BOT の support lane / engineering lane 設計へ具体化できたため投稿。"
+skipped:
+  - candidate: memory/shared_reads_candidates/20260710_gdc2026_outer_worlds2_poi_design.md
+    reason: "公式概要の4軸は有用だが、講演本文や追加資料なしでは production example、評価内容、失敗条件を十分に書けず、4000字級投稿にすると POI 設計一般論へ寄るため延期。"
+    action: postpone
+review:
+  policy_check: pass
+  posted_message_verification: ok
+  banned_terms_checked: [Mir, Ash, "Log には", "みんな", "問いかけ", "検討してほしい", "返してほしい"]
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
