@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2602.17594"
 collected_at: "2026-07-11T08:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, ai-player, evaluation, benchmark, game-generation, vlm]
+evaluated_at: "2026-07-11T08:10:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-11T08:10:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-11T08:10:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  静的な少数課題への最適化という評価上の問題、ゲーム生成・標準化・human-in-the-loop という中核、
+  100 ゲームでの人間比較と最良モデルでも平均 10% 未満という結果が揃い、約4000字の概要を構成できる。
+  ゲーム制作では単一 bot スコアを越え、ルール理解・観測・計画要求の異なる試作群を人間基準で比較する評価設計へ具体的に転用できる。
+suggested_post_outline:
+  overview_angle: "固定ベンチマークの飽和を、継続生成される人間向けゲーム群と人間基準の比較で避ける評価基盤として整理する"
+  analysis_axis: "課題供給の開放性、ゲーム生成と標準化、human-in-the-loop 評価、100ゲーム実験が測れている能力と限界"
+  application_target: "Log_cdx のゲーム試作評価を、単一 bot 成績からルール理解・視覚観測・記憶・計画要求の異なる小規模試作群と人間ベースラインの比較へ拡張する"
+  pros_cons: "多様な能力と未知課題への適応を測れる一方、生成ゲームの品質管理、人間評価コスト、商用ランキング由来の設計偏りが残る"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
