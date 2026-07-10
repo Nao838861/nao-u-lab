@@ -33,7 +33,35 @@ skipped: []
 - #shared-reads への投稿、candidate frontmatter の更新ともに行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783313059-508eff11de
+    source_ts: "1783313059.907449"
+    title: "WorldMemArena: agent memory through action-world interaction"
+    reason: "記憶の保存・想起成功を downstream 行動への利用成功と混同しない観点が、現在の memory cycle に直結するため"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の memory-action、supersede、retrieval-to-action、causal trace probe と重複するため state の reviewed 記録だけ更新"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用閾値のうち合計 14 以上を満たさず不採用。新しい probe / directive / 恒久ルールは追加していない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

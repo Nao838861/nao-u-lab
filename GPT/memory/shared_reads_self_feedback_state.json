@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T02:26:01+09:00",
+  "updated_at": "2026-07-11T04:30:00+09:00",
   "reviewed_source_ts": [
+    "1783313059.907449",
     "1778333440.813459",
     "1783358642.504499",
     "1783653132.093719",
@@ -8414,6 +8415,36 @@
       "change": {
         "type": "probe",
         "summary": "Added a reversible GameEngineBench-inspired runtime-integration probe: after build/launch, validate a fixed trace against the edited feature plus neighboring game systems before treating a playable diff as accepted.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-11T04:30:00+09:00",
+      "id": "sr-1783313059-508eff11de",
+      "source_ts": "1783313059.907449",
+      "title": "WorldMemArena: agent memory through action-world interaction",
+      "decision": "reject",
+      "reason": "Score 13. WorldMemArena is directly relevant because Codex memory work can confuse successful ingestion or recall with correct maintenance and downstream action use. Its write / maintain / retrieve / use lifecycle and evidence-chain diagnosis are actionable and well supported by the shared-reads post. However the current state already contains probes for memory-action classification, search-before-write, supersede handling, retrieval triggers, causal action traces, and whether recalled memory changes action. Adding another lifecycle probe would substantially restate those checks while the active probe set is already large, so this cycle records the read and rejects adoption to avoid probe bloat.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "Marked WorldMemArena as reviewed and rejected because existing lifecycle, supersede, retrieval-to-action, and causal-trace probes already cover the actionable behavior.",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
