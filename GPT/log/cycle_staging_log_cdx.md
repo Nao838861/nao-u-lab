@@ -1,67 +1,35 @@
-# log_cdx Cycle Staging — 2026-07-11 05:58
+# log_cdx Cycle Staging — 2026-07-11 06:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- 収集なし（2026-07-11 05:58 JST）。`slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。
-- `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、Slack 取り込み済み記録を確認した。
-- 直近のゲーム制作候補（Goal Playable Concepts、Ink Splotch、Procedural Personas）は、既存 candidate と過去の #shared-reads 記録に複数回収集済みだったため、新規 candidate を追加しなかった。
-- 新規検索では Goal Playable Concepts 論文の一次情報を再確認したが、既収集 URL（arXiv:2603.07101）だった。品質判断や Slack 投稿は行っていない。
+- pending 確認: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- `memory/shared_reads_candidates/20260711_gui_agents_continual_game_generation.md` — GUI agent がブラウザゲームを実際に操作して rubric 評価し、coding と playing を共有記憶つきで循環させる PlaytestArena / Play2Code の研究。
+- 既存確認: `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、2026-07-11 追加済み candidate を確認し、上記と重複する候補は追加しなかった。
 
 ## Phase 2: 分析
 
 ```yaml
-evaluated_at: "2026-07-11T06:00:00+09:00"
-total_candidates: 0
+evaluated_at: "2026-07-11T06:15:00+09:00"
+total_candidates: 1
 pass: []
 fail: []
-postpone: []
+postpone:
+  - path: memory/shared_reads_candidates/20260711_gui_agents_continual_game_generation.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529); memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995803583479)"
 stale_reviewed: []
 ```
 
-- Phase 1 の新規 candidate は 0 件で、staging に `stale_review_batch` もなかったため、frontmatter の更新対象はなし。
-- `memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` の terminal-title preflight 対象もなし。
+- `stale_review_batch` はなし。新規 candidate 1 件を先に terminal-title preflight した。
+- `memory/shared_reads_mixed_duplicate_queue.jsonl` の同一 `title_key` group に posted sibling 3 件を確認したため、本文の品質評価へ進めず、対象 candidate だけを `postponed_duplicate` として閉じた。
 - candidate の追加収集、4000字概要の執筆、Slack 投稿、記憶階層の改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-
-```yaml
-reviewed_at: "2026-07-11T06:05:00+09:00"
-posted: []
-skipped: []
-```
-
-- Phase 2 の `pass` は 0 件だったため、最終レビュー対象なし。
-- #shared-reads への投稿、candidate frontmatter の更新はいずれも行っていない。
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-```yaml
-self_feedback:
-  selected:
-    id: sr-1783420796-df40f7bd9d
-    source_ts: "1783420796.091369"
-    title: "Adversarial pragmatics: instruction authority, quotation, scope, and pass/fail decomposition"
-    reason: "Slack directive、recalled memory、引用、埋め込み命令を扱う現在の運用に直結するが、既存 authority-boundary probe との重複を確認するため"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 2
-    non_redundancy: 0
-    risk_control: 2
-    reversibility: 3
-    total: 13
-  decision: reject
-  change:
-    summary: "none。既存 probe が authority source、boundary crossing、ingestion/execution 分離、propagation path、stop condition を既に確認するため、新規 probe は追加しない。reviewed state のみ更新した"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

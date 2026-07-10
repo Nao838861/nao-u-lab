@@ -4,6 +4,21 @@ url: https://arxiv.org/abs/2605.28258
 collected_at: 2026-07-11T03:00:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, llm, gui-agent, playtesting, evaluation, browser-game]
+evaluated_at: 2026-07-11T06:15:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-11T06:15:00+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529); memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995803583479)"
+next_action: none
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  title_key が mixed duplicate queue の既存 group と一致し、同一論文の posted sibling と
+  #shared-reads permalink が確認できる。内容の再評価や Phase 3 での再投稿は行わず、
+  対象 candidate のみ duplicate として postponed に閉じる。
 ---
 
 ## raw_excerpt
