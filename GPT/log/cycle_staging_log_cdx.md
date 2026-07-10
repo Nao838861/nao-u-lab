@@ -12,6 +12,13 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260710_memory_architecture_language_emergence.md` - signaling game で memory architecture が shared convention の安定性を左右する候補。
 - 追加 candidate: `memory/shared_reads_candidates/20260710_causalsteward_divide_conquer_causal_discovery.md` - 高次元ログから causal model を分割・分析・結合する human-in-the-loop agentic workflow 候補。
 
+2026-07-10 10:00 JST Phase 1 収集メモ:
+- pending 確認: `tools/slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
+- 既存確認: `memory/raw/web_research/results.jsonl` と `memory/atoms.jsonl` の直近分、`memory/shared_reads_candidates/` の既存候補を確認。重複が多いため、既存 candidate に見当たらない外部情報だけを追加。
+- 追加: `memory/shared_reads_candidates/20260710_raid_nhl26_automated_game_testing.md` - NHL26 開発版の goalie AI exploit を RL population で複数発見する automated game testing case study。
+- 追加: `memory/shared_reads_candidates/20260710_multiplayer_world_models_rocket_league.md` - Rocket League を題材に、複数 player の action stream に条件付ける multiplayer world model。
+
+
 ## Phase 2: 分析
 ```yaml
 analyzed_at: "2026-07-10T08:05:37+09:00"
