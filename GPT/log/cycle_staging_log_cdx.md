@@ -12,7 +12,21 @@
   - `memory/shared_reads_candidates/20260710_predicting_engagement_difficulty_ai_players.md` — DRL + MCTS の AI players で human difficulty / engagement 指標を予測する automated playtesting 論文。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-07-10 22:17 JST log_cdx Phase 2
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260710_assessing_game_balance_autonomous_agents.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260710_predicting_engagement_difficulty_ai_players.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260710_ai_players_engagement_difficulty.md https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783660317348439"
+stale_reviewed: []
+notes:
+  - "stale_review_batch は staging に存在しなかったため、新規 candidate 2 件のみ評価した。"
+  - "tools/shared_reads_duplicate_preflight.py は現リポジトリに存在しなかったため、tools/shared_reads_title_index.py の normalize_title_key 規則と canonical / mixed duplicate sidecar を直接確認した。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

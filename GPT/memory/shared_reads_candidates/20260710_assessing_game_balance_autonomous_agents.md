@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2304.08699"
 collected_at: "2026-07-10T22:15:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, game-balance, autonomous-agents, evaluation]
+evaluated_at: "2026-07-10T22:17:52+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T22:17:52+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T22:17:52+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: >-
+  autonomous agents を使って platform game の version difficulty と skill/luck 要求を測る問題設定が明確で、balance を主観的な感想ではなく再現可能な playtest 指標に落とす材料になる。
+  評価対象が 2 本の platform game に限られるため汎用性には注意が要るが、Nao_u_BOT の小規模アクション/プラットフォーム試作で difficulty drift と運要素を分けて見る軸として具体的に使える。
+  CoopEval 水準の概要では、手法の中核、評価軸、ゲーム制作への採用範囲と限界を十分に展開できる。
+suggested_post_outline:
+  overview_angle: "ゲームバランスを感覚的な良し悪しではなく、autonomous agent による version difficulty と skill/luck 要求の比較として読む"
+  analysis_axis: "manual/ad-hoc playtesting の限界、agent 実装、2 platform game での difficulty/design issue 比較、skill と luck の分離を中心に整理する"
+  application_target: "Nao_u_BOT の playable diff 後評価で、同じ bot suite を複数 version に走らせ、難度上昇が skill 要求なのか randomness なのかを切り分ける評価軸"
+  pros_cons: "メリットは balance 議論を再現可能なログへ寄せられること。デメリットは agent が人間の学習や発見を代表しないため、最終判断には人間プレイと失敗 trace の併読が必要なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
