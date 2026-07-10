@@ -14,7 +14,20 @@
 - 既存候補との重複確認で、GameEngineBench、AI Native Games、FootsiesGym、CommonRoad-Game、RAID/NHL26、Playtesting Process for Ultra Small Teams、GUI Agents for Continual Game Generation、GameCraft-Bench、PTCG-Bench、Orak は候補化または投稿済みとして扱い、今回の新規 candidate から外した。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-07-11T02:18:25+09:00 Phase 2 evaluation
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260711_tempus_fugit_temporal_logic_game.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260711_adaptive_puzzle_frustration_fun.md
+    reason: "adaptive difficulty の適用先は具体的だが、GA 表現、player model 指標、pilot study の比較条件と結果が raw excerpt だけでは不足。投稿前に本文精査が必要。"
+stale_reviewed: []
+notes:
+  - "stale_review_batch は staging に存在しなかったため、新規 candidate 2 件だけを評価。"
+  - "title canonical index と mixed duplicate queue の preflight では、2 件とも posted terminal sibling による除外対象なし。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
