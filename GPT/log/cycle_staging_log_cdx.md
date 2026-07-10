@@ -47,7 +47,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-10T18:12:49+09:00 log_cdx Phase 3b:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783667523-2376c5145d
+    source_ts: "1783667523.525089"
+    title: "Apex Legends developer support model and support-lane interruption routing"
+    reason: "未レビューの score 12 atom。Apex Legends の Developer Support team 事例を、専任チーム導入ではなく Codex 定時サイクルの割り込み分類に縮小して使える。Slack pending、重複確認、再現条件整理、git 差分棚卸し、テスト失敗のような support work と、実装判断・投稿判断を混ぜる失敗を減らすため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "一時 probe を追加。次の phase run / playable diff / shared-reads 投稿 / validation / memory cleanup / git-gated work で割り込みが出た時、support_lane / engineering_lane / posting_judgment / human_gate に分け、support_lane は最大 3 件だけ first_signal / close_result / time_to_close or elapsed_order / escalated_reason を記録する。同じ support failure が 3 回続く場合は script/checklist/design fix へ戻し、support_loop_hiding_root_cause と明示する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

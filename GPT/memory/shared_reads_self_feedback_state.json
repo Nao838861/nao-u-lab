@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T16:14:37+09:00",
+  "updated_at": "2026-07-10T18:12:49+09:00",
   "reviewed_source_ts": [
+    "1783667523.525089",
     "1783660318.147689",
     "1783645796.943439",
     "1783629584.800039",
@@ -320,6 +321,42 @@
     "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T18:12:49+09:00",
+      "id": "sr-1783667523-2376c5145d",
+      "source_ts": "1783667523.525089",
+      "title": "Apex Legends developer support model and support-lane interruption routing",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase work repeatedly mixes low-level support interruptions such as Slack pending checks, duplicate checks, test reproduction, port/build failures, and git staging with higher-level engineering or posting judgment. The transferable point is not to create a large support process, but to label a small support lane, record first signal, close, and escalation reason for at most a few issues, and escalate repeated support failures back to scripts or engineering instead of expanding permanent rules.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next phase run, playable diff, shared-reads posting, headless/browser validation, memory cleanup, or git-gated work where an interruption or failure appears, did I classify it as support_lane, engineering_lane, posting_judgment, or human_gate instead of mixing it into the main task narrative?",
+        "For up to three support_lane items, did I record one compact packet with first_signal, close_result, time_to_close or elapsed_order, and escalated_reason when applicable, rather than adding a new durable rule immediately?",
+        "If the same support_lane failure recurs three times or blocks engineering judgment, did I route it to a script/checklist/design fix or explicit defer reason, and label support_loop_hiding_root_cause if I merely close it locally again?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two phase runs or playable/posting validation notes already classify interruptions by lane, record compact support packets for only the few relevant items, and escalate repeated support failures to scripts, checklists, or engineering fixes without expanding durable rules.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible support-lane interruption probe: classify low-level interruptions separately from engineering/posting judgment, record compact closure and escalation fields for at most three items, and escalate repeated support loops to tooling or design fixes.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T16:14:37+09:00",
       "id": "sr-1783660318-30a61a68ed",
@@ -8242,6 +8279,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-support-lane-interruption-routing",
+      "created_at": "2026-07-10T18:12:49+09:00",
+      "source_ts": "1783667523.525089",
+      "scope": "next phase run, playable diff, shared-reads posting, headless/browser validation, memory cleanup, or git-gated work where Codex may mix support interruptions with engineering or posting judgment",
+      "questions": [
+        "Before the next phase run, playable diff, shared-reads posting, headless/browser validation, memory cleanup, or git-gated work where an interruption or failure appears, did I classify it as support_lane, engineering_lane, posting_judgment, or human_gate instead of mixing it into the main task narrative?",
+        "For up to three support_lane items, did I record one compact packet with first_signal, close_result, time_to_close or elapsed_order, and escalated_reason when applicable, rather than adding a new durable rule immediately?",
+        "If the same support_lane failure recurs three times or blocks engineering judgment, did I route it to a script/checklist/design fix or explicit defer reason, and label support_loop_hiding_root_cause if I merely close it locally again?"
+      ],
+      "expires_after": "Review after the next two phase runs, playable diffs, shared-reads posting validations, headless/browser validations, memory cleanups, or git-gated notes that mention support lane, interruption, first signal, close result, escalation reason, repeated failure, script/checklist fix, or root-cause hiding."
+    },
     {
       "id": "probe-20260710-procedural-persona-divergence",
       "created_at": "2026-07-10T16:14:37+09:00",
