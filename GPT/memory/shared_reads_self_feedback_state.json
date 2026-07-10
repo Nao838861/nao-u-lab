@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T10:12:35+09:00",
+  "updated_at": "2026-07-10T12:14:46+09:00",
   "reviewed_source_ts": [
+    "1783645796.943439",
     "1783629584.800039",
     "1783615412.040899",
     "1783615413.008149",
@@ -317,6 +318,42 @@
     "1783638691.003099"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T12:14:46+09:00",
+      "id": "sr-1783645796-75c7a5917b",
+      "source_ts": "1783645796.943439",
+      "title": "EA SPORTS NHL 26 goalie behavioral exploit discovery with RAID",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex game evaluation can still treat a fixed headless route, known exploit, or single bot strategy as sufficient regression evidence. The narrow transferable point is RAID's reward-adaptive iteration: after a known exploit is found or fixed, change the reward or constraint to search for a different exploit family before claiming the behavior is robust. Existing probes already cover oracle type, regression fixtures, route profiles, and failure anchors, so this stays as a reversible exploit-diversity probe rather than a durable playtest policy.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next AI/NPC, enemy, goalie/keeper, boss, economy, route, or balance evaluation where a bot or scripted player finds one exploit, did I name the exploit_family and the fixed baseline route or strategy separately?",
+        "After a fix or success claim, did I run or specify one reward/constraint/initial-state variant intended to discover a different exploit family, instead of only rechecking the already-known route?",
+        "If no diversity probe is run, did I label the result known_exploit_regression_only, exploit_diversity_unchecked, reward_overfit_risk, or single_strategy_evidence before changing balance, prompts, memory, or acceptance criteria?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two exploit-oriented game evaluations already separate known exploit family from baseline route, include a variant search for another exploit family after fixes, and avoid broad robustness claims from a single strategy.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible RAID-inspired exploit-diversity probe: after finding or fixing one game exploit, vary reward, constraints, or initial state to search for another exploit family before claiming robustness.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T10:12:35+09:00",
       "id": "sr-1783638691-f04b866d3d",
@@ -8131,6 +8168,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-raid-exploit-diversity-regression",
+      "created_at": "2026-07-10T12:14:46+09:00",
+      "source_ts": "1783645796.943439",
+      "scope": "next AI/NPC, enemy, goalie/keeper, boss, economy, route, or balance evaluation where Codex may treat one discovered exploit, one fixed route, or one bot strategy as enough robustness evidence",
+      "questions": [
+        "Before the next AI/NPC, enemy, goalie/keeper, boss, economy, route, or balance evaluation where a bot or scripted player finds one exploit, did I name the exploit_family and the fixed baseline route or strategy separately?",
+        "After a fix or success claim, did I run or specify one reward/constraint/initial-state variant intended to discover a different exploit family, instead of only rechecking the already-known route?",
+        "If no diversity probe is run, did I label the result known_exploit_regression_only, exploit_diversity_unchecked, reward_overfit_risk, or single_strategy_evidence before changing balance, prompts, memory, or acceptance criteria?"
+      ],
+      "expires_after": "Review after the next two exploit-oriented game evaluations that mention exploit family, bot strategy, scripted route, reward variant, constraint variant, initial state variant, balance fix, robustness, or regression-only evidence."
+    },
     {
       "id": "probe-20260710-npm-contrastive-procedural-memory",
       "created_at": "2026-07-10T08:14:33+09:00",

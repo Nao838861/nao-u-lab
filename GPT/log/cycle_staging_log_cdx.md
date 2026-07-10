@@ -53,6 +53,35 @@ review:
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-07-10T12:14:46+09:00 Phase 3b self-feedback
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783645796-75c7a5917b
+    source_ts: "1783645796.943439"
+    title: "EA SPORTS NHL 26 goalie behavioral exploit discovery with RAID"
+    reason: "未 review かつ score 13。game-design / harness / agent / operation / evaluation を含み、次回のゲーム評価で single bot route や既知 exploit の再確認だけを robustness evidence と誤認するリスクに直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "RAID 由来の exploit-diversity probe を追加。既知 exploit の発見・修正後に、reward / constraint / initial-state を変えて別 exploit family を探す確認を求める。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+    note: "既存 probe は oracle type、regression fixture、route profile、failure anchor を扱うが、修正後に報酬や条件を変えて別 exploit family を探索する narrow check は薄い。恒久 directive や AGENTS は変更しない。"
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
