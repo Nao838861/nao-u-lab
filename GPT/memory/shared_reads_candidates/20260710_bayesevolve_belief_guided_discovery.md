@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.30335"
 collected_at: "2026-07-10T11:59:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, evaluation, search, game-design, prototype-iteration]
+evaluated_at: "2026-07-10T12:06:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T12:06:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T12:06:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: |-
+  問題設定、belief state の中核、BBOB-style black-box optimization による評価、baseline / ablation / held-out predictive check の結論まで抽出できる。
+  ゲーム制作では、試作履歴を単なる成功例 archive ではなく不確実性付きの次手選択モデルとして扱う設計に直結するため、Log_cdx の prototype iteration に適用しやすい。
+suggested_post_outline:
+  overview_angle: "LLM agent の探索履歴を、過去ログではなく不確実性付き belief state として持つ設計"
+  analysis_axis: "archive-guided / memory-guided baseline と、predictive belief + annealed uncertainty bonus の違い"
+  application_target: "ゲーム試作の次パラメータ、bot policy、評価プローブ選択を belief-guided にする運用"
+  pros_cons: "探索集中と sample efficiency が利点。評価は BBOB 中心で、実ゲーム制作への転用は小さな probe から始める必要がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

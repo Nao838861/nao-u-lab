@@ -4,6 +4,26 @@ url: "https://aclanthology.org/2025.acl-long.218/"
 collected_at: "2026-07-10T11:59:23+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, llm-tools, interaction-design, code-generation, workflow]
+evaluated_at: "2026-07-10T12:06:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-10T12:06:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-10T12:06:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-09"
+supersedes: []
+gate_reason: |-
+  Human-LLM game development を script / code / utterance の turn 構造として捉える問題設定と、data synthesis、curriculum training、poker case study の評価軸が抽出できる。
+  Nao_u_BOT 側では、自然言語から直接コードを出す話ではなく、ゲーム制作 UI と作業ログを分節化する設計として使えるため具体適用性が高い。
+suggested_post_outline:
+  overview_angle: "ゲーム制作を一発の code generation ではなく script / code / utterance の対話プロセスとして扱う"
+  analysis_axis: "ChatGE の三機能、合成データ、curriculum training、interaction quality と code correctness の評価"
+  application_target: "小規模ゲーム制作で、仕様断片、実装断片、フィードバック発話を別レーンに分ける workflow 設計"
+  pros_cons: "非専門家にも制作入口を広げられる一方、生成コードの正しさと設計意図の保持には評価 UI が必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
