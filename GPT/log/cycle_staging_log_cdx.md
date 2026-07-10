@@ -60,7 +60,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md を UTF-8 明示読みし、index の Markdown link を監査: 0 links / 0 broken。代表語は本文表示で正常。"
+  - "atoms.jsonl 2668 行を監査: JSON error 0、duplicate id 0、normalized_content_hash 重複 0。"
+  - "shared-reads lifecycle を集計: posted 403 / ready_to_post 10 / postponed 362 / failed 117 / needs_review 12 / frontmatter status missing 80。"
+  - "mixed duplicate queue を再生成: 69 groups。stale triage queue を 2026-07-11 基準で再生成: 上位 50 件。"
+  - "raw/ の 30 日超無更新ファイルを監査: 87 件。参照原文のため、この phase では移動せず archive 候補として記録のみ。"
+  - "Slack inbox を監査: directives 23 行 / broadcasts 21 行、pending は双方 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  stale_postponed_or_needs_review: 183
+  stale_triage_queue_rows: 50
+  handed_off_this_cycle: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "high game-transfer value; mixed duplicate group。role-sensitive NPC prompt の具体的評価を代表候補で統合確認する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "high game-transfer value; mixed duplicate group。GPC / Unity IR / replay 評価を terminal siblings と照合する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "high game-transfer value; mixed duplicate group。生成条件と user study の不足を原文で再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "high game-transfer value; mixed duplicate group。同一 title の複数候補から本件だけを代表として渡し、評価根拠を補う。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "high game-transfer value; mixed duplicate group。300 persona benchmark と既投稿内容の差分を統合確認する。"
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 読みで日本語本文が正常。初回出力で『記憶』『ゲーム設計』『敵パターン』『評価軸』を含む箇所を確認。"
+  display_or_tooling_status: "PowerShell here-string から Python へ渡した代表語 probe のキーだけが ?? 表示となったため tooling 経路の mojibake。source 破損ではない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
