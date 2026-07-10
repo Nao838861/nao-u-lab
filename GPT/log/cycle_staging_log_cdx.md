@@ -10,7 +10,19 @@
 - 新規検索では Goal Playable Concepts 論文の一次情報を再確認したが、既収集 URL（arXiv:2603.07101）だった。品質判断や Slack 投稿は行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-11T06:00:00+09:00"
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 1 の新規 candidate は 0 件で、staging に `stale_review_batch` もなかったため、frontmatter の更新対象はなし。
+- `memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` の terminal-title preflight 対象もなし。
+- candidate の追加収集、4000字概要の執筆、Slack 投稿、記憶階層の改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
