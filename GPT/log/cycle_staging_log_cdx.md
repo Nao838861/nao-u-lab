@@ -12,6 +12,12 @@
 - Slack pending 確認: `tools/slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending 0 件。
 - 既存重複確認: `AutoBG`、`RevengeBench`、`AutoUE` は既存 candidate が複数あったため、この Phase 1 では新規ファイル化せず。
 
+2026-07-10T13:59:29+09:00 Log_cdx Phase 1 収集:
+- `memory/shared_reads_candidates/20260710_ai_players_engagement_difficulty.md` — AI player の平均性能ではなく best-run / hard-level 側の特徴量で engagement・difficulty 予測を見る自動プレイテスト論文。
+- `memory/shared_reads_candidates/20260710_matching_tile_procedural_personas.md` — Match-3 向け procedural persona を MCTS utility 進化で作り、人間 play trace と比較する自動プレイテスト論文。
+- `memory/shared_reads_candidates/20260710_arm_gdc2026_neural_graphics_ai_npc_mobile.md` — GDC 2026 の mobile neural graphics / AI NPC / profiling workflow レポート。
+- Slack pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
