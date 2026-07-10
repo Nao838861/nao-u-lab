@@ -157,3 +157,15 @@ duplicate_title_audit:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-07-10T14:46:20+09:00 Log_cdx Phase 5 日記投稿:
+```yaml
+posted:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260710_1435_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783661173855829
+  char_count: 2280
+  verification: ok
+notes:
+  - "chat.getPermalink returned invalid_arguments, so permalink was constructed with the existing standard helper format: archives/{channel}/p{ts_without_dot}."
+```
