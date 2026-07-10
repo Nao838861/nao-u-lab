@@ -43,7 +43,39 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-07-10 22:24 JST log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783358642-966af409e0
+    source_ts: "1783358642.504499"
+    title: "AutoMem: memory operation as trainable cognitive skill"
+    reason: "candidate / directive / atoms / staging が増える運用で、記憶品質を保存量ではなく search-before-write と update/upsert/supersede/no-write の操作品質へ寄せられるため。恒久ルールではなく、次回 memory-affecting work だけの小さな audit probe に落とせる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "AutoMem 由来の memory_action audit probe を追加。次の Phase 4a memory cleanup / shared-reads candidate 更新 / Slack directive lifecycle / atom write / game-memory note で、操作を search/retrieve/write/append/rewrite/upsert/supersede/archive/no_write として名付け、書く前に既存候補を探し、blind append を避ける。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    - "次の memory-affecting work 前に memory_action を search/retrieve/write/append/rewrite/upsert/supersede/archive/no_write のどれかで名付けたか。"
+    - "write/append する場合、関連 atom/candidate/directive/state/project memory を先に search し、found_existing / empty_search / stale_hit / duplicate_hit / search_skipped_with_reason を残したか。"
+    - "最小の可逆操作を選び、redundant_write / append_only_update / supersede_missing / retrieval_trigger_unclear / memory_action_overhead を必要ならラベル付けしたか。"
+  withdrawal_condition: "次の 2 回の memory-affecting phase note で、memory_action、search-before-write 結果、最小の可逆操作、redundant-write/supersede risk が恒久ルール追加なしに自然に残るなら撤退する。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

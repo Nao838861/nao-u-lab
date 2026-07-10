@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-10T20:26:19+09:00",
+  "updated_at": "2026-07-10T22:24:41+09:00",
   "reviewed_source_ts": [
+    "1783358642.504499",
     "1783653132.093719",
     "1783667523.525089",
     "1783660318.147689",
@@ -322,6 +323,42 @@
     "1778496988.925499"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-10T22:24:41+09:00",
+      "id": "sr-1783358642-966af409e0",
+      "source_ts": "1783358642.504499",
+      "title": "AutoMem: memory operation as trainable cognitive skill",
+      "decision": "adopt_probe",
+      "reason": "Score 17. This atom is useful now because Codex phase work already creates shared-reads candidates, Slack/directive lifecycle records, atoms, and staging notes, but can still treat memory quality as file growth or successful ingestion. The transferable point is narrow: before writing another memory artifact, classify the memory action, search first, and decide whether the right operation is append, rewrite, upsert, supersede, archive, or no-write. Existing probes cover lifecycle diagnosis and load strategy, but this adds an operation-level audit focused on redundant writes and empty searches without adding a durable rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "probe": [
+        "Before the next Phase 4a memory cleanup, shared-reads candidate update, Slack directive lifecycle action, atom write, or game-memory note, did I name the memory_action as search, retrieve, write, append, rewrite, upsert, supersede, archive, or no_write?",
+        "If the action writes or appends, did I search the relevant existing atom, candidate, directive, state, or project memory first and record whether the result was found_existing, empty_search, stale_hit, duplicate_hit, or search_skipped_with_reason?",
+        "Before closing the work, did I choose the smallest reversible operation and label any issue as redundant_write, append_only_update, supersede_missing, retrieval_trigger_unclear, or memory_action_overhead if the audit itself is heavier than the decision?"
+      ],
+      "withdrawal_condition": "Drop this probe if the next two memory-affecting phase notes already name the memory action, search-before-write result, smallest reversible operation, and redundant-write or supersede risk without increasing durable instructions.",
+      "change": {
+        "type": "probe",
+        "summary": "Added a reversible AutoMem-inspired memory-action audit probe: before memory-affecting work, classify the memory operation, search before writing, and prefer the smallest update/upsert/archive/no-write action over blind append.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-10T20:26:19+09:00",
       "id": "sr-1783653132-1a07acfa18",
@@ -8316,6 +8353,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260710-automem-memory-action-audit",
+      "created_at": "2026-07-10T22:24:41+09:00",
+      "source_ts": "1783358642.504499",
+      "scope": "next Phase 4a memory cleanup, shared-reads candidate update, Slack directive lifecycle action, atom write, or game-memory note where Codex may treat memory quality as more saved text instead of better memory operations",
+      "questions": [
+        "Before the next Phase 4a memory cleanup, shared-reads candidate update, Slack directive lifecycle action, atom write, or game-memory note, did I name the memory_action as search, retrieve, write, append, rewrite, upsert, supersede, archive, or no_write?",
+        "If the action writes or appends, did I search the relevant existing atom, candidate, directive, state, or project memory first and record whether the result was found_existing, empty_search, stale_hit, duplicate_hit, or search_skipped_with_reason?",
+        "Before closing the work, did I choose the smallest reversible operation and label any issue as redundant_write, append_only_update, supersede_missing, retrieval_trigger_unclear, or memory_action_overhead if the audit itself is heavier than the decision?"
+      ],
+      "expires_after": "Review after the next two memory-affecting phase notes that mention memory action, search-before-write, append, rewrite, upsert, supersede, archive, duplicate candidate, empty search, redundant write, retrieval trigger, or memory lifecycle."
+    },
     {
       "id": "probe-20260710-chatge-three-lane-turn-record",
       "created_at": "2026-07-10T20:26:19+09:00",
