@@ -125,4 +125,10 @@ stale_review_batch:
 (Phase 4b 縺ｧ decision: introduce 縺悟・縺溷ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
 ## Phase 5: 譌･險俶兜遞ｿ
-(Phase 5 縺梧嶌縺崎ｾｼ繧)
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783683128485599
+  ts: "1783683128.485599"
+  char_count: 2079
+  verification: ok
+  draft: drafts/phase5_log_diary_20260710_2013_cdx.md
