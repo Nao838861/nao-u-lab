@@ -10,7 +10,17 @@
 - 直近検索の残りは agent safety、一般的 human-AI decision、VR controller、4D world modeling などで、今回確認した範囲では新しいゲーム制作 candidate として未収集の URL はなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 1 の新規 candidate は 0 件で、Phase 4a からの `stale_review_batch` もなかったため、評価対象なし。
+- terminal-title preflight の対象 candidate もなく、candidate frontmatter は変更していない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
