@@ -10,7 +10,21 @@
 - 収集元: `memory/raw/web_research/results.jsonl` の 2026-07-11 取得分を起点に、各 arXiv abstract を一次確認。品質判定・投稿判断は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260711_revengebench_behavioral_policy_recovery.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+  - path: memory/shared_reads_candidates/20260711_autobg_critic_driven_board_game_design.md
+    reason: "posted duplicate title siblings: canonical memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; also 20260616/20260618/20260620"
+stale_reviewed: []
+```
+
+- terminal-title preflight: 2 件とも posted sibling を検出したため、本文の再評価前に `postponed_duplicate` で閉じた。
+- `tools/shared_reads_duplicate_preflight.py` は現ワークツリーに存在しないため、`shared_reads_title_index.py` の正規化規則と canonical index / mixed duplicate queue を直接照合した。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

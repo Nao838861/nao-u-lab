@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2606.26094"
 collected_at: "2026-07-11T13:05:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, player-modeling, evaluation, behavioral-probes, opponent-modeling]
+evaluated_at: "2026-07-11T13:25:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-11T13:25:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209"
+next_action: none
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  同一 title / URL の RevengeBench は 2026-06-26 に #shared-reads 投稿済み。
+  terminal-title preflight 契約に従い、内容の再評価や Phase 3 投稿対象化を行わず duplicate として保留する。
 ---
 
 ## raw_excerpt
