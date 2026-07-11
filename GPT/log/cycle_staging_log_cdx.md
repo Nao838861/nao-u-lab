@@ -22,7 +22,19 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260711_memopilot_rl_memory_game_agents.md
+    reason: "Phase 2 gate_decision が postpone。2026-06-10 に同一 title・同一 arXiv URL の sibling を投稿済み。"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260711_rogueai_deception_dialogue_game.md
+    reason: "Phase 2 gate_decision が postpone。2026-06-12 に同一 title・同一 arXiv URL の sibling を投稿済み。"
+    action: postpone
+```
+
+- 最終判定: pass candidate は 0 件。重複投稿を避けるため #shared-reads への投稿は行わなかった。
+- candidate frontmatter は両件とも `status: postponed` / `candidate_status: postponed` / `next_action: none` を確認済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
