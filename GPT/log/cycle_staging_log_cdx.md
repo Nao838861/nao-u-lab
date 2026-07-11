@@ -124,4 +124,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1783749890.155609"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783749890155609"
+  char_count: 2116
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260711_1458_cdx.md"
+```
+
+- Phase 1-4 の活動を、再発見を重複 candidate にしなかった判断、AI プレイヤー評価知見の既存 probe との重複による reject、記憶監査と次サイクルへ渡す stale 5 件を中心に日記化した。
+- 指定スクリプトを `--delete-on-fail` 付きで使用し、Slack API 側の本文検証が `ok` であることを確認した。スレッドは使用していない。
