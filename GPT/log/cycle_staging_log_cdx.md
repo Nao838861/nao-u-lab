@@ -23,7 +23,14 @@ stale_reviewed: []
 - terminal-title preflight の対象も 0 件。既存 candidate の任意再評価、追加収集、Slack 投稿は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` が 0 件だったため、最終レビュー対象および #shared-reads 投稿はなし。
+- candidate frontmatter の更新対象もなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
