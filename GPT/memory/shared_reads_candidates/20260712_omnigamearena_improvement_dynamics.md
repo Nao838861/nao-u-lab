@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2606.09826
 collected_at: 2026-07-12T02:05:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, vlm-agent, playtesting, evaluation, unreal-engine, reflection]
+evaluated_at: "2026-07-12T02:10:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-12T02:10:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260611_omnigamearena_vlm_game_agents.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769"
+next_action: none
+stale_after: "2026-08-11"
+supersedes: []
+gate_reason: >-
+  同一 title / URL の candidate が 2026-06-11 に #shared-reads へ投稿済みで、terminal sibling の path と permalink を確認できた。
+  内容はゲーム AI の反復改善評価に有用だが、Phase 3 で再投稿する対象ではないため duplicate として postponed に閉じる。
 ---
 
 ## raw_excerpt
