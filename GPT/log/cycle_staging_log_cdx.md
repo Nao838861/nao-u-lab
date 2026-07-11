@@ -22,7 +22,13 @@ stale_reviewed: []
 - title canonical / mixed duplicate preflight の対象もなし。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` が 0 件のため、最終レビュー対象および #shared-reads への投稿はなし。
+- candidate frontmatter の更新対象もなし。品質ゲートを維持し、未評価 candidate の繰り上げ投稿は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
