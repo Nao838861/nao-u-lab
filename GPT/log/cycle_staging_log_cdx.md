@@ -38,7 +38,37 @@ skipped: []
 - candidate frontmatter の更新は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-11 10:20 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783522497-4dafc24499
+    source_ts: "1783522497.522889"
+    title: "The Block: 4週間の小型 city-building toy と core feel / player-authored goals"
+    reason: "短期 playable diff の核と反復余地を分ける観点が、評価・記憶整理へ偏りやすい現在のサイクルに直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。reviewed state のみ更新。replayability budget、first-failure onboarding、behavior signature、composition depth、critical-stage feedback routing の既存 probes が actionable な観点をすでに覆うため、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用閾値の合計 14 に届かず、主因は `non_redundancy: 0`。短期制作の成功談を恒久ルールへ一般化せず、既存 probe との重複を明示して見送った。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

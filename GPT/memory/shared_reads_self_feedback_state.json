@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T08:12:00+09:00",
+  "updated_at": "2026-07-11T10:20:00+09:00",
   "reviewed_source_ts": [
     "1782479421.683459",
     "1783313059.907449",
@@ -326,7 +326,8 @@
     "1778496988.925499",
     "1783689726.811799",
     "1783420796.091369",
-    "1782515410.585469"
+    "1782515410.585469",
+    "1783522497.522889"
   ],
   "reviews": [
     {
@@ -8500,6 +8501,36 @@
       "change": {
         "type": "state_only",
         "summary": "Marked the adversarial-pragmatics atom as reviewed and rejected because the existing authority-boundary probe already covers its actionable behavior.",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-11T10:20:00+09:00",
+      "id": "sr-1783522497-4dafc24499",
+      "source_ts": "1783522497.522889",
+      "title": "The Block: 4週間の小型 city-building toy と core feel / player-authored goals",
+      "decision": "reject",
+      "reason": "Score 13. 短期 playable diff で core feel と player-authored goals を分ける観点は、評価・記憶整理へ偏りやすい現在の定時サイクルとゲーム制作に直結し、The Block のポストモーテムにも開発期間、販売数、頻出不満という根拠がある。ただし active probes はすでに replayability budget、first-failure onboarding、behavior signature、composition depth、critical-stage feedback routing を通じて、短期核の可読性、複数の行動目標、反復で届く深さ、次段へ渡す不足を確認している。新たな core-feel / possibility-space probe はこれらの言い換えになり、active probe 群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "The Block atom を reviewed に追加し、既存の game evaluation probes と重複するため reject と記録した。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
