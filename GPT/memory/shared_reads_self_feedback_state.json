@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T15:20:00+09:00",
+  "updated_at": "2026-07-11T16:55:00+09:00",
   "reviewed_source_ts": [
+    "1782543504.379349",
     "1783420795.393029",
     "1783704212.614159",
     "1782479421.683459",
@@ -333,6 +334,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T16:55:00+09:00",
+      "id": "sr-1782543504-314f3ac74a",
+      "source_ts": "1782543504.379349",
+      "title": "DynamicMem: 変化するユーザー状態を長期行動ログから再構成する agent memory benchmark",
+      "decision": "reject",
+      "reason": "Score 13. DynamicMem は、記憶量や検索成功ではなく、長い event log から変化する現在状態を再構成し、その状態を次の行動へ使えるかを問うため、Codex の memory/phase 運用に直接関係する。しかし既存 state には、recall failure を State changed / Observation missing / Compression loss 等へ分ける EGOSTREAM probe、高信頼 premise の staleness audit、write / maintain / retrieve / use の lifecycle probe がすでにある。新しい current-state reconstruction probe はこれらの言い換えになり、active probe 群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe や恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-11T11:55:00+09:00",
       "id": "sr-1783704212-98c3958cb9",

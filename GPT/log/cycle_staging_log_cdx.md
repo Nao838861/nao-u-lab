@@ -37,7 +37,32 @@ skipped:
 - candidate frontmatter は両件とも `status: postponed` / `candidate_status: postponed` / `next_action: none` を確認済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782543504-314f3ac74a
+    source_ts: "1782543504.379349"
+    title: "DynamicMem: 変化するユーザー状態を長期行動ログから再構成する agent memory benchmark"
+    reason: "memory/phase 運用で、保存量や検索成功ではなく、変化した現在状態の再構成と次行動への利用を評価すべきか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の State changed / staleness / memory lifecycle probes と重複するため、reviewed state だけ更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
