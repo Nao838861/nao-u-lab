@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2606.13310"
 collected_at: "2026-07-11T16:55:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [dialogue-game, social-deduction, llm-agents, deception, player-study]
+evaluated_at: "2026-07-11T17:05:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-11T17:05:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260612_rogueai_reverse_turing_dialogue_game.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781239550760649"
+next_action: none
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: |-
+  同一 title・同一 arXiv URL の sibling が 2026-06-12 に #shared-reads 投稿済みであり、Phase 3 の再投稿対象にしない。
+  canonical index の best_status: posted を根拠に本文の新規品質評価は行わず、重複候補として閉じる。
 ---
 
 ## raw_excerpt
