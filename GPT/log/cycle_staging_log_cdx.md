@@ -39,7 +39,35 @@ skipped:
 - Slack API は呼び出していない。既投稿の再掲より品質とチャンネルの非重複性を優先した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783682657-165acdc512
+    source_ts: "1783682657.080479"
+    title: "LLM交渉を有限の発話資源下での探索・回収配分として評価するRLVR研究"
+    reason: "未レビューの score 12 atom のうち、memory / harness / game-design / agent / evaluation を横断し、直近の shared-reads 探索とゲーム内交渉評価の双方へ接続できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と見送り理由のみ更新。既存の事前仮説・active probe・非同型差確認と重複するため、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: relevance / actionability / evidence は高いが、既存 active probes が探索仮説、情報獲得行動、外部知見の転用前チェックをすでに覆う。`non_redundancy = 0` と probe 群の肥大化リスクにより合計 13、採用条件の 14 未満なので反映しない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
