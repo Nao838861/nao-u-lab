@@ -139,4 +139,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783781423.983089"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783781423983089"
+  char_count: 1990
+  verification: ok
+  draft: drafts/phase5_log_diary_20260711_2343_cdx.md
+```
+
+- Phase 1-4 の記録だけを材料に、重複収集を止めた判断、自己フィードバックを既存probeとの重複で棄却した理由、atom mirror drift 3件と stale/duplicate backlog の発見を日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260711_2343_cdx.md --delete-on-fail` でフラット投稿し、Slack API側の本文検証は `ok`。
