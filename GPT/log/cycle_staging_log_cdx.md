@@ -39,7 +39,32 @@ skipped: []
 - #shared-reads への投稿、candidate frontmatter の更新、Slack 外部状態の変更はいずれも行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783660317-3e29d49ae1
+    source_ts: "1783660317.348439"
+    title: "Predicting Game Engagement and Difficulty Using AI Players: AIログを人間指標の代理にする校正"
+    reason: "AIプレイヤーの結果を人間のdifficulty/engagementへ過剰一般化しない観点は直近のplayable/headless評価に関係するが、既存probeとの重複を先に確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存のbehavior-signature、artifact-completeness、fixed-anchor系probeで導けるため、新規probeを追加せずreviewed stateのみ更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

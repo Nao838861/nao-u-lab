@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-11T13:35:00+09:00",
+  "updated_at": "2026-07-11T15:20:00+09:00",
   "reviewed_source_ts": [
     "1783420795.393029",
     "1783704212.614159",
@@ -329,7 +329,8 @@
     "1783689726.811799",
     "1783420796.091369",
     "1782515410.585469",
-    "1783522497.522889"
+    "1783522497.522889",
+    "1783660317.348439"
   ],
   "reviews": [
     {
@@ -8543,6 +8544,36 @@
       "change": {
         "type": "state_only",
         "summary": "The Block atom を reviewed に追加し、既存の game evaluation probes と重複するため reject と記録した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-11T15:20:00+09:00",
+      "id": "sr-1783660317-3e29d49ae1",
+      "source_ts": "1783660317.348439",
+      "title": "Predicting Game Engagement and Difficulty Using AI Players: AIログを人間指標の代理にする校正",
+      "decision": "reject",
+      "reason": "Score 13. AIプレイヤーの平均成績だけでなく成功上位runの特徴を使い、人間のpass rateやchurn rateとの対応を測る観点は、playable diffやheadless評価でAIのクリア結果を人間体験へ過剰一般化しないために有用である。ただし既存のbehavior-signature-distribution-shift probeは行動分布を、gamecraft-artifact-completeness-replay probeは再生可能な実行証拠を、ptcgbench-anchor-harness-split probeは固定anchorとharness/モデル/transferの帰属をすでに要求している。新しいhuman-proxy calibration probeはこれらの組み合わせで導け、active probe群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "AI engagement/difficulty予測 atom を reviewed に追加し、既存の行動分布・artifact・anchor probes と重複するため reject と記録した。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
