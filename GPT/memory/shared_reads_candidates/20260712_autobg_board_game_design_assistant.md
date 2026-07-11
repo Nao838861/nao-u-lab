@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2606.01976v2"
 collected_at: "2026-07-12T05:15:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, board-game, llm, playtesting, iterative-design, player-modeling]
+evaluated_at: "2026-07-12T05:16:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-12T05:16:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260616_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260618_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260620_autobg_board_game_design_assistant.md"
+next_action: none
+stale_after: "2026-08-11"
+supersedes: []
+gate_reason: "title canonical index で同一 title group に posted sibling が4件確認済み。既投稿内容との重複になるため、本文の品質評価や Phase 3 投稿対象には進めない。"
 ---
 
 ## raw_excerpt

@@ -8,7 +8,17 @@
 - 収集元確認: 直近 `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、Slack raw の外部 URL を確認。Phase 1 のため品質判定・投稿は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260712_autobg_board_game_design_assistant.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260616_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260618_autobg_board_game_design_assistant.md; memory/shared_reads_candidates/20260620_autobg_board_game_design_assistant.md"
+stale_reviewed: []
+```
+
+- terminal-title preflight: `memory/shared_reads_title_canonical_index.jsonl` の AutoBG group は `best_status: posted`。同梱予定の `tools/shared_reads_duplicate_preflight.py` は当該 checkout に存在しなかったため、契約と同じ frontmatter 更新を対象 candidate 1件だけへ手動適用した。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
