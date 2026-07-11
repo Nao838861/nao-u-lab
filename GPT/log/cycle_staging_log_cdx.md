@@ -30,7 +30,30 @@ completed_by: "log_cdx (Phase 3)"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783551257-0afe7dfb3c
+    source_ts: "1783551257.158789"
+    title: "Evaluating Large Language Models in a Complex Hidden Role Game"
+    reason: "未レビューの高スコア atom で、hidden-role の長期対話・投票・政策選択を分解する評価が game-agent 作業に近いため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の TriEx belief/action/oracle probe と dialogue session outcome probe に診断軸が重複するため、reviewed state のみ更新した。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
