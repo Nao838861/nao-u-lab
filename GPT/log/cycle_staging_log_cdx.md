@@ -62,7 +62,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads mixed duplicate queue を再生成した（72 groups）。candidate frontmatter は変更していない。"
+  - "shared_reads stale triage queue を 2026-07-12 基準で再生成した（上限 50 rows）。"
+  - "inbox lifecycle を確認した。slack_directives / slack_broadcasts は pending 0 件で、handled 更新対象なし。"
+  - "MEMORY.md index と per-file atom index の整合性を validate_memory_index.py で確認した（OK）。"
+  - "atom duplicate cluster overlay を check した（45 clusters / 45 overlay groups、stale なし）。"
+issues:
+  - id: ISS-4A-20260712-01
+    description: "postponed / needs_review の stale backlog が 189 件あり、Phase 2 の少数再評価速度を大きく上回っている。上位 queue は mixed duplicate が中心で、同一論文の候補が再評価待ちを占有している。"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl（生成 rows 50）; memory/shared_reads_mixed_duplicate_queue.jsonl（72 groups）; candidate lifecycle counts: posted=402, ready_to_post=10, postponed=369, failed=118, needs_review=12, missing=81"
+    source_file_status: "UTF-8 source は読み取り可能。candidate 本体は正本として未変更。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ゲーム制作へ転用価値の高い候補が重複群の古い open row に埋もれ、次制作時に代表候補へ到達しにくい。既存 queue と Phase 2 handoff で処理可能なため、新規設計の blocker ではない。"
+  - id: ISS-4A-20260712-02
+    description: "memory_health が raw normalized-content duplicate 40 groups / 80 rows と repeated-title overlay 未付与 14種を警告している。content duplicate は recall-visible 側で fold 済みだが、未付与 title 群は検索結果の識別性を下げうる。"
+    severity: low
+    evidence: "python tools/memory_health.py --compact; memory/atoms/duplicate_clusters.jsonl; memory/atoms/title_quality_audit.jsonl"
+    source_file_status: "MEMORY.md は UTF-8 明示読みで正常。代表語 probe は 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得できた。duplicate cluster index は current。"
+    display_or_tooling_status: "最初の PowerShell here-string 経由 probe では日本語リテラルが ?? に置換されたが、rg の UTF-8 読みでは全代表語を取得。source 破損ではなく表示・tooling 経路の問題。"
+    why_blocks_game_memory: "同名・低情報 title が recall 時の候補比較を難しくする。ただし exact-content duplicate は既に fold され、現時点の影響は限定的。"
+  - id: ISS-4A-20260712-03
+    description: "memory/raw/ に 30日超未更新の原文が 87 files ある。多くは phase3 PDF/text と Slack archive で、参照中か否かをこの phase の機械判定だけでは確定できない。"
+    severity: low
+    evidence: "memory/raw/ mtime < 2026-06-12 の file count=87（例: memory/raw/web_research/phase3_pdfs/, phase3_sources/, slack_archive/shared-reads.jsonl）"
+    source_file_status: "列挙のみ。削除・移動・内容変更なし。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "raw の探索ノイズと容量は増えるが、上位 atom / candidate の検索導線を直接壊してはいない。参照関係未確認のまま archive すると provenance を失うため、Phase 4a では保留した。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  eligible_total: 189
+  handed_off: 5
+  queue_rows_materialized: 50
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "game_transfer_value=high; mixed duplicate group。role-sensitive NPC prompt constraints と usability/synthetic evaluation がゲーム制作へ直接転用可能。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "game_transfer_value=high; mixed duplicate group。GPC/design patterns/Unity IR と automated replay 評価が playable diff 化に直結。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "game_transfer_value=high; mixed duplicate group。procedural relatedness は有望だが生成条件と評価結果の追加確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "game_transfer_value=high; mixed duplicate group。dependency-aware RPG pipeline の差分と qualitative evaluation の強さを一次本文で再確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "game_transfer_value=high; mixed duplicate group。persona-conditioned shared RL policy と 300 persona benchmark が大量 NPC 設計へ直接接続する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
