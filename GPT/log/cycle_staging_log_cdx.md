@@ -33,7 +33,32 @@ skipped:
 - candidate frontmatter を再確認し、`gate_decision: postpone`、`status: postponed`、`candidate_status: postponed`、`last_decision: postponed_duplicate`、`next_action: none` の整合を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782550536-b867f7a8c2
+    source_ts: "1782550536.720219"
+    title: "Age of LLM: fog of war・外交・illegal action を同一試合ログで評価する戦略ゲーム benchmark"
+    reason: "部分観測ゲームにおける形式成功・信念更新・行動 legality の分離を、Codex の game agent / headless 評価へ反映できるか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。TriEx、AGI Maze、LUDOBENCH の active probes と重複するため、reviewed state のみ更新した。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 既存 probes が stated reason / belief / action / oracle、observation / inferred state / uncertainty、legality / strategic quality の分離を既に覆う。重複 probe の追加はチェック負荷を上げるため採用条件を満たさない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

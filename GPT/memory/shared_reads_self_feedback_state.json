@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T03:30:00+09:00",
+  "updated_at": "2026-07-12T05:15:00+09:00",
   "reviewed_source_ts": [
+    "1782550536.720219",
     "1782675600.795769",
     "1783636736.001819",
     "1783551266.713189",
@@ -340,6 +341,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-12T05:15:00+09:00",
+      "id": "sr-1782550536-b867f7a8c2",
+      "source_ts": "1782550536.720219",
+      "title": "Age of LLM: fog of war・外交・illegal action を同一試合ログで評価する戦略ゲーム benchmark",
+      "decision": "reject",
+      "reason": "Score 13. 部分観測下で、JSON 形式成功と rule-level legality、観測、信念、行動、外交メッセージを分けて評価する観点は Codex のゲーム agent / headless 評価に直結する。しかし active probes には既に、TriEx の stated reason / belief / action / oracle 分離、AGI Maze の observation / inferred state / uncertainty 分離、LUDOBENCH の legality / strategic quality 分離がある。新しい fog-of-war probe を足すと同じ診断を別名で重ね、次回評価のチェック負荷を増やすため、non_redundancy と risk_control が採用条件を満たさない。読了だけ記録し、既存 probes を再利用する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe や恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-12T03:30:00+09:00",
       "id": "sr-1782675600-5af674c22a",
