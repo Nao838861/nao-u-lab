@@ -119,4 +119,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783768772297729"
+  char_count: 2162
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260711_2013_cdx.md"
+```
+
+- Phase 1-4 の活動を、新規 candidate 0 件を空転ではなく重複検知と品質ゲートが働いた結果として捉え直し、utility/influence-map 型 NPC probe と candidate lifecycle 境界の発見を中心に日記化した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
