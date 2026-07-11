@@ -71,7 +71,66 @@ self_feedback:
 - 採用閾値の合計 14 に届かず、主因は `non_redundancy: 0`。短期制作の成功談を恒久ルールへ一般化せず、既存 probe との重複を明示して見送った。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-11 10:48 JST
+
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（69 group）。candidate frontmatter は変更していない。"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-11 基準で再生成（queue 50 件）。期限切れ backlog と今回 handoff 5 件を分離した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認。pending は双方 0 件で close 対象なし。"
+  - "MEMORY.md index を validate_memory_index.py で検証し OK。raw/ の 30 日超無更新ファイル 87 件は原文・同期状態を含むため、この phase では移動せず archive candidate として確認のみ。"
+issues:
+  - id: ISS-4A-20260711-001
+    description: "atoms.jsonl / per-file atom mirror に per-file-only 3 件の drift が残っている。"
+    severity: medium
+    evidence: "tools/audit_atom_mirror_drift.py: atoms_jsonl=2668, per_file_md=2671, index_jsonl=2668; per_file_only=[sr-1780726065-363a0d5e0a, sr-1780726900-0e0713d0ae, sr-1780731044-f49ec81a17]"
+    source_file_status: "UTF-8 parse_errors 0。3 per-file atom 自体は読めるが atoms.jsonl/index.jsonl に未収録。MEMORY.md は UTF-8 読みで『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現行 index に出現なし。source corruption の証拠なし。"
+    display_or_tooling_status: "PowerShell 経由の inline Python では日本語 probe literal が ?? に変換されたため、rg の UTF-8 検索で再確認。表示経路の差であり source 破損ではない。"
+    why_blocks_game_memory: "Phase D fallback や per-file atom からの想起時に canonical source と件数がずれ、3 件が通常 recall から欠落し得る。"
+  - id: ISS-4A-20260711-002
+    description: "shared-reads の期限切れ再評価 backlog が queue 上限まで残り、mixed duplicate 69 group が terminal/open 状態を併存している。"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl rows=50（出力上限到達）; memory/shared_reads_mixed_duplicate_queue.jsonl rows=69; candidate status counts posted=402, ready_to_post=10, postponed=362, failed=117, needs_review=12。"
+    source_file_status: "candidate frontmatter を UTF-8 で集計。正本は変更なし。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "同一記事の古い postponed 候補が Phase 2 の注意を反復消費し、ゲーム制作へ転用価値の高い新規知見の評価を遅らせる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  queue_rows: 50
+  mixed_duplicate_groups: 69
+  handed_off_now: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "age_days=17; high game_transfer_value; mixed duplicate group。recommended_representative として group 単位で統合判定する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16; high game_transfer_value; executable synthesis の制作転用価値が高い mixed duplicate group。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16; high game_transfer_value; 評価詳細不足を含む mixed duplicate representative。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16; high game_transfer_value; dependency pipeline の一次評価確認が必要な mixed duplicate representative。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "同一 title_key を重ねないため world-gen group の queue 5 行目を除外し、次の別 mixed duplicate group representative を採用。persona 条件付き共有 RL policy の制作転用価値を統合判定する。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- ISS-001 は既存の mirror audit/repair 経路で扱える整合性不良、ISS-002 は既存 stale/mixed queue と Phase 2 契約で消化できる backlog であり、新しい構造設計を要しないため `needs_design: false`。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
