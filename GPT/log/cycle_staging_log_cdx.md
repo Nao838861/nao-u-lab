@@ -70,7 +70,65 @@ self_feedback:
 - 採否理由: relevance / actionability / evidence は高いが、既存 active probes が探索仮説、情報獲得行動、外部知見の転用前チェックをすでに覆う。`non_redundancy = 0` と probe 群の肥大化リスクにより合計 13、採用条件の 14 未満なので反映しない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/shared_reads_mixed_duplicate_queue.jsonl を再生成（72 group）"
+  - "memory/shared_reads_stale_triage_queue.jsonl を 2026-07-11 基準で再生成（期限超過 backlog 50件）"
+  - "inbox lifecycle を確認。slack_directives / slack_broadcasts とも pending 0件のため close 更新なし"
+  - "MEMORY.md の index 参照先を確認。memory/atoms.jsonl と memory/raw/ は存在し、broken link なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog_count: 50
+stale_review_batch_count: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    status: postponed
+    stale_after: "2026-06-24"
+    priority_reason: "age_days=17。mixed duplicate group。role-sensitive NPC prompt の具体的設計と評価があり、代表候補の統合判定価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16。mixed duplicate group。goal playable pattern を playable diff へ接続する評価根拠が厚い"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16。mixed duplicate group。procedural relatedness の評価結果を補えばゲーム報酬・装備設計へ転用可能"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    status: postponed
+    stale_after: "2026-06-25"
+    priority_reason: "age_days=16。mixed duplicate group。依存関係付きRPG生成の一次評価を確認し、同group候補を統合する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=15。mixed duplicate group。300 persona評価と推論速度比較まであり、大量NPC設計への転用価値が高い"
+    recommended_review_action: reevaluate_in_phase2
+audit_notes:
+  memory_encoding:
+    source_file_status: "UTF-8明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得"
+    display_or_tooling_status: "none"
+  atoms:
+    source_file_status: "2668 rows。atom id 重複なし。normalized content 生重複40群80行は既存canonical overlayでfold済み。recall-visible重複は3群6行"
+    display_or_tooling_status: "memory_health は warning。未group化 repeated title 14種と既知のmojibake suspect atom 2件を報告するが、今回新規の構造障害とは判定しない"
+  shared_reads_lifecycle_counts:
+    posted: 46
+    ready_to_post: 0
+    postponed: 72
+    failed: 6
+    needs_review: 0
+  raw_archive_candidates:
+    count_older_than_30_days: 87
+    decision: "原文・Slack archive・同期state・研究PDF/TXTが混在し、機械的に移動できる単一群ではないため今回は候補確認のみ。削除・移動なし"
+  duplicate_titles:
+    unindexed_groups_sampled: 20
+    mixed_queue_groups: 72
+    decision: "terminal groupとして自動closeできないため、上記5代表だけをPhase 2へhandoff。同一title_keyの重複投入なし"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
