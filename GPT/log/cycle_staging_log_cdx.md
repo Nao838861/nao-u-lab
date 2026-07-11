@@ -20,7 +20,13 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+decision: no_pass_candidates
+reason: "Phase 2 の gate_decision: pass が 0 件のため、#shared-reads への投稿対象なし。postpone 候補は Phase 3 の対象外として再審査・投稿しない。"
+reviewed_at: "2026-07-11T11:28:00+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
