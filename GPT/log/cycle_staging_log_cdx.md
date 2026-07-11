@@ -29,7 +29,14 @@ stale_reviewed: []
 - candidate 本文の評価、frontmatter 更新、Slack 投稿、新規収集は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` は 0 件だったため、最終レビュー対象はなし。
+- #shared-reads への投稿、candidate frontmatter の更新、Slack 外部状態の変更はいずれも行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
