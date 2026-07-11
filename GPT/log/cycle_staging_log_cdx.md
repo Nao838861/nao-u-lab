@@ -33,7 +33,33 @@ skipped: []
 - candidate frontmatter の更新対象もなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782675600-5af674c22a
+    source_ts: "1782675600.795769"
+    title: "Doing What They Say, Not What They Reason: reasoning-conclusion / conclusion-action の分離評価"
+    reason: "説明・明示 decision・実行 action のずれを分ける知見が、headless playtest と phase 完了監査に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の text-action disconnect、commitment-to-action、mixed-action trace probes と重複し、採用条件の合計14を満たさないため state の reviewed 記録だけ更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

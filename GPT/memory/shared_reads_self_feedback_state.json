@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T01:55:00+09:00",
+  "updated_at": "2026-07-12T03:30:00+09:00",
   "reviewed_source_ts": [
+    "1782675600.795769",
     "1783636736.001819",
     "1783551266.713189",
     "1783337137.059349",
@@ -339,6 +340,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-12T03:30:00+09:00",
+      "id": "sr-1782675600-5af674c22a",
+      "source_ts": "1782675600.795769",
+      "title": "Doing What They Say, Not What They Reason: reasoning-conclusion / conclusion-action の分離評価",
+      "decision": "reject",
+      "reason": "Score 13. explicit decision と executed action を分け、さらに stated rule から decision が導けるかを別に測る観点は、headless playtest と phase 完了監査に直結する。しかし active probes には、effective_step / degenerate_step と同条件再検証を求める text-action disconnect probe、declared_action / acceptance condition / final_action_evidence を分ける commitment-to-action probe、expected side effect と verifier を分ける mixed-action trace probe がすでにある。新しい faithfulness probe はこれらの重複に近く、active probe 群を肥大化させるため採用しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed に追加し、既存の text-action / commitment-evidence / verifier probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-12T01:55:00+09:00",
       "id": "sr-1783636736-94bc7d0ed3",
