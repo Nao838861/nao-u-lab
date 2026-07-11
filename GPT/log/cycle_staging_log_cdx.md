@@ -19,7 +19,13 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260712_harnessfix_failed_trajectory_repair.md
+    reason: "Phase 2 で pass なし。既投稿の同題 sibling memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md と重複するため投稿対象外"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
