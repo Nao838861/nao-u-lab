@@ -8,7 +8,15 @@
 - 参照素材: 直近の `memory/raw/web_research/results.jsonl`、最近のatom、Slack raw URLを確認。Slack投稿は実施していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260712_harnessfix_failed_trajectory_repair.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
