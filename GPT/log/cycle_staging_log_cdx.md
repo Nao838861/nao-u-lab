@@ -27,7 +27,17 @@ stale_reviewed: []
 - `tools/shared_reads_duplicate_preflight.py` は現ワークツリーに存在しないため、`shared_reads_title_index.py` の正規化規則と canonical index / mixed duplicate queue を直接照合した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+result: no_pass_candidates
+reason: "Phase 2 の pass が 0 件。2 candidate はいずれも既投稿 sibling と重複し、postponed_duplicate 判定済みのため再投稿しない。"
+```
+
+- `memory/shared_reads_candidates/20260711_revengebench_behavioral_policy_recovery.md` は 2026-06-26 投稿済み candidate と同題・同内容のため対象外。
+- `memory/shared_reads_candidates/20260711_autobg_critic_driven_board_game_design.md` は canonical を含む複数の投稿済み sibling があるため対象外。
+- 投稿前レビューの対象本文はなく、Slack `chat.postMessage` は実行していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
