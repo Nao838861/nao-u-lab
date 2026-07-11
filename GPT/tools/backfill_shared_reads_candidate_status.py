@@ -239,7 +239,7 @@ def should_backfill(fields: dict[str, str], has_posted: bool, include_unreviewed
     return has_posted or bool(fields.get("gate_decision") or fields.get("evaluated_at"))
 
 
-def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed: bool, today: date) -> dict[str, object]:
+def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed: bool, today: date, missing_status_only: bool = False) -> dict[str, object]:
     text = path.read_text(encoding="utf-8")
     parsed = parse_frontmatter(text)
     if parsed is None:
@@ -248,6 +248,8 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
     prefix, frontmatter, suffix = parsed
     frontmatter, repaired_layout = repair_misplaced_scalars(frontmatter)
     fields = scalar_fields(frontmatter)
+    if missing_status_only and fields.get("status"):
+        return {"path": str(path.relative_to(ROOT)), "status": "unchanged", "candidate_lifecycle_status": fields["status"]}
     has_posted = has_top_level_block(frontmatter, "posted")
     has_phase3_skip = has_top_level_block(frontmatter, "phase3_skip")
     posted_fields = nested_block_fields(frontmatter, "posted")
@@ -300,6 +302,9 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
     changed = repaired_layout
     if not current_lifecycle_status:
         frontmatter = set_or_insert_scalar(frontmatter, "status", inferred_status, ["gate_decision", "candidate_status"])
+        if missing_status_only:
+            frontmatter = set_or_insert_scalar(frontmatter, "lifecycle_backfill_reason", '"missing_status_defaulted_to_needs_review"', ["status"])
+            frontmatter = set_or_insert_scalar(frontmatter, "lifecycle_backfilled_at", f'"{today.isoformat()}"', ["lifecycle_backfill_reason"])
         changed = True
     elif fix_conflicts and current_lifecycle_status != inferred_status:
         frontmatter = set_or_insert_scalar(frontmatter, "status", inferred_status, ["gate_decision", "candidate_status"])
@@ -377,6 +382,7 @@ def main() -> int:
         help="also mark candidate files without Phase 2/3 evidence as needs_review",
     )
     parser.add_argument("--dir", type=Path, default=DEFAULT_CANDIDATES_DIR)
+    parser.add_argument("--missing-status-only", action="store_true", help="only fill files whose top-level status is missing")
     parser.add_argument(
         "--today",
         default=date.today().isoformat(),
@@ -387,7 +393,7 @@ def main() -> int:
     candidate_dir = args.dir.resolve()
     today = date.fromisoformat(args.today)
     results = [
-        audit_file(path, args.apply, args.fix_conflicts, args.include_unreviewed, today)
+        audit_file(path, args.apply, args.fix_conflicts, args.include_unreviewed, today, args.missing_status_only)
         for path in sorted(candidate_dir.glob("*.md"))
         if path.name != "README.md"
     ]

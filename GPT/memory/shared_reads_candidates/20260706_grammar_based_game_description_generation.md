@@ -4,6 +4,17 @@ url: "https://arxiv.org/abs/2407.17404"
 collected_at: "2026-07-06T18:16:15+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [automated-game-design, game-description-language, grammar, llm, ludii]
+status: needs_review
+lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
+lifecycle_backfilled_at: "2026-07-12"
+candidate_status: needs_review
+stale_after: "2026-08-05"
+supersedes: []
+last_reviewed_at: "2026-07-06T18:16:15+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260706_grammar_based_game_description_generation.md; status:needs_review"
+next_action: evaluate_in_phase2
+
 ---
 
 ## raw_excerpt

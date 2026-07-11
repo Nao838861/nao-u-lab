@@ -200,7 +200,59 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-ATOM-MIRROR-DRIFT
+    files_changed:
+      - path: tools/audit_atom_mirror_drift.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: memory/atoms/README.md
+        change: modified
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+    summary: "監査付き明示 reconcile と health error 可視化を追加し、per-file-only 3件を atoms.jsonl へ補完して index を再生成した。"
+    partial: false
+  - issue_id: ISS-CANDIDATE-LIFECYCLE-GAP
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: memory/shared_reads_candidates/20260627_autobg_board_game_design_assistant.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260627_memopilot_test_time_learning_game_agents.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260627_ptcg_bench_harness_aware_agents.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260627_revengebench_policy_reverse_engineering.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260628_cross_device_motion_interaction.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260628_tcg_procedural_relatedness.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260706_conversational_pcg_generators.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260706_gdc2026_postmortem_ai_pipelines.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260706_grammar_based_game_description_generation.md
+        change: modified
+    summary: "status 欠落だけを対象にする限定導線を追加し、10件を理由・日付付き needs_review に補完した。本文は変更していない。"
+    partial: false
+migrations:
+  - what: "per-file-only atom 3件を atoms.jsonl に追記し index.jsonl を2671件で再生成"
+    affected: "dual-store atom mirror"
+  - what: "status 欠落候補10件を needs_review に正規化"
+    affected: "shared-reads candidate lifecycle queue"
+verification:
+  - "audit_atom_mirror_drift.py 再監査: 3 store 各2671件、全 drift/error/conflict 0件"
+  - "candidate lifecycle 再監査: changed 0、missing 0、総数922件、terminal件数不変"
+  - "memory_health.py --compact: mirror errorなし（既知warningのみ）"
+  - "memory_recall.py smoke と py_compile が成功"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

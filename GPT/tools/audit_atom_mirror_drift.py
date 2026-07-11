@@ -15,6 +15,7 @@ or rewrite existing `.md` files.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -55,6 +56,20 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def atom_id(row: dict[str, Any]) -> str:
     return str(row.get("id") or "")
+
+
+def comparable_atom(row: dict[str, Any]) -> dict[str, Any]:
+    # Frontmatter materializes defaults and normalizes some metadata. A
+    # collision here means the user-authored payload for the same id differs.
+    # `title` is intentionally excluded: legacy long titles are shortened in
+    # the Markdown heading/frontmatter representation. `content` is the
+    # authored payload when present; source_ts guards identity otherwise.
+    return {key: row.get(key) for key in ("id", "content", "source_ts")}
+
+
+def content_digest(row: dict[str, Any]) -> str:
+    payload = json.dumps(comparable_atom(row), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def load_per_file_atoms(atoms_dir: Path) -> tuple[list[dict[str, Any]], dict[str, str], list[str]]:
@@ -123,6 +138,13 @@ def build_audit() -> dict[str, Any]:
     per_file_ids = {atom_id(row) for row in per_file_atoms if atom_id(row)}
     index_ids = {atom_id(row) for row in index_entries if atom_id(row)}
 
+    jsonl_by_id = {atom_id(row): row for row in jsonl_atoms if atom_id(row)}
+    per_file_by_id = {atom_id(row): row for row in per_file_atoms if atom_id(row)}
+    content_conflicts = [
+        aid for aid in sorted(jsonl_ids & per_file_ids)
+        if content_digest(jsonl_by_id[aid]) != content_digest(per_file_by_id[aid])
+    ]
+
     missing_file = []
     for entry in index_entries:
         rel = str(entry.get("path") or "")
@@ -141,6 +163,7 @@ def build_audit() -> dict[str, Any]:
         "missing_file": missing_file,
         "parse_errors": per_file_errors,
         "index_errors": index_errors,
+        "content_conflicts": content_conflicts,
         "_jsonl_atoms": jsonl_atoms,
         "_per_file_atoms": per_file_atoms,
         "_paths_by_id": paths_by_id,
@@ -155,6 +178,17 @@ def public_report(audit: dict[str, Any], repaired: dict[str, Any] | None = None)
 
 
 def repair(audit: dict[str, Any]) -> dict[str, Any]:
+    blockers = {
+        "parse_errors": audit["parse_errors"],
+        "index_errors": audit["index_errors"],
+        "content_conflicts": audit["content_conflicts"],
+        "index_only": audit["index_only"],
+        "jsonl_only": audit["jsonl_only"],
+        "missing_file": audit["missing_file"],
+    }
+    active_blockers = {key: value for key, value in blockers.items() if value}
+    if active_blockers:
+        raise RuntimeError(f"reconcile refused; resolve blockers first: {active_blockers}")
     jsonl_atoms: list[dict[str, Any]] = audit["_jsonl_atoms"]
     per_file_atoms: list[dict[str, Any]] = audit["_per_file_atoms"]
     paths_by_id: dict[str, str] = audit["_paths_by_id"]
@@ -181,7 +215,7 @@ def repair(audit: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Audit atoms.jsonl / per-file .md / index.jsonl drift.")
-    parser.add_argument("--repair", action="store_true", help="append per-file-only atoms and rebuild index.jsonl")
+    parser.add_argument("--repair", "--reconcile", action="store_true", help="after audit, append only safe per-file-only atoms and rebuild index.jsonl")
     args = parser.parse_args()
 
     audit = build_audit()

@@ -182,7 +182,7 @@ Phase C で `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` が�
 ## 操作ツール
 
 - `tools/migrate_atoms_to_per_file.py` — `atoms.jsonl` → per-file 一括移行 (idempotent)
-- `tools/audit_atom_mirror_drift.py` — `atoms.jsonl` / per-file `.md` / `index.jsonl` の id drift を監査し、`--repair` で per-file-only atom を `atoms.jsonl` に戻して `index.jsonl` を再生成
+- `tools/audit_atom_mirror_drift.py` — `atoms.jsonl` / per-file `.md` / `index.jsonl` の id・内容 drift を監査する。`--reconcile`（`--repair` は互換 alias）は parse/index error、内容衝突、逆方向欠落がない時だけ per-file-only atom を補完し、通常 health check は自動修復せず drift をエラー表示する
 - `tools/build_atom_duplicate_groups.py` — 同一内容 atom 群の派生 index / canonical overlay 再生成
 - `tools/build_atom_title_cluster_index.py` — generic title cluster の recall 表示補助 sidecar 再生成
 - `tools/rebuild_atom_index.py` — (Phase C 以降) `index.jsonl` 再生成

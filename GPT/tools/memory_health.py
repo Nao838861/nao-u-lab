@@ -13,6 +13,7 @@ from typing import Any
 import memory_recall
 import memory_lifecycle
 import topology_audit
+import audit_atom_mirror_drift
 from atoms_fileformat import CANONICAL_OVERLAY_FILENAME
 from atom_quality import atom_quality_report
 
@@ -170,6 +171,7 @@ def build_health() -> dict[str, Any]:
         if report["suspect"]
     ]
     title_quality = title_quality_audit_summary()
+    mirror_audit = audit_atom_mirror_drift.build_audit()
 
     last_run = parse_dt(state.get("last_run"))
     slack_last = parse_dt(slack_state.get("last_run"))
@@ -199,6 +201,12 @@ def build_health() -> dict[str, Any]:
     if mojibake_suspects:
         top = ", ".join(str(row.get("id")) for row in mojibake_suspects[:5])
         warnings.append(f"mojibake suspect atoms {len(mojibake_suspects)}件: {top}")
+    mirror_failures = sum(len(mirror_audit[key]) for key in (
+        "per_file_only", "index_only", "jsonl_only", "missing_file",
+        "parse_errors", "index_errors", "content_conflicts",
+    ))
+    if mirror_failures:
+        errors.append(f"atom mirror drift {mirror_failures}件（明示 reconcile が必要）")
 
     smoke = check_recall_smoke()
     for row in smoke:
@@ -242,6 +250,7 @@ def build_health() -> dict[str, Any]:
         "canonical_overlay_folded_extra_rows_by_reason": overlay_duplicates["folded_extra_rows_by_reason"],
         "mojibake_suspect_atoms": mojibake_suspects[:20],
         "title_quality_audit": title_quality,
+        "atom_mirror_audit": {k: v for k, v in mirror_audit.items() if not k.startswith("_")},
         "raw_shared_reads_rows": len(raw_rows),
         "archive_last_run": state.get("last_run"),
         "slack_last_run": slack_state.get("last_run"),

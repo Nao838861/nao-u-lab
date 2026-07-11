@@ -4,6 +4,17 @@ url: "https://arxiv.org/abs/2605.23652"
 collected_at: "2026-06-28T09:59:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, npc, persona, reinforcement-learning, simulation]
+status: needs_review
+lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
+lifecycle_backfilled_at: "2026-07-12"
+candidate_status: needs_review
+stale_after: "2026-07-28"
+supersedes: []
+last_reviewed_at: "2026-06-28T09:59:24+09:00"
+last_decision: needs_review
+evidence: "candidate_file:20260628_pcsp_persona_traceable_npcs.md; status:needs_review"
+next_action: evaluate_in_phase2
+
 ---
 
 ## raw_excerpt
