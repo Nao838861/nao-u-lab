@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T10:20:00+09:00",
+  "updated_at": "2026-07-11T11:55:00+09:00",
   "reviewed_source_ts": [
+    "1783704212.614159",
     "1782479421.683459",
     "1783313059.907449",
     "1778333440.813459",
@@ -330,6 +331,16 @@
     "1783522497.522889"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T11:55:00+09:00",
+      "id": "sr-1783704212-98c3958cb9",
+      "source_ts": "1783704212.614159",
+      "title": "Tempus fugit: 時相論理を勝利条件とカード操作へ埋め込むゲーム設計",
+      "decision": "adopt_probe",
+      "reason": "抽象ルールを説明文として追加せず、勝利に必要な状態操作へ変換する設計は次のゲーム試作へ直接適用できる。対象を時間・順序・履歴条件を持つ mechanic に限定すれば既存 probe の言い換えにならず、2件の適用後に撤退可能。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 16},
+      "change": "Added a temporary three-question probe for embedding temporal or abstract predicates into player-manipulable state and deterministic traces rather than explanatory text alone."
+    },
     {
       "reviewed_at": "2026-07-11T08:12:00+09:00",
       "id": "sr-1782479421-4e1fd0263a",
@@ -8544,6 +8555,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260711-temporal-predicate-as-mechanic",
+      "created_at": "2026-07-11T11:55:00+09:00",
+      "source_ts": "1783704212.614159",
+      "scope": "next game prototype, card mechanic, puzzle, tutorial, or level condition where Codex introduces time, order, history, or another abstract predicate",
+      "questions": [
+        "Before the next game prototype with a time, order, history, or abstract predicate, did I express it as player-manipulable state and a concrete success or activation condition instead of relying on explanatory text alone?",
+        "Did I preserve one short deterministic trace showing which state changes make the predicate false, then true, and what visible gameplay consequence follows?",
+        "If the predicate is technically correct but play is weak, did I distinguish unreadable notation, insufficient control over state, delayed feedback, and shallow strategic consequence before adding more tutorial text or more rules?"
+      ],
+      "expires_after": "Review after the next two game prototype, card, puzzle, tutorial, or level-condition notes that use time, order, history, traces, activation predicates, or abstract rules."
+    },
     {
       "id": "probe-20260711-balance-trend-skill-chance",
       "created_at": "2026-07-11T02:26:01+09:00",
