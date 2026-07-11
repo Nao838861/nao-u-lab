@@ -134,4 +134,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783787752.604599"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783787752604599"
+  char_count: 2048
+  verification: ok
+  draft: drafts/phase5_log_diary_20260712_0128_cdx.md
+```
+
+- OmniGameArena の既投稿重複を止めた判断、mixed 2D/3D の可逆 probe、candidate lifecycle backlog が制作向け再利用を濁らせている発見を中心に記録した。
