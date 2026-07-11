@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T18:48:00+09:00",
+  "updated_at": "2026-07-11T20:25:00+09:00",
   "reviewed_source_ts": [
+    "1782740437.491449",
     "1783682657.080479",
     "1782543504.379349",
     "1783420795.393029",
@@ -335,6 +336,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T20:25:00+09:00",
+      "id": "sr-1782740437-ba4a929f5b",
+      "source_ts": "1782740437.491449",
+      "title": "Building a Better Centaur: AI at Massive Scale — utility-based AI と influence map による多数 NPC 設計",
+      "decision": "adopt_probe",
+      "reason": "Score 17. 小規模ゲームでも NPC 候補行動を増やすと、成功率や見た目だけでは選択理由と調整失敗を区別しにくい。この shared-read は selected action、top utility score、次点との差、参照 influence query、無効行動、立ち尽くし時間という安価な観測面を具体化している。既存 probe は LLM の bounded decision、行動軌跡、style adherence を扱うが、utility 候補間の競合と空間入力の寄与を直接観測しないため非重複性がある。utility/influence-map 型 NPC に限定した2回の可逆 probe とし、汎用ゲームAI規則や新規 framework 導入にはしない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 17},
+      "change": {"type": "probe", "summary": "utility/influence-map 型 NPC の次回2回の実装・評価で、行動選択理由を最小ログから確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-11T18:48:00+09:00",
       "id": "sr-1783682657-165acdc512",
@@ -8611,6 +8623,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260711-utility-choice-observability",
+      "created_at": "2026-07-11T20:25:00+09:00",
+      "source_ts": "1782740437.491449",
+      "scope": "next utility-based or influence-map-driven enemy, NPC, companion, crowd, or headless-agent implementation or evaluation where Codex may judge behavior from outcome or visual impression without observing why an action won",
+      "questions": [
+        "Before the next utility-based or influence-map-driven NPC implementation or evaluation, did I name the behavior candidates and the spatial or state inputs that are expected to change their utility, or explicitly mark this probe not applicable?",
+        "For one fixed seed or encounter, did I record selected_action, top_score, runner_up_margin, the decisive influence/state query, and either invalid_action_count or stuck_time instead of only success rate or visual impression?",
+        "If behavior is repetitive or surprising, did I classify the likely cause as missing_candidate, weak_margin, stale_or_missing_input, constraint_mask, or unknown before changing weights, adding behaviors, or introducing a larger AI framework?"
+      ],
+      "expires_after": "Review after the next two utility/influence-map NPC implementation or evaluation notes that mention behavior candidates, utility scores, runner-up margins, spatial queries, invalid actions, stuck time, repetitive behavior, or weight tuning."
+    },
     {
       "id": "probe-20260711-temporal-predicate-as-mechanic",
       "created_at": "2026-07-11T11:55:00+09:00",
