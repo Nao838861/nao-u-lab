@@ -21,7 +21,14 @@ stale_reviewed: []
 - `stale_review_batch` なし。Phase 1 の新規 candidate も 0 件のため、評価対象および candidate frontmatter の更新なし。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` が 0 件のため、最終レビュー対象および #shared-reads 投稿はなし。
+- candidate frontmatter の更新なし。外部副作用なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
