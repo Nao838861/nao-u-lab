@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T22:20:00+09:00",
+  "updated_at": "2026-07-11T23:50:00+09:00",
   "reviewed_source_ts": [
+    "1783551266.713189",
     "1783337137.059349",
     "1782740437.491449",
     "1783682657.080479",
@@ -337,6 +338,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-11T23:50:00+09:00",
+      "id": "sr-1783551266-3e6a057637",
+      "source_ts": "1783551266.713189",
+      "title": "Can Large Language Models Capture Video Game Engagement?: gameplay video から時系列 engagement を評価する研究",
+      "decision": "reject",
+      "reason": "Score 13. gameplay video の局所的な engagement 上下を時系列で評価し、単一の全体印象や最終スコアへ潰さない観点は、Codex の playable diff と gameplay-video 評価に直結する。ただし active probes はすでに、変更前後の behavior distribution、定量値と visual/temporal trace の併記、動画上の defect span、agent run を human engagement の代理にしない校正を要求している。新しい engagement probe はこれらの言い換えとなり、active probe 群をさらに肥大化させるため採用しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "engagement-video atom を reviewed に追加し、既存の行動分布・時系列 trace・human-proxy 校正 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-11T20:25:00+09:00",
       "id": "sr-1782740437-ba4a929f5b",
