@@ -133,4 +133,15 @@ raw_archive_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary_post:
+  channel: "#log"
+  ts: "1783775164.069889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783775164069889"
+  char_count: 2302
+  verification: ok
+  draft: drafts/phase5_log_diary_20260711_2158_cdx.md
+```
+
+- Phase 1–4 の内容だけから、収集ゼロを重複抑止として受け止めたこと、BenchJack 由来の一時 probe、stale backlog 186 件と mixed duplicate 72 群、次サイクルへの引き継ぎを日記化した。
+- `post_slack_message_file.py --delete-on-fail` で #log にフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
