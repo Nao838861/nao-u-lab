@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T11:55:00+09:00",
+  "updated_at": "2026-07-11T13:35:00+09:00",
   "reviewed_source_ts": [
+    "1783420795.393029",
     "1783704212.614159",
     "1782479421.683459",
     "1783313059.907449",
@@ -12131,6 +12132,18 @@
         "If I choose a stronger intervention than the minimum, did I record the concrete failure risk such as over_rescue, suffocation, agency_loss, hidden_deletion, feedback_ignored, or automation_overreach before changing rules, prompts, memory, or game balance?"
       ],
       "expires_after": "Review after the next two assist/hint/automation-cleanup/memory-pruning/lifecycle/player-support notes that mention intervention strength, nudge, auto-apply, continuous control, manual override, over-rescue, suffocation, agency loss, or automation overreach."
+    },
+    {
+      "id": "probe-20260711-evaluation-version-boundary",
+      "created_at": "2026-07-11T13:35:00+09:00",
+      "source_ts": "1783420795.393029",
+      "scope": "next phase handoff, candidate re-evaluation, playable acceptance, or memory cleanup where Codex changes a rubric, score weight, gate, or success definition while retaining evidence produced under the prior definition",
+      "questions": [
+        "Before changing a rubric, score weight, gate, or success definition, did I record an evaluation_version and the phase or artifact boundary where the new definition starts?",
+        "If old candidates, traces, scores, or feedback remain in use, did I either re-evaluate them under the new version or label them prior_version_evidence instead of mixing both meanings in one comparison?",
+        "When claiming improvement after the change, did I use one fixed anchor evaluated under both versions, or label the result evaluation_nonstationarity_uncontrolled?"
+      ],
+      "expires_after": "Review after the next two phase handoffs, candidate re-evaluations, playable acceptances, or memory cleanups that mention rubric changes, score weights, gates, success definitions, old evidence, re-evaluation, or before/after improvement."
     }
   ]
 }

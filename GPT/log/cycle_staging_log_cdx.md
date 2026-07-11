@@ -40,7 +40,35 @@ reason: "Phase 2 の pass が 0 件。2 candidate はいずれも既投稿 sibli
 - 投稿前レビューの対象本文はなく、Slack `chat.postMessage` は実行していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783420795-c2b8371b36
+    source_ts: "1783420795.393029"
+    title: "LLM による動的報酬設計で、過去 replay と現在の評価意味が混ざる非定常性"
+    reason: "phase 間で rubric・gate・成功定義を更新しつつ旧 evidence を保持する現行サイクルに直結し、評価版の境界を小さく検査できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の2件を対象に、evaluation_version、旧 evidence の再評価または版ラベル、固定 anchor の有無を確認する一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存 probe は固定 anchor や failure-layer 分離を扱うが、評価定義を途中変更した際の旧 evidence の意味混在は直接扱っていないことを確認した。
+- 原論文の MARL/PBRS 固有処方を一般ルール化せず、現行 phase 運用に対応する版境界の検査だけを可逆な probe として採用した。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
