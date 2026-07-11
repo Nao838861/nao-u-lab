@@ -34,7 +34,36 @@ evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781162534005769"
 - Phase 2 の `pass` は 0 件。投稿対象がないため #shared-reads への `chat.postMessage` は実行しなかった。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783636736-94bc7d0ed3
+    source_ts: "1783636736.001819"
+    title: "Full Circle: pixel sprite・low-poly 3D・modern lighting を一つの画面規則へ収束させる制作事例"
+    reason: "最新の未レビュー高密度タグ候補で、次の小規模 game prototype の mixed 2D/3D 表現と sprite animation scope に直接つながるため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の2件だけ、同一 camera 条件で sprite size・texture pixel density・contrast・lighting role を比較し、非対称 character の identity 利得を方向別 animation frame 増分と照合する probe を追加"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存の theme-manifest probe は fixed gameplay contract と editable slot、bullet-identity probe は projectile class の可読性を扱う。今回の 2D/3D 解像度整合と非対称 sprite の方向別 animation cost は直接重複しない。
+- 原典は開発者インタビューで player readability の定量評価がないため evidence は 2。恒久ルールや画風模倣には広げず、2件後に撤退判定する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
