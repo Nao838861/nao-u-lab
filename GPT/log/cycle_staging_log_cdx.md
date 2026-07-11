@@ -9,7 +9,16 @@
 - 最近の `memory/atoms.jsonl` と Slack 由来 atom も確認したが、今回の確認範囲では未保存の外部 URL candidate は見つからなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- `stale_review_batch` なし。Phase 1 の新規 candidate も 0 件のため、評価対象および candidate frontmatter の更新なし。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
