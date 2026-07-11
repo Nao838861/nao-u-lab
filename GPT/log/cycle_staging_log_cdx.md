@@ -28,7 +28,32 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782601664-50801ee180
+    source_ts: "1782601664.703159"
+    title: "Boardwalk: Towards a Framework for Creating Board Games with LLMs"
+    reason: "playable/headless 検証が build・launch・happy path で止まり、合法手、phase transition、forced action、副作用、turn order、終了条件の誤りを見落とす問題へ直接つながるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の rule-heavy turn-based prototype 検証で、最小 engine contract、non-happy-path scenario、失敗 taxonomy を確認する2回限定 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
