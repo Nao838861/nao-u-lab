@@ -9,7 +9,17 @@
 - Slack 由来の直近外部 URL も既存 candidate / posted draft と重複しており、この Phase 1 で追加できる未収集 URL は見つからなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 4a からの `stale_review_batch` はなし。
+- Phase 1 の新規 candidate は 0 件のため、candidate frontmatter の更新対象なし。
+- title canonical / mixed duplicate preflight の対象もなし。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
