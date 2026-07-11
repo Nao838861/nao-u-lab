@@ -7,14 +7,18 @@ genre_tags: [game-design, gamification, motivation, user-research, feedback]
 evaluated_at: "2026-07-11T18:45:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-11T18:45:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-11T18:45:00+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-11T19:02:00+09:00"
+last_decision: postponed_duplicate
+evidence: "terminal sibling: memory/shared_reads_candidates/20260516_gamification_with_purpose_learner_preferences.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863000063569"
+next_action: none
 stale_after: "2026-08-10"
 supersedes: []
+postponed:
+  reason: "同一 arXiv:2512.08551 の terminal sibling が 2026-05-16 に投稿済みのため再投稿しない"
+  duplicate_of: "memory/shared_reads_candidates/20260516_gamification_with_purpose_learner_preferences.md"
+  existing_permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863000063569"
 gate_reason: >-
   10要素の抽出、視覚プロトタイプ、125人の best-worst scaling、自由記述という手法と結果が揃い、重要要素を具体的に説明できる。
   報酬の追加ではなく、進捗・理解・feedback をプレイ中の意味ある情報へ接続する設計としてゲーム制作へ移せ、約4000字の分析に耐える。
