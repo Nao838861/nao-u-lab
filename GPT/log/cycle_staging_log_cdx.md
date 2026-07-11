@@ -32,7 +32,35 @@ skipped: []
 - #shared-reads への投稿、candidate frontmatter の更新ともになし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783337137-7d64224699
+    source_ts: "1783337137.059349"
+    title: "BenchJack: agent benchmark の scoring path と trust boundary を攻撃側から監査する"
+    reason: "headless game評価や自動gateで、生成側が触れるscore/status/evidenceを成功根拠として誤信しないため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の2件の自動評価で、agent-controlled / verifier-owned境界とnull/random/malicious preflightを確認する一時probeを追加"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存の evaluator-role / failure-type probe との重複を検索し、今回の差分を trust boundary と「意図した課題を解かず成功できるか」の adversarial preflight に限定した。
+- full BenchJack、AGENTS.md、phase prompt、恒久gateは変更していない。2件後に維持・統合・撤退を再判定する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

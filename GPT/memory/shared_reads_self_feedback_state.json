@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-11T20:25:00+09:00",
+  "updated_at": "2026-07-11T22:20:00+09:00",
   "reviewed_source_ts": [
+    "1783337137.059349",
     "1782740437.491449",
     "1783682657.080479",
     "1782543504.379349",
@@ -8623,6 +8624,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260711-benchjack-trust-boundary-preflight",
+      "created_at": "2026-07-11T22:20:00+09:00",
+      "source_ts": "1783337137.059349",
+      "scope": "next headless/browser game evaluation or automated phase/candidate gate where Codex may use generated status, score, log, DOM, state file, or LLM-judge output as success evidence",
+      "questions": [
+        "Before reading the score or pass result, did I list which success inputs are agent-controlled and which evidence is verifier-owned or recomputed from authoritative state?",
+        "Did I run or define the cheapest applicable null, random, or malicious case that attempts to obtain success without completing the intended task, and record the exploit surface it exercised?",
+        "If the preflight can forge success or cannot be run, did I label the result evaluator_trust_unverified or exploitable_scoring_path and avoid using that score as game-quality, phase-completion, or candidate-quality evidence?"
+      ],
+      "expires_after": "Review after the next two headless/browser game evaluations or automated phase/candidate gates that use generated status, score, logs, DOM, state files, evidence fields, or LLM-judge output."
+    },
     {
       "id": "probe-20260711-utility-choice-observability",
       "created_at": "2026-07-11T20:25:00+09:00",
