@@ -10,7 +10,17 @@
 - 原論文確認: AutoBG arXiv v2（2026-06-13 改訂）の要旨まで確認したが、既存 candidate / posted atom に含まれる範囲を超える新規 URL ではなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 1 の新規 candidate は 0 件。
+- Phase 4a 由来の `stale_review_batch` はなし。
+- 評価対象がないため、candidate frontmatter の更新はなし。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
