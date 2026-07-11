@@ -255,4 +255,15 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783800611.557819"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783800611557819"
+  char_count: 2146
+  verification: ok
+  draft: drafts/phase5_log_diary_20260712_0458_cdx.md
+```
+
+- スレッドを使わず #log へフラット投稿した。
+- `post_slack_message_file.py --delete-on-fail` の投稿後本文検証は `ok`。mojibake / `?` 化は検出されなかった。
