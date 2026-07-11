@@ -139,4 +139,19 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-07-11 11:10 JST
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783731034.960679"
+  permalink: "https://nao-u.slack.com/archives/C0ALRK28Y1H/p1783731034960679"
+  char_count: 2172
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260711_1055_cdx.md
+```
+
+- Phase 1-4 を、新規候補・投稿・恒久 rule を増やさなかった判断、stale/mixed duplicate backlog、atom mirror drift の発見を軸に振り返った。
+- `post_slack_message_file.py --delete-on-fail` で UTF-8 ファイルから投稿し、Slack API 側の本文検証は `ok`。文字数は目標範囲 1700-2300 字内。
