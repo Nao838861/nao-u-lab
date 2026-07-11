@@ -21,7 +21,16 @@ stale_reviewed: []
 - terminal-title preflight: `memory/shared_reads_title_canonical_index.jsonl` の AutoBG group は `best_status: posted`。同梱予定の `tools/shared_reads_duplicate_preflight.py` は当該 checkout に存在しなかったため、契約と同じ frontmatter 更新を対象 candidate 1件だけへ手動適用した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260712_autobg_board_game_design_assistant.md
+    reason: "Phase 2 の pass 対象ではなく、同一 title group に posted sibling が4件あるため重複投稿になる。candidate は postponed_duplicate / next_action: none へ更新済み。"
+    action: postpone
+```
+
+- 最終判定: 投稿対象なし。Phase 2 の `pass` は 0 件であり、品質ゲートに従って Slack #shared-reads への投稿は行わなかった。
+- candidate frontmatter を再確認し、`gate_decision: postpone`、`status: postponed`、`candidate_status: postponed`、`last_decision: postponed_duplicate`、`next_action: none` の整合を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
