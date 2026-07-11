@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2512.08551"
 collected_at: "2026-07-11T18:36:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, gamification, motivation, user-research, feedback]
+evaluated_at: "2026-07-11T18:45:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-11T18:45:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-11T18:45:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  10要素の抽出、視覚プロトタイプ、125人の best-worst scaling、自由記述という手法と結果が揃い、重要要素を具体的に説明できる。
+  報酬の追加ではなく、進捗・理解・feedback をプレイ中の意味ある情報へ接続する設計としてゲーム制作へ移せ、約4000字の分析に耐える。
+suggested_post_outline:
+  overview_angle: "学習者が選んだ要素から、目的と整合する gamification と報酬偏重の違いを解く"
+  analysis_axis: "要素名の順位だけでなく、視覚プロトタイプと BWS・自由記述を組み合わせた選好測定の強みと限界を検討する"
+  application_target: "チュートリアル、進行表示、即時 feedback、achievement を、プレイヤーの理解と内発的動機を支える情報設計として試作・評価する場面"
+  pros_cons: "具体的な選好データと質的理由が利点。教育文脈・自己申告選好であり、一般ゲームの継続行動や面白さへ直結すると断定できない点が制約"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

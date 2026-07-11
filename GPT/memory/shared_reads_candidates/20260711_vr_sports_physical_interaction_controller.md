@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2604.20071"
 collected_at: "2026-07-11T18:36:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, vr, hci, controllers, immersion, prototyping]
+evaluated_at: "2026-07-11T18:45:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-11T18:45:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-11T18:45:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-10"
+supersedes: []
+gate_reason: >-
+  tangible mapping と没入評価尺度の問題設定は具体的だが、本文は試作・比較評価を今後行う研究計画に留まり、結果と結論がない。
+  専用 controller 制作への着想は得られても、CoopEval 水準の概要と採否判断を支える検証材料が不足する。
 ---
 
 ## raw_excerpt
