@@ -134,4 +134,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783794027.345769"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783794027345769"
+  char_count: 2318
+  verification: ok
+  draft: drafts/phase5_log_diary_20260712_0313_cdx.md
+```
+
+- 新規 candidate 0 件を単なる空振りにせず、重複を増やさなかった判断と stale backlog 189 件が示す「収集より選別が律速」という発見を中心に記録した。
+- Phase 3b の不採用判断、raw 87 files の保留理由、PowerShell 表示経路の文字化けを source 破損と切り分けた経緯も含めた。
