@@ -93,7 +93,57 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260712-01
+    problem_restatement: "posted 済み候補が同一 title group に存在しても、open sibling が残る限り canonical index が terminal group として確定しない。そのため生成入口では既知タイトルを拒否できず、Phase 2 まで流入してから重複と判定する後段依存になっている。"
+    alternatives:
+      - name: "案A: terminal-dominance index と生成前 preflight"
+        sketch: "candidate frontmatter を正本のまま保ち、canonical title index は group 全件の閉鎖ではなく posted sibling の存在を terminal evidence として記録する。candidate を保存する各入口で title_key と source URL を照合し、既投稿一致なら新規ファイルを作らず skip evidence を実行ログへ残す。"
+        pros:
+          - "重複を Phase 2 より前で止め、評価枠と stale queue を消費しない"
+          - "既存の title_key 正規化、canonical index、posted permalink を再利用できる"
+          - "候補本文や過去 status を一括変更せず、sidecar は再生成可能に保てる"
+        cons:
+          - "candidate 生成入口を列挙し、全入口に同じ preflight を接続する必要がある"
+          - "同題の改訂論文や別内容を誤って止めないよう URL 不一致時の扱いが必要"
+          - "既存 mixed group 72 群は別途 backfill 方針が要る"
+        migration_cost: medium
+      - name: "案B: posted title tombstone registry を別設"
+        sketch: "posted 時に title_key、URL、permalink を append-only registry へ書き、生成入口は registry だけを照合する。canonical index と mixed queue は現状の意味を維持する。"
+        pros:
+          - "入口判定の意味が単純で高速"
+          - "既存 canonical index の terminal-group 定義を変更しない"
+          - "posted 履歴を append-only に近い形で監査できる"
+        cons:
+          - "posted 情報の sidecar が二重化し、同期不整合の新しい原因になる"
+          - "既存 posted candidate からの backfill と継続更新経路が必要"
+          - "title index と registry のどちらを見るべきか利用側が迷う"
+        migration_cost: medium
+      - name: "案C: mixed group の open sibling を一括 terminal 化"
+        sketch: "posted sibling を含む group の postponed / needs_review を failed または duplicate_terminal に更新し、group 全件を閉じて現行 canonical index に載せる。以後は既存 terminal preflight を使う。"
+        pros:
+          - "現行 index の定義と読み手をほぼ変えずに済む"
+          - "既存 mixed queue を短期間で縮小できる"
+          - "候補一覧だけで group の閉鎖状態が見える"
+        cons:
+          - "candidate frontmatter の大量変更となり、元の評価履歴と保留理由を曖昧にする"
+          - "同題だが改訂・別内容の候補まで機械的に閉じる危険がある"
+          - "新規生成そのものは止めないため、定期的な一括閉鎖が残る"
+        migration_cost: high
+    recommended: "案A: terminal-dominance index と生成前 preflight"
+    recommended_reason: "既存の正規化と sidecar 構造に最も近く、重複を評価前ではなく生成前に止められる。誤判定時も candidate 正本を壊さず index 再生成と入口条件の修正で戻せる。title 一致だけで全面拒否せず、同一 URL または posted evidence が強い場合は自動 skip、URL 不一致は review に送る二段階判定にすれば、改訂版を失うコストも抑えられる。"
+    decision: introduce
+    decision_reason: "今サイクルにも同題の6件目が生成され、後段 preflight だけでは流入コストを解消できていない。既存部品を流用でき、失敗時の復旧も sidecar 再生成で済むため Phase 4c で小さく導入できる。"
+    outline_for_4c:
+      - "canonical title index の行仕様を、posted sibling が1件でもある groupについて terminal evidence、canonical path、source URL、permalink、status counts を保持できる形に拡張する"
+      - "title_key 一致に加えて URL の canonicalized 一致を返す共通 preflight 契約を定め、posted URL 一致は skip、title のみ一致かつ URL 不一致は review とする"
+      - "shared-reads candidate を作成する入口を列挙し、ファイル書込み直前に同一 preflight を通す。skip 時は candidate を作らず実行ログへ根拠を残す"
+      - "既存 posted candidate から index を再生成し、RevengeBench を含む mixed group が terminal evidence として取得できることを確認する"
+      - "dry-run / fixture で、同一 title・同一 URL は拒否、同一 title・別 URL は review、未登録 title は生成継続となる境界を検証する"
+      - "既存 mixed group は履歴保持のため一括 status 変更せず、index で再流入を止めた後に通常の stale lifecycle で漸減させる"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
