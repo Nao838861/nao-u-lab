@@ -67,7 +67,50 @@ self_feedback:
 - 重複・矛盾確認: 既存の dominant-strategy / behavior-slice probe と隣接するが、no-op engagement・core mechanic usage・reaction delay の組合せは未収録。恒久 directive や phase prompt は変更しない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（72 groups）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-12 基準で再生成（上限50件）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 groups）"
+  - "Slack directives / broadcasts の pending 0 件を確認（handled 更新対象なし）"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  total: 184
+  postponed: 175
+  needs_review: 9
+  candidate_batch_count: 0
+  group_action_handoff_count: 1
+stale_review_batch: []
+group_action_handoff:
+  - group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    representative: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona と MCTS によるプレイスタイル別の自動評価は headless 評価への転用価値が高く、terminal 2件 / open 5件の重複を group 単位で再読する必要がある"
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- MEMORY.md: UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を確認。`validate_memory_index.py` は OK、index 行に broken entry なし。source_file_status=正常、display_or_tooling_status=none。
+- atoms: 2672件、ID重複エラーなし。normalized content の raw 重複40 groupsは既存 canonical overlay 40 groupsで fold 済み。recall-visible 残3 groupsと未group化反復title 14種は既知の監査warningだが、今回新たなゲーム記憶阻害は確認せず issue 化しない。
+- raw: 30日超のmtimeを持つ87ファイルを検出したが、archive_last_run は 2026-07-12 21:51:16。原文正本・sync state・phase3 sourceを含むため、このphaseでは追加移動なし。
+- lifecycle内訳: posted 404 / ready_to_post 10 / postponed 375 / failed 118 / needs_review 22 / frontmatter status欠落71。stale triage対象は `stale_after <= 2026-07-12` の postponed 175 + needs_review 9。terminal statusは再評価queueから除外。
+- duplicate title: unindexed mixed groupsを確認。group-action限定運用に従い、mixed duplicateは先頭1 groupのrepresentativeだけをhandoffし、candidate単位のstale_review_batchには重ねていない。candidate本体・canonical indexは未変更。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
