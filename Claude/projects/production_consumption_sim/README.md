@@ -108,14 +108,14 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 
 ## 次セッションの議題
 1. **島間交易・群島の詳細詰め**（Nao_u指定・最優先）
-2. プレイヤーの分単位ループの組み立て（動詞は出揃った——時系列に並べる）
+2. ~~プレイヤーの分単位ループ~~ → **着手（2026-07-13）**: [design/player_loop.md](design/player_loop.md) 第一次案。Factorio同型（機械が意見を持つFactorio）/ 港=相場師・島=庭師の二重構造 / 船の日=メトロノーム / 技能=経済の予測 / 3層クロック。港売買の粒度・プレイヤー像の言葉を確認中
 3. このゲームの「1行」（一番楽しい瞬間は何をしている時か / 誰向けか）
 4. references/ 調査: BazaarBot / Doran & Parberry 2010 / Songs of Syx / DF経済失敗の一次資料 / 堂島米市場 / 場所請負制 / ハドソン湾会社
 
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル比較
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル比較 / [player_loop.md](design/player_loop.md) = 分単位ループ
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
