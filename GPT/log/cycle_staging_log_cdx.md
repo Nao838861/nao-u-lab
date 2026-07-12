@@ -118,7 +118,56 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-STALE-DUP-BACKLOG
+    problem_restatement: "stale 184件と mixed duplicate 72 group は別々に観測できるが、レビュー入口が candidate 単位のため、同一題材の terminal sibling を調べ直すか、どの open sibling を正本候補として育てるかを毎回人が再判断している。必要なのは候補数を減らすこと自体ではなく、重複グループごとに一度だけ次アクションを決められる入口である"
+    alternatives:
+      - name: "案A: group-action queue を既存監査キューから導出"
+        sketch: "mixed duplicate group を作業単位にし、group ごとに representative、terminal sibling、open sibling、latest evidence、推奨 action を1行へ束ねる。stale queue と mixed duplicate queue は根拠データとして維持し、Phase 2 は group-action queue の上位だけを読む"
+        pros:
+          - "既存の status と2監査キューを正本のまま再利用でき、candidate frontmatter の一括移行が不要"
+          - "同一題材の再読を group ごとに1回へ寄せ、terminal sibling の再評価を抑えられる"
+          - "導出物なので失敗時は利用を止めるだけで戻せる"
+        cons:
+          - "representative と action の選定規則が粗いと、有望な sibling を隠す可能性がある"
+          - "新しい queue と既存2 queue の役割を明示しないと、入口が一つ増えただけになる"
+          - "自動生成のたびに action が揺れない安定した tie-break が必要"
+        migration_cost: low
+      - name: "案B: candidate frontmatter に duplicate lifecycle を持たせる"
+        sketch: "各 candidate に duplicate_group_id、canonical_candidate、superseded_by、review_disposition を記録し、open/terminal sibling の関係を正本へ固定する。Phase 2 は canonical_candidate だけを通常対象にする"
+        pros:
+          - "関係が候補ファイル自身に残り、どの tool からも同じ判断を参照できる"
+          - "一度確定した canonical を安定して追跡できる"
+          - "長期的には派生 queue への依存を減らせる"
+        cons:
+          - "既存候補への backfill と競合解消が必要で、誤判定が正本へ広く残る"
+          - "canonical の交代や一部だけ異なる記事を表現する lifecycle が複雑になる"
+          - "184件の stale 解消より先に schema 運用の負担が増える"
+        migration_cost: high
+      - name: "案C: stale oldest-first の固定バッチだけを継続"
+        sketch: "現状の stale review batch を age と game transfer value で並べ、毎サイクル一定件数を Phase 2 へ渡す。duplicate 情報は参考表示に留め、構造は変えない"
+        pros:
+          - "新しい概念や移行が不要"
+          - "backlog を確実に少しずつ消化できる"
+          - "個々の候補を見落としにくい"
+        cons:
+          - "同一題材の sibling を別サイクルで再読する重複コストが残る"
+          - "件数消化が目的化し、terminal sibling の確認に時間を使いやすい"
+          - "72 group という今回の主要 evidence を作業単位へ反映できない"
+        migration_cost: low
+    recommended: "案A: group-action queue を既存監査キューから導出"
+    recommended_reason: "現状の監査結果を壊さず、重複再読という直接の無駄だけを作業入口で除けるため。案Bより正本からの距離があり可逆で、誤った representative 選択の影響も派生 queue 内に限定できる。案Cと同程度の移行負担で、stale と duplicate を別々に扱う原因へ踏み込める"
+    decision: introduce
+    decision_reason: "Phase 4a の2 queue と status 集計だけで必要情報が揃っており、追加調査なしに小さな派生 index として試せる。まず1サイクル1 group の限定運用にすれば、選定規則の誤りを観測してから拡張できる"
+    outline_for_4c:
+      - "既存の stale triage queue と mixed duplicate queue を入力に、group 単位の派生 queue を生成する"
+      - "各行に group_key、representative、open_siblings、terminal_siblings、latest_evidence、recommended_action、priority_reason を持たせる"
+      - "representative は open を優先し、同条件では更新日時、game transfer value、path の順で決める deterministic な tie-break にする"
+      - "Phase 2 の handoff は上位1 group に限定し、候補単位の stale batch と二重投入しない"
+      - "元 candidate と既存2 queue は変更せず、1サイクル後に再読件数と action の妥当性を確認して継続可否を判定する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
