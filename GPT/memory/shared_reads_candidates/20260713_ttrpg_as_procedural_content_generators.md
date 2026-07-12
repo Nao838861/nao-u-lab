@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2007.06108"
 collected_at: "2026-07-13T02:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, tabletop-rpg, procedural-content-generation, expressive-range, generative-pipeline]
+evaluated_at: "2026-07-13T02:35:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-13T02:35:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-13T02:35:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-12"
+supersedes: []
+gate_reason: >-
+  TTRPG を PCG として捉え、possibility space・expressive range・generative pipeline を対応づける着想は明確で、ルールを生成装置として読む設計観点には使える。
+  ただし 4 ページの workshop 論文で、比較実験・評価指標・結果の厚みがなく、CoopEval 水準の約 4000 字を方法と評価の実体で支えるには不足する。
 ---
 
 ## raw_excerpt
