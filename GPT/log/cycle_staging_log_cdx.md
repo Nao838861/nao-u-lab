@@ -10,7 +10,13 @@
 - inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに `status: pending` なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+evaluated_at: "2026-07-13T07:30:42+09:00"
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+note: "Phase 1 の新規 candidate は 0 件。stale_review_batch および group action handoff もないため、candidate frontmatter の更新対象なし。"
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
