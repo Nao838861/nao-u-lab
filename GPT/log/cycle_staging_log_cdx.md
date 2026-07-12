@@ -20,7 +20,16 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260713_openlife_open_world_alife_agents.md
+    reason: "Phase 2 の gate_decision が postpone であり、長期実験の比較条件・指標・定量結果・失敗例が不足しているため、#shared-reads の投稿品質基準を満たさない"
+    action: candidate_revise
+```
+
+- 最終判定: 投稿なし。Phase 2 の `pass` candidate が 0 件のため、Slack API は呼び出していない。
+- candidate 状態: `status: postponed` / `candidate_status: postponed` を維持。本文または補足資料を再調査し、評価の中身を根拠付きで補強するまで保留する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
