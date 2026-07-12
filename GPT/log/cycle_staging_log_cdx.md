@@ -22,7 +22,16 @@ stale_reviewed: []
 - terminal-title preflight: title canonical index と mixed duplicate queue に同一 title group なし。専用 preflight script は workspace に存在しなかったため、sidecar を直接照合した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260712_liecraft_llm_deception_game.md
+    reason: "Phase 2 で gate_decision: pass に達していない。評価設計の定量結果と失敗例が不足し、根拠付きで 3500-4500 字の概要・分析を完成できないため、品質ゲートを優先して投稿しない"
+    action: postpone
+```
+
+- 最終判定: Phase 2 の `pass` は 0 件。#shared-reads への投稿なし。
+- 投稿前レビュー: 対象本文なし（Slack API 未実行、candidate frontmatter 変更なし）。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
