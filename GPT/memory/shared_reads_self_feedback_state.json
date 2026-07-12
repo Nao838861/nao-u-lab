@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T19:20:00+09:00",
+  "updated_at": "2026-07-12T21:10:00+09:00",
   "reviewed_source_ts": [
+    "1783457597.332759",
     "1783330189.970809",
     "1782609581.756829",
     "1782740436.215749",
@@ -8878,9 +8879,32 @@
         "replaces_or_simplifies_existing": false,
         "conflict_checked": true
       }
+    },
+    {
+      "reviewed_at": "2026-07-12T21:10:00+09:00",
+      "id": "sr-1783457597-a9d8ad4866",
+      "source_ts": "1783457597.332759",
+      "title": "AI-driven deception: 設計強度とプレイヤー知覚の分離",
+      "decision": "adopt_probe",
+      "reason": "Score 16. deception を含む playable diff では、設計者が入れた強度とプレイヤーが知覚した理不尽さを混同しやすく、同時追加 content の価値で評価上昇を誤帰属しうる。既存 probe は proxy と推定状態の分離を扱うが、設計入力・知覚出力・同時追加価値の三分離は明示していない。次の該当 diff だけに適用する可逆 probe とする。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 16},
+      "change": {"type": "probe", "summary": "設計強度・知覚された理不尽さ・同時追加価値を別々に記録する3問 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260712-deception-intent-perception-confound",
+      "created_at": "2026-07-12T21:10:00+09:00",
+      "source_ts": "1783457597.332759",
+      "scope": "next playable diff containing hidden rules, false cues, controlled randomness, feints, narrative deception, or unexpected state transitions",
+      "questions": [
+        "Did I record the design-side deception input separately, such as hidden-rule count, false-cue strength, reversal frequency, or explanation availability?",
+        "Did I record player-facing perception separately, such as unfairness, bug-like interpretation, surprise, cause inference, retry, or repeated failure, without treating design intent as proof of perception?",
+        "If the diff also adds content, polish, rewards, or fixes, did I label that content dividend and avoid attributing the overall evaluation change to deception alone?"
+      ],
+      "expires_after": "Review after the next two playable-diff notes containing deception, hidden rules, false cues, controlled randomness, feints, narrative twists, or unexpected state transitions."
+    },
     {
       "id": "probe-20260712-boardwalk-rule-contract-taxonomy",
       "created_at": "2026-07-12T09:05:00+09:00",

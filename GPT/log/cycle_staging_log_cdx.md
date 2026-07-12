@@ -31,7 +31,30 @@ skipped: []
 - 根拠: OmniGameArena は既投稿 URL 一致により Phase 1 で除外済みであり、Phase 3 に渡された candidate はない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783457597-a9d8ad4866
+    source_ts: "1783457597.332759"
+    title: "AI-driven deception: 設計強度とプレイヤー知覚の分離"
+    reason: "deception を含む playable diff で、設計意図・知覚結果・同時追加価値の交絡を分ける小さな検証へ直結するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の該当 playable diff で設計側 deception 強度、知覚された理不尽さ、content dividend を別々に記録する3問 probe を追加"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
