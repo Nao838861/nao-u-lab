@@ -28,7 +28,46 @@ note: "Phase 2 の pass candidate は 0 件。最終判定・Slack 投稿・cand
 (Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group-action sidecar を 2026-07-13 基準で再生成した（72 groups / 50 rows / 35 groups）。candidate 本体は変更していない。"
+  - "MEMORY.md index を validate_memory_index.py で照合し、per-file atom index との不整合・broken entry を検出しなかった。"
+  - "atoms.jsonl を memory_health.py と topology_audit.py で監査した。atom id の致命的重複・stale bridge はなく、正規化本文重複 40 group / 80 rows は recall 時に 40 rows fold 済み。"
+  - "candidate lifecycle 932件を集計した（posted 404 / ready_to_post 10 / postponed 377 / failed 119 / needs_review 22）。stale_after 期限超過は postponed 183 + needs_review 9 = 192件、今回 handoff は group-action 限定で1件。"
+  - "slack_directives.jsonl 23件、slack_broadcasts.jsonl 21件を確認し、pending はともに0件。handled 更新対象なし。"
+  - "memory/raw/ に mtime 30日超の原文が93件あることを確認した。原文保持対象を含むため、このphaseでは移動せず archive 候補として記録のみ。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  due_total: 192
+  postponed: 183
+  needs_review: 9
+  handed_off_this_cycle: 1
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue先頭。procedural persona別のheadless playtestへ転用価値が高く、terminal sibling 2件とopen sibling 5件が混在するため、代表1件の再読でgroup actionを判定する。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで日本語本文を正常表示。validate_memory_index.py も OK。source破損なし。"
+  display_or_tooling_status: "PowerShellからinline Pythonへ日本語literalを渡すprobeでは文字が '?' に置換された。直前の Get-Content -Encoding utf8 では本文表示正常のため、shell受け渡し経路の表示問題でありsource issueにはしない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
