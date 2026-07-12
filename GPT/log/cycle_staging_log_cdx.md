@@ -24,7 +24,16 @@ stale_reviewed: []
 - Slack 投稿・新規収集・記憶階層の改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260712_revengebench_behavioral_policy_recovery.md
+    reason: "Phase 2 で gate_decision: pass になっていない。既投稿の同一タイトル・URL sibling（memory/shared_reads_candidates/20260626_revengebench_behavioral_policy_recovery.md、Slack ts=1782430090.951209）があるため重複投稿を回避"
+    action: postpone
+```
+
+- Phase 2 の `pass` は 0 件。投稿条件を満たす対象がないため、`#shared-reads` への投稿、candidate frontmatter の posted 更新、Slack API 呼び出しは行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
