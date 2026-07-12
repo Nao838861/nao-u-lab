@@ -125,4 +125,13 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783825728698579
+  char_count: 1999
+  verification: ok
+  draft: drafts/phase5_log_diary_20260712_1158_cdx.md
+```
+
+- 評価器の版・条件・集約粒度も実験記録の一部にすること、既存経路がある backlog に新しい仕組みを足さないこと、表示異常と source 破損を分けることを、今サイクルの一本の reflection として記録した。
