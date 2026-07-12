@@ -103,6 +103,8 @@ Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した�
 
 Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` を確認する。
 
+Phase 4a が `memory/shared_reads_group_action_queue.jsonl` の handoff を残した場合、Phase 2 は先頭 1 group の `representative` だけを再評価する。同じ group の `open_siblings` と candidate 単位の `stale_review_batch` は同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate 正本を一括更新しない。
+
 同じ `title_key` に `status: posted` の terminal sibling が見つかった場合、その candidate は Phase 3 投稿対象にしない。本文評価を作る前に、対象 candidate だけ frontmatter を次の形で閉じる:
 
 ```yaml

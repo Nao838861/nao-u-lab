@@ -170,7 +170,32 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-STALE-DUP-BACKLOG
+    files_changed:
+      - path: tools/build_shared_reads_group_action_queue.py
+        change: created
+      - path: memory/shared_reads_group_action_queue.jsonl
+        change: created
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+    summary: "既存の stale triage queue と mixed duplicate queue から group 単位の派生 queue を deterministic に生成し、Phase 2 handoff を先頭 1 group の representative に限定した"
+    partial: false
+migrations:
+  - what: "既存 2 queue から group-action queue 35 group を初回生成"
+    affected: "派生 sidecar の新設のみ。candidate 正本、stale triage queue、mixed duplicate queue は未変更"
+verification:
+  - "python -m py_compile tools/build_shared_reads_group_action_queue.py: 成功"
+  - "build_shared_reads_group_action_queue.py 実行後の --check: rows=35、成功"
+  - "build_shared_reads_mixed_duplicate_queue.py --check: rows=72、成功"
+  - "build_shared_reads_stale_triage_queue.py --today 2026-07-12 --check: rows=50、成功"
+  - "python tools/memory_recall.py duplicate candidate group action: 正常終了"
+  - "今回対象差分の whitespace error なし。全体 git diff --check は開始時から存在する log/codex_log_cycle.log の trailing whitespace のみを報告"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

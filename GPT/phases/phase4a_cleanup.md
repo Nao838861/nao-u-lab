@@ -129,3 +129,13 @@ python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
 ```
 
 `shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用し、`duplicate_group_key` があるものは mixed duplicate 解消候補として扱う。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
+
+## group-action queue 限定運用 (2026-07-12)
+
+mixed duplicate の stale 候補は、既存 2 queue を再生成した後に次も実行する。
+
+```powershell
+python tools\build_shared_reads_group_action_queue.py
+```
+
+`memory/shared_reads_group_action_queue.jsonl` は group 単位の再生成可能 sidecar である。Phase 4a から Phase 2 へ渡す mixed duplicate は先頭 1 group の `representative` だけとし、同じ候補を candidate 単位の `stale_review_batch` に重ねて入れない。元 candidate、stale triage queue、mixed duplicate queue は変更しない。1 サイクル後に再読件数と action の妥当性を確認して継続可否を判定する。
