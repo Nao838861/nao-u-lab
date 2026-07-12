@@ -64,7 +64,53 @@ self_feedback:
 - 採否理由: 固定 anchor、評価 version 境界、旧証拠の再評価は `probe-20260711-evaluation-version-boundary`、分布変化と生成側への影響は既存の behavior-signature / evaluator-generator probes で確認できる。採用条件の合計 14 に届かず、特に non_redundancy と risk_control が不足するため見送った。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/shared_reads_mixed_duplicate_queue.jsonl を再生成（72 group）。同一 title_key から複数 candidate を batch に入れない条件を確認"
+  - "memory/shared_reads_stale_triage_queue.jsonl を 2026-07-12 基準で再生成（上限 50 件）"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認（各 0 件）。close 対象なし"
+  - "memory/MEMORY.md の参照、memory/atoms.jsonl、raw 30日経過、candidate lifecycle を読み取り監査。candidate 本体と raw 原文は変更なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 184
+  stale_triage_queue_rows: 50
+  handed_off_this_cycle: 5
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=16; game_transfer_value=high; mixed duplicate group。terminal/open の重複を代表1件で解消する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=16; game_transfer_value=high; mixed duplicate group。出典の時系列確認を含め代表1件を再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=16; game_transfer_value=high; mixed duplicate group。headless評価への転用価値が高い代表1件を再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "age_days=16; game_transfer_value=high; mixed duplicate group。実験結果と失敗例の一次確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "age_days=14; game_transfer_value=high; mixed duplicate group。代表1件で既投稿との差分を判定する"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- MEMORY index audit: Markdown link 0 件、backtick path 4 件はいずれも存在。UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` は取得、`評価軸` は本文に存在しなかった。`source_file_status`: UTF-8 decode 正常、文字化け・再生成対象なし。`display_or_tooling_status`: 初回 inline PowerShell 経路で日本語リテラルが `?` 表示になったため Unicode escape probe で再検証済み。
+- atoms audit: 2672 行、JSON parse error 0、重複 `id` 0、重複 `normalized_content_hash` 0、重複 `content_hash` 0。機械的に確定できる矛盾なし。
+- raw audit: 30 日超 mtime のファイル 88 件。原文保持領域であり、経過日数だけでは archive 可否を確定できないため移動なし。構造 issue には昇格しない。
+- lifecycle counts: `posted=403`, `ready_to_post=10`, `postponed=372`, `failed=118`, `needs_review=22`, frontmatter status 未検出=72（`posted_drafts/` 等の補助文書を含む）。`posted` / `failed` は再評価 batch から除外。
+- duplicate title audit: unindexed duplicate groups を確認。mixed group は再生成済み queue で Phase 2 に接続されており、自動 close や candidate frontmatter 更新は行っていない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
