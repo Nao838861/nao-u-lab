@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T22:15:00+09:00",
+  "updated_at": "2026-07-13T00:00:00+09:00",
   "reviewed_source_ts": [
+    "1776779928.148179",
     "1783500819.885039",
     "1783457597.332759",
     "1783330189.970809",
@@ -351,6 +352,36 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T00:00:00+09:00",
+      "id": "sr-1776779928-578bc4a847",
+      "source_ts": "1776779928.148179",
+      "title": "AI × ゲーム制作 外部検索4本の接合マップ — 栄養の偏り処方箋として Log C103 で掘った軸",
+      "decision": "reject",
+      "reason": "Score 11. memory / harness / evaluation / agent / operation / game-design の全優先タグを持ち、外部取得が AI と記憶へ偏る問題は現在の定時サイクルにも関係する。しかし atom に保持された根拠は4本の接合マップの途中までの抜粋で、各資料の評価結果や次回行動へ変換できる失敗条件を十分に確認できない。さらに現在は game_memory_task_lens_index.md に broad tag 偏りを task lens へ降ろす導線があり、新しい『検索栄養バランス』probe は既存導線の言い換えになりやすい。根拠不足と probe 肥大化を避け、読了だけ記録する。",
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 11
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-12T15:00:00+09:00",
       "id": "sr-1782740436-f6507c50b6",

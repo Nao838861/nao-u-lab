@@ -45,3 +45,34 @@ skipped:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+## Phase 3b — Shared-reads 自己フィードバック (2026-07-13 00:00 JST)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1776779928-578bc4a847
+    source_ts: "1776779928.148179"
+    title: "AI × ゲーム制作 外部検索4本の接合マップ — 栄養の偏り処方箋として Log C103 で掘った軸"
+    reason: "priority 6/6・score 18 の未レビュー候補。外部取得の偏りは現在のゲーム制作サイクルにも関係するが、保存 atom の根拠密度と既存 task-lens 導線との重複を確認するため。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 11
+  decision: reject
+  change:
+    summary: "none。reviewed_source_ts と見送り理由だけを state に記録し、新しい probe・評価表・directive は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+採用条件未達。atom は4本の外部資料を接合する着想を示すが、保持内容が途中までの抜粋で、各資料から導いた評価結果や失敗条件を十分に検証できない。また `memory/game_memory_task_lens_index.md` には broad tag 偏りを task lens へ降ろす既存導線があり、新しい検索バランス probe は重複しやすい。読了記録のみとし、恒久ルールは増やさない。
