@@ -9,7 +9,17 @@
 - 重複確認: OmniGameArena (2606.09826) と Goal Playable Patterns (2603.07101) は既存 candidate / atom に存在したため、新規作成対象から除外。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260712_liecraft_llm_deception_game.md
+    reason: "ゲームへの適用先は明確だが、要旨由来の情報だけでは評価設計・定量結果・失敗例が不足し、約4000字の概要を根拠付きで書けない"
+stale_reviewed: []
+```
+
+- terminal-title preflight: title canonical index と mixed duplicate queue に同一 title group なし。専用 preflight script は workspace に存在しなかったため、sidecar を直接照合した。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

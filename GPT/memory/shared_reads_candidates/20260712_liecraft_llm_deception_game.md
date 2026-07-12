@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2603.06874"
 collected_at: "2026-07-12T13:55:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [llm-games, multi-agent, hidden-role, evaluation, long-horizon]
+evaluated_at: "2026-07-12T14:05:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-12T14:05:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-12T14:05:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-11"
+supersedes: []
+gate_reason: "hidden-role game を長期・複数エージェントの deception 評価 sandbox にする問題設定と、ゲーム制作への接続は明確。ただし現 candidate は要旨由来の説明に留まり、役割構成、イベント設計、評価指標、比較条件、定量結果、失敗例を欠くため、CoopEval 水準の約4000字概要を根拠付きで構成できない。本文または十分な一次資料を確認してから再評価する。"
 ---
 
 ## raw_excerpt
