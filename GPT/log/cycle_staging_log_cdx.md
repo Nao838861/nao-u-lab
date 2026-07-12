@@ -33,7 +33,32 @@ skipped: []
 - 投稿前レビュー: 必須6項目、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、3917文字、重複なしを確認。`tools/shared_reads_policy.py` の検証を通過し、1回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782654150-2e95821435
+    source_ts: "1782654150.950569"
+    title: "SNAP: A Plan-Driven Framework for Controllable Interactive Narrative Generation"
+    reason: "Cell/Plan による局所的な文脈境界が Phase 運用と NPC 会話評価に直結する一方、既存 probe との重複を点検するため"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "採用閾値 14 未満。reviewed_source_ts と review 理由だけを記録し、新規 probe・directive・恒久ルールは追加しなかった"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

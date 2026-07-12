@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T10:25:00+09:00",
+  "updated_at": "2026-07-12T12:16:00+09:00",
   "reviewed_source_ts": [
+    "1782654150.950569",
     "1778535044.026339",
     "1782601664.703159",
     "1783551257.158789",
@@ -344,6 +345,23 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-12T12:16:00+09:00",
+      "source_ts": "1782654150.950569",
+      "atom_id": "sr-1782654150-2e95821435",
+      "title": "SNAP: A Plan-Driven Framework for Controllable Interactive Narrative Generation",
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "reason": "Cell と Plan で現在の文脈境界を閉じる発想は Phase 運用と NPC 会話に直結するが、現行 state には memory lifecycle phase boundary、bounded decision layer、authority boundary など近接 probe が既にある。active probe が 303 件ある状態で同趣旨を追加すると検索面と実行面をさらに膨らませる。採用閾値 14 に届かないため、レビュー済み記録だけを残し、新規 probe や恒久ルールは追加しない。"
+    },
     {
       "reviewed_at": "2026-07-12T10:25:00+09:00",
       "id": "sr-1778535044-497d7b3673",
