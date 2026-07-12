@@ -9,13 +9,43 @@
 
 ## Phase 2: 分析
 ```yaml
-total_candidates: 1
+total_candidates: 6
 pass: []
 fail: []
 postpone:
   - path: memory/shared_reads_candidates/20260712_harnessfix_failed_trajectory_repair.md
     reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md"
-stale_reviewed: []
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md"
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md"
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
+stale_reviewed:
+  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-11"
+  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-11"
+  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-11"
+  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-11"
+  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-11"
 ```
 
 ## Phase 3: Shared-reads 投稿

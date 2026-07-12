@@ -9,12 +9,12 @@ evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-26T20:27:55+09:00"
-last_decision: postpone
-evidence: "phase3_skip:同一論文は 2026-05-16 に品質フォーマットで投稿済みのため、重複投稿を避けて延期"
-stale_after: "2026-06-25"
+last_reviewed_at: "2026-07-12T10:15:54+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"
+stale_after: "2026-08-11"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
   問題設定、GPC/design patterns/Unity IRという中核手法、26 pattern instantiations と automated replay 評価、grounding/hygiene failure まで抽出できる。
   自分達の「アイデアからplayable diffへ落とす」制作サイクルに直接適用でき、4000字級の概要に必要な構造が揃っている。

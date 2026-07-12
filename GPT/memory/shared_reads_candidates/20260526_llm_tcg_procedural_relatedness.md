@@ -9,12 +9,12 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-26T03:11:06+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-26T03:11:06+09:00"
-stale_after: "2026-06-25"
+last_reviewed_at: "2026-07-12T10:15:54+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md"
+stale_after: "2026-08-11"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
   procedural relatedness という概念は面白いが、現メモでは Pokemon card case study の具体的な生成条件と評価結果がまだ薄い。
   ゲーム制作への適用も「個別化された武器・仲間・スキル」へ広げるには追加読解が必要で、現状のまま投稿すると一般論になりやすい。

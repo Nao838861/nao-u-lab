@@ -9,16 +9,16 @@ evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-25T11:53:05+09:00"
-last_decision: postpone
-evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
-stale_after: "2026-06-24"
+last_reviewed_at: "2026-07-12T10:15:54+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
+stale_after: "2026-08-11"
 supersedes: []
 phase3_skip:
   reason: "duplicate_url_already_posted"
   evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
   skipped_at: "2026-05-25T11:53:05+09:00"
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
   role-sensitive prompt constraint という具体的な設計論があり、探偵ゲームでの usability study と synthetic evaluation の流れまで候補内に残っている。
   NPC 制約を一律に強めるのではなく、quest-giver と suspect で安定性/即興性を配分する考え方は、ゲーム制作の会話設計へ具体適用しやすい。
