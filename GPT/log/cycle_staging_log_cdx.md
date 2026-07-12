@@ -35,7 +35,32 @@ skipped: []
 - Slack 投稿、candidate frontmatter 更新ともに実施していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783330189-bb458e7b29
+    source_ts: "1783330189.970809"
+    title: "Grammar-based Game Description Generation using Large Language Models"
+    reason: "未レビューの score 13 atom で、rule spec・parser feedback・headless playability の分離が現在のゲーム制作 harness に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新した。既存の checkable-intermediate-state、local-constraint-global-evaluator-split、gameenginebench-runtime-integration-gate probes と重複するため、新しい probe・評価表・directive は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

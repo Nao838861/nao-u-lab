@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T17:35:00+09:00",
+  "updated_at": "2026-07-12T19:20:00+09:00",
   "reviewed_source_ts": [
+    "1783330189.970809",
     "1782609581.756829",
     "1782740436.215749",
     "1783825416.879669",
@@ -8837,6 +8838,36 @@
       "change": {
         "type": "state_only",
         "summary": "PCSP atom を reviewed に追加し、既存の persona divergence・runtime style・utility trace probes と重複するため reject と記録した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-12T19:20:00+09:00",
+      "id": "sr-1783330189-bb458e7b29",
+      "source_ts": "1783330189.970809",
+      "title": "Grammar-based Game Description Generation using Large Language Models",
+      "decision": "reject",
+      "reason": "Score 13. 自由文から直接実装へ進まず、minimal grammar/schema、parser feedback、valid prefix、system pass、playability を段階的に分ける観点は、rule spec と headless 評価に直結し、100 instances による比較と Grammar Parsability 0.68、System Parsability 0.40、Playability 0.25 という限界を含む根拠がある。ただし active な checkable-intermediate-state probe は機械可読な中間状態と verifier feedback の分離を、local-constraint-global-evaluator-split probe は局所制約と全体 playability の分離を、gameenginebench-runtime-integration-gate probe は launch と runtime integration の分離をすでに要求している。新しい grammar/parser probe はこれらの言い換えになり、active probe 群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "Grammar-based Game Description Generation atom を reviewed に追加し、既存の中間状態・局所/全体評価・runtime integration probes と重複するため reject と記録した。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
