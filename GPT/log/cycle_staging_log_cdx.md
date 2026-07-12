@@ -41,7 +41,36 @@ skipped: []
 (Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を 2026-07-13 基準で再生成した（72 / 50 / 35 rows）。candidate 本体は変更していない。"
+  - "MEMORY.md と per-file atom index の整合を validate_memory_index.py で確認した（OK）。"
+  - "atom duplicate derived index を再生成した（duplicate clusters 45 / canonical overlay 45 groups）。atom 正本は変更していない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending がともに 0 件であることを確認した。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 72
+  group_action_queue_rows: 35
+  handed_off_groups: 1
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。age_days=17 の mixed duplicate group で、procedural persona + evolved MCTS を headless 評価のプレイスタイル別破綻検出へ接続できる。status_counts は terminal failed 2 / open postponed 5。terminal_paths は 20260515_automated_playtesting_procedural_personas.md と 20260625_procedural_personas_playtesting.md、open_paths は representative を含む5件。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+```
+
+- encoding-safe audit: `memory/MEMORY.md` は UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得できた。`source_file_status: UTF-8 source normal`、`display_or_tooling_status: none`。本文修復 issue は立てない。
+- atom audit: `memory_health.py --compact` は raw normalized-content duplicate 40 groups / 80 rows、recall-visible でも 40 groups / 80 rows を報告した。既存 fold（extra 40 rows）と canonical overlay 45 groups が機能しており、矛盾の具体証拠はないため構造 issue に昇格しない。
+- raw archive audit: `memory/raw/` に 30 日超の原文・評価 packet が複数あるが、参照原文と provenance を含む。明確な archive 判定根拠がないため移動せず、issue も立てない。
+- candidate lifecycle audit: stale triage queue は上限 50 rows、mixed duplicate queue は 72 groups、group-action queue は 35 groups。group-action 限定運用に従い、Phase 2 へは先頭 group の representative 1件だけを渡し、candidate 単位の重複 handoff は行わない。`posted` / `failed` は単独再評価対象から除外した。
+- title duplicate audit: unindexed duplicate group は残るが、mixed group は group-action queue で再評価経路があり、terminal group の新規異常は今回確認されなかった。現行 sidecar の運用観測範囲なので `needs_design: false` とした。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
