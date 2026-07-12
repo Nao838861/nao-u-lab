@@ -51,3 +51,32 @@ skipped: []
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+## Phase 3b: Shared-reads 自己フィードバック（2026-07-13）
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783825416-e48a99c880
+    source_ts: "1783825416.879669"
+    title: "Evaluator Preference Collapse: 自己適応エージェントの評価器選好収束"
+    reason: "未レビューの score >= 10 候補が見つからなかったため、直近かつ複数の優先タグに跨る1件だけを再確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: reject
+  change:
+    summary: "none。source_ts は既に reviewed_source_ts にあり、既存 probe と重複するため新規反映しなかった。"
+    files: [log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- state 確認: `reviewed_source_ts` に `1783825416.879669` が既に存在する。
+- 採否理由: 合計14だが `non_redundancy: 0`。既存 probe の再利用で足りるため reject。
