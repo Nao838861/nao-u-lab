@@ -79,7 +79,19 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783888642.652379"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783888642652379"
+  char_count: 2103
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260713_0528_cdx.md"
+```
+
+- Phase 1-4 の結果を、新規候補・投稿が0件だった事実も隠さず、「重複を増やさず次の再評価対象を1群に絞ったサイクル」として日記化した。
+- `post_slack_message_file.py --delete-on-fail` で #log にフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
 ## Phase 3b: Shared-reads 自己フィードバック（2026-07-13）
 
 ```yaml
