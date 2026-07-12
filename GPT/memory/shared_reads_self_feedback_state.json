@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T15:00:00+09:00",
+  "updated_at": "2026-07-12T17:35:00+09:00",
   "reviewed_source_ts": [
+    "1782609581.756829",
     "1782740436.215749",
     "1783825416.879669",
     "1782654150.950569",
@@ -8806,6 +8807,36 @@
       "change": {
         "type": "state_only",
         "summary": "Evaluator Preference Collapse atom を reviewed に追加し、既存の evaluation version・分布 drift・generator/evaluator probes と重複するため reject と記録した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-12T17:35:00+09:00",
+      "id": "sr-1782609581-aeda37fd3f",
+      "source_ts": "1782609581.756829",
+      "title": "PCSP: 共有 policy における NPC persona traceability",
+      "decision": "reject",
+      "reason": "Score 13. task reward と persona traceability を分離し、行動軌跡から persona を回収できるか、engine 側の capacity・経路・失敗回復で意図が潰れていないかを見る観点は NPC 評価に直結し、ablation と UE5 実装差の根拠もある。ただし active な procedural-persona-divergence probe は同一 scenario 上の複数 persona と最大分岐を、runtime-style-adherence probe は task success と行動 style の分離を、utility/influence-map probe は候補行動・空間入力・失敗理由の trace をすでに要求している。新しい persona-recovery probe はこれらの組み合わせで導け、active probe 群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "PCSP atom を reviewed に追加し、既存の persona divergence・runtime style・utility trace probes と重複するため reject と記録した。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
