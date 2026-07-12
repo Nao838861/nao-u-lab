@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T03:00:00+09:00",
+  "updated_at": "2026-07-13T03:47:50+09:00",
   "reviewed_source_ts": [
+    "1782661100.844199",
     "1783392010.105159",
     "1776779928.148179",
     "1783500819.885039",
@@ -353,6 +354,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T03:47:50+09:00",
+      "id": "sr-1782661100-ea6d0eae5b",
+      "source_ts": "1782661100.844199",
+      "title": "Are We Ready For An Agent-Native Memory System?",
+      "decision": "reject",
+      "reason": "Score 13. 永続保存・抽出・検索ルーティング・更新・統合・保守を4モジュールとして分離し、end-to-end成績だけでなく部品別の失敗・コスト・動的更新耐性を見る観点は、atoms per-file移行中の現在に直結する。ただし、既存stateにはwrite/manage/read loop、retrieval routing、更新前のconflict/currentness確認、外部memory研究の非同型性確認を扱うprobeが既にあり、新しい4モジュールprobeは実質的な言い換えになる。さらにatom本文は取り込み時に途中で切れており、論文の評価結果から具体的な失敗条件を十分に復元できない。重複と根拠不足を避け、reviewed記録だけを残す。",
+      "scores": {"relevance": 3, "actionability": 2, "evidence": 1, "non_redundancy": 1, "risk_control": 3, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_tsとreject理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T00:00:00+09:00",
       "id": "sr-1776779928-578bc4a847",

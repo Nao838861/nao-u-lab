@@ -36,7 +36,32 @@ skipped:
 Phase 2 の `pass` は 0 件。投稿条件に従い、#shared-reads への投稿、candidate frontmatter の追加更新ともに実施しなかった。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782661100-ea6d0eae5b
+    source_ts: "1782661100.844199"
+    title: "Are We Ready For An Agent-Native Memory System?"
+    reason: "atoms per-file移行中の現在に直結する一方、既存probeとの重複と、途中で切れたatom本文による根拠不足を確認するため"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_tsとreject理由のみ更新。新規probe・評価表・directive・恒久ルールは追加しない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
