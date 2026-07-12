@@ -89,11 +89,11 @@ self_feedback:
 ```yaml
 cleaned:
   - "memory/MEMORY.md の index を validate_memory_index.py で監査し、per-file atom index との不一致・broken entry が 0 件であることを確認"
-  - "memory/atoms.jsonl / per-file .md / index.jsonl の各 2671 件を mirror audit し、欠落・parse error・content conflict が 0 件であることを確認"
+  - "memory/atoms.jsonl を memory_health.py で監査（2671 atoms）。normalized content duplicate は raw 40 groups、recall-visible 3 groupsで、既存fold後の新規内容矛盾は検出なし"
   - "shared-reads lifecycle を集計（posted 46 / ready_to_post 0 / postponed 75 / failed 6 / needs_review 10）"
   - "mixed duplicate queue を再生成（72 groups）し、stale triage queue を 2026-07-12 基準で再生成（期限超過 backlog 50 件）"
   - "slack_directives.jsonl / slack_broadcasts.jsonl の pending がともに 0 件であることを確認"
-  - "memory/raw/ は今回の監査で機械的 archive 対象を確定できず、移動なし"
+  - "memory/raw/ は原文・監査証跡の正本を含むため、mtime だけでは機械的 archive 対象を確定せず移動なし"
 issues: []
 encoding_audit:
   source_file_status: "memory/MEMORY.md は UTF-8 明示読みで取得でき、代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を確認。source file 破損なし"
@@ -108,35 +108,35 @@ recommendation:
   priority_issues: []
 stale_review_backlog: 50
 stale_review_batch:
-  - path: memory/shared_reads_candidates/20260525_symbolically_scaffolded_play.md
-    status: postponed
-    stale_after: "2026-06-24"
-    duplicate_group_key: "symbolically scaffolded play designing role sensitive prompts for generative npc dialogue"
-    priority_reason: "age_days=18。role-sensitive NPC prompt 制約と usability study / synthetic evaluation がゲーム制作へ転用可能な mixed duplicate group"
-    recommended_review_action: reevaluate_in_phase2
-  - path: memory/shared_reads_candidates/20260526_grounding_machine_creativity_game_design_patterns.md
-    status: postponed
-    stale_after: "2026-06-25"
-    duplicate_group_key: "grounding machine creativity in game design knowledge representations empirical probing of llm based executable synthesis of goal playable patterns under structural constraints"
-    priority_reason: "age_days=17。GPC / design patterns / Unity IR と automated replay 評価を playable diff 導線へ接続できる mixed duplicate group"
-    recommended_review_action: reevaluate_in_phase2
-  - path: memory/shared_reads_candidates/20260526_llm_tcg_procedural_relatedness.md
-    status: postponed
-    stale_after: "2026-06-25"
-    duplicate_group_key: "from llm driven trading card generation to procedural relatedness a pokemon case study"
-    priority_reason: "age_days=17。個別化アイテムへの転用価値はあるが、生成条件と評価結果の追加確認が必要な mixed duplicate group"
-    recommended_review_action: reevaluate_in_phase2
-  - path: memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
-    status: postponed
-    stale_after: "2026-06-25"
-    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
-    priority_reason: "age_days=17。dependency-aware JSON pipeline の差分と qualitative evaluation の根拠を再確認すべき mixed duplicate group"
-    recommended_review_action: reevaluate_in_phase2
-  - path: memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
     status: postponed
     stale_after: "2026-06-26"
-    duplicate_group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
-    priority_reason: "age_days=16。300 persona benchmark と alignment / inference speed 評価が大量 NPC 設計へ直接つながる mixed duplicate group"
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    priority_reason: "age_days=16。依存関係付き prompt pipeline は転用価値が高いが、評価・比較・結論の根拠補完が必要な mixed duplicate group"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "large language models as pokemon battle agents strategic play and content generation"
+    priority_reason: "age_days=16。turn-based battle testbed の評価指標は有用だが、出典時系列と適用根拠を再確認すべき mixed duplicate group"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "age_days=16。プレイスタイル別の破綻検出へ転用可能で、既投稿 sibling との差分を group 単位で再評価すべき候補"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "age_days=16。headless評価への近さは高いが、実験結果・失敗例・結論の一次確認が必要な mixed duplicate group"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    duplicate_group_key: "agent island a saturation and contamination resistant benchmark from multiagent games"
+    priority_reason: "age_days=14。協力・対立・説得を含む評価とログ分析の転用価値が高く、既投稿 sibling との差分を再評価すべき候補"
     recommended_review_action: reevaluate_in_phase2
 ```
 
