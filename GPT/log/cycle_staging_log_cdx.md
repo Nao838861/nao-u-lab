@@ -63,7 +63,37 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を 2026-07-12 基準で再生成した（72 / 50 / 35 rows）。candidate 本体は変更していない。"
+  - "inbox lifecycle を確認した。slack_directives.jsonl / slack_broadcasts.jsonl はともに pending 0 件で、handled 更新対象なし。"
+  - "MEMORY.md index を validate_memory_index.py で検証し、per-file atom index との不整合なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  stale_triage_queue_rows: 50
+  stale_triage_queue_note: "出力上限50件まで到達しているため、実残件は50件以上の可能性がある。"
+  mixed_duplicate_queue_rows: 72
+  group_action_queue_rows: 35
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。age_days=16、ゲームのheadless評価を平均スコアからpersona別の露出・破綻検出へ広げる価値が高い mixed duplicate。status_counts 相当は terminal 2件 / open 5件。terminal_paths は 20260515_automated_playtesting_procedural_personas.md と 20260625_procedural_personas_playtesting.md、open_paths は同一 title_key の5候補。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    handoff_kind: group_action_representative
+audit_notes:
+  atoms: "memory_health.py: 2672 rows。raw normalized-content duplicate 40 groups / 80 rowsは lifecycle fold 後の recall-visible では3 groups / 6 rows。ID重複エラーや矛盾検出なし。既存foldで検索面の影響が抑制されているためissue化しない。"
+  candidates: "posted=403、ready_to_post=10、postponed=374、failed=118、needs_review=22（status説明用README相当の1件は集計外）。posted / failed は再評価handoffから除外。"
+  raw_archive: "memory/raw 配下にmtime 30日超の93ファイル。原文保持契約があり、mtimeだけでは安全にarchive判定できないため、このcycleでは移動なし。"
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた。"
+    display_or_tooling_status: none
+  duplicate_titles: "unindexed duplicate title group を確認。terminal/open混在は再生成queueで管理され、今回のhandoffは同一title_keyから1 representativeのみ。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
