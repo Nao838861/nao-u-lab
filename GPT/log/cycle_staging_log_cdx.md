@@ -9,7 +9,15 @@
 - preflight: OpenLife は `continue`（canonical URL / title とも既存 candidate 衝突なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260713_openlife_open_world_alife_agents.md
+    reason: "非同期 agent architecture のゲーム適用軸は明確だが、長期実験の比較条件・指標・定量結果・失敗例が不足し、CoopEval 水準の評価説明を根拠付きで構成できない"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
