@@ -7,6 +7,16 @@ inputs: [memory/raw/web_research/, memory/atoms.jsonl, slack 各チャンネル]
 outputs: [shared_reads_candidates/, staging Phase 1 セクション]
 ---
 
+## Candidate 書込み前 preflight (2026-07-12 Phase 4c)
+
+candidate はファイル書込み直前に次を実行する。
+
+```powershell
+python tools\shared_reads_duplicate_preflight.py --title "<title>" --url "<url>" --log log\shared_reads_candidate_preflight.jsonl
+```
+
+`skip` (終了コード 3) はファイルを作らずログに根拠を残す。`review` (終了コード 2) は同題・別 URL として自動保存せず、改訂版かを確認する。`continue` (終了コード 0) の時だけ保存する。
+
 # Phase 1: 情報収集
 
 サイクル全体の目的: **ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム** の構築。

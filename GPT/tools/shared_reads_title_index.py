@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES_DIR = ROOT / "memory" / "shared_reads_candidates"
 DEFAULT_TITLE_INDEX = ROOT / "memory" / "shared_reads_title_canonical_index.jsonl"
 TERMINAL_STATUSES = {"posted", "failed"}
+TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 
 
 def normalize_title_key(title: str) -> str:
@@ -21,6 +23,55 @@ def normalize_title_key(title: str) -> str:
     title = re.sub(r"https?://\S+", " ", title)
     title = re.sub(r"[_\W]+", " ", title, flags=re.UNICODE)
     return " ".join(title.split())
+
+
+def canonicalize_url(url: str) -> str:
+    """Normalize a source URL for duplicate preflight comparisons."""
+    url = url.strip()
+    if not url:
+        return ""
+    parts = urlsplit(url)
+    scheme = parts.scheme.casefold()
+    host = (parts.hostname or "").casefold()
+    port = parts.port
+    netloc = host
+    if port and not ((scheme == "http" and port == 80) or (scheme == "https" and port == 443)):
+        netloc = f"{host}:{port}"
+    path = re.sub(r"/{2,}", "/", parts.path or "/")
+    if path != "/":
+        path = path.rstrip("/")
+    query = urlencode(
+        sorted(
+            (key, value)
+            for key, value in parse_qsl(parts.query, keep_blank_values=True)
+            if not key.casefold().startswith("utm_") and key.casefold() not in TRACKING_QUERY_KEYS
+        ),
+        doseq=True,
+    )
+    return urlunsplit((scheme, netloc, path, query, ""))
+
+
+def duplicate_preflight(title: str, url: str, index: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Return continue/review/skip before a shared-reads candidate is written."""
+    title_key = normalize_title_key(title)
+    canonical_url = canonicalize_url(url)
+    row = index.get(title_key)
+    if not row or not row.get("terminal_evidence"):
+        return {"decision": "continue", "title_key": title_key, "canonical_url": canonical_url}
+    posted_urls = {
+        canonicalize_url(str(item))
+        for item in row.get("posted_source_urls", [])
+        if canonicalize_url(str(item))
+    }
+    decision = "skip" if canonical_url and canonical_url in posted_urls else "review"
+    return {
+        "decision": decision,
+        "title_key": title_key,
+        "canonical_url": canonical_url,
+        "canonical_path": row.get("canonical_path", ""),
+        "permalink": row.get("permalink", ""),
+        "reason": "posted_url_match" if decision == "skip" else "posted_title_match_url_differs",
+    }
 
 
 def strip_scalar(value: str) -> str:

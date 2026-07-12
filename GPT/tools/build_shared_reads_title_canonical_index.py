@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime
@@ -87,10 +88,11 @@ def build_index_rows(
         if len(group) < 2:
             continue
         statuses = {row.get("status", "") for row in group}
-        if terminal_only and (not statuses or not statuses <= TERMINAL_STATUSES):
+        posted = [row for row in group if row.get("status") == "posted"]
+        if terminal_only and not posted and (not statuses or not statuses <= TERMINAL_STATUSES):
             continue
         terminal = [row for row in group if row.get("status") in TERMINAL_STATUSES]
-        canonical = sorted(terminal or group, key=canonical_rank)[0]
+        canonical = sorted(posted or terminal or group, key=canonical_rank)[0]
         best_status = canonical.get("status", "")
         if terminal_only and best_status not in TERMINAL_STATUSES:
             continue
@@ -99,6 +101,8 @@ def build_index_rows(
         status_counts = Counter(row.get("status", "") for row in siblings)
         duplicate_paths = [row["path"] for row in siblings if row["path"] != canonical["path"]]
         urls = sorted({row["url"] for row in siblings if row.get("url")})
+        posted_urls = sorted({row["url"] for row in posted if row.get("url")})
+        permalink_match = re.search(r"https?://[^\s;]+", " ".join(row.get("evidence", "") for row in posted))
         index_rows.append(
             {
                 "title_key": title_key,
@@ -117,10 +121,13 @@ def build_index_rows(
                 "status_counts": dict(sorted(status_counts.items())),
                 "source_url": canonical.get("url") or (urls[0] if urls else ""),
                 "source_urls": urls,
+                "terminal_evidence": bool(posted) or statuses <= TERMINAL_STATUSES,
+                "posted_source_urls": posted_urls,
+                "permalink": permalink_match.group(0) if permalink_match else "",
                 "decision_note": (
-                    "Phase 4c ISS-4A-002 backfill. Exact title duplicate group is terminal "
-                    "(all candidates are posted or failed), so it should not enter Phase 2 "
-                    "reevaluation unless manually reopened."
+                    "Phase 4c ISS-4A-20260712-01 terminal-dominance backfill. A posted sibling "
+                    "is terminal evidence even when open siblings remain; candidate lifecycle "
+                    "frontmatter is unchanged."
                 ),
                 "updated_at": generated_at,
             }

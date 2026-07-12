@@ -146,7 +146,35 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260712-01
+    files_changed:
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/build_shared_reads_title_canonical_index.py
+        change: modified
+      - path: tools/shared_reads_duplicate_preflight.py
+        change: created
+      - path: tools/test_shared_reads_duplicate_preflight.py
+        change: created
+      - path: phases/phase1_collect.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+    summary: "posted sibling を mixed group の terminal evidence として index 化し、title と canonicalized URL による生成前 skip/review/continue 契約を追加した。"
+    partial: false
+migrations:
+  - what: "既存 candidate から canonical title index を再生成。candidate lifecycle frontmatter は変更しない。"
+    affected: "memory/shared_reads_title_canonical_index.jsonl の派生行のみ"
+verification:
+  - "境界 unittest: 同一 title・同一 URL=skip、同一 title・別 URL=review、未登録 title=continue"
+  - "RevengeBench mixed group が terminal_evidence と posted URL を保持すること"
+  - "tools/memory_recall.py の smoke test"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

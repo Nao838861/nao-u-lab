@@ -1,5 +1,7 @@
 # shared_reads_candidates/
 
+2026-07-12 Phase 4c から、同一 title group に `posted` sibling が1件でもあれば mixed group でも `terminal_evidence: true` として index に保持する。生成前に `tools/shared_reads_duplicate_preflight.py` を実行し、title と canonicalized URL が一致すれば `skip`、title のみ一致して URL が異なれば `review`、未登録 title は `continue` とする。既存 candidate の status は一括変更しない。
+
 #shared-reads に投稿する基準を満たさない**候補レベル**の記事置き場。
 
 Nao_u 指示 (2026-05-12 13:40 `directive_shared_reads_candidate_gate_20260512.md`):
