@@ -22,7 +22,18 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-13T04:15:00+09:00 最終判定
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260713_ptcg_bench_llm_agents.md
+    reason: "Phase 2 の gate_decision が pass ではなく postpone。既投稿の同題候補と重複するため、Phase 3 の投稿対象外"
+    action: postpone
+```
+
+Phase 2 の `pass` は 0 件。投稿条件に従い、#shared-reads への投稿、candidate frontmatter の追加更新ともに実施しなかった。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
