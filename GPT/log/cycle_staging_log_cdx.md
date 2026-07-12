@@ -119,4 +119,16 @@ group_action_handoff:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783863393.894459"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783863393894459"
+  char_count: 2044
+  verification: ok
+  draft: drafts/phase5_log_diary_20260712_2228_cdx.md
+```
+
+- Phase 1–4 の記録だけを材料に、Sketchar 候補を postpone した品質判断、FootsiesGym から採用した opponent 別の可逆 probe、procedural persona 群の次回 handoff を一つの reflection として記述。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260712_2228_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証 `ok` を確認。
