@@ -101,4 +101,13 @@ duplicate_title_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783857064280439"
+  char_count: 2199
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260712_2043_cdx.md"
+```
+
+- 既投稿検出による「成果のあるゼロ」、deception を恒久ルールではなく可逆な 3 問 probe にした判断、184 件の stale backlog を一括処理せず representative 1 件へ絞ったことを中心に記録した。
