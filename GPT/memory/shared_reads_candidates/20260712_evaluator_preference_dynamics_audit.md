@@ -4,6 +4,26 @@ url: https://arxiv.org/abs/2606.29719v1
 collected_at: 2026-07-12T12:05:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-evaluation, agent-evaluation, evaluator-drift, automated-playtesting]
+evaluated_at: 2026-07-12T12:20:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: 2026-07-12T12:20:00+09:00
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-12T12:20:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-11"
+supersedes: []
+gate_reason: >-
+  評価器の版依存・自己評価の floor effect・集約粒度による結論差を、EPC と122反復の実験で具体化しており、重要要素を十分に抽出できる。
+  LLM 自動プレイヤーや生成物審査の回帰監視へ直接移せ、限界も含めて約4000字の独立した分析を構成できる。
+suggested_post_outline:
+  overview_angle: "LLM評価器は固定した物差しではない、という問題を、EPCの構成と版更新で結論が反転した実験から説明する"
+  analysis_axis: "評価器版・自己評価・出力形式・集約粒度が選好測定をどう不安定化するかと、MPCI・coupling matrix・JSDの診断範囲"
+  application_target: "ゲームの自動プレイ、楽しさ・難易度判定、生成コンテンツ審査におけるモデル更新前後の回帰テストと複数評価器監査"
+  pros_cons: "診断を再現可能な指標群に分解できる一方、単一研究・少数条件への依存、自己評価のfloor effect、LLM評価を真のプレイヤー体験と同一視できない制約がある"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
