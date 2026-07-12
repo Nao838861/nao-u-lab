@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T09:05:00+09:00",
+  "updated_at": "2026-07-12T10:25:00+09:00",
   "reviewed_source_ts": [
+    "1778535044.026339",
     "1782601664.703159",
     "1783551257.158789",
     "1782550536.720219",
@@ -343,6 +344,36 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-12T10:25:00+09:00",
+      "id": "sr-1778535044-497d7b3673",
+      "source_ts": "1778535044.026339",
+      "title": "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版",
+      "decision": "reject",
+      "reason": "Score 10. memory / harness / evaluation / agent / operation / game-design の全優先タグを持つが、実体は4本の外部資料を一括再掲した lifecycle atom であり、status は superseded、quality は routine、quality_reason は lifecycle_repost_generic_prefix である。1件の知見として切り出せる中心命題・評価結果・次回条件がなく、ここから probe を作ると複数資料の混同と既存 probe の重複を招く。読了だけを記録し、恒久ルールや probe は追加しない。",
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 10
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-12T09:05:00+09:00",
       "id": "sr-1782601664-50801ee180",

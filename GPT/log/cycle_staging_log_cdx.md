@@ -157,3 +157,33 @@ posted:
   verification: ok
   thread: false
 ```
+## Phase 3b — Shared-reads 自己フィードバック (2026-07-12 10:25 JST)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535044-497d7b3673
+    source_ts: "1778535044.026339"
+    title: "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
+    reason: "全優先タグを持つ未レビュー候補だが、4資料を束ねた superseded lifecycle atom であり、単一知見として反映できるかを確認するため"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 10
+  decision: reject
+  change:
+    summary: "reviewed/source_ts と見送り理由のみ state に記録。probe・評価表・directive は追加しなかった"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+採用条件の actionability >= 2 と合計 >= 14 を満たさない。複数資料の一括再掲を単一の行動規範へ変換すると出典と適用条件が混ざるため、反映しない。
