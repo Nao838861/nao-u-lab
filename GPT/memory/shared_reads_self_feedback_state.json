@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T12:16:00+09:00",
+  "updated_at": "2026-07-12T14:05:00+09:00",
   "reviewed_source_ts": [
+    "1783825416.879669",
     "1782654150.950569",
     "1778535044.026339",
     "1782601664.703159",
@@ -8744,6 +8745,36 @@
       "change": {
         "type": "state_only",
         "summary": "AI engagement/difficulty予測 atom を reviewed に追加し、既存の行動分布・artifact・anchor probes と重複するため reject と記録した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-12T14:05:00+09:00",
+      "id": "sr-1783825416-e48a99c880",
+      "source_ts": "1783825416.879669",
+      "title": "Evaluator Preference Collapse: 評価器 drift と閉ループ選好収束",
+      "decision": "reject",
+      "reason": "Score 13. 評価器の小さな表現選好が反復最適化で候補分布へ増幅される観点は、Phase 2 の candidate 採点や game/headless 評価に直結し、同一 endpoint 名でも月をまたいで結論が反転した実験と、固定ケース・順位反転率・JSD・外部較正という具体的な監査案がある。ただし active な evaluation-version-boundary probe は評価器・rubric・gate 更新時の version 境界、旧証拠の再評価、固定 anchor 比較をすでに要求し、behavior-signature-distribution-shift と evaluator-generator-balance-stair も分布収束と生成側への影響を覆う。新しい evaluator-drift probe はこれらの組み合わせの言い換えになり、現在の active probe 群をさらに肥大化させるため、読了のみ記録して採用しない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "Evaluator Preference Collapse atom を reviewed に追加し、既存の evaluation version・分布 drift・generator/evaluator probes と重複するため reject と記録した。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

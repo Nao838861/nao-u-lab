@@ -34,7 +34,34 @@ skipped:
 - 投稿前レビュー: 対象本文なし（Slack API 未実行、candidate frontmatter 変更なし）。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783825416-e48a99c880
+    source_ts: "1783825416.879669"
+    title: "Evaluator Preference Collapse: 評価器 drift と閉ループ選好収束"
+    reason: "Phase 2 の candidate 採点と game/headless 評価では、評価器の小さな表現選好が次の候補生成へ増幅され得るため、最新の未レビュー atom として確認した"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。reviewed state と見送り理由だけを記録し、probe・評価表・directive は追加しなかった"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 固定 anchor、評価 version 境界、旧証拠の再評価は `probe-20260711-evaluation-version-boundary`、分布変化と生成側への影響は既存の behavior-signature / evaluator-generator probes で確認できる。採用条件の合計 14 に届かず、特に non_redundancy と risk_control が不足するため見送った。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
