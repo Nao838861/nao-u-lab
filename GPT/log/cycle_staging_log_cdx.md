@@ -13,7 +13,17 @@
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 1 で新規 candidate は作成されていない。
+- Phase 4a からの `stale_review_batch` / group action handoff はないため、candidate frontmatter の再評価・更新対象もない。
+- terminal-title preflight の対象は 0 件。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
