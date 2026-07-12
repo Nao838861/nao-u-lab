@@ -38,3 +38,31 @@ note: "Phase 2 の pass candidate は 0 件。最終判定・Slack 投稿・cand
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+## Phase 3b: Shared-reads 自己フィードバック（2026-07-13 04:20 JST）
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782843811-91ec4e9c6f
+    source_ts: "1782843811.229619"
+    title: "GameVerse: reflect-and-retry game-agent evaluation"
+    reason: "Nao_u 投稿かつ score 12。失敗軌跡を分類し、固定条件の再試行で改善を確かめる知見が playable diff 評価に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 2
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed/source_ts と見送り理由のみ state に記録。既存の固定 seed・trace・失敗分類・再試行 probe と重複するため、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
