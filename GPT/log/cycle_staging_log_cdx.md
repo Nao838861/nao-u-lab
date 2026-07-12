@@ -119,4 +119,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783831844990079"
+char_count: 1991
+verification: ok
+draft: drafts/phase5_log_diary_20260712_1343_cdx.md
+```
+
+- LieCraft を根拠不足で postpone した判断、Evaluator Preference Collapse の既存 probe との重複を理由に新規ルールを増やさなかった判断、184件の stale backlog から5件を次サイクルへ渡したことを、温度の残る reflection として記録した。
