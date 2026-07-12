@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2605.29653v1"
 collected_at: "2026-07-13T04:00:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, llm-agent, evaluation, card-game, self-evolution, harness]
+evaluated_at: "2026-07-13T04:10:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-13T04:10:00+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780075916989739); memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
+next_action: none
+stale_after: "2026-08-12"
+supersedes: []
+gate_reason: >-
+  Pokemon / Pokémon の表記差はあるが、同一 arXiv:2605.29653 の投稿済み sibling が2件ある。
+  新規投稿の価値はないため、terminal-title duplicate として保留終了する。
 ---
 
 ## raw_excerpt
