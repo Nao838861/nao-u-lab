@@ -57,7 +57,42 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "MEMORY.md の index atom 参照 50 件を照合し、broken 0 件を確認"
+  - "atoms.jsonl 2672 行を検査し、JSON 不正 0、重複 ID 0、同一 ID 矛盾 0、normalized/content hash 重複 group 0 を確認"
+  - "shared-reads lifecycle を集計し、posted 404 / ready_to_post 10 / postponed 374 / failed 118 / needs_review 22（frontmatter status 欠落 71）を確認"
+  - "mixed duplicate / stale triage / group-action queue を再生成し、既存内容と差分なしを確認"
+  - "Slack directives 23 行、broadcasts 21 行を確認し、pending 0 件のため status 更新なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  overdue_total: 184
+  postponed: 175
+  needs_review: 9
+  handed_off_candidates: 1
+  note: "group-action queue 限定運用に従い、mixed duplicate の先頭 1 group の representative だけを Phase 2 へ渡す"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭 group。headless 評価を平均スコアからプレイスタイル別の露出・破綻検出へ接続できる。status_counts 相当は terminal 2 / open 5。terminal_paths は 20260515_automated_playtesting_procedural_personas.md と 20260625_procedural_personas_playtesting.md、open_paths は representative を含む 5 件。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 decode 成功。代表語の 記憶 / ゲーム設計 / 敵パターン は取得でき、atom index 参照 50 件も解決。評価軸という連続語は本文に存在しないが decode 破損の証拠はない"
+  display_or_tooling_status: "最初の PowerShell inline script 出力では日本語 literal が ? に置換された。Unicode escape による再 probe では source の日本語を正常確認したため、表示・command 経路側の mojibake と判定"
+raw_archive_audit:
+  older_than_30_days: 87
+  action: "候補を記録のみ。headless_eval packet、Slack archive、web_research の PDF/TXT と投稿応答 evidence が混在し、参照関係を確認せず機械移動できないため本 phase では archive なし"
+duplicate_title_audit:
+  unindexed_groups_reported: 20
+  note: "terminal-only ではなく open status を含む mixed group が中心。canonical index へ自動 close せず、group-action queue の限定 handoff を優先"
+```
+
+- 判定: 期限超過 backlog は大きいが、既存 queue と Phase 2 handoff の運用対象であり、新しい構造設計を要する証拠は今回見つからなかった。Phase 4b / 4c は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
