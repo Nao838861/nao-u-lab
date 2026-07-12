@@ -49,3 +49,32 @@ skipped:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+## Phase 3b (2026-07-12 15:00 JST)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782740436-f6507c50b6
+    source_ts: "1782740436.215749"
+    title: "For Honor: ML automation for production bot development"
+    reason: "継続更新されるゲームでのbot制作短縮と、強さ・believability・難易度・production integrationを分ける知見が、現在のゲーム評価運用へ直接つながるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "既存の固定seed比較、bot役割分類、人間較正境界、非happy-path回帰、hand-coded baseline比較の各probeと重複するため、新規probeは追加せずreview stateだけ更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
