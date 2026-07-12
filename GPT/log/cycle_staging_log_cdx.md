@@ -38,7 +38,32 @@ reason: "Phase 2 の pass が 0 件のため、投稿対象なし。Slack 投稿
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783392010-384f043eb7
+    source_ts: "1783392010.105159"
+    title: "Games That Teach, Chats That Convince: interactive format の主観的説得感と客観的知識保持の分離評価"
+    reason: "game prototype と shared-reads の評価で、形式への好感と実際の保持・行動変化を混同しない観点が現在の作業に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の calibration・engagement・行動分布 probes と重複するため、読了記録だけを state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

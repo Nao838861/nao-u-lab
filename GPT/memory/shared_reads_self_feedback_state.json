@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T00:00:00+09:00",
+  "updated_at": "2026-07-13T03:00:00+09:00",
   "reviewed_source_ts": [
+    "1783392010.105159",
     "1776779928.148179",
     "1783500819.885039",
     "1783457597.332759",
@@ -8921,6 +8922,17 @@
       "reason": "Score 16. deception を含む playable diff では、設計者が入れた強度とプレイヤーが知覚した理不尽さを混同しやすく、同時追加 content の価値で評価上昇を誤帰属しうる。既存 probe は proxy と推定状態の分離を扱うが、設計入力・知覚出力・同時追加価値の三分離は明示していない。次の該当 diff だけに適用する可逆 probe とする。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 16},
       "change": {"type": "probe", "summary": "設計強度・知覚された理不尽さ・同時追加価値を別々に記録する3問 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-13T03:00:00+09:00",
+      "id": "sr-1783392010-384f043eb7",
+      "source_ts": "1783392010.105159",
+      "title": "Games That Teach, Chats That Convince: interactive format の主観的説得感と客観的知識保持の分離評価",
+      "decision": "reject",
+      "reason": "Score 13. essay、chatbot、narrative game で同じ説得内容を提示し、主観的な説得感・engagement と客観的な知識保持を分ける観点は、game prototype と shared-reads の評価に直結する。しかし active probes はすでに、主観的 readiness を測定可能な evidence から分離する calibration boundary、AI engagement を human engagement の代理にしない境界、単一スコアではなく行動分布と時系列 trace を見る評価を要求している。新しい format-effect probe はこれらの言い換えとなり、既に大きい active probe 群をさらに肥大化させるため採用しない。読了だけを state に記録し、次回は既存 probe を再利用する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "interactive format atom を reviewed に追加し、既存の calibration・engagement・行動分布 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
