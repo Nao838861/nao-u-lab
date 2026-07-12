@@ -21,7 +21,16 @@ stale_reviewed: []
 - duplicate preflight: title canonical index / mixed duplicate queue に同一 title group なし。専用 preflight script はこの checkout に存在しないため sidecar を直接照合した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260712_evaluator_preference_dynamics_audit.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669
+    char_count: 3917
+skipped: []
+```
+
+- 最終判定: 部分採用。評価器更新前後の固定ケース再評価、分布差、外部較正は採用する。EPC 固有の閾値と因果帰属は、条件間交絡、proxy 経由、論文内の公式 API 再現記述の不整合があるため直輸入しない。
+- 投稿前レビュー: 必須6項目、`■ 概要` 始まり、末尾 `■ URL`、禁止表現なし、3917文字、重複なしを確認。`tools/shared_reads_policy.py` の検証を通過し、1回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
