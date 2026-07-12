@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-12T21:10:00+09:00",
+  "updated_at": "2026-07-12T22:15:00+09:00",
   "reviewed_source_ts": [
+    "1783500819.885039",
     "1783457597.332759",
     "1783330189.970809",
     "1782609581.756829",
@@ -8893,6 +8894,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260712-headless-opponent-mechanic-matrix",
+      "created_at": "2026-07-12T22:15:00+09:00",
+      "source_ts": "1783500819.885039",
+      "scope": "next enemy-AI or headless-playtest evaluation where Codex may treat route clear, win rate, or one generic bot as sufficient evidence",
+      "questions": [
+        "Before the next enemy-AI or headless-playtest judgment, did I separate at least no-op engagement, ordinary route/random behavior, and one scripted exploiter instead of relying on one aggregate win or clear rate?",
+        "Did I record whether the prototype's core mechanic was actually used, such as dash, charge, guard, parry, special, graze, route choice, or another authored action, rather than treating success alone as designer-intent evidence?",
+        "If observation and reaction are effectively instant, did I add or name a reaction-delay, observation-mask, or input-commitment check, or label human_like_interaction_unverified?"
+      ],
+      "expires_after": "Review after the next two enemy-AI or headless-playtest notes that use win rate, clear rate, opponent policies, core-mechanic usage, or reaction timing as evidence."
+    },
     {
       "id": "probe-20260712-deception-intent-perception-confound",
       "created_at": "2026-07-12T21:10:00+09:00",

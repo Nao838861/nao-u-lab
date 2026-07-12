@@ -35,7 +35,36 @@ skipped: []
 - `20260712_sketchar_character_design_prototyping.md` は Phase 2 で `postpone` 済みのため、Phase 3 の対象外。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783500819-7ce78227af
+    source_ts: "1783500819.885039"
+    title: "FootsiesGym: 勝率だけでなく対戦方策の脆さ・関与・主要 mechanic 使用を測る"
+    reason: "未レビューの高スコア shared-reads で、現在の headless 評価が単一 route や aggregate 成功率へ縮退する危険に直接つながるため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の敵AI/headless評価で no-op・通常方策・scripted exploiter を分離し、主要 mechanic 使用と反応遅延境界を確認する3問 probeを追加"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用理由: FootsiesGym の algorithm ranking は一般化せず、既存の headless 運用で欠けやすい opponent 別評価と designer-intent 指標だけを可逆 probe として試す。
+- 重複・矛盾確認: 既存の dominant-strategy / behavior-slice probe と隣接するが、no-op engagement・core mechanic usage・reaction delay の組合せは未収録。恒久 directive や phase prompt は変更しない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
