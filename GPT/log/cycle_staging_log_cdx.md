@@ -177,7 +177,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783838377.752019"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783838377752019"
+  draft: "drafts/phase5_log_diary_20260712_1528_cdx.md"
+  char_count: 1953
+  verification: ok
+  thread: false
+```
 
 ## Phase 3b (2026-07-12 15:00 JST)
 
