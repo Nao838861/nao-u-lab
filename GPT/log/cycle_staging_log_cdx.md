@@ -67,7 +67,46 @@ self_feedback:
 - 撤退条件: 次の該当 2 件で設計判断を変えない、既存 telemetry と実質重複、または周期推定が恣意的なら probe を削除する。survival 以外へ一般化しない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を validate_memory_index.py で照合し、broken entry 0 件を確認した。"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-13 基準で再生成した（72 groups / 上位50 candidates / 35 groups）。"
+  - "inbox lifecycle を確認し、slack_directives.jsonl / slack_broadcasts.jsonl とも pending 0 件のため status 更新はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 192
+  stale_triage_queue_rows: 50
+  group_action_queue_rows: 35
+  handed_off_groups: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona と MCTS による複数プレイスタイルの破綻検出が headless 評価へ直接接続し、terminal 2件と open 5件が混在するため、group 単位の代表再評価が必要。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    status_counts:
+      terminal: 2
+      open: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+```
+
+- atom audit: 2,674 rows、ID重複なし。normalized-content duplicate は raw 40 groups / 80 rowsだが lifecycle/content fold 済みで、recall-visible は 3 groups / 6 rows。未group化 repeated-title 14種は既存 audit で可視化されており、今回新たな矛盾やゲーム記憶を塞ぐ構造問題とは判定しなかった。
+- candidate lifecycle: `posted 406 / ready_to_post 10 / postponed 377 / failed 120 / needs_review 22`。`postponed` / `needs_review` の期限超過 backlog は192件。candidate本体は変更せず、group-action限定運用により先頭1 groupだけをhandoffした。
+- raw audit: 30日超の静止ファイルは参照原文・監査ログとして保持されており、今回機械的にarchiveへ移すべき単独ファイルは特定しなかった。
+- encoding audit: `memory/MEMORY.md` は UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得できた。`source_file_status: valid UTF-8, representative probes passed`、`display_or_tooling_status: none`。本文再生成・手修復は不要。
+- duplicate title audit: canonical index未登録groupは残るが、mixed groupは再生成queueで分離済み。terminal-only groupの新規自動closeは行わず、先頭mixed groupのみPhase 2へ渡した。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
