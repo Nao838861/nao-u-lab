@@ -31,7 +31,33 @@ skipped: []
 - #shared-reads への Slack 投稿、candidate frontmatter の更新はいずれも行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783507895-05565b3775
+    source_ts: "1783507895.620679"
+    title: "LPM 1.0: 会話キャラクターを speaking / listening / idle と identity stability で評価する"
+    reason: "最新の未レビュー対象。既存 probe が台詞・知識境界・persona を中心に見る一方、非発話状態と短時間の identity continuity は未カバーだから"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "次の会話キャラクター/NPC作業2件だけで、speaking・listening・idle/turn-transition の状態別反応と短時間の identity continuity を確認する3問 probe を追加"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用理由: 発話内容や lip-sync だけで会話品質を判定せず、聞く・待つ・ターンが移る時の反応を状態別に観測できる。単一論文由来なので evidence は 2 とし、次の該当作業2件で重複または不要なら撤退する。
+- probe: (1) speaking / listening / idle または turn-transition を分けたか、(2) 非発話状態に状態根拠のある反応が最低1つあるか、(3) 崩れを台詞・非発話反応・ターン遷移・identity continuity に分けたか。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

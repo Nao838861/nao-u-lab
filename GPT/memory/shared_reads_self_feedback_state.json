@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T16:35:00+09:00",
+  "updated_at": "2026-07-13T18:20:00+09:00",
   "reviewed_source_ts": [
+    "1783507895.620679",
     "1783392014.742089",
     "1783901888.152929",
     "1777631607.016789",
@@ -360,6 +361,26 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T18:20:00+09:00",
+      "id": "sr-1783507895-05565b3775",
+      "source_ts": "1783507895.620679",
+      "title": "LPM 1.0: 会話キャラクターを speaking / listening / idle と identity stability で評価する",
+      "decision": "adopt_probe",
+      "reason": "Score 15. 次の会話キャラクターや NPC 評価では、発話内容や lip-sync だけでなく、聞いている時・沈黙時・ターン遷移時の反応が体験を支える。既存 probe は台詞の知識境界、persona、会話 filler、状態 grounding を扱うが、非発話状態の観測と短時間の identity continuity は直接見ていない。対象を会話/NPCの次2件だけに限定し、恒久ルールにはしない。論文由来の単一 atom で実環境検証は未実施なので evidence は2とする。",
+      "scores": {"relevance": 2, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 15},
+      "change": {"type": "probe", "summary": "次の会話キャラクター/NPC作業2件で、speaking・listening・idle/turn-transition の状態別反応と短時間の identity continuity を確認する3問の可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "probe": {
+        "scope": "次の会話キャラクター、NPC対話、音声アバター、または会話演出の実装・評価2件",
+        "questions": [
+          "発話内容や lip-sync だけでなく、speaking / listening / idle または turn-transition のうち該当する状態を分けて観測したか？",
+          "非発話状態に、視線・うなずき・間・表情・相手への反応のうち少なくとも1つ、状態に根拠のある変化があるか？",
+          "短い会話区間の前後で人物らしさが崩れた場合、台詞内容、非発話反応、ターン遷移、identity continuity のどこで崩れたかを分けたか？"
+        ],
+        "withdrawal_condition": "次の2件で状態別観測が不要または既存 probe と実質重複なら削除する。会話/NPC以外の一般ゲーム評価へ拡張しない。"
+      },
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T16:35:00+09:00",
       "id": "sr-1783392014-aeadcdd841",
