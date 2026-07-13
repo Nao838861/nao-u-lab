@@ -62,7 +62,60 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-14 基準で再生成した（72 groups / 50 candidates / 35 groups）。candidate 正本は変更していない。"
+  - "MEMORY.md の index atom 参照 50 件を atoms.jsonl と照合し、broken reference 0 件を確認した。"
+  - "atoms.jsonl 2674 件を監査し、JSON parse error 0、重複 ID group 0、競合 ID group 0、完全同文 group 0 を確認した。mirror audit も JSONL / per-file / index 各 2674 件、drift 0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各 0 件。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog:
+  eligible_total: 203
+  handoff_candidate_count: 0
+  handoff_group_count: 1
+  note: "postponed / needs_review かつ stale_after <= 2026-07-14。mixed duplicate は group-action queue 限定運用に従い、candidate 単位 batch と重複させない。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。age_days=18。procedural persona と evolved MCTS heuristics は headless 評価をプレイスタイル別の破綻検出へ接続できる一方、同一論文の terminal 2 件と open 5 件が混在している。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_kind: group_action_representative
+    group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts:
+      terminal: 2
+      open: 5
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+audit_notes:
+  encoding:
+    source_file_status: "memory/MEMORY.md は UTF-8 decode 成功。代表語は『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は本文に存在しない。文字化けを示す decode error はない。"
+    display_or_tooling_status: "最初の PowerShell 経由 inline probe では日本語リテラルが '?' に置換されたため、Unicode escape を用いた再 probe で source と表示経路を切り分けた。source file 破損ではない。"
+  candidate_lifecycle:
+    posted: 407
+    ready_to_post: 10
+    postponed: 378
+    failed: 120
+    needs_review: 22
+    note: "candidate 直下は全 937 件に status がある。posted_drafts 配下の 74 md は投稿本文 archive で candidate lifecycle 集計外。"
+  raw_archive_candidates:
+    files_older_than_30_days: 93
+    bytes: 62759242
+    action: "候補抽出のみ。Slack archive、同期 state、PDF/text 原文が混在し、Phase 4a で機械的に移動すると参照を壊す可能性があるため変更なし。"
+  duplicate_titles:
+    unindexed_mixed_groups_visible_in_audit: true
+    action: "既存 queue で Phase 2 へ group 単位 handoff 済み。新規構造 issue にはしない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
