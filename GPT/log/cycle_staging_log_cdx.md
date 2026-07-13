@@ -33,7 +33,32 @@ note: "原文を再確認し、単一成功例で因果効果は未検証とい�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783365738-b189133f88
+    source_ts: "1783365738.209019"
+    title: "OPINE-World: object-centric executable world model"
+    reason: "未知ゲームの観測を実行可能モデルと予測誤差へ接続する知見が、現在のゲーム制作・headless 評価に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の executable-preview・事前予測更新・失敗層分離 probes と重複するため、読了を state に記録した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

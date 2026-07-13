@@ -4,6 +4,7 @@
     "1782843811.229619",
     "1782661100.844199",
     "1783392010.105159",
+    "1783365738.209019",
     "1776779928.148179",
     "1783500819.885039",
     "1783457597.332759",
@@ -8957,6 +8958,17 @@
       "reason": "Score 13. essay、chatbot、narrative game で同じ説得内容を提示し、主観的な説得感・engagement と客観的な知識保持を分ける観点は、game prototype と shared-reads の評価に直結する。しかし active probes はすでに、主観的 readiness を測定可能な evidence から分離する calibration boundary、AI engagement を human engagement の代理にしない境界、単一スコアではなく行動分布と時系列 trace を見る評価を要求している。新しい format-effect probe はこれらの言い換えとなり、既に大きい active probe 群をさらに肥大化させるため採用しない。読了だけを state に記録し、次回は既存 probe を再利用する。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "interactive format atom を reviewed に追加し、既存の calibration・engagement・行動分布 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-13T14:00:00+09:00",
+      "id": "sr-1783365738-b189133f88",
+      "source_ts": "1783365738.209019",
+      "title": "OPINE-World: object-centric executable world model",
+      "decision": "reject",
+      "reason": "Score 13. 未知ゲームを操作しながら object、action、goal の仮説を source code の実行可能モデルへ落とし、予測誤差で修正する観点はゲーム制作と headless 評価に直結する。しかし active な Mind-Studio executable branch preview probe は state-action-next-state と held-out branch を、Agentic World Modeling probe は事前予測と expected-vs-actual 更新を、interactive benchmark bottleneck probe は exploration・modeling・goal-setting の失敗層分離をすでに要求している。OPINE-World 固有の probe はこの三者の重複となり、305件ある active probe 群をさらに肥大化させるため採用しない。読了のみ state に記録する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "OPINE-World atom を reviewed に追加し、既存の executable-preview・事前予測更新・失敗層分離 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
