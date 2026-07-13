@@ -130,4 +130,12 @@ group_action_handoff:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783921324505419
+  char_count: 1938
+  verification: ok
+  draft: drafts/phase5_log_diary_20260713_1428_cdx.md
+```
+- Phase 1〜4 の発見を、制度設計が agent 行動へ与える影響、可逆 probe、記憶監査の健全性と残課題を軸に reflection として投稿した。
