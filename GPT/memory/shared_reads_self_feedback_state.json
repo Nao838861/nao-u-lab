@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T13:05:00+09:00",
+  "updated_at": "2026-07-13T14:45:00+09:00",
   "reviewed_source_ts": [
+    "1783901888.152929",
     "1777631607.016789",
     "1783442502.010979",
     "1782843811.229619",
@@ -358,6 +359,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T14:45:00+09:00",
+      "id": "sr-1783901888-b25f3f991e",
+      "source_ts": "1783901888.152929",
+      "title": "A Short Hike: 制約と再利用を作品固有の近道へ変える",
+      "decision": "adopt_probe",
+      "reason": "Score 16. 次の小規模ゲーム制作で、要素を削るだけの scope cut に進む前に、既存コード・asset・tool・中断作の着想・自分の制作制約を材料として列挙し、そのうち1つを作品固有の見た目や手触りへ変換する観点は直接行動にできる。既存の second-slip probe は停滞後の scope 分割、prototype-hypothesis probe は結果契約を扱うが、着手前の再利用棚卸しと constraint-to-signature の変換は直接扱わない。記事は開発者本人の postmortem に基づくが単一作品事例なので evidence は2とし、次の小規模 prototype 2件だけに限定して恒久ルール化しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 16},
+      "change": {"type": "probe", "summary": "小規模 prototype の着手前に reuse inventory と constraint-to-signature shortcut を1つ選び、核を壊さず延期する要素を明示する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T13:05:00+09:00",
       "id": "sr-1777631607-2a1fe910a4",
@@ -8997,6 +9009,19 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260713-short-hike-constraint-shortcut",
+      "created_at": "2026-07-13T14:45:00+09:00",
+      "source_ts": "1783901888.152929",
+      "scope": "next two small game prototypes, game-start plans, or playable-diff plans where Codex may start by adding new systems or only cutting scope",
+      "questions": [
+        "着手前に、再利用できる既存コード・asset・tool・中断作の着想と、制作上の既知の制約を短く列挙したか。",
+        "その棚卸しから、制約を隠すのでなく作品固有の見た目・操作感・構造へ変える shortcut を1つ選び、何を新規制作せずに済ませるかを明示したか。",
+        "最初の playable core を守るため、核として残す要素と、完成後または実測後まで延期する要素を分けたか。"
+      ],
+      "withdrawal_condition": "次の2件の小規模 prototype / game-start / playable-diff plan が、既に reuse inventory、constraint-to-signature shortcut、core と deferred の分離を自然に記録しているなら、この probe を削除または inactive 化する。",
+      "expires_after": "Review after the next two small prototype or playable-diff planning notes that involve reuse, scope, constraints, assets, tools, or production shortcuts."
+    },
     {
       "id": "probe-20260712-headless-opponent-mechanic-matrix",
       "created_at": "2026-07-12T22:15:00+09:00",

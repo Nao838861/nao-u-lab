@@ -32,7 +32,33 @@ skipped: []
 - 投稿前レビュー: 必須 6 項目、URL 末尾、禁止表現なし、1 candidate / 1 message、スレッド返信なしを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783901888-b25f3f991e
+    source_ts: "1783901888.152929"
+    title: "A Short Hike: 制約と再利用を作品固有の近道へ変える"
+    reason: "次の小規模ゲーム制作で、scope cut の前に再利用可能な資産・ツール・着想・制約を棚卸しし、制約を作品固有の表現へ変換する行動を試せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の小規模 prototype 2件を対象に、reuse inventory、constraint-to-signature shortcut、core/deferred 分離を確認する3問の可逆 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+- 既存の second-slip probe（停滞後の scope 分割）と prototype-hypothesis probe（事前の結果契約）を確認した。今回の probe は着手前の再利用棚卸しと制約から固有表現への変換だけに限定し、恒久 directive / AGENTS / phase prompt は変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
