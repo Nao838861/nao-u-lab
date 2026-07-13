@@ -78,7 +78,8 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ### 人口・世帯
 - ハイブリッド: **入植船=主蛇口**（島の魅力で出入り・排水口兼用）、出生・加齢・死・相続=完全背景
 - **移民トリガー（2026-07-14）: 区画=招待状／船=心拍／住民=viability査定**（区画作成で引き↑→次の船が運ぶ→viable区画が埋まる・悪い立地は立て札のまま）。テレポートせず歩く
-- **名前つき世帯（2026-07-14）**: 姓+当主名+世継ぎ・軽profile・followした数世帯だけ深掘り（世帯粒度=1設備1世帯に整合）。創発物語が読める・原体験の崩壊が人格化。ヨーロッパ職業姓（Miller/Schmidt/Weber）
+- **名前つき=個人粒度（2026-07-14 Nao_u非交渉）**: 1設備=1世帯=**5〜15人の名前つき個人**（大家族の企業=史実）。二層モデル: 個人=生活/労働/ドラマの単位（名前/性別/年齢/死） ＋ 世帯=経済/取引の単位（財布共有・当主が意思決定）→個人と実装難度（取引=世帯数）が両立。賃金回避を維持（血縁自営家・新世帯は持参金で独立）。詳細: [design/individuals_and_money.md](design/individuals_and_money.md)
+- 性別=世帯形成+出生に効く・職業gender固定なし / テント=tier-0住処（着船即入居・進歩の絵） / 船頻度=序盤多く（依存期・暇対策）→自立で減る / 現金=世帯の財布+持参金による新世帯形成（個人財布はDF金詰まりリスクで非推奨）
 - **最初の御用=チュートリアル卒業試験**（Factorの声・着船→区画→漁→市場→農地→移民→御用で余剰+輸出+信用を一巡）。詳細: [design/opening_sequence.md](design/opening_sequence.md)
 - 餓死あり（空腹→衰弱→死の過程）。国内移動は摩擦パラメータ（移動コスト/情報遅延/土地への愛着）で創発
 - 相続: 子→近所→近場に広く薄く。国庫なし。プレイヤー関与なし（イベントログで観測のみ）。閉鎖経済では保存則の要請
@@ -137,7 +138,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
