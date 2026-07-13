@@ -41,7 +41,21 @@ skipped: []
 - 品質ゲートを維持し、次 Phase へ引き渡す。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783442502-f4c420fda2
+    source_ts: "1783442502.010979"
+    title: "Regime-Conditional Stabilisation of LLM-Augmented Cooperative Multi-Agent Reinforcement Learning"
+    reason: "報酬・介入を全期間へ一律適用せず、有効な regime に限定する知見が、ゲーム調整と定時サイクルの介入判断に小さく反映できるか確認するため。"
+  scores: {relevance: 3, actionability: 3, evidence: 2, non_redundancy: 0, risk_control: 2, reversibility: 3, total: 13}
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。既存の介入 amplitude、trigger condition、固定条件比較、segment 別 proxy 確認と重複するため、新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check: {adds_permanent_rule: false, replaces_or_simplifies_existing: false, conflict_checked: true}
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

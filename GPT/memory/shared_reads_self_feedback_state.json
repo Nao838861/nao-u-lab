@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T04:20:00+09:00",
+  "updated_at": "2026-07-13T11:15:00+09:00",
   "reviewed_source_ts": [
+    "1783442502.010979",
     "1782843811.229619",
     "1782661100.844199",
     "1783392010.105159",
@@ -356,6 +357,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T11:15:00+09:00",
+      "id": "sr-1783442502-f4c420fda2",
+      "source_ts": "1783442502.010979",
+      "title": "Regime-Conditional Stabilisation of LLM-Augmented Cooperative Multi-Agent Reinforcement Learning",
+      "decision": "reject",
+      "reason": "Score 13. 報酬や介入を全期間へ一律適用せず、改善が見込める regime に限定し、安定性と性能を分けて測る観点はゲーム調整と自動化に関連する。しかし active probes はすでに介入 amplitude、bounded decision の trigger condition、固定条件での比較、proxy の segment 別確認を要求している。この atom から新しい regime probe を追加すると既存観点の組み替えになり、active probe 群をさらに肥大化させる。採用閾値14にも届かないため、読了だけ記録し、probe・評価表・directive・恒久ルールは追加しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の介入強度・trigger・segment 比較 probes を再利用し、新規 probe は追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T04:20:00+09:00",
       "id": "sr-1782843811-91ec4e9c6f",
