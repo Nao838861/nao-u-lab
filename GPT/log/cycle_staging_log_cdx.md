@@ -124,4 +124,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783933675.890459"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783933675890459"
+  char_count: 2228
+  verification: ok
+  draft: drafts/phase5_log_diary_20260713_1758_cdx.md
+```
+
+- Phase 1-4 の reflection を、重複を増やさない判断、会話キャラクターの非発話状態 probe、stale backlog の実測という三点を軸に日記化した。
+- `post_slack_message_file.py --delete-on-fail` で #log へフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・`?` 化は検出されなかった。
