@@ -35,7 +35,35 @@ skipped: []
 - candidate frontmatter の更新、Slack 投稿、外部 URL の追加確認はいずれも実施していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783304602-15bb3759bd
+    source_ts: "1783304602.725049"
+    title: "Self-Evolving World Models for LLM Agent Planning: 実遷移・不一致・選択的 foresight"
+    reason: "headless game testing で、過去の予測を次の行動へ返すこと自体が悪化要因になりうるため。実遷移への grounding、予測不一致、低信頼時の棄権を小さく検証できる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の headless playtest / game-agent evaluation 2件で、実 state-action-next-state、予測不一致、低信頼 foresight の棄権、no-foresight 比較を確認する3問 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存の遷移記録・world-model 系 probe との重複を確認した。今回の差分は、予測を action context に戻す前の abstain と、with/no-foresight の行動差を同時に見る点に限定した。
+- action-return evidence: `memory/shared_reads_self_feedback_state.json` の `probe-20260713-selective-foresight-abstention`。恒久 directive、phase prompt、AGENTS.md は変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

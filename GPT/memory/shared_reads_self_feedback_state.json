@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T18:20:00+09:00",
+  "updated_at": "2026-07-13T19:48:21+09:00",
   "reviewed_source_ts": [
+    "1783304602.725049",
     "1783507895.620679",
     "1783392014.742089",
     "1783901888.152929",
@@ -361,6 +362,45 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T19:48:21+09:00",
+      "id": "sr-1783304602-15bb3759bd",
+      "source_ts": "1783304602.725049",
+      "title": "Self-Evolving World Models for LLM Agent Planning: 実遷移・不一致・選択的 foresight",
+      "decision": "adopt_probe",
+      "reason": "Score 16. headless game testing では、過去ログや抽象ルールを次の行動へ返す際に、正しい予測かだけでなく実際の成功率を下げないかを見る必要がある。この shared-read は、実 state-action-next-state、予測と観測の不一致、低信頼予測の棄権を一つの小さな行動ループとして提示し、no-foresight baseline より悪化する例も根拠に持つ。既存 probe には遷移記録や world-model 境界があるが、予測を context に戻す前の abstain と、with/without foresight の行動差を同時に問うものはない。次の headless playtest 2件だけに限定し、恒久ルールや framework 導入にはしない。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "change": {
+        "type": "probe",
+        "summary": "次の headless playtest / game-agent evaluation 2件で、実遷移への grounding、予測不一致の記録、低信頼 foresight の棄権と no-foresight 比較を確認する3問の可逆 probe を追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "probe": {
+        "scope": "次の headless playtest、deterministic replay、または game-agent evaluation 2件で、過去遷移や予測を次の行動 context に戻す場合",
+        "questions": [
+          "次の行動へ返す予測は、少なくとも1件の実 state-action-next-state 遷移に根拠があり、抽象ルールだけから作っていないか？",
+          "予測と実観測が食い違った時、不一致を transition evidence として残し、誤った予測をそのまま semantic rule に昇格させていないか？",
+          "低信頼予測を棄権または隔離し、with-foresight と no-foresight で invalid action、反復失敗、または success の少なくとも1指標を比較したか？"
+        ],
+        "withdrawal_condition": "次の2件で foresight を使わない、既存の遷移/world-model probe と実質重複する、または比較可能な行動差を作れない場合は削除する。一般的な記憶ルールや full framework へ拡張しない。"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-13T18:20:00+09:00",
       "id": "sr-1783507895-05565b3775",
@@ -9042,6 +9082,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260713-selective-foresight-abstention",
+      "created_at": "2026-07-13T19:48:21+09:00",
+      "source_ts": "1783304602.725049",
+      "scope": "next headless playtest, deterministic replay, or game-agent evaluation where Codex returns past transitions or predicted consequences to the action context",
+      "questions": [
+        "Is each prediction returned to the next action grounded in at least one observed state-action-next-state transition rather than only an abstract rule?",
+        "When prediction and observation disagree, did I preserve the mismatch as transition evidence and avoid promoting the wrong prediction directly into semantic memory?",
+        "Did I abstain from or isolate low-confidence foresight and compare with-foresight against no-foresight on at least one of invalid actions, repeated failures, or success?"
+      ],
+      "expires_after": "Review after the next two headless playtest, deterministic replay, or game-agent evaluation notes that return transitions or foresight to the action context."
+    },
     {
       "id": "probe-20260713-short-hike-constraint-shortcut",
       "created_at": "2026-07-13T14:45:00+09:00",
