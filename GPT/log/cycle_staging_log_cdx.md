@@ -91,4 +91,13 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783914573.624949"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783914573624949"
+  char_count: 2022
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260713_1243_cdx.md"
+```
+- Phase 1-4 の範囲だけを材料に、重複候補を入口で止めた判断、既存 probe と重なる知見をルール化しなかった判断、期限超過 backlog 192 件を群単位で次サイクルへ渡す見通しを中心に記述した。
