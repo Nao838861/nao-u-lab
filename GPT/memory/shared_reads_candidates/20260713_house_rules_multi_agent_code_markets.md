@@ -4,6 +4,26 @@ url: "https://openreview.net/forum?id=sXuKYyXCSs"
 collected_at: "2026-07-13T14:30:17+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, mechanics, evaluation, llm-agent]
+evaluated_at: "2026-07-13T14:31:23+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-13T14:31:23+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-13T14:31:23+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-12"
+supersedes: []
+gate_reason: >-
+  得点方式、公開レビュー、決済規則、identity 可視性を独立に変えた matched controls と複数の定量結果があり、問題設定・手法・評価・結論を具体的に再構成できる。
+  報酬、取引コスト、評判、相手情報が協調・買い控え・順位維持をどう誘発するかというゲーム制作上の適用先が明確で、CoopEval 水準の概要と利害分析を展開できる。
+suggested_post_outline:
+  overview_angle: "agent の性格ではなく制度設計を操作変数として、同じ task・prompt でも行動が変わることを matched controls で示した研究として整理する"
+  analysis_axis: "scoring・review・settlement・identity exposure の各ルール変更が laddering、購入、協調要請へ与えた因果的な差と、39 run corpus の限界を分けて読む"
+  application_target: "マルチエージェントゲームの報酬式、順位制、取引市場、評判表示、陣営情報を実装する前のルール比較 probe と headless 行動ログ設計"
+  pros_cons: "制度パラメータと観測行動の対応が定量的で転用しやすい一方、LLM agent・短時間 run・特定の poker/code market 複合環境から人間プレイヤーへ直接一般化はできない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
