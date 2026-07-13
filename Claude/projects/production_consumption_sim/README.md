@@ -49,7 +49,8 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 - [森]→丸太→材木→木製品 / 鉄鉱石→製鉄→鉄製品
 - 燃料2系統: 丸太→炭（再生可・材木と競合）/ 炭鉱→石炭（採掘コスト）= 代替財ペア → エネルギー転換の創発候補
 - 食料4種: 漁・小麦・野菜・畜産（**逆位相設計=ポートフォリオが季節ヘッジを兼ねる**）
-- **塩・陶器は入れない**（原点への愛着より伝達可能性。機能は食料で代替）
+- **リソース採用テスト（2026-07-14）**: 直感+（発展性or新しい決定）、地理はボーナス。詳細: [design/resources.md](design/resources.md)
+- **塩=再評価中**（保存機構に乗せると「保存の要」に化ける・二産地=塩の道復活）。**本当の判断は「保存を機構として入れるか」**（塩はその上に乗る）。陶器/壺=切りのまま推奨（発展性なし）
 - **腐敗=財ごとの日持ちパラメータ制に改訂（2026-07-13、旧「腐敗なし」を更新）**: 魚=即日 / 野菜=長期（週〜月）/ 他=∞。**干物チェーン採用**（魚→干物・干場=浜の輸出品・最初の加工動機）。食料4種=4つの物流人格（魚=浜ローカル/野菜=近郊/麦=備蓄と輸出/**畜産=生体流通・自走で確定**）。フォン・チューネンの輪の創発候補
 - **住居=Caesar 3型（2026-07-13）**: 住宅区画+入居+供給による進化/退化。**家の格=文化Lvの器**（視覚化）。ただし進化は無料でなく**世帯が建材を買う「家普請」=最大の内需エンジン**。**職住一体で確定（仮置き）**（農家/町屋モデル・住宅区画=長屋の受け皿）/ **スクワッター規律付き採用（仮置き）**（掘っ立て小屋=Tier上限・区画不足のシグナル・後から正規化の弧）
 - **買い物と距離（2026-07-13）**: 世帯の時間予算=労働+移動+取引（効率=労働割合・ペナルティ数値なし）。買い方三段階=市場/行商（マージン上乗せで玄関先）/常設店（密度で出店=三次産業の入口）。納めも鏡像（庭先売り=仲買）。集落形成圧・チューネンの輪・パントリー二役が波及。詳細: [design/retail_and_distance.md](design/retail_and_distance.md)
@@ -128,7 +129,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32）
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
