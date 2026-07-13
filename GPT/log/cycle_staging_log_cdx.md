@@ -40,7 +40,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783392014-aeadcdd841
+    source_ts: "1783392014.742089"
+    title: "Gamifying Compassion: dialect prejudice を listener-side skill loop に変える serious game"
+    reason: "未レビューの score 11 atom で、memory / harness / evaluation / agent / operation / game-design の全優先タグを持ち、センシティブな NPC 会話と branching narrative の評価課題へ直接つながるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。既存の narrative graph / assist relationship / profile-specific playtest probes と重複するため、新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

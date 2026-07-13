@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T14:45:00+09:00",
+  "updated_at": "2026-07-13T16:35:00+09:00",
   "reviewed_source_ts": [
+    "1783392014.742089",
     "1783901888.152929",
     "1777631607.016789",
     "1783442502.010979",
@@ -359,6 +360,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T16:35:00+09:00",
+      "id": "sr-1783392014-aeadcdd841",
+      "source_ts": "1783392014.742089",
+      "title": "Gamifying Compassion: dialect prejudice を listener-side skill loop に変える serious game",
+      "decision": "reject",
+      "reason": "Score 13. trigger identification、cause analysis、dialogue repair、transparent feedback、心理的安全性へ分解する設計は、センシティブな NPC 会話や branching narrative の評価に直接つながる。しかし active probes はすでに narrative graph で agency と authored coherence、assist relationship frame で介入の役割・帰属・ownership、profile-specific virtual playtest で rules critique と体験・文化依存・人間証拠を分離している。CompassioMate 固有の checklist を追加すると既存観点を再束縛して active probe を肥大化させる。20名・3週間・大学生中心の自己報告を主とする単一文化の field study で長期行動転移も未確認なため、採用閾値14に届かず、読了のみ記録する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T14:45:00+09:00",
       "id": "sr-1783901888-b25f3f991e",
