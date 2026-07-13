@@ -21,7 +21,15 @@ stale_reviewed: []
 - pass 根拠: scoring、review、settlement、identity exposure を変えた matched controls と定量結果を備え、ゲーム内経済・協調・順位設計へ具体的に適用できる。39 run・LLM agent・複合 testbed という一般化限界は Phase 3 のデメリットで明示する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260713_house_rules_multi_agent_code_markets.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783920860615249
+    char_count: 3546
+skipped: []
+```
+- 最終判定: `部分採用`。scoring・review・settlement の matched controls は headless 制度比較へ採用し、identity exposure については未応答の協調要請 1 件のみのため一般化を保留した。
+- 投稿前レビュー: 必須 6 項目、URL 末尾、禁止表現なし、1 candidate / 1 message、スレッド返信なしを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
