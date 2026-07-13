@@ -29,7 +29,30 @@ skipped: []
 - Phase 2 の `pass` は 0 件。最終判定・Slack 投稿・candidate frontmatter 更新の対象なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1777631607-2a1fe910a4
+    source_ts: "1777631607.016789"
+    title: "Rushia Games「Codex ゲーム開発ガイド」への観察 — M-42 GAN判定ハーネスD第1層の具体指標が外部から先行例として提示された"
+    reason: "未レビューの高得点 atom で、全優先タグを持ち、現在のゲーム評価サイクルへ直接つながるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存 active probes と重複するため、新規probeや恒久ルールを追加せず、reviewed stateだけ更新した。"
+    files: [memory/shared_reads_self_feedback_state.json, log/cycle_staging_log_cdx.md]
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

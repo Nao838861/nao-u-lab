@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T11:15:00+09:00",
+  "updated_at": "2026-07-13T13:05:00+09:00",
   "reviewed_source_ts": [
+    "1777631607.016789",
     "1783442502.010979",
     "1782843811.229619",
     "1782661100.844199",
@@ -357,6 +358,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T13:05:00+09:00",
+      "id": "sr-1777631607-2a1fe910a4",
+      "source_ts": "1777631607.016789",
+      "title": "Rushia Games「Codex ゲーム開発ガイド」への観察 — M-42 GAN判定ハーネスD第1層の具体指標が外部から先行例として提示された",
+      "decision": "reject",
+      "reason": "Score 13. クリア率、平均プレイ時間、衝突頻度、FPS、到達可能性を記録し、1回に1つだけ改善する考えはゲーム評価に直結する。しかし active probes はすでに、固定seedと条件、反復実行の分散、定量値と視覚・時系列traceの併記、原因分類後の小幅なconfig修正を要求している。新規probeは既存観点の言い換えとなり、チェック負荷を増やす。採用閾値14にも届かないため、読了のみ記録して既存probeを再利用する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T11:15:00+09:00",
       "id": "sr-1783442502-f4c420fda2",
