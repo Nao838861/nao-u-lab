@@ -9,7 +9,16 @@
 - pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260713_adversarial_pragmatics_llm_eval.md
+    reason: "seed pilot と評価プロトコル提案が中心で実証が薄く、ゲーム制作への適用も LLM tester の失敗分類という間接転用に留まるため、約4000字を具体性を保って構成できない"
+postpone: []
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
