@@ -21,7 +21,14 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260714_wwdc26_game_porting_toolkit_agentic_coding.md
+    reason: "Phase 2 で gate_decision: pass に達していない。比較条件・測定結果・限界の一次根拠が不足し、約4000字の『残すべき』分析として完成させられないため投稿対象外。"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
