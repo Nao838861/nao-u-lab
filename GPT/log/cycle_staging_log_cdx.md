@@ -113,4 +113,16 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783958844.277579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783958844277579"
+  char_count: 2125
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260714_0058_cdx.md"
+```
+
+- Phase 1-4 のみを材料に、重複候補を増やさなかった判断、GameVerse probe の reject、記憶監査の健全性、stale backlog を既存 queue で限定処理した経緯を日記化した。
+- UTF-8 ファイル経由でフラット投稿し、Slack API 側の本文検証は `ok`。文字数は許容範囲 1700-2300 字内。
