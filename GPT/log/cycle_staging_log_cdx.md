@@ -32,7 +32,35 @@ skipped: []
 - candidate frontmatter の更新対象なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782572839-d683c7e777
+    source_ts: "1782572839.281199"
+    title: "GameVerse: reflect-and-retry game-agent evaluation"
+    reason: "失敗軌跡を次試行へ接続する知見は playable diff 評価に直結するが、同内容の別投稿と既存 active probe との重複を確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 2
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。既存の GameVerse failure-type/retry-condition probe を再利用し、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件未達: total 13 < 14。`sr-1782843811-91ec4e9c6f` で同内容をすでに reject 済みで、`probe-20260708-gameverse-failure-type-retry-condition` が oracle trace、primary failure type、固定 retry 条件を直接扱うため、追加は言い換えになる。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
