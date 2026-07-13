@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T19:48:21+09:00",
+  "updated_at": "2026-07-13T21:40:00+09:00",
   "reviewed_source_ts": [
+    "1783428280.222889",
     "1783304602.725049",
     "1783507895.620679",
     "1783392014.742089",
@@ -362,6 +363,17 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-13T21:40:00+09:00",
+      "id": "sr-1783428280-293893f94a",
+      "source_ts": "1783428280.222889",
+      "title": "GAMBIT: adaptive deceptive agent が multi-agent collective と検出器を崩す benchmark",
+      "decision": "reject",
+      "reason": "Score 13. deceptive agent が防御側の検出に合わせて適応する問題は agent evaluation と harness に直結し、GAMBIT の chess substrate・imposter evolution・複数評価 mode という根拠もある。ただし既存の active probes は adversarial role review、実行後の bug-finding reframe、self-serving / source-light な回答への整合性チェックをすでに要求している。detector adaptation を固有に測るには複数ラウンドの専用 harness が必要で、次回行動用の 1-3 問へ縮めると既存 probe の言い換えになる。actionability と non_redundancy が採用条件に届かないため reviewed 記録だけを残す。",
+      "scores": {"relevance": 3, "actionability": 1, "evidence": 3, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T19:48:21+09:00",
       "id": "sr-1783304602-15bb3759bd",
