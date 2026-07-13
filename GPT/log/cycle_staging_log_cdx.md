@@ -61,7 +61,40 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を検証し、per-file atom index との不整合 0 件を確認した。UTF-8 明示読みで代表語（記憶・ゲーム設計・敵パターン・評価軸）を取得でき、source file は正常だった。"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl は各 2674 件で一致し、欠落・parse error・content conflict は各 0 件だった。normalized_content_hash 重複 45 group は既存 canonical overlay の対象として再生成した。"
+  - "shared-reads lifecycle は posted 50 / ready_to_post 0 / postponed 82 / failed 8 / needs_review 10。stale_after 期限超過 backlog は 203 件、今回の Phase 2 handoff は 1 group 1 representative に限定した。"
+  - "mixed duplicate queue 72 件、stale triage queue 上位 50 件、group-action queue 35 group を再生成した。"
+  - "memory/raw/ の30日超未更新ファイルは 93 件。Slack archive と web research 一次資料を含み、参照価値を失ったと機械判定できないため移動しなかった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件で、handled 更新対象はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog_count: 203
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue の先頭。procedural persona と MCTS heuristic によるプレイスタイル別の破綻検出は game memory への転用価値が高い一方、同一 title group に terminal 2 件・open 5 件が混在する。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    status_counts:
+      terminal: 2
+      open: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
