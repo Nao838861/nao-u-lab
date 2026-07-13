@@ -9,7 +9,17 @@
 - preflight 記録: `PTCG-Bench: Can LLM Agents Master Pokémon Trading Card Game?` は版付き URL に対して `continue` となったが、既存 atom (`sr-1780075916-b9519c152f`, `sr-1781744312-cac0ac493b`) と Slack 投稿で同一内容を確認したため candidate は追加しなかった。ログ: `log/shared_reads_candidate_preflight.jsonl`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- `stale_review_batch` / group action handoff は staging に存在せず、Phase 1 の新規 candidate も 0 件だったため、candidate frontmatter の更新対象なし。
+- Phase 1 で確認された PTCG-Bench、Neural Procedural Memory、PCSP、RPG dependency pipeline、Ink Splotch は既存 candidate・recent atoms・#shared-reads 投稿との照合で収集済みまたは投稿済みと判定されており、再評価・Phase 3 投稿対象に含めていない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
