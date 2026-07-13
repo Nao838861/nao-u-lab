@@ -34,7 +34,34 @@ skipped: []
 - #shared-reads への投稿、candidate frontmatter の更新、Slack permalink の生成はいずれも行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783406218-861e85f89f
+    source_ts: "1783406218.664919"
+    title: "Algorithmic Collusion at Test Time: 短期相互作用を meta-game として評価する"
+    reason: "短期の agent 間相互作用を単発結果ではなく、初期方策と適応規則の組合せとして見る観点が、現在の game-agent / multi-agent harness 評価に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "既存の shared-prior、comparability、baseline/held-out probes と重複するため、reviewed state のみ更新し、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件のうち `risk_control >= 2` と合計14以上を満たさないため反映しない。次回該当評価では既存の `probe-20260708-algorithmic-collusion-shared-prior-check`、`probe-20260603-mosaic-comparability-gate`、`probe-20260619-omni-game-arena-improvement-transfer` を再利用する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

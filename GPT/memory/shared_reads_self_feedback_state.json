@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T06:18:13+09:00",
+  "updated_at": "2026-07-14T08:12:00+09:00",
   "reviewed_source_ts": [
+    "1783406218.664919",
     "1783399385.009379",
     "1783460997.964439",
     "1783295826.851829",
@@ -9253,6 +9254,17 @@
       "reason": "Score 13. 未知ゲームを操作しながら object、action、goal の仮説を source code の実行可能モデルへ落とし、予測誤差で修正する観点はゲーム制作と headless 評価に直結する。しかし active な Mind-Studio executable branch preview probe は state-action-next-state と held-out branch を、Agentic World Modeling probe は事前予測と expected-vs-actual 更新を、interactive benchmark bottleneck probe は exploration・modeling・goal-setting の失敗層分離をすでに要求している。OPINE-World 固有の probe はこの三者の重複となり、305件ある active probe 群をさらに肥大化させるため採用しない。読了のみ state に記録する。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "OPINE-World atom を reviewed に追加し、既存の executable-preview・事前予測更新・失敗層分離 probes と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-14T08:12:00+09:00",
+      "id": "sr-1783406218-861e85f89f",
+      "source_ts": "1783406218.664919",
+      "title": "Algorithmic Collusion at Test Time: 短期相互作用を meta-game として評価する",
+      "decision": "reject",
+      "reason": "Score 13. 配備後の短い相互作用を、初期方策と適応規則の組合せとして評価する観点は、game-agent や multi-agent harness の短期挙動を単発スコアで判断しないために有用である。しかし active な algorithmic-collusion shared-prior probe は合意の非独立性と transfer mode を、MOSAIC comparability probe は共通 scenario・telemetry・adapter 境界を、OmniGameArena improvement-transfer probe は baseline・同条件再試行・held-out 条件をすでに要求している。新規 probe はこれらの重複となり、305件超の active probe 群をさらに肥大化させるため採用しない。次回該当評価では既存 probes を使い、読了のみ state に記録する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
