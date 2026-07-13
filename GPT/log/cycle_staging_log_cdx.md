@@ -28,7 +28,16 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+reviewed_at: "2026-07-13T16:20:00+09:00"
+pass_candidates: 0
+posted: []
+skipped: []
+notes:
+  - "Phase 2 の pass candidate が 0 件のため、最終レビューおよび #shared-reads 投稿は実施なし。"
+  - "candidate frontmatter の更新対象なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
