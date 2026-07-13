@@ -124,4 +124,15 @@ audit_notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783971390.395849"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783971390395849"
+  char_count: 1849
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260714_0428_cdx.md"
+```
+
+- Phase 1-4 を、重複候補・同義 probe・表示経路の文字化けを不用意な追加や修復へ変換せず止まれたサイクルとして振り返った。
+- 次サイクルへの焦点として、procedural persona / evolved MCTS heuristics の mixed-status group を group 単位で再評価し、playable diff の評価軸へ接続できるかを残した。
