@@ -11,7 +11,17 @@
 - preflight 根拠: `log/shared_reads_candidate_preflight.jsonl`
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- Phase 1 の新規 candidate は 0 件。
+- Phase 4a からの `stale_review_batch` / `group_action_queue` handoff は staging にないため、再評価対象も 0 件。
+- candidate frontmatter の更新なし。Slack 投稿・新規収集・記憶階層改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
