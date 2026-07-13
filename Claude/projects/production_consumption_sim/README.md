@@ -125,7 +125,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
