@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/resource-management-survival-games-ar
 collected_at: "2026-07-13T23:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, survival, systems-design, time-management, gdc-2026]
+evaluated_at: "2026-07-13T23:40:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-13T23:40:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-13T23:40:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-12"
+supersedes: []
+gate_reason: >-
+  異なる周期の cycle が衝突して計画変更を迫る、という問題設定・設計モデル・Pacific Drive の具体例・結論まで抽出できる。
+  形式的な比較実験ではなく講演事例である限界はあるが、meter 個別調整前の loop 設計とログ評価へ直接適用でき、約4000字の概要と批判的分析が成立する。
+suggested_post_outline:
+  overview_angle: "survival の資源群を在庫ではなく、異周期で競合する time-management loops として捉え直す"
+  analysis_axis: "pressure・stakes・failure の三要素と、周期衝突が heuristic な再計画および学習を生む因果を、講演事例の強みと実証不足の両面から分析する"
+  application_target: "複数 meter を持つ survival / resource-management prototype の設計表と telemetry に、周期・猶予・衝突・計画変更を記録する評価軸を導入する"
+  pros_cons: "利点は資源追加より先に意味のある摩擦を設計できること。欠点は Pacific Drive 中心の事例で、周期設計の定量的な成功条件や比較検証が示されていないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

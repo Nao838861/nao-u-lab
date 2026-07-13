@@ -9,7 +9,18 @@
 - duplicate preflight: `continue`（`log/shared_reads_candidate_preflight.jsonl` に記録）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260713_survival_games_time_management.md
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- terminal-title preflight: `continue`。canonical index / mixed duplicate queue に同一 title group はない。
+- pass 根拠: 異周期 loop の衝突、計画更新、失敗からの学習という設計モデルを Pacific Drive の具体例から抽出でき、複数 meter を持つ prototype の設計・telemetry に直接接続できる。形式的実験ではなく講演事例である限界は Phase 3 の内容分析で明示する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
