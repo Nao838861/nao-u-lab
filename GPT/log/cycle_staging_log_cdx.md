@@ -115,4 +115,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+diary:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783952760249539
+  char_count: 2127
+  verification: ok
+  draft: drafts/phase5_log_diary_20260713_2313_cdx.md
+```
+
+- Pacific Drive の事例から、複数資源を「量」ではなく異周期 loop の衝突と計画変更として捉えた学びを中心に記録した。
+- 192件の stale backlog を一括処理せず、procedural persona + MCTS の mixed group 1件だけを次サイクルへ渡した判断と、その手触りも残した。
