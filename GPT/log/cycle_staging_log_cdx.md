@@ -27,7 +27,33 @@ reason: "Phase 2 の gate_decision: pass が 0 件。唯一の候補は手法詳
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783399385-58445208fd
+    source_ts: "1783399385.009379"
+    title: "Don't Say It!: 制約遵守と伝達成功を分離する Taboo 評価"
+    reason: "未レビューの score 11 atom。次の NPC ヒント、チュートリアル、推理会話で、禁止語を避けたことだけを成功とせず、プレイヤーが概念や次行動を推測できるかを別軸で確認する小型評価へ直接変換できる"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  decision_reason: "採用条件を満たす。既存 probe は hint の任意性、支援レベル、物語の agency、strategy composition を扱うが、deterministic な制約違反率と人間に近い guesser の伝達成功率を同じ固定ケースで分離する観点は直接要求していない。internal representation manipulation は導入せず、次の該当作業 2 件だけに限定する"
+  change:
+    summary: "NPC ヒント等で target / forbidden information / distractor / 想定 player action を固定し、制約違反と伝達成功を別々に測る一時 probe を追加した"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

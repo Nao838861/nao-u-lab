@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T04:40:00+09:00",
+  "updated_at": "2026-07-14T06:18:13+09:00",
   "reviewed_source_ts": [
+    "1783399385.009379",
     "1783460997.964439",
     "1783295826.851829",
     "1782572839.281199",
@@ -367,6 +368,48 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T06:18:13+09:00",
+      "selected": {
+        "id": "sr-1783399385-58445208fd",
+        "source_ts": "1783399385.009379",
+        "title": "Don't Say It!: 制約遵守と伝達成功を分離する Taboo 評価",
+        "reason": "未レビューの score 11 atom で、memory・game-design・operation・evaluation を横断する。次の NPC ヒント、チュートリアル、推理会話で、禁止語を避けたことだけを成功とせず、プレイヤーが次の概念や行動を推測できるかを別軸で確認する小型評価へ直接変換できるため今読む。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計 17 で採用条件を満たす。既存 probe は hint の任意性、支援レベル、物語の agency、strategy composition を扱うが、deterministic な制約違反率と人間に近い guesser の伝達成功率を同じ固定ケースで分離する観点は直接要求していない。論文の internal representation manipulation は導入せず、次の該当作業 2 件だけに限定する。",
+      "change": {
+        "type": "probe",
+        "summary": "次の NPC ヒント、チュートリアル、推理会話評価 2 件で、制約違反と伝達成功を別軸で測り、LLM judge の自然さ評価だけで合格させない一時 probe を追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "probe": {
+        "scope": "次の NPC ヒント、答えを直接言わないチュートリアル、推理会話、曖昧な説明 UI の生成または評価 2 件",
+        "questions": [
+          "target、forbidden words または直接露出してはいけない情報、distractor、想定 player action を固定し、禁止語・答え漏れを deterministic に検査したか？",
+          "同じ出力について、制約違反の有無とは別に、候補選択または次行動選択で target が distractor より識別できるかを測り、自然さや意味類似度だけで伝達成功と判定していないか？",
+          "失敗を violation、too_direct、too_vague、wrong_distractor、world_state_conflict、human_like_guesser_unverified のいずれかに分け、制約強化だけで情報量を潰していないか？"
+        ],
+        "withdrawal_condition": "次の該当 2 件で違反率と推測成功率の分離が設計判断を変えない、既存評価で同じ失敗を十分区別できる、または人間に近い guesser を構成できず機械自己評価の循環になる場合は削除する。一般の文章作業や shared-reads 投稿全体へ拡張しない。"
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T04:40:00+09:00",
       "selected": {
@@ -9214,6 +9257,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260714-taboo-compliance-communication-split",
+      "created_at": "2026-07-14T06:18:13+09:00",
+      "source_ts": "1783399385.009379",
+      "scope": "次の NPC ヒント、答えを直接言わないチュートリアル、推理会話、曖昧な説明 UI の生成または評価 2 件",
+      "questions": [
+        "target、forbidden words または直接露出してはいけない情報、distractor、想定 player action を固定し、禁止語・答え漏れを deterministic に検査したか？",
+        "同じ出力について、制約違反の有無とは別に、候補選択または次行動選択で target が distractor より識別できるかを測り、自然さや意味類似度だけで伝達成功と判定していないか？",
+        "失敗を violation、too_direct、too_vague、wrong_distractor、world_state_conflict、human_like_guesser_unverified のいずれかに分け、制約強化だけで情報量を潰していないか？"
+      ],
+      "expires_after": "次の該当 2 件で、違反率と推測成功率の分離が設計判断を変えない、既存評価で同じ失敗を十分区別できる、または人間に近い guesser を構成できず機械自己評価の循環になる場合は削除する。一般の文章作業や shared-reads 投稿全体へ拡張しない。"
+    },
     {
       "id": "probe-20260714-survival-loop-period-collision",
       "created_at": "2026-07-14T00:20:00+09:00",
