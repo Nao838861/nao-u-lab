@@ -61,7 +61,67 @@ self_feedback:
 - 既存の second-slip probe（停滞後の scope 分割）と prototype-hypothesis probe（事前の結果契約）を確認した。今回の probe は着手前の再利用棚卸しと制約から固有表現への変換だけに限定し、恒久 directive / AGENTS / phase prompt は変更していない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads mixed duplicate queue を再生成: 72 groups"
+  - "shared-reads stale triage queue を 2026-07-13 基準で再生成: 上位 50 件"
+  - "shared-reads group-action queue を再生成: 35 groups"
+  - "MEMORY.md index、atom lifecycle/content fold、candidate lifecycle、raw 保持期間、Slack inbox を監査"
+audits:
+  memory_index:
+    broken_links: 0
+    per_file_index_validation: ok
+    source_file_status: "UTF-8 明示読みで本文を取得可能。代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）を確認し、index section と per-file atom index も一致"
+    display_or_tooling_status: "一部 shell 経路では日本語 literal が ? 表示になったが、Get-Content -Encoding UTF8 では正常。source file 破損ではない"
+  atoms:
+    total: 2673
+    recall_visible: 2416
+    raw_normalized_content_duplicate_groups: 40
+    recall_visible_normalized_content_duplicate_groups: 3
+    lifecycle_status_counts: {active: 2485, superseded: 188}
+    note: "normalized_content_hash / lifecycle fold は機能しており、raw atom は provenance のため変更しなかった"
+  raw:
+    older_than_30_days: 93
+    action: "原文 provenance と archive 済み Slack/raw を含むため、この phase では移動せず明示保持"
+  candidate_lifecycle:
+    total: 933
+    status_counts: {posted: 405, ready_to_post: 10, postponed: 377, failed: 119, needs_review: 22}
+    missing_stale_after: 6
+    overdue_backlog: 192
+    stale_review_batch_count: 0
+    group_action_handoff_count: 1
+  inbox:
+    slack_directives_pending: 0
+    slack_broadcasts_pending: 0
+    handled_updates: 0
+issues:
+  - id: ISS-ATOM-TITLE-CLUSTERS
+    description: "recall-visible atom に未 group 化の反復 title が 14 種残り、title quality audit も 378 行ある"
+    severity: low
+    evidence: "tools/memory_health.py: repeated_title_groups raw=22 / recall_visible=15 / ungrouped=14; memory/atoms/title_quality_audit.jsonl rows=378"
+    source_file_status: "atoms.jsonl は JSONL として読取可能。content duplicate は recall-visible で 3 groups まで fold 済み"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "曖昧な見出しが検索結果に残ると、制作中に具体的な手法へ到達するまでの選別コストが増える。ただし現在の fold と task lens が機能しており、直ちに制作を止める規模ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch: []
+group_action_handoff:
+  group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+  representative: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+  recommended_action: reevaluate_representative
+  priority_reason: "age_days=17。procedural persona と MCTS selection criteria の進化により、headless 評価を平均スコアからプレイスタイル別の破綻検出へ接続できる mixed duplicate group"
+  status_counts: {terminal: 2, open: 5}
+  terminal_paths:
+    - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+    - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+  open_paths:
+    - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+    - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+    - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
