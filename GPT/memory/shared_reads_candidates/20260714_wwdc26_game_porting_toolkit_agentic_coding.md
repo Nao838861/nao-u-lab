@@ -4,6 +4,20 @@ url: "https://developer.apple.com/wwdc26/guides/games/"
 collected_at: "2026-07-14T02:45:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, porting, agentic-coding, metal, evaluation]
+evaluated_at: "2026-07-14T02:46:48+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-14T02:46:48+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-14T02:46:48+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-13"
+supersedes: []
+gate_reason: >-
+  agent skills、Metal CLI、evaluation environment を first playable まで接続する着想と制作への適用先は明確。
+  ただし guide の紹介情報だけでは比較条件、測定結果、失敗条件・限界がなく、CoopEval 水準の約4000字を根拠付きで構成できないため保留する。
 ---
 
 ## raw_excerpt
