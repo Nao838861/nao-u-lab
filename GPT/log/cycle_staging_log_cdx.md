@@ -22,7 +22,15 @@ note: "stale_review_batch / group action handoff はなし。terminal-title pref
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+reviewed_at: "2026-07-13T13:18:08+09:00"
+posted:
+  - candidate: "memory/shared_reads_candidates/20260713_a_short_hike_smart_shortcuts.md"
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783901888152929"
+    char_count: 3605
+skipped: []
+note: "原文を再確認し、単一成功例で因果効果は未検証という限界を明記した上で部分採用とした。必須6項目、禁止表現、URL末尾、1 candidate / 1 post を検証済み。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
