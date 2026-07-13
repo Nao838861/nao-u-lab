@@ -58,7 +58,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-13 監査結果
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe と tools/validate_memory_index.py で index 整合を確認した（broken entry 0）。"
+  - "memory/atoms.jsonl 2673 件を監査し、重複 id 0 group、完全一致本文 0 group を確認した。"
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を 2026-07-13 基準で再生成した（72 rows / 50 rows / 35 rows、既存内容との差分なし）。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため lifecycle 更新なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle_counts:
+  posted: 405
+  ready_to_post: 10
+  postponed: 377
+  failed: 119
+  needs_review: 22
+stale_backlog:
+  eligible_total: 192
+  handed_to_phase2_candidate_count: 3
+  handed_to_phase2_group_count: 1
+group_action:
+  group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+  representative: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+  recommended_action: reevaluate_representative
+  priority_reason: "group-action queue 先頭。procedural persona と evolved MCTS によるプレイスタイル別の露出・破綻検出は headless 評価への転用価値が高く、terminal 2 件と open 5 件が混在する。candidate 単位 batch とは重複させない。"
+  terminal_paths:
+    - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+    - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+  open_paths:
+    - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+    - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+    - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+    - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。会話型 RPG への接続は具体的だが、学習効果・参加者評価・失敗例・運用制約が不足するため本文再評価が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。ゲーム共創の比較設計は直結するが、参加者評価結果と品質の増減が不足するため本文再評価が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md"
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。ゲーム間構造移植の中核は明確だが、評価指標・dataset・失敗条件が不足するため本文再評価が必要。"
+    recommended_review_action: reevaluate_in_phase2
+raw_archive_audit:
+  inactive_over_30_days: 93
+  action: explicit_keep
+  reason: "headless 評価 packet、Slack archive、web research 一次資料を含み、参照関係を個別確認せず機械的に移動できないため現位置保持。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として読取可能。記憶・ゲーム設計・敵パターンは取得でき、評価軸は本文に現れないが index validator は OK。source corruption の証拠なし。"
+  display_or_tooling_status: "PowerShell inline script へ日本語 literal を渡した初回 probe の表示が ? 化したため、Unicode escape probe で再確認した。source file の問題ではない。"
+```
+
+- duplicate title audit では未index mixed group が残るが、既存の group-action queue が group 単位の Phase 2 handoff を提供しているため、新規の構造設計 issue にはしない。
+- candidate 本体、atoms、MEMORY.md、inbox status は変更していない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
