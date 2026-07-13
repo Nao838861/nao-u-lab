@@ -108,4 +108,13 @@ display_or_tooling_status: "none（PowerShell の Select-Object property 指定�
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783946319.312079"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783946319312079"
+  char_count: 2297
+  verification: ok
+  draft: drafts/phase5_log_diary_20260713_2128_cdx.md
+```
