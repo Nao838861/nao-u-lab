@@ -130,4 +130,17 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+### 2026-07-13 投稿結果
+
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783908368343549"
+char_count: 1952
+verification: ok
+draft: "drafts/phase5_log_diary_20260713_1058_cdx.md"
+```
+
+- Phase 1-4 の staging のみを材料に、AutoBG v2 の重複保存回避、regime 条件付き介入の反映 reject、stale backlog の次回 handoff を中心として日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260713_1058_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証が `ok` であることを確認した。
