@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/finding-smart-shortcuts-in-a-short-hi
 collected_at: "2026-07-13T12:00:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, solo-development, scope-management, production]
+evaluated_at: "2026-07-13T09:15:40+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-13T09:15:40+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-13T09:15:40+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-12"
+supersedes: []
+gate_reason: >-
+  3か月のソロ制作を成立させた core scope / stretch goals、既存資産の再利用、日次再見積りが一つの完成戦略として具体的に結び付いている。
+  定量比較ではなく成功作の postmortem という限界はあるが、Nao_u_BOT の短期 playable diff で採否を決められる粒度があり、CoopEval 水準の概要と批判的分析を構成できる。
+suggested_post_outline:
+  overview_angle: "制約を単なる削減ではなく、最初から成立する核・後付け可能な余白・再利用による固有表現へ変換し、短期ソロ制作を完成まで運ぶ方法として解説する"
+  analysis_axis: "scope の階層化、資産再利用、外部締切、週次・日次の再見積りが相互にどう破綻リスクを下げたかを分析し、単一成功例からの一般化限界も分ける"
+  application_target: "Nao_u_BOT の短期ゲーム制作で、最初の playable diff を core scope として固定し、演出・敵種・秘密・追加ルールを stretch goals に分離する計画と日次の切り戻し判断"
+  pros_cons: "完成確率と方向転換余地を高める一方、核の定義を誤ると小さいだけの作品になり、成功作一例なので手法単独の因果効果は検証されていない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
