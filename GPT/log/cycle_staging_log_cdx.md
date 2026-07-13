@@ -8,7 +8,15 @@
 - duplicate preflight: `continue`（`log/shared_reads_candidate_preflight.jsonl` に記録）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260714_gdc_ai_design_stack.md
+    reason: "制作 workflow の適用先は具体的だが、セッション紹介相当の情報だけでは手法詳細・評価結果・限界が不足し、約4000字の概要を根拠付きで構成できない"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
