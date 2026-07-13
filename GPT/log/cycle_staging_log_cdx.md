@@ -62,7 +62,7 @@ self_feedback:
 
 ## Phase 4a: 整理 + 問題抽出
 ```yaml
-audited_at: "2026-07-13T13:00:00+09:00"
+audited_at: "2026-07-13T09:21:25+09:00"
 cleaned:
   - "shared_reads_mixed_duplicate_queue.jsonl を再生成（72 rows）"
   - "shared_reads_stale_triage_queue.jsonl を 2026-07-13 基準で再生成（50 rows、期限超過 backlog は postponed 183 + needs_review 9）"
