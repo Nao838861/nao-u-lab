@@ -56,9 +56,12 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 - 道具=**消費財**（摩耗メカニクス不要。消費の継続が定常需要=二次産業の血流）
 - 燃料需要は2分化: 産業=必須投入財（非弾力）/ 家庭=階梯財（高文化Lvの条件、弾力）
 
-### 文化レベル
+### 文化レベル / 生産性の階梯（心臓部・2026-07-14定量化）
 - =世帯・工房の定常消費ポートフォリオの階段（複数食料・木製品・鉄製品・家庭燃料…）。**維持にフローが必要**（テーゼの文化への再帰）
-- 効果: 生産効率が**桁で変わる**（マルサスの罠からの脱出速度）
+- **統一モデル: 生産倍率=f(文化Lv)**。食料多様性・道具階梯・燃料は同じ文化Lvへの入力。麦畑1枚が養う人数: Lv0=2 / Lv1(木製品)=8 / Lv2(鉄製品)=32（×4・全16倍=「桁が変わる」の実体）。詳細: [design/productivity_ladder.md](design/productivity_ladder.md)
+- **これがゲームの弧**: 遊離労働の螺旋（農夫が減り職人→三次産業へ）＝マルサス脱出+ペティ=クラークの数値表現・創発
+- 道具はフロー→供給が切れると階梯降格（32→8→2）＝崩壊連鎖の機構。**ヒステリシスが数値的に必須**（即16倍崩落は理不尽）。制約は土地でなく道具（島入植と整合）
+- 階梯の普遍性（全産業か農業のみか）・段数・ステップ/連続は未決（Mir推奨=全産業普遍・倍率は産業別）
 - 下り: 多少のヒステリシスで緩めてよいが、**崩壊は見せる**
 
 ### 流通と備蓄
@@ -125,7 +128,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡・レート設計
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32）
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
