@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T01:03:57+09:00",
+  "updated_at": "2026-07-14T03:05:00+09:00",
   "reviewed_source_ts": [
+    "1783295826.851829",
     "1782572839.281199",
     "1783952371.452499",
     "1783428280.222889",
@@ -365,6 +366,39 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T03:05:00+09:00",
+      "selected": {
+        "id": "sr-1783295826-0871e6d463",
+        "source_ts": "1783295826.851829",
+        "title": "SEMA: RTS の speed-quality trade-off を観測圧縮・run 内評価・run 間分析・階層記憶に分解する",
+        "reason": "次の headless playtest で、全 state を長文のまま渡すことによる遅延と判断ノイズを避ける観点は直接有用。ただし既存 active probe が抽象状態、観測チャネル、agent 役割、比較条件を既に個別に要求しており、新規 probe は同じ確認を束ね直すだけになる。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計 12 かつ risk_control 1 で採用条件未達。SEMA 全体や新規 probe を追加せず、次回 headless 評価では既存の titan-headless-qa-trace、playtest-agent-role-diagnostics、mosaic-comparability-gate を使えば観測圧縮・役割分離・同一条件比較を検証できる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T01:03:57+09:00",
       "id": "sr-1782572839-d683c7e777",

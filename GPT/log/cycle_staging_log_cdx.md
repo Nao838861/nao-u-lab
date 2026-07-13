@@ -31,7 +31,34 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783295826-0871e6d463
+    source_ts: "1783295826.851829"
+    title: "SEMA: RTS の speed-quality trade-off を観測圧縮・run 内評価・run 間分析・階層記憶に分解する"
+    reason: "headless playtest の遅延と判断ノイズに直結するが、既存 active probe が抽象状態・観測チャネル・agent 役割・比較条件を既に覆っているため重複確認する"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "合計 12 かつ risk_control 1 で採用条件未達。新規 probe は追加せず、次回は既存の titan-headless-qa-trace、playtest-agent-role-diagnostics、mosaic-comparability-gate を使う"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・評価表・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
