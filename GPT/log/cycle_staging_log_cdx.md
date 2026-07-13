@@ -125,4 +125,15 @@ atom_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783939994257249"
+  char_count: 2087
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260713_2045_cdx.md"
+```
+
+- Phase 1–4 の reflection として、重複候補を増やさなかった判断、選択的 foresight / abstention probe、procedural persona + evolved MCTS group の次サイクル handoff を中心に記録した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260713_2045_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証 `ok` を確認した。
