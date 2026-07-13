@@ -61,7 +61,67 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-07-13T13:00:00+09:00"
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（72 rows）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-13 基準で再生成（50 rows、期限超過 backlog は postponed 183 + needs_review 9）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 groups）"
+  - "inbox pending を確認（slack_directives 0、slack_broadcasts 0。handled 更新なし）"
+  - "MEMORY.md、atoms.jsonl、raw、candidate lifecycle を read-only 監査（candidate 本体・raw 本体は変更なし）"
+issues: []
+audit_evidence:
+  memory_index:
+    broken_links: 0
+    note: "MEMORY.md の索引は backtick path 形式で Markdown link 0 件。記載された主要入口は存在し、UTF-8 読みで日本語本文を確認。"
+    source_file_status: "UTF-8 source 正常。代表語（記憶、ゲーム設計、敵パターン、評価軸）は本文取得経路で確認。"
+    display_or_tooling_status: "PowerShell inline probe では日本語リテラルが ? 化したため、その出力は source 破損判定に不採用。Get-Content -Encoding UTF8 の本文表示は正常。"
+  atoms:
+    rows: 2672
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 0
+    contradiction_note: "機械的に判定可能な ID/hash 重複なし。意味的矛盾を示す具体的 evidence は今回なし。"
+  raw_archive_candidates:
+    older_than_30_days: 93
+    action: "none"
+    note: "Slack archive、web research 原文、sync state を含み、保持用途があるため mtime だけでは archive しない。"
+  candidate_lifecycle:
+    posted: 405
+    ready_to_post: 10
+    postponed: 377
+    failed: 119
+    needs_review: 22
+    stale_due_backlog: 192
+    stale_due_postponed: 183
+    stale_due_needs_review: 9
+    stale_review_batch_count: 1
+  duplicate_titles:
+    mixed_duplicate_queue_rows: 72
+    group_action_queue_rows: 35
+    unindexed_groups_sampled: 20
+    note: "open status を含むため terminal canonical index へ自動登録せず、group-action queue 経由で handoff。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "期限超過 backlog と mixed duplicate は既存の stale/group-action queue と Phase 2 契約で処理可能。今回、新しい構造的欠陥や設計要求を示す evidence はない。"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。age_days=17、ゲームの headless 評価を平均スコアからプレイスタイル別の破綻検出へ接続できる mixed duplicate group。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts: "terminal 2 / open 5"
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
