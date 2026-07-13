@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T03:05:00+09:00",
+  "updated_at": "2026-07-14T04:40:00+09:00",
   "reviewed_source_ts": [
+    "1783460997.964439",
     "1783295826.851829",
     "1782572839.281199",
     "1783952371.452499",
@@ -366,6 +367,39 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T04:40:00+09:00",
+      "selected": {
+        "id": "sr-1783460997-763a27123d",
+        "source_ts": "1783460997.964439",
+        "title": "pretraining history が competitive から collusive への復帰に与える影響",
+        "reason": "未レビューの score 16 atom で、instance divergence・memory・operation・evaluation を横断する。ただし同じ shared-reads 投稿から分割された直前 atom で、共有 prior を独立証拠と誤認しない既存 probe との重複を確認するため今読む。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計 12 で採用条件の 14 に届かない。pretraining history を共有 prior として扱う観点は有用だが、同一投稿の sr-1783460997-8ca95512d9 から既に probe-20260708-algorithmic-collusion-shared-prior-check が採用され、同じ source article・phase prompt・memory atom などを列挙している。新しい probe は既存 probe の言い換えになり、独立した行動差分を生まない。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T03:05:00+09:00",
       "selected": {

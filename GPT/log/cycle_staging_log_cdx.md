@@ -33,7 +33,33 @@ skipped: []
 - candidate frontmatter の更新なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783460997-763a27123d
+    source_ts: "1783460997.964439"
+    title: "pretraining history が competitive から collusive への復帰に与える影響"
+    reason: "未レビューの score 16 atom。instance divergence と shared prior の扱いに関係するが、同一投稿由来の既存 probe との重複を確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "採用条件の合計 14 に未達。同一 shared-reads 投稿の sr-1783460997-8ca95512d9 から probe-20260708-algorithmic-collusion-shared-prior-check が既に採用され、pretraining history を含む共有 prior の確認を扱っているため、新規 probe は言い換えになる。"
+  change:
+    summary: "state に reviewed_source_ts と reject 理由だけを記録。probe・評価表・directive・恒久ルールの追加は none。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
