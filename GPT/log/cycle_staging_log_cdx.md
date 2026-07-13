@@ -22,7 +22,13 @@ stale_reviewed: []
 - title canonical index / mixed duplicate queue の preflight を確認したが、今回本文評価へ進める対象はない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `gate_decision: pass` candidate は 0 件だったため、投稿対象なし。
+- #shared-reads への Slack 投稿、candidate frontmatter の更新はいずれも行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
