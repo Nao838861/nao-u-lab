@@ -64,7 +64,56 @@ self_feedback:
 - 採用条件のうち `risk_control >= 2` と合計14以上を満たさないため反映しない。次回該当評価では既存の `probe-20260708-algorithmic-collusion-shared-prior-check`、`probe-20260603-mosaic-comparability-gate`、`probe-20260619-omni-game-arena-improvement-transfer` を再利用する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-07-14T08:05:00+09:00"
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（72 groups、内容差分なし）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-14 基準で再生成（上位 50 件、内容差分なし）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 groups、内容差分なし）"
+  - "Slack inbox を確認（directives 23 行 / broadcasts 21 行、pending 0 件、close 対象なし）"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_summary:
+  lifecycle_counts:
+    posted: 406
+    ready_to_post: 10
+    postponed: 379
+    failed: 120
+    needs_review: 22
+  overdue_backlog: 203
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 72
+  group_action_queue_rows: 35
+  handoff_count: 1
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。age_days=18、ゲームの自動playtestを単一平均ではなく複数personaへ分解できるため game_transfer_value が高い。mixed duplicate は posted 2 / postponed 5 で、代表1件の再読によりgroupを閉じられる可能性がある。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+```
+
+- `memory/MEMORY.md`: `validate_memory_index.py` は OK。UTF-8 明示読みで `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` を取得でき、index の broken entry はない。
+- atom: 2674 件。id 重複・per-file/index/atoms.jsonl 間の欠落・content conflict は 0。normalized content 重複 40 groups は既存 overlay 45 groups で fold 済み。recall-visible には 3 groups 残るが既存 health warning の範囲で、今回新たな構造 issue とは判定しない。
+- encoding: `memory/MEMORY.md` の `source_file_status` は UTF-8 正常、`display_or_tooling_status` は none。health が疑義を出した atom 2 件は MEMORY.md の表示経路ではなく atom 本文側の既存監査対象であり、Phase 4a では修復しない。
+- `memory/raw/`: 30 日超の原文は存在するが、`raw/slack_archive/shared-reads.jsonl` は原文正本、web research の PDF/TXT は candidate 根拠になり得るため、機械的な archive 移動対象なし。
+- duplicate title audit: canonical index 未登録の mixed groups を確認。terminal-only group の新規登録対象ではなく、group-action queue 先頭1 groupだけを handoff した。同一候補を candidate 単位 batch に重ねていない。
+- 判定: backlog は大きいが、stale triage / mixed duplicate / group-action の既存経路で少数処理できる。新しい構造の設計を要する証拠はないため `needs_design: false`。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
