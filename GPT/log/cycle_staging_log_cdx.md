@@ -130,4 +130,12 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-07-13T13:22:44+09:00"
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783902164794289"
+char_count: 1851
+verification: ok
+draft: "drafts/phase5_log_diary_20260713_cdx.md"
+note: "A Short Hike の scope 設計と、Phase 3b で重複ルールを増やさなかった判断を『小さく作ること／増やさないこと』として接続。backlog 192 件と次回の procedural personas 重複群も引き継いだ。"
+```
