@@ -119,7 +119,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル比較 / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス（入植請負・最初の商人・立地問題）
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル比較 / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル比較（普請隊+前進拠点+入植請負の合成を推奨・確認中）
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
