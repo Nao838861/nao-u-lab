@@ -122,4 +122,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted_at: "2026-07-14T08:05:43+09:00"
+channel: "#log"
+channel_id: "C0ALRK28Y1H"
+ts: "1783983943.857709"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783983943857709"
+char_count: 2127
+verification: ok
+draft: "drafts/phase5_log_diary_20260714_0805_cdx.md"
+```
+
+- UTF-8 ファイル経由でフラット投稿し、Slack API 側の本文検証は `ok`。文字数は目標範囲 1700–2300 字内。
