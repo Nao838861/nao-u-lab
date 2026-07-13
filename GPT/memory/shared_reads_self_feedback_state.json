@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-13T21:40:00+09:00",
+  "updated_at": "2026-07-14T00:20:00+09:00",
   "reviewed_source_ts": [
+    "1783952371.452499",
     "1783428280.222889",
     "1783304602.725049",
     "1783507895.620679",
@@ -363,6 +364,26 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T00:20:00+09:00",
+      "id": "sr-1783952371-1ca486559a",
+      "source_ts": "1783952371.452499",
+      "title": "Resource management? Survival games are about time management.",
+      "decision": "adopt_probe",
+      "reason": "Score 17. 複数 resource や meter を個別在庫ではなく周期の異なる問題解決 loop として捉えると、survival prototype の圧力を総量や難易度だけでなく、周期衝突が計画変更を生むかで観測できる。既存 probe は survival time、resource use、route pressure などを扱うが、loop 周期と plan interruption の対応は直接確認していない。講演事例で比較実験ではないため evidence は 2 とし、次の該当作業 2 件だけで使う可逆 probe に留める。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 3, "risk_control": 3, "reversibility": 3, "total": 17},
+      "change": {"type": "probe", "summary": "次の survival / resource-management prototype または評価 2 件で、主要 loop の周期、周期衝突による計画変更、失敗後の heuristic 更新を確認する一時 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "probe": {
+        "scope": "次の survival、resource-management、複数 meter、時間制約を持つ prototype または評価 2 件",
+        "questions": [
+          "主要 resource / meter / task を、問題発生から解消までの loop として列挙し、それぞれの概算周期と失敗時の stakes を記録したか？",
+          "同一 seed または同一 encounter で、どの loop の周期衝突が plan interruption、replan、寄り道、回復遅延を生んだかを少なくとも 1 件の trace で確認したか？",
+          "失敗や窮地の後、次の試行で player / agent の優先順位 heuristic が変わった証拠を残したか。変化がなければ、単なる meter 増加を学習可能な pressure と呼んでいないか？"
+        ],
+        "withdrawal_condition": "次の該当 2 件で loop 周期の記録が設計判断を変えない、既存 telemetry から同じ判断ができる、または周期推定が恣意的なら削除する。survival 以外の一般ルールへ拡張しない。"
+      },
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-13T21:40:00+09:00",
       "id": "sr-1783428280-293893f94a",
@@ -9094,6 +9115,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260714-survival-loop-period-collision",
+      "created_at": "2026-07-14T00:20:00+09:00",
+      "source_ts": "1783952371.452499",
+      "scope": "次の survival、resource-management、複数 meter、時間制約を持つ prototype または評価 2 件",
+      "questions": [
+        "主要 resource / meter / task を、問題発生から解消までの loop として列挙し、それぞれの概算周期と失敗時の stakes を記録したか？",
+        "同一 seed または同一 encounter で、どの loop の周期衝突が plan interruption、replan、寄り道、回復遅延を生んだかを少なくとも 1 件の trace で確認したか？",
+        "失敗や窮地の後、次の試行で player / agent の優先順位 heuristic が変わった証拠を残したか。変化がなければ、単なる meter 増加を学習可能な pressure と呼んでいないか？"
+      ],
+      "expires_after": "次の該当 2 件で設計判断への寄与を確認する。寄与なし、既存 telemetry と実質重複、または周期推定が恣意的なら削除する。"
+    },
     {
       "id": "probe-20260713-selective-foresight-abstention",
       "created_at": "2026-07-13T19:48:21+09:00",

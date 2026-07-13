@@ -36,7 +36,35 @@ skipped: []
 - 投稿前レビュー: 4,233 字、必須項目順序、`■ 概要` 始まり、`■ URL` 末尾、禁止表現なし、URL の本文内分散なしを確認。`tools/slack_client.py` の `post_message` により 1 回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783952371-1ca486559a
+    source_ts: "1783952371.452499"
+    title: "Resource management? Survival games are about time management."
+    reason: "複数 resource / meter を周期の異なる loop として捉える観点が、次の survival prototype の設計と telemetry に直接使え、既存 probe にないため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 3
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の該当作業 2 件で、主要 loop の周期、周期衝突による計画変更、失敗後の heuristic 更新を確認する一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- evidence を 2 とした理由: Pacific Drive の具体例と設計者講演はあるが、比較実験や複数作品での再現検証はない。
+- 撤退条件: 次の該当 2 件で設計判断を変えない、既存 telemetry と実質重複、または周期推定が恣意的なら probe を削除する。survival 以外へ一般化しない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
