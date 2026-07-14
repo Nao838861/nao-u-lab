@@ -34,7 +34,33 @@ skipped: []
 - active directive 3 本と現行投稿ルールを確認済み。候補不在のため `tools/slack_client.py` は実行していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535046-4b3aaea218
+    source_ts: "1778535046.573029"
+    title: "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
+    reason: "未レビューかつ score 14、優先6タグを持つため選んだが、本文確認では superseded 済みの複数記事再投稿断片だった"
+  scores:
+    relevance: 1
+    actionability: 0
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 8
+  decision: reject
+  decision_reason: "独立した知見として方法・評価・結論を復元できず、canonical atom に統合済み。採用すると既存品質ゲートの言い換えになる"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe、評価表、directive、恒久ルールの追加なし"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
