@@ -4,6 +4,20 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Cronin_Brian_PlaytestingProcessF
 collected_at: "2026-07-15T05:59:36+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, playtesting, indie-development, user-research, iteration]
+evaluated_at: "2026-07-15T06:01:27+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T06:01:27+09:00"
+last_decision: postponed_duplicate
+evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780274208142799; matched_title_key:playtesting process for ultra small teams"
+next_action: none
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: |-
+  URL-first preflight で、同一 canonical URL の既投稿 candidate を確認したため本文評価を省略する。
+  同一内容の再投稿は行わず、既投稿 permalink を正本の証拠として参照する。
 ---
 
 ## raw_excerpt

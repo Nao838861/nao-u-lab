@@ -1,21 +1,21 @@
-# log_cdx Cycle Staging — 2026-07-15 05:43
+# log_cdx Cycle Staging — 2026-07-15 05:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260715_sketchar_character_design_prototyping.md` — 概念入力から参照画像を試作し、ゲームデザイナーとイラストレーター間のキャラクター設計対話を支援する生成 AI ツールの研究。
-- preflight review（保存なし）: `AutoBG: A Board Game Design Assistant with Interactive Ideation, Iterative Rulebook Generation, and Individualized Feedback` — 同題の既投稿があり URL 表記のみ異なるため、自動保存を見送った。
-- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも 0 件。
+- `memory/shared_reads_candidates/20260715_playtesting_process_ultra_small_teams.md` — GDC 2026の小規模チーム向け1対1プレイテスト手順。仮説→少人数テスト→統合→実変更の短周期と、誘導を避けた感情・理解度の聞き取りを収録。
+- inbox確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending 0件。
+- 収集経路: 既存candidate・最近のatom・web_researchを確認後、外部検索から未収録のGDC 2026一次資料を収集。duplicate preflightは `continue`。
 
 ## Phase 2: 分析
 ```yaml
 total_candidates: 1
 pass: []
-fail:
-  - path: memory/shared_reads_candidates/20260715_sketchar_character_design_prototyping.md
-    reason: "職種間の参照画像プロトタイピングという適用先は明確だが、研究の参加者構成・比較条件・評価指標・具体的結果・限界が不足し、約4000字の概要を根拠付きで構成できない。同一 URL の既存候補も failed。"
-postpone: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260715_playtesting_process_ultra_small_teams.md
+    reason: "posted_url_match: 同一 canonical URL の既投稿あり（canonical_path: memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780274208142799; matched_title_key: playtesting process for ultra small teams）"
 stale_reviewed: []
 ```
 
