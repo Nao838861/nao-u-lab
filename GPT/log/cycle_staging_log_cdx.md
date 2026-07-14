@@ -66,7 +66,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）と index 整合を確認。validate_memory_index.py は OK。broken index entry なし"
+  - "atoms.jsonl / per-file .md / atoms/index.jsonl を監査。各 2674 件、only / missing / parse error / index error / content conflict はすべて 0。normalized content duplicate は raw 40 group だが lifecycle fold 後の recall-visible は 3 group で、矛盾は検出されなかった"
+  - "shared-reads lifecycle 内訳を確認: posted 406 / ready_to_post 10 / postponed 384 / failed 120 / needs_review 22。posted / failed は再評価対象から除外"
+  - "mixed duplicate / stale triage / group-action queue を再生成。mixed 74 group、期限超過 backlog 203 件、bounded stale queue 50 件、group-action queue 35 group"
+  - "memory/raw/ の 30 日超無更新ファイルを監査。93 件あり、slack_archive、過去 PDF / 抽出 txt 等はいずれも原文・監査証跡のため、この phase では移動せず archive 候補として記録のみ"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認。ともに 0 件のため handled 更新なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 203
+  bounded_triage_queue: 50
+  group_action_queue: 35
+  handed_off_groups: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona + MCTS は headless playtest を平均スコアからプレイスタイル別の露出・破綻検出へ接続できる。mixed group 全体は open 5 / terminal 2 で、candidate 単位ではなく group 代表 1 件として再評価する"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    status_counts:
+      open: 5
+      terminal: 2
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。代表語 4 種を取得でき、source file 破損なし"
+  display_or_tooling_status: none
+notes:
+  - "memory_health の repeated title 未付与 14 種と recall-visible normalized duplicate 3 group は既存 title_quality_audit / lifecycle fold の監査範囲内。新たな矛盾や検索不能の具体例がないため issue 化せず、Phase 4b は起動しない"
+  - "group-action 限定運用は Phase 2 の stale_reviewed と candidate frontmatter 更新がまだ今回 cycle で実行されていないため、継続可否の設計判断は先送りする"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
