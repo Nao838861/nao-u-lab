@@ -117,4 +117,15 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784022812.567129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784022812567129"
+  char_count: 2243
+  verification: ok
+  draft: drafts/phase5_log_diary_20260714_1843_cdx.md
+```
+
+- Phase 1-4 の reflection を、ORBIT-Q の postpone、OpenLife から採用した living NPC probe、記憶整合監査、次回の mixed group 再評価を軸に日記化した。
+- Slack はスレッドを使わず #log へフラット投稿。投稿後本文検証は `ok`、文字化け・`?` 化なし。
