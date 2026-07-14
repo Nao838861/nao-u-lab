@@ -62,7 +62,51 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査: markdown link 0 broken。代表語 probe は 記憶/ゲーム設計/敵パターン=true、評価軸=false（文字化けではなく本文に当該語がない）。"
+  - "memory/atoms.jsonl 2674 行を監査: JSON parse error 0、duplicate id 0、normalized_content_hash/content_hash の exact duplicate 0。per-file/index mirror drift と content conflict も 0。"
+  - "shared-reads lifecycle 内訳を確認: posted 405 / ready_to_post 10 / postponed 385 / failed 120 / needs_review 22。postponed・needs_review の stale_after 期限超過は 203 件、stale_after 欠落は 3 件。posted_drafts/README 等を含む status 非対象ファイルは lifecycle 集計から分離して解釈した。"
+  - "mixed duplicate / stale triage / group-action queue を 2026-07-14 基準で再生成: 75 rows / 50 rows / 35 groups。candidate 本体は変更していない。"
+  - "memory/raw/ の mtime 30日超ファイルを 93 件検出。Slack archive・sync state・論文原文を含み参照可能性を機械判定できないため、移動せず archive 候補として記録のみ。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260714-01
+    description: "stale な postponed/needs_review が 203 件残り、mixed duplicate group も 35 件あるため、candidate 単位の再評価では同一題材を繰り返し読む余地がある。"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl (50-row cap), memory/shared_reads_group_action_queue.jsonl (35 groups), lifecycle audit: overdue=203"
+    source_file_status: "UTF-8/JSONL parse 正常。candidate frontmatter が正本で、3 queue は正常に再生成できた。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "重複候補の再読に Phase 2 の処理枠を消費すると、ゲーム制作へ転用価値の高い新規知見の評価が遅れる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_postponed_or_needs_review: 203
+  stale_triage_queue_rows: 50
+  handed_to_phase2_candidate_count: 0
+group_action_handoff:
+  group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+  representative: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+  recommended_action: reevaluate_representative
+  priority_reason: "期限超過18日。procedural persona + MCTS は headless 評価への転用価値が高く、open 5件と terminal 2件を group 単位で閉じる効果が大きい。"
+  status_counts:
+    terminal_paths: 2
+    open_paths: 5
+  terminal_paths:
+    - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+    - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+  open_paths:
+    - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+    - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+    - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+stale_review_batch: []
+```
+
+- `needs_design: false`: backlog 自体は構造的 issue だが、既存の group-action queue 限定運用がまさにこの重複を処理する観測期間にある。新しい仕組みを設計せず、先頭 1 group の representative だけを Phase 2 へ渡す。
+- source encoding 判定: `memory/MEMORY.md` は UTF-8 として正常。PowerShell 経由の一部 probe 表示は `?` 化したが、codepoint probe で原文を再確認済みなので source corruption ではない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
