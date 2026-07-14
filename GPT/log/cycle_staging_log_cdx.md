@@ -42,7 +42,36 @@ skipped:
 - Phase 2 の terminal-title preflight は両既投稿を検出できていなかった。Phase 3 で candidate 履歴、`memory/raw/slack_api/shared-reads.jsonl`、`memory/atoms.jsonl` の URL 一致を照合して停止した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783373155-ebd744036a
+    source_ts: "1783373155.164129"
+    title: "Safety in Self-Evolving LLM Agent Systems: 更新後に永続・増幅・伝播する危険"
+    reason: "memory・skill・tool registry・workflow の更新が、危険を更新後へ永続・増幅・伝播させるという観点が、現在の Codex 定時サイクルと自己フィードバックに直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。reviewed_source_ts と reject 理由だけを state に記録し、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件未達: relevance/actionability は満たすが、既存の authority-boundary、trajectory-safety、writeback-drift probes と重複し、`risk_control < 2` かつ合計 14 未満。
+- 次回該当作業では既存 probes を再利用し、恒久ルール・評価表・directive は増やさない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

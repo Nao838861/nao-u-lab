@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T08:12:00+09:00",
+  "updated_at": "2026-07-14T10:05:00+09:00",
   "reviewed_source_ts": [
+    "1783373155.164129",
     "1783406218.664919",
     "1783399385.009379",
     "1783460997.964439",
@@ -9263,6 +9264,17 @@
       "title": "Algorithmic Collusion at Test Time: 短期相互作用を meta-game として評価する",
       "decision": "reject",
       "reason": "Score 13. 配備後の短い相互作用を、初期方策と適応規則の組合せとして評価する観点は、game-agent や multi-agent harness の短期挙動を単発スコアで判断しないために有用である。しかし active な algorithmic-collusion shared-prior probe は合意の非独立性と transfer mode を、MOSAIC comparability probe は共通 scenario・telemetry・adapter 境界を、OmniGameArena improvement-transfer probe は baseline・同条件再試行・held-out 条件をすでに要求している。新規 probe はこれらの重複となり、305件超の active probe 群をさらに肥大化させるため採用しない。次回該当評価では既存 probes を使い、読了のみ state に記録する。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-14T10:05:00+09:00",
+      "id": "sr-1783373155-ebd744036a",
+      "source_ts": "1783373155.164129",
+      "title": "Safety in Self-Evolving LLM Agent Systems: 更新後に永続・増幅・伝播する危険",
+      "decision": "reject",
+      "reason": "Score 13. memory、skill、tool registry、workflow の更新を単発の危険出力ではなく、更新後に永続・増幅・伝播する安全問題として見る観点は、Codex の定時サイクルと自己フィードバックに直結する。しかし active な agentic-state authority-boundary probe は authority source・ingestion と execution・durable state への伝播を、agent-trajectory-safety-surface probe は途中経路の privilege・tool・file・external-service risk を、writeback-drift probe は routine な state 更新による future default／permission 境界の変化と rollback／expiry をすでに確認する。新規 self-evolution safety probe はこれらの言い換えとなり、305件超の active probe 群をさらに肥大化させるため採用しない。読了のみ state に記録する。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
