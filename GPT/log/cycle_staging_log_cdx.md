@@ -59,7 +59,42 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を validate_memory_index.py と UTF-8 代表語 probe で監査し、index / per-file atom index の不一致 0 件、source 文字化けなしを確認"
+  - "memory/atoms.jsonl を memory_health.py で監査し、2674 rows、id 重複エラーなし、normalized content 重複 raw 40 groups / recall-visible 3 groups（既存 fold 適用）を確認"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-15 基準で再生成（77 rows / 50 rows / 35 groups）"
+  - "candidate lifecycle 内訳を確認（status: posted 406 / ready_to_post 10 / postponed 389 / failed 120 / needs_review 22）。posted / failed は再評価対象外"
+  - "memory/raw/ の 30 日超無更新 93 files を確認。原文 provenance として参照中のため、この phase では移動なし"
+  - "Slack inbox は directives / broadcasts とも pending 0 件。handled 更新なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  queue_rows: 50
+  note: "stale triage queue は上限 50 件。上位はすべて mixed duplicate であり、group-action 限定運用に従って candidate 単位 batch へ重複投入しない"
+stale_review_batch: []
+group_action_handoff:
+  group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+  representative: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+  status: postponed
+  stale_after: "2026-06-26"
+  priority_reason: "age_days=19。procedural persona と MCTS による playstyle 別 headless 評価へ直接転用可能で、terminal 2件 / open 5件の mixed duplicate group"
+  recommended_review_action: reevaluate_representative
+  terminal_paths:
+    - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+    - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+  open_paths:
+    - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+    - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+    - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得可能。source file は正常"
+  display_or_tooling_status: none
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
