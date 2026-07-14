@@ -41,7 +41,34 @@ skipped:
 - 再検討条件: 元 GDC 講演または詳細 transcript から、設計判断、prototype ごとの評価、失敗と修正、最終結論を抽出できた場合に candidate を改稿する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783331249-b8cdfa29d6
+    source_ts: "1783331249.441049"
+    title: "AI Observability for LLM Systems: 5層観測タクソノミーと instance divergence の観測空白"
+    reason: "未レビューの score 12 atom で memory・harness・agent・operation を横断するが、同一投稿の後続 atom から採用済みの観測層 probe と重複するか確認するため今読む"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "同一 Slack 投稿の sr-1783331249-dc103d6a36 から、観測層、local threshold / cross-layer evidence、N=1 の採用境界を確認する probe が既に採用済み。別 probe は既存確認の言い換えとなり、合計 13 で採用条件未達"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・評価表・directive・恒久ルールは追加せず、既存 observability-layer probe を再利用する"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

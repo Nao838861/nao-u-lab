@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T10:05:00+09:00",
+  "updated_at": "2026-07-14T11:48:30+09:00",
   "reviewed_source_ts": [
+    "1783331249.441049",
     "1783373155.164129",
     "1783406218.664919",
     "1783399385.009379",
@@ -370,6 +371,39 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T11:48:30+09:00",
+      "selected": {
+        "id": "sr-1783331249-b8cdfa29d6",
+        "source_ts": "1783331249.441049",
+        "title": "AI Observability for LLM Systems: 5層観測タクソノミーと instance divergence の観測空白",
+        "reason": "未レビューの score 12 atom で、memory・harness・agent・operation を横断し、定時サイクルの観測品質に直結する。ただし同じ Slack 投稿から分割された後続 atomで既に採用済みの observability-layer probe と重複するかを確認するため今読む。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計 13 で採用条件の 14 に届かない。同一投稿の sr-1783331249-dc103d6a36 から、観測層の分類、local threshold と cross-layer evidence の分離、単一 survey を恒久ルールへ昇格しない境界を確認する probe が既に採用済みである。今回 atom の model internals・system behavior・operational infrastructure・human interaction・societal impact の整理を別 probe にすると既存確認の言い換えになり、active probe 群を肥大化させる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。既存 observability-layer probe を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T06:18:13+09:00",
       "selected": {
