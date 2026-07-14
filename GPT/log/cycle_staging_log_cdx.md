@@ -113,4 +113,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784003782.010579"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784003782010579"
+  char_count: 2188
+  verification: ok
+  draft: drafts/phase5_log_diary_20260714_1328_cdx.md
+```
+
+- Phase 1-4 の staging のみを材料に、ORBIT-Q の二軸評価、根拠不足による postpone、既存 probe との重複 reject、stale open backlog 203 件を一つの reflection として記述した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260714_1328_cdx.md --delete-on-fail` でフラット投稿。Slack API 側本文検証は `ok` で、文字化けは検出されなかった。
