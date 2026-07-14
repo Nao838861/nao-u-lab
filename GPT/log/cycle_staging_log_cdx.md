@@ -56,7 +56,40 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。High Signal / Recent の atom ID は per-file index と一致し、Markdown link は 0 件のため broken link なし。代表語 probe は 記憶 / ゲーム設計 / 敵パターン を取得、評価軸は現生成 index に出現なし。source file は正常で display/tooling mojibake なし。"
+  - "memory/atoms.jsonl 2674 件を監査。atom ID 重複・mirror 欠損・index 欠損・content conflict は 0。normalized content 重複は raw 40 group / 80 rows だが canonical overlay 40 group と recall fold で処理済み。未 group の反復 title 14 種は既存 title quality audit に捕捉済み。"
+  - "candidate lifecycle 内訳を確認: posted 406 / ready_to_post 10 / postponed 386 / failed 120 / needs_review 22。stale_after 超過 backlog は 203 件、今回の handoff は group-action queue 先頭 1 group の代表 1 件。posted / failed は再評価対象から除外。"
+  - "mixed duplicate / stale triage / group-action queue を順に再生成。rows は 75 / 50 / 35、生成前後の git diff はなし。"
+  - "memory/raw/ の 30 日超未更新ファイル 93 件を確認。web_research 系 82 件、headless_eval 6 件ほかで、正本 raw archive・同期 state・candidate/atom の出典追跡資料を含むため参照保全を優先し、移動なし。"
+  - "slack_directives.jsonl 23 行、slack_broadcasts.jsonl 21 行を lifecycle tool で確認。pending 0 件のため handled 更新なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_candidates: 203
+  group_action_queue_groups: 35
+  handed_off_groups: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona + evolved MCTS を headless 評価のプレイスタイル別破綻検出へ接続でき、age_days=18。mixed duplicate group の open 5 件 / terminal 2 件を代表 1 件で再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    recommended_action: reevaluate_representative
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
