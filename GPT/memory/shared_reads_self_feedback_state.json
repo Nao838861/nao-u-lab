@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T22:48:34+09:00",
+  "updated_at": "2026-07-15T00:45:00+09:00",
   "reviewed_source_ts": [
+    "1782704202.335039",
     "1778535759.606529",
     "1778535046.573029",
     "1778535042.365919",
@@ -377,6 +378,41 @@
     "1783295822.146129"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T00:45:00+09:00",
+      "selected": {
+        "id": "sr-1782704202-2d916e0744",
+        "source_ts": "1782704202.335039",
+        "title": "Dispatch: plot と narrative を混同しない制作設計",
+        "reason": "未レビューの score 11 atom で、memory・harness・game-design・operation・evaluation を横断する。現在のゲーム制作では分岐や出来事の整合性を確認しても、場面ごとの言葉、キャラクター関係、書き味を同じ『物語』評価へ潰す余地があるため、次の narrative/dialogue 作業に限定した二軸評価へ変換する。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で採用条件を満たす。既存の narrative graph probe は current node、causal dependency、agency と authored coherence を扱うが、plot の因果・進行と narrative の台詞・関係・瞬間の受け取り方を別々に採点する観点は直接要求していない。新しい恒久ルールや active probe は作らず、次の該当作業で一度使う可逆な評価表として保持する。",
+      "change": {
+        "type": "metric",
+        "summary": "次の narrative/dialogue/quest prototype 評価で、plot 軸（出来事・因果・進行が成立するか）と narrative 軸（記憶に残る言葉・キャラクター・関係が場面単位で現れるか）を分け、各軸に根拠となる1場面を記録する。片方だけ通った場合は『物語全体が良い』と総括せず、弱い軸を次の修正対象にする。",
+        "scope": "next narrative, dialogue, quest, or character-relation prototype review only",
+        "withdrawal_condition": "一度使って修正判断が変わらない、または既存 narrative graph probe の言い換えにしかならなければ review state の履歴だけ残して再利用しない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T21:12:00+09:00",
       "selected": {
