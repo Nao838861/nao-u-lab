@@ -30,7 +30,33 @@ skipped:
 - candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を確認済み。追加更新なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535047-efc0cf12ca
+    source_ts: "1778535047.473019"
+    title: "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
+    reason: "未レビューの score 13 atom で6優先タグを持つが、superseded / quality: routine / canonical_id ありの旧 lifecycle repost なので、独立した行動根拠になるかを確認した。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "合計14未満かつ actionability 2未満。複数論文を束ねた再投稿の excerpt から個別の手法・評価・失敗条件を復元できず、canonical atom に supersede 済み。probe 化すると既存の agent 評価・coordination・memory lifecycle 観点の重複になる。"
+  change:
+    summary: "none。reviewed_source_ts と reject 理由だけを state に記録し、probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

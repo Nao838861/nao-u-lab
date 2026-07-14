@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T02:25:00+09:00",
+  "updated_at": "2026-07-15T04:02:49+09:00",
   "reviewed_source_ts": [
+    "1778535047.473019",
     "1778535045.914569",
     "1782704202.335039",
     "1778535759.606529",
@@ -379,6 +380,39 @@
     "1783295822.146129"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T04:02:49+09:00",
+      "selected": {
+        "id": "sr-1778535047-efc0cf12ca",
+        "source_ts": "1778535047.473019",
+        "title": "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版",
+        "reason": "未レビューの score 13 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つため選定した。本文は SensingAgents など複数論文を束ねた旧再投稿であり、status: superseded、quality: routine、canonical_id ありの lifecycle repost なので、独立した次回行動の根拠になるかを確認した。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、actionability も閾値未満。excerpt は4本の異なる論文を束ねた再投稿の冒頭だけで、各手法・評価・失敗条件を復元できない。canonical atom に supersede 済みであり、ここから probe を作ると既存の agent 評価、multi-agent coordination、memory lifecycle 系 probe の言い換えを増やすだけになる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T02:25:00+09:00",
       "selected": {
