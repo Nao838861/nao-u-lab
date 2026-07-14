@@ -25,7 +25,18 @@ stale_reviewed: []
 - 保留理由: 現 candidate からは、5つの text-based embodied task の内訳、比較 baseline、task decomposition / difficulty filtering の実装と ablation、14〜19 points のタスク別結果、失敗例・限界を抽出できない。Phase 3 投稿対象にはせず、原論文相当の根拠を補ってから再評価する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260714_test_time_exploration_unknown_environments.md
+    reason: "Phase 2 の gate_decision が pass ではなく postpone。タスク構成、比較 baseline、訓練手順、タスク別結果、失敗例の根拠が不足し、3500-4500 字程度の投稿品質を満たす記事固有の分析を構成できないため。"
+    action: candidate_revise
+```
+
+- 最終判定: 投稿なし。Phase 3 は `gate_decision: pass` の candidate のみを扱うため、Slack API は呼び出していない。
+- candidate 状態: `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を維持。
+- inbox 確認: directives / broadcasts ともに pending 0 件。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
