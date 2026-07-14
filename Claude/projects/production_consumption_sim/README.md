@@ -82,6 +82,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 - **名前つき=個人粒度（2026-07-14 Nao_u非交渉）**: 1設備=1世帯=**5〜15人の名前つき個人**（大家族の企業=史実）。二層モデル: 個人=生活/労働/ドラマの単位（名前/性別/年齢/死） ＋ 世帯=経済/取引の単位（財布共有・当主が意思決定）→個人と実装難度（取引=世帯数）が両立。賃金回避を維持（血縁自営家・新世帯は持参金で独立）。詳細: [design/individuals_and_money.md](design/individuals_and_money.md)
 - 性別=世帯形成+出生に効く・職業gender固定なし / テント=tier-0住処（着船即入居・進歩の絵） / 船頻度=序盤多く（依存期・暇対策）→自立で減る / 現金=世帯の財布+持参金による新世帯形成（個人財布はDF金詰まりリスクで非推奨）
 - **最初の御用=チュートリアル卒業試験**（Factorの声・着船→区画→漁→市場→農地→移民→御用で余剰+輸出+信用を一巡）。詳細: [design/opening_sequence.md](design/opening_sequence.md)
+- **動的シミュ検証(2026-07-14)**: 開幕の弧は数値で成立(着船→漁で食う→移民→木材輸出で御用達成→Day90麦バースト→人口28→96)。**炙り出した要石**: (1)閉鎖経済は金の排水口が無いと洪水(市中金20倍膨張)=輸入/道具購入/建設/特許は飾りでなく必須 (2)会社の現金サイクル(買う↔本国へ売る)が要石=枯渇すると木こり飢餓 (3)魚過剰=干物排水口が要る。ヘッドレスExp1のassert項目を特定。詳細: [design/sim_tutorial_stage.md](design/sim_tutorial_stage.md)
 - 餓死あり（空腹→衰弱→死の過程）。国内移動は摩擦パラメータ（移動コスト/情報遅延/土地への愛着）で創発
 - 相続: 子→近所→近場に広く薄く。国庫なし。プレイヤー関与なし（イベントログで観測のみ）。閉鎖経済では保存則の要請
 - 転職=(b)摩擦あり。主摩擦=設備の乗り換えコスト（市場価格+沈没費用から創発）+腕のランプアップ最小限。判断=職業信念。**商人の誕生も転職の1ケース**（荷車を買う=流通誕生の瞬間）
@@ -139,7 +140,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py)
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py)
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
