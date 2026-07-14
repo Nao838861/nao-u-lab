@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T21:12:00+09:00",
+  "updated_at": "2026-07-14T22:48:34+09:00",
   "reviewed_source_ts": [
     "1778535759.606529",
     "1778535046.573029",
@@ -373,7 +373,8 @@
     "1782515410.585469",
     "1783522497.522889",
     "1783660317.348439",
-    "1783304602.130549"
+    "1783304602.130549",
+    "1783295822.146129"
   ],
   "reviews": [
     {
@@ -9460,9 +9461,32 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 3, "risk_control": 3, "reversibility": 3, "total": 17},
       "change": {"type": "probe", "summary": "次の living NPC / persistent agent prototype または headless simulation 2 件で、周辺プロセスの分離、reactive と spontaneous の区別、budget・未完了 goal・過去 failure による行動変化を確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-14T22:48:34+09:00",
+      "id": "sr-1783295822-8636fd3728",
+      "source_ts": "1783295822.146129",
+      "title": "Semantic signaling game: receiver awareness と systematic blindness",
+      "decision": "adopt_probe",
+      "reason": "Score 15. LLM 会話、hidden-role、NPC 交渉、候補評価で、流暢さや単一の判定精度を全体品質とみなさず、sender が操作する意味特徴、receiver が観測できる特徴、構造的 blind spot を分離する観点は次の game/headless 評価に転用できる。既存 probes は rhetorical rule gate、persona drift、style adherence、partial observation を扱うが、同一メッセージを awareness profile の差分で比較する小さな検出テストは要求していない。原典は抽象的な game-theoretic model と数値実験であり、実会話 UX やゲームの面白さを直接証明しないため evidence は 2 とする。固定 seed の小さな三者択一テスト 2 件に限定し、equilibrium 実装や恒久ルール化は採用しない。",
+      "scores": {"relevance": 2, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 15},
+      "change": {"type": "probe", "summary": "次の LLM 会話、hidden-role、NPC 交渉、または自然言語判定の headless 評価 2 件で、sender control と receiver awareness profile を分け、同一状況の判定差と blind spot を固定 seed で記録する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260714-semantic-signaling-awareness-profile",
+      "created_at": "2026-07-14T22:48:34+09:00",
+      "source_ts": "1783295822.146129",
+      "scope": "次の LLM 会話、hidden-role、NPC 交渉、自然言語 command、または persuasive message の headless 評価 2 件",
+      "questions": [
+        "評価前に、sender が操作できる semantic control を誇張、曖昧化、論点ずらし、確信度偽装、役割アピール等から 1-3 個に限定し、receiver が観測できる特徴を語調、証拠、役割、論理構造等の awareness profile として明示したか？",
+        "同一状況・固定 seed の message variant に対し、少なくとも 2 種類の awareness profile で信用・保留・疑う等の判定と短い理由を保存し、全特徴を見られる理想判定器を暗黙に仮定しなかったか？",
+        "判定差を会話品質、欺瞞耐性、面白さの証明とせず、どの blind spot を awareness 追加で改善できたか、または awareness_effect_unverified として次の一手だけを残したか？"
+      ],
+      "expires_after": "Review after the next two LLM dialogue, hidden-role, NPC negotiation, natural-language command, or persuasive-message evaluations that mention sender controls, awareness profiles, blind spots, trust/hold/suspect judgments, or fixed-seed message variants."
+    },
     {
       "id": "probe-20260714-openlife-surrounding-process-loop",
       "created_at": "2026-07-14T19:05:00+09:00",

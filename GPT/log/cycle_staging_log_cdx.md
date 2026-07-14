@@ -28,7 +28,32 @@ reason: "Phase 2 の pass が空のため投稿対象なし。postpone 判定の
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783295822-8636fd3728
+    source_ts: "1783295822.146129"
+    title: "Semantic signaling game: receiver awareness と systematic blindness"
+    reason: "LLM 会話や NPC/hidden-role 評価で、流暢さや単一判定を全体品質とせず、sender control・receiver awareness・blind spot を固定条件で分離する小さな評価へ落とせるため。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "次の LLM 会話、hidden-role、NPC 交渉、または自然言語判定の headless 評価 2 件で、sender control と receiver awareness profile を分け、同一状況の判定差と blind spot を固定 seed で記録する可逆 probe を追加した。equilibrium 実装・恒久ルール化・面白さの証明には広げない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
