@@ -121,7 +121,56 @@ stale_review_batch:
 - Phase 4a では設計・実装・candidate lifecycle 変更・raw archive 移動を行っていない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-20260714-01
+    problem_restatement: "現行 preflight は title_key が canonical index に一致した場合だけ posted_source_urls を照合するため、同一 source_url でも候補側の題名表記が異なると既投稿を Phase 2 の本文評価前に止められない。Phase 3 の横断照合が安全網になっているが、重複候補の読解と評価コストは既に発生している。"
+    alternatives:
+      - name: "案A: 既存 canonical index の URL 逆引きを preflight に追加"
+        sketch: "既存 posted_source_urls から canonical URL 単位の逆引きを組み立てる。preflight は URL 完全一致を第1ゲートとして skip し、一致しない場合だけ従来の title_key 判定へ進む。"
+        pros:
+          - "既存 index と posted_source_urls を再利用でき、新しい正本や常設 sidecar を増やさない"
+          - "題名揺れがあっても同一 source_url の既投稿を本文読解前に停止できる"
+          - "Phase 3 の URL 横断照合を最終安全網として残せる"
+        cons:
+          - "canonical index の再生成が古い場合は検出も古くなる"
+          - "改訂版・ミラー・別 landing page は title 判定または Phase 3 照合が引き続き必要"
+          - "URL canonicalization の規則を index 生成側と preflight 側で共有する必要がある"
+        migration_cost: low
+      - name: "案B: source URL 専用 canonical index を新設"
+        sketch: "posted candidate、Slack raw、atom から source URL と permalink を集約した URL 専用 sidecar を生成し、Phase 2 preflight はその index を参照する。title canonical index とは独立更新する。"
+        pros:
+          - "URL 重複検出の責務と鮮度を独立して監査できる"
+          - "title group 外の既投稿証拠も一つの形式へ集約できる"
+          - "将来 URL alias を明示管理しやすい"
+        cons:
+          - "再生成対象・更新順・監査項目が増える"
+          - "title index と URL index の不一致時に優先順位を定義する必要がある"
+          - "今回の不足に対して構造追加が大きく、二重管理を招く"
+        migration_cost: medium
+      - name: "案C: Phase 2 ごとに候補履歴と Slack raw を直接横断検索"
+        sketch: "preflight 時に candidate 全体、shared-reads raw、atom を source_url で検索し、既投稿 permalink があれば skip する。常設 index は追加しない。"
+        pros:
+          - "index の鮮度に依存しない"
+          - "Phase 3 で成功した照合範囲をそのまま前倒しできる"
+          - "追加データ構造が不要"
+        cons:
+          - "候補ごとの I/O と処理時間が大きい"
+          - "raw・atom・candidate の証拠優先順位が preflight に流入する"
+          - "Phase 2 と Phase 3 の照合ロジックが重複しやすい"
+        migration_cost: medium
+    recommended: "案A: 既存 canonical index の URL 逆引きを preflight に追加"
+    recommended_reason: "失敗原因は index に URL 証拠がないことではなく、title_key 一致を URL 照合の前提にしている検索順にある。案Aは既存 posted_source_urls と canonicalize_url を使うため現状からの距離が最短で、失敗時も Phase 3 の既存安全網が再投稿を止める。案Bの二重管理と案Cの毎回横断検索を導入する前に、まず可逆かつ低移行コストの検索順変更で再発例を閉じるのが妥当。"
+    decision: introduce
+    decision_reason: "同一 URL・異題名という今回の2例を直接覆い、既存データ構造の責務を広げずに Phase 2 の無駄な本文評価を削減できる。検証対象とロールバック範囲も preflight 周辺に限定でき、Phase 4c に渡せる粒度まで設計が固まっている。"
+    outline_for_4c:
+      - "shared_reads_title_index の読み込み結果から canonicalized posted_source_urls の URL 逆引きを作り、title_key 判定より先に参照する"
+      - "URL 一致は skip / posted_url_match とし、canonical_path・permalink・一致元 title_key を証拠として返す"
+      - "URL 不一致時は既存の title_key 判定を維持し、同題異URLを review、新規 title を continue とする"
+      - "同一URL・異題名、同題同URL、同題異URL、新規候補の回帰テストを追加する"
+      - "Phase 2 の手順文を URL-first / title-second の判定順へ更新し、Phase 3 の横断照合は最終安全網として残す"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
