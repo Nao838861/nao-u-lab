@@ -36,7 +36,34 @@ skipped: []
 - `memory/shared_reads_candidates/20260714_orbit_q_dual_axis_agent_benchmark.md` は Phase 2 で `postpone` 済みであり、Phase 3 の再判定対象外。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782080032-818675d502
+    source_ts: "1782080032.624219"
+    title: "PowerAgentBench-Dyn: 限られた simulation budget で途中観測から次の実験を選ぶ agent workflow 評価"
+    reason: "未レビューの score 10 atom で定時サイクルと headless game 評価に直結するが、同一投稿由来の既存 probe との重複を確認するため今読む"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "同一 shared-reads の sr-1782072515-16aace4567 から、simulation budget・observation/action contract・途中判断・deterministic evaluator・反復分散を確認する probe が既に採用済み。新規反映は言い換えになり、合計も採用条件 14 に届かない"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。既存 simulation-workflow probe を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

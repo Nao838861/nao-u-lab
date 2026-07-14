@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T11:48:30+09:00",
+  "updated_at": "2026-07-14T13:40:00+09:00",
   "reviewed_source_ts": [
+    "1782080032.624219",
     "1783331249.441049",
     "1783373155.164129",
     "1783406218.664919",
@@ -371,6 +372,39 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T13:40:00+09:00",
+      "selected": {
+        "id": "sr-1782080032-818675d502",
+        "source_ts": "1782080032.624219",
+        "title": "PowerAgentBench-Dyn: 限られた simulation budget で途中観測から次の実験を選ぶ agent workflow 評価",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation を横断し、定時サイクルや headless game 評価に直結する。ただし同じ shared-reads の別 atomから採用済みの simulation-workflow probe と重複するかを確認するため今読む。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計 13 で採用条件の 14 に届かない。同一投稿の sr-1782072515-16aace4567 から、simulation budget、observation/action contract、途中判断、deterministic evaluator、反復実行の分散を確認する probe が既に採用済みである。今回 atom から新しい probe や評価表を作ると既存確認の言い換えになり、次回行動を変えずに active probe 群だけを肥大化させる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。既存 simulation-workflow probe を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T11:48:30+09:00",
       "selected": {
