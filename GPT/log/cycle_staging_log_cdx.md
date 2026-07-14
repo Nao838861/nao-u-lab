@@ -4,9 +4,12 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260714_test_time_exploration_unknown_environments.md` — interaction history から implicit rules を推定する thinker と actor を分け、未知環境での反復失敗を減らす TTExplore の一次資料を収集。
-- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
-- 収集時 preflight: `continue`（canonical URL / title とも既存 candidate 重複なし）。品質判定・Slack 投稿は未実施。
+- 収集なし: 2026-07-14 の直近 `memory/raw/web_research/results.jsonl` からゲーム制作に関係する外部候補を3件確認したが、書込み直前 preflight がすべて `skip`（既投稿 URL 一致）を返したため、新規 candidate は作成しなかった。
+- 照合: `From World-Gen to Quest-Line: A Dependency-Driven Prompt Pipeline for Coherent RPG Generation` → `memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md`
+- 照合: `PTCG-Bench: Can LLM Agents Master Pokémon Trading Card Game?` → `memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md`
+- 照合: `One Policy, Infinite NPCs: Persona-Traceable Shared RL Policies for Scalable Game Agents` → `memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md`
+- pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- preflight 根拠: `log/shared_reads_candidate_preflight.jsonl`（今回の3レコード）。品質判定・Slack投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
 
