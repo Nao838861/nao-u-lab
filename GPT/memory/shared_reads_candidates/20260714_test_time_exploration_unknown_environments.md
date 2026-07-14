@@ -4,6 +4,19 @@ url: "https://openreview.net/forum?id=EfxT5mUQgS"
 collected_at: "2026-07-14T15:14:08.5447029+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, exploration, implicit-rules, agent-evaluation, playtesting]
+evaluated_at: "2026-07-14T15:15:50.5640149+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-14T15:15:50.5640149+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-14T15:15:50.5640149+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-13"
+supersedes: []
+gate_reason: >-
+  implicit rule 推定を thinker / actor に分離する中核は初見プレイ検証へ直結する。一方、5タスクの構成、比較 baseline、task decomposition と difficulty filtering の具体、個別結果・失敗例が不足し、約4000字の概要を根拠付きで書けないため保留する。
 ---
 
 ## raw_excerpt
