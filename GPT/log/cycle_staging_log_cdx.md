@@ -39,7 +39,36 @@ skipped:
 - inbox 確認: directives / broadcasts ともに pending 0 件。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535042-9446fe90ab
+    source_ts: "1778535042.365919"
+    title: "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
+    reason: "未レビューの score 15 かつ6重点タグ横断の候補。ただし superseded/routine の旧再投稿なので、現在の行動へ移す根拠が残るかを確認するため選択"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "4論文を一つに束ねた定型的な旧再投稿で、canonical atom に supersede 済み。現在の品質ゲート、stale/trigger 管理、途中過程・失敗条件の記録と重複し、採用条件 total 14 と actionability 2 を満たさない"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新しい probe・評価表・directive・恒久ルールは追加しない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 反映しない理由: atom の高い tag/score は内容固有性ではなく旧 ingestion の広い定型タグに由来する。ここから新規 probe を作ると、現行ルールの言い換えと active probe 群の肥大化になる。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

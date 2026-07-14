@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T13:40:00+09:00",
+  "updated_at": "2026-07-14T15:30:00+09:00",
   "reviewed_source_ts": [
+    "1778535042.365919",
     "1782080032.624219",
     "1783331249.441049",
     "1783373155.164129",
@@ -372,6 +373,39 @@
     "1783660317.348439"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T15:30:00+09:00",
+      "selected": {
+        "id": "sr-1778535042-9446fe90ab",
+        "source_ts": "1778535042.365919",
+        "title": "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版",
+        "reason": "未レビューの score 15 atom で memory・harness・evaluation・agent・operation・game-design を横断するため候補にした。ただし旧投稿のライフサイクル再投稿で status: superseded、quality: routine であり、現在の品質基準に照らして行動へ移す根拠があるかを確認するため今読む。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、actionability も2未満。4論文を一つの atom に束ね、ゲーム制作・記憶・ハーネスへの適用文が定型的に反復されている。canonical atom に supersede 済みで、現行の shared-reads 品質ゲート、記憶の stale/trigger 管理、途中過程と失敗条件の記録と重複するため、新しい probe にすると既存確認の言い換えになる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T13:40:00+09:00",
       "selected": {
