@@ -27,7 +27,18 @@ stale_reviewed: []
 - 保留理由: raw excerpt だけでは、蒸留した core の内訳、各 prototype での判断、評価結果、失敗と修正、最終結論を十分に抽出できない。Phase 3 投稿対象にはせず、講演本編または詳細 transcript の根拠を補うまで再調査待ちとする。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260714_hitman_go_design_postmortem.md
+    reason: "Phase 2 で gate_decision: postpone。講演紹介の短い概要だけでは、設計判断の推移、評価、失敗条件、結論を根拠付きで約4000字に構成できず、投稿品質を満たさない"
+    action: candidate_revise
+```
+
+- 最終判定: 投稿対象なし。Phase 2 の `pass` は 0 件のため、Slack `#shared-reads` への投稿は実施していない。
+- candidate 整合確認: `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を維持する。
+- 再検討条件: 元 GDC 講演または詳細 transcript から、設計判断、prototype ごとの評価、失敗と修正、最終結論を抽出できた場合に candidate を改稿する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
