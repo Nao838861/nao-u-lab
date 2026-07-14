@@ -120,6 +120,10 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 - **支援要請**: プレイヤーが能動的に要請（勝手に届かない）。本店への前借り。**本土との関係=信用枠1本**。破綻=特許取り消し（柔らかい敗北）。序盤は輸入・支援依存でよい（松前藩=米ゼロ藩/開拓使/Jamestownの史実）
 - **船の日=ゲームの心拍**（支援・瓦版・交易・御用が全部船で届く）
 
+### 難易度・メタ・ゲームオーバー（仮置き・本質でないのでpark）
+- **学びの失敗ローグライク**: 最初の数年は冬を越せないのが当たり前・本国の緊急輸入で食い繋ぐ。**命綱が段階的に高くつく**(支援→無利子貸付→利子付き借金)。ゲームオーバーの線は非明示・督促のescalateで予告(最終通告=警告の終点)。初見=5年目≈1時間で敗北→ボーナス付き2周目→熟練は無借金。安全弁=失敗を史実の常態と額縁化(ロアノーク/プリマス)＋即デブリーフ＋メタ進行
+- **ゲームオーバー選択肢空間（軸=引き継ぐ量=ボーナス）**: 1借金リセット続行/2**プレイヤー交代・荒廃から続き・秘書は同じ(仮置き)**/3住人全滅→同島再入植/4ゼロから新島。仮置き=案2(荒廃インフラ継承=2周目ボーナスそのもの)。**秘書=総督を跨ぐ通し柱は確定**。序盤サバイバル→制覇でサンドボックス開放。詳細: [design/difficulty_and_meta.md](design/difficulty_and_meta.md)
+
 ### ゴール構造・マップ
 - **サンドボックス主・シナリオは後から作れる**。理想=Factorio
 - 柔らかい頂上=**独立（特許の買い戻し）→明確なメリット→次の島の特許権を購入して進出**。同じ特許状が失敗では奪われ成功では買い戻される。特許購入=終盤の巨大貨幣シンク（金余り病の排水口とゴールが同一機構）
@@ -150,7 +154,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py) / [narrative_and_tone.md](design/narrative_and_tone.md) = 物語・トーン（債務/督促状/秘書/毒） / [tutorial_playthrough.md](design/tutorial_playthrough.md) = チュートリアル再現プレイ記録（実装モック・Day0→36） / [time_scale.md](design/time_scale.md) = 時間スケール（月暦・冬） / [thought_experiment_2years.md](design/thought_experiment_2years.md) = 最初の2年の思考実験(穴探し)
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py) / [narrative_and_tone.md](design/narrative_and_tone.md) = 物語・トーン（債務/督促状/秘書/毒） / [tutorial_playthrough.md](design/tutorial_playthrough.md) = チュートリアル再現プレイ記録（実装モック・Day0→36） / [time_scale.md](design/time_scale.md) = 時間スケール（月暦・冬） / [thought_experiment_2years.md](design/thought_experiment_2years.md) = 最初の2年の思考実験 / [difficulty_and_meta.md](design/difficulty_and_meta.md) = 難易度・メタ・ゲームオーバー
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
