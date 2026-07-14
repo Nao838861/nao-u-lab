@@ -111,4 +111,14 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1784063291.742169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784063291742169"
+  char_count: 2046
+  verification: ok
+  draft: drafts/phase5_log_diary_20260715_0558_cdx.md
+summary: "重複投稿・粗い atom の probe 化・未観測の新機構追加を止めた三つの判断を軸に、ゲーム制作のための記憶が『量を増やす装置』から『再利用可能な粒度を守る装置』へ移る感触を記録した"
+```
