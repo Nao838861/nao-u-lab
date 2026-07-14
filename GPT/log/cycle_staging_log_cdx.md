@@ -74,7 +74,51 @@ self_feedback:
 - 次回該当作業では既存 probes を再利用し、恒久ルール・評価表・directive は増やさない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）と validate_memory_index.py を確認。index entry の不整合・broken link は 0 件。"
+  - "memory/atoms.jsonl / per-file atom / index.jsonl を audit_atom_mirror_drift.py で照合。各 2674 件、id 欠落・parse error・content conflict は 0 件。normalized content duplicate は 40 group / 80 rows だが recall fold 済み。"
+  - "memory/raw/ の 30 日超未更新 file は 93 件。raw provenance として保持されており、この phase では archive 移動なし。"
+  - "shared-reads lifecycle を dry-run 監査。posted 406 / ready_to_post 10 / postponed 381 / failed 120 / needs_review 22、stale_after 超過 backlog 203 件。candidate 本体は変更せず、3 queue のみ再生成。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各 0 件。handled 更新なし。"
+issues:
+  - id: ISS-20260714-01
+    description: "Phase 2 の terminal-title preflight が、同一 URL の posted sibling を持つ当日 candidate 2 件を continue と判定し、Phase 3 まで重複候補を通した。"
+    severity: medium
+    evidence: "log/cycle_staging_log_cdx.md Phase 2 / Phase 3、memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md + 20260714_playtesting_beyond_personas.md、memory/shared_reads_candidates/20260526_lets_revolution_minesweeper_prototyping.md + 20260714_lets_revolution_prototyping_postmortem.md、memory/shared_reads_mixed_duplicate_queue.jsonl"
+    source_file_status: "UTF-8 source は正常。posted / postponed の sibling と同一 source_url が確認できる。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "既投稿の再収集・再分析が Phase 2 の処理枠を消費し、新しいゲーム制作知見の選別と想起入口の更新を遅らせる。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-20260714-01]
+stale_backlog:
+  overdue_total: 203
+  stale_triage_queue_rows: 50
+  group_action_queue_rows: 35
+  handed_off_this_cycle: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。game transfer value=high。status_counts は posted 2 / postponed 5 で、terminal_paths 2 件・open_paths 5 件を持つ mixed duplicate。今回の representative のみを Phase 2 へ渡す。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+```
+
+- encoding-safe audit: `memory/MEMORY.md` の source file は UTF-8 で正常。表示・tooling 経路の mojibake は今回観測せず。
+- stale handoff は group-action queue の先頭 1 group の representative のみ。candidate 単位 queue との重複投入はしていない。
+- Phase 4a では設計・実装・candidate lifecycle 変更・raw archive 移動を行っていない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
