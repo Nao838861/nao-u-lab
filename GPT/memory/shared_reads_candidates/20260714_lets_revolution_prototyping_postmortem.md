@@ -7,12 +7,13 @@ genre_tags: [game-design, postmortem, prototyping, puzzle, roguelike, procedural
 evaluated_at: "2026-07-14T09:45:50+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-14T09:45:50+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-14T09:45:50+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-14T10:10:00+09:00"
+last_decision: postponed_duplicate
+evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
+next_action: none
+postponed_reason: "同一 URL・同一記事が 2026-05-26 に #shared-reads へ投稿済みであり、再投稿に値する新規分析差分がないため。"
 stale_after: "2026-08-13"
 supersedes: []
 gate_reason: >-

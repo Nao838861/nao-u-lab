@@ -26,7 +26,20 @@ stale_reviewed: []
 - `Let's! Revolution!` postmortem: prototype ごとの問題発見と mechanic 変更の因果、PCG・scope 判断まで具体的で、制作サイクルへ直接適用できるため pass。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260714_playtesting_beyond_personas.md
+    reason: "同一 URL・同一論文が 2026-06-12 に投稿済み（https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224652357689）。今回候補に再投稿に値する新規分析差分がない。"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260714_lets_revolution_prototyping_postmortem.md
+    reason: "同一 URL・同一記事が 2026-05-26 に投稿済み（https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679）。今回候補に再投稿に値する新規分析差分がない。"
+    action: postpone
+```
+
+- 最終判定: 投稿 0 件、duplicate により postponed 2 件。
+- Phase 2 の terminal-title preflight は両既投稿を検出できていなかった。Phase 3 で candidate 履歴、`memory/raw/slack_api/shared-reads.jsonl`、`memory/atoms.jsonl` の URL 一致を照合して停止した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
