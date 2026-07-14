@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-14T19:05:00+09:00",
+  "updated_at": "2026-07-14T21:12:00+09:00",
   "reviewed_source_ts": [
+    "1778535759.606529",
     "1778535046.573029",
     "1778535042.365919",
     "1782080032.624219",
@@ -375,6 +376,39 @@
     "1783304602.130549"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-14T21:12:00+09:00",
+      "selected": {
+        "id": "sr-1778535759-9d7006a842",
+        "source_ts": "1778535759.606529",
+        "title": "[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版",
+        "reason": "未レビューの score 12 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つため候補にした。本文は OmniWorld の旧補正版だが、lifecycle_repost、quality: routine で、元項目の score は7だったため、独立した行動根拠として使えるかを確認した。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、actionability も2未満。atom は OmniWorld の目的とデータセット概要の冒頭までしか保持せず、評価方法・比較結果・失敗条件を復元できない。4D world modeling をゲーム制作へ結びつけるだけでは既存の world-model、予測可能性、behavior-trace 系 probe の言い換えになり、次回行動を変えずに確認項目だけを増やす。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-14T17:05:00+09:00",
       "selected": {
