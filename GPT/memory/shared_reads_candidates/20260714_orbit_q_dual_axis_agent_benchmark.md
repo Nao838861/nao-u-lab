@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.03105"
 collected_at: "2026-07-14T13:40:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, benchmark, harness, evaluation, scientific-programming]
+evaluated_at: "2026-07-14T13:40:01+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-14T13:40:01+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-14T13:40:01+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-13"
+supersedes: []
+gate_reason: >-
+  agent/harness と framework を分離する二軸比較、および agent 資源と artifact 実行効率を分ける設計はゲーム制作評価へ具体的に移せる。
+  ただし現候補だけでは課題構成、verification 各段、比較条件、定量結果、失敗類型が不足し、CoopEval 水準の約4000字概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt
