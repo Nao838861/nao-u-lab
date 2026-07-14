@@ -64,7 +64,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+audited_at: "2026-07-15T08:00:00+09:00"
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を現行 candidate frontmatter から再生成した（78 groups / 上位50 candidates / 35 groups）。派生内容は既存ファイルと一致し、candidate 正本は変更していない。"
+  - "Slack inbox lifecycle を確認した。slack_directives 23行、slack_broadcasts 21行の pending はともに0件で、handled 更新対象はなかった。"
+  - "memory/raw/ で最終更新が30日超のファイルを93件確認した。原文参照の正本を機械的に移動すると既存参照を壊すため、今サイクルのarchive移動対象は0件とした。"
+audits:
+  memory_index:
+    atom_index_rows: 50
+    broken_atom_targets: 0
+    source_file_status: "UTF-8明示読み成功。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。取得できた代表語に文字化けはなく、本文再生成・手修復は不要。評価軸は現本文に文字列が存在しないだけでencoding破損の証拠ではない。"
+    display_or_tooling_status: "一度、PowerShell here-string 内の日本語literalが ? に置換されたため、Unicode escapeで再probeした。source file側は正常。"
+  atoms:
+    total_rows: 2674
+    duplicate_ids: 0
+    normalized_content_duplicate_groups: 45
+    explicit_conflict_fields: 0
+    note: "既知の内容重複は memory/atoms/duplicate_groups.jsonl の派生overlayで可視化済み。今回、矛盾を示す新規の機械的証拠は見つからなかった。"
+  candidate_lifecycle:
+    total: 949
+    status_counts:
+      posted: 406
+      ready_to_post: 10
+      postponed: 390
+      failed: 121
+      needs_review: 22
+    missing_stale_after: 6
+    stale_backlog_total: 208
+    stale_triage_queue_rows: 50
+    mixed_duplicate_groups: 78
+    group_action_queue_rows: 35
+    handoff_count_this_cycle: 1
+issues:
+  - id: ISS-4A-STALE-THROUGHPUT
+    description: "postponed / needs_review の期限超過が208件ある一方、stale triage sidecarは上位50件、現行group-action契約は1 cycle 1 groupであり、再評価待ちが長期間残る。"
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py dry-run: overdue_for_reassessment=208; memory/shared_reads_stale_triage_queue.jsonl=50 rows; memory/shared_reads_group_action_queue.jsonl=35 rows。"
+    source_file_status: "candidate frontmatterはUTF-8で読取可能。正本は変更していない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "game productionへ転用価値がある候補が古い重複群に埋まり、Phase 2で再読されるまでの遅延が大きい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "問題は実在するが、2026-07-12導入のgroup-action限定運用を1 cycle観測する契約が既にある。今は4bで新設計を重ねず、Phase 2の1 group処理結果を確認する。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "group-action queue先頭。procedural persona + MCTSの評価手法はheadless game evaluationへ直接転用価値があり、posted sibling 2件とopen sibling 5件の混在を代表1件で判定できる。"
+    recommended_review_action: reevaluate_in_phase2
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
