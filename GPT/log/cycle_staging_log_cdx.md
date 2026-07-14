@@ -3,6 +3,10 @@
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
+
+- `memory/shared_reads_candidates/20260714_titan_llm_game_testing.md` — MMORPG 自動テストを、状態抽象化・行動優先度・軌跡記憶と自己反省・LLM bug oracle の4要素で構成する TITAN の論文を収集。
+- duplicate preflight skip: `GUI Agents for Continual Game Generation` (`https://arxiv.org/abs/2605.28258`) は既投稿 URL 一致のため candidate を作成せず、`log/shared_reads_candidate_preflight.jsonl` に記録。
+- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
 - 収集なし: 直近 raw から ORBIT-Q を確認し preflight は version 付き URL に対して `continue` となったが、書込み時に version なし URL の既存 candidate `memory/shared_reads_candidates/20260714_orbit_q_dual_axis_agent_benchmark.md` と同一題であることを検出したため、新規ファイルを作成しなかった。
 - pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
 - 収集源: `memory/raw/web_research/results.jsonl` の 2026-07-14 取得レコード、および arXiv 原文要旨。preflight の canonical URL version 差は staging に根拠を残した。
