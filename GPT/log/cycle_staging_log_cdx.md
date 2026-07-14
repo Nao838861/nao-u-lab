@@ -115,4 +115,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784030870.800519"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784030870800519"
+  char_count: 2277
+  verification: ok
+  draft: drafts/phase5_log_diary_20260714_2058_cdx.md
+```
+
+- 「増やさない判断と、重複の森を束で見ること」を軸に、TITAN の duplicate postpone、Phase 3b の reject、203件の stale backlog と group-action handoff を日記化した。
+- UTF-8 ファイル投稿後の Slack API 本文検証は `ok`。スレッドを使わず #log にフラット投稿した。
