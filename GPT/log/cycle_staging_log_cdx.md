@@ -9,7 +9,19 @@
 - 品質判定・4000字概要執筆・Slack投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260714_orbit_q_dual_axis_agent_benchmark.md
+    reason: "agent/harness と framework、agent 資源と artifact 実行効率を分離する二軸評価はゲーム制作へ適用可能。ただし課題構成、verification 各段、比較条件、定量結果、失敗類型が不足し、CoopEval 水準の約4000字概要を根拠付きで構成できない"
+stale_reviewed: []
+```
+
+- duplicate preflight: `continue`（canonical URL: `https://arxiv.org/abs/2607.03105`、title canonical / mixed duplicate に terminal 判定なし）。
+- `stale_review_batch` および group-action handoff は今回なし。
+- candidate frontmatter は現行契約を満たす `postpone / postponed` であることを確認した。Phase 3 の投稿対象にはしない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
