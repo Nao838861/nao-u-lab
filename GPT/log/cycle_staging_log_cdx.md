@@ -59,7 +59,50 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を 2026-07-15 基準で再生成（78 groups / stale 上位50件 / 35 group actions）"
+  - "MEMORY.md を UTF-8 明示読みで監査し、index 参照に broken link を検出せず、代表語 probe の source text が正常であることを確認"
+  - "atoms.jsonl 2674件を監査し、duplicate id 0件・同一 normalized_content_hash 0 group。既存 duplicate cluster index 45件は最新"
+  - "candidate lifecycle 949件を dry-run 監査（posted 406 / ready_to_post 10 / postponed 390 / failed 121 / needs_review 22）。candidate 本体は変更せず"
+  - "Slack inbox を監査し、directives 23件・broadcasts 21件とも pending 0件のため lifecycle 更新なし"
+  - "memory/raw 配下で mtime 30日超の93ファイルを archive 候補として識別。参照関係未確認のため Phase 4a では移動なし"
+issues:
+  - id: ISS-4A-20260715-01
+    description: "postponed / needs_review の stale_after 期限超過が208件あり、Phase 2 の少数再評価速度を上回る backlog が残っている"
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py --today 2026-07-15: overdue_for_reassessment=208; memory/shared_reads_stale_triage_queue.jsonl=50 rows; memory/shared_reads_group_action_queue.jsonl=35 rows"
+    source_file_status: "candidate frontmatter は UTF-8 で読取可能。正本は未変更。lifecycle status の総数は posted 406 / ready_to_post 10 / postponed 390 / failed 121 / needs_review 22"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "未評価候補が長く残ると、次のゲーム制作で利用価値の高い playtesting / PCG 知見が terminal duplicate と混在し、検索結果と再評価対象が濁る"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "既存の stale triage と group-action queue が bounded handoff を提供しており、まず1サイクルの処理結果を観測すべき段階。新しい仕組みの設計根拠はまだない"
+stale_backlog:
+  overdue_total: 208
+  stale_triage_queue_rows: 50
+  group_action_queue_rows: 35
+  handed_off_this_cycle: 2
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭 group の representative。procedural persona 別の自動 playtest は headless 評価へ直接転用価値が高く、terminal 2件 / open 5件の mixed duplicate を group 単位で閉じる候補"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts: "terminal=2 / open=5"
+    terminal_paths: "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths: "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md; memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md; memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md; memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md; memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale triage 上位50件で唯一の非 mixed 候補。LLM Game Master と課題型 role-play は会話 RPG へ転用余地がある一方、学習効果・参加者評価・失敗例が候補本文で不足している"
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常読取。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を source text で確認"
+  display_or_tooling_status: "一部 inline shell probe では日本語リテラルが ? 表示になったが、rg と Get-Content -Encoding UTF8 では原文を取得できたため source corruption ではない"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
