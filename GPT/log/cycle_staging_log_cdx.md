@@ -24,7 +24,17 @@ stale_reviewed: []
 - candidate frontmatter は現行契約を満たす `postpone / postponed` であることを確認した。Phase 3 の投稿対象にはしない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260714_orbit_q_dual_axis_agent_benchmark.md
+    reason: "Phase 2 の gate_decision が pass ではなく postpone。課題構成、verification 各段、比較条件、定量結果、失敗類型が不足し、記事を読まなくても中核が分かる 3500-4500 字の分析を根拠付きで完成できない"
+    action: postpone
+```
+
+- 最終判定: 投稿対象なし。Phase 2 の `pass: []` を尊重し、#shared-reads への投稿は実施しなかった。
+- candidate frontmatter は Phase 2 で `postpone / postponed` の現行契約を満たすことを確認済みのため、Phase 3 では変更していない。
+- 投稿前レビュー: 投稿本文が存在しないため対象外。候補品質を保つため撤退とした。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
