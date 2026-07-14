@@ -9,7 +9,15 @@
 - pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260715_sketchar_character_design_prototyping.md
+    reason: "職種間の参照画像プロトタイピングという適用先は明確だが、研究の参加者構成・比較条件・評価指標・具体的結果・限界が不足し、約4000字の概要を根拠付きで構成できない。同一 URL の既存候補も failed。"
+postpone: []
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
