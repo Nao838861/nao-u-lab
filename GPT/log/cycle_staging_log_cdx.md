@@ -12,7 +12,18 @@
   - `Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics` — 異なるプレイスタイルを MCTS persona として実装する自動 playtest 手法。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+evaluated_at: "2026-07-15T07:46:43+09:00"
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+notes:
+  - "Phase 4a からの stale_review_batch / group_action handoff は staging に存在しない。"
+  - "Phase 1 の新規 candidate は 0 件。3件はいずれも URL-first duplicate preflight で posted_url_match となり、candidate 作成前に除外済み。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
