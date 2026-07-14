@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2312.02897v1"
 collected_at: "2026-07-15T02:20:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, vr, avatar-customization, user-research, prototyping, accessibility]
+evaluated_at: "2026-07-15T02:21:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T02:21:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-15T02:21:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: "初心者と経験研究者を分けて prototype feedback を採る問題設定は、avatar customization と没入設計に具体的に適用できる。一方、6ページの companion paper と現 candidate メモだけでは、比較手順・具体結果・限界の抽出が薄く、CoopEval 水準の約4000字概要を根拠付きで構成できない。"
 ---
 
 ## raw_excerpt
