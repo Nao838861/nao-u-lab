@@ -9,7 +9,15 @@
 - duplicate preflight: 上記 candidate は `continue`。検索中に再発見した `AI Native Games: A Survey and Roadmap` は既存 candidate / atom を手動確認したため新規保存せず（preflight 自体は `continue` を返したため、重複検出漏れの観測のみ記録）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260714_lightweight_human_like_playtesting.md
+    reason: "抽象 tactic の再利用はゲーム制作へ具体適用できるが、比較対象・評価指標・ゲーム別結果・失敗条件が不足し、約4000字概要を根拠付きで構成できない"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
