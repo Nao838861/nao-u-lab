@@ -63,7 +63,44 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は 0 件で broken link なし。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸は本文に存在しないが UTF-8 decode error や source 破損はなし"
+  - "memory/atoms.jsonl 2674 行を監査。duplicate id 0 件、dangling superseded_by 0 件。memory_health の normalized content duplicate 40 group は canonical overlay で fold 済みで、今回新たな矛盾なし"
+  - "memory/raw/ の 30 日超ファイルを確認。Slack archive、取得済み論文 PDF/TXT など再現根拠として参照される原文のため、削除・移動せず明示保持"
+  - "shared-reads lifecycle を集計: posted 407 / ready_to_post 10 / postponed 384 / failed 120 / needs_review 22。status 欠落 74 は posted_drafts 等の非candidate補助文書を含む"
+  - "mixed duplicate queue 74 group、stale triage queue 上位50件、group-action queue 35 group を再生成。stale_after が期限到来した open candidate は全体203件（postponed 194 / needs_review 9）"
+  - "duplicate title canonical audit を実施。未登録 mixed group は group-action queue に残し、terminal group の自動 close や candidate frontmatter 更新は行わなかった"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending はともに 0 件。handled 更新対象なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 203
+  handed_off_this_cycle: 1
+  stale_triage_queue_visible: 50
+  note: "group-action queue 限定運用を継続し、mixed duplicate は先頭1 groupだけを Phase 2 へ渡す"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona + MCTS evolved heuristics は headless 評価をプレイスタイル別の破綻検出へ接続できる。status_counts は terminal 2 / open 5 相当で、terminal_paths 2件・open_paths 5件を持つ mixed duplicate group"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 strict decode 成功。source file の文字化け・破損なし"
+  display_or_tooling_status: "PowerShell 経由の日本語 literal probe は一度 ? 表示になったが、Unicode escape probe と rg で source 正常を確認。表示/tooling 経路のみの現象"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
