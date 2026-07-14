@@ -32,6 +32,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 7. **一機構多役**: 特許状=勝敗両方+貨幣シンク、食料4種=文化条件+季節ヘッジ、支援要請=食/金/救済の3コールドスタート解決
 8. **崩壊は見せる**。ただし意図しないアーティファクト（デスウェーブ）は消す
 9. **可観測性はコア要件**: 崩壊の因果が追えること（島内報・財の山・フロー計器）はシミュ本体と同格
+9b. **時間は経済日で測る鉄則（2026-07-14 数値検証済み）**: 運搬・距離・生産・消費は全て経済日（=1市場セッション）で計算・render秒では絶対測らない。→二重時計の嘘は提示層だけ・経済はゲーム速度非依存。検証: [design/sim_distance_time_check.md](design/sim_distance_time_check.md)
 10. **エージェントはバカでいい——賢さは市場が担う**（ゼロ知能原則、Gode & Sunder 1993。2026-07-13仮置き確定）: 個の意思決定は「小さな信念テーブルからmaxを取る」以上に賢くしない。全職業が同じ最小ループ（働く/動く/取引）で、職業=読むテーブルの違い。行商人=農夫+1判断（行き先選択）。検証ラダー（1市場収束→2市場裁定→行商人創発）で作る
 
 ## 確定した設計（テーマ別・2026-07-13棚卸し）
@@ -138,7 +139,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py)
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
