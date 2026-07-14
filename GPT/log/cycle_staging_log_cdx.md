@@ -26,7 +26,14 @@ stale_reviewed: []
 - 保留理由: 現 candidate からは、benchmark の課題内訳、多段 verification の判定条件、比較対象、主要数値、専門家参照実装との差の具体例を抽出できない。Phase 3 投稿対象にはせず、原論文相当の根拠を補ってから再評価する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` は 0 件。投稿対象がないため、#shared-reads への投稿は行わなかった。
+- `memory/shared_reads_candidates/20260714_orbit_q_dual_axis_agent_benchmark.md` は Phase 2 で `postpone` 済みであり、Phase 3 の再判定対象外。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
