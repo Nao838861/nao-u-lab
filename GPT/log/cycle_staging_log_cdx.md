@@ -20,7 +20,14 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260715_playtesting_process_ultra_small_teams.md
+    reason: "Phase 2 pass 対象なし。同一 canonical URL の既投稿（memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md、Slack permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780274208142799）を確認済みのため、重複投稿しない"
+    action: postpone
+summary: "gate_decision: pass は 0 件。Slack #shared-reads への投稿なし。candidate は Phase 2 で postponed / postponed_duplicate 更新済み"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
