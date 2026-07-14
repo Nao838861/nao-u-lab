@@ -173,7 +173,31 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-20260714-01
+    files_changed:
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/test_shared_reads_duplicate_preflight.py
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "duplicate preflight を URL-first / title-second に変更し、異題同 URL を本文評価前に posted duplicate として停止する。判定証拠として canonical_path・permalink・matched_title_key を返す。"
+    partial: false
+migrations: []
+verification:
+  - "python -m unittest tools.test_shared_reads_duplicate_preflight: 4 tests passed"
+  - "同一 URL・異題名、同題同 URL、同題異 URL、新規候補の4ケースを回帰テストで確認"
+  - "python tools\\shared_reads_duplicate_preflight.py --title Alternate-title-probe --url https://example.com/phase4c-new-probe: 実 index で continue を返して正常終了"
+  - "python tools\\memory_recall.py duplicate-preflight-URL-title --limit 1: per-file/legacy 読み出し経路が正常終了"
+  - "git diff --check: 今回の5ファイルに新規 whitespace error なし。既存の未 stage log/codex_log_cycle.log にのみ過去由来の trailing whitespace を検出"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

@@ -7,6 +7,10 @@ inputs: [Phase 1 staging, Phase 4a stale_review_batch, shared_reads_candidates/]
 outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクション]
 ---
 
+## Duplicate preflight の判定順 (2026-07-14 Phase 4c)
+
+本文評価前の duplicate preflight は URL-first / title-second とする。まず index 全体の `posted_source_urls` を canonicalize して候補 URL と照合し、一致時は title 表記が異なっても `skip / posted_url_match` とする。URL が一致しない場合だけ `title_key` を照合し、同題異 URL は `review`、未登録 title は `continue` とする。`skip` の証拠には `canonical_path` / `permalink` / `matched_title_key` を残す。Phase 3 の横断照合は最終安全網として維持する。
+
 ## stale_review_batch 再評価契約 (2026-06-19)
 
 Phase 4a が staging に `stale_review_batch` を残している場合、Phase 2 は通常の新規 candidate 評価より先にその batch を処理する。batch は最大 5 件を目安に、game production に直結する候補を優先する。`status: posted` / `status: failed` は再評価対象から外し、`postponed` / `needs_review` だけを扱う。

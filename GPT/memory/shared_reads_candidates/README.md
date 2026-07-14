@@ -1,5 +1,7 @@
 # shared_reads_candidates/
 
+2026-07-14 Phase 4c から duplicate preflight は URL-first / title-second で判定する。canonicalized `source_url` が index 内の `posted_source_urls` と一致すれば、title 表記が異なっても `skip / posted_url_match` とし、`canonical_path` / `permalink` / `matched_title_key` を証拠として返す。URL 不一致時だけ従来の title 判定へ進み、同題異 URL は `review`、新規 title は `continue` とする。Phase 3 の横断照合は最終安全網として残す。
+
 2026-07-12 Phase 4c から、同一 title group に `posted` sibling が1件でもあれば mixed group でも `terminal_evidence: true` として index に保持する。生成前に `tools/shared_reads_duplicate_preflight.py` を実行し、title と canonicalized URL が一致すれば `skip`、title のみ一致して URL が異なれば `review`、未登録 title は `continue` とする。既存 candidate の status は一括変更しない。
 
 #shared-reads に投稿する基準を満たさない**候補レベル**の記事置き場。

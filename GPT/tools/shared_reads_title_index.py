@@ -55,22 +55,35 @@ def duplicate_preflight(title: str, url: str, index: dict[str, dict[str, Any]]) 
     """Return continue/review/skip before a shared-reads candidate is written."""
     title_key = normalize_title_key(title)
     canonical_url = canonicalize_url(url)
+
+    if canonical_url:
+        for matched_title_key, matched_row in index.items():
+            posted_urls = {
+                canonicalize_url(str(item))
+                for item in matched_row.get("posted_source_urls", [])
+                if canonicalize_url(str(item))
+            }
+            if canonical_url in posted_urls:
+                return {
+                    "decision": "skip",
+                    "title_key": title_key,
+                    "matched_title_key": matched_title_key,
+                    "canonical_url": canonical_url,
+                    "canonical_path": matched_row.get("canonical_path", ""),
+                    "permalink": matched_row.get("permalink", ""),
+                    "reason": "posted_url_match",
+                }
+
     row = index.get(title_key)
     if not row or not row.get("terminal_evidence"):
         return {"decision": "continue", "title_key": title_key, "canonical_url": canonical_url}
-    posted_urls = {
-        canonicalize_url(str(item))
-        for item in row.get("posted_source_urls", [])
-        if canonicalize_url(str(item))
-    }
-    decision = "skip" if canonical_url and canonical_url in posted_urls else "review"
     return {
-        "decision": decision,
+        "decision": "review",
         "title_key": title_key,
         "canonical_url": canonical_url,
         "canonical_path": row.get("canonical_path", ""),
         "permalink": row.get("permalink", ""),
-        "reason": "posted_url_match" if decision == "skip" else "posted_title_match_url_differs",
+        "reason": "posted_title_match_url_differs",
     }
 
 
