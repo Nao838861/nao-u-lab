@@ -103,6 +103,13 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 - **市場=積み上がる財の山**（在庫計器・価格の直感表示・崩壊の可視化を兼ねる）。実体は抽象化しない（フローリボン却下）。フロー俯瞰はポーズ中の計器
 - 加齢はイベントで見せる（誕生・成人=労働参入・死=相続発動）
 
+### 物語・トーン（序盤フック・2026-07-14）
+- **既存の仕組みに「声と感情」を被せる層**（新システムなし・意思決定予算を食わない）。詳細: [design/narrative_and_tone.md](design/narrative_and_tone.md)
+- 債務プレッシャー+**本国の督促状**（債務とともに escalate・簡潔で毒・見出しで9割）が信用限界に顔をつける
+- **秘書（女性）=ファクター人間化**: 慰め・士気・方向は示すがパズルは解かない（最適手は言わず目標を指差す=Clippy回避/発見の喜び維持）
+- **毒=道徳的圧力**（債務が嵩むと飢餓民vs貢納/高利借金/酷使の選択=収奪vs持続を人間のジレンマに）。感情の弧: 依存と不安→秘書が希望→自立の転回=カタルシス
+- トーン=温かさ+毒（絶望一辺倒でない）。**商品の1行候補「本物の経済シミュ×ペーパープリーズの重圧」**
+
 ### 本土・情報・支援
 - 外の世界=**価格ベクトル+テキストのみ**（輸出入として表現。外交画面・本土マップなし）
 - 本土価格は変動+イベント（ショック源）。**価格ボードは常に前便時点の古値**。瓦版が次を予測させる（情報→先回り→仕込み→儲け=高田屋の技能）
@@ -140,7 +147,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py)
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py) / [narrative_and_tone.md](design/narrative_and_tone.md) = 物語・トーン（債務/督促状/秘書/毒）
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
