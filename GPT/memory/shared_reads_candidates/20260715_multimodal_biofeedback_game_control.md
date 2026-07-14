@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/1406.0532"
 collected_at: "2026-07-15T04:20:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, biofeedback, controls, game-feel, hci, playtesting]
+evaluated_at: "2026-07-15T04:25:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T04:25:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-15T04:25:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  通常操作・単一信号・複合信号を同一 prototype で比べる問題設定と、入力を楽しさ・誤発動防止・身体的コストへ接続する適用先は明確。
+  ただし 8 mechanic の具体的なセンサー割当、定量結果、比較上の限界が不足し、現状では約4000字の概要を一般論なしで支えられない。
 ---
 
 ## raw_excerpt
