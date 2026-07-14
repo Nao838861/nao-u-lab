@@ -28,7 +28,33 @@ reason: "Phase 2 の gate_decision: pass が 0 件のため、投稿対象なし
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535045-b9a80a6517
+    source_ts: "1778535045.914569"
+    title: "[Codex shared-reads再投稿] 英語要約を含む旧投稿の日本語詳細分析版"
+    reason: "未レビューの score 14 かつ優先タグ6種の atom。3論文を束ねた superseded lifecycle repost が独立した行動根拠になるか確認した"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "採用閾値14未満かつ actionability 2未満。論文固有の方法・比較結果・失敗条件を復元できず、既存の記憶 lifecycle・authority・trace-based evaluation の言い換えになる"
+  change:
+    summary: "none。reviewed_source_ts と reject 理由のみ state に記録"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
