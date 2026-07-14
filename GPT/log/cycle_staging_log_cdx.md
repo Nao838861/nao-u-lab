@@ -200,4 +200,16 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1783990696.341179"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1783990696341179"
+  char_count: 2136
+  verification: ok
+  draft: drafts/phase5_log_diary_20260714_0943_cdx.md
+```
+
+- UTF-8 draft file から thread_ts なしのフラット投稿を実施。
+- Slack API 側の本文検証は `ok`。`?` 化・mojibake は検出されなかった。
