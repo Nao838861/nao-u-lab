@@ -99,6 +99,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 
 ### 時間・表現
 - **二重時計**: 移動時計は人間が観察できる速度に固定、カレンダーは別レート。昼夜表現なし。年数概念は重要でない
+- **時間スケール提案（2026-07-14）**: 1日≈20秒(通常速・15〜30調整可)＋早送り2/4/8倍。**「作物年」≈60〜80日にし360日は捨てる**(暖季→収穫→冬→暖季。冬=生鮮が落ち保存食が要る季節ビートが約20分ごと)。加齢/世代は作物年から切り離す(遅い背景・数時間で1〜2世代)。「360日が長い」は年を360日にしないことで構造的に消える。詳細: [design/time_scale.md](design/time_scale.md)
 - 最高速=荷車が視認できる速度まで。**視覚速度キャップ+残像・スピード線のデフォルメ**（明滅を構造的に排除）。理想は「待ち時間が少なく速度が要らないゲーム」（やりながら検証）
 - **市場=積み上がる財の山**（在庫計器・価格の直感表示・崩壊の可視化を兼ねる）。実体は抽象化しない（フローリボン却下）。フロー俯瞰はポーズ中の計器
 - 加齢はイベントで見せる（誕生・成人=労働参入・死=相続発動）
@@ -147,7 +148,7 @@ Active (構想壁打ち段階 — **まだ作らない**。壁打ちと資料化
 ## フォルダ構成
 - `README.md` — このファイル。サマリーと目次
 - `dialogue/` — 壁打ちログ（Nao_u発言は原文・全文記録）
-- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py) / [narrative_and_tone.md](design/narrative_and_tone.md) = 物語・トーン（債務/督促状/秘書/毒） / [tutorial_playthrough.md](design/tutorial_playthrough.md) = チュートリアル再現プレイ記録（実装モック・Day0→36）
+- `design/` — 設計メモ。[distribution_models.md](design/distribution_models.md) = 流通5モデル / [player_loop.md](design/player_loop.md) = 分単位ループ / [opening_sequence.md](design/opening_sequence.md) = 開幕シーケンス / [construction_models.md](design/construction_models.md) = 建設の物理4モデル / [retail_and_distance.md](design/retail_and_distance.md) = 買い物と距離・小売三段階 / [goods_representation.md](design/goods_representation.md) = 「荷」単位と財の山の表示 / [rates_and_balance.md](design/rates_and_balance.md) = 生産/消費/ストックの均衡 / [productivity_ladder.md](design/productivity_ladder.md) = 生産性の階梯（心臓部・2/8/32） / [resources.md](design/resources.md) = リソース採用テストとロースター / [individuals_and_money.md](design/individuals_and_money.md) = 個人/世帯/現金 / [sim_distance_time_check.md](design/sim_distance_time_check.md) = 距離×時間の嘘 数値検証(+.py) / [sim_tutorial_stage.md](design/sim_tutorial_stage.md) = チュートリアル動的シミュ(+.py) / [narrative_and_tone.md](design/narrative_and_tone.md) = 物語・トーン（債務/督促状/秘書/毒） / [tutorial_playthrough.md](design/tutorial_playthrough.md) = チュートリアル再現プレイ記録（実装モック・Day0→36） / [time_scale.md](design/time_scale.md) = 時間スケール（1日≈20秒/作物年60-80日）
 - `references/` — 先行事例・文献調査（未着手）
 
 ---
