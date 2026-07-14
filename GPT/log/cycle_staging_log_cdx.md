@@ -66,7 +66,45 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、Markdown link 0 件（broken link 0 件）と代表語 probe（記憶 / ゲーム設計 / 敵パターン / 評価軸）の取得を確認"
+  - "memory_health.py で atoms 2674 件を監査。atom id 重複 error はなく、normalized content 重複 40 group / 80 rows は既存 fold、canonical overlay 45 group で吸収されていることを確認"
+  - "shared-reads 3 queue を再生成（mixed duplicate 74 rows、stale triage 50 rows、group action 35 rows）"
+  - "candidate lifecycle を集計（posted 407 / ready_to_post 10 / postponed 383 / failed 120 / needs_review 22）。stale_after <= 2026-07-14 の open backlog は 203 件、今回 handoff は 2 件"
+  - "memory/raw/ の 30 日超無更新ファイル 93 件を監査。raw 原文保持契約と利用中 archive を含むため、この phase では移動なし"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。根拠なしの handled 更新なし"
+issues:
+  - id: ISS-4A-STALE-DUPLICATE-BACKLOG
+    description: "stale open candidate 203 件のうち mixed duplicate が queue 上位を占め、同一題名の open/terminal 状態が検索・再評価候補を濁している"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl (50 rows); memory/shared_reads_group_action_queue.jsonl (35 groups); memory_health.py repeated_title_groups raw=22 / recall_visible=15 / ungrouped=14"
+    source_file_status: "candidate frontmatter と各 sidecar は UTF-8 で読取可能。candidate 本体は未変更"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ゲーム制作へ転用価値の高い playtesting / RPG pipeline 候補が同題名の複数行に分散し、Phase 2 の少数再評価枠を重複処理で消費しうる"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭 group。procedural persona による headless playtesting はゲーム制作への転用価値が高く、posted 2 / postponed 5 の mixed 状態を group 単位で閉じる必要がある"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    status_counts: "posted=2 / postponed=5"
+    terminal_paths: 2
+    open_paths: 5
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale triage queue 内の先頭 non-mixed candidate。会話型 RPG への転用余地はあるが、学習効果・参加者評価・失敗例の根拠不足を Phase 2 で再判定する"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- 判定: issue は既存の stale triage / group-action queue と Phase 2 handoff 契約で処理可能。新構造の設計は不要なため `needs_design: false`。
+- encoding-safe audit: `source_file_status=正常（UTF-8 代表語取得）`。shell / staging 表示にも今回 mojibake はなく、`display_or_tooling_status=none`。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
