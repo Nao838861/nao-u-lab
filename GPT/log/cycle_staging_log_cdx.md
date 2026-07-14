@@ -71,7 +71,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。atom 参照 50 件に broken 0 件。代表語 probe は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false で、取得できた日本語は正常"
+  - "memory/atoms.jsonl 2674 行を監査。JSON parse error 0、重複 id 0。per-file .md / index.jsonl と各 2674 件で一致し、content conflict 0"
+  - "既存 duplicate cluster sidecar を check。45 cluster / overlay 45 group で生成結果と一致し、正本 atom の変更なし"
+  - "memory/raw/ は 30 日超の非更新 file 93 件を確認。slack archive、sync state、web research 原文が中心で、原文保持契約と参照可能性を優先して本 phase では移動なし"
+  - "candidate lifecycle 内訳: posted 406 / ready_to_post 10 / postponed 382 / failed 120 / needs_review 22 / status 欠落 1。postponed + needs_review の stale_after 期限超過は 203 件、stale_after 欠落は 3 件"
+  - "mixed duplicate queue 74 行、stale triage queue 50 行、group-action queue 35 行を再生成。group-action 限定運用に従い mixed duplicate は先頭 1 group の representative のみ handoff"
+  - "slack_directives.jsonl 23 行、slack_broadcasts.jsonl 21 行を確認。pending は双方 0 件で close 対象なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 203
+  handed_off_this_cycle: 2
+  note: "期限超過全件を一度に流さず、group-action 先頭 1 group と stale triage 上位の非 mixed 1 件だけを Phase 2 へ渡す"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona 別の headless 評価へ直接移せる一方、同題候補が terminal 2 / open 5 に分散している"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    status_counts:
+      failed: 2
+      postponed: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale triage queue の非 mixed 最上位。会話型 RPG への移植価値は高いが、学習効果・参加者評価・失敗例の根拠が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- source_file_status: `memory/MEMORY.md` は UTF-8 source として正常。`評価軸` の literal は現 index に存在しないが、文字化けの証拠ではない。
+- display_or_tooling_status: 最初の PowerShell inline Python probe では日本語 literal が `?` に変換されたため、Unicode escape と `rg` で source を再確認した。source file 修復は不要。
+- 判定: 実データの不整合や検索導線の破断は見つからず、期限超過 203 件は既存 sidecar と Phase 2 handoff で処理可能。Phase 4b は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
