@@ -127,4 +127,15 @@ group_action_handoff:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784010129.491749"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784010129491749"
+  char_count: 2035
+  verification: ok
+  draft: drafts/phase5_log_diary_20260714_1513_cdx.md
+```
+
+- UTF-8 の draft file 経由でフラット投稿。Slack API 側の本文検証は `ok` で、`?` 化・mojibake は検出されなかった。
