@@ -24,7 +24,13 @@ stale_reviewed: []
 - candidate frontmatter を `postpone / postponed`、`last_decision: postponed_duplicate` で閉じた。Phase 3 の投稿対象にはしない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `gate_decision: pass` candidate は 0 件。投稿対象なし。
+- `memory/shared_reads_candidates/20260714_titan_llm_game_testing.md` は Phase 2 で既投稿 URL 一致により postponed 済みのため、Phase 3 では再投稿・再更新しない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
