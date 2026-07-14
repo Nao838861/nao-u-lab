@@ -109,4 +109,15 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784016519.155449"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784016519155449"
+  char_count: 1982
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260714_1658_cdx.md"
+```
+
+- Phase 1-4 の活動を「増やさない判断」と「203件の期限超過候補を次の1群へ絞る」を軸に日記化し、#log へフラット投稿した。
+- `post_slack_message_file.py --delete-on-fail` の投稿後検証は `ok`。文字化け・疑問符化・replacement character は検出されなかった。
