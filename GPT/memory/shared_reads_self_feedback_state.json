@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T06:03:57+09:00",
+  "updated_at": "2026-07-15T09:00:00+09:00",
   "reviewed_source_ts": [
     "1778491540.156779",
     "1778535047.473019",
@@ -378,7 +378,8 @@
     "1783522497.522889",
     "1783660317.348439",
     "1783304602.130549",
-    "1783295822.146129"
+    "1783295822.146129",
+    "1779956167.602569"
   ],
   "reviews": [
     {
@@ -9610,9 +9611,32 @@
       "scores": {"relevance": 2, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 15},
       "change": {"type": "probe", "summary": "次の LLM 会話、hidden-role、NPC 交渉、または自然言語判定の headless 評価 2 件で、sender control と receiver awareness profile を分け、同一状況の判定差と blind spot を固定 seed で記録する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-15T09:00:00+09:00",
+      "id": "sr-1779956167-0a1539adff",
+      "source_ts": "1779956167.602569",
+      "title": "Karpathy氏のLLM Wiki — 知識を『繋げる力』と『漏らさず拾う設計思想』",
+      "decision": "adopt_probe",
+      "reason": "Score 16. atoms/per-file/index は保存と検索を担うが、取り込み時の概念接続が次の判断を変えたか、誤統合をどの根拠で止めるかはまだ薄い。LLM Wiki の Raw/Wiki/Schema と Ingest/Query/Lint の分離は現在の memory 運用に直結し、次の ingest または consolidation で小さく検証できる。既存 probes は memory の失敗対象、意味境界、state role、worker bus を扱うが、新素材から既存概念への接続候補・行動差分・汚染防止根拠を一組で確認するものではない。2つの実運用記事と現行構造の対応が根拠だが、自動概念ページ更新の有効性をこの環境で直接測ってはいないため evidence は 2。1回の可逆 probe に限定し、概念ページ自動更新や恒久ルールは導入しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 16},
+      "change": {"type": "probe", "summary": "次の memory ingest または consolidation 1回で、新素材と既存概念の接続候補、接続が変える次の行動、誤統合を止める source_ts・反例・state role を確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260715-ingest-connection-action-lint",
+      "created_at": "2026-07-15T09:00:00+09:00",
+      "source_ts": "1779956167.602569",
+      "scope": "next memory ingest, atom consolidation, concept-page update, or recall summary that connects new material to an existing concept",
+      "questions": [
+        "Before connecting the new material, did I name one existing concept page, representative atom, or index entry it supports, contradicts, or leaves unresolved, instead of expanding many related files?",
+        "Did the connection change one next action, verification target, recall route, or staging conclusion; if not, did I keep it as reviewed state rather than promote it into a concept or rule?",
+        "Did I preserve one lint anchor that can stop a bad merge, such as source_ts, raw path, counterexample, state role, or explicit conflict, and label the connection concept_link_unverified if none exists?"
+      ],
+      "expires_after": "Review after the next memory ingest, atom consolidation, concept-page update, or recall summary that connects new material to existing knowledge."
+    },
     {
       "id": "probe-20260714-semantic-signaling-awareness-profile",
       "created_at": "2026-07-14T22:48:34+09:00",
