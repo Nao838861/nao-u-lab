@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-14T17:05:00+09:00",
+  "updated_at": "2026-07-14T19:05:00+09:00",
   "reviewed_source_ts": [
     "1778535046.573029",
     "1778535042.365919",
@@ -371,7 +371,8 @@
     "1783420796.091369",
     "1782515410.585469",
     "1783522497.522889",
-    "1783660317.348439"
+    "1783660317.348439",
+    "1783304602.130549"
   ],
   "reviews": [
     {
@@ -9414,9 +9415,33 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-14T19:05:00+09:00",
+      "id": "sr-1783304602-7eb4e72e3e",
+      "source_ts": "1783304602.130549",
+      "title": "OpenLife: open-world artificial life as surrounding processes",
+      "decision": "adopt_probe",
+      "reason": "Score 17. 単発 prompt の会話品質ではなく、memory・perception・evaluation・budget・scheduler を分離した周辺プロセスとして living NPC を設計し、reactive response だけでなく spontaneous action、unfinished goal、resource recovery、relationship change を同じ headless trace で見る観点は、次の NPC / simulation prototype に直結する。既存 probes は NPC の identity、social interaction、memory continuity、deterministic authority を個別に扱うが、周辺プロセスの接続と継続活動を一つの small-loop として確認していない。OpenLife の証拠は非統制の観察 run であり人工生命達成の因果証明ではないため evidence は 2 とし、30-100 tick の sandbox/headless 評価 2 件に限定する。外部投稿・決済・open-world access は採用しない。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 3, "risk_control": 3, "reversibility": 3, "total": 17},
+      "change": {"type": "probe", "summary": "次の living NPC / persistent agent prototype または headless simulation 2 件で、周辺プロセスの分離、reactive と spontaneous の区別、budget・未完了 goal・過去 failure による行動変化を確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260714-openlife-surrounding-process-loop",
+      "created_at": "2026-07-14T19:05:00+09:00",
+      "source_ts": "1783304602.130549",
+      "scope": "次の living NPC、persistent agent、small-world simulation、または 30-100 tick の headless prototype 評価 2 件",
+      "questions": [
+        "単発 prompt に人格を押し込まず、memory、perception/inbox、evaluation/appraisal、budget/resource、scheduler/activity のうち実装する周辺プロセスと、実装しない境界を列挙したか？",
+        "同じ 30-100 tick trace で、prompt/event への reactive action と、未完了 goal、budget、mention、relationship、過去 failure に基づく spontaneous/continued action を区別して記録したか？",
+        "行動変化を life-like/autonomous の証明とせず、spontaneous_action_ratio、memory_reference_freshness、resource_recovery、relationship_change、repeated_failure のいずれかで観測し、外部投稿・決済・network access は sandbox 外へ広げなかったか？"
+      ],
+      "expires_after": "次の living NPC / persistent-agent / small-world headless 評価 2 件の後に見直す。",
+      "withdrawal_condition": "次の2件で周辺プロセスの境界、reactive/spontaneous の区別、budget・goal・memory・relationship による行動差分が既存 trace に自然に含まれるなら、この probe を削除する。"
+    },
     {
       "id": "probe-20260714-taboo-compliance-communication-split",
       "created_at": "2026-07-14T06:18:13+09:00",
