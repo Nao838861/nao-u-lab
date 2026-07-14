@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/prototyping-i-let-s-revolution-i-
 collected_at: "2026-07-14T10:00:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, prototyping, puzzle, roguelike, procedural-generation]
+evaluated_at: "2026-07-14T09:45:50+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-14T09:45:50+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-14T09:45:50+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-13"
+supersedes: []
+gate_reason: >-
+  Minesweeper の path 化から、単調な最適行動と blind guess を検出し、pawn・Mana ability・attack clock・生成規則へ段階的に変換した因果連鎖が具体的である。
+  小さな probe、agency の診断、core loop の育成、完走優先の scope 判断までゲーム制作の反復場面へ直接移せ、約4000字の独立した分析に耐える。
+suggested_post_outline:
+  overview_angle: "既知 mechanic の表層移植ではなく、prototype で露出した agency 欠如を一手ずつ別の core loop へ変換した過程"
+  analysis_axis: "各 prototype が何を検証し、単調な最適解・50/50 推測・進行停滞をどの mechanic と生成制約で解いたか"
+  application_target: "Log_cdx の小規模 game prototype で、最小 probe から dominant strategy と blind choice を発見し、移動・資源・敵 clock・PCG 制約を順に追加する設計サイクル"
+  pros_cons: "長所は失敗の症状と設計変更の因果が追えること。短所は単一チームの事後分析であり、各変更の寄与を分離した比較実験ではないこと"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt

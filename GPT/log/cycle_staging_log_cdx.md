@@ -10,7 +10,20 @@
 - pending inbox: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260714_playtesting_beyond_personas.md
+  - memory/shared_reads_candidates/20260714_lets_revolution_prototyping_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- terminal-title preflight: 2 件とも `continue`。posted sibling / terminal canonical による除外なし。
+- `Playtesting: What is Beyond Personas`: developing persona と APF の役割分離、GVGAI / VizDoom での比較、route coverage への適用が揃うため pass。
+- `Let's! Revolution!` postmortem: prototype ごとの問題発見と mechanic 変更の因果、PCG・scope 判断まで具体的で、制作サイクルへ直接適用できるため pass。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
