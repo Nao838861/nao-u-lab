@@ -1,17 +1,18 @@
 // 流通の島 v0 エンジン (spatial/engine.py の較正値を移植・ブラウザ/Node両用)
 export const GOODS = ['fish','veg','wheat','pres','pick','tools','salt','char','meat','meal','stone','oil','iron','cloth'];
+export const PERISH = ['fish','veg','meat','pres','pick','wheat','meal'];
 // pick=漬物(野菜の保存・野菜枠の多様性が冬も立つ)
 export const FOODS = ['fish','veg','wheat','pres','pick','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',pick:'veg',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:5, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
+  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
-  D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.12, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
+  D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
   IMP:{wheat:2.6,tools:3.5,salt:3.0,iron:3.8}, IMP_COST:{wheat:1.0,tools:2.5,salt:2.0,iron:2.5},  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
-  EXP:{pres:0.8,pick:0.8,tools:1.5,stone:0.6,oil:3.2}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12}, EXP_ML:{pres:1.3,pick:1.2,tools:2.0,stone:0.9,oil:4.0},
-  PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:1.6,char:1.2},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
+  EXP:{pres:0.8,pick:0.8,tools:1.5,stone:0.6,oil:3.2,salt:1.5}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15}, EXP_ML:{pres:1.3,pick:1.2,tools:2.0,stone:0.9,oil:4.0,salt:1.9},
+  PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:2.0,char:1.5},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
   BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:5000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
@@ -170,12 +171,13 @@ export class World{
     for(const r of reqsNow){if(r==='saltchar'){needSet.add('salt');needSet.add('char');}
       else if(['tools','salt','char','cloth','iron'].includes(r))needSet.add(r);}
     needSet.add('char');   // 暖は全階層の基礎需要(冬)
-    for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.0],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
+    for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.5],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
       if(!needSet.has(g))continue;
       if(t[g])continue;
       if(h.pantry[g]<dd*cd*0.5)t[g]=[dd*cd-h.pantry[g],val];}
     return t;}
   sellOffers(h){const out={};const doleOn=this.goDay===null;
+    const cooled=g=>P.EXP[g]===undefined&&(h.noSell?.[g]||0)>this.day; // 輸出台のない財だけ季節休業(輸出財は台が常に買う)
     const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];
     if(my==='meal'){if(h.pantry.meal>=15)return{meal:Math.min(h.pantry.meal,P.HAUL)};return{};}
     if(my==='fish'){let keep=P.EAT;
@@ -187,7 +189,7 @@ export class World{
     else{let keep=FOODS.includes(my)?P.EAT*2:2,rate=0.5;
       if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=P.EAT*P.RATION*10;}
       if(my==='veg'&&doleOn)keep=P.EAT*P.RATION*10;
-      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,h.haul());}
+      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9&&!cooled(my))out[my]=Math.min(s*rate+2,s,h.haul());}
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
     if(h.job==='veg'&&h.pantry.pick>10)out.pick=Math.min(h.pantry.pick-5,h.haul());
@@ -214,31 +216,31 @@ export class World{
       const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
-      if(offers.fish>0||sellSum>=10||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>5))h.state='toMarket';}
+      if(offers.fish>0||sellSum>=10||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20))h.state='toMarket';}
 
     if(tod===29)this.dayEnd();}
   dayStart(){this.day++;this.deskUsed={};
     for(const g of GOODS){const st=this.stalls[g];
+      const perishable=PERISH.includes(g);
       for(let i=st.length-1;i>=0;i--){const s=st[i];
-        s.price*=0.985;s.age=(s.age||0)+1;   // 売れ残りは徐々に値下げ(店番の判断)
-        // 3日売れ残ったら公的買付台へ流す(民需の高値を試してから床に落とす)
-        if(s.age>=3&&s.hh instanceof HH){
-          const desks=[];
-          if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-          if(P.GRAN_BID[g]&&this.goDay===null&&(this.granary[g]||0)<((g==='wheat'||g==='pres')?300:120))desks.push(['GRAN',P.GRAN_BID[g],(g==='wheat'||g==='pres')?Math.max(2,this.doleRate*0.6):3]);
-          desks.sort((a,b)=>b[1]-a[1]);
-          for(const[kind,price,cap]of desks){
-            if(s.qty<1e-9)break;
-            const used=this.deskUsed[kind+g]||0;const can=Math.min(s.qty,Math.max(0,cap-used));
-            if(can<1e-9)continue;
-            this.deskUsed[kind+g]=used+can;
+        if(perishable)s.price*=0.985;s.age=(s.age||0)+1;   // 生鮮は値下げして捌く。保存財は値持ち(投げ売る理由がない)
+        // 3日売れ残ったら輸出台へ流す(端数は黙って本土行き=定常収入。信念ペナルティは生鮮のみ)
+        if(s.age>=3&&s.hh instanceof HH&&P.EXP[g]!==undefined){
+          const price=P.EXP[g],cap=P.EXP_CAP[g];
+          const used=this.deskUsed['EXP'+g]||0;const can=Math.min(s.qty,Math.max(0,cap-used));
+          if(can>1e-9){
+            this.deskUsed['EXP'+g]=used+can;
             s.qty-=can;s.hh.purse+=can*price;s.hh.income30+=can*price;this.treasury-=can*price;
-            if(kind==='GRAN')this.co.gran+=can*price;else if(kind==='EXP')this.co.expBuy+=can*price;
-            s.hh.belief[g]=Math.max(s.hh.belief[g]*0.9,price);
-            if(kind==='EXP'){this.exported[g]=(this.exported[g]||0)+can;
-              const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
-            else if(kind==='GRAN')this.granary[g]=(this.granary[g]||0)+can;}}
-        if(s.hh instanceof HH)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる
+            this.co.expBuy+=can*price;
+            if(perishable)s.hh.belief[g]=Math.max(s.hh.belief[g]*0.9,price);
+            this.exported[g]=(this.exported[g]||0)+can;
+            const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}}
+        if(s.hh instanceof HH&&perishable)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる(生鮮のみ)
+        if(s.hh instanceof HH&&!perishable&&s.age>=6)s.hh.belief[g]*=0.97; // 保存財は撤収時に少しだけ学習
+        if(s.age>=6&&s.hh instanceof HH&&g!=='fish'&&g!=='veg'){s.hh.pantry[g]+=s.qty;s.qty=0;
+          if(P.EXP[g]===undefined)(s.hh.noSell=s.hh.noSell||{})[g]=this.day+15;} // 輸出台のない財は畳んで15日休業(売れない市に通わない)
+        if(s.hh instanceof HH&&g==='salt'&&s.hh.job==='saltworks'){const floor=s.hh.belief.char*(P.SALT_CHAR/P.Y_SALT)*1.2;
+          s.hh.belief.salt=Math.max(s.hh.belief.salt,floor);s.price=Math.max(s.price,floor);} // 原価割れの値付けはしない(売るより持つ)
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;this.led.spoil.fish=(this.led.spoil.fish||0)+rot;}
         if(s.qty<0.5||s.price<0.05){          // 空/捨て値→撤収(残りは持ち主の帳尻へ)
           if(s.hh instanceof HH)s.hh.pantry[g]+=Math.max(0,s.qty);
@@ -257,6 +259,11 @@ export class World{
   produceTick(h,f){
     let stall=false;for(const g of GOODS){if(this.stalls[g].some(s=>s.hh===h)){stall=true;break;}}
     if(stall)f*=(h.members.length-1)/h.members.length;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
+    // 供給の自己調整: 職人は倉+自分の屋台残が日産10日分を超えたら手を止める(売れない山に投げ続けて信念崩落するのを防ぐ)
+    const craftG={saltworks:'salt',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal'}[h.job];
+    if(craftG){const daily={salt:P.Y_SALT,tools:P.Y_TOOLS,char:P.Y_CHAR,stone:P.Y_STONE,oil:P.Y_OIL,meal:P.Y_FISH/P.MEAL_FISH}[craftG]*h.mult();
+      const out=this.stalls[craftG].reduce((a,s)=>a+(s.hh===h?s.qty:0),0);
+      if(h.pantry[craftG]+out>daily*5)return;}
     const w=f*h.mult();
     if(h.job==='fisher2'){const dep=this.bay2/P.BAY0;
       if(!winter){const q=P.Y_FISH*w*dep;
@@ -277,7 +284,7 @@ export class World{
     else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
       this.grove=Math.min(P.GROVE0,this.grove-q*2+f*P.GROVE_R*this.grove*(1-dep));h.pantry.tools+=q;}
     else if(h.job==='charburner'){const dep=this.grove/P.GROVE0;const q=P.Y_CHAR*w*dep;
-      this.grove=Math.min(P.GROVE0,this.grove-q*1.5+f*P.GROVE_R*this.grove*(1-dep));h.pantry.char+=q;}
+      this.grove=Math.min(P.GROVE0,this.grove-q*1.0+f*P.GROVE_R*this.grove*(1-dep));h.pantry.char+=q;}
     else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
       h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;}}
   transact(h){const doleOn=this.goDay===null;
@@ -286,7 +293,6 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(P.GRAN_BID[g]&&doleOn&&(this.granary[g]||0)<((g==='wheat'||g==='pres')?300:120))desks.push(['GRAN',P.GRAN_BID[g],(g==='wheat'||g==='pres')?Math.max(2,this.doleRate*0.6):3]);
       if(g==='tools'&&this.pubLeft>0)desks.push(['PUB',1.8,this.pubLeft/1.8]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
@@ -308,7 +314,9 @@ export class World{
         h.belief[g]+=(price-h.belief[g])*0.1;q-=can;}
       if(q>1e-9){ // 屋台に出す(店番=家族が残る扱い。委託中は生産効率減)
         h.pantry[g]-=q;
-        this.stalls[g].push({hh:h,qty:q,price:h.belief[g]*(1.0+this.rng()*0.1),age:0});}}
+        const jit=PERISH.includes(g)?(1.0+this.rng()*0.1):(0.85+this.rng()*0.3); // 保存財は±15%の探索的値付け
+        const base=PERISH.includes(g)?h.belief[g]:Math.max(h.belief[g],(h.bestSale?.[g]?.[0]||0)*0.9); // 最良成約の記憶(季節の谷で信念が沈んでも冬値を忘れない)
+        this.stalls[g].push({hh:h,qty:q,price:base*jit,age:0});}}
     // --- 買い: 安い屋台(+会社の輸入棚)から。持ち帰り容量まで ---
     let cap=h.haul();
     const targets=this.buyTargets(h);
@@ -317,12 +325,10 @@ export class World{
       let[want,ceil]=targets[g];want=Math.min(want,cap);
       const shelves=[...this.stalls[g]].sort((a,b)=>a.price-b.price);
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
-      // 御蔵の放出=払底時のみ(常時棚に出すと公的備蓄が民業を圧迫し生産者を締め出す・計測済)
-      if(P.GRAN_BID[g]&&(this.granary[g]||0)>10&&this.stalls[g].length===0)
-        shelves.push({hh:'GRANSELL',qty:this.granary[g]-10,price:Math.min(P.GRAN_BID[g]*1.25,(P.IMP[g]??9)*0.97)});
+      const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal');
       for(const s of shelves){if(want<1e-9)break;
         if(s.price>ceil||s.price<=0)continue;
-        const q=Math.min(want,s.qty,h.purse/s.price);
+        const q=Math.min(want,s.qty,(h.purse+(isInput?30:0))/s.price); // 仕入れは-30まで信用買い(前貸し)
         if(q<1e-9)continue;
         h.purse-=q*s.price;h.pantry[g]+=q;want-=q;cap-=q;
         h.belief[g]+=(s.price-h.belief[g])*0.2;
@@ -333,7 +339,9 @@ export class World{
           this.imported[g]=(this.imported[g]||0)+q;}
         else if(s.hh==='GRANSELL'){this.treasury+=q*s.price;this.granary[g]-=q;s.qty-=q;}
         else{s.qty-=q;s.hh.purse+=q*s.price;s.hh.income30+=q*s.price;
-          s.hh.belief[g]+=(s.price-s.hh.belief[g])*0.1;}
+          if(PERISH.includes(g))s.hh.belief[g]+=(s.price-s.hh.belief[g])*0.1;
+          else{if(s.price>s.hh.belief[g])s.hh.belief[g]+=(s.price-s.hh.belief[g])*0.25; // 高札の成約だけ強く学ぶ(安札から売れる選択バイアス対策)
+            const bs=s.hh.bestSale=s.hh.bestSale||{};if(!bs[g]||s.price>bs[g][0]||this.day-bs[g][1]>120)bs[g]=[s.price,this.day];}}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);}
       if(want>1e-6&&targets[g])h.belief[g]=Math.min(h.belief[g]*1.04,12);}}
   marketSessionOld(){const d=this.day,m=Math.floor((d-1)/30)+1;
@@ -374,6 +382,13 @@ export class World{
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
         if(fd<1){let q=h.eat()*P.DOLE_RATION;
           for(const g of['wheat','pres']){const u=Math.min(this.granary[g],q);this.granary[g]-=u;q-=u;h.pantry[g]+=u;doleToday+=u;}
+          // 地元調達: 輸入パリティ以下の屋台から買う(村に金が落ちる。売り手が配給対象自身でも可=買い上げ)
+          for(const g of['wheat','pres','veg','meat']){if(q<1e-9)break;
+            for(const s of[...this.stalls[g]].sort((a,b)=>a.price-b.price)){if(q<1e-9)break;
+              if(!(s.hh instanceof HH)||s.price>P.IMP_COST.wheat*1.3)continue;
+              const u=Math.min(s.qty,q);if(u<1e-9)continue;
+              s.qty-=u;q-=u;h.pantry[g]+=u;doleToday+=u;
+              const c=u*s.price;s.hh.purse+=c;s.hh.income30+=c;this.treasury-=c;this.co.gran+=c;this.led.dole+=u;}}
           if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;this.outBy.dole+=c;this.led.dole+=q;this.co.doleC+=c;
             h.pantry.wheat+=q;doleToday+=q;}}}
       this.doleQty+=doleToday;this.doleRate+=(doleToday-this.doleRate)*0.1;}
