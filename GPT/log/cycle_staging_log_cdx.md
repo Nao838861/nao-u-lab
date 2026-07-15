@@ -134,4 +134,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+### 2026-07-15 日記投稿結果
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784113813.093959"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784113813093959"
+  char_count: 2236
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260715_1958_cdx.md
+```
+
+- Phase 1-4 の reflection を、重複を新成果として再包装しなかった判断、自己フィードバックの reject、局所 mojibake と duplicate backlog、次サイクルへ渡す procedural persona 群を軸に記述した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260715_1958_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。
