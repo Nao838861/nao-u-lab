@@ -44,7 +44,13 @@ P = dict(
     # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
     # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
     # 滑走路の長さ = 初期金庫(TREASURY0) ÷ 食料赤字×輸入原価
-    DOLE=True, CREDIT=4000.0,
+    DOLE=True,
+    # 会社財政の弧 (Nao_u 2026-07-15): 標準プレイ=無利子期間内に債務ピーク→黒字化→
+    # しばらくのちに完済 / 無理解プレイ=利子付き債務が複利で膨張→限度超過=破産→リプレイ。
+    # 金庫がマイナス=本国からの借入。M{FREE_M}まで無利子、以後は月利IRATE。
+    # 限度は支援期に伸びM{LIMIT_FREEZE}で凍結(本国の忍耐、v8で較正済みの形)
+    FREE_M=18, IRATE=0.01,
+    LIMIT0=8000.0, LIMIT_G=600.0, LIMIT_FREEZE=24,
     # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
     # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
     GRAN_BID=dict(wheat=1.6, pres=1.5),
@@ -169,6 +175,7 @@ class World:
         if overrides:
             P.update(overrides)
         self.plan = plan or {}           # 月→[(job, pos, road)] の入植計画(プレイヤーの手)
+        self.pub_schedule = {}           # 月→公費建設予算/日 (プレイヤーが絞る弁)
         self.month_events = []
         self.rng = random.Random(seed)
         self.hhs = hhs
@@ -218,6 +225,9 @@ class World:
         m = (d - 1) // 30 + 1
         mm = (m - 1) % 12 + 1
         se = self.season(mm)
+        if d % 30 == 1 and m in self.pub_schedule:
+            P['PUBWORKS'] = self.pub_schedule[m]
+            self.month_events.append(f'公費→{P["PUBWORKS"]:.0f}/日')
         # --- 入植(月初): 持参金=本土からの貨幣流入・渡航費=会社→本土 ---
         if d % 30 == 1 and m in self.plan:
             for job, pos, road in self.plan[m]:
@@ -349,10 +359,6 @@ class World:
                         dole_today += u
                     if q > 1e-9:                        # 不足は輸入
                         c = q * P['IMP_COST']['wheat']
-                        if self.treasury - c < -P['CREDIT']:
-                            self.go_day = self.day
-                            self.events.append((self.day, '★金庫が信用限度に達し配給停止(詰み)'))
-                            break
                         self.treasury -= c; self.mainland_out += c
                         h.pantry['wheat'] += q
                         self.imported['wheat'] += q; dole_today += q
@@ -426,15 +432,18 @@ class World:
             reqs = LADDER[h.cls()]
             keep = all(h.sat_today[reqs[i]] for i in range(h.lv))
             nxt = h.sat_today[reqs[h.lv]] if h.lv < len(reqs) else False
+            # 軟ストリーク: 欠けた日は進捗を5日分失う(振り出しには戻らない)。
+            # 連続N日の硬い判定は世帯粒度では現金フローの荒れで永久に成立しない
+            # (島集計のv8では見えなかった閂。実質=許容率つきの窓判定)
             if keep and nxt:
                 h.up += 1; h.down = 0
                 if h.up >= P['UP_DAYS'] * (h.lv + 1):
                     h.lv += 1; h.up = 0
                     self.events.append((d, f'HH{h.id}({h.job}) ▲Lv{h.lv}'))
             elif keep:
-                h.up = 0; h.down = 0
+                h.up = max(0, h.up - 5); h.down = 0
             else:
-                h.up = 0; h.down += 1
+                h.up = max(0, h.up - 5); h.down += 1
                 if h.down >= P['DOWN_DAYS'] and h.lv > 0:
                     h.lv -= 1; h.down = 0
                     self.events.append((d, f'HH{h.id}({h.job}) ▼Lv{h.lv}'))
@@ -485,6 +494,17 @@ class World:
                 self._pw_prev = self.pubworks_bought
             assert abs(err) < 1e-5, f"質量収支違反 {g}: err={err} day={self.day}"
 
+        # --- 会社財政の弧: 利子・限度・破産 (月末) ---
+        if d % 30 == 0:
+            debt = max(0.0, -self.treasury)
+            if m > P['FREE_M'] and debt > 0:
+                intr = debt * P['IRATE']
+                self.treasury -= intr; self.mainland_out += intr
+            limit = P['LIMIT0'] + P['LIMIT_G'] * min(m, P['LIMIT_FREEZE'])
+            if self.go_day is None and -self.treasury > limit:
+                self.go_day = d
+                self.events.append((d, f'★破産(債務{-self.treasury:.0f}>限度{limit:.0f})→配給停止・リプレイへ'))
+
         # --- 日次メトリクス ---
         if d % 30 == 0:
             clslv = defaultdict(list)
@@ -532,6 +552,12 @@ class World:
         if h.job != 'fisher':
             ceil = 99.0 if food_days < 1.5 else min(h.belief['fish'] * 1.5, cheapest * 2.2)
             t['fish'] = (P['EAT'] * 0.5, ceil)
+        # パンの小口常備(v8のF11の空間版): 夏に魚と野菜で満腹だと麦を買わず、45日で
+        # 穀物種別が切れて漁師が毎年6月にLv転落する。多様性分の麦は満腹でも買う
+        if h.job != 'wheat' and h.pantry['wheat'] < P['EAT'] * P['DIVERSITY_RATION'] * 10:
+            if 'wheat' not in t:
+                t['wheat'] = (P['EAT'] * P['DIVERSITY_RATION'] * 15 - h.pantry['wheat'],
+                              h.belief['wheat'] * 1.3)
         uv = P['USE_VALUE_CEILING']
         if h.job == 'saltworks' and h.pantry['char'] < P['SALT_CHAR'] * 5:
             ceil = (P['Y_SALT'] * h.belief['salt'] * 0.5 if uv else h.belief['char'] * 1.2)

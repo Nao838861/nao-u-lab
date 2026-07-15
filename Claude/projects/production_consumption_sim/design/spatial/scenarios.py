@@ -57,6 +57,18 @@ def summary_tail(w):
     print(f"直近30日収入(職種別): {inc}")
     print(f"文化Lv: {[(h.id, h.job, h.lv) for h in w.hhs]}")
 
+def arc(w):
+    ts = [(r['m'], r['treasury']) for r in w.rows]
+    peak_m, peak_t = min(ts, key=lambda x: x[1])
+    surplus_m = None; repaid_m = None
+    for i in range(1, len(ts)):
+        if surplus_m is None and ts[i][0] > 6 and ts[i][1] > ts[i-1][1] + 50:
+            surplus_m = ts[i][0]
+        if repaid_m is None and ts[i][1] >= 0 and ts[i-1][1] < 0:
+            repaid_m = ts[i][0]
+    print(f"財政弧: 債務ピーク M{peak_m}({-peak_t:.0f}) / 黒字化 {'M%d' % surplus_m if surplus_m else 'なし'} / "
+          f"完済 {'M%d' % repaid_m if repaid_m else 'なし'} / 破産 {'M%d' % ((w.go_day-1)//30+1) if w.go_day else 'なし'}")
+
 def table_m(w):
     print(f"{'月':>3}{'人口':>4}{'魚':>6}{'麦':>6}{'保存':>6}{'道具':>6}{'塩':>6}{'炭':>6}"
           f"{'世帯金':>7}{'商館':>8}{'配給/月':>7}{'飢餓':>5}{'湾%':>4} 文化Lv(職種平均)  出来事")
@@ -93,12 +105,14 @@ if __name__ == '__main__':
         start = [HH('fisher', (0.3, 0.2)), HH('veg', (0.6, -0.4)), HH('wheat', (1.0, -0.6))]
         plan = {
             2:  [('woodshop', (1.8, 1.0), False)],
+            3:  [('charburner', (2.0, 1.2), False)],   # 炭価高騰への標準的な応手
             4:  [('fisher', (0.4, -0.2), False)],
-            5:  [('charburner', (2.0, 1.2), False)],
+            5:  [('charburner', (2.1, 1.3), False)],
             6:  [('saltworks', (0.2, -0.3), False)],
             7:  [('veg', (0.8, 0.5), False)],
             8:  [('fisher', (0.5, 0.4), False)],
-            13: [('veg', (1.2, 0.9), False)],
+            9:  [('charburner', (2.3, 1.4), False)],
+            13: [('saltworks', (0.3, -0.4), False)],
             14: [('wheat', (1.2, -0.8), True), ('wheat', (1.4, -1.0), True)],
             15: [('fisher', (0.6, 0.6), False)],
             16: [('woodshop', (2.2, 1.4), True)],
@@ -106,12 +120,38 @@ if __name__ == '__main__':
             18: [('charburner', (2.4, 1.5), True)],
         }
         w = World(start, seed=11, plan=plan,
-                  overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000,
+                  overrides={'PUBWORKS': 120, 'TREASURY0': 3000,
                              'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0},
-                             'JOB_SWITCH': True}).run(720)
-        print('----- S4 標準プレイ 2年 (現行ルール一式: 配給・詰みレース・破綻転職・使用価値天井) -----')
+                             'JOB_SWITCH': True}).run(1440)
+        print('----- S4 標準プレイ 4年 (財政弧: 無利子M18→月利1%・限度は支援期に伸びM24凍結) -----')
         table_m(w)
         summary_tail(w)
+        arc(w)
+    elif which == 'S5':
+        HH._next = 0
+        start = [HH('fisher', (0.3, 0.2)), HH('veg', (0.6, -0.4)), HH('wheat', (1.0, -0.6))]
+        plan = {   # 無理解プレイ: 麦先行・炭と塩が遅い・漁が薄い
+            2:  [('wheat', (1.1, -0.7), False)],
+            3:  [('wheat', (1.3, -0.9), False)],
+            4:  [('veg', (0.8, 0.5), False)],
+            6:  [('fisher', (0.4, -0.2), False)],
+            9:  [('woodshop', (1.8, 1.0), False)],
+            13: [('fisher', (0.5, 0.4), False)],
+            14: [('veg', (1.2, 0.9), False)],
+            16: [('charburner', (2.0, 1.2), False)],
+            18: [('saltworks', (0.2, -0.3), False)],
+            20: [('wheat', (1.4, -1.0), False)],
+            26: [('fisher', (0.6, 0.6), False)],
+            30: [('veg', (1.5, -1.0), False)],
+        }
+        w = World(start, seed=11, plan=plan,
+                  overrides={'PUBWORKS': 120, 'TREASURY0': 3000,
+                             'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0},
+                             'JOB_SWITCH': True}).run(1440)
+        print('----- S5 無理解プレイ 4年 -----')
+        table_m(w)
+        summary_tail(w)
+        arc(w)
     elif which == 'S3':
         w = World(village(far_fisher=True), seed=11,
                   overrides={'JOB_SWITCH': True, 'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(1080)
