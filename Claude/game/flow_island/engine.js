@@ -4,7 +4,7 @@ export const FOODS = ['fish','veg','wheat','pres','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:13, Y_FISH_W:3.2, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:12, Y_MEAT:8,
+  Y_FISH:13, Y_FISH_W:3.2, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:12, Y_MEAT:16,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.12, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
@@ -158,13 +158,17 @@ export class World{
       else if(h.state==='toMarket'){if(this.stepToMarket(h))h.state='atMarket';}
       else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
       else if(h.state==='home'){this.produceTick(h,1/30);}}
-    if(tod===12)for(const h of this.hhs){if(h.state!=='home')continue;
+    if(tod===16)for(const h of this.hhs){if(h.state!=='home')continue;
       const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
       const offers=this.sellOffers(h);const sellSum=Object.values(offers).reduce((a,b)=>a+b,0);
-      const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*8);
+      const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*4);
       const inputLow=(h.job==='saltworks'&&h.pantry.char<2)||(h.job==='fisher'&&h.pantry.salt<1)||((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<1&&this.day%7===0);
-      if(offers.fish>0||sellSum>=10||fd<3||lowCult||inputLow)h.state='toMarket';}
-    if(tod===15)this.marketSession();
+      // 食料の自産者(漁/菜/牧)は日々の食いつなぎで出発しない(在庫が薄いのは仕様)。
+      // 本当に空の時だけ買いに行く。これが無いと毎日通勤し実効生産<自家消費で永久赤字
+      const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
+      // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
+      if(offers.fish>0||sellSum>=10||fd<fdThr||(lowCult&&h.purse>15)||(inputLow&&h.purse>5))h.state='toMarket';}
+    if(tod===21)this.marketSession();
     if(tod===29)this.dayEnd();}
   dayStart(){this.day++;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
     // 船(15日ごと): 未充足の区画へ移民を運ぶ(最大2世帯/便)
