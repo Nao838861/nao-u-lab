@@ -38,7 +38,36 @@ skipped:
 - candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を確認済み。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784088387-4eb6bf6ddb
+    source_ts: "1784088387.032009"
+    title: "EAST: 知識追跡と協調行動への変換を分けて測る機能的 Theory of Mind 評価"
+    reason: "未レビューの score 10 atom。memory・harness・game-design・agent・operation・evaluation を横断し、協力ゲームAIと複数agentのmemory共有境界で、説明の正しさと実行actionを分離する改善へ直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の協力ゲームAI評価または複数agentのmemory共有判断で、各agentの観測可能情報、相手知識の構造化予測、最終actionを分け、execution gap と偶然成功を確認する3問probeを追加した。次の該当2回後に見直す。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用理由: 全必須閾値を満たす。既存probeは共有状態や観測境界を扱うが、知識追跡の説明と最終actionの不一致を `execution gap` として別採点する点は未カバー。
+- 撤退条件: 次の該当2回で既存の観測境界・協調probeだけで同じ分離が自然に記録される、または規範的な協調点を一意に置けず判定が恣意的になる場合は、このprobeを終了する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

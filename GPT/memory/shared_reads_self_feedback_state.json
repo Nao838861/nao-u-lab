@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T13:20:00+09:00",
+  "updated_at": "2026-07-15T14:50:00+09:00",
   "reviewed_source_ts": [
     "1782668411.613329",
     "1778491540.156779",
@@ -382,9 +382,43 @@
     "1783295822.146129",
     "1779956167.602569",
     "1782646839.446789",
-    "1778535751.103379"
+    "1778535751.103379",
+    "1784088387.032009"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T14:50:00+09:00",
+      "selected": {
+        "id": "sr-1784088387-4eb6bf6ddb",
+        "source_ts": "1784088387.032009",
+        "title": "EAST: 知識追跡と協調行動への変換を分けて測る機能的 Theory of Mind 評価",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation を横断する。静的な説明の正しさと、相手が実際に利用できる情報に沿った行動を分離する観点は、協力ゲームAIの headless 評価と複数agent間のmemory共有境界に直接つながる。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計17で全必須閾値を満たす。既存probeには共有状態、観測境界、協調結果を確認するものがあるが、知識追跡の説明と最終actionの整合を execution gap として別採点する問いは重複しない。EASTの語彙課題や規範解を一般化せず、次の協力ゲーム評価またはmemory共有判断で2回だけ試す。",
+      "change": {
+        "type": "probe",
+        "summary": "次の協力ゲームAI評価または複数agentのmemory共有判断で、観測可能情報、相手知識の構造化予測、最終actionを分離し、予測が正しいのに行動が境界を破る execution gap を確認する3問probeを追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T11:35:00+09:00",
       "selected": {
@@ -9705,6 +9739,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260715-east-knowledge-action-gap",
+      "created_at": "2026-07-15T14:50:00+09:00",
+      "source_ts": "1784088387.032009",
+      "scope": "next cooperative game-agent/headless evaluation or multi-agent memory-sharing decision where Codex may treat a correct statement about another agent's knowledge as evidence that the final action respected that knowledge boundary",
+      "questions": [
+        "Did I record separately what each agent could observe, what it predicted the partner knew, and the final action or downstream memory reference, instead of inferring all three from a plausible explanation?",
+        "Did I classify the result as normative success, accidental success, mismatch, or execution gap when the knowledge prediction was correct but the action relied on unavailable or private information?",
+        "If the expected coordination point depends on salience, vocabulary, prompt similarity, or same-model self-play, did I preserve one controlled contrast or label the normative target unverified before changing game design, memory policy, or evaluation criteria?"
+      ],
+      "expires_after": "Review after the next two cooperative game-agent evaluations or multi-agent memory-sharing decisions that involve asymmetric observation, private staging, shared memory, partner-knowledge prediction, or coordination claims."
+    },
     {
       "id": "probe-20260715-team-scenario-mode-diversity",
       "created_at": "2026-07-15T09:34:14+09:00",
