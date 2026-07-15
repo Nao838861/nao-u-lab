@@ -10,7 +10,16 @@
 - 収集のみ実施。品質判定・長文概要・Slack 投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260715_one_pixel_minimalist_game_design.md
+    reason: "制約と実験設計、ゲーム制作への適用先は明確だが、結果・分析軸・結論の具体が不足し、約4000字概要には原文結果節の補完が必要"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

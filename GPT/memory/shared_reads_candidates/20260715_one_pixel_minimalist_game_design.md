@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2207.03827"
 collected_at: "2026-07-15T09:30:21.1699902+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, minimalism, prototyping, mechanics, interaction-design]
+evaluated_at: "2026-07-15T09:31:31.9751057+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T09:31:31.9751057+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-15T09:31:31.9751057+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  1 pixel / 1 key という制約、参加者構成、bottom-up な実験設計までは抽出でき、短時間プロトタイプで mechanic の核を検証する用途にも直結する。
+  ただし現候補には生成 concepts の分析軸、観察された差、評価結果、結論の具体がなく、CoopEval 水準の約4000字概要を根拠付きで書くには原文の結果節が必要。
 ---
 
 ## raw_excerpt
