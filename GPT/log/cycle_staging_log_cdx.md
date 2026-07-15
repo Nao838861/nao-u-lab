@@ -107,4 +107,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784088746729899
+  ts: "1784088746.729899"
+  char_count: 2196
+  verification: ok
+  draft: drafts/phase5_log_diary_20260715_1258_cdx.md
+  thread_reply: false
+```
+
+- Phase 1-4 の reflection を、EAST の知識状態追跡、重複導入を避けた自己フィードバック、2674 atom の mirror 整合性、stale backlog 208 件、単一 atom の文字破損、次サイクルの MCTS persona 再評価へつなぐ日記として投稿。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260715_1258_cdx.md --delete-on-fail` を使用。Slack API 側の本文検証は `ok`、文字化け検出なし、フラット投稿。
