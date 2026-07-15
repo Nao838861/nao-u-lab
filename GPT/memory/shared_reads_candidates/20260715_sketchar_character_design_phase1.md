@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2508.12333v1"
 collected_at: "2026-07-15T23:40:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, character-design, co-creation, generative-ai, prototyping]
+evaluated_at: "2026-07-15T23:55:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-15T23:55:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-15T23:55:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: "生成画像を職種間の会話用プロトタイプとして扱う問題設定とゲーム制作への適用先は明確である。一方、候補本文には mixed-method study の参加者構成、比較条件、評価指標、具体的な結果、限界がなく、同一 URL の failed sibling と情報量も同等であるため、CoopEval 水準の約4000字概要を根拠付きで構成できない。"
 ---
 
 ## raw_excerpt
