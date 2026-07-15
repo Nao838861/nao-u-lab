@@ -51,6 +51,10 @@ P = dict(
     # 限度は支援期に伸びM{LIMIT_FREEZE}で凍結(本国の忍耐、v8で較正済みの形)
     FREE_M=18, IRATE=0.01,
     LIMIT0=8000.0, LIMIT_G=600.0, LIMIT_FREEZE=24,
+    # 追加支援 (Nao_u 2026-07-15): 初期資金3000+「本国が文句を言いながら追加資金」を
+    # 3回まで。財政上は贈与だが物語上は借り(恩)が構造的に積み上がる=シナリオ装置。
+    # 使い切った後に利子付き借入→限度→破産の弧へ。回数は記録(上手い人は0回を誇れる)
+    BAILOUT_N=3, BAILOUT_TRIGGER=-2000.0, BAILOUT_AMOUNT=8000.0,
     # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
     # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
     GRAN_BID=dict(wheat=1.6, pres=1.5),
@@ -191,6 +195,7 @@ class World:
         self.pubworks_bought = 0.0
         self.mainland_in = 0.0; self.mainland_out = 0.0
         self.dole_qty = 0.0; self.go_day = None
+        self.bailouts = 0
         self.granary = defaultdict(float)
         self.gran_in_total = defaultdict(float); self.gran_out_total = defaultdict(float)
         self.dole_rate = 10.0
@@ -494,8 +499,17 @@ class World:
                 self._pw_prev = self.pubworks_bought
             assert abs(err) < 1e-5, f"質量収支違反 {g}: err={err} day={self.day}"
 
-        # --- 会社財政の弧: 利子・限度・破産 (月末) ---
+        # --- 会社財政の弧: 追加支援→利子→限度→破産 (月末) ---
         if d % 30 == 0:
+            if (self.treasury < P['BAILOUT_TRIGGER']
+                    and self.bailouts < P['BAILOUT_N'] and self.go_day is None):
+                self.bailouts += 1
+                self.treasury += P['BAILOUT_AMOUNT']
+                self.mainland_in += P['BAILOUT_AMOUNT']
+                grumble = ['「これが最後と思いなさい」', '「株主にどう説明しろと…」',
+                           '「次はもう無い。肝に銘じよ」'][min(self.bailouts - 1, 2)]
+                self.events.append((d, f'★本国の追加支援#{self.bailouts} +{P["BAILOUT_AMOUNT"]:.0f} {grumble}'))
+                self.month_events.append(f'追加支援#{self.bailouts}')
             debt = max(0.0, -self.treasury)
             if m > P['FREE_M'] and debt > 0:
                 intr = debt * P['IRATE']

@@ -62,12 +62,15 @@ def arc(w):
     peak_m, peak_t = min(ts, key=lambda x: x[1])
     surplus_m = None; repaid_m = None
     for i in range(1, len(ts)):
+        if ts[i][1] - ts[i-1][1] > 4000:   # 追加支援の跳ねは黒字化と数えない
+            continue
         if surplus_m is None and ts[i][0] > 6 and ts[i][1] > ts[i-1][1] + 50:
             surplus_m = ts[i][0]
         if repaid_m is None and ts[i][1] >= 0 and ts[i-1][1] < 0:
             repaid_m = ts[i][0]
     print(f"財政弧: 債務ピーク M{peak_m}({-peak_t:.0f}) / 黒字化 {'M%d' % surplus_m if surplus_m else 'なし'} / "
-          f"完済 {'M%d' % repaid_m if repaid_m else 'なし'} / 破産 {'M%d' % ((w.go_day-1)//30+1) if w.go_day else 'なし'}")
+          f"完済 {'M%d' % repaid_m if repaid_m else 'なし'} / 破産 {'M%d' % ((w.go_day-1)//30+1) if w.go_day else 'なし'} / "
+          f"追加支援 {w.bailouts}回{'(誇れる無支援!)' if w.bailouts == 0 else ''}")
 
 def table_m(w):
     print(f"{'月':>3}{'人口':>4}{'魚':>6}{'麦':>6}{'保存':>6}{'道具':>6}{'塩':>6}{'炭':>6}"
