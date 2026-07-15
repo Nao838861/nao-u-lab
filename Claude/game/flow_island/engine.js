@@ -239,7 +239,7 @@ export class World{
         if(s.hh instanceof HH&&perishable)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる(生鮮のみ)
         if(s.hh instanceof HH&&!perishable&&s.age>=6)s.hh.belief[g]*=0.97; // 保存財は撤収時に少しだけ学習
         if(s.age>=6&&s.hh instanceof HH&&g!=='fish'&&g!=='veg'){s.hh.pantry[g]+=s.qty;s.qty=0;
-          if(P.EXP[g]===undefined)(s.hh.noSell=s.hh.noSell||{})[g]=this.day+15;} // 輸出台のない財は畳んで15日休業(売れない市に通わない)
+          if(P.EXP[g]===undefined&&!PERISH.includes(g))(s.hh.noSell=s.hh.noSell||{})[g]=this.day+15;} // 休業=保存が利いて台もない財(炭布鉄)のみ。生鮮(麦肉)は売り続ける——麦農家が15日ストに入り蔵に9万荷眠るバグの修正
         if(s.hh instanceof HH&&g==='salt'&&s.hh.job==='saltworks'){const floor=s.hh.belief.char*(P.SALT_CHAR/P.Y_SALT)*1.2;
           s.hh.belief.salt=Math.max(s.hh.belief.salt,floor);s.price=Math.max(s.price,floor);} // 原価割れの値付けはしない(売るより持つ)
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;this.led.spoil.fish=(this.led.spoil.fish||0)+rot;}
