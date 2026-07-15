@@ -14,10 +14,10 @@ export const P = {
   EXP:{pres:0.6,pick:0.55,tools:1.0,stone:0.4,oil:2.4,salt:0.9}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15}, EXP_ML:{pres:0.66,pick:0.6,tools:1.1,stone:0.44,oil:2.64,salt:1.0},
   PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:2.0,char:1.5},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
-  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:5000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
+  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
-  MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:3, Y_OIL:2.5,
+  MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
   PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3,iron:3.5,cloth:2.5},
 };
@@ -46,7 +46,7 @@ export class HH{
     this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
-    this.pantry.tools=5;this.pantry.wheat=20;  // 兵糧(普請10日+立ち上がり)
+    this.pantry.tools=5;this.pantry.wheat=90;  // 兵糧(9人×約10日=普請期間を自弁。配給=輸入価格で治療するより船で運ぶ方が安い)
     if(job==='saltworks')this.pantry.char=15;
     if(job==='fisher'){this.pantry.salt=4;this.pantry.char=2;}
     if(job==='veg')this.pantry.salt=3;

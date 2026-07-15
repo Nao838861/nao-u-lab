@@ -60,7 +60,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129400';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129500';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -296,18 +296,21 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
   const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
   const f30=w.f30||{};
+  const NEEDQ={tools:P.D_TOOL,salt:P.D_SALT,char:P.D_CHAR,cloth:P.D_CLOTH,iron:P.D_IRON};
   const rows=Object.keys(NM).map(g=>{const f=f30[g]||{prod:0,cons:0,imp:0,exp:0};
     const stall=(w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0);
     if(f.prod+f.cons+f.imp+f.exp<0.05&&stall<1)return '';
     let badge='<span style="color:#889">均衡</span>';
-    if(f.imp>0.5)badge=`<b style="color:#ff8a7a">不足→輸入${f.imp.toFixed(0)}</b>`;
+    const lack=NEEDQ[g]?w.hhs.filter(h=>h.pantry[g]<NEEDQ[g]*2&&h.purse<10).length:0;
+    if(lack>=3)badge=`<b style="color:#ffb44a">${lack}世帯 買えず</b>`;
+    else if(f.imp>0.5)badge=`<b style="color:#ff8a7a">不足→輸入${f.imp.toFixed(0)}</b>`;
     else if(f.exp>0.5)badge=`<span style="color:#8fd0ff">輸出${f.exp.toFixed(0)}</span>`;
     else if(stall>15||f.prod>f.cons+f.exp+1)badge=`<b style="color:#8f8">余剰${stall>15?'(店'+Math.round(stall)+')':''}</b>`;
     return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${f.prod.toFixed(0)} 消${f.cons.toFixed(0)}</span>${badge}</div>`;}).filter(Boolean).join('');
-  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=島の生産/消=島の消費(荷/日)。不足=輸入で埋めている財(高くつく)・余剰=売れ残り</div>';
+  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず</b>=物はあるが世帯が貧しい(稼ぎが必要)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 秘書 ---
-let saidWinter=false,saidTight=false,saidFree=false,stage=0;
+let saidWinter=false,saidTight=false,saidFree=false,stage=0;const said={};
 function factor(){const el=document.getElementById('factor');const say=t=>el.textContent='「'+t+'」';
   const m=Math.floor(Math.max(0,w.day-1)/30)+1,mm=(m-1)%12+1;
   const debt=Math.max(0,-w.treasury),ratio=debt/w.limit();
@@ -317,6 +320,12 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
   if(stage===2){if(n('woodshop')<1){say('木工所を森の際に。道具がなければ文化は育ちません');return;}stage=3;}
   if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を。塩がなければ冬の蓄えが作れません');return;}stage=4;}
+  const f30=w.f30||{};const fw=f30.wheat||{imp:0};
+  if(stage>=4&&fw.imp>12&&!said.wheat){said.wheat=true;say('麦の輸入が月'+Math.round(fw.imp*30*10)+'デナリも嵩んでいます。麦畑か菜園を——食料の自給が全ての土台です');return;}
+  if(stage>=4&&fw.imp<6&&said.wheat){said.wheat=false;}
+  const poorN=w.hhs.filter(h=>h.purse<5).length;
+  if(stage>=4&&poorN>=w.hhs.length*0.5&&!said.poor&&m>14){said.poor=true;say('村人の半数が無一文です。物はあっても買えません。輸出できる産業(油・塩・道具)が村の稼ぎ口になります');return;}
+  if(poorN<w.hhs.length*0.3&&said.poor)said.poor=false;
   if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。右上📊の「島の蔵」で麦と保存食の量をご確認を');return;}
   if(mm===3)saidWinter=false;
   if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、様子を見る頃合いかと');return;}
