@@ -64,7 +64,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129700';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129800';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -291,7 +291,8 @@ function info(){const el=document.getElementById('pbody');
   if(h.job==='saltworks'&&h.pantry.char<0.5)why='⚠ 燃料切れ(炭がない)——塩を作れない';
   else if(h.job==='fisher'&&h.pantry.salt<0.5)why='⚠ 塩切れ——魚を保存できない';
   else if(h.job==='veg'&&!(mm>=3&&mm<=10))why='(冬季は畑が休み。漬物の蓄えで暮らす)';
-  else if(h.purse<0.5)why='⚠ 財布が空——買い物ができない';
+  else if(h.purse<0.5){const inc30=h.incomeLog.reduce((a,b)=>a+b,0);
+    why=inc30>20?'宵越しの銭なし——冬に稼ぎ夏に使う型。収入があるうちは健全':'⚠ 財布も収入も無い——この職の産物に買い手がいない';}
   const reqs=LADDER[JOBCLS[h.job]]||[];let lvHtml='';
   if(h.lv<reqs.length){const nxt=reqs[h.lv];const sat=h.satLast||{};
     const need=Math.round(45*(h.lv+1));
