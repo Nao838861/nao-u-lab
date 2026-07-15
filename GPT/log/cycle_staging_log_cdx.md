@@ -66,7 +66,39 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+- 実行日時: 2026-07-16
+- candidate lifecycle 内訳: `posted: 407 / ready_to_post: 10 / postponed: 394 / failed: 123 / needs_review: 22`（計 956）。`postponed` / `needs_review` の期限超過 backlog は 218 件、stale triage queue は上位 50 件。
+- mixed duplicate: 81 group、group-action queue は 36 group。限定運用に従い、先頭 1 group の representative だけを Phase 2 に渡した。
+- raw archive 候補: `memory/raw/` 配下で 30 日以上更新のないファイルは 93 件。一次資料・Slack archive を含むため、この phase では移動せず候補確認に留めた。
+
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（81 group）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-16 基準で再生成（上位 50 件）"
+  - "shared_reads_group_action_queue.jsonl を再生成（36 group）"
+  - "MEMORY.md index を validate_memory_index.py で検証し、per-file atom index との不一致 0 件を確認"
+  - "atoms.jsonl / per-file md / index.jsonl 各 2675 件の mirror drift・content conflict 0 件を確認"
+  - "atom duplicate 45 group が canonical overlay 済みであることを確認"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending 0 件を確認（handled 更新なし）"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom 1 件の title / trigger / excerpt に UTF-8 置換文字が保存されている"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md（『AIエ��ジェント』）。memory_health.py は別の 1 件も suspect とするが、gr-1777083728-44d444ab7a.md は UTF-8 明示読みで本文正常のため false positive。"
+    source_file_status: "UTF-8 明示読みでも sr-1776127289-4d9239b255.md と atoms/index.jsonl に置換文字が存在し、source file 実体の局所破損。MEMORY.md は代表語『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、index validation も pass。"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ置換文字を確認。表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "ファイルシステム型 agent memory の atom を検索・再利用する際に題名と本文断片の可読性が落ちるが、1 atom に局在し recall 全体は動作している。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。依存関係付き prompt pipeline はゲーム制作への transfer value が高い一方、評価内容・比較対象・結論が薄い。group_key=from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation; terminal siblings 2 件 / open siblings 4 件。期限超過 backlog 218 件中、今回 handoff は mixed duplicate 1 group だけ。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
