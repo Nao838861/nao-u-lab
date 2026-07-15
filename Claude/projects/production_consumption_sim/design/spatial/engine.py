@@ -304,8 +304,10 @@ class World:
         # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
         # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
         dole_on_mkt = P['DOLE'] and self.go_day is None
-        goods_order = (['tools', 'salt', 'char', 'fish', 'veg', 'wheat', 'pres']
+        goods_order = (['salt', 'char', 'tools', 'fish', 'veg', 'wheat', 'pres']
                        if dole_on_mkt else GOODS)
+        # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
+        # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
         clearing = {}
         for g in goods_order:
             bids, asks = [], []
