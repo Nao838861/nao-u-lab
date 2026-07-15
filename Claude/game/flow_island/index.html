@@ -26,6 +26,7 @@ small{color:#8899b0}
 <h2>入植（渡航費60）</h2><div id="jobs"></div>
 <h2>インフラ</h2><div id="infra"></div>
 <h2>市場価格</h2><div id="prices"></div>
+<h2>世帯情報 <small>(建物をクリック)</small></h2><div id="info"><small>—</small></div>
 <h2>出来事</h2><div id="log"></div>
 <h2>遊び方</h2><small>職を選んで地面をクリック=入植(対岸漁は右下の海沿い・採石は北東の岩場が適地)。菜種は対岸漁の粕(肥料)で伸び、油は高値で売れる。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
 </div>
@@ -33,9 +34,9 @@ small{color:#8899b0}
 import{World,P,JOBS,GOODS} from './engine.mjs';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
-function fit(){cv.width=document.getElementById('left').clientWidth;cv.height=innerHeight;}
+let ox=0,oy=60;
+function fit(){cv.width=document.getElementById('left').clientWidth;cv.height=innerHeight;ox=cv.width/2;}
 fit();addEventListener('resize',fit);
-let ox=cv.width/2,oy=60;
 const iso=(x,y)=>[ox+(x-y)*TW/2,oy+(x+y)*TH/2];
 const unIso=(px,py)=>{const a=(px-ox)/(TW/2),b=(py-oy)/(TH/2);return[Math.round((a+b)/2),Math.round((b-a)/2)];};
 // 地形
@@ -53,7 +54,7 @@ const start=[['fisher',24,MH-9],['fisher',27,MH-9],['veg',22,MH-12],['veg',20,MH
 for(const[j,x,y]of start)w.addHH(j,x,y);
 const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#555',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
 const JNAME={fisher:'漁師',fisher2:'対岸漁(粕)',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種畑',woodshop:'木工所',charburner:'炭焼き',quarryman:'採石',saltworks:'塩小屋'};
-let tool=null,speed=1,tick=0;
+let tool=null,speed=1,tick=0,sel=null;
 // UI
 const jb=document.getElementById('jobs');
 for(const j of JOBS){const b=document.createElement('button');b.textContent=JNAME[j];
@@ -74,6 +75,8 @@ let drag=false;
 cv.onmousedown=e=>{drag=true;act(e);};cv.onmousemove=e=>{if(drag&&tool==='road')act(e);};
 cv.onmouseup=()=>drag=false;
 function act(e){const[x,y]=unIso(e.offsetX,e.offsetY);
+  if(!tool){let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
+    sel=bd<2?best:null;info();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)&&w.treasury>-w.limit()){
     w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
@@ -91,7 +94,8 @@ function draw(){cx.clearRect(0,0,cv.width,cv.height);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
   cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
   cx.fillStyle='#fff';cx.font='10px sans-serif';cx.textAlign='center';cx.fillText('市場/港',mx,my+14);
-  for(const h of w.hhs){const[px,py]=iso(Math.round(h.x),Math.round(h.y));
+  for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){const[px,py]=iso(Math.round(h.x),Math.round(h.y));
+    if(h===sel){cx.strokeStyle='#ffe98a';cx.lineWidth=2;cx.strokeRect(px-12,py-22,24,24);cx.lineWidth=1;}
     cx.fillStyle=JCOL[h.job]||'#999';
     const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
     cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
@@ -108,6 +112,12 @@ function shade(hex,amt){const n=parseInt(hex.slice(1),16);
   return`rgb(${r},${g},${b})`;}
 // HUD
 const SEASON=['冬','冬','冬','春','春','春','夏','夏','夏','秋','秋','秋'];
+function info(){const el=document.getElementById('info');
+  if(!sel){el.innerHTML='<small>—</small>';return;}
+  const h=sel,pv=g=>h.pantry[g]>0.5?`${{fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'}[g]}${Math.round(h.pantry[g])}`:null;
+  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>
+   財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br>
+   <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function hud(){const d=w.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
   const se=mm>=10?'冬':mm<=3?'春':mm<=6?'夏':'秋';
   const debt=Math.max(0,-w.treasury),lim=w.limit();
@@ -116,11 +126,12 @@ function hud(){const d=w.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
    `<span>${Math.floor((m-1)/12)+1}年目 ${mm}月 <b>${se}</b></span><span>人口 <b>${w.hhs.length*9}</b></span>`+
    `<span>金庫 <b class="${w.treasury<0?'warn':''}">${Math.round(w.treasury)}</b></span><span>限度 ${Math.round(lim)}</span>`+
    `<span>支援 ${w.bailouts}/3</span><span>飢餓 <b class="${w.famine?'warn':''}">${w.famine}</b></span>`+
-   `<span>湾 ${Math.round(w.bay/P.BAY0*100)}%</span><span>森 ${Math.round(w.grove/P.GROVE0*100)}%</span>`;
+   `<span>湾 ${Math.round(w.bay/P.BAY0*100)}%</span><span>森 ${Math.round(w.grove/P.GROVE0*100)}%</span>`+
+   `<span>配給/日 ${w.doleRate.toFixed(0)}</span><span>輸出計 ${Math.round(Object.values(w.exported).reduce((a,b)=>a+b,0))}</span>`;
   document.getElementById('debtbar').firstElementChild?0:0;
   document.getElementById('debtbar').style.width=Math.min(100,debt/lim*100)+'%';
-  document.getElementById('prices').innerHTML=['fish','wheat','veg','meat','tools','salt','char','pres']
-    .map(g=>`<span>${{fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存'}[g]} <b>${fp(g)}</b></span>`).join('');
+  document.getElementById('prices').innerHTML=['fish','wheat','veg','meat','tools','salt','char','pres','meal','stone','oil']
+    .map(g=>`<span>${{fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'}[g]} <b>${fp(g)}</b></span>`).join('');
   const lg=document.getElementById('log');
   lg.innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');
   if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
@@ -129,6 +140,6 @@ function hud(){const d=w.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
 function frame(){tick++;
   for(let i=0;i<speed;i++)if(tick%4===0||speed>1)w.step&&stepSafe();
   function stepSafe(){try{w.step();}catch(e){console.error(e);speed=0;}}
-  draw();if(tick%15===0)hud();requestAnimationFrame(frame);}
+  draw();if(tick%15===0){hud();if(sel)info();}requestAnimationFrame(frame);}
 hud();frame();
 </script></body></html>
