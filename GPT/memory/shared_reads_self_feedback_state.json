@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T23:35:00+09:00",
+  "updated_at": "2026-07-16T01:30:00+09:00",
   "reviewed_source_ts": [
     "1782654152.094269",
     "1782487338.755809",
@@ -388,7 +388,8 @@
     "1782646839.446789",
     "1778535751.103379",
     "1784088387.032009",
-    "1783417724.835199"
+    "1783417724.835199",
+    "1782580046.412109"
   ],
   "reviews": [
     {
@@ -9904,6 +9905,17 @@
       "decision": "reject",
       "reason": "Score 13. structured event log を competency domain に分け、event 単体の成否ではなく session 内の方略変化と domain ごとの evidence volume を見る観点は、game/headless 評価と shared-reads gate に直結する。しかし active な classiclogic composition-layer probe は primitive layer と composition depth の分離を、causalgame outcome-explanation probe は outcome と mechanism・confounder の分離を、BALROG/attributed-trajectory probes は変化する state 上の action trajectory と決定帰属をすでに要求している。新規の domain-evidence probe はこれらの組み合わせの言い換えとなり、300件超の active probe 群をさらに肥大化させるため採用しない。読了と重複理由だけを state に残す。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-16T01:30:00+09:00",
+      "id": "sr-1782580046-1806a0717e",
+      "source_ts": "1782580046.412109",
+      "title": "HeRoN: LLM の提案・制約検査・実行を分離する hybrid NPC",
+      "decision": "reject",
+      "reason": "Score 13. LLM を直接の実行主体にせず、候補生成、制約検査、deterministic な実行へ分け、invalid action、state inconsistency、resource mismatch、format error を別々に測る観点は game/headless 評価に直結する。しかし active な runtime-verifiable-production-slices、state-abstraction-action-loop、Draw2Think inspectable-intermediate-state、local-constraint-global-evaluator-split probes が、action/state schema、deterministic verifier、runtime interaction、失敗層分類をすでに要求している。HeRoN 固有の三者名を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。論文と shared-reads 本文は定量的根拠を持つが、この環境で三層構成を比較実測していないため evidence は 2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 1, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
