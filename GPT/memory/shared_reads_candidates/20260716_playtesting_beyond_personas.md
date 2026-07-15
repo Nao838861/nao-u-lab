@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2107.11965"
 collected_at: "2026-07-16T07:10:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automated-playtesting, procedural-personas, reinforcement-learning, path-coverage]
+evaluated_at: "2026-07-16T07:01:24+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-16T07:01:24+09:00"
+last_decision: postponed_duplicate
+evidence: "gate_decision:postpone; evaluated_at:2026-07-16T07:01:24+09:00; duplicate_reason:posted_url_match; canonical_path:memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224652357689; matched_title_key:playtesting what is beyond personas"
+next_action: none
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  canonicalized URL が既投稿 candidate と一致し、同一論文の再収集である。
+  既投稿後の新規分析差分もないため本文品質評価と Phase 3 投稿を省略する。
 ---
 
 ## raw_excerpt
