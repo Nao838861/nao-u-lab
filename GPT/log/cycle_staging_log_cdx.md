@@ -22,7 +22,17 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260715_one_pixel_minimalist_game_design.md
+    reason: "Phase 2 の gate_decision が postpone であり、pass candidate が 0 件。現候補には生成 concepts の分析軸、観察された差、評価結果、結論の具体が不足し、3500-4500 字の投稿品質を満たさない。"
+    action: candidate_revise
+```
+
+- #shared-reads への投稿は行っていない。
+- candidate frontmatter は `gate_decision: postpone` / `status: postponed` / `next_action: revise_or_research` で整合しているため、追加更新なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
