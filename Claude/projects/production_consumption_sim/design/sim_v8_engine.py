@@ -16,7 +16,9 @@ D_RING = {0: 0.10, 1: 0.50, 2: 1.20}
 def h(D): return min(0.85, 0.05 + 0.45 * D)
 
 BASE = dict(fish=10.0, fish_w=2.5, veg=6.0, wheat=720.0, wood=6.0,
-            shop=4.0, char=4.0, salt=12.0)
+            shop=4.0, char=1.5, salt=12.0)
+# char 4.0→1.5 (2026-07-15 Nao_u「炭供給不足になって欲しいので産量を落として」):
+# 炭焼き1軒では塩+燻製+暖を賄えず、軒数を重ねる判断と用途間の競合が立つ
 
 P = dict(
     HH=9, CAPITAL=3000.0, PASSAGE=60.0, BUILD_L=5, KIT_L=40,
