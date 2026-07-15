@@ -40,8 +40,10 @@ P = dict(
     # 会社(港の商館): 輸入売値 / 輸出買値(買い叩き)+日次天井
     IMP=dict(wheat=2.0, tools=3.5, salt=3.0),
     IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0),   # 会社が本土に払う仕入原価(系外流出)
-    EXP=dict(pres=0.8), EXP_CAP=dict(pres=25.0),
-    EXP_MAINLAND=dict(pres=1.0),         # 会社が本土で売る値(系外流入・薄い鞘)
+    # 輸出=買い叩き+数量天井(確定設計)。会社の鞘が黒字化の細い収入源
+    # (v1.8: 道具輸出を追加=v8の材木輸出エンジンの空間版)
+    EXP=dict(pres=0.8, tools=1.5), EXP_CAP=dict(pres=25.0, tools=20.0),
+    EXP_MAINLAND=dict(pres=1.3, tools=2.0),
     PUBWORKS=0.0,                        # 公費建設: 会社が市場で道具を買う予算/日(貨幣注入弁)
     # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
     # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
