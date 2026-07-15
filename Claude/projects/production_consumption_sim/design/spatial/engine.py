@@ -70,6 +70,7 @@ P = dict(
     # 最も高い職を選ぶ。既存世帯は動かず新しい血が隙間を埋める(所得バランス三弁の②)。
     # 持参金は親世帯(最富)の財布から分与=島内移転
     BRANCHING=False, BRANCH_EVERY=90, BRANCH_MIN_HH=8,
+    BRANCH_DEBT_GATE=-3000.0,  # 会社債務がこれより深い間は分家しない(完済まで成長を控える=標準プレイの模写)
     # 資源プール(残量比例+再生下限)
     BAY_S0=600_000.0, BAY_R=0.00175, RESEED=0.3,
     GROVE_S0=60_000.0, GROVE_R=0.0006,
@@ -488,7 +489,7 @@ class World:
             island_fed = self.dole_rate < len(self.hhs) * P['HH_SIZE'] * 0.05
             # 自立ゲート: 依存期(配給が人口の5%超)の島は分家しない。配給下の人口成長は
             # 配給費を人口比例で爆発させる(v1.7実験: 6年で-18〜-23万)。自立→成長の順序
-            if avg2 and parent.purse >= 900 and island_fed:
+            if avg2 and parent.purse >= 900 and island_fed and self.treasury > P['BRANCH_DEBT_GATE']:
                 best = max(avg2, key=lambda j: avg2[j])
                 dowry = min(300.0, parent.purse * 0.3)
                 parent.purse -= dowry
