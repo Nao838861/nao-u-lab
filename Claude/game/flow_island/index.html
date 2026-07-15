@@ -12,6 +12,9 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #bar{left:8px;top:110px;bottom:auto;transform:none;padding:6px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 190px);overflow-y:auto}
 #bar button{border:1px solid #4a5d7d;border-radius:6px;padding:6px 8px;cursor:pointer;color:#102;font-weight:600;font-size:12px;min-width:52px}
 #bar button.on{outline:3px solid #ffe98a}
+#bar button.rec{outline:3px solid #7ac8ff;animation:recg 1.6s infinite}
+@keyframes recg{50%{outline-color:#bfe6ff;box-shadow:0 0 14px #7ac8ff}}
+#advice{position:absolute;left:50%;transform:translateX(-50%);top:34px;background:#14305088;border:1px solid #3a6ea0;border-radius:6px;padding:3px 12px;font-size:11px;color:#cfe6ff;z-index:5;pointer-events:none;white-space:nowrap}
 #bar button.infra{background:#2c3a54;color:#dde}
 #factor{left:50%;transform:translateX(-50%);bottom:10px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:94vw;white-space:normal;line-height:1.35}
 #toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;text-align:center}
@@ -38,6 +41,7 @@ small{color:#8899b0}
 </style></head><body>
 <canvas id="cv"></canvas>
 <div id="top" class="ov"></div>
+<div id="advice"></div>
 <div id="toast"></div>
 <div id="factor" class="ov">「ようこそ、支配人。まだ誰もいない島です」</div>
 <div id="bar" class="ov"></div>
@@ -60,7 +64,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129600';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129700';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -219,7 +223,16 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       cx.fillStyle='#1b2434dd';cx.beginPath();cx.arc(px+s/2+2,py-s-2,5.5,0,7);cx.fill();
       cx.strokeStyle=h.lv>0?'#ffd97a':'#556';cx.stroke();
       cx.fillStyle=h.lv>0?'#ffd97a':'#99a';cx.font='bold 7px sans-serif';cx.textAlign='center';
-      cx.fillText(h.lv,px+s/2+2,py-s+0.5);cx.textAlign='left';}
+      cx.fillText(h.lv,px+s/2+2,py-s+0.5);cx.textAlign='left';
+      // 問題アイコン(クリック不要の常時表示・点滅)
+      let icon=null;
+      const fd=['fish','veg','wheat','pres','pick','meat','meal'].reduce((sq,g)=>sq+h.pantry[g],0)/Math.max(1,h.eat());
+      if((h.hungerRun||0)>3||fd<0.7)icon='🍞';
+      else if((h.job==='saltworks'&&h.pantry.char<0.5)||(h.job==='fisher'&&h.pantry.salt<0.3))icon='⚠';
+      else if(h.purse<3&&h.incomeLog.reduce((a,b)=>a+b,0)<5)icon='💸';
+      if(icon){cx.globalAlpha=0.55+0.45*Math.sin(tick*0.12);
+        cx.font='11px sans-serif';cx.textAlign='center';cx.fillText(icon,px-s/2-6,py-s-4);
+        cx.globalAlpha=1;cx.textAlign='left';}}
     // 人: 実際の位置(通勤・移民の到着が見える)
     if(h.state!=='home'&&h.state!=='building'){
       const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',pick:'#9ac86a',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
@@ -315,6 +328,27 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
     return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${prodTxt} 消${f.cons.toFixed(0)}</span>${badge}</div>`+lackList;}).filter(Boolean).join('');
   document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=物はあるが世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
+// --- 次の一手アドバイザ ---
+function advise(){const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
+  const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
+  const poorN=w.hhs.filter(h=>h.purse<5).length;
+  const debt=Math.max(0,-w.treasury);
+  let rec=null,why='';
+  if(n('fisher')<2){rec='fisher';why='まず食料。浜の近くに漁師を';}
+  else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
+  else if(gf('wheat').imp>8){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
+  else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
+  else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}
+  else if(n('saltworks')<1){rec='saltworks';why='塩がなければ保存食が作れません';}
+  else if(debt>w.limit()*0.55){rec=null;why='債務が重い。建てるのを止め、回復を待つ時です';}
+  else if(poorN>=w.hhs.length*0.45&&n('rapeseed')<2){rec='rapeseed';why='村人の稼ぎが足りません。菜種油は本国に売れる換金作物です';}
+  else if(gf('salt').imp>0.5){rec='saltworks';why='塩を輸入に頼っています';}
+  else if(gf('tools').imp>0.5){rec='woodshop';why='道具を輸入に頼っています';}
+  else{rec=null;why='いまは均衡。世帯Lvの伸びと財政を見守りましょう';}
+  const el=document.getElementById('advice');
+  el.innerHTML=(rec?`<b style=color:#9fd6ff>次の一手: ${JNAME[rec]}</b> — `:'☑ ')+why;
+  bar.querySelectorAll('button').forEach(b=>b.classList.toggle('rec',!!rec&&b.dataset.t===rec));}
+setInterval(advise,3000);advise();
 // --- 秘書 ---
 let saidWinter=false,saidTight=false,saidFree=false,stage=0;const said={};
 function factor(){const el=document.getElementById('factor');const say=t=>el.textContent='「'+t+'」';
