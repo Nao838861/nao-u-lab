@@ -6,6 +6,6 @@ const terr=[];for(let y=0;y<40;y++){terr.push([]);for(let x=0;x<48;x++){let t='g
 w.setTerrain(terr);
 ['fisher','fisher','veg','wheat','woodshop','charburner','saltworks','shepherd','veg','fisher'].forEach((j,i)=>w.addZone(j,23+i%5,26+(i*2)%6));
 const plan={13:'wheat',14:'wheat',15:'veg',17:'fisher',18:'rapeseed',20:'rapeseed'}; // 食料先行=検証済みの定石(産業先行は破産M42)
-for(let d=1;d<=1440;d++){if(d%30===1){const m=Math.floor(d/30)+1;if(plan[m])w.addZone(plan[m],14+m%6,20+(m*3)%8);}w.step();
+for(let d=1;d<=1440;d++){if(d%30===1){const m=Math.floor(d/30)+1;if(plan[m]){const i=m-13;w.addZone(plan[m],21+i%7,27+(i*2)%5);}}w.step(); // 近接配置=距離勾配の定石
  if(d%360===0)console.log('Y'+d/360,'金庫',Math.round(w.treasury*10),'飢餓',w.famine,'支援',w.bailouts,'破産',w.goDay,'Lv最高',Math.max(...w.hhs.map(h=>h.lv)));}
 console.log('SMOKE OK (貨幣保存則も全日通過)');
