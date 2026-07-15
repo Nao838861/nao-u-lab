@@ -75,7 +75,45 @@ self_feedback:
 - 既存 active probes との重複を明示確認し、state-only の更新に留めた。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。Markdown link は 0 件で broken link なし。atom entry section は per-file index と一致。"
+  - "memory/atoms.jsonl を memory_health / duplicate index check で監査。2675 rows、duplicate overlay 45 groups（normalized_content_hash 40、title_excerpt_exact 5）は既存 fold 対象で、index 不整合なし。"
+  - "memory/raw/ の 30 日超無更新ファイルを監査。93 件を archive 候補として確認したが、原文 provenance の要否を機械判定できないため移動なし。"
+  - "shared-reads lifecycle を集計: posted 406 / ready_to_post 10 / postponed 396 / failed 123 / needs_review 22（README.md 以外に status missing 1）。stale_after 到達 backlog は 218 件。posted / failed は再評価 queue から除外。"
+  - "mixed duplicate / stale triage / group-action queue を再生成: 81 rows / 50 rows（全 backlog 218）/ 36 groups。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_backlog: 218
+stale_review_handoff_count: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。依存関係付き prompt pipeline はゲーム制作への転用価値が高い一方、評価内容・比較条件・結論の強さが不足し、同一 title group に open 4件 / terminal 2件が混在する。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation
+    status_counts: "group-action queue 上の open 4 / terminal 2"
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン を取得。評価軸は現行本文に語として存在しないため、文字化け根拠にはしない。"
+  display_or_tooling_status: "none"
+notes:
+  - "memory_health の未group化 repeated title 14種と mojibake suspect atom 2件は既存監査で可視化済み。source file 破損の確認なし、今回の新規構造 issue にはしない。"
+  - "raw archive 候補 93件は『古い』だけでは削除・移動せず、参照 provenance を維持した。"
+  - "group-action queue 限定運用に従い、mixed duplicate は先頭1 groupの representative のみを handoff。candidate 単位の上位候補とは重複させていない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
