@@ -137,7 +137,9 @@ export class World{
   buyTargets(h){const t={};const doleOn=this.goDay===null;
     const foodDays=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
     const cheapest=Math.min(h.belief.veg,h.belief.wheat,h.belief.pres);
-    const tgtD=doleOn?2:P.PANTRY_FOOD_D;
+    const mmT=(Math.floor((this.day-1)/30))%12+1;
+    const autumn=mmT>=7&&mmT<=9;   // 秋=冬支度(正典ルール3「備えを保つ」の季節スケール)
+    const tgtD=autumn?(doleOn?8:60):(doleOn?2:P.PANTRY_FOOD_D);  // 依存期の冬支度は控えめ(輸入で積むと本土流出が膨らむ)
     if(foodDays<tgtD){const starving=foodDays<1.5;
       for(const g of['veg','wheat','pres','pick'])
         t[g]=[(tgtD-foodDays)*P.EAT/4,starving?99:Math.min(h.belief[g]*1.5,cheapest*2.2)];}
@@ -378,11 +380,19 @@ export class World{
         this.log('☠ '+h.sur+'家の'+(dead?dead.name:'一人')+'が餓えで亡くなった');
         if(h.members.length<=2){this.log('☠ '+h.sur+'家は離散した——家は廃屋になった');
           (this.ruins=this.ruins||[]).push({x:h.x,y:h.y});
+          // 相続: 財布は近所3世帯に広く薄く(子→近所の正典・貨幣を蒸発させない)
+          const rest=this.hhs.filter(x=>x!==h);
+          if(rest.length&&h.purse>0){
+            const near=rest.sort((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y)).slice(0,3);
+            const share=h.purse/near.length;
+            for(const n of near)n.purse+=share;
+            h.purse=0;}
           this.hhs.splice(this.hhs.indexOf(h),1);}}
       h.kindLog.push([d,[...kinds]]);for(const k of kinds)h.kindDays[k]=(h.kindDays[k]||0)+1;
       while(h.kindLog.length&&h.kindLog[0][0]<=d-45){for(const k of h.kindLog[0][1])h.kindDays[k]--;h.kindLog.shift();}
       // 文化消費+保存加工
-      const sat={};for(const[g,dd]of[['tools',P.D_TOOL],['salt',P.D_SALT],['char',P.D_CHAR],['cloth',P.D_CLOTH],['iron',P.D_IRON]]){
+      const sat={};const mmW=(Math.floor((d-1)/30))%12+1;const chMul=mmW>=10||mmW<=2?2.0:0.6;
+      for(const[g,dd0]of[['tools',P.D_TOOL],['salt',P.D_SALT],['char',P.D_CHAR*chMul],['cloth',P.D_CLOTH],['iron',P.D_IRON]]){const dd=dd0;
         const u=Math.min(h.pantry[g],dd);h.pantry[g]-=u;sat[g]=u>=dd*0.95;}
       const kd=h.kindDays;sat.food1=Object.values(kd).some(v=>v>0);
       sat.food2=Object.values(kd).filter(v=>v>5).length>=2;
