@@ -9,11 +9,11 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #top b{color:#ffd97a}#top .warn{color:#ff8a7a}
 #top button{background:#2c3a54;color:#dde;border:1px solid #4a5d7d;border-radius:5px;padding:2px 9px;cursor:pointer}
 #top button.on{background:#5a7db0}
-#bar{left:50%;transform:translateX(-50%);bottom:10px;padding:6px;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:96vw}
+#bar{left:8px;top:110px;bottom:auto;transform:none;padding:6px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 190px);overflow-y:auto}
 #bar button{border:1px solid #4a5d7d;border-radius:6px;padding:6px 8px;cursor:pointer;color:#102;font-weight:600;font-size:12px;min-width:52px}
 #bar button.on{outline:3px solid #ffe98a}
 #bar button.infra{background:#2c3a54;color:#dde}
-#factor{left:50%;transform:translateX(-50%);bottom:62px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#factor{left:50%;transform:translateX(-50%);bottom:10px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;text-align:center}
 #toast div{background:#243450ee;border:1px solid #5a7db0;border-radius:6px;padding:4px 14px;margin:3px;font-size:13px;animation:fade 4s forwards}
 @keyframes fade{0%{opacity:0}8%{opacity:1}80%{opacity:1}100%{opacity:0}}
@@ -41,8 +41,14 @@ small{color:#8899b0}
  <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
 </div>
 <div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は止まり、島は静かに衰えていきます…</div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
+<script>
+addEventListener('error',e=>{const f=document.getElementById('factor');
+  if(f)f.textContent='⚠ エラー: '+e.message+' @'+(e.filename||'').split('/').pop()+':'+e.lineno;});
+addEventListener('unhandledrejection',e=>{const f=document.getElementById('factor');
+  if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
+</script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js';
+import{World,P,JOBS,GOODS} from './engine.js?v=119626';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -207,13 +213,14 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   if(w.doleRate<Math.max(1,w.hhs.length*9)*0.05&&!saidFree&&m>12){saidFree=true;say('配給がほとんど要らなくなりました。島が自分の足で立ち始めています');return;}}
 setInterval(factor,2500);
 // --- ループ ---
-function frame(){tick++;
+function frame(){try{tick++;
   const fp=FRAMES[speed];
   if(fp){const n=fp<1?Math.round(1/fp):(tick%fp===0?1:0);for(let i=0;i<n;i++){try{w.tickOnce();}catch(err){console.error(err);speed=0;break;}}}
   draw();
   if(tick%20===0){topbar();panel();toasts();if(sel)info();
     if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
       document.getElementById('overlay').style.display='flex';}
+  }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
   requestAnimationFrame(frame);}
 topbar();paint();frame();
 </script></body></html>
