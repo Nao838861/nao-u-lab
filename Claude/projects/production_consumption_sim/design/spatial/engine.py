@@ -87,7 +87,7 @@ LADDER = {
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
 JOBCLS = dict(fisher='fish', wheat='farm', veg='farm', woodshop='lumber',
-              charburner='lumber', saltworks='artisan')
+              charburner='lumber', saltworks='artisan', peddler='artisan')
 BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5)
 
 
@@ -184,10 +184,13 @@ DEFAULTS = dict(P)
 
 
 class World:
-    def __init__(self, hhs, seed=1, market_pos=(0.0, 0.0), overrides=None, plan=None):
+    def __init__(self, hhs, seed=1, market_pos=(0.0, 0.0), overrides=None, plan=None,
+                 market2_pos=None):
         P.update(DEFAULTS)               # 前のWorldのoverride汚染を防ぐ
         if overrides:
             P.update(overrides)
+        # Phase2-A: 第二市場(内陸・商館なし=価格が自由に浮く)。世帯は近い方に通う
+        self.markets_pos = [market_pos] + ([market2_pos] if market2_pos else [])
         self.plan = plan or {}           # 月→[(job, pos, road)] の入植計画(プレイヤーの手)
         self.pub_schedule = {}           # 月→公費建設予算/日 (プレイヤーが絞る弁)
         self.month_events = []
@@ -224,8 +227,15 @@ class World:
         assert abs(drift) < 1e-6, f"貨幣保存則違反: drift={drift} (day {self.day})"
 
     # ---------- 1日 ----------
+    def mkt_of(self, h):
+        if getattr(h, 'job', '') == 'peddler':
+            return self.day % len(self.markets_pos)   # 行商人は市場を日替わりで巡回
+        ds = [((h.pos[0]-mx)**2 + (h.pos[1]-my)**2) ** 0.5 for mx, my in self.markets_pos]
+        return ds.index(min(ds))
+
     def dist(self, h):
-        dx = h.pos[0] - self.market_pos[0]; dy = h.pos[1] - self.market_pos[1]
+        mx, my = self.markets_pos[self.mkt_of(h)]
+        dx = h.pos[0] - mx; dy = h.pos[1] - my
         return (dx * dx + dy * dy) ** 0.5
 
     def travel_share(self, h):
@@ -254,6 +264,13 @@ class World:
         bal = defaultdict(lambda: defaultdict(float))   # 質量収支: good → {src: qty}
         stock_pre = {g: sum(h.pantry[g] for h in self.hhs) for g in GOODS}
 
+        # 行商人: 今日立つ市場の信念ビューに切替(信念更新はその市場の帳面に載る)
+        for h in self.hhs:
+            if h.job == 'peddler':
+                if not hasattr(h, 'mbelief'):
+                    h.mbelief = [dict(h.belief) for _ in self.markets_pos]
+                h.belief = h.mbelief[self.mkt_of(h)]
+
         # --- 市場に行くか(パントリー不足 or 売り物あり or 生鮮の日売り) ---
         # 漁師は魚が翌日腐るので毎日市に立つ(魚市が心拍を刻む)。朝の判断なので
         # 貯蔵財の売り物は前日在庫で判断する
@@ -261,7 +278,7 @@ class World:
         for h in self.hhs:
             need = self.buy_targets(h)
             sell = self.sell_offers_qty(h)
-            going[h.id] = bool(need or sell) or h.job == 'fisher'
+            going[h.id] = bool(need or sell) or h.job in ('fisher', 'peddler')
 
         # --- 生産(職住一体・市場に行く日は移動が労働を食う) ---
         for h in self.hhs:
@@ -310,10 +327,11 @@ class World:
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
         clearing = {}
-        for g in goods_order:
+        for mi in range(len(self.markets_pos)):
+          part = [h for h in self.hhs if going[h.id] and self.mkt_of(h) == mi]
+          for g in goods_order:
             bids, asks = [], []
-            for h in self.hhs:
-                if not going[h.id]: continue
+            for h in part:
                 tgt = self.buy_targets(h).get(g)
                 if tgt:
                     qty, ceil = tgt
@@ -326,42 +344,38 @@ class World:
                 if sq > 1e-9:
                     ask = h.belief[g] * self.rng.uniform(0.95, 1.10)
                     asks.append((h, sq, ask)); h.offered_unsold.add(g)
-            # 会社: 輸入の売り(無制限)・輸出の買い(買い叩き+天井)・公共事業の買い
-            if g in P['IMP']:
-                asks.append(('CO', 1e9, P['IMP'][g]))
-            if g in P['EXP']:
-                bids.append(('CO:exp', P['EXP_CAP'][g], P['EXP'][g]))
-            if g == 'tools' and P['PUBWORKS'] > 0:
-                # 公費建設: 貨幣の注入弁。ただし民需の下に入る(住民の道具の使用価値2.5より
-                # 安い2.4で入札)。第一稿は3.4で入札→道具を買い占め住民が文化Lv2に
-                # 上がれないクラウディングアウトが発生した
-                bids.append(('CO:pub', P['PUBWORKS'] / 3.4, 1.8))  # 数量=名目基準(価格低下で需要爆発しない)・価格=民需の下
-            if g in P['GRAN_BID'] and P['DOLE'] and self.go_day is None:
-                # 御蔵: 直近の配給ペース分を地場から買い上げる(囲米)
-                qn = max(5.0, self.dole_rate)
-                bids.append(('CO:gran', qn, P['GRAN_BID'][g]))
+            # 会社(商館)は港市場(mi=0)にのみ立つ。内陸市場は価格が自由に浮く
+            if mi == 0:
+                if g in P['IMP']:
+                    asks.append(('CO', 1e9, P['IMP'][g]))
+                if g in P['EXP']:
+                    bids.append(('CO:exp', P['EXP_CAP'][g], P['EXP'][g]))
+                if g == 'tools' and P['PUBWORKS'] > 0:
+                    bids.append(('CO:pub', P['PUBWORKS'] / 3.4, 1.8))
+                if g in P['GRAN_BID'] and P['DOLE'] and self.go_day is None:
+                    qn = max(5.0, self.dole_rate)
+                    bids.append(('CO:gran', qn, P['GRAN_BID'][g]))
             pre_pantry = {h.id: h.pantry[g] for h, q, p_ in bids if isinstance(h, HH)}
             wanted = {h.id: q for h, q, p_ in bids if isinstance(h, HH)}
             pr, vol = self.market.clear(g, bids, asks)
-            # 買い損ねの学習(ルール1の対称化): 欲しい量の3割も買えなければ信念を上げる
-            for h in self.hhs:
+            for h in part:
                 if h.id in wanted and wanted[h.id] > 1e-6:
                     got = h.pantry[g] - pre_pantry[h.id]
                     if got < wanted[h.id] * 0.3:
                         h.belief[g] = min(h.belief[g] * 1.04, 12.0)
-            # 未約定の買い唱値は市場で「叫ばれて」いる=売り手側の観測(ルール1)。
-            # これが無いと「取引ゼロ→価格観測ゼロ→供給者が需要に気づかない」デッドロック
-            # (冬の魚市が立たない)に落ちる
             ub = self.market.unfilled_bid
             if ub is not None:
                 my_good = dict(fisher='fish', veg='veg', wheat='wheat', woodshop='tools',
-                               charburner='char', saltworks='salt')
-                for h in self.hhs:
-                    if going[h.id] and my_good[h.job] == g and ub > h.belief[g]:
+                               charburner='char', saltworks='salt', peddler=None)
+                for h in part:
+                    if my_good.get(h.job) == g and ub > h.belief[g]:
                         h.belief[g] += (ub - h.belief[g]) * 0.1
             if vol > 1e-9:
-                clearing[g] = pr
-                self.prices[g].append((d, pr, vol))
+                if mi == 0:
+                    clearing[g] = pr
+                    self.prices[g].append((d, pr, vol))
+                else:
+                    self.prices[('m%d' % mi, g)].append((d, pr, vol))
         for h in self.hhs:   # 売れ残り→信念を下げる(ルール4の裏面)
             for g in list(h.offered_unsold):
                 h.belief[g] *= P['UNSOLD_DECAY']
@@ -627,6 +641,14 @@ class World:
             if 'veg' not in t:
                 t['veg'] = (P['EAT'] * P['DIVERSITY_RATION'] * 10 - h.pantry['veg'],
                             h.belief['veg'] * 1.3)
+        if h.job == 'peddler' and hasattr(h, 'mbelief') and len(self.markets_pos) > 1:
+            here = self.mkt_of(h); there = 1 - here
+            for g in ('pres', 'salt', 'tools', 'char', 'wheat', 'veg'):
+                spread = h.mbelief[there][g] - h.mbelief[here][g]
+                if spread > h.mbelief[here][g] * 0.15 + 0.1:
+                    # 転売差益が使用価値(ルール2の行商形)。向こうの信念の85%が買値上限
+                    t[g] = (P['HAUL'] / 3, h.mbelief[there][g] * 0.85)
+            return t
         uv = P['USE_VALUE_CEILING']
         if h.job == 'saltworks' and h.pantry['char'] < P['SALT_CHAR'] * 5:
             ceil = (P['Y_SALT'] * h.belief['salt'] * 0.5 if uv else h.belief['char'] * 1.2)
@@ -652,6 +674,13 @@ class World:
     def sell_offers_qty(self, h):
         """ルール4: 自分の産物の余剰を少しずつ売る"""
         out = {}
+        if h.job == 'peddler':
+            for g in ('pres', 'salt', 'tools', 'char', 'wheat', 'veg'):
+                keep = P['EAT'] * 2 if g in FOODS else 0.0
+                q = max(0.0, h.pantry[g] - keep)
+                if q > 1e-9:
+                    out[g] = min(q, P['HAUL'])
+            return out
         my = dict(fisher='fish', veg='veg', wheat='wheat', woodshop='tools',
                   charburner='char', saltworks='salt')[h.job]
         keep = P['EAT'] * 2 if my in FOODS else 2.0
