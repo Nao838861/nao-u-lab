@@ -37,7 +37,35 @@ skipped:
 - candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を維持した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782646834-e44c1bd0de
+    source_ts: "1782646834.762419"
+    title: "ScoutGPT: event sequence の反実仮想を候補発見に使う"
+    reason: "game/headless 評価で、変更前後を同一条件で比較し、中間指標から次の検証候補を絞る観点が現在の制作サイクルに直結するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。paired-seed / proxy-signal variance の既存 probe と重複するため、新規 probe・評価表・directive・恒久ルールは追加しなかった"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 採用条件の合計 14 と `risk_control >= 2` を満たさない。active probe は 314 件あり、既存の `proxy-signal variance gate from Paired Seed / ICC / AIVAT` が同一初期条件・paired-seed・中間 signal の変動確認をすでに要求しているため、追加は次回行動を変えず肥大化だけを招く。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
