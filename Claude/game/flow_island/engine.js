@@ -54,7 +54,7 @@ export class World{
   dist(h){return Math.hypot(h.x-this.market.x,h.y-this.market.y);}
   travel(h){return Math.min(P.TRAVEL_MAX,this.dist(h)*2*P.TRAVEL_RATE*(h.road?P.ROAD_F:1));}
   limit(){const m=Math.floor((this.day-1)/30)+1;
-    return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),this.hhs.length*9*P.LIMIT_PC);}
+    return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),Math.max(6000,this.hhs.length*9*P.LIMIT_PC));}
   clear(g,bids,asks){bids.sort((a,b)=>b[2]-a[2]);asks.sort((a,b)=>a[2]-b[2]);
     let bi=0,ai=0,bq=bids[0]?.[1]??0,aq=asks[0]?.[1]??0;const tr=[];let pair=null;
     while(bi<bids.length&&ai<asks.length&&bids[bi][2]>=asks[ai][2]){

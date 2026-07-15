@@ -1,88 +1,110 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>流通の島 v0</title>
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>流通の島 v0.4</title>
 <style>
-body{margin:0;background:#1a2230;color:#dde;font:13px/1.5 system-ui,sans-serif;display:flex;height:100vh;overflow:hidden}
-#left{flex:1;position:relative}canvas{display:block;cursor:crosshair;touch-action:none}
-#side{width:320px;background:#232c3d;padding:10px 14px;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:-2px 0 8px #0006}
-@media(max-width:760px){body{flex-direction:column}#left{flex:none;height:52vh}#side{width:auto;flex:1}}
-h1{font-size:16px;margin:2px 0 8px}h2{font-size:13px;margin:10px 0 4px;color:#9fb8d8}
-.hud{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:12px}
-.hud b{color:#ffd97a}.warn{color:#ff8a7a}
-button{background:#31405a;color:#dde;border:1px solid #4a5d7d;border-radius:4px;padding:4px 8px;margin:2px;cursor:pointer;font-size:12px}
-button.on{background:#5a7db0;border-color:#9fc0ef}
-#log{font-size:11px;color:#aab;max-height:180px;overflow-y:auto;background:#1b2331;padding:6px;border-radius:4px}
-#log div{border-bottom:1px solid #2a3550;padding:1px 0}
-#overlay{position:absolute;inset:0;background:#000a;display:none;align-items:center;justify-content:center;flex-direction:column;font-size:22px}
-#prices{font-size:11px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px 8px}
-.bar{height:10px;background:#2a3550;border-radius:5px;overflow:hidden;margin:2px 0}
+*{box-sizing:border-box}body{margin:0;background:#101725;color:#dde;font:13px/1.4 system-ui,sans-serif;overflow:hidden}
+canvas{display:block;touch-action:none;position:fixed;inset:0}
+.ov{position:fixed;z-index:5;background:#1b2434cc;backdrop-filter:blur(4px);border:1px solid #3a4a66;border-radius:8px}
+#top{top:8px;left:8px;right:auto;padding:6px 12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;max-width:calc(100vw - 16px)}
+#top b{color:#ffd97a}#top .warn{color:#ff8a7a}
+#top button{background:#2c3a54;color:#dde;border:1px solid #4a5d7d;border-radius:5px;padding:2px 9px;cursor:pointer}
+#top button.on{background:#5a7db0}
+#bar{left:50%;transform:translateX(-50%);bottom:10px;padding:6px;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:96vw}
+#bar button{border:1px solid #4a5d7d;border-radius:6px;padding:6px 8px;cursor:pointer;color:#102;font-weight:600;font-size:12px;min-width:52px}
+#bar button.on{outline:3px solid #ffe98a}
+#bar button.infra{background:#2c3a54;color:#dde}
+#factor{left:50%;transform:translateX(-50%);bottom:62px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;text-align:center}
+#toast div{background:#243450ee;border:1px solid #5a7db0;border-radius:6px;padding:4px 14px;margin:3px;font-size:13px;animation:fade 4s forwards}
+@keyframes fade{0%{opacity:0}8%{opacity:1}80%{opacity:1}100%{opacity:0}}
+#drawer{top:8px;right:8px;width:250px;max-height:calc(100vh - 90px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 10px;display:none}
+#drawer.open{display:block}
+#dbtn{top:8px;right:8px;padding:6px 10px;cursor:pointer;z-index:6}
+#drawer h2{font-size:12px;color:#9fb8d8;margin:8px 0 3px}
+#prices{font-size:11px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px 6px}
+#log{font-size:11px;color:#aab}#log div{border-bottom:1px solid #2a3550;padding:1px 0}
+.bar{height:8px;background:#2a3550;border-radius:4px;overflow:hidden;width:110px;display:inline-block;vertical-align:middle}
 .bar>div{height:100%;background:linear-gradient(90deg,#e0b050,#e05050)}
+#overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;flex-direction:column;font-size:22px;z-index:9}
 small{color:#8899b0}
 </style></head><body>
-<div id="left"><canvas id="cv"></canvas>
-<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は停止され、島は静かに衰えていきます…</div><button onclick="location.reload()" style="font-size:16px">リプレイ</button></div></div>
-<div id="side">
-<h1>流通の島 <small>v0 mock</small></h1>
-<div class="hud" id="hud"></div>
-<div class="bar" title="債務/信用限度"><div id="debtbar" style="width:0%"></div></div>
-<div id="factor" style="background:#2a3448;border-left:3px solid #ffd97a;padding:6px 8px;margin:6px 0;font-size:12px;min-height:34px">「ようこそ、支配人。島はまだ何も知りません」</div>
-<h2>速度</h2><div id="speeds"></div>
-<h2>入植（渡航費60）</h2><div id="jobs"></div>
-<h2>インフラ</h2><div id="infra"></div>
-<h2>市場価格</h2><div id="prices"></div>
-<h2>世帯情報 <small>(建物をクリック)</small></h2><div id="info"><small>—</small></div>
-<h2>出来事</h2><div id="log"></div>
-<h2>遊び方</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム。職を選んで地面をタップ=入植(対岸漁は右下の海沿い・採石は北東の岩場が適地)。菜種は対岸漁の粕(肥料)で伸び、油は高値で売れる。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
+<canvas id="cv"></canvas>
+<div id="top" class="ov"></div>
+<div id="toast"></div>
+<div id="factor" class="ov">「ようこそ、支配人。まだ誰もいない島です」</div>
+<div id="bar" class="ov"></div>
+<div id="dbtn" class="ov">📊</div>
+<div id="drawer" class="ov">
+ <h2>世帯情報 <small>(建物をタップ)</small></h2><div id="info"><small>—</small></div>
+ <h2>市場価格</h2><div id="prices"></div>
+ <h2>出来事</h2><div id="log"></div>
+ <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
 </div>
+<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は止まり、島は静かに衰えていきます…</div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
 <script type="module">
 import{World,P,JOBS,GOODS} from './engine.js';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
-function fit(){const L=document.getElementById('left');cv.width=L.clientWidth;cv.height=L.clientHeight||innerHeight;ox=cv.width/2;}
+function fit(){cv.width=innerWidth;cv.height=innerHeight;ox=cv.width/2;}
 fit();addEventListener('resize',fit);
-if(cv.width<760){Z=0.55;}
-panY=cv.height/2-(60+(48+40)/2*10)*Z; // 島の中心を画面中央へ
+if(cv.width<760)Z=0.55;
+panY=cv.height/2-(60+(MW+MH)/2*10)*Z;
 const toWorld=(px,py)=>[(px-panX)/Z,(py-panY)/Z];
 const iso=(x,y)=>[ox+(x-y)*TW/2,oy+(x+y)*TH/2];
 const unIso=(px,py)=>{const[wx,wy]=toWorld(px,py);const a=(wx-ox)/(TW/2),b=(wy-oy)/(TH/2);return[Math.round((a+b)/2),Math.round((b-a)/2)];};
-// 地形
 const terr=[];for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
   let t='grass';
-  if(y>MH-4||(y>MH-7&&x>18&&x<32))t='water';
-  else if(y>MH-8&&y<=MH-4)t='sand';
+  if(y>MH-4||(y>MH-7&&x>18&&x<32))t='water';else if(y>MH-8&&y<=MH-4)t='sand';
   if(x<16&&y<16&&((x*7+y*13)%5<3))t='forest';
-  if(x>38&&y<10)t='rock';
-  terr[y].push(t);}}
+  if(x>38&&y<10)t='rock';terr[y].push(t);}}
 const TC={grass:['#4d7a3f','#446f38'],sand:['#c9b57a','#bfa96e'],water:['#2b5d8a','#27547d'],forest:['#3a5f31','#33562b'],rock:['#7a7a72','#6e6e66']};
 const w=new World(11);w.market={x:25,y:MH-8};
-const start=[['fisher',24,MH-9],['fisher',27,MH-9],['veg',22,MH-12],['veg',20,MH-11],
- ['wheat',16,MH-16],['wheat',18,MH-17],['woodshop',12,12],['charburner',10,11]];
-for(const[j,x,y]of start)w.addHH(j,x,y);
-const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#555',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
-const JNAME={fisher:'漁師',fisher2:'対岸漁(粕)',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種畑',woodshop:'木工所',charburner:'炭焼き',quarryman:'採石',saltworks:'塩小屋'};
-let tool=null,speed=1,tick=0,sel=null;
-// UI
-const jb=document.getElementById('jobs');
-for(const j of JOBS){const b=document.createElement('button');b.textContent=JNAME[j];
-  b.onclick=()=>{tool=tool===j?null:j;upd();};jb.appendChild(b);b.dataset.t=j;}
-const inf=document.getElementById('infra');
-for(const[id,label]of[['road','道を敷く(5/マス)'],['ship','海運投資(8000)'],['pave','石畳P(石200公費買上げ)']]){
-  const b=document.createElement('button');b.textContent=label;
-  b.onclick=()=>{if(id==='ship'){if(w.investShipping())b.disabled=true;}else if(id==='pave'){if(w.investPaving())b.disabled=true;}else{tool=tool==='road'?null:'road';upd();}};
-  b.dataset.t=id;inf.appendChild(b);}
-const sp=document.getElementById('speeds');
-for(const[s,l]of[[0,'⏸'],[1,'▶'],[4,'▶▶'],[16,'▶▶▶']]){
-  const b=document.createElement('button');b.textContent=l;b.onclick=()=>{speed=s;upd();};b.dataset.s=s;sp.appendChild(b);}
-function upd(){for(const b of jb.children)b.classList.toggle('on',b.dataset.t===tool);
-  for(const b of inf.children)b.classList.toggle('on',b.dataset.t===tool);
-  for(const b of sp.children)b.classList.toggle('on',+b.dataset.s===speed);}
-upd();
+const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
+const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
+let tool=null,speed=1,tick=0,sel=null,walkPhase=0;
+const FRAMES=[0,30,8,2]; // 速度→1歩の間隔(フレーム)。1×=2日/秒
+// --- 上バー ---
+const top=document.getElementById('top');
+function topbar(){const d=w.day,m=Math.floor(Math.max(0,d-1)/30)+1,mm=(m-1)%12+1;
+  const se=mm>=10?'❄冬':mm<=3?'🌸春':mm<=6?'☀夏':'🍂秋';
+  const debt=Math.max(0,-w.treasury),lim=w.limit();
+  top.innerHTML=`<span>${Math.floor((m-1)/12)+1}年目 ${mm}月 ${se}</span>`+
+   `<span>金庫 <b class="${w.treasury<0?'warn':''}">${Math.round(w.treasury)}</b></span>`+
+   `<span class="bar" title="債務/限度"><div style="width:${Math.min(100,debt/lim*100)}%"></div></span>`+
+   `<span>人口 <b>${w.hhs.length*9}</b></span><span>支援${w.bailouts}/3</span>`+
+   [['⏸',0],['▶',1],['▶▶',2],['▶▶▶',3]].map(([l,s])=>`<button data-s="${s}" class="${speed===s?'on':''}">${l}</button>`).join('');
+  top.querySelectorAll('button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;topbar();});}
+// --- 下バー(建設) ---
+const bar=document.getElementById('bar');
+for(const j of JOBS){const b=document.createElement('button');b.textContent=JNAME[j];b.style.background=JCOL[j];
+  b.onclick=()=>{tool=tool===j?null:j;paint();};b.dataset.t=j;bar.appendChild(b);}
+for(const[id,label]of[['road','道'],['pave','石畳P'],['ship','海運']]){
+  const b=document.createElement('button');b.textContent=label;b.className='infra';
+  b.onclick=()=>{if(id==='ship'){if(w.investShipping())b.disabled=true;}
+    else if(id==='pave'){if(w.investPaving())b.disabled=true;}
+    else{tool=tool==='road'?null:'road';paint();}};
+  b.dataset.t=id;bar.appendChild(b);}
+function paint(){bar.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.t===tool));}
+// --- 引き出し ---
+document.getElementById('dbtn').onclick=()=>{const dr=document.getElementById('drawer');
+  dr.classList.toggle('open');document.getElementById('dbtn').style.display=dr.classList.contains('open')?'none':'block';};
+document.getElementById('drawer').addEventListener('dblclick',()=>{document.getElementById('drawer').classList.remove('open');document.getElementById('dbtn').style.display='block';});
+// --- トースト(重要イベント) ---
+let lastEv=0;
+function toasts(){const box=document.getElementById('toast');
+  for(let i=lastEv;i<w.events.length;i++){const[dd,msg]=w.events[i];
+    if(/★|▲Lv|分家|施肥/.test(msg)){const el=document.createElement('div');el.textContent=msg;
+      box.appendChild(el);setTimeout(()=>el.remove(),4200);}}
+  lastEv=w.events.length;}
+// --- 入力(パン/ズーム/タップ) ---
 let drag=false,downP=null,moved=false,pinch0=null;
 function down(p){drag=true;moved=false;downP=p;if(tool==='road')act(p);}
 function move(p){if(!drag)return;
   if(tool==='road'){act(p);return;}
   const dx=p.offsetX-downP.offsetX,dy=p.offsetY-downP.offsetY;
   if(Math.abs(dx)+Math.abs(dy)>8)moved=true;
-  if(!tool||JOBS.includes(tool)){if(moved&&!tool){panX+=dx;panY+=dy;downP=p;}else if(moved&&tool){panX+=dx;panY+=dy;downP=p;}}}
+  if(moved){panX+=dx;panY+=dy;downP=p;}}
 function up(p){if(drag&&!moved&&tool!=='road')act(p);drag=false;pinch0=null;}
 cv.onmousedown=e=>down({offsetX:e.offsetX,offsetY:e.offsetY});
 cv.onmousemove=e=>move({offsetX:e.offsetX,offsetY:e.offsetY});
@@ -103,17 +125,17 @@ cv.addEventListener('touchmove',e=>{e.preventDefault();
     panX=cxp-(cxp-panX)*nz/Z;panY=cyp-(cyp-panY)*nz/Z;Z=nz;}
   else move(tp(e));},{passive:false});
 cv.addEventListener('touchend',e=>{e.preventDefault();up(tp(e));},{passive:false});
-function act(e){const[x,y]=unIso(e.offsetX,e.offsetY);
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();speed=speed===0?1:0;topbar();}
+  if(e.key>='1'&&e.key<='3'){speed=+e.key;topbar();}});
+function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
   if(!tool){let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
     sel=bd<2?best:null;info();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
-  if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)&&w.treasury>-w.limit()){
-    w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
-  else if(tool&&JOBS.includes(tool)){w.addHH(tool,x,y);drag=false;}}
-// 描画
+  if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
+  else if(JOBS.includes(tool)){w.addHH(tool,x,y);}}
+// --- 描画 ---
 function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
-  const d=w.day,mm=(Math.floor((d-1)/30))%12+1;
-  const wint=mm>=10;
+  const d=w.day,mm=(Math.floor(Math.max(0,d-1)/30))%12+1,wint=mm>=10;
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
     const[px,py]=iso(x,y);let c=TC[terr[y][x]][(x+y)%2];
     if(wint&&terr[y][x]!=='water')c=shade(c,30);
@@ -123,77 +145,64 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
     if(t==='forest'&&(x*13+y*7)%3===0){cx.fillStyle='#2c4a26';
       cx.beginPath();cx.moveTo(px,py-14);cx.lineTo(px+5,py-4);cx.lineTo(px-5,py-4);cx.closePath();cx.fill();
       cx.fillStyle='#5a4630';cx.fillRect(px-1,py-4,2,3);}
-    if(t==='rock'&&(x*11+y*5)%4===0){cx.fillStyle='#8d8d85';
-      cx.beginPath();cx.ellipse(px,py-3,5,3,0,0,7);cx.fill();}
-    if(t==='water'&&(x+y+((tick/25)|0))%7===0){cx.fillStyle='#4a7fae';
-      cx.fillRect(px-6,py-1,12,1);}}
+    if(t==='rock'&&(x*11+y*5)%4===0){cx.fillStyle='#8d8d85';cx.beginPath();cx.ellipse(px,py-3,5,3,0,0,7);cx.fill();}
+    if(t==='water'&&(x+y+((tick/25)|0))%7===0){cx.fillStyle='#4a7fae';cx.fillRect(px-6,py-1,12,1);}}
   const[mx,my]=iso(w.market.x,w.market.y);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
   cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
   cx.fillStyle='#fff';cx.font='10px sans-serif';cx.textAlign='center';cx.fillText('市場/港',mx,my+14);
-  for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){const[px,py]=iso(Math.round(h.x),Math.round(h.y));
+  for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){
+    const[px,py]=iso(Math.round(h.x),Math.round(h.y));
     if(h===sel){cx.strokeStyle='#ffe98a';cx.lineWidth=2;cx.strokeRect(px-12,py-22,24,24);cx.lineWidth=1;}
     cx.fillStyle=JCOL[h.job]||'#999';
     const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
     cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
-    if(h.hunger>0&&w.goDay){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
+    if(w.goDay&&h.hunger>0){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
     cx.fillStyle='#ffd97a';for(let i=0;i<h.lv;i++)cx.fillRect(px-s/2+i*3,py-s-7,2,2);
-    const t=(tick/60+h.id*0.37)%2,f=t<1?t:2-t;
+    // 歩行者: シミュ連動(walkPhaseはstep時のみ進む)
+    const t2=(walkPhase+h.id*0.37)%2,f=t2<1?t2:2-t2;
     const wx=h.x+(w.market.x-h.x)*f,wy=h.y+(w.market.y-h.y)*f;
     const[ax,ay]=iso(wx,wy);cx.fillStyle='#f5e9d0';cx.beginPath();cx.arc(ax,ay-3,2,0,7);cx.fill();}
   cx.textAlign='left';}
 function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
   cx.moveTo(px,py-TH/2*k);cx.lineTo(px+TW/2*k,py);cx.lineTo(px,py+TH/2*k);cx.lineTo(px-TW/2*k,py);cx.closePath();cx.fill();}
 function shade(hex,amt){const n=parseInt(hex.slice(1),16);
-  const r=Math.min(255,(n>>16)+amt),g=Math.min(255,((n>>8)&255)+amt),b=Math.min(255,(n&255)+amt);
-  return`rgb(${r},${g},${b})`;}
-// HUD
-const SEASON=['冬','冬','冬','春','春','春','夏','夏','夏','秋','秋','秋'];
+  return`rgb(${Math.min(255,(n>>16)+amt)},${Math.min(255,((n>>8)&255)+amt)},${Math.min(255,(n&255)+amt)})`;}
+// --- 情報/価格/ログ ---
 function info(){const el=document.getElementById('info');
   if(!sel){el.innerHTML='<small>—</small>';return;}
-  const h=sel,pv=g=>h.pantry[g]>0.5?`${{fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'}[g]}${Math.round(h.pantry[g])}`:null;
-  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>
-   財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br>
-   <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
-function hud(){const d=w.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
-  const se=mm>=10?'冬':mm<=3?'春':mm<=6?'夏':'秋';
-  const debt=Math.max(0,-w.treasury),lim=w.limit();
+  const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
+  const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
+  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
+function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
   const fp=g=>{const a=w.prices[g];return a&&a.length?a[a.length-1][1].toFixed(2):'-';};
-  document.getElementById('hud').innerHTML=
-   `<span>${Math.floor((m-1)/12)+1}年目 ${mm}月 <b>${se}</b></span><span>人口 <b>${w.hhs.length*9}</b></span>`+
-   `<span>金庫 <b class="${w.treasury<0?'warn':''}">${Math.round(w.treasury)}</b></span><span>限度 ${Math.round(lim)}</span>`+
-   `<span>支援 ${w.bailouts}/3</span><span>飢餓 <b class="${w.famine?'warn':''}">${w.famine}</b></span>`+
-   `<span>湾 ${Math.round(w.bay/P.BAY0*100)}%</span><span>森 ${Math.round(w.grove/P.GROVE0*100)}%</span>`+
-   `<span>配給/日 ${w.doleRate.toFixed(0)}</span><span>輸出計 ${Math.round(Object.values(w.exported).reduce((a,b)=>a+b,0))}</span>`;
-  document.getElementById('debtbar').firstElementChild?0:0;
-  document.getElementById('debtbar').style.width=Math.min(100,debt/lim*100)+'%';
-  document.getElementById('prices').innerHTML=['fish','wheat','veg','meat','tools','salt','char','pres','meal','stone','oil']
-    .map(g=>`<span>${{fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'}[g]} <b>${fp(g)}</b></span>`).join('');
-  const lg=document.getElementById('log');
-  lg.innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');
-  if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
-    document.getElementById('overlay').style.display='flex';}
-// ループ
-function frame(){tick++;
-  for(let i=0;i<speed;i++)if(tick%4===0||speed>1)w.step&&stepSafe();
-  function stepSafe(){try{w.step();}catch(e){console.error(e);speed=0;}}
-  draw();if(tick%15===0){hud();if(sel)info();}requestAnimationFrame(frame);}
-// 秘書(ファクター)の声
-let saidWinter=false,saidTight=false,saidFree=false;
-function factor(){const m=Math.floor((w.day-1)/30)+1,mm=(m-1)%12+1;
+  document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
+  document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
+// --- 秘書 ---
+let saidWinter=false,saidTight=false,saidFree=false,stage=0;
+function factor(){const el=document.getElementById('factor');const say=t=>el.textContent='「'+t+'」';
+  const m=Math.floor(Math.max(0,w.day-1)/30)+1,mm=(m-1)%12+1;
   const debt=Math.max(0,-w.treasury),ratio=debt/w.limit();
-  const el=document.getElementById('factor');const say=t=>el.textContent='「'+t+'」';
   if(w.goDay){say('…本国は、もう待ってくれないそうです。それでも島の朝は来ます');return;}
-  if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。蔵の麦と保存食をご確認を。冬の海は漁が細ります');return;}
+  const n=j=>w.hhs.filter(h=>h.job===j).length;
+  if(stage===0){if(n('fisher')<2){say('まず浜の近くに漁師を二軒。海が最初の畑です');return;}stage=1;}
+  if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
+  if(stage===2){if(n('woodshop')<1){say('木工所を森の際に。道具がなければ文化は育ちません');return;}stage=3;}
+  if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を。塩がなければ冬の蓄えが作れません');return;}stage=4;}
+  if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。蔵の麦と保存食をご確認を');return;}
   if(mm===3)saidWinter=false;
-  if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、公費を絞る頃合いかと');return;}
+  if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、様子を見る頃合いかと');return;}
   if(ratio<0.4&&saidTight){saidTight=false;say('財政に息がつけました。再び前へ');return;}
-  if(w.doleRate<w.hhs.length*9*0.05&&!saidFree&&m>12){saidFree=true;say('配給がほとんど要らなくなりました。島が自分の足で立ち始めています');return;}
-  if(m===2)say('序盤は配給が島を支えます。金庫が尽きる前に、木工と炭と塩の連鎖をお立てください');}
-setInterval(factor,2000);
-// キーボード: スペース=一時停止/再開・1-3=速度
-addEventListener('keydown',e=>{
-  if(e.code==='Space'){e.preventDefault();speed=speed===0?1:0;upd();}
-  if(e.key==='1'){speed=1;upd();}if(e.key==='2'){speed=4;upd();}if(e.key==='3'){speed=16;upd();}});
-hud();frame();
+  if(w.doleRate<Math.max(1,w.hhs.length*9)*0.05&&!saidFree&&m>12){saidFree=true;say('配給がほとんど要らなくなりました。島が自分の足で立ち始めています');return;}}
+setInterval(factor,2500);
+// --- ループ ---
+function frame(){tick++;
+  const fp=FRAMES[speed];
+  if(fp&&tick%fp===0){try{w.step();walkPhase+=0.06;}catch(err){console.error(err);speed=0;}}
+  draw();
+  if(tick%20===0){topbar();panel();toasts();if(sel)info();
+    if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
+      document.getElementById('overlay').style.display='flex';}
+  requestAnimationFrame(frame);}
+topbar();paint();frame();
 </script></body></html>
