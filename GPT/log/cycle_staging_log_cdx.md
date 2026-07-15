@@ -68,7 +68,61 @@ skipped:
 - candidate frontmatter は `gate_decision: postpone` / `status: postponed` / `next_action: revise_or_research` で整合しているため、追加更新なし。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "MEMORY.md indexをvalidate_memory_index.pyで監査し、per-file atom indexとの不整合・broken entryが0件であることを確認"
+  - "shared-reads mixed duplicate / stale triage / group-action queueを2026-07-15基準で再生成（78 groups / 50 candidates / 35 group actions）"
+  - "candidate lifecycleをdry-run監査（posted 406 / ready_to_post 10 / postponed 391 / failed 121 / needs_review 22、期限超過208件、missing stale_after 6件）"
+  - "Slack inboxを確認し、pending directives 0件 / broadcasts 0件のためhandled更新なし"
+  - "memory/rawの30日超ファイルを監査対象として確認したが、原文の参照価値と既存取り込み経路を変えるarchive移動はPhase 4aでは実施せず"
+issues:
+  - id: ISS-4A-20260715-01
+    description: "atomの反復title group 22種のうち14種がlifecycle group未付与で、titleだけでは検索結果の由来を判別しにくい"
+    severity: medium
+    evidence: "tools/memory_health.py: repeated_title_groups raw=22 / recall_visible=15 / ungrouped=14。代表例: 『■ 概要』20件、『@』3件、『■ メリット・デメリット』3件。normalized content duplicateはoverlay 45 groupsでfold済み"
+    source_file_status: "memory/atoms.jsonlはUTF-8 JSONLとして読取可能。atom id重複エラーなし。raw normalized-content duplicate 40 groupsはcanonical overlayに登録済み"
+    display_or_tooling_status: "recall_visibleではcontent fold後の重複は3 groupsまで抑制されるが、反復titleの14種はungrouped warningとして残る"
+    why_blocks_game_memory: "『概要』等の汎用titleが想起候補に並ぶと、過去ゲーム知見の識別と再利用に余分な本文確認が必要になる"
+  - id: ISS-4A-20260715-02
+    description: "postponed / needs_review候補の期限超過backlogが208件あり、再評価queue 50件と1サイクル1 group handoffの処理速度に対して滞留している"
+    severity: medium
+    evidence: "backfill_shared_reads_candidate_status.py dry-run: overdue_for_reassessment=208。shared_reads_stale_triage_queue.jsonl=50 rows、shared_reads_group_action_queue.jsonl=35 rows"
+    source_file_status: "candidate 950 filesはfrontmatter読取可能。status内訳 posted 406 / ready_to_post 10 / postponed 391 / failed 121 / needs_review 22。missing stale_after 6"
+    display_or_tooling_status: "queue再生成は成功。group-action限定運用により今回のmixed duplicate handoffは先頭1 groupのみ"
+    why_blocks_game_memory: "ゲーム制作へ転用価値のある候補が古い重複群の後ろに滞留し、次回制作時の外部知見供給が遅れる"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 208
+  stale_triage_queue_rows: 50
+  mixed_duplicate_groups: 78
+  group_action_queue_rows: 35
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue先頭。procedural persona別のheadless評価へ転用価値が高い。status_countsはterminal 2 / open 5相当で、terminal_pathsとopen_pathsが混在するためgroup単位の整理が必要"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+encoding_audit:
+  target: memory/MEMORY.md
+  source_file_status: "UTF-8明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を全て取得。source破損なし"
+  display_or_tooling_status: "none"
+raw_archive_audit:
+  cutoff: "2026-06-15"
+  action: "候補確認のみ。自動生成・参照中rawを誤移動しないためarchive変更なし"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
