@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-16T04:47:42+09:00",
+  "updated_at": "2026-07-16T07:15:00+09:00",
   "reviewed_source_ts": [
     "1779740294.256369",
     "1782646829.867869",
@@ -391,7 +391,8 @@
     "1778535751.103379",
     "1784088387.032009",
     "1783417724.835199",
-    "1782580046.412109"
+    "1782580046.412109",
+    "1779995806.511879"
   ],
   "reviews": [
     {
@@ -9983,6 +9984,17 @@
       "title": "HeRoN: LLM の提案・制約検査・実行を分離する hybrid NPC",
       "decision": "reject",
       "reason": "Score 13. LLM を直接の実行主体にせず、候補生成、制約検査、deterministic な実行へ分け、invalid action、state inconsistency、resource mismatch、format error を別々に測る観点は game/headless 評価に直結する。しかし active な runtime-verifiable-production-slices、state-abstraction-action-loop、Draw2Think inspectable-intermediate-state、local-constraint-global-evaluator-split probes が、action/state schema、deterministic verifier、runtime interaction、失敗層分類をすでに要求している。HeRoN 固有の三者名を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。論文と shared-reads 本文は定量的根拠を持つが、この環境で三層構成を比較実測していないため evidence は 2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 1, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-16T07:15:00+09:00",
+      "id": "sr-1779995806-e9890c7c4d",
+      "source_ts": "1779995806.511879",
+      "title": "SimWorld Studio: 実行可能な環境生成を verifier・skill library・performance feedback で閉じる",
+      "decision": "reject",
+      "reason": "Score 13. 生成物を見た目の良い scene ではなく、観測・行動・報酬・失敗条件を持つ実行可能な environment として扱い、compile、physics、task、performance の feedback を修正と reusable skill に戻す観点は game/headless 制作に直結する。しかし active な runtime-verifiable-production-slices、gameenginebench-runtime-integration-gate、structural-semantic-check-boundary、task-level-compatibility、difficulty-curve-source probes が、実行可能性、隣接 system、構造と意味、task-level 整合、難度 feedback をすでに個別に要求している。SimWorld 固有の閉ループを追加しても次回行動はほぼ変わらず、314件超の active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には verifier と success-rate gain の根拠があるが、この環境で performance-driven curriculum を比較実測していないため evidence は 2。読了と重複理由だけを state に残す。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 1, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}

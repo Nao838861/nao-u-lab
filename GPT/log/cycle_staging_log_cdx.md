@@ -39,7 +39,33 @@ skipped:
 - 投稿本文を作成していないため、禁止表現・文字数・必須フォーマットの投稿前レビュー対象もなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779995806-e9890c7c4d
+    source_ts: "1779995806.511879"
+    title: "SimWorld Studio: 実行可能な環境生成を verifier・skill library・performance feedback で閉じる"
+    reason: "生成物を実行可能な environment として検証・修正・再利用する知見は game/headless 制作に直結するが、現行 active probes との重複と probe 肥大化を今確認すべきため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。runtime verification、structural/semantic、task-level compatibility、difficulty feedback の既存 probes と重複するため新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
