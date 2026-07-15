@@ -4,7 +4,7 @@ export const FOODS = ['fish','veg','wheat','pres','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:12, Y_MEAT:16,
+  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:5,  // 12は村需要の20倍(診断済) Y_MEAT:16,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.12, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
@@ -40,7 +40,12 @@ export class HH{
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
     this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;
-    this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;}
+    this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
+    // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
+    this.pantry.tools=5;
+    if(job==='saltworks')this.pantry.char=15;
+    if(job==='fisher'){this.pantry.salt=4;this.pantry.char=2;}
+    if(job==='fisher2')this.pantry.salt=2;}
   mult(){return Math.pow(P.LV_MULT,this.lv);}
   eat(){return this.members.length;}
   haul(){return this.members.length*4;}   // 1人1荷(荷=4食分)×家族
@@ -157,6 +162,8 @@ export class World{
     if(my==='fish'){let keep=P.EAT;
       const alt=Math.min(h.belief.veg,h.belief.wheat,h.belief.pres);
       if(h.belief.fish>alt*1.5)keep=P.EAT*0.3;
+      // 塩がある分は保存に回す(今夜の塩蔵用に魚を残す。保存は買付台で確実に売れる)
+      keep+=Math.min(h.pantry.salt/P.PRES_SALT,12);
       const s=Math.max(0,h.pantry.fish-keep);if(s>1e-9)out.fish=Math.min(s,h.haul());}
     else{let keep=FOODS.includes(my)?P.EAT*2:2,rate=0.5;
       if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=P.EAT*P.RATION*10;}
@@ -269,7 +276,8 @@ export class World{
       let[want,ceil]=targets[g];want=Math.min(want,cap);
       const shelves=[...this.stalls[g]].sort((a,b)=>a.price-b.price);
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
-      if(P.GRAN_BID[g]&&(this.granary[g]||0)>10)
+      // 御蔵の放出=払底時のみ(常時棚に出すと公的備蓄が民業を圧迫し生産者を締め出す・計測済)
+      if(P.GRAN_BID[g]&&(this.granary[g]||0)>10&&this.stalls[g].length===0)
         shelves.push({hh:'GRANSELL',qty:this.granary[g]-10,price:Math.min(P.GRAN_BID[g]*1.25,(P.IMP[g]??9)*0.97)});
       for(const s of shelves){if(want<1e-9)break;
         if(s.price>ceil||s.price<=0)continue;
