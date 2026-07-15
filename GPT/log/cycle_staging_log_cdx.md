@@ -37,7 +37,33 @@ skipped: []
 - 投稿: #shared-reads へ 1 candidate を 1 回の `chat.postMessage` で送信。thread reply なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782668411-c7a6820ccb
+    source_ts: "1782668411.613329"
+    title: "Agentic Knowledge Tracing: stealth assessment を domain 別 evidence と session trajectory で読む"
+    reason: "未レビューかつ score 11 で memory/harness/evaluation/agent/operation/game-design の全優先タグを持つ。game/headless 評価と shared-reads gate への直接転用可能性を、既存 probe との重複込みで確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。classiclogic composition-layer、causalgame outcome-explanation、BALROG/attributed-trajectory probes と重複するため、新規 probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

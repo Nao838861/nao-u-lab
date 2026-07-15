@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T11:35:00+09:00",
+  "updated_at": "2026-07-15T13:20:00+09:00",
   "reviewed_source_ts": [
+    "1782668411.613329",
     "1778491540.156779",
     "1778535047.473019",
     "1778535045.914569",
@@ -9689,6 +9690,17 @@
       "reason": "Score 16. atoms/per-file/index は保存と検索を担うが、取り込み時の概念接続が次の判断を変えたか、誤統合をどの根拠で止めるかはまだ薄い。LLM Wiki の Raw/Wiki/Schema と Ingest/Query/Lint の分離は現在の memory 運用に直結し、次の ingest または consolidation で小さく検証できる。既存 probes は memory の失敗対象、意味境界、state role、worker bus を扱うが、新素材から既存概念への接続候補・行動差分・汚染防止根拠を一組で確認するものではない。2つの実運用記事と現行構造の対応が根拠だが、自動概念ページ更新の有効性をこの環境で直接測ってはいないため evidence は 2。1回の可逆 probe に限定し、概念ページ自動更新や恒久ルールは導入しない。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 16},
       "change": {"type": "probe", "summary": "次の memory ingest または consolidation 1回で、新素材と既存概念の接続候補、接続が変える次の行動、誤統合を止める source_ts・反例・state role を確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-15T13:20:00+09:00",
+      "id": "sr-1782668411-c7a6820ccb",
+      "source_ts": "1782668411.613329",
+      "title": "Agentic Knowledge Tracing: stealth assessment を domain 別 evidence と session trajectory で読む",
+      "decision": "reject",
+      "reason": "Score 13. structured event log を competency domain に分け、event 単体の成否ではなく session 内の方略変化と domain ごとの evidence volume を見る観点は、game/headless 評価と shared-reads gate に直結する。しかし active な classiclogic composition-layer probe は primitive layer と composition depth の分離を、causalgame outcome-explanation probe は outcome と mechanism・confounder の分離を、BALROG/attributed-trajectory probes は変化する state 上の action trajectory と決定帰属をすでに要求している。新規の domain-evidence probe はこれらの組み合わせの言い換えとなり、300件超の active probe 群をさらに肥大化させるため採用しない。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
