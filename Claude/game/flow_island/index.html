@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=123139';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=123251';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -199,7 +199,11 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
       cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
       if(w.goDay&&h.hunger>0){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
-      cx.fillStyle='#ffd97a';for(let i=0;i<h.lv;i++)cx.fillRect(px-s/2+i*3,py-s-7,2,2);}
+      // Lvバッジ(マップ上に常時表示)
+      cx.fillStyle='#1b2434dd';cx.beginPath();cx.arc(px+s/2+2,py-s-2,5.5,0,7);cx.fill();
+      cx.strokeStyle=h.lv>0?'#ffd97a':'#556';cx.stroke();
+      cx.fillStyle=h.lv>0?'#ffd97a':'#99a';cx.font='bold 7px sans-serif';cx.textAlign='center';
+      cx.fillText(h.lv,px+s/2+2,py-s+0.5);cx.textAlign='left';}
     // 人: 実際の位置(通勤・移民の到着が見える)
     if(h.state!=='home'&&h.state!=='building'){
       const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
