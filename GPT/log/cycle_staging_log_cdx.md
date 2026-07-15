@@ -66,7 +66,64 @@ self_feedback:
 
 ## Phase 4a: 整理 + 問題抽出
 
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（81 group）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-15 基準で再生成（上限50件）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 group）"
+  - "MEMORY.md index を validate_memory_index.py で検証し、per-file atom index との不一致なしを確認"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending 0件を確認（handled 更新対象なし）"
+issues:
+  - id: ISS-4A-STALE-BACKLOG
+    description: "postponed / needs_review の stale_after 超過が208件あり、candidate 単位で一度に処理すると同一title groupを重複再評価する。既存group-action queueによる1 groupずつのhandoffが必要。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/ lifecycle内訳 posted=406, ready_to_post=10, postponed=394, failed=123, needs_review=22; stale_after <= 2026-07-15 は208件。memory/shared_reads_group_action_queue.jsonl は35 group。"
+    source_file_status: "candidate frontmatter はUTF-8で読取可能。正本candidateは未変更。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "同一研究の複数candidateを個別に読み直すと、ゲーム制作へ転送すべき知見の選別より重複整理に時間を消費し、既投稿知識の再取得を繰り返す。"
+  - id: ISS-4A-ATOM-MOJIBAKE
+    description: "active atom 1件のtitle / Use when / excerptに置換文字を含むsource破損があり、発動条件の検索語が欠損している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md の『AIエ��ジェント』。memory_health.py は別のgame-rights atomもsuspectに挙げたが、UTF-8明示読みで後者の日本語本文は正常だった。"
+    source_file_status: "sr-1776127289-4d9239b255.md 自体にU+FFFDが保存されている。memory/MEMORY.md はUTF-8明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、index検証もOK。"
+    display_or_tooling_status: "PowerShell表示だけのmojibakeではない。gr-1777083728-44d444ab7a はhealth heuristicのfalse positive。"
+    why_blocks_game_memory: "壊れたtrigger語により、ファイルベース記憶やagent architectureを探す際の検索再現率が局所的に下がる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  expired_total: 208
+  stale_triage_queue_rows: 50
+  group_action_queue_rows: 35
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue先頭。procedural persona別のMCTS playtestingはheadless評価を平均スコアからプレイスタイル別の破綻検出へ接続できる。mixed duplicate groupのためrepresentative 1件だけを渡す。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+raw_archive_audit:
+  older_than_30_days_files: 93
+  total_bytes: 62759242
+  action: "候補を確認したが、原文・PDF・Slack archiveを参照関係の確認なしに移動しない。Phase 4aではアーカイブ実施なし。"
+atom_health:
+  total: 2675
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_groups_recall_visible: 3
+  contradictory_duplicate_evidence: "なし。normalized_content_hash fold後のvisible重複は3 groupで、memory_healthはerrorではなくwarning。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 
