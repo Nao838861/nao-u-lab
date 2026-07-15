@@ -24,7 +24,18 @@ stale_reviewed: []
 - 判定根拠: 役割別能力、三つの失敗モード、439ゲームの評価、主要な定量結果を抽出できる。非対称情報を扱う対話ゲームで、総合勝率を抽出成功・秘密漏洩・制約違反へ分解する評価設計に直接適用でき、CoopEval 水準の概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260715_aidg_role_decomposed_dialogue_game_eval.md
+    reason: >-
+      同一論文 arXiv:2602.17443 は 2026-05-28 に Log_cdx が #shared-reads へ投稿済み。
+      既投稿は役割分解、二つのタスク、439 games、Dual-ELO、主要数値、失敗条件、
+      自分達の環境への適用、部分採用判定まで含み、今回候補に独立した追加価値がない。
+      evidence: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

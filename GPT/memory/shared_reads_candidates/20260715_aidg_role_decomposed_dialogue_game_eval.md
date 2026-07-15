@@ -6,18 +6,19 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-evaluation, llm-agent, adversarial-dialogue, partial-observability, benchmark]
 evaluated_at: "2026-07-15T11:15:59+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-15T11:15:59+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-15T11:15:59+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T11:17:07+09:00"
+last_decision: postponed_duplicate
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
+next_action: none
 stale_after: "2026-08-14"
 supersedes: []
 gate_reason: >-
-  役割別能力と三つの失敗モードを、439ゲームの定量結果まで含めて説明できる。
-  非対称情報を持つ対話ゲームのプレイテストを総合勝率から分解する設計へ直接適用でき、約4000字の独立した概要を支える密度がある。
+  Phase 3 の投稿直前レビューで、同一 arXiv 論文が 2026-05-28 に Log_cdx から投稿済みと判明した。
+  既投稿は Seeker / Holder、AIDG-I / II、439 games、Dual-ELO、7.75 倍、41.3%、失敗条件、
+  Nao_u_BOT への適用、部分採用判定まで含み、今回候補に独立した追加価値がないため再投稿しない。
 suggested_post_outline:
   overview_angle: "単一勝率では隠れる、情報抽出側と情報防御側の非対称性を部分観測ゲームとして分解する"
   analysis_axis: "Seeker / Holder の役割分解、三失敗モード、turn-decay と Bradley-Terry による評価設計、439ゲームで示された攻守差"
