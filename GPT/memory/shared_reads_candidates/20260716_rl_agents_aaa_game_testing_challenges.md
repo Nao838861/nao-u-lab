@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2307.11105"
 collected_at: "2026-07-16T02:59:32.9856467+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-testing, reinforcement-learning, automation, production, aaa]
+evaluated_at: "2026-07-16T03:10:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-16T03:10:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-16T03:10:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  既存の決定的 bot 基盤へ RL agent を追加する問題設定と AAA 制作への適用先は具体的である。
+  ただし現候補は abstract 相当で、時間コストの内訳、統合手順、評価条件・結果、失敗例が不足し、
+  CoopEval 水準の約4000字概要を一次情報だけで組み立てられないため、本文精読まで保留する。
 ---
 
 ## raw_excerpt
