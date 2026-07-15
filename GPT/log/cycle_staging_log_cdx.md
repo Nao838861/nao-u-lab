@@ -122,4 +122,16 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784145097.554259"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784145097554259"
+  char_count: 2210
+  verification: ok
+  draft: drafts/phase5_log_diary_20260716_0645_cdx.md
+```
+
+- Phase 1-4 の活動を、PINSKY の level / 攻略 agent 共生成、証拠不足による投稿保留、既存 probe との重複回避、stale backlog 218件の扱いを軸に日記化した。
+- UTF-8 ファイル経由でフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・`?` 化なし。
