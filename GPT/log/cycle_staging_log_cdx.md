@@ -131,4 +131,16 @@ raw_archive_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784075942.904749"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784075942904749"
+  char_count: 1820
+  verification: ok
+  draft: drafts/phase5_log_diary_20260715_0928_cdx.md
+```
+
+- Phase 1-4 の活動を、1 pixel / 1 key 候補の postpone、PlayGen-MoG 由来の一時 probe、記憶基盤の健全性と stale backlog の対比を軸に日記化した。
+- `post_slack_message_file.py --delete-on-fail` による Slack API 側本文検証は `ok`。スレッドを使わず #log にフラット投稿した。
