@@ -204,7 +204,23 @@ export class World{
   dayStart(){this.day++;this.deskUsed={};
     for(const g of GOODS){const st=this.stalls[g];
       for(let i=st.length-1;i>=0;i--){const s=st[i];
-        s.price*=0.985;                       // 売れ残りは徐々に値下げ(店番の判断)
+        s.price*=0.985;s.age=(s.age||0)+1;   // 売れ残りは徐々に値下げ(店番の判断)
+        // 3日売れ残ったら公的買付台へ流す(民需の高値を試してから床に落とす)
+        if(s.age>=3&&s.hh instanceof HH){
+          const desks=[];
+          if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
+          if(P.GRAN_BID[g]&&this.goDay===null&&(this.granary[g]||0)<300)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);
+          desks.sort((a,b)=>b[1]-a[1]);
+          for(const[kind,price,cap]of desks){
+            if(s.qty<1e-9)break;
+            const used=this.deskUsed[kind+g]||0;const can=Math.min(s.qty,Math.max(0,cap-used));
+            if(can<1e-9)continue;
+            this.deskUsed[kind+g]=used+can;
+            s.qty-=can;s.hh.purse+=can*price;s.hh.income30+=can*price;this.treasury-=can*price;
+            s.hh.belief[g]=Math.max(s.hh.belief[g]*0.9,price);
+            if(kind==='EXP'){this.exported[g]=(this.exported[g]||0)+can;
+              const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;}
+            else if(kind==='GRAN')this.granary[g]=(this.granary[g]||0)+can;}}
         if(s.hh instanceof HH)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;}
         if(s.qty<0.5||s.price<0.05){          // 空/捨て値→撤収(残りは持ち主の帳尻へ)
@@ -259,7 +275,7 @@ export class World{
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
         if(q<1e-9)break;
-        if(price<h.belief[g]*0.7)continue;   // 安すぎる台には売らない
+        if(price<h.belief[g]*0.98)continue;  // 信念未満の公的台には売らず屋台へ(公的買値の天井化=高い支払意思に物が回らない問題の修正)
         const used=this.deskUsed[kind+g]||0;const can=Math.min(q,Math.max(0,cap-used));
         if(can<1e-9)continue;
         this.deskUsed[kind+g]=used+can;
@@ -273,7 +289,7 @@ export class World{
         h.belief[g]+=(price-h.belief[g])*0.1;q-=can;}
       if(q>1e-9){ // 屋台に出す(店番=家族が残る扱い。委託中は生産効率減)
         h.pantry[g]-=q;
-        this.stalls[g].push({hh:h,qty:q,price:h.belief[g]*(1.0+this.rng()*0.1)});}}
+        this.stalls[g].push({hh:h,qty:q,price:h.belief[g]*(1.0+this.rng()*0.1),age:0});}}
     // --- 買い: 安い屋台(+会社の輸入棚)から。持ち帰り容量まで ---
     let cap=h.haul();
     const targets=this.buyTargets(h);
