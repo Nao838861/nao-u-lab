@@ -1,4 +1,4 @@
-import{World}from'./engine.mjs';
+import{World}from'./engine.js';
 const w=new World(11);w.market={x:25,y:32};
 for(const[j,x,y]of[['fisher',24,31],['fisher',27,31],['veg',22,28],['veg',20,29],['wheat',16,24],['wheat',18,23],['woodshop',12,12],['charburner',10,11]])w.addHH(j,x,y);
 const plan={2:'woodshop',3:'charburner',4:'fisher',5:'charburner',6:'saltworks',7:'veg',8:'fisher',9:'veg',13:'fisher',14:'wheat',15:'wheat',16:'fisher',17:'wheat',18:'wheat',20:'shepherd'};
