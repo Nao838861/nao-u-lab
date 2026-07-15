@@ -65,7 +65,53 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-15 基準で再生成（80 / 50 / 35 rows）"
+  - "MEMORY.md の索引参照を監査。atom 参照 49 件に欠落なし。UTF-8 代表語 probe 4 件も正常"
+  - "atoms.jsonl 2675 rows を監査。JSON破損 0、重複 id 0、同一 id の矛盾 0"
+  - "candidate lifecycle を集計（posted 408、ready_to_post 10、postponed 393、failed 121、needs_review 22）"
+  - "Slack inbox を監査。directives / broadcasts とも pending 0 件のため status 更新なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  eligible_total: 208
+  stale_triage_queue_rows: 50
+  candidate_batch_count: 0
+  group_action_handoff_count: 1
+stale_review_batch: []
+group_action_handoff:
+  - group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    representative: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status_counts:
+      posted: 2
+      postponed: 5
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+      - "memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md"
+      - "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+      - "memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md"
+      - "memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md"
+    priority_reason: "group-action queue の先頭。posted と postponed が混在し、同一研究の候補が再評価 queue を占有しているため、Phase 2 で代表1件を読み group 単位の扱いを判定する"
+    recommended_review_action: "reevaluate_representative"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。記憶 / ゲーム設計 / 敵パターン / 評価軸を取得済み"
+  display_or_tooling_status: "inline PowerShell 経由の Python literal では日本語 probe が ? に変換されたが、rg と Get-Content -Encoding UTF8 では正常表示。source 破損ではない"
+raw_archive_audit:
+  inactive_over_30_days: 93
+  action: "retain"
+  reason: "headless 評価 packet、Slack archive、web research 原文が混在し、mtime だけでは安全な archive 対象を確定できない。Phase 4a で一律移動しない"
+atom_duplicate_audit:
+  normalized_content_groups: 59
+  redundant_rows: 78
+  disposition: "既存の normalized_content_hash / lifecycle fold 対象。raw atom は削除しないという現行契約内であり、新規 issue にはしない"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
