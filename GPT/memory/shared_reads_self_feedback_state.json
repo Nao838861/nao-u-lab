@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T18:19:31+09:00",
+  "updated_at": "2026-07-15T20:05:55+09:00",
   "reviewed_source_ts": [
+    "1782661102.148439",
     "1782675599.868889",
     "1782668411.613329",
     "1778491540.156779",
@@ -388,6 +389,39 @@
     "1783417724.835199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T20:05:55+09:00",
+      "selected": {
+        "id": "sr-1782661102-8db4a9216e",
+        "source_ts": "1782661102.148439",
+        "title": "Hallucination as Context Drift: multi-agent LLM の同期プロトコル",
+        "reason": "未レビューの score 12 atom のうち最新で、memory・game-design・agent・operation・evaluation を横断する。並行 agent の誤りを個体能力ではなく共有状態のずれとして捉える観点が、定時 phase handoff や協力 NPC 評価に接続できるか確認するため。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。共有状態、同期遅延、役割衝突、通信・共有memoryの小さな ablation は既存の multi-agent anchor、coordination evaluation、drift classification、partial-view handoff probe で既に確認できる。Context Divergence Score や同期 protocol を新しい probe にすると既存確認の言い換えと active probe 肥大化になるため、読了だけを記録する。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T18:19:31+09:00",
       "selected": {

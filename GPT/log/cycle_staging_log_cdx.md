@@ -54,7 +54,36 @@ skipped:
 - 3 件は未完成による延期ではなく、既投稿 URL 一致による重複除外。candidate の terminal record は変更していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782661102-8db4a9216e
+    source_ts: "1782661102.148439"
+    title: "Hallucination as Context Drift: multi-agent LLM の同期プロトコル"
+    reason: "未レビューの score 12 atom のうち最新で、memory・game-design・agent・operation・evaluation を横断する。並行 agent の誤りを個体能力ではなく共有状態のずれとして捉える観点が、定時 phase handoff や協力 NPC 評価に接続できるか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。既存の multi-agent anchor・coordination evaluation・drift classification・partial-view handoff probe が共有状態、同期遅延、役割衝突、比較条件を既に覆うため、reviewed state のみ更新した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件の合計 14 に対して 13。特に `non_redundancy: 0` のため、新しい probe、評価表、directive、恒久ルールは追加しない。
+- 重複確認先: `probe-20260618-multi-agent-anchor-protocol`、Alem coordination probe、Agent Drift probe、partial-view handoff probe。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
