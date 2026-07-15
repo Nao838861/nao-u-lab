@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2602.17443v2"
 collected_at: "2026-07-15T11:14:23+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-evaluation, llm-agent, adversarial-dialogue, partial-observability, benchmark]
+evaluated_at: "2026-07-15T11:15:59+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-15T11:15:59+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-15T11:15:59+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  役割別能力と三つの失敗モードを、439ゲームの定量結果まで含めて説明できる。
+  非対称情報を持つ対話ゲームのプレイテストを総合勝率から分解する設計へ直接適用でき、約4000字の独立した概要を支える密度がある。
+suggested_post_outline:
+  overview_angle: "単一勝率では隠れる、情報抽出側と情報防御側の非対称性を部分観測ゲームとして分解する"
+  analysis_axis: "Seeker / Holder の役割分解、三失敗モード、turn-decay と Bradley-Terry による評価設計、439ゲームで示された攻守差"
+  application_target: "Nao_u_BOT の非対称情報・交渉・推理ゲームで、総合勝率に加えて抽出成功、秘密漏洩、制約違反を別々に計測するプレイテスト基盤"
+  pros_cons: "利点は失敗原因を役割とモード別に診断できること。欠点は二者対話中心で、多人数ゲームや人間同士の駆け引きへの外挿に追加検証が要ること"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt

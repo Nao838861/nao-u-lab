@@ -10,7 +10,18 @@
 - Slack 新着には Log_cdx の既投稿素材以外の新規外部 URL を確認できなかった。Slack 投稿・品質判定は実施していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260715_aidg_role_decomposed_dialogue_game_eval.md
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- duplicate preflight: `continue`（URL 一致・title 一致ともになし）
+- 判定根拠: 役割別能力、三つの失敗モード、439ゲームの評価、主要な定量結果を抽出できる。非対称情報を扱う対話ゲームで、総合勝率を抽出成功・秘密漏洩・制約違反へ分解する評価設計に直接適用でき、CoopEval 水準の概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
