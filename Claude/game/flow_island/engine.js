@@ -192,6 +192,7 @@ export class World{
     for(const g of GOODS){const st=this.stalls[g];
       for(let i=st.length-1;i>=0;i--){const s=st[i];
         s.price*=0.985;                       // 売れ残りは徐々に値下げ(店番の判断)
+        if(s.hh instanceof HH)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;}
         if(s.qty<0.5||s.price<0.05){          // 空/捨て値→撤収(残りは持ち主の帳尻へ)
           if(s.hh instanceof HH)s.hh.pantry[g]+=Math.max(0,s.qty);
@@ -245,7 +246,7 @@ export class World{
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
         if(q<1e-9)break;
-        if(price<h.belief[g]*0.8)continue;   // 安すぎる台には売らない
+        if(price<h.belief[g]*0.7)continue;   // 安すぎる台には売らない
         const used=this.deskUsed[kind+g]||0;const can=Math.min(q,Math.max(0,cap-used));
         if(can<1e-9)continue;
         this.deskUsed[kind+g]=used+can;
@@ -268,6 +269,8 @@ export class World{
       let[want,ceil]=targets[g];want=Math.min(want,cap);
       const shelves=[...this.stalls[g]].sort((a,b)=>a.price-b.price);
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
+      if(P.GRAN_BID[g]&&(this.granary[g]||0)>10)
+        shelves.push({hh:'GRANSELL',qty:this.granary[g]-10,price:Math.min(P.GRAN_BID[g]*1.25,(P.IMP[g]??9)*0.97)});
       for(const s of shelves){if(want<1e-9)break;
         if(s.price>ceil||s.price<=0)continue;
         const q=Math.min(want,s.qty,h.purse/s.price);
@@ -277,6 +280,7 @@ export class World{
         if(s.hh==='CO'){this.treasury+=q*s.price;
           const c=q*(P.IMP_COST[g]??P.IMP[g]*0.7);this.treasury-=c;this.mainlandOut+=c;
           this.imported[g]=(this.imported[g]||0)+q;}
+        else if(s.hh==='GRANSELL'){this.treasury+=q*s.price;this.granary[g]-=q;s.qty-=q;}
         else{s.qty-=q;s.hh.purse+=q*s.price;s.hh.income30+=q*s.price;
           s.hh.belief[g]+=(s.price-s.hh.belief[g])*0.1;}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);}
