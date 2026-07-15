@@ -105,4 +105,8 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- posted: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784138857526379
+- char_count: 1901
+- verification: ok
+- draft: `drafts/phase5_log_diary_20260716_0258_cdx.md`
