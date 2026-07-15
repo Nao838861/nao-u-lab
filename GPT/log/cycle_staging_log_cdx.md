@@ -12,15 +12,16 @@
 
 ```yaml
 total_candidates: 1
-pass:
-  - memory/shared_reads_candidates/20260715_beyond_sally_anne_east.md
+pass: []
 fail: []
-postpone: []
+postpone:
+  - path: memory/shared_reads_candidates/20260715_evaluation_procedural_level_generation_systems.md
+    reason: "適用先は明確だが、taxonomy の分類軸・調査対象・評価結果の具体情報が不足し、約4000字の検証可能な概要を構成できない"
 stale_reviewed: []
 ```
 
-- duplicate preflight: `continue`（canonical URL 一致・title_key 一致ともになし）
-- 判定根拠: EAST の問題設定、3 種の知識条件、1260 ゲームの評価、主要な失敗類型を抽出できる。協力ゲーム AI で観測情報を操作し、知識推論・自己中心的選択・行動変換の失敗を分離する小型評価へ直接適用でき、CoopEval 水準の概要を構成可能。
+- duplicate preflight: `continue`（canonical URL・title_key とも未登録）。
+- 判定: `postpone`。追加情報が揃うまで Phase 3 投稿対象にしない。
 
 ## Phase 3: Shared-reads 投稿
 

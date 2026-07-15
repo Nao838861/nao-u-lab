@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2404.18657
 collected_at: 2026-07-15T15:00:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-content-generation, level-design, evaluation, survey]
+evaluated_at: 2026-07-15T14:46:09+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-15T14:46:09+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-15T14:46:09+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  PCG 評価法を taxonomy と実態調査で整理する問題設定は重要で、生成レベルの自動評価設計へ直接適用できる。
+  ただし現候補は分類軸、調査対象、評価手法の分布、具体的な弱点と根拠が不足し、CoopEval 水準の約4000字概要を検証可能な密度で構成できない。
 ---
 
 ## raw_excerpt
