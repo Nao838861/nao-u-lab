@@ -344,6 +344,7 @@ class World:
         dole_on_mkt = P['DOLE'] and self.go_day is None
         goods_order = (['salt', 'char', 'tools', 'meal', 'fish', 'veg', 'wheat', 'pres']
                        if dole_on_mkt else GOODS)
+        assert set(goods_order) == set(GOODS), 'goods_orderとGOODSの不一致(財の追加漏れ)'
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
         clearing = {}
@@ -367,6 +368,9 @@ class World:
                         bids.append((h, qty, price))
                 sq = self.sell_offers_qty(h).get(g, 0.0)
                 if sq > 1e-9:
+                    # (注)売り唱値の個人下限(0.25×初期信念)は導入して撤回: 競争価格が
+                    # 下限以下の財(菜の余剰など)が取引不能になり生産者が困窮する(計測済)。
+                    # 薄い市場のdeflation spiralは開課題のまま
                     ask = h.belief[g] * self.rng.uniform(0.95, 1.10)
                     asks.append((h, sq, ask)); h.offered_unsold.add(g)
             # 会社(商館)は港市場(mi=0)にのみ立つ。内陸市場は価格が自由に浮く
