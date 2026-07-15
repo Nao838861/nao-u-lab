@@ -60,7 +60,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129500';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129600';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -302,12 +302,18 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
     if(f.prod+f.cons+f.imp+f.exp<0.05&&stall<1)return '';
     let badge='<span style="color:#889">均衡</span>';
     const lack=NEEDQ[g]?w.hhs.filter(h=>h.pantry[g]<NEEDQ[g]*2&&h.purse<10).length:0;
-    if(lack>=3)badge=`<b style="color:#ffb44a">${lack}世帯 買えず</b>`;
+    if(lack>=3)badge=`<b style="color:#ffb44a;cursor:pointer" onclick="window.lackG=window.lackG==='${g}'?null:'${g}'">${lack}世帯 買えず▼</b>`;
     else if(f.imp>0.5)badge=`<b style="color:#ff8a7a">不足→輸入${f.imp.toFixed(0)}</b>`;
     else if(f.exp>0.5)badge=`<span style="color:#8fd0ff">輸出${f.exp.toFixed(0)}</span>`;
     else if(stall>15||f.prod>f.cons+f.exp+1)badge=`<b style="color:#8f8">余剰${stall>15?'(店'+Math.round(stall)+')':''}</b>`;
-    return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${f.prod.toFixed(0)} 消${f.cons.toFixed(0)}</span>${badge}</div>`;}).filter(Boolean).join('');
-  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず</b>=物はあるが世帯が貧しい(稼ぎが必要)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
+    let prodTxt=f.prod.toFixed(0);
+    if(g==='wheat'){const hl=(w.harvestLog||[]).filter(([dd])=>dd>w.day-360);
+      prodTxt=(hl.reduce((s,[,v])=>s+v,0)/360).toFixed(0)+'<small>(年平均)</small>';}
+    let lackList='';
+    if(window.lackG===g&&lack){const hhs=w.hhs.filter(h=>h.pantry[g]<NEEDQ[g]*2&&h.purse<10);
+      lackList='<div style="margin:2px 0 4px 8px;color:#ccb">'+hhs.map(h=>`${h.sur}家(${JNAME[h.job]}) 財布${M(h.purse)}・30日収入${M(h.incomeLog.reduce((a,b)=>a+b,0))}`).join('<br>')+'<br><small style=color:#889>収入が少ない=その職が稼げていない。輸出産業か地元の買い手が必要</small></div>';}
+    return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${prodTxt} 消${f.cons.toFixed(0)}</span>${badge}</div>`+lackList;}).filter(Boolean).join('');
+  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=物はあるが世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 秘書 ---
 let saidWinter=false,saidTight=false,saidFree=false,stage=0;const said={};
