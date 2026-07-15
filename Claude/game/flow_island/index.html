@@ -36,6 +36,7 @@ small{color:#8899b0}
  #bar{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none;border-radius:0;padding:6px 4px;-webkit-overflow-scrolling:touch}
  #bar button{flex:0 0 auto;min-width:58px;padding:8px 6px}
  #factor{bottom:60px;font-size:11px;padding:4px 8px}
+ #advice{top:auto;bottom:98px;font-size:10px;max-width:94vw;white-space:normal;text-align:center}
  #drawer{width:86vw;max-height:60vh}
 }
 </style></head><body>
@@ -64,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129900';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=130000';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
