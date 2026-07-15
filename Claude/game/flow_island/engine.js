@@ -1,15 +1,16 @@
 // 流通の島 v0 エンジン (spatial/engine.py の較正値を移植・ブラウザ/Node両用)
-export const GOODS = ['fish','veg','wheat','pres','tools','salt','char','meat','meal','stone','oil'];
-export const FOODS = ['fish','veg','wheat','pres','meat'];
-const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',meat:'meat'};
+export const GOODS = ['fish','veg','wheat','pres','pick','tools','salt','char','meat','meal','stone','oil'];
+// pick=漬物(野菜の保存・野菜枠の多様性が冬も立つ)
+export const FOODS = ['fish','veg','wheat','pres','pick','meat'];
+const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',pick:'veg',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:5,  // 12は村需要の20倍(診断済) Y_MEAT:16,
+  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:10, Y_WHEAT:1600, Y_TOOLS:5, Y_CHAR:1.8, Y_SALT:5,  // 12は村需要の20倍(診断済) Y_MEAT:16,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.12, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
   IMP:{wheat:2.0,tools:3.5,salt:3.0}, IMP_COST:{wheat:1.0,tools:2.5,salt:2.0},
-  EXP:{pres:0.8,tools:1.5,stone:0.6,oil:3.2}, EXP_CAP:{pres:25,tools:20,stone:15,oil:12}, EXP_ML:{pres:1.3,tools:2.0,stone:0.9,oil:4.0},
+  EXP:{pres:0.8,pick:0.8,tools:1.5,stone:0.6,oil:3.2}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12}, EXP_ML:{pres:1.3,pick:1.2,tools:2.0,stone:0.9,oil:4.0},
   PUB0:200, DOLE_RATION:1.1, GRAN_BID:{wheat:1.9,pres:1.7,salt:1.8,char:1.2},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:34000, LIMIT_G:2000, LIMIT_FREEZE:24, LIMIT_PC:400,
   BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
@@ -17,7 +18,7 @@ export const P = {
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:3, Y_OIL:2.5,
   PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
-  BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3},
+  BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3},
 };
 export const LADDER={farm:['food1','tools','salt','food2','char'],fish:['grain','tools','salt','char','food2'],
   lumber:['food1','tools','food2','salt','char'],artisan:['food1','food2','salt','char']};
@@ -45,6 +46,7 @@ export class HH{
     this.pantry.tools=5;
     if(job==='saltworks')this.pantry.char=15;
     if(job==='fisher'){this.pantry.salt=4;this.pantry.char=2;}
+    if(job==='veg')this.pantry.salt=3;
     if(job==='fisher2')this.pantry.salt=2;}
   mult(){return Math.pow(P.LV_MULT,this.lv);}
   eat(){return this.members.length;}
@@ -132,8 +134,8 @@ export class World{
     const cheapest=Math.min(h.belief.veg,h.belief.wheat,h.belief.pres);
     const tgtD=doleOn?2:P.PANTRY_FOOD_D;
     if(foodDays<tgtD){const starving=foodDays<1.5;
-      for(const g of['veg','wheat','pres'])
-        t[g]=[(tgtD-foodDays)*P.EAT/3,starving?99:Math.min(h.belief[g]*1.5,cheapest*2.2)];}
+      for(const g of['veg','wheat','pres','pick'])
+        t[g]=[(tgtD-foodDays)*P.EAT/4,starving?99:Math.min(h.belief[g]*1.5,cheapest*2.2)];}
     if(h.job!=='fisher')t.fish=[P.EAT*0.5,foodDays<1.5?99:Math.min(h.belief.fish*1.5,cheapest*2.2)];
     if(h.job!=='wheat'&&h.pantry.wheat<P.EAT*P.RATION*10&&!t.wheat)
       t.wheat=[P.EAT*P.RATION*15-h.pantry.wheat,h.belief.wheat*1.3];
@@ -147,6 +149,8 @@ export class World{
         t.meal=[P.FERT_NEED*20-h.pantry.meal,bv*0.7];}}
     if(h.job==='saltworks'&&h.pantry.char<P.SALT_CHAR*5)
       t.char=[P.SALT_CHAR*10-h.pantry.char,P.Y_SALT*h.belief.salt*0.5];
+    if(h.job==='veg'&&h.pantry.salt<1.5)
+      t.salt=[4-h.pantry.salt,h.belief.pick*P.PR_PICK/P.PICK_SALT*0.4];  // 漬物の導出需要
     if(h.job==='fisher'){if(h.pantry.salt<3)t.salt=[6-h.pantry.salt,h.belief.pres*P.PR_SALT/P.PRES_SALT*0.5];
       if(h.pantry.char<2)t.char=[4-h.pantry.char,(P.PR_SMOKE-P.PR_SALT)*h.belief.pres/P.SMOKE_CHAR*0.5];}
     // 依存期(配給中)は文化財を溜め込まない(60日分)。240日分を輸入で買うと開幕の
@@ -171,6 +175,7 @@ export class World{
       const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,h.haul());}
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
+    if(h.job==='veg'&&h.pantry.pick>10)out.pick=Math.min(h.pantry.pick-5,h.haul());
     return out;}
   step(){for(let i=0;i<30;i++)this.tickOnce();}
   tickOnce(){this.t++;
@@ -298,7 +303,7 @@ export class World{
     const doleOn=this.goDay===null;
     const here=this.hhs.filter(h=>h.state==='atMarket');
     for(const h of here)h._cap=h.haul();   // 持ち帰り容量=同行の家族の手
-    const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','meat']:GOODS;
+    const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','pick','meat']:GOODS;
     for(const g of order){const bids=[],asks=[];
       for(const h of here){const tgt=this.buyTargets(h)[g];
         if(tgt){let[qty,ceil]=tgt;const price=Math.min(h.belief[g]*(0.95+this.rng()*0.2),ceil);
@@ -337,12 +342,12 @@ export class World{
       this.doleQty+=doleToday;this.doleRate+=(doleToday-this.doleRate)*0.1;}
     // 食事
     for(const h of this.hhs){let need=h.eat();const kinds=new Set();
-      for(const g of['pres','wheat']){const u=Math.min(h.pantry[g],need*P.RATION);
+      for(const g of['pres','wheat','pick']){const u=Math.min(h.pantry[g],need*P.RATION*0.85);
         h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}
       for(let i=0;i<2;i++){const act=['fish','veg','meat'].filter(g=>h.pantry[g]>1e-9);
         if(!act.length||need<=1e-9)break;const share=need/act.length;
         for(const g of act){const u=Math.min(h.pantry[g],share);h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}}
-      for(const g of['pres','wheat']){if(need<=1e-9)break;
+      for(const g of['pres','wheat','pick']){if(need<=1e-9)break;
         const u=Math.min(h.pantry[g],need);h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}
       const hgy=need>0.5;if(hgy){h.hunger++;this.famine++;}(h.hungerHist=h.hungerHist||[]).push(hgy?1:0);
       h.kindLog.push([d,[...kinds]]);for(const k of kinds)h.kindDays[k]=(h.kindDays[k]||0)+1;
@@ -353,12 +358,17 @@ export class World{
       const kd=h.kindDays;sat.food1=Object.values(kd).some(v=>v>0);
       sat.food2=Object.values(kd).filter(v=>v>5).length>=2;
       sat.grain=(kd.wheat||0)>5;
+      if(h.job==='veg'&&h.pantry.veg>h.eat()*2&&h.pantry.salt>0.2){
+        // 漬け込み: 余り野菜+塩→漬物(冬の売り物・野菜枠の越冬)
+        const raw=Math.min(h.pantry.veg-h.eat()*2,h.pantry.salt/P.PICK_SALT,15);
+        h.pantry.veg-=raw;h.pantry.salt-=raw*P.PICK_SALT;h.pantry.pick+=raw*P.PR_PICK;}
       if(h.job==='fisher'&&h.pantry.fish>1e-9){
         const raw=Math.min(h.pantry.fish,h.pantry.salt/P.PRES_SALT);
         const smoked=Math.min(raw,h.pantry.char/P.SMOKE_CHAR);
         h.pantry.fish-=raw;h.pantry.salt-=raw*P.PRES_SALT;h.pantry.char-=smoked*P.SMOKE_CHAR;
         h.pantry.pres+=smoked*P.PR_SMOKE+(raw-smoked)*P.PR_SALT;}
-      {const rot=h.pantry.fish/P.FISH_LIFE;h.pantry.fish-=rot;}
+      {const rot=h.pantry.fish/P.FISH_LIFE;h.pantry.fish-=rot;
+       const vrot=h.pantry.veg/P.VEG_LIFE;h.pantry.veg-=vrot;}
       // ラダー(軟ストリーク)
       h.satLast=sat;
       const reqs=LADDER[h.cls()];

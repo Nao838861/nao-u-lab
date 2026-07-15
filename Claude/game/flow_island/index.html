@@ -59,7 +59,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=124888';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=125162';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -186,7 +186,7 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
   const[mx,my]=iso(w.market.x,w.market.y);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
   // 市場の荷の山(いま市に居る世帯の売り物+御蔵)
-  {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
+  {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',pick:'#9ac86a',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
    const piles={};
    for(const g in GC){const a=w.stalls[g]||[];const q=a.reduce((s,x)=>s+x.qty,0);if(q>1)piles[g]=q;}
    piles.wheat=(piles.wheat||0)+(w.granary.wheat||0);
@@ -217,7 +217,7 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       cx.fillText(h.lv,px+s/2+2,py-s+0.5);cx.textAlign='left';}
     // 人: 実際の位置(通勤・移民の到着が見える)
     if(h.state!=='home'&&h.state!=='building'){
-      const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
+      const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',pick:'#9ac86a',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
       let bg=null,bq=3;for(const g in GC)if(h.pantry[g]>bq){bq=h.pantry[g];bg=g;}
       // 隊列: 1人1荷(荷=4食分)。運ぶ量に応じた人数が列をなす
       let porters=1;
@@ -246,7 +246,7 @@ function placePopup(){if(!sel){popup.style.display='none';return;}
   let sx=ix*Z+panX+14,sy=iy*Z+panY-30;
   sx=Math.max(4,Math.min(innerWidth-240,sx));sy=Math.max(44,Math.min(innerHeight-140,sy));
   popup.style.left=sx+'px';popup.style.top=sy+'px';popup.style.display='block';}
-const NMG={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
+const NMG={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',pick:'漬物',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
 const REQN={food1:'食料',grain:'穀物(パン)',tools:'道具の常用',salt:'塩の常用',char:'炭(暖)の常用',food2:'食料2種',food3:'食料3種',saltchar:'塩と炭',iron:'鉄',cloth:'布'};
 function marketInfo(el){
   let html='<b>市場の屋台</b> <small>(品目計)</small><br>';
@@ -263,13 +263,13 @@ function marketInfo(el){
 function info(){const el=document.getElementById('pbody');
   if(!sel){popup.style.display='none';return;}
   if(sel==='MARKET'){marketInfo(el);return;}
-  const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
+  const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',pick:'漬物',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
   const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
   const hasStall=Object.keys(w.stalls).some(g=>w.stalls[g].some(s=>s.hh===h));
   const fam=h.members.slice(0,4).map(m=>m.name+'('+m.age+')').join(' ')+(h.members.length>4?' 他'+(h.members.length-4)+'人':'');
   el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}${hasStall?'・市場に店番を出している':''}</small><br><small>家族${h.members.length}人: ${fam}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
-function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
+function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+(w.granary[g]||0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
   document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span>金計 <b>${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</b></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
