@@ -42,9 +42,10 @@ small{color:#8899b0}
 <div id="factor" class="ov">「ようこそ、支配人。まだ誰もいない島です」</div>
 <div id="bar" class="ov"></div>
 <div id="pbtns" class="ov" style="top:8px;right:8px;padding:4px 6px;z-index:6">
- <button data-p="p_stock">蔵</button><button data-p="p_price">価格</button><button data-p="p_log">出来事</button></div>
+ <button data-p="p_stock">蔵</button><button data-p="p_price">価格</button><button data-p="p_flow">需給</button><button data-p="p_log">出来事</button></div>
 <div id="p_stock" class="ov panel" style="top:46px;right:8px;width:150px;display:none"><div class="ph">島の蔵<span class="px">✕</span></div><div id="stock" style="font-size:10px;display:grid;grid-template-columns:1fr 1fr;gap:0 6px;padding:4px 8px"></div></div>
 <div id="p_price" class="ov panel" style="top:46px;right:166px;width:150px;display:none"><div class="ph">市場価格<span class="px">✕</span></div><div id="prices" style="font-size:10px;display:grid;grid-template-columns:1fr 1fr;gap:0 6px;padding:4px 8px"></div></div>
+<div id="p_flow" class="ov panel" style="top:46px;right:8px;width:230px;display:none"><div class="ph">需給(日あたり・20日平均)<span class="px">✕</span></div><div id="flow" style="font-size:10px;padding:4px 8px"></div></div>
 <div id="p_log" class="ov panel" style="top:46px;right:8px;width:250px;display:none"><div class="ph">出来事<span class="px">✕</span></div><div id="log" style="font-size:11px;color:#aab;max-height:40vh;overflow-y:auto;padding:4px 8px"></div><div style="padding:4px 8px;border-top:1px solid #2a3550"><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・職を選んで地面タップ=区画。スペース=一時停止</small></div></div>
 <div id="popup" class="ov"><span id="pclose">✕</span><div id="pbody"></div></div>
  <h2>市場価格</h2><div id="prices"></div>
@@ -59,7 +60,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129300';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=129400';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -294,6 +295,16 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
   document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span>金計 <b>${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</b></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
+  const f30=w.f30||{};
+  const rows=Object.keys(NM).map(g=>{const f=f30[g]||{prod:0,cons:0,imp:0,exp:0};
+    const stall=(w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0);
+    if(f.prod+f.cons+f.imp+f.exp<0.05&&stall<1)return '';
+    let badge='<span style="color:#889">均衡</span>';
+    if(f.imp>0.5)badge=`<b style="color:#ff8a7a">不足→輸入${f.imp.toFixed(0)}</b>`;
+    else if(f.exp>0.5)badge=`<span style="color:#8fd0ff">輸出${f.exp.toFixed(0)}</span>`;
+    else if(stall>15||f.prod>f.cons+f.exp+1)badge=`<b style="color:#8f8">余剰${stall>15?'(店'+Math.round(stall)+')':''}</b>`;
+    return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${f.prod.toFixed(0)} 消${f.cons.toFixed(0)}</span>${badge}</div>`;}).filter(Boolean).join('');
+  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=島の生産/消=島の消費(荷/日)。不足=輸入で埋めている財(高くつく)・余剰=売れ残り</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 秘書 ---
 let saidWinter=false,saidTight=false,saidFree=false,stage=0;
