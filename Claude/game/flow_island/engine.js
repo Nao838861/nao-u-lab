@@ -94,7 +94,7 @@ export class World{
     const nb=bi<bids.length?bids[bi][2]:null;
     const price=Math.min(pair[0],Math.max(pair[1],nb??pair[1]));let vol=0;
     for(let[buyer,seller,q]of tr){let cost=q*price;
-      if(buyer instanceof HH){q=Math.min(q,price>0?buyer.purse/price:q);cost=q*price;
+      if(buyer instanceof HH){q=Math.min(q,price>0?buyer.purse/price:q,buyer._cap??1e9);cost=q*price;buyer._cap=(buyer._cap??1e9)-q;
         buyer.purse-=cost;buyer.pantry[g]+=q;buyer.belief[g]+=(price-buyer.belief[g])*0.2;}
       else{this.treasury-=cost;
         if(buyer==='EXP'){this.exported[g]=(this.exported[g]||0)+q;
@@ -209,6 +209,7 @@ export class World{
   marketSession(){const d=this.day,m=Math.floor((d-1)/30)+1;
     const doleOn=this.goDay===null;
     const here=this.hhs.filter(h=>h.state==='atMarket');
+    for(const h of here)h._cap=P.HAUL;   // 持ち帰り容量(荷車1往復)
     const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','meat']:GOODS;
     for(const g of order){const bids=[],asks=[];
       for(const h of here){const tgt=this.buyTargets(h)[g];

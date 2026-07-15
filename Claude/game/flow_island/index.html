@@ -45,6 +45,7 @@ small{color:#8899b0}
 <div id="dbtn" class="ov">📊</div>
 <div id="popup" class="ov"><span id="pclose">✕</span><div id="pbody"></div></div>
 <div id="drawer" class="ov">
+ <h2>島の蔵(在庫合計)</h2><div id="stock" style="font-size:11px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px 6px"></div>
  <h2>市場価格</h2><div id="prices"></div>
  <h2>出来事</h2><div id="log"></div>
  <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
@@ -57,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=120302';
+import{World,P,JOBS,GOODS} from './engine.js?v=120802';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -188,7 +189,12 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
     if(h.state!=='home'&&h.state!=='building'){
       const[ax,ay]=iso(h.px,h.py);cx.fillStyle='#f5e9d0';
       cx.beginPath();cx.arc(ax,ay-3,2.4,0,7);cx.fill();
-      cx.strokeStyle='#0006';cx.stroke();}}
+      cx.strokeStyle='#0006';cx.stroke();
+      // 担いでいる荷(一番多い財の色を頭上に)
+      if(h.state==='toMarket'||h.state==='toHome'){
+        const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
+        let bg=null,bq=3;for(const g in GC)if(h.pantry[g]>bq){bq=h.pantry[g];bg=g;}
+        if(bg){cx.fillStyle=GC[bg];cx.fillRect(ax-2.5,ay-9,5,4);cx.strokeStyle='#0008';cx.strokeRect(ax-2.5,ay-9,5,4);}}}}
   cx.textAlign='left';}
 function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
   cx.moveTo(px,py-TH/2*k);cx.lineTo(px+TW/2*k,py);cx.lineTo(px,py+TH/2*k);cx.lineTo(px-TW/2*k,py);cx.closePath();cx.fill();}
@@ -206,8 +212,12 @@ function info(){const el=document.getElementById('pbody');
   if(!sel){popup.style.display='none';return;}
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
-  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
+  const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
+  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
+  const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0);
+  tot.wheat+=w.granary.wheat||0;tot.pres+=w.granary.pres||0;
+  document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span><small>御蔵 麦${Math.round(w.granary.wheat||0)}</small></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?a[a.length-1][1].toFixed(2):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
@@ -222,7 +232,7 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
   if(stage===2){if(n('woodshop')<1){say('木工所を森の際に。道具がなければ文化は育ちません');return;}stage=3;}
   if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を。塩がなければ冬の蓄えが作れません');return;}stage=4;}
-  if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。蔵の麦と保存食をご確認を');return;}
+  if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。右上📊の「島の蔵」で麦と保存食の量をご確認を');return;}
   if(mm===3)saidWinter=false;
   if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、様子を見る頃合いかと');return;}
   if(ratio<0.4&&saidTight){saidTight=false;say('財政に息がつけました。再び前へ');return;}
