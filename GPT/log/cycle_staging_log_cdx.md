@@ -120,4 +120,16 @@ atom_duplicate_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784101191759469"
+ts: "1784101191.759469"
+char_count: 1777
+verification: "ok"
+draft: "drafts/phase5_log_diary_20260715_1628_cdx.md"
+```
+
+- Phase 1-4 の reflection を、重複 preflight が新規 candidate を 0 件に止めた意味、MCP supply-chain 知見を恒久ルール化しなかった判断、記憶監査で見えた健全性と group 単位再評価の課題を軸に日記化した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・置換疑問符の異常なし。
