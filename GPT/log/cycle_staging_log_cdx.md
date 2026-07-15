@@ -68,7 +68,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を validate_memory_index.py と Markdown link 実在確認で監査。index 不整合・broken link は 0 件"
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 `記憶` / `ゲーム設計` / `敵パターン` / `評価軸` をすべて取得。source file の文字化けなし"
+  - "memory_health.py で atoms 2675 件を監査。atom id 重複エラー・矛盾エラーはなく、normalized content duplicate は raw 40 group / recall-visible 3 group（既存 fold 適用）"
+  - "shared-reads lifecycle 内訳を確認: posted 408 / ready_to_post 10 / postponed 397 / failed 123 / needs_review 22。stale_after <= 2026-07-16 の open backlog は 218 件"
+  - "mixed duplicate / stale triage / group-action queue を再生成: 81 / 50（表示上限）/ 36 rows。candidate 本体は変更していない"
+  - "memory/raw/ の最終更新30日超ファイルを監査し、archive 候補 93 件を特定。原文保持と既存参照を壊さないため、この phase では移動していない"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を lifecycle tool で確認。pending 0 件のため status 更新なし"
+issues:
+  - id: ISS-ENC-001
+    description: "memory_health が検出した mojibake suspect 2 atom のうち、sr-1776127289-4d9239b255 は UTF-8 明示読みでも `エ��ジェント` が残る局所的な source file 破損。gr-1777083728-44d444ab7a は UTF-8 読みで正常で、検出上の false positive"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; tools/memory_health.py output 2026-07-16T07:05:10"
+    source_file_status: "sr-1776127289-4d9239b255 は UTF-8 source 自体に U+FFFD 相当の置換文字あり。gr-1777083728-44d444ab7a と memory/MEMORY.md は UTF-8 source 正常"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と rg の双方で同じ結果。表示経路だけの mojibake ではない"
+    why_blocks_game_memory: "該当 atom の題名・発動条件に検索語欠損があり、agent / context engineering を探す際の recall 精度を局所的に落とす。ただし影響は1 atomに限定される"
+  - id: ISS-STALE-001
+    description: "postponed / needs_review の期限超過 backlog が 218 件あり、mixed duplicate group も 36 件残る"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl; memory/shared_reads_group_action_queue.jsonl; lifecycle frontmatter audit 2026-07-16"
+    source_file_status: "candidate frontmatter は UTF-8 で読取可能。正本は未変更"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "posted / failed 済みの重複候補が open queue に混在し、次のゲーム制作に転用価値のある未評価候補へ到達するまでの再読コストを増やす"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog_total: 218
+stale_review_handoff_count: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    priority_reason: "group-action queue 先頭。open siblings 4 件 / terminal siblings 2 件が混在し、依存関係付き prompt pipeline のゲーム転用価値は高いが評価根拠が薄い"
+    status_counts: "group queue evidence: open 4 / terminal 2"
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- 判定: 既存の stale triage / group-action queue で少数処理する経路は機能している。ISS-ENC-001 は局所データ修復、ISS-STALE-001 は現行 Phase 2 handoff の継続で扱え、新しい仕組みの設計は不要なため `needs_design: false`。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
