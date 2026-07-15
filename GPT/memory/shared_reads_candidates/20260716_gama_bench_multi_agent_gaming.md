@@ -4,6 +4,19 @@ url: "https://arxiv.org/abs/2403.11807"
 collected_at: "2026-07-16T09:05:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, multi-agent, evaluation, game-theory, benchmark]
+evaluated_at: "2026-07-16T08:46:36+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-16T08:46:36+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-16T08:46:36+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  ゲーム理論シナリオ、動的スコア、頑健性・汎化・改善効果という評価軸は抽出でき、ゲーム AI の複数条件テストへ具体的に適用できる。一方、現候補には各シナリオの構成、動的スコアの算出法、評価プロトコル、軸別比較・限界が不足し、CoopEval 水準の約4000字概要を根拠付きで書けないため保留する。
 ---
 
 ## raw_excerpt
