@@ -77,8 +77,6 @@ function upd(){for(const b of jb.children)b.classList.toggle('on',b.dataset.t===
   for(const b of sp.children)b.classList.toggle('on',+b.dataset.s===speed);}
 upd();
 let drag=false,downP=null,moved=false,pinch0=null;
-function P(e){const r=cv.getBoundingClientRect();const t=e.touches?.[0]||e.changedTouches?.[0]||e;
-  return{offsetX:(t.clientX??0)-r.left+(e.offsetX!==undefined&&!e.touches?0:0)||t.clientX-r.left,offsetY:t.clientY-r.top};}
 function down(p){drag=true;moved=false;downP=p;if(tool==='road')act(p);}
 function move(p){if(!drag)return;
   if(tool==='road'){act(p);return;}
