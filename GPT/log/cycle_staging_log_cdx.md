@@ -36,7 +36,33 @@ skipped: []
 - Slack #shared-reads への投稿、candidate frontmatter の更新はいずれも未実施。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1783417724-cf4b894434
+    source_ts: "1783417724.835199"
+    title: "OX Security MCP supply chain: 一次ソース再検証と攻撃 family 分類"
+    reason: "未レビューの score 10 atom のうち最新。一次ソースによる訂正は外部 tool/MCP の出所確認に役立つが、現在の定時サイクルやゲーム制作への接続は間接的。"
+  scores:
+    relevance: 1
+    actionability: 2
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "合計 13 で採用条件の 14 に届かず、relevance も必須条件の 2 未満。既存ルールと active probe に重複するため、新規 probe は追加しない。"
+  change:
+    summary: "reviewed_source_ts と defer 理由だけを記録。probe・評価表・directive・恒久ルールの追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
