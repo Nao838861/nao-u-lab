@@ -4,6 +4,22 @@ url: "https://arxiv.org/abs/2607.00527"
 collected_at: "2026-07-15T21:44:53+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-native-games, generative-ai, survey, mechanics, evaluation]
+evaluated_at: "2026-07-15T21:46:30+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+duplicate_preflight_decision: skip
+duplicate_reason: posted_url_match
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-15T21:46:30+09:00"
+last_decision: posted_url_match
+evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669; matched_title_key:ai native games a survey and roadmap"
+next_action: none
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  canonical URL https://arxiv.org/abs/2607.00527 は、2026-07-06 に評価・投稿済みの candidate と一致する。
+  title 表記も同一であり、既存投稿の permalink を確認できたため、本文の再評価や Phase 3 への再投入は行わない。
 ---
 
 ## raw_excerpt
