@@ -1,0 +1,92 @@
+// 意図監査: 「設計意図どおり動いているか」を期待値で自動判定する
+// 使い方: node audit.mjs   (全PASS が健全状態。FAILは意図とのズレ=修理対象)
+import{World,GOODS} from './engine.js';
+
+const terr=[];for(let y=0;y<40;y++){terr.push([]);for(let x=0;x<48;x++){let t='grass';
+  if(y>36||(y>33&&x>18&&x<32))t='water';else if(y>32&&y<=36)t='sand';terr[y].push(t);}}
+const BASE=['fisher','fisher','veg','wheat','woodshop','charburner','saltworks','shepherd','veg','fisher'];
+const mk=(seed)=>{const w=new World(seed);w.market={x:25,y:32};w.port={x:25,y:35};w.setTerrain(terr);
+  BASE.forEach((j,i)=>w.addZone(j,23+i%5,26+(i*2)%6));return w;};
+
+let pass=0,fail=0;
+const t=(name,cond,detail)=>{console.log((cond?'PASS':'FAIL')+'  '+name+'  '+(detail||''));cond?pass++:fail++;};
+
+// ---- シナリオA: 均衡村+麦2枚追加(食料自給プレイ) 4年 ----
+const w=mk(11);
+w.addZone('wheat',22,28);w.addZone('wheat',24,29);
+const stallAvg={},famYear=[0,0,0,0];let doleY3=0,doleN=0;
+const priceLog={fish:[],char:[]};
+const stuck={};  // 信用限度に張り付いた日数
+for(let d=1;d<=1440;d++){w.step();
+  for(const g of['wheat','meat','tools','veg'])stallAvg[g]=(stallAvg[g]||0)+w.stalls[g].reduce((s,x)=>s+x.qty,0)/1440;
+  famYear[Math.min(3,Math.floor((d-1)/360))]=w.famine;
+  if(d>720&&d%30===0){doleY3+=w.doleRate;doleN++;}
+  const mm=(Math.floor((d-1)/30))%12+1;
+  for(const g in priceLog){const a=w.prices[g];if(a&&a.length&&a[a.length-1][0]===d)priceLog[g].push([mm,a[a.length-1][1]]);}
+  for(const h of w.hhs)if(h.purse<-2.5)stuck[h.id]=(stuck[h.id]||0)+1;}
+const fam=[famYear[0],famYear[1]-famYear[0],famYear[2]-famYear[1],famYear[3]-famYear[2]];
+
+// E1 麦自給: 麦3枚で輸入がY2以降ほぼ消える
+t('E1 麦自給(輸入<2/日)',(w.f30.wheat?.imp??9)<2,`輸入${(w.f30.wheat?.imp??9).toFixed(1)}/日`);
+// E2 全職が稼げる(30日収入>200デナリ) — 職業として成立しているか
+const incBy={};for(const h of w.hhs)(incBy[h.job]=incBy[h.job]||[]).push(h.incomeLog.reduce((a,b)=>a+b,0)*10);
+for(const j in incBy){const best=Math.max(...incBy[j]);
+  t(`E2 ${j}が稼げる`,best>200,`最良世帯30日収入${Math.round(best)}デナリ`);}
+// E3 信用の底に90日以上張り付く世帯なし(構造的debt trap検出)
+const worst=Math.max(0,...Object.values(stuck));
+t('E3 借金漬け世帯なし',worst<90,`最長張り付き${worst}日`);
+// E4 飢餓が年150未満(Y2以降)
+t('E4 飢餓(Y3)',fam[2]<150,`年別${fam.join('/')}`);
+// E5 森が持続(Y4で>5000)
+t('E5 森の持続',w.grove>5000,`残${Math.round(w.grove)}`);
+// E6 湾が持続(>30%)
+t('E6 湾の持続',w.bay>10*0.3*24,`残${Math.round(w.bay)}`);  // BAY0=240想定なら72
+// E7 屋台の恒常滞留なし(平均200荷未満)
+for(const g in stallAvg)t(`E7 ${g}滞留なし`,stallAvg[g]<200,`平均${Math.round(stallAvg[g])}荷`);
+// E8 文化ラダーが機能(最高Lv>=5, 中央値>=2)
+const lvs=w.hhs.map(h=>h.lv).sort((a,b)=>a-b);
+t('E8 ラダー機能',Math.max(...lvs)>=5&&lvs[Math.floor(lvs.length/2)]>=2,`最高${Math.max(...lvs)} 中央値${lvs[Math.floor(lvs.length/2)]}`);
+// E9 財政の弧(破産せず・限度内・富みすぎず)
+t('E9 財政の弧',w.goDay===null&&w.treasury*10>-w.limit()*10&&w.treasury*10<150000,`金庫${Math.round(w.treasury*10)}デナリ 支援${w.bailouts}`);
+// E10 季節価格: 冬の魚>夏の魚×1.3 / 冬の炭>夏の炭
+const sAvg=(log,c)=>{const xs=log.filter(([m])=>c(m)).map(x=>x[1]);return xs.length?xs.reduce((a,b)=>a+b)/xs.length:0;};
+const fw=sAvg(priceLog.fish,m=>m>=10||m<=2),fs=sAvg(priceLog.fish,m=>m>=4&&m<=9);
+t('E10 冬の魚価>夏',fw>fs*1.3,`冬${fw.toFixed(2)} 夏${fs.toFixed(2)}`);
+const cw=sAvg(priceLog.char,m=>m>=10||m<=2),cs=sAvg(priceLog.char,m=>m>=4&&m<=9);
+t('E10 冬の炭価>夏',cw>cs,`冬${cw.toFixed(2)} 夏${cs.toFixed(2)}`);
+// E11 死蔵なし(単一世帯が1000荷超を抱えない)
+let hoard=null;for(const h of w.hhs)for(const g of GOODS)if(h.pantry[g]>1000)hoard=`${h.job}が${g}${Math.round(h.pantry[g])}`;
+t('E11 死蔵なし',!hoard,hoard||'');
+// E12 人口成長(分家が機能・爆発もしない)
+t('E12 人口成長',w.pop()>=90&&w.pop()<=90*2.2,`人口${w.pop()}(開始90)`);
+// E13 配給依存の卒業(Y3以降 平均<人口8%)
+const doleAvg=doleY3/Math.max(1,doleN);
+t('E13 配給卒業',doleAvg<w.pop()*0.08,`Y3以降平均${doleAvg.toFixed(1)}人/日(人口${w.pop()})`);
+
+// ---- シナリオB: アドバイザ追従プレイ(推薦通り建てて破綻しないか) ----
+{const w2=mk(12);
+ const gf=g=>w2.f30?.[g]||{prod:0,cons:0,imp:0,exp:0};
+ const n=j=>w2.hhs.filter(h=>h.job===j).length+w2.zones.filter(z=>!z.filled&&z.job===j).length;
+ let builds=[];
+ for(let d=1;d<=1440;d++){w2.step();
+  if(d%90===0&&builds.length<10&&w2.treasury*10>15000){ // 季節に1枚+財政に余力がある時だけ(人間の実プレイ相当) // 45日ごとに助言を1回実行
+    const poorN=w2.hhs.filter(h=>h.purse<5).length;
+    const debt=Math.max(0,-w2.treasury);
+    let rec=null;
+    const m=Math.floor(d/30)+1;
+    if(n('fisher')<2)rec='fisher';
+    else if(n('veg')<1)rec='veg';
+    else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w2.pop()/36))rec='wheat';
+    else if(n('woodshop')<1)rec='woodshop';
+    else if(n('charburner')<1)rec='charburner';
+    else if(n('saltworks')<1)rec='saltworks';
+    else if(debt>w2.limit()*0.3)rec=null;
+    else if(m>18&&poorN>=w2.hhs.length*0.45&&n('rapeseed')<2)rec='rapeseed';
+    else if(gf('salt').imp>0.5)rec='saltworks';
+    else if(gf('tools').imp>0.5)rec='woodshop';
+    if(rec){const i=builds.length;w2.addZone(rec,21+i%7,27+(i*2)%5);builds.push(rec);}}}
+ t('E15 アドバイザ追従で生存',w2.goDay===null&&w2.famine<600,
+   `建てた:${builds.join(',')||'なし'} 金庫${Math.round(w2.treasury*10)} 支援${w2.bailouts} 飢餓${w2.famine} 破産${w2.goDay?'M'+Math.floor((w2.goDay-1)/30+1):'なし'}`);}
+
+console.log(`\n${pass}/${pass+fail} PASS`);
+process.exit(fail?1:0);

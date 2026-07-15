@@ -144,7 +144,7 @@ export class World{
     if(foodDays<tgtD){const starving=foodDays<1.5;
       for(const g of['veg','wheat','pres','pick'])
         t[g]=[(tgtD-foodDays)*P.EAT/4,starving?99:Math.min(h.belief[g]*1.5,cheapest*2.2)];}
-    if(h.job!=='fisher')t.fish=[P.EAT*0.5,foodDays<1.5?99:Math.min(h.belief.fish*1.5,cheapest*2.2)];
+    if(h.job!=='fisher')t.fish=[P.EAT*0.5,Math.min(h.belief.fish*1.5,cheapest*2.5)]; // 飢えても魚に99は払わない(主食が隣の棚にある)
     if(h.job!=='wheat'&&h.pantry.wheat<P.EAT*P.RATION*10&&!t.wheat)
       t.wheat=[P.EAT*P.RATION*15-h.pantry.wheat,h.belief.wheat*1.3];
     if(h.job!=='veg'&&h.pantry.veg<P.EAT*P.RATION*6&&!t.veg)
@@ -260,9 +260,10 @@ export class World{
   produceTick(h,f){
     let stall=false;for(const g of GOODS){if(this.stalls[g].some(s=>s.hh===h)){stall=true;break;}}
     if(stall)f*=(h.members.length-1)/h.members.length;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
-    // 供給の自己調整: 職人は倉+自分の屋台残が日産10日分を超えたら手を止める(売れない山に投げ続けて信念崩落するのを防ぐ)
-    const craftG={saltworks:'salt',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal'}[h.job];
-    if(craftG){const daily={salt:P.Y_SALT,tools:P.Y_TOOLS,char:P.Y_CHAR,stone:P.Y_STONE,oil:P.Y_OIL,meal:P.Y_FISH/P.MEAL_FISH}[craftG]*h.mult();
+    // 供給の自己調整: 輸出台のない財(炭肉粕)だけ「倉+店が5日分超で手を止める」。
+    // 輸出財(塩道具石油)は台が余剰を吸う=Lvと共に輸出経済が育つのが正しい弧なのでブレーキなし
+    const craftG={charburner:'char',shepherd:'meat',fisher2:'meal'}[h.job];
+    if(craftG){const daily={char:P.Y_CHAR,meat:P.Y_MEAT,meal:P.Y_FISH/P.MEAL_FISH}[craftG];
       const out=this.stalls[craftG].reduce((a,s)=>a+(s.hh===h?s.qty:0),0);
       if(h.pantry[craftG]+out>daily*5)return;}
     const w=f*h.mult();
@@ -470,14 +471,16 @@ export class World{
           this.log(`分家: ${best}(持参金${Math.round(dowry)})`);}}}
     // 破綻転職(飢え40/180日+1年クールダウン)
     if(d%30===0){for(const h of this.hhs){
+      h.insolvM=(h.purse<-2)?(h.insolvM||0)+1:0;
       h.hungerHist=(h.hungerHist||[]);
       if(h.hungerHist.length>180)h.hungerHist.splice(0,h.hungerHist.length-180);
-      const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS;
+      const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3; // 飢え続き or 3ヶ月借金漬け
       if(distress&&d-(h.lastSwitch||-9e9)>=P.COOLDOWN&&this.rng()<0.5){
         const inc={};for(const x of this.hhs)(inc[x.job]=inc[x.job]||[]).push(x.incomeLog.reduce((a,b)=>a+b,0));
         let best=null,bv=-1;for(const j in inc){const v=inc[j].reduce((a,b)=>a+b,0)/inc[j].length;if(v>bv){bv=v;best=j;}}
         if(best&&best!==h.job){this.log(`破綻転職: ${h.job}#${h.id}→${best}`);
-          h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];}}}}
+          if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 徳政: 借金は会社の貸し倒れ(再出発)
+          h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
     // 公費の既定テーパー(標準プレイの模写・UIで上書き可)
     if(d%30===1){if(m===26)this.pub=Math.min(this.pub,60);if(m===34)this.pub=Math.min(this.pub,20);
       if(this.doleRate<this.pop()*0.06&&m>12)this.pub=Math.min(this.pub,10);this.pubLeft=this.pub;}

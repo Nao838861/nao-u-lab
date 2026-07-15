@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=130000';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=130400';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -292,6 +292,10 @@ function info(){const el=document.getElementById('pbody');
   if(h.job==='saltworks'&&h.pantry.char<0.5)why='⚠ 燃料切れ(炭がない)——塩を作れない';
   else if(h.job==='fisher'&&h.pantry.salt<0.5)why='⚠ 塩切れ——魚を保存できない';
   else if(h.job==='veg'&&!(mm>=3&&mm<=10))why='(冬季は畑が休み。漬物の蓄えで暮らす)';
+  else if(h.job==='wheat'){const dd=Math.max(1,w.day);const doy=((dd-1)%360)+1;const hv=8*30+15;
+    const left=doy<=hv?hv-doy:360-doy+hv;
+    const est=Math.round(P.Y_WHEAT*h.mult()*Math.min(1,(h.wheatWork||0)/300));
+    why=`収穫まであと${left}日(9月)。今年の見込み ${est}荷`;}
   else if(h.purse<0.5){const inc30=h.incomeLog.reduce((a,b)=>a+b,0);
     why=inc30>20?'宵越しの銭なし——冬に稼ぎ夏に使う型。収入があるうちは健全':'⚠ 財布も収入も無い——この職の産物に買い手がいない';}
   const reqs=LADDER[JOBCLS[h.job]]||[];let lvHtml='';
@@ -331,19 +335,20 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
   document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=物はあるが世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 次の一手アドバイザ ---
-function advise(){const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
+function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
   const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
   const poorN=w.hhs.filter(h=>h.purse<5).length;
   const debt=Math.max(0,-w.treasury);
   let rec=null,why='';
   if(n('fisher')<2){rec='fisher';why='まず食料。浜の近くに漁師を';}
   else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
-  else if(gf('wheat').imp>8){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
+  else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/36)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
+  else if(gf('wheat').imp>8){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
   else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
   else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}
   else if(n('saltworks')<1){rec='saltworks';why='塩がなければ保存食が作れません';}
-  else if(debt>w.limit()*0.55){rec=null;why='債務が重い。建てるのを止め、回復を待つ時です';}
-  else if(poorN>=w.hhs.length*0.45&&n('rapeseed')<2){rec='rapeseed';why='村人の稼ぎが足りません。菜種油は本国に売れる換金作物です';}
+  else if(debt>w.limit()*0.3||w.treasury*10<15000&&m>6){rec=null;why='財政が細っています。入植1世帯=渡航費+自立まで配給で数千デナリの投資。金庫の回復を待って';}
+  else if(m>18&&poorN>=w.hhs.length*0.45&&n('rapeseed')<2){rec='rapeseed';why='村人の稼ぎが足りません。菜種油は本国に売れる換金作物です';}
   else if(gf('salt').imp>0.5){rec='saltworks';why='塩を輸入に頼っています';}
   else if(gf('tools').imp>0.5){rec='woodshop';why='道具を輸入に頼っています';}
   else{rec=null;why='いまは均衡。世帯Lvの伸びと財政を見守りましょう';}
