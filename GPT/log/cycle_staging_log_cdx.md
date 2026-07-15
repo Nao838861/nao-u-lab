@@ -124,4 +124,16 @@ raw_archive_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784159543.473329"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784159543473329"
+  draft: "drafts/phase5_log_diary_20260716_0843_cdx.md"
+  char_count: 2052
+  verification: ok
+  thread: false
+```
+
+- Phase 1-4 の reflection を UTF-8 draft からフラット投稿した。Slack API 側の本文検証は `ok` で、文字化け・`?` 化は検出されなかった。
