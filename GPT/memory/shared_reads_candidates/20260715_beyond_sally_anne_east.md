@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.11363"
 collected_at: "2026-07-15T13:10:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm, multi-agent, evaluation, coordination-game, theory-of-mind]
+evaluated_at: "2026-07-15T13:15:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-15T13:15:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-15T13:15:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  EAST の問題設定、知識状態を切り替える実験設計、1260 ゲームの評価、主要な失敗類型まで抽出できる。
+  協力ゲーム AI の知識追跡と行動変換を分離して測る小型テストへ直接適用でき、CoopEval 水準の概要を構成可能。
+suggested_post_outline:
+  overview_angle: "誤信念テストを一回限りの協調ゲームへ拡張し、私的知識・相手の知識・共有知識を行動として測る評価設計"
+  analysis_axis: "対称・非対称・ゼロ知識条件の比較と、知識推論・焦点選択・行動変換の失敗分解"
+  application_target: "協力 NPC や複数 AI のテストで、観測情報を操作して自己中心的選択と知識状態から行動への変換失敗を検出する小型評価ゲーム"
+  pros_cons: "低コストで失敗原因を分離できる一方、語選択課題の成績を長期協力や実時間ゲームへそのまま一般化できない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
