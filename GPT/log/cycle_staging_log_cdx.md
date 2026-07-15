@@ -25,7 +25,18 @@ stale_reviewed: []
 - Slack 投稿、新規収集、記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260716_playtesting_beyond_personas.md
+    reason: "Phase 2 で canonical URL が既投稿 candidate（memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md / https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224652357689）と一致し、gate_decision: pass ではなく postpone。新規分析差分もないため Phase 3 の投稿対象外"
+    action: postpone
+```
+
+- Phase 2 の `pass` は 0 件。投稿条件を満たす candidate がないため、#shared-reads への投稿は実施しなかった。
+- candidate frontmatter は Phase 2 で `postponed` に更新済みのため、Phase 3 では変更していない。
+- 投稿本文を作成していないため、禁止表現・文字数・必須フォーマットの投稿前レビュー対象もなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
