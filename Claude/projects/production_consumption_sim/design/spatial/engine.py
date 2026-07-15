@@ -64,6 +64,10 @@ P = dict(
     # 収入比較の転職は廃止(コブウェブ発振)。180日中40日飢えたら+1年クールダウンで
     # 観測収入最良の職へ(確率0.5)。動くのは破綻した者だけ=羊群れが構造的に起きない
     DISTRESS_DAYS=40, SWITCH_COOLDOWN=360,
+    # 参入弁 (v1.7): 分家=90日ごとに新世帯が形成され、市場で観測できる職種別所得が
+    # 最も高い職を選ぶ。既存世帯は動かず新しい血が隙間を埋める(所得バランス三弁の②)。
+    # 持参金は親世帯(最富)の財布から分与=島内移転
+    BRANCHING=False, BRANCH_EVERY=90, BRANCH_MIN_HH=8,
     # 資源プール(残量比例+再生下限)
     BAY_S0=600_000.0, BAY_R=0.00175, RESEED=0.3,
     GROVE_S0=60_000.0, GROVE_R=0.0006,
@@ -468,6 +472,30 @@ class World:
         for h in self.hhs:
             h.income_log.append(h.income30); h.income30 = 0.0
             if len(h.income_log) > 30: h.income_log.pop(0)
+        # --- 参入弁: 分家(90日ごと・観測所得で職を選ぶ) ---
+        if P['BRANCHING'] and d % P['BRANCH_EVERY'] == 0 and len(self.hhs) >= P['BRANCH_MIN_HH']:
+            obs2 = defaultdict(list)
+            for h in self.hhs:
+                obs2[h.job].append(sum(h.income_log))
+            avg2 = {j: sum(v) / len(v) for j, v in obs2.items() if v}
+            parent = max(self.hhs, key=lambda x: x.purse)
+            # 繁栄ゲート: 分家は余裕の証(親の財布900未満なら起きない)。これが無いと
+            # 貧しい島でも人口が増え、配給費が人口比例で爆発する(v1.7初回実験)
+            island_fed = self.dole_rate < len(self.hhs) * P['HH_SIZE'] * 0.05
+            # 自立ゲート: 依存期(配給が人口の5%超)の島は分家しない。配給下の人口成長は
+            # 配給費を人口比例で爆発させる(v1.7実験: 6年で-18〜-23万)。自立→成長の順序
+            if avg2 and parent.purse >= 900 and island_fed:
+                best = max(avg2, key=lambda j: avg2[j])
+                dowry = min(300.0, parent.purse * 0.3)
+                parent.purse -= dowry
+                src = max((x for x in self.hhs if x.job == best), key=lambda x: x.purse)
+                nh = HH(best, (src.pos[0] + self.rng.uniform(-0.2, 0.2),
+                               src.pos[1] + self.rng.uniform(-0.2, 0.2)),
+                        road=src.road, purse=dowry)
+                self.hhs.append(nh)
+                self.events.append((d, f'分家: HH{nh.id}→{best}(観測所得{avg2[best]:.0f})'))
+                self.month_events.append(f'分家→{best}')
+
         # 転職=生活破綻トリガーのみ (Nao_u: 「相当ハードルを上げる。長期間生活が
         # 破綻したら転職、に近いのがいい」)。稼ぎ比較の転職はコブウェブ発振するため廃止。
         # 動くのは破綻した者だけ→羊群れが構造的に起きない
