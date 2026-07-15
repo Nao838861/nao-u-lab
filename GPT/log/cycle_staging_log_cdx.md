@@ -24,7 +24,17 @@ stale_reviewed: []
 - Slack 投稿、新規収集、記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260716_gama_bench_multi_agent_gaming.md
+    reason: "Phase 2 の gate_decision が postpone。ゲーム制作への適用先は具体的だが、評価プロトコル、動的スコアの逸脱、軸別結果、失敗条件、限界の根拠密度が不足し、3500-4500 字の独立した深い分析として完成していない"
+    action: candidate_revise
+```
+
+- `pass: []` のため投稿対象なし。#shared-reads への Slack 投稿は実施していない。
+- candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` を維持した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
