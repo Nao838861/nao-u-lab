@@ -142,9 +142,12 @@ export class World{
       t.char=[P.SALT_CHAR*10-h.pantry.char,P.Y_SALT*h.belief.salt*0.5];
     if(h.job==='fisher'){if(h.pantry.salt<3)t.salt=[6-h.pantry.salt,h.belief.pres*P.PR_SALT/P.PRES_SALT*0.5];
       if(h.pantry.char<2)t.char=[4-h.pantry.char,(P.PR_SMOKE-P.PR_SALT)*h.belief.pres/P.SMOKE_CHAR*0.5];}
+    // 依存期(配給中)は文化財を溜め込まない(60日分)。240日分を輸入で買うと開幕の
+    // 手持ちが即座に会社へ吸われ、市中から通貨が消える(財布ゼロ問題の主因)
+    const cd=(this.goDay===null&&this.doleRate>0.5)?60:P.CULT_D;
     for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.0]]){
       if(t[g])continue;
-      if(h.pantry[g]<dd*P.CULT_D*0.5)t[g]=[dd*P.CULT_D-h.pantry[g],val];}
+      if(h.pantry[g]<dd*cd*0.5)t[g]=[dd*cd-h.pantry[g],val];}
     return t;}
   sellOffers(h){const out={};const doleOn=this.goDay===null;
     const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];

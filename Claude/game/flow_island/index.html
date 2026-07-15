@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=121035';
+import{World,P,JOBS,GOODS} from './engine.js?v=121553';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -172,6 +172,19 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
     cx.fillStyle='#ffffff88';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText(JNAME[z.job],px2,py2-18);}
   const[mx,my]=iso(w.market.x,w.market.y);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
+  // 市場の荷の山(いま市に居る世帯の売り物+御蔵)
+  {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
+   const piles={};
+   for(const h of w.hhs)if(h.state==='atMarket')for(const g in GC)if(h.pantry[g]>2)piles[g]=(piles[g]||0)+h.pantry[g];
+   piles.wheat=(piles.wheat||0)+(w.granary.wheat||0);
+   let i=0;
+   for(const g in piles){if(piles[g]<3)continue;
+     const px2=mx-24+(i%4)*16,py2=my+6+Math.floor(i/4)*10;
+     const hgt=Math.min(10,2+Math.log2(1+piles[g]));
+     cx.fillStyle=GC[g];cx.fillRect(px2,py2-hgt,10,hgt);
+     cx.strokeStyle='#0008';cx.strokeRect(px2,py2-hgt,10,hgt);
+     cx.fillStyle='#fff';cx.font='7px sans-serif';cx.textAlign='center';
+     cx.fillText(Math.round(piles[g]),px2+5,py2+7);i++;}}
   cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
   cx.fillStyle='#fff';cx.font='10px sans-serif';cx.textAlign='center';cx.fillText('市場/港',mx,my+14);
   for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){
@@ -225,7 +238,7 @@ function info(){const el=document.getElementById('pbody');
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0);
   tot.wheat+=w.granary.wheat||0;tot.pres+=w.granary.pres||0;
-  document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span><small>御蔵 麦${Math.round(w.granary.wheat||0)}</small></span>`;
+  document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span><small>御蔵 麦${Math.round(w.granary.wheat||0)}</small></span><span><small>世帯金計 ${Math.round(w.hhs.reduce((s,h)=>s+h.purse,0))}</small></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?a[a.length-1][1].toFixed(2):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
