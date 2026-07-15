@@ -23,7 +23,16 @@ stale_reviewed: []
 
 ## Phase 3: Shared-reads 投稿
 
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260715_sketchar_character_design_phase1.md
+    reason: "Phase 2 の gate_decision が fail であり、今回の pass candidate は 0 件。Phase 3 の投稿対象外。"
+    action: candidate_revise
+slack_posted: false
+decision: no_pass_candidates
+reviewed_at: "2026-07-15T23:28:00+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 
