@@ -34,7 +34,24 @@ stale_reviewed: []
 - Phase 1 の `review / posted_title_match_url_differs` は preflight 入力が `http` および arXiv version suffix 付きだったことによる canonicalization の偽陰性。既投稿 candidate の evaluation frontmatter は正本として維持し、再評価更新していない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-07-15 投稿判定結果
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+    reason: "Phase 2 で posted_url_match。既投稿 permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169 のため Phase 3 対象外"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
+    reason: "Phase 2 で posted_url_match。既投稿 permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409 のため Phase 3 対象外"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+    reason: "Phase 2 で posted_url_match。既投稿 permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129 のため Phase 3 対象外"
+    action: postpone
+```
+
+- Phase 2 の `pass` は 0 件。投稿条件に従い、candidate 本文の再作成、Slack `chat.postMessage`、frontmatter 更新はいずれも実施していない。
+- 3 件は未完成による延期ではなく、既投稿 URL 一致による重複除外。candidate の terminal record は変更していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
