@@ -323,8 +323,9 @@ export class World{
     const doleOrder=['salt','char','tools','cloth','iron','meal','stone','oil','fish','veg','wheat','pres','meat'].filter(g=>targets[g]);
     for(const g of(doleOn?doleOrder:Object.keys(targets))){
       let[want,ceil]=targets[g];want=Math.min(want,cap);
-      const shelves=[...this.stalls[g]].sort((a,b)=>a.price-b.price);
+      const shelves=[...this.stalls[g]];
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
+      shelves.sort((a,b)=>a.price-b.price); // 輸入棚も価格競争に参加=輸入パリティが真の天井になる
       const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal');
       for(const s of shelves){if(want<1e-9)break;
         if(s.price>ceil||s.price<=0)continue;
