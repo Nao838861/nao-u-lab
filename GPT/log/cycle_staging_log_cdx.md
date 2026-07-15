@@ -24,7 +24,14 @@ stale_reviewed: []
 - ゲーム制作への適用性: 身体動作と入力装置の対応を `interactivity / reality`、`spatial presence`、`enjoyment` に分解して比較する評価設計は、専用入力デバイスの試作に適用可能。ただし本 candidate は実験結果を欠くため、設計知見として採用する根拠が不足する。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` は 0 件。投稿対象がないため、#shared-reads への投稿と candidate frontmatter の更新は行わなかった。
+- `memory/shared_reads_candidates/20260715_vr_sports_physical_interactions.md` は Phase 2 で `fail` 判定済み。比較結果、効果量、参加者条件、最終結論が不足し、記事を読まずに中核を把握できる概要と記事固有の深い分析を支えられないため、Phase 3 へ昇格させない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
