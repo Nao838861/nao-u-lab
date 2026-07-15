@@ -58,7 +58,41 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。index と per-file atom index は一致し、Markdown link 0 件のため broken link なし。代表語 probe は 記憶 / ゲーム設計 / 敵パターン が取得でき、評価軸は本文に未出現。"
+  - "memory/atoms.jsonl 2,675 件を監査。atom id 重複 0、JSONL / per-file .md / index.jsonl の欠落・parse error・content conflict は全て 0。normalized content 重複 40 group は既存 canonical overlay で fold 済み。"
+  - "memory/raw/ は 30 日超 93 files を確認。Slack archive・論文 PDF/text 等の原文/provenanceであり、参照関係を壊す機械的移動は行わず明示保持。"
+  - "shared-reads lifecycle 955 件: posted 407 / ready_to_post 10 / postponed 394 / failed 122 / needs_review 22。stale_after 期限超過 backlog 208 件、今回 handoff 2 件。"
+  - "mixed duplicate queue 81 group、stale triage queue 上位 50 件、group-action queue 35 group を 2026-07-15 時点で再生成。mixed duplicate は先頭 1 group の representative のみ handoff し、candidate 単位と重複させていない。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "既存 atom 1 件で置換文字が title / trigger / excerpt に保存されており、表示経路だけでなく source atom 自体に mojibake がある。"
+    severity: low
+    evidence: "memory/atoms.jsonl atom sr-1776127289-4d9239b255（『AIエ��ジェント』）。per-file mirror も同内容。gr-1777083728-44d444ab7a は health heuristic の suspect だが UTF-8 明示読みでは置換文字を確認できず、source破損とは判定しない。"
+    source_file_status: "UTF-8 explicit read: sr-1776127289-4d9239b255 に U+FFFD 2文字を確認。memory/MEMORY.md 自体は主要日本語 probe 3/4を正常取得し、本文再生成の対象外。"
+    display_or_tooling_status: "PowerShell UTF-8表示でも同じ置換文字を再現するため、shell/stagingのみのmojibakeではない。"
+    why_blocks_game_memory: "該当する agent memory 記事を語句検索する際の recall 精度を局所的に落とすが、ゲーム制作の主要 entry point や atom 全体の整合性は妨げない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 208
+  queue_rows: 50
+  handed_off_this_cycle: 2
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona と MCTS による playstyle 別 headless 評価へ転用価値が高い mixed duplicate group。status_counts は terminal 2 / open 5、terminal_paths と open_paths は memory/shared_reads_group_action_queue.jsonl の同 group record を正本とする。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "stale triage queue 内の最上位 non-duplicate。会話型 RPG への転用価値は高いが、学習効果・参加者評価・失敗例・運用制約の一次確認が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
