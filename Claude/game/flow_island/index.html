@@ -25,6 +25,8 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #log{font-size:11px;color:#aab}#log div{border-bottom:1px solid #2a3550;padding:1px 0}
 .bar{height:8px;background:#2a3550;border-radius:4px;overflow:hidden;width:110px;display:inline-block;vertical-align:middle}
 .bar>div{height:100%;background:linear-gradient(90deg,#e0b050,#e05050)}
+#popup{position:fixed;z-index:7;display:none;max-width:230px;padding:8px 10px;font-size:12px}
+#popup #pclose{position:absolute;top:2px;right:7px;cursor:pointer;color:#ffd97a;font-size:15px;padding:2px 6px}
 #overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;flex-direction:column;font-size:22px;z-index:9}
 small{color:#8899b0}
 @media(max-width:760px){
@@ -41,8 +43,8 @@ small{color:#8899b0}
 <div id="factor" class="ov">「ようこそ、支配人。まだ誰もいない島です」</div>
 <div id="bar" class="ov"></div>
 <div id="dbtn" class="ov">📊</div>
+<div id="popup" class="ov"><span id="pclose">✕</span><div id="pbody"></div></div>
 <div id="drawer" class="ov">
- <h2>世帯情報 <small>(建物をタップ)</small></h2><div id="info"><small>—</small></div>
  <h2>市場価格</h2><div id="prices"></div>
  <h2>出来事</h2><div id="log"></div>
  <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
@@ -55,7 +57,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=119901';
+import{World,P,JOBS,GOODS} from './engine.js?v=120302';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -142,7 +144,7 @@ addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();speed=spe
   if(e.key>='1'&&e.key<='3'){speed=+e.key;topbar();}});
 function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
   if(!tool){let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
-    sel=bd<2?best:null;info();return;}
+    sel=bd<2?best:null;info();placePopup();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
   else if(JOBS.includes(tool)){w.addZone(tool,x,y);}}
@@ -193,8 +195,15 @@ function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
 function shade(hex,amt){const n=parseInt(hex.slice(1),16);
   return`rgb(${Math.min(255,(n>>16)+amt)},${Math.min(255,((n>>8)&255)+amt)},${Math.min(255,(n&255)+amt)})`;}
 // --- 情報/価格/ログ ---
-function info(){const el=document.getElementById('info');
-  if(!sel){el.innerHTML='<small>—</small>';return;}
+const popup=document.getElementById('popup');
+document.getElementById('pclose').onclick=()=>{sel=null;popup.style.display='none';};
+function placePopup(){if(!sel){popup.style.display='none';return;}
+  const[ix,iy]=iso(Math.round(sel.x),Math.round(sel.y));
+  let sx=ix*Z+panX+14,sy=iy*Z+panY-30;
+  sx=Math.max(4,Math.min(innerWidth-240,sx));sy=Math.max(44,Math.min(innerHeight-140,sy));
+  popup.style.left=sx+'px';popup.style.top=sy+'px';popup.style.display='block';}
+function info(){const el=document.getElementById('pbody');
+  if(!sel){popup.style.display='none';return;}
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
   el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
@@ -223,7 +232,7 @@ setInterval(factor,2500);
 function frame(){try{tick++;
   const fp=FRAMES[speed];
   if(fp){const n=fp<1?Math.round(1/fp):(tick%fp===0?1:0);for(let i=0;i<n;i++){try{w.tickOnce();}catch(err){console.error(err);speed=0;break;}}}
-  draw();
+  draw();placePopup();
   if(tick%20===0){topbar();panel();toasts();if(sel)info();
     if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
       document.getElementById('overlay').style.display='flex';}
