@@ -53,13 +53,19 @@ MULT = [1.585 ** i for i in range(8)]
 
 class Sim:
     def __init__(self, plan, name, roads_m=None, iron_from=None, exports=True,
-                 years=2, repay=False, salt_cut=None, overfish=False):
+                 years=2, repay=False, salt_cut=None, overfish=False,
+                 ladder='A', harvest=None, reseed=False):
         self.name = name; self.plan = plan; self.years = years
         self.roads_m = roads_m or {}
         self.iron_from = iron_from       # この月から鉄製品を輸入(中盤アップグレードB)
         self.exports = exports; self.repay = repay
         self.salt_cut = salt_cut         # ラダー転落テスト: この月から塩生産停止
         self.overfish = overfish
+        self.harvest = harvest or {}     # 年→収穫倍率 (凶作ショック)
+        self.reseed = reseed             # 木立の再播種下限 (P8テスト)
+        self.ladder = dict(LADDER)
+        if ladder == 'B':                # 農家B案: Lv3塩+炭 / Lv4食料2種 / Lv5鉄 / Lv6食料3種
+            self.ladder['farm'] = ['food1', 'tool', 'saltchar', 'food2', 'iron', 'food3']
         self.hhs = [dict(j='fish', r=0), dict(j='veg', r=0), dict(j='wheat', r=1)]
         self.pop = 28; self.cap = P['CAPITAL']; self.debt = 0.0
         self.lumber = P['KIT_L']; self.logs = 0.0
@@ -160,8 +166,9 @@ class Sim:
             if x['r'] == 0:
                 dep = self.groveS / P['GROVE_S0']
                 q = BASE['wood'] * self.mult('wood') * self.pf(0) * dep
-                self.groveS = min(P['GROVE_S0'],
-                                  self.groveS - q + P['GROVE_R'] * self.groveS * (1 - dep))
+                regen = P['GROVE_R'] * self.groveS * (1 - dep)
+                if self.reseed: regen += 0.5 * (1 - dep)   # 再播種下限(風で種が飛ぶ)
+                self.groveS = min(P['GROVE_S0'], self.groveS - q + regen)
             else:
                 dep = self.forestS / P['FOREST_S0']
                 q = BASE['wood'] * self.mult('wood') * self.pf(x['r']) * dep
@@ -256,9 +263,11 @@ class Sim:
         sat['cloth'] = False              # 畜産未実装 → 布は常に欠乏 (検出対象)
         sat['food1'] = len(kinds) >= 1
         sat['food2'] = len(kinds) >= 2
+        sat['food3'] = len(kinds) >= 3
         sat['grain'] = 'wheat' in kinds
+        sat['saltchar'] = sat['salt'] and sat['char']
         # --- ラダー判定 (昇格30日連続 / 降格60日欠乏) ---
-        for c, reqs in LADDER.items():
+        for c, reqs in self.ladder.items():
             cur = self.lv[c]
             keep = all(sat[reqs[i]] for i in range(cur))       # 累積メンテ
             nxt = sat[reqs[cur]] if cur < len(reqs) else False
@@ -276,10 +285,11 @@ class Sim:
                 if self.down[c] >= 60 and cur > 0:
                     self.lv[c] -= 1; self.down[c] = 0
                     self.mo['ev'].append(f'▼{c} Lv{self.lv[c]}')
-        # --- 麦収穫 ---
+        # --- 麦収穫 (凶作ショック倍率つき) ---
         if mm == 9 and day % 30 == 15:
+            yr = (m - 1) // 12 + 1
             hv = sum(BASE['wheat'] * self.mult('wheat') * self.pf(x['r'])
-                     for x in cnt('wheat'))
+                     for x in cnt('wheat')) * self.harvest.get(yr, 1.0)
             self.wheat += hv; self.mo['harv'] = hv
         # --- 輸出 (余剰を少しずつ売る=正典ルール4。建材予備20は手元に残す) ---
         if self.exports:
@@ -292,6 +302,9 @@ class Sim:
             self.pres -= xp; self.earn(xp * P['EXP_PRES'])
             self.mo['exp'] += xl * P['EXP_LOG'] + xp * P['EXP_PRES']
         self.mo['fish'] += f; self.mo['veg'] += v; self.mo['logs'] += lg
+        # 食事の内訳 (T6: 生魚シェアの衰退アーク観測用)
+        for k in eaten:
+            self.mo['d_' + k] = self.mo.get('d_' + k, 0.0) + eaten[k]
 
     def month_end(self, m, mm, se):
         if self.go_month is None and self.debt > self.credit_limit(m):
