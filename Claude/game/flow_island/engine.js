@@ -29,7 +29,8 @@ export class HH{
   constructor(job,x,y){this.id=HID++;this.job=job;this.x=x;this.y=y;this.road=false;
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
-    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;}
+    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;
+    this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;}
   mult(){return Math.pow(P.LV_MULT,this.lv);}
   cls(){return JOBCLS[this.job];}
 }
@@ -38,7 +39,35 @@ export class World{
     this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.doleQty=0;
     this.bailouts=0;this.goDay=null;this.shipping=false;this.pub=P.PUB0;this.famine=0;
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
-    this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;}
+    this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
+    this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;}
+  setTerrain(terr){this.terr=terr;}
+  tileCost(x,y){if(x<0||y<0||x>=this.MW||y>=this.MH)return Infinity;
+    if(this.terr&&this.terr[y][x]==='water')return Infinity;
+    if(this.roadTiles.has(x+','+y))return this.paved?0.45:0.6;
+    if(this.terr&&this.terr[y][x]==='forest')return 1.4;return 1;}
+  buildFlow(){const W=this.MW,H=this.MH;const dist=new Float32Array(W*H).fill(1e9);
+    const mx=Math.round(this.market.x),my=Math.round(this.market.y);
+    dist[my*W+mx]=0;const q=[[mx,my]];
+    while(q.length){q.sort((a,b)=>dist[a[1]*W+a[0]]-dist[b[1]*W+b[0]]);const[x,y]=q.shift();
+      const d0=dist[y*W+x];
+      for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){
+        const nx=x+dx,ny=y+dy;const c=this.tileCost(nx,ny);if(c===Infinity)continue;
+        const nd=d0+c*(dx&&dy?1.4:1);
+        if(nd<dist[ny*W+nx]-1e-6){dist[ny*W+nx]=nd;q.push([nx,ny]);}}}
+    this.flow=dist;}
+  stepToMarket(h){if(!this.flow)this.buildFlow();const W=this.MW;
+    const x=Math.round(h.px),y=Math.round(h.py);
+    let bx=x,by=y,bd=this.flow[y*W+x];
+    for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){
+      const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=this.MH)continue;
+      const d=this.flow[ny*W+nx];if(d<bd){bd=d;bx=nx;by=ny;}}
+    const sp=1/Math.max(0.45,this.tileCost(x,y));
+    h.px+=(bx-h.px)*Math.min(1,sp*0.9);h.py+=(by-h.py)*Math.min(1,sp*0.9);
+    return Math.hypot(h.px-this.market.x,h.py-this.market.y)<1.2;}
+  stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
+    h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;return false;}
+  addZone(job,x,y){this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
   addHH(job,x,y){const h=new HH(job,x,y);this.hhs.push(h);this.mainlandIn+=h.purse;
     this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.log(`入植: ${job}`);this.updRoads();return h;}
@@ -48,7 +77,7 @@ export class World{
     this.treasury-=P.SHIP_COST;this.mainlandOut+=P.SHIP_COST;this.shipping=true;
     for(const g in P.EXP_CAP)P.EXP_CAP[g]*=P.SHIP_CAP;for(const g in P.EXP_ML)P.EXP_ML[g]*=P.SHIP_PRICE;
     this.log('★沿岸海運に投資(輸出天井×2・本土価+20%)');return true;}
-  updRoads(){for(const h of this.hhs){h.road=false;
+  updRoads(){this.flow=null;for(const h of this.hhs){h.road=false;
     for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)
       if(this.roadTiles.has(`${Math.round(h.x)+dx},${Math.round(h.y)+dy}`)){h.road=true;break;}}}
   dist(h){return Math.hypot(h.x-this.market.x,h.y-this.market.y);}
@@ -118,45 +147,67 @@ export class World{
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,P.HAUL);
     return out;}
-  step(){this.day++;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
-    const winter=mm>=10;const doleOn=this.goDay===null;
-    // 生産
+  step(){for(let i=0;i<30;i++)this.tickOnce();}
+  tickOnce(){this.t++;
+    const tod=this.t%30;             // time of day
+    if(tod===1)this.dayStart();
+    // 移動と労働
     for(const h of this.hhs){
-      const going=h._going=true; // v0: 毎日市へ(簡略)
-      const ts=going?this.travel(h):0;const w=(1-ts)*h.mult();h.walk=ts;
-      if(h.job==='fisher2'){const dep=this.bay2/P.BAY0;
-        if(!winter){const q=P.Y_FISH*w*dep;
-          this.bay2=Math.min(P.BAY0,this.bay2-q+P.BAY_R*this.bay2*(1-dep)+P.RESEED*(1-dep));
-          h.pantry.meal+=q/P.MEAL_FISH;}}
-      else if(h.job==='quarryman')h.pantry.stone+=P.Y_STONE*w;
-      else if(h.job==='rapeseed'){
-        if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED);h.pantry.meal-=u;
-          h.fert=(h.fert||0)+u;
-          const fill=Math.min(1,(h.fert||0)/Math.max(1,P.FERT_NEED*(mm-2)*30));
-          h.pantry.oil+=P.Y_OIL*w*(1+P.FERT_BOOST*fill);}
-        else if(mm===9)h.fert=0;}
-      else if(h.job==='fisher'){const dep=this.bay/P.BAY0;
-        const q=(winter?P.Y_FISH_W:P.Y_FISH)*w*dep;
-        this.bay=Math.min(P.BAY0,this.bay-q+P.BAY_R*this.bay*(1-dep)+P.RESEED*(1-dep));
-        h.pantry.fish+=q;}
-      else if(h.job==='veg'&&mm>=3&&mm<=10)h.pantry.veg+=P.Y_VEG*w;
-      else if(h.job==='shepherd')h.pantry.meat+=P.Y_MEAT*w;
-      else if(h.job==='wheat'){h.wheatWork+=1-ts;
-        if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED);h.pantry.meal-=u;h.fert=(h.fert||0)+u;}
-        if(mm===9&&d%30===15){const fill=Math.min(1,(h.fert||0)/(P.FERT_NEED*180));
-          h.pantry.wheat+=P.Y_WHEAT*h.mult()*Math.min(1,h.wheatWork/300)*(1+P.FERT_BOOST*fill);
-          if(fill>0.05)this.log(`麦畑#${h.id} 施肥${Math.round(fill*100)}%→収穫+${Math.round(P.FERT_BOOST*fill*100)}%`);
-          h.wheatWork=0;h.fert=0;}}
-      else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
-        this.grove=Math.min(P.GROVE0,this.grove-q*2+P.GROVE_R*this.grove*(1-dep));h.pantry.tools+=q;}
-      else if(h.job==='charburner'){const dep=this.grove/P.GROVE0;const q=P.Y_CHAR*w*dep;
-        this.grove=Math.min(P.GROVE0,this.grove-q*1.5+P.GROVE_R*this.grove*(1-dep));h.pantry.char+=q;}
-      else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR,h.pantry.char);
-        h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*w*fuel;}}
-    // 市場
+      if(h.state==='arriving'){if(this.stepTo(h,h.x,h.y)){h.state='building';h.buildDays=10;this.log(`${h.job}#${h.id} 入居——普請開始`);}}
+      else if(h.state==='building'){/* 日次で減算 */}
+      else if(h.state==='toMarket'){if(this.stepToMarket(h))h.state='atMarket';}
+      else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
+      else if(h.state==='home'){this.produceTick(h,1/30);}}
+    if(tod===12)for(const h of this.hhs){if(h.state!=='home')continue;
+      const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
+      const offers=this.sellOffers(h);const sellSum=Object.values(offers).reduce((a,b)=>a+b,0);
+      const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*8);
+      const inputLow=(h.job==='saltworks'&&h.pantry.char<2)||(h.job==='fisher'&&h.pantry.salt<1)||((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<1&&this.day%7===0);
+      if(offers.fish>0||sellSum>=10||fd<3||lowCult||inputLow)h.state='toMarket';}
+    if(tod===15)this.marketSession();
+    if(tod===29)this.dayEnd();}
+  dayStart(){this.day++;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
+    // 船(15日ごと): 未充足の区画へ移民を運ぶ(最大2世帯/便)
+    if(d%15===0&&this.port){let n=0;
+      for(const z of this.zones){if(z.filled||n>=2)continue;
+        const h=new HH(z.job,z.x,z.y);h.px=this.port.x;h.py=this.port.y;h.state='arriving';
+        this.hhs.push(h);this.mainlandIn+=h.purse;this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;
+        z.filled=true;n++;this.updRoads();}
+      if(n>0)this.log(`入植船が着いた(${n}世帯)`);}
+    // 建設の進行
+    for(const h of this.hhs)if(h.state==='building'){h.buildDays--;
+      if(h.buildDays<=0){h.state='home';this.log(`${h.job}#${h.id} 家が建った`);}}
+  }
+  produceTick(h,f){const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
+    const w=f*h.mult();
+    if(h.job==='fisher2'){const dep=this.bay2/P.BAY0;
+      if(!winter){const q=P.Y_FISH*w*dep;
+        this.bay2=Math.min(P.BAY0,this.bay2-q+f*(P.BAY_R*this.bay2*(1-dep)+P.RESEED*(1-dep)));
+        h.pantry.meal+=q/P.MEAL_FISH;}}
+    else if(h.job==='quarryman')h.pantry.stone+=P.Y_STONE*w;
+    else if(h.job==='rapeseed'){if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;
+        const fill=Math.min(1,(h.fert||0)/Math.max(1,P.FERT_NEED*(mm-2)*30));
+        h.pantry.oil+=P.Y_OIL*w*(1+P.FERT_BOOST*fill);}}
+    else if(h.job==='fisher'){const dep=this.bay/P.BAY0;
+      const q=(winter?P.Y_FISH_W:P.Y_FISH)*w*dep;
+      this.bay=Math.min(P.BAY0,this.bay-q+f*(P.BAY_R*this.bay*(1-dep)+P.RESEED*(1-dep)));
+      h.pantry.fish+=q;}
+    else if(h.job==='veg'&&mm>=3&&mm<=10)h.pantry.veg+=P.Y_VEG*w;
+    else if(h.job==='shepherd')h.pantry.meat+=P.Y_MEAT*w;
+    else if(h.job==='wheat'){h.wheatWork+=f;
+      if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;}}
+    else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
+      this.grove=Math.min(P.GROVE0,this.grove-q*2+f*P.GROVE_R*this.grove*(1-dep));h.pantry.tools+=q;}
+    else if(h.job==='charburner'){const dep=this.grove/P.GROVE0;const q=P.Y_CHAR*w*dep;
+      this.grove=Math.min(P.GROVE0,this.grove-q*1.5+f*P.GROVE_R*this.grove*(1-dep));h.pantry.char+=q;}
+    else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
+      h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;}}
+  marketSession(){const d=this.day,m=Math.floor((d-1)/30)+1;
+    const doleOn=this.goDay===null;
+    const here=this.hhs.filter(h=>h.state==='atMarket');
     const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','meat']:GOODS;
     for(const g of order){const bids=[],asks=[];
-      for(const h of this.hhs){const tgt=this.buyTargets(h)[g];
+      for(const h of here){const tgt=this.buyTargets(h)[g];
         if(tgt){let[qty,ceil]=tgt;const price=Math.min(h.belief[g]*(0.95+this.rng()*0.2),ceil);
           qty=Math.min(qty,price>0?h.purse*0.9/price:0);
           if(qty>1e-9&&price>1e-9)bids.push([h,qty,price]);}
@@ -169,12 +220,20 @@ export class World{
       if(P.GRAN_BID[g]&&doleOn)bids.push(['GRAN',Math.max(5,this.doleRate),P.GRAN_BID[g]]);
       const pre={},want={};for(const[b,q]of bids.map(x=>[x[0],x[1]]))if(b instanceof HH){pre[b.id]=b.pantry[g];want[b.id]=q;}
       const[pr,vol]=this.clear(g,bids,asks);
-      for(const h of this.hhs)if(want[h.id]>1e-6&&h.pantry[g]-pre[h.id]<want[h.id]*0.3)
+      for(const h of here)if(want[h.id]>1e-6&&h.pantry[g]-pre[h.id]<want[h.id]*0.3)
         h.belief[g]=Math.min(h.belief[g]*1.04,12);
       if(this.unfilled!==null){const myG={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt'};
-        for(const h of this.hhs)if(myG[h.job]===g&&this.unfilled>h.belief[g])h.belief[g]+=(this.unfilled-h.belief[g])*0.1;}
+        for(const h of here)if(myG[h.job]===g&&this.unfilled>h.belief[g])h.belief[g]+=(this.unfilled-h.belief[g])*0.1;}
       if(vol>1e-9)(this.prices[g]=this.prices[g]||[]).push([d,pr,vol]);}
-    for(const h of this.hhs){for(const g of h.unsold)h.belief[g]*=0.98;h.unsold.clear();}
+    for(const h of here){for(const g of h.unsold)h.belief[g]*=0.98;h.unsold.clear();h.state='toHome';}
+  }
+  dayEnd(){const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
+    const doleOn=this.goDay===null;
+    if(mm===9&&d%30===15)for(const h of this.hhs)if(h.job==='wheat'){
+      const fill=Math.min(1,(h.fert||0)/(P.FERT_NEED*180));
+      h.pantry.wheat+=P.Y_WHEAT*h.mult()*Math.min(1,h.wheatWork/300)*(1+P.FERT_BOOST*fill);
+      if(fill>0.05)this.log(`麦畑#${h.id} 施肥${Math.round(fill*100)}%→+${Math.round(P.FERT_BOOST*fill*100)}%`);
+      h.wheatWork=0;h.fert=0;}
     // 配給
     if(doleOn){let doleToday=0;
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;

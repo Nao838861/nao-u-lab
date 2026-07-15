@@ -59,11 +59,11 @@ const terr=[];for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
   if(x<16&&y<16&&((x*7+y*13)%5<3))t='forest';
   if(x>38&&y<10)t='rock';terr[y].push(t);}}
 const TC={grass:['#4d7a3f','#446f38'],sand:['#c9b57a','#bfa96e'],water:['#2b5d8a','#27547d'],forest:['#3a5f31','#33562b'],rock:['#7a7a72','#6e6e66']};
-const w=new World(11);w.market={x:25,y:MH-8};
+const w=new World(11);w.market={x:25,y:MH-8};w.port={x:25,y:MH-5};w.setTerrain(terr);
 const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
 const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
-let tool=null,speed=1,tick=0,sel=null,walkPhase=0;
-const FRAMES=[0,30,8,2]; // 速度→1歩の間隔(フレーム)。1×=2日/秒
+let tool=null,speed=1,tick=0,sel=null;
+const FRAMES=[0,4,1,0.5]; // 速度→1tickの間隔(フレーム)。1×=15tick/s≒0.5日/秒
 // --- 上バー ---
 const top=document.getElementById('top');
 function topbar(){const d=w.day,m=Math.floor(Math.max(0,d-1)/30)+1,mm=(m-1)%12+1;
@@ -132,7 +132,7 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
     sel=bd<2?best:null;info();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
-  else if(JOBS.includes(tool)){w.addHH(tool,x,y);}}
+  else if(JOBS.includes(tool)){w.addZone(tool,x,y);}}
 // --- 描画 ---
 function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
   const d=w.day,mm=(Math.floor(Math.max(0,d-1)/30))%12+1,wint=mm>=10;
@@ -147,6 +147,13 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       cx.fillStyle='#5a4630';cx.fillRect(px-1,py-4,2,3);}
     if(t==='rock'&&(x*11+y*5)%4===0){cx.fillStyle='#8d8d85';cx.beginPath();cx.ellipse(px,py-3,5,3,0,0,7);cx.fill();}
     if(t==='water'&&(x+y+((tick/25)|0))%7===0){cx.fillStyle='#4a7fae';cx.fillRect(px-6,py-1,12,1);}}
+  // 港(桟橋)
+  {const[px2,py2]=iso(w.port.x,w.port.y);cx.fillStyle='#6a4f33';cx.fillRect(px2-14,py2-4,28,8);
+   cx.fillStyle='#fff';cx.font='9px sans-serif';cx.textAlign='center';cx.fillText('港',px2,py2+16);}
+  // 区画(未入居=点線ゴースト)
+  for(const z of w.zones){if(z.filled)continue;const[px2,py2]=iso(z.x,z.y);
+    cx.strokeStyle=JCOL[z.job]||'#999';cx.setLineDash([3,3]);cx.strokeRect(px2-7,py2-16,14,14);cx.setLineDash([]);
+    cx.fillStyle='#ffffff88';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText(JNAME[z.job],px2,py2-18);}
   const[mx,my]=iso(w.market.x,w.market.y);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
   cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
@@ -154,15 +161,19 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
   for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){
     const[px,py]=iso(Math.round(h.x),Math.round(h.y));
     if(h===sel){cx.strokeStyle='#ffe98a';cx.lineWidth=2;cx.strokeRect(px-12,py-22,24,24);cx.lineWidth=1;}
-    cx.fillStyle=JCOL[h.job]||'#999';
-    const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
-    cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
-    if(w.goDay&&h.hunger>0){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
-    cx.fillStyle='#ffd97a';for(let i=0;i<h.lv;i++)cx.fillRect(px-s/2+i*3,py-s-7,2,2);
-    // 歩行者: シミュ連動(walkPhaseはstep時のみ進む)
-    const t2=(walkPhase+h.id*0.37)%2,f=t2<1?t2:2-t2;
-    const wx=h.x+(w.market.x-h.x)*f,wy=h.y+(w.market.y-h.y)*f;
-    const[ax,ay]=iso(wx,wy);cx.fillStyle='#f5e9d0';cx.beginPath();cx.arc(ax,ay-3,2,0,7);cx.fill();}
+    if(h.state==='building'){cx.strokeStyle='#c9b57a';cx.strokeRect(px-6,py-14,12,12);
+      cx.fillStyle='#c9b57a55';cx.fillRect(px-6,py-14,12,12);
+      cx.fillStyle='#ffd97a';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText('普請'+h.buildDays,px,py-17);}
+    else if(h.state!=='arriving'){cx.fillStyle=JCOL[h.job]||'#999';
+      const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
+      cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
+      if(w.goDay&&h.hunger>0){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
+      cx.fillStyle='#ffd97a';for(let i=0;i<h.lv;i++)cx.fillRect(px-s/2+i*3,py-s-7,2,2);}
+    // 人: 実際の位置(通勤・移民の到着が見える)
+    if(h.state!=='home'&&h.state!=='building'){
+      const[ax,ay]=iso(h.px,h.py);cx.fillStyle='#f5e9d0';
+      cx.beginPath();cx.arc(ax,ay-3,2.4,0,7);cx.fill();
+      cx.strokeStyle='#0006';cx.stroke();}}
   cx.textAlign='left';}
 function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
   cx.moveTo(px,py-TH/2*k);cx.lineTo(px+TW/2*k,py);cx.lineTo(px,py+TH/2*k);cx.lineTo(px-TW/2*k,py);cx.closePath();cx.fill();}
@@ -184,8 +195,8 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   const m=Math.floor(Math.max(0,w.day-1)/30)+1,mm=(m-1)%12+1;
   const debt=Math.max(0,-w.treasury),ratio=debt/w.limit();
   if(w.goDay){say('…本国は、もう待ってくれないそうです。それでも島の朝は来ます');return;}
-  const n=j=>w.hhs.filter(h=>h.job===j).length;
-  if(stage===0){if(n('fisher')<2){say('まず浜の近くに漁師を二軒。海が最初の畑です');return;}stage=1;}
+  const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
+  if(stage===0){if(n('fisher')<2){say('まず浜の近くに漁師の区画を二つ。次の船が家族を連れてきます');return;}stage=1;}
   if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
   if(stage===2){if(n('woodshop')<1){say('木工所を森の際に。道具がなければ文化は育ちません');return;}stage=3;}
   if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を。塩がなければ冬の蓄えが作れません');return;}stage=4;}
@@ -198,7 +209,7 @@ setInterval(factor,2500);
 // --- ループ ---
 function frame(){tick++;
   const fp=FRAMES[speed];
-  if(fp&&tick%fp===0){try{w.step();walkPhase+=0.06;}catch(err){console.error(err);speed=0;}}
+  if(fp){const n=fp<1?Math.round(1/fp):(tick%fp===0?1:0);for(let i=0;i<n;i++){try{w.tickOnce();}catch(err){console.error(err);speed=0;break;}}}
   draw();
   if(tick%20===0){topbar();panel();toasts();if(sel)info();
     if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
