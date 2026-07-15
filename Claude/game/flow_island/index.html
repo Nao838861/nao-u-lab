@@ -13,7 +13,7 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #bar button{border:1px solid #4a5d7d;border-radius:6px;padding:6px 8px;cursor:pointer;color:#102;font-weight:600;font-size:12px;min-width:52px}
 #bar button.on{outline:3px solid #ffe98a}
 #bar button.infra{background:#2c3a54;color:#dde}
-#factor{left:50%;transform:translateX(-50%);bottom:10px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#factor{left:50%;transform:translateX(-50%);bottom:10px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:94vw;white-space:normal;line-height:1.35}
 #toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;text-align:center}
 #toast div{background:#243450ee;border:1px solid #5a7db0;border-radius:6px;padding:4px 14px;margin:3px;font-size:13px;animation:fade 4s forwards}
 @keyframes fade{0%{opacity:0}8%{opacity:1}80%{opacity:1}100%{opacity:0}}
@@ -27,6 +27,13 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 .bar>div{height:100%;background:linear-gradient(90deg,#e0b050,#e05050)}
 #overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;flex-direction:column;font-size:22px;z-index:9}
 small{color:#8899b0}
+@media(max-width:760px){
+ #top{gap:6px;padding:4px 8px;font-size:11px}
+ #bar{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none;border-radius:0;padding:6px 4px;-webkit-overflow-scrolling:touch}
+ #bar button{flex:0 0 auto;min-width:58px;padding:8px 6px}
+ #factor{bottom:60px;font-size:11px;padding:4px 8px}
+ #drawer{width:86vw;max-height:60vh}
+}
 </style></head><body>
 <canvas id="cv"></canvas>
 <div id="top" class="ov"></div>
@@ -48,7 +55,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=119626';
+import{World,P,JOBS,GOODS} from './engine.js?v=119901';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
