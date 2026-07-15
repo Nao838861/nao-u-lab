@@ -14,7 +14,24 @@
 - preflight 証跡: `log/shared_reads_candidate_preflight.jsonl`（3 件、decision=`review`、reason=`posted_title_match_url_differs`）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-07-15 分析結果
+
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+    reason: "skip / posted_url_match; canonical_path=memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169; matched_title_key=from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+  - path: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
+    reason: "skip / posted_url_match; canonical_path=memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409; matched_title_key=grounding machine creativity in game design knowledge representations empirical probing of llm based executable synthesis of goal playable patterns under structural constraints"
+  - path: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+    reason: "skip / posted_url_match; canonical_path=memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md; permalink=https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129; matched_title_key=automated playtesting with procedural personas through mcts with evolved heuristics"
+stale_reviewed: []
+```
+
+- duplicate preflight は URL-first で再確認した。3件とも candidate の `url` が title canonical index の `posted_source_urls` に一致し、candidate 自身も `status: posted` の terminal record だったため本文再評価から除外した。
+- Phase 1 の `review / posted_title_match_url_differs` は preflight 入力が `http` および arXiv version suffix 付きだったことによる canonicalization の偽陰性。既投稿 candidate の evaluation frontmatter は正本として維持し、再評価更新していない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
