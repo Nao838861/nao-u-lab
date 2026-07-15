@@ -68,7 +68,35 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照 50 件を atoms.jsonl / atoms/index.jsonl と照合し、broken reference 0 件を確認した。"
+  - "memory/atoms.jsonl 2675 件を監査し、ID 重複 0 件、既知の重複 cluster 45 件、duplicate sidecar が最新であることを確認した。矛盾を示す新規 evidence はなかった。"
+  - "memory/raw/ の 30 日超ファイルは 93 件。Slack archive、phase3 PDF 原文、同期状態を含む参照資産のため、この phase では archive 移動なしとした。"
+  - "shared-reads lifecycle 内訳: posted 408 / ready_to_post 10 / postponed 395 / failed 123 / needs_review 22。期限超過 backlog 218 件、stale triage queue 50 件を確認した。"
+  - "mixed duplicate queue 81 group、stale triage queue 50 件、group-action queue 36 group を再生成した。group-action 限定運用に従い、Phase 2 handoff は先頭 1 group の representative のみにした。"
+  - "slack_directives.jsonl 23 件、slack_broadcasts.jsonl 21 件を確認し、pending 0 件のため status 更新はなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_candidates: 218
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 81
+  group_action_queue_rows: 36
+  handed_off_this_cycle: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。依存関係付き prompt pipeline はゲーム制作への接続が明確だが、評価内容・比較対象・結論の根拠が不足。status_counts は terminal 2 件 / open 4 件に相当し、terminal_paths は 20260515_world_gen_quest_line_dependency_pipeline.md と 20260609_world_gen_to_quest_line_rpg_pipeline.md、open_paths は 20260526 / 20260527 / 20260625 / 20260708 の同 title_key 候補。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸を取得でき、source file 破損なし。"
+  display_or_tooling_status: "PowerShell から stdin 経由で渡した補助 probe では日本語キーが ? 表示になったが、UTF-8 Get-Content と rg の source probe は成功。表示・tooling 経路のみの mojibake。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
