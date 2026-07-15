@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T21:48:49+09:00",
+  "updated_at": "2026-07-15T23:35:00+09:00",
   "reviewed_source_ts": [
+    "1782654152.094269",
     "1782487338.755809",
     "1782661102.148439",
     "1782675599.868889",
@@ -390,6 +391,39 @@
     "1783417724.835199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T23:35:00+09:00",
+      "selected": {
+        "id": "sr-1782654152-bbf5b2c29c",
+        "source_ts": "1782654152.094269",
+        "title": "Generating Clue-Driven Investigative Game Narratives with Large Language Models",
+        "reason": "未レビューの score 12 atom で、memory・harness・game-design・operation・evaluation の優先タグを横断する。物語の雰囲気ではなく deductive solution model と clue 配置から推理可能性を守る観点が、次の narrative prototype や headless 評価へ小さく反映できるか確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。deductive solution model、clue dependency、solvability の分離は有用だが、active probes にはすでに puzzle dependency graph、blocked node、clue 未観測・忘却・symbol grounding miss の分類、部分正解・未発見 clue の記録がある。新しい probe や評価表を足すと既存観点の言い換えになり、次回行動を絞るより active probe 群を肥大化させる。次の調査・物語ゲームでは既存の dependency-progress probe を選び、実際の欠落が観測されるまで追加しない。",
+      "change": {
+        "type": "state_only",
+        "summary": "対象 atom を reviewed に追加し、既存の dependency-progress・clue failure・partial-credit probes と重複するため reject と記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T21:48:49+09:00",
       "selected": {

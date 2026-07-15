@@ -36,7 +36,33 @@ reviewed_at: "2026-07-15T23:28:00+09:00"
 
 ## Phase 3b: Shared-reads 自己フィードバック
 
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782654152-bbf5b2c29c
+    source_ts: "1782654152.094269"
+    title: "Generating Clue-Driven Investigative Game Narratives with Large Language Models"
+    reason: "未レビューの score 12 atom で、memory・harness・game-design・operation・evaluation の優先タグを横断する。物語の雰囲気ではなく deductive solution model と clue 配置から推理可能性を守る観点が、次の narrative prototype や headless 評価へ小さく反映できるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。active probes に puzzle dependency graph、blocked node、clue failure 分類、部分正解・未発見 clue の記録がすでにあり、新規 probe は既存観点の言い換えになる。次の調査・物語ゲームでは既存 probe を選び、実際の欠落が観測されるまで追加しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 
