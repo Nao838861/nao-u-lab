@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2007.08497"
 collected_at: "2026-07-16T04:58:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, artificial-life, coevolution, game-agents]
+evaluated_at: "2026-07-16T05:15:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-16T05:15:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-16T05:15:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  level と攻略 agent の共生成を難易度探索・headless test 多様化へ接続でき、ゲーム制作上の適用先は具体的である。
+  ただし現候補は abstract 相当の情報に留まり、PINSKY の選択・移送手順、比較条件、定量結果、失敗例が不足しているため、CoopEval 水準の約4000字概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt

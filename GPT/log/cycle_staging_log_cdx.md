@@ -12,7 +12,20 @@
 - Slack 投稿なし。品質判定・導入判断・記憶整理は未実施（後フェーズへ留保）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260716_pinsky_level_agent_cogeneration.md
+    reason: "ゲーム制作への適用先は具体的だが、手法の詳細・比較条件・定量結果・失敗例が不足し、約4000字概要を根拠付きで構成できない"
+stale_reviewed: []
+```
+
+- duplicate preflight: URL-first / title-second とも一致なし、`continue`。
+- 判定: `postpone`。level と攻略 agent の共生成は難易度探索・headless tester 多様化へ接続できるが、現候補の証拠密度は Phase 3 投稿ゲート未達。
+- Slack 投稿、新規収集、記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
