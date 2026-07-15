@@ -164,10 +164,12 @@ DEFAULTS = dict(P)
 
 
 class World:
-    def __init__(self, hhs, seed=1, market_pos=(0.0, 0.0), overrides=None):
+    def __init__(self, hhs, seed=1, market_pos=(0.0, 0.0), overrides=None, plan=None):
         P.update(DEFAULTS)               # 前のWorldのoverride汚染を防ぐ
         if overrides:
             P.update(overrides)
+        self.plan = plan or {}           # 月→[(job, pos, road)] の入植計画(プレイヤーの手)
+        self.month_events = []
         self.rng = random.Random(seed)
         self.hhs = hhs
         self.market_pos = market_pos
@@ -213,8 +215,17 @@ class World:
 
     def step(self):
         self.day += 1; d = self.day
-        mm = ((d - 1) // 30) % 12 + 1
+        m = (d - 1) // 30 + 1
+        mm = (m - 1) % 12 + 1
         se = self.season(mm)
+        # --- 入植(月初): 持参金=本土からの貨幣流入・渡航費=会社→本土 ---
+        if d % 30 == 1 and m in self.plan:
+            for job, pos, road in self.plan[m]:
+                h = HH(job, pos, road)
+                self.hhs.append(h)
+                self.mainland_in += h.purse
+                self.treasury -= 60.0; self.mainland_out += 60.0
+                self.month_events.append(f'+{job}')
         bal = defaultdict(lambda: defaultdict(float))   # 質量収支: good → {src: qty}
         stock_pre = {g: sum(h.pantry[g] for h in self.hhs) for g in GOODS}
 
@@ -476,6 +487,13 @@ class World:
 
         # --- 日次メトリクス ---
         if d % 30 == 0:
+            clslv = defaultdict(list)
+            for h in self.hhs:
+                clslv[h.cls()].append(h.lv)
+            lvs = '/'.join(f"{c[0]}{sum(v)/len(v):.1f}" for c, v in
+                           (('farm', clslv['farm']), ('fish', clslv['fish']),
+                            ('lumber', clslv['lumber']), ('artisan', clslv['artisan']))
+                           if v)
             self.rows.append(dict(
                 day=d, m=(d - 1) // 30 + 1, mm=mm,
                 prices={g: round(self.prices[g][-1][1], 2) for g in GOODS if self.prices[g]
@@ -483,10 +501,14 @@ class World:
                 purse_sum=round(sum(h.purse for h in self.hhs), 1),
                 treasury=round(self.treasury, 1),
                 famine=self.famine_days,
+                dole=self.dole_qty,
+                pop=len(self.hhs) * P['HH_SIZE'],
                 bay=round(self.bay / P['BAY_S0'] * 100),
                 grove=round(self.grove / P['GROVE_S0'] * 100),
-                lv={h.id: h.lv for h in self.hhs},
+                lv={h.id: h.lv for h in self.hhs}, lvs=lvs,
+                ev=list(self.month_events),
             ))
+            self.month_events = []
 
     # ---------- 売買の意思決定(正典ルール2/3/4) ----------
     def buy_targets(self, h):

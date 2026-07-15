@@ -47,6 +47,33 @@ def summary(w, label):
     print(f"直近イベント: {ev}")
     print(f"配給総量: {w.dole_qty:.0f} / 詰み: {"day %d" % w.go_day if w.go_day else "なし"} / 本土収支: 流入{w.mainland_in:.0f} 流出{w.mainland_out:.0f}")
 
+def summary_tail(w):
+    print(f"\n輸入: {dict((g, round(v)) for g, v in w.imported.items() if v > 0.5)}")
+    print(f"輸出: {dict((g, round(v)) for g, v in w.exported.items() if v > 0.5)}")
+    print(f"配給総量: {w.dole_qty:.0f} / 詰み: {'day %d' % w.go_day if w.go_day else 'なし'} / 本土収支: 流入{w.mainland_in:.0f} 流出{w.mainland_out:.0f}")
+    inc = {}
+    for h in w.hhs:
+        inc.setdefault(h.job, []).append(round(sum(h.income_log)))
+    print(f"直近30日収入(職種別): {inc}")
+    print(f"文化Lv: {[(h.id, h.job, h.lv) for h in w.hhs]}")
+
+def table_m(w):
+    print(f"{'月':>3}{'人口':>4}{'魚':>6}{'麦':>6}{'保存':>6}{'道具':>6}{'塩':>6}{'炭':>6}"
+          f"{'世帯金':>7}{'商館':>8}{'配給/月':>7}{'飢餓':>5}{'湾%':>4} 文化Lv(職種平均)  出来事")
+    prev_d = prev_f = 0
+    for r in w.rows:
+        pr = r['prices']
+        cell = lambda g: f"{pr[g]:>6.2f}" if g in pr else f"{'-':>6}"
+        ev = list(r['ev'])
+        lv_ev = [e[1] for e in w.events if r['day'] - 30 < e[0] <= r['day']
+                 and ('▲' in e[1] or '転職' in e[1] or '詰み' in e[1] or '★' in e[1])]
+        ev += lv_ev[:4]
+        print(f"{r['m']:>3}{r['pop']:>4}{cell('fish')}{cell('wheat')}{cell('pres')}"
+              f"{cell('tools')}{cell('salt')}{cell('char')}"
+              f"{r['purse_sum']:>7.0f}{r['treasury']:>8.0f}{r['dole']-prev_d:>7.0f}"
+              f"{r['famine']-prev_f:>5}{r['bay']:>4} {r['lvs']:<20} {' '.join(ev)}")
+        prev_d = r['dole']; prev_f = r['famine']
+
 if __name__ == '__main__':
     which = sys.argv[1] if len(sys.argv) > 1 else 'S1'
     if which == 'S1':
@@ -61,6 +88,30 @@ if __name__ == '__main__':
         near, far = w.hhs[0], w.hhs[1]
         print(f"\n近い漁師HH0: 財布{near.purse:.0f} / 遠い漁師HH1: 財布{far.purse:.0f} "
               f"(移動負担 {w.travel_share(near)*100:.0f}% vs {w.travel_share(far)*100:.0f}%)")
+    elif which == 'S4':
+        HH._next = 0
+        start = [HH('fisher', (0.3, 0.2)), HH('veg', (0.6, -0.4)), HH('wheat', (1.0, -0.6))]
+        plan = {
+            2:  [('woodshop', (1.8, 1.0), False)],
+            4:  [('fisher', (0.4, -0.2), False)],
+            5:  [('charburner', (2.0, 1.2), False)],
+            6:  [('saltworks', (0.2, -0.3), False)],
+            7:  [('veg', (0.8, 0.5), False)],
+            8:  [('fisher', (0.5, 0.4), False)],
+            13: [('veg', (1.2, 0.9), False)],
+            14: [('wheat', (1.2, -0.8), True), ('wheat', (1.4, -1.0), True)],
+            15: [('fisher', (0.6, 0.6), False)],
+            16: [('woodshop', (2.2, 1.4), True)],
+            17: [('veg', (1.5, -1.0), True)],
+            18: [('charburner', (2.4, 1.5), True)],
+        }
+        w = World(start, seed=11, plan=plan,
+                  overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000,
+                             'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0},
+                             'JOB_SWITCH': True}).run(720)
+        print('----- S4 標準プレイ 2年 (現行ルール一式: 配給・詰みレース・破綻転職・使用価値天井) -----')
+        table_m(w)
+        summary_tail(w)
     elif which == 'S3':
         w = World(village(far_fisher=True), seed=11,
                   overrides={'JOB_SWITCH': True, 'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(1080)
