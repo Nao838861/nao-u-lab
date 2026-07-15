@@ -25,8 +25,10 @@ P = dict(
     # 農家が収穫時に買いだめして端境期もストリークを保てる(20日だと毎年切れて文化が育たない)
     DIVERSITY_RATION=0.15,               # 貯蔵財(麦・保存)からの多様性小口
     # 生産レート(荷/日, Lv0) — v8と同じスケール
-    Y_FISH=10.0, Y_FISH_W=2.5, Y_VEG=6.0, Y_WHEAT=720.0, Y_TOOLS=4.0,
-    Y_CHAR=1.5, Y_SALT=12.0,
+    # v1.5較正: v8のレート(菜6/日等)は粗いLv(Lv1=×4)前提。細分化ラダー(1.585^Lv)だと
+    # Lv0-1の農家が産出<自家消費(9/日)の「成立しない職」になる→Lv1で旧Lv1相当に近づける
+    Y_FISH=13.0, Y_FISH_W=3.2, Y_VEG=10.0, Y_WHEAT=1300.0, Y_TOOLS=5.0,
+    Y_CHAR=1.8, Y_SALT=12.0,
     SALT_CHAR=1.0,                       # 製塩1日の燃料
     PR_SALT=0.6, PR_SMOKE=0.95, SMOKE_CHAR=0.1, PRES_SALT=0.125,  # 魚8荷に塩1荷
     # 文化の維持フロー(荷/日/世帯)
@@ -57,7 +59,7 @@ P = dict(
     BAILOUT_N=3, BAILOUT_TRIGGER=-2000.0, BAILOUT_AMOUNT=8000.0,
     # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
     # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
-    GRAN_BID=dict(wheat=1.6, pres=1.5),
+    GRAN_BID=dict(wheat=1.9, pres=1.7),  # 輸入パリティ(2.0)直下。1.6だと農家の信念(パリティに張り付く)と交差せず買上げ不成立
     # 転職 (Nao_u「相当ハードルを上げる。長期間生活が破綻したら転職」):
     # 収入比較の転職は廃止(コブウェブ発振)。180日中40日飢えたら+1年クールダウンで
     # 観測収入最良の職へ(確率0.5)。動くのは破綻した者だけ=羊群れが構造的に起きない
@@ -95,7 +97,7 @@ class HH:
         self.kind_days = defaultdict(int)   # 食の種別→最近45日で食べた日数
         self.kind_log = []                  # (day, set(kinds))
         self.sat_today = {}
-        self.income30 = 0.0; self.income_log = []
+        self.income30 = 0.0; self.income_log = []; self.income_total = 0.0; self.spend_total = 0.0
         self.hunger = 0; self.wheat_work = 0.0
         self.offered_unsold = set()
 
@@ -144,6 +146,7 @@ class Market:
                 q = min(q, buyer.purse / price if price > 0 else q)
                 cost = q * price
                 buyer.purse -= cost; buyer.pantry[good] += q
+                buyer.spend_total += cost
                 buyer.belief[good] += (price - buyer.belief[good]) * P['BELIEF_LR']
             else:  # 会社が買う: マーカーで輸出/公共事業/御蔵を区別
                 self.w.treasury -= cost
@@ -158,7 +161,7 @@ class Market:
                     self.w.pubworks_bought += q
             if isinstance(seller, HH):
                 seller.purse += cost; seller.pantry[good] -= q
-                seller.income30 += cost
+                seller.income30 += cost; seller.income_total += cost
                 seller.belief[good] += (price - seller.belief[good]) * P['BELIEF_LR']
                 seller.offered_unsold.discard(good)
             else:  # 会社が売る(輸入): 売上は金庫へ・仕入原価は本土へ流出
@@ -291,8 +294,14 @@ class World:
                 h.pantry['salt'] += q; bal['salt']['prod'] += q
 
         # --- 市場セッション ---
+        # 財の処理順=世帯の財布の使い順。配給期は「改善が先」(ルール3の依存期変形:
+        # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
+        # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
+        dole_on_mkt = P['DOLE'] and self.go_day is None
+        goods_order = (['tools', 'salt', 'char', 'fish', 'veg', 'wheat', 'pres']
+                       if dole_on_mkt else GOODS)
         clearing = {}
-        for g in GOODS:
+        for g in goods_order:
             bids, asks = [], []
             for h in self.hhs:
                 if not going[h.id]: continue
@@ -317,7 +326,7 @@ class World:
                 # 公費建設: 貨幣の注入弁。ただし民需の下に入る(住民の道具の使用価値2.5より
                 # 安い2.4で入札)。第一稿は3.4で入札→道具を買い占め住民が文化Lv2に
                 # 上がれないクラウディングアウトが発生した
-                bids.append(('CO:pub', P['PUBWORKS'] / 2.4, 2.4))
+                bids.append(('CO:pub', P['PUBWORKS'] / 3.4, 1.8))  # 数量=名目基準(価格低下で需要爆発しない)・価格=民需の下
             if g in P['GRAN_BID'] and P['DOLE'] and self.go_day is None:
                 # 御蔵: 直近の配給ペース分を地場から買い上げる(囲米)
                 qn = max(5.0, self.dole_rate)
@@ -446,9 +455,9 @@ class World:
                     h.lv += 1; h.up = 0
                     self.events.append((d, f'HH{h.id}({h.job}) ▲Lv{h.lv}'))
             elif keep:
-                h.up = max(0, h.up - 5); h.down = 0
+                h.up = max(0, h.up - 3); h.down = 0
             else:
-                h.up = max(0, h.up - 5); h.down += 1
+                h.up = max(0, h.up - 3); h.down += 1
                 if h.down >= P['DOWN_DAYS'] and h.lv > 0:
                     h.lv -= 1; h.down = 0
                     self.events.append((d, f'HH{h.id}({h.job}) ▼Lv{h.lv}'))
@@ -572,6 +581,12 @@ class World:
             if 'wheat' not in t:
                 t['wheat'] = (P['EAT'] * P['DIVERSITY_RATION'] * 15 - h.pantry['wheat'],
                               h.belief['wheat'] * 1.3)
+        # 野菜の小口常備: 配給時代は食料棚が常に2日分満ちるため野菜の市場需要が消滅し
+        # 菜農家が永久無収入になる(第2回診断)。多様性の嗜好として野菜も常備買い
+        if h.job != 'veg' and h.pantry['veg'] < P['EAT'] * P['DIVERSITY_RATION'] * 6:
+            if 'veg' not in t:
+                t['veg'] = (P['EAT'] * P['DIVERSITY_RATION'] * 10 - h.pantry['veg'],
+                            h.belief['veg'] * 1.3)
         uv = P['USE_VALUE_CEILING']
         if h.job == 'saltworks' and h.pantry['char'] < P['SALT_CHAR'] * 5:
             ceil = (P['Y_SALT'] * h.belief['salt'] * 0.5 if uv else h.belief['char'] * 1.2)
@@ -613,9 +628,25 @@ class World:
                 out[my] = min(surplus, P['HAUL'])
         else:
             # 貯蔵財は少しずつ売る(正典ルール4)。一括投げ売りは端境期の市を殺す
+            # 依存期の農家は換金する(第3回診断): Lv0-1の農家は産出<自家消費で、
+            # 「まず食べる」と販売収入ゼロ=文化を買う金が構造的に生まれない。
+            # 配給が食の床である間は収穫を売って現金化し、配給で食う(御蔵買上げが
+            # 受け皿=会社の金が本土でなく島の農家へ。自立後は自家消費に戻る)
+            dole_on = P['DOLE'] and self.go_day is None
+            if my == 'wheat':
+                # 収穫パルスのみ平準化して売る(ルール4の本来の対象)
+                rate = 0.10 if dole_on else 0.04
+                if dole_on: keep = P['EAT'] * P['DIVERSITY_RATION'] * 10
+            else:
+                # 連続生産財(道具・塩・炭・野菜)は日産分をほぼ全部売る。
+                # 平準化を全財に適用すると市場の出来高が生産の1-2割に絞られ
+                # 供給不足が慢性化する(v1.4診断: 道具出来高0.9/日)
+                rate = 0.5
+                if my == 'veg' and dole_on:
+                    keep = P['EAT'] * P['DIVERSITY_RATION'] * 10
             surplus = max(0.0, h.pantry[my] - keep)
             if surplus > 1e-9:
-                out[my] = min(surplus * 0.04 + 2.0, surplus, P['HAUL'])
+                out[my] = min(surplus * rate + 2.0, surplus, P['HAUL'])
         if h.job == 'fisher' and h.pantry['pres'] > P['EAT'] * P['PANTRY_FOOD_D']:
             out['pres'] = min(h.pantry['pres'] - P['EAT'] * P['PANTRY_FOOD_D'], P['HAUL'])
         return out
