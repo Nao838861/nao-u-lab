@@ -47,6 +47,31 @@ def run(std, seed):
     return dict(seed=seed, bankrupt=br, peak=-pk, peak_m=pm, repaid=rp,
                 final=ts[-1][1], hh=len(w.hhs), bailouts=w.bailouts)
 
+def run_adaptive(std, seed, days=2880):
+    """適応標準プレイ: 債務が限度の70%で緊縮(移民先送り+公費0)、50%で解除"""
+    from engine import P
+    HH._next = 0
+    w = World(start8(), seed=seed, plan={m: list(v) for m, v in big_plan(std).items()},
+              overrides=dict(BASE))
+    w.pub_schedule = {26: 100, 34: 40}
+    paused = False
+    for d in range(1, days + 1):
+        if d % 30 == 1 and d > 1:
+            m = (d - 1) // 30 + 1
+            debt = max(0.0, -w.treasury)
+            limit = P['LIMIT0'] + P['LIMIT_G'] * min(m, P['LIMIT_FREEZE'])
+            ratio = debt / limit
+            if ratio > 0.7 and not paused:
+                paused = True; P['PUBWORKS'] = 0.0
+                w.events.append((d, '★緊縮開始'))
+            if paused:
+                if m in w.plan:
+                    w.plan[m + 1] = w.plan.pop(m) + w.plan.get(m + 1, [])
+                if ratio < 0.5:
+                    paused = False; w.events.append((d, '緊縮解除'))
+        w.step()
+    return w
+
 if __name__ == '__main__':
     ok = True
     for std, label in ((True, '標準'), (False, '無理解')):
