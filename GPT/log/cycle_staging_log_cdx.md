@@ -21,6 +21,39 @@ postpone:
 stale_reviewed: []
 ```
 
+## Phase 3b: Shared-reads 自己フィードバック
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782646839-e8a708d2b8
+    source_ts: "1782646839.446789"
+    title: "PlayGen-MoG: coordinated multi-agent play generation from shared scenario modes"
+    reason: "未レビューの score 10 atom で優先6タグを持ち、個別NPC評価から集団作戦枝と多様性の評価へ次回行動を小さく変えられるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の敵集団・味方squad・multi-agent wave設計で、共有するteam-level scenarioを個体軌道より先に明示し、2条件以上で別の協調パターンが出るかを確認する2問の一時probeを追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用理由: score 16で必須閾値を満たす。論文固有のMixture-of-Gaussians実装は移植せず、作戦枝の共有とmode collapseの観察だけを一時probeにした。
+- 重複確認: 既存のwave rhythm probeはspawn配置と圧力、multi-agent coordination probeは情報共有とhandoffが中心であり、team-level scenarioの一貫性と複数条件での協調パターン多様性は未充足だった。
+- 撤退条件: 次の2件の該当設計・評価で既存手順だけで同じ観察が残る、または個体軌道評価を変えない場合はprobeを削除する。
+
 ## Phase 3: Shared-reads 投稿
 
 ```yaml
@@ -33,9 +66,6 @@ skipped:
 
 - #shared-reads への投稿は行っていない。
 - candidate frontmatter は `gate_decision: postpone` / `status: postponed` / `next_action: revise_or_research` で整合しているため、追加更新なし。
-
-## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
