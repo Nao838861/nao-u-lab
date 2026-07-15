@@ -239,7 +239,7 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(P.GRAN_BID[g]&&doleOn)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);
+      if(P.GRAN_BID[g]&&doleOn&&(this.granary[g]||0)<300)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);  // 備蓄目標300で買い止め
       if(g==='tools'&&this.pub>0)desks.push(['PUB',P.PUB===0?0:1.8,this.pub/1.8]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
