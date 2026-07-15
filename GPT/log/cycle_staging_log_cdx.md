@@ -28,7 +28,18 @@ stale_reviewed: []
 - Slack 投稿、新規収集、記憶階層改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260716_pinsky_level_agent_cogeneration.md
+    reason: "Phase 2 で postpone 判定。手法の詳細・比較条件・定量結果・失敗例が不足し、3500-4500字の投稿品質を根拠付きで満たせない"
+    action: candidate_revise
+```
+
+- 最終判定: `pass` candidate が 0 件のため、#shared-reads への投稿は実施しない。
+- candidate frontmatter は Phase 2 の `postponed` 状態を維持し、追加更新なし。
+- 品質ゲートを優先し、元論文の評価条件と失敗例を補強できるまで候補として保留する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
