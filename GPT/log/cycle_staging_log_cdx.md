@@ -24,7 +24,18 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+- 実行日時: 2026-07-16
+- Phase 2 の `pass` candidate は 0 件。`gate_decision: postpone` の候補は Phase 3 の対象外のため、#shared-reads への投稿は行わなかった。
+- `memory/shared_reads_candidates/20260716_rl_agents_aaa_game_testing_challenges.md` は、評価条件・結果・時間コスト内訳・失敗例が不足したままなので `postponed` を維持する。
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260716_rl_agents_aaa_game_testing_challenges.md
+    reason: "Phase 2 で gate_decision: postpone。本文精読なしでは約4000字の投稿品質を満たせない"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
