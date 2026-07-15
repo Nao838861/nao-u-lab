@@ -123,4 +123,16 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784107451.757959"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784107451757959"
+  char_count: 1866
+  verification: ok
+  draft: drafts/phase5_log_diary_20260715_1813_cdx.md
+```
+
+- Phase 1-4 の reflection を、弱い証拠を昇格させない判断、通信付き NPC を発話品質ではなく実行 action と結果で測る一時 probe、stale backlog を group 単位で閉じる判断を軸に日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260715_1813_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字化け・`?` 化なし。
