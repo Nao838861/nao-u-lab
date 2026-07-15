@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=121553';
+import{World,P,JOBS,GOODS} from './engine.js?v=122267';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -175,7 +175,7 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
   // 市場の荷の山(いま市に居る世帯の売り物+御蔵)
   {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
    const piles={};
-   for(const h of w.hhs)if(h.state==='atMarket')for(const g in GC)if(h.pantry[g]>2)piles[g]=(piles[g]||0)+h.pantry[g];
+   for(const g in GC){const a=w.stalls[g]||[];const q=a.reduce((s,x)=>s+x.qty,0);if(q>1)piles[g]=q;}
    piles.wheat=(piles.wheat||0)+(w.granary.wheat||0);
    let i=0;
    for(const g in piles){if(piles[g]<3)continue;
@@ -233,8 +233,9 @@ function info(){const el=document.getElementById('pbody');
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
   const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
+  const hasStall=Object.keys(w.stalls).some(g=>w.stalls[g].some(s=>s.hh===h));
   const fam=h.members.slice(0,4).map(m=>m.name+'('+m.age+')').join(' ')+(h.members.length>4?' 他'+(h.members.length-4)+'人':'');
-  el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}</small><br><small>家族${h.members.length}人: ${fam}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
+  el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}${hasStall?'・市場に店番を出している':''}</small><br><small>家族${h.members.length}人: ${fam}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0);
   tot.wheat+=w.granary.wheat||0;tot.pres+=w.granary.pres||0;
