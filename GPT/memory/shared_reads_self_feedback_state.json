@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T03:04:15+09:00",
+  "updated_at": "2026-07-16T04:47:42+09:00",
   "reviewed_source_ts": [
+    "1779740294.256369",
     "1782646829.867869",
     "1782654152.094269",
     "1782487338.755809",
@@ -393,6 +394,39 @@
     "1782580046.412109"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-16T04:47:42+09:00",
+      "selected": {
+        "id": "sr-1779740294-01def18122",
+        "source_ts": "1779740294.256369",
+        "title": "AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。model 単体ではなく model-harness-environment system として失敗を診断する観点が、現在の定時 phase・game prototype・検証運用に新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。model-harness-environment の分離、誤った file/test、failure 誤分類、task state 忘却、residue、検証不足は有用だが、active probes には既に failed_step と expected/observed effect、game code・test harness・probe script・prompt・logging・orchestration の repair target、control plane・persistent state・workspace・remote surface の境界、structural/semantic verifier の分離がある。さらに atom は投稿冒頭で切れており、論文の評価条件・比較結果・失敗例を再確認できない。新規 probe は既存観点の再束縛となるため追加しない。",
+      "change": {
+        "type": "state_only",
+        "summary": "対象 atom を reviewed に追加し、既存の HarnessFix・control-plane boundary・structural/semantic verifier probes と重複するため reject と記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-16T03:04:15+09:00",
       "selected": {
