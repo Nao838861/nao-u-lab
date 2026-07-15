@@ -45,9 +45,18 @@ P = dict(
     # 中盤に人口比で頼りすぎると漸減が見え、なお続けると後半に枯渇する時間スケール
     FISH_S0=600_000.0, FISH_R=0.00175,
     FISH_RESEED=0.3,                    # 産卵避難場(網の届かない入り江)=絶滅を吸収状態にしない
+    # 対岸漁場 (2026-07-15 Nao_u: 近海だけでは広大な麦畑を支えられない→進出動機):
+    # 同規模の独立プール。遠い(r2扱い)ので距離税が重い。漁獲は鮮度ゆえ食卓に届かず
+    # 〆粕(肥料)と塩蔵に回る=近海=食卓/対岸=肥料場の空間分業(菜の花の沖)
+    FISH2_S0=600_000.0, FISH2_R=0.00175,
+    # 干物の二段 (Nao_u: 塩だけでもできるが炭があると効率が大幅に上がる)
+    PR_SALT=0.6, PR_SMOKE=0.95, SMOKE_CHAR=0.1,   # 炭0.1荷で魚1荷を燻す
+    # 魚肥料 (〆粕): 魚8荷→粕1荷。畑1枚は耕作期(3-8月)に粕3荷/日で収穫+15%(ボーナス・必須でない)
+    # v8d較正: 粕1荷/日では近海の余剰だけで施肥100%に届き対岸進出の意味が消えた。
+    # 史実の鰊粕は大量投入。畑15枚なら魚360荷/日相当=近海MSY(260)を超える=対岸が要る
+    MEAL_FISH=8.0, FERT_NEED=3.0, FERT_BOOST=0.15,
     GROVE_S0=9_000.0, GROVE_R=0.0004,   # 港近郊(r0)の小さな木立
     FOREST_S0=250_000.0, FOREST_R=0.0004,  # 遠環(r1,r2)の大森林
-    PR=0.8,                              # 塩蔵歩留まり
 )
 
 # 職種→ラダー列: きこり/炭焼き=樵系, 木工/塩=職人系, 麦/菜=農家, 漁=漁師
@@ -57,7 +66,7 @@ LADDER = {
     'lumber':  ['food1', 'tool', 'food2', 'salt', 'char', 'iron'],
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
-JOBCLS = dict(fish='fish', veg='farm', wheat='farm', wood='lumber',
+JOBCLS = dict(fish='fish', fish2='fish', veg='farm', wheat='farm', wood='lumber',
               char='lumber', shop='artisan', salt='artisan')
 MULT = [1.585 ** i for i in range(8)]
 
@@ -82,7 +91,10 @@ class Sim:
         self.lumber = P['KIT_L']; self.logs = 0.0
         self.wheat = 0.0; self.pres = 0.0; self.veg_pool = []
         self.tools = 0.0; self.saltst = 0.0; self.charst = 0.0
-        self.fishS = P['FISH_S0']; self.groveS = P['GROVE_S0']; self.forestS = P['FOREST_S0']
+        self.fishS = P['FISH_S0']; self.fish2S = P['FISH2_S0']
+        self.groveS = P['GROVE_S0']; self.forestS = P['FOREST_S0']
+        self.meal = 0.0                  # 〆粕(魚肥料)ストック
+        self.fert_got = 0.0; self.fert_need_y = 0.0   # 当年の施肥充足の累計
         self.lv = {c: 0 for c in LADDER}           # 職種クラス別Lv
         self.up = {c: 0 for c in LADDER}           # 昇格ストリーク(日)
         self.down = {c: 0 for c in LADDER}         # 欠乏ストリーク(日)
@@ -171,6 +183,13 @@ class Sim:
         self.fishS = min(P['FISH_S0'],
                          self.fishS - f + P['FISH_R'] * self.fishS * (1 - fdep)
                          + P['FISH_RESEED'] * (1 - fdep))
+        # 対岸漁場: 漁獲→〆粕と塩蔵のみ(鮮度で食卓に届かない)。冬も海が荒れ渡れない
+        f2dep = self.fish2S / P['FISH2_S0']
+        f2 = (sum(BASE['fish'] * self.mult('fish2') * self.pf(x['r'])
+                  for x in cnt('fish2')) * f2dep if se != 'winter' else 0.0)
+        self.fish2S = min(P['FISH2_S0'],
+                          self.fish2S - f2 + P['FISH2_R'] * self.fish2S * (1 - f2dep)
+                          + P['FISH_RESEED'] * (1 - f2dep))
         v = (sum(BASE['veg'] * self.mult('veg') * self.pf(x['r']) for x in cnt('veg'))
              if 3 <= mm <= 10 else 0.0)
         lg = 0.0
@@ -255,11 +274,28 @@ class Sim:
         if rem > 1e-9:
             self.pay(rem * P['FOOD_IMP']); self.mo['imp'] += rem
             kinds.add('wheat')            # 輸入食=穀物扱い
-        # --- 塩蔵 (余剰魚+塩・蔵は人口120日分まで) ---
-        prc = min(fs, self.saltst * 8.0, max(0.0, self.pop * 120 - self.pres))
-        self.saltst = min(self.saltst - prc / 8.0,
+        # --- 保存の二段: 塩蔵のみ=歩留まり0.6 / 塩+炭の燻製=0.95 ---
+        # 炭の配分順位はチェーン上流から: 塩(製塩燃料・生産部で先取)→燻製(ここ)→世帯の暖(後段のsat判定)
+        # = 使用価値の序列(燻製>塩>暖)を市場なしのペーシング系で代理する固定順
+        # 保存目標=冬+端境期150日ぶんから麦蔵を引いた残り(正典ルール3: 備えを保つ→余りで改善)。
+        # v8d検出: 上限を人口×120日の固定にすると保存が魚を吸い尽くし施肥が人口増と共に飢える
+        # (77%→5%)。備えが足りたら限界の魚は肥料へ=導出需要の序列を勘定の順番で代理
+        pres_tgt = max(0.0, self.pop * 0.9 * 150 - self.wheat - self.pres)
+        raw = min(fs + f2, self.saltst * 8.0, pres_tgt)
+        self.saltst = min(self.saltst - raw / 8.0,
                           nhh * P['D_SALT'] * 90 + 50)
-        self.pres += prc * P['PR']; self.mo['presq'] += prc * P['PR']
+        smoked = min(raw, self.charst / P['SMOKE_CHAR'])
+        self.charst -= smoked * P['SMOKE_CHAR']
+        yld = smoked * P['PR_SMOKE'] + (raw - smoked) * P['PR_SALT']
+        self.pres += yld; self.mo['presq'] += yld
+        # 保存に回らなかった魚(近海余剰+対岸)→〆粕(8荷→粕1荷)
+        self.meal += max(0.0, fs + f2 - raw) / P['MEAL_FISH']
+        # --- 施肥 (耕作期3-8月・粕1荷/畑/日。ボーナスであって必須でない) ---
+        if 3 <= mm <= 8:
+            fneed = len(cnt('wheat')) * P['FERT_NEED']
+            if fneed > 0:
+                u = min(self.meal, fneed); self.meal -= u
+                self.fert_got += u; self.fert_need_y += fneed
         # --- 文化財の維持フロー消費 → 充足判定 ---
         sat = {}
         td = nhh * P['D_TOOL']; u = min(self.tools, td); self.tools -= u
@@ -297,12 +333,16 @@ class Sim:
                 if self.down[c] >= 60 and cur > 0:
                     self.lv[c] -= 1; self.down[c] = 0
                     self.mo['ev'].append(f'▼{c} Lv{self.lv[c]}')
-        # --- 麦収穫 (凶作ショック倍率つき) ---
+        # --- 麦収穫 (凶作ショック倍率+施肥ボーナス) ---
         if mm == 9 and day % 30 == 15:
             yr = (m - 1) // 12 + 1
+            fill = self.fert_got / self.fert_need_y if self.fert_need_y > 0 else 0.0
             hv = sum(BASE['wheat'] * self.mult('wheat') * self.pf(x['r'])
-                     for x in cnt('wheat')) * self.harvest.get(yr, 1.0)
+                     for x in cnt('wheat')) * self.harvest.get(yr, 1.0) \
+                 * (1 + P['FERT_BOOST'] * fill)
             self.wheat += hv; self.mo['harv'] = hv
+            if fill > 0.01: self.mo['ev'].append(f'施肥{fill*100:.0f}%→収穫+{P["FERT_BOOST"]*fill*100:.0f}%')
+            self.fert_got = 0.0; self.fert_need_y = 0.0
         # --- 輸出 (余剰を少しずつ売る=正典ルール4。建材予備20は手元に残す) ---
         if self.exports:
             xl = min(max(0.0, self.lumber - 20) * 0.10, P['EXP_CAP_L'])
@@ -329,7 +369,8 @@ class Sim:
             n=len(self.hhs), mo=self.mo,
             lum=self.lumber, wheat=self.wheat, pres=self.pres,
             cap=self.cap, debt=self.debt,
-            fishS=self.fishS / P['FISH_S0'], groveS=self.groveS / P['GROVE_S0'],
+            fishS=self.fishS / P['FISH_S0'], fish2S=self.fish2S / P['FISH2_S0'],
+            meal=self.meal, groveS=self.groveS / P['GROVE_S0'],
             forestS=self.forestS / P['FOREST_S0']))
 
     def table(self, every=1):
