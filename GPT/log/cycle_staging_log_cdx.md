@@ -10,6 +10,9 @@
 - 収集なし: 直近 raw と検索結果でゲーム制作へ接続できる URL は、すでに candidate または atom に存在した。例: AI Native Games (`2607.00527`)、AI Gamestore (`2602.17594`)、LieCraft (`2603.06874`)、LLM と gameplay/playability/PX (`2603.27896`)、PCG + LLM survey (`2410.15644`)。重複 candidate は作成しなかった。
 - candidate preflight: 新規保存対象が 0 件のため未実行。
 - Slack 投稿・品質判定・記憶整理は実施していない。
+- `memory/shared_reads_candidates/20260716_rl_agents_aaa_game_testing_challenges.md` — Battlefield 2042 / Dead Space を含むAAA制作で、既存bot基盤へ強化学習テストagentを統合した際の技術的・運用的な時間コストを扱う報告。
+- preflight skip: `Runtime Evaluation of Procedural Content Generation in an Endless Runner Game Using Autonomous Agents` は既投稿URL一致のためcandidateを作成せず、`log/shared_reads_candidate_preflight.jsonl` に根拠を記録。
+- inbox再確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending はともに0件。
 
 ## Phase 2: 分析
 
