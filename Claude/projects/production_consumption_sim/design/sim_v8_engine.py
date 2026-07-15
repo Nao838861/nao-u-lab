@@ -21,7 +21,14 @@ BASE = dict(fish=10.0, fish_w=2.5, veg=6.0, wheat=720.0, wood=6.0,
 P = dict(
     HH=9, CAPITAL=3000.0, PASSAGE=60.0, BUILD_L=5, KIT_L=40,
     FOOD_IMP=2.0, LUM_IMP=4.0, SALT_IMP=3.0, IRON_IMP=8.0,
-    EXP_LOG=1.2, EXP_PRES=2.2,          # 輸出単価(本土は穀物豊富=麦安、木材・保存魚が主力)
+    # 輸出単価 = 本国の買い叩き (Nao_u 2026-07-15): 輸入価格との往復スプレッドが
+    # 特許商会体制の搾取。材木は輸入4.0/買取0.5、食料は輸入2.0/保存魚買取0.8。
+    # 輸出は「返済の足し」であって儲けにならない。中盤の販路改善(沿岸海運・特許
+    # 買戻し等)で上がる余地を残す
+    EXP_LOG=0.5, EXP_PRES=0.8,
+    # 本国需要の飽和(荷/日): 買い叩き価格でも物量で黒字マシン化するのを防ぐ(P10)。
+    # 「本国はこれ以上要らない」が輸出の天井=中盤の販路拡張(沿岸海運)の動機になる
+    EXP_CAP_L=20.0, EXP_CAP_P=25.0,
     ROAD1_L=20, ROAD2_L=30,
     GRANT=150.0, GRANT_M=6,             # 支援金 M1-6
     FREE_M=18,                          # 無利子期間 M7-18
@@ -33,7 +40,11 @@ P = dict(
     # 世帯あたり日次の文化財需要 (要求ラダーの維持フロー)
     D_TOOL=0.20, D_SALT=0.06, D_CHAR=0.12, D_IRON=0.04,
     # 資源プール (残量比例則: 産出 *= S/S0)
-    FISH_S0=300_000.0, FISH_R=0.0012,   # 湾の魚 (ロジスティック回復)
+    # 湾の魚 (Nao_u 2026-07-15「枯渇は早すぎる」で再調整):
+    # 再生上限(MSY)=R*S0/4≈260荷/日。序盤(漁3-6軒)は取り切れず資源ほぼ満タン、
+    # 中盤に人口比で頼りすぎると漸減が見え、なお続けると後半に枯渇する時間スケール
+    FISH_S0=600_000.0, FISH_R=0.00175,
+    FISH_RESEED=0.3,                    # 産卵避難場(網の届かない入り江)=絶滅を吸収状態にしない
     GROVE_S0=9_000.0, GROVE_R=0.0004,   # 港近郊(r0)の小さな木立
     FOREST_S0=250_000.0, FOREST_R=0.0004,  # 遠環(r1,r2)の大森林
     PR=0.8,                              # 塩蔵歩留まり
@@ -158,7 +169,8 @@ class Sim:
         f = sum(fb * self.mult('fish') * self.pf(x['r']) for x in cnt('fish')) * fdep
         if self.overfish: f *= 1.0  # 努力一定・枯渇は残量則が表現
         self.fishS = min(P['FISH_S0'],
-                         self.fishS - f + P['FISH_R'] * self.fishS * (1 - fdep))
+                         self.fishS - f + P['FISH_R'] * self.fishS * (1 - fdep)
+                         + P['FISH_RESEED'] * (1 - fdep))
         v = (sum(BASE['veg'] * self.mult('veg') * self.pf(x['r']) for x in cnt('veg'))
              if 3 <= mm <= 10 else 0.0)
         lg = 0.0
@@ -293,12 +305,14 @@ class Sim:
             self.wheat += hv; self.mo['harv'] = hv
         # --- 輸出 (余剰を少しずつ売る=正典ルール4。建材予備20は手元に残す) ---
         if self.exports:
-            xl = max(0.0, self.lumber - 20) * 0.10; self.lumber -= xl
+            xl = min(max(0.0, self.lumber - 20) * 0.10, P['EXP_CAP_L'])
+            self.lumber -= xl
             self.earn(xl * P['EXP_LOG'])
             # v8修正 (第3回検出): 蔵の空白は冬でなく早春1-2月(野菜復帰前)に来る。
             # 蓄えの目標は冬60日でなく冬+端境期=150日分で見る
             winter_need = self.pop * 0.9 * 150
-            xp = max(0.0, self.pres - max(0.0, winter_need - self.wheat)) * 0.02
+            xp = min(max(0.0, self.pres - max(0.0, winter_need - self.wheat)) * 0.02,
+                     P['EXP_CAP_P'])
             self.pres -= xp; self.earn(xp * P['EXP_PRES'])
             self.mo['exp'] += xl * P['EXP_LOG'] + xp * P['EXP_PRES']
         self.mo['fish'] += f; self.mo['veg'] += v; self.mo['logs'] += lg
