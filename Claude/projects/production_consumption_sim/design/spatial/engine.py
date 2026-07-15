@@ -15,7 +15,7 @@
 import random
 from collections import defaultdict
 
-GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char']
+GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal']  # meal=〆粕(魚肥料)
 FOODS = ['fish', 'veg', 'wheat', 'pres']
 KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish')  # 多様性の種別(保存食=魚枠)
 
@@ -73,6 +73,9 @@ P = dict(
     BRANCH_DEBT_GATE=-3000.0,  # 会社債務がこれより深い間は分家しない(完済まで成長を控える=標準プレイの模写)
     # 資源プール(残量比例+再生下限)
     BAY_S0=600_000.0, BAY_R=0.00175, RESEED=0.3,
+    # Phase2-C: 対岸漁場(独立プール)。漁獲は鮮度で食卓に届かず〆粕(meal)へ(8荷→1荷)。
+    # 施肥: 麦畑は耕作期(3-8月)に粕3荷/日で収穫+15%(ボーナス・必須でない)
+    BAY2_S0=600_000.0, BAY2_R=0.00175, MEAL_FISH=8.0, FERT_NEED=3.0, FERT_BOOST=0.15,
     GROVE_S0=60_000.0, GROVE_R=0.0006,
     PURSE0=60.0, TREASURY0=3000.0,
     USE_VALUE_CEILING=True,              # 使用価値の天井(ルール2精緻化) — Falseで純信念ZI
@@ -86,9 +89,9 @@ LADDER = {
     'lumber':  ['food1', 'tools', 'food2', 'salt', 'char', 'iron'],
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
-JOBCLS = dict(fisher='fish', wheat='farm', veg='farm', woodshop='lumber',
+JOBCLS = dict(fisher='fish', fisher2='fish', wheat='farm', veg='farm', woodshop='lumber',
               charburner='lumber', saltworks='artisan', peddler='artisan')
-BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5)
+BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5, meal=1.0)
 
 
 class HH:
@@ -199,7 +202,7 @@ class World:
         self.market_pos = market_pos
         self.market = Market(self)
         self.treasury = P['TREASURY0']
-        self.bay = P['BAY_S0']; self.grove = P['GROVE_S0']
+        self.bay = P['BAY_S0']; self.bay2 = P['BAY2_S0']; self.grove = P['GROVE_S0']
         self.day = 0
         self.prices = defaultdict(list)       # good → [(day, price, vol)]
         self.rows = []
@@ -285,7 +288,16 @@ class World:
             ts = self.travel_share(h) if going[h.id] else 0.0
             w = (1 - ts) * h.mult()
             j = h.job
-            if j == 'fisher':
+            if j == 'fisher2':
+                dep2 = self.bay2 / P['BAY2_S0']
+                if se != 'winter':   # 冬は対岸へ渡れない
+                    q = P['Y_FISH'] * w * dep2
+                    self.bay2 = min(P['BAY2_S0'], self.bay2 - q
+                                    + P['BAY2_R'] * self.bay2 * (1 - dep2)
+                                    + P['RESEED'] * (1 - dep2))
+                    h.pantry['meal'] += q / P['MEAL_FISH']
+                    bal['meal']['prod'] += q / P['MEAL_FISH']
+            elif j == 'fisher':
                 dep = self.bay / P['BAY_S0']
                 q = (P['Y_FISH_W'] if se == 'winter' else P['Y_FISH']) * w * dep
                 self.bay = min(P['BAY_S0'], self.bay - q + P['BAY_R'] * self.bay * (1 - dep)
@@ -295,10 +307,18 @@ class World:
                 q = P['Y_VEG'] * w; h.pantry['veg'] += q; bal['veg']['prod'] += q
             elif j == 'wheat':
                 h.wheat_work += (1 - ts)
+                if 3 <= mm <= 8:
+                    u = min(h.pantry['meal'], P['FERT_NEED'])
+                    h.pantry['meal'] -= u; bal['meal']['used'] += u
+                    h.fert_got = getattr(h, 'fert_got', 0.0) + u
                 if mm == 9 and d % 30 == 15:
-                    q = P['Y_WHEAT'] * h.mult() * min(1.0, h.wheat_work / 300)
+                    fill = min(1.0, getattr(h, 'fert_got', 0.0) / (P['FERT_NEED'] * 180))
+                    q = P['Y_WHEAT'] * h.mult() * min(1.0, h.wheat_work / 300) \
+                        * (1 + P['FERT_BOOST'] * fill)
                     h.pantry['wheat'] += q; bal['wheat']['prod'] += q
-                    h.wheat_work = 0.0
+                    h.wheat_work = 0.0; h.fert_got = 0.0
+                    if fill > 0.05:
+                        self.events.append((d, f'HH{h.id} 施肥{fill*100:.0f}%→収穫+{P["FERT_BOOST"]*fill*100:.0f}%'))
             elif j == 'woodshop':
                 dep = self.grove / P['GROVE_S0']
                 q = P['Y_TOOLS'] * w * dep
@@ -322,7 +342,7 @@ class World:
         # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
         # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
         dole_on_mkt = P['DOLE'] and self.go_day is None
-        goods_order = (['salt', 'char', 'tools', 'fish', 'veg', 'wheat', 'pres']
+        goods_order = (['salt', 'char', 'tools', 'meal', 'fish', 'veg', 'wheat', 'pres']
                        if dole_on_mkt else GOODS)
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
@@ -363,6 +383,9 @@ class World:
             pre_pantry = {h.id: h.pantry[g] for h, q, p_ in bids if isinstance(h, HH)}
             wanted = {h.id: q for h, q, p_ in bids if isinstance(h, HH)}
             pr, vol = self.market.clear(g, bids, asks)
+            # (注)完売→強気の学習は導入して撤回した: 連続生産財は毎日完売が常態のため
+            # 信念+3%/日の物価スパイラルで主経済が破綻する(計測済)。薄い市場の
+            # deflation spiral(粕が0円)は開課題として残す
             for h in part:
                 if h.id in wanted and wanted[h.id] > 1e-6:
                     got = h.pantry[g] - pre_pantry[h.id]
@@ -376,8 +399,9 @@ class World:
                         h.belief[g] += (pr - h.belief[g]) * 0.3
             ub = self.market.unfilled_bid
             if ub is not None:
-                my_good = dict(fisher='fish', veg='veg', wheat='wheat', woodshop='tools',
-                               charburner='char', saltworks='salt', peddler=None)
+                my_good = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat',
+                               woodshop='tools', charburner='char', saltworks='salt',
+                               peddler=None)
                 for h in part:
                     if my_good.get(h.job) == g and ub > h.belief[g]:
                         h.belief[g] += (ub - h.belief[g]) * 0.1
@@ -661,6 +685,14 @@ class World:
                     t[g] = (P['HAUL'] / 2, h.mbelief[there][g] * 0.85)
             return t
         uv = P['USE_VALUE_CEILING']
+        if h.job == 'wheat':
+            mm_now = ((self.day - 1) // 30) % 12 + 1
+            if 3 <= mm_now <= 8 and h.pantry['meal'] < P['FERT_NEED'] * 10:
+                # 施肥の使用価値 = 増収分の麦価値 ÷ 必要粕量 (導出需要)
+                boost_val = (P['Y_WHEAT'] * h.mult() * P['FERT_BOOST'] * h.belief['wheat']
+                             / (P['FERT_NEED'] * 180))
+                ceil = (boost_val * 0.7 if uv else h.belief['meal'] * 1.2)
+                t['meal'] = (P['FERT_NEED'] * 20 - h.pantry['meal'], ceil)
         if h.job == 'saltworks' and h.pantry['char'] < P['SALT_CHAR'] * 5:
             ceil = (P['Y_SALT'] * h.belief['salt'] * 0.5 if uv else h.belief['char'] * 1.2)
             t['char'] = (P['SALT_CHAR'] * 10 - h.pantry['char'], ceil)
@@ -693,8 +725,14 @@ class World:
                 if q > 1e-9:
                     out[g] = min(q, P['HAUL'])
             return out
-        my = dict(fisher='fish', veg='veg', wheat='wheat', woodshop='tools',
+        my = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat', woodshop='tools',
                   charburner='char', saltworks='salt')[h.job]
+        if my == 'meal':
+            # 対岸は遠い: 〆粕は貯蔵できるのでまとめて運ぶ(15荷未満では市に行かない。
+            # 毎日通うと往復が労働の7割を食い産出が消える=前進拠点/沿岸海運の原型)
+            if h.pantry['meal'] >= 15.0:
+                return {'meal': min(h.pantry['meal'], P['HAUL'])}
+            return {}
         keep = P['EAT'] * 2 if my in FOODS else 2.0
         if my == 'fish':
             # 魚は今日腐る: 食べる分以外は全部売る。さらに魚価が他の食料より十分
