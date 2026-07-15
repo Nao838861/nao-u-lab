@@ -10,8 +10,8 @@ export const P = {
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
-  IMP:{wheat:2.6,tools:3.5,salt:3.0,iron:3.8}, IMP_COST:{wheat:1.0,tools:2.5,salt:2.0,iron:2.5},  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
-  EXP:{pres:0.8,pick:0.8,tools:1.5,stone:0.6,oil:3.2,salt:1.5}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15}, EXP_ML:{pres:1.3,pick:1.2,tools:2.0,stone:0.9,oil:4.0,salt:1.9},
+  IMP:{wheat:2.8,tools:3.8,salt:3.2,iron:4.0}, IMP_COST:{wheat:1.6,tools:2.8,salt:2.2,iron:3.0},  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
+  EXP:{pres:0.6,pick:0.55,tools:1.0,stone:0.4,oil:2.4,salt:0.9}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15}, EXP_ML:{pres:0.66,pick:0.6,tools:1.1,stone:0.44,oil:2.64,salt:1.0},
   PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:2.0,char:1.5},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
   BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:5000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
@@ -409,12 +409,15 @@ export class World{
         if(h.members.length<=2){this.log('☠ '+h.sur+'家は離散した——家は廃屋になった');
           (this.ruins=this.ruins||[]).push({x:h.x,y:h.y});
           // 相続: 財布は近所3世帯に広く薄く(子→近所の正典・貨幣を蒸発させない)
+          for(const g of GOODS){const st=this.stalls[g];
+            for(let i=st.length-1;i>=0;i--)if(st[i].hh===h)st.splice(i,1);} // 幽霊屋台の撤去(集計外の財布に金が漏れる)
           const rest=this.hhs.filter(x=>x!==h);
           if(rest.length&&h.purse>0){
             const near=rest.sort((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y)).slice(0,3);
             const share=h.purse/near.length;
             for(const n of near)n.purse+=share;
             h.purse=0;}
+          else if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 信用買いの借りは会社の貸し倒れ
           this.hhs.splice(this.hhs.indexOf(h),1);}}
       h.kindLog.push([d,[...kinds]]);for(const k of kinds)h.kindDays[k]=(h.kindDays[k]||0)+1;
       while(h.kindLog.length&&h.kindLog[0][0]<=d-45){for(const k of h.kindLog[0][1])h.kindDays[k]--;h.kindLog.shift();}
