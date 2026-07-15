@@ -71,7 +71,50 @@ self_feedback:
 採用理由: shared-reads 本文には 8 scenario・各100 episode・win rate / reward / invalid action rate の比較根拠があり、行動へ変換しやすい。既存 probe の route comparability や trace 保存とは重なる部分があるが、「通信そのものの限界寄与を no_comm 対照で測る」観点は独立している。対象を次の該当評価1回に限定し、恒久 directive・phase prompt・AGENTS.md は変更しない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みで監査。validate_memory_index.py は OK、代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）も取得でき、broken index entry は 0 件"
+  - "memory/atoms.jsonl を memory_health.py で監査。2675 atom、normalized content duplicate は raw 40 group / recall-visible 3 group だが lifecycle fold が有効。矛盾を示す新規 evidence はなし"
+  - "shared-reads の mixed duplicate / stale triage / group-action queue を 2026-07-15 基準で再生成（80 rows / 50 rows / 35 groups）"
+  - "candidate lifecycle を集計。posted 407 / ready_to_post 10 / postponed 393 / failed 122 / needs_review 22。stale_after 到来済みは 208 件（postponed 199 / needs_review 9）、今回 handoff は group-action queue 先頭 1 group のみ"
+  - "memory/raw/ の 30日超無更新 file を 93件識別。原文・Slack archive を含むため、この phase では移動せず archive 候補として記録のみ"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled 更新対象なし"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  due_total: 208
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 80
+  group_action_queue_rows: 35
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    priority_reason: "group-action queue 先頭。procedural persona と evolved MCTS heuristic は headless 評価を平均スコアからプレイスタイル別の破綻検出へ移す材料になり、terminal sibling 2件と open sibling 5件の group 判定を一度で閉じられる"
+    status_counts:
+      terminal_siblings: 2
+      open_siblings: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    recommended_review_action: reevaluate_in_phase2
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。代表語4件を取得でき、source file 破損なし"
+  display_or_tooling_status: none
+```
+
+- `memory_health.py` の warning（未 group 化 repeated title 14種、mojibake suspect atom 2件）は既存 audit で可視化済みで、recall smoke も成功した。今回の証拠だけでは次のゲーム制作を塞ぐ構造問題とは判定しない。
+- stale backlog は大きいが、Phase 2 へ大量投入せず group-action 限定運用を継続する。同一 group の candidate を candidate 単位 batch に重ねていない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
