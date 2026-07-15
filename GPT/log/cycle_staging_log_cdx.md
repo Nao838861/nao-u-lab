@@ -74,7 +74,70 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（79 group）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-15 基準で再生成（上限 50 件）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 group）"
+  - "inbox pending を確認（slack_directives 0 件、slack_broadcasts 0 件。close 対象なし）"
+issues:
+  - id: ISS-4A-STALE-BACKLOG
+    description: >-
+      candidate lifecycle は postponed 392 件、needs_review 22 件で、stale triage queue は
+      出力上限 50 件まで埋まっている。mixed duplicate も 79 group 残り、候補単位の再評価では
+      同一論文を繰り返し読む余地がある。ただし既存の group-action queue が 35 group を抽出済みで、
+      今回は限定運用の先頭 1 group を Phase 2 へ渡せる状態にある。
+    severity: medium
+    evidence: >-
+      memory/shared_reads_stale_triage_queue.jsonl (50 rows);
+      memory/shared_reads_mixed_duplicate_queue.jsonl (79 rows);
+      memory/shared_reads_group_action_queue.jsonl (35 rows);
+      candidate frontmatter counts: postponed=392, needs_review=22, ready_to_post=10,
+      posted=406, failed=121
+    source_file_status: >-
+      UTF-8 source は正常。MEMORY.md は validate_memory_index.py で per-file index と一致し、
+      代表語「記憶」「ゲーム設計」「敵パターン」「評価軸」を UTF-8 読みで取得できた。
+    display_or_tooling_status: none
+    why_blocks_game_memory: >-
+      ゲーム制作へ転用価値の高い playtesting / quest generation の知見が重複候補群に埋まり、
+      次制作時の検索結果を冗長にして代表記録への到達を遅らせる。
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  queue_rows: 50
+  note: "queue の limit 50 に達しているため、実残件は 50 件以上。今回 handoff は 1 group / 1 representative。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    priority_reason: >-
+      group-action queue の先頭 group。procedural persona と MCTS によるプレイスタイル別の
+      headless 評価へ直接接続でき、terminal sibling 2件と open sibling 5件の整理を同時に進められる。
+    status_counts:
+      terminal: 2
+      open: 5
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    open_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- atom audit: 2674 rows、duplicate hash 40群 / 80 rows。既存 fold と overlay 45群は整合し、
+  duplicate cluster index も最新。今回、新規の矛盾は確認できなかった。
+- topology audit: edges 564、high inbound 3、stale bridge 0。新規の孤児・時系列断絶 issue は立てない。
+- raw audit: 30日超の一次資料は存在するが、Slack archive、論文 PDF/TXT、同期状態など参照原文であり、
+  age だけを根拠に archive 移動しない。
+- title audit: unindexed duplicate は mixed group を含む。terminal group の自動 close は行わず、
+  group-action queue 先頭のみを handoff した。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
