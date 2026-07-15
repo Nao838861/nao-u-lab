@@ -62,7 +62,12 @@ P = dict(
     # 特許料 (設計コンセプト「特許開拓商会」の義務側): 本国へ年次上納。
     # これが無いと放置村が「自給できる寒村」に落ち着き9年経っても詰まない(穴D2)。
     # 停滞は特許料で沈み、成長する植民地は軽々吸収する=「早く自給しないと詰む」の背骨
-    CHARTER_FEE=0.0,  # 既定0(2500で放置村はM85に詰むが標準の完済も消える=物語オプション扱い)
+    CHARTER_FEE=0.0,
+    # 販路解放(Nao_u確定コンセプト「中盤の解放感」): 沿岸海運へ投資すると
+    # 輸出天井×3・本土売値+30%(買い叩きの部分回避)。World.invest_shipping_m で発動
+    SHIPPING_COST=8000.0, SHIPPING_CAP_MULT=2.0, SHIPPING_PRICE_MULT=1.2,
+    HOME_UPGRADE=False,  # 家普請(昇格に建材消費)。オンにすると昇格遅延→文化立ち上がり遅れ→
+    # ピーク+25kで標準が破産M32(計測済)。コンセプトは実装済み・現行較正との統合は次課題  # 既定0(2500で放置村はM85に詰むが標準の完済も消える=物語オプション扱い)
     # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
     # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
     GRAN_BID=dict(wheat=1.9, pres=1.7),  # 輸入パリティ(2.0)直下。1.6だと農家の信念(パリティに張り付く)と交差せず買上げ不成立
@@ -200,6 +205,8 @@ class World:
         self.markets_pos = [market_pos] + ([market2_pos] if market2_pos else [])
         self.plan = plan or {}           # 月→[(job, pos, road)] の入植計画(プレイヤーの手)
         self.pub_schedule = {}           # 月→公費建設予算/日 (プレイヤーが絞る弁)
+        self.invest_shipping_m = None    # この月に沿岸海運へ投資(販路解放)
+        self.shipping = False
         self.month_events = []
         self.rng = random.Random(seed)
         self.hhs = hhs
@@ -257,6 +264,12 @@ class World:
         m = (d - 1) // 30 + 1
         mm = (m - 1) % 12 + 1
         se = self.season(mm)
+        if d % 30 == 1 and self.invest_shipping_m == m and not self.shipping:
+            self.treasury -= P['SHIPPING_COST']; self.mainland_out += P['SHIPPING_COST']
+            self.shipping = True
+            P['EXP_CAP'] = {g: v * P['SHIPPING_CAP_MULT'] for g, v in P['EXP_CAP'].items()}
+            P['EXP_MAINLAND'] = {g: v * P['SHIPPING_PRICE_MULT'] for g, v in P['EXP_MAINLAND'].items()}
+            self.events.append((d, f'★沿岸海運に投資 -{P["SHIPPING_COST"]:.0f} (輸出天井×{P["SHIPPING_CAP_MULT"]:.0f}・本土価+30%)'))
         if d % 30 == 1 and m in self.pub_schedule:
             P['PUBWORKS'] = self.pub_schedule[m]
             self.month_events.append(f'公費→{P["PUBWORKS"]:.0f}/日')
@@ -520,8 +533,14 @@ class World:
             if keep and nxt:
                 h.up += 1; h.down = 0
                 if h.up >= P['UP_DAYS'] * (h.lv + 1):
-                    h.lv += 1; h.up = 0
-                    self.events.append((d, f'HH{h.id}({h.job}) ▲Lv{h.lv}'))
+                    # 家普請(Nao_u確定コンセプト「家の格=文化Lvの器・家普請=最大の内需」):
+                    # 昇格には家の格上げ=建材(道具3×新Lv)の一括消費が要る。無ければ保留
+                    cost_t = (1.0 * (h.lv + 1)) if P['HOME_UPGRADE'] else 0.0
+                    if h.pantry['tools'] >= cost_t:
+                        h.pantry['tools'] -= cost_t
+                        bal['tools']['cult'] += cost_t
+                        h.lv += 1; h.up = 0
+                        self.events.append((d, f'HH{h.id}({h.job}) ▲Lv{h.lv}'))
             elif keep:
                 h.up = max(0, h.up - 3); h.down = 0
             else:
