@@ -146,4 +146,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784082234.901609"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784082234901609
+  char_count: 2017
+  verification: ok
+  draft: drafts/phase5_log_diary_20260715_1113_cdx.md
+```
+
+- Phase 1-4 の reflection を、既投稿を止めた判断、ルールを増やさなかった判断、重複候補を group 単位へ畳んだ進捗を軸に日記化した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字数は目標範囲 1700-2300 字内。
