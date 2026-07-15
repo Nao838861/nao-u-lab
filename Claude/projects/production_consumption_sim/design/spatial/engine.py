@@ -339,14 +339,16 @@ class World:
             elif j == 'woodshop':
                 dep = self.grove / P['GROVE_S0']
                 q = P['Y_TOOLS'] * w * dep
+                # 禿山は恒久(Nao_u 2026-07-16: 魚は復活するが禿山になるべき。
+                # 詰み防止は「取りきれない規模の森」で担保し、再播種項は持たない)
                 self.grove = min(P['GROVE_S0'], self.grove - q * 2
-                                 + P['GROVE_R'] * self.grove * (1 - dep) + 0.2 * (1 - dep))
+                                 + P['GROVE_R'] * self.grove * (1 - dep))
                 h.pantry['tools'] += q; bal['tools']['prod'] += q
             elif j == 'charburner':
                 dep = self.grove / P['GROVE_S0']
                 q = P['Y_CHAR'] * w * dep
                 self.grove = min(P['GROVE_S0'], self.grove - q * 1.5
-                                 + P['GROVE_R'] * self.grove * (1 - dep) + 0.2 * (1 - dep))
+                                 + P['GROVE_R'] * self.grove * (1 - dep))
                 h.pantry['char'] += q; bal['char']['prod'] += q
             elif j == 'saltworks':
                 fuel = min(P['SALT_CHAR'], h.pantry['char'])
