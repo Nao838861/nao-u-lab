@@ -66,7 +66,39 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown 相対リンクを監査: broken link 0 件。UTF-8 明示読みで代表語（記憶 / ゲーム設計 / 敵パターン / 評価軸）をすべて取得。"
+  - "atom mirror を監査: atoms.jsonl / per-file md / index.jsonl は各 2674 件、content conflict / parse error / 欠落は 0 件。normalized content 重複 40 group は既存 fold 対象で、recall-visible は 3 group。"
+  - "shared-reads lifecycle 内訳を確認: posted 51 / ready_to_post 0 / postponed 96 / failed 9 / needs_review 10。posted / failed は再評価 queue から除外。"
+  - "mixed duplicate / stale triage / group-action queue を 2026-07-15 基準で再生成: 79 group / stale backlog 208 件（sidecar は上位 50 件）/ group-action 35 group。"
+  - "memory/raw/ の 30 日超未更新ファイル 93 件をアーカイブ候補として確認。原文保全領域のため本 Phase では移動なし。"
+  - "Slack inbox を監査: directives / broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-ENC-001
+    description: "1 atom の title / heading / Use when に Unicode 置換文字が残り、source 正本側の文字列が破損している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health mojibake suspect sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を確認。表示だけでなく per-file source に置換文字あり。"
+    display_or_tooling_status: "UTF-8 読みは正常に機能しており、tooling 起因ではない。MEMORY.md の代表語 probe は全件正常。"
+    why_blocks_game_memory: "該当 atom を検索・引用すると語が欠損するが、単一 atom であり現時点のゲーム制作導線を広く遮断しない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  eligible_count: 208
+  sidecar_count: 50
+  handed_off_count: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。procedural persona と evolved MCTS heuristic は headless 評価をプレイスタイル別の破綻検出へ接続できる。status_counts は terminal 2 / open 5、terminal_paths 2 件 / open_paths 5 件の mixed duplicate group。"
+    recommended_review_action: reevaluate_in_phase2
+    handoff_kind: group_action_representative
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
