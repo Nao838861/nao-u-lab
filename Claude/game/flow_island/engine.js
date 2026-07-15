@@ -20,8 +20,10 @@ export const P = {
   PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3},
 };
-export const LADDER={farm:['food1','tools','salt','food2','char'],fish:['grain','tools','salt','char','food2'],
-  lumber:['food1','tools','food2','salt','char'],artisan:['food1','food2','salt','char']};
+export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
+  fish:['grain','tools','salt','char','food2','iron'],
+  lumber:['food1','tools','food2','salt','char','iron'],
+  artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
 export const JOBS=Object.keys(JOBCLS);
 function mulberry(seed){let s=seed>>>0;return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -66,6 +68,7 @@ export class World{
   tileCost(x,y){if(x<0||y<0||x>=this.MW||y>=this.MH)return Infinity;
     if(this.terr&&this.terr[y][x]==='water')return Infinity;
     if(this.roadTiles.has(x+','+y))return this.paved?0.45:0.6;
+    if((this.traffic||{})[x+','+y]>400)return 0.85;   // 獣道(踏み分け道): 通行が地面を固める
     if(this.terr&&this.terr[y][x]==='forest')return 1.4;return 1;}
   buildFlow(){const W=this.MW,H=this.MH;const dist=new Float32Array(W*H).fill(1e9);
     const mx=Math.round(this.market.x),my=Math.round(this.market.y);
@@ -77,6 +80,8 @@ export class World{
         const nd=d0+c*(dx&&dy?1.4:1);
         if(nd<dist[ny*W+nx]-1e-6){dist[ny*W+nx]=nd;q.push([nx,ny]);}}}
     this.flow=dist;}
+  tread(x,y){const k=Math.round(x)+','+Math.round(y);
+    this.traffic=this.traffic||{};this.traffic[k]=Math.min(2000,(this.traffic[k]||0)+1);}
   stepToMarket(h){if(!this.flow)this.buildFlow();const W=this.MW;
     const x=Math.round(h.px),y=Math.round(h.py);
     let bx=x,by=y,bd=this.flow[y*W+x];
@@ -84,10 +89,10 @@ export class World{
       const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=this.MH)continue;
       const d=this.flow[ny*W+nx];if(d<bd){bd=d;bx=nx;by=ny;}}
     const sp=1/Math.max(0.45,this.tileCost(x,y));
-    h.px+=(bx-h.px)*Math.min(1,sp*0.9);h.py+=(by-h.py)*Math.min(1,sp*0.9);
+    h.px+=(bx-h.px)*Math.min(1,sp*0.9);h.py+=(by-h.py)*Math.min(1,sp*0.9);this.tread(h.px,h.py);
     return Math.hypot(h.px-this.market.x,h.py-this.market.y)<1.2;}
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
-    h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;return false;}
+    h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;this.tread(h.px,h.py);return false;}
   pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
   addZone(job,x,y){this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
@@ -156,7 +161,7 @@ export class World{
     // 依存期(配給中)は文化財を溜め込まない(60日分)。240日分を輸入で買うと開幕の
     // 手持ちが即座に会社へ吸われ、市中から通貨が消える(財布ゼロ問題の主因)
     const cd=(this.goDay===null&&this.doleRate>0.5)?60:P.CULT_D;
-    for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.0]]){
+    for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.0],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
       if(t[g])continue;
       if(h.pantry[g]<dd*cd*0.5)t[g]=[dd*cd-h.pantry[g],val];}
     return t;}
@@ -176,6 +181,7 @@ export class World{
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
     if(h.job==='veg'&&h.pantry.pick>10)out.pick=Math.min(h.pantry.pick-5,h.haul());
+    if(h.job==='shepherd'&&h.pantry.cloth>2)out.cloth=Math.min(h.pantry.cloth-1,h.haul());
     return out;}
   step(){for(let i=0;i<30;i++)this.tickOnce();}
   tickOnce(){this.t++;
@@ -254,7 +260,7 @@ export class World{
       this.bay=Math.min(P.BAY0,this.bay-q+f*(P.BAY_R*this.bay*(1-dep)+P.RESEED*(1-dep)));
       h.pantry.fish+=q;}
     else if(h.job==='veg'&&mm>=3&&mm<=10)h.pantry.veg+=P.Y_VEG*w;
-    else if(h.job==='shepherd')h.pantry.meat+=P.Y_MEAT*w;
+    else if(h.job==='shepherd'){h.pantry.meat+=P.Y_MEAT*w;h.pantry.cloth+=P.Y_CLOTH*w;}
     else if(h.job==='wheat'){h.wheatWork+=f;
       if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;}}
     else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
@@ -319,7 +325,7 @@ export class World{
     const doleOn=this.goDay===null;
     const here=this.hhs.filter(h=>h.state==='atMarket');
     for(const h of here)h._cap=h.haul();   // 持ち帰り容量=同行の家族の手
-    const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','pick','meat']:GOODS;
+    const order=doleOn?['salt','char','tools','cloth','iron','fish','veg','wheat','pres','pick','meat']:GOODS;
     for(const g of order){const bids=[],asks=[];
       for(const h of here){const tgt=this.buyTargets(h)[g];
         if(tgt){let[qty,ceil]=tgt;const price=Math.min(h.belief[g]*(0.95+this.rng()*0.2),ceil);
@@ -365,15 +371,24 @@ export class World{
         for(const g of act){const u=Math.min(h.pantry[g],share);h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}}
       for(const g of['pres','wheat','pick']){if(need<=1e-9)break;
         const u=Math.min(h.pantry[g],need);h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}
-      const hgy=need>0.5;if(hgy){h.hunger++;this.famine++;}(h.hungerHist=h.hungerHist||[]).push(hgy?1:0);
+      const hgy=need>0.5;if(hgy){h.hunger++;this.famine++;h.hungerRun=(h.hungerRun||0)+1;}else h.hungerRun=0;
+      (h.hungerHist=h.hungerHist||[]).push(hgy?1:0);
+      if(h.hungerRun>=60){h.hungerRun=30;
+        const dead=h.members.pop();
+        this.log('☠ '+h.sur+'家の'+(dead?dead.name:'一人')+'が餓えで亡くなった');
+        if(h.members.length<=2){this.log('☠ '+h.sur+'家は離散した——家は廃屋になった');
+          (this.ruins=this.ruins||[]).push({x:h.x,y:h.y});
+          this.hhs.splice(this.hhs.indexOf(h),1);}}
       h.kindLog.push([d,[...kinds]]);for(const k of kinds)h.kindDays[k]=(h.kindDays[k]||0)+1;
       while(h.kindLog.length&&h.kindLog[0][0]<=d-45){for(const k of h.kindLog[0][1])h.kindDays[k]--;h.kindLog.shift();}
       // 文化消費+保存加工
-      const sat={};for(const[g,dd]of[['tools',P.D_TOOL],['salt',P.D_SALT],['char',P.D_CHAR]]){
+      const sat={};for(const[g,dd]of[['tools',P.D_TOOL],['salt',P.D_SALT],['char',P.D_CHAR],['cloth',P.D_CLOTH],['iron',P.D_IRON]]){
         const u=Math.min(h.pantry[g],dd);h.pantry[g]-=u;sat[g]=u>=dd*0.95;}
       const kd=h.kindDays;sat.food1=Object.values(kd).some(v=>v>0);
       sat.food2=Object.values(kd).filter(v=>v>5).length>=2;
       sat.grain=(kd.wheat||0)>5;
+      sat.saltchar=sat.salt&&sat.char;
+      sat.food3=Object.values(kd).filter(v=>v>5).length>=3;
       if(h.job==='veg'&&h.pantry.veg>h.eat()*2&&h.pantry.salt>0.2){
         // 漬け込み: 余り野菜+塩→漬物(冬の売り物・野菜枠の越冬)
         const raw=Math.min(h.pantry.veg-h.eat()*2,h.pantry.salt/P.PICK_SALT,15);

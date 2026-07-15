@@ -59,7 +59,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=125714';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=126183';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -170,6 +170,7 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
     if(wint&&terr[y][x]!=='water')c=shade(c,30);
     diamond(px,py,c);
     if(w.roadTiles.has(x+','+y))diamond(px,py,w.paved?'#a9a49b':'#8a795a',0.62);
+    else if((w.traffic||{})[x+','+y]>400)diamond(px,py,'#6f7a4a',0.5);  // 獣道(踏み分け道)
     const t=terr[y][x];
     if(t==='forest'&&(x*13+y*7)%3===0){cx.fillStyle='#2c4a26';
       cx.beginPath();cx.moveTo(px,py-14);cx.lineTo(px+5,py-4);cx.lineTo(px-5,py-4);cx.closePath();cx.fill();
@@ -183,6 +184,9 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
   for(const z of w.zones){if(z.filled)continue;const[px2,py2]=iso(z.x,z.y);
     cx.strokeStyle=JCOL[z.job]||'#999';cx.setLineDash([3,3]);cx.strokeRect(px2-7,py2-16,14,14);cx.setLineDash([]);
     cx.fillStyle='#ffffff88';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText(JNAME[z.job],px2,py2-18);}
+  for(const r of (w.ruins||[])){const[rx,ry]=iso(r.x,r.y);
+    cx.fillStyle='#3a3d42';cx.fillRect(rx-5,ry-10,10,8);
+    cx.strokeStyle='#222';cx.strokeRect(rx-5,ry-10,10,8);}
   const[mx,my]=iso(w.market.x,w.market.y);
   cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
   // 市場の荷の山(いま市に居る世帯の売り物+御蔵)
