@@ -22,6 +22,7 @@ small{color:#8899b0}
 <h1>流通の島 <small>v0 mock</small></h1>
 <div class="hud" id="hud"></div>
 <div class="bar" title="債務/信用限度"><div id="debtbar" style="width:0%"></div></div>
+<div id="factor" style="background:#2a3448;border-left:3px solid #ffd97a;padding:6px 8px;margin:6px 0;font-size:12px;min-height:34px">「ようこそ、支配人。島はまだ何も知りません」</div>
 <h2>速度</h2><div id="speeds"></div>
 <h2>入植（渡航費60）</h2><div id="jobs"></div>
 <h2>インフラ</h2><div id="infra"></div>
@@ -149,5 +150,22 @@ function frame(){tick++;
   for(let i=0;i<speed;i++)if(tick%4===0||speed>1)w.step&&stepSafe();
   function stepSafe(){try{w.step();}catch(e){console.error(e);speed=0;}}
   draw();if(tick%15===0){hud();if(sel)info();}requestAnimationFrame(frame);}
+// 秘書(ファクター)の声
+let saidWinter=false,saidTight=false,saidFree=false;
+function factor(){const m=Math.floor((w.day-1)/30)+1,mm=(m-1)%12+1;
+  const debt=Math.max(0,-w.treasury),ratio=debt/w.limit();
+  const el=document.getElementById('factor');const say=t=>el.textContent='「'+t+'」';
+  if(w.goDay){say('…本国は、もう待ってくれないそうです。それでも島の朝は来ます');return;}
+  if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。蔵の麦と保存食をご確認を。冬の海は漁が細ります');return;}
+  if(mm===3)saidWinter=false;
+  if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、公費を絞る頃合いかと');return;}
+  if(ratio<0.4&&saidTight){saidTight=false;say('財政に息がつけました。再び前へ');return;}
+  if(w.doleRate<w.hhs.length*9*0.05&&!saidFree&&m>12){saidFree=true;say('配給がほとんど要らなくなりました。島が自分の足で立ち始めています');return;}
+  if(m===2)say('序盤は配給が島を支えます。金庫が尽きる前に、木工と炭と塩の連鎖をお立てください');}
+setInterval(factor,2000);
+// キーボード: スペース=一時停止/再開・1-3=速度
+addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();speed=speed===0?1:0;upd();}
+  if(e.key==='1'){speed=1;upd();}if(e.key==='2'){speed=4;upd();}if(e.key==='3'){speed=16;upd();}});
 hud();frame();
 </script></body></html>
