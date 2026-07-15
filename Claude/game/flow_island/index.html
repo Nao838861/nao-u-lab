@@ -59,7 +59,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=125424';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=125714';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -264,11 +264,27 @@ function info(){const el=document.getElementById('pbody');
   if(!sel){popup.style.display='none';return;}
   if(sel==='MARKET'){marketInfo(el);return;}
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',pick:'漬物',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
+  const REQN={food1:'食料',grain:'穀物(パン)',tools:'道具の常用',salt:'塩の常用',char:'炭(暖)の常用',food2:'食料2種',food3:'食料3種',saltchar:'塩と炭',iron:'鉄',cloth:'布'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
-  const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
+  const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中',building:'普請中',arriving:'入植の道中'};
   const hasStall=Object.keys(w.stalls).some(g=>w.stalls[g].some(s=>s.hh===h));
-  const fam=h.members.slice(0,4).map(m=>m.name+'('+m.age+')').join(' ')+(h.members.length>4?' 他'+(h.members.length-4)+'人':'');
-  el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}${hasStall?'・市場に店番を出している':''}</small><br><small>家族${h.members.length}人: ${fam}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
+  const mm=(Math.floor(Math.max(0,w.day-1)/30))%12+1;
+  let why='';
+  if(h.job==='saltworks'&&h.pantry.char<0.5)why='⚠ 燃料切れ(炭がない)——塩を作れない';
+  else if(h.job==='fisher'&&h.pantry.salt<0.5)why='⚠ 塩切れ——魚を保存できない';
+  else if(h.job==='veg'&&!(mm>=3&&mm<=10))why='(冬季は畑が休み。漬物の蓄えで暮らす)';
+  else if(h.purse<0.5)why='⚠ 財布が空——買い物ができない';
+  const reqs=LADDER[JOBCLS[h.job]]||[];let lvHtml='';
+  if(h.lv<reqs.length){const nxt=reqs[h.lv];const sat=h.satLast||{};
+    const need=Math.round(45*(h.lv+1));
+    lvHtml=`<b>次Lv${h.lv+1}</b>: ${REQN[nxt]||nxt} ${sat[nxt]?'<span style=color:#8f8>✓充足中</span>':'<b style=color:#ff8a7a>✗不足</b>'} <small>(進捗${Math.round(h.up)}/${need}日)</small><br>`;
+    const lower=reqs.slice(0,h.lv).map(r=>`${REQN[r]||r}${(h.satLast||{})[r]?'✓':'<b style=color:#ff8a7a>✗</b>'}`).join(' ');
+    if(lower)lvHtml+=`<small>維持: ${lower}</small><br>`;}
+  const inc=M(h.incomeLog.reduce((a,b)=>a+b,0));
+  el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>
+   <small>${ST[h.state]||h.state}${hasStall?'・店番を市場に出している':''}</small><br>
+   ${why?`<small style=color:#ffb08a>${why}</small><br>`:''}${lvHtml}財布 ${M(h.purse)} <small>(30日収入${inc})</small> / 移動${Math.round(w.travel(h)*100)}%<br>
+   <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+(w.granary[g]||0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
   document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span>金計 <b>${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</b></span>`;
