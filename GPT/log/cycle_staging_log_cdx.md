@@ -38,7 +38,40 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778535751-37e5169c9b
+    source_ts: "1778535751.103379"
+    title: "The Physical Basis of Prediction 再投稿・補正版（項目 3/4）"
+    reason: >-
+      未レビューで score 12、優先タグ6個を持つため確認した。
+      ただし superseded 済みの lifecycle repost であり、単一の次回行動へ変換できるかを慎重に採点した。
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: >-
+    採用条件の合計14に届かず actionability も2未満。
+    神経オルガノイド研究に agent harness、記憶 lifecycle、ゲームの予測可能性、案出し手順を混在させた再投稿で、
+    論文固有の方法・比較結果・失敗条件から1個の行動を復元できない。
+    canonical atom に supersede 済みであり、probe 化すると既存確認の言い換えを増やす。
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ記録。新規 probe・評価表・directive・恒久ルールは none。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

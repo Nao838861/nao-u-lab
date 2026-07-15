@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15T09:34:14+09:00",
+  "updated_at": "2026-07-15T11:35:00+09:00",
   "reviewed_source_ts": [
     "1778491540.156779",
     "1778535047.473019",
@@ -380,9 +380,43 @@
     "1783304602.130549",
     "1783295822.146129",
     "1779956167.602569",
-    "1782646839.446789"
+    "1782646839.446789",
+    "1778535751.103379"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T11:35:00+09:00",
+      "selected": {
+        "id": "sr-1778535751-37e5169c9b",
+        "source_ts": "1778535751.103379",
+        "title": "The Physical Basis of Prediction 再投稿・補正版（項目 3/4）",
+        "reason": "未レビューで score 12、memory・harness・evaluation・agent・operation・game-design の6優先タグを持つため確認した。ただし、複数記事を分割再掲した lifecycle repost の一部で、status: superseded、quality: routine、canonical_id ありのため、独立した次回行動へ変換できるかを慎重に採点した。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、actionability も2未満。本文は神経オルガノイドの世界モデル研究を扱う一方、適用節は agent harness、記憶 lifecycle、ゲームの予測可能性、案出し手順を同時に束ねており、論文固有の方法・比較結果・失敗条件から単一の行動を復元できない。canonical atom に supersede 済みで、ここから probe を作ると既存の予測可能性・trace・memory lifecycle 系確認を言い換えて増やすだけになる。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由だけを記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T09:34:14+09:00",
       "selected": {
