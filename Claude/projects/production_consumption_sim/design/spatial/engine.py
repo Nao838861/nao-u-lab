@@ -15,7 +15,7 @@
 import random
 from collections import defaultdict
 
-GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal', 'meat', 'cloth', 'iron', 'stone']
+GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal', 'meat', 'cloth', 'iron', 'stone', 'oil']
 # meal=〆粕(魚肥料) meat=畜産の肉(第4の食料種・通年) cloth=毛織物(家内制で羊飼いが織る) iron=鉄製品(輸入)
 FOODS = ['fish', 'veg', 'wheat', 'pres', 'meat']
 KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish', meat='meat')  # 多様性の種別(保存食=魚枠)
@@ -32,6 +32,9 @@ P = dict(
     Y_CHAR=1.8, Y_SALT=12.0,
     Y_MEAT=8.0, Y_CLOTH=0.4,             # 畜産最小モデル(羊=肉+羊毛の二役・家内制で織る)
     Y_STONE=3.0,                          # 石材(唯一の資本財: 継続消費なし・建設バーストのみ・永続)
+    # 菜種(換金作物・菜の花の沖): 耕作期に栽培・〆粕施肥が効く(+15%)・搾油して菜種油。
+    # 油は食えない=島内需要なし。「買い叩かれない高価値輸出」=第二の販路
+    Y_OIL=2.5,
     PAVE_STONE=200.0, PAVE_ROAD_F=0.45,   # 石畳: 公費が石を買い切ると道路0.6→0.45(永続)
     D_CLOTH=0.03, D_IRON=0.03,
     SALT_CHAR=1.0,                       # 製塩1日の燃料
@@ -47,8 +50,9 @@ P = dict(
     IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0, iron=2.5),   # 会社が本土に払う仕入原価(系外流出)
     # 輸出=買い叩き+数量天井(確定設計)。会社の鞘が黒字化の細い収入源
     # (v1.8: 道具輸出を追加=v8の材木輸出エンジンの空間版)
-    EXP=dict(pres=0.8, tools=1.5, stone=0.6), EXP_CAP=dict(pres=25.0, tools=20.0, stone=15.0),
-    EXP_MAINLAND=dict(pres=1.3, tools=2.0, stone=0.9),
+    EXP=dict(pres=0.8, tools=1.5, stone=0.6, oil=3.2),
+    EXP_CAP=dict(pres=25.0, tools=20.0, stone=15.0, oil=12.0),
+    EXP_MAINLAND=dict(pres=1.3, tools=2.0, stone=0.9, oil=4.0),  # 油=買い叩かれない(本土に競合が少ない灯油・食用油)
     PUBWORKS=0.0,                        # 公費建設: 会社が市場で道具を買う予算/日(貨幣注入弁)
     # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
     # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
@@ -105,10 +109,11 @@ LADDER = {
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
 JOBCLS = dict(fisher='fish', fisher2='fish', wheat='farm', veg='farm', shepherd='farm',
+              rapeseed='farm',
               quarryman='lumber',
               woodshop='lumber', charburner='lumber', saltworks='artisan', peddler='artisan')
 BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5, meal=1.0,
-               meat=1.3, cloth=2.5, iron=3.5, stone=1.0)
+               meat=1.3, cloth=2.5, iron=3.5, stone=1.0, oil=3.0)
 
 
 class HH:
@@ -336,6 +341,16 @@ class World:
                 self.bay = min(P['BAY_S0'], self.bay - q + P['BAY_R'] * self.bay * (1 - dep)
                                + P['RESEED'] * (1 - dep))
                 h.pantry['fish'] += q; bal['fish']['prod'] += q
+            elif j == 'rapeseed':
+                if 3 <= mm <= 8:
+                    u = min(h.pantry['meal'], P['FERT_NEED'])
+                    h.pantry['meal'] -= u; bal['meal']['used'] += u
+                    h.fert_got = getattr(h, 'fert_got', 0.0) + u
+                    fill = min(1.0, getattr(h, 'fert_got', 0.0) / max(1.0, P['FERT_NEED'] * (mm - 2) * 30))
+                    q = P['Y_OIL'] * w * (1 + P['FERT_BOOST'] * fill)
+                    h.pantry['oil'] += q; bal['oil']['prod'] += q
+                elif mm == 9:
+                    h.fert_got = 0.0
             elif j == 'quarryman':
                 h.pantry['stone'] += P['Y_STONE'] * w
                 bal['stone']['prod'] += P['Y_STONE'] * w
@@ -385,8 +400,8 @@ class World:
         # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
         # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
         dole_on_mkt = P['DOLE'] and self.go_day is None
-        goods_order = (['salt', 'char', 'tools', 'cloth', 'iron', 'meal', 'stone', 'fish',
-                        'veg', 'wheat', 'pres', 'meat'] if dole_on_mkt else GOODS)
+        goods_order = (['salt', 'char', 'tools', 'cloth', 'iron', 'meal', 'stone', 'oil',
+                        'fish', 'veg', 'wheat', 'pres', 'meat'] if dole_on_mkt else GOODS)
         assert set(goods_order) == set(GOODS), 'goods_orderとGOODSの不一致(財の追加漏れ)'
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
@@ -451,7 +466,8 @@ class World:
             if ub is not None:
                 my_good = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat',
                                shepherd='meat', woodshop='tools', charburner='char',
-                               saltworks='salt', quarryman='stone', peddler=None)
+                               saltworks='salt', quarryman='stone', rapeseed='oil',
+                               peddler=None)
                 for h in part:
                     if my_good.get(h.job) == g and ub > h.belief[g]:
                         h.belief[g] += (ub - h.belief[g]) * 0.1
@@ -751,7 +767,7 @@ class World:
                     t[g] = (P['HAUL'] / 2, h.mbelief[there][g] * 0.85)
             return t
         uv = P['USE_VALUE_CEILING']
-        if h.job == 'wheat':
+        if h.job in ('wheat', 'rapeseed'):
             mm_now = ((self.day - 1) // 30) % 12 + 1
             if 3 <= mm_now <= 8 and h.pantry['meal'] < P['FERT_NEED'] * 10:
                 # 施肥の使用価値 = 増収分の麦価値 ÷ 必要粕量 (導出需要)
@@ -799,7 +815,7 @@ class World:
             return out
         my = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat', shepherd='meat',
                   woodshop='tools', charburner='char', saltworks='salt',
-                  quarryman='stone')[h.job]
+                  quarryman='stone', rapeseed='oil')[h.job]
         if h.job == 'shepherd' and h.pantry['cloth'] > 1.0:
             out['cloth'] = min(h.pantry['cloth'] - 1.0, P['HAUL'])
         if my == 'meal':
