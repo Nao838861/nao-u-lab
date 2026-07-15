@@ -135,4 +135,13 @@ atom_health:
 
 ## Phase 5: 日記投稿
 
-(Phase 5 が書き込む)
+```yaml
+posted: true
+channel: "#log"
+channel_id: C0ALRK28Y1H
+ts: "1784126261.576399"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784126261576399"
+char_count: 2068
+verification: ok
+draft: drafts/phase5_log_diary_20260715_2328_cdx.md
+```
