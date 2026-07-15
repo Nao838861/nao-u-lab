@@ -25,13 +25,25 @@ export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shephe
 export const JOBS=Object.keys(JOBCLS);
 function mulberry(seed){let s=seed>>>0;return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 let HID=0;
+const FIRST=['ハンス','グレタ','ヤン','マリア','ピム','ロッテ','カレル','アンナ','ブラム','エルス','テオ','ヨハンナ','ミーナ','クラース','フェム','ダーン','ソフィー','ヘンク','リーケ','ヨープ'];
+const SUR=['ヤンセン','デ・フリース','バッカー','フィッセル','スミット','デッケル','ブラウワー','ファン・ダイク','メイヤー','ボス','ペーテルス','ハウトマン'];
+function genFamily(id){const r=mulberry(id*7919+13);
+  const n=7+Math.floor(r()*5);   // 7-11人
+  const sur=SUR[Math.floor(r()*SUR.length)];
+  const mem=[];for(let i=0;i<n;i++){const sex=r()<0.5?'♂':'♀';
+    const age=i<2?25+Math.floor(r()*20):3+Math.floor(r()*18);
+    mem.push({name:FIRST[Math.floor(r()*FIRST.length)],sex,age});}
+  return{sur,mem};}
 export class HH{
-  constructor(job,x,y){this.id=HID++;this.job=job;this.x=x;this.y=y;this.road=false;
+  constructor(job,x,y){this.id=HID++;
+    const f=genFamily(this.id);this.sur=f.sur;this.members=f.mem;this.job=job;this.x=x;this.y=y;this.road=false;
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
     this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;}
   mult(){return Math.pow(P.LV_MULT,this.lv);}
+  eat(){return this.members.length;}
+  haul(){return this.members.length*4;}   // 1人1荷(荷=4食分)×家族
   cls(){return JOBCLS[this.job];}
 }
 export class World{
@@ -67,6 +79,7 @@ export class World{
     return Math.hypot(h.px-this.market.x,h.py-this.market.y)<1.2;}
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
     h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;return false;}
+  pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
   addZone(job,x,y){this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
   addHH(job,x,y){const h=new HH(job,x,y);this.hhs.push(h);this.mainlandIn+=h.purse;
@@ -139,13 +152,13 @@ export class World{
     if(my==='fish'){let keep=P.EAT;
       const alt=Math.min(h.belief.veg,h.belief.wheat,h.belief.pres);
       if(h.belief.fish>alt*1.5)keep=P.EAT*0.3;
-      const s=Math.max(0,h.pantry.fish-keep);if(s>1e-9)out.fish=Math.min(s,P.HAUL);}
+      const s=Math.max(0,h.pantry.fish-keep);if(s>1e-9)out.fish=Math.min(s,h.haul());}
     else{let keep=FOODS.includes(my)?P.EAT*2:2,rate=0.5;
       if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=P.EAT*P.RATION*10;}
       if(my==='veg'&&doleOn)keep=P.EAT*P.RATION*10;
-      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,P.HAUL);}
+      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,h.haul());}
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
-      out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,P.HAUL);
+      out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
     return out;}
   step(){for(let i=0;i<30;i++)this.tickOnce();}
   tickOnce(){this.t++;
@@ -209,7 +222,7 @@ export class World{
   marketSession(){const d=this.day,m=Math.floor((d-1)/30)+1;
     const doleOn=this.goDay===null;
     const here=this.hhs.filter(h=>h.state==='atMarket');
-    for(const h of here)h._cap=P.HAUL;   // 持ち帰り容量(荷車1往復)
+    for(const h of here)h._cap=h.haul();   // 持ち帰り容量=同行の家族の手
     const order=doleOn?['salt','char','tools','fish','veg','wheat','pres','meat']:GOODS;
     for(const g of order){const bids=[],asks=[];
       for(const h of here){const tgt=this.buyTargets(h)[g];
@@ -242,13 +255,13 @@ export class World{
     // 配給
     if(doleOn){let doleToday=0;
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
-        if(fd<1){let q=P.EAT*P.DOLE_RATION;
+        if(fd<1){let q=h.eat()*P.DOLE_RATION;
           for(const g of['wheat','pres']){const u=Math.min(this.granary[g],q);this.granary[g]-=u;q-=u;h.pantry[g]+=u;doleToday+=u;}
           if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;
             h.pantry.wheat+=q;doleToday+=q;}}}
       this.doleQty+=doleToday;this.doleRate+=(doleToday-this.doleRate)*0.1;}
     // 食事
-    for(const h of this.hhs){let need=P.EAT;const kinds=new Set();
+    for(const h of this.hhs){let need=h.eat();const kinds=new Set();
       for(const g of['pres','wheat']){const u=Math.min(h.pantry[g],need*P.RATION);
         h.pantry[g]-=u;need-=u;if(u>1e-9)kinds.add(KIND[g]);}
       for(let i=0;i<2;i++){const act=['fish','veg','meat'].filter(g=>h.pantry[g]>1e-9);

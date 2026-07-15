@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=120802';
+import{World,P,JOBS,GOODS} from './engine.js?v=121035';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -88,7 +88,7 @@ function topbar(){const d=w.day,m=Math.floor(Math.max(0,d-1)/30)+1,mm=(m-1)%12+1
   top.innerHTML=`<span>${Math.floor((m-1)/12)+1}年目 ${mm}月 ${se}</span>`+
    `<span>金庫 <b class="${w.treasury<0?'warn':''}">${Math.round(w.treasury)}</b></span>`+
    `<span class="bar" title="債務/限度"><div style="width:${Math.min(100,debt/lim*100)}%"></div></span>`+
-   `<span>人口 <b>${w.hhs.length*9}</b></span><span>支援${w.bailouts}/3</span>`+
+   `<span>人口 <b>${w.pop()}</b></span><span>支援${w.bailouts}/3</span>`+
    [['⏸',0],['▶',1],['▶▶',2],['▶▶▶',3]].map(([l,s])=>`<button data-s="${s}" class="${speed===s?'on':''}">${l}</button>`).join('');
   top.querySelectorAll('button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;topbar();});}
 // --- 下バー(建設) ---
@@ -187,14 +187,21 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       cx.fillStyle='#ffd97a';for(let i=0;i<h.lv;i++)cx.fillRect(px-s/2+i*3,py-s-7,2,2);}
     // 人: 実際の位置(通勤・移民の到着が見える)
     if(h.state!=='home'&&h.state!=='building'){
-      const[ax,ay]=iso(h.px,h.py);cx.fillStyle='#f5e9d0';
-      cx.beginPath();cx.arc(ax,ay-3,2.4,0,7);cx.fill();
-      cx.strokeStyle='#0006';cx.stroke();
-      // 担いでいる荷(一番多い財の色を頭上に)
-      if(h.state==='toMarket'||h.state==='toHome'){
-        const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
-        let bg=null,bq=3;for(const g in GC)if(h.pantry[g]>bq){bq=h.pantry[g];bg=g;}
-        if(bg){cx.fillStyle=GC[bg];cx.fillRect(ax-2.5,ay-9,5,4);cx.strokeStyle='#0008';cx.strokeRect(ax-2.5,ay-9,5,4);}}}}
+      const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
+      let bg=null,bq=3;for(const g in GC)if(h.pantry[g]>bq){bq=h.pantry[g];bg=g;}
+      // 隊列: 1人1荷(荷=4食分)。運ぶ量に応じた人数が列をなす
+      let porters=1;
+      if(h.state==='toMarket'||h.state==='toHome')
+        porters=Math.max(1,Math.min(h.members.length,Math.ceil(bq/4)||1));
+      const tx=h.state==='toHome'||h.state==='arriving'?h.x:w.market.x;
+      const ty=h.state==='toHome'||h.state==='arriving'?h.y:w.market.y;
+      let dx=tx-h.px,dy=ty-h.py;const dl=Math.hypot(dx,dy)||1;dx/=dl;dy/=dl;
+      for(let i=0;i<porters;i++){
+        const[ax,ay]=iso(h.px-dx*0.45*i,h.py-dy*0.45*i);
+        cx.fillStyle='#f5e9d0';cx.beginPath();cx.arc(ax,ay-3,2.2,0,7);cx.fill();
+        cx.strokeStyle='#0006';cx.stroke();
+        if(bg&&(h.state==='toMarket'||h.state==='toHome')){
+          cx.fillStyle=GC[bg];cx.fillRect(ax-2.2,ay-8.5,4.4,3.6);cx.strokeStyle='#0008';cx.strokeRect(ax-2.2,ay-8.5,4.4,3.6);}}}}
   cx.textAlign='left';}
 function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
   cx.moveTo(px,py-TH/2*k);cx.lineTo(px+TW/2*k,py);cx.lineTo(px,py+TH/2*k);cx.lineTo(px-TW/2*k,py);cx.closePath();cx.fill();}
@@ -213,7 +220,8 @@ function info(){const el=document.getElementById('pbody');
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
   const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
-  el.innerHTML=`<b>${JNAME[h.job]}#${h.id}</b> Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
+  const fam=h.members.slice(0,4).map(m=>m.name+'('+m.age+')').join(' ')+(h.members.length>4?' 他'+(h.members.length-4)+'人':'');
+  el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br><small>${ST[h.state]||h.state}</small><br><small>家族${h.members.length}人: ${fam}</small><br>財布 ${Math.round(h.purse)} / 移動負担 ${Math.round(w.travel(h)*100)}%<br><small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0);
   tot.wheat+=w.granary.wheat||0;tot.pres+=w.granary.pres||0;
