@@ -10,7 +10,7 @@ export const P = {
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
   IMP:{wheat:2.0,tools:3.5,salt:3.0}, IMP_COST:{wheat:1.0,tools:2.5,salt:2.0},
   EXP:{pres:0.8,tools:1.5,stone:0.6,oil:3.2}, EXP_CAP:{pres:25,tools:20,stone:15,oil:12}, EXP_ML:{pres:1.3,tools:2.0,stone:0.9,oil:4.0},
-  PUB0:200, DOLE_RATION:1.1, GRAN_BID:{wheat:1.9,pres:1.7},
+  PUB0:200, DOLE_RATION:1.1, GRAN_BID:{wheat:1.9,pres:1.7,salt:1.8,char:1.2},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:34000, LIMIT_G:2000, LIMIT_FREEZE:24, LIMIT_PC:400,
   BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
@@ -19,7 +19,7 @@ export const P = {
   PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3},
 };
-const LADDER={farm:['food1','tools','salt','food2','char'],fish:['grain','tools','salt','char','food2'],
+export const LADDER={farm:['food1','tools','salt','food2','char'],fish:['grain','tools','salt','char','food2'],
   lumber:['food1','tools','food2','salt','char'],artisan:['food1','food2','salt','char']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
 export const JOBS=Object.keys(JOBCLS);
@@ -239,7 +239,7 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(P.GRAN_BID[g]&&doleOn)desks.push(['GRAN',P.GRAN_BID[g],1e9]);
+      if(P.GRAN_BID[g]&&doleOn)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);
       if(g==='tools'&&this.pub>0)desks.push(['PUB',P.PUB===0?0:1.8,this.pub/1.8]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
@@ -347,6 +347,7 @@ export class World{
         h.pantry.pres+=smoked*P.PR_SMOKE+(raw-smoked)*P.PR_SALT;}
       {const rot=h.pantry.fish/P.FISH_LIFE;h.pantry.fish-=rot;}
       // ラダー(軟ストリーク)
+      h.satLast=sat;
       const reqs=LADDER[h.cls()];
       const keep=reqs.slice(0,h.lv).every(r=>sat[r]);
       const nxt=h.lv<reqs.length?sat[reqs[h.lv]]:false;

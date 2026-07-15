@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS} from './engine.js?v=122267';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=123097';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -144,7 +144,9 @@ cv.addEventListener('touchend',e=>{e.preventDefault();up(tp(e));},{passive:false
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();speed=speed===0?1:0;topbar();}
   if(e.key>='1'&&e.key<='3'){speed=+e.key;topbar();}});
 function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
-  if(!tool){let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
+  if(!tool){
+    if(Math.hypot(w.market.x-x,w.market.y-y)<2){sel='MARKET';info();placePopup();return;}
+    let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
     sel=bd<2?best:null;info();placePopup();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
@@ -224,12 +226,26 @@ function shade(hex,amt){const n=parseInt(hex.slice(1),16);
 const popup=document.getElementById('popup');
 document.getElementById('pclose').onclick=()=>{sel=null;popup.style.display='none';};
 function placePopup(){if(!sel){popup.style.display='none';return;}
-  const[ix,iy]=iso(Math.round(sel.x),Math.round(sel.y));
+  const tx=sel==='MARKET'?w.market.x:sel.x,ty=sel==='MARKET'?w.market.y:sel.y;
+  const[ix,iy]=iso(Math.round(tx),Math.round(ty));
   let sx=ix*Z+panX+14,sy=iy*Z+panY-30;
   sx=Math.max(4,Math.min(innerWidth-240,sx));sy=Math.max(44,Math.min(innerHeight-140,sy));
   popup.style.left=sx+'px';popup.style.top=sy+'px';popup.style.display='block';}
+const NMG={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
+const REQN={food1:'食料',grain:'穀物(パン)',tools:'道具の常用',salt:'塩の常用',char:'炭(暖)の常用',food2:'食料2種',food3:'食料3種',saltchar:'塩と炭',iron:'鉄',cloth:'布'};
+function marketInfo(el){
+  let html='<b>市場</b><br><small>屋台:</small><br>';
+  let any=false;
+  for(const g of GOODS){for(const s of w.stalls[g]){any=true;
+    html+=`<small>${s.hh.sur}家の${NMG[g]} ${Math.round(s.qty)}荷 @${s.price.toFixed(2)}</small><br>`;}}
+  if(!any)html+='<small>(いまは空)</small><br>';
+  html+=`<small>会社の輸入棚: 麦${P.IMP.wheat} 道具${P.IMP.tools} 塩${P.IMP.salt}</small><br>`;
+  html+=`<small>会社の買付台: 保存${P.EXP.pres} 道具${P.EXP.tools}${P.EXP.stone?' 石'+P.EXP.stone:''}${P.EXP.oil?' 油'+P.EXP.oil:''}</small><br>`;
+  html+=`<small>御蔵: 麦${Math.round(w.granary.wheat||0)} 保存${Math.round(w.granary.pres||0)} 塩${Math.round(w.granary.salt||0)} 炭${Math.round(w.granary.char||0)}</small>`;
+  el.innerHTML=html;}
 function info(){const el=document.getElementById('pbody');
   if(!sel){popup.style.display='none';return;}
+  if(sel==='MARKET'){marketInfo(el);return;}
   const h=sel,NM={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
   const pv=g=>h.pantry[g]>0.5?`${NM[g]}${Math.round(h.pantry[g])}`:null;
   const ST={home:'在宅・生産中',toMarket:'市場へ(荷を運搬中)',atMarket:'市で商い中',toHome:'帰宅中(買い物を運搬中)',building:'普請中',arriving:'入植の道中'};
