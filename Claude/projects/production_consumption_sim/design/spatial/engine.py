@@ -15,9 +15,10 @@
 import random
 from collections import defaultdict
 
-GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal']  # meal=〆粕(魚肥料)
-FOODS = ['fish', 'veg', 'wheat', 'pres']
-KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish')  # 多様性の種別(保存食=魚枠)
+GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal', 'meat', 'cloth', 'iron']
+# meal=〆粕(魚肥料) meat=畜産の肉(第4の食料種・通年) cloth=毛織物(家内制で羊飼いが織る) iron=鉄製品(輸入)
+FOODS = ['fish', 'veg', 'wheat', 'pres', 'meat']
+KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish', meat='meat')  # 多様性の種別(保存食=魚枠)
 
 P = dict(
     HH_SIZE=9, EAT=9.0,                  # 1人1荷/日 × 世帯9人
@@ -29,6 +30,8 @@ P = dict(
     # Lv0-1の農家が産出<自家消費(9/日)の「成立しない職」になる→Lv1で旧Lv1相当に近づける
     Y_FISH=13.0, Y_FISH_W=3.2, Y_VEG=10.0, Y_WHEAT=1300.0, Y_TOOLS=5.0,
     Y_CHAR=1.8, Y_SALT=12.0,
+    Y_MEAT=8.0, Y_CLOTH=0.4,             # 畜産最小モデル(羊=肉+羊毛の二役・家内制で織る)
+    D_CLOTH=0.03, D_IRON=0.03,
     SALT_CHAR=1.0,                       # 製塩1日の燃料
     PR_SALT=0.6, PR_SMOKE=0.95, SMOKE_CHAR=0.1, PRES_SALT=0.125,  # 魚8荷に塩1荷
     # 文化の維持フロー(荷/日/世帯)
@@ -38,8 +41,8 @@ P = dict(
     TRAVEL_RATE=0.16, ROAD_F=0.6, TRAVEL_MAX=0.7,
     HAUL=40.0,                           # 1往復の運搬容量(荷)
     # 会社(港の商館): 輸入売値 / 輸出買値(買い叩き)+日次天井
-    IMP=dict(wheat=2.0, tools=3.5, salt=3.0),
-    IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0),   # 会社が本土に払う仕入原価(系外流出)
+    IMP=dict(wheat=2.0, tools=3.5, salt=3.0, iron=3.8),
+    IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0, iron=2.5),   # 会社が本土に払う仕入原価(系外流出)
     # 輸出=買い叩き+数量天井(確定設計)。会社の鞘が黒字化の細い収入源
     # (v1.8: 道具輸出を追加=v8の材木輸出エンジンの空間版)
     EXP=dict(pres=0.8, tools=1.5), EXP_CAP=dict(pres=25.0, tools=20.0),
@@ -93,14 +96,16 @@ P = dict(
 )
 
 LADDER = {
-    'farm':    ['food1', 'tools', 'salt', 'food2', 'char', 'iron'],
+    # 農家=B案(Nao_u 2026-07-16採用: 畜産最小モデルとセット): Lv3=塩+炭/Lv5=鉄/Lv6=食料3種
+    'farm':    ['food1', 'tools', 'saltchar', 'food2', 'iron', 'food3'],
     'fish':    ['grain', 'tools', 'salt', 'char', 'food2', 'iron'],
     'lumber':  ['food1', 'tools', 'food2', 'salt', 'char', 'iron'],
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
-JOBCLS = dict(fisher='fish', fisher2='fish', wheat='farm', veg='farm', woodshop='lumber',
-              charburner='lumber', saltworks='artisan', peddler='artisan')
-BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5, meal=1.0)
+JOBCLS = dict(fisher='fish', fisher2='fish', wheat='farm', veg='farm', shepherd='farm',
+              woodshop='lumber', charburner='lumber', saltworks='artisan', peddler='artisan')
+BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5, meal=1.0,
+               meat=1.3, cloth=2.5, iron=3.5)
 
 
 class HH:
@@ -185,7 +190,7 @@ class Market:
                 seller.offered_unsold.discard(good)
             else:  # 会社が売る(輸入): 売上は金庫へ・仕入原価は本土へ流出
                 self.w.treasury += cost
-                c = q * P['IMP_COST'][good]
+                c = q * P['IMP_COST'].get(good, P['IMP'][good] * 0.7)
                 self.w.treasury -= c; self.w.mainland_out += c
                 self.w.imported[good] += q
             vol += q
@@ -320,6 +325,11 @@ class World:
                 self.bay = min(P['BAY_S0'], self.bay - q + P['BAY_R'] * self.bay * (1 - dep)
                                + P['RESEED'] * (1 - dep))
                 h.pantry['fish'] += q; bal['fish']['prod'] += q
+            elif j == 'shepherd':
+                h.pantry['meat'] += P['Y_MEAT'] * w
+                bal['meat']['prod'] += P['Y_MEAT'] * w
+                h.pantry['cloth'] += P['Y_CLOTH'] * w
+                bal['cloth']['prod'] += P['Y_CLOTH'] * w
             elif j == 'veg' and 3 <= mm <= 10:
                 q = P['Y_VEG'] * w; h.pantry['veg'] += q; bal['veg']['prod'] += q
             elif j == 'wheat':
@@ -361,8 +371,8 @@ class World:
         # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
         # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
         dole_on_mkt = P['DOLE'] and self.go_day is None
-        goods_order = (['salt', 'char', 'tools', 'meal', 'fish', 'veg', 'wheat', 'pres']
-                       if dole_on_mkt else GOODS)
+        goods_order = (['salt', 'char', 'tools', 'cloth', 'iron', 'meal', 'fish', 'veg',
+                        'wheat', 'pres', 'meat'] if dole_on_mkt else GOODS)
         assert set(goods_order) == set(GOODS), 'goods_orderとGOODSの不一致(財の追加漏れ)'
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
@@ -423,8 +433,8 @@ class World:
             ub = self.market.unfilled_bid
             if ub is not None:
                 my_good = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat',
-                               woodshop='tools', charburner='char', saltworks='salt',
-                               peddler=None)
+                               shepherd='meat', woodshop='tools', charburner='char',
+                               saltworks='salt', peddler=None)
                 for h in part:
                     if my_good.get(h.job) == g and ub > h.belief[g]:
                         h.belief[g] += (ub - h.belief[g]) * 0.1
@@ -470,7 +480,7 @@ class World:
                 h.pantry[g] -= u; need -= u
                 if u > 1e-9: kinds.add(KIND[g]); bal[g]['eat'] += u
             for _ in range(2):
-                act = [g for g in ('fish', 'veg') if h.pantry[g] > 1e-9]
+                act = [g for g in ('fish', 'veg', 'meat') if h.pantry[g] > 1e-9]
                 if not act or need <= 1e-9: break
                 share = need / len(act)
                 for g in act:
@@ -497,15 +507,16 @@ class World:
         # --- 文化の維持消費 + 漁師の保存加工 ---
         for h in self.hhs:
             sat = {}
-            for g, dd in (('tools', P['D_TOOL']), ('salt', P['D_SALT']), ('char', P['D_CHAR'])):
+            for g, dd in (('tools', P['D_TOOL']), ('salt', P['D_SALT']), ('char', P['D_CHAR']),
+                          ('cloth', P['D_CLOTH']), ('iron', P['D_IRON'])):
                 u = min(h.pantry[g], dd)
                 h.pantry[g] -= u; bal[g]['cult'] += u
                 sat[g] = u >= dd * 0.95
             sat['food1'] = len([k for k, v in h.kind_days.items() if v > 0]) >= 1
             sat['food2'] = len([k for k, v in h.kind_days.items() if v > 5]) >= 2
             sat['grain'] = h.kind_days.get('wheat', 0) > 5
-            sat['iron'] = False; sat['cloth'] = False
-            sat['tools'] = sat['tools']
+            sat['saltchar'] = sat['salt'] and sat['char']
+            sat['food3'] = len([k for k, v in h.kind_days.items() if v > 5]) >= 3
             h.sat_today = sat
             if h.job == 'fisher' and h.pantry['fish'] > 1e-9:
                 raw = min(h.pantry['fish'], h.pantry['salt'] / P['PRES_SALT'])
@@ -740,10 +751,16 @@ class World:
                 ceil = ((P['PR_SMOKE'] - P['PR_SALT']) * h.belief['pres'] / P['SMOKE_CHAR'] * 0.5
                         if uv else h.belief['char'] * 1.2)
                 t['char'] = (4 - h.pantry['char'], ceil)
-        # 文化の維持フロー(暖・道具・食卓の塩)。行商人は30日分だけ(元手は積荷へ)
+        # 肉の小口常備(第4の多様性種・通年フロー=冬に強い)
+        if h.job != 'shepherd' and h.pantry['meat'] < P['EAT'] * P['DIVERSITY_RATION'] * 4:
+            if 'meat' not in t:
+                t['meat'] = (P['EAT'] * P['DIVERSITY_RATION'] * 8 - h.pantry['meat'],
+                             min(h.belief['meat'] * 1.4, cheapest * 2.2))
+        # 文化の維持フロー(暖・道具・食卓の塩・布・鉄)。行商人は30日分だけ(元手は積荷へ)
         cd_days = 30 if h.job == 'peddler' else P['PANTRY_CULT_D']
         for g, dd, val in (('tools', P['D_TOOL'], 2.5), ('salt', P['D_SALT'], 2.5),
-                           ('char', P['D_CHAR'], 2.0)):
+                           ('char', P['D_CHAR'], 2.0), ('cloth', P['D_CLOTH'], 2.8),
+                           ('iron', P['D_IRON'], 4.0)):
             if g in t: continue
             if h.pantry[g] < dd * cd_days * 0.5:
                 ceil = (val if uv else h.belief[g] * 1.2)
@@ -760,8 +777,10 @@ class World:
                 if q > 1e-9:
                     out[g] = min(q, P['HAUL'])
             return out
-        my = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat', woodshop='tools',
-                  charburner='char', saltworks='salt')[h.job]
+        my = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat', shepherd='meat',
+                  woodshop='tools', charburner='char', saltworks='salt')[h.job]
+        if h.job == 'shepherd' and h.pantry['cloth'] > 1.0:
+            out['cloth'] = min(h.pantry['cloth'] - 1.0, P['HAUL'])
         if my == 'meal':
             # 対岸は遠い: 〆粕は貯蔵できるのでまとめて運ぶ(15荷未満では市に行かない。
             # 毎日通うと往復が労働の7割を食い産出が消える=前進拠点/沿岸海運の原型)
