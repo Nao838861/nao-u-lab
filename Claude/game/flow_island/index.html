@@ -2,7 +2,7 @@
 <style>
 body{margin:0;background:#1a2230;color:#dde;font:13px/1.5 system-ui,sans-serif;display:flex;height:100vh;overflow:hidden}
 #left{flex:1;position:relative}canvas{display:block;cursor:crosshair;touch-action:none}
-#side{width:320px;background:#232c3d;padding:10px 14px;overflow-y:auto;box-shadow:-2px 0 8px #0006}
+#side{width:320px;background:#232c3d;padding:10px 14px;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:-2px 0 8px #0006}
 @media(max-width:760px){body{flex-direction:column}#left{flex:none;height:52vh}#side{width:auto;flex:1}}
 h1{font-size:16px;margin:2px 0 8px}h2{font-size:13px;margin:10px 0 4px;color:#9fb8d8}
 .hud{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:12px}
@@ -30,17 +30,20 @@ small{color:#8899b0}
 <h2>市場価格</h2><div id="prices"></div>
 <h2>世帯情報 <small>(建物をクリック)</small></h2><div id="info"><small>—</small></div>
 <h2>出来事</h2><div id="log"></div>
-<h2>遊び方</h2><small>職を選んで地面をクリック=入植(対岸漁は右下の海沿い・採石は北東の岩場が適地)。菜種は対岸漁の粕(肥料)で伸び、油は高値で売れる。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
+<h2>遊び方</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム。職を選んで地面をタップ=入植(対岸漁は右下の海沿い・採石は北東の岩場が適地)。菜種は対岸漁の粕(肥料)で伸び、油は高値で売れる。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
 </div>
 <script type="module">
 import{World,P,JOBS,GOODS} from './engine.js';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
-let ox=0,oy=60;
+let ox=0,oy=60,Z=1,panX=0,panY=0;
 function fit(){const L=document.getElementById('left');cv.width=L.clientWidth;cv.height=L.clientHeight||innerHeight;ox=cv.width/2;}
 fit();addEventListener('resize',fit);
+if(cv.width<760){Z=0.55;}
+panY=cv.height/2-(60+(48+40)/2*10)*Z; // 島の中心を画面中央へ
+const toWorld=(px,py)=>[(px-panX)/Z,(py-panY)/Z];
 const iso=(x,y)=>[ox+(x-y)*TW/2,oy+(x+y)*TH/2];
-const unIso=(px,py)=>{const a=(px-ox)/(TW/2),b=(py-oy)/(TH/2);return[Math.round((a+b)/2),Math.round((b-a)/2)];};
+const unIso=(px,py)=>{const[wx,wy]=toWorld(px,py);const a=(wx-ox)/(TW/2),b=(wy-oy)/(TH/2);return[Math.round((a+b)/2),Math.round((b-a)/2)];};
 // 地形
 const terr=[];for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
   let t='grass';
@@ -73,15 +76,35 @@ function upd(){for(const b of jb.children)b.classList.toggle('on',b.dataset.t===
   for(const b of inf.children)b.classList.toggle('on',b.dataset.t===tool);
   for(const b of sp.children)b.classList.toggle('on',+b.dataset.s===speed);}
 upd();
-let drag=false;
-cv.onmousedown=e=>{drag=true;act(e);};cv.onmousemove=e=>{if(drag&&tool==='road')act(e);};
-cv.onmouseup=()=>drag=false;
-// タッチ対応(スマホ)
-function tpos(e){const r=cv.getBoundingClientRect();const t=e.touches[0]||e.changedTouches[0];
+let drag=false,downP=null,moved=false,pinch0=null;
+function P(e){const r=cv.getBoundingClientRect();const t=e.touches?.[0]||e.changedTouches?.[0]||e;
+  return{offsetX:(t.clientX??0)-r.left+(e.offsetX!==undefined&&!e.touches?0:0)||t.clientX-r.left,offsetY:t.clientY-r.top};}
+function down(p){drag=true;moved=false;downP=p;if(tool==='road')act(p);}
+function move(p){if(!drag)return;
+  if(tool==='road'){act(p);return;}
+  const dx=p.offsetX-downP.offsetX,dy=p.offsetY-downP.offsetY;
+  if(Math.abs(dx)+Math.abs(dy)>8)moved=true;
+  if(!tool||JOBS.includes(tool)){if(moved&&!tool){panX+=dx;panY+=dy;downP=p;}else if(moved&&tool){panX+=dx;panY+=dy;downP=p;}}}
+function up(p){if(drag&&!moved&&tool!=='road')act(p);drag=false;pinch0=null;}
+cv.onmousedown=e=>down({offsetX:e.offsetX,offsetY:e.offsetY});
+cv.onmousemove=e=>move({offsetX:e.offsetX,offsetY:e.offsetY});
+cv.onmouseup=e=>up({offsetX:e.offsetX,offsetY:e.offsetY});
+cv.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY<0?1.12:0.89;
+  const nz=Math.min(2.5,Math.max(0.35,Z*f));
+  panX=e.offsetX-(e.offsetX-panX)*nz/Z;panY=e.offsetY-(e.offsetY-panY)*nz/Z;Z=nz;},{passive:false});
+function tp(e,i=0){const r=cv.getBoundingClientRect();const t=e.touches[i]||e.changedTouches[0];
   return{offsetX:t.clientX-r.left,offsetY:t.clientY-r.top};}
-cv.addEventListener('touchstart',e=>{e.preventDefault();drag=true;act(tpos(e));},{passive:false});
-cv.addEventListener('touchmove',e=>{e.preventDefault();if(drag&&tool==='road')act(tpos(e));},{passive:false});
-cv.addEventListener('touchend',()=>drag=false);
+cv.addEventListener('touchstart',e=>{e.preventDefault();
+  if(e.touches.length===2){const a=tp(e,0),b=tp(e,1);pinch0={d:Math.hypot(a.offsetX-b.offsetX,a.offsetY-b.offsetY),z:Z};drag=false;}
+  else down(tp(e));},{passive:false});
+cv.addEventListener('touchmove',e=>{e.preventDefault();
+  if(e.touches.length===2&&pinch0){const a=tp(e,0),b=tp(e,1);
+    const d=Math.hypot(a.offsetX-b.offsetX,a.offsetY-b.offsetY);
+    const cxp=(a.offsetX+b.offsetX)/2,cyp=(a.offsetY+b.offsetY)/2;
+    const nz=Math.min(2.5,Math.max(0.35,pinch0.z*d/pinch0.d));
+    panX=cxp-(cxp-panX)*nz/Z;panY=cyp-(cyp-panY)*nz/Z;Z=nz;}
+  else move(tp(e));},{passive:false});
+cv.addEventListener('touchend',e=>{e.preventDefault();up(tp(e));},{passive:false});
 function act(e){const[x,y]=unIso(e.offsetX,e.offsetY);
   if(!tool){let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
     sel=bd<2?best:null;info();return;}
@@ -90,7 +113,7 @@ function act(e){const[x,y]=unIso(e.offsetX,e.offsetY);
     w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
   else if(tool&&JOBS.includes(tool)){w.addHH(tool,x,y);drag=false;}}
 // 描画
-function draw(){cx.clearRect(0,0,cv.width,cv.height);
+function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
   const d=w.day,mm=(Math.floor((d-1)/30))%12+1;
   const wint=mm>=10;
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
