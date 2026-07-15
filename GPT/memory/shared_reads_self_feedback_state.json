@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T20:05:55+09:00",
+  "updated_at": "2026-07-15T21:48:49+09:00",
   "reviewed_source_ts": [
+    "1782487338.755809",
     "1782661102.148439",
     "1782675599.868889",
     "1782668411.613329",
@@ -389,6 +390,39 @@
     "1783417724.835199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T21:48:49+09:00",
+      "selected": {
+        "id": "sr-1782487338-dcddef5b36",
+        "source_ts": "1782487338.755809",
+        "title": "COMBAT: 反応する対戦相手を映像品質・ルール帰結・行動様式に分けて評価する",
+        "reason": "未レビューの score 11 atom で、memory・harness・game-design・agent・operation・evaluation を横断する。敵 AI を強さや映像の滑らかさだけでなく、プレイヤー入力への反応遅延、攻撃比率、damage pacing で見る提案は次の action prototype に直結するため確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 2,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。COMBAT の映像品質・ルール帰結・行動様式の分離は有用だが、active probes には既に固定 scenario/seed、state/action trace、行動分布、style adherence、反応遅延を含む communication 比較、速度・call cost・stuck time と品質の比較がある。reaction_adherence、attack_ratio_consistency、damage_pacing_mse を新しい probe にすると既存評価観点の再束縛となり、300件超の active probe 群をさらに肥大化させる。次の敵 AI 評価では既存 probe から対象に合う一つを選び、COMBAT 固有の指標は実際の欠落が観測されるまで追加しない。",
+      "change": {
+        "type": "state_only",
+        "summary": "COMBAT atom を reviewed に追加し、既存の反応性・行動分布・速度品質 probes と重複するため reject と記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T20:05:55+09:00",
       "selected": {
