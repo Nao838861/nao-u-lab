@@ -45,23 +45,24 @@ def summary(w, label):
     print(f"文化Lv: {[(h.id, h.job, h.lv) for h in w.hhs]}")
     ev = [e for e in w.events[-12:]]
     print(f"直近イベント: {ev}")
+    print(f"配給総量: {w.dole_qty:.0f} / 詰み: {"day %d" % w.go_day if w.go_day else "なし"} / 本土収支: 流入{w.mainland_in:.0f} 流出{w.mainland_out:.0f}")
 
 if __name__ == '__main__':
     which = sys.argv[1] if len(sys.argv) > 1 else 'S1'
     if which == 'S1':
-        w = World(village(), seed=11, overrides={'PUBWORKS': 120}).run(720)
+        w = World(village(), seed=11, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(720)
         summary(w, 'S1 開始村 2年 (使用価値天井あり)')
     elif which == 'S1b':
-        w = World(village(), seed=11, overrides={'USE_VALUE_CEILING': False, 'PUBWORKS': 120}).run(720)
+        w = World(village(), seed=11, overrides={'USE_VALUE_CEILING': False, 'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(720)
         summary(w, 'S1b 開始村 2年 (純信念ZI — 天井なし対照)')
     elif which == 'S2':
-        w = World(village(far_fisher=True), seed=11, overrides={'PUBWORKS': 120}).run(720)
+        w = World(village(far_fisher=True), seed=11, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(720)
         summary(w, 'S2 遠い漁師 2年 (距離勾配)')
         near, far = w.hhs[0], w.hhs[1]
         print(f"\n近い漁師HH0: 財布{near.purse:.0f} / 遠い漁師HH1: 財布{far.purse:.0f} "
               f"(移動負担 {w.travel_share(near)*100:.0f}% vs {w.travel_share(far)*100:.0f}%)")
     elif which == 'S3':
         w = World(village(far_fisher=True), seed=11,
-                  overrides={'JOB_SWITCH': True, 'PUBWORKS': 120}).run(1080)
+                  overrides={'JOB_SWITCH': True, 'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(1080)
         summary(w, 'S3 転職オン 3年')
         print(f"転職イベント: {[e for e in w.events if '転職' in e[1]]}")

@@ -24,16 +24,17 @@ results.append(t('auction_transfer', abs(s1.purse - (60 + 15 * 1.0)) < 1e-9
 
 # 2. 貨幣保存則 (200日・毎日engine内でassert / ここでは最終確認)
 HH._next = 0
-w = World(village(), seed=7, overrides={'PUBWORKS': 120}).run(200)
-results.append(t('money_conservation', abs(w.total_money() - w.money0) < 1e-6,
-                 f'total={w.total_money():.2f}'))
+w = World(village(), seed=7, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(200)
+drift = w.total_money() - w.money0 - (w.mainland_in - w.mainland_out)
+results.append(t('money_conservation', abs(drift) < 1e-6,
+                 f'島内変化={w.total_money()-w.money0:.1f} = 本土流入{w.mainland_in:.1f}-流出{w.mainland_out:.1f} (drift={drift:.2e})'))
 
 # 3. 質量収支 (engine内assertが200日通ったこと自体が証明)
 results.append(t('mass_balance_200d', True, '(engine内で毎日assert済)'))
 
 # 4. 冬の魚価 > 夏の魚価 (季節が価格に創発するか)
 HH._next = 0
-w = World(village(), seed=11, overrides={'PUBWORKS': 120}).run(720)
+w = World(village(), seed=11, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(720)
 def avgp(w, good, cond):
     xs = [p for d, p, v in w.prices[good] if cond(((d - 1) // 30) % 12 + 1)]
     return sum(xs) / len(xs) if xs else 0.0
@@ -52,7 +53,7 @@ results.append(t('wheat_import_parity_cap', parity_ok, '(輸入パリティが�
 
 # 6. 距離勾配 (遠い漁師は移動が労働を食い貧しくなる)
 HH._next = 0
-w2 = World(village(far_fisher=True), seed=11, overrides={'PUBWORKS': 120}).run(720)
+w2 = World(village(far_fisher=True), seed=11, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(720)
 near, far = w2.hhs[0], w2.hhs[1]
 results.append(t('distance_income', near.purse > far.purse * 1.1,
                  f'近{near.purse:.0f} vs 遠{far.purse:.0f}'))
@@ -68,7 +69,7 @@ results.append(t('belief_convergence_cv', len(y2) > 10 and cv(y2) < cv(y1),
 
 # 8. 使用価値の天井: 炭逼迫時に製塩(高使用価値)が暖(低)より確保できているか
 HH._next = 0
-wA = World(village(), seed=13, overrides={'PUBWORKS': 120}).run(360)
+wA = World(village(), seed=13, overrides={'PUBWORKS': 120, 'TREASURY0': 30000, 'CREDIT': 12000, 'IMP_COST': {'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}}).run(360)
 saltw = [h for h in wA.hhs if h.job == 'saltworks'][0]
 salt_char_ok = wA.imported.get('salt', 0)  # 塩の輸入が少ない=国産製塩が回った
 results.append(t('derived_demand_salt_runs', sum(

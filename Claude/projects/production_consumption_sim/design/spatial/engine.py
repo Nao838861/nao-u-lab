@@ -21,7 +21,8 @@ KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish')  # 多様性の�
 
 P = dict(
     HH_SIZE=9, EAT=9.0,                  # 1人1荷/日 × 世帯9人
-    PANTRY_FOOD_D=6, PANTRY_CULT_D=20,   # パントリー目標(日数)
+    PANTRY_FOOD_D=6, PANTRY_CULT_D=90,   # パントリー目標(日数)。文化財90日=年収一括の
+    # 農家が収穫時に買いだめして端境期もストリークを保てる(20日だと毎年切れて文化が育たない)
     DIVERSITY_RATION=0.15,               # 貯蔵財(麦・保存)からの多様性小口
     # 生産レート(荷/日, Lv0) — v8と同じスケール
     Y_FISH=10.0, Y_FISH_W=2.5, Y_VEG=6.0, Y_WHEAT=720.0, Y_TOOLS=4.0,
@@ -36,8 +37,21 @@ P = dict(
     HAUL=40.0,                           # 1往復の運搬容量(荷)
     # 会社(港の商館): 輸入売値 / 輸出買値(買い叩き)+日次天井
     IMP=dict(wheat=2.0, tools=3.5, salt=3.0),
+    IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0),   # 会社が本土に払う仕入原価(系外流出)
     EXP=dict(pres=0.8), EXP_CAP=dict(pres=25.0),
+    EXP_MAINLAND=dict(pres=1.0),         # 会社が本土で売る値(系外流入・薄い鞘)
     PUBWORKS=0.0,                        # 公費建設: 会社が市場で道具を買う予算/日(貨幣注入弁)
+    # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
+    # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
+    # 滑走路の長さ = 初期金庫(TREASURY0) ÷ 食料赤字×輸入原価
+    DOLE=True, CREDIT=4000.0,
+    # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
+    # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
+    GRAN_BID=dict(wheat=1.6, pres=1.5),
+    # 転職 (Nao_u「相当ハードルを上げる。長期間生活が破綻したら転職」):
+    # 収入比較の転職は廃止(コブウェブ発振)。180日中40日飢えたら+1年クールダウンで
+    # 観測収入最良の職へ(確率0.5)。動くのは破綻した者だけ=羊群れが構造的に起きない
+    DISTRESS_DAYS=40, SWITCH_COOLDOWN=360,
     # 資源プール(残量比例+再生下限)
     BAY_S0=600_000.0, BAY_R=0.00175, RESEED=0.3,
     GROVE_S0=60_000.0, GROVE_R=0.0006,
@@ -121,17 +135,26 @@ class Market:
                 cost = q * price
                 buyer.purse -= cost; buyer.pantry[good] += q
                 buyer.belief[good] += (price - buyer.belief[good]) * P['BELIEF_LR']
-            else:  # 会社が買う(輸出/公共事業)
+            else:  # 会社が買う: マーカーで輸出/公共事業/御蔵を区別
                 self.w.treasury -= cost
-                if good in P['EXP']: self.w.exported[good] += q
-                else: self.w.pubworks_bought += q
+                if buyer == 'CO:exp':
+                    self.w.exported[good] += q
+                    rev = q * P['EXP_MAINLAND'][good]   # 本土で転売(系外から流入)
+                    self.w.treasury += rev; self.w.mainland_in += rev
+                elif buyer == 'CO:gran':
+                    self.w.granary[good] += q
+                    self.w.gran_in_total[good] += q
+                else:
+                    self.w.pubworks_bought += q
             if isinstance(seller, HH):
                 seller.purse += cost; seller.pantry[good] -= q
                 seller.income30 += cost
                 seller.belief[good] += (price - seller.belief[good]) * P['BELIEF_LR']
                 seller.offered_unsold.discard(good)
-            else:  # 会社が売る(輸入)
+            else:  # 会社が売る(輸入): 売上は金庫へ・仕入原価は本土へ流出
                 self.w.treasury += cost
+                c = q * P['IMP_COST'][good]
+                self.w.treasury -= c; self.w.mainland_out += c
                 self.w.imported[good] += q
             vol += q
         return price, vol
@@ -157,6 +180,11 @@ class World:
         self.money0 = self.total_money()
         self.imported = defaultdict(float); self.exported = defaultdict(float)
         self.pubworks_bought = 0.0
+        self.mainland_in = 0.0; self.mainland_out = 0.0
+        self.dole_qty = 0.0; self.go_day = None
+        self.granary = defaultdict(float)
+        self.gran_in_total = defaultdict(float); self.gran_out_total = defaultdict(float)
+        self.dole_rate = 10.0
         self.famine_days = 0
         self.job_income = defaultdict(list)   # 転職の観測用(市場で見える公開情報)
         self.events = []
@@ -166,8 +194,10 @@ class World:
         return self.treasury + sum(h.purse for h in self.hhs)
 
     def assert_money(self):
+        # 保存則: 島内総額の変化 = 本土からの流入 - 本土への流出
         m = self.total_money()
-        assert abs(m - self.money0) < 1e-6, f"貨幣保存則違反: {m} != {self.money0} (day {self.day})"
+        drift = m - self.money0 - (self.mainland_in - self.mainland_out)
+        assert abs(drift) < 1e-6, f"貨幣保存則違反: drift={drift} (day {self.day})"
 
     # ---------- 1日 ----------
     def dist(self, h):
@@ -256,10 +286,16 @@ class World:
             if g in P['IMP']:
                 asks.append(('CO', 1e9, P['IMP'][g]))
             if g in P['EXP']:
-                bids.append(('CO', P['EXP_CAP'][g], P['EXP'][g]))
+                bids.append(('CO:exp', P['EXP_CAP'][g], P['EXP'][g]))
             if g == 'tools' and P['PUBWORKS'] > 0:
-                # 公費建設: 輸入パリティ(3.5)の少し下で地場の道具を買う=貨幣の注入弁
-                bids.append(('CO', P['PUBWORKS'] / 3.4, 3.4))
+                # 公費建設: 貨幣の注入弁。ただし民需の下に入る(住民の道具の使用価値2.5より
+                # 安い2.4で入札)。第一稿は3.4で入札→道具を買い占め住民が文化Lv2に
+                # 上がれないクラウディングアウトが発生した
+                bids.append(('CO:pub', P['PUBWORKS'] / 2.4, 2.4))
+            if g in P['GRAN_BID'] and P['DOLE'] and self.go_day is None:
+                # 御蔵: 直近の配給ペース分を地場から買い上げる(囲米)
+                qn = max(5.0, self.dole_rate)
+                bids.append(('CO:gran', qn, P['GRAN_BID'][g]))
             pre_pantry = {h.id: h.pantry[g] for h, q, p_ in bids if isinstance(h, HH)}
             wanted = {h.id: q for h, q, p_ in bids if isinstance(h, HH)}
             pr, vol = self.market.clear(g, bids, asks)
@@ -287,6 +323,31 @@ class World:
                 h.belief[g] *= P['UNSOLD_DECAY']
             h.offered_unsold.clear()
 
+        # --- 御蔵の配給(公費): 飢えた世帯に支給。蔵の地場買上げ分を先に使い、
+        #     不足だけ輸入(本土流出)。金庫+信用が尽きたら停止=詰み ---
+        dole_today = 0.0
+        if P['DOLE'] and self.go_day is None:
+            for h in self.hhs:
+                fd = sum(h.pantry[g] for g in FOODS) / P['EAT']
+                if fd < 1.0:
+                    q = P['EAT'] * 1.5
+                    for g in ('wheat', 'pres'):        # 蔵から先に
+                        u = min(self.granary[g], q)
+                        self.granary[g] -= u; q -= u
+                        h.pantry[g] += u; self.gran_out_total[g] += u
+                        dole_today += u
+                    if q > 1e-9:                        # 不足は輸入
+                        c = q * P['IMP_COST']['wheat']
+                        if self.treasury - c < -P['CREDIT']:
+                            self.go_day = self.day
+                            self.events.append((self.day, '★金庫が信用限度に達し配給停止(詰み)'))
+                            break
+                        self.treasury -= c; self.mainland_out += c
+                        h.pantry['wheat'] += q
+                        self.imported['wheat'] += q; dole_today += q
+            self.dole_qty += dole_today
+            self.dole_rate += (dole_today - self.dole_rate) * 0.1
+
         # --- 食べる(多様性小口+フロー水充填+不足時取り崩し) ---
         for h in self.hhs:
             need = P['EAT']; kinds = set()
@@ -307,8 +368,12 @@ class World:
                 u = min(h.pantry[g], need)
                 h.pantry[g] -= u; need -= u
                 if u > 1e-9: kinds.add(KIND[g]); bal[g]['eat'] += u
-            if need > 0.5:
+            hungry = need > 0.5
+            if hungry:
                 h.hunger += 1; self.famine_days += 1
+            h.hunger_hist = getattr(h, 'hunger_hist', [])
+            h.hunger_hist.append(1 if hungry else 0)
+            if len(h.hunger_hist) > 180: h.hunger_hist.pop(0)
             h.kind_log.append((d, kinds))
             for k in kinds: h.kind_days[k] += 1
             while h.kind_log and h.kind_log[0][0] <= d - 45:
@@ -367,30 +432,43 @@ class World:
         for h in self.hhs:
             h.income_log.append(h.income30); h.income30 = 0.0
             if len(h.income_log) > 30: h.income_log.pop(0)
+        # 転職=生活破綻トリガーのみ (Nao_u: 「相当ハードルを上げる。長期間生活が
+        # 破綻したら転職、に近いのがいい」)。稼ぎ比較の転職はコブウェブ発振するため廃止。
+        # 動くのは破綻した者だけ→羊群れが構造的に起きない
         if P['JOB_SWITCH'] and d % 30 == 0:
             obs = defaultdict(list)
             for h in self.hhs:
                 obs[h.job].append(sum(h.income_log))
             avg = {j: sum(v) / len(v) for j, v in obs.items() if v}
             for h in self.hhs:
-                mine = sum(h.income_log)
-                best = max(avg, key=lambda j: avg[j])
-                if avg[best] > max(mine, 1.0) * 1.5 and best != h.job and self.rng.random() < 0.3:
-                    self.events.append((d, f'HH{h.id} 転職 {h.job}→{best}'))
-                    h.job = best; h.lv = min(h.lv, 1)
+                distress = sum(getattr(h, 'hunger_hist', [])) >= P['DISTRESS_DAYS']
+                cool = d - getattr(h, 'last_switch', -9999) >= P['SWITCH_COOLDOWN']
+                if distress and cool and self.rng.random() < 0.5:
+                    best = max(avg, key=lambda j: avg[j])
+                    if best != h.job:
+                        self.events.append((d, f'HH{h.id} 破綻転職 {h.job}→{best}'))
+                        h.job = best; h.lv = min(h.lv, 1)
+                        h.last_switch = d; h.hunger_hist = []
 
         # --- 検証: 貨幣保存 + 質量収支 ---
         self.assert_money()
         if not hasattr(self, '_imp_prev'):
             self._imp_prev = defaultdict(float); self._exp_prev = defaultdict(float)
+        if not hasattr(self, '_gran_prev'):
+            self._gran_prev = defaultdict(float); self._grano_prev = defaultdict(float)
         for g in GOODS:
             imp_d = self.imported[g] - self._imp_prev[g]
             exp_d = self.exported[g] - self._exp_prev[g]
+            gin_d = self.gran_in_total[g] - self._gran_prev[g]
+            gout_d = self.gran_out_total[g] - self._grano_prev[g]
             self._imp_prev[g] = self.imported[g]; self._exp_prev[g] = self.exported[g]
+            self._gran_prev[g] = self.gran_in_total[g]
+            self._grano_prev[g] = self.gran_out_total[g]
             stock_now = sum(h.pantry[g] for h in self.hhs)
             src = bal[g]
             used = src['eat'] + src['cult'] + src['used'] + src['preserve'] + src['spoil']
-            err = (stock_pre[g] + src['prod'] + imp_d) - (stock_now + used + exp_d
+            err = (stock_pre[g] + src['prod'] + imp_d + gout_d) - (stock_now + used + exp_d
+                  + gin_d
                   + (self.pubworks_bought - getattr(self, '_pw_prev', 0.0) if g == 'tools' else 0.0))
             if g == 'tools':
                 self._pw_prev = self.pubworks_bought
@@ -416,10 +494,14 @@ class World:
         t = {}
         food_days = sum(h.pantry[g] for g in FOODS) / P['EAT']
         cheapest = min(h.belief[g] for g in ('veg', 'wheat', 'pres'))
-        if food_days < P['PANTRY_FOOD_D']:
+        # 配給が生きている間は備え目標を2日に縮める(依存期の合理: 会社が食わせて
+        # くれるのに市場価格で6日分を積むと金が文化財=改善に一切回らず、
+        # 文化が上がらない→自給が永遠に来ない閂になる。自給の朝に蔵を積み始める)
+        tgt_days = 2.0 if (P['DOLE'] and self.go_day is None) else P['PANTRY_FOOD_D']
+        if food_days < tgt_days:
             starving = food_days < 1.5
             for g in ('veg', 'wheat', 'pres'):   # 貯蔵できる食料はパントリー目標まで
-                qty = (P['PANTRY_FOOD_D'] - food_days) * P['EAT'] / 3
+                qty = (tgt_days - food_days) * P['EAT'] / 3
                 # 天井=信念×1.5、ただし最安の代替食の2.2倍まで(多様性プレミアムは有限。
                 # これが無いと買い損ね学習で信念が暴走し麦2.0の隣で魚を9で買う)
                 ceil = 99.0 if starving else min(h.belief[g] * 1.5, cheapest * 2.2)
