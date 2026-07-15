@@ -11,9 +11,9 @@ export const P = {
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
   IMP:{wheat:2.6,tools:3.5,salt:3.0,iron:3.8}, IMP_COST:{wheat:1.0,tools:2.5,salt:2.0,iron:2.5},  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
   EXP:{pres:0.8,pick:0.8,tools:1.5,stone:0.6,oil:3.2}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12}, EXP_ML:{pres:1.3,pick:1.2,tools:2.0,stone:0.9,oil:4.0},
-  PUB0:200, DOLE_RATION:1.1, GRAN_BID:{wheat:1.9,pres:1.7,salt:1.8,char:1.2},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
-  FREE_M:42, IRATE:0.012, LIMIT0:34000, LIMIT_G:2000, LIMIT_FREEZE:24, LIMIT_PC:400,
-  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
+  PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:1.6,char:1.2},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
+  FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
+  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:5000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:3, Y_OIL:2.5,
@@ -57,8 +57,8 @@ export class HH{
 }
 export class World{
   constructor(seed=11){this.rng=mulberry(seed);HID=0;this.hhs=[];this.day=0;this.treasury=P.TREASURY0;
-    this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.outBy={dole:0,pass:0};this.led={prod:{},eat:{},spoil:{},dole:0,need:0};this.doleQty=0;
-    this.bailouts=0;this.goDay=null;this.shipping=false;this.pub=P.PUB0;this.famine=0;
+    this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.outBy={dole:0,pass:0};this.led={prod:{},eat:{},spoil:{},dole:0,need:0};this.co={pub:0,gran:0,expBuy:0,expSell:0,impMargin:0,doleC:0,bail:0};this.doleQty=0;
+    this.bailouts=0;this.goDay=null;this.shipping=false;this.pub=P.PUB0;this.pubLeft=P.PUB0;this.famine=0;
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
     this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
@@ -225,7 +225,7 @@ export class World{
         if(s.age>=3&&s.hh instanceof HH){
           const desks=[];
           if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-          if(P.GRAN_BID[g]&&this.goDay===null&&(this.granary[g]||0)<300)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);
+          if(P.GRAN_BID[g]&&this.goDay===null&&(this.granary[g]||0)<((g==='wheat'||g==='pres')?300:120))desks.push(['GRAN',P.GRAN_BID[g],(g==='wheat'||g==='pres')?Math.max(2,this.doleRate*0.6):3]);
           desks.sort((a,b)=>b[1]-a[1]);
           for(const[kind,price,cap]of desks){
             if(s.qty<1e-9)break;
@@ -233,9 +233,10 @@ export class World{
             if(can<1e-9)continue;
             this.deskUsed[kind+g]=used+can;
             s.qty-=can;s.hh.purse+=can*price;s.hh.income30+=can*price;this.treasury-=can*price;
+            if(kind==='GRAN')this.co.gran+=can*price;else if(kind==='EXP')this.co.expBuy+=can*price;
             s.hh.belief[g]=Math.max(s.hh.belief[g]*0.9,price);
             if(kind==='EXP'){this.exported[g]=(this.exported[g]||0)+can;
-              const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;}
+              const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
             else if(kind==='GRAN')this.granary[g]=(this.granary[g]||0)+can;}}
         if(s.hh instanceof HH)s.hh.belief[g]=Math.min(s.hh.belief[g],s.price*1.05); // 売れない現実が信念を下げる
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;this.led.spoil.fish=(this.led.spoil.fish||0)+rot;}
@@ -285,8 +286,8 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(P.GRAN_BID[g]&&doleOn&&(this.granary[g]||0)<300)desks.push(['GRAN',P.GRAN_BID[g],Math.max(10,this.doleRate)]);  // 備蓄目標300で買い止め
-      if(g==='tools'&&this.pub>0)desks.push(['PUB',P.PUB===0?0:1.8,this.pub/1.8]);
+      if(P.GRAN_BID[g]&&doleOn&&(this.granary[g]||0)<((g==='wheat'||g==='pres')?300:120))desks.push(['GRAN',P.GRAN_BID[g],(g==='wheat'||g==='pres')?Math.max(2,this.doleRate*0.6):3]);
+      if(g==='tools'&&this.pubLeft>0)desks.push(['PUB',1.8,this.pubLeft/1.8]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
@@ -297,8 +298,10 @@ export class World{
         this.deskUsed[kind+g]=used+can;
         h.pantry[g]-=can;h.purse+=can*price;h.income30+=can*price;
         this.treasury-=can*price;
+        if(kind==='PUB')this.pubLeft-=can*price;
+        if(kind==='GRAN')this.co.gran+=can*price;else if(kind==='PUB')this.co.pub+=can*price;else if(kind==='EXP')this.co.expBuy+=can*price;
         if(kind==='EXP'){this.exported[g]=(this.exported[g]||0)+can;
-          const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;}
+          const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
         else if(kind==='GRAN')this.granary[g]=(this.granary[g]||0)+can;
         else if(kind==='PAVE')this.paveBought+=can;
         else this.pubworksBought=(this.pubworksBought||0)+can;
@@ -325,6 +328,7 @@ export class World{
         h.belief[g]+=(s.price-h.belief[g])*0.2;
         if(s.hh==='CO'){this.treasury+=q*s.price;
           const c=q*(P.IMP_COST[g]??P.IMP[g]*0.7);this.treasury-=c;this.mainlandOut+=c;
+          this.co.impMargin+=q*s.price-c;
           this.outBy['imp_'+g]=(this.outBy['imp_'+g]||0)+(c-q*s.price);
           this.imported[g]=(this.imported[g]||0)+q;}
         else if(s.hh==='GRANSELL'){this.treasury+=q*s.price;this.granary[g]-=q;s.qty-=q;}
@@ -370,7 +374,7 @@ export class World{
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
         if(fd<1){let q=h.eat()*P.DOLE_RATION;
           for(const g of['wheat','pres']){const u=Math.min(this.granary[g],q);this.granary[g]-=u;q-=u;h.pantry[g]+=u;doleToday+=u;}
-          if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;this.outBy.dole+=c;this.led.dole+=q;
+          if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;this.outBy.dole+=c;this.led.dole+=q;this.co.doleC+=c;
             h.pantry.wheat+=q;doleToday+=q;}}}
       this.doleQty+=doleToday;this.doleRate+=(doleToday-this.doleRate)*0.1;}
     // 食事
@@ -455,7 +459,8 @@ export class World{
         if(best&&best!==h.job){this.log(`破綻転職: ${h.job}#${h.id}→${best}`);
           h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];}}}}
     // 公費の既定テーパー(標準プレイの模写・UIで上書き可)
-    if(d%30===1){if(m===26)this.pub=Math.min(this.pub,100);if(m===34)this.pub=Math.min(this.pub,40);}
+    if(d%30===1){if(m===26)this.pub=Math.min(this.pub,60);if(m===34)this.pub=Math.min(this.pub,20);
+      if(this.doleRate<this.pop()*0.06&&m>12)this.pub=Math.min(this.pub,10);this.pubLeft=this.pub;}
     // 財政(月末)
     if(d%30===0){
       if(this.treasury<P.BAIL_TRIG&&this.bailouts<P.BAIL_N&&this.goDay===null){
