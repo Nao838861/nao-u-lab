@@ -48,7 +48,7 @@ P = dict(
     # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
     # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
     # 滑走路の長さ = 初期金庫(TREASURY0) ÷ 食料赤字×輸入原価
-    DOLE=True,
+    DOLE=True, DOLE_RATION=1.1,  # 支給=需要の1.1倍。1.5だと世帯が配給に寄りかかり停滞の世界線が生まれる(seed13)。1.1で全シード生存・飢餓ゼロ・ピーク分散も消滅
     # 会社財政の弧 (Nao_u 2026-07-15): 標準プレイ=無利子期間内に債務ピーク→黒字化→
     # しばらくのちに完済 / 無理解プレイ=利子付き債務が複利で膨張→限度超過=破産→リプレイ。
     # 金庫がマイナス=本国からの借入。M{FREE_M}まで無利子、以後は月利IRATE。
@@ -423,7 +423,7 @@ class World:
             for h in self.hhs:
                 fd = sum(h.pantry[g] for g in FOODS) / P['EAT']
                 if fd < 1.0:
-                    q = P['EAT'] * 1.5
+                    q = P['EAT'] * P.get('DOLE_RATION', 1.5)
                     h.dole_hist = getattr(h, 'dole_hist', [])
                     h.dole_hist.append(self.day)
                     for g in ('wheat', 'pres'):        # 蔵から先に

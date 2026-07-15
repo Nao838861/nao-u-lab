@@ -31,7 +31,7 @@ def start8():
             HH('woodshop',(1.8,1.0)), HH('charburner',(2.0,1.2))]
 
 BASE = dict(PUBWORKS=200, TREASURY0=6000, PANTRY_CULT_D=240, Y_WHEAT=1600.0,
-            FREE_M=42, UP_DAYS=45, LIMIT0=34000.0, LIMIT_G=2000.0, IRATE=0.012,  # 凍結限度82k=標準max78.6kと無理解min85.2kの間
+            FREE_M=42, UP_DAYS=45, LIMIT0=34000.0, DOLE_RATION=1.1, LIMIT_G=2000.0, IRATE=0.012,  # 凍結限度82k=標準max78.6kと無理解min85.2kの間
             BAILOUT_AMOUNT=15000.0,
             IMP_COST={'wheat': 1.0, 'tools': 2.5, 'salt': 2.0}, JOB_SWITCH=True, BRANCHING=True)
 
