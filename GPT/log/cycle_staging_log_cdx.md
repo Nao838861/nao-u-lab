@@ -9,7 +9,19 @@
 - duplicate preflight: AutoBG=`skip`（posted URL match）、RevengeBench=`review`（同題・別 URL、既存 canonical あり）、LLM-MARL stabilisation=`review`（同題・別 URL、既存 canonical あり）、RogueAI=`skip`（posted URL match）。これらは新規 candidate を作成せず、preflight log のみに記録。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260715_vr_sports_physical_interactions.md
+    reason: "比較結果・効果量・参加者条件・最終結論が不足し、CoopEval 水準の概要を支えられない"
+postpone: []
+stale_reviewed: []
+```
+
+- duplicate preflight: URL-first では posted URL 一致なし。title-second では同一 URL・同一 title の既存 mixed group（`failed` 1 件、`postponed` 1 件）を確認したが terminal posted sibling はなく、本文評価を継続した。
+- ゲーム制作への適用性: 身体動作と入力装置の対応を `interactivity / reality`、`spatial presence`、`enjoyment` に分解して比較する評価設計は、専用入力デバイスの試作に適用可能。ただし本 candidate は実験結果を欠くため、設計知見として採用する根拠が不足する。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

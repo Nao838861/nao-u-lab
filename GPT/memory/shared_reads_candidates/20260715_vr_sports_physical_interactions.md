@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2604.20071
 collected_at: 2026-07-15T18:14:34+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, virtual-reality, sports-game, physical-controller, hci, immersion, evaluation]
+evaluated_at: "2026-07-15T18:30:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-15T18:30:00+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-15T18:30:00+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-14"
+supersedes: []
+gate_reason: >-
+  物理コントローラと身体動作を対応づけ、interactivity / reality・spatial presence・enjoyment を比較する問題設定と評価軸は具体的である。
+  しかし candidate からは比較結果・効果量・参加者条件・最終結論を抽出できず、CoopEval 水準の概要で評価の中身と結論を支えられないため投稿対象にはしない。
 ---
 
 ## raw_excerpt
