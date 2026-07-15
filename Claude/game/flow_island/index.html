@@ -27,7 +27,7 @@ small{color:#8899b0}
 <h2>インフラ</h2><div id="infra"></div>
 <h2>市場価格</h2><div id="prices"></div>
 <h2>出来事</h2><div id="log"></div>
-<h2>遊び方</h2><small>職を選んで地面をクリック=入植。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
+<h2>遊び方</h2><small>職を選んで地面をクリック=入植(対岸漁は右下の海沿い・採石は北東の岩場が適地)。菜種は対岸漁の粕(肥料)で伸び、油は高値で売れる。序盤は配給(公費の輸入食料)が島を支えるが金庫が沈む——木工(道具)と炭・塩の連鎖を早く立て、文化Lvを上げて自給せよ。支援は3回まで。道は世帯の近くに敷くと移動が減り生産が増える。余裕が出たら海運投資で輸出が開く。</small>
 </div>
 <script type="module">
 import{World,P,JOBS,GOODS} from './engine.mjs';
@@ -51,17 +51,17 @@ const w=new World(11);w.market={x:25,y:MH-8};
 const start=[['fisher',24,MH-9],['fisher',27,MH-9],['veg',22,MH-12],['veg',20,MH-11],
  ['wheat',16,MH-16],['wheat',18,MH-17],['woodshop',12,12],['charburner',10,11]];
 for(const[j,x,y]of start)w.addHH(j,x,y);
-const JCOL={fisher:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',woodshop:'#b07840',charburner:'#555',saltworks:'#dfe4ea'};
-const JNAME={fisher:'漁師',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',woodshop:'木工所',charburner:'炭焼き',saltworks:'塩小屋'};
+const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#555',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
+const JNAME={fisher:'漁師',fisher2:'対岸漁(粕)',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種畑',woodshop:'木工所',charburner:'炭焼き',quarryman:'採石',saltworks:'塩小屋'};
 let tool=null,speed=1,tick=0;
 // UI
 const jb=document.getElementById('jobs');
 for(const j of JOBS){const b=document.createElement('button');b.textContent=JNAME[j];
   b.onclick=()=>{tool=tool===j?null:j;upd();};jb.appendChild(b);b.dataset.t=j;}
 const inf=document.getElementById('infra');
-for(const[id,label]of[['road','道を敷く(5/マス)'],['ship','海運投資(8000)']]){
+for(const[id,label]of[['road','道を敷く(5/マス)'],['ship','海運投資(8000)'],['pave','石畳P(石200公費買上げ)']]){
   const b=document.createElement('button');b.textContent=label;
-  b.onclick=()=>{if(id==='ship'){if(w.investShipping())b.disabled=true;}else{tool=tool==='road'?null:'road';upd();}};
+  b.onclick=()=>{if(id==='ship'){if(w.investShipping())b.disabled=true;}else if(id==='pave'){if(w.investPaving())b.disabled=true;}else{tool=tool==='road'?null:'road';upd();}};
   b.dataset.t=id;inf.appendChild(b);}
 const sp=document.getElementById('speeds');
 for(const[s,l]of[[0,'⏸'],[1,'▶'],[4,'▶▶'],[16,'▶▶▶']]){
