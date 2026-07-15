@@ -58,7 +58,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=123536';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=123869';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -79,6 +79,7 @@ const w=new World(11);w.market={x:25,y:MH-8};w.port={x:25,y:MH-5};w.setTerrain(t
 const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
 const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
 let tool=null,speed=1,tick=0,sel=null;
+const M=x=>Math.round(x*10);  // 表示通貨=デナリ(内部×10)
 const FRAMES=[0,4,1,0.5]; // 速度→1tickの間隔(フレーム)。1×=15tick/s≒0.5日/秒
 // --- 上バー ---
 const top=document.getElementById('top');
@@ -86,7 +87,7 @@ function topbar(){const d=w.day,m=Math.floor(Math.max(0,d-1)/30)+1,mm=(m-1)%12+1
   const se=mm>=10?'❄冬':mm<=3?'🌸春':mm<=6?'☀夏':'🍂秋';
   const debt=Math.max(0,-w.treasury),lim=w.limit();
   top.innerHTML=`<span>${Math.floor((m-1)/12)+1}年目 ${mm}月 ${se}</span>`+
-   `<span>金庫 <b class="${w.treasury<0?'warn':''}">${Math.round(w.treasury)}</b></span>`+
+   `<span>金庫 <b class="${w.treasury<0?'warn':''}">${M(w.treasury)}</b></span>`+
    `<span class="bar" title="債務/限度"><div style="width:${Math.min(100,debt/lim*100)}%"></div></span>`+
    `<span>人口 <b>${w.pop()}</b></span><span>支援${w.bailouts}/3</span>`+
    [['⏸',0],['▶',1],['▶▶',2],['▶▶▶',3]].map(([l,s])=>`<button data-s="${s}" class="${speed===s?'on':''}">${l}</button>`).join('');
@@ -238,13 +239,15 @@ function placePopup(){if(!sel){popup.style.display='none';return;}
 const NMG={fish:'魚',veg:'菜',wheat:'麦',pres:'保存',tools:'道具',salt:'塩',char:'炭',meat:'肉',meal:'粕',stone:'石',oil:'油'};
 const REQN={food1:'食料',grain:'穀物(パン)',tools:'道具の常用',salt:'塩の常用',char:'炭(暖)の常用',food2:'食料2種',food3:'食料3種',saltchar:'塩と炭',iron:'鉄',cloth:'布'};
 function marketInfo(el){
-  let html='<b>市場</b><br><small>屋台:</small><br>';
+  let html='<b>市場の屋台</b> <small>(品目計)</small><br>';
   let any=false;
-  for(const g of GOODS){for(const s of w.stalls[g]){any=true;
-    html+=`<small>${s.hh.sur}家の${NMG[g]} ${Math.round(s.qty)}荷 @${s.price.toFixed(2)}</small><br>`;}}
+  for(const g of GOODS){const st=w.stalls[g];if(!st.length)continue;any=true;
+    const q=st.reduce((s,x)=>s+x.qty,0);
+    const lo=Math.min(...st.map(s=>s.price)),hi=Math.max(...st.map(s=>s.price));
+    html+=`<small>${NMG[g]} <b>${Math.round(q)}</b>荷 @${M(lo)}${hi-lo>0.05?'〜'+M(hi):''} <span style=color:#8899b0>(${st.length}軒)</span></small><br>`;}
   if(!any)html+='<small>(いまは空)</small><br>';
-  html+=`<small>会社の輸入棚: 麦${P.IMP.wheat} 道具${P.IMP.tools} 塩${P.IMP.salt}</small><br>`;
-  html+=`<small>会社の買付台: 保存${P.EXP.pres} 道具${P.EXP.tools}${P.EXP.stone?' 石'+P.EXP.stone:''}${P.EXP.oil?' 油'+P.EXP.oil:''}</small><br>`;
+  html+=`<small>輸入棚: 麦@${M(P.IMP.wheat)} 道具@${M(P.IMP.tools)} 塩@${M(P.IMP.salt)}</small><br>`;
+  html+=`<small>買付台: 保存@${M(P.EXP.pres)} 道具@${M(P.EXP.tools)}${P.EXP.stone?' 石@'+M(P.EXP.stone):''}${P.EXP.oil?' 油@'+M(P.EXP.oil):''}</small><br>`;
   html+=`<small>御蔵: 麦${Math.round(w.granary.wheat||0)} 保存${Math.round(w.granary.pres||0)} 塩${Math.round(w.granary.salt||0)} 炭${Math.round(w.granary.char||0)}</small>`;
   el.innerHTML=html;}
 function info(){const el=document.getElementById('pbody');
@@ -259,8 +262,8 @@ function info(){const el=document.getElementById('pbody');
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0);
   tot.wheat+=w.granary.wheat||0;tot.pres+=w.granary.pres||0;
-  document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span><small>御蔵 麦${Math.round(w.granary.wheat||0)}</small></span><span><small>世帯金計 ${Math.round(w.hhs.reduce((s,h)=>s+h.purse,0))}</small></span>`;
-  const fp=g=>{const a=w.prices[g];return a&&a.length?a[a.length-1][1].toFixed(2):'-';};
+  document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span><small>世帯金計 ${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</small></span>`;
+  const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 秘書 ---
