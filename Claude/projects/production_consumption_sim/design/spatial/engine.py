@@ -21,7 +21,7 @@ KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish')  # 多様性の�
 
 P = dict(
     HH_SIZE=9, EAT=9.0,                  # 1人1荷/日 × 世帯9人
-    PANTRY_FOOD_D=6, PANTRY_CULT_D=90,   # パントリー目標(日数)。文化財90日=年収一括の
+    PANTRY_FOOD_D=6, PANTRY_CULT_D=240,   # パントリー目標(日数)。文化財90日=年収一括の
     # 農家が収穫時に買いだめして端境期もストリークを保てる(20日だと毎年切れて文化が育たない)
     DIVERSITY_RATION=0.15,               # 貯蔵財(麦・保存)からの多様性小口
     # 生産レート(荷/日, Lv0) — v8と同じスケール
@@ -366,6 +366,8 @@ class World:
                 fd = sum(h.pantry[g] for g in FOODS) / P['EAT']
                 if fd < 1.0:
                     q = P['EAT'] * 1.5
+                    h.dole_hist = getattr(h, 'dole_hist', [])
+                    h.dole_hist.append(self.day)
                     for g in ('wheat', 'pres'):        # 蔵から先に
                         u = min(self.granary[g], q)
                         self.granary[g] -= u; q -= u
@@ -475,7 +477,12 @@ class World:
                 obs[h.job].append(sum(h.income_log))
             avg = {j: sum(v) / len(v) for j, v in obs.items() if v}
             for h in self.hhs:
-                distress = sum(getattr(h, 'hunger_hist', [])) >= P['DISTRESS_DAYS']
+                # 破綻=飢え or 配給依存(180日中90日)。配給が飢餓を消すため飢えだけでは
+                # トリガーが発火せず、貧困職が配給の裏に固定化される(福祉ロックイン)
+                dh = getattr(h, 'dole_hist', [])
+                h.dole_hist = [x for x in dh if x > d - 180]
+                distress = (sum(getattr(h, 'hunger_hist', [])) >= P['DISTRESS_DAYS']
+                            or len(h.dole_hist) >= 99999)  # 配給依存トリガーは無効化: 有効にすると貧困職が一斉に漁へ雪崩れ産業構造が崩壊(負の実験・v1.6)。福祉ロックインの解除は参入弁(新規世帯の職選び)で行うべき
                 cool = d - getattr(h, 'last_switch', -9999) >= P['SWITCH_COOLDOWN']
                 if distress and cool and self.rng.random() < 0.5:
                     best = max(avg, key=lambda j: avg[j])
