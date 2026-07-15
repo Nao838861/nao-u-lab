@@ -57,7 +57,7 @@ export class HH{
 }
 export class World{
   constructor(seed=11){this.rng=mulberry(seed);HID=0;this.hhs=[];this.day=0;this.treasury=P.TREASURY0;
-    this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.doleQty=0;
+    this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.outBy={dole:0,pass:0};this.doleQty=0;
     this.bailouts=0;this.goDay=null;this.shipping=false;this.pub=P.PUB0;this.famine=0;
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
     this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
@@ -163,7 +163,15 @@ export class World{
     // 依存期(配給中)は文化財を溜め込まない(60日分)。240日分を輸入で買うと開幕の
     // 手持ちが即座に会社へ吸われ、市中から通貨が消える(財布ゼロ問題の主因)
     const cd=(this.goDay===null&&this.doleRate>0.5)?60:P.CULT_D;
+    // 文化財の購買=ラダーの現在位置(次Lvまで)が要求する財だけ(階段の先食い禁止:
+    // Lv0世帯が鉄@40を買う無駄が配給依存の主因だった)
+    const reqsNow=(LADDER[JOBCLS[h.job]]||[]).slice(0,h.lv+1);
+    const needSet=new Set();
+    for(const r of reqsNow){if(r==='saltchar'){needSet.add('salt');needSet.add('char');}
+      else if(['tools','salt','char','cloth','iron'].includes(r))needSet.add(r);}
+    needSet.add('char');   // 暖は全階層の基礎需要(冬)
     for(const[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.0],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
+      if(!needSet.has(g))continue;
       if(t[g])continue;
       if(h.pantry[g]<dd*cd*0.5)t[g]=[dd*cd-h.pantry[g],val];}
     return t;}
@@ -238,7 +246,7 @@ export class World{
     if(d%15===0&&this.port){let n=0;
       for(const z of this.zones){if(z.filled||n>=2)continue;
         const h=new HH(z.job,z.x,z.y);h.px=this.port.x;h.py=this.port.y;h.state='arriving';
-        this.hhs.push(h);this.mainlandIn+=h.purse;this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;
+        this.hhs.push(h);this.mainlandIn+=h.purse;this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.outBy.pass+=P.PASSAGE;
         z.filled=true;n++;this.updRoads();}
       if(n>0)this.log(`入植船が着いた(${n}世帯)`);}
     // 建設の進行
@@ -317,6 +325,7 @@ export class World{
         h.belief[g]+=(s.price-h.belief[g])*0.2;
         if(s.hh==='CO'){this.treasury+=q*s.price;
           const c=q*(P.IMP_COST[g]??P.IMP[g]*0.7);this.treasury-=c;this.mainlandOut+=c;
+          this.outBy['imp_'+g]=(this.outBy['imp_'+g]||0)+(c-q*s.price);
           this.imported[g]=(this.imported[g]||0)+q;}
         else if(s.hh==='GRANSELL'){this.treasury+=q*s.price;this.granary[g]-=q;s.qty-=q;}
         else{s.qty-=q;s.hh.purse+=q*s.price;s.hh.income30+=q*s.price;
@@ -361,7 +370,7 @@ export class World{
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
         if(fd<1){let q=h.eat()*P.DOLE_RATION;
           for(const g of['wheat','pres']){const u=Math.min(this.granary[g],q);this.granary[g]-=u;q-=u;h.pantry[g]+=u;doleToday+=u;}
-          if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;
+          if(q>1e-9){const c=q*P.IMP_COST.wheat;this.treasury-=c;this.mainlandOut+=c;this.outBy.dole+=c;
             h.pantry.wheat+=q;doleToday+=q;}}}
       this.doleQty+=doleToday;this.doleRate+=(doleToday-this.doleRate)*0.1;}
     // 食事
