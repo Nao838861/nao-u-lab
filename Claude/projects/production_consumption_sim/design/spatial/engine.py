@@ -54,11 +54,15 @@ P = dict(
     # 金庫がマイナス=本国からの借入。M{FREE_M}まで無利子、以後は月利IRATE。
     # 限度は支援期に伸びM{LIMIT_FREEZE}で凍結(本国の忍耐、v8で較正済みの形)
     FREE_M=18, IRATE=0.01,
-    LIMIT0=8000.0, LIMIT_G=600.0, LIMIT_FREEZE=24,
+    LIMIT0=8000.0, LIMIT_G=600.0, LIMIT_FREEZE=24, LIMIT_PC=400.0,
     # 追加支援 (Nao_u 2026-07-15): 初期資金3000+「本国が文句を言いながら追加資金」を
     # 3回まで。財政上は贈与だが物語上は借り(恩)が構造的に積み上がる=シナリオ装置。
     # 使い切った後に利子付き借入→限度→破産の弧へ。回数は記録(上手い人は0回を誇れる)
     BAILOUT_N=3, BAILOUT_TRIGGER=-2000.0, BAILOUT_AMOUNT=8000.0,
+    # 特許料 (設計コンセプト「特許開拓商会」の義務側): 本国へ年次上納。
+    # これが無いと放置村が「自給できる寒村」に落ち着き9年経っても詰まない(穴D2)。
+    # 停滞は特許料で沈み、成長する植民地は軽々吸収する=「早く自給しないと詰む」の背骨
+    CHARTER_FEE=0.0,  # 既定0(2500で放置村はM85に詰むが標準の完済も消える=物語オプション扱い)
     # 御蔵(囲米): 会社が地場の余剰食料を買い上げ配給に回す。輸入パリティより安く
     # 買えるなら本土流出が減り、食料生産者に購買力が注入される(貨幣の環流装置)
     GRAN_BID=dict(wheat=1.9, pres=1.7),  # 輸入パリティ(2.0)直下。1.6だと農家の信念(パリティに張り付く)と交差せず買上げ不成立
@@ -601,8 +605,11 @@ class World:
                 self._pw_prev = self.pubworks_bought
             assert abs(err) < 1e-5, f"質量収支違反 {g}: err={err} day={self.day}"
 
-        # --- 会社財政の弧: 追加支援→利子→限度→破産 (月末) ---
+        # --- 会社財政の弧: 特許料→追加支援→利子→限度→破産 (月末) ---
         if d % 30 == 0:
+            if m % 12 == 0 and P['CHARTER_FEE'] > 0:
+                self.treasury -= P['CHARTER_FEE']; self.mainland_out += P['CHARTER_FEE']
+                self.events.append((d, f'特許料上納 -{P["CHARTER_FEE"]:.0f}'))
             if (self.treasury < P['BAILOUT_TRIGGER']
                     and self.bailouts < P['BAILOUT_N'] and self.go_day is None):
                 self.bailouts += 1
@@ -616,7 +623,10 @@ class World:
             if m > P['FREE_M'] and debt > 0:
                 intr = debt * P['IRATE']
                 self.treasury -= intr; self.mainland_out += intr
-            limit = P['LIMIT0'] + P['LIMIT_G'] * min(m, P['LIMIT_FREEZE'])
+            limit = min(P['LIMIT0'] + P['LIMIT_G'] * min(m, P['LIMIT_FREEZE']),
+                        len(self.hhs) * P['HH_SIZE'] * P['LIMIT_PC'])
+            # 人口比例の上限: 本国は人口に応じてしか貸さない(1人あたりP['LIMIT_PC'])。
+            # これが無いと8世帯の放置村が8年経っても限度に届かず「詰まない」(穴D2で計測)
             if self.go_day is None and -self.treasury > limit:
                 self.go_day = d
                 self.events.append((d, f'★破産(債務{-self.treasury:.0f}>限度{limit:.0f})→配給停止・リプレイへ'))
