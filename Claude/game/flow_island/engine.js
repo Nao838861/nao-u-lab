@@ -192,7 +192,8 @@ export class World{
       // 本当に空の時だけ買いに行く。これが無いと毎日通勤し実効生産<自家消費で永久赤字
       const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
-      if(offers.fish>0||sellSum>=10||fd<fdThr||(lowCult&&h.purse>15)||(inputLow&&h.purse>5))h.state='toMarket';}
+      // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
+      if(offers.fish>0||sellSum>=10||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>5))h.state='toMarket';}
 
     if(tod===29)this.dayEnd();}
   dayStart(){this.day++;this.deskUsed={};
