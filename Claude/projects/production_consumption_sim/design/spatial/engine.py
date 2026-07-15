@@ -335,7 +335,12 @@ class World:
                 tgt = self.buy_targets(h).get(g)
                 if tgt:
                     qty, ceil = tgt
-                    price = min(h.belief[g] * self.rng.uniform(0.95, 1.15), ceil)
+                    if h.job == 'peddler':
+                        # 裁定家の入札は天井(転売価値)基準。現地信念に係留すると
+                        # 安値の市場で安値しか唱えず裁定が永遠に成立しない
+                        price = ceil * self.rng.uniform(0.8, 1.0)
+                    else:
+                        price = min(h.belief[g] * self.rng.uniform(0.95, 1.15), ceil)
                     budget = h.purse * 0.9
                     qty = min(qty, budget / price if price > 0 else 0)
                     if qty > 1e-9 and price > 1e-9:
@@ -363,6 +368,12 @@ class World:
                     got = h.pantry[g] - pre_pantry[h.id]
                     if got < wanted[h.id] * 0.3:
                         h.belief[g] = min(h.belief[g] * 1.04, 12.0)
+            # 行商人は市場に立てば板(約定価格)が見える=観測学習(これが無いと
+            # 両市場の初期信念が同一のため、最初の裁定機会に永遠に気づかない)
+            if vol > 1e-9:
+                for h in part:
+                    if h.job == 'peddler':
+                        h.belief[g] += (pr - h.belief[g]) * 0.3
             ub = self.market.unfilled_bid
             if ub is not None:
                 my_good = dict(fisher='fish', veg='veg', wheat='wheat', woodshop='tools',
@@ -647,7 +658,7 @@ class World:
                 spread = h.mbelief[there][g] - h.mbelief[here][g]
                 if spread > h.mbelief[here][g] * 0.15 + 0.1:
                     # 転売差益が使用価値(ルール2の行商形)。向こうの信念の85%が買値上限
-                    t[g] = (P['HAUL'] / 3, h.mbelief[there][g] * 0.85)
+                    t[g] = (P['HAUL'] / 2, h.mbelief[there][g] * 0.85)
             return t
         uv = P['USE_VALUE_CEILING']
         if h.job == 'saltworks' and h.pantry['char'] < P['SALT_CHAR'] * 5:
@@ -662,13 +673,14 @@ class World:
                 ceil = ((P['PR_SMOKE'] - P['PR_SALT']) * h.belief['pres'] / P['SMOKE_CHAR'] * 0.5
                         if uv else h.belief['char'] * 1.2)
                 t['char'] = (4 - h.pantry['char'], ceil)
-        # 文化の維持フロー(暖・道具・食卓の塩)
+        # 文化の維持フロー(暖・道具・食卓の塩)。行商人は30日分だけ(元手は積荷へ)
+        cd_days = 30 if h.job == 'peddler' else P['PANTRY_CULT_D']
         for g, dd, val in (('tools', P['D_TOOL'], 2.5), ('salt', P['D_SALT'], 2.5),
                            ('char', P['D_CHAR'], 2.0)):
             if g in t: continue
-            if h.pantry[g] < dd * P['PANTRY_CULT_D'] * 0.5:
+            if h.pantry[g] < dd * cd_days * 0.5:
                 ceil = (val if uv else h.belief[g] * 1.2)
-                t[g] = (dd * P['PANTRY_CULT_D'] - h.pantry[g], ceil)
+                t[g] = (dd * cd_days - h.pantry[g], ceil)
         return t
 
     def sell_offers_qty(self, h):
@@ -676,7 +688,7 @@ class World:
         out = {}
         if h.job == 'peddler':
             for g in ('pres', 'salt', 'tools', 'char', 'wheat', 'veg'):
-                keep = P['EAT'] * 2 if g in FOODS else 0.0
+                keep = 4.0 if g in FOODS else 0.0   # 食い扶持keepが積荷より大きいと一切売れない
                 q = max(0.0, h.pantry[g] - keep)
                 if q > 1e-9:
                     out[g] = min(q, P['HAUL'])
