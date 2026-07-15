@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-15T16:40:00+09:00",
+  "updated_at": "2026-07-15T18:19:31+09:00",
   "reviewed_source_ts": [
+    "1782675599.868889",
     "1782668411.613329",
     "1778491540.156779",
     "1778535047.473019",
@@ -387,6 +388,39 @@
     "1783417724.835199"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-15T18:19:31+09:00",
+      "selected": {
+        "id": "sr-1782675599-74ceadabb3",
+        "source_ts": "1782675599.868889",
+        "title": "SMAC-Talk: 局所観測・遅延通信・欺瞞下の協力 LLM agent 評価",
+        "reason": "未レビューの score 10 atom のうち最新で、memory・harness・game-design・agent・evaluation を横断する。会話付き NPC や複数 agent の評価を、発話の自然さではなく実行 action と結果へ接続する小さな検証に変換できるため。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計17で全必須閾値を満たす。次の協力 NPC または複数 agent の評価で、no_comm と comm の同一条件比較を1回行い、通信が action validity・共同目標・反応遅延のどれを助けたか壊したかを確認する。欺瞞条件は対象に自然に存在する場合だけ known / unknown source の差として追加し、専用環境や恒久ルールは作らない。",
+      "change": {
+        "type": "probe",
+        "summary": "次の協力 NPC・複数 agent・memory-source 評価で、通信なし/ありを同一条件で比較し、発話品質ではなく実行 action と結果への寄与を確認する3問の一時 probe を追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-15T16:40:00+09:00",
       "selected": {
