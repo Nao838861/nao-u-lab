@@ -15,7 +15,7 @@
 import random
 from collections import defaultdict
 
-GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal', 'meat', 'cloth', 'iron']
+GOODS = ['fish', 'veg', 'wheat', 'pres', 'tools', 'salt', 'char', 'meal', 'meat', 'cloth', 'iron', 'stone']
 # meal=〆粕(魚肥料) meat=畜産の肉(第4の食料種・通年) cloth=毛織物(家内制で羊飼いが織る) iron=鉄製品(輸入)
 FOODS = ['fish', 'veg', 'wheat', 'pres', 'meat']
 KIND = dict(fish='fish', veg='veg', wheat='wheat', pres='fish', meat='meat')  # 多様性の種別(保存食=魚枠)
@@ -31,6 +31,8 @@ P = dict(
     Y_FISH=13.0, Y_FISH_W=3.2, Y_VEG=10.0, Y_WHEAT=1300.0, Y_TOOLS=5.0,
     Y_CHAR=1.8, Y_SALT=12.0,
     Y_MEAT=8.0, Y_CLOTH=0.4,             # 畜産最小モデル(羊=肉+羊毛の二役・家内制で織る)
+    Y_STONE=3.0,                          # 石材(唯一の資本財: 継続消費なし・建設バーストのみ・永続)
+    PAVE_STONE=200.0, PAVE_ROAD_F=0.45,   # 石畳: 公費が石を買い切ると道路0.6→0.45(永続)
     D_CLOTH=0.03, D_IRON=0.03,
     SALT_CHAR=1.0,                       # 製塩1日の燃料
     PR_SALT=0.6, PR_SMOKE=0.95, SMOKE_CHAR=0.1, PRES_SALT=0.125,  # 魚8荷に塩1荷
@@ -45,8 +47,8 @@ P = dict(
     IMP_COST=dict(wheat=1.2, tools=2.5, salt=2.0, iron=2.5),   # 会社が本土に払う仕入原価(系外流出)
     # 輸出=買い叩き+数量天井(確定設計)。会社の鞘が黒字化の細い収入源
     # (v1.8: 道具輸出を追加=v8の材木輸出エンジンの空間版)
-    EXP=dict(pres=0.8, tools=1.5), EXP_CAP=dict(pres=25.0, tools=20.0),
-    EXP_MAINLAND=dict(pres=1.3, tools=2.0),
+    EXP=dict(pres=0.8, tools=1.5, stone=0.6), EXP_CAP=dict(pres=25.0, tools=20.0, stone=15.0),
+    EXP_MAINLAND=dict(pres=1.3, tools=2.0, stone=0.9),
     PUBWORKS=0.0,                        # 公費建設: 会社が市場で道具を買う予算/日(貨幣注入弁)
     # 御蔵の配給 (Nao_u 2026-07-15「公費で輸入食料で持たせる、早く自給しないと詰む」):
     # 飢えた世帯に会社が輸入麦を無償支給。金庫+信用が尽きたら配給停止=詰み。
@@ -103,9 +105,10 @@ LADDER = {
     'artisan': ['food1', 'food2', 'salt', 'char', 'cloth', 'iron'],
 }
 JOBCLS = dict(fisher='fish', fisher2='fish', wheat='farm', veg='farm', shepherd='farm',
+              quarryman='lumber',
               woodshop='lumber', charburner='lumber', saltworks='artisan', peddler='artisan')
 BELIEF0 = dict(fish=1.0, veg=1.0, wheat=1.2, pres=1.2, tools=2.0, salt=2.0, char=1.5, meal=1.0,
-               meat=1.3, cloth=2.5, iron=3.5)
+               meat=1.3, cloth=2.5, iron=3.5, stone=1.0)
 
 
 class HH:
@@ -181,6 +184,8 @@ class Market:
                 elif buyer == 'CO:gran':
                     self.w.granary[good] += q
                     self.w.gran_in_total[good] += q
+                elif good == 'stone':
+                    self.w.pave_bought += q   # 石畳(道具の質量収支カウンタに混ぜない)
                 else:
                     self.w.pubworks_bought += q
             if isinstance(seller, HH):
@@ -212,6 +217,8 @@ class World:
         self.pub_schedule = {}           # 月→公費建設予算/日 (プレイヤーが絞る弁)
         self.invest_shipping_m = None    # この月に沿岸海運へ投資(販路解放)
         self.shipping = False
+        self.pave_m = None               # この月から石畳プロジェクト(石200を公費で買い切り)
+        self.pave_bought = 0.0; self.paved = False
         self.month_events = []
         self.rng = random.Random(seed)
         self.hhs = hhs
@@ -269,6 +276,10 @@ class World:
         m = (d - 1) // 30 + 1
         mm = (m - 1) % 12 + 1
         se = self.season(mm)
+        if not self.paved and self.pave_bought >= P['PAVE_STONE']:
+            self.paved = True
+            P['ROAD_F'] = P['PAVE_ROAD_F']   # 石畳: 全道路が永続的に格上げ(維持なし)
+            self.events.append((d, f'★石畳完成(石{P["PAVE_STONE"]:.0f}) 道路{P["PAVE_ROAD_F"]}へ'))
         if d % 30 == 1 and self.invest_shipping_m == m and not self.shipping:
             self.treasury -= P['SHIPPING_COST']; self.mainland_out += P['SHIPPING_COST']
             self.shipping = True
@@ -325,6 +336,9 @@ class World:
                 self.bay = min(P['BAY_S0'], self.bay - q + P['BAY_R'] * self.bay * (1 - dep)
                                + P['RESEED'] * (1 - dep))
                 h.pantry['fish'] += q; bal['fish']['prod'] += q
+            elif j == 'quarryman':
+                h.pantry['stone'] += P['Y_STONE'] * w
+                bal['stone']['prod'] += P['Y_STONE'] * w
             elif j == 'shepherd':
                 h.pantry['meat'] += P['Y_MEAT'] * w
                 bal['meat']['prod'] += P['Y_MEAT'] * w
@@ -371,8 +385,8 @@ class World:
         # 食の床は配給が保証するので現金は文化財へ。これが無いと農家の作物代金が
         # 食料の買い戻しに蒸発し、文化を買う金が永遠に残らない=第3回診断)
         dole_on_mkt = P['DOLE'] and self.go_day is None
-        goods_order = (['salt', 'char', 'tools', 'cloth', 'iron', 'meal', 'fish', 'veg',
-                        'wheat', 'pres', 'meat'] if dole_on_mkt else GOODS)
+        goods_order = (['salt', 'char', 'tools', 'cloth', 'iron', 'meal', 'stone', 'fish',
+                        'veg', 'wheat', 'pres', 'meat'] if dole_on_mkt else GOODS)
         assert set(goods_order) == set(GOODS), 'goods_orderとGOODSの不一致(財の追加漏れ)'
         # v1.9: 塩・炭を道具より先に(ルール3「生業の入力→文化財」を財処理順に反映)。
         # 道具が先だと製塩所が財布を道具備蓄に使い果たし炭を3年買えない事故(計測済)
@@ -410,6 +424,9 @@ class World:
                     bids.append(('CO:exp', P['EXP_CAP'][g], P['EXP'][g]))
                 if g == 'tools' and P['PUBWORKS'] > 0:
                     bids.append(('CO:pub', P['PUBWORKS'] / 3.4, 1.8))
+                if (g == 'stone' and self.pave_m is not None and not self.paved
+                        and (d - 1) // 30 + 1 >= self.pave_m):
+                    bids.append(('CO:pub', 5.0, 1.4))   # 石畳: 民需の下で石を買い進める
                 if g in P['GRAN_BID'] and P['DOLE'] and self.go_day is None:
                     qn = max(5.0, self.dole_rate)
                     bids.append(('CO:gran', qn, P['GRAN_BID'][g]))
@@ -434,7 +451,7 @@ class World:
             if ub is not None:
                 my_good = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat',
                                shepherd='meat', woodshop='tools', charburner='char',
-                               saltworks='salt', peddler=None)
+                               saltworks='salt', quarryman='stone', peddler=None)
                 for h in part:
                     if my_good.get(h.job) == g and ub > h.belief[g]:
                         h.belief[g] += (ub - h.belief[g]) * 0.1
@@ -632,9 +649,12 @@ class World:
             used = src['eat'] + src['cult'] + src['used'] + src['preserve'] + src['spoil']
             err = (stock_pre[g] + src['prod'] + imp_d + gout_d) - (stock_now + used + exp_d
                   + gin_d
-                  + (self.pubworks_bought - getattr(self, '_pw_prev', 0.0) if g == 'tools' else 0.0))
+                  + (self.pubworks_bought - getattr(self, '_pw_prev', 0.0) if g == 'tools' else 0.0)
+                  + (self.pave_bought - getattr(self, '_pave_prev', 0.0) if g == 'stone' else 0.0))
             if g == 'tools':
                 self._pw_prev = self.pubworks_bought
+            if g == 'stone':
+                self._pave_prev = self.pave_bought
             assert abs(err) < 1e-5, f"質量収支違反 {g}: err={err} day={self.day}"
 
         # --- 会社財政の弧: 特許料→追加支援→利子→限度→破産 (月末) ---
@@ -778,7 +798,8 @@ class World:
                     out[g] = min(q, P['HAUL'])
             return out
         my = dict(fisher='fish', fisher2='meal', veg='veg', wheat='wheat', shepherd='meat',
-                  woodshop='tools', charburner='char', saltworks='salt')[h.job]
+                  woodshop='tools', charburner='char', saltworks='salt',
+                  quarryman='stone')[h.job]
         if h.job == 'shepherd' and h.pantry['cloth'] > 1.0:
             out['cloth'] = min(h.pantry['cloth'] - 1.0, P['HAUL'])
         if my == 'meal':
