@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.18';
+export const VERSION='v0.19';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -72,7 +72,7 @@ export class HH{
 export class World{
   constructor(seed=11){this.rng=mulberry(seed);HID=0;this.hhs=[];this.day=0;this.treasury=P.TREASURY0;
     this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.outBy={pass:0};this.led={prod:{},eat:{},spoil:{},need:0};this.co={pub:0,expBuy:0,expSell:0,impMargin:0,bail:0};this.hungryN=0;
-    this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.order=null;this.orderDone=0;
+    this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.order=null;this.orderDone=0;this.stock={};this.stockTgt={};
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
     this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
@@ -326,6 +326,13 @@ export class World{
       const perishable=PERISH.includes(g);
       for(let i=st.length-1;i>=0;i--){const s=st[i];
         s.age=(s.age||0)+1;   // 価格は毎回の出店で抽選し直す(記憶なし)。店先での値下げ学習はしない
+        // 商館の買上げ: プレイヤーが目標を設定した品を、市で2日誰も買わなかった余剰だけ言い値で集める
+        // (必須の人が先に買う機会を保証。金庫から支払い=プレイヤーの金の使い道)
+        if(s.age>=2&&s.hh instanceof HH&&(this.stockTgt[g]||0)-(this.stock[g]||0)>1e-9&&this.treasury>-this.limit()){
+          const can=Math.min(s.qty,(this.stockTgt[g]||0)-(this.stock[g]||0));
+          if(can>1e-9){s.qty-=can;s.hh.purse+=can*s.price;s.hh.income30+=can*s.price;
+            this.treasury-=can*s.price;this.co.procBuy=(this.co.procBuy||0)+can*s.price;
+            this.stock[g]=(this.stock[g]||0)+can;}}
         // 3日売れ残ったら輸出台へ流す(端数は黙って本土行き=定常収入。信念ペナルティは生鮮のみ)
         if(s.age>=3&&s.hh instanceof HH&&P.EXP[g]!==undefined){
           const price=P.EXP[g],cap=P.EXP_CAP[g];
@@ -352,6 +359,12 @@ export class World{
         this.order={g,qty,left:qty,price,due:d+90};
         this.log(`★本国より注文状: ${GN[g]}${qty}荷(@${Math.round(price*10)}デナリ・90日以内)`);}}
     if(this.order&&d>=this.order.due){this.log(`注文の期限切れ——本国重役たちの心証を損ねた(残${Math.round(this.order.left)}荷)`);this.order=null;}
+    // 注文の出荷: 商館在庫から自動で積む(本来は貯まったら確認ダイアログ。今は全自動)
+    if(this.order){const og=this.order.g;const can=Math.min(this.stock[og]||0,this.order.left);
+      if(can>1e-9){this.stock[og]-=can;this.order.left-=can;
+        const rev=can*this.order.price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.ordSell=(this.co.ordSell||0)+rev;
+        this.exported[og]=(this.exported[og]||0)+can;this.fl(og,'exp',can);
+        if(this.order.left<=1e-9){this.log('★注文を納めた——本国での評判が上がった');this.orderDone++;this.order=null;}}}
     // 船(15日ごと): 未充足の区画へ移民を運ぶ(最大2世帯/便)
     if(d%15===0&&this.port){let n=0;
       for(const z of this.zones){if(z.filled||n>=2)continue;
@@ -403,7 +416,6 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(this.order&&g===this.order.g&&this.order.left>1e-9)desks.push(['ORDER',this.order.price,Math.min(10,this.order.left)]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
@@ -416,10 +428,6 @@ export class World{
         this.treasury-=can*price;
         if(kind==='EXP'){this.co.expBuy+=can*price;this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
           const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
-        else if(kind==='ORDER'){this.order.left-=can;this.co.ordBuy=(this.co.ordBuy||0)+can*price;
-          const rev=can*price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.ordSell=(this.co.ordSell||0)+rev;
-          this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
-          if(this.order.left<=1e-9){this.log('★注文を納めた——本国での評判が上がった');this.orderDone++;this.order=null;}}
         else if(kind==='PAVE')this.paveBought+=can;
         q-=can;}
       if(q>1e-9){ // 屋台に出す(店番=家族が残る扱い。委託中は生産効率減)
@@ -437,6 +445,8 @@ export class World{
       let[want,ceil]=targets[g];want=Math.min(want,cap);
       const shelves=[...this.stalls[g]];
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
+      const freeStock=(this.stock[g]||0)-((this.order&&this.order.g===g)?this.order.left:0);
+      if(freeStock>1e-9)shelves.push({hh:'STOCK',qty:freeStock,price:Math.min((this.px[g]??1)*1.2,(P.IMP[g]??9e9)*0.97)}); // 商館の蔵出し(注文予約分は売らない)
       shelves.sort((a,b)=>a.price-b.price); // 輸入棚も価格競争に参加=輸入パリティが真の天井になる
       const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal')||((h.job==='woodshop'||h.job==='charburner')&&g==='log');
       for(const s of shelves){if(want<1e-9)break;
@@ -449,6 +459,7 @@ export class World{
           this.co.impMargin+=q*s.price-c;this.fl(g,'imp',q);
           this.outBy['imp_'+g]=(this.outBy['imp_'+g]||0)+(c-q*s.price);
           this.imported[g]=(this.imported[g]||0)+q;}
+        else if(s.hh==='STOCK'){this.treasury+=q*s.price;this.stock[g]-=q;s.qty-=q;this.co.stockSell=(this.co.stockSell||0)+q*s.price;}
         else{s.qty-=q;s.hh.purse+=q*s.price;s.hh.income30+=q*s.price;}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);
         this.px[g]=(this.px[g]??s.price)*0.9+s.price*0.1;}

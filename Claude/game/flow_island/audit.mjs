@@ -17,6 +17,8 @@ for(const seed of SEEDS){
  const planA={13:'wheat',16:'logger',20:'fisher',26:'woodshop',30:'rapeseed'}; // 標準プレイ=smoke台本と同一(木こりが森の腕へ)
  for(let d=1;d<=1440;d++){
   if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
+  if(d%5===0){if(w.order)w.stockTgt[w.order.g]=Math.max(w.stockTgt[w.order.g]||0,Math.ceil((w.stock[w.order.g]||0)+w.order.left));
+   w.stockTgt.wheat=Math.max(w.stockTgt.wheat||0,Math.round(w.pop()*2));} // プレイヤーの商館運用の模写
   w.step();
   for(const g of['wheat','meat','tools','veg'])stallAvg[g]=(stallAvg[g]||0)+w.stalls[g].reduce((s,x)=>s+x.qty,0)/1440/SEEDS.length;
   if(d%360===0)famYr[d/360-1].push(w.famine);
@@ -71,7 +73,10 @@ t('E12 人口成長',worlds.every(x=>x.pop()>=90&&x.pop()<=90*2.2),worlds.map(x=
  const gf=g=>w2.f30?.[g]||{prod:0,cons:0,imp:0,exp:0};
  const n=j=>w2.hhs.filter(h=>h.job===j).length+w2.zones.filter(z=>!z.filled&&z.job===j).length;
  let builds=[];
- for(let d=1;d<=1440;d++){w2.step();
+ for(let d=1;d<=1440;d++){
+  if(d%5===0){if(w2.order)w2.stockTgt[w2.order.g]=Math.max(w2.stockTgt[w2.order.g]||0,Math.ceil((w2.stock[w2.order.g]||0)+w2.order.left));
+   w2.stockTgt.wheat=Math.max(w2.stockTgt.wheat||0,Math.round(w2.pop()*2));}
+  w2.step();
   if(d%90===0&&builds.length<10&&w2.treasury*10>15000){ // 季節に1枚+財政に余力がある時だけ(人間の実プレイ相当) // 45日ごとに助言を1回実行
     const poorN=w2.hhs.filter(h=>h.purse<5).length;
     const debt=Math.max(0,-w2.treasury);
