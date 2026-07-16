@@ -32,7 +32,20 @@ duplicate_skipped:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+- 実行日時: 2026-07-17
+- 最終判定対象: 0 件。Phase 2 の `pass` が空のため、#shared-reads への投稿は行わなかった。
+- duplicate 除外: Phase 1/2 で確認済みの 2 件は、いずれも既投稿 URL と canonical candidate が一致しており、再投稿対象にしなかった。
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+    reason: posted_url_match（既投稿 URL と一致し、Phase 2 の pass 対象外）
+    action: none
+  - candidate: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+    reason: posted_url_match（既投稿 URL と一致し、Phase 2 の pass 対象外）
+    action: none
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
