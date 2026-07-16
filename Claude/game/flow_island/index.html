@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131200';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131300';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -167,7 +167,13 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
     sel=bd<2?best:null;info();placePopup();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
-  else if(JOBS.includes(tool)){w.addZone(tool,x,y);
+  else if(JOBS.includes(tool)){
+    const CRAFT={woodshop:'木工',charburner:'炭焼',saltworks:'塩',quarryman:'採石',rapeseed:'菜種',shepherd:'牧夫'};
+    const nSame=w.hhs.filter(h=>h.job===tool).length+w.zones.filter(z=>!z.filled&&z.job===tool).length;
+    w.addZone(tool,x,y);
+    if(CRAFT[tool]&&nSame>=1&&w.pop()<160){const box=document.getElementById('toast');const el=document.createElement('div');
+      el.textContent='⚠ '+CRAFT[tool]+'は村にもう'+nSame+'軒あります——この規模では客の取り合いで共倒れします(1軒で村全体を賄えます)';
+      el.style.color='#ff8a7a';box.appendChild(el);setTimeout(()=>el.remove(),6000);}
     const dz=Math.hypot(x-w.market.x,y-w.market.y);
     const box=document.getElementById('toast');const el=document.createElement('div');
     el.textContent=dz>7?'⚠ 市場まで遠すぎます('+Math.round(dz)+'区画)——往復で働く時間が消えます。近くに建て直すか「道」を':(dz>4.5?'△ やや遠め('+Math.round(dz)+'区画)。「道」を引くと足が軽くなります':'✓ 良い立地です(市場まで'+Math.round(dz)+'区画)');
@@ -378,8 +384,14 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
   if(stage===0){if(n('fisher')<2){say('まず浜の近くに漁師の区画を二つ。次の船が家族を連れてきます');return;}stage=1;}
   if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
-  if(stage===2){if(n('woodshop')<1){say('木工所を森の際に。道具がなければ文化は育ちません');return;}stage=3;}
-  if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を。塩がなければ冬の蓄えが作れません');return;}stage=4;}
+  if(stage===2){if(n('woodshop')<1){say('木工所を森の際に——村に1軒で足ります。道具がなければ文化は育ちません');return;}stage=3;}
+  if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を1軒ずつ——職人は1軒で村全体を賄えます。2軒目は共倒れに');return;}stage=4;}
+  w._tHist=w._tHist||[];if(m>(w._tLastM||0)){w._tHist.push(w.treasury);w._tLastM=m;if(w._tHist.length>4)w._tHist.shift();}
+  const th=w._tHist;
+  if(th.length>=4&&th[3]<th[2]&&th[2]<th[1]&&th[1]<th[0]&&!said.drain){said.drain=true;
+    const c=w.co,dole=(c.doleC||0),wage=(c.pub||0);
+    say(dole>wage?'金庫が3ヶ月減り続けています。最大の穴は配給費——稼げない世帯が多すぎます。出来事ログの【決算】をご確認を':'金庫が3ヶ月減り続けています。出来事ログの【決算】で何に消えているかをご確認を');return;}
+  if(th.length>=2&&th[1]>th[0])said.drain=false;
   const f30=w.f30||{};const fw=f30.wheat||{imp:0};
   if(stage>=4&&fw.imp>12&&!said.wheat){said.wheat=true;say('麦の輸入が月'+Math.round(fw.imp*30*10)+'デナリも嵩んでいます。麦畑か菜園を——食料の自給が全ての土台です');return;}
   if(stage>=4&&fw.imp<6&&said.wheat){said.wheat=false;}
