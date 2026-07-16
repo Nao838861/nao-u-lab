@@ -57,7 +57,7 @@ small{color:#8899b0}
  <h2>出来事</h2><div id="log"></div>
  <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
 </div>
-<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は止まり、島は静かに衰えていきます…</div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
+<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は止まり、島は静かに衰えていきます…</div><div id="postmortem" style="font-size:12px;max-width:440px;color:#cbd;background:#141d30;border:1px solid #345;border-radius:8px;padding:8px 12px;margin:6px"></div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
 <script>
 addEventListener('error',e=>{const f=document.getElementById('factor');
   if(f)f.textContent='⚠ エラー: '+e.message+' @'+(e.filename||'').split('/').pop()+':'+e.lineno;});
@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131100';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131200';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -167,7 +167,12 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
     sel=bd<2?best:null;info();placePopup();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
-  else if(JOBS.includes(tool)){w.addZone(tool,x,y);}}
+  else if(JOBS.includes(tool)){w.addZone(tool,x,y);
+    const dz=Math.hypot(x-w.market.x,y-w.market.y);
+    const box=document.getElementById('toast');const el=document.createElement('div');
+    el.textContent=dz>7?'⚠ 市場まで遠すぎます('+Math.round(dz)+'区画)——往復で働く時間が消えます。近くに建て直すか「道」を':(dz>4.5?'△ やや遠め('+Math.round(dz)+'区画)。「道」を引くと足が軽くなります':'✓ 良い立地です(市場まで'+Math.round(dz)+'区画)');
+    el.style.color=dz>7?'#ff8a7a':(dz>4.5?'#ffd97a':'#8f8');
+    box.appendChild(el);setTimeout(()=>el.remove(),5200);}}
 // --- 描画 ---
 function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
   const d=w.day,mm=(Math.floor(Math.max(0,d-1)/30))%12+1,wint=mm>=10;
@@ -334,6 +339,14 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
     return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${prodTxt} 消${f.cons.toFixed(0)}</span>${badge}</div>`+lackList;}).filter(Boolean).join('');
   document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=物はあるが世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
+// --- 月次決算(出来事ログに要約) ---
+let lastCo=null,lastM=0;
+setInterval(()=>{const m=Math.floor(Math.max(0,w.day-1)/30)+1;
+  if(m>lastM&&w.day>30){const c=w.co;
+    if(lastCo){const dole=(c.doleC-lastCo.doleC)||0,wage=(c.pub-lastCo.pub)||0,exp=(c.expSell-c.expBuy)-(lastCo.expSell-lastCo.expBuy),imp=(c.impMargin-lastCo.impMargin)||0;
+      const net=exp+imp-dole-wage;
+      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)} 配給-${M(dole)} 賃金-${M(wage)})`);}
+    lastCo={...c};lastM=m;}},1500);
 // --- 次の一手アドバイザ ---
 function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
   const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
@@ -385,8 +398,15 @@ function frame(){try{tick++;
   if(fp){const n=fp<1?Math.round(1/fp):(tick%fp===0?1:0);for(let i=0;i<n;i++){try{w.tickOnce();}catch(err){console.error(err);speed=0;break;}}}
   draw();placePopup();
   if(tick%20===0){topbar();panel();toasts();if(sel)info();
-    if(w.goDay&&document.getElementById('overlay').style.display!=='flex')
-      document.getElementById('overlay').style.display='flex';}
+    if(w.goDay&&document.getElementById('overlay').style.display!=='flex'){
+      document.getElementById('overlay').style.display='flex';
+      const c=w.co,outs=[['配給(輸入食料)',c.doleC||0],['人夫の賃金',c.pub||0]].sort((a,b)=>b[1]-a[1]);
+      const ins=(c.expSell-c.expBuy)+(c.impMargin||0);
+      const avgD=w.hhs.length?w.hhs.reduce((s,h)=>s+w.dist(h),0)/w.hhs.length:0;
+      let why='最大の支出は'+outs[0][0]+'('+M(outs[0][1])+'デナリ)。収入('+M(ins)+')の'+(ins>0.01?(outs[0][1]/ins).toFixed(1):'∞')+'倍でした。';
+      if(avgD>6.5)why+=' 区画が市場から遠すぎました(平均'+avgD.toFixed(1)+'区画)——通いで労働が消え、稼げず配給に落ちる悪循環です。次は市場の周りに固めて。';
+      else if((c.doleC||0)>ins*2)why+=' 食料の自給が遅すぎました。漁師2→菜園→麦畑を最初の年に、市場の近くへ。';
+      document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why;}}
   }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
   requestAnimationFrame(frame);}
 topbar();paint();frame();
