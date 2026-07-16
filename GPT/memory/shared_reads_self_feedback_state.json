@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T02:40:00+09:00",
+  "updated_at": "2026-07-17T04:25:00+09:00",
   "reviewed_source_ts": [
+    "1782528770.376139",
     "1780708885.257199",
     "1782565725.425459",
     "1778478943.773039",
@@ -10167,6 +10168,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260526-synthetic-user-drift-check", "probe-20260621-ares-ai-counterpart-trace", "probe-20260621-rpg-dialogue-filler-gap-grounding", "probe-20260708-coachable-agent-style-task-split"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の drift / interaction-trace / grounding / style-adherence probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-17T04:25:00+09:00",
+      "id": "sr-1782528770-1e1a1bbb76",
+      "source_ts": "1782528770.376139",
+      "title": "Dependency-aware な段階別 JSON pipeline による RPG 世界・クエスト生成",
+      "decision": "reject",
+      "reason": "Score 13. 世界設定、NPC、プレイヤー、campaign plan、個別 quest を依存順に生成し、構造化中間表現と段階別 validator で drift を局所化する観点は、ゲーム制作と phase handoff の両方に直結する。しかし active probes はすでに grounded-playable-spec で薄い intermediate spec、worker-bus-contract-observer で段階間 artifact の inspectable contract、guiding-not-railroading-narrative-graph で物語上の causal dependency を要求している。新規 probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文と原論文リンクは手法の根拠になるが、この環境で monolithic prompt と staged pipeline の同一条件比較を実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260516-grounded-playable-spec", "probe-20260530-worker-bus-contract-observer", "probe-20260619-guiding-not-railroading-narrative-graph"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の intermediate-spec / bus-contract / narrative-dependency probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],

@@ -36,7 +36,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782528770-1e1a1bbb76
+    source_ts: "1782528770.376139"
+    title: "Dependency-aware な段階別 JSON pipeline による RPG 世界・クエスト生成"
+    reason: "memory / harness / game-design / evaluation の複数タグを持つ未レビュー atom で、構造化中間表現と依存順生成が現在のゲーム制作・phase handoff に直結するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  reason: "採用閾値14未満。grounded-playable-spec、worker-bus-contract-observer、guiding-not-railroading-narrative-graph が intermediate spec・段階間 contract・物語依存をすでに覆い、314件の active probe に追加しても次回行動を変えない。原論文と投稿本文は根拠になるが、この環境で monolithic prompt と staged pipeline を比較実測していないため evidence は2。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
