@@ -61,7 +61,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を validate_memory_index.py と UTF-8 代表語 probe で監査。index broken link / entry 不整合は 0 件、記憶・ゲーム設計・敵パターン・評価軸を取得できた。"
+  - "memory/atoms.jsonl を memory_health.py と audit_atom_mirror_drift.py で監査。2678 atom、ID/index/file conflict 0 件。normalized content duplicate は raw 40 group / 80 rows だが canonical overlay で全40 groupが既に fold 対象。"
+  - "memory/raw/ の30日超無更新ファイルを監査。93件をarchive候補として識別したが、Slack archive・一次PDF/text・sync stateを含む原文保持領域なので、このphaseでは移動しなかった。"
+  - "shared-reads lifecycle を dry-run 監査。posted 410 / ready_to_post 10 / postponed 399 / failed 123 / needs_review 22。候補本体は変更していない。"
+  - "mixed duplicate queue 81件、stale triage queue 50件、group action queue 36件を再生成。派生sidecarの内容差分はなかった。"
+  - "slack_directives.jsonl 23行、slack_broadcasts.jsonl 21行を確認。pending は双方0件で close 対象なし。"
+issues:
+  - id: ISS-4A-STALE-001
+    description: "postponed / needs_review の期限超過 backlog が218件あり、今回のstale triage sidecar上限50件を上回る。ただしgroup action queueによる少数handoff経路は機能している。"
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py --today 2026-07-16: overdue_for_reassessment=218; memory/shared_reads_stale_triage_queue.jsonl=50 rows; memory/shared_reads_group_action_queue.jsonl=36 rows"
+    source_file_status: "candidate frontmatterはUTF-8で読取可能。posted 410 / ready_to_post 10 / postponed 399 / failed 123 / needs_review 22。正本の破損なし。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "高いgame_transfer_valueを持つ候補が長いbacklog内に滞留し、次のゲーム制作時に再利用可能な知見へ昇格するまで遅延する。ただし既存Phase 2の逐次処理で解消可能。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 218
+  stale_triage_queue_rows: 50
+  group_action_queue_rows: 36
+  handed_off_this_cycle: 1
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group action queue先頭。依存関係付きprompt pipelineはゲーム制作への接続が強い一方、評価内容・比較対象・結論の強さが不足。group_key=from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation; open_siblings=4; terminal_siblings=2。"
+    recommended_review_action: reevaluate_in_phase2
+    group_action: reevaluate_representative
+    terminal_paths:
+      - "memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md"
+      - "memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md"
+    open_paths:
+      - "memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md"
+      - "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md はUTF-8として正常。代表語4種を取得。"
+  display_or_tooling_status: "none"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
