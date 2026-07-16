@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-16T08:48:54+09:00",
+  "updated_at": "2026-07-16T11:05:00+09:00",
   "reviewed_source_ts": [
     "1779740294.256369",
     "1782646829.867869",
@@ -393,7 +393,8 @@
     "1783417724.835199",
     "1782580046.412109",
     "1779995806.511879",
-    "1782646834.762419"
+    "1782646834.762419",
+    "1782065326.755519"
   ],
   "reviews": [
     {
@@ -10009,6 +10010,17 @@
       "reason": "Score 13. 試合・ゲームの event sequence を条件つきで生成し、変更前後を paired seed や同一初期条件で比較し、勝率だけでなく objective 進行、被ダメージ、無効手率などの中間指標を見る観点は game/headless 評価に直結する。しかし active な proxy-signal variance gate は、集約指標や相関を報告する前に proxy 側と judgment 側の変動を確認し、zero-variance 時には paired-seed・version-delta・contrastive scenario を次の artifact とすることをすでに要求している。生成反実仮想を決定装置ではなく候補発見へ限定する観点も、既存の deterministic runtime verification と外部判断分離の probes の範囲内であり、ScoutGPT 固有の probe を追加しても次回行動はほぼ変わらない。314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には K League data と Monte Carlo sampling の根拠があるが、この環境で event-token model を比較実測していないため evidence は 2。読了と重複理由だけを state に残す。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 1, "risk_control": 1, "reversibility": 3, "total": 13},
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-16T11:05:00+09:00",
+      "id": "sr-1782065326-7118678bcc",
+      "source_ts": "1782065326.755519",
+      "title": "alem: base competence と multi-agent coordination を分離する benchmark",
+      "decision": "reject",
+      "reason": "Score 13. Base reward と Coordination reward を分け、通信・shared memory・明示役割の ablation と、handover・同期・長距離依存の失敗層を見る観点は multi-agent game evaluation に直結する。しかし active な probe-20260620-alem-base-vs-coordination が、個体進捗と協調成果の分離、communication/shared memory/role assignment の小さな contrast、base competence・communication・memory・plan horizon・role・observation・timing・objective design の失敗分類を同じ alem からすでに要求している。新しい probe を追加しても次回行動は変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には13種の LLM、4種の MARL baseline、Base%/Coord.% 分離、communication ablation の定量根拠があるが、この環境で軽量 handover/synchronous task を比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の alem base-vs-coordination probe を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],

@@ -34,7 +34,33 @@ skipped: []
 - Slack API: `chat.postMessage` 1回で投稿成功。thread reply・分割投稿なし。ts `1784165694.565729`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782065326-7118678bcc
+    source_ts: "1782065326.755519"
+    title: "alem: base competence と multi-agent coordination を分離する benchmark"
+    reason: "memory・game-design・agent・operation・evaluation の複数優先タグを持つ未レビュー atom で、直前 Phase 1-3 の multiplayer social-process 題材とも接続するため。ただし既存 probe との重複を最優先で確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "採用閾値14に届かない。既存の probe-20260620-alem-base-vs-coordination が、Base/Coordination 分離、communication/shared memory/role assignment ablation、協調失敗層分類を同じ alem からすでに要求しており、新規 probe は次回行動を変えず active probe 肥大化だけを招く。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。既存 alem probe を再利用し、新規 probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
