@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132700';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132800';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -350,7 +350,14 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'�
     if(window.lackG===g&&lack){const hhs=w.hhs.filter(h=>h.pantry[g]<NEEDQ[g]*2&&h.purse<10);
       lackList='<div style="margin:2px 0 4px 8px;color:#ccb">'+hhs.map(h=>`${h.sur}家(${JNAME[h.job]}) 財布${M(h.purse)}・30日収入${M(h.incomeLog.reduce((a,b)=>a+b,0))}`).join('<br>')+'<br><small style=color:#889>収入が少ない=その職が稼げていない。輸出産業か地元の買い手が必要</small></div>';}
     return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${prodTxt} 消${f.cons.toFixed(0)}</span>${badge}</div>`+lackList;}).filter(Boolean).join('');
-  document.getElementById('flow').innerHTML=rows+'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=物はあるが世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=余りを本国が買い叩き</div>';
+  const jinc={};for(const h of w.hhs)(jinc[h.job]=jinc[h.job]||[]).push((h.incY||0)*10);
+  const jrows=Object.entries(jinc).map(([j,v])=>[j,v.reduce((a,b)=>a+b,0)/v.length,v.length])
+    .sort((a,b)=>b[1]-a[1])
+    .map(([j,avg,n])=>`<div style="display:flex;justify-content:space-between"><span>${JNAME[j]}×${n}</span><b style="color:${avg>8000?'#8f8':(avg<2000?'#ff8a7a':'#dde')}">${Math.round(avg).toLocaleString()}</b></div>`).join('');
+  document.getElementById('flow').innerHTML=rows
+    +'<div style="color:#889;margin-top:3px">産=生産/消=消費(荷/日)。<b style=color:#ff8a7a>輸入</b>=島で作れず割高調達・<b style=color:#ffb44a>買えず▼</b>=世帯が貧しい(タップで内訳)・<b style=color:#8fd0ff>輸出</b>=本国が買い叩き</div>'
+    +'<div style="border-top:1px solid #2a3550;margin-top:4px;padding-top:3px"><b style="color:#9fd6ff">職業別の年収(平均・デナリ)</b>'+jrows
+    +'<div style="color:#889">緑=儲かっている(参入の好機=その区画を建てると値が崩れて均される)・赤=食えていない</div></div>';
   document.getElementById('log').innerHTML=w.events.slice(-14).reverse().map(([dd,m2])=>`<div>D${dd} ${m2}</div>`).join('');}
 // --- 月次決算(出来事ログに要約) ---
 let lastCo=null,lastM=0;
