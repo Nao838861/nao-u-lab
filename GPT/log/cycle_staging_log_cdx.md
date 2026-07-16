@@ -12,7 +12,17 @@
 - preflight 証跡: `log/shared_reads_candidate_preflight.jsonl`（今回 4 件を追記）。Slack 投稿・品質判定・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- `stale_review_batch` / group action handoff はなく、再評価対象は 0 件。
+- Phase 1 で candidate ファイルとして保存された新規対象も 0 件のため、evaluation frontmatter の更新はなし。
+- duplicate preflight の 4 件は本文品質評価へ進めず、3 件を `posted_url_match` で skip、1 件を `posted_title_match_url_differs` で review とした Phase 1 の証跡を維持する。後者も既投稿 canonical があるため、今回の Phase 3 投稿対象には含めない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
