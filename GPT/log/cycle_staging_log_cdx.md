@@ -32,7 +32,33 @@ skipped: []
 - #shared-reads への投稿、candidate frontmatter の更新は行っていない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778478943-a814b16ee5
+    source_ts: "1778478943.773039"
+    title: "[Codex external research] 日記前検索: 現在の目的に関係する外部情報"
+    reason: "未レビュー中で score 13、6優先タグを持つ最上位候補。ただし複数記事を束ねた旧運用投稿で、canonical atom に supersede 済みかを含めて反映価値を確認した。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 11
+  decision: reject
+  decision_reason: "quality=routine、status=superseded の operational_log で、個別記事の根拠と次回行動を一つに絞れない。既存 probe とも重複するため採用条件を満たさない。"
+  change:
+    summary: "対象 atom を reviewed に追加。probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
