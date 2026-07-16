@@ -163,7 +163,53 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designs:
+  - issue_id: ISS-ATOM-GENERIC-TITLES
+    problem_restatement: "既存 title_cluster_index は同一 title・tags・kind・source の cluster size >= 2 にだけ補助ラベルを出すため、分類キーで singleton に分かれた generic title は識別不能のまま残る。また補助ラベルは表示時の曖昧さを減らすが、手法名や失敗型として再利用できる意味的 title metadata にはならない。raw atom を壊さず、generic title 全件に検索・表示可能な安定した意味的別名を与える必要がある。"
+    alternatives:
+      - name: "案A: raw title の一括 retitle"
+        sketch: "title_quality_audit の retitle 対象を人手または自動抽出で命名し直し、atoms.jsonl と per-file atom の title を同期更新する。以後の recall は既存 title をそのまま検索・表示する。"
+        pros:
+          - "検索と表示の双方が単純になり、別名解決層を増やさない。"
+          - "atom 単体を開いた時にも内容を識別できる。"
+        cons:
+          - "dual-write 中の正本を大量更新し、原文由来 metadata と派生名の境界が曖昧になる。"
+          - "自動命名の誤りを raw atom に固定し、rollback と差分レビューのコストが高い。"
+          - "378 audit rows の一括移行は今回の medium severity に対して変更範囲が大きい。"
+        migration_cost: high
+      - name: "案B: 既存 title cluster sidecar を semantic alias へ拡張"
+        sketch: "title_cluster_index の非破壊・再生成可能という契約を保ちつつ、cluster size に関係なく generic title の atom を対象にする。本文の見出し・固有名・trigger・source を優先順位付きで使い、semantic_alias と生成根拠を記録し、recall の検索語と表示 title の補助に使う。"
+        pros:
+          - "raw atom と dual-write 経路を変更せず、既存 sidecar / recall 統合を小さく拡張できる。"
+          - "分類キーで singleton になった14 groupも同じ仕組みで覆える。"
+          - "派生名と根拠を再生成・監査でき、誤命名時は sidecar の修正だけで戻せる。"
+        cons:
+          - "source 本文が薄い atom では alias の品質が安定せず、fallback が必要になる。"
+          - "raw title と表示・検索 alias の二層を利用者が理解する必要がある。"
+          - "既存 index の名称と cluster 前提が実態に合わなくなるため、互換 field を残す設計が要る。"
+        migration_cost: medium
+      - name: "案C: 新規 ingest の generic title 拒否のみ"
+        sketch: "ingest 時に boilerplate title を検出し、本文から title を生成できない atom を quarantine または警告対象にする。既存378 audit rowsは変更せず、増加だけを止める。"
+        pros:
+          - "将来の負債増加を入口で抑えられる。"
+          - "既存 atom の移行が不要で、導入範囲が小さい。"
+        cons:
+          - "現在 recall-visible な未整理群を解消せず、Phase 4a の blocker が残る。"
+          - "section heading が原文上の正当な title であるケースを誤って拒否し得る。"
+          - "quarantine を増やすと、有用本文まで recall から落とす可能性がある。"
+        migration_cost: low
+    recommended: "案B: 既存 title cluster sidecar を semantic alias へ拡張"
+    recommended_reason: "現行の非破壊 sidecar と memory_recall の接続を再利用でき、raw atom の大量書換えより失敗時のコストが低い。既存問題の中心である singleton 化した generic title も覆え、新規の独立 index を増やさずに済む。alias の品質が不足する atom は raw title + source_ts + atom id の deterministic fallback に戻せるため、段階導入と rollback が容易である。"
+    decision: introduce
+    decision_reason: "問題は source 破損ではなく既存表示補助の coverage gap と検索 alias 不足に限定でき、拡張先も既存 title_cluster_index / memory_recall に定まっている。378件の raw metadata migration を避けながら medium severity の検索性問題を直接改善できるため、Phase 4c で bounded implementation に進める。"
+    outline_for_4c:
+      - "generic title 判定を既存 memory_recall と index builder で共有し、cluster size に関係なく対象 atom を sidecar に収載する。"
+      - "semantic_alias の抽出優先順位を、本文中の明示的な記事・論文名または括弧付き主題、trigger の識別句、keyword_hint、deterministic fallback の順に固定し、alias_source を記録する。"
+      - "既存 cluster_id・display_disambiguator field の後方互換性を保ったまま、semantic_alias を recall の検索対象と表示補助に加える。raw title、atoms.jsonl、per-file atom は変更しない。"
+      - "title_quality_audit の recall-visible ungrouped generic 件数と semantic alias coverage / fallback 件数を Phase 4a で監査できるようにする。"
+      - "『■ 概要』『@』『■ メリット・デメリット』を fixture に、固有名抽出、singleton coverage、fallback、既存 non-generic title 非変更を検証する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
