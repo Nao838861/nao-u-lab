@@ -54,7 +54,7 @@ export class HH{
     const f=genFamily(this.id);this.sur=f.sur;this.members=f.mem;this.job=job;this.x=x;this.y=y;this.road=false;
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
-    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.walk=0;
+    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.incM=0;this.incMonths=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
     this.pantry.tools=5;this.pantry.wheat=90;  // 兵糧(9人×約10日=普請期間を自弁。配給=輸入価格で治療するより船で運ぶ方が安い)
@@ -178,6 +178,13 @@ export class World{
       pres:P.PRES_SALT*(this.px.salt??2)/P.PR_SALT,pick:P.PICK_SALT*(this.px.salt??2)/P.PR_PICK}[g]??0;
     return labor+inp;}
   dist(h){return Math.hypot(h.x-this.market.x,h.y-this.market.y);}
+  pickJob(exclude){ // 職選び=直近12ヶ月の観測年収(月次窓)に比例した抽選。30日窓は年1回収入の麦を0に見せ(測定バグ)、argmaxは全員を単一の最高職へ殺到させる(コブウェブ)
+    const inc={};for(const h of this.hhs)(inc[h.job]=inc[h.job]||[]).push(h.incMonths.reduce((a,b)=>a+b,0)+h.incM);
+    const cand=Object.entries(inc).map(([j,v])=>[j,Math.max(0,v.reduce((a,b)=>a+b,0)/v.length)]).filter(([j,w])=>j!==exclude&&w>0);
+    if(!cand.length)return null;
+    const s=cand.reduce((a,[,w])=>a+w*w,0);let r=this.rng()*s;
+    for(const[j,w]of cand){r-=w*w;if(r<=0)return j;}
+    return cand[cand.length-1][0];}
   travel(h){return Math.min(P.TRAVEL_MAX,this.dist(h)*2*P.TRAVEL_RATE*(h.road?P.ROAD_F:1));}
   limit(){const m=Math.floor((this.day-1)/30)+1;
     return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),Math.max(6000,this.hhs.length*9*P.LIMIT_PC));}
@@ -522,7 +529,8 @@ export class World{
       else{h.up=Math.max(0,h.up-3);h.down++;
         if(h.down>=P.DOWN_DAYS&&h.lv>0){h.lv--;h.down=0;this.log(`${h.job}#${h.id} ▼Lv${h.lv}`);}}
       if((d-1)%360===0)h.incY=0;
-      h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();
+      h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.incM+=h.income30;h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();
+      if(d%30===0){h.incMonths.push(h.incM);h.incM=0;if(h.incMonths.length>12)h.incMonths.shift();}
       h.purseLog.push(h.purse);if(h.purseLog.length>31)h.purseLog.shift();}
     if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
       P.ROAD_F=P.PAVE_ROAD_F;this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
@@ -530,9 +538,8 @@ export class World{
     if(d%90===0&&this.hhs.length>=8&&this.goDay===null){
       const parent=this.hhs.reduce((a,b)=>a.purse>b.purse?a:b);
       const fed=this.doleRate<this.hhs.length*9*0.05;
-      if(parent.purse>=900&&fed){const inc={};
-        for(const h of this.hhs)(inc[h.job]=inc[h.job]||[]).push(h.incomeLog.reduce((a,b)=>a+b,0));
-        let best=null,bv=-1;for(const j in inc){const v=inc[j].reduce((a,b)=>a+b,0)/inc[j].length;if(v>bv){bv=v;best=j;}}
+      if(parent.purse>=900&&fed){
+        const best=this.pickJob(null);
         if(best){const src=this.hhs.filter(h=>h.job===best).reduce((a,b)=>a.purse>b.purse?a:b);
           const dowry=Math.min(300,parent.purse*0.3);parent.purse-=dowry;
           const nh=new HH(best,src.x+(this.rng()-0.5)*3,src.y+(this.rng()-0.5)*3);
@@ -546,8 +553,7 @@ export class World{
       const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3; // 飢え続き or 3ヶ月借金漬け
       if((h.insolvM||0)>=6&&h.purse<0){this.treasury+=h.purse;h.purse=0;h.insolvM=0;this.log(`${h.sur}家の借財を帳消しに(徳政)`);}
       if(distress&&d-(h.lastSwitch||-9e9)>=P.COOLDOWN&&this.rng()<0.5){
-        const inc={};for(const x of this.hhs)(inc[x.job]=inc[x.job]||[]).push(x.incomeLog.reduce((a,b)=>a+b,0));
-        let best=null,bv=-1;for(const j in inc){const v=inc[j].reduce((a,b)=>a+b,0)/inc[j].length;if(v>bv){bv=v;best=j;}}
+        const best=this.pickJob(h.job);
         if(best&&best!==h.job){this.log(`破綻転職: ${h.job}#${h.id}→${best}`);
           if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 徳政: 借金は会社の貸し倒れ(再出発)
           h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
