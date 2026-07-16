@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T04:25:00+09:00",
+  "updated_at": "2026-07-17T06:31:00+09:00",
   "reviewed_source_ts": [
+    "1778480570.779749",
     "1782528770.376139",
     "1780708885.257199",
     "1782565725.425459",
@@ -407,6 +408,20 @@
     "1782500861.216959"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T06:31:00+09:00",
+      "selected": {
+        "id": "sr-1778480570-a136f0227a",
+        "source_ts": "1778480570.779749",
+        "title": "Project DENT を2記事の対比で読む",
+        "reason": "未レビューの score 11 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。AI が弱い領域を検知して自作 editor や人間操作へ切り替え、AI/人間の責任境界を操作系へ落とす知見が、次の playable diff や assist 設計へ新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 14},
+      "decision": "reject",
+      "decision_reason": "合計は14で必須閾値も満たすが、中核である control ownership、AI/人間の handoff cue、override・safe fallback・undo は active な shared-control handoff probe がすでに直接確認している。AI の失敗を model 能力だけに帰属せず tool/editor/harness 層へ切り分ける観点も agent-eval attribution split probe と重複する。Project DENT の2記事対比は強い具体例だが、新規 probe は既存2観点を責任境界という名前で再結合し、肥大化させるため追加しない。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T01:05:00+09:00",
       "selected": {

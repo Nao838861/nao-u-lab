@@ -35,7 +35,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778480570-a136f0227a
+    source_ts: "1778480570.779749"
+    title: "Project DENT を2記事の対比で読む"
+    reason: "未レビューの score 11 atom で、優先6タグをすべて持つ。AI弱点の検知後に editor / 人間操作へ切り替え、責任境界を操作系へ落とす知見が新しい行動になるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "必須閾値と合計14は満たすが、control ownership / handoff cue / override / fallback は既存 shared-control handoff probe、model / tool / editor / harness の失敗層分離は既存 attribution probe と重複する。新規 probe は2観点を責任境界という名前で再結合して active probe 群を肥大化させるため、読了記録だけを残す。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
