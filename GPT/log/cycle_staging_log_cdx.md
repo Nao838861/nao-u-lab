@@ -8,7 +8,17 @@
 - duplicate preflight: `continue` (`https://arxiv.org/abs/2109.04037`)。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260716_trust_ya_small_group_processes.md
+fail: []
+postpone: []
+stale_reviewed: []
+```
+
+- duplicate preflight: `continue`（canonical URL / title_key とも terminal match なし）。
+- pass 根拠: status を投資集中・配当・実利のない記号購入へ写像する手法が具体的で、simulated agents と人間プレイ例という評価内容・限界まで抽出できる。固定役職に頼らない multiplayer prototype の社会関係設計と telemetry に直接適用でき、約4000字の批判的な概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

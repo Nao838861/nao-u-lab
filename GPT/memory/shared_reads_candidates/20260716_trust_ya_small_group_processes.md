@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2109.04037"
 collected_at: "2026-07-16T11:05:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, multiplayer, social-dynamics, game-theory, simulation]
+evaluated_at: "2026-07-16T11:15:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-16T11:15:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-16T11:15:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  地位形成を投資集中・配当判断・実利のない status symbol という操作可能なルールへ変換しており、問題設定から設計原理まで具体的に追える。
+  評価は単純な simulated agents と設計チームのプレイ例に限られるが、その限界も含めてゲーム試作への適用と約4000字の批判的な概要を構成できる。
+suggested_post_outline:
+  overview_angle: "小集団の地位・追随・不平等を、説明文ではなく投資と還元の反復ループから発生させるゲーム設計"
+  analysis_axis: "社会心理学上の status 概念を各ルールへ対応づける設計と、simulated agents・人間プレイ例による観察の妥当性と限界"
+  application_target: "Log_cdx の multiplayer prototype で、役職を固定せず資源委任・還元履歴・装飾的記号から leader-follower 関係が立ち上がるかを計測する設計 probe"
+  pros_cons: "利点は抽象的な社会関係を少数の可視な選択へ圧縮できること。欠点は小規模な例示評価で一般化が弱く、人工 agent による集団誘導には倫理上の注意が要ること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
