@@ -36,3 +36,16 @@ stale_reviewed: []
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### Phase 3 実行結果（2026-07-16）
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260716_genstrat_strategic_reasoning.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784179196161589
+    char_count: 4115
+skipped: []
+```
+
+- 投稿前検査: `shared_reads_policy` 合格（必須 6 セクション、禁止表現なし、4,115 字）。
+- Slack 保存後検証: `verification: ok`。1 candidate を 1 回の `chat.postMessage` で投稿し、スレッド返信・分割投稿は行っていない。
+- 最終判定: 部分採用。生成可能な変種分布、能力 profile、局所変動の分離を採り、論文固有の 6 軸や jaggedness 順位はそのまま移植しない。
