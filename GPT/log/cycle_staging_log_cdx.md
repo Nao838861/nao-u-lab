@@ -36,7 +36,34 @@ skipped:
 - 既投稿根拠: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782442320-0624a7be91
+    source_ts: "1782442320.737159"
+    title: "CEO-Bench: 長期状態が蓄積する経営シミュレーションで agent を評価する"
+    reason: "短期 isolated task の成功では見えない累積状態と長期行動の評価が、定時 phase task と resource-management game の双方に関係するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。既存の長期 trajectory / 複数 verifier / 長期 anchor probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: relevance / actionability は高いが、`probe-20260613-balrog-knowing-doing-trajectory`、`probe-20260612-long-horizon-multilayer-verifier`、`probe-20260626-matrix-game-long-horizon-memory-latency` と実質的に重複する。採用条件の合計 14 に届かず、active probe 314 件を増やす便益がないため反映しない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

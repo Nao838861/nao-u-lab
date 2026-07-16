@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T16:18:00+09:00",
+  "updated_at": "2026-07-16T17:55:00+09:00",
   "reviewed_source_ts": [
+    "1782442320.737159",
     "1779995803.583479",
     "1779740294.256369",
     "1782646829.867869",
@@ -10083,6 +10084,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260604-skill-lifecycle-promotion-gate", "SkillOpt held-out validation / add-delete-replace probes already recorded in reviews"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と defer 理由のみ更新した。新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-16T17:55:00+09:00",
+      "id": "sr-1782442320-0624a7be91",
+      "source_ts": "1782442320.737159",
+      "title": "CEO-Bench: 長期状態が蓄積する経営シミュレーションで agent を評価する",
+      "decision": "reject",
+      "reason": "Score 13. 短期 isolated task の成功ではなく、500日間の pricing・budgeting・R&D・support などが累積する軌跡で agent を見る観点は、長期 phase task と resource-management game の評価に直結する。しかし active な long-horizon probes はすでに、変化する状態下で知識が行動へ変換された trajectory signal、単一 pass ではない複数 verifier、長期 anchor と過去 checkpoint の再確認を要求している。CEO-Bench 固有の probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文と原論文リンクは根拠になるが、この環境で長期経営 simulation や同等の累積資源 trace を比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260613-balrog-knowing-doing-trajectory", "probe-20260612-long-horizon-multilayer-verifier", "probe-20260626-matrix-game-long-horizon-memory-latency"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の長期 trajectory / verifier / anchor probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
