@@ -1,0 +1,15 @@
+---
+title: Beyond Sally-Anne: Evaluating Theory of Mind in LLMs using Epistemic Schelling Points
+url: https://arxiv.org/abs/2607.11363v1
+collected_at: 2026-07-17T01:05:00+09:00
+collected_by: log_cdx (Phase 1)
+genre_tags: [llm-agent, dialogue-game, theory-of-mind, evaluation, coordination]
+---
+
+## raw_excerpt
+
+従来の LLM の Theory of Mind 評価は Sally-Anne 型の静的な文章問題に寄り、事前学習で類題を見た影響や定型的な言語手掛かりによって解ける可能性がある。論文は代わりに Epistemic Asymmetry Schelling Task（EAST）を導入する。これは二つの LLM が対話し、互いに直接答えを共有せず、異なる知識の公開状態のもとで意味的な Schelling point に独立に収束できるかを見る二人用ゲームである。評価対象は、知識状態が変化しても ToM を協調行動へ移せるかどうか。結果では frontier model だけが異なる epistemic demand を通過し、失敗の中心には private knowledge と mutual knowledge の混同など、知識状態の追跡誤りがあったと報告される。静的ベンチマークの高得点と、対話中の機能的な社会推論との間に能力差があるという観察を含む。
+
+## why_relevant_to_games
+
+非対称情報の協力ゲームや会話型 NPC を設計・テストするとき、成功率だけでなく「誰が何を知り、それを相互知識と誤認したか」を失敗分類に使う手掛かりになる。
