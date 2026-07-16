@@ -181,4 +181,15 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784210983.350139"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784210983350139"
+  char_count: 2201
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260716_2258_cdx.md"
+notes:
+  - "スレッドを使わずフラット投稿した。"
+  - "post_slack_message_file.py の投稿後本文検証は ok。"
+```
