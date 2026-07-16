@@ -6,7 +6,7 @@ export const FOODS = ['fish','veg','wheat','pres','pick','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',pick:'veg',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:10, Y_WHEAT:4500, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
+  Y_FISH:20, Y_FISH_W:5, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:16, Y_WHEAT:4500, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   CMULT:1.35, D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.012, ROAD_F:0.55, TRAVEL_MAX:0.45, HAUL:40,
@@ -18,7 +18,7 @@ export const P = {
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
-  PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
+  WOOD0:350, WOOD_R:0.7, PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3,iron:3.5,cloth:2.5},
 };
 export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
@@ -27,6 +27,16 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
 export const JOBS=Object.keys(JOBCLS);
+export function stdTerrain(MW=48,MH=40){const terr=[];
+  for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
+    let t='grass';
+    if(y>MH-4||(y>MH-7&&x>18&&x<32))t='water';else if(y>MH-8&&y<=MH-4)t='sand';
+    if(x<16&&y<16&&((x*7+y*13)%5<3))t='forest';          // 大森林(遠い=取りきれない)
+    if(x>=10&&x<=18&&y>=15&&y<=25&&((x*7+y*13)%5<3))t='forest'; // 森の腕(中距離=道を引けば届く第二フロンティア)
+    if(x>=28&&x<=33&&y>=23&&y<=27&&((x*5+y*11)%4<3))t='forest'; // 町外れの雑木林(近い・小さい=序盤用、やがて禿げる)
+    if(x>38&&y<10)t='rock';
+    terr[y].push(t);}}
+  return terr;}
 function mulberry(seed){let s=seed>>>0;return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 let HID=0;
 const FIRST=['ハンス','グレタ','ヤン','マリア','ピム','ロッテ','カレル','アンナ','ブラム','エルス','テオ','ヨハンナ','ミーナ','クラース','フェム','ダーン','ソフィー','ヘンク','リーケ','ヨープ'];
@@ -51,7 +61,9 @@ export class HH{
     if(job==='fisher'){this.pantry.salt=4;this.pantry.char=2;}
     if(job==='veg')this.pantry.salt=3;
     if(job==='fisher2')this.pantry.salt=2;}
-  mult(){return Math.pow(P.LV_MULT,this.lv);}
+  mult(){const raw=Math.pow(P.LV_MULT,this.lv);
+    const primary={fisher:1,fisher2:1,veg:1,wheat:1,shepherd:1,rapeseed:1}[this.job];
+    return primary?Math.min(raw,2.0):raw;} // 一次産業は複利で伸びない(畑と舟の物理)。食料をラダーの人質にしない
   eat(){return this.members.length;}
   haul(){return this.members.length*4;}   // 1人1荷(荷=4食分)×家族
   cls(){return JOBCLS[this.job];}
@@ -65,7 +77,35 @@ export class World{
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
     this.stalls={};for(const g of GOODS)this.stalls[g]=[];
     this.deskUsed={};}
-  setTerrain(terr){this.terr=terr;}
+  setTerrain(terr){this.terr=terr;this.wood={};
+    for(let y=0;y<terr.length;y++)for(let x=0;x<terr[y].length;x++)
+      if(terr[y][x]==='forest')this.wood[x+','+y]=P.WOOD0;}
+  near(x,y,type,r=2){if(!this.terr)return true; // 地形なし(旧テスト)は制約なし
+    for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
+      const t=this.terr[Math.round(y)+dy]?.[Math.round(x)+dx];
+      if(t===type)return true;}return false;}
+  canPlace(job,x,y){if(!this.terr)return[true,''];
+    const t=this.terr[Math.round(y)]?.[Math.round(x)];
+    if(!t||t==='water')return[false,'水の上には建てられません'];
+    if(t==='forest')return[false,'森を切り開く仕組みはまだありません——森の際に'];
+    if(t==='rock')return[false,'岩場の上には建てられません——際に'];
+    if((job==='fisher'||job==='fisher2')&&!this.near(x,y,'water',2))return[false,'漁師は水際にしか住めません'];
+    if((job==='woodshop'||job==='charburner')&&!this.near(x,y,'forest',2))return[false,'木工と炭焼きは森の際でないと立ち行きません'];
+    if(job==='quarryman'&&!this.near(x,y,'rock',2))return[false,'採石は岩場の際でないと立ち行きません'];
+    return[true,''];}
+  chopWood(h,amount){ // 択伐: 種木(15%)を残して伐る。足りない時だけ皆伐→禿山(乱獲の可視化・正典⑦)
+    if(!this.terr)return amount; // 旧テスト互換: 地形なしなら無制限
+    let got=0;const cx=Math.round(h.x),cy=Math.round(h.y);const seed=P.WOOD0*0.15;
+    for(let pass=0;pass<2&&got<amount;pass++)
+    for(let r=0;r<=5&&got<amount;r++)for(let dy=-r;dy<=r&&got<amount;dy++)for(let dx=-r;dx<=r&&got<amount;dx++){
+      const k=(cx+dx)+','+(cy+dy);const s=this.wood[k];
+      const floor=pass===0?seed:0;
+      if(s>floor){const u=Math.min(s-floor,amount-got);this.wood[k]-=u;got+=u;
+        if(this.wood[k]<=0.5){this.wood[k]=0;this.terr[cy+dy][cx+dx]='bald';this.log('森が禿げた——伐り尽くされた丘');}}}
+    return got;}
+  localWood(h){if(!this.terr)return 1;let s=0;const cx=Math.round(h.x),cy=Math.round(h.y);
+    for(let dy=-5;dy<=5;dy++)for(let dx=-5;dx<=5;dx++)s+=this.wood[(cx+dx)+','+(cy+dy)]||0;
+    return Math.min(1,s/(P.WOOD0*8));}
   tileCost(x,y){if(x<0||y<0||x>=this.MW||y>=this.MH)return Infinity;
     if(this.terr&&this.terr[y][x]==='water')return Infinity;
     if(this.roadTiles.has(x+','+y))return this.paved?0.45:0.6;
@@ -95,7 +135,9 @@ export class World{
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
     h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;this.tread(h.px,h.py);return false;}
   pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
-  addZone(job,x,y){this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);}
+  addZone(job,x,y){const[ok,why]=this.canPlace(job,x,y);
+    if(!ok){this.log(`区画不可(${job}): ${why}`);return false;}
+    this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);return true;}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
   addHH(job,x,y){const h=new HH(job,x,y);this.hhs.push(h);this.mainlandIn+=h.purse;
     this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.log(`入植: ${job}`);this.updRoads();return h;}
@@ -114,7 +156,7 @@ export class World{
       meat:P.Y_MEAT,cloth:P.Y_CLOTH,tools:P.Y_TOOLS,char:P.Y_CHAR,salt:P.Y_SALT,stone:P.Y_STONE,
       oil:(mm>=3&&mm<=8)?P.Y_OIL:0.01,meal:P.Y_FISH/P.MEAL_FISH,
       pres:winter?P.Y_FISH_W*P.PR_SALT:P.Y_FISH*P.PR_SALT,pick:P.Y_VEG*P.PR_PICK}[g]??1;
-    const scar={char:this.grove/P.GROVE0,tools:this.grove/P.GROVE0,fish:this.bay/P.BAY0,pres:this.bay/P.BAY0}[g]??1; // 資源の希少性=枯渇するほど原価が上がる(共有地に地代を)
+    const scar={char:this.localWood(h),tools:this.localWood(h),fish:this.bay/P.BAY0,pres:this.bay/P.BAY0}[g]??1; // 資源の希少性=近隣の森の残りで原価が上がる
     const labor=h.eat()*this.staple()/(YD*h.mult()*Math.max(0.05,scar));
     const inp={salt:(P.SALT_CHAR/P.Y_SALT)*(this.px.char??2),
       pres:P.PRES_SALT*(this.px.salt??2)/P.PR_SALT,pick:P.PICK_SALT*(this.px.salt??2)/P.PR_PICK}[g]??0;
@@ -151,7 +193,8 @@ export class World{
     const px=this.px;const cheapest=Math.min(px.veg??9,px.wheat??9,px.pres??9);
     const mmT=(Math.floor((this.day-1)/30))%12+1;
     const autumn=mmT>=7&&mmT<=9;   // 秋=冬支度(正典ルール3「備えを保つ」の季節スケール)
-    const tgtD=autumn?(doleOn?8:60):(doleOn?2:P.PANTRY_FOOD_D);  // 依存期の冬支度は控えめ(輸入で積むと本土流出が膨らむ)
+    let tgtD=autumn?(doleOn?8:60):(doleOn?2:P.PANTRY_FOOD_D);  // 依存期の冬支度は控えめ(輸入で積むと本土流出が膨らむ)
+    tgtD=Math.max(tgtD,Math.min(12,this.dist(h)*0.9)); // 遠い家ほど大きな貯蔵(まとめ買いで通いを減らす)
     if(foodDays<tgtD){const starving=foodDays<1.5;
       for(const g of['veg','wheat','pres','pick'])
         t[g]=[(tgtD-foodDays)*P.EAT/4,starving?99:Math.min((px[g]??9)*1.5,cheapest*2.2)];}
@@ -190,15 +233,15 @@ export class World{
   sellOffers(h){const out={};const doleOn=this.goDay===null;
     const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];
     if(my==='meal'){if(h.pantry.meal>=15)return{meal:Math.min(h.pantry.meal,P.HAUL)};return{};}
-    if(my==='fish'){let keep=P.EAT;
+    if(my==='fish'){let keep=h.eat()*1.2;
       const alt=Math.min(this.px.veg??9,this.px.wheat??9,this.px.pres??9);
-      if((this.px.fish??2)>alt*1.5)keep=P.EAT*0.3;
+      if((this.px.fish??2)>alt*1.5)keep=h.eat()*0.4;
       // 塩がある分は保存に回す(今夜の塩蔵用に魚を残す。保存は買付台で確実に売れる)
       keep+=Math.min(h.pantry.salt/P.PRES_SALT,12);
       const s=Math.max(0,h.pantry.fish-keep);if(s>1e-9)out.fish=Math.min(s,h.haul());}
-    else{let keep=FOODS.includes(my)?P.EAT*2:2,rate=0.5;
-      if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=P.EAT*P.RATION*10;}
-      if(my==='veg'&&doleOn)keep=P.EAT*P.RATION*10;
+    else{let keep=FOODS.includes(my)?h.eat()*2:2,rate=0.5;
+      if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=h.eat()*P.RATION*10;}
+      if(my==='veg'&&doleOn)keep=h.eat()*P.RATION*10;
       const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,h.haul());}
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
@@ -234,6 +277,7 @@ export class World{
     if(tod===29)this.dayEnd();}
   fl(g,k,v){const f=this.fday[g]=this.fday[g]||{prod:0,cons:0,imp:0,exp:0};f[k]+=v;}
   dayStart(){this.day++;this.deskUsed={};this.fday={};
+    if(this.terr)this.grove=Object.values(this.wood).reduce((a,b)=>a+b,0);
     for(const g of GOODS){const st=this.stalls[g];
       const perishable=PERISH.includes(g);
       for(let i=st.length-1;i>=0;i--){const s=st[i];
@@ -269,7 +313,7 @@ export class World{
     let stall=false;for(const g of GOODS){if(this.stalls[g].some(s=>s.hh===h)){stall=true;break;}}
     if(stall)f*=(h.members.length-1)/h.members.length;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
     // 普遍則: 自分の売れ残り(倉+店)が10日分を超えたら手を止める(損して作らない・全生産財共通)
-    const myG={saltworks:'salt',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal',shepherd:'meat',veg:'veg'}[h.job];
+    const myG={saltworks:'salt',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal',shepherd:'meat'}[h.job];
     if(myG){const daily={salt:P.Y_SALT,tools:P.Y_TOOLS,char:P.Y_CHAR,stone:P.Y_STONE,oil:P.Y_OIL,meal:P.Y_FISH/P.MEAL_FISH,meat:P.Y_MEAT,veg:P.Y_VEG}[myG]*h.mult();
       const out=this.stalls[myG].reduce((a,s)=>a+(s.hh===h?s.qty:0),0);
       if(h.pantry[myG]+out>daily*10)return;}
@@ -291,10 +335,10 @@ export class World{
     else if(h.job==='wheat'){if(h.pantry.wheat>P.Y_WHEAT*h.mult()*0.8)return; // 納屋が溢れたら休耕(働いても売れない年は畑を休ませる)
       h.wheatWork+=f;
       if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;this.fl('meal','cons',u);}}
-    else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
-      this.grove=Math.min(P.GROVE0,this.grove-q*2+f*P.GROVE_R*this.grove*(1-dep));h.pantry.tools+=q;this.fl('tools','prod',q);}
-    else if(h.job==='charburner'){const dep=this.grove/P.GROVE0;const q=P.Y_CHAR*w*dep;
-      this.grove=Math.min(P.GROVE0,this.grove-q*1.0+f*P.GROVE_R*this.grove*(1-dep));h.pantry.char+=q;this.fl('char','prod',q);}
+    else if(h.job==='woodshop'){const want=P.Y_TOOLS*w;const wd=this.chopWood(h,want*1.5);
+      const q=wd/1.5;h.pantry.tools+=q;this.fl('tools','prod',q);}
+    else if(h.job==='charburner'){const want=P.Y_CHAR*w;const wd=this.chopWood(h,want*1.0);
+      const q=wd;h.pantry.char+=q;this.fl('char','prod',q);}
     else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
       h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;this.fl('salt','prod',P.Y_SALT*h.mult()*fuel/P.SALT_CHAR);this.fl('char','cons',fuel);}}
   transact(h){const doleOn=this.goDay===null;
@@ -480,6 +524,13 @@ export class World{
       if(m>P.FREE_M&&debt>0){const i=debt*P.IRATE;this.treasury-=i;this.mainlandOut+=i;}
       if(this.goDay===null&&-this.treasury>this.limit()){this.goDay=d;
         this.log(`★破産(債務${Math.round(-this.treasury)}>限度${Math.round(this.limit())})——最終通告。配給停止`);}}
+    // 森の成長と遷移(禿山は隣に森が残っていれば数年で還る=取りきれない森の実装)
+    if(this.terr&&d%5===0){for(const k in this.wood){const s=this.wood[k];
+        if(s>0&&s<P.WOOD0)this.wood[k]=Math.min(P.WOOD0,s+P.WOOD_R*5);}
+      if(d%30===0){const[MW,MH]=[this.terr[0].length,this.terr.length];
+        for(let y=0;y<MH;y++)for(let x=0;x<MW;x++)if(this.terr[y][x]==='bald'){
+          let adj=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(this.terr[y+dy]?.[x+dx]==='forest'&&this.wood[(x+dx)+','+(y+dy)]>P.WOOD0*0.3)adj++;
+          if(adj>=2&&this.rng()<0.06){this.terr[y][x]='forest';this.wood[x+','+y]=P.WOOD0*0.25;}}}}
     // 需給フロー20日EMA
     this.f30=this.f30||{};
     for(const g of GOODS){const t=this.fday[g]||{prod:0,cons:0,imp:0,exp:0};

@@ -1,11 +1,13 @@
-import{World}from'./engine.js';
-// 基準村: 地形+addZone(入植キット支給経路)。標準プレイ=均衡配置+輸出拡張
-const w=new World(11);w.market={x:25,y:32};w.port={x:25,y:35};
-const terr=[];for(let y=0;y<40;y++){terr.push([]);for(let x=0;x<48;x++){let t='grass';
-  if(y>36||(y>33&&x>18&&x<32))t='water';else if(y>32&&y<=36)t='sand';terr[y].push(t);}}
-w.setTerrain(terr);
-['fisher','fisher','veg','wheat','woodshop','charburner','saltworks','shepherd','veg','fisher'].forEach((j,i)=>w.addZone(j,23+i%5,26+(i*2)%6));
-const plan={13:'wheat',14:'wheat',15:'veg',17:'fisher',18:'rapeseed',20:'rapeseed'}; // 食料先行=検証済みの定石(産業先行は破産M42)
-for(let d=1;d<=1440;d++){if(d%30===1){const m=Math.floor(d/30)+1;if(plan[m]){const i=m-13;w.addZone(plan[m],21+i%7,27+(i*2)%5);}}w.step(); // 近接配置=距離勾配の定石
- if(d%360===0)console.log('Y'+d/360,'金庫',Math.round(w.treasury*10),'飢餓',w.famine,'支援',w.bailouts,'破産',w.goDay,'Lv最高',Math.max(...w.hhs.map(h=>h.lv)));}
+import{mkWorld,findSpot} from './village.mjs';
+// 基準村(地形拘束適合)+食料先行の拡張。貨幣保存則はエンジン内で毎日assert
+const w=mkWorld(11);
+const plan={13:'wheat',16:'charburner',20:'fisher',26:'woodshop',30:'rapeseed'}; // 食料先行+季節1区画の現実ペース。M16=雑木林が禿げ森の腕へ(設計の弧)
+const road=(x1,y1,x2,y2)=>{const n=Math.max(Math.abs(x2-x1),Math.abs(y2-y1));
+  for(let i=0;i<=n;i++)w.roadTiles.add(Math.round(x1+(x2-x1)*i/n)+','+Math.round(y1+(y2-y1)*i/n));w.updRoads();};
+let roadDone=false;
+for(let d=1;d<=1440;d++){if(d%30===1){const m=Math.floor(d/30)+1;
+   if(plan[m]){const s=findSpot(w,plan[m]);if(s){w.addZone(plan[m],s[0],s[1]);
+     if(!roadDone&&(plan[m]==='charburner'||plan[m]==='woodshop')){road(w.market.x,w.market.y,s[0],s[1]);roadDone=true;}}}}
+ w.step();
+ if(d%360===0)console.log('Y'+d/360,'金庫',Math.round(w.treasury*10),'飢餓',w.famine,'支援',w.bailouts,'破産',w.goDay,'Lv最高',Math.max(...w.hhs.map(h=>h.lv)),'森計',Math.round(w.grove));}
 console.log('SMOKE OK (貨幣保存則も全日通過)');

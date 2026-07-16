@@ -1,12 +1,8 @@
 // 意図監査: 「設計意図どおり動いているか」を期待値で自動判定する
 // 使い方: node audit.mjs   (全PASS が健全状態。FAILは意図とのズレ=修理対象)
 import{World,GOODS} from './engine.js';
-
-const terr=[];for(let y=0;y<40;y++){terr.push([]);for(let x=0;x<48;x++){let t='grass';
-  if(y>36||(y>33&&x>18&&x<32))t='water';else if(y>32&&y<=36)t='sand';terr[y].push(t);}}
-const BASE=['fisher','fisher','veg','wheat','woodshop','charburner','saltworks','shepherd','veg','fisher'];
-const mk=(seed)=>{const w=new World(seed);w.market={x:25,y:32};w.port={x:25,y:35};w.setTerrain(terr);
-  BASE.forEach((j,i)=>w.addZone(j,23+i%5,26+(i*2)%6));return w;};
+import{mkWorld,findSpot} from './village.mjs';
+const mk=(seed)=>mkWorld(seed);
 
 let pass=0,fail=0;
 const t=(name,cond,detail)=>{console.log((cond?'PASS':'FAIL')+'  '+name+'  '+(detail||''));cond?pass++:fail++;};
@@ -18,8 +14,10 @@ const priceLog={fish:[],char:[]};
 const stuck={};
 for(const seed of SEEDS){
  const w=mk(seed);
- w.addZone('wheat',22,28);w.addZone('wheat',24,29);
- for(let d=1;d<=1440;d++){w.step();
+ const planA={13:'wheat',16:'charburner',20:'fisher',26:'woodshop',30:'rapeseed'}; // 標準プレイ=smoke台本と同一(雑木林枯渇→森の腕へ)
+ for(let d=1;d<=1440;d++){
+  if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
+  w.step();
   for(const g of['wheat','meat','tools','veg'])stallAvg[g]=(stallAvg[g]||0)+w.stalls[g].reduce((s,x)=>s+x.qty,0)/1440/SEEDS.length;
   famYear[Math.min(3,Math.floor((d-1)/360))]=(d<=360?0:0)||famYear[Math.min(3,Math.floor((d-1)/360))];
   if(d>720&&d%30===0){doleY3+=w.doleRate/SEEDS.length;doleN+=1/SEEDS.length;}
@@ -85,11 +83,12 @@ t('E13 配給卒業',doleAvg<worlds[0].pop()*0.1,`Y3以降平均${doleAvg.toFixe
     else if(n('woodshop')<1)rec='woodshop';
     else if(n('charburner')<1)rec='charburner';
     else if(n('saltworks')<1)rec='saltworks';
+    else if(w2.hhs.some(h=>(h.job==='charburner'||h.job==='woodshop')&&w2.localWood(h)<0.1)&&builds.filter(b=>b==='charburner'||b==='woodshop').length<2){rec=w2.hhs.find(h=>h.job==='charburner'&&w2.localWood(h)<0.1)?'charburner':'woodshop';}
     else if(debt>w2.limit()*0.3)rec=null;
     else if(m>18&&poorN>=w2.hhs.length*0.45&&n('rapeseed')<2)rec='rapeseed';
     else if(gf('salt').imp>0.5)rec='saltworks';
     else if(gf('tools').imp>0.5)rec='woodshop';
-    if(rec){const i=builds.length;w2.addZone(rec,21+i%7,27+(i*2)%5);builds.push(rec);}}}
+    if(rec){const s=findSpot(w2,rec);if(s){w2.addZone(rec,s[0],s[1]);builds.push(rec);}}}}
  t('E15 アドバイザ追従で生存',w2.goDay===null&&w2.famine<600,
    `建てた:${builds.join(',')||'なし'} 金庫${Math.round(w2.treasury*10)} 支援${w2.bailouts} 飢餓${w2.famine} 破産${w2.goDay?'M'+Math.floor((w2.goDay-1)/30+1):'なし'}`);}
 

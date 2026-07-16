@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131400';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain} from './engine.js?v=132200';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -76,12 +76,8 @@ panY=cv.height/2-(60+(MW+MH)/2*10)*Z;
 const toWorld=(px,py)=>[(px-panX)/Z,(py-panY)/Z];
 const iso=(x,y)=>[ox+(x-y)*TW/2,oy+(x+y)*TH/2];
 const unIso=(px,py)=>{const[wx,wy]=toWorld(px,py);const a=(wx-ox)/(TW/2),b=(wy-oy)/(TH/2);return[Math.round((a+b)/2),Math.round((b-a)/2)];};
-const terr=[];for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
-  let t='grass';
-  if(y>MH-4||(y>MH-7&&x>18&&x<32))t='water';else if(y>MH-8&&y<=MH-4)t='sand';
-  if(x<16&&y<16&&((x*7+y*13)%5<3))t='forest';
-  if(x>38&&y<10)t='rock';terr[y].push(t);}}
-const TC={grass:['#4d7a3f','#446f38'],sand:['#c9b57a','#bfa96e'],water:['#2b5d8a','#27547d'],forest:['#3a5f31','#33562b'],rock:['#7a7a72','#6e6e66']};
+const terr=stdTerrain(MW,MH);
+const TC={grass:['#4d7a3f','#446f38'],sand:['#c9b57a','#bfa96e'],water:['#2b5d8a','#27547d'],forest:['#3a5f31','#33562b'],rock:['#7a7a72','#6e6e66'],bald:['#8a7a58','#7d6f50']};
 const w=new World(11);w.market={x:25,y:MH-8};w.port={x:25,y:MH-5};w.setTerrain(terr);
 const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
 const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
@@ -168,8 +164,13 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
   if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
   else if(JOBS.includes(tool)){
+    const[ok,why]=w.canPlace(tool,x,y);
+    const box0=document.getElementById('toast');
+    if(!ok){const el=document.createElement('div');el.textContent='✕ '+why;el.style.color='#ff8a7a';
+      box0.appendChild(el);setTimeout(()=>el.remove(),4500);return;}
     const CRAFT={woodshop:'木工',charburner:'炭焼',saltworks:'塩',quarryman:'採石',rapeseed:'菜種',shepherd:'牧夫'};
-    const nSame=w.hhs.filter(h=>h.job===tool).length+w.zones.filter(z=>!z.filled&&z.job===tool).length;
+    const alive=h=>!(h.job==='woodshop'||h.job==='charburner')||w.localWood(h)>0.1;
+    const nSame=w.hhs.filter(h=>h.job===tool&&alive(h)).length+w.zones.filter(z=>!z.filled&&z.job===tool).length;
     w.addZone(tool,x,y);
     if(CRAFT[tool]&&nSame>=1&&w.pop()<160){const box=document.getElementById('toast');const el=document.createElement('div');
       el.textContent='⚠ '+CRAFT[tool]+'は村にもう'+nSame+'軒あります——この規模では客の取り合いで共倒れします(1軒で村全体を賄えます)';
@@ -363,6 +364,8 @@ function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||
   else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
   else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/42)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
   else if(gf('wheat').imp>8){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
+  else if(w.hhs.some(h=>h.job==='charburner'&&w.localWood(h)<0.1)){rec='charburner';why='炭焼きの森が禿げました。北西の森の際に建て直しを——道とセットで';}
+  else if(w.hhs.some(h=>h.job==='woodshop'&&w.localWood(h)<0.1)){rec='woodshop';why='木工の森が禿げました。北西の森の際に建て直しを';}
   else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
   else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}
   else if(n('saltworks')<1){rec='saltworks';why='塩がなければ保存食が作れません';}
@@ -392,6 +395,9 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
     const c=w.co,dole=(c.doleC||0),wage=(c.pub||0);
     say(dole>wage?'金庫が3ヶ月減り続けています。最大の穴は配給費——稼げない世帯が多すぎます。出来事ログの【決算】をご確認を':'金庫が3ヶ月減り続けています。出来事ログの【決算】で何に消えているかをご確認を');return;}
   if(th.length>=2&&th[1]>th[0])said.drain=false;
+  const dead=w.hhs.filter(h=>(h.job==='charburner'||h.job==='woodshop')&&w.localWood(h)<0.1);
+  if(dead.length&&!said.wood){said.wood=true;say('近くの雑木林が禿げました。'+(dead[0].job==='charburner'?'炭焼き':'木工')+'は北西の大森林の際に建て直しを——遠いぶん、道への投資を');return;}
+  if(!dead.length)said.wood=false;
   const f30=w.f30||{};const fw=f30.wheat||{imp:0};
   if(stage>=4&&fw.imp>12&&!said.wheat){said.wheat=true;say('麦の輸入が月'+Math.round(fw.imp*30*10)+'デナリも嵩んでいます。麦畑か菜園を——食料の自給が全ての土台です');return;}
   if(stage>=4&&fw.imp<6&&said.wheat){said.wheat=false;}
