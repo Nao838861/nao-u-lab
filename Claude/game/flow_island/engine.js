@@ -1,12 +1,12 @@
 // 流通の島 v0 エンジン (spatial/engine.py の較正値を移植・ブラウザ/Node両用)
-export const GOODS = ['fish','veg','wheat','pres','pick','tools','salt','char','meat','meal','stone','oil','iron','cloth'];
+export const GOODS = ['fish','veg','wheat','pres','pick','tools','salt','char','meat','meal','stone','oil','iron','cloth','log'];
 export const PERISH = ['fish','veg','meat','pres','pick','wheat','meal'];
 // pick=漬物(野菜の保存・野菜枠の多様性が冬も立つ)
 export const FOODS = ['fish','veg','wheat','pres','pick','meat'];
 const KIND = {fish:'fish',veg:'veg',wheat:'wheat',pres:'fish',pick:'veg',meat:'meat'};
 export const P = {
   EAT:9, PANTRY_FOOD_D:6, CULT_D:240, RATION:0.15,
-  Y_FISH:20, Y_FISH_W:5, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:16, Y_WHEAT:4500, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
+  Y_FISH:20, Y_FISH_W:5, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:16, Y_WHEAT:4500, Y_LOG:16, LOG_TOOL:1.5, LOG_CHAR:1.0, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   CMULT:1.35, D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.012, ROAD_F:0.55, TRAVEL_MAX:0.45, HAUL:40,
@@ -25,8 +25,8 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   fish:['grain','tools','salt','char','food2','iron'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
-export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.14';
+export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
+export const VERSION='v0.15β 材木チェーン調整中';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -59,6 +59,7 @@ export class HH{
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
     this.pantry.tools=5;this.pantry.wheat=90;  // 兵糧(9人×約10日=普請期間を自弁。配給=輸入価格で治療するより船で運ぶ方が安い)
     if(job==='saltworks')this.pantry.char=15;
+    if(job==='woodshop'||job==='charburner')this.pantry.log=20; // 開業在庫(丸太)——価格形成が回り出すまでの種
     if(job==='fisher'){this.pantry.salt=4;this.pantry.char=2;}
     if(job==='veg')this.pantry.salt=3;
     if(job==='fisher2')this.pantry.salt=2;}
@@ -91,7 +92,7 @@ export class World{
     if(t==='forest')return[false,'森を切り開く仕組みはまだありません——森の際に'];
     if(t==='rock')return[false,'岩場の上には建てられません——際に'];
     if((job==='fisher'||job==='fisher2')&&!this.near(x,y,'water',2))return[false,'漁師は水際にしか住めません'];
-    if((job==='woodshop'||job==='charburner')&&!this.near(x,y,'forest',2))return[false,'木工と炭焼きは森の際でないと立ち行きません'];
+    if(job==='logger'&&!this.near(x,y,'forest',2))return[false,'木こりは森の際でないと立ち行きません'];
     if(job==='quarryman'&&!this.near(x,y,'rock',2))return[false,'採石は岩場の際でないと立ち行きません'];
     return[true,''];}
   chopWood(h,amount){ // 択伐: 種木(15%)を残して伐る。足りない時だけ皆伐→禿山(乱獲の可視化・正典⑦)
@@ -159,11 +160,12 @@ export class World{
   cost(h,g){const mm=(Math.floor((Math.max(1,this.day)-1)/30))%12+1;const winter=mm>=10||mm<=2;
     const YD={fish:winter?P.Y_FISH_W:P.Y_FISH,veg:(mm>=3&&mm<=10)?P.Y_VEG:0.01,wheat:P.Y_WHEAT/360,
       meat:P.Y_MEAT,cloth:P.Y_CLOTH,tools:P.Y_TOOLS,char:P.Y_CHAR,salt:P.Y_SALT,stone:P.Y_STONE,
-      oil:(mm>=3&&mm<=8)?P.Y_OIL:0.01,meal:P.Y_FISH/P.MEAL_FISH,
+      oil:(mm>=3&&mm<=8)?P.Y_OIL:0.01,meal:P.Y_FISH/P.MEAL_FISH,log:P.Y_LOG,
       pres:winter?P.Y_FISH_W*P.PR_SALT:P.Y_FISH*P.PR_SALT,pick:P.Y_VEG*P.PR_PICK}[g]??1;
-    const scar={char:this.localWood(h),tools:this.localWood(h),fish:this.bay/P.BAY0,pres:this.bay/P.BAY0}[g]??1; // 資源の希少性=近隣の森の残りで原価が上がる
+    const scar={log:this.localWood(h),fish:this.bay/P.BAY0,pres:this.bay/P.BAY0}[g]??1; // 資源の希少性は伐る本人(木こり)の丸太原価に乗る
     const labor=h.eat()*this.staple()/(YD*h.mult()*Math.max(0.5,scar)); // 地代の転嫁は2倍まで。それ以上の枯渇は価格でなく休業で現れる(天井超えの在庫凍結を防ぐ)
     const inp={salt:(P.SALT_CHAR/P.Y_SALT)*(this.px.char??2),
+      tools:P.LOG_TOOL*(this.px.log??1),char:P.LOG_CHAR*(this.px.log??1),
       pres:P.PRES_SALT*(this.px.salt??2)/P.PR_SALT,pick:P.PICK_SALT*(this.px.salt??2)/P.PR_PICK}[g]??0;
     return labor+inp;}
   dist(h){return Math.hypot(h.x-this.market.x,h.y-this.market.y);}
@@ -216,6 +218,10 @@ export class World{
         t.meal=[P.FERT_NEED*20-h.pantry.meal,bv*0.7];}}
     if(h.job==='saltworks'&&h.pantry.char<P.SALT_CHAR*5)
       t.char=[P.SALT_CHAR*10-h.pantry.char,P.Y_SALT*(px.salt??2)*0.5];
+    if(h.job==='woodshop'&&h.pantry.log<P.LOG_TOOL*8)
+      t.log=[P.LOG_TOOL*16-h.pantry.log,Math.max(0.9,(px.tools??2)/P.LOG_TOOL*0.6)];
+    if(h.job==='charburner'&&h.pantry.log<P.LOG_CHAR*8)
+      t.log=[P.LOG_CHAR*16-h.pantry.log,Math.max(0.9,(px.char??2)/P.LOG_CHAR*0.6)];
     if(h.job==='veg'&&h.pantry.salt<1.5)
       t.salt=[4-h.pantry.salt,(px.pick??2)*P.PR_PICK/P.PICK_SALT*0.4];  // 漬物の導出需要
     if(h.job==='fisher'){if(h.pantry.salt<3)t.salt=[6-h.pantry.salt,(px.pres??2)*P.PR_SALT/P.PRES_SALT*0.5];
@@ -238,7 +244,7 @@ export class World{
       if(h.pantry[g]<tgt*0.5)t[g]=[tgt-h.pantry[g],val];}
     return t;}
   sellOffers(h){const out={};const doleOn=this.goDay===null;
-    const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];
+    const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',logger:'log',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];
     if(my==='meal'){if(h.pantry.meal>=15)return{meal:Math.min(h.pantry.meal,P.HAUL)};return{};}
     if(my==='fish'){let keep=h.eat()*1.2;
       const alt=Math.min(this.px.veg??9,this.px.wheat??9,this.px.pres??9);
@@ -249,7 +255,7 @@ export class World{
     else{let keep=FOODS.includes(my)?h.eat()*2:2,rate=0.5;
       if(my==='wheat'){rate=doleOn?0.1:0.04;if(doleOn)keep=h.eat()*P.RATION*10;}
       if(my==='veg'&&doleOn)keep=h.eat()*P.RATION*10;
-      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,h.haul());}
+      const s=Math.max(0,h.pantry[my]-keep);if(s>1e-9)out[my]=Math.min(s*rate+2,s,my==='log'?h.haul()/2:h.haul());} // 丸太は重い(運搬2枠)
     if(h.job==='fisher'&&h.pantry.pres>P.EAT*P.PANTRY_FOOD_D)
       out.pres=Math.min(h.pantry.pres-P.EAT*P.PANTRY_FOOD_D,h.haul());
     if(h.job==='veg'&&h.pantry.pick>10)out.pick=Math.min(h.pantry.pick-5,h.haul());
@@ -280,7 +286,7 @@ export class World{
       const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
       const offers=this.sellOffers(h);const sellSum=Object.values(offers).reduce((a,b)=>a+b,0);
       const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*4);
-      const inputLow=(h.job==='saltworks'&&h.pantry.char<2)||(h.job==='fisher'&&h.pantry.salt<1)||((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<1&&this.day%7===0);
+      const inputLow=(h.job==='saltworks'&&h.pantry.char<2)||(h.job==='fisher'&&h.pantry.salt<1)||((h.job==='woodshop'||h.job==='charburner')&&h.pantry.log<2)||((h.job==='wheat'||h.job==='rapeseed')&&h.pantry.meal<1&&this.day%7===0);
       // 食料の自産者(漁/菜/牧)は日々の食いつなぎで出発しない(在庫が薄いのは仕様)。
       // 本当に空の時だけ買いに行く。これが無いと毎日通勤し実効生産<自家消費で永久赤字
       const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
@@ -338,8 +344,8 @@ export class World{
     let stall=false;for(const g of GOODS){if(this.stalls[g].some(s=>s.hh===h)){stall=true;break;}}
     if(stall)f*=(h.members.length-1)/h.members.length;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
     // 普遍則: 自分の売れ残り(倉+店)が10日分を超えたら手を止める(損して作らない・全生産財共通)
-    const myG={saltworks:'salt',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal',shepherd:'meat'}[h.job];
-    if(myG){const daily={salt:P.Y_SALT,tools:P.Y_TOOLS,char:P.Y_CHAR,stone:P.Y_STONE,oil:P.Y_OIL,meal:P.Y_FISH/P.MEAL_FISH,meat:P.Y_MEAT,veg:P.Y_VEG}[myG]*h.mult();
+    const myG={saltworks:'salt',logger:'log',woodshop:'tools',charburner:'char',quarryman:'stone',rapeseed:'oil',fisher2:'meal',shepherd:'meat'}[h.job];
+    if(myG){const daily={salt:P.Y_SALT,log:P.Y_LOG,tools:P.Y_TOOLS,char:P.Y_CHAR,stone:P.Y_STONE,oil:P.Y_OIL,meal:P.Y_FISH/P.MEAL_FISH,meat:P.Y_MEAT,veg:P.Y_VEG}[myG]*h.mult();
       const out=this.stalls[myG].reduce((a,s)=>a+(s.hh===h?s.qty:0),0);
       if(h.pantry[myG]+out>daily*10)return;}
     const w=f*h.mult();
@@ -360,10 +366,11 @@ export class World{
     else if(h.job==='wheat'){if(h.pantry.wheat>P.Y_WHEAT*h.mult()*0.8)return; // 納屋が溢れたら休耕(働いても売れない年は畑を休ませる)
       h.wheatWork+=f;
       if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;this.fl('meal','cons',u);}}
-    else if(h.job==='woodshop'){const want=P.Y_TOOLS*w;const wd=this.chopWood(h,want*1.5);
-      const q=wd/1.5;h.pantry.tools+=q;this.fl('tools','prod',q);}
-    else if(h.job==='charburner'){const want=P.Y_CHAR*w;const wd=this.chopWood(h,want*1.0);
-      const q=wd;h.pantry.char+=q;this.fl('char','prod',q);}
+    else if(h.job==='logger'){const q=this.chopWood(h,P.Y_LOG*w);h.pantry.log+=q;this.fl('log','prod',q);}
+    else if(h.job==='woodshop'){const q=Math.min(P.Y_TOOLS*w,h.pantry.log/P.LOG_TOOL);
+      h.pantry.log-=q*P.LOG_TOOL;h.pantry.tools+=q;this.fl('tools','prod',q);this.fl('log','cons',q*P.LOG_TOOL);}
+    else if(h.job==='charburner'){const q=Math.min(P.Y_CHAR*w,h.pantry.log/P.LOG_CHAR);
+      h.pantry.log-=q*P.LOG_CHAR;h.pantry.char+=q;this.fl('char','prod',q);this.fl('log','cons',q*P.LOG_CHAR);}
     else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
       h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;this.fl('salt','prod',P.Y_SALT*h.mult()*fuel/P.SALT_CHAR);this.fl('char','cons',fuel);}}
   transact(h){const doleOn=this.goDay===null;
@@ -401,13 +408,13 @@ export class World{
     // --- 買い: 安い屋台(+会社の輸入棚)から。持ち帰り容量まで ---
     let cap=h.haul();
     const targets=this.buyTargets(h);
-    const doleOrder=['salt','char','tools','cloth','iron','meal','stone','oil','fish','veg','wheat','pres','meat'].filter(g=>targets[g]);
+    const doleOrder=['log','salt','char','tools','cloth','iron','meal','stone','oil','fish','veg','wheat','pres','meat'].filter(g=>targets[g]); // 生産インプット(丸太)は最優先
     for(const g of(doleOn?doleOrder:Object.keys(targets))){
       let[want,ceil]=targets[g];want=Math.min(want,cap);
       const shelves=[...this.stalls[g]];
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
       shelves.sort((a,b)=>a.price-b.price); // 輸入棚も価格競争に参加=輸入パリティが真の天井になる
-      const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal');
+      const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal')||((h.job==='woodshop'||h.job==='charburner')&&g==='log');
       for(const s of shelves){if(want<1e-9)break;
         if(s.price>ceil||s.price<=0)continue;
         const q=Math.min(want,s.qty,(h.purse+(isInput?30:0))/s.price); // 仕入れは-30まで信用買い(前貸し)
