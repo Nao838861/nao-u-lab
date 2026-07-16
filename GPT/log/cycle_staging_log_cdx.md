@@ -20,7 +20,13 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+notes:
+  - "Phase 2 の pass が空のため、投稿対象なし。"
+  - "過去 candidate の gate_decision: pass は今回の staging handoff ではないため再投稿対象に含めていない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
