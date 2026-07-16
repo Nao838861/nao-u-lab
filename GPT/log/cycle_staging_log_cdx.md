@@ -63,7 +63,55 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（81 groups、差分なし）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-16 基準で再生成（上位50件、差分なし）"
+  - "shared_reads_group_action_queue.jsonl を再生成（36 groups、差分なし）"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認（pending 0件、close更新なし）"
+issues:
+  - id: ISS-4A-ENC-001
+    description: "memory_health が2 atomの本文フィールドに実データ由来の文字化け疑いを検出した。MEMORY.md 自体はUTF-8で正常に読め、表示経路の文字化けではない。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md（title/trigger/excerpt）; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md（excerpt）; tools/memory_health.py --json"
+    source_file_status: "UTF-8 decode成功。memory/MEMORY.md では『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は語として存在しない。atom 2件には置換文字を含む疑いが残る。"
+    display_or_tooling_status: "Get-Content -Encoding UTF8 と Python UTF-8明示読みは正常。shell表示だけのmojibakeではない。"
+    why_blocks_game_memory: "該当atomを検索した時に表題・発動条件・原文抜粋が読みにくくなるが、対象は2675件中2件でrecall全体を塞いでいない。"
+  - id: ISS-4A-RAW-001
+    description: "memory/raw/ にmtimeが30日超の原文が93件（約62.8MB）ある。由来の異なるSlack archive・PDF抽出・検索rawが同じ基準で残っているため、archive対象の判別が未完了。"
+    severity: low
+    evidence: "memory/raw/ recursive mtime audit（2026-07-16、30日閾値）: 93 files / 62,759,242 bytes"
+    source_file_status: "対象は存在し読み取り可能。原文・同期stateを含むため、このphaseでは一括移動していない。"
+    display_or_tooling_status: "none"
+    why_blocks_game_memory: "直近の制作証拠と長期保存rawの区別を容量やmtimeだけでは付けられず、必要な原文を辿る際の探索ノイズになる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  eligible_total: 218
+  triage_queue_rows: 50
+  handed_off_this_cycle: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue先頭。依存関係付きprompt pipelineはゲーム転用価値が高いが、評価内容・比較対象・結論が薄い。status_countsは failed 2 / postponed 4、terminal_pathsは2件、open_pathsは4件。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+```
+
+- `memory/MEMORY.md`: atom ID参照50件、missing 0件。Markdown link形式のindex行は0件。
+- `memory/atoms.jsonl`: 2675行、invalid JSON 0、duplicate ID 0。mirror auditは jsonl / per-file / index 各2675件で conflict 0。raw normalized duplicate 40 groups / 80 rowsは既存canonical overlay 45 groupsでfold済み。
+- candidate lifecycle: `posted: 409 / ready_to_post: 10 / postponed: 398 / failed: 123 / needs_review: 22`。status欠落0件。`posted` / `failed` は再評価queueから除外した。
+- duplicate title audit: unindexed mixed groupを確認。既存queueでgroup単位handoffできるため、新規設計issueにはしない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
