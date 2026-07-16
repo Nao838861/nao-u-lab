@@ -28,7 +28,18 @@ duplicate_preflight_notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260717_evaluator_preference_dynamics_audit.md
+    reason: "Phase 2 で既投稿候補との同一 title・同一 URL が確認され、gate_decision: postpone。既投稿 permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260717_east_epistemic_schelling_points.md
+    reason: "Phase 2 で arXiv version suffix を除いた同一 URL・同一 title の既投稿候補が確認され、gate_decision: postpone。既投稿 permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784088387032009"
+    action: postpone
+summary: "pass candidate が 0 件のため #shared-reads への投稿は行わなかった。両 candidate の postponed frontmatter と重複 evidence を確認済み。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
