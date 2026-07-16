@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.17';
+export const VERSION='v0.18';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -72,7 +72,7 @@ export class HH{
 export class World{
   constructor(seed=11){this.rng=mulberry(seed);HID=0;this.hhs=[];this.day=0;this.treasury=P.TREASURY0;
     this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.outBy={pass:0};this.led={prod:{},eat:{},spoil:{},need:0};this.co={pub:0,expBuy:0,expSell:0,impMargin:0,bail:0};this.hungryN=0;
-    this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.goyo=null;this.goyoDone=0;
+    this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.order=null;this.orderDone=0;
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
     this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
@@ -342,16 +342,16 @@ export class World{
         if(s.qty<0.5||s.price<0.05){          // 空/捨て値→撤収(残りは持ち主の帳尻へ)
           if(s.hh instanceof HH)s.hh.pantry[g]+=Math.max(0,s.qty);
           st.splice(i,1);}}}const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
-    // 御用(本土の注文): 島の産物を会社が買い上げ本土へ納める——外貨の入口・金庫→村の還流(C3のシーザーの要求)
-    if(!this.goyo&&d>60&&d%15===0&&this.rng()<0.5){
+    // 本国注文(オルドル): 島の産物を会社が買い上げ本国へ納める——外貨の入口・金庫→村の還流(C3のシーザーの要求)
+    if(!this.order&&d>60&&d%15===0&&this.rng()<0.5){
       const GN={tools:'道具',char:'炭',salt:'塩',pres:'保存食',pick:'漬物',oil:'油',cloth:'布',stone:'石'};
-      const GP={tools:2.5,char:1.2,salt:1.5,pres:0.9,pick:0.8,oil:2.6,cloth:2.0,stone:1.2}; // 本土の相場(島の物価と独立。御用=常設の外貨の入口)
+      const GP={tools:2.5,char:1.2,salt:1.5,pres:0.9,pick:0.8,oil:2.6,cloth:2.0,stone:1.2}; // 本国の相場(島の物価と独立。本国注文=常設の外貨の入口)
       const cand=Object.keys(GN).filter(g=>(this.f30?.[g]?.prod||0)>0.3);
       if(cand.length){const g=cand[Math.floor(this.rng()*cand.length)];
         const qty=Math.round(30+this.rng()*50);const price=GP[g];
-        this.goyo={g,qty,left:qty,price,due:d+90};
-        this.log(`★御用: 本土が${GN[g]}${qty}荷を所望(@${Math.round(price*10)}デナリ・90日以内)`);}}
-    if(this.goyo&&d>=this.goyo.due){this.log(`御用の期限切れ——本土の覚えが悪くなった(残${Math.round(this.goyo.left)}荷)`);this.goyo=null;}
+        this.order={g,qty,left:qty,price,due:d+90};
+        this.log(`★本国より注文状: ${GN[g]}${qty}荷(@${Math.round(price*10)}デナリ・90日以内)`);}}
+    if(this.order&&d>=this.order.due){this.log(`注文の期限切れ——本国重役たちの心証を損ねた(残${Math.round(this.order.left)}荷)`);this.order=null;}
     // 船(15日ごと): 未充足の区画へ移民を運ぶ(最大2世帯/便)
     if(d%15===0&&this.port){let n=0;
       for(const z of this.zones){if(z.filled||n>=2)continue;
@@ -403,7 +403,7 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(this.goyo&&g===this.goyo.g&&this.goyo.left>1e-9)desks.push(['GOYO',this.goyo.price,Math.min(10,this.goyo.left)]);
+      if(this.order&&g===this.order.g&&this.order.left>1e-9)desks.push(['ORDER',this.order.price,Math.min(10,this.order.left)]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
@@ -416,10 +416,10 @@ export class World{
         this.treasury-=can*price;
         if(kind==='EXP'){this.co.expBuy+=can*price;this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
           const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
-        else if(kind==='GOYO'){this.goyo.left-=can;this.co.goyoBuy=(this.co.goyoBuy||0)+can*price;
-          const rev=can*price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.goyoSell=(this.co.goyoSell||0)+rev;
+        else if(kind==='ORDER'){this.order.left-=can;this.co.ordBuy=(this.co.ordBuy||0)+can*price;
+          const rev=can*price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.ordSell=(this.co.ordSell||0)+rev;
           this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
-          if(this.goyo.left<=1e-9){this.log('★御用を果たした——本土の覚えめでたし');this.goyoDone++;this.goyo=null;}}
+          if(this.order.left<=1e-9){this.log('★注文を納めた——本国での評判が上がった');this.orderDone++;this.order=null;}}
         else if(kind==='PAVE')this.paveBought+=can;
         q-=can;}
       if(q>1e-9){ // 屋台に出す(店番=家族が残る扱い。委託中は生産効率減)

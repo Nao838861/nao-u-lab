@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133102';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133103';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -363,8 +363,9 @@ let lastCo=null,lastM=0;
 setInterval(()=>{const m=Math.floor(Math.max(0,w.day-1)/30)+1;
   if(m>lastM&&w.day>30){const c=w.co;
     if(lastCo){const wage=(c.pub-lastCo.pub)||0,exp=(c.expSell-c.expBuy)-(lastCo.expSell-lastCo.expBuy),imp=(c.impMargin-lastCo.impMargin)||0;
-      const net=exp+imp-wage;
-      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)}${wage>0.05?' 道普請の賃金-'+M(wage):''})`);}
+      const ord=((c.ordSell||0)-(c.ordBuy||0))-((lastCo.ordSell||0)-(lastCo.ordBuy||0));
+      const net=exp+imp+ord-wage;
+      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)}${Math.abs(ord)>0.05?' 注文益'+M(ord):''}${wage>0.05?' 道普請の賃金-'+M(wage):''})`);}
     lastCo={...c};lastM=m;}},1500);
 // --- 次の一手アドバイザ ---
 function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
