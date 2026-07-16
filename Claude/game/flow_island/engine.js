@@ -9,7 +9,7 @@ export const P = {
   Y_FISH:13, Y_FISH_W:3.2, FISH_LIFE:3, VEG_LIFE:30, PICK_SALT:0.1, PR_PICK:0.85, Y_VEG:10, Y_WHEAT:4500, Y_TOOLS:8, Y_CHAR:8, Y_SALT:12, Y_MEAT:16, Y_CLOTH:0.35, D_CLOTH:0.03, D_IRON:0.03,
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   CMULT:1.35, D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
-  TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
+  TRAVEL_RATE:0.012, ROAD_F:0.55, TRAVEL_MAX:0.45, HAUL:40,
   IMP:{wheat:4.0,tools:6.0,salt:5.0,iron:4.5}, IMP_COST:{wheat:2.4,tools:4.2,salt:3.5,iron:3.2},  // 懲罰価格=持続不可能な緊急措置  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
   EXP:{pres:0.6,pick:0.55,oil:2.4}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.64},
   PUB0:600, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:2.0,char:1.5},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
@@ -228,7 +228,8 @@ export class World{
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
       const dayLabor=h.purse<h.eat()*0.8&&fd<4&&this.pubLeft>1;  // 人夫は困窮世帯のみ(寛大にすると本業が空洞化する——実測済)
       if(dayLabor)h.wantWork=true;else h.wantWork=false;
-      if(offers.fish>0||sellSum>=10||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20)||dayLabor)h.state='toMarket';}
+      const tripCost=Math.min(Math.max(10,this.dist(h)*2.2),h.haul()*0.8); // 遠い家ほどまとめて商う(週1の大荷)。運搬上限の8割でキャップ
+      if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20)||dayLabor)h.state='toMarket';}
 
     if(tod===29)this.dayEnd();}
   fl(g,k,v){const f=this.fday[g]=this.fday[g]||{prod:0,cons:0,imp:0,exp:0};f[k]+=v;}

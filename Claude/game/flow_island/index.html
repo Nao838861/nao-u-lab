@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131300';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=131400';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -176,8 +176,8 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
       el.style.color='#ff8a7a';box.appendChild(el);setTimeout(()=>el.remove(),6000);}
     const dz=Math.hypot(x-w.market.x,y-w.market.y);
     const box=document.getElementById('toast');const el=document.createElement('div');
-    el.textContent=dz>7?'⚠ 市場まで遠すぎます('+Math.round(dz)+'区画)——往復で働く時間が消えます。近くに建て直すか「道」を':(dz>4.5?'△ やや遠め('+Math.round(dz)+'区画)。「道」を引くと足が軽くなります':'✓ 良い立地です(市場まで'+Math.round(dz)+'区画)');
-    el.style.color=dz>7?'#ff8a7a':(dz>4.5?'#ffd97a':'#8f8');
+    el.textContent=dz>10?'⚠ かなり遠い立地('+Math.round(dz)+'区画)——稼ぎが細ります。「道」を引いて物流費を買い戻しましょう':(dz>6?'△ 遠め('+Math.round(dz)+'区画)。「道」を引くと採算が改善します':'✓ 良い立地です(市場まで'+Math.round(dz)+'区画)');
+    el.style.color=dz>10?'#ff8a7a':(dz>6?'#ffd97a':'#8f8');
     box.appendChild(el);setTimeout(()=>el.remove(),5200);}}
 // --- 描画 ---
 function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
@@ -416,7 +416,7 @@ function frame(){try{tick++;
       const ins=(c.expSell-c.expBuy)+(c.impMargin||0);
       const avgD=w.hhs.length?w.hhs.reduce((s,h)=>s+w.dist(h),0)/w.hhs.length:0;
       let why='最大の支出は'+outs[0][0]+'('+M(outs[0][1])+'デナリ)。収入('+M(ins)+')の'+(ins>0.01?(outs[0][1]/ins).toFixed(1):'∞')+'倍でした。';
-      if(avgD>6.5)why+=' 区画が市場から遠すぎました(平均'+avgD.toFixed(1)+'区画)——通いで労働が消え、稼げず配給に落ちる悪循環です。次は市場の周りに固めて。';
+      if(avgD>8)why+=' 区画が市場から遠すぎました(平均'+avgD.toFixed(1)+'区画)——道を引くか市場の近くに。';
       else if((c.doleC||0)>ins*2)why+=' 食料の自給が遅すぎました。漁師2→菜園→麦畑を最初の年に、市場の近くへ。';
       document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why;}}
   }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
