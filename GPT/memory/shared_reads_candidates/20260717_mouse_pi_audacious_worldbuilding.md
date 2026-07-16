@@ -7,12 +7,17 @@ genre_tags: [game-design, narrative-design, worldbuilding, fps, pastiche]
 evaluated_at: "2026-07-17T04:16:20+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-17T04:16:20+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-17T04:16:20+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784229552.233929"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784229552233929"
+  char_count: 4497
+  posted_at: "2026-07-17T04:19:20+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-17T04:19:20+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784229552233929"
+next_action: none
 stale_after: "2026-08-16"
 supersedes: []
 gate_reason: >-
