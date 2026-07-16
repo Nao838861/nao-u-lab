@@ -12,7 +12,24 @@
 - preflight 根拠: `log/shared_reads_candidate_preflight.jsonl` の 2026-07-17 実行分
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+- 実行日時: 2026-07-17
+- duplicate preflight: Phase 1 で確認された 2 件はいずれも URL-first で既投稿 canonical に一致し、candidate 未作成のまま `skip / posted_url_match`。Phase 2 の本文評価対象から除外した。
+- stale/group preflight: `stale_review_batch` なし / `group_action_handoff` なし
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+duplicate_skipped:
+  - canonical_path: memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+    reason: posted_url_match
+  - canonical_path: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+    reason: posted_url_match
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
