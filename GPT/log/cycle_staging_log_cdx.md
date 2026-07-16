@@ -21,7 +21,17 @@ stale_reviewed: []
 - pass 根拠: status を投資集中・配当・実利のない記号購入へ写像する手法が具体的で、simulated agents と人間プレイ例という評価内容・限界まで抽出できる。固定役職に頼らない multiplayer prototype の社会関係設計と telemetry に直接適用でき、約4000字の批判的な概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260716_trust_ya_small_group_processes.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784165694565729
+    char_count: 3976
+skipped: []
+```
+
+- 最終判定: 投稿可（判定は部分採用）。原文5ページを確認し、指数的 payout、P-card、Gini と total earnings、bot baseline、人間 pilot の規模と限界を本文へ反映した。
+- 投稿前 review: `tools.shared_reads_policy.validate_shared_reads_message` を通過。必須6節、順序、末尾 URL、3500–4500字、禁止表現なしを確認した。
+- Slack API: `chat.postMessage` 1回で投稿成功。thread reply・分割投稿なし。ts `1784165694.565729`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
