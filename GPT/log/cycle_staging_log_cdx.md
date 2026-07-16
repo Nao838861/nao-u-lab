@@ -66,7 +66,35 @@ self_feedback:
 - 採否理由: relevance / actionability は高いが、`probe-20260613-balrog-knowing-doing-trajectory`、`probe-20260612-long-horizon-multilayer-verifier`、`probe-20260626-matrix-game-long-horizon-memory-latency` と実質的に重複する。採用条件の合計 14 に届かず、active probe 314 件を増やす便益がないため反映しない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を検証した（broken entry link 0件、代表語 probe 4種を取得）。"
+  - "atoms 2678件を監査した。ID重複なし、normalized content 完全重複 40群/80行は既存 overlay 45群で fold 済み、duplicate cluster index は最新。"
+  - "shared-reads lifecycle 内訳を確認した（posted 410 / ready_to_post 10 / postponed 399 / failed 123 / needs_review 22）。"
+  - "mixed duplicate / stale triage / group action queue を再生成した（81群 / 上限50件 / 36群）。stale_after 到達 backlog は218件、今回の handoff は group-action queue 先頭1群のみ。"
+  - "memory/raw/ の30日超無更新ファイルを93件確認した。Slack archive、同期状態、論文一次資料が混在し参照関係を機械判定できないため、移動・削除は行わなかった。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl の pending は各0件。handled 更新なし。"
+issues:
+  - id: ISS-4A-TITLE-QUALITY
+    description: "repeated title group 22種のうち14種が canonical group 未付与で、特に『■ 概要』20件など本文見出し由来の汎用 title が検索結果を濁している。"
+    severity: medium
+    evidence: "tools/memory_health.py 2026-07-16T17:51:33: repeated_title_groups raw=22 / recall_visible=15 / ungrouped=14; memory/atoms/title_quality_audit.jsonl 378行"
+    source_file_status: "memory/MEMORY.md は UTF-8 正常。『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得でき、index validator も OK。atom source の破損ではなく title metadata 品質の問題。"
+    display_or_tooling_status: "PowerShell UTF-8 明示読みでは mojibake なし。memory_health は別途 mojibake suspect atom 2件を警告するが、本issueの汎用 title 群とは別。"
+    why_blocks_game_memory: "ゲーム制作時に手法名や評価軸で想起しても、内容を識別できない汎用 title が候補に混ざり、個別事例から再利用可能な知見へ辿る精度を下げる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。ゲーム転用価値 high だが、評価内容・比較対象・結論の強さが不足。group_key='from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation'; terminal_paths=2件; open_paths=4件。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- `needs_design: false` の理由: title quality audit と既存 duplicate overlay がすでに検出・fold 経路を持つため、今回は新構造の設計問題ではない。次回以降の機械cleanupで観測を継続する。
+- stale handoff: candidate単位の上位5件とは重ねず、group-action queue契約に従って先頭1 groupの representativeだけをPhase 2へ渡す。残backlog 218件、今回handoff 1件。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
