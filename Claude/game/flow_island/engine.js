@@ -157,7 +157,7 @@ export class World{
       oil:(mm>=3&&mm<=8)?P.Y_OIL:0.01,meal:P.Y_FISH/P.MEAL_FISH,
       pres:winter?P.Y_FISH_W*P.PR_SALT:P.Y_FISH*P.PR_SALT,pick:P.Y_VEG*P.PR_PICK}[g]??1;
     const scar={char:this.localWood(h),tools:this.localWood(h),fish:this.bay/P.BAY0,pres:this.bay/P.BAY0}[g]??1; // 資源の希少性=近隣の森の残りで原価が上がる
-    const labor=h.eat()*this.staple()/(YD*h.mult()*Math.max(0.05,scar));
+    const labor=h.eat()*this.staple()/(YD*h.mult()*Math.max(0.5,scar)); // 地代の転嫁は2倍まで。それ以上の枯渇は価格でなく休業で現れる(天井超えの在庫凍結を防ぐ)
     const inp={salt:(P.SALT_CHAR/P.Y_SALT)*(this.px.char??2),
       pres:P.PRES_SALT*(this.px.salt??2)/P.PR_SALT,pick:P.PICK_SALT*(this.px.salt??2)/P.PR_PICK}[g]??0;
     return labor+inp;}
@@ -228,7 +228,9 @@ export class World{
     for(let[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.5],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
       if(!needSet.has(g))continue;dd*=Math.pow(P.CMULT,h.lv); /* 消費のLv階段 */
       if(t[g])continue;
-      if(h.pantry[g]<dd*cd*0.5)t[g]=[dd*cd-h.pantry[g],val];}
+      let tgt=dd*cd;
+      if(g==='char'&&autumn)tgt=dd*2.0*100; // 炭の冬支度: 秋に冬需要(×2)の100日分を積む——冬のLv鋸歯の根治
+      if(h.pantry[g]<tgt*0.5)t[g]=[tgt-h.pantry[g],val];}
     return t;}
   sellOffers(h){const out={};const doleOn=this.goDay===null;
     const my={fisher:'fish',veg:'veg',wheat:'wheat',shepherd:'meat',woodshop:'tools',charburner:'char',saltworks:'salt',fisher2:'meal',quarryman:'stone',rapeseed:'oil'}[h.job];
@@ -505,6 +507,7 @@ export class World{
       h.hungerHist=(h.hungerHist||[]);
       if(h.hungerHist.length>180)h.hungerHist.splice(0,h.hungerHist.length-180);
       const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3; // 飢え続き or 3ヶ月借金漬け
+      if((h.insolvM||0)>=6&&h.purse<0){this.treasury+=h.purse;h.purse=0;h.insolvM=0;this.log(`${h.sur}家の借財を帳消しに(徳政)`);}
       if(distress&&d-(h.lastSwitch||-9e9)>=P.COOLDOWN&&this.rng()<0.5){
         const inc={};for(const x of this.hhs)(inc[x.job]=inc[x.job]||[]).push(x.incomeLog.reduce((a,b)=>a+b,0));
         let best=null,bv=-1;for(const j in inc){const v=inc[j].reduce((a,b)=>a+b,0)/inc[j].length;if(v>bv){bv=v;best=j;}}
