@@ -25,7 +25,14 @@ stale_reviewed: []
 - duplicate preflight の 4 件は本文品質評価へ進めず、3 件を `posted_url_match` で skip、1 件を `posted_title_match_url_differs` で review とした Phase 1 の証跡を維持する。後者も既投稿 canonical があるため、今回の Phase 3 投稿対象には含めない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `gate_decision: pass` candidate は 0 件のため、#shared-reads への投稿は行わなかった。
+- Phase 1 の duplicate preflight で確認した 4 件は、3 件が `posted_url_match`、1 件が既投稿 canonical を持つ `posted_title_match_url_differs` であり、いずれも今回の Phase 3 対象には含めていない。
+- candidate frontmatter の更新および Slack API 呼び出しはなし。品質ゲートを維持したまま正常終了。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
