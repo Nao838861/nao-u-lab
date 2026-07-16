@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132900';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133100';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -80,8 +80,8 @@ const unIso=(px,py)=>{const[wx,wy]=toWorld(px,py);const a=(wx-ox)/(TW/2),b=(wy-o
 const terr=stdTerrain(MW,MH);
 const TC={grass:['#4d7a3f','#446f38'],sand:['#c9b57a','#bfa96e'],water:['#2b5d8a','#27547d'],forest:['#3a5f31','#33562b'],rock:['#7a7a72','#6e6e66'],bald:['#8a7a58','#7d6f50']};
 const w=new World(11);w.market={x:25,y:MH-8};w.port={x:25,y:MH-5};w.setTerrain(terr);
-const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
-const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
+const JCOL={fisher:'#4fa3d0',fisher2:'#2f7ba8',veg:'#7ac35e',wheat:'#d8b84a',shepherd:'#c9a0d0',rapeseed:'#e8e34a',logger:'#5a8a4a',woodshop:'#b07840',charburner:'#8a8a8a',quarryman:'#9aa0a8',saltworks:'#dfe4ea'};
+const JNAME={fisher:'漁師',fisher2:'対岸漁',veg:'菜園',wheat:'麦畑',shepherd:'牧夫',rapeseed:'菜種',logger:'木こり',woodshop:'木工',charburner:'炭焼',quarryman:'採石',saltworks:'塩'};
 let tool=null,speed=1,tick=0,sel=null;
 const M=x=>Math.round(x*10);  // 表示通貨=デナリ(内部×10)
 const FRAMES=[0,4,1,0.5]; // 速度→1tickの間隔(フレーム)。1×=15tick/s≒0.5日/秒
@@ -327,7 +327,7 @@ function info(){const el=document.getElementById('pbody');
    <small>${ST[h.state]||h.state}${hasStall?'・店番を市場に出している':''}</small><br>
    ${why?`<small style=color:#ffb08a>${why}</small><br>`:''}${lvHtml}財布 ${M(h.purse)} <small>(30日収入${inc})</small> / 移動${Math.round(w.travel(h)*100)}%<br>
    <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
-function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
+function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',log:'丸太',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+(w.granary[g]||0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
   document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span>金計 <b>${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</b></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
@@ -377,8 +377,7 @@ function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||
   else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
   else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/42)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
   else if(gf('wheat').imp>8){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
-  else if(w.hhs.some(h=>h.job==='charburner'&&w.localWood(h)<0.1)){rec='charburner';why='炭焼きの森が禿げました。北西の森の際に建て直しを——道とセットで';}
-  else if(w.hhs.some(h=>h.job==='woodshop'&&w.localWood(h)<0.1)){rec='woodshop';why='木工の森が禿げました。北西の森の際に建て直しを';}
+  else if(w.hhs.some(h=>h.job==='logger'&&w.localWood(h)<0.1)){rec='logger';why='木こりの森が痩せました。北西の森の際に新しい木こりを——道とセットで';}
   else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
   else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}
   else if(n('saltworks')<1){rec='saltworks';why='塩がなければ保存食が作れません';}
@@ -400,7 +399,7 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   const n=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
   if(stage===0){if(n('fisher')<2){say('まず浜の近くに漁師の区画を二つ。次の船が家族を連れてきます');return;}stage=1;}
   if(stage===1){if(n('veg')+n('wheat')<2){say('次に菜園と麦畑を。畑は市場に近いほど良く働きます');return;}stage=2;}
-  if(stage===2){if(n('woodshop')<1){say('木工所を森の際に——村に1軒で足ります。道具がなければ文化は育ちません');return;}stage=3;}
+  if(stage===2){if(n('logger')<1){say('木こりを森の際に——丸太が木工と炭焼きの原料です');return;}if(n('woodshop')<1){say('木工所を町の近くに——丸太を買って道具を作ります。1軒で足ります');return;}stage=3;}
   if(stage===3){if(n('charburner')<1||n('saltworks')<1){say('炭焼きと塩小屋を1軒ずつ——職人は1軒で村全体を賄えます。2軒目は共倒れに');return;}stage=4;}
   w._tHist=w._tHist||[];if(m>(w._tLastM||0)){w._tHist.push(w.treasury);w._tLastM=m;if(w._tHist.length>4)w._tHist.shift();}
   const th=w._tHist;

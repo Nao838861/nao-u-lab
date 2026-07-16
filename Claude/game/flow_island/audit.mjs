@@ -14,7 +14,7 @@ const priceLog={fish:[],char:[]};
 const stuck={};
 for(const seed of SEEDS){
  const w=mk(seed);
- const planA={13:'wheat',16:'charburner',20:'fisher',26:'woodshop',30:'rapeseed'}; // 標準プレイ=smoke台本と同一(雑木林枯渇→森の腕へ)
+ const planA={13:'wheat',16:'logger',20:'fisher',26:'woodshop',30:'rapeseed'}; // 標準プレイ=smoke台本と同一(木こりが森の腕へ)
  for(let d=1;d<=1440;d++){
   if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
   w.step();
@@ -83,7 +83,7 @@ t('E13 配給卒業',doleAvg<worlds[0].pop()*0.1,`Y3以降平均${doleAvg.toFixe
     else if(n('woodshop')<1)rec='woodshop';
     else if(n('charburner')<1)rec='charburner';
     else if(n('saltworks')<1)rec='saltworks';
-    else if(w2.hhs.some(h=>(h.job==='charburner'||h.job==='woodshop')&&w2.localWood(h)<0.1)&&builds.filter(b=>b==='charburner'||b==='woodshop').length<2){rec=w2.hhs.find(h=>h.job==='charburner'&&w2.localWood(h)<0.1)?'charburner':'woodshop';}
+    else if(w2.hhs.some(h=>h.job==='logger'&&w2.localWood(h)<0.1)&&builds.filter(b=>b==='logger').length<2){rec='logger';}
     else if(debt>w2.limit()*0.3)rec=null;
     else if(m>18&&poorN>=w2.hhs.length*0.45&&n('rapeseed')<2)rec='rapeseed';
     else if(gf('salt').imp>0.5)rec='saltworks';
