@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T23:02:24+09:00",
+  "updated_at": "2026-07-17T01:05:00+09:00",
   "reviewed_source_ts": [
+    "1780708885.257199",
     "1782565725.425459",
     "1778478943.773039",
     "1782631263.097149",
@@ -404,6 +405,20 @@
     "1784179196.161589"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T01:05:00+09:00",
+      "selected": {
+        "id": "sr-1780708885-fdca3397f2",
+        "source_ts": "1780708885.257199",
+        "title": "Zero-shot 3D Map Generation with LLM Agents: A Dual-Agent Architecture",
+        "reason": "未レビューの score 14 atom で、memory・game-design・agent・operation・evaluation を含む。自然言語指示を厳密な PCG パラメータへ翻訳する Actor と Critic の反復が、次の game/headless 制作へ新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 1, "reversibility": 3, "total": 13},
+      "decision": "reject",
+      "decision_reason": "Actor が自然言語を構造化パラメータへ変換し、Critic が instruction-following と structural validity を検査する観点は直接実行可能で、shared-reads 本文には verify.js・ScriptDoctor との比較と適用境界も残っている。しかし active な Draw2Think inspectable-intermediate-state、structural-semantic check、local-constraint/global-evaluator split、runtime-verifiable production slice probes が、構造化状態、決定的検査、LLM critic の false positive 境界、失敗層分類をすでに要求している。新規 probe は同じ確認を Actor/Critic 名で言い換え、314件超の active probe 群をさらに肥大化させる。non_redundancy=0、risk_control=1、合計13で採用条件を満たさないため、読了だけを記録する。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-16T23:02:24+09:00",
       "selected": {

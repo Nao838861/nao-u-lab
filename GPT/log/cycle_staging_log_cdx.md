@@ -42,7 +42,34 @@ summary: "pass candidate が 0 件のため #shared-reads への投稿は行わ�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780708885-fdca3397f2
+    source_ts: "1780708885.257199"
+    title: "Zero-shot 3D Map Generation with LLM Agents: A Dual-Agent Architecture"
+    reason: "未レビューの score 14 atom で、memory・game-design・agent・operation・evaluation を含む。Actor/Critic 反復が次の game/headless 制作へ新しい小さな行動を加えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "自然言語指示を構造化パラメータへ変換し、instruction-following と structural validity を分けて検査する観点は有用。しかし既存の Draw2Think inspectable-intermediate-state、structural-semantic check、local-constraint/global-evaluator split、runtime-verifiable production slice probes が同じ行動境界をすでに具体化している。新規 probe は Actor/Critic 名による言い換えとなり、314件超の active probe 群を肥大化させる。non_redundancy と risk_control、および合計点が採用条件を満たさない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
