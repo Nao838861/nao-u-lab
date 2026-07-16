@@ -10,7 +10,22 @@
 - pending inbox: directives 0 件、broadcasts 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260717_evaluator_preference_dynamics_audit.md
+    reason: "posted duplicate: memory/shared_reads_candidates/20260712_evaluator_preference_dynamics_audit.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669"
+  - path: memory/shared_reads_candidates/20260717_east_epistemic_schelling_points.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260715_beyond_sally_anne_east.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784088387032009"
+stale_reviewed: []
+group_actions: []
+duplicate_preflight_notes:
+  - "script preflight returned continue for both candidates because the canonical index lacks these posted groups; raw Slack archive and posted candidate frontmatter supplied terminal evidence"
+  - "EAST candidate differs only by arXiv version suffix (/v1), so URL canonicalization must treat it as the posted source"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
