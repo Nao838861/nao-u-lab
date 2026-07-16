@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132500';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132600';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -163,7 +163,9 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
     let best=null,bd=9;for(const h of w.hhs){const dd=Math.hypot(h.x-x,h.y-y);if(dd<bd){bd=dd;best=h;}}
     sel=bd<2?best:null;info();placePopup();return;}
   if(x<0||y<0||x>=MW||y>=MH||terr[y][x]==='water')return;
-  if(tool==='road'){const k=x+','+y;if(!w.roadTiles.has(k)){w.roadTiles.add(k);w.treasury-=5;w.mainlandOut+=5;w.updRoads();}}
+  if(tool==='road'){if(w.planRoad(x,y)){const box=document.getElementById('toast');const el=document.createElement('div');
+    el.textContent='🔨 道普請を計画——貧しい世帯が働きに来ます(3人日/区画・賃金は公費)';el.style.color='#d9c88a';
+    box.appendChild(el);setTimeout(()=>el.remove(),4000);}}
   else if(JOBS.includes(tool)){
     const[ok,why]=w.canPlace(tool,x,y);
     const box0=document.getElementById('toast');
@@ -223,6 +225,9 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
      cx.fillText(Math.round(piles[g]),px2+5,py2+7);i++;}}
   cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
   cx.fillStyle='#fff';cx.font='10px sans-serif';cx.textAlign='center';cx.fillText('市場/港',mx,my+14);
+  for(const s of w.sites){const[sx,sy]=iso(s.x,s.y);
+    cx.strokeStyle='#d9c88a';cx.setLineDash([3,3]);cx.strokeRect(sx-8,sy-4,16,8);cx.setLineDash([]);
+    cx.fillStyle='#d9c88a';cx.font='8px sans-serif';cx.fillText('普請'+s.left,sx,sy-6);}
   for(const h of [...w.hhs].sort((a,b)=>(a.x+a.y)-(b.x+b.y))){
     const[px,py]=iso(Math.round(h.x),Math.round(h.y));
     if(h===sel){cx.strokeStyle='#ffe98a';cx.lineWidth=2;cx.strokeRect(px-12,py-22,24,24);cx.lineWidth=1;}
@@ -403,7 +408,8 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   if(stage>=4&&fw.imp>12&&!said.wheat){said.wheat=true;say('麦の輸入が月'+Math.round(fw.imp*30*10)+'デナリも嵩んでいます。麦畑か菜園を——食料の自給が全ての土台です');return;}
   if(stage>=4&&fw.imp<6&&said.wheat){said.wheat=false;}
   const poorN=w.hhs.filter(h=>h.purse<5).length;
-  if(stage>=4&&poorN>=w.hhs.length*0.5&&!said.poor&&m>14){said.poor=true;say('村人の半数が無一文です。物はあっても買えません。輸出できる産業(油・塩・道具)が村の稼ぎ口になります');return;}
+  if(stage>=4&&poorN>=w.hhs.length*0.5&&!said.poor&&m>14){said.poor=true;
+    say(w.sites.length?'普請場が村人の食い扶持になっています':'村人の半数が無一文です。道普請を起こせば働き口と道が同時にできます(お救い普請)。輸出産業も稼ぎ口に');return;}
   if(poorN<w.hhs.length*0.3&&said.poor)said.poor=false;
   if(mm===9&&!saidWinter){saidWinter=true;say('間もなく冬です。右上📊の「島の蔵」で麦と保存食の量をご確認を');return;}
   if(mm===3)saidWinter=false;

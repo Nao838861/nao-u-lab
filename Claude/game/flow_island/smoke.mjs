@@ -3,7 +3,7 @@ import{mkWorld,findSpot} from './village.mjs';
 const w=mkWorld(11);
 const plan={13:'wheat',16:'charburner',20:'fisher',26:'woodshop',30:'rapeseed'}; // 食料先行+季節1区画の現実ペース。M16=雑木林が禿げ森の腕へ(設計の弧)
 const road=(x1,y1,x2,y2)=>{const n=Math.max(Math.abs(x2-x1),Math.abs(y2-y1));
-  for(let i=0;i<=n;i++)w.roadTiles.add(Math.round(x1+(x2-x1)*i/n)+','+Math.round(y1+(y2-y1)*i/n));w.updRoads();};
+  for(let i=0;i<=n;i++)w.planRoad(Math.round(x1+(x2-x1)*i/n),Math.round(y1+(y2-y1)*i/n));}; // 普請計画(困窮世帯が実際に働いて完成する)
 let roadDone=false;
 for(let d=1;d<=1440;d++){if(d%30===1){const m=Math.floor(d/30)+1;
    if(plan[m]){const s=findSpot(w,plan[m]);if(s){w.addZone(plan[m],s[0],s[1]);

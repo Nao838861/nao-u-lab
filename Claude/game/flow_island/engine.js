@@ -18,7 +18,7 @@ export const P = {
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
-  WOOD0:350, WOOD_R:0.7, PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
+  WOOD0:350, WOOD_R:0.7, ROAD_WORK:3, PAVE_STONE:200, PAVE_ROAD_F:0.45, DISTRESS:40, COOLDOWN:360,
   BELIEF0:{fish:1,veg:1,wheat:1.2,pres:1.2,pick:1.3,tools:2,salt:2,char:1.5,meat:1.3,meal:1,stone:1,oil:3,iron:3.5,cloth:2.5},
 };
 export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
@@ -26,7 +26,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.12.1';
+export const VERSION='v0.13';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -74,7 +74,7 @@ export class World{
     this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.granary={wheat:0,pres:0};this.doleRate=10;this.outBy={dole:0,pass:0};this.led={prod:{},eat:{},spoil:{},dole:0,need:0};this.co={pub:0,gran:0,expBuy:0,expSell:0,impMargin:0,doleC:0,bail:0};this.doleQty=0;
     this.bailouts=0;this.goDay=null;this.shipping=false;this.pub=P.PUB0;this.pubLeft=P.PUB0;this.famine=0;
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
-    this.px={...P.BELIEF0};this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
+    this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
     this.stalls={};for(const g of GOODS)this.stalls[g]=[];
     this.deskUsed={};}
@@ -136,6 +136,10 @@ export class World{
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
     h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;this.tread(h.px,h.py);return false;}
   pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
+  planRoad(x,y){const k=x+','+y;
+    if(this.roadTiles.has(k)||this.sites.some(s=>s.x===x&&s.y===y))return false;
+    if(this.terr&&(this.terr[y]?.[x])==='water')return false;
+    this.sites.push({x,y,left:P.ROAD_WORK});this.log('道普請を計画');return true;}
   addZone(job,x,y){const[ok,why]=this.canPlace(job,x,y);
     if(!ok){this.log(`区画不可(${job}): ${why}`);return false;}
     this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);return true;}
@@ -260,6 +264,13 @@ export class World{
       if(h.state==='arriving'){if(this.stepTo(h,h.x,h.y)){h.state='building';h.buildDays=10;this.log(`${h.job}#${h.id} 入居——普請開始`);}}
       else if(h.state==='building'){/* 日次で減算 */}
       else if(h.state==='toMarket'){if(this.stepToMarket(h)){h.state='atMarket';this.transact(h);h.state='toHome';}}
+      else if(h.state==='toWork'){if(this.stepTo(h,h.wx,h.wy)){
+        const si=this.sites.findIndex(s=>s.x===h.wx&&s.y===h.wy);
+        if(si>=0){const s=this.sites[si];s.left--;
+          const wage=h.eat()*this.staple()*0.6;
+          h.purse+=wage;h.income30+=wage;this.treasury-=wage;this.co.pub+=wage;
+          if(s.left<=0){this.roadTiles.add(s.x+','+s.y);this.sites.splice(si,1);this.updRoads();this.log('道が一区画通じた');}}
+        h.state='toMarket';}} // 賃金を持って帰りに市場へ寄る(日雇いの現実。貧困層の消費が市場の土台)
       else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
       else if(h.state==='home'){this.produceTick(h,1/30);}}
     if(tod===16)for(const h of this.hhs){if(h.state!=='home')continue;
@@ -272,10 +283,12 @@ export class World{
       const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
-      const dayLabor=h.purse<h.eat()*0.8&&fd<4&&this.pubLeft>1;  // 人夫は困窮世帯のみ(寛大にすると本業が空洞化する——実測済)
-      if(dayLabor)h.wantWork=true;else h.wantWork=false;
+      const needy=h.purse<h.eat()*0.8&&fd<4;
+      if(needy&&this.sites.length){ // 人夫=実在する普請で働く(施しではなく仕事。現場がなければ賃金もない)
+        const s=this.sites.reduce((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)<Math.hypot(b.x-h.x,b.y-h.y)?a:b);
+        h.wx=s.x;h.wy=s.y;h.state='toWork';continue;}
       const tripCost=Math.min(Math.max(10,this.dist(h)*2.2),h.haul()*0.8); // 遠い家ほどまとめて商う(週1の大荷)。運搬上限の8割でキャップ
-      if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20)||dayLabor)h.state='toMarket';}
+      if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20))h.state='toMarket';}
 
     if(tod===29)this.dayEnd();}
   fl(g,k,v){const f=this.fday[g]=this.fday[g]||{prod:0,cons:0,imp:0,exp:0};f[k]+=v;}
@@ -345,10 +358,6 @@ export class World{
     else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
       h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;this.fl('salt','prod',P.Y_SALT*h.mult()*fuel/P.SALT_CHAR);this.fl('char','cons',fuel);}}
   transact(h){const doleOn=this.goDay===null;
-    if(h.wantWork&&this.pubLeft>1){ // 人夫: 家族の手が空いている分だけ荷役(賃金=生計費の6割・公費から)
-      const wage=Math.min(h.eat()*this.staple()*0.6,this.pubLeft);
-      h.purse+=wage;h.income30+=wage;this.treasury-=wage;this.pubLeft-=wage;this.co.pub+=wage;
-      h.wantWork=false;}
     // --- 売り: まず会社の買付台(輸出/御蔵/公費)・値が合わなければ屋台に置く ---
     const offers=this.sellOffers(h);
     for(const g in offers){let q=offers[g];
