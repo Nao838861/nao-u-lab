@@ -130,7 +130,7 @@ python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
 
 `shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用し、`duplicate_group_key` があるものは mixed duplicate 解消候補として扱う。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
 
-## group-action queue 限定運用 (2026-07-12)
+## bounded group-action handoff (2026-07-16 Phase 4c)
 
 mixed duplicate の stale 候補は、既存 2 queue を再生成した後に次も実行する。
 
@@ -138,4 +138,13 @@ mixed duplicate の stale 候補は、既存 2 queue を再生成した後に次
 python tools\build_shared_reads_group_action_queue.py
 ```
 
-`memory/shared_reads_group_action_queue.jsonl` は group 単位の再生成可能 sidecar である。Phase 4a から Phase 2 へ渡す mixed duplicate は先頭 1 group の `representative` だけとし、同じ候補を candidate 単位の `stale_review_batch` に重ねて入れない。元 candidate、stale triage queue、mixed duplicate queue は変更しない。1 サイクル後に再読件数と action の妥当性を確認して継続可否を判定する。
+`memory/shared_reads_group_action_queue.jsonl` は group 単位の再生成可能 sidecar である。Phase 4a から Phase 2 へ渡す budget は通常 1 group とする。ただし、次の両方を満たす時だけ backlog 高水位と判定し、最大 3 group にする。
+
+- `overdue_open_total` が `shared_reads_stale_triage_queue.jsonl` の収載行数を超えている（queue が overdue 全体を収載できていない）。
+- `shared_reads_group_action_queue.jsonl` に未処理の actionable group が 3 件以上ある。
+
+高水位判定と実際の budget は、固定閾値ではなくその cycle の queue 全体の状態として staging の `stale_backlog` に記録する。`group_action_handoff` は queue の順序を保って budget 件まで選ぶ。同じ `group_key` は 1 回だけ選び、各 group の `representative`、`open_siblings`、`terminal_siblings`、`latest_evidence` をそのまま根拠として渡す。
+
+handoff に含めた group の `representative` と `open_siblings` は candidate 単位の `stale_review_batch` に重ねて入れない。この重複排除は複数 group を渡す場合も全 group に適用する。元 candidate、stale triage queue、mixed duplicate queue は変更しない。
+
+staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` を残す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、`close_siblings` または `keep_distinct` と判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。

@@ -107,7 +107,25 @@ Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した�
 
 Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` を確認する。
 
-Phase 4a が `memory/shared_reads_group_action_queue.jsonl` の handoff を残した場合、Phase 2 は先頭 1 group の `representative` だけを再評価する。同じ group の `open_siblings` と candidate 単位の `stale_review_batch` は同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate 正本を一括更新しない。
+Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は記録された budget（通常 1 group、backlog 高水位時だけ最大 3 group）の各 `representative` を再評価する。同じ `group_key` は 1 回だけ扱い、handoff 対象 group の `representative` と `open_siblings` を candidate 単位の `stale_review_batch` と同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate frontmatter を group 単位で自動一括更新しない。
+
+各 group の再評価結果は、再生成可能な queue とは別に staging Phase 2 の `group_actions` へ次の契約で残す。これは後続の明示的 lifecycle 処理への監査可能な handoff であり、この Phase 2 では sibling candidate の status を適用しない。
+
+```yaml
+group_actions:
+  - group_key: <group_key>
+    representative: <評価した path>
+    action: close_siblings | keep_distinct | defer
+    target_paths: [<判断対象の open sibling path>, ...]
+    reason: <action の根拠>
+    terminal_evidence:
+      - path: <参照した terminal sibling path>
+        evidence: <permalink、status、評価差など>
+    representative_decision: pass | fail | postpone
+    analysis_time_minutes: <通常 candidate 分析への影響を次 cycle で判定できる値>
+```
+
+`close_siblings` は対象を閉じてよいという提案、`keep_distinct` は題材差・資料差などにより別 candidate として維持する判断、`defer` は根拠不足による保留である。いずれも `target_paths` / `reason` / `terminal_evidence` を省略しない。参照できる terminal evidence がなければ空配列にせず、その不足を示して `defer` にする。
 
 同じ `title_key` に `status: posted` の terminal sibling が見つかった場合、その candidate は Phase 3 投稿対象にしない。本文評価を作る前に、対象 candidate だけ frontmatter を次の形で閉じる:
 

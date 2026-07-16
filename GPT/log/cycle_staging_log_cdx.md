@@ -159,7 +159,26 @@ notes:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260716-01
+    files_changed:
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "group handoff を通常 1・backlog 高水位時最大 3 の bounded budget に変更し、複数 group の重複排除と Phase 2 group_actions 契約を導入した。candidate frontmatter の自動一括更新は禁止したまま維持した。"
+    partial: false
+migrations: []
+verification:
+  - "phase 文書の high-water 条件、budget 上限、全 handoff group に対する stale_review_batch 重複排除を確認。"
+  - "Phase 2 group_actions に action / target_paths / reason / terminal_evidence / representative_decision / analysis_time_minutes が必須であることを確認。"
+  - "python tools/build_shared_reads_group_action_queue.py --check: OK（36 rows）。"
+  - "python tools/memory_recall.py \"bounded group review budget stale candidate\": 正常終了。"
+  - "python -m py_compile tools/build_shared_reads_group_action_queue.py: 正常終了。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
