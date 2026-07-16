@@ -65,7 +65,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=130400';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS} from './engine.js?v=130500';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -342,7 +342,7 @@ function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||
   let rec=null,why='';
   if(n('fisher')<2){rec='fisher';why='まず食料。浜の近くに漁師を';}
   else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
-  else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/36)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
+  else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/42)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
   else if(gf('wheat').imp>8){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
   else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
   else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}

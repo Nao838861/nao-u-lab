@@ -11,7 +11,7 @@ export const P = {
   D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.016, ROAD_F:0.6, TRAVEL_MAX:0.7, HAUL:40,
   IMP:{wheat:2.8,tools:3.8,salt:3.2,iron:4.0}, IMP_COST:{wheat:1.6,tools:2.8,salt:2.2,iron:3.0},  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
-  EXP:{pres:0.6,pick:0.55,tools:1.0,stone:0.4,oil:2.4,salt:0.9}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15}, EXP_ML:{pres:0.66,pick:0.6,tools:1.1,stone:0.44,oil:2.64,salt:1.0},
+  EXP:{pres:0.6,pick:0.55,tools:1.0,stone:0.4,oil:2.4,salt:0.9,wheat:0.6}, EXP_CAP:{pres:25,pick:15,tools:20,stone:15,oil:12,salt:15,wheat:8}, EXP_ML:{pres:0.66,pick:0.6,tools:1.1,stone:0.44,oil:2.64,salt:1.0,wheat:0.66},
   PUB0:120, DOLE_RATION:1.1, GRAN_BID:{wheat:1.5,pres:1.4,salt:2.0,char:1.5},  // 塩=公共備蓄の要・炭=冬の救恤燃料(通貨の入口を広げ相互貧困デッドロックを解く)
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
   BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
@@ -388,7 +388,7 @@ export class World{
           // 地元調達: 輸入パリティ以下の屋台から買う(村に金が落ちる。売り手が配給対象自身でも可=買い上げ)
           for(const g of['wheat','pres','veg','meat']){if(q<1e-9)break;
             for(const s of[...this.stalls[g]].sort((a,b)=>a.price-b.price)){if(q<1e-9)break;
-              if(!(s.hh instanceof HH)||s.price>P.IMP_COST.wheat*1.3)continue;
+              if(!(s.hh instanceof HH)||s.price>P.IMP_COST.wheat*1.3)continue; // 地元調達は仕入値+3割まで(それ以上は輸入が安い)
               const u=Math.min(s.qty,q);if(u<1e-9)continue;
               s.qty-=u;q-=u;h.pantry[g]+=u;doleToday+=u;
               const c=u*s.price;s.hh.purse+=c;s.hh.income30+=c;this.treasury-=c;this.co.gran+=c;this.led.dole+=u;}}

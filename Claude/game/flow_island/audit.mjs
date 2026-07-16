@@ -76,7 +76,7 @@ t('E13 配給卒業',doleAvg<w.pop()*0.08,`Y3以降平均${doleAvg.toFixed(1)}�
     const m=Math.floor(d/30)+1;
     if(n('fisher')<2)rec='fisher';
     else if(n('veg')<1)rec='veg';
-    else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w2.pop()/36))rec='wheat';
+    else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w2.pop()/42))rec='wheat';
     else if(n('woodshop')<1)rec='woodshop';
     else if(n('charburner')<1)rec='charburner';
     else if(n('saltworks')<1)rec='saltworks';
