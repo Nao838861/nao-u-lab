@@ -24,7 +24,15 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260717_agentmeter_model_cli_matching.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784236763584529
+    char_count: 4532
+    decision: partial_adoption
+    review: "必須6項目、URL末尾、禁止表現なし、policy check 3400-4600字を通過。model-CLI を配備単位として測る原則と expensive failure、Core→full validation を採用し、AMS の重み・価格 snapshot・一般 CLI task の順位は移植しない。"
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
