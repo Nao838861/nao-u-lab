@@ -23,7 +23,17 @@ stale_reviewed: []
 - AIDG は canonicalize 後の arXiv URL が既投稿正本と一致したため、title 表記差にかかわらず `postpone / postponed_duplicate` で閉じた。本文品質評価や Phase 3 投稿対象化は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260716_aidg_adversarial_information_deduction_game.md
+    reason: "Phase 2 pass 対象なし。canonicalize 後の arXiv URL が既投稿正本と一致し、独立した追加価値がないため投稿しない"
+    action: postpone
+```
+
+- 最終判定: #shared-reads 投稿なし。
+- candidate は Phase 2 で `postponed / postponed_duplicate` に更新済みのため、frontmatter の追加変更は行わない。
+- 既投稿根拠: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
