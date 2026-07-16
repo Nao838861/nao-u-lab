@@ -36,7 +36,34 @@ skipped: []
 - 判定: 部分採用。まず action/state trace と terminal quality / process diagnostic の分離を導入し、offline AW は高報酬 support がある反復領域に限定する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779745539-6683882ff3
+    source_ts: "1779745539.367889"
+    title: "SkillOpt — スキルドキュメントをエージェントの学習可能な外部状態として最適化する（Mir）"
+    reason: "Phase 3b 自体が外部テキスト状態の小さな最適化ループであり、未レビューかつ memory/harness/evaluation/agent/operation/game-design の6タグを持つため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: defer
+  change:
+    summary: "既存の SkillOpt 系 probe と重複するため、reviewed state と見送り理由のみ更新。新規 probe は追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採用条件の合計 14 に届かず（13）、`non_redundancy: 0`。既存 state の SkillOpt 系 review/probe が held-out validation、add/delete/replace、rejected-edit memory、small edit scope を既に扱うため、追加反映は行わない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
