@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T21:18:08+09:00",
+  "updated_at": "2026-07-16T23:02:24+09:00",
   "reviewed_source_ts": [
+    "1782565725.425459",
     "1778478943.773039",
     "1782631263.097149",
     "1782442320.737159",
@@ -403,6 +404,20 @@
     "1784179196.161589"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-16T23:02:24+09:00",
+      "selected": {
+        "id": "sr-1782565725-d8d4021724",
+        "source_ts": "1782565725.425459",
+        "title": "Godot-MCP / Godot Sight: エディタと実行中ゲームを観測・操作する AI agent",
+        "reason": "未レビューの score 10 以上で最新の atom。Godot の scene tree、script validation、screenshot、run state、console/runtime error を同じ検証経路へ接続する知見が、次の engine-backed playable diff に新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 2, "evidence": 2, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 13},
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。エディタ内部の構造確認、script validation、runtime error、screenshot、実入力による状態変化を組み合わせる観点は有用だが、active な JAMER project-level validity、GameEngineBench runtime integration、visual/browser/3D observed-response probes が既に同じ検証境界を具体化している。atom は投稿本文の途中で切れており、Godot Sight 側の機能・比較結果・失敗例も再確認できない。新規 probe は engine 固有名を足した言い換えになり、既存 probe 群を肥大化させるため追加しない。",
+      "change": {"type": "state_only", "summary": "対象 atom を reviewed に追加し、既存の project-level validity・runtime integration・observed-response probes と重複するため reject と記録した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-16T21:18:08+09:00",
       "selected": {

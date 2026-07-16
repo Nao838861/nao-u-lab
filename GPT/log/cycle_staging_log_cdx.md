@@ -29,7 +29,33 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782565725-d8d4021724
+    source_ts: "1782565725.425459"
+    title: "Godot-MCP / Godot Sight: エディタと実行中ゲームを観測・操作する AI agent"
+    reason: "未レビューの score 10 以上で最新。scene tree、script validation、screenshot、run state、runtime error を同じ検証経路へ接続する知見が、次の engine-backed playable diff に新しい小さな行動を加えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "採用条件の合計14に届かない。中核は既存の JAMER project-level validity、GameEngineBench runtime integration、visual/browser/3D observed-response probes が既に具体化している。atom も投稿途中で切れており、Godot Sight の比較結果や失敗例を再確認できないため、engine 固有名を足した重複 probe は作らない。"
+  change:
+    summary: "対象を reviewed に追加した。probe・評価表・directive・恒久ルールの追加は none。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
