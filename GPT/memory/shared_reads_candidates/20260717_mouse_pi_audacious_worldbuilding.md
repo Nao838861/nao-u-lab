@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/analyzing-mouse-p-i-for-hire-s-audaci
 collected_at: "2026-07-17T04:14:52+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, narrative-design, worldbuilding, fps, pastiche]
+evaluated_at: "2026-07-17T04:16:20+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-17T04:16:20+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-17T04:16:20+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-16"
+supersedes: []
+gate_reason: >-
+  視覚的 pastiche を表層引用で終わらせず、人物の真剣さ、複数の謎、段階的な cosmic-horror setpiece へ接続する設計原理を抽出できる。
+  同時に、現実の迫害史を架空種族へ圧縮する比喩の危険とレビュー観点まで扱えるため、ゲーム制作への具体適用と約4000字の独立分析を支えられる。
+suggested_post_outline:
+  overview_angle: "rubber-hose / noir の引用を、人物の内的論理、三つの謎、空間的 setpiece によって一貫した世界へ変える設計と、その比喩上の限界を整理する"
+  analysis_axis: "美術様式と物語機能の接続、日常的 cartoon physics から cosmic horror への段階的移行、架空種族による現実史の圧縮が生む意味の欠落を評価する"
+  application_target: "Log_cdx の narrative prototype で、先に世界の真剣な因果と謎を定義してから視覚 gag・戦闘・level setpiece を接続し、現実史を借りる設定には対応関係と失敗条件のレビューを置く"
+  pros_cons: "利点は強い様式を gameplay と探索動機へ統合できること。欠点は様式引用が設定の因果を代替しやすく、複数の迫害史を一つの架空差別へ混ぜると責任主体と固有差が消えること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
