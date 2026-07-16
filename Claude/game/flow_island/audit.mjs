@@ -1,6 +1,6 @@
 // 意図監査: 「設計意図どおり動いているか」を期待値で自動判定する
 // 使い方: node audit.mjs   (全PASS が健全状態。FAILは意図とのズレ=修理対象)
-import{World,GOODS} from './engine.js';
+import{World,GOODS,P} from './engine.js';
 import{mkWorld,findSpot} from './village.mjs';
 const mk=(seed)=>mkWorld(seed);
 
@@ -9,7 +9,7 @@ const t=(name,cond,detail)=>{console.log((cond?'PASS':'FAIL')+'  '+name+'  '+(de
 
 // ---- シナリオA: 均衡村+麦2枚追加(食料自給プレイ) 4年×3シード平均 ----
 const SEEDS=[11,13,14];const worlds=[];
-const stallAvg={},famYear=[0,0,0,0];let doleY3=0,doleN=0;
+const stallAvg={},famYr=[[],[],[],[]]; // シードごとの年間飢餓
 const priceLog={fish:[],char:[]};
 const stuck={};
 for(const seed of SEEDS){
@@ -19,8 +19,7 @@ for(const seed of SEEDS){
   if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
   w.step();
   for(const g of['wheat','meat','tools','veg'])stallAvg[g]=(stallAvg[g]||0)+w.stalls[g].reduce((s,x)=>s+x.qty,0)/1440/SEEDS.length;
-  famYear[Math.min(3,Math.floor((d-1)/360))]=(d<=360?0:0)||famYear[Math.min(3,Math.floor((d-1)/360))];
-  if(d>720&&d%30===0){doleY3+=w.doleRate/SEEDS.length;doleN+=1/SEEDS.length;}
+  if(d%360===0)famYr[d/360-1].push(w.famine);
   const mm=(Math.floor((d-1)/30))%12+1;
   for(const g in priceLog){const a=w.prices[g];if(a&&a.length&&a[a.length-1][0]===d)priceLog[g].push([mm,a[a.length-1][1]]);}
   for(const h of w.hhs)if(h.purse<-2.5)stuck[seed+'_'+h.id]=(stuck[seed+'_'+h.id]||0)+1;}
@@ -58,13 +57,14 @@ t('E10 冬の魚価>夏',fw>fs*1.3,`冬${fw.toFixed(2)} 夏${fs.toFixed(2)}`);
 const cw=sAvg(priceLog.char,m=>m>=10||m<=2),cs=sAvg(priceLog.char,m=>m>=4&&m<=9);
 t('E10 冬の炭価>夏',cw>cs,`冬${cw.toFixed(2)} 夏${cs.toFixed(2)}`);
 // E11 死蔵なし(単一世帯が1000荷超を抱えない)
-let hoard=null;for(const x of worlds)for(const h of x.hhs)for(const g of GOODS)if(h.pantry[g]>1.5*4500)hoard=`${h.job}が${g}${Math.round(h.pantry[g])}`; // 農家の1.5収穫分までは納屋の備え
+let hoard=null;for(const x of worlds)for(const h of x.hhs)for(const g of GOODS)if(h.pantry[g]>1.5*P.Y_WHEAT*2)hoard=`${h.job}が${g}${Math.round(h.pantry[g])}`; // 農家の1.5収穫分(mult2)までは納屋の備え
 t('E11 死蔵なし',!hoard,hoard||'');
 // E12 人口成長(分家が機能・爆発もしない)
 t('E12 人口成長',worlds.every(x=>x.pop()>=90&&x.pop()<=90*2.2),worlds.map(x=>x.pop()).join('/'));
-// E13 配給依存の卒業(Y3以降 平均<人口8%)
-const doleAvg=doleY3/Math.max(1,doleN);
-t('E13 配給卒業',doleAvg<worlds[0].pop()*0.1,`Y3以降平均${doleAvg.toFixed(1)}人/日`);
+// E13 飢えの出口が機能(配給という制度は無い。飢餓が村の成熟とともに減っていくか)
+{const yr=famYr.map(a=>a.reduce((s,x)=>s+x,0)/SEEDS.length); // 累積→年次差分
+ const y2=yr[1]-yr[0],y4=yr[3]-yr[2];
+ t('E13 飢えの出口',y4<y2*1.1,`Y2飢餓${Math.round(y2)}→Y4飢餓${Math.round(y4)}(増え続けたらFAIL)`);}
 
 // ---- シナリオB: アドバイザ追従プレイ(推薦通り建てて破綻しないか) ----
 {const w2=mk(12);
@@ -79,7 +79,7 @@ t('E13 配給卒業',doleAvg<worlds[0].pop()*0.1,`Y3以降平均${doleAvg.toFixe
     const m=Math.floor(d/30)+1;
     if(n('fisher')<2)rec='fisher';
     else if(n('veg')<1)rec='veg';
-    else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w2.pop()/42))rec='wheat';
+    else if((gf('wheat').imp>8||w2.hungryN>=3)&&n('wheat')<Math.ceil(w2.pop()/42))rec='wheat';
     else if(n('woodshop')<1)rec='woodshop';
     else if(n('charburner')<1)rec='charburner';
     else if(n('saltworks')<1)rec='saltworks';

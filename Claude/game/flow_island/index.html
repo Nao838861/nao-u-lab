@@ -58,7 +58,7 @@ small{color:#8899b0}
  <h2>出来事</h2><div id="log"></div>
  <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
 </div>
-<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。配給は止まり、島は静かに衰えていきます…</div><div id="postmortem" style="font-size:12px;max-width:440px;color:#cbd;background:#141d30;border:1px solid #345;border-radius:8px;padding:8px 12px;margin:6px"></div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
+<div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。本国との信用は絶たれ、島は静かに衰えていきます…</div><div id="postmortem" style="font-size:12px;max-width:440px;color:#cbd;background:#141d30;border:1px solid #345;border-radius:8px;padding:8px 12px;margin:6px"></div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
 <script>
 addEventListener('error',e=>{const f=document.getElementById('factor');
   if(f)f.textContent='⚠ エラー: '+e.message+' @'+(e.filename||'').split('/').pop()+':'+e.lineno;});
@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133101';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133102';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -214,7 +214,6 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
   {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',pick:'#9ac86a',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
    const piles={};
    for(const g in GC){const a=w.stalls[g]||[];const q=a.reduce((s,x)=>s+x.qty,0);if(q>1)piles[g]=q;}
-   piles.wheat=(piles.wheat||0)+(w.granary.wheat||0);
    let i=0;
    for(const g in piles){if(piles[g]<3)continue;
      const px2=mx-24+(i%4)*16,py2=my+6+Math.floor(i/4)*10;
@@ -294,8 +293,7 @@ function marketInfo(el){
     const lo=Math.min(...st.map(s=>s.price)),hi=Math.max(...st.map(s=>s.price));
     html+=`<small>${NMG[g]} <b>${Math.round(q)}</b>荷 @${M(lo)}${hi-lo>0.05?'〜'+M(hi):''} <span style=color:#8899b0>(${st.length}軒)</span></small><br>`;}
   html+=`<small>輸入棚: 麦@${M(P.IMP.wheat)} 道具@${M(P.IMP.tools)} 塩@${M(P.IMP.salt)}</small><br>`;
-  html+=`<small>買付台: 保存@${M(P.EXP.pres)} 道具@${M(P.EXP.tools)}${P.EXP.stone?' 石@'+M(P.EXP.stone):''}${P.EXP.oil?' 油@'+M(P.EXP.oil):''}</small><br>`;
-  html+=`<small>御蔵: 麦${Math.round(w.granary.wheat||0)} 保存${Math.round(w.granary.pres||0)} 塩${Math.round(w.granary.salt||0)} 炭${Math.round(w.granary.char||0)}</small>`;
+  html+=`<small>買付台(輸出): ${Object.keys(P.EXP).map(g=>(NMG[g]||g)+'@'+M(P.EXP[g])).join(' ')}</small>`;
   el.innerHTML=html;}
 function info(){const el=document.getElementById('pbody');
   if(!sel){popup.style.display='none';return;}
@@ -329,7 +327,7 @@ function info(){const el=document.getElementById('pbody');
    ${why?`<small style=color:#ffb08a>${why}</small><br>`:''}${lvHtml}財布 ${M(h.purse)} <small>(直近30日: 売上${inc}・収支<b style="color:${net<0?'#ff8a7a':'#8f8'}">${net>=0?'+':''}${net}</b>)</small> / 移動${Math.round(w.travel(h)*100)}%<br>
    <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',log:'丸太',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
-  const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+(w.granary[g]||0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
+  const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
   document.getElementById('stock').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${Math.round(tot[g])}</b></span>`).join('')+`<span>金計 <b>${M(w.hhs.reduce((s,h)=>s+h.purse,0))}</b></span>`;
   const fp=g=>{const a=w.prices[g];return a&&a.length?M(a[a.length-1][1]):'-';};
   document.getElementById('prices').innerHTML=Object.keys(NM).map(g=>`<span>${NM[g]} <b>${fp(g)}</b></span>`).join('');
@@ -364,9 +362,9 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',log:'丸�
 let lastCo=null,lastM=0;
 setInterval(()=>{const m=Math.floor(Math.max(0,w.day-1)/30)+1;
   if(m>lastM&&w.day>30){const c=w.co;
-    if(lastCo){const dole=(c.doleC-lastCo.doleC)||0,wage=(c.pub-lastCo.pub)||0,exp=(c.expSell-c.expBuy)-(lastCo.expSell-lastCo.expBuy),imp=(c.impMargin-lastCo.impMargin)||0;
-      const net=exp+imp-dole-wage;
-      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)} 配給-${M(dole)} 賃金-${M(wage)})`);}
+    if(lastCo){const wage=(c.pub-lastCo.pub)||0,exp=(c.expSell-c.expBuy)-(lastCo.expSell-lastCo.expBuy),imp=(c.impMargin-lastCo.impMargin)||0;
+      const net=exp+imp-wage;
+      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)}${wage>0.05?' 道普請の賃金-'+M(wage):''})`);}
     lastCo={...c};lastM=m;}},1500);
 // --- 次の一手アドバイザ ---
 function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
@@ -376,13 +374,13 @@ function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||
   let rec=null,why='';
   if(n('fisher')<2){rec='fisher';why='まず食料。浜の近くに漁師を';}
   else if(n('veg')<1){rec='veg';why='野菜がないと食が偏り文化が育ちません';}
-  else if(gf('wheat').imp>8&&n('wheat')<Math.ceil(w.pop()/42)){rec='wheat';why=`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
-  else if(gf('wheat').imp>8){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
+  else if((gf('wheat').imp>8||w.hungryN>=3)&&n('wheat')<Math.ceil(w.pop()/42)){rec='wheat';why=w.hungryN>=3?`${w.hungryN}世帯が飢えています。麦畑で食料の底を(市場の近くに)`:`麦の輸入が月${Math.round(gf('wheat').imp*30*10)}デナリ。麦畑で自給を(市場の近くに)`;}
+  else if(gf('wheat').imp>8||w.hungryN>=3){rec=null;why='麦畑は足りています。次の収穫(9月)を待ちましょう';}
   else if(w.hhs.some(h=>h.job==='logger'&&w.localWood(h)<0.1)){rec='logger';why='木こりの森が痩せました。北西の森の際に新しい木こりを——道とセットで';}
   else if(n('woodshop')<1){rec='woodshop';why='道具がなければ暮らしが上がりません';}
   else if(n('charburner')<1){rec='charburner';why='炭は冬の暖と塩業の燃料です';}
   else if(n('saltworks')<1){rec='saltworks';why='塩がなければ保存食が作れません';}
-  else if(debt>w.limit()*0.3||w.treasury*10<15000&&m>6){rec=null;why='財政が細っています。入植1世帯=渡航費+自立まで配給で数千デナリの投資。金庫の回復を待って';}
+  else if(debt>w.limit()*0.3||w.treasury*10<15000&&m>6){rec=null;why='財政が細っています。入植1世帯=渡航費の投資。金庫の回復を待って';}
   else if(m>18&&poorN>=w.hhs.length*0.45&&n('rapeseed')<2){rec='rapeseed';why='村人の稼ぎが足りません。菜種油は本国に売れる換金作物です';}
   else if(gf('salt').imp>0.5){rec='saltworks';why='塩を輸入に頼っています';}
   else if(gf('tools').imp>0.5){rec='woodshop';why='道具を輸入に頼っています';}
@@ -405,8 +403,7 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   w._tHist=w._tHist||[];if(m>(w._tLastM||0)){w._tHist.push(w.treasury);w._tLastM=m;if(w._tHist.length>4)w._tHist.shift();}
   const th=w._tHist;
   if(th.length>=4&&th[3]<th[2]&&th[2]<th[1]&&th[1]<th[0]&&!said.drain){said.drain=true;
-    const c=w.co,dole=(c.doleC||0),wage=(c.pub||0);
-    say(dole>wage?'金庫が3ヶ月減り続けています。最大の穴は配給費——稼げない世帯が多すぎます。出来事ログの【決算】をご確認を':'金庫が3ヶ月減り続けています。出来事ログの【決算】で何に消えているかをご確認を');return;}
+    say('金庫が3ヶ月減り続けています。出来事ログの【決算】で何に消えているかをご確認を');return;}
   if(th.length>=2&&th[1]>th[0])said.drain=false;
   const dead=w.hhs.filter(h=>(h.job==='charburner'||h.job==='woodshop')&&w.localWood(h)<0.1);
   if(dead.length&&!said.wood){said.wood=true;say('近くの雑木林が禿げました。'+(dead[0].job==='charburner'?'炭焼き':'木工')+'は北西の大森林の際に建て直しを——遠いぶん、道への投資を');return;}
@@ -422,7 +419,7 @@ function factor(){const el=document.getElementById('factor');const say=t=>el.tex
   if(mm===3)saidWinter=false;
   if(ratio>0.55&&!saidTight){saidTight=true;say('債務が限度の半分を超えました。入植を控え、様子を見る頃合いかと');return;}
   if(ratio<0.4&&saidTight){saidTight=false;say('財政に息がつけました。再び前へ');return;}
-  if(w.doleRate<Math.max(1,w.hhs.length*9)*0.05&&!saidFree&&m>12){saidFree=true;say('配給がほとんど要らなくなりました。島が自分の足で立ち始めています');return;}}
+  if(w.hungryN===0&&!saidFree&&m>12){saidFree=true;say('村から飢えが消えました。島が自分の足で立ち始めています');return;}}
 setInterval(factor,2500);
 // --- ループ ---
 function frame(){try{tick++;
@@ -432,12 +429,12 @@ function frame(){try{tick++;
   if(tick%20===0){topbar();panel();toasts();if(sel)info();
     if(w.goDay&&document.getElementById('overlay').style.display!=='flex'){
       document.getElementById('overlay').style.display='flex';
-      const c=w.co,outs=[['配給(輸入食料)',c.doleC||0],['人夫の賃金',c.pub||0]].sort((a,b)=>b[1]-a[1]);
+      const c=w.co,outs=[['道普請の賃金',c.pub||0],['輸出の買付超過',Math.max(0,(c.expBuy||0)-(c.expSell||0))]].sort((a,b)=>b[1]-a[1]);
       const ins=(c.expSell-c.expBuy)+(c.impMargin||0);
       const avgD=w.hhs.length?w.hhs.reduce((s,h)=>s+w.dist(h),0)/w.hhs.length:0;
       let why='最大の支出は'+outs[0][0]+'('+M(outs[0][1])+'デナリ)。収入('+M(ins)+')の'+(ins>0.01?(outs[0][1]/ins).toFixed(1):'∞')+'倍でした。';
       if(avgD>8)why+=' 区画が市場から遠すぎました(平均'+avgD.toFixed(1)+'区画)——道を引くか市場の近くに。';
-      else if((c.doleC||0)>ins*2)why+=' 食料の自給が遅すぎました。漁師2→菜園→麦畑を最初の年に、市場の近くへ。';
+      else if(w.famine>400)why+=' 食料の自給が遅すぎました。漁師2→菜園→麦畑を最初の年に、市場の近くへ。';
       document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why+'<br><small style=color:#667>'+VERSION+'</small>';}}
   }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
   requestAnimationFrame(frame);}
