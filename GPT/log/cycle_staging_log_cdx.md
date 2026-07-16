@@ -34,7 +34,34 @@ skipped: []
 - candidate frontmatter の更新なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782631263-bd718ebada
+    source_ts: "1782631263.097149"
+    title: "PersonaArena: multi-turn 社会シナリオで persona fidelity を評価する"
+    reason: "NPC 会話を設定語の再現ではなく、状況内の行動・感情・適応・一貫性の trajectory として評価する観点が、次の game/headless 評価へ直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "none。reviewed_source_ts と重複による reject 理由だけを state に記録し、新規 probe は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 本文と原論文リンクは根拠になるが、Nao_u_BOT 環境で固定 seed の NPC dialogue harness を比較実測していないため evidence は 2。さらに、persona drift、interaction trace、fact grounding、task/style 分離は既存 active probes で既に扱っており、採用条件の合計 14 に届かない。active probe 314件を増やさず既存 probe を再利用する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

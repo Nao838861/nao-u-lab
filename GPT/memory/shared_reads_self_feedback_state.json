@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T17:55:00+09:00",
+  "updated_at": "2026-07-16T19:46:00+09:00",
   "reviewed_source_ts": [
+    "1782631263.097149",
     "1782442320.737159",
     "1779995803.583479",
     "1779740294.256369",
@@ -10096,6 +10097,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260613-balrog-knowing-doing-trajectory", "probe-20260612-long-horizon-multilayer-verifier", "probe-20260626-matrix-game-long-horizon-memory-latency"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の長期 trajectory / verifier / anchor probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-16T19:46:00+09:00",
+      "id": "sr-1782631263-bd718ebada",
+      "source_ts": "1782631263.097149",
+      "title": "PersonaArena: multi-turn 社会シナリオで persona fidelity を評価する",
+      "decision": "reject",
+      "reason": "Score 13. Persona 設定語の再現ではなく、固定した multi-turn 社会シナリオ内の行動選択・感情表現・適応・一貫性を trajectory として見て、persona drift、style overfit、redundant loop、scene mismatch、adaptation failure を evidence 付きで残す観点は NPC 会話評価に直結する。しかし active probes はすでに、synthetic user の persona drift、AI counterpart の interaction trace、NPC dialogue の fact grounding と failure label、task success と style adherence の分離を要求している。PersonaArena 固有の probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には 1,000 persona、動的 social sandbox、8指標、複数 judge と disagreement arbitration、SFT/DPO 改善実験の根拠があるが、この環境で固定 seed の NPC dialogue harness を比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260526-synthetic-user-drift-check", "probe-20260621-ares-ai-counterpart-trace", "probe-20260621-rpg-dialogue-filler-gap-grounding", "probe-20260708-coachable-agent-style-task-split"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の drift / interaction-trace / grounding / style-adherence probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
