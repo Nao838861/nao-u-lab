@@ -414,7 +414,7 @@ export class World{
     // 配給
     if(doleOn){let doleToday=0;
       for(const h of this.hhs){const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
-        if(fd<1){let q=h.eat()*P.DOLE_RATION;
+        if(fd<0.4){let q=h.eat()*P.DOLE_RATION;
           for(const g of['wheat','pres']){const u=Math.min(this.granary[g],q);this.granary[g]-=u;q-=u;h.pantry[g]+=u;doleToday+=u;}
           // 地元調達: 輸入パリティ以下の屋台から買う(村に金が落ちる。売り手が配給対象自身でも可=買い上げ)
           for(const g of['wheat','pres','veg','meat']){if(q<1e-9)break;
@@ -435,6 +435,7 @@ export class World{
         for(const g of act){const u=Math.min(h.pantry[g],share);h.pantry[g]-=u;need-=u;if(u>1e-9){kinds.add(KIND[g]);this.led.eat[g]=(this.led.eat[g]||0)+u;this.fl(g,'cons',u);}}}
       for(const g of['pres','wheat','pick']){if(need<=1e-9)break;
         const u=Math.min(h.pantry[g],need);h.pantry[g]-=u;need-=u;if(u>1e-9){kinds.add(KIND[g]);this.led.eat[g]=(this.led.eat[g]||0)+u;this.fl(g,'cons',u);}}
+      if(need>0.5){const forage=Math.min(need,h.eat()*0.55);need-=forage;this.fl('veg','prod',forage*0.3);} // 自給の床: 採集・落穂拾い(村の生存を金庫から切り離す)
       const hgy=need>0.5;if(hgy){h.hunger++;this.famine++;h.hungerRun=(h.hungerRun||0)+1;}else h.hungerRun=0;
       (h.hungerHist=h.hungerHist||[]).push(hgy?1:0);
       if(h.hungerRun>=60){h.hungerRun=30;
