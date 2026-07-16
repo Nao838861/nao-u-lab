@@ -26,7 +26,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.15';
+export const VERSION='v0.16';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -54,7 +54,7 @@ export class HH{
     const f=genFamily(this.id);this.sur=f.sur;this.members=f.mem;this.job=job;this.x=x;this.y=y;this.road=false;
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
-    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.walk=0;
+    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
     this.pantry.tools=5;this.pantry.wheat=90;  // 兵糧(9人×約10日=普請期間を自弁。配給=輸入価格で治療するより船で運ぶ方が安い)
@@ -126,16 +126,25 @@ export class World{
   tread(x,y){const k=Math.round(x)+','+Math.round(y);
     this.traffic=this.traffic||{};this.traffic[k]=Math.min(2000,(this.traffic[k]||0)+1);}
   stepToMarket(h){if(!this.flow)this.buildFlow();const W=this.MW;
-    const x=Math.round(h.px),y=Math.round(h.py);
-    let bx=x,by=y,bd=this.flow[y*W+x];
-    for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){
-      const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=this.MH)continue;
-      const d=this.flow[ny*W+nx];if(d<bd){bd=d;bx=nx;by=ny;}}
-    const sp=1/Math.max(0.45,this.tileCost(x,y));
-    h.px+=(bx-h.px)*Math.min(1,sp*0.9);h.py+=(by-h.py)*Math.min(1,sp*0.9);this.tread(h.px,h.py);
+    // 移動速度=1/tileCost(経路探索と同じ地形尺度)。これが崩れると「探索が選ぶのに実際は速くない道」へ全員が迂回する
+    // 草・森は旧来の0.9掛けそのまま(既存較正を保つ)。道の速度剰余(f>1)だけ多段ホップで実際に消化する
+    let f=Math.min(2.2,0.9/Math.max(0.45,this.tileCost(Math.round(h.px),Math.round(h.py))));
+    for(let hop=0;hop<4&&f>1e-6;hop++){
+      const x=Math.round(h.px),y=Math.round(h.py);
+      let bx=x,by=y,bd=this.flow[y*W+x];
+      for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){
+        const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=this.MH)continue;
+        const d=this.flow[ny*W+nx];if(d<bd){bd=d;bx=nx;by=ny;}}
+      if(bx===x&&by===y)break;
+      const step=Math.min(1,f);
+      h.px+=(bx-h.px)*step;h.py+=(by-h.py)*step;f-=step;}
+    this.tread(h.px,h.py);
     return Math.hypot(h.px-this.market.x,h.py-this.market.y)<1.2;}
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
-    h.px+=(tx-h.px)/d*0.8;h.py+=(ty-h.py)/d*0.8;this.tread(h.px,h.py);return false;}
+    // 道の上なら帰路・普請行きも速い。地形では遅くしない(港=水際の入植者が速度0で立ち往生し餓死する)
+    const f=this.roadTiles.has(Math.round(h.px)+','+Math.round(h.py))?(this.paved?1.55:1.35):1;
+    const mv=Math.min(d,0.8*f);
+    h.px+=(tx-h.px)/d*mv;h.py+=(ty-h.py)/d*mv;this.tread(h.px,h.py);return false;}
   pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
   planRoad(x,y){const k=x+','+y;
     if(this.roadTiles.has(k)||this.sites.some(s=>s.x===x&&s.y===y))return false;
@@ -478,7 +487,7 @@ export class World{
             const share=h.purse/near.length;
             for(const n of near)n.purse+=share;
             h.purse=0;}
-          else if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 信用買いの借りは会社の貸し倒れ
+          else{this.treasury+=h.purse;h.purse=0;} // 借りは会社の貸し倒れ・相続人なき遺産は金庫へ(貨幣を蒸発させない)
           this.hhs.splice(this.hhs.indexOf(h),1);}}
       h.kindLog.push([d,[...kinds]]);for(const k of kinds)h.kindDays[k]=(h.kindDays[k]||0)+1;
       while(h.kindLog.length&&h.kindLog[0][0]<=d-45){for(const k of h.kindLog[0][1])h.kindDays[k]--;h.kindLog.shift();}
@@ -513,7 +522,8 @@ export class World{
       else{h.up=Math.max(0,h.up-3);h.down++;
         if(h.down>=P.DOWN_DAYS&&h.lv>0){h.lv--;h.down=0;this.log(`${h.job}#${h.id} ▼Lv${h.lv}`);}}
       if((d-1)%360===0)h.incY=0;
-      h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();}
+      h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();
+      h.purseLog.push(h.purse);if(h.purseLog.length>31)h.purseLog.shift();}
     if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
       P.ROAD_F=P.PAVE_ROAD_F;this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
     // 分家(90日ごと・繁栄+自立ゲート・観測所得で職選び)

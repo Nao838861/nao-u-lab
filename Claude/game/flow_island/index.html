@@ -66,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133100';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133101';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -315,7 +315,7 @@ function info(){const el=document.getElementById('pbody');
     const est=Math.round(P.Y_WHEAT*h.mult()*Math.min(1,(h.wheatWork||0)/300));
     why=`収穫まであと${left}日(9月)。今年の見込み ${est}荷`;}
   else if(h.purse<0.5){const inc30=h.incomeLog.reduce((a,b)=>a+b,0);
-    why=inc30>20?'宵越しの銭なし——冬に稼ぎ夏に使う型。収入があるうちは健全':'⚠ 財布も収入も無い——この職の産物に買い手がいない';}
+    why=inc30>20?'宵越しの銭なし——売っては食う自転車操業。売上があるうちは飢えない':'⚠ 財布も売上も無い——この職の産物に買い手がいない';}
   const reqs=LADDER[JOBCLS[h.job]]||[];let lvHtml='';
   if(h.lv<reqs.length){const nxt=reqs[h.lv];const sat=h.satLast||{};
     const need=Math.round(45*(h.lv+1));
@@ -323,9 +323,10 @@ function info(){const el=document.getElementById('pbody');
     const lower=reqs.slice(0,h.lv).map(r=>`${REQN[r]||r}${(h.satLast||{})[r]?'✓':'<b style=color:#ff8a7a>✗</b>'}`).join(' ');
     if(lower)lvHtml+=`<small>維持: ${lower}</small><br>`;}
   const inc=M(h.incomeLog.reduce((a,b)=>a+b,0));
+  const net=h.purseLog.length?M(h.purse-h.purseLog[0]):0;
   el.innerHTML=`<b>${h.sur}家</b>(${JNAME[h.job]}) Lv${h.lv} ${h.road?'(道あり)':'(道なし)'}<br>
    <small>${ST[h.state]||h.state}${hasStall?'・店番を市場に出している':''}</small><br>
-   ${why?`<small style=color:#ffb08a>${why}</small><br>`:''}${lvHtml}財布 ${M(h.purse)} <small>(30日収入${inc})</small> / 移動${Math.round(w.travel(h)*100)}%<br>
+   ${why?`<small style=color:#ffb08a>${why}</small><br>`:''}${lvHtml}財布 ${M(h.purse)} <small>(直近30日: 売上${inc}・収支<b style="color:${net<0?'#ff8a7a':'#8f8'}">${net>=0?'+':''}${net}</b>)</small> / 移動${Math.round(w.travel(h)*100)}%<br>
    <small>在庫: ${GOODS.map(pv).filter(Boolean).join(' ')||'なし'}</small>`;}
 function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',log:'丸太',tools:'道具',salt:'塩',char:'炭',pres:'保存',pick:'漬物',meal:'粕',stone:'石',oil:'油'};
   const tot={};for(const g in NM)tot[g]=w.hhs.reduce((s,h)=>s+h.pantry[g],0)+(w.granary[g]||0)+((w.stalls[g]||[]).reduce((s,x)=>s+x.qty,0));
@@ -348,7 +349,7 @@ function panel(){const NM={fish:'魚',wheat:'麦',veg:'菜',meat:'肉',log:'丸�
       prodTxt=(hl.reduce((s,[,v])=>s+v,0)/360).toFixed(0)+'<small>(年平均)</small>';}
     let lackList='';
     if(window.lackG===g&&lack){const hhs=w.hhs.filter(h=>h.pantry[g]<NEEDQ[g]*2&&h.purse<10);
-      lackList='<div style="margin:2px 0 4px 8px;color:#ccb">'+hhs.map(h=>`${h.sur}家(${JNAME[h.job]}) 財布${M(h.purse)}・30日収入${M(h.incomeLog.reduce((a,b)=>a+b,0))}`).join('<br>')+'<br><small style=color:#889>収入が少ない=その職が稼げていない。輸出産業か地元の買い手が必要</small></div>';}
+      lackList='<div style="margin:2px 0 4px 8px;color:#ccb">'+hhs.map(h=>`${h.sur}家(${JNAME[h.job]}) 財布${M(h.purse)}・30日売上${M(h.incomeLog.reduce((a,b)=>a+b,0))}`).join('<br>')+'<br><small style=color:#889>売上が少ない=その職が稼げていない。輸出産業か地元の買い手が必要</small></div>';}
     return `<div style="display:flex;justify-content:space-between;gap:4px"><span>${NM[g]}</span><span>産${prodTxt} 消${f.cons.toFixed(0)}</span>${badge}</div>`+lackList;}).filter(Boolean).join('');
   const jinc={};for(const h of w.hhs)(jinc[h.job]=jinc[h.job]||[]).push((h.incY||0)*10);
   const jrows=Object.entries(jinc).map(([j,v])=>[j,v.reduce((a,b)=>a+b,0)/v.length,v.length])
