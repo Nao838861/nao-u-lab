@@ -64,7 +64,52 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（81 group）。"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-16 基準で再生成（上位 50 件）。"
+  - "shared_reads_group_action_queue.jsonl を再生成（36 group）。"
+  - "inbox lifecycle を確認。directives / broadcasts とも pending 0 件のため status 更新なし。"
+  - "memory/raw/ の 30 日超ファイル 93 件を棚卸し。raw 原文保持契約と用途を age だけでは判別できないため、移動・削除なし。"
+issues:
+  - id: ISS-STALE-CANDIDATE-BACKLOG
+    description: "postponed / needs_review の stale_after 到来済みが 218 件（postponed 209、needs_review 9）あり、candidate 単位の全件再評価は現在の 1 サイクル最大 5 件 handoff を大きく上回る。mixed duplicate も 81 group 残っている。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/ lifecycle 集計、memory/shared_reads_stale_triage_queue.jsonl 50 rows、memory/shared_reads_mixed_duplicate_queue.jsonl 81 rows、memory/shared_reads_group_action_queue.jsonl 36 rows"
+    source_file_status: "UTF-8 明示読みで candidate frontmatter と各 queue は正常。memory/MEMORY.md も UTF-8 で『記憶』『ゲーム設計』『敵パターン』を取得でき、atom index の実 atom 参照 50 件に欠落なし。『評価軸』の完全一致は現本文にないが、文字化けではない。"
+    display_or_tooling_status: "PowerShell 出力経路では日本語 probe を inline script に直接渡した際に ? 表示が出たため、Unicode escape による UTF-8 source probe で切り分け済み。source file 破損なし。"
+    why_blocks_game_memory: "古い候補と同題候補が open queue に残り続けると、次のゲーム制作で有望な手法を探す際に terminal な既投稿・失敗候補と未評価候補の区別へ余計な確認コストが掛かる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  due_total: 218
+  postponed: 209
+  needs_review: 9
+  stale_triage_queue_rows: 50
+  mixed_duplicate_groups: 81
+  group_action_queue_rows: 36
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭 group。依存関係付き prompt pipeline はゲーム制作への転用価値が高い一方、評価・比較・結論の一次根拠が不足。status_counts 相当は terminal 2 / open 4 で、terminal_paths 2 件・open_paths 4 件を group 単位で解消する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+```
+
+- atom audit: 2678 rows。ID 重複・mirror parse error・content conflict は 0。normalized content duplicate は raw 40 group / 80 rows だが recall-visible は fold 後 3 group / 6 rowsで、既存 lifecycle / canonical overlay の管理対象。今回、新たな意味的矛盾は確認できなかった。
+- candidate lifecycle: `posted: 411` / `ready_to_post: 10` / `postponed: 398` / `failed: 123` / `needs_review: 22`。posted / failed は再評価 batch から除外した。
+- title audit: unindexed duplicate group を確認。terminal-only は今回の上位結果になく、open status を含む mixed group は自動 close / canonical index 登録をせず queue に維持した。
+- `ISS-STALE-CANDIDATE-BACKLOG` は既存の stale triage → group action → Phase 2 更新契約で処理可能な運用 backlog であり、新規構造の設計根拠にはしない。よって Phase 4b は起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
