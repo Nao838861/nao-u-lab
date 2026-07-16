@@ -212,7 +212,37 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-ATOM-GENERIC-TITLES
+    files_changed:
+      - path: tools/atom_title_clusters.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/build_atom_title_quality_audit.py
+        change: modified
+      - path: tools/test_atom_title_clusters.py
+        change: created
+      - path: memory/atoms/title_cluster_index.jsonl
+        change: modified
+      - path: memory/atoms/title_quality_audit.jsonl
+        change: modified
+      - path: memory/atoms/title_quality_audit_README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "generic title 判定と semantic alias 抽出を sidecar builder / recall で共有し、singleton generic atom も検索・表示 alias の対象にした。raw atom title は変更していない。"
+    partial: false
+migrations:
+  - what: "title_cluster_index と title_quality_audit を全 atom から再生成"
+    affected: "title cluster 484 行 / 634 members、title quality audit 603 行。recall-visible generic 341 件は本文由来 alias 341 / fallback 0。"
+verification:
+  - "python -m unittest tools\\test_atom_title_clusters.py: 4 tests passed（■ 概要、@、■ メリット・デメリット、non-generic singleton）。"
+  - "build_atom_title_cluster_index.py --check: current (484 title clusters)。"
+  - "build_atom_title_quality_audit.py --check: current (603 audit rows)。"
+  - "memory_recall.py 'HarnessFix 失敗層' --limit 1 --no-log --compact: semantic alias で対象 atom を検索・表示できた。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

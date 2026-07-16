@@ -12,6 +12,10 @@
 - `recall_visible`: recall 表示対象かどうか
 - `recommended_action`: `retitle` / `display_title` / `postpone`
 - `sample_hint`: 本文から取った短い識別ヒント
+- `semantic_alias` / `alias_source`: generic title に対する検索・表示用の別名と抽出根拠
+- `semantic_alias_covered` / `semantic_alias_fallback`: 本文由来 alias と deterministic fallback の監査フラグ
+
+`title_cluster_index.jsonl` は repeated title に加えて singleton の generic title も収録する。`memory_recall.py` は `semantic_alias` を検索対象と表示ラベルに加えるが、atom 本体の `title` は変更しない。
 
 再生成:
 

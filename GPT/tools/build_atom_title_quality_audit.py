@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_recall
+from atom_title_clusters import is_generic_title, semantic_alias
 from atoms_fileformat import load_atoms_from_per_file
 
 
@@ -139,6 +140,8 @@ def build_audit_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
         group_id = title_group_id(title)
         for atom in sorted(group, key=lambda row: (parse_source_ts(row), str(row.get("id") or ""))):
             recall_visible = not memory_recall.is_default_excluded(atom)
+            alias, alias_source = semantic_alias(atom)
+            generic = is_generic_title(title)
             rows.append(
                 {
                     "audit_id": f"{group_id}:{atom.get('id')}",
@@ -153,6 +156,11 @@ def build_audit_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     "detection_reasons": reasons,
                     "recommended_action": recommended_action(reasons, recall_visible),
                     "sample_hint": sample_hint(atom),
+                    "generic_title": generic,
+                    "semantic_alias": alias if generic else "",
+                    "alias_source": alias_source if generic else "",
+                    "semantic_alias_covered": bool(generic and alias_source != "deterministic_fallback"),
+                    "semantic_alias_fallback": bool(generic and alias_source == "deterministic_fallback"),
                     "generated_at": generated_at,
                 }
             )
@@ -219,7 +227,13 @@ def main() -> int:
 
     write_jsonl(args.output, rows)
     groups = len({row["title_group_id"] for row in rows})
-    print(f"wrote {len(rows)} title quality audit rows / {groups} title groups to {args.output}")
+    generic_rows = [row for row in rows if row.get("generic_title") and row.get("recall_visible")]
+    covered = sum(bool(row.get("semantic_alias_covered")) for row in generic_rows)
+    fallback = sum(bool(row.get("semantic_alias_fallback")) for row in generic_rows)
+    print(
+        f"wrote {len(rows)} title quality audit rows / {groups} title groups to {args.output}; "
+        f"recall-visible generic={len(generic_rows)} alias_covered={covered} fallback={fallback}"
+    )
     return 0
 
 

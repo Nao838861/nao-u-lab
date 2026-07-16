@@ -24,9 +24,28 @@ MEMORY_DIR = ROOT / "memory"
 ATOMS_DIR = MEMORY_DIR / "atoms"
 TITLE_CLUSTER_INDEX_PATH = ATOMS_DIR / "title_cluster_index.jsonl"
 
+GENERIC_TITLE_PREFIXES = (
+    "[Codex external research]",
+    "[Codex shared-reads",
+    "[Codex shared_reads",
+    "■ 概要",
+    "■ 内容分析",
+    "■ メリット・デメリット",
+    "@",
+    "笆",
+    "讎りｦ",
+    "繝｡繝ｪ繝・ヨ",
+    "繝・Γ繝ｪ繝・ヨ",
+)
+
 
 def normalized_title(atom: dict[str, Any]) -> str:
     return re.sub(r"\s+", " ", str(atom.get("title") or "").strip())
+
+
+def is_generic_title(title: str) -> bool:
+    normalized = re.sub(r"\s+", " ", str(title or "").strip())
+    return any(normalized.startswith(prefix) for prefix in GENERIC_TITLE_PREFIXES)
 
 
 def source_identity(atom: dict[str, Any]) -> str:
@@ -140,6 +159,48 @@ def keyword_hint(atom: dict[str, Any], max_len: int = 42) -> str:
     return text[: max_len - 1].rstrip() + "…"
 
 
+def semantic_alias(atom: dict[str, Any], max_len: int = 96) -> tuple[str, str]:
+    """Return a deterministic content-derived alias and its provenance."""
+    raw_text = " ".join(
+        str(atom.get(key) or "").strip()
+        for key in ("excerpt", "trigger")
+        if str(atom.get(key) or "").strip()
+    )
+    heading_patterns = (
+        r"(?:^|\s)##\s+\d+\.\s+(.+?)(?:\s+-\s+|\s+■\s+|$)",
+        r"(?:^|\s)#+\s+([^#\n|]{4,160})",
+        r"【([^】]{4,160})】",
+    )
+    for pattern in heading_patterns:
+        match = re.search(pattern, raw_text)
+        if match:
+            value = re.sub(r"\s+", " ", match.group(1)).strip(" -:：/、。")
+            if value and not is_generic_title(value):
+                return _truncate(value, max_len), "explicit_heading"
+
+    title = normalized_title(atom)
+    for prefix in GENERIC_TITLE_PREFIXES:
+        if title.startswith(prefix):
+            remainder = title[len(prefix) :].strip(" -:：/、。")
+            if len(remainder) >= 4 and not is_generic_title(remainder):
+                return _truncate(remainder, max_len), "title_remainder"
+
+    hint = keyword_hint(atom, max_len=max_len)
+    if hint and not is_generic_title(hint):
+        return hint, "keyword_hint"
+
+    fallback = " | ".join(
+        value for value in (normalized_title(atom), str(atom.get("source_ts") or ""), atom_id(atom)) if value
+    )
+    return _truncate(fallback, max_len), "deterministic_fallback"
+
+
+def _truncate(text: str, max_len: int) -> str:
+    if len(text) <= max_len:
+        return text
+    return text[: max_len - 1].rstrip() + "…"
+
+
 def atom_id(atom: dict[str, Any]) -> str:
     return str(atom.get("id") or "")
 
@@ -164,11 +225,13 @@ def build_title_cluster_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]
     generated_at = datetime.now().isoformat(timespec="seconds")
     rows: list[dict[str, Any]] = []
     for key, group in grouped.items():
-        if len(group) < 2:
+        generic_group = any(is_generic_title(normalized_title(atom)) for atom in group)
+        if len(group) < 2 and not generic_group:
             continue
         parts = json.loads(key)
         members = []
         for atom in sorted(group, key=lambda row: (parse_source_ts(row), atom_id(row))):
+            alias, alias_source = semantic_alias(atom)
             members.append(
                 {
                     "id": atom_id(atom),
@@ -176,6 +239,8 @@ def build_title_cluster_rows(atoms: list[dict[str, Any]]) -> list[dict[str, Any]
                     "url_domain": first_domain(atom),
                     "keyword_hint": keyword_hint(atom),
                     "display_disambiguator": display_disambiguator(atom),
+                    "semantic_alias": alias,
+                    "alias_source": alias_source,
                 }
             )
         rows.append(
@@ -214,5 +279,7 @@ def load_title_cluster_map(path: Path = TITLE_CLUSTER_INDEX_PATH) -> dict[str, d
                     "cluster_id": cluster_id,
                     "cluster_size": count,
                     "display_disambiguator": str(member.get("display_disambiguator") or ""),
+                    "semantic_alias": str(member.get("semantic_alias") or ""),
+                    "alias_source": str(member.get("alias_source") or ""),
                 }
     return mapped

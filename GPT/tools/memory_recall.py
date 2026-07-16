@@ -19,7 +19,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 import memory_lifecycle
-from atom_title_clusters import load_title_cluster_map
+from atom_title_clusters import is_generic_title, load_title_cluster_map
 from atoms_fileformat import load_atoms_from_per_file, load_atoms_with_view
 
 
@@ -79,6 +79,7 @@ def atom_text(atom: dict[str, Any]) -> str:
         " ".join(atom.get("tags", [])),
         " ".join(atom.get("kind", [])),
         " ".join(atom.get("links", [])),
+        str(atom.get("semantic_alias") or ""),
     ]
     return "\n".join(fields)
 
@@ -147,18 +148,6 @@ def normalized_title(atom: dict[str, Any]) -> str:
 
 def title_counts(atoms: list[dict[str, Any]]) -> Counter[str]:
     return Counter(title for title in (normalized_title(atom) for atom in atoms) if title)
-
-
-GENERIC_TITLE_PREFIXES = (
-    "[Codex external research]",
-    "[Codex shared-reads",
-    "■ 概要",
-    "笆",
-)
-
-
-def is_generic_title(title: str) -> bool:
-    return any(title.startswith(prefix) for prefix in GENERIC_TITLE_PREFIXES)
 
 
 def first_url_hint(atom: dict[str, Any]) -> str:
@@ -238,7 +227,12 @@ def annotate_display_labels(
         row = dict(atom)
         cluster = title_cluster_map.get(str(row.get("id") or ""))
         label = normalized_title(row)
-        if cluster and int(cluster.get("cluster_size") or 0) >= 2:
+        if cluster:
+            alias = str(cluster.get("semantic_alias") or "").strip()
+            if alias:
+                row["semantic_alias"] = alias
+                row["alias_source"] = cluster.get("alias_source")
+                label = alias
             disambiguator = str(cluster.get("display_disambiguator") or "").strip()
             if disambiguator:
                 row["display_disambiguator"] = disambiguator
@@ -262,6 +256,10 @@ def annotate_display_labels(
 def search(query: str, limit: int, include_operational: bool = False) -> list[tuple[float, dict[str, Any]]]:
     raw_atoms = load_atoms()
     title_cluster_map = load_title_cluster_map()
+    for atom in raw_atoms:
+        overlay = title_cluster_map.get(str(atom.get("id") or ""), {})
+        if overlay.get("semantic_alias"):
+            atom["semantic_alias"] = overlay["semantic_alias"]
     exact_matches = exact_reference_matches(raw_atoms, query)
     if exact_matches:
         duplicate_title_counts = title_counts(raw_atoms)
@@ -270,6 +268,10 @@ def search(query: str, limit: int, include_operational: bool = False) -> list[tu
         return []
 
     atoms = load_atoms_for_recall()
+    for atom in atoms:
+        overlay = title_cluster_map.get(str(atom.get("id") or ""), {})
+        if overlay.get("semantic_alias"):
+            atom["semantic_alias"] = overlay["semantic_alias"]
     if not include_operational:
         atoms = [atom for atom in atoms if not is_default_excluded(atom)]
     duplicate_title_counts = title_counts(atoms)
@@ -313,6 +315,8 @@ def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> No
             "display_label": atom.get("display_label"),
             "display_secondary_key": atom.get("display_secondary_key"),
             "display_disambiguator": atom.get("display_disambiguator"),
+            "semantic_alias": atom.get("semantic_alias"),
+            "alias_source": atom.get("alias_source"),
             "title_cluster_id": atom.get("title_cluster_id"),
             "title_cluster_size": atom.get("title_cluster_size"),
             "tags": atom.get("tags", [])[:8],
