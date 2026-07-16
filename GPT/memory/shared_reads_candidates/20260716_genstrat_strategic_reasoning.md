@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2605.23238"
 collected_at: "2026-07-16T14:30:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, game-ai, evaluation, procedural-generation, imperfect-information, strategic-reasoning]
+evaluated_at: "2026-07-16T14:31:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-16T14:31:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-16T14:31:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  手続き生成ゲームによる汚染・飽和回避、6軸の能力分解、近傍ゲーム間の jaggedness という手法の中核と、36,000試合超の評価設計・主要結論を抽出できる。
+  単一ステージ平均では隠れる自動プレイヤーの局所破綻を、ルール変種群と能力プロファイルで診断する形へ直接移せるため、CoopEval水準の批判的概要を構成できる。
+suggested_post_outline:
+  overview_angle: "固定ベンチマークから生成可能な戦略環境分布へ移り、平均勝率を能力地形と局所的不安定性へ分解する評価設計"
+  analysis_axis: "ゲーム生成条件、6能力軸、jaggedness、総当たり試合設計が、汚染耐性とモデル間差の説明力をどこまで高めるか"
+  application_target: "Log_cdx の headless 自動プレイヤー評価で、ルール・観測・時間深さ・リスク条件を系統変化させ、平均点と局所破綻を別々に記録する評価 packet"
+  pros_cons: "長所は評価分布を更新でき、同平均モデルの異質な弱点を見つけられる点。短所は二人零和カードゲームから action game の実時間制御へ移す際に軸と生成器の再設計が必要な点"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
