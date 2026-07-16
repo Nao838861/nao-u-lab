@@ -8,7 +8,16 @@
 - pending 確認: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+notes:
+  - "Phase 1 は posted_url_match により candidate 作成なし。"
+  - "staging に stale_review_batch / group_action handoff がないため、再評価対象なし。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
