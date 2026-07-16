@@ -23,7 +23,33 @@ stale_reviewed: []
 (Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779995803-58df67fa02
+    source_ts: "1779995803.583479"
+    title: "GUI Agents for Continual Game Generation"
+    reason: "未レビューの score 10 atom で優先6タグをすべて持つ。GUI agent の実操作による interaction-level failure 検出が次の browser game 検証に非重複の行動を加えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "実入力経路、状態変化、勝敗・再開、静的成功と player-facing quality の分離は既存の browser-interaction-rubric と runtime/replay/GUI trace 系 probe に具体化済み。新規反映は言い換えになり active probe 群を肥大化させるため見送った。"
+  change:
+    summary: "state に reviewed と重複見送り理由を記録。新規 probe・評価表・directive・恒久ルールは追加なし。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

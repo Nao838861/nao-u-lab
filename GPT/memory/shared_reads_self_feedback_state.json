@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-16T12:32:00+09:00",
+  "updated_at": "2026-07-16T14:22:00+09:00",
   "reviewed_source_ts": [
+    "1779995803.583479",
     "1779740294.256369",
     "1782646829.867869",
     "1782654152.094269",
@@ -398,6 +399,39 @@
     "1779745539.367889"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-16T14:22:00+09:00",
+      "selected": {
+        "id": "sr-1779995803-58df67fa02",
+        "source_ts": "1779995803.583479",
+        "title": "GUI Agents for Continual Game Generation",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。生成ゲームをビルド成功や静止画だけで受理せず、GUI agent による実操作で interaction-level failure を検出する知見が、次の browser game 検証に新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計は14だが、採用必須条件を満たすだけでは新規反映の根拠にならない。中核である実入力経路、状態変化、勝敗・再開、静的成功と player-facing quality の分離は、既存の probe-20260528-browser-interaction-rubric と engine/runtime artifact、replay evidence、GUI trace 系 probe に既に具体化されている。新規 probe は同じ確認の言い換えとなり、active probe 群を肥大化させるため見送る。",
+      "change": {
+        "type": "state_only",
+        "summary": "対象 atom を reviewed に追加し、既存 browser interaction rubric と重複するため reject と記録した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-16T04:47:42+09:00",
       "selected": {
