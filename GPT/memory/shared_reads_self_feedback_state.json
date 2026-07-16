@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T06:31:00+09:00",
+  "updated_at": "2026-07-17T08:28:00+09:00",
   "reviewed_source_ts": [
+    "1784236763.584529",
     "1778480570.779749",
     "1782528770.376139",
     "1780708885.257199",
@@ -408,6 +409,20 @@
     "1782500861.216959"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T08:28:00+09:00",
+      "selected": {
+        "id": "sr-1784236763-e12c0a86f6",
+        "source_ts": "1784236763.584529",
+        "title": "AgentMeter: model–CLI 構成を成功・費用・高コスト失敗で評価する benchmark",
+        "reason": "未レビューで最新の score 10 atom であり、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。同じ model でも CLI harness により成功率、token 消費、再読、停止判定が変わる知見が、次の game/headless 評価や memory pipeline 評価へ新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 14},
+      "decision": "reject",
+      "decision_reason": "合計は14で必須閾値も満たすが、model 単体でなく model + 観測表現 + tool schema + context/replay + timeout/停止条件を評価単位にする観点は agent-eval attribution split、simulation budget、harness fit nonmonotone probes が既に直接要求している。高 token の未完了、反復再読、無変更、誤成功宣言を expensive failure として残す観点も failed_step・expected/observed effect・repair_scope を記録する HarnessFix probe と重なる。AgentMeter は強い定量例だが、Core12 や AMS 風の新規 probe を追加すると評価項目を重複させるため、既存 probe の次回適用時に trajectory cost を証拠として使うに留める。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新し、重複する probe・評価表・directive・恒久ルールは追加しなかった。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T06:31:00+09:00",
       "selected": {

@@ -48,7 +48,34 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784236763-e12c0a86f6
+    source_ts: "1784236763.584529"
+    title: "AgentMeter: model–CLI 構成を成功・費用・高コスト失敗で評価する benchmark"
+    reason: "未レビューで最新の score 10 atom。memory・harness・game-design・agent・operation・evaluation の6優先タグを持ち、game/headless と memory pipeline の評価単位を改善できるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "model + CLI/harness 構成の version 化、simulation budget、失敗 trajectory の層別は、既存の agent-eval attribution split・harness fit nonmonotone・simulation budget・HarnessFix probes が既に直接扱う。AgentMeter は強い定量例だが、新規 Core12/AMS probe は同じ評価境界を増やすため追加しない。"
+  change:
+    summary: "reviewed/source_ts と reject 理由のみ state に記録。probe・評価表・directive・恒久ルールは追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
