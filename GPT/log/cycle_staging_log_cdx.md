@@ -8,7 +8,20 @@
 - 既存素材 `RNG-Bench` は同 URL の candidate が既に存在したため、新規ファイルを作成しなかった（preflight ログあり）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260717_agentmeter_model_cli_matching.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260717_agentmeter_model_cli_matching.md
+    decision: continue
+    canonical_url: https://arxiv.org/abs/2606.21140
+    title_key: agentmeter evaluating model cli matching for cli based local task solving agents
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
