@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-16T14:22:00+09:00",
+  "updated_at": "2026-07-16T16:18:00+09:00",
   "reviewed_source_ts": [
     "1779995803.583479",
     "1779740294.256369",
@@ -396,9 +396,24 @@
     "1779995806.511879",
     "1782646834.762419",
     "1782065326.755519",
-    "1779745539.367889"
+    "1779745539.367889",
+    "1784179196.161589"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-16T16:18:00+09:00",
+      "selected": {
+        "id": "sr-1784179196-ce22f77445",
+        "source_ts": "1784179196.161589",
+        "title": "GENSTRAT: 未知の generalized betting game による戦略一般化評価",
+        "reason": "未レビューの score 12 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。未知ゲーム群で一般化を測る観点が次の game-agent / headless 評価へ新しい小さな行動を加えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 14},
+      "decision": "reject",
+      "decision_reason": "合計は14だが、active な semantics-preserving-variant-family probe は seed・mirror・label・wording・noise を変えつつ同じ戦略が維持されるかをすでに要求し、cross-game-capability-heldout probe は same-game practice / same-genre transfer / held-out game transfer を分離している。GENSTRAT はこの2 probe の強い実装例だが、新規 probe にすると既存観点の言い換えとなる。atom だけでは論文本文や seed-level 結果の再確認も不足するため、恒久ルール・評価表・probe は追加しない。",
+      "change": {"type": "state_only", "summary": "対象 atom を reviewed に追加し、既存 probe と重複するため reject と記録した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-16T14:22:00+09:00",
       "selected": {

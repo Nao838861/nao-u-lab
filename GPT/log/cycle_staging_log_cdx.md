@@ -35,7 +35,33 @@ skipped: []
 - candidate frontmatter の更新および Slack API 呼び出しはなし。品質ゲートを維持したまま正常終了。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784179196-ce22f77445
+    source_ts: "1784179196.161589"
+    title: "GENSTRAT: 未知の generalized betting game による戦略一般化評価"
+    reason: "未レビューの score 12 atom で優先6タグをすべて持つ。未知ゲーム群による一般化評価が非重複の小さな行動を加えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "既存の semantics-preserving-variant-family probe が seed・mirror・label・wording・noise を変えた戦略維持を、cross-game-capability-heldout probe が same-game / same-genre / held-out transfer の分離をすでに要求している。GENSTRAT は強い実装例だが新規 probe は言い換えになる。atom 単体では論文本文や seed-level 結果の再確認も不足するため反映しない。"
+  change:
+    summary: "reviewed state のみ更新。probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
