@@ -52,7 +52,40 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index と per-file atom index の整合を検証した（validate_memory_index: OK、broken entry 0）。代表語は『記憶』『ゲーム設計』『評価軸』を取得でき、『敵パターン』は現行本文に完全一致なし。source file の文字化けは認めない。"
+  - "memory/atoms.jsonl 2677 行を監査し、parse error 0、duplicate id 0。memory_health が報告する normalized-content の fold 対象 40 group / 80 rows は既存の recall fold で吸収されており、矛盾を示す evidence は見つからなかった。"
+  - "memory/raw/ で mtime 30日超の原文 93 files（2026-05-11〜2026-06-12）を archive 候補として識別した。Phase 4a では移動・削除していない。"
+  - "shared-reads lifecycle 内訳を確認した: posted 410 / ready_to_post 10 / postponed 398 / failed 123 / needs_review 22 / frontmatter status missing 1。postponed/needs_review の stale_after 期限超過は 218 件。"
+  - "mixed duplicate / stale triage / group-action queue を 2026-07-16 基準で再生成した（81 / 50 / 36 rows）。group-action 限定運用に従い、先頭 1 group の representative のみ Phase 2 handoff に採用した。"
+  - "slack_directives.jsonl 23 rows / slack_broadcasts.jsonl 21 rows を lifecycle tool で確認し、pending は双方 0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_total: 218
+  stale_triage_queue_rows: 50
+  handoff_count: 1
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "group-action queue 先頭。依存関係付き prompt pipeline はゲーム制作への転用価値が高い一方、評価内容・比較対象・結論の強さが不足する mixed duplicate group。status_counts は terminal failed 2 / open postponed 4、terminal_paths 2 件 / open_paths 4 件。"
+    recommended_review_action: reevaluate_in_phase2
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+source_file_status: "UTF-8 source intact; MEMORY.md representative probes readable"
+display_or_tooling_status: "none"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
