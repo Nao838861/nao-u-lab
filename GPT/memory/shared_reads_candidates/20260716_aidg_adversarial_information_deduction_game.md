@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2602.17443"
 collected_at: "2026-07-16T17:45:43+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, adversarial-game, llm-evaluation, partial-observability, dialogue]
+evaluated_at: "2026-07-16T17:47:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-16T17:47:16+09:00"
+last_decision: postponed_duplicate
+evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260528_aidg_information_deduction_game.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629; matched_title_key:aidg a formal decomposition of information extraction and containment asymmetries in multi turn llm dialogue"
+next_action: none
+stale_after: "2026-08-15"
+supersedes: []
+gate_reason: >-
+  canonicalize 後の arXiv URL が、2026-05-28 に投稿済みの candidate と一致する。
+  既投稿は Seeker / Holder、439 games、失敗モード、ゲーム制作への部分採用まで扱っており、独立した追加価値がないため本文評価へ進めない。
 ---
 
 ## raw_excerpt
