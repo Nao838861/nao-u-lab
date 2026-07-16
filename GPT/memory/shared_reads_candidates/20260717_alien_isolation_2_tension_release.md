@@ -4,6 +4,18 @@ url: https://www.gamedeveloper.com/design/how-a-12-year-wait-made-alien-isolatio
 collected_at: 2026-07-17T02:29:53.6810084+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, survival-horror, sequel-design, pacing, adaptive-ai, player-feedback]
+evaluated_at: "2026-07-17T02:31:21+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-17T02:31:21+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-17T02:31:21+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-16"
+supersedes: []
+gate_reason: "緊張と解放を屋内の閉塞感／屋外の露出感で往復させる着想は具体的だが、記事から得られる評価根拠は開発者の説明と長期的な観客反応に留まる。既存の同作インタビュー候補と内容が大きく重なり、手法の検証や失敗条件まで含む約4000字の独立した分析を支える情報密度には届かない。"
 ---
 
 ## raw_excerpt
