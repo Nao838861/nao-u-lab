@@ -43,6 +43,7 @@ small{color:#8899b0}
 <canvas id="cv"></canvas>
 <div id="top" class="ov"></div>
 <div id="advice"></div>
+<div id="ver" style="position:fixed;right:6px;bottom:4px;font-size:10px;color:#8899b0;z-index:6;background:#141d3088;padding:1px 7px;border-radius:4px"></div>
 <div id="toast"></div>
 <div id="factor" class="ov">「ようこそ、支配人。まだ誰もいない島です」</div>
 <div id="bar" class="ov"></div>
@@ -65,7 +66,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain} from './engine.js?v=132400';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=132500';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -424,8 +425,9 @@ function frame(){try{tick++;
       let why='最大の支出は'+outs[0][0]+'('+M(outs[0][1])+'デナリ)。収入('+M(ins)+')の'+(ins>0.01?(outs[0][1]/ins).toFixed(1):'∞')+'倍でした。';
       if(avgD>8)why+=' 区画が市場から遠すぎました(平均'+avgD.toFixed(1)+'区画)——道を引くか市場の近くに。';
       else if((c.doleC||0)>ins*2)why+=' 食料の自給が遅すぎました。漁師2→菜園→麦畑を最初の年に、市場の近くへ。';
-      document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why;}}
+      document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why+'<br><small style=color:#667>'+VERSION+'</small>';}}
   }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
   requestAnimationFrame(frame);}
+document.getElementById('ver').textContent=VERSION+' ('+new Date().toISOString().slice(0,10)+')';
 topbar();paint();frame();
 </script></body></html>
