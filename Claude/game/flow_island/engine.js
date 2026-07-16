@@ -226,7 +226,7 @@ export class World{
       const fdThr=(h.job==='fisher'||h.job==='shepherd'||h.job==='veg')?1.2:3;
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
-      const dayLabor=sellSum<10&&h.purse<h.eat()*1.5&&this.pubLeft>1;  // 売る物がなく財布が薄い→人夫(日雇い)へ
+      const dayLabor=h.purse<h.eat()*0.8&&fd<4&&this.pubLeft>1;  // 人夫は困窮世帯のみ(寛大にすると本業が空洞化する——実測済)
       if(dayLabor)h.wantWork=true;else h.wantWork=false;
       if(offers.fish>0||sellSum>=10||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20)||dayLabor)h.state='toMarket';}
 
@@ -287,7 +287,7 @@ export class World{
       h.pantry.fish+=q;this.led.prod.fish=(this.led.prod.fish||0)+q;this.fl('fish','prod',q);}
     else if(h.job==='veg'&&mm>=3&&mm<=10){h.pantry.veg+=P.Y_VEG*w;this.led.prod.veg=(this.led.prod.veg||0)+P.Y_VEG*w;this.fl('veg','prod',P.Y_VEG*w);}
     else if(h.job==='shepherd'){h.pantry.meat+=P.Y_MEAT*w;this.led.prod.meat=(this.led.prod.meat||0)+P.Y_MEAT*w;h.pantry.cloth+=P.Y_CLOTH*w;this.fl('meat','prod',P.Y_MEAT*w);this.fl('cloth','prod',P.Y_CLOTH*w);}
-    else if(h.job==='wheat'){if(h.pantry.wheat>P.Y_WHEAT*h.mult()*1.2)return; // 納屋が溢れたら休耕(働いても売れない年は畑を休ませる)
+    else if(h.job==='wheat'){if(h.pantry.wheat>P.Y_WHEAT*h.mult()*0.8)return; // 納屋が溢れたら休耕(働いても売れない年は畑を休ませる)
       h.wheatWork+=f;
       if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;this.fl('meal','cons',u);}}
     else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
@@ -306,7 +306,7 @@ export class World{
     for(const g in offers){let q=offers[g];
       const desks=[];
       if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
-      if(g==='tools'&&this.pubLeft>0)desks.push(['PUB',1.8,this.pubLeft/1.8]);
+      if(g==='tools'&&this.pubLeft>0){const pp=Math.max((this.px.tools??1)*1.05,0.3);desks.push(['PUB',pp,Math.min(15,this.pubLeft/pp)]);} // 公共調達は市場価格・日15個まで(公費は賃金と分け合う)
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
@@ -438,7 +438,8 @@ export class World{
       else if(keep){h.up=Math.max(0,h.up-3);h.down=0;}
       else{h.up=Math.max(0,h.up-3);h.down++;
         if(h.down>=P.DOWN_DAYS&&h.lv>0){h.lv--;h.down=0;this.log(`${h.job}#${h.id} ▼Lv${h.lv}`);}}
-      h.incomeLog.push(h.income30);h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();}
+      if((d-1)%360===0)h.incY=0;
+      h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();}
     if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
       P.ROAD_F=P.PAVE_ROAD_F;this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
     // 分家(90日ごと・繁栄+自立ゲート・観測所得で職選び)
@@ -466,7 +467,7 @@ export class World{
           if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 徳政: 借金は会社の貸し倒れ(再出発)
           h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
     // 公費の既定テーパー(標準プレイの模写・UIで上書き可)
-    if(d%30===1){if(m===26)this.pub=Math.min(this.pub,300);if(m===34)this.pub=Math.min(this.pub,150);
+    if(d%30===1){if(m===26)this.pub=Math.min(this.pub,400);if(m===34)this.pub=Math.min(this.pub,250);
       if(this.doleRate<this.pop()*0.06&&m>12)this.pub=Math.min(this.pub,10);this.pubLeft=this.pub;}
     // 財政(月末)
     if(d%30===0){
