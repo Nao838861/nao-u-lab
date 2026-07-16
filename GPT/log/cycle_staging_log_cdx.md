@@ -108,7 +108,55 @@ notes:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designs:
+  - issue_id: ISS-4A-20260716-01
+    problem_restatement: "stale candidate の検出と優先順位付けは既にできているが、Phase 2 への入口が常に 1 group で、代表候補の再評価結果を open siblings の lifecycle 判断へ戻す契約もない。そのため backlog の増減に処理量が追随せず、同一題材の open candidate が検索面に残り続ける。"
+    alternatives:
+      - name: 案A・固定 batch 拡大
+        sketch: "Phase 2 に渡す group 数を毎 cycle 3〜5 件へ固定的に増やす。既存 queue の順序と representative 選択は維持し、単純に先頭 N group を処理する。"
+        pros:
+          - "既存構造からの距離が短く、backlog の消化速度を直ちに上げられる"
+          - "処理量が固定なので cycle の見積もりが容易"
+        cons:
+          - "通常の candidate 分析と競合し、各 group の根拠確認が薄くなる恐れがある"
+          - "代表候補だけを評価しても siblings の status が閉じなければ、見かけの throughput しか増えない"
+        migration_cost: low
+      - name: 案B・group 判定による自動終端
+        sketch: "代表候補の判定を group 全体へ伝播し、同一 duplicate_group_key の open siblings を自動的に failed または superseded 相当へ閉じる。terminal sibling の存在を伝播条件に使う。"
+        pros:
+          - "1 回の評価で複数 candidate を閉じられ、backlog を最速で縮小できる"
+          - "同一題材の重複が recall に残る時間を短くできる"
+        cons:
+          - "同一 group 内の版差・一次資料差・ゲーム転用差を誤って潰す失敗コストが高い"
+          - "candidate frontmatter が正本という現行原則に対し、自動一括更新の監査契約が未設計"
+          - "誤判定時の復元と provenance 表現が必要になり、変更範囲が広い"
+        migration_cost: high
+      - name: 案C・bounded group review budget
+        sketch: "Phase 2 の handoff を 1 group 固定から、通常 1・backlog 高水位時は最大 3 group の bounded budget にする。各 group は representative 1 件だけを深く再評価し、結果に group_action（close_siblings / keep_distinct / defer）と根拠を必須で残す。candidate 正本の更新は Phase 2 では行わず、後続の明示的 lifecycle 処理へ分離する。"
+        pros:
+          - "品質を保つ上限を置きつつ、backlog に応じて消化速度を上げられる"
+          - "group_action を残すことで、評価件数ではなく open siblings の収束へ接続できる"
+          - "自動一括終端を避けるため、誤 grouping の失敗コストを限定できる"
+        cons:
+          - "高水位閾値、1 cycle の budget、close_siblings の適用条件を決める必要がある"
+          - "Phase 2 と lifecycle 適用工程の間に未処理 action が溜まる可能性がある"
+          - "最大 3 group の cycle では通常分析の時間を圧迫しうる"
+        migration_cost: medium
+    recommended: 案C・bounded group review budget
+    recommended_reason: "現行の再生成可能 queue と representative 単位の深い評価を再利用でき、移行距離は中程度に収まる。案Aのように評価件数だけ増やすのではなく sibling の収束判断を成果物にでき、案Bのような誤った一括終端も避けられる。最大 3 group という小さい上限なら、失敗時は budget を 1 に戻して action sidecar を破棄でき、candidate 正本への影響を限定できる。"
+    decision: introduce
+    decision_reason: "218 件の overdue open と 36 actionable groups に対して 1 group 固定は構造的に追いつかず、postpone して観測を増やしても入口の上限は変わらない。一方、自動終端まで同時導入する根拠は不足しているため、可逆な budget 拡張と明示的 group_action 契約だけを Phase 4c の対象にする。"
+    outline_for_4c:
+      - "group handoff の budget を通常 1、overdue open が高水位の時だけ最大 3 とする条件を phase 文書に定義する。初期高水位は今回観測値を直接固定せず、queue 全体に対する backlog 状態として表現する。"
+      - "同一 group を candidate 単位 stale_review_batch と重複投入しない既存制約を、複数 group handoff にも適用する。"
+      - "Phase 2 の group 再評価出力に group_action（close_siblings / keep_distinct / defer）、対象 paths、根拠、参照した terminal evidence を必須化する。"
+      - "candidate frontmatter の自動一括更新は禁止したまま、group_action を再生成 queue とは別の監査可能な handoff として残す。"
+      - "1 cycle 後に processed groups、closed または keep_distinct と判断できた open siblings、通常分析への時間影響を確認し、budget 3 の継続可否を判定する。"
+notes:
+  - "Phase 4a の priority_issues は 1 件であり、当該 issue の decision を記録した。"
+  - "この phase では staging file 以外を編集していない。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
