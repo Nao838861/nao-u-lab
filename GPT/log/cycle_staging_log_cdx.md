@@ -66,7 +66,47 @@ self_feedback:
 - 採用条件の合計 14 に届かず（13）、`non_redundancy: 0`。既存 state の SkillOpt 系 review/probe が held-out validation、add/delete/replace、rejected-edit memory、small edit scope を既に扱うため、追加反映は行わない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を validate_memory_index.py で確認した（broken entry 0 件、Markdown path link なし）。代表語 probe の 記憶 / ゲーム設計 / 敵パターン / 評価軸 はすべて取得でき、source file は正常。"
+  - "memory_health.py と build_atom_duplicate_groups.py --check を実行した。atom id 重複 0 件、duplicate cluster 45 / overlay 45 は整合。raw normalized-content duplicate 40 group は既存 fold 管理下で、recall-visible は 3 group まで縮退している。明示的な矛盾は検出されなかった。"
+  - "memory/raw/ の 30 日超無更新 file を 93 件確認した。一次資料・評価 packet・Slack raw を含み参照元として保持すべきものが混在するため、年齢だけでの移動は行わなかった。"
+  - "shared-reads lifecycle 内訳を確認した（posted 53 / ready_to_post 0 / postponed 102 / failed 11 / needs_review 10）。posted / failed は再評価対象から除外した。"
+  - "mixed duplicate / stale triage / group-action queue を 2026-07-16 基準で再生成した（81 group / stale queue 50 件上限到達 / group-action 36 group）。"
+  - "Slack directives 23 行、broadcasts 21 行を確認し、pending は両方 0 件。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  eligible_queue_count: 50
+  queue_limit_reached: true
+  handed_off_candidate_count: 0
+  handed_off_group_count: 1
+  note: "stale triage sidecar は 50 件上限に達している。group-action 限定運用に従い、candidate 単位 batch と重複させず先頭 1 group の representative だけを次回 Phase 2 へ渡す。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    priority_reason: "group-action queue 先頭。game transfer value は high だが、評価内容・比較対象・結論の強さが不足し、terminal 2 件と open 4 件が混在している。"
+    status_counts:
+      failed: 1
+      posted: 1
+      postponed: 4
+    terminal_paths:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    open_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- encoding audit: `source_file_status = UTF-8 source normal`、`display_or_tooling_status = none`。PowerShell 出力上も代表語の mojibake はなかった。
+- 判定: 新規の構造問題はなし。stale backlog は大きいが、既存の stale triage / mixed duplicate / group-action queue が処理導線を持つため、今回は 4b を起動しない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
