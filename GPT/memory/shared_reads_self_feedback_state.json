@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-17T01:05:00+09:00",
+  "updated_at": "2026-07-17T02:40:00+09:00",
   "reviewed_source_ts": [
     "1780708885.257199",
     "1782565725.425459",
@@ -402,7 +402,8 @@
     "1782646834.762419",
     "1782065326.755519",
     "1779745539.367889",
-    "1784179196.161589"
+    "1784179196.161589",
+    "1782500861.216959"
   ],
   "reviews": [
     {
@@ -10151,6 +10152,18 @@
       "title": "PersonaArena: multi-turn 社会シナリオで persona fidelity を評価する",
       "decision": "reject",
       "reason": "Score 13. Persona 設定語の再現ではなく、固定した multi-turn 社会シナリオ内の行動選択・感情表現・適応・一貫性を trajectory として見て、persona drift、style overfit、redundant loop、scene mismatch、adaptation failure を evidence 付きで残す観点は NPC 会話評価に直結する。しかし active probes はすでに、synthetic user の persona drift、AI counterpart の interaction trace、NPC dialogue の fact grounding と failure label、task success と style adherence の分離を要求している。PersonaArena 固有の probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には 1,000 persona、動的 social sandbox、8指標、複数 judge と disagreement arbitration、SFT/DPO 改善実験の根拠があるが、この環境で固定 seed の NPC dialogue harness を比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260526-synthetic-user-drift-check", "probe-20260621-ares-ai-counterpart-trace", "probe-20260621-rpg-dialogue-filler-gap-grounding", "probe-20260708-coachable-agent-style-task-split"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の drift / interaction-trace / grounding / style-adherence probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-17T02:40:00+09:00",
+      "id": "sr-1782500861-51ac86f546",
+      "source_ts": "1782500861.216959",
+      "title": "Persona drift を prompt-to-line / line-to-line / Q&A consistency に分け、許可された状態変化と根拠のない drift を区別する",
+      "decision": "reject",
+      "reason": "Score 13. 初期 persona との逸脱、履歴内矛盾、診断質問で露出する潜在信念ずれを分け、allowed state changes を明示して正当な変化を drift と誤判定しない観点は NPC / synthetic playtester の評価に直結する。しかし前回レビューした PersonaArena とほぼ同じ適用面であり、active probes はすでに synthetic-user drift、AI counterpart interaction trace、NPC dialogue の fact grounding と failure label、task success と style adherence の分離を要求している。新規 probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には3種類の consistency、複数 domain、長距離会話、55%超の inconsistency 減少という根拠があるが、この環境で allowed state transition 付き NPC ログを比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260526-synthetic-user-drift-check", "probe-20260621-ares-ai-counterpart-trace", "probe-20260621-rpg-dialogue-filler-gap-grounding", "probe-20260708-coachable-agent-style-task-split"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の drift / interaction-trace / grounding / style-adherence probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},

@@ -37,7 +37,34 @@ reason: "Phase 2 の gate_decision: pass が 0 件のため、投稿対象なし
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782500861-51ac86f546
+    source_ts: "1782500861.216959"
+    title: "Persona drift を prompt-to-line / line-to-line / Q&A consistency に分け、許可された状態変化と根拠のない drift を区別する"
+    reason: "NPC / synthetic playtester の長距離一貫性評価に直結する一方、直前の PersonaArena review と既存 probe 群との重複を確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  reason: "採用条件の合計14点に届かない。allowed state change と drift の分離は有用だが、既存の synthetic-user drift / interaction trace / NPC grounding / style-task split probes が同じ次回行動をすでに要求しており、新規 probe は行動差を生まず active probe 群だけを肥大化させる。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録。新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
