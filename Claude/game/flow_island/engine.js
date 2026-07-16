@@ -287,7 +287,8 @@ export class World{
       h.pantry.fish+=q;this.led.prod.fish=(this.led.prod.fish||0)+q;this.fl('fish','prod',q);}
     else if(h.job==='veg'&&mm>=3&&mm<=10){h.pantry.veg+=P.Y_VEG*w;this.led.prod.veg=(this.led.prod.veg||0)+P.Y_VEG*w;this.fl('veg','prod',P.Y_VEG*w);}
     else if(h.job==='shepherd'){h.pantry.meat+=P.Y_MEAT*w;this.led.prod.meat=(this.led.prod.meat||0)+P.Y_MEAT*w;h.pantry.cloth+=P.Y_CLOTH*w;this.fl('meat','prod',P.Y_MEAT*w);this.fl('cloth','prod',P.Y_CLOTH*w);}
-    else if(h.job==='wheat'){h.wheatWork+=f;
+    else if(h.job==='wheat'){if(h.pantry.wheat>P.Y_WHEAT*h.mult()*1.2)return; // 納屋が溢れたら休耕(働いても売れない年は畑を休ませる)
+      h.wheatWork+=f;
       if(mm>=3&&mm<=8){const u=Math.min(h.pantry.meal,P.FERT_NEED*f);h.pantry.meal-=u;h.fert=(h.fert||0)+u;this.fl('meal','cons',u);}}
     else if(h.job==='woodshop'){const dep=this.grove/P.GROVE0;const q=P.Y_TOOLS*w*dep;
       this.grove=Math.min(P.GROVE0,this.grove-q*2+f*P.GROVE_R*this.grove*(1-dep));h.pantry.tools+=q;this.fl('tools','prod',q);}
