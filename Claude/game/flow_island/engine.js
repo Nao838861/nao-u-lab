@@ -26,7 +26,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.13';
+export const VERSION='v0.14';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -265,12 +265,15 @@ export class World{
       else if(h.state==='building'){/* 日次で減算 */}
       else if(h.state==='toMarket'){if(this.stepToMarket(h)){h.state='atMarket';this.transact(h);h.state='toHome';}}
       else if(h.state==='toWork'){if(this.stepTo(h,h.wx,h.wy)){
-        const si=this.sites.findIndex(s=>s.x===h.wx&&s.y===h.wy);
-        if(si>=0){const s=this.sites[si];s.left--;
-          const wage=h.eat()*this.staple()*0.6;
-          h.purse+=wage;h.income30+=wage;this.treasury-=wage;this.co.pub+=wage;
-          if(s.left<=0){this.roadTiles.add(s.x+','+s.y);this.sites.splice(si,1);this.updRoads();this.log('道が一区画通じた');}}
-        h.state='toMarket';}} // 賃金を持って帰りに市場へ寄る(日雇いの現実。貧困層の消費が市場の土台)
+        const wage=h.eat()*this.staple()*0.6;
+        if(h.emp){ // 民間: 雇い主の財布から賃金、雇い主は翌日の生産に人手ブースト
+          const emp=h.emp;const pay=Math.min(wage,Math.max(0,emp.purse));
+          emp.purse-=pay;h.purse+=pay;h.income30+=pay;emp.boost=1.4;emp.hand=null;h.emp=null;}
+        else{const si=this.sites.findIndex(s=>s.x===h.wx&&s.y===h.wy);
+          if(si>=0){const s=this.sites[si];s.left--;
+            h.purse+=wage;h.income30+=wage;this.treasury-=wage;this.co.pub+=wage;
+            if(s.left<=0){this.roadTiles.add(s.x+','+s.y);this.sites.splice(si,1);this.updRoads();this.log('道が一区画通じた');}}}
+        h.state='toMarket';}} // 賃金を持って帰りに市場へ寄る(貧困層の消費が市場の土台)
       else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
       else if(h.state==='home'){this.produceTick(h,1/30);}}
     if(tod===16)for(const h of this.hhs){if(h.state!=='home')continue;
@@ -284,9 +287,14 @@ export class World{
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。配給は家に届く)
       const needy=h.purse<h.eat()*0.8&&fd<4;
-      if(needy&&this.sites.length){ // 人夫=実在する普請で働く(施しではなく仕事。現場がなければ賃金もない)
+      if(needy&&this.sites.length){ // 公共普請があればそちらへ(賃金=公費)
         const s=this.sites.reduce((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)<Math.hypot(b.x-h.x,b.y-h.y)?a:b);
-        h.wx=s.x;h.wy=s.y;h.state='toWork';continue;}
+        h.wx=s.x;h.wy=s.y;h.state='toWork';h.emp=null;continue;}
+      if(needy){ // 民間の雇用: 豊かな世帯の手伝い(農繁期の日傭・奉公)。賃金は雇い主から=村内循環
+        const wage=h.eat()*this.staple()*0.6;
+        const emp=this.hhs.filter(x=>x!==h&&x.purse>wage*4&&!x.hand&&x.state!=='building')
+          .sort((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y))[0];
+        if(emp){emp.hand=h;h.emp=emp;h.wx=emp.x;h.wy=emp.y;h.state='toWork';continue;}}
       const tripCost=Math.min(Math.max(10,this.dist(h)*2.2),h.haul()*0.8); // 遠い家ほどまとめて商う(週1の大荷)。運搬上限の8割でキャップ
       if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20))h.state='toMarket';}
 
@@ -326,6 +334,7 @@ export class World{
       if(h.buildDays<=0){h.state='home';this.log(`${h.job}#${h.id} 家が建った`);}}
   }
   produceTick(h,f){
+    if(h.boost){f*=h.boost;if(this.t%30===29)h.boost=null;}
     let stall=false;for(const g of GOODS){if(this.stalls[g].some(s=>s.hh===h)){stall=true;break;}}
     if(stall)f*=(h.members.length-1)/h.members.length;const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;const winter=mm>=10;
     // 普遍則: 自分の売れ残り(倉+店)が10日分を超えたら手を止める(損して作らない・全生産財共通)
