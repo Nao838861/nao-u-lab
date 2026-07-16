@@ -7,14 +7,19 @@ genre_tags: [llm-agents, harness, reinforcement-learning, evaluation, game-devel
 evaluated_at: "2026-07-16T12:16:59+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-16T12:16:59+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-16T12:16:59+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-16T12:22:08+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784172123925489"
+next_action: none
 stale_after: "2026-08-15"
 supersedes: []
+posted:
+  ts: "1784172123.925489"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784172123925489"
+  char_count: 4452
+  posted_at: "2026-07-16T12:22:08+09:00"
 gate_reason: >-
   Harness MDP、offline rollout、terminal rubric reward、advantage-weighted regression、Harness Maturity Score、
   baseline/ablation と benchmark 別の結果まで、問題設定・手法・評価・限界を一続きで説明できる。

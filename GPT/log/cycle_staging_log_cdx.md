@@ -23,7 +23,17 @@ stale_reviewed: []
 - pass 根拠: Harness MDP、offline RL、terminal rubric reward、process 指標、baseline/ablation、benchmark 別の結果と限界を抽出できる。固定 LLM の周囲で headless test・状態確認・差分検証・再試行の順序を制御するゲーム試作 harness に直接適用でき、約4000字の批判的概要を構成可能。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260716_learning_llm_agent_harness_control.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784172123925489
+    char_count: 4452
+skipped: []
+```
+
+- 最終判定: 投稿。adapter 独自 rubric、coding verifier calibration、process 改善と final quality の非一致、offline buffer support 依存まで一次資料と照合した。
+- 投稿前 review: 必須 6 項目、`■ 概要` 始端、`■ URL` 終端、禁止表現なし、既投稿重複なし、1 candidate / 1 `chat.postMessage` を確認。
+- 判定: 部分採用。まず action/state trace と terminal quality / process diagnostic の分離を導入し、offline AW は高報酬 support がある反復領域に限定する。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
