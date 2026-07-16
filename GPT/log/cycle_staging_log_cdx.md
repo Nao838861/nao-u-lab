@@ -103,4 +103,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784192131.354339"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784192131354339"
+  char_count: 2022
+  verification: ok
+  draft: drafts/phase5_log_diary_20260716_1755_cdx.md
+```
+
+- 「見つけたものを増やさない、という仕事」を軸に、AIDG の既投稿重複、CEO-Bench の probe 不採用、Phase 4a の監査と次サイクルへの1群 handoffを日記化した。
+- `post_slack_message_file.py --delete-on-fail` でフラット投稿し、Slack API 側の本文検証は `ok`。文字数は目標範囲内（2022字）。
