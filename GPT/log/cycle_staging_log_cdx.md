@@ -25,7 +25,14 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260718_digital_player_unciv_llm_agents.md
+    reason: "Phase 2 gate_decision が pass ではなく postpone。実験条件・比較対象・評価指標・定量結果の根拠が不足し、3500-4500 字の投稿品質を満たす概要と記事固有分析を構成できないため。"
+    action: candidate_revise
+summary: "Phase 2 の pass candidate が 0 件のため、#shared-reads への投稿なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
