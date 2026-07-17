@@ -63,7 +63,103 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の整合を検証（broken link / missing atom 0 件）"
+  - "atoms.jsonl / per-file .md / index.jsonl の 2682 件ミラーを監査（片側欠落・parse error・content conflict 0 件）"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-17 基準で再生成（83 / 50 / 35 行）"
+  - "candidate lifecycle 973 件を dry-run 監査（posted 414 / ready_to_post 10 / postponed 402 / failed 125 / needs_review 22）"
+  - "Slack inbox の pending を確認（directives 0 / broadcasts 0）。handled 更新対象なし"
+  - "memory/raw/ の 30 日超ファイルを抽出。一次資料・headless 評価原文のため、この Phase では移動せず archive 候補として保持"
+issues:
+  - id: ISS-4A-20260717-01
+    description: "1 件の active atom に replacement character が保存され、title / trigger / excerpt と派生 index・related candidate 表示へ伝播している"
+    severity: medium
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl"
+    source_file_status: "UTF-8 明示読みでも『AIエ��ジェント』を取得。source atom 自体に U+FFFD が含まれる。対照の gr-1777083728-44d444ab7a は疑わしい文字列を持たず、health heuristic の false positive"
+    display_or_tooling_status: "表示経路だけの mojibake ではなく、派生 index と related_candidates に同じ破損文字列が反映されている"
+    why_blocks_game_memory: "『AIエージェント』の語検索・題名照合を弱め、関連候補表示へ壊れた表記を再伝播させる"
+  - id: ISS-4A-20260717-02
+    description: "postponed / needs_review の期限超過が 231 件あり、50 行の stale triage queue と 35 actionable duplicate groups を上回る backlog が継続している"
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py dry-run; memory/shared_reads_stale_triage_queue.jsonl; memory/shared_reads_group_action_queue.jsonl"
+    source_file_status: "candidate frontmatter は読取可能。missing stale_after 6 件、dry-run 上の metadata change 候補 2 件"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "古い重複候補が Phase 2 の評価枠を占有し、ゲーム制作へ転用価値の高い候補の発見と精査を遅らせる"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 231
+  stale_triage_queue_rows: 50
+  actionable_group_count: 35
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+group_action_handoff:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    representative: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    latest_evidence: "stale_after=2026-06-26; age_days=21; 評価内容・比較対象・結論の強さが不足"
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    representative: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md
+      - memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    latest_evidence: "stale_after=2026-06-26; age_days=21; 出典時系列確認が必要"
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    representative: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md
+    latest_evidence: "stale_after=2026-06-28; age_days=19; persona traceability の評価手順が不足"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "game_transfer_value=high。procedural persona と MCTS の headless playtest 転用価値が高いが、mixed duplicate の代表評価が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "game_transfer_value=high。runtime PCG の agent validation は現行 headless 評価に近いが、実験結果の一次確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "game_transfer_value=high。協力・対立・説得を含む game benchmark とログ分析の転用余地が高い"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "game_transfer_value=high。playable diff 制作に直結するが、重複 group の canonical 判断が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+    status: postponed
+    stale_after: "2026-06-29"
+    priority_reason: "同一 URL の既投稿証拠があり、mixed duplicate sibling を terminal 化できる可能性が高い"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
