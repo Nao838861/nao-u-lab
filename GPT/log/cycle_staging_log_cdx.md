@@ -8,6 +8,11 @@
 - duplicate preflight で既投稿 URL と一致したため保存しなかったもの: PTCG-Bench (`arXiv:2605.29653`)、One Policy, Infinite NPCs (`arXiv:2605.23652`)。
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
 
+- 2026-07-17 15:28 再収集なし: 外部探索で見つかった有力資料は、既存 candidate または既投稿 atom と一致したため、新規 candidate は作成しなかった。
+- 重複確認: High Dimensional PCG (2602.18943)、GUI Agents for Continual Game Generation (2605.28258)、Multiverse (2603.26782)、MeepleLM (2601.07251)、Who embraces AI in play? (2605.09550)、Playing the Imitation Game (2602.14254)。
+- preflight記録: Multiverse は continue を返したが、直接照合で同一URL candidate 2件を確認したため保存しなかった。
+- inbox再確認: directives / broadcasts とも pending 0件。
+
 ## Phase 2: 分析
 
 ```yaml
