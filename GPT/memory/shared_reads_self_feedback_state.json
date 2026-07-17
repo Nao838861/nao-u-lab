@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T01:05:10+09:00",
+  "updated_at": "2026-07-18T03:05:00+09:00",
   "reviewed_source_ts": [
     "1781127468.093899",
     "1782449735.510889",
@@ -414,6 +414,7 @@
     "1784179196.161589",
     "1782500861.216959",
     "1784250324.239229",
+    "1781019055.113759",
     "1779971995.584189",
     "1782428061.285269"
   ],
@@ -10341,6 +10342,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260623-mind-studio-executable-preview", "probe-20260621-fly-fail-fix-metric-visual-repair", "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の transition-trace / first-failure / diagnostic-attribution probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-18T03:05:00+09:00",
+      "id": "sr-1781019055-5b85dcb77d",
+      "source_ts": "1781019055.113759",
+      "title": "SAGE — Memory write を novelty 検出問題として再定式化する vMF density gate",
+      "decision": "reject",
+      "reason": "Score 13. 候補 fact を ADD / NOOP / MERGE に分け、memory write を novelty 判定として扱う観点は、316件ある active probe 群へ重複 probe を追加しない判断に直結する。しかし既存の memory-action-audit は search-before-write と append / rewrite / upsert / supersede / archive / no-write の選択を、base-camp-saturation-novelty-gate は同じ観点の再訪か新規価値かの判定をすでに要求している。新規 probe はこの2件を vMF / SAGE の語彙で言い換えるだけで、次回行動を変えずチェック負荷を増やすため non_redundancy=0、risk_control=2 とした。shared-reads 本文と原論文リンクは手法の根拠になるが、この環境で embedding density gate を比較実測していないため evidence=2。採用条件の合計14に届かないため、読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260601-memory-action-audit", "probe-20260609-base-camp-saturation-novelty-gate"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の search-before-write / novelty-gate probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
