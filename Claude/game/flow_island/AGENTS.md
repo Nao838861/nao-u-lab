@@ -1,0 +1,29 @@
+# AGENTS.md — flow_island AI協業規約 (Claude/Codex共通)
+
+このディレクトリのゲーム「流通の島」は複数のAI CLIが交互に開発する。
+**どのAIも、作業前にこの順で読むこと**: 本ファイル → [CONTEXT.md](CONTEXT.md) → [WORKLOG.md](WORKLOG.md)末尾 → 必要に応じてREADME.md(版履歴)と `../../projects/production_consumption_sim/design/`・`dialogue/`(Nao_uの指示の逐語原文)。
+
+## 協業プロトコル(Nao_u指定・2026-07-18)
+1. **交互ターン制**: Nao_uが各CLIに交互に依頼する。各セッション=1ターン
+2. **セカンドオピニオン義務**: ターン開始時、まず前任AIの直近作業(`git log`とWORKLOG末尾)をレビューし、
+   同意/懸念をWORKLOGの自ターン欄に短く書く。おかしいと思ったら遠慮なく指摘・修理する(それがこの体制の目的)
+3. **セッションの終わりは必ずgitにpush**(未pushで終わるのは禁止)。終了前チェック:
+   - [ ] テスト通過(`node smoke.mjs && node ui_test.mjs && node audit.mjs`)
+   - [ ] CONTEXT.mdに新知識を追記(このセッションにしか無い情報をゼロにする)
+   - [ ] WORKLOG.mdに自ターンのエントリ追記
+   - [ ] Nao_uの指示があった場合はdialogue/に逐語で記録
+   - [ ] commit & push(prefix規約は下記)
+
+## 作業規約
+- **commit prefix**: ゲームコード=`game:` / 設計・対話記録=`project:` / エージェント運用規則=`rule:`。ゲームと規則の変更は別コミットに分ける
+- **エピサイクル禁止**(最重要・Nao_uが繰り返し明示): 場当たりのルール・特例・罰則・閾値いじりを足さない。個別症状より構造で直す。監査の閾値すれすれFAILをパラメータ調整で追わない
+- **実測してから設計**: 数値(サイズ・容量・閾値)を提案する前にヘッドレスで現行シムを測る
+- **検証はヘッドレス優先**: ブラウザ確認の前にsmoke/audit/ui_testと書き捨てprobe(`.probe*.mjs`、コミットしない)
+- **engine.js変更時**: `VERSION`定数とindex.htmlの`?v=`キャッシュバスターを両方上げる(デプロイ=push、GitHub Pages 1-2分)
+- 貨幣保存則assert(エンジン内蔵)を絶対に殺さない。違反が出たら喜んで原因を掘る(最強の検証装置)
+- 大きい構造変更(盤・道・経済モデル)は実装前に`design/`へ検討文書を書き、Nao_uの裁可を待つ
+- インラインコメントを複数定数の行に追記しない(定数を飲み込むNaN事故の前科)
+
+## 現在の状態(2026-07-18時点。最新はWORKLOG参照)
+- v0.20.1 / 監査20/27 / デプロイ済み(https://nao838861.github.io/nao-u-lab/Claude/game/flow_island/)
+- 主戦場: 盤の大改修R1-R5の検討完了・Nao_u承認とR1前の宿題4件(visual_spec.md台帳)が残り

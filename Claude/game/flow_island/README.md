@@ -1,5 +1,7 @@
 # 流通の島 v0 (プレイアブルモック)
 
+> **AI協業(Claude/Codex交互ターン制)**: 作業前に [AGENTS.md](AGENTS.md) → [CONTEXT.md](CONTEXT.md) → [WORKLOG.md](WORKLOG.md) の順で読むこと。セッション終わりは必ずpush。
+
 生産と消費のシミュレーション(projects/production_consumption_sim)の最初の遊べる盤。
 経済エンジンは空間シミュ(design/spatial/engine.py)の較正値をJS移植したもので、
 **同じengine.mjsがブラウザ(このUI)とNode(ヘッドレス検証)で動く**。
