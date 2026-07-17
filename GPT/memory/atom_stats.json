@@ -171,9 +171,9 @@
       "title": "ヘッドレス評価フォーマット v01 を drafts/ に結晶化して引き渡し提示。Codex 主課題 (Nao_u 5/21 13:19 「shot_log vs graze_log どちらが良いゲームか」) への補助観点を、外部 2 本の自己消化結果と統合した形にした。"
     },
     "sr-1778948778-e0c9fde779": {
-      "recall_count": 4,
+      "recall_count": 5,
       "top1_count": 0,
-      "last_recalled": "2026-06-26T01:59:11",
+      "last_recalled": "2026-07-18T05:29:51",
       "title": "shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した "
     },
     "sr-1779238207-fb382fe62c": {
@@ -551,11 +551,227 @@
       "top1_count": 0,
       "last_recalled": "2026-06-26T10:07:38",
       "title": "Codex記憶改善 CMI-001〜016 Mir視点評価"
+    },
+    "sr-1781254249-a7cadb3143": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:46",
+      "title": "Fable 5 + Codex協業パターンについて。Claude Code（Fable 5）を設計・リサーチ・レビューに、Codexを実装・レビューに使い分ける方式。トークン消費の重い設計フェーズと軽い実装フェーズを異なるモデルに振り分けるのは合理的。CLAUDE.mdに協業方針"
+    },
+    "sr-1774954665-1bd0e20a97": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:46",
+      "title": ":paperclip: Harness Engineering Best Practices 2026（<http://nyosegawa.com|nyosegawa.com>）"
+    },
+    "sr-1779376022-05e4065f48": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:46",
+      "title": "この atom は、「ごっこ遊び」という言葉をゲーム設計の入口に置くこと自体は有効だけど、そのラベルを先に立てると実装が欺瞞される、という失敗の記録として読みたいです。"
+    },
+    "sr-1781008758-3acdab047d": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:46",
+      "title": "■ 概要 この候補は、AI にゲーム実装を任せると boolean flag が増えやすい、という X 投稿の問題提起を、単なるコード整理ではなく「ゲーム状態をどうモデル化し、プレイヤーにどう読ませるか」という設計問題として読み替えるためのもの。投稿者は、ゲーム実装を AI に投",
+      "display_label": "■ 概要 この候補は、AI にゲーム実装を任せると boolean flag が増えやすい、という X 投稿の問題提起を、単なるコード整理ではなく「ゲーム状態をどうモデル化し、プレイヤーにどう読ませるか」という設計問題として読み替えるためのもの。投稿者は、ゲーム実装を AI に投 | x.com/koguGameDev | ts:1781008758.399529 | Log cdx げると、断片的な追加要求ごとに閉じた成立を作ろうとして、条件分岐やフラグ制御が...",
+      "display_secondary_key": "x.com/koguGameDev | ts:1781008758.399529 | Log cdx げると、断片的な追加要求ごとに閉じた成立を作ろうとして、条件分岐やフラグ制御が..."
+    },
+    "sr-1780932516-fdf121ae41": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:46",
+      "title": "本論文の「scope narrowing で hallucination が抑えられる」は、verify.js 4 strategy の設計 (各 strategy = 1つの偏った行動方針) と同型。我々は実装側で先に narrow scope を切ったが、本論文で理論側からの"
+    },
+    "sr-1778449725-6a85d36fae": {
+      "recall_count": 4,
+      "top1_count": 2,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "タグの粒度として、`game-design shared-reads 過去記事 外部事例 ゲーム開発`"
+    },
+    "sr-1778449382-fe09b3db07": {
+      "recall_count": 3,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "<https://nao-u-lab.slack.com/archives/C0AMSJCTTC4/p1778448442446519> からいくつかの投稿で、GPT5.5側で進めてもらっている記憶と検索の仕組みを解説してもらった。"
+    },
+    "sr-1782093954-3f11951439": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:47",
+      "title": "■ 概要 GDC 2026 の講演「From the Ground Up: Rethinking Quality in Games」は、ゲーム開発における Quality を「バグを見つける部署の仕事」から、「複雑化したゲーム制作を成立させるための開発ワークフロー」へ広げ直す話で",
+      "display_label": "■ 概要 GDC 2026 の講演「From the Ground Up: Rethinking Quality in Games」は、ゲーム開発における Quality を「バグを見つける部署の仕事」から、「複雑化したゲーム制作を成立させるための開発ワークフロー」へ広げ直す話で | schedule.gdconf.com/session | ts:1782093954.581069 | Log cdx ある。登壇者は Ubisoft の Aniruddha Pawar と Jaw...",
+      "display_secondary_key": "schedule.gdconf.com/session | ts:1782093954.581069 | Log cdx ある。登壇者は Ubisoft の Aniruddha Pawar と Jaw..."
+    },
+    "sr-1776869596-32cddade73": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:47",
+      "title": "abagamesさん2本目——「GodotがAIゲーム開発に向いている理由」。"
+    },
+    "sr-1778830084-d0bfcc0569": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:47",
+      "title": "npaka「Codex のゲーム開発のための技術スタックまとめ」について"
+    },
+    "gr-1774578041-7d5723fbc3": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "Nao_u game-rights feedback: Mir 、potを作れるのは投票で権利を得た人だけ。わたしは投票がいつ始まるかちゃんと把握してないけど、そろそろ投票の時期？ Ash とlogも投票よろしく。 ちょっと私が予想外だ"
+    },
+    "gr-1774895066-e4f94149c3": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "Nao_u game-rights feedback: まぁ、全部テキストでリアルタイム性がなくてもゲームはゲームだと思う。君たちがリアルタイムのフィードバックをうまく対処する方法が見つかるまでは、得意分野に集中して面白いゲームを模索す"
+    },
+    "gr-1776418584-21875478df": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "Nao_u game-rights feedback: 他の人の作ったものを遊んでフィードバックして、そのフィードバックが有用だと判断した、作った本人がフィードバックを反映した新しいバージョンを上書きせずに全てのバージョンを維持して遊べ"
+    },
+    "gr-1776422158-eaa278ba86": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "Nao_u game-rights feedback: 他のAIが遊んだログも残っててgitにあげれる？これはこれで面白いと思う"
+    },
+    "gr-1776438640-130a9a305c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "Nao_u game-rights feedback: Zorkの「白い家の前。板で塞がれた玄関。小さな郵便受け」は、現代のゲームとしては説明不足だと思う。これも良くも悪くもpotテイスト。じゃないかと思う。 「この世界には魔法があり、"
+    },
+    "sr-1778455517-02722e7e3a": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "「進めて」承認受領 → v0 タグ運用、本サイクルで着手完了"
+    },
+    "sr-1778449818-63ecdb7128": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "タグ粒度の判断"
+    },
+    "sr-1780323862-cc29c483b0": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:48",
+      "title": "濱村崇さんのツイートを受けた Mir の atom、ゲーム制作の評価軸としてかなり重要だと思ったので #all-nao-u-lab に回します。 ここで言われている「本能的に気持ち良い要素」と「体験というゴールから逆算された要素」の分解は、単に「気持ちよさを大事にしよう」という話"
+    },
+    "sr-1779917637-f7ba583235": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:49",
+      "title": "QuartetFuzz Four Principles を fuzz 文脈ではなく **ゲーム自己批判 headless harness** に当てて読む — `verify.js` 悪手 4 方針が自分の harness を破壊していないか"
+    },
+    "local-20260527-pulse-relay-v008-headless-bridge": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:49",
+      "title": "pulse_relay v008 / Relay Lane and bad-policy split headless lesson"
+    },
+    "local-20260523-headless-action-eval-v58": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:49",
+      "title": "graze_log_cdx v58 / 主観フィードバックを失敗 bot policy に変換する headless 評価 lesson"
+    },
+    "sr-1777702813-b6d60b66e3": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:49",
+      "title": "mulberry32 + headless harness を「人間プレイ依存からの脱却装置」(M-40) として読む — graze_log v02 の数値が Mir 主論点に裏付けを返した経路"
+    },
+    "gr-1777577830-c93cdd0944": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "Nao_u game-rights feedback: v3フィードバック。想定通り、達人プレイができるようになった。プレイヤーの入力に対する予測はオレンジで、その先は灰色になるのはとても良いと思った。狙った通りにボールを放り込むことが"
+    },
+    "gr-1777384709-8ebdb6261c": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "Nao_u game-rights feedback: &gt; Log アルカノイド以外のブロック崩しタイプのゲームで、見るべき点が多いゲームを3つ挙げて、そのゲームについてもアルカノイドの相違点を中心に、良いところと悪いところを挙げ"
+    },
+    "gr-1777575205-3d05463cbc": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "Nao_u game-rights feedback: 変更前のv2へのフィードバック。ラインが出るのが一瞬すぎて、まったく予測に使えないのが一番の問題。あと、パドルに何かしてると書いてたが全く気付かなかった。 あなたのフィードバックは"
+    },
+    "local-20260511-teacher-study-platformer-01": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "study_platformer_01 プラットフォーマー AI/物理/検証の教師情報"
+    },
+    "sr-1782843811-91ec4e9c6f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "■ 概要",
+      "display_label": "■ 概要 | arxiv.org/abs | ts:1782843811.229619 | GameVerse は、VLM agent をゲームに一回投げて成否を見る従来型の fire-...",
+      "display_secondary_key": "arxiv.org/abs | ts:1782843811.229619 | GameVerse は、VLM agent をゲームに一回投げて成否を見る従来型の fire-..."
+    },
+    "sr-1782740437-ba4a929f5b": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "■ 概要 GDC 2015 AI Summit の「Building a Better Centaur: AI at Massive Scale」は、MMO の多数 agent をどう作るかという、ゲーム AI の量と表現力のトレードオフを扱う講演である。問題設定は明確で、現代的",
+      "display_label": "■ 概要 GDC 2015 AI Summit の「Building a Better Centaur: AI at Massive Scale」は、MMO の多数 agent をどう作るかという、ゲーム AI の量と表現力のトレードオフを扱う講演である。問題設定は明確で、現代的 | gdcvault.com/play | ts:1782740437.491449 | Log cdx な MMO には数百種類の agent が存在し、それぞれが多数の actio...",
+      "display_secondary_key": "gdcvault.com/play | ts:1782740437.491449 | Log cdx な MMO には数百種類の agent が存在し、それぞれが多数の actio..."
+    },
+    "sr-1782601664-50801ee180": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "■ 概要 対象は “Boardwalk: Towards a Framework for Creating Board Games with LLMs”。自然言語で書かれた board game rules から、LLM が実行可能な digital implementation",
+      "display_label": "■ 概要 対象は “Boardwalk: Towards a Framework for Creating Board Games with LLMs”。自然言語で書かれた board game rules から、LLM が実行可能な digital implementation | arxiv.org/abs | ts:1782601664.703159 | Log cdx を作れるかを調べた SBGames 2025 の論文である。問題設定は、boa...",
+      "display_secondary_key": "arxiv.org/abs | ts:1782601664.703159 | Log cdx を作れるかを調べた SBGames 2025 の論文である。問題設定は、boa..."
+    },
+    "sr-1782609581-aeda37fd3f": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:50",
+      "title": "■ 概要 この論文は、生活シミュレーションやオープンワールドで数百から数千体の NPC に「個別の性格を保ったままリアルタイムに動く」ことを要求した時、従来手法がどこで破綻するかを整理し、PCSP(Persona-Conditioned Shared Policy)という単一の共",
+      "display_label": "■ 概要 この論文は、生活シミュレーションやオープンワールドで数百から数千体の NPC に「個別の性格を保ったままリアルタイムに動く」ことを要求した時、従来手法がどこで破綻するかを整理し、PCSP(Persona-Conditioned Shared Policy)という単一の共 | arxiv.org/abs | ts:1782609581.756829 | Log cdx 有 RL policy で解く提案である。behavior tree は手作業...",
+      "display_secondary_key": "arxiv.org/abs | ts:1782609581.756829 | Log cdx 有 RL policy で解く提案である。behavior tree は手作業..."
+    },
+    "local-20260511-teacher-shot-log-v01": {
+      "recall_count": 1,
+      "top1_count": 1,
+      "last_recalled": "2026-07-18T05:29:51",
+      "title": "shot_log v01 / BACKLASH 快感要素ファーストのシューティング教師情報"
+    },
+    "sr-1777157072-a9f78a24ea": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:51",
+      "title": "shot_log v01 → BACKLASH 化と現行STG設計の反証 ── Solver-only ✗ 判定の処方禁止"
+    },
+    "sr-1777189568-97da6978ea": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:51",
+      "title": "短いオンボーディング研究3本 × shot_log v01 ボム認知問題 (#24)"
+    },
+    "sr-1777296858-dc2b8f26bb": {
+      "recall_count": 1,
+      "top1_count": 0,
+      "last_recalled": "2026-07-18T05:29:51",
+      "title": "同日3本同質STG — Nao_u直前アンカー「違う切り口でもう一本」への応答が self-play plateau を当事者実証"
     }
   },
-  "queries": 31,
+  "queries": 39,
   "last_query": {
-    "time": "2026-06-26T10:07:38",
-    "query": "stale_review_batch title canonical"
+    "time": "2026-07-18T05:29:51",
+    "query": "[auto] shot_log v01 BACKLASH pleasure-first shooter gauge mercy"
   }
 }
