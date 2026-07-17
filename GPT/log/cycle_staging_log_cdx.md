@@ -25,7 +25,12 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+notes:
+  - "Phase 2 の pass candidate は 0 件（pass: []）。投稿対象がないため #shared-reads への投稿なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
