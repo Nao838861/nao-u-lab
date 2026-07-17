@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T08:28:00+09:00",
+  "updated_at": "2026-07-17T10:20:00+09:00",
   "reviewed_source_ts": [
+    "1782464061.761579",
     "1784236763.584529",
     "1778480570.779749",
     "1782528770.376139",
@@ -10210,6 +10211,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260516-grounded-playable-spec", "probe-20260530-worker-bus-contract-observer", "probe-20260619-guiding-not-railroading-narrative-graph"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の intermediate-spec / bus-contract / narrative-dependency probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-17T10:20:00+09:00",
+      "id": "sr-1782464061-7f29624a9d",
+      "source_ts": "1782464061.761579",
+      "title": "生成AIによる player behavior analysis と gray-area triage",
+      "decision": "reject",
+      "reason": "Score 13. headless 評価で pass/fail の間に review-needed を置き、replay id・seed・policy・metric・疑い理由を保存する観点はゲーム評価に直結する。しかし active probes はすでに、binary/statistical/interpretive oracle の分離、behavior distribution、passive trajectory と active probe、AI playtest の診断 attribution を要求している。新規 probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文には49,739 sessions、65 features、low-confidence 6.8%、human-AI agreement 75%、false positive 21%減などの根拠があるが、この環境で low-confidence replay queue を比較実測していないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260604-open-world-behavior-oracle", "probe-20260619-behavior-signature-distribution-shift", "probe-20260626-revengebench-behavior-recovery-action-distance", "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の oracle / behavior-distribution / active-probe / diagnostic-attribution probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],

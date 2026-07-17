@@ -37,7 +37,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782464061-7f29624a9d
+    source_ts: "1782464061.761579"
+    title: "生成AIによる player behavior analysis と gray-area triage"
+    reason: "未レビューの score 12 候補で、memory・harness・game-design・operation・evaluation を横断し、headless 評価の曖昧ケースを review queue に戻す提案が現在のゲーム評価運用に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "採用閾値14未満。review-needed、behavior distribution、passive trajectory + active probe、診断 attribution は既存4 probes と重複し、新規 probe は次回行動を変えず active probe 314件を肥大化させる。本文の研究結果は根拠になるが、この環境で low-confidence replay queue の比較実測はない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ state に記録。新規 probe・評価表・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
