@@ -13,7 +13,7 @@ export const P = {
   IMP:{wheat:4.0,tools:6.0,salt:5.0,iron:4.5}, IMP_COST:{wheat:2.4,tools:4.2,salt:3.5,iron:3.2},  // 懲罰価格=持続不可能な緊急措置  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
   EXP:{pres:0.6,pick:0.55,oil:2.4}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.64},
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
-  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:3000, PURSE0:60, PASSAGE:60,
+  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:5500, PURSE0:60, PASSAGE:60, BUILD_COST:250, FEE:0.04,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.19';
+export const VERSION='v0.20';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -151,7 +151,9 @@ export class World{
     this.sites.push({x,y,left:P.ROAD_WORK});this.log('道普請を計画');return true;}
   addZone(job,x,y){const[ok,why]=this.canPlace(job,x,y);
     if(!ok){this.log(`区画不可(${job}): ${why}`);return false;}
-    this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}`);return true;}
+    if(this.treasury-P.BUILD_COST<-this.limit()){this.log(`金庫不足——支度金${P.BUILD_COST*10}デナリが出せない`);return false;}
+    this.treasury-=P.BUILD_COST;this.mainlandOut+=P.BUILD_COST;this.co.build=(this.co.build||0)+P.BUILD_COST; // 建築リズムの支出側(資材は本土調達。将来=地元の材木+普請賃金へ)
+    this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}(支度金${P.BUILD_COST*10}デナリ)`);return true;}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
   addHH(job,x,y){const h=new HH(job,x,y);this.hhs.push(h);this.mainlandIn+=h.purse;
     this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.log(`入植: ${job}`);this.updRoads();return h;}
@@ -187,28 +189,6 @@ export class World{
   travel(h){return Math.min(P.TRAVEL_MAX,this.dist(h)*2*P.TRAVEL_RATE*(h.road?P.ROAD_F:1));}
   limit(){const m=Math.floor((this.day-1)/30)+1;
     return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),Math.max(6000,this.hhs.length*9*P.LIMIT_PC));}
-  clear(g,bids,asks){bids.sort((a,b)=>b[2]-a[2]);asks.sort((a,b)=>a[2]-b[2]);
-    let bi=0,ai=0,bq=bids[0]?.[1]??0,aq=asks[0]?.[1]??0;const tr=[];let pair=null;
-    while(bi<bids.length&&ai<asks.length&&bids[bi][2]>=asks[ai][2]){
-      const q=Math.min(bq,aq);tr.push([bids[bi][0],asks[ai][0],q]);pair=[bids[bi][2],asks[ai][2]];
-      bq-=q;aq-=q;if(bq<=1e-12){bi++;bq=bids[bi]?.[1]??0;}if(aq<=1e-12){ai++;aq=asks[ai]?.[1]??0;}}
-    this.unfilled=bi<bids.length?bids[bi][2]:null;
-    if(!tr.length)return[0,0];
-    const nb=bi<bids.length?bids[bi][2]:null;
-    const price=Math.min(pair[0],Math.max(pair[1],nb??pair[1]));let vol=0;
-    for(let[buyer,seller,q]of tr){let cost=q*price;
-      if(buyer instanceof HH){q=Math.min(q,price>0?buyer.purse/price:q,buyer._cap??1e9);cost=q*price;buyer._cap=(buyer._cap??1e9)-q;
-        buyer.purse-=cost;buyer.pantry[g]+=q;buyer.belief[g]+=(price-buyer.belief[g])*0.2;}
-      else{this.treasury-=cost;
-        if(buyer==='EXP'){this.exported[g]=(this.exported[g]||0)+q;
-          const rev=q*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;}
-        else if(buyer==='PAVE'){this.paveBought+=q;}}
-      if(seller instanceof HH){seller.purse+=cost;seller.pantry[g]-=q;seller.income30+=cost;
-        seller.belief[g]+=(price-seller.belief[g])*0.2;seller.unsold.delete(g);}
-      else{this.treasury+=cost;const c=q*(P.IMP_COST[g]??P.IMP[g]*0.7);
-        this.treasury-=c;this.mainlandOut+=c;this.imported[g]=(this.imported[g]||0)+q;}
-      vol+=q;}
-    return[price,vol];}
   buyTargets(h){const t={};
     const foodDays=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
     const px=this.px;const cheapest=Math.min(px.veg??9,px.wheat??9,px.pres??9);
@@ -460,7 +440,8 @@ export class World{
           this.outBy['imp_'+g]=(this.outBy['imp_'+g]||0)+(c-q*s.price);
           this.imported[g]=(this.imported[g]||0)+q;}
         else if(s.hh==='STOCK'){this.treasury+=q*s.price;this.stock[g]-=q;s.qty-=q;this.co.stockSell=(this.co.stockSell||0)+q*s.price;}
-        else{s.qty-=q;s.hh.purse+=q*s.price;s.hh.income30+=q*s.price;}
+        else{s.qty-=q;const fee=q*s.price*P.FEE; // 市場口銭: 金庫の貯まる速さ=村の取引量(良い配置ほど速い)
+          s.hh.purse+=q*s.price-fee;s.hh.income30+=q*s.price-fee;this.treasury+=fee;this.co.fee=(this.co.fee||0)+fee;}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);
         this.px[g]=(this.px[g]??s.price)*0.9+s.price*0.1;}
       }}

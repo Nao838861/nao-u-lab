@@ -97,5 +97,19 @@ t('E12 人口成長',worlds.every(x=>x.pop()>=90&&x.pop()<=90*2.2),worlds.map(x=
  t('E15 アドバイザ追従で生存',w2.goDay===null&&w2.famine<600,
    `建てた:${builds.join(',')||'なし'} 金庫${Math.round(w2.treasury*10)} 支援${w2.bailouts} 飢餓${w2.famine} 破産${w2.goDay?'M'+Math.floor((w2.goDay-1)/30+1):'なし'}`);}
 
+// ---- シナリオC: 建築リズム(E16) 漸進建築が一括建築に勝つ——建てる→貯まる→また建てるのループ意図 ----
+{const LIST=['wheat','wheat','charburner','saltworks','logger'];const res={};
+ for(const mode of['lump','paced']){
+  const w3=mk(12);let bi=0;
+  for(let d=1;d<=1440;d++){
+   if(d%5===0){if(w3.order)w3.stockTgt[w3.order.g]=Math.max(w3.stockTgt[w3.order.g]||0,Math.ceil((w3.stock[w3.order.g]||0)+w3.order.left));
+    w3.stockTgt.wheat=Math.max(w3.stockTgt.wheat||0,Math.round(w3.pop()*2));}
+   if(mode==='lump'&&d===120){for(const j of LIST){const s=findSpot(w3,j);if(s)w3.addZone(j,s[0],s[1]);}}
+   if(mode==='paced'&&d%90===0&&bi<LIST.length&&w3.treasury*10>15000){const s=findSpot(w3,LIST[bi]);if(s){w3.addZone(LIST[bi],s[0],s[1]);bi++;}}
+   w3.step();}
+  res[mode]={fam:w3.famine,pop:w3.pop(),fee:w3.co.fee||0};}
+ t('E16 漸進建築>一括建築',res.paced.fam<res.lump.fam&&res.paced.pop>=res.lump.pop&&res.paced.fee>res.lump.fee,
+   `飢餓 漸進${res.paced.fam}/一括${res.lump.fam} 人口${res.paced.pop}/${res.lump.pop} 口銭${Math.round(res.paced.fee*10)}/${Math.round(res.lump.fee*10)}`);}
+
 console.log(`\n${pass}/${pass+fail} PASS`);
 process.exit(fail?1:0);

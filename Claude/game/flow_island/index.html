@@ -67,7 +67,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133104';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133105';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -372,8 +372,9 @@ setInterval(()=>{const m=Math.floor(Math.max(0,w.day-1)/30)+1;
   if(m>lastM&&w.day>30){const c=w.co;
     if(lastCo){const wage=(c.pub-lastCo.pub)||0,exp=(c.expSell-c.expBuy)-(lastCo.expSell-lastCo.expBuy),imp=(c.impMargin-lastCo.impMargin)||0;
       const ord=(c.ordSell||0)-(lastCo.ordSell||0),proc=(c.procBuy||0)-(lastCo.procBuy||0),ssell=(c.stockSell||0)-(lastCo.stockSell||0);
-      const net=exp+imp+ord+ssell-proc-wage;
-      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(輸出益${M(exp)} 輸入益${M(imp)}${ord>0.05?' 注文+'+M(ord):''}${proc>0.05?' 買上げ-'+M(proc):''}${ssell>0.05?' 蔵出し+'+M(ssell):''}${wage>0.05?' 道普請の賃金-'+M(wage):''})`);}
+      const fee=(c.fee||0)-(lastCo.fee||0),bld=(c.build||0)-(lastCo.build||0);
+      const net=exp+imp+ord+ssell+fee-proc-wage-bld;
+      w.log(`【M${m-1}決算】${net>=0?'+':''}${M(net)}デナリ(${fee>0.05?'口銭+'+M(fee)+' ':''}輸出益${M(exp)} 輸入益${M(imp)}${ord>0.05?' 注文+'+M(ord):''}${proc>0.05?' 買上げ-'+M(proc):''}${ssell>0.05?' 蔵出し+'+M(ssell):''}${bld>0.05?' 支度金-'+M(bld):''}${wage>0.05?' 道普請の賃金-'+M(wage):''})`);}
     lastCo={...c};lastM=m;}},1500);
 // --- 次の一手アドバイザ ---
 function advise(){const m=Math.floor(Math.max(0,w.day-1)/30)+1;const f30=w.f30||{};const gf=g=>f30[g]||{prod:0,cons:0,imp:0,exp:0};
