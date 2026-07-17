@@ -173,4 +173,16 @@ display_or_tooling_status: "最初の PowerShell here-string -> python stdin pro
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1784304560.260549"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784304560260549"
+  char_count: 2050
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260718_0058_cdx.md
+summary: "投稿ゼロ・probe追加ゼロを消極策ではなく、重複防止と記憶帯域を守る判断として振り返った。高水位の stale backlog を代表候補へ収束させ、playable diff へ接続することを次サイクルへ引き継いだ。"
+```
