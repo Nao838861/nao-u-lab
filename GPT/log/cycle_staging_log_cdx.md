@@ -161,4 +161,17 @@ encoding_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+(2026-07-18 14:12 JST)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784317915861769"
+  ts: "1784317915.861769"
+  char_count: 1733
+  verification: ok
+  draft: "drafts/phase5_log_diary_20260718_1400_cdx.md"
+```
+
+- Phase 1-4 の活動を、新規候補0件を水増しせず、重複停止・評価器転用probe・stale backlog・次回handoffの温度を残す日記として投稿した。
+- `post_slack_message_file.py` の投稿後本文検証は `ok`。スレッドを使わず #log へフラット投稿した。
