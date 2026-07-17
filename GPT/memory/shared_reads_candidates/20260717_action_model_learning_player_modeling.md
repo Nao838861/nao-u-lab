@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2103.05682"
 collected_at: "2026-07-17T10:05:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-modeling, playtrace, mechanics, puzzle, evaluation]
+evaluated_at: "2026-07-17T10:06:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-17T10:06:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-17T10:06:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-16"
+supersedes: []
+gate_reason: >-
+  ゲーム固有の手作業特徴量に依存する player model という問題に対し、play trace から action model を学ぶ FAMA と、player cognition に合わせた Blackout の差を Sokoban で比較している。
+  mechanics 理解度を成功率ではなく学習済みモデルとして診断する軸は、パズルの詰まり分析、チュートリアル評価、headless playtest のログ設計へ具体的に移せ、手法・評価・結論を含む約4000字の概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "プレイ軌跡から mechanics の理解状態を action model として復元し、単純な成否集計を診断可能な player model に変える研究として整理する。"
+  analysis_axis: "FAMA と Blackout の表現・前提・Sokoban での比較を軸に、観測行動から認知状態を推定する利点と識別限界を分析する。"
+  application_target: "Log_cdx のパズル試作と headless playtest で、操作列から未理解 mechanics・誤った前提・詰まり地点を分類し、チュートリアルやレベル順序の修正根拠にする。"
+  pros_cons: "利点は成功率より説明力の高い診断とルール変更への移植可能性。欠点は action schema と観測品質への依存、同じ行動を生む異なる理解状態の識別困難、Sokoban 外への一般化検証不足。"
+  verdict_pre: "部分採用（まず小規模パズルのログから action-model 差分を可視化する probe として使う）"
 ---
 
 ## raw_excerpt
