@@ -64,7 +64,97 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（83 groups、candidate 本体は未変更）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-18 基準で再生成（上限 50 rows）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 actionable groups）"
+  - "MEMORY.md index と per-file atom index の整合性を validate_memory_index.py で確認（broken entry 0）"
+  - "Slack inbox lifecycle を確認（directives pending 0、broadcasts pending 0、status 更新なし）"
+  - "memory/raw/ の 30 日超無更新ファイルを監査（93 files。原文保持契約があるため移動せず archive 候補として記録）"
+candidate_lifecycle_counts:
+  posted: 413
+  ready_to_post: 10
+  postponed: 405
+  failed: 125
+  needs_review: 22
+  missing_status: 1
+atom_audit:
+  rows: 2682
+  duplicate_id_count: 0
+  normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups_after_fold: 3
+  repeated_title_groups_without_lifecycle_group: 14
+  contradiction_status: "memory_health.py と validate_memory_index.py では ID 矛盾なし。本文重複は canonical overlay / recall fold で抑制済み"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読み成功。代表語『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は現本文に存在しない。文字化けを示す decode error はない"
+  display_or_tooling_status: "最初の shell inline probe では日本語 literal が '?' 表示になったが、Unicode escape probe で source 正常を確認。表示/tooling 経路の問題であり source 修復対象ではない"
+raw_archive_candidates:
+  count: 93
+  cutoff: "mtime < 2026-06-18"
+  oldest_examples:
+    - memory/raw/sync_state.txt
+    - memory/raw/slack_archive/shared-reads.jsonl
+    - memory/raw/web_research/phase3_pdfs/2602.18943.txt
+  action: "原文保持と参照関係を壊さないため、この phase では移動しない"
+issues:
+  - id: ISS-4A-STALE-BACKLOG
+    description: "stale_after 超過の open candidate が 236 件あり、50-row stale triage queue の収載量を超える。35 actionable duplicate groups も残り、同一題材が次サイクルの候補探索へ再流入しやすい"
+    severity: medium
+    evidence: "memory/shared_reads_stale_triage_queue.jsonl (50 rows), memory/shared_reads_group_action_queue.jsonl (35 groups), overdue_open_total=236"
+    source_file_status: "candidate frontmatter は UTF-8 で読め、lifecycle 内訳を集計可能。posted/failed は再評価対象外として扱った"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "重複候補の再評価に Phase 2 の時間を使い、ゲーム制作へ転用できる新規知見の分析量を圧迫する"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "既存の bounded group-action handoff が高水位条件と重複排除を扱えているため、新設計ではなく Phase 2 で既存 queue を消化して効果を観測する"
+stale_backlog:
+  overdue_open_total: 236
+  stale_triage_queue_rows: 50
+  actionable_group_count: 35
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  previous_cycle_group_actions: 0
+group_action_handoff:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    representative: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    latest_evidence: "stale_after=2026-06-26; 評価・比較・結論の根拠不足。代表を一次資料で再評価"
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    representative: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md
+      - memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    latest_evidence: "stale_after=2026-06-26; arXiv ID の時系列と出典信頼性を確認して group 判定"
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    representative: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md
+    latest_evidence: "stale_after=2026-06-28; persona traceability の評価手順不足を代表で確認"
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
