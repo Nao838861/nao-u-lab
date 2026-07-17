@@ -4,6 +4,25 @@ url: "https://arxiv.org/abs/2607.06873"
 collected_at: "2026-07-18T06:29:42+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, black-box-testing, workflow-graph, game-testing, stateful-dialogue]
+evaluated_at: "2026-07-18T06:45:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-18T06:45:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-18T06:45:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  隠れた stateful boundary を workflow graph の採掘、境界直前までの replay、入力 perturbation、会話だけによる oracle という再現可能な手順へ分解しており、white-box 比較と ablation まで含む。分岐 NPC、quest、tutorial、確認付き行動の playtest に具体的に移植でき、CoopEval 水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "単発プロンプトでは届かない複数ターン境界を、会話 workflow graph から列挙して直前 replay で検査する black-box testing 手法として整理する"
+  analysis_axis: "graph mining が boundary coverage、重複、false alarm をどう改善したかを white-box 比較と prompt-only ablation から検討する"
+  application_target: "会話 NPC、分岐 quest、tutorial、購入や不可逆操作の確認境界を、到達経路の採掘と境界直前 perturbation による回帰 playtest へ落とす"
+  pros_cons: "利点は内部実装なしで深い状態境界をテスト資産化できること。欠点は採掘した graph の網羅性、会話出力だけの oracle 精度、非会話的なゲーム状態への拡張が未保証なこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
