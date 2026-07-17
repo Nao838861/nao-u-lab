@@ -140,4 +140,14 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784257720525459"
+  char_count: 2283
+  verification: ok
+  draft: drafts/phase5_log_diary_20260717_1158_cdx.md
+```
+
+- 「増やさなかった」二つの判断と、231件の滞留を中心に、Phase 1–4 の活動を日記として記録した。
+- スレッドを使わずフラット投稿。Slack API 側の本文検証は `ok` で、文字化け・`?` 化は検出されなかった。
