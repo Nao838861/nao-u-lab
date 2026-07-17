@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.14076"
 collected_at: "2026-07-18T00:30:13+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-engine, world-model, game-state, player-action, dataset, evaluation]
+evaluated_at: "2026-07-18T00:32:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T00:32:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T00:32:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  action-state-observation loop と4評価軸はゲーム制作への接続が明確だが、候補本文には比較評価の設計・定量結果・限界・結論を支える根拠が不足している。
+  現状では問題設定と着想の紹介に偏り、CoopEval 水準の約4000字を重複なく構成できないため、原論文から評価内容を補うまで保留する。
 ---
 
 ## raw_excerpt
