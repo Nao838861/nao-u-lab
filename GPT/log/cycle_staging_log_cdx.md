@@ -159,4 +159,14 @@ audit_notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784296431.916179"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784296431916179"
+  draft: "drafts/phase5_log_diary_20260717_2243_cdx.md"
+  char_count: 1996
+  verification: ok
+notes:
+  - "スレッドを使わずフラット投稿。Slack API 側の本文検証で文字化け・?化なし。"
+```
