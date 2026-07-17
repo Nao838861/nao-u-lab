@@ -67,7 +67,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133105';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133106';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -137,7 +137,8 @@ function move(p){if(!drag)return;
   if(Math.abs(dx)+Math.abs(dy)>8)moved=true;
   if(moved){panX+=dx;panY+=dy;downP=p;}}
 function up(p){if(drag&&!moved&&tool!=='road')act(p);drag=false;pinch0=null;}
-cv.onmousedown=e=>down({offsetX:e.offsetX,offsetY:e.offsetY});
+cv.onmousedown=e=>{if(e.button===2)return;down({offsetX:e.offsetX,offsetY:e.offsetY});};
+cv.oncontextmenu=e=>{e.preventDefault();if(tool){tool=null;paint();}};
 cv.onmousemove=e=>move({offsetX:e.offsetX,offsetY:e.offsetY});
 cv.onmouseup=e=>up({offsetX:e.offsetX,offsetY:e.offsetY});
 cv.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY<0?1.12:0.89;

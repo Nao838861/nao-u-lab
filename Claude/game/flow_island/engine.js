@@ -86,8 +86,12 @@ export class World{
       const t=this.terr[Math.round(y)+dy]?.[Math.round(x)+dx];
       if(t===type)return true;}return false;}
   canPlace(job,x,y){if(!this.terr)return[true,''];
-    const t=this.terr[Math.round(y)]?.[Math.round(x)];
+    const rx=Math.round(x),ry=Math.round(y);
+    const t=this.terr[ry]?.[rx];
     if(!t||t==='water')return[false,'水の上には建てられません'];
+    if(this.zones.some(z=>Math.round(z.x)===rx&&Math.round(z.y)===ry)||this.hhs.some(h=>Math.round(h.x)===rx&&Math.round(h.y)===ry))return[false,'この土地には既に建物があります'];
+    if(this.roadTiles.has(rx+','+ry)||this.sites.some(s=>s.x===rx&&s.y===ry))return[false,'道の上には建てられません'];
+    if(Math.round(this.market.x)===rx&&Math.round(this.market.y)===ry)return[false,'ここは市場です'];
     if(t==='forest')return[false,'森を切り開く仕組みはまだありません——森の際に'];
     if(t==='rock')return[false,'岩場の上には建てられません——際に'];
     if((job==='fisher'||job==='fisher2')&&!this.near(x,y,'water',2))return[false,'漁師は水際にしか住めません'];
@@ -148,6 +152,7 @@ export class World{
   planRoad(x,y){const k=x+','+y;
     if(this.roadTiles.has(k)||this.sites.some(s=>s.x===x&&s.y===y))return false;
     if(this.terr&&(this.terr[y]?.[x])==='water')return false;
+    if(this.zones.some(z=>Math.round(z.x)===x&&Math.round(z.y)===y)||this.hhs.some(h=>Math.round(h.x)===x&&Math.round(h.y)===y))return false; // 建物の上に道は引けない
     this.sites.push({x,y,left:P.ROAD_WORK});this.log('道普請を計画');return true;}
   addZone(job,x,y){const[ok,why]=this.canPlace(job,x,y);
     if(!ok){this.log(`区画不可(${job}): ${why}`);return false;}
