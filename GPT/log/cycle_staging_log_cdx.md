@@ -9,7 +9,17 @@
 - duplicate preflight: `continue` を返したが、手動の canonical URL 検索で既存 candidate を確認。preflight log に実行根拠を保存済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+```
+
+- Phase 1 で新規 candidate は作成されておらず、stale_review_batch / group_action_handoff も存在しないため、評価対象は 0 件。
+- RNG-Bench は既存 candidate `memory/shared_reads_candidates/20260620_rng_bench_non_markov_games.md` と同一 URL であることが Phase 1 の手動 canonical URL 照合で確認済み。新規 candidate が存在しないため frontmatter 更新は不要。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
