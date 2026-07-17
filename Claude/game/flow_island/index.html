@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>流通の島 v0.4</title>
+<title>流通の島 v0.21.1</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#101725;color:#dde;font:13px/1.4 system-ui,sans-serif;overflow:hidden}
 canvas{display:block;touch-action:none;position:fixed;inset:0}
@@ -14,7 +14,7 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #bar button.on{outline:3px solid #ffe98a}
 #bar button.rec{outline:3px solid #7ac8ff;animation:recg 1.6s infinite}
 @keyframes recg{50%{outline-color:#bfe6ff;box-shadow:0 0 14px #7ac8ff}}
-#advice{position:absolute;left:50%;transform:translateX(-50%);top:34px;background:#14305088;border:1px solid #3a6ea0;border-radius:6px;padding:3px 12px;font-size:11px;color:#cfe6ff;z-index:5;pointer-events:none;white-space:nowrap}
+#advice{position:absolute;left:50%;transform:translateX(-50%);top:48px;background:#14305088;border:1px solid #3a6ea0;border-radius:6px;padding:3px 12px;font-size:11px;color:#cfe6ff;z-index:5;pointer-events:none;white-space:nowrap}
 #bar button.infra{background:#2c3a54;color:#dde}
 #factor{left:50%;transform:translateX(-50%);bottom:10px;padding:5px 14px;font-size:12px;color:#ffe9b0;border-color:#8a7440;max-width:94vw;white-space:normal;line-height:1.35}
 #toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:6;pointer-events:none;text-align:center}
@@ -32,11 +32,17 @@ canvas{display:block;touch-action:none;position:fixed;inset:0}
 #overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;flex-direction:column;font-size:22px;z-index:9}
 small{color:#8899b0}
 @media(max-width:760px){
- #top{gap:6px;padding:4px 8px;font-size:11px}
+ #top{left:4px;right:4px;max-width:none;gap:3px;padding:4px 6px;font-size:11px}
+ #top .bar{display:none}
+ #top button{padding-left:4px;padding-right:4px}
+ #pbtns{top:74px!important;left:4px;right:auto!important;width:calc(100vw - 8px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;white-space:nowrap}
+ #pbtns button{min-width:0;padding-left:2px;padding-right:2px}
+ .panel{top:116px!important;right:4px!important;max-width:calc(100vw - 8px)}
  #bar{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none;border-radius:0;padding:6px 4px;-webkit-overflow-scrolling:touch}
  #bar button{flex:0 0 auto;min-width:58px;padding:8px 6px}
  #factor{bottom:60px;font-size:11px;padding:4px 8px}
- #advice{top:auto;bottom:98px;font-size:10px;max-width:94vw;white-space:normal;text-align:center}
+ #advice{top:auto;bottom:122px;font-size:10px;max-width:94vw;white-space:normal;text-align:center}
+ #ver{top:112px!important;bottom:auto!important;left:6px!important;right:auto!important}
  #drawer{width:86vw;max-height:60vh}
 }
 </style></head><body>
@@ -55,10 +61,6 @@ small{color:#8899b0}
 <div id="p_flow" class="ov panel" style="top:46px;right:8px;width:230px;display:none"><div class="ph">需給(日あたり・20日平均)<span class="px">✕</span></div><div id="flow" style="font-size:10px;padding:4px 8px"></div></div>
 <div id="p_log" class="ov panel" style="top:46px;right:8px;width:250px;display:none"><div class="ph">出来事<span class="px">✕</span></div><div id="log" style="font-size:11px;color:#aab;max-height:40vh;overflow-y:auto;padding:4px 8px"></div><div style="padding:4px 8px;border-top:1px solid #2a3550"><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・職を選んで地面タップ=区画。スペース=一時停止</small></div></div>
 <div id="popup" class="ov"><span id="pclose">✕</span><div id="pbody"></div></div>
- <h2>市場価格</h2><div id="prices"></div>
- <h2>出来事</h2><div id="log"></div>
- <h2>操作</h2><small>ドラッグ=地図移動・ピンチ/ホイール=ズーム・スペース=一時停止。職を選んで地面をタップ=入植(渡航費60)。道具を選び直すと解除。</small>
-</div>
 <div id="overlay"><div>★ 本国より最終通告 ★</div><div style="font-size:14px;margin:8px">債務が信用限度を超えました。本国との信用は絶たれ、島は静かに衰えていきます…</div><div id="postmortem" style="font-size:12px;max-width:440px;color:#cbd;background:#141d30;border:1px solid #345;border-radius:8px;padding:8px 12px;margin:6px"></div><button onclick="location.reload()" style="font-size:16px;padding:8px 20px">リプレイ</button></div>
 <script>
 addEventListener('error',e=>{const f=document.getElementById('factor');
@@ -67,7 +69,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133107';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133108';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -125,7 +127,7 @@ document.querySelectorAll('.panel').forEach(p=>{
 let lastEv=0;
 function toasts(){const box=document.getElementById('toast');
   for(let i=lastEv;i<w.events.length;i++){const[dd,msg]=w.events[i];
-    if(/★|▲Lv|分家|施肥/.test(msg)){const el=document.createElement('div');el.textContent=msg;
+    if(/★|▲Lv|分かれて|入植船|子が生まれた|☠|破綻転職/.test(msg)){const el=document.createElement('div');el.textContent=msg;
       box.appendChild(el);setTimeout(()=>el.remove(),4200);}}
   lastEv=w.events.length;}
 // --- 入力(パン/ズーム/タップ) ---
@@ -450,6 +452,7 @@ function frame(){try{tick++;
       document.getElementById('postmortem').innerHTML='<b>敗因</b>: '+why+'<br><small style=color:#667>'+VERSION+'</small>';}}
   }catch(err){document.getElementById('factor').textContent='⚠ '+err.message;}
   requestAnimationFrame(frame);}
-document.getElementById('ver').textContent=VERSION+' ('+new Date().toISOString().slice(0,10)+')';
+{const now=new Date();const localDate=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+ document.getElementById('ver').textContent=VERSION+' ('+localDate+')';}
 topbar();paint();frame();
 </script></body></html>

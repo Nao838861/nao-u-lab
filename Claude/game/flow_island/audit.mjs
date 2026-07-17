@@ -11,9 +11,10 @@ const t=(name,cond,detail)=>{console.log((cond?'PASS':'FAIL')+'  '+name+'  '+(de
 const SEEDS=[11,13,14];const worlds=[];
 const stallAvg={},famYr=[[],[],[],[]]; // シードごとの年間飢餓
 const priceLog={fish:[],char:[]};
-const stuck={};
+const stuck={};const earlyWheatSwitch=[];
 for(const seed of SEEDS){
  const w=mk(seed);
+ const rawLog=w.log.bind(w);w.log=msg=>{if(w.day<255&&msg.startsWith('破綻転職: wheat'))earlyWheatSwitch.push([seed,w.day,msg]);return rawLog(msg);};
  const planA={13:'wheat',16:'logger',20:'fisher',26:'woodshop',30:'rapeseed'}; // 標準プレイ=smoke台本と同一(木こりが森の腕へ)
  for(let d=1;d<=1440;d++){
   if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
@@ -67,6 +68,9 @@ t('E12 人口成長',worlds.every(x=>x.pop()>=90&&x.pop()<=90*2.2),worlds.map(x=
 {const yr=famYr.map(a=>a.reduce((s,x)=>s+x,0)/SEEDS.length); // 累積→年次差分
  const y2=yr[1]-yr[0],y4=yr[3]-yr[2];
  t('E13 飢えの出口',y4<y2*1.1,`Y2飢餓${Math.round(y2)}→Y4飢餓${Math.round(y4)}(増え続けたらFAIL)`);}
+// E14 年1収穫職を、最初の観測点より前の所得ゼロで失敗判定しない
+t('E14 麦農家が初回収穫前に転職しない',earlyWheatSwitch.length===0,
+  earlyWheatSwitch.map(([seed,d])=>`seed${seed}:day${d}`).join(',')||'全seedで初回収穫を観測');
 
 // ---- シナリオB: アドバイザ追従プレイ(推薦通り建てて破綻しないか) ----
 {const w2=mk(12);

@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.21';
+export const VERSION='v0.21.1';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -53,7 +53,7 @@ export class HH{
     const f=genFamily(this.id);this.sur=f.sur;this.members=f.mem;this.job=job;this.x=x;this.y=y;this.road=false;
     this.purse=P.PURSE0;this.pantry={};for(const g of GOODS)this.pantry[g]=0;
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
-    this.hunger=0;this.wheatWork=0;this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.incM=0;this.incMonths=[];this.walk=0;
+    this.hunger=0;this.wheatWork=0;this.jobCycleDone=job!=='wheat';this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.incM=0;this.incMonths=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
     this.pantry.tools=5;this.pantry.wheat=240;  // 兵糧(ひと季節分を持参。飢えを輸入価格で治療するより船で運ぶ方が安い——配給なき島の初期補給)
@@ -354,13 +354,24 @@ export class World{
         const rev=can*this.order.price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.ordSell=(this.co.ordSell||0)+rev;
         this.exported[og]=(this.exported[og]||0)+can;this.fl(og,'exp',can);
         if(this.order.left<=1e-9){this.log('★注文を納めた——本国での評判が上がった');this.orderDone++;this.order=null;}}}
-    // 船(15日ごと): 未充足の区画へ移民を運ぶ(最大2世帯/便)
+    // 空き区画の充足(15日ごと・最大2世帯/便): 島内の余剰人口(8人以上の大家族の半分)が先。
+    // 本土からの移民は「余剰が無く、かつ島が飢えていない」時だけ来る(空き家=絶対に移民が湧く蛇口、をやめる)
     if(d%15===0&&this.port){let n=0;
       for(const z of this.zones){if(z.filled||n>=2)continue;
-        const h=new HH(z.job,z.x,z.y);h.px=this.port.x;h.py=this.port.y;h.state='arriving';
-        this.hhs.push(h);this.mainlandIn+=h.purse;this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.outBy.pass+=P.PASSAGE;
-        z.filled=true;n++;this.updRoads();}
-      if(n>0)this.log(`入植船が着いた(${n}世帯)`);}
+        const donor=this.hhs.filter(x=>x.members.length>=8&&x.state==='home').sort((a,b)=>b.members.length-a.members.length)[0];
+        if(donor){ // 島内の余剰人口: 家族が割れ、納屋と財布を頭数比で持参(物資は無から湧かない)
+          const k=Math.floor(donor.members.length/2);const moved=donor.members.splice(donor.members.length-k,k);
+          const f=k/(k+donor.members.length);
+          const nh=new HH(z.job,z.x,z.y);nh.sur=donor.sur;nh.members=moved;
+          for(const g of GOODS){nh.pantry[g]=donor.pantry[g]*f;donor.pantry[g]*=(1-f);}
+          nh.purse=donor.purse*f;donor.purse*=(1-f);
+          nh.px=donor.x;nh.py=donor.y;nh.state='arriving';
+          this.hhs.push(nh);z.filled=true;n++;this.updRoads();
+          this.log(`${donor.sur}家の${k}人が分かれて${z.job}の区画へ移り住む`);}
+        else if(this.hungryN<Math.max(1,this.hhs.length*0.2)){ // 移民の代替(渡航費+キットは船で持参)
+          const h=new HH(z.job,z.x,z.y);h.px=this.port.x;h.py=this.port.y;h.state='arriving';
+          this.hhs.push(h);this.mainlandIn+=h.purse;this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.outBy.pass+=P.PASSAGE;
+          z.filled=true;n++;this.updRoads();this.log('入植船が着いた——本土からの移民');}}}
     // 建設の進行
     for(const h of this.hhs)if(h.state==='building'){h.buildDays--;
       if(h.buildDays<=0){h.state='home';this.log(`${h.job}#${h.id} 家が建った`);}}
@@ -474,7 +485,7 @@ export class World{
       const fill=Math.min(1,(h.fert||0)/(P.FERT_NEED*180));
       {const hv=P.Y_WHEAT*h.mult()*Math.min(1,h.wheatWork/300)*(1+P.FERT_BOOST*fill);h.pantry.wheat+=hv;this.led.prod.wheat=(this.led.prod.wheat||0)+hv;this.fl('wheat','prod',hv);(this.harvestLog=this.harvestLog||[]).push([d,hv]);}
       if(fill>0.05)this.log(`麦畑#${h.id} 施肥${Math.round(fill*100)}%→+${Math.round(P.FERT_BOOST*fill*100)}%`);
-      h.wheatWork=0;h.fert=0;}
+      h.wheatWork=0;h.fert=0;h.jobCycleDone=true;}
     // 食事(配給という制度は無い。飢えの出口は採集の床・民間の雇用・転職——それでも足りなければ人は死ぬ)
     this.hungryN=0;
     for(const h of this.hhs){let need=h.eat();this.led.need+=need;const kinds=new Set();
@@ -542,30 +553,26 @@ export class World{
       h.purseLog.push(h.purse);if(h.purseLog.length>31)h.purseLog.shift();}
     if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
       P.ROAD_F=P.PAVE_ROAD_F;this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
-    // 分家(90日ごと・繁栄+自立ゲート・観測所得で職選び)
-    if(d%90===0&&this.hhs.length>=8&&this.goDay===null){
-      const parent=this.hhs.reduce((a,b)=>a.purse>b.purse?a:b);
-      const fed=this.hungryN<Math.max(1,this.hhs.length*0.1); // 村が飢えている間は分家しない(新しい口を増やさない)
-      if(parent.purse>=900&&fed){
-        const best=this.pickJob(null);
-        if(best){const same=this.hhs.filter(h=>h.job===best);
-          const src=same.length?same.reduce((a,b)=>a.purse>b.purse?a:b):{x:this.market.x,y:this.market.y}; // 絶滅職の再興は市場の近くから
-          const dowry=Math.min(300,parent.purse*0.3);parent.purse-=dowry;
-          const nh=new HH(best,src.x+(this.rng()-0.5)*3,src.y+(this.rng()-0.5)*3);
-          nh.purse=dowry;this.hhs.push(nh);this.updRoads();
-          this.log(`分家: ${best}(持参金${Math.round(dowry)})`);}}}
+    // 出生(月次): 飢えていない家族は増える——余剰人口の源泉。人口の受け皿(区画)はプレイヤーが用意する
+    if(d%30===0)for(const h of this.hhs){
+      if(h.members.length<11&&h.hungerRun===0&&FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT>2&&this.rng()<0.12){
+        const FIRSTN=['ハンス','グレタ','ヤン','マリア','ピム','ロッテ','カレル','アンナ','ブラム','エルス'];
+        h.members.push({name:FIRSTN[Math.floor(this.rng()*FIRSTN.length)],sex:this.rng()<0.5?'♂':'♀',age:0});
+        this.log(`${h.sur}家に子が生まれた(家族${h.members.length}人)`);}}
     // 破綻転職(飢え40/180日+1年クールダウン)
     if(d%30===0){for(const h of this.hhs){
       h.insolvM=(h.purse<-2)?(h.insolvM||0)+1:0;
       h.hungerHist=(h.hungerHist||[]);
       if(h.hungerHist.length>180)h.hungerHist.splice(0,h.hungerHist.length-180);
-      const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3; // 飢え続き or 3ヶ月借金漬け
+      // 年1収穫の麦は、少なくとも最初の収穫を観測してから転職評価する。
+      // 観測前の所得ゼロを失敗と誤認すると、収穫前に離職→麦職絶滅→飢餓の吸収状態になる。
+      const distress=h.jobCycleDone&&(h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3);
       if((h.insolvM||0)>=6&&h.purse<0){this.treasury+=h.purse;h.purse=0;h.insolvM=0;this.log(`${h.sur}家の借財を帳消しに(徳政)`);}
       if(distress&&d-(h.lastSwitch||-9e9)>=P.COOLDOWN&&this.rng()<0.5){
         const best=this.pickJob(h.job,h);
         if(best&&best!==h.job){this.log(`破綻転職: ${h.job}#${h.id}→${best}`);
           if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 徳政: 借金は会社の貸し倒れ(再出発)
-          h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
+          h.job=best;h.jobCycleDone=best!=='wheat';h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
     // 財政(月末)
     if(d%30===0){
       if(this.treasury<P.BAIL_TRIG&&this.bailouts<P.BAIL_N&&this.goDay===null){
