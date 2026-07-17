@@ -27,7 +27,12 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+summary: "Phase 2 の gate_decision: pass 候補が 0 件のため、投稿対象なし。Traccia 候補は Phase 2 で fail 判定済みであり、Phase 3 では扱わない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
