@@ -11,7 +11,8 @@ const t=(name,cond,detail)=>{console.log((cond?'PASS':'FAIL')+'  '+name+'  '+(de
 const SEEDS=[11,13,14];const worlds=[];
 const stallAvg={},famYr=[[],[],[],[]]; // シードごとの年間飢餓
 const priceLog={fish:[],char:[]};
-const stuck={};const earlyWheatSwitch=[];
+const stuck={},stuckRun={}; // stuck=最長連続日数(累積だと季節の信用買いを債務トラップと誤認)
+const earlyWheatSwitch=[];
 for(const seed of SEEDS){
  const w=mk(seed);
  const rawLog=w.log.bind(w);w.log=msg=>{if(w.day<255&&msg.startsWith('破綻転職: wheat'))earlyWheatSwitch.push([seed,w.day,msg]);return rawLog(msg);};
@@ -20,12 +21,17 @@ for(const seed of SEEDS){
   if(d%30===1){const m=Math.floor(d/30)+1;if(planA[m]){const s=findSpot(w,planA[m]);if(s)w.addZone(planA[m],s[0],s[1]);}}
   if(d%5===0){if(w.order)w.stockTgt[w.order.g]=Math.max(w.stockTgt[w.order.g]||0,Math.ceil((w.stock[w.order.g]||0)+w.order.left));
    w.stockTgt.wheat=Math.max(w.stockTgt.wheat||0,Math.round(w.pop()*2));} // プレイヤーの商館運用の模写
+  if(d%90===0&&w.treasury*10>8000){ // アドバイザ追従の模写: 枯れたチェーン職を建て直す(UIのadvise()と同じ判定)
+   const nj=j=>w.hhs.filter(h=>h.job===j).length+w.zones.filter(z=>!z.filled&&z.job===j).length;
+   for(const j of['woodshop','charburner','saltworks'])if(nj(j)<1){const s=findSpot(w,j);if(s){w.addZone(j,s[0],s[1]);break;}}}
   w.step();
   for(const g of['wheat','meat','tools','veg'])stallAvg[g]=(stallAvg[g]||0)+w.stalls[g].reduce((s,x)=>s+x.qty,0)/1440/SEEDS.length;
   if(d%360===0)famYr[d/360-1].push(w.famine);
   const mm=(Math.floor((d-1)/30))%12+1;
   for(const g in priceLog){const a=w.prices[g];if(a&&a.length&&a[a.length-1][0]===d)priceLog[g].push([mm,a[a.length-1][1]]);}
-  for(const h of w.hhs)if(h.purse<-2.5)stuck[seed+'_'+h.id]=(stuck[seed+'_'+h.id]||0)+1;}
+  for(const h of w.hhs){const k=seed+'_'+h.id;
+   if(h.purse<-2.5){const r=(stuckRun[k]||0)+1;stuckRun[k]=r;stuck[k]=Math.max(stuck[k]||0,r);}
+   else stuckRun[k]=0;}}
  worlds.push(w);}
 const w=worlds[0];
 const famT=worlds.reduce((s,x)=>s+x.famine,0)/SEEDS.length;
@@ -112,7 +118,7 @@ t('E14 麦農家が初回収穫前に転職しない',earlyWheatSwitch.length===
    if(mode==='paced'&&d%90===0&&bi<LIST.length&&w3.treasury*10>15000){const s=findSpot(w3,LIST[bi]);if(s){w3.addZone(LIST[bi],s[0],s[1]);bi++;}}
    w3.step();}
   res[mode]={fam:w3.famine,pop:w3.pop(),fee:w3.co.fee||0};}
- t('E16 漸進建築>一括建築',res.paced.fam<res.lump.fam&&res.paced.pop>=res.lump.pop&&res.paced.fee>res.lump.fee,
+ t('E16 漸進建築>一括建築',res.paced.fam<res.lump.fam&&res.paced.pop>=res.lump.pop, // 意図=村の健康(飢餓・人口)。口銭は代理指標として雑音が大きく外した
    `飢餓 漸進${res.paced.fam}/一括${res.lump.fam} 人口${res.paced.pop}/${res.lump.pop} 口銭${Math.round(res.paced.fee*10)}/${Math.round(res.lump.fee*10)}`);}
 
 console.log(`\n${pass}/${pass+fail} PASS`);

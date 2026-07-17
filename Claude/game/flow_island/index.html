@@ -101,7 +101,8 @@ function topbar(){const d=w.day,m=Math.floor(Math.max(0,d-1)/30)+1,mm=(m-1)%12+1
   top.querySelectorAll('button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;topbar();});}
 // --- 下バー(建設) ---
 const bar=document.getElementById('bar');
-for(const j of JOBS){const b=document.createElement('button');b.textContent=JNAME[j];b.style.background=JCOL[j];
+for(const j of JOBS){if(j==='fisher2')continue; // 対岸漁=需要未整備の罠職業(隠す。エンジンには残置)
+ const b=document.createElement('button');b.textContent=JNAME[j];b.style.background=JCOL[j];
   b.onclick=()=>{tool=tool===j?null:j;paint();};b.dataset.t=j;bar.appendChild(b);}
 for(const[id,label]of[['road','道'],['pave','石畳P'],['ship','海運']]){
   const b=document.createElement('button');b.textContent=label;b.className='infra';

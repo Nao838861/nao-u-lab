@@ -13,7 +13,7 @@ export const P = {
   IMP:{wheat:4.0,tools:6.0,salt:5.0,iron:4.5}, IMP_COST:{wheat:2.4,tools:4.2,salt:3.5,iron:3.2},  // 懲罰価格=持続不可能な緊急措置  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
   EXP:{pres:0.6,pick:0.55,oil:2.4}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.64},
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
-  BAIL_N:3, BAIL_TRIG:-2000, BAIL_AMT:8000, TREASURY0:5500, PURSE0:60, PASSAGE:60, BUILD_COST:250, FEE:0.04,
+  TREASURY0:5500, PURSE0:60, PASSAGE:60, BUILD_COST:250, FEE:0.04,
   SHIP_COST:8000, SHIP_CAP:2, SHIP_PRICE:1.2,
   BAY0:600000, BAY_R:0.00175, RESEED:0.3, GROVE0:60000, GROVE_R:0.0006,
   MEAL_FISH:8, FERT_NEED:3, FERT_BOOST:0.15, Y_STONE:8, Y_OIL:6,
@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.22';
+export const VERSION='v0.23';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -77,6 +77,7 @@ export class World{
     this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
     this.stalls={};for(const g of GOODS)this.stalls[g]=[];
+    this.expCap={...P.EXP_CAP};this.expMl={...P.EXP_ML}; // 海運投資はこの世界だけを変える(P直変異は別ワールドを汚染するバグだった)
     this.deskUsed={};}
   setTerrain(terr){this.terr=terr;this.wood={};
     for(let y=0;y<terr.length;y++)for(let x=0;x<terr[y].length;x++)
@@ -166,7 +167,7 @@ export class World{
     this.log('★石畳プロジェクト開始(石200を公費で買い上げ)');return true;}
   investShipping(){if(this.shipping||this.treasury<-this.limit())return false;
     this.treasury-=P.SHIP_COST;this.mainlandOut+=P.SHIP_COST;this.shipping=true;
-    for(const g in P.EXP_CAP)P.EXP_CAP[g]*=P.SHIP_CAP;for(const g in P.EXP_ML)P.EXP_ML[g]*=P.SHIP_PRICE;
+    for(const g in this.expCap)this.expCap[g]*=P.SHIP_CAP;for(const g in this.expMl)this.expMl[g]*=P.SHIP_PRICE;
     this.log('★沿岸海運に投資(輸出天井×2・本土価+20%)');return true;}
   updRoads(){this.flow=null;for(const h of this.hhs){h.road=false;
     for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)
@@ -244,7 +245,7 @@ export class World{
     for(const r of reqsNow){if(r==='saltchar'){needSet.add('salt');needSet.add('char');}
       else if(['tools','salt','char','cloth','iron'].includes(r))needSet.add(r);}
     needSet.add('char');   // 暖は全階層の基礎需要(冬)
-    for(let[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.5],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,4.0]]){
+    for(let[g,dd,val]of[['tools',P.D_TOOL,2.5],['salt',P.D_SALT,2.5],['char',P.D_CHAR,2.5],['cloth',P.D_CLOTH,2.8],['iron',P.D_IRON,5.0]]){ // 鉄5.0>輸入4.5(4.0では構造的に買えずLv5が達成不能だった)
       if(!needSet.has(g))continue;dd*=Math.pow(P.CMULT,h.lv); /* 消費のLv階段 */
       if(t[g])continue;
       let tgt=dd*cd;
@@ -322,14 +323,14 @@ export class World{
         s.age=(s.age||0)+1;   // 価格は毎回の出店で抽選し直す(記憶なし)。店先での値下げ学習はしない
         // 3日売れ残ったら輸出台へ流す(端数は黙って本土行き=定常収入。信念ペナルティは生鮮のみ)
         if(s.age>=3&&s.hh instanceof HH&&P.EXP[g]!==undefined){
-          const price=P.EXP[g],cap=P.EXP_CAP[g];
+          const price=P.EXP[g],cap=this.expCap[g];
           const used=this.deskUsed['EXP'+g]||0;const can=Math.min(s.qty,Math.max(0,cap-used));
           if(can>1e-9){
             this.deskUsed['EXP'+g]=used+can;
             s.qty-=can;s.hh.purse+=can*price;s.hh.income30+=can*price;this.treasury-=can*price;
             this.co.expBuy+=can*price;
             this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
-            const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}}
+            const rev=can*this.expMl[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}}
         if(s.age>=6&&s.hh instanceof HH&&g!=='fish'&&g!=='veg'){s.hh.pantry[g]+=s.qty;s.qty=0;} // 6日で店を畳む(次の出店で新たに抽選)
         if(g==='fish'){const rot=s.qty/P.FISH_LIFE;s.qty-=rot;this.led.spoil.fish=(this.led.spoil.fish||0)+rot;}
         if(g==='veg'){const rot=s.qty/P.VEG_LIFE;s.qty-=rot;this.led.spoil.veg=(this.led.spoil.veg||0)+rot;}
@@ -415,7 +416,7 @@ export class World{
     const offers=this.sellOffers(h);
     for(const g in offers){let q=offers[g];
       const desks=[];
-      if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],P.EXP_CAP[g]]);
+      if(P.EXP[g]!==undefined)desks.push(['EXP',P.EXP[g],this.expCap[g]]);
       if(g==='stone'&&this.paving&&!this.paved)desks.push(['PAVE',1.4,1e9]);
       desks.sort((a,b)=>b[1]-a[1]);
       for(const[kind,price,cap]of desks){
@@ -427,7 +428,7 @@ export class World{
         h.pantry[g]-=can;h.purse+=can*price;h.income30+=can*price;
         this.treasury-=can*price;
         if(kind==='EXP'){this.co.expBuy+=can*price;this.exported[g]=(this.exported[g]||0)+can;this.fl(g,'exp',can);
-          const rev=can*P.EXP_ML[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
+          const rev=can*this.expMl[g];this.treasury+=rev;this.mainlandIn+=rev;this.co.expSell+=rev;}
         else if(kind==='PAVE')this.paveBought+=can;
         q-=can;}
       if(q>1e-9){ // 屋台に出す(店番=家族が残る扱い。委託中は生産効率減)
@@ -552,7 +553,7 @@ export class World{
       if(d%30===0){h.incMonths.push(h.incM);h.incM=0;if(h.incMonths.length>12)h.incMonths.shift();}
       h.purseLog.push(h.purse);if(h.purseLog.length>31)h.purseLog.shift();}
     if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
-      P.ROAD_F=P.PAVE_ROAD_F;this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
+      this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
     // 出生(月次): 飢えていない家族は増える——余剰人口の源泉。人口の受け皿(区画)はプレイヤーが用意する
     if(d%30===0)for(const h of this.hhs){
       if(h.members.length<11&&h.hungerRun===0&&FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT>2&&this.rng()<0.12){
@@ -575,10 +576,6 @@ export class World{
           h.job=best;h.jobCycleDone=best!=='wheat';h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
     // 財政(月末)
     if(d%30===0){
-      if(this.treasury<P.BAIL_TRIG&&this.bailouts<P.BAIL_N&&this.goDay===null){
-        this.bailouts++;this.treasury+=P.BAIL_AMT;this.mainlandIn+=P.BAIL_AMT;
-        const gr=['「これが最後と思いなさい」','「株主にどう説明しろと…」','「次はもう無い。肝に銘じよ」'][Math.min(this.bailouts-1,2)];
-        this.log(`★本国の追加支援#${this.bailouts} +${P.BAIL_AMT} ${gr}`);}
       const debt=Math.max(0,-this.treasury);
       if(m>P.FREE_M&&debt>0){const i=debt*P.IRATE;this.treasury-=i;this.mainlandOut+=i;}
       if(this.goDay===null&&-this.treasury>this.limit()){this.goDay=d;
