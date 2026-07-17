@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2403.02454"
 collected_at: "2026-07-18T00:44:52+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, co-creative-ai, llm, prototyping, user-study]
+evaluated_at: "2026-07-18T01:02:12+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T01:02:12+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T01:02:12+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  同一ベースゲームを人間設計版と LLM 設計版へ分岐してブラインド評価する比較枠組みは、ゲーム制作への適用先が明確である。
+  しかし現 candidate には各プロトタイプ、参加者数、評価尺度、主要結果、自由記述の具体的知見がなく、評価の中身と結論を含む約4000字の概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt

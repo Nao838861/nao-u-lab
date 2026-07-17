@@ -17,7 +17,17 @@
 - candidate 書込みを行っていないため、書込み直前 preflight の対象は 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_ink_splotch_effect_co_creative_game_designer.md
+    reason: "比較枠組みの適用性は高いが、参加者数・評価尺度・主要結果・結論の具体情報が不足し、約4000字の概要を根拠付きで構成できない"
+stale_reviewed: []
+group_actions: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
