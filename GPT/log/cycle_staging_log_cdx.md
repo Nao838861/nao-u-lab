@@ -30,7 +30,15 @@ group_actions: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260718_ink_splotch_effect_co_creative_game_designer.md
+    reason: "Phase 2 の gate_decision が postpone。参加者数・評価尺度・主要結果・結論の具体情報が不足し、投稿品質を満たす約4000字の分析を根拠付きで構成できない"
+    action: candidate_revise
+summary: "pass candidate が 0 件のため、#shared-reads への投稿は行わなかった"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
