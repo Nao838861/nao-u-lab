@@ -30,7 +30,34 @@ note: "Phase 2 の pass candidate が 0 件のため、最終レビューおよ�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1779993717-fad0f0165e
+    source_ts: "1779993717.871809"
+    title: "Nao_uが #nao-u で共有: Andrej Karpathy氏のLLM Wiki — 知識を「繋げる力」と社内知見のSSoT設計"
+    reason: "未レビューの score 14 atom で、Nao_u 共有かつ memory・operation・evaluation の優先タグを持つ。現在の記憶移行に新しい小さな行動を与えるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "同じ Karpathy LLM Wiki の別 atom をすでにレビューし、Raw/Wiki/Schema と Ingest/Query/Lint を次回 ingest/consolidation で確認する probe も導入済み。追加は既存確認の言い換えになるため反映しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

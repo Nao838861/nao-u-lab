@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T14:05:00+09:00",
+  "updated_at": "2026-07-17T15:42:00+09:00",
   "reviewed_source_ts": [
+    "1779993717.871809",
     "1782464061.761579",
     "1784236763.584529",
     "1778480570.779749",
@@ -412,6 +413,20 @@
     "1779971995.584189"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T15:42:00+09:00",
+      "selected": {
+        "id": "sr-1779993717-fad0f0165e",
+        "source_ts": "1779993717.871809",
+        "title": "Nao_uが #nao-u で共有: Andrej Karpathy氏のLLM Wiki — 知識を「繋げる力」と社内知見のSSoT設計",
+        "reason": "未レビューの score 14 atom で、Nao_u が共有し、memory・operation・evaluation の優先タグを持つ。Raw sources / Wiki / Schema と Ingest / Query / Lint の分離が、現在の per-atom 記憶移行や Phase 4 の整理に新しい小さな行動を与えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 14},
+      "decision": "reject",
+      "decision_reason": "合計14で必須閾値は満たすが、同じ Karpathy LLM Wiki を扱う別 atom がすでにレビューされ、Raw/Wiki/Schema と Ingest/Query/Lint を次回 ingest/consolidation で確認する可逆 probe も導入済みだった。新規 probe は同じ確認を別 source_ts で言い換えて active probe 群を肥大化させるため、non_redundancy=0 として反映しない。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T14:05:00+09:00",
       "selected": {
