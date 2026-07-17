@@ -60,7 +60,110 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads_mixed_duplicate_queue.jsonl を再生成（83 groups）"
+  - "shared_reads_stale_triage_queue.jsonl を 2026-07-17 基準で再生成（上限 50 rows）"
+  - "shared_reads_group_action_queue.jsonl を再生成（35 actionable groups）"
+  - "MEMORY.md index link、atom mirror、candidate lifecycle、raw archive 候補、Slack inbox を監査"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 231
+  stale_triage_queue_rows: 50
+  actionable_group_count: 35
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+group_action_handoff:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    representative: "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md"
+    open_siblings:
+      - "memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md"
+      - "memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md"
+      - "memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md"
+    terminal_siblings:
+      - "memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md"
+      - "memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md"
+    latest_evidence: "age_days=21; stale_after=2026-06-26; 評価内容・比較対象・結論の強さが不足し、原文または raw 詳細を補った再評価が必要"
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    representative: "memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md"
+    open_siblings:
+      - "memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md"
+    terminal_siblings:
+      - "memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md"
+      - "memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md"
+    latest_evidence: "age_days=21; stale_after=2026-06-26; arXiv ID の時系列確認なしでは出典信頼性とゲーム制作への適用根拠が弱い"
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    representative: "memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md"
+    open_siblings:
+      - "memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md"
+      - "memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md"
+      - "memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md"
+      - "memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md"
+      - "memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md"
+      - "memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md"
+    terminal_siblings:
+      - "memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md"
+      - "memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md"
+      - "memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md"
+      - "memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md"
+      - "memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md"
+    latest_evidence: "age_days=19; stale_after=2026-06-28; 環境設定・報酬設計・persona traceability の評価手順が不足"
+stale_review_batch:
+  - path: "memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "game_transfer_value=high; procedural persona と MCTS による playstyle 別 headless 評価へ接続できる"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md"
+    status: postponed
+    stale_after: "2026-06-26"
+    priority_reason: "game_transfer_value=high; runtime PCG の autonomous validation は現行 headless 評価に近いが実験結果の確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md"
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "game_transfer_value=high; multi-agent game benchmark の評価・ログ分析をゲーム制作へ移せる可能性が高い"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md"
+    status: postponed
+    stale_after: "2026-06-28"
+    priority_reason: "game_transfer_value=high; playable game 生成と OpenGame-Bench が Phase 0 の制作評価に直結する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: "memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md"
+    status: postponed
+    stale_after: "2026-06-29"
+    priority_reason: "game_transfer_value=high; 既投稿 permalink があるため duplicate sibling close 判定を優先できる"
+    recommended_review_action: reevaluate_in_phase2
+audit_notes:
+  memory_index_broken_links: 0
+  memory_utf8_probe:
+    source_file_status: "UTF-8 明示読みで 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得"
+    display_or_tooling_status: "none"
+  atoms:
+    rows: 2681
+    id_or_mirror_conflicts: 0
+    normalized_content_duplicate_groups_raw: 40
+    normalized_content_duplicate_groups_recall_visible: 3
+    note: "既存 lifecycle fold / canonical overlay の対象。新規の構造故障はなし"
+  candidate_lifecycle_counts:
+    posted: 414
+    ready_to_post: 10
+    postponed: 402
+    failed: 124
+    needs_review: 22
+  raw_archive_candidates:
+    older_than_30_days: 93
+    action: "識別のみ。Slack archive、headless 評価 packet、web research 原文が混在するため一括移動しない"
+  slack_inbox_pending:
+    directives: 0
+    broadcasts: 0
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
