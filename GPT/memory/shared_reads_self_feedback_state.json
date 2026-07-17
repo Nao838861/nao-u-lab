@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-18T03:05:00+09:00",
+  "updated_at": "2026-07-18T05:35:00+09:00",
   "reviewed_source_ts": [
+    "1779601071.377389",
     "1781127468.093899",
     "1782449735.510889",
     "1784276373.343179",
@@ -419,6 +420,15 @@
     "1782428061.285269"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T05:35:00+09:00",
+      "selected": {"id": "sr-1779601071-0fa98c550e", "source_ts": "1779601071.377389", "title": "OpenGame と自前評価器の目的差――外部ベンチを評価器へ直輸入しない", "reason": "未レビューの score 11 atom で memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。外部ベンチの指標を自前の進化追跡や playable-diff 判定へ移す際、測定目的と変数化対象の不一致を先に検出する小さな行動差へ変換できる。"},
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 3, "reversibility": 3, "total": 16},
+      "decision": "adopt_probe",
+      "decision_reason": "外部 benchmark の権威や網羅性ではなく、自前作業で固定する変数・観測する出力・下す判断の対応を一度だけ確認する。既存 probe は proxy、根拠、playable status を扱うが、評価器移植前の目的同型性を直接問わない。対象を次の評価 harness / benchmark 転用1件に限定し、重複または行動差がなければ撤退する。",
+      "change": {"type": "probe", "summary": "評価器・benchmark 転用前に、目的・変数・判定の同型性と不一致時の最小翻訳を確認する3問 probeを追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-18T01:05:10+09:00",
       "selected": {
@@ -10358,6 +10368,19 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260718-benchmark-purpose-variable-alignment",
+      "created_at": "2026-07-18T05:35:00+09:00",
+      "source_ts": "1779601071.377389",
+      "scope": "next evaluation-harness change or external benchmark/metric transfer into a game prototype, memory evaluation, or phase verdict",
+      "questions": [
+        "外部 benchmark と自前 harness について、それぞれが変数化する対象と固定する対象を1行で分けたか。",
+        "自前で下したい判断を1つ明記し、移植候補の指標がその判断を直接支えるか、単に隣接能力を測るだけかを区別したか。",
+        "目的が非同型なら、指標の直輸入を止め、翻訳できる最小要素1つと独自検証1件だけを残したか。"
+      ],
+      "withdrawal_condition": "次の2件の評価 harness または benchmark 転用レビューが既に目的・変数・判定を分離し、非同型な指標を直輸入せずに扱えている場合、または既存 proxy probe と行動差が出ない場合は削除する。",
+      "expires_after": "Review after the next two evaluation-harness changes or external benchmark/metric transfer decisions."
+    },
     {
       "id": "probe-20260717-player-intent-action-response",
       "created_at": "2026-07-17T20:20:00+09:00",
