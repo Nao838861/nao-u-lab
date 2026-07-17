@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>流通の島 v0.21.1</title>
+<title>流通の島 v0.22</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#101725;color:#dde;font:13px/1.4 system-ui,sans-serif;overflow:hidden}
 canvas{display:block;touch-action:none;position:fixed;inset:0}
@@ -69,7 +69,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133108';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133109';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
