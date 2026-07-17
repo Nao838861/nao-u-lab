@@ -11,7 +11,20 @@
 - 外部一次資料: https://arxiv.org/abs/2605.29653
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+(2026-07-18 05:08 JST)
+
+```yaml
+total_candidates: 0
+pass: []
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+```
+
+- Phase 1 で新規 candidate は収集されておらず、評価対象は 0 件。
+- Phase 4a 由来の `stale_review_batch` / `group_action_handoff` も staging に存在しないため、再評価および candidate frontmatter 更新はなし。
+- PTCG-Bench は Phase 1 の URL-first duplicate preflight で `skip / posted_url_match` 済みのため、本文評価には進めなかった。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
