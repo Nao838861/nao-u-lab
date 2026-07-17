@@ -27,7 +27,20 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260718_ai_native_games_survey_roadmap.md
+    reason: >-
+      canonical URL と題名が 2026-07-06 の投稿済み candidate に一致した。
+      既存投稿（4467字、Slack ts 1783287766.520669）は同じ論文の固有内容と適用分析を既に含み、
+      新規の差分や更新版に基づく追加価値がないため、重複投稿を行わない。
+    action: postpone
+evidence:
+  canonical_candidate: memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md
+  permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669
+  reviewed_at: 2026-07-18T08:17:04+09:00
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
