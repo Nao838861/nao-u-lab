@@ -25,7 +25,16 @@ group_actions: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+- 実行日時: 2026-07-17T10:05:27+09:00
+- 最終判定: pass candidate 1 件を投稿。元論文本文まで確認し、失敗 action の活用、完全観測/PDDL schema 前提、人間の mental model との一致未検証、3 level の小規模評価という境界を本文へ反映した。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260717_action_model_learning_player_modeling.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784250324239229
+    char_count: 4544
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
