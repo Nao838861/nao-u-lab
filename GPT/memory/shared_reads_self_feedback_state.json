@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-17T10:20:00+09:00",
+  "updated_at": "2026-07-17T12:15:00+09:00",
   "reviewed_source_ts": [
     "1782464061.761579",
     "1784236763.584529",
@@ -407,7 +407,8 @@
     "1782065326.755519",
     "1779745539.367889",
     "1784179196.161589",
-    "1782500861.216959"
+    "1782500861.216959",
+    "1784250324.239229"
   ],
   "reviews": [
     {
@@ -10223,6 +10224,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260604-open-world-behavior-oracle", "probe-20260619-behavior-signature-distribution-shift", "probe-20260626-revengebench-behavior-recovery-action-distance", "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の oracle / behavior-distribution / active-probe / diagnostic-attribution probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-17T12:15:00+09:00",
+      "id": "sr-1784250324-df60d52807",
+      "source_ts": "1784250324.239229",
+      "title": "Action Model Learning による失敗入力を含む player rule-model 診断",
+      "decision": "reject",
+      "reason": "Score 13. 成功しなかった入力を state-action-same-state の反例として保存し、未観測 mechanic を理解不足ではなく unknown と扱う観点は、deterministic puzzle の telemetry と headless 診断に直結する。しかし active probes はすでに、minimal state-action-next-state と rule-bearing event row、first-failure-to-next-action evidence、metric と visual/temporal trace、AI playtest の diagnostic attribution を要求している。新規 probe を追加しても次回行動はほぼ変わらず、314件ある active probe 群をさらに肥大化させるため採用しない。shared-reads 本文と原論文は小規模 Sokoban 3 level での precision・計算資源差を示すが、人間の mental model との一致は未実験で、この環境でも failure_reason schema の比較実測がないため evidence は2。読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260623-mind-studio-executable-preview", "probe-20260621-fly-fail-fix-metric-visual-repair", "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の transition-trace / first-failure / diagnostic-attribution probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
