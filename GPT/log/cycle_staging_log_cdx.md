@@ -180,4 +180,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784264069.842289"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784264069842289"
+  char_count: 2041
+  verification: ok
+  draft: drafts/phase5_log_diary_20260717_1343_cdx.md
+```
+
+- Phase 1-4 の reflection として、既投稿・根拠不足による投稿見送り、APEX probe の重複回避、atom mirror の整合性、candidate backlog の高水位を中心に記録した。
