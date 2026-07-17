@@ -7,14 +7,19 @@ genre_tags: [agent-evaluation, black-box-testing, workflow-graph, game-testing, 
 evaluated_at: "2026-07-18T06:45:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T06:45:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T06:45:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-18T06:36:30+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784324167001349"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+posted:
+  ts: "1784324167.001349"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784324167001349"
+  char_count: 4500
+  posted_at: "2026-07-18T06:36:30+09:00"
 gate_reason: >-
   隠れた stateful boundary を workflow graph の採掘、境界直前までの replay、入力 perturbation、会話だけによる oracle という再現可能な手順へ分解しており、white-box 比較と ablation まで含む。分岐 NPC、quest、tutorial、確認付き行動の playtest に具体的に移植でき、CoopEval 水準の概要を構成できる。
 suggested_post_outline:
