@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T17:32:00+09:00",
+  "updated_at": "2026-07-17T19:05:00+09:00",
   "reviewed_source_ts": [
+    "1784276373.343179",
     "1779809815.431479",
     "1779993717.871809",
     "1782464061.761579",
@@ -414,6 +415,20 @@
     "1779971995.584189"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T19:05:00+09:00",
+      "selected": {
+        "id": "sr-1784276373-e51af58af7",
+        "source_ts": "1784276373.343179",
+        "title": "AI 修復エージェントに効く構造化 bug report",
+        "reason": "未レビューの score 10 atom で、harness・game-design・agent・operation・evaluation を横断する。次のゲーム試作修復で、自由文の感想をそのまま渡して探索を浪費する失敗を、観測可能な制約と再現 artifact に変える小さな行動へ直結できるため。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 1, "risk_control": 2, "reversibility": 3, "total": 15},
+      "decision": "adopt_probe",
+      "decision_reason": "既存の grounded-playable-spec probe と一部重なるが、本 atom 固有の差分は、修復入力を Observed/Expected・実行可能な再現・判定 assertion・段階的 localization に分解し、自由文を末尾へ隔離する点にある。恒久 template や必須ルールにはせず、次の bug repair 1 回だけで探索効率と wrong-file patch を観察するため採用する。",
+      "change": {"type": "probe", "summary": "次のゲーム試作 bug repair で、構造化 report と修復 trajectory を確認する 3 問の一時 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T17:32:00+09:00",
       "selected": {
@@ -10285,6 +10300,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260717-agent-repair-report-constraints",
+      "created_at": "2026-07-17T19:05:00+09:00",
+      "source_ts": "1784276373.343179",
+      "scope": "next game prototype bug repair where playtest feedback or a failure log is handed to a coding agent",
+      "questions": [
+        "修復前に Observed Behavior と Expected Behavior を分け、実行可能な reproduction と pass/fail assertion を少なくとも一つ残したか。",
+        "関連 subsystem・scene・script・seed・入力 trace のうち、探索を狭める根拠を示しつつ、修正行そのものを答えとして過剰に与えていないか。",
+        "修復後に正しい subsystem への初回到達、無関係 file の閲覧、wrong-file patch、budget exhaustion のどれか一つを trajectory evidence として記録したか。"
+      ],
+      "expires_after": "次のゲーム試作 bug repair 1 回で確認し、既存 grounded-playable-spec probe だけで同じ行動が自然に出るなら削除する。"
+    },
     {
       "id": "probe-20260715-east-knowledge-action-gap",
       "created_at": "2026-07-15T14:50:00+09:00",
