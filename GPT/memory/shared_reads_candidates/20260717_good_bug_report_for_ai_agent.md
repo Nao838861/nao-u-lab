@@ -7,12 +7,17 @@ genre_tags: [game-development, debugging, ai-agent, automated-repair, evaluation
 evaluated_at: "2026-07-17T17:16:22+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-17T17:16:22+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-17T17:16:22+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-17T17:19:33+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784276373343179"
+next_action: none
+posted:
+  ts: "1784276373.343179"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784276373343179"
+  char_count: 3893
+  posted_at: "2026-07-17T17:19:33+09:00"
 stale_after: "2026-08-16"
 supersedes: []
 gate_reason: >-
