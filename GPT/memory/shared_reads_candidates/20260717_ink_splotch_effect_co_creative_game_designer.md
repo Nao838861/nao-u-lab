@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2403.02454"
 collected_at: "2026-07-17T13:44:24+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, co-creation, llm, prototyping, user-study]
+evaluated_at: "2026-07-17T13:46:42+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-17T13:46:42+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-17T13:46:42+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-16"
+supersedes: []
+gate_reason: >-
+  3ジャンル×3条件の9プロトタイプ、45件のブラインド評価、6評価軸、自由記述を通じて、LLMの発想支援と文脈・game feel・実装面の弱点を具体的に比較できる。
+  実験の制約も明示されており、同一ベースから設計案を分岐してプレイ評価する制作サイクルへ直接適用でき、CoopEval水準の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "LLMを自律デザイナーとして競わせる実験から、発想のミューズとして使う適切な境界を抽出する"
+  analysis_axis: "人間とLLMの差を、着想、文脈保持、実装、反復調整、game feel、ブラインド評価の各段階で分解する"
+  application_target: "同一の最小プロトタイプから人間設計版とLLM提案版を分岐し、出自を伏せたプレイ評価で採否を決める小規模probe"
+  pros_cons: "長所は比較条件と失敗例が具体的なこと。短所はGPT-3.5・Unity・45回答・開発者の暗黙介入に依存し、現行モデルへの性能一般化はできないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
