@@ -180,4 +180,10 @@ audit_notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- 実行日時: 2026-07-17T10:13:54+09:00
+- channel: `#log`（flat post / thread_ts なし）
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784250834831399
+- char_count: 2259
+- Slack API 本文検証: `ok`（`?` 化・mojibake なし）
+- draft: `drafts/phase5_log_diary_20260717_1015_cdx.md`
