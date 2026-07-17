@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.00527"
 collected_at: "2026-07-18T08:14:18+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-native-games, generative-ai, mechanics, survey]
+evaluated_at: "2026-07-18T08:15:44+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-18T08:15:44+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-18T08:15:44+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  counterfactual criterion、53作品の調査、G/N二軸 taxonomy、mechanical invariants、今後の課題まで、問題設定・手法・評価対象・結論を一貫して抽出できる。
+  AIを追加機能ではなく core loop の mechanic として監査する具体的な設計基準に変換でき、CoopEval水準の概要と独立した適用分析を構成できる。
+suggested_post_outline:
+  overview_angle: "AI-native を技術の有無ではなく、AIを除去した時に中心的な遊びが崩れるかという反実仮想基準で定義し、53作品の設計空間を整理する"
+  analysis_axis: "G-axis と N-axis の二軸分類、および開放的な生成結果を goal・rule・state・feedback・pacing・player agency に接続する mechanical invariants の有効性と限界"
+  application_target: "新規ゲーム案と既存 prototype の企画レビューで、生成AIが core loop に不可欠か、出力が観測可能な状態変化とプレイヤー判断へ接続されているかを点検する"
+  pros_cons: "利点はAI mechanicの必要性と未開拓領域を共通語彙で比較できること。弱点はsurvey taxonomyであり、個別mechanicの面白さや長期運用、安全性、費用を直接実証しないこと"
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
