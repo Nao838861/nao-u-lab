@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-17T15:42:00+09:00",
+  "updated_at": "2026-07-17T17:32:00+09:00",
   "reviewed_source_ts": [
+    "1779809815.431479",
     "1779993717.871809",
     "1782464061.761579",
     "1784236763.584529",
@@ -413,6 +414,20 @@
     "1779971995.584189"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T17:32:00+09:00",
+      "selected": {
+        "id": "sr-1779809815-40079e52bf",
+        "source_ts": "1779809815.431479",
+        "title": "Agent Island: saturation／contamination に強い multiagent game benchmark",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。固定問題ではなく adaptive agents との交渉・投票を評価場にし、順位の不確実性と行動ログを分離する設計が、次回の game/headless 評価へ新しい小さな行動を与えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 15},
+      "decision": "reject",
+      "decision_reason": "合計は15で閾値を満たすが、Agent Island から移せる要点は既存 probe と重複する。lmgame-Bench probe が既知ルールによる contamination と scaffold 要因の分離を、PowerAgentBench-Dyn probe が run/seed budget と反復分散を、Scoreable Games probe が aggregate score・context variant・metric bundle の分解を、M3-BENCH／multi-agent evaluation 系 probe が行動・理由・通信ログの整合をすでに確認している。新規 probe は同じ確認の言い換えとなり active probe 群を肥大化させるため採用しない。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T15:42:00+09:00",
       "selected": {
