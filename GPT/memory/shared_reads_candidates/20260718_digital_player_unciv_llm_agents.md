@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2502.20807"
 collected_at: "2026-07-18T02:44:49+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, player-modeling, strategy-game, llm-agent, evaluation]
+evaluated_at: "2026-07-18T02:47:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T02:47:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T02:47:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  Unciv 上で長期計画・数値推論・外交を同時評価する問題設定はゲーム制作へ具体的に適用できる。
+  しかし候補本文は abstract 相当で、実験条件・比較対象・評価指標・定量結果がなく、CoopEval 水準の概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt

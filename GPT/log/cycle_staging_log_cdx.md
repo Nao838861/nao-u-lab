@@ -8,7 +8,21 @@
 - 既存 raw・recent atoms と新規検索を確認。GameEngineBench、runtime PCG evaluation、EAST、generated-content perception、autonomous balance testing は既存 candidate / 投稿 atom と重複していたため、新規 candidate 化していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_digital_player_unciv_llm_agents.md
+    reason: "Unciv の長期計画・数値推論・外交評価は具体的だが、候補本文に実験条件・比較対象・評価指標・定量結果がなく、約4000字の概要を根拠付きで構成できない"
+stale_reviewed: []
+group_actions: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260718_digital_player_unciv_llm_agents.md
+    decision: continue
+    canonical_url: https://arxiv.org/abs/2502.20807
+    title_key: digital player evaluating large language models based human like agent in games
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
