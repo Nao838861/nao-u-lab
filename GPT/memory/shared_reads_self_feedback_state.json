@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-17T12:15:00+09:00",
+  "updated_at": "2026-07-17T14:05:00+09:00",
   "reviewed_source_ts": [
     "1782464061.761579",
     "1784236763.584529",
@@ -408,9 +408,24 @@
     "1779745539.367889",
     "1784179196.161589",
     "1782500861.216959",
-    "1784250324.239229"
+    "1784250324.239229",
+    "1779971995.584189"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-17T14:05:00+09:00",
+      "selected": {
+        "id": "sr-1779971995-4c7d48be74",
+        "source_ts": "1779971995.584189",
+        "title": "APEX: Autonomous Policy Exploration for Self-Evolving LLM Agents",
+        "reason": "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ。成功した方策への固着を探索停滞として扱う観点が、定時サイクルと game/headless 評価に新しい小さな行動を与えるか確認した。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 3, "non_redundancy": 0, "risk_control": 3, "reversibility": 3, "total": 15},
+      "decision": "reject",
+      "decision_reason": "採用閾値の合計は満たすが、同じ APEX 論文を要約した atom sr-1779669494-15705cce59 を 2026-05-26 に既にレビューし、未訪問の分岐を次の探索候補として残す一時 probe を採用済みである。さらに exploration-vs-utilization failure と state-action loop の active probe も隣接する。source_ts は別でも内容上は重複しており、追加 probe は同じ確認の言い換えになるため non_redundancy=0 として反映しない。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-17T08:28:00+09:00",
       "selected": {
