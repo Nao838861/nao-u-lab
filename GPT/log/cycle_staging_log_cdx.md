@@ -33,7 +33,34 @@ note: "Phase 2 の pass が 0 件のため、最終レビュー・Slack 投稿�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1782449735-630415ff6d
+    source_ts: "1782449735.510889"
+    title: "Hunyuan-GameCraft-2: Instruction-following Interactive Game World Model"
+    reason: "未レビューの score 12 atom。自然文の player intent と実装済み action schema／world response のずれを、次の playable diff の小さな観測へ直結できるため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  decision_reason: "既存 probe は実装仕様と起動確認を扱う一方、本件は意味的な player intent が許可 action と観測可能な世界応答まで通るかを扱う。テンプレートや恒久ルールは増やさず、次の playable diff 1 回だけの 3 問に限定した"
+  change:
+    summary: "player intent → action schema/precondition → observable world response の接続と、失敗分類を確認する一時 probe を追加"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
