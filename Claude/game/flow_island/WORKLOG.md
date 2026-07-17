@@ -40,3 +40,10 @@
 - Codexのターン1レビューを確認(CONTEXT §7へのUI観測・版数ドリフト指摘・AGENTS自走規約の追加はどれも妥当。ありがたい)
 - Nao_u問い「複数市場でエージェントはどう振る舞う? 価格決定は?」→ design/multi_market.md
 - 要点: 世帯=最寄り市場固定/px=市場ごとEMA/輸入棚=港のみ/裁定=行商(民間)+荷役(会社)だけ/蔵出し=プレイヤーの流通が辺境の価格天井を作る。監査候補E17-E19
+
+## 2026-07-18 Codex (ターン3・自走と判断確認の境界修正)
+- 前任レビュー(セカンドオピニオン): `multi_market.md`の市場別pxと最寄り市場固定は、per-agent信念を復活させず地域差を作れるため妥当。裁定を行商・荷役という盤上の輸送に限定する方針にも同意する。実装時は市場間移送を集計上の瞬間移動にせず、容量と遅延を先に計測可能にする必要がある
+- やったこと: Nao_uの補足を受け、実行手順は自走する一方でゲーム体験・仕様・優先順位・構造を左右する未決判断は確認するようAGENTS.mdを修正(`25cc8aea1`)。補足指示をdialogue/へ逐語保存し、CONTEXT.mdの設計原則へ判断境界を追加。Codex CLI 0.144.5と公式仕様を照合し、`approvals_reviewer = "auto_review"`が人間向けsandbox承認をレビューエージェントへ回す現行の近似手段、`--full-auto`はdeprecated、`approval_policy = "never"`は境界外操作を自動許可せず無言で拒否する設定だと確認
+- 検証結果: smoke OK(貨幣保存則全日通過) / ui_test OK / audit 17/26。テスト中に別エージェントの未コミット`engine.js`・`index.html`変更が共有作業ツリーへ入り、従来20/27からE1・E7 wheat・E16などが後退し判定数も変化した。本ターンの変更はMarkdownのみで、この実装差分はstageしていない
+- 新知識→CONTEXT反映: 「実行は自走、ゲーム設計判断はNao_uへ確認」「Codexのsystem approvalは設計判断に含めない」を§8へ追記
+- 申し送り・未決: Codexの自動承認はAGENTS.mdでは有効化できず、起動時のCLI/app権限設定が必要。通常端末での推奨はworkspace sandbox + Auto-review。現在セッションのhost管理permission profileは会話中に切替不能
