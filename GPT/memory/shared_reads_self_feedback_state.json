@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T06:45:00+09:00",
+  "updated_at": "2026-07-18T07:05:00+09:00",
   "reviewed_source_ts": [
     "1778535742.144259",
     "1779601071.377389",
@@ -418,7 +418,8 @@
     "1784250324.239229",
     "1781019055.113759",
     "1779971995.584189",
-    "1782428061.285269"
+    "1782428061.285269",
+    "1784324167.001349"
   ],
   "reviews": [
     {
@@ -10379,6 +10380,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260601-memory-action-audit", "probe-20260609-base-camp-saturation-novelty-gate"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の search-before-write / novelty-gate probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-18T07:05:00+09:00",
+      "id": "sr-1784324167-28705569f8",
+      "source_ts": "1784324167.001349",
+      "title": "AgentEval — conversational workflow graph による状態遷移境界の発見と検査",
+      "decision": "reject",
+      "reason": "Score 13. 単発の成功率ではなく、複数ターンの前提条件を workflow graph として辿り、本人確認・最終確認・条件値などの状態遷移境界を検査する観点は、会話 agent、Slack lifecycle、headless game evaluation に直結する。しかし active probes はすでに、外部テキストから durable state への authority propagation、agent-controlled evidence を排した trust-boundary preflight、最小 state-action-next-state trace と分岐反例を要求している。新規 probe を追加しても次回行動はほぼ変わらず、316件ある active probe 群をさらに肥大化させるため non_redundancy=0、risk_control=2 とした。shared-reads 本文と原論文リンクは discovery / testing の根拠になるが、この環境で workflow graph 採掘と既存 trace probe を比較実測していないため evidence=2。採用条件の合計14に届かないため、読了と重複理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260619-agentic-state-authority-boundary", "probe-20260711-benchjack-trust-boundary-preflight", "probe-20260626-mindstudio-executable-branch-preview"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の authority-boundary / trust-preflight / transition-trace probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],

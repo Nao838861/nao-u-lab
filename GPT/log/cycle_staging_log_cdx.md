@@ -43,7 +43,33 @@ evidence:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784324167-28705569f8
+    source_ts: "1784324167.001349"
+    title: "AgentEval — conversational workflow graph による状態遷移境界の発見と検査"
+    reason: "未レビューの score 10 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグをすべて持つ最新候補。単発の成功率では見落とす複数ターンの状態遷移境界を、現在の会話 agent・Slack lifecycle・headless game evaluation に追加反映すべきか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。authority propagation、agent-controlled evidence の trust preflight、state-action-next-state trace と分岐反例は既存 probe がすでに要求しており、新規 probe は重複して active probe 群を肥大化させる。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
