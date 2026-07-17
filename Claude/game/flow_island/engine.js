@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.20';
+export const VERSION='v0.21';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -184,9 +184,18 @@ export class World{
       pres:P.PRES_SALT*(this.px.salt??2)/P.PR_SALT,pick:P.PICK_SALT*(this.px.salt??2)/P.PR_PICK}[g]??0;
     return labor+inp;}
   dist(h){return Math.hypot(h.x-this.market.x,h.y-this.market.y);}
-  pickJob(exclude){ // 職選び=直近12ヶ月の観測年収(月次窓)に比例した抽選。30日窓は年1回収入の麦を0に見せ(測定バグ)、argmaxは全員を単一の最高職へ殺到させる(コブウェブ)
-    const inc={};for(const h of this.hhs)(inc[h.job]=inc[h.job]||[]).push(h.incMonths.reduce((a,b)=>a+b,0)+h.incM);
-    const cand=Object.entries(inc).map(([j,v])=>[j,Math.max(0,v.reduce((a,b)=>a+b,0)/v.length)]).filter(([j,w])=>j!==exclude&&w>0);
+  pickJob(exclude,h){ // 職選び=直近12ヶ月の観測年収に比例した抽選。30日窓は麦を0に見せ・argmaxは殺到(コブウェブ)
+    // 候補は全職業: 「現在いる職」だけだと絶滅職が吸収状態になり、麦が一度消えると二度と再参入できず村が壊死する
+    const inc={};for(const x of this.hhs)(inc[x.job]=inc[x.job]||[]).push(x.incMonths.reduce((a,b)=>a+b,0)+x.incM);
+    const avgs=Object.values(inc).map(v=>v.reduce((a,b)=>a+b,0)/v.length).filter(v=>v>0).sort((a,b)=>a-b);
+    const med=avgs.length?avgs[Math.floor(avgs.length/2)]:1; // 絶滅職の期待所得=島の中央値(再参入の窓)
+    const NEED={fisher:'water',fisher2:'water',logger:'forest',quarryman:'rock'};
+    const cand=[];
+    for(const j of JOBS){if(j===exclude)continue;
+      if(h&&NEED[j]&&!this.near(h.x,h.y,NEED[j],2))continue; // 転職は自宅の地形に縛る(内陸の漁師を作らない)
+      if(!h&&NEED[j]&&!this.hhs.some(x=>x.job===j))continue;  // 分家は絶滅した地形職に入らない(湧き先が無い)
+      const v=inc[j];const w=v&&v.length?Math.max(0,v.reduce((a,b)=>a+b,0)/v.length):med;
+      if(w>0)cand.push([j,w]);}
     if(!cand.length)return null;
     const s=cand.reduce((a,[,w])=>a+w*w,0);let r=this.rng()*s;
     for(const[j,w]of cand){r-=w*w;if(r<=0)return j;}
@@ -311,13 +320,6 @@ export class World{
       const perishable=PERISH.includes(g);
       for(let i=st.length-1;i>=0;i--){const s=st[i];
         s.age=(s.age||0)+1;   // 価格は毎回の出店で抽選し直す(記憶なし)。店先での値下げ学習はしない
-        // 商館の買上げ: プレイヤーが目標を設定した品を、市で2日誰も買わなかった余剰だけ言い値で集める
-        // (必須の人が先に買う機会を保証。金庫から支払い=プレイヤーの金の使い道)
-        if(s.age>=2&&s.hh instanceof HH&&(this.stockTgt[g]||0)-(this.stock[g]||0)>1e-9&&this.treasury>-this.limit()){
-          const can=Math.min(s.qty,(this.stockTgt[g]||0)-(this.stock[g]||0));
-          if(can>1e-9){s.qty-=can;s.hh.purse+=can*s.price;s.hh.income30+=can*s.price;
-            this.treasury-=can*s.price;this.co.procBuy=(this.co.procBuy||0)+can*s.price;
-            this.stock[g]=(this.stock[g]||0)+can;}}
         // 3日売れ残ったら輸出台へ流す(端数は黙って本土行き=定常収入。信念ペナルティは生鮮のみ)
         if(s.age>=3&&s.hh instanceof HH&&P.EXP[g]!==undefined){
           const price=P.EXP[g],cap=P.EXP_CAP[g];
@@ -346,7 +348,9 @@ export class World{
     if(this.order&&d>=this.order.due){this.log(`注文の期限切れ——本国重役たちの心証を損ねた(残${Math.round(this.order.left)}荷)`);this.order=null;}
     // 注文の出荷: 商館在庫から自動で積む(本来は貯まったら確認ダイアログ。今は全自動)
     if(this.order){const og=this.order.g;const can=Math.min(this.stock[og]||0,this.order.left);
-      if(can>1e-9){this.stock[og]-=can;this.order.left-=can;
+      if(can>1e-9){const avgC=(this.stockCost?.[og]||0)/Math.max(1e-9,this.stock[og]||0);
+        this.stockCost=this.stockCost||{};this.stockCost[og]=Math.max(0,(this.stockCost[og]||0)-can*avgC);
+        this.stock[og]-=can;this.order.left-=can;
         const rev=can*this.order.price*1.25;this.treasury+=rev;this.mainlandIn+=rev;this.co.ordSell=(this.co.ordSell||0)+rev;
         this.exported[og]=(this.exported[og]||0)+can;this.fl(og,'exp',can);
         if(this.order.left<=1e-9){this.log('★注文を納めた——本国での評判が上がった');this.orderDone++;this.order=null;}}}
@@ -431,7 +435,8 @@ export class World{
       const shelves=[...this.stalls[g]];
       if(P.IMP[g]!==undefined)shelves.push({hh:'CO',qty:1e9,price:P.IMP[g]});
       const freeStock=(this.stock[g]||0)-((this.order&&this.order.g===g)?this.order.left:0);
-      if(freeStock>1e-9)shelves.push({hh:'STOCK',qty:freeStock,price:Math.min((this.px[g]??1)*1.2,(P.IMP[g]??9e9)*0.97)}); // 商館の蔵出し(注文予約分は売らない)
+      if(freeStock>1e-9){const avg=(this.stockCost?.[g]||0)/Math.max(1e-9,this.stock[g]||0);
+        shelves.push({hh:'STOCK',qty:freeStock,price:Math.min(Math.max(avg*1.2,0.3),(P.IMP[g]??9e9)*0.97)});} // 蔵出し=仕入原価×1.2(コストプラス)。px連動は飢饉の便乗値上げになり備蓄が保険にならない
       shelves.sort((a,b)=>a.price-b.price); // 輸入棚も価格競争に参加=輸入パリティが真の天井になる
       const isInput=(h.job==='saltworks'&&g==='char')||(h.job==='fisher'&&(g==='salt'||g==='char'))||(h.job==='veg'&&g==='salt')||((h.job==='wheat'||h.job==='rapeseed')&&g==='meal')||((h.job==='woodshop'||h.job==='charburner')&&g==='log');
       for(const s of shelves){if(want<1e-9)break;
@@ -444,13 +449,27 @@ export class World{
           this.co.impMargin+=q*s.price-c;this.fl(g,'imp',q);
           this.outBy['imp_'+g]=(this.outBy['imp_'+g]||0)+(c-q*s.price);
           this.imported[g]=(this.imported[g]||0)+q;}
-        else if(s.hh==='STOCK'){this.treasury+=q*s.price;this.stock[g]-=q;s.qty-=q;this.co.stockSell=(this.co.stockSell||0)+q*s.price;}
+        else if(s.hh==='STOCK'){this.treasury+=q*s.price;
+          const avg=(this.stockCost?.[g]||0)/Math.max(1e-9,this.stock[g]||0);this.stockCost[g]=Math.max(0,(this.stockCost[g]||0)-q*avg);
+          this.stock[g]-=q;s.qty-=q;this.co.stockSell=(this.co.stockSell||0)+q*s.price;}
         else{s.qty-=q;const fee=q*s.price*P.FEE; // 市場口銭: 金庫の貯まる速さ=村の取引量(良い配置ほど速い)
           s.hh.purse+=q*s.price-fee;s.hh.income30+=q*s.price-fee;this.treasury+=fee;this.co.fee=(this.co.fee||0)+fee;}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);
         this.px[g]=(this.px[g]??s.price)*0.9+s.price*0.1;}
       }}
   dayEnd(){const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
+    // 商館の買上げ: その日の全世帯の買い物が済んだ後の余剰を、安い屋台から順に(=必須の人が先・逆選抜なし。
+    // 熟成待ち方式は「市場が拒否した高値の抽選」だけを掴む逆選抜で実測350%過払いだった)
+    this.stockCost=this.stockCost||{};
+    for(const g in this.stockTgt){let lack=(this.stockTgt[g]||0)-(this.stock[g]||0);
+      if(lack<=1e-9||this.treasury<=-this.limit())continue;
+      for(const s of[...this.stalls[g]].sort((a,b)=>a.price-b.price)){if(lack<=1e-9)break;
+        if(!(s.hh&&s.hh.purse!==undefined))continue;
+        const can=Math.min(s.qty,lack);if(can<1e-9)continue;
+        s.qty-=can;s.hh.purse+=can*s.price;s.hh.income30+=can*s.price;
+        this.treasury-=can*s.price;this.co.procBuy=(this.co.procBuy||0)+can*s.price;
+        this.stock[g]=(this.stock[g]||0)+can;this.stockCost[g]=(this.stockCost[g]||0)+can*s.price;
+        lack-=can;}}
     if(mm===9&&d%30===15)for(const h of this.hhs)if(h.job==='wheat'){
       const fill=Math.min(1,(h.fert||0)/(P.FERT_NEED*180));
       {const hv=P.Y_WHEAT*h.mult()*Math.min(1,h.wheatWork/300)*(1+P.FERT_BOOST*fill);h.pantry.wheat+=hv;this.led.prod.wheat=(this.led.prod.wheat||0)+hv;this.fl('wheat','prod',hv);(this.harvestLog=this.harvestLog||[]).push([d,hv]);}
@@ -529,7 +548,8 @@ export class World{
       const fed=this.hungryN<Math.max(1,this.hhs.length*0.1); // 村が飢えている間は分家しない(新しい口を増やさない)
       if(parent.purse>=900&&fed){
         const best=this.pickJob(null);
-        if(best){const src=this.hhs.filter(h=>h.job===best).reduce((a,b)=>a.purse>b.purse?a:b);
+        if(best){const same=this.hhs.filter(h=>h.job===best);
+          const src=same.length?same.reduce((a,b)=>a.purse>b.purse?a:b):{x:this.market.x,y:this.market.y}; // 絶滅職の再興は市場の近くから
           const dowry=Math.min(300,parent.purse*0.3);parent.purse-=dowry;
           const nh=new HH(best,src.x+(this.rng()-0.5)*3,src.y+(this.rng()-0.5)*3);
           nh.purse=dowry;this.hhs.push(nh);this.updRoads();
@@ -542,7 +562,7 @@ export class World{
       const distress=h.hungerHist.reduce((a,b)=>a+b,0)>=P.DISTRESS||(h.insolvM||0)>=3; // 飢え続き or 3ヶ月借金漬け
       if((h.insolvM||0)>=6&&h.purse<0){this.treasury+=h.purse;h.purse=0;h.insolvM=0;this.log(`${h.sur}家の借財を帳消しに(徳政)`);}
       if(distress&&d-(h.lastSwitch||-9e9)>=P.COOLDOWN&&this.rng()<0.5){
-        const best=this.pickJob(h.job);
+        const best=this.pickJob(h.job,h);
         if(best&&best!==h.job){this.log(`破綻転職: ${h.job}#${h.id}→${best}`);
           if(h.purse<0){this.treasury+=h.purse;h.purse=0;} // 徳政: 借金は会社の貸し倒れ(再出発)
           h.job=best;h.lv=Math.min(h.lv,1);h.lastSwitch=d;h.hungerHist=[];h.insolvM=0;}}}}
