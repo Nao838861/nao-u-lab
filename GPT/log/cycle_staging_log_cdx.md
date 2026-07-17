@@ -10,7 +10,19 @@
 - 参照元: `memory/raw/web_research/results.jsonl` の 2026-07-17T15:51:04 取得行、および arXiv:2607.07593v1 原文ページ。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260717_good_bug_report_for_ai_agent.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+```
+
+- duplicate preflight: `continue`（canonical URL: `https://arxiv.org/abs/2607.07593`、title_key: `what makes a good bug report for an ai agent`）。
+- 判定根拠: 87 agents・433 issues の観察分析に加え、2 models・17 mutations の controlled ablation があり、問題設定・手法・評価・結論を独立して説明できる。ゲーム試作では playtest feedback を再現手順、期待挙動、局所化 cue、関連コードを備えた修正入力へ変換する工程に直接適用でき、CoopEval 水準の約4000字へ展開可能。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
