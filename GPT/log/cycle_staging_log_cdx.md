@@ -24,7 +24,21 @@ group_actions: []
 - 判定根拠: 3 genre × 3条件の9 prototype、45回答のblind ranking、6評価軸と自由記述、実装過程・失敗・限界が揃い、問題設定から結論まで抽出可能。ゲーム制作では、同一baseから人間設計版とLLM提案版を分岐し、出自を伏せてplaytestするprobeへ直接適用できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260717_ink_splotch_effect_co_creative_game_designer.md
+    reason: >-
+      canonical URL は #shared-reads に ts=1778466346.767849 と
+      ts=1778535742.695379 で既投稿。今回候補も短い excerpt のみで、
+      3500-4500字の materially deeper な置換投稿を支える全文根拠が不足している。
+    action: candidate_revise
+```
+
+- 最終判定: `postponed`。Slack 投稿なし。
+- duplicate evidence: `https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778466346767849`、`https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535742695379`。
+- 再審査条件: 論文全文から3ジャンル×3条件の具体的設計、45回答の集計値、6評価軸、自由記述、開発者介入、限界を再構成し、既存投稿を明確に上回る単独分析にすること。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

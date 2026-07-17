@@ -7,12 +7,12 @@ genre_tags: [game-design, co-creation, llm, prototyping, user-study]
 evaluated_at: "2026-07-17T13:46:42+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-17T13:46:42+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-17T13:46:42+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-17T13:48:35+09:00"
+last_decision: postponed
+evidence: "existing shared-reads posts: ts=1778466346.767849 and ts=1778535742.695379; current candidate contains only a short excerpt"
+next_action: "candidate_revise only if a materially deeper, full-paper-grounded replacement is justified"
 stale_after: "2026-08-16"
 supersedes: []
 gate_reason: >-
@@ -24,6 +24,10 @@ suggested_post_outline:
   application_target: "同一の最小プロトタイプから人間設計版とLLM提案版を分岐し、出自を伏せたプレイ評価で採否を決める小規模probe"
   pros_cons: "長所は比較条件と失敗例が具体的なこと。短所はGPT-3.5・Unity・45回答・開発者の暗黙介入に依存し、現行モデルへの性能一般化はできないこと"
   verdict_pre: "部分採用"
+postpone_reason: >-
+  canonical URL（arXiv:2403.02454）は #shared-reads に 2026-05-11 の初回投稿と 2026-05-12 の単独再投稿がすでに存在する。
+  既存投稿は現行品質に達していないが、今回の candidate も短い excerpt に留まり、3500-4500字の新規かつ記事固有の分析として置換投稿する根拠が不足している。
+  重複を増やさず、全文に基づく実験条件・数値結果・失敗条件を揃えた materially deeper な改稿ができる場合だけ再審査する。
 ---
 
 ## raw_excerpt
