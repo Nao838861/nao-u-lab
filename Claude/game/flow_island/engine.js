@@ -25,7 +25,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   lumber:['food1','tools','food2','salt','char','iron'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
-export const VERSION='v0.23';
+export const VERSION='v0.24';
 export const JOBS=Object.keys(JOBCLS);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
@@ -491,7 +491,7 @@ export class World{
     this.hungryN=0;
     for(const h of this.hhs){let need=h.eat();this.led.need+=need;const kinds=new Set();
       for(const g of['pres','wheat','pick']){const u=Math.min(h.pantry[g],need*P.RATION*0.85);
-        h.pantry[g]-=u;need-=u;if(u>1e-9){kinds.add(KIND[g]);this.led.eat[g]=(this.led.eat[g]||0)+u;}}
+        h.pantry[g]-=u;need-=u;if(u>1e-9){kinds.add(KIND[g]);this.led.eat[g]=(this.led.eat[g]||0)+u;this.fl(g,'cons',u);}} // fl漏れ=需給パネルの麦消費が過少表示されていた(E20が検出)
       for(let i=0;i<2;i++){const act=['fish','veg','meat'].filter(g=>h.pantry[g]>1e-9);
         if(!act.length||need<=1e-9)break;const share=need/act.length;
         for(const g of act){const u=Math.min(h.pantry[g],share);h.pantry[g]-=u;need-=u;if(u>1e-9){kinds.add(KIND[g]);this.led.eat[g]=(this.led.eat[g]||0)+u;this.fl(g,'cons',u);}}}

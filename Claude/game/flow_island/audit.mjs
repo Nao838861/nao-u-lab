@@ -121,5 +121,25 @@ t('E14 麦農家が初回収穫前に転職しない',earlyWheatSwitch.length===
  t('E16 漸進建築>一括建築',res.paced.fam<res.lump.fam&&res.paced.pop>=res.lump.pop, // 意図=村の健康(飢餓・人口)。口銭は代理指標として雑音が大きく外した
    `飢餓 漸進${res.paced.fam}/一括${res.lump.fam} 人口${res.paced.pop}/${res.lump.pop} 口銭${Math.round(res.paced.fee*10)}/${Math.round(res.lump.fee*10)}`);}
 
+// ---- E20 物資出納の報告(嘘発見器・報告のみ) ----
+// 貨幣保存則が「金の湧き」を全部捕まえたのと同じ網を物資に張る。
+// 在庫変動が記録フロー(prod/cons/imp/exp)で説明できない=どこかに無計装の湧き/消えがある。
+// 分家キット印刷(総収穫の9%が無から)はこの網があれば指摘される前に検出できた。
+{const w4=mk(11);const GOODS4=['wheat','log','salt','tools'];
+ const tot=g=>w4.hhs.reduce((s,h)=>s+h.pantry[g],0)+w4.stalls[g].reduce((s,x)=>s+x.qty,0)+(w4.stock[g]||0);
+ const unex={},flows={};for(const g of GOODS4){unex[g]=0;flows[g]=0;}
+ let prev={};for(const g of GOODS4)prev[g]=tot(g);
+ const planC={13:'wheat',16:'logger',20:'fisher',26:'woodshop',30:'rapeseed'};
+ for(let d=1;d<=1440;d++){
+  if(d%30===1){const m=Math.floor(d/30)+1;if(planC[m]){const s=findSpot(w4,planC[m]);if(s)w4.addZone(planC[m],s[0],s[1]);}}
+  if(d%5===0){if(w4.order)w4.stockTgt[w4.order.g]=Math.max(w4.stockTgt[w4.order.g]||0,Math.ceil((w4.stock[w4.order.g]||0)+w4.order.left));
+   w4.stockTgt.wheat=Math.max(w4.stockTgt.wheat||0,Math.round(w4.pop()*2));}
+  w4.step();
+  for(const g of GOODS4){const f=w4.fday?.[g]||{prod:0,cons:0,imp:0,exp:0};
+   const now=tot(g);const explained=f.prod-f.cons+f.imp-f.exp;
+   unex[g]+=now-prev[g]-explained;flows[g]+=Math.abs(f.prod)+Math.abs(f.cons);prev[g]=now;}}
+ for(const g of GOODS4){const r=flows[g]>1?Math.abs(unex[g])/flows[g]*100:0;
+  console.log(`E20報告 ${g}: 説明できない出納 ${unex[g]>=0?'+':''}${Math.round(unex[g])}荷 (総フローの${r.toFixed(1)}%)${r>10?' ⚠要調査':''}`);}}
+
 console.log(`\n${pass}/${pass+fail} PASS`);
 process.exit(fail?1:0);
