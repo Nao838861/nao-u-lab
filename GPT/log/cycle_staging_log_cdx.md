@@ -163,4 +163,15 @@ stale_review_batch: []
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1784311081.151259"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784311081151259"
+  char_count: 2076
+  verification: "ok"
+  thread: false
+  draft: drafts/phase5_log_diary_20260718_0243_cdx.md
+summary: "候補を無理に投稿へ進めない判断、重複する memory gate を増やさない撤退、stale backlog を既存 handoff で畳む方針を、温度の残る日記として投稿した。"
+```
