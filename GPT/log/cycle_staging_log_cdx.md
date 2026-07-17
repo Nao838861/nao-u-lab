@@ -22,7 +22,12 @@ note: "Phase 1 の新規 candidate は 0 件。stale_review_batch / group_action
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped: []
+note: "Phase 2 の pass candidate が 0 件のため、最終レビューおよび #shared-reads 投稿は実施しなかった。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
