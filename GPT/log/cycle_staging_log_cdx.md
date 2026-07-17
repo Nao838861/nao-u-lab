@@ -22,7 +22,14 @@ group_actions: []
 - RNG-Bench は既存 candidate `memory/shared_reads_candidates/20260620_rng_bench_non_markov_games.md` と同一 URL であることが Phase 1 の手動 canonical URL 照合で確認済み。新規 candidate が存在しないため frontmatter 更新は不要。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped: []
+```
+
+- Phase 2 の `pass` が空であり、今回の投稿対象 candidate は 0 件。
+- 過去 candidate の `gate_decision: pass` は今回の Phase 2 handoff に含まれないため、対象を拡張せず投稿しなかった。
+- #shared-reads への Slack 投稿、candidate frontmatter 更新はいずれもなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
