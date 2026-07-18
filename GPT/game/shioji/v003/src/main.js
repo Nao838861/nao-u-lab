@@ -581,8 +581,19 @@ canvas.addEventListener('pointercancel', event => {
   canvas.classList.remove('map-dragging');
 });
 
-window.addEventListener('pointerup', () => canvas.classList.remove('map-dragging'));
-window.addEventListener('blur', () => canvas.classList.remove('map-dragging'));
+function clearPointerState() {
+  state.pointers.clear();
+  state.panLast = null;
+  state.dragMoved = false;
+  state.pinch = null;
+  state.roadDragStart = null;
+  canvas.classList.remove('map-dragging');
+}
+
+window.addEventListener('pointerup', event => {
+  if (event.pointerType === 'mouse' && event.buttons === 0) clearPointerState();
+});
+window.addEventListener('blur', clearPointerState);
 
 canvas.addEventListener('wheel', event => {
   event.preventDefault();
