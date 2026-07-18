@@ -568,6 +568,8 @@ window.addEventListener('blur', () => canvas.classList.remove('map-dragging'));
 
 canvas.addEventListener('wheel', event => {
   event.preventDefault();
+  // Macのトラックパッドの通常スクロールでは島を動かさない。
+  if (!event.metaKey && !event.ctrlKey) return;
   const point = localPoint(event);
   renderer.zoomAt(event.deltaY < 0 ? 1.1 : 0.9, point.x, point.y);
 }, { passive: false });
