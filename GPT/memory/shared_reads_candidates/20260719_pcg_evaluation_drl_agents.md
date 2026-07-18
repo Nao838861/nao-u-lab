@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2505.16801"
 collected_at: "2026-07-19T05:47:00+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [procedural-content-generation, game-testing, reinforcement-learning, serious-games, evaluation]
+evaluated_at: "2026-07-19T05:49:28+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-19T05:49:28+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-19T05:49:28+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  PCG 版ごとに DRL agent の勝率・学習時間を比較する適用軸は明確で、生成器回帰テストへの接続も具体的である。
+  ただし候補メモには agent 構成、訓練条件、統計検定、PCG 差分、限界の詳細がなく、単一ゲームの 94% 対 97% だけでは ~4000字概要の評価部分が薄い。
 ---
 
 ## raw_excerpt

@@ -1,28 +1,23 @@
 ---
-title: CA2: Code-Aware Agent for Automated Game Testing
+title: "CA2: Code-Aware Agent for Automated Game Testing"
 url: https://arxiv.org/abs/2605.13918
 collected_at: 2026-06-02T13:59:22.2815508+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-testing, qa, reinforcement-learning, code-coverage, instrumentation]
-evaluated_at: 2026-06-02T14:02:36+09:00
+evaluated_at: 2026-07-19T05:49:28+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-06-02T14:08:40+09:00
-last_decision: postponed
-evidence: "duplicate prior #shared-reads post: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+last_reviewed_at: 2026-07-19T05:49:28+09:00
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
 next_action: none
-postpone_reason: "Phase 3 duplicate check: same source already posted to #shared-reads on 2026-05-28."
-stale_after: "2026-07-02"
+stale_after: "2026-08-18"
 supersedes: []
-gate_reason: "ゲーム状態だけでなく current function call trace / call stack を観測に入れ、target functions への到達を testing strategy の目的にする中核が明確。headless 評価が表層到達やスコアだけで止まる問題に対し、spawn / collision / scoring などの関数到達を検証目標へ変える適用性が高い。"
-suggested_post_outline:
-  overview_angle: "自動ゲームテストを「画面や状態を見る」から「内部関数へ到達したかを見る」へ拡張する軸で書く。"
-  analysis_axis: "call trace / call stack の観測、target function 到達を学習する testing strategy、state-based / image-based instrumentation、baseline との差分を分析する。"
-  application_target: "headless playtest の coverage 指標、特定ギミックや衝突処理の到達確認、失敗時の未到達関数ログ化。"
-  pros_cons: "メリットはテスト失敗の原因を内部到達の不足として扱える点。デメリットは instrumentation の手間と、到達しても面白さや手触りの品質は保証しない点。"
-  verdict_pre: "採用。ゲーム制作サイクルの deterministic 検証層に入れる価値が高い。"
+gate_reason: |-
+  posted-source index で同一 arXiv work と 2026-05-28 の既投稿 permalink が一致した。
+  手法の価値は高いが新しい評価差分を持たないため、Phase 3 の投稿対象にはしない。
 ---
 
 ## raw_excerpt

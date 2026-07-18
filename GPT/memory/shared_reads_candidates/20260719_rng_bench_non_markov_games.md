@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.19338"
 collected_at: "2026-07-19T05:44:56+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, agent-evaluation, multimodal, memory, benchmark]
+evaluated_at: "2026-07-19T05:49:28+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T05:49:28+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T05:49:28+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  非 Markov 環境の記憶能力を、完全状態公開や事後想起ではなく多段階行動の中で測る問題設定・二つのゲーム・難度軸・Memory Gap・主要結果が揃っている。
+  AI テストプレイヤーの失敗を忘却と方策選択に分ける評価へ直接適用でき、CoopEval 水準の概要を独立して構成できる。
+suggested_post_outline:
+  overview_angle: "現在観測だけでは解けないゲームを使い、MLLM の記憶を行動中に測る評価設計として書く。"
+  analysis_axis: "既存評価の交絡、Matching Pairs / 3D Maze、三つの難度軸、head-to-head duel、Memory Gap、長文脈でも残る忘却を分析する。"
+  application_target: "部分観測ゲームの headless test と、AI テストプレイヤーの失敗原因を記憶欠落・行動選択へ分解する診断 harness。"
+  pros_cons: "メリットは記憶と方策の失敗を分離できる点。デメリットは合成ゲーム上の測定であり、実作品の意味記憶や人間らしい探索へそのまま一般化できない点。"
+  verdict_pre: "部分採用。テスト用ミニゲームと Memory Gap 型診断を先に試す。"
 ---
 
 ## raw_excerpt

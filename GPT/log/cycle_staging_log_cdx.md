@@ -11,7 +11,93 @@
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending はともに 0 件。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260719_rng_bench_non_markov_games.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    reason: "posted-source URL/work 一致。既投稿: memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md / https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+  - path: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    reason: "title canonical review 後、NVIDIA Research と既投稿 arXiv が同一 work と確認。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796436646579"
+  - path: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    reason: "posted-source URL/work 一致。既投稿: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md / https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
+  - path: memory/shared_reads_candidates/20260719_pcg_evaluation_drl_agents.md
+    reason: "agent 構成・訓練条件・統計検定・PCG 差分・限界が不足し、~4000字概要の評価部分を支えられない。"
+stale_reviewed: []
+
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    decision: skip
+    reason: posted_source_url_match
+  - path: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    decision: review
+    reason: posted_title_match_url_differs
+  - path: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    decision: skip
+    reason: posted_source_url_match
+  - path: memory/shared_reads_candidates/20260719_rng_bench_non_markov_games.md
+    decision: continue
+    reason: no posted-source or title canonical match
+  - path: memory/shared_reads_candidates/20260719_pcg_evaluation_drl_agents.md
+    decision: continue
+    reason: no posted-source or title canonical match
+
+group_actions:
+  - group_key: ca2 code aware agent for automated game testing
+    representative: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    reason: "posted-source index が同一 arXiv work を既投稿へ結び、代表候補に新しい評価差分がない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779915242282019"
+      - path: memory/shared_reads_candidates/20260609_ca2_code_aware_game_testing.md
+        evidence: "status: failed; 同一 URL・同一論文の既投稿重複として terminal"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: fly fail fix iterative game repair with reinforcement learning and large multimodal models
+    representative: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    reason: "URL は NVIDIA Research と arXiv で異なるが、題名・手法・実験内容が一致する同一 work で、新しい評価差分がない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_fly_fail_fix_iterative_game_repair.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796436646579"
+      - path: memory/shared_reads_candidates/20260526_fly_fail_fix_iterative_game_repair.md
+        evidence: "status: failed; 同一論文の既投稿重複として terminal"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: gameuiagent an llm powered framework for automated game ui design with structured intermediate representation
+    representative: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    reason: "posted-source index が同一 arXiv work を既投稿へ結び、代表候補に新しい評価差分がない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
+      - path: memory/shared_reads_candidates/20260601_gameuiagent_structured_ir.md
+        evidence: "status: failed; 同一論文の既投稿重複として terminal"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-d0febab9bc126a36
+    - gha-1c98384a8ec33d43
+    - gha-0954d40fbd95be3b
+  acknowledged_ids:
+    - gha-d0febab9bc126a36
+    - gha-1c98384a8ec33d43
+    - gha-0954d40fbd95be3b
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
