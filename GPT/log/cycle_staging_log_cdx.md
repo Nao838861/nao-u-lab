@@ -129,7 +129,110 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で High Signal / Recent / Game Task / Tag Entry の atom id・per-file path を監査。broken link / unknown id / missing per-file は 0 件。"
+  - "memory/atoms.jsonl 2690 件を memory_health.py と build_atom_duplicate_groups.py --check で監査。duplicate id / mirror drift / parse error は 0 件、normalized-content duplicate 40 group / 80 rows は既存 fold・45 group overlay と同期済み。"
+  - "memory/raw/ の 30日超ファイルは 93 件（web_research 85、headless_eval 6、slack_archive / sync state 2）。いずれも一次資料・評価 trace・ingest provenance で参照継続中のため、path を壊す移動は行わず明示保持。"
+  - "candidate lifecycle 996 件を監査（posted 423 / failed 127 / postponed 414 / needs_review 22 / ready_to_post 10）。posted / failed は再評価 queue から除外。"
+  - "mixed duplicate / stale triage / group action queue を 2026-07-19 基準で再生成（84 / 50 / 33 rows）。"
+  - "前 cycle の group handoff 3件が Phase 2 で処理済み・pending 0 であることを確認後、今 cycle の上位3 groupを persistent inbox へ冪等 enqueue。audit errors 0。"
+  - "slack_directives.jsonl 23 rows / slack_broadcasts.jsonl 21 rows を lifecycle tool で確認。pending 0 のため status 更新なし。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』1語が U+FFFD 2文字を含む一方、memory_health は正常なゲーム内表記『???がヘッダに出る』を持つ gr-1777083728-44d444ab7a も mojibake suspect として数える。実破損と誤検知が同じ warning に混在している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md; tools/atom_quality.py mojibake_score"
+    source_file_status: "UTF-8 明示読みで sr atom と raw source の双方に U+FFFD を確認したため sr は source 側の既存破損。gr atom は UTF-8 本文が正常で、??? は Nao_u 原文中の意図的な UI 表記。memory/MEMORY.md は UTF-8 読みで『記憶』『ゲーム設計』『敵パターン』を取得でき、『評価軸』は単に本文に存在しない。index validator も OK。"
+    display_or_tooling_status: "PowerShell UTF-8 表示と rg が sr の同じ U+FFFD を再現するため表示経路の mojibake ではない。gr は atom_quality.py の run_count >= 1 による tooling false positive。"
+    why_blocks_game_memory: "sr は『AIエージェント』完全一致の検索入口を1件だけ弱めるが agent / memory tags で到達可能。gr の誤検知は health warning の精度を下げるが recall 内容自体は失われないため、現時点では設計フェーズを起動する阻害度ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 254
+  stale_triage_queue_rows: 50
+  actionable_group_count: 33
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-17a4fb34ca143655
+    - gha-2971eb870867ba27
+    - gha-4640411d0a914242
+  previous_cycle_feedback:
+    processed_groups: 3
+    close_siblings: 3
+    keep_distinct: 0
+    group_analysis_time_minutes: 3
+    normal_candidate_passed: 1
+    budget_decision: "backlog 高水位が継続し、3 group 処理後も通常 candidate 分析・投稿を維持できたため budget 3 を継続。"
+group_action_handoff:
+  - group_key: "apex autonomous policy exploration for self evolving llm agents"
+    representative: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260525_apex_policy_exploration.md
+      - memory/shared_reads_candidates/20260526_apex_autonomous_policy_exploration.md
+      - memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+      stale_after: "2026-06-29"
+      reason: "exploration collapse / strategy map / fork discovery / policy selection は有用だが、map 更新規則と評価結果の根拠が不足。"
+  - group_key: "mimic py an extensible tool for personality driven automated game testing with large language models"
+    representative: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+      stale_after: "2026-06-30"
+      reason: "bad-policy bot 拡張との接続は強いが、評価設計・実験結果・既存手法との差分が不足。"
+  - group_key: "pixie code level mechanic generation for game designers"
+    representative: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+      stale_after: "2026-06-30"
+      reason: "mechanic 変種を試す制作サイクルへの接続はあるが、annotation 仕様・生成例・testing の中身が不足。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "game_transfer_value=high; persona 別 headless 破綻検出へ接続でき、手法中核も抽出済み。mixed duplicate として sibling 整理を含め再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "game_transfer_value=high; runtime PCG と autonomous validation は headless 評価へ近いが、実験結果・失敗例・結論の一次確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    duplicate_group_key: "agent island a saturation and contamination resistant benchmark from multiagent games"
+    priority_reason: "game_transfer_value=high; multi-agent game benchmark と ranking / log 分析をゲーム内社会評価へ移せる。mixed duplicate の代表として再評価する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    duplicate_group_key: "opengame open agentic coding for games"
+    priority_reason: "game_transfer_value=high; playable diff 導線に直結し、Template Skill / Debug Skill / OpenGame-Bench の根拠を再確認する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "agentic pcg procedural content generation via tool using llms"
+    priority_reason: "game_transfer_value=high だが 2026-05-27 に同一 URL の投稿済み evidence があり、mixed sibling を terminal close できるかを優先確認する。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
