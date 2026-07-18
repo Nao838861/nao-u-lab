@@ -1,4 +1,4 @@
-export const VERSION = 'v003.0.7-handcart';
+export const VERSION = 'v003.1.0-tutorialflow';
 
 export const GRID = { width: 24, height: 19, tileW: 68, tileH: 34 };
 export const DAY_SECONDS = 1.6;
@@ -119,6 +119,16 @@ export const TUTORIAL = [
     id: 'complete', title: '第一章達成 — 流れが島をつくる',
     detail: '倉庫と上位等級が解禁されました。森、町、港の間に次の流れを作れます。',
     advisor: '一荷の道筋ができました。次は量を増やすか、倉庫で滞りをほどくか。島の形はそこからです。',
+  },
+  {
+    id: 'warehouse', title: '中継倉庫を建てる',
+    detail: '「物流」から中継倉庫を選び、道に接する場所へ建てます。森と町の間の荷を受け止めます。',
+    advisor: '輸出が始まった島では、荷を一か所へ寄せず中継できます。まず倉庫を一つ建てましょう。',
+  },
+  {
+    id: 'warehouse-check', title: '倉庫の働きを確認する',
+    detail: '建てた中継倉庫をクリックし、入荷・保管・出荷の欄を確認してください。',
+    advisor: '倉庫は数字だけの箱ではありません。荷車がどこから来て、どこへ出るかをここで確認できます。',
   },
 ];
 

@@ -658,7 +658,7 @@ export class World {
     this.chapterStage = Math.max(this.chapterStage, stage);
   }
 
-  tutorialComplete(stage) {
+  tutorialComplete(stage, state = {}) {
     const logger = this.getBuildingByType('logger');
     const woodshop = this.getBuildingByType('woodshop');
     const port = this.getBuildingByType('port');
@@ -671,6 +671,8 @@ export class World {
       case 5: return Boolean(woodshop && woodshop.grade >= 1);
       case 6: return this.sectionAmount(port, 'outbound', 'boards') > 0 || (this.stats.exported.boards || 0) > 0;
       case 7: return (this.stats.exported.boards || 0) > 0;
+      case 8: return Boolean(this.getBuildingByType('warehouse'));
+      case 9: return Boolean(this.getBuildingByType('warehouse') && state.warehouseViewed);
       default: return false;
     }
   }

@@ -32,6 +32,7 @@ const state = {
   trackingReturn: null,
   modalSavedSpeed: null,
   completedLetterShown: false,
+  warehouseViewed: false,
   mail: [
     {
       id: 'charter', day: 1, unread: false, important: true,
@@ -150,8 +151,8 @@ function renderObjective() {
   const step = TUTORIAL[state.tutorial] || TUTORIAL.at(-1);
   $('#objective-title').textContent = step.title;
   $('#objective-detail').textContent = dynamicObjectiveDetail();
-  $('#objective-count').textContent = `${Math.min(8, state.tutorial + 1)} / 8`;
-  $('#objective-fill').style.width = `${Math.min(100, state.tutorial / 8 * 100)}%`;
+  $('#objective-count').textContent = `${Math.min(10, state.tutorial + 1)} / 10`;
+  $('#objective-fill').style.width = `${Math.min(100, state.tutorial / 10 * 100)}%`;
   $('#advisor-line').textContent = step.advisor;
 
   const actions = [];
@@ -165,12 +166,13 @@ function renderObjective() {
   }
   if (state.tutorial === 5) actions.push({ id: 'focus-woodshop', label: '木工房を見る' });
   if (state.tutorial === 6 || state.tutorial === 7) actions.push({ id: 'focus-port', label: '港を見る' });
+  if (state.tutorial === 9) actions.push({ id: 'focus-warehouse', label: '倉庫を見る' });
   $('#objective-actions').innerHTML = actions.map(action => `<button data-objective-action="${action.id}">${action.label}</button>`).join('');
 }
 
 function updateTutorial() {
   let advanced = false;
-  while (state.tutorial < 8 && world.tutorialComplete(state.tutorial)) {
+  while (state.tutorial < 10 && world.tutorialComplete(state.tutorial, state)) {
     state.tutorial++;
     world.setChapterStage(state.tutorial);
     advanced = true;
@@ -180,7 +182,7 @@ function updateTutorial() {
   toast('航海日誌を更新', step.title, 'good');
   if (state.tutorial === 1) setCategory('production');
   if (state.tutorial === 3) setCategory('production');
-  if (state.tutorial === 8) completeChapter();
+  if (state.tutorial === 10) completeChapter();
   renderObjective();
   renderBuildTools();
 }
@@ -280,6 +282,10 @@ function renderSelection() {
 function selectBuilding(building) {
   if (!building) return;
   state.selectedId = building.id;
+  if (building.type === 'warehouse' && state.tutorial === 9) {
+    state.warehouseViewed = true;
+    updateTutorial();
+  }
   renderer.selectedId = building.id;
   $('#selection').hidden = false;
   renderSelection();
@@ -608,6 +614,7 @@ $('#objective-actions').addEventListener('click', event => {
   if (action === 'focus-logger') focusBuilding('logger');
   if (action === 'focus-woodshop') focusBuilding('woodshop');
   if (action === 'focus-port') focusBuilding('port');
+  if (action === 'focus-warehouse') focusBuilding('warehouse');
 });
 
 $('#selection-body').addEventListener('click', event => {
