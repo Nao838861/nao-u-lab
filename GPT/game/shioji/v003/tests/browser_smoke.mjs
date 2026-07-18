@@ -81,6 +81,39 @@ async function desktop() {
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島 v003');
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), false);
   assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.2.0-material-shapes');
+  const materialShapeCalls = await page.eval(`(() => {
+    const renderer = window.__CHARTER__.renderer;
+    const originalContext = renderer.ctx;
+    const recorder = () => {
+      const calls = [];
+      const ctx = new Proxy({}, {
+        set: () => true,
+        get: (_, method) => (...args) => calls.push({ method, args }),
+      });
+      return { calls, ctx };
+    };
+    const logs = recorder();
+    const boards = recorder();
+    try {
+      renderer.ctx = logs.ctx;
+      renderer.drawLogsAt(40, 40, 4, 1);
+      renderer.ctx = boards.ctx;
+      renderer.drawBoardsAt(40, 40, 4, 1);
+    } finally {
+      renderer.ctx = originalContext;
+    }
+    const count = (record, method) => record.calls.filter(call => call.method === method).length;
+    return {
+      logEllipses: count(logs, 'ellipse'),
+      logRectangles: count(logs, 'fillRect'),
+      boardEllipses: count(boards, 'ellipse'),
+      boardRectangles: count(boards, 'fillRect'),
+    };
+  })()`);
+  assert.ok(materialShapeCalls.logEllipses >= 2, '丸太は円形の木口と年輪を持つ');
+  assert.equal(materialShapeCalls.logRectangles, 0, '丸太を角材として描かない');
+  assert.equal(materialShapeCalls.boardEllipses, 0, '製材を円柱として描かない');
+  assert.ok(materialShapeCalls.boardRectangles >= 2, '製材は薄い角材を積んだ束として描く');
   assert.equal(await page.eval('document.documentElement.scrollWidth <= innerWidth'), true);
   await page.screenshot('opening-desktop.png');
 
@@ -144,6 +177,14 @@ async function desktop() {
   await page.eval('for(let i=0;i<150;i++) window.__CHARTER__.world.update(.1)');
   await wait(350);
   await page.eval("window.__CHARTER__.selectBuilding(window.__CHARTER__.world.getBuildingByType('woodshop'))");
+  await page.eval(`(() => {
+    const c = window.__CHARTER__;
+    const woodshop = c.world.getBuildingByType('woodshop');
+    c.renderer.zoom = 1.45;
+    c.renderer.focus(woodshop.x + 1.5, woodshop.y + 2.15, true);
+  })()`);
+  await wait(180);
+  await page.screenshot('material-shapes-desktop.png');
   assert.match(await page.eval("document.querySelector('#selection-body').innerText"), /等級0/);
   assert.match(await page.eval("document.querySelector('#selection-body').innerText"), /入荷棚/);
   assert.match(await page.eval("document.querySelector('#selection-body').innerText"), /出荷場/);
