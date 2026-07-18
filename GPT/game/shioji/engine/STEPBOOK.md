@@ -15,13 +15,13 @@ Nao_uの診断: 「GPTは詳細を1ステップずつ積み重ねようとして
 
 ---
 ## Phase A: 足場と嘘発見器(段1-4)【ENGINE_SPEC Step0】
-- [ ] **1** engine/src雛形+package.json(`npm test`=`node tests/run.mjs`)+シードPRNG(mulberry32)+`world.step()`空実装+tests/run.mjs枠 — 寄与: 全段の土台
+- [x] **1** engine/src雛形+package.json(`npm test`=`node tests/run.mjs`)+シードPRNG(mulberry32)+`world.step()`空実装+tests/run.mjs枠 — 寄与: 全段の土台
   - 参照: §1構成図 / 完了: `npm test`が緑で走る(空枠でよい)+同シード2回で同結果
-- [ ] **2** 会社台帳(money+ledger)と「金の増減は必ずledger経由」 — 寄与: 金の嘘発見器の前提
+- [x] **2** 会社台帳(money+ledger)と「金の増減は必ずledger経由」 — 寄与: 金の嘘発見器の前提
   - 参照: §3.7 / 完了: ledger外の資金変更が存在しないことの単体テスト(直接代入で赤くなる)
-- [ ] **3** 貨幣保存則assert(毎日)+testConservation(3シード×360日) — 寄与: 以後の全段のバグを即日検出
+- [x] **3** 貨幣保存則assert(毎日)+testConservation(3シード×360日) — 寄与: 以後の全段のバグを即日検出
   - 参照: §7の4(最終受け入れは3シード×6年) / 完了: testConservation 3シード×360日=違反ゼロ
-- [ ] **4** 物資出納の検査枠(在庫変動=prod-cons+imp-exp±輸送中) — 寄与: 物の嘘発見器
+- [x] **4** 物資出納の検査枠(在庫変動=prod-cons+imp-exp±輸送中) — 寄与: 物の嘘発見器
   - 参照: §7.0.1帯表(出納残差<5%) / 罠#10 / 完了: わざと1件記帳を漏らすと赤くなる(嘘発見器自身の検証)
 
 ## Phase B: 物理層(段5-10)【Step1】
@@ -111,3 +111,4 @@ Nao_uの診断: 「GPTは詳細を1ステップずつ積み重ねようとして
 | 日付 | 到達段 | メモ(詰まり・較正変更・提案段) |
 |---|---|---|
 | | 0/40 | 開始前 |
+| 2026-07-19 | 4/40 | 段1〜4完了。決定論、会社台帳、日次貨幣保存則、cargo込み物資出納の嘘発見器を実装。 |
