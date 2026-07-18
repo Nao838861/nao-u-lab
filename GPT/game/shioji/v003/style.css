@@ -214,6 +214,7 @@ button:disabled { opacity: .42; cursor: not-allowed; }
 .opening-copy blockquote { margin: 18px 0; padding-left: 14px; border-left: 2px solid var(--gold); color: #eadfbd; font: 13px/1.7 Georgia, "Yu Mincho", serif; }
 .opening-copy .primary { max-width: 360px; }
 .direct-play { display: block; color: var(--muted); margin-top: 8px; font-size: 9px; }
+.build-version { display: block; color: rgba(231,213,161,.55); margin-top: 5px; font: 9px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; }
 
 .compact { background: rgba(5,19,22,.66); }
 .letter-card { position: relative; width: min(620px, 94vw); max-height: 88vh; overflow: auto; padding: 42px 46px; background: #e8d7ae; color: #382f29; box-shadow: 0 24px 80px rgba(0,0,0,.5); border: 8px solid #c6aa74; }
