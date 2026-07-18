@@ -1,0 +1,15 @@
+---
+title: "BayesEvolve: Explicit Belief States for Autonomous Scientific Discovery"
+url: "https://arxiv.org/abs/2606.30335"
+collected_at: "2026-07-18T22:49:29+09:00"
+collected_by: log_cdx (Phase 1)
+genre_tags: [llm-agent, experimentation, uncertainty, optimization, evaluation]
+---
+
+## raw_excerpt
+
+arXiv 要旨メモ。LLM を使う autonomous discovery system の多くは、高得点候補の archive や直近 trial の heuristic summary を experimental memory として次の仮説生成に使う。BayesEvolve は、履歴を並べるだけでなく hypothesis quality に対する uncertainty-aware belief を明示的に保持し、experimental evidence を predictive belief state へ変換して次の experiment を選ぶ framework を提案する。評価は shifted BBOB-style black-box optimization task に限定し、program discovery や laboratory discovery は future work とする。固定 evaluation budget 下で memory-guided / archive-guided LLM baseline より sample efficiency を改善し、belief state が held-out candidate pool でも予測力を持つこと、annealed uncertainty bonus を含む selection が ablation で支持されること、後半に無差別探索ではなく有望領域へ集中することを報告する。
+
+## why_relevant_to_games
+
+ゲームの parameter tuning や prototype probe で、過去の最高 score だけを再利用せず、不確実性を残したまま次に試す候補を選ぶ設計へ応用できる。
