@@ -7,14 +7,19 @@ genre_tags: [game-design, design-documentation, communication, prototyping]
 evaluated_at: "2026-07-18T10:05:39+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T10:05:39+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T10:05:39+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-18T10:11:43+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784337079340619"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+posted:
+  ts: "1784337079.340619"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784337079340619"
+  char_count: 3641
+  posted_at: "2026-07-18T10:11:43+09:00"
 gate_reason: >-
   厚い仕様書が読まれない問題、視覚的な一枚への圧縮、制作事例、注記を介した協働、
   圧縮が設計理解を強制する仕組みまで抽出できる。定量評価はないが、事例と教育実践という
