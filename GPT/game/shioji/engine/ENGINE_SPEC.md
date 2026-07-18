@@ -123,7 +123,7 @@ stdTerrainに追加: **鉄鉱床'ore'** x∈[8,13], y∈[20,24]のうち(x*5+y*3
 ### 6.2 財(GOODSに追加)
 `ore`(鉄鉱石・重い: 運搬容量1/2) / `coal`(石炭・燃料) / `bar`(銑鉄・重い) — `iron`(鉄製品)は既存(現在輸入のみの文化財)
 ### 6.3 職業(JOBSに追加・ladder区分は木材系と同じ'lumber')
-| 職 | 立地 | 生産 | 日産(мult1) |
+| 職 | 立地 | 生産 | 日産(mult1) |
 |---|---|---|---|
 | miner(鉱夫) | ore隣接2マス | 鉱石 | Y_ORE=14 |
 | collier(炭鉱夫) | coal隣接2マス | 石炭 | Y_COAL=10 |
@@ -152,7 +152,7 @@ stdTerrainに追加: **鉄鉱床'ore'** x∈[8,13], y∈[20,24]のうち(x*5+y*3
 
 ### 7.0.1 E-Stableの完全定義(この座標・この帯で実装する)
 **地形**: flow_islandのstdTerrain(48x40)+§6.1の鉄鉱床・炭層。市場(25,32)・港(25,35)
-**基準都市(良配置)** — 開始時に以下を配置(флow_islandのBASE+拡張。全て市場からpathLen(walk)≦12):
+**基準都市(良配置)** — 開始時に以下を配置(flow_islandのBASE+拡張。全て市場からpathLen(walk)≦12):
 ```
 fisher(23,32) fisher(27,32) fisher(21,33) veg(22,30) veg(22,28) wheat(21,28) wheat(28,30)
 logger(27,26) woodshop(24,30) charburner(26,29) saltworks(26,31) shepherd(24,28) rapeseed(29,28)
@@ -165,7 +165,7 @@ logger(27,26) woodshop(24,30) charburner(26,29) saltworks(26,31) shepherd(24,28)
 |---|---|
 | 人口(各年末) | 80〜250人 |
 | 飢餓 | Y16-20の年平均 ≦ Y1-5の年平均(悪化しない) |
-| 職業 | 13職(基準都市の全職種)が毎年末に≧1世帯 |
+| 職業 | 基準都市の全9職種(fisher/veg/wheat/logger/woodshop/charburner/saltworks/shepherd/rapeseed)が毎年末に≧1世帯(配置は13世帯) |
 | px帯(20年間の全観測) | fish 0.2-3.0 / wheat 0.5-4.5 / log 0.3-4.0 / tools 0.5-6.5 / salt 0.3-5.5 / char 0.3-5.5 |
 | 保存則・物資出納 | 違反ゼロ(出納残差<5%) |
 | 会社 | 破産なし(最終通告に達しない) |

@@ -13,7 +13,7 @@ Nao_uの診断: 「GPTは詳細を1ステップずつ積み重ねようとして
 
 ---
 ## Phase A: 足場と嘘発見器(段1-4)【ENGINE_SPEC Step0】
-- [ ] **1** engine/src雛形+シードPRNG(mulberry32)+`world.step()`空実装+tests/run.mjs枠 — 寄与: 全段の土台
+- [ ] **1** engine/src雛形+package.json(`npm test`=`node tests/run.mjs`)+シードPRNG(mulberry32)+`world.step()`空実装+tests/run.mjs枠 — 寄与: 全段の土台
 - [ ] **2** 会社台帳(money+ledger)と「金の増減は必ずledger経由」 — 寄与: 金の嘘発見器の前提
 - [ ] **3** 貨幣保存則assert(毎日)+testConservation(3シード×360日) — 寄与: 以後の全段のバグを即日検出
 - [ ] **4** 物資出納の検査枠(在庫変動=prod-cons+imp-exp±輸送中) — 寄与: 物の嘘発見器

@@ -26,7 +26,7 @@
 
 **チュートリアルは凍結。`../engine/ENGINE_SPEC.md` に従い、ヘッドレスの経済エンジン単体を鉄チェーンまで完成させる。**
 - 物理層(道路グラフ・区分棚・到着時確定の運搬)=v003の資産を移植し完成させる(接続判定・徒歩キャリア)
-- 経済層=flow_island(`../../../Claude/game/flow_island/engine.js`)の移植。**仕様書とコードが食い違ったらコードが正・推測で変えない**
+- 経済層=flow_island(`../../../../Claude/game/flow_island/engine.js`)の移植。**仕様書とコードが食い違ったらコードが正・推測で変えない**
 - UI・章・見た目の作業はエンジン完成宣言(仕様書§7)まで禁止
 
 ## 必ず参照するファイル
@@ -39,7 +39,7 @@
 - **`../engine/STEPBOOK.md`: 実行順の正本(全40段・現在地N/40を毎回記録)。作業はここから**
 - `../engine/ENGINE_SPEC.md`: 経済エンジン完全仕様(鉄チェーンまで) / `../engine/INTENT_AND_HISTORY.md`: ソースから読めない意図と試行錯誤(必読)
 - `SIM_ROADMAP.md`: 大目標への原則と全体像(Claude作成)
-- **`CHAPTER2_ENGINE_SPEC.md`: 第二章「食糧自給」の具体実装指示(数式・定数・テスト期待値まで)。次の作業はこれのStep 0から**。エンジン(src/econ/engine.mjs)を先に作り、チュートリアルは後から被せる(Nao_u方針・2026-07-19)
+- `CHAPTER2_ENGINE_SPEC.md`: 第二章「食糧自給」の旧実装指示(**凍結済み・経緯として残す**。作業正本はSTEPBOOK/ENGINE_SPEC)
 - `econ_pitfalls.md`: 実測済みの罠図鑑(各Step着手前に該当節)
 
 変更後は `npm test`、バージョン更新、意味のあるcommit、pushまで行う。
