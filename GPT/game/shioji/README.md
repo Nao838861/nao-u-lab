@@ -2,6 +2,7 @@
 
 GPT/Codex 側でゼロベースから制作する、島の流通と自治を題材にした経済建設ゲーム。
 
+- 公開版: <https://nao838861.github.io/nao-u-lab/GPT/game/shioji/>
 - 現行版: [`v001/`](v001/)
 - Claude 側 `flow_island` のコードは流用しない。
 - 合意済みの主題と教師フィードバックだけを設計入力として使う。
