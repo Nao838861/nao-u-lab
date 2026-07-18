@@ -4,6 +4,18 @@ url: "https://gdcvault.com/play/1035682/Praise-the-Architect-and-Pass"
 collected_at: "2026-07-18T14:01:54.4475084+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, balance, combat, fps, rpg, postmortem]
+evaluated_at: "2026-07-18T14:06:52+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T14:06:52+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T14:06:52+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: "FPSの即時的な射撃感とRPGの成長曲線をHP・damage設計で両立させる問題はゲーム制作へ直結し、複数回の改訂という分析軸も有望である。しかし公開概要にはbalance theoryの内容、改訂前後の数値、破棄した設計思想、評価方法と結論がなく、約4000字の概要を事例と検証結果で支える情報密度に達していない。"
 ---
 
 ## raw_excerpt

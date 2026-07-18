@@ -13,7 +13,20 @@
 - duplicate preflight: 上記2件はいずれも `continue`。`--log log/shared_reads_candidate_preflight.jsonl` を指定して実行（本ツールは `continue` をログへ追記しないため、標準出力を本セクションに記録）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_i_expect_you_to_die_content_pipeline_evolution.md
+    reason: "公開概要だけではarchitecture移行の手順・code sample・評価内容が不足し、約4000字の概要を根拠付きで構成できない"
+  - path: memory/shared_reads_candidates/20260718_outer_worlds2_health_damage_balance.md
+    reason: "公開概要だけではbalance theory・改訂前後の数値・評価結果が不足し、約4000字の概要を根拠付きで構成できない"
+stale_reviewed: []
+```
+
+- terminal-title / URL duplicate preflight: 2件とも `continue`。stale_review_batch と group_action_handoff は今サイクルの staging に存在しないため、新規2件だけを評価した。
+- 判定時刻: 2026-07-18T14:06:52+09:00。Slack投稿、新規収集、記憶階層の改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

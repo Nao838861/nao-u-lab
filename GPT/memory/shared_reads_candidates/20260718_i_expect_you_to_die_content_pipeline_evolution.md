@@ -4,6 +4,18 @@ url: "https://gdcvault.com/play/1035702/Lasers-Mimic-Masks-and-Squid"
 collected_at: "2026-07-18T14:01:54.4475084+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, content-pipeline, architecture, vr, puzzle, postmortem]
+evaluated_at: "2026-07-18T14:06:52+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T14:06:52+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T14:06:52+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: "monolithic class・rigid FSM・singletonからmodular/event-driven architectureへ移行した問題設定と方向性は具体的で、ゲーム制作への適用先も明確である。しかし公開概要だけではmodule境界、移行手順、code sample、失敗例、制作効率やlevel規模の評価が分からず、手法の中核と評価を備えた約4000字の概要を根拠付きで書けない。"
 ---
 
 ## raw_excerpt
