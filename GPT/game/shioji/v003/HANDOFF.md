@@ -31,6 +31,8 @@
 
 ## 必ず参照するファイル
 
+- **`../PROJECT_OVERVIEW.md`: プロジェクト全体像とNao_u指示の正本への地図(最初に読む——shiojiは大きなプロジェクトの片翼であり、確定事項・裁可待ち・全体計画はClaude側の正本にある)**
+
 - `product_spec.md`: 現行仕様
 - `design_log.md`: ユーザー指摘の原文と判断
 - `completion_audit.md`: 実装・未検証・未実装の監査
