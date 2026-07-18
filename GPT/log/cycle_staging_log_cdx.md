@@ -252,7 +252,101 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-GROUP-ACTION-NO-CLOSURE
+    problem_restatement: "Phase 2 の判断は staging と handoff の handled 証跡には残るが、candidate lifecycle の正本にも再生成 queue の抑止条件にも反映されない。したがって close_siblings だけでなく keep_distinct / defer も『判断済み』を表現できず、同じ group が新規仕事として再出現する。"
+    alternatives:
+      - name: "案A: Phase 2 が candidate を直接更新してから acknowledge"
+        sketch: "close_siblings の target_paths を Phase 2 が個別に terminal 化し、全更新成功後だけ既存 inbox を acknowledge する。keep_distinct / defer は handled_evidence の文字列だけに残す。"
+        pros:
+          - "既存 candidate frontmatter を正本のまま維持できる"
+          - "close_siblings に限れば変更範囲と移行手間が小さい"
+          - "新しい永続 sidecar を増やさない"
+        cons:
+          - "複数ファイル更新と acknowledge の途中失敗を回復する契約が弱い"
+          - "keep_distinct は mixed queue の生成条件を変えないため再出現が止まらない"
+          - "defer の再試行時期を機械判定できない"
+        migration_cost: low
+      - name: "案B: 既存 handoff inbox を fingerprint 付き解決台帳へ拡張"
+        sketch: "inbox row に action、対象 path、terminal evidence、group membership fingerprint、適用結果、retry_after を構造化して残す。既存 tool に冪等な resolve 契約を持たせ、close_siblings は candidate を terminal 化してから handled、keep_distinct は現在の fingerprint が同じ間だけ queue から抑止、defer は retry_after まで再投入を抑止する。"
+        pros:
+          - "3 種類の action すべてに永続的かつ監査可能な完了条件を与えられる"
+          - "group の path / status 構成が変われば fingerprint 不一致で再審査でき、古い keep_distinct 判断を永久適用しない"
+          - "既存の persistent inbox と candidate frontmatter を利用し、正本を新設しなくてよい"
+        cons:
+          - "inbox schema、queue 生成、Phase 2 契約を同時に揃える必要がある"
+          - "複数 candidate 更新の途中失敗に備え、resolve の再実行を冪等に設計する必要がある"
+          - "既存 handled row には fingerprint がないため、旧行は抑止根拠に使えない"
+        migration_cost: medium
+      - name: "案C: group resolution 専用 sidecar を追加"
+        sketch: "group_key ごとの最新 action と対象集合を新しい JSONL index に保存し、各 queue builder が参照する。candidate 更新と handoff acknowledge は別経路のまま残す。"
+        pros:
+          - "group 判断の照会と queue 抑止が単純になる"
+          - "既存 inbox schema を大きく変えずに済む"
+        cons:
+          - "candidate、inbox、resolution index の三者間で不整合が起こりうる"
+          - "再生成可能 sidecar と正本の境界が増え、現在の『正本を増やさない』方針から遠い"
+          - "close_siblings の実適用 consumer は別途必要なまま"
+        migration_cost: high
+    recommended: "案B: 既存 handoff inbox を fingerprint 付き解決台帳へ拡張"
+    recommended_reason: "案A は目先の close_siblings には近いが、実際の action 語彙 3 種のうち 2 種を閉じられず、同じ再出現問題を残す。案B は medium cost だが既存 inbox を判断から適用までの監査境界として再利用でき、失敗時も同一 ID の冪等 resolve で回復できる。案C のように新しい正本候補を増やさず、group 構成が変化した時だけ安全に再審査へ戻せる。"
+    decision: introduce
+    decision_reason: "現サイクルで処理済み group が直ちに再出現し、Phase 2 budget を反復消費した実害がある。必要な action、対象 path、terminal evidence は既に handoff payload と group_actions に存在するため、追加調査より lifecycle の完了条件を実装する段階にある。"
+    outline_for_4c:
+      - "shared_reads_group_handoff inbox schema に decision fields、membership fingerprint、apply result、retry_after を追加し、旧 row を読める後方互換を保つ"
+      - "既存 handoff tool に、payload と action 契約を検証して同一 ID で再実行可能な resolve 操作を追加する"
+      - "close_siblings は対象 open sibling を terminal status `failed` と duplicate 専用 last_decision / evidence / next_action に更新し、全対象が期待状態になった後だけ handled とする"
+      - "keep_distinct は現在の path / status 構成 fingerprint が一致する間だけ group-action queue から除外し、構成変化時は自動的に再審査対象へ戻す"
+      - "defer は handled にせず retry_after 付き deferred とし、期限前の再投入を抑止して期限後に再度 eligible にする"
+      - "Phase 2 の group_actions 記録後に resolve し、resolved / deferred ID と適用件数を group_handoff_audit に残す契約へ更新する"
+      - "close_siblings の冪等再実行、keep_distinct fingerprint 変化、defer 期限、部分適用回復、旧 inbox row の回帰テストを追加する"
+
+  - issue_id: ISS-4A-FRONTMATTER-BOUNDARY
+    problem_restatement: "frontmatter parser が delimiter 行ではなく任意位置の文字列 `---` を終端とみなすため、正常な scalar 値に triple hyphen が含まれただけで metadata が欠落する。candidate source の破損ではなく、文書境界と値の内容を区別していない parser 契約の問題である。"
+    alternatives:
+      - name: "案A: 行単位の厳密 delimiter 検出"
+        sketch: "先頭行が単独の `---` であることを確認し、2 行目以降で次に現れる単独の `---` 行だけを終端とする。既存の scalar / folded block の読み取り規則は維持する。"
+        pros:
+          - "URL や本文中の triple hyphen を delimiter と誤認しない"
+          - "既存 parser の返値型と利用側を変えずに直せる"
+          - "失敗時の影響範囲が小さくロールバックしやすい"
+        cons:
+          - "YAML 全仕様を解釈する parser にはならない"
+          - "別実装の frontmatter parser との重複は残る"
+          - "改行コードと closing delimiter 不在時の扱いをテストで固定する必要がある"
+        migration_cost: low
+      - name: "案B: YAML safe loader へ置換"
+        sketch: "厳密に切り出した frontmatter block を YAML library の safe loader で読み、利用側が期待する scalar を正規化する。"
+        pros:
+          - "quoted scalar、list、複数行値など YAML 構文への対応が広い"
+          - "自前 parser の例外ケースを減らせる"
+        cons:
+          - "依存追加または環境依存の確認が必要"
+          - "返値が文字列以外になるため既存 consumer の挙動が変わりうる"
+          - "今回の delimiter bug に対して変更面が大きい"
+        migration_cost: medium
+      - name: "案C: 全 shared-reads tool の parser を共通 metadata module に統合"
+        sketch: "read / update / validate を一つの共通層に集約し、title index、review queue、backfill などを段階移行する。境界検出もそこで一度だけ実装する。"
+        pros:
+          - "長期的には parser の仕様差と重複を解消できる"
+          - "読み書き双方の frontmatter 契約を一箇所で検証できる"
+        cons:
+          - "利用側が多く回帰範囲が広い"
+          - "今回の 1 件を直すための移行としては重い"
+          - "部分移行期間に二つの挙動が併存する"
+        migration_cost: high
+    recommended: "案A: 行単位の厳密 delimiter 検出"
+    recommended_reason: "原因が delimiter の境界判定に限定され、candidate 原文も既存 scalar 解釈も正常である。案A は URL 中の `game---the-making` を正しく保持しながら既存 consumer の契約を変えず、失敗時のコストと現状からの距離が最小。parser 統合は別 issue として実利用差が確認された時に扱う方が安全である。"
+    decision: introduce
+    decision_reason: "terminal lifecycle の誤分類を直接生み、canonical index と duplicate preflight の信頼性を落としている一方、修正条件と再現例が明確で低コストに閉じられる。postpone する理由がない。"
+    outline_for_4c:
+      - "shared_reads_title_index.read_frontmatter の opening / closing delimiter を行境界で判定し、LF と CRLF の双方を受理する"
+      - "closing delimiter がない文書は空 metadata として安全側に倒す既存契約を維持する"
+      - "URL scalar 内の triple hyphen、本文中の delimiter 風文字列、folded block、CRLF、終端欠落の回帰テストを追加する"
+      - "問題 candidate が posted と分類され、mixed / canonical / posted-source の既存 consumer が同じ metadata を読むことを check mode で確認する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
