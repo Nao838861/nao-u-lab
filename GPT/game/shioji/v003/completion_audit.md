@@ -13,7 +13,7 @@
 | 複数回の定期便と収支 | 長時間テストの複数輸出検証 | 確認済み |
 | 秘書・書状・現物台帳 | `index.html` とブラウザテストのUI検査 | 要ブラウザ通し確認 |
 | PC/スマホでの実操作 | `tests/browser_smoke.mjs` | CDPターゲット安定化中 |
-| 公開URLでの最新版確認 | GitHub Pagesデプロイ履歴 | 要公開確認 |
+| 公開URLでの最新版確認 | 公開HTMLが `Build v003.1.4-browserprobe` を返すことをcurlで確認 | 確認済み |
 
 ## 残課題
 
