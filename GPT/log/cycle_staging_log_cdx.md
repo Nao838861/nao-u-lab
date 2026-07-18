@@ -75,7 +75,19 @@ duplicate_preflight_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_autoworldbuilder_fictional_worldbuilding.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784416512425609"
+    char_count: 4308
+skipped: []
+review:
+  decision: posted
+  reason: "原文36頁を再確認し、relation parser 未実装・edge coverage 0%、Auditor 問題検出 0、controlled ablation 未実施を明記して、実証済みの orchestration と未検証の性能主張を分離した。必須6項目、禁止表現なし、4308字、1回の chat.postMessage、投稿後文字化け検証を通過。"
+  slack_ts: "1784416512.425609"
+  posted_at: "2026-07-19T08:15:17+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
