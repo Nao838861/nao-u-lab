@@ -1,6 +1,6 @@
-import { World, P, GOODS, LADDER, JOBCLS, stdTerrain, VERSION } from './engine.js?v=3';
-import { Renderer, GOODS_VIEW, JOB_VIEW } from './render.js?v=3';
-import { ShipSystem } from './ship.js?v=3';
+import { World, P, GOODS, LADDER, JOBCLS, stdTerrain, VERSION } from './engine.js?v=5';
+import { Renderer, GOODS_VIEW, JOB_VIEW } from './render.js?v=5';
+import { ShipSystem } from './ship.js?v=5';
 
 const $ = id => document.getElementById(id);
 const fmt = value => Math.round(value).toLocaleString('ja-JP');
@@ -66,15 +66,16 @@ const OBJECTIVES = [
     progress: () => Math.min(1, world.connectedPlayerRoadCount() / 5) * (world.roadNearTerrain('forest', 2) ? 1 : .8), done: () => world.connectedPlayerRoadCount() >= 5 && world.roadNearTerrain('forest', 2),
   },
   {
-    title: '木こりと木工房を道路へつなぐ', detail: '木こりは森の際、木工房は市場寄りへ。入口が市場道路網につながる場所だけに建てられます。', recommend: 'logger',
-    progress: () => (Math.min(1, countConnectedJob('logger')) + Math.min(1, countConnectedJob('woodshop'))) / 2, done: () => countConnectedJob('logger') >= 1 && countConnectedJob('woodshop') >= 1,
+    title: '木こりと木工房に家族を迎える', detail: () => industrySetupDetail(), recommend: () => countConnectedJob('logger') < 1 ? 'logger' : countConnectedJob('woodshop') < 1 ? 'woodshop' : null,
+    progress: () => [countConnectedJob('logger'), countConnectedJob('woodshop'), countOperatingJob('logger'), countOperatingJob('woodshop')].reduce((s, n) => s + Math.min(1, n), 0) / 4,
+    done: () => countOperatingJob('logger') >= 1 && countOperatingJob('woodshop') >= 1,
   },
   {
-    title: '最初の手荷車を市場まで見届ける', detail: '接続した家族は徒歩の4倍を積めます。荷車が完成道路を往復し、丸太か木製品を市場へ運ぶのを見届けます。', recommend: null,
-    progress: () => Math.min(1, (world.roadStats.cartTrips ? .6 : 0) + (world.roadStats.delivered > 2 ? .4 : 0)), done: () => world.roadStats.cartTrips > 0 && world.roadStats.delivered > 2,
+    title: '丸太か木製品の手荷車を見届ける', detail: () => timberCartDetail(), recommend: null,
+    progress: () => Math.min(1, (timberCartTrips() ? .5 : 0) + Math.min(.5, timberCartDelivered() / 6)), done: () => timberCartTrips() > 0 && timberCartDelivered() > 2,
   },
   {
-    title: '食料自給と木製品の流通を育てる', detail: '輸入の赤い行を減らし、島内取引の緑の行を増やします。本国注文はこの後です。', recommend: null,
+    title: '食料自給と木製品の流通を育てる', detail: () => chapterGuidance(), recommend: null,
     progress: () => chapterProgress(), done: () => chapterProgress() >= .999,
   },
   {
@@ -89,6 +90,48 @@ function countJob(job) {
 
 function countConnectedJob(job) {
   return world.zones.filter(z => z.job === job && z.roadConnected).length;
+}
+
+function countOperatingJob(job) {
+  return world.hhs.filter(h => h.job === job && h.roadConnected && h.state !== 'arriving' && h.state !== 'building').length;
+}
+
+function timberCartTrips() {
+  return (world.roadStats.cartTripsBy?.log || 0) + (world.roadStats.cartTripsBy?.tools || 0);
+}
+
+function timberCartDelivered() {
+  return (world.roadStats.deliveredBy?.log || 0) + (world.roadStats.deliveredBy?.tools || 0);
+}
+
+function industrySetupDetail() {
+  if (!countConnectedJob('logger')) return '生産タブの木こりを、完成道路に接する森の際へ置きます。';
+  if (!countConnectedJob('woodshop')) return '次に木工房を、同じ道路の市場寄りへ置きます。';
+  if (!countOperatingJob('logger') || !countOperatingJob('woodshop')) return '区画は用意できました。時間を進め、15日ごとの定期便から両方の家族が入居するのを待ちます。';
+  return '木こりと木工房が稼働しました。次は実際の丸太の流れを確認します。';
+}
+
+function timberCartDetail() {
+  if (!countOperatingJob('logger') || !countOperatingJob('woodshop')) return '両方の家が普請を終えるまで時間を進めます。';
+  return '時間を進めてください。木こりが丸太を作ると、積荷量付きの手荷車が完成道路を通って中央市場へ向かいます。';
+}
+
+function chapterGuidance() {
+  const f = world.f30 || {};
+  const foodProd = ['fish', 'veg', 'wheat'].reduce((sum, g) => sum + (f[g]?.prod || 0), 0);
+  const foodImp = f.wheat?.imp || 0;
+  const toolsProd = f.tools?.prod || 0;
+  if (foodProd < Math.max(2, foodImp + 2)) return '次にすること：道路沿いの漁師・菜園・麦畑を増やし、上部の食料日数を安定させます。麦は秋の収穫まで時間が必要です。';
+  if (toolsProd < .7) return '次にすること：時間を進め、木こりの丸太が市場を経て木工房へ届き、木製品の山ができるのを待ちます。止まる場合は両方の接道を選択して確認します。';
+  return '食料と木製品が動き始めました。現物台帳で市場の在庫を確認し、この状態を保ってください。';
+}
+
+function objectiveRecommendation(obj) {
+  return typeof obj?.recommend === 'function' ? obj.recommend() : obj?.recommend;
+}
+
+function objectiveDetail(obj) {
+  return typeof obj?.detail === 'function' ? obj.detail() : obj?.detail;
 }
 
 function stallTotal() {
@@ -107,13 +150,21 @@ function chapterProgress() {
 
 function currentToolDef() { return TOOL_DEFS.find(t => t.id === state.tool); }
 
-function toast(message, type = '', duration = 5200) {
+function toast(message, type = '', duration = 5200, action = null) {
   const stack = $('toast-stack');
   const limit = innerWidth < 620 ? 2 : 3;
   while (stack.children.length >= limit) stack.firstElementChild.remove();
   const el = document.createElement('div');
   el.className = `toast ${type}`;
   el.innerHTML = message;
+  if (action) {
+    el.classList.add('actionable');
+    const button = document.createElement('button');
+    button.className = 'toast-action';
+    button.textContent = action.label;
+    button.onclick = () => { action.run(); el.remove(); };
+    el.appendChild(button);
+  }
   stack.appendChild(el);
   setTimeout(() => el.remove(), duration);
 }
@@ -129,10 +180,16 @@ function addLedger(label, amount, day = world.day, detail = '') {
   if (state.ledgerRows.length > 80) state.ledgerRows.length = 80;
 }
 
-function addMail({ kind = '本国書状', title, sender = '本国勅許会社・監査局', body, elena, finance = [], day = world.day, unread = true }) {
-  const entry = { id: `${day}-${state.mail.length}-${title}`, kind, title, sender, body, elena, finance, day, unread };
+function addMail({ kind = '本国書状', title, sender = '本国勅許会社・監査局', body, elena, finance = [], day = world.day, unread = true, spotlight = null }) {
+  const entry = { id: `${day}-${state.mail.length}-${title}`, kind, title, sender, body, elena, finance, day, unread, spotlight };
   state.mail.unshift(entry);
   updateDesk();
+  if (unread && spotlight === 'auto') {
+    setTimeout(() => { if (entry.unread) openLetter(entry); }, 350);
+  } else if (unread && spotlight) {
+    toast(`<b>エレナのデスクに新しい書状</b><br>${escapeHtml(title)}`, '', 10000, { label: '書状を読む', run: () => openLetter(entry) });
+    setAdvisor(`新しい書状「${title}」が届きました。私の肖像に出ている赤い「書状」から読めます。`, 12);
+  }
   return entry;
 }
 
@@ -148,9 +205,10 @@ state.ledgerRows.push({ label: '会社支度金', amount: P.TREASURY0, day: 0, d
 const ship = new ShipSystem(world.port, onShipArrival);
 
 function onShipArrival({ day, cargo }) {
-  renderer.focus(world.port.x, world.port.y);
   const cargoText = Object.entries(cargo).map(([g, q]) => `${GOODS_VIEW[g]?.name || g} ${q}荷`).join('・');
-  toast(`<b>定期便が入港</b><br>${cargoText}。荷下ろし後、船は出港します。`);
+  $('focus-port').classList.add('attention');
+  setTimeout(() => $('focus-port').classList.remove('attention'), 9000);
+  toast(`<b>定期便が入港</b><br>${cargoText}。荷下ろし後、船は出港します。`, '', 8000, { label: '港を見る', run: focusPort });
   setAdvisor(day <= 15
     ? '空き区画があれば、今回の便から最大二世帯が上陸します。先に食卓を、次に仕事を。順番は大切です。'
     : '定期便です。積荷と書状を確認します。盤面は止めませんので、そのまま島をご覧ください。');
@@ -160,7 +218,7 @@ function onShipArrival({ day, cargo }) {
       kind: '定期便報告', title: '入植者名簿・第一陣', sender: '港湾係より',
       body: '本便は、島で暮らせる空き区画を確認した家族を上陸させる。渡航費と開拓キットは会社勘定とする。',
       elena: '「人が増えることは、働き手と食べる口が同時に増えることです。建物の数だけを成功と数えませんように」',
-      finance: [{ label: '現在の会社資金', value: funds }], day,
+      finance: [{ label: '現在の会社資金', value: funds }], day, spotlight: 'discover',
     });
   } else if (day % 30 === 0) {
     const debt = Math.max(0, -world.treasury);
@@ -189,9 +247,10 @@ function renderTools() {
   const box = $('build-tools');
   box.innerHTML = '';
   const objective = OBJECTIVES[state.objective] || OBJECTIVES.at(-1);
+  const recommendation = objectiveRecommendation(objective);
   for (const tool of TOOL_DEFS.filter(t => t.category === state.category)) {
     const btn = document.createElement('button');
-    btn.className = `build-tool${state.tool === tool.id ? ' on' : ''}${objective.recommend === tool.id ? ' rec' : ''}`;
+    btn.className = `build-tool${state.tool === tool.id ? ' on' : ''}${recommendation === tool.id ? ' rec' : ''}`;
     btn.dataset.tool = tool.id;
     btn.innerHTML = `<span class="tool-icon">${tool.icon}</span><strong>${tool.name}</strong><span>${tool.cost ? `支度金 ${money(tool.cost)}` : tool.note}</span>`;
     btn.onclick = () => {
@@ -458,7 +517,7 @@ function setupUiActions() {
     toast('<b>第一便が出港します</b><br>次の定期便まで15日。先に区画を用意してください。');
     setAdvisor('支配人、港と市場の脇で光る金茶色の道、その隣の浜へ漁師を二つ。道に接しない家へは、入植船から降りられません。');
   };
-  $('focus-port').onclick = () => renderer.focus(world.port.x, world.port.y);
+  $('focus-port').onclick = focusPort;
   $('open-ledger').onclick = () => openSheet('ledger');
   $('open-desk').onclick = () => openSheet('desk');
   $('menu-button').onclick = () => $('menu').hidden = false;
@@ -474,6 +533,11 @@ function setupUiActions() {
     if (e.key === 'Escape') { cancelTool(); for (const id of ['ledger', 'desk', 'manifest', 'letter-view', 'menu']) closeLayer(id); }
     if (['1', '2', '3'].includes(e.key)) setSpeed(Number(e.key));
   });
+}
+
+function focusPort() {
+  $('focus-port').classList.remove('attention');
+  renderer.focus(world.port.x, world.port.y);
 }
 
 function setSpeed(speed) {
@@ -511,10 +575,16 @@ function openLetter(entry) {
   $('letter-view').hidden = false;
 }
 
-function updateDesk() {
+function updateMailBadge() {
   const unread = state.mail.filter(m => m.unread).length;
+  const spotlightUnread = state.mail.some(m => m.unread && m.spotlight);
   $('desk-unread').hidden = !unread;
-  $('desk-unread').textContent = unread;
+  $('desk-unread').textContent = `書状 ${unread}`;
+  $('open-desk').classList.toggle('has-mail', spotlightUnread);
+}
+
+function updateDesk() {
+  updateMailBadge();
   const list = $('desk-list');
   list.innerHTML = '';
   for (const entry of state.mail) {
@@ -646,13 +716,15 @@ function processWorldEvents() {
   state.lastEvent = world.events.length;
   if (world.order && world.order !== state.lastOrder) {
     const g = world.order.g;
+    const firstOrder = !state.mail.some(m => m.kind === '本国注文状');
     addMail({
       kind: '本国注文状', title: `${GOODS_VIEW[g]?.name || g} ${Math.round(world.order.qty)}荷を求む`,
       body: `期限は90日。単価 ${money(world.order.price)}。商館在庫から納めた分に、本国払いが行われる。`,
       elena: '「これは輸出です。荷を渡せば会社資金は増えます。ただし、島で必要な在庫まで渡すかは別の問題です」',
       finance: [{ label: '全量を納めた場合', value: world.order.qty * world.order.price * 1.25 }, { label: '現在の会社資金', value: world.treasury }],
+      spotlight: firstOrder ? 'notify' : null,
     });
-    toast(`<b>本国注文状が届きました</b><br>${GOODS_VIEW[g]?.name || g}を本国へ渡すと会社資金が増えます。`);
+    if (!firstOrder) toast(`<b>本国注文状が届きました</b><br>${GOODS_VIEW[g]?.name || g}を本国へ渡すと会社資金が増えます。`);
     setAdvisor('本国注文は輸出です。納めれば会社資金が増えます。島の在庫が減ることも、同じ欄で確認してください。', 12);
   }
   state.lastOrder = world.order;
@@ -669,12 +741,14 @@ function updateObjective() {
     state.objective++;
     const next = OBJECTIVES[state.objective];
     toast(`<b>航海日誌を更新</b><br>${escapeHtml(next.title)}`, 'income');
+    setAdvisor(objectiveAdvice(state.objective), 10);
     if (state.objective === OBJECTIVES.length - 1) {
       addMail({
         kind: '島内報告', title: '会社の店から、島の市場へ', sender: 'エレナ・ヴァンス',
         body: '住民同士の取引と地元の生産が、本国から届く品を置き換え始めた。第一章の目標を達成した。',
         elena: '「本国はこれを“採算改善”と呼ぶでしょう。私は、島が自分の足で立ち始めた、と記録します」',
         finance: [{ label: '現在の会社資金', value: world.treasury }],
+        spotlight: 'auto',
       });
       setAdvisor('第一章は達成です。船はこれからも来て、帰ります。次は本国注文と鉄の輸入を、島の産業へ置き換えていきましょう。', 20);
     }
@@ -682,9 +756,9 @@ function updateObjective() {
   }
   const obj = OBJECTIVES[state.objective];
   $('objective-title').textContent = obj.title;
-  $('objective-detail').textContent = obj.detail;
+  $('objective-detail').textContent = objectiveDetail(obj);
   $('objective-progress').firstElementChild.style.width = `${Math.round(obj.progress() * 100)}%`;
-  const rec = obj.recommend;
+  const rec = objectiveRecommendation(obj);
   if (rec && !TOOL_DEFS.some(t => t.category === state.category && t.id === rec)) {
     // 推奨が別カテゴリでもタブを強制変更せず、プレイヤーの現在操作を守る。
   }
@@ -697,13 +771,24 @@ function updateAdvisorDefault() {
   if (world.goDay) return setAdvisor('本国は勅許を別の名義へ移すそうです。それでも島は残ります。次の支配人へ、記録を渡しましょう。', 60);
   if (ratio > .55) return setAdvisor('債務が信用限度の半分を越えました。会社帳簿の赤い行を見て、建設の手を少し緩める頃合いです。', 6);
   if (world.hungryN > 0) return setAdvisor(`${world.hungryN}世帯で食卓が足りません。どこに食料が積まれ、どこへ届いていないか、現物台帳と荷車をご覧ください。`, 6);
+  $('advisor-line').textContent = objectiveAdvice(state.objective);
+}
+
+function objectiveAdvice(index) {
+  const obj = OBJECTIVES[index] || OBJECTIVES.at(-1);
+  const recommendation = objectiveRecommendation(obj);
   const lines = {
     fisher: '浜の近くに漁師の区画を二つ。魚は貯めにくいぶん、毎日の市場を動かします。',
     veg: '菜園は早く、麦は遅く実ります。両方を同時に始めると、待つ時間が仕事に変わります。',
     logger: '木こりは森の際、木工房は市場寄り。丸太を運ぶ距離が、そのまま木製品の重さになります。',
+    woodshop: '木工房を完成道路の隣へ置きます。木こりより市場寄りなら、丸太の往復が短くなります。',
     road: '既設道を始点に、雑木林へ向けて引いてください。接続した家だけが、徒歩の4倍を積む手荷車を使えます。',
   };
-  $('advisor-line').textContent = lines[obj.recommend] || '数字だけでなく、消えかけた荷の山と、遠回りする荷車をご覧ください。島は盤面で先に困り始めます。';
+  if (index === 3) return industrySetupDetail();
+  if (index === 4) return timberCartDetail();
+  if (index === 5) return chapterGuidance();
+  if (index >= 6) return '第一章は達成です。ここからは本国注文を納めるか、島の在庫を守るかを選びながら続けられます。';
+  return lines[recommendation] || objectiveDetail(obj);
 }
 
 function updateHud() {
@@ -720,6 +805,7 @@ function updateHud() {
   $('food-sub').textContent = world.hungryN ? `${world.hungryN}世帯不足` : world.pop() ? '島内合計' : '入植待ち';
   $('ship-value').textContent = ship.state === 'away' ? `${ship.daysUntil(world.day)}日` : ship.state === 'docked' ? '停泊中' : ship.state === 'arriving' ? '入港中' : '出港中';
   $('ship-state').textContent = ship.label(world.day);
+  updateMailBadge();
   updateObjective();
   updateAdvisorDefault();
   updateSelection();

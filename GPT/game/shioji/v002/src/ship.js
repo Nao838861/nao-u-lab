@@ -22,12 +22,13 @@ export class ShipSystem {
   update(dt, day) {
     this.elapsed += dt;
     if (!this.opening && this.state === 'away' && day >= this.nextDue) {
+      const arrivalDay = this.nextDue;
       this.state = 'arriving';
       this.elapsed = 0;
-      this.lastArrivalDay = this.nextDue;
+      this.lastArrivalDay = arrivalDay;
       this.nextDue += 15;
-      this.cargo = this.cargoFor(day);
-      this.onArrival({ day, cargo: this.cargo });
+      this.cargo = this.cargoFor(arrivalDay);
+      this.onArrival({ day: arrivalDay, cargo: this.cargo });
     }
     if (this.state === 'arriving' && this.elapsed >= 4.2) {
       this.state = 'docked';

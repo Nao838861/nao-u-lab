@@ -27,7 +27,7 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
 // Claude側で較正されたv0.24を、v002の表示・物語層から利用する。
-export const VERSION='v002-road-v0.25';
+export const VERSION='v002-road-v0.26';
 export const JOBS=Object.keys(JOBCLS);
 export const DIR8=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]];
 const keyOf=(x,y)=>`${Math.round(x)},${Math.round(y)}`;
@@ -83,7 +83,8 @@ export class World{
     this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.order=null;this.orderDone=0;this.stock={};this.stockTgt={};
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
     this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.starterRoadTiles=new Set();this.playerRoadTiles=new Set();
-    this.roadConnected=new Set();this.roadFlow=null;this.roadSeq=0;this.roadBatch=0;this.roadStats={cartTrips:0,delivered:0};this.money0=P.TREASURY0;this.paveBought=0;
+    this.roadConnected=new Set();this.roadFlow=null;this.roadSeq=0;this.roadBatch=0;
+    this.roadStats={cartTrips:0,delivered:0,cartTripsBy:{},deliveredBy:{}};this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
     this.stalls={};for(const g of GOODS)this.stalls[g]=[];
     this.expCap={...P.EXP_CAP};this.expMl={...P.EXP_ML}; // 海運投資はこの世界だけを変える(P直変異は別ワールドを汚染するバグだった)
@@ -564,10 +565,11 @@ export class World{
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);
         this.px[g]=(this.px[g]??s.price)*0.9+s.price*0.1;}
       }
-    const delivered=GOODS.reduce((sum,g)=>sum+Math.max(0,(before[g]||0)-(h.pantry[g]||0)),0);
+    const deliveredBy={};const delivered=GOODS.reduce((sum,g)=>{const q=Math.max(0,(before[g]||0)-(h.pantry[g]||0));if(q>0)deliveredBy[g]=q;return sum+q;},0);
     let back=null,backQ=0;for(const g of GOODS){const q=(h.pantry[g]||0)-(before[g]||0);if(q>backQ){backQ=q;back=g;}}
     h.lastDelivered=delivered;h.returnCargo=back;h.returnCargoQty=backQ;
-    if(h.tripVehicle==='cart'&&delivered>0){h.cartTrips++;this.roadStats.cartTrips++;this.roadStats.delivered+=delivered;}
+    if(h.tripVehicle==='cart'&&delivered>0){h.cartTrips++;this.roadStats.cartTrips++;this.roadStats.delivered+=delivered;
+      for(const[g,q]of Object.entries(deliveredBy)){this.roadStats.deliveredBy[g]=(this.roadStats.deliveredBy[g]||0)+q;this.roadStats.cartTripsBy[g]=(this.roadStats.cartTripsBy[g]||0)+1;}}
     }
   dayEnd(){const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
     // 商館の買上げ: その日の全世帯の買い物が済んだ後の余剰を、安い屋台から順に(=必須の人が先・逆選抜なし。

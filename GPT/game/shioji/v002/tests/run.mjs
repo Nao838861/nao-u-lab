@@ -99,6 +99,7 @@ function testEconomy() {
   assert.ok(world.pop() > 0, '住民が入植している');
   assert.ok(world.hhs.some(h => h.job === 'fisher'), '漁師が存在する');
   assert.ok((world.f30?.fish?.prod || 0) > 0, '魚の生産フローがある');
+  assert.ok((world.roadStats.deliveredBy.log || 0) + (world.roadStats.deliveredBy.tools || 0) > 2, '木材系の手荷車配送を品目別に記録する');
   assert.ok(world.mainlandIn >= 0 && world.mainlandOut >= 0, '本国境界の帳簿が存在する');
   assert.equal(world.goDay, null, '基準村は2年以内に破産しない');
   return world;
