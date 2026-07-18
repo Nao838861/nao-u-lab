@@ -100,7 +100,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780943030-021bc7086e
+    source_ts: "1780943030.415079"
+    title: "From Gameplay Traces to Game Mechanics — causal induction を挟むゲームルール復元"
+    reason: "勝率や clear rate を結果だけで閉じず、trace から event・state change・outcome と反証条件を結ぶ軽量 causal memo が、現在の headless/game 評価に新しい行動差を作るか確認するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "数値上の採用条件は満たすが、EgoCS causal gameplay log、Mind-Studio executable branch preview、CausalGame outcome/explanation split が、因果鎖・別分岐・交絡と反証を既に具体化している。319件ある active probe 群への追加は次回行動を変えず、確認負荷だけを増やすため反映しない。"
+  change:
+    summary: "reviewed_source_ts と重複・見送り理由のみ更新。probe・評価表・directive・恒久ルールの追加は none。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

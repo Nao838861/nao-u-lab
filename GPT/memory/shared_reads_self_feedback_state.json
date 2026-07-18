@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-18T23:04:22+09:00",
+  "updated_at": "2026-07-19T01:39:22+09:00",
   "reviewed_source_ts": [
+    "1780943030.415079",
     "1784375330.114349",
     "1784375319.927069",
     "1784337079.340619",
@@ -429,6 +430,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T01:39:22+09:00",
+      "selected": {
+        "id": "sr-1780943030-021bc7086e",
+        "source_ts": "1780943030.415079",
+        "title": "From Gameplay Traces to Game Mechanics — causal induction を挟むゲームルール復元",
+        "reason": "未レビューの score 12 atom で、harness・game-design・agent・evaluation を含む8タグを持つ。勝率や clear rate を結果だけで閉じず、gameplay trace から event・state change・outcome と反証条件を結ぶ軽量 causal memo が、現在の headless/game 評価に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14で数値上の採用条件は満たすが、新規反映は見送る。shared-reads 本文は raw Slack に全文があり、SCM を中間表現にした direct VGDL generation との比較、9ゲーム、最大81% preference win rate、適用限界まで記録されているため evidence=3 とした。一方、active な EgoCS causal gameplay log は input/action・view・state・event・outcome の因果鎖を、Mind-Studio executable branch preview は state-action-next-state と別分岐を、CausalGame outcome/explanation split は outcome・mechanism・confounder・反証を既に要求している。今回の lightweight causal memo はこの三者の再束縛であり、319件ある active probe 群へ追加しても次回行動を変えず確認負荷だけを増やすため non_redundancy=0 とした。",
+      "existing_probes": [
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260626-mindstudio-executable-branch-preview",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の因果ログ・別分岐・outcome/mechanism 分離 probes との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-18T23:04:22+09:00",
       "selected": {
