@@ -510,8 +510,11 @@ canvas.addEventListener('pointermove', event => {
     state.pinch.distance = distance;
     return;
   }
-  if (previous && Math.hypot(point.x - previous.x, point.y - previous.y) > 1) state.dragMoved = true;
-  if (!state.tool && state.panLast && state.pointers.size === 1) renderer.pan(point.x - state.panLast.x, point.y - state.panLast.y);
+  const moveDistance = previous ? Math.hypot(point.x - previous.x, point.y - previous.y) : 0;
+  if (moveDistance > 5) state.dragMoved = true;
+  if (!state.tool && state.panLast && state.pointers.size === 1 && state.dragMoved) {
+    renderer.pan(point.x - state.panLast.x, point.y - state.panLast.y);
+  }
   state.panLast = point;
   updatePointerPreview(renderer.tileAt(point.x, point.y));
 });
