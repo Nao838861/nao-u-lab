@@ -1,5 +1,7 @@
 # 流通レイヤーの設計比較 — 商人・運び屋・備蓄を誰がどう担うか
 
+> **2026-07-18 正典準拠バナー**: 本書の前提(価格信念・賃金なし等)は実装検証を経て更新された。現在の確定は [canon.md](canon.md)・商人の最新整合は [merchant_reconciliation.md](merchant_reconciliation.md) を正とする。本書はC案の原設計と比較検討の経緯として残す。
+
 作成: 2026-07-13（Mir） / 状態: **検討中（Nao_u「慎重に決定したい」）**
 親: [../README.md](../README.md) / 発端: [../dialogue/20260712_session2_mir.md](../dialogue/20260712_session2_mir.md) の商人≠運び屋議論
 

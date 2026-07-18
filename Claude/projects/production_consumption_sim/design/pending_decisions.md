@@ -1,5 +1,7 @@
 # Nao_u判断待ちリスト（正本・2026-07-16更新）
 
+> **2026-07-18 更新**: 判断待ちの最新正本は [v2_implementation_spec.md](v2_implementation_spec.md) の【未】一覧+ [missing_pillars.md](missing_pillars.md) に移行。本書の「決定済み」節は有効な履歴。
+
 ## 決定済み(2026-07-16 Nao_u)
 - **1 使用価値の天井=正典ルール2の精緻化として承認**(推奨通り) → individuals_and_money.mdへ反映
 - **2 畜産最小モデル+ラダーB案+×1.585承認**(推奨通り) → 実装キューへ
