@@ -198,6 +198,19 @@ Codex では現在のセッションに与えられた sandbox、approval、secu
 
 ## 編集原則
 
+## ゲーム制作の引き継ぎ入口
+
+ゲーム `潮路の島` の現状・目標・ユーザー指摘・未実装項目を確認する場合は、次の順で読む。
+
+1. `game/shioji/v003/HANDOFF.md` — 引き継ぎ要約（最初に読む）
+2. `game/shioji/v003/product_spec.md` — 現行仕様
+3. `game/shioji/v003/design_log.md` — 指摘原文と設計判断の履歴
+4. `game/shioji/v003/completion_audit.md` — 実装済み・未検証・未実装の監査
+
+Claudeへ依頼する際は、次の一文で足りる。
+
+> `/Users/Nao_u/nao-u-lab/GPT/game/shioji/v003/HANDOFF.md` を起点に、product_spec.md・design_log.md・completion_audit.md を読んでから、既存方針を引き継いで作業してください。
+
 この `AGENTS.md` は長い指示の複製置き場ではなく、次回起動時に Claude 側と Codex 側の source of truth を見つけるための索引である。
 
 このファイルには、Codex が迷わず読み始めるための最小限の導線だけを書く。
