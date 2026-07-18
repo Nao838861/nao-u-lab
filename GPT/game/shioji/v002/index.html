@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102e30">
+  <meta name="description" content="荷が動き、人が暮らし、本国の圧力に抗うクォータービュー経済都市シミュレーション">
+  <title>CHARTER ISLE — 潮路の島</title>
+  <link rel="stylesheet" href="./style.css?v=2">
+</head>
+<body>
+  <canvas id="world" aria-label="潮路の島のクォータービュー盤面"></canvas>
+
+  <header id="hud" class="glass">
+    <div class="brand"><span class="brand-mark">CI</span><span><b>CHARTER ISLE</b><small>潮路の島</small></span></div>
+    <div class="hud-stat date"><small>暦</small><b id="date-value">1年目 1月</b></div>
+    <button class="hud-stat money" id="open-ledger" aria-label="会社帳簿を開く">
+      <small>会社資金</small><b id="money-value">55,000</b><span id="money-delta">開始資金</span>
+    </button>
+    <div class="hud-stat"><small>人口</small><b id="pop-value">0</b></div>
+    <div class="hud-stat food"><small>食料</small><b id="food-value">—</b><span id="food-sub">入植待ち</span></div>
+    <button class="hud-stat ship-clock" id="focus-port" aria-label="港へ移動">
+      <small>次の定期便</small><b id="ship-value">15日</b><span id="ship-state">沖合</span>
+    </button>
+    <div class="speed" aria-label="時間速度">
+      <button data-speed="0">Ⅱ</button><button data-speed="1" class="on">▶</button><button data-speed="2">▶▶</button><button data-speed="3">▶▶▶</button>
+    </div>
+    <button id="menu-button" class="icon-button" aria-label="メニュー">☰</button>
+  </header>
+
+  <section id="objective" class="glass">
+    <div class="objective-kicker">最初の航海日誌</div>
+    <b id="objective-title">漁師の区画を2つ用意する</b>
+    <div id="objective-progress"><i></i></div>
+    <small id="objective-detail">浜の近くを選んでください。次の船で家族が渡ってきます。</small>
+  </section>
+
+  <aside id="advisor" class="glass">
+    <button class="portrait-button" id="open-desk" aria-label="エレナのデスクを開く">
+      <img src="./assets/elena_vance.png" alt="秘書エレナ・ヴァンスの肖像">
+      <span id="desk-unread" hidden>1</span>
+    </button>
+    <div class="advisor-copy">
+      <small>会社秘書</small><b>エレナ・ヴァンス</b>
+      <p id="advisor-line">支配人、まず帳簿をご覧ください。本国の好意には、必ず請求書が付きます。</p>
+    </div>
+  </aside>
+
+  <aside id="selection" class="glass" hidden>
+    <button class="close" data-close="selection">×</button>
+    <div id="selection-body"></div>
+  </aside>
+
+  <nav id="build-dock" class="glass" aria-label="建築メニュー">
+    <div class="dock-tabs">
+      <button data-category="life" class="on">暮らし</button>
+      <button data-category="industry">生産</button>
+      <button data-category="logistics">流通</button>
+    </div>
+    <div id="build-tools"></div>
+    <button id="cancel-tool" class="cancel-tool" hidden>配置をやめる</button>
+  </nav>
+
+  <div id="tool-hint" class="glass" hidden></div>
+  <div id="toast-stack" aria-live="polite"></div>
+  <div id="float-layer"></div>
+
+  <aside id="ledger" class="side-sheet glass" hidden>
+    <header><div><small>会社帳簿</small><h2>資金の出入り</h2></div><button class="close" data-close="ledger">×</button></header>
+    <div class="ledger-total"><span>現在の会社資金</span><b id="ledger-total">55,000</b></div>
+    <div class="credit-line"><span>信用限度まで</span><b id="credit-left">—</b><i><em id="credit-fill"></em></i></div>
+    <div class="ledger-legend"><span class="income">＋ 本国・口銭から入る</span><span class="expense">－ 輸入・建設で出る</span></div>
+    <div id="ledger-rows" class="ledger-rows"></div>
+  </aside>
+
+  <aside id="desk" class="side-sheet desk-sheet glass" hidden>
+    <header><div><small>エレナのデスク</small><h2>書状と報告</h2></div><button class="close" data-close="desk">×</button></header>
+    <div id="desk-list" class="desk-list"></div>
+  </aside>
+
+  <aside id="manifest" class="side-sheet glass" hidden>
+    <header><div><small>現物台帳</small><h2>島の在庫と流れ</h2></div><button class="close" data-close="manifest">×</button></header>
+    <div id="manifest-body"></div>
+  </aside>
+
+  <div id="opening" class="modal-backdrop">
+    <article class="opening-card">
+      <div class="opening-art"><img src="./assets/elena_vance.png" alt="エレナ・ヴァンス"></div>
+      <div class="opening-copy">
+        <div class="letter-kicker">第一便・勅許会社書簡</div>
+        <h1>この島を、会社の帳簿から<br>人の暮らしへ。</h1>
+        <p>支配人、本国は入植の成功を期待しています。言い換えれば、失敗の費用はこちら持ちです。</p>
+        <div class="opening-ledger">
+          <div><span>会社支度金</span><b class="plus">＋55,000</b></div>
+          <div><span>次便の移民</span><b>空き区画 最大2世帯</b></div>
+          <div><span>当面の目的</span><b>食料と材木の自給</b></div>
+        </div>
+        <p class="elena-quote">「浜に漁師の場所を二つ。その次に菜園と麦畑を。船は待ってくれますが、腹は待ってくれません」</p>
+        <button id="begin-button" class="primary">港を開く</button>
+        <small>サーバーやインストールは不要です。GitHub Pagesからブラウザで直接遊べます。</small>
+      </div>
+    </article>
+  </div>
+
+  <div id="letter-view" class="letter-view" hidden>
+    <article>
+      <button class="close" data-close="letter-view">×</button>
+      <div id="letter-body"></div>
+    </article>
+  </div>
+
+  <div id="menu" class="modal-backdrop compact" hidden>
+    <article class="menu-card">
+      <button class="close" data-close="menu">×</button>
+      <h2>航海日誌</h2>
+      <button id="menu-ledger">会社帳簿</button>
+      <button id="menu-manifest">現物台帳</button>
+      <button id="menu-desk">エレナのデスク</button>
+      <button id="reset-game" class="danger">最初からやり直す</button>
+      <p><small>ドラッグ: 地図移動 / ホイール・ピンチ: ズーム / スペース: 一時停止</small></p>
+      <p class="version">v002 / economy core v0.24</p>
+    </article>
+  </div>
+
+  <div id="failure" class="modal-backdrop" hidden>
+    <article class="failure-card">
+      <div class="seal">最終通告</div>
+      <h1>勅許は、次の支配人へ。</h1>
+      <p>債務が信用限度を越えました。島は残り、帳簿の名前だけが変わります。</p>
+      <p class="elena-quote">「一年後、またここでお待ちします。次は、この島が何を欲しがるかをもう少し知った状態で」</p>
+      <button id="retry-button" class="primary">新しい支配人として再着任</button>
+    </article>
+  </div>
+
+  <script type="module" src="./src/main.js?v=2"></script>
+</body>
+</html>
