@@ -71,7 +71,7 @@ async function newPage(width, height, mobile = false, url = GAME) {
     await wait(100);
     if (await page.eval("document.readyState === 'complete' && Boolean(window.__CHARTER__)")) return page;
   }
-  throw new Error('game did not load');
+  throw new Error(`game did not load; runtime errors: ${page.errors.join(' | ') || 'none'}`);
 }
 
 async function desktop() {
