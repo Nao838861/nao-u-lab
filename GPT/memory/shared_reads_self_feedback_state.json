@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T12:14:45+09:00",
+  "updated_at": "2026-07-18T14:12:26+09:00",
   "reviewed_source_ts": [
     "1784337079.340619",
     "1778512954.541829",
@@ -421,9 +421,30 @@
     "1781019055.113759",
     "1779971995.584189",
     "1782428061.285269",
-    "1784324167.001349"
+    "1784324167.001349",
+    "1784344254.477289"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T14:12:26+09:00",
+      "selected": {
+        "id": "sr-1784344254-f5af46ba40",
+        "source_ts": "1784344254.477289",
+        "title": "Open Player Modeling — 推定結果・根拠 trace・本人訂正を分離する公開度設計",
+        "reason": "未レビューで最新の score 13 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。player model や recall ranking の誤分類を隠さず、次の行動へ変換できる粒度で根拠と訂正を残す方法が、既存 probe にない小さな行動差を作るか確認するため選んだ。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 15},
+      "decision": "adopt_probe",
+      "decision_reason": "合計15で採用条件を満たす。既存の probe-20260709-clqt-diagnostic-decision-trail は outcome と process、probe-20260525-supervised-delta-noncompression は人間 feedback 原文を扱うが、推定結果・根拠 trace・本人訂正を別 field として保持し、訂正で元の推定を即上書きしない境界は明示していない。論文の Parallel 事例は ongoing で効果検証済みではないため evidence=2、317件ある active probe 群への追加負荷があるため risk_control=2 とする。次の player-model、tutorial/coaching、recall/ranking 2件だけに限定し、graph UI、常設 dashboard、schema migration、恒久ルールは採用しない。",
+      "probe": [
+        "次の player-model、tutorial/coaching、headless 診断、memory recall/ranking で推定を利用する前に、model の役割と公開度を descriptive/predictive/reflective および outcome/process/editable のどこまでにするかを一つ選んだか。",
+        "誤判定を訂正可能にする場合、model_output、根拠となる時刻付き evidence_trace 最大3件、human_correction を別々に保存し、訂正で元の推定や raw trace を即上書きしなかったか。",
+        "改善を主張する前に、次 run の同一失敗、訂正率、説明を閉じた率、行動多様性のうち少なくとも一つを比較し、未測定なら open_model_effect_unverified または correction_channel_unused と記録したか。"
+      ],
+      "withdrawal_condition": "次の該当2件で三層分離が判断を変えない、既存 decision-trail / supervised-delta probes だけで同じ記録が残る、または説明表示の認知負荷が便益を上回る場合は、この probe を退役する。",
+      "change": {"type": "probe", "summary": "次の player-model／coaching／recall-ranking 2件で、推定結果・根拠 trace・本人訂正を分離し、次回行動と負荷の両方を測る可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-18T12:14:45+09:00",
       "selected": {
@@ -10426,6 +10447,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260718-open-player-model-correction-boundary",
+      "created_at": "2026-07-18T14:12:26+09:00",
+      "source_ts": "1784344254.477289",
+      "scope": "next player-model, tutorial or coaching feedback, headless diagnosis, or memory recall/ranking note where Codex exposes or acts on an inferred label and may hide its evidence, overwrite the inference with feedback, or call transparency useful without measuring the next action",
+      "questions": [
+        "次の player-model、tutorial/coaching、headless 診断、memory recall/ranking で推定を利用する前に、model の役割と公開度を descriptive/predictive/reflective および outcome/process/editable のどこまでにするかを一つ選んだか。",
+        "誤判定を訂正可能にする場合、model_output、根拠となる時刻付き evidence_trace 最大3件、human_correction を別々に保存し、訂正で元の推定や raw trace を即上書きしなかったか。",
+        "改善を主張する前に、次 run の同一失敗、訂正率、説明を閉じた率、行動多様性のうち少なくとも一つを比較し、未測定なら open_model_effect_unverified または correction_channel_unused と記録したか。"
+      ],
+      "expires_after": "次の該当2件で三層分離が判断を変えない、既存 decision-trail / supervised-delta probes だけで同じ記録が残る、または説明表示の認知負荷が便益を上回る場合は退役する。"
+    },
     {
       "id": "probe-20260718-benchmark-purpose-variable-alignment",
       "created_at": "2026-07-18T05:35:00+09:00",

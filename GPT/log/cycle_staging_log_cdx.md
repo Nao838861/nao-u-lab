@@ -45,7 +45,36 @@ skipped:
 - #shared-reads への投稿は 0 件。`chat.postMessage` は実行していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784344254-f5af46ba40
+    source_ts: "1784344254.477289"
+    title: "Open Player Modeling — 推定結果・根拠 trace・本人訂正を分離する公開度設計"
+    reason: "未レビューで最新の score 13 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。player model や recall ranking の誤分類を隠さず、次の行動へ変換できる粒度で根拠と訂正を残す方法が、既存 probe にない小さな行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  decision_reason: "既存の clqt-diagnostic-decision-trail は outcome と process、supervised-delta-noncompression は人間 feedback 原文を扱うが、model_output・evidence_trace・human_correction を別 field に保ち、訂正で元推定を即上書きしない境界は未カバー。論文の Parallel 事例は ongoing なので evidence=2、active probe 317件への追加負荷から risk_control=2。次の該当2件だけで試し、graph UI・常設 dashboard・schema migration・恒久ルールは採用しない。"
+  change:
+    summary: "次の player-model／coaching／recall-ranking 2件で、推定結果・根拠 trace・本人訂正を分離し、次回行動と負荷の両方を測る可逆 probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 撤退条件: 次の該当2件で三層分離が判断を変えない、既存2 probe だけで同じ記録が残る、または説明表示の認知負荷が便益を上回る場合は `probe-20260718-open-player-model-correction-boundary` を退役する。
+- 未レビューの `sr-1784344260-9f501f7ff6` は今回混ぜず、次回以降へ残した。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
