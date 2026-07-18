@@ -146,6 +146,7 @@ function testWarehouseBuffersVisibleOverflow() {
 
 function testTutorialContinuesIntoWarehouse() {
   assert.deepEqual(TUTORIAL.slice(8).map(step => step.id), ['warehouse', 'warehouse-check', 'complete'], '倉庫導線の表示順が内部条件と一致する');
+  assert.match(TUTORIAL.at(-1).detail, /倉庫.*等級2.*出荷量/, '第一章後の次目標を明示する');
   const world = new World();
   world.beginCharter();
   world.setChapterStage(8);

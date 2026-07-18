@@ -1,4 +1,4 @@
-export const VERSION = 'v003.1.4-browserprobe';
+export const VERSION = 'v003.1.5-postchapter';
 
 export const GRID = { width: 24, height: 19, tileW: 68, tileH: 34 };
 export const DAY_SECONDS = 1.6;
@@ -126,9 +126,9 @@ export const TUTORIAL = [
     advisor: '倉庫は数字だけの箱ではありません。荷車がどこから来て、どこへ出るかをここで確認できます。',
   },
   {
-    id: 'complete', title: '第一章達成 — 流れが島をつくる',
-    detail: '輸出と中継の流れができました。森、町、港の間に次の流れを作れます。',
-    advisor: '一荷の道筋と倉庫の役割を確認できました。ここからは量を増やし、上位等級へ進めます。',
+    id: 'complete', title: '第一章後 — 島を次の段階へ',
+    detail: 'ここからは三つの道があります。倉庫で荷を中継する、木工房を等級2へ増築する、または港への出荷量を増やす。目的欄のボタンから対象を確認できます。',
+    advisor: '第一章は終わりですが、島づくりはここからです。倉庫、増築、輸出量のどれから進めるか選びましょう。',
   },
 ];
 

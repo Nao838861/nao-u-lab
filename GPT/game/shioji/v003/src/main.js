@@ -167,6 +167,11 @@ function renderObjective() {
   if (state.tutorial === 5) actions.push({ id: 'focus-woodshop', label: '木工房を見る' });
   if (state.tutorial === 6 || state.tutorial === 7) actions.push({ id: 'focus-port', label: '港を見る' });
   if (state.tutorial === 9) actions.push({ id: 'focus-warehouse', label: '倉庫を見る' });
+  if (state.tutorial >= 10) {
+    actions.push({ id: 'focus-warehouse', label: '倉庫を見る' });
+    actions.push({ id: 'focus-woodshop', label: '木工房を増築' });
+    actions.push({ id: 'focus-port', label: '輸出量を確認' });
+  }
   $('#objective-actions').innerHTML = actions.map(action => `<button data-objective-action="${action.id}">${action.label}</button>`).join('');
 }
 
