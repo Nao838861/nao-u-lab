@@ -7,14 +7,17 @@ genre_tags: [game-theory, multi-agent, llm-agent, evaluation, cooperation]
 evaluated_at: "2026-07-18T22:54:41+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T22:54:41+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T22:54:41+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T23:00:22+09:00"
+last_decision: postponed
+evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+postponed:
+  reason: "同一論文 v1 の詳細分析が既に #shared-reads にあり、v2 の中核結論も既存投稿と重複するため再投稿しない"
+  existing_permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
 gate_reason: >-
   単発 social dilemma で新しい model が一貫して defect する問題から、協力を善意ではなく equilibrium として維持する mechanism の比較へ進む中核を抽出できる。
   4 種の game、制度と LLM agent の同一枠評価、協力 NPC・交渉・自己対戦への適用と限界を結べるため、約4000字の独立分析を構成できる。

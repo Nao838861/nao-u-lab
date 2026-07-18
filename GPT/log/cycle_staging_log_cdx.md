@@ -32,7 +32,20 @@ group_actions: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260718_coopeval_v2_social_dilemmas.md
+    reason: "同一論文 v1 の詳細分析が既に #shared-reads にあり、v2 の中核結論も既存投稿と重複する"
+    action: postpone
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778536700085879"
+  - candidate: memory/shared_reads_candidates/20260718_openlife_open_world_agents.md
+    reason: "同一 URL の分析が既に #shared-reads にある。既存本文は英語のため、日本語版へ置換する場合は重複投稿ではなく既存メッセージの扱いを別途決める"
+    action: candidate_revise
+    evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549"
+duplicate_preflight_note: "tools/shared_reads_duplicate_preflight.py は両件を continue と返したが、memory/raw/slack_api/shared-reads.jsonl の実投稿履歴で重複を確認した"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

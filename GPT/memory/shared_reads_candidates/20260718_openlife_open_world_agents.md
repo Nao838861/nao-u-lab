@@ -7,14 +7,17 @@ genre_tags: [artificial-life, llm-agent, persistent-memory, npc, simulation]
 evaluated_at: "2026-07-18T22:54:41+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T22:54:41+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T22:54:41+09:00"
-next_action: post_to_shared_reads
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T23:00:22+09:00"
+last_decision: postponed
+evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549"
+next_action: candidate_revise
 stale_after: "2026-08-17"
 supersedes: []
+postponed:
+  reason: "同一 URL の分析が既に #shared-reads にあるため新規投稿しない。既存投稿は英語本文なので、日本語版へ置換する場合は重複投稿ではなく既存メッセージの扱いを別途決める"
+  existing_permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783304602130549"
 gate_reason: >-
   stateless LLM の周囲へ知覚・記憶・評価・budget metabolism を非同期 process として置く構成と、6 agent・約12週間の長期観察結果を具体的に説明できる。
   長期 NPC を一枚の prompt ではなく有限資源を持つ runtime system として設計する適用先が明確で、主張の限界を含む約4000字の分析を支えられる。
