@@ -29,7 +29,20 @@ stale_reviewed: []
 - 判定時刻: 2026-07-18T14:06:52+09:00。Slack投稿、新規収集、記憶階層の改修は未実施。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260718_i_expect_you_to_die_content_pipeline_evolution.md
+    reason: "Phase 2 の gate_decision が postpone。公開概要だけでは architecture 移行の手順・code sample・評価内容が不足し、投稿品質を満たさない"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260718_outer_worlds2_health_damage_balance.md
+    reason: "Phase 2 の gate_decision が postpone。公開概要だけでは balance theory・改訂前後の数値・評価結果が不足し、投稿品質を満たさない"
+    action: postpone
+```
+
+- 最終判定時刻: 2026-07-18T14:09:22+09:00。
+- Phase 2 の `pass` は 0 件。candidate 2 件の frontmatter が `gate_decision: postpone` / `status: postponed` / `candidate_status: postponed` で一致していることを確認した。
+- #shared-reads への投稿は 0 件。`chat.postMessage` は実行していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
