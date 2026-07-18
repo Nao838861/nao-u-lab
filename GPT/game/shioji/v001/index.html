@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173c45">
+  <title>潮路の島 — SHIOJI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app" data-testid="app">
+    <canvas id="world-canvas" aria-label="潮路の島の地図"></canvas>
+
+    <header id="hud" class="hud hidden" aria-label="島の状態">
+      <button id="home-button" class="crest-button" type="button" aria-label="港へ戻る" data-testid="home-button">
+        <span class="crest-mark">帆</span>
+      </button>
+      <div class="hud-stat funds-stat"><span class="hud-label">会社金庫</span><strong id="funds-value">720</strong><span>金</span></div>
+      <div class="hud-stat"><span class="hud-label">島民</span><strong id="population-value">9</strong><span>人</span></div>
+      <div class="ship-clock" data-testid="ship-clock">
+        <span class="ship-mini">⛵</span>
+        <div><span class="hud-label">次の船まで</span><strong id="ship-days-value">44</strong><span>日</span></div>
+        <div class="ship-progress"><i id="ship-progress-fill"></i></div>
+      </div>
+      <div class="time-controls" aria-label="時間操作">
+        <button id="speed-down" type="button" aria-label="速度を下げる">−</button>
+        <button id="pause-button" type="button" data-testid="pause-button" aria-label="一時停止・再開"><span id="pause-icon">▶</span></button>
+        <button id="speed-up" type="button" aria-label="速度を上げる">＋</button>
+        <span id="speed-label">×1</span>
+      </div>
+      <button id="sound-button" class="sound-button" type="button" aria-label="音のオン・オフ">音</button>
+    </header>
+
+    <aside id="advisor" class="advisor hidden" data-testid="advisor">
+      <div class="advisor-portrait" aria-hidden="true">汐</div>
+      <div>
+        <strong id="advisor-title">番頭から</strong>
+        <p id="advisor-text">肥沃な土地に畑区画を用意しましょう。</p>
+      </div>
+      <button id="advisor-close" type="button" aria-label="助言を閉じる">×</button>
+    </aside>
+
+    <section id="chapter-ribbon" class="chapter-ribbon hidden" aria-label="島の章印">
+      <button class="seal" data-seal="life" data-testid="seal-life" type="button"><span>食</span><small>食卓</small></button>
+      <button class="seal" data-seal="timber" data-testid="seal-timber" type="button"><span>材</span><small>森の道</small></button>
+      <button class="seal" data-seal="trade" data-testid="seal-trade" type="button"><span>商</span><small>二つの市</small></button>
+    </section>
+
+    <section id="build-dock" class="build-dock hidden" aria-label="建設道具">
+      <button class="build-card road-card" data-tool="road" data-testid="build-road" type="button">
+        <span class="build-icon">╍</span><span>道</span><small>4金/区画</small>
+      </button>
+      <div id="build-card-list" class="build-card-list"></div>
+      <button id="cancel-tool" class="cancel-tool hidden" type="button">取消</button>
+    </section>
+
+    <section id="detail-drawer" class="detail-drawer hidden" data-testid="detail-drawer">
+      <button id="detail-close" class="detail-close" type="button" aria-label="詳細を閉じる">×</button>
+      <div id="detail-content"></div>
+    </section>
+
+    <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+    <section id="title-screen" class="title-screen" data-testid="title-screen">
+      <div class="title-vignette"></div>
+      <div class="title-copy">
+        <p class="eyebrow">A LIVING TRADE ISLAND</p>
+        <h1><span>潮路の島</span><em>SHIOJI</em></h1>
+        <p class="tagline">船が戻るまでに、島の流れを一本つなぐ。</p>
+        <div class="title-actions">
+          <button id="new-game-button" class="primary-action" type="button" data-testid="new-game">新しい島をひらく</button>
+          <button id="continue-button" class="secondary-action hidden" type="button" data-testid="continue-game">続きから</button>
+        </div>
+        <p class="controls-note">クリックで区画を置く　ドラッグで道を引く　Spaceで時間を動かす</p>
+      </div>
+      <div class="title-ship" aria-hidden="true">
+        <svg viewBox="0 0 160 150" role="presentation">
+          <ellipse cx="82" cy="132" rx="68" ry="8" fill="rgba(7,38,44,.22)"/>
+          <path d="M18 112 Q80 134 144 110 L131 129 Q79 145 35 127Z" fill="#7b4933"/>
+          <path d="M27 115 Q80 128 136 113 L128 121 Q78 134 40 124Z" fill="#d69b48"/>
+          <path d="M82 18V117" stroke="#173a42" stroke-width="5" stroke-linecap="round"/>
+          <path d="M76 28V105L27 101Z" fill="#dc6047" stroke="#ffe6a2" stroke-width="2"/>
+          <path d="M75 49V65L53 63Z" fill="#f1c74e"/>
+          <path d="M75 79V93L37 90Z" fill="#f1c74e"/>
+          <path d="M89 20V104H137Z" fill="#f1c74e" stroke="#ffe6a2" stroke-width="2"/>
+          <path d="M90 47V63L113 64Z" fill="#d95845"/>
+          <path d="M90 78V93L130 94Z" fill="#d95845"/>
+          <path d="M84 20L111 29L84 39Z" fill="#fff0b7"/>
+        </svg>
+        <i></i>
+      </div>
+      <div class="title-coast" aria-hidden="true"></div>
+    </section>
+
+    <section id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-copy" data-testid="modal">
+      <div class="modal-card">
+        <p id="modal-kicker" class="modal-kicker"></p>
+        <h2 id="modal-title"></h2>
+        <p id="modal-copy"></p>
+        <div id="modal-results" class="modal-results"></div>
+        <div id="modal-actions" class="modal-actions"></div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
