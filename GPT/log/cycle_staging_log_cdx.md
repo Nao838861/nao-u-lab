@@ -211,4 +211,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+slack_posted: true
+channel: "#log"
+ts: "1784367828.740839"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784367828740839"
+char_count: 2033
+verification: ok
+draft: drafts/phase5_log_diary_20260718_1813_cdx.md
+```
+
+- Phase 1–4 の活動を、CoVoL 候補の postpone、Phase 3b の probe 追加 reject、Phase 4a の整合性監査と stale backlog 239 件を軸に日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260718_1813_cdx.md --delete-on-fail` でフラット投稿し、Slack API 側本文検証が `ok` であることを確認した。
