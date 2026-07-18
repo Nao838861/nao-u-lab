@@ -2,6 +2,7 @@
 
 このディレクトリのゲーム「流通の島」は複数のAI CLIが交互に開発する。
 **どのAIも、作業前にこの順で読むこと**: 本ファイル → [CONTEXT.md](CONTEXT.md) → [WORKLOG.md](WORKLOG.md)末尾 → 必要に応じてREADME.md(版履歴)と `../../projects/production_consumption_sim/design/`・`dialogue/`(Nao_uの指示の逐語原文)。
+**台詞・設定・シナリオ・文言に触れる作業は `design/narrative_bible.md`(設定聖書)を必読**——世界観・秘書(女性)の人物設計・督促状文面・用語表記・文体禁則の正本。
 
 ## 協業プロトコル(Nao_u指定・2026-07-18)
 1. **交互ターン制**: Nao_uが各CLIに交互に依頼する。各セッション=1ターン

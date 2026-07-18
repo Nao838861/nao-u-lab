@@ -10,7 +10,7 @@
 2. 本ファイル — 技術と意思決定の全体
 3. [WORKLOG.md](WORKLOG.md) — 直前ターンの状態と申し送り(末尾エントリ)
 4. [README.md](README.md) — バージョン履歴(v0.9〜v0.20、各版の発見と残課題)
-5. 設計文書: `../../projects/production_consumption_sim/design/` — board_redesign(盤の大改修・現在の主戦場)/visual_spec/road_drawing/road_only_movement/build_economy_loop/catchiness
+5. 設計文書: `../../projects/production_consumption_sim/design/` — **canon.md(経済と機構の正典)** / **narrative_bible.md(世界・秘書・シナリオ・文体の正本——台詞や設定に触れる前に必読)** / v2_implementation_spec(実装仕様) / pending_decisions_20260718(裁可メニュー) / board_redesign・visual_spec・redesign_review ほか
 6. Nao_uの発言の原文: `../../projects/production_consumption_sim/dialogue/20260712_session2_mir.md`(全指示の逐語記録。要約を信じず原文に当たれる)
 
 ## 1. ゲームの主題(Nao_u本人の言葉・2026-07-18)
