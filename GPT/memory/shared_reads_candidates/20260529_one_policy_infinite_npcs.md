@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2605.23652"
 collected_at: "2026-05-29T10:13:42+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, npc, reinforcement-learning, persona, simulation]
-evaluated_at: "2026-05-29T10:17:06+09:00"
+evaluated_at: "2026-07-19T01:22:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-29T10:17:06+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T10:17:06+09:00"
-stale_after: "2026-06-28"
+last_reviewed_at: "2026-07-19T01:22:49+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829"
+stale_after: "2026-08-18"
 supersedes: []
-gate_reason: "persona-conditioned shared RL policy の中核と速度・規模の利点は見えるが、候補メモだけでは環境設定、報酬設計、persona traceability の評価手順がまだ薄い。ゲーム制作への適用は life sim / colony 系に寄るため、現行制作サイクルへ無理に一般化するとこじつけになりやすい。"
-next_action: revise_or_research
+gate_reason: |-
+  posted-source index で同一 URL の実投稿が確認できたため、本文品質や適用範囲を再評価せず投稿対象から除外する。
+  posted candidate と実投稿 permalink が揃っており、同 title group の open sibling を閉じる根拠は十分である。
+next_action: none
 
 ---
 

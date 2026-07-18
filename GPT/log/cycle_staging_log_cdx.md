@@ -10,7 +10,85 @@
 - `memory/shared_reads_candidates/20260719_fc26_rl_goalkeeper_designer_first.md` — FC 26 の goalkeeper RLを、legacy AI data、network reset、scenario-based learning、designer feedback、deterministic benchmark、fail-safeまで含むproduction pipelineとして収集。duplicate preflightは `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260719_fc26_rl_goalkeeper_designer_first.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    reason: "posted-source index で同一 arXiv work の実投稿を確認した重複候補"
+  - path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    reason: "posted-source index で同一 arXiv work の実投稿を確認した重複候補"
+  - path: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    reason: "posted-source index で同一 URL の実投稿を確認した重複候補"
+stale_reviewed: []
+group_actions:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    representative: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    reason: "posted-source work identity arxiv:2604.25482 が一致し、同 title group の再投稿余地がない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"
+      - path: memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+        evidence: "status: failed; gate_reason は既投稿 candidate との重複"
+      - path: memory/shared_reads_posted_source_index.jsonl
+        evidence: "posted_source_work_match; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782528770376139"
+    representative_decision: postpone
+    analysis_time_minutes: 1
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    representative: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    reason: "posted-source work identity arxiv:2512.17308 が一致し、terminal title siblings も再評価後 failed で閉じている。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md
+        evidence: "status: failed; 評価設定・比較・結果が不足"
+      - path: memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+        evidence: "status: failed; 2026-07-10 再評価でも4000字概要の根拠不足"
+      - path: memory/shared_reads_posted_source_index.jsonl
+        evidence: "posted_source_work_match; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535752535609"
+    representative_decision: postpone
+    analysis_time_minutes: 1
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    representative: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    reason: "posted-source URL が一致し、posted candidate と permalink の provenance が揃っている。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
+      - path: memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+        evidence: "status: posted; existing duplicate として同 permalink を記録"
+      - path: memory/shared_reads_posted_source_index.jsonl
+        evidence: "posted_source_url_match; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829"
+    representative_decision: postpone
+    analysis_time_minutes: 1
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-a4578100473517e1
+    - gha-d8f2f2e10418b800
+    - gha-d5b345b9bb3ec2de
+  acknowledged_ids:
+    - gha-a4578100473517e1
+    - gha-d8f2f2e10418b800
+    - gha-d5b345b9bb3ec2de
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

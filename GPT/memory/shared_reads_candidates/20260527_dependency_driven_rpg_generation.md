@@ -4,20 +4,20 @@ url: "http://arxiv.org/abs/2604.25482v1"
 collected_at: "2026-05-27T19:23:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, procedural-generation, narrative, llm]
-evaluated_at: "2026-05-27T19:27:00+09:00"
+evaluated_at: "2026-07-19T01:22:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-27T19:27:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T19:27:00+09:00"
-stale_after: "2026-06-26"
+last_reviewed_at: "2026-07-19T01:22:49+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782528770376139"
+stale_after: "2026-08-18"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
-  依存関係付きprompt pipelineという着想とゲーム制作への接続は明確だが、候補本文では評価の中身、比較対象、結論の強さが不足している。
-  4000字概要を書くと一般論で膨らませる危険があるため、Phase 3投稿には回さず、原文またはraw詳細を補って再評価する。
+  posted-source index で同一 arXiv work の実投稿が確認できたため、本文品質を再評価せず投稿対象から除外する。
+  同 title group の open sibling を閉じる根拠として、posted candidate と実投稿 permalink を Phase 2 staging に引き渡す。
 
 ---
 

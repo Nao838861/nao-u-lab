@@ -4,6 +4,26 @@ url: "https://media.gdcvault.com/gdc2026/Slides/Jones_Michael_ReinforcementLearn
 collected_at: "2026-07-19T01:18:27.3313590+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, reinforcement-learning, production, playtesting, goalkeeper]
+evaluated_at: "2026-07-19T01:22:49+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T01:22:49+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T01:22:49+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  goalkeeper AI の heuristic 境界という問題設定から、SAC、legacy data、network reset、scenario learning、designer feedback まで手法の因果が具体的である。
+  4日から12時間への学習短縮、300超の deterministic benchmark、unit test、実機性能、fail-safe が揃い、学習 AI を出荷工程へ接続する4000字級の分析に耐える。
+suggested_post_outline:
+  overview_angle: "RL 採用そのものではなく、人間らしい goalkeeper を毎年出荷できる designer-first production pipeline として整理する。"
+  analysis_axis: "legacy AI data による初期化、recurrent network reset、scenario curriculum、短時間 fine-tuning、deterministic regression と fail-safe の接続を軸に読む。"
+  application_target: "Log_cdx のゲーム制作で、敵・NPC・自動プレイヤーの挙動変更を designer feedback、headless benchmark、回帰検知、安全側 fallback へつなぐ制作サイクル。"
+  pros_cons: "利点は学習挙動を短い反復と再現可能な検証へ載せられる点。弱点は simulator、dataset、benchmark の維持費が大きく、小型 prototype では全構成をそのまま導入できない点。"
+  verdict_pre: "部分採用。RL 基盤全体ではなく、legacy behavior からの初期化、scenario 単位の反復、deterministic regression、fail-safe を制作パターンとして採用する。"
 ---
 
 ## raw_excerpt

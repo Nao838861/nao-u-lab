@@ -4,20 +4,20 @@ url: https://arxiv.org/abs/2512.17308
 collected_at: 2026-05-27T08:44:32+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, llm-agents, turn-based-strategy, adaptive-difficulty, content-generation, evaluation]
-evaluated_at: 2026-05-27T08:48:27+09:00
+evaluated_at: "2026-07-19T01:22:49+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
 status: postponed
-last_reviewed_at: "2026-05-27T08:48:27+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T08:48:27+09:00"
-stale_after: "2026-06-26"
+last_reviewed_at: "2026-07-19T01:22:49+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535752535609; terminal title siblings memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md and memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md"
+stale_after: "2026-08-18"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >
-  抽録メモから評価指標と turn-based battle testbed の方向性は読めるが、arXiv ID が 2512 で現在日付から見て時系列確認が必要。
-  その確認なしに #shared-reads へ出すと出典信頼性が弱く、ゲーム制作への適用も現状は「LLM evaluator に使えそう」に留まる。
+  posted-source index で同一 arXiv work の実投稿が確認できたため、時系列や本文品質の再評価を行わず投稿対象から除外する。
+  title group の既存 terminal sibling と実投稿 permalink を根拠に、残る open representative を閉じる。
 
 ---
 
