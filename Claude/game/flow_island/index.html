@@ -69,7 +69,7 @@ addEventListener('unhandledrejection',e=>{const f=document.getElementById('facto
   if(f)f.textContent='⚠ エラー: '+(e.reason&&e.reason.message||e.reason);});
 </script>
 <script type="module">
-import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133110';
+import{World,P,JOBS,GOODS,LADDER,JOBCLS,stdTerrain,VERSION} from './engine.js?v=133111';
 const MW=48,MH=40,TW=40,TH=20;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 let ox=0,oy=60,Z=1,panX=0,panY=0;
@@ -188,33 +188,45 @@ function act(p){const[x,y]=unIso(p.offsetX,p.offsetY);
     el.textContent=dz>10?'⚠ かなり遠い立地('+Math.round(dz)+'区画)——稼ぎが細ります。「道」を引いて物流費を買い戻しましょう':(dz>6?'△ 遠め('+Math.round(dz)+'区画)。「道」を引くと採算が改善します':'✓ 良い立地です(市場まで'+Math.round(dz)+'区画)');
     el.style.color=dz>10?'#ff8a7a':(dz>6?'#ffd97a':'#8f8');
     box.appendChild(el);setTimeout(()=>el.remove(),5200);}}
+// --- スプライト層 ---
+// 規約: (px,py)=足元菱形の中心。画像は水平中心=px・下端=py+TH/2。ズームはcanvas変換が面倒を見る。
+// assets/manifest.json の sprites 配列に名前を足し assets/<名前>.png を置くと、その絵から順に差し替わる。
+// 画像が無いものは従来のベクタ描画に自動フォールバック(=段階的にドット絵を入れられる)。
+const SPRS={};
+fetch('assets/manifest.json').then(r=>r.ok?r.json():null).then(m=>{
+  if(!m||!m.sprites)return;
+  for(const name of m.sprites){const im=new Image();im.onload=()=>{SPRS[name]=im;};im.src='assets/'+name+'.png';}}).catch(()=>{});
+function drawSpr(name,px,py){const im=SPRS[name];if(!im)return false;
+  cx.drawImage(im,Math.round(px-im.width/2),Math.round(py+TH/2-im.height));return true;}
 // --- 描画 ---
 function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.setTransform(Z,0,0,Z,panX,panY);
   const d=w.day,mm=(Math.floor(Math.max(0,d-1)/30))%12+1,wint=mm>=10;
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
     const[px,py]=iso(x,y);let c=TC[terr[y][x]][(x+y)%2];
     if(wint&&terr[y][x]!=='water')c=shade(c,30);
-    diamond(px,py,c);
-    if(w.roadTiles.has(x+','+y))diamond(px,py,w.paved?'#a9a49b':'#8a795a',0.62);
-    else if((w.traffic||{})[x+','+y]>400)diamond(px,py,'#6f7a4a',0.5);  // 獣道(踏み分け道)
+    if(!((wint&&drawSpr('tile_'+terr[y][x]+'_winter',px,py))||drawSpr('tile_'+terr[y][x],px,py)))diamond(px,py,c);
+    if(w.roadTiles.has(x+','+y)){if(!drawSpr(w.paved?'road_paved':'road_dirt',px,py))diamond(px,py,w.paved?'#a9a49b':'#8a795a',0.62);}
+    else if((w.traffic||{})[x+','+y]>400){if(!drawSpr('road_trail',px,py))diamond(px,py,'#6f7a4a',0.5);}  // 獣道(踏み分け道)
     const t=terr[y][x];
-    if(t==='forest'&&(x*13+y*7)%3===0){cx.fillStyle='#2c4a26';
+    if(t==='forest'&&(x*13+y*7)%3===0&&!drawSpr('tree_'+((x*7+y*13)%3),px,py)){cx.fillStyle='#2c4a26';
       cx.beginPath();cx.moveTo(px,py-14);cx.lineTo(px+5,py-4);cx.lineTo(px-5,py-4);cx.closePath();cx.fill();
       cx.fillStyle='#5a4630';cx.fillRect(px-1,py-4,2,3);}
-    if(t==='rock'&&(x*11+y*5)%4===0){cx.fillStyle='#8d8d85';cx.beginPath();cx.ellipse(px,py-3,5,3,0,0,7);cx.fill();}
+    if(t==='rock'&&(x*11+y*5)%4===0&&!drawSpr('rock_0',px,py)){cx.fillStyle='#8d8d85';cx.beginPath();cx.ellipse(px,py-3,5,3,0,0,7);cx.fill();}
     if(t==='water'&&(x+y+((tick/25)|0))%7===0){cx.fillStyle='#4a7fae';cx.fillRect(px-6,py-1,12,1);}}
   // 港(桟橋)
-  {const[px2,py2]=iso(w.port.x,w.port.y);cx.fillStyle='#6a4f33';cx.fillRect(px2-14,py2-4,28,8);
+  {const[px2,py2]=iso(w.port.x,w.port.y);
+   if(!drawSpr('port',px2,py2)){cx.fillStyle='#6a4f33';cx.fillRect(px2-14,py2-4,28,8);}
    cx.fillStyle='#fff';cx.font='9px sans-serif';cx.textAlign='center';cx.fillText('港',px2,py2+16);}
   // 区画(未入居=点線ゴースト)
   for(const z of w.zones){if(z.filled)continue;const[px2,py2]=iso(z.x,z.y);
     cx.strokeStyle=JCOL[z.job]||'#999';cx.setLineDash([3,3]);cx.strokeRect(px2-7,py2-16,14,14);cx.setLineDash([]);
     cx.fillStyle='#ffffff88';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText(JNAME[z.job],px2,py2-18);}
   for(const r of (w.ruins||[])){const[rx,ry]=iso(r.x,r.y);
-    cx.fillStyle='#3a3d42';cx.fillRect(rx-5,ry-10,10,8);
-    cx.strokeStyle='#222';cx.strokeRect(rx-5,ry-10,10,8);}
+    if(!drawSpr('ruin',rx,ry)){cx.fillStyle='#3a3d42';cx.fillRect(rx-5,ry-10,10,8);
+    cx.strokeStyle='#222';cx.strokeRect(rx-5,ry-10,10,8);}}
   const[mx,my]=iso(w.market.x,w.market.y);
-  cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);
+  const sprMarket=drawSpr('market',mx,my);
+  if(!sprMarket){cx.fillStyle='#e8d9a0';cx.fillRect(mx-16,my-26,32,22);}
   // 市場の荷の山(いま市に居る世帯の売り物+御蔵)
   {const GC={fish:'#4fa3d0',veg:'#7ac35e',wheat:'#d8b84a',pres:'#c08a50',pick:'#9ac86a',tools:'#b07840',salt:'#eef',char:'#555',meat:'#d08a9a',meal:'#9a8a5a',stone:'#999',oil:'#ee6'};
    const piles={};
@@ -223,11 +235,12 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
    for(const g in piles){if(piles[g]<3)continue;
      const px2=mx-24+(i%4)*16,py2=my+6+Math.floor(i/4)*10;
      const hgt=Math.min(10,2+Math.log2(1+piles[g]));
-     cx.fillStyle=GC[g];cx.fillRect(px2,py2-hgt,10,hgt);
-     cx.strokeStyle='#0008';cx.strokeRect(px2,py2-hgt,10,hgt);
+     if(!drawSpr('pile_'+g+'_'+Math.min(4,1+Math.floor(hgt/3)),px2+5,py2-10)){
+       cx.fillStyle=GC[g];cx.fillRect(px2,py2-hgt,10,hgt);
+       cx.strokeStyle='#0008';cx.strokeRect(px2,py2-hgt,10,hgt);}
      cx.fillStyle='#fff';cx.font='7px sans-serif';cx.textAlign='center';
      cx.fillText(Math.round(piles[g]),px2+5,py2+7);i++;}}
-  cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);
+  if(!sprMarket){cx.fillStyle='#7a4a2a';cx.fillRect(mx-18,my-30,36,6);}
   cx.fillStyle='#fff';cx.font='10px sans-serif';cx.textAlign='center';cx.fillText('市場/港',mx,my+14);
   for(const s of w.sites){const[sx,sy]=iso(s.x,s.y);
     cx.strokeStyle='#d9c88a';cx.setLineDash([3,3]);cx.strokeRect(sx-8,sy-4,16,8);cx.setLineDash([]);
@@ -238,9 +251,11 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
     if(h.state==='building'){cx.strokeStyle='#c9b57a';cx.strokeRect(px-6,py-14,12,12);
       cx.fillStyle='#c9b57a55';cx.fillRect(px-6,py-14,12,12);
       cx.fillStyle='#ffd97a';cx.font='8px sans-serif';cx.textAlign='center';cx.fillText('普請'+h.buildDays,px,py-17);}
-    else if(h.state!=='arriving'){cx.fillStyle=JCOL[h.job]||'#999';
-      const s=10+h.lv*1.5;cx.fillRect(px-s/2,py-s-4,s,s);
-      cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);
+    else if(h.state!=='arriving'){
+      const s=10+h.lv*1.5;
+      if(!(drawSpr('bld_'+h.job+'_lv'+Math.min(h.lv,5),px,py)||drawSpr('bld_'+h.job,px,py))){
+        cx.fillStyle=JCOL[h.job]||'#999';cx.fillRect(px-s/2,py-s-4,s,s);
+        cx.strokeStyle='#0008';cx.strokeRect(px-s/2,py-s-4,s,s);}
       if(w.goDay&&h.hunger>0){cx.fillStyle='#0007';cx.fillRect(px-s/2,py-s-4,s,s);}
       // Lvバッジ(マップ上に常時表示)
       cx.fillStyle='#1b2434dd';cx.beginPath();cx.arc(px+s/2+2,py-s-2,5.5,0,7);cx.fill();
@@ -267,11 +282,13 @@ function draw(){cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height
       const tx=h.state==='toHome'||h.state==='arriving'?h.x:w.market.x;
       const ty=h.state==='toHome'||h.state==='arriving'?h.y:w.market.y;
       let dx=tx-h.px,dy=ty-h.py;const dl=Math.hypot(dx,dy)||1;dx/=dl;dy/=dl;
+      const loaded=bg&&(h.state==='toMarket'||h.state==='toHome');
       for(let i=0;i<porters;i++){
         const[ax,ay]=iso(h.px-dx*0.45*i,h.py-dy*0.45*i);
+        if(drawSpr(loaded?'walker_load':'walker',ax,ay-2))continue;
         cx.fillStyle='#f5e9d0';cx.beginPath();cx.arc(ax,ay-3,2.2,0,7);cx.fill();
         cx.strokeStyle='#0006';cx.stroke();
-        if(bg&&(h.state==='toMarket'||h.state==='toHome')){
+        if(loaded){
           cx.fillStyle=GC[bg];cx.fillRect(ax-2.2,ay-8.5,4.4,3.6);cx.strokeStyle='#0008';cx.strokeRect(ax-2.2,ay-8.5,4.4,3.6);}}}}
   cx.textAlign='left';}
 function diamond(px,py,c,k=1){cx.fillStyle=c;cx.beginPath();
