@@ -1,4 +1,4 @@
-export const VERSION = 'v003.1.9-cart-visual';
+export const VERSION = 'v003.2.0-material-shapes';
 
 export const GRID = { width: 24, height: 19, tileW: 68, tileH: 34 };
 export const DAY_SECONDS = 1.6;

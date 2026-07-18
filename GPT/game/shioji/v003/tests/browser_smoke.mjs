@@ -80,7 +80,7 @@ async function desktop() {
   const page = await newPage(1440, 900);
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島 v003');
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), false);
-  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.1.9-cart-visual');
+  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.2.0-material-shapes');
   assert.equal(await page.eval('document.documentElement.scrollWidth <= innerWidth'), true);
   await page.screenshot('opening-desktop.png');
 
