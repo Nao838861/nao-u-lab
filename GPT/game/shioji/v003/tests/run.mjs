@@ -155,6 +155,38 @@ function testTutorialContinuesIntoWarehouse() {
   assert.equal(warehouse.type, 'warehouse');
 }
 
+function testLongRunInvariants() {
+  const world = new World();
+  world.beginCharter();
+  world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
+  const loggerResult = world.addBuilding('logger', 16, 7);
+  assert.equal(loggerResult.ok, true, loggerResult.reason);
+  const woodshopResult = world.addBuilding('woodshop', 11, 8);
+  assert.equal(woodshopResult.ok, true, woodshopResult.reason);
+  const warehouseResult = world.addBuilding('warehouse', 15, 10);
+  assert.equal(warehouseResult.ok, true, warehouseResult.reason);
+  const logger = loggerResult.building;
+  const woodshop = woodshopResult.building;
+  const warehouse = warehouseResult.building;
+  world.setChapterStage(8);
+  for (let tick = 0; tick < 6000; tick++) {
+    world.update(0.1);
+    for (const building of world.buildings) {
+      for (const section of Object.values(building.inventory)) {
+        for (const amount of Object.values(section)) assert.ok(amount >= 0, '在庫が負数にならない');
+      }
+    }
+    for (const shipment of world.shipments) {
+      assert.ok(shipment.path.every(point => world.roads.has(keyOf(point.x, point.y))), '長時間運転でも道路外荷車が出ない');
+    }
+    assert.ok(Number.isFinite(world.funds) && world.funds >= 0, '長時間運転でも資金が壊れない');
+  }
+  assert.ok(world.stats.produced.log > 0 && world.stats.produced.boards > 0, '長時間で生産が停止しない');
+  assert.ok(world.stats.exported.boards > 0, '長時間で輸出が停止しない');
+  assert.ok(world.sectionAmount(warehouse, 'storage', 'log') >= 0, '倉庫在庫が壊れない');
+  assert.equal(new Set([logger.id, woodshop.id, warehouse.id]).size, 3, '長時間検証中も施設IDが衝突しない');
+}
+
 testFootprintsAndRoads();
 testVisibleLogisticsAndUpgrade();
 testPortAndMoneyShareOneState();
@@ -162,6 +194,7 @@ testFixedSlotsAndStatus();
 testPathDisconnectDoesNotTeleport();
 testWarehouseBuffersVisibleOverflow();
 testTutorialContinuesIntoWarehouse();
+testLongRunInvariants();
 
 console.log(JSON.stringify({
   ok: true,
