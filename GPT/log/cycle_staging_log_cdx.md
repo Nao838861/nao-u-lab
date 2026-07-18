@@ -9,7 +9,24 @@
 - duplicate preflight: 既投稿 URL 一致 4 件を `skip` として非作成し、preflight log に根拠を保存。追加照合で判明したローカル既存 candidate 3 件も重複作成せず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260718_one_page_designs_communication.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+duplicate_preflight:
+  decision: continue
+  canonical_url: https://www.gamedeveloper.com/design/-the-goal-of-design-is-to-efficiently-communicate-ideas-
+  title_key: the goal of design is to efficiently communicate ideas
+evaluation_note: >-
+  定量評価はなく制作事例と教育実践による定性的根拠に留まるが、問題設定、着想、
+  手法の中核、運用例、結論を抽出できる。短期プロトタイプの実装前レビューへ直接適用でき、
+  根拠の限界を含めて約4000字の現行フォーマットに展開可能なため pass とした。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
