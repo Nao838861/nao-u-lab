@@ -7,14 +7,19 @@ genre_tags: [game-ai, reinforcement-learning, production, playtesting, goalkeepe
 evaluated_at: "2026-07-19T01:22:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-19T01:22:49+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-19T01:22:49+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-19T01:34:08+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784392410906539"
+next_action: none
 stale_after: "2026-08-18"
 supersedes: []
+posted:
+  ts: "1784392410.906539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784392410906539"
+  char_count: 4333
+  posted_at: "2026-07-19T01:34:08+09:00"
 gate_reason: |-
   goalkeeper AI の heuristic 境界という問題設定から、SAC、legacy data、network reset、scenario learning、designer feedback まで手法の因果が具体的である。
   4日から12時間への学習短縮、300超の deterministic benchmark、unit test、実機性能、fail-safe が揃い、学習 AI を出荷工程へ接続する4000字級の分析に耐える。
