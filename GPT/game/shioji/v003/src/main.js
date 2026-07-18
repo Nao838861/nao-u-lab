@@ -722,13 +722,13 @@ function frame(time) {
   requestAnimationFrame(frame);
 }
 
-renderBuildTools();
-renderObjective();
-renderHud();
-requestAnimationFrame(frame);
-
 window.__CHARTER__ = {
   version: VERSION, world, renderer, state,
   selectTool, setCategory, selectBuilding, startTracking, stopTracking,
   renderHud, renderObjective, renderSelection,
 };
+
+renderBuildTools();
+renderObjective();
+renderHud();
+requestAnimationFrame(frame);
