@@ -250,7 +250,98 @@ stale_review_batch: []
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-CROSS-CYCLE-HANDOFF-LOSS
+    problem_restatement: "group_action_handoff は次サイクルの Phase 2 が消費する情報なのに、寿命が当該サイクル限りの staging にだけ保存されている。producer と consumer の間で staging が初期化されるため、現契約では正常実行しても handoff が必ず失われ、同じ group が queue 上位に滞留する。"
+    alternatives:
+      - name: 永続handoff inbox
+        sketch: "Phase 4a が選んだ group を、group_key と source_cycle_id を持つ永続 inbox に pending として upsert する。Phase 2 は oldest pending を先に読み、group_actions を記録した時点で handled evidence を残し、staging には当該cycleの入出力だけを鏡写しする。"
+        pros:
+          - "staging 初期化や途中失敗をまたいで handoff を保持できる"
+          - "pending / handled と根拠が残り、未処理と再処理を区別できる"
+          - "既存の再生成可能 group action queue と candidate lifecycle を変更せず接続できる"
+        cons:
+          - "新しい runtime state と lifecycle 管理が1つ増える"
+          - "producer の upsert と consumer の acknowledge を冪等にする必要がある"
+        migration_cost: medium
+      - name: staging carry-forward
+        sketch: "cycle runner が staging を初期化する直前に前cycleの group_action_handoff を読み、新stagingの Phase 2 input 節へコピーする。処理済み判定も新staging内の group_actions との照合で行う。"
+        pros:
+          - "追加する永続ファイルがなく、既存staging形式に近い"
+          - "runner と phase prompt の小さい変更で始められる"
+        cons:
+          - "報告書である staging が runtime queue を兼ね、責務が曖昧になる"
+          - "copy と acknowledge の間の失敗で欠落または重複しやすい"
+          - "2 cycle 以上未処理の item や監査履歴を表現しにくい"
+        migration_cost: low
+      - name: Phase 2でqueueから再選択
+        sketch: "Phase 4a からの handoff を廃止し、Phase 2 が毎cycle shared_reads_group_action_queue を直接読み、budget と優先順をその場で再計算する。"
+        pros:
+          - "跨cycleの受け渡しstateを持たずに済む"
+          - "queue が再生成可能という既存性質をそのまま利用できる"
+        cons:
+          - "Phase 4a の高水位判定と選定判断を Phase 2 に重複実装する"
+          - "queue 再生成による順位変化で古い group が飢餓化し得る"
+          - "producer が何を渡し consumer が何を処理したかの対応が残らない"
+        migration_cost: low
+    recommended: 永続handoff inbox
+    recommended_reason: "失敗原因は選定ロジックではなく寿命の異なるデータを staging に置いたことなので、consumer が acknowledge するまで残る小さな inbox が問題境界に最も直接対応する。carry-forward より変更量は増えるが、失敗時にも pending を失わず、queue 本体や candidate を壊さないため復旧コストが低い。"
+    decision: introduce
+    decision_reason: "severity high で、直前cycleの3 groupが実際に未処理となり再掲されている。schema、producer、consumer、完了条件を限定でき、現時点で postpone すべき不確定要素はない。"
+    outline_for_4c:
+      - "group_key + source_cycle_id を一意キーとし、pending / handled、選定根拠、payload、handled evidence を持つ永続handoff inboxを追加する"
+      - "Phase 4a の選定後に冪等upsertし、現cycleの3 groupも初期pendingとして移行する"
+      - "Phase 2 は新規candidateより先に oldest pending をbudget内で消費し、group_actions記録後に同じitemをhandledへ遷移させる"
+      - "staging は当該cycleで読んだitemと処理結果の表示に限定し、inbox未処理件数とIDを監査情報として残す"
+      - "staging初期化、再実行、途中失敗、同一group再選定で欠落・二重処理しないことをfixtureで検証する"
+
+  - issue_id: ISS-POSTED-DUPLICATE-INDEX-GAP
+    problem_restatement: "現行 posted_source_urls は duplicate title group に入った candidate frontmatter からだけ作られるため、単独の既投稿candidate、legacy投稿、candidateと実投稿の対応が欠けた投稿を被覆しない。実際の投稿有無と派生candidate indexの収載条件が一致せず、preflightが既投稿を continue にしている。"
+    alternatives:
+      - name: 実投稿source indexを分離
+        sketch: "raw Slack の #shared-reads 実投稿履歴を主入力に、posted candidate metadata を補助入力として、正規化source URLから permalink / ts / title evidence / candidate pathへ引ける再生成可能indexを作る。preflightはこのURL indexを先に照合し、既存title canonical indexを第二段に使う。"
+        pros:
+          - "実際に投稿された事実を正本にでき、legacy投稿やcandidate欠落も拾える"
+          - "title groupの整理用indexと投稿済みURL台帳の責務を分離できる"
+          - "rawから再生成でき、手修正に依存せずprovenanceを保持できる"
+        cons:
+          - "Slack本文から対象source URLと投稿permalinkを抽出する規則が必要になる"
+          - "raw Slack取り込みが遅延している時のfreshness判定を設ける必要がある"
+          - "同一研究のversion違い、PDF/abstract違いをwork単位へ正規化する設計が要る"
+        migration_cost: medium
+      - name: title canonical indexを全posted candidateへ拡張
+        sketch: "duplicate groupだけという収載条件を外し、posted singletonも shared_reads_title_canonical_index に入れる。現行 posted_source_urls と preflight の読み口は維持する。"
+        pros:
+          - "既存loaderとpreflightをほぼそのまま使える"
+          - "candidateが存在するposted singletonのURL gapは小さい変更で埋まる"
+        cons:
+          - "candidateが存在しないlegacy投稿とmetadata欠落は依然として拾えない"
+          - "title duplicate整理用sidecarに投稿台帳の責務が混ざる"
+          - "index収載増加がreview queueなど既存consumerの意味を変え得る"
+        migration_cost: low
+      - name: preflightでraw Slackを毎回横断
+        sketch: "独立indexを持たず、candidate作成前に shared-reads raw履歴を全走査してURLとtitleを比較する。Phase 3で今回行った手動確認をpreflightへ直接組み込む。"
+        pros:
+          - "実投稿履歴を直接参照できる"
+          - "新しいmaterialized indexの同期処理が不要"
+        cons:
+          - "候補ごとに長いrawを走査し、定時cycleのコストが増える"
+          - "抽出・正規化結果を監査しにくく、consumerごとに処理が分散する"
+          - "rawの増加に伴って性能と再現性が悪化する"
+        migration_cost: low
+    recommended: 実投稿source indexを分離
+    recommended_reason: "今回重複を止めた最終根拠はraw Slackの実投稿履歴であり、candidate lifecycleはその代理にすぎない。専用indexなら現行title canonical indexのgroup意味を壊さず、URL-first判定だけを完全化できる。抽出誤り時もrawと既存Phase 3照合を残せるため、誤skipと重複postの双方を監査・復旧しやすい。"
+    decision: introduce
+    decision_reason: "OpenLifeの同一URLとCoopEvalの既投稿分析で再現例があり、現状はPhase 3の人手相当横断照合に依存している。入力正本、index責務、preflight順序が定まり、Phase 4cで小さく導入可能である。"
+    outline_for_4c:
+      - "source URL正規形、work identity、Slack ts/permalink、title evidence、candidate path、provenanceを持つ再生成可能なposted-source indexを追加する"
+      - "raw Slack実投稿を主入力、status postedのcandidate metadataを補助入力としてbackfillし、CoopEvalとOpenLifeを回帰fixtureにする"
+      - "一般的なtracking除去に加え、同一研究のversion suffixとPDF/abstract差を吸収するdomain限定work identity規則を定義する"
+      - "duplicate preflightをposted-source URL/work一致のskip、title canonical一致のreview、新規のcontinueという順序へ接続する"
+      - "indexがrawより古い、抽出不能、provenance不足の場合はcontinueではなくreviewへ倒し、Phase 3のraw照合を安全網として維持する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
