@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.14047v2"
 collected_at: "2026-07-19T03:30:53+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, corrective-memory, human-feedback, automated-testing, skill-learning]
+evaluated_at: "2026-07-19T03:34:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T03:34:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T03:34:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  反復監督コストという問題、retry budget・LLM parser・Corrective Memory・escalation の中核、実 robot での比較と定量結果が揃っている。
+  自動 playtest の失敗修正を再利用可能な条件付き記録へ変え、人間確認を例外経路へ限定する制作 loop に具体化でき、約4000字の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "自律収集の成功率だけでなく、同じ修正を人間が何度も教える監督コストを Corrective Memory でどう切るかを軸に書く。"
+  analysis_axis: "self-reset と verifier、retry budget 後の escalation、自然言語修正の構造化・再利用、teleoperation 比較と成功率改善を分けて評価する。"
+  application_target: "Log_cdx の自動 playtest / playable diff 検証で、反復失敗を条件・修正・再試行結果として保持し、budget 超過時だけ Nao_u 確認へ送る小さな probe。"
+  pros_cons: "利点は人間の反復介入を減らし修正を次 episode へ効かせられる点。弱点は誤った修正の固定化、verifier 誤判定、robot task からゲーム操作への移植差である。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

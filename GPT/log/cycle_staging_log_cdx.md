@@ -11,7 +11,83 @@
 - duplicate preflight により AutoBG、RevengeBench、Regime-Conditional Stabilisation、Beyond Sally-Anne は既投稿一致として保存を skip。permalink と一致根拠は `log/shared_reads_candidate_preflight.jsonl` に記録済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 6
+pass:
+  - memory/shared_reads_candidates/20260719_zero2skill_corrective_memory.md
+  - memory/shared_reads_candidates/20260719_mempoison_persistent_memory_attacks.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260525_apex_policy_exploration.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199); memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971995584189)"
+  - path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089)"
+  - path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439)"
+  - path: memory/shared_reads_candidates/20260719_flow_aware_rl_navigation.md
+    reason: "observation 比較の定量値・失敗条件・global parameter の悪化機序が不足し、約4000字概要の根拠が足りない"
+stale_reviewed:
+  - path: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-18"
+  - path: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-18"
+  - path: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    previous_status: postponed
+    decision: postpone
+    updated_stale_after: "2026-08-18"
+group_actions:
+  - group_key: apex autonomous policy exploration for self evolving llm agents
+    representative: memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260530_apex_policy_exploration_self_evolving_agents.md
+    reason: "canonical arXiv URL が posted-source index の実 Slack 投稿 2 件と一致し、同一 work の再投稿余地がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260525_apex_policy_exploration.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199"
+      - path: memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971995584189"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: mimic py an extensible tool for personality driven automated game testing with large language models
+    representative: memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260531_mimic_py_personality_driven_game_testing.md
+    reason: "canonical arXiv URL が posted-source index の provenance 付き実 Slack 投稿と一致し、既投稿版は 4320 字で lifecycle も posted"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: pixie code level mechanic generation for game designers
+    representative: memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260531_pixie_code_level_mechanic_generation.md
+    reason: "canonical AIIDE URL が posted-source index の provenance 付き実 Slack 投稿と一致し、同一 work の再投稿余地がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-17a4fb34ca143655
+    - gha-2971eb870867ba27
+    - gha-4640411d0a914242
+  acknowledged_ids:
+    - gha-17a4fb34ca143655
+    - gha-2971eb870867ba27
+    - gha-4640411d0a914242
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
