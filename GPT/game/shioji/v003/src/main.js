@@ -151,7 +151,7 @@ function renderObjective() {
   const step = TUTORIAL[state.tutorial] || TUTORIAL.at(-1);
   $('#objective-title').textContent = step.title;
   $('#objective-detail').textContent = dynamicObjectiveDetail();
-  $('#objective-count').textContent = `${Math.min(10, state.tutorial + 1)} / 10`;
+  $('#objective-count').textContent = `${Math.min(11, state.tutorial + 1)} / 11`;
   $('#objective-fill').style.width = `${Math.min(100, state.tutorial / 10 * 100)}%`;
   $('#advisor-line').textContent = step.advisor;
 
