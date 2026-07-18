@@ -14,9 +14,8 @@
 | 丸太と製材を色以外の形で識別 | `tests/browser_smoke.mjs` の形状契約と `material-shapes-desktop.png` | 確認済み |
 | 秘書・書状・現物台帳 | `index.html` とブラウザテストのUI検査 | 要ブラウザ通し確認 |
 | PC/スマホでの実操作 | `tests/browser_smoke.mjs` | 確認済み |
-| 公開URLでの最新版確認 | 公開HTMLが `Build v003.1.4-browserprobe` を返すことをcurlで確認 | 確認済み |
+| 公開URLでの最新版確認 | 公開HTMLが `Build v003.2.0-material-shapes` を返すことをcurlで確認 | 確認済み |
 
 ## 残課題
 
 1. 実ブラウザで第一章から倉庫確認までの表示文・書状・資金表示を確認する。
-2. 公開版でビルド番号とアセットキャッシュが一致することを確認する。
