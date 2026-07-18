@@ -471,21 +471,31 @@ export class Renderer {
       const col = i % 3;
       const px = x + (col - 1) * 7 * s + row * 2 * s;
       const py = y - row * 5 * s - col * 1.5 * s;
+      // 丸太: 太い円柱と明確な円形の切り口、年輪を描く。
       ctx.strokeStyle = GOODS.log.dark;
       ctx.lineWidth = Math.max(2, 4 * s);
-      ctx.beginPath(); ctx.moveTo(px - 7 * s, py); ctx.lineTo(px + 7 * s, py - 3 * s); ctx.stroke();
-      ctx.fillStyle = '#d39a5c'; ctx.beginPath(); ctx.arc(px + 7 * s, py - 3 * s, 2.2 * s, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(px - 7 * s, py); ctx.lineTo(px + 6 * s, py - 3 * s); ctx.stroke();
+      ctx.fillStyle = '#d39a5c'; ctx.strokeStyle = GOODS.log.dark; ctx.lineWidth = Math.max(1, s);
+      ctx.beginPath(); ctx.ellipse(px + 6 * s, py - 3 * s, 3 * s, 2.5 * s, -0.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(px + 6 * s, py - 3 * s, 1.2 * s, 1 * s, -0.2, 0, Math.PI * 2); ctx.stroke();
     }
   }
 
   drawBoardsAt(x, y, stage, s) {
     const ctx = this.ctx;
     for (let i = 0; i < stage + 1; i++) {
+      // 製材: 円柱ではなく、薄い角材を幅違いで積んだ束。木口と木目を見せる。
+      const width = 20 - (i % 3) * 2;
+      const height = 3.2;
+      const left = x - width * 0.5 * s + (i % 2) * 2 * s;
+      const top = y - (i + 1) * 3.2 * s;
       ctx.fillStyle = i % 2 ? '#c98b43' : GOODS.boards.color;
       ctx.strokeStyle = GOODS.boards.dark;
       ctx.lineWidth = Math.max(1, s);
-      ctx.fillRect(x - 11 * s + (i % 2) * 2 * s, y - (i + 1) * 3.2 * s, 22 * s, 3.4 * s);
-      ctx.strokeRect(x - 11 * s + (i % 2) * 2 * s, y - (i + 1) * 3.2 * s, 22 * s, 3.4 * s);
+      ctx.fillRect(left, top, width * s, height * s);
+      ctx.strokeRect(left, top, width * s, height * s);
+      ctx.strokeStyle = '#8a552b'; ctx.lineWidth = Math.max(0.6, s * 0.65);
+      ctx.beginPath(); ctx.moveTo(left + 3 * s, top + 1.5 * s); ctx.lineTo(left + (width - 3) * s, top + 1.2 * s); ctx.stroke();
     }
   }
 

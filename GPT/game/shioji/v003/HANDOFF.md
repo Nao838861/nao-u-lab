@@ -36,7 +36,8 @@
 - `product_spec.md`: 現行仕様
 - `design_log.md`: ユーザー指摘の原文と判断
 - `completion_audit.md`: 実装・未検証・未実装の監査
-- **`../engine/ENGINE_SPEC.md`: 経済エンジン完全仕様(鉄チェーンまで)。現在の作業正本**
+- **`../engine/STEPBOOK.md`: 実行順の正本(全40段・現在地N/40を毎回記録)。作業はここから**
+- `../engine/ENGINE_SPEC.md`: 経済エンジン完全仕様(鉄チェーンまで) / `../engine/INTENT_AND_HISTORY.md`: ソースから読めない意図と試行錯誤(必読)
 - `SIM_ROADMAP.md`: 大目標への原則と全体像(Claude作成)
 - **`CHAPTER2_ENGINE_SPEC.md`: 第二章「食糧自給」の具体実装指示(数式・定数・テスト期待値まで)。次の作業はこれのStep 0から**。エンジン(src/econ/engine.mjs)を先に作り、チュートリアルは後から被せる(Nao_u方針・2026-07-19)
 - `econ_pitfalls.md`: 実測済みの罠図鑑(各Step着手前に該当節)

@@ -1,6 +1,6 @@
 # 経済エンジン完全仕様書 — 鉄チェーンまで (Claude作成・2026-07-19)
 
-> **全体像**: 本エンジンが全体計画のどこに位置するかは [../PROJECT_OVERVIEW.md](../PROJECT_OVERVIEW.md)(Nao_u指示の正本への地図)を先に読むこと。
+> **読む順**: ①[../PROJECT_OVERVIEW.md](../PROJECT_OVERVIEW.md)(全体像とNao_u指示の地図) → ②本書(仕様) → ③[INTENT_AND_HISTORY.md](INTENT_AND_HISTORY.md)(ソースから読めない意図と試行錯誤——**触る前に必読**) → ④**[STEPBOOK.md](STEPBOOK.md)(実行順の正本・全40段。作業はこの段順で進め、現在地N/40を毎回記録)**
 
 ## 0. 目的とスコープ(Nao_u指示・2026-07-19)
 - **チュートリアルは凍結**。UI・演出・章構成の作業を一切しない
