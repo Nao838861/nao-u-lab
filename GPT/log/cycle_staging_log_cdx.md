@@ -142,7 +142,109 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index を検証。per-file atom index と一致し、broken link / duplicate entry は 0 件。UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』を取得できた"
+  - "memory/atoms.jsonl 2691 rows を監査。atom id 重複 0、致命的整合性 error 0。normalized content duplicate 40 groups / 80 rows は recall fold 済み、canonical overlay 45 groups は現行 index と一致"
+  - "30日超の memory/raw/ 93 files を確認。raw 原文保持の正本・candidate の出典・headless 評価入力が混在し、既存 archive 規約もないため、この cycle では移動対象 0 件"
+  - "candidate lifecycle 999 files を監査: posted 425 / ready_to_post 10 / postponed 415 / failed 127 / needs_review 22。postponed / needs_review で stale_after 欠落は 0 件"
+  - "shared_reads_mixed_duplicate_queue 84 rows、shared_reads_stale_triage_queue 50 rows、shared_reads_group_action_queue 31 rows を 2026-07-19 基準で再生成"
+  - "Slack directives 23 rows / broadcasts 21 rows を監査。pending 0 のため handled 更新は 0 件"
+  - "前 cycle の group handoff 3件は Phase 2 が全件 close_siblings と判断し、各2分、pending 0 まで acknowledge 済み。通常 candidate 6件の分析と2件の投稿も完了しているため budget 3 の継続が可能と判定"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 のタイトル・trigger・excerpt に replacement character『��』が残り、『AIエージェント』の語が破損している"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw Slack archive と派生 atom の双方に literal『��』を確認。source data 自体の局所破損。memory/MEMORY.md の代表語 probe は正常"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding utf8 と rg の両方で同一。表示経路だけの mojibake ではない。memory_health のもう1件 gr-1777083728-44d444ab7a は原文中の意図的な『???』による false positive"
+    why_blocks_game_memory: "記憶アーキテクチャをゲーム制作へ転用する際、『AIエージェント』の完全一致検索と recall label の可読性を1件だけ損なう。局所データ品質問題であり、階層設計を止める規模ではない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 251
+  stale_triage_queue_rows: 50
+  actionable_group_count: 31
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-d0febab9bc126a36
+    - gha-1c98384a8ec33d43
+    - gha-0954d40fbd95be3b
+  previous_cycle_processed_groups: 3
+  previous_cycle_group_actions: "close_siblings 3 / keep_distinct 0 / defer 0"
+  previous_cycle_analysis_time_minutes: 6
+  budget_3_continuation: true
+group_action_handoff:
+  - group_key: "ca2 code aware agent for automated game testing"
+    representative: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260528_ca2_code_aware_game_testing.md
+      - memory/shared_reads_candidates/20260609_ca2_code_aware_game_testing.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260602_ca2_code_aware_game_testing.md
+      stale_after: "2026-07-02"
+      reason: "current function call trace / call stack と target functions 到達を testing strategy に使う高いゲーム転用価値があり、mixed duplicate group の代表再評価が必要"
+  - group_key: "fly fail fix iterative game repair with reinforcement learning and large multimodal models"
+    representative: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_fly_fail_fix_iterative_game_repair.md
+      - memory/shared_reads_candidates/20260526_fly_fail_fix_iterative_game_repair.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260602_fly_fail_fix_iterative_game_repair.md
+      stale_after: "2026-07-02"
+      reason: "RL playtester の metrics / frame trace を LMM designer の修正へ接続する題材。現候補は実験条件と失敗例が不足するため代表再評価が必要"
+  - group_key: "gameuiagent an llm powered framework for automated game ui design with structured intermediate representation"
+    representative: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md
+      - memory/shared_reads_candidates/20260601_gameuiagent_structured_ir.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260602_gameuiagent_structured_ir.md
+      stale_after: "2026-07-02"
+      reason: "Design Spec JSON と deterministic post-processing は有望だが、評価結果と失敗 taxonomy が薄いため代表再評価が必要"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "procedural persona と MCTS の selection criteria 進化は headless 評価をプレイスタイル別の破綻検出へ拡張でき、mixed duplicate の整理にもつながる"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "runtime PCG と autonomous agent validation はゲーム制作へ直結するが、実験結果・失敗例・結論の一次確認が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    duplicate_group_key: "agent island a saturation and contamination resistant benchmark from multiagent games"
+    priority_reason: "協力・対立・説得を含む multi-agent game benchmark と ranking 手法の転用価値が高く、mixed duplicate の代表判定が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+    status: postponed
+    stale_after: "2026-06-28"
+    duplicate_group_key: "opengame open agentic coding for games"
+    priority_reason: "playable game 生成と Build Health / Visual Usability / Intent Alignment は Phase 0 に直結し、terminal sibling と同一 work かを再確認できる"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "agentic pcg procedural content generation via tool using llms"
+    priority_reason: "既投稿 permalink の証拠があり、mixed duplicate の open representative を terminal 判定へ送れる"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
