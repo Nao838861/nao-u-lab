@@ -502,10 +502,13 @@ canvas.addEventListener('pointermove', event => {
   // pointerupを取り逃がしても、ボタンを押していないマウス移動で
   // カメラが追従し続けないように押下状態を正本にする。
   if (event.pointerType === 'mouse' && event.buttons === 0) {
+    const point = localPoint(event);
     state.pointers.delete(event.pointerId);
     state.panLast = null;
     state.dragMoved = false;
     canvas.classList.remove('map-dragging');
+    // 建設モードでは、押していない hover でも設置予定地を更新する。
+    if (state.tool) updatePointerPreview(renderer.tileAt(point.x, point.y));
     return;
   }
   const point = localPoint(event);
