@@ -1,5 +1,5 @@
 import {
-  BUILDINGS, BUILD_TOOLS, FIXED, GOODS, GRADE_NAMES, TUTORIAL, VERSION,
+  BUILDINGS, BUILD_TOOLS, FIXED, GOODS, GRADE_NAMES, TUTORIAL, UPGRADE_REQUIREMENTS, VERSION,
 } from './config.js';
 import { Renderer } from './render.js';
 import { World } from './world.js';
@@ -143,6 +143,19 @@ function dynamicObjectiveDetail() {
     if (world.ship.state === 'away') return `港に木製品${world.sectionAmount(port, 'outbound', 'boards')}。定期船まであと${world.daysToShip()}日です。`;
     if (world.ship.state === 'loading') return `船積み中。輸出ヤードの山が減った分だけ、会社資金が増えます。`;
     return `船は${world.statusOf(port).label}です。木製品は輸出ヤードで待っています。`;
+  }
+  if (step >= 10) {
+    const warehouse = world.getBuildingByType('warehouse');
+    const storedLogs = warehouse ? world.sectionAmount(warehouse, 'storage', 'log') : 0;
+    const storedBoards = warehouse ? world.sectionAmount(warehouse, 'storage', 'boards') : 0;
+    const tools = port ? world.sectionAmount(port, 'inbound', 'tools') : 0;
+    const stone = port ? world.sectionAmount(port, 'inbound', 'stone') : 0;
+    if (!woodshop) return 'まず木工房を建て、丸太を木製品へ加工できる流れを作ります。';
+    if (woodshop.grade < 2) {
+      const need = UPGRADE_REQUIREMENTS.woodshop[2];
+      return `次の増築は等級2です。木製品${storedBoards}/${need.boards}、工具${tools}/${need.tools}、切石${stone}/${need.stone}。倉庫と港の山を見ながら荷車を待ちます。`;
+    }
+    return `中継が動いています。倉庫の丸太${storedLogs}、木製品${storedBoards}。港の輸出ヤードと船の出港を確認しましょう。`;
   }
   return TUTORIAL[step]?.detail || '';
 }
