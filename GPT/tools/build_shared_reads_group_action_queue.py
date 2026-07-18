@@ -6,8 +6,11 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+from shared_reads_group_handoff import DEFAULT_INBOX, ROOT, resolution_suppresses
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build a group-level shared-reads review queue.")
     parser.add_argument("--stale-queue", type=Path, default=DEFAULT_STALE_QUEUE)
     parser.add_argument("--mixed-queue", type=Path, default=DEFAULT_MIXED_QUEUE)
+    parser.add_argument("--inbox", type=Path, default=DEFAULT_INBOX)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--limit", type=int, default=-1)
     parser.add_argument("--check", action="store_true", help="do not write; fail if output is stale")
@@ -53,7 +57,13 @@ def select_representative(open_paths: list[str], stale_by_path: dict[str, dict[s
     return min(open_paths, key=required_rank)
 
 
-def build_queue(stale_rows: list[dict[str, Any]], mixed_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def build_queue(
+    stale_rows: list[dict[str, Any]],
+    mixed_rows: list[dict[str, Any]],
+    inbox_rows: list[dict[str, Any]] | None = None,
+    root: Path = ROOT,
+    as_of: datetime | None = None,
+) -> list[dict[str, Any]]:
     stale_by_path = {str(row.get("path") or ""): row for row in stale_rows if row.get("path")}
     records: list[dict[str, Any]] = []
     for group in mixed_rows:
@@ -70,8 +80,7 @@ def build_queue(stale_rows: list[dict[str, Any]], mixed_rows: list[dict[str, Any
             key=lambda path: (str(stale_by_path[path].get("stale_after") or ""), path),
         )
         latest = stale_by_path[latest_path]
-        records.append(
-            {
+        record = {
                 "group_key": group.get("group_key", ""),
                 "representative": representative,
                 "open_siblings": open_paths,
@@ -84,7 +93,8 @@ def build_queue(stale_rows: list[dict[str, Any]], mixed_rows: list[dict[str, Any
                 "recommended_action": group.get("recommended_action", "reevaluate_representative"),
                 "priority_reason": representative_stale.get("reason", ""),
             }
-        )
+        if not resolution_suppresses(record, inbox_rows or [], root, as_of):
+            records.append(record)
 
     records.sort(
         key=lambda row: (
@@ -106,7 +116,8 @@ def render_jsonl(records: list[dict[str, Any]]) -> str:
 
 def main() -> int:
     args = parse_args()
-    records = build_queue(read_jsonl(args.stale_queue), read_jsonl(args.mixed_queue))
+    inbox_rows = read_jsonl(args.inbox) if args.inbox.exists() else []
+    records = build_queue(read_jsonl(args.stale_queue), read_jsonl(args.mixed_queue), inbox_rows)
     if args.limit >= 0:
         records = records[: args.limit]
     rendered = render_jsonl(records)

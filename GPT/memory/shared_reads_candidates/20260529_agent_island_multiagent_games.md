@@ -7,11 +7,11 @@ genre_tags: [multi-agent, game-design, benchmark, cooperation, persuasion, llm-a
 evaluated_at: 2026-05-29T12:37:16+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-29T12:37:16+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T12:37:16+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T08:42:48+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-dee9fd1de06f9d89; terminal:memory/shared_reads_candidates/20260517_agent_island_multiagent_games.md: status:posted permalink:p1778971050740239; reason:terminal title index が紹介ページと投稿済み原文を同一 work と確定"
 phase3_review:
   reviewed_at: "2026-05-29T13:05:00+09:00"
   decision: postpone
@@ -21,7 +21,7 @@ phase3_review:
     permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
 stale_after: "2026-06-28"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
   saturation / contamination に強い multi-agent game benchmark という問題設定、協力・対立・説得を含む環境、Bayesian Plackett-Luce による ranking、ログ分析までの重要要素が抽出できる。
   Nao_u_BOT の社会心理・交渉・NPC 相互作用ゲームで、ログ設計と行動バイアス評価に具体的に使えるため、Phase 3 投稿水準の概要を書ける。

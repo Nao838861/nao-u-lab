@@ -142,13 +142,14 @@ def strip_scalar(value: str) -> str:
 
 
 def read_frontmatter(path: Path) -> dict[str, str]:
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
+    text = path.read_text(encoding="utf-8-sig")
+    lines = text.splitlines()
+    if not lines or lines[0] != "---":
         return {}
-    try:
-        _, frontmatter, _ = text.split("---", 2)
-    except ValueError:
+    closing_index = next((index for index, line in enumerate(lines[1:], start=1) if line == "---"), None)
+    if closing_index is None:
         return {}
+    frontmatter_lines = lines[1:closing_index]
 
     data: dict[str, str] = {}
     current_key: str | None = None
@@ -161,7 +162,7 @@ def read_frontmatter(path: Path) -> dict[str, str]:
         current_key = None
         folded = []
 
-    for raw_line in frontmatter.splitlines():
+    for raw_line in frontmatter_lines:
         if current_key is not None:
             if raw_line.startswith((" ", "\t")) or not raw_line.strip():
                 folded.append(raw_line)

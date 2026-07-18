@@ -7,11 +7,11 @@ genre_tags: [game-generation, coding-agent, headless-evaluation, browser-game, a
 evaluated_at: "2026-07-19T08:04:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T08:04:38+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T08:42:48+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-03cdcad532e5031a; terminal:memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md: status:posted permalink:p1779801836817719; reason:posted-source index が同一 arXiv work を実投稿済みと確定"
 next_action: none
 stale_after: "2026-08-18"
 supersedes: []

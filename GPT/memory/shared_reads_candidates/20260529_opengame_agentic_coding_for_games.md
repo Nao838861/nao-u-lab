@@ -7,11 +7,11 @@ genre_tags: [game-design, agentic-coding, browser-games, playability-evaluation,
 evaluated_at: 2026-05-29T12:37:16+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-29T12:37:16+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T12:37:16+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T08:42:48+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-03cdcad532e5031a; terminal:memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md: status:posted permalink:p1779801836817719; reason:posted-source index が同一 arXiv work を実投稿済みと確定"
 phase3_review:
   reviewed_at: "2026-05-29T13:05:00+09:00"
   decision: postpone
@@ -21,7 +21,7 @@ phase3_review:
     permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
 stale_after: "2026-06-28"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |-
   問題設定は「自然言語要求から playable なブラウザゲームを agentic coding で作る」ことに明確で、Template Skill / Debug Skill / OpenGame-Bench という手法の中核と評価軸を抽出できる。
   Nao_u_BOT の Phase 0 playable diff、headless 実行確認、失敗 signature の記憶化に直結し、~4000字の概要に必要な密度もある。

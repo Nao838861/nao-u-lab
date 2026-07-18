@@ -115,13 +115,15 @@ Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は
 python tools\shared_reads_group_handoff.py pending --limit 3
 ```
 
-処理対象 ID と開始時/終了時の pending 件数を staging の監査情報に残す。各 item は `group_actions` に対応する結果を書いた後でのみ acknowledge し、evidence には staging 上の group_key と決定を記す。途中失敗した item は pending のまま残す。
+処理対象 ID と開始時/終了時の pending 件数を staging の監査情報に残す。各 item は `group_actions` に対応する結果を書いた後、`acknowledge` ではなく `resolve` で判断を適用する。途中失敗した item は pending のまま残し、同一 ID の `resolve` を再実行して回復する。
 
 ```powershell
-python tools\shared_reads_group_handoff.py acknowledge --id <handoff_id> --evidence "staging Phase 2 group_actions: <group_key> -> <decision>"
+python tools\shared_reads_group_handoff.py resolve --id <handoff_id> --action close_siblings --target-path <candidate_path> --reason "<根拠>" --terminal-evidence "<terminal_path>=<status/permalink>" --representative-decision postpone
 ```
 
-各 group の再評価結果は、再生成可能な queue とは別に staging Phase 2 の `group_actions` へ次の契約で残す。これは後続の明示的 lifecycle 処理への監査可能な handoff であり、この Phase 2 では sibling candidate の status を適用しない。
+`close_siblings` の `target_paths` には representative を含む現在の open sibling をすべて列挙する。各対象を `failed` にし、duplicate 専用の `last_decision` / `evidence` / `next_action` を記録する。payload の open membership がすべて terminal になったことを再読込で確認した後だけ handled になる。`keep_distinct` は現在の path/status 構成 fingerprint が一致する間だけ group-action queue から除外し、構成が変われば自動再審査する。`defer` は `--retry-after <ISO>` を必須とし、期限までは queue への再投入を抑止するが handled にはしない。
+
+各 group の再評価結果は、再生成可能な queue とは別に staging Phase 2 の `group_actions` へ次の契約で残す。これは判断と適用結果を同一 handoff ID で結ぶ監査記録である。
 
 ```yaml
 group_actions:
@@ -143,7 +145,12 @@ staging Phase 2 には合わせて次を残す。
 group_handoff_audit:
   pending_before: <件数>
   read_ids: [<handoff_id>, ...]
-  acknowledged_ids: [<handoff_id>, ...]
+  resolved_ids: [<handoff_id>, ...]
+  deferred_ids: [<handoff_id>, ...]
+  partial_ids: [<handoff_id>, ...]
+  apply_counts:
+    candidates_updated: <件数>
+    already_terminal: <件数>
   pending_after: <件数>
 ```
 

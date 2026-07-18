@@ -349,7 +349,71 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-GROUP-ACTION-NO-CLOSURE
+    files_changed:
+      - path: tools/shared_reads_group_handoff.py
+        change: modified
+      - path: tools/build_shared_reads_group_action_queue.py
+        change: modified
+      - path: tools/test_shared_reads_group_handoff.py
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: memory/directive_shared_reads_group_handoff_resolution_20260719.md
+        change: created
+      - path: memory/shared_reads_group_handoff_inbox.jsonl
+        change: modified
+      - path: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260602_opengame_agentic_coding_for_games.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260604_agent_island_dynamic_multiagent_benchmark.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260604_if_serious_games_open_weight_llms.md
+        change: modified
+      - path: memory/shared_reads_group_action_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_mixed_duplicate_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_stale_triage_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+      - path: memory/shared_reads_posted_source_index.jsonl
+        change: modified
+    summary: "handoff schema v2 と replay-safe resolve を導入。close_siblings は全 open member の terminal 検証後だけ handled、keep_distinct は fingerprint 一致中だけ queue 抑止、defer は retry_after 後に再 eligible とした。"
+    partial: false
+  - issue_id: ISS-4A-FRONTMATTER-BOUNDARY
+    files_changed:
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/test_shared_reads_title_index.py
+        change: created
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+      - path: memory/shared_reads_mixed_duplicate_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_posted_source_index.jsonl
+        change: modified
+    summary: "frontmatter の opening/closing delimiter を単独行で判定し、URL 内 triple hyphen を保持。BOM、LF/CRLF、folded block、本文、終端欠落の回帰を固定した。"
+    partial: false
+migrations:
+  - what: "staging で close_siblings が決定済みの OpenGame、Agent Island、Interactive Fiction を resolve し、5 candidate を failed_duplicate terminal へ移行。同時再投入された同一2 row も同一判断で冪等 resolve。"
+    affected: "memory/shared_reads_group_handoff_inbox.jsonl の5 rowと candidate 5件。判断未確定の AutoUE 1 row は pending のまま維持。"
+  - what: "parser と lifecycle の正規化結果から canonical、mixed、posted-source、stale triage、group action の各派生 index を再生成。"
+    affected: "title canonical 93 rows、mixed 81 rows、posted-source 547 rows、stale triage 50 rows、group action 31 rows。"
+verification:
+  - "python -m unittest discover -s tools -p test_shared_reads*.py: 19 tests OK。close 冪等再実行、部分適用回復、keep fingerprint 変化、defer 期限、旧 row、delimiter 回帰を含む。"
+  - "問題 candidate 20260518_biped_rational_design_postmortem.md は URL の game---the-making を保持し、status/candidate_status とも posted と読めた。"
+  - "title canonical / mixed duplicate / posted-source / stale triage / group action の全 generator が --check で一致。"
+  - "shared_reads_group_handoff.py audit は rows=15、errors=[]、pending=1。残る AutoUE は判断未確定のため正常な pending。"
+  - "tools/memory_recall.py shared-reads frontmatter group handoff lifecycle は exit 0。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
