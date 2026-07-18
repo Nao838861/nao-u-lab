@@ -118,7 +118,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778439731-7e150c0088
+    source_ts: "1778439731.144739"
+    title: "@bakagane『not for meが荒れる構造』を cross_review の場の非対称性として読み直す"
+    reason: "未レビュー中の最高 score で、game-design / harness / operation / evaluation を横断し、次の cross_review の機能を判定か探索かで混同する問題に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "既存の observation-before-prescription と game-feedback-loop-asymmetry probes に重なり、care framing が必要な批判を弱める危険もある。risk_control と合計が採用条件を満たさないため、新規 probe は追加しない。"
+  change:
+    summary: "reviewed_source_ts と見送り理由のみ state に記録。既存 probe を再利用する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

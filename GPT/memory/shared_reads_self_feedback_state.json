@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T03:52:38+09:00",
+  "updated_at": "2026-07-19T06:04:39+09:00",
   "reviewed_source_ts": [
+    "1778439731.144739",
     "1784392410.906539",
     "1780943030.415079",
     "1784375330.114349",
@@ -10669,6 +10670,18 @@
       "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
       "existing_probes": ["probe-20260619-agentic-state-authority-boundary", "probe-20260711-benchjack-trust-boundary-preflight", "probe-20260626-mindstudio-executable-branch-preview"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の authority-boundary / trust-preflight / transition-trace probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-19T06:04:39+09:00",
+      "id": "sr-1778439731-7e150c0088",
+      "source_ts": "1778439731.144739",
+      "title": "@bakagane「not for meが荒れる構造」を cross_review の場の非対称性として読み直す",
+      "decision": "reject",
+      "reason": "Score 13. 未レビュー中の最高 score で、cross_review が判定機能と探索・emergence 機能のどちらを担うかを先に区別する観点は、ゲーム制作と自己評価に直結する。しかし active probe はすでに、レビューで観測を処方より先に置き作者の判断空間を残すことと、評価前に最適化対象の feedback loop を明示することを要求しており、新規の review-mode probe は次回行動を大きく変えない。また「ケア破壊」 framing は、原文自身が警告する通り「荒れるから批判しない」へ滑って必要な判定を弱める危険がある。shared-reads 本文は具体的な cross_review 事例を含むが、場の機能を分けた比較運用は未実測なので evidence=2。non_redundancy=1、risk_control=1、合計13で採用条件を満たさないため、既存 probe を再利用し、読了と見送り理由だけを state に残す。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 1, "risk_control": 1, "reversibility": 3, "total": 13},
+      "existing_probes": ["probe-20260515-cross-review-observation-before-prescription", "probe-20260606-game-feedback-loop-asymmetry"],
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の observation-before-prescription / feedback-loop probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
     }
   ],
