@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { BUILDINGS, FIXED, GOODS, TUTORIAL, UPGRADE_REQUIREMENTS, VERSION } from '../src/config.js';
 import { keyOf, line8, roadPath } from '../src/pathfinding.js';
 import { World } from '../src/world.js';
@@ -156,6 +157,16 @@ function testTutorialContinuesIntoWarehouse() {
   assert.equal(warehouse.type, 'warehouse');
 }
 
+function testNarrativeAndHudContracts() {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  for (const id of ['open-desk', 'open-desk-top', 'open-ledger', 'funds-value', 'income-value', 'expense-value', 'objective', 'advisor']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`), `${id}の導線が残っている`);
+  }
+  assert.match(html, /あなたは本国から派遣された新任支配人/);
+  assert.match(html, /道を一本ひき、木こり仕事場を建てる/);
+  assert.match(html, /本国書状と港湾報告/);
+}
+
 function testLongRunInvariants() {
   const world = new World();
   world.beginCharter();
@@ -197,6 +208,7 @@ testFixedSlotsAndStatus();
 testPathDisconnectDoesNotTeleport();
 testWarehouseBuffersVisibleOverflow();
 testTutorialContinuesIntoWarehouse();
+testNarrativeAndHudContracts();
 testLongRunInvariants();
 
 console.log(JSON.stringify({
