@@ -184,6 +184,8 @@ function testLongRunInvariants() {
   }
   assert.ok(world.stats.produced.log > 0 && world.stats.produced.boards > 0, '長時間で生産が停止しない');
   assert.ok(world.stats.exported.boards > 0, '長時間で輸出が停止しない');
+  assert.ok(world.ship.nextDay > 0 && world.day > world.ship.nextDay - 16, '定期便の次回予定日が時間経過に応じて更新される');
+  assert.ok(world.ledger.filter(row => row.kind === 'export').length >= 2, '長時間で定期船の輸出が複数回発生する');
   assert.ok(world.sectionAmount(warehouse, 'storage', 'log') >= 0, '倉庫在庫が壊れない');
   assert.equal(new Set([logger.id, woodshop.id, warehouse.id]).size, 3, '長時間検証中も施設IDが衝突しない');
 }
