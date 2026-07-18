@@ -499,6 +499,15 @@ canvas.addEventListener('pointerdown', event => {
 });
 
 canvas.addEventListener('pointermove', event => {
+  // pointerupを取り逃がしても、ボタンを押していないマウス移動で
+  // カメラが追従し続けないように押下状態を正本にする。
+  if (event.pointerType === 'mouse' && event.buttons === 0) {
+    state.pointers.delete(event.pointerId);
+    state.panLast = null;
+    state.dragMoved = false;
+    canvas.classList.remove('map-dragging');
+    return;
+  }
   const point = localPoint(event);
   const previous = state.pointers.get(event.pointerId);
   state.pointers.set(event.pointerId, point);
