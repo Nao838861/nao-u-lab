@@ -119,7 +119,137 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語 probe と per-file atom index 整合を監査。validate_memory_index.py は OK、broken index entry は 0 件。"
+  - "memory_health.py で atoms 2693 件を監査。atom id 重複 0、mirror content conflict 0。normalized content 重複は raw 40 group / recall-visible 3 group だが既存 fold が適用されているため atom 本体は変更なし。"
+  - "shared-reads lifecycle を top-level candidate 1002 件で集計し、mixed duplicate / stale triage / group action queue を再生成。"
+  - "duplicate title canonical audit を --unindexed-only --limit 20 で確認。表示された group は open-only または terminal/open mixed で、terminal-only の自動 index 登録対象は sample 内 0 件。mixed/open は既存 queue に残した。"
+  - "cycle 2026-07-19 07:58 の group action 3 件を persistent inbox へ冪等 enqueue。audit は rows=15、pending=3、errors=0。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。handled へ変更した行はなし。"
+  - "memory/raw/ の 30 日超ファイルを監査し、93 件・62,759,242 bytes を archive 候補として識別。内訳は web_research 85、headless_eval 6、slack_archive 1、raw 直下 1。active ingest source と一次 provenance を含むため移動はしていない。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 として正常。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。最後の false は文字化けではなく当該文字列が本文にない結果。"
+  display_or_tooling_status: none
+candidate_lifecycle_counts:
+  total: 1002
+  posted: 426
+  ready_to_post: 10
+  postponed: 415
+  failed: 128
+  needs_review: 22
+  parser_unclassified: 1
+issues:
+  - id: ISS-4A-FRONTMATTER-BOUNDARY
+    description: "shared_reads_title_index.read_frontmatter() が frontmatter 終端行ではなく文字列 '---' で split するため、URL 内に triple hyphen を含む candidate を途中で切り、terminal lifecycle を未分類にする。"
+    severity: high
+    evidence: "tools/shared_reads_title_index.py:145-150; memory/shared_reads_candidates/20260518_biped_rational_design_postmortem.md は UTF-8 原文に status: posted を持つが parser 集計では missing となる。"
+    source_file_status: "candidate source は UTF-8 正常で、frontmatter に candidate_status: posted / status: posted / Slack permalink が存在する。source 破損ではない。"
+    display_or_tooling_status: "read_frontmatter の delimiter 解釈で URL 中の game---the-making を終端と誤認する tooling 問題。"
+    why_blocks_game_memory: "投稿済みの高品質なゲーム制作ポストモーテムが terminal evidence として見えず、duplicate preflight・canonical index・再評価除外の信頼性を落とす。"
+  - id: ISS-4A-GROUP-ACTION-NO-CLOSURE
+    description: "Phase 2 の group_actions は close_siblings を判断して acknowledge するが、判断対象 candidate の lifecycle を閉じる後続適用先が確認できないため、処理済み group が actionable queue に再出現する。"
+    severity: high
+    evidence: "log/cycle_staging_log_cdx.md Phase 2 は Agent Island / OpenGame / Interactive Fiction の close_siblings を記録して pending 3→0 とした。一方 phases/phase2_analyze.md:124 は sibling status を適用しない契約で、repository 内に group_actions の consumer はなく、再生成後 queue 先頭へ Agent Island と OpenGame が戻った。対象 20260529 candidate も status: postponed / stale_after: 2026-06-28 のまま。"
+    source_file_status: "staging、phase prompt、candidate frontmatter、handoff inbox はすべて UTF-8 正常。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "同じ duplicate group の再判断が Phase 2 budget を反復消費し、ゲーム制作へ転用価値のある新規知見の評価・想起を遅らせる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-GROUP-ACTION-NO-CLOSURE
+    - ISS-4A-FRONTMATTER-BOUNDARY
+stale_backlog:
+  overdue_open_total: 245
+  stale_triage_queue_rows: 50
+  actionable_group_count: 32
+  backlog_high_water: true
+  high_water_reason: "overdue_open_total 245 > stale_triage_queue_rows 50 かつ actionable_group_count 32 >= 3。"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  phase2_processed_group_count: 3
+  phase2_group_analysis_time_minutes: 5
+  reappeared_processed_groups:
+    - "agent island a saturation and contamination resistant benchmark from multiagent games"
+    - "opengame open agentic coding for games"
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-eb0daf3711dbcce9
+    - gha-d95051a6af5ade9a
+    - gha-f8f32c50cae6cca1
+group_action_handoff:
+  - group_key: "agent island a saturation and contamination resistant benchmark from multiagent games"
+    representative: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+      - memory/shared_reads_candidates/20260604_agent_island_dynamic_multiagent_benchmark.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260517_agent_island_multiagent_games.md
+      - memory/shared_reads_candidates/20260527_agent_island_multiagent_games.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260529_agent_island_multiagent_games.md
+      stale_after: "2026-06-28"
+      reason: "age_days=21; mixed duplicate group present; saturation / contamination 耐性、協力・対立・説得を含む環境、Bayesian Plackett-Luce ranking、ログ分析がゲーム制作評価へ接続する。"
+  - group_key: "opengame open agentic coding for games"
+    representative: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+      - memory/shared_reads_candidates/20260602_opengame_agentic_coding_for_games.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md
+      - memory/shared_reads_candidates/20260626_opengame_agentic_coding_for_games.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260529_opengame_agentic_coding_for_games.md
+      stale_after: "2026-06-28"
+      reason: "age_days=21; mixed duplicate group present; playable browser game、Template Skill / Debug Skill / OpenGame-Bench が Phase 0 playable diff と headless 評価へ接続する。"
+  - group_key: "autoue automated generation of 3d games in unreal engine via multi agent systems"
+    representative: memory/shared_reads_candidates/20260604_autoue_3d_game_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260604_autoue_3d_game_generation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260604_autoue_3d_game_generation.md
+      stale_after: "2026-07-04"
+      reason: "age_days=15; mixed duplicate group present; engine constraints、documentation grounding、runtime test commands は有用だが公開要旨レベルで実験設定・失敗例・比較対象が薄い。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "age_days=23、game_transfer_value=high。procedural persona と MCTS heuristic evolution を headless playstyle 別評価へ接続できる mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "age_days=23、game_transfer_value=high。runtime PCG と autonomous agent validation が headless 評価へ近いが一次内容確認が必要な mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "agentic pcg procedural content generation via tool using llms"
+    priority_reason: "age_days=20、game_transfer_value=high。既投稿 permalink が evidence にあり、重複閉鎖を判断できる mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_llm_gameplay_playability_player_experience.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "large language models in game development implications for gameplay playability and player experience"
+    priority_reason: "age_days=20、game_transfer_value=high。gameplay / playability / player experience の評価軸は有用だが一次事例が不足する mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260601_kg_enhanced_incremental_game_playtesting.md
+    status: postponed
+    stale_after: "2026-07-01"
+    duplicate_group_key: "knowledge graph enhanced large language model for incremental game playtesting"
+    priority_reason: "age_days=18、game_transfer_value=high。変更ログと game element KG による差分回帰テストへ直結するが評価数値・失敗例が不足する mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
