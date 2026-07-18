@@ -90,7 +90,33 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784408323-f42733ab9c
+    source_ts: "1784408323.132209"
+    title: "RNG-Bench — remember-to-act を同一 replay の介入差で診断する"
+    reason: "未レビューの直近 score 12 atom で、memory / harness / game-design / agent / evaluation を横断し、次回の headless game-agent 評価に直接つながるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "既存の広い knowing-doing trajectory probe を、同一 seed/replay の baseline／structured state-assisted 比較、action-trace ablation、memory_or_binding / policy_or_rule / state_to_action の failure 分類を行う1回限りの probe に置換した。active probe 数は319のまま増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

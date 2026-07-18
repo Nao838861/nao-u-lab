@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T06:04:39+09:00",
+  "updated_at": "2026-07-19T08:19:44+09:00",
   "reviewed_source_ts": [
+    "1784408323.132209",
     "1778439731.144739",
     "1784392410.906539",
     "1780943030.415079",
@@ -10683,6 +10684,18 @@
       "existing_probes": ["probe-20260515-cross-review-observation-before-prescription", "probe-20260606-game-feedback-loop-asymmetry"],
       "change": {"type": "state_only", "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の observation-before-prescription / feedback-loop probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-19T08:19:44+09:00",
+      "id": "sr-1784408323-f42733ab9c",
+      "source_ts": "1784408323.132209",
+      "title": "RNG-Bench — remember-to-act を同一 replay の介入差で診断する",
+      "decision": "adopt_probe",
+      "reason": "Score 15. 正しい行動が過去の非表示観測に依存する場面で、通常条件と structured state ledger 付き条件を同一 replay で比較し、action trace ablation と trajectory failure を使って記憶・binding、方策・規則理解、state-to-action 変換を分ける観点は、次回の headless game-agent 評価へ直接適用できる。既存の knowing-doing probe は trajectory 上の断点を要求するが介入条件を指定せず、causalgame probe は一般的な ablation を要求するだけなので、RNG-Bench の paired replay は追加の診断力がある。一方で probe を純増すると319件ある active probe 群をさらに肥大化させるため、広い knowing-doing probe を1回限りの paired-replay probeへ置換した。shared-reads 本文と原論文は Matching Pairs / 3D Maze、oracle state、action-history ablation、trajectory 指標を根拠にするが、この環境での比較実測は未実施なので evidence=2。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 15},
+      "existing_probes": ["probe-20260613-balrog-knowing-doing-trajectory", "probe-20260708-causalgame-outcome-explanation-split"],
+      "change": {"type": "probe_replacement", "summary": "広い knowing-doing trajectory probe を、同一 seed/replay の baseline／state-assisted 比較、action-trace ablation、3層 failure 分類を行う1回限りの probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260613-balrog-knowing-doing-trajectory", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
     }
   ],
   "active_probes": [
@@ -11362,16 +11375,16 @@
       "status": "active"
     },
     {
-      "id": "probe-20260613-balrog-knowing-doing-trajectory",
-      "created_at": "2026-06-13T18:14:00+09:00",
-      "source_ts": "1781312946.508549",
-      "scope": "next game-agent evaluation, playable-diff verification, or phase outcome where Codex may treat knowledge, explanation, short-run success, or benchmark-like score as evidence of long-horizon action capability",
+      "id": "probe-20260719-rng-bench-state-assisted-replay",
+      "created_at": "2026-07-19T08:19:44+09:00",
+      "source_ts": "1784408323.132209",
+      "scope": "next headless or browser game-agent evaluation where the correct action depends on an observation or action no longer visible in the current state",
       "questions": [
-        "Before the next game-agent evaluation, playable-diff verification, or phase outcome where I cite a model/prototype's knowledge, explanation, short-run success, or benchmark-like score, did I name one action-level trajectory signal that shows the knowledge was used under changing state?",
-        "If the agent or prototype can explain the rule but fails in play, did I classify it as a knowing-doing gap and record the observed transition where knowledge stopped becoming action, instead of treating it as generic reasoning failure?",
-        "If only static explanation or short interaction evidence is available, did I label the conclusion as static/short-horizon and name the missing long-horizon trajectory evidence before changing game rules, harnesses, or memory directives?"
+        "Before judging the failure, did I name one past-state dependency as identity-location, spatial, or semantic state and preserve one fixed seed, route, or deterministic replay for comparison?",
+        "Did I run the same replay in baseline and structured state-assisted conditions, and when observation-action binding is uncertain compare action trace present versus absent while recording success, invalid action, detour, collision, or recheck events?",
+        "Did I classify baseline-only failure repaired by state as memory_or_binding, failure in both conditions as policy_or_rule, and correct stated state followed by a wrong action as state_to_action, or label the diagnosis paired_replay_unverified when the contrast could not be run?"
       ],
-      "expires_after": "Review after the next two game-agent evaluations, playable-diff verifications, or phase outcome notes that use knowledge claims, explanations, short-run success, benchmark-like scores, action trajectories, or long-horizon capability claims as evidence."
+      "expires_after": "Review after the next headless or browser game-agent evaluation whose correct action depends on a no-longer-visible observation or past action."
     },
     {
       "id": "probe-20260612-memory-field-promotion-trial",
