@@ -87,8 +87,10 @@ async function desktop() {
   assert.equal(await page.eval("getComputedStyle(document.querySelector('#tracking')).display"), 'none', '追跡していない時は追跡帯を表示しない');
   assert.equal(await page.eval("document.body.innerText.includes('盤面')"), false, '世界内文言に開発語を出さない');
   assert.equal(await page.eval("document.querySelector('#funds-value').textContent"), '1,200');
+  assert.equal(await page.eval("getComputedStyle(document.querySelector('#world')).cursor"), 'default', '通常時は手カーソルを表示しない');
 
   await page.eval("document.querySelector('[data-tool=road]').click()");
+  assert.equal(await page.eval("getComputedStyle(document.querySelector('#world')).cursor"), 'crosshair', '建設時は照準カーソルを表示する');
   const roadStart = await page.eval('window.__CHARTER__.renderer.project(13.5,11.5)');
   const roadEnd = await page.eval('window.__CHARTER__.renderer.project(15.5,9.5)');
   await page.click(roadStart.x, roadStart.y);

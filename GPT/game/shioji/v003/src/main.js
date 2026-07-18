@@ -490,6 +490,7 @@ canvas.addEventListener('pointerdown', event => {
   }
   state.dragMoved = false;
   state.panLast = point;
+  if (!state.tool) canvas.classList.add('map-dragging');
   const tile = renderer.tileAt(point.x, point.y);
   if (state.tool === 'road') {
     state.roadDragStart = state.roadAnchor || tile;
@@ -548,6 +549,7 @@ canvas.addEventListener('pointerup', event => {
     if (building) selectBuilding(building);
   }
   state.panLast = null;
+  canvas.classList.remove('map-dragging');
 });
 
 canvas.addEventListener('pointercancel', event => {
@@ -555,6 +557,7 @@ canvas.addEventListener('pointercancel', event => {
   state.panLast = null;
   state.pinch = null;
   state.roadDragStart = null;
+  canvas.classList.remove('map-dragging');
 });
 
 canvas.addEventListener('wheel', event => {

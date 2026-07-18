@@ -26,7 +26,8 @@ button { font: inherit; color: inherit; }
 button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 button:disabled { opacity: .42; cursor: not-allowed; }
 
-#world { position: fixed; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+#world { position: fixed; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: default; }
+#world.map-dragging { cursor: grabbing; }
 #world.tool-active { cursor: crosshair; }
 
 .panel {
