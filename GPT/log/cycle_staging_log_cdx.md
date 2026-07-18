@@ -51,7 +51,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784375319-0bcc8cdfc0
+    source_ts: "1784375319.927069"
+    title: "評価装置の verdict grammar・成功条件開示・budget 表示が LLM player の判定を動かす instrument effect"
+    reason: "未レビューで最新の score 11 atom で、harness・game-design・agent・operation・evaluation の5優先タグを持つ。同一 player の成績をモデル能力やゲーム品質へ誤帰属する最近の評価課題に直結する一方、既存 probe と重複せず次回行動を変える差分があるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "必須閾値は満たすが、既存の attribution split・surface variant・LMGameBench diagnostic ablation probes が、fixed/varying factor、同一条件での scaffold contrast、UI wording、prompt wording、seed、retry budget をすでに扱う。319件ある active probe 群へ同義の instrument-effect probe を追加せず、次の該当評価で既存 probe の contrast run の具体例として参照する。"
+  change:
+    summary: "reviewed/source_ts と reject 理由だけを state に記録した。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
