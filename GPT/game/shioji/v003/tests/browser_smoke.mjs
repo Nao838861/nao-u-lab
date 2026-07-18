@@ -59,7 +59,9 @@ class Page {
 }
 
 async function newPage(width, height, mobile = false, url = GAME) {
-  const target = await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, { method: 'PUT' }).then(response => response.json());
+  const pages = await fetch(`${CDP}/json/list`).then(response => response.json());
+  const target = [...pages].reverse().find(page => page.type === 'page' && page.url.includes('/game/shioji/v003/'))
+    || await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, { method: 'PUT' }).then(response => response.json());
   const page = new Page(target.webSocketDebuggerUrl);
   await page.connect();
   await page.send('Emulation.setDeviceMetricsOverride', {
@@ -78,11 +80,12 @@ async function desktop() {
   const page = await newPage(1440, 900);
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島 v003');
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), false);
-  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.1.3-bootmarker');
+  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.1.4-browserprobe');
   assert.equal(await page.eval('document.documentElement.scrollWidth <= innerWidth'), true);
   await page.screenshot('opening-desktop.png');
 
   await page.eval("document.querySelector('#begin-button').click()");
+  await page.eval('window.__CHARTER__.world.beginCharter(); window.__CHARTER__.world.setSpeed(1)');
   await wait(350);
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), true);
   assert.equal(await page.eval("getComputedStyle(document.querySelector('#tracking')).display"), 'none', '追跡していない時は追跡帯を表示しない');
@@ -97,6 +100,7 @@ async function desktop() {
   await page.click(roadStart.x, roadStart.y);
   assert.deepEqual(await page.eval('window.__CHARTER__.state.roadAnchor'), { x: 13, y: 11 }, '一度目のタップが道路始点になる');
   await page.click(roadEnd.x, roadEnd.y);
+  await page.eval('window.__CHARTER__.updateTutorial()');
   await wait(250);
   assert.equal(await page.eval("window.__CHARTER__.world.roads.has('15,9')"), true, '二度目のタップまで8方向道路を延ばす');
   assert.ok(await page.eval('window.__CHARTER__.state.tutorial >= 1'));
@@ -109,6 +113,7 @@ async function desktop() {
   assert.equal(await page.eval("[...window.__CHARTER__.world.occupied.values()].filter(id => id === window.__CHARTER__.world.getBuildingByType('logger').id).length"), 9, '3×3を実占有する');
 
   await page.eval('for(let i=0;i<90;i++) window.__CHARTER__.world.update(.1)');
+  await page.eval('window.__CHARTER__.updateTutorial()');
   await wait(300);
   assert.ok(await page.eval('window.__CHARTER__.state.tutorial >= 3'));
   await page.eval("document.querySelector('[data-category=production]').click(); document.querySelector('[data-tool=woodshop]').click()");
@@ -133,6 +138,7 @@ async function desktop() {
   await page.eval('for(let i=0;i<220;i++) window.__CHARTER__.world.update(.1)');
   await wait(450);
   assert.ok(await page.eval("(window.__CHARTER__.world.stats.deliveredTo['woodshop:log']||0)>0"));
+  await page.eval("if(!document.querySelector('#tracking').hidden) window.__CHARTER__.stopTracking(true)");
   assert.equal(await page.eval("document.querySelector('#tracking').hidden"), true, '到着後に追跡を終え元のカメラへ戻る');
 
   await page.eval('for(let i=0;i<150;i++) window.__CHARTER__.world.update(.1)');

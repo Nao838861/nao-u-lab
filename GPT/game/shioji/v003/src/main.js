@@ -725,7 +725,7 @@ function frame(time) {
 window.__CHARTER__ = {
   version: VERSION, world, renderer, state,
   selectTool, setCategory, selectBuilding, startTracking, stopTracking,
-  renderHud, renderObjective, renderSelection,
+  renderHud, renderObjective, renderSelection, updateTutorial,
 };
 
 renderBuildTools();
