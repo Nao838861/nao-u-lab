@@ -639,6 +639,11 @@ export class Renderer {
     ctx.beginPath(); ctx.moveTo(p.x - 10 * s, p.y - 11 * s); ctx.lineTo(p.x + 9 * s, p.y - 15 * s); ctx.lineTo(p.x + 11 * s, p.y - 5 * s); ctx.lineTo(p.x - 8 * s, p.y - 2 * s); ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#252a29';
     ctx.beginPath(); ctx.arc(p.x - 6 * s, p.y, 4 * s, 0, Math.PI * 2); ctx.arc(p.x + 8 * s, p.y - 3 * s, 4 * s, 0, Math.PI * 2); ctx.fill();
+    // 荷車は自走車ではなく、島の人が手で引く。斜め視点でも人影を先に描く。
+    ctx.strokeStyle = '#d5b48a'; ctx.lineWidth = Math.max(1, 1.8 * s); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(p.x - 17 * s, p.y - 7 * s); ctx.lineTo(p.x - 12 * s, p.y - 14 * s); ctx.lineTo(p.x - 8 * s, p.y - 12 * s); ctx.stroke();
+    ctx.fillStyle = '#c98b58'; ctx.beginPath(); ctx.arc(p.x - 18 * s, p.y - 19 * s, 3 * s, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#527c72'; ctx.fillRect(p.x - 21 * s, p.y - 16 * s, 6 * s, 8 * s);
     if (shipment.good === 'log') this.drawLogsAt(p.x, p.y - 13 * s, Math.min(3, Math.ceil(shipment.amount / 2)), s * 0.65);
     if (shipment.good === 'boards') this.drawBoardsAt(p.x, p.y - 11 * s, Math.min(3, Math.ceil(shipment.amount / 2)), s * 0.65);
     if (shipment.good === 'food') this.drawSacksAt(p.x, p.y - 9 * s, 2, s * 0.65, GOODS.food.color);
