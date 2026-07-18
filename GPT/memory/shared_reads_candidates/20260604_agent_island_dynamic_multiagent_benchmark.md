@@ -4,21 +4,20 @@ url: "https://digitaleconomy.stanford.edu/publication/agent-island-a-saturation-
 collected_at: "2026-06-04T03:07:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-evaluation, multiagent-games, benchmark, social-dynamics, game-ai]
-evaluated_at: "2026-06-04T04:31:55+09:00"
+evaluated_at: "2026-07-19T08:04:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-04T04:31:55+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T04:31:55+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+last_reviewed_at: "2026-07-19T08:04:38+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260517_agent_island_multiagent_games.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971050740239"
+next_action: none
+stale_after: "2026-08-18"
 supersedes: []
-gate_reason: >-
-  adaptive multiagent games による saturation/contamination 耐性という問題設定は重要だが、
-  現抜粋だけでは benchmark の環境設計、評価ログ、Bayesian ranking の具体が薄い。
-  ゲーム制作への適用は harness 設計として有望なので、本文確認後に再評価する。
+gate_reason: |-
+  candidate URL は Stanford 紹介ページだが、terminal title index が同一 title group と arXiv 原文を posted として確定している。
+  実投稿 permalink も確認できるため、Phase 3 の投稿対象から重複として除外する。
 ---
 
 ## raw_excerpt

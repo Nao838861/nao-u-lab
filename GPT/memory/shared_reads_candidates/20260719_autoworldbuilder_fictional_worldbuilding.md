@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.09403"
 collected_at: "2026-07-19T08:00:58.6964454+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, worldbuilding, llm-agent, procedural-content-generation, evaluation]
+evaluated_at: "2026-07-19T08:04:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T08:04:38+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T08:04:38+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  文脈増大・創造性と整合性の衝突・自動 QA 不足という問題設定から、concept network、DAG scheduling、4層圧縮、Auditor review の中核を抽出できる。
+  20 task / 2 model の評価、token 削減率、pass rate、生成規模・所要時間まで揃い、ゲーム世界設定 pipeline への具体的な適用と限界を ~4000字で論じられる。
+suggested_post_outline:
+  overview_angle: "AutoWorldBuilder を、世界設定を大量生成する仕組みではなく、増え続ける設定を依存関係・文脈予算・独立監査で壊さず育てる制作 pipeline として書く。"
+  analysis_axis: "concept network による矛盾検出、semantic-locality を使う DAG batch、layer-as-budget compression、生成と Auditor review の分離を、報告された成功率・token 削減・pass rate 改善と対応づけて見る。"
+  application_target: "Log_cdx のゲーム試作で、world bible の concept 追加を DAG task 化し、関連設定だけを圧縮して渡し、独立した整合性 gate を通す小規模 probe に効く。"
+  pros_cons: "長所は設定規模の増大を依存関係と文脈予算で扱い、生成と監査を分離できる点。短所は20 task・2 model の内部評価であり、conflict 0 が面白さ・独自性・プレイヤー理解を保証しない点。"
+  verdict_pre: "部分採用。concept network 全面導入ではなく、依存関係つき world bible と Auditor gate を一つの試作で検証する。"
 ---
 
 ## raw_excerpt

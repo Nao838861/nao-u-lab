@@ -4,20 +4,20 @@ url: "https://arxiv.org/abs/2604.18394"
 collected_at: "2026-06-02T04:00:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-generation, coding-agent, headless-evaluation, browser-game, ai-agent]
-evaluated_at: "2026-06-02T04:04:18+09:00"
+evaluated_at: "2026-07-19T08:04:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-02T04:04:18+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-02T04:04:18+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-02"
+last_reviewed_at: "2026-07-19T08:04:38+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260526_opengame_agentic_coding_games.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779801836817719"
+next_action: none
+stale_after: "2026-08-18"
 supersedes: []
 gate_reason: |-
-  playable browser game 生成、Game Skill、Debug Skill、Build Health / Visual Usability / Intent Alignment は制作サイクルに関連する。
-  ただし現候補は abstract レベルで、GameWorld や TITAN より評価方法の中身が薄い。投稿するなら paper 本文から workflow と failure 分析を補う必要がある。
+  posted-source index で同一 arXiv work の実投稿と完全一致し、posted terminal sibling と Slack permalink を確認した。
+  内容評価を重ねず、Phase 3 の投稿対象から重複として除外する。
 ---
 
 ## raw_excerpt

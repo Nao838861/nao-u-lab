@@ -4,18 +4,20 @@ url: https://www.mdpi.com/2076-3417/16/6/2932
 collected_at: 2026-06-04T00:29:29+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [interactive-fiction, serious-games, llm, structured-validation, narrative-design]
-evaluated_at: 2026-06-04T00:33:54+09:00
+evaluated_at: "2026-07-19T08:04:38+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: 2026-06-04T00:33:54+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T00:33:54+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-04"
+last_reviewed_at: "2026-07-19T08:04:38+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_sine_open_weight_interactive_fiction_serious_games.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780083448196669"
+next_action: none
+stale_after: "2026-08-18"
 supersedes: []
-gate_reason: "structured JSON seed と validation は実装可能性が高いが、候補本文だけでは評価結果の具体性、open-weight model 間の差、serious game と一般ゲーム制作の接続が不足している。Phase 3 の ~4000字概要にするには本文から評価表や失敗例を追加で抜く必要がある。"
+gate_reason: |-
+  posted-source index で同一 MDPI URL の実投稿と完全一致し、posted terminal sibling と Slack permalink を確認した。
+  内容評価を重ねず、Phase 3 の投稿対象から重複として除外する。
 ---
 
 ## raw_excerpt
