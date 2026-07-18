@@ -560,6 +560,9 @@ canvas.addEventListener('pointercancel', event => {
   canvas.classList.remove('map-dragging');
 });
 
+window.addEventListener('pointerup', () => canvas.classList.remove('map-dragging'));
+window.addEventListener('blur', () => canvas.classList.remove('map-dragging'));
+
 canvas.addEventListener('wheel', event => {
   event.preventDefault();
   const point = localPoint(event);

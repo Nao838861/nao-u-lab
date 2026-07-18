@@ -1,4 +1,4 @@
-export const VERSION = 'v003.0.1-cursorfix';
+export const VERSION = 'v003.0.2-cursorcachefix';
 
 export const GRID = { width: 24, height: 19, tileW: 68, tileH: 34 };
 export const DAY_SECONDS = 1.6;
