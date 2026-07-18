@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T01:39:22+09:00",
+  "updated_at": "2026-07-19T03:52:38+09:00",
   "reviewed_source_ts": [
+    "1784392410.906539",
     "1780943030.415079",
     "1784375330.114349",
     "1784375319.927069",
@@ -430,6 +431,45 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T03:52:38+09:00",
+      "selected": {
+        "id": "sr-1784392410-4a6f862bbd",
+        "source_ts": "1784392410.906539",
+        "title": "EA SPORTS FC 26 goalkeeper AI — designer feedback を scenario・reward・regression test へ翻訳する production RL",
+        "reason": "最新の未レビュー score 11 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。旧 heuristic を baseline と bootstrap data に残し、designer feedback を再現 scenario と回帰 oracle に変える方法が、現在の playable diff と headless 評価に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "risk_control=1、合計13で採用条件に届かないため、新規 probe・metric は追加しない。shared-reads 本文は GDC slide と論文を突き合わせ、2,000 shot、344 expert-authored tests、5 seeds、400 human-play games、170μs inference、ablation、catastrophic forgetting まで記録しているため evidence=3 とした。一方、learned-policy-leaf-gate は局所 behavior と hand-coded baseline・believability・runtime cost を、bdd-route-contract-regression は固定 scenario と executable oracle を、commonroad-human-operation-regression-fixture は人手発見を再現 fixture へ変えることを、gameenginebench-runtime-integration-gate は変更箇所と周辺 system の回帰を既に要求している。For Honor production bot atom も同じ重複理由で reject 済みであり、FC 26 の四層を新しい checklist に再束縛すると active probe 群の確認負荷と小型 prototype の harness 過剰構築を増やす。次の該当作業では本 atom を既存 probes の具体例として参照する。",
+      "existing_probes": [
+        "probe-20260621-learned-policy-leaf-gate",
+        "probe-20260608-bdd-route-contract-regression",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の局所置換・baseline比較・scenario fixture・回帰oracle・runtime integration probes との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T01:39:22+09:00",
       "selected": {

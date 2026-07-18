@@ -108,7 +108,38 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784392410-4a6f862bbd
+    source_ts: "1784392410.906539"
+    title: "EA SPORTS FC 26 goalkeeper AI — designer feedback を scenario・reward・regression test へ翻訳する production RL"
+    reason: "最新の未レビュー score 11 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。旧 heuristic を baseline と bootstrap data に残し、designer feedback を再現 scenario と回帰 oracle に変える方法が、現在の playable diff と headless 評価に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "GDC slide と論文、2,000 shot、344 expert-authored tests、5 seeds、400 human-play games、170μs inference、ablation と catastrophic forgetting まで根拠がある。一方、局所 behavior と旧 baseline、固定 scenario と executable oracle、人手発見の fixture 化、周辺 system 回帰は既存4 probes が既に覆い、For Honor production bot atom も同じ重複理由で reject 済み。新しい checklist は行動差より確認負荷と小型 prototype の harness 過剰構築を増やすため採用しない。"
+  existing_probes:
+    - probe-20260621-learned-policy-leaf-gate
+    - probe-20260608-bdd-route-contract-regression
+    - probe-20260708-commonroad-human-operation-regression-fixture
+    - probe-20260709-gameenginebench-runtime-integration-gate
+  change:
+    summary: "reviewed/source_ts と重複による reject 理由のみ更新。probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
