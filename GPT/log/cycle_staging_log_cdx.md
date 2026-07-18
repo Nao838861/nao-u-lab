@@ -37,7 +37,33 @@ skipped: []
 - 最終判定: 2 件とも「部分採用」。OPM は効果未検証の設計フレーム、MAB は歩数差非有意・motivation 差のみ有意という限界を本文に明記。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784337079-13cea6d9f1
+    source_ts: "1784337079.340619"
+    title: "One-Page Designs — 設計関係を一視野へ置く front map"
+    reason: "未レビューで最新の score 14 atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つ。視覚的 front map が既存 probe と異なる行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かない。既存の game-scope-brief-cut-gate が one-page scope、core loop、完了条件、risk test を要求し、trace・assertion 系 probe も設計関係と実行証跡の往復を扱う。317件の active probe 群へ追加すると行動差より確認負荷が増えるため反映しない。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

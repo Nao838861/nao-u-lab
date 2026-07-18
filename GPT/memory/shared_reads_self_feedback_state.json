@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-18T10:15:00+09:00",
+  "updated_at": "2026-07-18T12:14:45+09:00",
   "reviewed_source_ts": [
+    "1784337079.340619",
     "1778512954.541829",
     "1778535742.144259",
     "1779601071.377389",
@@ -423,6 +424,20 @@
     "1784324167.001349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T12:14:45+09:00",
+      "selected": {
+        "id": "sr-1784337079-13cea6d9f1",
+        "source_ts": "1784337079.340619",
+        "title": "One-Page Designs — 設計関係を一視野へ置く front map",
+        "reason": "未レビューで最新の score 14 atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つ。One-Page Design を短文仕様ではなく関係図と理解差の検出面として扱う知見が、次の prototype 行動へ既存 probe とは異なる差を作るか確認するため選んだ。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 0, "risk_control": 2, "reversibility": 3, "total": 13},
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。視覚的 front map、解釈不一致、未記載依存、更新漏れ、回答時間の計測は実行可能だが、active な probe-20260602-game-scope-brief-cut-gate が one-page scope、core loop、完了条件、risk test をすでに要求し、trace・assertion 系 probe が設計関係と実行証跡の往復を扱っている。投稿自身も統制実験がなく、全資料置換や恒久ルール化を避けると明記する。317件ある active probe 群へ新設すると行動差より確認負荷が増えるため、読了だけを記録して反映しない。",
+      "change": {"type": "state_only", "summary": "reviewed_source_ts と、既存 one-page scope・trace probes との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-18T10:15:00+09:00",
       "selected": {
