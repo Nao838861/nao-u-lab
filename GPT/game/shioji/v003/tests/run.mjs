@@ -143,12 +143,25 @@ function testWarehouseBuffersVisibleOverflow() {
   assert.ok((world.stats.deliveredTo['warehouse:log'] || 0) > 0, '倉庫到着を他の配送と同じ記録へ残す');
 }
 
+function testTutorialContinuesIntoWarehouse() {
+  const world = new World();
+  world.beginCharter();
+  world.setChapterStage(8);
+  assert.equal(world.tutorialComplete(8), false, '倉庫解禁だけでは建設完了にしない');
+  const warehouse = world.addBuilding('warehouse', FIXED.suggestedWoodshop.x, FIXED.suggestedWoodshop.y).building;
+  assert.equal(world.tutorialComplete(8), true, '倉庫建設で次の教程へ進める');
+  assert.equal(world.tutorialComplete(9, { warehouseViewed: false }), false, '倉庫を確認するまでは完了しない');
+  assert.equal(world.tutorialComplete(9, { warehouseViewed: true }), true, '倉庫確認で教程を完了できる');
+  assert.equal(warehouse.type, 'warehouse');
+}
+
 testFootprintsAndRoads();
 testVisibleLogisticsAndUpgrade();
 testPortAndMoneyShareOneState();
 testFixedSlotsAndStatus();
 testPathDisconnectDoesNotTeleport();
 testWarehouseBuffersVisibleOverflow();
+testTutorialContinuesIntoWarehouse();
 
 console.log(JSON.stringify({
   ok: true,
