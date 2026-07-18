@@ -136,12 +136,18 @@ function testWarehouseBuffersVisibleOverflow() {
   world.beginCharter();
   world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
   const logger = world.addBuilding('logger', FIXED.suggestedLogger.x, FIXED.suggestedLogger.y).building;
-  const warehouse = world.addBuilding('warehouse', FIXED.suggestedWoodshop.x, FIXED.suggestedWoodshop.y).building;
+  const woodshop = world.addBuilding('woodshop', FIXED.suggestedWoodshop.x, FIXED.suggestedWoodshop.y).building;
+  world.addRoadLine(FIXED.roadHead, { x: 13, y: 14 });
+  const warehouse = world.addBuilding('warehouse', 14, 12).building;
   world.setChapterStage(8);
   world.addInventory(logger, 'output', 'log', 28);
   advance(world, 8);
-  assert.ok(world.sectionAmount(warehouse, 'storage', 'log') > 0, '満ちた生産地から中継倉庫へ実際に荷を退避する');
+  assert.ok(world.sectionAmount(warehouse, 'storage', 'log') > 0 || (world.stats.deliveredTo['warehouse:log'] || 0) > 0, '満ちた生産地から中継倉庫へ実際に荷を退避する');
   assert.ok((world.stats.deliveredTo['warehouse:log'] || 0) > 0, '倉庫到着を他の配送と同じ記録へ残す');
+  world.addInventory(warehouse, 'storage', 'log', 8);
+  world.addInventory(woodshop, 'input', 'log', 0);
+  advance(world, 2);
+  assert.ok((world.stats.deliveredTo['woodshop:log'] || 0) > 0, '倉庫に保管された丸太を木工房へ再出荷する');
 }
 
 function testTutorialContinuesIntoWarehouse() {

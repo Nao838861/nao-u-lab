@@ -448,6 +448,19 @@ export class World {
           });
           if (overflowingProducer) this.findAndShip(good, warehouse, 'storage', Math.min(8, capacity - stored));
         }
+
+        // 倉庫は終着点ではなく中継点。保管された荷を次の需要先へ再出荷する。
+        const woodshop = this.buildingsByType('woodshop')[0];
+        const port = this.getBuildingByType('port');
+        if (woodshop && this.sectionAmount(warehouse, 'storage', 'log') > 0) {
+          const need = Math.max(0, 12 - this.sectionAmount(woodshop, 'input', 'log') - this.incomingAmount(woodshop.id, 'input', 'log'));
+          if (need > 0) this.createShipment(warehouse, 'storage', woodshop, 'input', 'log', Math.min(need, 8));
+        }
+        if (port && this.sectionAmount(warehouse, 'storage', 'boards') > 0) {
+          const capacity = this.sectionCapacity(port, 'outbound', 'boards');
+          const need = Math.max(0, capacity - this.sectionAmount(port, 'outbound', 'boards') - this.incomingAmount(port.id, 'outbound', 'boards'));
+          if (need > 0) this.createShipment(warehouse, 'storage', port, 'outbound', 'boards', Math.min(need, 8));
+        }
       }
     }
   }
