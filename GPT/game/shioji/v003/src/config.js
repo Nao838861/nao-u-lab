@@ -1,4 +1,4 @@
-export const VERSION = 'v003.1.5-postchapter';
+export const VERSION = 'v003.1.6-frontage';
 
 export const GRID = { width: 24, height: 19, tileW: 68, tileH: 34 };
 export const DAY_SECONDS = 1.6;
@@ -136,7 +136,7 @@ export const FIXED = {
   port: { x: 2, y: 14, entrance: { x: 6, y: 15 }, grade: 3 },
   market: { x: 7, y: 12, entrance: { x: 8, y: 15 }, grade: 2 },
   roadHead: { x: 13, y: 11 },
-  forestGate: { x: 15, y: 9 },
-  suggestedLogger: { x: 16, y: 7 },
-  suggestedWoodshop: { x: 11, y: 8 },
+  forestGate: { x: 13, y: 8 },
+  suggestedLogger: { x: 14, y: 6 },
+  suggestedWoodshop: { x: 14, y: 9 },
 };

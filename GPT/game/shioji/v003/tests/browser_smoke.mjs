@@ -80,7 +80,7 @@ async function desktop() {
   const page = await newPage(1440, 900);
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島 v003');
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), false);
-  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.1.5-postchapter');
+  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.1.6-frontage');
   assert.equal(await page.eval('document.documentElement.scrollWidth <= innerWidth'), true);
   await page.screenshot('opening-desktop.png');
 
@@ -96,17 +96,17 @@ async function desktop() {
   await page.eval("document.querySelector('[data-tool=road]').click()");
   assert.equal(await page.eval("getComputedStyle(document.querySelector('#world')).cursor"), 'crosshair', '建設時は照準カーソルを表示する');
   const roadStart = await page.eval('window.__CHARTER__.renderer.project(13.5,11.5)');
-  const roadEnd = await page.eval('window.__CHARTER__.renderer.project(15.5,9.5)');
+  const roadEnd = await page.eval('window.__CHARTER__.renderer.project(13.5,8.5)');
   await page.click(roadStart.x, roadStart.y);
   assert.deepEqual(await page.eval('window.__CHARTER__.state.roadAnchor'), { x: 13, y: 11 }, '一度目のタップが道路始点になる');
   await page.click(roadEnd.x, roadEnd.y);
   await page.eval('window.__CHARTER__.updateTutorial()');
   await wait(250);
-  assert.equal(await page.eval("window.__CHARTER__.world.roads.has('15,9')"), true, '二度目のタップまで8方向道路を延ばす');
+  assert.equal(await page.eval("window.__CHARTER__.world.roads.has('13,8')"), true, '二度目のタップまで直線道路を延ばす');
   assert.ok(await page.eval('window.__CHARTER__.state.tutorial >= 1'));
 
   await page.eval("document.querySelector('[data-category=production]').click(); document.querySelector('[data-tool=logger]').click()");
-  const loggerPoint = await page.eval('window.__CHARTER__.renderer.project(16.5,7.5)');
+  const loggerPoint = await page.eval('window.__CHARTER__.renderer.project(14.5,6.5)');
   await page.click(loggerPoint.x, loggerPoint.y);
   await wait(250);
   assert.equal(await page.eval("window.__CHARTER__.world.buildingsByType('logger').length"), 1);
@@ -117,7 +117,7 @@ async function desktop() {
   await wait(300);
   assert.ok(await page.eval('window.__CHARTER__.state.tutorial >= 3'));
   await page.eval("document.querySelector('[data-category=production]').click(); document.querySelector('[data-tool=woodshop]').click()");
-  const woodshopPoint = await page.eval('window.__CHARTER__.renderer.project(11.5,8.5)');
+  const woodshopPoint = await page.eval('window.__CHARTER__.renderer.project(14.5,9.5)');
   await page.click(woodshopPoint.x, woodshopPoint.y);
   await wait(250);
   assert.equal(await page.eval("window.__CHARTER__.world.buildingsByType('woodshop').length"), 1);

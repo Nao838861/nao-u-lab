@@ -15,7 +15,7 @@ function advance(world, seconds, observe = null) {
 function establishWoodRoute(world) {
   const road = world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
   assert.equal(road.ok, true, road.reason);
-  assert.equal(road.newCells.length, 2, '既設の道標を除く2区画だけ新設する');
+  assert.equal(road.newCells.length, 3, '既設の道標を除く3区画だけ新設する');
   assert.equal(world.tutorialComplete(0), true, '森の手前へ繋がった完成道路を教程条件にする');
 
   const logger = world.addBuilding('logger', FIXED.suggestedLogger.x, FIXED.suggestedLogger.y);
@@ -32,13 +32,13 @@ function testFootprintsAndRoads() {
   const world = new World();
   const road = world.roadPreview(FIXED.roadHead, FIXED.forestGate);
   assert.equal(road.ok, true);
-  assert.deepEqual(road.cells, [{ x: 13, y: 11 }, { x: 14, y: 10 }, { x: 15, y: 9 }], '8方向の斜め道路を連続線として引く');
+  assert.deepEqual(road.cells, [{ x: 13, y: 11 }, { x: 13, y: 10 }, { x: 13, y: 9 }, { x: 13, y: 8 }], 'チュートリアルの直線道路を連続線として引く');
   world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
-  const placed = world.addBuilding('logger', 16, 7);
+  const placed = world.addBuilding('logger', 14, 6);
   assert.equal(placed.ok, true);
   const logger = placed.building;
   assert.equal([...world.occupied.values()].filter(id => id === logger.id).length, 9, '3×3建物は論理上も9区画を占有する');
-  assert.equal(world.roads.has(keyOf(16, 7)), false, '建物占有区画へ道路を重ねない');
+  assert.equal(world.roads.has(keyOf(14, 6)), false, '建物占有区画へ道路を重ねない');
   const blocked = world.roadPreview(FIXED.forestGate, { x: 17, y: 8 });
   assert.equal(blocked.ok, false);
   assert.match(blocked.reason, /建物/);
@@ -110,7 +110,7 @@ function testPortAndMoneyShareOneState() {
 function testFixedSlotsAndStatus() {
   const world = new World();
   world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
-  const logger = world.addBuilding('logger', 16, 7).building;
+  const logger = world.addBuilding('logger', 14, 6).building;
   assert.equal(world.sectionCapacity(logger, 'output', 'log'), BUILDINGS.logger.outputCaps.log);
   assert.equal(world.sectionAmount(logger, 'output', 'log'), 0, '空の固定出荷枠も数量0として存在する');
   world.addInventory(logger, 'output', 'log', world.sectionCapacity(logger, 'output', 'log'));
@@ -125,7 +125,7 @@ function testPathDisconnectDoesNotTeleport() {
   const world = new World();
   world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
   const { logger, woodshop } = establishWoodRoute(new World());
-  const path = roadPath(world.roads, { x: 15, y: 9 }, { x: 13, y: 11 });
+  const path = roadPath(world.roads, { x: 13, y: 8 }, { x: 13, y: 11 });
   assert.ok(path && path.length >= 3);
   assert.equal(path.every(point => world.roads.has(keyOf(point.x, point.y))), true);
   assert.notEqual(logger.id, woodshop.id);
@@ -172,11 +172,12 @@ function testLongRunInvariants() {
   const world = new World();
   world.beginCharter();
   world.addRoadLine(FIXED.roadHead, FIXED.forestGate);
-  const loggerResult = world.addBuilding('logger', 16, 7);
+  const loggerResult = world.addBuilding('logger', 14, 6);
   assert.equal(loggerResult.ok, true, loggerResult.reason);
-  const woodshopResult = world.addBuilding('woodshop', 11, 8);
+  const woodshopResult = world.addBuilding('woodshop', 14, 9);
   assert.equal(woodshopResult.ok, true, woodshopResult.reason);
-  const warehouseResult = world.addBuilding('warehouse', 15, 10);
+  world.addRoadLine(FIXED.roadHead, { x: 13, y: 14 });
+  const warehouseResult = world.addBuilding('warehouse', 14, 12);
   assert.equal(warehouseResult.ok, true, warehouseResult.reason);
   const logger = loggerResult.building;
   const woodshop = woodshopResult.building;
