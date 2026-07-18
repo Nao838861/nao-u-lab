@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2505.08515"
 collected_at: "2026-07-18T18:15:43.8507534+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, cooperative-game, educational-game, accessibility, playtesting]
+evaluated_at: "2026-07-18T18:19:30+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T18:19:30+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-18T18:19:30+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  turn-taking を学習目標へ接続する着想と専門家面接を設計へ戻す流れは、協力ゲーム制作に具体的に適用できる。
+  ただし現候補は abstract 相当だけで、プロトタイプ仕様、面接で得た設計変更、評価指標・結果の詳細がなく、約4000字の概要を根拠付きで構成できない。
 ---
 
 ## raw_excerpt

@@ -10,7 +10,19 @@
 - duplicate preflight skip（candidate 未作成）: MemoPilot / PTCG-Bench / One Policy, Infinite NPCs / LLM-driven TCG generation / Cross-Device Motion Interaction。いずれも `posted_url_match`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md
+    reason: abstract 相当のみで、プロトタイプ仕様・専門家面接由来の設計変更・評価指標の詳細が不足し、約4000字の概要を根拠付きで構成できない
+stale_reviewed: []
+```
+
+- duplicate preflight: `continue`（canonical URL: `https://arxiv.org/abs/2505.08515`、title_key: `covol a cooperative vocabulary learning game for children with autism`）。
+- 判定: `postpone`。turn-taking を協力型学習ゲームの目標へ接続する題材は具体的だが、Phase 3 投稿前に本文から手法・評価・結論を補う必要がある。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
