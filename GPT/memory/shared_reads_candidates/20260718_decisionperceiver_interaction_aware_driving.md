@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.09725"
 collected_at: "2026-07-18T22:49:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [multi-agent, npc-ai, attention, simulation, decision-making]
+evaluated_at: "2026-07-18T22:54:41+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-18T22:54:41+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-18T22:54:41+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  可変数 agent を固定長 latent へ集約する設計と scalability 評価は抽出できるが、根拠は自動運転の lane change・speed control に限定される。
+  ゲーム NPC への転用は architecture 類似に依存し、実測値・比較差・gameplay 上の意思決定品質が不足するため、約4000字の残すべきゲーム制作分析には達しない。
 ---
 
 ## raw_excerpt

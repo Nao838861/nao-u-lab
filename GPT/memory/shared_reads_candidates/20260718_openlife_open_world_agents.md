@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.31046"
 collected_at: "2026-07-18T22:49:29+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [artificial-life, llm-agent, persistent-memory, npc, simulation]
+evaluated_at: "2026-07-18T22:54:41+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-18T22:54:41+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-18T22:54:41+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  stateless LLM の周囲へ知覚・記憶・評価・budget metabolism を非同期 process として置く構成と、6 agent・約12週間の長期観察結果を具体的に説明できる。
+  長期 NPC を一枚の prompt ではなく有限資源を持つ runtime system として設計する適用先が明確で、主張の限界を含む約4000字の分析を支えられる。
+suggested_post_outline:
+  overview_angle: "万能な一個の agent ではなく、stateless LLM を複数の非同期生命維持 process が囲む open-world ALIFE の実験系として整理する"
+  analysis_axis: "closed-world reward から open-vocabulary judgment への変更、意味ベースの記憶再配線、budget metabolism、12週間で観測された自発性と社会構造を分解して評価する"
+  application_target: "Log_cdx の生活 simulation / 長期 NPC で、知覚・記憶・行動評価・資源消費を分離し、停止可能な短期 probe と event log で自発性と暴走を判定する runtime"
+  pros_cons: "利点は長期挙動を prompt から system dynamics へ移せること。欠点は高い運用費、open-vocabulary 評価の再現性不足、外部ネットワークや決済を含む権限・安全境界である"
+  verdict_pre: "部分採用。process 分離と有限予算は採用し、外部権限は閉じた simulation 内の可逆な資源へ置き換える"
 ---
 
 ## raw_excerpt

@@ -13,7 +13,23 @@
 - Slack inbox: directives pending 0件 / broadcasts pending 0件。品質判定・Slack投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260718_coopeval_v2_social_dilemmas.md
+  - memory/shared_reads_candidates/20260718_openlife_open_world_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260718_llm_vulnerability_lifecycle_stack_survey.md
+    reason: "8段階 taxonomy は有用だが、比較評価とゲーム固有の適用 probe が不足"
+  - path: memory/shared_reads_candidates/20260718_decisionperceiver_interaction_aware_driving.md
+    reason: "自動運転固有の実証からゲーム NPC への転用距離が大きく、結果詳細も不足"
+postpone:
+  - path: memory/shared_reads_candidates/20260718_bayesevolve_belief_guided_experimentation.md
+    reason: "belief 更新法・baseline・数値結果を補えば parameter tuning への適用を再評価可能"
+stale_reviewed: []
+group_actions: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
