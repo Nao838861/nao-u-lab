@@ -265,7 +265,7 @@ export class Renderer {
       }
     }
     for (const building of this.world.buildings) drawables.push({ depth: building.x + building.y + building.w + building.h - 0.6, x: building.x, kind: 'building', data: building });
-    for (const shipment of this.world.shipments) drawables.push({ depth: shipment.x + shipment.y + 0.9, x: shipment.x, kind: 'cart', data: shipment });
+    for (const shipment of this.world.shipments) drawables.push({ depth: shipment.x + shipment.y + 1.15, x: shipment.x, kind: 'cart', data: shipment });
     if (this.world.ship.state !== 'away') drawables.push({ depth: 20.4, x: 0, kind: 'ship', data: this.world.ship });
     drawables.sort((a, b) => a.depth - b.depth || a.x - b.x);
     for (const item of drawables) {
@@ -635,15 +635,23 @@ export class Renderer {
       ctx.beginPath(); ctx.arc(p.x, p.y - 8 * s, 17 * s, 0, Math.PI * 2); ctx.fill();
       ctx.globalAlpha = 1;
     }
+    // 先に人を描く。人の手から荷台へ伸びる柄が見えるため、荷車との一体感が出る。
+    const personX = p.x - 18 * s;
+    const personY = p.y - 18 * s;
+    ctx.fillStyle = '#c98b58'; ctx.beginPath(); ctx.arc(personX, personY - 7 * s, 4 * s, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#527c72'; ctx.fillRect(personX - 4 * s, personY - 3 * s, 8 * s, 11 * s);
+    ctx.strokeStyle = '#303b39'; ctx.lineWidth = Math.max(1, 1.6 * s); ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(personX - 2 * s, personY + 8 * s); ctx.lineTo(personX - 5 * s, personY + 15 * s);
+    ctx.moveTo(personX + 2 * s, personY + 8 * s); ctx.lineTo(personX + 6 * s, personY + 15 * s);
+    ctx.stroke();
+    ctx.strokeStyle = '#d5b48a'; ctx.lineWidth = Math.max(1, 1.8 * s);
+    ctx.beginPath(); ctx.moveTo(personX + 2 * s, personY - 1 * s); ctx.lineTo(p.x - 9 * s, p.y - 10 * s); ctx.stroke();
+
     ctx.fillStyle = '#6c472e'; ctx.strokeStyle = '#292a28'; ctx.lineWidth = Math.max(1, 1.5 * s);
     ctx.beginPath(); ctx.moveTo(p.x - 10 * s, p.y - 11 * s); ctx.lineTo(p.x + 9 * s, p.y - 15 * s); ctx.lineTo(p.x + 11 * s, p.y - 5 * s); ctx.lineTo(p.x - 8 * s, p.y - 2 * s); ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#252a29';
     ctx.beginPath(); ctx.arc(p.x - 6 * s, p.y, 4 * s, 0, Math.PI * 2); ctx.arc(p.x + 8 * s, p.y - 3 * s, 4 * s, 0, Math.PI * 2); ctx.fill();
-    // 荷車は自走車ではなく、島の人が手で引く。斜め視点でも人影を先に描く。
-    ctx.strokeStyle = '#d5b48a'; ctx.lineWidth = Math.max(1, 1.8 * s); ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(p.x - 17 * s, p.y - 7 * s); ctx.lineTo(p.x - 12 * s, p.y - 14 * s); ctx.lineTo(p.x - 8 * s, p.y - 12 * s); ctx.stroke();
-    ctx.fillStyle = '#c98b58'; ctx.beginPath(); ctx.arc(p.x - 18 * s, p.y - 19 * s, 3 * s, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#527c72'; ctx.fillRect(p.x - 21 * s, p.y - 16 * s, 6 * s, 8 * s);
     if (shipment.good === 'log') this.drawLogsAt(p.x, p.y - 13 * s, Math.min(3, Math.ceil(shipment.amount / 2)), s * 0.65);
     if (shipment.good === 'boards') this.drawBoardsAt(p.x, p.y - 11 * s, Math.min(3, Math.ceil(shipment.amount / 2)), s * 0.65);
     if (shipment.good === 'food') this.drawSacksAt(p.x, p.y - 9 * s, 2, s * 0.65, GOODS.food.color);
