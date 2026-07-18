@@ -281,7 +281,9 @@ button.hud-stat:hover { background: #ffffff0b; }
   border-radius: 8px;
   color: var(--paper);
   pointer-events: none;
-  white-space: nowrap;
+  max-width: calc(100vw - 24px);
+  white-space: normal;
+  text-align: center;
 }
 
 #toast-stack {
@@ -483,7 +485,7 @@ button.hud-stat:hover { background: #ffffff0b; }
   #build-dock { left: 0; right: 0; bottom: 0; transform: none; width: 100%; height: 88px; padding-bottom: max(6px, env(safe-area-inset-bottom)); border-radius: 12px 12px 0 0; }
   .dock-tabs button { width: 48px; }
   .build-tool { flex-basis: 80px; min-height: 68px; }
-  #tool-hint { bottom: 96px; max-width: calc(100vw - 20px); overflow: hidden; text-overflow: ellipsis; }
+  #tool-hint { bottom: 184px; max-width: calc(100vw - 20px); }
   #toast-stack { top: 126px; right: 7px; width: calc(100vw - 14px); }
   .side-sheet { top: 64px; right: 7px; bottom: 94px; width: calc(100vw - 14px); }
   .opening-card { display: block; max-height: 94vh; overflow-y: auto; }

@@ -74,6 +74,12 @@ const BASE = [
   ['logger', 27, 26], ['woodshop', 24, 30], ['charburner', 26, 29], ['saltworks', 26, 31],
 ];
 
+const BASE_ROADS = [
+  ...Array.from({ length: 10 }, (_, i) => [25, 26 + i]),
+  [24, 32], [26, 32], [24, 31], [23, 30], [22, 29],
+  [26, 27], [24, 29], [23, 29], [22, 32], [23, 31],
+];
+
 async function desktop() {
   const page = await newPage(1440, 900);
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島');
@@ -85,12 +91,37 @@ async function desktop() {
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), true);
   assert.equal(await page.eval('window.__CHARTER__.ship.state'), 'departing');
 
+  assert.deepEqual(await page.eval('window.__CHARTER__.snapRoadEnd([25,32],[29,33])'), [29, 32], '浅い線は水平8方向へ吸着する');
+  assert.deepEqual(await page.eval('window.__CHARTER__.snapRoadEnd([25,32],[29,35])'), [29, 36], '斜め線は45度方向へ吸着する');
+  assert.deepEqual(await page.eval(`[[30,32],[20,32],[25,37],[25,27],[30,37],[20,27],[30,27],[20,37]].map(p => window.__CHARTER__.snapRoadEnd([25,32],p))`),
+    [[30,32],[20,32],[25,37],[25,27],[30,37],[20,27],[30,27],[20,37]], '8方向すべてへ正確に吸着する');
+  assert.equal(await page.eval("window.__CHARTER__.world.canPlace('veg',5,5)[0]"), false, '道路から離れた建物を拒否する');
+
+  await page.eval("document.querySelector('[data-category=logistics]').click()");
+  await page.eval("document.querySelector('[data-tool=road]').click()");
+  const roadStart = await page.eval('window.__CHARTER__.renderer.project(24,32)');
+  const roadEnd = await page.eval('window.__CHARTER__.renderer.project(18,26)');
+  await page.click(roadStart.x, roadStart.y);
+  assert.deepEqual(await page.eval('window.__CHARTER__.state.roadAnchor'), [24, 32], '一度目のタップで道路の始点を保持する');
+  await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: roadEnd.x, y: roadEnd.y });
+  await wait(180);
+  assert.equal(await page.eval('window.__CHARTER__.state.roadPreview.connects'), true, '完成予定線の市場接続をプレビューする');
+  assert.match(await page.eval("document.querySelector('#tool-hint').textContent"), /市場へ接続/);
+  assert.match(await page.eval("document.querySelector('#tool-hint').textContent"), /賃金約1,440.*18人日/, '道路見積を会社資金と同じ換算で表示する');
+  await page.screenshot('roads-preview-desktop.png');
+  await page.click(roadEnd.x, roadEnd.y);
+  assert.equal(await page.eval('window.__CHARTER__.world.sites.length'), 6, '二度目のタップで連続道路を計画する');
+  await page.eval('window.__CHARTER__.removeRoadLine([23,31],[18,26])');
+  assert.equal(await page.eval('window.__CHARTER__.world.sites.length'), 0, '計画道路も撤去ツールの対象になる');
+
   const point = await page.eval('window.__CHARTER__.renderer.project(23,32)');
+  await page.eval("document.querySelector('[data-category=life]').click()");
   await page.eval("document.querySelector('[data-tool=fisher]').click()");
   await page.click(point.x, point.y);
   assert.equal(await page.eval("window.__CHARTER__.world.zones.some(z => z.job === 'fisher' && z.x === 23 && z.y === 32)"), true, 'canvas click places a zone');
   await page.eval(`(() => {
     const c = window.__CHARTER__;
+    c.world.seedRoads(${JSON.stringify(BASE_ROADS)});
     const base = ${JSON.stringify(BASE.slice(1))};
     for (const [job,x,y] of base) c.placeBuilding(job,x,y);
     c.planRoadLine([25,32],[27,26]);
@@ -119,7 +150,24 @@ async function desktop() {
   await wait(700);
   assert.ok(await page.eval('window.__CHARTER__.world.pop() >= 40'), '成長後に40人以上が暮らす');
   assert.ok(await page.eval(`Object.values(window.__CHARTER__.world.stalls).reduce((n,a)=>n+a.length,0) > 0`), '市場に現物在庫が並ぶ');
+  assert.ok(await page.eval('window.__CHARTER__.world.roadStats.cartTrips > 0'), '接続道路上を積荷付き手荷車が往復する');
   await page.screenshot('flow-desktop.png');
+  await page.eval(`(() => {
+    const c = window.__CHARTER__;
+    c.setSpeed(0);
+    const h = c.world.hhs.find(x => x.roadConnected && x.state === 'home') || c.world.hhs.find(x => x.roadConnected);
+    h.state = 'home'; h.px = h.x; h.py = h.y;
+    const good = {fisher:'fish',veg:'veg',wheat:'wheat',logger:'log',woodshop:'tools',charburner:'char',saltworks:'salt'}[h.job] || 'wheat';
+    h.pantry[good] += 80;
+    c.world.startMarketTrip(h, {[good]: 40});
+    c.world.stepToMarket(h); c.world.stepToMarket(h);
+    c.state.selected = h;
+    c.renderer.focus(h.px, h.py, true);
+    c.updateHud();
+  })()`);
+  await wait(180);
+  assert.equal(await page.eval('window.__CHARTER__.state.selected.tripVehicle'), 'cart');
+  await page.screenshot('loaded-cart-desktop.png');
   assert.deepEqual(page.errors, []);
   page.close();
 }
@@ -135,6 +183,16 @@ async function mobile() {
   assert.equal(await page.eval("document.querySelector('#build-dock').getBoundingClientRect().right <= innerWidth"), true);
   assert.equal(await page.eval("document.querySelector('#hud').getBoundingClientRect().right <= innerWidth"), true);
   assert.ok(await page.eval("document.querySelector('[data-tool=fisher]').getBoundingClientRect().height >= 44"));
+  await page.eval("document.querySelector('[data-category=logistics]').click()");
+  assert.ok(await page.eval("document.querySelector('[data-tool=road]').getBoundingClientRect().height >= 44"), 'スマホでも道路ボタンのタップ領域を確保する');
+  assert.ok(await page.eval("document.querySelector('[data-tool=roadRemove]').getBoundingClientRect().height >= 44"), 'スマホでも撤去ボタンのタップ領域を確保する');
+  await page.eval("document.querySelector('[data-tool=road]').click()");
+  const start = await page.eval('window.__CHARTER__.renderer.project(24,32)');
+  await page.click(start.x, start.y);
+  assert.deepEqual(await page.eval('window.__CHARTER__.state.roadAnchor'), [24, 32], 'スマホ相当でも一タップ目を始点として保持する');
+  assert.equal(await page.eval("document.querySelector('#tool-hint').textContent.includes('0区画')"), false, '始点指定時に無意味な0区画見積を出さない');
+  const hintRect = await page.eval(`(() => { const r=document.querySelector('#tool-hint').getBoundingClientRect(); return {left:r.left,right:r.right,bottom:r.bottom}; })()`);
+  assert.ok(hintRect.left >= 0 && hintRect.right <= 390, JSON.stringify(hintRect));
   await page.screenshot('game-mobile.png');
   assert.deepEqual(page.errors, []);
   page.close();

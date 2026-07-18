@@ -10,6 +10,7 @@ export const P = {
   SALT_CHAR:1, PR_SALT:0.6, PR_SMOKE:0.95, SMOKE_CHAR:0.1, PRES_SALT:0.125,
   CMULT:1.35, D_TOOL:0.2, D_SALT:0.06, D_CHAR:0.4, LV_MULT:1.585, UP_DAYS:45, DOWN_DAYS:60,
   TRAVEL_RATE:0.012, ROAD_F:0.55, TRAVEL_MAX:0.45, HAUL:40,
+  GRASS_COST:1.6, FOREST_COST:2.2, DIRT_COST:0.55, STONE_COST:0.4, CART_MULT:4, ROAD_CREWS:1,
   IMP:{wheat:4.0,tools:6.0,salt:5.0,iron:4.5}, IMP_COST:{wheat:2.4,tools:4.2,salt:3.5,iron:3.2},  // 懲罰価格=持続不可能な緊急措置  // 麦2.6=輸入パリティが島の麦を殺す幼稚産業問題の修正
   EXP:{pres:0.6,pick:0.55,oil:2.4}, /* 特産のみ。他財の輸出台は対症療法だったので撤去 */ EXP_CAP:{pres:25,pick:15,oil:12}, EXP_ML:{pres:0.66,pick:0.6,oil:2.64},
   FREE_M:42, IRATE:0.012, LIMIT0:20000, LIMIT_G:1500, LIMIT_FREEZE:24, LIMIT_PC:250,
@@ -26,8 +27,11 @@ export const LADDER={farm:['food1','tools','saltchar','food2','iron','food3'],
   artisan:['food1','food2','salt','char','cloth','iron']};
 export const JOBCLS={fisher:'fish',fisher2:'fish',wheat:'farm',veg:'farm',shepherd:'farm',rapeseed:'farm',logger:'lumber',woodshop:'lumber',charburner:'lumber',quarryman:'lumber',saltworks:'artisan'};
 // Claude側で較正されたv0.24を、v002の表示・物語層から利用する。
-export const VERSION='v002-core-v0.24';
+export const VERSION='v002-road-v0.25';
 export const JOBS=Object.keys(JOBCLS);
+export const DIR8=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]];
+const keyOf=(x,y)=>`${Math.round(x)},${Math.round(y)}`;
+const fromKey=k=>k.split(',').map(Number);
 export function stdTerrain(MW=48,MH=40){const terr=[];
   for(let y=0;y<MH;y++){terr.push([]);for(let x=0;x<MW;x++){
     let t='grass';
@@ -56,6 +60,9 @@ export class HH{
     this.belief={...P.BELIEF0};this.lv=0;this.up=0;this.down=0;this.kindDays={};this.kindLog=[];
     this.hunger=0;this.wheatWork=0;this.jobCycleDone=job!=='wheat';this.unsold=new Set();this.income30=0;this.incomeLog=[];this.purseLog=[];this.incM=0;this.incMonths=[];this.walk=0;
     this.px=x;this.py=y;this.state='home';this.cargo=null;this.buildDays=0;
+    this.roadConnected=false;this.roadEntry=null;this.roadDistance=Infinity;this.transport='foot';
+    this.tripVehicle='foot';this.tripCargo=null;this.tripCargoQty=0;this.returnCargo=null;this.returnCargoQty=0;this.tripRoute=null;this.returnRoute=null;this.routeIndex=0;
+    this.lastDelivered=0;this.cartTrips=0;
     // 開拓キット(移民は道具と生業の入力を持参する): 創業デッドロック防止
     this.pantry.tools=5;this.pantry.wheat=240;  // 兵糧(ひと季節分を持参。飢えを輸入価格で治療するより船で運ぶ方が安い——配給なき島の初期補給)
     if(job==='saltworks')this.pantry.char=15;
@@ -67,7 +74,7 @@ export class HH{
     const primary={fisher:1,fisher2:1,veg:1,wheat:1,shepherd:1,rapeseed:1}[this.job];
     return primary?Math.min(raw,2.0):raw;} // 一次産業は複利で伸びない(畑と舟の物理)。食料をラダーの人質にしない
   eat(){return this.members.length;}
-  haul(){return this.members.length*4;}   // 1人1荷(荷=4食分)×家族
+  haul(){return this.members.length*4*(this.transport==='cart'?P.CART_MULT:1);} // 徒歩を既存較正の基準に、接続手荷車は4倍
   cls(){return JOBCLS[this.job];}
 }
 export class World{
@@ -75,14 +82,16 @@ export class World{
     this.bay=P.BAY0;this.bay2=P.BAY0;this.grove=P.GROVE0;this.paving=false;this.paved=false;this.outBy={pass:0};this.led={prod:{},eat:{},spoil:{},need:0};this.co={pub:0,expBuy:0,expSell:0,impMargin:0,bail:0};this.hungryN=0;
     this.bailouts=0;this.goDay=null;this.shipping=false;this.famine=0;this.order=null;this.orderDone=0;this.stock={};this.stockTgt={};
     this.mainlandIn=0;this.mainlandOut=0;this.imported={};this.exported={};this.events=[];this.prices={};
-    this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.money0=P.TREASURY0;this.paveBought=0;
+    this.px={...P.BELIEF0};this.sites=[];this.market={x:0,y:0};this.roadTiles=new Set();this.starterRoadTiles=new Set();this.playerRoadTiles=new Set();
+    this.roadConnected=new Set();this.roadFlow=null;this.roadSeq=0;this.roadBatch=0;this.roadStats={cartTrips:0,delivered:0};this.money0=P.TREASURY0;this.paveBought=0;
     this.zones=[];this.port=null;this.t=0;this.flow=null;this.terrCost=null;this.MW=48;this.MH=40;
     this.stalls={};for(const g of GOODS)this.stalls[g]=[];
     this.expCap={...P.EXP_CAP};this.expMl={...P.EXP_ML}; // 海運投資はこの世界だけを変える(P直変異は別ワールドを汚染するバグだった)
     this.deskUsed={};}
   setTerrain(terr){this.terr=terr;this.wood={};
     for(let y=0;y<terr.length;y++)for(let x=0;x<terr[y].length;x++)
-      if(terr[y][x]==='forest')this.wood[x+','+y]=P.WOOD0;}
+      if(terr[y][x]==='forest')this.wood[x+','+y]=P.WOOD0;
+    this.MH=terr.length;this.MW=terr[0]?.length||this.MW;this.updRoads();}
   near(x,y,type,r=2){if(!this.terr)return true; // 地形なし(旧テスト)は制約なし
     for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
       const t=this.terr[Math.round(y)+dy]?.[Math.round(x)+dx];
@@ -99,6 +108,7 @@ export class World{
     if((job==='fisher'||job==='fisher2')&&!this.near(x,y,'water',2))return[false,'漁師は水際にしか住めません'];
     if(job==='logger'&&!this.near(x,y,'forest',2))return[false,'木こりは森の際でないと立ち行きません'];
     if(job==='quarryman'&&!this.near(x,y,'rock',2))return[false,'採石は岩場の際でないと立ち行きません'];
+    if(!this.roadAccessAt(rx,ry,true))return[false,'道路に接していません——市場へつながる道の隣に'];
     return[true,''];}
   chopWood(h,amount){ // 択伐: 種木(15%)を残して伐る。足りない時だけ皆伐→禿山(乱獲の可視化・正典⑦)
     if(!this.terr)return amount; // 旧テスト互換: 地形なしなら無制限
@@ -115,9 +125,9 @@ export class World{
     return Math.min(1,s/(P.WOOD0*8));}
   tileCost(x,y){if(x<0||y<0||x>=this.MW||y>=this.MH)return Infinity;
     if(this.terr&&this.terr[y][x]==='water')return Infinity;
-    if(this.roadTiles.has(x+','+y))return this.paved?0.45:0.6;
+    if(this.roadTiles.has(x+','+y))return this.paved?P.STONE_COST:P.DIRT_COST;
     if((this.traffic||{})[x+','+y]>400)return 0.85;   // 獣道(踏み分け道): 通行が地面を固める
-    if(this.terr&&this.terr[y][x]==='forest')return 1.4;return 1;}
+    if(this.terr&&this.terr[y][x]==='forest')return P.FOREST_COST;return P.GRASS_COST;}
   buildFlow(){const W=this.MW,H=this.MH;const dist=new Float32Array(W*H).fill(1e9);
     const mx=Math.round(this.market.x),my=Math.round(this.market.y);
     dist[my*W+mx]=0;const q=[[mx,my]];
@@ -128,39 +138,121 @@ export class World{
         const nd=d0+c*(dx&&dy?1.4:1);
         if(nd<dist[ny*W+nx]-1e-6){dist[ny*W+nx]=nd;q.push([nx,ny]);}}}
     this.flow=dist;}
+  roadSet(includeSites=false){const out=new Set(this.roadTiles);
+    if(includeSites)for(const s of this.sites)out.add(keyOf(s.x,s.y));return out;}
+  roadRoots(roads){const roots=[];const mx=Math.round(this.market.x),my=Math.round(this.market.y);
+    for(const k of roads){const[x,y]=fromKey(k);if(Math.max(Math.abs(x-mx),Math.abs(y-my))<=1)roots.push(k);}
+    return roots;}
+  connectedRoadSet(roads){const seen=new Set();const q=this.roadRoots(roads);
+    for(const k of q)seen.add(k);
+    while(q.length){const k=q.shift();const[x,y]=fromKey(k);
+      for(const[dx,dy]of DIR8){const nk=keyOf(x+dx,y+dy);if(roads.has(nk)&&!seen.has(nk)){seen.add(nk);q.push(nk);}}}
+    return seen;}
+  buildRoadFlow(){const W=this.MW,H=this.MH,dist=new Float32Array(W*H).fill(1e9);const q=[];
+    for(const k of this.roadRoots(this.roadConnected)){const[x,y]=fromKey(k);dist[y*W+x]=0;q.push([x,y]);}
+    while(q.length){q.sort((a,b)=>dist[a[1]*W+a[0]]-dist[b[1]*W+b[0]]);const[x,y]=q.shift();const d0=dist[y*W+x];
+      for(const[dx,dy]of DIR8){const nx=x+dx,ny=y+dy,nk=keyOf(nx,ny);if(!this.roadConnected.has(nk))continue;
+        const nd=d0+(this.paved?P.STONE_COST:P.DIRT_COST)*(dx&&dy?1.4:1);
+        if(nd<dist[ny*W+nx]-1e-6){dist[ny*W+nx]=nd;q.push([nx,ny]);}}}
+    this.roadFlow=dist;}
+  roadAccessAt(x,y,includeSites=false){const roads=this.roadSet(includeSites);if(!roads.size)return null;
+    const connected=includeSites?this.connectedRoadSet(roads):this.roadConnected;
+    let best=null,bestD=1e9;
+    for(const[dx,dy]of DIR8){const nx=Math.round(x)+dx,ny=Math.round(y)+dy,k=keyOf(nx,ny);if(!connected.has(k))continue;
+      const d=includeSites?Math.hypot(nx-this.market.x,ny-this.market.y):(this.roadFlow?.[ny*this.MW+nx]??1e9);
+      if(d<bestD){bestD=d;best={key:k,x:nx,y:ny,completed:this.roadTiles.has(k),distance:d};}}
+    return best;}
+  roadNodeAt(x,y){const rx=Math.round(x),ry=Math.round(y),same=keyOf(rx,ry);if(this.roadConnected.has(same))return same;
+    let best=null,bd=1e9;for(const[dx,dy]of DIR8){const k=keyOf(rx+dx,ry+dy);if(!this.roadConnected.has(k))continue;
+      const d=Math.hypot(rx+dx-x,ry+dy-y);if(d<bd){bd=d;best=k;}}return best;}
+  roadPath(startKey,endKey){if(!this.roadConnected.has(startKey)||!this.roadConnected.has(endKey))return null;
+    const q=[startKey],prev=new Map([[startKey,null]]);while(q.length){const k=q.shift();if(k===endKey)break;const[x,y]=fromKey(k);
+      for(const[dx,dy]of DIR8){const nk=keyOf(x+dx,y+dy);if(this.roadConnected.has(nk)&&!prev.has(nk)){prev.set(nk,k);q.push(nk);}}}
+    if(!prev.has(endKey))return null;const out=[];for(let k=endKey;k!==null;k=prev.get(k))out.push(fromKey(k));return out.reverse();}
+  revalidateActiveTrips(){for(const h of this.hhs){if(h.tripVehicle!=='cart'||!['toMarket','toHome'].includes(h.state))continue;
+      const route=h.state==='toMarket'?h.tripRoute:h.returnRoute;if(!route)continue;
+      const invalid=route.slice(h.routeIndex||0).some(([x,y])=>Math.hypot(x-h.x,y-h.y)>.2&&Math.hypot(x-this.market.x,y-this.market.y)>1.2&&!this.roadConnected.has(keyOf(x,y)));
+      if(!invalid)continue;const current=this.roadNodeAt(h.px,h.py);let rerouted=false;
+      if(h.state==='toMarket'&&current){const road=this.roadRouteFrom(current);if(road){h.tripRoute=[[h.px,h.py],...road];h.routeIndex=0;rerouted=true;}}
+      else if(h.state==='toHome'&&current&&h.roadEntry){const road=this.roadPath(current,h.roadEntry);if(road){h.returnRoute=[[h.px,h.py],...road,[h.x,h.y]];h.routeIndex=0;rerouted=true;}}
+      if(!rerouted){h.tripVehicle='foot';h.routeIndex=0;if(h.state==='toMarket')h.tripRoute=this.traceFootRoute(h.px,h.py);else h.returnRoute=[[h.px,h.py],[h.x,h.y]];
+        this.log(`${h.sur}家は道切れで荷を背負い直した`);}}}
+  updRoads(){this.flow=null;this.roadConnected=this.connectedRoadSet(this.roadTiles);this.buildRoadFlow();
+    for(const h of this.hhs){const access=this.roadAccessAt(h.x,h.y,false);h.roadConnected=Boolean(access);h.road=Boolean(access);
+      h.roadEntry=access?.key||null;h.roadDistance=access?access.distance+1:Infinity;h.transport=access?'cart':'foot';}
+    for(const z of this.zones){const access=this.roadAccessAt(z.x,z.y,false);z.roadConnected=Boolean(access);z.roadEntry=access?.key||null;}
+    this.revalidateActiveTrips();}
+  seedRoads(points){for(const[x,y]of points){if(this.terr?.[y]?.[x]==='water')continue;const k=keyOf(x,y);this.roadTiles.add(k);this.starterRoadTiles.add(k);}this.updRoads();}
+  roadRouteFrom(entryKey){if(!entryKey||!this.roadConnected.has(entryKey))return null;if(!this.roadFlow)this.buildRoadFlow();
+    const route=[];let[x,y]=fromKey(entryKey);route.push([x,y]);
+    for(let guard=0;guard<this.MW*this.MH;guard++){const cur=this.roadFlow[y*this.MW+x];if(cur<=1e-6)break;
+      let bx=x,by=y,bd=cur;for(const[dx,dy]of DIR8){const nx=x+dx,ny=y+dy;if(!this.roadConnected.has(keyOf(nx,ny)))continue;
+        const d=this.roadFlow[ny*this.MW+nx];if(d<bd-1e-6){bd=d;bx=nx;by=ny;}}
+      if(bx===x&&by===y)return null;x=bx;y=by;route.push([x,y]);}
+    route.push([this.market.x,this.market.y]);return route;}
+  traceFootRoute(x,y){if(!this.flow)this.buildFlow();const route=[[x,y]];let cx=Math.round(x),cy=Math.round(y);
+    for(let guard=0;guard<this.MW*this.MH;guard++){if(Math.hypot(cx-this.market.x,cy-this.market.y)<1.2)break;
+      let bx=cx,by=cy,bd=this.flow[cy*this.MW+cx];for(const[dx,dy]of DIR8){const nx=cx+dx,ny=cy+dy;if(nx<0||ny<0||nx>=this.MW||ny>=this.MH)continue;
+        const d=this.flow[ny*this.MW+nx];if(d<bd-1e-6){bd=d;bx=nx;by=ny;}}
+      if(bx===cx&&by===cy)break;cx=bx;cy=by;route.push([cx,cy]);}
+    route.push([this.market.x,this.market.y]);return route;}
+  startMarketTrip(h,offers=null){const access=h.roadConnected?this.roadAccessAt(h.x,h.y,false):null;
+    h.transport=access?'cart':'foot';h.tripVehicle=h.transport;h.tripCargo=null;h.tripCargoQty=0;h.returnCargo=null;h.returnCargoQty=0;h.routeIndex=0;
+    const sale=offers||this.sellOffers(h);let best=0;for(const[g,q]of Object.entries(sale))if(q>best){best=q;h.tripCargo=g;h.tripCargoQty=q;}
+    const road=access?this.roadRouteFrom(access.key):null;
+    h.tripRoute=road?[[h.px,h.py],[h.x,h.y],...road]:this.traceFootRoute(h.px,h.py);h.state='toMarket';}
+  stepRoute(h,route){if(!route?.length)return true;h.routeIndex=Math.min(h.routeIndex||0,route.length-1);
+    let budget=h.tripVehicle==='cart'?(this.paved?1.65:1.4):0.9;
+    for(let guard=0;guard<4&&budget>1e-6;guard++){if(h.routeIndex>=route.length)return true;const[tx,ty]=route[h.routeIndex];const d=Math.hypot(tx-h.px,ty-h.py);
+      if(d<0.08){h.px=tx;h.py=ty;h.routeIndex++;continue;}const mv=Math.min(d,budget);h.px+=(tx-h.px)/d*mv;h.py+=(ty-h.py)/d*mv;budget-=mv;this.tread(h.px,h.py);if(mv<d)break;}
+    return h.routeIndex>=route.length;}
   tread(x,y){const k=Math.round(x)+','+Math.round(y);
     this.traffic=this.traffic||{};this.traffic[k]=Math.min(2000,(this.traffic[k]||0)+1);}
-  stepToMarket(h){if(!this.flow)this.buildFlow();const W=this.MW;
-    // 移動速度=1/tileCost(経路探索と同じ地形尺度)。これが崩れると「探索が選ぶのに実際は速くない道」へ全員が迂回する
-    // 草・森は旧来の0.9掛けそのまま(既存較正を保つ)。道の速度剰余(f>1)だけ多段ホップで実際に消化する
-    let f=Math.min(2.2,0.9/Math.max(0.45,this.tileCost(Math.round(h.px),Math.round(h.py))));
-    for(let hop=0;hop<4&&f>1e-6;hop++){
-      const x=Math.round(h.px),y=Math.round(h.py);
-      let bx=x,by=y,bd=this.flow[y*W+x];
-      for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){
-        const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=this.MH)continue;
-        const d=this.flow[ny*W+nx];if(d<bd){bd=d;bx=nx;by=ny;}}
-      if(bx===x&&by===y)break;
-      const step=Math.min(1,f);
-      h.px+=(bx-h.px)*step;h.py+=(by-h.py)*step;f-=step;}
-    this.tread(h.px,h.py);
-    return Math.hypot(h.px-this.market.x,h.py-this.market.y)<1.2;}
+  stepToMarket(h){if(!h.tripRoute)this.startMarketTrip(h);return this.stepRoute(h,h.tripRoute);}
   stepTo(h,tx,ty){const d=Math.hypot(tx-h.px,ty-h.py);if(d<0.8)return true;
     // 道の上なら帰路・普請行きも速い。地形では遅くしない(港=水際の入植者が速度0で立ち往生し餓死する)
     const f=this.roadTiles.has(Math.round(h.px)+','+Math.round(h.py))?(this.paved?1.55:1.35):1;
     const mv=Math.min(d,0.8*f);
     h.px+=(tx-h.px)/d*mv;h.py+=(ty-h.py)/d*mv;this.tread(h.px,h.py);return false;}
   pop(){return this.hhs.reduce((s,h)=>s+h.members.length,0);}
-  planRoad(x,y){const k=x+','+y;
+  planRoad(x,y,meta={}){const k=x+','+y;
     if(this.roadTiles.has(k)||this.sites.some(s=>s.x===x&&s.y===y))return false;
     if(this.terr&&(this.terr[y]?.[x])==='water')return false;
     if(this.zones.some(z=>Math.round(z.x)===x&&Math.round(z.y)===y)||this.hhs.some(h=>Math.round(h.x)===x&&Math.round(h.y)===y))return false; // 建物の上に道は引けない
-    this.sites.push({x,y,left:P.ROAD_WORK});this.log('道普請を計画');return true;}
+    this.sites.push({x,y,left:P.ROAD_WORK,seq:this.roadSeq++,batch:meta.batch??this.roadBatch,player:meta.player!==false});return true;}
+  beginRoadBatch(){return++this.roadBatch;}
+  roadRemovalImpact(points){const remove=new Set(points.map(([x,y])=>keyOf(x,y)));const remaining=new Set([...this.roadTiles].filter(k=>!remove.has(k)));
+    const connected=this.connectedRoadSet(remaining);let isolatedRoads=0,disconnectedZones=0,disconnectedHomes=0;
+    for(const k of this.roadConnected)if(remaining.has(k)&&!connected.has(k))isolatedRoads++;
+    const hasAccess=o=>DIR8.some(([dx,dy])=>connected.has(keyOf(o.x+dx,o.y+dy)));
+    for(const z of this.zones)if(!z.filled&&z.roadConnected&&!hasAccess(z))disconnectedZones++;
+    for(const h of this.hhs)if(h.roadConnected&&!hasAccess(h))disconnectedHomes++;
+    return{isolatedRoads,disconnectedZones,disconnectedHomes};}
+  removeRoadBatch(points){const impact=this.roadRemovalImpact(points);let removed=0,planned=0;
+    for(const[x,y]of points){const k=keyOf(x,y);const si=this.sites.findIndex(s=>s.x===x&&s.y===y);
+      if(si>=0){this.sites.splice(si,1);removed++;planned++;continue;}if(!this.roadTiles.has(k))continue;
+      this.roadTiles.delete(k);this.playerRoadTiles.delete(k);this.starterRoadTiles.delete(k);removed++;}
+    if(removed){this.updRoads();this.log(`道路を${removed}区画撤去`);}return{removed,planned,...impact};}
+  removeRoad(x,y){const k=keyOf(x,y);const before=this.zones.filter(z=>z.roadConnected).length;
+    const si=this.sites.findIndex(s=>s.x===x&&s.y===y);if(si>=0){this.sites.splice(si,1);return{removed:true,planned:true,isolated:0};}
+    if(!this.roadTiles.has(k))return{removed:false,planned:false,isolated:0};
+    this.roadTiles.delete(k);this.playerRoadTiles.delete(k);this.starterRoadTiles.delete(k);this.updRoads();
+    const after=this.zones.filter(z=>z.roadConnected).length;this.log('道路を撤去');return{removed:true,planned:false,isolated:Math.max(0,before-after)};}
+  estimateRoadCost(count){const avg=this.hhs.length?this.hhs.reduce((s,h)=>s+h.eat(),0)/this.hhs.length:8;
+    return count*P.ROAD_WORK*avg*this.staple();}
+  connectedPlayerRoadCount(){let n=0;for(const k of this.playerRoadTiles)if(this.roadConnected.has(k))n++;return n;}
+  roadNearTerrain(type,r=2){for(const k of this.playerRoadTiles){if(!this.roadConnected.has(k))continue;const[x,y]=fromKey(k);
+      for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++)if(this.terr?.[y+dy]?.[x+dx]===type)return true;}return false;}
+  nextRoadSite(h){if(!this.sites.length)return null;const connected=this.roadConnected;
+    return[...this.sites].sort((a,b)=>{const af=DIR8.some(([dx,dy])=>connected.has(keyOf(a.x+dx,a.y+dy)))?0:1;
+      const bf=DIR8.some(([dx,dy])=>connected.has(keyOf(b.x+dx,b.y+dy)))?0:1;
+      return af-bf||a.batch-b.batch||a.seq-b.seq||Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y);})[0];}
   addZone(job,x,y){const[ok,why]=this.canPlace(job,x,y);
     if(!ok){this.log(`区画不可(${job}): ${why}`);return false;}
     if(this.treasury-P.BUILD_COST<-this.limit()){this.log(`会社資金不足——支度金 ${P.BUILD_COST*10} を用意できない`);return false;}
     this.treasury-=P.BUILD_COST;this.mainlandOut+=P.BUILD_COST;this.co.build=(this.co.build||0)+P.BUILD_COST; // 建築リズムの支出側(資材は本土調達。将来=地元の材木+普請賃金へ)
-    this.zones.push({job,x,y,filled:false});this.log(`区画指定: ${job}（支度金 -${P.BUILD_COST*10}）`);return true;}
+    const access=this.roadAccessAt(x,y,false);
+    this.zones.push({job,x,y,filled:false,roadConnected:Boolean(access),roadEntry:access?.key||null});this.log(`区画指定: ${job}（支度金 -${P.BUILD_COST*10}）`);return true;}
   log(msg){this.events.push([this.day,msg]);if(this.events.length>400)this.events.shift();}
   addHH(job,x,y){const h=new HH(job,x,y);this.hhs.push(h);this.mainlandIn+=h.purse;
     this.treasury-=P.PASSAGE;this.mainlandOut+=P.PASSAGE;this.log(`入植: ${job}`);this.updRoads();return h;}
@@ -170,9 +262,6 @@ export class World{
     this.treasury-=P.SHIP_COST;this.mainlandOut+=P.SHIP_COST;this.shipping=true;
     for(const g in this.expCap)this.expCap[g]*=P.SHIP_CAP;for(const g in this.expMl)this.expMl[g]*=P.SHIP_PRICE;
     this.log('★沿岸海運に投資(輸出天井×2・本土価+20%)');return true;}
-  updRoads(){this.flow=null;for(const h of this.hhs){h.road=false;
-    for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)
-      if(this.roadTiles.has(`${Math.round(h.x)+dx},${Math.round(h.y)+dy}`)){h.road=true;break;}}}
   staple(){return Math.max(1.0,Math.min(this.px.wheat??2,this.px.veg??9,this.px.pres??9,P.IMP.wheat));} // 床1.0=名目の錨。信用枠-30/文化購買門15等の名目定数はこの物価水準を前提とする(撤去実験は全名目閾値を壊した)
   cost(h,g){const mm=(Math.floor((Math.max(1,this.day)-1)/30))%12+1;const winter=mm>=10||mm<=2;
     const YD={fish:winter?P.Y_FISH_W:P.Y_FISH,veg:(mm>=3&&mm<=10)?P.Y_VEG:0.01,wheat:P.Y_WHEAT/360,
@@ -202,7 +291,8 @@ export class World{
     const s=cand.reduce((a,[,w])=>a+w*w,0);let r=this.rng()*s;
     for(const[j,w]of cand){r-=w*w;if(r<=0)return j;}
     return cand[cand.length-1][0];}
-  travel(h){return Math.min(P.TRAVEL_MAX,this.dist(h)*2*P.TRAVEL_RATE*(h.road?P.ROAD_F:1));}
+  travel(h){const d=h.roadConnected&&Number.isFinite(h.roadDistance)?h.roadDistance:this.dist(h)*P.GRASS_COST;
+    return Math.min(P.TRAVEL_MAX,d*2*P.TRAVEL_RATE*(h.roadConnected?P.ROAD_F:1));}
   limit(){const m=Math.floor((this.day-1)/30)+1;
     return Math.min(P.LIMIT0+P.LIMIT_G*Math.min(m,P.LIMIT_FREEZE),Math.max(6000,this.hhs.length*9*P.LIMIT_PC));}
   buyTargets(h){const t={};
@@ -279,7 +369,9 @@ export class World{
     for(const h of this.hhs){
       if(h.state==='arriving'){if(this.stepTo(h,h.x,h.y)){h.state='building';h.buildDays=10;this.log(`${h.job}#${h.id} 入居——普請開始`);}}
       else if(h.state==='building'){/* 日次で減算 */}
-      else if(h.state==='toMarket'){if(this.stepToMarket(h)){h.state='atMarket';this.transact(h);h.state='toHome';}}
+      else if(h.state==='toMarket'){if(this.stepToMarket(h)){h.state='atMarket';this.transact(h);h.state='toHome';
+        const route=h.tripRoute||[[h.x,h.y]];const hi=Math.max(0,route.findIndex(([x,y])=>Math.hypot(x-h.x,y-h.y)<0.1));
+        h.returnRoute=route.slice(hi).reverse();h.routeIndex=0;}}
       else if(h.state==='toWork'){if(this.stepTo(h,h.wx,h.wy)){
         const wage=h.eat()*this.staple()*1.0 /* 日傭の賃金=家族の食い扶持。0.6では死を遅らせるだけで浮上できない */;
         if(h.emp){ // 民間: 雇い主の財布から賃金、雇い主は翌日の生産に人手ブースト
@@ -288,11 +380,12 @@ export class World{
         else{const si=this.sites.findIndex(s=>s.x===h.wx&&s.y===h.wy);
           if(si>=0){const s=this.sites[si];s.left--;
             h.purse+=wage;h.income30+=wage;this.treasury-=wage;this.co.pub+=wage;
-            if(s.left<=0){this.roadTiles.add(s.x+','+s.y);this.sites.splice(si,1);this.updRoads();this.log('道が一区画通じた');}}}
-        h.state='toMarket';}} // 賃金を持って帰りに市場へ寄る(貧困層の消費が市場の土台)
-      else if(h.state==='toHome'){if(this.stepTo(h,h.x,h.y))h.state='home';}
+            if(s.left<=0){const k=keyOf(s.x,s.y);this.roadTiles.add(k);if(s.player)this.playerRoadTiles.add(k);this.sites.splice(si,1);this.updRoads();this.log('道が一区画通じた');}}}
+        this.startMarketTrip(h,{});}} // 賃金を持って帰りに市場へ寄る(貧困層の消費が市場の土台)
+      else if(h.state==='toHome'){if(this.stepRoute(h,h.returnRoute)){h.state='home';h.tripRoute=null;h.returnRoute=null;h.routeIndex=0;h.tripCargo=null;h.tripCargoQty=0;h.returnCargo=null;h.returnCargoQty=0;}}
       else if(h.state==='home'){this.produceTick(h,1/30);}}
-    if(tod===16)for(const h of this.hhs){if(h.state!=='home')continue;
+    if(tod===16){const guaranteed=new Set(this.sites.length?[...this.hhs].filter(h=>h.state==='home').sort((a,b)=>a.purse-b.purse).slice(0,P.ROAD_CREWS).map(h=>h.id):[]);
+      for(const h of this.hhs){if(h.state!=='home')continue;
       const fd=FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT;
       const offers=this.sellOffers(h);const sellSum=Object.values(offers).reduce((a,b)=>a+b,0);
       const lowCult=['tools','salt','char'].some(g=>h.pantry[g]<[P.D_TOOL,P.D_SALT,P.D_CHAR][['tools','salt','char'].indexOf(g)]*4);
@@ -303,8 +396,8 @@ export class World{
       // 買い物トリップは財布に金がある時だけ(貧乏通勤トラップ防止: 買えないのに毎日通い労働が消える)
       // 空腹トリップも一文なしなら行かない(買えずに手ぶらで帰る無駄通勤。飢えたら働きに出る)
       const needy=h.purse<h.eat()*0.8&&fd<4;
-      if(needy&&this.sites.length){ // 公共普請があればそちらへ(賃金=公費)
-        const s=this.sites.reduce((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)<Math.hypot(b.x-h.x,b.y-h.y)?a:b);
+      if(this.sites.length&&(needy||guaranteed.has(h.id))){ // 好況時も最低1世帯へ公費仕事を提示する
+        const s=this.nextRoadSite(h);
         h.wx=s.x;h.wy=s.y;h.state='toWork';h.emp=null;continue;}
       if(needy){ // 民間の雇用: 豊かな世帯の手伝い(農繁期の日傭・奉公)。賃金は雇い主から=村内循環
         const wage=h.eat()*this.staple()*1.0;
@@ -312,7 +405,7 @@ export class World{
           .sort((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y))[0];
         if(emp){emp.hand=h;h.emp=emp;h.wx=emp.x;h.wy=emp.y;h.state='toWork';continue;}}
       const tripCost=Math.min(Math.max(10,this.dist(h)*2.2),h.haul()*0.8); // 遠い家ほどまとめて商う(週1の大荷)。運搬上限の8割でキャップ
-      if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20))h.state='toMarket';}
+      if(offers.fish>0||sellSum>=tripCost||(fd<fdThr&&h.purse>2)||(lowCult&&h.purse>15)||(inputLow&&h.purse>-20))this.startMarketTrip(h,offers);}}
 
     if(tod===29)this.dayEnd();}
   fl(g,k,v){const f=this.fday[g]=this.fday[g]||{prod:0,cons:0,imp:0,exp:0};f[k]+=v;}
@@ -359,7 +452,7 @@ export class World{
     // 空き区画の充足(15日ごと・最大2世帯/便): 島内の余剰人口(8人以上の大家族の半分)が先。
     // 本土からの移民は「余剰が無く、かつ島が飢えていない」時だけ来る(空き家=絶対に移民が湧く蛇口、をやめる)
     if(d%15===0&&this.port){let n=0;
-      for(const z of this.zones){if(z.filled||n>=2)continue;
+      for(const z of this.zones){if(z.filled||n>=2||!z.roadConnected)continue;
         const donor=this.hhs.filter(x=>x.members.length>=8&&x.state==='home').sort((a,b)=>b.members.length-a.members.length)[0];
         if(donor){ // 島内の余剰人口: 家族が割れ、納屋と財布を頭数比で持参(物資は無から湧かない)
           const k=Math.floor(donor.members.length/2);const moved=donor.members.splice(donor.members.length-k,k);
@@ -413,6 +506,7 @@ export class World{
     else if(h.job==='saltworks'){const fuel=Math.min(P.SALT_CHAR*f,h.pantry.char);
       h.pantry.char-=fuel;h.pantry.salt+=P.Y_SALT*h.mult()*fuel/P.SALT_CHAR/1;this.fl('salt','prod',P.Y_SALT*h.mult()*fuel/P.SALT_CHAR);this.fl('char','cons',fuel);}}
   transact(h){
+    const before={...h.pantry};
     // --- 売り: まず会社の買付台(輸出/石畳)・値が合わなければ屋台に置く ---
     const offers=this.sellOffers(h);
     for(const g in offers){let q=offers[g];
@@ -469,7 +563,12 @@ export class World{
           s.hh.purse+=q*s.price-fee;s.hh.income30+=q*s.price-fee;this.treasury+=fee;this.co.fee=(this.co.fee||0)+fee;}
         (this.prices[g]=this.prices[g]||[]).push([this.day,s.price,q]);
         this.px[g]=(this.px[g]??s.price)*0.9+s.price*0.1;}
-      }}
+      }
+    const delivered=GOODS.reduce((sum,g)=>sum+Math.max(0,(before[g]||0)-(h.pantry[g]||0)),0);
+    let back=null,backQ=0;for(const g of GOODS){const q=(h.pantry[g]||0)-(before[g]||0);if(q>backQ){backQ=q;back=g;}}
+    h.lastDelivered=delivered;h.returnCargo=back;h.returnCargoQty=backQ;
+    if(h.tripVehicle==='cart'&&delivered>0){h.cartTrips++;this.roadStats.cartTrips++;this.roadStats.delivered+=delivered;}
+    }
   dayEnd(){const d=this.day,m=Math.floor((d-1)/30)+1,mm=(m-1)%12+1;
     // 商館の買上げ: その日の全世帯の買い物が済んだ後の余剰を、安い屋台から順に(=必須の人が先・逆選抜なし。
     // 熟成待ち方式は「市場が拒否した高値の抽選」だけを掴む逆選抜で実測350%過払いだった)
@@ -553,8 +652,8 @@ export class World{
       h.incY=(h.incY||0)+h.income30;h.incomeLog.push(h.income30);h.incM+=h.income30;h.income30=0;if(h.incomeLog.length>30)h.incomeLog.shift();
       if(d%30===0){h.incMonths.push(h.incM);h.incM=0;if(h.incMonths.length>12)h.incMonths.shift();}
       h.purseLog.push(h.purse);if(h.purseLog.length>31)h.purseLog.shift();}
-    if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;
-      this.log('★石畳完成——全ての道が格上げ(0.6→0.45・永続)');}
+    if(this.paving&&!this.paved&&this.paveBought>=P.PAVE_STONE){this.paved=true;this.updRoads();
+      this.log('★石畳完成——全ての道が格上げ(0.55→0.4・永続)');}
     // 出生(月次): 飢えていない家族は増える——余剰人口の源泉。人口の受け皿(区画)はプレイヤーが用意する
     if(d%30===0)for(const h of this.hhs){
       if(h.members.length<11&&h.hungerRun===0&&FOODS.reduce((s,g)=>s+h.pantry[g],0)/P.EAT>2&&this.rng()<0.12){

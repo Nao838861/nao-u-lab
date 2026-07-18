@@ -1,6 +1,6 @@
-import { World, P, GOODS, LADDER, JOBCLS, stdTerrain, VERSION } from './engine.js?v=2';
-import { Renderer, GOODS_VIEW, JOB_VIEW } from './render.js?v=2';
-import { ShipSystem } from './ship.js?v=2';
+import { World, P, GOODS, LADDER, JOBCLS, stdTerrain, VERSION } from './engine.js?v=3';
+import { Renderer, GOODS_VIEW, JOB_VIEW } from './render.js?v=3';
+import { ShipSystem } from './ship.js?v=3';
 
 const $ = id => document.getElementById(id);
 const fmt = value => Math.round(value).toLocaleString('ja-JP');
@@ -12,6 +12,7 @@ const world = new World(11);
 world.market = { x: 25, y: 32 };
 world.port = { x: 25, y: 35 };
 world.setTerrain(stdTerrain(48, 40));
+world.seedRoads([[25, 32], [24, 32], [26, 32], [25, 33], [25, 34], [25, 35]]);
 
 const renderer = new Renderer($('world'), world);
 const state = {
@@ -19,6 +20,8 @@ const state = {
   category: 'life',
   tool: null,
   hover: null,
+  roadAnchor: null,
+  roadPreview: null,
   placementOk: true,
   selected: null,
   running: false,
@@ -44,30 +47,31 @@ const TOOL_DEFS = [
   { id: 'woodshop', category: 'industry', name: '木工房', icon: '🪚', cost: P.BUILD_COST, note: '丸太→木製品' },
   { id: 'charburner', category: 'industry', name: '炭焼', icon: '♨', cost: P.BUILD_COST, note: '冬と製塩' },
   { id: 'saltworks', category: 'industry', name: '製塩', icon: '◇', cost: P.BUILD_COST, note: '保存食' },
-  { id: 'road', category: 'logistics', name: '道路', icon: '⌁', cost: null, note: '日傭で普請' },
+  { id: 'road', category: 'logistics', name: '道路', icon: '⌁', cost: null, note: '8方向に線引き' },
+  { id: 'roadRemove', category: 'logistics', name: '道路撤去', icon: '⌫', cost: null, note: '返金なし' },
   { id: 'manifest', category: 'logistics', name: '現物台帳', icon: '▦', cost: null, note: '在庫と流れ', action: 'manifest' },
 ];
 
 const OBJECTIVES = [
   {
-    title: '漁師の区画を2つ用意する', detail: '浜から2タイル以内を選びます。次の船で家族が渡ってきます。', recommend: 'fisher',
+    title: '漁師の区画を2つ用意する', detail: '浜と既設道路の両方に接する土地を選びます。次の船で家族が渡ってきます。', recommend: 'fisher',
     progress: () => Math.min(1, countJob('fisher') / 2), done: () => countJob('fisher') >= 2,
   },
   {
-    title: '菜園と麦畑を1つずつ用意する', detail: '菜園はすぐに、麦は秋に実ります。短い時計と長い時計を両方動かします。', recommend: 'veg',
+    title: '菜園と麦畑を道沿いに用意する', detail: '菜園はすぐに、麦は秋に実ります。道路へ接する空き地を使います。', recommend: 'veg',
     progress: () => (Math.min(1, countJob('veg')) + Math.min(1, countJob('wheat'))) / 2, done: () => countJob('veg') >= 1 && countJob('wheat') >= 1,
   },
   {
-    title: '丸太を木製品に変える', detail: '木こりは森の際へ。木工房は市場寄りへ。立地の違いが荷車の距離になります。', recommend: 'logger',
-    progress: () => (Math.min(1, countJob('logger')) + Math.min(1, countJob('woodshop'))) / 2, done: () => countJob('logger') >= 1 && countJob('woodshop') >= 1,
+    title: '市場から雑木林へ道路を伸ばす', detail: '流通タブの道路を選び、既設道から北の雑木林へドラッグします。対角を含む8方向へ吸着します。', recommend: 'road',
+    progress: () => Math.min(1, world.connectedPlayerRoadCount() / 5) * (world.roadNearTerrain('forest', 2) ? 1 : .8), done: () => world.connectedPlayerRoadCount() >= 5 && world.roadNearTerrain('forest', 2),
   },
   {
-    title: '市場へつながる道路を6区画計画する', detail: '道路は会社が直接完成させません。仕事を必要とする住民が日傭で普請し、賃金を市場へ持ち帰ります。', recommend: 'road',
-    progress: () => Math.min(1, (world.roadTiles.size + world.sites.length) / 6), done: () => world.roadTiles.size + world.sites.length >= 6,
+    title: '木こりと木工房を道路へつなぐ', detail: '木こりは森の際、木工房は市場寄りへ。入口が市場道路網につながる場所だけに建てられます。', recommend: 'logger',
+    progress: () => (Math.min(1, countConnectedJob('logger')) + Math.min(1, countConnectedJob('woodshop'))) / 2, done: () => countConnectedJob('logger') >= 1 && countConnectedJob('woodshop') >= 1,
   },
   {
-    title: '積荷が市場へ届くのを見届ける', detail: '人を押す必要はありません。価格と在庫を見て、家族が手荷車で商いに向かいます。', recommend: null,
-    progress: () => Math.min(1, (world.hhs.some(h => ['toMarket', 'atMarket', 'toHome'].includes(h.state)) ? .55 : 0) + (stallTotal() > 2 ? .45 : 0)), done: () => stallTotal() > 2,
+    title: '最初の手荷車を市場まで見届ける', detail: '接続した家族は徒歩の4倍を積めます。荷車が完成道路を往復し、丸太か木製品を市場へ運ぶのを見届けます。', recommend: null,
+    progress: () => Math.min(1, (world.roadStats.cartTrips ? .6 : 0) + (world.roadStats.delivered > 2 ? .4 : 0)), done: () => world.roadStats.cartTrips > 0 && world.roadStats.delivered > 2,
   },
   {
     title: '食料自給と木製品の流通を育てる', detail: '輸入の赤い行を減らし、島内取引の緑の行を増やします。本国注文はこの後です。', recommend: null,
@@ -81,6 +85,10 @@ const OBJECTIVES = [
 
 function countJob(job) {
   return world.zones.filter(z => z.job === job).length;
+}
+
+function countConnectedJob(job) {
+  return world.zones.filter(z => z.job === job && z.roadConnected).length;
 }
 
 function stallTotal() {
@@ -171,7 +179,7 @@ function onShipArrival({ day, cargo }) {
 
 function buildToolbar() {
   document.querySelectorAll('.dock-tabs button').forEach(btn => {
-    btn.onclick = () => { state.category = btn.dataset.category; state.tool = null; renderTools(); };
+    btn.onclick = () => { state.category = btn.dataset.category; state.tool = null; state.roadAnchor = null; state.roadPreview = null; updateToolHint(); renderTools(); };
   });
   renderTools();
 }
@@ -189,6 +197,8 @@ function renderTools() {
     btn.onclick = () => {
       if (tool.action) { openSheet(tool.action); return; }
       state.tool = state.tool === tool.id ? null : tool.id;
+      state.roadAnchor = null;
+      state.roadPreview = null;
       $('world').classList.toggle('tool-active', !!state.tool);
       $('cancel-tool').hidden = !state.tool;
       updateToolHint();
@@ -204,14 +214,30 @@ function updateToolHint() {
   const def = currentToolDef();
   if (!def) { hint.hidden = true; return; }
   hint.hidden = false;
-  hint.textContent = def.id === 'road'
-    ? '始点から終点までドラッグ — 道普請は住民の日傭仕事になります'
-    : `${def.name}を置く場所をタップ — 支度金 －${money(def.cost)}`;
+  if (def.id === 'road') hint.textContent = 'ドラッグ、または始点と終点を順にタップ — 8方向へ吸着します';
+  else if (def.id === 'roadRemove') hint.textContent = '撤去する道路をドラッグ、または始点と終点を順にタップ — 返金なし';
+  else hint.textContent = `${def.name}を置く場所をタップ — 支度金 －${money(def.cost)}`;
+}
+
+function updateRoadHint(preview) {
+  const hint = $('tool-hint');
+  if (!preview) return updateToolHint();
+  hint.hidden = false;
+  if (preview.remove) {
+    const affected = (preview.disconnectedHomes || 0) + (preview.disconnectedZones || 0);
+    hint.textContent = `撤去 ${preview.removable}区画${preview.isolated ? ` — 道${preview.isolated}区画が孤立` : ''}${affected ? `・沿道${affected}件が不通` : ''}`;
+    return;
+  }
+  const cost = world.estimateRoadCost(preview.newCount);
+  const status = preview.valid ? (preview.connects ? '市場へ接続' : '孤立した計画') : preview.reason;
+  hint.textContent = `${preview.newCount}区画・賃金約${money(cost)}・${preview.workDays}人日 — ${status}`;
 }
 
 function cancelTool() {
   state.tool = null;
   state.hover = null;
+  state.roadAnchor = null;
+  state.roadPreview = null;
   $('world').classList.remove('tool-active');
   $('cancel-tool').hidden = true;
   $('tool-hint').hidden = true;
@@ -225,7 +251,12 @@ function canPlace(tool, x, y) {
   if (tool === 'road') {
     if (world.terr[y]?.[x] === 'water') return [false, '水上には道を引けません'];
     if (world.roadTiles.has(`${x},${y}`)) return [false, 'すでに道があります'];
+    if (world.zones.some(z => z.x === x && z.y === y) || world.hhs.some(h => Math.round(h.x) === x && Math.round(h.y) === y)) return [false, '建物の上には道を引けません'];
     return [true, ''];
+  }
+  if (tool === 'roadRemove') {
+    const site = world.sites.some(s => s.x === x && s.y === y);
+    return [world.roadTiles.has(`${x},${y}`) || site, 'ここに撤去できる道路はありません'];
   }
   return world.canPlace(tool, x, y);
 }
@@ -243,29 +274,81 @@ function placeBuilding(tool, x, y) {
   return true;
 }
 
-function planRoadLine(a, b) {
-  const points = lineTiles(a[0], a[1], b[0], b[1]);
-  let made = 0;
-  for (const [x, y] of points) if (canPlace('road', x, y)[0] && world.planRoad(x, y)) made++;
-  if (made) {
-    toast(`<b>道普請 ${made}区画を計画</b><br>完成までの賃金は会社資金から出ます。`, 'expense');
-    setAdvisor('道はただの速度上昇ではありません。普請の賃金が住民の財布へ入り、その金が市場へ戻ります。');
-  } else toast('<b>道を計画できません</b><br>水面・建物・既存道路を避けてください。', 'expense');
+function snapRoadEnd(a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1];
+  if (!dx && !dy) return [...a];
+  const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]];
+  let best = dirs[0], score = -Infinity;
+  for (const d of dirs) {
+    const s = (dx * d[0] + dy * d[1]) / Math.hypot(d[0], d[1]);
+    if (s > score) { score = s; best = d; }
+  }
+  const len = Math.max(1, Math.round((dx * best[0] + dy * best[1]) / (best[0] * best[0] + best[1] * best[1])));
+  return [a[0] + best[0] * len, a[1] + best[1] * len];
 }
 
 function lineTiles(x0, y0, x1, y1) {
-  const out = [];
-  const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-  const dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-  let err = dx + dy;
-  for (;;) {
-    out.push([x0, y0]);
-    if (x0 === x1 && y0 === y1) break;
-    const e2 = 2 * err;
-    if (e2 >= dy) { err += dy; x0 += sx; }
-    if (e2 <= dx) { err += dx; y0 += sy; }
+  const dx = Math.sign(x1 - x0), dy = Math.sign(y1 - y0), n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0));
+  return Array.from({ length: n + 1 }, (_, i) => [x0 + dx * i, y0 + dy * i]);
+}
+
+function plannedConnects(points) {
+  const roads = world.roadSet(true);
+  for (const [x, y] of points) roads.add(`${x},${y}`);
+  const connected = world.connectedRoadSet(roads);
+  return points.some(([x, y]) => connected.has(`${x},${y}`));
+}
+
+function buildRoadPreview(a, b, remove = false) {
+  const end = snapRoadEnd(a, b), points = lineTiles(a[0], a[1], end[0], end[1]);
+  if (remove) {
+    const removable = points.filter(([x, y]) => world.roadTiles.has(`${x},${y}`) || world.sites.some(s => s.x === x && s.y === y)).length;
+    const impact = world.roadRemovalImpact(points);
+    return { points, remove: true, valid: removable > 0, removable, isolated: impact.isolatedRoads,
+      disconnectedZones: impact.disconnectedZones, disconnectedHomes: impact.disconnectedHomes, end };
   }
-  return out;
+  let reason = '', newCount = 0;
+  const statuses = points.map(([x, y]) => {
+    const k = `${x},${y}`;
+    if (world.roadTiles.has(k)) return 'existing';
+    if (world.sites.some(s => s.x === x && s.y === y)) return 'planned';
+    const [ok, why] = canPlace('road', x, y);
+    if (!ok) { reason ||= why; return 'blocked'; }
+    newCount++; return 'new';
+  });
+  const valid = !reason && newCount > 0;
+  return { points, statuses, remove: false, valid, reason: reason || (newCount ? '' : '新しく引く区画がありません'), newCount,
+    connects: plannedConnects(points), workDays: newCount * P.ROAD_WORK, end };
+}
+
+function planRoadLine(a, b) {
+  const preview = buildRoadPreview(a, b, false);
+  state.roadPreview = preview;
+  if (!preview.valid) { toast(`<b>道路を計画できません</b><br>${escapeHtml(preview.reason)}`, 'expense'); return false; }
+  const batch = world.beginRoadBatch();let made = 0;
+  for (let i = 0; i < preview.points.length; i++) {
+    if (preview.statuses[i] !== 'new') continue;
+    const [x, y] = preview.points[i];if (world.planRoad(x, y, { batch, player: true })) made++;
+  }
+  if (made) {
+    world.log(`道普請 ${made}区画を計画`);
+    toast(`<b>道普請 ${made}区画を計画</b><br>市場側から順に、人夫が約${preview.workDays}人日で通します。`, 'expense');
+    setAdvisor(preview.connects ? 'この計画は市場の道へつながっています。完成すれば、沿道の家へ手荷車が入れます。' : 'この道はまだ市場へつながっていません。孤立した道では、荷車は使えません。');
+    state.roadAnchor = null;state.roadPreview = null;updateRoadHint(null);updateObjective();return true;
+  } else toast('<b>道を計画できません</b><br>水面・建物・既存道路を避けてください。', 'expense');
+  return false;
+}
+
+function removeRoadLine(a, b) {
+  const preview = buildRoadPreview(a, b, true);
+  const result = world.removeRoadBatch(preview.points);
+  if (result.removed) {
+    const affected = result.disconnectedHomes + result.disconnectedZones;
+    toast(`<b>道路を${result.removed}区画撤去</b><br>返金はありません。${result.isolatedRoads ? `${result.isolatedRoads}区画が市場から孤立${affected ? `、沿道${affected}件が不通` : ''}。` : '市場への接続は保たれています。'}`, result.isolatedRoads || affected ? 'expense' : '');
+    if (result.isolatedRoads || affected) setAdvisor('道が切れ、沿道の区画が市場から孤立しました。再接続するまで、荷車は出ません。');
+    state.roadAnchor = null;state.roadPreview = null;updateRoadHint(null);return true;
+  }
+  toast('<b>撤去できる道路がありません</b>', 'expense');return false;
 }
 
 function showMoneyFloat(amount, x = world.port.x, y = world.port.y) {
@@ -288,6 +371,7 @@ function selectAt(x, y) {
   if (best) state.selected = best;
   else if (Math.hypot(world.port.x - x, world.port.y - y) < 2.8) state.selected = 'port';
   else if (Math.hypot(world.market.x - x, world.market.y - y) < 2.5) state.selected = 'market';
+  else if (world.roadTiles.has(`${x},${y}`)) state.selected = { type: 'road', x, y };
   else state.selected = null;
   updateSelection();
 }
@@ -300,7 +384,8 @@ function setupInput() {
     canvas.setPointerCapture(e.pointerId);
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     const tile = renderer.screenToTile(e.clientX, e.clientY);
-    if (pointers.size === 1) gesture = { startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, tile, moved: false, roadStart: state.tool === 'road' ? tile : null };
+    const roadTool = state.tool === 'road' || state.tool === 'roadRemove';
+    if (pointers.size === 1) gesture = { startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, tile, moved: false, roadStart: roadTool ? (state.roadAnchor || tile) : null };
     else if (pointers.size === 2) {
       const pts = [...pointers.values()];
       gesture = { pinch: true, distance: Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y) };
@@ -309,7 +394,18 @@ function setupInput() {
   canvas.addEventListener('pointermove', e => {
     if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     state.hover = renderer.screenToTile(e.clientX, e.clientY);
-    if (state.tool && state.hover) state.placementOk = canPlace(state.tool, state.hover[0], state.hover[1])[0];
+    if (state.tool && state.hover) {
+      const [hx, hy] = state.hover;
+      state.placementOk = canPlace(state.tool, hx, hy)[0]
+        || (state.tool === 'road' && (world.roadTiles.has(`${hx},${hy}`) || world.sites.some(s => s.x === hx && s.y === hy)));
+    }
+    if (gesture?.roadStart && state.hover) {
+      state.roadPreview = buildRoadPreview(gesture.roadStart, state.hover, state.tool === 'roadRemove');
+      updateRoadHint(state.roadPreview);
+    } else if (state.roadAnchor && state.hover && (state.tool === 'road' || state.tool === 'roadRemove')) {
+      state.roadPreview = buildRoadPreview(state.roadAnchor, state.hover, state.tool === 'roadRemove');
+      updateRoadHint(state.roadPreview);
+    }
     if (!gesture) return;
     if (pointers.size >= 2 && gesture.pinch) {
       const pts = [...pointers.values()];
@@ -330,7 +426,18 @@ function setupInput() {
     pointers.delete(e.pointerId);
     if (!gesture || gesture.pinch) { if (!pointers.size) gesture = null; return; }
     const tile = renderer.screenToTile(last.x, last.y);
-    if (state.tool === 'road' && gesture.roadStart) planRoadLine(gesture.roadStart, tile);
+    const roadTool = state.tool === 'road' || state.tool === 'roadRemove';
+    if (roadTool && gesture.roadStart) {
+      if (!gesture.moved && !state.roadAnchor) {
+        state.roadAnchor = tile;state.roadPreview = null;
+        const def = state.tool === 'roadRemove' ? '撤去の終点' : '道路の終点';
+        $('tool-hint').hidden = false;$('tool-hint').textContent = `${def}をタップするか、そこまでドラッグしてください`;
+        toast('<b>始点を指定</b><br>終点をタップするか、そのままドラッグしてください。');
+      } else {
+        const start = state.roadAnchor || gesture.roadStart;
+        if (state.tool === 'road') planRoadLine(start, tile); else removeRoadLine(start, tile);
+      }
+    }
     else if (state.tool && !gesture.moved) placeBuilding(state.tool, tile[0], tile[1]);
     else if (!state.tool && !gesture.moved) selectAt(tile[0], tile[1]);
     gesture = null;
@@ -349,7 +456,7 @@ function setupUiActions() {
     ship.begin();
     setSpeed(1);
     toast('<b>第一便が出港します</b><br>次の定期便まで15日。先に区画を用意してください。');
-    setAdvisor('支配人、漁師の区画を二つ。浜の近くなら、魚はその日のうちに市場へ届きます。');
+    setAdvisor('支配人、港と市場の脇で光る金茶色の道、その隣の浜へ漁師を二つ。道に接しない家へは、入植船から降りられません。');
   };
   $('focus-port').onclick = () => renderer.focus(world.port.x, world.port.y);
   $('open-ledger').onclick = () => openSheet('ledger');
@@ -464,14 +571,25 @@ function updateSelection() {
     $('selection-body').innerHTML = `<span class="tag">島内取引</span><h3>中央市場</h3><p>住民同士の売買から4%の口銭が会社へ入ります。</p><div class="info-grid"><div><small>店頭在庫</small><b>${fmt(stallTotal())}荷</b></div><div><small>市場価格</small><b>${Object.values(world.prices).reduce((n, a) => n + (a?.length ? 1 : 0), 0)}品目成立</b></div></div>`;
     return;
   }
+  if (sel?.type === 'road') {
+    const key = `${sel.x},${sel.y}`;
+    const connected = world.roadConnected.has(key);
+    const traffic = world.traffic?.[key] || 0;
+    const served = [...world.hhs, ...world.zones.filter(z => !z.filled)].filter(o => o.roadEntry === key).length;
+    $('selection-body').innerHTML = `<span class="tag">${connected ? '市場道路網' : '孤立路'}</span><h3>${world.paved ? '石畳' : '土の道'}</h3><p>${connected ? '中央市場まで連続しています。荷車が通行できます。' : '市場から切れています。荷車は入りません。'}</p><div class="info-grid"><div><small>通行の痕跡</small><b>${fmt(traffic)}</b></div><div><small>接道する家・区画</small><b>${served}件</b></div></div>`;
+    return;
+  }
   const h = sel;
   if (!world.hhs.includes(h)) { state.selected = null; panel.hidden = true; return; }
   const v = JOB_VIEW[h.job] || { name: h.job, output: null };
   const actions = { home: '仕事と暮らし', toMarket: '市場へ運搬中', atMarket: '市場で商い中', toHome: '市場から帰宅中', arriving: '港から入植地へ移動中', building: '自宅を普請中', toWork: '日傭仕事へ移動中' };
   const cargo = renderer.dominantCargo(h);
+  const cargoQty = renderer.cargoQty(h);
   const members = h.members.slice(0, 5).map(m => `${m.name}${m.sex}`).join('・') + (h.members.length > 5 ? `ほか${h.members.length - 5}人` : '');
   const food = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'].reduce((s, g) => s + (h.pantry[g] || 0), 0);
-  $('selection-body').innerHTML = `<span class="tag">${escapeHtml(v.name)}</span><h3>${escapeHtml(h.sur)}家</h3><p>${escapeHtml(members)}</p><div class="cargo-line">${cargo ? `${GOODS_VIEW[cargo]?.name || cargo}を積載・${actions[h.state] || h.state}` : actions[h.state] || h.state}</div><div class="info-grid"><div><small>住民の所持金</small><b>${money(h.purse)}</b></div><div><small>食料</small><b>約${Math.floor(food / Math.max(1, h.members.length))}日分</b></div><div><small>文化Lv</small><b>${h.lv}</b></div><div><small>市場まで</small><b>${world.dist(h).toFixed(1)}区画</b></div></div>`;
+  const transport = h.roadConnected ? `手荷車・${h.haul()}荷` : `徒歩・${h.haul()}荷`;
+  const distance = h.roadConnected && Number.isFinite(h.roadDistance) ? `${h.roadDistance.toFixed(1)}道程` : `${world.dist(h).toFixed(1)}区画`;
+  $('selection-body').innerHTML = `<span class="tag">${escapeHtml(v.name)}</span><span class="tag">${h.roadConnected ? '接道' : '未接続'}</span><h3>${escapeHtml(h.sur)}家</h3><p>${escapeHtml(members)}</p><div class="cargo-line">${cargo ? `${GOODS_VIEW[cargo]?.name || cargo} ${fmt(cargoQty)}荷を積載・${actions[h.state] || h.state}` : actions[h.state] || h.state}</div><div class="info-grid"><div><small>住民の所持金</small><b>${money(h.purse)}</b></div><div><small>食料</small><b>約${Math.floor(food / Math.max(1, h.members.length))}日分</b></div><div><small>運搬手段</small><b>${transport}</b></div><div><small>市場まで</small><b>${distance}</b></div></div>`;
 }
 
 function financeSnapshot() {
@@ -583,7 +701,7 @@ function updateAdvisorDefault() {
     fisher: '浜の近くに漁師の区画を二つ。魚は貯めにくいぶん、毎日の市場を動かします。',
     veg: '菜園は早く、麦は遅く実ります。両方を同時に始めると、待つ時間が仕事に変わります。',
     logger: '木こりは森の際、木工房は市場寄り。丸太を運ぶ距離が、そのまま木製品の重さになります。',
-    road: '道を引けば荷が速くなり、普請の賃金も住民へ流れます。市場へ戻る金までが一本の道です。',
+    road: '既設道を始点に、雑木林へ向けて引いてください。接続した家だけが、徒歩の4倍を積む手荷車を使えます。',
   };
   $('advisor-line').textContent = lines[obj.recommend] || '数字だけでなく、消えかけた荷の山と、遠回りする荷車をご覧ください。島は盤面で先に困り始めます。';
 }
@@ -633,7 +751,7 @@ function frame(now) {
   ship.update(dt, world.day);
   renderer.draw({
     ship: ship.getPosition(), hover: state.hover, tool: state.tool,
-    placementOk: state.placementOk, selected: state.selected,
+    placementOk: state.placementOk, selected: state.selected, roadPreview: state.roadPreview, roadAnchor: state.roadAnchor,
   });
   if (now - state.lastUi > 240) {
     updateHud();
@@ -660,6 +778,9 @@ window.__CHARTER__ = {
   ship,
   placeBuilding,
   planRoadLine,
+  removeRoadLine,
+  buildRoadPreview,
+  snapRoadEnd,
   setSpeed,
   updateHud,
 };

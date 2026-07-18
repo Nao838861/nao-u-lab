@@ -158,7 +158,8 @@ export class Renderer {
     c.fillRect(0, 0, this.width, this.height);
     this.drawSeaHaze();
     this.drawTerrain();
-    this.drawRoads();
+    this.drawRoads(view);
+    this.drawRoadPreview(view.roadPreview);
     this.drawObjects(view);
     this.drawPlacement(view);
     c.setTransform(1, 0, 0, 1, 0, 0);
@@ -204,29 +205,91 @@ export class Renderer {
     }
   }
 
-  drawRoads() {
+  drawRoads(view = {}) {
     const w = this.world;
     const c = this.ctx;
     const roads = w.roadTiles || new Set();
+    const connected = w.roadConnected || new Set();
+    const forward = [[1, 0], [0, 1], [1, 1], [1, -1]];
+    c.save();
+    c.lineCap = 'round';
+    c.lineJoin = 'round';
+    for (const key of roads) {
+      const [x, y] = key.split(',').map(Number);
+      const p = this.project(x, y);
+      for (const [dx, dy] of forward) {
+        const nk = `${x + dx},${y + dy}`;
+        if (!roads.has(nk)) continue;
+        const q = this.project(x + dx, y + dy);
+        const live = connected.has(key) && connected.has(nk);
+        c.strokeStyle = live ? '#493b2d' : '#483f3a';
+        c.lineWidth = Math.max(4, 12 * this.zoom);
+        c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+        c.strokeStyle = live ? (w.paved ? '#b9b8ae' : '#a8895d') : '#6c625c';
+        c.lineWidth = Math.max(2, 8 * this.zoom);
+        c.stroke();
+        c.strokeStyle = live ? (w.paved ? '#dfddd2aa' : '#d7b97a99') : '#95776b77';
+        c.lineWidth = Math.max(1, 1.5 * this.zoom);
+        c.stroke();
+      }
+    }
     for (const key of roads) {
       const [x, y] = key.split(',').map(Number);
       const p = this.project(x, y);
       if (!this.isVisible(p, 50)) continue;
-      this.diamond(p.x, p.y, w.paved ? '#aaa69b' : '#8d7958', 0.66, '#4f4536');
-      c.strokeStyle = w.paved ? '#d4d0c6aa' : '#c9ad7899';
-      c.lineWidth = Math.max(1, 2 * this.zoom);
-      for (const [dx, dy] of [[1, 0], [0, 1]]) {
-        if (!roads.has(`${x + dx},${y + dy}`)) continue;
-        const q = this.project(x + dx, y + dy);
-        c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+      const live = connected.has(key);
+      const traffic = w.traffic?.[key] || 0;
+      this.diamond(p.x, p.y, live ? (w.paved ? '#aaa99f' : '#927650') : '#665c58', 0.51, live ? '#d7ba7b88' : '#a7776d');
+      if (traffic > 20 && live) {
+        const a = Math.min(.7, .16 + Math.log10(traffic + 1) * .16);
+        c.fillStyle = `rgba(245,207,116,${a})`;
+        c.beginPath(); c.arc(p.x, p.y, Math.max(1.5, 2.4 * this.zoom), 0, TAU); c.fill();
+      }
+      if (!live) {
+        c.strokeStyle = '#e47a68'; c.lineWidth = Math.max(1, 1.5 * this.zoom);
+        c.beginPath(); c.moveTo(p.x, p.y - 2 * this.zoom); c.lineTo(p.x, p.y - 15 * this.zoom); c.stroke();
+        c.fillStyle = '#d95f52'; c.beginPath(); c.moveTo(p.x, p.y - 15 * this.zoom); c.lineTo(p.x + 8 * this.zoom, p.y - 11 * this.zoom); c.lineTo(p.x, p.y - 8 * this.zoom); c.closePath(); c.fill();
+      }
+      if (!w.hhs.length && (key === '24,32' || key === '26,32')) {
+        const pulse = 1 + Math.sin(this.frame * .06) * .14;
+        c.strokeStyle = '#ffe18bbd'; c.lineWidth = Math.max(1.5, 2 * this.zoom);
+        c.beginPath(); c.ellipse(p.x, p.y, 18 * this.zoom * pulse, 8 * this.zoom * pulse, 0, 0, TAU); c.stroke();
+      }
+      if (view.selected?.type === 'road' && view.selected.x === x && view.selected.y === y) {
+        c.strokeStyle = '#ffe38b'; c.lineWidth = Math.max(2, 2.5 * this.zoom);
+        c.beginPath(); c.ellipse(p.x, p.y, 20 * this.zoom, 9 * this.zoom, 0, 0, TAU); c.stroke();
       }
     }
     for (const s of w.sites || []) {
       const p = this.project(s.x, s.y);
-      this.diamond(p.x, p.y, '#775f3d99', 0.62, '#ebc56b');
+      const frontier = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]].some(([dx,dy]) => connected.has(`${s.x+dx},${s.y+dy}`));
+      this.diamond(p.x, p.y, frontier ? '#8e704499' : '#63565099', 0.62, frontier ? '#ebc56b' : '#bc8175');
       c.fillStyle = '#f2d684'; c.font = `${Math.max(9, 11 * this.zoom)}px sans-serif`; c.textAlign = 'center';
       c.fillText('⚒', p.x, p.y + 4);
+      if (this.zoom > .8) this.label(p.x, p.y - 15 * this.zoom, `${Math.max(0, s.left)}人日`);
     }
+    c.restore();
+  }
+
+  drawRoadPreview(preview) {
+    if (!preview?.points?.length) return;
+    const c = this.ctx, z = this.zoom;
+    c.save(); c.lineCap = 'round'; c.lineJoin = 'round'; c.setLineDash([7 * z, 5 * z]);
+    for (let i = 1; i < preview.points.length; i++) {
+      const p = this.project(...preview.points[i - 1]), q = this.project(...preview.points[i]);
+      c.strokeStyle = preview.remove ? '#ff8e79dd' : preview.valid ? (preview.connects ? '#f5d06fdd' : '#d68b7bdd') : '#e66c62dd';
+      c.lineWidth = Math.max(3, 7 * z); c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke();
+    }
+    c.setLineDash([]);
+    preview.points.forEach(([x, y], i) => {
+      const p = this.project(x, y);
+      const status = preview.statuses?.[i];
+      const color = preview.remove ? '#d9655866' : status === 'blocked' ? '#d9574c88' : status === 'existing' ? '#6caec266' : preview.connects ? '#e9c86177' : '#c87b6f77';
+      this.diamond(p.x, p.y, color, .57, preview.remove ? '#ffae9e' : '#ffe29a');
+    });
+    const end = this.project(...preview.end);
+    c.fillStyle = preview.valid ? '#ffe39a' : '#ff9b8c'; c.beginPath(); c.arc(end.x, end.y, Math.max(3, 4 * z), 0, TAU); c.fill();
+    c.restore();
   }
 
   drawObjects(view) {
@@ -320,12 +383,13 @@ export class Renderer {
   drawZone(p, zdata) {
     if (zdata.filled) return;
     const c = this.ctx, z = this.zoom;
-    this.diamond(p.x, p.y, '#d7c47d30', 0.88, '#f4d47c');
-    c.strokeStyle = '#f1d17d'; c.lineWidth = 2 * z;
+    this.diamond(p.x, p.y, zdata.roadConnected ? '#d7c47d30' : '#b66a5b38', 0.88, zdata.roadConnected ? '#f4d47c' : '#ee8d79');
+    c.strokeStyle = zdata.roadConnected ? '#f1d17d' : '#ee8d79'; c.lineWidth = 2 * z;
     c.beginPath(); c.moveTo(p.x, p.y - 2 * z); c.lineTo(p.x, p.y - 23 * z); c.stroke();
     c.fillStyle = '#ead18a'; c.fillRect(p.x, p.y - 23 * z, 15 * z, 9 * z);
     c.fillStyle = '#243737'; c.font = `700 ${Math.max(8, 8 * z)}px sans-serif`; c.textAlign = 'center';
     c.fillText(JOB_VIEW[zdata.job]?.icon || '⌂', p.x + 7.5 * z, p.y - 16 * z);
+    if (!zdata.roadConnected) this.label(p.x, p.y + 18 * z, '道待ち');
   }
 
   drawHome(p, h, selected) {
@@ -336,6 +400,12 @@ export class Renderer {
     else this.drawWorkshop(p, h);
     if (selected) {
       c.strokeStyle = '#ffe38b'; c.lineWidth = 2.5 * z; c.beginPath(); c.ellipse(p.x, p.y + 2 * z, 25 * z, 11 * z, 0, 0, TAU); c.stroke();
+      if (h.roadEntry) {
+        const [rx, ry] = h.roadEntry.split(',').map(Number), q = this.project(rx, ry);
+        c.setLineDash([3 * z, 3 * z]); c.strokeStyle = '#ffe38bcc'; c.lineWidth = Math.max(1, 1.5 * z);
+        c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke(); c.setLineDash([]);
+        c.fillStyle = '#ffe38b'; c.beginPath(); c.arc(q.x, q.y, 2.5 * z, 0, TAU); c.fill();
+      }
     }
     const q = (h.pantry[v.output] || 0) + (this.world.stalls[v.output] || []).filter(s => s.hh === h).reduce((sum, s) => sum + s.qty, 0);
     if (q > 1.2) this.drawPile(p.x + 18 * z, p.y + 2 * z, v.output, q, 0.75);
@@ -394,8 +464,12 @@ export class Renderer {
     const v = JOB_VIEW[h.job] || JOB_VIEW.veg;
     const bob = Math.sin(this.frame * 0.17 + h.id) * (h.state === 'home' ? 0.6 : 1.4) * z;
     const cargo = this.dominantCargo(h);
+    const cargoQty = this.cargoQty(h);
     const moving = h.state !== 'home';
-    if (moving && cargo && (h.state === 'toMarket' || h.state === 'toHome')) this.drawCart(p.x - 5 * z, p.y + bob, cargo, h);
+    if (moving && cargo && (h.state === 'toMarket' || h.state === 'toHome')) {
+      if (h.tripVehicle === 'cart') this.drawCart(p.x - 5 * z, p.y + bob, cargo, cargoQty);
+      else this.drawPack(p.x - 3 * z, p.y + bob, cargo);
+    }
     c.fillStyle = '#e8c09a'; c.beginPath(); c.arc(p.x + 6 * z, p.y - 13 * z + bob, 3.1 * z, 0, TAU); c.fill();
     c.fillStyle = this.jobColor(h.job); c.beginPath(); c.moveTo(p.x + 2 * z, p.y - 10 * z + bob); c.lineTo(p.x + 10 * z, p.y - 10 * z + bob); c.lineTo(p.x + 11 * z, p.y + bob); c.lineTo(p.x + 1 * z, p.y + bob); c.closePath(); c.fill();
     c.strokeStyle = '#263232'; c.lineWidth = Math.max(1, z); c.beginPath(); c.moveTo(p.x + 4 * z, p.y + bob); c.lineTo(p.x + 3 * z, p.y + 5 * z + bob); c.moveTo(p.x + 8 * z, p.y + bob); c.lineTo(p.x + 9 * z, p.y + 5 * z + bob); c.stroke();
@@ -403,16 +477,27 @@ export class Renderer {
     if (this.zoom > 1.15 && moving) this.label(p.x, p.y - 29 * z, `${h.sur}家・${v.name}`);
   }
 
-  drawCart(x, y, good, h) {
+  drawCart(x, y, good, qty) {
     const c = this.ctx, z = this.zoom, gv = GOODS_VIEW[good];
-    c.strokeStyle = '#3b2b20'; c.lineWidth = 2 * z; c.beginPath(); c.moveTo(x - 14 * z, y - 2 * z); c.lineTo(x + 2 * z, y - 4 * z); c.stroke();
-    c.fillStyle = '#835c39'; c.fillRect(x - 17 * z, y - 10 * z, 14 * z, 7 * z);
-    c.fillStyle = gv.color; c.fillRect(x - 15 * z, y - 15 * z, 10 * z, 6 * z);
-    c.strokeStyle = gv.edge; c.strokeRect(x - 15 * z, y - 15 * z, 10 * z, 6 * z);
-    c.fillStyle = '#2b2923'; c.beginPath(); c.arc(x - 14 * z, y - 2 * z, 3.5 * z, 0, TAU); c.fill(); c.beginPath(); c.arc(x - 5 * z, y - 2 * z, 3.5 * z, 0, TAU); c.fill();
+    c.strokeStyle = '#3b2b20'; c.lineWidth = 2.3 * z; c.beginPath(); c.moveTo(x - 21 * z, y - 3 * z); c.lineTo(x + 3 * z, y - 5 * z); c.stroke();
+    c.fillStyle = '#8a6039'; c.fillRect(x - 24 * z, y - 13 * z, 21 * z, 10 * z);
+    c.strokeStyle = '#3c2b20'; c.strokeRect(x - 24 * z, y - 13 * z, 21 * z, 10 * z);
+    this.drawPile(x - 14 * z, y - 13 * z, good, Math.max(1, qty), .62, false);
+    c.fillStyle = '#211f1b'; c.beginPath(); c.arc(x - 20 * z, y - 2 * z, 4.5 * z, 0, TAU); c.fill(); c.beginPath(); c.arc(x - 6 * z, y - 2 * z, 4.5 * z, 0, TAU); c.fill();
+    c.strokeStyle = '#c99b58'; c.lineWidth = z; c.beginPath(); c.arc(x - 20 * z, y - 2 * z, 2.3 * z, 0, TAU); c.stroke(); c.beginPath(); c.arc(x - 6 * z, y - 2 * z, 2.3 * z, 0, TAU); c.stroke();
+    if (this.zoom > .72) this.label(x - 14 * z, y - 31 * z, `${Math.max(1, Math.round(qty))}荷`);
+  }
+
+  drawPack(x, y, good) {
+    const c = this.ctx, z = this.zoom, gv = GOODS_VIEW[good];
+    c.fillStyle = gv?.color || '#b79059'; c.strokeStyle = gv?.edge || '#ead39d'; c.lineWidth = Math.max(1, z);
+    c.beginPath(); c.roundRect(x - 7 * z, y - 12 * z, 9 * z, 10 * z, 2 * z); c.fill(); c.stroke();
+    c.strokeStyle = '#5b402e'; c.beginPath(); c.arc(x - 2.5 * z, y - 12 * z, 4 * z, Math.PI, TAU); c.stroke();
   }
 
   dominantCargo(h) {
+    if (h.state === 'toMarket' && h.tripCargo) return h.tripCargo;
+    if (h.state === 'toHome' && h.returnCargo) return h.returnCargo;
     const primary = JOB_VIEW[h.job]?.output;
     if (primary && h.pantry[primary] > 1) return primary;
     let best = null, qty = 1;
@@ -420,7 +505,13 @@ export class Renderer {
     return best;
   }
 
-  drawPile(x, y, good, qty, scale = 1) {
+  cargoQty(h) {
+    if (h.state === 'toMarket') return h.tripCargoQty || 0;
+    if (h.state === 'toHome') return h.returnCargoQty || 0;
+    return 0;
+  }
+
+  drawPile(x, y, good, qty, scale = 1, showCount = true) {
     const c = this.ctx, z = this.zoom * scale, gv = GOODS_VIEW[good];
     if (!gv) return;
     const stage = qty < 6 ? 1 : qty < 20 ? 2 : qty < 55 ? 3 : 4;
@@ -441,7 +532,7 @@ export class Renderer {
         c.beginPath(); c.roundRect(px - 4 * z, py - 6 * z, 8 * z, 7 * z, 2 * z); c.fill(); c.stroke();
       }
     }
-    if (qty >= 10 && this.zoom > 0.67) {
+    if (showCount && qty >= 10 && this.zoom > 0.67) {
       c.fillStyle = '#082225d9'; c.beginPath(); c.roundRect(x + 8 * z, y - 18 * z, 23 * z, 12 * z, 5 * z); c.fill();
       c.fillStyle = gv.edge; c.font = `700 ${Math.max(8, 8 * z)}px sans-serif`; c.textAlign = 'center'; c.fillText(Math.round(qty), x + 19.5 * z, y - 9 * z);
     }
@@ -504,7 +595,13 @@ export class Renderer {
     const ok = view.placementOk !== false;
     const c = this.ctx, z = this.zoom;
     this.diamond(p.x, p.y, ok ? '#8fd59e66' : '#df766866', 0.94, ok ? '#b9efbd' : '#ff9f90');
-    if (view.tool !== 'road') {
+    if (view.roadAnchor) {
+      const a = this.project(...view.roadAnchor);
+      c.strokeStyle = '#ffe38b'; c.lineWidth = Math.max(2, 2.5 * z);
+      c.beginPath(); c.ellipse(a.x, a.y, 19 * z, 8 * z, 0, 0, TAU); c.stroke();
+      if (this.zoom > .65) this.label(a.x, a.y - 15 * z, '始点');
+    }
+    if (view.tool !== 'road' && view.tool !== 'roadRemove') {
       c.globalAlpha = 0.65;
       this.prism(p.x, p.y, 34, 20, 27, ok ? '#cfb678' : '#9f6d65', '#6f5941', '#58453a');
       c.globalAlpha = 1;
