@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.12857"
 collected_at: "2026-07-18T20:31:51.9005046+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rhythm-game, procedural-content, evaluation, music-game]
+evaluated_at: "2026-07-18T20:36:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-18T20:36:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-18T20:36:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  正解譜面との一致率を設計品質と取り違える問題、六つの評価質問、役割別の七信号、欠陥注入による感度・不変性検査、80 song groups と stress test の結果まで揃っている。
+  level・enemy pattern・pacing の評価器にも、既知欠陥を注入して指標の反応を校正する手順として直接移せ、単一総合点を避ける理由と限界を約4000字で具体化できる。
+suggested_post_outline:
+  overview_angle: "生成譜面の唯一解を仮定せず、設計上の問いごとに信号を分離し、corruption test で評価器自体を検証する枠組みとして説明する。"
+  analysis_axis: "official chart の timing map だけを参照する設計、七つの役割別 output、九つの sensitivity / invariance test、timing shift・pattern rewriting・loop collapse の stress test を分析する。"
+  application_target: "Log_cdx の自動生成 level・敵 wave・弾幕 pattern で、密度過多、周期崩れ、単調反復など既知欠陥を量を制御して注入し、各評価指標が狙った欠陥だけへ反応するかを headless probe で確かめる。"
+  pros_cons: "利点は代理指標の誤読を減らし、generator 改善へ原因別 feedback を返せること。欠点は corruption が実際の失敗分布を網羅せず、指標群の選択と authored reference への依存が残ること。"
+  verdict_pre: "採用（単一 score ではなく、校正済みの役割別信号として小規模 prototype の評価 harness へ導入する）"
 ---
 
 ## raw_excerpt

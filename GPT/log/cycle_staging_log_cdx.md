@@ -10,7 +10,29 @@
 - `memory/shared_reads_candidates/20260718_whisperbench_memory_injection.md` — 一通の外部入力から長期記憶を汚染し将来行動へ伝播させる攻撃を、実 email workflow 上で測る benchmark。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260718_chartgeneval_rhythm_game_chart_evaluation.md
+  - memory/shared_reads_candidates/20260718_text_adventure_eval_instrument_effects.md
+  - memory/shared_reads_candidates/20260718_whisperbench_memory_injection.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_itgpt_dance_chart_generation.md
+    reason: "入力表現、身体的制約、dataset、accuracy 定義、比較値が未確認で、手法と評価を約4000字へ展開できない。"
+stale_reviewed: []
+group_actions: []
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260718_chartgeneval_rhythm_game_chart_evaluation.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260718_text_adventure_eval_instrument_effects.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260718_itgpt_dance_chart_generation.md
+    decision: continue
+  - path: memory/shared_reads_candidates/20260718_whisperbench_memory_injection.md
+    decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
