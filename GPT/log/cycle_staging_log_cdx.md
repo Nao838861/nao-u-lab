@@ -83,7 +83,171 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads の mixed duplicate / stale triage / group action の3派生queueを現行candidate正本から再生成した。3ファイルとも既存内容と一致し、差分はなかった。"
+  - "MEMORY.md の索引を per-file atom index と照合し、broken link 0件を確認した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending がともに0件であることを確認した。handled更新は不要だった。"
+
+memory_index_audit:
+  broken_links: 0
+  source_file_status: "UTF-8明示読みで本文を取得でき、記憶 / ゲーム設計 / 敵パターンを確認。評価軸という代表語は本文に現れないが、UTF-8破損やbroken linkではない。"
+  display_or_tooling_status: none
+
+atom_audit:
+  atoms_jsonl: 2690
+  per_file_md: 2690
+  index_jsonl: 2690
+  mirror_missing_or_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  recall_visible_content_folded_extra_rows: 3
+  contradiction_or_content_conflict: false
+  note: "raw重複は lifecycle/content fold で想起表示から畳み込まれ、三者ミラーにもcontent_conflictsはない。既存title quality auditは603行を収載している。"
+
+encoding_audit:
+  source_file_status: "MEMORY.mdはUTF-8として正常。memory_healthのmojibake suspectは2 atomで、前回監査済みの単発source damage 1件とheuristic false positive 1件から増えていない。"
+  display_or_tooling_status: none
+  action: "表示経路のmojibakeやMEMORY.md破損ではないため、本文の再生成・手修復は行わない。"
+
+raw_archive_audit:
+  inactive_over_30d_files: 93
+  inactive_over_30d_bytes: 62759242
+  by_area:
+    web_research: 85
+    headless_eval: 6
+    slack_archive: 1
+    sync_state: 1
+  archived: []
+  note: "多くは一次資料・評価traceで、raw保持原則と既存atomのprovenanceに関わる。安全に移動できる明確な一時物は特定できず、機械的archiveは行わない。"
+
+candidate_lifecycle_audit:
+  files: 995
+  status_counts:
+    posted: 422
+    ready_to_post: 10
+    postponed: 414
+    failed: 127
+    needs_review: 22
+  missing_stale_after: 3
+  missing_stale_after_note: "3件ともstatus: postedのterminal candidateで、再評価queue対象外。補完更新はしない。"
+  overdue_open_total: 239
+  unindexed_duplicate_title_groups: 25
+  mixed_duplicate_queue_rows: 84
+
+previous_cycle_handoff_audit:
+  previous_phase4a_commit: 1fdb75261
+  previous_handed_off_group_count: 3
+  current_phase2_group_actions: 0
+  current_phase2_stale_reviewed: 0
+  same_top_groups_remain_actionable: true
+  staging_reset_evidence:
+    - phases/README.md:41
+    - tools/codex_phases_cycle.py:172
+    - tools/codex_phases_cycle.py:202
+    - tools/codex_phases_cycle.py:453
+
+issues:
+  - id: ISS-CROSS-CYCLE-HANDOFF-LOSS
+    description: "Phase 4aのgroup_action_handoffがサイクル末尾のstagingだけに残り、次サイクル開始時のstaging初期化でPhase 2が読む前に失われる。直前サイクルで渡した3 groupは現Phase 2でgroup_actions 0件のまま、同じqueue上位に残った。"
+    severity: high
+    evidence: "commit 1fdb75261 の log/cycle_staging_log_cdx.md group_action_handoff 3件; 現 staging Phase 2 group_actions: []; phases/README.md:41; tools/codex_phases_cycle.py:172-202,453"
+    source_file_status: "UTF-8 sourceは正常。handoff内容と初期化契約を双方から読める。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "前サイクルで見つけた重複・stale knowledgeの整理判断が次の評価phaseへ届かず、同じ候補群が再提示され続ける。ゲーム制作時にcanonicalな知見へ収束せず、再評価時間と検索ノイズが減らない。"
+  - id: ISS-POSTED-DUPLICATE-INDEX-GAP
+    description: "URL-first duplicate preflightのposted_source_urlsが実Slack投稿履歴を十分に被覆せず、既投稿のCoopEval v2/OpenLife候補をcontinue判定した。Phase 3のraw Slack横断照合が最終安全網として重複投稿を止めた。"
+    severity: medium
+    evidence: "現 staging Phase 3 duplicate_preflight_note; memory/raw/slack_api/shared-reads.jsonl ts=1778536700.085879 / 1783304602.130549; memory/shared_reads_title_canonical_index.jsonl に対応URL行なし"
+    source_file_status: "UTF-8 sourceは正常。raw Slackにはpermalink相当のtsと本文URLが存在し、canonical index側には対応行がない。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "既投稿の高品質分析がcanonical参照に結び付かず、同じ外部知見が新規candidateとして再流入する。ゲーム制作で過去分析を再利用する代わりに重複評価が発生し、どの解釈を正本として開くべきか曖昧になる。"
+
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-CROSS-CYCLE-HANDOFF-LOSS
+    - ISS-POSTED-DUPLICATE-INDEX-GAP
+  reason: "いずれも個別candidateの手修正では閉じず、既存phase間handoffとcanonical duplicate参照の接続契約に関わる。Phase 4aでは設計・実装せずPhase 4bへ渡す。"
+
+stale_backlog:
+  overdue_open_total: 239
+  stale_triage_queue_rows: 50
+  actionable_group_count: 35
+  backlog_high_water: true
+  high_water_reason: "overdue_open_total 239 > queue rows 50 かつ actionable groups 35 >= 3。前cycle handoffが未処理なのでbudget 3の効果はまだ確認できないが、現行契約どおりqueue順を保って再掲する。"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  candidate_batch_count: 0
+  candidate_batch_reason: "stale triage上位50件はすべてmixed duplicate。group handoffとの二重投入を避けるためcandidate単位batchは空にした。"
+
+group_action_handoff:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    status_counts:
+      failed: 1
+      posted: 1
+      postponed: 4
+    priority_reason: "age_days=22; mixed duplicate group present; 依存関係付きprompt pipelineという着想とゲーム制作への接続は明確だが、候補本文では評価の中身、比較対象、結論の強さが不足している。"
+    representative: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      stale_after: "2026-06-26"
+      reason: "age_days=22; mixed duplicate group present; 評価の中身、比較対象、結論の強さを補って再評価する必要がある。"
+    recommended_action: reevaluate_representative
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    status_counts:
+      failed: 2
+      postponed: 1
+    priority_reason: "age_days=22; mixed duplicate group present; arXiv IDの時系列確認なしでは出典信頼性が弱く、ゲーム制作への適用もLLM evaluator候補に留まる。"
+    representative: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md
+      - memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+      stale_after: "2026-06-26"
+      reason: "age_days=22; mixed duplicate group present; 出典の時系列と評価指標を確認してから再評価する必要がある。"
+    recommended_action: reevaluate_representative
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    status_counts:
+      failed: 3
+      needs_review: 1
+      posted: 2
+      postponed: 5
+    priority_reason: "age_days=20; mixed duplicate group present; 環境設定、報酬設計、persona traceabilityの評価手順が薄く、現行制作サイクルへ無理に一般化すべきでない。"
+    representative: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260608_pcsp_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      stale_after: "2026-06-28"
+      reason: "age_days=20; mixed duplicate group present; 実験設定と評価手順を補って代表candidateを再評価する必要がある。"
+    recommended_action: review_representative
+
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
