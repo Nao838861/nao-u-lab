@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T14:12:26+09:00",
+  "updated_at": "2026-07-18T16:20:45+09:00",
   "reviewed_source_ts": [
     "1784337079.340619",
     "1778512954.541829",
@@ -422,9 +422,30 @@
     "1779971995.584189",
     "1782428061.285269",
     "1784324167.001349",
-    "1784344254.477289"
+    "1784344254.477289",
+    "1784344260.203569"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T16:20:45+09:00",
+      "selected": {
+        "id": "sr-1784344260-9f501f7ff6",
+        "source_ts": "1784344260.203569",
+        "title": "Player Modeling via Multi-Armed Bandits — 適応探索を safe arms と最悪時損失で制約する",
+        "reason": "未レビューで最新の score 10 atom で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。適応型 difficulty・hint・prototype variant・recall strategy で、探索自体が外れ体験を課す失敗を次回行動へ変換できるか確認するため選んだ。"
+      },
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 15},
+      "decision": "adopt_probe",
+      "decision_reason": "合計15で採用条件を満たす。既存の skill-conditioned-playtest-route／procedural-persona-divergence probes は player profile 差を、game-balance-bot-trend-calibration は reward proxy と人間傾向を扱うが、探索前に全 arm を単体で許容可能にし、最悪 arm の連続提示数や探索損失を停止条件として記録する境界は明示していない。論文は simulation と48名の試験を持つ一方、歩数差は非有意、motivation 差も小さく、この環境で未検証なので evidence=2。319件目となる active probe の負荷があるため risk_control=2 とし、次の該当2件だけに限定する。",
+      "probe": [
+        "次の adaptive difficulty、hint、recommendation、prototype variant、recall strategy で探索を始める前に、arm を3種類以下へ絞り、各 arm が単体でも許容できる safe arm であることと、中止すべき体験損失を一つ定義したか。",
+        "reward 一数値だけでなく raw metrics を分離し、chosen_arm、explore_or_exploit、選択理由、更新前後の期待値、最悪 arm の連続提示数または exploration_loss を trace に残したか。",
+        "適用範囲を広げる前に fixed／random／adaptive のいずれかの比較と simulator 仮定への sensitivity を一つ確認し、人間評価がなければ reward_proxy_unvalidated または simulator_assumption_unverified と記録したか。"
+      ],
+      "withdrawal_condition": "次の該当2件で safe-arm 制約や最悪時損失が判断を変えない、既存 reward-proxy／persona probes だけで同じ停止判断が残る、または記録負荷が適応機能の便益を上回る場合は退役する。",
+      "change": {"type": "probe", "summary": "次の適応型ゲーム／memory 実験2件で、safe arms、raw metrics、探索の最悪時損失を確認する可逆 probe を追加した。", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": false, "conflict_checked": true}
+    },
     {
       "reviewed_at": "2026-07-18T14:12:26+09:00",
       "selected": {
@@ -10447,6 +10468,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260718-adaptive-exploration-loss-boundary",
+      "created_at": "2026-07-18T16:20:45+09:00",
+      "source_ts": "1784344260.203569",
+      "scope": "next adaptive difficulty, hint, recommendation, prototype-variant, or memory recall-strategy experiment where exploration may expose a player or downstream task to a poor arm while optimizing a proxy",
+      "questions": [
+        "次の adaptive difficulty、hint、recommendation、prototype variant、recall strategy で探索を始める前に、arm を3種類以下へ絞り、各 arm が単体でも許容できる safe arm であることと、中止すべき体験損失を一つ定義したか。",
+        "reward 一数値だけでなく raw metrics を分離し、chosen_arm、explore_or_exploit、選択理由、更新前後の期待値、最悪 arm の連続提示数または exploration_loss を trace に残したか。",
+        "適用範囲を広げる前に fixed／random／adaptive のいずれかの比較と simulator 仮定への sensitivity を一つ確認し、人間評価がなければ reward_proxy_unvalidated または simulator_assumption_unverified と記録したか。"
+      ],
+      "expires_after": "次の該当2件で判断差が出ない、既存 reward-proxy／persona probes と同じ記録しか残らない、または記録負荷が便益を上回る場合は退役する。"
+    },
     {
       "id": "probe-20260718-open-player-model-correction-boundary",
       "created_at": "2026-07-18T14:12:26+09:00",
