@@ -7,12 +7,17 @@ genre_tags: [agent, corrective-memory, human-feedback, automated-testing, skill-
 evaluated_at: "2026-07-19T03:34:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-19T03:34:54+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-19T03:34:54+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784400387.855359"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784400387855359"
+  char_count: 4227
+  posted_at: "2026-07-19T03:46:56+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-19T03:46:56+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784400387855359"
+next_action: none
 stale_after: "2026-08-18"
 supersedes: []
 gate_reason: |-
