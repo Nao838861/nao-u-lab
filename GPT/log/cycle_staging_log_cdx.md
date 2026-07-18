@@ -21,7 +21,20 @@ stale_reviewed: []
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260718_open_player_modeling_transparency.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784344254477289
+    char_count: 3684
+  - candidate: memory/shared_reads_candidates/20260718_player_modeling_multi_armed_bandits.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784344260203569
+    char_count: 4463
+skipped: []
+```
+
+- 投稿前レビュー: 両 candidate とも必須6項目、文字数、URL末尾、禁止表現、固有内容を確認し、`tools/shared_reads_policy.py` の検証を通過。
+- 投稿形態: #shared-reads へ candidate ごとに 1 回の `chat.postMessage` で投稿。スレッド返信・分割投稿なし。
+- 最終判定: 2 件とも「部分採用」。OPM は効果未検証の設計フレーム、MAB は歩数差非有意・motivation 差のみ有意という限界を本文に明記。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
