@@ -10,7 +10,17 @@
 - 重複確認: 両件とも `shared_reads_duplicate_preflight.py` は `continue`。既出の TITAN / KLPEG / PTCG-Bench / PCSP / MemoPilot / AI Native Games 等は新規 candidate にしなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260718_human_game_invention_generation_evaluation.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260718_overwatch_stadium_design.md
+    reason: "posted duplicate title sibling: memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217144998889"
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

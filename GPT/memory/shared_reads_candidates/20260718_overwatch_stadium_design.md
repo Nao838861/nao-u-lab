@@ -4,6 +4,20 @@ url: "https://gdcvault.com/play/1035697/Designing-Stadium-Crafting-a-New"
 collected_at: "2026-07-18T16:01:28.9653233+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, postmortem, competitive-multiplayer, balancing, iteration, live-ops]
+evaluated_at: "2026-07-18T16:04:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-18T16:04:47+09:00"
+last_decision: postponed_duplicate
+evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780217144998889; gate_decision:postpone; evaluated_at:2026-07-18T16:04:47+09:00"
+next_action: none
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  同一タイトルの候補 memory/shared_reads_candidates/20260531_overwatch_stadium_new_mode_design.md が投稿済みで、
+  今回の GDC Vault URL は同じ講演の詳細版に当たる。新しい制作情報は含むが、Phase 3 の再投稿対象にはしない。
 ---
 
 ## raw_excerpt

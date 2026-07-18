@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2508.10914"
 collected_at: "2026-07-18T16:01:28.9653233+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, cognitive-science, invention, evaluation, simulation, board-games]
+evaluated_at: "2026-07-18T16:04:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-18T16:04:47+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-18T16:04:47+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-17"
+supersedes: []
+gate_reason: >-
+  初心者のゲーム発明を proposal と model-based evaluation に分け、Ludax、言語モデル、
+  self-play、presence-only data を接続する問題設定・手法・予備評価・限界が揃っている。
+  実装前の案出しと小規模シミュレーションを分離して記録する制作手順へ直接適用でき、約4000字で批判的に展開できる。
+suggested_post_outline:
+  overview_angle: "人のゲーム発明を、既知要素からの候補生成と、頭内モデルによる候補評価の二段階として計測する研究として書く。"
+  analysis_axis: "presence-only data に対する MaxEnt、proposal probability と simulated funness の説明力、形式化不能な案と評価モデルの外挿限界。"
+  application_target: "Log_cdx のゲーム試作で、発想ログと採否ログを分離し、実装前に最小ルール記述と短い self-play probe を挟む制作サイクル。"
+  pros_cons: "メリットは発想の新規性と評価可能性を混同せず検証できること。デメリットは予備分析であり、Ludax と Intuitive Gamer の前提外にある案を過小評価しうること。"
+  verdict_pre: "部分採用。二段階の記録方式は採用し、simulated funness は採否の自動判定ではなく反証用の補助信号として使う。"
 ---
 
 ## raw_excerpt
