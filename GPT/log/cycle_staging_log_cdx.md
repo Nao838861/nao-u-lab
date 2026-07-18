@@ -10,7 +10,15 @@
 - 収集時刻: 2026-07-18T12:00:57+09:00。Slack 投稿、品質判定、記憶階層変更は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260718_open_player_modeling_transparency.md
+  - memory/shared_reads_candidates/20260718_player_modeling_multi_armed_bandits.md
+fail: []
+postpone: []
+stale_reviewed: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
