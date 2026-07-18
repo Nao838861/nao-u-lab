@@ -52,6 +52,15 @@
 
 ## 検証
 
+ローカルで遊ぶ場合は、リポジトリ直下で次を実行します（HTMLを直接ダブルクリックしないでください）。
+
+```bash
+cd /Users/Nao_u/nao-u-lab/GPT
+python3 -m http.server 8420
+```
+
+Chromeで <http://localhost:8420/game/shioji/v003/> を開きます。8420番が使用中なら、別のポート番号に置き換えてください。
+
 ```bash
 npm test
 ```
