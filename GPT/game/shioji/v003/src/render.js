@@ -181,10 +181,10 @@ export class Renderer {
     ctx.fillRect(0, 0, this.width, this.height);
 
     this.drawTerrain();
+    this.drawBuildingGrounds();
     this.drawRoads();
-    this.drawRouteHighlight();
+    this.drawGroundOverlays();
     this.drawWorldObjects();
-    this.drawPreviews();
     this.drawMoneyFloats();
   }
 
@@ -254,21 +254,58 @@ export class Renderer {
     ctx.restore();
   }
 
-  drawWorldObjects() {
+  drawBuildingGrounds() {
+    for (const building of this.world.buildings) this.drawBuildingGround(building);
+  }
+
+  drawBuildingGround(building) {
+    const selected = this.selectedId === building.id;
+    const baseFill = building.type === 'port' ? '#887b68' : building.type === 'market' ? '#b59d72' : '#6f784f';
+    this.footprint(building.x, building.y, building.w, building.h, baseFill, selected ? COLORS.gold : '#455344', selected ? 0.98 : 0.9);
+  }
+
+  worldDrawable(kind, data, anchorX, anchorY) {
+    return { depth: anchorX + anchorY, sortX: anchorX, kind, data };
+  }
+
+  shipGroundPosition(ship) {
+    let t = 1;
+    if (ship.state === 'arriving') t = ease(ship.progress);
+    if (ship.state === 'departing') t = 1 - ease(ship.progress);
+    return { x: -1.6 + t * 3.2, y: 19.8 - t * 2.35 };
+  }
+
+  collectWorldDrawables() {
     const drawables = [];
     for (let y = 0; y < this.world.height; y++) {
       for (let x = 0; x < this.world.width; x++) {
         const terrain = this.world.terrainAt(x, y);
         if (this.world.occupied.has(keyOf(x, y))) continue;
-        if (terrain.kind === 'forest') drawables.push({ depth: x + y + 0.2, x, kind: 'tree', data: { x, y, variant: terrain.variant } });
-        if (terrain.kind === 'rock' && terrain.variant % 2 === 0) drawables.push({ depth: x + y + 0.15, x, kind: 'rock', data: { x, y, variant: terrain.variant } });
+        if (terrain.kind === 'forest') {
+          const data = { x, y, variant: terrain.variant };
+          drawables.push(this.worldDrawable('tree', data, x + 0.5 + (terrain.variant - 1.5) * 0.04, y + 0.5));
+        }
+        if (terrain.kind === 'rock' && terrain.variant % 2 === 0) {
+          const data = { x, y, variant: terrain.variant };
+          drawables.push(this.worldDrawable('rock', data, x + 0.5, y + 0.55));
+        }
       }
     }
-    for (const building of this.world.buildings) drawables.push({ depth: building.x + building.y + building.w + building.h - 0.6, x: building.x, kind: 'building', data: building });
-    for (const shipment of this.world.shipments) drawables.push({ depth: shipment.x + shipment.y + 1.15, x: shipment.x, kind: 'cart', data: shipment });
-    if (this.world.ship.state !== 'away') drawables.push({ depth: 20.4, x: 0, kind: 'ship', data: this.world.ship });
-    drawables.sort((a, b) => a.depth - b.depth || a.x - b.x);
-    for (const item of drawables) {
+    for (const building of this.world.buildings) {
+      drawables.push(this.worldDrawable('building', building, building.x + building.w, building.y + building.h));
+    }
+    for (const shipment of this.world.shipments) {
+      drawables.push(this.worldDrawable('cart', shipment, shipment.x + 0.5, shipment.y + 0.5));
+    }
+    if (this.world.ship.state !== 'away') {
+      const shipPosition = this.shipGroundPosition(this.world.ship);
+      drawables.push(this.worldDrawable('ship', this.world.ship, shipPosition.x + 0.5, shipPosition.y + 0.5));
+    }
+    return drawables.sort((a, b) => a.depth - b.depth || a.sortX - b.sortX);
+  }
+
+  drawWorldObjects() {
+    for (const item of this.collectWorldDrawables()) {
       if (item.kind === 'tree') this.drawTree(item.data);
       if (item.kind === 'rock') this.drawRock(item.data);
       if (item.kind === 'building') this.drawBuilding(item.data);
@@ -316,11 +353,7 @@ export class Renderer {
   }
 
   drawBuilding(building) {
-    const selected = this.selectedId === building.id;
     const pulse = 0.5 + Math.sin(this.pulse * 4) * 0.15;
-    const baseFill = building.type === 'port' ? '#887b68' : building.type === 'market' ? '#b59d72' : '#6f784f';
-    this.footprint(building.x, building.y, building.w, building.h, baseFill, selected ? COLORS.gold : '#455344', selected ? 0.98 : 0.9);
-
     if (building.type === 'port') this.drawPort(building);
     else if (building.type === 'market') this.drawMarket(building);
     else if (building.type === 'logger') this.drawLogger(building);
@@ -671,11 +704,7 @@ export class Renderer {
   }
 
   drawShip(ship) {
-    let t = 1;
-    if (ship.state === 'arriving') t = ease(ship.progress);
-    if (ship.state === 'departing') t = 1 - ease(ship.progress);
-    const x = -1.6 + t * 3.2;
-    const y = 19.8 - t * 2.35;
+    const { x, y } = this.shipGroundPosition(ship);
     const p = this.project(x, y, 1);
     const ctx = this.ctx;
     const s = this.zoom;
@@ -694,7 +723,8 @@ export class Renderer {
     ctx.restore();
   }
 
-  drawPreviews() {
+  drawGroundOverlays() {
+    this.drawRouteHighlight();
     if (this.roadPreview?.cells?.length) {
       const ctx = this.ctx;
       ctx.save();

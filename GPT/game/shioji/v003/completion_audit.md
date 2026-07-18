@@ -12,6 +12,7 @@
 | 倉庫の建設・確認・章達成導線 | `testTutorialContinuesIntoWarehouse` | 確認済み |
 | 複数回の定期便と収支 | 長時間テストの複数輸出検証 | 確認済み |
 | 丸太と製材を色以外の形で識別 | `tests/browser_smoke.mjs` の形状契約と `material-shapes-desktop.png` | 確認済み |
+| 地面レイヤーと3D深度ソートを分離 | `tests/browser_smoke.mjs` の描画順・共通深度契約と `building-preview-ground-desktop.png` | 確認済み |
 | 秘書・書状・現物台帳 | `index.html` とブラウザテストのUI検査 | 要ブラウザ通し確認 |
 | PC/スマホでの実操作 | `tests/browser_smoke.mjs` | 確認済み |
 | 公開URLでの最新版確認 | 公開HTMLが `Build v003.2.0-material-shapes` を返すことをcurlで確認 | 確認済み |

@@ -55,6 +55,9 @@ class Page {
     await this.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
     await this.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
   }
+  async move(x, y) {
+    await this.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
+  }
   close() { this.ws.close(); }
 }
 
@@ -80,7 +83,28 @@ async function desktop() {
   const page = await newPage(1440, 900);
   assert.equal(await page.eval('document.title'), 'CHARTER ISLE — 潮路の島 v003');
   assert.equal(await page.eval("document.querySelector('#opening').hidden"), false);
-  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.2.0-material-shapes');
+  assert.equal(await page.eval("document.querySelector('[data-testid=build-version]').textContent"), 'Build v003.2.1-render-layers');
+  const renderLayerOrder = await page.eval(`(() => {
+    const renderer = window.__CHARTER__.renderer;
+    const methods = ['drawTerrain', 'drawBuildingGrounds', 'drawRoads', 'drawGroundOverlays', 'drawWorldObjects', 'drawMoneyFloats'];
+    const originals = Object.fromEntries(methods.map(method => [method, renderer[method]]));
+    const calls = [];
+    try {
+      for (const method of methods) {
+        renderer[method] = (...args) => {
+          calls.push(method);
+          return originals[method].apply(renderer, args);
+        };
+      }
+      renderer.render(0);
+    } finally {
+      for (const method of methods) renderer[method] = originals[method];
+    }
+    return calls;
+  })()`);
+  assert.deepEqual(renderLayerOrder, [
+    'drawTerrain', 'drawBuildingGrounds', 'drawRoads', 'drawGroundOverlays', 'drawWorldObjects', 'drawMoneyFloats',
+  ], '地面要素を固定順で描いてから、3D要素を深度ソートして描く');
   const materialShapeCalls = await page.eval(`(() => {
     const renderer = window.__CHARTER__.renderer;
     const originalContext = renderer.ctx;
@@ -140,6 +164,10 @@ async function desktop() {
 
   await page.eval("document.querySelector('[data-category=production]').click(); document.querySelector('[data-tool=logger]').click()");
   const loggerPoint = await page.eval('window.__CHARTER__.renderer.project(14.5,6.5)');
+  await page.move(loggerPoint.x, loggerPoint.y);
+  await wait(180);
+  assert.equal(await page.eval("window.__CHARTER__.renderer.preview?.tool"), 'logger');
+  await page.screenshot('building-preview-ground-desktop.png');
   await page.click(loggerPoint.x, loggerPoint.y);
   await wait(250);
   assert.equal(await page.eval("window.__CHARTER__.world.buildingsByType('logger').length"), 1);
@@ -164,6 +192,19 @@ async function desktop() {
     if(shipment) c.startTracking(shipment);
   })()`);
   await wait(300);
+  const worldSort = await page.eval(`(() => {
+    const c = window.__CHARTER__;
+    const drawables = c.renderer.collectWorldDrawables();
+    const cart = drawables.find(item => item.kind === 'cart');
+    const shipment = c.world.shipments.find(item => item.good === 'log');
+    return {
+      sorted: drawables.every((item, index) => index === 0 || drawables[index - 1].depth <= item.depth),
+      cartDepth: cart?.depth,
+      cartGroundDepth: shipment ? shipment.x + 0.5 + shipment.y + 0.5 : null,
+    };
+  })()`);
+  assert.equal(worldSort.sorted, true, '全3D要素を共通の地面接地点でソートする');
+  assert.equal(worldSort.cartDepth, worldSort.cartGroundDepth, '荷車だけに深度補正を足さない');
   assert.equal(await page.eval("document.querySelector('#tracking').hidden"), false, '任意操作で荷車追跡を開始する');
   assert.equal(await page.eval('window.__CHARTER__.world.speedIndex'), 1, '追跡中は読める通常速度へ落とす');
   await page.screenshot('tracked-log-desktop.png');
