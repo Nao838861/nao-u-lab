@@ -8,6 +8,7 @@ status: needs_review
 candidate_status: needs_review
 last_reviewed_at: "2026-05-29T06:29:43.8303200+09:00"
 last_decision: needs_review
+stale_after: "2026-06-28"
 evidence: "candidate_file:20260529_stealth_lighting_readability.md; status:needs_review"
 next_action: evaluate_in_phase2
 supersedes: []
