@@ -7,14 +7,19 @@ genre_tags: [game-evaluation, text-adventure, llm-agent, benchmark, experimental
 evaluated_at: "2026-07-18T20:36:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T20:36:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T20:36:04+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-18T20:48:57.6477547+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375319927069"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+posted:
+  ts: "1784375319.927069"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375319927069"
+  char_count: 4453
+  posted_at: "2026-07-18T20:48:57.6477547+09:00"
 gate_reason: >-
   LLM player を固定し、verdict grammar・成功条件の開示・budget 表示・反復を評価装置側の変数として操作する問題設定と、anchor / matched instance の具体値、反証された仮説まで抽出できる。
   headless playtester の成績をゲーム品質へ直結させず、評価 UI と判定文法の instrument effect を隔離する再現可能な試験として、制作中の playtest harness へ直接適用できる。

@@ -7,14 +7,19 @@ genre_tags: [game-design, rhythm-game, procedural-content, evaluation, music-gam
 evaluated_at: "2026-07-18T20:36:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T20:36:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T20:36:04+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-18T20:48:57.6477547+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375300283269"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+posted:
+  ts: "1784375300.283269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375300283269"
+  char_count: 4037
+  posted_at: "2026-07-18T20:48:57.6477547+09:00"
 gate_reason: >-
   正解譜面との一致率を設計品質と取り違える問題、六つの評価質問、役割別の七信号、欠陥注入による感度・不変性検査、80 song groups と stress test の結果まで揃っている。
   level・enemy pattern・pacing の評価器にも、既知欠陥を注入して指標の反応を校正する手順として直接移せ、単一総合点を避ける理由と限界を約4000字で具体化できる。

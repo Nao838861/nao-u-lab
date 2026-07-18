@@ -7,14 +7,19 @@ genre_tags: [agent-memory, security, persistent-agents, benchmark, game-producti
 evaluated_at: "2026-07-18T20:36:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-18T20:36:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-18T20:36:04+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-18T20:48:57.6477547+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375330114349"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
+posted:
+  ts: "1784375330.114349"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784375330114349"
+  char_count: 4488
+  posted_at: "2026-07-18T20:48:57.6477547+09:00"
 gate_reason: >-
   一通の外部入力から記憶採用、表面上の stealth、将来行動への伝播までを end-to-end で測る問題設定、108 cases、実 email workflow、MemGhost の二つの proxy、held-out 結果と transfer が揃う。
   Slack・記事・playtest report・asset metadata を長期記憶へ入れるゲーム制作環境で、ingest 時だけでなく recall-to-action 時にも provenance と信頼境界を検査する具体的な安全策へ落とせる。
