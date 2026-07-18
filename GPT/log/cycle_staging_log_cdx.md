@@ -37,7 +37,35 @@ reason: Phase 2 の pass が 0 件で、postpone 判定の candidate は Phase 3
 - 最終判定: 投稿対象なし。`memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md` は Phase 2 の `gate_decision: postpone` を維持し、Slack には投稿していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784358881-5f52656bd0
+    source_ts: "1784358881.327349"
+    title: 初心者のゲーム発明を proposal と model-based evaluation に分ける計算モデル
+    reason: 未レビューで最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグを持つ。ゲーム案を思いつけなかった失敗と、評価して捨てた失敗を分ける観点が次の prototype 記録を改善できるか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: reviewed_source_ts と reject 理由のみ更新。既存の rejected-output / simulation-boundary / hypothesis-verdict probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加しなかった。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 採否理由: 合計13で採用条件の14に未達。本文と元論文は proposal / evaluation 分離の根拠を持つが、この環境での比較実測はない。既存の `probe-20260528-pcg-tool-loop-evidence`、`probe-20260528-anti-template-selection-signal`、`probe-20260603-rules-core-parity-regression`、`probe-20260607-designer-question-agent-playtest`、`probe-20260706-paperclaw-prototype-hypothesis-contract` が主要な次回行動をすでに覆い、319件ある active probe 群へ追加すると確認負荷が増える。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-18T16:20:45+09:00",
+  "updated_at": "2026-07-18T18:24:52+09:00",
   "reviewed_source_ts": [
     "1784337079.340619",
     "1778512954.541829",
@@ -423,9 +423,50 @@
     "1782428061.285269",
     "1784324167.001349",
     "1784344254.477289",
-    "1784344260.203569"
+    "1784344260.203569",
+    "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T18:24:52+09:00",
+      "selected": {
+        "id": "sr-1784358881-5f52656bd0",
+        "source_ts": "1784358881.327349",
+        "title": "初心者のゲーム発明を proposal と model-based evaluation に分ける計算モデル",
+        "reason": "未レビューで最新の score 12 atom で、memory・harness・game-design・agent・operation・evaluation の優先タグを持つ。ゲーム案を思いつけなかった失敗と、評価して捨てた失敗を分ける観点が、次の prototype 記録を小さく改善できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。proposal log と evaluation log の分離、捨て案、複数形式化、headless rollout を反証補助にする観点は有用だが、既存 probes がすでに rejected output の保存、構造妥当性と player-facing quality の分離、simulation の限界明示、headless と playable の境界、事前仮説と実測 verdict を要求している。shared-reads 本文と元論文は484人・実行可能402案・尤度比検定を根拠に持つ一方、work-in-progress の人口レベル分析であり、この環境で proposal/evaluation 分離ログを比較実測していないため evidence=2。319件ある active probe 群へ重複項目を足すと確認負荷が増えるため、読了と重複理由だけを state に残す。",
+      "existing_probes": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260528-anti-template-selection-signal",
+        "probe-20260603-rules-core-parity-regression",
+        "probe-20260607-designer-question-agent-playtest",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と reject 理由のみ更新した。既存の rejected-output / simulation-boundary / hypothesis-verdict probes を再利用し、新規 probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-18T16:20:45+09:00",
       "selected": {
