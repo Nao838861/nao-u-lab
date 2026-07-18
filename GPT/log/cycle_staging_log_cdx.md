@@ -48,7 +48,39 @@ duplicate_preflight_note: "tools/shared_reads_duplicate_preflight.py は両件�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784375330-b722b58ff8
+    source_ts: "1784375330.114349"
+    title: "WhisperBench — 外部文書から durable memory を介して後続行動を変える stealth memory injection"
+    reason: "未レビューで最新の score 10 atom。memory・agent・operation・evaluation の4優先タグを持ち、外部入力を atom・長期記憶へ取り込む現在の運用で、時間差の行動変化を既存 probe の重複なしに測れるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_metric
+  decision_reason: "採用条件を満たす。既存 probe は provenance、memory の失敗段階、ingest と execution の authority boundary をすでに扱うため、新規 active probe は追加しない。差分は、次の該当1件で durable adoption、write visibility、delayed action effect、正当 control memory の recall 維持を一つの isolated synthetic case で分離測定する点に限定する。攻撃 payload 生成や本番環境での試験は行わない。"
+  metric:
+    name: memory_adoption_to_delayed_effect_split
+    scope: "次の memory-ingest / recall / summarization / promotion 変更のうち、隔離した synthetic case で確認できる1件だけ"
+    check: "benign control と実害のない偽 fact/preference を隔離入力に混ぜ、untrusted 内容の durable adoption、write/diff の可視化、別 session 相当の後続判断変化、正当 control memory の recall 維持を別々に記録する。"
+    withdrawal_condition: "既存3 probes だけで同じ四分割と停止判断が残る、隔離 fixture を安全に作れない、または記録が判断を変えなければ再利用しない。"
+  change:
+    summary: "次の該当 memory lifecycle 変更1件だけに使う可逆 metric を state に追加。新規 active probe、directive、schema、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-18T20:55:00+09:00",
+  "updated_at": "2026-07-18T23:04:22+09:00",
   "reviewed_source_ts": [
+    "1784375330.114349",
     "1784375319.927069",
     "1784337079.340619",
     "1778512954.541829",
@@ -428,6 +429,50 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-18T23:04:22+09:00",
+      "selected": {
+        "id": "sr-1784375330-b722b58ff8",
+        "source_ts": "1784375330.114349",
+        "title": "WhisperBench — 外部文書から durable memory を介して後続行動を変える stealth memory injection",
+        "reason": "未レビューで最新の score 10 atom で、memory・agent・operation・evaluation の4優先タグを持つ。Slack、外部記事、playtest report から atom と長期記憶を作る現在の運用に対し、取り込み時に無害でも別 session の行動を変える時間差リスクを、既存 probe を増やさず評価差へ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計15で採用条件を満たす。WhisperBench は108 cases、実 SMTP/IMAP と複数 agent/memory backend、state diff・tool trace・後続 response を用い、injection・stealth・delayed effectiveness を分離しているため evidence=3 とした。既存の memory-poisoning-ingest-check、memory-stage-risk-classifier、agentic-state-authority-boundary は provenance、失敗段階、ingest と execution の分離をすでに確認するので non_redundancy=1。差分は、次の該当1件で adoption、write visibility、delayed action effect、正当記憶の recall 維持を一つの isolated control として測る点だけに限定する。攻撃 payload 生成、実 credential・実 Slack channel・本番 repo での試験、trust-label schema や恒久ルールの追加は採用しない。",
+      "existing_probes": [
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260531-memory-stage-risk-classifier",
+        "probe-20260619-agentic-state-authority-boundary"
+      ],
+      "metric": {
+        "name": "memory_adoption_to_delayed_effect_split",
+        "scope": "next memory-ingest, recall, summarization, or promotion change that can be exercised with one isolated synthetic case",
+        "check": "benign control と実害のない偽 fact/preference を隔離入力に混ぜ、untrusted 内容の durable adoption、write/diff の user-visible 露呈、別 session 相当の後続判断変化、正当 control memory の recall 維持を別々に記録する。後続行動まで変わらなければ memory compromise と総括せず、失敗段階を adoption_only または visibility_gap に狭める。",
+        "withdrawal_condition": "次の該当1件で既存3 probes だけで同じ四分割と停止判断が残る、隔離 fixture を安全に作れない、または記録が判断を変えない場合は再利用せず review 履歴だけ残す。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の該当する memory lifecycle 変更1件だけで、adoption・write visibility・delayed action effect・正当記憶維持を分けて見る可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-18T20:55:00+09:00",
       "selected": {
