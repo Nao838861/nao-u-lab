@@ -1,6 +1,13 @@
 # shared_reads_candidates/
 
-2026-07-14 Phase 4c から duplicate preflight は URL-first / title-second で判定する。canonicalized `source_url` が index 内の `posted_source_urls` と一致すれば、title 表記が異なっても `skip / posted_url_match` とし、`canonical_path` / `permalink` / `matched_title_key` を証拠として返す。URL 不一致時だけ従来の title 判定へ進み、同題異 URL は `review`、新規 title は `continue` とする。Phase 3 の横断照合は最終安全網として残す。
+2026-07-18 Phase 4c から duplicate preflight の第一段は `memory/shared_reads_posted_source_index.jsonl` とする。これは raw Slack の実投稿を主入力、`status: posted` candidate metadata を補助入力にした再生成可能 index で、canonical URL / domain 限定 work identity / Slack ts・permalink / title evidence / candidate path / provenance を保持する。URL/work 一致は `skip`、title canonical のみの一致は `review`、新規は `continue`。index stale、抽出不能、provenance 不足も安全側の `review` とする。Phase 3 の raw 横断照合は最終安全網として残す。
+
+再生成と検証:
+
+```powershell
+python tools\build_shared_reads_posted_source_index.py
+python tools\build_shared_reads_posted_source_index.py --check
+```
 
 2026-07-12 Phase 4c から、同一 title group に `posted` sibling が1件でもあれば mixed group でも `terminal_evidence: true` として index に保持する。生成前に `tools/shared_reads_duplicate_preflight.py` を実行し、title と canonicalized URL が一致すれば `skip`、title のみ一致して URL が異なれば `review`、未登録 title は `continue` とする。既存 candidate の status は一括変更しない。
 

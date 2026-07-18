@@ -7,9 +7,9 @@ inputs: [Phase 1 staging, Phase 4a stale_review_batch, shared_reads_candidates/]
 outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクション]
 ---
 
-## Duplicate preflight の判定順 (2026-07-14 Phase 4c)
+## Duplicate preflight の判定順 (2026-07-18 Phase 4c)
 
-本文評価前の duplicate preflight は URL-first / title-second とする。まず index 全体の `posted_source_urls` を canonicalize して候補 URL と照合し、一致時は title 表記が異なっても `skip / posted_url_match` とする。URL が一致しない場合だけ `title_key` を照合し、同題異 URL は `review`、未登録 title は `continue` とする。`skip` の証拠には `canonical_path` / `permalink` / `matched_title_key` を残す。Phase 3 の横断照合は最終安全網として維持する。
+本文評価前の duplicate preflight は、実 Slack 投稿から再生成した `memory/shared_reads_posted_source_index.jsonl` を第一段、既存 title canonical index を第二段にする。posted-source の canonical URL または domain 限定 work identity が一致すれば `skip`、title canonical のみ一致すれば `review`、どちらもなければ `continue` とする。index が raw/candidate snapshot より古い、該当 title の URL 抽出が未解決、または一致行の provenance が不足する時は `continue` にせず `review` に倒す。Phase 3 の raw Slack 横断照合は最終安全網として維持する。
 
 ## stale_review_batch 再評価契約 (2026-06-19)
 
@@ -109,6 +109,18 @@ Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の
 
 Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は記録された budget（通常 1 group、backlog 高水位時だけ最大 3 group）の各 `representative` を再評価する。同じ `group_key` は 1 回だけ扱い、handoff 対象 group の `representative` と `open_siblings` を candidate 単位の `stale_review_batch` と同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate frontmatter を group 単位で自動一括更新しない。
 
+2026-07-18 Phase 4c 以降、跨 cycle の正本は staging ではなく `memory/shared_reads_group_handoff_inbox.jsonl` とする。Phase 2 の開始時に次を実行し、新規 candidate と `stale_review_batch` より先に oldest pending を最大3件処理する。
+
+```powershell
+python tools\shared_reads_group_handoff.py pending --limit 3
+```
+
+処理対象 ID と開始時/終了時の pending 件数を staging の監査情報に残す。各 item は `group_actions` に対応する結果を書いた後でのみ acknowledge し、evidence には staging 上の group_key と決定を記す。途中失敗した item は pending のまま残す。
+
+```powershell
+python tools\shared_reads_group_handoff.py acknowledge --id <handoff_id> --evidence "staging Phase 2 group_actions: <group_key> -> <decision>"
+```
+
 各 group の再評価結果は、再生成可能な queue とは別に staging Phase 2 の `group_actions` へ次の契約で残す。これは後続の明示的 lifecycle 処理への監査可能な handoff であり、この Phase 2 では sibling candidate の status を適用しない。
 
 ```yaml
@@ -123,6 +135,16 @@ group_actions:
         evidence: <permalink、status、評価差など>
     representative_decision: pass | fail | postpone
     analysis_time_minutes: <通常 candidate 分析への影響を次 cycle で判定できる値>
+```
+
+staging Phase 2 には合わせて次を残す。
+
+```yaml
+group_handoff_audit:
+  pending_before: <件数>
+  read_ids: [<handoff_id>, ...]
+  acknowledged_ids: [<handoff_id>, ...]
+  pending_after: <件数>
 ```
 
 `close_siblings` は対象を閉じてよいという提案、`keep_distinct` は題材差・資料差などにより別 candidate として維持する判断、`defer` は根拠不足による保留である。いずれも `target_paths` / `reason` / `terminal_evidence` を省略しない。参照できる terminal evidence がなければ空配列にせず、その不足を示して `defer` にする。
@@ -142,8 +164,7 @@ stale_after: "YYYY-MM-DD"  # last_reviewed_at から約 30 日後
 staging Phase 2 には `pass` ではなく `postpone` または `stale_reviewed` として記録し、理由に `posted duplicate title sibling` と terminal path / permalink を残す。判定確認には必要に応じて次を使う。
 
 ```powershell
-python tools\shared_reads_duplicate_preflight.py memory\shared_reads_candidates\<candidate>.md
-python tools\shared_reads_duplicate_preflight.py memory\shared_reads_candidates\<candidate>.md --apply
+python tools\shared_reads_duplicate_preflight.py --title "<candidate frontmatter title>" --url "<candidate frontmatter url>"
 ```
 
-`--apply` は対象 candidate の frontmatter だけを更新する。mixed duplicate queue は引き続き派生 sidecar として扱い、group 全体の自動 close や sibling candidate の一括更新はしない。
+判定結果を確認してから対象 candidate の frontmatter だけを更新する。mixed duplicate queue は引き続き派生 sidecar として扱い、group 全体の自動 close や sibling candidate の一括更新はしない。

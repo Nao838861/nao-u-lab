@@ -344,7 +344,65 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-CROSS-CYCLE-HANDOFF-LOSS
+    files_changed:
+      - path: tools/shared_reads_group_handoff.py
+        change: created
+      - path: tools/test_shared_reads_group_handoff.py
+        change: created
+      - path: memory/shared_reads_group_handoff_inbox.jsonl
+        change: created
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: phases/README.md
+        change: modified
+    summary: "Phase 4a の group 選定を composite ID で冪等 upsertし、Phase 2 が group_actions 記録後だけ acknowledge する persistent inbox を導入した。staging は当該cycleの表示に限定した。"
+    partial: false
+  - issue_id: ISS-POSTED-DUPLICATE-INDEX-GAP
+    files_changed:
+      - path: tools/shared_reads_posted_source_index.py
+        change: created
+      - path: tools/build_shared_reads_posted_source_index.py
+        change: created
+      - path: tools/test_shared_reads_posted_source_index.py
+        change: created
+      - path: tools/shared_reads_duplicate_preflight.py
+        change: modified
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/test_shared_reads_duplicate_preflight.py
+        change: modified
+      - path: memory/shared_reads_posted_source_index.jsonl
+        change: created
+      - path: phases/phase1_collect.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+    summary: "raw Slack 実投稿を主入力、posted candidate metadata を補助入力にした再生成可能 source index を追加し、URL/work skip、title review、新規 continue の順へ preflight を接続した。stale・抽出不能・provenance不足は review に倒す。"
+    partial: false
+migrations:
+  - what: "現cycleの group_action_handoff 3件を source_cycle_id=2026-07-18 22:43 の pending item として永続 inbox へ移行"
+    affected: "memory/shared_reads_group_handoff_inbox.jsonl の3件。既存candidate frontmatterと派生queueは変更していない。"
+  - what: "raw shared-reads 投稿と status: posted candidate metadata から posted-source index を backfill"
+    affected: "source 539行。CoopEval/OpenLifeを含む。URL未抽出109投稿はmetadataに保持し、該当titleのpreflightをreviewへ倒す。"
+verification:
+  - "python -m unittest discover -s tools -p 'test_shared_reads_*py': 10 tests OK。staging reset、再実行、途中ack、同一group再選定、work identity、CoopEval/OpenLife fixtureを確認。"
+  - "python tools/build_shared_reads_posted_source_index.py --check: rows=539、現raw/candidate snapshotと一致。"
+  - "python tools/shared_reads_group_handoff.py audit: rows=3、pending_count=3、errors=[]。同cycle再enqueueは3件とも already_enqueued。"
+  - "実データpreflight: CoopEval 2604.15267 と OpenLife 2606.31046 はともに posted_source_work_match / skip（期待終了コード3）。"
+  - "python tools/memory_recall.py 'group action handoff shared reads' --limit 3 --no-log: 正常に3件recall。"
+  - "python tools/codex_phases_cycle.py --dry-run: Phase 1〜5と条件付き4b/4cのplanを正常出力。"
+  - "関連Python 5ファイルの py_compile 成功。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

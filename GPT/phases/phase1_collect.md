@@ -9,13 +9,19 @@ outputs: [shared_reads_candidates/, staging Phase 1 セクション]
 
 ## Candidate 書込み前 preflight (2026-07-12 Phase 4c)
 
+candidate の収集開始前に、実 Slack 投稿を正本とする posted-source index を再生成する。
+
+```powershell
+python tools\build_shared_reads_posted_source_index.py
+```
+
 candidate はファイル書込み直前に次を実行する。
 
 ```powershell
 python tools\shared_reads_duplicate_preflight.py --title "<title>" --url "<url>" --log log\shared_reads_candidate_preflight.jsonl
 ```
 
-`skip` (終了コード 3) はファイルを作らずログに根拠を残す。`review` (終了コード 2) は同題・別 URL として自動保存せず、改訂版かを確認する。`continue` (終了コード 0) の時だけ保存する。
+判定順は posted-source の URL/work 一致、title canonical 一致、新規の順とする。`skip` (終了コード 3) はファイルを作らずログに Slack permalink と一致根拠を残す。`review` (終了コード 2) は同題・別 URL に加え、index stale、抽出不能、provenance 不足を含み、自動保存せず確認する。`continue` (終了コード 0) の時だけ保存する。Phase 3 の raw Slack 横断照合は最終安全網として残す。
 
 # Phase 1: 情報収集
 

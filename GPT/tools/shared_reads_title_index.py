@@ -51,12 +51,57 @@ def canonicalize_url(url: str) -> str:
     return urlunsplit((scheme, netloc, path, query, ""))
 
 
-def duplicate_preflight(title: str, url: str, index: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def duplicate_preflight(
+    title: str,
+    url: str,
+    index: dict[str, dict[str, Any]],
+    posted_source_rows: list[dict[str, Any]] | None = None,
+    posted_source_status: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Return continue/review/skip before a shared-reads candidate is written."""
     title_key = normalize_title_key(title)
     canonical_url = canonicalize_url(url)
 
-    if canonical_url:
+    if posted_source_rows is not None:
+        status = posted_source_status or {"healthy": False, "reason": "posted_source_index_status_missing"}
+        if not status.get("healthy"):
+            return {
+                "decision": "review",
+                "title_key": title_key,
+                "canonical_url": canonical_url,
+                "reason": str(status.get("reason") or "posted_source_index_unhealthy"),
+            }
+        from shared_reads_posted_source_index import find_source_match
+
+        matched_row, match_reason = find_source_match(canonical_url, posted_source_rows)
+        if matched_row:
+            matched_title_keys = list(matched_row.get("title_keys", []))
+            permalinks = list(matched_row.get("permalinks", []))
+            evidence = {
+                "title_key": title_key,
+                "canonical_url": canonical_url,
+                "matched_work_identity": matched_row.get("work_identity", ""),
+                "matched_title_key": title_key if title_key in matched_title_keys else next(iter(matched_title_keys), ""),
+                "canonical_path": next(iter(matched_row.get("candidate_paths", [])), ""),
+                "permalink": permalinks[-1] if permalinks else "",
+            }
+            if not matched_row.get("provenance_complete"):
+                return {
+                    "decision": "review",
+                    **evidence,
+                    "reason": "posted_source_provenance_incomplete",
+                }
+            return {"decision": "skip", **evidence, "reason": match_reason}
+        if title_key and title_key in set(status.get("unresolved_title_keys", [])):
+            return {
+                "decision": "review",
+                "title_key": title_key,
+                "canonical_url": canonical_url,
+                "reason": "posted_source_extraction_unresolved",
+            }
+
+    # Backward-compatible fallback for callers that have not supplied the actual-post index.
+    if posted_source_rows is None and canonical_url:
         for matched_title_key, matched_row in index.items():
             posted_urls = {
                 canonicalize_url(str(item))

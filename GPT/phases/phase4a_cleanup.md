@@ -145,6 +145,15 @@ python tools\build_shared_reads_group_action_queue.py
 
 高水位判定と実際の budget は、固定閾値ではなくその cycle の queue 全体の状態として staging の `stale_backlog` に記録する。`group_action_handoff` は queue の順序を保って budget 件まで選ぶ。同じ `group_key` は 1 回だけ選び、各 group の `representative`、`open_siblings`、`terminal_siblings`、`latest_evidence` をそのまま根拠として渡す。
 
+2026-07-18 Phase 4c 以降、選定後は staging header の cycle ID と実際の budget を使って永続 inbox へ冪等 upsert する。未処理の同一 group が既にある場合は二重投入せず、既存 pending ID を staging に記録する。
+
+```powershell
+python tools\shared_reads_group_handoff.py enqueue --source-cycle-id "<staging header cycle id>" --limit <group_handoff_budget>
+python tools\shared_reads_group_handoff.py audit
+```
+
+staging の `group_action_handoff` は当該 cycle の選定表示に限定する。監査情報として `handoff_inbox_pending_count` と `handoff_inbox_ids` を `stale_backlog` に追加し、跨 cycle の未処理判定は `memory/shared_reads_group_handoff_inbox.jsonl` を正本とする。
+
 handoff に含めた group の `representative` と `open_siblings` は candidate 単位の `stale_review_batch` に重ねて入れない。この重複排除は複数 group を渡す場合も全 group に適用する。元 candidate、stale triage queue、mixed duplicate queue は変更しない。
 
 staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` を残す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、`close_siblings` または `keep_distinct` と判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。

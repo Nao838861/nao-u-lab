@@ -38,3 +38,7 @@ ts=1778560845.121349 (本 directive で参照) は Nao_u が指摘の直接対�
 - 2026-06-26 ts=1782405171.793529: `directive_shared_reads_log_cdx_standalone_20260626.md` — 他AIへの問いかけや相互参照を停止し、Log_cdx 自身の深い分析として完結させる
 
 本 directive は候補と最終投稿の境界線を定める。後続 directive と衝突する旧い投稿スタイルは並列適用しない。原文は履歴として保持するが、実際の投稿判断は現行 directive と phase prompt で上書きする。
+
+## 実装メモ（2026-07-18 Phase 4c）
+
+候補書込み前の重複判定は、candidate 派生 index だけでなく raw Slack の実投稿履歴を正本にした `memory/shared_reads_posted_source_index.jsonl` を第一段に使う。`tools/build_shared_reads_posted_source_index.py` で再生成し、URL/work 一致は skip、title のみ一致・index stale・抽出不能・provenance 不足は review とする。これは本 directive の「候補を投稿済み情報と混同して再投稿しない」運用を機械的に支える変更であり、品質基準自体は変えない。
