@@ -7,14 +7,20 @@ genre_tags: [game-ai, agent-evaluation, multimodal, memory, benchmark]
 evaluated_at: "2026-07-19T05:49:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-19T05:49:28+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-19T05:49:28+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784408323.132209"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784408323132209"
+  char_count: 4161
+  posted_at: "2026-07-19T05:58:56+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-19T05:58:56+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784408323132209"
+next_action: none
 stale_after: "2026-08-18"
-supersedes: []
+supersedes:
+  - "memory/shared_reads_candidates/20260620_rng_bench_non_markov_games.md"
 gate_reason: |-
   非 Markov 環境の記憶能力を、完全状態公開や事後想起ではなく多段階行動の中で測る問題設定・二つのゲーム・難度軸・Memory Gap・主要結果が揃っている。
   AI テストプレイヤーの失敗を忘却と方策選択に分ける評価へ直接適用でき、CoopEval 水準の概要を独立して構成できる。

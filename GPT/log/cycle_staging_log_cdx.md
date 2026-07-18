@@ -100,7 +100,22 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_rng_bench_non_markov_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784408323132209
+    char_count: 4161
+skipped: []
+consolidated:
+  - candidate: memory/shared_reads_candidates/20260620_rng_bench_non_markov_games.md
+    reason: "同一 arXiv URL の旧 postponed candidate。今回、原論文本文で Memory Gap 定義、duel protocol、主要 ablation、限界を確認し、20260719 candidate を完成版として投稿したため terminal duplicate に更新。"
+    action: close_duplicate
+review:
+  policy_gate: pass
+  source_checked: "arXiv PDF 26 pages; main tables and limitations visually verified"
+  posting_mode: "single chat.postMessage; no thread"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
