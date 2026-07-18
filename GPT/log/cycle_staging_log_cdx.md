@@ -64,11 +64,11 @@ self_feedback:
     actionability: 3
     evidence: 3
     non_redundancy: 0
-    risk_control: 2
+    risk_control: 1
     reversibility: 3
-    total: 14
+    total: 13
   decision: reject
-  decision_reason: "必須閾値は満たすが、既存の attribution split・surface variant・LMGameBench diagnostic ablation probes が、fixed/varying factor、同一条件での scaffold contrast、UI wording、prompt wording、seed、retry budget をすでに扱う。319件ある active probe 群へ同義の instrument-effect probe を追加せず、次の該当評価で既存 probe の contrast run の具体例として参照する。"
+  decision_reason: "risk_control=1、合計13で採用条件に届かない。既存の attribution split・surface variant・LMGameBench diagnostic ablation probes が、fixed/varying factor、同一条件での scaffold contrast、UI wording、prompt wording、seed、retry budget をすでに扱う。319件ある active probe 群へ同義の instrument-effect probe を追加せず、次の該当評価で既存 probe の contrast run の具体例として参照する。"
   change:
     summary: "reviewed/source_ts と reject 理由だけを state に記録した。新規 probe・評価表・directive・恒久ルールは追加していない。"
     files:

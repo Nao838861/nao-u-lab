@@ -441,12 +441,12 @@
         "actionability": 3,
         "evidence": 3,
         "non_redundancy": 0,
-        "risk_control": 2,
+        "risk_control": 1,
         "reversibility": 3,
-        "total": 14
+        "total": 13
       },
       "decision": "reject",
-      "decision_reason": "合計14で必須閾値は満たすが、新規 probe は追加しない。固定 player/build のまま評価装置側の knob を変える要点は、既存の agent-eval-attribution-split と evaluation-attribution-split が fixed/varying factor と same seed/different scaffold を、semantics-preserving-surface-variant が UI wording と success condition を、lmgamebench-ai-playtest-diagnostic-ablation が prompt wording・retry budget・seed をすでに確認している。shared-reads 本文は byte-identical anchor で strong claims が38/40から7/40、成功条件開示で false verdicts が18/59から0/58へ変化し、事前仮説の反証も含むため evidence=3 としたが、319件ある active probe 群へ同義の instrument-effect probe を足すと確認負荷だけが増える。次の該当評価では既存 attribution probe の contrast run の具体例としてこの atom を参照する。",
+      "decision_reason": "risk_control=1、合計13で採用条件に届かないため、新規 probe は追加しない。固定 player/build のまま評価装置側の knob を変える要点は、既存の agent-eval-attribution-split と evaluation-attribution-split が fixed/varying factor と same seed/different scaffold を、semantics-preserving-surface-variant が UI wording と success condition を、lmgamebench-ai-playtest-diagnostic-ablation が prompt wording・retry budget・seed をすでに確認している。shared-reads 本文は byte-identical anchor で strong claims が38/40から7/40、成功条件開示で false verdicts が18/59から0/58へ変化し、事前仮説の反証も含むため evidence=3 としたが、319件ある active probe 群へ同義の instrument-effect probe を足すと確認負荷だけが増える。次の該当評価では既存 attribution probe の contrast run の具体例としてこの atom を参照する。",
       "existing_probes": [
         "probe-20260605-agent-eval-attribution-split",
         "probe-20260614-evaluation-attribution-split",
