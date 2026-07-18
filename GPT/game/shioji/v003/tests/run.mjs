@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { BUILDINGS, FIXED, GOODS, UPGRADE_REQUIREMENTS, VERSION } from '../src/config.js';
+import { BUILDINGS, FIXED, GOODS, TUTORIAL, UPGRADE_REQUIREMENTS, VERSION } from '../src/config.js';
 import { keyOf, line8, roadPath } from '../src/pathfinding.js';
 import { World } from '../src/world.js';
 
@@ -144,6 +144,7 @@ function testWarehouseBuffersVisibleOverflow() {
 }
 
 function testTutorialContinuesIntoWarehouse() {
+  assert.deepEqual(TUTORIAL.slice(8).map(step => step.id), ['warehouse', 'warehouse-check', 'complete'], '倉庫導線の表示順が内部条件と一致する');
   const world = new World();
   world.beginCharter();
   world.setChapterStage(8);
