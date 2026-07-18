@@ -81,7 +81,149 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared_reads の mixed duplicate / stale triage / group action の3派生queueを現行candidate正本から再生成した。3ファイルとも既存内容と一致し、差分はなかった。"
+  - "MEMORY.md の索引atom 87件を per-file index と照合し、broken link 0件を確認した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending がともに0件であることを確認した。handled更新は不要だった。"
+
+memory_index_audit:
+  checked_index_atom_ids: 87
+  broken_links: 0
+  source_file_status: "UTF-8明示読みで本文を取得でき、記憶 / ゲーム設計 / 敵パターンを確認。評価軸という代表語は本文に現れないが、UTF-8破損やbroken linkではない。"
+  display_or_tooling_status: none
+
+atom_audit:
+  atoms_jsonl: 2690
+  per_file_md: 2690
+  index_jsonl: 2690
+  mirror_missing_or_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_duplicate_groups_before_fold: 3
+  recall_visible_duplicate_extra_rows_after_fold: 0
+  source_ts_duplicate_warning: false
+  contradiction_or_content_conflict: false
+  note: "raw重複は lifecycle/content fold で表示から除外され、三者ミラーにもcontent_conflictsはないため、Phase 4bを要する構造問題とは判定しない。"
+
+encoding_audit:
+  source_file_status: "MEMORY.mdはUTF-8として正常。sr-1776127289-4d9239b255 はraw slack_archive段階から『エ��ジェント』を含み、per-file atomへ同じU+FFFDが継承された単発のsource damage。gr-1777083728-44d444ab7a は対象atom内にU+FFFDがなく、health heuristicのsuspectだった。"
+  display_or_tooling_status: "none。PowerShell表示だけのmojibakeは検出していない。"
+  action: "単発source damageは意味を推測して手修復せず保持。ゲーム制作記憶の導線を塞がないためissue化しない。"
+
+raw_archive_audit:
+  inactive_over_30d_files: 93
+  inactive_over_30d_bytes: 62759242
+  by_area:
+    web_research: 85
+    headless_eval: 6
+    slack_archive: 1
+    sync_state: 1
+  archived: []
+  note: "多くは一次資料・評価traceで、raw保持原則と既存atomのprovenanceに関わる。Phase 4aで安全に移動できる明確な一時物は特定できず、機械的archiveは行わない。"
+
+candidate_lifecycle_audit:
+  files: 990
+  status_counts:
+    posted: 422
+    ready_to_post: 10
+    postponed: 411
+    failed: 125
+    needs_review: 22
+  missing_stale_after: 3
+  missing_stale_after_paths:
+    - memory/shared_reads_candidates/20260612_playtest_gamified_test_generator_post.md
+    - memory/shared_reads_candidates/20260612_resp_visual_glitch_detection_post.md
+    - memory/shared_reads_candidates/20260612_tempglitch_temporal_glitch_detection_post.md
+  missing_stale_after_note: "3件ともstatus: postedのterminal candidateで、再評価queue対象外。補完のための更新はしない。"
+  overdue_open_total: 239
+  unindexed_duplicate_title_groups: 23
+  mixed_duplicate_queue_rows: 84
+
+issues: []
+
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "索引欠損・atom mirror競合・検索を塞ぐ新しい構造問題はない。大量のstale/mixed duplicateは既存queueとbounded group handoffで処理できる運用backlogであり、今回さらに仕組みを増やす根拠にはしない。"
+
+stale_backlog:
+  overdue_open_total: 239
+  stale_triage_queue_rows: 50
+  actionable_group_count: 35
+  backlog_high_water: true
+  high_water_reason: "overdue_open_total 239 > queue rows 50 かつ actionable groups 35 >= 3。"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  candidate_batch_count: 0
+  candidate_batch_reason: "stale triage上位50件はすべてmixed duplicate。選択3 groupのrepresentative/open siblingsとの重複を避け、group budgetをcandidate laneから迂回しないため、単体candidate handoffは空にした。"
+
+group_action_handoff:
+  - group_key: "from world gen to quest line a dependency driven prompt pipeline for coherent rpg generation"
+    status_counts:
+      failed: 1
+      posted: 1
+      postponed: 4
+    priority_reason: "age_days=22; mixed duplicate group present; 依存関係付きprompt pipelineという着想とゲーム制作への接続は明確だが、候補本文では評価の中身、比較対象、結論の強さが不足している。 4000字概要を書くと一般論で膨らませる危険があるため、Phase 3投稿には回さず、原文またはraw詳細を補って再評価する。"
+    representative: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260526_world_gen_to_quest_line_rpg_pipeline.md
+      - memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260625_dependency_driven_rpg_generation.md
+      - memory/shared_reads_candidates/20260708_rpg_dependency_prompt_pipeline.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+      - memory/shared_reads_candidates/20260609_world_gen_to_quest_line_rpg_pipeline.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260527_dependency_driven_rpg_generation.md
+      stale_after: "2026-06-26"
+      reason: "age_days=22; mixed duplicate group present; 依存関係付きprompt pipelineという着想とゲーム制作への接続は明確だが、候補本文では評価の中身、比較対象、結論の強さが不足している。 4000字概要を書くと一般論で膨らませる危険があるため、Phase 3投稿には回さず、原文またはraw詳細を補って再評価する。"
+    recommended_action: reevaluate_representative
+  - group_key: "large language models as pokemon battle agents strategic play and content generation"
+    status_counts:
+      failed: 2
+      postponed: 1
+    priority_reason: "age_days=22; mixed duplicate group present; 抽録メモから評価指標と turn-based battle testbed の方向性は読めるが、arXiv ID が 2512 で現在日付から見て時系列確認が必要。 その確認なしに #shared-reads へ出すと出典信頼性が弱く、ゲーム制作への適用も現状は「LLM evaluator に使えそう」に留まる。"
+    representative: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md
+      - memory/shared_reads_candidates/20260518_pokemon_battle_llm_agents.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260527_pokemon_battle_agents_llm.md
+      stale_after: "2026-06-26"
+      reason: "age_days=22; mixed duplicate group present; 抽録メモから評価指標と turn-based battle testbed の方向性は読めるが、arXiv ID が 2512 で現在日付から見て時系列確認が必要。 その確認なしに #shared-reads へ出すと出典信頼性が弱く、ゲーム制作への適用も現状は「LLM evaluator に使えそう」に留まる。"
+    recommended_action: reevaluate_representative
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    status_counts:
+      failed: 3
+      needs_review: 1
+      posted: 2
+      postponed: 5
+    priority_reason: "age_days=20; mixed duplicate group present; persona-conditioned shared RL policy の中核と速度・規模の利点は見えるが、候補メモだけでは環境設定、報酬設計、persona traceability の評価手順がまだ薄い。ゲーム制作への適用は life sim / colony 系に寄るため、現行制作サイクルへ無理に一般化す..."
+    representative: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      stale_after: "2026-06-28"
+      reason: "age_days=20; mixed duplicate group present; persona-conditioned shared RL policy の中核と速度・規模の利点は見えるが、候補メモだけでは環境設定、報酬設計、persona traceability の評価手順がまだ薄い。ゲーム制作への適用は life sim / colony 系に寄るため、現行制作サイクルへ無理に一般化す..."
+    recommended_action: review_representative
+
+stale_review_batch: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
