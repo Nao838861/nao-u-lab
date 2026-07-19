@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/run.mjs && npm test --prefix ../engine",
+    "test": "node tests/run.mjs && node tests/acceptance.mjs && npm test --prefix ../engine",
     "test:unit": "node tests/run.mjs",
+    "test:acceptance": "node tests/acceptance.mjs",
     "test:browser": "node tests/browser_smoke.mjs"
   }
 }

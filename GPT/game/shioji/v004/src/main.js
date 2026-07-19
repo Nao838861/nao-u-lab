@@ -72,6 +72,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
 }
 
 function renderHud() {
+  $('#build-version').textContent = `Build ${VERSION}`;
   $('#funds-value').textContent = formatNumber(model.companyMoney);
   $('#day-value').textContent = `${model.day}日目`;
   $('#tick-value').textContent = `tick ${model.tick}`;

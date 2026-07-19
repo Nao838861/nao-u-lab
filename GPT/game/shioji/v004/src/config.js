@@ -1,4 +1,4 @@
-export const VERSION = 'v004.0.4-operations';
+export const VERSION = 'v004.0.5-release';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
