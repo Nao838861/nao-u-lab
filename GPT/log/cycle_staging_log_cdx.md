@@ -110,7 +110,47 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784425463-fc1bf0fbf1
+    source_ts: "1784425463.441119"
+    title: "ArchEval — 支援量・事前予測・trajectory を分離する computer-architecture agent benchmark"
+    reason: >-
+      最新の未レビュー score 11 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。
+      prepared harness 内での局所最適化と、feedback 前の設計判断・予測校正を分ける評価骨格が、
+      次の playable diff や Phase 2 判定に新しい行動差を作るか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    採用条件の合計14に届かない。本文は20 challenge・8 simulator・L1/L2/L3、80件の L3 run、
+    予測誤差・予測区間 hit・valid-but-worse と研究上の限界まで残しており evidence は強い。
+    ただし agent-eval-attribution-split、agentic-world-modeling-preaction-prediction-law、
+    paperclaw-prototype-hypothesis-contract が評価帰属、事前期待と実測差、result contract と verdict を既に覆う。
+    G1/G3 と trajectory schema を別 probe にすると既存三者の再束縛になり、319件の active probe と
+    小型 prototype の harness 保守負荷を増やすため反映しない。
+  existing_probes:
+    - probe-20260605-agent-eval-attribution-split
+    - probe-20260626-agentic-world-modeling-preaction-prediction-law
+    - probe-20260706-paperclaw-prototype-hypothesis-contract
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録。新規 probe・metric・directive は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

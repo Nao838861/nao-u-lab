@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T10:49:09+09:00",
+  "updated_at": "2026-07-19T12:59:12+09:00",
   "reviewed_source_ts": [
+    "1784425463.441119",
     "1784408323.132209",
     "1784400387.855359",
     "1778439731.144739",
@@ -434,6 +435,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T12:59:12+09:00",
+      "selected": {
+        "id": "sr-1784425463-fc1bf0fbf1",
+        "source_ts": "1784425463.441119",
+        "title": "ArchEval — 支援量・事前予測・trajectory を分離する computer-architecture agent benchmark",
+        "reason": "最新の未レビュー score 11 atom で、memory・harness・game-design・agent・operation・evaluation を含む8タグを持つ。prepared harness 内での局所最適化と、feedback 前の設計判断・予測校正を分ける評価骨格が、次の playable diff や Phase 2 判定に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "risk_control=1、合計13で採用条件に届かないため、新規 probe・metric は追加しない。shared-reads 本文は20 challenge・8 simulator・L1/L2/L3、80件の L3 run、予測誤差・予測区間 hit・valid-but-worse の内訳、single-seed と configuration 混在の限界まで記録しているため evidence=3 とした。一方、agent-eval-attribution-split は model・instruction・tool・harness・simulator・評価 script の寄与分離を、agentic-world-modeling-preaction-prediction-law は観測可能な事前期待と expected/actual の更新を、paperclaw-prototype-hypothesis-contract は事前の result contract・test path・測定後 verdict を既に要求している。ArchEval の G1/G3 二条件と trajectory schema を新しい checklist にすると、この三者を再束縛し、319件ある active probe 群の確認負荷と小型 prototype の harness 保守を増やす。次の該当作業では本 atom を既存 probes の具体例として参照する。",
+      "existing_probes": [
+        "probe-20260605-agent-eval-attribution-split",
+        "probe-20260626-agentic-world-modeling-preaction-prediction-law",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の評価帰属・事前予測・prototype 仮説契約 probes との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T03:52:38+09:00",
       "selected": {
