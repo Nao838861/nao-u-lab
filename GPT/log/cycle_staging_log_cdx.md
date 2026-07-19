@@ -128,7 +128,79 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みと validate_memory_index.py で監査。index 参照の欠落は 0 件。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸の完全一致は 0 件だったが、評価を含む日本語本文は正常に読めたため source 破損なしと判定。"
+  - "memory/atoms.jsonl を memory_health.py と build_atom_duplicate_groups.py --check で監査。atom id 重複・mirror content conflict は 0 件、normalized content 重複 40 group / 80 row は既存 overlay 45 group で fold 済み。"
+  - "memory/raw/ の 2026-06-20 より前に更新された 95 file を分類。web_research 87、headless_eval 6、既存 slack_archive 1、稼働中 sync_state 1 で、原文・評価 evidence または既存 archive/state のため移動対象は 0 件。"
+  - "shared-reads candidate frontmatter を監査。posted 436、ready_to_post 10、postponed 353、failed 204、needs_review 18、README 1（status 対象外）。mixed duplicate / stale triage / group action queue を再生成した。"
+  - "期限超過 open candidate 202 件のうち non-group 上位 5 件を Phase 2 再評価へ渡し、candidate 本体は変更しなかった。"
+  - "cycle 2026-07-20 05:58 の group handoff 1 件を永続 inbox へ enqueue（gha-b05b9545bc017fc7）。directive / broadcast inbox は pending 0 件のため status 更新なし。"
+issues:
+  - id: ISS-4A-20260720-01
+    description: "shared-reads title canonical index の terminal-only 契約と builder の選別条件が一致していない。現 index 96 row 中 66 row が terminal/open 混在で、逆に terminal-only duplicate 4 group が未登録のまま check は stale を返す。"
+    severity: medium
+    evidence: "tools/build_shared_reads_title_canonical_index.py の `if terminal_only and not posted ...` 条件、memory/shared_reads_title_canonical_index.jsonl（mixed 66/96 row）、audit_shared_reads_title_duplicates.py --unindexed-only（terminal 4 group / mixed 3 group）、builder --check expected_rows=101"
+    source_file_status: "関連 .py / .jsonl / candidate .md は UTF-8 明示読みで正常。source encoding 破損なし。"
+    display_or_tooling_status: "--terminal-only が posted sibling を含む mixed group も通すため、名称と現行 Phase 4a 契約が不一致。mojibake ではない。"
+    why_blocks_game_memory: "terminal と再評価対象の境界が title index 内で曖昧になり、同じゲーム制作知見の open candidate が Phase 2 へ届かない、または閉じた group が再流入する可能性がある。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260720-01
+stale_backlog:
+  overdue_open_total: 202
+  stale_triage_queue_rows: 50
+  actionable_group_count: 2
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は成立したが、actionable group は 2 件で 3 件以上ではない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 4
+  handoff_inbox_ids:
+    - gha-d233eb155f8a6f5a
+    - gha-7353a4d4a9d38fa9
+    - gha-d6f01edf6ec0491f
+    - gha-b05b9545bc017fc7
+group_action_handoff:
+  - group_key: "swe marathon can agents autonomously complete ultra long horizon software work"
+    inbox_id: gha-b05b9545bc017fc7
+    representative: memory/shared_reads_candidates/20260617_swe_marathon_long_horizon_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260617_swe_marathon_long_horizon_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260610_swe_marathon_long_horizon_agent_work.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260617_swe_marathon_long_horizon_agents.md
+      stale_after: "2026-07-17"
+      reason: "20 task と多層検証の概要まではあるが、評価結果・結論・失敗傾向が不足しており本文再評価が必要。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "会話型 RPG に直結するが、学習効果・参加者評価・失敗例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "co-creative game design の比較設計は有用だが、参加者評価結果と品質差が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "ゲーム間 level 構造移植に使えるが、評価指標・dataset・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "探索・文脈保持・目標推定の評価に有用だが、評価手法・結果・失敗分析が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "headless playtest への示唆はあるが、評価条件・失敗分類・model 比較が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
