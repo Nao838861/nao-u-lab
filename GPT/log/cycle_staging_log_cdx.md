@@ -115,7 +115,34 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784449179-f42bcd8f0e
+    source_ts: "1784449179.598279"
+    title: "Super Mario Bros. World 1-1 — 同一部品の順序効果を controller 感度込みで測る"
+    reason: "未レビュー条件を満たす最新の score 10 atom。直近の tutorial／難度導入評価を、一つの bot の最終 clear rate ではなく、同一 segment の順序差・学習速度・破綻 seed・controller 間の順位反転へ分解できるため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: "同じ6区間を使う canonical／reverse／random permutation と、MC／DQN の結果差が具体的根拠になる。一方、簡略化環境・reward shaping・少数 seed・RL agent に限定され、人間の tutorial 体験は未検証。既存 probes は順序、固定条件、policy差、proxy境界を個別には扱うが、内容を固定した順序 ablation と controller 順位反転を一つの次回チェックにはしていない。"
+  change:
+    summary: "広い probe-20260518-element-vs-sequence-design を、3〜4 segment の canonical／reverse／少数 permutation、学習曲線・catastrophic failure、2種以上の controller 感度を確認する1回限りの probe-20260720-tutorial-order-controller-sensitivity へ置換。active probe 数は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

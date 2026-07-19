@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T23:55:22+09:00",
+  "updated_at": "2026-07-20T02:08:00+09:00",
   "reviewed_source_ts": [
+    "1784449179.598279",
     "1784416512.425609",
     "1784465316.969869",
     "1784449178.584249",
@@ -440,6 +441,47 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-20T02:08:00+09:00",
+      "selected": {
+        "id": "sr-1784449179-f42bcd8f0e",
+        "source_ts": "1784449179.598279",
+        "title": "Super Mario Bros. World 1-1 — 同一部品の順序効果を controller 感度込みで測る",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・agent・evaluation を含む7タグを持つ。直近のゲーム制作では tutorial や難度導入を一つの bot の最終 clear rate で判定しやすいため、同一 segment の順序だけを変え、学習速度・破綻 seed・controller 間の順位反転を分けて見る小さな次回行動へ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で採用条件を満たす。shared-reads 本文は同じ6区間を使う canonical・reverse・10 permutation、MC と DQN、最終 win rate・50%到達 episode・AUC・catastrophic failure を比較し、MC では順序差が大きい一方 DQN では ANOVA p=0.82 だったという具体的根拠を持つ。ただし簡略化した World 1-1、強い reward shaping、少数 seed、RL agent の結果であり、人間の理解・楽しさ・驚きを直接測っていないため evidence=2 とした。既存の element-vs-sequence-design は要素と順序を分けるが比較条件と controller 感度を指定せず、relative-difficulty-regression-calibration、balance-trend-skill-chance、procedural-persona-divergence、lmgamebench-ai-playtest-diagnostic-ablation は固定条件・policy差・proxy境界を個別に扱う。これらを一般化せず、古く広い element-vs-sequence probe を次の該当1件だけの順序 ablation に置換するため non_redundancy=2、risk_control=3 とした。",
+      "existing_probes": [
+        "probe-20260518-element-vs-sequence-design",
+        "probe-20260616-relative-difficulty-regression-calibration",
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260710-procedural-persona-divergence",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"
+      ],
+      "change": {
+        "type": "probe_replacement",
+        "summary": "広い element-vs-sequence probe を、同一 segment 群の順序だけを変え、学習曲線・catastrophic failure・複数 controller の順位反転を確認する1回限りの probe に置換した。active probe 数は増やしていない。",
+        "replaces_probe": "probe-20260518-element-vs-sequence-design",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T23:55:22+09:00",
       "selected": {
@@ -12337,16 +12379,16 @@
       "expires_after": "Review after the next shared-reads draft, game prototype/tutorial, or memory/CLI UX change where explanation and experience design compete."
     },
     {
-      "id": "probe-20260518-element-vs-sequence-design",
-      "created_at": "2026-05-18T03:43:56+09:00",
-      "source_ts": "1779012072.223609",
-      "scope": "next game mechanic implementation/repair, memory cleanup, or tooling/check addition where creating an element may be confused with placing it in an operational sequence",
+      "id": "probe-20260720-tutorial-order-controller-sensitivity",
+      "created_at": "2026-07-20T02:08:00+09:00",
+      "source_ts": "1784449179.598279",
+      "scope": "next tutorial, onboarding, level-segment ordering, or difficulty-introduction evaluation where Codex may call one order better from one controller or final clear rate alone",
       "questions": [
-        "要素そのものの設計と、登場順・発火条件・運用列の設計を1行で分けて書いたか。",
-        "ゲーム mechanic なら、最初の1-3回の遭遇/使用だけで、その要素の価値や危険が説明文なしに立つかを確認したか。",
-        "memory/tooling/check なら、何を作ったかだけでなく、いつ走らせ、いつ見直し、いつ退役候補にするかを最低1つ決めたか。"
+        "次の tutorial、onboarding、level segment、難度導入の順序を評価する前に、3〜4個の segment 内容・総量・seed 群を固定し、canonical・reverse・1〜2個の構造的 permutation で順序だけを変えたか。",
+        "最終 clear rate だけでなく、初回安定到達までの episode または attempt、学習曲線 AUC、各 segment 入口の失敗率、回復しない catastrophic seed を別列で残し、結論が reward shaping に依存する場合は reward 成分または有無を明記したか。",
+        "scripted novice と search・trajectory・replay 系 bot など credit assignment の違う controller を2種以上比べ、順序の順位が反転または消失した場合は controller_sensitive_ordering と記録し、人間確認なしに tutorial 品質・理解・楽しさへ一般化しなかったか。"
       ],
-      "expires_after": "次に game mechanic の実装/修正、memory cleanup、または tooling/check 追加を1回行ったら見直す。"
+      "expires_after": "次の該当1件を終えたら見直す。同一内容の順序 ablation または controller 比較が判断を変えない、既存の relative-difficulty／balance-trend／persona／LMGame-Bench probes だけで同じ判定が残る、または実験負荷が便益を上回る場合は退役する。"
     },
     {
       "id": "probe-20260518-runtime-verifiable-production-slices",
