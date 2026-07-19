@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.04433"
 collected_at: "2026-07-19T10:31:55.6071157+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [player-modeling, personalization, agent, evaluation, user-simulation]
+evaluated_at: "2026-07-19T10:36:51+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T10:36:51+09:00"
+last_decision: fail
+evidence: "gate_decision:fail; evaluated_at:2026-07-19T10:36:51+09:00"
+next_action: keep_for_reference
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >
+  三 paradigm と autonomy 軸は整理に使えるが、候補内の中核は研究課題の列挙で、手法比較を裏づける実験設定・定量評価・失敗分析がない。
+  adaptive difficulty や player model への接続も推薦領域からの類推に留まり、現状ではゲーム制作向けに約4000字を残す固有情報密度に届かない。
 ---
 
 ## raw_excerpt

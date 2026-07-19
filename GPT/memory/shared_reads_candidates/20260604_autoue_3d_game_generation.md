@@ -7,12 +7,12 @@ genre_tags: [game-dev, 3d-games, multi-agent, unreal-engine, automated-testing]
 evaluated_at: 2026-06-04T00:33:54+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-04T00:33:54+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T00:33:54+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T10:36:37+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-f8f32c50cae6cca1; terminal:memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md: status:posted; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529; reason:同一タイトルかつ同一 AutoUE work で、URL 差は OpenReview と arXiv の公開先差に留まる。投稿済み sibling が手法・適用・限界を 4220 字で既に記録しており、別 candidate として維持する情報差がない。"
+next_action: none
 stale_after: "2026-07-04"
 supersedes: []
 gate_reason: "engine constraints、documentation grounding、runtime test commands は有用だが、現時点の候補本文は公開要旨レベルで、実験設定や失敗例、比較対象が薄い。Unreal 固有の重い workflow を Nao_u_BOT の現在のブラウザ/2D制作へ直接落とすには追加調査が必要。"

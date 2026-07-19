@@ -11,7 +11,39 @@
 - duplicate preflight: 上記 2 件はいずれも posted-source URL/work・title canonical 一致なしで `continue`。`continue` は標準出力のみで、`log/shared_reads_candidate_preflight.jsonl` への記録対象は `skip` / `review` のみ。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260719_archeval_computer_architecture_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260719_agentic_recommender_systems_roadmap.md
+    reason: "taxonomy と研究課題の列挙が中心で実証評価がなく、ゲーム制作への適用も推薦領域からの類推に留まる"
+postpone: []
+stale_reviewed: []
+group_actions:
+  - group_key: "autoue automated generation of 3d games in unreal engine via multi agent systems"
+    representative: memory/shared_reads_candidates/20260604_autoue_3d_game_generation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260604_autoue_3d_game_generation.md
+    reason: "同一タイトル・同一 work で、OpenReview と arXiv の URL 差以外に別 candidate として残す情報差がなく、投稿済み sibling が手法・適用・限界を 4220 字で既に記録している"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md
+        evidence: "status: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529"
+    representative_decision: postpone
+    analysis_time_minutes: 4
+group_handoff_audit:
+  pending_before: 1
+  read_ids: [gha-f8f32c50cae6cca1]
+  resolved_ids: [gha-f8f32c50cae6cca1]
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 1
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.03601"
 collected_at: "2026-07-19T10:31:55.6071157+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-evaluation, harness, simulation, game-testing, optimization]
+evaluated_at: "2026-07-19T10:36:51+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T10:36:51+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T10:36:51+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >
+  設計 agent の能力を、20 challenge・8 simulator・三段階の feedback 条件と trajectory 指標で分解しており、問題設定から実験結果まで具体的に説明できる。
+  headless playtest や自動バランス調整で「simulator がある時だけ成功する agent」を見分ける評価へ直接適用でき、CoopEval 水準の概要と独自分析を組み立てられる。
+suggested_post_outline:
+  overview_angle: "AI agent の最終 score ではなく、設計過程・simulator feedback 依存・提出 artifact の完全性まで測る benchmark として説明する"
+  analysis_axis: "L1/L2/L3 の支援条件、20 challenge と 8 simulator、baseline 正規化性能と trajectory 指標、feedback を外した時の崩れ方を対応づける"
+  application_target: "ゲームの headless playtest、自動バランス調整、生成 prototype 評価で、実行 feedback あり／なしの性能差と制約違反・artifact 欠損を記録する harness"
+  pros_cons: "メリットは成功値と設計能力を分離できる点。デメリットは computer architecture 用 simulator の構造をゲームへ移植する設計コストと、challenge 固有 baseline への依存。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
