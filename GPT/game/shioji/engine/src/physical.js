@@ -85,6 +85,12 @@ export function createPhysicalState({
     nextBuildingId: 1,
     roadRevision: 0,
     connectionCache: { revision: -1, components: {} },
+    haulJobs: [],
+    nextHaulJobId: 1,
+    nextCarrierId: 1,
+    tick: 0,
+    groundPiles: [],
+    nextGroundPileId: 1,
   };
 }
 
@@ -191,24 +197,36 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
   return 1;
 }
 
-export function pathLen(physical, start, goal, mode = "walk") {
+export function findTravelPath(physical, start, goal, mode = "walk") {
   const startCost = tileTravelCost(physical, start.x, start.y, mode);
   const goalCost = tileTravelCost(physical, goal.x, goal.y, mode);
-  if (!Number.isFinite(startCost) || !Number.isFinite(goalCost)) return Infinity;
-  if (start.x === goal.x && start.y === goal.y) return 0;
+  if (!Number.isFinite(startCost) || !Number.isFinite(goalCost)) return null;
+  if (start.x === goal.x && start.y === goal.y) {
+    return { path: [{ x: start.x, y: start.y }], cost: 0 };
+  }
 
   const distances = new Float64Array(physical.width * physical.height);
   distances.fill(Infinity);
   const indexOf = (x, y) => y * physical.width + x;
   distances[indexOf(start.x, start.y)] = 0;
   const open = [{ x: start.x, y: start.y, cost: 0 }];
+  const came = {};
 
   while (open.length > 0) {
     open.sort((a, b) => a.cost - b.cost);
     const current = open.shift();
     const currentIndex = indexOf(current.x, current.y);
     if (current.cost > distances[currentIndex] + 1e-9) continue;
-    if (current.x === goal.x && current.y === goal.y) return current.cost;
+    if (current.x === goal.x && current.y === goal.y) {
+      const path = [];
+      let cursor = keyOf(goal.x, goal.y);
+      while (cursor) {
+        const [x, y] = parseKey(cursor);
+        path.push({ x, y });
+        cursor = came[cursor];
+      }
+      return { path: path.reverse(), cost: current.cost };
+    }
 
     for (const [dirX, dirY] of DIRS) {
       const x = current.x + dirX;
@@ -220,10 +238,15 @@ export function pathLen(physical, start, goal, mode = "walk") {
       const nextIndex = indexOf(x, y);
       if (nextCost >= distances[nextIndex] - 1e-9) continue;
       distances[nextIndex] = nextCost;
+      came[keyOf(x, y)] = keyOf(current.x, current.y);
       open.push({ x, y, cost: nextCost });
     }
   }
-  return Infinity;
+  return null;
+}
+
+export function pathLen(physical, start, goal, mode = "walk") {
+  return findTravelPath(physical, start, goal, mode)?.cost ?? Infinity;
 }
 
 export function connectedRoads(roadsOrPhysical, origin) {
@@ -449,6 +472,251 @@ export function withdrawInventory(building, section, goods, amount) {
 
 export function moveInventoryBetweenSections() {
   throw new Error("棚を跨ぐ移動には運搬ジョブが必要です");
+}
+
+function buildingById(physical, buildingId) {
+  return physical.buildings.find((building) => building.id === buildingId) ?? null;
+}
+
+function normalizeHaulEndpoint(endpoint) {
+  const buildingId = endpoint?.buildingId ?? endpoint?.building?.id ?? endpoint?.building;
+  if (typeof buildingId !== "string" || typeof endpoint?.section !== "string") {
+    throw new TypeError("haul endpoint must identify a building and section");
+  }
+  return { buildingId, section: endpoint.section };
+}
+
+function requirePositiveQuantity(qty, label = "haul quantity") {
+  if (!Number.isFinite(qty) || qty <= 0) {
+    throw new TypeError(`${label} must be a finite positive number`);
+  }
+}
+
+export function createWalkCarrier(physical, { people = 1, id = null } = {}) {
+  if (!Number.isSafeInteger(people) || people <= 0) {
+    throw new TypeError("walk carrier people must be a positive safe integer");
+  }
+  const carrier = {
+    id: id ?? `walker${physical.nextCarrierId}`,
+    mode: "walk",
+    people,
+    capacity: people * 4,
+  };
+  physical.nextCarrierId += 1;
+  return carrier;
+}
+
+export function createCartCarrier(physical, { id = null } = {}) {
+  const carrier = {
+    id: id ?? `cart${physical.nextCarrierId}`,
+    mode: "cart",
+    capacity: 16,
+  };
+  physical.nextCarrierId += 1;
+  return carrier;
+}
+
+export function incomingHaulAmount(physical, buildingId, section, goods) {
+  return physical.haulJobs
+    .filter((job) => job.status === "in_transit")
+    .filter((job) => job.to.buildingId === buildingId && job.to.section === section && job.goods === goods)
+    .reduce((total, job) => total + job.qty, 0);
+}
+
+export function createHaulJob(physical, { from, to, goods, qty, carrier }) {
+  const sourceRef = normalizeHaulEndpoint(from);
+  const targetRef = normalizeHaulEndpoint(to);
+  const source = buildingById(physical, sourceRef.buildingId);
+  const target = buildingById(physical, targetRef.buildingId);
+  if (!source || !target) throw new Error("運搬元または運搬先の建物が存在しません");
+  requireSection(source, sourceRef.section);
+  requireSection(target, targetRef.section);
+  requirePositiveQuantity(qty);
+  if (typeof goods !== "string" || goods.length === 0) throw new TypeError("goods must be a non-empty string");
+  if (!carrier || typeof carrier !== "object") throw new TypeError("haul job requires a carrier");
+  requirePositiveQuantity(carrier.capacity, "carrier capacity");
+  if (qty > carrier.capacity + 1e-9) throw new Error("キャリア容量超過");
+  if (sectionAmount(source, sourceRef.section, goods) + 1e-9 < qty) throw new Error("運搬元の在庫不足");
+
+  const targetFree = sectionCapacity(target, targetRef.section, goods)
+    - sectionAmount(target, targetRef.section, goods)
+    - incomingHaulAmount(physical, target.id, targetRef.section, goods);
+  if (targetFree + 1e-9 < qty) throw new Error("運搬先の空き容量不足");
+
+  const sourcePosition = source.entrance ?? { x: source.x + source.w / 2, y: source.y + source.h / 2 };
+  const targetPosition = target.entrance ?? { x: target.x + target.w / 2, y: target.y + target.h / 2 };
+  const jobCarrier = structuredClone(carrier);
+  jobCarrier.active = true;
+  jobCarrier.position = structuredClone(jobCarrier.position ?? sourcePosition);
+  jobCarrier.cargo = { goods, qty };
+  if (jobCarrier.mode === "walk" || jobCarrier.mode === "cart") {
+    if (!source.entrance || !target.entrance) throw new Error("移動キャリアには両建物の入口が必要です");
+    const route = findTravelPath(physical, sourcePosition, targetPosition, jobCarrier.mode);
+    if (!route) throw new Error(`${jobCarrier.mode}で到達できる経路がありません`);
+    jobCarrier.path = route.path;
+    jobCarrier.routeCost = route.cost;
+    jobCarrier.pathIndex = 0;
+    jobCarrier.segmentRemaining = null;
+    jobCarrier.position = structuredClone(route.path[0]);
+  }
+
+  withdrawInventory(source, sourceRef.section, goods, qty);
+  const job = {
+    id: `h${physical.nextHaulJobId}`,
+    from: sourceRef,
+    to: targetRef,
+    goods,
+    qty,
+    carrier: jobCarrier,
+    status: "in_transit",
+  };
+  physical.nextHaulJobId += 1;
+  physical.haulJobs.push(job);
+  return job;
+}
+
+export function completeHaulJob(physical, jobId) {
+  const job = physical.haulJobs.find((candidate) => candidate.id === jobId);
+  if (!job || job.status !== "in_transit") throw new Error(`完了できない運搬ジョブ: ${jobId}`);
+  const target = buildingById(physical, job.to.buildingId);
+  if (!target) throw new Error("運搬先の建物が存在しません");
+  depositInventory(target, job.to.section, job.goods, job.qty);
+  job.carrier.cargo = null;
+  job.carrier.active = false;
+  job.status = "completed";
+  return job;
+}
+
+function carrierSegmentCost(physical, from, to, mode) {
+  const diagonal = from.x !== to.x && from.y !== to.y;
+  return tileTravelCost(physical, to.x, to.y, mode) * (diagonal ? 1.4 : 1);
+}
+
+function moveCarrierOneTick(physical, job) {
+  const carrier = job.carrier;
+  if (!Array.isArray(carrier.path)) return;
+  let budget = 1;
+  while (budget > 1e-9 && carrier.pathIndex < carrier.path.length - 1) {
+    const from = carrier.path[carrier.pathIndex];
+    const to = carrier.path[carrier.pathIndex + 1];
+    const fullCost = carrierSegmentCost(physical, from, to, carrier.mode);
+    const remaining = carrier.segmentRemaining ?? fullCost;
+    if (budget + 1e-9 >= remaining) {
+      budget -= remaining;
+      carrier.pathIndex += 1;
+      carrier.segmentRemaining = null;
+      carrier.position = { x: to.x, y: to.y };
+      continue;
+    }
+
+    const alreadyTravelled = fullCost - remaining;
+    const progress = (alreadyTravelled + budget) / fullCost;
+    carrier.position = {
+      x: from.x + (to.x - from.x) * progress,
+      y: from.y + (to.y - from.y) * progress,
+    };
+    carrier.segmentRemaining = remaining - budget;
+    budget = 0;
+  }
+  if (carrier.pathIndex >= carrier.path.length - 1) completeHaulJob(physical, job.id);
+}
+
+export function assertCarrierInvariants(physical) {
+  for (const job of physical.haulJobs) {
+    if (job.status !== "in_transit") continue;
+    const carrier = job.carrier;
+    if (!carrier.cargo || carrier.cargo.goods !== job.goods || carrier.cargo.qty !== job.qty) {
+      throw new Error(`輸送中cargo不一致 ${job.id}`);
+    }
+    if (!Number.isFinite(carrier.position?.x) || !Number.isFinite(carrier.position?.y)) {
+      throw new Error(`キャリア位置不正 ${job.id}`);
+    }
+    if (carrier.mode === "cart") {
+      if (!carrier.path?.every(({ x, y }) => hasRoad(physical, x, y))) {
+        throw new Error(`道路外荷車 ${job.id}`);
+      }
+    }
+  }
+  return true;
+}
+
+export function stepHaulCarriers(physical, ticks = 1) {
+  if (!Number.isSafeInteger(ticks) || ticks < 0) {
+    throw new TypeError("carrier ticks must be a non-negative safe integer");
+  }
+  for (let tick = 0; tick < ticks; tick += 1) {
+    physical.tick += 1;
+    assertCarrierInvariants(physical);
+    for (const job of physical.haulJobs) {
+      if (job.status !== "in_transit") continue;
+      if (job.carrier.mode !== "walk" && job.carrier.mode !== "cart") continue;
+      moveCarrierOneTick(physical, job);
+    }
+    assertCarrierInvariants(physical);
+  }
+  return physical.tick;
+}
+
+export function nearestBuilding(physical, position) {
+  let nearest = null;
+  let nearestDistance = Infinity;
+  for (const building of physical.buildings) {
+    const anchor = building.entrance ?? {
+      x: building.x + building.w / 2,
+      y: building.y + building.h / 2,
+    };
+    const distance = Math.hypot(anchor.x - position.x, anchor.y - position.y);
+    if (distance < nearestDistance) {
+      nearest = building;
+      nearestDistance = distance;
+    }
+  }
+  return nearest;
+}
+
+export function loseHaulCarrier(physical, jobId, position = null) {
+  const job = physical.haulJobs.find((candidate) => candidate.id === jobId);
+  if (!job || job.status !== "in_transit") throw new Error(`消失処理できない運搬ジョブ: ${jobId}`);
+  const dropPosition = structuredClone(position ?? job.carrier.position);
+  const owner = nearestBuilding(physical, dropPosition);
+  if (!owner) throw new Error("外置きの所有建物が見つかりません");
+  const pile = {
+    id: `p${physical.nextGroundPileId}`,
+    ownerBuildingId: owner.id,
+    x: dropPosition.x,
+    y: dropPosition.y,
+    goods: job.goods,
+    qty: job.qty,
+  };
+  physical.nextGroundPileId += 1;
+  physical.groundPiles.push(pile);
+  job.carrier.position = dropPosition;
+  job.carrier.cargo = null;
+  job.carrier.active = false;
+  job.status = "carrier_lost";
+  job.groundPileId = pile.id;
+  return pile;
+}
+
+export function materialSnapshot(physical) {
+  const inventory = {};
+  const cargo = {};
+  for (const building of physical.buildings) {
+    for (const section of INVENTORY_SECTIONS) {
+      for (const [goods, qty] of Object.entries(building.inventory[section])) {
+        inventory[goods] = (inventory[goods] ?? 0) + qty;
+      }
+    }
+  }
+  for (const pile of physical.groundPiles) {
+    inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
+  }
+  for (const job of physical.haulJobs) {
+    if (!job.carrier.cargo) continue;
+    const { goods, qty } = job.carrier.cargo;
+    cargo[goods] = (cargo[goods] ?? 0) + qty;
+  }
+  return { inventory, cargo };
 }
 
 export function assertOccupancyInvariant(physical) {

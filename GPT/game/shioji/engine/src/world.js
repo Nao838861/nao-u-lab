@@ -1,5 +1,5 @@
 import { assertMoneyConservation, createEconomicState } from "./econ.js";
-import { createPhysicalState } from "./physical.js";
+import { createPhysicalState, stepHaulCarriers } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
 
 export function createWorld({ seed = 1, initialCompanyMoney = 0 } = {}) {
@@ -20,6 +20,7 @@ export function createWorld({ seed = 1, initialCompanyMoney = 0 } = {}) {
       return result.value;
     },
     step() {
+      stepHaulCarriers(state.physical, 30);
       state.day += 1;
       assertMoneyConservation(state.economy);
       return state;

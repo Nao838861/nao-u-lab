@@ -12,15 +12,22 @@ import {
   V003_FIXED,
   addBuilding,
   addRoadLine,
+  assertCarrierInvariants,
   assertMaterialBalance,
   assertOccupancyInvariant,
+  completeHaulJob,
+  createCartCarrier,
+  createHaulJob,
   createMaterialFlowLedger,
   createPhysicalState,
   createV003PhysicalState,
+  createWalkCarrier,
   depositInventory,
   hasRoad,
   isConnected,
   keyOf,
+  loseHaulCarrier,
+  materialSnapshot,
   moveInventoryBetweenSections,
   pathLen,
   recordMaterialFlow,
@@ -28,6 +35,7 @@ import {
   roadPath,
   sectionAmount,
   sectionCapacity,
+  stepHaulCarriers,
   withdrawInventory,
 } from "../src/physical.js";
 import { createWorld } from "../src/world.js";
@@ -263,6 +271,182 @@ test("段8: 道路の追加・撤去直後にisConnectedの成分判定が変わ
   assert.equal(removeRoadTile(physical, 4, 1), true);
   assert.equal(isConnected(physical, homeA, homeC), false);
   assert.equal(physical.connectionCache.revision, physical.roadRevision);
+});
+
+test("段9: 出発時に棚から引き輸送中cargoを経て到着時に確定する", () => {
+  const physical = createV003PhysicalState();
+  addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  const logger = addBuilding(physical, "logger", 14, 6).building;
+  const woodshop = addBuilding(physical, "woodshop", 14, 9).building;
+  depositInventory(logger, "output", "log", 10);
+  const before = materialSnapshot(physical);
+
+  const job = createHaulJob(physical, {
+    from: { building: logger, section: "output" },
+    to: { building: woodshop, section: "input" },
+    goods: "log",
+    qty: 6,
+    carrier: { id: "manual-1", mode: "manual", capacity: 8 },
+  });
+  assert.deepEqual(job.from, { buildingId: logger.id, section: "output" });
+  assert.deepEqual(job.to, { buildingId: woodshop.id, section: "input" });
+  assert.equal(sectionAmount(logger, "output", "log"), 4);
+  assert.equal(sectionAmount(woodshop, "input", "log"), 0);
+  assert.deepEqual(job.carrier.cargo, { goods: "log", qty: 6 });
+  assertMaterialBalance({ before, after: materialSnapshot(physical), flows: {} });
+
+  completeHaulJob(physical, job.id);
+  assert.equal(sectionAmount(woodshop, "input", "log"), 6);
+  assert.equal(job.carrier.cargo, null);
+  assertMaterialBalance({ before, after: materialSnapshot(physical), flows: {} });
+});
+
+test("段9: キャリア消失時は最近傍建物所有の外置きへ荷を残す", () => {
+  const physical = createV003PhysicalState();
+  addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  const logger = addBuilding(physical, "logger", 14, 6).building;
+  const woodshop = addBuilding(physical, "woodshop", 14, 9).building;
+  depositInventory(logger, "output", "log", 4);
+  const before = materialSnapshot(physical);
+  const job = createHaulJob(physical, {
+    from: { building: logger, section: "output" },
+    to: { building: woodshop, section: "input" },
+    goods: "log",
+    qty: 4,
+    carrier: { id: "manual-2", mode: "manual", capacity: 8 },
+  });
+
+  const pile = loseHaulCarrier(physical, job.id, { x: 15, y: 7 });
+  assert.equal(pile.ownerBuildingId, logger.id);
+  assert.equal(pile.qty, 4);
+  assert.equal(job.status, "carrier_lost");
+  assert.equal(job.carrier.cargo, null);
+  assertMaterialBalance({ before, after: materialSnapshot(physical), flows: {} });
+});
+
+function makeCarrierTestPhysical({ withRoad = false } = {}) {
+  const terrain = Array.from({ length: 3 }, () =>
+    Array.from({ length: 7 }, () => ({ kind: "grass", variant: 0 })));
+  const physical = createPhysicalState({ width: 7, height: 3, terrain });
+  const definitions = {
+    depot: {
+      category: "logistics", w: 1, h: 1,
+      caps: { input: { log: 64 }, output: { log: 64 } },
+    },
+  };
+  const source = addBuilding(physical, "depot", 0, 0, {
+    definitions, entrance: { x: 0, y: 1 }, requireRoad: false,
+  }).building;
+  const target = addBuilding(physical, "depot", 6, 0, {
+    definitions, entrance: { x: 6, y: 1 }, requireRoad: false,
+  }).building;
+  if (withRoad) addRoadLine(physical, source.entrance, target.entrance);
+  return { physical, source, target };
+}
+
+test("段10: 徒歩は野歩きでき道路上では経路コストどおり速い", () => {
+  const plain = makeCarrierTestPhysical();
+  depositInventory(plain.source, "output", "log", 8);
+  const plainBefore = materialSnapshot(plain.physical);
+  const plainJob = createHaulJob(plain.physical, {
+    from: { building: plain.source, section: "output" },
+    to: { building: plain.target, section: "input" },
+    goods: "log",
+    qty: 8,
+    carrier: createWalkCarrier(plain.physical, { people: 2 }),
+  });
+  assert.equal(plainJob.carrier.capacity, 8);
+  for (let tick = 0; tick < 5; tick += 1) {
+    stepHaulCarriers(plain.physical);
+    assertMaterialBalance({ before: plainBefore, after: materialSnapshot(plain.physical), flows: {} });
+  }
+  assert.equal(plainJob.status, "in_transit");
+  stepHaulCarriers(plain.physical);
+  assert.equal(plainJob.status, "completed");
+
+  const road = makeCarrierTestPhysical({ withRoad: true });
+  depositInventory(road.source, "output", "log", 8);
+  const roadJob = createHaulJob(road.physical, {
+    from: { building: road.source, section: "output" },
+    to: { building: road.target, section: "input" },
+    goods: "log",
+    qty: 8,
+    carrier: createWalkCarrier(road.physical, { people: 2 }),
+  });
+  stepHaulCarriers(road.physical, 3);
+  assert.equal(roadJob.status, "in_transit");
+  stepHaulCarriers(road.physical);
+  assert.equal(roadJob.status, "completed");
+  assert.ok(road.physical.tick < plain.physical.tick);
+});
+
+test("段10: 荷車は容量16・道路限定で輸送中込み量保存を守る", () => {
+  const { physical, source, target } = makeCarrierTestPhysical({ withRoad: true });
+  depositInventory(source, "output", "log", 16);
+  const before = materialSnapshot(physical);
+  const job = createHaulJob(physical, {
+    from: { building: source, section: "output" },
+    to: { building: target, section: "input" },
+    goods: "log",
+    qty: 16,
+    carrier: createCartCarrier(physical),
+  });
+  assert.equal(job.carrier.capacity, 16);
+  assert.equal(job.carrier.path.every(({ x, y }) => hasRoad(physical, x, y)), true);
+
+  while (job.status === "in_transit") {
+    assert.equal(assertCarrierInvariants(physical), true);
+    assertMaterialBalance({ before, after: materialSnapshot(physical), flows: {} });
+    stepHaulCarriers(physical);
+  }
+  assert.equal(job.status, "completed");
+  assert.equal(sectionAmount(target, "input", "log"), 16);
+  assertMaterialBalance({ before, after: materialSnapshot(physical), flows: {} });
+
+  const overCapacity = makeCarrierTestPhysical({ withRoad: true });
+  depositInventory(overCapacity.source, "output", "log", 17);
+  assert.throws(() => createHaulJob(overCapacity.physical, {
+    from: { building: overCapacity.source, section: "output" },
+    to: { building: overCapacity.target, section: "input" },
+    goods: "log",
+    qty: 17,
+    carrier: createCartCarrier(overCapacity.physical),
+  }), /キャリア容量超過/);
+});
+
+test("段10: 非接続の荷車を出発させず道路撤去も不変条件が検出する", () => {
+  const disconnected = makeCarrierTestPhysical();
+  addRoadLine(disconnected.physical, disconnected.source.entrance, disconnected.source.entrance);
+  addRoadLine(disconnected.physical, disconnected.target.entrance, disconnected.target.entrance);
+  depositInventory(disconnected.source, "output", "log", 4);
+  assert.throws(() => createHaulJob(disconnected.physical, {
+    from: { building: disconnected.source, section: "output" },
+    to: { building: disconnected.target, section: "input" },
+    goods: "log",
+    qty: 4,
+    carrier: createCartCarrier(disconnected.physical),
+  }), /到達できる経路がありません/);
+  assert.equal(sectionAmount(disconnected.source, "output", "log"), 4);
+
+  const active = makeCarrierTestPhysical({ withRoad: true });
+  depositInventory(active.source, "output", "log", 4);
+  createHaulJob(active.physical, {
+    from: { building: active.source, section: "output" },
+    to: { building: active.target, section: "input" },
+    goods: "log",
+    qty: 4,
+    carrier: createCartCarrier(active.physical),
+  });
+  removeRoadTile(active.physical, 3, 1);
+  assert.throws(() => assertCarrierInvariants(active.physical), /道路外荷車/);
+});
+
+test("段10: world.stepは1日につき物理キャリアを30tick進める", () => {
+  const world = createWorld({ seed: 11 });
+  assert.equal(world.state.physical.tick, 0);
+  world.step();
+  assert.equal(world.state.day, 1);
+  assert.equal(world.state.physical.tick, 30);
 });
 
 let failures = 0;
