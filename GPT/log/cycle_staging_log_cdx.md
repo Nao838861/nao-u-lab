@@ -145,7 +145,162 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+### 2026-07-20 04:24 JST
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の index-visible atom / task entry を検証し、broken entry 0 件を確認した。
+  - atoms.jsonl / per-file atom / index.jsonl の 2701 件を照合し、欠落・parse error・content conflict 0 件を確認した。既知の duplicate cluster 45 件は canonical overlay で fold 済みだった。
+  - mixed duplicate / stale triage / group action の派生 queue を再生成した。candidate 本体は変更していない。
+  - stale mixed duplicate 3 group を cycle `2026-07-20 03:58` として永続 handoff inbox へ冪等 enqueue した。
+  - slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件だったため、handled 更新は行わなかった。
+
+mechanical_audit:
+  memory_index:
+    broken_entries: 0
+    validator: python tools/validate_memory_index.py
+    encoding: >-
+      UTF-8 明示読みは成功。代表語は `記憶` / `ゲーム設計` / `敵パターン` を
+      MEMORY.md から取得できた。`評価軸` の完全一致は MEMORY.md にはなく、
+      atoms.jsonl では取得できたため、source 破損とは判定しない。
+  atoms:
+    total: 2701
+    mirror_content_conflicts: 0
+    normalized_content_duplicate_groups_raw: 40
+    normalized_content_duplicate_groups_recall_visible: 3
+    duplicate_cluster_overlay_groups: 45
+    contradiction_signal: none
+  raw_archive_review:
+    files_total: 245
+    inactive_over_30_days: 95
+    action: explicit_keep
+    reason: >-
+      slack_archive、PDF/TXT 原文、sync state が中心で、mtime だけでは参照完了や
+      provenance 退役を判定できない。一次資料保全を優先し、この phase では移動しない。
+  candidate_lifecycle_counts:
+    posted: 436
+    ready_to_post: 10
+    postponed: 361
+    failed: 193
+    needs_review: 20
+
+issues:
+  - id: ISS-ENC-001
+    description: >-
+      historical atom `sr-1776127289-4d9239b255` の title / trigger / excerpt に
+      `エ��ジェント` という U+FFFD 置換文字が保存されている。
+    severity: low
+    evidence: >-
+      memory/atoms.jsonl id=sr-1776127289-4d9239b255;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md
+    source_file_status: >-
+      両 source を UTF-8 明示読みして同じ U+FFFD を確認したため、source 内の局所破損。
+      memory health が併記した gr-1777083728-44d444ab7a は UTF-8 原文正常で false positive だった。
+    display_or_tooling_status: none; PowerShell UTF-8 表示でも source と同じ文字列を再現
+    why_blocks_game_memory: >-
+      「AIエージェント」の exact title / trigger 検索をこの1 atomだけ弱める。
+      影響は局所的で、mirror・index・recall smoke は正常なため Phase 4b を起動するほどではない。
+
+recommendation:
+  needs_design: false
+  priority_issues: []
+
+stale_backlog:
+  overdue_open_total: 206
+  stale_triage_queue_rows: 50
+  actionable_group_count: 5
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  remaining_actionable_group_count_after_handoff: 2
+  handoff_inbox_pending_count: 6
+  handoff_inbox_ids:
+    - gha-5f0a1ccaece64e4a
+    - gha-bcf948e41f7911a1
+    - gha-e9643b11c0c9a704
+    - gha-d233eb155f8a6f5a
+    - gha-7353a4d4a9d38fa9
+    - gha-d6f01edf6ec0491f
+  current_cycle_handoff_ids:
+    - gha-d233eb155f8a6f5a
+    - gha-7353a4d4a9d38fa9
+    - gha-d6f01edf6ec0491f
+
+group_action_handoff:
+  - group_key: sketchar supporting character design and illustration prototyping using generative ai
+    representative: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+      - memory/shared_reads_candidates/20260712_sketchar_character_design_prototyping.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260625_sketchar_character_design_genai.md
+      - memory/shared_reads_candidates/20260715_sketchar_character_design_phase1.md
+      - memory/shared_reads_candidates/20260715_sketchar_character_design_prototyping.md
+      - memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+      stale_after: "2026-06-15"
+      reason: age_days=35; mixed duplicate group present; character design と illustration 間の boundary object として再評価価値がある。
+  - group_key: mage multi axis evaluation of llm generated executable game scenes beyond compile pass rate
+    representative: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md
+      - memory/shared_reads_candidates/20260608_mage_multi_axis_executable_game_scene_eval.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+      stale_after: "2026-06-27"
+      reason: age_days=23; mixed duplicate group present; compile pass 以外の4軸評価が playable prototype 検証へ直接接続する。
+  - group_key: robo dance postmortem gamedevjs jam 2026
+    representative: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260518_robo_dance_jam_postmortem.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+      stale_after: "2026-07-01"
+      reason: age_days=19; mixed duplicate group present; 同時ターン制とリズム同期の edge case / TDD 回復知見を持つ。
+
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      game_transfer_value=high。LLM Game Master / NPC 会話 / task-based role-play は具体的だが、
+      学習効果・参加者評価・失敗例が不足するため本文再評価が必要。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      game_transfer_value=high。同題 postponed 6件のうち queue 上位1件だけを代表にし、
+      co-creative game design の参加者評価と品質差を一次本文で確認する。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      game_transfer_value=high。shared latent space と level blending は移植価値があるが、
+      dataset・評価指標・失敗条件が候補本文に不足する。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      game_transfer_value=high。探索・文脈保持・目標推定の評価を headless playtest に接続できるが、
+      benchmark 手法・結果・失敗分析が不足する。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      game_transfer_value=high。Zork の探索・計画限界は有用だが、position paper の
+      評価条件・失敗分類・モデル比較を本文で確認する必要がある。
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
