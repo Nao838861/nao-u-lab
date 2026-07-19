@@ -4,6 +4,26 @@ url: http://arxiv.org/abs/2607.13553v1
 collected_at: 2026-07-20T04:01:22.1522297+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, reinforcement-learning, navigation, partial-observability, agent-memory]
+evaluated_at: "2026-07-20T04:05:49+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-20T04:05:49+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-20T04:05:49+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: |-
+  局所速度・渦度・短期記憶・大域パラメータを分離比較し、問題設定、TD3 による手法、5 条件の評価、情報過多が逆効果になる結論まで抽出できる。
+  動的フィールド内の NPC に何を観測させるかという具体的なゲーム AI 設計へ接続でき、比較結果と限界を含む CoopEval 水準の概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "非定常な流れを完全予測せず、局所センサーと短期記憶だけで頑健に移動する方策をどう作るか。"
+  analysis_axis: "TD3、double-gyre flow、5 種の観測戦略、速度と渦度の役割差、短期記憶の効果、大域パラメータ提示が性能を落とした理由を分けて読む。"
+  application_target: "風・潮流・群衆・移動床・危険場のある prototype で、NPC の観測 budget、履歴窓、センサー別の役割を設計し、完全な world state を渡さない headless 比較に使う。"
+  pros_cons: "利点は知覚入力を増やせばよいという前提を崩し、局所観測と記憶の最小構成を比較できる点。欠点は double-gyre と TD3 の結果を離散的なゲーム地形や人間らしい NPC 行動へそのまま一般化できない点。"
+  verdict_pre: "部分採用。流体モデル自体ではなく、局所速度・構造センサー・短期履歴・大域情報の ablation を NPC 知覚設計へ移す。"
 ---
 
 ## raw_excerpt

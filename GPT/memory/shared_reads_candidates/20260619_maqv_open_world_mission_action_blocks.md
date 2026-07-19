@@ -7,11 +7,11 @@ genre_tags: [game-design, mission-design, action-blocks, open-world, pacing]
 evaluated_at: 2026-06-19T10:02:07+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: duplicate_existing_post
-status: postponed
-candidate_status: duplicate_existing_post
-last_reviewed_at: 2026-06-19T10:08:26+09:00
-last_decision: duplicate_existing_post
-evidence: "duplicate of https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781148254466439"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T04:05:30+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-9be2b185156f996b; terminal:memory/shared_reads_candidates/20260611_open_world_mission_action_block_framework.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781148254466439; reason:posted-source index で同一 arXiv URL の既投稿を確認したため、open representative を再投稿対象外として閉じる"
 next_action: none
 stale_after: "2026-07-19"
 supersedes: []
