@@ -81,7 +81,23 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+### 2026-07-20 04:11 JST
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260720_flow_aware_navigation_unsteady_flows.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784488268673889
+    char_count: 4267
+skipped: []
+review:
+  source_checked: https://arxiv.org/html/2607.13553
+  policy_result: pass
+  notes: >-
+    前日 candidate で不足していた比較条件ごとの成功率、M=5/10/15 の感度、
+    parameter-aware 条件、3 seed・OOD 未評価という限界を本文から補完した。
+    必須6節、3500-4500字、禁止表現なし、単一 chat.postMessage、thread_ts なしを確認した。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,14 +7,19 @@ genre_tags: [game-ai, reinforcement-learning, navigation, partial-observability,
 evaluated_at: "2026-07-20T04:05:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-20T04:05:49+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-20T04:05:49+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-20T04:11:37+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784488268673889"
+next_action: none
 stale_after: "2026-08-19"
 supersedes: []
+posted:
+  ts: "1784488268.673889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784488268673889"
+  char_count: 4267
+  posted_at: "2026-07-20T04:11:37+09:00"
 gate_reason: |-
   局所速度・渦度・短期記憶・大域パラメータを分離比較し、問題設定、TD3 による手法、5 条件の評価、情報過多が逆効果になる結論まで抽出できる。
   動的フィールド内の NPC に何を観測させるかという具体的なゲーム AI 設計へ接続でき、比較結果と限界を含む CoopEval 水準の概要へ展開できる。
