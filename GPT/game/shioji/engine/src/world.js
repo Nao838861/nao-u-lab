@@ -1,8 +1,8 @@
-import { assertMoneyConservation, createEconomicState } from "./econ.js";
+import { assertMoneyConservation, createEconomicState, P } from "./econ.js";
 import { createPhysicalState, stepHaulCarriers } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
 
-export function createWorld({ seed = 1, initialCompanyMoney = 0 } = {}) {
+export function createWorld({ seed = 1, initialCompanyMoney = P.TREASURY0 } = {}) {
   const normalizedSeed = normalizeSeed(seed);
   const state = {
     day: 0,

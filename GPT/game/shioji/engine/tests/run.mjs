@@ -1,12 +1,31 @@
 import assert from "node:assert/strict";
 
 import {
+  FOODS,
+  GOODS,
+  JOBCLS,
+  P,
+  PERISH,
   assertCompanyLedger,
   assertMoneyConservation,
+  createEconomicState,
+  createHousehold,
   createCompanyState,
+  economicMaterialSnapshot,
+  householdClass,
+  householdEat,
+  householdHaul,
+  householdMult,
   postCompanyLedger,
   recordExternalMoneyFlow,
 } from "../src/econ.js";
+import {
+  FOODS as FLOW_ISLAND_FOODS,
+  GOODS as FLOW_ISLAND_GOODS,
+  P as FLOW_ISLAND_P,
+  PERISH as FLOW_ISLAND_PERISH,
+  HH as FlowIslandHousehold,
+} from "../../../../../Claude/game/flow_island/engine.js";
 import { mulberry32 } from "../src/prng.js";
 import {
   V003_FIXED,
@@ -447,6 +466,71 @@ test("段10: world.stepは1日につき物理キャリアを30tick進める", ()
   world.step();
   assert.equal(world.state.day, 1);
   assert.equal(world.state.physical.tick, 30);
+});
+
+test("段11: P・GOODS・FOODS・PERISHがflow_island正本と同値", () => {
+  assert.deepEqual(P, FLOW_ISLAND_P);
+  assert.deepEqual(GOODS, FLOW_ISLAND_GOODS);
+  assert.deepEqual(FOODS, FLOW_ISLAND_FOODS);
+  assert.deepEqual(PERISH, FLOW_ISLAND_PERISH);
+  assert.equal(createWorld({ seed: 11 }).state.economy.company.money, P.TREASURY0);
+});
+
+test("段11: 定数は入れ子を含め実行時に変更できない", () => {
+  assert.equal(Object.isFrozen(P), true);
+  assert.equal(Object.isFrozen(P.IMP), true);
+  assert.throws(() => {
+    P.IMP.wheat = 999;
+  }, TypeError);
+  assert.equal(P.IMP.wheat, FLOW_ISLAND_P.IMP.wheat);
+});
+
+test("段12: HH構造・家族生成・eat/haulがflow_islandと同値", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "fisher", x: 12, y: 7 });
+  const source = new FlowIslandHousehold("fisher", 12, 7);
+
+  assert.equal(household.id, source.id);
+  assert.equal(household.sur, source.sur);
+  assert.deepEqual(household.members, source.members);
+  assert.equal(household.job, source.job);
+  assert.equal(household.purse, source.purse);
+  assert.deepEqual(household.pantry, source.pantry);
+  assert.deepEqual(household.belief, source.belief);
+  assert.equal(householdEat(household), source.eat());
+  assert.equal(householdHaul(household), source.haul());
+  assert.equal(householdMult(household), source.mult());
+  assert.equal(householdClass(household), JOBCLS.fisher);
+  assert.equal(economy.households[0], household);
+  assert.doesNotThrow(() => JSON.stringify(economy));
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段12: 職業別開拓キットを移民持参として物資出納へ記帳する", () => {
+  const cases = {
+    saltworks: { tools: 5, wheat: 240, char: 15 },
+    woodshop: { tools: 5, wheat: 240, log: 20 },
+    fisher: { tools: 5, wheat: 240, salt: 4, char: 2 },
+    veg: { tools: 5, wheat: 240, salt: 3 },
+    fisher2: { tools: 5, wheat: 240, salt: 2 },
+  };
+
+  for (const [job, expectedKit] of Object.entries(cases)) {
+    const economy = createEconomicState();
+    const household = createHousehold(economy, { job, x: 1, y: 1 });
+    for (const goods of GOODS) {
+      assert.equal(household.pantry[goods], expectedKit[goods] ?? 0, `${job}/${goods}`);
+    }
+    assertMaterialBalance({
+      before: { inventory: {}, cargo: {} },
+      after: economicMaterialSnapshot(economy),
+      flows: economy.materialFlows,
+    });
+    assert.equal(
+      economy.materialLedger.every((entry) => entry.kind === "imp" && /開拓キット/.test(entry.reason)),
+      true,
+    );
+  }
 });
 
 let failures = 0;
