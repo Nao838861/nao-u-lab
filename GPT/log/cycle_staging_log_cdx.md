@@ -153,7 +153,126 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語（記憶／ゲーム設計／敵パターン／評価軸）を取得。validate_memory_index.py も OK、Markdown link 行は 0 件で broken link はなかった。"
+  - "atoms 2695 件の三重 mirror（atoms.jsonl／per-file md／index.jsonl）は欠落・parse error・content conflict とも 0。45 duplicate cluster／45 overlay group は最新で、normalized-content duplicate 40 group は表示時 fold 済み。"
+  - "memory/raw/ は 30 日超の 93 file を確認。raw は原文正本として保持する現行方針で、archive job も 2026-07-19 12:21 に実行済みのため、今回は移動・削除なし。"
+  - "shared-reads lifecycle（README の schema 例 1 行を除く）は posted 429／ready_to_post 10／postponed 406／failed 140／needs_review 22。overdue は postponed 225／needs_review 12。"
+  - "mixed duplicate queue 77 rows、stale triage queue 50 rows、group action queue 28 rows を再生成。3 group enqueue 後は pending suppression を反映して group action queue 25 rows。Phase 2 で terminal 化した 3 group が mixed queue から除外された。"
+  - "slack_directives.jsonl／slack_broadcasts.jsonl は pending 0。handled 更新対象はなかった。"
+  - "高水位判定に従い group action 上位 3 group を source_cycle_id=2026-07-19 12:43 で永続 handoff inbox へ冪等 enqueue。audit は errors 0。"
+issues:
+  - id: DATA-UTF8-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分に U+FFFD が2文字残る。表示経路ではなく、取り込み元 raw Slack archive から atoms.jsonl／per-file md／index へ継承された局所的な source data corruption。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919（同一 row 2件）; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms/index.jsonl"
+    source_file_status: "UTF-8 明示読みで raw と派生3層すべてに literal U+FFFD を確認。memory/MEMORY.md 本体は代表語 probe 成功、index validator OK。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 原文に U+FFFD がなく false positive。"
+    display_or_tooling_status: "none; shell／staging の mojibake ではない"
+    why_blocks_game_memory: "『AIエージェント』完全一致検索でこの1 atom が漏れうるが、mirror 整合性・recall smoke・他のゲーム制作記憶への波及はなく、現時点では局所的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 237
+  stale_triage_queue_rows: 50
+  actionable_group_count: 28
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-640e794e59585012
+    - gha-18aea31729c5baa5
+    - gha-f639cc4f7da8006b
+  prior_cycle_observation:
+    processed_groups: 3
+    close_siblings_candidates: 5
+    analysis_time_minutes: 3
+    deferred_groups: 0
+    budget_decision: "budget 3 を継続。237 > 50 かつ actionable 28 >= 3 で高水位、直前 Phase 2 は通常 candidate 3件の分析と併行して3 groupを閉じられた。"
+group_action_handoff:
+  - group_key: "cross device motion interaction via apple s native system frameworks"
+    representative: memory/shared_reads_candidates/20260605_cross_device_motion_interaction_native_ios.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_cross_device_motion_haptics.md
+      - memory/shared_reads_candidates/20260605_cross_device_motion_interaction_native_ios.md
+      - memory/shared_reads_candidates/20260628_cross_device_motion_interaction.md
+      - memory/shared_reads_candidates/20260708_cross_device_motion_interaction_iphone.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260605_cross_device_motion_interaction_native_ios.md
+      stale_after: "2026-07-05"
+      reason: "age_days=14; mixed duplicate group present; iPhone motion controller、haptics、offline pipeline、latency logs まで揃っており embodied prototype には有用。ただし Nao_u_BOT の直近主戦場は PC/LLM game prototyping で、iOS 実装条件・再現手順・..."
+    handoff_inbox_id: gha-640e794e59585012
+  - group_key: "procedural generation of 3d maps with snappable meshes"
+    representative: memory/shared_reads_candidates/20260605_snappable_meshes_3d_map_pcg.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260605_snappable_meshes_3d_map_pcg.md
+      - memory/shared_reads_candidates/20260709_snappable_meshes_3d_map_generation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md
+      - memory/shared_reads_candidates/20260518_snappable_meshes_pcg_maps.md
+      - memory/shared_reads_candidates/20260618_snappable_meshes_3d_map_pcg.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260605_snappable_meshes_3d_map_pcg.md
+      stale_after: "2026-07-05"
+      reason: "age_days=14; mixed duplicate group present; premade meshes、designer constraints、snapping、navigability feedback という中核が明瞭で、完全自動生成ではなく制作補助 PCG としてゲーム制作への適用が具体的。3D/疑似3Dレベル制作の部品設計・接続制約・通行可能性検査へ直接つなげられる。"
+    handoff_inbox_id: gha-18aea31729c5baa5
+  - group_key: "agentic pcg procedural content generation via tool using llms"
+    representative: memory/shared_reads_candidates/20260606_agentic_pcg_tool_using_llms.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260604_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260606_agentic_pcg_tool_using_llms.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260527_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260529_agentic_pcg_tool_using_llms.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260606_agentic_pcg_tool_using_llms.md
+      stale_after: "2026-07-06"
+      reason: "age_days=13; mixed duplicate group present; tool-calling LLM + brushes / algorithms / evaluation functionsという着想はNao_u_BOTのPCG設計に近い。 ただし現候補はabstractと例示中心で、評価手順・比較対象・成功失敗の中身がPhase 3水準には不足している。 投稿候補にするには、..."
+    handoff_inbox_id: gha-f639cc4f7da8006b
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "headless 評価を平均スコアからプレイスタイル別の破綻検出へ拡張できる high-transfer mixed duplicate。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "runtime PCG と autonomous validation は headless 評価へ近いが、実験結果・失敗例・結論の一次確認が必要。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_llm_gameplay_playability_player_experience.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "large language models in game development implications for gameplay playability and player experience"
+    priority_reason: "gameplay／playability／player experience の評価軸は有用だが、2 project の具体例不足を mixed group 単位で判定する必要がある。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+    status: postponed
+    stale_after: "2026-07-02"
+    duplicate_group_key: "gui agents for continual game generation"
+    priority_reason: "PlaytestArena／Play2Code／rubric pass-rate 66.8% を持ち、playable diff の実プレイ評価ループへ直接転用可能。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260602_rulesmith_game_balancing.md
+    status: postponed
+    stale_after: "2026-07-02"
+    duplicate_group_key: "rulesmith multi agent llms for automated game balancing"
+    priority_reason: "self-play と Bayesian optimization の rule-space 探索は有用だが、CivMini の実験条件・比較結果不足を mixed group 単位で確認する必要がある。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
