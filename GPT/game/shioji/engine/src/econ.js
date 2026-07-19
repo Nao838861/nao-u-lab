@@ -110,6 +110,13 @@ export const JOBCLS = deepFreeze({
   saltworks: "artisan",
 });
 
+export const LADDER = deepFreeze({
+  farm: ["food1", "tools", "saltchar", "food2", "iron", "food3"],
+  fish: ["grain", "tools", "salt", "char", "food2", "iron"],
+  lumber: ["food1", "tools", "food2", "salt", "char", "iron"],
+  artisan: ["food1", "food2", "salt", "char", "cloth", "iron"],
+});
+
 const FIRST_NAMES = deepFreeze([
   "ハンス", "グレタ", "ヤン", "マリア", "ピム", "ロッテ", "カレル", "アンナ", "ブラム", "エルス",
   "テオ", "ヨハンナ", "ミーナ", "クラース", "フェム", "ダーン", "ソフィー", "ヘンク", "リーケ", "ヨープ",
@@ -597,6 +604,143 @@ export function sellOffers(economy, household) {
   return offers;
 }
 
+export const BUY_ORDER = deepFreeze([
+  "log", "salt", "char", "tools", "cloth", "iron", "meal",
+  "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
+]);
+
+function marketDistance(economy, household) {
+  return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
+}
+
+export function buyTargets(economy, household, { day = economy.currentDay } = {}) {
+  const targets = {};
+  const foodDays = FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
+  const { px } = economy;
+  const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
+  const month = (Math.floor((day - 1) / 30) % 12) + 1;
+  const autumn = month >= 7 && month <= 9;
+  let targetDays = autumn ? 10 : P.PANTRY_FOOD_D;
+  targetDays = Math.max(targetDays, Math.min(12, marketDistance(economy, household) * 0.9));
+
+  if (foodDays < targetDays) {
+    const starving = foodDays < 1.5;
+    for (const goods of ["veg", "wheat", "pres", "pick"]) {
+      targets[goods] = [
+        (targetDays - foodDays) * P.EAT / 4,
+        starving ? 99 : Math.min((px[goods] ?? 9) * 1.5, cheapest * 2.2),
+      ];
+    }
+  }
+  if (household.job !== "fisher") {
+    targets.fish = [P.EAT * 0.5, Math.min((px.fish ?? 9) * 1.5, cheapest * 2.5)];
+  }
+  if (household.job !== "wheat" && household.pantry.wheat < P.EAT * P.RATION * 10 && !targets.wheat) {
+    targets.wheat = [
+      P.EAT * P.RATION * 15 - household.pantry.wheat,
+      (px.wheat ?? 3) * 1.3,
+    ];
+  }
+  if (household.job !== "veg" && household.pantry.veg < P.EAT * P.RATION * 6 && !targets.veg) {
+    targets.veg = [
+      P.EAT * P.RATION * 10 - household.pantry.veg,
+      (px.veg ?? 3) * 1.3,
+    ];
+  }
+  if (household.job !== "shepherd" && household.pantry.meat < P.EAT * P.RATION * 4 && !targets.meat) {
+    targets.meat = [
+      P.EAT * P.RATION * 8 - household.pantry.meat,
+      Math.min((px.meat ?? 3) * 1.4, cheapest * 2.2),
+    ];
+  }
+  if (
+    (household.job === "wheat" || household.job === "rapeseed")
+    && household.pantry.meal < P.FERT_NEED * 10
+    && month >= 3
+    && month <= 8
+  ) {
+    const benefit = (household.job === "wheat"
+      ? P.Y_WHEAT * householdMult(household)
+      : P.Y_OIL * householdMult(household) * 540)
+      * P.FERT_BOOST
+      * (household.job === "wheat" ? (px.wheat ?? 2) : (px.oil ?? 3))
+      / (P.FERT_NEED * 180);
+    targets.meal = [P.FERT_NEED * 20 - household.pantry.meal, benefit * 0.7];
+  }
+  if (household.job === "saltworks" && household.pantry.char < P.SALT_CHAR * 5) {
+    targets.char = [P.SALT_CHAR * 10 - household.pantry.char, P.Y_SALT * (px.salt ?? 2) * 0.5];
+  }
+  if (household.job === "woodshop" && household.pantry.log < P.LOG_TOOL * 8) {
+    targets.log = [
+      P.LOG_TOOL * 16 - household.pantry.log,
+      Math.max(0.9, (px.tools ?? 2) / P.LOG_TOOL * 0.6),
+    ];
+  }
+  if (household.job === "charburner" && household.pantry.log < P.LOG_CHAR * 8) {
+    targets.log = [
+      P.LOG_CHAR * 16 - household.pantry.log,
+      Math.max(0.9, (px.char ?? 2) / P.LOG_CHAR * 0.6),
+    ];
+  }
+  if (household.job === "veg" && household.pantry.salt < 1.5) {
+    targets.salt = [
+      4 - household.pantry.salt,
+      (px.pick ?? 2) * P.PR_PICK / P.PICK_SALT * 0.4,
+    ];
+  }
+  if (household.job === "fisher") {
+    if (household.pantry.salt < 3) {
+      targets.salt = [
+        6 - household.pantry.salt,
+        (px.pres ?? 2) * P.PR_SALT / P.PRES_SALT * 0.5,
+      ];
+    }
+    if (household.pantry.char < 2) {
+      targets.char = [
+        4 - household.pantry.char,
+        (P.PR_SMOKE - P.PR_SALT) * (px.pres ?? 2) / P.SMOKE_CHAR * 0.5,
+      ];
+    }
+  }
+
+  const currentRequirements = (LADDER[householdClass(household)] ?? []).slice(0, household.lv + 1);
+  const needed = new Set();
+  for (const requirement of currentRequirements) {
+    if (requirement === "saltchar") {
+      needed.add("salt");
+      needed.add("char");
+    } else if (["tools", "salt", "char", "cloth", "iron"].includes(requirement)) {
+      needed.add(requirement);
+    }
+  }
+  needed.add("char");
+  for (const [goods, baseDaily, ceiling] of [
+    ["tools", P.D_TOOL, 2.5],
+    ["salt", P.D_SALT, 2.5],
+    ["char", P.D_CHAR, 2.5],
+    ["cloth", P.D_CLOTH, 2.8],
+    ["iron", P.D_IRON, 5],
+  ]) {
+    if (!needed.has(goods)) continue;
+    const daily = baseDaily * Math.pow(P.CMULT, household.lv);
+    if (targets[goods]) continue;
+    let target = daily * P.CULT_D;
+    if (goods === "char" && autumn) target = daily * 2 * 100;
+    if (household.pantry[goods] < target * 0.5) {
+      targets[goods] = [target - household.pantry[goods], ceiling];
+    }
+  }
+  return targets;
+}
+
+export function isProductionInput(household, goods) {
+  return (household.job === "saltworks" && goods === "char")
+    || (household.job === "fisher" && (goods === "salt" || goods === "char"))
+    || (household.job === "veg" && goods === "salt")
+    || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
+    || ((household.job === "woodshop" || household.job === "charburner") && goods === "log");
+}
+
 export function quoteAskPrice(cost, goods, random) {
   if (!Number.isFinite(cost) || cost < 0) throw new TypeError("cost must be non-negative and finite");
   if (typeof random !== "function") throw new TypeError("random must be a function");
@@ -607,6 +751,80 @@ export function quoteAskPrice(cost, goods, random) {
 
 function findHousehold(economy, householdId) {
   return economy.households.find((household) => household.id === householdId);
+}
+
+export function buyAtMarket(economy, household, { day }) {
+  let capacity = householdHaul(household);
+  const targets = buyTargets(economy, household, { day });
+  const order = BUY_ORDER.filter((goods) => targets[goods]);
+  const transactions = [];
+
+  for (const goods of order) {
+    let [wanted, ceiling] = targets[goods];
+    wanted = Math.min(wanted, capacity);
+    const shelves = economy.stalls[goods]
+      .filter((stall) => findHousehold(economy, stall.householdId))
+      .map((stall) => ({ kind: "STALL", stall, price: stall.price }));
+    if (P.IMP[goods] !== undefined) shelves.push({ kind: "CO", price: P.IMP[goods] });
+    shelves.sort((a, b) => a.price - b.price);
+    const input = isProductionInput(household, goods);
+
+    for (const shelf of shelves) {
+      if (wanted < 1e-9) break;
+      if (shelf.price > ceiling || shelf.price <= 0) continue;
+      const available = shelf.kind === "CO" ? Infinity : shelf.stall.qty;
+      const affordable = (household.purse + (input ? 30 : 0)) / shelf.price;
+      const qty = Math.min(wanted, available, affordable);
+      if (qty < 1e-9) continue;
+
+      const payment = qty * shelf.price;
+      household.purse -= payment;
+      household.pantry[goods] += qty;
+      wanted -= qty;
+      capacity -= qty;
+
+      if (shelf.kind === "CO") {
+        postCompanyLedger(economy.company, {
+          day,
+          amount: payment,
+          reason: `世帯${household.id}へ輸入${goods}を小売`,
+        });
+        const wholesale = qty * (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7);
+        postCompanyLedger(economy.company, {
+          day,
+          amount: -wholesale,
+          reason: `${goods}の本土仕入`,
+        });
+        recordExternalMoneyFlow(economy, { amount: -wholesale, reason: `${goods}の本土仕入` });
+        economy.co.impMargin += payment - wholesale;
+        economy.outBy[`imp_${goods}`] = (economy.outBy[`imp_${goods}`] ?? 0) + wholesale - payment;
+        economy.imported[goods] = (economy.imported[goods] ?? 0) + qty;
+        recordEconomicMaterialFlow(economy, goods, "imp", qty, `${goods}を本土から輸入`);
+      } else {
+        shelf.stall.qty -= qty;
+        const seller = findHousehold(economy, shelf.stall.householdId);
+        const fee = payment * P.FEE;
+        seller.purse += payment - fee;
+        seller.income30 += payment - fee;
+        postCompanyLedger(economy.company, {
+          day,
+          amount: fee,
+          reason: `${goods}市場取引の口銭`,
+        });
+        economy.co.fee += fee;
+      }
+
+      economy.prices[goods].push([day, shelf.price, qty]);
+      economy.px[goods] = (economy.px[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
+      transactions.push({
+        goods,
+        qty,
+        price: shelf.price,
+        source: shelf.kind === "CO" ? "CO" : shelf.stall.householdId,
+      });
+    }
+  }
+  return { targets, order, transactions, remainingCapacity: capacity };
 }
 
 function exportHouseholdGoods(economy, household, goods, qty, price, day) {
@@ -678,6 +896,12 @@ export function sellAtMarket(economy, physical, household, { day, random }) {
     }
   }
   return { offers, listed };
+}
+
+export function transactAtMarket(economy, physical, household, { day, random }) {
+  const sold = sellAtMarket(economy, physical, household, { day, random });
+  const bought = buyAtMarket(economy, household, { day });
+  return { sold, bought };
 }
 
 export function ageMarketStalls(economy, { day }) {
@@ -955,8 +1179,12 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     expCap: { ...P.EXP_CAP },
     expMl: { ...P.EXP_ML },
     deskUsed: {},
-    co: { expBuy: 0, expSell: 0 },
+    co: { expBuy: 0, expSell: 0, impMargin: 0, fee: 0 },
     exported: {},
+    imported: {},
+    outBy: {},
+    prices: Object.fromEntries(GOODS.map((goods) => [goods, []])),
+    market: { x: 0, y: 0 },
     harvestLog: [],
     paving: false,
     paved: false,

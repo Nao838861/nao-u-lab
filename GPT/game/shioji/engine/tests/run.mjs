@@ -1,14 +1,18 @@
 import assert from "node:assert/strict";
 
 import {
+  BUY_ORDER,
   FOODS,
   GOODS,
   JOBCLS,
+  LADDER,
   P,
   PERISH,
   ageMarketStalls,
   assertCompanyLedger,
   assertMoneyConservation,
+  buyAtMarket,
+  buyTargets,
   createEconomicState,
   createHousehold,
   createCompanyState,
@@ -38,7 +42,9 @@ import {
   GOODS as FLOW_ISLAND_GOODS,
   P as FLOW_ISLAND_P,
   PERISH as FLOW_ISLAND_PERISH,
+  LADDER as FLOW_ISLAND_LADDER,
   HH as FlowIslandHousehold,
+  World as FlowIslandWorld,
   stdTerrain as flowIslandStdTerrain,
 } from "../../../../../Claude/game/flow_island/engine.js";
 import { mulberry32 } from "../src/prng.js";
@@ -861,6 +867,195 @@ test("段16: 輸出財は屋台3日目にEXP上限まで本土へ流す", () => 
   assert.equal(fisher.purse, purseBefore + exported * P.EXP.pres);
   assert.equal(economy.materialFlows.pres.exp, exported);
   assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保持する", () => {
+  assert.deepEqual(LADDER, FLOW_ISLAND_LADDER);
+  assert.deepEqual(BUY_ORDER, [
+    "log", "salt", "char", "tools", "cloth", "iron", "meal",
+    "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
+  ]);
+  assert.equal(BUY_ORDER.includes("pick"), false);
+
+  const economy = createEconomicState();
+  const starving = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (const goods of FOODS) starving.pantry[goods] = 0;
+  const starvingTargets = buyTargets(economy, starving, { day: 1 });
+  for (const goods of ["veg", "wheat", "pres", "pick"]) {
+    assert.deepEqual(starvingTargets[goods], [P.PANTRY_FOOD_D * P.EAT / 4, 99]);
+  }
+  assert.ok(starvingTargets.fish[1] < 99);
+
+  const woodshop = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+  woodshop.pantry.log = 0;
+  assert.deepEqual(
+    buyTargets(economy, woodshop, { day: 1 }).log,
+    [P.LOG_TOOL * 16, Math.max(0.9, economy.px.tools / P.LOG_TOOL * 0.6)],
+  );
+
+  const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+  farmer.lv = 4;
+  assert.equal(buyTargets(economy, farmer, { day: 1 }).iron[1], 5);
+
+  const compareWithSource = (household, day) => {
+    const sourceWorld = new FlowIslandWorld(11);
+    sourceWorld.day = day;
+    sourceWorld.market = { ...economy.market };
+    sourceWorld.px = { ...economy.px };
+    const sourceHousehold = new FlowIslandHousehold(household.job, household.x, household.y);
+    sourceHousehold.pantry = structuredClone(household.pantry);
+    sourceHousehold.lv = household.lv;
+    assert.deepEqual(
+      buyTargets(economy, household, { day }),
+      sourceWorld.buyTargets(sourceHousehold),
+    );
+  };
+  compareWithSource(starving, 1);
+  compareWithSource(woodshop, 1);
+  compareWithSource(farmer, 1);
+});
+
+test("段17: 固定買い順は生産入力logを食料wheatより先に約定する", () => {
+  const economy = createEconomicState();
+  const logSeller = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  const wheatSeller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+  const buyer = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 0;
+  buyer.pantry.log = 0;
+  logSeller.pantry.log = 30;
+  wheatSeller.pantry.wheat = 30;
+  logSeller.pantry.log -= 30;
+  wheatSeller.pantry.wheat -= 30;
+  economy.stalls.log.push({ householdId: logSeller.id, qty: 30, price: 0.5, age: 0 });
+  economy.stalls.wheat.push({ householdId: wheatSeller.id, qty: 30, price: 2, age: 0 });
+
+  const result = buyAtMarket(economy, buyer, { day: 1 });
+  assert.equal(result.transactions[0].goods, "log");
+  assert.equal(result.transactions.some((transaction) => transaction.goods === "wheat"), true);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段17: 屋台約定はpxをEMA更新し売り手から4%口銭を会社へ移す", () => {
+  const economy = createEconomicState();
+  const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+  const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 0;
+  seller.pantry.wheat -= 20;
+  economy.stalls.wheat.push({ householdId: seller.id, qty: 20, price: 2, age: 0 });
+  const before = economicMaterialSnapshot(economy);
+  const sellerPurse = seller.purse;
+  const buyerPurse = buyer.purse;
+
+  const result = buyAtMarket(economy, buyer, { day: 1 });
+  const transaction = result.transactions.find((entry) => entry.goods === "wheat");
+  const payment = transaction.qty * transaction.price;
+  const fee = payment * P.FEE;
+  assert.equal(transaction.qty, P.PANTRY_FOOD_D * P.EAT / 4);
+  assert.equal(buyer.purse, buyerPurse - payment);
+  assert.equal(seller.purse, sellerPurse + payment - fee);
+  assert.equal(economy.co.fee, fee);
+  assert.ok(Math.abs(economy.px.wheat - (P.BELIEF0.wheat * 0.9 + 2 * 0.1)) < 1e-12);
+  assert.deepEqual(economy.prices.wheat, [[1, 2, transaction.qty]]);
+  assert.deepEqual(economicMaterialSnapshot(economy), before);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段17: CO輸入棚は生産入力だけ財布-30まで信用買いできる", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  for (const goods of FOODS) fisher.pantry[goods] = 100;
+  fisher.pantry.salt = 0;
+  economy.px.pres = 5;
+  postCompanyLedger(economy.company, { day: 1, amount: fisher.purse, reason: "信用テストの財布預入" });
+  fisher.purse = 0;
+
+  const result = buyAtMarket(economy, fisher, { day: 61 });
+  const salt = result.transactions.find((transaction) => transaction.goods === "salt");
+  assert.deepEqual(salt, { goods: "salt", qty: 6, price: P.IMP.salt, source: "CO" });
+  assert.equal(fisher.purse, -30);
+  assert.equal(economy.imported.salt, 6);
+  assert.equal(economy.co.impMargin, 6 * (P.IMP.salt - P.IMP_COST.salt));
+  assert.equal(economy.moneyBoundary.out, 6 * P.IMP_COST.salt);
+  assert.equal(economy.materialFlows.salt.imp, 10);
+  assert.equal(economy.px.salt, P.BELIEF0.salt * 0.9 + P.IMP.salt * 0.1);
+  assert.equal(assertMoneyConservation(economy), true);
+
+  const noCreditEconomy = createEconomicState();
+  const logger = createHousehold(noCreditEconomy, { job: "logger", x: 0, y: 0 });
+  for (const goods of FOODS) logger.pantry[goods] = 0;
+  postCompanyLedger(noCreditEconomy.company, {
+    day: 1,
+    amount: logger.purse,
+    reason: "非入力信用テストの財布預入",
+  });
+  logger.purse = 0;
+  const noCredit = buyAtMarket(noCreditEconomy, logger, { day: 1 });
+  assert.equal(noCredit.transactions.some((transaction) => transaction.goods === "wheat"), false);
+  assert.equal(logger.purse, 0);
+});
+
+test("段18: 飢えた世帯だけが高値の主食を買い食料pxを上げる", () => {
+  const run = (foodQty) => {
+    const economy = createEconomicState();
+    const seller = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+    const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+    for (const goods of FOODS) buyer.pantry[goods] = 0;
+    buyer.pantry.veg = foodQty;
+    seller.pantry.wheat -= 30;
+    economy.stalls.wheat.push({ householdId: seller.id, qty: 30, price: 2, age: 0 });
+    const before = economy.px.wheat;
+    const result = buyAtMarket(economy, buyer, { day: 1 });
+    return { before, economy, result };
+  };
+
+  const starving = run(0);
+  const merelyLow = run(P.EAT * 2);
+  assert.ok(starving.economy.px.wheat > starving.before);
+  assert.equal(merelyLow.economy.px.wheat, merelyLow.before);
+  assert.equal(starving.result.transactions.some((transaction) => transaction.goods === "wheat"), true);
+  assert.equal(merelyLow.result.transactions.some((transaction) => transaction.goods === "wheat"), false);
+});
+
+test("段18: 豊漁の安い魚が約定するとfish pxが下がる", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 0, y: 0 });
+  const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (let day = 61; day <= 65; day += 1) {
+    producePrimaryTick(economy, null, fisher, { day, fraction: 1 });
+  }
+  sellAtMarket(economy, null, fisher, { day: 65, random: () => 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 100;
+  const before = economy.px.fish;
+
+  const result = buyAtMarket(economy, buyer, { day: 65 });
+  assert.equal(result.transactions.some((transaction) => transaction.goods === "fish"), true);
+  assert.ok(economy.px.fish < before);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段18: 丸太市況の上昇が道具原価・ask・tools pxへ順に伝播する", () => {
+  const run = (logPrice) => {
+    const economy = createEconomicState();
+    economy.px.log = logPrice;
+    const seller = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+    const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+    seller.pantry.tools = 100;
+    buyer.lv = 1;
+    for (const goods of FOODS) buyer.pantry[goods] = 100;
+    buyer.pantry.tools = 0;
+    const cost = productionCost(economy, null, seller, "tools", { day: 1 });
+    const sale = sellAtMarket(economy, null, seller, { day: 1, random: () => 0 });
+    const ask = sale.listed.find((stall) => stall.goods === "tools").price;
+    const bought = buyAtMarket(economy, buyer, { day: 1 });
+    assert.equal(bought.transactions.some((transaction) => transaction.goods === "tools"), true);
+    return { ask, cost, px: economy.px.tools };
+  };
+
+  const low = run(0.1);
+  const high = run(0.6);
+  assert.ok(high.cost > low.cost);
+  assert.ok(high.ask > low.ask);
+  assert.ok(high.px > low.px);
 });
 
 let failures = 0;
