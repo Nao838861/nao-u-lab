@@ -203,7 +203,57 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260720-01
+    problem_restatement: "title canonical index が「group 全件が posted / failed で閉じた」ことを示す再評価除外 sidecar なのか、「posted sibling が 1 件でもある」ことを示す生成前重複防止 index なのかが未分離である。2026-07-12 の terminal-dominance 実装で mixed group が大量に入る一方、Phase 2 / 4a、CLI help、audit は terminal-only を前提とし、check と運用判断が同じファイルに異なる意味を要求している。"
+    alternatives:
+      - name: "案A: 役割分離—closed canonical / mixed review / posted-source skip"
+        sketch: "title canonical index は名称どおり group 全件が terminal の closed group だけに戻す。既投稿 work の URL / work identity 一致は posted-source index で skip、mixed group の title 一致は既存 mixed duplicate queue で review とし、continue へのすり抜けを防ぐ。"
+        pros:
+          - "closed / mixed / posted の意味が各 sidecar の現行名称と Phase 2 / 4a 契約に一致する"
+          - "2026-07-18 導入済みの posted-source index と mixed duplicate queue を再利用でき、candidate 正本の一括変更が不要"
+          - "mixed title は自動 close せず review に残しつつ、同題候補の無制限な新規作成も抑制できる"
+        cons:
+          - "preflight が posted-source / closed canonical / mixed queue の 3 入力になり、判定順と stale 時の fail-safe を明文化する必要がある"
+          - "terminal-dominance を前提に追記された 2026-07-12 の説明と decision_note を現行契約へ置換する移行が必要"
+          - "index 再生成後の row 減少を欠落ではなく意味分離の結果として監査できる指標が要る"
+        migration_cost: medium
+      - name: "案B: terminal-dominance を正式契約化"
+        sketch: "builder の現行選別は維持し、--terminal-only を --has-terminal-evidence に改名する。index に group_state: closed | mixed を持たせ、Phase 2 / 4a / audit の記述も「posted sibling があれば登録」へ統一する。"
+        pros:
+          - "現 index の mixed 66 row と生成前 title review の挙動をほぼ維持できる"
+          - "posted sibling を含む group の可視性を 1 ファイルに保てる"
+          - "builder の選別ロジック変更は小さい"
+        cons:
+          - "canonical index の主用途である「再評価除外」に mixed group が入り、open candidate を誤って抑制する危険が残る"
+          - "posted-source index と mixed duplicate queue の役割を重複して保持する"
+          - "CLI、README、Phase 2 / 4a、audit、consumer ごとに group_state の解釈を移行する必要がある"
+        migration_cost: medium
+      - name: "案C: 単一 duplicate-group index へ統合"
+        sketch: "title canonical index と mixed duplicate queue を新しい 1 group 1 row の duplicate-group index に統合する。group_state、terminal/open paths、posted evidence、consumer_action を持たせ、各 phase は action をフィルタする。"
+        pros:
+          - "title group の全状態を 1 row で説明でき、sidecar 間の title_key 不整合を減らせる"
+          - "closed への状態遷移と mixed backlog を同じ schema で監査できる"
+          - "将来の group-action handoff と接続しやすい"
+        cons:
+          - "2 つの稼働中 sidecar とその consumer を同時移行するため、今回の medium issue に対して変更範囲が広すぎる"
+          - "consumer_action を index に入れると、派生 data と phase policy の責務が再び混ざる"
+          - "移行中の dual-read と rollback 経路を設計する追加コストがかかる"
+        migration_cost: high
+    recommended: "案A: 役割分離—closed canonical / mixed review / posted-source skip"
+    recommended_reason: "2026-07-18 に実 Slack 投稿を正本とする posted-source index が導入され、2026-07-12 時点で terminal-dominance index が担っていた「既投稿 work を生成前に止める」役割は独立済みである。そのため canonical index を closed group 判定に戻し、mixed title だけ既存 queue から review する方が、現状からの追加構造が小さく、誤判定時も再生成可能 sidecar と preflight 条件の rollback で戻せる。候補 frontmatter の一括更新を避けられるため、履歴毀損のコストも最も低い。"
+    decision: introduce
+    decision_reason: "現在は check が stale を返すだけでなく、index が mixed 66/96 row を「再評価除外」として渡し得るため、open candidate を Phase 2 へ渡す契約と衝突している。一方で terminal-only 4 group の未登録もあり、現状維持や命名だけの変更では収束しない。既存の 3 sidecar に skip / review / exclude の責務を分ける設計は固まっており、Phase 4c で境界 fixture を先に固定して小さく移行できる。"
+    outline_for_4c:
+      - "preflight の判定順を、posted-source URL/work 一致は skip、posted-source 不健全は review、closed canonical title 一致は review、mixed queue title 一致は review、それ以外は continue として固定する"
+      - "title canonical builder の terminal-only を、duplicate group の status 全件が posted / failed の場合だけ登録する契約へ戻し、terminal-dominance 固有の decision_note を closed-group 根拠へ置換する"
+      - "mixed duplicate queue を preflight の review 入力として読む境界を追加し、queue の missing / stale を自動 continue に倒さない fail-safe を定める"
+      - "既存 candidate frontmatter は変更せず 3 sidecar を再生成し、canonical は closed group のみ、mixed queue は open status を含む group のみになることと、両者の title_key 交差が 0 であることを監査する"
+      - "fixture で、posted と同一 work は skip、terminal-only title 一致は review、mixed title 一致は review、未登録は continue、各入力の stale / missing は review となる境界を固定する"
+      - "README と Phase 1 / 2 / 4a の重複説明を、posted-source=skip、mixed=review handoff、closed canonical=再評価除外の現行契約に置換し、2026-07-12 terminal-dominance の上書き関係を残さない"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
