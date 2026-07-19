@@ -145,7 +145,142 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の atom 参照 87 件を監査し、missing 0 件を確認した。"
+  - "memory/atoms.jsonl 2700 件を health 監査し、ID 重複 0、mirror drift 0、recall smoke 全通過を確認した。normalized content 重複 40 group / 80 rows は既存 fold 対象として保持した。"
+  - "shared-reads lifecycle を dry-run 監査し、frontmatter の変更なしで内訳を確認した。posted 434 / ready_to_post 10 / postponed 366 / failed 188 / needs_review 20。"
+  - "mixed duplicate / stale triage / group action queue を 2026-07-20 基準で再生成した。"
+  - "高水位 budget 3 で group handoff 3 件を永続 inbox へ enqueue し、audit errors 0 を確認した。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため status 更新なし。"
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 明示読み成功。atom 参照 missing 0。代表語は 記憶 / ゲーム設計 / 敵パターン を取得でき、評価軸 は本文に存在しない語だった。"
+    display_or_tooling_status: "PowerShell here-string から Python へ日本語 literal を渡す経路では ? へ置換されたが、Unicode escape probe と Get-Content -Encoding UTF8 で source 正常を確認。"
+  atom_health_false_positive:
+    source_file_status: "gr-1777083728-44d444ab7a の ??? は Nao_u 原文中の意図的表記であり mojibake ではない。"
+    display_or_tooling_status: none
+raw_archive_audit:
+  older_than_30_days: 95
+  oldest: "2026-05-11T08:24:42"
+  main_locations:
+    - "memory/raw/web_research: 37"
+    - "memory/raw/web_research/phase3_pdfs: 13"
+    - "memory/raw/web_research/phase3_20260515b: 8"
+    - "memory/raw/web_research/phase3_sources: 8"
+  action: "raw は原文正本・既存 archive 置き場なので移動せず保持。古さだけを根拠に安全に退避できるものは今回 0 件。"
+issues:
+  - id: ISS-TITLE-001
+    description: "recall-visible atom に反復タイトルが残り、14 title group は group_id 未付与。boilerplate title を含む title-quality audit は 621 rows。"
+    severity: medium
+    evidence: "python tools/memory_health.py --json: recall_visible_repeated_title_groups=15、ungrouped_repeated_title_groups=14、memory/atoms/title_quality_audit.jsonl rows=621"
+    source_file_status: "UTF-8 読み成功。文字コード破損ではなく title / grouping metadata の問題。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "同じタイトルの atom が候補集合で衝突し、次のゲーム制作で個別事例と一般化知見を名前から選び分けにくい。"
+  - id: ISS-ENC-001
+    description: "1 atom の title / trigger / excerpt に U+FFFD が残る。もう1件の health suspect は意図的な ??? で false positive。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md および memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919 に AIエ��ジェント。"
+    source_file_status: "UTF-8 parse は成功するが、atom と raw source の双方に U+FFFD が実在するため source 由来の局所破損。"
+    display_or_tooling_status: "none。UTF-8 明示読みでも同じ置換文字を確認。"
+    why_blocks_game_memory: "AIエージェントを語として検索する時に当該 atom の title / trigger が完全一致せず、関連記憶を落とす可能性がある。"
+  - id: ISS-STALE-001
+    description: "postponed / needs_review の期限超過が 211 件あり、bounded stale triage queue 50 行を上回る。"
+    severity: medium
+    evidence: "backfill_shared_reads_candidate_status.py --today 2026-07-20: overdue_for_reassessment=211。shared_reads_stale_triage_queue.jsonl=50 rows。group_action_queue=8 actionable groups。"
+    source_file_status: "candidate frontmatter UTF-8 読み成功。posted / failed は queue 対象外として正しく除外。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "再評価待ちのゲーム制作知見が bounded queue 外に残り、次の制作へ届くまでの遅延が長くなる。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "title-quality audit、content/lifecycle fold、stale triage と persistent group inbox が既に存在する。今回は既存経路の稼働確認と bounded handoff で進められ、新しい仕組みの設計根拠はない。"
+stale_backlog:
+  overdue_open_total: 211
+  stale_triage_queue_rows: 50
+  actionable_group_count: 8
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 6
+  handoff_inbox_ids:
+    - gha-5f0a1ccaece64e4a
+    - gha-bcf948e41f7911a1
+    - gha-e9643b11c0c9a704
+group_action_handoff:
+  - group_key: "from player to master enhancing test time learning of llm agents via reinforcement learning over memory"
+    representative: memory/shared_reads_candidates/20260618_memopilot_rl_over_memory.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260616_memopilot_memory_rl_game_agents.md
+      - memory/shared_reads_candidates/20260618_memopilot_rl_over_memory.md
+      - memory/shared_reads_candidates/20260627_memopilot_test_time_learning_game_agents.md
+      - memory/shared_reads_candidates/20260711_memopilot_rl_memory_game_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260610_memopilot_test_time_learning_memory.md
+      - memory/shared_reads_candidates/20260619_memopilot_test_time_learning_game_agents.md
+      - memory/shared_reads_candidates/20260625_memopilot_test_time_learning_game_memory.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260618_memopilot_rl_over_memory.md
+      stale_after: "2026-07-19"
+      reason: "age_days=1; mixed duplicate group present; memory update 自体を multi-turn RL の対象にする着想は、プレイログから何を次回方策へ残すかという制作サイクルに接続できる。"
+  - group_key: "one policy infinite npcs persona traceable shared rl policies for scalable game agents"
+    representative: memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260529_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260628_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260708_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260709_persona_traceable_shared_rl_npcs.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md
+      - memory/shared_reads_candidates/20260608_pcsp_persona_traceable_npcs.md
+      - memory/shared_reads_candidates/20260609_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260617_persona_traceable_shared_rl_npcs.md
+      - memory/shared_reads_candidates/20260618_persona_traceable_shared_policy_npcs.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260620_pcsp_persona_traceable_npcs.md
+      stale_after: "2026-07-20"
+      reason: "age_days=0; mixed duplicate group present; persona-conditioned shared policy、trajectory consistency、real-time deployment という手法要素と評価材料は抽出できる。"
+  - group_key: "enhancing immersion in virtual reality sports through physical interactions"
+    representative: memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260711_vr_sports_physical_interaction_controller.md
+      - memory/shared_reads_candidates/20260715_vr_sports_physical_interactions.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+      stale_after: "2026-06-15"
+      reason: "age_days=35; mixed duplicate group present; 問題設定と tangible mapping は明確だが、実験結果や比較知見の厚みは原文確認が必要。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "会話型 RPG への転用価値はあるが、学習効果・参加者評価・失敗例が候補本文に不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "open-only duplicate title group の代表1件。比較設計は有用だが、参加者評価結果を一次情報で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "ゲーム間構造移植の着想は有用だが、評価指標・dataset・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "探索・文脈保持・目標推定の評価へ転用できるが、評価手法と失敗分析が abstract 水準。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "headless playtest への注意点は有用だが、評価条件・失敗分類・モデル比較を原文で確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
