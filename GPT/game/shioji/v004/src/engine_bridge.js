@@ -7,6 +7,7 @@ import { START_MODES } from './start_modes.js';
 
 export function buildBlankCity(seed = 11) {
   const plan = makeStableCityPlan();
+  const portSite = plan.logisticsSites.port;
   const physical = createPhysicalState({
     width: 48,
     height: 40,
@@ -15,10 +16,9 @@ export function buildBlankCity(seed = 11) {
   const world = createWorld({
     seed,
     physicalState: physical,
-    market: { ...plan.logisticsSites.market.entrance },
-    warehouse: { ...plan.logisticsSites.warehouse.entrance },
-    port: { ...plan.logisticsSites.port.entrance },
-    logisticsSites: plan.logisticsSites,
+    market: { ...portSite.entrance },
+    port: { ...portSite.entrance },
+    logisticsSites: { port: portSite },
   });
   ensureCompanyLogisticsSites(world.state.economy, physical);
   return world;

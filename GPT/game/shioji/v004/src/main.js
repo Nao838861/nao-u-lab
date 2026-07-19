@@ -174,10 +174,13 @@ function removalPreview(tile) {
   for (let y = building.y; y < building.y + building.height; y += 1) {
     for (let x = building.x; x < building.x + building.width; x += 1) cells.push({ x, y });
   }
-  const ok = !building.fixed && building.ownerHouseholdId === null && building.shelfAmount <= 1e-9;
+  const marketBusy = building.roles?.includes('market')
+    && model.households.some(household => household.marketTripActive);
+  const ok = !building.fixed && building.ownerHouseholdId === null
+    && building.shelfAmount <= 1e-9 && !marketBusy;
   return {
     kind: 'remove-building', building, cells, ok,
-    reason: ok ? '' : '固定施設・入居中・在庫ありの建物は撤去できません',
+    reason: ok ? '' : '固定施設・入居中・在庫あり・市場往復中の建物は撤去できません',
   };
 }
 

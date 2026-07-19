@@ -183,6 +183,7 @@ export function snapshotToViewModel(snapshot) {
       cultureLevel: household.lv ?? 0,
       buildingId: household.buildingId,
       state: household.state,
+      marketTripActive: Boolean(household.marketCarrier),
       pantry,
       pantryStock: pantryGroups[0] ?? null,
     };

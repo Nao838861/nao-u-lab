@@ -7,10 +7,15 @@ import {
 import {
   addRoadLine,
   buildingById,
+  haulJobById,
   removeBuilding,
   removeRoadTile,
 } from "./physical.js";
 import { addAuditZone, findAuditSpot } from "./audit.js";
+import {
+  forgetCompanyLogisticsBuilding,
+  placeCompanyLogisticsBuilding,
+} from "./world.js";
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -291,6 +296,24 @@ export function createEngineApi(
     const { economy, physical } = world.state;
     switch (op.type) {
       case "place_building": {
+        if (op.job === "market" || op.job === "warehouse") {
+          const placed = placeCompanyLogisticsBuilding(
+            economy,
+            physical,
+            op.job,
+            { x: op.x, y: op.y },
+            {
+              day: world.state.day,
+              buildingX: op.buildingX ?? null,
+              buildingY: op.buildingY ?? null,
+            },
+          );
+          return {
+            ok: placed.ok,
+            buildingId: placed.ok ? placed.building.id : null,
+            reason: placed.reason ?? null,
+          };
+        }
         const ok = addAuditZone(
           world,
           op.job,
@@ -304,10 +327,27 @@ export function createEngineApi(
       case "remove_building": {
         const building = buildingById(physical, op.buildingId);
         if (!building || building.fixed || building.ownerHouseholdId !== null) return { ok: false };
+        if (
+          building.roles?.includes("market")
+          && economy.households.some((household) => household.marketCarrier)
+        ) return { ok: false };
+        const activeTransport = (physical.activeHaulJobIds ?? []).some((jobId) => {
+          const job = haulJobById(physical, jobId);
+          return job?.status === "in_transit"
+            && (job.from.buildingId === building.id || job.to.buildingId === building.id);
+        });
+        if (activeTransport) return { ok: false };
+        const stored = Object.values(building.inventory ?? {}).some((section) => (
+          Object.values(section).some((qty) => qty > 1e-9)
+        ));
+        if (stored) return { ok: false };
         const zoneIndex = economy.zones.findIndex(({ buildingId }) => buildingId === op.buildingId);
         if (zoneIndex >= 0 && economy.zones[zoneIndex].filled) return { ok: false };
         const ok = removeBuilding(physical, building);
-        if (ok && zoneIndex >= 0) economy.zones.splice(zoneIndex, 1);
+        if (ok) {
+          forgetCompanyLogisticsBuilding(economy, building);
+          if (zoneIndex >= 0) economy.zones.splice(zoneIndex, 1);
+        }
         return { ok };
       }
       case "add_road":

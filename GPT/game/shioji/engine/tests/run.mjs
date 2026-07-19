@@ -143,6 +143,7 @@ import {
   createAuditWorld,
   createIronAuditWorld,
   evaluateIronChainScenarios,
+  findAuditSpot,
   mimicPlayer,
   makeStableCityPlan,
   runFlowIslandAudit,
@@ -259,6 +260,25 @@ function createLogisticsTestFixture({ connectMarketWarehouse = false, connectPor
     addRoadLine(physical, { x: 9, y: 7 }, economy.port);
   }
   return { economy, physical };
+}
+
+function createPortOnlyTestWorld(seed = 11) {
+  const plan = makeStableCityPlan();
+  const port = plan.logisticsSites.port;
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(48, 40),
+  });
+  const world = createWorld({
+    seed,
+    physicalState: physical,
+    market: { ...port.entrance },
+    port: { ...port.entrance },
+    logisticsSites: { port },
+  });
+  ensureCompanyLogisticsSites(world.state.economy, physical);
+  return world;
 }
 
 test("mulberry32は同じシードから同じ列を返す", () => {
@@ -2884,6 +2904,155 @@ test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付�
     && Number.isFinite(x)
     && Number.isFinite(y)
   )), true);
+});
+
+test("完成後拡張: 港だけの世界は市場・蔵を自動生成せず公開操作で実体化する", () => {
+  const world = createPortOnlyTestWorld();
+  const api = createEngineApi(world);
+  assert.deepEqual(world.state.physical.buildings.map(({ type }) => type), ["port"]);
+  api.advanceDays(1);
+  assert.deepEqual(world.state.physical.buildings.map(({ type }) => type), ["port"]);
+
+  const plan = makeStableCityPlan();
+  const marketPlan = plan.logisticsSites.market;
+  const warehousePlan = plan.logisticsSites.warehouse;
+  const marketResult = api.applyOperation({
+    type: "place_building",
+    job: "market",
+    x: marketPlan.entrance.x,
+    y: marketPlan.entrance.y,
+    buildingX: marketPlan.x,
+    buildingY: marketPlan.y,
+  });
+  const warehouseResult = api.applyOperation({
+    type: "place_building",
+    job: "warehouse",
+    x: warehousePlan.entrance.x,
+    y: warehousePlan.entrance.y,
+    buildingX: warehousePlan.x,
+    buildingY: warehousePlan.y,
+  });
+  assert.equal(marketResult.ok, true);
+  assert.equal(warehouseResult.ok, true);
+  assert.equal(api.applyOperation({
+    type: "place_building",
+    job: "market",
+    x: 18,
+    y: 18,
+  }).ok, false);
+
+  const { economy, physical } = world.state;
+  const market = companyLogisticsSite(physical, "market");
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  assert.equal(market.id, marketResult.buildingId);
+  assert.equal(warehouse.id, warehouseResult.buildingId);
+  assert.deepEqual(economy.market, marketPlan.entrance);
+  assert.deepEqual(economy.warehouse, warehousePlan.entrance);
+  assert.equal(market.fixed, false);
+  assert.equal(warehouse.fixed, false);
+  assert.ok(sectionCapacity(market, "outbound", "log") > 1e9);
+  assert.ok(sectionCapacity(warehouse, "storage", "log") > 1e9);
+  assert.equal(economy.company.money, P.TREASURY0 - P.BUILD_COST * 2);
+  assert.equal(economy.moneyBoundary.out, P.BUILD_COST * 2);
+  assert.deepEqual(api.inputJournal().slice(0, 2).map(({ op }) => op.job), ["market", "warehouse"]);
+});
+
+test("完成後拡張: 市場を建てるまでは住民が見えない市場へ往復しない", () => {
+  const world = createPortOnlyTestWorld();
+  const api = createEngineApi(world);
+  const [x, y] = findAuditSpot(world, "woodshop");
+  assert.equal(api.applyOperation({ type: "place_building", job: "woodshop", x, y }).ok, true);
+  api.advanceDays(45);
+  const { economy, physical } = world.state;
+  assert.ok(economy.households.length > 0);
+  assert.equal(economy.households.every((household) => household.marketCarrier === null), true);
+  assert.equal(Object.values(economy.stalls).every((stalls) => stalls.length === 0), true);
+  assert.deepEqual(physical.buildings.map(({ type }) => type).sort(), ["port", "woodshop"]);
+  assert.equal(companyLogisticsSite(physical, "market"), null);
+  assert.equal(companyLogisticsSite(physical, "warehouse"), null);
+});
+
+test("完成後拡張: 後置きの市場・蔵が従来どおり道路限定の買上げと蔵出しを担う", () => {
+  const world = createPortOnlyTestWorld();
+  const api = createEngineApi(world);
+  const plan = makeStableCityPlan();
+  for (const type of ["market", "warehouse"]) {
+    const site = plan.logisticsSites[type];
+    assert.equal(api.applyOperation({
+      type: "place_building",
+      job: type,
+      x: site.entrance.x,
+      y: site.entrance.y,
+      buildingX: site.x,
+      buildingY: site.y,
+    }).ok, true);
+  }
+  assert.equal(api.applyOperation({
+    type: "add_road",
+    start: { x: 25, y: 28 },
+    end: { x: 28, y: 28 },
+  }).ok, true);
+  assert.equal(api.applyOperation({
+    type: "add_road",
+    start: { x: 28, y: 28 },
+    end: { x: 28, y: 32 },
+  }).ok, true);
+
+  const { economy, physical } = world.state;
+  const market = companyLogisticsSite(physical, "market");
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  const seller = createHousehold(economy, { job: "logger", x: 20, y: 20 });
+  economy.stalls.log.push({ householdId: seller.id, qty: 8, price: 1, age: 0 });
+  depositInventory(market, "outbound", "log", 8);
+  setCompanyStockTarget(economy, "log", 8);
+  const [purchase] = runCompanyProcurement(economy, { day: 1, physical });
+  assert.equal(purchase.qty, 8);
+  assert.equal(sectionAmount(market, "outbound", "log"), 0);
+  assert.equal(api.applyOperation({ type: "remove_building", buildingId: market.id }).ok, false);
+  assert.equal(api.applyOperation({ type: "remove_building", buildingId: warehouse.id }).ok, false);
+  while (physical.activeHaulJobIds.length > 0) stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 1 });
+  assert.equal(economy.stock.log, 8);
+  assert.equal(sectionAmount(warehouse, "storage", "log"), 8);
+
+  assert.ok(requestCompanyStockRelease(economy, physical, "log", { day: 2, qty: 8 }));
+  while (physical.activeHaulJobIds.length > 0) stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 2 });
+  assert.equal(economy.stock.log, 0);
+  assert.equal(economy.marketStock.log, 8);
+  assert.equal(sectionAmount(market, "inbound", "log"), 8);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("完成後拡張: 空の市場・蔵は撤去後に復活せず配置journalを再生できる", () => {
+  const create = () => createPortOnlyTestWorld(13);
+  const world = create();
+  const api = createEngineApi(world);
+  const plan = makeStableCityPlan();
+  for (const type of ["market", "warehouse"]) {
+    const site = plan.logisticsSites[type];
+    assert.equal(api.applyOperation({
+      type: "place_building",
+      job: type,
+      x: site.entrance.x,
+      y: site.entrance.y,
+      buildingX: site.x,
+      buildingY: site.y,
+    }).ok, true);
+  }
+  const placedState = api.snapshot({ scope: "full" });
+  const placementJournal = api.inputJournal();
+  const replay = replayInputJournal(create, placementJournal, { untilTick: 0 });
+  assert.deepEqual(replay.api.snapshot({ scope: "full" }), placedState);
+
+  const market = companyLogisticsSite(world.state.physical, "market");
+  const warehouse = companyLogisticsSite(world.state.physical, "warehouse");
+  assert.equal(api.applyOperation({ type: "remove_building", buildingId: market.id }).ok, true);
+  assert.equal(api.applyOperation({ type: "remove_building", buildingId: warehouse.id }).ok, true);
+  api.advanceDays(1);
+  assert.deepEqual(world.state.physical.buildings.map(({ type }) => type), ["port"]);
+  assert.equal(companyLogisticsSite(world.state.physical, "market"), null);
+  assert.equal(companyLogisticsSite(world.state.physical, "warehouse"), null);
 });
 
 test("段48: API版mimicPlayerと入力ジャーナル再生は直接版と同一状態になる", () => {

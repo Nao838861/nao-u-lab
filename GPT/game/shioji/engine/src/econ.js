@@ -3108,6 +3108,30 @@ export function fundSettlementZone(
   return true;
 }
 
+export function fundCompanyBuilding(economy, { type, day }) {
+  const label = type === "market" ? "市場" : type === "warehouse" ? "蔵" : null;
+  if (!label) throw new Error(`会社施設の建築対象外です: ${type}`);
+  if (!Number.isSafeInteger(day) || day < 0) {
+    throw new TypeError("company building day must be a non-negative safe integer");
+  }
+  if (economy.company.money - P.BUILD_COST < -companyCreditLimit(economy, { day })) {
+    recordEconomyEvent(economy, day, `金庫不足——${label}の建築費${P.BUILD_COST * 10}デナリが出せない`);
+    return false;
+  }
+  postCompanyLedger(economy.company, {
+    day,
+    amount: -P.BUILD_COST,
+    reason: `${label}の建築費`,
+  });
+  recordExternalMoneyFlow(economy, {
+    amount: -P.BUILD_COST,
+    reason: `${label}の本土建築資材`,
+  });
+  economy.co.build += P.BUILD_COST;
+  recordEconomyEvent(economy, day, `物流施設建設: ${label}(建築費${P.BUILD_COST * 10}デナリ)`);
+  return true;
+}
+
 export function investCompanyShipping(economy, { day }) {
   if (economy.shipping || economy.company.money < -companyCreditLimit(economy, { day })) return false;
   postCompanyLedger(economy.company, {

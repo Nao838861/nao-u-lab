@@ -5,7 +5,7 @@ import { buildBaseCity } from '../../engine/src/audit.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
-import { BUILDING_ART, BUILDING_SIZES } from '../src/config.js';
+import { BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS } from '../src/config.js';
 import { createEngineController } from '../src/engine_bridge.js';
 import {
   OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
@@ -58,10 +58,26 @@ test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の�
   const testCity = createEngineController({ seed: 11, mode: 'test' });
   assert.deepEqual(tutorial.readModel(), sandbox.readModel());
   const blank = sandbox.readModel();
-  assert.deepEqual(blank.buildings.map(building => building.type).sort(), ['market', 'port', 'warehouse']);
+  assert.deepEqual(blank.buildings.map(building => building.type), ['port']);
   assert.equal(blank.households.length, 0);
   assert.equal(blank.roadKeys.length, 0);
-  const preview = findPreview(blank, 'woodshop');
+  assert.deepEqual(PLACEMENT_JOBS.slice(0, 2), ['market', 'warehouse']);
+  sandbox.advanceOneDay();
+  assert.deepEqual(sandbox.readModel().buildings.map(building => building.type), ['port']);
+  for (const type of ['market', 'warehouse']) {
+    const logisticsPreview = findPreview(sandbox.readModel(), type);
+    assert.ok(logisticsPreview, `未開拓島に${type}を配置できる`);
+    assert.equal(sandbox.operate({
+      type: 'place_building', job: type,
+      x: logisticsPreview.entrance.x, y: logisticsPreview.entrance.y,
+      buildingX: logisticsPreview.x, buildingY: logisticsPreview.y,
+    }).ok, true);
+  }
+  assert.deepEqual(
+    sandbox.readModel().buildings.map(building => building.type).sort(),
+    ['market', 'port', 'warehouse'],
+  );
+  const preview = findPreview(sandbox.readModel(), 'woodshop');
   assert.ok(preview, '未開拓島にも最初の職建物を配置できる');
   assert.equal(sandbox.operate({
     type: 'place_building', job: 'woodshop',
@@ -263,7 +279,7 @@ test('段6: 全建物種をsnapshotの正位置・正サイズ・入口のまま
     role: type,
     roles: [type],
     ownerHouseholdId: ['market', 'warehouse', 'port'].includes(type) ? null : 100 + index,
-    fixed: ['market', 'port'].includes(type),
+    fixed: type === 'port',
     grade: 0,
     inventory: {
       input: {}, output: {}, storage: {}, construction: {}, inbound: {}, outbound: {}, pickup: {},
@@ -560,7 +576,7 @@ test('段14: 道路プレビュー・操作journal・市場接続色と警告座
   const fixture = {
     roadKeys: ['0,0', '1,0', '5,5'],
     buildings: [
-      { id: 'market', type: 'market', entrance: { x: 0, y: 0 } },
+      { id: 'market', type: 'market', roles: ['market'], entrance: { x: 0, y: 0 } },
       { id: 'near', type: 'woodshop', entrance: { x: 1, y: 0 } },
       { id: 'far', type: 'logger', entrance: { x: 5, y: 5 } },
     ],

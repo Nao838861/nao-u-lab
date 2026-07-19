@@ -74,7 +74,11 @@ function validFootprint(model, job, entrance, site) {
 function rejection(model, job, entrance) {
   const definition = BUILDING_SIZES[job];
   if (!definition) return '未対応の建物です';
-  if (definition.fixed) return '市場と港は固定施設です';
+  if (definition.fixed) return '港は固定施設です';
+  if (
+    (job === 'market' || job === 'warehouse')
+    && model.buildings.some(building => building.roles?.includes(job))
+  ) return job === 'market' ? '市場はすでにあります' : '蔵はすでにあります';
   const terrain = terrainAt(model, entrance.x, entrance.y);
   if (!terrain || terrain === 'water') return '水の上には建てられません';
   if ((model.zones ?? []).some(zone => Math.round(zone.x) === entrance.x && Math.round(zone.y) === entrance.y)
@@ -83,7 +87,8 @@ function rejection(model, job, entrance) {
   if ((model.roadWorksites ?? []).some(site => site.x === entrance.x && site.y === entrance.y)) {
     return '普請中の入口には建てられません';
   }
-  if (Math.round(model.economyMarket.x) === entrance.x && Math.round(model.economyMarket.y) === entrance.y) {
+  const market = model.buildings.find(building => building.roles?.includes('market'));
+  if (market?.entrance?.x === entrance.x && market.entrance.y === entrance.y) {
     return 'ここは市場です';
   }
   if (terrain === 'forest') return '森そのものではなく森の際へ配置してください';
@@ -105,7 +110,9 @@ export function previewBuildingPlacement(model, job, point) {
   if (reason || !definition) return {
     kind: 'building', job, entrance, ok: false, reason: reason ?? '未対応の建物です', cells: [],
   };
-  const toward = model.economyMarket;
+  const toward = model.buildings.find(building => building.roles?.includes('market'))?.entrance
+    ?? model.buildings.find(building => building.roles?.includes('port'))?.entrance
+    ?? model.economyMarket;
   const candidates = perimeterOrigins(entrance, definition.width, definition.height)
     .filter(site => validFootprint(model, job, entrance, site))
     .sort((left, right) => {
@@ -175,10 +182,10 @@ export function previewRoadPlacement(model, start, end) {
 
 export function analyzeRoadConnections(model) {
   const roads = new Set(model.roadKeys);
-  const market = model.buildings.find(building => building.type === 'market');
-  const origin = market?.entrance ?? model.economyMarket;
+  const market = model.buildings.find(building => building.roles?.includes('market'));
+  const origin = market?.entrance ?? null;
   const connected = new Set();
-  const queue = roads.has(tileKey(origin.x, origin.y)) ? [{ x: origin.x, y: origin.y }] : [];
+  const queue = origin && roads.has(tileKey(origin.x, origin.y)) ? [{ x: origin.x, y: origin.y }] : [];
   while (queue.length) {
     const point = queue.shift();
     const key = tileKey(point.x, point.y);

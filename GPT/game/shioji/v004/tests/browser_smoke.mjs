@@ -108,6 +108,7 @@ async function checkStartChoice(width, height, mobile, mode) {
       speed: window.__SHIOJI_V004__.clock.speedIndex,
       startMode: window.__SHIOJI_V004__.startMode,
       buildings: window.__SHIOJI_V004__.model.buildings.map(building => building.type).sort(),
+      buildingOptions: [...document.querySelectorAll('#building-kind option')].map(option => option.value),
       households: window.__SHIOJI_V004__.model.households.length,
       roads: window.__SHIOJI_V004__.model.roadKeys.length,
     };
@@ -116,7 +117,8 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.deepEqual(launcher.buttonModes, ['tutorial', 'sandbox', 'test']);
   assert.equal(launcher.speed, 0);
   assert.equal(launcher.startMode, 'sandbox');
-  assert.deepEqual(launcher.buildings, ['market', 'port', 'warehouse']);
+  assert.deepEqual(launcher.buildings, ['port']);
+  assert.deepEqual(launcher.buildingOptions.slice(0, 2), ['market', 'warehouse']);
   assert.equal(launcher.households, 0);
   assert.equal(launcher.roads, 0);
   assert.ok(launcher.dialog.left >= 0 && launcher.dialog.right <= width, JSON.stringify(launcher));
@@ -144,7 +146,7 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.ok(started.buildings > 3, JSON.stringify(started));
     assert.ok(started.roads > 0, JSON.stringify(started));
   } else {
-    assert.equal(started.buildings, 3, JSON.stringify(started));
+    assert.equal(started.buildings, 1, JSON.stringify(started));
     assert.equal(started.households, 0, JSON.stringify(started));
     assert.equal(started.roads, 0, JSON.stringify(started));
   }
@@ -156,8 +158,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.0.6-start-modes');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.0.6-start-modes');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.0.7-free-logistics');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.0.7-free-logistics');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({

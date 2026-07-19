@@ -10,7 +10,7 @@ export const START_MODES = Object.freeze({
     id: 'sandbox',
     label: 'ゼロから開拓',
     shortLabel: '未開拓サンドボックス',
-    description: '市場・蔵・港だけがある島で、建物と道を自分で配置します。',
+    description: '港だけがある島で、市場・蔵・職建物と道を自分で配置します。',
     blank: true,
   }),
   test: Object.freeze({

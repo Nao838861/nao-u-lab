@@ -66,7 +66,7 @@ const ECONOMIC_JOB_BUILDINGS = Object.freeze({
 
 export const ECONOMIC_BUILDINGS = Object.freeze({
   ...ECONOMIC_JOB_BUILDINGS,
-  market: { category: "fixed", w: 5, h: 5, allowedTerrain: ECONOMIC_LAND },
+  market: { category: "logistics", w: 5, h: 5, allowedTerrain: ECONOMIC_LAND },
   warehouse: { category: "logistics", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
   port: { category: "fixed", w: 4, h: 3, shore: true },
 });

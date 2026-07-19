@@ -1,4 +1,4 @@
-export const VERSION = 'v004.0.6-start-modes';
+export const VERSION = 'v004.0.7-free-logistics';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -73,12 +73,13 @@ export const BUILDING_SIZES = Object.freeze({
   veg: Object.freeze({ width: 4, height: 4 }),
   shepherd: Object.freeze({ width: 4, height: 4 }),
   rapeseed: Object.freeze({ width: 4, height: 4 }),
-  market: Object.freeze({ width: 5, height: 5, fixed: true }),
+  market: Object.freeze({ width: 5, height: 5 }),
   warehouse: Object.freeze({ width: 4, height: 4 }),
   port: Object.freeze({ width: 4, height: 3, fixed: true, shore: true }),
 });
 
 export const PLACEMENT_JOBS = Object.freeze([
+  'market', 'warehouse',
   'fisher', 'fisher2', 'logger', 'woodshop', 'charburner', 'saltworks', 'quarryman',
   'miner', 'collier', 'smelter', 'smith', 'wheat', 'veg', 'shepherd', 'rapeseed',
 ]);

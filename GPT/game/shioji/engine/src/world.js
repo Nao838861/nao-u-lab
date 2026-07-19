@@ -6,6 +6,7 @@ import {
   assignNeedyWork,
   completeAssignedWork,
   createEconomicState,
+  fundCompanyBuilding,
   initializeNaturalResources,
   isProductionInput,
   householdMaterialAmount,
@@ -27,6 +28,7 @@ import {
   ECONOMIC_BUILDINGS,
   addBuilding,
   buildingById,
+  canPlaceBuilding,
   createWalkCarrier,
   createPhysicalState,
   depositInventory,
@@ -103,8 +105,8 @@ function logisticsEntrance(physical, role, fallback) {
 export function ensureCompanyLogisticsSites(economy, physical) {
   const ensure = (role, type, position, sections, roles = [role]) => {
     let building = buildingById(physical, physical.roleBuildingIds?.[role]);
-    if (building || !position) return building;
     const planned = economy.logisticsSites?.[role] ?? {};
+    if (building || !economy.logisticsSites?.[role] || !position) return building;
     const entrance = planned.entrance ?? position;
     const origin = Number.isSafeInteger(planned.x) && Number.isSafeInteger(planned.y)
       ? { x: planned.x, y: planned.y }
@@ -155,6 +157,73 @@ export function ensureCompanyLogisticsSites(economy, physical) {
     ["port", "trade_port"],
   );
   return { market, warehouse, port };
+}
+
+const PLAYER_LOGISTICS_BUILDINGS = Object.freeze({
+  market: Object.freeze({ role: "market", sections: Object.freeze(["inbound", "outbound", "pickup"]) }),
+  warehouse: Object.freeze({ role: "warehouse", sections: Object.freeze(["storage"]) }),
+});
+
+export function placeCompanyLogisticsBuilding(
+  economy,
+  physical,
+  type,
+  entrance,
+  { day, buildingX = null, buildingY = null } = {},
+) {
+  const spec = PLAYER_LOGISTICS_BUILDINGS[type];
+  if (!spec) return { ok: false, reason: "unsupported-logistics-building" };
+  if (buildingById(physical, physical.roleBuildingIds?.[spec.role])) {
+    return { ok: false, reason: "logistics-role-exists" };
+  }
+  if (!Number.isSafeInteger(entrance?.x) || !Number.isSafeInteger(entrance?.y)) {
+    return { ok: false, reason: "invalid-entrance" };
+  }
+  const preferred = Number.isSafeInteger(buildingX) && Number.isSafeInteger(buildingY)
+    ? { x: buildingX, y: buildingY }
+    : null;
+  const toward = buildingById(physical, physical.roleBuildingIds?.market)?.entrance
+    ?? buildingById(physical, physical.roleBuildingIds?.port)?.entrance
+    ?? economy.market;
+  const options = {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { ...entrance },
+    requireRoad: false,
+  };
+  const origin = preferred ?? findBuildingSiteForEntrance(physical, type, entrance, {
+    definitions: ECONOMIC_BUILDINGS,
+    toward,
+  });
+  if (!origin) return { ok: false, reason: "no-building-site" };
+  const placement = canPlaceBuilding(physical, type, origin.x, origin.y, options);
+  if (!placement.ok) return placement;
+  if (!fundCompanyBuilding(economy, { type, day })) {
+    return { ok: false, reason: "insufficient-funds" };
+  }
+  const placed = addBuilding(physical, type, origin.x, origin.y, {
+    ...options,
+    role: spec.role,
+    roles: [spec.role],
+    caps: buildingCaps(...spec.sections),
+  });
+  if (!placed.ok) throw new Error(`${type}の検証済み配置に失敗しました: ${placed.reason}`);
+  const site = { x: origin.x, y: origin.y, entrance: { ...entrance } };
+  (economy.logisticsSites ??= {})[spec.role] = structuredClone(site);
+  if (spec.role === "market") economy.market = { ...entrance };
+  if (spec.role === "warehouse") economy.warehouse = { ...entrance };
+  return placed;
+}
+
+export function forgetCompanyLogisticsBuilding(economy, building) {
+  const roles = new Set(building?.roles ?? []);
+  if (roles.has("market")) {
+    delete economy.logisticsSites?.market;
+    economy.market = economy.port ? { ...economy.port } : { x: 0, y: 0 };
+  }
+  if (roles.has("warehouse")) {
+    delete economy.logisticsSites?.warehouse;
+    economy.warehouse = null;
+  }
 }
 
 export function ensureHouseholdInputSites(economy, physical) {
@@ -261,6 +330,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
 }
 
 export function decideHouseholdTrips(economy, physical) {
+  if (!buildingById(physical, physical.roleBuildingIds?.market)) return;
   for (const household of economy.households) {
     if (household.state !== "home") continue;
     const foodDays = FOODS.reduce(
@@ -322,10 +392,20 @@ export function createWorld({
   const normalizedSeed = normalizeSeed(seed);
   const physical = physicalState ?? createPhysicalState();
   const economy = createEconomicState({ initialCompanyMoney });
-  economy.market = market ? { ...market } : { x: 8, y: 15 };
-  economy.warehouse = warehouse ? { ...warehouse } : { x: 10, y: 15 };
+  const marketPosition = market ? { ...market } : { x: 8, y: 15 };
+  const warehousePosition = warehouse ? { ...warehouse } : { x: 10, y: 15 };
+  economy.market = marketPosition;
+  economy.warehouse = logisticsSites && !logisticsSites.warehouse && !warehouse
+    ? null
+    : warehousePosition;
   if (port) economy.port = { ...port };
-  if (logisticsSites) economy.logisticsSites = structuredClone(logisticsSites);
+  economy.logisticsSites = logisticsSites
+    ? structuredClone(logisticsSites)
+    : {
+      market: { entrance: { ...marketPosition } },
+      warehouse: { entrance: { ...warehousePosition } },
+      ...(port ? { port: { entrance: { ...port } } } : {}),
+    };
   const state = {
     day: 0,
     tick: 0,
