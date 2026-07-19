@@ -123,7 +123,7 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.equal(launcher.roads, 0);
   assert.ok(launcher.dialog.left >= 0 && launcher.dialog.right <= width, JSON.stringify(launcher));
   assert.ok(launcher.dialog.top >= 0 && launcher.dialog.bottom <= height, JSON.stringify(launcher));
-  await page.screenshot(`/tmp/shioji_v004_start_${mobile ? 'mobile' : mode}.png`);
+  await page.screenshot(`/tmp/shioji_v004_start_${mode}_${mobile ? 'mobile' : 'desktop'}.png`);
 
   await page.evaluate(`document.querySelector('[data-start-mode="${mode}"]').click()`);
   for (let attempt = 0; attempt < 80; attempt += 1) {
@@ -138,6 +138,15 @@ async function checkStartChoice(width, height, mobile, mode) {
     buildings: window.__SHIOJI_V004__.model.buildings.length,
     households: window.__SHIOJI_V004__.model.households.length,
     roads: window.__SHIOJI_V004__.model.roadKeys.length,
+    tutorialState: window.__SHIOJI_V004__.tutorialState,
+    objectiveVisible: !document.querySelector('#tutorial-objective').hidden,
+    letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
+    letterText: document.querySelector('#tutorial-letter-modal').textContent,
+    objectiveBounds: ((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom }))(
+      document.querySelector('#tutorial-objective').getBoundingClientRect()),
+    paperBounds: ((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom }))(
+      document.querySelector('.tutorial-paper').getBoundingClientRect()),
+    speed: window.__SHIOJI_V004__.clock.speedIndex,
     errors: document.querySelector('#status').textContent,
   })`);
   assert.equal(started.mode, mode, JSON.stringify(started));
@@ -150,7 +159,55 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.households, 0, JSON.stringify(started));
     assert.equal(started.roads, 0, JSON.stringify(started));
   }
-  await page.screenshot(`/tmp/shioji_v004_started_${mode}.png`);
+  if (mode === 'tutorial') {
+    assert.equal(started.tutorialState.active, true, JSON.stringify(started));
+    assert.equal(started.objectiveVisible, true, JSON.stringify(started));
+    assert.equal(started.letterVisible, true, JSON.stringify(started));
+    assert.equal(started.speed, 0, JSON.stringify(started));
+    assert.match(started.letterText, /0日目/);
+    assert.match(started.letterText, /港 1棟・人口 0人・道路 0区画/);
+    for (const bounds of [started.objectiveBounds, started.paperBounds]) {
+      assert.ok(bounds.left >= 0 && bounds.right <= width, JSON.stringify(started));
+      assert.ok(bounds.top >= 0 && bounds.bottom <= height, JSON.stringify(started));
+    }
+    await page.screenshot(`/tmp/shioji_v004_tutorial_letter_${mobile ? 'mobile' : 'desktop'}.png`);
+    const restoredSpeed = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      document.querySelector('#close-tutorial-letter').click();
+      const speed = game.clock.speedIndex;
+      game.setSpeed(0);
+      return speed;
+    })()`);
+    assert.equal(restoredSpeed, 1);
+    await page.screenshot(`/tmp/shioji_v004_tutorial_goal_${mobile ? 'mobile' : 'desktop'}.png`);
+    const skip = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const before = { model: game.model, journal: game.controller.inputJournal() };
+      document.querySelector('#skip-tutorial').click();
+      return {
+        before,
+        after: { model: game.model, journal: game.controller.inputJournal() },
+        state: game.tutorialState,
+        objectiveHidden: document.querySelector('#tutorial-objective').hidden,
+        lettersHidden: document.querySelector('#open-tutorial-letters').hidden,
+        label: document.querySelector('#start-mode-label').textContent,
+        save: game.tutorialSave(),
+      };
+    })()`);
+    assert.deepEqual(skip.after, skip.before, JSON.stringify(skip));
+    assert.equal(skip.state.active, false, JSON.stringify(skip));
+    assert.equal(skip.state.skipped, true, JSON.stringify(skip));
+    assert.equal(skip.objectiveHidden, true, JSON.stringify(skip));
+    assert.equal(skip.lettersHidden, true, JSON.stringify(skip));
+    assert.match(skip.label, /自由プレイ/);
+    assert.deepEqual(skip.save.engineJournal, skip.before.journal);
+    assert.deepEqual(skip.save.tutorialState, skip.state);
+  } else {
+    assert.equal(started.tutorialState, null, JSON.stringify(started));
+    assert.equal(started.objectiveVisible, false, JSON.stringify(started));
+    assert.equal(started.letterVisible, false, JSON.stringify(started));
+  }
+  await page.screenshot(`/tmp/shioji_v004_started_${mode}_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   page.close();
 }
@@ -158,8 +215,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.0.7-free-logistics');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.0.7-free-logistics');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.1.0-tutorial-foundation');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.1.0-tutorial-foundation');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -478,6 +535,7 @@ async function checkViewport(width, height, mobile) {
 }
 
 await checkStartChoice(1440, 900, false, 'tutorial');
+await checkStartChoice(390, 844, true, 'tutorial');
 await checkStartChoice(390, 844, true, 'sandbox');
 await checkStartChoice(800, 700, false, 'test');
 await checkViewport(1440, 900, false);

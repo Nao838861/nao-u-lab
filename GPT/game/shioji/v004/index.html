@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.0.7">
+  <link rel="stylesheet" href="./style.css?v=v004.1.0">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -31,6 +31,16 @@
     <button id="step-day" class="step-day" type="button" data-testid="step-day">1日進める</button>
   </header>
 
+  <aside id="tutorial-objective" class="panel tutorial-objective" hidden data-testid="tutorial-objective">
+    <div>
+      <small id="tutorial-chapter">—</small>
+      <b id="tutorial-goal">—</b>
+      <span id="tutorial-detail">—</span>
+    </div>
+    <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
+    <button id="skip-tutorial" type="button">案内を終える<small>島はそのまま</small></button>
+  </aside>
+
   <aside id="observer" class="panel observer" data-testid="observer">
     <small>島の観測</small>
     <h1>エンジンの世界</h1>
@@ -46,6 +56,7 @@
     <div class="observer-actions">
       <button id="open-company" type="button">会社</button>
       <button id="open-events" type="button">出来事</button>
+      <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
       <button id="choose-start" type="button">最初から</button>
     </div>
     <p>ドラッグ／スワイプで移動、ホイール／ピンチで拡大縮小。</p>
@@ -102,6 +113,26 @@
     <div id="event-log" class="event-log"></div>
   </aside>
 
+  <aside id="tutorial-letter-sheet" class="panel sheet" hidden data-testid="tutorial-letter-sheet">
+    <header>
+      <div><small>会社秘書からの報告</small><h2>届いた書状</h2></div>
+      <button type="button" data-close-sheet="tutorial-letter-sheet" aria-label="書状一覧を閉じる">×</button>
+    </header>
+    <p class="sheet-note">本文の数値は、届いた時点の島で実際に観測した値です。</p>
+    <div id="tutorial-letter-list" class="tutorial-letter-list"></div>
+  </aside>
+
+  <div id="tutorial-letter-modal" class="tutorial-letter-modal" hidden data-testid="tutorial-letter-modal">
+    <article class="tutorial-paper" role="dialog" aria-modal="true" aria-labelledby="tutorial-letter-title">
+      <button id="close-tutorial-letter" class="paper-close" type="button" aria-label="書状を閉じる">×</button>
+      <small id="tutorial-letter-kicker" class="paper-kicker">—</small>
+      <h2 id="tutorial-letter-title">—</h2>
+      <strong id="tutorial-letter-summary">—</strong>
+      <div id="tutorial-letter-body" class="paper-body"></div>
+      <footer id="tutorial-letter-signature">—</footer>
+    </article>
+  </div>
+
   <div id="status" class="panel status" role="status" aria-live="polite">
     <i></i><span>経済エンジンに接続済み</span>
   </div>
@@ -114,8 +145,8 @@
       <p>同じ経済エンジンを、異なる初期状態から始めます。</p>
       <div class="start-options">
         <button type="button" data-start-mode="tutorial">
-          <span><b>チュートリアルから</b><em>準備中</em></span>
-          <small>ガイドは準備中です。現在は未開拓島から同じ条件で始めます。</small>
+          <span><b>チュートリアルから</b><em>案内つき</em></span>
+          <small>未開拓島で、実際の島況に沿う書状と目標を手がかりに開拓します。</small>
         </button>
         <button type="button" data-start-mode="sandbox">
           <span><b>ゼロから開拓</b><em>サンドボックス</em></span>
@@ -130,6 +161,6 @@
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.0.7"></script>
+  <script type="module" src="./src/main.js?v=v004.1.0"></script>
 </body>
 </html>

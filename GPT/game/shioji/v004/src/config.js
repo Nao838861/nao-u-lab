@@ -1,4 +1,4 @@
-export const VERSION = 'v004.0.7-free-logistics';
+export const VERSION = 'v004.1.0-tutorial-foundation';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

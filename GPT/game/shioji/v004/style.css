@@ -148,8 +148,24 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .observer dt { color: var(--muted); font-size: 10px; }
 .observer dd { margin: 0; font: 700 11px Georgia, serif; }
 .observer p { margin: 8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
-.observer-actions { display: flex; gap: 5px; margin-top: 9px; }
+.observer-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
 .observer-actions button { flex: 1; border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 5px; padding: 6px; cursor: pointer; font-size: 10px; }
+.observer-actions button[hidden] { display: none; }
+.unread-badge { display: inline-grid; min-width: 16px; height: 16px; place-items: center; margin-left: 3px; border-radius: 999px; background: #b84f43; color: #fff6dc; font-size: 9px; }
+.unread-badge[hidden] { display: none; }
+
+.tutorial-objective { position: fixed; z-index: 25; top: 91px; left: 50%; width: min(520px, calc(100vw - 540px)); min-width: 360px; transform: translateX(-50%); display: grid; grid-template-columns: minmax(0,1fr) 80px auto; gap: 13px; align-items: center; padding: 10px 12px; border-radius: 9px; }
+.tutorial-objective[hidden] { display: none; }
+.tutorial-objective.complete { border-color: rgba(159,203,118,.65); }
+.tutorial-objective.complete div small, .tutorial-objective.complete div b { color: var(--green); }
+.tutorial-objective div { min-width: 0; display: grid; gap: 2px; }
+.tutorial-objective div small { color: var(--gold); font-size: 9px; }
+.tutorial-objective div b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13px Georgia, "Yu Mincho", serif; }
+.tutorial-objective div span { color: var(--muted); font-size: 9px; }
+.tutorial-objective label { display: grid; gap: 3px; text-align: right; color: var(--muted); font-size: 9px; }
+.tutorial-objective progress { width: 80px; height: 6px; accent-color: var(--gold); }
+.tutorial-objective > button { border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.04); padding: 6px 8px; cursor: pointer; font-size: 9px; }
+.tutorial-objective > button small { display: block; color: var(--muted); font-size: 8px; }
 
 .build-dock {
   position: fixed;
@@ -237,6 +253,22 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .event-row.warn, .event-row.order { border-left-color: var(--gold); }
 .event-row b { display: flex; justify-content: space-between; font-size: 10px; }
 .event-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+.tutorial-letter-list { display: grid; gap: 6px; margin-top: 10px; }
+.tutorial-letter-row { width: 100%; display: grid; gap: 3px; border: 1px solid rgba(226,209,161,.15); border-left: 3px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.03); padding: 9px; text-align: left; cursor: pointer; }
+.tutorial-letter-row.unread { border-left-color: var(--gold); background: rgba(229,182,91,.08); }
+.tutorial-letter-row b { font: 700 12px Georgia, "Yu Mincho", serif; }
+.tutorial-letter-row small { color: var(--muted); font-size: 9px; }
+
+.tutorial-letter-modal { position: fixed; z-index: 110; inset: 0; display: grid; place-items: center; padding: 20px; overflow: auto; background: rgba(5,18,20,.72); backdrop-filter: blur(7px); }
+.tutorial-letter-modal[hidden] { display: none; }
+.tutorial-paper { position: relative; width: min(620px, 100%); max-height: calc(100vh - 40px); overflow: auto; padding: 48px 54px 42px; border: 1px solid #a28c60; color: #352d21; background: linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,0)), #e8d8ad; box-shadow: 0 24px 70px rgba(0,0,0,.5), inset 0 0 70px rgba(101,73,35,.12); font-family: Georgia, "Yu Mincho", serif; }
+.paper-close { position: absolute; top: 14px; right: 16px; border: 1px solid rgba(53,45,33,.28); border-radius: 50%; width: 30px; height: 30px; background: transparent; color: #554936; cursor: pointer; font-size: 18px; }
+.paper-kicker { color: #766143; font-size: 10px; letter-spacing: .16em; }
+.tutorial-paper h2 { margin: 9px 0 7px; font-size: 27px; }
+.tutorial-paper > strong { display: block; padding: 8px 0; border-top: 1px solid rgba(53,45,33,.2); border-bottom: 1px solid rgba(53,45,33,.2); color: #675437; font-size: 12px; }
+.paper-body { margin-top: 24px; font-size: 14px; line-height: 2; }
+.paper-body p { margin: 0 0 1.1em; }
+.tutorial-paper footer { margin-top: 26px; text-align: right; font-size: 13px; }
 
 .status {
   position: fixed;
@@ -285,6 +317,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .brand { min-width: 145px; }
   .brand b { font-size: 10px; }
   .tick-stat { display: none; }
+  .tutorial-objective { width: min(470px, calc(100vw - 330px)); min-width: 330px; }
 }
 
 @media (max-width: 640px) {
@@ -311,6 +344,12 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   }
   .observer h1 { font-size: 15px; }
   .observer p { display: none; }
+  .observer-actions button { flex-basis: 42%; }
+  .tutorial-objective { top: 72px; left: 6px; right: 6px; width: auto; min-width: 0; transform: none; grid-template-columns: minmax(0,1fr) 58px; gap: 7px; padding: 8px 9px; }
+  .tutorial-objective label { grid-column: 2; grid-row: 1; }
+  .tutorial-objective progress { width: 58px; }
+  .tutorial-objective > button { grid-column: 1 / -1; padding: 4px; }
+  .tutorial-objective > button small { display: inline; margin-left: 4px; }
   .tracking { top: 72px; max-width: calc(100vw - 12px); white-space: nowrap; }
   .tracking button { padding: 5px; }
   .status {
@@ -325,6 +364,9 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   #toast-stack { top: 72px; right: 7px; width: min(280px, calc(100vw - 14px)); }
   .sheet-open #toast-stack { display: none; }
   .sheet { top: 70px; right: 5px; left: 5px; bottom: 99px; width: auto; }
+  .tutorial-paper { padding: 42px 25px 30px; }
+  .tutorial-paper h2 { font-size: 22px; }
+  .paper-body { font-size: 13px; line-height: 1.8; }
   .start-screen { place-items: start center; padding: max(12px, env(safe-area-inset-top)) 10px max(12px, env(safe-area-inset-bottom)); }
   .start-dialog { padding: 18px 13px; }
   .start-dialog h1 { font-size: 22px; }

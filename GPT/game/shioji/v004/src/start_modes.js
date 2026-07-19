@@ -2,8 +2,8 @@ export const START_MODES = Object.freeze({
   tutorial: Object.freeze({
     id: 'tutorial',
     label: 'チュートリアルから',
-    shortLabel: 'チュートリアル（未開拓）',
-    description: 'ガイドは準備中です。現在は未開拓島から同じ条件で始めます。',
+    shortLabel: 'チュートリアル',
+    description: '未開拓島で、実際の島況に沿う書状と目標を手がかりに開拓します。',
     blank: true,
   }),
   sandbox: Object.freeze({

@@ -9,6 +9,7 @@ import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './place
 import { WorldPresentation } from './presentation.js';
 import { Renderer } from './renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
+import { createTutorialDirectorForMode } from './tutorial_director.js';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -19,6 +20,8 @@ const camera = new IsometricCamera();
 const renderer = new Renderer(canvas, camera);
 const clock = new SimulationClock({ speedIndex: requestedStartMode ? 1 : 0 });
 let model = controller.readModel();
+const tutorialDirector = createTutorialDirectorForMode(startMode);
+tutorialDirector?.observe(model, []);
 const presentation = new WorldPresentation(model);
 let displayModel = presentation.reset(model);
 let lastEventSequence = 0;
@@ -28,6 +31,8 @@ let activeTool = null;
 let toolDragStart = null;
 let dismissedOfferKey = null;
 const eventLog = [];
+let openTutorialLetterId = null;
+let speedBeforeLetter = null;
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
 
@@ -72,6 +77,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
   if (animate) presentation.enqueue(nextModel, events, baseSeconds);
   else displayModel = presentation.reset(nextModel);
   model = nextModel;
+  tutorialDirector?.observe(model, events);
   return events;
 }
 
@@ -92,6 +98,7 @@ function renderHud() {
     button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);
   });
   if (!$('#company-sheet').hidden) renderCompanySheet();
+  renderTutorial();
 }
 
 function setSpeed(index) {
@@ -373,7 +380,9 @@ canvas.addEventListener('wheel', event => {
 }, { passive: false });
 
 window.addEventListener('keydown', event => {
-  if (event.key === ' ') {
+  if (event.key === 'Escape' && !$('#tutorial-letter-modal').hidden) {
+    closeTutorialLetter();
+  } else if (event.key === ' ') {
     event.preventDefault();
     setSpeed(clock.speedIndex === 0 ? 1 : 0);
   } else if (['1', '2', '3', '4'].includes(event.key)) {
@@ -439,21 +448,130 @@ function renderEventSheet() {
     </button>`).join('') : '<p class="sheet-note">まだ出来事はありません。</p>';
 }
 
+function renderTutorial() {
+  const available = Boolean(tutorialDirector);
+  const state = tutorialDirector?.readState() ?? null;
+  const objective = tutorialDirector?.currentObjective() ?? null;
+  const objectivePanel = $('#tutorial-objective');
+  const letterButton = $('#open-tutorial-letters');
+  objectivePanel.hidden = !objective;
+  objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
+  letterButton.hidden = !available || Boolean(state?.skipped);
+  if (state?.skipped) $('#start-mode-label').textContent = '自由プレイ（案内終了）';
+  if (objective) {
+    $('#tutorial-chapter').textContent = objective.chapter;
+    $('#tutorial-goal').textContent = objective.title;
+    $('#tutorial-detail').textContent = objective.detail;
+    $('#tutorial-progress').textContent = `${objective.progress.done} / ${objective.progress.total}`;
+    $('#tutorial-progress-bar').max = objective.progress.total;
+    $('#tutorial-progress-bar').value = objective.progress.done;
+  }
+  if (!available) return;
+  const letters = tutorialDirector.letters();
+  const unread = letters.filter(letter => letter.unread).length;
+  $('#tutorial-unread').hidden = unread === 0 || Boolean(state?.skipped);
+  $('#tutorial-unread').textContent = String(unread);
+  if (!$('#tutorial-letter-sheet').hidden) renderTutorialLetterSheet();
+}
+
+function renderTutorialLetterSheet() {
+  const letters = tutorialDirector?.letters() ?? [];
+  const list = $('#tutorial-letter-list');
+  list.replaceChildren();
+  if (!letters.length) {
+    const empty = document.createElement('p');
+    empty.className = 'sheet-note';
+    empty.textContent = 'まだ書状は届いていません。';
+    list.append(empty);
+    return;
+  }
+  for (const letter of [...letters].reverse()) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `tutorial-letter-row${letter.unread ? ' unread' : ''}`;
+    button.dataset.tutorialLetter = letter.id;
+    const heading = document.createElement('b');
+    heading.textContent = letter.title;
+    const summary = document.createElement('small');
+    summary.textContent = `${letter.issuedDay}日目・${letter.summary}`;
+    button.append(heading, summary);
+    list.append(button);
+  }
+}
+
+function openTutorialLetter(id) {
+  const letter = tutorialDirector?.letters().find(row => row.id === id);
+  if (!letter) return false;
+  if (openTutorialLetterId === null) {
+    speedBeforeLetter = clock.speedIndex;
+    setSpeed(0);
+  }
+  openTutorialLetterId = id;
+  tutorialDirector.markLetterRead(id);
+  $('#tutorial-letter-kicker').textContent = letter.kicker;
+  $('#tutorial-letter-title').textContent = letter.title;
+  $('#tutorial-letter-summary').textContent = letter.summary;
+  const body = $('#tutorial-letter-body');
+  body.replaceChildren();
+  for (const paragraph of letter.body.split(/\n{2,}/)) {
+    const node = document.createElement('p');
+    node.textContent = paragraph;
+    body.append(node);
+  }
+  $('#tutorial-letter-signature').textContent = letter.signature;
+  $('#tutorial-letter-modal').hidden = false;
+  document.body.classList.add('letter-open');
+  renderTutorial();
+  $('#close-tutorial-letter').focus();
+  return true;
+}
+
+function closeTutorialLetter() {
+  if (openTutorialLetterId === null) return;
+  openTutorialLetterId = null;
+  $('#tutorial-letter-modal').hidden = true;
+  document.body.classList.remove('letter-open');
+  const restore = speedBeforeLetter;
+  speedBeforeLetter = null;
+  if (restore !== null) setSpeed(restore);
+}
+
+function skipTutorial() {
+  if (!tutorialDirector) return null;
+  const state = tutorialDirector.skip();
+  renderTutorial();
+  $('#status span').textContent = '案内を終了しました。島はそのまま自由に遊べます';
+  return state;
+}
+
+function tutorialSave() {
+  return tutorialDirector?.exportSave(controller.inputJournal()) ?? null;
+}
+
 function openSheet(id) {
   for (const sheet of document.querySelectorAll('.sheet')) sheet.hidden = sheet.id !== id;
   document.body.classList.add('sheet-open');
   if (id === 'company-sheet') renderCompanySheet();
   if (id === 'event-sheet') renderEventSheet();
+  if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
+$('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
   button.addEventListener('click', () => {
     $(`#${button.dataset.closeSheet}`).hidden = true;
     document.body.classList.remove('sheet-open');
   });
 });
+
+$('#tutorial-letter-list').addEventListener('click', event => {
+  const button = event.target.closest('[data-tutorial-letter]');
+  if (button) openTutorialLetter(button.dataset.tutorialLetter);
+});
+$('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
+$('#skip-tutorial').addEventListener('click', skipTutorial);
 
 function rejectOrderOffer() {
   dismissedOfferKey = orderKey(model.orderOffer);
@@ -595,6 +713,11 @@ window.__SHIOJI_V004__ = Object.freeze({
   selectTool,
   openSheet,
   rejectOrderOffer,
+  skipTutorial,
+  openTutorialLetter,
+  closeTutorialLetter,
+  tutorialSave,
+  get tutorialState() { return tutorialDirector?.readState() ?? null; },
   chooseStartMode,
   previewBuilding(job, x, y) { return previewBuildingPlacement(model, job, { x, y }); },
   previewRoad(start, end) { return previewRoadPlacement(model, start, end); },
@@ -606,8 +729,12 @@ requestAnimationFrame(frame);
 
 if (requestedStartMode) {
   $('#status span').textContent = startMode === 'tutorial'
-    ? 'チュートリアル準備中：未開拓島から開始しました'
+    ? 'エレナの案内で未開拓島から開始しました'
     : `${START_MODES[startMode].shortLabel}で開始しました`;
+  if (tutorialDirector) {
+    const firstUnread = tutorialDirector.letters().find(letter => letter.unread);
+    if (firstUnread) openTutorialLetter(firstUnread.id);
+  }
 } else {
   showStartScreen();
 }

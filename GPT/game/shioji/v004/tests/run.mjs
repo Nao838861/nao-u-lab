@@ -6,7 +6,7 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import { BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS } from '../src/config.js';
-import { createEngineController } from '../src/engine_bridge.js';
+import { buildBlankCity, createEngineController } from '../src/engine_bridge.js';
 import {
   OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
 } from '../src/event_view.js';
@@ -17,6 +17,10 @@ import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
+import { TUTORIAL_LETTERS } from '../src/tutorial_content.js';
+import {
+  TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
+} from '../src/tutorial_director.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -43,12 +47,132 @@ test('段1: createEngineApiで基準都市を起動し1日30tick進める', () =
   assert.equal(after.tick, 30);
 });
 
-test('段1: v003の章・台本・旧Worldをv004へ持ち込まない', () => {
+test('チュートリアル段1: v003の旧Worldを持ち込まず観測ディレクターを分離する', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  assert.doesNotMatch(html, /objective|advisor|opening|TUTORIAL|第一章/);
+  const director = fs.readFileSync(new URL('../src/tutorial_director.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(director, /applyOperation|advanceTicks|\.operate\(/);
   assert.match(html, /src="\.\/src\/main\.js/);
   assert.match(html, /潮路の島 v004/);
   assert.equal(fs.existsSync(new URL('../src/world.js', import.meta.url)), false);
+  for (const id of [
+    'tutorial-objective', 'tutorial-progress-bar', 'skip-tutorial',
+    'open-tutorial-letters', 'tutorial-letter-sheet', 'tutorial-letter-modal',
+  ]) assert.match(html, new RegExp(`id=["']${id}["']`));
+});
+
+test('チュートリアル段1: ディレクター有無で操作なしの世界JSONと入力journalが完全一致する', () => {
+  const guided = createEngineApi(buildBlankCity(13));
+  const plain = createEngineApi(buildBlankCity(13));
+  const director = createTutorialDirector();
+  let sequence = 0;
+  director.observe(snapshotToViewModel(guided.snapshot({ scope: 'full' })), []);
+  for (let tick = 0; tick < 90; tick += 1) {
+    guided.advanceTicks(1);
+    plain.advanceTicks(1);
+    const events = guided.events({ afterSequence: sequence });
+    if (events.length) sequence = events.at(-1).sequence;
+    director.observe(snapshotToViewModel(guided.snapshot({ scope: 'full' })), events);
+  }
+  assert.deepEqual(guided.snapshot(), plain.snapshot());
+  assert.deepEqual(guided.inputJournal(), plain.inputJournal());
+
+  const save = director.exportSave(guided.inputJournal());
+  const roundTrip = JSON.parse(JSON.stringify(save));
+  const restored = createTutorialDirector({ state: roundTrip.tutorialState });
+  assert.deepEqual(restored.readState(), director.readState());
+  assert.deepEqual(roundTrip.engineJournal, guided.inputJournal());
+});
+
+test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し込み一度だけ発行する', () => {
+  const model = snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot({ scope: 'full' }));
+  const observed = structuredClone(model);
+  observed.day = 7;
+  observed.population = 13;
+  observed.roadKeys = ['1,1', '2,2', '3,3', '4,4', '5,5'];
+  const director = createTutorialDirector({ goals: [] });
+  director.observe(observed, []);
+  director.observe(observed, []);
+  const [letter] = director.letters();
+  assert.equal(director.letters().length, 1);
+  assert.match(letter.body, /7日目/);
+  assert.match(letter.body, /人口は13人/);
+  assert.match(letter.body, /完成道路は5区画/);
+  assert.match(letter.summary, /港 1棟・人口 13人・道路 5区画/);
+  assert.equal(TUTORIAL_LETTERS.every(definition => typeof definition.render === 'function'), true);
+});
+
+test('チュートリアル段2: 実ロット数と実帳簿値を書状へ渡してもworldを変えない', () => {
+  const model = structuredClone(
+    snapshotToViewModel(createEngineApi(buildBlankCity(11)).snapshot({ scope: 'full' })),
+  );
+  model.companyLedger = [{ day: 2, amount: 37.5, reason: '実測決済' }];
+  const definitions = [{
+    id: 'event-fixture',
+    when: ({ events }) => events.some(event => event.type === 'handling'),
+    render: ({ model: observed, events }) => ({
+      kicker: '実イベント', title: '荷役と帳簿の報告', summary: `${events[0].qty}荷`,
+      body: `${events[0].qty}荷を扱い、帳簿へ${observed.companyLedger.at(-1).amount}デナリを記録しました。`,
+      signature: '会社秘書 エレナ',
+    }),
+  }];
+  const director = new TutorialDirector({ goals: [], letters: definitions });
+  const event = { sequence: 4, type: 'handling', day: 2, tick: 33, qty: 6.25 };
+  director.observe(model, [event]);
+  director.observe(model, [event]);
+  assert.equal(director.letters().length, 1);
+  assert.match(director.letters()[0].body, /6\.25荷/);
+  assert.match(director.letters()[0].body, /37\.5デナリ/);
+  assert.equal(director.readState().lastEventSequence, event.sequence);
+});
+
+test('チュートリアル段3: skipは同じ世界とjournalを保ったまま案内だけを終了する', () => {
+  const api = createEngineApi(buildBlankCity(14));
+  const director = createTutorialDirector();
+  director.observe(snapshotToViewModel(api.snapshot({ scope: 'full' })), []);
+  const before = api.snapshot();
+  const journal = api.inputJournal();
+  const skipped = director.skip();
+  assert.equal(skipped.active, false);
+  assert.equal(skipped.skipped, true);
+  assert.equal(director.currentObjective(), null);
+  assert.deepEqual(api.snapshot(), before);
+  assert.deepEqual(api.inputJournal(), journal);
+
+  const completedModel = structuredClone(snapshotToViewModel(before));
+  completedModel.terrain[1][1] = { ...completedModel.terrain[1][1], kind: 'forest' };
+  completedModel.roadKeys = ['0,0'];
+  completedModel.buildings.push({ type: 'logger' });
+  const completionDirector = createTutorialDirector();
+  completionDirector.observe(completedModel, []);
+  assert.equal(completionDirector.currentObjective().complete, true);
+  assert.deepEqual(completionDirector.currentObjective().progress, { done: 2, total: 2 });
+});
+
+test('チュートリアル段4: tutorialだけが同じ未開拓worldへディレクターを重ねる', () => {
+  const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
+  const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
+  assert.deepEqual(tutorial.readModel(), sandbox.readModel());
+  assert.ok(createTutorialDirectorForMode('tutorial'));
+  assert.equal(createTutorialDirectorForMode('sandbox'), null);
+  assert.equal(createTutorialDirectorForMode('test'), null);
+});
+
+test('チュートリアル段5前提実測: 港だけの無人島でも木こり区画へ15日目に移民が入る', () => {
+  for (const seed of [11, 13, 14]) {
+    const controller = createEngineController({ seed, mode: 'tutorial' });
+    const preview = findPreview(controller.readModel(), 'logger');
+    assert.ok(preview, `seed${seed}で木こりを配置できる`);
+    assert.equal(controller.operate({
+      type: 'place_building', job: 'logger',
+      x: preview.entrance.x, y: preview.entrance.y,
+      buildingX: preview.x, buildingY: preview.y,
+    }).ok, true);
+    controller.advanceTicks(15 * 30);
+    const model = controller.readModel();
+    assert.equal(model.population, 9, `seed${seed}の15日目人口`);
+    assert.equal(model.buildings.some(building => building.roles.includes('market')), false);
+    assert.equal(model.roadKeys.length, 0);
+  }
 });
 
 test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {
@@ -133,7 +257,8 @@ test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致�
 test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さない', () => {
   const sources = Object.fromEntries([
     'camera.js', 'clock.js', 'config.js', 'controller.js', 'event_view.js', 'main.js',
-    'placement.js', 'presentation.js', 'renderer.js', 'start_modes.js', 'view_model.js',
+    'placement.js', 'presentation.js', 'renderer.js', 'start_modes.js', 'tutorial_content.js',
+    'tutorial_director.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
     assert.doesNotMatch(source, /engine\/src/, `${file}からengineを直接importしない`);
