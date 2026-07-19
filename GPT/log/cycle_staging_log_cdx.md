@@ -132,7 +132,149 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "mixed duplicate queue を再生成: 63 rows"
+  - "stale triage queue を 2026-07-19 基準で再生成: 50 rows / overdue open 209 件"
+  - "group action queue を再生成: actionable 10 groups"
+  - "高水位 budget 3 で group handoff inbox へ 3 groups を冪等 enqueue"
+memory_audit:
+  memory_index:
+    result: ok
+    evidence: "python tools/validate_memory_index.py: 2700 atom の per-file index と High Signal / Recent entry が一致。MEMORY.md は Markdown link ではなく atom ID entry 方式で、missing ID なし"
+  encoding_probe:
+    source_file_status: "memory/MEMORY.md を UTF-8 明示読みし、代表語 記憶 / ゲーム設計 / 敵パターン / 評価軸 を取得"
+    display_or_tooling_status: none
+  atoms:
+    rows: 2700
+    duplicate_ids: 0
+    mirror_conflicts: 0
+    normalized_content_duplicate_groups: 40
+    recall_visible_duplicate_groups_after_fold: 3
+    lifecycle_note: "normalized hash 40 groups と title/excerpt exact 5 groups は既存 canonical overlay / content fold の対象。新規矛盾は検出せず"
+  raw_archive_review:
+    older_than_30_days: 95
+    recent: 150
+    archive_candidates: []
+    decision: "mtime だけでは移動しない。旧 web research は provenance、headless_eval は再現証拠、slack_archive は既に archive 層であり、raw 保持方針を優先"
+  candidate_lifecycle:
+    total_files: 1016
+    status_counts:
+      posted: 433
+      ready_to_post: 10
+      postponed: 370
+      failed: 183
+      needs_review: 20
+    missing_stale_after: 3
+    missing_stale_after_note: "3 件はいずれも status: posted の完成投稿本文で terminal。再評価 queue 対象外"
+  slack_inboxes:
+    directives_pending: 0
+    broadcasts_pending: 0
+    handled_updates: 0
+stale_backlog:
+  overdue_open_total: 209
+  stale_triage_queue_rows: 50
+  actionable_group_count: 10
+  backlog_high_water: true
+  high_water_reason: "overdue 209 > queue rows 50 かつ actionable groups 10 >= 3"
+  prior_cycle_budget_check: "Phase 2 は前回 inbox 3 groups を全件 resolve（10 candidates / 各2分）し、通常 candidate 4 件の分析も完了。budget 3 を継続"
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handed_off_open_candidate_count: 5
+  candidate_batch_count: 5
+  overdue_not_handed_off_this_cycle: 199
+  overdue_not_covered_by_due_or_new_group_inbox_or_candidate_batch: 194
+  handoff_inbox_pending_count: 6
+  handoff_inbox_due_deferred_count: 3
+  handoff_inbox_new_pending_count: 3
+  handoff_inbox_ids:
+    - gha-4a73e253b746e823
+    - gha-4269487ab4273d9c
+    - gha-630fe00abf2c172e
+    - gha-f217d2c5fbea338e
+    - gha-9be2b185156f996b
+    - gha-96ce86a9b8016bca
+group_action_handoff:
+  - group_key: benchmarking open ended multi agent coordination in language agents
+    representative: memory/shared_reads_candidates/20260618_alem_open_ended_multi_agent_coordination.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260611_alem_open_ended_multi_agent_coordination.md
+      - memory/shared_reads_candidates/20260617_alem_open_ended_multi_agent_coordination.md
+      - memory/shared_reads_candidates/20260618_alem_open_ended_multi_agent_coordination.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260620_alem_multi_agent_coordination.md
+      - memory/shared_reads_candidates/20260622_alem_open_ended_multi_agent_coordination.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260618_alem_open_ended_multi_agent_coordination.md
+      stale_after: "2026-07-18"
+      reason: "協力型 NPC 評価への接続は強いが、評価設計と失敗例は追加読解が必要"
+  - group_key: deconstructing open world game mission design formula a thematic analysis using an action block framework
+    representative: memory/shared_reads_candidates/20260619_maqv_open_world_mission_action_blocks.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260619_maqv_open_world_mission_action_blocks.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260611_open_world_mission_action_block_framework.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260619_maqv_open_world_mission_action_blocks.md
+      stale_after: "2026-07-19"
+      reason: "MAQV / action block grammar / 2200 missions の根拠があり、短い playable prototype への転用可否を代表1件で判定できる"
+  - group_key: foveated haptic gaze
+    representative: memory/shared_reads_candidates/20260619_foveated_haptic_gaze_accessible_games.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260619_foveated_haptic_gaze_accessible_games.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_foveated_haptic_gaze_accessible_gameworlds.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260619_foveated_haptic_gaze_accessible_games.md
+      stale_after: "2026-07-19"
+      reason: "旧 failed sibling と同等の薄さか、実験条件・評価結果・設計手順を補えるかを代表1件で判定する"
+issues:
+  - id: ISS-ENC-001
+    description: "1 atom の原文に replacement character を含む語 AIエ��ジェント が残り、AIエージェントの完全一致検索を弱める"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw archive と両 atom mirror に同じ replacement character が存在。source data 側の既存欠損"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "局所的で、一般的な game-design recall は通る。該当する agent memory 記事を完全一致で探す時だけ漏れ得る"
+  - id: ISS-TITLE-001
+    description: "recall-visible repeated title 15 groups のうち 14 groups が lifecycle group 未付与で、汎用見出し由来の検索ノイズが残る"
+    severity: low
+    evidence: "python tools/memory_health.py --json: ungrouped_repeated_title_groups=14; memory/atoms/title_quality_audit.jsonl=621 rows"
+    source_file_status: "atom mirror は 2700/2700/2700 で一致し parse/content conflict なし。既存 title quality audit が retitle/postpone/display_title 候補を保持"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "■ 概要 などの汎用 title は手法名検索の順位を薄めるが、game task entry point と content fold があるため現時点の recall を停止させない"
+recommendation:
+  needs_design: false
+  priority_issues: []
+  reason: "新しい構造を要する問題はない。2 issue は既存 audit / fold の範囲で追跡可能な局所データ品質で、Phase 4b を起動しない"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260616_memopilot_memory_rl_game_agents.md
+    status: postponed
+    stale_after: "2026-07-16"
+    priority_reason: "play log から次試行へ残す記憶選択に転用可能。same-title sibling は重ねず、この代表だけで reward・advantage・baseline 比較を再評価"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "character prototype の boundary object として転用価値 medium。永続 inbox の due/new 6 groups を除いた queue 順で、評価条件・参加者反応を補えるか再評価"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "mixed duplicate の代表1件。tangible controller の prototype / 評価結果が ~4000字の概要に足るか再評価"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    status: postponed
+    stale_after: "2026-06-27"
+    priority_reason: "compile pass 以外の runtime・構造忠実度・mechanism adherence をゲーム生成評価へ転用できるため、4軸の実測根拠を再評価"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    status: postponed
+    stale_after: "2026-07-01"
+    priority_reason: "同時ターン制と rhythm sync の edge case、unit test 導入、playtest feedback の具体性を代表1件で再評価"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
