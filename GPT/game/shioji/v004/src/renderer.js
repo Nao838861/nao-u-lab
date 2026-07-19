@@ -19,6 +19,7 @@ export class Renderer {
     this.height = 1;
     this.pulse = 0;
     this.selectedCarrierId = null;
+    this.operationPreview = null;
     this.resize();
   }
 
@@ -170,8 +171,12 @@ export class Renderer {
 
   drawRoads(model) {
     const roadSet = new Set(model.roadKeys);
+    const connected = new Set(model.roadConnection?.connectedRoadKeys ?? []);
     const roads = model.roadKeys.map(parseKey);
-    for (const [x, y] of roads) this.diamond(x, y, '#a78e61', '#69593f', 0.94);
+    for (const [x, y] of roads) {
+      const isConnected = connected.has(keyOf(x, y));
+      this.diamond(x, y, isConnected ? '#a78e61' : '#9f6355', isConnected ? '#69593f' : '#713f3b', 0.94);
+    }
     const ctx = this.ctx;
     ctx.save();
     ctx.lineCap = 'round';
@@ -180,13 +185,14 @@ export class Renderer {
       for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
         if (!roadSet.has(keyOf(x + dx, y + dy))) continue;
         const other = this.camera.project(x + dx + 0.5, y + dy + 0.5);
-        ctx.strokeStyle = '#69593f';
+        const segmentConnected = connected.has(keyOf(x, y)) && connected.has(keyOf(x + dx, y + dy));
+        ctx.strokeStyle = segmentConnected ? '#69593f' : '#713f3b';
         ctx.lineWidth = Math.max(5, 13 * this.camera.zoom);
         ctx.beginPath();
         ctx.moveTo(center.x, center.y);
         ctx.lineTo(other.x, other.y);
         ctx.stroke();
-        ctx.strokeStyle = '#b39a6b';
+        ctx.strokeStyle = segmentConnected ? '#b39a6b' : '#bd7867';
         ctx.lineWidth = Math.max(3, 9 * this.camera.zoom);
         ctx.beginPath();
         ctx.moveTo(center.x, center.y);
@@ -242,6 +248,57 @@ export class Renderer {
       ctx.restore();
     }
     this.drawTrackedRoute(model);
+    this.drawConnectionWarnings(model);
+    this.drawOperationPreview();
+  }
+
+  drawConnectionWarnings(model) {
+    const disconnected = new Set((model.roadConnection?.buildings ?? [])
+      .filter(row => !row.connected).map(row => row.id));
+    const ctx = this.ctx;
+    for (const building of model.buildings) {
+      if (!disconnected.has(building.id) || !building.entrance) continue;
+      const point = this.camera.project(building.entrance.x + 0.5, building.entrance.y + 0.5, 4);
+      ctx.save();
+      ctx.strokeStyle = '#e26f5d';
+      ctx.fillStyle = 'rgba(87,30,28,.82)';
+      ctx.lineWidth = Math.max(2, 2.5 * this.camera.zoom);
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, Math.max(7, 10 * this.camera.zoom), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.font = `800 ${Math.max(8, 9 * this.camera.zoom)}px ui-sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#442321';
+      ctx.fillStyle = '#ffd2bd';
+      ctx.strokeText('道が繋がっていません', point.x, point.y - 12 * this.camera.zoom);
+      ctx.fillText('道が繋がっていません', point.x, point.y - 12 * this.camera.zoom);
+      ctx.restore();
+    }
+  }
+
+  drawOperationPreview() {
+    const preview = this.operationPreview;
+    if (!preview) return;
+    const ok = preview.ok;
+    const fill = ok ? '#d4be62' : '#d45e52';
+    const stroke = ok ? '#f4db74' : '#ff8a72';
+    const cells = preview.cells?.length ? preview.cells : preview.entrance ? [preview.entrance] : [];
+    for (const cell of cells) this.diamond(cell.x, cell.y, fill, stroke, 0.48);
+    if (preview.entrance) {
+      const point = this.camera.project(preview.entrance.x + 0.5, preview.entrance.y + 0.5, 5);
+      const ctx = this.ctx;
+      ctx.save();
+      ctx.fillStyle = ok ? '#f6d76b' : '#ff7461';
+      ctx.strokeStyle = '#342e29';
+      ctx.lineWidth = Math.max(1, this.camera.zoom);
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, Math.max(4, 6 * this.camera.zoom), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   drawTrackedRoute(model) {

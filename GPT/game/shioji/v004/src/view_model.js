@@ -1,4 +1,5 @@
 import { JOB_LABELS, SECTION_LABELS } from './config.js';
+import { analyzeRoadConnections } from './placement.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
 const INVENTORY_SECTIONS = Object.freeze([
@@ -176,6 +177,8 @@ export function snapshotToViewModel(snapshot) {
       job: household.job,
       x: household.px ?? household.x,
       y: household.py ?? household.y,
+      homeX: household.x,
+      homeY: household.y,
       members: household.members?.length ?? 0,
       cultureLevel: household.lv ?? 0,
       buildingId: household.buildingId,
@@ -219,7 +222,11 @@ export function snapshotToViewModel(snapshot) {
     };
   });
   const portBuilding = buildings.find(building => building.type === 'port');
-  return deepFreeze({
+  const marketLowest = Object.fromEntries(Object.entries(snapshot.economy.stalls).map(([goods, rows]) => [
+    goods,
+    rows.filter(row => row.qty > 1e-9).reduce((lowest, row) => Math.min(lowest, row.price), Infinity),
+  ]));
+  const base = {
     day: snapshot.day,
     tick: snapshot.tick,
     seed: snapshot.seed,
@@ -245,7 +252,18 @@ export function snapshotToViewModel(snapshot) {
     portBerth: portBuilding
       ? portBerth(portBuilding, snapshot.physical.terrain, snapshot.physical.width, snapshot.physical.height)
       : null,
-  });
+    economyMarket: { ...snapshot.economy.market },
+    zones: snapshot.economy.zones.map(zone => ({ ...zone })),
+    reservedBuildingSites: (snapshot.economy.reservedBuildingSites ?? []).map(site => ({ ...site })),
+    roadWorksites: snapshot.physical.roadWorksites.map(site => ({ ...site })),
+    companyLedger: snapshot.economy.company.ledger.map(row => ({ ...row })),
+    companyStock: { ...snapshot.economy.stock },
+    stockTargets: { ...snapshot.economy.stockTgt },
+    orderOffer: snapshot.economy.orderOffer ? { ...snapshot.economy.orderOffer } : null,
+    activeOrder: snapshot.economy.order ? { ...snapshot.economy.order } : null,
+    marketLowest,
+  };
+  return deepFreeze({ ...base, roadConnection: analyzeRoadConnections(base) });
 }
 
 export { INVENTORY_SECTIONS };

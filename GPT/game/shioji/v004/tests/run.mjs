@@ -5,8 +5,14 @@ import { buildBaseCity } from '../../engine/src/audit.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
-import { BUILDING_ART } from '../src/config.js';
+import { BUILDING_ART, BUILDING_SIZES } from '../src/config.js';
 import { createEngineController } from '../src/engine_bridge.js';
+import {
+  OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
+} from '../src/event_view.js';
+import {
+  analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
+} from '../src/placement.js';
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
@@ -73,8 +79,8 @@ test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致�
 
 test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さない', () => {
   const sources = Object.fromEntries([
-    'camera.js', 'clock.js', 'config.js', 'controller.js', 'main.js', 'presentation.js',
-    'renderer.js', 'view_model.js',
+    'camera.js', 'clock.js', 'config.js', 'controller.js', 'event_view.js', 'main.js',
+    'placement.js', 'presentation.js', 'renderer.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
     assert.doesNotMatch(source, /engine\/src/, `${file}からengineを直接importしない`);
@@ -441,6 +447,144 @@ test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示�
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.match(renderer, /hitTestCarrier/);
   assert.match(main, /selectCarrier/);
+});
+
+function findPreview(model, job) {
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      const preview = previewBuildingPlacement(model, job, { x, y });
+      if (preview.ok) return preview;
+    }
+  }
+  return null;
+}
+
+test('段13: 入口カーソルからエンジンと同じ実寸敷地を選び不正地形を事前拒否する', () => {
+  const controller = createEngineController({ seed: 11 });
+  const before = controller.readModel();
+  for (const [type, definition] of Object.entries(ECONOMIC_BUILDINGS)) {
+    assert.deepEqual(BUILDING_SIZES[type], {
+      width: definition.w, height: definition.h,
+      ...(definition.category === 'fixed' ? { fixed: true } : {}),
+      ...(definition.shore ? { shore: true } : {}),
+    });
+  }
+  let water = null;
+  for (let y = 0; y < before.height && !water; y += 1) {
+    for (let x = 0; x < before.width; x += 1) {
+      if (before.terrain[y][x].kind === 'water') { water = { x, y }; break; }
+    }
+  }
+  assert.match(previewBuildingPlacement(before, 'woodshop', water).reason, /水/);
+  assert.match(previewBuildingPlacement(before, 'port', { x: 30, y: 35 }).reason, /固定/);
+  const occupiedEntrance = before.buildings.find(building => !['market', 'warehouse', 'port'].includes(building.type)).entrance;
+  assert.equal(previewBuildingPlacement(before, 'woodshop', occupiedEntrance).ok, false);
+
+  const preview = findPreview(before, 'woodshop');
+  assert.ok(preview, '基準都市の空き地に木工房の区画を置ける');
+  assert.deepEqual([preview.width, preview.height], [3, 3]);
+  assert.equal(preview.cells.length, 9);
+  const result = controller.operate({
+    type: 'place_building', job: 'woodshop',
+    x: preview.entrance.x, y: preview.entrance.y,
+    buildingX: preview.x, buildingY: preview.y,
+  });
+  assert.equal(result.ok, true);
+  const placed = controller.readModel().buildings.find(building => building.id === result.buildingId);
+  assert.deepEqual(
+    { x: placed.x, y: placed.y, width: placed.width, height: placed.height, entrance: placed.entrance },
+    { x: preview.x, y: preview.y, width: preview.width, height: preview.height, entrance: preview.entrance },
+  );
+  assert.deepEqual(controller.inputJournal().at(-1).op, {
+    type: 'place_building', job: 'woodshop',
+    x: preview.entrance.x, y: preview.entrance.y,
+    buildingX: preview.x, buildingY: preview.y,
+  });
+  assert.equal(controller.operate({ type: 'remove_building', buildingId: placed.id }).ok, true);
+  assert.equal(controller.readModel().buildings.some(building => building.id === placed.id), false);
+});
+
+test('段14: 道路プレビュー・操作journal・市場接続色と警告座標を保持する', () => {
+  const controller = createEngineController({ seed: 11 });
+  const before = controller.readModel();
+  let roadPreview = null;
+  for (let y = 0; y < before.height && !roadPreview; y += 1) {
+    for (let x = 0; x < before.width; x += 1) {
+      const candidate = previewRoadPlacement(before, { x, y }, { x, y });
+      if (candidate.ok) { roadPreview = candidate; break; }
+    }
+  }
+  assert.ok(roadPreview);
+  assert.equal(controller.operate({ type: 'add_road', start: roadPreview.start, end: roadPreview.end }).ok, true);
+  assert.equal(controller.readModel().roadKeys.includes(`${roadPreview.start.x},${roadPreview.start.y}`), true);
+  assert.equal(controller.operate({ type: 'remove_road', x: roadPreview.start.x, y: roadPreview.start.y }).ok, true);
+  assert.deepEqual(controller.inputJournal().slice(-2).map(row => row.op.type), ['add_road', 'remove_road']);
+
+  const fixture = {
+    roadKeys: ['0,0', '1,0', '5,5'],
+    buildings: [
+      { id: 'market', type: 'market', entrance: { x: 0, y: 0 } },
+      { id: 'near', type: 'woodshop', entrance: { x: 1, y: 0 } },
+      { id: 'far', type: 'logger', entrance: { x: 5, y: 5 } },
+    ],
+    economyMarket: { x: 0, y: 0 },
+  };
+  const connection = analyzeRoadConnections(fixture);
+  assert.deepEqual(new Set(connection.connectedRoadKeys), new Set(['0,0', '1,0']));
+  assert.equal(connection.buildings.find(row => row.id === 'near').connected, true);
+  assert.deepEqual(connection.buildings.find(row => row.id === 'far'), {
+    id: 'far', connected: false, x: 5, y: 5,
+  });
+  const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  assert.match(renderer, /道が繋がっていません/);
+});
+
+test('段15: 会社台帳・買上げ目標・蔵出し・注文比較を描画モデルと公開操作へ接続する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(105);
+  const snapshot = api.snapshot();
+  assert.ok(snapshot.economy.orderOffer);
+  snapshot.economy.stalls.tools = [{ householdId: 999, qty: 4, price: 1.75, age: 0 }];
+  const model = snapshotToViewModel(snapshot);
+  assert.deepEqual(model.companyLedger, snapshot.economy.company.ledger);
+  assert.equal(model.marketLowest.tools, 1.75);
+  assert.deepEqual(model.orderOffer, snapshot.economy.orderOffer);
+
+  const controller = createEngineController({ seed: 11 });
+  controller.operate({ type: 'set_stock_target', goods: 'tools', qty: 12 });
+  const release = controller.operate({ type: 'release_stock', goods: 'tools', qty: 16 });
+  assert.equal(release.ok, false, '在庫ゼロの蔵出しは何も運ばない');
+  controller.advanceTicks(105 * 30);
+  assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
+  assert.deepEqual(controller.inputJournal().slice(-3).map(row => row.op.type), [
+    'set_stock_target', 'release_stock', 'accept_order',
+  ]);
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  for (const id of ['company-sheet', 'order-panel', 'company-goods', 'company-ledger']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+});
+
+test('段16: 観測APIの全イベント種と重要メッセージがトースト・ログ表示経路を持つ', () => {
+  for (const type of OBSERVED_EVENT_TYPES) {
+    assert.equal(hasEventPresentation(type), true, type);
+    const row = presentEvent({ type, day: 3, tick: 81, x: 4, y: 5, goods: 'wheat', qty: 1 });
+    assert.ok(row.title && row.tone);
+  }
+  assert.deepEqual(
+    presentEvent({ type: 'notice', message: '★本国より注文状: 道具30荷', day: 1, tick: 1, x: 0, y: 0 }).title,
+    '本国から注文状',
+  );
+  assert.equal(
+    presentEvent({ type: 'notice', message: '会社へ最終通告', day: 1, tick: 1, x: 0, y: 0 }).tone,
+    'bad',
+  );
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.match(html, /id="toast-stack"/);
+  assert.match(html, /id="event-log"/);
+  assert.match(main, /appendEvents/);
+  assert.match(main, /camera\.focus\(row\.x/);
 });
 
 console.log(`\n${passed} v004 tests passed`);

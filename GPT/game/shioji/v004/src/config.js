@@ -1,4 +1,4 @@
-export const VERSION = 'v004.0.3-logistics';
+export const VERSION = 'v004.0.4-operations';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -56,6 +56,32 @@ export const BUILDING_ART = Object.freeze({
   shepherd: art('pasture', '#8b7657', '#8c704f', '#ddd0aa'),
   rapeseed: art('farm', '#b7933e', '#816b49', '#e4cf48'),
 });
+
+export const BUILDING_SIZES = Object.freeze({
+  fisher: Object.freeze({ width: 3, height: 3 }),
+  fisher2: Object.freeze({ width: 3, height: 3 }),
+  logger: Object.freeze({ width: 3, height: 3 }),
+  woodshop: Object.freeze({ width: 3, height: 3 }),
+  charburner: Object.freeze({ width: 3, height: 3 }),
+  saltworks: Object.freeze({ width: 3, height: 3 }),
+  quarryman: Object.freeze({ width: 3, height: 3 }),
+  miner: Object.freeze({ width: 3, height: 3 }),
+  collier: Object.freeze({ width: 3, height: 3 }),
+  smelter: Object.freeze({ width: 3, height: 3 }),
+  smith: Object.freeze({ width: 3, height: 3 }),
+  wheat: Object.freeze({ width: 4, height: 4 }),
+  veg: Object.freeze({ width: 4, height: 4 }),
+  shepherd: Object.freeze({ width: 4, height: 4 }),
+  rapeseed: Object.freeze({ width: 4, height: 4 }),
+  market: Object.freeze({ width: 5, height: 5, fixed: true }),
+  warehouse: Object.freeze({ width: 4, height: 4 }),
+  port: Object.freeze({ width: 4, height: 3, fixed: true, shore: true }),
+});
+
+export const PLACEMENT_JOBS = Object.freeze([
+  'fisher', 'fisher2', 'logger', 'woodshop', 'charburner', 'saltworks', 'quarryman',
+  'miner', 'collier', 'smelter', 'smith', 'wheat', 'veg', 'shepherd', 'rapeseed',
+]);
 
 export const GOODS_ART = Object.freeze({
   log: Object.freeze({ color: '#9b5f32', dark: '#5b3422', shape: 'round' }),

@@ -106,9 +106,15 @@ async function checkViewport(width, height, mobile) {
       hud: rect(document.querySelector('#hud')),
       speed: rect(document.querySelector('#speed-controls')),
       buttons: [...document.querySelectorAll('#speed-controls button')].map(rect),
+      dock: rect(document.querySelector('#build-dock')),
+      observer: rect(document.querySelector('#observer')),
+      observerActions: [...document.querySelectorAll('.observer-actions button')].map(rect),
     };
   })()`);
-  for (const bounds of [controlBounds.hud, controlBounds.speed, ...controlBounds.buttons]) {
+  for (const bounds of [
+    controlBounds.hud, controlBounds.speed, controlBounds.dock, controlBounds.observer,
+    ...controlBounds.buttons, ...controlBounds.observerActions,
+  ]) {
     assert.ok(bounds.left >= 0 && bounds.right <= controlBounds.viewport.width, JSON.stringify(controlBounds));
     assert.ok(bounds.top >= 0 && bounds.bottom <= controlBounds.viewport.height, JSON.stringify(controlBounds));
   }
@@ -238,6 +244,162 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.familyRows > 0, JSON.stringify(worldVisuals));
+
+    const placement = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      let preview = null;
+      for (let y = 0; y < game.model.height && !preview; y += 1) {
+        for (let x = 0; x < game.model.width; x += 1) {
+          const candidate = game.previewBuilding('woodshop', x, y);
+          if (candidate.ok) { preview = candidate; break; }
+        }
+      }
+      const water = game.model.terrain.flatMap((row, y) => row.map((tile, x) => ({ ...tile, x, y })))
+        .find(tile => tile.kind === 'water');
+      const invalid = game.previewBuilding('woodshop', water.x, water.y);
+      document.querySelector('#building-kind').value = 'woodshop';
+      document.querySelector('[data-tool="building"]').click();
+      game.camera.focus(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
+      const point = game.camera.project(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
+      return {
+        preview,
+        invalid: { ok: invalid.ok, reason: invalid.reason },
+        point,
+        buildingIds: game.model.buildings.map(building => building.id),
+      };
+    })()`);
+    assert.equal(placement.invalid.ok, false);
+    assert.match(placement.invalid.reason, /水/);
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: placement.point.x, y: placement.point.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: placement.point.x, y: placement.point.y, button: 'left', clickCount: 1,
+    });
+    const placed = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const before = new Set(${JSON.stringify(placement.buildingIds)});
+      const building = game.model.buildings.find(row => !before.has(row.id));
+      return { building, journal: game.controller.inputJournal().at(-1) };
+    })()`);
+    assert.equal(placed.building.type, 'woodshop');
+    assert.deepEqual(
+      { x: placed.building.x, y: placed.building.y, entrance: placed.building.entrance },
+      { x: placement.preview.x, y: placement.preview.y, entrance: placement.preview.entrance },
+    );
+    assert.equal(placed.journal.op.type, 'place_building');
+
+    const removePoint = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      document.querySelector('[data-tool="remove-building"]').click();
+      const building = game.model.buildings.find(row => row.id === ${JSON.stringify(placed.building.id)});
+      game.camera.focus(building.x + building.width / 2, building.y + building.height / 2);
+      return game.camera.project(building.x + building.width / 2, building.y + building.height / 2);
+    })()`);
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: removePoint.x, y: removePoint.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: removePoint.x, y: removePoint.y, button: 'left', clickCount: 1,
+    });
+    assert.equal(await page.evaluate(`window.__SHIOJI_V004__.model.buildings.some(row => row.id === ${JSON.stringify(placed.building.id)})`), false);
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.controller.inputJournal().at(-1).op.type'), 'remove_building');
+
+    const road = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      let preview = null;
+      for (let y = 0; y < game.model.height && !preview; y += 1) {
+        for (let x = 0; x < game.model.width; x += 1) {
+          const candidate = game.previewRoad({ x, y }, { x, y });
+          if (candidate.ok) { preview = candidate; break; }
+        }
+      }
+      document.querySelector('[data-tool="road"]').click();
+      game.camera.focus(preview.start.x + 0.5, preview.start.y + 0.5);
+      return { preview, point: game.camera.project(preview.start.x + 0.5, preview.start.y + 0.5) };
+    })()`);
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: road.point.x, y: road.point.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: road.point.x, y: road.point.y, button: 'left', clickCount: 1,
+    });
+    assert.equal(await page.evaluate(`window.__SHIOJI_V004__.model.roadKeys.includes(${JSON.stringify(`${road.preview.start.x},${road.preview.start.y}`)})`), true);
+    await page.evaluate("document.querySelector('[data-tool=\"remove-road\"]').click()");
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: road.point.x, y: road.point.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: road.point.x, y: road.point.y, button: 'left', clickCount: 1,
+    });
+    assert.equal(await page.evaluate(`window.__SHIOJI_V004__.model.roadKeys.includes(${JSON.stringify(`${road.preview.start.x},${road.preview.start.y}`)})`), false);
+    assert.deepEqual(await page.evaluate('window.__SHIOJI_V004__.controller.inputJournal().slice(-2).map(row => row.op.type)'), ['add_road', 'remove_road']);
+
+    const company = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.openSheet('company-sheet');
+      const sheet = document.querySelector('#company-sheet').getBoundingClientRect();
+      const offer = game.model.orderOffer;
+      const orderText = document.querySelector('#order-panel').textContent;
+      let targetRow = document.querySelector('.goods-row[data-goods="tools"]');
+      targetRow.querySelector('input').value = '12';
+      targetRow.querySelector('[data-company-action="set-target"]').click();
+      targetRow = document.querySelector('.goods-row[data-goods="tools"]');
+      targetRow.querySelector('[data-company-action="release-stock"]').click();
+      const beforeReject = game.controller.inputJournal().length;
+      document.querySelector('[data-company-action="reject-order"]').click();
+      const afterReject = game.controller.inputJournal().length;
+      const stillOffered = game.model.orderOffer;
+      document.querySelector('[data-company-action="reconsider"]').click();
+      document.querySelector('[data-company-action="accept-order"]').click();
+      return {
+        sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
+        offer, orderText, beforeReject, afterReject, stillOffered,
+        activeOrder: game.model.activeOrder,
+        journalTypes: game.controller.inputJournal().slice(-3).map(row => row.op.type),
+      };
+    })()`);
+    assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
+    assert.ok(company.sheet.top >= 0 && company.sheet.bottom <= height, JSON.stringify(company));
+    assert.ok(company.offer, JSON.stringify(company));
+    assert.match(company.orderText, /本国決済単価/);
+    assert.match(company.orderText, /市場最安/);
+    assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
+    assert.deepEqual(company.stillOffered, company.offer);
+    assert.deepEqual(company.journalTypes, ['set_stock_target', 'release_stock', 'accept_order']);
+    assert.equal(company.activeOrder.g, company.offer.g);
+    await page.screenshot('/tmp/shioji_v004_company.png');
+
+    const eventPanel = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.openSheet('event-sheet');
+      return {
+        rows: document.querySelectorAll('.event-row').length,
+        operation: game.eventLog.some(row => row.type === 'operation'),
+        important: game.eventLog.some(row => row.important),
+      };
+    })()`);
+    assert.ok(eventPanel.rows > 0, JSON.stringify(eventPanel));
+    assert.equal(eventPanel.operation, true, JSON.stringify(eventPanel));
+    assert.equal(eventPanel.important, true, JSON.stringify(eventPanel));
+    await page.screenshot('/tmp/shioji_v004_events.png');
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      document.querySelector('[data-close-sheet="event-sheet"]').click();
+      game.selectTool(game.activeTool);
+      game.camera.focus(game.model.width / 2, game.model.height / 2);
+      document.querySelector('#toast-stack').replaceChildren();
+    })()`);
+  } else {
+    const mobileSheet = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.openSheet('company-sheet');
+      const box = document.querySelector('#company-sheet').getBoundingClientRect();
+      document.querySelector('[data-close-sheet="company-sheet"]').click();
+      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
+    })()`);
+    assert.ok(mobileSheet.left >= 0 && mobileSheet.right <= width, JSON.stringify(mobileSheet));
+    assert.ok(mobileSheet.top >= 0 && mobileSheet.bottom <= height, JSON.stringify(mobileSheet));
   }
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
