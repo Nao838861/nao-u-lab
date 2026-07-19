@@ -1,11 +1,13 @@
 import {
   FOODS,
+  GOODS,
   P,
   ageMarketStalls,
   assignNeedyWork,
   completeAssignedWork,
   createEconomicState,
   initializeNaturalResources,
+  isProductionInput,
   loadMarketSellCargo,
   marketTripCost,
   marketTripDuration,
@@ -14,12 +16,16 @@ import {
   runCompanyDayStart,
   runDayEnd,
   sellOffers,
+  settleCompanyLogistics,
   transactMarketCargo,
   unloadMarketBuyCargo,
 } from "./econ.js";
 import {
+  buildingById,
+  createPointBuilding,
   createWalkCarrier,
   createPhysicalState,
+  depositInventory,
   hasRoad,
   keyOf,
   routeTravelCarrier,
@@ -58,14 +64,80 @@ function syncHouseholdToCarrier(economy, household) {
   tread(economy, household.px, household.py);
 }
 
-function finishMarketTrip(household) {
-  unloadMarketBuyCargo(household);
+function finishMarketTrip(physical, household) {
+  unloadMarketBuyCargo(household, physical);
   household.marketCarrier.cargo = null;
   household.marketCarrier = null;
   household.marketTransactionTicks = 0;
   household.px = household.x;
   household.py = household.y;
   household.state = "home";
+}
+
+const ECONOMIC_POINT_CAPACITY = Number.MAX_SAFE_INTEGER;
+
+function pointCaps(...sections) {
+  return Object.fromEntries(sections.map((section) => [
+    section,
+    Object.fromEntries(GOODS.map((goods) => [goods, ECONOMIC_POINT_CAPACITY])),
+  ]));
+}
+
+export function ensureCompanyLogisticsSites(economy, physical) {
+  const ensure = (role, type, position, sections) => {
+    let building = buildingById(physical, physical.roleBuildingIds?.[role]);
+    if (building || !position) return building;
+    building = createPointBuilding(physical, {
+      type,
+      role,
+      x: position.x,
+      y: position.y,
+      caps: pointCaps(...sections),
+    });
+    if (role === "market") {
+      for (const goods of GOODS) {
+        const stalls = economy.stalls[goods]
+          .reduce((total, stall) => total + stall.qty, 0);
+        if (stalls > 0) depositInventory(building, "outbound", goods, stalls);
+        const stock = economy.marketStock[goods] ?? 0;
+        if (stock > 0) depositInventory(building, "inbound", goods, stock);
+      }
+    } else if (role === "warehouse") {
+      for (const [goods, qty] of Object.entries(economy.stock)) {
+        if (qty > 0) depositInventory(building, "storage", goods, qty);
+      }
+    }
+    return building;
+  };
+  const market = ensure("market", "market", economy.market, ["inbound", "outbound"]);
+  const warehouse = ensure("warehouse", "warehouse", economy.market, ["storage"]);
+  const port = ensure("port", "port", economy.port, ["inbound", "outbound"]);
+  return { market, warehouse, port };
+}
+
+export function ensureHouseholdInputSites(economy, physical) {
+  for (const household of economy.households) {
+    let building = buildingById(physical, household.buildingId);
+    if (!building) {
+      building = createPointBuilding(physical, {
+        type: household.job,
+        x: household.x,
+        y: household.y,
+        ownerHouseholdId: household.id,
+        caps: pointCaps("input"),
+      });
+      household.buildingId = building.id;
+      for (const goods of GOODS) {
+        if (!isProductionInput(household, goods)) continue;
+        const qty = household.pantry[goods];
+        if (qty <= 1e-9) continue;
+        household.pantry[goods] = 0;
+        depositInventory(building, "input", goods, qty);
+      }
+    }
+    building.type = household.job;
+    building.ownerHouseholdId = household.id;
+  }
 }
 
 export function beginMarketTrip(economy, physical, household) {
@@ -121,7 +193,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
       tilePosition(household),
     );
     if (household.marketCarrier.routeCost === 0) {
-      finishMarketTrip(household);
+      finishMarketTrip(physical, household);
       return true;
     }
     household.state = "toHome";
@@ -129,7 +201,7 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
   }
   if (household.state === "toHome") {
     if (stepTravelCarrier(physical, household.marketCarrier)) {
-      finishMarketTrip(household);
+      finishMarketTrip(physical, household);
       return true;
     }
     syncHouseholdToCarrier(economy, household);
@@ -212,8 +284,10 @@ export function createWorld({
         (total, stock) => total + stock,
         0,
       );
-      ageMarketStalls(economy, { day: state.day });
-      runCompanyDayStart(economy, { day: state.day, random });
+      ensureCompanyLogisticsSites(economy, physical);
+      ensureHouseholdInputSites(economy, physical);
+      ageMarketStalls(economy, { day: state.day, physical });
+      runCompanyDayStart(economy, { day: state.day, random, physical });
       for (const household of economy.households) {
         household.productionMultiplier = household.state === "home" ? 1 : 0;
         household.tookMarketTripToday = household.marketCarrier !== null;
@@ -271,6 +345,7 @@ export function createWorld({
     tickOnce,
     step() {
       stepHaulCarriers(state.physical, 30);
+      settleCompanyLogistics(state.economy, state.physical, { day: state.day + 1 });
       for (let tick = 0; tick < 30; tick += 1) tickOnce();
       return state;
     },

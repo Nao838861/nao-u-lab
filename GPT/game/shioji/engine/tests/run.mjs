@@ -17,6 +17,7 @@ import {
   buyAtMarket,
   buyTargets,
   companyCreditLimit,
+  companyLogisticsSite,
   companyStockReleasePrice,
   completeAssignedWork,
   createEconomicState,
@@ -41,8 +42,10 @@ import {
   postCompanyLedger,
   productionCost,
   productionMultiplierForTrip,
+  productionInputAmount,
   producePrimaryTick,
   quoteAskPrice,
+  requestCompanyStockRelease,
   recordExternalMoneyFlow,
   regenerateForest,
   runCompanyDayStart,
@@ -57,8 +60,10 @@ import {
   sellAtMarket,
   sellOffers,
   setCompanyStockTarget,
+  settleCompanyLogistics,
   shouldPauseProduction,
   staplePrice,
+  unloadMarketBuyCargo,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -104,7 +109,13 @@ import {
   withdrawInventory,
   workRoadWorksite,
 } from "../src/physical.js";
-import { beginMarketTrip, createWorld, stepMarketTrip } from "../src/world.js";
+import {
+  beginMarketTrip,
+  createWorld,
+  ensureCompanyLogisticsSites,
+  ensureHouseholdInputSites,
+  stepMarketTrip,
+} from "../src/world.js";
 import { runFlowIslandAudit } from "../src/audit.js";
 
 const tests = [];
@@ -1806,6 +1817,205 @@ test("段27: localWood半径と相続3世帯は直線近傍のまま変えない
     heirs.map((heir, index) => heir.purse - purses[index]),
     [20, 20, 20, 0],
   );
+});
+
+test("段28: 工房はpantryでなく自建物のinput棚だけから原料を消費する", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 5, height: 3, terrain });
+  const economy = createEconomicState();
+  const woodshop = createHousehold(economy, { job: "woodshop", x: 2, y: 1 });
+  ensureHouseholdInputSites(economy, physical);
+  const building = physical.buildings.find((candidate) => candidate.id === woodshop.buildingId);
+  assert.ok(building?.point);
+  assert.equal(sectionAmount(building, "input", "log"), 20);
+  assert.equal(woodshop.pantry.log, 0);
+
+  withdrawInventory(building, "input", "log", 20);
+  woodshop.pantry.log = 100;
+  woodshop.pantry.tools = 0;
+  producePrimaryTick(economy, physical, woodshop, { day: 1, fraction: 1 });
+  assert.equal(woodshop.pantry.tools, 0);
+  assert.equal(woodshop.pantry.log, 100);
+
+  depositInventory(building, "input", "log", 15);
+  producePrimaryTick(economy, physical, woodshop, { day: 1, fraction: 1 });
+  assert.equal(woodshop.pantry.tools, P.Y_TOOLS);
+  assert.equal(sectionAmount(building, "input", "log"), 15 - P.Y_TOOLS * P.LOG_TOOL);
+  assert.equal(productionInputAmount(physical, woodshop, "log"), 3);
+});
+
+test("段28: 市場で買った生産原料は帰宅時にinput棚へ確定する", () => {
+  const physical = createPhysicalState({
+    width: 3,
+    height: 3,
+    terrain: Array.from({ length: 3 }, () => (
+      Array.from({ length: 3 }, () => ({ kind: "grass", variant: 0 }))
+    )),
+  });
+  const economy = createEconomicState();
+  const saltworks = createHousehold(economy, { job: "saltworks", x: 1, y: 1 });
+  ensureHouseholdInputSites(economy, physical);
+  const building = physical.buildings.find((candidate) => candidate.id === saltworks.buildingId);
+  const before = sectionAmount(building, "input", "char");
+  saltworks.cargo = { direction: "inbound", manifest: { char: 4, wheat: 6 } };
+
+  unloadMarketBuyCargo(saltworks, physical);
+  assert.equal(sectionAmount(building, "input", "char"), before + 4);
+  assert.equal(saltworks.pantry.char, 0);
+  assert.equal(saltworks.pantry.wheat, 240 + 6);
+});
+
+test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市場から蔵へ運ぶ", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 8, height: 3, terrain });
+  const economy = createEconomicState();
+  economy.market = { x: 1, y: 1 };
+  economy.port = { x: 6, y: 1 };
+  ensureCompanyLogisticsSites(economy, physical);
+  const seller = createHousehold(economy, { job: "woodshop", x: 2, y: 2 });
+  seller.pantry.tools = 100;
+  sellAtMarket(economy, physical, seller, { day: 1, random: () => 0 });
+  const offered = economy.stalls.tools[0].qty;
+  setCompanyStockTarget(economy, "tools", offered);
+  const before = economicMaterialSnapshot(economy, physical);
+
+  assert.deepEqual(runCompanyProcurement(economy, { day: 1, physical }), []);
+  assert.equal(physical.haulJobs.length, 0);
+  assert.equal(economy.stalls.tools[0].qty, offered);
+  assert.match(economy.events.at(-1)[1], /道が繋がっていません/);
+  assert.deepEqual(economicMaterialSnapshot(economy, physical), before);
+
+  assert.equal(addRoadLine(physical, { x: 1, y: 1 }, { x: 6, y: 1 }).ok, true);
+  const purchases = runCompanyProcurement(economy, { day: 2, physical });
+  assert.ok(purchases.length > 0);
+  assert.equal(purchases.every((purchase) => purchase.jobId), true);
+  assert.equal(economy.stock.tools ?? 0, 0);
+  assert.equal(physical.haulJobs.every((job) => job.carrier.mode === "cart"), true);
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: {},
+  });
+
+  stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 3 });
+  assert.equal(economy.stock.tools, offered);
+  assert.equal(
+    sectionAmount(companyLogisticsSite(physical, "warehouse"), "storage", "tools"),
+    offered,
+  );
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: {},
+  });
+
+  const release = requestCompanyStockRelease(economy, physical, "tools", { day: 3 });
+  assert.ok(release);
+  assert.equal(release.carrier.mode, "cart");
+  stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 4 });
+  assert.equal(economy.marketStock.tools, release.qty);
+  assert.equal(economy.stock.tools, offered - release.qty);
+  assert.equal(
+    sectionAmount(companyLogisticsSite(physical, "market"), "inbound", "tools"),
+    release.qty,
+  );
+});
+
+test("段29: 本国注文は蔵から港への荷車到着後だけ船積みと売上を確定する", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 8, height: 3, terrain });
+  const economy = createEconomicState();
+  economy.market = { x: 1, y: 1 };
+  economy.port = { x: 6, y: 1 };
+  ensureCompanyLogisticsSites(economy, physical);
+  addRoadLine(physical, economy.market, economy.port);
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  economy.stock.tools = 8;
+  economy.stockCost.tools = 8;
+  depositInventory(warehouse, "storage", "tools", 8);
+  economy.order = { g: "tools", qty: 8, left: 8, price: 2.5, due: 90 };
+  const before = economicMaterialSnapshot(economy, physical);
+  const moneyBefore = economy.company.money;
+
+  const start = runCompanyDayStart(economy, { day: 2, random: () => 1, physical });
+  assert.equal(start.dispatched.length, 1);
+  assert.equal(economy.order.left, 8);
+  assert.equal(economy.company.money, moneyBefore);
+  assert.equal(economy.stock.tools, 0);
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: {},
+  });
+
+  stepHaulCarriers(physical, 3);
+  assert.equal(economy.order.left, 8);
+  stepHaulCarriers(physical, 1);
+  settleCompanyLogistics(economy, physical, { day: 3 });
+  assert.equal(economy.order, null);
+  assert.equal(economy.orderDone, 1);
+  assert.equal(economy.company.money, moneyBefore + 8 * 2.5 * 1.25);
+  assert.equal(sectionAmount(companyLogisticsSite(physical, "port"), "outbound", "tools"), 0);
+  assertMaterialBalance({
+    before,
+    after: economicMaterialSnapshot(economy, physical),
+    flows: economy.dailyMaterialFlows,
+  });
+});
+
+test("段30: testRoadShortensTrips――道路短縮分だけ労働時間と日産が増える", () => {
+  const make = () => {
+    const terrain = Array.from({ length: 3 }, () => (
+      Array.from({ length: 12 }, () => ({ kind: "grass", variant: 0 }))
+    ));
+    const physical = createPhysicalState({ width: 12, height: 3, terrain });
+    const economy = createEconomicState();
+    economy.market = { x: 10, y: 1 };
+    const household = createHousehold(economy, { job: "shepherd", x: 1, y: 1 });
+    household.pantry.meat = 0;
+    household.pantry.cloth = 0;
+    return { economy, household, physical };
+  };
+  const plain = make();
+  const plainDistance = marketPathLength(plain.economy, plain.physical, plain.household);
+  const plainTicks = marketTripDuration(plain.economy, plain.physical, plain.household);
+  const plainMultiplier = productionMultiplierForTrip(plainTicks);
+  for (let tick = 0; tick < 30; tick += 1) {
+    producePrimaryTick(plain.economy, plain.physical, plain.household, {
+      day: 1,
+      fraction: plainMultiplier / 30,
+    });
+  }
+
+  const road = make();
+  addRoadLine(road.physical, road.household, road.economy.market);
+  const roadDistance = marketPathLength(road.economy, road.physical, road.household);
+  const roadTicks = marketTripDuration(road.economy, road.physical, road.household);
+  const roadMultiplier = productionMultiplierForTrip(roadTicks);
+  for (let tick = 0; tick < 30; tick += 1) {
+    producePrimaryTick(road.economy, road.physical, road.household, {
+      day: 1,
+      fraction: roadMultiplier / 30,
+    });
+  }
+
+  assert.equal(plainDistance, 9);
+  assert.ok(Math.abs(roadDistance - 9 * 0.6) < 1e-12);
+  assert.equal(plainTicks, plainDistance * 2 + 2);
+  assert.equal(roadTicks, roadDistance * 2 + 2);
+  assert.ok(roadTicks < plainTicks);
+  assert.ok(roadMultiplier > plainMultiplier);
+  assert.ok(Math.abs(plain.household.pantry.meat - P.Y_MEAT * plainMultiplier) < 1e-10);
+  assert.ok(Math.abs(road.household.pantry.meat - P.Y_MEAT * roadMultiplier) < 1e-10);
+  assert.ok(road.household.pantry.meat > plain.household.pantry.meat);
 });
 
 let failures = 0;

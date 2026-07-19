@@ -2,6 +2,7 @@ import {
   GOODS,
   P,
   companyCreditLimit,
+  economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
 } from "./econ.js";
@@ -332,16 +333,21 @@ function runBuildingRhythmScenario() {
 
 function runMaterialAudit() {
   const world = createAuditWorld(11);
-  const { economy } = world.state;
+  const { economy, physical } = world.state;
   const goodsList = ["wheat", "log", "salt", "tools"];
-  const total = (goods) => (
-    economy.households.reduce((sum, household) => sum + household.pantry[goods], 0)
-    + economy.stalls[goods].reduce((sum, stall) => sum + stall.qty, 0)
-    + (economy.stock[goods] ?? 0)
-  );
+  const total = (snapshot, goods) => {
+    return (snapshot.inventory[goods] ?? 0) + (snapshot.cargo[goods] ?? 0);
+  };
   const unexplained = Object.fromEntries(goodsList.map((goods) => [goods, 0]));
   const flows = Object.fromEntries(goodsList.map((goods) => [goods, 0]));
-  const previous = Object.fromEntries(goodsList.map((goods) => [goods, total(goods)]));
+  const initialSnapshot = economicMaterialSnapshot(economy, physical);
+  const previous = Object.fromEntries(
+    goodsList.map((goods) => [goods, total(initialSnapshot, goods)]),
+  );
+  const previousFlows = Object.fromEntries(goodsList.map((goods) => [
+    goods,
+    { ...(economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 }) },
+  ]));
   const plan = { 13: "wheat", 16: "logger", 20: "fisher", 26: "woodshop", 30: "rapeseed" };
   for (let day = 1; day <= 1440; day += 1) {
     if (day % 30 === 1) {
@@ -353,13 +359,21 @@ function runMaterialAudit() {
     }
     if (day % 5 === 0) setPlayerStockTargets(economy);
     world.step();
+    const currentSnapshot = economicMaterialSnapshot(economy, physical);
     for (const goods of goodsList) {
-      const flow = economy.dailyMaterialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
-      const current = total(goods);
+      const cumulative = economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
+      const flow = Object.fromEntries(
+        ["prod", "cons", "imp", "exp"].map((kind) => [
+          kind,
+          cumulative[kind] - previousFlows[goods][kind],
+        ]),
+      );
+      const current = total(currentSnapshot, goods);
       const explained = flow.prod - flow.cons + flow.imp - flow.exp;
       unexplained[goods] += current - previous[goods] - explained;
-      flows[goods] += Math.abs(flow.prod) + Math.abs(flow.cons);
+      flows[goods] += Math.abs(flow.prod) + Math.abs(flow.cons) + Math.abs(flow.imp) + Math.abs(flow.exp);
       previous[goods] = current;
+      previousFlows[goods] = { ...cumulative };
     }
   }
   return Object.fromEntries(goodsList.map((goods) => {

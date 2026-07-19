@@ -1,4 +1,14 @@
-import { pathLen, workRoadWorksite } from "./physical.js";
+import {
+  buildingById,
+  createCartCarrier,
+  createHaulJob,
+  depositInventory,
+  isConnected,
+  pathLen,
+  sectionAmount,
+  withdrawInventory,
+  workRoadWorksite,
+} from "./physical.js";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -233,6 +243,7 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     px: x,
     py: y,
     state: "home",
+    buildingId: null,
     cargo: null,
     marketCarrier: null,
     marketTransactionTicks: 0,
@@ -289,6 +300,41 @@ export function householdHaul(household) {
   return household.members.length * 4;
 }
 
+export function householdInputBuilding(physical, household) {
+  if (!physical || !household.buildingId) return null;
+  return buildingById(physical, household.buildingId);
+}
+
+export function productionInputAmount(physical, household, goods) {
+  const building = householdInputBuilding(physical, household);
+  return building
+    ? sectionAmount(building, "input", goods)
+    : household.pantry[goods];
+}
+
+function withdrawProductionInput(physical, household, goods, qty) {
+  const building = householdInputBuilding(physical, household);
+  if (building) withdrawInventory(building, "input", goods, qty);
+  else household.pantry[goods] -= qty;
+}
+
+function householdMaterialAmount(physical, household, goods) {
+  const building = householdInputBuilding(physical, household);
+  return household.pantry[goods]
+    + (building ? sectionAmount(building, "input", goods) : 0);
+}
+
+function withdrawHouseholdMaterial(physical, household, goods, qty) {
+  const fromPantry = Math.min(household.pantry[goods], qty);
+  household.pantry[goods] -= fromPantry;
+  const remaining = qty - fromPantry;
+  if (remaining > 1e-9) {
+    const building = householdInputBuilding(physical, household);
+    if (!building) throw new Error(`世帯${household.id}の${goods}が不足しています`);
+    withdrawInventory(building, "input", goods, remaining);
+  }
+}
+
 function tilePosition(position) {
   return { x: Math.round(position.x), y: Math.round(position.y) };
 }
@@ -326,7 +372,7 @@ export function householdClass(household) {
   return JOBCLS[household.job];
 }
 
-export function economicMaterialSnapshot(economy) {
+export function economicMaterialSnapshot(economy, physical = null) {
   const inventory = {};
   const cargo = {};
   for (const household of economy.households) {
@@ -351,6 +397,27 @@ export function economicMaterialSnapshot(economy) {
   }
   for (const [goods, qty] of Object.entries(economy.stock)) {
     inventory[goods] = (inventory[goods] ?? 0) + qty;
+  }
+  for (const [goods, qty] of Object.entries(economy.marketStock ?? {})) {
+    inventory[goods] = (inventory[goods] ?? 0) + qty;
+  }
+  if (physical) {
+    for (const building of physical.buildings) {
+      if (building.ownerHouseholdId === null && building.role !== "port") continue;
+      for (const section of Object.values(building.inventory)) {
+        for (const [goods, qty] of Object.entries(section)) {
+          inventory[goods] = (inventory[goods] ?? 0) + qty;
+        }
+      }
+    }
+    for (const job of physical.haulJobs) {
+      if (!job.economicLogistics || !job.carrier.cargo) continue;
+      const { goods, qty } = job.carrier.cargo;
+      cargo[goods] = (cargo[goods] ?? 0) + qty;
+    }
+    for (const pile of physical.groundPiles) {
+      inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
+    }
   }
   return { inventory, cargo };
 }
@@ -466,16 +533,16 @@ function runHouseholdFoodAndDeath(economy, household, day, markPhase = () => {})
   }
 }
 
-function consumeCultureGoods(economy, household, goods, dailyNeed, satisfied) {
-  const used = Math.min(household.pantry[goods], dailyNeed);
-  household.pantry[goods] -= used;
+function consumeCultureGoods(economy, physical, household, goods, dailyNeed, satisfied) {
+  const used = Math.min(householdMaterialAmount(physical, household, goods), dailyNeed);
+  withdrawHouseholdMaterial(physical, household, goods, used);
   satisfied[goods] = used >= dailyNeed * 0.95;
   if (used > 1e-9) {
     recordEconomicMaterialFlow(economy, goods, "cons", used, `世帯${household.id}の文化消費`);
   }
 }
 
-function runHouseholdCultureAndLadder(economy, household, day, markPhase = () => {}) {
+function runHouseholdCultureAndLadder(economy, physical, household, day, markPhase = () => {}) {
   markPhase("culture");
   const month = ((Math.floor((day - 1) / 30)) % 12) + 1;
   const charcoalMultiplier = month >= 10 || month <= 2 ? 2 : 0.6;
@@ -489,6 +556,7 @@ function runHouseholdCultureAndLadder(economy, household, day, markPhase = () =>
   ]) {
     consumeCultureGoods(
       economy,
+      physical,
       household,
       goods,
       baseNeed * Math.pow(P.CMULT, household.lv),
@@ -506,31 +574,37 @@ function runHouseholdCultureAndLadder(economy, household, day, markPhase = () =>
   if (
     household.job === "veg"
     && household.pantry.veg > householdEat(household) * 2
-    && household.pantry.salt > 0.2
+    && householdMaterialAmount(physical, household, "salt") > 0.2
   ) {
     const raw = Math.min(
       household.pantry.veg - householdEat(household) * 2,
-      household.pantry.salt / P.PICK_SALT,
+      householdMaterialAmount(physical, household, "salt") / P.PICK_SALT,
       15,
     );
     const salt = raw * P.PICK_SALT;
     const pick = raw * P.PR_PICK;
     household.pantry.veg -= raw;
-    household.pantry.salt -= salt;
+    withdrawHouseholdMaterial(physical, household, "salt", salt);
     household.pantry.pick += pick;
     recordEconomicMaterialFlow(economy, "veg", "cons", raw, `世帯${household.id}の漬け込み`);
     recordEconomicMaterialFlow(economy, "salt", "cons", salt, `世帯${household.id}の漬け込み`);
     recordEconomicMaterialFlow(economy, "pick", "prod", pick, `世帯${household.id}の漬け込み`);
   }
   if (household.job === "fisher" && household.pantry.fish > 1e-9) {
-    const raw = Math.min(household.pantry.fish, household.pantry.salt / P.PRES_SALT);
-    const smoked = Math.min(raw, household.pantry.char / P.SMOKE_CHAR);
+    const raw = Math.min(
+      household.pantry.fish,
+      householdMaterialAmount(physical, household, "salt") / P.PRES_SALT,
+    );
+    const smoked = Math.min(
+      raw,
+      householdMaterialAmount(physical, household, "char") / P.SMOKE_CHAR,
+    );
     const salt = raw * P.PRES_SALT;
     const charcoal = smoked * P.SMOKE_CHAR;
     const preserved = smoked * P.PR_SMOKE + (raw - smoked) * P.PR_SALT;
     household.pantry.fish -= raw;
-    household.pantry.salt -= salt;
-    household.pantry.char -= charcoal;
+    withdrawHouseholdMaterial(physical, household, "salt", salt);
+    withdrawHouseholdMaterial(physical, household, "char", charcoal);
     household.pantry.pres += preserved;
     recordEconomicMaterialFlow(economy, "fish", "cons", raw, `世帯${household.id}の保存加工`);
     recordEconomicMaterialFlow(economy, "salt", "cons", salt, `世帯${household.id}の保存加工`);
@@ -606,11 +680,11 @@ function runHouseholdCultureAndLadder(economy, household, day, markPhase = () =>
   if (household.purseLog.length > 31) household.purseLog.shift();
 }
 
-function runHouseholdDayEnd(economy, { day, markPhase = () => {} }) {
+function runHouseholdDayEnd(economy, physical, { day, markPhase = () => {} }) {
   economy.hungryN = 0;
   for (const household of economy.households) {
     runHouseholdFoodAndDeath(economy, household, day, markPhase);
-    runHouseholdCultureAndLadder(economy, household, day, markPhase);
+    runHouseholdCultureAndLadder(economy, physical, household, day, markPhase);
   }
   for (const phase of ["food", "death", "culture", "ladder"]) markPhase(phase);
   return { hungry: economy.hungryN, famine: economy.famine };
@@ -860,12 +934,15 @@ export function loadMarketSellCargo(economy, household) {
   return household.cargo;
 }
 
-export function unloadMarketBuyCargo(household) {
+export function unloadMarketBuyCargo(household, physical = null) {
   if (household.cargo?.direction !== "inbound") {
     throw new Error(`世帯${household.id}に帰宅荷がありません`);
   }
   for (const [goods, qty] of Object.entries(household.cargo.manifest)) {
-    household.pantry[goods] += qty;
+    const building = householdInputBuilding(physical, household);
+    if (building && isProductionInput(household, goods)) {
+      depositInventory(building, "input", goods, qty);
+    } else household.pantry[goods] += qty;
   }
   const delivered = household.cargo;
   household.cargo = null;
@@ -883,6 +960,7 @@ export function buyTargets(
   { day = economy.currentDay, physical = null } = {},
 ) {
   const targets = {};
+  const inputQty = (goods) => productionInputAmount(physical, household, goods);
   const foodDays = FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
   const { px } = economy;
   const cheapest = Math.min(px.veg ?? 9, px.wheat ?? 9, px.pres ?? 9);
@@ -926,7 +1004,7 @@ export function buyTargets(
   }
   if (
     (household.job === "wheat" || household.job === "rapeseed")
-    && household.pantry.meal < P.FERT_NEED * 10
+    && inputQty("meal") < P.FERT_NEED * 10
     && month >= 3
     && month <= 8
   ) {
@@ -936,39 +1014,39 @@ export function buyTargets(
       * P.FERT_BOOST
       * (household.job === "wheat" ? (px.wheat ?? 2) : (px.oil ?? 3))
       / (P.FERT_NEED * 180);
-    targets.meal = [P.FERT_NEED * 20 - household.pantry.meal, benefit * 0.7];
+    targets.meal = [P.FERT_NEED * 20 - inputQty("meal"), benefit * 0.7];
   }
-  if (household.job === "saltworks" && household.pantry.char < P.SALT_CHAR * 5) {
-    targets.char = [P.SALT_CHAR * 10 - household.pantry.char, P.Y_SALT * (px.salt ?? 2) * 0.5];
+  if (household.job === "saltworks" && inputQty("char") < P.SALT_CHAR * 5) {
+    targets.char = [P.SALT_CHAR * 10 - inputQty("char"), P.Y_SALT * (px.salt ?? 2) * 0.5];
   }
-  if (household.job === "woodshop" && household.pantry.log < P.LOG_TOOL * 8) {
+  if (household.job === "woodshop" && inputQty("log") < P.LOG_TOOL * 8) {
     targets.log = [
-      P.LOG_TOOL * 16 - household.pantry.log,
+      P.LOG_TOOL * 16 - inputQty("log"),
       Math.max(0.9, (px.tools ?? 2) / P.LOG_TOOL * 0.6),
     ];
   }
-  if (household.job === "charburner" && household.pantry.log < P.LOG_CHAR * 8) {
+  if (household.job === "charburner" && inputQty("log") < P.LOG_CHAR * 8) {
     targets.log = [
-      P.LOG_CHAR * 16 - household.pantry.log,
+      P.LOG_CHAR * 16 - inputQty("log"),
       Math.max(0.9, (px.char ?? 2) / P.LOG_CHAR * 0.6),
     ];
   }
-  if (household.job === "veg" && household.pantry.salt < 1.5) {
+  if (household.job === "veg" && inputQty("salt") < 1.5) {
     targets.salt = [
-      4 - household.pantry.salt,
+      4 - inputQty("salt"),
       (px.pick ?? 2) * P.PR_PICK / P.PICK_SALT * 0.4,
     ];
   }
   if (household.job === "fisher") {
-    if (household.pantry.salt < 3) {
+    if (inputQty("salt") < 3) {
       targets.salt = [
-        6 - household.pantry.salt,
+        6 - inputQty("salt"),
         (px.pres ?? 2) * P.PR_SALT / P.PRES_SALT * 0.5,
       ];
     }
-    if (household.pantry.char < 2) {
+    if (inputQty("char") < 2) {
       targets.char = [
-        4 - household.pantry.char,
+        4 - inputQty("char"),
         (P.PR_SMOKE - P.PR_SALT) * (px.pres ?? 2) / P.SMOKE_CHAR * 0.5,
       ];
     }
@@ -997,8 +1075,9 @@ export function buyTargets(
     if (targets[goods]) continue;
     let target = daily * P.CULT_D;
     if (goods === "char" && autumn) target = daily * 2 * 100;
-    if (household.pantry[goods] < target * 0.5) {
-      targets[goods] = [target - household.pantry[goods], ceiling];
+    const current = householdMaterialAmount(physical, household, goods);
+    if (current < target * 0.5) {
+      targets[goods] = [target - current, ceiling];
     }
   }
   return targets;
@@ -1024,10 +1103,12 @@ function findHousehold(economy, householdId) {
   return economy.households.find((household) => household.id === householdId);
 }
 
-export function companyStockReleasePrice(economy, goods) {
-  const stock = economy.stock[goods] ?? 0;
+export function companyStockReleasePrice(economy, goods, { market = false } = {}) {
+  const stockTable = market ? economy.marketStock : economy.stock;
+  const costTable = market ? economy.marketStockCost : economy.stockCost;
+  const stock = stockTable[goods] ?? 0;
   if (stock <= 1e-9) return null;
-  const averageCost = (economy.stockCost[goods] ?? 0) / Math.max(1e-9, stock);
+  const averageCost = (costTable[goods] ?? 0) / Math.max(1e-9, stock);
   return Math.min(
     Math.max(averageCost * 1.2, 0.3),
     (P.IMP[goods] ?? 9e9) * 0.97,
@@ -1057,12 +1138,15 @@ export function buyAtMarket(
     if (P.IMP[goods] !== undefined) shelves.push({ kind: "CO", price: P.IMP[goods] });
     const reserved = economy.order?.g === goods ? economy.order.left : 0;
     const freeStock = (economy.stock[goods] ?? 0) - reserved;
-    if (freeStock > 1e-9) {
+    const retailStock = physical ? (economy.marketStock[goods] ?? 0) : freeStock;
+    if (retailStock > 1e-9) {
       shelves.push({
         kind: "STOCK",
-        qty: freeStock,
-        price: companyStockReleasePrice(economy, goods),
+        qty: retailStock,
+        price: companyStockReleasePrice(economy, goods, { market: Boolean(physical) }),
       });
+    } else if (physical && freeStock > 1e-9) {
+      requestCompanyStockRelease(economy, physical, goods, { day });
     }
     shelves.sort((a, b) => a.price - b.price);
     const input = isProductionInput(household, goods);
@@ -1107,17 +1191,27 @@ export function buyAtMarket(
           amount: payment,
           reason: `世帯${household.id}へ蔵出し${goods}を小売`,
         });
-        const averageCost = (economy.stockCost[goods] ?? 0)
-          / Math.max(1e-9, economy.stock[goods] ?? 0);
-        economy.stockCost[goods] = Math.max(
+        const stockTable = physical ? economy.marketStock : economy.stock;
+        const costTable = physical ? economy.marketStockCost : economy.stockCost;
+        const averageCost = (costTable[goods] ?? 0)
+          / Math.max(1e-9, stockTable[goods] ?? 0);
+        costTable[goods] = Math.max(
           0,
-          (economy.stockCost[goods] ?? 0) - qty * averageCost,
+          (costTable[goods] ?? 0) - qty * averageCost,
         );
-        economy.stock[goods] -= qty;
+        stockTable[goods] -= qty;
+        if (physical) {
+          const market = companyLogisticsSite(physical, "market");
+          withdrawInventory(market, "inbound", goods, qty);
+        }
         shelf.qty -= qty;
         economy.co.stockSell += payment;
       } else {
         shelf.stall.qty -= qty;
+        if (physical) {
+          const market = companyLogisticsSite(physical, "market");
+          withdrawInventory(market, "outbound", goods, qty);
+        }
         const seller = findHousehold(economy, shelf.stall.householdId);
         const fee = payment * P.FEE;
         seller.purse += payment - fee;
@@ -1228,6 +1322,8 @@ function sellManifestAtMarket(
       const price = quoteAskPrice(cost, goods, random);
       const stall = { householdId: household.id, qty, price, age: 0 };
       economy.stalls[goods].push(stall);
+      const market = companyLogisticsSite(physical, "market");
+      if (market) depositInventory(market, "outbound", goods, qty);
       listed.push({ goods, ...stall });
     }
   }
@@ -1273,7 +1369,7 @@ export function transactMarketCargo(economy, physical, household, { day, random 
   return { sold, bought };
 }
 
-export function ageMarketStalls(economy, { day }) {
+export function ageMarketStalls(economy, { day, physical = null }) {
   economy.currentDay = day;
   economy.deskUsed = {};
   economy.dailyMaterialFlows = {};
@@ -1289,16 +1385,23 @@ export function ageMarketStalls(economy, { day }) {
         if (accepted > 1e-9) {
           economy.deskUsed[`EXP${goods}`] = used + accepted;
           stall.qty -= accepted;
+          const market = companyLogisticsSite(physical, "market");
+          if (market) withdrawInventory(market, "outbound", goods, accepted);
           exportHouseholdGoods(economy, household, goods, accepted, P.EXP[goods], day);
         }
       }
       if (stall.age >= 6 && household && goods !== "fish" && goods !== "veg") {
+        const returned = stall.qty;
         household.pantry[goods] += stall.qty;
         stall.qty = 0;
+        const market = companyLogisticsSite(physical, "market");
+        if (market && returned > 0) withdrawInventory(market, "outbound", goods, returned);
       }
       if (goods === "fish" && stall.qty > 0) {
         const spoiled = stall.qty / P.FISH_LIFE;
         stall.qty -= spoiled;
+        const market = companyLogisticsSite(physical, "market");
+        if (market) withdrawInventory(market, "outbound", goods, spoiled);
         economy.led.spoil.fish = (economy.led.spoil.fish ?? 0) + spoiled;
         recordEconomicMaterialFlow(
           economy,
@@ -1312,6 +1415,8 @@ export function ageMarketStalls(economy, { day }) {
       if (goods === "veg" && stall.qty > 0) {
         const spoiled = stall.qty / P.VEG_LIFE;
         stall.qty -= spoiled;
+        const market = companyLogisticsSite(physical, "market");
+        if (market) withdrawInventory(market, "outbound", goods, spoiled);
         economy.led.spoil.veg = (economy.led.spoil.veg ?? 0) + spoiled;
         recordEconomicMaterialFlow(
           economy,
@@ -1323,7 +1428,10 @@ export function ageMarketStalls(economy, { day }) {
         );
       }
       if (stall.qty < 0.5 || stall.price < 0.05) {
-        if (household) household.pantry[goods] += Math.max(0, stall.qty);
+        const returned = Math.max(0, stall.qty);
+        if (household) household.pantry[goods] += returned;
+        const market = companyLogisticsSite(physical, "market");
+        if (market && returned > 0) withdrawInventory(market, "outbound", goods, returned);
         stalls.splice(index, 1);
       }
     }
@@ -1400,8 +1508,11 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     produced.stone = qty;
   } else if (household.job === "rapeseed") {
     if (month >= 3 && month <= 8) {
-      const used = Math.max(0, Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction));
-      household.pantry.meal -= used;
+      const used = Math.max(
+        0,
+        Math.min(productionInputAmount(physical, household, "meal"), P.FERT_NEED * effectiveFraction),
+      );
+      withdrawProductionInput(physical, household, "meal", used);
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
         recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の菜種施肥`);
@@ -1449,8 +1560,11 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) return produced;
     household.wheatWork += effectiveFraction;
     if (month >= 3 && month <= 8) {
-      const used = Math.max(0, Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction));
-      household.pantry.meal -= used;
+      const used = Math.max(
+        0,
+        Math.min(productionInputAmount(physical, household, "meal"), P.FERT_NEED * effectiveFraction),
+      );
+      withdrawProductionInput(physical, household, "meal", used);
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
         recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の施肥`);
@@ -1462,23 +1576,32 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "log", "prod", qty, `世帯${household.id}の伐採`);
     produced.log = qty;
   } else if (household.job === "woodshop") {
-    const qty = Math.max(0, Math.min(P.Y_TOOLS * work, household.pantry.log / P.LOG_TOOL));
-    household.pantry.log -= qty * P.LOG_TOOL;
+    const qty = Math.max(
+      0,
+      Math.min(P.Y_TOOLS * work, productionInputAmount(physical, household, "log") / P.LOG_TOOL),
+    );
+    withdrawProductionInput(physical, household, "log", qty * P.LOG_TOOL);
     household.pantry.tools += qty;
     recordEconomicMaterialFlow(economy, "tools", "prod", qty, `世帯${household.id}の木工`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_TOOL, `世帯${household.id}の木工`);
     produced.tools = qty;
   } else if (household.job === "charburner") {
-    const qty = Math.max(0, Math.min(P.Y_CHAR * work, household.pantry.log / P.LOG_CHAR));
-    household.pantry.log -= qty * P.LOG_CHAR;
+    const qty = Math.max(
+      0,
+      Math.min(P.Y_CHAR * work, productionInputAmount(physical, household, "log") / P.LOG_CHAR),
+    );
+    withdrawProductionInput(physical, household, "log", qty * P.LOG_CHAR);
     household.pantry.char += qty;
     recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼`);
     produced.char = qty;
   } else if (household.job === "saltworks") {
-    const fuel = Math.max(0, Math.min(P.SALT_CHAR * effectiveFraction, household.pantry.char));
+    const fuel = Math.max(
+      0,
+      Math.min(P.SALT_CHAR * effectiveFraction, productionInputAmount(physical, household, "char")),
+    );
     const qty = P.Y_SALT * householdMult(household) * fuel / P.SALT_CHAR;
-    household.pantry.char -= fuel;
+    withdrawProductionInput(physical, household, "char", fuel);
     household.pantry.salt += qty;
     if (qty > 0) recordEconomicMaterialFlow(economy, "salt", "prod", qty, `世帯${household.id}の製塩`);
     if (fuel > 0) recordEconomicMaterialFlow(economy, "char", "cons", fuel, `世帯${household.id}の製塩`);
@@ -1662,6 +1785,77 @@ export function companyCreditLimit(economy, { day = economy.currentDay } = {}) {
   );
 }
 
+export function companyLogisticsSite(physical, role) {
+  if (!physical) return null;
+  const id = physical.roleBuildingIds?.[role];
+  if (id) return buildingById(physical, id);
+  const building = physical.buildings.find((candidate) => candidate.role === role) ?? null;
+  if (building) (physical.roleBuildingIds ??= {})[role] = building.id;
+  return building;
+}
+
+function recordLogisticsBlocked(economy, day, fromRole, toRole) {
+  const message = `会社物流停止(${fromRole}→${toRole})——道が繋がっていません`;
+  if (!economy.events.some(([eventDay, event]) => eventDay === day && event === message)) {
+    recordEconomyEvent(economy, day, message);
+  }
+}
+
+function pendingCompanyHaul(physical, kind, goods) {
+  return physical.haulJobs
+    .filter((job) => job.status === "in_transit")
+    .filter((job) => job.economicLogistics?.kind === kind && job.goods === goods)
+    .reduce((total, job) => total + job.qty, 0);
+}
+
+function dispatchCompanyHaul(
+  economy,
+  physical,
+  { day, kind, fromRole, fromSection, toRole, toSection, goods, qty, metadata = {} },
+) {
+  const from = companyLogisticsSite(physical, fromRole);
+  const to = companyLogisticsSite(physical, toRole);
+  if (!from || !to || !isConnected(physical, from, to)) {
+    recordLogisticsBlocked(economy, day, fromRole, toRole);
+    return null;
+  }
+  const job = createHaulJob(physical, {
+    from: { building: from, section: fromSection },
+    to: { building: to, section: toSection },
+    goods,
+    qty,
+    carrier: createCartCarrier(physical),
+  });
+  job.economicLogistics = { kind, day, ...metadata };
+  job.economicReconciled = false;
+  return job;
+}
+
+export function requestCompanyStockRelease(economy, physical, goods, { day }) {
+  if (pendingCompanyHaul(physical, "stock_release", goods) > 1e-9) return null;
+  const reserved = economy.order?.g === goods ? economy.order.left : 0;
+  const free = Math.max(0, (economy.stock[goods] ?? 0) - reserved);
+  const qty = Math.min(16, free);
+  if (qty <= 1e-9) return null;
+  const averageCost = (economy.stockCost[goods] ?? 0)
+    / Math.max(1e-9, economy.stock[goods] ?? 0);
+  const job = dispatchCompanyHaul(economy, physical, {
+    day,
+    kind: "stock_release",
+    fromRole: "warehouse",
+    fromSection: "storage",
+    toRole: "market",
+    toSection: "inbound",
+    goods,
+    qty,
+    metadata: { cost: qty * averageCost },
+  });
+  if (!job) return null;
+  economy.stock[goods] -= qty;
+  economy.stockCost[goods] = Math.max(0, (economy.stockCost[goods] ?? 0) - qty * averageCost);
+  return job;
+}
+
 export function setCompanyStockTarget(economy, goods, qty) {
   if (!GOODS.includes(goods)) throw new Error(`unknown stock target goods: ${goods}`);
   if (!Number.isFinite(qty) || qty < 0) throw new TypeError("stock target must be non-negative and finite");
@@ -1669,35 +1863,159 @@ export function setCompanyStockTarget(economy, goods, qty) {
   return qty;
 }
 
-export function runCompanyProcurement(economy, { day }) {
+export function runCompanyProcurement(economy, { day, physical = null }) {
   const purchases = [];
   for (const goods of Object.keys(economy.stockTgt)) {
-    let lack = (economy.stockTgt[goods] ?? 0) - (economy.stock[goods] ?? 0);
+    let lack = (economy.stockTgt[goods] ?? 0)
+      - (economy.stock[goods] ?? 0)
+      - (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0);
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
     const stalls = [...economy.stalls[goods]].sort((a, b) => a.price - b.price);
     for (const stall of stalls) {
       if (lack <= 1e-9) break;
       const seller = findHousehold(economy, stall.householdId);
       if (!seller) continue;
-      const qty = Math.min(stall.qty, lack);
-      if (qty < 1e-9) continue;
-      const payment = qty * stall.price;
-      stall.qty -= qty;
-      seller.purse += payment;
-      seller.income30 += payment;
-      postCompanyLedger(economy.company, {
-        day,
-        amount: -payment,
-        reason: `世帯${seller.id}から蔵へ${goods}を買上げ`,
-      });
-      economy.co.procBuy += payment;
-      economy.stock[goods] = (economy.stock[goods] ?? 0) + qty;
-      economy.stockCost[goods] = (economy.stockCost[goods] ?? 0) + payment;
-      lack -= qty;
-      purchases.push({ goods, householdId: seller.id, qty, price: stall.price });
+      let remaining = Math.min(stall.qty, lack);
+      while (remaining > 1e-9) {
+        const qty = Math.min(16, remaining);
+        const payment = qty * stall.price;
+        let job = null;
+        if (physical) {
+          job = dispatchCompanyHaul(economy, physical, {
+            day,
+            kind: "procurement",
+            fromRole: "market",
+            fromSection: "outbound",
+            toRole: "warehouse",
+            toSection: "storage",
+            goods,
+            qty,
+            metadata: { payment, householdId: seller.id, price: stall.price },
+          });
+          if (!job) break;
+        }
+        stall.qty -= qty;
+        seller.purse += payment;
+        seller.income30 += payment;
+        postCompanyLedger(economy.company, {
+          day,
+          amount: -payment,
+          reason: `世帯${seller.id}から蔵へ${goods}を買上げ`,
+        });
+        economy.co.procBuy += payment;
+        if (!physical) {
+          economy.stock[goods] = (economy.stock[goods] ?? 0) + qty;
+          economy.stockCost[goods] = (economy.stockCost[goods] ?? 0) + payment;
+        }
+        lack -= qty;
+        remaining -= qty;
+        purchases.push({
+          goods,
+          householdId: seller.id,
+          qty,
+          price: stall.price,
+          jobId: job?.id ?? null,
+        });
+      }
     }
   }
   return purchases;
+}
+
+function dispatchCompanyOrder(economy, physical, { day }) {
+  if (!economy.order) return [];
+  const goods = economy.order.g;
+  let remaining = Math.min(
+    economy.stock[goods] ?? 0,
+    Math.max(0, economy.order.left - pendingCompanyHaul(physical, "order", goods)),
+  );
+  const jobs = [];
+  while (remaining > 1e-9) {
+    const qty = Math.min(16, remaining);
+    const averageCost = (economy.stockCost[goods] ?? 0)
+      / Math.max(1e-9, economy.stock[goods] ?? 0);
+    const job = dispatchCompanyHaul(economy, physical, {
+      day,
+      kind: "order",
+      fromRole: "warehouse",
+      fromSection: "storage",
+      toRole: "port",
+      toSection: "outbound",
+      goods,
+      qty,
+      metadata: {
+        cost: qty * averageCost,
+        orderPrice: economy.order.price,
+        orderDue: economy.order.due,
+      },
+    });
+    if (!job) break;
+    economy.stock[goods] -= qty;
+    economy.stockCost[goods] = Math.max(
+      0,
+      (economy.stockCost[goods] ?? 0) - qty * averageCost,
+    );
+    remaining -= qty;
+    jobs.push(job);
+  }
+  return jobs;
+}
+
+export function settleCompanyLogistics(economy, physical, { day }) {
+  const settled = [];
+  for (const job of physical.haulJobs) {
+    if (
+      job.status !== "completed"
+      || !job.economicLogistics
+      || job.economicReconciled
+    ) continue;
+    const metadata = job.economicLogistics;
+    if (metadata.kind === "procurement") {
+      economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
+      economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.payment;
+    } else if (metadata.kind === "stock_release") {
+      economy.marketStock[job.goods] = (economy.marketStock[job.goods] ?? 0) + job.qty;
+      economy.marketStockCost[job.goods] = (economy.marketStockCost[job.goods] ?? 0) + metadata.cost;
+    } else if (metadata.kind === "order") {
+      if (
+        economy.order
+        && economy.order.g === job.goods
+        && day <= economy.order.due
+      ) {
+        const port = companyLogisticsSite(physical, "port");
+        const shipped = Math.min(job.qty, economy.order.left);
+        withdrawInventory(port, "outbound", job.goods, shipped);
+        economy.order.left -= shipped;
+        const revenue = shipped * metadata.orderPrice * 1.25;
+        postCompanyLedger(economy.company, {
+          day,
+          amount: revenue,
+          reason: `本国注文へ${job.goods}を出荷`,
+        });
+        recordExternalMoneyFlow(economy, {
+          amount: revenue,
+          reason: `${job.goods}の本国注文売上`,
+        });
+        economy.co.ordSell += revenue;
+        economy.exported[job.goods] = (economy.exported[job.goods] ?? 0) + shipped;
+        recordEconomicMaterialFlow(
+          economy,
+          job.goods,
+          "exp",
+          shipped,
+          `${job.goods}を本国注文へ出荷`,
+        );
+        if (economy.order.left <= 1e-9) {
+          recordEconomyEvent(economy, day, "★注文を納めた——本国での評判が上がった");
+          economy.orderDone += 1;
+          economy.order = null;
+        }
+      }
+    }
+    job.economicReconciled = true;
+    settled.push({ jobId: job.id, kind: metadata.kind, goods: job.goods, qty: job.qty });
+  }
+  return settled;
 }
 
 function createSuccessorHousehold(economy, donor, zone) {
@@ -1769,13 +2087,14 @@ export function fillSettlementZones(economy, { day }) {
   return settlements;
 }
 
-export function runCompanyDayStart(economy, { day, random }) {
+export function runCompanyDayStart(economy, { day, random, physical = null }) {
   if (typeof random !== "function") throw new TypeError("company day-start random must be a function");
   const result = {
     created: null,
     expired: null,
     shipped: null,
     completed: false,
+    dispatched: [],
     settlements: [],
     buildingsCompleted: [],
   };
@@ -1812,7 +2131,10 @@ export function runCompanyDayStart(economy, { day, random }) {
     economy.order = null;
   }
 
-  if (economy.order) {
+  if (economy.order && physical) {
+    result.dispatched = dispatchCompanyOrder(economy, physical, { day })
+      .map((job) => ({ jobId: job.id, goods: job.goods, qty: job.qty }));
+  } else if (economy.order) {
     const goods = economy.order.g;
     const qty = Math.min(economy.stock[goods] ?? 0, economy.order.left);
     if (qty > 1e-9) {
@@ -2135,10 +2457,10 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   };
 
   mark("company_procurement");
-  const purchases = runCompanyProcurement(economy, { day });
+  const purchases = runCompanyProcurement(economy, { day, physical });
   mark("wheat_harvest");
   const harvests = runWheatHarvest(economy, { day });
-  const survival = runHouseholdDayEnd(economy, { day, markPhase: mark });
+  const survival = runHouseholdDayEnd(economy, physical, { day, markPhase: mark });
   mark("paving");
   if (economy.paving && !economy.paved && economy.paveBought >= P.PAVE_STONE) {
     economy.paved = true;
@@ -2285,6 +2607,8 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     port: null,
     stock: {},
     stockCost: {},
+    marketStock: {},
+    marketStockCost: {},
     stockTgt: {},
     order: null,
     orderDone: 0,

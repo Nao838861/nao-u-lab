@@ -104,6 +104,8 @@ export function createPhysicalState({
     nextRoadWorksiteId: 1,
     roadOrigin,
     buildings: [],
+    buildingIndex: {},
+    roleBuildingIds: {},
     occupied: {},
     nextBuildingId: 1,
     roadRevision: 0,
@@ -489,10 +491,44 @@ export function addBuilding(physical, type, x, y, options = {}) {
   };
   physical.nextBuildingId += 1;
   physical.buildings.push(building);
+  physical.buildingIndex[building.id] = physical.buildings.length - 1;
   for (const tile of footprintTiles(type, x, y, definitions)) {
     physical.occupied[keyOf(tile.x, tile.y)] = building.id;
   }
   return { ok: true, building };
+}
+
+export function createPointBuilding(
+  physical,
+  { type, x, y, role = null, ownerHouseholdId = null, caps = {} },
+) {
+  if (typeof type !== "string" || type.length === 0) {
+    throw new TypeError("point building type must be a non-empty string");
+  }
+  if (!Number.isFinite(x) || !Number.isFinite(y)) {
+    throw new TypeError("point building position must be finite");
+  }
+  const building = {
+    id: `b${physical.nextBuildingId}`,
+    type,
+    role,
+    ownerHouseholdId,
+    x: Math.round(x),
+    y: Math.round(y),
+    w: 0,
+    h: 0,
+    entrance: { x: Math.round(x), y: Math.round(y) },
+    fixed: role !== null,
+    grade: 0,
+    point: true,
+    inventory: createSectionInventory(),
+    caps: structuredClone(caps),
+  };
+  physical.nextBuildingId += 1;
+  physical.buildings.push(building);
+  physical.buildingIndex[building.id] = physical.buildings.length - 1;
+  if (role !== null) physical.roleBuildingIds[role] = building.id;
+  return building;
 }
 
 export function createSectionInventory() {
@@ -553,8 +589,15 @@ export function moveInventoryBetweenSections() {
   throw new Error("棚を跨ぐ移動には運搬ジョブが必要です");
 }
 
-function buildingById(physical, buildingId) {
-  return physical.buildings.find((building) => building.id === buildingId) ?? null;
+export function buildingById(physical, buildingId) {
+  const indexed = physical.buildingIndex?.[buildingId];
+  if (indexed !== undefined && physical.buildings[indexed]?.id === buildingId) {
+    return physical.buildings[indexed];
+  }
+  const index = physical.buildings.findIndex((building) => building.id === buildingId);
+  if (index < 0) return null;
+  (physical.buildingIndex ??= {})[buildingId] = index;
+  return physical.buildings[index];
 }
 
 function normalizeHaulEndpoint(endpoint) {
