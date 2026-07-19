@@ -7,12 +7,17 @@ genre_tags: [game-ai, npc, open-world, behavior-selection, memory, performance]
 evaluated_at: "2026-07-19T21:38:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-19T21:38:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-19T21:38:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-19T21:48:36.969869+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784465316969869"
+next_action: none
+posted:
+  ts: "1784465316.969869"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784465316969869"
+  char_count: 4178
+  posted_at: "2026-07-19T21:48:36.969869+09:00"
 stale_after: "2026-08-18"
 supersedes: []
 gate_reason: >-
