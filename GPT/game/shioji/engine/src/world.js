@@ -1,27 +1,44 @@
-import { assertMoneyConservation, createEconomicState, P } from "./econ.js";
+import {
+  assertMoneyConservation,
+  createEconomicState,
+  initializeNaturalResources,
+  P,
+  regenerateForest,
+  runHouseholdSurvival,
+  runPrimaryProductionDay,
+} from "./econ.js";
 import { createPhysicalState, stepHaulCarriers } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
 
 export function createWorld({ seed = 1, initialCompanyMoney = P.TREASURY0 } = {}) {
   const normalizedSeed = normalizeSeed(seed);
+  const physical = createPhysicalState();
+  const economy = createEconomicState({ initialCompanyMoney });
   const state = {
     day: 0,
     seed: normalizedSeed,
     rngState: normalizedSeed,
-    physical: createPhysicalState(),
-    economy: createEconomicState({ initialCompanyMoney }),
+    physical,
+    economy,
   };
+  initializeNaturalResources(economy, physical);
+
+  function random() {
+    const result = nextMulberry32(state.rngState);
+    state.rngState = result.state;
+    return result.value;
+  }
 
   return {
     state,
-    random() {
-      const result = nextMulberry32(state.rngState);
-      state.rngState = result.state;
-      return result.value;
-    },
+    random,
     step() {
       stepHaulCarriers(state.physical, 30);
-      state.day += 1;
+      const nextDay = state.day + 1;
+      runPrimaryProductionDay(state.economy, state.physical, { day: nextDay });
+      runHouseholdSurvival(state.economy, { day: nextDay });
+      regenerateForest(state.economy, state.physical, { day: nextDay, random });
+      state.day = nextDay;
       assertMoneyConservation(state.economy);
       return state;
     },

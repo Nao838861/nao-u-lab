@@ -67,6 +67,25 @@ export function makeV003Terrain(width = V003_GRID.width, height = V003_GRID.heig
   return terrain;
 }
 
+export function makeFlowIslandTerrain(width = 48, height = 40) {
+  const terrain = [];
+  for (let y = 0; y < height; y += 1) {
+    const row = [];
+    for (let x = 0; x < width; x += 1) {
+      let kind = "grass";
+      if (y > height - 4 || (y > height - 7 && x > 18 && x < 32)) kind = "water";
+      else if (y > height - 8 && y <= height - 4) kind = "sand";
+      if (x < 16 && y < 16 && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
+      if (x >= 10 && x <= 18 && y >= 15 && y <= 25 && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
+      if (x >= 28 && x <= 33 && y >= 23 && y <= 27 && ((x * 5 + y * 11) % 4 < 3)) kind = "forest";
+      if (x > 38 && y < 10) kind = "rock";
+      row.push({ kind, variant: 0 });
+    }
+    terrain.push(row);
+  }
+  return terrain;
+}
+
 export function createPhysicalState({
   width = V003_GRID.width,
   height = V003_GRID.height,

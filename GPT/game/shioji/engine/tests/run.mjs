@@ -16,8 +16,13 @@ import {
   householdEat,
   householdHaul,
   householdMult,
+  initializeNaturalResources,
+  localWood,
   postCompanyLedger,
+  producePrimaryTick,
   recordExternalMoneyFlow,
+  regenerateForest,
+  runHouseholdSurvival,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -25,6 +30,7 @@ import {
   P as FLOW_ISLAND_P,
   PERISH as FLOW_ISLAND_PERISH,
   HH as FlowIslandHousehold,
+  stdTerrain as flowIslandStdTerrain,
 } from "../../../../../Claude/game/flow_island/engine.js";
 import { mulberry32 } from "../src/prng.js";
 import {
@@ -46,6 +52,7 @@ import {
   isConnected,
   keyOf,
   loseHaulCarrier,
+  makeFlowIslandTerrain,
   materialSnapshot,
   moveInventoryBetweenSections,
   pathLen,
@@ -531,6 +538,176 @@ test("段12: 職業別開拓キットを移民持参として物資出納へ記�
       true,
     );
   }
+});
+
+test("段13: 食事は保存食控えめ→生鮮2巡→保存食の3段で満たす", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "fisher", x: 1, y: 1 });
+  household.members = household.members.slice(0, 4);
+  for (const goods of GOODS) household.pantry[goods] = 0;
+  household.pantry.pres = 2;
+  household.pantry.fish = 1;
+  household.pantry.veg = 1;
+  household.pantry.meat = 1;
+
+  runHouseholdSurvival(economy, { day: 1 });
+  assert.ok(Math.abs(household.pantry.pres - 1) < 1e-9);
+  assert.equal(household.pantry.fish, 0);
+  assert.equal(household.pantry.veg, 0);
+  assert.equal(household.pantry.meat, 0);
+  assert.ok(Math.abs(economy.led.eat.pres - 1) < 1e-9);
+  assert.equal(economy.led.eat.fish, 1);
+  assert.equal(economy.led.eat.veg, 1);
+  assert.equal(economy.led.eat.meat, 1);
+  assert.equal(household.hungerRun, 0);
+});
+
+test("段13: 採集床0.75の後も不足すれば飢えが連続する", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 1, y: 1 });
+  household.members = household.members.slice(0, 4);
+  for (const goods of FOODS) household.pantry[goods] = 0;
+
+  runHouseholdSurvival(economy, { day: 1 });
+  assert.equal(household.hungerRun, 1);
+  assert.equal(household.hunger, 1);
+  assert.equal(economy.hungryN, 1);
+  assert.equal(economy.famine, 1);
+  assert.ok(Math.abs(economy.materialFlows.veg.prod - 0.9) < 1e-9);
+});
+
+test("段13: 飢え60日で死亡し人数2以下なら同日に離散・近所相続する", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 10, y: 10 });
+  const heirs = [
+    createHousehold(economy, { job: "veg", x: 11, y: 10 }),
+    createHousehold(economy, { job: "fisher", x: 12, y: 10 }),
+    createHousehold(economy, { job: "wheat", x: 13, y: 10 }),
+    createHousehold(economy, { job: "woodshop", x: 30, y: 30 }),
+  ];
+  household.members = household.members.slice(0, 3);
+  for (const goods of FOODS) household.pantry[goods] = 0;
+  for (const heir of heirs) heir.pantry.wheat = 10_000;
+  const pursesBefore = heirs.map((heir) => heir.purse);
+
+  for (let day = 1; day <= 59; day += 1) runHouseholdSurvival(economy, { day });
+  assert.equal(household.members.length, 3);
+  assert.equal(economy.households.includes(household), true);
+  runHouseholdSurvival(economy, { day: 60 });
+
+  assert.equal(household.members.length, 2);
+  assert.equal(economy.households.includes(household), false);
+  assert.equal(economy.ruins.at(-1).formerHouseholdId, household.id);
+  assert.equal(heirs[0].purse, pursesBefore[0] + 20);
+  assert.equal(heirs[1].purse, pursesBefore[1] + 20);
+  assert.equal(heirs[2].purse, pursesBefore[2] + 20);
+  assert.equal(heirs[3].purse, pursesBefore[3]);
+  assert.equal(assertMoneyConservation(economy), true);
+  assert.match(economy.events.at(-1)[1], /離散/);
+});
+
+test("段14: flow_island標準地形を同値生成し森をタイル資源化する", () => {
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(),
+  });
+  assert.deepEqual(
+    physical.terrain.map((row) => row.map((tile) => tile.kind)),
+    flowIslandStdTerrain(),
+  );
+
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  const forestTiles = physical.terrain.flat().filter((tile) => tile.kind === "forest").length;
+  assert.equal(Object.keys(economy.natural.wood).length, forestTiles);
+  assert.equal(Object.values(economy.natural.wood).every((stock) => stock === P.WOOD0), true);
+});
+
+test("段14: 漁は冬1/4・菜園は月3〜10のみ・牧畜は肉と布を生産する", () => {
+  const makeProducer = (job) => {
+    const physical = createPhysicalState({
+      width: 48,
+      height: 40,
+      terrain: makeFlowIslandTerrain(),
+    });
+    const economy = createEconomicState();
+    initializeNaturalResources(economy, physical);
+    const household = createHousehold(economy, { job, x: 25, y: 32 });
+    return { economy, household, physical };
+  };
+
+  const summerFisher = makeProducer("fisher");
+  producePrimaryTick(summerFisher.economy, summerFisher.physical, summerFisher.household, {
+    day: 61,
+    fraction: 1,
+  });
+  assert.equal(summerFisher.household.pantry.fish, P.Y_FISH);
+
+  const winterFisher = makeProducer("fisher");
+  producePrimaryTick(winterFisher.economy, winterFisher.physical, winterFisher.household, {
+    day: 271,
+    fraction: 1,
+  });
+  assert.equal(winterFisher.household.pantry.fish, P.Y_FISH_W);
+  assert.equal(winterFisher.household.pantry.fish / summerFisher.household.pantry.fish, 0.25);
+
+  const gardener = makeProducer("veg");
+  producePrimaryTick(gardener.economy, gardener.physical, gardener.household, { day: 31, fraction: 1 });
+  assert.equal(gardener.household.pantry.veg, 0);
+  producePrimaryTick(gardener.economy, gardener.physical, gardener.household, { day: 61, fraction: 1 });
+  assert.equal(gardener.household.pantry.veg, P.Y_VEG);
+  producePrimaryTick(gardener.economy, gardener.physical, gardener.household, { day: 301, fraction: 1 });
+  assert.equal(gardener.household.pantry.veg, P.Y_VEG);
+
+  const shepherd = makeProducer("shepherd");
+  producePrimaryTick(shepherd.economy, shepherd.physical, shepherd.household, { day: 1, fraction: 1 });
+  assert.equal(shepherd.household.pantry.meat, P.Y_MEAT);
+  assert.equal(shepherd.household.pantry.cloth, P.Y_CLOTH);
+});
+
+test("段14: 木こりは択伐し不足時だけ皆伐して禿山を作る", () => {
+  const terrain = Array.from({ length: 5 }, () => (
+    Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  terrain[2][2].kind = "forest";
+  const physical = createPhysicalState({ width: 5, height: 5, terrain });
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  const logger = createHousehold(economy, { job: "logger", x: 2, y: 2 });
+
+  producePrimaryTick(economy, physical, logger, { day: 1, fraction: 1 });
+  assert.equal(logger.pantry.log, P.Y_LOG);
+  assert.equal(economy.natural.wood["2,2"], P.WOOD0 - P.Y_LOG);
+  assert.equal(physical.terrain[2][2].kind, "forest");
+  assert.ok(localWood(economy, physical, logger) > 0);
+
+  logger.pantry.log = 0;
+  economy.natural.wood["2,2"] = 10;
+  producePrimaryTick(economy, physical, logger, { day: 2, fraction: 1 });
+  assert.equal(logger.pantry.log, 10);
+  assert.equal(economy.natural.wood["2,2"], 0);
+  assert.equal(physical.terrain[2][2].kind, "bald");
+  assert.match(economy.events.at(-1)[1], /森が禿げた/);
+});
+
+test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生する", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 3 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  terrain[1][0].kind = "forest";
+  terrain[1][1].kind = "bald";
+  terrain[1][2].kind = "forest";
+  const physical = createPhysicalState({ width: 3, height: 3, terrain });
+  const economy = createEconomicState();
+  initializeNaturalResources(economy, physical);
+  economy.natural.wood["0,1"] = 100;
+
+  regenerateForest(economy, physical, { day: 5, random: () => 1 });
+  assert.equal(economy.natural.wood["0,1"], 100 + P.WOOD_R * 5);
+  regenerateForest(economy, physical, { day: 30, random: () => 0 });
+  assert.equal(physical.terrain[1][1].kind, "forest");
+  assert.equal(economy.natural.wood["1,1"], P.WOOD0 * 0.25);
 });
 
 let failures = 0;

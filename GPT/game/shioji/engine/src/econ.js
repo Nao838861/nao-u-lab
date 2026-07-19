@@ -256,7 +256,270 @@ export function economicMaterialSnapshot(economy) {
       cargo[household.cargo.goods] = (cargo[household.cargo.goods] ?? 0) + household.cargo.qty;
     }
   }
+  for (const ruin of economy.ruins) {
+    for (const [goods, qty] of Object.entries(ruin.inventory)) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
+  }
   return { inventory, cargo };
+}
+
+function consumeFood(economy, household, goods, qty, kinds) {
+  if (qty <= 1e-9) return 0;
+  household.pantry[goods] -= qty;
+  kinds.add(FOOD_KIND[goods]);
+  economy.led.eat[goods] = (economy.led.eat[goods] ?? 0) + qty;
+  recordEconomicMaterialFlow(economy, goods, "cons", qty, `世帯${household.id}の食事`);
+  return qty;
+}
+
+function recordEconomyEvent(economy, day, message) {
+  economy.events.push([day, message]);
+  if (economy.events.length > 400) economy.events.shift();
+}
+
+function disperseHousehold(economy, household, day) {
+  recordEconomyEvent(economy, day, `☠ ${household.sur}家は離散した——家は廃屋になった`);
+  economy.ruins.push({
+    x: household.x,
+    y: household.y,
+    formerHouseholdId: household.id,
+    inventory: structuredClone(household.pantry),
+  });
+  const rest = economy.households.filter((candidate) => candidate !== household);
+  if (rest.length > 0 && household.purse > 0) {
+    const near = rest
+      .sort((a, b) => Math.hypot(a.x - household.x, a.y - household.y)
+        - Math.hypot(b.x - household.x, b.y - household.y))
+      .slice(0, 3);
+    const share = household.purse / near.length;
+    for (const heir of near) heir.purse += share;
+    household.purse = 0;
+  } else {
+    if (household.purse !== 0) {
+      postCompanyLedger(economy.company, {
+        day,
+        amount: household.purse,
+        reason: household.purse > 0 ? "相続人なき遺産" : "離散世帯の貸し倒れ",
+      });
+    }
+    household.purse = 0;
+  }
+  economy.households.splice(economy.households.indexOf(household), 1);
+}
+
+export function runHouseholdSurvival(economy, { day }) {
+  if (!Number.isSafeInteger(day) || day <= 0) throw new TypeError("survival day must be a positive safe integer");
+  economy.hungryN = 0;
+  for (const household of economy.households) {
+    let need = householdEat(household);
+    economy.led.need += need;
+    const kinds = new Set();
+
+    for (const goods of ["pres", "wheat", "pick"]) {
+      const used = Math.min(household.pantry[goods], need * P.RATION * 0.85);
+      need -= consumeFood(economy, household, goods, used, kinds);
+    }
+    for (let pass = 0; pass < 2; pass += 1) {
+      const available = ["fish", "veg", "meat"].filter((goods) => household.pantry[goods] > 1e-9);
+      if (available.length === 0 || need <= 1e-9) break;
+      const share = need / available.length;
+      for (const goods of available) {
+        const used = Math.min(household.pantry[goods], share);
+        need -= consumeFood(economy, household, goods, used, kinds);
+      }
+    }
+    for (const goods of ["pres", "wheat", "pick"]) {
+      if (need <= 1e-9) break;
+      const used = Math.min(household.pantry[goods], need);
+      need -= consumeFood(economy, household, goods, used, kinds);
+    }
+    if (need > 0.5) {
+      const forage = Math.min(need, householdEat(household) * 0.75);
+      need -= forage;
+      recordEconomicMaterialFlow(economy, "veg", "prod", forage * 0.3, `世帯${household.id}の採集`);
+    }
+
+    const hungry = need > 0.5;
+    if (hungry) {
+      household.hunger += 1;
+      economy.famine += 1;
+      economy.hungryN += 1;
+      household.hungerRun = (household.hungerRun ?? 0) + 1;
+    } else {
+      household.hungerRun = 0;
+    }
+    (household.hungerHist ??= []).push(hungry ? 1 : 0);
+
+    if (household.hungerRun >= 60) {
+      household.hungerRun = 30;
+      const dead = household.members.pop();
+      recordEconomyEvent(economy, day, `☠ ${household.sur}家の${dead?.name ?? "一人"}が餓えで亡くなった`);
+      if (household.members.length <= 2) disperseHousehold(economy, household, day);
+    }
+
+    household.kindLog.push([day, [...kinds]]);
+    for (const kind of kinds) household.kindDays[kind] = (household.kindDays[kind] ?? 0) + 1;
+    while (household.kindLog.length > 0 && household.kindLog[0][0] <= day - 45) {
+      for (const kind of household.kindLog[0][1]) household.kindDays[kind] -= 1;
+      household.kindLog.shift();
+    }
+  }
+  return { hungry: economy.hungryN, famine: economy.famine };
+}
+
+function terrainKindAt(physical, x, y) {
+  const tile = physical?.terrain?.[y]?.[x];
+  return typeof tile === "string" ? tile : tile?.kind;
+}
+
+function setTerrainKind(physical, x, y, kind) {
+  const tile = physical.terrain[y][x];
+  if (typeof tile === "string") physical.terrain[y][x] = kind;
+  else tile.kind = kind;
+}
+
+export function initializeNaturalResources(economy, physical) {
+  economy.natural.bay = P.BAY0;
+  economy.natural.bay2 = P.BAY0;
+  economy.natural.wood = {};
+  for (let y = 0; y < physical.height; y += 1) {
+    for (let x = 0; x < physical.width; x += 1) {
+      if (terrainKindAt(physical, x, y) === "forest") {
+        economy.natural.wood[`${x},${y}`] = P.WOOD0;
+      }
+    }
+  }
+  return economy.natural;
+}
+
+export function chopWood(economy, physical, household, amount) {
+  if (!physical?.terrain) return amount;
+  let gathered = 0;
+  const centerX = Math.round(household.x);
+  const centerY = Math.round(household.y);
+  const seedFloor = P.WOOD0 * 0.15;
+  for (let pass = 0; pass < 2 && gathered < amount; pass += 1) {
+    for (let radius = 0; radius <= 5 && gathered < amount; radius += 1) {
+      for (let offsetY = -radius; offsetY <= radius && gathered < amount; offsetY += 1) {
+        for (let offsetX = -radius; offsetX <= radius && gathered < amount; offsetX += 1) {
+          const x = centerX + offsetX;
+          const y = centerY + offsetY;
+          const key = `${x},${y}`;
+          const stock = economy.natural.wood[key];
+          const floor = pass === 0 ? seedFloor : 0;
+          if (!(stock > floor)) continue;
+          const used = Math.min(stock - floor, amount - gathered);
+          economy.natural.wood[key] -= used;
+          gathered += used;
+          if (economy.natural.wood[key] <= 0.5) {
+            economy.natural.wood[key] = 0;
+            setTerrainKind(physical, x, y, "bald");
+            recordEconomyEvent(economy, economy.currentDay, "森が禿げた——伐り尽くされた丘");
+          }
+        }
+      }
+    }
+  }
+  return gathered;
+}
+
+export function localWood(economy, physical, household) {
+  if (!physical?.terrain) return 1;
+  let stock = 0;
+  const centerX = Math.round(household.x);
+  const centerY = Math.round(household.y);
+  for (let offsetY = -5; offsetY <= 5; offsetY += 1) {
+    for (let offsetX = -5; offsetX <= 5; offsetX += 1) {
+      stock += economy.natural.wood[`${centerX + offsetX},${centerY + offsetY}`] ?? 0;
+    }
+  }
+  return Math.min(1, stock / (P.WOOD0 * 8));
+}
+
+export function producePrimaryTick(economy, physical, household, { day, fraction }) {
+  if (!Number.isFinite(fraction) || fraction < 0) throw new TypeError("production fraction must be non-negative and finite");
+  const month = (Math.floor((day - 1) / 30) % 12) + 1;
+  const winter = month >= 10;
+  const work = fraction * householdMult(household);
+  const produced = {};
+
+  if (household.job === "fisher") {
+    const depletion = economy.natural.bay / P.BAY0;
+    const qty = (winter ? P.Y_FISH_W : P.Y_FISH) * work * depletion;
+    economy.natural.bay = Math.min(
+      P.BAY0,
+      economy.natural.bay - qty
+        + fraction * (P.BAY_R * economy.natural.bay * (1 - depletion) + P.RESEED * (1 - depletion)),
+    );
+    household.pantry.fish += qty;
+    economy.led.prod.fish = (economy.led.prod.fish ?? 0) + qty;
+    recordEconomicMaterialFlow(economy, "fish", "prod", qty, `世帯${household.id}の漁`);
+    produced.fish = qty;
+  } else if (household.job === "veg" && month >= 3 && month <= 10) {
+    const qty = P.Y_VEG * work;
+    household.pantry.veg += qty;
+    economy.led.prod.veg = (economy.led.prod.veg ?? 0) + qty;
+    recordEconomicMaterialFlow(economy, "veg", "prod", qty, `世帯${household.id}の菜園`);
+    produced.veg = qty;
+  } else if (household.job === "shepherd") {
+    const meat = P.Y_MEAT * work;
+    const cloth = P.Y_CLOTH * work;
+    household.pantry.meat += meat;
+    household.pantry.cloth += cloth;
+    economy.led.prod.meat = (economy.led.prod.meat ?? 0) + meat;
+    recordEconomicMaterialFlow(economy, "meat", "prod", meat, `世帯${household.id}の牧畜`);
+    recordEconomicMaterialFlow(economy, "cloth", "prod", cloth, `世帯${household.id}の牧畜`);
+    produced.meat = meat;
+    produced.cloth = cloth;
+  } else if (household.job === "logger") {
+    const qty = chopWood(economy, physical, household, P.Y_LOG * work);
+    household.pantry.log += qty;
+    recordEconomicMaterialFlow(economy, "log", "prod", qty, `世帯${household.id}の伐採`);
+    produced.log = qty;
+  }
+  return produced;
+}
+
+export function runPrimaryProductionDay(economy, physical, { day }) {
+  economy.currentDay = day;
+  for (let tick = 0; tick < 30; tick += 1) {
+    for (const household of economy.households) {
+      if (household.state === "home") {
+        producePrimaryTick(economy, physical, household, { day, fraction: 1 / 30 });
+      }
+    }
+  }
+}
+
+export function regenerateForest(economy, physical, { day, random }) {
+  if (!physical?.terrain || day % 5 !== 0) return;
+  for (const [key, stock] of Object.entries(economy.natural.wood)) {
+    if (stock > 0 && stock < P.WOOD0) {
+      economy.natural.wood[key] = Math.min(P.WOOD0, stock + P.WOOD_R * 5);
+    }
+  }
+  if (day % 30 !== 0) return;
+  for (let y = 0; y < physical.height; y += 1) {
+    for (let x = 0; x < physical.width; x += 1) {
+      if (terrainKindAt(physical, x, y) !== "bald") continue;
+      let adjacent = 0;
+      for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
+        for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
+          const nearX = x + offsetX;
+          const nearY = y + offsetY;
+          if (
+            terrainKindAt(physical, nearX, nearY) === "forest"
+            && (economy.natural.wood[`${nearX},${nearY}`] ?? 0) > P.WOOD0 * 0.3
+          ) adjacent += 1;
+        }
+      }
+      if (adjacent >= 2 && random() < 0.06) {
+        setTerrainKind(physical, x, y, "forest");
+        economy.natural.wood[`${x},${y}`] = P.WOOD0 * 0.25;
+      }
+    }
+  }
 }
 
 const MONEY_EPSILON = 1e-9;
@@ -349,6 +612,13 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     nextHouseholdId: 0,
     materialFlows: {},
     materialLedger: [],
+    led: { prod: {}, eat: {}, spoil: {}, need: 0 },
+    hungryN: 0,
+    famine: 0,
+    ruins: [],
+    events: [],
+    currentDay: 0,
+    natural: { bay: P.BAY0, bay2: P.BAY0, wood: {} },
     moneyBoundary: {
       openingTotal: initialCompanyMoney,
       in: 0,
