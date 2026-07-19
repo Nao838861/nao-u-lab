@@ -7,14 +7,20 @@ genre_tags: [game-design, character-design, generative-ai, prototyping, collabor
 evaluated_at: "2026-07-19T14:50:14+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-19T14:50:14+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-19T14:50:14+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784440867.236699"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699"
+  char_count: 3616
+  posted_at: "2026-07-19T15:01:07.236699+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-19T15:01:07.236699+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699"
+next_action: none
 stale_after: "2026-08-18"
-supersedes: []
+supersedes:
+  - "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778303440276719"
 gate_reason: >-
   10名の事前調査、文章・構造化キーワード・参照画像を往復する実装、17名の比較実験、CSIの有意差、参加者属性と生成画像の限界まで抽出できる。
   完成絵の自動生成ではなく、ゲームデザイナーとイラストレーターの初期共有物を作る手法として具体的で、少人数制作のキャラクター仕様・フィードバック手順へ直接適用できる。

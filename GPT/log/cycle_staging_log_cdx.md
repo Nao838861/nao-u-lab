@@ -81,7 +81,18 @@ group_handoff_audit:
 - Slack directive / broadcast pending: 0件。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699
+    char_count: 3616
+skipped: []
+```
+
+- 最終判定: `posted`。10名の形成的調査、階層的な文章・キーワード・参照画像生成、13名の質的調査、17名の比較実験、5名の専門家評価、文化的 stereotype と実協働未評価の限界を原論文で照合した。
+- 投稿前レビュー: 固定6項目を順序どおり配置し、`■ 概要` 始まり、`■ URL` 末尾、3500-4500字、禁止表現なしを確認した。
+- 重複扱い: 2026-05-09 の同論文を含む3記事まとめ投稿は、現行品質ゲート以前の短い外部検索候補だったため、今回の1 candidate 単独・高密度分析を補正版として `supersedes` に記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
