@@ -9,9 +9,26 @@ import {
 } from "../src/econ.js";
 import { mulberry32 } from "../src/prng.js";
 import {
+  V003_FIXED,
+  addBuilding,
+  addRoadLine,
   assertMaterialBalance,
+  assertOccupancyInvariant,
   createMaterialFlowLedger,
+  createPhysicalState,
+  createV003PhysicalState,
+  depositInventory,
+  hasRoad,
+  isConnected,
+  keyOf,
+  moveInventoryBetweenSections,
+  pathLen,
   recordMaterialFlow,
+  removeRoadTile,
+  roadPath,
+  sectionAmount,
+  sectionCapacity,
+  withdrawInventory,
 } from "../src/physical.js";
 import { createWorld } from "../src/world.js";
 
@@ -106,6 +123,146 @@ test("物資フローを1件わざと記帳し忘れると嘘発見器が赤く�
     }),
     /物資出納違反.*wheat/,
   );
+});
+
+test("段5: v003と同じ地形・道路グラフをNode単体で生成する", () => {
+  const physical = createV003PhysicalState();
+  const terrainCounts = {};
+  for (const row of physical.terrain) {
+    for (const tile of row) terrainCounts[tile.kind] = (terrainCounts[tile.kind] ?? 0) + 1;
+  }
+  assert.deepEqual(terrainCounts, { water: 87, grass: 303, forest: 56, rock: 10 });
+  assert.equal(Object.keys(physical.roads).length, 8);
+
+  const extension = addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  assert.equal(extension.ok, true);
+  assert.deepEqual(extension.cells, [
+    { x: 13, y: 11 }, { x: 13, y: 10 }, { x: 13, y: 9 }, { x: 13, y: 8 },
+  ]);
+  assert.equal(extension.newCells.length, 3);
+  const path = roadPath(physical, V003_FIXED.port.entrance, V003_FIXED.forestGate);
+  assert.ok(path);
+  assert.equal(path.every(({ x, y }) => hasRoad(physical, x, y)), true);
+});
+
+test("段5: 3x3占有を記録し重複・道路横断を拒否する", () => {
+  const physical = createV003PhysicalState();
+  addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  const result = addBuilding(physical, "logger", 14, 6);
+  assert.equal(result.ok, true, result.reason);
+  const occupiedByLogger = Object.values(physical.occupied)
+    .filter((buildingId) => buildingId === result.building.id);
+  assert.equal(occupiedByLogger.length, 9);
+  assert.equal(assertOccupancyInvariant(physical), true);
+
+  const overlap = addBuilding(physical, "woodshop", 15, 7, { requireRoad: false });
+  assert.equal(overlap.ok, false);
+  assert.equal(overlap.reason, "building-overlap");
+  const blockedRoad = addRoadLine(physical, { x: 13, y: 8 }, { x: 16, y: 8 });
+  assert.equal(blockedRoad.ok, false);
+  assert.equal(physical.occupied[keyOf(14, 8)], result.building.id);
+  assert.equal(assertOccupancyInvariant(physical), true);
+  assert.doesNotThrow(() => JSON.stringify(physical));
+});
+
+test("段6: input/output/storage/construction棚へ容量内で入出庫する", () => {
+  const physical = createV003PhysicalState();
+  addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  const woodshop = addBuilding(physical, "woodshop", 14, 9).building;
+  const warehouse = addBuilding(physical, "warehouse", 10, 8, { requireRoad: false }).building;
+
+  assert.deepEqual(Object.keys(woodshop.inventory), [
+    "input", "output", "storage", "construction", "inbound", "outbound",
+  ]);
+  depositInventory(woodshop, "input", "log", 12);
+  depositInventory(woodshop, "output", "boards", 5);
+  depositInventory(woodshop, "construction", "tools", 2);
+  depositInventory(warehouse, "storage", "log", 8);
+  assert.equal(withdrawInventory(woodshop, "input", "log", 5), 7);
+  assert.equal(sectionAmount(woodshop, "input", "log"), 7);
+  assert.equal(sectionAmount(woodshop, "output", "boards"), 5);
+  assert.equal(sectionAmount(woodshop, "construction", "tools"), 2);
+  assert.equal(sectionAmount(warehouse, "storage", "log"), 8);
+  assert.equal(sectionCapacity(woodshop, "input", "log"), 26);
+});
+
+test("段6: 容量超過・在庫不足・運搬ジョブなしの棚跨ぎを拒否する", () => {
+  const physical = createV003PhysicalState();
+  addRoadLine(physical, V003_FIXED.roadHead, V003_FIXED.forestGate);
+  const woodshop = addBuilding(physical, "woodshop", 14, 9).building;
+  depositInventory(woodshop, "input", "log", 10);
+
+  assert.throws(() => depositInventory(woodshop, "input", "log", 17), /棚容量超過/);
+  assert.throws(() => withdrawInventory(woodshop, "input", "log", 11), /棚在庫不足/);
+  assert.throws(
+    () => moveInventoryBetweenSections(woodshop, "input", "output", "log", 1),
+    /運搬ジョブが必要/,
+  );
+  assert.equal(sectionAmount(woodshop, "input", "log"), 10);
+  assert.equal(sectionAmount(woodshop, "output", "log"), 0);
+});
+
+test("段7: pathLenは道・獣道・草・森・対角のコスト表に従う", () => {
+  const terrain = [
+    ["grass", "grass", "grass", "grass", "grass"],
+    ["grass", "grass", "forest", "grass", "grass"],
+    ["grass", "grass", "grass", "grass", "grass"],
+  ].map((row) => row.map((kind) => ({ kind, variant: 0 })));
+  const physical = createPhysicalState({ width: 5, height: 3, terrain });
+
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 1, y: 1 }, "walk"), 1);
+  assert.equal(pathLen(physical, { x: 1, y: 1 }, { x: 2, y: 1 }, "walk"), 1.4);
+  assert.equal(pathLen(physical, { x: 0, y: 0 }, { x: 1, y: 1 }, "walk"), 1.4);
+
+  physical.trails[keyOf(1, 1)] = true;
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 1, y: 1 }, "walk"), 0.85);
+  assert.equal(addRoadLine(physical, { x: 0, y: 1 }, { x: 1, y: 1 }).ok, true);
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 1, y: 1 }, "walk"), 0.6);
+});
+
+test("段7: cartは道路だけを通り非接続ならInfinityを返す", () => {
+  const terrain = Array.from({ length: 3 }, () =>
+    Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 })));
+  const physical = createPhysicalState({ width: 5, height: 3, terrain });
+  addRoadLine(physical, { x: 0, y: 1 }, { x: 2, y: 1 });
+
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 1, y: 1 }, "cart"), 0.6);
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 2, y: 1 }, "cart"), 1.2);
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 4, y: 1 }, "cart"), Infinity);
+  assert.equal(pathLen(physical, { x: 0, y: 1 }, { x: 4, y: 1 }, "walk"), 3.2);
+});
+
+test("段8: 道路の追加・撤去直後にisConnectedの成分判定が変わる", () => {
+  const terrain = Array.from({ length: 3 }, () =>
+    Array.from({ length: 7 }, () => ({ kind: "grass", variant: 0 })));
+  const physical = createPhysicalState({ width: 7, height: 3, terrain });
+  const definitions = {
+    home: { category: "production", w: 1, h: 1, caps: {} },
+  };
+  const homeA = addBuilding(physical, "home", 0, 0, {
+    definitions, entrance: { x: 0, y: 1 }, requireRoad: false,
+  }).building;
+  const homeB = addBuilding(physical, "home", 2, 0, {
+    definitions, entrance: { x: 2, y: 1 }, requireRoad: false,
+  }).building;
+  const homeC = addBuilding(physical, "home", 6, 0, {
+    definitions, entrance: { x: 6, y: 1 }, requireRoad: false,
+  }).building;
+  addRoadLine(physical, { x: 0, y: 1 }, { x: 2, y: 1 });
+  addRoadLine(physical, { x: 6, y: 1 }, { x: 6, y: 1 });
+
+  assert.equal(isConnected(physical, homeA, homeB), true);
+  assert.equal(isConnected(physical, homeA, homeC), false);
+  const disconnectedRevision = physical.connectionCache.revision;
+
+  addRoadLine(physical, { x: 2, y: 1 }, { x: 6, y: 1 });
+  assert.ok(physical.roadRevision > disconnectedRevision);
+  assert.equal(isConnected(physical, homeA, homeC), true);
+  assert.equal(physical.connectionCache.revision, physical.roadRevision);
+
+  assert.equal(removeRoadTile(physical, 4, 1), true);
+  assert.equal(isConnected(physical, homeA, homeC), false);
+  assert.equal(physical.connectionCache.revision, physical.roadRevision);
 });
 
 let failures = 0;
