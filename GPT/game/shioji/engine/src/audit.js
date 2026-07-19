@@ -7,7 +7,11 @@ import {
   localWood,
 } from "./econ.js";
 import {
+  addRoadLine,
+  assertCarrierInvariants,
+  assertOccupancyInvariant,
   createPhysicalState,
+  findLandRoadEntrance,
   hasRoad,
   makeFlowIslandTerrain,
 } from "./physical.js";
@@ -27,6 +31,16 @@ export const AUDIT_BASE = Object.freeze([
   ["shepherd", 24, 28],
   ["veg", 22, 28],
   ["fisher", 21, 33],
+]);
+
+const LEGACY_AUDIT_JOBS = Object.freeze([
+  "fisher", "fisher2", "wheat", "veg", "shepherd", "rapeseed",
+  "logger", "woodshop", "charburner", "quarryman", "saltworks",
+]);
+
+export const AUDIT_ROAD_TARGETS = Object.freeze([
+  Object.freeze({ x: 27, y: 26 }),
+  Object.freeze({ x: 21, y: 28 }),
 ]);
 
 function terrainKind(physical, x, y) {
@@ -76,6 +90,12 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
   if (job === "quarryman" && !nearTerrain(physical, x, y, "rock", 2)) {
     return [false, "採石は岩場の際でないと立ち行きません"];
   }
+  if (job === "miner" && !nearTerrain(physical, x, y, "ore", 2)) {
+    return [false, "鉱夫は鉄鉱床の2マス以内でないと立ち行きません"];
+  }
+  if (job === "collier" && !nearTerrain(physical, x, y, "coal", 2)) {
+    return [false, "炭鉱夫は炭層の2マス以内でないと立ち行きません"];
+  }
   return [true, ""];
 }
 
@@ -107,9 +127,20 @@ export function createAuditWorld(seed) {
     market: { x: 25, y: 32 },
     port: { x: 25, y: 35 },
   });
+  world.state.economy.jobSelectionPool = [...LEGACY_AUDIT_JOBS];
   for (const [job, x, y] of AUDIT_BASE) {
     if (!addAuditZone(world, job, x, y)) {
       throw new Error(`基準村の配置不可: ${job}@${x},${y}`);
+    }
+  }
+  const roadTargets = [
+    ...AUDIT_ROAD_TARGETS,
+    findLandRoadEntrance(physical, world.state.economy.port, world.state.economy.market),
+  ];
+  for (const target of roadTargets) {
+    const road = target && addRoadLine(physical, world.state.economy.market, target);
+    if (!road?.ok && !road?.cells?.every(({ x, y }) => hasRoad(physical, x, y))) {
+      throw new Error(`基準村の道路敷設不可: ${target?.x},${target?.y}`);
     }
   }
   return world;
@@ -402,7 +433,9 @@ export function runFlowIslandAudit() {
       (incomeByJob[household.job] ??= []).push((household.incY ?? 0) * 10);
     }
   }
+  const legacyAuditJobs = new Set(LEGACY_AUDIT_JOBS);
   for (const [job, incomes] of Object.entries(incomeByJob)) {
+    if (!legacyAuditJobs.has(job)) continue;
     const best = Math.max(...incomes);
     addResult(results, `E2-${job}`, `${job}が稼げる`, best > 2000, `最良世帯の年間収入${Math.round(best)}デナリ`);
   }
@@ -507,10 +540,16 @@ export function runFlowIslandAudit() {
   );
 
   const material = runMaterialAudit();
+  const physical = {
+    carriers: scenario.worlds.every((world) => assertCarrierInvariants(world.state.physical)),
+    occupancy: scenario.worlds.every((world) => assertOccupancyInvariant(world.state.physical)),
+    material: Object.values(material).every((report) => report.ratio < 5 && !report.warning),
+  };
   const passed = results.filter((result) => result.passed).length;
   return {
     results,
     material,
+    physical,
     passed,
     failed: results.length - passed,
     total: results.length,

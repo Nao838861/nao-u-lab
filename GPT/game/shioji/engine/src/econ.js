@@ -1,8 +1,12 @@
 import {
   buildingById,
+  completeHaulJob,
+  carrierGoodsCapacity,
   createCartCarrier,
   createHaulJob,
   depositInventory,
+  goodsUnitWeight,
+  haulJobById,
   isConnected,
   pathLen,
   sectionAmount,
@@ -18,7 +22,7 @@ function deepFreeze(value) {
 
 export const GOODS = deepFreeze([
   "fish", "veg", "wheat", "pres", "pick", "tools", "salt", "char",
-  "meat", "meal", "stone", "oil", "iron", "cloth", "log",
+  "meat", "meal", "stone", "oil", "iron", "cloth", "log", "ore", "coal", "bar",
 ]);
 export const PERISH = deepFreeze(["fish", "veg", "meat", "pres", "pick", "wheat", "meal"]);
 export const FOODS = deepFreeze(["fish", "veg", "wheat", "pres", "pick", "meat"]);
@@ -40,6 +44,14 @@ export const P = deepFreeze({
   Y_VEG: 16,
   Y_WHEAT: 6000,
   Y_LOG: 16,
+  Y_ORE: 14,
+  Y_COAL: 10,
+  Y_SMELT: 8,
+  Y_SMITH: 5,
+  SMELT_ORE: 2,
+  SMELT_FUEL: 1,
+  SMITH_BAR: 1,
+  SMITH_FUEL: 0.5,
   LOG_TOOL: 1.5,
   LOG_CHAR: 1,
   Y_TOOLS: 8,
@@ -101,7 +113,7 @@ export const P = deepFreeze({
   BELIEF0: {
     fish: 1, veg: 1, wheat: 1.2, pres: 1.2, pick: 1.3, tools: 2,
     salt: 2, char: 1.5, meat: 1.3, meal: 1, stone: 1, oil: 3,
-    iron: 3.5, cloth: 2.5,
+    iron: 3.5, cloth: 2.5, ore: 0.8, coal: 1, bar: 2.2,
   },
 });
 
@@ -116,6 +128,10 @@ export const JOBCLS = deepFreeze({
   woodshop: "lumber",
   charburner: "lumber",
   quarryman: "lumber",
+  miner: "lumber",
+  collier: "lumber",
+  smelter: "lumber",
+  smith: "lumber",
   saltworks: "artisan",
 });
 
@@ -176,6 +192,14 @@ function applyImmigrantKit(household) {
   household.pantry.wheat = 240;
   if (household.job === "saltworks") household.pantry.char = 15;
   if (household.job === "woodshop" || household.job === "charburner") household.pantry.log = 20;
+  if (household.job === "smelter") {
+    household.pantry.ore = 20;
+    household.pantry.char = 10;
+  }
+  if (household.job === "smith") {
+    household.pantry.bar = 10;
+    household.pantry.char = 5;
+  }
   if (household.job === "fisher") {
     household.pantry.salt = 4;
     household.pantry.char = 2;
@@ -318,7 +342,7 @@ function withdrawProductionInput(physical, household, goods, qty) {
   else household.pantry[goods] -= qty;
 }
 
-function householdMaterialAmount(physical, household, goods) {
+export function householdMaterialAmount(physical, household, goods) {
   const building = householdInputBuilding(physical, household);
   return household.pantry[goods]
     + (building ? sectionAmount(building, "input", goods) : 0);
@@ -775,6 +799,10 @@ const OUTPUT_GOODS_BY_JOB = deepFreeze({
   woodshop: "tools",
   charburner: "char",
   quarryman: "stone",
+  miner: "ore",
+  collier: "coal",
+  smelter: "bar",
+  smith: "iron",
   rapeseed: "oil",
   fisher2: "meal",
   shepherd: "meat",
@@ -786,6 +814,10 @@ const DAILY_OUTPUT_BY_GOODS = deepFreeze({
   tools: P.Y_TOOLS,
   char: P.Y_CHAR,
   stone: P.Y_STONE,
+  ore: P.Y_ORE,
+  coal: P.Y_COAL,
+  bar: P.Y_SMELT,
+  iron: P.Y_SMITH,
   oil: P.Y_OIL,
   meal: P.Y_FISH / P.MEAL_FISH,
   meat: P.Y_MEAT,
@@ -839,6 +871,10 @@ export function productionCost(economy, physical, household, goods, { day = econ
     oil: month >= 3 && month <= 8 ? P.Y_OIL : 0.01,
     meal: P.Y_FISH / P.MEAL_FISH,
     log: P.Y_LOG,
+    ore: P.Y_ORE,
+    coal: P.Y_COAL,
+    bar: P.Y_SMELT,
+    iron: P.Y_SMITH,
     pres: (winter ? P.Y_FISH_W : P.Y_FISH) * P.PR_SALT,
     pick: P.Y_VEG * P.PR_PICK,
   }[goods] ?? 1;
@@ -849,12 +885,20 @@ export function productionCost(economy, physical, household, goods, { day = econ
   }[goods] ?? 1;
   const labor = householdEat(household) * staplePrice(economy)
     / (dailyYield * householdMult(household) * Math.max(0.5, scarcity));
+  const fuelPrice = Math.min(
+    economy.px.char ?? P.BELIEF0.char,
+    economy.px.coal ?? P.BELIEF0.coal,
+  );
   const input = {
     salt: (P.SALT_CHAR / P.Y_SALT) * (economy.px.char ?? 2),
     tools: P.LOG_TOOL * (economy.px.log ?? 1),
     char: P.LOG_CHAR * (economy.px.log ?? 1),
     pres: P.PRES_SALT * (economy.px.salt ?? 2) / P.PR_SALT,
     pick: P.PICK_SALT * (economy.px.salt ?? 2) / P.PR_PICK,
+    bar: P.SMELT_ORE * (economy.px.ore ?? P.BELIEF0.ore)
+      + P.SMELT_FUEL * fuelPrice,
+    iron: P.SMITH_BAR * (economy.px.bar ?? P.BELIEF0.bar)
+      + P.SMITH_FUEL * fuelPrice,
   }[goods] ?? 0;
   return labor + input;
 }
@@ -872,6 +916,10 @@ export function sellOffers(economy, household) {
     saltworks: "salt",
     fisher2: "meal",
     quarryman: "stone",
+    miner: "ore",
+    collier: "coal",
+    smelter: "bar",
+    smith: "iron",
     rapeseed: "oil",
   }[household.job];
 
@@ -924,11 +972,12 @@ export function loadMarketSellCargo(economy, household) {
   const offers = sellOffers(economy, household);
   const manifest = {};
   for (const [goods, offered] of Object.entries(offers)) {
-    const qty = Math.min(offered, capacity);
+    const unitWeight = goodsUnitWeight(goods);
+    const qty = Math.min(offered, capacity / unitWeight);
     if (qty <= 1e-9) continue;
     household.pantry[goods] -= qty;
     manifest[goods] = qty;
-    capacity -= qty;
+    capacity -= qty * unitWeight;
   }
   household.cargo = { direction: "outbound", manifest };
   return household.cargo;
@@ -950,7 +999,7 @@ export function unloadMarketBuyCargo(household, physical = null) {
 }
 
 export const BUY_ORDER = deepFreeze([
-  "log", "salt", "char", "tools", "cloth", "iron", "meal",
+  "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
   "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
 ]);
 
@@ -1031,6 +1080,30 @@ export function buyTargets(
       Math.max(0.9, (px.char ?? 2) / P.LOG_CHAR * 0.6),
     ];
   }
+  if (household.job === "smelter") {
+    const inputCeiling = (px.bar ?? P.BELIEF0.bar) / P.SMELT_ORE * 0.6;
+    if (inputQty("ore") < 10) {
+      targets.ore = [20 - inputQty("ore"), inputCeiling];
+    }
+    const fuel = inputQty("char") + inputQty("coal");
+    if (fuel < 5) {
+      const wanted = 10 - fuel;
+      targets.char = [wanted, inputCeiling];
+      targets.coal = [wanted, inputCeiling];
+    }
+  }
+  if (household.job === "smith") {
+    const inputCeiling = (px.iron ?? P.IMP.iron) * 0.6;
+    if (inputQty("bar") < 5) {
+      targets.bar = [10 - inputQty("bar"), inputCeiling];
+    }
+    const fuel = inputQty("char") + inputQty("coal");
+    if (fuel < 2.5) {
+      const wanted = 5 - fuel;
+      targets.char = [wanted, inputCeiling];
+      targets.coal = [wanted, inputCeiling];
+    }
+  }
   if (household.job === "veg" && inputQty("salt") < 1.5) {
     targets.salt = [
       4 - inputQty("salt"),
@@ -1088,6 +1161,8 @@ export function isProductionInput(household, goods) {
     || (household.job === "fisher" && (goods === "salt" || goods === "char"))
     || (household.job === "veg" && goods === "salt")
     || ((household.job === "wheat" || household.job === "rapeseed") && goods === "meal")
+    || (household.job === "smelter" && ["ore", "char", "coal"].includes(goods))
+    || (household.job === "smith" && ["bar", "char", "coal"].includes(goods))
     || ((household.job === "woodshop" || household.job === "charburner") && goods === "log");
 }
 
@@ -1131,7 +1206,8 @@ export function buyAtMarket(
 
   for (const goods of order) {
     let [wanted, ceiling] = targets[goods];
-    wanted = Math.min(wanted, capacity);
+    const unitWeight = goodsUnitWeight(goods);
+    wanted = Math.min(wanted, capacity / unitWeight);
     const shelves = economy.stalls[goods]
       .filter((stall) => findHousehold(economy, stall.householdId))
       .map((stall) => ({ kind: "STALL", stall, price: stall.price }));
@@ -1146,7 +1222,15 @@ export function buyAtMarket(
         price: companyStockReleasePrice(economy, goods, { market: Boolean(physical) }),
       });
     } else if (physical && freeStock > 1e-9) {
-      requestCompanyStockRelease(economy, physical, goods, { day });
+      requestCompanyStockRelease(economy, physical, goods, { day, qty: wanted });
+      const arrived = economy.marketStock[goods] ?? 0;
+      if (arrived > 1e-9) {
+        shelves.push({
+          kind: "STOCK",
+          qty: arrived,
+          price: companyStockReleasePrice(economy, goods, { market: true }),
+        });
+      }
     }
     shelves.sort((a, b) => a.price - b.price);
     const input = isProductionInput(household, goods);
@@ -1166,7 +1250,7 @@ export function buyAtMarket(
       if (delivery === "pantry") household.pantry[goods] += qty;
       else manifest[goods] = (manifest[goods] ?? 0) + qty;
       wanted -= qty;
-      capacity -= qty;
+      capacity -= qty * unitWeight;
 
       if (shelf.kind === "CO") {
         postCompanyLedger(economy.company, {
@@ -1468,6 +1552,23 @@ export function runWheatHarvest(economy, { day }) {
   return harvested;
 }
 
+function withdrawProductionFuel(economy, physical, household, qty) {
+  let remaining = qty;
+  const used = { char: 0, coal: 0 };
+  const fuels = ["char", "coal"].sort((left, right) => (
+    (economy.px[left] ?? P.BELIEF0[left]) - (economy.px[right] ?? P.BELIEF0[right])
+  ));
+  for (const goods of fuels) {
+    const amount = Math.min(remaining, productionInputAmount(physical, household, goods));
+    if (amount <= 1e-9) continue;
+    withdrawProductionInput(physical, household, goods, amount);
+    used[goods] += amount;
+    remaining -= amount;
+    if (remaining <= 1e-9) break;
+  }
+  return used;
+}
+
 export function producePrimaryTick(economy, physical, household, { day, fraction, endOfDay = false }) {
   if (!Number.isFinite(fraction) || fraction < 0) throw new TypeError("production fraction must be non-negative and finite");
   const month = (Math.floor((day - 1) / 30) % 12) + 1;
@@ -1575,6 +1676,58 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     household.pantry.log += qty;
     recordEconomicMaterialFlow(economy, "log", "prod", qty, `世帯${household.id}の伐採`);
     produced.log = qty;
+  } else if (household.job === "miner") {
+    const qty = P.Y_ORE * work;
+    household.pantry.ore += qty;
+    recordEconomicMaterialFlow(economy, "ore", "prod", qty, `世帯${household.id}の採鉱`);
+    produced.ore = qty;
+  } else if (household.job === "collier") {
+    const qty = P.Y_COAL * work;
+    household.pantry.coal += qty;
+    recordEconomicMaterialFlow(economy, "coal", "prod", qty, `世帯${household.id}の採炭`);
+    produced.coal = qty;
+  } else if (household.job === "smelter") {
+    const fuelAvailable = productionInputAmount(physical, household, "char")
+      + productionInputAmount(physical, household, "coal");
+    const qty = Math.max(0, Math.min(
+      P.Y_SMELT * work,
+      productionInputAmount(physical, household, "ore") / P.SMELT_ORE,
+      fuelAvailable / P.SMELT_FUEL,
+    ));
+    const ore = qty * P.SMELT_ORE;
+    const fuel = qty * P.SMELT_FUEL;
+    withdrawProductionInput(physical, household, "ore", ore);
+    const usedFuel = withdrawProductionFuel(economy, physical, household, fuel);
+    household.pantry.bar += qty;
+    if (qty > 0) recordEconomicMaterialFlow(economy, "bar", "prod", qty, `世帯${household.id}の製鉄`);
+    if (ore > 0) recordEconomicMaterialFlow(economy, "ore", "cons", ore, `世帯${household.id}の製鉄`);
+    for (const goods of ["char", "coal"]) {
+      if (usedFuel[goods] > 0) {
+        recordEconomicMaterialFlow(economy, goods, "cons", usedFuel[goods], `世帯${household.id}の製鉄`);
+      }
+    }
+    produced.bar = qty;
+  } else if (household.job === "smith") {
+    const fuelAvailable = productionInputAmount(physical, household, "char")
+      + productionInputAmount(physical, household, "coal");
+    const qty = Math.max(0, Math.min(
+      P.Y_SMITH * work,
+      productionInputAmount(physical, household, "bar") / P.SMITH_BAR,
+      fuelAvailable / P.SMITH_FUEL,
+    ));
+    const bar = qty * P.SMITH_BAR;
+    const fuel = qty * P.SMITH_FUEL;
+    withdrawProductionInput(physical, household, "bar", bar);
+    const usedFuel = withdrawProductionFuel(economy, physical, household, fuel);
+    household.pantry.iron += qty;
+    if (qty > 0) recordEconomicMaterialFlow(economy, "iron", "prod", qty, `世帯${household.id}の鍛冶`);
+    if (bar > 0) recordEconomicMaterialFlow(economy, "bar", "cons", bar, `世帯${household.id}の鍛冶`);
+    for (const goods of ["char", "coal"]) {
+      if (usedFuel[goods] > 0) {
+        recordEconomicMaterialFlow(economy, goods, "cons", usedFuel[goods], `世帯${household.id}の鍛冶`);
+      }
+    }
+    produced.iron = qty;
   } else if (household.job === "woodshop") {
     const qty = Math.max(
       0,
@@ -1802,8 +1955,11 @@ function recordLogisticsBlocked(economy, day, fromRole, toRole) {
 }
 
 function pendingCompanyHaul(physical, kind, goods) {
-  return physical.haulJobs
-    .filter((job) => job.status === "in_transit")
+  const activeIds = physical.activeHaulJobIds
+    ?? physical.haulJobs.filter((job) => job.status === "in_transit").map((job) => job.id);
+  return activeIds
+    .map((jobId) => haulJobById(physical, jobId))
+    .filter(Boolean)
     .filter((job) => job.economicLogistics?.kind === kind && job.goods === goods)
     .reduce((total, job) => total + job.qty, 0);
 }
@@ -1828,32 +1984,48 @@ function dispatchCompanyHaul(
   });
   job.economicLogistics = { kind, day, ...metadata };
   job.economicReconciled = false;
+  (physical.economicHaulJobIds ??= []).push(job.id);
+  if (job.carrier.routeCost <= 1e-9) {
+    completeHaulJob(physical, job.id);
+    settleCompanyLogistics(economy, physical, { day });
+  }
   return job;
 }
 
-export function requestCompanyStockRelease(economy, physical, goods, { day }) {
-  if (pendingCompanyHaul(physical, "stock_release", goods) > 1e-9) return null;
+export function requestCompanyStockRelease(economy, physical, goods, { day, qty = 16 }) {
+  if (!Number.isFinite(qty) || qty < 0) {
+    throw new TypeError("stock release quantity must be non-negative and finite");
+  }
   const reserved = economy.order?.g === goods ? economy.order.left : 0;
   const free = Math.max(0, (economy.stock[goods] ?? 0) - reserved);
-  const qty = Math.min(16, free);
-  if (qty <= 1e-9) return null;
+  let remaining = Math.min(qty, free);
+  if (remaining <= 1e-9) return null;
   const averageCost = (economy.stockCost[goods] ?? 0)
     / Math.max(1e-9, economy.stock[goods] ?? 0);
-  const job = dispatchCompanyHaul(economy, physical, {
-    day,
-    kind: "stock_release",
-    fromRole: "warehouse",
-    fromSection: "storage",
-    toRole: "market",
-    toSection: "inbound",
-    goods,
-    qty,
-    metadata: { cost: qty * averageCost },
-  });
-  if (!job) return null;
-  economy.stock[goods] -= qty;
-  economy.stockCost[goods] = Math.max(0, (economy.stockCost[goods] ?? 0) - qty * averageCost);
-  return job;
+  const jobs = [];
+  while (remaining > 1e-9) {
+    const load = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
+    const job = dispatchCompanyHaul(economy, physical, {
+      day,
+      kind: "stock_release",
+      fromRole: "warehouse",
+      fromSection: "storage",
+      toRole: "market",
+      toSection: "inbound",
+      goods,
+      qty: load,
+      metadata: { cost: load * averageCost },
+    });
+    if (!job) break;
+    economy.stock[goods] -= load;
+    economy.stockCost[goods] = Math.max(
+      0,
+      (economy.stockCost[goods] ?? 0) - load * averageCost,
+    );
+    remaining -= load;
+    jobs.push(job);
+  }
+  return jobs[0] ?? null;
 }
 
 export function setCompanyStockTarget(economy, goods, qty) {
@@ -1868,7 +2040,11 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
   for (const goods of Object.keys(economy.stockTgt)) {
     let lack = (economy.stockTgt[goods] ?? 0)
       - (economy.stock[goods] ?? 0)
-      - (physical ? pendingCompanyHaul(physical, "procurement", goods) : 0);
+      - (physical ? (
+        (economy.marketStock[goods] ?? 0)
+        + pendingCompanyHaul(physical, "procurement", goods)
+        + pendingCompanyHaul(physical, "stock_release", goods)
+      ) : 0);
     if (lack <= 1e-9 || economy.company.money <= -companyCreditLimit(economy, { day })) continue;
     const stalls = [...economy.stalls[goods]].sort((a, b) => a.price - b.price);
     for (const stall of stalls) {
@@ -1877,7 +2053,7 @@ export function runCompanyProcurement(economy, { day, physical = null }) {
       if (!seller) continue;
       let remaining = Math.min(stall.qty, lack);
       while (remaining > 1e-9) {
-        const qty = Math.min(16, remaining);
+        const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
         const payment = qty * stall.price;
         let job = null;
         if (physical) {
@@ -1931,7 +2107,7 @@ function dispatchCompanyOrder(economy, physical, { day }) {
   );
   const jobs = [];
   while (remaining > 1e-9) {
-    const qty = Math.min(16, remaining);
+    const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, goods), remaining);
     const averageCost = (economy.stockCost[goods] ?? 0)
       / Math.max(1e-9, economy.stock[goods] ?? 0);
     const job = dispatchCompanyHaul(economy, physical, {
@@ -1963,12 +2139,22 @@ function dispatchCompanyOrder(economy, physical, { day }) {
 
 export function settleCompanyLogistics(economy, physical, { day }) {
   const settled = [];
-  for (const job of physical.haulJobs) {
+  const pendingIds = physical.economicHaulJobIds
+    ?? physical.haulJobs
+      .filter((job) => job.economicLogistics && !job.economicReconciled)
+      .map((job) => job.id);
+  const stillPending = [];
+  for (const jobId of pendingIds) {
+    const job = haulJobById(physical, jobId);
+    if (!job) continue;
     if (
       job.status !== "completed"
       || !job.economicLogistics
       || job.economicReconciled
-    ) continue;
+    ) {
+      if (!job.economicReconciled) stillPending.push(job.id);
+      continue;
+    }
     const metadata = job.economicLogistics;
     if (metadata.kind === "procurement") {
       economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
@@ -2015,6 +2201,7 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     job.economicReconciled = true;
     settled.push({ jobId: job.id, kind: metadata.kind, goods: job.goods, qty: job.qty });
   }
+  physical.economicHaulJobIds = stillPending;
   return settled;
 }
 
@@ -2340,9 +2527,12 @@ export function jobSelectionWeights(economy, physical, { exclude, household = nu
     fisher2: "water",
     logger: "forest",
     quarryman: "rock",
+    miner: "ore",
+    collier: "coal",
   };
   const weights = [];
-  for (const job of JOBS) {
+  const jobPool = economy.jobSelectionPool ?? JOBS;
+  for (const job of jobPool) {
     if (job === exclude) continue;
     if (household && terrainNeed[job] && !isNearTerrain(physical, household, terrainNeed[job], 2)) {
       continue;

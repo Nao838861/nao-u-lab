@@ -8,10 +8,12 @@ import {
   createEconomicState,
   initializeNaturalResources,
   isProductionInput,
+  householdMaterialAmount,
   loadMarketSellCargo,
   marketTripCost,
   marketTripDuration,
   producePrimaryTick,
+  productionInputAmount,
   productionMultiplierForTrip,
   runCompanyDayStart,
   runDayEnd,
@@ -26,6 +28,7 @@ import {
   createWalkCarrier,
   createPhysicalState,
   depositInventory,
+  findLandRoadEntrance,
   hasRoad,
   keyOf,
   routeTravelCarrier,
@@ -84,7 +87,7 @@ function pointCaps(...sections) {
 }
 
 export function ensureCompanyLogisticsSites(economy, physical) {
-  const ensure = (role, type, position, sections) => {
+  const ensure = (role, type, position, sections, entrance = null) => {
     let building = buildingById(physical, physical.roleBuildingIds?.[role]);
     if (building || !position) return building;
     building = createPointBuilding(physical, {
@@ -92,6 +95,7 @@ export function ensureCompanyLogisticsSites(economy, physical) {
       role,
       x: position.x,
       y: position.y,
+      entrance,
       caps: pointCaps(...sections),
     });
     if (role === "market") {
@@ -111,7 +115,8 @@ export function ensureCompanyLogisticsSites(economy, physical) {
   };
   const market = ensure("market", "market", economy.market, ["inbound", "outbound"]);
   const warehouse = ensure("warehouse", "warehouse", economy.market, ["storage"]);
-  const port = ensure("port", "port", economy.port, ["inbound", "outbound"]);
+  const portEntrance = findLandRoadEntrance(physical, economy.port, economy.market);
+  const port = ensure("port", "port", economy.port, ["inbound", "outbound"], portEntrance);
   return { market, warehouse, port };
 }
 
@@ -220,17 +225,30 @@ export function decideHouseholdTrips(economy, physical) {
     const offers = sellOffers(economy, household);
     const sellQuantity = Object.values(offers).reduce((total, qty) => total + qty, 0);
     const lowCulture = ["tools", "salt", "char"].some((goods, index) => (
-      household.pantry[goods] < [P.D_TOOL, P.D_SALT, P.D_CHAR][index] * 4
+      householdMaterialAmount(physical, household, goods)
+        < [P.D_TOOL, P.D_SALT, P.D_CHAR][index] * 4
     ));
-    const inputLow = (household.job === "saltworks" && household.pantry.char < 2)
-      || (household.job === "fisher" && household.pantry.salt < 1)
+    const inputLow = (household.job === "saltworks"
+      && productionInputAmount(physical, household, "char") < 2)
+      || (household.job === "fisher"
+        && productionInputAmount(physical, household, "salt") < 1)
       || (
         (household.job === "woodshop" || household.job === "charburner")
-        && household.pantry.log < 2
+        && productionInputAmount(physical, household, "log") < 2
       )
+      || (household.job === "smelter" && (
+        productionInputAmount(physical, household, "ore") < P.SMELT_ORE
+        || productionInputAmount(physical, household, "char")
+          + productionInputAmount(physical, household, "coal") < P.SMELT_FUEL
+      ))
+      || (household.job === "smith" && (
+        productionInputAmount(physical, household, "bar") < P.SMITH_BAR
+        || productionInputAmount(physical, household, "char")
+          + productionInputAmount(physical, household, "coal") < P.SMITH_FUEL
+      ))
       || (
         (household.job === "wheat" || household.job === "rapeseed")
-        && household.pantry.meal < 1
+        && productionInputAmount(physical, household, "meal") < 1
         && economy.currentDay % 7 === 0
       );
     const foodThreshold = ["fisher", "shepherd", "veg"].includes(household.job) ? 1.2 : 3;

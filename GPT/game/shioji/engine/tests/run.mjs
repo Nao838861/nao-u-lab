@@ -84,10 +84,12 @@ import {
   assertMaterialBalance,
   assertOccupancyInvariant,
   completeHaulJob,
+  carrierGoodsCapacity,
   createCartCarrier,
   createHaulJob,
   createMaterialFlowLedger,
   createPhysicalState,
+  createPointBuilding,
   createV003PhysicalState,
   createWalkCarrier,
   depositInventory,
@@ -116,9 +118,15 @@ import {
   ensureHouseholdInputSites,
   stepMarketTrip,
 } from "../src/world.js";
-import { runFlowIslandAudit } from "../src/audit.js";
+import { canPlaceSettlement, createAuditWorld, runFlowIslandAudit } from "../src/audit.js";
 
 const tests = [];
+let cachedFlowIslandAudit = null;
+
+function flowIslandAudit() {
+  cachedFlowIslandAudit ??= runFlowIslandAudit();
+  return cachedFlowIslandAudit;
+}
 
 function test(name, run) {
   tests.push({ name, run });
@@ -532,11 +540,20 @@ test("段11: P・GOODS・FOODS・PERISHが意図した移動係数以外flow_isl
   delete sourceConstants.TRAVEL_RATE;
   delete sourceConstants.ROAD_F;
   delete sourceConstants.TRAVEL_MAX;
-  assert.deepEqual(P, sourceConstants);
+  const actualConstants = Object.fromEntries(
+    Object.keys(sourceConstants).map((key) => [key, P[key]]),
+  );
+  actualConstants.BELIEF0 = Object.fromEntries(
+    Object.keys(sourceConstants.BELIEF0).map((goods) => [goods, P.BELIEF0[goods]]),
+  );
+  assert.deepEqual(
+    actualConstants,
+    sourceConstants,
+  );
   assert.equal("TRAVEL_RATE" in P, false);
   assert.equal("ROAD_F" in P, false);
   assert.equal("TRAVEL_MAX" in P, false);
-  assert.deepEqual(GOODS, FLOW_ISLAND_GOODS);
+  assert.deepEqual(GOODS.slice(0, FLOW_ISLAND_GOODS.length), FLOW_ISLAND_GOODS);
   assert.deepEqual(FOODS, FLOW_ISLAND_FOODS);
   assert.deepEqual(PERISH, FLOW_ISLAND_PERISH);
   assert.equal(createWorld({ seed: 11 }).state.economy.company.money, P.TREASURY0);
@@ -561,8 +578,22 @@ test("段12: HH構造・家族生成・eat/haulがflow_islandと同値", () => {
   assert.deepEqual(household.members, source.members);
   assert.equal(household.job, source.job);
   assert.equal(household.purse, source.purse);
-  assert.deepEqual(household.pantry, source.pantry);
-  assert.deepEqual(household.belief, source.belief);
+  assert.deepEqual(
+    Object.fromEntries(FLOW_ISLAND_GOODS.map((goods) => [goods, household.pantry[goods]])),
+    source.pantry,
+  );
+  assert.deepEqual(
+    Object.fromEntries(["ore", "coal", "bar"].map((goods) => [goods, household.pantry[goods]])),
+    { ore: 0, coal: 0, bar: 0 },
+  );
+  assert.deepEqual(
+    Object.fromEntries(Object.keys(source.belief).map((goods) => [goods, household.belief[goods]])),
+    source.belief,
+  );
+  assert.deepEqual(
+    Object.fromEntries(["ore", "coal", "bar"].map((goods) => [goods, household.belief[goods]])),
+    { ore: 0.8, coal: 1, bar: 2.2 },
+  );
   assert.equal(householdEat(household), source.eat());
   assert.equal(householdHaul(household), source.haul());
   assert.equal(householdMult(household), source.mult());
@@ -671,10 +702,13 @@ test("段14: flow_island標準地形を同値生成し森をタイル資源化�
     height: 40,
     terrain: makeFlowIslandTerrain(),
   });
-  assert.deepEqual(
-    physical.terrain.map((row) => row.map((tile) => tile.kind)),
-    flowIslandStdTerrain(),
-  );
+  const sourceTerrain = flowIslandStdTerrain();
+  for (let y = 0; y < physical.height; y += 1) {
+    for (let x = 0; x < physical.width; x += 1) {
+      if (physical.terrain[y][x].kind === "ore" || physical.terrain[y][x].kind === "coal") continue;
+      assert.equal(physical.terrain[y][x].kind, sourceTerrain[y][x], `${x},${y}`);
+    }
+  }
 
   const economy = createEconomicState();
   initializeNaturalResources(economy, physical);
@@ -916,7 +950,7 @@ test("段16: 輸出財は屋台3日目にEXP上限まで本土へ流す", () => 
 test("段17: buyTargets天井表・LADDER・固定買い順を正本どおり保持する", () => {
   assert.deepEqual(LADDER, FLOW_ISLAND_LADDER);
   assert.deepEqual(BUY_ORDER, [
-    "log", "salt", "char", "tools", "cloth", "iron", "meal",
+    "ore", "bar", "log", "salt", "char", "coal", "tools", "cloth", "iron", "meal",
     "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
   ]);
   assert.equal(BUY_ORDER.includes("pick"), false);
@@ -1558,6 +1592,8 @@ test("段23: 転職候補は絶滅職を含む全職で地形職だけ自宅近�
   terrain[5][4] = "water";
   terrain[4][5] = "forest";
   terrain[4][3] = "rock";
+  terrain[2][4] = "ore";
+  terrain[2][5] = "coal";
   const physical = createPhysicalState({ width: 9, height: 9, terrain });
   const economy = createEconomicState();
   const household = createHousehold(economy, { job: "saltworks", x: 4, y: 4 });
@@ -1576,7 +1612,7 @@ test("段23: 転職候補は絶滅職を含む全職で地形職だけ自宅近�
     exclude: household.job,
     household,
   }).map(([job]) => job);
-  for (const job of ["fisher", "fisher2", "logger", "quarryman"]) {
+  for (const job of ["fisher", "fisher2", "logger", "quarryman", "miner", "collier"]) {
     assert.equal(inlandCandidates.includes(job), false, job);
   }
   for (const job of ["wheat", "veg", "shepherd", "rapeseed", "woodshop", "charburner"]) {
@@ -1637,7 +1673,7 @@ test("段23: 6ヶ月の負債は徳政で会社貸し倒れへ移して貨幣を
 });
 
 test("段24: Phase C監査の28項目を維持しPhase D途中もE20残差が帯内", () => {
-  const audit = runFlowIslandAudit();
+  const audit = flowIslandAudit();
   assert.equal(audit.total, 28);
   assert.equal(audit.results.every((result) => typeof result.passed === "boolean"), true);
   assert.ok(audit.passed >= 20, `Phase D途中の監査が大幅後退: ${audit.passed}/28`);
@@ -1890,6 +1926,7 @@ test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市�
   assert.deepEqual(economicMaterialSnapshot(economy, physical), before);
 
   assert.equal(addRoadLine(physical, { x: 1, y: 1 }, { x: 6, y: 1 }).ok, true);
+  companyLogisticsSite(physical, "warehouse").entrance = { x: 4, y: 1 };
   const purchases = runCompanyProcurement(economy, { day: 2, physical });
   assert.ok(purchases.length > 0);
   assert.equal(purchases.every((purchase) => purchase.jobId), true);
@@ -1901,7 +1938,7 @@ test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市�
     flows: {},
   });
 
-  stepHaulCarriers(physical, 1);
+  stepHaulCarriers(physical, 2);
   settleCompanyLogistics(economy, physical, { day: 3 });
   assert.equal(economy.stock.tools, offered);
   assert.equal(
@@ -1917,7 +1954,7 @@ test("段29: 非接続の会社物流は荷車を生成せず接続後だけ市�
   const release = requestCompanyStockRelease(economy, physical, "tools", { day: 3 });
   assert.ok(release);
   assert.equal(release.carrier.mode, "cart");
-  stepHaulCarriers(physical, 1);
+  stepHaulCarriers(physical, 2);
   settleCompanyLogistics(economy, physical, { day: 4 });
   assert.equal(economy.marketStock.tools, release.qty);
   assert.equal(economy.stock.tools, offered - release.qty);
@@ -2016,6 +2053,253 @@ test("段30: testRoadShortensTrips――道路短縮分だけ労働時間と日�
   assert.ok(Math.abs(plain.household.pantry.meat - P.Y_MEAT * plainMultiplier) < 1e-10);
   assert.ok(Math.abs(road.household.pantry.meat - P.Y_MEAT * roadMultiplier) < 1e-10);
   assert.ok(road.household.pantry.meat > plain.household.pantry.meat);
+});
+
+test("段31: 結合後監査は25/28相当で物理不変条件もすべて緑", () => {
+  const audit = flowIslandAudit();
+  assert.equal(audit.total, 28);
+  assert.ok(audit.passed >= 25, `Phase D監査が帯外: ${audit.passed}/28`);
+  assert.deepEqual(audit.physical, {
+    carriers: true,
+    occupancy: true,
+    material: true,
+  });
+  for (const [goods, report] of Object.entries(audit.material)) {
+    assert.ok(report.ratio < 5, `${goods}: ${report.ratio}%`);
+  }
+
+  const world = createAuditWorld(11);
+  ensureCompanyLogisticsSites(world.state.economy, world.state.physical);
+  const port = companyLogisticsSite(world.state.physical, "port");
+  assert.deepEqual({ x: port.x, y: port.y }, { x: 25, y: 35 });
+  assert.deepEqual(port.entrance, { x: 25, y: 33 });
+  assert.equal(hasRoad(world.state.physical, 25, 33), true);
+  assert.equal(hasRoad(world.state.physical, 25, 35), false);
+  assert.equal(assertCarrierInvariants(world.state.physical), true);
+  assert.equal(assertOccupancyInvariant(world.state.physical), true);
+});
+
+test("段31: 蔵出し要求は1台制限せず16荷ずつ複数便へ分割する", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 10 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 10, height: 3, terrain });
+  const economy = createEconomicState();
+  economy.market = { x: 1, y: 1 };
+  economy.port = { x: 8, y: 1 };
+  ensureCompanyLogisticsSites(economy, physical);
+  const warehouse = companyLogisticsSite(physical, "warehouse");
+  warehouse.entrance = { x: 6, y: 1 };
+  addRoadLine(physical, economy.market, economy.port);
+  economy.stock.wheat = 40;
+  economy.stockCost.wheat = 40;
+  depositInventory(warehouse, "storage", "wheat", 40);
+
+  const first = requestCompanyStockRelease(economy, physical, "wheat", { day: 1, qty: 40 });
+  const jobs = physical.haulJobs.filter((job) => job.economicLogistics?.kind === "stock_release");
+  assert.equal(first, jobs[0]);
+  assert.deepEqual(jobs.map((job) => job.qty), [16, 16, 8]);
+  assert.equal(economy.stock.wheat, 0);
+  assert.equal(jobs.reduce((total, job) => total + job.carrier.cargo.qty, 0), 40);
+  stepHaulCarriers(physical, 3);
+  settleCompanyLogistics(economy, physical, { day: 2 });
+  assert.equal(economy.marketStock.wheat, 40);
+  assert.equal(sectionAmount(companyLogisticsSite(physical, "market"), "inbound", "wheat"), 40);
+});
+
+test("段32: 鉄鉱床と炭層は§6.1の座標式どおり生成される", () => {
+  const terrain = makeFlowIslandTerrain();
+  const actualOre = [];
+  const actualCoal = [];
+  const expectedOre = [];
+  const expectedCoal = [];
+  for (let y = 0; y < 40; y += 1) {
+    for (let x = 0; x < 48; x += 1) {
+      if (terrain[y][x].kind === "ore") actualOre.push(`${x},${y}`);
+      if (terrain[y][x].kind === "coal") actualCoal.push(`${x},${y}`);
+      if (x >= 8 && x <= 13 && y >= 20 && y <= 24 && ((x * 5 + y * 3) % 4 < 2)) {
+        expectedOre.push(`${x},${y}`);
+      }
+      if (x >= 3 && x <= 7 && y >= 26 && y <= 30 && ((x * 7 + y * 5) % 4 < 2)) {
+        expectedCoal.push(`${x},${y}`);
+      }
+    }
+  }
+  assert.deepEqual(actualOre, expectedOre);
+  assert.deepEqual(actualCoal, expectedCoal);
+  assert.deepEqual(GOODS.slice(-3), ["ore", "coal", "bar"]);
+});
+
+test("段32: oreとbarは重量2で徒歩・荷車の数量容量が通常財の半分", () => {
+  const terrain = Array.from({ length: 3 }, () => (
+    Array.from({ length: 8 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 8, height: 3, terrain });
+  addRoadLine(physical, { x: 1, y: 1 }, { x: 6, y: 1 });
+  const source = createPointBuilding(physical, {
+    type: "mine",
+    x: 1,
+    y: 1,
+    caps: { output: { ore: 100, bar: 100, coal: 100 } },
+  });
+  const target = createPointBuilding(physical, {
+    type: "smelter",
+    x: 6,
+    y: 1,
+    caps: { input: { ore: 100, bar: 100, coal: 100 } },
+  });
+  depositInventory(source, "output", "ore", 20);
+
+  const cart = createCartCarrier(physical);
+  const walkers = createWalkCarrier(physical, { people: 2 });
+  assert.equal(carrierGoodsCapacity(cart, "coal"), 16);
+  assert.equal(carrierGoodsCapacity(cart, "ore"), 8);
+  assert.equal(carrierGoodsCapacity(cart, "bar"), 8);
+  assert.equal(carrierGoodsCapacity(walkers, "coal"), 8);
+  assert.equal(carrierGoodsCapacity(walkers, "ore"), 4);
+  assert.throws(() => createHaulJob(physical, {
+    from: { building: source, section: "output" },
+    to: { building: target, section: "input" },
+    goods: "ore",
+    qty: 9,
+    carrier: cart,
+  }), /キャリア容量超過/);
+  const job = createHaulJob(physical, {
+    from: { building: source, section: "output" },
+    to: { building: target, section: "input" },
+    goods: "ore",
+    qty: 8,
+    carrier: cart,
+  });
+  assert.equal(job.carrier.cargo.qty, 8);
+});
+
+test("段33: 鉱夫・炭鉱夫は2マス以内の対応鉱床だけで就業候補になる", () => {
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(),
+  });
+  const economy = createEconomicState();
+  assert.deepEqual(canPlaceSettlement(economy, physical, "miner", 8, 18), [true, ""]);
+  assert.match(canPlaceSettlement(economy, physical, "miner", 8, 17)[1], /鉄鉱床/);
+  assert.deepEqual(canPlaceSettlement(economy, physical, "collier", 3, 25), [true, ""]);
+  assert.match(canPlaceSettlement(economy, physical, "collier", 3, 23)[1], /炭層/);
+
+  const nearOre = createHousehold(economy, { job: "logger", x: 8, y: 18 });
+  const nearJobs = jobSelectionWeights(economy, physical, {
+    exclude: "logger",
+    household: nearOre,
+  }).map(([job]) => job);
+  assert.equal(nearJobs.includes("miner"), true);
+  assert.equal(nearJobs.includes("collier"), false);
+
+  const far = createHousehold(economy, { job: "logger", x: 25, y: 20 });
+  const farJobs = jobSelectionWeights(economy, physical, {
+    exclude: "logger",
+    household: far,
+  }).map(([job]) => job);
+  assert.equal(farJobs.includes("miner"), false);
+  assert.equal(farJobs.includes("collier"), false);
+});
+
+test("段33: minerとcollierは既存キットを持参し日産14鉱石・10石炭を生産する", () => {
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(),
+  });
+  const economy = createEconomicState();
+  const miner = createHousehold(economy, { job: "miner", x: 8, y: 18 });
+  const collier = createHousehold(economy, { job: "collier", x: 3, y: 25 });
+  assert.equal(miner.pantry.tools, 5);
+  assert.equal(miner.pantry.wheat, 240);
+  assert.equal(collier.pantry.tools, 5);
+  assert.equal(collier.pantry.wheat, 240);
+  assert.equal(miner.pantry.ore, 0);
+  assert.equal(collier.pantry.coal, 0);
+
+  producePrimaryTick(economy, physical, miner, { day: 1, fraction: 1 });
+  producePrimaryTick(economy, physical, collier, { day: 1, fraction: 1 });
+  assert.equal(miner.pantry.ore, P.Y_ORE);
+  assert.equal(collier.pantry.coal, P.Y_COAL);
+  assert.equal(economy.materialFlows.ore.prod, P.Y_ORE);
+  assert.equal(economy.materialFlows.coal.prod, P.Y_COAL);
+});
+
+test("段34: 製鉄・鍛冶の開拓キットとpx初期値を持つ", () => {
+  const economy = createEconomicState();
+  assert.equal(economy.px.ore, 0.8);
+  assert.equal(economy.px.coal, 1);
+  assert.equal(economy.px.bar, 2.2);
+
+  const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
+  assert.equal(smelter.pantry.tools, 5);
+  assert.equal(smelter.pantry.wheat, 240);
+  assert.equal(smelter.pantry.ore, 20);
+  assert.equal(smelter.pantry.char, 10);
+
+  const smith = createHousehold(economy, { job: "smith", x: 21, y: 20 });
+  assert.equal(smith.pantry.tools, 5);
+  assert.equal(smith.pantry.wheat, 240);
+  assert.equal(smith.pantry.bar, 10);
+  assert.equal(smith.pantry.char, 5);
+});
+
+test("段34: 鉱石2+燃料1→銑鉄1、銑鉄1+燃料0.5→鉄1で変換する", () => {
+  const economy = createEconomicState();
+  const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
+  smelter.pantry.ore = 4;
+  smelter.pantry.char = 2;
+  smelter.pantry.coal = 0;
+  smelter.pantry.bar = 0;
+  const smelted = producePrimaryTick(economy, null, smelter, { day: 1, fraction: 1 });
+  assert.deepEqual(smelted, { bar: 2 });
+  assert.equal(smelter.pantry.ore, 0);
+  assert.equal(smelter.pantry.char, 0);
+  assert.equal(smelter.pantry.bar, 2);
+  assert.equal(economy.materialFlows.ore.cons, 4);
+  assert.equal(economy.materialFlows.char.cons, 2);
+  assert.equal(economy.materialFlows.bar.prod, 2);
+
+  const smith = createHousehold(economy, { job: "smith", x: 21, y: 20 });
+  smith.pantry.bar = 3;
+  smith.pantry.char = 1.5;
+  smith.pantry.coal = 0;
+  smith.pantry.iron = 0;
+  const forged = producePrimaryTick(economy, null, smith, { day: 1, fraction: 1 });
+  assert.deepEqual(forged, { iron: 3 });
+  assert.equal(smith.pantry.bar, 0);
+  assert.equal(smith.pantry.char, 0);
+  assert.equal(smith.pantry.iron, 3);
+  assert.equal(economy.materialFlows.bar.cons, 3);
+  assert.equal(economy.materialFlows.iron.prod, 3);
+});
+
+test("段34: 製鉄・鍛冶の原料買い天井式を適用する", () => {
+  const economy = createEconomicState();
+  economy.px.bar = 2.2;
+  economy.px.iron = 4.5;
+
+  const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
+  smelter.pantry.ore = 0;
+  smelter.pantry.char = 0;
+  smelter.pantry.coal = 0;
+  const smelterTargets = buyTargets(economy, smelter, { day: 1 });
+  const smelterCeiling = 2.2 / 2 * 0.6;
+  assert.deepEqual(smelterTargets.ore, [20, smelterCeiling]);
+  assert.deepEqual(smelterTargets.char, [10, smelterCeiling]);
+  assert.deepEqual(smelterTargets.coal, [10, smelterCeiling]);
+
+  const smith = createHousehold(economy, { job: "smith", x: 21, y: 20 });
+  smith.pantry.bar = 0;
+  smith.pantry.char = 0;
+  smith.pantry.coal = 0;
+  const smithTargets = buyTargets(economy, smith, { day: 1 });
+  const smithCeiling = 4.5 * 0.6;
+  assert.deepEqual(smithTargets.bar, [10, smithCeiling]);
+  assert.deepEqual(smithTargets.char, [5, smithCeiling]);
+  assert.deepEqual(smithTargets.coal, [5, smithCeiling]);
 });
 
 let failures = 0;

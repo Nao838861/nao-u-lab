@@ -5,6 +5,19 @@ const DIRS = [
 
 const travelPathCaches = new WeakMap();
 
+export const GOODS_UNIT_WEIGHT = Object.freeze({ ore: 2, bar: 2 });
+
+export function goodsUnitWeight(goods) {
+  return GOODS_UNIT_WEIGHT[goods] ?? 1;
+}
+
+export function carrierGoodsCapacity(carrier, goods) {
+  if (!Number.isFinite(carrier?.capacity) || carrier.capacity < 0) {
+    throw new TypeError("carrier capacity must be a finite non-negative number");
+  }
+  return carrier.capacity / goodsUnitWeight(goods);
+}
+
 export const V003_GRID = Object.freeze({ width: 24, height: 19 });
 export const V003_FIXED = Object.freeze({
   port: { x: 2, y: 14, entrance: { x: 6, y: 15 }, grade: 3 },
@@ -81,6 +94,8 @@ export function makeFlowIslandTerrain(width = 48, height = 40) {
       if (x >= 10 && x <= 18 && y >= 15 && y <= 25 && ((x * 7 + y * 13) % 5 < 3)) kind = "forest";
       if (x >= 28 && x <= 33 && y >= 23 && y <= 27 && ((x * 5 + y * 11) % 4 < 3)) kind = "forest";
       if (x > 38 && y < 10) kind = "rock";
+      if (x >= 8 && x <= 13 && y >= 20 && y <= 24 && ((x * 5 + y * 3) % 4 < 2)) kind = "ore";
+      if (x >= 3 && x <= 7 && y >= 26 && y <= 30 && ((x * 7 + y * 5) % 4 < 2)) kind = "coal";
       row.push({ kind, variant: 0 });
     }
     terrain.push(row);
@@ -112,6 +127,9 @@ export function createPhysicalState({
     travelRevision: 0,
     connectionCache: { revision: -1, components: {} },
     haulJobs: [],
+    haulJobIndex: {},
+    activeHaulJobIds: [],
+    economicHaulJobIds: [],
     nextHaulJobId: 1,
     nextCarrierId: 1,
     tick: 0,
@@ -165,6 +183,21 @@ export function line8(a, b) {
     }
   }
   return points;
+}
+
+export function findLandRoadEntrance(physical, position, toward) {
+  if (
+    !Number.isFinite(position?.x)
+    || !Number.isFinite(position?.y)
+    || !Number.isFinite(toward?.x)
+    || !Number.isFinite(toward?.y)
+  ) return null;
+  const cells = line8(
+    [Math.round(position.x), Math.round(position.y)],
+    [Math.round(toward.x), Math.round(toward.y)],
+  );
+  const land = cells.find(([x, y]) => isLand(physical, x, y));
+  return land ? { x: land[0], y: land[1] } : null;
 }
 
 export function roadPath(roadsOrPhysical, start, goal) {
@@ -500,7 +533,15 @@ export function addBuilding(physical, type, x, y, options = {}) {
 
 export function createPointBuilding(
   physical,
-  { type, x, y, role = null, ownerHouseholdId = null, caps = {} },
+  {
+    type,
+    x,
+    y,
+    entrance = null,
+    role = null,
+    ownerHouseholdId = null,
+    caps = {},
+  },
 ) {
   if (typeof type !== "string" || type.length === 0) {
     throw new TypeError("point building type must be a non-empty string");
@@ -508,6 +549,10 @@ export function createPointBuilding(
   if (!Number.isFinite(x) || !Number.isFinite(y)) {
     throw new TypeError("point building position must be finite");
   }
+  if (
+    entrance !== null
+    && (!Number.isFinite(entrance?.x) || !Number.isFinite(entrance?.y))
+  ) throw new TypeError("point building entrance must be finite");
   const building = {
     id: `b${physical.nextBuildingId}`,
     type,
@@ -517,7 +562,9 @@ export function createPointBuilding(
     y: Math.round(y),
     w: 0,
     h: 0,
-    entrance: { x: Math.round(x), y: Math.round(y) },
+    entrance: entrance === null
+      ? { x: Math.round(x), y: Math.round(y) }
+      : { x: Math.round(entrance.x), y: Math.round(entrance.y) },
     fixed: role !== null,
     grade: 0,
     point: true,
@@ -654,8 +701,7 @@ export function routeTravelCarrier(physical, carrier, start, goal) {
 }
 
 export function incomingHaulAmount(physical, buildingId, section, goods) {
-  return physical.haulJobs
-    .filter((job) => job.status === "in_transit")
+  return activeHaulJobs(physical)
     .filter((job) => job.to.buildingId === buildingId && job.to.section === section && job.goods === goods)
     .reduce((total, job) => total + job.qty, 0);
 }
@@ -672,7 +718,7 @@ export function createHaulJob(physical, { from, to, goods, qty, carrier }) {
   if (typeof goods !== "string" || goods.length === 0) throw new TypeError("goods must be a non-empty string");
   if (!carrier || typeof carrier !== "object") throw new TypeError("haul job requires a carrier");
   requirePositiveQuantity(carrier.capacity, "carrier capacity");
-  if (qty > carrier.capacity + 1e-9) throw new Error("キャリア容量超過");
+  if (qty > carrierGoodsCapacity(carrier, goods) + 1e-9) throw new Error("キャリア容量超過");
   if (sectionAmount(source, sourceRef.section, goods) + 1e-9 < qty) throw new Error("運搬元の在庫不足");
 
   const targetFree = sectionCapacity(target, targetRef.section, goods)
@@ -701,11 +747,40 @@ export function createHaulJob(physical, { from, to, goods, qty, carrier }) {
   };
   physical.nextHaulJobId += 1;
   physical.haulJobs.push(job);
+  (physical.haulJobIndex ??= {})[job.id] = physical.haulJobs.length - 1;
+  (physical.activeHaulJobIds ??= []).push(job.id);
   return job;
 }
 
+export function haulJobById(physical, jobId) {
+  const index = physical.haulJobIndex?.[jobId];
+  if (Number.isSafeInteger(index) && physical.haulJobs[index]?.id === jobId) {
+    return physical.haulJobs[index];
+  }
+  const fallbackIndex = physical.haulJobs.findIndex((job) => job.id === jobId);
+  if (fallbackIndex < 0) return null;
+  (physical.haulJobIndex ??= {})[jobId] = fallbackIndex;
+  return physical.haulJobs[fallbackIndex];
+}
+
+function activeHaulJobs(physical) {
+  if (!Array.isArray(physical.activeHaulJobIds)) {
+    physical.activeHaulJobIds = physical.haulJobs
+      .filter((job) => job.status === "in_transit")
+      .map((job) => job.id);
+  }
+  return physical.activeHaulJobIds
+    .map((jobId) => haulJobById(physical, jobId))
+    .filter((job) => job?.status === "in_transit");
+}
+
+function deactivateHaulJob(physical, jobId) {
+  const index = physical.activeHaulJobIds?.indexOf(jobId) ?? -1;
+  if (index >= 0) physical.activeHaulJobIds.splice(index, 1);
+}
+
 export function completeHaulJob(physical, jobId) {
-  const job = physical.haulJobs.find((candidate) => candidate.id === jobId);
+  const job = haulJobById(physical, jobId);
   if (!job || job.status !== "in_transit") throw new Error(`完了できない運搬ジョブ: ${jobId}`);
   const target = buildingById(physical, job.to.buildingId);
   if (!target) throw new Error("運搬先の建物が存在しません");
@@ -713,6 +788,7 @@ export function completeHaulJob(physical, jobId) {
   job.carrier.cargo = null;
   job.carrier.active = false;
   job.status = "completed";
+  deactivateHaulJob(physical, job.id);
   return job;
 }
 
@@ -759,9 +835,11 @@ function moveCarrierOneTick(physical, job) {
 }
 
 export function assertCarrierInvariants(physical) {
-  for (const job of physical.haulJobs) {
-    if (job.status !== "in_transit") continue;
+  for (const job of activeHaulJobs(physical)) {
     const carrier = job.carrier;
+    if (job.qty > carrierGoodsCapacity(carrier, job.goods) + 1e-9) {
+      throw new Error(`キャリア容量超過 ${job.id}`);
+    }
     if (!carrier.cargo || carrier.cargo.goods !== job.goods || carrier.cargo.qty !== job.qty) {
       throw new Error(`輸送中cargo不一致 ${job.id}`);
     }
@@ -784,8 +862,7 @@ export function stepHaulCarriers(physical, ticks = 1) {
   for (let tick = 0; tick < ticks; tick += 1) {
     physical.tick += 1;
     assertCarrierInvariants(physical);
-    for (const job of physical.haulJobs) {
-      if (job.status !== "in_transit") continue;
+    for (const job of activeHaulJobs(physical)) {
       if (job.carrier.mode !== "walk" && job.carrier.mode !== "cart") continue;
       moveCarrierOneTick(physical, job);
     }
@@ -812,7 +889,7 @@ export function nearestBuilding(physical, position) {
 }
 
 export function loseHaulCarrier(physical, jobId, position = null) {
-  const job = physical.haulJobs.find((candidate) => candidate.id === jobId);
+  const job = haulJobById(physical, jobId);
   if (!job || job.status !== "in_transit") throw new Error(`消失処理できない運搬ジョブ: ${jobId}`);
   const dropPosition = structuredClone(position ?? job.carrier.position);
   const owner = nearestBuilding(physical, dropPosition);
@@ -832,6 +909,7 @@ export function loseHaulCarrier(physical, jobId, position = null) {
   job.carrier.active = false;
   job.status = "carrier_lost";
   job.groundPileId = pile.id;
+  deactivateHaulJob(physical, job.id);
   return pile;
 }
 
@@ -848,7 +926,7 @@ export function materialSnapshot(physical) {
   for (const pile of physical.groundPiles) {
     inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
   }
-  for (const job of physical.haulJobs) {
+  for (const job of activeHaulJobs(physical)) {
     if (!job.carrier.cargo) continue;
     const { goods, qty } = job.carrier.cargo;
     cargo[goods] = (cargo[goods] ?? 0) + qty;
