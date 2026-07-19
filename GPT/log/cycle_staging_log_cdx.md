@@ -105,7 +105,34 @@ candidate_files_updated: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784449178-ea5bdaa847
+    source_ts: "1784449178.584249"
+    title: "Application of machine learning to monster level prediction in tabletop RPG game design — 順序 tier 予測を balance lint に限定する"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つ。人間が付けた enemy tier と予測差を外れ値 lint に限定し、次の playtest 優先順位を改善できるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  decision_reason: "6,007体・16モデル・chronological split・21回の expanding window と複数の順序指標はあるが、全体 scaling の leakage、人間比較不在、Pathfinder 固有 stat、特殊能力や encounter 文脈の未観測が残る。既存 balance-trend probe は version trend と skill/chance を扱うが、authored tier との差を自動決定でなく playtest 優先 lint にする境界は持たない。"
+  change:
+    summary: "次の enemy tier／balance-lint 作業2件で、未来側 holdout、二段階以上の外れ値 slice、予測と fun／human evaluation の境界を確認する可逆 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T17:23:48+09:00",
+  "updated_at": "2026-07-19T19:26:24+09:00",
   "reviewed_source_ts": [
+    "1784449178.584249",
     "1784440867.236699",
     "1784433358.176329",
     "1784425463.441119",
@@ -437,6 +438,50 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T19:26:24+09:00",
+      "selected": {
+        "id": "sr-1784449178-ea5bdaa847",
+        "source_ts": "1784449178.584249",
+        "title": "Application of machine learning to monster level prediction in tabletop RPG game design — 順序 tier 予測を balance lint に限定する",
+        "reason": "最新の未レビュー score 12 atom で、memory・harness・game-design・operation・evaluation を含む8タグを持つ。人間が付けた enemy tier と数値特徴からの予測差を最終決定ではなく外れ値 lint として使い、次の playtest 優先順位を小さく改善できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計15で採用条件を満たす。既存の balance-trend-skill-chance probe は固定 seed で version trend と skill/chance を分離するが、authored ordinal tier と予測差を lint にして大外れ個体だけを次の playtest へ送る境界は持たないため non_redundancy=2 とした。論文は6,007体、16モデル、chronological split と21回の expanding window、macro MAE・Somers' D・完全一致・±1一致を持つ一方、全体 scaling の leakage、人間との直接比較不在、Pathfinder 固有 stat、特殊能力・地形・party composition の未観測があるため evidence=2。新規 probe は敵 tier／balance lint の次の2件だけに限定し、予測を fun・fairness・最終 balance の代理にしない。",
+      "existing_probes": [
+        "probe-20260711-balance-trend-skill-chance",
+        "probe-20260711-procedural-persona-divergence",
+        "probe-20260711-evaluation-version-boundary"
+      ],
+      "probe": [
+        "次の enemy tier または balance-lint 作業で、予測対象を人間が確定した順序 tier の再現に限定し、fun・fairness・encounter 全体の難度を予測したとは扱わず、過去版で学習して次版を評価する split または同等の未来側 holdout を先に固定したか。",
+        "macro MAE と±1一致だけで終えず、二段階以上外した個体を一覧化し、特殊行動・複数敵・地形・player build・操作技能など未観測要因のどの slice に偏るかを一つ確認したか。",
+        "予測差は自動修正や自動却下に使わず playtest 優先キューへ送る lint に留め、headless telemetry と人間の体感評価を別軸で残したか。"
+      ],
+      "withdrawal_condition": "次の該当2件で未来側 split または大外れ slice が playtest 優先順位を変えない、既存 balance-trend／persona probes だけで同じ判断が残る、または authored tier の履歴が不足して lint を構成できない場合は退役する。",
+      "change": {
+        "type": "probe",
+        "summary": "次の enemy tier／balance-lint 作業2件で、未来側 holdout、二段階以上の外れ値 slice、予測と fun／human evaluation の境界を確認する可逆 probe を追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T17:23:48+09:00",
       "selected": {
@@ -10829,6 +10874,18 @@
     }
   ],
   "active_probes": [
+    {
+      "id": "probe-20260719-ordinal-tier-balance-lint",
+      "created_at": "2026-07-19T19:26:24+09:00",
+      "source_ts": "1784449178.584249",
+      "scope": "next enemy-tier prediction, authored difficulty-tier check, or balance-lint task where Codex may treat agreement with historical labels as fun, fairness, encounter difficulty, or an automatic balance decision",
+      "questions": [
+        "次の enemy tier または balance-lint 作業で、予測対象を人間が確定した順序 tier の再現に限定し、fun・fairness・encounter 全体の難度を予測したとは扱わず、過去版で学習して次版を評価する split または同等の未来側 holdout を先に固定したか。",
+        "macro MAE と±1一致だけで終えず、二段階以上外した個体を一覧化し、特殊行動・複数敵・地形・player build・操作技能など未観測要因のどの slice に偏るかを一つ確認したか。",
+        "予測差は自動修正や自動却下に使わず playtest 優先キューへ送る lint に留め、headless telemetry と人間の体感評価を別軸で残したか。"
+      ],
+      "expires_after": "次の該当2件で未来側 split または大外れ slice が playtest 優先順位を変えない、既存 balance-trend／persona probes だけで同じ判断が残る、または authored tier の履歴が不足して lint を構成できない場合は退役する。"
+    },
     {
       "id": "probe-20260718-adaptive-exploration-loss-boundary",
       "created_at": "2026-07-18T16:20:45+09:00",
