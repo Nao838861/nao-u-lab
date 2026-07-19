@@ -16,6 +16,7 @@ import {
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
+import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -50,6 +51,42 @@ test('段1: v003の章・台本・旧Worldをv004へ持ち込まない', () => {
   assert.equal(fs.existsSync(new URL('../src/world.js', import.meta.url)), false);
 });
 
+test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {
+  assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test']);
+  const tutorial = createEngineController({ seed: 11, mode: 'tutorial' });
+  const sandbox = createEngineController({ seed: 11, mode: 'sandbox' });
+  const testCity = createEngineController({ seed: 11, mode: 'test' });
+  assert.deepEqual(tutorial.readModel(), sandbox.readModel());
+  const blank = sandbox.readModel();
+  assert.deepEqual(blank.buildings.map(building => building.type).sort(), ['market', 'port', 'warehouse']);
+  assert.equal(blank.households.length, 0);
+  assert.equal(blank.roadKeys.length, 0);
+  const preview = findPreview(blank, 'woodshop');
+  assert.ok(preview, '未開拓島にも最初の職建物を配置できる');
+  assert.equal(sandbox.operate({
+    type: 'place_building', job: 'woodshop',
+    x: preview.entrance.x, y: preview.entrance.y,
+    buildingX: preview.x, buildingY: preview.y,
+  }).ok, true);
+  sandbox.advanceTicks(15 * 30);
+  assert.ok(sandbox.readModel().households.length > 0, '未開拓島の最初の区画へ移民が到着する');
+  assert.ok(testCity.readModel().buildings.length > blank.buildings.length);
+  assert.ok(testCity.readModel().zones.length > 0);
+  assert.ok(testCity.readModel().roadKeys.length > 0);
+  assert.throws(() => createEngineController({ mode: 'unknown' }), /unknown start mode/);
+});
+
+test('開始選択: URLのmodeは3種だけを受理し他のqueryを保つ', () => {
+  assert.equal(parseStartMode('?mode=tutorial'), 'tutorial');
+  assert.equal(parseStartMode('?mode=sandbox'), 'sandbox');
+  assert.equal(parseStartMode('?mode=test'), 'test');
+  assert.equal(parseStartMode('?mode=unknown'), null);
+  assert.equal(parseStartMode(''), null);
+  const selected = new URL(urlForStartMode('https://example.test/game/?seed=11', 'sandbox'));
+  assert.equal(selected.searchParams.get('mode'), 'sandbox');
+  assert.equal(selected.searchParams.get('seed'), '11');
+});
+
 test('段2: full snapshotを地形・建物・キャリア・棚の不変描画モデルへ変換する', () => {
   const api = createEngineApi(buildBaseCity(11));
   const snapshot = api.snapshot({ scope: 'full' });
@@ -80,7 +117,7 @@ test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致�
 test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さない', () => {
   const sources = Object.fromEntries([
     'camera.js', 'clock.js', 'config.js', 'controller.js', 'event_view.js', 'main.js',
-    'placement.js', 'presentation.js', 'renderer.js', 'view_model.js',
+    'placement.js', 'presentation.js', 'renderer.js', 'start_modes.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
     assert.doesNotMatch(source, /engine\/src/, `${file}からengineを直接importしない`);

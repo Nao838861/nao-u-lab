@@ -8,13 +8,16 @@ import { presentEvent } from './event_view.js';
 import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js';
 import { WorldPresentation } from './presentation.js';
 import { Renderer } from './renderer.js';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
-const controller = createEngineController({ seed: 11 });
+const requestedStartMode = parseStartMode(location.search);
+const startMode = requestedStartMode ?? 'sandbox';
+const controller = createEngineController({ seed: 11, mode: startMode });
 const camera = new IsometricCamera();
 const renderer = new Renderer(canvas, camera);
-const clock = new SimulationClock({ speedIndex: 1 });
+const clock = new SimulationClock({ speedIndex: requestedStartMode ? 1 : 0 });
 let model = controller.readModel();
 const presentation = new WorldPresentation(model);
 let displayModel = presentation.reset(model);
@@ -26,6 +29,7 @@ let toolDragStart = null;
 let dismissedOfferKey = null;
 const eventLog = [];
 camera.setWorldSize(model.width, model.height);
+if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
 
 function formatNumber(value) {
   return Math.round(value).toLocaleString('ja-JP');
@@ -73,6 +77,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
 
 function renderHud() {
   $('#build-version').textContent = `Build ${VERSION}`;
+  $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
   $('#funds-value').textContent = formatNumber(model.companyMoney);
   $('#day-value').textContent = `${model.day}日目`;
   $('#tick-value').textContent = `tick ${model.tick}`;
@@ -530,6 +535,28 @@ function updateTracking(currentModel) {
   camera.focus(carrier.x + 0.5, carrier.y + 0.5);
 }
 
+const gameUiElements = [...document.body.children].filter(element => (
+  element.id !== 'start-screen' && !['SCRIPT', 'NOSCRIPT'].includes(element.tagName)
+));
+
+function showStartScreen() {
+  setSpeed(0);
+  $('#start-screen').hidden = false;
+  document.body.classList.add('choosing-start');
+  for (const element of gameUiElements) element.inert = true;
+  $('#start-screen [data-start-mode="tutorial"]').focus();
+}
+
+function chooseStartMode(mode) {
+  location.assign(urlForStartMode(location.href, mode));
+}
+
+$('#start-screen').addEventListener('click', event => {
+  const button = event.target.closest('[data-start-mode]');
+  if (button) chooseStartMode(button.dataset.startMode);
+});
+$('#choose-start').addEventListener('click', showStartScreen);
+
 let lastFrame = performance.now();
 function frame(now) {
   const elapsedSeconds = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000));
@@ -546,6 +573,7 @@ function frame(now) {
 
 window.__SHIOJI_V004__ = Object.freeze({
   version: VERSION,
+  startMode,
   camera,
   clock,
   controller,
@@ -564,6 +592,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   selectTool,
   openSheet,
   rejectOrderOffer,
+  chooseStartMode,
   previewBuilding(job, x, y) { return previewBuildingPlacement(model, job, { x, y }); },
   previewRoad(start, end) { return previewRoadPlacement(model, start, end); },
 });
@@ -571,5 +600,13 @@ window.__SHIOJI_V004__ = Object.freeze({
 renderHud();
 renderer.render(displayModel, 0);
 requestAnimationFrame(frame);
+
+if (requestedStartMode) {
+  $('#status span').textContent = startMode === 'tutorial'
+    ? 'チュートリアル準備中：未開拓島から開始しました'
+    : `${START_MODES[startMode].shortLabel}で開始しました`;
+} else {
+  showStartScreen();
+}
 
 if (SPEEDS.length !== 4) throw new Error('speed controls and speed definitions must stay aligned');

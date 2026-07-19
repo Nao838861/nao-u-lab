@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.0.5">
+  <link rel="stylesheet" href="./style.css?v=v004.0.6">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -41,10 +41,12 @@
       <div><dt>獣道</dt><dd id="trail-count">—</dd></div>
       <div><dt>見える在庫</dt><dd id="stock-count">—</dd></div>
       <div><dt>直近イベント</dt><dd id="event-count">0</dd></div>
+      <div><dt>開始</dt><dd id="start-mode-label">—</dd></div>
     </dl>
     <div class="observer-actions">
       <button id="open-company" type="button">会社</button>
       <button id="open-events" type="button">出来事</button>
+      <button id="choose-start" type="button">最初から</button>
     </div>
     <p>ドラッグ／スワイプで移動、ホイール／ピンチで拡大縮小。</p>
     <small id="build-version" data-testid="build-version">Build —</small>
@@ -104,7 +106,30 @@
     <i></i><span>経済エンジンに接続済み</span>
   </div>
 
+  <div id="start-screen" class="start-screen" hidden data-testid="start-screen">
+    <section class="panel start-dialog" role="dialog" aria-modal="true" aria-labelledby="start-title">
+      <div class="start-seal">CI</div>
+      <small>CHARTER ISLE</small>
+      <h1 id="start-title">島の始め方を選ぶ</h1>
+      <p>同じ経済エンジンを、異なる初期状態から始めます。</p>
+      <div class="start-options">
+        <button type="button" data-start-mode="tutorial">
+          <span><b>チュートリアルから</b><em>準備中</em></span>
+          <small>ガイドは準備中です。現在は未開拓島から同じ条件で始めます。</small>
+        </button>
+        <button type="button" data-start-mode="sandbox">
+          <span><b>ゼロから開拓</b><em>サンドボックス</em></span>
+          <small>市場・蔵・港だけがある島で、建物と道を自分で配置します。</small>
+        </button>
+        <button type="button" data-start-mode="test">
+          <span><b>テスト配置で観察</b><em>従来の開始</em></span>
+          <small>人口・道路・産業が動いている、これまでと同じ検証済み都市です。</small>
+        </button>
+      </div>
+    </section>
+  </div>
+
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.0.5"></script>
+  <script type="module" src="./src/main.js?v=v004.0.6"></script>
 </body>
 </html>

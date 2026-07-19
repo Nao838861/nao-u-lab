@@ -1,9 +1,33 @@
 import { createEngineApi } from '../../engine/src/api.js';
-import { buildBaseCity } from '../../engine/src/audit.js';
+import { buildBaseCity, makeStableCityPlan } from '../../engine/src/audit.js';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js';
 import { createViewController } from './controller.js';
+import { START_MODES } from './start_modes.js';
 
-export function createEngineController({ seed = 11 } = {}) {
-  const world = buildBaseCity(seed);
+export function buildBlankCity(seed = 11) {
+  const plan = makeStableCityPlan();
+  const physical = createPhysicalState({
+    width: 48,
+    height: 40,
+    terrain: makeFlowIslandTerrain(48, 40),
+  });
+  const world = createWorld({
+    seed,
+    physicalState: physical,
+    market: { ...plan.logisticsSites.market.entrance },
+    warehouse: { ...plan.logisticsSites.warehouse.entrance },
+    port: { ...plan.logisticsSites.port.entrance },
+    logisticsSites: plan.logisticsSites,
+  });
+  ensureCompanyLogisticsSites(world.state.economy, physical);
+  return world;
+}
+
+export function createEngineController({ seed = 11, mode = 'test' } = {}) {
+  const profile = START_MODES[mode];
+  if (!profile) throw new RangeError(`unknown start mode: ${mode}`);
+  const world = profile.blank ? buildBlankCity(seed) : buildBaseCity(seed);
   const api = createEngineApi(world);
   return createViewController(api);
 }

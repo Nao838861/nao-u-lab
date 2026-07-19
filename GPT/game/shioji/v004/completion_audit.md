@@ -17,7 +17,8 @@
 | UI操作150日と再生の決定論 | 公開7操作の入力ジャーナルから再生したJSON状態が完全一致 | 確認済み |
 | エンジン回帰 | `npm test`のエンジン107件と`audit:stable`の3シード×8年 | 確認済み |
 | PC／スマホの完成画像 | `/tmp/shioji_v004_browser_desktop.png`と`/tmp/shioji_v004_browser_mobile.png` | 確認済み |
-| 公開版 | 固定URLで`Build v004.0.5-release`、PC／スマホsmoke全緑 | 確認済み |
+| 開始方法の3択 | tutorialとsandboxは同一の固定3施設・人口0・道路0、testは従来都市。全ボタンをPC／スマホ実クリック | 確認済み |
+| 公開版 | 固定URLで`Build v004.0.6-start-modes`、PC／スマホsmoke全緑 | 確認済み |
 
 ## 完成判定
 

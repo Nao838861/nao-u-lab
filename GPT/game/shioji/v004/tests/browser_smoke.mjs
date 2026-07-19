@@ -2,7 +2,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const CDP = process.env.SHIOJI_CDP ?? 'http://127.0.0.1:9226';
-const GAME = process.env.SHIOJI_URL ?? 'http://localhost:8420/game/shioji/v004/';
+const requestedGame = new URL(process.env.SHIOJI_URL ?? 'http://localhost:8420/game/shioji/v004/');
+requestedGame.searchParams.delete('mode');
+const START_GAME = requestedGame.href;
+const gameForMode = mode => {
+  const url = new URL(START_GAME);
+  url.searchParams.set('mode', mode);
+  return url.href;
+};
+const GAME = gameForMode('test');
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 class Page {
@@ -63,7 +71,7 @@ class Page {
   }
 }
 
-async function newPage(width, height, mobile) {
+async function newPage(width, height, mobile, url = GAME) {
   const target = await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, {
     method: 'PUT',
   }).then(response => response.json());
@@ -77,7 +85,7 @@ async function newPage(width, height, mobile) {
     screenWidth: width,
     screenHeight: height,
   });
-  await page.send('Page.navigate', { url: GAME });
+  await page.send('Page.navigate', { url });
   for (let attempt = 0; attempt < 80; attempt += 1) {
     await wait(100);
     if (await page.evaluate("document.readyState === 'complete' && Boolean(window.__SHIOJI_V004__)")) {
@@ -87,11 +95,70 @@ async function newPage(width, height, mobile) {
   throw new Error(`v004 did not load: ${page.errors.join(' | ') || 'no runtime error reported'}`);
 }
 
+async function checkStartChoice(width, height, mobile, mode) {
+  const page = await newPage(width, height, mobile, START_GAME);
+  const launcher = await page.evaluate(`(() => {
+    const screen = document.querySelector('#start-screen');
+    const dialog = screen.querySelector('.start-dialog').getBoundingClientRect();
+    const buttons = [...screen.querySelectorAll('[data-start-mode]')];
+    return {
+      hidden: screen.hidden,
+      buttonModes: buttons.map(button => button.dataset.startMode),
+      dialog: { left: dialog.left, right: dialog.right, top: dialog.top, bottom: dialog.bottom },
+      speed: window.__SHIOJI_V004__.clock.speedIndex,
+      startMode: window.__SHIOJI_V004__.startMode,
+      buildings: window.__SHIOJI_V004__.model.buildings.map(building => building.type).sort(),
+      households: window.__SHIOJI_V004__.model.households.length,
+      roads: window.__SHIOJI_V004__.model.roadKeys.length,
+    };
+  })()`);
+  assert.equal(launcher.hidden, false, JSON.stringify(launcher));
+  assert.deepEqual(launcher.buttonModes, ['tutorial', 'sandbox', 'test']);
+  assert.equal(launcher.speed, 0);
+  assert.equal(launcher.startMode, 'sandbox');
+  assert.deepEqual(launcher.buildings, ['market', 'port', 'warehouse']);
+  assert.equal(launcher.households, 0);
+  assert.equal(launcher.roads, 0);
+  assert.ok(launcher.dialog.left >= 0 && launcher.dialog.right <= width, JSON.stringify(launcher));
+  assert.ok(launcher.dialog.top >= 0 && launcher.dialog.bottom <= height, JSON.stringify(launcher));
+  await page.screenshot(`/tmp/shioji_v004_start_${mobile ? 'mobile' : mode}.png`);
+
+  await page.evaluate(`document.querySelector('[data-start-mode="${mode}"]').click()`);
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    await wait(100);
+    if (await page.evaluate(`Boolean(window.__SHIOJI_V004__)
+      && window.__SHIOJI_V004__.startMode === ${JSON.stringify(mode)}
+      && new URLSearchParams(location.search).get('mode') === ${JSON.stringify(mode)}`)) break;
+  }
+  const started = await page.evaluate(`({
+    mode: window.__SHIOJI_V004__.startMode,
+    screenHidden: document.querySelector('#start-screen').hidden,
+    buildings: window.__SHIOJI_V004__.model.buildings.length,
+    households: window.__SHIOJI_V004__.model.households.length,
+    roads: window.__SHIOJI_V004__.model.roadKeys.length,
+    errors: document.querySelector('#status').textContent,
+  })`);
+  assert.equal(started.mode, mode, JSON.stringify(started));
+  assert.equal(started.screenHidden, true, JSON.stringify(started));
+  if (mode === 'test') {
+    assert.ok(started.buildings > 3, JSON.stringify(started));
+    assert.ok(started.roads > 0, JSON.stringify(started));
+  } else {
+    assert.equal(started.buildings, 3, JSON.stringify(started));
+    assert.equal(started.households, 0, JSON.stringify(started));
+    assert.equal(started.roads, 0, JSON.stringify(started));
+  }
+  await page.screenshot(`/tmp/shioji_v004_started_${mode}.png`);
+  assert.deepEqual(page.errors, []);
+  page.close();
+}
+
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.0.5-release');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.0.5-release');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.0.6-start-modes');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.0.6-start-modes');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
     width: window.__SHIOJI_V004__.model.width,
@@ -408,6 +475,9 @@ async function checkViewport(width, height, mobile) {
   page.close();
 }
 
+await checkStartChoice(1440, 900, false, 'tutorial');
+await checkStartChoice(390, 844, true, 'sandbox');
+await checkStartChoice(800, 700, false, 'test');
 await checkViewport(1440, 900, false);
 await checkViewport(390, 844, true);
 console.log('CHARTER ISLE v004 browser smoke: PASS');
