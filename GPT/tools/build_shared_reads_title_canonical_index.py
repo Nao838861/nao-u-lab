@@ -89,7 +89,7 @@ def build_index_rows(
             continue
         statuses = {row.get("status", "") for row in group}
         posted = [row for row in group if row.get("status") == "posted"]
-        if terminal_only and not posted and (not statuses or not statuses <= TERMINAL_STATUSES):
+        if terminal_only and (not statuses or not statuses <= TERMINAL_STATUSES):
             continue
         terminal = [row for row in group if row.get("status") in TERMINAL_STATUSES]
         canonical = sorted(posted or terminal or group, key=canonical_rank)[0]
@@ -125,9 +125,8 @@ def build_index_rows(
                 "posted_source_urls": posted_urls,
                 "permalink": permalink_match.group(0) if permalink_match else "",
                 "decision_note": (
-                    "Phase 4c ISS-4A-20260712-01 terminal-dominance backfill. A posted sibling "
-                    "is terminal evidence even when open siblings remain; candidate lifecycle "
-                    "frontmatter is unchanged."
+                    "Phase 4c ISS-4A-20260720-01 closed-group canonical. Every sibling is "
+                    "posted or failed; candidate lifecycle frontmatter is unchanged."
                 ),
                 "updated_at": generated_at,
             }

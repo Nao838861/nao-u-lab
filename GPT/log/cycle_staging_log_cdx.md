@@ -256,7 +256,49 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260720-01
+    files_changed:
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/shared_reads_duplicate_preflight.py
+        change: modified
+      - path: tools/build_shared_reads_title_canonical_index.py
+        change: modified
+      - path: tools/build_shared_reads_mixed_duplicate_queue.py
+        change: modified
+      - path: tools/test_shared_reads_duplicate_preflight.py
+        change: modified
+      - path: memory/shared_reads_title_canonical_index.jsonl
+        change: modified
+      - path: memory/shared_reads_posted_source_index.jsonl
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+      - path: phases/phase1_collect.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "preflight を posted-source=skip、closed canonical=review、mixed queue=review に役割分離した。canonical builder は全 sibling が posted / failed の group だけを登録し、各 sidecar の missing / stale は review に倒す。"
+    partial: false
+migrations:
+  - what: "candidate frontmatter を変更せず、posted-source / closed canonical / mixed duplicate の3 sidecarを現行データから再生成"
+    affected: "posted-source 562 data rows、closed canonical 48 groups、mixed duplicate 55 groups"
+verification:
+  - "python -m unittest discover -s tools -p 'test_shared_reads*.py': 23 tests OK（missing / stale loader fixture を含む）"
+  - "python -m py_compile: shared_reads_title_index.py、duplicate_preflight CLI、canonical / mixed builders が成功"
+  - "3 sidecar の --check が成功。canonical の open status group 0、mixed の open status 不在 group 0、canonical / mixed title_key 交差 0"
+  - "実 sidecar preflight fixture: posted same work=skip、closed title=review、mixed title=review、unregistered=continue"
+  - "python tools/memory_recall.py の関連 query が正常終了し、既存の記憶読出しを確認"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

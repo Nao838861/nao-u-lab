@@ -1,15 +1,21 @@
 # shared_reads_candidates/
 
-2026-07-18 Phase 4c から duplicate preflight の第一段は `memory/shared_reads_posted_source_index.jsonl` とする。これは raw Slack の実投稿を主入力、`status: posted` candidate metadata を補助入力にした再生成可能 index で、canonical URL / domain 限定 work identity / Slack ts・permalink / title evidence / candidate path / provenance を保持する。URL/work 一致は `skip`、title canonical のみの一致は `review`、新規は `continue`。index stale、抽出不能、provenance 不足も安全側の `review` とする。Phase 3 の raw 横断照合は最終安全網として残す。
+duplicate preflight は `memory/shared_reads_posted_source_index.jsonl`、closed canonical index、mixed duplicate queue の順に読む。raw Slack の実投稿を正本とする URL/work 一致だけが `skip`、closed / mixed title 一致は `review`、どれにも該当しない時だけ `continue` になる。3 sidecar の missing・candidate更新後のstale、抽出不能、provenance 不足も安全側の `review` とする。Phase 3 の raw 横断照合は最終安全網として残す。
 
 再生成と検証:
 
 ```powershell
 python tools\build_shared_reads_posted_source_index.py
+python tools\build_shared_reads_title_canonical_index.py
+python tools\build_shared_reads_mixed_duplicate_queue.py
 python tools\build_shared_reads_posted_source_index.py --check
+python tools\build_shared_reads_title_canonical_index.py --check
+python tools\build_shared_reads_mixed_duplicate_queue.py --check
 ```
 
-2026-07-12 Phase 4c から、同一 title group に `posted` sibling が1件でもあれば mixed group でも `terminal_evidence: true` として index に保持する。生成前に `tools/shared_reads_duplicate_preflight.py` を実行し、title と canonicalized URL が一致すれば `skip`、title のみ一致して URL が異なれば `review`、未登録 title は `continue` とする。既存 candidate の status は一括変更しない。
+candidate frontmatter を作成・更新した後は closed / mixed sidecar が stale になる。次の candidate の preflight 前に3 builderを再実行し、stale のまま自動処理を続けない。
+
+2026-07-20 Phase 4c で sidecar の役割を分離した。title canonical index は全 sibling が `posted` / `failed` の closed group だけを保持し、terminal / open status が混在する group は mixed duplicate queue にだけ保持する。既存 candidate の status は一括変更しない。
 
 #shared-reads に投稿する基準を満たさない**候補レベル**の記事置き場。
 
@@ -109,7 +115,7 @@ summary の `missing_stale_after` と `overdue_for_reassessment` を Phase 4a/4c
 
 ## title canonical index (2026-06-25)
 
-`memory/shared_reads_title_canonical_index.jsonl` は、同一 title の候補が複数残った時に「この title group は既に posted / failed として閉じている」と Phase 2 の再評価 queue へ伝える lightweight sidecar である。candidate 本体や lifecycle frontmatter の正本ではない。
+`memory/shared_reads_title_canonical_index.jsonl` は、同一 title の候補が複数残り、全 sibling が `posted` / `failed` の時に「この title group は閉じている」と Phase 2 の再評価 queue へ伝える lightweight sidecar である。open status を1件でも含む group は登録しない。candidate 本体や lifecycle frontmatter の正本ではない。
 
 1 行 1 `title_key` で、最低限 `title_key` / `canonical_path` / `best_status` / `duplicate_paths` / `source_url` / `decision_note` / `updated_at` を持つ。2026-06-25 Phase 4c 以降は `siblings` と `status_counts` も持ち、同一 title group 内の path/status/url を sidecar 上で確認できる。誤結合を避けるため、title だけで確定せず、`source_url` と candidate path を人間が確認できる形で残す。
 

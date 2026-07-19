@@ -9,7 +9,9 @@ outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクショ
 
 ## Duplicate preflight の判定順 (2026-07-18 Phase 4c)
 
-本文評価前の duplicate preflight は、実 Slack 投稿から再生成した `memory/shared_reads_posted_source_index.jsonl` を第一段、既存 title canonical index を第二段にする。posted-source の canonical URL または domain 限定 work identity が一致すれば `skip`、title canonical のみ一致すれば `review`、どちらもなければ `continue` とする。index が raw/candidate snapshot より古い、該当 title の URL 抽出が未解決、または一致行の provenance が不足する時は `continue` にせず `review` に倒す。Phase 3 の raw Slack 横断照合は最終安全網として維持する。
+本文評価前の duplicate preflight は、`posted-source → closed canonical → mixed queue → continue` の順に確認する。実 Slack 投稿の canonical URL / domain 限定 work identity 一致だけを `skip` とし、全 sibling が `posted` / `failed` の closed title 一致と、terminal / open status が混在する mixed title 一致は `review` にする。3 sidecar の missing・candidate snapshot より古い stale、URL 抽出未解決、provenance 不足も `review` に倒す。Phase 3 の raw Slack 横断照合は最終安全網として維持する。
+
+Phase 2 開始時と candidate frontmatter 更新後の次回 preflight 前に、posted-source / title canonical / mixed duplicate の各 builder を再実行する。sidecar の自動補正は行わず、stale のままなら評価を進めない。
 
 ## stale_review_batch 再評価契約 (2026-06-19)
 
@@ -90,7 +92,7 @@ Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿
 
 ## title canonical index による再評価除外 (2026-06-25)
 
-Phase 4c で `memory/shared_reads_title_canonical_index.jsonl` を追加した。これは candidate lifecycle の正本ではなく、同一 title group に `best_status: posted` または `best_status: failed` の canonical 判定がある時だけ、stale reevaluation queue から外すための軽量 sidecar である。
+Phase 4c で `memory/shared_reads_title_canonical_index.jsonl` を追加した。これは candidate lifecycle の正本ではなく、同一 title group の全 sibling が `posted` / `failed` で閉じた時だけ、stale reevaluation queue から外すための軽量 sidecar である。
 
 Phase 2 で `stale_review_batch` や `memory/shared_reads_review_queue.jsonl` を扱う前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、index に terminal 判定があるものは再評価しない。必要に応じて人間が再オープンする場合は、index 行の `decision_note` / `source_url` / `duplicate_paths` を確認してから個別に扱う。
 ## stale_review_batch / title canonical 運用確認 (2026-06-26)

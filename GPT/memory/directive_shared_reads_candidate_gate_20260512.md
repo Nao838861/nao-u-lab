@@ -42,3 +42,7 @@ ts=1778560845.121349 (本 directive で参照) は Nao_u が指摘の直接対�
 ## 実装メモ（2026-07-18 Phase 4c）
 
 候補書込み前の重複判定は、candidate 派生 index だけでなく raw Slack の実投稿履歴を正本にした `memory/shared_reads_posted_source_index.jsonl` を第一段に使う。`tools/build_shared_reads_posted_source_index.py` で再生成し、URL/work 一致は skip、title のみ一致・index stale・抽出不能・provenance 不足は review とする。これは本 directive の「候補を投稿済み情報と混同して再投稿しない」運用を機械的に支える変更であり、品質基準自体は変えない。
+
+## 実装メモ（2026-07-20 Phase 4c）
+
+title canonical index は全 sibling が `posted` / `failed` の closed group 専用へ戻し、terminal / open status が混在する group は mixed duplicate queue から `review` へ渡す。preflight は posted-source の同一 work だけを `skip` とし、closed / mixed title 一致と各 sidecar の missing・stale は `review` にする。candidate frontmatter と品質基準は変更しない。

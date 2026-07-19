@@ -12,8 +12,14 @@ from shared_reads_posted_source_index import (
     DEFAULT_RAW_SLACK,
     load_index as load_posted_source_index,
 )
-from shared_reads_title_index import DEFAULT_TITLE_INDEX, duplicate_preflight, load_title_index
-from shared_reads_title_index import DEFAULT_CANDIDATES_DIR
+from shared_reads_title_index import (
+    DEFAULT_CANDIDATES_DIR,
+    DEFAULT_MIXED_QUEUE,
+    DEFAULT_TITLE_INDEX,
+    duplicate_preflight,
+    load_mixed_queue_with_status,
+    load_title_index_with_status,
+)
 
 
 def main() -> int:
@@ -22,6 +28,7 @@ def main() -> int:
     parser.add_argument("--url", required=True)
     parser.add_argument("--index", type=Path, default=DEFAULT_TITLE_INDEX)
     parser.add_argument("--posted-source-index", type=Path, default=DEFAULT_POSTED_SOURCE_INDEX)
+    parser.add_argument("--mixed-queue", type=Path, default=DEFAULT_MIXED_QUEUE)
     parser.add_argument("--raw-slack", type=Path, default=DEFAULT_RAW_SLACK)
     parser.add_argument("--candidates-dir", type=Path, default=DEFAULT_CANDIDATES_DIR)
     parser.add_argument("--log", type=Path, help="append skip/review evidence as JSONL")
@@ -31,12 +38,17 @@ def main() -> int:
         raw_path=args.raw_slack,
         candidates_dir=args.candidates_dir,
     )
+    title_index, title_status = load_title_index_with_status(args.index, args.candidates_dir)
+    mixed_queue, mixed_status = load_mixed_queue_with_status(args.mixed_queue, args.candidates_dir)
     result = duplicate_preflight(
         args.title,
         args.url,
-        load_title_index(args.index),
+        title_index,
         posted_source_rows=posted_rows,
         posted_source_status=posted_status,
+        title_index_status=title_status,
+        mixed_queue=mixed_queue,
+        mixed_queue_status=mixed_status,
     )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     if args.log and result["decision"] in {"skip", "review"}:

@@ -13,6 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES_DIR = ROOT / "memory" / "shared_reads_candidates"
 DEFAULT_TITLE_INDEX = ROOT / "memory" / "shared_reads_title_canonical_index.jsonl"
+DEFAULT_MIXED_QUEUE = ROOT / "memory" / "shared_reads_mixed_duplicate_queue.jsonl"
 TERMINAL_STATUSES = {"posted", "failed"}
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 
@@ -57,6 +58,9 @@ def duplicate_preflight(
     index: dict[str, dict[str, Any]],
     posted_source_rows: list[dict[str, Any]] | None = None,
     posted_source_status: dict[str, Any] | None = None,
+    title_index_status: dict[str, Any] | None = None,
+    mixed_queue: dict[str, dict[str, Any]] | None = None,
+    mixed_queue_status: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return continue/review/skip before a shared-reads candidate is written."""
     title_key = normalize_title_key(title)
@@ -119,17 +123,44 @@ def duplicate_preflight(
                     "reason": "posted_url_match",
                 }
 
+    if title_index_status is not None and not title_index_status.get("healthy"):
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "reason": str(title_index_status.get("reason") or "title_index_unhealthy"),
+        }
+
     row = index.get(title_key)
-    if not row or not row.get("terminal_evidence"):
-        return {"decision": "continue", "title_key": title_key, "canonical_url": canonical_url}
-    return {
-        "decision": "review",
-        "title_key": title_key,
-        "canonical_url": canonical_url,
-        "canonical_path": row.get("canonical_path", ""),
-        "permalink": row.get("permalink", ""),
-        "reason": "posted_title_match_url_differs",
-    }
+    if row and row.get("terminal_evidence"):
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "canonical_path": row.get("canonical_path", ""),
+            "permalink": row.get("permalink", ""),
+            "reason": "closed_title_match",
+        }
+
+    if mixed_queue_status is not None and not mixed_queue_status.get("healthy"):
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "reason": str(mixed_queue_status.get("reason") or "mixed_queue_unhealthy"),
+        }
+
+    mixed_row = (mixed_queue or {}).get(title_key)
+    if mixed_row:
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "representative_paths": list(mixed_row.get("representative_paths", [])),
+            "reason": "mixed_title_match",
+        }
+
+    return {"decision": "continue", "title_key": title_key, "canonical_url": canonical_url}
 
 
 def strip_scalar(value: str) -> str:
@@ -208,6 +239,56 @@ def load_title_index(path: Path = DEFAULT_TITLE_INDEX) -> dict[str, dict[str, An
                 raise ValueError(f"{path}:{line_number}: missing title_key")
             rows[title_key] = row
     return rows
+
+
+def _derived_index_status(path: Path, candidates_dir: Path, name: str) -> dict[str, Any]:
+    if not path.exists():
+        return {"healthy": False, "reason": f"{name}_missing"}
+    candidate_mtimes = [
+        item.stat().st_mtime_ns
+        for item in candidates_dir.glob("*.md")
+        if item.name.upper() != "README.MD"
+    ]
+    newest_candidate = max(candidate_mtimes, default=0)
+    if path.stat().st_mtime_ns < newest_candidate:
+        return {"healthy": False, "reason": f"{name}_stale_candidates"}
+    return {"healthy": True, "reason": "fresh"}
+
+
+def load_title_index_with_status(
+    path: Path = DEFAULT_TITLE_INDEX,
+    candidates_dir: Path = DEFAULT_CANDIDATES_DIR,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    status = _derived_index_status(path, candidates_dir, "title_index")
+    if not status["healthy"]:
+        return {}, status
+    try:
+        return load_title_index(path), status
+    except (OSError, ValueError, json.JSONDecodeError):
+        return {}, {"healthy": False, "reason": "title_index_invalid"}
+
+
+def load_mixed_queue_with_status(
+    path: Path = DEFAULT_MIXED_QUEUE,
+    candidates_dir: Path = DEFAULT_CANDIDATES_DIR,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    status = _derived_index_status(path, candidates_dir, "mixed_queue")
+    if not status["healthy"]:
+        return {}, status
+    rows: dict[str, dict[str, Any]] = {}
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                group_key = str(row.get("group_key") or "")
+                if not group_key:
+                    raise ValueError(f"{path}:{line_number}: missing group_key")
+                rows[group_key] = row
+    except (OSError, ValueError, json.JSONDecodeError):
+        return {}, {"healthy": False, "reason": "mixed_queue_invalid"}
+    return rows, status
 
 
 def title_index_terminal_match(meta: dict[str, str], index: dict[str, dict[str, Any]]) -> dict[str, Any] | None:

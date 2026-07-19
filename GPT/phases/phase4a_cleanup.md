@@ -98,10 +98,12 @@ Slack directive を `handled` にする時は、受領や staging への割り�
 `memory/shared_reads_candidates/` の duplicate title group を確認する時は、必要に応じて次を使う。
 
 ```powershell
+python tools\build_shared_reads_title_canonical_index.py
+python tools\build_shared_reads_mixed_duplicate_queue.py
 python tools\audit_shared_reads_title_duplicates.py --unindexed-only --limit 20
 ```
 
-`memory/shared_reads_title_canonical_index.jsonl` に未登録の duplicate title group があり、posted / failed / postponed が混在して Phase 2 の再評価を濁す場合は、Phase 4a の `issues` または `stale_review_batch` に出す。index 登録済み group は、`best_status: posted` または `best_status: failed` がある限り再評価 queue から外れる。
+`memory/shared_reads_title_canonical_index.jsonl` に未登録の duplicate title group があり、posted / failed / postponed が混在して Phase 2 の再評価を濁す場合は、`memory/shared_reads_mixed_duplicate_queue.jsonl` から Phase 4a の `issues` または `stale_review_batch` に出す。canonical index 登録済み group は全 sibling が `posted` / `failed` の closed group なので再評価 queue から外れる。
 ## stale_review_batch / duplicate title handoff 記録 (2026-06-26)
 
 `postponed` / `needs_review` の `stale_after <= 今日` を見る時は、残 backlog 件数と今回 `stale_review_batch` に渡す件数を分けて staging に書く。Phase 2 に渡すのは最大 5 件を目安にし、処理契約は Phase 2 の `stale_reviewed` と candidate frontmatter 更新で閉じる。

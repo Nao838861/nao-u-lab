@@ -9,10 +9,12 @@ outputs: [shared_reads_candidates/, staging Phase 1 セクション]
 
 ## Candidate 書込み前 preflight (2026-07-12 Phase 4c)
 
-candidate の収集開始前に、実 Slack 投稿を正本とする posted-source index を再生成する。
+candidate の収集開始前と各 candidate の書込み直前に、3 sidecar を再生成する。candidate を1件保存すると closed / mixed sidecar は stale になるため、複数件を収集する時も次の3コマンドを再実行してから次の preflight へ進む。
 
 ```powershell
 python tools\build_shared_reads_posted_source_index.py
+python tools\build_shared_reads_title_canonical_index.py
+python tools\build_shared_reads_mixed_duplicate_queue.py
 ```
 
 candidate はファイル書込み直前に次を実行する。
@@ -21,7 +23,7 @@ candidate はファイル書込み直前に次を実行する。
 python tools\shared_reads_duplicate_preflight.py --title "<title>" --url "<url>" --log log\shared_reads_candidate_preflight.jsonl
 ```
 
-判定順は posted-source の URL/work 一致、title canonical 一致、新規の順とする。`skip` (終了コード 3) はファイルを作らずログに Slack permalink と一致根拠を残す。`review` (終了コード 2) は同題・別 URL に加え、index stale、抽出不能、provenance 不足を含み、自動保存せず確認する。`continue` (終了コード 0) の時だけ保存する。Phase 3 の raw Slack 横断照合は最終安全網として残す。
+判定順は posted-source の URL/work 一致、closed canonical title 一致、mixed queue title 一致、新規の順とする。`skip` (終了コード 3) は実投稿と同一 work の時だけファイルを作らず、ログに Slack permalink と一致根拠を残す。closed canonical / mixed title 一致と、3 sidecar の missing・stale、抽出不能、provenance 不足は `review` (終了コード 2) とし、自動保存しない。`continue` (終了コード 0) の時だけ保存する。Phase 3 の raw Slack 横断照合は最終安全網として残す。
 
 # Phase 1: 情報収集
 

@@ -10,11 +10,16 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from shared_reads_title_index import DEFAULT_CANDIDATES_DIR, normalize_title_key, read_frontmatter, rel_path
+from shared_reads_title_index import (
+    DEFAULT_CANDIDATES_DIR,
+    DEFAULT_MIXED_QUEUE,
+    normalize_title_key,
+    read_frontmatter,
+    rel_path,
+)
 
 
-ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = ROOT / "memory" / "shared_reads_mixed_duplicate_queue.jsonl"
+DEFAULT_OUTPUT = DEFAULT_MIXED_QUEUE
 TERMINAL_STATUSES = {"posted", "failed"}
 OPEN_STATUSES = {"ready_to_post", "postponed", "needs_review"}
 
