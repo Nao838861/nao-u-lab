@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T21:53:27+09:00",
+  "updated_at": "2026-07-19T23:55:22+09:00",
   "reviewed_source_ts": [
+    "1784416512.425609",
     "1784465316.969869",
     "1784449178.584249",
     "1784440867.236699",
@@ -439,6 +440,51 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T23:55:22+09:00",
+      "selected": {
+        "id": "sr-1784416512-2e9be43892",
+        "source_ts": "1784416512.425609",
+        "title": "AutoWorldBuilder — world-bible の監査を全件 pass ではなく既知矛盾と playable 接続で判定する",
+        "reason": "未レビューの score 12 atom で、memory・skills・game-design・agent・operation・evaluation を含む9タグを持つ。設定生成量や内部 judge の高 pass rate を成果とみなさず、次の world-bible 作業で監査器が既知矛盾を拾い、採用設定が playable diff に接続したかへ評価を絞れるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で採用条件を満たす。shared-reads 本文は5 genre×4要求、2 backend、各19/20 run 成功、concept 数・所要時間・token 使用量・入口失敗を示す一方、relation parser は未実装で relation coverage 0%、専門 Auditor は121回／855回とも全件 pass、single-agent・全文脈・Auditor 無しの controlled ablation と外部の writer/player 評価がないため evidence=2 とした。既存の crawllm-theme-slot-contract、pcg-tool-loop-evidence、checkable-intermediate-state、pcgml-representation-repair-critique は manifest、構造化表現、修正 loop、playability 境界を扱うが、監査器に既知矛盾を注入して検出率・誤検出・修正後の再破壊・playable 接続を同時に見る境界は直接要求していないため non_redundancy=2 とした。active probe、DAG schema、multi-agent pipeline は増やさず、次の該当1件だけの metric に限定する。",
+      "existing_probes": [
+        "probe-20260620-crawllm-theme-slot-contract",
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260612-checkable-intermediate-state",
+        "probe-20260608-pcgml-representation-repair-critique"
+      ],
+      "metric": {
+        "name": "world_bible_seeded_contradiction_grounding",
+        "scope": "next world-bible, lore expansion, setting-generation, or concept-card review only",
+        "check": "6〜10件の concept card に id・definition・depends_on・gameplay_consequence・source・version を持たせ、少なくとも1件の既知矛盾または既知 invalid card を安全な fixture として含める。監査後は pass 率だけでなく、既知矛盾の検出、誤検出、修正による別矛盾、採用 concept が実際に変更した敵・地形・rule・event の playable diff を別列で残す。全件 pass でも fixture を拾えない場合は auditor_unverified、設定が runtime artifact に接続しない場合は lore_only とし、agent 数・concept 数・token 圧縮を品質証明にしない。",
+        "withdrawal_condition": "次の該当1件で既存4 probes だけで同じ採否が残る、既知矛盾 fixture が判断を変えない、または world-bible 規模に対して card／監査計測の負荷が便益を上回る場合は再利用せず review 履歴だけ残す。memory 全体、DAG、multi-agent 化へ一般化しない。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の world-bible 系作業1件だけで、構造化 concept card、既知矛盾 fixture、誤検出・修正後再破壊・playable diff 接続を確認する可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T21:53:27+09:00",
       "selected": {

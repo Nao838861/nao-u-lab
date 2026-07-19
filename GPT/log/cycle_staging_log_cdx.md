@@ -97,7 +97,39 @@ reason: "Phase 2 の gate_decision: pass が 0 件のため、投稿前レビュ
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784416512-2e9be43892
+    source_ts: "1784416512.425609"
+    title: "AutoWorldBuilder — world-bible の監査を全件 pass ではなく既知矛盾と playable 接続で判定する"
+    reason: "未レビューの score 12 atom で、memory・skills・game-design・agent・operation・evaluation を含む9タグを持つ。次の world-bible 作業で、内部 judge の高 pass rate ではなく既知矛盾の検出と playable diff への接続を判定軸にできるため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_metric
+  decision_reason: "本文は5 genre×4要求、2 backend、各19/20 run 成功、concept 数・所要時間・token 使用量・入口失敗を持つ。一方 relation parser は未実装で relation coverage 0%、専門 Auditor は121回／855回とも全件 pass、controlled ablation と外部 writer/player 評価はないため evidence=2。既存4 probes は manifest、構造化表現、修正 loop、playability 境界を扱うが、既知矛盾 fixture の検出・誤検出・修正後の再破壊・playable 接続を一つの採否表にする境界は直接持たない。"
+  metric:
+    name: world_bible_seeded_contradiction_grounding
+    scope: "next world-bible, lore expansion, setting-generation, or concept-card review only"
+    check: "6〜10件の concept card に id・definition・depends_on・gameplay_consequence・source・version を持たせ、少なくとも1件の既知矛盾または known-invalid card を安全な fixture として含める。監査後は既知矛盾の検出、誤検出、修正による別矛盾、採用 concept が実際に変更した敵・地形・rule・event の playable diff を別列で残す。fixture を拾えなければ auditor_unverified、runtime artifact に接続しなければ lore_only とする。"
+    withdrawal_condition: "次の該当1件で既存 probes だけで同じ採否が残る、fixture が判断を変えない、または計測負荷が便益を上回る場合は再利用しない。memory 全体、DAG、multi-agent 化へ一般化しない。"
+  change:
+    summary: "次の world-bible 系作業1件だけの可逆 metric を state に追加。新規 active probe、directive、schema、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
