@@ -100,7 +100,19 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260720_cognitive_structured_multimodal_agent.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784480576915539
+    char_count: 4469
+skipped: []
+review:
+  duplicate_preflight: continue
+  policy: ok
+  stored_message_verification: ok
+  decision: "部分採用。三層の visual episode と selective retrieval を小規模 probe で比較し、合成 benchmark・LLM judge・未公開 code/dataset・runtime 比較条件は限界として明記した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
