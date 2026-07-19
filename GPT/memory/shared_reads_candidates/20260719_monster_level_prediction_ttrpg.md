@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.09196"
 collected_at: "2026-07-19T17:01:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, balance, ttrpg, machine-learning, explainability]
+evaluated_at: "2026-07-19T17:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T17:08:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T17:08:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  順序尺度としての monster level、通常回帰・ordinal regression・ordinal-aware neural network の比較、chronological / expanding-window 評価、tree ensemble の優位と説明可能性まで重要要素が揃う。
+  敵データの後発コンテンツ汎化と、予測誤差・寄与属性を設計者へ返す補助工程に具体適用でき、4000字級の分析に耐える。
+suggested_post_outline:
+  overview_angle: "モンスターの強さを単一式で決めるのではなく、順序予測と時系列検証で設計判断を補助する研究として書く"
+  analysis_axis: "回帰の丸め、ordinal model、ordinal-aware loss、chronological / expanding-window 分割、feature importance と error distribution を比較する"
+  application_target: "敵パターンや難易度帯を追加する際、既存属性から想定 tier を予測し、外れ値と寄与属性をデザイナーが再確認する balance probe"
+  pros_cons: "利点は後発データへの汎化と判断根拠を同時に測れること。弱点は既存 level 定義の偏りを学習し、相互作用や体感難度を単独では捉えないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

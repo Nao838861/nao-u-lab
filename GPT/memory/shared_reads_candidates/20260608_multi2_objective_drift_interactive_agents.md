@@ -7,12 +7,12 @@ genre_tags: [multi-agent, objective-drift, interactive-environments, headless-ev
 evaluated_at: "2026-06-08T20:48:29+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-08T20:48:29+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-08T20:48:29+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T17:06:19+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-a5f8e2113570610b; terminal:memory/shared_reads_candidates/20260615_multi2_hierarchical_llm_agents_interactive_envs.md: failed; same URL; evidence=gate_decision:fail; reason:同一 arXiv URL の terminal sibling が実験環境・drift 測定・比較結果不足で failed。代表にも追加結果がなく、概念紹介だけでは投稿品質に届かないため閉じる。"
+next_action: none
 stale_after: "2026-07-08"
 supersedes: []
 gate_reason: |-

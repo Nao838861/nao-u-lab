@@ -7,11 +7,11 @@ genre_tags: [game-design, balancing, llm-agents, simulation, pcg]
 evaluated_at: 2026-07-09T19:32:52+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-07-09T19:32:52+09:00
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md; memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md; memory/shared_reads_candidates/20260604_rulesmith_multi_agent_balancing.md"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T17:06:18+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-51c30c4f27de93fe; terminal:memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519; posted_source_url_match; reason:posted-source index が arXiv:2602.06232 の実 Slack 投稿を canonical URL/work 一致で確認したため、同一内容の open siblings を閉じる。"
 next_action: none
 stale_after: "2026-08-08"
 supersedes: []

@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2606.29511"
 collected_at: "2026-07-19T17:01:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, level-design, tutorial, reinforcement-learning, curriculum]
+evaluated_at: "2026-07-19T17:08:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T17:08:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T17:08:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: |-
+  World 1-1 の再実装、4種の学習法比較、具体的な勝率、6区間の12順序条件、収束速度・学習効率・catastrophic failure の結論が揃う。
+  チュートリアル区間の順序を headless probe で比較する適用先が明確で、結果の解釈と限界を含む4000字級の分析に耐える。
+suggested_post_outline:
+  overview_angle: "名作チュートリアルの良さを印象評ではなく、区間順序が学習速度と破綻率へ与える差として測る研究として書く"
+  analysis_axis: "離散環境、Q-Learning / SARSA / Monte Carlo / DQN 比較、報酬経路、12 curriculum 条件、三つの評価基準の関係を分析する"
+  application_target: "新規プロトタイプの敵・足場・操作導入区間を入れ替え、到達率・収束・致命的失敗を同一 seed 群で比較する tutorial probe"
+  pros_cons: "利点は配置順の教育効果を反復可能に測れること。弱点は RL agent の学びやすさが人間の理解・楽しさと一致するとは限らず、報酬設計にも左右されること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

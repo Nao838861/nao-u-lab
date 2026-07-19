@@ -7,12 +7,12 @@ genre_tags: [game-design, balancing, llm-agent, self-play, bayesian-optimization
 evaluated_at: 2026-06-02T14:02:36+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-02T14:02:36+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-02T14:02:36+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T17:06:18+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-51c30c4f27de93fe; terminal:memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519; posted_source_url_match; reason:posted-source index が arXiv:2602.06232 の実 Slack 投稿を canonical URL/work 一致で確認したため、同一内容の open siblings を閉じる。"
+next_action: none
 stale_after: "2026-07-02"
 supersedes: []
 gate_reason: "multi-agent self-play と Bayesian optimization による rule space 探索は有用だが、Phase 1 メモだけでは CivMini の実験条件・評価指標・比較結果の具体性が不足している。小規模プロトタイプのパラメータ探索への接続はあるものの、~4000字の概要にするには追加確認が必要。"
