@@ -127,7 +127,126 @@ self_feedback:
 - 撤退条件: 次の2回の一人称／三人称 navigation 評価後に、格子分類が修正判断を変えない、または ground truth/input 分離と別 seed/closed-loop 確認の保守負荷が診断価値を上回る場合は probe を退役する。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で per-file atom index との整合を確認した。index mismatch / broken reference は 0 件。代表語 probe は 記憶=22、ゲーム設計=8、敵パターン=1、評価軸=0 で、本文は正常に UTF-8 decode できた。"
+  - "memory/atoms.jsonl 2696件を memory_health.py と duplicate cluster check で監査した。atom id 重複・mirror content conflict は 0 件。normalized_content_hash 重複40群80行は既存 fold、45 overlay group で管理済み。"
+  - "memory/raw/ の mtime 30日超93件を監査した。Slack archive、論文 PDF / 抽出 text など再検証用の原文証跡であり、参照切れを避けて今回は明示保持した。"
+  - "shared-reads candidate 1005件の lifecycle 内訳を確認した（posted=427、ready_to_post=10、postponed=398、failed=149、needs_review=21）。posted / failed は再評価対象から除外した。"
+  - "shared_reads_mixed_duplicate_queue.jsonl（74行）、shared_reads_stale_triage_queue.jsonl（上位50行）、shared_reads_group_action_queue.jsonl（handoff前25行）を再生成した。enqueue後はpending 3群を除外してgroup queueを22行へ再生成した。"
+  - "slack_directives.jsonl 23行、slack_broadcasts.jsonl 21行を監査し、pending 0件を確認した。完了根拠のない handled 更新は行っていない。"
+  - "cycle 2026-07-19 14:43 の group handoff 3件を shared_reads_group_handoff_inbox.jsonl へ冪等 enqueue し、audit errors=0 を確認した。"
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』が title / trigger / excerpt で『AIエ��ジェント』になっており、U+FFFD を2文字含む局所的な source corruption がある。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl:317; memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みでも同じ U+FFFD を確認したため source file 自体の破損。atom mirror 3経路で同値。"
+    display_or_tooling_status: "none。memory_health.py が検出した別候補 gr-1777083728-44d444ab7a の『???』は原文どおりで、UTF-8表示も正常な false positive。"
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索ではこの atom の title / trigger / excerpt が一致せず、関連する記憶アーキテクチャ比較へ直接到達しにくい。ただし tags と links は健全なため影響は限定的。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  lifecycle_status_counts:
+    posted: 427
+    ready_to_post: 10
+    postponed: 398
+    failed: 149
+    needs_review: 21
+  overdue_open_total: 231
+  stale_triage_queue_rows: 50
+  actionable_group_count: 25
+  remaining_actionable_group_count: 22
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  stale_review_batch_count: 5
+  remaining_overdue_not_batched: 226
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-51c30c4f27de93fe
+    - gha-351db9a4ed164993
+    - gha-a5f8e2113570610b
+  previous_cycle_group_actions_processed: 3
+  previous_cycle_group_action_minutes: 6
+  previous_cycle_normal_candidate_completed: 1
+  budget_three_continuation: true
+group_action_handoff:
+  - group_key: "rulesmith multi agent llms for automated game balancing"
+    representative: memory/shared_reads_candidates/20260606_rulesmith_multi_agent_game_balancing.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_rulesmith_game_balancing.md
+      - memory/shared_reads_candidates/20260606_rulesmith_multi_agent_game_balancing.md
+      - memory/shared_reads_candidates/20260706_rulesmith_llm_game_balancing.md
+      - memory/shared_reads_candidates/20260709_rulesmith_automated_game_balancing.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md
+      - memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md
+      - memory/shared_reads_candidates/20260527_rulesmith_multi_agent_game_balancing.md
+      - memory/shared_reads_candidates/20260604_rulesmith_multi_agent_balancing.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260606_rulesmith_multi_agent_game_balancing.md
+      stale_after: "2026-07-06"
+      reason: "age_days=13; mixed duplicate group present; manual tuning依存のゲームバランス調整を、multi-agent self-playとBayesian optimizationへ分解している。 CivMiniのfaction / economy / combatという複数要素のある環境で、win-rate disparitiesなどの指標と解釈可能..."
+  - group_key: "the bottleneck of ai game dev is not coding it s testing"
+    representative: memory/shared_reads_candidates/20260606_ai_gamedev_testing_bottleneck_reddit.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260606_ai_gamedev_testing_bottleneck_reddit.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260607_ai_gamedev_testing_bottleneck_reddit.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260606_ai_gamedev_testing_bottleneck_reddit.md
+      stale_after: "2026-07-06"
+      reason: "age_days=13; mixed duplicate group present; AI game dev の詰まりが coding ではなく testing / regression / UX 確認に移る、という観察は実務的に有用。ただし Reddit 議論単体では手法の中核、評価、結論が弱く、CoopEval 水準の概要にするには裏取りや関連事例が必要。"
+  - group_key: "multi 2 hierarchical multi agent decision making with llm based agents in interactive environments"
+    representative: memory/shared_reads_candidates/20260608_multi2_objective_drift_interactive_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260608_multi2_objective_drift_interactive_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260615_multi2_hierarchical_llm_agents_interactive_envs.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260608_multi2_objective_drift_interactive_agents.md
+      stale_after: "2026-07-08"
+      reason: "age_days=11; mixed duplicate group present; objective drift とロール分離は、headless player・探索・評価ログ係を混ぜない設計判断に近く、適用先は明確。 ただし現candidateはhigh-level/sub-agent分割の概念紹介に留まり、実験環境・drift測定・比較結果が不足するため、投稿品質には未達。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "automated playtesting with procedural personas through mcts with evolved heuristics"
+    priority_reason: "game_transfer_value=high。procedural persona と MCTS の evolved heuristic は、headless 評価をプレイスタイル別の破綻検出へ移す候補で、queue先頭の未handoff group。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+    status: postponed
+    stale_after: "2026-06-26"
+    duplicate_group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    priority_reason: "game_transfer_value=high。runtime PCG と autonomous validation は headless 評価へ近いが、実験結果・失敗例・結論の一次確認が必要な queue 上位候補。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260530_llm_gameplay_playability_player_experience.md
+    status: postponed
+    stale_after: "2026-06-29"
+    duplicate_group_key: "large language models in game development implications for gameplay playability and player experience"
+    priority_reason: "game_transfer_value=high。gameplay / playability / player experience の評価軸を次制作へ移せるが、2 project の具体例が不足している。同groupからは最上位1件だけを選定。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+    status: postponed
+    stale_after: "2026-07-02"
+    duplicate_group_key: "gui agents for continual game generation"
+    priority_reason: "game_transfer_value=high。GUI agent の実プレイfeedback loopと66.8% rubric pass-rateがあり、browser/headless評価への接続が強い。同groupからは最上位1件だけを選定。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260609_bdd_il_game_regression_testing.md
+    status: postponed
+    stale_after: "2026-07-09"
+    duplicate_group_key: "enhancing automated video game regression testing through behavior driven development and imitation learning"
+    priority_reason: "game_transfer_value=high。BDD・Imitation Learning・RL fine-tuningをゲーム回帰検査へ接続する候補だが、評価結果とreward構成の一次確認が必要。今回handoffした3 groupとは非重複。"
+    queue_recommended_action: merge_duplicate
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
