@@ -7,12 +7,12 @@ genre_tags: [llm-game, reflective-game, npc, feedback-design, user-study]
 evaluated_at: "2026-06-16T02:19:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-16T02:22:35+09:00"
-last_decision: postponed
-evidence: "postponed_due_to_existing_shared_reads_post:1778841694.783189"
-next_action: revise_only_if_new_probe_or_delta
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T23:49:13+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-df86ca0b643649dc; terminal:memory/shared_reads_candidates/20260515_prompting_destiny_reflective_llm_rpg.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841694783189; reason:posted-source canonical URL and work identity both match an existing Slack post"
+next_action: none
 stale_after: "2026-07-16"
 supersedes: []
 postpone_reason: "Phase 3 self-review: 同論文は #shared-reads ts=1778841694.783189 で詳細投稿済み。今回候補は既投稿を超える新規 probe / 実装差分 / 追加評価を含まず、再投稿は重複になる。"

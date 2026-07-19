@@ -4,24 +4,24 @@ url: https://arxiv.org/abs/2603.27896
 collected_at: 2026-05-13T00:02:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm, player-experience, playability, game-engineering, quality-risk]
-evaluated_at: "2026-06-17T14:00:00+09:00"
+evaluated_at: "2026-07-19T23:49:20+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-06-17T14:00:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-17T14:00:00+09:00"
-stale_after: "2026-07-17"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T23:49:13+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-ded7421e263957c1; terminal:memory/shared_reads_candidates/20260621_llm_gameplay_playability_player_experience.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781984368198809; reason:posted-source canonical URL and work identity both match existing Slack posts"
+stale_after: "2026-08-18"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 previous_gate_reason: >
   LLM を game architecture component として見て、correctness / difficulty calibration / structural coherence を問う観点は有用。
   ただし候補メモだけでは 2 projects の中身や autoethnographic analysis の具体例が薄く、Phase 3 の高密度投稿には追加読解が必要。
 
 gate_reason: >
-  LLM を game architecture component として扱い、correctness、difficulty calibration、structural coherence を評価対象に戻す観点は有用。
-  ただし candidate メモだけでは 2 projects の中身と autoethnographic analysis の証拠が薄く、CoopEval 水準の概要には本文読解が必要。
+  posted-source index で同一 canonical URL / arXiv work の投稿済み sibling を確認したため、本文評価や再投稿を行わず duplicate として閉じる。
+  terminal evidence は 2026-06-21 の #shared-reads permalink。
 ---
 
 ## raw_excerpt

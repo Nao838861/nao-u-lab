@@ -7,11 +7,11 @@ genre_tags: [game-dev, agent, harness, evaluation, debugging, automated-testing]
 evaluated_at: "2026-07-12T08:45:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-12T08:45:00+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T23:49:13+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d54ebb46673e6ba4; terminal:memory/shared_reads_candidates/20260708_harnessfix_failed_trajectories.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783449745791319; reason:posted-source canonical URL and work identity both match an existing Slack post"
 next_action: none
 stale_after: "2026-08-11"
 supersedes: []
