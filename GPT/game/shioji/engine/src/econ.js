@@ -11,6 +11,7 @@ import {
   isConnected,
   pathLen,
   sectionAmount,
+  sectionCapacity,
   withdrawInventory,
   workRoadWorksite,
 } from "./physical.js";
@@ -481,6 +482,21 @@ function recordEconomyEvent(economy, day, message) {
   if (economy.events.length > 400) economy.events.shift();
 }
 
+function settlementZoneForBuilding(economy, buildingId) {
+  return economy.zones.find((zone) => zone.buildingId === buildingId) ?? null;
+}
+
+function releaseHouseholdBuilding(economy, physical, household) {
+  const building = physical ? buildingById(physical, household.buildingId) : null;
+  if (building?.ownerHouseholdId === household.id) building.ownerHouseholdId = null;
+  const zone = settlementZoneForBuilding(economy, household.buildingId);
+  if (zone) {
+    zone.filled = false;
+    zone.vacated = true;
+  }
+  return building;
+}
+
 function disperseHousehold(economy, household, day, physical = null) {
   recordEconomyEvent(economy, day, `☠ ${household.sur}家は離散した——家は廃屋になった`);
   // dayEndは離散後も、その世帯オブジェクトに対する文化消費まで続く。
@@ -512,9 +528,11 @@ function disperseHousehold(economy, household, day, physical = null) {
   economy.ruins.push({
     x: household.x,
     y: household.y,
+    buildingId: household.buildingId,
     formerHouseholdId: household.id,
     inventory,
   });
+  releaseHouseholdBuilding(economy, physical, household);
   const rest = economy.households.filter((candidate) => candidate !== household);
   if (rest.length > 0 && household.purse > 0) {
     const near = rest
@@ -766,10 +784,12 @@ function runHouseholdDayEnd(economy, physical, { day, markPhase = () => {} }) {
   return { hungry: economy.hungryN, famine: economy.famine };
 }
 
-export function runHouseholdSurvival(economy, { day }) {
+export function runHouseholdSurvival(economy, { day, physical = null }) {
   if (!Number.isSafeInteger(day) || day <= 0) throw new TypeError("survival day must be a positive safe integer");
   economy.hungryN = 0;
-  for (const household of economy.households) runHouseholdFoodAndDeath(economy, household, day);
+  for (const household of economy.households) {
+    runHouseholdFoodAndDeath(economy, household, day, () => {}, physical);
+  }
   return { hungry: economy.hungryN, famine: economy.famine };
 }
 
@@ -2713,7 +2733,19 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
   return settled;
 }
 
-function createSuccessorHousehold(economy, donor, zone) {
+function settleHouseholdInZone(economy, physical, household, zone) {
+  household.buildingId = zone.buildingId ?? null;
+  if (zone.vacated) {
+    household.px = zone.x;
+    household.py = zone.y;
+    household.state = "home";
+    zone.vacated = false;
+  }
+  const building = physical ? buildingById(physical, household.buildingId) : null;
+  if (building) building.ownerHouseholdId = household.id;
+}
+
+function createSuccessorHousehold(economy, donor, zone, physical = null) {
   const household = makeHouseholdRecord(economy, { job: zone.job, x: zone.x, y: zone.y });
   const movedCount = Math.floor(donor.members.length / 2);
   const moved = donor.members.splice(donor.members.length - movedCount, movedCount);
@@ -2729,12 +2761,12 @@ function createSuccessorHousehold(economy, donor, zone) {
   household.px = donor.x;
   household.py = donor.y;
   household.state = "arriving";
-  household.buildingId = zone.buildingId ?? null;
+  settleHouseholdInZone(economy, physical, household, zone);
   economy.households.push(household);
   return household;
 }
 
-function createZoneImmigrant(economy, zone, day) {
+function createZoneImmigrant(economy, zone, day, physical = null) {
   const household = createHousehold(economy, {
     job: zone.job,
     x: zone.x,
@@ -2743,7 +2775,7 @@ function createZoneImmigrant(economy, zone, day) {
   household.px = economy.port.x;
   household.py = economy.port.y;
   household.state = "arriving";
-  household.buildingId = zone.buildingId ?? null;
+  settleHouseholdInZone(economy, physical, household, zone);
   postCompanyLedger(economy.company, {
     day,
     amount: -P.PASSAGE,
@@ -2757,7 +2789,7 @@ function createZoneImmigrant(economy, zone, day) {
   return household;
 }
 
-export function fillSettlementZones(economy, { day }) {
+export function fillSettlementZones(economy, { day, physical = null }) {
   const settlements = [];
   if (day % 15 !== 0 || !economy.port) return settlements;
   for (const zone of economy.zones) {
@@ -2766,7 +2798,7 @@ export function fillSettlementZones(economy, { day }) {
       .filter((household) => household.members.length >= 8 && household.state === "home")
       .sort((a, b) => b.members.length - a.members.length)[0];
     if (donor) {
-      const household = createSuccessorHousehold(economy, donor, zone);
+      const household = createSuccessorHousehold(economy, donor, zone, physical);
       zone.filled = true;
       settlements.push({ kind: "successor", zone, household, donor });
       recordEconomyEvent(
@@ -2775,7 +2807,7 @@ export function fillSettlementZones(economy, { day }) {
         `${donor.sur}家の${household.members.length}人が分かれて${zone.job}の区画へ移り住む`,
       );
     } else if (economy.hungryN < Math.max(1, economy.households.length * 0.2)) {
-      const household = createZoneImmigrant(economy, zone, day);
+      const household = createZoneImmigrant(economy, zone, day, physical);
       zone.filled = true;
       settlements.push({ kind: "immigrant", zone, household, donor: null });
       recordEconomyEvent(economy, day, "入植船が着いた——本土からの移民");
@@ -2863,7 +2895,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
       }
     }
   }
-  result.settlements = fillSettlementZones(economy, { day });
+  result.settlements = fillSettlementZones(economy, { day, physical });
   for (const household of economy.households) {
     if (household.state !== "building") continue;
     household.buildDays -= 1;
@@ -3005,20 +3037,28 @@ export function runBirthPhase(economy, { day, random }) {
   return births;
 }
 
-function isNearTerrain(physical, household, kind, radius = 2) {
-  if (!physical?.terrain) return true;
-  for (let offsetY = -radius; offsetY <= radius; offsetY += 1) {
-    for (let offsetX = -radius; offsetX <= radius; offsetX += 1) {
-      if (
-        terrainKindAt(
-          physical,
-          Math.round(household.x) + offsetX,
-          Math.round(household.y) + offsetY,
-        ) === kind
-      ) return true;
-    }
-  }
-  return false;
+export function vacantJobBuildings(economy, physical, job, { household = null } = {}) {
+  if (!physical) return [];
+  const activeBuildingIds = new Set(
+    economy.households.map((candidate) => candidate.buildingId).filter(Boolean),
+  );
+  const activeHouseholdIds = new Set(economy.households.map((candidate) => candidate.id));
+  const from = householdEntrance(physical, household ?? { x: 0, y: 0, buildingId: null });
+  return physical.buildings
+    .filter((building) => (
+      building.type === job
+      && building.id !== household?.buildingId
+      && !activeBuildingIds.has(building.id)
+      && (
+        building.ownerHouseholdId === null
+        || !activeHouseholdIds.has(building.ownerHouseholdId)
+      )
+    ))
+    .sort((left, right) => {
+      const leftDistance = pathLen(physical, from, left.entrance, "walk");
+      const rightDistance = pathLen(physical, from, right.entrance, "walk");
+      return leftDistance - rightDistance || left.id.localeCompare(right.id);
+    });
 }
 
 export function jobSelectionWeights(economy, physical, { exclude, household = null } = {}) {
@@ -3033,22 +3073,11 @@ export function jobSelectionWeights(economy, physical, { exclude, household = nu
     .filter((value) => value > 0)
     .sort((a, b) => a - b);
   const median = averages.length > 0 ? averages[Math.floor(averages.length / 2)] : 1;
-  const terrainNeed = {
-    fisher: "water",
-    fisher2: "water",
-    logger: "forest",
-    quarryman: "rock",
-    miner: "ore",
-    collier: "coal",
-  };
   const weights = [];
   const jobPool = economy.jobSelectionPool ?? JOBS;
   for (const job of jobPool) {
     if (job === exclude) continue;
-    if (household && terrainNeed[job] && !isNearTerrain(physical, household, terrainNeed[job], 2)) {
-      continue;
-    }
-    if (!household && terrainNeed[job] && !economy.households.some((entry) => entry.job === job)) {
+    if (physical && vacantJobBuildings(economy, physical, job, { household }).length === 0) {
       continue;
     }
     const values = incomes[job];
@@ -3058,6 +3087,66 @@ export function jobSelectionWeights(economy, physical, { exclude, household = nu
     if (weight > 0) weights.push([job, weight]);
   }
   return weights;
+}
+
+function moveHouseholdBuildingInventory(household, fromBuilding, toBuilding, nextJob) {
+  if (!fromBuilding || fromBuilding === toBuilding) return;
+  const nextHousehold = { ...household, job: nextJob };
+  for (const goods of GOODS) {
+    const qty = sectionAmount(fromBuilding, "input", goods);
+    if (qty <= 1e-9) continue;
+    withdrawInventory(fromBuilding, "input", goods, qty);
+    let movedToInput = 0;
+    if (isProductionInput(nextHousehold, goods)) {
+      const room = sectionCapacity(toBuilding, "input", goods)
+        - sectionAmount(toBuilding, "input", goods);
+      movedToInput = Math.min(qty, Math.max(0, room));
+      if (movedToInput > 1e-9) depositInventory(toBuilding, "input", goods, movedToInput);
+    }
+    household.pantry[goods] += qty - movedToInput;
+  }
+}
+
+export function moveHouseholdToVacantBuilding(
+  economy,
+  physical,
+  household,
+  targetBuilding,
+  { day },
+) {
+  if (!physical || !targetBuilding) return false;
+  if (!vacantJobBuildings(economy, physical, targetBuilding.type, { household })
+    .some((building) => building.id === targetBuilding.id)) return false;
+  const previousJob = household.job;
+  const previousBuilding = householdInputBuilding(physical, household);
+  moveHouseholdBuildingInventory(household, previousBuilding, targetBuilding, targetBuilding.type);
+  releaseHouseholdBuilding(economy, physical, household);
+  targetBuilding.ownerHouseholdId = household.id;
+  const targetZone = settlementZoneForBuilding(economy, targetBuilding.id);
+  if (targetZone) {
+    targetZone.filled = true;
+    targetZone.vacated = false;
+  }
+  household.job = targetBuilding.type;
+  household.buildingId = targetBuilding.id;
+  household.x = targetBuilding.entrance.x;
+  household.y = targetBuilding.entrance.y;
+  household.px = targetBuilding.entrance.x;
+  household.py = targetBuilding.entrance.y;
+  household.state = "home";
+  household.wx = null;
+  household.wy = null;
+  household.jobCycleDone = household.job !== "wheat";
+  household.lv = Math.min(household.lv, 1);
+  household.lastSwitch = day;
+  household.hungerHist = [];
+  household.insolvM = 0;
+  recordEconomyEvent(
+    economy,
+    day,
+    `破綻転職: ${previousJob}#${household.id}→${household.job}(${targetBuilding.id})へ移住`,
+  );
+  return true;
 }
 
 export function pickHouseholdJob(economy, physical, {
@@ -3103,16 +3192,31 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
     }
     if (
       distress
+      && household.state === "home"
       && day - (household.lastSwitch || -9e9) >= P.COOLDOWN
       && random() < 0.5
     ) {
       const previousJob = household.job;
-      const nextJob = pickHouseholdJob(economy, physical, {
+      const nextJob = physical ? pickHouseholdJob(economy, physical, {
         exclude: previousJob,
         household,
         random,
-      });
+      }) : null;
       if (nextJob && nextJob !== previousJob) {
+        const targetBuilding = vacantJobBuildings(
+          economy,
+          physical,
+          nextJob,
+          { household },
+        )[0];
+        if (!targetBuilding) {
+          recordEconomyEvent(
+            economy,
+            day,
+            `転職不可: ${previousJob}#${household.id}——${nextJob}の空き建物がありません`,
+          );
+          continue;
+        }
         if (household.purse < 0) {
           const debt = -household.purse;
           postCompanyLedger(economy.company, {
@@ -3123,22 +3227,24 @@ export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
           household.purse = 0;
           changes.push({ kind: "debt_relief", householdId: household.id, debt });
         }
-        household.job = nextJob;
-        household.jobCycleDone = nextJob !== "wheat";
-        household.lv = Math.min(household.lv, 1);
-        household.lastSwitch = day;
-        household.hungerHist = [];
-        household.insolvM = 0;
+        moveHouseholdToVacantBuilding(
+          economy,
+          physical,
+          household,
+          targetBuilding,
+          { day },
+        );
         changes.push({
           kind: "job_switch",
           householdId: household.id,
           from: previousJob,
           to: nextJob,
         });
+      } else {
         recordEconomyEvent(
           economy,
           day,
-          `破綻転職: ${previousJob}#${household.id}→${nextJob}`,
+          `転職不可: ${previousJob}#${household.id}——空いている他職の建物がありません`,
         );
       }
     }

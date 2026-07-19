@@ -80,6 +80,7 @@ import {
 } from "../../../../../Claude/game/flow_island/engine.js";
 import { mulberry32 } from "../src/prng.js";
 import {
+  ECONOMIC_BUILDINGS,
   V003_FIXED,
   addBuilding,
   addRoadLine,
@@ -125,6 +126,9 @@ import {
   E_STABLE_BASE,
   E_STABLE_JOBS,
   IRON_AUDIT_SITES,
+  IRON_CHAIN_BANDS,
+  IRON_DEMAND_HOUSEHOLDS,
+  IRON_DEMAND_LEVEL,
   buildBaseCity,
   canPlaceSettlement,
   createAuditWorld,
@@ -138,6 +142,37 @@ import {
 const tests = [];
 let cachedFlowIslandAudit = null;
 let cachedIronChainAudit = null;
+
+function createEconomicTestPhysical(width = 24, height = 16) {
+  return createPhysicalState({
+    width,
+    height,
+    terrain: Array.from({ length: height }, () => (
+      Array.from({ length: width }, () => ({ kind: "grass", variant: 0 }))
+    )),
+  });
+}
+
+function addEconomicTestBuilding(
+  physical,
+  type,
+  x,
+  y,
+  entranceX,
+  entranceY,
+  ownerHouseholdId = null,
+) {
+  const input = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const placed = addBuilding(physical, type, x, y, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x: entranceX, y: entranceY },
+    requireRoad: false,
+    ownerHouseholdId,
+    caps: { input },
+  });
+  assert.equal(placed.ok, true, `${type}: ${placed.reason ?? "配置不可"}`);
+  return placed.building;
+}
 
 function flowIslandAudit() {
   cachedFlowIslandAudit ??= runFlowIslandAudit();
@@ -1643,47 +1678,30 @@ test("段23: 余剰家族がなく島が飢えていない時だけ移民船が�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
-test("段23: 転職候補は絶滅職を含む全職で地形職だけ自宅近傍に絞る", () => {
-  const terrain = Array.from({ length: 9 }, () => Array(9).fill("grass"));
-  terrain[5][4] = "water";
-  terrain[4][5] = "forest";
-  terrain[4][3] = "rock";
-  terrain[2][4] = "ore";
-  terrain[2][5] = "coal";
-  const physical = createPhysicalState({ width: 9, height: 9, terrain });
+test("段23履歴/段44改定: 転職候補は自宅地形でなく実在する空き職建物に絞る", () => {
+  const physical = createEconomicTestPhysical();
   const economy = createEconomicState();
-  const household = createHousehold(economy, { job: "saltworks", x: 4, y: 4 });
-  const allCandidates = jobSelectionWeights(economy, physical, {
+  const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+  const home = addEconomicTestBuilding(physical, "logger", 2, 2, 5, 3, household.id);
+  household.buildingId = home.id;
+  assert.deepEqual(jobSelectionWeights(economy, physical, {
     exclude: household.job,
     household,
-  }).map(([job]) => job);
-  assert.deepEqual(allCandidates, JOBS.filter((job) => job !== household.job));
+  }), []);
 
-  const inland = createPhysicalState({
-    width: 9,
-    height: 9,
-    terrain: Array.from({ length: 9 }, () => Array(9).fill("grass")),
-  });
-  const inlandCandidates = jobSelectionWeights(economy, inland, {
+  addEconomicTestBuilding(physical, "woodshop", 10, 2, 9, 3);
+  assert.deepEqual(jobSelectionWeights(economy, physical, {
     exclude: household.job,
     household,
-  }).map(([job]) => job);
-  for (const job of ["fisher", "fisher2", "logger", "quarryman", "miner", "collier"]) {
-    assert.equal(inlandCandidates.includes(job), false, job);
-  }
-  for (const job of ["wheat", "veg", "shepherd", "rapeseed", "woodshop", "charburner"]) {
-    assert.equal(inlandCandidates.includes(job), true, job);
-  }
+  }).map(([job]) => job), ["woodshop"]);
 });
 
-test("段23: 破綻転職は初収穫前の麦を守り、困窮職を全職候補から再配置する", () => {
-  const physical = createPhysicalState({
-    width: 9,
-    height: 9,
-    terrain: Array.from({ length: 9 }, () => Array(9).fill("grass")),
-  });
+test("段23履歴/段44改定: 初収穫前の麦を守り、困窮職は空き建物へだけ移住する", () => {
+  const physical = createEconomicTestPhysical();
   const guardedEconomy = createEconomicState();
-  const guardedWheat = createHousehold(guardedEconomy, { job: "wheat", x: 4, y: 4 });
+  const guardedWheat = createHousehold(guardedEconomy, { job: "wheat", x: 6, y: 3 });
+  const guardedHome = addEconomicTestBuilding(physical, "wheat", 2, 2, 6, 3, guardedWheat.id);
+  guardedWheat.buildingId = guardedHome.id;
   guardedWheat.hungerHist = Array(P.DISTRESS).fill(1);
   guardedWheat.jobCycleDone = false;
   let guardedRandomCalls = 0;
@@ -1695,16 +1713,32 @@ test("段23: 破綻転職は初収穫前の麦を守り、困窮職を全職候�
   assert.equal(guardedRandomCalls, 0);
 
   const economy = createEconomicState();
-  const household = createHousehold(economy, { job: "logger", x: 4, y: 4 });
+  const switchPhysical = createEconomicTestPhysical();
+  const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+  const oldHome = addEconomicTestBuilding(
+    switchPhysical,
+    "logger",
+    2,
+    2,
+    5,
+    3,
+    household.id,
+  );
+  const wheatHome = addEconomicTestBuilding(switchPhysical, "wheat", 10, 2, 9, 3);
+  household.buildingId = oldHome.id;
+  economy.jobSelectionPool = ["wheat"];
   household.hungerHist = Array(P.DISTRESS).fill(1);
   household.jobCycleDone = true;
-  const changes = runPopulationDynamicsPhase(economy, physical, {
+  const changes = runPopulationDynamicsPhase(economy, switchPhysical, {
     day: 360,
     random: () => 0,
   });
   assert.equal(household.job, "wheat");
   assert.equal(household.jobCycleDone, false);
   assert.equal(household.lastSwitch, 360);
+  assert.equal(household.buildingId, wheatHome.id);
+  assert.equal(oldHome.ownerHouseholdId, null);
+  assert.equal(wheatHome.ownerHouseholdId, household.id);
   assert.deepEqual(changes.at(-1), {
     kind: "job_switch", householdId: household.id, from: "logger", to: "wheat",
   });
@@ -2371,7 +2405,7 @@ test("段32: oreとbarは重量2で徒歩・荷車の数量容量が通常財の
   assert.equal(job.carrier.cargo.qty, 8);
 });
 
-test("段33: 鉱夫・炭鉱夫は2マス以内の対応鉱床だけで就業候補になる", () => {
+test("段33履歴/段44改定: 鉱夫・炭鉱夫の立地制約は建物の配置時に検証する", () => {
   const physical = createPhysicalState({
     width: 48,
     height: 40,
@@ -2383,21 +2417,6 @@ test("段33: 鉱夫・炭鉱夫は2マス以内の対応鉱床だけで就業候
   assert.deepEqual(canPlaceSettlement(economy, physical, "collier", 3, 25), [true, ""]);
   assert.match(canPlaceSettlement(economy, physical, "collier", 3, 23)[1], /炭層/);
 
-  const nearOre = createHousehold(economy, { job: "logger", x: 8, y: 18 });
-  const nearJobs = jobSelectionWeights(economy, physical, {
-    exclude: "logger",
-    household: nearOre,
-  }).map(([job]) => job);
-  assert.equal(nearJobs.includes("miner"), true);
-  assert.equal(nearJobs.includes("collier"), false);
-
-  const far = createHousehold(economy, { job: "logger", x: 25, y: 20 });
-  const farJobs = jobSelectionWeights(economy, physical, {
-    exclude: "logger",
-    household: far,
-  }).map(([job]) => job);
-  assert.equal(farJobs.includes("miner"), false);
-  assert.equal(farJobs.includes("collier"), false);
 });
 
 test("段33: minerとcollierは既存キットを持参し日産14鉱石・10石炭を生産する", () => {
@@ -2609,13 +2628,25 @@ test("段36: シナリオDの鉱床道路だけが遠隔2職の市場往復を30
   }
 });
 
-test("段36履歴/段45前提: 強制Lv5需要を観測し物資保存だけは再配置後も厳密に通る", () => {
+test("段36履歴/段45: Lv4世帯4軒の成熟需要で狭めたE-Fe1/2帯と保存則を通る", () => {
   const audit = ironChainAudit();
   assert.equal(audit.total, 4);
   assert.deepEqual(audit.results.map(({ id }) => id), ["E-Fe1", "E-Fe2", "E-Fe4", "E-Fe5"]);
   assert.equal(audit.results.find(({ id }) => id === "E-Fe5").passed, true);
   assert.equal(audit.connected.day, 2160);
   assert.equal(audit.disconnected.day, 2160);
+  assert.equal(audit.passed, audit.total);
+  assert.equal(IRON_DEMAND_HOUSEHOLDS, 4);
+  assert.equal(IRON_DEMAND_LEVEL, 4);
+  assert.equal(audit.connected.matureHouseholdIds.length, 4);
+  const replacement = audit.connected.yearly.find(
+    ({ day }) => day === IRON_CHAIN_BANDS.replacementByDay,
+  );
+  assert.ok(replacement.ironImport <= IRON_CHAIN_BANDS.ironImportMax);
+  assert.ok(replacement.ironProduction >= IRON_CHAIN_BANDS.ironProductionMin);
+  for (const [job, minimum] of Object.entries(IRON_CHAIN_BANDS.incomeMinimums)) {
+    assert.ok(audit.connected.incomes[job] >= minimum, job);
+  }
   assert.ok(Math.max(...audit.connected.yearly.map(({ ironImport }) => ironImport)) > 0);
   for (const income of Object.values(audit.connected.incomes)) assert.ok(Number.isFinite(income));
   for (const scenario of [audit.connected, audit.disconnected]) {
@@ -2693,6 +2724,108 @@ test("段41診断器: 座標再構成後も年次観測・全日物資出納・�
   assert.ok(Number.isSafeInteger(scenario.yearly[0].population));
   assert.ok(Number.isFinite(scenario.yearly[0].famine));
   assert.deepEqual(Object.keys(scenario.yearly[0].jobs), [...E_STABLE_JOBS]);
+});
+
+test("段44: 転職は建物型を変えず空き工房へ世帯と家財を移し物資を保存する", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+  const loggerHome = addEconomicTestBuilding(
+    physical,
+    "logger",
+    2,
+    2,
+    5,
+    3,
+    household.id,
+  );
+  const woodshopHome = addEconomicTestBuilding(physical, "woodshop", 10, 2, 9, 3);
+  household.buildingId = loggerHome.id;
+  economy.zones.push(
+    { job: "logger", x: 5, y: 3, buildingId: loggerHome.id, filled: true },
+    { job: "woodshop", x: 9, y: 3, buildingId: woodshopHome.id, filled: false },
+  );
+  economy.jobSelectionPool = ["woodshop"];
+  depositInventory(loggerHome, "input", "log", 17);
+  household.pantry.salt = 4;
+  household.hungerHist = Array(P.DISTRESS).fill(1);
+  household.jobCycleDone = true;
+  const before = economicMaterialSnapshot(economy, physical);
+
+  const changes = runPopulationDynamicsPhase(economy, physical, {
+    day: 360,
+    random: () => 0,
+  });
+  const after = economicMaterialSnapshot(economy, physical);
+
+  assert.deepEqual(changes.at(-1), {
+    kind: "job_switch",
+    householdId: household.id,
+    from: "logger",
+    to: "woodshop",
+  });
+  assert.equal(loggerHome.type, "logger");
+  assert.equal(woodshopHome.type, "woodshop");
+  assert.equal(loggerHome.ownerHouseholdId, null);
+  assert.equal(woodshopHome.ownerHouseholdId, household.id);
+  assert.equal(household.buildingId, woodshopHome.id);
+  assert.deepEqual([household.x, household.y, household.px, household.py], [9, 3, 9, 3]);
+  assert.equal(sectionAmount(loggerHome, "input", "log"), 0);
+  assert.equal(sectionAmount(woodshopHome, "input", "log"), 17);
+  assert.deepEqual(economy.zones.map(({ filled }) => filled), [false, true]);
+  assert.deepEqual(after, before);
+  assert.match(economy.events.at(-1)[1], /へ移住/);
+});
+
+test("段44: 空き職建物がなければ転職せず理由をイベントに残す", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 5, y: 3 });
+  const home = addEconomicTestBuilding(physical, "logger", 2, 2, 5, 3, household.id);
+  household.buildingId = home.id;
+  household.hungerHist = Array(P.DISTRESS).fill(1);
+  household.jobCycleDone = true;
+
+  const changes = runPopulationDynamicsPhase(economy, physical, {
+    day: 360,
+    random: () => 0,
+  });
+
+  assert.deepEqual(changes, []);
+  assert.equal(household.job, "logger");
+  assert.equal(household.buildingId, home.id);
+  assert.match(economy.events.at(-1)[1], /空いている他職の建物がありません/);
+});
+
+test("段44: 離散した世帯の建物は同じbuildingIdの空き家として再入居できる", () => {
+  const physical = createEconomicTestPhysical();
+  const economy = createEconomicState();
+  economy.port = { x: 1, y: 1 };
+  const household = createHousehold(economy, { job: "woodshop", x: 5, y: 3 });
+  const home = addEconomicTestBuilding(physical, "woodshop", 2, 2, 5, 3, household.id);
+  household.buildingId = home.id;
+  household.members = household.members.slice(0, 3);
+  household.hungerRun = 59;
+  for (const goods of GOODS) household.pantry[goods] = 0;
+  const zone = { job: "woodshop", x: 5, y: 3, buildingId: home.id, filled: true };
+  economy.zones.push(zone);
+
+  runHouseholdSurvival(economy, { day: 1, physical });
+  assert.equal(economy.households.length, 0);
+  assert.equal(home.ownerHouseholdId, null);
+  assert.equal(zone.filled, false);
+  assert.equal(zone.vacated, true);
+  assert.equal(economy.ruins.at(-1).buildingId, home.id);
+
+  economy.hungryN = 0;
+  const [settlement] = fillSettlementZones(economy, { day: 15, physical });
+  assert.equal(settlement.kind, "immigrant");
+  assert.equal(settlement.household.buildingId, home.id);
+  assert.equal(settlement.household.state, "home");
+  assert.equal(home.ownerHouseholdId, settlement.household.id);
+  assert.equal(zone.filled, true);
+  assert.equal(zone.vacated, false);
+  assert.equal(assertMoneyConservation(economy), true);
 });
 
 let failures = 0;

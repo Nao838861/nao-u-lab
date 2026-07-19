@@ -96,7 +96,19 @@ export const IRON_AUDIT_SITES = Object.freeze([
   Object.freeze({ job: "smith", x: 41, y: 29, buildingX: 38, buildingY: 28 }),
 ]);
 const IRON_AUDIT_START_DAY = 720;
-const IRON_DEMAND_HOUSEHOLDS = 8;
+export const IRON_DEMAND_HOUSEHOLDS = 4;
+export const IRON_DEMAND_LEVEL = 4;
+export const IRON_CHAIN_BANDS = Object.freeze({
+  replacementByDay: 1080,
+  ironImportMax: 0.001,
+  ironProductionMin: 0.5,
+  incomeMinimums: Object.freeze({
+    miner: 7500,
+    collier: 7500,
+    smelter: 11000,
+    smith: 10000,
+  }),
+});
 
 function terrainKind(physical, x, y) {
   if (x < 0 || y < 0 || x >= physical.width || y >= physical.height) return undefined;
@@ -825,6 +837,7 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
   const plan = { 13: "wheat", 16: "logger", 20: "fisher", 26: "woodshop", 30: "rapeseed" };
   const ironJobSwitches = [];
   const yearly = [];
+  const matureHouseholdIds = [];
   const maxIncomes = Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [job, 0]));
   for (let day = 1; day <= days; day += 1) {
     if (day % 30 === 1) {
@@ -847,9 +860,10 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
     }
     if (day === IRON_AUDIT_START_DAY + 1) {
       for (const household of economy.households.slice(0, IRON_DEMAND_HOUSEHOLDS)) {
-        household.lv = Math.max(household.lv, 5);
+        household.lv = Math.max(household.lv, IRON_DEMAND_LEVEL);
         household.up = 0;
         household.down = 0;
+        matureHouseholdIds.push(household.id);
       }
       placeIronAuditHouseholds(world);
     }
@@ -886,7 +900,12 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
         day,
         ironImport: economy.f30.iron?.imp ?? 0,
         ironProduction: economy.f30.iron?.prod ?? 0,
-        level5: economy.households.filter((household) => household.lv >= 5).length,
+        level4: economy.households.filter((household) => household.lv >= IRON_DEMAND_LEVEL).length,
+        matureDemandHouseholds: matureHouseholdIds.filter((householdId) => (
+          economy.households.some((household) => (
+            household.id === householdId && household.lv >= IRON_DEMAND_LEVEL
+          ))
+        )).length,
         jobs: Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [
           job,
           economy.households.filter((household) => household.job === job).length,
@@ -900,6 +919,7 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
     ironProduction: economy.f30.iron?.prod ?? 0,
     incomes: maxIncomes,
     ironJobSwitches,
+    matureHouseholdIds,
     yearly,
     jobs: Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [
       job,
@@ -923,8 +943,9 @@ export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
   ));
   const replacement = connected.yearly.find((sample) => (
     sample.day > IRON_AUDIT_START_DAY
-    && sample.ironImport < 0.05
-    && sample.ironProduction > 0.05
+    && sample.day <= IRON_CHAIN_BANDS.replacementByDay
+    && sample.ironImport <= IRON_CHAIN_BANDS.ironImportMax
+    && sample.ironProduction >= IRON_CHAIN_BANDS.ironProductionMin
   ));
   const disconnectedAtReplacement = disconnected.yearly.find((sample) => (
     sample.day === replacement?.day
@@ -939,9 +960,13 @@ export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
     },
     {
       id: "E-Fe2",
-      passed: Object.values(connected.incomes).every((income) => income > 2000),
+      passed: Object.entries(IRON_CHAIN_BANDS.incomeMinimums).every(
+        ([job, minimum]) => connected.incomes[job] >= minimum,
+      ),
       detail: Object.entries(connected.incomes)
-        .map(([job, income]) => `${job}:${Math.round(income)}`)
+        .map(([job, income]) => (
+          `${job}:${Math.round(income)}/${IRON_CHAIN_BANDS.incomeMinimums[job]}`
+        ))
         .join(" "),
     },
     {
@@ -972,6 +997,35 @@ export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
     results,
     passed: results.filter((result) => result.passed).length,
     total: results.length,
+  };
+}
+
+export function runIronChainBandAudit({ seeds = AUDIT_SEEDS, days = 2160 } = {}) {
+  const audits = seeds.map((seed) => runIronChainAudit({ seed, days }));
+  const atReplacement = audits.map(({ connected }) => (
+    connected.yearly.find(({ day }) => day === IRON_CHAIN_BANDS.replacementByDay)
+  ));
+  const incomes = Object.fromEntries(Object.keys(IRON_CHAIN_BANDS.incomeMinimums).map((job) => {
+    const values = audits.map(({ connected }) => connected.incomes[job]);
+    return [job, { min: Math.min(...values), max: Math.max(...values) }];
+  }));
+  return {
+    seeds: [...seeds],
+    days,
+    bands: structuredClone(IRON_CHAIN_BANDS),
+    envelope: {
+      ironImport: {
+        min: Math.min(...atReplacement.map(({ ironImport }) => ironImport)),
+        max: Math.max(...atReplacement.map(({ ironImport }) => ironImport)),
+      },
+      ironProduction: {
+        min: Math.min(...atReplacement.map(({ ironProduction }) => ironProduction)),
+        max: Math.max(...atReplacement.map(({ ironProduction }) => ironProduction)),
+      },
+      incomes,
+    },
+    audits,
+    passed: audits.every((audit) => audit.passed === audit.total),
   };
 }
 
