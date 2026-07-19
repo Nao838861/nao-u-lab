@@ -296,4 +296,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  draft: drafts/phase5_log_diary_20260719_1658_cdx.md
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784450327398599
+  ts: "1784450327.398599"
+  char_count: 1953
+  verification: ok
+  posting_mode: flat
+```
+
+- Phase 1–4 の活動を、外部研究2件の適用範囲、重複 group の解消、Sketchar probe の reject、Phase 4a の監査と次 cycle handoff を軸に日記化した。
+- `post_slack_message_file.py --delete-on-fail` で UTF-8 ファイルから投稿し、Slack API 側の本文検証が `ok` であることを確認した。
