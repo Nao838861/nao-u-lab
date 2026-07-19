@@ -100,7 +100,49 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+### 2026-07-20 04:15 JST
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784480576-71674feae4
+    source_ts: "1784480576.915539"
+    title: "CMA — selective visual episode retrieval と原画像へ戻れる記憶境界"
+    reason: >-
+      最新の未レビュー score 14 atom で、memory / harness / evaluation / agent /
+      operation / game-design を含む。画像生成・編集、game asset variant、playtest frame の
+      再参照で、全履歴・text-only・selective visual retrieval の差を小さく検査できるため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  decision_reason: >-
+    shared-reads 本文と原論文は、20-turn session、near-duplicate / negative retrieval、
+    retrieval accuracy、text-only ablation、runtime を具体的根拠として持つ。一方、評価は
+    同一 scenario engine による合成100 sessionで、公開 repository は code / dataset を
+    released soon としており、この環境での再現も未実施なので evidence=2 とした。
+    既存の bounded-memory-contract は memory 条件を区別するが、visual episode の書込み表現、
+    sibling 誤選択、abstention、原画像到達性を扱わないため差分がある。純増は避けて置換した。
+  change:
+    summary: >-
+      probe-20260709-agenticsts-bounded-memory-contract を、同一 visual variant 集合で
+      all_visual_context / text_only_memory / selective_visual_retrieval を比較し、近似画像、
+      abstention、原画像到達性、失敗層を確認する期限付き probe へ置換した。
+      active probe 数は320件のままで、directive / AGENTS.md / phase prompt は変更していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-20T02:08:00+09:00",
+  "updated_at": "2026-07-20T04:15:24+09:00",
   "reviewed_source_ts": [
+    "1784480576.915539",
     "1784449179.598279",
     "1784416512.425609",
     "1784465316.969869",
@@ -11004,6 +11005,18 @@
       "existing_probes": ["probe-20260708-gameverse-failure-type-retry-condition", "probe-20260613-attempt-branch-ledger", "probe-20260708-harnessfix-failure-anchor-repair-scope"],
       "change": {"type": "probe_replacement", "summary": "広い failure-type / retry-condition probe を、1 failure class に限定して phase 別 verifier、retry budget、条件付き correction、regression 時の rollback を確認する1回限りの probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260708-gameverse-failure-type-retry-condition", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-20T04:15:24+09:00",
+      "id": "sr-1784480576-71674feae4",
+      "source_ts": "1784480576.915539",
+      "title": "CMA — selective visual episode retrieval と原画像へ戻れる記憶境界",
+      "decision": "adopt_probe",
+      "reason": "Score 15. 原画像・thumbnail・検索用 metadata を分け、全画像再投入／text-only／selective visual retrieval を近似画像と retrieval 不要条件で比較する観点は、次の画像生成・編集、game asset variant、playtest frame 再参照に直結する。既存の AgenticSTS probe は no-store／full transcript／bounded typed retrieval の条件名と比較 metadata を求めるが、visual episode の書込み表現、近似 sibling 誤選択、abstention、絞込み後の原画像到達性を区別しないため non_redundancy=2 とした。shared-reads 本文と原論文は、20-turn session、near-duplicate／negative retrieval、retrieval accuracy、text-only ablation、runtime を根拠にするが、100 session は同一 scenario engine の合成評価で、公開 repository は code／dataset を released soon としており、この環境での再現も未実施なので evidence=2。probe 純増を避け、広い bounded-memory-contract probe を期限付き selective-visual probe へ置換した。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 15},
+      "existing_probes": ["probe-20260709-agenticsts-bounded-memory-contract", "probe-20260622-d2e-synchronized-playtest-stream", "probe-20260621-hmem-provenance-pointer-before-abstraction"],
+      "change": {"type": "probe_replacement", "summary": "広い bounded typed retrieval probe を、同一 visual variant 集合で全履歴／text-only／selective visual retrieval を比較し、近似画像・abstention・原画像到達性・失敗層を確認する期限付き probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260709-agenticsts-bounded-memory-contract", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
     }
   ],
   "active_probes": [
@@ -11466,16 +11479,16 @@
       "expires_after": "Review after the next two evaluation notes that mention final score, pass/fail, posted/skipped, aggregate quality, decision trail, process axis, recompute, outcome-only ranking, coherence, acuity, composure, discipline, or reliability."
     },
     {
-      "id": "probe-20260709-agenticsts-bounded-memory-contract",
-      "created_at": "2026-07-09T11:59:19+09:00",
-      "source_ts": "1783358588.917439",
-      "scope": "next playable diff, headless/browser game evaluation, or memory-probe note where Codex may reuse prior run evidence without separating no-store, full transcript accumulation, and bounded typed retrieval contracts",
+      "id": "probe-20260720-cma-selective-visual-episode-retrieval",
+      "created_at": "2026-07-20T04:15:24+09:00",
+      "source_ts": "1784480576.915539",
+      "scope": "next image generation/editing task, game asset variant iteration, or playtest-frame recall where Codex may reuse multiple prior visuals or near-duplicate episodes",
       "questions": [
-        "Before the next playable diff, headless/browser game evaluation, or memory-probe note where prior run evidence may be reused, did I name the decision input contract as no_store, full_transcript_accumulation, bounded_typed_retrieval, or raw_replay_only instead of mixing them implicitly?",
-        "Did I preserve the minimal comparison metadata, such as condition_tag, seed or route, frozen memory or skill snapshot, prompt record, retrieval type, observation summary, available actions, selected action, result state, and failure tag?",
-        "If memory appears to improve or harm the result, did I label the evidence as debug_contract_ok, performance_directional_only, transcript_accumulation_confounded, typed_retrieval_unverified, extraction_dominant, or action_validity_dominant before changing design, memory, or acceptance criteria?"
+        "Before the next image generation/editing, game asset variant, or playtest-frame recall task with prior visuals, did I name the comparison contract as all_visual_context, text_only_memory, or selective_visual_retrieval and keep the same variant set, query, and seed or route where possible?",
+        "Did each candidate visual retain an episode or source pointer, parent/current/rejected state, thumbnail, discriminative tags or description, and a reachable original image; and did I test one near-duplicate choice plus one retrieval-not-needed abstention instead of judging only the final output?",
+        "Before changing the workflow, did I classify any failure as perception_write_error, retrieval_miss, sibling_confusion, abstention_failure, controller_dispatch_error, or downstream_edit_error, and roll back if selective retrieval fails to preserve full-context quality or to beat text-only memory on near-duplicates?"
       ],
-      "expires_after": "Review after the next two playable-diff, headless/browser game-evaluation, or memory-probe notes that mention no-store, full transcript, bounded typed retrieval, condition tags, frozen snapshots, prompt records, retrieval type, memory effect, debug contract, or transcript accumulation."
+      "expires_after": "Review after the next two image generation/editing, game asset variant, or playtest-frame recall notes that mention prior visuals, visual variants, near-duplicates, thumbnails, selective retrieval, text-only memory, abstention, original-image reachability, or visual-context cost."
     },
     {
       "id": "probe-20260709-replayability-budget-core-depth",
