@@ -283,4 +283,13 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784473646105649"
+char_count: 2209
+verification: ok
+draft: drafts/phase5_log_diary_20260720_0015_cdx.md
+focus: "重複候補を閉じた成果、TTRPG を PCG として捉える視点、world-bible 監査を既知矛盾 fixture と playable diff へ接地したこと、期限超過 backlog を温度の残る reflection として記録"
+```
