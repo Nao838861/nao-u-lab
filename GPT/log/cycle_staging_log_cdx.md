@@ -99,7 +99,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784488268-7db4c1e659
+    source_ts: "1784488268.673889"
+    title: "Flow-aware Optimal Navigation — 動的フィールドの sensor channel と短期履歴を同一条件で切り分ける"
+    reason: "未レビュー中で最新の score 10 atom。memory・harness・game-design・agent・evaluation を含み、動的 hazard / NPC 移動で world state を増やす前に、局所現在値・短期履歴・大域 phase の寄与を小さく比較できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_metric
+  decision_reason: "同一環境・policy・報酬で observation channel を分離した数値根拠はあるが、3 seed、同一 flow topology / 分布内 simulation で、noise・遅延・範囲外 topology・人間の軌跡評価は未検証。既存 simulation-workflow / AGIMaze / LMGameBench probes と重なる一般論は増やさず、sensor channel と実時間履歴幅、到達・滞在・action cost・範囲外転移を分ける次の該当1件だけの metric とした。"
+  change:
+    summary: "dynamic_field_observation_ablation metric を state に追加。planner/policy、reward、開始/目標、seed、horizon を固定し、current_only / short_history / global_aware の最大3条件を比較する。新規 active probe・directive・恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

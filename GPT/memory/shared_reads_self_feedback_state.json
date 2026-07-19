@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-20T04:15:24+09:00",
+  "updated_at": "2026-07-20T06:16:54+09:00",
   "reviewed_source_ts": [
+    "1784488268.673889",
     "1784480576.915539",
     "1784449179.598279",
     "1784416512.425609",
@@ -11017,6 +11018,50 @@
       "existing_probes": ["probe-20260709-agenticsts-bounded-memory-contract", "probe-20260622-d2e-synchronized-playtest-stream", "probe-20260621-hmem-provenance-pointer-before-abstraction"],
       "change": {"type": "probe_replacement", "summary": "広い bounded typed retrieval probe を、同一 visual variant 集合で全履歴／text-only／selective visual retrieval を比較し、近似画像・abstention・原画像到達性・失敗層を確認する期限付き probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260709-agenticsts-bounded-memory-contract", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-20T06:16:54+09:00",
+      "selected": {
+        "id": "sr-1784488268-7db4c1e659",
+        "source_ts": "1784488268.673889",
+        "title": "Flow-aware Optimal Navigation — 動的フィールドの sensor channel と短期履歴を同一条件で切り分ける",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・evaluation を含む7タグを持つ。次の動的 hazard、潮流、風、移動床、群衆場、NPC 移動の評価で、world state を増やすこと自体を改善とみなさず、局所現在値・短期履歴・大域 phase のどれが到達、滞在、操作 cost に効いたかを小さく切り分けられるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で採用条件を満たす。shared-reads 本文は同じ double-gyre、TD3、報酬の下で naive、局所速度、局所渦度、速度履歴、渦度履歴を比較し、速度履歴が約71%、他条件が約49〜60%だったこと、履歴長5・10・15の予備比較、大域パラメータ A・ω の追加で多くの条件が悪化したことを具体的根拠に持つ。一方、主結果は3 seed、同一 topology・同一分布内の simulation で、sensor noise、遅延、欠測、異なる流れ、実機、人間から見た軌跡品質を評価していないため evidence=2 とした。既存の simulation-workflow probe は予算・観測行動契約・反復分散、AGIMaze probe は観測と推定状態、LMGameBench probe は診断 ablation を扱うが、同じ planner/policy の sensor channel と時間幅だけを固定 seed で変え、到達・目標滞在・操作 cost・範囲外転移を分ける一回限りの比較は直接指定しないため non_redundancy=2。active probe や標準知覚 schema は増やさず、次の該当作業1件だけの metric に限定する。",
+      "existing_probes": [
+        "probe-20260622-simulation-workflow-evaluation",
+        "probe-20260707-agimaze-partial-observation-state-split",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation"
+      ],
+      "metric": {
+        "name": "dynamic_field_observation_ablation",
+        "scope": "next dynamic-field NPC, moving-hazard, current, wind, moving-platform, crowd-flow, or local-field navigation experiment only",
+        "check": "planner/policy、reward、開始／目標、seed set、horizon を固定し、current_only、short_history、global_aware の最大3条件を比較する。履歴は tick 数の移植ではなく実時間幅を記録し、到達率、目標近傍滞在率、到達時間、action cost、衝突数、train 範囲外の強度または周期を別列に残す。global_aware が悪化した時は情報量一般の害と決めず、正規化または局所値との conditioning を1回だけ対照し、sensor_benefit、stale_history、conditioning_mismatch、in_distribution_only、human_trajectory_unchecked のいずれかで境界を記録する。",
+        "withdrawal_condition": "次の該当1件で既存3 probes だけで同じ採否が残る、sensor 条件差が修正判断を変えない、動的フィールドが prototype の中核でない、または比較負荷が便益を上回る場合は再利用せず review 履歴だけ残す。TD3、M=10、double-gyre 固有値を標準設計へ一般化しない。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の動的フィールド系作業1件だけで、局所現在値・短期履歴・大域情報を同一条件で比較し、到達・滞在・操作 cost・範囲外転移を分離する可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
     }
   ],
   "active_probes": [
