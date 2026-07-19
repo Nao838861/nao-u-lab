@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2607.05029"
 collected_at: "2026-07-19T12:45:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [llm-agent, persistent-memory, security, playtesting, provenance]
+evaluated_at: "2026-07-19T12:49:26+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-19T12:49:26+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-19T12:49:26+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >-
+  reasoning trace 汚染という脅威と長期 playtest 記憶への適用先は明確で、FARMA と SENTINEL の対立構造も重要である。
+  ただし現 candidate には五つの検査 signal、攻撃条件、比較防御、モデル別結果の内訳がなく、
+  CoopEval 水準の概要を一般論にせず書くには一次資料の追加精読が必要。
 ---
 
 ## raw_excerpt

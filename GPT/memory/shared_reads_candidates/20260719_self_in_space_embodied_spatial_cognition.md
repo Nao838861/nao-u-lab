@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2607.12477"
 collected_at: "2026-07-19T12:45:40+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [embodied-agent, spatial-cognition, multimodal, navigation, evaluation]
+evaluated_at: "2026-07-19T12:49:26+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T12:49:26+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T12:49:26+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >-
+  space/self と perception/memory/reasoning の直交する評価枠、実世界 UAV video 由来の規模、
+  motion-aware representation の介入と下流 decision-making まで揃い、重要要素を具体的に説明できる。
+  3D ゲームの自動テスターで環境認識と自機状態推定を分離して測る navigation harness に直接適用できる。
+suggested_post_outline:
+  overview_angle: "embodied agent の空間能力を周囲の認識だけでなく、自機の位置・運動・履歴を含む self-in-space として測る軸"
+  analysis_axis: "space/self × perception/memory/reasoning の評価格子、SIS-Bench のデータ構成、motion-aware representation の介入効果"
+  application_target: "一人称・三人称 3D prototype の自動テスターで、物体認識、自機姿勢、移動履歴、経路判断を別々に計測する navigation harness"
+  pros_cons: "利点は失敗を環境認識と自己状態推定に切り分けられること。弱点は UAV video の受動視覚評価をゲーム内の能動操作へ移す際に追加設計が要ること。"
+  verdict_pre: "部分採用。まず navigation test に self-state の perception/memory 指標を追加する。"
 ---
 
 ## raw_excerpt

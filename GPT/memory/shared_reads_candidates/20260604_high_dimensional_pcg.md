@@ -7,12 +7,12 @@ genre_tags: [procedural-content-generation, level-design, mechanics, validation,
 evaluated_at: "2026-06-04T21:30:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-04T21:30:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-04T21:30:00+09:00; duplicate_of:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349"
-next_action: keep_for_reference
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T12:48:53+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-1a4859d27061b35d; terminal:memory/shared_reads_candidates/20260513_hdpcg_gameplay_dimensions_pcg.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349; reason:同一 canonical URL の posted sibling があり permalink まで確認できるため open sibling を再投稿対象から閉じる"
+next_action: none
 stale_after: "2026-07-04"
 supersedes: []
 gate_reason: |-

@@ -7,11 +7,11 @@ genre_tags: [game-design, llm-game-generation, mechanics, evaluation, tool-agent
 evaluated_at: "2026-06-04T04:31:55+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-04T04:34:32+09:00"
-last_decision: postponed
-evidence: "duplicate_of:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009798720239"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T12:48:52+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-900623d765072ad6; terminal:memory/shared_reads_candidates/20260517_creativegame_mechanic_aware_generation.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009798720239; reason:同一 canonical URL の posted sibling があり permalink まで確認できるため再投稿対象から閉じる"
 next_action: none
 postpone_reason: "Phase 3 重複確認。同一 URL は 2026-05-17 に #shared-reads 投稿済みのため再投稿しない。"
 duplicate_of:
