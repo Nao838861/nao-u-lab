@@ -141,6 +141,29 @@ async function checkViewport(width, height, mobile) {
     day: window.__SHIOJI_V004__.model.day,
     tick: window.__SHIOJI_V004__.model.tick,
   })`), { day: timeBefore.day + 1, tick: timeBefore.tick + 30 });
+  if (!mobile) {
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      while (game.model.day < 120) game.stepOneDay();
+    })()`);
+    const worldVisuals = await page.evaluate(`(() => {
+      const model = window.__SHIOJI_V004__.model;
+      return {
+        trails: model.trailRows.length,
+        strongestTrail: Math.max(0, ...model.trailRows.map(row => row.stage)),
+        raisedBuildings: model.buildings.filter(building => building.cultureLevel > 0).length,
+        appearanceKeys: new Set(model.buildings.map(building => building.appearance.key)).size,
+        stalls: model.marketStalls.length,
+        stock: model.totalVisibleStock,
+      };
+    })()`);
+    assert.ok(worldVisuals.trails > 100, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.strongestTrail >= 4, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.raisedBuildings > 0, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.appearanceKeys > 5, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
+  }
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
   page.close();

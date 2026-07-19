@@ -36,6 +36,8 @@ function renderHud() {
   $('#world-size').textContent = `${model.width}×${model.height}`;
   $('#building-count').textContent = `${model.buildings.length}棟`;
   $('#carrier-count').textContent = `${model.carriers.length}`;
+  $('#trail-count').textContent = `${model.trailRows.length}区画`;
+  $('#stock-count').textContent = formatNumber(model.totalVisibleStock);
   $('#event-count').textContent = formatNumber(visibleEventCount);
   document.querySelectorAll('[data-speed]').forEach(button => {
     button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);

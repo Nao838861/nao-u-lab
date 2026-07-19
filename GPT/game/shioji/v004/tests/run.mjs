@@ -2,10 +2,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createEngineApi } from '../../engine/src/api.js';
 import { buildBaseCity } from '../../engine/src/audit.js';
+import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
+import { BUILDING_ART } from '../src/config.js';
 import { createEngineController } from '../src/engine_bridge.js';
 import { snapshotToViewModel } from '../src/view_model.js';
+import {
+  MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
+} from '../src/visuals.js';
 
 let passed = 0;
 
@@ -181,6 +186,136 @@ test('段3/4: レスポンシブHUDとカメラ・速度操作のブラウザ契
   assert.match(css, /html, body[\s\S]*overflow:\s*hidden/);
   assert.match(css, /touch-action:\s*none/);
   assert.match(css, /@media \(max-width: 640px\)/);
+});
+
+test('段5: economy.trafficの踏圧を使用頻度5段階の獣道へ変換する', () => {
+  assert.deepEqual([1, 9, 10, 49, 50, 199, 200, 799, 800].map(value => (
+    trailVisual(value).stage
+  )), [1, 1, 2, 2, 3, 3, 4, 4, 5]);
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(120);
+  const snapshot = api.snapshot();
+  assert.equal(Object.keys(snapshot.physical.trails).length, 0, 'エンジン側の未同期trailsへ書き込まない');
+  assert.ok(Object.keys(snapshot.economy.traffic).length > 100);
+  const model = snapshotToViewModel(snapshot);
+  assert.equal(model.trailRows.length, Object.keys(snapshot.economy.traffic).length);
+  assert.ok(model.trailRows.some(row => row.stage >= 4));
+});
+
+test('段6: 全建物種をsnapshotの正位置・正サイズ・入口のまま描画モデル化する', () => {
+  const snapshot = createEngineApi(buildBaseCity(11)).snapshot();
+  const entries = Object.entries(ECONOMIC_BUILDINGS);
+  snapshot.physical.buildings = entries.map(([type, definition], index) => ({
+    id: `fixture-${type}`,
+    type,
+    x: 2 + (index % 5) * 8,
+    y: 2 + Math.floor(index / 5) * 8,
+    w: definition.w,
+    h: definition.h,
+    entrance: { x: 2 + (index % 5) * 8, y: 1 + Math.floor(index / 5) * 8 },
+    role: type,
+    roles: [type],
+    ownerHouseholdId: ['market', 'warehouse', 'port'].includes(type) ? null : 100 + index,
+    fixed: ['market', 'port'].includes(type),
+    grade: 0,
+    inventory: {
+      input: {}, output: {}, storage: {}, construction: {}, inbound: {}, outbound: {}, pickup: {},
+    },
+    caps: {},
+  }));
+  snapshot.physical.occupied = {};
+  snapshot.economy.households = entries
+    .map(([type], index) => ({
+      id: 100 + index,
+      job: type,
+      x: 0,
+      y: 0,
+      px: 0,
+      py: 0,
+      lv: index % 5,
+      members: [],
+      pantry: {},
+      state: 'home',
+      buildingId: `fixture-${type}`,
+    }))
+    .filter(household => !['market', 'warehouse', 'port'].includes(household.job));
+  const model = snapshotToViewModel(snapshot);
+  assert.deepEqual(new Set(model.buildings.map(building => building.type)), new Set(entries.map(([type]) => type)));
+  for (const source of snapshot.physical.buildings) {
+    const building = model.buildings.find(row => row.id === source.id);
+    assert.deepEqual(
+      { x: building.x, y: building.y, width: building.width, height: building.height, entrance: building.entrance },
+      { x: source.x, y: source.y, width: source.w, height: source.h, entrance: source.entrance },
+    );
+  }
+  assert.deepEqual(new Set(Object.keys(BUILDING_ART)), new Set(entries.map(([type]) => type)));
+  const warehouse = model.buildings.find(building => building.type === 'warehouse');
+  assert.equal(warehouse.vacant, true, '独立配置の空き蔵を空き建物として表示する');
+  assert.match(warehouse.appearance.key, /vacant$/);
+});
+
+test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段階へ反映される', () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(120);
+  const levelEvents = api.events().filter(event => event.message?.includes('▲Lv'));
+  assert.ok(levelEvents.length > 0, '実エンジンからLv上昇イベントが出る');
+  const model = snapshotToViewModel(api.snapshot());
+  assert.ok(model.buildings.some(building => building.cultureLevel >= 1));
+  for (const event of levelEvents) {
+    const householdId = Number(event.message.match(/#(\d+)/)?.[1]);
+    const household = model.households.find(row => row.id === householdId);
+    const building = model.buildings.find(row => row.id === household?.buildingId);
+    if (building) assert.ok(building.appearance.level >= 1);
+  }
+  const base = buildingAppearance({ type: 'woodshop', cultureLevel: 0, vacant: false });
+  const raised = buildingAppearance({ type: 'woodshop', cultureLevel: 3, vacant: false });
+  assert.notEqual(base.key, raised.key);
+  assert.ok(raised.elevation > base.elevation && raised.stoneBase);
+  assert.equal(buildingAppearance({ type: 'future-job', cultureLevel: 2, vacant: false }).fallback, true);
+});
+
+test('段8: 在庫量を代表スプライト上限と正確な数字へ変換しゼロも保持する', () => {
+  const zero = pileVisual(0, 'log');
+  const fraction = pileVisual(0.55, 'fish');
+  const large = pileVisual(500, 'iron');
+  assert.deepEqual({ count: zero.spriteCount, label: zero.label }, { count: 0, label: '0' });
+  assert.equal(fraction.spriteCount, 1);
+  assert.equal(fraction.label, '0.6');
+  assert.equal(large.spriteCount, MAX_PILE_SPRITES);
+  assert.equal(large.clipped, true);
+  assert.equal(large.label, '500');
+});
+
+test('段8: 区分棚・pantry・市場屋台をsnapshotと同量で世帯単位に表示する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(120);
+  const snapshot = api.snapshot();
+  const model = snapshotToViewModel(snapshot);
+  for (const building of model.buildings) {
+    const source = snapshot.physical.buildings.find(row => row.id === building.id);
+    for (const shelf of building.shelves) {
+      assert.equal(shelf.amount, source.inventory[shelf.section]?.[shelf.goods] ?? 0);
+    }
+    for (const group of building.shelfGroups) {
+      assert.equal(group.totalAmount, group.items.reduce((total, item) => total + Math.max(0, item.amount), 0));
+    }
+  }
+  for (const household of model.households) {
+    const source = snapshot.economy.households.find(row => row.id === household.id);
+    for (const pantry of household.pantry) assert.equal(pantry.amount, source.pantry[pantry.goods]);
+  }
+  const positiveHouseholdIds = new Set(model.stalls
+    .filter(stall => stall.visual.amount > 1e-9)
+    .map(stall => stall.householdId));
+  assert.deepEqual(new Set(model.marketStalls.map(stall => stall.householdId)), positiveHouseholdIds);
+  assert.ok(model.marketStalls.every(stall => stall.items.every(item => item.householdId === stall.householdId)));
+  assert.ok(model.households.every(household => (
+    household.pantryStock === null
+    || household.pantryStock.totalAmount === household.pantry
+      .reduce((total, row) => total + Math.max(0, row.amount), 0)
+  )));
+  assert.ok(model.buildings.flatMap(building => building.shelves).some(row => row.visual.spriteCount === 0));
 });
 
 console.log(`\n${passed} v004 tests passed`);
