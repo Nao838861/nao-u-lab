@@ -100,7 +100,42 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784465316-d67e0aa9ab
+    source_ts: "1784465316.969869"
+    title: A Memory-Driven Action Selection Framework for Scalable Ambient NPC Behavior — 反復抑制を多様性・文脈・予算の三軸で判定する
+    reason: 最新の未レビュー score 11 atom で、memory・harness・game-design・operation・evaluation を含む7タグを持つ。直前の投稿を、背景 NPC の賢さ一般ではなく、次の ambient action-selection 作業に限定した比較評価へ変換できるため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_metric
+  decision_reason: >-
+    50〜200 NPC×各5 run、平均・P99・処理別 cost まで根拠がある一方、多様性、人間の知覚、baseline比較、同期 interruption の最大 hitch は未測定なので evidence=2。
+    既存の style/task 分離、bounded-memory 契約、runtime integration probes と重なるが、同一 graph/seed で fixed-order・uniform-random・least-recently-used を比較し、反復低下が文脈違反・fallback・P99悪化との交換になっていないかを同じ表で見る境界は新しい。
+    active probe を増やさず、次の該当1件だけで使う metric に限定した。
+  metric:
+    name: ambient_recency_memory_three_axis
+    scope: next ambient or background NPC action-selection implementation or evaluation only
+    check: 同じ action graph・seed 群・decision 数で3方式を比較し、反復軸、文脈軸、予算軸を別列にする。least-recently-used が反復だけを改善して他二軸を悪化させる場合は採用せず、personality・goal・社会記憶・知覚上の生命感の証明へ拡張しない。
+    withdrawal_condition: 次の該当1件で既存3 probes だけで同じ採否が残る、比較が実装判断を変えない、または計測負荷が便益を上回る場合は再利用しない。
+  change:
+    summary: 次の ambient NPC action-selection 作業1件用に、fixed-order・uniform-random・least-recently-used の反復・文脈・P99予算を比較する可逆 metric を state に追加した。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

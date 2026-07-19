@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T19:26:24+09:00",
+  "updated_at": "2026-07-19T21:53:27+09:00",
   "reviewed_source_ts": [
+    "1784465316.969869",
     "1784449178.584249",
     "1784440867.236699",
     "1784433358.176329",
@@ -438,6 +439,50 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T21:53:27+09:00",
+      "selected": {
+        "id": "sr-1784465316-d67e0aa9ab",
+        "source_ts": "1784465316.969869",
+        "title": "A Memory-Driven Action Selection Framework for Scalable Ambient NPC Behavior — 反復抑制を多様性・文脈・予算の三軸で判定する",
+        "reason": "最新の未レビュー score 11 atom で、memory・harness・game-design・operation・evaluation を含む7タグを持つ。直前の shared-reads 投稿が示した bounded recency memory を、背景 NPC の賢さ一般ではなく、次の ambient action-selection 作業で反復・文脈適合・runtime budget を同時に比較する小さな評価へ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で採用条件を満たす。shared-reads 本文は action graph、三種の有限 memory、failure safeguard、Unity/Unreal 統合、Unity Editor 上の50・100・150・200 NPC×各5 run、200 NPC時の平均0.305 ms・P99 1.173 ms、engine boundary が支配的という具体的根拠を持つ。一方、多様性・知覚品質の定量評価、random・round-robin・weighted baseline、人間比較、同期 interruption 時の最大 hitch は未測定なので evidence=2 とした。既存の coachable-agent-style-task-split は task success と repetition/style の分離を、agenticsts-bounded-memory-contract は memory 条件と seed/trace の固定を、gameenginebench-runtime-integration-gate は周辺 runtime 回帰を既に扱う。ただし同一 graph/seed で fixed-order・uniform-random・least-recently-used を比較し、反復低下が文脈違反・fallback・P99悪化との交換になっていないかを一つの表で判定する境界は直接要求していないため non_redundancy=2 とした。active probe 群を増やさず、次の該当1件だけで使う metric に限定する。",
+      "existing_probes": [
+        "probe-20260708-coachable-agent-style-task-split",
+        "probe-20260709-agenticsts-bounded-memory-contract",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "metric": {
+        "name": "ambient_recency_memory_three_axis",
+        "scope": "next ambient or background NPC action-selection implementation or evaluation only",
+        "check": "同じ action graph・seed 群・decision 数で fixed-order、uniform-random、least-recently-used を比較し、反復軸（同一 action 連続率または window 内 unique transition）、文脈軸（precondition 違反、fallback／停止、interrupt 復帰失敗）、予算軸（P99 update time と一斉 interruption spike、可能なら memory bytes/NPC）を別列で残す。least-recently-used が反復だけを下げても他二軸を悪化させる場合は採用せず、結果を personality・goal・社会記憶・人間が知覚する生命感の証明へ拡張しない。",
+        "withdrawal_condition": "次の該当1件で既存3 probes だけで同じ三軸比較と採否が残る、三方式の比較が実装判断を変えない、または ambient NPC 作業に対して fixture／計測負荷が便益を上回る場合は再利用せず review 履歴だけ残す。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の ambient NPC action-selection 作業1件だけで、fixed-order・uniform-random・least-recently-used を同条件比較し、反復・文脈・P99予算を別軸で判定する可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T19:26:24+09:00",
       "selected": {
