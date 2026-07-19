@@ -90,7 +90,24 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_self_in_space_embodied_spatial_cognition.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784433358176329
+    char_count: 4372
+skipped: []
+review:
+  final_decision: posted
+  verdict: 部分採用
+  source_verified: arXiv v2 HTML 本文
+  policy_validation: ok
+  slack_text_verification: ok
+  note: >-
+    26 model・13 task・human baseline・SIS-Motion ablation・OpenUAV transfer・論文自身の limitation まで確認。
+    self/space × perception/memory/reasoning の診断格子を 3D navigation headless harness に部分採用し、
+    motion encoder は小規模 probe の転移と closed-loop 相関を確認するまで導入しない。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
