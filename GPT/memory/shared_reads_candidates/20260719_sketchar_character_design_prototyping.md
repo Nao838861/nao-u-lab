@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2508.12333"
 collected_at: "2026-07-19T14:46:15+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, character-design, generative-ai, prototyping, collaboration]
+evaluated_at: "2026-07-19T14:50:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T14:50:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T14:50:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >-
+  10名の事前調査、文章・構造化キーワード・参照画像を往復する実装、17名の比較実験、CSIの有意差、参加者属性と生成画像の限界まで抽出できる。
+  完成絵の自動生成ではなく、ゲームデザイナーとイラストレーターの初期共有物を作る手法として具体的で、少人数制作のキャラクター仕様・フィードバック手順へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "Sketchar を完成画像の自動生成器ではなく、曖昧な人物像を文章・キーワード・参照画像の往復可能な設計資料へ変換する協働プロトタイピング手法として整理する。"
+  analysis_axis: "10名の形成的調査から導いた課題、段階的な生成・人手修正、17名の比較実験と Creativity Support Index、実協働ではない評価条件と著作権・stereotype の限界を分けて読む。"
+  application_target: "少人数ゲーム制作で、役割・背景・性格・関係を構造化し、ラフ画像を完成素材ではなくキャラクター仕様の検証物として使う企画―美術間の handoff に適用する。"
+  pros_cons: "メリットは言語化しにくい意図を早期に可視化し、非美術職も修正点を共有しやすいこと。デメリットは画像品質と文化的偏り、権利確認、単独作業による協働評価の外的妥当性に制約があること。"
+  verdict_pre: "部分採用。設定の構造化と低忠実度の参照画像生成は採用し、完成アート判断と権利確認は人間の工程として分離する。"
 ---
 
 ## raw_excerpt

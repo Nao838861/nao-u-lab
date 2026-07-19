@@ -7,14 +7,14 @@ genre_tags: [game-feel, controls, haptics, motion-input, prototyping, mobile-hci
 evaluated_at: 2026-05-27T08:48:27+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T08:48:27+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T08:48:27+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T14:50:23+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-640e794e59585012; terminal:memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match; reason:posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
 stale_after: "2026-06-26"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >
   CoreMotion / MultipeerConnectivity / CoreHaptics、70ms 前後の遅延、公開ログ付きという実装要素は具体的だが、現行制作のブラウザゲームへ直結するには距離がある。
   game feel の測定軸としては有用でも、単体で CoopEval 水準の4,000字概要にするにはゲーム設計上の含意が薄く、別の入力遅延・触覚記事と束ねる方がよい。

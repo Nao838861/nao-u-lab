@@ -7,11 +7,11 @@ genre_tags: [game-prototyping, hci, input-device, embodied-interaction, mobile-g
 evaluated_at: "2026-07-08T15:48:40+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-08T15:48:40+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T14:50:23+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-640e794e59585012; terminal:memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match; reason:posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
 next_action: none
 stale_after: "2026-08-07"
 supersedes: []

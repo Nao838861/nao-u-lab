@@ -7,12 +7,12 @@ genre_tags: [pcg, llm-agent, level-design, tool-use, game-ai]
 evaluated_at: 2026-06-06T20:17:29+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-06T20:17:29+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-06T20:17:29+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T14:50:40+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-f639cc4f7da8006b; terminal:memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609; posted_source_url_match; reason:posted-source index が AgenticPCG project URL の実 Slack 投稿を exact work 一致で確認したため open siblings は再投稿候補として閉じる"
+next_action: none
 stale_after: "2026-07-06"
 supersedes: []
 gate_reason: |-

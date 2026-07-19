@@ -7,11 +7,11 @@ genre_tags: [pcg, level-design, 3d-map, unity, designer-control]
 evaluated_at: "2026-06-05T01:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T04:27:47+09:00"
-last_decision: postponed
-evidence: "duplicate_existing_post:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T14:50:31+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-18aea31729c5baa5; terminal:memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781751066262309; posted_source_url_match; reason:posted-source index が arXiv:2108.00056 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
 next_action: none
 stale_after: "2026-07-05"
 supersedes: []

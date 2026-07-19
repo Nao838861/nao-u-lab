@@ -7,12 +7,12 @@ genre_tags: [embodied-interaction, mobile-game, haptics, prototyping, motion-con
 evaluated_at: "2026-06-05T01:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-05T01:45:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T01:45:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T14:50:23+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-640e794e59585012; terminal:memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match; reason:posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
+next_action: none
 stale_after: "2026-07-05"
 supersedes: []
 gate_reason: "iPhone motion controller、haptics、offline pipeline、latency logs まで揃っており embodied prototype には有用。ただし Nao_u_BOT の直近主戦場は PC/LLM game prototyping で、iOS 実装条件・再現手順・ゲーム設計への落とし込みを追加確認しないと投稿が技術紹介に寄りすぎる。"

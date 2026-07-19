@@ -10,7 +10,75 @@
 - source 確認: `memory/raw/web_research/results.jsonl` の 2026-07-19 14:06 / 14:21 取得分、最近の `memory/atoms.jsonl`、raw Slack を確認。raw Slack のローカル archive は #shared-reads が 2026-07-19 12:55 まで、#all-nao-u-lab が 2026-07-11 14:50 まで。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions:
+  - group_key: cross device motion interaction via apple s native system frameworks
+    representative: memory/shared_reads_candidates/20260605_cross_device_motion_interaction_native_ios.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260527_cross_device_motion_haptics.md
+      - memory/shared_reads_candidates/20260605_cross_device_motion_interaction_native_ios.md
+      - memory/shared_reads_candidates/20260628_cross_device_motion_interaction.md
+      - memory/shared_reads_candidates/20260708_cross_device_motion_interaction_iphone.md
+    reason: "posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため、open siblings を再投稿候補として閉じた。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md
+        evidence: "posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: procedural generation of 3d maps with snappable meshes
+    representative: memory/shared_reads_candidates/20260605_snappable_meshes_3d_map_pcg.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260605_snappable_meshes_3d_map_pcg.md
+      - memory/shared_reads_candidates/20260709_snappable_meshes_3d_map_generation.md
+    reason: "posted-source index が arXiv:2108.00056 の実 Slack 投稿を exact URL/work 一致で確認したため、open siblings を再投稿候補として閉じた。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md
+        evidence: "posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781751066262309; posted_source_url_match"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+  - group_key: agentic pcg procedural content generation via tool using llms
+    representative: memory/shared_reads_candidates/20260606_agentic_pcg_tool_using_llms.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260530_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260604_agentic_pcg_tool_using_llms.md
+      - memory/shared_reads_candidates/20260606_agentic_pcg_tool_using_llms.md
+    reason: "posted-source index が AgenticPCG project URL の実 Slack 投稿を exact work 一致で確認したため、open siblings を再投稿候補として閉じた。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md
+        evidence: "posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609; posted_source_url_match"
+    representative_decision: postpone
+    analysis_time_minutes: 2
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-640e794e59585012
+    - gha-18aea31729c5baa5
+    - gha-f639cc4f7da8006b
+  resolved_ids:
+    - gha-640e794e59585012
+    - gha-18aea31729c5baa5
+    - gha-f639cc4f7da8006b
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 9
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 通常 candidate 判定: Sketchar は形成的調査、段階的な human-in-the-loop 実装、17名の比較実験、CSI、限界まで揃い、キャラクター仕様と低忠実度参照画像の handoff へ具体適用できるため pass。
+- duplicate preflight: 3 group は posted-source URL/work 一致で `skip`、Sketchar は posted-source / title canonical とも一致せず `continue`。
+- Slack directive / broadcast pending: 0件。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

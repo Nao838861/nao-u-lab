@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2508.01110"
 collected_at: "2026-06-28T09:59:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, hci, prototyping, motion-control, haptics]
-status: needs_review
+status: failed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
+candidate_status: failed
 stale_after: "2026-07-28"
 supersedes: []
-last_reviewed_at: "2026-06-28T09:59:24+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260628_cross_device_motion_interaction.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-19T14:50:23+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-640e794e59585012; terminal:memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match; reason:posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
+next_action: none
 
 ---
 
