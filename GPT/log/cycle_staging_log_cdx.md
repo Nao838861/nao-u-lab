@@ -10,7 +10,88 @@
 - preflight: posted-source index を実 Slack 正本から再生成（554 rows / unresolved_posts 109）。上記 2 件はいずれも `continue`。品質判定と Slack 投稿は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260719_anytime_strategic_deviation_detection.md
+    reason: "手法と適用先は明確だが、実験条件・baseline・検出性能の結果が候補本文に不足"
+  - path: memory/shared_reads_candidates/20260719_ax_vs_hx_ai_playtesting.md
+    reason: "AX/HX の区分は有用だが、prototype 条件・指標・比較結果の内訳が候補本文に不足"
+stale_reviewed: []
+duplicate_preflight:
+  posted_source_index_checked: true
+  title_canonical_index_checked: true
+  decisions:
+    - path: memory/shared_reads_candidates/20260719_anytime_strategic_deviation_detection.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260719_ax_vs_hx_ai_playtesting.md
+      decision: continue
+group_actions:
+  - group_key: a novel procedural generation for level design of mansions and dungeons
+    representative: memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md
+    reason: "同一 title・canonical URL の posted sibling があり、独立資料として維持する差がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260605_mansion_dungeon_bsp_pcg.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780628654631239"
+      - path: memory/shared_reads_candidates/20260609_mansion_dungeon_pcg_level_principles.md
+        evidence: "failed duplicate"
+    representative_decision: postpone
+    analysis_time_minutes: 3
+  - group_key: gui agents for continual game generation
+    representative: memory/shared_reads_candidates/20260614_gui_agents_continual_game_generation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260606_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260613_play2code_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260614_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260709_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260711_gui_agents_continual_game_generation.md
+    reason: "全 open sibling が同一 arXiv 2605.28258 の再収集で、posted sibling を上回る資料差がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529"
+      - path: memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995803583479"
+    representative_decision: postpone
+    analysis_time_minutes: 4
+  - group_key: runtime evaluation of procedural content generation in an endless runner game using autonomous agents
+    representative: memory/shared_reads_candidates/20260614_runtime_pcg_evaluation_agents.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+      - memory/shared_reads_candidates/20260614_runtime_pcg_evaluation_agents.md
+    reason: "両 open sibling は同一 arXiv 2605.01783 の再収集で、posted sibling に対する追加資料差がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884869679689"
+      - path: memory/shared_reads_candidates/20260517_runtime_pcg_evaluation_agents.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447709959"
+    representative_decision: postpone
+    analysis_time_minutes: 3
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-02f81a961f47099e
+    - gha-7fe2ccd7a61ad864
+    - gha-965c62c42489ca18
+  resolved_ids:
+    - gha-02f81a961f47099e
+    - gha-7fe2ccd7a61ad864
+    - gha-965c62c42489ca18
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 9
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

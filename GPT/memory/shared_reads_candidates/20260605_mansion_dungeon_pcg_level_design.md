@@ -4,12 +4,12 @@ url: "https://arxiv.org/abs/2606.03857"
 collected_at: "2026-06-05T11:47:47.1769811+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-generation, level-design, dungeon, navigability]
-status: needs_review
-candidate_status: needs_review
-last_reviewed_at: "2026-06-12T05:06:00+09:00"
-last_decision: needs_review
-evidence: "Phase 4a lifecycle audit: status field was missing"
-next_action: evaluate_in_phase2
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T19:20:43+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-02f81a961f47099e; terminal:memory/shared_reads_candidates/20260605_mansion_dungeon_bsp_pcg.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780628654631239; memory/shared_reads_candidates/20260609_mansion_dungeon_pcg_level_principles.md: failed duplicate; reason:同一 title かつ同一 canonical arXiv URL の posted sibling があり、手法・評価内容にも独立資料として維持する差がない"
+next_action: none
 gate_reason: "Phase 1 collected candidate; Phase 2 quality gate result is not recorded yet."
 stale_after: "2026-07-12"
 supersedes: []
