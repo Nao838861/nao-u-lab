@@ -34,6 +34,36 @@ export const AUDIT_BASE = Object.freeze([
   ["fisher", 21, 33],
 ]);
 
+export const E_STABLE_BASE = Object.freeze([
+  Object.freeze(["fisher", 23, 32]),
+  Object.freeze(["fisher", 27, 32]),
+  Object.freeze(["fisher", 21, 33]),
+  Object.freeze(["veg", 22, 30]),
+  Object.freeze(["veg", 22, 28]),
+  Object.freeze(["wheat", 21, 28]),
+  Object.freeze(["wheat", 28, 30]),
+  Object.freeze(["logger", 27, 26]),
+  Object.freeze(["woodshop", 24, 30]),
+  Object.freeze(["charburner", 26, 29]),
+  Object.freeze(["saltworks", 26, 31]),
+  Object.freeze(["shepherd", 24, 28]),
+  Object.freeze(["rapeseed", 29, 28]),
+]);
+
+export const E_STABLE_JOBS = Object.freeze([
+  "fisher", "veg", "wheat", "logger", "woodshop",
+  "charburner", "saltworks", "shepherd", "rapeseed",
+]);
+
+export const E_STABLE_PRICE_BANDS = Object.freeze({
+  fish: Object.freeze([0.2, 3]),
+  wheat: Object.freeze([0.5, 4.5]),
+  log: Object.freeze([0.3, 4]),
+  tools: Object.freeze([0.5, 6.5]),
+  salt: Object.freeze([0.3, 5.5]),
+  char: Object.freeze([0.3, 5.5]),
+});
+
 const LEGACY_AUDIT_JOBS = Object.freeze([
   "fisher", "fisher2", "wheat", "veg", "shepherd", "rapeseed",
   "logger", "woodshop", "charburner", "quarryman", "saltworks",
@@ -125,7 +155,7 @@ export function addAuditZone(world, job, x, y) {
   });
 }
 
-export function createAuditWorld(seed) {
+function createAuditCity(seed, layout) {
   const physical = createPhysicalState({
     width: 48,
     height: 40,
@@ -138,7 +168,7 @@ export function createAuditWorld(seed) {
     port: { x: 25, y: 35 },
   });
   world.state.economy.jobSelectionPool = [...LEGACY_AUDIT_JOBS];
-  for (const [job, x, y] of AUDIT_BASE) {
+  for (const [job, x, y] of layout) {
     if (!addAuditZone(world, job, x, y)) {
       throw new Error(`基準村の配置不可: ${job}@${x},${y}`);
     }
@@ -154,6 +184,14 @@ export function createAuditWorld(seed) {
     }
   }
   return world;
+}
+
+export function createAuditWorld(seed) {
+  return createAuditCity(seed, AUDIT_BASE);
+}
+
+export function buildBaseCity(seed) {
+  return createAuditCity(seed, E_STABLE_BASE);
 }
 
 function placeIronAuditHouseholds(world) {
@@ -241,6 +279,25 @@ function setPlayerStockTargets(economy) {
 function countJobAndZones(economy, job) {
   return economy.households.filter((household) => household.job === job).length
     + economy.zones.filter((zone) => !zone.filled && zone.job === job).length;
+}
+
+export function mimicPlayer(world, day = world.state.day + 1) {
+  const { economy } = world.state;
+  let stockTargetsUpdated = false;
+  let rebuilt = null;
+  if (day % 5 === 0) {
+    setPlayerStockTargets(economy);
+    stockTargetsUpdated = true;
+  }
+  if (day % 90 === 0 && economy.company.money * 10 > 8000) {
+    for (const job of ["woodshop", "charburner", "saltworks"]) {
+      if (countJobAndZones(economy, job) >= 1) continue;
+      const spot = findAuditSpot(world, job);
+      if (spot && addAuditZone(world, job, spot[0], spot[1])) rebuilt = job;
+      if (spot) break;
+    }
+  }
+  return { stockTargetsUpdated, rebuilt };
 }
 
 function addResult(results, id, name, passed, detail) {
@@ -481,7 +538,7 @@ function captureMaterialFlows(economy) {
   ]));
 }
 
-function ironScenarioMaterialReport(economy, physical, initialTotals, initialFlows) {
+function scenarioMaterialReport(economy, physical, initialTotals, initialFlows) {
   const finalTotals = materialTotals(economicMaterialSnapshot(economy, physical));
   return Object.fromEntries(GOODS.map((goods) => {
     const finalFlow = economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
@@ -499,6 +556,165 @@ function ironScenarioMaterialReport(economy, physical, initialTotals, initialFlo
       ratio: throughput > 1 ? Math.abs(residual) / throughput * 100 : 0,
     }];
   }));
+}
+
+function average(values) {
+  return values.length > 0
+    ? values.reduce((total, value) => total + value, 0) / values.length
+    : null;
+}
+
+function stablePriceRanges(economy) {
+  return Object.fromEntries(Object.keys(E_STABLE_PRICE_BANDS).map((goods) => {
+    const value = economy.px[goods];
+    return [goods, Number.isFinite(value)
+      ? { min: value, max: value, observations: 1 }
+      : { min: Infinity, max: -Infinity, observations: 0 }];
+  }));
+}
+
+function sampleStablePrices(economy, ranges) {
+  for (const [goods, range] of Object.entries(ranges)) {
+    const value = economy.px[goods];
+    if (!Number.isFinite(value)) continue;
+    range.min = Math.min(range.min, value);
+    range.max = Math.max(range.max, value);
+    range.observations += 1;
+  }
+}
+
+function inspectStableMaterial(economy, physical, initialTotals, initialFlows, day) {
+  const report = scenarioMaterialReport(economy, physical, initialTotals, initialFlows);
+  let worst = { day, goods: null, ratio: 0, residual: 0, throughput: 0 };
+  let passed = true;
+  for (const [goods, entry] of Object.entries(report)) {
+    const lowFlowResidual = entry.throughput <= 1 && Math.abs(entry.residual) >= 1e-6;
+    if (entry.ratio >= 5 || lowFlowResidual) passed = false;
+    if (
+      entry.ratio > worst.ratio
+      || (entry.ratio === worst.ratio && Math.abs(entry.residual) > Math.abs(worst.residual))
+    ) {
+      worst = { day, goods, ...entry };
+    }
+  }
+  return { passed, worst };
+}
+
+export function runStableCityScenario(
+  seed,
+  { days = 7200, materialCheckInterval = 1 } = {},
+) {
+  if (!Number.isSafeInteger(days) || days <= 0) {
+    throw new TypeError("stable scenario days must be a positive safe integer");
+  }
+  if (!Number.isSafeInteger(materialCheckInterval) || materialCheckInterval <= 0) {
+    throw new TypeError("material check interval must be a positive safe integer");
+  }
+  const world = buildBaseCity(seed);
+  const { economy, physical } = world.state;
+  const initialTotals = materialTotals(economicMaterialSnapshot(economy, physical));
+  const initialFlows = captureMaterialFlows(economy);
+  const prices = stablePriceRanges(economy);
+  const yearly = [];
+  let previousFamine = 0;
+  let materialPassed = true;
+  let worstMaterial = { day: 0, goods: null, ratio: 0, residual: 0, throughput: 0 };
+
+  for (let day = 1; day <= days; day += 1) {
+    mimicPlayer(world, day);
+    world.step();
+    sampleStablePrices(economy, prices);
+    if (day % materialCheckInterval === 0 || day === days) {
+      const material = inspectStableMaterial(
+        economy,
+        physical,
+        initialTotals,
+        initialFlows,
+        day,
+      );
+      materialPassed &&= material.passed;
+      if (
+        material.worst.ratio > worstMaterial.ratio
+        || (
+          material.worst.ratio === worstMaterial.ratio
+          && Math.abs(material.worst.residual) > Math.abs(worstMaterial.residual)
+        )
+      ) worstMaterial = material.worst;
+    }
+    if (day % 360 === 0) {
+      const cumulativeFamine = economy.famine;
+      yearly.push({
+        year: day / 360,
+        day,
+        population: auditPopulation(economy),
+        famine: cumulativeFamine - previousFamine,
+        jobs: Object.fromEntries(E_STABLE_JOBS.map((job) => [
+          job,
+          economy.households.filter((household) => household.job === job).length,
+        ])),
+        companyMoney: economy.company.money * 10,
+        bankruptcyDay: economy.goDay,
+      });
+      previousFamine = cumulativeFamine;
+    }
+  }
+
+  const priceBandsPassed = Object.entries(E_STABLE_PRICE_BANDS).every(([goods, [low, high]]) => (
+    prices[goods].observations > 0
+    && prices[goods].min >= low
+    && prices[goods].max <= high
+  ));
+  const earlyFamine = average(yearly.slice(0, 5).map((sample) => sample.famine));
+  const lateFamine = average(yearly.slice(15, 20).map((sample) => sample.famine));
+  const bands = {
+    population: yearly.length === 20
+      && yearly.every((sample) => sample.population >= 80 && sample.population <= 250),
+    famine: earlyFamine !== null && lateFamine !== null && lateFamine <= earlyFamine,
+    jobs: yearly.length === 20 && yearly.every((sample) => (
+      E_STABLE_JOBS.every((job) => sample.jobs[job] >= 1)
+    )),
+    prices: priceBandsPassed,
+    material: materialPassed,
+    company: economy.goDay === null,
+  };
+  return {
+    seed,
+    day: world.state.day,
+    yearly,
+    prices,
+    famine: { earlyAverage: earlyFamine, lateAverage: lateFamine },
+    material: { passed: materialPassed, worst: worstMaterial },
+    physical: {
+      carriers: assertCarrierInvariants(physical),
+      occupancy: assertOccupancyInvariant(physical),
+    },
+    bankruptcyDay: economy.goDay,
+    bands,
+    passed: Object.values(bands).every(Boolean),
+  };
+}
+
+export function runStableCityAudit(
+  { seeds = AUDIT_SEEDS, days = 7200, materialCheckInterval = 1 } = {},
+) {
+  const scenarios = seeds.map((seed) => runStableCityScenario(seed, {
+    days,
+    materialCheckInterval,
+  }));
+  const bands = Object.fromEntries(
+    Object.keys(scenarios[0]?.bands ?? {}).map((band) => [
+      band,
+      scenarios.every((scenario) => scenario.bands[band]),
+    ]),
+  );
+  return {
+    seeds: [...seeds],
+    days,
+    scenarios,
+    bands,
+    passed: scenarios.length === seeds.length
+      && scenarios.every((scenario) => scenario.passed),
+  };
 }
 
 export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
@@ -593,7 +809,7 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
       carriers: assertCarrierInvariants(physical),
       occupancy: assertOccupancyInvariant(physical),
     },
-    material: ironScenarioMaterialReport(economy, physical, initialTotals, initialFlows),
+    material: scenarioMaterialReport(economy, physical, initialTotals, initialFlows),
   };
 }
 

@@ -119,12 +119,16 @@ import {
   stepMarketTrip,
 } from "../src/world.js";
 import {
+  E_STABLE_BASE,
   IRON_AUDIT_SITES,
+  buildBaseCity,
   canPlaceSettlement,
   createAuditWorld,
   createIronAuditWorld,
+  mimicPlayer,
   runFlowIslandAudit,
   runIronChainAudit,
+  runStableCityScenario,
 } from "../src/audit.js";
 
 const tests = [];
@@ -2445,6 +2449,69 @@ test("段36: 6年シナリオDでE-Fe1・2・4・5がすべて通る", () => {
       assert.ok(Math.abs(scenario.material[goods].residual) < 1e-6, goods);
     }
   }
+});
+
+test("段37: buildBaseCityは§7.0.1の13区画・市場・港・道網と一致する", () => {
+  const world = buildBaseCity(11);
+  const { economy, physical } = world.state;
+  assert.equal(world.state.day, 0);
+  assert.equal(world.state.seed, 11);
+  assert.deepEqual(economy.market, { x: 25, y: 32 });
+  assert.deepEqual(economy.port, { x: 25, y: 35 });
+  assert.deepEqual(
+    economy.zones.map(({ job, x, y, filled }) => [job, x, y, filled]),
+    E_STABLE_BASE.map(([job, x, y]) => [job, x, y, false]),
+  );
+  assert.deepEqual(Object.keys(physical.roads).sort(), [
+    "21,28", "22,29", "23,30", "24,31", "25,31", "25,32",
+    "25,33", "26,28", "26,29", "26,30", "27,26", "27,27",
+  ]);
+  assert.equal(physical.terrain[35][25].kind, "water");
+  assert.equal(hasRoad(physical, 25, 35), false);
+  assert.equal(hasRoad(physical, 25, 33), true);
+  for (const zone of economy.zones) {
+    assert.ok(pathLen(physical, zone, economy.market) <= 12, `${zone.job}@${zone.x},${zone.y}`);
+  }
+});
+
+test("段37: mimicPlayerは5日商館目標と90日ごと1軒の枯れ職再建を模写する", () => {
+  const world = buildBaseCity(11);
+  const { economy } = world.state;
+  const household = createHousehold(economy, { job: "veg", x: 20, y: 30 });
+  economy.order = { g: "salt", left: 23 };
+  economy.stock.salt = 7;
+
+  assert.deepEqual(mimicPlayer(world, 1), { stockTargetsUpdated: false, rebuilt: null });
+  assert.deepEqual(mimicPlayer(world, 5), { stockTargetsUpdated: true, rebuilt: null });
+  assert.equal(economy.stockTgt.salt, 30);
+  assert.equal(economy.stockTgt.wheat, household.members.length * 2);
+
+  economy.zones = economy.zones.filter(({ job }) => job !== "woodshop");
+  const before = economy.zones.length;
+  assert.deepEqual(mimicPlayer(world, 90), {
+    stockTargetsUpdated: true,
+    rebuilt: "woodshop",
+  });
+  assert.equal(economy.zones.length, before + 1);
+  assert.equal(economy.zones.filter(({ job }) => job === "woodshop").length, 1);
+});
+
+test("段38診断器: 年次帯・全日物資出納・物理不変条件を同じ走行から採取する", () => {
+  const scenario = runStableCityScenario(11, { days: 360 });
+  assert.equal(scenario.day, 360);
+  assert.deepEqual(scenario.physical, { carriers: true, occupancy: true });
+  assert.equal(scenario.material.passed, true);
+  assert.equal(scenario.yearly.length, 1);
+  assert.deepEqual(
+    {
+      year: scenario.yearly[0].year,
+      population: scenario.yearly[0].population,
+      famine: scenario.yearly[0].famine,
+      woodshop: scenario.yearly[0].jobs.woodshop,
+    },
+    { year: 1, population: 72, famine: 299, woodshop: 0 },
+  );
+  assert.equal(scenario.passed, false);
 });
 
 let failures = 0;

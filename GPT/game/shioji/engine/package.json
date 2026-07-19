@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit:stable": "node scripts/e_stable.mjs",
     "test": "node tests/run.mjs"
   }
 }
