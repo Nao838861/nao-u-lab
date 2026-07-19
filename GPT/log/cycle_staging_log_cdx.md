@@ -95,7 +95,36 @@ skipped: []
 - 重複扱い: 2026-05-09 の同論文を含む3記事まとめ投稿は、現行品質ゲート以前の短い外部検索候補だったため、今回の1 candidate 単独・高密度分析を補正版として `supersedes` に記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784433358-32432be2ff
+    source_ts: "1784433358.176329"
+    title: "Self in Space — 外界／自機 × 知覚／記憶／推論で game-agent 失敗を分解する"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・agent・evaluation を含む7タグを持ち、次の 3D navigation/headless 評価で camera/world motion 混同と memory/planner 失敗を分ける行動差を作れるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "既存の RNG-Bench paired-replay probe を、同一 seed/replay を保った self/space × perception/memory/reasoning 診断、ground-truth/input 分離、別 seed と closed-loop outcome 確認を行う期限付き probe に置換した。active probe 数は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
+
+- 採用理由: SIS-Bench は 1,646 video・4,856 QA・26 model と人間比較、visual-only SFT 対照を持つが、四択/open-loop 評価で当環境の closed-loop 実測はないため evidence=2。直前 probe の paired replay を残しつつ、自己運動／外界変化と知覚／記憶／推論の診断軸だけを追加した。
+- 撤退条件: 次の2回の一人称／三人称 navigation 評価後に、格子分類が修正判断を変えない、または ground truth/input 分離と別 seed/closed-loop 確認の保守負荷が診断価値を上回る場合は probe を退役する。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

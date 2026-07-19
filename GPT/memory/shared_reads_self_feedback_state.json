@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T12:59:12+09:00",
+  "updated_at": "2026-07-19T15:07:31+09:00",
   "reviewed_source_ts": [
+    "1784433358.176329",
     "1784425463.441119",
     "1784408323.132209",
     "1784400387.855359",
@@ -435,6 +436,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T15:07:31+09:00",
+      "selected": {
+        "id": "sr-1784433358-32432be2ff",
+        "source_ts": "1784433358.176329",
+        "title": "Self in Space — 外界／自機 × 知覚／記憶／推論で game-agent 失敗を分解する",
+        "reason": "最新の未レビュー score 12 atom で、memory・harness・game-design・agent・evaluation を含む7タグを持つ。aggregate goal 到達率の裏に埋もれる camera/world motion 混同、自己姿勢の喪失、履歴忘却、planner 破綻を分ける診断格子が、次の 3D navigation/headless 評価に行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "SIS-Bench の self/space × perception/memory/reasoning 格子は、同じ失敗に見える run を能力別に分解でき、固定 seed/replay と engine ground truth を使う小さな probe へ変換できる。直前の RNG-Bench probe は過去状態依存を baseline／state-assisted の介入差で分けるが、自己運動と外界変化、知覚・記憶・推論のどこが壊れたかまでは分類しないため non_redundancy=2 とした。一方、SIS-Bench は1,646 video・4,856 QA・26 model、人間比較と visual-only SFT 対照を持つが、四択/open-loop 評価であり当環境の closed-loop 実測はないため evidence=2。probe 純増を避け、RNG-Bench の同一 replay 比較を保持したまま本格子と input leakage／別 seed／closed-loop 確認を加える置換に留める。",
+      "existing_probes": [
+        "probe-20260719-rng-bench-state-assisted-replay",
+        "probe-20260626-matrix-game-long-horizon-memory-latency"
+      ],
+      "change": {
+        "type": "probe_replacement",
+        "summary": "RNG-Bench の paired-replay probe を、同一 seed/replay を保った self/space × perception/memory/reasoning 診断、ground-truth/input 分離、別 seed と closed-loop outcome 確認を行う期限付き probe に置換した。active probe 数は増やしていない。",
+        "replaces_probe": "probe-20260719-rng-bench-state-assisted-replay",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T12:59:12+09:00",
       "selected": {
@@ -11427,16 +11466,16 @@
       "status": "active"
     },
     {
-      "id": "probe-20260719-rng-bench-state-assisted-replay",
-      "created_at": "2026-07-19T08:19:44+09:00",
-      "source_ts": "1784408323.132209",
-      "scope": "next headless or browser game-agent evaluation where the correct action depends on an observation or action no longer visible in the current state",
+      "id": "probe-20260719-sis-self-space-diagnostic-grid",
+      "created_at": "2026-07-19T15:07:31+09:00",
+      "source_ts": "1784433358.176329",
+      "scope": "next headless or browser game-agent evaluation in a first-person or third-person prototype where camera motion, navigation history, self pose, or world-state change may be confused",
       "questions": [
-        "Before judging the failure, did I name one past-state dependency as identity-location, spatial, or semantic state and preserve one fixed seed, route, or deterministic replay for comparison?",
-        "Did I run the same replay in baseline and structured state-assisted conditions, and when observation-action binding is uncertain compare action trace present versus absent while recording success, invalid action, detour, collision, or recheck events?",
-        "Did I classify baseline-only failure repaired by state as memory_or_binding, failure in both conditions as policy_or_rule, and correct stated state followed by a wrong action as state_to_action, or label the diagnosis paired_replay_unverified when the contrast could not be run?"
+        "Before using aggregate success or goal arrival, did I place the expected evidence or observed failure in one cell of space/self × perception/memory/reasoning and preserve one fixed seed, route, or deterministic replay plus engine-derived ground truth?",
+        "Did I compare the same replay under RGB-only and exactly one added observation condition such as motion summary, bounded self-state, or structured history, while keeping ground-truth labels out of evaluator input and recording success, invalid action, detour, collision, or recheck events?",
+        "Did I credit the added observation only when the target cell improves on another seed and agrees with a closed-loop outcome, otherwise labeling the result perception, memory, reasoning_or_planner, input_leakage, or paired_replay_unverified before changing the model, harness, or game?"
       ],
-      "expires_after": "Review after the next headless or browser game-agent evaluation whose correct action depends on a no-longer-visible observation or past action."
+      "expires_after": "Review after the next two first-person or third-person navigation/headless evaluations that involve camera motion, route history, self pose, world-state change, motion summaries, structured state, or closed-loop goal outcomes."
     },
     {
       "id": "probe-20260612-memory-field-promotion-trial",
