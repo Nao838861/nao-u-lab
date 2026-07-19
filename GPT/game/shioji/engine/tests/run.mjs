@@ -6,6 +6,7 @@ import {
   JOBCLS,
   P,
   PERISH,
+  ageMarketStalls,
   assertCompanyLedger,
   assertMoneyConservation,
   createEconomicState,
@@ -19,10 +20,18 @@ import {
   initializeNaturalResources,
   localWood,
   postCompanyLedger,
+  productionCost,
   producePrimaryTick,
+  quoteAskPrice,
   recordExternalMoneyFlow,
   regenerateForest,
   runHouseholdSurvival,
+  runPrimaryProductionDay,
+  runWheatHarvest,
+  sellAtMarket,
+  sellOffers,
+  shouldPauseProduction,
+  staplePrice,
 } from "../src/econ.js";
 import {
   FOODS as FLOW_ISLAND_FOODS,
@@ -708,6 +717,150 @@ test("段14: 森は5日ごとに成長し隣接する森から禿山へ再生す
   regenerateForest(economy, physical, { day: 30, random: () => 0 });
   assert.equal(physical.terrain[1][1].kind, "forest");
   assert.equal(economy.natural.wood["1,1"], P.WOOD0 * 0.25);
+});
+
+test("段15: 麦はd255に年1回だけwheatWorkと施肥率から収穫する", () => {
+  const physical = createPhysicalState();
+  const economy = createEconomicState();
+  const farmer = createHousehold(economy, { job: "wheat", x: 4, y: 4 });
+  farmer.pantry.meal = P.FERT_NEED * 180;
+  const wheatBefore = farmer.pantry.wheat;
+
+  for (let day = 1; day <= 254; day += 1) {
+    runPrimaryProductionDay(economy, physical, { day });
+    assert.deepEqual(runWheatHarvest(economy, { day }), []);
+  }
+  assert.equal(farmer.pantry.wheat, wheatBefore);
+  assert.equal(farmer.jobCycleDone, false);
+
+  runPrimaryProductionDay(economy, physical, { day: 255 });
+  const harvest = runWheatHarvest(economy, { day: 255 });
+  const expected = P.Y_WHEAT * (255 / 300) * (1 + P.FERT_BOOST);
+  assert.equal(harvest.length, 1);
+  assert.ok(Math.abs(harvest[0].qty - expected) < 1e-8);
+  assert.ok(Math.abs(farmer.pantry.wheat - wheatBefore - expected) < 1e-8);
+  assert.equal(farmer.wheatWork, 0);
+  assert.equal(farmer.fert, 0);
+  assert.equal(farmer.jobCycleDone, true);
+
+  producePrimaryTick(economy, physical, farmer, { day: 256, fraction: 1 });
+  assert.equal(farmer.wheatWork, 0);
+});
+
+test("段15: pantryと自分の屋台が日産10日分を超えると生産を休む", () => {
+  const physical = createPhysicalState();
+  const economy = createEconomicState();
+  const shepherd = createHousehold(economy, { job: "shepherd", x: 4, y: 4 });
+  const tenDays = P.Y_MEAT * householdMult(shepherd) * 10;
+
+  shepherd.pantry.meat = tenDays;
+  assert.equal(shouldPauseProduction(economy, shepherd), false);
+  shepherd.pantry.meat += 1e-6;
+  assert.equal(shouldPauseProduction(economy, shepherd), true);
+  const clothBefore = shepherd.pantry.cloth;
+  producePrimaryTick(economy, physical, shepherd, { day: 1, fraction: 1 });
+  assert.equal(shepherd.pantry.cloth, clothBefore);
+
+  shepherd.pantry.meat = 0;
+  economy.stalls.meat.push({
+    householdId: shepherd.id,
+    qty: tenDays + 1e-6,
+    price: 1,
+    age: 0,
+  });
+  assert.equal(shouldPauseProduction(economy, shepherd), true);
+});
+
+test("段16: staple床1.0を保ちaskは必ず原価以上になる", () => {
+  const economy = createEconomicState();
+  economy.px.wheat = 0.2;
+  economy.px.veg = 0.4;
+  economy.px.pres = 0.8;
+  assert.equal(staplePrice(economy), 1);
+
+  const logger = createHousehold(economy, { job: "logger", x: 2, y: 2 });
+  const cost = productionCost(economy, null, logger, "log", { day: 1 });
+  for (const goods of ["log", "wheat"]) {
+    for (const randomValue of [0, 0.25, 0.999999]) {
+      const ask = quoteAskPrice(cost, goods, () => randomValue);
+      assert.ok(ask >= cost * 1.05);
+    }
+  }
+});
+
+test("段16: sellOffersは職業別keepと重量上限を守る", () => {
+  const economy = createEconomicState();
+  const logger = createHousehold(economy, { job: "logger", x: 2, y: 2 });
+  logger.pantry.log = 100;
+  const loggerOffers = sellOffers(economy, logger);
+  assert.equal(loggerOffers.log, householdHaul(logger) / 2);
+
+  const farmer = createHousehold(economy, { job: "wheat", x: 3, y: 2 });
+  farmer.pantry.wheat = 1_000;
+  const keep = householdEat(farmer) * P.RATION * 10;
+  const surplus = farmer.pantry.wheat - keep;
+  assert.equal(
+    sellOffers(economy, farmer).wheat,
+    Math.min(surplus * 0.1 + 2, surplus, householdHaul(farmer)),
+  );
+});
+
+test("段16: 石畳買付台は原価を割らない石だけを直接買い上げる", () => {
+  const economy = createEconomicState();
+  economy.paving = true;
+  const quarryman = createHousehold(economy, { job: "quarryman", x: 2, y: 2 });
+  quarryman.pantry.stone = 100;
+  const offered = sellOffers(economy, quarryman).stone;
+  const purseBefore = quarryman.purse;
+
+  const result = sellAtMarket(economy, null, quarryman, { day: 1, random: () => 0 });
+  assert.equal(result.listed.length, 0);
+  assert.equal(economy.paveBought, offered);
+  assert.equal(quarryman.pantry.stone, 100 - offered);
+  assert.equal(quarryman.purse, purseBefore + offered * 1.4);
+  assert.equal(economy.materialFlows.stone.cons, offered);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段16: 屋台在庫はJSON化でき6日売れなければ持ち主へ戻る", () => {
+  const economy = createEconomicState();
+  const artisan = createHousehold(economy, { job: "woodshop", x: 2, y: 2 });
+  artisan.pantry.tools = 100;
+  const before = economicMaterialSnapshot(economy);
+  const cost = productionCost(economy, null, artisan, "tools", { day: 1 });
+  const result = sellAtMarket(economy, null, artisan, { day: 1, random: () => 0 });
+
+  assert.equal(result.listed.length, 1);
+  assert.equal(result.listed[0].goods, "tools");
+  assert.ok(result.listed[0].price >= cost * 1.05);
+  assert.deepEqual(economicMaterialSnapshot(economy), before);
+  assert.doesNotThrow(() => JSON.stringify(economy));
+
+  for (let day = 2; day <= 7; day += 1) ageMarketStalls(economy, { day });
+  assert.equal(economy.stalls.tools.length, 0);
+  assert.equal(artisan.pantry.tools, 100);
+  assert.deepEqual(economicMaterialSnapshot(economy), before);
+});
+
+test("段16: 輸出財は屋台3日目にEXP上限まで本土へ流す", () => {
+  const economy = createEconomicState();
+  const fisher = createHousehold(economy, { job: "fisher", x: 2, y: 2 });
+  fisher.pantry.pres = 100;
+  const sale = sellAtMarket(economy, null, fisher, { day: 61, random: () => 0 });
+  assert.equal(sale.listed[0].goods, "pres");
+  const listedQty = sale.listed[0].qty;
+  const purseBefore = fisher.purse;
+
+  ageMarketStalls(economy, { day: 62 });
+  ageMarketStalls(economy, { day: 63 });
+  assert.equal(economy.exported.pres, undefined);
+  ageMarketStalls(economy, { day: 64 });
+
+  const exported = Math.min(listedQty, P.EXP_CAP.pres);
+  assert.equal(economy.exported.pres, exported);
+  assert.equal(fisher.purse, purseBefore + exported * P.EXP.pres);
+  assert.equal(economy.materialFlows.pres.exp, exported);
+  assert.equal(assertMoneyConservation(economy), true);
 });
 
 let failures = 0;

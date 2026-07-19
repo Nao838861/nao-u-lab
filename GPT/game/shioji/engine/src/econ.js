@@ -261,6 +261,9 @@ export function economicMaterialSnapshot(economy) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
   }
+  for (const [goods, stalls] of Object.entries(economy.stalls)) {
+    for (const stall of stalls) inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
+  }
   return { inventory, cargo };
 }
 
@@ -280,11 +283,19 @@ function recordEconomyEvent(economy, day, message) {
 
 function disperseHousehold(economy, household, day) {
   recordEconomyEvent(economy, day, `☠ ${household.sur}家は離散した——家は廃屋になった`);
+  const inventory = structuredClone(household.pantry);
+  for (const [goods, stalls] of Object.entries(economy.stalls)) {
+    for (let index = stalls.length - 1; index >= 0; index -= 1) {
+      if (stalls[index].householdId !== household.id) continue;
+      inventory[goods] += stalls[index].qty;
+      stalls.splice(index, 1);
+    }
+  }
   economy.ruins.push({
     x: household.x,
     y: household.y,
     formerHouseholdId: household.id,
-    inventory: structuredClone(household.pantry),
+    inventory,
   });
   const rest = economy.households.filter((candidate) => candidate !== household);
   if (rest.length > 0 && household.purse > 0) {
@@ -437,11 +448,320 @@ export function localWood(economy, physical, household) {
   return Math.min(1, stock / (P.WOOD0 * 8));
 }
 
+const OUTPUT_GOODS_BY_JOB = deepFreeze({
+  saltworks: "salt",
+  logger: "log",
+  woodshop: "tools",
+  charburner: "char",
+  quarryman: "stone",
+  rapeseed: "oil",
+  fisher2: "meal",
+  shepherd: "meat",
+});
+
+const DAILY_OUTPUT_BY_GOODS = deepFreeze({
+  salt: P.Y_SALT,
+  log: P.Y_LOG,
+  tools: P.Y_TOOLS,
+  char: P.Y_CHAR,
+  stone: P.Y_STONE,
+  oil: P.Y_OIL,
+  meal: P.Y_FISH / P.MEAL_FISH,
+  meat: P.Y_MEAT,
+  veg: P.Y_VEG,
+});
+
+function householdStallQuantity(economy, household, goods) {
+  return economy.stalls[goods].reduce((total, stall) => (
+    total + (stall.householdId === household.id ? stall.qty : 0)
+  ), 0);
+}
+
+function hasHouseholdStall(economy, household) {
+  return GOODS.some((goods) => economy.stalls[goods].some(
+    (stall) => stall.householdId === household.id,
+  ));
+}
+
+export function shouldPauseProduction(economy, household) {
+  const goods = OUTPUT_GOODS_BY_JOB[household.job];
+  if (!goods) return false;
+  const daily = DAILY_OUTPUT_BY_GOODS[goods] * householdMult(household);
+  return household.pantry[goods] + householdStallQuantity(economy, household, goods) > daily * 10;
+}
+
+export function staplePrice(economy) {
+  return Math.max(
+    1,
+    Math.min(
+      economy.px.wheat ?? 2,
+      economy.px.veg ?? 9,
+      economy.px.pres ?? 9,
+      P.IMP.wheat,
+    ),
+  );
+}
+
+export function productionCost(economy, physical, household, goods, { day = economy.currentDay } = {}) {
+  const month = (Math.floor((Math.max(1, day) - 1) / 30) % 12) + 1;
+  const winter = month >= 10 || month <= 2;
+  const dailyYield = {
+    fish: winter ? P.Y_FISH_W : P.Y_FISH,
+    veg: month >= 3 && month <= 10 ? P.Y_VEG : 0.01,
+    wheat: P.Y_WHEAT / 360,
+    meat: P.Y_MEAT,
+    cloth: P.Y_CLOTH,
+    tools: P.Y_TOOLS,
+    char: P.Y_CHAR,
+    salt: P.Y_SALT,
+    stone: P.Y_STONE,
+    oil: month >= 3 && month <= 8 ? P.Y_OIL : 0.01,
+    meal: P.Y_FISH / P.MEAL_FISH,
+    log: P.Y_LOG,
+    pres: (winter ? P.Y_FISH_W : P.Y_FISH) * P.PR_SALT,
+    pick: P.Y_VEG * P.PR_PICK,
+  }[goods] ?? 1;
+  const scarcity = {
+    log: localWood(economy, physical, household),
+    fish: economy.natural.bay / P.BAY0,
+    pres: economy.natural.bay / P.BAY0,
+  }[goods] ?? 1;
+  const labor = householdEat(household) * staplePrice(economy)
+    / (dailyYield * householdMult(household) * Math.max(0.5, scarcity));
+  const input = {
+    salt: (P.SALT_CHAR / P.Y_SALT) * (economy.px.char ?? 2),
+    tools: P.LOG_TOOL * (economy.px.log ?? 1),
+    char: P.LOG_CHAR * (economy.px.log ?? 1),
+    pres: P.PRES_SALT * (economy.px.salt ?? 2) / P.PR_SALT,
+    pick: P.PICK_SALT * (economy.px.salt ?? 2) / P.PR_PICK,
+  }[goods] ?? 0;
+  return labor + input;
+}
+
+export function sellOffers(economy, household) {
+  const offers = {};
+  const goods = {
+    fisher: "fish",
+    veg: "veg",
+    wheat: "wheat",
+    shepherd: "meat",
+    logger: "log",
+    woodshop: "tools",
+    charburner: "char",
+    saltworks: "salt",
+    fisher2: "meal",
+    quarryman: "stone",
+    rapeseed: "oil",
+  }[household.job];
+
+  if (goods === "meal") {
+    if (household.pantry.meal >= 15) return { meal: Math.min(household.pantry.meal, P.HAUL) };
+    return {};
+  }
+  if (goods === "fish") {
+    let keep = householdEat(household) * 1.2;
+    const alternative = Math.min(economy.px.veg ?? 9, economy.px.wheat ?? 9, economy.px.pres ?? 9);
+    if ((economy.px.fish ?? 2) > alternative * 1.5) keep = householdEat(household) * 0.4;
+    keep += Math.min(household.pantry.salt / P.PRES_SALT, 12);
+    const surplus = Math.max(0, household.pantry.fish - keep);
+    if (surplus > 1e-9) offers.fish = Math.min(surplus, householdHaul(household));
+  } else {
+    let keep = FOODS.includes(goods) ? householdEat(household) * 2 : 2;
+    let rate = 0.5;
+    if (goods === "wheat") {
+      rate = 0.1;
+      keep = householdEat(household) * P.RATION * 10;
+    }
+    if (goods === "veg") keep = householdEat(household) * P.RATION * 10;
+    const surplus = Math.max(0, household.pantry[goods] - keep);
+    if (surplus > 1e-9) {
+      offers[goods] = Math.min(
+        surplus * rate + 2,
+        surplus,
+        goods === "log" ? householdHaul(household) / 2 : householdHaul(household),
+      );
+    }
+  }
+  if (household.job === "fisher" && household.pantry.pres > P.EAT * P.PANTRY_FOOD_D) {
+    offers.pres = Math.min(
+      household.pantry.pres - P.EAT * P.PANTRY_FOOD_D,
+      householdHaul(household),
+    );
+  }
+  if (household.job === "veg" && household.pantry.pick > 10) {
+    offers.pick = Math.min(household.pantry.pick - 5, householdHaul(household));
+  }
+  if (household.job === "shepherd" && household.pantry.cloth > 2) {
+    offers.cloth = Math.min(household.pantry.cloth - 1, householdHaul(household));
+  }
+  return offers;
+}
+
+export function quoteAskPrice(cost, goods, random) {
+  if (!Number.isFinite(cost) || cost < 0) throw new TypeError("cost must be non-negative and finite");
+  if (typeof random !== "function") throw new TypeError("random must be a function");
+  let ask = cost * (1.05 + random() * 1.25);
+  if (P.IMP[goods]) ask = Math.min(ask, P.IMP[goods] * 0.97);
+  return Math.max(ask, cost * 1.05);
+}
+
+function findHousehold(economy, householdId) {
+  return economy.households.find((household) => household.id === householdId);
+}
+
+function exportHouseholdGoods(economy, household, goods, qty, price, day) {
+  const purchase = qty * price;
+  household.purse += purchase;
+  household.income30 += purchase;
+  postCompanyLedger(economy.company, {
+    day,
+    amount: -purchase,
+    reason: `世帯${household.id}から${goods}を輸出買付`,
+  });
+  economy.co.expBuy += purchase;
+  economy.exported[goods] = (economy.exported[goods] ?? 0) + qty;
+  recordEconomicMaterialFlow(economy, goods, "exp", qty, `${goods}を本土へ輸出`);
+
+  const revenue = qty * economy.expMl[goods];
+  postCompanyLedger(economy.company, {
+    day,
+    amount: revenue,
+    reason: `${goods}の本土売上`,
+  });
+  recordExternalMoneyFlow(economy, { amount: revenue, reason: `${goods}の本土売上` });
+  economy.co.expSell += revenue;
+}
+
+export function sellAtMarket(economy, physical, household, { day, random }) {
+  const offers = sellOffers(economy, household);
+  const listed = [];
+  for (const [goods, offered] of Object.entries(offers)) {
+    let qty = offered;
+    const desks = [];
+    if (P.EXP[goods] !== undefined) desks.push(["EXP", P.EXP[goods], economy.expCap[goods]]);
+    if (goods === "stone" && economy.paving && !economy.paved) desks.push(["PAVE", 1.4, Infinity]);
+    desks.sort((a, b) => b[1] - a[1]);
+    for (const [kind, price, cap] of desks) {
+      if (qty <= 1e-9) break;
+      const cost = productionCost(economy, physical, household, goods, { day });
+      if (price < cost) continue;
+      const deskKey = `${kind}${goods}`;
+      const used = economy.deskUsed[deskKey] ?? 0;
+      const accepted = Math.min(qty, Math.max(0, cap - used));
+      if (accepted > 1e-9) {
+        economy.deskUsed[deskKey] = used + accepted;
+        household.pantry[goods] -= accepted;
+        if (kind === "EXP") {
+          exportHouseholdGoods(economy, household, goods, accepted, price, day);
+        } else if (kind === "PAVE") {
+          const purchase = accepted * price;
+          household.purse += purchase;
+          household.income30 += purchase;
+          postCompanyLedger(economy.company, {
+            day,
+            amount: -purchase,
+            reason: `世帯${household.id}から石畳用stoneを買付`,
+          });
+          economy.paveBought += accepted;
+          recordEconomicMaterialFlow(economy, "stone", "cons", accepted, "石畳への投入");
+        }
+        qty -= accepted;
+      }
+    }
+    if (qty > 1e-9) {
+      household.pantry[goods] -= qty;
+      const cost = productionCost(economy, physical, household, goods, { day });
+      const price = quoteAskPrice(cost, goods, random);
+      const stall = { householdId: household.id, qty, price, age: 0 };
+      economy.stalls[goods].push(stall);
+      listed.push({ goods, ...stall });
+    }
+  }
+  return { offers, listed };
+}
+
+export function ageMarketStalls(economy, { day }) {
+  economy.currentDay = day;
+  economy.deskUsed = {};
+  for (const goods of GOODS) {
+    const stalls = economy.stalls[goods];
+    for (let index = stalls.length - 1; index >= 0; index -= 1) {
+      const stall = stalls[index];
+      const household = findHousehold(economy, stall.householdId);
+      stall.age = (stall.age ?? 0) + 1;
+      if (stall.age >= 3 && household && P.EXP[goods] !== undefined) {
+        const used = economy.deskUsed[`EXP${goods}`] ?? 0;
+        const accepted = Math.min(stall.qty, Math.max(0, economy.expCap[goods] - used));
+        if (accepted > 1e-9) {
+          economy.deskUsed[`EXP${goods}`] = used + accepted;
+          stall.qty -= accepted;
+          exportHouseholdGoods(economy, household, goods, accepted, P.EXP[goods], day);
+        }
+      }
+      if (stall.age >= 6 && household && goods !== "fish" && goods !== "veg") {
+        household.pantry[goods] += stall.qty;
+        stall.qty = 0;
+      }
+      if (goods === "fish" && stall.qty > 0) {
+        const spoiled = stall.qty / P.FISH_LIFE;
+        stall.qty -= spoiled;
+        economy.led.spoil.fish = (economy.led.spoil.fish ?? 0) + spoiled;
+        recordEconomicMaterialFlow(economy, "fish", "cons", spoiled, "屋台の魚の腐敗");
+      }
+      if (goods === "veg" && stall.qty > 0) {
+        const spoiled = stall.qty / P.VEG_LIFE;
+        stall.qty -= spoiled;
+        economy.led.spoil.veg = (economy.led.spoil.veg ?? 0) + spoiled;
+        recordEconomicMaterialFlow(economy, "veg", "cons", spoiled, "屋台の野菜の腐敗");
+      }
+      if (stall.qty < 0.5 || stall.price < 0.05) {
+        if (household) household.pantry[goods] += Math.max(0, stall.qty);
+        stalls.splice(index, 1);
+      }
+    }
+  }
+}
+
+export function runWheatHarvest(economy, { day }) {
+  const month = (Math.floor((day - 1) / 30) % 12) + 1;
+  if (month !== 9 || day % 30 !== 15) return [];
+  const harvested = [];
+  for (const household of economy.households) {
+    if (household.job !== "wheat") continue;
+    const fill = Math.min(1, (household.fert ?? 0) / (P.FERT_NEED * 180));
+    const qty = P.Y_WHEAT
+      * householdMult(household)
+      * Math.min(1, household.wheatWork / 300)
+      * (1 + P.FERT_BOOST * fill);
+    household.pantry.wheat += qty;
+    economy.led.prod.wheat = (economy.led.prod.wheat ?? 0) + qty;
+    recordEconomicMaterialFlow(economy, "wheat", "prod", qty, `世帯${household.id}の麦収穫`);
+    economy.harvestLog.push([day, qty]);
+    harvested.push({ householdId: household.id, qty, fertilizerFill: fill });
+    household.wheatWork = 0;
+    household.fert = 0;
+    household.jobCycleDone = true;
+    if (fill > 0.05) {
+      recordEconomyEvent(
+        economy,
+        day,
+        `麦畑#${household.id} 施肥${Math.round(fill * 100)}%→+${Math.round(P.FERT_BOOST * fill * 100)}%`,
+      );
+    }
+  }
+  return harvested;
+}
+
 export function producePrimaryTick(economy, physical, household, { day, fraction }) {
   if (!Number.isFinite(fraction) || fraction < 0) throw new TypeError("production fraction must be non-negative and finite");
   const month = (Math.floor((day - 1) / 30) % 12) + 1;
   const winter = month >= 10;
-  const work = fraction * householdMult(household);
+  let effectiveFraction = fraction;
+  if (hasHouseholdStall(economy, household)) {
+    effectiveFraction *= (household.members.length - 1) / household.members.length;
+  }
+  if (shouldPauseProduction(economy, household)) return {};
+  const work = effectiveFraction * householdMult(household);
   const produced = {};
 
   if (household.job === "fisher") {
@@ -472,6 +792,17 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "cloth", "prod", cloth, `世帯${household.id}の牧畜`);
     produced.meat = meat;
     produced.cloth = cloth;
+  } else if (household.job === "wheat") {
+    if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) return produced;
+    household.wheatWork += effectiveFraction;
+    if (month >= 3 && month <= 8) {
+      const used = Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction);
+      household.pantry.meal -= used;
+      household.fert = (household.fert ?? 0) + used;
+      if (used > 0) {
+        recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の施肥`);
+      }
+    }
   } else if (household.job === "logger") {
     const qty = chopWood(economy, physical, household, P.Y_LOG * work);
     household.pantry.log += qty;
@@ -619,6 +950,17 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     events: [],
     currentDay: 0,
     natural: { bay: P.BAY0, bay2: P.BAY0, wood: {} },
+    px: { ...P.BELIEF0 },
+    stalls: Object.fromEntries(GOODS.map((goods) => [goods, []])),
+    expCap: { ...P.EXP_CAP },
+    expMl: { ...P.EXP_ML },
+    deskUsed: {},
+    co: { expBuy: 0, expSell: 0 },
+    exported: {},
+    harvestLog: [],
+    paving: false,
+    paved: false,
+    paveBought: 0,
     moneyBoundary: {
       openingTotal: initialCompanyMoney,
       in: 0,
