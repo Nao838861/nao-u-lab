@@ -2,6 +2,7 @@ import {
   GOODS,
   P,
   companyCreditLimit,
+  createHousehold,
   economicMaterialSnapshot,
   fundSettlementZone,
   localWood,
@@ -37,6 +38,15 @@ const LEGACY_AUDIT_JOBS = Object.freeze([
   "fisher", "fisher2", "wheat", "veg", "shepherd", "rapeseed",
   "logger", "woodshop", "charburner", "quarryman", "saltworks",
 ]);
+
+export const IRON_AUDIT_SITES = Object.freeze([
+  Object.freeze({ job: "miner", x: 12, y: 20, roadTarget: Object.freeze({ x: 13, y: 20 }) }),
+  Object.freeze({ job: "collier", x: 7, y: 30, roadTarget: Object.freeze({ x: 8, y: 30 }) }),
+  Object.freeze({ job: "smelter", x: 28, y: 30 }),
+  Object.freeze({ job: "smith", x: 29, y: 32 }),
+]);
+const IRON_AUDIT_START_DAY = 720;
+const IRON_DEMAND_HOUSEHOLDS = 8;
 
 export const AUDIT_ROAD_TARGETS = Object.freeze([
   Object.freeze({ x: 27, y: 26 }),
@@ -143,6 +153,45 @@ export function createAuditWorld(seed) {
       throw new Error(`基準村の道路敷設不可: ${target?.x},${target?.y}`);
     }
   }
+  return world;
+}
+
+function placeIronAuditHouseholds(world) {
+  const { economy } = world.state;
+  economy.jobSelectionPool = [
+    ...LEGACY_AUDIT_JOBS,
+    ...IRON_AUDIT_SITES.map(({ job }) => job),
+  ];
+  for (const site of IRON_AUDIT_SITES) {
+    let { x, y } = site;
+    if (!canPlaceSettlement(economy, world.state.physical, site.job, x, y)[0] && !site.roadTarget) {
+      const fallback = findAuditSpot(world, site.job);
+      if (fallback) [x, y] = fallback;
+    }
+    if (!addAuditZone(world, site.job, x, y)) {
+      throw new Error(`鉄監査の配置不可: ${site.job}@${x},${y}`);
+    }
+    economy.zones.at(-1).filled = true;
+    createHousehold(economy, { job: site.job, x, y });
+  }
+}
+
+export function createIronAuditWorld(
+  seed,
+  { depositRoads = true, placeHouseholds = true } = {},
+) {
+  const world = createAuditWorld(seed);
+  const { economy, physical } = world.state;
+  if (depositRoads) {
+    for (const { roadTarget } of IRON_AUDIT_SITES) {
+      if (!roadTarget) continue;
+      const road = addRoadLine(physical, economy.market, roadTarget);
+      if (!road.ok && !road.cells.every((cell) => hasRoad(physical, cell.x, cell.y))) {
+        throw new Error(`鉄監査の鉱床道路敷設不可: ${roadTarget.x},${roadTarget.y}`);
+      }
+    }
+  }
+  if (placeHouseholds) placeIronAuditHouseholds(world);
   return world;
 }
 
@@ -416,6 +465,198 @@ function runMaterialAudit() {
       warning: ratio > 10,
     }];
   }));
+}
+
+function materialTotals(snapshot) {
+  return Object.fromEntries(GOODS.map((goods) => [
+    goods,
+    (snapshot.inventory[goods] ?? 0) + (snapshot.cargo[goods] ?? 0),
+  ]));
+}
+
+function captureMaterialFlows(economy) {
+  return Object.fromEntries(GOODS.map((goods) => [
+    goods,
+    { ...(economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 }) },
+  ]));
+}
+
+function ironScenarioMaterialReport(economy, physical, initialTotals, initialFlows) {
+  const finalTotals = materialTotals(economicMaterialSnapshot(economy, physical));
+  return Object.fromEntries(GOODS.map((goods) => {
+    const finalFlow = economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
+    const delta = Object.fromEntries(["prod", "cons", "imp", "exp"].map((kind) => [
+      kind,
+      finalFlow[kind] - initialFlows[goods][kind],
+    ]));
+    const explained = delta.prod - delta.cons + delta.imp - delta.exp;
+    const residual = finalTotals[goods] - initialTotals[goods] - explained;
+    const throughput = Math.abs(delta.prod) + Math.abs(delta.cons)
+      + Math.abs(delta.imp) + Math.abs(delta.exp);
+    return [goods, {
+      residual,
+      throughput,
+      ratio: throughput > 1 ? Math.abs(residual) / throughput * 100 : 0,
+    }];
+  }));
+}
+
+export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
+  const world = createIronAuditWorld(seed, { depositRoads, placeHouseholds: false });
+  const { economy, physical } = world.state;
+  const initialTotals = materialTotals(economicMaterialSnapshot(economy, physical));
+  const initialFlows = captureMaterialFlows(economy);
+  const plan = { 13: "wheat", 16: "logger", 20: "fisher", 26: "woodshop", 30: "rapeseed" };
+  const ironJobSwitches = [];
+  const yearly = [];
+  const maxIncomes = Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [job, 0]));
+  for (let day = 1; day <= days; day += 1) {
+    if (day % 30 === 1) {
+      const month = Math.floor(day / 30) + 1;
+      if (plan[month]) {
+        const spot = findAuditSpot(world, plan[month]);
+        if (spot) addAuditZone(world, plan[month], spot[0], spot[1]);
+      }
+    }
+    if (day % 5 === 0) setPlayerStockTargets(economy);
+    if (day % 90 === 0 && economy.company.money * 10 > 8000) {
+      for (const job of ["woodshop", "charburner", "saltworks"]) {
+        if (countJobAndZones(economy, job) >= 1) continue;
+        const spot = findAuditSpot(world, job);
+        if (spot) {
+          addAuditZone(world, job, spot[0], spot[1]);
+          break;
+        }
+      }
+    }
+    if (day === IRON_AUDIT_START_DAY + 1) {
+      for (const household of economy.households.slice(0, IRON_DEMAND_HOUSEHOLDS)) {
+        household.lv = Math.max(household.lv, 5);
+        household.up = 0;
+        household.down = 0;
+      }
+      placeIronAuditHouseholds(world);
+    }
+    world.step();
+    for (const { job } of IRON_AUDIT_SITES) {
+      maxIncomes[job] = Math.max(
+        maxIncomes[job],
+        ...economy.households
+          .filter((household) => household.job === job)
+          .map((household) => (household.incY ?? 0) * 10),
+      );
+    }
+    for (const [eventDay, message] of economy.events) {
+      if (eventDay === day && message.startsWith("破綻転職:")) {
+        const touchesIronJob = IRON_AUDIT_SITES.some(({ job }) => message.includes(job));
+        if (touchesIronJob && !ironJobSwitches.some((entry) => (
+          entry.day === day && entry.message === message
+        ))) {
+          const householdId = Number(message.match(/#(\d+)/)?.[1]);
+          const household = economy.households.find(({ id }) => id === householdId);
+          ironJobSwitches.push({
+            day,
+            message,
+            purse: household?.purse ?? null,
+            income: (household?.incY ?? 0) * 10,
+            hunger180: household?.hungerHist?.reduce((total, value) => total + value, 0) ?? null,
+            insolvencyMonths: household?.insolvM ?? null,
+          });
+        }
+      }
+    }
+    if (day % 360 === 0) {
+      yearly.push({
+        day,
+        ironImport: economy.f30.iron?.imp ?? 0,
+        ironProduction: economy.f30.iron?.prod ?? 0,
+        level5: economy.households.filter((household) => household.lv >= 5).length,
+        jobs: Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [
+          job,
+          economy.households.filter((household) => household.job === job).length,
+        ])),
+      });
+    }
+  }
+  return {
+    day: world.state.day,
+    ironImport: economy.f30.iron?.imp ?? 0,
+    ironProduction: economy.f30.iron?.prod ?? 0,
+    incomes: maxIncomes,
+    ironJobSwitches,
+    yearly,
+    jobs: Object.fromEntries(IRON_AUDIT_SITES.map(({ job }) => [
+      job,
+      economy.households.filter((household) => household.job === job).length,
+    ])),
+    physical: {
+      carriers: assertCarrierInvariants(physical),
+      occupancy: assertOccupancyInvariant(physical),
+    },
+    material: ironScenarioMaterialReport(economy, physical, initialTotals, initialFlows),
+  };
+}
+
+export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
+  const connected = runIronChainScenario({ seed, depositRoads: true, days });
+  const disconnected = runIronChainScenario({ seed, depositRoads: false, days });
+  const materialGreen = [connected, disconnected].every((scenario) => (
+    GOODS.every((goods) => Math.abs(scenario.material[goods].residual) < 1e-6)
+    && scenario.physical.carriers
+    && scenario.physical.occupancy
+  ));
+  const replacement = connected.yearly.find((sample) => (
+    sample.day > IRON_AUDIT_START_DAY
+    && sample.ironImport < 0.05
+    && sample.ironProduction > 0.05
+  ));
+  const disconnectedAtReplacement = disconnected.yearly.find((sample) => (
+    sample.day === replacement?.day
+  ));
+  const results = [
+    {
+      id: "E-Fe1",
+      passed: Boolean(replacement),
+      detail: replacement
+        ? `day${replacement.day} 鉄輸入EMA ${replacement.ironImport.toFixed(3)} / 国産EMA ${replacement.ironProduction.toFixed(3)}`
+        : "6年以内に国産置換を観測できず",
+    },
+    {
+      id: "E-Fe2",
+      passed: Object.values(connected.incomes).every((income) => income > 2000),
+      detail: Object.entries(connected.incomes)
+        .map(([job, income]) => `${job}:${Math.round(income)}`)
+        .join(" "),
+    },
+    {
+      id: "E-Fe4",
+      passed: Boolean(
+        replacement
+        && disconnectedAtReplacement
+        && disconnectedAtReplacement.ironProduction < 0.05
+        && replacement.ironProduction > disconnectedAtReplacement.ironProduction * 10,
+      ),
+      detail: replacement && disconnectedAtReplacement
+        ? `day${replacement.day} 国産EMA 道路あり${replacement.ironProduction.toFixed(3)} / なし${disconnectedAtReplacement.ironProduction.toFixed(3)}`
+        : "比較可能な国産置換時点なし",
+    },
+    {
+      id: "E-Fe5",
+      passed: materialGreen,
+      detail: `最大残差${Math.max(
+        ...[connected, disconnected].flatMap((scenario) => (
+          GOODS.map((goods) => Math.abs(scenario.material[goods].residual))
+        )),
+      ).toExponential(3)}`,
+    },
+  ];
+  return {
+    connected,
+    disconnected,
+    results,
+    passed: results.filter((result) => result.passed).length,
+    total: results.length,
+  };
 }
 
 export function runFlowIslandAudit() {

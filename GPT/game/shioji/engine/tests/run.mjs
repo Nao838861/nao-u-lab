@@ -118,14 +118,27 @@ import {
   ensureHouseholdInputSites,
   stepMarketTrip,
 } from "../src/world.js";
-import { canPlaceSettlement, createAuditWorld, runFlowIslandAudit } from "../src/audit.js";
+import {
+  IRON_AUDIT_SITES,
+  canPlaceSettlement,
+  createAuditWorld,
+  createIronAuditWorld,
+  runFlowIslandAudit,
+  runIronChainAudit,
+} from "../src/audit.js";
 
 const tests = [];
 let cachedFlowIslandAudit = null;
+let cachedIronChainAudit = null;
 
 function flowIslandAudit() {
   cachedFlowIslandAudit ??= runFlowIslandAudit();
   return cachedFlowIslandAudit;
+}
+
+function ironChainAudit() {
+  cachedIronChainAudit ??= runIronChainAudit();
+  return cachedIronChainAudit;
 }
 
 function test(name, run) {
@@ -664,6 +677,7 @@ test("段13: 採集床0.75の後も不足すれば飢えが連続する", () => 
   assert.equal(economy.hungryN, 1);
   assert.equal(economy.famine, 1);
   assert.ok(Math.abs(economy.materialFlows.veg.prod - 0.9) < 1e-9);
+  assert.ok(Math.abs(economy.materialFlows.veg.cons - 0.9) < 1e-9);
 });
 
 test("段13: 飢え60日で死亡し人数2以下なら同日に離散・近所相続する", () => {
@@ -2300,6 +2314,137 @@ test("段34: 製鉄・鍛冶の原料買い天井式を適用する", () => {
   assert.deepEqual(smithTargets.bar, [10, smithCeiling]);
   assert.deepEqual(smithTargets.char, [5, smithCeiling]);
   assert.deepEqual(smithTargets.coal, [5, smithCeiling]);
+});
+
+test("段35 E-Fe3: 炭焼なしでも安い石炭棚を選び製鉄が回る", () => {
+  const economy = createEconomicState();
+  economy.px.bar = 4;
+  const smelter = createHousehold(economy, { job: "smelter", x: 20, y: 20 });
+  const coalSeller = createHousehold(economy, { job: "collier", x: 3, y: 25 });
+  const otherSeller = createHousehold(economy, { job: "logger", x: 27, y: 26 });
+  assert.equal(economy.households.some((household) => household.job === "charburner"), false);
+  smelter.pantry.ore = 0;
+  smelter.pantry.char = 0;
+  smelter.pantry.coal = 0;
+  smelter.pantry.bar = 0;
+  smelter.purse = 100;
+  economy.stalls.char.push({
+    householdId: otherSeller.id,
+    qty: 10,
+    price: 1.1,
+    age: 0,
+  });
+  economy.stalls.coal.push({
+    householdId: coalSeller.id,
+    qty: 10,
+    price: 0.7,
+    age: 0,
+  });
+
+  const purchase = buyAtMarket(economy, smelter, { day: 1 });
+  const fuelPurchases = purchase.transactions.filter(({ goods }) => (
+    goods === "char" || goods === "coal"
+  ));
+  assert.deepEqual(
+    fuelPurchases.map(({ goods, qty, price }) => ({ goods, qty, price })),
+    [{ goods: "coal", qty: 10, price: 0.7 }],
+  );
+  assert.equal(smelter.pantry.char, 0);
+  assert.equal(smelter.pantry.coal, 10);
+  assert.equal(purchase.remainingCapacity, smelter.members.length * 4 - 10);
+
+  smelter.pantry.ore = 4;
+  const produced = producePrimaryTick(economy, null, smelter, { day: 1, fraction: 1 });
+  assert.deepEqual(produced, { bar: 2 });
+  assert.equal(smelter.pantry.ore, 0);
+  assert.equal(smelter.pantry.coal, 8);
+  assert.equal(smelter.pantry.bar, 2);
+});
+
+test("段36: §6.4の成立算術はLv0で輸入鉄より高く、成長後に下回る", () => {
+  const chainCost = ({ upstreamLevel, smithLevel }) => {
+    const economy = createEconomicState();
+    const miner = createHousehold(economy, { job: "miner", x: 0, y: 0 });
+    const collier = createHousehold(economy, { job: "collier", x: 1, y: 0 });
+    const smelter = createHousehold(economy, { job: "smelter", x: 2, y: 0 });
+    const smith = createHousehold(economy, { job: "smith", x: 3, y: 0 });
+    for (const household of [miner, collier, smelter, smith]) {
+      household.members = Array.from({ length: 9 }, (_, index) => ({
+        name: `算術${index}`,
+        sex: "♂",
+        age: 30,
+      }));
+    }
+    miner.lv = upstreamLevel;
+    collier.lv = upstreamLevel;
+    smelter.lv = upstreamLevel;
+    smith.lv = smithLevel;
+    const ore = productionCost(economy, null, miner, "ore", { day: 1 });
+    const coal = productionCost(economy, null, collier, "coal", { day: 1 });
+    economy.px.ore = ore;
+    economy.px.coal = coal;
+    economy.px.char = 99;
+    const bar = productionCost(economy, null, smelter, "bar", { day: 1 });
+    economy.px.bar = bar;
+    const iron = productionCost(economy, null, smith, "iron", { day: 1 });
+    return { ore, coal, bar, iron };
+  };
+
+  const immature = chainCost({ upstreamLevel: 0, smithLevel: 0 });
+  const levelOne = chainCost({ upstreamLevel: 1, smithLevel: 1 });
+  const matured = chainCost({ upstreamLevel: 1, smithLevel: 2 });
+  assert.ok(Math.abs(immature.iron - 5.560714285714286) < 1e-12);
+  assert.ok(immature.iron > P.IMP.iron);
+  assert.ok(Math.abs(levelOne.iron - 3.5083370887787293) < 1e-12);
+  assert.ok(matured.iron >= 2.9 && matured.iron <= 3.5);
+  assert.ok(levelOne.iron < P.IMP.iron);
+  assert.ok(matured.iron < levelOne.iron);
+});
+
+test("段36: シナリオDの鉱床道路だけが遠隔2職の市場往復を30tick以内にする", () => {
+  const connected = createIronAuditWorld(11, {
+    depositRoads: true,
+    placeHouseholds: false,
+  });
+  const disconnected = createIronAuditWorld(11, {
+    depositRoads: false,
+    placeHouseholds: false,
+  });
+  for (const site of IRON_AUDIT_SITES.filter(({ roadTarget }) => roadTarget)) {
+    const withRoad = marketTripDuration(
+      connected.state.economy,
+      connected.state.physical,
+      site,
+    );
+    const withoutRoad = marketTripDuration(
+      disconnected.state.economy,
+      disconnected.state.physical,
+      site,
+    );
+    assert.ok(withRoad <= 30, `${site.job}: ${withRoad}`);
+    assert.ok(withoutRoad > 30, `${site.job}: ${withoutRoad}`);
+  }
+});
+
+test("段36: 6年シナリオDでE-Fe1・2・4・5がすべて通る", () => {
+  const audit = ironChainAudit();
+  assert.equal(audit.total, 4);
+  assert.equal(audit.passed, 4, JSON.stringify(audit.results));
+  assert.deepEqual(audit.results.map(({ id, passed }) => ({ id, passed })), [
+    { id: "E-Fe1", passed: true },
+    { id: "E-Fe2", passed: true },
+    { id: "E-Fe4", passed: true },
+    { id: "E-Fe5", passed: true },
+  ]);
+  assert.equal(audit.connected.day, 2160);
+  assert.equal(audit.disconnected.day, 2160);
+  for (const income of Object.values(audit.connected.incomes)) assert.ok(income > 2000);
+  for (const scenario of [audit.connected, audit.disconnected]) {
+    assert.deepEqual(scenario.physical, { carriers: true, occupancy: true });
+    for (const goods of GOODS) {
+      assert.ok(Math.abs(scenario.material[goods].residual) < 1e-6, goods);
+    }
+  }
 });
 
 let failures = 0;

@@ -527,7 +527,16 @@ function runHouseholdFoodAndDeath(economy, household, day, markPhase = () => {})
   if (need > 0.5) {
     const forage = Math.min(need, householdEat(household) * 0.75);
     need -= forage;
-    recordEconomicMaterialFlow(economy, "veg", "prod", forage * 0.3, `世帯${household.id}の採集`);
+    const accounted = forage * 0.3;
+    recordEconomicMaterialFlow(economy, "veg", "prod", accounted, `世帯${household.id}の採集`);
+    recordEconomicMaterialFlow(
+      economy,
+      "veg",
+      "cons",
+      accounted,
+      `世帯${household.id}の採集分を即時消費`,
+      { includeInDaily: false },
+    );
   }
 
   const hungry = need > 0.5;
@@ -1203,46 +1212,61 @@ export function buyAtMarket(
   const order = BUY_ORDER.filter((goods) => targets[goods]);
   const transactions = [];
   const manifest = {};
+  const processed = new Set();
 
-  for (const goods of order) {
-    let [wanted, ceiling] = targets[goods];
-    const unitWeight = goodsUnitWeight(goods);
-    wanted = Math.min(wanted, capacity / unitWeight);
-    const shelves = economy.stalls[goods]
-      .filter((stall) => findHousehold(economy, stall.householdId))
-      .map((stall) => ({ kind: "STALL", stall, price: stall.price }));
-    if (P.IMP[goods] !== undefined) shelves.push({ kind: "CO", price: P.IMP[goods] });
-    const reserved = economy.order?.g === goods ? economy.order.left : 0;
-    const freeStock = (economy.stock[goods] ?? 0) - reserved;
-    const retailStock = physical ? (economy.marketStock[goods] ?? 0) : freeStock;
-    if (retailStock > 1e-9) {
-      shelves.push({
-        kind: "STOCK",
-        qty: retailStock,
-        price: companyStockReleasePrice(economy, goods, { market: Boolean(physical) }),
-      });
-    } else if (physical && freeStock > 1e-9) {
-      requestCompanyStockRelease(economy, physical, goods, { day, qty: wanted });
-      const arrived = economy.marketStock[goods] ?? 0;
-      if (arrived > 1e-9) {
+  for (const orderedGoods of order) {
+    if (processed.has(orderedGoods)) continue;
+    const fuelSubstitution = ["smelter", "smith"].includes(household.job)
+      && ["char", "coal"].includes(orderedGoods)
+      && targets.char
+      && targets.coal;
+    const goodsGroup = fuelSubstitution ? ["char", "coal"] : [orderedGoods];
+    for (const goods of goodsGroup) processed.add(goods);
+    let [wanted, ceiling] = targets[orderedGoods];
+    const shelves = [];
+    for (const goods of goodsGroup) {
+      shelves.push(...economy.stalls[goods]
+        .filter((stall) => findHousehold(economy, stall.householdId))
+        .map((stall) => ({ goods, kind: "STALL", stall, price: stall.price })));
+      if (P.IMP[goods] !== undefined) {
+        shelves.push({ goods, kind: "CO", price: P.IMP[goods] });
+      }
+      const reserved = economy.order?.g === goods ? economy.order.left : 0;
+      const freeStock = (economy.stock[goods] ?? 0) - reserved;
+      const retailStock = physical ? (economy.marketStock[goods] ?? 0) : freeStock;
+      if (retailStock > 1e-9) {
         shelves.push({
+          goods,
           kind: "STOCK",
-          qty: arrived,
-          price: companyStockReleasePrice(economy, goods, { market: true }),
+          qty: retailStock,
+          price: companyStockReleasePrice(economy, goods, { market: Boolean(physical) }),
         });
+      } else if (physical && freeStock > 1e-9) {
+        requestCompanyStockRelease(economy, physical, goods, { day, qty: wanted });
+        const arrived = economy.marketStock[goods] ?? 0;
+        if (arrived > 1e-9) {
+          shelves.push({
+            goods,
+            kind: "STOCK",
+            qty: arrived,
+            price: companyStockReleasePrice(economy, goods, { market: true }),
+          });
+        }
       }
     }
     shelves.sort((a, b) => a.price - b.price);
-    const input = isProductionInput(household, goods);
 
     for (const shelf of shelves) {
       if (wanted < 1e-9) break;
       if (shelf.price > ceiling || shelf.price <= 0) continue;
+      const { goods } = shelf;
+      const unitWeight = goodsUnitWeight(goods);
+      const input = isProductionInput(household, goods);
       const available = shelf.kind === "CO"
         ? Infinity
         : shelf.kind === "STOCK" ? shelf.qty : shelf.stall.qty;
       const affordable = (household.purse + (input ? 30 : 0)) / shelf.price;
-      const qty = Math.min(wanted, available, affordable);
+      const qty = Math.min(wanted, available, affordable, capacity / unitWeight);
       if (qty < 1e-9) continue;
 
       const payment = qty * shelf.price;
