@@ -8,6 +8,8 @@
 - duplicate preflight: 7 件を posted-source URL/work 一致で skip（EAST、RevengeBench、RogueAI、AutoBG、Gamification with Purpose、PTCG-Bench、multimodal biofeedback）。各 Slack permalink と一致根拠は `log/shared_reads_candidate_preflight.jsonl` に記録。
 - inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` に `status: pending` なし。
 - source 確認: `memory/raw/web_research/results.jsonl` の 2026-07-19 14:06 / 14:21 取得分、最近の `memory/atoms.jsonl`、raw Slack を確認。raw Slack のローカル archive は #shared-reads が 2026-07-19 12:55 まで、#all-nao-u-lab が 2026-07-11 14:50 まで。
+- `memory/shared_reads_candidates/20260719_monster_level_prediction_ttrpg.md` — Pathfinder 2e の属性表からモンスター level を ordinal prediction し、説明可能なバランス支援へつなぐ研究。
+- `memory/shared_reads_candidates/20260719_super_mario_world_1_1_curriculum.md` — World 1-1 の区間順序を入れ替え、学習速度・効率・catastrophic failure でチュートリアル構造を測る研究。
 
 ## Phase 2: 分析
 
