@@ -4,21 +4,20 @@ url: https://conf.researchr.org/details/icse-2026/gas-2026-papers/4/Enhancing-Au
 collected_at: 2026-06-09T23:48:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automated-playtesting, regression-testing, bdd, imitation-learning, reinforcement-learning]
-evaluated_at: 2026-06-09T23:58:00+09:00
+evaluated_at: 2026-07-20T01:52:50+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-09T23:58:00+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T23:58:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T01:52:27+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-4a73e253b746e823; terminal:memory/shared_reads_candidates/20260608_bdd_rl_il_game_regression_testing.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780860681445569; reason:posted-source index confirms the same canonical URL was already posted so this open duplicate must not enter Phase 3"
+next_action: none
+stale_after: "2026-08-19"
 supersedes: []
 gate_reason: |-
-  BDD、Imitation Learning、RL fine-tuning の接続はゲーム回帰テストに使えるが、candidate 内の評価情報が「時間削減・coverage 向上・複雑な regression 検出」の要約に留まる。
-  CoopEval 水準の概要を書くには、BDD シナリオから reward や exploration guide へ落とす具体手順と case study の数値・失敗例が不足している。
-  Phase 3 投稿ではなく、原文または一次資料で評価詳細を補ってから再判定する。
+  posted-source index で同一 canonical URL の投稿済み candidate と permalink を確認した。
+  内容評価を再開しても Phase 3 へ送れない重複候補なので、参照用の terminal candidate として閉じる。
 ---
 
 ## raw_excerpt

@@ -1,24 +1,23 @@
 ---
-title: Mortar: Evolving Mechanics For Automatic Game Design
+title: "Mortar: Evolving Mechanics For Automatic Game Design"
 url: https://openreview.net/forum?id=y4LTYbGXkc
 collected_at: 2026-06-09T23:48:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, automatic-game-design, procedural-content-generation, quality-diversity, mechanics, llm]
-evaluated_at: 2026-06-09T23:58:00+09:00
+evaluated_at: 2026-07-20T01:52:50+09:00
 evaluated_by: log_cdx (Phase 2)
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-09T23:58:00+09:00
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T23:58:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T01:52:27+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-4269487ab4273d9c; terminal:memory/shared_reads_candidates/20260604_mortar_evolving_mechanics.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780501085622209; reason:posted-source index confirms the same OpenReview work was already posted so the remaining open duplicate must not enter Phase 3"
+next_action: none
+stale_after: "2026-08-19"
 supersedes: []
 gate_reason: |-
-  Quality-Diversity、LLM、tree search、skill-based ordering という重要要素は抽出でき、ゲーム制作への接続も強い。
-  ただし candidate 内では archive 構成、メカニクス表現、ablation/user study の中身が薄く、4000字概要では推測が混ざりやすい。
-  投稿候補としては有望だが、Phase 3 に回す前に原文で評価設計と生成物例を補う。
+  posted-source index で同一 OpenReview work の投稿済み candidate と permalink を確認した。
+  skill-based ordering の題材価値はあるが再投稿対象ではないため、参照用の terminal candidate として閉じる。
 ---
 
 ## raw_excerpt

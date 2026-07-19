@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2606.04990
 collected_at: 2026-07-20T01:46:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, playtesting, provenance, observability, debugging]
+evaluated_at: 2026-07-20T01:52:50+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: 2026-07-20T01:52:50+09:00
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-20T01:52:50+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: |-
+  typed provenance graph と evidence relation の区別、taxonomy、playtest agent の失敗再現への適用先は明確である。
+  ただし現 candidate には代表 benchmark・dataset・metric や比較結果の具体例がなく、4000字化すると survey 項目の列挙と自己流のゲーム適用が中心になるため保留する。
 ---
 
 ## raw_excerpt
