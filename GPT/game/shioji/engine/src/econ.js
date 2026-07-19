@@ -1,4 +1,5 @@
 import {
+  activePortCalls,
   buildingById,
   completeHaulJob,
   carrierGoodsCapacity,
@@ -440,7 +441,10 @@ export function economicMaterialSnapshot(economy, physical = null) {
         }
       }
     }
-    for (const job of physical.haulJobs) {
+    const activeJobs = Array.isArray(physical.activeHaulJobIds)
+      ? physical.activeHaulJobIds.map((jobId) => haulJobById(physical, jobId)).filter(Boolean)
+      : physical.haulJobs.filter((job) => job.status === "in_transit");
+    for (const job of activeJobs) {
       if (!job.economicLogistics || !job.carrier.cargo) continue;
       const { goods, qty } = job.carrier.cargo;
       cargo[goods] = (cargo[goods] ?? 0) + qty;
@@ -821,31 +825,52 @@ export function initializeNaturalResources(economy, physical) {
   return economy.natural;
 }
 
+const WOOD_NEIGHBORHOOD_CACHE = new WeakMap();
+
+function woodNeighborhood(household) {
+  const centerX = Math.round(household.x);
+  const centerY = Math.round(household.y);
+  const cached = WOOD_NEIGHBORHOOD_CACHE.get(household);
+  if (cached?.centerX === centerX && cached?.centerY === centerY) return cached;
+  const localKeys = [];
+  for (let offsetY = -5; offsetY <= 5; offsetY += 1) {
+    for (let offsetX = -5; offsetX <= 5; offsetX += 1) {
+      localKeys.push(`${centerX + offsetX},${centerY + offsetY}`);
+    }
+  }
+  const chopCells = [];
+  for (let radius = 0; radius <= 5; radius += 1) {
+    for (let offsetY = -radius; offsetY <= radius; offsetY += 1) {
+      for (let offsetX = -radius; offsetX <= radius; offsetX += 1) {
+        const x = centerX + offsetX;
+        const y = centerY + offsetY;
+        chopCells.push({ x, y, key: `${x},${y}` });
+      }
+    }
+  }
+  const next = { centerX, centerY, localKeys, chopCells };
+  WOOD_NEIGHBORHOOD_CACHE.set(household, next);
+  return next;
+}
+
 export function chopWood(economy, physical, household, amount) {
   if (!physical?.terrain) return amount;
   let gathered = 0;
-  const centerX = Math.round(household.x);
-  const centerY = Math.round(household.y);
+  const { chopCells } = woodNeighborhood(household);
   const seedFloor = P.WOOD0 * 0.15;
   for (let pass = 0; pass < 2 && gathered < amount; pass += 1) {
-    for (let radius = 0; radius <= 5 && gathered < amount; radius += 1) {
-      for (let offsetY = -radius; offsetY <= radius && gathered < amount; offsetY += 1) {
-        for (let offsetX = -radius; offsetX <= radius && gathered < amount; offsetX += 1) {
-          const x = centerX + offsetX;
-          const y = centerY + offsetY;
-          const key = `${x},${y}`;
-          const stock = economy.natural.wood[key];
-          const floor = pass === 0 ? seedFloor : 0;
-          if (!(stock > floor)) continue;
-          const used = Math.min(stock - floor, amount - gathered);
-          economy.natural.wood[key] -= used;
-          gathered += used;
-          if (economy.natural.wood[key] <= 0.5) {
-            economy.natural.wood[key] = 0;
-            setTerrainKind(physical, x, y, "bald");
-            recordEconomyEvent(economy, economy.currentDay, "森が禿げた——伐り尽くされた丘");
-          }
-        }
+    for (const { x, y, key } of chopCells) {
+      if (gathered >= amount) break;
+      const stock = economy.natural.wood[key];
+      const floor = pass === 0 ? seedFloor : 0;
+      if (!(stock > floor)) continue;
+      const used = Math.min(stock - floor, amount - gathered);
+      economy.natural.wood[key] -= used;
+      gathered += used;
+      if (economy.natural.wood[key] <= 0.5) {
+        economy.natural.wood[key] = 0;
+        setTerrainKind(physical, x, y, "bald");
+        recordEconomyEvent(economy, economy.currentDay, "森が禿げた——伐り尽くされた丘");
       }
     }
   }
@@ -855,13 +880,7 @@ export function chopWood(economy, physical, household, amount) {
 export function localWood(economy, physical, household) {
   if (!physical?.terrain) return 1;
   let stock = 0;
-  const centerX = Math.round(household.x);
-  const centerY = Math.round(household.y);
-  for (let offsetY = -5; offsetY <= 5; offsetY += 1) {
-    for (let offsetX = -5; offsetX <= 5; offsetX += 1) {
-      stock += economy.natural.wood[`${centerX + offsetX},${centerY + offsetY}`] ?? 0;
-    }
-  }
+  for (const key of woodNeighborhood(household).localKeys) stock += economy.natural.wood[key] ?? 0;
   return Math.min(1, stock / (P.WOOD0 * 8));
 }
 
@@ -902,10 +921,42 @@ function householdStallQuantity(economy, household, goods) {
   ), 0);
 }
 
+function stallsSize(economy) {
+  return GOODS.reduce((total, goods) => total + economy.stalls[goods].length, 0);
+}
+
+function touchStallMembership(economy) {
+  economy.stallMembershipRevision = (economy.stallMembershipRevision ?? 0) + 1;
+}
+
+function stallHouseholdMembership(economy) {
+  const currentTick = economy.currentTick;
+  if (
+    Number.isSafeInteger(currentTick)
+    && economy.stallMembershipCacheTick === currentTick
+    && economy.stallMembershipCacheRevision === economy.stallMembershipRevision
+  ) return economy.stallHouseholdMembership;
+  const size = stallsSize(economy);
+  if (
+    economy.stallMembershipCacheRevision === economy.stallMembershipRevision
+    && economy.stallMembershipCacheSize === size
+  ) {
+    economy.stallMembershipCacheTick = currentTick;
+    return economy.stallHouseholdMembership;
+  }
+  const membership = {};
+  for (const goods of GOODS) {
+    for (const stall of economy.stalls[goods]) membership[stall.householdId] = true;
+  }
+  economy.stallHouseholdMembership = membership;
+  economy.stallMembershipCacheRevision = economy.stallMembershipRevision;
+  economy.stallMembershipCacheSize = size;
+  economy.stallMembershipCacheTick = currentTick;
+  return membership;
+}
+
 function hasHouseholdStall(economy, household) {
-  return GOODS.some((goods) => economy.stalls[goods].some(
-    (stall) => stall.householdId === household.id,
-  ));
+  return stallHouseholdMembership(economy)[household.id] === true;
 }
 
 export function shouldPauseProduction(economy, household) {
@@ -1266,8 +1317,13 @@ export function companyStockReleasePrice(economy, goods, { market = false } = {}
 }
 
 function pendingImportQuantity(economy, goods) {
-  return (economy.importRequests ?? [])
-    .filter((request) => request.goods === goods && request.status !== "sold")
+  const requests = Array.isArray(economy.unsoldImportRequestIds)
+    ? economy.unsoldImportRequestIds
+      .map((requestId) => importRequestById(economy, requestId))
+      .filter(Boolean)
+    : (economy.importRequests ?? []).filter((request) => request.status !== "sold");
+  return requests
+    .filter((request) => request.goods === goods)
     .reduce(
       (total, request) => total + Math.max(0, request.qty - request.soldQty - request.marketQty),
       0,
@@ -1300,6 +1356,9 @@ export function requestCompanyImport(economy, physical, goods, { day, qty }) {
   });
   request.portCallId = call.id;
   economy.importRequests.push(request);
+  (economy.importRequestIndex ??= {})[request.id] = economy.importRequests.length - 1;
+  (economy.activeImportRequestIds ??= []).push(request.id);
+  (economy.unsoldImportRequestIds ??= []).push(request.id);
   return request;
 }
 
@@ -1414,13 +1473,19 @@ export function buyAtMarket(
           economy.co.impMargin += payment - wholesale;
           economy.outBy[`imp_${goods}`] = (economy.outBy[`imp_${goods}`] ?? 0) - payment;
           let remainingSold = qty;
-          for (const request of economy.importRequests) {
+          const unsoldIds = [...(economy.unsoldImportRequestIds ?? [])];
+          for (const requestId of unsoldIds) {
+            const request = importRequestById(economy, requestId);
+            if (!request) continue;
             if (request.goods !== goods || remainingSold <= 1e-9) continue;
             const sold = Math.min(request.marketQty, remainingSold);
             request.marketQty -= sold;
             request.soldQty += sold;
             remainingSold -= sold;
-            if (request.soldQty >= request.qty - 1e-9) request.status = "sold";
+            if (request.soldQty >= request.qty - 1e-9) {
+              request.status = "sold";
+              deactivateId(economy.unsoldImportRequestIds, request.id);
+            }
           }
         } else {
           const wholesale = qty * (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7);
@@ -1532,6 +1597,9 @@ function exportHouseholdGoods(
     };
     economy.nextExportLotId += 1;
     economy.exportLots.push(lot);
+    (economy.exportLotIndex ??= {})[lot.id] = economy.exportLots.length - 1;
+    (economy.activeExportLotIds ??= []).push(lot.id);
+    (economy.pendingExportLotIds ??= []).push(lot.id);
     dispatchPendingExportLots(economy, physical, { day });
     return lot;
   }
@@ -1602,6 +1670,7 @@ function sellManifestAtMarket(
       const price = quoteAskPrice(cost, goods, random);
       const stall = { householdId: household.id, qty, price, age: 0 };
       economy.stalls[goods].push(stall);
+      touchStallMembership(economy);
       const market = companyLogisticsSite(physical, "market");
       if (market) depositInventory(market, "outbound", goods, qty);
       listed.push({ goods, ...stall });
@@ -1769,6 +1838,7 @@ export function ageMarketStalls(economy, { day, physical = null }) {
       }
       if (stall.qty <= 1e-9) {
         stalls.splice(index, 1);
+        touchStallMembership(economy);
       }
     }
   }
@@ -2169,6 +2239,8 @@ const ORDER_NAMES = deepFreeze({
   stone: "石",
 });
 
+export const COMPANY_ORDER_GOODS = Object.freeze(Object.keys(ORDER_NAMES));
+
 const ORDER_PRICES = deepFreeze({
   tools: 2.5,
   char: 1.2,
@@ -2179,6 +2251,21 @@ const ORDER_PRICES = deepFreeze({
   cloth: 2,
   stone: 1.2,
 });
+
+export function acceptCompanyOrder(economy, { day = economy.currentDay } = {}) {
+  if (!Number.isSafeInteger(day) || day < 0) {
+    throw new TypeError("order acceptance day must be a non-negative safe integer");
+  }
+  if (economy.order || !economy.orderOffer || day >= economy.orderOffer.due) return null;
+  economy.order = economy.orderOffer;
+  economy.orderOffer = null;
+  recordEconomyEvent(
+    economy,
+    day,
+    `本国注文を受諾: ${ORDER_NAMES[economy.order.g]}${Math.round(economy.order.qty)}荷`,
+  );
+  return structuredClone(economy.order);
+}
 
 export function companyCreditLimit(economy, { day = economy.currentDay } = {}) {
   if (!Number.isSafeInteger(day) || day < 0) {
@@ -2218,7 +2305,7 @@ function pendingCompanyHaul(physical, kind, goods) {
 }
 
 function pendingOrderPortQuantity(physical, goods) {
-  return physical.portCalls
+  return activePortCalls(physical)
     .filter((call) => (
       call.status === "docked"
       && call.direction === "export"
@@ -2257,16 +2344,76 @@ function dispatchCompanyHaul(
 }
 
 function exportLotById(economy, lotId) {
-  return economy.exportLots.find((lot) => lot.id === lotId) ?? null;
+  const index = economy.exportLotIndex?.[lotId];
+  if (Number.isSafeInteger(index) && economy.exportLots[index]?.id === lotId) {
+    return economy.exportLots[index];
+  }
+  const fallbackIndex = economy.exportLots.findIndex((lot) => lot.id === lotId);
+  if (fallbackIndex < 0) return null;
+  (economy.exportLotIndex ??= {})[lotId] = fallbackIndex;
+  return economy.exportLots[fallbackIndex];
 }
 
 function importRequestById(economy, requestId) {
-  return economy.importRequests.find((request) => request.id === requestId) ?? null;
+  const index = economy.importRequestIndex?.[requestId];
+  if (Number.isSafeInteger(index) && economy.importRequests[index]?.id === requestId) {
+    return economy.importRequests[index];
+  }
+  const fallbackIndex = economy.importRequests.findIndex((request) => request.id === requestId);
+  if (fallbackIndex < 0) return null;
+  (economy.importRequestIndex ??= {})[requestId] = fallbackIndex;
+  return economy.importRequests[fallbackIndex];
+}
+
+function portReturnById(economy, returnId) {
+  const index = economy.portReturnIndex?.[returnId];
+  if (Number.isSafeInteger(index) && economy.portReturns[index]?.id === returnId) {
+    return economy.portReturns[index];
+  }
+  const fallbackIndex = economy.portReturns.findIndex((lot) => lot.id === returnId);
+  if (fallbackIndex < 0) return null;
+  (economy.portReturnIndex ??= {})[returnId] = fallbackIndex;
+  return economy.portReturns[fallbackIndex];
+}
+
+function deactivateId(ids, id) {
+  const index = ids?.indexOf(id) ?? -1;
+  if (index >= 0) ids.splice(index, 1);
+}
+
+function activeExportLots(economy) {
+  return (economy.activeExportLotIds ??= economy.exportLots
+    .filter((lot) => lot.status !== "shipped")
+    .map((lot) => lot.id))
+    .map((lotId) => exportLotById(economy, lotId))
+    .filter(Boolean);
+}
+
+function activeImportRequests(economy) {
+  return (economy.activeImportRequestIds ??= economy.importRequests
+    .filter((request) => ["vessel", "port", "to_market"].includes(request.status))
+    .map((request) => request.id))
+    .map((requestId) => importRequestById(economy, requestId))
+    .filter(Boolean);
+}
+
+function activePortReturns(economy) {
+  return (economy.activePortReturnIds ??= economy.portReturns
+    .filter((lot) => lot.status !== "returned")
+    .map((lot) => lot.id))
+    .map((returnId) => portReturnById(economy, returnId))
+    .filter(Boolean);
 }
 
 function dispatchPendingExportLots(economy, physical, { day }) {
   const jobs = [];
-  for (const lot of economy.exportLots) {
+  const pendingIds = economy.pendingExportLotIds ??= activeExportLots(economy)
+    .filter((lot) => lot.marketQty > 1e-9 || lot.warehouseQty > 1e-9)
+    .map((lot) => lot.id);
+  const stillPending = [];
+  for (const lotId of pendingIds) {
+    const lot = exportLotById(economy, lotId);
+    if (!lot) continue;
     while (lot.marketQty > 1e-9) {
       const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.marketQty);
       const job = dispatchCompanyHaul(economy, physical, {
@@ -2303,13 +2450,15 @@ function dispatchPendingExportLots(economy, physical, { day }) {
       lot.status = "to_port";
       jobs.push(job);
     }
+    if (lot.marketQty > 1e-9 || lot.warehouseQty > 1e-9) stillPending.push(lot.id);
   }
+  economy.pendingExportLotIds = stillPending;
   return jobs;
 }
 
 function dispatchPendingImports(economy, physical, { day }) {
   const jobs = [];
-  for (const request of economy.importRequests) {
+  for (const request of activeImportRequests(economy)) {
     if (request.status !== "port") continue;
     while (request.portQty > 1e-9) {
       const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, request.goods), request.portQty);
@@ -2332,13 +2481,14 @@ function dispatchPendingImports(economy, physical, { day }) {
       request.status = "to_market";
       jobs.push(job);
     }
+    if (request.portQty <= 1e-9) deactivateId(economy.activeImportRequestIds, request.id);
   }
   return jobs;
 }
 
 function dispatchPendingPortReturns(economy, physical, { day }) {
   const jobs = [];
-  for (const lot of economy.portReturns) {
+  for (const lot of activePortReturns(economy)) {
     while (lot.portQty > 1e-9) {
       const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.portQty);
       const job = dispatchCompanyHaul(economy, physical, {
@@ -2357,6 +2507,7 @@ function dispatchPendingPortReturns(economy, physical, { day }) {
       lot.status = "to_warehouse";
       jobs.push(job);
     }
+    if (lot.portQty <= 1e-9) deactivateId(economy.activePortReturnIds, lot.id);
   }
   return jobs;
 }
@@ -2374,12 +2525,14 @@ function queuePortReturn(economy, physical, { day, goods, qty, unitCost }) {
   };
   economy.nextPortReturnId += 1;
   economy.portReturns.push(lot);
+  (economy.portReturnIndex ??= {})[lot.id] = economy.portReturns.length - 1;
+  (economy.activePortReturnIds ??= []).push(lot.id);
   dispatchPendingPortReturns(economy, physical, { day });
   return lot;
 }
 
 function cancelOrderPortCalls(economy, physical, { day }) {
-  for (const call of physical.portCalls) {
+  for (const call of activePortCalls(physical)) {
     if (call.status !== "docked" || call.metadata?.kind !== "order") continue;
     call.status = "cancelled";
     queuePortReturn(economy, physical, {
@@ -2572,6 +2725,9 @@ export function settleCompanyLogistics(economy, physical, { day }) {
       if (lot) {
         lot.warehouseQty += job.qty;
         lot.status = "warehouse";
+        if (!(economy.pendingExportLotIds ??= []).includes(lot.id)) {
+          economy.pendingExportLotIds.push(lot.id);
+        }
       }
     } else if (metadata.kind === "export_port") {
       const lot = exportLotById(economy, metadata.lotId);
@@ -2596,12 +2752,15 @@ export function settleCompanyLogistics(economy, physical, { day }) {
         request.status = "market";
       }
     } else if (metadata.kind === "order_return") {
-      const lot = economy.portReturns.find((candidate) => candidate.id === metadata.returnId);
+      const lot = portReturnById(economy, metadata.returnId);
       economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
       economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.cost;
       if (lot) {
         lot.returnedQty += job.qty;
-        if (lot.returnedQty >= lot.qty - 1e-9) lot.status = "returned";
+        if (lot.returnedQty >= lot.qty - 1e-9) {
+          lot.status = "returned";
+          deactivateId(economy.activePortReturnIds, lot.id);
+        }
       }
     } else if (metadata.kind === "order") {
       const port = companyLogisticsSite(physical, "port");
@@ -2692,7 +2851,10 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
         transfer.qty,
         `${transfer.goods}を港から本土へ輸出`,
       );
-      if (lot.shippedQty >= lot.qty - 1e-9) lot.status = "shipped";
+      if (lot.shippedQty >= lot.qty - 1e-9) {
+        lot.status = "shipped";
+        deactivateId(economy.activeExportLotIds, lot.id);
+      }
     } else if (metadata.kind === "order") {
       if (
         !economy.order
@@ -2820,6 +2982,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
   if (typeof random !== "function") throw new TypeError("company day-start random must be a function");
   const result = {
     created: null,
+    offerExpired: null,
     expired: null,
     shipped: null,
     completed: false,
@@ -2827,27 +2990,37 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
     settlements: [],
     buildingsCompleted: [],
   };
-  if (!economy.order && day > 60 && day % 15 === 0 && random() < 0.5) {
+  if (!economy.order && !economy.orderOffer && day > 60 && day % 15 === 0 && random() < 0.5) {
     const candidates = Object.keys(ORDER_NAMES).filter(
       (goods) => (economy.f30[goods]?.prod ?? 0) > 0.3,
     );
     if (candidates.length > 0) {
       const goods = candidates[Math.floor(random() * candidates.length)];
       const qty = Math.round(30 + random() * 50);
-      economy.order = {
+      economy.orderOffer = {
         g: goods,
         qty,
         left: qty,
         price: ORDER_PRICES[goods],
         due: day + 90,
       };
-      result.created = structuredClone(economy.order);
+      result.created = structuredClone(economy.orderOffer);
       recordEconomyEvent(
         economy,
         day,
         `★本国より注文状: ${ORDER_NAMES[goods]}${qty}荷(@${Math.round(ORDER_PRICES[goods] * 10)}デナリ・90日以内)`,
       );
     }
+  }
+
+  if (economy.orderOffer && day >= economy.orderOffer.due) {
+    result.offerExpired = structuredClone(economy.orderOffer);
+    recordEconomyEvent(
+      economy,
+      day,
+      `未受諾の注文状が失効: ${ORDER_NAMES[economy.orderOffer.g]}${Math.round(economy.orderOffer.qty)}荷`,
+    );
+    economy.orderOffer = null;
   }
 
   if (economy.order && day >= economy.order.due) {
@@ -3284,7 +3457,7 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("flow_ema");
   updateFlowEma(economy);
   mark("money_conservation");
-  assertMoneyConservation(economy);
+  assertMoneyConservation(economy, { incremental: true });
 
   return { trace, purchases, harvests, survival, births, population, finance };
 }
@@ -3303,6 +3476,8 @@ export function createCompanyState(initialMoney = 0) {
     money: initialMoney,
     openingMoney: initialMoney,
     ledger: [],
+    validatedLedgerLength: 0,
+    validatedLedgerBalance: initialMoney,
   };
 }
 
@@ -3338,6 +3513,30 @@ export function assertCompanyLedger(company) {
   return true;
 }
 
+function assertCompanyLedgerIncremental(company) {
+  let start = company.validatedLedgerLength ?? 0;
+  let expected = company.validatedLedgerBalance ?? company.openingMoney;
+  if (start < 0 || start > company.ledger.length) {
+    start = 0;
+    expected = company.openingMoney;
+  }
+  requireFiniteMoney(expected, "company.validatedLedgerBalance");
+  for (let index = start; index < company.ledger.length; index += 1) {
+    const entry = company.ledger[index];
+    requireFiniteMoney(entry.amount, `company.ledger[${index}].amount`);
+    expected += entry.amount;
+    if (Math.abs(entry.balance - expected) > MONEY_EPSILON) {
+      throw new Error(`会社台帳の残高不一致 index=${index}`);
+    }
+  }
+  if (Math.abs(company.money - expected) > MONEY_EPSILON) {
+    throw new Error(`会社資金に台帳外の変更があります expected=${expected} actual=${company.money}`);
+  }
+  company.validatedLedgerLength = company.ledger.length;
+  company.validatedLedgerBalance = expected;
+  return true;
+}
+
 export function recordExternalMoneyFlow(economy, { amount, reason }) {
   requireFiniteMoney(amount, "external flow amount");
   if (typeof reason !== "string" || reason.length === 0) {
@@ -3358,8 +3557,9 @@ export function moneyTotal(economy) {
   return economy.company.money + householdMoney;
 }
 
-export function assertMoneyConservation(economy) {
-  assertCompanyLedger(economy.company);
+export function assertMoneyConservation(economy, { incremental = false } = {}) {
+  if (incremental) assertCompanyLedgerIncremental(economy.company);
+  else assertCompanyLedger(economy.company);
   const actual = moneyTotal(economy);
   const expected =
     economy.moneyBoundary.openingTotal +
@@ -3388,10 +3588,16 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     events: [],
     traffic: {},
     currentDay: 0,
+    currentTick: null,
     natural: { bay: P.BAY0, bay2: P.BAY0, wood: {} },
     grove: P.GROVE0,
     px: { ...P.BELIEF0 },
     stalls: Object.fromEntries(GOODS.map((goods) => [goods, []])),
+    stallMembershipRevision: 0,
+    stallMembershipCacheRevision: -1,
+    stallMembershipCacheSize: 0,
+    stallMembershipCacheTick: null,
+    stallHouseholdMembership: {},
     expCap: { ...P.EXP_CAP },
     expMl: { ...P.EXP_ML },
     deskUsed: {},
@@ -3421,14 +3627,23 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     importStock: {},
     importStockCost: {},
     importRequests: [],
+    importRequestIndex: {},
+    activeImportRequestIds: [],
+    unsoldImportRequestIds: [],
     nextImportRequestId: 1,
     portReturns: [],
+    portReturnIndex: {},
+    activePortReturnIds: [],
     nextPortReturnId: 1,
     exportLots: [],
+    exportLotIndex: {},
+    activeExportLotIds: [],
+    pendingExportLotIds: [],
     nextExportLotId: 1,
     marketReturns: [],
     nextMarketReturnId: 1,
     stockTgt: {},
+    orderOffer: null,
     order: null,
     orderDone: 0,
     zones: [],

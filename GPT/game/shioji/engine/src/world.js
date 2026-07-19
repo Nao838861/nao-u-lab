@@ -344,6 +344,7 @@ export function createWorld({
 
   function tickOnce() {
     state.tick += 1;
+    economy.currentTick = state.tick;
     const timeOfDay = state.tick % 30;
     if (timeOfDay === 1) {
       state.day += 1;
@@ -404,6 +405,11 @@ export function createWorld({
     if (timeOfDay === 29) {
       runDayEnd(economy, physical, { day: state.day, random });
     }
+    stepHaulCarriers(state.physical, 1);
+    settleCompanyLogistics(state.economy, state.physical, { day: state.day });
+    const transfers = stepPortHandling(state.physical, 1);
+    settlePortTransfers(state.economy, state.physical, { day: state.day, transfers });
+    return state;
   }
 
   return {
@@ -413,10 +419,6 @@ export function createWorld({
     step() {
       for (let tick = 0; tick < 30; tick += 1) {
         tickOnce();
-        stepHaulCarriers(state.physical, 1);
-        settleCompanyLogistics(state.economy, state.physical, { day: state.day });
-        const transfers = stepPortHandling(state.physical, 1);
-        settlePortTransfers(state.economy, state.physical, { day: state.day, transfers });
       }
       return state;
     },

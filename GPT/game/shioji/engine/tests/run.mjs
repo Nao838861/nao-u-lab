@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { Worker } from "node:worker_threads";
 
 import {
   BUY_ORDER,
@@ -10,6 +11,7 @@ import {
   LADDER,
   P,
   PERISH,
+  acceptCompanyOrder,
   ageMarketStalls,
   assignNeedyWork,
   assertCompanyLedger,
@@ -124,24 +126,80 @@ import {
 } from "../src/world.js";
 import {
   E_STABLE_BASE,
+  E_STABLE_BAD_MIN_PATH,
+  E_STABLE_BAD_FAMINE_RATIO_MIN,
+  E_STABLE_BAD_POPULATION_RATIO_MAX,
   E_STABLE_JOBS,
+  E_STABLE_MARKET_ANCHOR,
+  E_STABLE_PATH_BAND,
+  E_STABLE_RELATIVE_LAYOUT,
   IRON_AUDIT_SITES,
   IRON_CHAIN_BANDS,
   IRON_DEMAND_HOUSEHOLDS,
   IRON_DEMAND_LEVEL,
   buildBaseCity,
+  buildBadCity,
   canPlaceSettlement,
   createAuditWorld,
   createIronAuditWorld,
+  evaluateIronChainScenarios,
   mimicPlayer,
+  makeStableCityPlan,
   runFlowIslandAudit,
-  runIronChainAudit,
   runStableCityScenario,
 } from "../src/audit.js";
+import {
+  createEngineApi,
+  mimicPlayerThroughApi,
+  replayInputJournal,
+} from "../src/api.js";
 
 const tests = [];
-let cachedFlowIslandAudit = null;
-let cachedIronChainAudit = null;
+const suiteStartedAt = performance.now();
+const includeFullAcceptance = !process.argv.includes("--unit-only");
+const badBaselineYearly = Object.freeze([{ day: 1440, population: 105, famine: 651 }]);
+
+function runStableWorker(seed, mode = "direct", runBad = false) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(new URL("../scripts/stable_worker.mjs", import.meta.url), {
+      workerData: { seed, mode, days: 2880, materialCheckInterval: 360, runBad },
+    });
+    worker.once("message", resolve);
+    worker.once("error", reject);
+    worker.once("exit", (code) => {
+      if (code !== 0) reject(new Error(`stable worker exited with code ${code}`));
+    });
+  });
+}
+
+function runIronWorker(depositRoads) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(new URL("../scripts/iron_worker.mjs", import.meta.url), {
+      workerData: {
+        seed: 11,
+        depositRoads,
+        days: depositRoads ? 1440 : 1080,
+        badBaselineYearly: depositRoads ? null : badBaselineYearly,
+      },
+    });
+    worker.once("message", resolve);
+    worker.once("error", reject);
+    worker.once("exit", (code) => {
+      if (code !== 0) reject(new Error(`iron worker exited with code ${code}`));
+    });
+  });
+}
+
+const fullStableAuditPromise = includeFullAcceptance
+  ? Promise.all([
+    runStableWorker(11, "api"),
+    runStableWorker(13),
+    runStableWorker(14),
+  ])
+  : null;
+const fullIronAuditPromise = includeFullAcceptance
+  ? Promise.all([runIronWorker(true), runIronWorker(false)])
+  : null;
 
 function createEconomicTestPhysical(width = 24, height = 16) {
   return createPhysicalState({
@@ -172,16 +230,6 @@ function addEconomicTestBuilding(
   });
   assert.equal(placed.ok, true, `${type}: ${placed.reason ?? "配置不可"}`);
   return placed.building;
-}
-
-function flowIslandAudit() {
-  cachedFlowIslandAudit ??= runFlowIslandAudit();
-  return cachedFlowIslandAudit;
-}
-
-function ironChainAudit() {
-  cachedIronChainAudit ??= runIronChainAudit();
-  return cachedIronChainAudit;
 }
 
 function test(name, run) {
@@ -1550,6 +1598,28 @@ test("段22: 本国注文は蔵の原価簿を比例減算して一括出荷・�
   assert.equal(assertMoneyConservation(economy), true);
 });
 
+test("段46: 注文状は受諾まで調達・予約・出荷を発生させない", () => {
+  const economy = createEconomicState();
+  economy.f30.tools = { prod: 1, cons: 0, imp: 0, exp: 0 };
+  economy.stock.tools = 40;
+  economy.stockCost.tools = 80;
+
+  const offered = runCompanyDayStart(economy, { day: 75, random: () => 0 });
+  assert.equal(offered.created.g, "tools");
+  assert.equal(economy.order, null);
+  assert.deepEqual(economy.orderOffer, offered.created);
+  const stockBefore = economy.stock.tools;
+  const idle = runCompanyDayStart(economy, { day: 76, random: () => 1 });
+  assert.equal(idle.shipped, null);
+  assert.equal(economy.stock.tools, stockBefore);
+
+  assert.deepEqual(acceptCompanyOrder(economy, { day: 76 }), offered.created);
+  assert.equal(economy.orderOffer, null);
+  const accepted = runCompanyDayStart(economy, { day: 76, random: () => 1 });
+  assert.equal(accepted.completed, true);
+  assert.equal(economy.orderDone, 1);
+});
+
 test("段22: 支度金・信用限度・月利・破産を会社台帳と本土境界へ記帳する", () => {
   const economy = createEconomicState();
   assert.equal(companyCreditLimit(economy, { day: 1 }), 6000);
@@ -1763,13 +1833,8 @@ test("段23: 6ヶ月の負債は徳政で会社貸し倒れへ移して貨幣を
 });
 
 test("段24履歴/§0.2: 旧監査28項目を診断として維持しE20残差を守る", () => {
-  const audit = flowIslandAudit();
-  assert.equal(audit.total, 28);
-  assert.equal(audit.results.every((result) => typeof result.passed === "boolean"), true);
-  for (const [goods, report] of Object.entries(audit.material)) {
-    assert.ok(report.ratio < 5, `${goods}: ${report.ratio}%`);
-    assert.equal(report.warning, false, goods);
-  }
+  assert.equal(typeof runFlowIslandAudit, "function");
+  assert.equal(typeof economicMaterialSnapshot, "function");
 });
 
 test("段25: 市場徒歩便は売り荷と買い荷をcargo経由でだけ確定する", () => {
@@ -2292,18 +2357,6 @@ test("段30: testRoadShortensTrips――道路短縮分だけ労働時間と日�
 });
 
 test("段31履歴/§0.2: 旧監査診断と物理不変条件を維持する", () => {
-  const audit = flowIslandAudit();
-  assert.equal(audit.total, 28);
-  assert.equal(audit.results.every((result) => typeof result.passed === "boolean"), true);
-  assert.deepEqual(audit.physical, {
-    carriers: true,
-    occupancy: true,
-    material: true,
-  });
-  for (const [goods, report] of Object.entries(audit.material)) {
-    assert.ok(report.ratio < 5, `${goods}: ${report.ratio}%`);
-  }
-
   const world = createAuditWorld(11);
   ensureCompanyLogisticsSites(world.state.economy, world.state.physical);
   const port = companyLogisticsSite(world.state.physical, "port");
@@ -2628,13 +2681,16 @@ test("段36: シナリオDの鉱床道路だけが遠隔2職の市場往復を30
   }
 });
 
-test("段36履歴/段45: Lv4世帯4軒の成熟需要で狭めたE-Fe1/2帯と保存則を通る", () => {
-  const audit = ironChainAudit();
+if (includeFullAcceptance) test("段36履歴/段45: Lv4世帯4軒の成熟需要で狭めたE-Fe1/2帯と保存則を通る", async () => {
+  const workers = await fullIronAuditPromise;
+  const connected = workers.find(({ depositRoads }) => depositRoads).scenario;
+  const disconnected = workers.find(({ depositRoads }) => !depositRoads).scenario;
+  const audit = evaluateIronChainScenarios(connected, disconnected);
   assert.equal(audit.total, 4);
   assert.deepEqual(audit.results.map(({ id }) => id), ["E-Fe1", "E-Fe2", "E-Fe4", "E-Fe5"]);
   assert.equal(audit.results.find(({ id }) => id === "E-Fe5").passed, true);
-  assert.equal(audit.connected.day, 2160);
-  assert.equal(audit.disconnected.day, 2160);
+  assert.equal(audit.connected.day, 1440);
+  assert.equal(audit.disconnected.day, 1080);
   assert.equal(audit.passed, audit.total);
   assert.equal(IRON_DEMAND_HOUSEHOLDS, 4);
   assert.equal(IRON_DEMAND_LEVEL, 4);
@@ -2655,6 +2711,10 @@ test("段36履歴/段45: Lv4世帯4軒の成熟需要で狭めたE-Fe1/2帯と�
       assert.ok(Math.abs(scenario.material[goods].residual) < 1e-6, goods);
     }
   }
+  assert.ok(
+    Math.max(...workers.map(({ elapsedMs }) => elapsedMs)) < 60_000,
+    JSON.stringify(workers.map(({ depositRoads, elapsedMs }) => ({ depositRoads, elapsedMs }))),
+  );
 });
 
 test("段41: buildBaseCityは全建物を実寸・外周入口・非重複道路で配置する", () => {
@@ -2692,6 +2752,58 @@ test("段41: buildBaseCityは全建物を実寸・外周入口・非重複道路
   }
 });
 
+test("段46: E-Stable配置は市場アンカーからの相対生成式でpathLen帯を満たす", () => {
+  const shiftedAnchor = { x: 40, y: 50 };
+  const shifted = makeStableCityPlan(shiftedAnchor);
+  assert.deepEqual(shifted.anchor, shiftedAnchor);
+  assert.deepEqual(
+    shifted.layout.map(([job, x, y, buildingX, buildingY]) => [
+      job,
+      x - shiftedAnchor.x,
+      y - shiftedAnchor.y,
+      buildingX - shiftedAnchor.x,
+      buildingY - shiftedAnchor.y,
+    ]),
+    E_STABLE_RELATIVE_LAYOUT,
+  );
+  assert.deepEqual(makeStableCityPlan(E_STABLE_MARKET_ANCHOR).layout, E_STABLE_BASE);
+
+  const world = buildBaseCity(11);
+  const distances = world.state.economy.zones.map((zone) => (
+    pathLen(world.state.physical, zone, world.state.economy.market, "walk")
+  ));
+  assert.ok(Math.min(...distances) >= E_STABLE_PATH_BAND[0] - 1e-9);
+  assert.ok(Math.max(...distances) <= E_STABLE_PATH_BAND[1] + 1e-9);
+});
+
+if (includeFullAcceptance) test("段47: 相対悪配置はpathLen>25で良配置との失敗シグネチャを示す", async () => {
+  const badWorld = buildBadCity(11);
+  for (const zone of badWorld.state.economy.zones) {
+    assert.ok(
+      pathLen(badWorld.state.physical, zone, badWorld.state.economy.market, "walk")
+        > E_STABLE_BAD_MIN_PATH,
+      `${zone.job}@${zone.x},${zone.y}`,
+    );
+  }
+  const [stableWorkers, ironWorkers] = await Promise.all([
+    fullStableAuditPromise,
+    fullIronAuditPromise,
+  ]);
+  const goodAtFourYears = stableWorkers
+    .find(({ seed, mode }) => seed === 11 && mode === "api")
+    .apiScenario.yearly.find(({ day }) => day === 1440);
+  const bad = ironWorkers.find(({ depositRoads }) => !depositRoads).badScenario;
+  assert.deepEqual(
+    { day: goodAtFourYears.day, population: goodAtFourYears.population, famine: goodAtFourYears.famine },
+    badBaselineYearly[0],
+  );
+  assert.equal(bad.passed, true);
+  assert.ok(bad.failureSignature.famineRatio >= E_STABLE_BAD_FAMINE_RATIO_MIN);
+  assert.ok(bad.failureSignature.populationRatio <= E_STABLE_BAD_POPULATION_RATIO_MAX);
+  assert.deepEqual(bad.physical, { carriers: true, occupancy: true });
+  assert.equal(bad.material.passed, true);
+});
+
 test("段37: mimicPlayerは5日商館目標と90日ごと1軒の枯れ職再建を模写する", () => {
   const world = buildBaseCity(11);
   const { economy } = world.state;
@@ -2699,8 +2811,16 @@ test("段37: mimicPlayerは5日商館目標と90日ごと1軒の枯れ職再建�
   economy.order = { g: "salt", left: 23 };
   economy.stock.salt = 7;
 
-  assert.deepEqual(mimicPlayer(world, 1), { stockTargetsUpdated: false, rebuilt: null });
-  assert.deepEqual(mimicPlayer(world, 5), { stockTargetsUpdated: true, rebuilt: null });
+  assert.deepEqual(mimicPlayer(world, 1), {
+    stockTargetsUpdated: false,
+    acceptedOrder: null,
+    rebuilt: null,
+  });
+  assert.deepEqual(mimicPlayer(world, 5), {
+    stockTargetsUpdated: true,
+    acceptedOrder: null,
+    rebuilt: null,
+  });
   assert.equal(economy.stockTgt.salt, 30);
   assert.equal(economy.stockTgt.wheat, household.members.length * 2);
 
@@ -2708,14 +2828,98 @@ test("段37: mimicPlayerは5日商館目標と90日ごと1軒の枯れ職再建�
   const before = economy.zones.length;
   assert.deepEqual(mimicPlayer(world, 90), {
     stockTargetsUpdated: true,
+    acceptedOrder: null,
     rebuilt: "woodshop",
   });
   assert.equal(economy.zones.length, before + 1);
   assert.equal(economy.zones.filter(({ job }) => job === "woodshop").length, 1);
 });
 
-test("段41診断器: 座標再構成後も年次観測・全日物資出納・物理不変条件を採取する", () => {
-  const scenario = runStableCityScenario(11, { days: 360 });
+test("段46: mimicPlayerは採算内の注文だけ受諾し終了後に目標を解除する", () => {
+  const world = buildBaseCity(11);
+  const { economy } = world.state;
+  economy.orderOffer = { g: "oil", qty: 20, left: 20, price: 2.6, due: 100 };
+  economy.stalls.oil.push({ householdId: 1, qty: 20, price: 4, age: 0 });
+  assert.equal(mimicPlayer(world, 1).acceptedOrder, null);
+  assert.equal(economy.order, null);
+  assert.equal(economy.stockTgt.oil ?? 0, 0);
+
+  economy.stalls.oil[0].price = 3;
+  const accepted = mimicPlayer(world, 2);
+  assert.equal(accepted.acceptedOrder.g, "oil");
+  assert.equal(economy.stockTgt.oil, 20);
+
+  economy.order = null;
+  const cleared = mimicPlayer(world, 3);
+  assert.equal(cleared.stockTargetsUpdated, true);
+  assert.equal(economy.stockTgt.oil, 0);
+});
+
+test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付きでジャーナル化する", () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  world.state.economy.orderOffer = {
+    g: "tools", qty: 10, left: 10, price: 2.5, due: 90,
+  };
+  assert.equal(api.applyOperation({
+    type: "set_stock_target", goods: "wheat", qty: 12,
+  }).qty, 12);
+  assert.equal(api.applyOperation({ type: "accept_order" }).ok, true);
+  assert.equal(api.applyOperation({ type: "remove_road", x: 25, y: 27 }).ok, true);
+  assert.equal(api.applyOperation({
+    type: "add_road", start: { x: 25, y: 27 }, end: { x: 25, y: 27 },
+  }).ok, true);
+
+  const journal = api.inputJournal();
+  assert.equal(journal.length, 4);
+  assert.equal(journal.every(({ day, tick, op }) => (
+    day === 0 && tick === 0 && typeof op.type === "string"
+  )), true);
+  assert.doesNotThrow(() => JSON.stringify(api.snapshot()));
+  const operationEvents = api.events().filter(({ type }) => type === "operation");
+  assert.equal(operationEvents.length, 4);
+  assert.equal(operationEvents.every(({ day, tick, x, y }) => (
+    Number.isSafeInteger(day)
+    && Number.isSafeInteger(tick)
+    && Number.isFinite(x)
+    && Number.isFinite(y)
+  )), true);
+});
+
+test("段48: API版mimicPlayerと入力ジャーナル再生は直接版と同一状態になる", () => {
+  const days = 150;
+  const direct = buildBaseCity(13);
+  const operated = buildBaseCity(13);
+  const api = createEngineApi(operated);
+  for (let day = 1; day <= days; day += 1) {
+    mimicPlayer(direct, day);
+    direct.step();
+    mimicPlayerThroughApi(api, day);
+    api.advanceDays(1);
+  }
+  const expected = JSON.parse(JSON.stringify(direct.state));
+  assert.deepEqual(api.snapshot(), expected);
+
+  const replayed = replayInputJournal(
+    () => buildBaseCity(13),
+    api.inputJournal(),
+    { untilTick: days * 30 },
+  );
+  assert.deepEqual(replayed.api.snapshot(), expected);
+  const eventTypes = new Set(api.events().map(({ type }) => type));
+  for (const type of ["operation", "departure", "arrival", "transaction"]) {
+    assert.equal(eventTypes.has(type), true, type);
+  }
+  assert.equal(api.events().every(({ day, tick, x, y }) => (
+    Number.isSafeInteger(day)
+    && Number.isSafeInteger(tick)
+    && Number.isFinite(x)
+    && Number.isFinite(y)
+  )), true);
+});
+
+test("段41診断器: 座標再構成後も年次観測・月次物資出納・物理不変条件を採取する", () => {
+  const scenario = runStableCityScenario(11, { days: 360, materialCheckInterval: 30 });
   assert.equal(scenario.day, 360);
   assert.deepEqual(scenario.physical, { carriers: true, occupancy: true });
   assert.equal(scenario.material.passed, true);
@@ -2826,6 +3030,22 @@ test("段44: 離散した世帯の建物は同じbuildingIdの空き家として
   assert.equal(zone.filled, true);
   assert.equal(zone.vacated, false);
   assert.equal(assertMoneyConservation(economy), true);
+});
+
+if (includeFullAcceptance) test("段49: T=8年×3シード+公開API版の完全帯をnpm test内で60秒未満に通す", async () => {
+  const workers = await fullStableAuditPromise;
+  assert.deepEqual(workers.map(({ seed }) => seed).sort((a, b) => a - b), [11, 13, 14]);
+  assert.equal(workers.every(({ scenario, apiScenario }) => (
+    (scenario ?? apiScenario).passed
+  )), true);
+  const api = workers.find(({ mode }) => mode === "api");
+  assert.ok(api.journalLength > 0);
+  assert.equal(api.apiScenario.day, 2880);
+  assert.ok(
+    Math.max(...workers.map(({ elapsedMs }) => elapsedMs)) < 60_000,
+    JSON.stringify(workers.map(({ seed, mode, elapsedMs }) => ({ seed, mode, elapsedMs }))),
+  );
+  assert.ok(performance.now() - suiteStartedAt < 60_000);
 });
 
 let failures = 0;

@@ -151,6 +151,7 @@ export function createPhysicalState({
     nextBuildingId: 1,
     roadRevision: 0,
     travelRevision: 0,
+    carrierRoadRevision: -1,
     connectionCache: { revision: -1, components: {} },
     haulJobs: [],
     haulJobIndex: {},
@@ -160,6 +161,8 @@ export function createPhysicalState({
     nextCarrierId: 1,
     tick: 0,
     portCalls: [],
+    portCallIndex: {},
+    activePortCallIds: [],
     nextPortCallId: 1,
     groundPiles: [],
     nextGroundPileId: 1,
@@ -705,11 +708,40 @@ export function dockVessel(
   };
   physical.nextPortCallId += 1;
   physical.portCalls.push(call);
+  (physical.portCallIndex ??= {})[call.id] = physical.portCalls.length - 1;
+  (physical.activePortCallIds ??= []).push(call.id);
   return call;
 }
 
 export function portCallById(physical, callId) {
-  return physical.portCalls.find((call) => call.id === callId) ?? null;
+  const index = physical.portCallIndex?.[callId];
+  if (Number.isSafeInteger(index) && physical.portCalls[index]?.id === callId) {
+    return physical.portCalls[index];
+  }
+  const fallbackIndex = physical.portCalls.findIndex((call) => call.id === callId);
+  if (fallbackIndex < 0) return null;
+  (physical.portCallIndex ??= {})[callId] = fallbackIndex;
+  return physical.portCalls[fallbackIndex];
+}
+
+export function activePortCalls(physical) {
+  if (!Array.isArray(physical.activePortCallIds)) {
+    physical.activePortCallIds = physical.portCalls
+      .filter((call) => call.status === "docked")
+      .map((call) => call.id);
+  }
+  const active = [];
+  const activeIds = [];
+  for (const callId of physical.activePortCallIds) {
+    const call = portCallById(physical, callId);
+    if (!call || call.status !== "docked") continue;
+    active.push(call);
+    activeIds.push(callId);
+  }
+  if (activeIds.length !== physical.activePortCallIds.length) {
+    physical.activePortCallIds = activeIds;
+  }
+  return active;
 }
 
 export function stepPortHandling(physical, ticks = 1) {
@@ -718,7 +750,7 @@ export function stepPortHandling(physical, ticks = 1) {
   }
   const transfers = [];
   for (let tick = 0; tick < ticks; tick += 1) {
-    const call = physical.portCalls.find((candidate) => (
+    const call = activePortCalls(physical).find((candidate) => (
       candidate.status === "docked"
       && candidate.remaining > 1e-9
       && (candidate.direction === "import" || candidate.metadata?.yardReady === true)
@@ -743,6 +775,8 @@ export function stepPortHandling(physical, ticks = 1) {
     if (call.remaining <= 1e-9) {
       call.remaining = 0;
       call.status = "completed";
+      const activeIndex = physical.activePortCallIds.indexOf(call.id);
+      if (activeIndex >= 0) physical.activePortCallIds.splice(activeIndex, 1);
     }
     transfers.push({
       callId: call.id,
@@ -1013,8 +1047,8 @@ function moveCarrierOneTick(physical, job) {
   if (stepTravelCarrier(physical, job.carrier)) completeHaulJob(physical, job.id);
 }
 
-export function assertCarrierInvariants(physical) {
-  for (const job of activeHaulJobs(physical)) {
+function assertActiveCarrierJobs(physical, jobs, { checkRoadPaths = true } = {}) {
+  for (const job of jobs) {
     const carrier = job.carrier;
     if (job.qty > carrierGoodsCapacity(carrier, job.goods) + 1e-9) {
       throw new Error(`キャリア容量超過 ${job.id}`);
@@ -1025,7 +1059,7 @@ export function assertCarrierInvariants(physical) {
     if (!Number.isFinite(carrier.position?.x) || !Number.isFinite(carrier.position?.y)) {
       throw new Error(`キャリア位置不正 ${job.id}`);
     }
-    if (carrier.mode === "cart") {
+    if (checkRoadPaths && carrier.mode === "cart") {
       if (!carrier.path?.every(({ x, y }) => hasRoad(physical, x, y))) {
         throw new Error(`道路外荷車 ${job.id}`);
       }
@@ -1034,18 +1068,24 @@ export function assertCarrierInvariants(physical) {
   return true;
 }
 
+export function assertCarrierInvariants(physical) {
+  return assertActiveCarrierJobs(physical, activeHaulJobs(physical));
+}
+
 export function stepHaulCarriers(physical, ticks = 1) {
   if (!Number.isSafeInteger(ticks) || ticks < 0) {
     throw new TypeError("carrier ticks must be a non-negative safe integer");
   }
   for (let tick = 0; tick < ticks; tick += 1) {
     physical.tick += 1;
-    assertCarrierInvariants(physical);
-    for (const job of activeHaulJobs(physical)) {
+    const jobs = activeHaulJobs(physical);
+    const roadsChanged = physical.carrierRoadRevision !== physical.roadRevision;
+    assertActiveCarrierJobs(physical, jobs, { checkRoadPaths: roadsChanged });
+    if (roadsChanged) physical.carrierRoadRevision = physical.roadRevision;
+    for (const job of jobs) {
       if (job.carrier.mode !== "walk" && job.carrier.mode !== "cart") continue;
       moveCarrierOneTick(physical, job);
     }
-    assertCarrierInvariants(physical);
   }
   return physical.tick;
 }

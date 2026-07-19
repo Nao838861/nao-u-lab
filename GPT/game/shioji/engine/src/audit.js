@@ -1,6 +1,8 @@
 import {
+  COMPANY_ORDER_GOODS,
   GOODS,
   P,
+  acceptCompanyOrder,
   companyCreditLimit,
   createHousehold,
   economicMaterialSnapshot,
@@ -13,11 +15,13 @@ import {
   addRoadLine,
   assertCarrierInvariants,
   assertOccupancyInvariant,
+  buildingById,
   canPlaceBuilding,
   createPhysicalState,
   findBuildingSiteForEntrance,
   hasRoad,
   makeFlowIslandTerrain,
+  pathLen,
 } from "./physical.js";
 import { createWorld, ensureCompanyLogisticsSites } from "./world.js";
 
@@ -37,21 +41,79 @@ export const AUDIT_BASE = Object.freeze([
   ["fisher", 35, 34, 36, 33],
 ]);
 
-export const E_STABLE_BASE = Object.freeze([
-  Object.freeze(["fisher", 17, 32, 16, 33]),
-  Object.freeze(["fisher", 33, 32, 32, 33]),
-  Object.freeze(["fisher", 35, 34, 36, 33]),
-  Object.freeze(["veg", 25, 27, 23, 23]),
-  Object.freeze(["veg", 18, 30, 19, 29]),
-  Object.freeze(["wheat", 18, 29, 14, 27]),
-  Object.freeze(["wheat", 40, 27, 39, 23]),
-  Object.freeze(["logger", 34, 25, 35, 24]),
-  Object.freeze(["woodshop", 24, 21, 23, 18]),
-  Object.freeze(["charburner", 28, 21, 27, 18]),
-  Object.freeze(["saltworks", 32, 21, 31, 18]),
-  Object.freeze(["shepherd", 14, 32, 10, 31]),
-  Object.freeze(["rapeseed", 22, 27, 19, 23]),
+export const E_STABLE_MARKET_ANCHOR = Object.freeze({ x: 25, y: 28 });
+
+export const E_STABLE_RELATIVE_LAYOUT = Object.freeze([
+  Object.freeze(["fisher", -8, 4, -9, 5]),
+  Object.freeze(["fisher", 8, 4, 7, 5]),
+  Object.freeze(["fisher", 10, 6, 11, 5]),
+  Object.freeze(["veg", 0, -1, -2, -5]),
+  Object.freeze(["veg", -7, 2, -6, 1]),
+  Object.freeze(["wheat", -7, 1, -11, -1]),
+  Object.freeze(["wheat", 15, -1, 14, -5]),
+  Object.freeze(["logger", 9, -3, 10, -4]),
+  Object.freeze(["woodshop", -1, -7, -2, -10]),
+  Object.freeze(["charburner", 3, -7, 2, -10]),
+  Object.freeze(["saltworks", 7, -7, 6, -10]),
+  Object.freeze(["shepherd", -11, 4, -15, 3]),
+  Object.freeze(["rapeseed", -3, -1, -6, -5]),
 ]);
+
+export const E_STABLE_RELATIVE_ROADS = Object.freeze([
+  Object.freeze([[0, 0], [0, -1], [-3, -1]]),
+  Object.freeze([[0, -1], [15, -1]]),
+  Object.freeze([[0, 0], [-7, 0], [-7, 3], [-11, 3], [-11, 4]]),
+  Object.freeze([[-7, 3], [-8, 4]]),
+  Object.freeze([[-7, 0], [-7, -7], [7, -7]]),
+  Object.freeze([[9, -1], [9, -3]]),
+  Object.freeze([[8, -1], [8, 4], [10, 4], [10, 6]]),
+  Object.freeze([[0, 0], [3, 0], [3, 4]]),
+]);
+
+export const E_STABLE_PATH_BAND = Object.freeze([0.6, 9.36]);
+
+function translatePoint(anchor, point) {
+  return Object.freeze([anchor.x + point[0], anchor.y + point[1]]);
+}
+
+export function makeStableCityPlan(marketEntrance = E_STABLE_MARKET_ANCHOR) {
+  if (!Number.isSafeInteger(marketEntrance?.x) || !Number.isSafeInteger(marketEntrance?.y)) {
+    throw new TypeError("stable city market entrance must use safe integer coordinates");
+  }
+  const anchor = Object.freeze({ x: marketEntrance.x, y: marketEntrance.y });
+  const layout = Object.freeze(E_STABLE_RELATIVE_LAYOUT.map(
+    ([job, x, y, buildingX, buildingY]) => Object.freeze([
+      job,
+      anchor.x + x,
+      anchor.y + y,
+      anchor.x + buildingX,
+      anchor.y + buildingY,
+    ]),
+  ));
+  const roadPolylines = Object.freeze(E_STABLE_RELATIVE_ROADS.map((polyline) => (
+    Object.freeze(polyline.map((point) => translatePoint(anchor, point)))
+  )));
+  const logisticsSites = Object.freeze({
+    market: Object.freeze({
+      x: anchor.x - 2,
+      y: anchor.y + 1,
+      entrance: anchor,
+    }),
+    warehouse: Object.freeze({
+      x: anchor.x + 4,
+      y: anchor.y + 1,
+      entrance: Object.freeze({ x: anchor.x + 3, y: anchor.y + 2 }),
+    }),
+    port: Object.freeze({
+      x: anchor.x + 3,
+      y: anchor.y + 5,
+      entrance: Object.freeze({ x: anchor.x + 3, y: anchor.y + 4 }),
+    }),
+  });
+  return Object.freeze({ anchor, layout, roadPolylines, logisticsSites });
+}
+
+export const E_STABLE_BASE = makeStableCityPlan().layout;
 
 export const AUDIT_LOGISTICS_SITES = Object.freeze({
   market: Object.freeze({ x: 23, y: 29, entrance: Object.freeze({ x: 25, y: 28 }) }),
@@ -75,13 +137,18 @@ export const E_STABLE_JOBS = Object.freeze([
   "charburner", "saltworks", "shepherd", "rapeseed",
 ]);
 
+export const E_STABLE_YEARS = 8;
+export const E_STABLE_DAYS = E_STABLE_YEARS * 360;
+export const E_STABLE_POPULATION_BAND = Object.freeze([70, 150]);
+export const E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX = 12;
+
 export const E_STABLE_PRICE_BANDS = Object.freeze({
-  fish: Object.freeze([0.2, 3]),
-  wheat: Object.freeze([0.5, 4.5]),
-  log: Object.freeze([0.3, 4]),
-  tools: Object.freeze([0.5, 6.5]),
-  salt: Object.freeze([0.3, 5.5]),
-  char: Object.freeze([0.3, 5.5]),
+  fish: Object.freeze([0.18, 1.8]),
+  wheat: Object.freeze([0.13, 4.1]),
+  log: Object.freeze([0.17, 1.5]),
+  tools: Object.freeze([0.75, 2.5]),
+  salt: Object.freeze([0.2, 5.1]),
+  char: Object.freeze([0.7, 3.7]),
 });
 
 const LEGACY_AUDIT_JOBS = Object.freeze([
@@ -104,8 +171,8 @@ export const IRON_CHAIN_BANDS = Object.freeze({
   ironProductionMin: 0.5,
   incomeMinimums: Object.freeze({
     miner: 7500,
-    collier: 7500,
-    smelter: 11000,
+    collier: 6000,
+    smelter: 10750,
     smith: 10000,
   }),
 });
@@ -240,19 +307,28 @@ export function addAuditZone(world, job, x, y, buildingX = null, buildingY = nul
   return true;
 }
 
-function createAuditCity(seed, layout) {
+function createAuditCity(
+  seed,
+  layout,
+  {
+    logisticsSites = AUDIT_LOGISTICS_SITES,
+    roadPolylines = AUDIT_ROAD_POLYLINES,
+    width = 48,
+    height = 40,
+  } = {},
+) {
   const physical = createPhysicalState({
-    width: 48,
-    height: 40,
-    terrain: makeFlowIslandTerrain(48, 40),
+    width,
+    height,
+    terrain: makeFlowIslandTerrain(width, height),
   });
   const world = createWorld({
     seed,
     physicalState: physical,
-    market: { ...AUDIT_LOGISTICS_SITES.market.entrance },
-    warehouse: { ...AUDIT_LOGISTICS_SITES.warehouse.entrance },
-    port: { ...AUDIT_LOGISTICS_SITES.port.entrance },
-    logisticsSites: AUDIT_LOGISTICS_SITES,
+    market: { ...logisticsSites.market.entrance },
+    warehouse: { ...logisticsSites.warehouse.entrance },
+    port: { ...logisticsSites.port.entrance },
+    logisticsSites,
   });
   ensureCompanyLogisticsSites(world.state.economy, physical);
   world.state.economy.jobSelectionPool = [...LEGACY_AUDIT_JOBS];
@@ -261,7 +337,7 @@ function createAuditCity(seed, layout) {
       throw new Error(`基準村の配置不可: ${job}@${x},${y}`);
     }
   }
-  for (const polyline of AUDIT_ROAD_POLYLINES) {
+  for (const polyline of roadPolylines) {
     for (let index = 1; index < polyline.length; index += 1) {
       const [fromX, fromY] = polyline[index - 1];
       const [toX, toY] = polyline[index];
@@ -278,8 +354,82 @@ export function createAuditWorld(seed) {
   return createAuditCity(seed, AUDIT_BASE);
 }
 
-export function buildBaseCity(seed) {
-  return createAuditCity(seed, E_STABLE_BASE);
+export function buildBaseCity(seed, { marketEntrance = E_STABLE_MARKET_ANCHOR } = {}) {
+  const plan = makeStableCityPlan(marketEntrance);
+  const world = createAuditCity(seed, plan.layout, {
+    logisticsSites: plan.logisticsSites,
+    roadPolylines: plan.roadPolylines,
+  });
+  const [minimumPath, maximumPath] = E_STABLE_PATH_BAND;
+  for (const zone of world.state.economy.zones) {
+    const distance = pathLen(world.state.physical, zone, world.state.economy.market, "walk");
+    if (distance < minimumPath - 1e-9 || distance > maximumPath + 1e-9) {
+      throw new Error(`基準都市の入口pathLenが帯外: ${zone.job}@${zone.x},${zone.y}=${distance}`);
+    }
+  }
+  return world;
+}
+
+export const E_STABLE_BAD_MARKET_ANCHOR = Object.freeze({ x: 50, y: 28 });
+export const E_STABLE_BAD_MIN_PATH = 25;
+export const E_STABLE_BAD_FAMINE_RATIO_MIN = 2.5;
+export const E_STABLE_BAD_POPULATION_RATIO_MAX = 0.75;
+
+function findBadSettlementSite(world, job) {
+  const { economy, physical } = world.state;
+  const minimumX = Math.max(1, economy.market.x - 46);
+  const maximumX = Math.min(physical.width - 2, economy.market.x - 20);
+  const minimumY = Math.max(1, economy.market.y - 12);
+  const maximumY = Math.min(physical.height - 2, economy.market.y + 4);
+  for (let y = maximumY; y >= minimumY; y -= 1) {
+    for (let x = minimumX; x <= maximumX; x += 1) {
+      if (pathLen(physical, { x, y }, economy.market, "walk") <= E_STABLE_BAD_MIN_PATH) continue;
+      if (canPlaceSettlement(economy, physical, job, x, y)[0]) return [x, y];
+    }
+  }
+  return null;
+}
+
+export function buildBadCity(
+  seed,
+  { marketEntrance = E_STABLE_BAD_MARKET_ANCHOR, width = 64, height = 40 } = {},
+) {
+  const logisticsSites = Object.freeze({
+    market: Object.freeze({
+      x: marketEntrance.x - 2,
+      y: marketEntrance.y + 1,
+      entrance: Object.freeze({ ...marketEntrance }),
+    }),
+    warehouse: Object.freeze({
+      x: marketEntrance.x - 6,
+      y: marketEntrance.y + 1,
+      entrance: Object.freeze({ x: marketEntrance.x - 7, y: marketEntrance.y + 2 }),
+    }),
+    port: Object.freeze({
+      x: marketEntrance.x - 22,
+      y: marketEntrance.y + 5,
+      entrance: Object.freeze({ x: marketEntrance.x - 22, y: marketEntrance.y + 4 }),
+    }),
+  });
+  const world = createAuditCity(seed, [], {
+    logisticsSites,
+    roadPolylines: [],
+    width,
+    height,
+  });
+  for (const [job] of E_STABLE_RELATIVE_LAYOUT) {
+    const site = findBadSettlementSite(world, job);
+    if (!site || !addAuditZone(world, job, site[0], site[1])) {
+      throw new Error(`悪配置対照の配置不可: ${job}`);
+    }
+  }
+  for (const zone of world.state.economy.zones) {
+    const distance = pathLen(world.state.physical, zone, world.state.economy.market, "walk");
+    if (!(distance > E_STABLE_BAD_MIN_PATH)) {
+      throw new Error(`悪配置のpathLenが近すぎます: ${zone.job}=${distance}`);
+    }
+  }
+  return world;
 }
 
 function placeIronAuditHouseholds(world) {
@@ -305,6 +455,25 @@ function placeIronAuditHouseholds(world) {
     zone.filled = true;
     const household = createHousehold(economy, { job: site.job, x, y });
     household.buildingId = zone.buildingId;
+  }
+}
+
+function ensureMatureAuditHouseholds(world) {
+  const { economy, physical } = world.state;
+  while (economy.households.length < IRON_DEMAND_HOUSEHOLDS) {
+    let zone = economy.zones.find((candidate) => !candidate.filled);
+    if (!zone) {
+      const spot = findAuditSpot(world, "veg");
+      if (!spot || !addAuditZone(world, "veg", spot[0], spot[1])) {
+        throw new Error("Lv4成熟世帯4軒を配置できません");
+      }
+      zone = economy.zones.at(-1);
+    }
+    const household = createHousehold(economy, { job: zone.job, x: zone.x, y: zone.y });
+    household.buildingId = zone.buildingId;
+    zone.filled = true;
+    const building = buildingById(physical, zone.buildingId);
+    if (building) building.ownerHouseholdId = household.id;
   }
 }
 
@@ -376,16 +545,36 @@ export function auditPopulation(economy) {
 }
 
 function setPlayerStockTargets(economy) {
-  if (economy.order) {
-    economy.stockTgt[economy.order.g] = Math.max(
-      economy.stockTgt[economy.order.g] ?? 0,
-      Math.ceil((economy.stock[economy.order.g] ?? 0) + economy.order.left),
-    );
+  let changed = false;
+  for (const goods of COMPANY_ORDER_GOODS) {
+    const target = economy.order?.g === goods
+      ? Math.ceil((economy.stock[goods] ?? 0) + economy.order.left)
+      : 0;
+    if ((economy.stockTgt[goods] ?? 0) !== target) {
+      economy.stockTgt[goods] = target;
+      changed = true;
+    }
   }
-  economy.stockTgt.wheat = Math.max(
-    economy.stockTgt.wheat ?? 0,
-    Math.round(auditPopulation(economy) * 2),
-  );
+  const wheatTarget = Math.round(auditPopulation(economy) * 2);
+  if ((economy.stockTgt.wheat ?? 0) !== wheatTarget) {
+    economy.stockTgt.wheat = wheatTarget;
+    changed = true;
+  }
+  return changed;
+}
+
+function cheapestOrderGoods(economy, goods) {
+  return economy.stalls[goods]
+    .filter((stall) => stall.qty > 1e-9)
+    .reduce((cheapest, stall) => Math.min(cheapest, stall.price), Infinity);
+}
+
+function acceptProfitableOrder(economy, day) {
+  const offer = economy.orderOffer;
+  if (!offer) return null;
+  const cheapest = cheapestOrderGoods(economy, offer.g);
+  if (cheapest > offer.price * 1.25) return null;
+  return acceptCompanyOrder(economy, { day });
 }
 
 function countJobAndZones(economy, job) {
@@ -395,9 +584,13 @@ function countJobAndZones(economy, job) {
 
 export function mimicPlayer(world, day = world.state.day + 1) {
   const { economy } = world.state;
+  const acceptedOrder = acceptProfitableOrder(economy, day);
   let stockTargetsUpdated = false;
   let rebuilt = null;
-  if (day % 5 === 0) {
+  const staleOrderTarget = !economy.order && COMPANY_ORDER_GOODS.some(
+    (goods) => (economy.stockTgt[goods] ?? 0) > 0,
+  );
+  if (day % 5 === 0 || acceptedOrder || staleOrderTarget) {
     setPlayerStockTargets(economy);
     stockTargetsUpdated = true;
   }
@@ -409,7 +602,7 @@ export function mimicPlayer(world, day = world.state.day + 1) {
       if (spot) break;
     }
   }
-  return { stockTargetsUpdated, rebuilt };
+  return { stockTargetsUpdated, acceptedOrder, rebuilt };
 }
 
 function addResult(results, id, name, passed, detail) {
@@ -714,13 +907,16 @@ function inspectStableMaterial(economy, physical, initialTotals, initialFlows, d
 
 export function runStableCityScenario(
   seed,
-  { days = 7200, materialCheckInterval = 1 } = {},
+  { days = E_STABLE_DAYS, materialCheckInterval = 1, controller = mimicPlayer } = {},
 ) {
   if (!Number.isSafeInteger(days) || days <= 0) {
     throw new TypeError("stable scenario days must be a positive safe integer");
   }
   if (!Number.isSafeInteger(materialCheckInterval) || materialCheckInterval <= 0) {
     throw new TypeError("material check interval must be a positive safe integer");
+  }
+  if (typeof controller !== "function") {
+    throw new TypeError("stable scenario controller must be a function");
   }
   const world = buildBaseCity(seed);
   const { economy, physical } = world.state;
@@ -733,7 +929,7 @@ export function runStableCityScenario(
   let worstMaterial = { day: 0, goods: null, ratio: 0, residual: 0, throughput: 0 };
 
   for (let day = 1; day <= days; day += 1) {
-    mimicPlayer(world, day);
+    controller(world, day);
     world.step();
     sampleStablePrices(economy, prices);
     if (day % materialCheckInterval === 0 || day === days) {
@@ -776,13 +972,21 @@ export function runStableCityScenario(
     && prices[goods].min >= low
     && prices[goods].max <= high
   ));
-  const earlyFamine = average(yearly.slice(0, 5).map((sample) => sample.famine));
-  const lateFamine = average(yearly.slice(15, 20).map((sample) => sample.famine));
+  const comparisonYears = Math.min(3, yearly.length);
+  const earlyFamine = average(yearly.slice(0, comparisonYears).map((sample) => sample.famine));
+  const lateFamine = average(yearly.slice(-comparisonYears).map((sample) => sample.famine));
+  const faminePerCapita = yearly.map((sample) => (
+    sample.population > 0 ? sample.famine / sample.population : Infinity
+  ));
+  const [minimumPopulation, maximumPopulation] = E_STABLE_POPULATION_BAND;
   const bands = {
-    population: yearly.length === 20
-      && yearly.every((sample) => sample.population >= 80 && sample.population <= 250),
-    famine: earlyFamine !== null && lateFamine !== null && lateFamine <= earlyFamine,
-    jobs: yearly.length === 20 && yearly.every((sample) => (
+    population: yearly.length === days / 360
+      && yearly.every((sample) => (
+        sample.population >= minimumPopulation && sample.population <= maximumPopulation
+      )),
+    famine: faminePerCapita.length === yearly.length
+      && faminePerCapita.every((value) => value <= E_STABLE_FAMINE_DAYS_PER_CAPITA_MAX),
+    jobs: yearly.length === days / 360 && yearly.every((sample) => (
       E_STABLE_JOBS.every((job) => sample.jobs[job] >= 1)
     )),
     prices: priceBandsPassed,
@@ -794,7 +998,12 @@ export function runStableCityScenario(
     day: world.state.day,
     yearly,
     prices,
-    famine: { earlyAverage: earlyFamine, lateAverage: lateFamine },
+    famine: {
+      earlyAverage: earlyFamine,
+      lateAverage: lateFamine,
+      perCapita: faminePerCapita,
+      maximumPerCapita: faminePerCapita.length > 0 ? Math.max(...faminePerCapita) : null,
+    },
     material: { passed: materialPassed, worst: worstMaterial },
     physical: {
       carriers: assertCarrierInvariants(physical),
@@ -807,7 +1016,7 @@ export function runStableCityScenario(
 }
 
 export function runStableCityAudit(
-  { seeds = AUDIT_SEEDS, days = 7200, materialCheckInterval = 1 } = {},
+  { seeds = AUDIT_SEEDS, days = E_STABLE_DAYS, materialCheckInterval = 1 } = {},
 ) {
   const scenarios = seeds.map((seed) => runStableCityScenario(seed, {
     days,
@@ -829,6 +1038,97 @@ export function runStableCityAudit(
   };
 }
 
+export function runBadCityScenario(
+  seed = AUDIT_SEEDS[0],
+  { days = 1440, baselineYearly = null, materialCheckInterval = 1 } = {},
+) {
+  if (!Number.isSafeInteger(days) || days <= 0 || days % 360 !== 0) {
+    throw new TypeError("bad city scenario days must be a positive whole number of years");
+  }
+  const world = buildBadCity(seed);
+  const { economy, physical } = world.state;
+  const initialTotals = materialTotals(economicMaterialSnapshot(economy, physical));
+  const initialFlows = captureMaterialFlows(economy);
+  const yearly = [];
+  let previousFamine = 0;
+  let materialPassed = true;
+  let worstMaterial = { day: 0, goods: null, ratio: 0, residual: 0, throughput: 0 };
+  for (let day = 1; day <= days; day += 1) {
+    mimicPlayer(world, day);
+    world.step();
+    if (day % materialCheckInterval === 0 || day === days) {
+      const material = inspectStableMaterial(
+        economy,
+        physical,
+        initialTotals,
+        initialFlows,
+        day,
+      );
+      materialPassed &&= material.passed;
+      if (material.worst.ratio > worstMaterial.ratio) worstMaterial = material.worst;
+    }
+    if (day % 360 === 0) {
+      const cumulativeFamine = economy.famine;
+      yearly.push({
+        year: day / 360,
+        day,
+        population: auditPopulation(economy),
+        famine: cumulativeFamine - previousFamine,
+        jobs: Object.fromEntries(E_STABLE_JOBS.map((job) => [
+          job,
+          economy.households.filter((household) => household.job === job).length,
+        ])),
+      });
+      previousFamine = cumulativeFamine;
+    }
+  }
+  const final = yearly.at(-1);
+  const baseline = baselineYearly?.find((sample) => sample.day === days) ?? null;
+  const extinctJobs = E_STABLE_JOBS.filter((job) => (final?.jobs[job] ?? 0) === 0);
+  const finalFaminePerCapita = final && final.population > 0
+    ? final.famine / final.population
+    : Infinity;
+  const baselineFaminePerCapita = baseline && baseline.population > 0
+    ? baseline.famine / baseline.population
+    : null;
+  const famineRatio = baselineFaminePerCapita !== null
+    ? baselineFaminePerCapita > 0
+      ? finalFaminePerCapita / baselineFaminePerCapita
+      : finalFaminePerCapita > 0 ? Infinity : 0
+    : null;
+  const populationRatio = baseline && baseline.population > 0
+    ? final.population / baseline.population
+    : null;
+  const signatures = {
+    famine: famineRatio !== null && famineRatio >= E_STABLE_BAD_FAMINE_RATIO_MIN,
+    population: (final?.population ?? Infinity) < 60
+      || (populationRatio !== null && populationRatio <= E_STABLE_BAD_POPULATION_RATIO_MAX),
+    jobs: extinctJobs.length >= 3,
+  };
+  const physicalPassed = assertCarrierInvariants(physical) && assertOccupancyInvariant(physical);
+  return {
+    seed,
+    day: world.state.day,
+    yearly,
+    final,
+    baseline,
+    failureSignature: {
+      signatures,
+      famineRatio,
+      populationRatio,
+      extinctJobs,
+      finalFaminePerCapita,
+      baselineFaminePerCapita,
+    },
+    material: { passed: materialPassed, worst: worstMaterial },
+    physical: {
+      carriers: assertCarrierInvariants(physical),
+      occupancy: assertOccupancyInvariant(physical),
+    },
+    passed: Object.values(signatures).some(Boolean) && materialPassed && physicalPassed,
+  };
+}
+
 export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
   const world = createIronAuditWorld(seed, { depositRoads, placeHouseholds: false });
   const { economy, physical } = world.state;
@@ -847,7 +1147,13 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
         if (spot) addAuditZone(world, plan[month], spot[0], spot[1]);
       }
     }
-    if (day % 5 === 0) setPlayerStockTargets(economy);
+    const acceptedOrder = economy.orderOffer
+      ? acceptCompanyOrder(economy, { day })
+      : null;
+    const staleOrderTarget = !economy.order && COMPANY_ORDER_GOODS.some(
+      (goods) => (economy.stockTgt[goods] ?? 0) > 0,
+    );
+    if (day % 5 === 0 || acceptedOrder || staleOrderTarget) setPlayerStockTargets(economy);
     if (day % 90 === 0 && economy.company.money * 10 > 8000) {
       for (const job of ["woodshop", "charburner", "saltworks"]) {
         if (countJobAndZones(economy, job) >= 1) continue;
@@ -859,7 +1165,12 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
       }
     }
     if (day === IRON_AUDIT_START_DAY + 1) {
-      for (const household of economy.households.slice(0, IRON_DEMAND_HOUSEHOLDS)) {
+      ensureMatureAuditHouseholds(world);
+      const matureHouseholds = economy.households.slice(0, IRON_DEMAND_HOUSEHOLDS);
+      if (matureHouseholds.length !== IRON_DEMAND_HOUSEHOLDS) {
+        throw new Error(`Lv4成熟世帯が不足しています: ${matureHouseholds.length}/${IRON_DEMAND_HOUSEHOLDS}`);
+      }
+      for (const household of matureHouseholds) {
         household.lv = Math.max(household.lv, IRON_DEMAND_LEVEL);
         household.up = 0;
         household.down = 0;
@@ -868,15 +1179,16 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
       placeIronAuditHouseholds(world);
     }
     world.step();
-    for (const { job } of IRON_AUDIT_SITES) {
-      maxIncomes[job] = Math.max(
-        maxIncomes[job],
-        ...economy.households
-          .filter((household) => household.job === job)
-          .map((household) => (household.incY ?? 0) * 10),
+    for (const household of economy.households) {
+      if (!Object.hasOwn(maxIncomes, household.job)) continue;
+      maxIncomes[household.job] = Math.max(
+        maxIncomes[household.job],
+        (household.incY ?? 0) * 10,
       );
     }
-    for (const [eventDay, message] of economy.events) {
+    for (let eventIndex = economy.events.length - 1; eventIndex >= 0; eventIndex -= 1) {
+      const [eventDay, message] = economy.events[eventIndex];
+      if (eventDay < day) break;
       if (eventDay === day && message.startsWith("破綻転職:")) {
         const touchesIronJob = IRON_AUDIT_SITES.some(({ job }) => message.includes(job));
         if (touchesIronJob && !ironJobSwitches.some((entry) => (
@@ -933,9 +1245,7 @@ export function runIronChainScenario({ seed, depositRoads, days = 2160 }) {
   };
 }
 
-export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
-  const connected = runIronChainScenario({ seed, depositRoads: true, days });
-  const disconnected = runIronChainScenario({ seed, depositRoads: false, days });
+export function evaluateIronChainScenarios(connected, disconnected) {
   const materialGreen = [connected, disconnected].every((scenario) => (
     GOODS.every((goods) => Math.abs(scenario.material[goods].residual) < 1e-6)
     && scenario.physical.carriers
@@ -998,6 +1308,12 @@ export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
     passed: results.filter((result) => result.passed).length,
     total: results.length,
   };
+}
+
+export function runIronChainAudit({ seed = 11, days = 2160 } = {}) {
+  const connected = runIronChainScenario({ seed, depositRoads: true, days });
+  const disconnected = runIronChainScenario({ seed, depositRoads: false, days });
+  return evaluateIronChainScenarios(connected, disconnected);
 }
 
 export function runIronChainBandAudit({ seeds = AUDIT_SEEDS, days = 2160 } = {}) {
