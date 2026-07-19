@@ -77,7 +77,21 @@ group_handoff_audit:
 - stale_review_batch: 現 cycle staging にはなし。group handoff 3件を新規 candidate より先に処理した。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260719_monster_level_prediction_ttrpg.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784449178584249
+    char_count: 3989
+  - candidate: memory/shared_reads_candidates/20260719_super_mario_world_1_1_curriculum.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784449179598279
+    char_count: 4212
+skipped: []
+```
+
+- monster level prediction: 6,007体・33特徴・16モデル・chronological / 21-window expanding 評価を原文で確認した。既存 level の再現であり、特殊能力・遭遇条件・人間との直接比較を含まない限界と、全体 scaling による leakage を明記して部分採用とした。
+- World 1-1 curriculum: MC では canonical 94.7% / reversed 48.5%、DQN では ANOVA p=0.82 の null effect であることを原文で確認した。人間 pedagogy の直接証拠ではなく learner / reward / ordering の相互作用として限定し、複数 controller の順列 probe を部分採用とした。
+- 投稿前 policy review: 2件とも `■ 概要` 開始、必須6項目、`■ URL` 末尾、禁止表現なし、3400–4600字の validator を通過。各 candidate を独立した `chat.postMessage` で投稿し、live history で ts・本文・thread_ts 不在を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
