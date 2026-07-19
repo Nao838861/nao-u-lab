@@ -7,11 +7,11 @@ genre_tags: [game-design, npc-ai, reinforcement-learning, persona, evaluation]
 evaluated_at: "2026-05-27T19:27:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-20T06:07:10+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-bcf948e41f7911a1; terminal:memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829 and https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829; reason:posted-source index confirms the same arXiv work was already posted with complete provenance so the open siblings must not re-enter Phase 3"
 postponed:
   at: "2026-05-27T19:42:00+09:00"
   reason: "Phase 3 で同一論文の既投稿を確認したため。2026-05-26 の投稿と新規差分がなく、#shared-reads の重複投稿を避ける。"

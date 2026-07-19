@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/audio/deep-dive-sound-design-for-the-living-
 collected_at: "2026-07-20T06:02:08.1127293+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-audio, spatial-audio, open-world, feedback, accessibility]
+evaluated_at: "2026-07-20T06:07:46+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-20T06:07:46+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-20T06:07:46+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: |-
+  Lift Vine と Veilswarm の2事例から、知覚上の目的、素材選択、可変 emitter、RTPC、視線・速度・状態・local/remote 条件まで実装判断を追える。
+  形式的なユーザー実験はないが、出荷済み open-world の制約解決事例として、音を affordance と身体反応へ結ぶ具体 probe に落とせる。
+  二つの事例の共通原理・限界・小規模 prototype への縮約を含めれば、約4000字の残すべき分析に耐える。
+suggested_post_outline:
+  overview_angle: "open-world 音響を装飾ではなく、操作対象の可読性、移動速度、空間反応、coop の視点整合を担う状態依存システムとして整理する。"
+  analysis_axis: "Lift Vine の音色と可読性の両立、可変 emitter と視線補助、Veilswarm の共有 telemetry・RTPC・鏡映 emitter、local/remote 分離を比較する。"
+  application_target: "Log_cdx の browser game prototype で、少数 emitter と既存 gameplay state を使い、対象発見・速度感・危険状態・local player feedback を音で読ませる実装 probe。"
+  pros_cons: "長所は視覚ロジックを音へ再利用し少ない発音点で反応密度を上げられること。短所は専用 middleware の事例で定量評価がなく、2D/3D layer の過剰化や反復疲労を個別に検証する必要があること。"
+  verdict_pre: "部分採用。まず一つの可変オブジェクトで emitter 位置・速度・状態閾値・local/remote 条件を共有する小規模 probe を試す。"
 ---
 
 ## raw_excerpt

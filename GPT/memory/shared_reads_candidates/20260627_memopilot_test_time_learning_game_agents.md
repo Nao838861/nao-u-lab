@@ -4,16 +4,16 @@ url: "https://arxiv.org/abs/2606.08656v1"
 collected_at: "2026-06-27T13:47:41+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, memory, reinforcement-learning, test-time-learning, poker]
-status: needs_review
+status: failed
 lifecycle_backfill_reason: "missing_status_defaulted_to_needs_review"
 lifecycle_backfilled_at: "2026-07-12"
-candidate_status: needs_review
+candidate_status: failed
 stale_after: "2026-07-27"
 supersedes: []
-last_reviewed_at: "2026-06-27T13:47:41+09:00"
-last_decision: needs_review
-evidence: "candidate_file:20260627_memopilot_test_time_learning_game_agents.md; status:needs_review"
-next_action: evaluate_in_phase2
+last_reviewed_at: "2026-07-20T06:07:02+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-5f0a1ccaece64e4a; terminal:memory/shared_reads_candidates/20260610_memopilot_test_time_learning_memory.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781045833863959; reason:posted-source index confirms the same arXiv work was already posted so all open siblings are duplicate candidates"
+next_action: none
 
 ---
 

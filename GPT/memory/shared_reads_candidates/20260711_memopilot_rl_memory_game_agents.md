@@ -7,11 +7,11 @@ genre_tags: [llm-agents, game-playing, memory, reinforcement-learning, evaluatio
 evaluated_at: "2026-07-11T17:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-11T17:05:00+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260610_memopilot_test_time_learning_memory.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781045833863959"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T06:07:02+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-5f0a1ccaece64e4a; terminal:memory/shared_reads_candidates/20260610_memopilot_test_time_learning_memory.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781045833863959; reason:posted-source index confirms the same arXiv work was already posted so all open siblings are duplicate candidates"
 next_action: none
 stale_after: "2026-08-10"
 supersedes: []

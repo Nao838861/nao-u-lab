@@ -7,11 +7,11 @@ genre_tags: [game-ai, npc, reinforcement-learning, persona, simulation]
 evaluated_at: "2026-07-19T01:22:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-07-19T01:22:49+09:00"
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-20T06:07:10+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-bcf948e41f7911a1; terminal:memory/shared_reads_candidates/20260526_one_policy_infinite_npcs.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779725135414829 and https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782609581756829; reason:posted-source index confirms the same arXiv work was already posted with complete provenance so the open siblings must not re-enter Phase 3"
 stale_after: "2026-08-18"
 supersedes: []
 gate_reason: |-
