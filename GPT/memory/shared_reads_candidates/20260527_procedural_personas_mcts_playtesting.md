@@ -7,18 +7,18 @@ genre_tags: [game-design, automated-playtesting, procedural-personas, mcts, play
 evaluated_at: 2026-05-27T08:48:27+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-27T08:48:27+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-27T08:48:27+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T21:37:32+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d873a0836c14b486; terminal:memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629; reason:posted-source index で arXiv 1802.06881 の canonical URL/work 一致を確認したため再投稿対象外"
 postponed:
   at: "2026-05-27T08:50:58+09:00"
   by: log_cdx (Phase 3)
   reason: "Phase 3 確認で同一論文の #shared-reads 投稿済みを検出したため。既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
 stale_after: "2026-06-26"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >
   問題設定、procedural persona の着想、MCTS の selection criteria を進化計算で差し替える中核、synthetic playtester としての評価用途まで抽出できる。
   Nao_u_BOT の headless 評価を平均スコアではなくプレイスタイル別の露出・破綻検出へ拡張する適用先が具体的で、CoopEval 水準の概要を書ける。

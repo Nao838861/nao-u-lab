@@ -7,12 +7,12 @@ genre_tags: [playtesting, player-modeling, procedural-personas, pcg, mcts]
 evaluated_at: "2026-06-16T02:19:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-16T02:22:35+09:00"
-last_decision: postponed
-evidence: "postponed_due_to_existing_shared_reads_post:1778789339.493129"
-next_action: revise_only_if_new_probe_or_delta
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T21:37:32+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d873a0836c14b486; terminal:memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629; reason:posted-source index で arXiv 1802.06881 の canonical URL/work 一致を確認したため再投稿対象外"
+next_action: none
 stale_after: "2026-07-16"
 supersedes: []
 postpone_reason: "Phase 3 self-review: 同論文は #shared-reads ts=1778789339.493129 で詳細投稿済み。今回候補は新規 probe / 実装差分 / 追加評価を含まず、再投稿は重複になる。"

@@ -4,6 +4,20 @@ url: https://dl.digra.org/index.php/dl/article/view/2837
 collected_at: 2026-07-19T21:32:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, npc, dialogue-systems, llm, narrative-systems]
+evaluated_at: "2026-07-19T21:38:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-19T21:38:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-19T21:38:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >-
+  自由入力、脚本制約、ゲーム状態変更、意味データ保存という設計要素は具体的で、会話型 NPC 制作への接続も強い。
+  ただし候補本文には形式化の詳細、実装構成、評価方法・結果・限界がなく、現状の情報だけでは4000字級の概要が概念紹介へ寄るため保留する。
 ---
 
 ## raw_excerpt

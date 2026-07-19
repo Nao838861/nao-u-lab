@@ -7,14 +7,14 @@ genre_tags: [game-design, automated-playtesting, pcg, player-modeling, evaluatio
 evaluated_at: "2026-05-17T14:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-06-21T05:25:00+09:00"
-last_decision: postpone_stale_batch
-evidence: "Phase 4a stale_review_batch; keep for minority Phase 2 reevaluation"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-19T21:37:32+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d873a0836c14b486; terminal:memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629; reason:posted-source index で arXiv 1802.06881 の canonical URL/work 一致を確認したため再投稿対象外"
 stale_after: "2026-07-21"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
   procedural personas / automated playtesting は headless 評価に近く、Phase 4a stale_review_batch では少数再評価対象。
   ただし投稿済み候補や 20260616 版との重複があるため、次回 Phase 2 で新規差分と本文密度を確認してから扱う。

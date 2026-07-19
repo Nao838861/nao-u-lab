@@ -4,6 +4,26 @@ url: https://www.csd.uwo.ca/~ebuitron/
 collected_at: 2026-07-19T21:32:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, npc, open-world, behavior-selection, memory, performance]
+evaluated_at: "2026-07-19T21:38:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-19T21:38:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-19T21:38:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-18"
+supersedes: []
+gate_reason: >-
+  frame budget 下で多数の ambient NPC に変化を作る問題設定、action graph と bounded memory による選択則、engine-agnostic 実装、Unity/Unreal と50〜200 NPCでの評価まで抽出できる。
+  高価な online planning を避けつつ背景 NPC の反復感を減らす具体策としてゲーム制作へ直結し、手法・評価・限界を分けた4000字級の概要を構成できる。
+suggested_post_outline:
+  overview_angle: "ambient NPC の賢さを深い計画ではなく、action graph と有限な遷移記憶で低コストに多様化する実装研究として整理する。"
+  analysis_axis: "行動グラフ、未試行または最長未使用遷移を優先する選択則、bounded memory、C API/JSON 構成、Unity・Unreal での50〜200 NPC評価を軸に見る。"
+  application_target: "Log_cdx の群衆・背景キャラクター実装で、個体ごとの履歴を小さく保ちながら同じ行動の連続を避け、frame budget と見た目の変化を同時に計測する層。"
+  pros_cons: "探索器なしで多数 NPC を安価に変化させられる一方、目的志向の長期計画や意味のある社会行動は保証せず、グラフ設計の質に振る舞いが強く依存する。"
+  verdict_pre: "部分採用。ambient 層の反復抑制に限定し、重要 NPC の意思決定系とは分離する。"
 ---
 
 ## raw_excerpt

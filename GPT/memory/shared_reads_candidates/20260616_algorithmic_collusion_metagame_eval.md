@@ -7,12 +7,12 @@ genre_tags: [multi-agent, game-theory, test-time-adaptation, evaluation, strateg
 evaluated_at: "2026-06-16T02:19:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-16T02:19:24+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-16T02:19:24+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T21:37:31+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-eee43275a9c927cf; terminal:memory/shared_reads_posted_source_index.jsonl: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783406218664919; memory/shared_reads_candidates/20260516_algorithmic_collusion_test_time_metagame.md: failed; reason:posted-source index で arXiv 2602.17203 の canonical work 一致を確認したため再投稿対象外"
+next_action: none
 stale_after: "2026-07-16"
 supersedes: []
 gate_reason: "meta-game design、empirical best-response graphs、test-time constraints は重要だが、候補本文は algorithmic collusion risk 側の文脈が強い。対戦ゲームAI評価へ転用するには、具体的なゲーム制作シナリオと指標の翻訳を追加確認してからの方がよい。"

@@ -7,11 +7,11 @@ genre_tags: [game-design, automated-playtesting, player-modeling, procedural-con
 evaluated_at: 2026-07-09T03:47:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-07-09T03:47:41+09:00
-last_decision: postponed_duplicate
-evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T21:37:32+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d873a0836c14b486; terminal:memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129; memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629; reason:posted-source index で arXiv 1802.06881 の canonical URL/work 一致を確認したため再投稿対象外"
 next_action: none
 stale_after: "2026-08-08"
 supersedes: []

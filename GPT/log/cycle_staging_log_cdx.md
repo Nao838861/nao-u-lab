@@ -15,7 +15,79 @@
 - Slack 投稿: なし
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260719_memory_driven_ambient_npc_behavior.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260719_open_dialogue_llm_npcs.md
+    reason: 形式化・実装・評価結果が候補本文に不足し、4000字級では概念紹介に寄る
+  - path: memory/shared_reads_candidates/20260719_ai_npc_social_presence_open_world.md
+    reason: 尺度・統計手法・効果量・限界が不足し、調査結果の妥当性を深掘りできない
+stale_reviewed: []
+group_actions:
+  - group_key: ai gamestore scalable open ended evaluation of machine general intelligence with human games
+    representative: memory/shared_reads_candidates/20260616_ai_gamestore_human_games.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260616_ai_gamestore_human_games.md
+      - memory/shared_reads_candidates/20260620_ai_gamestore_human_games.md
+      - memory/shared_reads_candidates/20260711_ai_gamestore_open_ended_game_evaluation.md
+    reason: posted-source index で arXiv 2602.17594 の canonical URL/work 一致を確認したため再投稿対象外
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md
+        evidence: "posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579"
+    representative_decision: postpone
+    analysis_time_minutes: 3
+  - group_key: algorithmic collusion at test time a meta game design and evaluation
+    representative: memory/shared_reads_candidates/20260616_algorithmic_collusion_metagame_eval.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260616_algorithmic_collusion_metagame_eval.md
+    reason: posted-source index で arXiv 2602.17203 の canonical work 一致を確認したため再投稿対象外
+    terminal_evidence:
+      - path: memory/shared_reads_posted_source_index.jsonl
+        evidence: "posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783406218664919"
+      - path: memory/shared_reads_candidates/20260516_algorithmic_collusion_test_time_metagame.md
+        evidence: failed
+    representative_decision: postpone
+    analysis_time_minutes: 3
+  - group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    representative: memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    reason: posted-source index で arXiv 1802.06881 の canonical URL/work 一致を確認したため再投稿対象外
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+        evidence: "posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
+      - path: memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+        evidence: "posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341107329629"
+    representative_decision: postpone
+    analysis_time_minutes: 4
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-6c97712be1a4f523
+    - gha-eee43275a9c927cf
+    - gha-d873a0836c14b486
+  resolved_ids:
+    - gha-6c97712be1a4f523
+    - gha-eee43275a9c927cf
+    - gha-d873a0836c14b486
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 9
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

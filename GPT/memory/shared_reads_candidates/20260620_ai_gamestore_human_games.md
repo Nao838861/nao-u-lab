@@ -7,11 +7,11 @@ genre_tags: [game-design, evaluation, playtesting, human-games, vlm, benchmark]
 evaluated_at: 2026-06-20T06:47:31+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: postponed
-candidate_status: postponed
-last_reviewed_at: 2026-06-20T06:52:26+09:00
-last_decision: postpone_duplicate_existing_post
-evidence: "existing shared-reads post: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779417206845399; prior candidate posted: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-19T21:37:31+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-6c97712be1a4f523; terminal:memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779793589433579; reason:posted-source index で arXiv 2602.17594 の canonical URL/work 一致を確認したため再投稿対象外"
 next_action: none
 stale_after: "2026-07-20"
 supersedes: []
