@@ -1,4 +1,4 @@
-import { workRoadWorksite } from "./physical.js";
+import { pathLen, workRoadWorksite } from "./physical.js";
 
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
@@ -51,9 +51,6 @@ export const P = deepFreeze({
   LV_MULT: 1.585,
   UP_DAYS: 45,
   DOWN_DAYS: 60,
-  TRAVEL_RATE: 0.012,
-  ROAD_F: 0.55,
-  TRAVEL_MAX: 0.45,
   HAUL: 40,
   IMP: { wheat: 4, tools: 6, salt: 5, iron: 4.5 },
   IMP_COST: { wheat: 2.4, tools: 4.2, salt: 3.5, iron: 3.2 },
@@ -237,6 +234,10 @@ function makeHouseholdRecord(economy, { job, x, y }) {
     py: y,
     state: "home",
     cargo: null,
+    marketCarrier: null,
+    marketTransactionTicks: 0,
+    marketTripTicks: 0,
+    productionMultiplier: 1,
     buildDays: 0,
     boost: null,
     employerId: null,
@@ -288,6 +289,39 @@ export function householdHaul(household) {
   return household.members.length * 4;
 }
 
+function tilePosition(position) {
+  return { x: Math.round(position.x), y: Math.round(position.y) };
+}
+
+export function marketPathLength(economy, physical, household) {
+  if (!physical) {
+    return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
+  }
+  return pathLen(
+    physical,
+    tilePosition(household),
+    tilePosition(economy.market),
+    "walk",
+  );
+}
+
+export function marketTripDuration(economy, physical, household) {
+  return marketPathLength(economy, physical, household) * 2 + 2;
+}
+
+export function productionMultiplierForTrip(tripTicks) {
+  if (!Number.isFinite(tripTicks) || tripTicks < 0) {
+    if (tripTicks === Infinity) return 0;
+    throw new TypeError("tripTicks must be non-negative and finite");
+  }
+  return Math.max(0, (30 - tripTicks) / 30);
+}
+
+export function marketTripCost(economy, physical, household) {
+  const distance = marketPathLength(economy, physical, household);
+  return Math.min(Math.max(10, distance * 2.2), householdHaul(household) * 0.8);
+}
+
 export function householdClass(household) {
   return JOBCLS[household.job];
 }
@@ -300,7 +334,11 @@ export function economicMaterialSnapshot(economy) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
     if (household.cargo) {
-      cargo[household.cargo.goods] = (cargo[household.cargo.goods] ?? 0) + household.cargo.qty;
+      const manifest = household.cargo.manifest
+        ?? (household.cargo.goods ? { [household.cargo.goods]: household.cargo.qty } : {});
+      for (const [goods, qty] of Object.entries(manifest)) {
+        cargo[goods] = (cargo[goods] ?? 0) + qty;
+      }
     }
   }
   for (const ruin of economy.ruins) {
@@ -592,8 +630,11 @@ function terrainKindAt(physical, x, y) {
 
 function setTerrainKind(physical, x, y, kind) {
   const tile = physical.terrain[y][x];
+  const previous = typeof tile === "string" ? tile : tile.kind;
+  if (previous === kind) return;
   if (typeof tile === "string") physical.terrain[y][x] = kind;
   else tile.kind = kind;
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
 }
 
 export function initializeNaturalResources(economy, physical) {
@@ -803,16 +844,44 @@ export function sellOffers(economy, household) {
   return offers;
 }
 
+export function loadMarketSellCargo(economy, household) {
+  if (household.cargo) throw new Error(`世帯${household.id}は既にcargoを運搬中です`);
+  let capacity = householdHaul(household);
+  const offers = sellOffers(economy, household);
+  const manifest = {};
+  for (const [goods, offered] of Object.entries(offers)) {
+    const qty = Math.min(offered, capacity);
+    if (qty <= 1e-9) continue;
+    household.pantry[goods] -= qty;
+    manifest[goods] = qty;
+    capacity -= qty;
+  }
+  household.cargo = { direction: "outbound", manifest };
+  return household.cargo;
+}
+
+export function unloadMarketBuyCargo(household) {
+  if (household.cargo?.direction !== "inbound") {
+    throw new Error(`世帯${household.id}に帰宅荷がありません`);
+  }
+  for (const [goods, qty] of Object.entries(household.cargo.manifest)) {
+    household.pantry[goods] += qty;
+  }
+  const delivered = household.cargo;
+  household.cargo = null;
+  return delivered;
+}
+
 export const BUY_ORDER = deepFreeze([
   "log", "salt", "char", "tools", "cloth", "iron", "meal",
   "stone", "oil", "fish", "veg", "wheat", "pres", "meat",
 ]);
 
-function marketDistance(economy, household) {
-  return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
-}
-
-export function buyTargets(economy, household, { day = economy.currentDay } = {}) {
+export function buyTargets(
+  economy,
+  household,
+  { day = economy.currentDay, physical = null } = {},
+) {
   const targets = {};
   const foodDays = FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
   const { px } = economy;
@@ -820,7 +889,10 @@ export function buyTargets(economy, household, { day = economy.currentDay } = {}
   const month = (Math.floor((day - 1) / 30) % 12) + 1;
   const autumn = month >= 7 && month <= 9;
   let targetDays = autumn ? 10 : P.PANTRY_FOOD_D;
-  targetDays = Math.max(targetDays, Math.min(12, marketDistance(economy, household) * 0.9));
+  targetDays = Math.max(
+    targetDays,
+    Math.min(12, marketPathLength(economy, physical, household) * 0.9),
+  );
 
   if (foodDays < targetDays) {
     const starving = foodDays < 1.5;
@@ -962,11 +1034,19 @@ export function companyStockReleasePrice(economy, goods) {
   );
 }
 
-export function buyAtMarket(economy, household, { day }) {
+export function buyAtMarket(
+  economy,
+  household,
+  { day, physical = null, delivery = "pantry" },
+) {
+  if (delivery !== "pantry" && delivery !== "cargo") {
+    throw new Error(`unknown market delivery: ${delivery}`);
+  }
   let capacity = householdHaul(household);
-  const targets = buyTargets(economy, household, { day });
+  const targets = buyTargets(economy, household, { day, physical });
   const order = BUY_ORDER.filter((goods) => targets[goods]);
   const transactions = [];
+  const manifest = {};
 
   for (const goods of order) {
     let [wanted, ceiling] = targets[goods];
@@ -999,7 +1079,8 @@ export function buyAtMarket(economy, household, { day }) {
 
       const payment = qty * shelf.price;
       household.purse -= payment;
-      household.pantry[goods] += qty;
+      if (delivery === "pantry") household.pantry[goods] += qty;
+      else manifest[goods] = (manifest[goods] ?? 0) + qty;
       wanted -= qty;
       capacity -= qty;
 
@@ -1061,7 +1142,13 @@ export function buyAtMarket(economy, household, { day }) {
       });
     }
   }
-  return { targets, order, transactions, remainingCapacity: capacity };
+  return {
+    targets,
+    order,
+    transactions,
+    remainingCapacity: capacity,
+    cargo: delivery === "cargo" ? { direction: "inbound", manifest } : null,
+  };
 }
 
 function exportHouseholdGoods(economy, household, goods, qty, price, day) {
@@ -1087,8 +1174,13 @@ function exportHouseholdGoods(economy, household, goods, qty, price, day) {
   economy.co.expSell += revenue;
 }
 
-export function sellAtMarket(economy, physical, household, { day, random }) {
-  const offers = sellOffers(economy, household);
+function sellManifestAtMarket(
+  economy,
+  physical,
+  household,
+  offers,
+  { day, random, withdrawFromPantry },
+) {
   const listed = [];
   for (const [goods, offered] of Object.entries(offers)) {
     let qty = offered;
@@ -1105,7 +1197,7 @@ export function sellAtMarket(economy, physical, household, { day, random }) {
       const accepted = Math.min(qty, Math.max(0, cap - used));
       if (accepted > 1e-9) {
         economy.deskUsed[deskKey] = used + accepted;
-        household.pantry[goods] -= accepted;
+        if (withdrawFromPantry) household.pantry[goods] -= accepted;
         if (kind === "EXP") {
           exportHouseholdGoods(economy, household, goods, accepted, price, day);
         } else if (kind === "PAVE") {
@@ -1131,7 +1223,7 @@ export function sellAtMarket(economy, physical, household, { day, random }) {
       }
     }
     if (qty > 1e-9) {
-      household.pantry[goods] -= qty;
+      if (withdrawFromPantry) household.pantry[goods] -= qty;
       const cost = productionCost(economy, physical, household, goods, { day });
       const price = quoteAskPrice(cost, goods, random);
       const stall = { householdId: household.id, qty, price, age: 0 };
@@ -1142,9 +1234,42 @@ export function sellAtMarket(economy, physical, household, { day, random }) {
   return { offers, listed };
 }
 
+export function sellAtMarket(economy, physical, household, { day, random }) {
+  return sellManifestAtMarket(
+    economy,
+    physical,
+    household,
+    sellOffers(economy, household),
+    { day, random, withdrawFromPantry: true },
+  );
+}
+
+export function sellMarketCargo(economy, physical, household, { day, random }) {
+  if (household.cargo?.direction !== "outbound") {
+    throw new Error(`世帯${household.id}に市場向けcargoがありません`);
+  }
+  const offers = household.cargo.manifest;
+  const sold = sellManifestAtMarket(
+    economy,
+    physical,
+    household,
+    offers,
+    { day, random, withdrawFromPantry: false },
+  );
+  household.cargo = null;
+  return sold;
+}
+
 export function transactAtMarket(economy, physical, household, { day, random }) {
   const sold = sellAtMarket(economy, physical, household, { day, random });
-  const bought = buyAtMarket(economy, household, { day });
+  const bought = buyAtMarket(economy, household, { day, physical });
+  return { sold, bought };
+}
+
+export function transactMarketCargo(economy, physical, household, { day, random }) {
+  const sold = sellMarketCargo(economy, physical, household, { day, random });
+  const bought = buyAtMarket(economy, household, { day, physical, delivery: "cargo" });
+  household.cargo = bought.cargo;
   return { sold, bought };
 }
 
@@ -1391,11 +1516,16 @@ export function laborWage(economy, household) {
 
 export function assignNeedyWork(economy, physical, household) {
   if (household.state !== "home" || !isNeedyHousehold(household)) return null;
-  if (physical.roadWorksites.length > 0) {
-    const worksite = physical.roadWorksites.reduce((a, b) => (
-      Math.hypot(a.x - household.x, a.y - household.y)
-        < Math.hypot(b.x - household.x, b.y - household.y) ? a : b
-    ));
+  const home = tilePosition(household);
+  const reachableWorksites = physical.roadWorksites
+    .map((worksite) => ({
+      worksite,
+      distance: pathLen(physical, home, tilePosition(worksite), "walk"),
+    }))
+    .filter(({ distance }) => distance <= 14)
+    .sort((a, b) => a.distance - b.distance);
+  if (reachableWorksites.length > 0) {
+    const { worksite } = reachableWorksites[0];
     household.wx = worksite.x;
     household.wy = worksite.y;
     household.state = "toWork";
@@ -1412,10 +1542,12 @@ export function assignNeedyWork(economy, physical, household) {
       && candidate.workerId === null
       && candidate.state !== "building"
     ))
-    .sort((a, b) => (
-      Math.hypot(a.x - household.x, a.y - household.y)
-      - Math.hypot(b.x - household.x, b.y - household.y)
-    ))[0];
+    .map((candidate) => ({
+      candidate,
+      distance: pathLen(physical, home, tilePosition(candidate), "walk"),
+    }))
+    .filter(({ distance }) => distance <= 14)
+    .sort((a, b) => a.distance - b.distance)[0]?.candidate;
   if (!employer) return null;
   employer.workerId = household.id;
   household.employerId = employer.id;

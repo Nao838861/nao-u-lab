@@ -3,6 +3,8 @@ const DIRS = [
   [1, 1], [1, -1], [-1, 1], [-1, -1],
 ];
 
+const travelPathCaches = new WeakMap();
+
 export const V003_GRID = Object.freeze({ width: 24, height: 19 });
 export const V003_FIXED = Object.freeze({
   port: { x: 2, y: 14, entrance: { x: 6, y: 15 }, grade: 3 },
@@ -105,6 +107,7 @@ export function createPhysicalState({
     occupied: {},
     nextBuildingId: 1,
     roadRevision: 0,
+    travelRevision: 0,
     connectionCache: { revision: -1, components: {} },
     haulJobs: [],
     nextHaulJobId: 1,
@@ -219,11 +222,29 @@ export function tileTravelCost(physical, x, y, mode = "walk") {
 }
 
 export function findTravelPath(physical, start, goal, mode = "walk") {
+  const trailSignature = Object.entries(physical.trails ?? {})
+    .filter(([, active]) => active === true)
+    .map(([key]) => key)
+    .sort()
+    .join(";");
+  const revision = `${physical.roadRevision}:${physical.travelRevision ?? 0}:${trailSignature}`;
+  let cache = travelPathCaches.get(physical);
+  if (!cache || cache.revision !== revision) {
+    cache = { revision, routes: new Map() };
+    travelPathCaches.set(physical, cache);
+  }
+  const cacheKey = `${mode}:${start.x},${start.y}>${goal.x},${goal.y}`;
+  if (cache.routes.has(cacheKey)) return cache.routes.get(cacheKey);
   const startCost = tileTravelCost(physical, start.x, start.y, mode);
   const goalCost = tileTravelCost(physical, goal.x, goal.y, mode);
-  if (!Number.isFinite(startCost) || !Number.isFinite(goalCost)) return null;
+  if (!Number.isFinite(startCost) || !Number.isFinite(goalCost)) {
+    cache.routes.set(cacheKey, null);
+    return null;
+  }
   if (start.x === goal.x && start.y === goal.y) {
-    return { path: [{ x: start.x, y: start.y }], cost: 0 };
+    const route = { path: [{ x: start.x, y: start.y }], cost: 0 };
+    cache.routes.set(cacheKey, route);
+    return route;
   }
 
   const distances = new Float64Array(physical.width * physical.height);
@@ -246,7 +267,9 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
         path.push({ x, y });
         cursor = came[cursor];
       }
-      return { path: path.reverse(), cost: current.cost };
+      const route = { path: path.reverse(), cost: current.cost };
+      cache.routes.set(cacheKey, route);
+      return route;
     }
 
     for (const [dirX, dirY] of DIRS) {
@@ -263,6 +286,7 @@ export function findTravelPath(physical, start, goal, mode = "walk") {
       open.push({ x, y, cost: nextCost });
     }
   }
+  cache.routes.set(cacheKey, null);
   return null;
 }
 
@@ -571,6 +595,21 @@ export function createCartCarrier(physical, { id = null } = {}) {
   return carrier;
 }
 
+export function routeTravelCarrier(physical, carrier, start, goal) {
+  if (!carrier || (carrier.mode !== "walk" && carrier.mode !== "cart")) {
+    throw new TypeError("travel carrier mode must be walk or cart");
+  }
+  const route = findTravelPath(physical, start, goal, carrier.mode);
+  if (!route) throw new Error(`${carrier.mode}で到達できる経路がありません`);
+  carrier.active = true;
+  carrier.path = route.path;
+  carrier.routeCost = route.cost;
+  carrier.pathIndex = 0;
+  carrier.segmentRemaining = null;
+  carrier.position = structuredClone(route.path[0]);
+  return carrier;
+}
+
 export function incomingHaulAmount(physical, buildingId, section, goods) {
   return physical.haulJobs
     .filter((job) => job.status === "in_transit")
@@ -601,18 +640,10 @@ export function createHaulJob(physical, { from, to, goods, qty, carrier }) {
   const sourcePosition = source.entrance ?? { x: source.x + source.w / 2, y: source.y + source.h / 2 };
   const targetPosition = target.entrance ?? { x: target.x + target.w / 2, y: target.y + target.h / 2 };
   const jobCarrier = structuredClone(carrier);
-  jobCarrier.active = true;
-  jobCarrier.position = structuredClone(jobCarrier.position ?? sourcePosition);
   jobCarrier.cargo = { goods, qty };
   if (jobCarrier.mode === "walk" || jobCarrier.mode === "cart") {
     if (!source.entrance || !target.entrance) throw new Error("移動キャリアには両建物の入口が必要です");
-    const route = findTravelPath(physical, sourcePosition, targetPosition, jobCarrier.mode);
-    if (!route) throw new Error(`${jobCarrier.mode}で到達できる経路がありません`);
-    jobCarrier.path = route.path;
-    jobCarrier.routeCost = route.cost;
-    jobCarrier.pathIndex = 0;
-    jobCarrier.segmentRemaining = null;
-    jobCarrier.position = structuredClone(route.path[0]);
+    routeTravelCarrier(physical, jobCarrier, sourcePosition, targetPosition);
   }
 
   withdrawInventory(source, sourceRef.section, goods, qty);
@@ -647,9 +678,9 @@ function carrierSegmentCost(physical, from, to, mode) {
   return tileTravelCost(physical, to.x, to.y, mode) * (diagonal ? 1.4 : 1);
 }
 
-function moveCarrierOneTick(physical, job) {
-  const carrier = job.carrier;
-  if (!Array.isArray(carrier.path)) return;
+export function stepTravelCarrier(physical, carrier) {
+  if (!Array.isArray(carrier?.path)) throw new TypeError("travel carrier has no route");
+  if (!carrier.active) return true;
   let budget = 1;
   while (budget > 1e-9 && carrier.pathIndex < carrier.path.length - 1) {
     const from = carrier.path[carrier.pathIndex];
@@ -673,7 +704,15 @@ function moveCarrierOneTick(physical, job) {
     carrier.segmentRemaining = remaining - budget;
     budget = 0;
   }
-  if (carrier.pathIndex >= carrier.path.length - 1) completeHaulJob(physical, job.id);
+  if (carrier.pathIndex >= carrier.path.length - 1) {
+    carrier.active = false;
+    return true;
+  }
+  return false;
+}
+
+function moveCarrierOneTick(physical, job) {
+  if (stepTravelCarrier(physical, job.carrier)) completeHaulJob(physical, job.id);
 }
 
 export function assertCarrierInvariants(physical) {
