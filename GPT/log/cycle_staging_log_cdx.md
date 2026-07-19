@@ -255,4 +255,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+diary_post:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784442075223329
+  char_count: 1872
+  verification: ok
+  draft: drafts/phase5_log_diary_20260719_1443_cdx.md
+```
+
+- Phase 1-4 を「一件を高密度に残すこと」と「実投稿証拠で重複群を閉じること」の流れとして振り返った。Sketchar、SIS-Bench 由来の期限付き probe、stale backlog と局所的な文字破損を含め、未完了事項と次サイクルへの引き継ぎも明記した。
+- `post_slack_message_file.py --delete-on-fail` の API 側本文検証は `ok`。`?` 化と U+FFFD は投稿前検査でも 0 件。
