@@ -141,10 +141,83 @@ async function checkViewport(width, height, mobile) {
     day: window.__SHIOJI_V004__.model.day,
     tick: window.__SHIOJI_V004__.model.tick,
   })`), { day: timeBefore.day + 1, tick: timeBefore.tick + 30 });
+  assert.ok(await page.evaluate('window.__SHIOJI_V004__.presentation.pendingCount > 0'));
+  await page.evaluate('window.__SHIOJI_V004__.advanceTicks(0, { animate: false })');
   if (!mobile) {
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      while (game.model.day < 120) game.stepOneDay();
+      game.advanceTicks(1292 - game.model.tick, { animate: false });
+      game.advanceTicks(1, { animate: true, baseSeconds: 0.3 });
+    })()`);
+    await wait(45);
+    const dockingVisual = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const ship = game.displayModel.portVisuals[0];
+      const handling = game.displayModel.handlingVisuals[0];
+      return {
+        phase: ship?.phase,
+        progress: ship?.progress,
+        vesselCargo: ship?.vesselCargo,
+        modelVesselCargo: game.model.portCalls[0]?.vesselCargo,
+        handlingQty: handling?.qty,
+        handlingDerived: handling?.derived,
+      };
+    })()`);
+    assert.equal(dockingVisual.phase, 'approaching', JSON.stringify(dockingVisual));
+    assert.ok(dockingVisual.progress > 0 && dockingVisual.progress < 1, JSON.stringify(dockingVisual));
+    assert.equal(dockingVisual.vesselCargo, dockingVisual.modelVesselCargo);
+    assert.equal(dockingVisual.handlingQty, 1);
+    assert.equal(dockingVisual.handlingDerived, true);
+
+    await wait(330);
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.displayModel.portVisuals[0]?.phase'), 'docked');
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.advanceTicks(9, { animate: false });
+      game.advanceTicks(1, { animate: true, baseSeconds: 0.3 });
+    })()`);
+    await wait(45);
+    const departureVisual = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      return {
+        phase: game.displayModel.portVisuals[0]?.phase,
+        qty: game.displayModel.handlingVisuals[0]?.qty,
+        cart: game.model.carriers.find(carrier => carrier.kind === 'cart')?.id ?? null,
+      };
+    })()`);
+    assert.equal(departureVisual.phase, 'departing', JSON.stringify(departureVisual));
+    assert.ok(departureVisual.qty > 0 && departureVisual.qty <= 1, JSON.stringify(departureVisual));
+    assert.ok(departureVisual.cart, JSON.stringify(departureVisual));
+
+    await wait(330);
+    const carrierPoint = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const carrier = game.displayModel.carriers.find(row => row.kind === 'cart');
+      const point = game.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
+      return { id: carrier.id, x: point.x, y: point.y - 8 * game.camera.zoom };
+    })()`);
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: carrierPoint.x, y: carrierPoint.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: carrierPoint.x, y: carrierPoint.y, button: 'left', clickCount: 1,
+    });
+    await wait(60);
+    const tracking = await page.evaluate(`({
+      selected: window.__SHIOJI_V004__.selectedCarrierId,
+      hidden: document.querySelector('#tracking').hidden,
+      label: document.querySelector('#tracking-label').textContent,
+      route: document.querySelector('#tracking-route').textContent,
+    })`);
+    assert.equal(tracking.selected, carrierPoint.id, JSON.stringify(tracking));
+    assert.equal(tracking.hidden, false, JSON.stringify(tracking));
+    assert.match(tracking.label, /麦/);
+    assert.match(tracking.route, /港.*市場/);
+    await page.evaluate('window.__SHIOJI_V004__.stopTracking()');
+
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.advanceTicks(120 * 30 - game.model.tick, { animate: false });
     })()`);
     const worldVisuals = await page.evaluate(`(() => {
       const model = window.__SHIOJI_V004__.model;
@@ -155,6 +228,7 @@ async function checkViewport(width, height, mobile) {
         appearanceKeys: new Set(model.buildings.map(building => building.appearance.key)).size,
         stalls: model.marketStalls.length,
         stock: model.totalVisibleStock,
+        familyRows: model.carriers.filter(carrier => carrier.kind === 'household' && carrier.members > 1).length,
       };
     })()`);
     assert.ok(worldVisuals.trails > 100, JSON.stringify(worldVisuals));
@@ -163,6 +237,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.appearanceKeys > 5, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
+    assert.ok(worldVisuals.familyRows > 0, JSON.stringify(worldVisuals));
   }
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);

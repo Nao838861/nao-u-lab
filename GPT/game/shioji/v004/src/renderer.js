@@ -1,5 +1,5 @@
 import {
-  BUILDING_COLORS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
+  BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
 } from './config.js';
 
 function keyOf(x, y) {
@@ -18,6 +18,7 @@ export class Renderer {
     this.width = 1;
     this.height = 1;
     this.pulse = 0;
+    this.selectedCarrierId = null;
     this.resize();
   }
 
@@ -240,6 +241,25 @@ export class Renderer {
       ctx.stroke();
       ctx.restore();
     }
+    this.drawTrackedRoute(model);
+  }
+
+  drawTrackedRoute(model) {
+    const carrier = model.carriers.find(row => row.id === this.selectedCarrierId);
+    if (!carrier?.path?.length) return;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,219,112,.9)';
+    ctx.lineWidth = Math.max(2, 3 * this.camera.zoom);
+    ctx.setLineDash([7 * this.camera.zoom, 6 * this.camera.zoom]);
+    ctx.beginPath();
+    carrier.path.forEach((point, index) => {
+      const projected = this.camera.project(point.x + 0.5, point.y + 0.5, 2);
+      if (index) ctx.lineTo(projected.x, projected.y);
+      else ctx.moveTo(projected.x, projected.y);
+    });
+    ctx.stroke();
+    ctx.restore();
   }
 
   collectWorldDrawables(model) {
@@ -300,6 +320,28 @@ export class Renderer {
     for (const carrier of model.carriers) {
       drawables.push({ kind: 'carrier', data: carrier, depth: carrier.x + carrier.y + 1 });
     }
+    for (const ship of model.portVisuals ?? []) {
+      const position = this.shipPosition(model.portBerth, ship);
+      drawables.push({
+        kind: 'ship', data: { ...ship, ...position }, depth: position.x + position.y + 1,
+      });
+    }
+    for (const handling of model.handlingVisuals ?? []) {
+      const port = model.buildings.find(building => building.type === 'port');
+      if (!port || !model.portBerth) continue;
+      const yard = { x: port.x + port.width * 0.55, y: port.y + port.height * 0.58 };
+      const ship = model.portBerth.dock;
+      const start = handling.direction === 'import' ? ship : yard;
+      const finish = handling.direction === 'import' ? yard : ship;
+      const progress = handling.progress ?? 1;
+      const position = {
+        x: start.x + (finish.x - start.x) * progress,
+        y: start.y + (finish.y - start.y) * progress,
+      };
+      drawables.push({
+        kind: 'handling', data: { ...handling, ...position }, depth: position.x + position.y + 1.2,
+      });
+    }
     return drawables.sort((left, right) => left.depth - right.depth);
   }
 
@@ -311,7 +353,19 @@ export class Renderer {
       if (drawable.kind === 'inventory') this.drawInventoryPile(drawable.data);
       if (drawable.kind === 'stall') this.drawMarketStall(drawable.data);
       if (drawable.kind === 'carrier') this.drawCarrier(drawable.data);
+      if (drawable.kind === 'ship') this.drawShip(drawable.data);
+      if (drawable.kind === 'handling') this.drawHandlingBlock(drawable.data);
     }
+  }
+
+  shipPosition(berth, ship) {
+    const progress = Math.max(0, Math.min(1, ship.progress ?? 1));
+    const from = ship.phase === 'departing' ? berth.dock : berth.away;
+    const to = ship.phase === 'departing' ? berth.away : berth.dock;
+    return {
+      x: from.x + (to.x - from.x) * progress,
+      y: from.y + (to.y - from.y) * progress,
+    };
   }
 
   drawTree({ x, y, variant = 0 }) {
@@ -421,6 +475,9 @@ export class Renderer {
         ctx.fillRect(base.x - index * 8 * this.camera.zoom, base.y, 4 * this.camera.zoom, 5 * this.camera.zoom);
       }
     }
+    if (building.type === 'port') {
+      this.drawCrane(building.x + building.width * 0.72, building.y + building.height * 0.78);
+    }
     ctx.restore();
     const labelPoint = this.camera.project(
       building.x + building.width / 2,
@@ -527,28 +584,179 @@ export class Renderer {
     ctx.restore();
   }
 
+  drawCrane(x, y) {
+    const point = this.camera.project(x, y, 4);
+    const scale = this.camera.zoom;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = '#4f3928';
+    ctx.lineWidth = Math.max(2, 4 * scale);
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y);
+    ctx.lineTo(point.x, point.y - 48 * scale);
+    ctx.lineTo(point.x + 29 * scale, point.y - 39 * scale);
+    ctx.stroke();
+    ctx.strokeStyle = '#252d2c';
+    ctx.lineWidth = Math.max(1, 1.4 * scale);
+    ctx.beginPath();
+    ctx.moveTo(point.x + 27 * scale, point.y - 39 * scale);
+    ctx.lineTo(point.x + 27 * scale, point.y - 12 * scale);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  drawShip(ship) {
+    const point = this.camera.project(ship.x, ship.y, 2);
+    const scale = this.camera.zoom;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.strokeStyle = '#302a27';
+    ctx.lineWidth = Math.max(1, 2 * scale);
+    ctx.fillStyle = '#6d3f2e';
+    ctx.beginPath();
+    ctx.moveTo(point.x - 38 * scale, point.y - 4 * scale);
+    ctx.lineTo(point.x + 42 * scale, point.y - 12 * scale);
+    ctx.lineTo(point.x + 29 * scale, point.y + 12 * scale);
+    ctx.lineTo(point.x - 27 * scale, point.y + 16 * scale);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#d9c79d';
+    ctx.beginPath();
+    ctx.moveTo(point.x + 2 * scale, point.y - 70 * scale);
+    ctx.lineTo(point.x + 32 * scale, point.y - 31 * scale);
+    ctx.lineTo(point.x + 2 * scale, point.y - 25 * scale);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(point.x - 3 * scale, point.y - 61 * scale);
+    ctx.lineTo(point.x - 29 * scale, point.y - 33 * scale);
+    ctx.lineTo(point.x - 3 * scale, point.y - 27 * scale);
+    ctx.closePath();
+    ctx.fillStyle = '#b95b47';
+    ctx.fill();
+    ctx.stroke();
+    ctx.strokeStyle = '#3a3028';
+    ctx.lineWidth = Math.max(2, 3 * scale);
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y - 5 * scale);
+    ctx.lineTo(point.x, point.y - 74 * scale);
+    ctx.stroke();
+    ctx.fillStyle = '#e4bd58';
+    ctx.fillRect(point.x + 2 * scale, point.y - 72 * scale, 14 * scale, 6 * scale);
+    const cargo = pileLabel(ship.vesselCargo ?? 0);
+    ctx.font = `700 ${Math.max(8, 9 * scale)}px ui-sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#263333';
+    ctx.fillStyle = '#f1e4c2';
+    const phase = ship.phase === 'approaching' ? '入港' : ship.phase === 'departing' ? '出港' : '接岸';
+    const label = `${phase} ${GOODS_LABELS[ship.goods] ?? ship.goods} ${cargo}`;
+    ctx.strokeText(label, point.x, point.y + 27 * scale);
+    ctx.fillText(label, point.x, point.y + 27 * scale);
+    ctx.restore();
+  }
+
+  drawHandlingBlock(handling) {
+    const point = this.camera.project(handling.x, handling.y, 17);
+    const scale = this.camera.zoom;
+    const art = GOODS_ART[handling.goods] ?? { color: '#d19a50', dark: '#715236', shape: 'crate' };
+    this.drawGoodsSprite(art, point.x, point.y, scale * 0.82);
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.font = `800 ${Math.max(8, 9 * scale)}px ui-sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#263333';
+    ctx.fillStyle = '#f6d784';
+    const label = `1荷 ${pileLabel(handling.qty)}`;
+    ctx.strokeText(label, point.x, point.y - 9 * scale);
+    ctx.fillText(label, point.x, point.y - 9 * scale);
+    ctx.restore();
+  }
+
   drawCarrier(carrier) {
     const point = this.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
     const scale = this.camera.zoom;
     const ctx = this.ctx;
     ctx.save();
+    if (carrier.id === this.selectedCarrierId) {
+      ctx.globalAlpha = 0.35 + Math.sin(this.pulse * 5) * 0.12;
+      ctx.fillStyle = '#f6d76b';
+      ctx.beginPath();
+      ctx.arc(point.x, point.y - 8 * scale, 18 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
     if (carrier.kind === 'cart') {
+      const personX = point.x - 18 * scale;
+      const personY = point.y - 18 * scale;
+      ctx.fillStyle = '#c98b58';
+      ctx.beginPath();
+      ctx.arc(personX, personY - 7 * scale, 4 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#527c72';
+      ctx.fillRect(personX - 4 * scale, personY - 3 * scale, 8 * scale, 11 * scale);
+      ctx.strokeStyle = '#d5b48a';
+      ctx.lineWidth = Math.max(1, 1.8 * scale);
+      ctx.beginPath();
+      ctx.moveTo(personX + 2 * scale, personY - 1 * scale);
+      ctx.lineTo(point.x - 9 * scale, point.y - 10 * scale);
+      ctx.stroke();
       ctx.fillStyle = '#6c472e';
-      ctx.fillRect(point.x - 10 * scale, point.y - 11 * scale, 20 * scale, 10 * scale);
+      ctx.strokeStyle = '#292a28';
+      ctx.beginPath();
+      ctx.moveTo(point.x - 10 * scale, point.y - 11 * scale);
+      ctx.lineTo(point.x + 9 * scale, point.y - 15 * scale);
+      ctx.lineTo(point.x + 11 * scale, point.y - 5 * scale);
+      ctx.lineTo(point.x - 8 * scale, point.y - 2 * scale);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
       ctx.fillStyle = '#252a29';
       ctx.beginPath();
       ctx.arc(point.x - 6 * scale, point.y, 4 * scale, 0, Math.PI * 2);
-      ctx.arc(point.x + 7 * scale, point.y, 4 * scale, 0, Math.PI * 2);
+      ctx.arc(point.x + 8 * scale, point.y - 3 * scale, 4 * scale, 0, Math.PI * 2);
       ctx.fill();
+      if (carrier.goods) {
+        const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
+        this.drawGoodsSprite(art, point.x, point.y - 13 * scale, scale * 0.62);
+      }
     } else {
-      const bob = Math.sin(this.pulse * 7 + carrier.x) * scale;
-      ctx.fillStyle = '#d6b087';
-      ctx.beginPath();
-      ctx.arc(point.x, point.y - 13 * scale + bob, 3.2 * scale, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#426b64';
-      ctx.fillRect(point.x - 3 * scale, point.y - 10 * scale + bob, 6 * scale, 10 * scale);
+      const count = Math.max(1, Math.min(5, carrier.members ?? carrier.people ?? 1));
+      for (let index = count - 1; index >= 0; index -= 1) {
+        const offsetX = index * 5 * scale;
+        const offsetY = index * 3 * scale;
+        const bob = Math.sin(this.pulse * 7 + carrier.x + index) * scale;
+        ctx.fillStyle = '#d6b087';
+        ctx.beginPath();
+        ctx.arc(point.x + offsetX, point.y - 13 * scale + offsetY + bob, 3.2 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = index === 0 ? '#426b64' : '#6a7660';
+        ctx.fillRect(point.x - 3 * scale + offsetX, point.y - 10 * scale + offsetY + bob, 6 * scale, 10 * scale);
+      }
     }
     ctx.restore();
   }
+
+  hitTestCarrier(model, screenX, screenY) {
+    let selected = null;
+    let nearest = Infinity;
+    for (const carrier of model.carriers) {
+      const point = this.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
+      const distance = Math.hypot(screenX - point.x, screenY - (point.y - 8 * this.camera.zoom));
+      const radius = Math.max(12, 20 * this.camera.zoom);
+      if (distance <= radius && distance < nearest) {
+        selected = carrier;
+        nearest = distance;
+      }
+    }
+    return selected;
+  }
+}
+
+function pileLabel(value) {
+  const rounded = Math.round(Math.max(0, value) * 10) / 10;
+  return Number.isInteger(rounded) ? `${rounded}` : rounded.toFixed(1);
 }

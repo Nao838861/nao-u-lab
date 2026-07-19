@@ -7,6 +7,9 @@ import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import { BUILDING_ART } from '../src/config.js';
 import { createEngineController } from '../src/engine_bridge.js';
+import {
+  WorldPresentation, interpolateWorldModel, transitionDuration,
+} from '../src/presentation.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -70,7 +73,8 @@ test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致�
 
 test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さない', () => {
   const sources = Object.fromEntries([
-    'camera.js', 'clock.js', 'config.js', 'controller.js', 'main.js', 'renderer.js', 'view_model.js',
+    'camera.js', 'clock.js', 'config.js', 'controller.js', 'main.js', 'presentation.js',
+    'renderer.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
     assert.doesNotMatch(source, /engine\/src/, `${file}からengineを直接importしない`);
@@ -316,6 +320,127 @@ test('段8: 区分棚・pantry・市場屋台をsnapshotと同量で世帯単位
       .reduce((total, row) => total + Math.max(0, row.amount), 0)
   )));
   assert.ok(model.buildings.flatMap(building => building.shelves).some(row => row.visual.spriteCount === 0));
+});
+
+test('段9: tick間とdayEnd束イベントを表示時間へ展開しキャリアをテレポートさせない', () => {
+  const from = {
+    carriers: [
+      { id: 'haul:h1', kind: 'cart', x: 2, y: 3, path: [{ x: 2, y: 3 }, { x: 3, y: 3 }] },
+      { id: 'household:7', kind: 'household', x: 5, y: 5, members: 4, path: [] },
+    ],
+    portCalls: [], buildings: [], portBerth: null,
+  };
+  const to = {
+    ...from,
+    carriers: [
+      { ...from.carriers[0], x: 3, y: 3 },
+      { ...from.carriers[1], x: 12, y: 9 },
+    ],
+  };
+  const events = [
+    { type: 'job_move', householdId: 7, x: 12, y: 9 },
+    { type: 'notice', x: 12, y: 9 },
+    { type: 'inheritance', householdId: 7, x: 12, y: 9 },
+  ];
+  assert.ok(transitionDuration(from, to, events, 0.02) >= 0.18, 'dayEnd束を最低表示時間へ展開');
+  const quarter = interpolateWorldModel(from, to, events, 0.25);
+  assert.deepEqual(
+    quarter.carriers.map(row => [row.id, row.x, row.y]),
+    [['haul:h1', 2.25, 3], ['household:7', 6.75, 6]],
+  );
+  const half = interpolateWorldModel(from, to, events, 0.5);
+  assert.ok(Math.hypot(
+    half.carriers[1].x - quarter.carriers[1].x,
+    half.carriers[1].y - quarter.carriers[1].y,
+  ) < Math.hypot(12 - 5, 9 - 5), '大移動を単一フレームで飛ばさない');
+
+  const arrived = interpolateWorldModel(
+    from,
+    { ...from, carriers: [from.carriers[1]] },
+    [{ type: 'arrival', haulJobId: 'h1', x: 3, y: 3 }],
+    0.5,
+  );
+  assert.deepEqual(
+    arrived.carriers.find(row => row.id === 'haul:h1'),
+    { ...from.carriers[0], x: 2.5, y: 3 },
+  );
+  const presentation = new WorldPresentation(from);
+  presentation.enqueue(to, events, 0.02);
+  assert.equal(presentation.pendingCount, 1);
+  assert.ok(presentation.advance(0.09).carriers[1].x > 5);
+  assert.equal(presentation.advance(0.2).presentationProgress, 1);
+});
+
+test('段10/11: 実港便の接岸・1荷/tick・出港をsnapshotとイベント差分へ同期する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceTicks(1292);
+  let previousSnapshot = api.snapshot();
+  let previousModel = snapshotToViewModel(previousSnapshot);
+  let sequence = api.events().at(-1)?.sequence ?? 0;
+
+  api.advanceTicks(1);
+  let snapshot = api.snapshot();
+  let model = snapshotToViewModel(snapshot);
+  let events = api.events({ afterSequence: sequence });
+  sequence = events.at(-1)?.sequence ?? sequence;
+  assert.equal(model.tick, 1293);
+  assert.equal(model.portCalls.length, 1);
+  assert.equal(events.some(event => event.type === 'docking'), true);
+  const approaching = interpolateWorldModel(previousModel, model, events, 0.25);
+  assert.equal(approaching.portVisuals[0].phase, 'approaching');
+  const docked = interpolateWorldModel(previousModel, model, events, 0.9);
+  assert.equal(docked.portVisuals[0].phase, 'docked');
+  assert.equal(docked.handlingVisuals.length, 1, '新規便と同tickの初荷をsnapshot差分で補完');
+  assert.equal(docked.handlingVisuals[0].derived, true);
+  assert.equal(docked.handlingVisuals[0].qty, 1);
+
+  let departed = null;
+  let engineHandlingTicks = 0;
+  for (let guard = 0; guard < 20 && !departed; guard += 1) {
+    previousSnapshot = snapshot;
+    previousModel = model;
+    api.advanceTicks(1);
+    snapshot = api.snapshot();
+    model = snapshotToViewModel(snapshot);
+    events = api.events({ afterSequence: sequence });
+    sequence = events.at(-1)?.sequence ?? sequence;
+    const previousCall = previousSnapshot.physical.portCalls[0];
+    const call = snapshot.physical.portCalls[0];
+    const moved = previousCall.remaining - call.remaining;
+    const frame = interpolateWorldModel(previousModel, model, events, 0.5);
+    const visibleMoved = frame.handlingVisuals.reduce((total, row) => total + row.qty, 0);
+    assert.ok(Math.abs(visibleMoved - moved) < 1e-9, `tick ${snapshot.tick}の1荷表示`);
+    if (moved > 0) {
+      assert.ok(moved <= 1 + 1e-9);
+      if (events.some(event => event.type === 'handling')) engineHandlingTicks += 1;
+    }
+    const modelCall = model.portCalls[0];
+    const port = snapshot.physical.buildings.find(building => building.id === call.portBuildingId);
+    assert.equal(modelCall.vesselCargo, call.vesselCargo);
+    assert.equal(modelCall.yardAmount, port.inventory[modelCall.yardSection][call.goods] ?? 0);
+    if (call.status === 'completed') departed = frame.portVisuals[0];
+  }
+  assert.ok(engineHandlingTicks > 0, '2荷目以降は公開handlingイベントを使用');
+  assert.equal(departed.phase, 'departing');
+  assert.ok(departed.progress > 0 && departed.progress < 1);
+});
+
+test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示できるモデルを持つ', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceTicks(1303);
+  const model = snapshotToViewModel(api.snapshot());
+  const carrier = model.carriers.find(row => row.haulJobId);
+  assert.ok(carrier, '最初の港荷を運ぶキャリアが存在する');
+  assert.equal(carrier.kind, 'cart');
+  assert.equal(carrier.goods, 'wheat');
+  assert.ok(carrier.amount > 0);
+  assert.match(carrier.from.label, /港/);
+  assert.match(carrier.to.label, /市場/);
+  assert.ok(carrier.path.length >= 2);
+  const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.match(renderer, /hitTestCarrier/);
+  assert.match(main, /selectCarrier/);
 });
 
 console.log(`\n${passed} v004 tests passed`);

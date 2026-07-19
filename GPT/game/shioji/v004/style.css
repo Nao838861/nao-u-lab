@@ -149,6 +149,25 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .observer dd { margin: 0; font: 700 11px Georgia, serif; }
 .observer p { margin: 11px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
 
+.tracking {
+  position: fixed;
+  z-index: 24;
+  left: 50%;
+  top: 92px;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  padding: 8px 9px 8px 12px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+.tracking[hidden] { display: none; }
+.tracking span { display: grid; grid-template-columns: auto auto; column-gap: 8px; align-items: baseline; }
+.tracking small { color: var(--gold); font-size: 9px; }
+.tracking b { font-size: 12px; }
+.tracking em { grid-column: 1 / -1; color: var(--muted); font-size: 9px; font-style: normal; }
+.tracking button { border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--cream); border-radius: 5px; padding: 6px 8px; cursor: pointer; font-size: 10px; }
+
 .status {
   position: fixed;
   z-index: 18;
@@ -195,6 +214,8 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   }
   .observer h1 { font-size: 15px; }
   .observer p { display: none; }
+  .tracking { top: 72px; max-width: calc(100vw - 12px); white-space: nowrap; }
+  .tracking button { padding: 5px; }
   .status {
     right: 7px;
     bottom: max(7px, env(safe-area-inset-bottom));

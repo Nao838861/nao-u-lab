@@ -1,3 +1,4 @@
+import { JOB_LABELS, SECTION_LABELS } from './config.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
 const INVENTORY_SECTIONS = Object.freeze([
@@ -55,29 +56,86 @@ function groupedStock(rows) {
   });
 }
 
-function carrierRows(snapshot) {
+function buildingEndpoint(buildingById, endpoint) {
+  const building = buildingById.get(endpoint?.buildingId);
+  if (!building) return endpoint ? { ...endpoint, label: endpoint.buildingId } : null;
+  const section = endpoint.section ? ` / ${SECTION_LABELS[endpoint.section] ?? endpoint.section}` : '';
+  return {
+    ...endpoint,
+    type: building.type,
+    x: building.entrance?.x ?? building.x + building.width / 2,
+    y: building.entrance?.y ?? building.y + building.height / 2,
+    label: `${JOB_LABELS[building.type] ?? building.type}${section}`,
+  };
+}
+
+function carrierRows(snapshot, buildings) {
+  const buildingById = new Map(buildings.map(building => [building.id, building]));
   const hauls = snapshot.physical.haulJobs
     .filter(job => job.status !== 'completed' && job.carrier?.position)
     .map(job => ({
       id: `haul:${job.id}`,
+      haulJobId: job.id,
       kind: job.carrier.mode === 'cart' ? 'cart' : 'walker',
+      mode: job.carrier.mode,
       x: job.carrier.position.x,
       y: job.carrier.position.y,
       goods: job.goods,
       amount: job.qty,
-      from: job.from,
-      to: job.to,
+      people: job.carrier.people ?? 1,
+      path: (job.carrier.path ?? []).map(point => ({ ...point })),
+      from: buildingEndpoint(buildingById, job.from),
+      to: buildingEndpoint(buildingById, job.to),
     }));
   const households = snapshot.economy.households.map(household => ({
     id: `household:${household.id}`,
+    householdId: household.id,
     kind: 'household',
     x: household.px ?? household.x,
     y: household.py ?? household.y,
     state: household.state,
     job: household.job,
     members: household.members?.length ?? 0,
+    goods: household.marketCarrier?.cargo?.goods ?? null,
+    amount: household.marketCarrier?.cargo?.qty ?? 0,
+    path: (household.marketCarrier?.path ?? []).map(point => ({ ...point })),
+    from: { label: JOB_LABELS[household.job] ?? household.job, x: household.x, y: household.y },
+    to: { label: household.state === 'toMarket' ? '市場' : '家', x: household.x, y: household.y },
   }));
   return [...hauls, ...households];
+}
+
+function portBerth(building, terrain, width, height) {
+  const candidates = [
+    { side: 'north', dx: 0, dy: -1, x: building.x + building.width / 2, y: building.y - 0.7 },
+    { side: 'south', dx: 0, dy: 1, x: building.x + building.width / 2, y: building.y + building.height + 0.7 },
+    { side: 'west', dx: -1, dy: 0, x: building.x - 0.7, y: building.y + building.height / 2 },
+    { side: 'east', dx: 1, dy: 0, x: building.x + building.width + 0.7, y: building.y + building.height / 2 },
+  ];
+  const waterScore = candidate => {
+    let score = 0;
+    for (let offset = -1; offset <= 1; offset += 1) {
+      for (let distance = 1; distance <= 3; distance += 1) {
+        const edgeX = candidate.dx === 0
+          ? Math.floor(building.x + building.width / 2 + offset)
+          : Math.floor(candidate.x + candidate.dx * distance);
+        const edgeY = candidate.dy === 0
+          ? Math.floor(building.y + building.height / 2 + offset)
+          : Math.floor(candidate.y + candidate.dy * distance);
+        if (edgeX >= 0 && edgeX < width && edgeY >= 0 && edgeY < height
+          && terrain[edgeY]?.[edgeX]?.kind === 'water') score += 1;
+      }
+    }
+    return score;
+  };
+  const selected = candidates
+    .map(candidate => ({ ...candidate, score: waterScore(candidate) }))
+    .sort((left, right) => right.score - left.score)[0];
+  return {
+    side: selected.side,
+    dock: { x: selected.x, y: selected.y },
+    away: { x: selected.x + selected.dx * 4, y: selected.y + selected.dy * 4 },
+  };
 }
 
 export function snapshotToViewModel(snapshot) {
@@ -150,6 +208,17 @@ export function snapshotToViewModel(snapshot) {
   const trailRows = [...traffic.entries()]
     .map(([key, tread]) => ({ key, ...trailVisual(tread) }))
     .filter(row => row.stage > 0);
+  const portCalls = snapshot.physical.portCalls.map(call => {
+    const port = snapshot.physical.buildings.find(building => building.id === call.portBuildingId);
+    const section = call.direction === 'export' ? 'outbound' : 'inbound';
+    return {
+      ...call,
+      metadata: { ...(call.metadata ?? {}) },
+      yardSection: section,
+      yardAmount: port?.inventory?.[section]?.[call.goods] ?? 0,
+    };
+  });
+  const portBuilding = buildings.find(building => building.type === 'port');
   return deepFreeze({
     day: snapshot.day,
     tick: snapshot.tick,
@@ -163,7 +232,7 @@ export function snapshotToViewModel(snapshot) {
     trailRows,
     occupiedKeys: Object.keys(snapshot.physical.occupied),
     buildings,
-    carriers: carrierRows(snapshot),
+    carriers: carrierRows(snapshot, buildings),
     households,
     stalls,
     marketStalls,
@@ -172,7 +241,10 @@ export function snapshotToViewModel(snapshot) {
         total + household.pantry.reduce((sum, row) => sum + row.visual.amount, 0)
       ), 0)
       + stalls.reduce((total, stall) => total + stall.visual.amount, 0),
-    portCalls: snapshot.physical.portCalls.map(call => ({ ...call })),
+    portCalls,
+    portBerth: portBuilding
+      ? portBerth(portBuilding, snapshot.physical.terrain, snapshot.physical.width, snapshot.physical.height)
+      : null,
   });
 }
 

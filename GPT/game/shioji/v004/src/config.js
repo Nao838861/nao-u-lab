@@ -1,4 +1,4 @@
-export const VERSION = 'v004.0.2-world-art';
+export const VERSION = 'v004.0.3-logistics';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -76,6 +76,12 @@ export const GOODS_ART = Object.freeze({
   char: Object.freeze({ color: '#5f625c', dark: '#303330', shape: 'sack' }),
   cloth: Object.freeze({ color: '#b78c9a', dark: '#6c5660', shape: 'crate' }),
   oil: Object.freeze({ color: '#9d7b3f', dark: '#5f4c2d', shape: 'crate' }),
+});
+
+export const GOODS_LABELS = Object.freeze({
+  log: '丸太', ore: '鉄鉱石', coal: '石炭', bar: '銑鉄', iron: '鉄材', tools: '道具',
+  stone: '石材', wheat: '麦', fish: '魚', veg: '野菜', meat: '肉', pres: '保存食',
+  pick: '漬物', meal: '粉', salt: '塩', char: '木炭', cloth: '布', oil: '油',
 });
 
 export const SECTION_LABELS = Object.freeze({

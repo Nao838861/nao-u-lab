@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.0.2">
+  <link rel="stylesheet" href="./style.css?v=v004.0.3">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -45,11 +45,20 @@
     <p>ドラッグ／スワイプで移動、ホイール／ピンチで拡大縮小。</p>
   </aside>
 
+  <div id="tracking" class="panel tracking" hidden data-testid="tracking">
+    <span>
+      <small id="tracking-kind">物流を追跡中</small>
+      <b id="tracking-label">—</b>
+      <em id="tracking-route">— → —</em>
+    </span>
+    <button id="stop-tracking" type="button">追跡を終える</button>
+  </div>
+
   <div id="status" class="panel status" role="status" aria-live="polite">
     <i></i><span>経済エンジンに接続済み</span>
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.0.2"></script>
+  <script type="module" src="./src/main.js?v=v004.0.3"></script>
 </body>
 </html>
