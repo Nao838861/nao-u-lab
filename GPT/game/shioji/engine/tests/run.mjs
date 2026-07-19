@@ -9,19 +9,24 @@ import {
   P,
   PERISH,
   ageMarketStalls,
+  assignNeedyWork,
   assertCompanyLedger,
   assertMoneyConservation,
   buyAtMarket,
   buyTargets,
+  completeAssignedWork,
   createEconomicState,
   createHousehold,
   createCompanyState,
   economicMaterialSnapshot,
   householdClass,
   householdEat,
+  householdFoodDays,
   householdHaul,
   householdMult,
   initializeNaturalResources,
+  isNeedyHousehold,
+  laborWage,
   localWood,
   postCompanyLedger,
   productionCost,
@@ -71,6 +76,7 @@ import {
   materialSnapshot,
   moveInventoryBetweenSections,
   pathLen,
+  planRoadWorksite,
   recordMaterialFlow,
   removeRoadTile,
   roadPath,
@@ -78,6 +84,7 @@ import {
   sectionCapacity,
   stepHaulCarriers,
   withdrawInventory,
+  workRoadWorksite,
 } from "../src/physical.js";
 import { createWorld } from "../src/world.js";
 
@@ -1056,6 +1063,183 @@ test("段18: 丸太市況の上昇が道具原価・ask・tools pxへ順に伝�
   assert.ok(high.cost > low.cost);
   assert.ok(high.ask > low.ask);
   assert.ok(high.px > low.px);
+});
+
+test("段19: 木工・炭焼・製塩・菜種・採石・魚粉を正本量で変換する", () => {
+  const make = (job) => {
+    const economy = createEconomicState();
+    const household = createHousehold(economy, { job, x: 0, y: 0 });
+    return { economy, household };
+  };
+
+  const woodshop = make("woodshop");
+  woodshop.household.pantry.log = 100;
+  woodshop.household.pantry.tools = 0;
+  producePrimaryTick(woodshop.economy, null, woodshop.household, { day: 1, fraction: 1 });
+  assert.equal(woodshop.household.pantry.tools, P.Y_TOOLS);
+  assert.equal(woodshop.household.pantry.log, 100 - P.Y_TOOLS * P.LOG_TOOL);
+
+  const charburner = make("charburner");
+  charburner.household.pantry.log = 100;
+  charburner.household.pantry.char = 0;
+  producePrimaryTick(charburner.economy, null, charburner.household, { day: 1, fraction: 1 });
+  assert.equal(charburner.household.pantry.char, P.Y_CHAR);
+  assert.equal(charburner.household.pantry.log, 100 - P.Y_CHAR * P.LOG_CHAR);
+
+  const saltworks = make("saltworks");
+  saltworks.household.pantry.char = 10;
+  saltworks.household.pantry.salt = 0;
+  producePrimaryTick(saltworks.economy, null, saltworks.household, { day: 1, fraction: 1 });
+  assert.equal(saltworks.household.pantry.salt, P.Y_SALT);
+  assert.equal(saltworks.household.pantry.char, 10 - P.SALT_CHAR);
+
+  const rapeseed = make("rapeseed");
+  rapeseed.household.pantry.meal = 10;
+  rapeseed.household.pantry.oil = 0;
+  const rapeseedResult = producePrimaryTick(rapeseed.economy, null, rapeseed.household, {
+    day: 61,
+    fraction: 1,
+  });
+  const fill = P.FERT_NEED / (P.FERT_NEED * 30);
+  assert.equal(rapeseed.household.pantry.meal, 10 - P.FERT_NEED);
+  assert.ok(Math.abs(rapeseedResult.oil - P.Y_OIL * (1 + P.FERT_BOOST * fill)) < 1e-12);
+
+  const quarryman = make("quarryman");
+  quarryman.household.pantry.stone = 0;
+  producePrimaryTick(quarryman.economy, null, quarryman.household, { day: 1, fraction: 1 });
+  assert.equal(quarryman.household.pantry.stone, P.Y_STONE);
+
+  const fishmeal = make("fisher2");
+  fishmeal.household.pantry.meal = 0;
+  producePrimaryTick(fishmeal.economy, null, fishmeal.household, { day: 61, fraction: 1 });
+  assert.equal(fishmeal.household.pantry.meal, P.Y_FISH / P.MEAL_FISH);
+  const winterMeal = make("fisher2");
+  winterMeal.household.pantry.meal = 0;
+  producePrimaryTick(winterMeal.economy, null, winterMeal.household, { day: 271, fraction: 1 });
+  assert.equal(winterMeal.household.pantry.meal, 0);
+});
+
+test("段19: 各変換職のcostは生計費と正本の原料pxを連鎖する", () => {
+  const cases = [
+    { job: "woodshop", goods: "tools", day: 1, yield: P.Y_TOOLS, input: (px) => P.LOG_TOOL * px.log },
+    { job: "charburner", goods: "char", day: 1, yield: P.Y_CHAR, input: (px) => P.LOG_CHAR * px.log },
+    { job: "saltworks", goods: "salt", day: 1, yield: P.Y_SALT, input: (px) => P.SALT_CHAR / P.Y_SALT * px.char },
+    { job: "rapeseed", goods: "oil", day: 61, yield: P.Y_OIL, input: () => 0 },
+    { job: "quarryman", goods: "stone", day: 1, yield: P.Y_STONE, input: () => 0 },
+    { job: "fisher2", goods: "meal", day: 61, yield: P.Y_FISH / P.MEAL_FISH, input: () => 0 },
+  ];
+
+  for (const entry of cases) {
+    const economy = createEconomicState();
+    economy.px.log = 2;
+    economy.px.char = 3;
+    const household = createHousehold(economy, { job: entry.job, x: 0, y: 0 });
+    const labor = householdEat(household) * staplePrice(economy)
+      / (entry.yield * householdMult(household));
+    const expected = labor + entry.input(economy.px);
+    const actual = productionCost(economy, null, household, entry.goods, { day: entry.day });
+    assert.ok(Math.abs(actual - expected) < 1e-12, `${entry.job}/${entry.goods}`);
+
+    const sourceWorld = new FlowIslandWorld(11);
+    sourceWorld.day = entry.day;
+    sourceWorld.px = { ...economy.px };
+    const sourceHousehold = new FlowIslandHousehold(entry.job, 0, 0);
+    assert.ok(Math.abs(actual - sourceWorld.cost(sourceHousehold, entry.goods)) < 1e-12);
+  }
+});
+
+test("段20: needyは財布が人数×0.8未満かつ食料4日未満で賃金は食い扶持", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (const goods of FOODS) household.pantry[goods] = 0;
+  household.purse = householdEat(household) * 0.8 - 1e-9;
+  assert.equal(householdFoodDays(household), 0);
+  assert.equal(isNeedyHousehold(household), true);
+  household.purse = householdEat(household) * 0.8;
+  assert.equal(isNeedyHousehold(household), false);
+  household.purse = 0;
+  household.pantry.wheat = P.EAT * 4;
+  assert.equal(isNeedyHousehold(household), false);
+
+  economy.px.wheat = 2;
+  economy.px.veg = 3;
+  economy.px.pres = 4;
+  assert.equal(laborWage(economy, household), householdEat(household) * 2);
+});
+
+test("段20: needyは民間雇用より公共の道普請を優先し会社から全賃金を得る", () => {
+  const terrain = Array.from({ length: 5 }, () => (
+    Array.from({ length: 5 }, () => ({ kind: "grass", variant: 0 }))
+  ));
+  const physical = createPhysicalState({ width: 5, height: 5, terrain });
+  const worksite = planRoadWorksite(physical, 2, 2, { workRequired: P.ROAD_WORK });
+  const economy = createEconomicState();
+  const worker = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  createHousehold(economy, { job: "shepherd", x: 1, y: 0 });
+  for (const goods of FOODS) worker.pantry[goods] = 0;
+  postCompanyLedger(economy.company, { day: 1, amount: worker.purse, reason: "普請前の財布預入" });
+  worker.purse = 0;
+  const wage = laborWage(economy, worker);
+  const companyBefore = economy.company.money;
+
+  assert.deepEqual(assignNeedyWork(economy, physical, worker), {
+    kind: "public",
+    worksiteId: worksite.id,
+    x: 2,
+    y: 2,
+  });
+  const result = completeAssignedWork(economy, physical, worker, { day: 1 });
+  assert.deepEqual(result, { worked: true, kind: "public", paid: wage, completed: false });
+  assert.equal(worker.purse, wage);
+  assert.equal(economy.company.money, companyBefore - wage);
+  assert.equal(economy.co.pub, wage);
+  assert.equal(physical.roadWorksites[0].left, P.ROAD_WORK - 1);
+  assert.equal(worker.state, "toMarket");
+  assert.equal(assertMoneyConservation(economy), true);
+
+  const revision = physical.roadRevision;
+  assert.equal(workRoadWorksite(physical, worksite.id).completed, false);
+  assert.equal(workRoadWorksite(physical, worksite.id).completed, true);
+  assert.equal(hasRoad(physical, 2, 2), true);
+  assert.equal(physical.roadRevision, revision + 1);
+});
+
+test("段20: 民間日傭は雇主から全賃金を受け翌日生産を1.4倍にする", () => {
+  const physical = createPhysicalState();
+  const economy = createEconomicState();
+  const worker = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  const employer = createHousehold(economy, { job: "shepherd", x: 1, y: 0 });
+  for (const goods of FOODS) worker.pantry[goods] = 0;
+  postCompanyLedger(economy.company, { day: 1, amount: worker.purse, reason: "日傭前の財布預入" });
+  worker.purse = 0;
+  const wage = laborWage(economy, worker);
+  const employerPurse = employer.purse;
+
+  assert.deepEqual(assignNeedyWork(economy, physical, worker), {
+    kind: "private",
+    employerId: employer.id,
+    x: employer.x,
+    y: employer.y,
+  });
+  assert.equal(employer.workerId, worker.id);
+  const result = completeAssignedWork(economy, physical, worker, { day: 1 });
+  assert.deepEqual(result, { worked: true, kind: "private", paid: wage, completed: false });
+  assert.equal(worker.purse, wage);
+  assert.equal(employer.purse, employerPurse - wage);
+  assert.equal(employer.workerId, null);
+  assert.equal(employer.boost, 1.4);
+  assert.equal(assertMoneyConservation(economy), true);
+
+  employer.pantry.meat = 0;
+  employer.pantry.cloth = 0;
+  producePrimaryTick(economy, physical, employer, {
+    day: 2,
+    fraction: 1,
+    endOfDay: true,
+  });
+  assert.ok(Math.abs(employer.pantry.meat - P.Y_MEAT * 1.4) < 1e-12);
+  assert.ok(Math.abs(employer.pantry.cloth - P.Y_CLOTH * 1.4) < 1e-12);
+  assert.equal(employer.boost, null);
 });
 
 let failures = 0;

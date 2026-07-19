@@ -1,3 +1,5 @@
+import { workRoadWorksite } from "./physical.js";
+
 function deepFreeze(value) {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
   for (const child of Object.values(value)) deepFreeze(child);
@@ -219,6 +221,12 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
     state: "home",
     cargo: null,
     buildDays: 0,
+    boost: null,
+    employerId: null,
+    workerId: null,
+    worksiteId: null,
+    wx: null,
+    wy: null,
   };
   applyImmigrantKit(household);
   economy.households.push(household);
@@ -976,11 +984,15 @@ export function runWheatHarvest(economy, { day }) {
   return harvested;
 }
 
-export function producePrimaryTick(economy, physical, household, { day, fraction }) {
+export function producePrimaryTick(economy, physical, household, { day, fraction, endOfDay = false }) {
   if (!Number.isFinite(fraction) || fraction < 0) throw new TypeError("production fraction must be non-negative and finite");
   const month = (Math.floor((day - 1) / 30) % 12) + 1;
   const winter = month >= 10;
   let effectiveFraction = fraction;
+  if (household.boost) {
+    effectiveFraction *= household.boost;
+    if (endOfDay) household.boost = null;
+  }
   if (hasHouseholdStall(economy, household)) {
     effectiveFraction *= (household.members.length - 1) / household.members.length;
   }
@@ -988,13 +1000,54 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
   const work = effectiveFraction * householdMult(household);
   const produced = {};
 
-  if (household.job === "fisher") {
+  if (household.job === "fisher2") {
+    const depletion = economy.natural.bay2 / P.BAY0;
+    if (!winter) {
+      const fish = P.Y_FISH * work * depletion;
+      economy.natural.bay2 = Math.min(
+        P.BAY0,
+        economy.natural.bay2 - fish
+          + effectiveFraction * (
+            P.BAY_R * economy.natural.bay2 * (1 - depletion)
+            + P.RESEED * (1 - depletion)
+          ),
+      );
+      const qty = fish / P.MEAL_FISH;
+      household.pantry.meal += qty;
+      recordEconomicMaterialFlow(economy, "meal", "prod", qty, `世帯${household.id}の魚粉生産`);
+      produced.meal = qty;
+    }
+  } else if (household.job === "quarryman") {
+    const qty = P.Y_STONE * work;
+    household.pantry.stone += qty;
+    recordEconomicMaterialFlow(economy, "stone", "prod", qty, `世帯${household.id}の採石`);
+    produced.stone = qty;
+  } else if (household.job === "rapeseed") {
+    if (month >= 3 && month <= 8) {
+      const used = Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction);
+      household.pantry.meal -= used;
+      household.fert = (household.fert ?? 0) + used;
+      if (used > 0) {
+        recordEconomicMaterialFlow(economy, "meal", "cons", used, `世帯${household.id}の菜種施肥`);
+      }
+      const fill = Math.min(
+        1,
+        household.fert / Math.max(1, P.FERT_NEED * (month - 2) * 30),
+      );
+      const qty = P.Y_OIL * work * (1 + P.FERT_BOOST * fill);
+      household.pantry.oil += qty;
+      recordEconomicMaterialFlow(economy, "oil", "prod", qty, `世帯${household.id}の搾油`);
+      produced.oil = qty;
+    }
+  } else if (household.job === "fisher") {
     const depletion = economy.natural.bay / P.BAY0;
     const qty = (winter ? P.Y_FISH_W : P.Y_FISH) * work * depletion;
     economy.natural.bay = Math.min(
       P.BAY0,
       economy.natural.bay - qty
-        + fraction * (P.BAY_R * economy.natural.bay * (1 - depletion) + P.RESEED * (1 - depletion)),
+        + effectiveFraction * (
+          P.BAY_R * economy.natural.bay * (1 - depletion) + P.RESEED * (1 - depletion)
+        ),
     );
     household.pantry.fish += qty;
     economy.led.prod.fish = (economy.led.prod.fish ?? 0) + qty;
@@ -1032,6 +1085,28 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     household.pantry.log += qty;
     recordEconomicMaterialFlow(economy, "log", "prod", qty, `世帯${household.id}の伐採`);
     produced.log = qty;
+  } else if (household.job === "woodshop") {
+    const qty = Math.min(P.Y_TOOLS * work, household.pantry.log / P.LOG_TOOL);
+    household.pantry.log -= qty * P.LOG_TOOL;
+    household.pantry.tools += qty;
+    recordEconomicMaterialFlow(economy, "tools", "prod", qty, `世帯${household.id}の木工`);
+    recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_TOOL, `世帯${household.id}の木工`);
+    produced.tools = qty;
+  } else if (household.job === "charburner") {
+    const qty = Math.min(P.Y_CHAR * work, household.pantry.log / P.LOG_CHAR);
+    household.pantry.log -= qty * P.LOG_CHAR;
+    household.pantry.char += qty;
+    recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼`);
+    recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼`);
+    produced.char = qty;
+  } else if (household.job === "saltworks") {
+    const fuel = Math.min(P.SALT_CHAR * effectiveFraction, household.pantry.char);
+    const qty = P.Y_SALT * householdMult(household) * fuel / P.SALT_CHAR;
+    household.pantry.char -= fuel;
+    household.pantry.salt += qty;
+    if (qty > 0) recordEconomicMaterialFlow(economy, "salt", "prod", qty, `世帯${household.id}の製塩`);
+    if (fuel > 0) recordEconomicMaterialFlow(economy, "char", "cons", fuel, `世帯${household.id}の製塩`);
+    produced.salt = qty;
   }
   return produced;
 }
@@ -1041,10 +1116,104 @@ export function runPrimaryProductionDay(economy, physical, { day }) {
   for (let tick = 0; tick < 30; tick += 1) {
     for (const household of economy.households) {
       if (household.state === "home") {
-        producePrimaryTick(economy, physical, household, { day, fraction: 1 / 30 });
+        producePrimaryTick(economy, physical, household, {
+          day,
+          fraction: 1 / 30,
+          endOfDay: tick === 29,
+        });
       }
     }
   }
+}
+
+export function householdFoodDays(household) {
+  return FOODS.reduce((total, goods) => total + household.pantry[goods], 0) / P.EAT;
+}
+
+export function isNeedyHousehold(household) {
+  return household.purse < householdEat(household) * 0.8 && householdFoodDays(household) < 4;
+}
+
+export function laborWage(economy, household) {
+  return householdEat(household) * staplePrice(economy);
+}
+
+export function assignNeedyWork(economy, physical, household) {
+  if (household.state !== "home" || !isNeedyHousehold(household)) return null;
+  if (physical.roadWorksites.length > 0) {
+    const worksite = physical.roadWorksites.reduce((a, b) => (
+      Math.hypot(a.x - household.x, a.y - household.y)
+        < Math.hypot(b.x - household.x, b.y - household.y) ? a : b
+    ));
+    household.wx = worksite.x;
+    household.wy = worksite.y;
+    household.state = "toWork";
+    household.employerId = null;
+    household.worksiteId = worksite.id;
+    return { kind: "public", worksiteId: worksite.id, x: worksite.x, y: worksite.y };
+  }
+
+  const wage = laborWage(economy, household);
+  const employer = economy.households
+    .filter((candidate) => (
+      candidate !== household
+      && candidate.purse > wage * 4
+      && candidate.workerId === null
+      && candidate.state !== "building"
+    ))
+    .sort((a, b) => (
+      Math.hypot(a.x - household.x, a.y - household.y)
+      - Math.hypot(b.x - household.x, b.y - household.y)
+    ))[0];
+  if (!employer) return null;
+  employer.workerId = household.id;
+  household.employerId = employer.id;
+  household.worksiteId = null;
+  household.wx = employer.x;
+  household.wy = employer.y;
+  household.state = "toWork";
+  return { kind: "private", employerId: employer.id, x: employer.x, y: employer.y };
+}
+
+export function completeAssignedWork(economy, physical, household, { day }) {
+  if (household.state !== "toWork") return { worked: false, kind: null, paid: 0 };
+  const wage = laborWage(economy, household);
+  let kind = null;
+  let paid = 0;
+  let completed = false;
+
+  if (household.employerId !== null) {
+    const employer = findHousehold(economy, household.employerId);
+    if (employer) {
+      paid = Math.min(wage, Math.max(0, employer.purse));
+      employer.purse -= paid;
+      household.purse += paid;
+      household.income30 += paid;
+      employer.boost = 1.4;
+      employer.workerId = null;
+      kind = "private";
+    }
+    household.employerId = null;
+  } else if (household.worksiteId !== null) {
+    const result = workRoadWorksite(physical, household.worksiteId);
+    if (result.worked) {
+      household.purse += wage;
+      household.income30 += wage;
+      postCompanyLedger(economy.company, {
+        day,
+        amount: -wage,
+        reason: `世帯${household.id}の道普請賃金`,
+      });
+      economy.co.pub += wage;
+      paid = wage;
+      kind = "public";
+      completed = result.completed;
+      if (completed) recordEconomyEvent(economy, day, "道が一区画通じた");
+    }
+    household.worksiteId = null;
+  }
+  household.state = "toMarket";
+  return { worked: kind !== null, kind, paid, completed };
 }
 
 export function regenerateForest(economy, physical, { day, random }) {
@@ -1179,7 +1348,7 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     expCap: { ...P.EXP_CAP },
     expMl: { ...P.EXP_ML },
     deskUsed: {},
-    co: { expBuy: 0, expSell: 0, impMargin: 0, fee: 0 },
+    co: { expBuy: 0, expSell: 0, impMargin: 0, fee: 0, pub: 0 },
     exported: {},
     imported: {},
     outBy: {},

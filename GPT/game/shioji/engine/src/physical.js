@@ -98,6 +98,8 @@ export function createPhysicalState({
     terrain,
     roads: {},
     trails: {},
+    roadWorksites: [],
+    nextRoadWorksiteId: 1,
     roadOrigin,
     buildings: [],
     occupied: {},
@@ -357,6 +359,40 @@ export function addRoadTile(physical, x, y) {
   physical.roads[key] = true;
   physical.roadRevision += 1;
   return true;
+}
+
+export function planRoadWorksite(physical, x, y, { workRequired = 3 } = {}) {
+  if (!Number.isSafeInteger(workRequired) || workRequired <= 0) {
+    throw new TypeError("workRequired must be a positive safe integer");
+  }
+  const key = keyOf(x, y);
+  if (
+    !isLand(physical, x, y)
+    || physical.occupied[key]
+    || physical.roads[key] === true
+    || physical.roadWorksites.some((worksite) => worksite.x === x && worksite.y === y)
+  ) return null;
+  const worksite = {
+    id: physical.nextRoadWorksiteId,
+    kind: "road",
+    x,
+    y,
+    left: workRequired,
+  };
+  physical.nextRoadWorksiteId += 1;
+  physical.roadWorksites.push(worksite);
+  return worksite;
+}
+
+export function workRoadWorksite(physical, worksiteId) {
+  const index = physical.roadWorksites.findIndex((worksite) => worksite.id === worksiteId);
+  if (index < 0) return { worked: false, completed: false, worksite: null };
+  const worksite = physical.roadWorksites[index];
+  worksite.left -= 1;
+  if (worksite.left > 0) return { worked: true, completed: false, worksite };
+  const completed = addRoadTile(physical, worksite.x, worksite.y);
+  physical.roadWorksites.splice(index, 1);
+  return { worked: true, completed, worksite };
 }
 
 export function removeRoadTile(physical, x, y) {
