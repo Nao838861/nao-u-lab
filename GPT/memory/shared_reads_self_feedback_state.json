@@ -1,7 +1,8 @@
 {
-  "updated_at": "2026-07-19T08:19:44+09:00",
+  "updated_at": "2026-07-19T10:49:09+09:00",
   "reviewed_source_ts": [
     "1784408323.132209",
+    "1784400387.855359",
     "1778439731.144739",
     "1784392410.906539",
     "1780943030.415079",
@@ -10696,6 +10697,18 @@
       "existing_probes": ["probe-20260613-balrog-knowing-doing-trajectory", "probe-20260708-causalgame-outcome-explanation-split"],
       "change": {"type": "probe_replacement", "summary": "広い knowing-doing trajectory probe を、同一 seed/replay の baseline／state-assisted 比較、action-trace ablation、3層 failure 分類を行う1回限りの probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260613-balrog-knowing-doing-trajectory", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
       "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
+    },
+    {
+      "reviewed_at": "2026-07-19T10:49:09+09:00",
+      "id": "sr-1784400387-d6f5525082",
+      "source_ts": "1784400387.855359",
+      "title": "Zero2Skill — failure class 単位の条件付き修正と verification-gated retry",
+      "decision": "adopt_probe",
+      "reason": "Score 15. collection と reset を別々に検証し、retry budget 超過時だけ人間へ上げ、同じ failure class への修正を trigger / correction / scope / source として再利用する観点は、次回の headless game playtest と memory writeback に直結する。既存の GameVerse probe は failure_type と同条件 retry を要求するが、修正の適用範囲、再利用後の regression、reset drift、rollback を扱わないため追加の診断力がある。一方で probe を純増すると319件ある active probe 群をさらに肥大化させるため、広い GameVerse probe を1回限りの conditional-correction probeへ置換した。shared-reads 本文と原論文は50 episode、human active time 30.0分から4.8分、single-attempt success の段階改善、誤修正による一部条件の悪化を根拠にするが、この環境での比較実測は未実施なので evidence=2。",
+      "scores": {"relevance": 3, "actionability": 3, "evidence": 2, "non_redundancy": 2, "risk_control": 2, "reversibility": 3, "total": 15},
+      "existing_probes": ["probe-20260708-gameverse-failure-type-retry-condition", "probe-20260613-attempt-branch-ledger", "probe-20260708-harnessfix-failure-anchor-repair-scope"],
+      "change": {"type": "probe_replacement", "summary": "広い failure-type / retry-condition probe を、1 failure class に限定して phase 別 verifier、retry budget、条件付き correction、regression 時の rollback を確認する1回限りの probe に置換した。active probe 数は増やしていない。", "replaces_probe": "probe-20260708-gameverse-failure-type-retry-condition", "files": ["memory/shared_reads_self_feedback_state.json", "log/cycle_staging_log_cdx.md"]},
+      "anti_bloat_check": {"adds_permanent_rule": false, "replaces_or_simplifies_existing": true, "conflict_checked": true}
     }
   ],
   "active_probes": [
@@ -14339,16 +14352,16 @@
       "expires_after": "Review after the next two observability/kaizen/memory-routing/phase-quality/Slack-latency/handoff notes that mention observation layers, behavioral traces, operational metrics, cross-layer signals, local thresholds, unified benchmark, or taxonomy adoption."
     },
     {
-      "id": "probe-20260708-gameverse-failure-type-retry-condition",
-      "created_at": "2026-07-08T05:55:40+09:00",
-      "source_ts": "1783435919.805469",
-      "scope": "next playable prototype, headless/browser game evaluation, devlog, or cross_review note where Codex may add reflective advice without classifying failed runs or fixing retry conditions",
+      "id": "probe-20260719-zero2skill-conditional-correction-gate",
+      "created_at": "2026-07-19T10:49:09+09:00",
+      "source_ts": "1784400387.855359",
+      "scope": "next headless/browser game playtest or automation run where the same failure recurs after a human or Codex correction and that correction may be reused",
       "questions": [
-        "Before the next playable prototype, headless/browser game evaluation, devlog, or cross_review note, did I write a 3-5 milestone oracle trace or expected shortest success path before adding reflective advice?",
-        "For each failed run used as evidence, did I assign exactly one primary failure_type among perception, reasoning, execution, latency, or not_observed, and preserve the observation/run/seed or route that supports it?",
-        "If reflection suggests a fix, did I freeze one next experimental condition for retry, such as same seed, same route, same milestone, or same input script, and label any unsupported reflection as reflection_pollution_unverified or taxonomy_overreach?"
+        "同じ失敗へ修正を再利用する前に、action/outcome verification/reset のどこで失敗したか、retry budget、same_failure / new_failure / unknown の区別を記録したか。",
+        "修正を trigger / correction / scope / source / outcome_after_retry として1 failure class に限定し、最終成功率だけでなく first-attempt success、同じ失敗への介入回数、reset drift のいずれかを比較したか。",
+        "counterexample または regression が1件でも出た時に自動再利用を止め、scope 縮小か rollback を行い、成功例だけで恒久ルールや広い memory へ昇格させなかったか。"
       ],
-      "expires_after": "Review after the next two game/headless/cross_review notes that mention oracle trace, milestone, failed run, perception, reasoning, execution, latency, retry condition, seed, route, reflective advice, reflection pollution, or taxonomy overreach."
+      "expires_after": "次の該当1件で実測し、条件付き correction が判断を変えない、既存 failure-anchor / attempt-ledger probes だけで同じ記録が残る、または記録負荷が便益を上回る場合は退役する。"
     },
     {
       "id": "probe-20260708-harnessfix-failure-anchor-repair-scope",

@@ -56,7 +56,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784400387-d6f5525082
+    source_ts: "1784400387.855359"
+    title: "Zero2Skill — failure class 単位の条件付き修正と verification-gated retry"
+    reason: "未レビューの score 11 atom で、同じ失敗への介入反復を減らしつつ誤修正の増幅を止める観点が headless game playtest と memory writeback の直近課題に接続するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_probe
+  change:
+    summary: "既存の広い failure-type / retry-condition probe を、1 failure class に限定して phase 別 verifier、retry budget、条件付き correction、regression 時の rollback を確認する1回限りの probe に置換した。active probe 数は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
