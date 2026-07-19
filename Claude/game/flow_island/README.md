@@ -1,5 +1,7 @@
 # 流通の島 v0 (プレイアブルモック)
 
+> 【2026-07-19 退役】本実装は**参照アーカイブ**(「なぜこの設計か」を引く場所)。後継は `GPT/game/shioji/engine/`。経済の改良はすべて後継へ。数値同値の維持は終了(後継ENGINE_SPEC.md §0.2)。
+
 > **AI協業(Claude/Codex交互ターン制)**: 作業前に [AGENTS.md](AGENTS.md) → [CONTEXT.md](CONTEXT.md) → [WORKLOG.md](WORKLOG.md) の順で読むこと。セッション終わりは必ずpush。
 
 生産と消費のシミュレーション(projects/production_consumption_sim)の最初の遊べる盤。
