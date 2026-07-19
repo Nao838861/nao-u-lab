@@ -135,7 +135,111 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、代表語4件を取得。validate_memory_index.py で index と per-file atom index の一致を確認（broken link 0）"
+  - "atom mirror を監査し、atoms.jsonl / per-file md / index.jsonl は各2699件、欠落・parse error・content conflict は0件。既知重複45 cluster の index も最新"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を再生成（68 / 50 / 16 rows）"
+  - "cycle 2026-07-19 19:13 の high-water budget 3 group を永続 handoff inbox へ冪等 enqueue"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件のため status 更新なし"
+  - "memory/raw/ の30日超無更新ファイル93件を抽出。一次 provenance を保持するため、この phase では移動せず archive 候補として記録のみ"
+candidate_lifecycle:
+  posted: 433
+  ready_to_post: 10
+  postponed: 386
+  failed: 164
+  needs_review: 20
+issues:
+  - id: ISS-UTF8-001
+    description: "atom sr-1776127289-4d9239b255 の『AIエージェント』部分が、原 raw から U+FFFD 2文字を含む状態で per-file / atoms.jsonl / index / MEMORY.md に伝播している"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory_health.py mojibake_suspect_atoms"
+    source_file_status: "UTF-8 decoding は成功するが source text 自体に replacement character が存在。gr-1777083728-44d444ab7a は UTF-8 明示読みで正常であり false positive"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』の完全一致検索と title 品質を1件だけ損なう。ゲーム記憶の主要 entry point や recall smoke は正常で、影響は局所的"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 220
+  stale_triage_queue_rows: 50
+  actionable_group_count: 16
+  actionable_group_count_after_enqueue: 13
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-6c97712be1a4f523
+    - gha-eee43275a9c927cf
+    - gha-d873a0836c14b486
+group_action_handoff:
+  - group_key: ai gamestore scalable open ended evaluation of machine general intelligence with human games
+    representative: memory/shared_reads_candidates/20260616_ai_gamestore_human_games.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260616_ai_gamestore_human_games.md
+      - memory/shared_reads_candidates/20260620_ai_gamestore_human_games.md
+      - memory/shared_reads_candidates/20260711_ai_gamestore_open_ended_game_evaluation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_ai_gamestore_open_ended_evaluation.md
+      - memory/shared_reads_candidates/20260526_ai_gamestore_open_ended_human_games_eval.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260616_ai_gamestore_human_games.md
+      stale_after: "2026-07-16"
+      reason: "生成手順・評価プロトコル・100本ゲームの内訳が薄く、4000字級概要には追加確認が必要"
+  - group_key: algorithmic collusion at test time a meta game design and evaluation
+    representative: memory/shared_reads_candidates/20260616_algorithmic_collusion_metagame_eval.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260616_algorithmic_collusion_metagame_eval.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260516_algorithmic_collusion_test_time_metagame.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260616_algorithmic_collusion_metagame_eval.md
+      stale_after: "2026-07-16"
+      reason: "対戦ゲームAI評価へ転用する具体シナリオと指標の翻訳が不足"
+  - group_key: automated playtesting with procedural personas through mcts with evolved heuristics
+    representative: memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+      - memory/shared_reads_candidates/20260527_procedural_personas_mcts_playtesting.md
+      - memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      - memory/shared_reads_candidates/20260709_procedural_personas_playtesting.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+      - memory/shared_reads_candidates/20260625_procedural_personas_playtesting.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260616_procedural_personas_automated_playtesting.md
+      stale_after: "2026-07-16"
+      reason: "複数プレイスタイルの headless playtest へ直結するため、group 単位で重複を解消して評価する"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260530_llm_gameplay_playability_player_experience.md
+    status: postponed
+    stale_after: "2026-06-29"
+    priority_reason: "gameplay / playability / player experience の評価軸は有用だが、2 project の具体と観察例が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260609_bdd_il_game_regression_testing.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "BDD・IL・RL fine-tuning の接続は有用だが、reward・coverage・失敗例の具体が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260609_mortar_evolving_game_mechanics.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "Quality-Diversity・LLM・tree search は制作接続が強いが、archive 構成と評価内訳が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260610_emergence_world_long_horizon_agents.md
+    status: postponed
+    stale_after: "2026-07-10"
+    priority_reason: "長期 multi-agent simulation と governance drift は有用だが、15日 study の条件・指標・結果が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260611_alem_open_ended_multi_agent_coordination.md
+    status: postponed
+    stale_after: "2026-07-11"
+    priority_reason: "個体能力と協調能力を分ける評価軸は有用だが、model 比較・return・ablation の具体値が不足"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
