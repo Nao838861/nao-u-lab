@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-19T15:07:31+09:00",
+  "updated_at": "2026-07-19T17:23:48+09:00",
   "reviewed_source_ts": [
+    "1784440867.236699",
     "1784433358.176329",
     "1784425463.441119",
     "1784408323.132209",
@@ -436,6 +437,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-19T17:23:48+09:00",
+      "selected": {
+        "id": "sr-1784440867-5847a784b5",
+        "source_ts": "1784440867.236699",
+        "title": "Sketchar — 生成画像をキャラクター企画と美術の編集可能な境界物にする",
+        "reason": "最新の未レビュー score 12 atom で、memory・harness・game-design・operation・evaluation を含む7タグを持つ。文章だけの人物設定と、構造化仕様＋低忠実度参照画像の handoff 差を測る案が、次のキャラクター制作行動へ新しい小さな差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "risk_control=1、合計13で採用条件に届かないため、新規 probe・metric は追加しない。shared-reads 本文は形成的インタビュー10名、デザイナー評価13名、順序を入れ替えた17名の CSI 比較、イラストレーター5名による参照物評価と、細部品質・stereotype・権利・地域差の限界まで記録しているため evidence=2 とした。ただし実際の企画―美術共同作業で、解釈違い、追加質問、修正回数、完成時間が改善したかは未測定である。既存の provisional-artifact-acceptance-gate は生成物の段階・artifact class・受入条件・cleanup burden を、pcg-tool-loop-evidence は却下案・修正理由・不足 verifier の保存を、contribution-boundary-provenance は参照物の役割・出典・権利境界を既に要求している。Sketchar 固有の handoff packet 比較を追加すると、active probe 群の確認負荷に加えて画像生成と人間レビューをキャラクター制作の前提へ広げるため、次の該当作業では本 atom を既存 probes の具体例としてのみ参照する。",
+      "existing_probes": [
+        "probe-20260617-provisional-artifact-acceptance-gate",
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260625-contribution-boundary-provenance"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の生成 artifact 受入・却下理由保存・provenance probes との重複および実協働未検証による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-19T15:07:31+09:00",
       "selected": {

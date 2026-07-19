@@ -94,7 +94,38 @@ skipped: []
 - 投稿前 policy review: 2件とも `■ 概要` 開始、必須6項目、`■ URL` 末尾、禁止表現なし、3400–4600字の validator を通過。各 candidate を独立した `chat.postMessage` で投稿し、live history で ts・本文・thread_ts 不在を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784440867-5847a784b5
+    source_ts: "1784440867.236699"
+    title: "Sketchar — 生成画像をキャラクター企画と美術の編集可能な境界物にする"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・operation・evaluation を含む7タグを持つ。文章だけの人物設定と、構造化仕様＋低忠実度参照画像の handoff 差を測る案が、次のキャラクター制作行動へ新しい小さな差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "実際の企画―美術共同作業で解釈違い・追加質問・修正回数・完成時間が改善したかは未測定。既存の provisional-artifact-acceptance-gate、pcg-tool-loop-evidence、contribution-boundary-provenance が、生成物の段階と受入条件、却下案と修正理由、参照物の権利・provenance を既に覆う。新しい画像 handoff probe は確認負荷と制作スコープを増やすため採用しない。"
+  existing_probes:
+    - probe-20260617-provisional-artifact-acceptance-gate
+    - probe-20260528-pcg-tool-loop-evidence
+    - probe-20260625-contribution-boundary-provenance
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを state に記録した。probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
