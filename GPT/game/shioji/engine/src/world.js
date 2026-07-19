@@ -1,13 +1,11 @@
 import {
   ageMarketStalls,
-  assertMoneyConservation,
   createEconomicState,
   initializeNaturalResources,
   P,
-  regenerateForest,
-  runHouseholdSurvival,
+  runCompanyDayStart,
+  runDayEnd,
   runPrimaryProductionDay,
-  runWheatHarvest,
 } from "./econ.js";
 import { createPhysicalState, stepHaulCarriers } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
@@ -38,12 +36,10 @@ export function createWorld({ seed = 1, initialCompanyMoney = P.TREASURY0 } = {}
       stepHaulCarriers(state.physical, 30);
       const nextDay = state.day + 1;
       ageMarketStalls(state.economy, { day: nextDay });
+      runCompanyDayStart(state.economy, { day: nextDay, random });
       runPrimaryProductionDay(state.economy, state.physical, { day: nextDay });
-      runWheatHarvest(state.economy, { day: nextDay });
-      runHouseholdSurvival(state.economy, { day: nextDay });
-      regenerateForest(state.economy, state.physical, { day: nextDay, random });
+      runDayEnd(state.economy, state.physical, { day: nextDay, random });
       state.day = nextDay;
-      assertMoneyConservation(state.economy);
       return state;
     },
   };

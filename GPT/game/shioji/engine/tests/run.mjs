@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 import {
   BUY_ORDER,
+  DAY_END_ORDER,
   FOODS,
   GOODS,
   JOBCLS,
@@ -14,11 +15,14 @@ import {
   assertMoneyConservation,
   buyAtMarket,
   buyTargets,
+  companyCreditLimit,
+  companyStockReleasePrice,
   completeAssignedWork,
   createEconomicState,
   createHousehold,
   createCompanyState,
   economicMaterialSnapshot,
+  fundSettlementZone,
   householdClass,
   householdEat,
   householdFoodDays,
@@ -34,11 +38,16 @@ import {
   quoteAskPrice,
   recordExternalMoneyFlow,
   regenerateForest,
+  runCompanyDayStart,
+  runCompanyFinance,
+  runCompanyProcurement,
+  runDayEnd,
   runHouseholdSurvival,
   runPrimaryProductionDay,
   runWheatHarvest,
   sellAtMarket,
   sellOffers,
+  setCompanyStockTarget,
   shouldPauseProduction,
   staplePrice,
 } from "../src/econ.js";
@@ -1240,6 +1249,201 @@ test("段20: 民間日傭は雇主から全賃金を受け翌日生産を1.4倍�
   assert.ok(Math.abs(employer.pantry.meat - P.Y_MEAT * 1.4) < 1e-12);
   assert.ok(Math.abs(employer.pantry.cloth - P.Y_CLOTH * 1.4) < 1e-12);
   assert.equal(employer.boost, null);
+});
+
+test("段21: dayEndの全フェーズ順を固定し実行traceで検査する", () => {
+  const expected = [
+    "company_procurement",
+    "wheat_harvest",
+    "food",
+    "death",
+    "culture",
+    "ladder",
+    "paving",
+    "birth",
+    "population_dynamics",
+    "company_finance",
+    "forest_regeneration",
+    "flow_ema",
+    "money_conservation",
+  ];
+  assert.deepEqual(DAY_END_ORDER, expected);
+  assert.equal(Object.isFrozen(DAY_END_ORDER), true);
+
+  const economy = createEconomicState();
+  const result = runDayEnd(economy, null, { day: 1, random: () => 1 });
+  assert.deepEqual(result.trace, expected);
+});
+
+test("段21: d255は会社買上げ後に麦を収穫し、その麦で食事してから文化・ラダーへ進む", () => {
+  const economy = createEconomicState();
+  const farmer = createHousehold(economy, { job: "wheat", x: 0, y: 0 });
+  for (const goods of FOODS) farmer.pantry[goods] = 0;
+  farmer.wheatWork = 300;
+  farmer.up = P.UP_DAYS - 1;
+
+  const result = runDayEnd(economy, null, { day: 255, random: () => 1 });
+  assert.equal(result.harvests.length, 1);
+  assert.equal(result.harvests[0].qty, P.Y_WHEAT);
+  assert.equal(economy.hungryN, 0);
+  assert.ok(farmer.pantry.wheat < P.Y_WHEAT);
+  assert.equal(farmer.lv, 1);
+  assert.equal(farmer.satLast.food1, true);
+  assert.ok(economy.f30.wheat.prod > 0);
+  assert.ok(economy.f30.wheat.cons > 0);
+});
+
+test("段21: 食後の文化消費・漬け込み・腐敗を経て軟ストリークを更新する", () => {
+  const economy = createEconomicState();
+  const vegetable = createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  vegetable.pantry.wheat = 100;
+  vegetable.pantry.veg = 100;
+  vegetable.pantry.salt = 10;
+  vegetable.pantry.pick = 0;
+  vegetable.up = P.UP_DAYS - 1;
+  const toolsBefore = vegetable.pantry.tools;
+
+  const sourceWorld = new FlowIslandWorld(11);
+  sourceWorld.day = 61;
+  sourceWorld.fday = {};
+  const sourceHousehold = sourceWorld.addHH("veg", 0, 0);
+  sourceHousehold.members = structuredClone(vegetable.members);
+  sourceHousehold.pantry = structuredClone(vegetable.pantry);
+  sourceHousehold.up = vegetable.up;
+  sourceWorld.dayEnd();
+
+  runDayEnd(economy, null, { day: 61, random: () => 1 });
+  assert.equal(vegetable.lv, 1);
+  assert.equal(vegetable.satLast.food1, true);
+  assert.equal(vegetable.pantry.tools, toolsBefore - P.D_TOOL);
+  assert.ok(vegetable.pantry.pick > 0);
+  assert.ok(economy.led.spoil.veg > 0);
+  assert.ok(economy.materialFlows.pick.prod > 0);
+  assert.deepEqual(vegetable.pantry, sourceHousehold.pantry);
+  assert.deepEqual(vegetable.satLast, sourceHousehold.satLast);
+  assert.deepEqual(
+    { lv: vegetable.lv, up: vegetable.up, down: vegetable.down },
+    { lv: sourceHousehold.lv, up: sourceHousehold.up, down: sourceHousehold.down },
+  );
+});
+
+test("段22: 会社買上げは目標まで安い屋台から先に蔵へ移す", () => {
+  const economy = createEconomicState();
+  const expensive = createHousehold(economy, { job: "woodshop", x: 0, y: 0 });
+  const cheap = createHousehold(economy, { job: "woodshop", x: 1, y: 0 });
+  expensive.pantry.tools -= 5;
+  cheap.pantry.tools -= 5;
+  economy.stalls.tools.push(
+    { householdId: expensive.id, qty: 5, price: 5, age: 0 },
+    { householdId: cheap.id, qty: 5, price: 1, age: 0 },
+  );
+  setCompanyStockTarget(economy, "tools", 6);
+  const before = economicMaterialSnapshot(economy);
+
+  const purchases = runCompanyProcurement(economy, { day: 1 });
+  assert.deepEqual(purchases.map(({ price, qty }) => [price, qty]), [[1, 5], [5, 1]]);
+  assert.equal(economy.stock.tools, 6);
+  assert.equal(economy.stockCost.tools, 10);
+  assert.equal(economy.co.procBuy, 10);
+  assert.equal(cheap.purse, P.PURSE0 + 5);
+  assert.equal(expensive.purse, P.PURSE0 + 5);
+  assert.deepEqual(economicMaterialSnapshot(economy), before);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段22: 蔵出しは予約在庫を除き平均原価×1.2の固定価格で売る", () => {
+  const economy = createEconomicState();
+  const buyer = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  for (const goods of FOODS) buyer.pantry[goods] = 0;
+  postCompanyLedger(economy.company, {
+    day: 1,
+    amount: buyer.purse - 14.4,
+    reason: "蔵出し試験の財布預入",
+  });
+  buyer.purse = 14.4;
+  economy.stock.wheat = 10;
+  economy.stockCost.wheat = 20;
+  economy.order = { g: "wheat", qty: 4, left: 4, price: 2, due: 90 };
+  const before = economicMaterialSnapshot(economy);
+
+  assert.equal(companyStockReleasePrice(economy, "wheat"), 2.4);
+  const bought = buyAtMarket(economy, buyer, { day: 1 });
+  const sale = bought.transactions.find((transaction) => transaction.source === "STOCK");
+  assert.deepEqual(sale, { goods: "wheat", qty: 6, price: 2.4, source: "STOCK" });
+  assert.equal(economy.stock.wheat, 4);
+  assert.equal(economy.stockCost.wheat, 8);
+  assert.ok(Math.abs(economy.co.stockSell - 14.4) < 1e-12);
+  assert.deepEqual(economicMaterialSnapshot(economy), before);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段22: 本国注文は蔵の原価簿を比例減算して一括出荷・外貨化する", () => {
+  const economy = createEconomicState();
+  economy.stock.tools = 40;
+  economy.stockCost.tools = 80;
+  economy.order = { g: "tools", qty: 30, left: 30, price: 2.5, due: 160 };
+  ageMarketStalls(economy, { day: 70 });
+  const result = runCompanyDayStart(economy, { day: 70, random: () => 1 });
+
+  assert.deepEqual(result.shipped, { goods: "tools", qty: 30, revenue: 93.75 });
+  assert.equal(result.completed, true);
+  assert.equal(economy.order, null);
+  assert.equal(economy.orderDone, 1);
+  assert.equal(economy.stock.tools, 10);
+  assert.equal(economy.stockCost.tools, 20);
+  assert.equal(economy.exported.tools, 30);
+  assert.equal(economy.materialFlows.tools.exp, 30);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段22: 支度金・信用限度・月利・破産を会社台帳と本土境界へ記帳する", () => {
+  const economy = createEconomicState();
+  assert.equal(companyCreditLimit(economy, { day: 1 }), 6000);
+  assert.equal(fundSettlementZone(economy, {
+    job: "logger", x: 3, y: 4, day: 1,
+  }), true);
+  assert.deepEqual(economy.zones, [{ job: "logger", x: 3, y: 4, filled: false }]);
+  assert.equal(economy.company.money, P.TREASURY0 - P.BUILD_COST);
+  assert.equal(economy.moneyBoundary.out, P.BUILD_COST);
+
+  const withdrawal = economy.company.money + 6001;
+  postCompanyLedger(economy.company, { day: 29, amount: -withdrawal, reason: "破産試験の本土支出" });
+  recordExternalMoneyFlow(economy, { amount: -withdrawal, reason: "破産試験の本土支出" });
+  const bankruptcy = runCompanyFinance(economy, { day: 30 });
+  assert.deepEqual(bankruptcy, { interest: 0, bankrupt: true });
+  assert.equal(economy.goDay, 30);
+  assert.equal(assertMoneyConservation(economy), true);
+
+  const interestEconomy = createEconomicState();
+  postCompanyLedger(interestEconomy.company, {
+    day: 1289,
+    amount: -(P.TREASURY0 + 1000),
+    reason: "利払い試験の本土支出",
+  });
+  recordExternalMoneyFlow(interestEconomy, {
+    amount: -(P.TREASURY0 + 1000),
+    reason: "利払い試験の本土支出",
+  });
+  const finance = runCompanyFinance(interestEconomy, { day: 1290 });
+  assert.equal(finance.interest, 1000 * P.IRATE);
+  assert.equal(finance.bankrupt, false);
+  assert.equal(interestEconomy.company.money, -1000 * (1 + P.IRATE));
+  assert.equal(assertMoneyConservation(interestEconomy), true);
+});
+
+test("段22: 信用限度は月次成長枠と世帯数枠の小さい方で決まる", () => {
+  const nineHouseholds = createEconomicState();
+  for (let index = 0; index < 9; index += 1) {
+    createHousehold(nineHouseholds, { job: "logger", x: index, y: 0 });
+  }
+  assert.equal(companyCreditLimit(nineHouseholds, { day: 1 }), 9 * 9 * P.LIMIT_PC);
+
+  const twentyHouseholds = createEconomicState();
+  for (let index = 0; index < 20; index += 1) {
+    createHousehold(twentyHouseholds, { job: "logger", x: index, y: 0 });
+  }
+  assert.equal(companyCreditLimit(twentyHouseholds, { day: 1 }), P.LIMIT0 + P.LIMIT_G);
+  assert.equal(companyCreditLimit(twentyHouseholds, { day: 720 }), 20 * 9 * P.LIMIT_PC);
 });
 
 let failures = 0;
