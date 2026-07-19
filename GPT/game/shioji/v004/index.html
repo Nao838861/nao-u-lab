@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#143d42">
+  <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
+  <title>CHARTER ISLE — 潮路の島 v004</title>
+  <link rel="stylesheet" href="./style.css?v=v004.0.1">
+</head>
+<body>
+  <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
+
+  <header id="hud" class="panel" data-testid="hud">
+    <div class="brand">
+      <span class="brand-seal">CI</span>
+      <span><b>CHARTER ISLE</b><small>潮路の島 v004</small></span>
+    </div>
+    <div class="funds hud-stat" data-testid="funds">
+      <small>会社資金</small><b id="funds-value">—</b>
+    </div>
+    <div class="hud-stat"><small>日付</small><b id="day-value">0日目</b></div>
+    <div class="hud-stat tick-stat"><small>時刻</small><b id="tick-value">tick 0</b></div>
+    <div class="hud-stat population-stat"><small>人口</small><b id="population-value">0人</b></div>
+    <div id="speed-controls" class="speed" aria-label="時間速度" data-testid="speed-controls">
+      <button type="button" data-speed="0" aria-label="一時停止">Ⅱ</button>
+      <button type="button" data-speed="1" class="on" aria-label="通常速度">▶</button>
+      <button type="button" data-speed="2" aria-label="四倍速">▶▶</button>
+      <button type="button" data-speed="3" aria-label="一日毎秒">▶▶▶</button>
+    </div>
+    <button id="step-day" class="step-day" type="button" data-testid="step-day">1日進める</button>
+  </header>
+
+  <aside id="observer" class="panel observer" data-testid="observer">
+    <small>島の観測</small>
+    <h1>エンジンの世界</h1>
+    <dl>
+      <div><dt>盤面</dt><dd id="world-size">—</dd></div>
+      <div><dt>建物</dt><dd id="building-count">—</dd></div>
+      <div><dt>移動中</dt><dd id="carrier-count">—</dd></div>
+      <div><dt>直近イベント</dt><dd id="event-count">0</dd></div>
+    </dl>
+    <p>ドラッグ／スワイプで移動、ホイール／ピンチで拡大縮小。</p>
+  </aside>
+
+  <div id="status" class="panel status" role="status" aria-live="polite">
+    <i></i><span>経済エンジンに接続済み</span>
+  </div>
+
+  <noscript>このゲームにはJavaScriptが必要です。</noscript>
+  <script type="module" src="./src/main.js?v=v004.0.1"></script>
+</body>
+</html>
