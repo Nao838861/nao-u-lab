@@ -7,14 +7,19 @@ genre_tags: [game-audio, spatial-audio, open-world, feedback, accessibility]
 evaluated_at: "2026-07-20T06:07:46+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-20T06:07:46+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-20T06:07:46+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-20T06:14:11+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784495623345539"
+next_action: none
 stale_after: "2026-08-19"
 supersedes: []
+posted:
+  ts: "1784495623.345539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784495623345539"
+  char_count: 4414
+  posted_at: "2026-07-20T06:14:11+09:00"
 gate_reason: |-
   Lift Vine と Veilswarm の2事例から、知覚上の目的、素材選択、可変 emitter、RTPC、視線・速度・状態・local/remote 条件まで実装判断を追える。
   形式的なユーザー実験はないが、出荷済み open-world の制約解決事例として、音を affordance と身体反応へ結ぶ具体 probe に落とせる。
