@@ -6,6 +6,7 @@ import {
   FOODS,
   GOODS,
   JOBCLS,
+  JOBS,
   LADDER,
   P,
   PERISH,
@@ -22,6 +23,7 @@ import {
   createHousehold,
   createCompanyState,
   economicMaterialSnapshot,
+  fillSettlementZones,
   fundSettlementZone,
   householdClass,
   householdEat,
@@ -30,6 +32,7 @@ import {
   householdMult,
   initializeNaturalResources,
   isNeedyHousehold,
+  jobSelectionWeights,
   laborWage,
   localWood,
   postCompanyLedger,
@@ -41,9 +44,11 @@ import {
   runCompanyDayStart,
   runCompanyFinance,
   runCompanyProcurement,
+  runBirthPhase,
   runDayEnd,
   runHouseholdSurvival,
   runPrimaryProductionDay,
+  runPopulationDynamicsPhase,
   runWheatHarvest,
   sellAtMarket,
   sellOffers,
@@ -96,6 +101,7 @@ import {
   workRoadWorksite,
 } from "../src/physical.js";
 import { createWorld } from "../src/world.js";
+import { runFlowIslandAudit } from "../src/audit.js";
 
 const tests = [];
 
@@ -1444,6 +1450,181 @@ test("段22: 信用限度は月次成長枠と世帯数枠の小さい方で決�
   }
   assert.equal(companyCreditLimit(twentyHouseholds, { day: 1 }), P.LIMIT0 + P.LIMIT_G);
   assert.equal(companyCreditLimit(twentyHouseholds, { day: 720 }), 20 * 9 * P.LIMIT_PC);
+});
+
+test("段23: 月次出生は非飢餓・食料2日超・11人未満の世帯だけに起きる", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "veg", x: 0, y: 0 });
+  household.members = household.members.slice(0, 10);
+  while (household.members.length < 10) {
+    household.members.push({ name: `家族${household.members.length}`, sex: "♀", age: 10 });
+  }
+  household.hungerRun = 0;
+  household.pantry.wheat = P.EAT * 3;
+  const births = runBirthPhase(economy, { day: 30, random: () => 0 });
+
+  assert.equal(births.length, 1);
+  assert.equal(household.members.length, 11);
+  assert.deepEqual(household.members.at(-1), { name: "ハンス", sex: "♂", age: 0 });
+  assert.equal(runBirthPhase(economy, { day: 60, random: () => 0 }).length, 0);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段23: 家督分家は人数・財布・全pantryを頭数比で移し何も印刷しない", () => {
+  const economy = createEconomicState();
+  const donor = createHousehold(economy, { job: "veg", x: 2, y: 3 });
+  donor.members = Array.from({ length: 10 }, (_, index) => ({
+    name: `家族${index}`, sex: index % 2 ? "♀" : "♂", age: 20 + index,
+  }));
+  for (const [index, goods] of GOODS.entries()) donor.pantry[goods] = (index + 1) * 10;
+  postCompanyLedger(economy.company, { day: 14, amount: -60, reason: "分家試験の家産移転" });
+  donor.purse += 60;
+  economy.port = { x: 0, y: 0 };
+  economy.zones.push({ job: "woodshop", x: 8, y: 9, filled: false });
+  const beforeMaterials = economicMaterialSnapshot(economy);
+  const beforeMembers = donor.members.length;
+  const beforeMoney = donor.purse + economy.company.money;
+
+  const [settlement] = fillSettlementZones(economy, { day: 15 });
+  const successor = settlement.household;
+  assert.equal(settlement.kind, "successor");
+  assert.equal(successor.job, "woodshop");
+  assert.equal(successor.sur, donor.sur);
+  assert.equal(successor.members.length, 5);
+  assert.equal(donor.members.length, 5);
+  assert.equal(successor.state, "arriving");
+  assert.deepEqual({ x: successor.px, y: successor.py }, { x: donor.x, y: donor.y });
+  assert.equal(successor.purse, 60);
+  assert.equal(donor.purse, 60);
+  assert.equal(successor.members.length + donor.members.length, beforeMembers);
+  assert.equal(successor.purse + donor.purse + economy.company.money, beforeMoney);
+  assert.deepEqual(economicMaterialSnapshot(economy), beforeMaterials);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段23: 余剰家族がなく島が飢えていない時だけ移民船が区画を埋める", () => {
+  const economy = createEconomicState();
+  const resident = createHousehold(economy, { job: "logger", x: 2, y: 2 });
+  resident.members = resident.members.slice(0, 7);
+  economy.port = { x: 4, y: 5 };
+  economy.zones.push({ job: "fisher", x: 7, y: 8, filled: false });
+  economy.hungryN = 1;
+  assert.deepEqual(fillSettlementZones(economy, { day: 15 }), []);
+  assert.equal(economy.zones[0].filled, false);
+
+  economy.hungryN = 0;
+  const companyBefore = economy.company.money;
+  const [settlement] = fillSettlementZones(economy, { day: 15 });
+  assert.equal(settlement.kind, "immigrant");
+  assert.equal(settlement.household.state, "arriving");
+  assert.deepEqual(
+    { x: settlement.household.px, y: settlement.household.py },
+    economy.port,
+  );
+  assert.equal(settlement.household.pantry.wheat, 240);
+  assert.equal(settlement.household.pantry.tools, 5);
+  assert.equal(economy.company.money, companyBefore - P.PASSAGE);
+  assert.equal(economy.outBy.pass, P.PASSAGE);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段23: 転職候補は絶滅職を含む全職で地形職だけ自宅近傍に絞る", () => {
+  const terrain = Array.from({ length: 9 }, () => Array(9).fill("grass"));
+  terrain[5][4] = "water";
+  terrain[4][5] = "forest";
+  terrain[4][3] = "rock";
+  const physical = createPhysicalState({ width: 9, height: 9, terrain });
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "saltworks", x: 4, y: 4 });
+  const allCandidates = jobSelectionWeights(economy, physical, {
+    exclude: household.job,
+    household,
+  }).map(([job]) => job);
+  assert.deepEqual(allCandidates, JOBS.filter((job) => job !== household.job));
+
+  const inland = createPhysicalState({
+    width: 9,
+    height: 9,
+    terrain: Array.from({ length: 9 }, () => Array(9).fill("grass")),
+  });
+  const inlandCandidates = jobSelectionWeights(economy, inland, {
+    exclude: household.job,
+    household,
+  }).map(([job]) => job);
+  for (const job of ["fisher", "fisher2", "logger", "quarryman"]) {
+    assert.equal(inlandCandidates.includes(job), false, job);
+  }
+  for (const job of ["wheat", "veg", "shepherd", "rapeseed", "woodshop", "charburner"]) {
+    assert.equal(inlandCandidates.includes(job), true, job);
+  }
+});
+
+test("段23: 破綻転職は初収穫前の麦を守り、困窮職を全職候補から再配置する", () => {
+  const physical = createPhysicalState({
+    width: 9,
+    height: 9,
+    terrain: Array.from({ length: 9 }, () => Array(9).fill("grass")),
+  });
+  const guardedEconomy = createEconomicState();
+  const guardedWheat = createHousehold(guardedEconomy, { job: "wheat", x: 4, y: 4 });
+  guardedWheat.hungerHist = Array(P.DISTRESS).fill(1);
+  guardedWheat.jobCycleDone = false;
+  let guardedRandomCalls = 0;
+  runPopulationDynamicsPhase(guardedEconomy, physical, {
+    day: 360,
+    random: () => { guardedRandomCalls += 1; return 0; },
+  });
+  assert.equal(guardedWheat.job, "wheat");
+  assert.equal(guardedRandomCalls, 0);
+
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 4, y: 4 });
+  household.hungerHist = Array(P.DISTRESS).fill(1);
+  household.jobCycleDone = true;
+  const changes = runPopulationDynamicsPhase(economy, physical, {
+    day: 360,
+    random: () => 0,
+  });
+  assert.equal(household.job, "wheat");
+  assert.equal(household.jobCycleDone, false);
+  assert.equal(household.lastSwitch, 360);
+  assert.deepEqual(changes.at(-1), {
+    kind: "job_switch", householdId: household.id, from: "logger", to: "wheat",
+  });
+});
+
+test("段23: 6ヶ月の負債は徳政で会社貸し倒れへ移して貨幣を保存する", () => {
+  const economy = createEconomicState();
+  const household = createHousehold(economy, { job: "logger", x: 0, y: 0 });
+  postCompanyLedger(economy.company, { day: 149, amount: 70, reason: "徳政試験の住民債務" });
+  household.purse = -10;
+  household.insolvM = 5;
+  household.jobCycleDone = true;
+  const changes = runPopulationDynamicsPhase(economy, null, {
+    day: 150,
+    random: () => 1,
+  });
+
+  assert.equal(household.purse, 0);
+  assert.equal(household.insolvM, 0);
+  assert.deepEqual(changes, [{ kind: "debt_relief", householdId: household.id, debt: 10 }]);
+  assert.equal(assertMoneyConservation(economy), true);
+});
+
+test("段24: E1〜E16監査はflow_island正本と同じ25/28になりE20残差も帯内", () => {
+  const audit = runFlowIslandAudit();
+  assert.equal(audit.total, 28);
+  assert.equal(audit.passed, 25);
+  assert.equal(audit.failed, 3);
+  assert.deepEqual(
+    audit.results.filter((result) => !result.passed).map((result) => result.id),
+    ["E1", "E8", "E10-char"],
+  );
+  assert.equal(audit.results.find((result) => result.id === "E3").passed, true);
+  for (const [goods, report] of Object.entries(audit.material)) {
+    assert.ok(report.ratio < 5, `${goods}: ${report.ratio}%`);
+    assert.equal(report.warning, false, goods);
+  }
 });
 
 let failures = 0;

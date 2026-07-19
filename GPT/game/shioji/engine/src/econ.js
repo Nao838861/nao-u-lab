@@ -112,6 +112,8 @@ export const JOBCLS = deepFreeze({
   saltworks: "artisan",
 });
 
+export const JOBS = deepFreeze(Object.keys(JOBCLS));
+
 export const LADDER = deepFreeze({
   farm: ["food1", "tools", "saltchar", "food2", "iron", "food3"],
   fish: ["grain", "tools", "salt", "char", "food2", "iron"],
@@ -184,7 +186,11 @@ export function recordEconomicMaterialFlow(
   { includeInDaily = true } = {},
 ) {
   if (!["prod", "cons", "imp", "exp"].includes(kind)) throw new Error(`unknown material flow kind: ${kind}`);
-  if (!Number.isFinite(qty) || qty < 0) throw new TypeError("material flow qty must be non-negative and finite");
+  if (!Number.isFinite(qty) || qty < 0) {
+    throw new TypeError(
+      `material flow qty must be non-negative and finite: ${goods}/${kind}=${qty} (${reason})`,
+    );
+  }
   const flow = economy.materialFlows[goods] ?? { prod: 0, cons: 0, imp: 0, exp: 0 };
   flow[kind] += qty;
   economy.materialFlows[goods] = flow;
@@ -196,9 +202,8 @@ export function recordEconomicMaterialFlow(
   }
 }
 
-export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
+function makeHouseholdRecord(economy, { job, x, y }) {
   if (!JOBCLS[job]) throw new Error(`unknown household job: ${job}`);
-  if (origin !== "immigrant") throw new Error(`unsupported household origin: ${origin}`);
   const id = economy.nextHouseholdId;
   economy.nextHouseholdId += 1;
   const family = generateFamily(id);
@@ -240,6 +245,12 @@ export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
     wx: null,
     wy: null,
   };
+  return household;
+}
+
+export function createHousehold(economy, { job, x, y, origin = "immigrant" }) {
+  if (origin !== "immigrant") throw new Error(`unsupported household origin: ${origin}`);
+  const household = makeHouseholdRecord(economy, { job, x, y });
   applyImmigrantKit(household);
   economy.households.push(household);
   recordExternalMoneyFlow(economy, {
@@ -1264,7 +1275,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     produced.stone = qty;
   } else if (household.job === "rapeseed") {
     if (month >= 3 && month <= 8) {
-      const used = Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction);
+      const used = Math.max(0, Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction));
       household.pantry.meal -= used;
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
@@ -1313,7 +1324,7 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     if (household.pantry.wheat > P.Y_WHEAT * householdMult(household) * 0.8) return produced;
     household.wheatWork += effectiveFraction;
     if (month >= 3 && month <= 8) {
-      const used = Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction);
+      const used = Math.max(0, Math.min(household.pantry.meal, P.FERT_NEED * effectiveFraction));
       household.pantry.meal -= used;
       household.fert = (household.fert ?? 0) + used;
       if (used > 0) {
@@ -1326,21 +1337,21 @@ export function producePrimaryTick(economy, physical, household, { day, fraction
     recordEconomicMaterialFlow(economy, "log", "prod", qty, `世帯${household.id}の伐採`);
     produced.log = qty;
   } else if (household.job === "woodshop") {
-    const qty = Math.min(P.Y_TOOLS * work, household.pantry.log / P.LOG_TOOL);
+    const qty = Math.max(0, Math.min(P.Y_TOOLS * work, household.pantry.log / P.LOG_TOOL));
     household.pantry.log -= qty * P.LOG_TOOL;
     household.pantry.tools += qty;
     recordEconomicMaterialFlow(economy, "tools", "prod", qty, `世帯${household.id}の木工`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_TOOL, `世帯${household.id}の木工`);
     produced.tools = qty;
   } else if (household.job === "charburner") {
-    const qty = Math.min(P.Y_CHAR * work, household.pantry.log / P.LOG_CHAR);
+    const qty = Math.max(0, Math.min(P.Y_CHAR * work, household.pantry.log / P.LOG_CHAR));
     household.pantry.log -= qty * P.LOG_CHAR;
     household.pantry.char += qty;
     recordEconomicMaterialFlow(economy, "char", "prod", qty, `世帯${household.id}の炭焼`);
     recordEconomicMaterialFlow(economy, "log", "cons", qty * P.LOG_CHAR, `世帯${household.id}の炭焼`);
     produced.char = qty;
   } else if (household.job === "saltworks") {
-    const fuel = Math.min(P.SALT_CHAR * effectiveFraction, household.pantry.char);
+    const fuel = Math.max(0, Math.min(P.SALT_CHAR * effectiveFraction, household.pantry.char));
     const qty = P.Y_SALT * householdMult(household) * fuel / P.SALT_CHAR;
     household.pantry.char -= fuel;
     household.pantry.salt += qty;
@@ -1509,8 +1520,8 @@ const ORDER_PRICES = deepFreeze({
 });
 
 export function companyCreditLimit(economy, { day = economy.currentDay } = {}) {
-  if (!Number.isSafeInteger(day) || day <= 0) {
-    throw new TypeError("credit-limit day must be a positive safe integer");
+  if (!Number.isSafeInteger(day) || day < 0) {
+    throw new TypeError("credit-limit day must be a non-negative safe integer");
   }
   const month = Math.floor((day - 1) / 30) + 1;
   return Math.min(
@@ -1557,9 +1568,85 @@ export function runCompanyProcurement(economy, { day }) {
   return purchases;
 }
 
+function createSuccessorHousehold(economy, donor, zone) {
+  const household = makeHouseholdRecord(economy, { job: zone.job, x: zone.x, y: zone.y });
+  const movedCount = Math.floor(donor.members.length / 2);
+  const moved = donor.members.splice(donor.members.length - movedCount, movedCount);
+  const share = movedCount / (movedCount + donor.members.length);
+  household.sur = donor.sur;
+  household.members = moved;
+  for (const goods of GOODS) {
+    household.pantry[goods] = donor.pantry[goods] * share;
+    donor.pantry[goods] *= 1 - share;
+  }
+  household.purse = donor.purse * share;
+  donor.purse *= 1 - share;
+  household.px = donor.x;
+  household.py = donor.y;
+  household.state = "arriving";
+  economy.households.push(household);
+  return household;
+}
+
+function createZoneImmigrant(economy, zone, day) {
+  const household = createHousehold(economy, {
+    job: zone.job,
+    x: zone.x,
+    y: zone.y,
+  });
+  household.px = economy.port.x;
+  household.py = economy.port.y;
+  household.state = "arriving";
+  postCompanyLedger(economy.company, {
+    day,
+    amount: -P.PASSAGE,
+    reason: `移民${household.id}の渡航費`,
+  });
+  recordExternalMoneyFlow(economy, {
+    amount: -P.PASSAGE,
+    reason: `移民${household.id}の本土渡航費`,
+  });
+  economy.outBy.pass += P.PASSAGE;
+  return household;
+}
+
+export function fillSettlementZones(economy, { day }) {
+  const settlements = [];
+  if (day % 15 !== 0 || !economy.port) return settlements;
+  for (const zone of economy.zones) {
+    if (zone.filled || settlements.length >= 2) continue;
+    const donor = economy.households
+      .filter((household) => household.members.length >= 8 && household.state === "home")
+      .sort((a, b) => b.members.length - a.members.length)[0];
+    if (donor) {
+      const household = createSuccessorHousehold(economy, donor, zone);
+      zone.filled = true;
+      settlements.push({ kind: "successor", zone, household, donor });
+      recordEconomyEvent(
+        economy,
+        day,
+        `${donor.sur}家の${household.members.length}人が分かれて${zone.job}の区画へ移り住む`,
+      );
+    } else if (economy.hungryN < Math.max(1, economy.households.length * 0.2)) {
+      const household = createZoneImmigrant(economy, zone, day);
+      zone.filled = true;
+      settlements.push({ kind: "immigrant", zone, household, donor: null });
+      recordEconomyEvent(economy, day, "入植船が着いた——本土からの移民");
+    }
+  }
+  return settlements;
+}
+
 export function runCompanyDayStart(economy, { day, random }) {
   if (typeof random !== "function") throw new TypeError("company day-start random must be a function");
-  const result = { created: null, expired: null, shipped: null, completed: false };
+  const result = {
+    created: null,
+    expired: null,
+    shipped: null,
+    completed: false,
+    settlements: [],
+    buildingsCompleted: [],
+  };
   if (!economy.order && day > 60 && day % 15 === 0 && random() < 0.5) {
     const candidates = Object.keys(ORDER_NAMES).filter(
       (goods) => (economy.f30[goods]?.prod ?? 0) > 0.3,
@@ -1622,6 +1709,16 @@ export function runCompanyDayStart(economy, { day, random }) {
         economy.order = null;
         result.completed = true;
       }
+    }
+  }
+  result.settlements = fillSettlementZones(economy, { day });
+  for (const household of economy.households) {
+    if (household.state !== "building") continue;
+    household.buildDays -= 1;
+    if (household.buildDays <= 0) {
+      household.state = "home";
+      result.buildingsCompleted.push(household.id);
+      recordEconomyEvent(economy, day, `${household.job}#${household.id} 家が建った`);
     }
   }
   return result;
@@ -1720,13 +1817,178 @@ export const DAY_END_ORDER = deepFreeze([
   "money_conservation",
 ]);
 
-// 段23で正本の出生・分家・移民・破綻転職をこの固定位置へ実装する。
-export function runBirthPhase() {
-  return [];
+const BIRTH_NAMES = deepFreeze([
+  "ハンス", "グレタ", "ヤン", "マリア", "ピム",
+  "ロッテ", "カレル", "アンナ", "ブラム", "エルス",
+]);
+
+export function runBirthPhase(economy, { day, random }) {
+  const births = [];
+  if (day % 30 !== 0) return births;
+  for (const household of economy.households) {
+    const foodDays = FOODS.reduce(
+      (total, goods) => total + household.pantry[goods],
+      0,
+    ) / P.EAT;
+    if (
+      household.members.length < 11
+      && household.hungerRun === 0
+      && foodDays > 2
+      && random() < 0.12
+    ) {
+      const member = {
+        name: BIRTH_NAMES[Math.floor(random() * BIRTH_NAMES.length)],
+        sex: random() < 0.5 ? "♂" : "♀",
+        age: 0,
+      };
+      household.members.push(member);
+      births.push({ householdId: household.id, member });
+      recordEconomyEvent(
+        economy,
+        day,
+        `${household.sur}家に子が生まれた(家族${household.members.length}人)`,
+      );
+    }
+  }
+  return births;
 }
 
-export function runPopulationDynamicsPhase() {
-  return [];
+function isNearTerrain(physical, household, kind, radius = 2) {
+  if (!physical?.terrain) return true;
+  for (let offsetY = -radius; offsetY <= radius; offsetY += 1) {
+    for (let offsetX = -radius; offsetX <= radius; offsetX += 1) {
+      if (
+        terrainKindAt(
+          physical,
+          Math.round(household.x) + offsetX,
+          Math.round(household.y) + offsetY,
+        ) === kind
+      ) return true;
+    }
+  }
+  return false;
+}
+
+export function jobSelectionWeights(economy, physical, { exclude, household = null } = {}) {
+  const incomes = {};
+  for (const candidate of economy.households) {
+    (incomes[candidate.job] ??= []).push(
+      candidate.incMonths.reduce((total, income) => total + income, 0) + candidate.incM,
+    );
+  }
+  const averages = Object.values(incomes)
+    .map((values) => values.reduce((total, value) => total + value, 0) / values.length)
+    .filter((value) => value > 0)
+    .sort((a, b) => a - b);
+  const median = averages.length > 0 ? averages[Math.floor(averages.length / 2)] : 1;
+  const terrainNeed = {
+    fisher: "water",
+    fisher2: "water",
+    logger: "forest",
+    quarryman: "rock",
+  };
+  const weights = [];
+  for (const job of JOBS) {
+    if (job === exclude) continue;
+    if (household && terrainNeed[job] && !isNearTerrain(physical, household, terrainNeed[job], 2)) {
+      continue;
+    }
+    if (!household && terrainNeed[job] && !economy.households.some((entry) => entry.job === job)) {
+      continue;
+    }
+    const values = incomes[job];
+    const weight = values?.length
+      ? Math.max(0, values.reduce((total, value) => total + value, 0) / values.length)
+      : median;
+    if (weight > 0) weights.push([job, weight]);
+  }
+  return weights;
+}
+
+export function pickHouseholdJob(economy, physical, {
+  exclude,
+  household = null,
+  random,
+}) {
+  const candidates = jobSelectionWeights(economy, physical, { exclude, household });
+  if (candidates.length === 0) return null;
+  const total = candidates.reduce((sum, [, weight]) => sum + weight * weight, 0);
+  let choice = random() * total;
+  for (const [job, weight] of candidates) {
+    choice -= weight * weight;
+    if (choice <= 0) return job;
+  }
+  return candidates[candidates.length - 1][0];
+}
+
+export function runPopulationDynamicsPhase(economy, physical, { day, random }) {
+  const changes = [];
+  if (day % 30 !== 0) return changes;
+  for (const household of economy.households) {
+    household.insolvM = household.purse < -2 ? (household.insolvM ?? 0) + 1 : 0;
+    household.hungerHist ??= [];
+    if (household.hungerHist.length > 180) {
+      household.hungerHist.splice(0, household.hungerHist.length - 180);
+    }
+    const distress = household.jobCycleDone && (
+      household.hungerHist.reduce((total, hungry) => total + hungry, 0) >= P.DISTRESS
+      || household.insolvM >= 3
+    );
+    if (household.insolvM >= 6 && household.purse < 0) {
+      const debt = -household.purse;
+      postCompanyLedger(economy.company, {
+        day,
+        amount: household.purse,
+        reason: `世帯${household.id}の徳政による貸し倒れ`,
+      });
+      household.purse = 0;
+      household.insolvM = 0;
+      changes.push({ kind: "debt_relief", householdId: household.id, debt });
+      recordEconomyEvent(economy, day, `${household.sur}家の借財を帳消しに(徳政)`);
+    }
+    if (
+      distress
+      && day - (household.lastSwitch || -9e9) >= P.COOLDOWN
+      && random() < 0.5
+    ) {
+      const previousJob = household.job;
+      const nextJob = pickHouseholdJob(economy, physical, {
+        exclude: previousJob,
+        household,
+        random,
+      });
+      if (nextJob && nextJob !== previousJob) {
+        if (household.purse < 0) {
+          const debt = -household.purse;
+          postCompanyLedger(economy.company, {
+            day,
+            amount: household.purse,
+            reason: `世帯${household.id}の転職徳政による貸し倒れ`,
+          });
+          household.purse = 0;
+          changes.push({ kind: "debt_relief", householdId: household.id, debt });
+        }
+        household.job = nextJob;
+        household.jobCycleDone = nextJob !== "wheat";
+        household.lv = Math.min(household.lv, 1);
+        household.lastSwitch = day;
+        household.hungerHist = [];
+        household.insolvM = 0;
+        changes.push({
+          kind: "job_switch",
+          householdId: household.id,
+          from: previousJob,
+          to: nextJob,
+        });
+        recordEconomyEvent(
+          economy,
+          day,
+          `破綻転職: ${previousJob}#${household.id}→${nextJob}`,
+        );
+      }
+    }
+  }
+  return changes;
 }
 
 export function runDayEnd(economy, physical, { day, random = () => 1, trace = [] }) {
@@ -1753,7 +2015,7 @@ export function runDayEnd(economy, physical, { day, random = () => 1, trace = []
   mark("birth");
   const births = runBirthPhase(economy, { day, random });
   mark("population_dynamics");
-  const population = runPopulationDynamicsPhase(economy, { day, random });
+  const population = runPopulationDynamicsPhase(economy, physical, { day, random });
   mark("company_finance");
   const finance = runCompanyFinance(economy, { day });
   mark("forest_regeneration");
@@ -1863,8 +2125,10 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     famine: 0,
     ruins: [],
     events: [],
+    traffic: {},
     currentDay: 0,
     natural: { bay: P.BAY0, bay2: P.BAY0, wood: {} },
+    grove: P.GROVE0,
     px: { ...P.BELIEF0 },
     stalls: Object.fromEntries(GOODS.map((goods) => [goods, []])),
     expCap: { ...P.EXP_CAP },
@@ -1883,9 +2147,10 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     },
     exported: {},
     imported: {},
-    outBy: {},
+    outBy: { pass: 0 },
     prices: Object.fromEntries(GOODS.map((goods) => [goods, []])),
     market: { x: 0, y: 0 },
+    port: null,
     stock: {},
     stockCost: {},
     stockTgt: {},
