@@ -8,46 +8,66 @@ import {
   localWood,
 } from "./econ.js";
 import {
+  ECONOMIC_BUILDINGS,
+  addBuilding,
   addRoadLine,
   assertCarrierInvariants,
   assertOccupancyInvariant,
+  canPlaceBuilding,
   createPhysicalState,
-  findLandRoadEntrance,
+  findBuildingSiteForEntrance,
   hasRoad,
   makeFlowIslandTerrain,
 } from "./physical.js";
-import { createWorld } from "./world.js";
+import { createWorld, ensureCompanyLogisticsSites } from "./world.js";
 
 export const AUDIT_SEEDS = Object.freeze([11, 13, 14]);
 
 export const AUDIT_BASE = Object.freeze([
-  ["fisher", 23, 32],
-  ["fisher", 27, 32],
-  ["veg", 22, 30],
-  ["wheat", 21, 28],
-  ["logger", 27, 26],
-  ["woodshop", 24, 30],
-  ["charburner", 26, 29],
-  ["saltworks", 26, 31],
-  ["shepherd", 24, 28],
-  ["veg", 22, 28],
-  ["fisher", 21, 33],
+  ["fisher", 17, 32, 16, 33],
+  ["fisher", 33, 32, 32, 33],
+  ["veg", 25, 27, 23, 23],
+  ["wheat", 18, 29, 14, 27],
+  ["logger", 34, 25, 35, 24],
+  ["woodshop", 24, 21, 23, 18],
+  ["charburner", 28, 21, 27, 18],
+  ["saltworks", 32, 21, 31, 18],
+  ["shepherd", 14, 32, 10, 31],
+  ["veg", 18, 30, 19, 29],
+  ["fisher", 35, 34, 36, 33],
 ]);
 
 export const E_STABLE_BASE = Object.freeze([
-  Object.freeze(["fisher", 23, 32]),
-  Object.freeze(["fisher", 27, 32]),
-  Object.freeze(["fisher", 21, 33]),
-  Object.freeze(["veg", 22, 30]),
-  Object.freeze(["veg", 22, 28]),
-  Object.freeze(["wheat", 21, 28]),
-  Object.freeze(["wheat", 28, 30]),
-  Object.freeze(["logger", 27, 26]),
-  Object.freeze(["woodshop", 24, 30]),
-  Object.freeze(["charburner", 26, 29]),
-  Object.freeze(["saltworks", 26, 31]),
-  Object.freeze(["shepherd", 24, 28]),
-  Object.freeze(["rapeseed", 29, 28]),
+  Object.freeze(["fisher", 17, 32, 16, 33]),
+  Object.freeze(["fisher", 33, 32, 32, 33]),
+  Object.freeze(["fisher", 35, 34, 36, 33]),
+  Object.freeze(["veg", 25, 27, 23, 23]),
+  Object.freeze(["veg", 18, 30, 19, 29]),
+  Object.freeze(["wheat", 18, 29, 14, 27]),
+  Object.freeze(["wheat", 40, 27, 39, 23]),
+  Object.freeze(["logger", 34, 25, 35, 24]),
+  Object.freeze(["woodshop", 24, 21, 23, 18]),
+  Object.freeze(["charburner", 28, 21, 27, 18]),
+  Object.freeze(["saltworks", 32, 21, 31, 18]),
+  Object.freeze(["shepherd", 14, 32, 10, 31]),
+  Object.freeze(["rapeseed", 22, 27, 19, 23]),
+]);
+
+export const AUDIT_LOGISTICS_SITES = Object.freeze({
+  market: Object.freeze({ x: 23, y: 29, entrance: Object.freeze({ x: 25, y: 28 }) }),
+  warehouse: Object.freeze({ x: 29, y: 29, entrance: Object.freeze({ x: 28, y: 30 }) }),
+  port: Object.freeze({ x: 28, y: 33, entrance: Object.freeze({ x: 28, y: 32 }) }),
+});
+
+export const AUDIT_ROAD_POLYLINES = Object.freeze([
+  Object.freeze([[25, 28], [25, 27], [22, 27]]),
+  Object.freeze([[25, 27], [40, 27]]),
+  Object.freeze([[25, 28], [18, 28], [18, 31], [14, 31], [14, 32]]),
+  Object.freeze([[18, 31], [17, 32]]),
+  Object.freeze([[18, 28], [18, 21], [32, 21]]),
+  Object.freeze([[34, 27], [34, 25]]),
+  Object.freeze([[33, 27], [33, 32], [35, 32], [35, 34]]),
+  Object.freeze([[25, 28], [28, 28], [28, 32]]),
 ]);
 
 export const E_STABLE_JOBS = Object.freeze([
@@ -70,18 +90,13 @@ const LEGACY_AUDIT_JOBS = Object.freeze([
 ]);
 
 export const IRON_AUDIT_SITES = Object.freeze([
-  Object.freeze({ job: "miner", x: 12, y: 20, roadTarget: Object.freeze({ x: 13, y: 20 }) }),
-  Object.freeze({ job: "collier", x: 7, y: 30, roadTarget: Object.freeze({ x: 8, y: 30 }) }),
-  Object.freeze({ job: "smelter", x: 28, y: 30 }),
-  Object.freeze({ job: "smith", x: 29, y: 32 }),
+  Object.freeze({ job: "miner", x: 8, y: 25, buildingX: 5, buildingY: 23, roadTarget: Object.freeze({ x: 8, y: 25 }) }),
+  Object.freeze({ job: "collier", x: 5, y: 30, buildingX: 4, buildingY: 31, roadTarget: Object.freeze({ x: 5, y: 30 }) }),
+  Object.freeze({ job: "smelter", x: 41, y: 25, buildingX: 38, buildingY: 24 }),
+  Object.freeze({ job: "smith", x: 41, y: 29, buildingX: 38, buildingY: 28 }),
 ]);
 const IRON_AUDIT_START_DAY = 720;
 const IRON_DEMAND_HOUSEHOLDS = 8;
-
-export const AUDIT_ROAD_TARGETS = Object.freeze([
-  Object.freeze({ x: 27, y: 26 }),
-  Object.freeze({ x: 21, y: 28 }),
-]);
 
 function terrainKind(physical, x, y) {
   if (x < 0 || y < 0 || x >= physical.width || y >= physical.height) return undefined;
@@ -100,6 +115,25 @@ function nearTerrain(physical, x, y, kind, radius = 2) {
   return false;
 }
 
+function siteOverlapsReservation(economy, job, entrance, site) {
+  const definition = ECONOMIC_BUILDINGS[job];
+  if (!definition) return false;
+  return (economy.reservedBuildingSites ?? []).some((reserved) => {
+    if (
+      reserved.job === job
+      && reserved.x === entrance.x
+      && reserved.y === entrance.y
+      && reserved.buildingX === site.x
+      && reserved.buildingY === site.y
+    ) return false;
+    const reservedDefinition = ECONOMIC_BUILDINGS[reserved.job];
+    return site.x < reserved.buildingX + reservedDefinition.w
+      && site.x + definition.w > reserved.buildingX
+      && site.y < reserved.buildingY + reservedDefinition.h
+      && site.y + definition.h > reserved.buildingY;
+  });
+}
+
 export function canPlaceSettlement(economy, physical, job, x, y) {
   const roundedX = Math.round(x);
   const roundedY = Math.round(y);
@@ -111,10 +145,9 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
       (household) => Math.round(household.x) === roundedX && Math.round(household.y) === roundedY,
     )
   ) return [false, "この土地には既に建物があります"];
-  if (
-    hasRoad(physical, roundedX, roundedY)
-    || physical.roadWorksites.some((site) => site.x === roundedX && site.y === roundedY)
-  ) return [false, "道の上には建てられません"];
+  if (physical.roadWorksites.some((site) => site.x === roundedX && site.y === roundedY)) {
+    return [false, "普請中の入口には建てられません"];
+  }
   if (Math.round(economy.market.x) === roundedX && Math.round(economy.market.y) === roundedY) {
     return [false, "ここは市場です"];
   }
@@ -136,23 +169,63 @@ export function canPlaceSettlement(economy, physical, job, x, y) {
   if (job === "collier" && !nearTerrain(physical, x, y, "coal", 2)) {
     return [false, "炭鉱夫は炭層の2マス以内でないと立ち行きません"];
   }
+  const site = findBuildingSiteForEntrance(physical, job, { x: roundedX, y: roundedY }, {
+    definitions: ECONOMIC_BUILDINGS,
+    toward: economy.market,
+  });
+  if (!site) return [false, "実寸フットプリントを確保できません"];
+  if (siteOverlapsReservation(economy, job, { x: roundedX, y: roundedY }, site)) {
+    return [false, "将来区画の予約地です"];
+  }
   return [true, ""];
 }
 
-export function addAuditZone(world, job, x, y) {
-  return fundSettlementZone(world.state.economy, {
+function settlementBuildingSite(world, job, x, y, preferredOrigin = null) {
+  const { economy, physical } = world.state;
+  if (preferredOrigin) {
+    const check = canPlaceBuilding(physical, job, preferredOrigin.x, preferredOrigin.y, {
+      definitions: ECONOMIC_BUILDINGS,
+      entrance: { x, y },
+      requireRoad: false,
+    });
+    if (
+      check.ok
+      && !siteOverlapsReservation(economy, job, { x, y }, preferredOrigin)
+    ) return preferredOrigin;
+    return null;
+  }
+  const site = findBuildingSiteForEntrance(physical, job, { x, y }, {
+    definitions: ECONOMIC_BUILDINGS,
+    toward: economy.market,
+  });
+  return site && !siteOverlapsReservation(economy, job, { x, y }, site) ? site : null;
+}
+
+export function addAuditZone(world, job, x, y, buildingX = null, buildingY = null) {
+  const { economy, physical } = world.state;
+  const preferred = Number.isSafeInteger(buildingX) && Number.isSafeInteger(buildingY)
+    ? { x: buildingX, y: buildingY }
+    : null;
+  const site = settlementBuildingSite(world, job, x, y, preferred);
+  if (!site) return false;
+  const funded = fundSettlementZone(economy, {
     job,
     x,
     y,
     day: world.state.day,
-    canPlace: (candidateJob, candidateX, candidateY) => canPlaceSettlement(
-      world.state.economy,
-      world.state.physical,
-      candidateJob,
-      candidateX,
-      candidateY,
-    ),
+    canPlace: () => [true, ""],
   });
+  if (!funded) return false;
+  const input = Object.fromEntries(GOODS.map((goods) => [goods, Number.MAX_SAFE_INTEGER]));
+  const placed = addBuilding(physical, job, site.x, site.y, {
+    definitions: ECONOMIC_BUILDINGS,
+    entrance: { x, y },
+    requireRoad: false,
+    caps: { input },
+  });
+  if (!placed.ok) throw new Error(`区画建物の配置不可: ${job}@${x},${y}/${placed.reason}`);
+  economy.zones.at(-1).buildingId = placed.building.id;
+  return true;
 }
 
 function createAuditCity(seed, layout) {
@@ -164,23 +237,26 @@ function createAuditCity(seed, layout) {
   const world = createWorld({
     seed,
     physicalState: physical,
-    market: { x: 25, y: 32 },
-    port: { x: 25, y: 35 },
+    market: { ...AUDIT_LOGISTICS_SITES.market.entrance },
+    warehouse: { ...AUDIT_LOGISTICS_SITES.warehouse.entrance },
+    port: { ...AUDIT_LOGISTICS_SITES.port.entrance },
+    logisticsSites: AUDIT_LOGISTICS_SITES,
   });
+  ensureCompanyLogisticsSites(world.state.economy, physical);
   world.state.economy.jobSelectionPool = [...LEGACY_AUDIT_JOBS];
-  for (const [job, x, y] of layout) {
-    if (!addAuditZone(world, job, x, y)) {
+  for (const [job, x, y, buildingX, buildingY] of layout) {
+    if (!addAuditZone(world, job, x, y, buildingX, buildingY)) {
       throw new Error(`基準村の配置不可: ${job}@${x},${y}`);
     }
   }
-  const roadTargets = [
-    ...AUDIT_ROAD_TARGETS,
-    findLandRoadEntrance(physical, world.state.economy.port, world.state.economy.market),
-  ];
-  for (const target of roadTargets) {
-    const road = target && addRoadLine(physical, world.state.economy.market, target);
-    if (!road?.ok && !road?.cells?.every(({ x, y }) => hasRoad(physical, x, y))) {
-      throw new Error(`基準村の道路敷設不可: ${target?.x},${target?.y}`);
+  for (const polyline of AUDIT_ROAD_POLYLINES) {
+    for (let index = 1; index < polyline.length; index += 1) {
+      const [fromX, fromY] = polyline[index - 1];
+      const [toX, toY] = polyline[index];
+      const road = addRoadLine(physical, { x: fromX, y: fromY }, { x: toX, y: toY });
+      if (!road.ok && !road.cells.every(({ x, y }) => hasRoad(physical, x, y))) {
+        throw new Error(`基準村の道路敷設不可: ${fromX},${fromY}→${toX},${toY}`);
+      }
     }
   }
   return world;
@@ -201,16 +277,22 @@ function placeIronAuditHouseholds(world) {
     ...IRON_AUDIT_SITES.map(({ job }) => job),
   ];
   for (const site of IRON_AUDIT_SITES) {
-    let { x, y } = site;
+    let { x, y, buildingX, buildingY } = site;
     if (!canPlaceSettlement(economy, world.state.physical, site.job, x, y)[0] && !site.roadTarget) {
       const fallback = findAuditSpot(world, site.job);
-      if (fallback) [x, y] = fallback;
+      if (fallback) {
+        [x, y] = fallback;
+        buildingX = null;
+        buildingY = null;
+      }
     }
-    if (!addAuditZone(world, site.job, x, y)) {
+    if (!addAuditZone(world, site.job, x, y, buildingX, buildingY)) {
       throw new Error(`鉄監査の配置不可: ${site.job}@${x},${y}`);
     }
-    economy.zones.at(-1).filled = true;
-    createHousehold(economy, { job: site.job, x, y });
+    const zone = economy.zones.at(-1);
+    zone.filled = true;
+    const household = createHousehold(economy, { job: site.job, x, y });
+    household.buildingId = zone.buildingId;
   }
 }
 
@@ -220,12 +302,30 @@ export function createIronAuditWorld(
 ) {
   const world = createAuditWorld(seed);
   const { economy, physical } = world.state;
+  economy.reservedBuildingSites = IRON_AUDIT_SITES.map((site) => ({ ...site }));
+  for (const [from, to] of [
+    [{ x: 40, y: 27 }, { x: 41, y: 27 }],
+    [{ x: 41, y: 27 }, { x: 41, y: 25 }],
+    [{ x: 41, y: 27 }, { x: 41, y: 29 }],
+  ]) {
+    const road = addRoadLine(physical, from, to);
+    if (!road.ok && !road.cells.every((cell) => hasRoad(physical, cell.x, cell.y))) {
+      throw new Error(`鉄監査の町内道路敷設不可: ${to.x},${to.y}`);
+    }
+  }
   if (depositRoads) {
-    for (const { roadTarget } of IRON_AUDIT_SITES) {
-      if (!roadTarget) continue;
-      const road = addRoadLine(physical, economy.market, roadTarget);
-      if (!road.ok && !road.cells.every((cell) => hasRoad(physical, cell.x, cell.y))) {
-        throw new Error(`鉄監査の鉱床道路敷設不可: ${roadTarget.x},${roadTarget.y}`);
+    const depositPolylines = [
+      [[8, 25], [13, 26], [13, 30], [14, 31]],
+      [[5, 30], [13, 30]],
+    ];
+    for (const polyline of depositPolylines) {
+      for (let index = 1; index < polyline.length; index += 1) {
+        const [fromX, fromY] = polyline[index - 1];
+        const [toX, toY] = polyline[index];
+        const road = addRoadLine(physical, { x: fromX, y: fromY }, { x: toX, y: toY });
+        if (!road.ok && !road.cells.every((cell) => hasRoad(physical, cell.x, cell.y))) {
+          throw new Error(`鉄監査の鉱床道路敷設不可: ${toX},${toY}`);
+        }
       }
     }
   }
@@ -890,10 +990,9 @@ export function runFlowIslandAudit() {
       (incomeByJob[household.job] ??= []).push((household.incY ?? 0) * 10);
     }
   }
-  const legacyAuditJobs = new Set(LEGACY_AUDIT_JOBS);
-  for (const [job, incomes] of Object.entries(incomeByJob)) {
-    if (!legacyAuditJobs.has(job)) continue;
-    const best = Math.max(...incomes);
+  for (const job of E_STABLE_JOBS) {
+    const incomes = incomeByJob[job] ?? [];
+    const best = incomes.length > 0 ? Math.max(...incomes) : 0;
     addResult(results, `E2-${job}`, `${job}が稼げる`, best > 2000, `最良世帯の年間収入${Math.round(best)}デナリ`);
   }
 

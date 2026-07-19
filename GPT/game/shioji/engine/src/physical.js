@@ -44,13 +44,39 @@ export const V003_BUILDINGS = Object.freeze({
     caps: { storage: { log: 40, boards: 40, food: 30, tools: 20, stone: 30 } },
   },
 });
+
+const ECONOMIC_LAND = Object.freeze(["grass", "sand"]);
+const ECONOMIC_JOB_BUILDINGS = Object.freeze({
+  fisher: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  fisher2: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  logger: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  woodshop: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  charburner: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  saltworks: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  quarryman: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  miner: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  collier: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  smelter: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  smith: { category: "production", w: 3, h: 3, allowedTerrain: ECONOMIC_LAND },
+  wheat: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+  veg: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+  shepherd: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+  rapeseed: { category: "production", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+});
+
+export const ECONOMIC_BUILDINGS = Object.freeze({
+  ...ECONOMIC_JOB_BUILDINGS,
+  market: { category: "fixed", w: 5, h: 5, allowedTerrain: ECONOMIC_LAND },
+  warehouse: { category: "logistics", w: 4, h: 4, allowedTerrain: ECONOMIC_LAND },
+  port: { category: "fixed", w: 4, h: 3, shore: true },
+});
 export const V003_INITIAL_ROADS = Object.freeze([
   [6, 15], [7, 15], [8, 15], [9, 15],
   [10, 14], [11, 13], [12, 12], [13, 11],
 ]);
 
 export const INVENTORY_SECTIONS = Object.freeze([
-  "input", "output", "storage", "construction", "inbound", "outbound",
+  "input", "output", "storage", "construction", "inbound", "outbound", "pickup",
 ]);
 
 export const keyOf = (x, y) => `${x},${y}`;
@@ -133,6 +159,8 @@ export function createPhysicalState({
     nextHaulJobId: 1,
     nextCarrierId: 1,
     tick: 0,
+    portCalls: [],
+    nextPortCallId: 1,
     groundPiles: [],
     nextGroundPileId: 1,
   };
@@ -248,6 +276,7 @@ export function roadPath(roadsOrPhysical, start, goal) {
 export function tileTravelCost(physical, x, y, mode = "walk") {
   if (mode !== "walk" && mode !== "cart") throw new Error(`unknown travel mode: ${mode}`);
   if (!inside(physical, x, y) || terrainAt(physical, x, y).kind === "water") return Infinity;
+  if (physical.occupied[keyOf(x, y)]) return Infinity;
   const road = hasRoad(physical, x, y);
   if (mode === "cart") return road ? 0.6 : Infinity;
   if (road) return 0.6;
@@ -486,13 +515,86 @@ export function findEntrance(physical, type, x, y, definitions = V003_BUILDINGS)
   return candidates[0] ?? null;
 }
 
+export function isPerimeterEntrance(x, y, width, height, entrance) {
+  if (!Number.isSafeInteger(entrance?.x) || !Number.isSafeInteger(entrance?.y)) return false;
+  return perimeterTiles(x, y, width, height)
+    .some((tile) => tile.x === entrance.x && tile.y === entrance.y);
+}
+
+export function findBuildingSiteForEntrance(
+  physical,
+  type,
+  entrance,
+  {
+    definitions = ECONOMIC_BUILDINGS,
+    toward = null,
+    preferredOrigin = null,
+    fixed = false,
+  } = {},
+) {
+  const definition = definitions[type];
+  if (!definition) return null;
+  const origins = new Map();
+  for (let x = entrance.x - definition.w + 1; x <= entrance.x; x += 1) {
+    for (const y of [entrance.y + 1, entrance.y - definition.h]) {
+      origins.set(keyOf(x, y), { x, y });
+    }
+  }
+  for (let y = entrance.y - definition.h + 1; y <= entrance.y; y += 1) {
+    for (const x of [entrance.x + 1, entrance.x - definition.w]) {
+      origins.set(keyOf(x, y), { x, y });
+    }
+  }
+  const candidates = [...origins.values()].filter(({ x, y }) => canPlaceBuilding(
+    physical,
+    type,
+    x,
+    y,
+    { definitions, entrance, requireRoad: false, fixed },
+  ).ok);
+  candidates.sort((a, b) => {
+    const preferredA = preferredOrigin && a.x === preferredOrigin.x && a.y === preferredOrigin.y ? 0 : 1;
+    const preferredB = preferredOrigin && b.x === preferredOrigin.x && b.y === preferredOrigin.y ? 0 : 1;
+    if (preferredA !== preferredB) return preferredA - preferredB;
+    if (toward) {
+      const centerA = { x: a.x + (definition.w - 1) / 2, y: a.y + (definition.h - 1) / 2 };
+      const centerB = { x: b.x + (definition.w - 1) / 2, y: b.y + (definition.h - 1) / 2 };
+      const direction = { x: toward.x - entrance.x, y: toward.y - entrance.y };
+      const facingA = (centerA.x - entrance.x) * direction.x
+        + (centerA.y - entrance.y) * direction.y;
+      const facingB = (centerB.x - entrance.x) * direction.x
+        + (centerB.y - entrance.y) * direction.y;
+      if (facingA !== facingB) return facingA - facingB;
+    }
+    return a.y - b.y || a.x - b.x;
+  });
+  return candidates[0] ?? null;
+}
+
 export function canPlaceBuilding(physical, type, x, y, options = {}) {
   const definitions = options.definitions ?? V003_BUILDINGS;
   const definition = definitions[type];
   if (!definition) return { ok: false, reason: "unknown-building" };
   if (definition.category === "fixed" && !options.fixed) return { ok: false, reason: "fixed-building" };
+  if (!Number.isSafeInteger(x) || !Number.isSafeInteger(y)) {
+    return { ok: false, reason: "invalid-position" };
+  }
   const tiles = footprintTiles(type, x, y, definitions);
-  if (tiles.some((tile) => !isLand(physical, tile.x, tile.y))) return { ok: false, reason: "not-land" };
+  if (tiles.some((tile) => !inside(physical, tile.x, tile.y))) {
+    return { ok: false, reason: "out-of-bounds" };
+  }
+  if (definition.shore) {
+    const landCount = tiles.filter((tile) => isLand(physical, tile.x, tile.y)).length;
+    if (landCount === 0 || landCount === tiles.length) {
+      return { ok: false, reason: "shore-required" };
+    }
+  } else if (definition.allowedTerrain && tiles.some((tile) => (
+    !definition.allowedTerrain.includes(terrainAt(physical, tile.x, tile.y).kind)
+  ))) {
+    return { ok: false, reason: "terrain-blocked" };
+  } else if (tiles.some((tile) => !isLand(physical, tile.x, tile.y))) {
+    return { ok: false, reason: "not-land" };
+  }
   if (tiles.some((tile) => hasRoad(physical, tile.x, tile.y))) return { ok: false, reason: "road-overlap" };
   if (tiles.some((tile) => physical.occupied[keyOf(tile.x, tile.y)])) return { ok: false, reason: "building-overlap" };
   if (definition.forestMin) {
@@ -500,6 +602,16 @@ export function canPlaceBuilding(physical, type, x, y, options = {}) {
     if (forest < definition.forestMin) return { ok: false, reason: "forest-required" };
   }
   const entrance = options.entrance ?? findEntrance(physical, type, x, y, definitions);
+  if (
+    entrance
+    && !isPerimeterEntrance(x, y, definition.w, definition.h, entrance)
+  ) return { ok: false, reason: "invalid-entrance" };
+  if (entrance && !isLand(physical, entrance.x, entrance.y)) {
+    return { ok: false, reason: "entrance-not-land" };
+  }
+  if (entrance && physical.occupied[keyOf(entrance.x, entrance.y)]) {
+    return { ok: false, reason: "entrance-blocked" };
+  }
   if (options.requireRoad !== false && !entrance) return { ok: false, reason: "road-required" };
   return { ok: true, entrance };
 }
@@ -517,10 +629,13 @@ export function addBuilding(physical, type, x, y, options = {}) {
     w: definition.w,
     h: definition.h,
     entrance: options.entrance ?? check.entrance ?? null,
+    role: options.role ?? null,
+    roles: [...new Set(options.roles ?? (options.role ? [options.role] : []))],
+    ownerHouseholdId: options.ownerHouseholdId ?? null,
     fixed: Boolean(options.fixed),
     grade: options.grade ?? 0,
     inventory: createSectionInventory(),
-    caps: structuredClone(definition.caps ?? {}),
+    caps: structuredClone(options.caps ?? definition.caps ?? {}),
   };
   physical.nextBuildingId += 1;
   physical.buildings.push(building);
@@ -528,54 +643,118 @@ export function addBuilding(physical, type, x, y, options = {}) {
   for (const tile of footprintTiles(type, x, y, definitions)) {
     physical.occupied[keyOf(tile.x, tile.y)] = building.id;
   }
+  for (const role of building.roles) physical.roleBuildingIds[role] = building.id;
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
   return { ok: true, building };
 }
 
-export function createPointBuilding(
+export function removeBuilding(physical, buildingOrId) {
+  const building = typeof buildingOrId === "string"
+    ? buildingById(physical, buildingOrId)
+    : buildingOrId;
+  if (!building) return false;
+  const active = activeHaulJobs(physical).some((job) => (
+    job.from.buildingId === building.id || job.to.buildingId === building.id
+  ));
+  if (active) throw new Error(`運搬中の建物は撤去できません: ${building.id}`);
+  const stored = INVENTORY_SECTIONS.some((section) => (
+    Object.values(building.inventory[section]).some((qty) => qty > 1e-9)
+  ));
+  if (stored) throw new Error(`在庫のある建物は撤去できません: ${building.id}`);
+  for (let tileY = building.y; tileY < building.y + building.h; tileY += 1) {
+    for (let tileX = building.x; tileX < building.x + building.w; tileX += 1) {
+      delete physical.occupied[keyOf(tileX, tileY)];
+    }
+  }
+  const index = physical.buildings.findIndex((candidate) => candidate.id === building.id);
+  physical.buildings.splice(index, 1);
+  delete physical.buildingIndex[building.id];
+  for (let nextIndex = index; nextIndex < physical.buildings.length; nextIndex += 1) {
+    physical.buildingIndex[physical.buildings[nextIndex].id] = nextIndex;
+  }
+  for (const [role, buildingId] of Object.entries(physical.roleBuildingIds)) {
+    if (buildingId === building.id) delete physical.roleBuildingIds[role];
+  }
+  physical.travelRevision = (physical.travelRevision ?? 0) + 1;
+  return true;
+}
+
+export function dockVessel(
   physical,
-  {
-    type,
-    x,
-    y,
-    entrance = null,
-    role = null,
-    ownerHouseholdId = null,
-    caps = {},
-  },
+  { portBuildingId = physical.roleBuildingIds?.port, direction, goods, qty, metadata = {} },
 ) {
-  if (typeof type !== "string" || type.length === 0) {
-    throw new TypeError("point building type must be a non-empty string");
+  const port = buildingById(physical, portBuildingId);
+  if (!port || port.type !== "port") throw new Error("接岸先の港がありません");
+  if (direction !== "export" && direction !== "import") {
+    throw new Error(`unknown port transfer direction: ${direction}`);
   }
-  if (!Number.isFinite(x) || !Number.isFinite(y)) {
-    throw new TypeError("point building position must be finite");
+  if (typeof goods !== "string" || !Number.isFinite(qty) || qty <= 0) {
+    throw new TypeError("port transfer goods/qty must be positive");
   }
-  if (
-    entrance !== null
-    && (!Number.isFinite(entrance?.x) || !Number.isFinite(entrance?.y))
-  ) throw new TypeError("point building entrance must be finite");
-  const building = {
-    id: `b${physical.nextBuildingId}`,
-    type,
-    role,
-    ownerHouseholdId,
-    x: Math.round(x),
-    y: Math.round(y),
-    w: 0,
-    h: 0,
-    entrance: entrance === null
-      ? { x: Math.round(x), y: Math.round(y) }
-      : { x: Math.round(entrance.x), y: Math.round(entrance.y) },
-    fixed: role !== null,
-    grade: 0,
-    point: true,
-    inventory: createSectionInventory(),
-    caps: structuredClone(caps),
+  const call = {
+    id: `pc${physical.nextPortCallId}`,
+    portBuildingId: port.id,
+    direction,
+    goods,
+    qty,
+    remaining: qty,
+    transferred: 0,
+    vesselCargo: direction === "import" ? qty : 0,
+    status: "docked",
+    metadata: structuredClone(metadata),
   };
-  physical.nextBuildingId += 1;
-  physical.buildings.push(building);
-  physical.buildingIndex[building.id] = physical.buildings.length - 1;
-  if (role !== null) physical.roleBuildingIds[role] = building.id;
-  return building;
+  physical.nextPortCallId += 1;
+  physical.portCalls.push(call);
+  return call;
+}
+
+export function portCallById(physical, callId) {
+  return physical.portCalls.find((call) => call.id === callId) ?? null;
+}
+
+export function stepPortHandling(physical, ticks = 1) {
+  if (!Number.isSafeInteger(ticks) || ticks < 0) {
+    throw new TypeError("port handling ticks must be a non-negative safe integer");
+  }
+  const transfers = [];
+  for (let tick = 0; tick < ticks; tick += 1) {
+    const call = physical.portCalls.find((candidate) => (
+      candidate.status === "docked"
+      && candidate.remaining > 1e-9
+      && (candidate.direction === "import" || candidate.metadata?.yardReady === true)
+    ));
+    if (!call) break;
+    const port = buildingById(physical, call.portBuildingId);
+    const section = call.direction === "export" ? "outbound" : "inbound";
+    let qty = Math.min(1, call.remaining);
+    if (call.direction === "export") {
+      qty = Math.min(qty, sectionAmount(port, section, call.goods));
+      if (qty <= 1e-9) continue;
+      withdrawInventory(port, section, call.goods, qty);
+      call.vesselCargo += qty;
+    } else {
+      qty = Math.min(qty, call.vesselCargo);
+      if (qty <= 1e-9) continue;
+      depositInventory(port, section, call.goods, qty);
+      call.vesselCargo -= qty;
+    }
+    call.remaining -= qty;
+    call.transferred += qty;
+    if (call.remaining <= 1e-9) {
+      call.remaining = 0;
+      call.status = "completed";
+    }
+    transfers.push({
+      callId: call.id,
+      portBuildingId: port.id,
+      direction: call.direction,
+      goods: call.goods,
+      qty,
+      completed: call.status === "completed",
+      metadata: call.metadata,
+    });
+  }
+  return transfers;
 }
 
 export function createSectionInventory() {
@@ -937,6 +1116,12 @@ export function materialSnapshot(physical) {
 export function assertOccupancyInvariant(physical) {
   const expected = {};
   for (const building of physical.buildings) {
+    if (!(building.w > 0) || !(building.h > 0) || building.point) {
+      throw new Error(`点建物または無寸法建物が残っています: ${building.id}`);
+    }
+    if (!isPerimeterEntrance(building.x, building.y, building.w, building.h, building.entrance)) {
+      throw new Error(`建物入口が外周にありません: ${building.id}`);
+    }
     for (let y = building.y; y < building.y + building.h; y += 1) {
       for (let x = building.x; x < building.x + building.w; x += 1) {
         const key = keyOf(x, y);

@@ -19,21 +19,24 @@ import {
   runDayEnd,
   sellOffers,
   settleCompanyLogistics,
+  settlePortTransfers,
   transactMarketCargo,
   unloadMarketBuyCargo,
 } from "./econ.js";
 import {
+  ECONOMIC_BUILDINGS,
+  addBuilding,
   buildingById,
-  createPointBuilding,
   createWalkCarrier,
   createPhysicalState,
   depositInventory,
-  findLandRoadEntrance,
+  findBuildingSiteForEntrance,
   hasRoad,
   keyOf,
   routeTravelCarrier,
   stepTravelCarrier,
   stepHaulCarriers,
+  stepPortHandling,
 } from "./physical.js";
 import { nextMulberry32, normalizeSeed } from "./prng.js";
 
@@ -72,32 +75,56 @@ function finishMarketTrip(physical, household) {
   household.marketCarrier.cargo = null;
   household.marketCarrier = null;
   household.marketTransactionTicks = 0;
-  household.px = household.x;
-  household.py = household.y;
+  const home = householdEntrance(physical, household);
+  household.px = home.x;
+  household.py = home.y;
   household.state = "home";
 }
 
-const ECONOMIC_POINT_CAPACITY = Number.MAX_SAFE_INTEGER;
+const ECONOMIC_BUILDING_CAPACITY = Number.MAX_SAFE_INTEGER;
 
-function pointCaps(...sections) {
+function buildingCaps(...sections) {
   return Object.fromEntries(sections.map((section) => [
     section,
-    Object.fromEntries(GOODS.map((goods) => [goods, ECONOMIC_POINT_CAPACITY])),
+    Object.fromEntries(GOODS.map((goods) => [goods, ECONOMIC_BUILDING_CAPACITY])),
   ]));
 }
 
+function householdEntrance(physical, household) {
+  return buildingById(physical, household.buildingId)?.entrance
+    ?? tilePosition(household);
+}
+
+function logisticsEntrance(physical, role, fallback) {
+  return buildingById(physical, physical.roleBuildingIds?.[role])?.entrance
+    ?? tilePosition(fallback);
+}
+
 export function ensureCompanyLogisticsSites(economy, physical) {
-  const ensure = (role, type, position, sections, entrance = null) => {
+  const ensure = (role, type, position, sections, roles = [role]) => {
     let building = buildingById(physical, physical.roleBuildingIds?.[role]);
     if (building || !position) return building;
-    building = createPointBuilding(physical, {
-      type,
-      role,
-      x: position.x,
-      y: position.y,
+    const planned = economy.logisticsSites?.[role] ?? {};
+    const entrance = planned.entrance ?? position;
+    const origin = Number.isSafeInteger(planned.x) && Number.isSafeInteger(planned.y)
+      ? { x: planned.x, y: planned.y }
+      : findBuildingSiteForEntrance(physical, type, entrance, {
+        definitions: ECONOMIC_BUILDINGS,
+        toward: economy.market,
+        fixed: type === "market" || type === "port",
+      });
+    if (!origin) throw new Error(`${role}の実寸フットプリントを配置できません`);
+    const placed = addBuilding(physical, type, origin.x, origin.y, {
+      definitions: ECONOMIC_BUILDINGS,
+      fixed: type === "market" || type === "port",
+      requireRoad: false,
       entrance,
-      caps: pointCaps(...sections),
+      role,
+      roles,
+      caps: buildingCaps(...sections),
     });
+    if (!placed.ok) throw new Error(`${role}の配置不可: ${placed.reason}`);
+    building = placed.building;
     if (role === "market") {
       for (const goods of GOODS) {
         const stalls = economy.stalls[goods]
@@ -113,10 +140,20 @@ export function ensureCompanyLogisticsSites(economy, physical) {
     }
     return building;
   };
-  const market = ensure("market", "market", economy.market, ["inbound", "outbound"]);
-  const warehouse = ensure("warehouse", "warehouse", economy.market, ["storage"]);
-  const portEntrance = findLandRoadEntrance(physical, economy.port, economy.market);
-  const port = ensure("port", "port", economy.port, ["inbound", "outbound"], portEntrance);
+  const market = ensure("market", "market", economy.market, ["inbound", "outbound", "pickup"]);
+  const warehouse = ensure(
+    "warehouse",
+    "warehouse",
+    economy.warehouse ?? economy.market,
+    ["storage"],
+  );
+  const port = ensure(
+    "port",
+    "port",
+    economy.port,
+    ["inbound", "outbound"],
+    ["port", "trade_port"],
+  );
   return { market, warehouse, port };
 }
 
@@ -124,13 +161,21 @@ export function ensureHouseholdInputSites(economy, physical) {
   for (const household of economy.households) {
     let building = buildingById(physical, household.buildingId);
     if (!building) {
-      building = createPointBuilding(physical, {
-        type: household.job,
-        x: household.x,
-        y: household.y,
-        ownerHouseholdId: household.id,
-        caps: pointCaps("input"),
+      const entrance = tilePosition(household);
+      const origin = findBuildingSiteForEntrance(physical, household.job, entrance, {
+        definitions: ECONOMIC_BUILDINGS,
+        toward: economy.market,
       });
+      if (!origin) throw new Error(`世帯${household.id}の実寸フットプリントを配置できません`);
+      const placed = addBuilding(physical, household.job, origin.x, origin.y, {
+        definitions: ECONOMIC_BUILDINGS,
+        requireRoad: false,
+        entrance,
+        ownerHouseholdId: household.id,
+        caps: buildingCaps("input"),
+      });
+      if (!placed.ok) throw new Error(`世帯${household.id}の配置不可: ${placed.reason}`);
+      building = placed.building;
       household.buildingId = building.id;
       for (const goods of GOODS) {
         if (!isProductionInput(household, goods)) continue;
@@ -140,7 +185,6 @@ export function ensureHouseholdInputSites(economy, physical) {
         depositInventory(building, "input", goods, qty);
       }
     }
-    building.type = household.job;
     building.ownerHouseholdId = household.id;
   }
 }
@@ -156,7 +200,7 @@ export function beginMarketTrip(economy, physical, household) {
   const carrier = createWalkCarrier(physical, { people: household.members.length });
   carrier.cargo = household.cargo;
   const start = household.state === "home"
-    ? tilePosition(household)
+    ? householdEntrance(physical, household)
     : Number.isFinite(household.wx) && Number.isFinite(household.wy)
       ? tilePosition({ x: household.wx, y: household.wy })
       : tilePosition({ x: household.px, y: household.py });
@@ -164,7 +208,7 @@ export function beginMarketTrip(economy, physical, household) {
     physical,
     carrier,
     start,
-    tilePosition(economy.market),
+    logisticsEntrance(physical, "market", economy.market),
   );
   household.px = start.x;
   household.py = start.y;
@@ -180,8 +224,9 @@ export function beginMarketTrip(economy, physical, household) {
 export function stepMarketTrip(economy, physical, household, { day, random }) {
   if (household.state === "toMarket") {
     if (stepTravelCarrier(physical, household.marketCarrier)) {
-      household.px = economy.market.x;
-      household.py = economy.market.y;
+      const market = logisticsEntrance(physical, "market", economy.market);
+      household.px = market.x;
+      household.py = market.y;
       household.state = "atMarket";
     } else syncHouseholdToCarrier(economy, household);
     return false;
@@ -194,8 +239,8 @@ export function stepMarketTrip(economy, physical, household, { day, random }) {
     routeTravelCarrier(
       physical,
       household.marketCarrier,
-      tilePosition(economy.market),
-      tilePosition(household),
+      logisticsEntrance(physical, "market", economy.market),
+      householdEntrance(physical, household),
     );
     if (household.marketCarrier.routeCost === 0) {
       finishMarketTrip(physical, household);
@@ -270,13 +315,17 @@ export function createWorld({
   initialCompanyMoney = P.TREASURY0,
   physicalState = null,
   market = null,
+  warehouse = null,
   port = null,
+  logisticsSites = null,
 } = {}) {
   const normalizedSeed = normalizeSeed(seed);
   const physical = physicalState ?? createPhysicalState();
   const economy = createEconomicState({ initialCompanyMoney });
-  if (market) economy.market = { ...market };
+  economy.market = market ? { ...market } : { x: 8, y: 15 };
+  economy.warehouse = warehouse ? { ...warehouse } : { x: 10, y: 15 };
   if (port) economy.port = { ...port };
+  if (logisticsSites) economy.logisticsSites = structuredClone(logisticsSites);
   const state = {
     day: 0,
     tick: 0,
@@ -362,9 +411,13 @@ export function createWorld({
     random,
     tickOnce,
     step() {
-      stepHaulCarriers(state.physical, 30);
-      settleCompanyLogistics(state.economy, state.physical, { day: state.day + 1 });
-      for (let tick = 0; tick < 30; tick += 1) tickOnce();
+      for (let tick = 0; tick < 30; tick += 1) {
+        tickOnce();
+        stepHaulCarriers(state.physical, 1);
+        settleCompanyLogistics(state.economy, state.physical, { day: state.day });
+        const transfers = stepPortHandling(state.physical, 1);
+        settlePortTransfers(state.economy, state.physical, { day: state.day, transfers });
+      }
       return state;
     },
   };

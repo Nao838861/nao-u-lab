@@ -5,6 +5,7 @@ import {
   createCartCarrier,
   createHaulJob,
   depositInventory,
+  dockVessel,
   goodsUnitWeight,
   haulJobById,
   isConnected,
@@ -363,14 +364,23 @@ function tilePosition(position) {
   return { x: Math.round(position.x), y: Math.round(position.y) };
 }
 
+function householdEntrance(physical, household) {
+  return householdInputBuilding(physical, household)?.entrance ?? tilePosition(household);
+}
+
+function logisticsEntrance(physical, role, fallback) {
+  const buildingId = physical?.roleBuildingIds?.[role];
+  return buildingById(physical, buildingId)?.entrance ?? tilePosition(fallback);
+}
+
 export function marketPathLength(economy, physical, household) {
   if (!physical) {
     return Math.hypot(household.x - economy.market.x, household.y - economy.market.y);
   }
   return pathLen(
     physical,
-    tilePosition(household),
-    tilePosition(economy.market),
+    householdEntrance(physical, household),
+    logisticsEntrance(physical, "market", economy.market),
     "walk",
   );
 }
@@ -404,10 +414,15 @@ export function economicMaterialSnapshot(economy, physical = null) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
     if (household.cargo) {
-      const manifest = household.cargo.manifest
-        ?? (household.cargo.goods ? { [household.cargo.goods]: household.cargo.qty } : {});
-      for (const [goods, qty] of Object.entries(manifest)) {
-        cargo[goods] = (cargo[goods] ?? 0) + qty;
+      const manifests = [
+        household.cargo.manifest
+          ?? (household.cargo.goods ? { [household.cargo.goods]: household.cargo.qty } : {}),
+        household.cargo.returnManifest ?? {},
+      ];
+      for (const manifest of manifests) {
+        for (const [goods, qty] of Object.entries(manifest)) {
+          cargo[goods] = (cargo[goods] ?? 0) + qty;
+        }
       }
     }
   }
@@ -416,18 +431,8 @@ export function economicMaterialSnapshot(economy, physical = null) {
       inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
   }
-  for (const [goods, stalls] of Object.entries(economy.stalls)) {
-    for (const stall of stalls) inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
-  }
-  for (const [goods, qty] of Object.entries(economy.stock)) {
-    inventory[goods] = (inventory[goods] ?? 0) + qty;
-  }
-  for (const [goods, qty] of Object.entries(economy.marketStock ?? {})) {
-    inventory[goods] = (inventory[goods] ?? 0) + qty;
-  }
   if (physical) {
     for (const building of physical.buildings) {
-      if (building.ownerHouseholdId === null && building.role !== "port") continue;
       for (const section of Object.values(building.inventory)) {
         for (const [goods, qty] of Object.entries(section)) {
           inventory[goods] = (inventory[goods] ?? 0) + qty;
@@ -441,6 +446,22 @@ export function economicMaterialSnapshot(economy, physical = null) {
     }
     for (const pile of physical.groundPiles) {
       inventory[pile.goods] = (inventory[pile.goods] ?? 0) + pile.qty;
+    }
+  } else {
+    for (const [goods, stalls] of Object.entries(economy.stalls)) {
+      for (const stall of stalls) inventory[goods] = (inventory[goods] ?? 0) + stall.qty;
+    }
+    for (const lot of economy.marketReturns ?? []) {
+      inventory[lot.goods] = (inventory[lot.goods] ?? 0) + lot.qty;
+    }
+    for (const [goods, qty] of Object.entries(economy.stock)) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
+    for (const [goods, qty] of Object.entries(economy.marketStock ?? {})) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
+    }
+    for (const [goods, qty] of Object.entries(economy.importStock ?? {})) {
+      inventory[goods] = (inventory[goods] ?? 0) + qty;
     }
   }
   return { inventory, cargo };
@@ -460,17 +481,33 @@ function recordEconomyEvent(economy, day, message) {
   if (economy.events.length > 400) economy.events.shift();
 }
 
-function disperseHousehold(economy, household, day) {
+function disperseHousehold(economy, household, day, physical = null) {
   recordEconomyEvent(economy, day, `☠ ${household.sur}家は離散した——家は廃屋になった`);
   // dayEndは離散後も、その世帯オブジェクトに対する文化消費まで続く。
   // pantryを廃屋在庫と共有し、正本の走査順と新エンジンの物資保存を両立する。
   const inventory = household.pantry;
+  for (const manifest of [household.cargo?.manifest, household.cargo?.returnManifest]) {
+    for (const [goods, qty] of Object.entries(manifest ?? {})) {
+      inventory[goods] += qty;
+    }
+  }
+  household.cargo = null;
+  household.marketCarrier = null;
+  const market = companyLogisticsSite(physical, "market");
   for (const [goods, stalls] of Object.entries(economy.stalls)) {
     for (let index = stalls.length - 1; index >= 0; index -= 1) {
       if (stalls[index].householdId !== household.id) continue;
       inventory[goods] += stalls[index].qty;
+      if (market) withdrawInventory(market, "outbound", goods, stalls[index].qty);
       stalls.splice(index, 1);
     }
+  }
+  for (let index = economy.marketReturns.length - 1; index >= 0; index -= 1) {
+    const lot = economy.marketReturns[index];
+    if (lot.householdId !== household.id) continue;
+    inventory[lot.goods] += lot.qty;
+    if (market) withdrawInventory(market, "pickup", lot.goods, lot.qty);
+    economy.marketReturns.splice(index, 1);
   }
   economy.ruins.push({
     x: household.x,
@@ -500,7 +537,13 @@ function disperseHousehold(economy, household, day) {
   economy.households.splice(economy.households.indexOf(household), 1);
 }
 
-function runHouseholdFoodAndDeath(economy, household, day, markPhase = () => {}) {
+function runHouseholdFoodAndDeath(
+  economy,
+  household,
+  day,
+  markPhase = () => {},
+  physical = null,
+) {
   markPhase("food");
   let need = householdEat(household);
   economy.led.need += need;
@@ -555,7 +598,7 @@ function runHouseholdFoodAndDeath(economy, household, day, markPhase = () => {})
     household.hungerRun = 30;
     const dead = household.members.pop();
     recordEconomyEvent(economy, day, `☠ ${household.sur}家の${dead?.name ?? "一人"}が餓えで亡くなった`);
-    if (household.members.length <= 2) disperseHousehold(economy, household, day);
+    if (household.members.length <= 2) disperseHousehold(economy, household, day, physical);
   }
 
   household.kindLog.push([day, [...kinds]]);
@@ -716,7 +759,7 @@ function runHouseholdCultureAndLadder(economy, physical, household, day, markPha
 function runHouseholdDayEnd(economy, physical, { day, markPhase = () => {} }) {
   economy.hungryN = 0;
   for (const household of economy.households) {
-    runHouseholdFoodAndDeath(economy, household, day, markPhase);
+    runHouseholdFoodAndDeath(economy, household, day, markPhase, physical);
     runHouseholdCultureAndLadder(economy, physical, household, day, markPhase);
   }
   for (const phase of ["food", "death", "culture", "ladder"]) markPhase(phase);
@@ -1002,6 +1045,9 @@ export function unloadMarketBuyCargo(household, physical = null) {
       depositInventory(building, "input", goods, qty);
     } else household.pantry[goods] += qty;
   }
+  for (const [goods, qty] of Object.entries(household.cargo.returnManifest ?? {})) {
+    household.pantry[goods] += qty;
+  }
   const delivered = household.cargo;
   household.cargo = null;
   return delivered;
@@ -1199,6 +1245,44 @@ export function companyStockReleasePrice(economy, goods, { market = false } = {}
   );
 }
 
+function pendingImportQuantity(economy, goods) {
+  return (economy.importRequests ?? [])
+    .filter((request) => request.goods === goods && request.status !== "sold")
+    .reduce(
+      (total, request) => total + Math.max(0, request.qty - request.soldQty - request.marketQty),
+      0,
+    );
+}
+
+export function requestCompanyImport(economy, physical, goods, { day, qty }) {
+  if (P.IMP[goods] === undefined) throw new Error(`輸入対象外です: ${goods}`);
+  if (!Number.isFinite(qty) || qty <= 1e-9) return null;
+  const port = companyLogisticsSite(physical, "port");
+  if (!port) return null;
+  const request = {
+    id: `imp${economy.nextImportRequestId}`,
+    goods,
+    qty,
+    soldQty: 0,
+    marketQty: 0,
+    portQty: 0,
+    status: "vessel",
+    requestedDay: day,
+    unitCost: P.IMP_COST[goods] ?? P.IMP[goods] * 0.7,
+  };
+  economy.nextImportRequestId += 1;
+  const call = dockVessel(physical, {
+    portBuildingId: port.id,
+    direction: "import",
+    goods,
+    qty,
+    metadata: { kind: "import", requestId: request.id },
+  });
+  request.portCallId = call.id;
+  economy.importRequests.push(request);
+  return request;
+}
+
 export function buyAtMarket(
   economy,
   household,
@@ -1229,7 +1313,20 @@ export function buyAtMarket(
         .filter((stall) => findHousehold(economy, stall.householdId))
         .map((stall) => ({ goods, kind: "STALL", stall, price: stall.price })));
       if (P.IMP[goods] !== undefined) {
-        shelves.push({ goods, kind: "CO", price: P.IMP[goods] });
+        const importQty = physical ? (economy.importStock[goods] ?? 0) : Infinity;
+        if (importQty > 1e-9) {
+          shelves.push({ goods, kind: "CO", qty: importQty, price: P.IMP[goods] });
+        }
+        if (
+          physical
+          && P.IMP[goods] <= ceiling
+          && wanted > importQty + pendingImportQuantity(economy, goods) + 1e-9
+        ) {
+          requestCompanyImport(economy, physical, goods, {
+            day,
+            qty: wanted - importQty - pendingImportQuantity(economy, goods),
+          });
+        }
       }
       const reserved = economy.order?.g === goods ? economy.order.left : 0;
       const freeStock = (economy.stock[goods] ?? 0) - reserved;
@@ -1263,7 +1360,7 @@ export function buyAtMarket(
       const unitWeight = goodsUnitWeight(goods);
       const input = isProductionInput(household, goods);
       const available = shelf.kind === "CO"
-        ? Infinity
+        ? shelf.qty
         : shelf.kind === "STOCK" ? shelf.qty : shelf.stall.qty;
       const affordable = (household.purse + (input ? 30 : 0)) / shelf.price;
       const qty = Math.min(wanted, available, affordable, capacity / unitWeight);
@@ -1282,17 +1379,42 @@ export function buyAtMarket(
           amount: payment,
           reason: `世帯${household.id}へ輸入${goods}を小売`,
         });
-        const wholesale = qty * (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7);
-        postCompanyLedger(economy.company, {
-          day,
-          amount: -wholesale,
-          reason: `${goods}の本土仕入`,
-        });
-        recordExternalMoneyFlow(economy, { amount: -wholesale, reason: `${goods}の本土仕入` });
-        economy.co.impMargin += payment - wholesale;
-        economy.outBy[`imp_${goods}`] = (economy.outBy[`imp_${goods}`] ?? 0) + wholesale - payment;
-        economy.imported[goods] = (economy.imported[goods] ?? 0) + qty;
-        recordEconomicMaterialFlow(economy, goods, "imp", qty, `${goods}を本土から輸入`);
+        if (physical) {
+          const stock = economy.importStock[goods] ?? 0;
+          const averageCost = (economy.importStockCost[goods] ?? 0) / Math.max(1e-9, stock);
+          const wholesale = qty * averageCost;
+          economy.importStock[goods] = Math.max(0, stock - qty);
+          economy.importStockCost[goods] = Math.max(
+            0,
+            (economy.importStockCost[goods] ?? 0) - wholesale,
+          );
+          const market = companyLogisticsSite(physical, "market");
+          withdrawInventory(market, "inbound", goods, qty);
+          shelf.qty -= qty;
+          economy.co.impMargin += payment - wholesale;
+          economy.outBy[`imp_${goods}`] = (economy.outBy[`imp_${goods}`] ?? 0) - payment;
+          let remainingSold = qty;
+          for (const request of economy.importRequests) {
+            if (request.goods !== goods || remainingSold <= 1e-9) continue;
+            const sold = Math.min(request.marketQty, remainingSold);
+            request.marketQty -= sold;
+            request.soldQty += sold;
+            remainingSold -= sold;
+            if (request.soldQty >= request.qty - 1e-9) request.status = "sold";
+          }
+        } else {
+          const wholesale = qty * (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7);
+          postCompanyLedger(economy.company, {
+            day,
+            amount: -wholesale,
+            reason: `${goods}の本土仕入`,
+          });
+          recordExternalMoneyFlow(economy, { amount: -wholesale, reason: `${goods}の本土仕入` });
+          economy.co.impMargin += payment - wholesale;
+          economy.outBy[`imp_${goods}`] = (economy.outBy[`imp_${goods}`] ?? 0) + wholesale - payment;
+          economy.imported[goods] = (economy.imported[goods] ?? 0) + qty;
+          recordEconomicMaterialFlow(economy, goods, "imp", qty, `${goods}を本土から輸入`);
+        }
       } else if (shelf.kind === "STOCK") {
         postCompanyLedger(economy.company, {
           day,
@@ -1353,7 +1475,15 @@ export function buyAtMarket(
   };
 }
 
-function exportHouseholdGoods(economy, household, goods, qty, price, day) {
+function exportHouseholdGoods(
+  economy,
+  household,
+  goods,
+  qty,
+  price,
+  day,
+  { physical = null, inventoryReady = false } = {},
+) {
   const purchase = qty * price;
   household.purse += purchase;
   household.income30 += purchase;
@@ -1363,6 +1493,28 @@ function exportHouseholdGoods(economy, household, goods, qty, price, day) {
     reason: `世帯${household.id}から${goods}を輸出買付`,
   });
   economy.co.expBuy += purchase;
+  if (physical) {
+    const market = companyLogisticsSite(physical, "market");
+    if (!market) throw new Error("輸出買付を置く市場がありません");
+    if (!inventoryReady) depositInventory(market, "outbound", goods, qty);
+    const lot = {
+      id: `exp${economy.nextExportLotId}`,
+      householdId: household.id,
+      goods,
+      qty,
+      marketQty: qty,
+      warehouseQty: 0,
+      portQty: 0,
+      shippedQty: 0,
+      unitRevenue: economy.expMl[goods],
+      status: "market",
+      purchasedDay: day,
+    };
+    economy.nextExportLotId += 1;
+    economy.exportLots.push(lot);
+    dispatchPendingExportLots(economy, physical, { day });
+    return lot;
+  }
   economy.exported[goods] = (economy.exported[goods] ?? 0) + qty;
   recordEconomicMaterialFlow(economy, goods, "exp", qty, `${goods}を本土へ輸出`);
 
@@ -1401,7 +1553,7 @@ function sellManifestAtMarket(
         economy.deskUsed[deskKey] = used + accepted;
         if (withdrawFromPantry) household.pantry[goods] -= accepted;
         if (kind === "EXP") {
-          exportHouseholdGoods(economy, household, goods, accepted, price, day);
+          exportHouseholdGoods(economy, household, goods, accepted, price, day, { physical });
         } else if (kind === "PAVE") {
           const purchase = accepted * price;
           household.purse += purchase;
@@ -1473,14 +1625,91 @@ export function transactAtMarket(economy, physical, household, { day, random }) 
 export function transactMarketCargo(economy, physical, household, { day, random }) {
   const sold = sellMarketCargo(economy, physical, household, { day, random });
   const bought = buyAtMarket(economy, household, { day, physical, delivery: "cargo" });
+  const returnManifest = loadMarketReturns(
+    economy,
+    physical,
+    household,
+    bought.remainingCapacity,
+  );
+  bought.cargo.returnManifest = returnManifest;
   household.cargo = bought.cargo;
   return { sold, bought };
+}
+
+export function loadMarketReturns(economy, physical, household, availableCapacity) {
+  if (!Number.isFinite(availableCapacity) || availableCapacity < -1e-9) {
+    throw new TypeError("返品便の空き容量が不正です");
+  }
+  let capacity = Math.max(0, availableCapacity);
+  const manifest = {};
+  const market = companyLogisticsSite(physical, "market");
+  for (const lot of economy.marketReturns) {
+    if (lot.householdId !== household.id || lot.qty <= 1e-9 || capacity <= 1e-9) continue;
+    const unitWeight = goodsUnitWeight(lot.goods);
+    const qty = Math.min(lot.qty, capacity / unitWeight);
+    if (qty <= 1e-9) continue;
+    lot.qty -= qty;
+    capacity -= qty * unitWeight;
+    manifest[lot.goods] = (manifest[lot.goods] ?? 0) + qty;
+    if (market) withdrawInventory(market, "pickup", lot.goods, qty);
+  }
+  economy.marketReturns = economy.marketReturns.filter((lot) => lot.qty > 1e-9);
+  return manifest;
+}
+
+function queueMarketReturn(economy, physical, household, goods, qty, day) {
+  if (qty <= 1e-9) return null;
+  const lot = {
+    id: `ret${economy.nextMarketReturnId}`,
+    householdId: household.id,
+    goods,
+    qty,
+    queuedDay: day,
+  };
+  economy.nextMarketReturnId += 1;
+  economy.marketReturns.push(lot);
+  const market = companyLogisticsSite(physical, "market");
+  if (market) {
+    withdrawInventory(market, "outbound", goods, qty);
+    depositInventory(market, "pickup", goods, qty);
+  }
+  return lot;
+}
+
+function spoilMarketQuantity(economy, physical, section, goods, qty, reason) {
+  const life = goods === "fish" ? P.FISH_LIFE : goods === "veg" ? P.VEG_LIFE : null;
+  if (!life || qty <= 1e-9) return 0;
+  const spoiled = qty / life;
+  const market = companyLogisticsSite(physical, "market");
+  if (market) withdrawInventory(market, section, goods, spoiled);
+  economy.led.spoil[goods] = (economy.led.spoil[goods] ?? 0) + spoiled;
+  recordEconomicMaterialFlow(
+    economy,
+    goods,
+    "cons",
+    spoiled,
+    reason,
+    { includeInDaily: false },
+  );
+  return spoiled;
 }
 
 export function ageMarketStalls(economy, { day, physical = null }) {
   economy.currentDay = day;
   economy.deskUsed = {};
   economy.dailyMaterialFlows = {};
+  for (const lot of economy.marketReturns) {
+    const spoiled = spoilMarketQuantity(
+      economy,
+      physical,
+      "pickup",
+      lot.goods,
+      lot.qty,
+      `引き取り待ち${lot.goods}の腐敗`,
+    );
+    lot.qty -= spoiled;
+  }
+  economy.marketReturns = economy.marketReturns.filter((lot) => lot.qty > 1e-9);
   for (const goods of GOODS) {
     const stalls = economy.stalls[goods];
     for (let index = stalls.length - 1; index >= 0; index -= 1) {
@@ -1494,52 +1723,31 @@ export function ageMarketStalls(economy, { day, physical = null }) {
           economy.deskUsed[`EXP${goods}`] = used + accepted;
           stall.qty -= accepted;
           const market = companyLogisticsSite(physical, "market");
-          if (market) withdrawInventory(market, "outbound", goods, accepted);
-          exportHouseholdGoods(economy, household, goods, accepted, P.EXP[goods], day);
+          exportHouseholdGoods(
+            economy,
+            household,
+            goods,
+            accepted,
+            P.EXP[goods],
+            day,
+            { physical, inventoryReady: Boolean(market) },
+          );
         }
       }
-      if (stall.age >= 6 && household && goods !== "fish" && goods !== "veg") {
-        const returned = stall.qty;
-        household.pantry[goods] += stall.qty;
+      const spoiled = spoilMarketQuantity(
+        economy,
+        physical,
+        "outbound",
+        goods,
+        stall.qty,
+        `屋台の${goods}の腐敗`,
+      );
+      stall.qty -= spoiled;
+      if (stall.age >= 6 && household) {
+        queueMarketReturn(economy, physical, household, goods, stall.qty, day);
         stall.qty = 0;
-        const market = companyLogisticsSite(physical, "market");
-        if (market && returned > 0) withdrawInventory(market, "outbound", goods, returned);
       }
-      if (goods === "fish" && stall.qty > 0) {
-        const spoiled = stall.qty / P.FISH_LIFE;
-        stall.qty -= spoiled;
-        const market = companyLogisticsSite(physical, "market");
-        if (market) withdrawInventory(market, "outbound", goods, spoiled);
-        economy.led.spoil.fish = (economy.led.spoil.fish ?? 0) + spoiled;
-        recordEconomicMaterialFlow(
-          economy,
-          "fish",
-          "cons",
-          spoiled,
-          "屋台の魚の腐敗",
-          { includeInDaily: false },
-        );
-      }
-      if (goods === "veg" && stall.qty > 0) {
-        const spoiled = stall.qty / P.VEG_LIFE;
-        stall.qty -= spoiled;
-        const market = companyLogisticsSite(physical, "market");
-        if (market) withdrawInventory(market, "outbound", goods, spoiled);
-        economy.led.spoil.veg = (economy.led.spoil.veg ?? 0) + spoiled;
-        recordEconomicMaterialFlow(
-          economy,
-          "veg",
-          "cons",
-          spoiled,
-          "屋台の野菜の腐敗",
-          { includeInDaily: false },
-        );
-      }
-      if (stall.qty < 0.5 || stall.price < 0.05) {
-        const returned = Math.max(0, stall.qty);
-        if (household) household.pantry[goods] += returned;
-        const market = companyLogisticsSite(physical, "market");
-        if (market && returned > 0) withdrawInventory(market, "outbound", goods, returned);
+      if (stall.qty <= 1e-9) {
         stalls.splice(index, 1);
       }
     }
@@ -1816,7 +2024,7 @@ export function laborWage(economy, household) {
 
 export function assignNeedyWork(economy, physical, household) {
   if (household.state !== "home" || !isNeedyHousehold(household)) return null;
-  const home = tilePosition(household);
+  const home = householdEntrance(physical, household);
   const reachableWorksites = physical.roadWorksites
     .map((worksite) => ({
       worksite,
@@ -1844,7 +2052,7 @@ export function assignNeedyWork(economy, physical, household) {
     ))
     .map((candidate) => ({
       candidate,
-      distance: pathLen(physical, home, tilePosition(candidate), "walk"),
+      distance: pathLen(physical, home, householdEntrance(physical, candidate), "walk"),
     }))
     .filter(({ distance }) => distance <= 14)
     .sort((a, b) => a.distance - b.distance)[0]?.candidate;
@@ -1852,8 +2060,9 @@ export function assignNeedyWork(economy, physical, household) {
   employer.workerId = household.id;
   household.employerId = employer.id;
   household.worksiteId = null;
-  household.wx = employer.x;
-  household.wy = employer.y;
+  const employerEntrance = householdEntrance(physical, employer);
+  household.wx = employerEntrance.x;
+  household.wy = employerEntrance.y;
   household.state = "toWork";
   return { kind: "private", employerId: employer.id, x: employer.x, y: employer.y };
 }
@@ -1988,6 +2197,17 @@ function pendingCompanyHaul(physical, kind, goods) {
     .reduce((total, job) => total + job.qty, 0);
 }
 
+function pendingOrderPortQuantity(physical, goods) {
+  return physical.portCalls
+    .filter((call) => (
+      call.status === "docked"
+      && call.direction === "export"
+      && call.goods === goods
+      && call.metadata?.kind === "order"
+    ))
+    .reduce((total, call) => total + call.remaining, 0);
+}
+
 function dispatchCompanyHaul(
   economy,
   physical,
@@ -2014,6 +2234,141 @@ function dispatchCompanyHaul(
     settleCompanyLogistics(economy, physical, { day });
   }
   return job;
+}
+
+function exportLotById(economy, lotId) {
+  return economy.exportLots.find((lot) => lot.id === lotId) ?? null;
+}
+
+function importRequestById(economy, requestId) {
+  return economy.importRequests.find((request) => request.id === requestId) ?? null;
+}
+
+function dispatchPendingExportLots(economy, physical, { day }) {
+  const jobs = [];
+  for (const lot of economy.exportLots) {
+    while (lot.marketQty > 1e-9) {
+      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.marketQty);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "export_market",
+        fromRole: "market",
+        fromSection: "outbound",
+        toRole: "warehouse",
+        toSection: "storage",
+        goods: lot.goods,
+        qty,
+        metadata: { lotId: lot.id },
+      });
+      if (!job) break;
+      lot.marketQty -= qty;
+      lot.status = "to_warehouse";
+      jobs.push(job);
+    }
+    while (lot.warehouseQty > 1e-9) {
+      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.warehouseQty);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "export_port",
+        fromRole: "warehouse",
+        fromSection: "storage",
+        toRole: "port",
+        toSection: "outbound",
+        goods: lot.goods,
+        qty,
+        metadata: { lotId: lot.id },
+      });
+      if (!job) break;
+      lot.warehouseQty -= qty;
+      lot.status = "to_port";
+      jobs.push(job);
+    }
+  }
+  return jobs;
+}
+
+function dispatchPendingImports(economy, physical, { day }) {
+  const jobs = [];
+  for (const request of economy.importRequests) {
+    if (request.status !== "port") continue;
+    while (request.portQty > 1e-9) {
+      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, request.goods), request.portQty);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "import_delivery",
+        fromRole: "port",
+        fromSection: "inbound",
+        toRole: "market",
+        toSection: "inbound",
+        goods: request.goods,
+        qty,
+        metadata: {
+          requestId: request.id,
+          cost: qty * request.unitCost,
+        },
+      });
+      if (!job) break;
+      request.portQty -= qty;
+      request.status = "to_market";
+      jobs.push(job);
+    }
+  }
+  return jobs;
+}
+
+function dispatchPendingPortReturns(economy, physical, { day }) {
+  const jobs = [];
+  for (const lot of economy.portReturns) {
+    while (lot.portQty > 1e-9) {
+      const qty = Math.min(carrierGoodsCapacity({ capacity: 16 }, lot.goods), lot.portQty);
+      const job = dispatchCompanyHaul(economy, physical, {
+        day,
+        kind: "order_return",
+        fromRole: "port",
+        fromSection: "outbound",
+        toRole: "warehouse",
+        toSection: "storage",
+        goods: lot.goods,
+        qty,
+        metadata: { returnId: lot.id, cost: qty * lot.unitCost },
+      });
+      if (!job) break;
+      lot.portQty -= qty;
+      lot.status = "to_warehouse";
+      jobs.push(job);
+    }
+  }
+  return jobs;
+}
+
+function queuePortReturn(economy, physical, { day, goods, qty, unitCost }) {
+  if (qty <= 1e-9) return null;
+  const lot = {
+    id: `back${economy.nextPortReturnId}`,
+    goods,
+    qty,
+    portQty: qty,
+    returnedQty: 0,
+    unitCost,
+    status: "port",
+  };
+  economy.nextPortReturnId += 1;
+  economy.portReturns.push(lot);
+  dispatchPendingPortReturns(economy, physical, { day });
+  return lot;
+}
+
+function cancelOrderPortCalls(economy, physical, { day }) {
+  for (const call of physical.portCalls) {
+    if (call.status !== "docked" || call.metadata?.kind !== "order") continue;
+    call.status = "cancelled";
+    queuePortReturn(economy, physical, {
+      day,
+      goods: call.goods,
+      qty: call.remaining,
+      unitCost: call.metadata.unitCost ?? 0,
+    });
+  }
 }
 
 export function requestCompanyStockRelease(economy, physical, goods, { day, qty = 16 }) {
@@ -2127,7 +2482,12 @@ function dispatchCompanyOrder(economy, physical, { day }) {
   const goods = economy.order.g;
   let remaining = Math.min(
     economy.stock[goods] ?? 0,
-    Math.max(0, economy.order.left - pendingCompanyHaul(physical, "order", goods)),
+    Math.max(
+      0,
+      economy.order.left
+        - pendingCompanyHaul(physical, "order", goods)
+        - pendingOrderPortQuantity(physical, goods),
+    ),
   );
   const jobs = [];
   while (remaining > 1e-9) {
@@ -2145,6 +2505,7 @@ function dispatchCompanyOrder(economy, physical, { day }) {
       qty,
       metadata: {
         cost: qty * averageCost,
+        unitCost: averageCost,
         orderPrice: economy.order.price,
         orderDue: economy.order.due,
       },
@@ -2186,46 +2547,169 @@ export function settleCompanyLogistics(economy, physical, { day }) {
     } else if (metadata.kind === "stock_release") {
       economy.marketStock[job.goods] = (economy.marketStock[job.goods] ?? 0) + job.qty;
       economy.marketStockCost[job.goods] = (economy.marketStockCost[job.goods] ?? 0) + metadata.cost;
+    } else if (metadata.kind === "export_market") {
+      const lot = exportLotById(economy, metadata.lotId);
+      if (lot) {
+        lot.warehouseQty += job.qty;
+        lot.status = "warehouse";
+      }
+    } else if (metadata.kind === "export_port") {
+      const lot = exportLotById(economy, metadata.lotId);
+      const port = companyLogisticsSite(physical, "port");
+      if (lot && port) {
+        lot.portQty += job.qty;
+        lot.status = "port";
+        dockVessel(physical, {
+          portBuildingId: port.id,
+          direction: "export",
+          goods: job.goods,
+          qty: job.qty,
+          metadata: { kind: "household_export", lotId: lot.id, yardReady: true },
+        });
+      }
+    } else if (metadata.kind === "import_delivery") {
+      const request = importRequestById(economy, metadata.requestId);
+      economy.importStock[job.goods] = (economy.importStock[job.goods] ?? 0) + job.qty;
+      economy.importStockCost[job.goods] = (economy.importStockCost[job.goods] ?? 0) + metadata.cost;
+      if (request) {
+        request.marketQty += job.qty;
+        request.status = "market";
+      }
+    } else if (metadata.kind === "order_return") {
+      const lot = economy.portReturns.find((candidate) => candidate.id === metadata.returnId);
+      economy.stock[job.goods] = (economy.stock[job.goods] ?? 0) + job.qty;
+      economy.stockCost[job.goods] = (economy.stockCost[job.goods] ?? 0) + metadata.cost;
+      if (lot) {
+        lot.returnedQty += job.qty;
+        if (lot.returnedQty >= lot.qty - 1e-9) lot.status = "returned";
+      }
     } else if (metadata.kind === "order") {
+      const port = companyLogisticsSite(physical, "port");
       if (
-        economy.order
+        port
+        && economy.order
         && economy.order.g === job.goods
-        && day <= economy.order.due
+        && day < economy.order.due
       ) {
-        const port = companyLogisticsSite(physical, "port");
-        const shipped = Math.min(job.qty, economy.order.left);
-        withdrawInventory(port, "outbound", job.goods, shipped);
-        economy.order.left -= shipped;
-        const revenue = shipped * metadata.orderPrice * 1.25;
-        postCompanyLedger(economy.company, {
+        dockVessel(physical, {
+          portBuildingId: port.id,
+          direction: "export",
+          goods: job.goods,
+          qty: Math.min(job.qty, economy.order.left),
+          metadata: {
+            kind: "order",
+            orderPrice: metadata.orderPrice,
+            orderDue: metadata.orderDue,
+            unitCost: metadata.unitCost,
+            yardReady: true,
+          },
+        });
+      } else {
+        queuePortReturn(economy, physical, {
           day,
-          amount: revenue,
-          reason: `本国注文へ${job.goods}を出荷`,
+          goods: job.goods,
+          qty: job.qty,
+          unitCost: metadata.unitCost ?? 0,
         });
-        recordExternalMoneyFlow(economy, {
-          amount: revenue,
-          reason: `${job.goods}の本国注文売上`,
-        });
-        economy.co.ordSell += revenue;
-        economy.exported[job.goods] = (economy.exported[job.goods] ?? 0) + shipped;
-        recordEconomicMaterialFlow(
-          economy,
-          job.goods,
-          "exp",
-          shipped,
-          `${job.goods}を本国注文へ出荷`,
-        );
-        if (economy.order.left <= 1e-9) {
-          recordEconomyEvent(economy, day, "★注文を納めた——本国での評判が上がった");
-          economy.orderDone += 1;
-          economy.order = null;
-        }
       }
     }
     job.economicReconciled = true;
     settled.push({ jobId: job.id, kind: metadata.kind, goods: job.goods, qty: job.qty });
   }
   physical.economicHaulJobIds = stillPending;
+  dispatchPendingExportLots(economy, physical, { day });
+  dispatchPendingImports(economy, physical, { day });
+  dispatchPendingPortReturns(economy, physical, { day });
+  return settled;
+}
+
+export function settlePortTransfers(economy, physical, { day, transfers }) {
+  const settled = [];
+  for (const transfer of transfers) {
+    const metadata = transfer.metadata ?? {};
+    if (metadata.kind === "import") {
+      const request = importRequestById(economy, metadata.requestId);
+      if (!request) continue;
+      const wholesale = transfer.qty * request.unitCost;
+      request.portQty += transfer.qty;
+      postCompanyLedger(economy.company, {
+        day,
+        amount: -wholesale,
+        reason: `${transfer.goods}の本土仕入`,
+      });
+      recordExternalMoneyFlow(economy, {
+        amount: -wholesale,
+        reason: `${transfer.goods}の本土仕入`,
+      });
+      economy.outBy[`imp_${transfer.goods}`] = (economy.outBy[`imp_${transfer.goods}`] ?? 0) + wholesale;
+      economy.imported[transfer.goods] = (economy.imported[transfer.goods] ?? 0) + transfer.qty;
+      recordEconomicMaterialFlow(
+        economy,
+        transfer.goods,
+        "imp",
+        transfer.qty,
+        `${transfer.goods}を本土から港ヤードへ輸入`,
+      );
+      if (transfer.completed) request.status = "port";
+    } else if (metadata.kind === "household_export") {
+      const lot = exportLotById(economy, metadata.lotId);
+      if (!lot) continue;
+      lot.portQty = Math.max(0, lot.portQty - transfer.qty);
+      lot.shippedQty += transfer.qty;
+      const revenue = transfer.qty * lot.unitRevenue;
+      postCompanyLedger(economy.company, {
+        day,
+        amount: revenue,
+        reason: `${transfer.goods}の本土売上`,
+      });
+      recordExternalMoneyFlow(economy, { amount: revenue, reason: `${transfer.goods}の本土売上` });
+      economy.co.expSell += revenue;
+      economy.exported[transfer.goods] = (economy.exported[transfer.goods] ?? 0) + transfer.qty;
+      recordEconomicMaterialFlow(
+        economy,
+        transfer.goods,
+        "exp",
+        transfer.qty,
+        `${transfer.goods}を港から本土へ輸出`,
+      );
+      if (lot.shippedQty >= lot.qty - 1e-9) lot.status = "shipped";
+    } else if (metadata.kind === "order") {
+      if (
+        !economy.order
+        || economy.order.g !== transfer.goods
+        || day >= economy.order.due
+      ) continue;
+      const shipped = Math.min(transfer.qty, economy.order.left);
+      economy.order.left -= shipped;
+      const revenue = shipped * metadata.orderPrice * 1.25;
+      postCompanyLedger(economy.company, {
+        day,
+        amount: revenue,
+        reason: `本国注文へ${transfer.goods}を出荷`,
+      });
+      recordExternalMoneyFlow(economy, {
+        amount: revenue,
+        reason: `${transfer.goods}の本国注文売上`,
+      });
+      economy.co.ordSell += revenue;
+      economy.exported[transfer.goods] = (economy.exported[transfer.goods] ?? 0) + shipped;
+      recordEconomicMaterialFlow(
+        economy,
+        transfer.goods,
+        "exp",
+        shipped,
+        `${transfer.goods}を本国注文へ出荷`,
+      );
+      if (economy.order.left <= 1e-9) {
+        recordEconomyEvent(economy, day, "★注文を納めた——本国での評判が上がった");
+        economy.orderDone += 1;
+        economy.order = null;
+        cancelOrderPortCalls(economy, physical, { day });
+      }
+    }
+    settled.push(transfer);
+  }
+  dispatchPendingImports(economy, physical, { day });
   return settled;
 }
 
@@ -2245,6 +2729,7 @@ function createSuccessorHousehold(economy, donor, zone) {
   household.px = donor.x;
   household.py = donor.y;
   household.state = "arriving";
+  household.buildingId = zone.buildingId ?? null;
   economy.households.push(household);
   return household;
 }
@@ -2258,6 +2743,7 @@ function createZoneImmigrant(economy, zone, day) {
   household.px = economy.port.x;
   household.py = economy.port.y;
   household.state = "arriving";
+  household.buildingId = zone.buildingId ?? null;
   postCompanyLedger(economy.company, {
     day,
     amount: -P.PASSAGE,
@@ -2340,6 +2826,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
       `注文の期限切れ——本国重役たちの心証を損ねた(残${Math.round(economy.order.left)}荷)`,
     );
     economy.order = null;
+    if (physical) cancelOrderPortCalls(economy, physical, { day });
   }
 
   if (economy.order && physical) {
@@ -2391,7 +2878,7 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
 
 export function fundSettlementZone(
   economy,
-  { job, x, y, day, canPlace = () => [true, ""] },
+  { job, x, y, day, buildingId = null, canPlace = () => [true, ""] },
 ) {
   const placement = canPlace(job, x, y);
   const ok = Array.isArray(placement) ? placement[0] : placement;
@@ -2411,7 +2898,7 @@ export function fundSettlementZone(
   });
   recordExternalMoneyFlow(economy, { amount: -P.BUILD_COST, reason: `${job}区画の本土建築資材` });
   economy.co.build += P.BUILD_COST;
-  economy.zones.push({ job, x, y, filled: false });
+  economy.zones.push({ job, x, y, buildingId, filled: false });
   recordEconomyEvent(economy, day, `区画指定: ${job}(支度金${P.BUILD_COST * 10}デナリ)`);
   return true;
 }
@@ -2818,11 +3305,23 @@ export function createEconomicState({ initialCompanyMoney = P.TREASURY0 } = {}) 
     outBy: { pass: 0 },
     prices: Object.fromEntries(GOODS.map((goods) => [goods, []])),
     market: { x: 0, y: 0 },
+    warehouse: null,
     port: null,
+    logisticsSites: {},
     stock: {},
     stockCost: {},
     marketStock: {},
     marketStockCost: {},
+    importStock: {},
+    importStockCost: {},
+    importRequests: [],
+    nextImportRequestId: 1,
+    portReturns: [],
+    nextPortReturnId: 1,
+    exportLots: [],
+    nextExportLotId: 1,
+    marketReturns: [],
+    nextMarketReturnId: 1,
     stockTgt: {},
     order: null,
     orderDone: 0,
