@@ -12,9 +12,11 @@ last_decision: postpone_lifecycle_backfill
 evidence: "Phase 4c lifecycle backfill from ISS-4A-20260621-001"
 next_action: evaluate_in_phase2
 stale_after: "2026-07-19"
+supersedes: []
 gate_reason: |
   Phase 4c では lifecycle 欠損の補完だけを行う。CARMI / human-like play-style は headless playtest と player-modeling に関係するため、
   投稿可否は次の Phase 2 で本文密度と既存 posted 候補との重複を確認して判定する。
+
 ---
 
 ## raw_excerpt

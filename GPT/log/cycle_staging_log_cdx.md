@@ -128,7 +128,166 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared-reads title canonical index を 93→96 group に再生成し、Multi² / Sketchar / AI game-dev testing の terminal-dominance 3 group を登録した。"
+  - "mixed duplicate / stale triage queue を canonical index 更新後に 71 / 50 rows へ再生成した。group action は選定時19件、pending 3件の永続化後は抑制済み16件。"
+  - "現行 queue の高水位 budget 3 group を cycle ID 2026-07-19 16:58 で persistent handoff inbox に enqueue した。"
+  - "candidate 2件（CARMI / synthetic human-like testing）へ欠けていた supersedes: [] を lifecycle metadata として補完した。status や判定は変更していない。"
+  - "atom title-quality 派生監査を現 atoms に合わせて 603→621 rows / 399 groups へ再生成した。"
+audits:
+  memory_index:
+    atom_refs: 50
+    missing_atom_refs: 0
+    markdown_links: 0
+    broken_markdown_links: 0
+  encoding:
+    memory_md:
+      source_file_status: "UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。評価軸の不在は文字化けではなく本文語の不在で、他3語と日本語本文は正常。再生成・手修復対象にしない。"
+      display_or_tooling_status: none
+    atom_sr_1776127289_4d9239b255:
+      source_file_status: "atoms.jsonl と per-file atom の title / trigger / excerpt に U+FFFD が実在する既知の単発 source 破損。"
+      display_or_tooling_status: "memory_health の検出は true positive。MEMORY.md 自体の破損ではない。"
+    atom_gr_1777083728_44d444ab7a:
+      source_file_status: "UTF-8 source に U+FFFD はなく、原文の意図的な文字列 ??? を保持。"
+      display_or_tooling_status: "memory_health の mojibake suspect は false positive。"
+  atoms:
+    rows: 2697
+    parse_errors: 0
+    duplicate_ids: 0
+    duplicate_source_ts_groups: 0
+    missing_lifecycle_refs: 0
+    mirror_counts: {atoms_jsonl: 2697, per_file_md: 2697, index_jsonl: 2697}
+    mirror_content_conflicts: 0
+    normalized_content_duplicate_groups: 40
+    normalized_content_duplicate_rows: 80
+    canonical_overlay_groups: 45
+    note: "既知の非破壊 fold 対象で、duplicate cluster / overlay check は current。矛盾として扱わない。"
+  raw_archive_candidates:
+    cutoff: "2026-06-19"
+    count: 93
+    bytes: 62759242
+    breakdown: {web_research: 85, headless_eval: 6, slack_archive: 1, sync_state: 1}
+    action: "record_only"
+    reason: "web_research / headless_eval は一次証拠、slack_archive は既に archive、sync_state は運用状態であるため、mtime だけで移動しない。"
+  candidate_lifecycle:
+    total: 1010
+    status_counts: {posted: 432, ready_to_post: 10, postponed: 392, failed: 155, needs_review: 21}
+    missing_stale_after: 3
+    missing_stale_after_scope: "terminal posted artifact 3件。open stale queue には入らない。"
+    overdue_open_total: 227
+  inbox:
+    slack_directives_pending: 0
+    slack_broadcasts_pending: 0
+    handled_updates: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 227
+  stale_triage_queue_rows: 50
+  actionable_group_count: 19
+  actionable_group_count_after_handoff: 16
+  backlog_high_water: true
+  group_handoff_budget: 3
+  handed_off_group_count: 3
+  handoff_inbox_pending_count: 3
+  handoff_inbox_ids:
+    - gha-02f81a961f47099e
+    - gha-7fe2ccd7a61ad864
+    - gha-965c62c42489ca18
+  queue_refresh_correction:
+    deferred_count: 3
+    deferred_ids:
+      - gha-4a73e253b746e823
+      - gha-4269487ab4273d9c
+      - gha-630fe00abf2c172e
+    retry_after: "2026-07-20T00:00:00+09:00"
+    reason: "canonical index refresh で deterministic queue order が変わったため、旧順位の選定を candidate 無変更のまま翌日再試行へ回した。"
+  previous_cycle_feedback:
+    processed_groups: 3
+    close_siblings: 3
+    keep_distinct: 0
+    candidates_updated: 6
+    analysis_time_minutes: 6
+    normal_candidates_processed: 2
+    budget_decision: "通常 candidate 2件を分析・投稿しつつ 3 group を解決できたため、高水位条件が続く今 cycle も budget 3 を維持する。"
+group_action_handoff:
+  - group_key: "a novel procedural generation for level design of mansions and dungeons"
+    inbox_id: gha-02f81a961f47099e
+    representative: memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260605_mansion_dungeon_bsp_pcg.md
+      - memory/shared_reads_candidates/20260609_mansion_dungeon_pcg_level_principles.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260605_mansion_dungeon_pcg_level_design.md
+      stale_after: "2026-07-12"
+      reason: "Phase 1 collected candidate; Phase 2 quality gate result is not recorded yet."
+  - group_key: "gui agents for continual game generation"
+    inbox_id: gha-7fe2ccd7a61ad864
+    representative: memory/shared_reads_candidates/20260614_gui_agents_continual_game_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260602_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260606_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260613_play2code_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260614_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260709_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260711_gui_agents_continual_game_generation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260601_gui_agents_continual_game_generation.md
+      - memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260614_gui_agents_continual_game_generation.md
+      stale_after: "2026-07-14"
+      reason: "PlaytestArena / Play2Code、GUI agent evaluator、66.8% rubric pass-rate まで抽出済み。open siblings を group 単位で再評価する。"
+  - group_key: "runtime evaluation of procedural content generation in an endless runner game using autonomous agents"
+    inbox_id: gha-965c62c42489ca18
+    representative: memory/shared_reads_candidates/20260614_runtime_pcg_evaluation_agents.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260527_runtime_pcg_autonomous_agents.md
+      - memory/shared_reads_candidates/20260614_runtime_pcg_evaluation_agents.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+      - memory/shared_reads_candidates/20260517_runtime_pcg_evaluation_agents.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260614_runtime_pcg_evaluation_agents.md
+      stale_after: "2026-07-14"
+      reason: "air scanner / ground traversal agent / physics sweep / structured crash report の具体要素があり、group 単位で再評価する。"
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。LLM Game Master と課題ベース role-play は具体的だが、学習効果・参加者評価・失敗例が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。co-creative game design の比較設計は有用だが、参加者結果と品質差の一次確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。shared latent space と level blending は転用価値があるが、評価指標・dataset・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。探索・文脈保持・目標推定の評価は有用だが、現 candidate は abstract 水準。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。Zork の探索・計画 failure は headless 評価へ接続できるが、評価条件とモデル比較の精読が必要。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- `stale_review_batch` は bounded group handoff と重複しない、stale triage queue 上位の non-mixed candidate 5件。candidate 本体の status は Phase 2 の判断まで変更していない。
+- memory_health は warning のままだが、errors=0、recall smoke 3 query は各3 hit。既知の repeated title / 単発 U+FFFD は既存 overlay・title audit の監視内で、新しい設計を起動する根拠にはしない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
