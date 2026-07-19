@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-07-19 23:43
+# log_cdx Cycle Staging — 2026-07-20 01:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -8,8 +8,9 @@
 - `slack_broadcasts.jsonl`: pending 0 件
 - 確認範囲: `memory/raw/web_research/results.jsonl` と `memory/atoms.jsonl` の直近分、ローカル Slack 取込、ゲーム制作関連の新規外部検索
 - posted-source index: 実 Slack 投稿から再生成（557 records、unresolved 109）
-- duplicate preflight: 既投稿との URL/work 一致 10 件を `skip` とし、candidate を作らず permalink と一致根拠を `log/shared_reads_candidate_preflight.jsonl` に記録
-- `memory/shared_reads_candidates/20260719_tabletop_roleplaying_games_as_pcg.md` — TTRPG の規則系を PCG として捉え、possibility space・expressive range・generative pipeline を対応づける FDG Workshop 論文
+- duplicate preflight: 下記2件はいずれも `--log log/shared_reads_candidate_preflight.jsonl` を指定して実行し、`continue`（script 仕様上 `continue` は log 非追記）
+- `memory/shared_reads_candidates/20260720_cognitive_structured_multimodal_agent.md` — 視覚履歴を episodic memory へ外部化し、長期の画像理解・生成・編集で必要 episode を再活性化する multimodal agent
+- `memory/shared_reads_candidates/20260720_agent_traces_execution_provenance.md` — agent の観測・根拠・tool・memory・判断を typed provenance graph と evidence relation で追跡する survey
 - Slack 投稿: なし
 
 ## Phase 2: 分析
