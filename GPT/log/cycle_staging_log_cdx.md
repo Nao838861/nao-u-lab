@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-07-20 22:13
+# log_cdx Cycle Staging — 2026-07-21 00:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -82,21 +82,24 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 ```yaml
 cleaned:
-  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-20 基準で再生成した。再生成結果は既存内容と同一で、candidate 本体は変更していない"
-  - "group handoff を cycle ID 2026-07-20 22:13・budget 1 で冪等 enqueue し、追加 0 件・永続 inbox pending 0 件・audit error 0 件を確認した"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-21 基準で再生成した。candidate 本体は変更していない"
+  - "cycle ID 2026-07-21 00:13・budget 1 で GAMED.AI duplicate group を永続 handoff inbox に enqueue し、pending 1 件・audit error 0 件を確認した。enqueue 後の group action queue は 0 行へ再生成した"
   - "Slack inbox 正本を監査し、directives 23 件・broadcasts 21 件がすべて handled、pending 0 件だったため status 更新は発生しなかった"
 memory_index_audit:
   utf8_read: ok
-  atom_references: 50
+  high_signal_recent_atom_references: 50
+  all_entry_point_references: 143
   broken_atom_references: 0
   markdown_links: 0
   broken_markdown_links: 0
 encoding_audit:
-  source_file_status: "memory/MEMORY.md は UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。U+FFFD による破損は検出せず、評価軸の不在は文字化けではなく本文に完全一致語がない状態"
-  display_or_tooling_status: "初回の PowerShell here-string 内の日本語 probe が ? に置換されたため、Unicode escape probe で再検証した。source file の破損とは判定しない"
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。U+FFFD はなく、評価軸の不在は文字化けではなく本文に完全一致語がない状態"
+  display_or_tooling_status: none
 atom_audit:
-  rows: 2705
+  rows: 2706
+  parse_errors: 0
   duplicate_ids: 0
+  duplicate_source_ts: 0
   normalized_content_duplicate_groups_raw: 40
   normalized_content_duplicate_rows_raw: 80
   normalized_content_duplicate_groups_recall_visible: 3
@@ -104,13 +107,25 @@ atom_audit:
   recall_visible_folded_extra_rows: 3
   canonical_overlay_groups: 45
   supersedes_relation_problems: 0
+  mirror_counts:
+    atoms_jsonl: 2706
+    per_file_md: 2706
+    index_jsonl: 2706
   mirror_drift: 0
-  contradiction_result: "明示 supersedes 関係に非対称・参照切れなし。今回の機械監査で新たな矛盾は検出しなかった"
+  contradiction_result: "明示 supersedes 関係に非対称・参照切れなし。機械監査で新たな意味矛盾は検出しなかった"
+atom_encoding_audit:
+  source_file_status: "sr-1776127289-4d9239b255 は UTF-8 明示読みでも title / excerpt の『AIエ��ジェント』に U+FFFD があり、atoms.jsonl・per-file md・index.jsonl に同じ破損が存在する。gr-1777083728-44d444ab7a は U+FFFD なしで正常に読め、memory_health の heuristic false positive"
+  display_or_tooling_status: none
 raw_archive_audit:
   inactive_over_30_days_files: 95
   inactive_over_30_days_bytes: 62979319
+  breakdown:
+    web_research: 87
+    headless_eval: 6
+    sync_state.txt: 1
+    slack_archive: 1
   moved: 0
-  note: "slack_archive 正本・headless_eval・web_research 一次資料を含む。現行の raw 保持原則に従い、archive 契約なしで移動せず棚卸しだけ行った"
+  note: "Slack archive 正本・headless eval・web research 一次資料を含む。現行の raw 保持原則に従い、archive 契約なしで移動せず棚卸しだけ行った"
 candidate_lifecycle:
   managed_total: 1025
   status_counts:
@@ -120,24 +135,52 @@ candidate_lifecycle:
     failed: 211
     needs_review: 18
   unmanaged_markdown: 106
-  note: "status frontmatter を持たない README / posted draft 等は lifecycle 集計から除外"
+  missing_stale_after: 3
+  note: "status frontmatter を持たない README / posted draft 等は lifecycle 集計から除外。posted / failed は再評価 queue から除外した"
+title_duplicate_audit:
+  canonical_index_rows: 53
+  mixed_duplicate_queue_rows: 50
+  unexpected_terminal_only_rows_in_mixed_queue: 0
+  note: "canonical index は closed group のみで check 成功。unindexed duplicate は open status を含む mixed group として queue 側に残っている"
 stale_backlog:
-  overdue_open_total: 197
+  overdue_open_total: 206
   overdue_status_counts:
-    postponed: 186
+    postponed: 195
     needs_review: 11
   stale_triage_queue_rows: 50
   mixed_duplicate_queue_rows: 50
-  actionable_group_count: 0
+  actionable_group_count: 1
+  actionable_group_count_after_enqueue: 0
   backlog_high_water: false
   group_handoff_budget: 1
-  handed_off_group_count: 0
-  handoff_inbox_pending_count: 0
-  handoff_inbox_ids: []
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids: [gha-8bb9ca31b15220a6]
   stale_review_batch_count: 5
-  note: "overdue は queue 収載上限を超えるが actionable group が 3 件未満のため、高水位の両条件は成立しない"
-group_action_handoff: []
-issues: []
+  previous_phase2_group_actions: 0
+  note: "overdue は stale triage queue の収載上限を超えるが、enqueue 前 actionable group が 3 件未満のため高水位の両条件は成立しない。handoff group の representative / open siblings は candidate 単位 batch から除外した"
+group_action_handoff:
+  - id: gha-8bb9ca31b15220a6
+    group_key: "gamed ai a hierarchical multi agent framework for automated educational game generation"
+    representative: memory/shared_reads_candidates/20260621_gamedai_educational_game_generation.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260611_gamed_ai_mechanic_contracts.md
+      - memory/shared_reads_candidates/20260621_gamedai_educational_game_generation.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260527_gamedai_educational_game_generation.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260621_gamedai_educational_game_generation.md
+      stale_after: "2026-07-21"
+      reason: "age_days=0; mixed duplicate group。階層型 multi-agent、mechanic contract、deterministic Quality Gate、評価指標が揃い、ゲーム制作への転用価値が高い"
+    recommended_action: merge_duplicate
+issues:
+  - id: ISS-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』が『AIエ��ジェント』として source から破損し、3 mirror に同期されている"
+    severity: low
+    evidence: "memory/atoms.jsonl:317 / memory/atoms/2026-04/sr-1776127289-4d9239b255.md / memory/atoms/index.jsonl:317"
+    source_file_status: "UTF-8 明示読みで U+FFFD を再現。jsonl・per-file md・index の3箇所が同内容で、mirror drift ではない"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "『AIエージェント』完全一致検索ではこの記憶が欠落し得る。ただし agent tag と他の本文語から recall 可能で、影響は局所的"
 recommendation:
   needs_design: false
   priority_issues: []
@@ -176,11 +219,4 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-```yaml
-posted:
-  channel: "#log"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784554867634329"
-  char_count: 1992
-  verification: ok
-  draft: drafts/phase5_log_diary_20260720_2213_cdx.md
-```
+(Phase 5 が書き込む)
