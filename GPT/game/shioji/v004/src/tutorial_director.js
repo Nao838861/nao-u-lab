@@ -48,7 +48,7 @@ export class TutorialDirector {
     for (const definition of this.letterDefinitions) {
       if (this.state.letters.some(letter => letter.id === definition.id)) continue;
       if (!definition.when({ model, events, state: this.readState() })) continue;
-      const rendered = definition.render({ model, events });
+      const rendered = definition.render({ model, events, state: this.readState() });
       this.state.letters.push({
         id: definition.id,
         source: definition.source ?? 'event',

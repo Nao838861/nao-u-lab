@@ -39,6 +39,94 @@ function newHouseholdEvent(events) {
   return events.find(event => event.type === 'arrival' && event.reason === 'new_household');
 }
 
+function pantryAmount(household, goods) {
+  return household.pantry?.find(row => row.goods === goods)?.amount ?? 0;
+}
+
+function loggerLogStock(model) {
+  return model.households
+    .filter(household => household.job === 'logger')
+    .reduce((total, household) => total + pantryAmount(household, 'log'), 0);
+}
+
+function marketBuilding(model) {
+  return model.buildings.find(building => building.roles?.includes('market')) ?? null;
+}
+
+function woodshopHouseholds(model) {
+  return model.households.filter(household => household.job === 'woodshop');
+}
+
+function stallAmount(model, goods) {
+  return model.stalls
+    .filter(stall => stall.goods === goods)
+    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
+}
+
+function logTransaction(events) {
+  return events.find(event => event.type === 'transaction' && event.goods === 'log') ?? null;
+}
+
+// 徒歩距離の見積り(§2.5.1近似: 道0.6/森1.4/他1.0/水∞・8方向・対角×1.4)。
+// 獣道(0.85)はsnapshotに乗らないため考慮しない=距離をやや多めに見積る控えめな警告になる。
+export function estimateWalkLen(model, from, to) {
+  if (!from || !to) return Infinity;
+  const blocked = new Set();
+  for (const building of model.buildings) {
+    for (let dy = 0; dy < (building.height ?? building.h ?? 0); dy += 1) {
+      for (let dx = 0; dx < (building.width ?? building.w ?? 0); dx += 1) {
+        blocked.add(`${building.x + dx},${building.y + dy}`);
+      }
+    }
+  }
+  const roads = new Set(model.roadKeys);
+  const enterCost = (x, y) => {
+    if (x < 0 || y < 0 || x >= model.width || y >= model.height) return Infinity;
+    const kind = tileKind(model, x, y);
+    if (kind === 'water') return Infinity;
+    const key = `${x},${y}`;
+    if (blocked.has(key) && !(x === to.x && y === to.y)) return Infinity;
+    if (roads.has(key)) return 0.6;
+    return kind === 'forest' ? 1.4 : 1.0;
+  };
+  const dist = new Map([[`${from.x},${from.y}`, 0]]);
+  const queue = [{ x: from.x, y: from.y, cost: 0 }];
+  while (queue.length) {
+    queue.sort((a, b) => a.cost - b.cost);
+    const current = queue.shift();
+    if (current.x === to.x && current.y === to.y) return current.cost;
+    if (current.cost > (dist.get(`${current.x},${current.y}`) ?? Infinity)) continue;
+    for (let dy = -1; dy <= 1; dy += 1) {
+      for (let dx = -1; dx <= 1; dx += 1) {
+        if (!dx && !dy) continue;
+        const nx = current.x + dx;
+        const ny = current.y + dy;
+        const base = enterCost(nx, ny);
+        if (!Number.isFinite(base)) continue;
+        const step = dx && dy ? base * 1.4 : base;
+        const next = current.cost + step;
+        const key = `${nx},${ny}`;
+        if (next >= (dist.get(key) ?? Infinity)) continue;
+        dist.set(key, next);
+        queue.push({ x: nx, y: ny, cost: next });
+      }
+    }
+  }
+  return Infinity;
+}
+
+function farHouseholdFromMarket(model) {
+  const market = marketBuilding(model);
+  if (!market?.entrance) return null;
+  for (const household of model.households) {
+    const home = model.buildings.find(building => building.id === household.buildingId);
+    if (!home?.entrance) continue;
+    const walk = estimateWalkLen(model, home.entrance, market.entrance);
+    if (walk > 14) return { household, home, walk };
+  }
+  return null;
+}
+
 export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'first-road-and-logger',
@@ -68,6 +156,36 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done: Number(households > 0), total: 1 },
         detail: `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`,
         evidence: { households, population: model.population },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'market-for-logs',
+    chapter: '第一章・最初の一荷',
+    title: '市場を置き、丸太の売り場を開く',
+    evaluate({ model }) {
+      const market = marketBuilding(model);
+      const logs = loggerLogStock(model);
+      return {
+        complete: Boolean(market),
+        progress: { done: Number(Boolean(market)), total: 1 },
+        detail: `市場 ${market ? 1 : 0}棟 / 木こりの手元の丸太 ${logs.toFixed(1)}荷`,
+        evidence: { market: Boolean(market), logs },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-woodshop',
+    chapter: '第一章・最初の一荷',
+    title: '木工房を置き、道具づくりを始める',
+    evaluate({ model }) {
+      const woodshops = model.buildings.filter(building => building.type === 'woodshop').length;
+      const settled = woodshopHouseholds(model).length;
+      return {
+        complete: woodshops > 0,
+        progress: { done: Number(woodshops > 0), total: 1 },
+        detail: `木工房 ${woodshops}棟 / 入居 ${settled}世帯`,
+        evidence: { woodshops, settled },
       };
     },
   }),
@@ -113,6 +231,114 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${event.day}日目。入植船から${household.members}人の世帯が降り、木こりの区画へ入りました。島の人口は${model.population}人です。`,
           '人が来れば、仕事と暮らしが動き始めます。まずは丸太が積み上がる様子を見届けましょう。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'logs-pile-no-market',
+    source: 'snapshot',
+    when({ model }) {
+      return !marketBuilding(model) && loggerLogStock(model) >= 10;
+    },
+    render({ model }) {
+      const logs = loggerLogStock(model);
+      return {
+        kicker: '丸太の山からの催促',
+        title: '売る場所がありません',
+        summary: `木こりの手元に丸太 ${logs.toFixed(1)}荷・市場 0棟`,
+        body: [
+          `${model.day}日目。木こりの手元には丸太が${logs.toFixed(1)}荷積み上がりましたが、島にはまだ売り買いの場がありません。`,
+          '市場の区画をお決めください。港の近くの平地が良いでしょう——のちに会社の荷車が市場と港を行き来します。入植者が持参した食料が尽きる前に、買い物のできる場を。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'market-distance-warning',
+    source: 'snapshot',
+    when({ model }) {
+      return Boolean(farHouseholdFromMarket(model));
+    },
+    render({ model }) {
+      const far = farHouseholdFromMarket(model);
+      return {
+        kicker: '道のりの懸念',
+        title: '市場まで遠すぎる家があります',
+        summary: `${far.household.job}の家から市場まで、道なりの見積りでおよそ${far.walk.toFixed(1)}`,
+        body: [
+          `市場まで、${far.household.job}の家から道なりの見積りでおよそ${far.walk.toFixed(1)}。14を超えると、一日のうちに市場まで歩いて戻ることができません。`,
+          'この家の者は買い物に出られず、いずれ食べる物に困ります。道を敷いて近づけるか、建て直しをご検討ください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-log-stall',
+    source: 'snapshot',
+    when({ model }) {
+      return stallAmount(model, 'log') > 0;
+    },
+    render({ model }) {
+      const amount = stallAmount(model, 'log');
+      return {
+        kicker: '市の立った日',
+        title: '市場に丸太が並びました',
+        summary: `${model.day}日目・屋台の丸太 ${amount.toFixed(1)}荷`,
+        body: [
+          `${model.day}日目。木こりが市場まで歩き、屋台に丸太を${amount.toFixed(1)}荷並べました。`,
+          '値付けは彼ら自身が行い、買い手がつけば商いになります。次は丸太の買い手——木工房の区画をお決めください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-tools',
+    source: 'snapshot',
+    when({ model }) {
+      return woodshopHouseholds(model)
+        .some(household => pantryAmount(household, 'tools') > 0);
+    },
+    render({ model, state }) {
+      const household = woodshopHouseholds(model)
+        .find(candidate => pantryAmount(candidate, 'tools') > 0);
+      const tools = pantryAmount(household, 'tools');
+      const tradedBefore = Boolean(state?.letters?.some(letter => letter.id === 'first-log-trade'));
+      const provenance = tradedBefore
+        ? '工房の棚の丸太——持参分と市場で買い足した分——から'
+        : '入植のとき船で持参した丸太から';
+      return {
+        kicker: '工房の初仕事',
+        title: '最初の道具が挽かれました',
+        summary: `${model.day}日目・道具 ${tools.toFixed(1)}荷`,
+        body: [
+          `${model.day}日目。木工房が${provenance}、最初の道具を${tools.toFixed(1)}荷仕上げました。`,
+          '棚の丸太が減れば、工房は市場で買い足します。物が育ち、銀が回り始めています。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-log-trade',
+    source: 'event',
+    when({ events }) {
+      return Boolean(logTransaction(events));
+    },
+    render({ model, events }) {
+      const trade = logTransaction(events);
+      const price = (trade.price * 10).toFixed(1);
+      return {
+        kicker: '市場の初商い',
+        title: '丸太に買い手がつきました',
+        summary: `${trade.transactionDay ?? model.day}日目・${trade.qty}荷・${price}デナリ/荷`,
+        body: [
+          `${trade.transactionDay ?? model.day}日目。市場で丸太${trade.qty}荷が1荷あたり${price}デナリで商われました。木工房の棚が満ち、木こりの財布に銀が入りました。`,
+          '値は私どもが決めたものではありません。売り手の言い値に買い手がついた、それだけのことです。市場とはそういう場所でございます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

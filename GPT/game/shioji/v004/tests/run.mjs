@@ -17,7 +17,7 @@ import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
-import { TUTORIAL_GOALS, TUTORIAL_LETTERS } from '../src/tutorial_content.js';
+import { TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
@@ -218,7 +218,7 @@ test('チュートリアル段5: 港から森への道・木こり・実入植�
   assert.ok(household);
   assert.equal(household.job, 'logger');
   assert.equal(director.readState().completedGoals.includes('first-settlers-arrive'), true);
-  assert.equal(director.currentObjective().complete, true);
+  assert.equal(director.currentObjective().id, 'market-for-logs', '入植の次は市場の目標へ進む');
 
   const letter = director.letters().find(candidate => candidate.id === 'first-settlers-report');
   assert.ok(letter);
@@ -242,6 +242,179 @@ test('チュートリアル段5: 港から森への道・木こり・実入植�
   assert.deepEqual(replay.readModel(), model);
   assert.deepEqual(replay.inputJournal(), journal);
 });
+
+test('チュートリアル段6: 丸太の催促→市場→初売り→木工房→持参丸太の初道具→市場の初商いを実況しjournal再生できる', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  const director = createTutorialDirector();
+  const deaths = [];
+  let sequence = 0;
+  const observe = () => {
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    deaths.push(...events.filter(event => event.type === 'death'));
+    director.observe(controller.readModel(), events);
+    return events;
+  };
+  const advanceUntil = (predicate, maxDays, label) => {
+    const limit = controller.readModel().day + maxDays;
+    while (controller.readModel().day <= limit) {
+      controller.advanceTicks(1);
+      observe();
+      if (predicate()) return;
+    }
+    assert.fail(`${label}が${maxDays}日以内に起きる`);
+  };
+  const hasLetter = id => director.letters().some(letter => letter.id === id);
+  observe();
+
+  const setup = findRoadLoggerSetup(controller.readModel());
+  assert.ok(setup);
+  assert.equal(controller.operate({
+    type: 'add_road', start: setup.road.start, end: setup.road.end,
+  }).ok, true);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+    buildingX: setup.logger.x, buildingY: setup.logger.y,
+  }).ok, true);
+  observe();
+
+  advanceUntil(() => hasLetter('logs-pile-no-market'), 25, '丸太の催促書状');
+  const prompt = director.letters().find(letter => letter.id === 'logs-pile-no-market');
+  assert.match(prompt.body, /丸太が\d+(\.\d)?荷積み上がりました/);
+  assert.equal(director.currentObjective().id, 'market-for-logs');
+  assert.equal(deaths.length, 0, '市場が立つ前に餓死者を出さない(キット食料の余裕)');
+
+  const port = controller.readModel().buildings.find(building => building.roles.includes('port'));
+  const marketPreview = findPreviewNear(controller.readModel(), 'market', port.entrance);
+  assert.ok(marketPreview);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'market',
+    x: marketPreview.entrance.x, y: marketPreview.entrance.y,
+    buildingX: marketPreview.x, buildingY: marketPreview.y,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('market-for-logs'), true);
+
+  const afterMarket = controller.readModel();
+  const market = afterMarket.buildings.find(building => building.roles.includes('market'));
+  const loggerHome = afterMarket.buildings.find(building => building.type === 'logger');
+  const walkNear = estimateWalkLen(afterMarket, loggerHome.entrance, market.entrance);
+  if (walkNear <= 14) {
+    assert.equal(hasLetter('market-distance-warning'), false, '近い市場では警告を出さない');
+  }
+
+  advanceUntil(() => hasLetter('first-log-stall'), 20, '市場に丸太が並ぶ');
+  assert.equal(director.currentObjective().id, 'first-woodshop');
+
+  const woodshopPreview = findPreviewNear(controller.readModel(), 'woodshop', market.entrance);
+  assert.ok(woodshopPreview);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'woodshop',
+    x: woodshopPreview.entrance.x, y: woodshopPreview.entrance.y,
+    buildingX: woodshopPreview.x, buildingY: woodshopPreview.y,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('first-woodshop'), true);
+
+  advanceUntil(() => hasLetter('first-tools'), 45, '最初の道具の書状');
+  const letters = director.letters();
+  const toolsIndex = letters.findIndex(letter => letter.id === 'first-tools');
+  const tradeIndex = letters.findIndex(letter => letter.id === 'first-log-trade');
+  if (tradeIndex === -1 || tradeIndex > toolsIndex) {
+    assert.match(letters[toolsIndex].body, /持参した丸太/, '市場取引前の初道具は持参丸太として実況する');
+  }
+
+  if (!hasLetter('first-log-trade')) {
+    advanceUntil(() => hasLetter('first-log-trade'), 45, '丸太の初商い');
+  }
+  const tradeLetter = director.letters().find(letter => letter.id === 'first-log-trade');
+  assert.match(tradeLetter.body, /1荷あたり\d+(\.\d)?デナリで商われました/);
+
+  const model = controller.readModel();
+  const journal = controller.inputJournal();
+  assert.deepEqual(
+    journal.map(row => row.op.type),
+    ['add_road', 'place_building', 'place_building', 'place_building'],
+  );
+  const replay = createEngineController({ seed: 11, mode: 'tutorial' });
+  let replayTick = 0;
+  for (const row of journal) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(model.tick - replayTick);
+  assert.deepEqual(replay.readModel(), model);
+});
+
+test('チュートリアル段6: 市場まで見積り14超の家にはエレナが実測値で警告する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  const director = createTutorialDirector();
+  let sequence = 0;
+  const observe = () => {
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    director.observe(controller.readModel(), events);
+  };
+  observe();
+  const setup = findRoadLoggerSetup(controller.readModel());
+  assert.ok(setup);
+  assert.equal(controller.operate({
+    type: 'add_road', start: setup.road.start, end: setup.road.end,
+  }).ok, true);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+    buildingX: setup.logger.x, buildingY: setup.logger.y,
+  }).ok, true);
+  let settled = false;
+  while (!settled && controller.readModel().day <= 16) {
+    controller.advanceTicks(1);
+    observe();
+    settled = controller.readModel().households.some(household => household.job === 'logger');
+  }
+  assert.ok(settled, '木こり世帯が入居する');
+
+  const model = controller.readModel();
+  const loggerHome = model.buildings.find(building => building.type === 'logger');
+  let farPreview = null;
+  for (let y = model.height - 1; y >= 0 && !farPreview; y -= 1) {
+    for (let x = model.width - 1; x >= 0 && !farPreview; x -= 1) {
+      const preview = previewBuildingPlacement(model, 'market', { x, y });
+      if (!preview.ok) continue;
+      const walk = estimateWalkLen(model, loggerHome.entrance, preview.entrance);
+      if (Number.isFinite(walk) && walk > 14) farPreview = preview;
+    }
+  }
+  assert.ok(farPreview, '見積り14超の市場候補地が存在する');
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'market',
+    x: farPreview.entrance.x, y: farPreview.entrance.y,
+    buildingX: farPreview.x, buildingY: farPreview.y,
+  }).ok, true);
+  observe();
+  const warning = director.letters().find(letter => letter.id === 'market-distance-warning');
+  assert.ok(warning, '遠距離警告の書状が出る');
+  const after = controller.readModel();
+  const placedMarket = after.buildings.find(building => building.roles.includes('market'));
+  const measured = estimateWalkLen(after, loggerHome.entrance, placedMarket.entrance);
+  assert.ok(measured > 14);
+  assert.match(warning.body, new RegExp(`およそ${measured.toFixed(1)}`));
+});
+
+function findPreviewNear(model, job, origin, maxRadius = 20) {
+  let best = null;
+  for (let y = Math.max(0, origin.y - maxRadius); y <= Math.min(model.height - 1, origin.y + maxRadius); y += 1) {
+    for (let x = Math.max(0, origin.x - maxRadius); x <= Math.min(model.width - 1, origin.x + maxRadius); x += 1) {
+      const preview = previewBuildingPlacement(model, job, { x, y });
+      if (!preview.ok) continue;
+      const distance = Math.hypot(preview.entrance.x - origin.x, preview.entrance.y - origin.y);
+      if (!best || distance < best.distance) best = { preview, distance };
+    }
+  }
+  return best?.preview ?? null;
+}
 
 test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {
   assert.deepEqual(Object.keys(START_MODES), ['tutorial', 'sandbox', 'test']);
