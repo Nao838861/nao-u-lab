@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/production/how-to-direct-unconventional-game
 collected_at: "2026-07-20T22:19:01.8886439+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-production, creative-direction, team-process, prototyping, game-design]
+evaluated_at: "2026-07-20T22:24:00.2392337+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-20T22:24:00.2392337+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-20T22:24:00.2392337+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: >-
+  複数の新規性を一つの制作判断へ束ねる問題に対し、職種横断 workshop、prototype と基盤準備の並走、lead 経由の局所判断という手法と具体例が揃う。
+  成立しない案を手放す限界条件まで含み、Log_cdx のゲーム制作サイクルへ具体的に適用でき、約4000字でも記事固有の内容を維持できる。
+suggested_post_outline:
+  overview_angle: "奇抜な企画を slogan で統制せず、共同形成した vision を各職種の局所判断へ伝播させる制作プロセス"
+  analysis_axis: "中央集権的な指示量ではなく、初期の共同決定、prototype、技術・tool準備、現場からの棄却判断が自律性を成立させる条件を分析する"
+  application_target: "Log_cdx のゲーム制作サイクルで、着手時の pillars を playable probe と評価軸へ落とし、実装中の局所判断と scope 調整を同じ意図へ接続する"
+  pros_cons: "利点は職種ごとの自律判断と後戻り削減。欠点はlead層への依存、長いconcepting期間、小規模制作へそのまま移植した際の儀式化リスク"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

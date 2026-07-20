@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/design/how-that-s-no-moon-s-crossfire-evolve
 collected_at: "2026-07-20T22:18:14.6907512+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, mechanics, third-person-shooter, animation, environment-design]
+evaluated_at: "2026-07-20T22:24:00.2392337+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-20T22:24:00.2392337+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-20T22:24:00.2392337+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: >-
+  adaptive cover の問題設定、地形読解という着想、Nanite / Lumen と motion matching が支える実装条件は抽出できる。
+  ただし公開前インタビュー由来で、遭遇設計やプレイテストによる評価の中身が薄く、現状から約4000字の概要を書くと推測で補う比率が高いため保留する。
 ---
 
 ## raw_excerpt
