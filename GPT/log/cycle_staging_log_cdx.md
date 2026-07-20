@@ -93,7 +93,113 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "shared-reads の terminal title canonical index を再生成し、closed group 54件を確認した"
+  - "mixed duplicate / stale triage / group action queue を順に再生成した（49 group / 50 candidate / 0 actionable group）"
+  - "group handoff inbox を cycle_id=2026-07-21 04:28・budget=1 で冪等 enqueue/audit し、新規投入0件・pending 0件を確認した"
+  - "Slack inbox lifecycle を監査し、directives 23行・broadcasts 21行はいずれも pending 0件だったため close 更新は行わなかった"
+audit_summary:
+  memory_index:
+    validator: "OK: memory/MEMORY.md entry sections match per-file atom index"
+    markdown_link_rows: 0
+    encoding_probe:
+      terms: ["記憶", "ゲーム設計", "敵パターン", "評価軸"]
+      result: "UTF-8 明示読みですべて取得。memory/MEMORY.md の source file は正常"
+      display_or_tooling_status: none
+  atoms:
+    total: 2707
+    mirror_counts:
+      atoms_jsonl: 2707
+      per_file_md: 2707
+      index_jsonl: 2707
+    content_conflicts: 0
+    normalized_content_duplicate_groups: 40
+    duplicate_overlay_groups: 45
+    duplicate_overlay_check: ok
+    recall_visible_duplicate_groups_after_fold: 3
+  raw_archive_candidates:
+    inactive_over_30_days_count: 95
+    total_bytes: 62979319
+    main_locations:
+      - "memory/raw/web_research/ と旧 phase3_* subdirectories"
+      - "memory/raw/headless_eval/"
+      - "memory/raw/slack_archive/shared-reads.jsonl"
+    action: "原文 provenance と既存 path 参照を壊さないため、この phase では移動せず archive 候補として記録のみ"
+  candidate_lifecycle:
+    total: 1028
+    posted: 441
+    ready_to_post: 9
+    postponed: 347
+    failed: 213
+    needs_review: 18
+  duplicate_title_audit:
+    duplicate_title_groups: 121
+    terminal_canonical_groups: 54
+    mixed_groups: 49
+    all_open_unindexed_groups: 18
+  inbox:
+    directives_rows: 23
+    directives_pending: 0
+    broadcasts_rows: 21
+    broadcasts_pending: 0
+stale_backlog:
+  overdue_open_total: 205
+  stale_triage_queue_rows: 50
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "205 > 50 は成立するが、actionable group が3件以上という条件を満たさない"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+issues:
+  - id: ISS-4A-20260721-01
+    description: "duplicate title group のうち全 sibling が open の18 groupが mixed duplicate / group-action 経路の対象外で、同一 work の stale candidate が個別再評価される"
+    severity: high
+    evidence: "duplicate title 121 group = terminal canonical 54 + mixed 49 + all-open unindexed 18。The Ink Splotch Effect は postponed 6件だが memory/shared_reads_stale_triage_queue.jsonl では duplicate_group_key が空のまま代表候補が candidate 単位で選ばれている"
+    source_file_status: "対象 candidate 6件の frontmatter は UTF-8 で読み取り可能。status は全件 postponed で source file 破損なし"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "Phase 2 の少数レビュー枠を同一 work の sibling が繰り返し消費し、異なるゲーム設計・playtest 知見の再評価と次制作への転送を遅らせる"
+  - id: ISS-4A-20260721-02
+    description: "1件の active atom で title / trigger / excerpt に実 U+FFFD が残り、検索語が破損している"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md と source memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919 の双方が『AIエ��ジェント』を保持。memory_health のもう1件 gr-1777083728-44d444ab7a は本文中の意味のある『???』を detector が拾った false positive で、U+FFFD は0件"
+    source_file_status: "UTF-8 明示読みで atom と raw source の双方に U+FFFD 2文字を確認。source ingestion 前または archive 生成時点の実データ破損"
+    display_or_tooling_status: "PowerShell Get-Content -Encoding UTF8 と Python UTF-8 読みで同じ文字を再現。表示経路だけの mojibake ではない"
+    why_blocks_game_memory: "個人OS / filesystem memory の既存知見を『AIエージェント』で検索する際の一致と可読性を局所的に落とす"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-4A-20260721-01]
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game transfer value=high、37日 overdue。NPC 会話・課題型 role-play は具体的だが、学習効果・参加者評価・失敗例の原文確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game transfer value=high、37日 overdue。比較設計は直結するが評価結果が不足。all-open duplicate 6件の代表として扱い、ISS-4A-20260721-01 の evidence にする"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game transfer value=high、37日 overdue。shared latent space と level blending は有用だが、評価指標・dataset・失敗条件の確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game transfer value=high、37日 overdue。探索・文脈保持・目標推定の評価は有用だが、現 candidate は abstract 水準"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game transfer value=high、37日 overdue。探索・計画限界と headless playtest への接続は具体的だが、評価条件・失敗分類・model 比較の確認が必要"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
