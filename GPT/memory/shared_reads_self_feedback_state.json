@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T04:46:23+09:00",
+  "updated_at": "2026-07-21T07:00:24+09:00",
   "reviewed_source_ts": [
+    "1778285008.434499",
     "1784568554.225909",
     "1780957691.430689",
     "1781105732.550179",
@@ -449,6 +450,45 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T07:00:24+09:00",
+      "selected": {
+        "id": "sr-1778285008-7920fb4ad8",
+        "source_ts": "1778285008.434499",
+        "title": "AGENTIF (Tsinghua KEG, 2026): agentic 環境下で「指示長↑→遵守率↓」を初実証",
+        "reason": "未レビューの score 13 atom で、agent・game-design・operation の3優先タグを持つ。shared-reads 本文が Nao_u の『ルール急増=同じ失敗を繰り返す兆候』という評価へ明示接続しており、現在320件ある active probe と長い起動時指示に対して、新しい追加ではなく既存経路の再利用または削減判断を促せるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。AGENTIF は50の実在 agentic application から707 instruction・8,415 constraints を構成し、instruction length／constraint count の bucket が増えるほど平均 CSR・ISR が下がり、6,000語超では全モデルの ISR がほぼ0になる結果を示すため、長い指示が遵守を難しくする根拠はある。一方、この分析は長さと constraint 数を制御して因果分離した削減実験ではなく、評価モデルも現在の Codex と異なり、この環境の起動時総文字数と task outcome の比較も未実施なので evidence=2 とした。実行時 context の最小化、追加前の held-out validation、control-flow を先に直す判断は既存の load-strategy-progressive-disclosure、skillopt-skill-doc-validation、control-flow-before-prompt-growth、bayesian-agent-feature-conditioned-update が既に要求している。新しい『prompt 長を測る』probe を足すと、同じ知見を別名で320件の active probe 群へ追加するだけなので non_redundancy=0。次の instruction edit では既存 probes を使い、本 atom は重複の根拠としてのみ参照する。",
+      "existing_probes": [
+        "probe-20260626-load-strategy-progressive-disclosure",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260517-control-flow-before-prompt-growth",
+        "probe-20260709-bayesian-agent-feature-conditioned-update"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、一次論文の適用限界および既存 instruction-load／edit-validation probes との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T02:34:57+09:00",
       "selected": {

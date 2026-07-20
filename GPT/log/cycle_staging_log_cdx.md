@@ -51,7 +51,53 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778285008-7920fb4ad8
+    source_ts: "1778285008.434499"
+    title: 'AGENTIF (Tsinghua KEG, 2026): agentic 環境下で「指示長↑→遵守率↓」を初実証'
+    reason: >-
+      未レビューの score 13 atom で agent・game-design・operation の3優先タグを持ち、
+      Nao_u の「ルール急増=同じ失敗を繰り返す兆候」という評価へ明示接続している。
+      現在320件ある active probe と長い起動時指示に対し、新規追加ではなく既存経路の
+      再利用または削減判断へ変換できるか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    AGENTIF は50の実在 agentic application、707 instruction、8,415 constraints を用い、
+    instruction length／constraint count の増加に伴う CSR・ISR 低下と、6,000語超で
+    全モデルの ISR がほぼ0になる結果を示す。一方、長さと constraint 数を因果分離した
+    削減実験ではなく、現在の Codex の実行時 context と task outcome でも未検証のため
+    evidence=2。実行時 context の最小化、instruction edit 前の検証、prompt 追加より
+    control-flow を先に直す判断は既存4 probes が扱っており、新しい prompt-length probe は
+    320件の active probe 群へ同義の確認を増やすだけなので non_redundancy=0。
+    合計13で採用条件の14に届かず、既存 probes を再利用して新規反映は行わない。
+  existing_probes:
+    - probe-20260626-load-strategy-progressive-disclosure
+    - probe-20260620-skillopt-skill-doc-validation
+    - probe-20260517-control-flow-before-prompt-growth
+    - probe-20260709-bayesian-agent-feature-conditioned-update
+  change:
+    summary: >-
+      reviewed_source_ts と reject 理由だけを state に記録した。
+      probe・評価表・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
