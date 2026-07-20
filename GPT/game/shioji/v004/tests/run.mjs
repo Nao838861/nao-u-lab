@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createEngineApi } from '../../engine/src/api.js';
 import { buildBaseCity } from '../../engine/src/audit.js';
+import { runPopulationDynamicsPhase } from '../../engine/src/econ.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
@@ -18,9 +19,11 @@ import {
 } from '../src/presentation.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
-  FOOD_IMPORT_EMA_TARGET, LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
+  CONVERSION_SURVIVAL_DAYS, FOOD_IMPORT_EMA_TARGET,
+  LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
   ORDER_JUDGMENT_FALLBACK_OFFERS, SEASONAL_RESERVE_TARGET,
-  SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO,
+  SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
+  TOOLS_PRICE_RISE_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
@@ -1241,7 +1244,8 @@ test('チュートリアル段19: 注文を受けずに見送り、実失効イ�
   assert.match(closing.title, /引き受けない自由も総督のものです/);
   assert.match(closing.facts.skipped.expired.message, /未受諾の注文状が失効/);
   assert.equal(director.readState().completedGoals.includes('close-fourth-chapter'), true);
-  assert.equal(director.isComplete(), true);
+  assert.equal(director.isComplete(), false);
+  assert.equal(director.currentObjective().id, 'observe-tools-price-rise');
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
@@ -1292,6 +1296,305 @@ function findReachablePreviewNear(model, job, origin, maxRadius = 20) {
   }
   return best;
 }
+
+function placeMissingConversionBuildings(controller) {
+  const placed = [];
+  for (const job of ['woodshop', 'charburner', 'saltworks']) {
+    let model = controller.readModel();
+    if (model.buildings.some(building => building.type === job)) continue;
+    const market = model.buildings.find(building => building.roles.includes('market'));
+    const candidate = findReachablePreviewNear(model, job, market.entrance);
+    assert.ok(candidate?.preview, `${job}を市場から徒歩14以内へ配置できる`);
+    const preview = candidate.preview;
+    const result = controller.operate({
+      type: 'place_building', job,
+      x: preview.entrance.x, y: preview.entrance.y,
+      buildingX: preview.x, buildingY: preview.y,
+    });
+    assert.equal(result.ok, true, `${job}の公開配置操作が成功する`);
+    placed.push({ job, buildingX: preview.x, buildingY: preview.y });
+  }
+  return placed;
+}
+
+function measureFifthChapterSeed(seed) {
+  const fixture = tutorialThroughPlay.fourthChapter;
+  const controller = replayTutorialJournal(fixture.journal, fixture.model.tick, seed);
+  let model = controller.readModel();
+  const startDay = model.day;
+  let minimumPrice = model.marketPrices.tools;
+  let minimumDay = model.day;
+  let rise = null;
+  while (!rise && model.day < startDay + 180) {
+    controller.advanceTicks(30);
+    model = controller.readModel();
+    if (model.marketPrices.tools < minimumPrice) {
+      minimumPrice = model.marketPrices.tools;
+      minimumDay = model.day;
+    }
+    const delta = model.marketPrices.tools - minimumPrice;
+    const ratio = model.marketPrices.tools / minimumPrice - 1;
+    if (ratio >= TOOLS_PRICE_RISE_RATIO && delta >= TOOLS_PRICE_RISE_DELTA) {
+      rise = {
+        startDay, minimumDay, day: model.day, minimumPrice,
+        currentPrice: model.marketPrices.tools, ratio, delta,
+      };
+    }
+  }
+  assert.ok(rise, `seed${seed}で180日以内に道具相場の実上昇を観測できる`);
+  placeMissingConversionBuildings(controller);
+  const placementDay = controller.readModel().day;
+  let sequence = controller.events(0).at(-1)?.sequence ?? 0;
+  let activeSince = null;
+  let signature = null;
+  let chainDay = null;
+  let levelUp = null;
+  let noVacancy = null;
+  let survived = null;
+  const deadline = placementDay + 360;
+  while (controller.readModel().day < deadline && (!survived || !levelUp || !chainDay)) {
+    controller.advanceTicks(30);
+    model = controller.readModel();
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    levelUp ??= events.find(event => event.type === 'notice'
+      && /#\d+ ▲Lv\d+/.test(event.message ?? '')) ?? null;
+    noVacancy ??= events.find(event => event.type === 'notice'
+      && event.message?.startsWith('転職不可:')
+      && /空.*建物がありません/.test(event.message)) ?? null;
+    const rows = ['woodshop', 'charburner', 'saltworks'].map(job => {
+      const household = model.households.find(row => row.job === job);
+      return { job, householdId: household?.id ?? null, buildingId: household?.buildingId ?? null };
+    });
+    const active = rows.every(row => row.householdId !== null);
+    const nextSignature = active ? rows.map(row => `${row.job}:${row.buildingId}`).join('|') : null;
+    if (!active) {
+      activeSince = null;
+      signature = null;
+    } else if (signature !== nextSignature) {
+      activeSince = model.day;
+      signature = nextSignature;
+    }
+    if (!chainDay && model.conversionEconomics.length === 3
+      && model.conversionEconomics.every(row => row.productionEma > 0 && row.cost > 0)) {
+      chainDay = model.day;
+    }
+    if (activeSince !== null && model.day - activeSince >= CONVERSION_SURVIVAL_DAYS) {
+      survived = { startDay: activeSince, day: model.day, elapsedDays: model.day - activeSince, rows };
+    }
+  }
+  assert.ok(chainDay, `seed${seed}で三職の実原価・生産EMAが立ち上がる`);
+  assert.ok(survived, `seed${seed}で三職が連続${CONVERSION_SURVIVAL_DAYS}日存続する`);
+  assert.ok(levelUp, `seed${seed}で配置後にLv上昇の実イベントが起きる`);
+  return {
+    seed, rise, placementDay, chainDay, survived,
+    levelUp: { day: levelUp.eventDay ?? levelUp.day, message: levelUp.message },
+    noVacancy: noVacancy
+      ? { day: noVacancy.eventDay ?? noVacancy.day, message: noVacancy.message }
+      : null,
+  };
+}
+
+test('チュートリアル段20: 道具の実相場上昇から三変換職を配置し、原料棚と実原価を実況する', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const journalBefore = controller.inputJournal().length;
+  const startDay = controller.readModel().day;
+  while (!director.readState().completedGoals.includes('observe-tools-price-rise')
+    && controller.readModel().day < startDay + 180) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('observe-tools-price-rise'), true,
+    '3シード較正した180日以内に道具相場の立ち上がりを検出する');
+  observe();
+  const riseLetter = director.letters().find(letter => letter.id === 'tools-price-rise');
+  assert.ok(riseLetter);
+  assert.ok(riseLetter.facts.ratio >= TOOLS_PRICE_RISE_RATIO);
+  assert.ok(riseLetter.facts.delta >= TOOLS_PRICE_RISE_DELTA);
+  assert.match(riseLetter.title, /道具の値が上がっています/);
+  assert.match(riseLetter.body, new RegExp(`${(riseLetter.facts.currentPrice * 10).toFixed(1)}デナリ`));
+  assert.equal(director.currentObjective().id, 'place-conversion-workshops');
+
+  const placed = placeMissingConversionBuildings(controller);
+  assert.deepEqual(placed.map(row => row.job), ['charburner', 'saltworks'],
+    '第一章の木工房を活かし、炭焼と製塩所だけを新設する');
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('place-conversion-workshops'), true);
+  const placedLetter = director.letters().find(letter => letter.id === 'conversion-workshops-placed');
+  assert.ok(placedLetter);
+  assert.match(placedLetter.body, /input棚/);
+
+  const chainDeadline = controller.readModel().day + 180;
+  while (!director.readState().completedGoals.includes('observe-conversion-cost-chain')
+    && controller.readModel().day < chainDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('observe-conversion-cost-chain'), true);
+  const chainEvidence = director.readState().goalResults['observe-conversion-cost-chain'].evidence;
+  assert.equal(chainEvidence.rows.length, 3);
+  for (const row of chainEvidence.rows) {
+    assert.equal(row.occupied, true, `${row.job}へ実世帯が入る`);
+    assert.ok(row.economics.cost > 0, `${row.job}のengine正本実原価を表示する`);
+    assert.ok(row.economics.productionEma > 0, `${row.job}の実生産EMAが立つ`);
+    assert.ok(Number.isFinite(row.economics.inputAmount));
+  }
+  observe();
+  const chainLetter = director.letters().find(letter => letter.id === 'conversion-cost-chain');
+  assert.ok(chainLetter);
+  for (const row of chainEvidence.rows) {
+    assert.match(chainLetter.body, new RegExp(`${(row.economics.cost * 10).toFixed(1)}デナリ`));
+  }
+  assert.equal(director.currentObjective().id, 'sustain-conversion-workshops');
+  tutorialThroughPlay.fifthChapterStart = {
+    journalBefore,
+    rise: riseLetter.facts,
+    chain: chainEvidence,
+  };
+});
+
+test('チュートリアル段21: 三変換職を90日保ち、実Lv上昇を建物外観へ結んで第五章を締める', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const deadline = controller.readModel().day + 180;
+  while (!director.readState().completedGoals.includes('sustain-conversion-workshops')
+    && controller.readModel().day < deadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('sustain-conversion-workshops'), true);
+  const survival = director.readState().goalResults['sustain-conversion-workshops'].evidence;
+  assert.equal(survival.active, true);
+  assert.ok(survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
+  assert.equal(survival.rows.every(row => row.occupied), true);
+
+  let levelLetter = director.letters().find(letter => letter.id === 'household-level-up');
+  const levelDeadline = controller.readModel().day + 180;
+  while (!levelLetter && controller.readModel().day < levelDeadline) {
+    controller.advanceTicks(30);
+    observe();
+    levelLetter = director.letters().find(letter => letter.id === 'household-level-up');
+  }
+  assert.ok(levelLetter, '配置後の実Lv上昇イベントを少なくとも1件観測する');
+  assert.match(levelLetter.facts.message, /#\d+ ▲Lv\d+/);
+  assert.ok(levelLetter.facts.appearance);
+  assert.equal(levelLetter.facts.appearance.level, levelLetter.facts.level);
+  assert.match(levelLetter.body, new RegExp(levelLetter.facts.appearance.key));
+  observe();
+  assert.equal(director.readState().completedGoals.includes('observe-household-level-up'), true);
+  observe();
+  const closing = director.letters().find(letter => letter.id === 'chapter-five-close');
+  assert.ok(closing);
+  assert.ok(closing.facts.survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
+  assert.equal(closing.facts.levelUp.message, levelLetter.facts.message);
+  assert.equal(director.readState().completedGoals.includes('close-fifth-chapter'), true);
+  assert.equal(director.isComplete(), true);
+
+  const finalModel = controller.readModel();
+  const journal = controller.inputJournal();
+  assert.equal(journal.length, tutorialThroughPlay.fifthChapterStart.journalBefore + 2,
+    '第五章で世界を変える入力はプレイヤーの炭焼・製塩所配置だけ');
+  const replay = replayTutorialJournal(journal, finalModel.tick);
+  assert.deepEqual(replay.readModel(), finalModel, '第五章完走後も公開journalから同じ世界を再生できる');
+  assert.deepEqual(replay.inputJournal(), journal);
+  tutorialThroughPlay.fifthChapter = {
+    model: finalModel,
+    journal,
+    report: {
+      seed: 11,
+      rise: tutorialThroughPlay.fifthChapterStart.rise,
+      survived: survival,
+      levelUp: levelLetter.facts,
+    },
+  };
+  console.log(`  段20〜21実測 seed11:道具day${tutorialThroughPlay.fifthChapterStart.rise.minimumDay}`
+    + ` ${(tutorialThroughPlay.fifthChapterStart.rise.minimumPrice).toFixed(3)}`
+    + `→day${tutorialThroughPlay.fifthChapterStart.rise.currentDay}`
+    + ` ${(tutorialThroughPlay.fifthChapterStart.rise.currentPrice).toFixed(3)}`
+    + ` / 三職day${survival.startDay}→${survival.currentDay}`
+    + ` / ${levelLetter.facts.message}@day${levelLetter.facts.day}`);
+});
+
+test('チュートリアル段20〜21実測: 3シードで相場検出・原価連鎖・90日存続・Lv上昇が成立する', () => {
+  const seed11 = tutorialThroughPlay.fifthChapter.report;
+  const rows = [
+    {
+      seed: 11,
+      rise: {
+        minimumDay: seed11.rise.minimumDay,
+        day: seed11.rise.currentDay,
+        minimumPrice: seed11.rise.minimumPrice,
+        currentPrice: seed11.rise.currentPrice,
+        ratio: seed11.rise.ratio,
+        delta: seed11.rise.delta,
+      },
+      survived: {
+        startDay: seed11.survived.startDay,
+        day: seed11.survived.currentDay,
+        elapsedDays: seed11.survived.elapsedDays,
+      },
+      levelUp: { day: seed11.levelUp.day, message: seed11.levelUp.message },
+    },
+    measureFifthChapterSeed(13),
+    measureFifthChapterSeed(14),
+  ];
+  for (const row of rows) {
+    assert.ok(row.rise.ratio >= TOOLS_PRICE_RISE_RATIO);
+    assert.ok(row.rise.delta >= TOOLS_PRICE_RISE_DELTA);
+    assert.ok(row.survived.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
+    assert.match(row.levelUp.message, /#\d+ ▲Lv\d+/);
+  }
+  console.log(`  段20〜21三シード ${rows.map(row => (
+    `seed${row.seed}:道具 day${row.rise.minimumDay} ${row.rise.minimumPrice.toFixed(3)}`
+      + `→day${row.rise.day} ${row.rise.currentPrice.toFixed(3)}`
+      + `(${(row.rise.ratio * 100).toFixed(1)}%)`
+      + ` / 三職${row.survived.startDay}→${row.survived.day}`
+      + ` / ${row.levelUp.message}@${row.levelUp.day}`
+  )).join(' | ')}`);
+});
+
+test('チュートリアル段21: engineが実際に出した転職不可だけへ空き建物の意味を実況する', () => {
+  const world = buildBaseCity(11);
+  const api = createEngineApi(world);
+  api.advanceDays(60);
+  const { economy, physical } = world.state;
+  const owner = economy.households[0].id;
+  for (const building of physical.buildings) {
+    if (!building.fixed) building.ownerHouseholdId = owner;
+  }
+  for (const household of economy.households) {
+    household.hungerHist = Array(40).fill(true);
+    household.purse = 0;
+    household.insolvM = 0;
+    household.lastSwitch = -1;
+    household.state = 'home';
+    household.jobCycleDone = true;
+  }
+  const eventDay = world.state.day + 360;
+  const eventCount = economy.events.length;
+  runPopulationDynamicsPhase(economy, physical, { day: eventDay, random: () => 0 });
+  const actual = economy.events.slice(eventCount)
+    .find(([, message]) => message.startsWith('転職不可:') && /空.*建物がありません/.test(message));
+  assert.ok(actual, '空き職建物ゼロのengineから転職不可が実発生する');
+  const [day, message] = actual;
+  const state = new TutorialDirector().readState();
+  state.completedGoals.push('place-conversion-workshops');
+  const director = new TutorialDirector({
+    goals: [],
+    letters: TUTORIAL_LETTERS.filter(letter => letter.id === 'no-vacancy-job-change'),
+    state,
+  });
+  director.observe(snapshotToViewModel(api.snapshot({ scope: 'full' })), [{
+    type: 'notice', eventDay: day, day, message,
+  }]);
+  const letter = director.letters().find(row => row.id === 'no-vacancy-job-change');
+  assert.ok(letter);
+  assert.equal(letter.source, 'event');
+  assert.equal(letter.facts.message, message);
+  assert.equal(letter.facts.vacantBuildingCount, 0);
+  assert.match(letter.body, new RegExp(message));
+  assert.match(letter.body, /空いている別職の建物へ実際に移り住みます/);
+});
 
 function measureLoggerRoadRecovery(seed) {
   const controller = createEngineController({ seed, mode: 'tutorial' });

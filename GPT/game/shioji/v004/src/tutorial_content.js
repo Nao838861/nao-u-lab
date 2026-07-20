@@ -212,11 +212,19 @@ export const SEASONAL_SURPLUS_MIN = 8;
 export const SEASONAL_VALLEY_RATIO = 0.2;
 export const SEASONAL_RESERVE_TARGET = 16;
 export const ORDER_JUDGMENT_FALLBACK_OFFERS = 3;
+export const TOOLS_PRICE_RISE_RATIO = 0.05;
+export const TOOLS_PRICE_RISE_DELTA = 0.05;
+export const CONVERSION_SURVIVAL_DAYS = 90;
 const LOGGER_MULTIPLIER_RECOVERY = 0.1;
 const FOOD_PRODUCTION_EMA_MIN = 0.25;
 const FOOD_PRICE_CHANGE_MIN = 0.01;
 const FOOD_IMPORT_EMA_CHANGE_MIN = 0.05;
 const SEASONAL_FOOD_GOODS = ['fish', 'veg', 'wheat'];
+const CONVERSION_JOB_DEFINITIONS = Object.freeze([
+  Object.freeze({ job: 'woodshop', label: '木工房', goods: 'tools', inputGoods: 'log' }),
+  Object.freeze({ job: 'charburner', label: '炭焼', goods: 'char', inputGoods: 'log' }),
+  Object.freeze({ job: 'saltworks', label: '製塩所', goods: 'salt', inputGoods: 'char' }),
+]);
 
 function marketGoodsAvailability(model, goods) {
   const stalls = model.stalls
@@ -379,6 +387,136 @@ function offerExpiredEvent(events, expected = null) {
     && (!expected || event.message.includes(
       `${goodsLabel(expected.goods)}${Math.round(expected.qty)}荷`,
     ))) ?? null;
+}
+
+function toolsPriceRiseObservation(model, state) {
+  const previous = state?.goalResults?.['observe-tools-price-rise']?.evidence ?? {};
+  const currentPrice = model.marketPrices?.tools ?? 0;
+  const newMinimum = !Number.isFinite(previous.minimumPrice)
+    || currentPrice < previous.minimumPrice;
+  const minimumPrice = newMinimum ? currentPrice : previous.minimumPrice;
+  const minimumDay = newMinimum ? model.day : previous.minimumDay;
+  const delta = currentPrice - minimumPrice;
+  const ratio = minimumPrice > 1e-9 ? currentPrice / minimumPrice - 1 : 0;
+  return {
+    startDay: previous.startDay ?? model.day,
+    startPrice: previous.startPrice ?? currentPrice,
+    minimumDay,
+    minimumPrice,
+    currentDay: model.day,
+    currentPrice,
+    delta,
+    ratio,
+    thresholdRatio: TOOLS_PRICE_RISE_RATIO,
+    thresholdDelta: TOOLS_PRICE_RISE_DELTA,
+    risen: ratio >= TOOLS_PRICE_RISE_RATIO && delta >= TOOLS_PRICE_RISE_DELTA,
+  };
+}
+
+function conversionWorkshopStatus(model) {
+  return CONVERSION_JOB_DEFINITIONS.map(definition => {
+    const buildings = model.buildings.filter(building => building.type === definition.job);
+    const occupied = buildings.find(building => building.occupied);
+    const household = occupied
+      ? model.households.find(row => row.buildingId === occupied.id && row.job === definition.job)
+      : null;
+    const economics = household
+      ? model.conversionEconomics?.find(row => row.householdId === household.id)
+      : null;
+    return {
+      ...definition,
+      buildingCount: buildings.length,
+      buildingId: occupied?.id ?? buildings[0]?.id ?? null,
+      householdId: household?.id ?? null,
+      occupied: Boolean(household),
+      economics: economics ? { ...economics } : null,
+    };
+  });
+}
+
+function conversionCostChain(model) {
+  const rows = conversionWorkshopStatus(model);
+  const active = rows.every(row => row.occupied
+    && Number.isFinite(row.economics?.cost)
+    && row.economics.cost > 0
+    && row.economics.productionEma > 0);
+  return {
+    active,
+    rows,
+    logPrice: model.marketPrices?.log ?? 0,
+    charPrice: model.marketPrices?.char ?? 0,
+  };
+}
+
+function conversionSurvival(model, state) {
+  const previous = state?.goalResults?.['sustain-conversion-workshops']?.evidence ?? {};
+  const rows = conversionWorkshopStatus(model);
+  const active = rows.every(row => row.occupied);
+  const signature = active
+    ? rows.map(row => `${row.job}:${row.buildingId}`).join('|')
+    : null;
+  const continuous = active && previous.signature === signature;
+  const startDay = active ? (continuous ? previous.startDay : model.day) : null;
+  const elapsedDays = startDay === null ? 0 : model.day - startDay;
+  return {
+    active,
+    signature,
+    startDay,
+    currentDay: model.day,
+    elapsedDays,
+    requiredDays: CONVERSION_SURVIVAL_DAYS,
+    rows: rows.map(row => ({
+      job: row.job,
+      label: row.label,
+      buildingId: row.buildingId,
+      householdId: row.householdId,
+      occupied: row.occupied,
+    })),
+  };
+}
+
+function householdLevelUpReport(model, events) {
+  const event = events.find(candidate => candidate.type === 'notice'
+    && /#\d+ ▲Lv\d+/.test(candidate.message ?? ''));
+  if (!event) return null;
+  const match = event.message.match(/^([^#]+)#(\d+) ▲Lv(\d+)$/);
+  if (!match) return null;
+  const householdId = Number(match[2]);
+  const level = Number(match[3]);
+  const household = model.households.find(row => row.id === householdId);
+  const building = model.buildings.find(row => row.id === household?.buildingId);
+  return {
+    day: event.eventDay ?? event.day ?? model.day,
+    message: event.message,
+    job: match[1],
+    householdId,
+    previousLevel: Math.max(0, level - 1),
+    level,
+    buildingId: building?.id ?? household?.buildingId ?? null,
+    buildingType: building?.type ?? household?.job ?? match[1],
+    appearance: building?.appearance ? { ...building.appearance } : null,
+  };
+}
+
+function noVacancyReport(model, events) {
+  const event = events.find(candidate => candidate.type === 'notice'
+    && candidate.message?.startsWith('転職不可:')
+    && /空.*建物がありません/.test(candidate.message));
+  if (!event) return null;
+  const match = event.message.match(/^転職不可: ([^#]+)#(\d+)——(.+)$/);
+  const targetJob = match?.[3]?.match(/^([^の]+)の空き建物がありません$/)?.[1] ?? null;
+  const vacant = model.buildings.filter(building => building.vacant);
+  return {
+    day: event.eventDay ?? event.day ?? model.day,
+    message: event.message,
+    previousJob: match?.[1] ?? null,
+    householdId: match ? Number(match[2]) : null,
+    targetJob,
+    vacantBuildingCount: vacant.length,
+    targetVacancyCount: targetJob
+      ? vacant.filter(building => building.type === targetJob).length
+      : vacant.length,
+  };
 }
 
 function loggerTripObservation(model) {
@@ -1015,6 +1153,108 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued ? '利益を得た注文と、見送った注文の報告書が届きました' : '未受諾注文の失効報告を待っています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-tools-price-rise',
+    chapter: '第五章・島の手仕事',
+    title: '道具相場の立ち上がりを見届ける',
+    evaluate({ model, state }) {
+      const observation = toolsPriceRiseObservation(model, state);
+      return {
+        complete: observation.risen,
+        progress: {
+          done: Math.min(observation.ratio, TOOLS_PRICE_RISE_RATIO),
+          total: TOOLS_PRICE_RISE_RATIO,
+        },
+        detail: `道具 ${(observation.minimumPrice * 10).toFixed(1)}→${(observation.currentPrice * 10).toFixed(1)}デナリ/荷（底から${(observation.ratio * 100).toFixed(1)}%）`,
+        evidence: observation,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'place-conversion-workshops',
+    chapter: '第五章・島の手仕事',
+    title: '木工房・炭焼・製塩所を揃える',
+    evaluate({ model }) {
+      const rows = conversionWorkshopStatus(model);
+      const done = rows.filter(row => row.buildingCount > 0).length;
+      return {
+        complete: done === rows.length,
+        progress: { done, total: rows.length },
+        detail: rows.map(row => `${row.label} ${row.buildingCount}棟`).join(' / '),
+        evidence: { rows },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-conversion-cost-chain',
+    chapter: '第五章・島の手仕事',
+    title: '三つの手仕事へ原料が流れるのを待つ',
+    evaluate({ model }) {
+      const chain = conversionCostChain(model);
+      const done = chain.rows.filter(row => row.occupied
+        && Number.isFinite(row.economics?.cost)
+        && row.economics.cost > 0
+        && row.economics.productionEma > 0).length;
+      return {
+        complete: chain.active,
+        progress: { done, total: chain.rows.length },
+        detail: chain.rows.map(row => (
+          `${row.label} ${row.occupied ? `生産EMA ${(row.economics?.productionEma ?? 0).toFixed(2)}` : '入植待ち'}`
+        )).join(' / '),
+        evidence: chain,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'sustain-conversion-workshops',
+    chapter: '第五章・島の手仕事',
+    title: '三つの手仕事を90日存続させる',
+    evaluate({ model, state }) {
+      const survival = conversionSurvival(model, state);
+      const complete = survival.active && survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS;
+      return {
+        complete,
+        progress: {
+          done: Math.min(survival.elapsedDays, CONVERSION_SURVIVAL_DAYS),
+          total: CONVERSION_SURVIVAL_DAYS,
+        },
+        detail: survival.active
+          ? `連続 ${survival.elapsedDays}/${CONVERSION_SURVIVAL_DAYS}日`
+          : '木工房・炭焼・製塩所の入植がすべて続くのを待っています',
+        evidence: survival,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-household-level-up',
+    chapter: '第五章・島の手仕事',
+    title: '暮らしの等級が上がった建物を確かめる',
+    evaluate({ state }) {
+      const letter = state?.letters?.find(candidate => candidate.id === 'household-level-up');
+      return {
+        complete: Boolean(letter),
+        progress: { done: Number(Boolean(letter)), total: 1 },
+        detail: letter
+          ? `${letter.facts.job}#${letter.facts.householdId}がLv${letter.facts.level}へ上がりました`
+          : '文化財が暮らしへ届き、実際のLv上昇が起きるのを待っています',
+        evidence: { levelUp: letter?.facts ?? null },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-fifth-chapter',
+    chapter: '第五章・島の手仕事',
+    title: '第五章の手仕事と暮らしの報告を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-five-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '90日の存続と暮らしの成長報告が届きました' : '第五章の報告をまとめています',
         evidence: { issued },
       };
     },
@@ -1857,6 +2097,147 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `ひとつの注文は、実売上${profit.revenue.toFixed(1)}から出荷原価${profit.orderCost.toFixed(1)}を引き、粗利${profit.realizedMargin.toFixed(1)}で完遂しました。もうひとつの${goodsLabel(selected.goods)}${selected.qty}荷は受諾せず、${skipped.expired.day}日目に実際に失効しました。`,
           '注文状は命令ではありません。決済と市場を比べ、会社の銀を使うか決めること。引き受けない自由も総督のものです。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'tools-price-rise',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'observe-tools-price-rise');
+    },
+    render({ state }) {
+      const facts = state.goalResults['observe-tools-price-rise'].evidence;
+      return {
+        kicker: '第五章・島の手仕事',
+        title: '道具の値が上がっています',
+        summary: `底値 ${(facts.minimumPrice * 10).toFixed(1)}→${(facts.currentPrice * 10).toFixed(1)}デナリ/荷（+${(facts.ratio * 100).toFixed(1)}%）`,
+        facts,
+        body: [
+          `${facts.minimumDay}日目に1荷あたり${(facts.minimumPrice * 10).toFixed(1)}デナリだった道具相場EMAが、${facts.currentDay}日目には${(facts.currentPrice * 10).toFixed(1)}デナリ、底から${(facts.ratio * 100).toFixed(1)}%上がりました。台詞のための固定相場ではなく、この島で動いた実値です。`,
+          '既設の木工房に加え、炭焼と製塩所をお置きください。木工と炭焼は丸太を、製塩所は木炭をinput棚へ買い、道具・木炭・塩へ作り替えます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'conversion-workshops-placed',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'place-conversion-workshops');
+    },
+    render({ model, state }) {
+      const rows = state.goalResults['place-conversion-workshops'].evidence.rows;
+      return {
+        kicker: '手仕事の受け皿',
+        title: '三つの仕事場が揃いました',
+        summary: rows.map(row => `${row.label}${row.buildingCount}棟`).join('・'),
+        facts: { rows },
+        body: [
+          `${model.day}日目。${rows.map(row => `${row.label}${row.buildingCount}棟`).join('、')}が島に揃いました。建物を置いただけでは品は生まれません。移民が入り、原料を市場で買ってinput棚へ運ぶまでを待ちます。`,
+          'input棚の中身、原料相場、作る品の原価と生産EMAを、同じ瞬間の実帳面で並べてご報告します。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'conversion-cost-chain',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'observe-conversion-cost-chain');
+    },
+    render({ model, state }) {
+      const facts = state.goalResults['observe-conversion-cost-chain'].evidence;
+      const woodshop = facts.rows.find(row => row.job === 'woodshop').economics;
+      const charburner = facts.rows.find(row => row.job === 'charburner').economics;
+      const saltworks = facts.rows.find(row => row.job === 'saltworks').economics;
+      return {
+        kicker: '原価連鎖の実測',
+        title: '丸太から道具と木炭へ、木炭から塩へ',
+        summary: `生産EMA 道具${woodshop.productionEma.toFixed(2)}・木炭${charburner.productionEma.toFixed(2)}・塩${saltworks.productionEma.toFixed(2)}`,
+        facts,
+        body: [
+          `${model.day}日目。丸太相場は1荷あたり${(facts.logPrice * 10).toFixed(1)}デナリ。木工房のinput棚には${woodshop.inputAmount.toFixed(1)}荷あり、道具の実生産原価は${(woodshop.cost * 10).toFixed(1)}デナリ/荷、生産EMAは${woodshop.productionEma.toFixed(2)}です。炭焼のinput棚は丸太${charburner.inputAmount.toFixed(1)}荷、木炭原価${(charburner.cost * 10).toFixed(1)}デナリ/荷、生産EMA${charburner.productionEma.toFixed(2)}です。`,
+          `その木炭相場は1荷あたり${(facts.charPrice * 10).toFixed(1)}デナリ。製塩所のinput棚には${saltworks.inputAmount.toFixed(1)}荷あり、塩の実生産原価は${(saltworks.cost * 10).toFixed(1)}デナリ/荷、生産EMAは${saltworks.productionEma.toFixed(2)}です。原料の値が次の作り手の原価へ渡る——これが島内の連鎖です。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'household-level-up',
+    source: 'event',
+    when({ model, events, state }) {
+      return goalCompleted(state, 'place-conversion-workshops')
+        && Boolean(householdLevelUpReport(model, events));
+    },
+    render({ model, events }) {
+      const facts = householdLevelUpReport(model, events);
+      const appearance = facts.appearance;
+      return {
+        kicker: '暮らしの等級',
+        title: '暮らしが、建物の姿を育てました',
+        summary: `${facts.job}#${facts.householdId} Lv${facts.previousLevel}→Lv${facts.level}${appearance ? `・外観段階${appearance.tier}` : ''}`,
+        facts,
+        body: [
+          `${facts.day}日目、実イベント「${facts.message}」。文化財を満たした世帯の暮らしがLv${facts.previousLevel}からLv${facts.level}へ上がりました。`,
+          appearance
+            ? `住まい兼仕事場${facts.buildingId}の描画も世帯Lvを受け、外観キーは${appearance.key}、外観段階${appearance.tier}、高さ${appearance.elevation}になりました。品の流れは、財布だけでなく町の姿にも残ります。`
+            : '品の流れは、財布だけでなく暮らしの等級にも残ります。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'no-vacancy-job-change',
+    source: 'event',
+    when({ model, events, state }) {
+      return goalCompleted(state, 'place-conversion-workshops')
+        && Boolean(noVacancyReport(model, events));
+    },
+    render({ model, events }) {
+      const facts = noVacancyReport(model, events);
+      const target = facts.targetJob ? `${facts.targetJob}の` : '';
+      return {
+        kicker: '産業政策・転職',
+        title: '仕事を替えるにも、空いた建物が要ります',
+        summary: `${facts.message}・空き職建物 ${facts.vacantBuildingCount}棟`,
+        facts,
+        body: [
+          `${facts.day}日目、実イベント「${facts.message}」。この時、島の空き職建物は${facts.vacantBuildingCount}棟、${target}空きは${facts.targetVacancyCount}棟でした。`,
+          '困窮した世帯は、仕事だけを名前で替えるのではなく、空いている別職の建物へ実際に移り住みます。将来ほしい産業の建物を一棟空けておくことが、人の移れる道を用意する産業政策になります。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-five-close',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'sustain-conversion-workshops')
+        && goalCompleted(state, 'observe-household-level-up');
+    },
+    render({ state }) {
+      const survival = state.goalResults['sustain-conversion-workshops'].evidence;
+      const levelUp = state.letters.find(letter => letter.id === 'household-level-up').facts;
+      const vacancy = state.letters.find(letter => letter.id === 'no-vacancy-job-change')?.facts ?? null;
+      const vacancyBody = vacancy
+        ? `また、${vacancy.day}日目の「${vacancy.message}」から、転職には空き建物という受け皿が要ることも分かりました。`
+        : '転職失敗はこの90日には観測されませんでした。起きた時だけ、その実記録と空き建物数をご報告します。';
+      return {
+        kicker: '第五章・手仕事と暮らしの報告',
+        title: '品の連鎖が、島の暮らしを育てました',
+        summary: `三つの手仕事 ${survival.elapsedDays}日存続・${levelUp.job}#${levelUp.householdId} Lv${levelUp.level}`,
+        facts: { survival, levelUp, vacancy },
+        body: [
+          `木工房・炭焼・製塩所は${survival.startDay}日目から${survival.currentDay}日目まで、連続${survival.elapsedDays}日存続しました。丸太は道具と木炭へ、木炭は塩へ渡り、三つの品の生産が続いています。`,
+          `${levelUp.day}日目には${levelUp.job}#${levelUp.householdId}がLv${levelUp.level}へ上がり、建物${levelUp.buildingId}の外観にも反映されました。${vacancyBody}`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

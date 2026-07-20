@@ -1,11 +1,17 @@
 import { JOB_LABELS, SECTION_LABELS } from './config.js';
-import { MAINLAND_AID, companyStockReleasePrice } from './engine_bridge.js';
+import { MAINLAND_AID, companyStockReleasePrice, productionCost } from './engine_bridge.js';
 import { analyzeRoadConnections } from './placement.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
 ]);
+
+const CONVERSION_JOBS = Object.freeze({
+  woodshop: Object.freeze({ goods: 'tools', inputGoods: 'log' }),
+  charburner: Object.freeze({ goods: 'char', inputGoods: 'log' }),
+  saltworks: Object.freeze({ goods: 'salt', inputGoods: 'char' }),
+});
 
 function deepFreeze(value) {
   if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
@@ -243,6 +249,31 @@ export function snapshotToViewModel(snapshot) {
     goods,
     qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods, { market: true }) : null,
   ]));
+  const conversionEconomics = snapshot.economy.households.flatMap(household => {
+    const definition = CONVERSION_JOBS[household.job];
+    if (!definition) return [];
+    const building = snapshot.physical.buildings.find(candidate => candidate.id === household.buildingId);
+    const cost = productionCost(
+      snapshot.economy,
+      snapshot.physical,
+      household,
+      definition.goods,
+      { day: snapshot.day },
+    );
+    return [{
+      householdId: household.id,
+      buildingId: household.buildingId,
+      job: household.job,
+      goods: definition.goods,
+      inputGoods: definition.inputGoods,
+      inputAmount: building?.inventory?.input?.[definition.inputGoods] ?? 0,
+      inputPrice: snapshot.economy.px[definition.inputGoods] ?? 0,
+      cost,
+      marketPrice: snapshot.economy.px[definition.goods] ?? 0,
+      productionEma: snapshot.economy.f30?.[definition.goods]?.prod ?? 0,
+      consumptionEma: snapshot.economy.f30?.[definition.goods]?.cons ?? 0,
+    }];
+  });
   const base = {
     day: snapshot.day,
     tick: snapshot.tick,
@@ -285,6 +316,7 @@ export function snapshotToViewModel(snapshot) {
     companyMarketStock: { ...snapshot.economy.marketStock },
     companyMarketStockAverageCosts,
     companyReleasePrices,
+    conversionEconomics,
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {
       const requests = snapshot.economy.mainlandAid?.requests ?? 0;
