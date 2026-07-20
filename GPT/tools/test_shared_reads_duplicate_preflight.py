@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from shared_reads_title_index import (
     duplicate_preflight,
     load_mixed_queue_with_status,
+    load_open_group_queue_with_status,
     load_title_index_with_status,
 )
 from build_shared_reads_title_canonical_index import build_index_rows
@@ -128,6 +129,27 @@ class DuplicatePreflightTest(unittest.TestCase):
         new_result = duplicate_preflight("New Title", "https://example.com/new", closed, **common)
         self.assertEqual(new_result["decision"], "continue")
 
+    def test_all_open_title_match_is_review_not_skip(self):
+        healthy = {"healthy": True, "reason": "fresh"}
+        result = duplicate_preflight(
+            "Same Name",
+            "https://example.net/third-work",
+            {},
+            posted_source_rows=[],
+            posted_source_status=healthy,
+            title_index_status=healthy,
+            open_group_queue={
+                "same name": {
+                    "group_key": "same name",
+                    "group_kind": "all_open",
+                    "representative_paths": ["a.md", "b.md"],
+                }
+            },
+            open_group_queue_status=healthy,
+        )
+        self.assertEqual((result["decision"], result["reason"]), ("review", "open_duplicate_title_match"))
+        self.assertEqual(result["group_kind"], "all_open")
+
     def test_each_unhealthy_sidecar_reviews(self):
         healthy = {"healthy": True, "reason": "fresh"}
         cases = [
@@ -183,6 +205,7 @@ class DuplicatePreflightTest(unittest.TestCase):
             candidate.write_text("---\ntitle: Fixture\n---\n", encoding="utf-8")
             title_index = root / "title.jsonl"
             mixed_queue = root / "mixed.jsonl"
+            open_group_queue = root / "open-groups.jsonl"
 
             self.assertEqual(
                 load_title_index_with_status(title_index, candidates)[1]["reason"],
@@ -192,9 +215,14 @@ class DuplicatePreflightTest(unittest.TestCase):
                 load_mixed_queue_with_status(mixed_queue, candidates)[1]["reason"],
                 "mixed_queue_missing",
             )
+            self.assertEqual(
+                load_open_group_queue_with_status(open_group_queue, candidates)[1]["reason"],
+                "open_group_queue_missing",
+            )
 
             title_index.write_text("", encoding="utf-8")
             mixed_queue.write_text("", encoding="utf-8")
+            open_group_queue.write_text("", encoding="utf-8")
             future = time.time_ns() + 2_000_000_000
             os.utime(candidate, ns=(future, future))
             self.assertEqual(
@@ -204,6 +232,10 @@ class DuplicatePreflightTest(unittest.TestCase):
             self.assertEqual(
                 load_mixed_queue_with_status(mixed_queue, candidates)[1]["reason"],
                 "mixed_queue_stale_candidates",
+            )
+            self.assertEqual(
+                load_open_group_queue_with_status(open_group_queue, candidates)[1]["reason"],
+                "open_group_queue_stale_candidates",
             )
 
 

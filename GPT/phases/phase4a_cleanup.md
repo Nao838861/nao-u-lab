@@ -123,24 +123,25 @@ python tools\build_shared_reads_mixed_duplicate_queue.py
 Phase 4a で mixed duplicate を handoff する時は、この queue の上位から最大 5 件を見て、同じ `title_key` の candidate を複数同時に `stale_review_batch` へ入れない。`recommended_representative` を基本に選び、`priority_reason` / `status_counts` / `terminal_paths` / `open_paths` を staging に根拠として残す。terminal group は従来通り `memory/shared_reads_title_canonical_index.jsonl` 側で扱う。
 ## stale triage queue (2026-07-06)
 
-Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を導入した。Phase 4a が `stale_review_batch` を作る時は、まず次を再生成する。
+Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を導入した。2026-07-21 Phase 4c 以降、Phase 4a が `stale_review_batch` を作る時は、まず次の順で再生成する。
 
 ```powershell
-python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_open_duplicate_group_queue.py
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
+python tools\build_shared_reads_group_action_queue.py
 ```
 
-`shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用し、`duplicate_group_key` があるものは mixed duplicate 解消候補として扱う。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
+`shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。`duplicate_group_key` は mixed / all-open の双方に付け、同じ group は queue 上位選定で1回だけ扱う。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用するが、group-action handoff に含めた sibling は重ねて入れない。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
 
 ## bounded group-action handoff (2026-07-16 Phase 4c)
 
-mixed duplicate の stale 候補は、既存 2 queue を再生成した後に次も実行する。
+open duplicate group の stale 候補は、open-group sidecar と stale triage を再生成した後に group-action queue を生成する。
 
 ```powershell
 python tools\build_shared_reads_group_action_queue.py
 ```
 
-`memory/shared_reads_group_action_queue.jsonl` は group 単位の再生成可能 sidecar である。Phase 4a から Phase 2 へ渡す budget は通常 1 group とする。ただし、次の両方を満たす時だけ backlog 高水位と判定し、最大 3 group にする。
+`memory/shared_reads_open_duplicate_group_queue.jsonl` は open sibling を持つ重複 title 群を `mixed` / `all_open` に分類し、`group_key` / `group_kind` / `open_paths` / `terminal_paths` / `status_counts` / `source_url_evidence` / `representative_paths` を持つ再生成可能 sidecar である。`memory/shared_reads_group_action_queue.jsonl` はそこから stale evidence がある group を1群1件へ畳む。Phase 4a から Phase 2 へ渡す budget は通常 1 group とする。ただし、次の両方を満たす時だけ backlog 高水位と判定し、最大 3 group にする。
 
 - `overdue_open_total` が `shared_reads_stale_triage_queue.jsonl` の収載行数を超えている（queue が overdue 全体を収載できていない）。
 - `shared_reads_group_action_queue.jsonl` に未処理の actionable group が 3 件以上ある。
@@ -158,4 +159,4 @@ staging の `group_action_handoff` は当該 cycle の選定表示に限定す�
 
 handoff に含めた group の `representative` と `open_siblings` は candidate 単位の `stale_review_batch` に重ねて入れない。この重複排除は複数 group を渡す場合も全 group に適用する。元 candidate、stale triage queue、mixed duplicate queue は変更しない。
 
-staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` を残す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、`close_siblings` または `keep_distinct` と判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。
+staging の `stale_backlog` には最低限 `overdue_open_total` / `stale_triage_queue_rows` / `open_duplicate_group_count` / `mixed_group_count` / `all_open_group_count` / `actionable_group_count` / `backlog_high_water` / `group_handoff_budget` / `handed_off_group_count` を残す。title 一致だけでは自動 close / skip せず、`source_url_evidence` を読んで既存の `close_siblings` / `keep_distinct` / `defer` へ渡す。1 cycle 後は Phase 2 の `group_actions` を参照し、processed groups、判断できた open siblings、通常 candidate 分析への時間影響を確認して、budget 3 を継続するか判定する。

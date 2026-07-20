@@ -46,3 +46,7 @@ ts=1778560845.121349 (本 directive で参照) は Nao_u が指摘の直接対�
 ## 実装メモ（2026-07-20 Phase 4c）
 
 title canonical index は全 sibling が `posted` / `failed` の closed group 専用へ戻し、terminal / open status が混在する group は mixed duplicate queue から `review` へ渡す。preflight は posted-source の同一 work だけを `skip` とし、closed / mixed title 一致と各 sidecar の missing・stale は `review` にする。candidate frontmatter と品質基準は変更しない。
+
+## 実装メモ（2026-07-21 Phase 4c）
+
+open sibling を持つ同一 title 群を mixed / all-open に分ける `memory/shared_reads_open_duplicate_group_queue.jsonl` を導入し、stale triage・group-action・candidate preflight の入力をこの superset sidecar へ切り替えた。title 一致だけでは同一 work と確定せず、URL evidence を伴う review と既存 handoff resolve を通す。候補本文・投稿品質基準・posted-source の同一 work だけを skip する境界は変更しない。

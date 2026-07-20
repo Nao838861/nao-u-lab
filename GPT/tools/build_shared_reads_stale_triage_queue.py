@@ -11,8 +11,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from build_shared_reads_mixed_duplicate_queue import DEFAULT_OUTPUT as DEFAULT_MIXED_QUEUE
-from build_shared_reads_mixed_duplicate_queue import build_queue as build_mixed_duplicate_queue
+from build_shared_reads_open_duplicate_group_queue import DEFAULT_OUTPUT as DEFAULT_OPEN_GROUP_QUEUE
+from build_shared_reads_open_duplicate_group_queue import build_queue as build_open_duplicate_group_queue
 from shared_reads_title_index import DEFAULT_CANDIDATES_DIR, normalize_title_key, read_frontmatter, rel_path
 
 
@@ -51,7 +51,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--candidates-dir", type=Path, default=DEFAULT_CANDIDATES_DIR)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--mixed-queue", type=Path, default=DEFAULT_MIXED_QUEUE)
+    parser.add_argument(
+        "--open-group-queue",
+        "--mixed-queue",
+        dest="open_group_queue",
+        type=Path,
+        default=DEFAULT_OPEN_GROUP_QUEUE,
+    )
     parser.add_argument("--today", default=date.today().isoformat())
     parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--check", action="store_true", help="do not write; fail if output is stale")
@@ -96,7 +102,7 @@ def reason_for(meta: dict[str, str], age_days: int, duplicate_group_key: str) ->
     base = " ".join(base.split())
     if len(base) > 160:
         base = base[:157].rstrip() + "..."
-    duplicate_note = "mixed duplicate group present" if duplicate_group_key else "no mixed duplicate group"
+    duplicate_note = "open duplicate group present" if duplicate_group_key else "no open duplicate group"
     return f"age_days={age_days}; {duplicate_note}; {base}"
 
 
@@ -110,21 +116,21 @@ def recommended_review_action(duplicate_group_key: str, transfer_value: str, age
     return "keep_for_phase2"
 
 
-def load_mixed_group_keys(candidates_dir: Path, mixed_queue_path: Path) -> set[str]:
-    if mixed_queue_path.exists():
+def load_open_group_keys(candidates_dir: Path, open_group_queue_path: Path) -> set[str]:
+    if open_group_queue_path.exists():
         rows = []
-        with mixed_queue_path.open("r", encoding="utf-8") as handle:
+        with open_group_queue_path.open("r", encoding="utf-8") as handle:
             for line in handle:
                 line = line.strip()
                 if line:
                     rows.append(json.loads(line))
     else:
-        rows = build_mixed_duplicate_queue(candidates_dir)
+        rows = build_open_duplicate_group_queue(candidates_dir)
     return {str(row.get("group_key") or "") for row in rows if row.get("group_key")}
 
 
-def build_queue(candidates_dir: Path, today: date, mixed_queue_path: Path, limit: int) -> list[dict[str, Any]]:
-    mixed_group_keys = load_mixed_group_keys(candidates_dir, mixed_queue_path)
+def build_queue(candidates_dir: Path, today: date, open_group_queue_path: Path, limit: int) -> list[dict[str, Any]]:
+    open_group_keys = load_open_group_keys(candidates_dir, open_group_queue_path)
     records: list[dict[str, Any]] = []
     for path in sorted(candidates_dir.glob("*.md")):
         if path.name.upper() == "README.MD":
@@ -137,7 +143,7 @@ def build_queue(candidates_dir: Path, today: date, mixed_queue_path: Path, limit
         if stale_after is None or stale_after > today:
             continue
         group_key = normalize_title_key(meta.get("title", ""))
-        duplicate_group_key = group_key if group_key in mixed_group_keys else ""
+        duplicate_group_key = group_key if group_key in open_group_keys else ""
         age_days = (today - stale_after).days
         transfer_value = game_transfer_value(meta)
         records.append(
@@ -165,7 +171,18 @@ def build_queue(candidates_dir: Path, today: date, mixed_queue_path: Path, limit
             row["path"],
         )
     )
-    return records if limit < 0 else records[:limit]
+    selected: list[dict[str, Any]] = []
+    selected_group_keys: set[str] = set()
+    for row in records:
+        group_key = str(row["duplicate_group_key"])
+        if group_key and group_key in selected_group_keys:
+            continue
+        selected.append(row)
+        if group_key:
+            selected_group_keys.add(group_key)
+        if limit >= 0 and len(selected) >= limit:
+            break
+    return selected
 
 
 def render_jsonl(records: list[dict[str, Any]]) -> str:
@@ -175,7 +192,7 @@ def render_jsonl(records: list[dict[str, Any]]) -> str:
 def main() -> int:
     args = parse_args()
     today = date.fromisoformat(args.today)
-    records = build_queue(args.candidates_dir, today, args.mixed_queue, args.limit)
+    records = build_queue(args.candidates_dir, today, args.open_group_queue, args.limit)
     rendered = render_jsonl(records)
 
     if args.check:

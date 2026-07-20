@@ -1,21 +1,23 @@
 # shared_reads_candidates/
 
-duplicate preflight は `memory/shared_reads_posted_source_index.jsonl`、closed canonical index、mixed duplicate queue の順に読む。raw Slack の実投稿を正本とする URL/work 一致だけが `skip`、closed / mixed title 一致は `review`、どれにも該当しない時だけ `continue` になる。3 sidecar の missing・candidate更新後のstale、抽出不能、provenance 不足も安全側の `review` とする。Phase 3 の raw 横断照合は最終安全網として残す。
+duplicate preflight は `memory/shared_reads_posted_source_index.jsonl`、closed canonical index、open duplicate group queue の順に読む。raw Slack の実投稿を正本とする URL/work 一致だけが `skip`、closed / mixed / all-open の title 一致は `review`、どれにも該当しない時だけ `continue` になる。3 sidecar の missing・candidate更新後のstale、抽出不能、provenance 不足も安全側の `review` とする。Phase 3 の raw 横断照合は最終安全網として残す。
 
 再生成と検証:
 
 ```powershell
 python tools\build_shared_reads_posted_source_index.py
 python tools\build_shared_reads_title_canonical_index.py
-python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_open_duplicate_group_queue.py
 python tools\build_shared_reads_posted_source_index.py --check
 python tools\build_shared_reads_title_canonical_index.py --check
-python tools\build_shared_reads_mixed_duplicate_queue.py --check
+python tools\build_shared_reads_open_duplicate_group_queue.py --check
 ```
 
-candidate frontmatter を作成・更新した後は closed / mixed sidecar が stale になる。次の candidate の preflight 前に3 builderを再実行し、stale のまま自動処理を続けない。
+candidate frontmatter を作成・更新した後は closed / open-group sidecar が stale になる。次の candidate の preflight 前に3 builderを再実行し、stale のまま自動処理を続けない。
 
 2026-07-20 Phase 4c で sidecar の役割を分離した。title canonical index は全 sibling が `posted` / `failed` の closed group だけを保持し、terminal / open status が混在する group は mixed duplicate queue にだけ保持する。既存 candidate の status は一括変更しない。
+
+2026-07-21 Phase 4c で `memory/shared_reads_open_duplicate_group_queue.jsonl` を追加した。これは mixed group と all-open group の双方を保持する superset sidecar で、stale triage / group-action / duplicate preflight の現行入力である。旧 mixed queue は既存監査との互換用に残す。title 一致だけでは同一 work と確定せず、`source_url_evidence` を読んで review する。
 
 #shared-reads に投稿する基準を満たさない**候補レベル**の記事置き場。
 
@@ -152,7 +154,7 @@ Phase 4c で `memory/shared_reads_stale_triage_queue.jsonl` を追加した。�
 再生成:
 
 ```powershell
-python tools\build_shared_reads_mixed_duplicate_queue.py
+python tools\build_shared_reads_open_duplicate_group_queue.py
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD>
 python tools\build_shared_reads_stale_triage_queue.py --today <YYYY-MM-DD> --check
 ```

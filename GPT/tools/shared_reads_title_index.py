@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES_DIR = ROOT / "memory" / "shared_reads_candidates"
 DEFAULT_TITLE_INDEX = ROOT / "memory" / "shared_reads_title_canonical_index.jsonl"
 DEFAULT_MIXED_QUEUE = ROOT / "memory" / "shared_reads_mixed_duplicate_queue.jsonl"
+DEFAULT_OPEN_DUPLICATE_GROUP_QUEUE = ROOT / "memory" / "shared_reads_open_duplicate_group_queue.jsonl"
 TERMINAL_STATUSES = {"posted", "failed"}
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 
@@ -61,6 +62,8 @@ def duplicate_preflight(
     title_index_status: dict[str, Any] | None = None,
     mixed_queue: dict[str, dict[str, Any]] | None = None,
     mixed_queue_status: dict[str, Any] | None = None,
+    open_group_queue: dict[str, dict[str, Any]] | None = None,
+    open_group_queue_status: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return continue/review/skip before a shared-reads candidate is written."""
     title_key = normalize_title_key(title)
@@ -140,6 +143,25 @@ def duplicate_preflight(
             "canonical_path": row.get("canonical_path", ""),
             "permalink": row.get("permalink", ""),
             "reason": "closed_title_match",
+        }
+
+    if open_group_queue_status is not None and not open_group_queue_status.get("healthy"):
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "reason": str(open_group_queue_status.get("reason") or "open_group_queue_unhealthy"),
+        }
+
+    open_group_row = (open_group_queue or {}).get(title_key)
+    if open_group_row:
+        return {
+            "decision": "review",
+            "title_key": title_key,
+            "canonical_url": canonical_url,
+            "group_kind": open_group_row.get("group_kind", ""),
+            "representative_paths": list(open_group_row.get("representative_paths", [])),
+            "reason": "open_duplicate_title_match",
         }
 
     if mixed_queue_status is not None and not mixed_queue_status.get("healthy"):
@@ -288,6 +310,30 @@ def load_mixed_queue_with_status(
                 rows[group_key] = row
     except (OSError, ValueError, json.JSONDecodeError):
         return {}, {"healthy": False, "reason": "mixed_queue_invalid"}
+    return rows, status
+
+
+def load_open_group_queue_with_status(
+    path: Path = DEFAULT_OPEN_DUPLICATE_GROUP_QUEUE,
+    candidates_dir: Path = DEFAULT_CANDIDATES_DIR,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    status = _derived_index_status(path, candidates_dir, "open_group_queue")
+    if not status["healthy"]:
+        return {}, status
+    rows: dict[str, dict[str, Any]] = {}
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                group_key = str(row.get("group_key") or "")
+                group_kind = str(row.get("group_kind") or "")
+                if not group_key or group_kind not in {"mixed", "all_open"}:
+                    raise ValueError(f"{path}:{line_number}: invalid group_key/group_kind")
+                rows[group_key] = row
+    except (OSError, ValueError, json.JSONDecodeError):
+        return {}, {"healthy": False, "reason": "open_group_queue_invalid"}
     return rows, status
 
 

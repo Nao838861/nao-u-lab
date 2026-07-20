@@ -9,9 +9,9 @@ outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクショ
 
 ## Duplicate preflight の判定順 (2026-07-18 Phase 4c)
 
-本文評価前の duplicate preflight は、`posted-source → closed canonical → mixed queue → continue` の順に確認する。実 Slack 投稿の canonical URL / domain 限定 work identity 一致だけを `skip` とし、全 sibling が `posted` / `failed` の closed title 一致と、terminal / open status が混在する mixed title 一致は `review` にする。3 sidecar の missing・candidate snapshot より古い stale、URL 抽出未解決、provenance 不足も `review` に倒す。Phase 3 の raw Slack 横断照合は最終安全網として維持する。
+本文評価前の duplicate preflight は、`posted-source → closed canonical → open duplicate group → continue` の順に確認する。実 Slack 投稿の canonical URL / domain 限定 work identity 一致だけを `skip` とし、closed title、terminal/open 混在の mixed title、全 sibling が open の all-open title 一致は `review` にする。3 sidecar の missing・candidate snapshot より古い stale、URL 抽出未解決、provenance 不足も `review` に倒す。Phase 3 の raw Slack 横断照合は最終安全網として維持する。
 
-Phase 2 開始時と candidate frontmatter 更新後の次回 preflight 前に、posted-source / title canonical / mixed duplicate の各 builder を再実行する。sidecar の自動補正は行わず、stale のままなら評価を進めない。
+Phase 2 開始時と candidate frontmatter 更新後の次回 preflight 前に、posted-source / title canonical / open duplicate group の各 builder を再実行する。sidecar の自動補正は行わず、stale のままなら評価を進めない。
 
 ## stale_review_batch 再評価契約 (2026-06-19)
 
@@ -107,7 +107,7 @@ Phase 4c で `memory/shared_reads_mixed_duplicate_queue.jsonl` を導入した�
 
 ## 評価前 terminal-title preflight (2026-06-29)
 
-Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_mixed_duplicate_queue.jsonl` を確認する。
+Phase 2 は、新規 candidate 評価および `stale_review_batch` 再評価の本文読解に入る前に、対象 candidate の `title` を `tools/shared_reads_title_index.py` の `normalize_title_key()` と同じ規則で `title_key` 化し、`memory/shared_reads_title_canonical_index.jsonl` と `memory/shared_reads_open_duplicate_group_queue.jsonl` を確認する。
 
 Phase 4a が staging に `group_action_handoff` を残した場合、Phase 2 は記録された budget（通常 1 group、backlog 高水位時だけ最大 3 group）の各 `representative` を再評価する。同じ `group_key` は 1 回だけ扱い、handoff 対象 group の `representative` と `open_siblings` を candidate 単位の `stale_review_batch` と同時に評価しない。`terminal_siblings` と `latest_evidence` は判断根拠として読むが、candidate frontmatter を group 単位で自動一括更新しない。
 
@@ -156,7 +156,7 @@ group_handoff_audit:
   pending_after: <件数>
 ```
 
-`close_siblings` は対象を閉じてよいという提案、`keep_distinct` は題材差・資料差などにより別 candidate として維持する判断、`defer` は根拠不足による保留である。いずれも `target_paths` / `reason` / `terminal_evidence` を省略しない。参照できる terminal evidence がなければ空配列にせず、その不足を示して `defer` にする。
+`close_siblings` は対象を閉じてよいという提案、`keep_distinct` は題材差・資料差などにより別 candidate として維持する判断、`defer` は根拠不足による保留である。いずれも `target_paths` / `reason` / `terminal_evidence` を省略しない。all-open 群を `keep_distinct` にする時は、`terminal_evidence` の既存 schema に各 open path の source URL / work 差分を記録する。根拠を示せない時は `defer` にする。title 一致だけで `close_siblings` や `skip` を選ばない。
 
 同じ `title_key` に `status: posted` の terminal sibling が見つかった場合、その candidate は Phase 3 投稿対象にしない。本文評価を作る前に、対象 candidate だけ frontmatter を次の形で閉じる:
 

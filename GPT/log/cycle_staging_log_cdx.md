@@ -252,7 +252,57 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260721-01
+    files_changed:
+      - path: tools/build_shared_reads_open_duplicate_group_queue.py
+        change: created
+      - path: memory/shared_reads_open_duplicate_group_queue.jsonl
+        change: created
+      - path: tools/build_shared_reads_stale_triage_queue.py
+        change: modified
+      - path: tools/build_shared_reads_group_action_queue.py
+        change: modified
+      - path: tools/shared_reads_title_index.py
+        change: modified
+      - path: tools/shared_reads_duplicate_preflight.py
+        change: modified
+      - path: tools/test_shared_reads_open_duplicate_group_queue.py
+        change: created
+      - path: tools/test_shared_reads_group_handoff.py
+        change: modified
+      - path: tools/test_shared_reads_duplicate_preflight.py
+        change: modified
+      - path: memory/shared_reads_stale_triage_queue.jsonl
+        change: modified
+      - path: memory/shared_reads_group_action_queue.jsonl
+        change: modified
+      - path: phases/phase1_collect.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "open sibling を持つ同一 title 群を mixed / all_open に分類する superset sidecar を導入し、stale triage・group-action・duplicate preflight を既存 handoff resolve へ接続した。title 一致だけでは自動 close / skip しない。"
+    partial: false
+migrations:
+  - what: "candidate frontmatter を変更せず、open duplicate group / stale triage / group-action の派生 sidecar を現データから再生成"
+    affected: "open duplicate 67群（mixed 49、all_open 18）、stale triage 50行、actionable group 14群"
+verification:
+  - "python -m unittest discover -s tools -p 'test_shared_reads_*.py': 28 tests passed"
+  - "mixed / all_open / 同名別work / membership変化 / 冪等render の追加テストが通過"
+  - "3 builder の --check がすべて成功。stale queue の duplicate group 14行は group_key 14件で重複なし"
+  - "python tools/shared_reads_group_handoff.py audit: rows=48、pending=0、errors=[]"
+  - "python tools/memory_recall.py 'open duplicate group all_open' --limit 3 --compact --no-log: exit 0"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

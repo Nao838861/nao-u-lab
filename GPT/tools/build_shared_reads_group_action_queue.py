@@ -15,7 +15,7 @@ from shared_reads_group_handoff import DEFAULT_INBOX, ROOT, resolution_suppresse
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_STALE_QUEUE = ROOT / "memory" / "shared_reads_stale_triage_queue.jsonl"
-DEFAULT_MIXED_QUEUE = ROOT / "memory" / "shared_reads_mixed_duplicate_queue.jsonl"
+DEFAULT_OPEN_GROUP_QUEUE = ROOT / "memory" / "shared_reads_open_duplicate_group_queue.jsonl"
 DEFAULT_OUTPUT = ROOT / "memory" / "shared_reads_group_action_queue.jsonl"
 TERMINAL_STATUSES = {"posted", "failed"}
 TRANSFER_RANK = {"high": 0, "medium": 1, "low": 2}
@@ -28,7 +28,13 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build a group-level shared-reads review queue.")
     parser.add_argument("--stale-queue", type=Path, default=DEFAULT_STALE_QUEUE)
-    parser.add_argument("--mixed-queue", type=Path, default=DEFAULT_MIXED_QUEUE)
+    parser.add_argument(
+        "--open-group-queue",
+        "--mixed-queue",
+        dest="open_group_queue",
+        type=Path,
+        default=DEFAULT_OPEN_GROUP_QUEUE,
+    )
     parser.add_argument("--inbox", type=Path, default=DEFAULT_INBOX)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--limit", type=int, default=-1)
@@ -59,17 +65,21 @@ def select_representative(open_paths: list[str], stale_by_path: dict[str, dict[s
 
 def build_queue(
     stale_rows: list[dict[str, Any]],
-    mixed_rows: list[dict[str, Any]],
+    open_group_rows: list[dict[str, Any]],
     inbox_rows: list[dict[str, Any]] | None = None,
     root: Path = ROOT,
     as_of: datetime | None = None,
 ) -> list[dict[str, Any]]:
     stale_by_path = {str(row.get("path") or ""): row for row in stale_rows if row.get("path")}
     records: list[dict[str, Any]] = []
-    for group in mixed_rows:
+    for group in open_group_rows:
         evidence = group.get("evidence") or {}
-        open_paths = sorted(str(path) for path in evidence.get("open_paths", []) if path)
-        terminal_paths = sorted(str(path) for path in evidence.get("terminal_paths", []) if path)
+        open_paths = sorted(
+            str(path) for path in (group.get("open_paths") or evidence.get("open_paths", [])) if path
+        )
+        terminal_paths = sorted(
+            str(path) for path in (group.get("terminal_paths") or evidence.get("terminal_paths", [])) if path
+        )
         stale_open_paths = [path for path in open_paths if path in stale_by_path]
         if not stale_open_paths:
             continue
@@ -82,6 +92,7 @@ def build_queue(
         latest = stale_by_path[latest_path]
         record = {
                 "group_key": group.get("group_key", ""),
+                "group_kind": group.get("group_kind", "mixed"),
                 "representative": representative,
                 "open_siblings": open_paths,
                 "terminal_siblings": terminal_paths,
@@ -117,7 +128,7 @@ def render_jsonl(records: list[dict[str, Any]]) -> str:
 def main() -> int:
     args = parse_args()
     inbox_rows = read_jsonl(args.inbox) if args.inbox.exists() else []
-    records = build_queue(read_jsonl(args.stale_queue), read_jsonl(args.mixed_queue), inbox_rows)
+    records = build_queue(read_jsonl(args.stale_queue), read_jsonl(args.open_group_queue), inbox_rows)
     if args.limit >= 0:
         records = records[: args.limit]
     rendered = render_jsonl(records)

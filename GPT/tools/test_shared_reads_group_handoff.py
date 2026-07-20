@@ -149,6 +149,33 @@ class GroupHandoffTest(unittest.TestCase):
             self.assertFalse(resolution_suppresses(item_payload, rows, root))
             self.assertEqual(len(build_queue(stale_rows, mixed_rows, rows, root)), 1)
 
+    def test_all_open_keep_distinct_uses_source_evidence_and_reopens_on_membership_change(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            a = "memory/shared_reads_candidates/a.md"
+            b = "memory/shared_reads_candidates/b.md"
+            candidate(root / a, "postponed")
+            candidate(root / b, "needs_review")
+            item_payload = payload("same-name", [a, b])
+            item_payload["representative"] = a
+            item_payload["group_kind"] = "all_open"
+            rows, _ = enqueue_rows([], [item_payload], "cycle-a", "2026-07-18T00:00:00+09:00", root)
+            decision = {
+                "group_key": "same-name",
+                "action": "keep_distinct",
+                "target_paths": [a, b],
+                "reason": "same title but different works",
+                "terminal_evidence": [
+                    {"path": a, "evidence": "source:https://example.com/work-a"},
+                    {"path": b, "evidence": "source:https://example.org/work-b"},
+                ],
+            }
+            rows, result = resolve(rows, rows[0]["id"], decision, "fixture", "2026-07-19T00:00:00+09:00", root)
+            self.assertEqual(result, "resolved")
+            self.assertTrue(resolution_suppresses(item_payload, rows, root))
+            update_frontmatter_fields(root / b, {"status": "ready_to_post"})
+            self.assertFalse(resolution_suppresses(item_payload, rows, root))
+
     def test_defer_is_ineligible_until_retry_after(self):
         base = datetime(2026, 7, 19, tzinfo=timezone.utc)
         rows, _ = enqueue_rows([], [payload("alpha")], "cycle-a", base.isoformat())
