@@ -157,15 +157,20 @@ export function createEngineApi(
     if (!captureEventStream) return;
     const { economy, physical } = world.state;
     const nextHouseholds = new Map();
+    const newcomers = [];
+    const memberDecreases = [];
+    const trackedSurs = new Set(
+      [...tracker.households.values()].map((previous) => previous.sur).filter(Boolean),
+    );
     for (const household of economy.households) {
       const point = { x: household.px ?? household.x, y: household.py ?? household.y };
       const previous = tracker.households.get(household.id);
-      if (!previous) emit("arrival", point, { householdId: household.id, reason: "new_household" });
+      if (!previous) newcomers.push({ household, point });
       else {
         if (household.members.length > previous.members) {
           emit("birth", point, { householdId: household.id, count: household.members.length - previous.members });
         } else if (household.members.length < previous.members) {
-          emit("death", point, { householdId: household.id, count: previous.members - household.members });
+          memberDecreases.push({ household, point, lost: previous.members - household.members.length });
         }
         if (household.job !== previous.job || household.buildingId !== previous.buildingId) {
           emit("job_move", point, {
@@ -196,10 +201,32 @@ export function createEngineApi(
       nextHouseholds.set(household.id, {
         state: household.state,
         members: household.members.length,
+        sur: household.sur,
         job: household.job,
         buildingId: household.buildingId,
         x: point.x,
         y: point.y,
+      });
+    }
+    // 家督分家は「人数減+同tickに同じ家名の新世帯」で識別し、死亡と区別して報告する
+    const newcomerBySur = new Map(newcomers.map(({ household }) => [household.sur, household.id]));
+    for (const { household, point, lost } of memberDecreases) {
+      const splitTo = newcomerBySur.get(household.sur);
+      if (splitTo !== undefined) {
+        emit("departure", point, {
+          householdId: household.id,
+          reason: "household_split",
+          toHouseholdId: splitTo,
+          count: lost,
+        });
+      } else {
+        emit("death", point, { householdId: household.id, count: lost });
+      }
+    }
+    for (const { household, point } of newcomers) {
+      emit("arrival", point, {
+        householdId: household.id,
+        reason: trackedSurs.has(household.sur) ? "successor" : "new_household",
       });
     }
     for (const [householdId, previous] of tracker.households) {
