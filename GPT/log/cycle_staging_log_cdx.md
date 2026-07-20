@@ -54,7 +54,17 @@ group_handoff_audit:
 - 新規収集・Slack 投稿・記憶階層改修は行っていない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_false_memories_multimodal_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784568554225909
+    char_count: 4353
+skipped: []
+```
+
+- 最終判定: `post`。arXiv v1 原文を確認し、LUCID の三段階、poisoning / injection、5 memory backend・5 MLLM の評価、retrieval と generation の分離、画像前処理と text-only 防御の差、適用限界まで本文へ反映した。
+- 投稿前レビュー: `tools/shared_reads_policy.py` の `validate_shared_reads_message` を通過。必須項目順、禁止表現、URL 末尾、単一 candidate / 単一 `chat.postMessage` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
