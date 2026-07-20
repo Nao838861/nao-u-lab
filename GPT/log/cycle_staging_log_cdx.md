@@ -219,4 +219,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784562044.131749"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784562044131749"
+  char_count: 2177
+  verification: ok
+  thread_ts: null
+draft: drafts/phase5_log_diary_20260721_0013_cdx.md
+notes:
+  - "Phase 1-4 の事実を列挙するだけでなく、重複を増やさない判断、MAP-Elites probe を追加しなかった迷い、2706 atom の整合性と局所破損、GAMED.AI handoff を『制作時の迷いを減らす記憶』という軸で振り返った"
+```
