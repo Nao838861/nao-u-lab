@@ -9,7 +9,72 @@
 - pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも 0 件。前回成功時刻 2026-07-20 06:38 JST 以降、収集対象 Slack ログへの新規投稿なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260720_actplane_agent_harness_os_policy.md
+fail:
+  - path: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    reason: "posted-source の同一 arXiv work と一致。group handoff で open sibling を閉鎖"
+  - path: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    reason: "posted-source の同一 arXiv work と一致。group handoff で open sibling を閉鎖"
+  - path: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    reason: "posted-source の同一 URL と一致。group handoff で open sibling を閉鎖"
+postpone: []
+stale_reviewed: []
+group_actions:
+  - group_key: sketchar supporting character design and illustration prototyping using generative ai
+    representative: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+      - memory/shared_reads_candidates/20260712_sketchar_character_design_prototyping.md
+    reason: "同一 arXiv work が #shared-reads に投稿済みであり、open sibling に別資料・別題材として残す根拠がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699"
+    representative_decision: fail
+    analysis_time_minutes: 2
+  - group_key: mage multi axis evaluation of llm generated executable game scenes beyond compile pass rate
+    representative: memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260528_mage_multi_axis_game_scene_eval.md
+    reason: "同一 arXiv work が #shared-reads に投稿済みであり、再投稿対象として残す根拠がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987180373269"
+    representative_decision: fail
+    analysis_time_minutes: 1
+  - group_key: robo dance postmortem gamedevjs jam 2026
+    representative: memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260601_robo_dance_gamedevjs_postmortem.md
+    reason: "同一 source URL が #shared-reads に投稿済みであり、別 candidate として維持する根拠がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260518_robo_dance_jam_postmortem.md
+        evidence: "posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
+    representative_decision: fail
+    analysis_time_minutes: 1
+group_handoff_audit:
+  pending_before: 4
+  read_ids:
+    - gha-d233eb155f8a6f5a
+    - gha-7353a4d4a9d38fa9
+    - gha-d6f01edf6ec0491f
+  resolved_ids:
+    - gha-d233eb155f8a6f5a
+    - gha-7353a4d4a9d38fa9
+    - gha-d6f01edf6ec0491f
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 4
+    already_terminal: 0
+  pending_after: 1
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

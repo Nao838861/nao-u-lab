@@ -7,14 +7,14 @@ genre_tags: [character-design, genai, prototyping, visual-design, collaboration]
 evaluated_at: "2026-05-16T01:32:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-16T01:32:28+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-16T01:32:28+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-20T17:50:26+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d233eb155f8a6f5a; terminal:memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699; reason:same arXiv work already posted to shared-reads"
 stale_after: "2026-06-15"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: >-
   designer と illustrator の communication gap を GenAI prototype で埋める問題設定はゲーム制作に直結する。
   ただし現 candidate は tool concept と boundary object としての読みは十分でも、評価条件・比較・参加者反応の中身が薄く、CoopEval 水準の概要に必要な検証部分をまだ埋めにくい。

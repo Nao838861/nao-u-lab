@@ -7,12 +7,12 @@ genre_tags: [game-design, character-design, generative-ai, prototyping, collabor
 evaluated_at: "2026-07-12T22:41:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-12T22:41:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-12T22:41:00+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T17:50:26+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d233eb155f8a6f5a; terminal:memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699; reason:same arXiv work already posted to shared-reads"
+next_action: none
 stale_after: "2026-08-11"
 supersedes: []
 gate_reason: "生成画像を最終素材ではなく職種間の参照試作として使う着想と、キャラクター制作への適用先は明確。ただし現候補には mixed-method study の参加者構成、比較条件、評価指標、具体的な結果と限界が不足し、CoopEval 水準の約4000字概要を根拠付きで構成できないため保留。"
