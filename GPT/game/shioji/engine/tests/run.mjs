@@ -2887,8 +2887,9 @@ test("支援要請: 逓減と拒絶・既存輸入経路での実配送・journa
   const economy = api.snapshot({ scope: "full" }).economy;
   assert.equal(economy.mainlandAid.requests, 4);
   for (const qty of [240, 180, 120, 60]) {
-    assert.ok(economy.importRequests.some((request) => request.goods === "wheat" && request.qty === qty),
-      `支援${qty}荷が輸入要請として実在する`);
+    const request = economy.importRequests.find((row) => row.goods === "wheat" && row.qty === qty);
+    assert.ok(request, `支援${qty}荷が輸入要請として実在する`);
+    assert.deepEqual([request.aid, request.unitCost], [true, 0], "支援は贈与(仕入原価0)");
   }
   for (let tick = 0; tick < 12 * 30; tick += 1) api.advanceTicks(1);
   const after = api.snapshot({ scope: "full" }).economy;

@@ -1341,14 +1341,14 @@ export function requestMainlandAid(economy, physical, { day }) {
     return { ok: false, refused: true, requests: used, qty: 0 };
   }
   const qty = Math.round(MAINLAND_AID.BASE_WHEAT * (1 - MAINLAND_AID.DECAY * used));
-  const request = requestCompanyImport(economy, physical, "wheat", { day, qty });
+  const request = requestCompanyImport(economy, physical, "wheat", { day, qty, aid: true });
   if (!request) return { ok: false, refused: false, requests: used, qty: 0 };
   economy.mainlandAid = { requests: used + 1 };
   recordEconomyEvent(economy, day, `本国へ食料支援を要請(${used + 1}回目)——麦${qty}荷の船が発つ`);
   return { ok: true, refused: false, qty, requests: used + 1 };
 }
 
-export function requestCompanyImport(economy, physical, goods, { day, qty }) {
+export function requestCompanyImport(economy, physical, goods, { day, qty, aid = false }) {
   if (P.IMP[goods] === undefined) throw new Error(`輸入対象外です: ${goods}`);
   if (!Number.isFinite(qty) || qty <= 1e-9) return null;
   const port = companyLogisticsSite(physical, "port");
@@ -1362,7 +1362,8 @@ export function requestCompanyImport(economy, physical, goods, { day, qty }) {
     portQty: 0,
     status: "vessel",
     requestedDay: day,
-    unitCost: P.IMP_COST[goods] ?? P.IMP[goods] * 0.7,
+    aid,
+    unitCost: aid ? 0 : (P.IMP_COST[goods] ?? P.IMP[goods] * 0.7),
   };
   economy.nextImportRequestId += 1;
   const call = dockVessel(physical, {
@@ -1414,6 +1415,10 @@ export function buyAtMarket(
         if (importQty > 1e-9) {
           shelves.push({ goods, kind: "CO", qty: importQty, price: P.IMP[goods] });
         }
+        const aidQty = physical ? (economy.aidStock?.[goods] ?? 0) : 0;
+        if (aidQty > 1e-9) {
+          shelves.push({ goods, kind: "AID", qty: aidQty, price: 0 });
+        }
         if (
           physical
           && P.IMP[goods] <= ceiling
@@ -1452,14 +1457,16 @@ export function buyAtMarket(
 
     for (const shelf of shelves) {
       if (wanted < 1e-9) break;
-      if (shelf.price > ceiling || shelf.price <= 0) continue;
+      if (shelf.kind !== "AID" && (shelf.price > ceiling || shelf.price <= 0)) continue;
       const { goods } = shelf;
       const unitWeight = goodsUnitWeight(goods);
       const input = isProductionInput(household, goods);
-      const available = shelf.kind === "CO"
+      const available = (shelf.kind === "CO" || shelf.kind === "AID" || shelf.kind === "STOCK")
         ? shelf.qty
-        : shelf.kind === "STOCK" ? shelf.qty : shelf.stall.qty;
-      const affordable = (household.purse + (input ? 30 : 0)) / shelf.price;
+        : shelf.stall.qty;
+      const affordable = shelf.kind === "AID"
+        ? Infinity
+        : (household.purse + (input ? 30 : 0)) / shelf.price;
       const qty = Math.min(wanted, available, affordable, capacity / unitWeight);
       if (qty < 1e-9) continue;
 
@@ -1470,7 +1477,27 @@ export function buyAtMarket(
       wanted -= qty;
       capacity -= qty * unitWeight;
 
-      if (shelf.kind === "CO") {
+      if (shelf.kind === "AID") {
+        if (physical) {
+          economy.aidStock[goods] = Math.max(0, (economy.aidStock[goods] ?? 0) - qty);
+          const market = companyLogisticsSite(physical, "market");
+          withdrawInventory(market, "inbound", goods, qty);
+          shelf.qty -= qty;
+          let remainingTaken = qty;
+          for (const requestId of [...(economy.unsoldImportRequestIds ?? [])]) {
+            const request = importRequestById(economy, requestId);
+            if (!request?.aid || request.goods !== goods || remainingTaken <= 1e-9) continue;
+            const taken = Math.min(request.marketQty, remainingTaken);
+            request.marketQty -= taken;
+            request.soldQty += taken;
+            remainingTaken -= taken;
+            if (request.soldQty >= request.qty - 1e-9) {
+              request.status = "sold";
+              deactivateId(economy.unsoldImportRequestIds, request.id);
+            }
+          }
+        }
+      } else if (shelf.kind === "CO") {
         postCompanyLedger(economy.company, {
           day,
           amount: payment,
@@ -1494,7 +1521,7 @@ export function buyAtMarket(
           const unsoldIds = [...(economy.unsoldImportRequestIds ?? [])];
           for (const requestId of unsoldIds) {
             const request = importRequestById(economy, requestId);
-            if (!request) continue;
+            if (!request || request.aid) continue;
             if (request.goods !== goods || remainingSold <= 1e-9) continue;
             const sold = Math.min(request.marketQty, remainingSold);
             request.marketQty -= sold;
@@ -1558,15 +1585,17 @@ export function buyAtMarket(
       }
 
       economy.prices[goods].push([day, shelf.price, qty]);
-      economy.px[goods] = (economy.px[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
-      transactions.push({
-        goods,
-        qty,
-        price: shelf.price,
-        source: shelf.kind === "CO"
-          ? "CO"
-          : shelf.kind === "STOCK" ? "STOCK" : shelf.stall.householdId,
-      });
+      if (shelf.kind !== "AID") {
+        economy.px[goods] = (economy.px[goods] ?? shelf.price) * 0.9 + shelf.price * 0.1;
+        transactions.push({
+          goods,
+          qty,
+          price: shelf.price,
+          source: shelf.kind === "CO"
+            ? "CO"
+            : shelf.kind === "STOCK" ? "STOCK" : shelf.stall.householdId,
+        });
+      }
     }
   }
   return {
@@ -2763,8 +2792,12 @@ export function settleCompanyLogistics(economy, physical, { day }) {
       }
     } else if (metadata.kind === "import_delivery") {
       const request = importRequestById(economy, metadata.requestId);
-      economy.importStock[job.goods] = (economy.importStock[job.goods] ?? 0) + job.qty;
-      economy.importStockCost[job.goods] = (economy.importStockCost[job.goods] ?? 0) + metadata.cost;
+      if (request?.aid) {
+        (economy.aidStock ??= {})[job.goods] = (economy.aidStock[job.goods] ?? 0) + job.qty;
+      } else {
+        economy.importStock[job.goods] = (economy.importStock[job.goods] ?? 0) + job.qty;
+        economy.importStockCost[job.goods] = (economy.importStockCost[job.goods] ?? 0) + metadata.cost;
+      }
       if (request) {
         request.marketQty += job.qty;
         request.status = "market";
@@ -2827,26 +2860,37 @@ export function settlePortTransfers(economy, physical, { day, transfers }) {
     if (metadata.kind === "import") {
       const request = importRequestById(economy, metadata.requestId);
       if (!request) continue;
-      const wholesale = transfer.qty * request.unitCost;
       request.portQty += transfer.qty;
-      postCompanyLedger(economy.company, {
-        day,
-        amount: -wholesale,
-        reason: `${transfer.goods}の本土仕入`,
-      });
-      recordExternalMoneyFlow(economy, {
-        amount: -wholesale,
-        reason: `${transfer.goods}の本土仕入`,
-      });
-      economy.outBy[`imp_${transfer.goods}`] = (economy.outBy[`imp_${transfer.goods}`] ?? 0) + wholesale;
-      economy.imported[transfer.goods] = (economy.imported[transfer.goods] ?? 0) + transfer.qty;
-      recordEconomicMaterialFlow(
-        economy,
-        transfer.goods,
-        "imp",
-        transfer.qty,
-        `${transfer.goods}を本土から港ヤードへ輸入`,
-      );
+      if (request.aid) {
+        economy.imported[transfer.goods] = (economy.imported[transfer.goods] ?? 0) + transfer.qty;
+        recordEconomicMaterialFlow(
+          economy,
+          transfer.goods,
+          "imp",
+          transfer.qty,
+          `本国からの食料支援(${transfer.goods})が港ヤードへ届く——贈与のため銀は動かない`,
+        );
+      } else {
+        const wholesale = transfer.qty * request.unitCost;
+        postCompanyLedger(economy.company, {
+          day,
+          amount: -wholesale,
+          reason: `${transfer.goods}の本土仕入`,
+        });
+        recordExternalMoneyFlow(economy, {
+          amount: -wholesale,
+          reason: `${transfer.goods}の本土仕入`,
+        });
+        economy.outBy[`imp_${transfer.goods}`] = (economy.outBy[`imp_${transfer.goods}`] ?? 0) + wholesale;
+        economy.imported[transfer.goods] = (economy.imported[transfer.goods] ?? 0) + transfer.qty;
+        recordEconomicMaterialFlow(
+          economy,
+          transfer.goods,
+          "imp",
+          transfer.qty,
+          `${transfer.goods}を本土から港ヤードへ輸入`,
+        );
+      }
       if (transfer.completed) request.status = "port";
     } else if (metadata.kind === "household_export") {
       const lot = exportLotById(economy, metadata.lotId);
