@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T00:27:48+09:00",
+  "updated_at": "2026-07-21T02:34:57+09:00",
   "reviewed_source_ts": [
+    "1780957691.430689",
     "1781105732.550179",
     "1784545923.720719",
     "1784538040.103019",
@@ -447,6 +448,61 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T02:34:57+09:00",
+      "selected": {
+        "id": "sr-1780957691-9c9e4fccec",
+        "source_ts": "1780957691.430689",
+        "title": "GDC 2026『Write Between the Lines』— 必須理解と任意発見を複数 cue へ分ける",
+        "reason": "未レビューの score 12 atom で、memory・game-design・evaluation の3優先タグを持ち、投稿本文が問題設定、layered storytelling・rewarding curiosity・strategic brevity、適用限界まで自己完結している。新しい narrative probe を増やすのではなく、次の物語要素を含む playable diff で、短文化による意味消失と任意発見を一度だけ分けて観測できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計15で全必須閾値を満たす。shared-reads 本文は、説明を削る代わりに情報を行動・環境・UI・音・探索報酬へ分散し、必須理解と見逃されてもよい発見を分けるという実行可能な差を示す。一方、既存の narrative-playthrough-evidence は prose と playable evidence の分離を、gamerastra-accessibility-mental-map は cue と player mental map の分離を既に確認しており、active probe も320件あるため non_redundancy=1 とした。重複する新規 probe は追加せず、次の該当 playable diff 1件だけで required_understanding／optional_discovery と cue 配置を記録する可逆な評価 metric に留める。",
+      "existing_probes": [
+        "probe-20260610-narrative-playthrough-evidence",
+        "probe-20260621-gamerastra-accessibility-mental-map"
+      ],
+      "metric": {
+        "name": "required_optional_story_cue_placement",
+        "scope": "次の narrative、NPC、quest、tutorial、story-facing playable diff 1件",
+        "fields": [
+          "required_understanding",
+          "optional_discovery",
+          "cue_channels: action|environment|ui|audio|text|reward",
+          "observed_verdict"
+        ],
+        "verdict_labels": [
+          "required_cue_visible",
+          "required_cue_missed",
+          "optional_discovery_rewarded",
+          "brevity_flattened_meaning",
+          "not_applicable"
+        ],
+        "expires_after": "次に該当する playable diff 1件を評価したら、行動差がなければ追試・恒久化せず終了する。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "新規 active probe や恒久ルールを追加せず、次の物語要素を含む playable diff 1件だけで必須理解／任意発見と cue 配置を分ける評価 metric を review state に記録した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T00:27:48+09:00",
       "selected": {

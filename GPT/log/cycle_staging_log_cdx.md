@@ -67,7 +67,34 @@ skipped: []
 - 投稿前レビュー: `tools/shared_reads_policy.py` の `validate_shared_reads_message` を通過。必須項目順、禁止表現、URL 末尾、単一 candidate / 単一 `chat.postMessage` を確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780957691-9c9e4fccec
+    source_ts: "1780957691.430689"
+    title: "GDC 2026『Write Between the Lines』— 必須理解と任意発見を複数 cue へ分ける"
+    reason: "未レビューの score 12 atom で、memory・game-design・evaluation の3優先タグを持つ。投稿本文が手法、適用、限界まで自己完結しており、新規 probe を増やさず次の narrative playable diff に小さな行動差を作れるか確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 15
+  decision: adopt_metric
+  decision_reason: "採用閾値を満たす。既存 probes が prose／playable evidence と cue／mental map の分離を扱い、active probe も320件あるため、新規 probe は追加しない。次の該当 playable diff 1件だけで required_understanding／optional_discovery、cue_channels、observed_verdict を記録し、行動差がなければ追試・恒久化せず終了する。"
+  change:
+    summary: "review state に required_optional_story_cue_placement metric を追加した。新規 active probe、directive、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
