@@ -414,7 +414,7 @@ function renderCompanySheet() {
     $('#order-panel').innerHTML = `
       <h3>受諾済みの本国注文</h3>
       <p><b>${GOODS_LABELS[active.g] ?? active.g} ${formatQuantity(active.left)} / ${formatQuantity(active.qty)}荷</b></p>
-      <p>期限 ${active.due}日目・決済単価 ${formatQuantity(active.price * 10)}デナリ</p>`;
+      <p>期限 ${active.due}日目・完遂決済単価 ${formatQuantity(active.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(active.price * 10)}）</p>`;
   } else if (offer && dismissedOfferKey === orderKey(offer)) {
     $('#order-panel').innerHTML = `
       <h3>注文状を見送り中</h3>
@@ -428,7 +428,7 @@ function renderCompanySheet() {
     $('#order-panel').innerHTML = `
       <h3>本国から注文状</h3>
       <p><b>${GOODS_LABELS[offer.g] ?? offer.g} ${formatQuantity(offer.qty)}荷</b>・期限 ${offer.due}日目</p>
-      <p>本国決済単価 ${formatQuantity(offer.price * 10)}デナリ / 市場最安 ${marketText}</p>
+      <p>完遂決済単価 ${formatQuantity(offer.price * 1.25 * 10)}デナリ（注文基準 ${formatQuantity(offer.price * 10)}） / 市場最安 ${marketText}</p>
       <div class="order-actions">
         <button class="accept" type="button" data-company-action="accept-order">受諾する</button>
         <button class="reject" type="button" data-company-action="reject-order">拒否する</button>

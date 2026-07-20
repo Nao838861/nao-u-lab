@@ -1,4 +1,4 @@
-export const VERSION = 'v004.2.1-tutorial-reserve';
+export const VERSION = 'v004.2.2-tutorial-orders';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

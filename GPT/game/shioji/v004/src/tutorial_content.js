@@ -211,6 +211,7 @@ export const FOOD_IMPORT_EMA_TARGET = 0.6;
 export const SEASONAL_SURPLUS_MIN = 8;
 export const SEASONAL_VALLEY_RATIO = 0.2;
 export const SEASONAL_RESERVE_TARGET = 16;
+export const ORDER_JUDGMENT_FALLBACK_OFFERS = 3;
 const LOGGER_MULTIPLIER_RECOVERY = 0.1;
 const FOOD_PRODUCTION_EMA_MIN = 0.25;
 const FOOD_PRICE_CHANGE_MIN = 0.01;
@@ -286,6 +287,98 @@ function stockReleaseReport(events, expectedGoods = null) {
     qty: departure.qty,
     haulJobId: departure.haulJobId,
   };
+}
+
+function orderKey(order) {
+  return order ? `${order.g}:${order.qty}:${order.due}` : null;
+}
+
+function orderQuote(model) {
+  const offer = model.orderOffer;
+  if (!offer) return null;
+  const observedLowest = model.marketLowest?.[offer.g];
+  const marketLowest = Number.isFinite(observedLowest) ? observedLowest : null;
+  const settlementPrice = offer.price * 1.25;
+  const marginPerUnit = marketLowest === null ? null : settlementPrice - marketLowest;
+  return {
+    key: orderKey(offer),
+    day: model.day,
+    goods: offer.g,
+    qty: offer.qty,
+    due: offer.due,
+    basePrice: offer.price,
+    settlementPrice,
+    marketLowest,
+    marginPerUnit,
+    quotedMargin: marginPerUnit === null ? null : marginPerUnit * offer.qty,
+    profitable: marginPerUnit !== null && marginPerUnit > 1e-9,
+  };
+}
+
+function profitableOrderFacts(state) {
+  return state?.goalResults?.['assess-profitable-order']?.evidence?.quote ?? null;
+}
+
+function orderMatches(order, facts) {
+  return Boolean(order && facts && order.g === facts.goods
+    && order.qty === facts.qty && order.due === facts.due);
+}
+
+function profitableOrderEconomics(model, state, events) {
+  const facts = profitableOrderFacts(state);
+  const prior = state?.goalResults?.['complete-profitable-order']?.evidence ?? {};
+  const completion = orderCompletedEvent(events);
+  if (!facts || (!completion && !prior.completed)) return null;
+  const ledger = model.companyLedger.slice(facts.ledgerLength ?? 0);
+  const revenue = ledger
+    .filter(row => row.reason === `本国注文へ${facts.goods}を出荷`)
+    .reduce((total, row) => total + row.amount, 0);
+  const purchases = ledger
+    .filter(row => row.reason?.endsWith(`から蔵へ${facts.goods}を買上げ`) && row.amount < 0)
+    .reduce((total, row) => total - row.amount, 0);
+  const startingStockCost = facts.startingStockCost ?? 0;
+  const endingStock = model.companyStock?.[facts.goods] ?? 0;
+  const endingAverageCost = model.companyStockAverageCosts?.[facts.goods] ?? 0;
+  const endingStockCost = endingStock * endingAverageCost;
+  const orderCost = Math.max(0, startingStockCost + purchases - endingStockCost);
+  return {
+    completed: Boolean(completion) || Boolean(prior.completed),
+    completionDay: completion?.eventDay ?? completion?.day ?? prior.completionDay ?? model.day,
+    goods: facts.goods,
+    qty: facts.qty,
+    revenue,
+    purchases,
+    startingStockCost,
+    endingStockCost,
+    orderCost,
+    realizedMargin: revenue - orderCost,
+  };
+}
+
+function skippableOrderObservation(model, state) {
+  const previous = state?.goalResults?.['observe-skippable-order']?.evidence ?? {};
+  const seenOffers = [...(previous.seenOffers ?? [])];
+  let selected = previous.selected ?? null;
+  const quote = orderQuote(model);
+  if (quote && !seenOffers.some(row => row.key === quote.key)) {
+    seenOffers.push(quote);
+    if (!selected) {
+      if (quote.marketLowest === null) selected = { ...quote, reason: 'no_market' };
+      else if (quote.marginPerUnit < -1e-9) selected = { ...quote, reason: 'loss' };
+      else if (seenOffers.length >= ORDER_JUDGMENT_FALLBACK_OFFERS) {
+        selected = { ...quote, reason: 'comparison_fallback' };
+      }
+    }
+  }
+  return { seenOffers, selected };
+}
+
+function offerExpiredEvent(events, expected = null) {
+  return events.find(event => event.type === 'notice'
+    && event.message?.includes('未受諾の注文状が失効')
+    && (!expected || event.message.includes(
+      `${goodsLabel(expected.goods)}${Math.round(expected.qty)}荷`,
+    ))) ?? null;
 }
 
 function loggerTripObservation(model) {
@@ -775,6 +868,153 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued ? '仕入原価と蔵出し値の報告書が届きました' : '荷車が市場へ着くのを待っています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'assess-profitable-order',
+    chapter: '第四章・本国の注文',
+    title: '決済単価と市場最安値を比べる',
+    evaluate({ model }) {
+      const quote = orderQuote(model);
+      const complete = Boolean(quote?.profitable);
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: quote
+          ? `${goodsLabel(quote.goods)}: 決済 ${(quote.settlementPrice * 10).toFixed(1)} / 市場最安 ${quote.marketLowest === null ? '売り物なし' : (quote.marketLowest * 10).toFixed(1)}デナリ`
+          : '次の注文状と、その時の市場最安値を待っています',
+        evidence: {
+          quote: quote ? {
+            ...quote,
+            ledgerLength: model.companyLedger.length,
+            startingStock: model.companyStock?.[quote.goods] ?? 0,
+            startingStockCost: (model.companyStock?.[quote.goods] ?? 0)
+              * (model.companyStockAverageCosts?.[quote.goods] ?? 0),
+          } : null,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'accept-profitable-order',
+    chapter: '第四章・本国の注文',
+    title: '黒字を見込める注文を受諾する',
+    evaluate({ model, state }) {
+      const facts = profitableOrderFacts(state);
+      const accepted = orderMatches(model.activeOrder, facts);
+      return {
+        complete: accepted,
+        progress: { done: Number(accepted), total: 1 },
+        detail: accepted
+          ? `${goodsLabel(facts.goods)} ${facts.qty}荷を受諾しました`
+          : '会社の注文欄で、比較した注文を受諾してください',
+        evidence: { accepted, orderKey: orderKey(model.activeOrder) },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'target-profitable-order',
+    chapter: '第四章・本国の注文',
+    title: '買上げ目標を注文数まで定める',
+    evaluate({ model, state }) {
+      const facts = profitableOrderFacts(state);
+      const target = facts ? (model.stockTargets?.[facts.goods] ?? 0) : 0;
+      const complete = Boolean(facts && orderMatches(model.activeOrder, facts)
+        && target >= facts.qty);
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: facts
+          ? `${goodsLabel(facts.goods)}の買上げ目標 ${target}/${facts.qty}荷`
+          : '注文の比較を待っています',
+        evidence: { goods: facts?.goods ?? null, target, required: facts?.qty ?? 0 },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'complete-profitable-order',
+    chapter: '第四章・本国の注文',
+    title: '注文を完遂し、実現した粗利を確かめる',
+    evaluate({ model, events, state }) {
+      const economics = profitableOrderEconomics(model, state, events);
+      const complete = Boolean(economics?.completed && economics.revenue > 0
+        && economics.realizedMargin > 1e-9);
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: economics?.completed
+          ? `実売上 ${economics.revenue.toFixed(1)} / 出荷原価 ${economics.orderCost.toFixed(1)} / 粗利 ${economics.realizedMargin.toFixed(1)}`
+          : '市場→蔵→港→船の実物流で注文を納めています',
+        evidence: economics ?? { completed: false },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-skippable-order',
+    chapter: '第四章・本国の注文',
+    title: '受けない注文を、数字から選ぶ',
+    evaluate({ model, state }) {
+      const observation = skippableOrderObservation(model, state);
+      const { selected } = observation;
+      return {
+        complete: Boolean(selected),
+        progress: {
+          done: Math.min(observation.seenOffers.length, ORDER_JUDGMENT_FALLBACK_OFFERS),
+          total: ORDER_JUDGMENT_FALLBACK_OFFERS,
+        },
+        detail: selected
+          ? `${goodsLabel(selected.goods)}: ${selected.reason === 'loss' ? '採算割れ' : selected.reason === 'no_market' ? '市場在庫なし' : '比較確認の代替課題'}`
+          : `注文を${observation.seenOffers.length}件比較しました。採算割れがなければ${ORDER_JUDGMENT_FALLBACK_OFFERS}件目を確認課題にします`,
+        evidence: observation,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'let-skippable-order-expire',
+    chapter: '第四章・本国の注文',
+    title: '注文を受諾せず、期限切れを見届ける',
+    evaluate({ model, events, state }) {
+      const selected = state?.goalResults?.['observe-skippable-order']?.evidence?.selected ?? null;
+      const prior = state?.goalResults?.['let-skippable-order-expire']?.evidence ?? {};
+      const candidateAccepted = Boolean(prior.candidateAccepted
+        || orderMatches(model.activeOrder, selected));
+      const exactExpiry = offerExpiredEvent(events, selected);
+      const recoveryExpiry = candidateAccepted ? offerExpiredEvent(events) : null;
+      const expired = exactExpiry ?? recoveryExpiry;
+      return {
+        complete: Boolean(expired),
+        progress: { done: Number(Boolean(expired)), total: 1 },
+        detail: expired
+          ? `${expired.eventDay ?? expired.day}日目に未受諾の注文状が失効しました`
+          : candidateAccepted
+            ? '比較した注文は受諾済みです。決着後、次の注文を受けずに見送れます'
+            : selected
+              ? `${goodsLabel(selected.goods)} ${selected.qty}荷・期限${selected.due}日目まで受諾せずに待ちます`
+              : '見送る注文を比較しています',
+        evidence: {
+          selected,
+          candidateAccepted,
+          expired: expired ? {
+            day: expired.eventDay ?? expired.day,
+            message: expired.message,
+            exact: Boolean(exactExpiry),
+          } : null,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-fourth-chapter',
+    chapter: '第四章・本国の注文',
+    title: '第四章の商い判断報告を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-four-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '利益を得た注文と、見送った注文の報告書が届きました' : '未受諾注文の失効報告を待っています',
         evidence: { issued },
       };
     },
@@ -1500,6 +1740,123 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${model.day}日目。${goodsLabel(goods)}が市場へ${arrived.toFixed(1)}荷到着し、蔵出し値は1荷あたり${(releasePrice * 10).toFixed(1)}デナリになりました。今回の出庫ロット原価は${(warehouseAverageCost * 10).toFixed(1)}デナリ、先着在庫も合わせた売場の平均仕入原価は${averageCost === null ? '—' : (averageCost * 10).toFixed(1)}デナリ、蔵出し値はその${multiplier === null ? '—' : multiplier.toFixed(2)}倍です。`,
           `同じ日の市場相場EMAは${(model.marketPrices[goods] * 10).toFixed(1)}デナリ。余る時に会社が買い、薄い時に道を通して戻す——蔵は在庫を消す箱ではなく、季節のあいだをつなぐ場所です。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'profitable-order-assessment',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'assess-profitable-order');
+    },
+    render({ state }) {
+      const quote = profitableOrderFacts(state);
+      return {
+        kicker: '第四章・本国の注文',
+        title: '決済の値と、仕入の値を並べます',
+        summary: `${goodsLabel(quote.goods)}・決済 ${(quote.settlementPrice * 10).toFixed(1)} / 市場最安 ${(quote.marketLowest * 10).toFixed(1)}デナリ`,
+        facts: quote,
+        body: [
+          `${quote.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文状です。本国の表示単価は${(quote.basePrice * 10).toFixed(1)}デナリですが、完遂時の実決済は1荷あたり${(quote.settlementPrice * 10).toFixed(1)}デナリ。いま市場で買える最安値は${(quote.marketLowest * 10).toFixed(1)}デナリです。`,
+          `現時点の差は1荷あたり${(quote.marginPerUnit * 10).toFixed(1)}デナリ、全${quote.qty}荷なら${(quote.quotedMargin * 10).toFixed(1)}デナリの黒字見込みです。相場は動きますが、まず決済と仕入を同じ単位で並べる——その上で受けるかをお決めください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'profitable-order-accepted',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'accept-profitable-order');
+    },
+    render({ model, state }) {
+      const quote = profitableOrderFacts(state);
+      return {
+        kicker: '受諾後の仕度',
+        title: '受諾と買付は、別のご下命です',
+        summary: `${goodsLabel(quote.goods)} ${quote.qty}荷・買上げ目標 ${model.stockTargets?.[quote.goods] ?? 0}荷`,
+        facts: { ...quote, target: model.stockTargets?.[quote.goods] ?? 0 },
+        body: [
+          `${model.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷の注文を受諾しました。第一章と同じく、受諾しただけでは会社の買付は始まりません。`,
+          `帳場で${goodsLabel(quote.goods)}の買上げ目標を${quote.qty}荷以上に定めてください。会社の銀を使う命令は、いつも総督の選択です。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'profitable-order-complete',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'complete-profitable-order');
+    },
+    render({ state }) {
+      const quote = profitableOrderFacts(state);
+      const facts = state.goalResults['complete-profitable-order'].evidence;
+      return {
+        kicker: '利益を得た注文',
+        title: '見立てを、実帳簿で確かめました',
+        summary: `売上 ${facts.revenue.toFixed(1)} / 出荷原価 ${facts.orderCost.toFixed(1)} / 粗利 ${facts.realizedMargin.toFixed(1)}`,
+        facts: { ...facts, quote },
+        body: [
+          `${facts.completionDay}日目。${goodsLabel(facts.goods)}${facts.qty}荷を納め、実売上は${facts.revenue.toFixed(1)}、今回の出荷に対応する実在庫原価は${facts.orderCost.toFixed(1)}、差し引き粗利は${facts.realizedMargin.toFixed(1)}でした。`,
+          `注文状を見た時の市場最安は1荷あたり${(quote.marketLowest * 10).toFixed(1)}デナリ、完遂決済は${(quote.settlementPrice * 10).toFixed(1)}デナリでした。最初の見立てと、最後の実帳簿を分けて確かめるのが商いです。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'skippable-order-assessment',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'observe-skippable-order');
+    },
+    render({ state }) {
+      const evidence = state.goalResults['observe-skippable-order'].evidence;
+      const quote = evidence.selected;
+      const market = quote.marketLowest === null
+        ? '市場に売り物がなく、仕入値を確定できません'
+        : `市場最安は1荷あたり${(quote.marketLowest * 10).toFixed(1)}デナリです`;
+      const judgment = quote.reason === 'loss'
+        ? `決済との差は1荷あたり${(quote.marginPerUnit * 10).toFixed(1)}デナリで、現在値では赤字です`
+        : quote.reason === 'no_market'
+          ? '調達できる数量も原価も見えず、完遂の見立てを立てられません'
+          : `期間内に採算割れが来なかったため、${evidence.seenOffers.length}件目を比較根拠の確認課題にします。現在値では黒字見込みです`;
+      return {
+        kicker: '受けない注文の見立て',
+        title: 'この注文は、受諾せずに見送ります',
+        summary: `${goodsLabel(quote.goods)} ${quote.qty}荷・決済 ${(quote.settlementPrice * 10).toFixed(1)}デナリ / ${quote.marketLowest === null ? '市場在庫なし' : `市場最安 ${(quote.marketLowest * 10).toFixed(1)}デナリ`}`,
+        facts: evidence,
+        body: [
+          `${quote.day}日目。${goodsLabel(quote.goods)}${quote.qty}荷、完遂決済は1荷あたり${(quote.settlementPrice * 10).toFixed(1)}デナリ。${market}。${judgment}。`,
+          `会社欄の「拒否する」は世界や帳簿を書き換えず、この注文状を画面上で伏せるだけです。受諾せず期限まで置き、実際の失効を見届けてください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-four-close',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'let-skippable-order-expire');
+    },
+    render({ state }) {
+      const profit = state.goalResults['complete-profitable-order'].evidence;
+      const skipped = state.goalResults['let-skippable-order-expire'].evidence;
+      const selected = skipped.selected;
+      return {
+        kicker: '第四章・商い判断報告',
+        title: '引き受けない自由も総督のものです',
+        summary: `利益注文の粗利 ${profit.realizedMargin.toFixed(1)} / 見送り ${goodsLabel(selected.goods)} ${selected.qty}荷`,
+        facts: { profit, skipped },
+        body: [
+          `ひとつの注文は、実売上${profit.revenue.toFixed(1)}から出荷原価${profit.orderCost.toFixed(1)}を引き、粗利${profit.realizedMargin.toFixed(1)}で完遂しました。もうひとつの${goodsLabel(selected.goods)}${selected.qty}荷は受諾せず、${skipped.expired.day}日目に実際に失効しました。`,
+          '注文状は命令ではありません。決済と市場を比べ、会社の銀を使うか決めること。引き受けない自由も総督のものです。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

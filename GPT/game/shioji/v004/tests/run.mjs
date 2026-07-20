@@ -19,7 +19,8 @@ import {
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
   FOOD_IMPORT_EMA_TARGET, LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
-  SEASONAL_RESERVE_TARGET, SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO,
+  ORDER_JUDGMENT_FALLBACK_OFFERS, SEASONAL_RESERVE_TARGET,
+  SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
@@ -1105,7 +1106,8 @@ test('チュートリアル段17: 次の在庫谷で実荷車による蔵出し�
     '売場で合算された実平均原価に1.2を掛けた蔵出し値になる');
   assert.match(closing.body, new RegExp(`${(closing.facts.releasePrice * 10).toFixed(1)}デナリ`));
   assert.equal(director.readState().completedGoals.includes('close-third-chapter'), true);
-  assert.equal(director.isComplete(), true);
+  assert.equal(director.isComplete(), false);
+  assert.equal(director.currentObjective().id, 'assess-profitable-order');
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
@@ -1117,6 +1119,141 @@ test('チュートリアル段17: 次の在庫谷で実荷車による蔵出し�
     + `出庫原価${closing.facts.warehouseAverageCost.toFixed(3)}`
     + `/売場平均${closing.facts.averageCost.toFixed(3)}→価格${closing.facts.releasePrice.toFixed(3)}`
     + `(${closing.facts.multiplier.toFixed(3)}倍)`);
+});
+
+test('チュートリアル段18〜19実測: 3シードで黒字注文と3件比較の代替経路が成立する', () => {
+  const rows = [];
+  for (const seed of [11, 13, 14]) {
+    const fixture = tutorialThroughPlay.thirdChapter;
+    const replay = replayTutorialJournal(fixture.journal, fixture.model.tick, seed);
+    const offers = [];
+    const seen = new Set();
+    const deadline = replay.readModel().day + 400;
+    while (replay.readModel().day < deadline) {
+      replay.advanceTicks(30);
+      const model = replay.readModel();
+      const offer = model.orderOffer;
+      if (!offer) continue;
+      const key = `${offer.g}:${offer.qty}:${offer.due}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const cheapest = model.marketLowest[offer.g];
+      offers.push({
+        day: model.day, goods: offer.g, qty: offer.qty, due: offer.due,
+        settlement: offer.price * 1.25, cheapest,
+        profitable: Number.isFinite(cheapest) && cheapest <= offer.price * 1.25,
+      });
+      const hasProfitable = offers.some(row => row.profitable);
+      const hasUnsafe = offers.some(row => !Number.isFinite(row.cheapest)
+        || row.cheapest > row.settlement);
+      if (hasProfitable && (hasUnsafe || offers.length >= ORDER_JUDGMENT_FALLBACK_OFFERS)) break;
+    }
+    assert.ok(offers.some(offer => offer.profitable), `seed${seed}で400日以内に黒字見込み注文が来る`);
+    assert.ok(offers.some(offer => !Number.isFinite(offer.cheapest)
+      || offer.cheapest > offer.settlement)
+      || offers.length >= ORDER_JUDGMENT_FALLBACK_OFFERS,
+    `seed${seed}で危険注文または${ORDER_JUDGMENT_FALLBACK_OFFERS}件比較の代替経路に入れる`);
+    rows.push({ seed, offers });
+  }
+  console.log(`  段18〜19注文実測 ${rows.map(row => `seed${row.seed}: ${row.offers.map(offer => `${offer.goods}@d${offer.day} ${Number.isFinite(offer.cheapest) ? offer.cheapest.toFixed(3) : '在庫なし'}/${offer.settlement.toFixed(3)} ${offer.profitable ? '黒字' : '見送り候補'}`).join(', ')}`).join(' | ')}`);
+});
+
+test('チュートリアル段18: 実決済と市場最安を並べ、黒字注文を受諾・完遂する', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const assessmentDeadline = controller.readModel().day + 400;
+  while (!director.readState().completedGoals.includes('assess-profitable-order')
+    && controller.readModel().day < assessmentDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('assess-profitable-order'), true);
+  observe();
+  const assessment = director.letters().find(letter => letter.id === 'profitable-order-assessment');
+  assert.ok(assessment);
+  assert.ok(assessment.facts.marketLowest < assessment.facts.settlementPrice);
+  assert.ok(assessment.facts.quotedMargin > 0);
+  assert.match(assessment.body, new RegExp(`${(assessment.facts.settlementPrice * 10).toFixed(1)}デナリ`));
+  assert.match(assessment.body, new RegExp(`${(assessment.facts.marketLowest * 10).toFixed(1)}デナリ`));
+  assert.equal(director.currentObjective().id, 'accept-profitable-order');
+
+  const accepted = controller.operate({ type: 'accept_order' });
+  assert.equal(accepted.ok, true);
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('accept-profitable-order'), true);
+  const acceptedLetter = director.letters().find(letter => letter.id === 'profitable-order-accepted');
+  assert.ok(acceptedLetter);
+
+  assert.equal(controller.operate({
+    type: 'set_stock_target', goods: assessment.facts.goods, qty: assessment.facts.qty,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('target-profitable-order'), true);
+
+  const completionDeadline = assessment.facts.due * 30;
+  while (!director.readState().completedGoals.includes('complete-profitable-order')
+    && controller.readModel().tick < completionDeadline) {
+    controller.advanceTicks(1);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('complete-profitable-order'), true,
+    `注文期限${assessment.facts.due}日目までに黒字で完遂する`);
+  observe();
+  const completed = director.letters().find(letter => letter.id === 'profitable-order-complete');
+  assert.ok(completed);
+  assert.ok(completed.facts.revenue > 0);
+  assert.ok(completed.facts.orderCost >= 0);
+  assert.ok(completed.facts.realizedMargin > 0);
+  assert.match(completed.body, new RegExp(`粗利は${completed.facts.realizedMargin.toFixed(1)}`));
+  tutorialThroughPlay.profitableOrder = completed.facts;
+});
+
+test('チュートリアル段19: 注文を受けずに見送り、実失効イベントで第四章を締める', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const selectionDeadline = controller.readModel().day + 500;
+  while (!director.readState().completedGoals.includes('observe-skippable-order')
+    && controller.readModel().day < selectionDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('observe-skippable-order'), true);
+  observe();
+  const advice = director.letters().find(letter => letter.id === 'skippable-order-assessment');
+  assert.ok(advice);
+  const selected = advice.facts.selected;
+  assert.ok(['loss', 'no_market', 'comparison_fallback'].includes(selected.reason));
+  assert.match(advice.body, /受諾せず期限まで置き/);
+  assert.equal(controller.readModel().activeOrder, null, '見送りは受諾操作を行わない');
+  const journalBeforeWait = controller.inputJournal();
+
+  const expiryDeadline = selected.due + 2;
+  while (!director.readState().completedGoals.includes('let-skippable-order-expire')
+    && controller.readModel().day <= expiryDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('let-skippable-order-expire'), true);
+  assert.deepEqual(controller.inputJournal(), journalBeforeWait,
+    '見送りと期限切れはエンジン操作を追加しない');
+  observe();
+  const closing = director.letters().find(letter => letter.id === 'chapter-four-close');
+  assert.ok(closing);
+  assert.match(closing.title, /引き受けない自由も総督のものです/);
+  assert.match(closing.facts.skipped.expired.message, /未受諾の注文状が失効/);
+  assert.equal(director.readState().completedGoals.includes('close-fourth-chapter'), true);
+  assert.equal(director.isComplete(), true);
+
+  const finalModel = controller.readModel();
+  const journal = controller.inputJournal();
+  const replay = replayTutorialJournal(journal, finalModel.tick);
+  assert.deepEqual(replay.readModel(), finalModel, '第四章完走後も公開journalから同じ世界を再生できる');
+  assert.deepEqual(replay.inputJournal(), journal);
+  tutorialThroughPlay.fourthChapter = { model: finalModel, journal };
+  const profit = tutorialThroughPlay.profitableOrder;
+  console.log(`  段18〜19実測 ${profit.goods}${profit.qty}荷:市場${profit.quote.marketLowest.toFixed(3)}`
+    + `→決済${profit.quote.settlementPrice.toFixed(3)} / 売上${profit.revenue.toFixed(1)}`
+    + `-原価${profit.orderCost.toFixed(1)}=粗利${profit.realizedMargin.toFixed(1)}`
+    + ` / 見送り${selected.goods}${selected.qty}荷 ${selected.reason}→day${closing.facts.skipped.expired.day}失効`);
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {
@@ -1842,9 +1979,12 @@ test('段15: 会社台帳・買上げ目標・蔵出し・注文比較を描画�
     'set_stock_target', 'release_stock', 'accept_order',
   ]);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   for (const id of ['company-sheet', 'order-panel', 'aid-panel', 'company-goods', 'company-ledger']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+  assert.match(main, /offer\.price \* 1\.25 \* 10/,
+    '会社欄は注文基準値でなく完遂時の1.25倍決済単価を市場最安と並べる');
 });
 
 test('段7支援UI: 逓減量と拒絶を描画モデルへ出し、要請を公開journalへ記録する', () => {

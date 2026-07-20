@@ -217,8 +217,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.2.1-tutorial-reserve');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.2.1-tutorial-reserve');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.2.2-tutorial-orders');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.2.2-tutorial-orders');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -494,7 +494,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
     assert.ok(company.sheet.top >= 0 && company.sheet.bottom <= height, JSON.stringify(company));
     assert.ok(company.offer, JSON.stringify(company));
-    assert.match(company.orderText, /本国決済単価/);
+    assert.match(company.orderText, /完遂決済単価/);
     assert.match(company.orderText, /市場最安/);
     assert.match(company.aidText, /次の支援は麦240荷/);
     assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
