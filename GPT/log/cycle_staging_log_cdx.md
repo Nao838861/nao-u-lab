@@ -202,7 +202,54 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260721-01
+    problem_restatement: "全 sibling が postponed / ready_to_post 等の open status である同一 title 群は、terminal canonical にも mixed duplicate queue にも入らない。そのため group 単位の resolve 経路を迂回し、同一 work の候補が stale_review_batch の少数枠を candidate 単位で繰り返し消費する"
+    alternatives:
+      - name: "案A: open duplicate group sidecar を group-action 経路へ接続"
+        sketch: "全 duplicate title 群のうち open sibling を1件以上持つ群を、mixed / all_open を区別する再生成可能 sidecar にまとめる。stale triage と group-action はこの sidecar を共通参照し、1群1 representative だけを既存 handoff の close_siblings / keep_distinct / defer 判断へ渡す"
+        pros:
+          - "terminal canonical の『全 sibling が terminal』という意味を変えずに済む"
+          - "all-open と mixed を同じ group resolve / membership fingerprint / 冪等 handoff で扱える"
+          - "candidate 本体を変更しないため、誤集約時は sidecar 再生成と keep_distinct で復帰できる"
+        cons:
+          - "mixed 専用 queue との役割整理と、Phase 4a の再生成順・記述更新が必要"
+          - "title 正規化だけでは別 work の同名候補を含み得るため、自動 close ではなく review を維持する必要がある"
+          - "既存テストに all_open / mixed / membership 変化の組合せを追加する必要がある"
+        migration_cost: medium
+      - name: "案B: stale triage 内だけで title 単位に折り畳む"
+        sketch: "stale queue 生成時に normalized title ごとに最優先 candidate だけを残し、他 sibling を一時的に抑止する。新しい group sidecar や handoff schema は増やさない"
+        pros:
+          - "変更範囲が小さく、レビュー枠の重複消費を直接止められる"
+          - "追加の永続 sidecar が不要"
+        cons:
+          - "なぜ sibling を抑止したか、誰が代表か、いつ再審査するかの監査情報が弱い"
+          - "keep_distinct や構成変化時の再審査を既存 handoff と共有できない"
+          - "title 誤一致で異なる work を黙って隠す失敗コストが高い"
+        migration_cost: low
+      - name: "案C: candidate frontmatter に canonical_group / representative を保存"
+        sketch: "重複候補本体へ group ID、代表 path、group decision を書き込み、各 phase がその明示関係を読む。group 解消結果を candidate と同じ場所に永続化する"
+        pros:
+          - "candidate 単体を見ても sibling 関係と代表が分かる"
+          - "title 正規化規則が変わっても確定済み関係を保持できる"
+        cons:
+          - "既存 candidate 群への一括更新と、追加・rename・status 変更時の同期が必要"
+          - "派生可能な関係を正本へ重複保存し、frontmatter drift を増やす"
+          - "誤集約の巻き戻しで複数 candidate を再編集するため失敗コストが高い"
+        migration_cost: high
+    recommended: "案A: open duplicate group sidecar を group-action 経路へ接続"
+    recommended_reason: "現行の terminal canonical、stale triage、bounded group-action、永続 handoff resolve を保ったまま、欠けている all-open 分類だけを埋められる。移行手間は中程度だが、候補本文を移行せず再生成可能 sidecar に限定されるため、誤判定時の復帰コストは低い。案Bは最短だが重複を不可視化し、案Cは現状から遠く正本の同期負債が大きい"
+    decision: introduce
+    decision_reason: "18群が経路外で、実際に6 sibling の1件が個別 stale review 枠へ入っているため、観測待ちではなく構造上の欠落を直すべき段階にある。既存 handoff の判断語彙と fingerprint を再利用でき、title 一致だけで自動 close しない安全境界も定義できた"
+    outline_for_4c:
+      - "全 duplicate title 群から、open sibling を持つ群を mixed / all_open に分類する再生成可能 sidecar を導入し、group_key・group_kind・open_paths・terminal_paths・status_counts・source URL evidence・representative candidates を持たせる"
+      - "stale triage が open group sidecar を参照し、all-open sibling にも duplicate_group_key と group_kind を付ける。候補単位の上位選定では同じ group_key を1回だけ扱う"
+      - "group-action queue を open group sidecar と stale 情報から生成し、all_open 群も既存の budget 付き handoff inbox へ1群1件で enqueue する"
+      - "title-only 一致は review 扱いとし、自動 close / skip は行わない。Phase 2 の resolve は既存の close_siblings / keep_distinct / defer と membership fingerprint を使う"
+      - "mixed / all_open / 同名別work / membership変化 / 冪等再生成をテストし、Phase 4a の再生成順・監査項目を現行 queue 構成へ更新する"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
