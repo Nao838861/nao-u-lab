@@ -1,4 +1,4 @@
-export const VERSION = 'v004.1.3-tutorial-island-table';
+export const VERSION = 'v004.2.0-tutorial-release';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

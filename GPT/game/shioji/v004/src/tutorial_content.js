@@ -232,6 +232,33 @@ function goalCompleted(state, id) {
   return Boolean(state?.completedGoals?.includes(id));
 }
 
+function starvationReport(events) {
+  const deaths = events.filter(event => event.type === 'death');
+  if (!deaths.length) return null;
+  const narrated = deaths.find(event => event.message?.includes('餓えで亡くなった'))
+    ?? deaths.find(event => event.message?.startsWith('☠'))
+    ?? deaths[0];
+  const peopleLost = deaths.reduce((total, event) => total + (event.count ?? 0), 0);
+  return {
+    events: deaths.length,
+    peopleLost,
+    message: narrated.message ?? null,
+    householdId: narrated.householdId ?? null,
+  };
+}
+
+function bankruptcyReport(events) {
+  const event = events.find(candidate => candidate.type === 'notice'
+    && (candidate.message?.includes('★破産') || candidate.message?.includes('最終通告')));
+  if (!event) return null;
+  const values = event.message?.match(/債務([\d.]+)>限度([\d.]+)/);
+  return {
+    message: event.message,
+    debt: values ? Number(values[1]) : null,
+    limit: values ? Number(values[2]) : null,
+  };
+}
+
 function foodFlowMetrics(model) {
   return {
     importEma: FOOD_GOODS.reduce((total, goods) => (
@@ -564,7 +591,59 @@ export const TUTORIAL_GOALS = Object.freeze([
   }),
 ]);
 
+function pendingTutorialGoal(state) {
+  const goal = TUTORIAL_GOALS.find(candidate => !goalCompleted(state, candidate.id));
+  return goal ? { id: goal.id, chapter: goal.chapter, title: goal.title } : null;
+}
+
 export const TUTORIAL_LETTERS = Object.freeze([
+  Object.freeze({
+    id: 'tutorial-starvation-consequence',
+    source: 'event',
+    when({ events }) {
+      return Boolean(starvationReport(events));
+    },
+    render({ model, events, state }) {
+      const report = starvationReport(events);
+      const currentGoal = pendingTutorialGoal(state);
+      const runwayDays = islandFoodRunwayDays(model);
+      return {
+        kicker: '島況・飢餓報告',
+        title: '食料を待つあいだにも、人は失われます',
+        summary: `死亡・離散事象 ${report.events}件・人口 ${model.population}人・食料 ${runwayDays.toFixed(1)}日分`,
+        facts: { ...report, population: model.population, runwayDays, currentGoal },
+        body: [
+          `${model.day}日目。観測された死亡・離散事象はこの報告で${report.events}件、人数が確定できる事象では${report.peopleLost}人です。現在人口は${model.population}人、島内で見える食料は人口1人あたり${runwayDays.toFixed(1)}日分です。${report.message ? `実記録は「${report.message}」。` : ''}`,
+          `教程は食料を足さず、亡くなった人も戻しません。${currentGoal ? `未完了の目標「${currentGoal.title}」はそのままです。` : ''}市場と食料の流れを作るか、この帰結を抱えたまま別の道をお選びください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'tutorial-bankruptcy-consequence',
+    source: 'event',
+    when({ events }) {
+      return Boolean(bankruptcyReport(events));
+    },
+    render({ model, events, state }) {
+      const report = bankruptcyReport(events);
+      const currentGoal = pendingTutorialGoal(state);
+      const debtText = report.debt === null ? '—' : report.debt.toFixed(0);
+      const limitText = report.limit === null ? '—' : report.limit.toFixed(0);
+      return {
+        kicker: '会社・最終通告',
+        title: '帳簿は、教程の外でも閉じません',
+        summary: `債務 ${debtText}・信用限度 ${limitText}・会社残高 ${model.companyMoney.toFixed(1)}`,
+        facts: { ...report, companyMoney: model.companyMoney, currentGoal },
+        body: [
+          `${model.day}日目。会社の実記録は「${report.message}」。会社残高は${model.companyMoney.toFixed(1)}、記録された債務は${debtText}、信用限度は${limitText}です。`,
+          `教程は支出を取り消さず、帳簿を巻き戻しません。${currentGoal ? `未完了の目標「${currentGoal.title}」も消えていません。` : ''}この島は同じ規則のまま続きます。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
   Object.freeze({
     id: 'arrival-report',
     source: 'snapshot',

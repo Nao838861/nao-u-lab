@@ -186,9 +186,11 @@ test('チュートリアル段5: 港から森への道・木こり・実入植�
   const controller = createEngineController({ seed: 11, mode: 'tutorial' });
   const director = createTutorialDirector();
   let sequence = 0;
+  const observedEvents = [];
   const observe = () => {
     const events = controller.events(sequence);
     if (events.length) sequence = events.at(-1).sequence;
+    observedEvents.push(...events);
     director.observe(controller.readModel(), events);
     return events;
   };
@@ -642,7 +644,10 @@ test('チュートリアル段7〜9: 支援物流→初注文→調達→逐次�
   replay.advanceTicks(completeModel.tick - replayTick);
   assert.deepEqual(replay.readModel(), completeModel, '段5〜8の公開journalを同一世界へ再生できる');
   assert.deepEqual(replay.inputJournal(), journal);
-  tutorialThroughPlay = { controller, director, observe, observedEvents };
+  tutorialThroughPlay = {
+    controller, director, observe, observedEvents,
+    firstChapter: { model: completeModel, journal },
+  };
 });
 
 test('チュートリアル段10: 第一章を終えた同じ世界で既設道路の実測効果を認める', () => {
@@ -837,6 +842,140 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   }
   replay.advanceTicks(finalModel.tick - replayTick);
   assert.deepEqual(replay.readModel(), finalModel, '第二章完走後も全操作journalから同じ自由プレイ世界を再生できる');
+  tutorialThroughPlay.secondChapter = {
+    model: finalModel,
+    journal: controller.inputJournal(),
+  };
+});
+
+function replayTutorialJournal(journal, finalTick, seed = 11) {
+  const replay = createEngineController({ seed, mode: 'tutorial' });
+  let replayTick = 0;
+  for (const row of journal) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    replay.operate(row.op);
+  }
+  replay.advanceTicks(finalTick - replayTick);
+  return replay;
+}
+
+test('チュートリアル段14: ディレクター有無で第二章完走後の世界が完全一致する', () => {
+  const { model, journal } = tutorialThroughPlay.secondChapter;
+  const replay = replayTutorialJournal(journal, model.tick);
+  assert.deepEqual(replay.readModel(), model);
+  assert.deepEqual(replay.inputJournal(), journal);
+});
+
+test('チュートリアル段14: 目標を無視した飢餓・破産を実数で語り、失敗後も進行できる', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  const director = createTutorialDirector();
+  let sequence = 0;
+  const observedEvents = [];
+  const observe = () => {
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    observedEvents.push(...events);
+    director.observe(controller.readModel(), events);
+    return events;
+  };
+  observe();
+
+  let model = controller.readModel();
+  const port = model.buildings.find(building => building.roles.includes('port'));
+  const failureSetup = findRoadLoggerSetup(model);
+  const logger = failureSetup?.logger;
+  assert.ok(logger && failureSetup.road);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: logger.entrance.x, y: logger.entrance.y,
+    buildingX: logger.x, buildingY: logger.y,
+  }).ok, true);
+  observe();
+  assert.equal(director.currentObjective().id, 'first-road-and-logger');
+  assert.equal(director.currentObjective().complete, false);
+
+  model = controller.readModel();
+  const burn = findPreviewNear(model, 'woodshop', port.entrance);
+  assert.ok(burn, '浪費も公開された通常の建築操作だけで行える');
+  const spendToCreditEdge = () => {
+    let built = 0;
+    for (; built < 1000; built += 1) {
+      const placed = controller.operate({
+        type: 'place_building', job: 'woodshop',
+        x: burn.entrance.x, y: burn.entrance.y,
+        buildingX: burn.x, buildingY: burn.y,
+      });
+      if (!placed.ok) break;
+      assert.equal(controller.operate({
+        type: 'remove_building', buildingId: placed.buildingId,
+      }).ok, true);
+    }
+    assert.ok(built < 1000, '信用限度で建築支出が止まる');
+    return built;
+  };
+
+  let paidBuildings = 0;
+  for (let month = 0; month < 45; month += 1) {
+    paidBuildings += spendToCreditEdge();
+    controller.advanceTicks(30 * 30);
+    observe();
+    if (director.letters().some(letter => letter.id === 'tutorial-bankruptcy-consequence')
+      && director.letters().some(letter => letter.id === 'tutorial-starvation-consequence')) break;
+  }
+  assert.ok(paidBuildings > 0);
+  const starvation = director.letters().find(letter => letter.id === 'tutorial-starvation-consequence');
+  const bankruptcy = director.letters().find(letter => letter.id === 'tutorial-bankruptcy-consequence');
+  assert.ok(starvation, `市場も道路も作らず放置すると実死亡事象が書状になる: ${JSON.stringify({
+    day: controller.readModel().day,
+    population: controller.readModel().population,
+    households: controller.readModel().households.length,
+    deathEvents: observedEvents.filter(event => event.type === 'death').length,
+    notices: observedEvents.filter(event => event.message?.includes('餓')).map(event => event.message),
+  })}`);
+  assert.ok(bankruptcy, '通常建築の浪費と実月利による最終通告が書状になる');
+  assert.ok(starvation.facts.events > 0);
+  assert.ok(starvation.facts.peopleLost > 0, '死亡イベント自身の実人数を使う');
+  assert.ok(starvation.facts.population >= 0);
+  assert.equal(starvation.facts.currentGoal.id, 'first-road-and-logger');
+  assert.ok(bankruptcy.facts.debt > bankruptcy.facts.limit);
+  assert.equal(bankruptcy.facts.companyMoney, controller.readModel().companyMoney);
+  assert.equal(bankruptcy.facts.currentGoal.id, 'first-road-and-logger');
+  assert.match(starvation.body, /教程は食料を足さず、亡くなった人も戻しません/);
+  assert.match(bankruptcy.body, /教程は支出を取り消さず、帳簿を巻き戻しません/);
+  assert.equal(director.currentObjective().id, 'first-road-and-logger');
+  console.log(`  段14失敗実測 飢餓day${starvation.issuedDay}:人口${starvation.facts.population}`
+    + ` / 破産day${bankruptcy.issuedDay}:債務${bankruptcy.facts.debt}>限度${bankruptcy.facts.limit}`
+    + ` / 建築支出${paidBuildings}回`);
+
+  model = controller.readModel();
+  assert.equal(controller.operate({
+    type: 'add_road', start: failureSetup.road.start, end: failureSetup.road.end,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('first-road-and-logger'), true,
+    '飢餓・破産後も実snapshotで目標列が進む');
+
+  const finalModel = controller.readModel();
+  const journal = controller.inputJournal();
+  const replay = replayTutorialJournal(journal, finalModel.tick);
+  assert.deepEqual(replay.readModel(), finalModel,
+    '失敗経路もディレクターなしのjournal再生と完全一致する');
+});
+
+test('チュートリアル段15: 第一章・第二章の完走journal 2本をリリースsmokeに常設する', () => {
+  const chapters = [
+    ['第一章', tutorialThroughPlay.firstChapter],
+    ['第二章', tutorialThroughPlay.secondChapter],
+  ];
+  assert.ok(chapters[0][1].journal.length > 0);
+  assert.ok(chapters[1][1].journal.length > chapters[0][1].journal.length);
+  assert.ok(chapters[1][1].model.tick > chapters[0][1].model.tick);
+  for (const [chapter, fixture] of chapters) {
+    const replay = replayTutorialJournal(fixture.journal, fixture.model.tick);
+    assert.deepEqual(replay.readModel(), fixture.model, `${chapter}完走journalの世界が完全一致する`);
+    assert.deepEqual(replay.inputJournal(), fixture.journal, `${chapter}完走journal自体も同一である`);
+  }
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {

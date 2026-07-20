@@ -47,7 +47,7 @@ cd /Users/Nao_u/nao-u-lab/GPT/game/shioji/v004
 npm test
 ```
 
-`npm test`はv004の40件、UI全8操作を含む150日ジャーナル再生テスト、`../engine/`の112件を順に実行する。
+`npm test`はv004の43件、第一章・第二章の完走journal 2本、失敗許容、UI全8操作を含む150日ジャーナル再生テスト、`../engine/`の112件を順に実行する。
 
 実ChromeによるPC・スマホ確認は、リポジトリ直下のHTTPサーバーとデバッグポート9226のChromeを起動した後に実行する。
 
