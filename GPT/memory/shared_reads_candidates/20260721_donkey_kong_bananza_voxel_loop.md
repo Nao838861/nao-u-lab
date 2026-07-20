@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/how-voxels-enabled-a-juicy-gameplay-l
 collected_at: "2026-07-21T04:32:43.2861660+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, action, level-design, game-feel, voxel]
+evaluated_at: "2026-07-21T04:37:13+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T04:37:13+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T04:37:13+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >
+  voxel 地形を見せ物ではなく戦闘・地形変化・発見・再戦闘の循環へ変える中核と、collision の不自然さを player の機会増減で裁く基準が明確。
+  出荷済み作品の具体例として action prototype の loop 設計と game-feel 調整へ直接適用でき、限界も含めて約4000字の分析を組める。
+suggested_post_outline:
+  overview_angle: "大規模 voxel 技術の紹介ではなく、破壊を次の戦闘と探索へ接続する chain of destruction の設計として説明する"
+  analysis_axis: "岩を得る powered-up state、敵の吹き飛ばし、地形開口、報酬露出、次の岩の獲得という循環と、厳密な collision を崩す判断基準"
+  application_target: "小規模 action prototype で、攻撃結果が移動経路・発見・次の攻撃資源を同時に生む playable loop と game-feel の評価軸を設計する場面"
+  pros_cons: "メリットは一つの破壊操作が戦闘と探索を連結し、技術コストを反復可能な遊びへ回収できる点。デメリットは自由破壊が level pacing と発見順を崩し、許容した食い込みが損失側へ転ぶ境界を個別検証する必要がある点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

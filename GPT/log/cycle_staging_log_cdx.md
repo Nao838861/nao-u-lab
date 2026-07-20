@@ -13,7 +13,35 @@
 - `memory/raw/web_research/results.jsonl` の 2026-07-21 03:36 追加分を照合。Human-Centric Reflective Architecture は既存 candidate、RevengeBench / RogueAI / AutoBG は同一 work の実投稿済み記録があり、重複ファイルは作成しなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260721_donkey_kong_bananza_voxel_loop.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260721_people_of_note_musical_rpg.md
+    reason: "設計意図は具体的だが、未発売作品の開発者説明だけでは playtest 結果や体験差の評価を支えられない"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  builders_refreshed_at: "2026-07-21T04:38:04+09:00"
+  items:
+    - path: memory/shared_reads_candidates/20260721_people_of_note_musical_rpg.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260721_donkey_kong_bananza_voxel_loop.md
+      decision: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
