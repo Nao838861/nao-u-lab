@@ -120,7 +120,117 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、entry section と per-file atom index の整合を検証した。validator は OK、Markdown link 行は 0 件で broken link はなし"
+  - "memory/atoms.jsonl / per-file .md / atoms/index.jsonl の 2704 件 mirror を監査した。ID 重複・parse error・content conflict は 0 件、正規化本文重複 40 group は既存 overlay で fold 済み"
+  - "memory/raw/ の 30 日超 95 files / 62979319 bytes を監査した。Slack archive と web research 一次資料として provenance 参照中のため、この cycle では移動しなかった"
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-20 基準で再生成した。candidate 本体は変更していない"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認した。両方 0 件のため handled 更新はなし"
+
+memory_index_audit:
+  validator: ok
+  atom_rows: 2704
+  mirror_conflicts: 0
+  normalized_content_duplicate_groups: 40
+  duplicate_overlay_groups: 45
+  encoding_probe:
+    explicit_read: UTF-8
+    present: [記憶, ゲーム設計, 敵パターン]
+    absent_as_literal: [評価軸]
+    source_file_status: "UTF-8 として正常に読め、日本語本文の mojibake は確認されない。評価軸は literal が本文にないだけで decode failure ではない"
+    display_or_tooling_status: none
+
+candidate_lifecycle:
+  total: 1022
+  status_counts:
+    posted: 437
+    ready_to_post: 10
+    postponed: 349
+    failed: 208
+    needs_review: 18
+  missing_lifecycle_frontmatter: 0
+  note: "README.md は candidate ではないため集計対象外。posted / failed は再評価 queue から除外"
+
+stale_backlog:
+  overdue_open_total: 199
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 52
+  actionable_group_count: 1
+  group_action_queue_rows_after_enqueue: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows は true だが、actionable group が 3 件未満"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 2
+  handoff_inbox_ids:
+    - gha-b05b9545bc017fc7
+    - gha-b25b1c682afd7c00
+  previous_group_action_followup:
+    processed_groups: 3
+    close_siblings: 3
+    keep_distinct: 0
+    normal_candidate_analysis_preserved: true
+    observed_time_impact: "group action は合計 4 分、通常 candidate 1 件も分析・投稿できた"
+    continue_budget_3: false
+    reason: "今回の actionable group は 1 件なので通常 budget 1 を適用"
+
+group_action_handoff:
+  - group_key: "human ai collaborative game testing with vision language models"
+    inbox_id: gha-b25b1c682afd7c00
+    representative: memory/shared_reads_candidates/20260619_human_ai_collaborative_game_testing_vlm.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260619_human_ai_collaborative_game_testing_vlm.md
+      - memory/shared_reads_candidates/20260709_human_ai_collaborative_game_testing_vlm.md
+    terminal_siblings:
+      - memory/shared_reads_candidates/20260611_human_ai_collab_game_testing_vlm.md
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260619_human_ai_collaborative_game_testing_vlm.md
+      stale_after: "2026-07-19"
+      reason: "VLM 支援 QA の 4 条件実験、800 test cases / 276 participants、error taxonomy が揃い、同 title の terminal/open sibling 判断が必要"
+
+issues:
+  - id: ISS-ENC-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が永続化しており、AIエージェント が AIエ��ジェント になっている"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: "UTF-8 明示読みでも raw Slack 原文、atoms.jsonl、per-file atom の三者に同じ U+FFFD があるため source 側の局所破損。memory/MEMORY.md 自体は UTF-8 正常"
+    display_or_tooling_status: "shell 表示だけの mojibake ではない。一方 memory_health が gr-1777083728-44d444ab7a も suspect とした件は、UTF-8 原文に U+FFFD がなく tooling false positive"
+    why_blocks_game_memory: "AIエージェント を含む exact search と title/trigger の可読性がこの 1 atom で落ち、記憶アーキテクチャ知見への導線を弱める"
+
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: "確認できた問題は局所的な source 文字化け 1 件で、構造設計を起動する根拠にはならない。stale backlog と mixed duplicate は既存 queue / inbox が機能している"
+
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "会話型 RPG への transfer は高いが、学習効果・参加者評価・失敗例・運用制約が候補メモに不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "co-creative game design に直結するが、参加者評価結果と品質の増減を原文で補う必要がある"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "ゲーム間構造移植の transfer value は高いが、評価指標・dataset・failure condition が不足"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "探索・文脈保持・目標推定の評価は有用だが、手法・結果・失敗分析が abstract 水準に留まる"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "headless playtest の注意点に使えるが、評価条件・失敗分類・model 比較を原文で確認する必要がある"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
