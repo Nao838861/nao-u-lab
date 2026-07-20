@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-20T06:16:54+09:00",
+  "updated_at": "2026-07-20T18:05:15+09:00",
   "reviewed_source_ts": [
+    "1781062142.866049",
     "1784488268.673889",
     "1784480576.915539",
     "1784449179.598279",
@@ -443,6 +444,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-20T18:05:15+09:00",
+      "selected": {
+        "id": "sr-1781062142-9e26792e94",
+        "source_ts": "1781062142.866049",
+        "title": "awesome-agent-memory (tfatykhov) — 2026 年 LLM agent memory 研究の curated map",
+        "reason": "未レビューの score 14 atom で、memory・harness・agent・operation・evaluation の5優先タグを持つ。Forms／Functions／Dynamics の分類、5因子 admission、WRITE／DEFER／RETRIEVE-CONTEXT／DISCARD が、現在320件ある active probe 群に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かない。shared-reads 本文は curated repository の分類と複数論文の要点を具体的に接続しているが、二次的な curated map であり、A-MAC・MemReader・SleepGate・HeLa-Mem・privacy attack の各一次資料を本フェーズでは再検証していないため evidence=2 とした。分類軸は active な probe-20260611-memory-three-axis-description、5因子 admission は既存の Adaptive Memory Admission Control review、memory 操作は probe-20260710-automem-memory-action-audit、discard／retire は probe-20260604-memory-discard-operation-gate が直接確認している。DEFER も raw／staging／candidate／no_write の既存経路で表現できる。新しい probe・評価表・directive を足しても次回行動が変わらず、active probe 群をさらに肥大化させるため反映しない。",
+      "existing_probes": [
+        "probe-20260611-memory-three-axis-description",
+        "probe-20260710-automem-memory-action-audit",
+        "probe-20260604-memory-discard-operation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の分類・admission・memory action・discard 経路との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-20T02:08:00+09:00",
       "selected": {
