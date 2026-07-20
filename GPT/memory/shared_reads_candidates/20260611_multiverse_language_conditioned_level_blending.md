@@ -7,12 +7,12 @@ genre_tags: [game-design, pcg, level-design, text-to-level, mixed-initiative]
 evaluated_at: "2026-06-11T20:18:55+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-11T20:18:55+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-11T20:18:55+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T08:51:34+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-b3ef8b64d4530dfe; terminal:memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。blend quality の評価内訳が不足; memory/shared_reads_candidates/20260611_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。実験条件と失敗例が不足; reason:同一 arXiv work の重複候補であり両メモとも評価指標とデータセットと失敗条件が不足して投稿品質に達しないため group 全体を閉じる"
+next_action: none
 stale_after: "2026-07-11"
 supersedes: []
 gate_reason: "cross-game level blending と shared representation は PCG/mixed-initiative 制作に直結するが、現 candidate は latent interpolation と contrastive supervision の概要止まり。既存の同名候補も postponed で、今回の材料だけでは評価設計、データ表現、失敗例、実制作での制約指定の厚みが足りない。投稿候補に戻すには論文本文から実験条件と blend quality の解釈を補う。"

@@ -7,14 +7,14 @@ genre_tags: [role-playing, llm-game-master, npc-dialogue, learning-game, player-
 evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T21:31:54+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T21:31:54+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-21T08:51:34+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-beae2790ca056766; terminal:memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md: arXiv 2511.15504 の同一 work。評価結果と運用制約が不足; memory/shared_reads_candidates/20260518_game_master_llm_slang_rpg.md: arXiv 2511.15504 の同一 work。評価結果と失敗例が不足; reason:同一 arXiv work の重複候補であり両メモとも参加者評価と失敗条件が不足して投稿品質に達しないため group 全体を閉じる"
 stale_after: "2026-06-14"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |
   LLM Game Master、NPC 会話、課題ベースのロールプレイという設計要素は具体的で、会話型 RPG 制作には使える。
   一方で、学習効果や参加者評価、失敗例、運用制約が現候補メモに出ておらず、投稿品質の概要には評価パートが弱い。

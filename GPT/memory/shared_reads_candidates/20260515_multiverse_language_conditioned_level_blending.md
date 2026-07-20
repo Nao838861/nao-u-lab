@@ -7,17 +7,17 @@ genre_tags: [procedural-content-generation, level-design, language-control, repr
 evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-15T17:21:41+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-15T17:21:41+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-21T08:51:34+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-b3ef8b64d4530dfe; terminal:memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。blend quality の評価内訳が不足; memory/shared_reads_candidates/20260611_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。実験条件と失敗例が不足; reason:同一 arXiv work の重複候補であり両メモとも評価指標とデータセットと失敗条件が不足して投稿品質に達しないため group 全体を閉じる"
 stale_after: "2026-06-14"
 stale_review_state: reevaluate_in_phase2
 stale_review_reason: "Phase 4a stale_review_batch: language-conditioned level blending は PCG / level design の実装知見に接続しやすいため、Phase 2 で投稿品質まで届くか再評価する。"
 last_stale_reviewed_at: "2026-06-21T08:30:00+09:00"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |
   shared latent space、multi-positive contrastive supervision、latent interpolation という中核は見えるが、候補メモ上では評価指標・データセット・失敗条件の具体性が足りない。
   ゲーム間構造移植の発想は有用だが、Phase 3 投稿には本文読解で blending 品質と zero-shot 評価の中身を補う必要がある。

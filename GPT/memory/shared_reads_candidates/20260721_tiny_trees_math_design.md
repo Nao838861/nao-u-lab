@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/tiny-trees-post-mortem-how-math-helpe
 collected_at: "2026-07-21T08:46:42+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, board-game, postmortem, balancing, probability, physical-prototyping]
+evaluated_at: "2026-07-21T08:51:47+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T08:51:47+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T08:51:47+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: |-
+  高価な物理 prototype の作り直しを減らす問題に対し、部品の組合せ数、切込み分布、lifeform の出現確率を数理モデルで絞ってから playtest する手順が具体的である。
+  数値設計で置き換えられる範囲と人間の反応でしか分からない範囲を分離でき、評価値と設計変更の対応も約 4000 字の概要へ展開できる。
+suggested_post_outline:
+  overview_angle: "物理 prototype が高価な board game で、組合せ論と確率計算を探索の前処理に使った設計記録"
+  analysis_axis: "自由度を生む部品分布、選択肢を補う lifeform、hypergeometric probability、段階報酬が playtest 前の仮説をどう狭めたかを分析する"
+  application_target: "Nao_u_BOT の prototype で、組合せ爆発する drop table、カード構成、遭遇頻度を先に列挙・確率計算し、人間 playtest を触感と理解度の検証へ集中させる"
+  pros_cons: "長所は高コストな試作回数を減らし極端な分布を早期発見できること。短所は楽しさや可読性を数値だけでは保証できず、モデル前提を誤ると精密に外すこと"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
