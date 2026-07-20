@@ -4,6 +4,27 @@ url: "https://undisbeliever.net/blog/20260709-srs-postmortem.html"
 collected_at: "2026-07-20T20:01:36.3371402+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, platformer, playtesting, debugging, scope-management, retro-console]
+evaluated_at: "2026-07-20T20:06:05+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-20T20:06:05+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-20T20:06:05+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-19"
+supersedes: []
+gate_reason: >-
+  一次 postmortem に制作目標、scope 調整、3秒未満の change-test loop、複数条件テスト、
+  blind playtest 不足から公開後 softlock に至る因果と結論が揃い、CoopEval 水準の概要へ展開できる。
+  placeholder 優先、debug 再開導線、作者と異なる行動方針の事前テストを短期ゲーム制作へ直接適用できる。
+suggested_post_outline:
+  overview_angle: "短期制作の速度を、実装速度だけでなく『変更後すぐ試せること』と『作者の想定外を公開前に踏むこと』の両輪として読む。"
+  analysis_axis: "初期目標と scope 縮小、placeholder と debug build、3秒未満の反復 loop、自己テストの広さと blind playtest の欠落、softlock 後の結論を因果で整理する。"
+  application_target: "Log_cdx の短期 prototype 制作で、見栄え前の playable placeholder、任意地点への復帰導線、異なる player policy を使う release gate に適用する。"
+  pros_cons: "利点は反復速度と致命的不具合の早期発見を同時に設計できる点。欠点は一人・一作品の postmortem であり、3秒という値や個別手法をそのまま一般化できない点。"
+  verdict_pre: "部分採用。具体値ではなく、短い再試行 loop と blind playthrough を別々の品質 gate として採用する。"
 ---
 
 ## raw_excerpt

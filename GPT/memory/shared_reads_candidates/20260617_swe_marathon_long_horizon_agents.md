@@ -7,12 +7,12 @@ genre_tags: [agent-evaluation, long-horizon, memory, workflow, game-production]
 evaluated_at: "2026-06-17T09:33:30+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-17T09:33:30+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-17T09:33:30+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-20T20:05:54+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-b05b9545bc017fc7; terminal:memory/shared_reads_candidates/20260610_swe_marathon_long_horizon_agent_work.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781046010166399; reason:同一 arXiv work は 2026-06-10 に投稿済みで、未投稿 sibling に題材差・資料差がないため重複を閉じる。"
+next_action: none
 stale_after: "2026-07-17"
 supersedes: []
 gate_reason: "長期 agent 評価を短い ticket 成功率から切り離す問題設定は重要。ただし保存済み抜粋では 20 task 構成と多層検証の概要までで、評価結果・結論・失敗傾向が不足している。ゲーム制作サイクル評価への接続は有望だが、CoopEval 水準の概要を書くには論文本体確認が必要。"
