@@ -77,7 +77,17 @@ group_handoff_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260720_actplane_agent_harness_os_policy.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784538040103019
+    char_count: 3960
+skipped: []
+```
+
+- 最終判定: 部分採用。Linux/eBPF 実装の即時導入ではなく、event/state policy、authority domain、間接経路を含む violation trace、semantic feedback を採用対象とした。
+- 投稿前検証: `shared_reads_policy` 合格、禁止表現なし、必須セクション順序・末尾 URL・単独投稿を確認。Slack 保存後の UTF-8 検証も `ok`。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
