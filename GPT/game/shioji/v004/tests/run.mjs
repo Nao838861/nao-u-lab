@@ -294,6 +294,7 @@ test('チュートリアル段6: 丸太の催促→市場→初売り→木工�
     buildingX: marketPreview.x, buildingY: marketPreview.y,
   }).ok, true);
   observe();
+  observe();
   assert.equal(director.readState().completedGoals.includes('market-for-logs'), true);
 
   const afterMarket = controller.readModel();
@@ -304,6 +305,21 @@ test('チュートリアル段6: 丸太の催促→市場→初売り→木工�
     assert.equal(hasLetter('market-distance-warning'), false, '近い市場では警告を出さない');
   }
 
+  if (!director.readState().completedGoals.includes('connect-market-to-port')) {
+    assert.equal(hasLetter('market-needs-port-road'), true, '未接続なら輸入棚が空である事実の書状が出る');
+    const portRoad = previewRoadPlacement(controller.readModel(), port.entrance, market.entrance);
+    assert.equal(portRoad.ok, true, '港と市場を結ぶ道を引ける');
+    assert.equal(controller.operate({
+      type: 'add_road', start: portRoad.start, end: portRoad.end,
+    }).ok, true);
+    observe();
+    observe();
+  } else {
+    assert.equal(hasLetter('market-needs-port-road'), false, '接続済みなら催促書状は出ない');
+  }
+  assert.equal(director.readState().completedGoals.includes('connect-market-to-port'), true);
+
+  advanceUntil(() => hasLetter('first-import-food'), 30, '本土の食料が市場に並ぶ');
   advanceUntil(() => hasLetter('first-log-stall'), 20, '市場に丸太が並ぶ');
   assert.equal(director.currentObjective().id, 'first-woodshop');
 
@@ -334,9 +350,10 @@ test('チュートリアル段6: 丸太の催促→市場→初売り→木工�
   const model = controller.readModel();
   const journal = controller.inputJournal();
   assert.deepEqual(
-    journal.map(row => row.op.type),
-    ['add_road', 'place_building', 'place_building', 'place_building'],
+    journal.slice(0, 3).map(row => row.op.type),
+    ['add_road', 'place_building', 'place_building'],
   );
+  assert.equal(journal.at(-1).op.type, 'place_building');
   const replay = createEngineController({ seed: 11, mode: 'tutorial' });
   let replayTick = 0;
   for (const row of journal) {

@@ -67,6 +67,23 @@ function logTransaction(events) {
   return events.find(event => event.type === 'transaction' && event.goods === 'log') ?? null;
 }
 
+function portConnectedToMarket(model) {
+  const port = model.buildings.find(building => building.roles?.includes('port'));
+  if (!port) return false;
+  const row = model.roadConnection?.buildings?.find(entry => entry.id === port.id);
+  return Boolean(row?.connected);
+}
+
+const FOOD_GOODS = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
+
+function marketFoodShelfAmount(model) {
+  const market = marketBuilding(model);
+  if (!market) return 0;
+  return (market.shelves ?? [])
+    .filter(row => FOOD_GOODS.includes(row.goods))
+    .reduce((total, row) => total + (row.amount ?? 0), 0);
+}
+
 // 徒歩距離の見積り(§2.5.1近似: 道0.6/森1.4/他1.0/水∞・8方向・対角×1.4)。
 // 獣道(0.85)はsnapshotに乗らないため考慮しない=距離をやや多めに見積る控えめな警告になる。
 export function estimateWalkLen(model, from, to) {
@@ -175,6 +192,20 @@ export const TUTORIAL_GOALS = Object.freeze([
     },
   }),
   Object.freeze({
+    id: 'connect-market-to-port',
+    chapter: '第一章・最初の一荷',
+    title: '港と市場を道で結ぶ',
+    evaluate({ model }) {
+      const connected = portConnectedToMarket(model);
+      return {
+        complete: connected,
+        progress: { done: Number(connected), total: 1 },
+        detail: connected ? '港と市場が道で結ばれました' : '港の入口は市場の道路成分の外です',
+        evidence: { connected },
+      };
+    },
+  }),
+  Object.freeze({
     id: 'first-woodshop',
     chapter: '第一章・最初の一荷',
     title: '木工房を置き、道具づくりを始める',
@@ -271,6 +302,45 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `市場まで、${far.household.job}の家から道なりの見積りでおよそ${far.walk.toFixed(1)}。14を超えると、一日のうちに市場まで歩いて戻ることができません。`,
           'この家の者は買い物に出られず、いずれ食べる物に困ります。道を敷いて近づけるか、建て直しをご検討ください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'market-needs-port-road',
+    source: 'snapshot',
+    when({ model }) {
+      return Boolean(marketBuilding(model)) && !portConnectedToMarket(model);
+    },
+    render({ model }) {
+      return {
+        kicker: '空の輸入棚',
+        title: '本土の食料が市場に届きません',
+        summary: `${model.day}日目・市場は開きましたが港と道が結ばれていません`,
+        body: [
+          `${model.day}日目。市場は開きましたが、本土から届く食料は港のヤードに降りたまま——会社の荷車は道のない所を通れません。`,
+          '港と市場を道でお結びください。結ばれるまで市場の輸入棚は空のままで、入植者たちは持参の食料を食べ尽くせば飢えます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-import-food',
+    source: 'snapshot',
+    when({ model }) {
+      return marketFoodShelfAmount(model) > 0;
+    },
+    render({ model }) {
+      const amount = marketFoodShelfAmount(model);
+      return {
+        kicker: '本土からの荷',
+        title: '本土の食料が市場に並びました',
+        summary: `${model.day}日目・市場の食料棚 ${amount.toFixed(1)}荷`,
+        body: [
+          `${model.day}日目。港に降りた本土の食料が荷車で運ばれ、市場の棚に${amount.toFixed(1)}荷並びました。これで入植者たちは銀さえあれば食べていけます。`,
+          'ただし本土の食料は買うたびに島の銀が海を渡って出ていきます。いずれ、島の食卓は島で賄う日が要りましょう。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
