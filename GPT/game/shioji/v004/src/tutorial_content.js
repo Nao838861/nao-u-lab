@@ -279,6 +279,26 @@ export const TUTORIAL_GOALS = Object.freeze([
       };
     },
   }),
+  Object.freeze({
+    id: 'order-procurement-target',
+    chapter: '第一章・最初の一荷',
+    title: '買上げ目標を定め、調達を命じる',
+    evaluate({ model }) {
+      const order = model.activeOrder;
+      const target = order ? (model.stockTargets?.[order.g] ?? 0) : 0;
+      const done = Boolean(order) && target > 0;
+      return {
+        complete: done,
+        progress: { done: Number(done), total: 1 },
+        detail: order
+          ? (done
+            ? `${goodsLabel(order.g)}の買上げ目標 ${target}荷`
+            : '受諾だけでは会社の銀は動きません。買上げ目標のご下命を')
+          : '注文の受諾が先です',
+        evidence: { target },
+      };
+    },
+  }),
 ]);
 
 export const TUTORIAL_LETTERS = Object.freeze([
@@ -507,6 +527,28 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${model.day}日目。蔵は建ちましたが、入口が市場からの道と繋がっていません。会社の荷車は道のない所を通れず、買い付けた品を運び込めません。`,
           '蔵の入口まで道をお延ばしください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'order-needs-target',
+    source: 'snapshot',
+    when({ model }) {
+      const order = model.activeOrder;
+      return Boolean(order) && Boolean(warehouseBuilding(model)) && warehouseConnected(model)
+        && (model.stockTargets?.[order.g] ?? 0) <= 0;
+    },
+    render({ model }) {
+      const order = model.activeOrder;
+      return {
+        kicker: '会社の銀は総督のもの',
+        title: '買付のご下命を',
+        summary: `${goodsLabel(order.g)}の買上げ目標が0のままです`,
+        body: [
+          `${model.day}日目。蔵と道は整いましたが、会社の買付はまだ動いていません。注文の受諾だけでは会社の銀は動かず、いくらまで買い集めるかは総督のご下命によります。`,
+          `会社の帳場で${goodsLabel(order.g)}の買上げ目標をお定めください。注文は${order.qty}荷、目標をその数に合わせるのが定石です。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

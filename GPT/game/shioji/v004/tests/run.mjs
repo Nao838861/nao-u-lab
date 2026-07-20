@@ -542,6 +542,15 @@ test('チュートリアル段7: 初注文(実測day75)→受諾→蔵→未接�
   observe();
   observe();
   assert.equal(director.readState().completedGoals.includes('warehouse-for-order'), true);
+  observe();
+  assert.equal(director.currentObjective().id, 'order-procurement-target');
+  assert.equal(hasLetter('order-needs-target'), true, '買上げ目標のご下命の書状が出る');
+  const activeOrder = controller.readModel().activeOrder;
+  assert.equal(controller.operate({
+    type: 'set_stock_target', goods: activeOrder.g, qty: activeOrder.qty,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('order-procurement-target'), true);
 
   // 初調達(first-company-procurement)の検証は初期経済バランスの較正待ち。
   // 実測(2026-07-20): キット丸太枯渇後に木工房が丸太を買う銀を持たず生産停止、
