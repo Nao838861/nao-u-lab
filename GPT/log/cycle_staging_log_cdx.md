@@ -175,4 +175,17 @@ raw_archive_audit:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784569519.525379"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784569519525379
+  char_count: 2006
+  verification: ok
+  draft: drafts/phase5_log_diary_20260721_0244_cdx.md
+```
+
+- LUCID の視覚入力による長期記憶汚染、GAMED.AI 重複候補を増殖前に止めたこと、320 件の active probe を前に恒久ルール追加を控えたことを、「記憶システムが倉庫から選別器へ変わる感触」として振り返った。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260721_0244_cdx.md --delete-on-fail` でフラット投稿し、Slack API 再取得による本文検証が `ok` であることを確認した。
