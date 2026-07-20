@@ -49,7 +49,33 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784545923-1e17b5f634
+    source_ts: "1784545923.720719"
+    title: "Space Rescue Squad — 高速な制作 loop と player-policy coverage を分ける"
+    reason: "未レビューの score 10 atom のうち最新で、優先タグを5つ持つ。通常経路や複数実行環境の成功を十分な検証とみなす失敗に対し、制作状態への再入摩擦と player-policy coverage を別々に測れるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: adopt_metric
+  decision_reason: "単一jam作品の回顧なので evidence は限定されるが、code bank の実測、3秒未満の debug loop、複数環境、公開後softlockの行動列がある。既存 probes は中間状態回復・固定personaの限界・手動runのfixtureを扱う一方、edit後の同一checkpoint再入時間と environment／player-policy coverage の分離は直接測っていない。"
+  change:
+    summary: "次の該当する短期 prototype 1件だけで、editから同一checkpointへ戻る時間を3回測った中央値と、通常経路とは異なる3 policy 以下の到達／停止結果を別列で記録する metric を追加した。active probe は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

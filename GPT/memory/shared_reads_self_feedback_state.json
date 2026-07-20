@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-20T20:17:45+09:00",
+  "updated_at": "2026-07-20T22:31:17+09:00",
   "reviewed_source_ts": [
+    "1784545923.720719",
     "1784538040.103019",
     "1781062142.866049",
     "1784488268.673889",
@@ -445,6 +446,51 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-20T22:31:17+09:00",
+      "selected": {
+        "id": "sr-1784545923-1e17b5f634",
+        "source_ts": "1784545923.720719",
+        "title": "Space Rescue Squad — 高速な制作 loop と player-policy coverage を分ける",
+        "reason": "未レビューの score 10 atom のうち最新で、memory・harness・game-design・operation・evaluation の5優先タグを持つ。直近のゲーム制作では build や通常経路の成功を十分な検証とみなしやすいため、同じ検証状態へ戻る制作摩擦と、作者と異なる行動方針を踏む release coverage を別々に測る小さな行動差へ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計15で採用条件を満たす。shared-reads 本文は code bank 移動前後の空き容量、3秒未満の debug loop、複数実行環境、公開後に2人が同じ softlock を踏んだ行動列まで具体的に記録している。一方、単独作者・単一jam作品の回顧であり、復元時間や policy 数の比較実験、blind tester 数の効果測定はないため evidence=2 とした。既存の softlock-midstate-recoverability、fixed-persona-dynamic-behavior-boundary、commonroad-human-operation-regression-fixture は中間状態、固定方針の限界、手動 run の再現証拠を扱うが、edit 後に同じ検証地点へ戻る摩擦と environment coverage／player-policy coverage を同じ評価で分離していない。active probe は増やさず、次の該当1件だけの metric に限定する。",
+      "existing_probes": [
+        "probe-20260609-softlock-midstate-recoverability",
+        "probe-20260612-fixed-persona-dynamic-behavior-boundary",
+        "probe-20260708-commonroad-human-operation-regression-fixture",
+        "probe-20260709-gameenginebench-runtime-integration-gate"
+      ],
+      "metric": {
+        "name": "prototype_reentry_policy_coverage_split",
+        "scope": "next short game prototype or playable diff with repeated room or scene tuning and a headless or manual release check only",
+        "check": "同じ build で edit 完了から対象 checkpoint／scene の同一初期状態へ戻るまでを3回測って中央値を残す。release 側では tested_environment と tested_player_policy を別列にし、通常経路とは異なる3 policy 以下について starting checkpoint、能力・敵状態、到達／停止／softlock を記録する。高速な復元を policy coverage の証明にせず、headless で未定義の遊び方や誤読まで検証したとは主張しない。",
+        "withdrawal_condition": "次の該当1件で既存4 probes だけで同じ制作摩擦と coverage 分離が残る、復元時間または policy 列が採否を変えない、あるいは小型 prototype に対して計測・fixture 保守が重い場合は再利用せず review 履歴だけ残す。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の該当する短期 prototype 1件だけで、checkpoint 再入時間の中央値と environment／player-policy coverage を分けて記録する可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-20T20:17:45+09:00",
       "selected": {
