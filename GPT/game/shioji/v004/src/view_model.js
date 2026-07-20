@@ -1,5 +1,5 @@
 import { JOB_LABELS, SECTION_LABELS } from './config.js';
-import { MAINLAND_AID } from './engine_bridge.js';
+import { MAINLAND_AID, companyStockReleasePrice } from './engine_bridge.js';
 import { analyzeRoadConnections } from './placement.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
@@ -231,6 +231,18 @@ export function snapshotToViewModel(snapshot) {
     goods,
     rows.filter(row => row.qty > 1e-9).reduce((lowest, row) => Math.min(lowest, row.price), Infinity),
   ]));
+  const companyStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.stock).map(([goods, qty]) => [
+    goods,
+    qty > 1e-9 ? (snapshot.economy.stockCost[goods] ?? 0) / qty : null,
+  ]));
+  const companyMarketStockAverageCosts = Object.fromEntries(Object.entries(snapshot.economy.marketStock).map(([goods, qty]) => [
+    goods,
+    qty > 1e-9 ? (snapshot.economy.marketStockCost[goods] ?? 0) / qty : null,
+  ]));
+  const companyReleasePrices = Object.fromEntries(Object.entries(snapshot.economy.marketStock).map(([goods, qty]) => [
+    goods,
+    qty > 1e-9 ? companyStockReleasePrice(snapshot.economy, goods, { market: true }) : null,
+  ]));
   const base = {
     day: snapshot.day,
     tick: snapshot.tick,
@@ -269,6 +281,10 @@ export function snapshotToViewModel(snapshot) {
     imported: { ...snapshot.economy.imported },
     moneyOutBy: { ...snapshot.economy.outBy },
     companyStock: { ...snapshot.economy.stock },
+    companyStockAverageCosts,
+    companyMarketStock: { ...snapshot.economy.marketStock },
+    companyMarketStockAverageCosts,
+    companyReleasePrices,
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {
       const requests = snapshot.economy.mainlandAid?.requests ?? 0;

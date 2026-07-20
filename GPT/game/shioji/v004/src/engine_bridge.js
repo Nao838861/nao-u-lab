@@ -1,4 +1,4 @@
-export { MAINLAND_AID } from '../../engine/src/econ.js';
+export { MAINLAND_AID, companyStockReleasePrice } from '../../engine/src/econ.js';
 import { createEngineApi } from '../../engine/src/api.js';
 import { buildBaseCity, makeStableCityPlan } from '../../engine/src/audit.js';
 import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js';

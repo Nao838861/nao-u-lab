@@ -19,6 +19,7 @@ import {
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
   FOOD_IMPORT_EMA_TARGET, LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
+  SEASONAL_RESERVE_TARGET, SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
@@ -819,7 +820,8 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   const { controller, director, observe } = tutorialThroughPlay;
   observe();
   assert.equal(director.readState().completedGoals.includes('close-second-chapter'), true);
-  assert.equal(director.isComplete(), true);
+  assert.equal(director.isComplete(), false);
+  assert.equal(director.currentObjective().id, 'observe-seasonal-food-valley');
   const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
   assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
   assert.match(closing.body, new RegExp(`${closing.facts.before.importEma.toFixed(3)}から${closing.facts.current.importEma.toFixed(3)}`));
@@ -831,6 +833,11 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   assert.equal(controller.readModel().stockTargets.fish, 3);
   assert.equal(controller.readModel().tick, beforeTick);
   assert.equal(controller.inputJournal().length, beforeJournal + 1);
+  assert.equal(controller.operate({ type: 'set_stock_target', goods: 'fish', qty: 0 }).ok, true);
+  observe();
+  assert.equal(controller.readModel().stockTargets.fish, 0,
+    '第三章の備えをプレイヤー自身が新しく定められるよう自由操作smokeの目標を戻す');
+  assert.equal(controller.inputJournal().length, beforeJournal + 2);
 
   const finalModel = controller.readModel();
   const replay = createEngineController({ seed: 11, mode: 'tutorial' });
@@ -976,6 +983,140 @@ test('チュートリアル段15: 第一章・第二章の完走journal 2本を�
     assert.deepEqual(replay.readModel(), fixture.model, `${chapter}完走journalの世界が完全一致する`);
     assert.deepEqual(replay.inputJournal(), fixture.journal, `${chapter}完走journal自体も同一である`);
   }
+});
+
+test('チュートリアル段16実測: 余剰8荷→ピーク20%以下の季節在庫谷を3シードで検出する', () => {
+  const valleyGoal = TUTORIAL_GOALS.find(goal => goal.id === 'observe-seasonal-food-valley');
+  const rows = [];
+  for (const seed of [11, 13, 14]) {
+    const fixture = tutorialThroughPlay.secondChapter;
+    const replay = replayTutorialJournal(fixture.journal, fixture.model.tick, seed);
+    const director = createTutorialDirector({ goals: [valleyGoal], letters: [] });
+    director.observe(replay.readModel(), []);
+    const deadline = replay.readModel().day + 365;
+    while (!director.isComplete() && replay.readModel().day < deadline) {
+      replay.advanceTicks(30);
+      director.observe(replay.readModel(), []);
+    }
+    const valley = director.readState().goalResults[valleyGoal.id]?.evidence?.valley;
+    assert.ok(valley, `seed${seed}で365日以内に季節在庫谷を検出する`);
+    assert.ok(valley.peakAvailability >= SEASONAL_SURPLUS_MIN);
+    assert.ok(valley.valleyRatio <= SEASONAL_VALLEY_RATIO);
+    rows.push({ seed, ...valley });
+  }
+  console.log(`  段16季節実測 ${rows.map(row => (
+    `seed${row.seed}:${row.goods} day${row.peakDay} ${row.peakAvailability.toFixed(1)}`
+      + `→day${row.day} ${row.available.toFixed(1)}荷(${(row.valleyRatio * 100).toFixed(1)}%)`
+      + `/px${row.peakPrice.toFixed(3)}→${row.price.toFixed(3)}`
+  )).join(' | ')}`);
+});
+
+test('チュートリアル段16: 実在庫谷を語り、旧注文目標を閉じて食料の買上げ目標を定める', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const deadline = controller.readModel().day + 365;
+  while (!director.readState().completedGoals.includes('observe-seasonal-food-valley')
+    && controller.readModel().day < deadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('observe-seasonal-food-valley'), true);
+  observe();
+  const report = director.letters().find(letter => letter.id === 'seasonal-food-valley-report');
+  assert.ok(report);
+  assert.ok(report.facts.peakAvailability >= SEASONAL_SURPLUS_MIN);
+  assert.ok(report.facts.valleyRatio <= SEASONAL_VALLEY_RATIO);
+  assert.match(report.body, new RegExp(`${report.facts.peakAvailability.toFixed(1)}荷`));
+  assert.match(report.body, new RegExp(`${report.facts.available.toFixed(1)}荷`));
+
+  if (report.facts.firstOrderGoods && report.facts.staleTarget > 0) {
+    assert.equal(controller.operate({
+      type: 'set_stock_target', goods: report.facts.firstOrderGoods, qty: 0,
+    }).ok, true);
+    observe();
+  }
+  assert.equal(controller.operate({
+    type: 'set_stock_target', goods: report.facts.goods, qty: SEASONAL_RESERVE_TARGET,
+  }).ok, true);
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('set-seasonal-stock-target'), true);
+  assert.equal(controller.readModel().stockTargets[report.facts.goods], SEASONAL_RESERVE_TARGET);
+  if (report.facts.firstOrderGoods !== report.facts.goods) {
+    assert.equal(controller.readModel().stockTargets[report.facts.firstOrderGoods], 0);
+  }
+  const targetLetter = director.letters().find(letter => letter.id === 'seasonal-stock-target-set');
+  assert.equal(targetLetter.facts.target, SEASONAL_RESERVE_TARGET);
+  assert.match(targetLetter.body, /目標を書いただけでは品は増えません/);
+  tutorialThroughPlay.seasonalGoods = report.facts.goods;
+  tutorialThroughPlay.seasonalValley = report.facts;
+});
+
+test('チュートリアル段17: 次の在庫谷で実荷車による蔵出しと実価格を報告する', () => {
+  const { controller, director, observe, seasonalGoods } = tutorialThroughPlay;
+  const fillDeadline = controller.readModel().day + 365;
+  while (!director.readState().completedGoals.includes('fill-seasonal-reserve')
+    && controller.readModel().day < fillDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('fill-seasonal-reserve'), true);
+  const filled = director.letters().find(letter => letter.id === 'seasonal-reserve-filled');
+  assert.ok(filled.facts.stock > 0);
+  assert.ok(filled.facts.averageCost > 0);
+  observe();
+
+  const releaseDeadline = controller.readModel().day + 365;
+  while (!director.readState().goalResults['release-seasonal-reserve']?.evidence?.ready
+    && controller.readModel().day < releaseDeadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  const ready = director.readState().goalResults['release-seasonal-reserve']?.evidence;
+  assert.equal(ready?.ready, true, '備蓄後の新しい余剰ピークと在庫谷を実測する');
+  assert.ok(ready.stock > 0);
+  const stockBefore = controller.readModel().companyStock[seasonalGoods];
+  const released = controller.operate({
+    type: 'release_stock', goods: seasonalGoods, qty: SEASONAL_RESERVE_TARGET,
+  });
+  assert.equal(released.ok, true);
+  const releaseEvents = observe();
+  const departure = releaseEvents.find(event => event.type === 'departure'
+    && event.carrier === 'cart' && event.goods === seasonalGoods);
+  assert.ok(departure);
+  assert.ok(departure.qty > 0 && departure.qty <= Math.min(SEASONAL_RESERVE_TARGET, stockBefore));
+  assert.equal(director.readState().completedGoals.includes('release-seasonal-reserve'), true);
+  const dispatch = director.letters().find(letter => letter.id === 'seasonal-release-dispatched');
+  assert.equal(dispatch.facts.qty, departure.qty);
+  assert.match(dispatch.body, new RegExp(`${departure.qty.toFixed(1)}荷を積んだ実荷車`));
+
+  const arrivalDeadline = controller.readModel().tick + 120;
+  while (!director.letters().some(letter => letter.id === 'chapter-three-close')
+    && controller.readModel().tick < arrivalDeadline) {
+    controller.advanceTicks(1);
+    observe();
+  }
+  const closing = director.letters().find(letter => letter.id === 'chapter-three-close');
+  assert.ok(closing, '実荷車が市場へ到着してから章締めする');
+  assert.ok(closing.facts.arrived > 0);
+  assert.ok(closing.facts.releasePrice > 0);
+  assert.ok(closing.facts.averageCost > 0);
+  assert.ok(closing.facts.warehouseAverageCost > 0);
+  assert.ok(Math.abs(closing.facts.multiplier - 1.2) < 1e-9,
+    '売場で合算された実平均原価に1.2を掛けた蔵出し値になる');
+  assert.match(closing.body, new RegExp(`${(closing.facts.releasePrice * 10).toFixed(1)}デナリ`));
+  assert.equal(director.readState().completedGoals.includes('close-third-chapter'), true);
+  assert.equal(director.isComplete(), true);
+
+  const finalModel = controller.readModel();
+  const journal = controller.inputJournal();
+  const replay = replayTutorialJournal(journal, finalModel.tick);
+  assert.deepEqual(replay.readModel(), finalModel, '第三章完走後も公開journalから同じ世界を再生できる');
+  assert.deepEqual(replay.inputJournal(), journal);
+  tutorialThroughPlay.thirdChapter = { model: finalModel, journal };
+  console.log(`  段17蔵出し実測 ${seasonalGoods} ${departure.qty.toFixed(1)}荷 / `
+    + `出庫原価${closing.facts.warehouseAverageCost.toFixed(3)}`
+    + `/売場平均${closing.facts.averageCost.toFixed(3)}→価格${closing.facts.releasePrice.toFixed(3)}`
+    + `(${closing.facts.multiplier.toFixed(3)}倍)`);
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {

@@ -208,10 +208,85 @@ function farHouseholdFromMarket(model) {
 export const LOGGER_TRIP_WARNING_TICKS = 24;
 export const LOGGER_TRIP_RECOVERY_TICKS = 4;
 export const FOOD_IMPORT_EMA_TARGET = 0.6;
+export const SEASONAL_SURPLUS_MIN = 8;
+export const SEASONAL_VALLEY_RATIO = 0.2;
+export const SEASONAL_RESERVE_TARGET = 16;
 const LOGGER_MULTIPLIER_RECOVERY = 0.1;
 const FOOD_PRODUCTION_EMA_MIN = 0.25;
 const FOOD_PRICE_CHANGE_MIN = 0.01;
 const FOOD_IMPORT_EMA_CHANGE_MIN = 0.05;
+const SEASONAL_FOOD_GOODS = ['fish', 'veg', 'wheat'];
+
+function marketGoodsAvailability(model, goods) {
+  const stalls = model.stalls
+    .filter(stall => stall.goods === goods)
+    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
+  const market = marketBuilding(model);
+  const inbound = (market?.shelves ?? [])
+    .filter(shelf => shelf.section === 'inbound' && shelf.goods === goods)
+    .reduce((total, shelf) => total + (shelf.amount ?? 0), 0);
+  return stalls + inbound;
+}
+
+function seasonalFoodValley(model, state, goalId = 'observe-seasonal-food-valley', goodsRows = SEASONAL_FOOD_GOODS) {
+  const previous = state?.goalResults?.[goalId]?.evidence?.observations ?? {};
+  const observations = {};
+  const valleys = [];
+  for (const goods of goodsRows) {
+    const available = marketGoodsAvailability(model, goods);
+    const price = model.marketPrices?.[goods] ?? 0;
+    const prior = previous[goods] ?? {
+      peakAvailability: 0,
+      peakDay: null,
+      peakPrice: price,
+      lowestPrice: price,
+    };
+    const newPeak = available > prior.peakAvailability;
+    const row = {
+      goods,
+      day: model.day,
+      available,
+      price,
+      peakAvailability: newPeak ? available : prior.peakAvailability,
+      peakDay: newPeak ? model.day : prior.peakDay,
+      peakPrice: newPeak ? price : prior.peakPrice,
+      lowestPrice: Math.min(prior.lowestPrice, price),
+    };
+    observations[goods] = row;
+    if (row.peakAvailability >= SEASONAL_SURPLUS_MIN
+      && model.day > row.peakDay
+      && row.available <= row.peakAvailability * SEASONAL_VALLEY_RATIO) {
+      valleys.push({
+        ...row,
+        valleyRatio: row.available / row.peakAvailability,
+        priceChangeFromPeak: row.price - row.peakPrice,
+      });
+    }
+  }
+  valleys.sort((left, right) => left.valleyRatio - right.valleyRatio
+    || SEASONAL_FOOD_GOODS.indexOf(left.goods) - SEASONAL_FOOD_GOODS.indexOf(right.goods));
+  return { observations, valley: valleys[0] ?? null };
+}
+
+function seasonalValleyFacts(state) {
+  return state?.goalResults?.['observe-seasonal-food-valley']?.evidence?.valley ?? null;
+}
+
+function stockReleaseReport(events, expectedGoods = null) {
+  const operation = events.find(event => event.type === 'operation'
+    && event.ok && event.op?.type === 'release_stock'
+    && (!expectedGoods || event.op.goods === expectedGoods));
+  if (!operation) return null;
+  const departure = events.find(event => event.type === 'departure'
+    && event.carrier === 'cart' && event.goods === operation.op.goods);
+  if (!departure) return null;
+  return {
+    goods: operation.op.goods,
+    requestedQty: operation.op.qty,
+    qty: departure.qty,
+    haulJobId: departure.haulJobId,
+  };
+}
 
 function loggerTripObservation(model) {
   const household = model.households.find(row => row.job === 'logger'
@@ -585,6 +660,121 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued ? '食料自給と本土流出の報告書が届きました' : '輸入EMAの低下を確認しています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-seasonal-food-valley',
+    chapter: '第三章・蔵の備え',
+    title: '市場の余剰が薄くなる季節を見届ける',
+    evaluate({ model, state }) {
+      const observation = seasonalFoodValley(model, state);
+      const valley = observation.valley;
+      return {
+        complete: Boolean(valley),
+        progress: { done: Number(Boolean(valley)), total: 1 },
+        detail: valley
+          ? `${goodsLabel(valley.goods)} ${valley.peakAvailability.toFixed(1)}→${valley.available.toFixed(1)}荷 / 相場 ${(valley.price * 10).toFixed(1)}デナリ`
+          : '魚・野菜・麦の余剰と相場を観測中です',
+        evidence: observation,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'set-seasonal-stock-target',
+    chapter: '第三章・蔵の備え',
+    title: '注文の買付を閉じ、食料の備えを定める',
+    evaluate({ model, state }) {
+      const valley = seasonalValleyFacts(state);
+      const firstGoods = firstOrderFacts(state)?.goods ?? null;
+      const target = valley ? (model.stockTargets?.[valley.goods] ?? 0) : 0;
+      const staleTarget = firstGoods && firstGoods !== valley?.goods
+        ? (model.stockTargets?.[firstGoods] ?? 0) : 0;
+      const targetReady = target >= SEASONAL_RESERVE_TARGET;
+      const oldTargetClosed = staleTarget <= 0;
+      return {
+        complete: Boolean(valley) && targetReady && oldTargetClosed,
+        progress: { done: Number(oldTargetClosed) + Number(targetReady), total: 2 },
+        detail: valley
+          ? `${goodsLabel(firstGoods)}の旧目標 ${staleTarget} / ${goodsLabel(valley.goods)}の備え ${target}/${SEASONAL_RESERVE_TARGET}荷`
+          : '市場の在庫谷を観測しています',
+        evidence: {
+          goods: valley?.goods ?? null,
+          target,
+          requiredTarget: SEASONAL_RESERVE_TARGET,
+          firstOrderGoods: firstGoods,
+          staleTarget,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'fill-seasonal-reserve',
+    chapter: '第三章・蔵の備え',
+    title: '余剰が会社の蔵へ届くのを見届ける',
+    evaluate({ model, state }) {
+      const valley = seasonalValleyFacts(state);
+      const stock = valley ? (model.companyStock?.[valley.goods] ?? 0) : 0;
+      return {
+        complete: stock > 0,
+        progress: { done: Number(stock > 0), total: 1 },
+        detail: valley
+          ? `蔵の${goodsLabel(valley.goods)} ${stock.toFixed(1)}荷 / 目標 ${model.stockTargets?.[valley.goods] ?? 0}荷`
+          : '市場の在庫谷を観測しています',
+        evidence: {
+          goods: valley?.goods ?? null,
+          stock,
+          averageCost: valley ? (model.companyStockAverageCosts?.[valley.goods] ?? null) : null,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'release-seasonal-reserve',
+    chapter: '第三章・蔵の備え',
+    title: '次の在庫谷で蔵の備えを市場へ出す',
+    evaluate({ model, events, state }) {
+      const valley = seasonalValleyFacts(state);
+      const observation = valley
+        ? seasonalFoodValley(model, state, 'release-seasonal-reserve', [valley.goods])
+        : { observations: {}, valley: null };
+      const prior = state?.goalResults?.['release-seasonal-reserve']?.evidence ?? {};
+      const release = stockReleaseReport(events, valley?.goods ?? null);
+      const averageCost = model.companyStockAverageCosts?.[valley?.goods] ?? prior.averageCost ?? null;
+      const stock = model.companyStock?.[valley?.goods] ?? 0;
+      const ready = Boolean(observation.valley) && (stock > 0 || prior.stock > 0);
+      const complete = Boolean(release) && (ready || prior.ready);
+      const reportedReady = release ? (ready || prior.ready) : ready;
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: valley
+          ? (ready
+            ? `${goodsLabel(valley.goods)}が再び薄くなりました。蔵出しできます`
+            : `${goodsLabel(valley.goods)} ${marketGoodsAvailability(model, valley.goods).toFixed(1)}荷 / 蔵 ${stock.toFixed(1)}荷`)
+          : '市場の在庫谷を観測しています',
+        evidence: {
+          ...observation,
+          goods: valley?.goods ?? null,
+          stock,
+          averageCost,
+          ready: reportedReady,
+          release,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-third-chapter',
+    chapter: '第三章・蔵の備え',
+    title: '第三章の蔵出し報告を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-three-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '仕入原価と蔵出し値の報告書が届きました' : '荷車が市場へ着くのを待っています',
         evidence: { issued },
       };
     },
@@ -1168,6 +1358,148 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${model.day}日目。魚と野菜を作る営みが根付き、食料生産EMAは${current.productionEma.toFixed(2)}。食料輸入EMAは第二章開始時の${before.importEma.toFixed(3)}から${current.importEma.toFixed(3)}へ下がりました。`,
           `本土仕入の累計${current.outflow.toFixed(1)}は消えません——過去に出た銀の記録です。けれど、これから出てゆく速さは変えられました。ここから先も同じ島、同じ帳簿のまま、総督のお考えでお続けください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'seasonal-food-valley-report',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'observe-seasonal-food-valley');
+    },
+    render({ model, state }) {
+      const facts = seasonalValleyFacts(state);
+      const firstGoods = firstOrderFacts(state)?.goods ?? null;
+      const staleTarget = firstGoods ? (model.stockTargets?.[firstGoods] ?? 0) : 0;
+      return {
+        kicker: '第三章・蔵の備え',
+        title: '市場が空になる日があります',
+        summary: `${goodsLabel(facts.goods)} ${facts.peakAvailability.toFixed(1)}→${facts.available.toFixed(1)}荷・相場 ${(facts.price * 10).toFixed(1)}デナリ`,
+        facts: { ...facts, firstOrderGoods: firstGoods, staleTarget },
+        body: [
+          `${facts.peakDay}日目に市場で見えた${goodsLabel(facts.goods)}の余剰は${facts.peakAvailability.toFixed(1)}荷でしたが、${facts.day}日目には${facts.available.toFixed(1)}荷、ピークの${(facts.valleyRatio * 100).toFixed(1)}%まで薄くなりました。その日の相場EMAは1荷あたり${(facts.price * 10).toFixed(1)}デナリです。`,
+          `${firstGoods ? `最初の注文で定めた${goodsLabel(firstGoods)}の買上げ目標は、いまも${staleTarget}荷のままです。役目を終えた命令は0へ戻し、` : ''}${goodsLabel(facts.goods)}の買上げ目標を${SEASONAL_RESERVE_TARGET}荷にしてください。目標は注文ではなく、余る季節の品を会社の蔵へ備えるためにも使えます。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'seasonal-stock-target-set',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'set-seasonal-stock-target');
+    },
+    render({ model, state }) {
+      const facts = seasonalValleyFacts(state);
+      const target = model.stockTargets?.[facts.goods] ?? 0;
+      return {
+        kicker: '会社の買付命令',
+        title: '余る季節の品を、蔵へ',
+        summary: `${goodsLabel(facts.goods)}の買上げ目標 ${target}荷`,
+        facts: { goods: facts.goods, target },
+        body: [
+          `${model.day}日目。${goodsLabel(facts.goods)}の買上げ目標を${target}荷と定めました。会社の荷車は価格と在庫のある時だけ市場で買い、実物を蔵へ運びます。`,
+          '目標を書いただけでは品は増えません。作り手の余剰が市場に出て、会社が代金を払い、荷車が到着するまでを見届けましょう。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'seasonal-reserve-filled',
+    source: 'snapshot',
+    when({ model, state }) {
+      const facts = seasonalValleyFacts(state);
+      return goalCompleted(state, 'set-seasonal-stock-target')
+        && Boolean(facts && (model.companyStock?.[facts.goods] ?? 0) > 0);
+    },
+    render({ model, state }) {
+      const facts = seasonalValleyFacts(state);
+      const stock = model.companyStock[facts.goods];
+      const averageCost = model.companyStockAverageCosts?.[facts.goods] ?? 0;
+      return {
+        kicker: '蔵の入庫報告',
+        title: '備えが実物になりました',
+        summary: `${goodsLabel(facts.goods)} ${stock.toFixed(1)}荷・平均仕入 ${(averageCost * 10).toFixed(1)}デナリ`,
+        facts: { goods: facts.goods, stock, averageCost },
+        body: [
+          `${model.day}日目。会社の蔵に${goodsLabel(facts.goods)}が${stock.toFixed(1)}荷入りました。実際の平均仕入原価は1荷あたり${(averageCost * 10).toFixed(1)}デナリです。`,
+          '次に市場の余剰がふたたび薄くなった時、帳場の「蔵出し」でこの備えを市場へ戻せます。値付けも、その時の実帳面からご報告します。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'seasonal-release-dispatched',
+    source: 'event',
+    when({ events, state }) {
+      const facts = seasonalValleyFacts(state);
+      const prior = state?.goalResults?.['release-seasonal-reserve']?.evidence;
+      return Boolean(prior?.ready && stockReleaseReport(events, facts?.goods));
+    },
+    render({ model, events, state }) {
+      const valley = seasonalValleyFacts(state);
+      const prior = state.goalResults['release-seasonal-reserve'].evidence;
+      const release = stockReleaseReport(events, valley.goods);
+      return {
+        kicker: '蔵出しの荷車',
+        title: '備えを市場へ戻します',
+        summary: `${goodsLabel(release.goods)} ${release.qty.toFixed(1)}荷・実荷車が出発`,
+        facts: {
+          ...release,
+          averageCost: prior.averageCost,
+          marketAvailability: marketGoodsAvailability(model, release.goods),
+          marketPrice: model.marketPrices[release.goods],
+        },
+        body: [
+          `${model.day}日目。市場で見える${goodsLabel(release.goods)}が${marketGoodsAvailability(model, release.goods).toFixed(1)}荷まで薄くなったため、蔵から${release.qty.toFixed(1)}荷を積んだ実荷車が出発しました。`,
+          '品は瞬時に市場へ移りません。蔵から市場まで道を走り、棚へ到着した時に蔵出し値が立ちます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-three-close',
+    source: 'event',
+    when({ model, events, state }) {
+      const dispatch = state?.letters?.find(letter => letter.id === 'seasonal-release-dispatched');
+      return Boolean(dispatch
+        && events.some(event => event.type === 'arrival'
+          && event.haulJobId === dispatch.facts.haulJobId
+          && event.goods === dispatch.facts.goods)
+        && (model.companyMarketStock?.[dispatch.facts.goods] ?? 0) > 0
+        && Number.isFinite(model.companyReleasePrices?.[dispatch.facts.goods]));
+    },
+    render({ model, events, state }) {
+      const dispatch = state.letters.find(letter => letter.id === 'seasonal-release-dispatched');
+      const { goods, averageCost: warehouseAverageCost } = dispatch.facts;
+      const arrival = events.find(event => event.type === 'arrival'
+        && event.haulJobId === dispatch.facts.haulJobId);
+      const arrived = arrival.qty;
+      const releasePrice = model.companyReleasePrices[goods];
+      const averageCost = model.companyMarketStockAverageCosts?.[goods] ?? null;
+      const multiplier = averageCost > 0 ? releasePrice / averageCost : null;
+      return {
+        kicker: '第三章・蔵出し報告',
+        title: '備えは、季節をつなぐ荷になりました',
+        summary: `${goodsLabel(goods)} ${arrived.toFixed(1)}荷・蔵出し ${(releasePrice * 10).toFixed(1)}デナリ/荷`,
+        facts: {
+          goods,
+          arrived,
+          warehouseAverageCost,
+          averageCost,
+          releasePrice,
+          multiplier,
+          marketPrice: model.marketPrices[goods],
+        },
+        body: [
+          `${model.day}日目。${goodsLabel(goods)}が市場へ${arrived.toFixed(1)}荷到着し、蔵出し値は1荷あたり${(releasePrice * 10).toFixed(1)}デナリになりました。今回の出庫ロット原価は${(warehouseAverageCost * 10).toFixed(1)}デナリ、先着在庫も合わせた売場の平均仕入原価は${averageCost === null ? '—' : (averageCost * 10).toFixed(1)}デナリ、蔵出し値はその${multiplier === null ? '—' : multiplier.toFixed(2)}倍です。`,
+          `同じ日の市場相場EMAは${(model.marketPrices[goods] * 10).toFixed(1)}デナリ。余る時に会社が買い、薄い時に道を通して戻す——蔵は在庫を消す箱ではなく、季節のあいだをつなぐ場所です。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
