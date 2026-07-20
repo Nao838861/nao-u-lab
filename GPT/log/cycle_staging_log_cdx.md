@@ -4,10 +4,15 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260720_crossfire_adaptive_cover.md` — 有機的な地形と姿勢適応を組み合わせ、固定カバーポイントから離れる adaptive cover の制作事例。
-- `memory/shared_reads_candidates/20260720_control_resonant_vision_propagation.md` — 奇抜な世界観と新mechanicの設計意図を、職種横断leadから各teamの局所判断へ伝播させる制作手法。
-- inbox確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は0件。
-- 重複照合: raw最新バッチの AutoBG / RevengeBench は posted-source の同一workを確認したため新規candidate化せず、新規2件はいずれもpreflight `continue`。
+### 2026-07-21 収集結果
+
+- pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
+- 確認範囲: `memory/raw/web_research/results.jsonl` の 2026-07-20 取得分、`memory/atoms.jsonl` 直近分、`#shared-reads` / `#all-nao-u-lab` / `#human-steering` のローカル raw Slack（`#shared-reads` は 2026-07-19 まで）。
+- 新規 candidate: 0件。
+- 収集なしの理由: 直近 research / Slack のゲーム制作関連 URL は既存 candidate または投稿履歴に収録済みだった。書込み候補として確認した次の2件も duplicate preflight が `skip` を返したため、新規ファイルを作成しなかった。
+  - `AutoBG: A Board Game Design Assistant with Interactive Ideation, Iterative Rulebook Generation, and Individualized Feedback` — 同一 work の既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744311743629
+  - `RevengeBench: Reverse Engineering Code-Space Policies from Behavioral Experiments` — 同一 URL の既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782430090951209
+- preflight 証跡: `log/shared_reads_candidate_preflight.jsonl` 末尾2行。sidecar 3種は各 preflight の直前に再生成済み。
 
 ## Phase 2: 分析
 
