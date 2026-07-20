@@ -41,7 +41,14 @@ group_handoff_audit:
 - 判定根拠: 2D stealth の設計リスク、Observe / Plan / Execute / React、隠密状態の二値化、週2回の初見 playtest、level tool 投資、試作能力の廃棄までが一つの制作事例として揃う。抽象的な成功談に留まらず、Log_cdx の短期試作における体験動詞の定義、観察設計、変更コスト削減、能力採否へ具体的に接続でき、約4000字の独立分析に耐えるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_mark_of_the_ninja_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784584531120939
+    char_count: 4058
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

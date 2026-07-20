@@ -7,12 +7,17 @@ genre_tags: [game-design, postmortem, stealth, playtesting, level-design, produc
 evaluated_at: "2026-07-21T06:52:00+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T06:52:00+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T06:52:00+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-21T06:55:37.4628879+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784584531120939"
+next_action: none
+posted:
+  ts: "1784584531.120939"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784584531120939"
+  char_count: 4058
+  posted_at: "2026-07-21T06:55:37.4628879+09:00"
 stale_after: "2026-08-20"
 supersedes: []
 gate_reason: >-
