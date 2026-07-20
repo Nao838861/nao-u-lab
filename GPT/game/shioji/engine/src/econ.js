@@ -1330,6 +1330,24 @@ function pendingImportQuantity(economy, goods) {
     );
 }
 
+export const MAINLAND_AID = deepFreeze({ BASE_WHEAT: 240, DECAY: 0.25, REFUSAL_AT: 4 });
+
+// 本国への食料支援要請(Nao_u裁可・2026-07-20)。支援は既存の輸入経路(船→港ヤード→市場の荷車便)で届く——
+// 道と市場が無い島には支援も届かない。要請を重ねると本国の心象を損ね、量が逓減し、やがて断られる。
+export function requestMainlandAid(economy, physical, { day }) {
+  const used = economy.mainlandAid?.requests ?? 0;
+  if (used >= MAINLAND_AID.REFUSAL_AT) {
+    recordEconomyEvent(economy, day, "本国は食料支援の要請を断った——度重なる要請に心象を損ねている");
+    return { ok: false, refused: true, requests: used, qty: 0 };
+  }
+  const qty = Math.round(MAINLAND_AID.BASE_WHEAT * (1 - MAINLAND_AID.DECAY * used));
+  const request = requestCompanyImport(economy, physical, "wheat", { day, qty });
+  if (!request) return { ok: false, refused: false, requests: used, qty: 0 };
+  economy.mainlandAid = { requests: used + 1 };
+  recordEconomyEvent(economy, day, `本国へ食料支援を要請(${used + 1}回目)——麦${qty}荷の船が発つ`);
+  return { ok: true, refused: false, qty, requests: used + 1 };
+}
+
 export function requestCompanyImport(economy, physical, goods, { day, qty }) {
   if (P.IMP[goods] === undefined) throw new Error(`輸入対象外です: ${goods}`);
   if (!Number.isFinite(qty) || qty <= 1e-9) return null;

@@ -2,6 +2,7 @@ import {
   COMPANY_ORDER_GOODS,
   acceptCompanyOrder,
   requestCompanyStockRelease,
+  requestMainlandAid,
   setCompanyStockTarget,
 } from "./econ.js";
 import {
@@ -398,6 +399,12 @@ export function createEngineApi(
           : world.state.day;
         const order = acceptCompanyOrder(economy, { day: actionDay });
         return { ok: Boolean(order), order };
+      }
+      case "request_aid": {
+        const actionDay = world.state.tick % 30 === 0
+          ? world.state.day + 1
+          : world.state.day;
+        return requestMainlandAid(economy, physical, { day: actionDay });
       }
       default:
         throw new Error(`unknown engine operation: ${op.type}`);

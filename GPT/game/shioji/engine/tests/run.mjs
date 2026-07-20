@@ -2875,6 +2875,36 @@ test("段46: mimicPlayerは採算内の注文だけ受諾し終了後に目標�
   assert.equal(economy.stockTgt.oil, 0);
 });
 
+test("支援要請: 逓減と拒絶・既存輸入経路での実配送・journal決定論(Nao_u裁可2026-07-20)", () => {
+  const api = createEngineApi(buildBaseCity(11));
+  const first = api.applyOperation({ type: "request_aid" });
+  assert.deepEqual([first.ok, first.qty, first.requests], [true, 240, 1]);
+  assert.equal(api.applyOperation({ type: "request_aid" }).qty, 180);
+  assert.equal(api.applyOperation({ type: "request_aid" }).qty, 120);
+  assert.equal(api.applyOperation({ type: "request_aid" }).qty, 60);
+  const fifth = api.applyOperation({ type: "request_aid" });
+  assert.deepEqual([fifth.ok, fifth.refused], [false, true]);
+  const economy = api.snapshot({ scope: "full" }).economy;
+  assert.equal(economy.mainlandAid.requests, 4);
+  for (const qty of [240, 180, 120, 60]) {
+    assert.ok(economy.importRequests.some((request) => request.goods === "wheat" && request.qty === qty),
+      `支援${qty}荷が輸入要請として実在する`);
+  }
+  for (let tick = 0; tick < 12 * 30; tick += 1) api.advanceTicks(1);
+  const after = api.snapshot({ scope: "full" }).economy;
+  const delivered = (after.imported?.wheat ?? 0);
+  assert.ok(delivered >= 240, `支援の麦が実際に上陸している(累計輸入${delivered.toFixed(1)}荷)`);
+
+  let replayTick = 0;
+  const replay = createEngineApi(buildBaseCity(11));
+  for (const row of api.inputJournal()) {
+    while (replayTick < row.tick) { replay.advanceTicks(1); replayTick += 1; }
+    replay.applyOperation(row.op);
+  }
+  while (replayTick < 12 * 30) { replay.advanceTicks(1); replayTick += 1; }
+  assert.deepEqual(replay.snapshot({ scope: "full" }), api.snapshot({ scope: "full" }));
+});
+
 test("段48: 操作APIは買上げ・注文受諾・道路操作をday/tick付きでジャーナル化する", () => {
   const world = buildBaseCity(11);
   const api = createEngineApi(world);
