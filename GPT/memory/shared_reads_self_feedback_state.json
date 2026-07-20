@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-20T18:05:15+09:00",
+  "updated_at": "2026-07-20T20:17:45+09:00",
   "reviewed_source_ts": [
+    "1784538040.103019",
     "1781062142.866049",
     "1784488268.673889",
     "1784480576.915539",
@@ -444,6 +445,44 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-20T20:17:45+09:00",
+      "selected": {
+        "id": "sr-1784538040-b2d81bd9b4",
+        "source_ts": "1784538040.103019",
+        "title": "ActPlane — task context を解く agent と cross-event policy を強制する OS の分業",
+        "reason": "未レビューの score 12 atom のうち最新で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。現在の phase runner、headless 検証、git 作業ゲートでは、古い test pass を最新 edit 後の証拠として扱うことや、拒否だけして回復経路を返さないことが起こり得るため、既存 runtime-enforcement probe に新しい行動差を作れるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計17で採用条件を満たす。shared-reads 本文は repository 64件・2,116 statement の policy 調査、38規則・190 trace、OctoBench、OpenAgentSafety の比較に加え、間接経路、cross-event state、semantic feedback、over-taint、platform 制約まで示している。既存の runtime-enforcement-3tuple probe は trigger・predicate・enforcement と deterministic scope をすでに扱うため、新規 probe は追加しない。一方で、最後の source edit と test pass の順序を比較する鮮度条件、および拒否時に未達 predicate と次の許可経路を返す corrective payload は明示されていなかった。そこで既存3問をこの2点だけで精密化し、active probe 数を320件のまま維持する。Linux/eBPF 本体、恒久 DSL、広い block rule は導入しない。",
+      "existing_probes": [
+        "probe-20260617-runtime-enforcement-3tuple-scope",
+        "probe-20260710-phoneharness-mixed-action-side-effect-trace",
+        "probe-20260619-agentic-state-authority-boundary"
+      ],
+      "change": {
+        "type": "probe_refinement",
+        "summary": "既存 runtime-enforcement probe に cross-event の順序・鮮度確認と、拒否後の corrective payload を加えた。新しい probe、directive、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": true,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-20T18:05:15+09:00",
       "selected": {
@@ -14063,13 +14102,15 @@
       "id": "probe-20260617-runtime-enforcement-3tuple-scope",
       "created_at": "2026-06-17T03:25:16+09:00",
       "source_ts": "1778404188.110159",
-      "scope": "next phase evaluation, game/headless playtest, Slack operation report, or memory writeback where Codex may rely on prompt compliance for an externally checkable rule",
+      "refined_at": "2026-07-20T20:17:45+09:00",
+      "refined_by_source_ts": "1784538040.103019",
+      "scope": "next phase evaluation, game/headless playtest, Slack operation report, memory writeback, automation run, or git gate where Codex may rely on prompt compliance or stale evidence for an externally checkable rule",
       "questions": [
-        "Before the next phase evaluation, game/headless playtest, Slack operation report, or memory writeback where a rule failure can be externally checked, did I name one Triggering event, one Predicate, and one Enforcement or recovery action instead of relying only on prompt compliance?",
-        "Did I keep the 3-tuple scoped to external or deterministic checks such as file state, git status, permalink, test result, phase boundary, command output, or safety invariant, and avoid applying it to open-ended judgments like fun, taste, Nao_u feedback interpretation, or design quality?",
-        "If the check fails, did I record whether the response was stop, rollback, rewrite, notify, or mark evaluator/harness failure, and leave the mechanism as a probe rather than introducing a new permanent DSL or broad gate?"
+        "Before the next externally checkable rule, did I name one triggering event, one predicate, and one enforcement or recovery action; when the predicate spans events, did I also compare their order or freshness, such as source_changed occurring after the last test_passed?",
+        "Did I keep the check scoped to observable state such as file state, git status, permalink, test result, phase boundary, command output, or safety invariant; for wrapper or subprocess effects, did I name the observable side effect or label indirect_path_unobserved, while excluding open-ended judgments like fun, taste, feedback interpretation, or design quality?",
+        "If the check fails, did I return a corrective payload naming the unmet predicate and next allowed recovery path, record stop, rollback, rewrite, notify, or harness failure, and leave the mechanism as a reversible probe rather than introducing a permanent DSL or broad gate?"
       ],
-      "expires_after": "Review after the next two phase evaluations, game/headless playtests, Slack operation reports, or memory writebacks that mention file state, git status, permalinks, test results, phase boundaries, command output, safety invariants, or rule failures."
+      "expires_after": "Review after the next two phase evaluations, game/headless playtests, Slack operations, memory writebacks, automation runs, or git gates that mention event order, evidence freshness, indirect paths, unmet predicates, corrective payloads, or allowed recovery paths."
     },
     {
       "id": "probe-20260617-ssgm-memory-integration-gate",

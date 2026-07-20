@@ -69,7 +69,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784538040-b2d81bd9b4
+    source_ts: "1784538040.103019"
+    title: "ActPlane — task context を解く agent と cross-event policy を強制する OS の分業"
+    reason: "最新の未レビュー score 12 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。phase runner、headless 検証、git gate で古い pass を最新 edit 後の証拠として扱わず、拒否後の回復経路を返す行動へ接続できるか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  decision_reason: "既存の runtime-enforcement 3-tuple と重なるため新規 probe は増やさず、cross-event の順序・鮮度と、未達 predicate／次の許可経路を返す corrective payload の2点だけを既存 probe に加えた。Linux/eBPF 本体、恒久 DSL、広い block rule は導入しない。"
+  change:
+    summary: "probe-20260617-runtime-enforcement-3tuple-scope を精密化した。active probe 数は320件のまま。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: true
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
