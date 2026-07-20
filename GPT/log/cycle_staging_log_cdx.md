@@ -99,7 +99,95 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、validate_memory_index.py で atom index 参照を検証した（OK、inline Markdown link なし）。"
+  - "atom duplicate sidecar を --check し、45 cluster / 45 overlay group が最新であることを確認した。atom 2705 件の jsonl・per-file・index mirror は一致し、content conflict / id duplicate は 0 件。"
+  - "shared-reads title canonical index を再生成した（terminal duplicate group 53 件）。mixed duplicate queue 50 件、stale triage queue 50 件、group-action queue 0 件も順に再生成した。"
+  - "group handoff を cycle_id=2026-07-20 19:58 / limit=1 で冪等 enqueue した。選定対象は 0 group、永続 inbox は pending 0 件。"
+  - "Slack inbox lifecycle を監査した。directives 0 件 / broadcasts 0 件のため handled 更新はなかった。"
+issues:
+  - id: ISS-4A-20260720-01
+    description: "recall-visible atom に、canonical group 未付与の反復・定型タイトルが 14 種残る。代表例は『■ 概要』20件、『@』3件、『■ メリット・デメリット』3件で、title_quality_audit は 621 行を収載している。"
+    severity: medium
+    evidence: "tools/memory_health.py --json: ungrouped_repeated_title_groups=14; memory/atoms/title_quality_audit.jsonl: rows=621"
+    source_file_status: "UTF-8 明示読みで日本語は正常。atom mirror 2705/2705/2705、parse error・content conflict ともに 0。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ゲーム制作時に手法名や経験タイトルで recall しても、定型見出しの同名 atom が識別不能になり、個別事例から一般化ノウハウへ辿る精度を下げる。既存 title-quality audit で所在は特定済みなので、新設計ではなく既存 cleanup 経路の消化対象。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+lifecycle_counts:
+  posted: 438
+  ready_to_post: 10
+  postponed: 346
+  failed: 211
+  needs_review: 18
+encoding_audit:
+  memory_md:
+    source_file_status: "UTF-8 明示読みで『記憶』『ゲーム設計』『敵パターン』『評価軸』をすべて取得。source file は正常。"
+    display_or_tooling_status: none
+  atom_suspects:
+    - id: sr-1776127289-4d9239b255
+      source_file_status: "UTF-8 明示読みでも raw Slack archive・atoms.jsonl・per-file atom の全てに『AIエ��ジェント』が残るため、表示経路ではなく取り込み元に既存する局所的 source damage。"
+      display_or_tooling_status: none
+      disposition: "単一 atom の局所欠損で tags・URL・本文導線は残るため、構造 issue や Phase 4b 起動理由にはしない。"
+    - id: gr-1777083728-44d444ab7a
+      source_file_status: "UTF-8 正常。原文中の意図的な文字列『???がヘッダに出る』を scanner が疑義扱いした false positive。"
+      display_or_tooling_status: none
+raw_archive_audit:
+  cutoff: "2026-06-20"
+  older_than_30_days: 95
+  major_locations:
+    - "memory/raw/web_research: 37"
+    - "memory/raw/web_research/phase3_pdfs: 13"
+    - "その他 web_research 下: 38"
+    - "memory/raw/headless_eval: 6"
+    - "memory/raw/slack_archive + memory/raw 直下: 2"
+  action: explicit_keep
+  reason: "atom/candidate の一次 provenance と旧評価証拠を含み、既存参照を壊さず移動できる archive 契約が確認できないため、この Phase では列挙のみ。広範な移動は行わない。"
+stale_backlog:
+  overdue_open_total: 197
+  overdue_status_counts:
+    postponed: 186
+    needs_review: 11
+  stale_triage_queue_rows: 50
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows は満たすが、actionable group が 3 件以上という第2条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。会話型 RPG への適用は具体的だが、学習効果・参加者評価・失敗例・運用制約の確認が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。co-creative game design の比較設計は直結するが、参加者評価と品質差の本文確認が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。ゲーム間構造移植の中核は見えるが、評価指標・dataset・失敗条件が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。探索・文脈保持・目標推定の評価は有用だが、評価手法・結果・失敗分析が abstract 水準に留まる。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。headless playtest への示唆はあるが、position paper の評価条件・失敗分類・model 比較が不足。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
