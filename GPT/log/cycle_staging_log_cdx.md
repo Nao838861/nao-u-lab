@@ -42,12 +42,12 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
+
 ```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260720_control_resonant_vision_propagation.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784554115343959
-    char_count: 4146
+posted: []
 skipped: []
+notes:
+  - "Phase 2 の pass candidate が 0 件のため、投稿前レビュー、Slack 投稿、candidate frontmatter 更新はいずれも実施なし"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
