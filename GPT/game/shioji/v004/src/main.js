@@ -468,6 +468,7 @@ function renderTutorial() {
   objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
   letterButton.hidden = !available || Boolean(state?.skipped);
   if (state?.skipped) $('#start-mode-label').textContent = '自由プレイ（案内終了）';
+  else if (tutorialDirector?.isComplete()) $('#start-mode-label').textContent = '自由プレイ（教程完了）';
   if (objective) {
     $('#tutorial-chapter').textContent = objective.chapter;
     $('#tutorial-goal').textContent = objective.title;

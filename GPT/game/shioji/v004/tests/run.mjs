@@ -17,7 +17,10 @@ import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
-import { TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen } from '../src/tutorial_content.js';
+import {
+  FOOD_IMPORT_EMA_TARGET, LOGGER_TRIP_RECOVERY_TICKS, LOGGER_TRIP_WARNING_TICKS,
+  TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen,
+} from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
@@ -27,6 +30,7 @@ import {
 } from '../src/visuals.js';
 
 let passed = 0;
+let tutorialThroughPlay = null;
 
 function test(name, body) {
   body();
@@ -638,6 +642,201 @@ test('チュートリアル段7〜9: 支援物流→初注文→調達→逐次�
   replay.advanceTicks(completeModel.tick - replayTick);
   assert.deepEqual(replay.readModel(), completeModel, '段5〜8の公開journalを同一世界へ再生できる');
   assert.deepEqual(replay.inputJournal(), journal);
+  tutorialThroughPlay = { controller, director, observe, observedEvents };
+});
+
+test('チュートリアル段10: 第一章を終えた同じ世界で既設道路の実測効果を認める', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const limit = controller.readModel().tick + 45 * 30;
+  while (!director.readState().completedGoals.includes('improve-logger-route')
+    && controller.readModel().tick < limit) {
+    controller.advanceTicks(1);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('improve-logger-route'), true);
+  const evidence = director.readState().goalResults['improve-logger-route'].evidence;
+  assert.ok(evidence.tripTicks > 0);
+  const resultLetter = director.letters().find(letter => (
+    letter.id === 'logger-road-already-good' || letter.id === 'logger-road-recovered'
+  ));
+  assert.ok(resultLetter);
+  assert.match(resultLetter.body, new RegExp(`${evidence.tripTicks.toFixed(1)}tick`));
+});
+
+test('チュートリアル段10実測: 遠回りの木こりは実往復tickが長く、直結道路で倍率が回復する', () => {
+  const rows = [11, 13, 14].map(seed => measureLoggerRoadRecovery(seed));
+  for (const row of rows) {
+    assert.ok(row.before.tripTicks > row.after.tripTicks, `seed${row.seed}の往復時間が短縮する`);
+    assert.ok(row.before.multiplier < row.after.multiplier, `seed${row.seed}の生産倍率が回復する`);
+    assert.ok(row.before.tripTicks <= 30, `seed${row.seed}の遠回りでも市場往復は成立する`);
+    assert.ok(row.before.tripTicks > LOGGER_TRIP_WARNING_TICKS);
+    assert.ok(row.after.tripTicks <= LOGGER_TRIP_WARNING_TICKS);
+    assert.ok(row.before.tripTicks - row.after.tripTicks >= LOGGER_TRIP_RECOVERY_TICKS);
+    const warning = row.director.letters().find(letter => letter.id === 'logger-trip-warning');
+    const recovered = row.director.letters().find(letter => letter.id === 'logger-road-recovered');
+    assert.match(warning.body, new RegExp(`${row.before.tripTicks.toFixed(1)}tick`));
+    assert.match(recovered.body, new RegExp(`${row.after.tripTicks.toFixed(1)}tick`));
+    assert.equal(row.director.currentObjective().complete, true);
+  }
+  console.log(`  段10実測 ${rows.map(row => (
+    `seed${row.seed}:${row.before.tripTicks.toFixed(1)}tick/${row.before.multiplier.toFixed(3)}`
+      + `→${row.after.tripTicks.toFixed(1)}tick/${row.after.multiplier.toFixed(3)}`
+  )).join(' | ')}`);
+});
+
+const TUTORIAL_FOOD_GOODS = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
+
+function tutorialFoodMetrics(model) {
+  return {
+    day: model.day,
+    importEma: TUTORIAL_FOOD_GOODS.reduce((total, goods) => total + (model.flowEma[goods]?.imp ?? 0), 0),
+    productionEma: TUTORIAL_FOOD_GOODS.reduce((total, goods) => total + (model.flowEma[goods]?.prod ?? 0), 0),
+    fishPrice: model.marketPrices.fish,
+    vegPrice: model.marketPrices.veg,
+    outflow: model.companyLedger.reduce((total, row) => {
+      const goods = row.reason?.match(/^([^の]+)の本土仕入$/)?.[1];
+      return goods && TUTORIAL_FOOD_GOODS.includes(goods) && row.amount < 0
+        ? total - row.amount : total;
+    }, 0),
+  };
+}
+
+test('チュートリアル段11: 同じ世界の市場近くへ漁家と菜園を置き、実価格・実フロー変化を実況する', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  observe();
+  assert.equal(director.currentObjective().id, 'place-island-food');
+  const opening = director.letters().find(letter => letter.id === 'food-dependence-report');
+  assert.ok(opening);
+  const baseline = tutorialFoodMetrics(controller.readModel());
+  assert.equal(opening.facts.importEma, baseline.importEma);
+  assert.equal(opening.facts.outflow, baseline.outflow);
+  const market = controller.readModel().buildings.find(building => building.roles.includes('market'));
+  for (const job of ['fisher', 'veg']) {
+    const placementPlan = findReachablePreviewNear(controller.readModel(), job, market.entrance);
+    const { preview } = placementPlan ?? {};
+    assert.ok(preview, `${job}を市場近くから徒歩14以内の適地へ置ける`);
+    assert.equal(controller.operate({
+      type: 'place_building', job,
+      x: preview.entrance.x, y: preview.entrance.y,
+      buildingX: preview.x, buildingY: preview.y,
+    }).ok, true);
+    const road = previewRoadPlacement(controller.readModel(), preview.entrance, market.entrance);
+    if (road.ok) {
+      assert.equal(controller.operate({ type: 'add_road', start: road.start, end: road.end }).ok, true);
+    }
+    observe();
+  }
+  const foodStartTick = controller.inputJournal()
+    .find(row => row.op.type === 'place_building' && row.op.job === 'fisher').tick;
+  const placement = director.readState().goalResults['place-island-food'];
+  assert.equal(
+    director.readState().completedGoals.includes('place-island-food'),
+    true,
+    `配置判定 ${JSON.stringify(placement)}`,
+  );
+  assert.ok(placement.evidence.fisherWalk <= 14);
+  assert.ok(placement.evidence.vegWalk <= 14);
+
+  const deadline = controller.readModel().day + 60;
+  while (!director.readState().completedGoals.includes('observe-island-food-change')
+    && controller.readModel().day < deadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('observe-island-food-change'), true);
+  const letter = director.letters().find(row => row.id === 'island-food-change');
+  assert.ok(letter.facts.current.productionEma >= 0.25);
+  assert.notEqual(letter.facts.current.importEma, letter.facts.before.importEma);
+  assert.ok(
+    letter.facts.current.fishPrice !== letter.facts.before.fishPrice
+      || letter.facts.current.vegPrice !== letter.facts.before.vegPrice,
+  );
+  assert.match(letter.body, new RegExp(`食料輸入EMAも${letter.facts.before.importEma.toFixed(3)}から${letter.facts.current.importEma.toFixed(3)}`));
+  tutorialThroughPlay.foodStartTick = foodStartTick;
+  tutorialThroughPlay.foodBaseline = baseline;
+});
+
+test('チュートリアル段12: 3シード実測の食料輸入EMA 0.60未満を自給目標にする', () => {
+  const { controller, director, observe, foodStartTick, foodBaseline } = tutorialThroughPlay;
+  const deadline = controller.readModel().day + 70;
+  while (!director.readState().completedGoals.includes('reduce-food-imports')
+    && controller.readModel().day < deadline) {
+    controller.advanceTicks(30);
+    observe();
+  }
+  assert.equal(director.readState().completedGoals.includes('reduce-food-imports'), true);
+  const final = tutorialFoodMetrics(controller.readModel());
+  assert.ok(final.importEma < FOOD_IMPORT_EMA_TARGET);
+  assert.ok(final.productionEma >= 0.25);
+  const reached = director.letters().find(letter => letter.id === 'food-import-target-reached');
+  assert.equal(reached.facts.target, FOOD_IMPORT_EMA_TARGET);
+  assert.match(reached.body, new RegExp(`食料輸入EMAは${final.importEma.toFixed(3)}`));
+
+  const journal = controller.inputJournal();
+  const seedRows = [{ seed: 11, baseline: foodBaseline, final }];
+  for (const seed of [13, 14]) {
+    const replay = createEngineController({ seed, mode: 'tutorial' });
+    let journalIndex = 0;
+    let replayTick = 0;
+    let replayBaseline = null;
+    const targetTicks = [...new Set([
+      ...journal.map(row => row.tick), foodStartTick, controller.readModel().tick,
+    ])].sort((left, right) => left - right);
+    for (const targetTick of targetTicks) {
+      replay.advanceTicks(targetTick - replayTick);
+      replayTick = targetTick;
+      if (targetTick === foodStartTick) replayBaseline = tutorialFoodMetrics(replay.readModel());
+      while (journal[journalIndex]?.tick === targetTick) {
+        const result = replay.operate(journal[journalIndex].op);
+        assert.equal(result.ok, true, `seed${seed}で${journal[journalIndex].op.type}を再生できる`);
+        journalIndex += 1;
+      }
+    }
+    const deadlineTick = foodStartTick + 70 * 30;
+    while (tutorialFoodMetrics(replay.readModel()).importEma >= FOOD_IMPORT_EMA_TARGET
+      && replayTick < deadlineTick) {
+      replay.advanceTicks(30);
+      replayTick += 30;
+    }
+    seedRows.push({ seed, baseline: replayBaseline, final: tutorialFoodMetrics(replay.readModel()) });
+  }
+  console.log(`  段12実測 ${seedRows.map(row => (
+    `seed${row.seed}:baseline=${row.baseline.importEma.toFixed(3)}`
+      + `→${row.final.importEma.toFixed(3)} / 生産${row.final.productionEma.toFixed(2)}`
+  )).join(' | ')}`);
+  for (const row of seedRows) {
+    assert.ok(row.final.importEma < FOOD_IMPORT_EMA_TARGET, `seed${row.seed}が輸入EMA帯を通る`);
+    assert.ok(row.final.productionEma >= 0.25, `seed${row.seed}で島内食料生産が立ち上がる`);
+  }
+});
+
+test('チュートリアル段13: 第二章を実数で締め、同じ世界で公開操作を続けられる', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  observe();
+  assert.equal(director.readState().completedGoals.includes('close-second-chapter'), true);
+  assert.equal(director.isComplete(), true);
+  const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
+  assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
+  assert.match(closing.body, new RegExp(`${closing.facts.before.importEma.toFixed(3)}から${closing.facts.current.importEma.toFixed(3)}`));
+
+  const beforeJournal = controller.inputJournal().length;
+  const beforeTick = controller.readModel().tick;
+  assert.equal(controller.operate({ type: 'set_stock_target', goods: 'fish', qty: 3 }).ok, true);
+  observe();
+  assert.equal(controller.readModel().stockTargets.fish, 3);
+  assert.equal(controller.readModel().tick, beforeTick);
+  assert.equal(controller.inputJournal().length, beforeJournal + 1);
+
+  const finalModel = controller.readModel();
+  const replay = createEngineController({ seed: 11, mode: 'tutorial' });
+  let replayTick = 0;
+  for (const row of controller.inputJournal()) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(finalModel.tick - replayTick);
+  assert.deepEqual(replay.readModel(), finalModel, '第二章完走後も全操作journalから同じ自由プレイ世界を再生できる');
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {
@@ -651,6 +850,126 @@ function findPreviewNear(model, job, origin, maxRadius = 20) {
     }
   }
   return best?.preview ?? null;
+}
+
+function findReachablePreviewNear(model, job, origin, maxRadius = 20) {
+  let best = null;
+  for (let y = Math.max(0, origin.y - maxRadius); y <= Math.min(model.height - 1, origin.y + maxRadius); y += 1) {
+    for (let x = Math.max(0, origin.x - maxRadius); x <= Math.min(model.width - 1, origin.x + maxRadius); x += 1) {
+      const preview = previewBuildingPlacement(model, job, { x, y });
+      if (!preview.ok) continue;
+      const width = Math.max(...preview.cells.map(cell => cell.x)) - preview.x + 1;
+      const height = Math.max(...preview.cells.map(cell => cell.y)) - preview.y + 1;
+      const projected = {
+        ...model,
+        buildings: [...model.buildings, {
+          id: 'placement-projection', type: job,
+          x: preview.x, y: preview.y, width, height,
+          entrance: preview.entrance,
+        }],
+      };
+      const distance = estimateWalkLen(projected, preview.entrance, origin);
+      if (!Number.isFinite(distance) || distance > 14) continue;
+      if (!best || distance < best.distance) best = { preview, distance };
+    }
+  }
+  return best;
+}
+
+function measureLoggerRoadRecovery(seed) {
+  const controller = createEngineController({ seed, mode: 'tutorial' });
+  const state = new TutorialDirector().readState();
+  state.completedGoals.push('close-first-chapter');
+  const director = new TutorialDirector({
+    goals: TUTORIAL_GOALS.filter(goal => goal.id === 'improve-logger-route'),
+    letters: TUTORIAL_LETTERS.filter(letter => (
+      letter.id === 'logger-trip-warning' || letter.id === 'logger-road-recovered'
+    )),
+    state,
+  });
+  const observe = () => director.observe(controller.readModel(), []);
+  let model = controller.readModel();
+  observe();
+  const port = model.buildings.find(building => building.roles.includes('port'));
+  const marketPreview = findPreviewNear(model, 'market', port.entrance);
+  assert.ok(marketPreview);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'market',
+    x: marketPreview.entrance.x, y: marketPreview.entrance.y,
+    buildingX: marketPreview.x, buildingY: marketPreview.y,
+  }).ok, true);
+  model = controller.readModel();
+  const market = model.buildings.find(building => building.roles.includes('market'));
+  if (!model.roadConnection.buildings.find(row => row.id === port.id)?.connected) {
+    const portRoad = previewRoadPlacement(model, port.entrance, market.entrance);
+    assert.equal(controller.operate({ type: 'add_road', start: portRoad.start, end: portRoad.end }).ok, true);
+    model = controller.readModel();
+    observe();
+  }
+
+  let selected = null;
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      const preview = previewBuildingPlacement(model, 'logger', { x, y });
+      if (!preview.ok) continue;
+      const walk = estimateWalkLen(model, preview.entrance, market.entrance);
+      if (!Number.isFinite(walk) || walk < 8 || walk > 13.5) continue;
+      const road = previewRoadPlacement(model, preview.entrance, market.entrance);
+      if (!road.ok) continue;
+      const footprint = new Set(preview.cells.map(cell => `${cell.x},${cell.y}`));
+      if (road.cells.some(cell => footprint.has(`${cell.x},${cell.y}`))) continue;
+      if (!selected || walk > selected.walk) selected = { preview, road, walk };
+    }
+  }
+  assert.ok(selected, `seed${seed}に道路改善可能な遠回り木こり候補がある`);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: selected.preview.entrance.x, y: selected.preview.entrance.y,
+    buildingX: selected.preview.x, buildingY: selected.preview.y,
+  }).ok, true);
+  observe();
+
+  let before = null;
+  const beforeLimit = controller.readModel().tick + 60 * 30;
+  while (!before && controller.readModel().tick < beforeLimit) {
+    controller.advanceTicks(1);
+    observe();
+    const household = controller.readModel().households.find(row => row.job === 'logger');
+    if (household?.tookMarketTripToday && household.marketTripTicks > 0) {
+      before = {
+        day: controller.readModel().day,
+        tripTicks: household.marketTripTicks,
+        multiplier: household.productionMultiplier,
+      };
+    }
+  }
+  assert.ok(before, `seed${seed}で道路前の市場往復を観測できる`);
+  assert.equal(director.letters().some(letter => letter.id === 'logger-trip-warning'), true);
+  assert.equal(director.currentObjective().complete, false);
+  model = controller.readModel();
+  const logger = model.buildings.find(building => building.type === 'logger');
+  const shortcut = previewRoadPlacement(model, logger.entrance, market.entrance);
+  assert.equal(shortcut.ok, true);
+  assert.equal(controller.operate({ type: 'add_road', start: shortcut.start, end: shortcut.end }).ok, true);
+  observe();
+
+  let after = null;
+  const afterLimit = controller.readModel().tick + 45 * 30;
+  while (!after && controller.readModel().tick < afterLimit) {
+    controller.advanceTicks(1);
+    observe();
+    const household = controller.readModel().households.find(row => row.job === 'logger');
+    if (controller.readModel().day > before.day && household?.tookMarketTripToday
+      && household.marketTripTicks < before.tripTicks) {
+      after = {
+        day: controller.readModel().day,
+        tripTicks: household.marketTripTicks,
+        multiplier: household.productionMultiplier,
+      };
+    }
+  }
+  assert.ok(after, `seed${seed}で道路後の短い市場往復を観測できる`);
+  return { seed, before, after, director };
 }
 
 test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {

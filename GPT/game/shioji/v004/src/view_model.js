@@ -185,6 +185,9 @@ export function snapshotToViewModel(snapshot) {
       buildingId: household.buildingId,
       state: household.state,
       marketTripActive: Boolean(household.marketCarrier),
+      marketTripTicks: household.marketTripTicks ?? 0,
+      productionMultiplier: household.productionMultiplier ?? 1,
+      tookMarketTripToday: Boolean(household.tookMarketTripToday),
       pantry,
       pantryStock: pantryGroups[0] ?? null,
     };
@@ -259,6 +262,12 @@ export function snapshotToViewModel(snapshot) {
     reservedBuildingSites: (snapshot.economy.reservedBuildingSites ?? []).map(site => ({ ...site })),
     roadWorksites: snapshot.physical.roadWorksites.map(site => ({ ...site })),
     companyLedger: snapshot.economy.company.ledger.map(row => ({ ...row })),
+    marketPrices: { ...snapshot.economy.px },
+    flowEma: Object.fromEntries(Object.entries(snapshot.economy.f30 ?? {}).map(([goods, flow]) => [
+      goods, { ...flow },
+    ])),
+    imported: { ...snapshot.economy.imported },
+    moneyOutBy: { ...snapshot.economy.outBy },
     companyStock: { ...snapshot.economy.stock },
     stockTargets: { ...snapshot.economy.stockTgt },
     mainlandAid: (() => {

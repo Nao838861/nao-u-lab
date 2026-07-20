@@ -89,6 +89,11 @@ export class TutorialDirector {
     });
   }
 
+  isComplete() {
+    return this.goals.length > 0
+      && this.goals.every(goal => this.state.completedGoals.includes(goal.id));
+  }
+
   letters() {
     return clone(this.state.letters);
   }

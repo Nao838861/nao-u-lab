@@ -205,6 +205,90 @@ function farHouseholdFromMarket(model) {
   return null;
 }
 
+export const LOGGER_TRIP_WARNING_TICKS = 24;
+export const LOGGER_TRIP_RECOVERY_TICKS = 4;
+export const FOOD_IMPORT_EMA_TARGET = 0.6;
+const LOGGER_MULTIPLIER_RECOVERY = 0.1;
+const FOOD_PRODUCTION_EMA_MIN = 0.25;
+const FOOD_PRICE_CHANGE_MIN = 0.01;
+const FOOD_IMPORT_EMA_CHANGE_MIN = 0.05;
+
+function loggerTripObservation(model) {
+  const household = model.households.find(row => row.job === 'logger'
+    && row.tookMarketTripToday && row.marketTripTicks > 0);
+  if (!household) return null;
+  return {
+    householdId: household.id,
+    tripTicks: household.marketTripTicks,
+    multiplier: household.productionMultiplier,
+  };
+}
+
+function loggerWarningFacts(state) {
+  return state?.letters?.find(letter => letter.id === 'logger-trip-warning')?.facts ?? null;
+}
+
+function goalCompleted(state, id) {
+  return Boolean(state?.completedGoals?.includes(id));
+}
+
+function foodFlowMetrics(model) {
+  return {
+    importEma: FOOD_GOODS.reduce((total, goods) => (
+      total + (model.flowEma?.[goods]?.imp ?? 0)
+    ), 0),
+    productionEma: FOOD_GOODS.reduce((total, goods) => (
+      total + (model.flowEma?.[goods]?.prod ?? 0)
+    ), 0),
+    fishPrice: model.marketPrices?.fish ?? 0,
+    vegPrice: model.marketPrices?.veg ?? 0,
+    outflow: foodImportOutflow(model),
+  };
+}
+
+function foodDependenceFacts(state) {
+  return state?.letters?.find(letter => letter.id === 'food-dependence-report')?.facts ?? null;
+}
+
+function foodBuildingStatus(model) {
+  const market = marketBuilding(model);
+  const fisher = model.buildings.find(building => ['fisher', 'fisher2'].includes(building.type));
+  const veg = model.buildings.find(building => building.type === 'veg');
+  const fisherWalk = market && fisher ? estimateWalkLen(model, fisher.entrance, market.entrance) : Infinity;
+  const vegWalk = market && veg ? estimateWalkLen(model, veg.entrance, market.entrance) : Infinity;
+  return {
+    fisher: Boolean(fisher),
+    veg: Boolean(veg),
+    fisherWalk,
+    vegWalk,
+    near: fisherWalk <= 14 && vegWalk <= 14,
+  };
+}
+
+function islandFoodChange(model, state) {
+  const before = foodDependenceFacts(state);
+  if (!before) return null;
+  const current = foodFlowMetrics(model);
+  const priceChanged = Math.abs(current.fishPrice - before.fishPrice) >= FOOD_PRICE_CHANGE_MIN
+    || Math.abs(current.vegPrice - before.vegPrice) >= FOOD_PRICE_CHANGE_MIN;
+  const importChanged = Math.abs(current.importEma - before.importEma) >= FOOD_IMPORT_EMA_CHANGE_MIN;
+  return current.productionEma >= FOOD_PRODUCTION_EMA_MIN && priceChanged && importChanged
+    ? { before, current, priceChanged, importChanged }
+    : null;
+}
+
+function loggerTripRecovered(model, state) {
+  const current = loggerTripObservation(model);
+  const before = loggerWarningFacts(state);
+  if (!current || !before) return null;
+  const ticksRecovered = before.tripTicks - current.tripTicks;
+  const multiplierRecovered = current.multiplier - before.multiplier;
+  return ticksRecovered >= LOGGER_TRIP_RECOVERY_TICKS
+    && multiplierRecovered >= LOGGER_MULTIPLIER_RECOVERY
+    ? { before, current, ticksRecovered, multiplierRecovered }
+    : null;
+}
+
 export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'first-road-and-logger',
@@ -385,6 +469,95 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued ? '輸出収入と食料仕入を並べた報告書が届きました' : '注文の完遂報告を待っています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'improve-logger-route',
+    chapter: '橋・木こりの二日',
+    title: '木こりの市場往復を道で短くする',
+    evaluate({ model, state }) {
+      const current = loggerTripObservation(model);
+      const warning = loggerWarningFacts(state);
+      const recovered = loggerTripRecovered(model, state);
+      const alreadyGood = Boolean(current && !warning
+        && current.tripTicks <= LOGGER_TRIP_WARNING_TICKS);
+      const complete = Boolean(recovered) || alreadyGood;
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: current
+          ? `実往復 ${current.tripTicks.toFixed(1)}tick / 生産 ${(current.multiplier * 100).toFixed(1)}%`
+          : '木こりが次に市場を往復する日を観測中です',
+        evidence: {
+          tripTicks: current?.tripTicks ?? null,
+          multiplier: current?.multiplier ?? null,
+          warned: Boolean(warning),
+          recovered: Boolean(recovered),
+          alreadyGood,
+        },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'place-island-food',
+    chapter: '第二章・島の食卓',
+    title: '漁家と菜園を市場近くの適地へ置く',
+    evaluate({ model }) {
+      const status = foodBuildingStatus(model);
+      const done = Number(status.fisher) + Number(status.veg) + Number(status.near);
+      return {
+        complete: status.fisher && status.veg && status.near,
+        progress: { done, total: 3 },
+        detail: status.fisher && status.veg
+          ? `市場まで 漁家${Number.isFinite(status.fisherWalk) ? status.fisherWalk.toFixed(1) : '—'} / 菜園${Number.isFinite(status.vegWalk) ? status.vegWalk.toFixed(1) : '—'}`
+          : `漁家 ${Number(status.fisher)}棟 / 菜園 ${Number(status.veg)}棟（漁家は水際へ）`,
+        evidence: status,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'observe-island-food-change',
+    chapter: '第二章・島の食卓',
+    title: '島の食料が市場を変えるのを見届ける',
+    evaluate({ model, state }) {
+      const change = islandFoodChange(model, state);
+      const metrics = foodFlowMetrics(model);
+      return {
+        complete: Boolean(change),
+        progress: { done: Number(Boolean(change)), total: 1 },
+        detail: `食料生産EMA ${metrics.productionEma.toFixed(2)} / 輸入EMA ${metrics.importEma.toFixed(2)}`,
+        evidence: { ...metrics, changed: Boolean(change) },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'reduce-food-imports',
+    chapter: '第二章・島の食卓',
+    title: '食料輸入EMAを0.60未満へ下げる',
+    evaluate({ model }) {
+      const metrics = foodFlowMetrics(model);
+      const complete = metrics.productionEma >= FOOD_PRODUCTION_EMA_MIN
+        && metrics.importEma < FOOD_IMPORT_EMA_TARGET;
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: `食料輸入EMA ${metrics.importEma.toFixed(3)}（目標 < ${FOOD_IMPORT_EMA_TARGET.toFixed(2)}） / 島内生産 ${metrics.productionEma.toFixed(2)}`,
+        evidence: metrics,
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-second-chapter',
+    chapter: '第二章・島の食卓',
+    title: '第二章の報告書を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-two-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '食料自給と本土流出の報告書が届きました' : '輸入EMAの低下を確認しています',
         evidence: { issued },
       };
     },
@@ -755,6 +928,167 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `最初の注文で、会社の実台帳には売上${revenue.toFixed(1)}が入りました。同じ時点までに、本土から買った食料の仕入は累計${foodOutflow.toFixed(1)}です。`,
           `食料支援は${aidRequests}回要請しましたが、贈与なのでこの仕入額には含まれません。輸出で銀を得る道は通りました。次は、島の食卓を本土任せにせず、島の中で作る番です。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'logger-trip-warning',
+    source: 'snapshot',
+    when({ model, state }) {
+      const trip = loggerTripObservation(model);
+      return goalCompleted(state, 'close-first-chapter')
+        && Boolean(trip && trip.tripTicks > LOGGER_TRIP_WARNING_TICKS);
+    },
+    render({ model }) {
+      const trip = loggerTripObservation(model);
+      const lost = (1 - trip.multiplier) * 100;
+      return {
+        kicker: '橋・木こりの二日',
+        title: '買い出しが伐採の一日を削っています',
+        summary: `実往復 ${trip.tripTicks.toFixed(1)}tick・生産減 ${(lost).toFixed(1)}%`,
+        facts: { ...trip, lost },
+        body: [
+          `${model.day}日目。木こりの市場往復は実測で${trip.tripTicks.toFixed(1)}tick。買い出しに一日を取られ、伐採の生産倍率は${(trip.multiplier * 100).toFixed(1)}%、つまり${lost.toFixed(1)}%減っています。`,
+          '家の入口から市場まで、なるべく続けて道をお敷きください。次の買い出しの日に、同じ値をもう一度測ります。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'logger-road-recovered',
+    source: 'snapshot',
+    when({ model, state }) {
+      return goalCompleted(state, 'close-first-chapter')
+        && Boolean(loggerTripRecovered(model, state));
+    },
+    render({ model, state }) {
+      const recovery = loggerTripRecovered(model, state);
+      return {
+        kicker: '道の効き目',
+        title: '木こりの仕事時間が戻りました',
+        summary: `${recovery.before.tripTicks.toFixed(1)}→${recovery.current.tripTicks.toFixed(1)}tick・生産${(recovery.current.multiplier * 100).toFixed(1)}%`,
+        facts: recovery,
+        body: [
+          `${model.day}日目。新しい道の後、市場往復は${recovery.before.tripTicks.toFixed(1)}tickから${recovery.current.tripTicks.toFixed(1)}tickへ短くなりました。`,
+          `伐採の生産倍率は${(recovery.before.multiplier * 100).toFixed(1)}%から${(recovery.current.multiplier * 100).toFixed(1)}%へ回復しています。距離は時間であり、道は働く時間を取り戻します。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'logger-road-already-good',
+    source: 'snapshot',
+    when({ model, state }) {
+      const trip = loggerTripObservation(model);
+      return goalCompleted(state, 'close-first-chapter')
+        && Boolean(trip && !loggerWarningFacts(state)
+        && trip.tripTicks <= LOGGER_TRIP_WARNING_TICKS);
+    },
+    render({ model }) {
+      const trip = loggerTripObservation(model);
+      return {
+        kicker: '道の効き目',
+        title: '森への道は、すでに働いています',
+        summary: `実往復 ${trip.tripTicks.toFixed(1)}tick・生産 ${(trip.multiplier * 100).toFixed(1)}%`,
+        facts: trip,
+        body: [
+          `${model.day}日目。木こりの市場往復は${trip.tripTicks.toFixed(1)}tick、生産倍率は${(trip.multiplier * 100).toFixed(1)}%でした。`,
+          '最初に敷いた道が十分に短い経路を作っています。余計な敷き直しは要りません——道の効き目だけ、覚えておいてください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'food-dependence-report',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'improve-logger-route');
+    },
+    render({ model }) {
+      const facts = foodFlowMetrics(model);
+      return {
+        kicker: '第二章・島の食卓',
+        title: '島の銀を、島の食卓へ',
+        summary: `食料輸入EMA ${facts.importEma.toFixed(3)}・本土仕入累計 ${facts.outflow.toFixed(1)}`,
+        facts,
+        body: [
+          `${model.day}日目。食料の輸入量EMAは${facts.importEma.toFixed(3)}、会社の実台帳に残る本土仕入は累計${facts.outflow.toFixed(1)}です。輸入の代金は、島の銀が本土へ出てゆく流れでもあります。`,
+          '水際には漁家を、市場の近くの平地には菜園をお置きください。島の食料が市場に届けば、値と輸入の流れがどう変わるかを同じ帳面で追います。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'island-food-change',
+    source: 'snapshot',
+    when({ model, state }) {
+      return goalCompleted(state, 'place-island-food')
+        && Boolean(islandFoodChange(model, state));
+    },
+    render({ model, state }) {
+      const change = islandFoodChange(model, state);
+      return {
+        kicker: '島内生産の報告',
+        title: '魚と野菜が、市場の数字を動かしました',
+        summary: `食料生産EMA ${change.current.productionEma.toFixed(2)}・輸入EMA ${change.before.importEma.toFixed(3)}→${change.current.importEma.toFixed(3)}`,
+        facts: change,
+        body: [
+          `${model.day}日目。島内の食料生産EMAは${change.current.productionEma.toFixed(2)}へ立ち上がりました。魚の値は1荷あたり${(change.before.fishPrice * 10).toFixed(1)}から${(change.current.fishPrice * 10).toFixed(1)}デナリへ、野菜は${(change.before.vegPrice * 10).toFixed(1)}から${(change.current.vegPrice * 10).toFixed(1)}デナリへ動いています。`,
+          `食料輸入EMAも${change.before.importEma.toFixed(3)}から${change.current.importEma.toFixed(3)}へ変わりました。まだ上下はしますが、島の食卓を島の手で満たす流れは、実際の価格と荷の動きに現れています。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'food-import-target-reached',
+    source: 'snapshot',
+    when({ model, state }) {
+      const metrics = foodFlowMetrics(model);
+      return goalCompleted(state, 'observe-island-food-change')
+        && metrics.productionEma >= FOOD_PRODUCTION_EMA_MIN
+        && metrics.importEma < FOOD_IMPORT_EMA_TARGET;
+    },
+    render({ model, state }) {
+      const before = foodDependenceFacts(state);
+      const current = foodFlowMetrics(model);
+      return {
+        kicker: '自給の節目',
+        title: '本土から買う食料の流れが細りました',
+        summary: `輸入EMA ${before.importEma.toFixed(3)}→${current.importEma.toFixed(3)}（目標 < ${FOOD_IMPORT_EMA_TARGET.toFixed(2)}）`,
+        facts: { before, current, target: FOOD_IMPORT_EMA_TARGET },
+        body: [
+          `${model.day}日目。食料輸入EMAは${current.importEma.toFixed(3)}となり、実測から定めた節目${FOOD_IMPORT_EMA_TARGET.toFixed(2)}を下回りました。第二章の開始時は${before.importEma.toFixed(3)}でした。`,
+          `島内の食料生産EMAは${current.productionEma.toFixed(2)}。本土仕入の累計は${current.outflow.toFixed(1)}ですが、いま流れ込む速さそのものは細っています。累計と現在の速さは、分けてご覧ください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-two-close',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'reduce-food-imports');
+    },
+    render({ model, state }) {
+      const reached = state?.letters?.find(letter => letter.id === 'food-import-target-reached');
+      const before = foodDependenceFacts(state);
+      const current = foodFlowMetrics(model);
+      return {
+        kicker: '第二章・収支報告',
+        title: '島の食卓は、島の営みになりました',
+        summary: `食料生産EMA ${current.productionEma.toFixed(2)}・輸入EMA ${current.importEma.toFixed(3)}`,
+        facts: { before, current, reached: Boolean(reached) },
+        body: [
+          `${model.day}日目。魚と野菜を作る営みが根付き、食料生産EMAは${current.productionEma.toFixed(2)}。食料輸入EMAは第二章開始時の${before.importEma.toFixed(3)}から${current.importEma.toFixed(3)}へ下がりました。`,
+          `本土仕入の累計${current.outflow.toFixed(1)}は消えません——過去に出た銀の記録です。けれど、これから出てゆく速さは変えられました。ここから先も同じ島、同じ帳簿のまま、総督のお考えでお続けください。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
