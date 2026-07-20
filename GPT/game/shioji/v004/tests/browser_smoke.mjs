@@ -77,6 +77,8 @@ async function newPage(width, height, mobile, url = GAME) {
   }).then(response => response.json());
   const page = new Page(target.webSocketDebuggerUrl);
   await page.connect();
+  await page.send('Network.enable');
+  await page.send('Network.setCacheDisabled', { cacheDisabled: true });
   await page.send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
