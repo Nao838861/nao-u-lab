@@ -17,13 +17,10 @@
 ## Phase 2: 分析
 
 ```yaml
-total_candidates: 2
-pass:
-  - memory/shared_reads_candidates/20260720_control_resonant_vision_propagation.md
+total_candidates: 0
+pass: []
 fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260720_crossfire_adaptive_cover.md
-    reason: "設計着想と技術条件は明確だが、プレイテスト等の評価根拠が薄く、約4000字では推測による水増しになる"
+postpone: []
 stale_reviewed: []
 group_actions: []
 group_handoff_audit:
@@ -39,9 +36,9 @@ group_handoff_audit:
 duplicate_preflight:
   sidecars_rebuilt: [posted_source, title_canonical, mixed_duplicate]
   sidecars_fresh: true
-  continue:
-    - memory/shared_reads_candidates/20260720_crossfire_adaptive_cover.md
-    - memory/shared_reads_candidates/20260720_control_resonant_vision_propagation.md
+  continue: []
+notes:
+  - "Phase 1 の新規 candidate、stale_review_batch、永続 group handoff pending がいずれも 0 件のため、candidate frontmatter 更新なし"
 ```
 
 ## Phase 3: Shared-reads 投稿
