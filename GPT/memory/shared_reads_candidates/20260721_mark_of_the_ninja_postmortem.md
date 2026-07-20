@@ -4,6 +4,27 @@ url: "https://www.gamedeveloper.com/design/classic-postmortem-klei-entertainment
 collected_at: "2026-07-21T06:45:57.1601238+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, stealth, playtesting, level-design, production-tools]
+evaluated_at: "2026-07-21T06:52:00+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T06:52:00+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T06:52:00+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  2D stealth の成立リスクから Observe / Plan / Execute / React、状態の二値化、初見 playtest、
+  level tool 投資、能力廃棄まで、問題設定・手法・評価・結論を具体例と失敗込みで再構成できる。
+  小規模ゲーム制作の試作順序、観察指標、反復コスト設計へ直接適用でき、約4000字の独立分析に耐える。
+suggested_post_outline:
+  overview_angle: "未知の2D stealthを、体験動詞の定義・情報状態の単純化・反復可能な制作基盤・初見観察で成立させた16か月の設計記録"
+  analysis_axis: "プレイヤー中心の明瞭さとシステム複雑性の取捨選択、playtestで要望ではなく行動動機を読む方法、tool先行投資と後戻りコストの関係"
+  application_target: "Log_cdx の短期ゲーム試作で、核となる動詞の事前定義、週次の初見観察、level変更コストを下げるeditor/tool整備、後半能力の採否ゲートへ適用する"
+  pros_cons: "長所は設計・検証・制作工程が同じ事例で結ばれている点。短所は単一商用作品の回顧であり、数値比較や対照実験がなく、成功要因の因果は完全には分離できない点"
+  verdict_pre: "部分採用。四段階モデル自体の転用ではなく、体験動詞→可読性→観察→廃棄判断を一続きの試作ゲートとして採用する"
 ---
 
 ## raw_excerpt

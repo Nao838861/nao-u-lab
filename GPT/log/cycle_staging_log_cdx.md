@@ -13,7 +13,32 @@
 - Phase 1 では品質判定・4000字概要・Slack投稿・記憶整理を実施していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+- 実行日時: 2026-07-21 06:52 JST
+- duplicate sidecar: posted-source / title canonical / open duplicate group の各 builder を再実行し、`--check` がすべて成功。
+- duplicate preflight: `Classic Postmortem: Klei Entertainment's Mark of the Ninja` は canonical URL / title とも `continue`。
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260721_mark_of_the_ninja_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
+
+- 判定根拠: 2D stealth の設計リスク、Observe / Plan / Execute / React、隠密状態の二値化、週2回の初見 playtest、level tool 投資、試作能力の廃棄までが一つの制作事例として揃う。抽象的な成功談に留まらず、Log_cdx の短期試作における体験動詞の定義、観察設計、変更コスト削減、能力採否へ具体的に接続でき、約4000字の独立分析に耐えるため `pass`。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
