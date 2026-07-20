@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T02:34:57+09:00",
+  "updated_at": "2026-07-21T04:46:23+09:00",
   "reviewed_source_ts": [
+    "1784568554.225909",
     "1780957691.430689",
     "1781105732.550179",
     "1784545923.720719",
@@ -11271,6 +11272,46 @@
       "change": {
         "type": "metric",
         "summary": "次の動的フィールド系作業1件だけで、局所現在値・短期履歴・大域情報を同一条件で比較し、到達・滞在・操作 cost・範囲外転移を分離する可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-21T04:46:23+09:00",
+      "selected": {
+        "id": "sr-1784568554-415e75a467",
+        "source_ts": "1784568554.225909",
+        "title": "Do Agents Dream of False Memories? — 視覚入力から長期記憶へ残る black-box false-memory attack",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。画像、caption、durable memory、retrieval、後続応答を一つの failure chain として扱う知見が、次の画像由来 memory の取り込み行動へ既存 probe にない差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "risk_control=1、合計13で採用条件の14に届かないため、新規 probe・metric は追加しない。shared-reads 本文は5 memory backend、複数 MLLM、poisoning／injection、retrieval と生成の分離、blur／JPEG／LLM judge の防御比較を具体的に記録しているが、v1 preprint、人工 target、Mem-Gallery 中心であり、この環境の screenshot／asset／playtest frame では未実測なので evidence=2 とした。既存の memory-poisoning-ingest-check は原典・取得経路・quarantine を、memory-stage-risk-classifier は ingestion／consolidation／retrieval の失敗段階を、CMA selective-visual probe は原画像到達性と sibling confusion を、D2E synchronized stream は frame／input／state／outcome を、直近 WhisperBench metric は adoption／visibility／delayed effect をすでに確認する。20-frame caption stability と cross-modal consistency をさらに追加すると、画像由来 memory 全般へ多重 caption／再圧縮／state 照合を広げ、通常制作の false positive、API cost、active probe 群の確認負荷を増やす。次の該当作業では本 atom を既存 probes の具体例としてのみ参照する。",
+      "existing_probes": [
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260531-memory-stage-risk-classifier",
+        "probe-20260720-cma-selective-visual-episode-retrieval",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260619-agentic-state-authority-boundary"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の poisoning・失敗段階・visual retrieval・同期 state trace・delayed-effect 評価との重複および高コスト gate の過剰一般化リスクによる reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

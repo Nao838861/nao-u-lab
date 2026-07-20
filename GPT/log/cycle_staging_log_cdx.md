@@ -57,7 +57,40 @@ skipped: []
 - 投稿前レビュー: `tools/shared_reads_policy.py` の `validate_shared_reads_message` を通過。必須項目順、禁止表現、URL 末尾、単一 candidate / 単一 `chat.postMessage`、Slack 保存本文の文字化けがないことを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784568554-415e75a467
+    source_ts: "1784568554.225909"
+    title: "Do Agents Dream of False Memories? — 視覚入力から長期記憶へ残る black-box false-memory attack"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグを持つ。画像→caption→durable memory→retrieval→後続応答の failure chain が、次の画像由来 memory の取り込み行動へ既存 probe にない差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も2未満。5 backend・複数 MLLM・poisoning/injection・retrieval/generation・防御比較は具体的だが、v1 preprint と人工 target／Mem-Gallery 中心で当環境では未実測。既存の poisoning ingest、失敗段階分類、CMA visual retrieval、同期 frame/input/state/outcome、WhisperBench delayed-effect metric が同じ境界をすでに覆う。20-frame caption stability を追加すると、画像由来 memory 全般へ多重 caption・再圧縮・state 照合を広げ、false positive、API cost、320件ある active probe 群の確認負荷を増やすため採用しない。"
+  existing_probes:
+    - probe-20260517-memory-poisoning-ingest-check
+    - probe-20260531-memory-stage-risk-classifier
+    - probe-20260720-cma-selective-visual-episode-retrieval
+    - probe-20260622-d2e-synchronized-playtest-stream
+    - probe-20260619-agentic-state-authority-boundary
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
