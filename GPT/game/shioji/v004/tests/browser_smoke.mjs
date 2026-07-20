@@ -215,8 +215,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.1.0-tutorial-foundation');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.1.0-tutorial-foundation');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.1.1-tutorial-first-settlers');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.1.1-tutorial-first-settlers');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({

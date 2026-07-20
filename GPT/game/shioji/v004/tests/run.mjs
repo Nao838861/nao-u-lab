@@ -17,7 +17,7 @@ import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
-import { TUTORIAL_LETTERS } from '../src/tutorial_content.js';
+import { TUTORIAL_GOALS, TUTORIAL_LETTERS } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
@@ -139,10 +139,13 @@ test('チュートリアル段3: skipは同じ世界とjournalを保ったまま
   assert.deepEqual(api.inputJournal(), journal);
 
   const completedModel = structuredClone(snapshotToViewModel(before));
-  completedModel.terrain[1][1] = { ...completedModel.terrain[1][1], kind: 'forest' };
-  completedModel.roadKeys = ['0,0'];
+  const portEntrance = completedModel.buildings.find(building => building.roles.includes('port')).entrance;
+  completedModel.terrain[portEntrance.y][portEntrance.x + 1] = {
+    ...completedModel.terrain[portEntrance.y][portEntrance.x + 1], kind: 'forest',
+  };
+  completedModel.roadKeys = [`${portEntrance.x},${portEntrance.y}`];
   completedModel.buildings.push({ type: 'logger' });
-  const completionDirector = createTutorialDirector();
+  const completionDirector = new TutorialDirector({ goals: [TUTORIAL_GOALS[0]], letters: [] });
   completionDirector.observe(completedModel, []);
   assert.equal(completionDirector.currentObjective().complete, true);
   assert.deepEqual(completionDirector.currentObjective().progress, { done: 2, total: 2 });
@@ -173,6 +176,71 @@ test('チュートリアル段5前提実測: 港だけの無人島でも木こ�
     assert.equal(model.buildings.some(building => building.roles.includes('market')), false);
     assert.equal(model.roadKeys.length, 0);
   }
+});
+
+test('チュートリアル段5: 港から森への道・木こり・実入植を目標列と書状へ実況しjournal再生できる', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  const director = createTutorialDirector();
+  let sequence = 0;
+  const observe = () => {
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    director.observe(controller.readModel(), events);
+    return events;
+  };
+  observe();
+
+  const setup = findRoadLoggerSetup(controller.readModel());
+  assert.ok(setup, '港から森の際へ道を通し、木こりを置ける組合せがある');
+  assert.equal(controller.operate({
+    type: 'add_road', start: setup.road.start, end: setup.road.end,
+  }).ok, true);
+  observe();
+  assert.equal(controller.currentObjective, undefined, '世界controllerへチュートリアル能力を混ぜない');
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+    buildingX: setup.logger.x, buildingY: setup.logger.y,
+  }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('first-road-and-logger'), true);
+  assert.equal(director.currentObjective().id, 'first-settlers-arrive');
+
+  let arrival = null;
+  while (!arrival && controller.readModel().day <= 16) {
+    controller.advanceTicks(1);
+    const events = observe();
+    arrival = events.find(event => event.type === 'arrival' && event.reason === 'new_household') ?? null;
+  }
+  assert.ok(arrival, '入植イベントが実際に発生する');
+  const model = controller.readModel();
+  const household = model.households.find(candidate => candidate.id === arrival.householdId);
+  assert.ok(household);
+  assert.equal(household.job, 'logger');
+  assert.equal(director.readState().completedGoals.includes('first-settlers-arrive'), true);
+  assert.equal(director.currentObjective().complete, true);
+
+  const letter = director.letters().find(candidate => candidate.id === 'first-settlers-report');
+  assert.ok(letter);
+  assert.match(letter.body, new RegExp(`${arrival.day}日目`));
+  assert.match(letter.body, new RegExp(`${household.members}人の世帯`));
+  assert.match(letter.body, new RegExp(`人口は${model.population}人`));
+  const letterCount = director.letters().length;
+  director.observe(model, [arrival]);
+  assert.equal(director.letters().length, letterCount, '同じ入植イベントでは再発行しない');
+
+  const journal = controller.inputJournal();
+  assert.deepEqual(journal.map(row => row.op.type), ['add_road', 'place_building']);
+  const replay = createEngineController({ seed: 11, mode: 'tutorial' });
+  let replayTick = 0;
+  for (const row of journal) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(model.tick - replayTick);
+  assert.deepEqual(replay.readModel(), model);
+  assert.deepEqual(replay.inputJournal(), journal);
 });
 
 test('開始選択: tutorialとsandboxは同じ未開拓島、testは従来の安定都市になる', () => {
@@ -635,6 +703,33 @@ function findPreview(model, job) {
     }
   }
   return null;
+}
+
+function findRoadLoggerSetup(model) {
+  const port = model.buildings.find(building => building.roles.includes('port'));
+  if (!port?.entrance) return null;
+  const candidates = [];
+  for (let y = 0; y < model.height; y += 1) {
+    for (let x = 0; x < model.width; x += 1) {
+      const logger = previewBuildingPlacement(model, 'logger', { x, y });
+      if (!logger.ok) continue;
+      const road = previewRoadPlacement(model, port.entrance, logger.entrance);
+      if (!road.ok) continue;
+      const reachesForest = road.cells.some(cell => {
+        for (let dy = -1; dy <= 1; dy += 1) {
+          for (let dx = -1; dx <= 1; dx += 1) {
+            if ((dx || dy) && model.terrain[cell.y + dy]?.[cell.x + dx]?.kind === 'forest') return true;
+          }
+        }
+        return false;
+      });
+      if (!reachesForest) continue;
+      const footprint = new Set(logger.cells.map(cell => `${cell.x},${cell.y}`));
+      if (road.cells.some(cell => footprint.has(`${cell.x},${cell.y}`))) continue;
+      candidates.push({ logger, road });
+    }
+  }
+  return candidates.sort((left, right) => left.road.cells.length - right.road.cells.length)[0] ?? null;
 }
 
 test('段13: 入口カーソルからエンジンと同じ実寸敷地を選び不正地形を事前拒否する', () => {
