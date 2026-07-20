@@ -76,6 +76,27 @@ function portConnectedToMarket(model) {
 
 const FOOD_GOODS = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
 
+const GOODS_LABELS = Object.freeze({
+  tools: '道具', char: '木炭', salt: '塩', pres: '保存食', pick: '漬物',
+  oil: '菜種油', cloth: '布', stone: '石材', log: '丸太', fish: '魚',
+  veg: '野菜', wheat: '麦', meat: '肉', iron: '鉄',
+});
+
+function goodsLabel(goods) {
+  return GOODS_LABELS[goods] ?? goods;
+}
+
+function warehouseBuilding(model) {
+  return model.buildings.find(building => building.type === 'warehouse') ?? null;
+}
+
+function warehouseConnected(model) {
+  const warehouse = warehouseBuilding(model);
+  if (!warehouse) return false;
+  const row = model.roadConnection?.buildings?.find(entry => entry.id === warehouse.id);
+  return Boolean(row?.connected);
+}
+
 function marketFoodShelfAmount(model) {
   const market = marketBuilding(model);
   if (!market) return 0;
@@ -217,6 +238,44 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done: Number(woodshops > 0), total: 1 },
         detail: `木工房 ${woodshops}棟 / 入居 ${settled}世帯`,
         evidence: { woodshops, settled },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'accept-first-order',
+    chapter: '第一章・最初の一荷',
+    title: '本国の注文を受ける',
+    evaluate({ model }) {
+      const accepted = Boolean(model.activeOrder);
+      const offer = model.orderOffer;
+      const detail = accepted
+        ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
+        : offer
+          ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
+          : '道具づくりを続ければ、本国が島の品に目を留めます';
+      return {
+        complete: accepted,
+        progress: { done: Number(accepted), total: 1 },
+        detail,
+        evidence: { accepted, offer: Boolean(offer) },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'warehouse-for-order',
+    chapter: '第一章・最初の一荷',
+    title: '蔵を置き、道で結ぶ',
+    evaluate({ model }) {
+      const warehouse = warehouseBuilding(model);
+      const connected = warehouseConnected(model);
+      const done = Number(Boolean(warehouse)) + Number(connected);
+      return {
+        complete: Boolean(warehouse) && connected,
+        progress: { done, total: 2 },
+        detail: warehouse
+          ? (connected ? '蔵が道で結ばれました' : '蔵はありますが道の外です')
+          : '納品には会社の蔵が要ります',
+        evidence: { warehouse: Boolean(warehouse), connected },
       };
     },
   }),
@@ -388,6 +447,88 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${model.day}日目。木工房が${provenance}、最初の道具を${tools.toFixed(1)}荷仕上げました。`,
           '棚の丸太が減れば、工房は市場で買い足します。物が育ち、銀が回り始めています。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-order-offer',
+    source: 'snapshot',
+    when({ model }) {
+      return Boolean(model.orderOffer);
+    },
+    render({ model }) {
+      const offer = model.orderOffer;
+      const unit = (offer.price * 1.25 * 10).toFixed(1);
+      return {
+        kicker: '本国からの書状',
+        title: `${goodsLabel(offer.g)}の注文が届きました`,
+        summary: `${goodsLabel(offer.g)} ${offer.qty}荷・決済${unit}デナリ/荷・${offer.due}日目まで`,
+        body: [
+          `${model.day}日目。本国が島の${goodsLabel(offer.g)}に目を留め、${offer.qty}荷の注文状が届きました。決済は1荷あたり${unit}デナリ、納期は${offer.due}日目です。`,
+          '受けるかどうかは総督のご判断です。お受けになるなら、会社が市場で買い付け、船で本国へ納めます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'order-needs-warehouse',
+    source: 'snapshot',
+    when({ model }) {
+      return Boolean(model.activeOrder) && !warehouseBuilding(model);
+    },
+    render({ model }) {
+      const order = model.activeOrder;
+      return {
+        kicker: '受諾の続き',
+        title: '納めるには蔵が要ります',
+        summary: `${goodsLabel(order.g)} ${order.qty}荷の調達には会社の蔵が必要です`,
+        body: [
+          `${model.day}日目。${goodsLabel(order.g)}${order.qty}荷の注文をお受けになりました。会社の荷車は市場で買い付けた品を一度蔵へ納め、そこから港へ運びます。`,
+          'いまの島には蔵がありません。市場と港を結ぶ道の沿いに、蔵の区画をお決めください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'warehouse-unconnected',
+    source: 'snapshot',
+    when({ model }) {
+      return Boolean(warehouseBuilding(model)) && !warehouseConnected(model);
+    },
+    render({ model }) {
+      return {
+        kicker: '道の切れ目',
+        title: '蔵まで道が繋がっていません',
+        summary: `${model.day}日目・蔵の入口は道路の外です`,
+        body: [
+          `${model.day}日目。蔵は建ちましたが、入口が市場からの道と繋がっていません。会社の荷車は道のない所を通れず、買い付けた品を運び込めません。`,
+          '蔵の入口まで道をお延ばしください。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-company-procurement',
+    source: 'snapshot',
+    when({ model }) {
+      const order = model.activeOrder;
+      return Boolean(order) && (model.companyStock?.[order.g] ?? 0) > 0;
+    },
+    render({ model }) {
+      const order = model.activeOrder;
+      const stocked = model.companyStock[order.g];
+      return {
+        kicker: '調達はじまる',
+        title: '会社の荷車が蔵へ運び始めました',
+        summary: `${model.day}日目・蔵の${goodsLabel(order.g)} ${stocked.toFixed(1)}荷/${order.qty}荷`,
+        body: [
+          `${model.day}日目。会社が市場の屋台から${goodsLabel(order.g)}を買い付け、荷車が蔵へ${stocked.toFixed(1)}荷を納めました。注文の${order.qty}荷まで、買い付けは続きます。`,
+          '作った者に銀が入り、島の品が本国へ向かう仕度が進んでいます。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

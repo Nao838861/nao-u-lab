@@ -420,6 +420,136 @@ test('チュートリアル段6: 市場まで見積り14超の家にはエレナ
   assert.match(warning.body, new RegExp(`およそ${measured.toFixed(1)}`));
 });
 
+test('チュートリアル段7: 初注文(実測day75)→受諾→蔵→未接続の実況→接続まで(初調達は初期経済の較正待ち)', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  const director = createTutorialDirector();
+  let sequence = 0;
+  const observe = () => {
+    const events = controller.events(sequence);
+    if (events.length) sequence = events.at(-1).sequence;
+    director.observe(controller.readModel(), events);
+  };
+  const hasLetter = id => director.letters().some(letter => letter.id === id);
+  const advanceDaysUntil = (predicate, maxDays, label) => {
+    const limit = controller.readModel().day + maxDays;
+    while (controller.readModel().day <= limit) {
+      controller.advanceTicks(30);
+      observe();
+      if (predicate()) return;
+    }
+    assert.fail(`${label}が${maxDays}日以内に起きる`);
+  };
+  observe();
+
+  const setup = findRoadLoggerSetup(controller.readModel());
+  assert.ok(setup);
+  assert.equal(controller.operate({
+    type: 'add_road', start: setup.road.start, end: setup.road.end,
+  }).ok, true);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'logger',
+    x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+    buildingX: setup.logger.x, buildingY: setup.logger.y,
+  }).ok, true);
+  observe();
+  controller.advanceTicks(18 * 30);
+  observe();
+
+  const port = controller.readModel().buildings.find(building => building.roles.includes('port'));
+  const marketPreview = findPreviewNear(controller.readModel(), 'market', port.entrance);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'market',
+    x: marketPreview.entrance.x, y: marketPreview.entrance.y,
+    buildingX: marketPreview.x, buildingY: marketPreview.y,
+  }).ok, true);
+  observe();
+  observe();
+  if (!director.readState().completedGoals.includes('connect-market-to-port')) {
+    const market0 = controller.readModel().buildings.find(building => building.roles.includes('market'));
+    const portRoad = previewRoadPlacement(controller.readModel(), port.entrance, market0.entrance);
+    assert.equal(controller.operate({ type: 'add_road', start: portRoad.start, end: portRoad.end }).ok, true);
+    observe();
+    observe();
+  }
+  controller.advanceTicks(5 * 30);
+  observe();
+  const market = controller.readModel().buildings.find(building => building.roles.includes('market'));
+  const woodshopPreview = findPreviewNear(controller.readModel(), 'woodshop', market.entrance);
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'woodshop',
+    x: woodshopPreview.entrance.x, y: woodshopPreview.entrance.y,
+    buildingX: woodshopPreview.x, buildingY: woodshopPreview.y,
+  }).ok, true);
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('first-woodshop'), true);
+
+  advanceDaysUntil(() => Boolean(controller.readModel().orderOffer), 70, '初注文の到着');
+  const offer = controller.readModel().orderOffer;
+  assert.equal(offer.g, 'tools', '生産連動の品目選択で道具の注文が来る');
+  const offerLetter = director.letters().find(letter => letter.id === 'first-order-offer');
+  assert.ok(offerLetter, '注文状の書状が出る');
+  assert.match(offerLetter.body, new RegExp(`${offer.qty}荷の注文状`));
+  assert.equal(director.currentObjective().id, 'accept-first-order');
+
+  assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('accept-first-order'), true);
+  assert.equal(hasLetter('order-needs-warehouse'), true, '蔵が要る事実の書状が出る');
+
+  const modelForWarehouse = controller.readModel();
+  const roads = new Set(modelForWarehouse.roadKeys);
+  const awayFromRoad = entrance => {
+    for (let dy = -1; dy <= 1; dy += 1) {
+      for (let dx = -1; dx <= 1; dx += 1) {
+        if (roads.has(`${entrance.x + dx},${entrance.y + dy}`)) return false;
+      }
+    }
+    return true;
+  };
+  let isolated = null;
+  let isolatedDistance = Infinity;
+  for (let y = 0; y < modelForWarehouse.height; y += 1) {
+    for (let x = 0; x < modelForWarehouse.width; x += 1) {
+      const preview = previewBuildingPlacement(modelForWarehouse, 'warehouse', { x, y });
+      if (!preview.ok || !awayFromRoad(preview.entrance)) continue;
+      const road = previewRoadPlacement(modelForWarehouse, market.entrance, preview.entrance);
+      if (!road.ok) continue;
+      const distance = Math.hypot(preview.entrance.x - market.entrance.x, preview.entrance.y - market.entrance.y);
+      if (distance < isolatedDistance) {
+        isolated = preview;
+        isolatedDistance = distance;
+      }
+    }
+  }
+  assert.ok(isolated, '道から離れ、かつ後から道を引ける蔵の候補地がある');
+  assert.equal(controller.operate({
+    type: 'place_building', job: 'warehouse',
+    x: isolated.entrance.x, y: isolated.entrance.y,
+    buildingX: isolated.x, buildingY: isolated.y,
+  }).ok, true);
+  observe();
+  assert.equal(hasLetter('warehouse-unconnected'), true, '蔵まで道が無い事実の書状が出る');
+  assert.equal(director.readState().completedGoals.includes('warehouse-for-order'), false);
+
+  const wireModel = controller.readModel();
+  const warehouse = wireModel.buildings.find(building => building.type === 'warehouse');
+  const warehouseRoad = previewRoadPlacement(wireModel, market.entrance, warehouse.entrance);
+  assert.equal(warehouseRoad.ok, true, '市場から蔵へ道を引ける');
+  assert.equal(controller.operate({
+    type: 'add_road', start: warehouseRoad.start, end: warehouseRoad.end,
+  }).ok, true);
+  observe();
+  observe();
+  assert.equal(director.readState().completedGoals.includes('warehouse-for-order'), true);
+
+  // 初調達(first-company-procurement)の検証は初期経済バランスの較正待ち。
+  // 実測(2026-07-20): キット丸太枯渇後に木工房が丸太を買う銀を持たず生産停止、
+  // 手持ち道具はkeep未満で売りに出ず、屋台に道具が並ばないため会社が買えない。
+  // Nao_u方針「ちゃんとプレイしたらギリギリ耐える」の較正が入り次第、ここへ調達までの検証を戻す。
+  assert.equal(advanceDaysUntil.length, 3, '(較正待ちの目印)');
+});
+
 function findPreviewNear(model, job, origin, maxRadius = 20) {
   let best = null;
   for (let y = Math.max(0, origin.y - maxRadius); y <= Math.min(model.height - 1, origin.y + maxRadius); y += 1) {
