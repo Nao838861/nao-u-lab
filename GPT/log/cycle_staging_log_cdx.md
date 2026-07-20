@@ -78,7 +78,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "shared-reads の mixed duplicate / stale triage / group action queue を 2026-07-20 基準で再生成した。再生成結果は既存内容と同一で、candidate 本体は変更していない"
+  - "group handoff を cycle ID 2026-07-20 22:13・budget 1 で冪等 enqueue し、追加 0 件・永続 inbox pending 0 件・audit error 0 件を確認した"
+  - "Slack inbox 正本を監査し、directives 23 件・broadcasts 21 件がすべて handled、pending 0 件だったため status 更新は発生しなかった"
+memory_index_audit:
+  utf8_read: ok
+  atom_references: 50
+  broken_atom_references: 0
+  markdown_links: 0
+  broken_markdown_links: 0
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読み成功。代表語は 記憶=true / ゲーム設計=true / 敵パターン=true / 評価軸=false。U+FFFD による破損は検出せず、評価軸の不在は文字化けではなく本文に完全一致語がない状態"
+  display_or_tooling_status: "初回の PowerShell here-string 内の日本語 probe が ? に置換されたため、Unicode escape probe で再検証した。source file の破損とは判定しない"
+atom_audit:
+  rows: 2705
+  duplicate_ids: 0
+  normalized_content_duplicate_groups_raw: 40
+  normalized_content_duplicate_rows_raw: 80
+  normalized_content_duplicate_groups_recall_visible: 3
+  normalized_content_duplicate_rows_recall_visible: 6
+  recall_visible_folded_extra_rows: 3
+  canonical_overlay_groups: 45
+  supersedes_relation_problems: 0
+  mirror_drift: 0
+  contradiction_result: "明示 supersedes 関係に非対称・参照切れなし。今回の機械監査で新たな矛盾は検出しなかった"
+raw_archive_audit:
+  inactive_over_30_days_files: 95
+  inactive_over_30_days_bytes: 62979319
+  moved: 0
+  note: "slack_archive 正本・headless_eval・web_research 一次資料を含む。現行の raw 保持原則に従い、archive 契約なしで移動せず棚卸しだけ行った"
+candidate_lifecycle:
+  managed_total: 1025
+  status_counts:
+    posted: 439
+    ready_to_post: 10
+    postponed: 347
+    failed: 211
+    needs_review: 18
+  unmanaged_markdown: 106
+  note: "status frontmatter を持たない README / posted draft 等は lifecycle 集計から除外"
+stale_backlog:
+  overdue_open_total: 197
+  overdue_status_counts:
+    postponed: 186
+    needs_review: 11
+  stale_triage_queue_rows: 50
+  mixed_duplicate_queue_rows: 50
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  stale_review_batch_count: 5
+  note: "overdue は queue 収載上限を超えるが actionable group が 3 件未満のため、高水位の両条件は成立しない"
+group_action_handoff: []
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "会話型 RPG への転用価値は高いが、学習効果・参加者評価・失敗例・運用制約が不足しているため、原文根拠を再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "ゲーム共創の比較設計は有用だが、参加者評価の結果と品質の増減が不足しているため、本文結果を再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "ゲーム間構造移植の価値は高いが、評価指標・dataset・失敗条件の具体性が不足しているため、Phase 2 で根拠を補えるか再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "探索・文脈保持・目標推定の評価は headless playtest に転用可能だが、評価手法・結果・失敗分析が abstract 水準のため再評価する"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "探索・計画限界は有用だが、position paper の評価条件・失敗分類・model 比較が不足しているため、原文確認後に再評価する"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
