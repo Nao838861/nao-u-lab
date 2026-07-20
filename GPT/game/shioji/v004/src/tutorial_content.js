@@ -67,6 +67,35 @@ function logTransaction(events) {
   return events.find(event => event.type === 'transaction' && event.goods === 'log') ?? null;
 }
 
+function firstOrderFacts(state) {
+  return state?.letters?.find(letter => letter.id === 'first-order-offer')?.facts ?? null;
+}
+
+function orderHandlingEvent(events, state) {
+  const facts = firstOrderFacts(state);
+  return events.find(event => event.type === 'handling' && event.direction === 'export'
+    && (!facts || event.goods === facts.goods)) ?? null;
+}
+
+function orderCompletedEvent(events) {
+  return events.find(event => event.type === 'notice'
+    && event.message?.includes('★注文を納めた')) ?? null;
+}
+
+function orderLedgerRevenue(model, goods) {
+  return model.companyLedger
+    .filter(row => row.reason === `本国注文へ${goods}を出荷`)
+    .reduce((total, row) => total + row.amount, 0);
+}
+
+function foodImportOutflow(model) {
+  const prefixes = new Set(FOOD_GOODS);
+  return model.companyLedger.reduce((total, row) => {
+    const goods = row.reason?.match(/^([^の]+)の本土仕入$/)?.[1];
+    return goods && prefixes.has(goods) && row.amount < 0 ? total - row.amount : total;
+  }, 0);
+}
+
 function portConnectedToMarket(model) {
   const port = model.buildings.find(building => building.roles?.includes('port'));
   if (!port) return false;
@@ -151,6 +180,17 @@ export function estimateWalkLen(model, from, to) {
     }
   }
   return Infinity;
+}
+
+export function islandFoodRunwayDays(model) {
+  const pantryFood = model.households.reduce((total, household) => total
+    + (household.pantry ?? []).filter(row => FOOD_GOODS.includes(row.goods))
+      .reduce((sum, row) => sum + row.amount, 0), 0);
+  const stallFood = model.stalls
+    .filter(stall => FOOD_GOODS.includes(stall.goods))
+    .reduce((total, stall) => total + (stall.qty ?? 0), 0);
+  const total = pantryFood + stallFood + marketFoodShelfAmount(model);
+  return total / Math.max(1, model.population);
 }
 
 function farHouseholdFromMarket(model) {
@@ -296,6 +336,56 @@ export const TUTORIAL_GOALS = Object.freeze([
             : '受諾だけでは会社の銀は動きません。買上げ目標のご下命を')
           : '注文の受諾が先です',
         evidence: { target },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-order-procurement',
+    chapter: '第一章・最初の一荷',
+    title: '最初の買付品が蔵へ届くのを見届ける',
+    evaluate({ model }) {
+      const order = model.activeOrder;
+      const stocked = order ? (model.companyStock?.[order.g] ?? 0) : 0;
+      return {
+        complete: stocked > 0,
+        progress: { done: Number(stocked > 0), total: 1 },
+        detail: order
+          ? `蔵の${goodsLabel(order.g)} ${stocked.toFixed(1)}荷 / 注文 ${order.qty}荷`
+          : '注文の受諾が先です',
+        evidence: { stocked, goods: order?.g ?? null },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'complete-first-order',
+    chapter: '第一章・最初の一荷',
+    title: '注文の船積みと船出を見届ける',
+    evaluate({ model, events }) {
+      const completed = Boolean(orderCompletedEvent(events));
+      const exportHandling = events.filter(event => (
+        event.type === 'handling' && event.direction === 'export'
+      ));
+      return {
+        complete: completed,
+        progress: { done: Number(completed), total: 1 },
+        detail: completed
+          ? '最後の一荷を積み、本国注文を納めました'
+          : `このtickの船積み ${exportHandling.reduce((sum, event) => sum + event.qty, 0).toFixed(1)}荷`,
+        evidence: { completed, exportHandling: exportHandling.length, ledgerRows: model.companyLedger.length },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'close-first-chapter',
+    chapter: '第一章・最初の一荷',
+    title: '第一章の報告書を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'chapter-one-close'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued ? '輸出収入と食料仕入を並べた報告書が届きました' : '注文の完遂報告を待っています',
+        evidence: { issued },
       };
     },
   }),
@@ -473,6 +563,29 @@ export const TUTORIAL_LETTERS = Object.freeze([
     },
   }),
   Object.freeze({
+    id: 'aid-suggestion',
+    source: 'snapshot',
+    when({ model }) {
+      return model.population > 0 && model.day > 10
+        && islandFoodRunwayDays(model) < 14
+        && (model.mainlandAid?.requests ?? 0) === 0;
+    },
+    render({ model }) {
+      const runway = islandFoodRunwayDays(model);
+      const aid = model.mainlandAid ?? { nextQty: 240 };
+      return {
+        kicker: '秘書の進言',
+        title: '食料の残りが心もとなくなっています',
+        summary: `島の食料はおよそ${runway.toFixed(0)}日分`,
+        body: [
+          `${model.day}日目。島の食料を数えると、およそ${runway.toFixed(0)}日分です。まだ切れてはいませんが、船の往来には日数がかかります——少し早めにお知らせしています。`,
+          `会社の帳場から本国へ食料支援を要請できます(次の支援は麦${aid.nextQty}荷)。ただし、要請を重ねるほど本国の心象を損ね、支援の量は減っていきます。実際に要請するかどうかは、総督のご判断です。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
     id: 'first-order-offer',
     source: 'snapshot',
     when({ model }) {
@@ -485,6 +598,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         kicker: '本国からの書状',
         title: `${goodsLabel(offer.g)}の注文が届きました`,
         summary: `${goodsLabel(offer.g)} ${offer.qty}荷・決済${unit}デナリ/荷・${offer.due}日目まで`,
+        facts: { goods: offer.g, qty: offer.qty, price: offer.price, due: offer.due },
         body: [
           `${model.day}日目。本国が島の${goodsLabel(offer.g)}に目を留め、${offer.qty}荷の注文状が届きました。決済は1荷あたり${unit}デナリ、納期は${offer.due}日目です。`,
           '受けるかどうかは総督のご判断です。お受けになるなら、会社が市場で買い付け、船で本国へ納めます。',
@@ -571,6 +685,76 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `${model.day}日目。会社が市場の屋台から${goodsLabel(order.g)}を買い付け、荷車が蔵へ${stocked.toFixed(1)}荷を納めました。注文の${order.qty}荷まで、買い付けは続きます。`,
           '作った者に銀が入り、島の品が本国へ向かう仕度が進んでいます。',
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-order-handling',
+    source: 'event',
+    when({ events, state }) {
+      return Boolean(orderHandlingEvent(events, state));
+    },
+    render({ model, events, state }) {
+      const handling = orderHandlingEvent(events, state);
+      const facts = firstOrderFacts(state);
+      return {
+        kicker: '港の荷役報告',
+        title: '注文の品を一荷ずつ船へ',
+        summary: `${handling.day}日目・${goodsLabel(handling.goods)} ${handling.qty.toFixed(1)}荷を船積み`,
+        body: [
+          `${handling.day}日目。蔵から港へ届いた${goodsLabel(handling.goods)}を、このtickは${handling.qty.toFixed(1)}荷だけ船へ移しました。荷役は一度に消えず、実際に一荷ずつ進みます。`,
+          `注文は${facts?.qty ?? '—'}荷。最後の荷を積み終えるまで、港のヤードと船をご覧ください。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-order-complete',
+    source: 'event',
+    when({ events }) {
+      return Boolean(orderCompletedEvent(events));
+    },
+    render({ model, events, state }) {
+      const completed = orderCompletedEvent(events);
+      const facts = firstOrderFacts(state);
+      const revenue = orderLedgerRevenue(model, facts.goods);
+      const base = facts.qty * facts.price;
+      const premium = revenue - base;
+      return {
+        kicker: '第一便の完遂報告',
+        title: '注文の船が本国へ発ちました',
+        summary: `${completed.eventDay ?? completed.day}日目・売上 ${revenue.toFixed(1)}・達成上乗せ ${premium.toFixed(1)}`,
+        facts: { goods: facts.goods, qty: facts.qty, revenue, premium },
+        body: [
+          `${completed.eventDay ?? completed.day}日目。最後の一荷が船へ移り、${goodsLabel(facts.goods)}${facts.qty}荷の注文を納めました。会社の実台帳に、本国注文売上として${revenue.toFixed(1)}が記帳されています。`,
+          `このうち通常単価分は${base.toFixed(1)}、完遂による上乗せは${premium.toFixed(1)}です。市場で作り手へ銀を払い、道と蔵と港を経て、島の品が初めて本国の売上になりました。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'chapter-one-close',
+    source: 'event',
+    when({ events }) {
+      return Boolean(orderCompletedEvent(events));
+    },
+    render({ model, state }) {
+      const completion = state?.letters?.find(letter => letter.id === 'first-order-complete');
+      const revenue = completion?.facts?.revenue ?? 0;
+      const foodOutflow = foodImportOutflow(model);
+      const aidRequests = model.mainlandAid?.requests ?? 0;
+      return {
+        kicker: '第一章・収支報告',
+        title: '最初の一荷、その向こう側',
+        summary: `注文売上 ${revenue.toFixed(1)} / 食料の本土仕入 ${foodOutflow.toFixed(1)}`,
+        facts: { revenue, foodOutflow, aidRequests },
+        body: [
+          `最初の注文で、会社の実台帳には売上${revenue.toFixed(1)}が入りました。同じ時点までに、本土から買った食料の仕入は累計${foodOutflow.toFixed(1)}です。`,
+          `食料支援は${aidRequests}回要請しましたが、贈与なのでこの仕入額には含まれません。輸出で銀を得る道は通りました。次は、島の食卓を本土任せにせず、島の中で作る番です。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

@@ -215,8 +215,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.1.1-tutorial-first-settlers');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.1.1-tutorial-first-settlers');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.1.2-tutorial-first-cargo');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.1.2-tutorial-first-cargo');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -469,6 +469,8 @@ async function checkViewport(width, height, mobile) {
       const sheet = document.querySelector('#company-sheet').getBoundingClientRect();
       const offer = game.model.orderOffer;
       const orderText = document.querySelector('#order-panel').textContent;
+      const aidText = document.querySelector('#aid-panel').textContent;
+      document.querySelector('[data-company-action="request-aid"]').click();
       let targetRow = document.querySelector('.goods-row[data-goods="tools"]');
       targetRow.querySelector('input').value = '12';
       targetRow.querySelector('[data-company-action="set-target"]').click();
@@ -482,9 +484,9 @@ async function checkViewport(width, height, mobile) {
       document.querySelector('[data-company-action="accept-order"]').click();
       return {
         sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
-        offer, orderText, beforeReject, afterReject, stillOffered,
+        offer, orderText, aidText, beforeReject, afterReject, stillOffered,
         activeOrder: game.model.activeOrder,
-        journalTypes: game.controller.inputJournal().slice(-3).map(row => row.op.type),
+        journalTypes: game.controller.inputJournal().slice(-4).map(row => row.op.type),
       };
     })()`);
     assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
@@ -492,9 +494,10 @@ async function checkViewport(width, height, mobile) {
     assert.ok(company.offer, JSON.stringify(company));
     assert.match(company.orderText, /本国決済単価/);
     assert.match(company.orderText, /市場最安/);
+    assert.match(company.aidText, /次の支援は麦240荷/);
     assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
     assert.deepEqual(company.stillOffered, company.offer);
-    assert.deepEqual(company.journalTypes, ['set_stock_target', 'release_stock', 'accept_order']);
+    assert.deepEqual(company.journalTypes, ['request_aid', 'set_stock_target', 'release_stock', 'accept_order']);
     assert.equal(company.activeOrder.g, company.offer.g);
     await page.screenshot('/tmp/shioji_v004_company.png');
 

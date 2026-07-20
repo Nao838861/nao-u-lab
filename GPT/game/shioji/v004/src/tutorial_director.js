@@ -61,7 +61,7 @@ export class TutorialDirector {
 
     for (const goal of this.goals) {
       if (this.state.completedGoals.includes(goal.id)) continue;
-      const result = goal.evaluate({ model, events });
+      const result = goal.evaluate({ model, events, state: this.readState() });
       this.state.goalResults[goal.id] = clone(result);
       if (result.complete) this.state.completedGoals.push(goal.id);
       break;

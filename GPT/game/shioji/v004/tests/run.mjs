@@ -420,14 +420,17 @@ test('チュートリアル段6: 市場まで見積り14超の家にはエレナ
   assert.match(warning.body, new RegExp(`およそ${measured.toFixed(1)}`));
 });
 
-test('チュートリアル段7: 初注文(実測day75)→受諾→蔵→未接続の実況→接続まで(初調達は初期経済の較正待ち)', () => {
+test('チュートリアル段7〜9: 支援物流→初注文→調達→逐次船積み→実収支の章締めを完走する', () => {
   const controller = createEngineController({ seed: 11, mode: 'tutorial' });
   const director = createTutorialDirector();
   let sequence = 0;
+  const observedEvents = [];
   const observe = () => {
     const events = controller.events(sequence);
     if (events.length) sequence = events.at(-1).sequence;
+    observedEvents.push(...events);
     director.observe(controller.readModel(), events);
+    return events;
   };
   const hasLetter = id => director.letters().some(letter => letter.id === id);
   const advanceDaysUntil = (predicate, maxDays, label) => {
@@ -483,6 +486,18 @@ test('チュートリアル段7: 初注文(実測day75)→受諾→蔵→未接�
   observe();
   observe();
   assert.equal(director.readState().completedGoals.includes('first-woodshop'), true);
+
+  advanceDaysUntil(() => hasLetter('aid-suggestion'), 45, '食料支援の進言');
+  const aidLetter = director.letters().find(letter => letter.id === 'aid-suggestion');
+  assert.match(aidLetter.body, /島の食料を数えると、およそ\d+日分/);
+  for (const qty of [240, 180, 120, 60]) {
+    const result = controller.operate({ type: 'request_aid' });
+    assert.deepEqual([result.ok, result.qty], [true, qty]);
+    observe();
+  }
+  assert.deepEqual(controller.readModel().mainlandAid, {
+    requests: 4, refused: true, nextQty: 0,
+  });
 
   advanceDaysUntil(() => Boolean(controller.readModel().orderOffer), 70, '初注文の到着');
   const offer = controller.readModel().orderOffer;
@@ -551,12 +566,78 @@ test('チュートリアル段7: 初注文(実測day75)→受諾→蔵→未接�
   }).ok, true);
   observe();
   assert.equal(director.readState().completedGoals.includes('order-procurement-target'), true);
+  observe();
+  assert.equal(director.currentObjective().id, 'first-order-procurement');
 
-  // 初調達(first-company-procurement)の検証は初期経済バランスの較正待ち。
-  // 実測(2026-07-20): キット丸太枯渇後に木工房が丸太を買う銀を持たず生産停止、
-  // 手持ち道具はkeep未満で売りに出ず、屋台に道具が並ばないため会社が買えない。
-  // Nao_u方針「ちゃんとプレイしたらギリギリ耐える」の較正が入り次第、ここへ調達までの検証を戻す。
-  assert.equal(advanceDaysUntil.length, 3, '(較正待ちの目印)');
+  const procurementLimit = controller.readModel().tick + 45 * 30;
+  while (!hasLetter('first-company-procurement') && controller.readModel().tick < procurementLimit) {
+    controller.advanceTicks(1);
+    observe();
+  }
+  assert.equal(hasLetter('first-company-procurement'), true, '市場から蔵への初調達が実際に起きる');
+  assert.equal(director.readState().completedGoals.includes('first-order-procurement'), true);
+  const procurement = director.letters().find(letter => letter.id === 'first-company-procurement');
+  assert.match(procurement.body, /会社が市場の屋台から道具を買い付け/);
+  assert.equal(observedEvents.some(event => event.type === 'death'), false, '段7の初調達まで餓死ゼロ');
+  assert.deepEqual(
+    controller.inputJournal().filter(row => row.op.type === 'request_aid').map(row => row.op.type),
+    ['request_aid', 'request_aid', 'request_aid', 'request_aid'],
+  );
+
+  const completionLimit = offer.due * 30;
+  while (!hasLetter('first-order-complete') && controller.readModel().tick < completionLimit) {
+    controller.advanceTicks(1);
+    observe();
+  }
+  const completionEvent = observedEvents.find(event => (
+    event.type === 'notice' && event.message?.includes('★注文を納めた')
+  ));
+  assert.ok(completionEvent, `注文期限${offer.due}日目までに完遂イベントが起きる`);
+  const handlingEvents = observedEvents.filter(event => (
+    event.type === 'handling' && event.direction === 'export' && event.goods === offer.g
+  ));
+  assert.ok(handlingEvents.length >= offer.qty, '注文数量ぶんの逐次荷役イベントがある');
+  assert.equal(handlingEvents.every(event => event.qty > 0 && event.qty <= 1 + 1e-9), true);
+  assert.equal(observedEvents.some(event => (
+    event.type === 'departure' && event.carrier === 'cart' && event.goods === offer.g
+  )), true, '道具を運ぶ実荷車が出発する');
+
+  const completeModel = controller.readModel();
+  const revenueRows = completeModel.companyLedger.filter(row => row.reason === `本国注文へ${offer.g}を出荷`);
+  const revenue = revenueRows.reduce((total, row) => total + row.amount, 0);
+  assert.ok(revenue > 0);
+  assert.equal(completeModel.activeOrder, null);
+  assert.equal(director.readState().completedGoals.includes('complete-first-order'), true);
+  const handlingLetter = director.letters().find(letter => letter.id === 'first-order-handling');
+  assert.match(handlingLetter.body, new RegExp(`${handlingEvents[0].qty.toFixed(1)}荷だけ船へ`));
+  const completeLetter = director.letters().find(letter => letter.id === 'first-order-complete');
+  assert.match(completeLetter.body, new RegExp(`本国注文売上として${revenue.toFixed(1)}`));
+  assert.equal(completeLetter.facts.revenue, revenue);
+  observe();
+  assert.equal(director.readState().completedGoals.includes('close-first-chapter'), true);
+  const closing = director.letters().find(letter => letter.id === 'chapter-one-close');
+  assert.ok(closing);
+  const expectedFoodOutflow = completeModel.companyLedger.reduce((total, row) => (
+    /^(fish|veg|wheat|pres|pick|meat)の本土仕入$/.test(row.reason) && row.amount < 0
+      ? total - row.amount : total
+  ), 0);
+  assert.equal(closing.facts.revenue, revenue);
+  assert.equal(closing.facts.foodOutflow, expectedFoodOutflow);
+  assert.equal(closing.facts.aidRequests, 4);
+  assert.match(closing.body, new RegExp(`食料の仕入は累計${expectedFoodOutflow.toFixed(1)}`));
+  assert.equal(observedEvents.some(event => event.type === 'death'), false, '初注文の完遂まで餓死ゼロ');
+
+  const journal = controller.inputJournal();
+  const replay = createEngineController({ seed: 11, mode: 'tutorial' });
+  let replayTick = 0;
+  for (const row of journal) {
+    replay.advanceTicks(row.tick - replayTick);
+    replayTick = row.tick;
+    assert.equal(replay.operate(row.op).ok, true);
+  }
+  replay.advanceTicks(completeModel.tick - replayTick);
+  assert.deepEqual(replay.readModel(), completeModel, '段5〜8の公開journalを同一世界へ再生できる');
+  assert.deepEqual(replay.inputJournal(), journal);
 });
 
 function findPreviewNear(model, job, origin, maxRadius = 20) {
@@ -1162,9 +1243,25 @@ test('段15: 会社台帳・買上げ目標・蔵出し・注文比較を描画�
     'set_stock_target', 'release_stock', 'accept_order',
   ]);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  for (const id of ['company-sheet', 'order-panel', 'company-goods', 'company-ledger']) {
+  for (const id of ['company-sheet', 'order-panel', 'aid-panel', 'company-goods', 'company-ledger']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+});
+
+test('段7支援UI: 逓減量と拒絶を描画モデルへ出し、要請を公開journalへ記録する', () => {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  assert.deepEqual(controller.readModel().mainlandAid, {
+    requests: 0, refused: false, nextQty: 240,
+  });
+  for (const nextQty of [180, 120, 60, 0]) {
+    assert.equal(controller.operate({ type: 'request_aid' }).ok, true);
+    assert.equal(controller.readModel().mainlandAid.nextQty, nextQty);
+  }
+  assert.equal(controller.readModel().mainlandAid.refused, true);
+  assert.deepEqual(
+    controller.inputJournal().map(row => row.op.type),
+    ['request_aid', 'request_aid', 'request_aid', 'request_aid'],
+  );
 });
 
 test('段16: 観測APIの全イベント種と重要メッセージがトースト・ログ表示経路を持つ', () => {

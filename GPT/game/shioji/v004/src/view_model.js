@@ -1,4 +1,5 @@
 import { JOB_LABELS, SECTION_LABELS } from './config.js';
+import { MAINLAND_AID } from './engine_bridge.js';
 import { analyzeRoadConnections } from './placement.js';
 import { buildingAppearance, pileVisual, trailVisual } from './visuals.js';
 
@@ -260,6 +261,12 @@ export function snapshotToViewModel(snapshot) {
     companyLedger: snapshot.economy.company.ledger.map(row => ({ ...row })),
     companyStock: { ...snapshot.economy.stock },
     stockTargets: { ...snapshot.economy.stockTgt },
+    mainlandAid: (() => {
+      const requests = snapshot.economy.mainlandAid?.requests ?? 0;
+      const refused = requests >= MAINLAND_AID.REFUSAL_AT;
+      const nextQty = refused ? 0 : Math.round(MAINLAND_AID.BASE_WHEAT * (1 - MAINLAND_AID.DECAY * requests));
+      return { requests, refused, nextQty };
+    })(),
     orderOffer: snapshot.economy.orderOffer ? { ...snapshot.economy.orderOffer } : null,
     activeOrder: snapshot.economy.order ? { ...snapshot.economy.order } : null,
     marketLowest,

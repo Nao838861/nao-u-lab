@@ -1,4 +1,4 @@
-export const VERSION = 'v004.1.1-tutorial-first-settlers';
+export const VERSION = 'v004.1.2-tutorial-first-cargo';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

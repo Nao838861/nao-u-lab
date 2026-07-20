@@ -73,6 +73,7 @@ assert.equal(controller.operate({
   type: 'set_stock_target', goods: 'tools', qty: 12,
 }).ok, true);
 controller.operate({ type: 'release_stock', goods: 'tools', qty: 16 });
+assert.equal(controller.operate({ type: 'request_aid' }).ok, true);
 
 let acceptedOrder = false;
 for (let day = 1; day <= DAYS; day += 1) {
@@ -94,7 +95,7 @@ const journal = controller.inputJournal();
 const operationTypes = new Set(journal.map(({ op }) => op.type));
 for (const type of [
   'place_building', 'remove_building', 'add_road', 'remove_road',
-  'set_stock_target', 'release_stock', 'accept_order',
+  'set_stock_target', 'release_stock', 'request_aid', 'accept_order',
 ]) {
   assert.equal(operationTypes.has(type), true, `${type}が入力ジャーナルに記録される`);
 }
@@ -111,4 +112,4 @@ assert.deepEqual(
   'UI操作150日後と入力ジャーナル再生後のエンジン状態が完全一致する',
 );
 
-console.log(`ok - 段17: v003差分ゼロ、UI全7操作${DAYS}日後とjournal再生が完全一致`);
+console.log(`ok - 段17: v003差分ゼロ、UI全8操作${DAYS}日後とjournal再生が完全一致`);

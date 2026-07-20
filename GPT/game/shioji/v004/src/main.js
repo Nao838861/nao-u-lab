@@ -396,8 +396,18 @@ function orderKey(order) {
   return order ? `${order.g}:${order.qty}:${order.due}` : null;
 }
 
+
+function renderAidPanel() {
+  const aid = model.mainlandAid ?? { requests: 0, refused: false, nextQty: 240 };
+  $('#aid-panel').innerHTML = aid.refused
+    ? `<h3>本国の食料支援</h3><p>度重なる要請(${aid.requests}回)に本国の心象は冷え、支援は望めません。</p>`
+    : `<h3>本国の食料支援</h3>
+       <p>これまでの要請 ${aid.requests}回・次の支援は麦${aid.nextQty}荷。重ねるほど本国の心象を損ね、量は減っていきます。</p>
+       <div class="order-actions"><button type="button" data-company-action="request-aid">支援を要請する</button></div>`;
+}
 function renderCompanySheet() {
   $('#company-balance').textContent = formatNumber(model.companyMoney);
+  renderAidPanel();
   const offer = model.orderOffer;
   const active = model.activeOrder;
   if (active) {
@@ -590,6 +600,11 @@ $('#company-sheet').addEventListener('click', event => {
   }
   if (action === 'reconsider') {
     dismissedOfferKey = null;
+    renderCompanySheet();
+    return;
+  }
+  if (action === 'request-aid') {
+    applyEngineOperation({ type: 'request_aid' }, '本国へ食料支援を要請しました', '本国は要請に応じません');
     renderCompanySheet();
     return;
   }
