@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-21T13:32:15+09:00",
+  "updated_at": "2026-07-21T15:32:38+09:00",
   "reviewed_source_ts": [
     "1780878537.585419",
     "1784584531.120939",
@@ -450,9 +450,49 @@
     "1784344254.477289",
     "1784344260.203569",
     "1784358881.327349",
-    "1784600238.488659"
+    "1784600238.488659",
+    "1784608038.645759"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T15:32:38+09:00",
+      "selected": {
+        "id": "sr-1784608038-668a2ef4c4",
+        "source_ts": "1784608038.645759",
+        "title": "Self-Improvements in Modern Agentic Systems — 更新対象・信号・持続性・評価予算の整理",
+        "reason": "未レビューの最新 score 13 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。model parameter と scaffold の更新を分け、固定予算・held-out transfer・regression・rollback evidence で自己改善を判定する観点が、現在の Phase 3b とゲーム／memory 改善へ直結するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は自己改善を update target・signal・持続範囲・evaluation budget に分け、held-out transfer・regression・cost・judge 分離・rollback を併記している一方、survey であり統一 protocol を単一の controlled experiment で実証していないため evidence=2 とした。行動面は、ptcgbench-anchor-harness-split が fixed anchor と outcome/regression signal を、omni-game-arena-improvement-transfer が baseline・same-condition rerun・held-out transfer を、evaluation-attribution-split が model/scaffold/tool/environment の要因分離を、skillopt-instruction-edit-validation-gate が held-out case と小さな可逆 edit をすでに要求している。320件ある active probe 群へ同じ評価束を追加すると確認負荷だけが増えるため non_redundancy=0。次の該当作業では既存 probes を再利用し、本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260618-ptcgbench-anchor-harness-split",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260614-evaluation-attribution-split",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の baseline／held-out／regression／attribution probes との重複による reject 理由だけを更新した。新規 probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T11:22:12+09:00",
       "selected": {

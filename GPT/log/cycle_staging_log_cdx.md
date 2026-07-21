@@ -111,7 +111,39 @@ final_decision: "品質ゲート維持のため 2 件とも投稿せず、追加
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784608038-668a2ef4c4
+    source_ts: "1784608038.645759"
+    title: "Self-Improvements in Modern Agentic Systems — 更新対象・信号・持続性・評価予算の整理"
+    reason: "未レビューの最新 score 13 atom で、memory・harness・evaluation・agent・operation・game-design の6優先タグをすべて持つ。model parameter と scaffold の更新を分け、固定予算・held-out transfer・regression・rollback evidence で自己改善を判定する観点が、現在の Phase 3b とゲーム／memory 改善へ直結するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 2
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "survey 本文は評価軸と限界を具体的に示すが、統一 protocol の controlled experiment はない。さらに fixed anchor、baseline／same-condition rerun／held-out transfer、model／scaffold／tool／environment attribution、held-out instruction validation は既存4 probe がすでに要求している。320件の active probe 群へ同じ評価束を追加しても次回行動を変えず、確認負荷だけを増やすため反映しない。"
+  existing_probes:
+    - probe-20260618-ptcgbench-anchor-harness-split
+    - probe-20260619-omni-game-arena-improvement-transfer
+    - probe-20260614-evaluation-attribution-split
+    - probe-20260626-skillopt-instruction-edit-validation-gate
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録した。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
