@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1578153/first-gamejam-post-mortem"
 collected_at: "2026-07-22T02:45:45+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev, postmortem, game-jam, controls, playtesting, game-feel]
+evaluated_at: "2026-07-22T02:49:51+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T02:49:51+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T02:49:51+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: >-
+  初見者が独特な移動を読めない問題に対し、入力表示の削減と世界内の進行方向 cue を試した結果、
+  なお残った難度問題まで評価値と制作時系列に結び付けており、操作可読性・jam scope・物語露出を具体的に分析できる。
+  単独の自己報告という限界を明示しても、記事固有の判断と失敗から約4000字の概要・適用評価を構成できる。
+suggested_post_outline:
+  overview_angle: "初jamの一週間を、独特な移動の可読性、playtest反映、制作scope、物語露出が最終評価へどう現れたかという判断連鎖で再構成する"
+  analysis_axis: "作者には自然になった操作と初見者の心的モデルのずれを中心に、cue追加で改善した部分と難度を残した部分、技術的寄り道、secret route依存を分けて検証する"
+  application_target: "Log_cdxの短期ゲームprototypeで、初回30秒の入力理解テスト、visual cue変更前後の観察、難度と操作不明の切り分け、締切中のtool作業制限、重要な物語beatの到達率確認に使う"
+  pros_cons: "利点は評価値・playtest反応・工程上の判断が同じ記録にあり失敗の因果を追えること。弱点は単一作者の自己報告で、tester数や変更前後の定量比較がなく一般化には追加検証が要ること"
+  verdict_pre: "部分採用。操作可読性とjam工程の監査枠は採用し、難度維持や物語露出の結論は自作prototypeで小さく再検証する"
 ---
 
 ## raw_excerpt
