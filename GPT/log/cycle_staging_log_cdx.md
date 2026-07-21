@@ -43,7 +43,25 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_eli_real_user_seam_playtesting.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641228892699
+    char_count: 4378
+  - candidate: memory/shared_reads_candidates/20260721_battle_arena_animation_state_sync.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641237651129
+    char_count: 4463
+skipped: []
+review:
+  required_sections: pass
+  banned_phrases: pass
+  canonical_urls_at_end: pass
+  duplicate_preflight: continue
+  post_verification: pass
+notes:
+  - ELI candidate の非 canonical URL が通常表示で 404 だったため、原文の canonical URL に置換してから投稿した。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

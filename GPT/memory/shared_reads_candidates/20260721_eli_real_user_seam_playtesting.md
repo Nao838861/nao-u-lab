@@ -1,20 +1,25 @@
 ---
 title: "Postmortem: Release 2026-06-15"
-url: "https://itch.io/devlog/1561972/postmortem-release-2026-06-15"
+url: "https://special-cog.itch.io/eli/devlog/1561972/postmortem-release-2026-06-15"
 collected_at: "2026-07-21T22:30:01+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, playtesting, qa, godot, onboarding, state-transition]
 evaluated_at: "2026-07-21T22:33:29+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T22:33:29+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T22:33:29+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-21T22:40:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641228892699"
+next_action: none
 stale_after: "2026-08-20"
 supersedes: []
+posted:
+  ts: "1784641228.892699"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641228892699"
+  char_count: 4378
+  posted_at: "2026-07-21T22:40:46+09:00"
 gate_reason: >-
   owner ID と template、main tab と detached window、実装済み操作と発見可能性という異種の seam failure が具体的な症状・原因・修正まで揃う。
   単なる「他人にテストしてもらう」論ではなく、状態遷移を試験単位にする方法としてゲームの save・scene・device 検証へ展開でき、約4000字の固有分析を支えられる。

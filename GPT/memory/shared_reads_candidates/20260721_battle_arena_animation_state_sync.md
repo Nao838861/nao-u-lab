@@ -7,14 +7,19 @@ genre_tags: [game-development, postmortem, action-game, animation, state-machine
 evaluated_at: "2026-07-21T22:33:29+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T22:33:29+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T22:33:29+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-21T22:40:46+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641237651129"
+next_action: none
 stale_after: "2026-08-20"
 supersedes: []
+posted:
+  ts: "1784641237.651129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784641237651129"
+  char_count: 4463
+  posted_at: "2026-07-21T22:40:46+09:00"
 gate_reason: >-
   Startup / Active / Recovery / Transition を frame data、animation、hitbox、入力割込み、logical state の共通語彙にした実装が具体的で、内部 playtest の評価範囲も明示されている。
   短期 action prototype の手触り検証と horizontal slice を混同しない milestone 設計まで一貫しており、約4000字で手法・評価・限界を固有に説明できる。
