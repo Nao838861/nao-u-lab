@@ -103,7 +103,22 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_star_trek_voyager_survival_narrative.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784600238488659"
+    char_count: 4024
+  - candidate: memory/shared_reads_candidates/20260721_saros_narrative_process.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784600248563269"
+    char_count: 4454
+skipped: []
+review:
+  format: pass
+  banned_phrases: none
+  duplicate_preflight: continue
+  source_check: original_articles_read
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
