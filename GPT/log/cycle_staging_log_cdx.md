@@ -44,7 +44,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784656503-1ecf6998a9
+    source_ts: "1784656503.008299"
+    title: "Sunset Twist game jam postmortem — 作者の習熟と初見操作の分離"
+    reason: "最新の未レビュー score 10 atom で、harness・game-design・operation・evaluation の優先タグを持つ。独特な移動を作者が習熟した事実と、初見者が入力結果を予測できることを混同した失敗を、次の短期 prototype の評価行動へ小さく変換できるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "risk_control が2未満、合計が14未満で採用条件を満たさない。記事には初見理解を測る具体案がある一方、変更前後の tester 数や測定値がなく、単一作者の自己報告である。既存の first-30-second comprehension、onboarding friction、cue/challenge trace、tutorial順序、narrative playthrough probes が同じ行動差をすでに扱い、複数の制作論点を一つの新規 probe に束ねると active probe 群をさらに肥大化させるため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。新規 probe・評価表・directive・恒久ルール・lease は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
