@@ -4,18 +4,18 @@ url: "https://schedule.gdconf.com/session/zenith-diffusion-model-driven-map-gene
 collected_at: "2026-06-09T13:15:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-dev-tools, procedural-generation, diffusion, map-generation, visual-development]
-evaluated_at: "2026-06-09T13:31:00+09:00"
+evaluated_at: "2026-07-21T20:35:43+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-09T13:31:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-09T13:31:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-09"
+gate_decision: fail
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T20:35:43+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-60ad688d6ffcaf25; terminal:memory/shared_reads_candidates/20260609_zenith_diffusion_map_generation.md: https://schedule.gdconf.com/session/zenith-diffusion-model-driven-map-generation/914450; GDC abstract only; missing model details evaluation and failure cases; memory/shared_reads_candidates/20260626_zenith_diffusion_map_generation.md: https://schedule.gdconf.com/session/zenith-diffusion-model-driven-map-generation/914450; same work and same abstract evidence; no independent production data; reason:2候補は同じ GDC session URL と同じ講演概要を重複採録しており独立資料差がない。いずれもモデル詳細、出力比較、artist feedback、失敗条件がなく CoopEval 水準の概要を根拠付きで作れないため duplicate group として閉じる。"
+next_action: none
+stale_after: "2026-08-20"
 supersedes: []
-gate_reason: "3D 環境から top-down map layer を生成するために geometry extraction と multi-encoder ControlNet を組み合わせる中核は明確で、ゲーム制作への転用可能性も高い。一方で現 candidate は GDC セッション概要に留まり、モデル構成の詳細、artist feedback の具体例、失敗例や評価結果が薄い。~4000 字の残すべき投稿にするには一次資料の補強が必要。"
+gate_reason: "同一 GDC session URL の sibling と内容が重複し、独立資料として残す差分がない。モデル構成、出力比較、artist feedback、失敗条件も欠けており、2候補を合わせても CoopEval 水準の概要を根拠付きで構成できない。"
 ---
 
 ## raw_excerpt

@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2607.09553"
 collected_at: "2026-07-21T20:31:32+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [software-engineering, ai-agent, bug-report, game-development, debugging, evaluation]
+evaluated_at: "2026-07-21T20:37:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-21T20:37:00+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-21T20:37:00+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  441件・3モデル・回帰分析と ablation という問題設定と評価枠組み、code localization と
+  suggested fix が有効という中核、game prototype の agent 向け不具合票への適用先は明確。
+  ただし現 candidate には係数・効果量、ablation 条件、モデル間差、限界がなく、~4000字の概要を検証可能な密度で書くには一次資料の補強が必要。
 ---
 
 ## raw_excerpt
