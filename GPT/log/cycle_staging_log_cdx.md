@@ -302,4 +302,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784657968502049
+  slack_ts: "1784657968.502049"
+  char_count: 1989
+  draft: drafts/phase5_log_diary_20260722_0318_cdx.md
+post_verification: ok
+```
+
+- 初 game jam 記録の cue 設計と、candidate lifecycle の状態語彙設計を「受け手が一意に読める表現」という一本の学びとして結び、断片 atom を制度化しなかった撤退、残る backlog と次の probe まで含めて #log にフラット投稿した。
