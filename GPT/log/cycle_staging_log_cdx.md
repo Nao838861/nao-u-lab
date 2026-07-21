@@ -185,7 +185,72 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designed_at: "2026-07-22T03:08:13+09:00"
+designs:
+  - issue_id: ISS-4A-20260722-04
+    problem_restatement: >-
+      candidate の現在状態は postponed だが、遷移理由の posted_url_match が
+      last_decision に入り、audit が先頭文字列 posted を状態 posted と誤読している。
+      状態、判定、理由を同じ自由文字列から推測する契約では、evidence が十分でも
+      正常な terminal close を anomaly にしてしまう。
+    alternatives:
+      - name: 案A・posted_url_match の局所例外
+        sketch: >-
+          status_from_last_decision に posted_url_match は postponed とみなす例外を加える。
+          candidate frontmatter は変更せず、今回の false-positive だけを抑える。
+        pros:
+          - 変更範囲と migration が最小
+          - 現在の candidate 記録をそのまま保持できる
+        cons:
+          - 理由語から状態を推測する混線が残る
+          - 新しい posted_* 理由が増えるたびに例外追加が必要
+          - posted_url_match が常に同じ遷移先とは限らない
+        migration_cost: low
+      - name: 案B・last_decision を閉じた状態語彙に限定
+        sketch: >-
+          last_decision は posted / ready_to_post / postpone(d) / fail(ed) / needs_review の
+          明示的な状態判定だけを受け付け、prefix 推測をやめる。posted_url_match のような
+          原因は既存 duplicate_reason と evidence に保持し、非正規行だけを正規化する。
+        pros:
+          - 状態と理由の責務が分かれ、同型の prefix 衝突を防げる
+          - 新規 field や別 ledger が不要で、現行 schema からの距離が短い
+          - duplicate_reason と canonical_path / permalink の provenance を失わない
+        cons:
+          - 既存の非正規 last_decision を洗い出して正規化する必要がある
+          - 許可する alias と canonical 出力値を一度固定する必要がある
+          - writer と audit の双方で同じ語彙契約を守る必要がある
+        migration_cost: low
+      - name: 案C・遷移イベント ledger の新設
+        sketch: >-
+          from / to / reason / evidence / timestamp を持つ append-only ledger を作り、
+          candidate frontmatter は最新状態の projection とする。audit は ledger を正本にする。
+        pros:
+          - 複数回遷移の履歴と根拠を最も明確に保持できる
+          - 状態 projection の再構築と時系列 audit が可能
+        cons:
+          - 1045 candidate の移行と writer 群の変更が必要
+          - frontmatter と ledger の二重正本化リスクがある
+          - false-positive 1件に対して仕組みが過大
+        migration_cost: high
+    recommended: 案B・last_decision を閉じた状態語彙に限定
+    recommended_reason: >-
+      失敗原因は posted_url_match 固有ではなく prefix 推測そのものにあるため、案Aは再発を先送りする。
+      案Bなら既存の status / candidate_status を現在状態、duplicate_reason / evidence を理由と根拠として
+      そのまま使え、非正規 last_decision の少数行と audit 契約だけを直せる。失敗時も dry-run anomaly の
+      増減として検出でき、ledger を増やす案Cより撤回コストが小さい。
+    decision: introduce
+    decision_reason: >-
+      現行データだけで責務分離が成立し、対象例と再発条件が明確で、Phase 4c で小さく検証可能である。
+      historical gate_decision は品質判定として保持し、現在状態を巻き戻す根拠にはしない。
+    outline_for_4c:
+      - last_decision の状態解釈を完全一致の閉じた allow-list にし、startswith による推測を廃止する
+      - posted_url_match を last_decision に持つ candidate を、状態判定は postpone(d)、理由は duplicate_reason、根拠は evidence という分担へ正規化する
+      - gate_decision=pass から postponed へ evidence 付きで進んだ重複 skip が正常と判定され、posted_* という未知理由を posted 状態に誤認しない回帰テストを追加する
+      - dry-run audit で current_state_transition_lacks_evidence が 0 件になり、lifecycle count と terminal 状態が変わらないことを確認する
+      - Phase 4a の監査説明に、last_decision は閉じた状態語彙、原因は専用 reason field と evidence に置く契約を反映する
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
