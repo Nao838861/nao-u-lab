@@ -8,7 +8,30 @@
 - Slack inbox: directives / broadcasts とも pending 0件。直近の local Slack 取込（#shared-reads 2026-07-22 02:55 JST）以降に新規外部 URL は確認できず。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260722_stripped_runtime_controls_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260722_stripped_runtime_controls_postmortem.md
+    decision: continue
+    title_key: post jam retrospective a strong idea that needed more time
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
