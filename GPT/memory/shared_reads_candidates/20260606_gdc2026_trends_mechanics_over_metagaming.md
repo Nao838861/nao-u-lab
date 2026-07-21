@@ -7,12 +7,12 @@ genre_tags: [game-industry, mobile-games, production, ai-tools, mechanics, gdc]
 evaluated_at: "2026-06-06T02:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-06T02:02:42+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-06T02:02:42+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T17:35:26+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-2d425c13d80e1db3; terminal:memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/; memory/shared_reads_candidates/20260606_gdc2026_trends_volume_over_viability.md: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/; reason:同一 PocketGamer 記事の同一 URL を別時刻に採取した重複であり、両 candidate とも紹介記事の要点メモに留まり手法と評価の材料が不足するため閉じる"
+next_action: none
 stale_after: "2026-07-06"
 supersedes: []
 gate_reason: |-

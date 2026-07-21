@@ -10,7 +10,50 @@
 - duplicate preflight: 3 sidecar 再生成後に実行し `continue`。品質判定・Slack 投稿・記憶整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260721_harness_design_post_training_llm_agents.md
+    reason: abstract のみで harness 条件・OOD shift 構成・比較手法・定量結果が不足し、約 4000 字概要を根拠付きで書けない
+stale_reviewed: []
+group_actions:
+  - group_key: d2c co development and volume over viability gdc 2026 trends revealed
+    representative: memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+      - memory/shared_reads_candidates/20260606_gdc2026_trends_volume_over_viability.md
+    reason: 同一 PocketGamer 記事の同一 URL を別時刻に採取した重複であり、両 candidate とも紹介記事の要点メモに留まり手法と評価の材料が不足するため閉じた
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+        evidence: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/
+      - path: memory/shared_reads_candidates/20260606_gdc2026_trends_volume_over_viability.md
+        evidence: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/
+    representative_decision: fail
+    analysis_time_minutes: 5
+group_handoff_audit:
+  pending_before: 1
+  read_ids: [gha-2d425c13d80e1db3]
+  resolved_ids: [gha-2d425c13d80e1db3]
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 2
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  candidate: memory/shared_reads_candidates/20260721_harness_design_post_training_llm_agents.md
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2606.25447
+sidecar_audit:
+  posted_source_rows: 574
+  title_canonical_rows_after_group_resolution: 64
+  open_duplicate_group_rows_after_group_resolution: 57
+  freshness_check: passed
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

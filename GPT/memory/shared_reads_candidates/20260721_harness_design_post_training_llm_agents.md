@@ -4,6 +4,20 @@ url: https://arxiv.org/abs/2606.25447
 collected_at: 2026-07-21T17:31:35.2745316+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [ai-agent, harness, tool-use, post-training, evaluation, game-ai]
+evaluated_at: "2026-07-21T17:35:52+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-21T17:35:52+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-21T17:35:52+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: |-
+  harness を tool 公開・説明・step 観測の設計変数として post-training と共同評価する問題設定は明確で、headless 自動プレイ基盤へ直接適用できる。
+  ただし現 candidate は abstract のみで、harness 条件、task / tool shift の構成、比較手法、定量結果を抽出できず、CoopEval 水準の約 4000 字概要を根拠付きで書けないため保留する。
 ---
 
 ## raw_excerpt
