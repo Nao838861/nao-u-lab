@@ -191,6 +191,15 @@ stale_review_batch:
     stale_after: "2026-06-15"
     priority_reason: "game_transfer_value=high。memory・validation・REST interface・Unity demo の接続は LLM NPC の破綻抑制に使えるが、empirical study / ablation の評価指標と失敗例を本文で確認する必要がある。"
     recommended_review_action: reevaluate_in_phase2
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 0
+    dormant: 2
+  basis: "Phase 4c 初期 migration 後に helper の pending --due-only --limit 1 と validate を実行。fixture 2件は dormant、期限到来 pending は0件。"
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
@@ -247,7 +256,37 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-PROBE-001
+    files_changed:
+      - path: tools/shared_reads_probe_lifecycle.py
+        change: created
+      - path: tools/test_shared_reads_probe_lifecycle.py
+        change: created
+      - path: memory/shared_reads_probe_lifecycle.jsonl
+        change: created
+      - path: memory/directive_shared_reads_probe_lifecycle_20260721.md
+        change: created
+      - path: phases/phase3b_self_feedback.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "probe 本文を既存 active_probes に保持したまま、期限付き lease / receipt ledger と enqueue / resolve / pending / validate helper を導入した。Phase 3b の採用と Phase 4a の1件 close を lifecycle 契約へ接続した。"
+    partial: false
+migrations:
+  - what: "probe-20260604-memory-discard-operation-gate と probe-20260625-amvl-retention-utility-lifecycle の2件だけを dormant fixture として ledger に登録した。"
+    affected: "memory/shared_reads_probe_lifecycle.jsonl の2行のみ。残り318件の legacy probe は ledger 不在=dormant として active_probes 本文を無変更で保持。"
+verification:
+  - "python -B tools/shared_reads_probe_lifecycle.py validate: rows=2、dormant=2、errors=[]。"
+  - "python -B tools/shared_reads_probe_lifecycle.py pending --due-only --limit 1 --as-of 2026-07-21T18:00:00+09:00: items=[]、pending=0。"
+  - "python -B -m unittest tools.test_shared_reads_probe_lifecycle -v: 4 tests passed。usage_evidence_missing→dormant、comparison への merge、判断差あり→再 lease、unknown ID / duplicate pending / evidence 無し resolved / 循環 superseded_by の拒否を確認。"
+  - "python -B -m unittest discover -s tools -p test_shared_reads_*.py -v: 既存を含む32 tests passed。"
+  - "python -B tools/memory_recall.py 'probe lifecycle' --limit 3 --compact --no-log: exit 0、既存 atom 3件を読出し。"
+  - "git diff --check: whitespace error なし。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

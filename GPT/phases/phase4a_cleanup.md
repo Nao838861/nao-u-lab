@@ -4,8 +4,8 @@ name: 記憶階層 整理 + 問題抽出
 focus: メカニカルな整理 + 構造的問題の発見 (設計するな、実装するな)
 estimated_time: 10-20 min
 gating_role: 4b/4c の起動可否を決める
-inputs: [memory/, log/cycle_staging_log_cdx.md, inbox 系]
-outputs: [staging Phase 4a セクション (issues + needs_design 判定)]
+inputs: [memory/, log/cycle_staging_log_cdx.md, inbox 系, memory/shared_reads_probe_lifecycle.jsonl]
+outputs: [staging Phase 4a セクション (issues + needs_design 判定 + probe lifecycle 件数), due lease 1件までの receipt]
 ---
 
 # Phase 4a: 記憶階層 整理 + 問題抽出
@@ -23,6 +23,22 @@ outputs: [staging Phase 4a セクション (issues + needs_design 判定)]
 3. `memory/raw/` の古いファイルでアーカイブすべきもの (30 日以上動きがない原文等)
 4. `memory/shared_reads_candidates/` で lifecycle frontmatter の内訳を確認する (`status: posted | ready_to_post | postponed | failed | needs_review`)。`postponed` / `needs_review` candidate は mtime や filename date ではなく `stale_after` を優先し、`stale_after <= 今日` のものを fail 降格、明示保持、または次 Phase 2 再評価のどれにするか記録する。`posted` / `failed` は原則として再評価 queue から外す。再評価に送る場合は、最大 5 件程度を `stale_review_batch` として staging に残し、Phase 2 が少数処理できる handoff にする
 5. inbox 系 (`slack_directives.jsonl`, `slack_broadcasts.jsonl`) で処理済みのものを `status: handled` に更新
+6. `python tools\shared_reads_probe_lifecycle.py pending --due-only --limit 1` で期限到来 probe lease を1件だけ確認し、consumer artifact の判断前後と evidence pointer を receipt に残す
+
+## probe lease の機械的 close (2026-07-21 Phase 4c)
+
+`memory/shared_reads_probe_lifecycle.jsonl` は probe 本文ではなく operational lifecycle の正本である。Phase 4a は1 cycle 1件だけ due lease を扱う。
+
+- consumer artifact を観測できた時は、`before_decision` / `after_decision` / `changed` / `evidence` を指定して `resolve` する。
+- 判断差があった時は `status: resolved` とする。次の利用先が具体的に決まった場合だけ、Phase 3b の enqueue と同じ契約で再 lease できる。
+- 判断差がなかった時は `changed: false` の receipt を残す。既存 comparison probe が同じ判断を包含し、根拠がある場合だけ `status: merged` と `superseded_by` を指定する。それ以外は `status: resolved` で閉じ、merge / retire 候補として staging に残す。自動削除しない。
+- consumer artifact が未作成・未観測・evidence 不足なら `status: dormant` とする。probe 本文は削除しない。
+- `retired` は明示的な根拠がある場合だけ使い、期限切れだけで自動退役させない。
+
+```powershell
+python tools\shared_reads_probe_lifecycle.py resolve --probe-id "<probe_id>" --status resolved --before-decision "<before>" --after-decision "<after>" --changed --evidence "<path#section>"
+python tools\shared_reads_probe_lifecycle.py validate
+```
 
 ## encoding-safe audit contract
 
@@ -60,6 +76,14 @@ issues:
 recommendation:
   needs_design: true | false  # Phase 4b を起動すべきか
   priority_issues: [<id>, ...]  # 4b で扱うべき issue (多くても 1-3 件)
+probe_lifecycle:
+  inspected_due_count: <0 または 1>
+  inspected_probe_id: <probe_id または null>
+  outcome: pending | resolved | dormant | merged | retired | none
+  counts:
+    pending: <件数>
+    resolved: <件数>
+    dormant: <件数>
 stale_review_batch:
   - path: <memory/shared_reads_candidates/...md>
     status: postponed | needs_review

@@ -3,8 +3,8 @@ phase: 3b
 name: Shared-reads 自己フィードバック
 focus: 過去 shared-reads から 1 件だけ選び、Codex 自身の次回行動に小さく反映する
 estimated_time: 15-25 min
-inputs: [memory/atoms.jsonl, memory/MEMORY.md, log/cycle_staging_log_cdx.md, memory/shared_reads_self_feedback_state.json]
-outputs: [staging Phase 3b セクション, 必要なら小さな directive/probe/state 更新]
+inputs: [memory/atoms.jsonl, memory/MEMORY.md, log/cycle_staging_log_cdx.md, memory/shared_reads_self_feedback_state.json, memory/shared_reads_probe_lifecycle.jsonl]
+outputs: [staging Phase 3b セクション, 必要なら小さな directive/probe/state 更新, adopt 時の probe lifecycle lease 1件]
 ---
 
 # Phase 3b: Shared-reads 自己フィードバック
@@ -70,6 +70,22 @@ scores:
 - `AGENTS.md` を第二の知識ベースにする
 - 1 件の論文から全作業へ効く普遍ルールを作る
 
+## probe lease / receipt contract (2026-07-21 Phase 4c)
+
+`adopt_probe` または `adopt_metric` とする時は、採用を `active_probes` への保存だけで完了扱いにしない。次をすべて指定できる1件だけを operational active として lease する。
+
+- `probe_id`: `memory/shared_reads_self_feedback_state.json` の `active_probes` に存在する ID
+- `consumer_phase`: 実際に判断へ使う後続 phase
+- `trigger_artifact`: before / after を比較できる具体的な成果物
+- `expected_delta`: probe が変えるはずの判断を1行で記述
+- `lease_due`: ISO-8601 の期限
+
+```powershell
+python tools\shared_reads_probe_lifecycle.py enqueue --probe-id "<probe_id>" --consumer-phase "<Phase 4a など>" --trigger-artifact "<path#section>" --expected-delta "<期待する判断差>" --lease-due "<ISO-8601>"
+```
+
+1 cycle に enqueue するのは1件だけ。同じ probe の pending lease があれば追加しない。consumer、artifact、判断差、期限のいずれかを指定できない知見は `adopt_probe` / `adopt_metric` にせず、`defer` または `reject` の state-only review に留める。probe 本文の正本は `active_probes`、運用状態の正本は `memory/shared_reads_probe_lifecycle.jsonl` とする。ledger にない legacy probe は dormant であり、operational active ではない。
+
 ## staging Phase 3b に記録
 
 ```yaml
@@ -91,6 +107,13 @@ self_feedback:
   change:
     summary: <何を変えたか。変えない場合は none>
     files: [<path>, ...]
+  lease:  # adopt_probe / adopt_metric の時だけ必須。その他は null
+    probe_id: <active_probes に存在する ID>
+    consumer_phase: <後続 phase>
+    trigger_artifact: <path#section>
+    expected_delta: <期待する判断差>
+    lease_due: <ISO-8601>
+    enqueue_result: enqueued
   anti_bloat_check:
     adds_permanent_rule: true | false
     replaces_or_simplifies_existing: true | false
@@ -103,3 +126,4 @@ self_feedback:
 - 採点と採否理由が staging にある
 - 恒久ルールを増やす場合、既存ルールとの重複・矛盾を明示確認している
 - state に reviewed/source_ts が残っている
+- adopt_probe / adopt_metric の場合は、具体的な lease 1件が ledger にあり、指定不能なら state-only review になっている
