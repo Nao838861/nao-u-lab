@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T04:05:30+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-f217d2c5fbea338e; terminal:memory/shared_reads_candidates/20260620_alem_multi_agent_coordination.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781905946856299; memory/shared_reads_candidates/20260622_alem_open_ended_multi_agent_coordination.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782065326755519; reason:posted-source index で同一 arXiv work の既投稿を確認したため、open siblings は再投稿対象外として閉じる"
 next_action: none
 stale_after: "2026-07-17"

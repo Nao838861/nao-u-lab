@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-21T08:51:34+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-b3ef8b64d4530dfe; terminal:memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。blend quality の評価内訳が不足; memory/shared_reads_candidates/20260611_multiverse_language_conditioned_level_blending.md: arXiv 2603.26782 の同一 work。実験条件と失敗例が不足; reason:同一 arXiv work の重複候補であり両メモとも評価指標とデータセットと失敗条件が不足して投稿品質に達しないため group 全体を閉じる"
 next_action: none
 stale_after: "2026-07-11"

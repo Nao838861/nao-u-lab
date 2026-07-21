@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: 2026-07-17T01:10:00+09:00
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260712_evaluator_preference_dynamics_audit.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783825416879669"
 next_action: none
 stale_after: "2026-08-16"

@@ -12,7 +12,7 @@ duplicate_reason: posted_url_match
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-18T08:17:04+09:00"
-last_decision: posted_url_match
+last_decision: postponed
 evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260706_ai_native_games_survey_roadmap.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783287766520669; slack_ts:1783287766.520669"
 next_action: none
 stale_after: "2026-08-17"

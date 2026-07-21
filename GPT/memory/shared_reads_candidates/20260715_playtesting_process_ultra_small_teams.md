@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-15T06:01:27+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "posted_url_match; canonical_path:memory/shared_reads_candidates/20260601_gdc2026_playtesting_ultra_small_teams.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780274208142799; matched_title_key:playtesting process for ultra small teams"
 next_action: none
 stale_after: "2026-08-14"

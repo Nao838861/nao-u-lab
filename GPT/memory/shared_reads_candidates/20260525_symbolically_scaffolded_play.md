@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md; permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
 stale_after: "2026-08-11"
 supersedes: []

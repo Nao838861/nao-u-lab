@@ -8,7 +8,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-06-21T05:25:00+09:00"
-last_decision: postpone_lifecycle_backfill
+last_decision: postponed
+lifecycle_backfill_reason: postpone_lifecycle_backfill
 evidence: "Phase 4c lifecycle backfill from ISS-4A-20260621-001"
 next_action: evaluate_in_phase2
 stale_after: "2026-07-19"

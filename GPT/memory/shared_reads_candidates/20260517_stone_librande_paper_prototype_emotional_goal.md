@@ -12,7 +12,8 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_gdc2026_stone_librande_game_design_workshop.md"
 next_action: none
 gate_reason: |-

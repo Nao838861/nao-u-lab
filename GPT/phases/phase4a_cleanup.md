@@ -163,7 +163,7 @@ python tools\build_shared_reads_group_action_queue.py
 
 `tools/backfill_shared_reads_candidate_status.py` は `gate_decision` を当初の品質判断として保存し、現在状態の巻き戻し根拠に使わない。現在状態は posted block、後続 decision evidence を伴う phase3 skip 後の遷移、整合した `status` / `candidate_status`、片側だけ存在する現在状態、decision evidence、欠損時の gate fallback の順で読む。
 
-`gate_decision: postpone` から evidence 付き `failed_duplicate_of_terminal_sibling` へ進んだ行は正常な lifecycle transition である。真の anomaly は `status` / `candidate_status` の不一致、または historical gate と異なる現在状態に対応する `last_decision` / `evidence` がない場合として報告する。`--fix-conflicts` は posted/phase3 block または decision evidence で一意に決まる時だけ修復し、曖昧な行や整合済み terminal 状態を historical gate へ戻さない。
+`last_decision` は `posted` / `pass` / `ready_to_post` / `postpone` / `postponed` / `fail` / `failed` / `needs_review` の閉じた状態語彙だけを使う。重複や移行の原因は `duplicate_reason` などの専用 reason field、根拠は `evidence` に分離する。たとえば `gate_decision: postpone` から `last_decision: failed` と evidence 付きで進んだ行は正常な lifecycle transition である。真の anomaly は `status` / `candidate_status` の不一致、または historical gate と異なる現在状態に対応する正規 `last_decision` / `evidence` がない場合として報告する。`--fix-conflicts` は posted/phase3 block または decision evidence で一意に決まる時だけ修復し、曖昧な行や整合済み terminal 状態を historical gate へ戻さない。
 
 ## bounded group-action handoff (2026-07-16 Phase 4c)
 

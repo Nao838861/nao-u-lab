@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-19T14:50:23+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-640e794e59585012; terminal:memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599; posted_source_url_match; reason:posted-source index が arXiv:2508.01110 の実 Slack 投稿を exact URL/work 一致で確認したため open siblings は再投稿候補として閉じる"
 stale_after: "2026-06-26"
 supersedes: []

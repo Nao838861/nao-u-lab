@@ -15,7 +15,8 @@ posted:
 status: posted
 candidate_status: posted
 last_reviewed_at: "2026-06-20T19:07:00+09:00"
-last_decision: posted_existing_duplicate
+last_decision: posted
+duplicate_reason: posted_existing_duplicate
 evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781744311743629"
 next_action: none
 stale_after: "2026-07-20"

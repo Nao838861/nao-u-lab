@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-21T15:23:01+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-b8f8c2f9fda2d6b2; terminal:memory/shared_reads_candidates/20260518_spring_cleaning_gamejam_postmortem.md: same itch.io devlog 1515448 and equivalent issue list; memory/shared_reads_candidates/20260601_spring_cleaning_gamejam_postmortem.md: same itch.io devlog 1515448 and equivalent issue list; reason:2件とも同一itch.io postmortemの重複で制作反省は具体的だが評価根拠と一般化可能な手法が薄く4000字級投稿へ届かない"
 next_action: none
 stale_after: "2026-07-01"

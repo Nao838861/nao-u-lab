@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T12:48:53+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-89e598abe33b0ea0; terminal:memory/shared_reads_candidates/20260530_klpeg_incremental_game_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780068162217169; memory/shared_reads_candidates/20260609_klpeg_incremental_game_playtesting.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781015897493199; reason:同一 work の posted siblings が複数あり permalink まで確認できるため open sibling を再投稿対象から閉じる"
 next_action: none
 postpone_reason: "Phase 3 duplicate guard: same URL/topic was already posted to #shared-reads on 2026-05-30."

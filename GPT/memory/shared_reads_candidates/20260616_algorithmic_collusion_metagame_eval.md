@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T21:37:31+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-eee43275a9c927cf; terminal:memory/shared_reads_posted_source_index.jsonl: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783406218664919; memory/shared_reads_candidates/20260516_algorithmic_collusion_test_time_metagame.md: failed; reason:posted-source index で arXiv 2602.17203 の canonical work 一致を確認したため再投稿対象外"
 next_action: none
 stale_after: "2026-07-16"

@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T10:36:37+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-f8f32c50cae6cca1; terminal:memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md: status:posted; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529; reason:同一タイトルかつ同一 AutoUE work で、URL 差は OpenReview と arXiv の公開先差に留まる。投稿済み sibling が手法・適用・限界を 4220 字で既に記録しており、別 candidate として維持する情報差がない。"
 next_action: none
 stale_after: "2026-07-04"

@@ -253,7 +253,53 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260722-04
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: tools/migrate_shared_reads_last_decision.py
+        change: created
+      - path: tools/shared_reads_group_handoff.py
+        change: modified
+      - path: tools/test_backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: tools/test_migrate_shared_reads_last_decision.py
+        change: created
+      - path: tools/test_shared_reads_group_handoff.py
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/shared_reads_candidates/*.md (legacy 値を持つ 181 files)
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: >-
+      last_decision の状態解釈を完全一致の閉じた語彙へ変更し、group handoff writer と
+      Phase 2/4a の運用契約を状態・理由・evidence の分離へ揃えた。
+    partial: false
+migrations:
+  - what: >-
+      legacy last_decision 181件を正規化し、理由を duplicate_reason または
+      lifecycle_backfill_reason へ退避した。内訳は failed_duplicate_of_terminal_sibling 111、
+      postponed_duplicate 59、fail_duplicate_posted 4、posted_url_match 2、
+      postpone_lifecycle_backfill 2、posted_existing_duplicate 3。
+    affected: >-
+      memory/shared_reads_candidates の 181 files。lifecycle count は failed 240、
+      needs_review 18、posted 450、postponed 327、ready_to_post 9 のまま不変。
+verification:
+  - "python -m unittest discover -s tools -p 'test_*shared_reads*.py': 44 tests OK"
+  - "python -m unittest tools.test_migrate_shared_reads_last_decision: 2 tests OK"
+  - "py_compile: backfill / migration / group_handoff の3 scripts OK"
+  - "migration dry-run: changed=0、conflicts=0（再実行 idempotent）"
+  - "candidate audit dry-run: current_state_transition_lacks_evidence=0。既存の stale_after 差異14件だけが残り、本 issue 外のため未変更"
+  - "memory_recall.py --no-log: compact recall で2 atomsを読めることを確認"
+  - "対象差分の git diff --check: OK"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

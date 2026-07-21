@@ -6,7 +6,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from backfill_shared_reads_candidate_status import audit_file, scalar_fields, parse_frontmatter
+from backfill_shared_reads_candidate_status import (
+    audit_file,
+    parse_frontmatter,
+    scalar_fields,
+    status_from_last_decision,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,7 +42,8 @@ class CandidateLifecycleAuditTest(unittest.TestCase):
             "gate_decision: postpone\n"
             "candidate_status: failed\n"
             "status: failed\n"
-            "last_decision: failed_duplicate_of_terminal_sibling\n"
+            "last_decision: failed\n"
+            "duplicate_reason: failed_duplicate_of_terminal_sibling\n"
             'evidence: "group_handoff:fixture"\n',
         )
         result = audit_file(self.path, True, True, False, self.today)
@@ -62,7 +68,8 @@ class CandidateLifecycleAuditTest(unittest.TestCase):
             "gate_decision: postpone\n"
             "candidate_status: postponed\n"
             "status: failed\n"
-            "last_decision: failed_duplicate_of_terminal_sibling\n"
+            "last_decision: failed\n"
+            "duplicate_reason: failed_duplicate_of_terminal_sibling\n"
             'evidence: "group_handoff:fixture"\n',
         )
         result = audit_file(self.path, True, True, False, self.today)
@@ -82,7 +89,8 @@ class CandidateLifecycleAuditTest(unittest.TestCase):
             "gate_decision: pass\n"
             "candidate_status: failed\n"
             "status: failed\n"
-            "last_decision: failed_duplicate_of_terminal_sibling\n"
+            "last_decision: failed\n"
+            "duplicate_reason: failed_duplicate_of_terminal_sibling\n"
             'evidence: "group_handoff:fixture"\n'
             "phase3_skip:\n"
             '  skipped_at: "2026-05-28T05:54:06+09:00"\n'
@@ -91,6 +99,26 @@ class CandidateLifecycleAuditTest(unittest.TestCase):
         result = audit_file(self.path, True, True, False, self.today)
         self.assertEqual(result["status_source"], "decision_evidence_after_phase3_skip")
         self.assertEqual(fields(self.path)["status"], "failed")
+
+    def test_evidenced_duplicate_skip_uses_explicit_postponed_state(self):
+        write_candidate(
+            self.path,
+            "gate_decision: pass\n"
+            "candidate_status: postponed\n"
+            "status: postponed\n"
+            "last_decision: postponed\n"
+            "duplicate_reason: posted_url_match\n"
+            'evidence: "canonical_path:fixture"\n',
+        )
+        result = audit_file(self.path, False, False, False, self.today)
+        self.assertEqual(result["anomalies"], [])
+
+    def test_reason_prefix_is_not_interpreted_as_state(self):
+        self.assertEqual(status_from_last_decision("posted_url_match"), "")
+        self.assertEqual(status_from_last_decision("failed_duplicate_of_terminal_sibling"), "")
+        self.assertEqual(status_from_last_decision("postponed_duplicate"), "")
+        self.assertEqual(status_from_last_decision("posted"), "posted")
+        self.assertEqual(status_from_last_decision("postpone"), "postponed")
 
 
 if __name__ == "__main__":

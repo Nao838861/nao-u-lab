@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-07-12T10:15:54+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidate: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md"
 stale_after: "2026-08-11"
 supersedes: []

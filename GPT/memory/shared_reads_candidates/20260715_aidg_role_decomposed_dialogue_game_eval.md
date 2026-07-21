@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-15T11:17:07+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779942387259629"
 next_action: none
 stale_after: "2026-08-14"

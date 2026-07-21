@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T14:50:40+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-f639cc4f7da8006b; terminal:memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md: posted; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779885575577609; posted_source_url_match; reason:posted-source index が AgenticPCG project URL の実 Slack 投稿を exact work 一致で確認したため open siblings は再投稿候補として閉じる"
 next_action: none
 postpone_reason: "Phase 3 重複確認。同一 URL は 2026-05-27 に #shared-reads 投稿済みのため再投稿しない。"

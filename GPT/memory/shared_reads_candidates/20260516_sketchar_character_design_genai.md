@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-20T17:50:26+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-d233eb155f8a6f5a; terminal:memory/shared_reads_candidates/20260719_sketchar_character_design_prototyping.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784440867236699; reason:same arXiv work already posted to shared-reads"
 stale_after: "2026-06-15"
 supersedes: []

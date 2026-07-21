@@ -10,7 +10,8 @@ gate_decision: fail
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T01:52:27+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-630fe00abf2c172e; terminal:memory/shared_reads_candidates/20260618_emergence_world_long_horizon_agent_autonomy.md: failed for insufficient deterministic game-production probe; memory/shared_reads_candidates/20260625_emergence_world_long_horizon_agent_autonomy.md: failed after repeated lack of metrics and concrete failure logs; reason:all open files are the same arXiv work and repeat the same missing metrics governance details and concrete failure evidence already recorded by failed siblings"
 next_action: none
 stale_after: "2026-08-19"

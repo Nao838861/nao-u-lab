@@ -35,6 +35,16 @@ NEXT_ACTION_BY_STATUS = {
 REASSESSMENT_STATUSES = {"postponed", "needs_review"}
 CANONICAL_QUEUE_STATUSES = {"postponed", "needs_review", "ready_to_post"}
 VALID_LIFECYCLE_STATUSES = {"posted", "ready_to_post", "postponed", "failed", "needs_review"}
+LAST_DECISION_STATUS_BY_VALUE = {
+    "posted": "posted",
+    "pass": "ready_to_post",
+    "ready_to_post": "ready_to_post",
+    "postpone": "postponed",
+    "postponed": "postponed",
+    "fail": "failed",
+    "failed": "failed",
+    "needs_review": "needs_review",
+}
 
 
 def parse_frontmatter(text: str) -> tuple[str, str, str] | None:
@@ -79,17 +89,7 @@ def nested_block_fields(frontmatter: str, key: str) -> dict[str, str]:
 
 def status_from_last_decision(value: str) -> str:
     decision = value.casefold().strip()
-    if decision.startswith("posted"):
-        return "posted"
-    if decision == "pass" or decision.startswith("ready_to_post"):
-        return "ready_to_post"
-    if decision.startswith("postpone") or decision.startswith("postponed"):
-        return "postponed"
-    if decision.startswith("fail") or decision.startswith("failed"):
-        return "failed"
-    if decision.startswith("needs_review"):
-        return "needs_review"
-    return ""
+    return LAST_DECISION_STATUS_BY_VALUE.get(decision, "")
 
 
 def infer_candidate_status(fields: dict[str, str], has_posted: bool, has_phase3_skip: bool) -> tuple[str, str, bool]:

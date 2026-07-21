@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T08:42:48+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-dee9fd1de06f9d89; terminal:memory/shared_reads_candidates/20260517_agent_island_multiagent_games.md: status:posted permalink:p1778971050740239; reason:terminal title index が紹介ページと投稿済み原文を同一 work と確定"
 next_action: none
 stale_after: "2026-08-18"

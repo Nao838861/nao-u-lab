@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T19:20:43+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-7fe2ccd7a61ad864; terminal:memory/shared_reads_candidates/20260528_gui_agents_continual_game_generation.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779979770780529; memory/shared_reads_candidates/20260610_gui_agents_continual_game_generation.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779995803583479; reason:全 open sibling が同一 arXiv 2605.28258 の再収集であり posted sibling 2件を上回る独立資料差がない"
 next_action: none
 duplicate_note: "Phase 3 duplicate check found an existing #shared-reads post for arXiv 2605.28258, so no duplicate message was sent."

@@ -123,7 +123,7 @@ python tools\shared_reads_group_handoff.py pending --limit 3
 python tools\shared_reads_group_handoff.py resolve --id <handoff_id> --action close_siblings --target-path <candidate_path> --reason "<根拠>" --terminal-evidence "<terminal_path>=<status/permalink>" --representative-decision postpone
 ```
 
-`close_siblings` の `target_paths` には representative を含む現在の open sibling をすべて列挙する。各対象を `failed` にし、duplicate 専用の `last_decision` / `evidence` / `next_action` を記録する。payload の open membership がすべて terminal になったことを再読込で確認した後だけ handled になる。`keep_distinct` は現在の path/status 構成 fingerprint が一致する間だけ group-action queue から除外し、構成が変われば自動再審査する。`defer` は `--retry-after <ISO>` を必須とし、期限までは queue への再投入を抑止するが handled にはしない。
+`close_siblings` の `target_paths` には representative を含む現在の open sibling をすべて列挙する。各対象を `failed` にし、`last_decision: failed`、duplicate 専用の `duplicate_reason` / `evidence` / `next_action` を記録する。payload の open membership がすべて terminal になったことを再読込で確認した後だけ handled になる。`keep_distinct` は現在の path/status 構成 fingerprint が一致する間だけ group-action queue から除外し、構成が変われば自動再審査する。`defer` は `--retry-after <ISO>` を必須とし、期限までは queue への再投入を抑止するが handled にはしない。
 
 各 group の再評価結果は、再生成可能な queue とは別に staging Phase 2 の `group_actions` へ次の契約で残す。これは判断と適用結果を同一 handoff ID で結ぶ監査記録である。
 
@@ -164,7 +164,8 @@ group_handoff_audit:
 status: postponed
 candidate_status: postponed
 last_reviewed_at: <ISO>
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: duplicate_of_terminal_sibling
 evidence: "duplicate of posted candidates: <terminal_paths/permalinks>"
 next_action: none
 stale_after: "YYYY-MM-DD"  # last_reviewed_at から約 30 日後

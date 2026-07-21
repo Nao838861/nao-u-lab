@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T20:05:54+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-b05b9545bc017fc7; terminal:memory/shared_reads_candidates/20260610_swe_marathon_long_horizon_agent_work.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781046010166399; reason:同一 arXiv work は 2026-06-10 に投稿済みで、未投稿 sibling に題材差・資料差がないため重複を閉じる。"
 next_action: none
 stale_after: "2026-07-17"

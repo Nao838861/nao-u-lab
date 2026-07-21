@@ -106,6 +106,11 @@ class GroupHandoffTest(unittest.TestCase):
             self.assertEqual(rows[0]["status"], "pending")
             self.assertEqual(read_jsonl_after_write(root, rows)[0]["apply_result"]["state"], "partial")
             self.assertEqual(read_candidate_status(root / a), "failed")
+            self.assertEqual(read_candidate_field(root / a, "last_decision"), "failed")
+            self.assertEqual(
+                read_candidate_field(root / a, "duplicate_reason"),
+                "failed_duplicate_of_terminal_sibling",
+            )
 
             candidate(root / b, "needs_review")
             rows, result = resolve(rows, row_id, decision, "fixture", "2026-07-19T00:01:00+09:00", root)
@@ -221,8 +226,12 @@ class GroupHandoffTest(unittest.TestCase):
 
 
 def read_candidate_status(path: Path) -> str:
+    return read_candidate_field(path, "status")
+
+
+def read_candidate_field(path: Path, key: str) -> str:
     for line in path.read_text(encoding="utf-8").splitlines():
-        if line.startswith("status:"):
+        if line.startswith(f"{key}:"):
             return line.split(":", 1)[1].strip().strip('"')
     return ""
 

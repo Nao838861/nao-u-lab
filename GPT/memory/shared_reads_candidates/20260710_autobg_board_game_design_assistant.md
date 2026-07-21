@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-10T03:45:00+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260606_autobg_board_game_design_assistant.md; canonical posted group includes 20260616/20260618/20260620 siblings"
 next_action: none
 stale_after: "2026-08-09"

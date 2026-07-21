@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-09T13:47:38+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_ptcg_bench_self_evolving_game_agents.md; memory/shared_reads_candidates/20260618_ptcg_bench_self_evolving_card_game_agents.md"
 next_action: none
 stale_after: "2026-08-08"

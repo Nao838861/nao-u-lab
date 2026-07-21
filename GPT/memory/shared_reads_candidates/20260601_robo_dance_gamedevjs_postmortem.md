@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T17:50:26+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-d6f01edf6ec0491f; terminal:memory/shared_reads_candidates/20260518_robo_dance_jam_postmortem.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629; reason:same source URL already posted to shared-reads"
 next_action: none
 stale_after: "2026-07-01"

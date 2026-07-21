@@ -10,7 +10,8 @@ gate_decision: pass
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-20T17:50:26+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-7353a4d4a9d38fa9; terminal:memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987180373269; reason:same arXiv work already posted to shared-reads"
 phase3_skip:
   skipped_at: "2026-05-28T05:54:06+09:00"

@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-21T15:22:52+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-2de8a8019119410d; terminal:memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md: same arXiv 2505.08515 and equivalent prototype summary; memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md: same arXiv 2505.08515 and equivalent abstract excerpt; reason:2件とも同一arXiv workのabstract相当でプロトタイプ仕様と面接による変更と効果評価が不足し投稿品質へ届かない"
 stale_after: "2026-06-15"
 supersedes: []

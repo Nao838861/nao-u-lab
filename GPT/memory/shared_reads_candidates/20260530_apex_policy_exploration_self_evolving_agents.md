@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-07-19T03:34:54+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260525_apex_policy_exploration.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779669494944199); memory/shared_reads_candidates/20260528_apex_autonomous_policy_exploration.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779971995584189)"
 stale_after: "2026-08-18"
 supersedes: []

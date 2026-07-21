@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T04:05:30+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-96ce86a9b8016bca; terminal:memory/shared_reads_candidates/20260515_foveated_haptic_gaze_accessible_gameworlds.md: failed; posted permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778535754740259; reason:posted-source index で同一 arXiv work の実 Slack 投稿を確認し、旧候補も terminal であるため open representative を閉じる"
 next_action: none
 stale_after: "2026-07-19"

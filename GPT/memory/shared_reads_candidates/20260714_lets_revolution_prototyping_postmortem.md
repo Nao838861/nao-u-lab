@@ -10,7 +10,8 @@ gate_decision: pass
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-14T10:10:00+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "既投稿: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779769858830679"
 next_action: none
 postponed_reason: "同一 URL・同一記事が 2026-05-26 に #shared-reads へ投稿済みであり、再投稿に値する新規分析差分がないため。"

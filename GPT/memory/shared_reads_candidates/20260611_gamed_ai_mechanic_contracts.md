@@ -10,7 +10,8 @@ gate_decision: fail
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-21T02:21:39+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-8bb9ca31b15220a6; terminal:memory/shared_reads_candidates/20260527_gamedai_educational_game_generation.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779870125964739; reason:同一 arXiv 2604.23947 の内容が既に shared-reads へ投稿済みで work identity が一致するため"
 next_action: none
 stale_after: "2026-08-20"

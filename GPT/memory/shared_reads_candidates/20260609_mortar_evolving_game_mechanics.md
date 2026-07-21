@@ -10,7 +10,8 @@ gate_decision: fail
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T01:52:27+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-4269487ab4273d9c; terminal:memory/shared_reads_candidates/20260604_mortar_evolving_mechanics.md: posted https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780501085622209; reason:posted-source index confirms the same OpenReview work was already posted so the remaining open duplicate must not enter Phase 3"
 next_action: none
 stale_after: "2026-08-19"

@@ -10,7 +10,8 @@ gate_decision: fail
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-06-21T05:25:00+09:00"
-last_decision: fail_duplicate_posted
+last_decision: failed
+duplicate_reason: fail_duplicate_posted
 evidence: "Phase 4a stale_review_batch; same URL already covered by memory/shared_reads_candidates/20260515_prompting_destiny_reflective_llm_rpg.md"
 stale_after: "2026-07-21"
 supersedes: []

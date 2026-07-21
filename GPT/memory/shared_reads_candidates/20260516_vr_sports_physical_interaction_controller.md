@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-20T06:07:15+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-e9643b11c0c9a704; terminal:memory/shared_reads_candidates/20260711_vr_sports_physical_interaction_controller.md: failed because the paper remains a planned prototype and comparison without results; memory/shared_reads_candidates/20260715_vr_sports_physical_interactions.md: failed because participant conditions effect sizes and final conclusions are absent; reason:terminal siblings evaluated the identical arXiv work and found no experiment results or conclusion sufficient for a CoopEval-level post"
 stale_after: "2026-06-15"
 supersedes: []

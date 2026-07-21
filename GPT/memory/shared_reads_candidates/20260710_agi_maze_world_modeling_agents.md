@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-10T03:45:00+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260706_agi_maze_world_modeling_agents.md; permalink https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1783322184028869"
 next_action: none
 stale_after: "2026-08-09"

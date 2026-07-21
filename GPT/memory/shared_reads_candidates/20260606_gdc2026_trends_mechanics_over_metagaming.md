@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-21T17:35:26+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-2d425c13d80e1db3; terminal:memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/; memory/shared_reads_candidates/20260606_gdc2026_trends_volume_over_viability.md: same source URL https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed/; reason:同一 PocketGamer 記事の同一 URL を別時刻に採取した重複であり、両 candidate とも紹介記事の要点メモに留まり手法と評価の材料が不足するため閉じる"
 next_action: none
 stale_after: "2026-07-06"

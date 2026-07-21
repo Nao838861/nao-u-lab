@@ -10,7 +10,8 @@ gate_decision: pass
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-11T19:02:00+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "terminal sibling: memory/shared_reads_candidates/20260516_gamification_with_purpose_learner_preferences.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863000063569"
 next_action: none
 stale_after: "2026-08-10"

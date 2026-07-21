@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-08T15:48:40+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260528_liecraft_deception_game_benchmark.md; memory/shared_reads_candidates/20260605_liecraft_hidden_role_llm_eval.md"
 next_action: none
 stale_after: "2026-08-07"

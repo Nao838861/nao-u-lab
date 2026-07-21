@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-07-10T01:35:18+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260527_copilot_cli_roguelike_design_flow.md"
 stale_after: "2026-08-09"
 supersedes: []

@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-16T07:01:24+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "gate_decision:postpone; evaluated_at:2026-07-16T07:01:24+09:00; duplicate_reason:posted_url_match; canonical_path:memory/shared_reads_candidates/20260612_playtesting_beyond_personas.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781224652357689; matched_title_key:playtesting what is beyond personas"
 next_action: none
 stale_after: "2026-08-15"

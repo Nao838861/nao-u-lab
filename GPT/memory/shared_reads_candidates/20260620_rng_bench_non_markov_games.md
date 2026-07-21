@@ -10,7 +10,8 @@ gate_decision: fail
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T05:58:56+09:00"
-last_decision: fail_duplicate_posted
+last_decision: failed
+duplicate_reason: fail_duplicate_posted
 evidence: "same source completed and posted by memory/shared_reads_candidates/20260719_rng_bench_non_markov_games.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784408323132209"
 next_action: keep_for_reference
 stale_after: "2026-07-20"

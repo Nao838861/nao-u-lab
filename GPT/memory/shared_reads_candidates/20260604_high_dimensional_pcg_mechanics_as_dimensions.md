@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T12:48:53+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-1a4859d27061b35d; terminal:memory/shared_reads_candidates/20260513_hdpcg_gameplay_dimensions_pcg.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349; reason:同一 canonical URL の posted sibling があり permalink まで確認できるため open sibling を再投稿対象から閉じる"
 next_action: none
 postpone_reason: "Phase 3 重複確認。同一 URL は 2026-05-13 に #shared-reads 投稿済みのため再投稿しない。"

@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-14T21:01:47+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "posted_url_match; canonical_url:https://arxiv.org/abs/2509.22170; canonical_path:memory/shared_reads_candidates/20260602_titan_llm_agents_automated_video_game_testing.md; permalink:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780340975651269; matched_title_key:leveraging llm agents for automated video game testing"
 next_action: none
 stale_after: "2026-08-13"

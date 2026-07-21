@@ -10,7 +10,8 @@ gate_decision: pass
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-21T11:07:55+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-6d729c1da0befef9; terminal:memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md: https://arxiv.org/abs/2403.02454 same work; memory/shared_reads_candidates/20260609_ink_splotch_effect_chatgpt_game_designer.md: https://arxiv.org/abs/2403.02454 same work; memory/shared_reads_candidates/20260709_ink_splotch_llm_cocreative_game_design.md: https://arxiv.org/abs/2403.02454 same work; memory/shared_reads_candidates/20260715_ink_splotch_co_creative_game_design.md: https://arxiv.org/abs/2403.02454 same work; memory/shared_reads_candidates/20260717_ink_splotch_effect_co_creative_game_designer.md: https://arxiv.org/abs/2403.02454 same work and prior Slack provenance; memory/shared_reads_candidates/20260718_ink_splotch_effect_co_creative_game_designer.md: https://arxiv.org/abs/2403.02454 same work; reason:6件は同じ arXiv 2403.02454 を同じ比較設計で要約した重複候補であり 独立資料として残す差分がない。既投稿 provenance も代表候補に記録済みのため全 open sibling を duplicate として閉じる。"
 next_action: none
 stale_after: "2026-08-16"

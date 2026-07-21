@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: 2026-07-19T05:49:28+09:00
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md; https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
 next_action: none
 stale_after: "2026-08-18"

@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T20:05:54+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-b25b1c682afd7c00; terminal:memory/shared_reads_candidates/20260611_human_ai_collab_game_testing_vlm.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781148253840449; reason:同一 arXiv work は 2026-06-11 に投稿済みで、open siblings は同じ実験・結論を扱い独立候補として残す差分がない。"
 next_action: none
 stale_after: "2026-08-08"

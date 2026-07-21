@@ -10,7 +10,7 @@ gate_decision: duplicate_existing_post
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T04:05:30+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
 evidence: "group_handoff:gha-9be2b185156f996b; terminal:memory/shared_reads_candidates/20260611_open_world_mission_action_block_framework.md: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781148254466439; reason:posted-source index で同一 arXiv URL の既投稿を確認したため、open representative を再投稿対象外として閉じる"
 next_action: none
 stale_after: "2026-07-19"
@@ -28,6 +28,7 @@ suggested_post_outline:
   application_target: "STG や短編 prototype のリプレイログを spawn warning、micro dodge、resource pickup、rest beat などの block sequence に分解する。"
   pros_cons: "利点は pacing / variation を感想ではなく観察単位にできる点。欠点は open-world mission 由来の語彙を小規模ゲームへ移す際に過剰分類しやすい点。"
   verdict_pre: "部分採用。MAQV 全体ではなく、action block sequence と rhythm 可視化を採用する。"
+
 ---
 
 ## raw_excerpt

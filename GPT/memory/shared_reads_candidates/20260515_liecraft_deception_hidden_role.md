@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: postponed
 status: postponed
 last_reviewed_at: "2026-07-09T21:35:47+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260605_liecraft_hidden_role_llm_eval.md"
 stale_after: "2026-08-08"
 supersedes: []

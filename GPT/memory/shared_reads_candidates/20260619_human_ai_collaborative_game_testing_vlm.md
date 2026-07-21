@@ -10,7 +10,7 @@ gate_decision: duplicate_existing_post
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-20T20:05:54+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
 evidence: "group_handoff:gha-b25b1c682afd7c00; terminal:memory/shared_reads_candidates/20260611_human_ai_collab_game_testing_vlm.md: posted:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1781148253840449; reason:同一 arXiv work は 2026-06-11 に投稿済みで、open siblings は同じ実験・結論を扱い独立候補として残す差分がない。"
 next_action: none
 stale_after: "2026-07-19"
@@ -28,6 +28,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の playable diff 検証で、スクリーンショット目視、VLM 一次レビュー、deterministic evidence を組み合わせる。"
   pros_cons: "利点は見落とし削減とレビュー観点の標準化。欠点は stylized visual や subtle defect で誤誘導が起きるため採否ログが必須。"
   verdict_pre: "部分採用。VLM 判断そのものではなく、defect taxonomy と検証ログ設計を採用する。"
+
 ---
 
 ## raw_excerpt

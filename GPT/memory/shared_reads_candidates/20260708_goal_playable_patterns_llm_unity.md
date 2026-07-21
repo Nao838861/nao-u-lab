@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-08T15:48:40+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260515_goal_playable_patterns_llm.md; memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260528_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260530_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260605_goal_playable_patterns_llm_synthesis.md; memory/shared_reads_candidates/20260618_goal_playable_patterns_llm_executable_synthesis.md; memory/shared_reads_candidates/20260625_goal_playable_patterns_llm_unity.md"
 next_action: none
 stale_after: "2026-08-07"

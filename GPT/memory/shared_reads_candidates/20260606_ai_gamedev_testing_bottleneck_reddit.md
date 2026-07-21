@@ -10,7 +10,8 @@ gate_decision: postpone
 status: failed
 candidate_status: failed
 last_reviewed_at: "2026-07-19T17:06:19+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-351db9a4ed164993; terminal:memory/shared_reads_candidates/20260607_ai_gamedev_testing_bottleneck_reddit.md: failed; same URL; evidence=gate_decision:fail; reason:同一 Reddit URL の terminal sibling が手法・評価設計・再現可能な結論不足で failed。代表にも追加証拠がなく、CoopEval 水準へ到達しないため閉じる。"
 next_action: none
 stale_after: "2026-07-06"

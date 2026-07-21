@@ -10,7 +10,8 @@ gate_decision: postpone
 status: postponed
 candidate_status: postponed
 last_reviewed_at: "2026-07-19T03:34:54+09:00"
-last_decision: postponed_duplicate
+last_decision: postponed
+duplicate_reason: postponed_duplicate
 evidence: "duplicate of posted candidates: memory/shared_reads_candidates/20260530_mimic_py_personality_driven_game_testing.md (https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780105434627089)"
 next_action: none
 stale_after: "2026-08-18"

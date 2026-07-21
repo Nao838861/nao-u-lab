@@ -10,7 +10,8 @@ gate_decision: postpone
 candidate_status: failed
 status: failed
 last_reviewed_at: "2026-07-21T08:51:35+09:00"
-last_decision: failed_duplicate_of_terminal_sibling
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
 evidence: "group_handoff:gha-8eaea70f6c52cf37; terminal:https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778541945571209: posted_source_work_match arXiv 2507.23701; reason:実 Slack 投稿が arXiv 2507.23701 と work identity 一致し Phase 3 再投稿対象ではないため重複候補を閉じる"
 stale_after: "2026-06-14"
 stale_review_state: reevaluate_in_phase2
