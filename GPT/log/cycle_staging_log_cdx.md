@@ -103,7 +103,46 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784600238-ba8cce1bd7
+    source_ts: "1784600238.488659"
+    title: "Star Trek: Voyager - Across the Unknown — 並行 event を人物・資源・確率・後続効果で結ぶ survival narrative"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。次の narrative／resource-management prototype で、event 分岐数ではなく actor／resource の拘束が後続 choice set と結果説明へ伝播したかを一度だけ観測できるため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_metric
+  decision_reason: "記事には main／side／random event、並行 mission の crew 拘束、visible odds、後続効果の具体例があるが、定量比較や新規 IP での検証はない。既存 probe は narrative graph、survival loop 周期、playable evidence、outcome／mechanism 分離を扱うものの、actor／resource lock から later choice set までを一行で追う観測は直接重ならない。"
+  change:
+    summary: "次の複数 event 系作業1件だけで、actor／resource 拘束、即時 state delta、後続 choice set／modifier、失敗説明を同じ行に残す shared_event_contention_trace metric を追加した。active probe は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  metric:
+    name: shared_event_contention_trace
+    scope: "next multi-event narrative, survival, crew/resource-management prototype or evaluation only"
+    fields:
+      - event_id
+      - locked_actor_or_resource
+      - visible_odds_or_condition
+      - player_or_agent_choice
+      - immediate_state_delta
+      - later_choice_set_or_modifier
+      - explanation_verdict
+    withdrawal_condition: "次の該当1件で既存 probe だけで同じ判断が残る、later effect が修正判断を変えない、並行 event／共有 resource が中核でない、または記録負荷が便益を上回る場合は再利用しない。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-21T11:22:12+09:00",
+  "updated_at": "2026-07-21T13:32:15+09:00",
   "reviewed_source_ts": [
     "1780878537.585419",
     "1784584531.120939",
@@ -449,7 +449,8 @@
     "1784324167.001349",
     "1784344254.477289",
     "1784344260.203569",
-    "1784358881.327349"
+    "1784358881.327349",
+    "1784600238.488659"
   ],
   "reviews": [
     {
@@ -11465,6 +11466,67 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存の poisoning・失敗段階・visual retrieval・同期 state trace・delayed-effect 評価との重複および高コスト gate の過剰一般化リスクによる reject 理由だけを更新した。probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-21T13:32:15+09:00",
+      "selected": {
+        "id": "sr-1784600238-ba8cce1bd7",
+        "source_ts": "1784600238.488659",
+        "title": "Star Trek: Voyager - Across the Unknown — 並行 event を人物・資源・確率・後続効果で結ぶ survival narrative",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・evaluation の5優先タグを持つ。次の narrative／resource-management prototype で、event 分岐数ではなく actor／resource の拘束が後続 choice set と結果説明へ伝播したかを一度だけ観測できるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で全必須閾値を満たす。shared-reads 本文は main／side／random event、並行 mission の crew 拘束、visible odds、Kes／Icheb の後続効果という具体例を持ち、5 event の micro network と固定 seed 評価へ変換できる。一方、完成作を遊んだ記者の構造分析であり、分岐規模、player 調査、完走率、確率調整の比較実験は示されず、新規 IP への転移も未検証なので evidence=2 とした。既存の narrative-graph probe は plot node と agency、survival-resource probe は loop 周期と plan interruption、narrative-playthrough probe は prose と playable evidence を扱うが、並行 event 間の actor／resource lock が immediate delta から later choice set／modifier へ伝播し、失敗を配分判断として説明できるかを同じ trace で直接確認しないため non_redundancy=2 とした。active probe、event schema、恒久ルールは増やさず、次の該当作業1件だけの metric に限定する。",
+      "existing_probes": [
+        "probe-20260619-guiding-not-railroading-narrative-graph",
+        "probe-20260714-survival-loop-period-collision",
+        "probe-20260610-narrative-playthrough-evidence",
+        "probe-20260708-causalgame-outcome-explanation-split"
+      ],
+      "metric": {
+        "name": "shared_event_contention_trace",
+        "scope": "next multi-event narrative, survival, crew/resource-management prototype or evaluation only",
+        "fields": [
+          "event_id",
+          "locked_actor_or_resource",
+          "visible_odds_or_condition",
+          "player_or_agent_choice",
+          "immediate_state_delta",
+          "later_choice_set_or_modifier",
+          "explanation_verdict"
+        ],
+        "verdict_labels": [
+          "contention_changed_choice",
+          "downstream_effect_observed",
+          "state_link_unused",
+          "random_accident",
+          "cause_not_explainable",
+          "not_applicable"
+        ],
+        "withdrawal_condition": "次の該当1件で既存4 probes だけで同じ修正判断が残る、later effect の記録が設計判断を変えない、並行 event／共有 actor・resource が中核でない、または trace 負荷が便益を上回る場合は再利用せず review 履歴だけ残す。5 event、三層 event、固有 crew 数を標準設計へ一般化しない。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "次の複数 event 系作業1件だけで、actor／resource 拘束、即時 state delta、後続 choice set／modifier、失敗説明を同じ行に残す可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
