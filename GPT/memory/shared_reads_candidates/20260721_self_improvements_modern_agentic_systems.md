@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.13104"
 collected_at: "2026-07-21T13:15:45.7380231+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, agent, self-improvement, memory, evaluation, strategic-reasoning]
+evaluated_at: "2026-07-21T13:19:04+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T13:19:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T13:19:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: |-
+  foundation model 更新と prompt / memory / tool / control logic の scaffold 更新を分ける分類が明確で、問題設定・中核概念・評価軸を抽出できる。
+  self-play、curriculum、reusable skill をゲーム agent の固定 budget 評価へ具体適用でき、CoopEval 水準の概要を構成可能なため pass とする。
+suggested_post_outline:
+  overview_angle: "自己改善を model の再学習だけに限定せず、可逆な scaffold 更新を含む update operator として捉える survey として整理する。"
+  analysis_axis: "更新対象、改善信号、可逆性、固定 budget 下の learning trajectory、transfer、overhead、regression を分離して読む。"
+  application_target: "ゲーム agent の self-play、playtest memory、curriculum logic、再利用 skill を次 cycle へ持ち越す評価・記録設計。"
+  pros_cons: "共通語彙と観測軸を得られる一方、survey の分類は個別ゲームの面白さや更新安全性を直接保証せず、実装時の小規模 probe が必要。"
+  verdict_pre: "部分採用。model 更新より可逆な scaffold 更新を先に試し、固定 budget の学習曲線と regression を併記する。"
 ---
 
 ## raw_excerpt

@@ -4,21 +4,20 @@ url: "https://arxiv.org/html/2606.02832v1"
 collected_at: "2026-06-10T03:29:31+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, enemy-design, collision, morphology, action-game]
-evaluated_at: "2026-06-10T03:32:09+09:00"
+evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-10T03:32:09+09:00"
+last_reviewed_at: "2026-07-21T13:19:04+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-10T03:32:09+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-21T13:19:04+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-10"
+stale_after: "2026-08-20"
 supersedes: []
 gate_reason: >-
-  敵の見た目を collision / body plan / player interaction から発想する着眼は有用だが、
-  候補本文だけでは generator の表現、探索条件、評価方法、artist output との比較結果が薄い。
-  現状では具体的なゲーム制作適用は書ける一方、CoopEval 水準の概要には追加確認が必要。
+  敵の見た目を collision / body plan / player interaction から発想する着眼は 2D action / shmup に直結する。
+  ただし generator 3 手法の差分、探索条件、評価指標、artist output との比較結果が薄く、CoopEval 水準の概要には追加確認が必要。
 ---
 
 ## raw_excerpt

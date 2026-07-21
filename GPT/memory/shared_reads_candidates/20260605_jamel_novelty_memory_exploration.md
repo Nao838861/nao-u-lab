@@ -4,18 +4,20 @@ url: "https://arxiv.org/abs/2606.01528"
 collected_at: "2026-06-05T01:35:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent-memory, exploration, game-testing, novelty, llm-agent]
-evaluated_at: "2026-06-05T01:45:00+09:00"
+evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 status: postponed
 candidate_status: postponed
-last_reviewed_at: "2026-06-05T01:45:00+09:00"
+last_reviewed_at: "2026-07-21T13:19:04+09:00"
 last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-05T01:45:00+09:00"
+evidence: "gate_decision:postpone; evaluated_at:2026-07-21T13:19:04+09:00"
 next_action: revise_or_research
-stale_after: "2026-07-05"
+stale_after: "2026-08-20"
 supersedes: []
-gate_reason: "novelty signal と memory training を結びつける着想は game-testing bot に有用。ただし candidate は abstract 要約中心で、JAMEL の訓練ループ・評価環境・既存手法との差分を 4000 字品質で説明するには本文確認が必要。今回は Phase 3 投稿候補にはしない。"
+gate_reason: |-
+  novelty signal と memory training を結びつける着想は game-testing bot に有用。
+  ただし現 candidate は abstract 要約中心で、訓練ループ・評価環境・baseline 差分を CoopEval 水準で説明できないため postpone とする。
 ---
 
 ## raw_excerpt

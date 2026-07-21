@@ -4,18 +4,26 @@ url: "https://arxiv.org/html/2601.23206v2"
 collected_at: "2026-06-14T19:59:28.8718985+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [narrative-ai, small-language-models, npc, dynamic-content, evaluation]
-evaluated_at: "2026-06-14T20:18:00+09:00"
+evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-14T20:18:00+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-14T20:18:00+09:00"
-next_action: revise_or_research
-stale_after: "2026-07-14"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T13:19:04+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T13:19:04+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
 supersedes: []
-gate_reason: "狭い責務の fine-tuned SLM、量子化、retry-until-success という着想はゲーム内動的テキスト生成に有用。ただし現 candidate だけでは評価の中身と一般化可能な制作判断が薄く、DefameLM という PoC から自分達の制作サイクルへ接続するには追加確認が必要。"
+gate_reason: |-
+  狭い責務の fine-tuned SLM、制約形式、16/8/4-bit 比較、retry-until-success、5 秒予算まで具体化され、問題設定・手法・評価・限界を一続きで説明できる。
+  NPC 台詞や短い演出文のローカル生成へ直接適用でき、CoopEval 水準の概要を構成可能なため pass とする。
+suggested_post_outline:
+  overview_angle: "巨大な汎用 LLM ではなく、責務を狭く切った SLM と再試行でゲーム内動的生成を成立させる PoC として整理する。"
+  analysis_axis: "制約付き format、task-specific fine-tuning、16/8/4-bit 量子化、judge/retry、5 秒以内の latency budget を品質と運用コストの両面から分析する。"
+  application_target: "NPC 台詞、短いクエスト反応、戦闘前後の演出文を consumer hardware 上で生成する小規模プロトタイプの content pipeline。"
+  pros_cons: "低遅延・ローカル実行・責務境界の明確さが利点。タスク別データ整備、汎用性の低さ、local runtime quality assessment の未解決が弱点。"
+  verdict_pre: "部分採用。モデル規模より先に生成面を狭く定義し、制約検査と retry budget を設計する考え方を採用する。"
 ---
 
 ## raw_excerpt
