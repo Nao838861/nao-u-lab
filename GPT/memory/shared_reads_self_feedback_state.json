@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T00:40:37+09:00",
+  "updated_at": "2026-07-22T02:58:38+09:00",
   "reviewed_source_ts": [
+    "1781127468.122429",
     "1784641228.892699",
     "1781008433.930809",
     "1780644277.510099",
@@ -458,6 +459,45 @@
     "1780427580.664779"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-22T02:58:38+09:00",
+      "selected": {
+        "id": "sr-1781127468-2dc35ddd13",
+        "source_ts": "1781127468.122429",
+        "title": "Shutshimi 10秒バースト分析の後半断片",
+        "reason": "最新の未レビュー score 14 atom だが、同じ Slack 投稿の完全版として既にレビュー済みの sr-1781127468-5cdab9c4b4（source_ts 1781127468.093899）の約29ms後に取り込まれた後半断片である。新しい知見として反映する前に、重複と断片性を確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 1,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "actionability が2未満、合計が14未満で採用条件を満たさない。atom は Shutshimi 記事分析の d3〜d5 と判定部分だけを含む途中断片で、原典 URL、問題設定、手法の中核、評価の全体を単独では保持していない。同一投稿の先頭側 atom は 2026-07-18 に既にレビュー済みで、10秒という固定値を新規 probe にすると既存の timescale／loop／tempo probes と重複するため、行動変更には使わない。",
+      "existing_review": {
+        "source_ts": "1781127468.093899",
+        "decision": "reject",
+        "reviewed_at": "2026-07-18T01:05:10+09:00"
+      },
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と断片重複による reject 理由だけを記録した。probe、評価表、directive、恒久ルール、lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-22T00:40:37+09:00",
       "selected": {

@@ -55,7 +55,36 @@ post_verification: ok
 - 最終判定: 投稿。操作理解・純粋な難度・熟達性を分離し、評価順位、cue変更、jam工程、物語露出の失敗条件まで記事固有に分析した。必須6項目、4,291字、禁止表現なし、URL末尾を確認し、1回の `chat.postMessage` で投稿した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781127468-2dc35ddd13
+    source_ts: "1781127468.122429"
+    title: Shutshimi 10秒バースト分析の後半断片
+    reason: 最新の未レビュー score 14 atom だが、約29ms前の同一 Slack 投稿 atom が既にレビュー済みであり、反映前に重複と断片性を確認するため選んだ。
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: actionability が2未満、合計が14未満。d3〜d5と判定だけの途中断片で原典・問題設定・手法・評価の全体を欠き、同一投稿の先頭側 atom は2026-07-18にレビュー済み。10秒固定値は既存 timescale／loop／tempo probes とも重複するため反映しない。
+  change:
+    summary: reviewed_source_ts と断片重複による reject 理由だけを記録した。probe、評価表、directive、恒久ルール、lease は追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- 既存 pending lease `probe-20260625-amvl-retention-utility-lifecycle` は Phase 4a 向けに維持し、本レビューから lifecycle ledger への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
