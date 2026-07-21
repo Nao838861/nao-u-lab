@@ -112,4 +112,4 @@ assert.deepEqual(
   'UI操作150日後と入力ジャーナル再生後のエンジン状態が完全一致する',
 );
 
-console.log(`ok - 段17: v003差分ゼロ、UI全8操作${DAYS}日後とjournal再生が完全一致`);
+console.log(`ok - 全章受け入れ: v003・engine差分ゼロ、UI全8操作${DAYS}日後とjournal再生が完全一致`);

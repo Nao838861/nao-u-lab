@@ -7,7 +7,11 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import { BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS } from '../src/config.js';
-import { buildBlankCity, createEngineController } from '../src/engine_bridge.js';
+import {
+  E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
+  buildBlankCity, createEngineController,
+} from '../src/engine_bridge.js';
+import { VERSION } from '../src/config.js';
 import {
   OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
 } from '../src/event_view.js';
@@ -972,6 +976,13 @@ test('チュートリアル段14: 目標を無視した飢餓・破産を実数�
   const replay = replayTutorialJournal(journal, finalModel.tick);
   assert.deepEqual(replay.readModel(), finalModel,
     '失敗経路もディレクターなしのjournal再生と完全一致する');
+  tutorialThroughPlay.failure = {
+    model: finalModel,
+    journal,
+    tutorialState: director.readState(),
+    starvationId: starvation.id,
+    bankruptcyId: bankruptcy.id,
+  };
 });
 
 test('チュートリアル段15: 第一章・第二章の完走journal 2本をリリースsmokeに常設する', () => {
@@ -1488,7 +1499,8 @@ test('チュートリアル段21: 三変換職を90日保ち、実Lv上昇を建
   assert.ok(closing.facts.survival.elapsedDays >= CONVERSION_SURVIVAL_DAYS);
   assert.equal(closing.facts.levelUp.message, levelLetter.facts.message);
   assert.equal(director.readState().completedGoals.includes('close-fifth-chapter'), true);
-  assert.equal(director.isComplete(), true);
+  assert.equal(director.isComplete(), false);
+  assert.equal(director.currentObjective().id, 'graduate-governor');
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
@@ -1513,6 +1525,173 @@ test('チュートリアル段21: 三変換職を90日保ち、実Lv上昇を建
     + ` ${(tutorialThroughPlay.fifthChapterStart.rise.currentPrice).toFixed(3)}`
     + ` / 三職day${survival.startDay}→${survival.currentDay}`
     + ` / ${levelLetter.facts.message}@day${levelLetter.facts.day}`);
+});
+
+test('チュートリアル段22: 卒業書状へ町の実測と安定監査の参照帯を並記する', () => {
+  const { controller, director, observe } = tutorialThroughPlay;
+  const modelBefore = controller.readModel();
+  const journalBefore = controller.inputJournal();
+  observe();
+
+  const graduation = director.letters().find(letter => letter.id === 'tutorial-graduation');
+  assert.ok(graduation);
+  const facts = graduation.facts;
+  const foodGoods = ['fish', 'veg', 'wheat', 'pres', 'pick', 'meat'];
+  const expectedImportEma = foodGoods.reduce((total, goods) => (
+    total + (modelBefore.flowEma[goods]?.imp ?? 0)
+  ), 0);
+  const expectedProductionEma = foodGoods.reduce((total, goods) => (
+    total + (modelBefore.flowEma[goods]?.prod ?? 0)
+  ), 0);
+  const expectedIncome = modelBefore.companyLedger
+    .filter(row => row.amount > 0).reduce((total, row) => total + row.amount, 0);
+  const expectedExpense = modelBefore.companyLedger
+    .filter(row => row.amount < 0).reduce((total, row) => total - row.amount, 0);
+  assert.equal(facts.population, modelBefore.population);
+  assert.equal(facts.survivingJobCount, new Set(modelBefore.households.map(row => row.job)).size);
+  assert.equal(facts.foodImportEma, expectedImportEma);
+  assert.equal(facts.foodProductionEma, expectedProductionEma);
+  assert.equal(facts.companyIncome, expectedIncome);
+  assert.equal(facts.companyExpense, expectedExpense);
+  assert.equal(facts.companyNet, expectedIncome - expectedExpense);
+  assert.equal(facts.companyMoney, modelBefore.companyMoney);
+  assert.equal(facts.companyBankruptcyDay, modelBefore.companyBankruptcyDay);
+  assert.deepEqual(facts.reference.populationBand, [...E_STABLE_POPULATION_BAND]);
+  assert.deepEqual(facts.reference.stableJobs, [...E_STABLE_JOBS]);
+  assert.equal(facts.reference.years, E_STABLE_YEARS);
+  assert.equal(facts.reference.foodImportEmaMax, FOOD_IMPORT_EMA_TARGET);
+  assert.equal(facts.stableJobsRequired, E_STABLE_JOBS.length);
+  assert.match(graduation.title, /あとは総督の思うままに/);
+  assert.match(graduation.body, /合否ではなく行く先を測る物差し/);
+  assert.match(graduation.body, /テスト配置で観察/);
+  assert.match(graduation.body, /見本の町/);
+  assert.equal(director.isComplete(), true);
+  assert.equal(director.readState().completedGoals.includes('graduate-governor'), true);
+  assert.deepEqual(controller.readModel(), modelBefore, '卒業書状は世界を変更しない');
+  assert.deepEqual(controller.inputJournal(), journalBefore, '卒業書状は入力を追加しない');
+
+  const tutorialSave = JSON.parse(JSON.stringify(director.exportSave(journalBefore)));
+  const restored = createTutorialDirector({ state: tutorialSave.tutorialState });
+  assert.equal(restored.isComplete(), true);
+  assert.ok(restored.letters().some(letter => letter.id === 'tutorial-graduation'));
+  const letterCount = restored.letters().length;
+  restored.observe(modelBefore, []);
+  assert.equal(restored.letters().length, letterCount, '卒業書状は再発行されない');
+
+  const guided = replayTutorialJournal(journalBefore, modelBefore.tick);
+  const sandbox = replayTutorialJournal(journalBefore, modelBefore.tick);
+  const target = (modelBefore.stockTargets.tools ?? 0) + 1;
+  const operation = { type: 'set_stock_target', goods: 'tools', qty: target };
+  assert.deepEqual(guided.operate(operation), sandbox.operate(operation));
+  restored.observe(guided.readModel(), []);
+  guided.advanceTicks(30);
+  sandbox.advanceTicks(30);
+  restored.observe(guided.readModel(), []);
+  assert.deepEqual(guided.readModel(), sandbox.readModel(),
+    '卒業後もディレクターを重ねた同一島はサンドボックスと同じ規則で進む');
+  assert.deepEqual(guided.inputJournal(), sandbox.inputJournal());
+
+  tutorialThroughPlay.graduation = {
+    model: modelBefore,
+    journal: journalBefore,
+    tutorialState: director.readState(),
+    save: tutorialSave,
+    facts,
+  };
+  console.log(`  段22卒業実測 人口${facts.population} / 存続${facts.survivingJobCount}職`
+    + ` / 中核${facts.stableJobsPresent}/${facts.stableJobsRequired}`
+    + ` / 食料輸入EMA ${facts.foodImportEma.toFixed(3)}`
+    + ` / 会社収支 ${facts.companyNet >= 0 ? '+' : ''}${facts.companyNet.toFixed(1)}`);
+});
+
+function replayRawJournalWithDirector(fixture) {
+  const guided = createEngineApi(buildBlankCity(11));
+  const plain = createEngineApi(buildBlankCity(11));
+  const director = createTutorialDirector();
+  let tick = 0;
+  let sequence = 0;
+  const observe = () => {
+    const events = guided.events({ afterSequence: sequence });
+    if (events.length) sequence = events.at(-1).sequence;
+    director.observe(snapshotToViewModel(guided.snapshot({ scope: 'full' })), events);
+  };
+  const advanceTo = target => {
+    while (tick < target) {
+      const step = Math.min(30, target - tick);
+      guided.advanceTicks(step);
+      plain.advanceTicks(step);
+      tick += step;
+      observe();
+    }
+  };
+  observe();
+  for (const row of fixture.journal) {
+    advanceTo(row.tick);
+    assert.deepEqual(guided.applyOperation(row.op), plain.applyOperation(row.op));
+    observe();
+  }
+  advanceTo(fixture.model.tick);
+  for (let pass = 0; pass < 3; pass += 1) observe();
+  return { guided, plain, director };
+}
+
+test('チュートリアル段23: 全章通しと失敗経路でディレクター非干渉を再監査する', () => {
+  const full = replayRawJournalWithDirector(tutorialThroughPlay.graduation);
+  assert.deepEqual(full.guided.snapshot(), full.plain.snapshot(),
+    '全章journalを通した生のengine snapshotがディレクター有無で完全一致する');
+  assert.deepEqual(full.guided.inputJournal(), full.plain.inputJournal());
+  assert.deepEqual(
+    snapshotToViewModel(full.guided.snapshot({ scope: 'full' })),
+    tutorialThroughPlay.graduation.model,
+  );
+  assert.equal(full.director.readState().observedTick, tutorialThroughPlay.graduation.model.tick,
+    '間引いた日次観測でも全章journalの最終tickまで購読する');
+
+  const failed = replayRawJournalWithDirector(tutorialThroughPlay.failure);
+  assert.deepEqual(failed.guided.snapshot(), failed.plain.snapshot());
+  assert.deepEqual(failed.guided.inputJournal(), failed.plain.inputJournal());
+  assert.deepEqual(
+    snapshotToViewModel(failed.guided.snapshot({ scope: 'full' })),
+    tutorialThroughPlay.failure.model,
+  );
+  const failedState = failed.director.readState();
+  assert.ok(failedState.letters.some(letter => letter.id === tutorialThroughPlay.failure.starvationId));
+  assert.ok(failedState.letters.some(letter => letter.id === tutorialThroughPlay.failure.bankruptcyId));
+  assert.ok(failedState.completedGoals.includes('first-road-and-logger'),
+    '飢餓・破産後も道路操作で目標列を再開できる');
+  const directorSource = fs.readFileSync(new URL('../src/tutorial_director.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(directorSource, /applyOperation|advanceTicks|\.operate\(/);
+});
+
+test('チュートリアル段24: 全章完走journalと卒業セーブを恒久smokeにする', () => {
+  const chapters = [
+    ['第一章', tutorialThroughPlay.firstChapter],
+    ['第二章', tutorialThroughPlay.secondChapter],
+    ['第三章', tutorialThroughPlay.thirdChapter],
+    ['第四章', tutorialThroughPlay.fourthChapter],
+    ['第五章', tutorialThroughPlay.fifthChapter],
+    ['終章', tutorialThroughPlay.graduation],
+  ];
+  let previousTick = -1;
+  let previousJournalLength = -1;
+  for (const [chapter, fixture] of chapters) {
+    assert.ok(fixture.model.tick >= previousTick, `${chapter}は前章と同じ世界の続きである`);
+    assert.ok(fixture.journal.length >= previousJournalLength, `${chapter}のjournalは前章を包含する`);
+    const replay = replayTutorialJournal(fixture.journal, fixture.model.tick);
+    assert.deepEqual(replay.readModel(), fixture.model, `${chapter}完走journalの世界が完全一致する`);
+    assert.deepEqual(replay.inputJournal(), fixture.journal, `${chapter}完走journal自体も同一である`);
+    previousTick = fixture.model.tick;
+    previousJournalLength = fixture.journal.length;
+  }
+  const restored = createTutorialDirector({
+    state: JSON.parse(JSON.stringify(tutorialThroughPlay.graduation.save)).tutorialState,
+  });
+  assert.equal(restored.isComplete(), true);
+  assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
+  assert.equal(VERSION, 'v004.3.0-tutorial-complete');
+  const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
+  assert.match(readme, /見本の町/);
 });
 
 test('チュートリアル段20〜21実測: 3シードで相場検出・原価連鎖・90日存続・Lv上昇が成立する', () => {

@@ -17,7 +17,7 @@ export const START_MODES = Object.freeze({
     id: 'test',
     label: 'テスト配置で観察',
     shortLabel: '安定テスト都市',
-    description: 'これまでと同じ、人口・道路・産業が動いている検証済み都市です。',
+    description: 'これまでと同じ、人口・道路・産業が動く検証済みの「見本の町」です。',
     blank: false,
   }),
 });

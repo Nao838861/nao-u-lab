@@ -464,7 +464,7 @@ function renderTutorial() {
   const objective = tutorialDirector?.currentObjective() ?? null;
   const objectivePanel = $('#tutorial-objective');
   const letterButton = $('#open-tutorial-letters');
-  objectivePanel.hidden = !objective;
+  objectivePanel.hidden = !objective || Boolean(tutorialDirector?.isComplete());
   objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
   letterButton.hidden = !available || Boolean(state?.skipped);
   if (state?.skipped) $('#start-mode-label').textContent = '自由プレイ（案内終了）';

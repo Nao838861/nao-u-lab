@@ -1,3 +1,9 @@
+import {
+  E_STABLE_JOBS,
+  E_STABLE_POPULATION_BAND,
+  E_STABLE_YEARS,
+} from './engine_bridge.js';
+
 function tileKind(model, x, y) {
   return model.terrain[y]?.[x]?.kind ?? null;
 }
@@ -516,6 +522,56 @@ function noVacancyReport(model, events) {
     targetVacancyCount: targetJob
       ? vacant.filter(building => building.type === targetJob).length
       : vacant.length,
+  };
+}
+
+function tutorialGraduationFacts(model) {
+  const jobCounts = Object.fromEntries([...new Set(model.households.map(row => row.job))]
+    .sort()
+    .map(job => [job, model.households.filter(row => row.job === job).length]));
+  const stableJobCounts = Object.fromEntries(E_STABLE_JOBS.map(job => [
+    job,
+    model.households.filter(row => row.job === job).length,
+  ]));
+  const stableJobsPresent = Object.values(stableJobCounts).filter(count => count > 0).length;
+  const food = foodFlowMetrics(model);
+  const companyIncome = model.companyLedger
+    .filter(row => row.amount > 0)
+    .reduce((total, row) => total + row.amount, 0);
+  const companyExpense = model.companyLedger
+    .filter(row => row.amount < 0)
+    .reduce((total, row) => total - row.amount, 0);
+  const companyNet = companyIncome - companyExpense;
+  const populationBand = [...E_STABLE_POPULATION_BAND];
+  return {
+    day: model.day,
+    population: model.population,
+    survivingJobCount: Object.keys(jobCounts).length,
+    jobCounts,
+    stableJobCounts,
+    stableJobsPresent,
+    stableJobsRequired: E_STABLE_JOBS.length,
+    foodImportEma: food.importEma,
+    foodProductionEma: food.productionEma,
+    companyIncome,
+    companyExpense,
+    companyNet,
+    companyMoney: model.companyMoney,
+    companyBankruptcyDay: model.companyBankruptcyDay,
+    reference: {
+      years: E_STABLE_YEARS,
+      populationBand,
+      stableJobs: [...E_STABLE_JOBS],
+      foodImportEmaMax: FOOD_IMPORT_EMA_TARGET,
+      companyRequiresNoBankruptcy: true,
+    },
+    comparison: {
+      populationInBand: model.population >= populationBand[0]
+        && model.population <= populationBand[1],
+      allStableJobsPresent: stableJobsPresent === E_STABLE_JOBS.length,
+      foodImportWithinTarget: food.importEma < FOOD_IMPORT_EMA_TARGET,
+      companySolvent: model.companyBankruptcyDay === null,
+    },
   };
 }
 
@@ -1255,6 +1311,22 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete: issued,
         progress: { done: Number(issued), total: 1 },
         detail: issued ? '90日の存続と暮らしの成長報告が届きました' : '第五章の報告をまとめています',
+        evidence: { issued },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'graduate-governor',
+    chapter: '終章・総督の島',
+    title: '卒業書状を受け取る',
+    evaluate({ state }) {
+      const issued = Boolean(state?.letters?.some(letter => letter.id === 'tutorial-graduation'));
+      return {
+        complete: issued,
+        progress: { done: Number(issued), total: 1 },
+        detail: issued
+          ? '教程の目標を閉じ、同じ島で自由プレイが始まりました'
+          : '第五章までの実測を卒業書状へまとめています',
         evidence: { issued },
       };
     },
@@ -2238,6 +2310,32 @@ export const TUTORIAL_LETTERS = Object.freeze([
         body: [
           `木工房・炭焼・製塩所は${survival.startDay}日目から${survival.currentDay}日目まで、連続${survival.elapsedDays}日存続しました。丸太は道具と木炭へ、木炭は塩へ渡り、三つの品の生産が続いています。`,
           `${levelUp.day}日目には${levelUp.job}#${levelUp.householdId}がLv${levelUp.level}へ上がり、建物${levelUp.buildingId}の外観にも反映されました。${vacancyBody}`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'tutorial-graduation',
+    source: 'snapshot',
+    when({ state }) {
+      return goalCompleted(state, 'close-fifth-chapter');
+    },
+    render({ model }) {
+      const facts = tutorialGraduationFacts(model);
+      const netSign = facts.companyNet >= 0 ? '+' : '';
+      const bankruptcy = facts.companyBankruptcyDay === null
+        ? '破産なし'
+        : `${facts.companyBankruptcyDay}日目に破産記録あり`;
+      return {
+        kicker: '終章・総督の島',
+        title: 'あとは総督の思うままに',
+        summary: `人口${facts.population}人・存続${facts.survivingJobCount}職・食料輸入EMA ${facts.foodImportEma.toFixed(3)}・会社収支 ${netSign}${facts.companyNet.toFixed(1)}`,
+        facts,
+        body: [
+          `${facts.day}日目。総督が育てた町は人口${facts.population}人、現に世帯が働く職は${facts.survivingJobCount}種です。安定監査の中核${facts.stableJobsRequired}職のうち${facts.stableJobsPresent}職が存続しています。食料輸入EMAは${facts.foodImportEma.toFixed(3)}、島内食料生産EMAは${facts.foodProductionEma.toFixed(2)}です。`,
+          `会社の実台帳は収入${facts.companyIncome.toFixed(1)}、支出${facts.companyExpense.toFixed(1)}、差引${netSign}${facts.companyNet.toFixed(1)}、残高${facts.companyMoney.toFixed(1)}、${bankruptcy}。見本となるE-Stableは${facts.reference.years}年の各年に人口${facts.reference.populationBand[0]}〜${facts.reference.populationBand[1]}人、中核${facts.stableJobsRequired}職を各1以上、破産なしを確かめる参照帯です。食料自給の節目は、この島で較正した輸入EMA ${facts.reference.foodImportEmaMax.toFixed(2)}未満です。町の年齢も総督の選択も違うため、これは合否ではなく行く先を測る物差しとしてお読みください。`,
+          '開始メニューの「テスト配置で観察」は、同じエンジンでこの安定帯を通った「見本の町」です。見比べることも、ここから別の産業を伸ばすこともできます。教程の目標はここで閉じますが、島も帳簿も作り直しません。エレナは重要な出来事だけをお届けします——あとは総督の思うままに。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

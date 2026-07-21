@@ -279,6 +279,7 @@ export function snapshotToViewModel(snapshot) {
     tick: snapshot.tick,
     seed: snapshot.seed,
     companyMoney: snapshot.economy.company.money,
+    companyBankruptcyDay: snapshot.economy.goDay ?? null,
     population: households.reduce((total, household) => total + household.members, 0),
     width: snapshot.physical.width,
     height: snapshot.physical.height,

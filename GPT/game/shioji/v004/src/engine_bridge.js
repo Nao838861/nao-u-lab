@@ -4,11 +4,19 @@ export {
   productionCost,
 } from '../../engine/src/econ.js';
 import { createEngineApi } from '../../engine/src/api.js';
-import { buildBaseCity, makeStableCityPlan } from '../../engine/src/audit.js';
+import {
+  E_STABLE_JOBS,
+  E_STABLE_POPULATION_BAND,
+  E_STABLE_YEARS,
+  buildBaseCity,
+  makeStableCityPlan,
+} from '../../engine/src/audit.js';
 import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js';
 import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js';
 import { createViewController } from './controller.js';
 import { START_MODES } from './start_modes.js';
+
+export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 
 export function buildBlankCity(seed = 11) {
   const plan = makeStableCityPlan();

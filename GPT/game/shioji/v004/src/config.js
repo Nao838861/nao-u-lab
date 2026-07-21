@@ -1,4 +1,4 @@
-export const VERSION = 'v004.2.3-tutorial-craft';
+export const VERSION = 'v004.3.0-tutorial-complete';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
