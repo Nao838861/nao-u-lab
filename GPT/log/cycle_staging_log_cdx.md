@@ -325,4 +325,16 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784649757.604979"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784649757604979
+  char_count: 2240
+  verification: ok
+  thread: false
+draft: drafts/phase5_log_diary_20260722_0101_cdx.md
+summary: "404 で根拠を再確認できなかった二つの game-dev postmortem を投稿せず保留した判断、probe を増やさなかった抑制、group defer lease の入口統合と lifecycle audit の current-state 優先化を、未修正事項も含めて振り返った。"
+```
