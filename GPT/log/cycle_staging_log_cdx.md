@@ -189,7 +189,92 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260722-01
+    problem_restatement: "candidate の stale 時刻と group 単位の defer lease が別経路で評価されるため、group を retry_after まで保留しても stale triage が同じ group を即座に再提示する。永続 inbox を判断の正本にした契約が、再生成 queue の入口まで貫通していない。"
+    alternatives:
+      - name: "案A: stale triage 生成時に live group lease を合成する"
+        sketch: "stale triage builder が open-group sidecar と group handoff inbox を読み、同一 group の pending または期限前 deferred lease を候補選定前に除外する。defer は retry_after が到来した時、または記録時から group membership が変化した時に自動で再登場させる。"
+        pros:
+          - "Phase 4a が読む queue 自体から defer 中の group が消え、candidate 単位 handoff による迂回を入口で止められる。"
+          - "既存の inbox を正本として再利用し、新しい永続状態を増やさない。"
+          - "期限到来と membership 変化では再提示されるため、永久 suppression を避けられる。"
+        cons:
+          - "再生成可能 sidecar が inbox の operational state と as_of 時刻に依存する。"
+          - "group membership fingerprint の比較を stale triage 側でも共有する必要がある。"
+        migration_cost: medium
+      - name: "案B: Phase 4a の staging 選定時だけ除外する"
+        sketch: "stale triage queue は現状のまま残し、Phase 4a が上位5件を引用する直前に inbox の pending/deferred group を手動または prompt 契約で飛ばす。"
+        pros:
+          - "既存 builder と sidecar schema を変更しない。"
+          - "導入範囲が小さい。"
+        cons:
+          - "queue 先頭が実質 non-actionable のままで、各 consumer が同じ除外規則を再実装する。"
+          - "今回の explicit_keep のような手作業が繰り返され、経路追加時に再発しやすい。"
+        migration_cost: low
+      - name: "案C: defer 時に sibling の stale_after を retry_after へ書き換える"
+        sketch: "group defer を解決する際、全 open sibling の candidate frontmatter にある stale_after を retry_after 相当へ更新し、candidate 単位 queue から自然に外す。"
+        pros:
+          - "既存 stale triage builder を変更せず抑止できる。"
+          - "candidate 単体を見ても次回確認時刻が分かる。"
+        cons:
+          - "group 判断が複数 candidate 本体へ複製され、lease 変更や sibling 増減で不整合になる。"
+          - "stale_after の意味が candidate review 時刻と group defer 時刻で混在する。"
+        migration_cost: medium
+    recommended: "案A: stale triage 生成時に live group lease を合成する"
+    recommended_reason: "問題はデータ不足ではなく、既にある inbox の lease が stale triage 入力へ届かないことにある。案Aは正本を増やさず最も上流で迂回を閉じる。誤 suppression の失敗コストを抑えるため、group_key 一致だけでなく membership fingerprint 一致を条件にし、期限到来・構成変化では fail-open で再提示する。案Bは運用負債を残し、案Cは派生判断を candidate 正本へ複製する距離が大きい。"
+    decision: introduce
+    decision_reason: "再現条件と正本が特定でき、既存 lease contract の局所的な延長で解決できる。Phase 2 budget の反復消費を直ちに止める価値が高く、4c の境界テストも明確である。"
+    outline_for_4c:
+      - "stale triage builder に handoff inbox と as_of を入力する lease-aware filtering を追加し、非 group candidate は従来通り扱う。"
+      - "pending、期限前 deferred、retry 到来、membership 変化、無関係 group の各境界をテストする。"
+      - "Phase 4a の契約を、stale triage queue は live lease 適用済みであり group defer を candidate 単位で再投入しない、という記述へ更新する。"
+      - "sidecar を再生成し、今回の JAMEL group が retry_after 前は消え、他の actionable candidate の順序が繰り上がることを検証する。"
+
+  - issue_id: ISS-4A-20260722-02
+    problem_restatement: "backfill 用に過去の gate_decision から状態を補う推論と、既に後続判断を持つ candidate の現在状態を監査する推論が共用されている。そのため正常な postpone から failed/posted への lifecycle 遷移が conflict と誤認され、fix 操作は古い gate 状態への巻き戻しになりうる。"
+    alternatives:
+      - name: "案A: missing-field backfill と current-state audit の優先規則を分離する"
+        sketch: "gate_decision は lifecycle 項目が欠ける時だけ初期値推論に使う。既存項目の監査は status と candidate_status の一致、現在の last_decision/evidence/next_action、posted/phase3 block など現状態の証拠を基準にし、gate との差は履歴上の transition として非 conflict にする。"
+        pros:
+          - "terminal closure を旧 gate へ戻さず、既存 frontmatter の意味を保てる。"
+          - "新 schema や全 candidate migration を要求せず、監査の false-positive を直接減らせる。"
+          - "status と candidate_status の不一致など、本当に修復すべき矛盾は引き続き検出できる。"
+        cons:
+          - "last_decision と evidence の妥当性を判定する明示的な優先表が必要になる。"
+          - "古い candidate で現在状態の証拠が部分的な場合は needs_review へ fail-closed する設計が要る。"
+        migration_cost: medium
+      - name: "案B: 後続判断のたび gate_decision も現在状態へ同期する"
+        sketch: "duplicate closure や投稿時に gate_decision を fail/pass へ上書きし、既存 audit の単一推論規則と一致させる。"
+        pros:
+          - "audit 実装の変更が小さい。"
+          - "表面上の status/gate 不一致がなくなる。"
+        cons:
+          - "gate_decision が当初の品質判定という履歴を失い、後続 lifecycle action と意味が混ざる。"
+          - "過去ファイルの一括 migration が必要で、誤更新時の追跡が難しい。"
+        migration_cost: high
+      - name: "案C: append-only lifecycle event ledger から状態を再構成する"
+        sketch: "各 candidate の gate、postpone、duplicate closure、posted を event として別 ledger に追記し、監査時に最新 event を reduce して current state を得る。"
+        pros:
+          - "履歴と現在状態を最も明確に分離できる。"
+          - "将来の遷移監査や復元性が高い。"
+        cons:
+          - "1044 candidate の既存 frontmatter と二重管理になり、移行・整合確認の範囲が大きい。"
+          - "今回の false-positive に対して過剰設計で、新たな正本競合を生む。"
+        migration_cost: high
+    recommended: "案A: missing-field backfill と current-state audit の優先規則を分離する"
+    recommended_reason: "現状の frontmatter には current state、last_decision、evidence が既にあり、欠けているのは event ledger ではなく推論の時系列である。案Aなら backfill の利便性を残しつつ、既存 lifecycle を優先する局所変更で済む。証拠が曖昧な既存行は自動修復せず needs_review として報告すれば、失敗時も状態破壊ではなく未解決監査に留まる。"
+    decision: introduce
+    decision_reason: "122件の anomaly の大半が同一の優先順位誤りで説明でき、危険な --fix-conflicts 経路も同じ設計で封じられる。期待する遷移と実矛盾のテスト例が具体化できており、追加 ledger なしで導入可能である。"
+    outline_for_4c:
+      - "lifecycle 推論を missing-field backfill と existing-state audit に分け、gate_decision は欠損補完時のみ authoritative とする。"
+      - "既存状態の優先表を posted/phase3 の明示 block、整合した status/candidate_status と後続 decision evidence、欠損時 gate fallback の順で定義する。"
+      - "postpone gate から terminal failed へ進んだ例を正常 transition とし、status/candidate_status 不一致や evidence 不足を真の anomaly とするテストを追加する。"
+      - "--fix-conflicts が historical gate を根拠に terminal 状態を巻き戻さず、曖昧な行は自動変更しないことを検証する。"
+      - "dry-run anomaly 内訳を再取得し、false-positive 減少と残存 anomaly の根拠を Phase 4c staging に記録する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
