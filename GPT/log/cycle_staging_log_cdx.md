@@ -102,7 +102,114 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の entry index を per-file atom index と照合し、broken link 0 件を確認した。
+  - atoms.jsonl / per-file .md / index.jsonl の 2714 件を照合し、ID 重複・parse error・mirror content conflict が 0 件であることを確認した。
+  - normalized body 重複 40 群は既存 lifecycle fold、45 群は canonical overlay に収載済みで、自動削除や再編は行わなかった。
+  - 30 日超の raw 95 件（web_research 87、headless_eval 6、slack_archive 1、raw 直下 1）を archive 候補として棚卸しし、原文保持契約があるため移動しなかった。
+  - candidate lifecycle 1042 件を dry-run 監査し、open duplicate / stale triage / group action の 3 sidecar を再生成した。内容差分は 0 件だった。
+  - slack_directives.jsonl / slack_broadcasts.jsonl の pending が 0 件だったため handled 更新は行わなかった。
+  - group handoff inbox を audit し、pending 0 / error 0 を確認した。actionable group が 0 件のため enqueue は 0 件だった。
+issues:
+  - id: ISS-4A-STALE-BACKLOG
+    description: postponed / needs_review の期限到来が 182 件あり、stale triage sidecar の 50 行上限を超えている。既存 queue で処理可能だが、未処理残は継続している。
+    severity: medium
+    evidence: "tools/backfill_shared_reads_candidate_status.py --today 2026-07-21: overdue_for_reassessment=182; memory/shared_reads_stale_triage_queue.jsonl: rows=50"
+    source_file_status: candidate frontmatter と sidecar は UTF-8 で正常に読める。
+    display_or_tooling_status: none
+    why_blocks_game_memory: 古い候補が再評価入口を占有し続けると、ゲーム制作へ転用価値の高い候補が Phase 2 の少数 review budget に到達しにくい。
+  - id: ISS-4A-TITLE-SEARCH
+    description: recall-visible repeated title group が 15 群あり、未 grouping の repeated title も 14 種残る。既存 title quality audit はあるが、active な後続判断を変えた証拠は今回観測できなかったため design 起動根拠にはしない。
+    severity: medium
+    evidence: "tools/memory_health.py --json: recall_visible_repeated_title_groups=15; ungrouped_repeated_title_groups=14; memory/atoms/title_quality_audit.jsonl: rows=621"
+    source_file_status: 対象 index / audit は UTF-8 で正常に読める。内容品質の問題であり encoding 破損ではない。
+    display_or_tooling_status: none
+    why_blocks_game_memory: 同名・定型 title は検索結果で個別の制作知見を識別しにくくするが、今回の Phase 4a では実利用時の判断差まで確認できていない。
+  - id: ISS-4A-ATOM-MOJIBAKE
+    description: sr-1776127289-4d9239b255 の「エージェント」が replacement 文字を含む形で保存されている。別の mojibake suspect 1 件は本文中の "???" による false positive だった。
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md"
+    source_file_status: UTF-8 明示読みでも raw archive と atom の双方に「エ��ジェント」が保存されており、source data 自体の局所破損である。
+    display_or_tooling_status: none。PowerShell 表示経路だけの mojibake ではない。
+    why_blocks_game_memory: 「エージェント」の exact keyword 検索と title 識別を1件だけ弱める。
+recommendation:
+  needs_design: false
+  priority_issues: []
+  rationale: 3 issue とも既存の Phase 2 handoff、title audit、局所データ修復で扱える。新構造を設計する前に既存経路で active utility の差分を観測すべきである。
+atom_audit:
+  atoms: 2714
+  mirror_content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  canonical_overlay_duplicate_groups: 45
+  errors: 0
+candidate_lifecycle:
+  posted: 449
+  ready_to_post: 9
+  postponed: 325
+  failed: 240
+  needs_review: 18
+  skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_for_reassessment: 182
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 0
+    dormant: 1
+  due_receipt: null
+  note: probe-20260625-amvl-retention-utility-lifecycle は 2026-07-22T23:00:00+09:00 が due のため、この cycle では resolve しない。
+stale_backlog:
+  overdue_open_total: 182
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: overdue_open_total > stale_triage_queue_rows は満たすが、actionable group が 3 件以上ではない。
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+  suppressed_existing_group:
+    group_key: joint agent memory and exploration learning via novelty signals
+    inbox_id: gha-e6d4d4b5a37a0808
+    status: deferred
+    retry_after: "2026-08-20T13:19:04+09:00"
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: Zork の探索・計画限界は headless playtest に転用価値が高いが、評価条件・失敗分類・モデル比較の本文確認が不足している。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: 検証可能な短い planning benchmark はゲーム評価へ使いやすいが、実験設計と比較結果の詳細が不足している。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: social deduction の推論スタイル追跡は有用だが、評価指標・失敗例と既存投稿との重複確認が必要である。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: LLM NPC の memory / validation 構成はゲーム転用しやすいが、empirical study と ablation の詳細が不足している。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: accessibility を player・engine・launcher 間の基盤として扱う着想は高価値で、本文の評価結果を補えば制作導線へ接続できる。
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
