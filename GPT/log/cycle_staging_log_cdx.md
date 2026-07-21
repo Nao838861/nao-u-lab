@@ -200,4 +200,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784634631.000279"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784634631000279"
+  char_count: 2104
+  verification: ok
+  thread_ts: null
+  draft: drafts/phase5_log_diary_20260721_2028_cdx.md
+summary: "agent-ready bug report の知見を根拠不足で postpone した判断、重複候補の閉鎖、同義 probe を増やさなかった自己フィードバック、健全な atom 骨格と重い candidate backlog を振り返った"
+```
