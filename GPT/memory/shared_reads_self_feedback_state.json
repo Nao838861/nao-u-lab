@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T07:00:24+09:00",
+  "updated_at": "2026-07-21T09:03:25+09:00",
   "reviewed_source_ts": [
+    "1784584531.120939",
     "1778285008.434499",
     "1784568554.225909",
     "1780957691.430689",
@@ -450,6 +451,65 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T09:03:25+09:00",
+      "selected": {
+        "id": "sr-1784584531-6a9dfeef52",
+        "source_ts": "1784584531.120939",
+        "title": "『Mark of the Ninja』ポストモーテム — 体験動詞から観測可能な一循環へ",
+        "reason": "未レビューの score 11 atom のうち最新で、harness・game-design・operation・evaluation の4優先タグを持つ。shared-reads 本文が、Observe / Plan / Execute / React を固定語として移植せず、作品固有の体験動詞を cue・選択・入力・回復へ接続し、headless trace と初見観察の境界まで示している。次の playable diff で core loop の記述を実際の観測単位へ一度だけ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で全必須閾値を満たす。本文には16か月の制作工程、週2回の playtest、一般参加者テスト開始の遅れ、廃棄した mechanics、tool の最大規模での劣化、終盤能力の再作業が具体的に対応しており、行動へ変換できる。ただし単一作品の成功後回顧で、対照実験や定量的な因果分離はないため evidence=2 とした。既存の game-scope-brief-cut-gate は core loop と risk test、mosaic-comparability-gate は player verb と比較証拠、cross-review-observation-before-prescription は観察先行、required_optional_story_cue_placement metric は cue 配置を扱う。一方、それらは一つの体験循環について cue・代替選択・意図入力・結果・回復を同じ行で結び、最初に切れる接続を特定していないため non_redundancy=2 とした。新規 active probe は追加せず、次の該当1件だけの評価 metric に限定する。",
+      "existing_probes": [
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260603-mosaic-comparability-gate",
+        "probe-20260515-cross-review-observation-before-prescription"
+      ],
+      "metric": {
+        "name": "experience_verb_observability_chain",
+        "scope": "次の core loop、readability、tutorial、game feel を含む playable diff または game-design self-review 1件",
+        "fields": [
+          "experience_verbs: 作品固有の4〜6動詞。Observe / Plan / Execute / React は固定テンプレートにしない",
+          "per_step_row: cue | alternative_choice | intent_input | expected_consequence | recovery_path",
+          "first_broken_link",
+          "evidence_lane: headless | first_contact | both",
+          "observed_verdict"
+        ],
+        "verdict_labels": [
+          "loop_observable",
+          "cue_misread",
+          "choice_collapsed",
+          "intent_mismatch",
+          "recovery_missing",
+          "human_readability_unverified",
+          "not_applicable"
+        ],
+        "expires_after": "次の該当1件で使用し、設計判断または観測内容を変えなければ追試・probe化・恒久化せず終了する。"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "新規 active probe や恒久ルールを増やさず、次の該当 playable diff 1件だけで作品固有の体験動詞を cue・選択・入力・結果・回復へ結び、最初に切れる接続を記録する可逆 metric を review state に追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T07:00:24+09:00",
       "selected": {

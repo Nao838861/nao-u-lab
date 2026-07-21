@@ -95,7 +95,51 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784584531-6a9dfeef52
+    source_ts: "1784584531.120939"
+    title: "『Mark of the Ninja』ポストモーテム — 体験動詞から観測可能な一循環へ"
+    reason: "未レビューの score 11 atom のうち最新で、harness・game-design・operation・evaluation の4優先タグを持つ。作品固有の体験動詞を cue・選択・入力・回復へ接続し、次の playable diff で一度だけ観測単位へ変換できるため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_metric
+  decision_reason: "単一作品の成功後回顧で因果分離はできないが、制作工程、playtest、廃棄 mechanic、tool の劣化、終盤能力の再作業が具体的で、次回行動へ変換できる。既存の core-loop・player-verb・cue・観察先行 probe と部分重複するため、新規 active probe は増やさず、次の該当1件だけの experience_verb_observability_chain metric に留める。"
+  metric:
+    name: experience_verb_observability_chain
+    scope: "次の core loop、readability、tutorial、game feel を含む playable diff または game-design self-review 1件"
+    fields:
+      - "experience_verbs: 作品固有の4〜6動詞。記事の四語を固定テンプレートにしない"
+      - "per_step_row: cue | alternative_choice | intent_input | expected_consequence | recovery_path"
+      - first_broken_link
+      - "evidence_lane: headless | first_contact | both"
+      - observed_verdict
+    verdict_labels:
+      - loop_observable
+      - cue_misread
+      - choice_collapsed
+      - intent_mismatch
+      - recovery_missing
+      - human_readability_unverified
+      - not_applicable
+    expires_after: "次の該当1件で使用し、設計判断または観測内容を変えなければ追試・probe化・恒久化せず終了する。"
+  change:
+    summary: "review state に1回限りの体験循環 metric を追加した。active probe、directive、AGENTS.md、phase prompt は変更していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
