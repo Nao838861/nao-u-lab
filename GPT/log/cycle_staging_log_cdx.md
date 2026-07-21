@@ -146,7 +146,84 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、index entry と per-file atom index の対応を検証した。validate_memory_index.py は OK、atom mirror は atoms.jsonl / per-file / index 各 2714 件で missing・parse error・content conflict 0 件。"
+  - "memory/atoms.jsonl の重複を監査した。normalized content duplicate は 40 group / 80 rows、canonical overlay は 45 group で既存 fold 対象に収まり、duplicate cluster index は current、矛盾は検出されなかった。"
+  - "memory/raw/ で 2026-06-21 より前に更新が止まった原文を棚卸しした。archive 候補は 95 files / 62,979,319 bytes（主に web_research と phase3 PDF/text）。原文保持と参照切れ回避のため、この phase では移動していない。"
+  - "shared-reads candidate 1037 件の lifecycle を監査した。failed 236 / needs_review 18 / posted 447 / postponed 327 / ready_to_post 9、overdue open 185。stale_after 欠損 3 件はすべて posted で、再評価 queue 対象外。"
+  - "title canonical index 63 rows と mixed duplicate queue 49 rows が current であることを確認し、open duplicate group queue / stale triage queue / group action queue を指定順で再生成した。"
+  - "Slack directives 23 rows / broadcasts 21 rows は pending 0 件。close gate を満たして新たに handled へ変える対象はなかった。"
+  - "group-action budget 1 に基づき、gha-2d425c13d80e1db3 を source_cycle_id=2026-07-21 15:13 で永続 handoff inbox へ enqueue した。"
+issues:
+  - id: ISS-ENC-001
+    description: "active atom sr-1776127289-4d9239b255 の『AIエージェント』部分が『AIエ��ジェント』として source から破損しており、title / trigger / excerpt に同じ replacement character が残っている。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3,16,20,24; memory/atoms.jsonl id=sr-1776127289-4d9239b255。memory_health.py のもう1件の suspect gr-1777083728-44d444ab7a は UTF-8 明示読みで replacement character なし。"
+    source_file_status: "UTF-8 explicit read reproduces U+FFFD twice in the atom source and both mirrors; source content is damaged. MEMORY.md itself decodes normally, and probes for 記憶 / ゲーム設計 / 敵パターン succeed; 評価軸 is not present as a lexical item."
+    display_or_tooling_status: "none; PowerShell の表示経路だけの mojibake ではない。"
+    why_blocks_game_memory: "『エージェント』での title / trigger 検索からこの active atom が漏れる可能性がある。ただし単発の data repair 対象で、記憶階層の再設計を要する規模ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 58
+  mixed_group_count: 49
+  all_open_group_count: 9
+  actionable_group_count: 2
+  backlog_high_water: false
+  high_water_basis: "overdue_open_total > stale_triage_queue_rows は true だが、actionable_group_count >= 3 は false。"
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - gha-2d425c13d80e1db3
+group_action_handoff:
+  - group_key: "d2c co development and volume over viability gdc 2026 trends revealed"
+    group_kind: all_open
+    representative: memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+      - memory/shared_reads_candidates/20260606_gdc2026_trends_volume_over_viability.md
+    terminal_siblings: []
+    status_counts:
+      postponed: 2
+    source_url_evidence:
+      - "https://www.pocketgamer.biz/d2c-co-development-and-volume-over-viability-gdc-2026-trends-revealed"
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260606_gdc2026_trends_mechanics_over_metagaming.md
+      stale_after: "2026-07-06"
+      reason: "age_days=15。同一 URL の2候補が all-open のまま残る。短期 prototype 方針への転用余地はあるが、現候補は trend report 紹介に留まり、元 report / 関連事例による手法・失敗例・評価の確認が必要。"
+    inbox_id: gha-2d425c13d80e1db3
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260616_jamel_memory_exploration_novelty.md
+    status: postponed
+    stale_after: "2026-07-16"
+    priority_reason: "game_transfer_value=high。novelty signal で memory と exploration を同時に学ぶ着想は game AI 評価へ転用できるが、signal 定義・memory 表現・学習手順の本文確認が必要。open duplicate group は candidate 単位で1件だけ渡す。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260609_zenith_diffusion_map_generation.md
+    status: postponed
+    stale_after: "2026-07-09"
+    priority_reason: "game_transfer_value=medium。geometry extraction と multi-encoder ControlNet の map generation は転用性があるが、同名 open sibling と GDC 概要だけではモデル構成・評価が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。Zork における探索・計画限界は headless playtest に有用だが、position paper の評価条件・失敗分類・model 比較を本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high。検証可能な遷移を持つ短い planning benchmark として使いやすいが、実験設計・比較対象・結果の具体が不足する。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high。個別 reasoning style の追跡は social deduction 設計へ接続できるが、既存 Slack atom との重複と本文の評価指標・失敗例を確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
