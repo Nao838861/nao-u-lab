@@ -7,12 +7,17 @@ genre_tags: [game-dev, postmortem, game-jam, controls, playtesting, game-feel]
 evaluated_at: "2026-07-22T02:49:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-22T02:49:51+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-22T02:49:51+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784656503.008299"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784656503008299"
+  char_count: 4291
+  posted_at: "2026-07-22T02:55:03+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-22T02:55:03+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784656503008299"
+next_action: none
 stale_after: "2026-08-21"
 supersedes: []
 gate_reason: >-
