@@ -6,18 +6,20 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, racing, physics, level-design, game-feel, live-service]
 evaluated_at: "2026-07-21T15:23:07+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T15:23:07+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T15:23:07+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-21T15:29:26+09:00"
+last_decision: postpone
+evidence: "Phase 3 final review: source contains design claims but no measured playtest, comparison, or failure-case evidence"
+next_action: revise_or_research
 stale_after: "2026-08-20"
 supersedes: []
 gate_reason: >-
-  物体 scale の変更を、既存 map の再解釈、専用 physics/camera、制作 workflow、10 event の段階導入まで一貫して設計した過程が具体的である。
-  同じ空間から別の遊びを作る小規模 prototype に適用でき、実装コストと既存資産再利用の両面を含む約4000字の分析へ展開できる。
+  物体 scale の変更を、既存 map の再解釈、専用 physics/camera、制作 workflow、10 event の段階導入まで一貫して説明しており、設計資料としての具体性はある。
+  ただし元記事は開発者インタビューで、playtest の人数・指標・比較条件・調整前後の結果・失敗例を示していない。
+  必須条件の「評価の中身」を記事固有の根拠で書けず、約4000字へ展開すると推測が支配的になるため、Phase 3 で投稿を見送る。
+  RC Frenzy の実測 telemetry、設計講演、または具体的な postmortem が得られた時に再評価する。
 suggested_post_outline:
   overview_angle: "RC 化を単なる車両縮小ではなく、空間の affordance・物理・camera・学習順をまとめて変換する再設計として整理する。"
   analysis_axis: "scale による既存環境の再発見、toy-scale physics の作り直し、camera が走行判断へ与える効果、10 event の mechanic sequencing を軸に読む。"

@@ -92,7 +92,23 @@ duplicate_preflight_audit:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260721_crew_motorfest_rc_playground.md
+    reason: "元記事は scale・physics・camera・10 event の設計判断を説明するが、playtest 指標、比較条件、調整前後の結果、失敗例がなく、必須の『評価の中身』を記事固有の根拠で書けない。"
+    action: postpone
+  - candidate: memory/shared_reads_candidates/20260721_temtem_swarm_scalable_ability_system.md
+    reason: "元記事は 250 超の technique を支える構造を説明するが、追加時間、defect、balance iteration、performance、代替方式との比較がなく、scalability の結論を検証する評価がない。"
+    action: postpone
+reviewed_at: "2026-07-21T15:29:26+09:00"
+slack_posted: false
+duplicate_preflight:
+  memory/shared_reads_candidates/20260721_crew_motorfest_rc_playground.md: continue
+  memory/shared_reads_candidates/20260721_temtem_swarm_scalable_ability_system.md: continue
+final_decision: "品質ゲート維持のため 2 件とも投稿せず、追加 evidence 待ちへ戻した。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
