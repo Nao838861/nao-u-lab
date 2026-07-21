@@ -7,14 +7,14 @@ genre_tags: [agent-evaluation, visual-grounding, planning, minimal-feedback, gam
 evaluated_at: "2026-05-29T13:35:19+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-candidate_status: postponed
-status: postponed
-last_reviewed_at: "2026-05-29T13:35:19+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-05-29T13:35:19+09:00"
+candidate_status: failed
+status: failed
+last_reviewed_at: "2026-07-21T11:08:12+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-add345627d3416f8; terminal:memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md: https://arxiv.org/abs/2603.15888 paper source; memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md: https://www.microsoft.com/en-us/research/publication/asgardbench-evaluating-visually-grounded-interactive-planning-under-minimal-feedback/ same paper publication page; reason:2件は arXiv 2603.15888 とその Microsoft Research publication page という同一論文の別入口であり task 数と要旨も一致する。独立候補として維持する資料差がなく 両方とも結果の粒度不足なので重複候補として閉じる。"
 stale_after: "2026-06-28"
 supersedes: []
-next_action: revise_or_research
+next_action: none
 gate_reason: |
   visual observation に基づく plan adaptation 評価という問題設定は、ゲーム AI tester / visual playtest に接続できる。
   ただし候補本文だけでは task 設計、baseline、失敗類型、評価結果の粒度が足りず、Phase 3 で残すべき密度の概要を書くには追加読解が必要。

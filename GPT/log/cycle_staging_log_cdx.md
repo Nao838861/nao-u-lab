@@ -12,7 +12,95 @@
 - duplicate preflight: 3 件とも `continue`。Phase 1 では品質判定・Slack 投稿を行っていない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260721_star_trek_voyager_survival_narrative.md
+  - memory/shared_reads_candidates/20260721_saros_narrative_process.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260721_pragmata_puzzle_shooter.md
+    reason: "hybrid combat の着想は具体的だが、playtest 結果や反復調整の証拠がなく約4000字の評価部分を支えられない"
+stale_reviewed: []
+group_actions:
+  - group_key: "the ink splotch effect a case study on chatgpt as a co creative game designer"
+    representative: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+      - memory/shared_reads_candidates/20260609_ink_splotch_effect_chatgpt_game_designer.md
+      - memory/shared_reads_candidates/20260709_ink_splotch_llm_cocreative_game_design.md
+      - memory/shared_reads_candidates/20260715_ink_splotch_co_creative_game_design.md
+      - memory/shared_reads_candidates/20260717_ink_splotch_effect_co_creative_game_designer.md
+      - memory/shared_reads_candidates/20260718_ink_splotch_effect_co_creative_game_designer.md
+    reason: "6件は同じ arXiv 2403.02454 と同じ比較設計を扱い、独立資料として残す差分がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+        evidence: "https://arxiv.org/abs/2403.02454"
+      - path: memory/shared_reads_candidates/20260609_ink_splotch_effect_chatgpt_game_designer.md
+        evidence: "https://arxiv.org/abs/2403.02454"
+      - path: memory/shared_reads_candidates/20260709_ink_splotch_llm_cocreative_game_design.md
+        evidence: "https://arxiv.org/abs/2403.02454"
+      - path: memory/shared_reads_candidates/20260715_ink_splotch_co_creative_game_design.md
+        evidence: "https://arxiv.org/abs/2403.02454"
+      - path: memory/shared_reads_candidates/20260717_ink_splotch_effect_co_creative_game_designer.md
+        evidence: "https://arxiv.org/abs/2403.02454; prior Slack provenance recorded in candidate"
+      - path: memory/shared_reads_candidates/20260718_ink_splotch_effect_co_creative_game_designer.md
+        evidence: "https://arxiv.org/abs/2403.02454"
+    representative_decision: fail
+    analysis_time_minutes: 5
+  - group_key: "a modular framework for automated evaluation of procedural content generation in serious games with deep reinforcement learning agents"
+    representative: memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md
+      - memory/shared_reads_candidates/20260719_pcg_evaluation_drl_agents.md
+    reason: "2件は同じ arXiv 2505.16801 を扱い、後発候補の数値補足も独立 work を作らない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md
+        evidence: "https://arxiv.org/abs/2505.16801; abstract-level evidence"
+      - path: memory/shared_reads_candidates/20260719_pcg_evaluation_drl_agents.md
+        evidence: "https://arxiv.org/abs/2505.16801; same work with 94% versus 97% only"
+    representative_decision: fail
+    analysis_time_minutes: 3
+  - group_key: "asgardbench evaluating visually grounded interactive planning under minimal feedback"
+    representative: memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md
+      - memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md
+    reason: "arXiv と Microsoft Research publication page は同一論文の別入口で、独立候補として維持する資料差がない"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md
+        evidence: "https://arxiv.org/abs/2603.15888; paper source"
+      - path: memory/shared_reads_candidates/20260529_asgardbench_visual_planning.md
+        evidence: "Microsoft Research publication page for the same paper"
+    representative_decision: fail
+    analysis_time_minutes: 3
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-6d729c1da0befef9
+    - gha-a1428d3078960c36
+    - gha-add345627d3416f8
+  resolved_ids:
+    - gha-6d729c1da0befef9
+    - gha-a1428d3078960c36
+    - gha-add345627d3416f8
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 10
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  builders_fresh: true
+  decisions:
+    memory/shared_reads_candidates/20260721_star_trek_voyager_survival_narrative.md: continue
+    memory/shared_reads_candidates/20260721_saros_narrative_process.md: continue
+    memory/shared_reads_candidates/20260721_pragmata_puzzle_shooter.md: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

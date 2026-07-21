@@ -4,6 +4,20 @@ url: "https://www.gamedeveloper.com/design/how-capcom-s-pragmata-blends-puzzle-s
 collected_at: "2026-07-21T11:03:18.1040342+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, action-game, puzzle, hybrid-mechanics, combat-design, progression]
+evaluated_at: "2026-07-21T11:08:54+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-21T11:08:54+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-21T11:08:54+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  target 選択→hack→shield break→射撃を一つの cadence にする着想と、二人の関係を操作習熟へ重ねる適用先は明確である。
+  ただし現材料は開発意図の紹介に留まり、負荷調整の比較、playtest 結果、反復で棄却した案がなく、約4000字の評価部分を根拠付きで書けない。
 ---
 
 ## raw_excerpt

@@ -7,12 +7,12 @@ genre_tags: [procedural-content-generation, game-testing, reinforcement-learning
 evaluated_at: "2026-07-19T05:49:28+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-19T05:49:28+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-19T05:49:28+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T11:08:04+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-a1428d3078960c36; terminal:memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md: https://arxiv.org/abs/2505.16801 same work abstract-level evidence; memory/shared_reads_candidates/20260719_pcg_evaluation_drl_agents.md: https://arxiv.org/abs/2505.16801 same work adds 94 percent versus 97 percent only; reason:2件は同じ arXiv 2505.16801 の同じ serious-game PCG 評価を扱い 後発候補も数値を補っただけで独立 work ではない。どちらも本文条件不足で pass できないため重複候補として閉じる。"
+next_action: none
 stale_after: "2026-08-18"
 supersedes: []
 gate_reason: |-

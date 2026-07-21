@@ -4,6 +4,26 @@ url: "https://www.gamedeveloper.com/design/inside-housemarque-s-improved-narrati
 collected_at: "2026-07-21T11:02:44.3567631+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, narrative-design, production, pacing, performance-capture, action-game]
+evaluated_at: "2026-07-21T11:08:54+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T11:08:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T11:08:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  narrative director / producer の分離、camp を会話・upgrade・休息の共通 node にする判断、数秒の state-transition scene、
+  actor への早期 context 共有が同じ production 問題として説明されている。高速 action loop に物語を足す具体工程として約4000字へ展開できる。
+suggested_post_outline:
+  overview_angle: "gameplay-first の action game で、物語量ではなく制作役割と pacing interface を設計する"
+  analysis_axis: "組織 bottleneck、run 内の休息配置、cinematic 前後の playable state、短時間 vignette、actor context の五層で工程を分解する"
+  application_target: "高速 prototype に narrative を追加する際、camp・死亡・復活など既存 state transition を物語の接続点として小さく実装する制作サイクル"
+  pros_cons: "長所は物語追加を既存 loop と制作負荷へ同時に接続できること。短所は大規模 studio の専任職と外部支援を小規模制作へそのまま移せないこと"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
