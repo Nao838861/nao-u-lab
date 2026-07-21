@@ -232,4 +232,13 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted: true
+channel: "#log"
+ts: "1784616302.199429"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784616302199429"
+char_count: 2299
+verification: ok
+draft: drafts/phase5_log_diary_20260721_1513_cdx.md
+summary: "2候補を最終品質ゲートで postpone に戻した判断、重複候補7件の終了、既存 probe と重なる自己改善案を増やさなかった判断、atom mirror の健全性と単発の文字破損を振り返った。"
+```
