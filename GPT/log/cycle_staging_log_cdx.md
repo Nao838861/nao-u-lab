@@ -194,7 +194,57 @@ stale_review_batch:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designs:
+  - issue_id: ISS-PROBE-001
+    problem_restatement: "probe 本体は320件保存されているが、どの後続 phase がいつ使うか、使用前後で判断がどう変わったか、期限後に何を keep / merge / retire するかを結ぶ運用状態がない。現状の repository 内 ID 検索は作成・重複参照と実利用を区別できず、active という名前だけが増え続けている。"
+    alternatives:
+      - name: "案A: 既存 state 内 lifecycle overlay"
+        sketch: "memory/shared_reads_self_feedback_state.json に probe_id をキーとする lifecycle map を追加し、leased / dormant / merged / retired、consumer、due_after、usage receipt を保持する。既存 active_probes は本文の正本として残し、overlay にない legacy probe は dormant とみなす。"
+        pros:
+          - "新しい保存先や helper tool を増やさず、Phase 3b が既に更新する state の中で完結する。"
+          - "probe 本文と lifecycle を probe_id で直接照合できる。"
+          - "legacy probe を一括書換えせず、触れたものから段階移行できる。"
+        cons:
+          - "既に約1.5万行ある単一 JSON に mutable な運用状態を重ね、差分競合と全体再書込みを増やす。"
+          - "review 履歴・probe 本文・現在状態・receipt が同居し、正本の境界がさらに曖昧になる。"
+          - "手編集で lease / receipt の整合性を維持する必要がある。"
+        migration_cost: medium
+      - name: "案B: 期限付き probe lease / receipt ledger"
+        sketch: "probe 本文は既存 state に保持したまま、別の lifecycle ledger に probe_id、consumer_phase、expected_delta、lease_due、status、before / after decision、evidence pointer を記録する。operational active は未完了 lease のみとし、consumer が receipt を返さないまま期限切れなら削除せず dormant に戻す。"
+        pros:
+          - "作成記録と判断差の証拠を分離し、active を『利用先と期限がある状態』として機械判定できる。"
+          - "320件の legacy probe を破壊的に移行せず dormant な履歴として残し、必要な1件だけ再 lease できる。"
+          - "1 cycle 1件の enqueue / resolve budget にでき、利用証拠がない probe をさらに増やしにくい。"
+        cons:
+          - "新しい ledger、validator / enqueue / resolve helper、Phase 3b と Phase 4a の契約更新が必要になる。"
+          - "consumer_phase と expected_delta が曖昧だと receipt が自己申告だけになり、形だけの利用記録になる。"
+          - "既存 state と ledger の probe_id 整合性、重複 lease、期限判定を検証する必要がある。"
+        migration_cost: medium
+      - name: "案C: repository 参照回数 + TTL"
+        sketch: "定期的に probe_id の repository 出現箇所を数え、created_at / expires_after と参照回数だけで keep / retire 候補を生成する。既存320件を一括監査できるが、明示的な consumer handoff は作らない。"
+        pros:
+          - "既存データだけで全 probe を機械的に棚卸しできる。"
+          - "後続 phase の記録様式を大きく変えずに導入できる。"
+          - "孤立 ID と期限超過を安価に発見できる。"
+        cons:
+          - "作成・重複照合・ログ出力も利用として数えるため、今回の false positive を解消できない。"
+          - "ID を明記せず内容だけ使った場合は false negative になる。"
+          - "参照数だけでは comparison probe との unique delta や判断への因果を示せない。"
+        migration_cost: low
+    recommended: "案B: 期限付き probe lease / receipt ledger"
+    recommended_reason: "issue の中心は検索不足ではなく、producer である Phase 3b と consumer である後続 phase の間に因果を記録する handoff がないことなので、案Cでは解消しない。案Aは保存面を増やさない反面、既に大きい state の責務と書込み競合を増やす。案Bなら既存 probe 本文を無変更で保持し、operational active だけを小さな ledger へ分離できる。ledger や helper が失敗しても probe は消えず dormant に戻るだけで、再 lease 可能なため失敗コストが低い。legacy 320件の一括判定は避け、まず ISS-PROBE-001 の target / comparison だけで契約を検証する距離に限定する。"
+    decision: introduce
+    decision_reason: "Phase 4a で active_probes=320、target / comparison の repository 実利用箇所0件、verdict=usage_evidence_missing という具体的証拠が揃っている。既存の expires_after は自然言語で、consumer、期限到来、判断差、解決状態を機械的に閉じられないため現状維持では同じ欠測が続く。削除や一括 migration を伴わない lease / receipt の最小導入なら可逆であり、次の Phase 4c に送れる粒度まで設計が固まった。"
+    outline_for_4c:
+      - "probe 本文の正本は memory/shared_reads_self_feedback_state.json の active_probes のまま変更せず、operational lifecycle の正本として memory/shared_reads_probe_lifecycle.jsonl を追加する。"
+      - "ledger row を probe_id / source_review_ts / consumer_phase / trigger_artifact / expected_delta / leased_at / lease_due / status(pending|resolved|dormant|merged|retired) / receipt(before_decision, after_decision, changed, evidence) / superseded_by の契約にする。"
+      - "enqueue / resolve / pending / validate を行う単一 helper を用意し、存在しない probe_id、同一 probe の重複 pending lease、evidence なしの resolved、循環 superseded_by を拒否する。"
+      - "Phase 3b の adopt_probe / adopt_metric は consumer_phase、trigger_artifact、expected_delta、lease_due を指定して1件だけ enqueue し、指定できない知見は active 扱いにせず state-only review に留める。"
+      - "Phase 4a は1 cycle 1件だけ due lease を確認し、consumer artifact の before / after decision と evidence pointer を receipt に残す。判断差なしは merge / retire 候補、未観測は dormant とし、自動削除しない。"
+      - "初期 migration は probe-20260604-memory-discard-operation-gate と probe-20260625-amvl-retention-utility-lifecycle の2件だけを fixture とし、残り legacy probe は ledger 不在=dormant として本文を保持する。"
+      - "target が usage_evidence_missing のまま期限切れになる経路、comparison へ merge する経路、判断差ありで再 lease する経路をテストし、Phase 4a staging に pending / resolved / dormant 件数を出す。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
