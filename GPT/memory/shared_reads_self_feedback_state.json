@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T22:44:58+09:00",
+  "updated_at": "2026-07-22T00:40:37+09:00",
   "reviewed_source_ts": [
+    "1784641228.892699",
     "1781008433.930809",
     "1780644277.510099",
     "1780878537.585419",
@@ -457,6 +458,46 @@
     "1780427580.664779"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-22T00:40:37+09:00",
+      "selected": {
+        "id": "sr-1784641228-e4500934d0",
+        "source_ts": "1784641228.892699",
+        "title": "ELI Release 2026-06-15 postmortem — transition seam QA",
+        "reason": "最新の未レビュー score 10 atom で、memory・harness・game-design・operation・evaluation の優先タグを持つ。機能単体の green では見落とす offline→account、world teardown、別端末、初見操作の継ぎ目を、次の prototype 検証へ小さく反映できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      },
+      "decision": "defer",
+      "decision_reason": "合計17で全必須閾値を満たす。実利用者二名と実機で、ownership migration 漏れ、window teardown 漏れ、初見 discoverability、別端末 sync onboarding という seam failure を症状・原因・修正へ対応づけた根拠があり、次の game prototype では feature checklist と別に transition seam を一つ選ぶ行動へ変換できる。一方、gameenginebench runtime integration、playtest agent role、AI-readable acceptance の既存 probe と一部重複し、現在の ledger には Phase 4a 向け pending lease が既に1件ある。さらに次の prototype の具体的な trigger artifact をまだ指定できないため、lease contract を満たさない active probe は作らず state-only defer とした。",
+      "existing_probes": [
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260602-playtest-agent-role-diagnostics",
+        "probe-20260621-ai-readable-playtest-acceptance-surface"
+      ],
+      "defer_condition": "次の具体的な game prototype または playable diff が staging に現れ、before / after を比較できる artifact と consumer phase を指定でき、既存 pending lease が解消している時だけ、既存 probe の再利用で transition seam と discoverability の判断差を出せるか再検討する。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と採点・defer 理由だけを記録した。probe、評価表、directive、恒久ルール、lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T22:44:58+09:00",
       "selected": {

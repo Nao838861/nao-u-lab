@@ -57,7 +57,35 @@ reason: "Phase 2 の pass が 0 件のため、#shared-reads への投稿対象�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784641228-e4500934d0
+    source_ts: "1784641228.892699"
+    title: "ELI Release 2026-06-15 postmortem — transition seam QA"
+    reason: "最新の未レビュー score 10 atom で、memory・harness・game-design・operation・evaluation の優先タグを持つ。機能単体の green では見落とす transition seam を、次の prototype 検証へ小さく反映できるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: defer
+  decision_reason: "閾値は満たすが、現在の ledger には Phase 4a 向け pending lease が既に1件あり、次の prototype の具体的な trigger artifact もまだ指定できない。lease contract を満たさない active probe は作らず、state-only review に留めた。"
+  change:
+    summary: "reviewed_source_ts と採点・defer 理由のみ更新。probe、評価表、directive、恒久ルール、lease は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
