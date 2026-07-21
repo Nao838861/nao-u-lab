@@ -87,7 +87,102 @@ self_feedback:
 - 既存 pending lease `probe-20260625-amvl-retention-utility-lifecycle` は Phase 4a 向けに維持し、本レビューから lifecycle ledger への enqueue は行っていない。
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、per-file atom index との対応を検証した。broken index entry は 0 件。代表語は 記憶=23、ゲーム設計=8、敵パターン=1、評価軸=0 で、最後は文字化けではなく現行 index に完全一致語がない状態。"
+  - "memory/atoms.jsonl と per-file/index mirror を監査した。3層とも 2716 件、content_conflicts=0、raw normalized-content duplicate=40群、recall-visible duplicate=3群で、45群の canonical overlay は最新。"
+  - "memory/raw/ の 30日超ファイル 95件・62,979,319 bytes を確認した。Slack 原文、論文 PDF/TXT、headless 評価原文という provenance 入力であり、参照切れを避けるため archive_candidates は 0 件とした。"
+  - "candidate 派生 index を指定順で再生成した。title canonical=65群、mixed duplicate=49群、open duplicate=56群、stale triage=50行、group action=0群。candidate 本体は変更していない。"
+  - "slack_directives.jsonl 23行 / slack_broadcasts.jsonl 21行を監査し、pending は双方 0 件。close 対象はなかった。"
+  - "group handoff を cycle_id=2026-07-22T02:43+09:00 / budget=1 で enqueue 監査した。actionable group は 0 件、inbox pending も 0 件で、新規 handoff はなかった。"
+  - "probe lifecycle を validate し、期限到来 lease は 0 件だったため receipt 更新は行っていない。"
+candidate_lifecycle:
+  files: 1045
+  counts:
+    posted: 450
+    ready_to_post: 9
+    postponed: 327
+    failed: 240
+    needs_review: 18
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_for_reassessment: 185
+  anomalies:
+    current_state_transition_lacks_evidence: 1
+    stale_after_differs_from_30d_default: 14
+issues:
+  - id: ISS-4A-20260722-04
+    description: "candidate lifecycle audit が last_decision=posted_url_match を『投稿済み状態』と解釈し、投稿済み URL との重複を理由に postponed とした evidence 付き遷移を evidence 不足として誤検出する。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260718_ai_native_games_survey_roadmap.md: gate_decision=pass、duplicate_preflight_decision=skip、status/candidate_status=postponed、last_decision=posted_url_match、canonical_path と permalink を含む evidence あり; tools/backfill_shared_reads_candidate_status.py dry-run の current_state_transition_lacks_evidence=1"
+    source_file_status: "candidate は UTF-8 として正常に読め、status/candidate_status、duplicate_reason、canonical_path、permalink は相互に整合する。"
+    display_or_tooling_status: "status_from_last_decision が posted で始まる token を一律 posted lifecycle と読むための audit false-positive。"
+    why_blocks_game_memory: "重複 candidate の『投稿した』と『投稿済み work なので見送った』を区別できず、terminal close と将来再評価の判断を誤らせる。"
+  - id: ISS-4A-20260722-05
+    description: "active atom 1件の raw 原文と派生 atom に Unicode replacement character が残り、『AIエージェント』の語が壊れている。"
+    severity: low
+    evidence: "memory/raw/slack_archive/shared-reads.jsonl:492; memory/atoms/2026-04/sr-1776127289-4d9239b255.md:3; source_ts=1776127289.990919"
+    source_file_status: "UTF-8 明示読みでも source raw 自体に『AIエ��ジェント』があり、per-file atom と index も同じ値を保持する。"
+    display_or_tooling_status: "console mojibake ではない。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 source が正常な heuristic false-positive。"
+    why_blocks_game_memory: "完全一致の『AIエージェント』検索から score 11 の atom 1件が漏れるが、影響は局所的。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260722-04
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  next_pending_probe_id: probe-20260625-amvl-retention-utility-lifecycle
+  next_lease_due: "2026-07-22T23:00:00+09:00"
+  counts:
+    pending: 1
+    resolved: 0
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  stale_review_batch_count: 5
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows は真だが、actionable group >= 3 が偽。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "headless playtest に直結する探索・計画限界だが、評価条件、失敗分類、モデル比較を一次本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "検証可能な短い planning benchmark として転用価値が高く、実験設計、比較対象、結果の補強が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "個別推論スタイル追跡はゲーム AI に有用だが、既存 atom との重複と評価指標・失敗例の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "LLM NPC validation の構成は具体的だが、empirical study、ablation、失敗例の精読が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "初回設定・入力補助・字幕・難度の基盤設計へ移せるが、player/developer 双方の評価結果を一次本文で確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
