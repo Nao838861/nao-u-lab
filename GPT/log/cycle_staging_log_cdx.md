@@ -64,7 +64,42 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781008433-15d205b332
+    source_ts: "1781008433.930809"
+    title: MemoryArena vs LoCoMo の passive recall / active decision-relevant memory gap
+    reason: Phase 4a が記憶整理案を選ぶ直前なので、想起・保持できた事実ではなく、その記憶が後続判断を変えたかを一度だけ判定へ使うため。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  decision_reason: MemoryArena の相互依存 multi-session task は passive recall と active decision-relevant use の差を具体化する。ただし既存 AMV-L probe が action impact / downstream reuse をすでに問うため、新規 probe は追加せず既存 probe を1回だけ再利用する。
+  change:
+    summary: 既存 AMV-L retention/utility probe を次の Phase 4a だけ operational に lease した。新規 probe、directive、恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - memory/shared_reads_probe_lifecycle.jsonl
+      - log/cycle_staging_log_cdx.md
+  lease:
+    probe_id: probe-20260625-amvl-retention-utility-lifecycle
+    consumer_phase: Phase 4a
+    trigger_artifact: log/cycle_staging_log_cdx.md#Phase-4a
+    expected_delta: recall・retention・stale の passive 証拠しかない改善候補は即採用せず active_utility_unverified とし、後続判断を変えた証拠がある候補を優先する。
+    lease_due: "2026-07-22T23:00:00+09:00"
+    enqueue_result: enqueued
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

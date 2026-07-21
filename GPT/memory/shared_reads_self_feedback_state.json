@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T20:41:19+09:00",
+  "updated_at": "2026-07-21T22:44:58+09:00",
   "reviewed_source_ts": [
+    "1781008433.930809",
     "1780644277.510099",
     "1780878537.585419",
     "1784584531.120939",
@@ -456,6 +457,58 @@
     "1780427580.664779"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T22:44:58+09:00",
+      "selected": {
+        "id": "sr-1781008433-15d205b332",
+        "source_ts": "1781008433.930809",
+        "title": "MemoryArena vs LoCoMo の passive recall / active decision-relevant memory gap",
+        "reason": "未レビューの score 12 atom で、memory・skills・agent・operation・evaluation の5優先タグを持つ。Phase 4a が記憶整理案を選ぶ直前なので、想起・保持できた事実ではなく、その記憶が後続判断を変えたかを一度だけ判定へ使うため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_probe",
+      "decision_reason": "合計16で全必須閾値を満たす。MemoryArena は web navigation、preference-constrained planning、progressive information search、sequential formal reasoning の相互依存 multi-session task で、LoCoMo では near-perfect な system が40-60%へ落ちるという passive recall と active decision-relevant use の差を示す。現在の Phase 4a では recall hit、retention、stale 判定だけを改善根拠にしない行動差へ直結する。一方、既存の AMV-L probe が action impact／downstream reuse と可逆な lifecycle action をすでに問うため non_redundancy=1 とし、新規 probe は追加しない。ledger 上で dormant だった既存 probe を次の Phase 4a だけ operational に lease し、passive 証拠しかない候補を active_utility_unverified として留保するかを観測する。",
+      "existing_probes": [
+        "probe-20260625-amvl-retention-utility-lifecycle",
+        "probe-20260708-causalgame-outcome-explanation-split",
+        "probe-20260617-cbr-reusable-case-quality"
+      ],
+      "probe_reuse": {
+        "probe_id": "probe-20260625-amvl-retention-utility-lifecycle",
+        "scope": "このサイクルの Phase 4a における memory cleanup / design 候補1件だけ",
+        "withdrawal_condition": "Phase 4a で passive と active の区別が判断を変えない、既存の retention/utility 記録だけで同じ結論になる、または具体的な後続判断の証拠を取得できない場合は lease を dormant で閉じ、追加 probe や恒久ルールを作らない。"
+      },
+      "lease": {
+        "probe_id": "probe-20260625-amvl-retention-utility-lifecycle",
+        "consumer_phase": "Phase 4a",
+        "trigger_artifact": "log/cycle_staging_log_cdx.md#Phase-4a",
+        "expected_delta": "recall・retention・stale の passive 証拠しかない改善候補は即採用せず active_utility_unverified とし、後続判断を変えた証拠がある候補を優先する。",
+        "lease_due": "2026-07-22T23:00:00+09:00",
+        "enqueue_result": "enqueued"
+      },
+      "change": {
+        "type": "probe_reuse",
+        "summary": "新規 probe を増やさず、既存 AMV-L retention/utility probe を次の Phase 4a 1回だけ operational に lease した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "memory/shared_reads_probe_lifecycle.jsonl",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T20:41:19+09:00",
       "selected": {
