@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.3.0">
+  <link rel="stylesheet" href="./style.css?v=v004.4.0">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -86,6 +86,18 @@
     <button id="stop-tracking" type="button">追跡を終える</button>
   </div>
 
+  <aside id="building-sheet" class="panel sheet building-sheet" hidden data-testid="building-sheet">
+    <header>
+      <div><small id="building-sheet-kicker">盤面の建物</small><h2 id="building-sheet-title">—</h2></div>
+      <button type="button" data-close-sheet="building-sheet" aria-label="建物情報を閉じる">×</button>
+    </header>
+    <div id="building-summary" class="building-summary"></div>
+    <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
+    <section id="building-household" class="building-detail"></section>
+    <section id="building-shelves" class="building-detail"></section>
+    <section id="building-conversion" class="building-detail"></section>
+  </aside>
+
   <aside id="company-sheet" class="panel sheet" hidden data-testid="company-sheet">
     <header>
       <div><small>勅許会社</small><h2>会社と本国注文</h2></div>
@@ -162,6 +174,6 @@
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.3.0"></script>
+  <script type="module" src="./src/main.js?v=v004.4.0"></script>
 </body>
 </html>

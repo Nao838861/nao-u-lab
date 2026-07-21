@@ -19,6 +19,7 @@ export class Renderer {
     this.height = 1;
     this.pulse = 0;
     this.selectedCarrierId = null;
+    this.selectedBuildingId = null;
     this.operationPreview = null;
     this.resize();
   }
@@ -167,6 +168,13 @@ export class Renderer {
         fill, '#455344', 0.9,
       );
     }
+    const selected = model.buildings.find(building => building.id === this.selectedBuildingId);
+    if (selected) {
+      this.footprint(
+        selected.x, selected.y, selected.width, selected.height,
+        '#f2c45d', '#ffe39a', 0.34,
+      );
+    }
   }
 
   drawRoads(model) {
@@ -238,11 +246,12 @@ export class Renderer {
         2,
       );
       ctx.save();
-      ctx.fillStyle = building.vacant ? '#9b8e77' : '#e5b65b';
-      ctx.strokeStyle = '#443d31';
-      ctx.lineWidth = Math.max(1, this.camera.zoom);
+      const selected = building.id === this.selectedBuildingId;
+      ctx.fillStyle = selected ? '#fff0ad' : building.vacant ? '#9b8e77' : '#e5b65b';
+      ctx.strokeStyle = selected ? '#f2a93b' : '#443d31';
+      ctx.lineWidth = Math.max(selected ? 2 : 1, (selected ? 2 : 1) * this.camera.zoom);
       ctx.beginPath();
-      ctx.arc(point.x, point.y, Math.max(2.5, 4 * this.camera.zoom), 0, Math.PI * 2);
+      ctx.arc(point.x, point.y, Math.max(selected ? 4 : 2.5, (selected ? 6 : 4) * this.camera.zoom), 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.restore();
@@ -810,6 +819,42 @@ export class Renderer {
       }
     }
     return selected;
+  }
+
+  hitTestBuilding(model, screenX, screenY) {
+    const pointInPolygon = (point, polygon) => {
+      let inside = false;
+      for (let current = 0, previous = polygon.length - 1; current < polygon.length; previous = current, current += 1) {
+        const a = polygon[current];
+        const b = polygon[previous];
+        if ((a.y > point.y) !== (b.y > point.y)
+          && point.x < ((b.x - a.x) * (point.y - a.y)) / (b.y - a.y) + a.x) inside = !inside;
+      }
+      return inside;
+    };
+    const point = { x: screenX, y: screenY };
+    const frontToBack = [...model.buildings].sort((left, right) => (
+      right.x + right.width + right.y + right.height
+      - (left.x + left.width + left.y + left.height)
+    ));
+    for (const building of frontToBack) {
+      const elevation = Math.max(4, building.appearance?.elevation ?? 12);
+      const base = [
+        this.camera.project(building.x, building.y),
+        this.camera.project(building.x + building.width, building.y),
+        this.camera.project(building.x + building.width, building.y + building.height),
+        this.camera.project(building.x, building.y + building.height),
+      ];
+      const top = [
+        this.camera.project(building.x, building.y, elevation),
+        this.camera.project(building.x + building.width, building.y, elevation),
+        this.camera.project(building.x + building.width, building.y + building.height, elevation),
+        this.camera.project(building.x, building.y + building.height, elevation),
+      ];
+      const faces = [base, top, [top[1], base[1], base[2], top[2]], [top[2], base[2], base[3], top[3]]];
+      if (faces.some(face => pointInPolygon(point, face))) return building;
+    }
+    return null;
   }
 }
 

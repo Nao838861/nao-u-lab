@@ -21,6 +21,7 @@ import {
 import {
   WorldPresentation, interpolateWorldModel, transitionDuration,
 } from '../src/presentation.js';
+import { Renderer } from '../src/renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from '../src/start_modes.js';
 import {
   CONVERSION_SURVIVAL_DAYS, FOOD_IMPORT_EMA_TARGET,
@@ -1688,7 +1689,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.3.0-tutorial-complete');
+  assert.equal(VERSION, 'v004.4.0-building-inspector');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -1935,6 +1936,32 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.equal(Object.isFrozen(model), true);
   assert.equal(Object.isFrozen(model.terrain[0][0]), true);
   assert.throws(() => { model.terrain[0][0].kind = 'coal'; }, TypeError);
+});
+
+test('UI向上段2: 世帯の財布・家族・充足・空腹と加工棚を不変モデルで公開する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(30);
+  const snapshot = api.snapshot({ scope: 'full' });
+  const before = structuredClone(snapshot);
+  const model = snapshotToViewModel(snapshot);
+  const source = snapshot.economy.households[0];
+  assert.ok(source, '入植後の実世帯を観測する');
+  const household = model.households.find(row => row.id === source.id);
+  assert.equal(household.familyName, source.sur);
+  assert.deepEqual(household.memberNames, source.members.map(member => member.name));
+  assert.equal(household.purse, source.purse);
+  assert.equal(household.recentIncome, source.incomeLog.at(-1) ?? source.income30);
+  assert.deepEqual(household.satisfaction, source.satLast);
+  assert.equal(household.hungerDays, source.hungerHist.reduce((total, value) => total + value, 0));
+  assert.equal(household.hungerWindow, source.hungerHist.length);
+  assert.equal(Object.isFrozen(household.satisfaction), true);
+  assert.throws(() => household.memberNames.push('改変'), TypeError);
+  for (const conversion of model.conversionEconomics) {
+    const building = snapshot.physical.buildings.find(row => row.id === conversion.buildingId);
+    assert.equal(conversion.inputAmount, building.inventory.input[conversion.inputGoods] ?? 0);
+    assert.equal(conversion.outputAmount, building.inventory.output[conversion.goods] ?? 0);
+  }
+  assert.deepEqual(snapshot, before, '表示変換は元snapshotを書き換えない');
 });
 
 test('段2: UIあり/なしで60tick後のエンジンJSON状態が完全一致する', () => {
@@ -2321,6 +2348,50 @@ test('段12: 実キャリアは荷・出所・行き先・経路を追跡表示�
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.match(renderer, /hitTestCarrier/);
   assert.match(main, /selectCarrier/);
+});
+
+test('UI向上段3: 3D建物の上面を前面順にhit testし空所は選ばない', () => {
+  const model = snapshotToViewModel(createEngineApi(buildBaseCity(11)).snapshot());
+  const camera = new IsometricCamera();
+  camera.resize(1200, 800);
+  camera.setWorldSize(model.width, model.height);
+  const renderer = Object.create(Renderer.prototype);
+  renderer.camera = camera;
+  const building = model.buildings.find(row => row.type === 'market') ?? model.buildings[0];
+  const point = camera.project(
+    building.x + building.width / 2,
+    building.y + building.height / 2,
+    building.appearance.elevation,
+  );
+  assert.equal(renderer.hitTestBuilding(model, point.x, point.y)?.id, building.id);
+  assert.equal(renderer.hitTestBuilding(model, -10000, -10000), null);
+});
+
+test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択強調を備える', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const renderer = fs.readFileSync(new URL('../src/renderer.js', import.meta.url), 'utf8');
+  const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
+  for (const id of [
+    'building-sheet', 'building-summary', 'building-household', 'building-shelves',
+    'building-conversion', 'focus-selected-building',
+  ]) assert.match(html, new RegExp(`id=["']${id}["']`));
+  assert.match(main, /hitTestCarrier[\s\S]*hitTestBuilding[\s\S]*selectBuilding/);
+  assert.match(main, /function renderBuildingSheet/);
+  assert.match(main, /camera\.focus\(building\.x \+ building\.width \/ 2/);
+  assert.match(renderer, /selectedBuildingId/);
+  assert.match(renderer, /drawTerrain\(model\);[\s\S]*drawBuildingGrounds\(model\);[\s\S]*drawRoads\(model\);[\s\S]*drawGroundOverlays\(model\);[\s\S]*drawWorldObjects\(model\);/);
+  assert.match(css, /#world\s*\{[\s\S]*cursor:\s*default/);
+  assert.match(css, /#world\.map-dragging\s*\{\s*cursor:\s*grabbing/);
+  assert.match(css, /#world\.tool-active\s*\{\s*cursor:\s*crosshair/);
+
+  const api = createEngineApi(buildBaseCity(13));
+  const before = api.snapshot();
+  const journal = api.inputJournal();
+  const selected = snapshotToViewModel(before).buildings[0];
+  assert.ok(selected.id !== null, '選択対象にはsnapshot由来のIDがある');
+  assert.deepEqual(api.snapshot(), before, '表示上の選択はengine stateを変えない');
+  assert.deepEqual(api.inputJournal(), journal, '表示上の選択はjournalを増やさない');
 });
 
 function findPreview(model, job) {

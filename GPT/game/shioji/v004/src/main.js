@@ -1,7 +1,7 @@
 import { IsometricCamera } from './camera.js';
 import { SimulationClock } from './clock.js';
 import {
-  GOODS_LABELS, JOB_LABELS, PLACEMENT_JOBS, SPEEDS, VERSION,
+  GOODS_LABELS, JOB_LABELS, PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION,
 } from './config.js';
 import { createEngineController } from './engine_bridge.js';
 import { presentEvent } from './event_view.js';
@@ -27,6 +27,7 @@ let displayModel = presentation.reset(model);
 let lastEventSequence = 0;
 let visibleEventCount = 0;
 let selectedCarrierId = null;
+let selectedBuildingId = null;
 let activeTool = null;
 let toolDragStart = null;
 let dismissedOfferKey = null;
@@ -43,6 +44,23 @@ function formatNumber(value) {
 function formatQuantity(value) {
   return (Math.round(value * 10) / 10).toLocaleString('ja-JP', { maximumFractionDigits: 1 });
 }
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>'"]/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
+  })[character]);
+}
+
+const HOUSEHOLD_STATE_LABELS = Object.freeze({
+  home: '在宅', toMarket: '市場へ移動中', atMarket: '市場で取引中',
+  fromMarket: '帰宅中', working: '仕事中', toWork: '仕事場へ移動中',
+  fromWork: '仕事から帰宅中',
+});
+
+const SATISFACTION_LABELS = Object.freeze({
+  food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
+  saltchar: '塩と燃料', tools: '道具', salt: '塩', char: '燃料', cloth: '布', iron: '鉄材',
+});
 
 function showToast(row) {
   const toast = document.createElement('div');
@@ -82,6 +100,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
 }
 
 function renderHud() {
+  syncSelectedBuilding();
   $('#build-version').textContent = `Build ${VERSION}`;
   $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
   $('#funds-value').textContent = formatNumber(model.companyMoney);
@@ -98,6 +117,7 @@ function renderHud() {
     button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);
   });
   if (!$('#company-sheet').hidden) renderCompanySheet();
+  if (!$('#building-sheet').hidden) renderBuildingSheet();
   renderTutorial();
 }
 
@@ -222,6 +242,7 @@ function selectTool(tool) {
     button.classList.toggle('on', button.dataset.tool === activeTool);
   });
   $('#cancel-tool').hidden = !activeTool;
+  canvas.classList.toggle('tool-active', Boolean(activeTool));
   setToolHint(toolInstruction(activeTool));
 }
 
@@ -363,6 +384,10 @@ function endPointer(event) {
   if (wasTap) {
     const carrier = renderer.hitTestCarrier(displayModel, point.x, point.y);
     if (carrier) selectCarrier(carrier);
+    else {
+      const building = renderer.hitTestBuilding(displayModel, point.x, point.y);
+      selectBuilding(building);
+    }
   }
 }
 
@@ -382,6 +407,11 @@ canvas.addEventListener('wheel', event => {
 window.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !$('#tutorial-letter-modal').hidden) {
     closeTutorialLetter();
+  } else if (event.key === 'Escape') {
+    const sheet = [...document.querySelectorAll('.sheet')].find(candidate => !candidate.hidden);
+    if (sheet) closeSheet(sheet.id);
+    else if (activeTool) selectTool(activeTool);
+    else if (selectedBuildingId !== null) selectBuilding(null);
   } else if (event.key === ' ') {
     event.preventDefault();
     setSpeed(clock.speedIndex === 0 ? 1 : 0);
@@ -510,6 +540,79 @@ function renderTutorialLetterSheet() {
   }
 }
 
+function renderBuildingSheet() {
+  const building = model.buildings.find(row => row.id === selectedBuildingId);
+  if (!building) return false;
+  const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
+  const connection = model.roadConnection?.buildings?.find(row => row.id === building.id);
+  const hasMarket = model.buildings.some(row => row.roles?.includes('market'));
+  const status = building.fixed ? '会社の固定施設' : building.occupied ? '世帯が稼働中' : '空き区画';
+  const road = !hasMarket ? '市場未設置' : connection?.connected ? '市場へ接続' : '市場へ未接続';
+  $('#building-sheet-kicker').textContent = building.roles?.includes('port') ? '港湾物流'
+    : building.roles?.includes('market') ? '市場物流'
+      : building.roles?.includes('warehouse') ? '会社物流' : '職住一体の区画';
+  $('#building-sheet-title').textContent = JOB_LABELS[building.type] ?? building.type;
+  $('#building-summary').innerHTML = `
+    <div class="building-fact"><small>状態</small><b>${status}</b></div>
+    <div class="building-fact"><small>道路</small><b>${road}</b></div>
+    <div class="building-fact"><small>敷地</small><b>${building.width}×${building.height}区画</b></div>
+    <div class="building-fact"><small>座標 / 入口</small><b>${building.x},${building.y} / ${building.entrance ? `${building.entrance.x},${building.entrance.y}` : 'なし'}</b></div>`;
+
+  const householdPanel = $('#building-household');
+  householdPanel.hidden = !household;
+  if (household) {
+    const family = household.familyName ? `${escapeHtml(household.familyName)}家` : `世帯#${household.id}`;
+    const names = household.memberNames.length ? household.memberNames.map(escapeHtml).join('、') : '名前の記録なし';
+    const purse = household.purse === null ? '未観測' : `${formatQuantity(household.purse * 10)}デナリ`;
+    const income = `${household.recentIncome >= 0 ? '+' : ''}${formatQuantity(household.recentIncome * 10)}デナリ`;
+    const satisfaction = household.satisfaction
+      ? Object.entries(household.satisfaction).map(([key, met]) => (
+        `<span class="${met ? 'met' : ''}">${escapeHtml(SATISFACTION_LABELS[key] ?? GOODS_LABELS[key] ?? key)}</span>`
+      )).join('') : '<span>未観測</span>';
+    householdPanel.innerHTML = `
+      <h3>${family}・${household.members}人</h3>
+      <div class="household-vitals">
+        <span><small>現在</small><b>${escapeHtml(HOUSEHOLD_STATE_LABELS[household.state] ?? household.state)}</b></span>
+        <span><small>財布</small><b>${purse}</b></span>
+        <span><small>直近日収</small><b>${income}</b></span>
+        <span><small>文化</small><b>Lv${household.cultureLevel}</b></span>
+        <span><small>空腹</small><b>${household.hungerWindow ? `${household.hungerDays}/${household.hungerWindow}日` : '記録なし'}</b></span>
+        <span><small>生産倍率</small><b>${Math.round(household.productionMultiplier * 100)}%</b></span>
+      </div>
+      <p>家族: ${names}</p>
+      <p>連続空腹 ${household.hungerRun}日・累計歩行 ${formatQuantity(household.walkingDistance)}区画・${household.marketTripActive ? `市場往復 ${household.marketTripTicks}tick` : '市場往復なし'}</p>
+      <div class="satisfaction-list" aria-label="直近の暮らしの充足">${satisfaction}</div>`;
+  }
+
+  const shelfPanel = $('#building-shelves');
+  const boundedCapacity = row => Number.isFinite(row.capacity)
+    && row.capacity > 0 && row.capacity < Number.MAX_SAFE_INTEGER / 2;
+  const shelves = building.shelves.filter(row => row.amount > 1e-9 || boundedCapacity(row));
+  shelfPanel.innerHTML = `<h3>区分棚</h3>${shelves.length ? `<div class="shelf-list">${shelves.map(row => {
+    const bounded = boundedCapacity(row);
+    const capacity = bounded ? ` / ${formatQuantity(row.capacity)}荷`
+      : row.capacity > 0 ? '荷 / 上限なし' : '荷';
+    const percent = bounded ? Math.min(100, Math.max(0, row.amount / row.capacity * 100)) : 0;
+    const meter = bounded ? `<i class="shelf-meter"><i style="width:${percent}%"></i></i>` : '';
+    return `<div class="shelf-row"><small>${escapeHtml(SECTION_LABELS[row.section] ?? row.section)}</small><span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)}${meter}</span><b>${formatQuantity(row.amount)}${capacity}</b></div>`;
+  }).join('')}</div>` : '<p>棚に割り当てられた現物はありません。</p>'}`;
+
+  const conversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
+  const conversionPanel = $('#building-conversion');
+  conversionPanel.hidden = !conversion;
+  if (conversion) {
+    conversionPanel.innerHTML = `
+      <h3>加工のつながり</h3>
+      <div class="conversion-chain">
+        <span><small>投入棚</small><b>${escapeHtml(GOODS_LABELS[conversion.inputGoods] ?? conversion.inputGoods)} ${formatQuantity(conversion.inputAmount)}荷</b></span>
+        <b>→</b>
+        <span><small>産出棚</small><b>${escapeHtml(GOODS_LABELS[conversion.goods] ?? conversion.goods)} ${formatQuantity(conversion.outputAmount)}荷</b></span>
+      </div>
+      <p>実生産原価 ${formatQuantity(conversion.cost * 10)}デナリ/荷・市場相場 ${formatQuantity(conversion.marketPrice * 10)}デナリ/荷・生産EMA ${formatQuantity(conversion.productionEma)}</p>`;
+  }
+  return true;
+}
+
 function openTutorialLetter(id) {
   const letter = tutorialDirector?.letters().find(row => row.id === id);
   if (!letter) return false;
@@ -562,19 +665,60 @@ function tutorialSave() {
 function openSheet(id) {
   for (const sheet of document.querySelectorAll('.sheet')) sheet.hidden = sheet.id !== id;
   document.body.classList.add('sheet-open');
+  if (id === 'building-sheet') renderBuildingSheet();
   if (id === 'company-sheet') renderCompanySheet();
   if (id === 'event-sheet') renderEventSheet();
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
+}
+
+function closeSheet(id) {
+  const sheet = $(`#${id}`);
+  if (sheet) sheet.hidden = true;
+  if (![...document.querySelectorAll('.sheet')].some(candidate => !candidate.hidden)) {
+    document.body.classList.remove('sheet-open');
+  }
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
-  button.addEventListener('click', () => {
-    $(`#${button.dataset.closeSheet}`).hidden = true;
-    document.body.classList.remove('sheet-open');
-  });
+  button.addEventListener('click', () => closeSheet(button.dataset.closeSheet));
+});
+
+function syncSelectedBuilding() {
+  if (selectedBuildingId === null) return null;
+  const building = model.buildings.find(row => row.id === selectedBuildingId) ?? null;
+  if (building) return building;
+  selectedBuildingId = null;
+  renderer.selectedBuildingId = null;
+  closeSheet('building-sheet');
+  return null;
+}
+
+function selectBuilding(building) {
+  if (!building) {
+    const hadSelection = selectedBuildingId !== null;
+    selectedBuildingId = null;
+    renderer.selectedBuildingId = null;
+    closeSheet('building-sheet');
+    if (hadSelection) $('#status span').textContent = '建物の選択を解除しました';
+    return null;
+  }
+  stopTracking('');
+  selectedBuildingId = building.id;
+  renderer.selectedBuildingId = building.id;
+  openSheet('building-sheet');
+  $('#status span').textContent = `${JOB_LABELS[building.type] ?? building.type}の情報を開きました`;
+  return building;
+}
+
+$('#focus-selected-building').addEventListener('click', () => {
+  const building = syncSelectedBuilding();
+  if (!building) return;
+  camera.focus(building.x + building.width / 2, building.y + building.height / 2);
+  closeSheet('building-sheet');
+  $('#status span').textContent = `${JOB_LABELS[building.type] ?? building.type}を画面中央へ移しました`;
 });
 
 $('#tutorial-letter-list').addEventListener('click', event => {
@@ -648,6 +792,9 @@ function stopTracking(message = '追跡を終了しました') {
 
 function selectCarrier(carrier) {
   if (!carrier) return stopTracking();
+  selectedBuildingId = null;
+  renderer.selectedBuildingId = null;
+  closeSheet('building-sheet');
   selectedCarrierId = carrier.id;
   renderer.selectedCarrierId = carrier.id;
   const goods = carrier.goods ? (GOODS_LABELS[carrier.goods] ?? carrier.goods) : '人の移動';
@@ -718,6 +865,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get model() { return model; },
   get displayModel() { return displayModel; },
   get selectedCarrierId() { return selectedCarrierId; },
+  get selectedBuildingId() { return selectedBuildingId; },
   get activeTool() { return activeTool; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
   presentation,
@@ -725,6 +873,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   stepOneDay,
   advanceTicks,
   selectCarrier,
+  selectBuilding,
   stopTracking,
   selectTool,
   openSheet,

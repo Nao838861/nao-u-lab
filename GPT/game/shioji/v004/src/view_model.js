@@ -179,8 +179,12 @@ export function snapshotToViewModel(snapshot) {
   const households = snapshot.economy.households.map(household => {
     const pantry = pantryRows(household);
     const pantryGroups = groupedStock(pantry);
+    const hungerHistory = [...(household.hungerHist ?? [])];
+    const satisfaction = household.satLast ? { ...household.satLast } : null;
     return {
       id: household.id,
+      familyName: household.sur ?? '',
+      memberNames: (household.members ?? []).map(member => member?.name ?? String(member)),
       job: household.job,
       x: household.px ?? household.x,
       y: household.py ?? household.y,
@@ -194,6 +198,19 @@ export function snapshotToViewModel(snapshot) {
       marketTripTicks: household.marketTripTicks ?? 0,
       productionMultiplier: household.productionMultiplier ?? 1,
       tookMarketTripToday: Boolean(household.tookMarketTripToday),
+      purse: Number.isFinite(household.purse) ? household.purse : null,
+      recentIncome: Number.isFinite(household.incomeLog?.at(-1))
+        ? household.incomeLog.at(-1) : (household.income30 ?? 0),
+      satisfaction,
+      satisfiedCount: satisfaction
+        ? Object.values(satisfaction).filter(Boolean).length : null,
+      satisfactionCount: satisfaction ? Object.keys(satisfaction).length : null,
+      hungerDays: hungerHistory.reduce((total, hungry) => total + Number(Boolean(hungry)), 0),
+      hungerWindow: hungerHistory.length,
+      hungerRun: household.hungerRun ?? 0,
+      walkingDistance: household.walk ?? 0,
+      roadConnected: Boolean(household.road),
+      marketTransactionTicks: household.marketTransactionTicks ?? 0,
       pantry,
       pantryStock: pantryGroups[0] ?? null,
     };
@@ -267,6 +284,7 @@ export function snapshotToViewModel(snapshot) {
       goods: definition.goods,
       inputGoods: definition.inputGoods,
       inputAmount: building?.inventory?.input?.[definition.inputGoods] ?? 0,
+      outputAmount: building?.inventory?.output?.[definition.goods] ?? 0,
       inputPrice: snapshot.economy.px[definition.inputGoods] ?? 0,
       cost,
       marketPrice: snapshot.economy.px[definition.goods] ?? 0,

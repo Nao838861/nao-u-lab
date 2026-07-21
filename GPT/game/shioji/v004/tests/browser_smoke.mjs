@@ -217,8 +217,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.3.0-tutorial-complete');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.3.0-tutorial-complete');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.4.0-building-inspector');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.4.0-building-inspector');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -283,7 +283,7 @@ async function checkViewport(width, height, mobile) {
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
       game.advanceTicks(1292 - game.model.tick, { animate: false });
-      game.advanceTicks(1, { animate: true, baseSeconds: 0.3 });
+      game.advanceTicks(1, { animate: true, baseSeconds: 2 });
     })()`);
     await wait(45);
     const dockingVisual = await page.evaluate(`(() => {
@@ -305,12 +305,12 @@ async function checkViewport(width, height, mobile) {
     assert.equal(dockingVisual.handlingQty, 1);
     assert.equal(dockingVisual.handlingDerived, true);
 
-    await wait(330);
+    await wait(2100);
     assert.equal(await page.evaluate('window.__SHIOJI_V004__.displayModel.portVisuals[0]?.phase'), 'docked');
     await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
       game.advanceTicks(9, { animate: false });
-      game.advanceTicks(1, { animate: true, baseSeconds: 0.3 });
+      game.advanceTicks(1, { animate: true, baseSeconds: 2 });
     })()`);
     await wait(45);
     const departureVisual = await page.evaluate(`(() => {
@@ -325,7 +325,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(departureVisual.qty > 0 && departureVisual.qty <= 1, JSON.stringify(departureVisual));
     assert.ok(departureVisual.cart, JSON.stringify(departureVisual));
 
-    await wait(330);
+    await wait(2100);
     const carrierPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
       const carrier = game.displayModel.carriers.find(row => row.kind === 'cart');
@@ -374,6 +374,72 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.familyRows > 0, JSON.stringify(worldVisuals));
+
+    const buildingPoint = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const buildings = [...game.displayModel.buildings]
+        .sort((left, right) => Number(right.occupied) - Number(left.occupied));
+      for (const building of buildings) {
+        const point = game.camera.project(
+          building.x + building.width / 2,
+          building.y + building.height / 2,
+          building.appearance.elevation,
+        );
+        if (game.renderer.hitTestCarrier(game.displayModel, point.x, point.y)) continue;
+        if (game.renderer.hitTestBuilding(game.displayModel, point.x, point.y)?.id !== building.id) continue;
+        return { id: building.id, x: point.x, y: point.y, journalLength: game.controller.inputJournal().length };
+      }
+      return null;
+    })()`);
+    assert.ok(buildingPoint, '荷車と重ならない建物の実クリック点がある');
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: buildingPoint.x, y: buildingPoint.y, button: 'left', clickCount: 1,
+    });
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: buildingPoint.x, y: buildingPoint.y, button: 'left', clickCount: 1,
+    });
+    await wait(60);
+    assert.deepEqual(page.errors, [], `建物クリック中のruntime error: ${page.errors.join(' | ')}`);
+    const buildingSheet = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const sheet = document.querySelector('#building-sheet');
+      const box = sheet.getBoundingClientRect();
+      return {
+        selected: game.selectedBuildingId,
+        rendererSelected: game.renderer.selectedBuildingId,
+        hidden: sheet.hidden,
+        title: document.querySelector('#building-sheet-title').textContent,
+        summary: document.querySelector('#building-summary').textContent,
+        household: document.querySelector('#building-household').textContent,
+        shelves: document.querySelector('#building-shelves').textContent,
+        journalLength: game.controller.inputJournal().length,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(buildingSheet.selected, buildingPoint.id, JSON.stringify(buildingSheet));
+    assert.equal(buildingSheet.rendererSelected, buildingPoint.id, JSON.stringify(buildingSheet));
+    assert.equal(buildingSheet.hidden, false, JSON.stringify(buildingSheet));
+    assert.ok(buildingSheet.title.length > 0, JSON.stringify(buildingSheet));
+    assert.match(buildingSheet.summary, /状態.*道路.*敷地.*座標/s);
+    assert.match(buildingSheet.shelves, /区分棚/, JSON.stringify(buildingSheet));
+    assert.equal(buildingSheet.journalLength, buildingPoint.journalLength, '建物選択はjournalを増やさない');
+    assert.ok(buildingSheet.box.left >= 0 && buildingSheet.box.right <= width, JSON.stringify(buildingSheet));
+    assert.ok(buildingSheet.box.top >= 0 && buildingSheet.box.bottom <= height, JSON.stringify(buildingSheet));
+    await page.screenshot('/tmp/shioji_v004_building_sheet.png');
+    const focusResult = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      document.querySelector('#focus-selected-building').click();
+      const result = {
+        selected: game.selectedBuildingId,
+        hidden: document.querySelector('#building-sheet').hidden,
+        panX: game.camera.panX,
+        panY: game.camera.panY,
+      };
+      game.selectBuilding(null);
+      return result;
+    })()`);
+    assert.equal(focusResult.selected, buildingPoint.id, JSON.stringify(focusResult));
+    assert.equal(focusResult.hidden, true, JSON.stringify(focusResult));
 
     const placement = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -524,15 +590,30 @@ async function checkViewport(width, height, mobile) {
       document.querySelector('#toast-stack').replaceChildren();
     })()`);
   } else {
-    const mobileSheet = await page.evaluate(`(() => {
+    const mobileBuilding = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      game.openSheet('company-sheet');
-      const box = document.querySelector('#company-sheet').getBoundingClientRect();
-      document.querySelector('[data-close-sheet="company-sheet"]').click();
-      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
+      game.selectBuilding(game.model.buildings.find(building => building.occupied) ?? game.model.buildings[0]);
+      const buildingBox = document.querySelector('#building-sheet').getBoundingClientRect();
+      const buildingText = document.querySelector('#building-sheet').textContent;
+      return {
+        box: { left: buildingBox.left, right: buildingBox.right, top: buildingBox.top, bottom: buildingBox.bottom },
+        text: buildingText,
+      };
     })()`);
-    assert.ok(mobileSheet.left >= 0 && mobileSheet.right <= width, JSON.stringify(mobileSheet));
-    assert.ok(mobileSheet.top >= 0 && mobileSheet.bottom <= height, JSON.stringify(mobileSheet));
+    assert.ok(mobileBuilding.box.left >= 0 && mobileBuilding.box.right <= width, JSON.stringify(mobileBuilding));
+    assert.ok(mobileBuilding.box.top >= 0 && mobileBuilding.box.bottom <= height, JSON.stringify(mobileBuilding));
+    assert.match(mobileBuilding.text, /状態.*道路.*敷地.*座標/s);
+    await page.screenshot('/tmp/shioji_v004_building_sheet_mobile.png');
+    const mobileCompany = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.selectBuilding(null);
+      game.openSheet('company-sheet');
+      const companyBox = document.querySelector('#company-sheet').getBoundingClientRect();
+      document.querySelector('[data-close-sheet="company-sheet"]').click();
+      return { left: companyBox.left, right: companyBox.right, top: companyBox.top, bottom: companyBox.bottom };
+    })()`);
+    assert.ok(mobileCompany.left >= 0 && mobileCompany.right <= width, JSON.stringify(mobileCompany));
+    assert.ok(mobileCompany.top >= 0 && mobileCompany.bottom <= height, JSON.stringify(mobileCompany));
   }
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
