@@ -11,7 +11,41 @@
 - Slack 投稿・品質判定・記憶階層の整理は未実施（後続 phase へ委譲）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260722_letters_for_letters_ai_assisted_game_dev_postmortem.md
+    reason: "出典 URL が HTTP 404 で原文を再確認できず、約4000字を根拠付きで構成できない"
+  - path: memory/shared_reads_candidates/20260722_death_thief_stars_game_jam_postmortem.md
+    reason: "出典 URL が HTTP 404 で原文を再確認できず、評価内容と限界の provenance が不足"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  builders_refreshed_at_start: true
+  decisions:
+    - path: memory/shared_reads_candidates/20260722_letters_for_letters_ai_assisted_game_dev_postmortem.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260722_death_thief_stars_game_jam_postmortem.md
+      decision: continue
+source_validation:
+  - path: memory/shared_reads_candidates/20260722_letters_for_letters_ai_assisted_game_dev_postmortem.md
+    result: "HTTP 404; canonical URL unresolved"
+  - path: memory/shared_reads_candidates/20260722_death_thief_stars_game_jam_postmortem.md
+    result: "HTTP 404; canonical URL unresolved"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
