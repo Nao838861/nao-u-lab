@@ -4,6 +4,26 @@ url: "https://emlise.itch.io/conservation-of-bass/devlog/1476584/conservation-of
 collected_at: "2026-07-22T07:01:13+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, puzzle, postmortem, game-jam, mechanics, scope, level-design]
+evaluated_at: "2026-07-22T07:05:20+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T07:05:20+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T07:05:20+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: >-
+  過去の scope 超過という問題、5 level を先に列挙する採用試験、単一 mechanic への制約、棄却案、並行制作と polish、
+  jam の全カテゴリ1位まで因果を追える。短期 puzzle prototype の着手判定として、約4000字でも根拠を薄めず展開できる。
+suggested_post_outline:
+  overview_angle: "単一 mechanic の面白さを、実装後ではなく『同じ規則で5 levelを作れるか』という展開可能性テストで着手前に検証する"
+  analysis_axis: "scope 失敗の反省、level 案による事前検証、規則と theme の統一、職種間の並行制作、棄却案、jam 評価を一つの因果鎖として読む"
+  application_target: "短期 puzzle prototype で coding 前に5つの異なる状況を紙上列挙し、成立しなければ mechanic を替え、成立後は追加規則を抑えて polish へ時間を移す制作ゲート"
+  pros_cons: "長所は展開不足を安価に発見し、level design を他工程と並走させられること。短所は5案が質や長期的深さを保証せず、短い jam と完成品では必要な検証量が異なること"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

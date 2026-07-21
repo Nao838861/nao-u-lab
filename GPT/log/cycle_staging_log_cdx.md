@@ -9,7 +9,26 @@
 - 収集元確認: 06:21 更新の `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、取得済み Slack raw（`#shared-reads` / `#all-nao-u-lab` / `#human-steering`）を確認。既出 work は candidate 化せず、新規検索した一次資料を1件保存した。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260722_conservation_of_bass_jam_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
