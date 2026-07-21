@@ -34,6 +34,7 @@ NEXT_ACTION_BY_STATUS = {
 }
 REASSESSMENT_STATUSES = {"postponed", "needs_review"}
 CANONICAL_QUEUE_STATUSES = {"postponed", "needs_review", "ready_to_post"}
+VALID_LIFECYCLE_STATUSES = {"posted", "ready_to_post", "postponed", "failed", "needs_review"}
 
 
 def parse_frontmatter(text: str) -> tuple[str, str, str] | None:
@@ -76,29 +77,50 @@ def nested_block_fields(frontmatter: str, key: str) -> dict[str, str]:
     return values
 
 
-def infer_candidate_status(fields: dict[str, str], has_posted: bool, has_phase3_skip: bool) -> str:
-    if has_posted:
+def status_from_last_decision(value: str) -> str:
+    decision = value.casefold().strip()
+    if decision.startswith("posted"):
         return "posted"
-    if has_phase3_skip:
+    if decision == "pass" or decision.startswith("ready_to_post"):
+        return "ready_to_post"
+    if decision.startswith("postpone") or decision.startswith("postponed"):
         return "postponed"
+    if decision.startswith("fail") or decision.startswith("failed"):
+        return "failed"
+    if decision.startswith("needs_review"):
+        return "needs_review"
+    return ""
+
+
+def infer_candidate_status(fields: dict[str, str], has_posted: bool, has_phase3_skip: bool) -> tuple[str, str, bool]:
+    """Return current status, evidence source, and whether conflicts are safe to repair."""
+    if has_posted:
+        return "posted", "posted_block", True
+    lifecycle_status = fields.get("status", "").casefold()
+    candidate_status = fields.get("candidate_status", "").casefold()
+    evidence_status = status_from_last_decision(fields.get("last_decision", "")) if fields.get("evidence") else ""
+    if has_phase3_skip:
+        if evidence_status and lifecycle_status == candidate_status == evidence_status:
+            return evidence_status, "decision_evidence_after_phase3_skip", False
+        return "postponed", "phase3_skip_block", True
+    if lifecycle_status in VALID_LIFECYCLE_STATUSES and lifecycle_status == candidate_status:
+        return lifecycle_status, "consistent_current_fields", False
+    if evidence_status and evidence_status in {lifecycle_status, candidate_status}:
+        return evidence_status, "decision_evidence", True
+    if lifecycle_status in VALID_LIFECYCLE_STATUSES and not candidate_status:
+        return lifecycle_status, "status_field", True
+    if candidate_status in VALID_LIFECYCLE_STATUSES and not lifecycle_status:
+        return candidate_status, "candidate_status_field", True
+    if lifecycle_status in VALID_LIFECYCLE_STATUSES:
+        return lifecycle_status, "ambiguous_current_fields", False
+    if candidate_status in VALID_LIFECYCLE_STATUSES:
+        return candidate_status, "ambiguous_current_fields", False
+    if evidence_status:
+        return evidence_status, "decision_evidence", True
     gate_decision = fields.get("gate_decision", "").lower()
     if gate_decision in STATUS_BY_GATE_DECISION:
-        return STATUS_BY_GATE_DECISION[gate_decision]
-    return "needs_review"
-
-
-def status_matches_gate(status: str, gate_decision: str, has_posted: bool, has_phase3_skip: bool) -> bool:
-    if has_posted:
-        return status == "posted"
-    if has_phase3_skip:
-        return status == "postponed"
-    if gate_decision == "pass":
-        return status == "ready_to_post"
-    if gate_decision == "postpone":
-        return status == "postponed"
-    if gate_decision == "fail":
-        return status == "failed"
-    return status == "needs_review"
+        return STATUS_BY_GATE_DECISION[gate_decision], "gate_fallback", True
+    return "needs_review", "default", True
 
 
 def parse_iso(value: str) -> datetime | None:
@@ -274,7 +296,7 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
         }
 
     current_status = fields.get("candidate_status", "")
-    inferred_status = infer_candidate_status(fields, has_posted, has_phase3_skip)
+    inferred_status, status_source, conflict_fixable = infer_candidate_status(fields, has_posted, has_phase3_skip)
     current_lifecycle_status = fields.get("status", "")
     current_last_reviewed_at = fields.get("last_reviewed_at", "")
     current_last_decision = fields.get("last_decision", "")
@@ -290,12 +312,16 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
 
     anomalies: list[str] = []
     gate_decision = fields.get("gate_decision", "").lower()
-    if has_posted and gate_decision != "pass":
-        anomalies.append("posted_block_without_gate_decision_pass")
-    if current_status and not status_matches_gate(current_status, gate_decision, has_posted, has_phase3_skip):
-        anomalies.append(f"candidate_status_conflicts_with_inferred:{current_status}!={inferred_status}")
-    if current_lifecycle_status and current_lifecycle_status != inferred_status:
-        anomalies.append(f"status_conflicts_with_inferred:{current_lifecycle_status}!={inferred_status}")
+    if current_status and current_lifecycle_status and current_status != current_lifecycle_status:
+        anomalies.append(f"status_candidate_status_mismatch:{current_lifecycle_status}!={current_status}")
+    gate_status = STATUS_BY_GATE_DECISION.get(gate_decision, "")
+    current_pair_status = current_lifecycle_status if current_lifecycle_status == current_status else ""
+    transition_has_evidence = (
+        bool(current_evidence)
+        and status_from_last_decision(current_last_decision) == current_pair_status
+    )
+    if current_pair_status and gate_status and current_pair_status != gate_status and not transition_has_evidence:
+        anomalies.append(f"current_state_transition_lacks_evidence:{gate_status}->{current_pair_status}")
     if current_stale_after and inferred_stale_after and current_stale_after != inferred_stale_after:
         anomalies.append(f"stale_after_differs_from_30d_default:{current_stale_after}!={inferred_stale_after}")
 
@@ -306,14 +332,14 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
             frontmatter = set_or_insert_scalar(frontmatter, "lifecycle_backfill_reason", '"missing_status_defaulted_to_needs_review"', ["status"])
             frontmatter = set_or_insert_scalar(frontmatter, "lifecycle_backfilled_at", f'"{today.isoformat()}"', ["lifecycle_backfill_reason"])
         changed = True
-    elif fix_conflicts and current_lifecycle_status != inferred_status:
+    elif fix_conflicts and conflict_fixable and current_lifecycle_status != inferred_status:
         frontmatter = set_or_insert_scalar(frontmatter, "status", inferred_status, ["gate_decision", "candidate_status"])
         changed = True
 
     if not current_status:
         frontmatter = insert_candidate_status(frontmatter, inferred_status)
         changed = True
-    elif fix_conflicts and current_status != inferred_status:
+    elif fix_conflicts and conflict_fixable and current_status != inferred_status:
         frontmatter = insert_candidate_status(frontmatter, inferred_status)
         changed = True
 
@@ -352,6 +378,7 @@ def audit_file(path: Path, apply: bool, fix_conflicts: bool, include_unreviewed:
         "candidate_lifecycle_status": current_lifecycle_status or inferred_status,
         "candidate_status": current_status or inferred_status,
         "gate_decision": fields.get("gate_decision"),
+        "status_source": status_source,
         "has_posted": has_posted,
         "has_phase3_skip": has_phase3_skip,
         "last_reviewed_at": current_last_reviewed_at or inferred_last_reviewed_at,
@@ -419,6 +446,12 @@ def main() -> int:
         ],
         "anomalies": [item for item in results if item.get("anomalies")],
     }
+    anomaly_counts: dict[str, int] = {}
+    for item in summary["anomalies"]:
+        for anomaly in item.get("anomalies", []):
+            key = str(anomaly).split(":", 1)[0]
+            anomaly_counts[key] = anomaly_counts.get(key, 0) + 1
+    summary["anomaly_counts"] = dict(sorted(anomaly_counts.items()))
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

@@ -50,3 +50,7 @@ title canonical index は全 sibling が `posted` / `failed` の closed group �
 ## 実装メモ（2026-07-21 Phase 4c）
 
 open sibling を持つ同一 title 群を mixed / all-open に分ける `memory/shared_reads_open_duplicate_group_queue.jsonl` を導入し、stale triage・group-action・candidate preflight の入力をこの superset sidecar へ切り替えた。title 一致だけでは同一 work と確定せず、URL evidence を伴う review と既存 handoff resolve を通す。候補本文・投稿品質基準・posted-source の同一 work だけを skip する境界は変更しない。
+
+## 実装メモ（2026-07-22 Phase 4c）
+
+stale triage queue の生成時に永続 group handoff inbox の live lease を合成し、pending と期限前 deferred の同一 membership group を candidate 単位で再投入しないようにした。期限到来または membership 変化では再提示する。candidate lifecycle audit は当初の `gate_decision` と後続の現在状態を分離し、evidence 付き terminal 遷移を保持する。候補本文や投稿品質基準は変更しない。

@@ -128,7 +128,8 @@ def resolution_suppresses(
     row = relevant[0]
     action = row.get("decision_action")
     if row.get("status") == "deferred" and action == "defer":
-        return not retry_is_due(row, as_of)
+        same_membership = str(row.get("membership_fingerprint") or "") == membership_fingerprint(payload, root)
+        return same_membership and not retry_is_due(row, as_of)
     if row.get("status") == "handled" and action == "keep_distinct":
         return str(row.get("membership_fingerprint") or "") == membership_fingerprint(payload, root)
     return row.get("status") in {"pending", "deferred"}
@@ -190,7 +191,14 @@ def enqueue_rows(
             (
                 row
                 for row in reversed(rows)
-                if row.get("group_key") == group_key and row.get("status") in {"pending", "deferred"}
+                if row.get("group_key") == group_key
+                and (
+                    row.get("status") == "pending"
+                    or (
+                        row.get("status") == "deferred"
+                        and str(row.get("membership_fingerprint") or "") == membership_fingerprint(payload, root)
+                    )
+                )
             ),
             None,
         )

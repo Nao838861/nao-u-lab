@@ -157,6 +157,14 @@ python tools\build_shared_reads_group_action_queue.py
 
 `shared_reads_stale_triage_queue.jsonl` は `path` / `title` / `status` / `stale_after` / `age_days` / `duplicate_group_key` / `game_transfer_value` / `recommended_review_action` / `reason` だけを持つ再生成可能 sidecar である。`duplicate_group_key` は mixed / all-open の双方に付け、同じ group は queue 上位選定で1回だけ扱う。Phase 4a の `stale_review_batch` はこの queue の上位 5 件を引用するが、group-action handoff に含めた sibling は重ねて入れない。candidate 本体は Phase 2 の評価結果が出るまで変更しない。
 
+2026-07-22 Phase 4c 以降、stale triage builder は `memory/shared_reads_group_handoff_inbox.jsonl` の live lease を生成時に合成する。pending group と、`retry_after` 前かつ membership fingerprint が一致する deferred group は queue へ再挿入しない。期限到来、open/terminal sibling の構成・状態変化、無関係な group は抑止せず fail-open で再提示する。再現時刻を固定する監査では `--as-of <ISO 8601>` を指定できる。staging の `stale_review_batch` は「live lease 適用済み queue の上位」であり、group defer を candidate 単位で迂回しない。
+
+## candidate lifecycle audit の現在状態優先規則 (2026-07-22 Phase 4c)
+
+`tools/backfill_shared_reads_candidate_status.py` は `gate_decision` を当初の品質判断として保存し、現在状態の巻き戻し根拠に使わない。現在状態は posted block、後続 decision evidence を伴う phase3 skip 後の遷移、整合した `status` / `candidate_status`、片側だけ存在する現在状態、decision evidence、欠損時の gate fallback の順で読む。
+
+`gate_decision: postpone` から evidence 付き `failed_duplicate_of_terminal_sibling` へ進んだ行は正常な lifecycle transition である。真の anomaly は `status` / `candidate_status` の不一致、または historical gate と異なる現在状態に対応する `last_decision` / `evidence` がない場合として報告する。`--fix-conflicts` は posted/phase3 block または decision evidence で一意に決まる時だけ修復し、曖昧な行や整合済み terminal 状態を historical gate へ戻さない。
+
 ## bounded group-action handoff (2026-07-16 Phase 4c)
 
 open duplicate group の stale 候補は、open-group sidecar と stale triage を再生成した後に group-action queue を生成する。

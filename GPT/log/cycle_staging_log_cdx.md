@@ -277,7 +277,52 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260722-01
+    files_changed:
+      - path: tools/build_shared_reads_stale_triage_queue.py
+        change: modified
+      - path: tools/shared_reads_group_handoff.py
+        change: modified
+      - path: tools/test_shared_reads_stale_triage_leases.py
+        change: created
+      - path: tools/test_shared_reads_group_handoff.py
+        change: modified
+      - path: memory/shared_reads_stale_triage_queue.jsonl
+        change: modified
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+    summary: "stale triage 生成時に永続 handoff inbox の live lease と as_of を合成した。pending と期限前 deferred の同一 membership group を除外し、期限到来・membership 変化・無関係 group は再提示する。"
+    partial: false
+  - issue_id: ISS-4A-20260722-02
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: tools/test_backfill_shared_reads_candidate_status.py
+        change: created
+      - path: phases/phase4a_cleanup.md
+        change: modified
+      - path: memory/directive_shared_reads_candidate_gate_20260512.md
+        change: modified
+    summary: "candidate lifecycle audit を current-state 優先へ変更し、gate_decision は欠損補完だけに使う。evidence 付き後続 terminal 遷移を正常扱いし、曖昧な状態を --fix-conflicts で巻き戻さない。"
+    partial: false
+migrations:
+  - what: "2026-07-22T12:00:00+09:00 を as_of に stale triage sidecar を再生成し、期限前 deferred の JAMEL group を除外した。"
+    affected: "memory/shared_reads_stale_triage_queue.jsonl は 50 行を維持し、JAMEL 1 行が消え、次順位の reward-shaping candidate 1 行が入った。candidate frontmatter の一括移行は不要。"
+verification:
+  - "python -m unittest tools.test_shared_reads_group_handoff tools.test_shared_reads_open_duplicate_group_queue tools.test_shared_reads_stale_triage_leases tools.test_backfill_shared_reads_candidate_status: 18 tests OK"
+  - "python -m unittest discover -s tools -p test_shared_reads*.py: 35 tests OK。backfill lifecycle tests: 5 tests OK"
+  - "lease 境界: pending / retry 前 deferred は抑止、retry 到来 / membership 変化 / unrelated group は再提示を確認"
+  - "python tools/backfill_shared_reads_candidate_status.py --today 2026-07-22: changed=0、anomaly files は 122 から 15 へ減少。内訳は current_state_transition_lacks_evidence=1、stale_after_differs_from_30d_default=14"
+  - "--fix-conflicts dry-run: changed=0。historical gate を根拠に terminal 状態を自動変更しないことを確認"
+  - "python tools/shared_reads_group_handoff.py audit: rows=62、pending_count=0、errors=[]"
+  - "stale triage --check: rows=50 OK。JAMEL group は queue / group-action queue の双方から消え、非 group candidate が先頭へ繰り上がった"
+  - "python tools/memory_recall.py \"shared-reads stale triage lease candidate lifecycle\" --limit 3: 既存 atom を正常に読めた"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

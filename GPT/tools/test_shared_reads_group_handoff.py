@@ -177,20 +177,36 @@ class GroupHandoffTest(unittest.TestCase):
             self.assertFalse(resolution_suppresses(item_payload, rows, root))
 
     def test_defer_is_ineligible_until_retry_after(self):
-        base = datetime(2026, 7, 19, tzinfo=timezone.utc)
-        rows, _ = enqueue_rows([], [payload("alpha")], "cycle-a", base.isoformat())
-        decision = {
-            "group_key": "alpha",
-            "action": "defer",
-            "target_paths": [],
-            "reason": "source evidence missing",
-            "terminal_evidence": [],
-            "retry_after": (base + timedelta(days=2)).isoformat(),
-        }
-        rows, result = resolve(rows, rows[0]["id"], decision, "fixture", base.isoformat())
-        self.assertEqual(result, "deferred")
-        self.assertEqual(pending_rows(rows, as_of=base + timedelta(days=1)), [])
-        self.assertEqual(len(pending_rows(rows, as_of=base + timedelta(days=3))), 1)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            open_path = "memory/shared_reads_candidates/open.md"
+            candidate(root / open_path, "postponed")
+            item_payload = payload("alpha", [open_path])
+            item_payload["representative"] = open_path
+            base = datetime(2026, 7, 19, tzinfo=timezone.utc)
+            rows, _ = enqueue_rows([], [item_payload], "cycle-a", base.isoformat(), root)
+            decision = {
+                "group_key": "alpha",
+                "action": "defer",
+                "target_paths": [],
+                "reason": "source evidence missing",
+                "terminal_evidence": [],
+                "retry_after": (base + timedelta(days=2)).isoformat(),
+            }
+            rows, result = resolve(rows, rows[0]["id"], decision, "fixture", base.isoformat(), root)
+            self.assertEqual(result, "deferred")
+            self.assertTrue(resolution_suppresses(item_payload, rows, root, base + timedelta(days=1)))
+            self.assertFalse(resolution_suppresses(item_payload, rows, root, base + timedelta(days=3)))
+            self.assertEqual(pending_rows(rows, as_of=base + timedelta(days=1)), [])
+            self.assertEqual(len(pending_rows(rows, as_of=base + timedelta(days=3))), 1)
+            rows, due_reselection = enqueue_rows(rows, [item_payload], "cycle-due", "later", root)
+            self.assertEqual(due_reselection[0]["result"], "pending_duplicate_suppressed")
+            self.assertEqual(len(rows), 1)
+
+            update_frontmatter_fields(root / open_path, {"status": "needs_review"})
+            self.assertFalse(resolution_suppresses(item_payload, rows, root, base + timedelta(days=1)))
+            rows, reselected = enqueue_rows(rows, [item_payload], "cycle-b", "later", root)
+            self.assertEqual(reselected[0]["result"], "enqueued")
 
     def test_legacy_handled_row_remains_valid(self):
         legacy = {
