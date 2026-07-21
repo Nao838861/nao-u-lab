@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T09:03:25+09:00",
+  "updated_at": "2026-07-21T11:22:12+09:00",
   "reviewed_source_ts": [
+    "1780878537.585419",
     "1784584531.120939",
     "1778285008.434499",
     "1784568554.225909",
@@ -451,6 +452,58 @@
     "1784358881.327349"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T11:22:12+09:00",
+      "selected": {
+        "id": "sr-1780878537-e743ee52fb",
+        "source_ts": "1780878537.585419",
+        "title": "Memora + FAMA — Forget phase の評価装置",
+        "reason": "未レビューの score 11 atom で、memory・harness・agent・operation・evaluation の5優先タグを持つ。Memora/FAMA は stale な記憶を検出するだけでなく、無効記憶の再利用を評価上の損失として扱う。現在の self-feedback state には active probe が320件あり、discard・staleness・selective forgetting・retention/utility を扱う既存probeが併存しているため、警告や新規probeを増やさず、次の Phase 4a で重複候補1件の実利用差を判定する入力として選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "adopt_metric",
+      "decision_reason": "合計16で全必須閾値を満たす。shared-reads 本文は4 LLM×6 memory agent の評価から invalid memory reuse と evolving-memory adjustment failure を主検出シグナルとして示す一方、ローカルの active probe が実際に判断へ使われた回数はまだ追跡していないため evidence=2 とした。既存の memory-discard-operation、memory-staleness-current-evidence、memoryagentbench-axis-boundary、AMVL retention/utility probes と概念は重複するが、それらを増補せず、重複候補1件を keep/merge/retire の実行判断へ送る一回限りの metric に限定するため non_redundancy=2 とした。",
+      "existing_probes": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260605-memory-staleness-current-evidence",
+        "probe-20260608-memoryagentbench-axis-boundary",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "metric": {
+        "name": "fama_active_probe_reuse_penalty",
+        "scope": "このサイクルの Phase 4a で active probe 1件だけを評価する",
+        "target_probe": "probe-20260604-memory-discard-operation-gate",
+        "comparison_probe": "probe-20260625-amvl-retention-utility-lifecycle",
+        "fields": [
+          "reuse_evidence: target probe が staging・action・retirement 判断を一度でも変えた証拠",
+          "unique_delta: comparison probe では残らない質問・証拠・判断差",
+          "verdict: keep_unique_action | merge_into_amvl | retire_no_delta | usage_evidence_missing"
+        ],
+        "decision_rule": "unique_delta がなく comparison probe で同じ判断が残るなら、新しい警告やprobeを加えず target を merge/retire 候補にする。利用証拠を確認できない場合は usage_evidence_missing とし、このmetric自体を恒久化しない。",
+        "expires_after": "このサイクルの Phase 4a 1回で終了"
+      },
+      "change": {
+        "type": "metric",
+        "summary": "新規 active probe や恒久ルールを増やさず、次の Phase 4a で既存の重複probe 1件だけを利用差に基づき keep/merge/retire 判定する一回限りのmetricを review state に追加した。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T09:03:25+09:00",
       "selected": {
