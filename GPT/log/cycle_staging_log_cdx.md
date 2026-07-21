@@ -90,7 +90,17 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260721_self_improvements_modern_agentic_systems.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784608038645759
+    char_count: 4286
+skipped:
+  - candidate: memory/shared_reads_candidates/20260614_slm_dynamic_game_content.md
+    reason: "同一 arXiv ID 2601.23206 の詳細分析が 2026-06-09 に #shared-reads へ既投稿。現行ルールでの再投稿は重複となるため撤退。"
+    action: postpone
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

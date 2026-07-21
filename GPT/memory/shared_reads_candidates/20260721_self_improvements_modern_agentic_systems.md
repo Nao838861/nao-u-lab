@@ -7,14 +7,19 @@ genre_tags: [game-ai, agent, self-improvement, memory, evaluation, strategic-rea
 evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T13:19:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T13:19:04+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-21T13:28:06+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784608038645759"
+next_action: none
 stale_after: "2026-08-20"
 supersedes: []
+posted:
+  ts: "1784608038.645759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784608038645759"
+  char_count: 4286
+  posted_at: "2026-07-21T13:28:06+09:00"
 gate_reason: |-
   foundation model 更新と prompt / memory / tool / control logic の scaffold 更新を分ける分類が明確で、問題設定・中核概念・評価軸を抽出できる。
   self-play、curriculum、reusable skill をゲーム agent の固定 budget 評価へ具体適用でき、CoopEval 水準の概要を構成可能なため pass とする。

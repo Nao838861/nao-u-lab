@@ -6,18 +6,18 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [narrative-ai, small-language-models, npc, dynamic-content, evaluation]
 evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-21T13:19:04+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-21T13:19:04+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-21T13:28:06+09:00"
+last_decision: postponed_duplicate
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780932516509039"
+next_action: none
 stale_after: "2026-08-20"
 supersedes: []
 gate_reason: |-
-  狭い責務の fine-tuned SLM、制約形式、16/8/4-bit 比較、retry-until-success、5 秒予算まで具体化され、問題設定・手法・評価・限界を一続きで説明できる。
-  NPC 台詞や短い演出文のローカル生成へ直接適用でき、CoopEval 水準の概要を構成可能なため pass とする。
+  Phase 3 の raw Slack 再確認で、同一 arXiv ID 2601.23206 の詳細分析が 2026-06-09 に #shared-reads へ投稿済みと判明した。
+  既投稿本文は当時 2 メッセージに分割されているが、現行の 1 candidate / 1 chat.postMessage ルールで再投稿は行わず、duplicate として閉じる。
 suggested_post_outline:
   overview_angle: "巨大な汎用 LLM ではなく、責務を狭く切った SLM と再試行でゲーム内動的生成を成立させる PoC として整理する。"
   analysis_axis: "制約付き format、task-specific fine-tuning、16/8/4-bit 量子化、judge/retry、5 秒以内の latency budget を品質と運用コストの両面から分析する。"
