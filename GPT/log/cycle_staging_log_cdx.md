@@ -67,7 +67,34 @@ result: no_post
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780427580-967d3f2c17
+    source_ts: "1780427580.664779"
+    title: "Mem0 の self-editing と append-only contamination 問題"
+    reason: "未レビューの score 13 atom で、memory・agent・operation・evaluation の4優先タグを持つ。shared pool の重複・superseded atom の再ヒット・異なる instance 由来の矛盾を汚染観察へ変える提案が、現在320件ある active probe と append-only の per-atom 記憶をさらに増やすべきかという直近課題へ直接つながるため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "risk_control=1、合計12で採用条件の14に届かない。観察条件は具体的だが、per-atom migration の status／supersedes 方針、discard／usage-signal／poisoning／retention probes、本サイクル採用済みの FAMA keep／merge／retire metric と重複する。別名の probe を増やすと320件ある active probe と review state 自体を append-only に膨らませるため、新規反映は行わず、次の Phase 4a では FAMA metric が指定した既存 probe 1件の利用差判定を優先する。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新。新規 probe・評価表・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

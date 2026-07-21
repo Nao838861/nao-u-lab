@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-21T15:32:38+09:00",
+  "updated_at": "2026-07-21T17:42:29+09:00",
   "reviewed_source_ts": [
     "1780878537.585419",
     "1784584531.120939",
@@ -451,9 +451,50 @@
     "1784344260.203569",
     "1784358881.327349",
     "1784600238.488659",
-    "1784608038.645759"
+    "1784608038.645759",
+    "1780427580.664779"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T17:42:29+09:00",
+      "selected": {
+        "id": "sr-1780427580-967d3f2c17",
+        "source_ts": "1780427580.664779",
+        "title": "Mem0 の self-editing と append-only contamination 問題",
+        "reason": "未レビューの score 13 atom で、memory・agent・operation・evaluation の4優先タグを持つ。shared pool の重複・superseded atom の再ヒット・異なる instance 由来の矛盾を汚染観察へ変える提案が、現在320件ある active probe と append-only の per-atom 記憶をさらに増やすべきかという直近課題へ直接つながるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "risk_control=1、合計12で採用条件の14に届かないため、新規 probe・metric・directive は追加しない。shared-reads 本文は append-only contamination を、同一事実の3件以上の並存、supersede 後の旧 atom 再ヒット、異なる instance 由来の矛盾という観察可能な3条件へ落としており actionability は高い。一方、根拠は商業比較記事と自己申告を含む二次整理で、この環境における retrieval 品質差や誤行動率は未測定なので evidence=2 とした。さらに per-atom migration directive は実体を保持しつつ status／supersedes で fold する方針を既に持ち、memory-discard-operation、forget-usage-signal、memory-poisoning-ingest の既存 probes と、本サイクルで採用済みの FAMA keep／merge／retire metric が同じ次回行動を覆う。ここで汚染判定を別名で加えると、320件ある active probe と review state 自体を append-only に膨らませるため non_redundancy=0、risk_control=1。次の Phase 4a では新規観点を足さず、FAMA metric が指定した既存 probe 1件の利用差判定を優先する。",
+      "existing_probes": [
+        "probe-20260604-memory-discard-operation-gate",
+        "probe-20260607-forget-usage-signal-gate",
+        "probe-20260517-memory-poisoning-ingest-check",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "existing_metric": "fama_active_probe_reuse_penalty",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の discard／usage-signal／poisoning／retention probes および FAMA keep／merge／retire metric との重複による reject 理由だけを更新した。新規 probe・評価表・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T15:32:38+09:00",
       "selected": {
