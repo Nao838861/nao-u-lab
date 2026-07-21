@@ -11,7 +11,85 @@
 - duplicate preflight: 2 件とも sidecar 再生成後に実行し `continue`。Slack 投稿・品質判定は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260721_crew_motorfest_rc_playground.md
+  - memory/shared_reads_candidates/20260721_temtem_swarm_scalable_ability_system.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions:
+  - group_key: coffeebench benchmarking long horizon llm agents in heterogeneous multi agent economies
+    representative: memory/shared_reads_candidates/20260616_coffeebench_long_horizon_multi_agent_economy.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260616_coffeebench_long_horizon_multi_agent_economy.md
+      - memory/shared_reads_candidates/20260617_coffeebench_long_horizon_economy_agents.md
+      - memory/shared_reads_candidates/20260618_coffeebench_long_horizon_multi_agent_economy.md
+    reason: "3件とも同一 arXiv work の要旨重複であり、各候補とも実験条件と成績差の具体性が不足し CoopEval 水準へ届かない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260616_coffeebench_long_horizon_multi_agent_economy.md
+        evidence: "same arXiv 2606.16613; equivalent postponed excerpt"
+      - path: memory/shared_reads_candidates/20260617_coffeebench_long_horizon_economy_agents.md
+        evidence: "same arXiv 2606.16613; equivalent postponed excerpt"
+      - path: memory/shared_reads_candidates/20260618_coffeebench_long_horizon_multi_agent_economy.md
+        evidence: "same arXiv 2606.16613; equivalent postponed excerpt"
+    representative_decision: fail
+    analysis_time_minutes: 3
+  - group_key: covol a cooperative vocabulary learning game for children with autism
+    representative: memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md
+      - memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md
+    reason: "2件とも同一 arXiv work の abstract 相当で、prototype 仕様、面接による変更、効果評価が不足し投稿品質へ届かない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md
+        evidence: "same arXiv 2505.08515; equivalent prototype summary"
+      - path: memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md
+        evidence: "same arXiv 2505.08515; equivalent abstract excerpt"
+    representative_decision: fail
+    analysis_time_minutes: 2
+  - group_key: devlog 00 gamejam postmortem spring cleaning
+    representative: memory/shared_reads_candidates/20260518_spring_cleaning_gamejam_postmortem.md
+    action: close_siblings
+    target_paths:
+      - memory/shared_reads_candidates/20260518_spring_cleaning_gamejam_postmortem.md
+      - memory/shared_reads_candidates/20260601_spring_cleaning_gamejam_postmortem.md
+    reason: "2件とも同一 itch.io postmortem の重複で、制作反省は具体的だが評価根拠と一般化可能な手法が薄く4000字級投稿へ届かない。"
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260518_spring_cleaning_gamejam_postmortem.md
+        evidence: "same itch.io devlog 1515448; equivalent issue list"
+      - path: memory/shared_reads_candidates/20260601_spring_cleaning_gamejam_postmortem.md
+        evidence: "same itch.io devlog 1515448; equivalent issue list"
+    representative_decision: fail
+    analysis_time_minutes: 2
+group_handoff_audit:
+  pending_before: 3
+  read_ids:
+    - gha-d11a0e3c6d3aee00
+    - gha-2de8a8019119410d
+    - gha-b8f8c2f9fda2d6b2
+  resolved_ids:
+    - gha-d11a0e3c6d3aee00
+    - gha-2de8a8019119410d
+    - gha-b8f8c2f9fda2d6b2
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 7
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight_audit:
+  posted_source_index: fresh
+  title_canonical_index: fresh
+  open_duplicate_group_queue: fresh
+  decisions:
+    memory/shared_reads_candidates/20260721_crew_motorfest_rc_playground.md: continue
+    memory/shared_reads_candidates/20260721_temtem_swarm_scalable_ability_system.md: continue
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

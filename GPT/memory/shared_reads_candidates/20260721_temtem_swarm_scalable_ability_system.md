@@ -4,6 +4,26 @@ url: "https://80.lv/articles/how-devs-designed-a-scalable-ability-system-for-tem
 collected_at: "2026-07-21T15:16:34.7630109+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, action, abilities, progression, data-driven, architecture]
+evaluated_at: "2026-07-21T15:23:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T15:23:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T15:23:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  250超の ability を、進行三層、共通 stat modifier、data-driven template、実行 class hierarchy に分解した設計が具体的で、問題から解法まで追える。
+  組合せ可能性と balance change の局所化を小規模 action prototype にも縮小適用でき、過剰設計の危険を含めて約4000字の分析へ展開できる。
+suggested_post_outline:
+  overview_angle: "ability の大量追加を個別実装の問題ではなく、数値・進行・発火責務を分離した共通基盤の問題として整理する。"
+  analysis_axis: "Skills/Gears/Techniques の進行責務、base value と modifier の合成、template による level curve、共通処理と個別挙動を分ける script hierarchy を分析する。"
+  application_target: "自分達の action prototype で、数値効果を共通 modifier pipeline に寄せ、少数 ability の組合せテストと balance 調整を core logic の書き換えなしで回す場面に効く。"
+  pros_cons: "利点は追加と横断調整の影響範囲を狭め、組合せを増やせること。欠点は規模が小さい段階から完全な階層と汎用 stat system を入れると抽象化コストが先行すること。"
+  verdict_pre: "部分採用。まず共通 stat/modifier と data template を採用し、class hierarchy は ability 種別が増えてから段階導入する。"
 ---
 
 ## raw_excerpt

@@ -7,12 +7,12 @@ genre_tags: [game-design, postmortem, jam, production, pipeline, onboarding]
 evaluated_at: "2026-06-01T01:46:40+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-01T01:46:40+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-01T01:46:40+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T15:23:01+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-b8f8c2f9fda2d6b2; terminal:memory/shared_reads_candidates/20260518_spring_cleaning_gamejam_postmortem.md: same itch.io devlog 1515448 and equivalent issue list; memory/shared_reads_candidates/20260601_spring_cleaning_gamejam_postmortem.md: same itch.io devlog 1515448 and equivalent issue list; reason:2件とも同一itch.io postmortemの重複で制作反省は具体的だが評価根拠と一般化可能な手法が薄く4000字級投稿へ届かない"
+next_action: none
 stale_after: "2026-07-01"
 supersedes: []
 gate_reason: "engine template、modular design、tools、視覚的説明の重要性は有用だが、現 candidate の抜粋だけでは手法の中核と評価の中身が薄い。ゲーム制作への適用は可能でも、CoopEval 水準の4000字概要にするには一次本文から失敗例と判断理由を補強する必要がある。"

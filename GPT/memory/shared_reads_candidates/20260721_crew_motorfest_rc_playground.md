@@ -4,6 +4,26 @@ url: "https://80.lv/articles/interview-ubisoft-transformed-the-crew-motorfest-in
 collected_at: "2026-07-21T15:16:05.8418087+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, racing, physics, level-design, game-feel, live-service]
+evaluated_at: "2026-07-21T15:23:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-21T15:23:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-21T15:23:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-20"
+supersedes: []
+gate_reason: >-
+  物体 scale の変更を、既存 map の再解釈、専用 physics/camera、制作 workflow、10 event の段階導入まで一貫して設計した過程が具体的である。
+  同じ空間から別の遊びを作る小規模 prototype に適用でき、実装コストと既存資産再利用の両面を含む約4000字の分析へ展開できる。
+suggested_post_outline:
+  overview_angle: "RC 化を単なる車両縮小ではなく、空間の affordance・物理・camera・学習順をまとめて変換する再設計として整理する。"
+  analysis_axis: "scale による既存環境の再発見、toy-scale physics の作り直し、camera が走行判断へ与える効果、10 event の mechanic sequencing を軸に読む。"
+  application_target: "自分達の小規模 prototype で、既存 map を移動速度・当たり判定・camera の変更で再利用し、少数 stage で新操作を順に教える設計に効く。"
+  pros_cons: "利点は既存資産を新しい遊びへ変換できること。欠点は scale 変更が physics、camera、authoring tool、敵挙動まで波及し、見た目の縮小以上の実装費を伴うこと。"
+  verdict_pre: "部分採用。RC 題材そのものではなく、scale change を content multiplier と onboarding sequence に接続する設計手順を採用する。"
 ---
 
 ## raw_excerpt

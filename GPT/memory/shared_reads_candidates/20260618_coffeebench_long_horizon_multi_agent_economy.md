@@ -7,12 +7,12 @@ genre_tags: [game-design, agent-evaluation, simulation, multi-agent, economy]
 evaluated_at: "2026-06-19T00:02:05+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-06-19T00:02:05+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-06-19T00:02:05+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T15:22:43+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-d11a0e3c6d3aee00; terminal:memory/shared_reads_candidates/20260616_coffeebench_long_horizon_multi_agent_economy.md: same arXiv 2606.16613 and equivalent postponed excerpt; memory/shared_reads_candidates/20260617_coffeebench_long_horizon_economy_agents.md: same arXiv 2606.16613 and equivalent postponed excerpt; memory/shared_reads_candidates/20260618_coffeebench_long_horizon_multi_agent_economy.md: same arXiv 2606.16613 and equivalent postponed excerpt; reason:3件とも同一arXiv workの要旨重複であり各候補とも実験条件と成績差の具体性が不足しCoopEval水準へ届かない"
+next_action: none
 stale_after: "2026-07-19"
 supersedes: []
 gate_reason: |-

@@ -7,12 +7,12 @@ genre_tags: [game-design, cooperative-game, educational-game, accessibility, pla
 evaluated_at: "2026-07-18T18:19:30+09:00"
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-18T18:19:30+09:00"
-last_decision: postpone
-evidence: "gate_decision:postpone; evaluated_at:2026-07-18T18:19:30+09:00"
-next_action: revise_or_research
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-21T15:22:52+09:00"
+last_decision: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-2de8a8019119410d; terminal:memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md: same arXiv 2505.08515 and equivalent prototype summary; memory/shared_reads_candidates/20260718_covol_cooperative_vocabulary_game.md: same arXiv 2505.08515 and equivalent abstract excerpt; reason:2件とも同一arXiv workのabstract相当でプロトタイプ仕様と面接による変更と効果評価が不足し投稿品質へ届かない"
+next_action: none
 stale_after: "2026-08-17"
 supersedes: []
 gate_reason: >-
