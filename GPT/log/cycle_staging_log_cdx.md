@@ -59,7 +59,35 @@ reason: "Phase 2 の pass が空のため、投稿前レビュー対象なし。
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780644277-8c1e52c9b3
+    source_ts: "1780644277.510099"
+    title: "skill 自己進化系 2 論文の同日収束: MUSE-Autoskill + Microsoft SkillOpt 実装事例"
+    reason: "未レビューの score 13 atom で、skills・game-design・agent・operation・evaluation を含み、skill 自動生成より先に評価可能な単位と validation を作る提案が現行 Phase 3b へ直結するため"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "skill lifecycle promotion、held-out validation、add/delete/replace、変更 surface と検証対象の固定を扱う既存 probes があり、この atom 固有の新しい行動差がない。320件規模の active_probes へ同義 probe を足すリスクが高いため state-only review とした"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由のみ更新。probe・評価表・directive・恒久ルール・lease は追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

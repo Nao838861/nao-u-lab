@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-21T17:42:29+09:00",
+  "updated_at": "2026-07-21T20:41:19+09:00",
   "reviewed_source_ts": [
+    "1780644277.510099",
     "1780878537.585419",
     "1784584531.120939",
     "1778285008.434499",
@@ -455,6 +456,44 @@
     "1780427580.664779"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-21T20:41:19+09:00",
+      "selected": {
+        "id": "sr-1780644277-8c1e52c9b3",
+        "source_ts": "1780644277.510099",
+        "title": "skill 自己進化系 2 論文の同日収束: MUSE-Autoskill + Microsoft SkillOpt 実装事例",
+        "reason": "未レビューの score 13 atom で、skills・game-design・agent・operation・evaluation を含む。skill 自動生成より先に評価可能な単位と validation を作るという提案が、Phase 3b の probe 肥大化と現行 skill 運用へ直接つながるため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "MUSE-Autoskill と SkillOpt の生成・最適化分離、評価関数を先に置くこと、変更を小さく validation することは実行可能で Slack 原文と原論文 URL もある。しかし active_probes には skill lifecycle promotion gate、held-out validation と add/delete/replace を扱う SkillOpt probes、変更対象 surface と検証対象を先に固定する probe がすでにある。この atom 固有の新しい行動差はなく、320件規模の active_probes へ同義 probe を足すリスクが高いため採用しない。",
+      "existing_probes": [
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と既存 skill lifecycle／held-out validation probes との重複による reject 理由のみ更新した。probe・評価表・directive・恒久ルール・lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-21T17:42:29+09:00",
       "selected": {
