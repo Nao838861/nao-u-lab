@@ -10,7 +10,37 @@
 - 収集経路: 直近 `memory/raw/web_research/results.jsonl` と最近の atom を確認し、投稿済み work の反復を避けて一次資料を新規検索。各 candidate の書込み直前に3 sidecarを再生成し、duplicate preflight `continue` を確認。Slack 投稿は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260721_eli_real_user_seam_playtesting.md
+  - memory/shared_reads_candidates/20260721_battle_arena_animation_state_sync.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_rebuilt: true
+  sidecars_fresh: true
+  results:
+    - path: memory/shared_reads_candidates/20260721_eli_real_user_seam_playtesting.md
+      decision: continue
+      title_key: postmortem release 2026 06 15
+    - path: memory/shared_reads_candidates/20260721_battle_arena_animation_state_sync.md
+      decision: continue
+      title_key: postmortem one week from idea to internal playtest
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
