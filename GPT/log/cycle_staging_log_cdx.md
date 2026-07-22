@@ -9,7 +9,30 @@
 - Slack 外部 URL: 直前 cycle 成功時刻（2026-07-23 07:02）以降の新規 URL なし。04:57 の Alien Pinball 投稿は既投稿のため候補化対象外。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260723_liquid_swarm_crazygames_metrics_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260723_liquid_swarm_crazygames_metrics_postmortem.md
+    decision: continue
+    title_key: six weeks on crazygames my incremental roguelite makes 31 day full breakdown of what s working while my previous three games flopped
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

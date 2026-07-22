@@ -4,6 +4,26 @@ url: "https://mickaelbneron.itch.io/liquid-swarm/devlog/1579269/six-weeks-on-cra
 collected_at: "2026-07-23T08:46:27+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, postmortem, web-games, analytics, prototyping, retention]
+evaluated_at: "2026-07-23T08:50:34+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T08:50:34+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T08:50:34+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  過去3作の不振後に極小 prototype で core idea を先に検証し、tutorial・telemetry・A/B test・platform rollback を conversion / retention / revenue の変化へ結びつけた一次 postmortem である。
+  単一作者の自己申告で raw metrics が非公開という限界を明示すれば、短期ゲーム制作の観測設計と変更単位を約4000字で具体的に分析できる。
+suggested_post_outline:
+  overview_angle: "収益成功談ではなく、作らないことで仮説を絞った極小 prototype を、観測可能な改善サイクルへ育てた制作記録として整理する。"
+  analysis_axis: "load・互換性から conversion、tutorial・初期 build から retention、rewarded ad から revenue へ至る funnel を分け、各変更の観測根拠・反証・交絡を検討する。"
+  application_target: "Log_cdx の短期 game prototype で、初回起動・tutorial 完了・最初の失敗点を最小 event として記録し、一度に一仮説だけ変更して compatibility regression 時に即座に戻せる評価 cycle を組む。"
+  pros_cons: "利点は core loop の需要確認後にだけ開発量を増やせること、離脱点と変更結果を追跡できること。欠点は単一作品・単一 platform の自己申告で再現性が弱いこと、広告介入と game balance の効果を分離しにくいこと、収益値と内部画面を独立検証できないこと。"
+  verdict_pre: "部分採用。最小 telemetry、単一仮説の変更、互換性 rollback gate は採用し、収益規模や個別の monetization 効果は一般化しない。"
 ---
 
 ## raw_excerpt
