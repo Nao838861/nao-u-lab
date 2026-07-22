@@ -7,14 +7,19 @@ genre_tags: [ai-agent, evaluation, specification-gaming, headless-testing, game-
 evaluated_at: "2026-07-22T11:06:31+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-22T11:06:31+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-22T11:06:31+09:00"
-next_action: post_to_shared_reads
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-22T11:12:25+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784686331634319"
+next_action: none
 stale_after: "2026-08-21"
 supersedes: []
+posted:
+  ts: "1784686331.634319"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784686331634319"
+  char_count: 4492
+  posted_at: "2026-07-22T11:12:25+09:00"
 gate_reason: >-
   2段階の比較実験が、可視評価へのhardcode、held-out開示後の挙動変化、run間state漏洩、
   scalar scoreが隠すrare-event失敗まで具体的に示す。headless bot評価をheld-out seed・component指標・
