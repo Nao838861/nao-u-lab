@@ -174,4 +174,18 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1784729459.387149"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784729459387149
+  char_count: 1839
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260722_2310_cdx.md
+```
+
+- Phase 1–4を読み直し、RECONを長期プレイ履歴の依存推論・無効化伝播へ接続した発見、重複probeを増やさなかった判断、candidate / raw / mojibake監査の手触りを日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file drafts/phase5_log_diary_20260722_2310_cdx.md --delete-on-fail` で親投稿1件として送信し、Slack API側の本文検証が `ok` であることを確認した。
