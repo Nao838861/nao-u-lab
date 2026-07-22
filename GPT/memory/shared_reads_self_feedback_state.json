@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T05:01:37+09:00",
+  "updated_at": "2026-07-23T06:53:56+09:00",
   "reviewed_source_ts": [
+    "1784750272.072049",
     "1780932516.537239",
     "1780975880.419269",
     "1780935964.958299",
@@ -472,6 +473,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T06:53:56+09:00",
+      "selected": {
+        "id": "sr-1784750272-ac1f27482b",
+        "source_ts": "1784750272.072049",
+        "title": "Alien Escape Pinball postmortem — “the physics is the prompt”",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。collision geometry を visual generation の拘束条件へ渡す工程、低性能 bot を観察装置に限定する境界、feel と polish の独立予算化が、次の小規模 game prototype に固有の判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。collision silhouette を生成 asset の拘束条件へする工程は具体的だが、既存の Draw2Think probe が collision shape と deterministic predicate の分離を、PCG tool-loop probe が generator・editor・verifier・play trace と structural validity／player-facing quality の分離を既に扱う。低性能 bot を観察装置に限定する点も playtest-agent role diagnostics と designer-question agent playtest が覆い、feel の fixed-seed／manual 判定境界も既存の manual regression fixture と calibratable-domain probes に含まれる。単一作者・単一作品の回顧で、工数比較、生成回数、bot coverage、player 指標がなく evidence は2に留める。記事の三つの論点を一つの新規 probe に束ねると適用範囲が広すぎ、すでに320件ある active_probes の判断負荷を増やすため risk_control=1 とし、state-only review に留める。",
+      "existing_probes": [
+        "probe-20260619-draw2think-inspectable-intermediate-state",
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260602-playtest-agent-role-diagnostics",
+        "probe-20260607-designer-question-agent-playtest",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 probe との重複および複合 gate 化のリスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T05:01:37+09:00",
       "selected": {

@@ -52,7 +52,35 @@ reviewed_at: "2026-07-23T06:51:16+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784750272-ac1f27482b
+    source_ts: "1784750272.072049"
+    title: "Alien Escape Pinball postmortem — “the physics is the prompt”"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。collision geometry、観察用 bot、feel/polish 分離が次の game prototype に固有の判断差を作るか確認するため選んだ"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回る。collision shape と deterministic predicate の分離は Draw2Think、generator/editor/verifier/play trace と structural/player-facing quality の分離は PCG tool loop、bot を観察装置に限定する境界は playtest-agent role diagnostics と designer-question agent playtest、feel の fixed-seed/manual 判定境界は manual regression fixture が既に覆う。単一作者・単一作品の回顧で比較工数・bot coverage・player 指標がなく、三論点を一つの probe に束ねると active_probes 320件の判断負荷をさらに増やすため state-only review とした"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
