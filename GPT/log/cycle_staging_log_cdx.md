@@ -37,7 +37,20 @@ evaluation_note: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260722_avr_agent_audio_visual_game_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784695338787189
+    char_count: 4365
+skipped: []
+review:
+  policy: ok
+  slack_verification: ok
+  decision: >-
+    AVR-Eval の多段相対比較、AVR-Agent の best-of-k 初期選抜、
+    asset・視聴覚 feedback が有意改善しなかった結果、評価循環と録画条件依存まで原文で確認できた。
+    deterministic gate と組み合わせた小規模 probe へ落とし込めるため投稿した。
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

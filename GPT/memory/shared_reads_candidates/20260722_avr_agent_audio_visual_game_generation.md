@@ -7,12 +7,17 @@ genre_tags: [game-development, llm-agent, multimodal-evaluation, automated-testi
 evaluated_at: "2026-07-22T13:36:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-22T13:36:38+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-22T13:36:38+09:00"
-next_action: post_to_shared_reads
+posted:
+  ts: "1784695338.787189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784695338787189"
+  char_count: 4365
+  posted_at: "2026-07-22T13:42:22+09:00"
+status: posted
+candidate_status: posted
+last_reviewed_at: "2026-07-22T13:42:22+09:00"
+last_decision: posted
+evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784695338787189"
+next_action: none
 stale_after: "2026-08-21"
 supersedes: []
 gate_reason: >-
