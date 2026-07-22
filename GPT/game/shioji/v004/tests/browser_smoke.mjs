@@ -104,6 +104,54 @@ async function pressKey(page, key, code, modifiers = 0) {
   await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, modifiers });
 }
 
+async function checkTutorialCompanyPointerStability() {
+  const page = await newPage(800, 700, false, gameForMode('tutorial'));
+  const setup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.closeTutorialLetter();
+    game.openSheet('company-sheet');
+    game.setSpeed(3);
+    const button = document.querySelector('[data-company-action="request-aid"]');
+    const box = button.getBoundingClientRect();
+    window.__tutorialHeldCompanyButton = button;
+    return {
+      point: { x: box.x + box.width / 2, y: box.y + box.height / 2 },
+      domUpdates: game.performanceMetrics().domUpdates,
+    };
+  })()`);
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: setup.point.x, y: setup.point.y,
+    button: 'left', clickCount: 1,
+  });
+  await wait(180);
+  const held = await page.evaluate(`({
+    connected: document.contains(window.__tutorialHeldCompanyButton),
+    same: document.querySelector('[data-company-action="request-aid"]')
+      === window.__tutorialHeldCompanyButton,
+    domUpdates: window.__SHIOJI_V004__.performanceMetrics().domUpdates,
+  })`);
+  assert.equal(held.connected, true, JSON.stringify(held));
+  assert.equal(held.same, true, JSON.stringify(held));
+  assert.ok(held.domUpdates > setup.domUpdates, JSON.stringify(held));
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: setup.point.x, y: setup.point.y,
+    button: 'left', clickCount: 1,
+  });
+  await wait(80);
+  const result = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    return {
+      journal: game.controller.inputJournal().filter(row => row.op.type === 'request_aid'),
+      status: document.querySelector('#status span').textContent,
+    };
+  })()`);
+  assert.equal(result.journal.length, 1, JSON.stringify(result));
+  assert.match(result.status, /停止|支援/);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkStartChoice(width, height, mobile, mode) {
   const page = await newPage(width, height, mobile, START_GAME);
   const launcher = await page.evaluate(`(() => {
@@ -249,8 +297,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.6.0-ui-complete');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.6.0-ui-complete');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.0-tutorial-flow');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.0-tutorial-flow');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -706,12 +754,15 @@ async function checkViewport(width, height, mobile) {
       const afterReject = game.controller.inputJournal().length;
       const stillOffered = game.model.orderOffer;
       document.querySelector('[data-company-action="reconsider"]').click();
-      document.querySelector('[data-company-action="accept-order"]').click();
+      game.setSpeed(3);
+      const acceptButton = document.querySelector('[data-company-action="accept-order"]');
+      const acceptBox = acceptButton.getBoundingClientRect();
+      window.__companyHeldButton = acceptButton;
       return {
         sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
         offer, orderText, aidText, beforeReject, afterReject, stillOffered,
-        activeOrder: game.model.activeOrder,
-        journalTypes: game.controller.inputJournal().slice(-4).map(row => row.op.type),
+        acceptPoint: { x: acceptBox.x + acceptBox.width / 2, y: acceptBox.y + acceptBox.height / 2 },
+        domUpdates: game.performanceMetrics().domUpdates,
       };
     })()`);
     assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
@@ -722,8 +773,34 @@ async function checkViewport(width, height, mobile) {
     assert.match(company.aidText, /次の支援は麦240荷/);
     assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
     assert.deepEqual(company.stillOffered, company.offer);
-    assert.deepEqual(company.journalTypes, ['request_aid', 'set_stock_target', 'release_stock', 'accept_order']);
-    assert.equal(company.activeOrder.g, company.offer.g);
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed', x: company.acceptPoint.x, y: company.acceptPoint.y,
+      button: 'left', clickCount: 1,
+    });
+    await wait(180);
+    const heldOrderButton = await page.evaluate(`({
+      connected: document.contains(window.__companyHeldButton),
+      same: document.querySelector('[data-company-action="accept-order"]') === window.__companyHeldButton,
+      domUpdates: window.__SHIOJI_V004__.performanceMetrics().domUpdates,
+    })`);
+    assert.equal(heldOrderButton.connected, true, JSON.stringify(heldOrderButton));
+    assert.equal(heldOrderButton.same, true, JSON.stringify(heldOrderButton));
+    assert.ok(heldOrderButton.domUpdates > company.domUpdates, JSON.stringify(heldOrderButton));
+    await page.send('Input.dispatchMouseEvent', {
+      type: 'mouseReleased', x: company.acceptPoint.x, y: company.acceptPoint.y,
+      button: 'left', clickCount: 1,
+    });
+    await wait(80);
+    const acceptedOrder = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.setSpeed(0);
+      return {
+        activeOrder: game.model.activeOrder,
+        journalTypes: game.controller.inputJournal().slice(-4).map(row => row.op.type),
+      };
+    })()`);
+    assert.deepEqual(acceptedOrder.journalTypes, ['request_aid', 'set_stock_target', 'release_stock', 'accept_order']);
+    assert.equal(acceptedOrder.activeOrder.g, company.offer.g);
     await page.screenshot('/tmp/shioji_v004_company.png');
 
     const eventPanel = await page.evaluate(`(() => {
@@ -799,6 +876,7 @@ await checkStartChoice(1440, 900, false, 'tutorial');
 await checkStartChoice(390, 844, true, 'tutorial');
 await checkStartChoice(390, 844, true, 'sandbox');
 await checkStartChoice(800, 700, false, 'test');
+await checkTutorialCompanyPointerStability();
 await checkViewport(1440, 900, false);
 await checkViewport(390, 844, true);
 console.log('CHARTER ISLE v004 browser smoke: PASS');

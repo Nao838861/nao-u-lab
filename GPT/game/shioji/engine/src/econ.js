@@ -3052,7 +3052,11 @@ export function runCompanyDayStart(economy, { day, random, physical = null }) {
     settlements: [],
     buildingsCompleted: [],
   };
-  if (!economy.order && !economy.orderOffer && day > 60 && day % 15 === 0 && random() < 0.5) {
+  const orderRoll = !economy.order && !economy.orderOffer && day > 60 && day % 15 === 0
+    ? random()
+    : null;
+  const shouldOfferOrder = economy.orderDone === 0 || orderRoll < 0.5;
+  if (!economy.order && !economy.orderOffer && orderRoll !== null && shouldOfferOrder) {
     const candidates = Object.keys(ORDER_NAMES).filter(
       (goods) => (economy.f30[goods]?.prod ?? 0) > 0.3,
     );

@@ -49,6 +49,8 @@ let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
+const companyInteractionPointers = new Set();
+let companyInteractionReleasePending = false;
 const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
@@ -539,6 +541,8 @@ canvas.addEventListener('pointercancel', () => {
 window.addEventListener('blur', () => {
   clearPointers();
   pressedMovementKeys.clear();
+  companyInteractionPointers.clear();
+  companyInteractionReleasePending = false;
 });
 document.addEventListener('visibilitychange', () => pressedMovementKeys.clear());
 
@@ -594,6 +598,7 @@ function renderAidPanel() {
        <div class="order-actions"><button type="button" data-company-action="request-aid">支援を要請する</button></div>`;
 }
 function renderCompanySheet() {
+  if (companyInteractionPointers.size > 0 || companyInteractionReleasePending) return;
   $('#company-balance').textContent = formatNumber(model.companyMoney);
   renderAidPanel();
   const offer = model.orderOffer;
@@ -1034,6 +1039,29 @@ $('#skip-tutorial').addEventListener('click', skipTutorial);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
 $('#secretary').addEventListener('click', followSecretaryRoute);
 
+const companySheet = $('#company-sheet');
+companySheet.addEventListener('pointerdown', event => {
+  if (!event.target.closest('button, input, select, textarea')) return;
+  companyInteractionPointers.add(event.pointerId);
+});
+
+function releaseCompanyInteraction(event) {
+  if (!companyInteractionPointers.delete(event.pointerId)) return;
+  if (companyInteractionPointers.size > 0 || companyInteractionReleasePending) return;
+  companyInteractionReleasePending = true;
+  requestAnimationFrame(() => {
+    if (companyInteractionPointers.size > 0) {
+      companyInteractionReleasePending = false;
+      return;
+    }
+    companyInteractionReleasePending = false;
+    if (!companySheet.hidden) renderCompanySheet();
+  });
+}
+
+window.addEventListener('pointerup', releaseCompanyInteraction);
+window.addEventListener('pointercancel', releaseCompanyInteraction);
+
 function rejectOrderOffer() {
   dismissedOfferKey = orderKey(model.orderOffer);
   renderCompanySheet();
@@ -1041,7 +1069,7 @@ function rejectOrderOffer() {
   return dismissedOfferKey;
 }
 
-$('#company-sheet').addEventListener('click', event => {
+companySheet.addEventListener('click', event => {
   const button = event.target.closest('[data-company-action]');
   if (!button) return;
   const action = button.dataset.companyAction;

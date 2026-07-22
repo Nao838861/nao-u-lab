@@ -1,4 +1,4 @@
-export const VERSION = 'v004.6.0-ui-complete';
+export const VERSION = 'v004.7.0-tutorial-flow';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

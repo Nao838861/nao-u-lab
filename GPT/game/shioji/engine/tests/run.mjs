@@ -156,8 +156,10 @@ import {
 } from "../src/api.js";
 
 const tests = [];
+const matchIndex = process.argv.indexOf('--match');
+const testMatch = matchIndex >= 0 ? new RegExp(process.argv[matchIndex + 1]) : null;
 const suiteStartedAt = performance.now();
-const includeFullAcceptance = !process.argv.includes("--unit-only");
+const includeFullAcceptance = !process.argv.includes("--unit-only") && !testMatch;
 const badBaselineYearly = Object.freeze([{ day: 1440, population: 105, famine: 651 }]);
 
 function runStableWorker(seed, mode = "direct", runBad = false) {
@@ -1638,6 +1640,22 @@ test("段46: 注文状は受諾まで調達・予約・出荷を発生させな�
   const accepted = runCompanyDayStart(economy, { day: 76, random: () => 1 });
   assert.equal(accepted.completed, true);
   assert.equal(economy.orderDone, 1);
+});
+
+test("段46: 最初の生産適格注文だけは抽選待ちせず、二件目から50%抽選へ戻る", () => {
+  const first = createEconomicState();
+  first.f30.tools = { prod: 1, cons: 0, imp: 0, exp: 0 };
+  const rolls = [0.9, 0, 0.4];
+  const offered = runCompanyDayStart(first, { day: 75, random: () => rolls.shift() });
+  assert.equal(offered.created.g, "tools", "初回はchance rollが0.9でも最初の適格日に届く");
+  assert.equal(first.orderDone, 0);
+
+  const repeat = createEconomicState();
+  repeat.orderDone = 1;
+  repeat.f30.tools = { prod: 1, cons: 0, imp: 0, exp: 0 };
+  const skipped = runCompanyDayStart(repeat, { day: 75, random: () => 0.9 });
+  assert.equal(skipped.created, null, "二件目以降は従来どおり50%抽選を使う");
+  assert.equal(repeat.orderOffer, null);
 });
 
 test("段22: 支度金・信用限度・月利・破産を会社台帳と本土境界へ記帳する", () => {
@@ -3249,7 +3267,8 @@ if (includeFullAcceptance) test("段49: T=8年×3シード+公開API版の完全
 });
 
 let failures = 0;
-for (const { name, run } of tests) {
+const selectedTests = testMatch ? tests.filter(({ name }) => testMatch.test(name)) : tests;
+for (const { name, run } of selectedTests) {
   try {
     await run();
     console.log(`ok - ${name}`);
@@ -3263,5 +3282,5 @@ for (const { name, run } of tests) {
 if (failures > 0) {
   process.exitCode = 1;
 } else {
-  console.log(`\n${tests.length} tests passed`);
+  console.log(`\n${selectedTests.length} tests passed`);
 }

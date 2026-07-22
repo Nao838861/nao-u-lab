@@ -697,23 +697,9 @@ export const TUTORIAL_GOALS = Object.freeze([
     },
   }),
   Object.freeze({
-    id: 'first-settlers-arrive',
-    chapter: '第一章・最初の一荷',
-    title: '最初の入植世帯を迎える',
-    evaluate({ model }) {
-      const households = model.households.filter(household => household.job === 'logger').length;
-      return {
-        complete: households > 0,
-        progress: { done: Number(households > 0), total: 1 },
-        detail: `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`,
-        evidence: { households, population: model.population },
-      };
-    },
-  }),
-  Object.freeze({
     id: 'market-for-logs',
     chapter: '第一章・最初の一荷',
-    title: '市場を置き、丸太の売り場を開く',
+    title: '入植船を待つ前に市場を置く',
     evaluate({ model }) {
       const market = marketBuilding(model);
       const logs = loggerLogStock(model);
@@ -740,6 +726,54 @@ export const TUTORIAL_GOALS = Object.freeze([
     },
   }),
   Object.freeze({
+    id: 'request-first-aid',
+    chapter: '第一章・最初の一荷',
+    title: '最初の食料支援を1回要請する',
+    evaluate({ model }) {
+      const requests = model.mainlandAid?.requests ?? 0;
+      const complete = requests >= 1;
+      return {
+        complete,
+        progress: { done: Number(complete), total: 1 },
+        detail: complete
+          ? `支援 ${requests}回要請済み（以後は逓減します）`
+          : `会社の帳場から麦${model.mainlandAid?.nextQty ?? 240}荷を要請し、食料職の立ち上がりを繋ぎます`,
+        evidence: { requests, nextQty: model.mainlandAid?.nextQty ?? 0 },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-settlers-arrive',
+    chapter: '第一章・最初の一荷',
+    title: '市場と食料便を整えて、最初の入植世帯を迎える',
+    evaluate({ model }) {
+      const households = model.households.filter(household => household.job === 'logger').length;
+      return {
+        complete: households > 0,
+        progress: { done: Number(households > 0), total: 1 },
+        detail: `木こりの入植世帯 ${households}世帯 / 島の人口 ${model.population}人`,
+        evidence: { households, population: model.population },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'place-island-food',
+    chapter: '第一章・最初の一荷',
+    title: '木工房より先に、漁家と菜園を市場近くへ置く',
+    evaluate({ model }) {
+      const status = foodBuildingStatus(model);
+      const done = Number(status.fisher) + Number(status.veg) + Number(status.near);
+      return {
+        complete: status.fisher && status.veg && status.near,
+        progress: { done, total: 3 },
+        detail: status.fisher && status.veg
+          ? `市場まで 漁家${Number.isFinite(status.fisherWalk) ? status.fisherWalk.toFixed(1) : '—'} / 菜園${Number.isFinite(status.vegWalk) ? status.vegWalk.toFixed(1) : '—'}`
+          : `漁家 ${Number(status.fisher)}棟 / 菜園 ${Number(status.veg)}棟（漁家は水際へ）`,
+        evidence: status,
+      };
+    },
+  }),
+  Object.freeze({
     id: 'first-woodshop',
     chapter: '第一章・最初の一荷',
     title: '木工房を置き、道具づくりを始める',
@@ -755,29 +789,9 @@ export const TUTORIAL_GOALS = Object.freeze([
     },
   }),
   Object.freeze({
-    id: 'accept-first-order',
-    chapter: '第一章・最初の一荷',
-    title: '本国の注文を受ける',
-    evaluate({ model }) {
-      const accepted = Boolean(model.activeOrder);
-      const offer = model.orderOffer;
-      const detail = accepted
-        ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
-        : offer
-          ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
-          : '道具づくりを続ければ、本国が島の品に目を留めます';
-      return {
-        complete: accepted,
-        progress: { done: Number(accepted), total: 1 },
-        detail,
-        evidence: { accepted, offer: Boolean(offer) },
-      };
-    },
-  }),
-  Object.freeze({
     id: 'warehouse-for-order',
     chapter: '第一章・最初の一荷',
-    title: '蔵を置き、道で結ぶ',
+    title: '注文を待つ間に蔵を置き、道で結ぶ',
     evaluate({ model }) {
       const warehouse = warehouseBuilding(model);
       const connected = warehouseConnected(model);
@@ -787,8 +801,44 @@ export const TUTORIAL_GOALS = Object.freeze([
         progress: { done, total: 2 },
         detail: warehouse
           ? (connected ? '蔵が道で結ばれました' : '蔵はありますが道の外です')
-          : '納品には会社の蔵が要ります',
+          : '注文を待つ間に、会社が買い集める蔵を用意します',
         evidence: { warehouse: Boolean(warehouse), connected },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'prepare-first-tools-stock',
+    chapter: '第一章・最初の一荷',
+    title: '道具の買上げ目標を80荷にする',
+    evaluate({ model }) {
+      const target = model.stockTargets?.tools ?? 0;
+      const stocked = model.companyStock?.tools ?? 0;
+      const complete = target >= 80;
+      return {
+        complete,
+        progress: { done: Math.min(target, 80), total: 80 },
+        detail: `買上げ目標 ${target}荷 / 蔵の道具 ${stocked.toFixed(1)}荷（初注文の最大量80荷を先に準備）`,
+        evidence: { target, stocked },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'accept-first-order',
+    chapter: '第一章・最初の一荷',
+    title: '最初の適格日に届く本国注文を受ける',
+    evaluate({ model }) {
+      const accepted = Boolean(model.activeOrder);
+      const offer = model.orderOffer;
+      const detail = accepted
+        ? `受諾済み: ${goodsLabel(model.activeOrder.g)} ${model.activeOrder.qty}荷`
+        : offer
+          ? `注文状が届いています: ${goodsLabel(offer.g)} ${offer.qty}荷(${offer.due}日目まで)`
+          : `蔵の道具 ${(model.companyStock?.tools ?? 0).toFixed(1)}荷 / 生産条件を満たす最初の15日区切りを待っています`;
+      return {
+        complete: accepted,
+        progress: { done: Number(accepted), total: 1 },
+        detail,
+        evidence: { accepted, offer: Boolean(offer), stocked: model.companyStock?.tools ?? 0 },
       };
     },
   }),
@@ -799,14 +849,14 @@ export const TUTORIAL_GOALS = Object.freeze([
     evaluate({ model }) {
       const order = model.activeOrder;
       const target = order ? (model.stockTargets?.[order.g] ?? 0) : 0;
-      const done = Boolean(order) && target > 0;
+      const done = Boolean(order) && target === order.qty;
       return {
         complete: done,
         progress: { done: Number(done), total: 1 },
         detail: order
           ? (done
-            ? `${goodsLabel(order.g)}の買上げ目標 ${target}荷`
-            : '受諾だけでは会社の銀は動きません。買上げ目標のご下命を')
+            ? `${goodsLabel(order.g)}の買上げ目標を注文と同じ ${target}荷へ調整済み`
+            : `事前目標${target}荷を、注文の${order.qty}荷へ合わせてください`)
           : '注文の受諾が先です',
         evidence: { target },
       };
@@ -886,23 +936,6 @@ export const TUTORIAL_GOALS = Object.freeze([
           recovered: Boolean(recovered),
           alreadyGood,
         },
-      };
-    },
-  }),
-  Object.freeze({
-    id: 'place-island-food',
-    chapter: '第二章・島の食卓',
-    title: '漁家と菜園を市場近くの適地へ置く',
-    evaluate({ model }) {
-      const status = foodBuildingStatus(model);
-      const done = Number(status.fisher) + Number(status.veg) + Number(status.near);
-      return {
-        complete: status.fisher && status.veg && status.near,
-        progress: { done, total: 3 },
-        detail: status.fisher && status.veg
-          ? `市場まで 漁家${Number.isFinite(status.fisherWalk) ? status.fisherWalk.toFixed(1) : '—'} / 菜園${Number.isFinite(status.vegWalk) ? status.vegWalk.toFixed(1) : '—'}`
-          : `漁家 ${Number(status.fisher)}棟 / 菜園 ${Number(status.veg)}棟（漁家は水際へ）`,
-        evidence: status,
       };
     },
   }),
@@ -1424,7 +1457,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `${event.day}日目・${household.members}人の世帯・島の人口 ${model.population}人`,
         body: [
           `${event.day}日目。入植船から${household.members}人の世帯が降り、木こりの区画へ入りました。島の人口は${model.population}人です。`,
-          '人が来れば、仕事と暮らしが動き始めます。まずは丸太が積み上がる様子を見届けましょう。',
+          '市場と食料便は先に整いました。木工房を急ぐ前に、水際へ漁家、市場近くの平地へ菜園を置き、島の食卓を立ち上げましょう。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1490,6 +1523,26 @@ export const TUTORIAL_LETTERS = Object.freeze([
     },
   }),
   Object.freeze({
+    id: 'initial-aid-plan',
+    source: 'snapshot',
+    when({ model }) {
+      return portConnectedToMarket(model) && (model.mainlandAid?.requests ?? 0) === 0;
+    },
+    render({ model }) {
+      const nextQty = model.mainlandAid?.nextQty ?? 240;
+      return {
+        kicker: '入植前の備え',
+        title: '食料職が育つまでの一便を',
+        summary: `次の支援は麦${nextQty}荷・要請は重ねるほど逓減`,
+        body: [
+          `${model.day}日目。港と市場の道が通りました。入植者の持参食料だけでは、漁家と菜園が働き始めるまでの空白を安全には渡れません。`,
+          `会社の帳場から、本国へ食料支援を1回要請してください。次の便は麦${nextQty}荷です。支援は要請を重ねるほど減り、5回目から拒まれます——今回は最初の立ち上がりを繋ぐ一便だけにします。`,
+        ].join('\n\n'),
+        signature: '会社秘書 エレナ',
+      };
+    },
+  }),
+  Object.freeze({
     id: 'first-import-food',
     source: 'snapshot',
     when({ model }) {
@@ -1523,7 +1576,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         summary: `${model.day}日目・屋台の丸太 ${amount.toFixed(1)}荷`,
         body: [
           `${model.day}日目。木こりが市場まで歩き、屋台に丸太を${amount.toFixed(1)}荷並べました。`,
-          '値付けは彼ら自身が行い、買い手がつけば商いになります。次は丸太の買い手——木工房の区画をお決めください。',
+          '値付けは彼ら自身が行い、買い手がつけば商いになります。食料の区画が整ったら、丸太の買い手となる木工房を置きましょう。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1646,17 +1699,17 @@ export const TUTORIAL_LETTERS = Object.freeze([
     when({ model }) {
       const order = model.activeOrder;
       return Boolean(order) && Boolean(warehouseBuilding(model)) && warehouseConnected(model)
-        && (model.stockTargets?.[order.g] ?? 0) <= 0;
+        && (model.stockTargets?.[order.g] ?? 0) !== order.qty;
     },
     render({ model }) {
       const order = model.activeOrder;
       return {
         kicker: '会社の銀は総督のもの',
         title: '買付のご下命を',
-        summary: `${goodsLabel(order.g)}の買上げ目標が0のままです`,
+        summary: `${goodsLabel(order.g)}の買上げ目標を${order.qty}荷へ合わせます`,
         body: [
-          `${model.day}日目。蔵と道は整いましたが、会社の買付はまだ動いていません。注文の受諾だけでは会社の銀は動かず、いくらまで買い集めるかは総督のご下命によります。`,
-          `会社の帳場で${goodsLabel(order.g)}の買上げ目標をお定めください。注文は${order.qty}荷、目標をその数に合わせるのが定石です。`,
+          `${model.day}日目。注文前の備えとして道具を先に買い集めてあります。受けた注文は${goodsLabel(order.g)}${order.qty}荷です。`,
+          `会社の帳場で${goodsLabel(order.g)}の買上げ目標を${order.qty}荷へ合わせてください。既存在庫は失われず、余分な買付だけを止められます。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1839,7 +1892,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         facts,
         body: [
           `${model.day}日目。食料の輸入量EMAは${facts.importEma.toFixed(3)}、会社の実台帳に残る本土仕入は累計${facts.outflow.toFixed(1)}です。輸入の代金は、島の銀が本土へ出てゆく流れでもあります。`,
-          '水際には漁家を、市場の近くの平地には菜園をお置きください。島の食料が市場に届けば、値と輸入の流れがどう変わるかを同じ帳面で追います。',
+          '第一章で置いた漁家と菜園は、いまも市場へ食料を運んでいます。ここからは建物を増やさず、島内生産が値と輸入の流れをどう変えるかを同じ帳面で追います。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

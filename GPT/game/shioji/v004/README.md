@@ -46,6 +46,23 @@ python3 -m http.server 8420
 
 ## 検証
 
+通常は変更した契約だけを検証する。詳細と昇格条件は [TESTING_POLICY.md](TESTING_POLICY.md)。第一章の導線変更なら次を使う。
+
+```bash
+cd /Users/Nao_u/nao-u-lab/GPT/game/shioji/v004
+npm run test:tutorial-early
+npm run test:focused -- "チュートリアル段5|チュートリアル段6|チュートリアル段7"
+```
+
+engineの軽微な修正は、該当unitだけを長期workerなしで実行できる。
+
+```bash
+cd /Users/Nao_u/nao-u-lab/GPT/game/shioji/engine
+npm run test:focused -- "最初の生産適格注文"
+```
+
+経済定数、保存則、長期帯、複数章の契約を変えた時、または公開前の総点検だけ全件へ上げる。
+
 ```bash
 cd /Users/Nao_u/nao-u-lab/GPT/game/shioji/v004
 npm test

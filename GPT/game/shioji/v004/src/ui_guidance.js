@@ -1,4 +1,5 @@
 const COMPANY_GOALS = new Set([
+  'request-first-aid', 'prepare-first-tools-stock',
   'accept-first-order', 'order-procurement-target', 'first-order-procurement',
   'complete-first-order', 'set-seasonal-stock-target', 'fill-seasonal-reserve',
   'release-seasonal-reserve', 'assess-profitable-order', 'accept-profitable-order',
