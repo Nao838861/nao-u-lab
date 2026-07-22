@@ -769,7 +769,7 @@ test('チュートリアル段11: 第一章で置いた漁家と菜園の実価�
     letter.facts.current.fishPrice !== letter.facts.before.fishPrice
       || letter.facts.current.vegPrice !== letter.facts.before.vegPrice,
   );
-  assert.match(letter.body, new RegExp(`食料輸入EMAも${letter.facts.before.importEma.toFixed(3)}から${letter.facts.current.importEma.toFixed(3)}`));
+  assert.match(letter.body, new RegExp(`1日あたり${letter.facts.before.importEma.toFixed(2)}荷から${letter.facts.current.importEma.toFixed(2)}荷へ`));
   tutorialThroughPlay.foodStartTick = foodStartTick;
   tutorialThroughPlay.foodBaseline = baseline;
 });
@@ -788,7 +788,7 @@ test('チュートリアル段12: 3シード実測の食料輸入EMA 0.60未満�
   assert.ok(final.productionEma >= 0.25);
   const reached = director.letters().find(letter => letter.id === 'food-import-target-reached');
   assert.equal(reached.facts.target, FOOD_IMPORT_EMA_TARGET);
-  assert.match(reached.body, new RegExp(`食料輸入EMAは${final.importEma.toFixed(3)}`));
+  assert.match(reached.body, new RegExp(`1日あたり${reached.facts.current.importEma.toFixed(2)}荷になり`));
 
   const journal = controller.inputJournal();
   const seedRows = [{ seed: 11, baseline: foodBaseline, final }];
@@ -836,7 +836,7 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   assert.equal(director.currentObjective().id, 'observe-seasonal-food-valley');
   const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
   assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
-  assert.match(closing.body, new RegExp(`${closing.facts.before.importEma.toFixed(3)}から${closing.facts.current.importEma.toFixed(3)}`));
+  assert.match(closing.body, new RegExp(`1日あたり${closing.facts.current.importEma.toFixed(2)}荷です`));
 
   const beforeJournal = controller.inputJournal().length;
   const beforeTick = controller.readModel().tick;
