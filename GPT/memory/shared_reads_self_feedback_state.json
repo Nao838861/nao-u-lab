@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T07:12:52+09:00",
+  "updated_at": "2026-07-22T09:11:33+09:00",
   "reviewed_source_ts": [
+    "1781127460.642669",
     "1784656503.008299",
     "1781127468.122429",
     "1784641228.892699",
@@ -11865,6 +11866,39 @@
       "change": {
         "type": "metric",
         "summary": "次の複数 event 系作業1件だけで、actor／resource 拘束、即時 state delta、後続 choice set／modifier、失敗説明を同じ行に残す可逆 metric を追加した。新規 active probe、directive、schema、恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-22T09:11:33+09:00",
+      "selected": {
+        "id": "sr-1781127460-fc7428b646",
+        "source_ts": "1781127460.642669",
+        "title": "■ アイデアの種 3 つ",
+        "reason": "未レビュー条件を満たす最新の score 13 atom で、game-design・operation・evaluation を含む7タグを持つ。Nao_u 手描き理想曲線と生成結果の RMSE 比較を次回行動へ変換できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "defer",
+      "decision_reason": "合計13で採用条件の14に届かないため、probe・metric・directive は追加しない。手描き理想曲線と生成曲線を RMSE で比較する案は具体的だが、原投稿自身が本文 PDF 未取得、danger 値と敵多様性の計算式に推定を含むこと、pseudo-GA loop と3案は論文ではなく当方の独自仮説であること、300世代 GA の核心を再現できないことを明記しているため evidence=1 とした。また原投稿は3案を即実装せず N=4 待機としており、今サイクルには同一生成器・固定 seed・手描き曲線を持つ before/after artifact も、判断へ使う後続 consumer phase もない。320件の active_probes と既存 pending lease がある状態で広い最適化 probe を足すより、比較対象が具体化した時に1理想曲線への適合と多様性探索のどちらが修正判断を変えるか再評価する。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、原典・再現条件・trigger artifact・consumer phase が不足しているため defer した理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

@@ -45,7 +45,34 @@ reason: "Phase 2 の pass が空のため、#shared-reads への投稿対象な�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781127460-fc7428b646
+    source_ts: "1781127460.642669"
+    title: "■ アイデアの種 3 つ"
+    reason: "未レビュー条件を満たす最新の score 13 atom で、game-design・operation・evaluation を含む7タグを持つ。Nao_u 手描き理想曲線と生成結果の RMSE 比較を次回行動へ変換できるか確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 13
+  decision: defer
+  decision_reason: "合計13で採用条件の14に届かない。原投稿自身が本文 PDF 未取得、計算式に推定を含むこと、3案は論文ではなく独自仮説であること、300世代 GA を再現できないこと、N=4 待機で即実装しないことを明記している。今サイクルには同一生成器・固定 seed・手描き曲線を持つ比較 artifact と判断へ使う consumer phase もないため、state-only review に留める。"
+  change:
+    summary: "reviewed/source_ts と defer 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
