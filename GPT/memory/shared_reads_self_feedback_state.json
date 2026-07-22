@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T17:41:48+09:00",
+  "updated_at": "2026-07-22T20:13:47+09:00",
   "reviewed_source_ts": [
+    "1780943233.150639",
     "1784702535.676319",
     "1784695338.787189",
     "1784686331.634319",
@@ -466,6 +467,52 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-22T20:13:47+09:00",
+      "selected": {
+        "id": "sr-1780943233-c17382e3a5",
+        "source_ts": "1780943233.150639",
+        "title": "HeLa-Mem — Hebbian 強化と連想グラフによる LLM agent 長期記憶",
+        "reason": "未レビューの score 13 atom で、memory・game-design・agent・operation・evaluation の5優先タグを持つ。Phase 4a の記憶整理で、同じ取り込みバッチ内の共起を別タスクで再利用された連想と誤認し、link／cluster を自己強化する危険を既存 probe が十分に止めるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たす。shared-reads 本文に加え、arXiv abstract で反復共活性により進化する episodic graph、Hebbian Distillation、spreading activation、ACL 2026 採択を確認し、公開 repository で LongMemEval-S 500件の再現対象と HeLa-Mem 65.40 ACC の記載も確認した。既存の ingest-connection-action-lint は接続が次の行動を変えるかと provenance anchor を、memory-retention-gate は観測済み retention signal と可逆な lifecycle を既に問う。新しい差は、同一 source／同一 ingest batch の共起を独立した再利用証拠と数えないことと、近傍連想だけでなく非近傍 control を残すことに限られる。しかし active_probes は320件あり、ledger には AMV-L retention/utility probe の pending lease が1件残る。別 lease を重ねると『強い連想ほど維持され、維持されたからさらに強く見える』自己強化と確認負荷を増やすため、今回は state-only review に留める。",
+      "evidence_sources": [
+        "memory/raw/slack_api/shared-reads.jsonl#ts=1780943233.150639",
+        "https://arxiv.org/abs/2604.16839",
+        "https://github.com/ReinerBRO/HeLa-Mem"
+      ],
+      "existing_probes": [
+        "probe-20260715-ingest-connection-action-lint",
+        "probe-20260602-memory-retention-gate",
+        "probe-20260619-amem-memory-evolution-link-vs-attribute",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "defer_condition": "既存の AMV-L pending lease が receipt 付きで閉じ、Phase 4a に具体的な link／cluster 強化候補と before／after artifact が現れた時だけ、ingest-connection-action-lint を『distinct downstream reuse と same-batch co-occurrence の分離 + non-neighbor control』で1回精密化するか再検討する。",
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts、採点、一次資料確認、既存 probe との重複、pending lease 解消後の再検討条件だけを記録した。probe・metric・directive・恒久ルール・lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-22T11:14:58+09:00",
       "selected": {
