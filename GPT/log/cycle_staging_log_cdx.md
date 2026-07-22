@@ -49,7 +49,40 @@ skipped:
 - candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` と整合しているため変更なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784702535-ee9abe1a48
+    source_ts: "1784702535.676319"
+    title: "Dynamic Agent Skills — skill library を lifecycle transition として評価する survey"
+    reason: "最新の未レビュー score 11 atom で、skill の admission・retrieval・repair・Prune・rollback が既存運用に新しい行動差を作るか確認するため選んだ"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: "合計14未満かつ risk_control 2未満。124論文 survey は具体的な lifecycle audit frame を与えるが統一 controlled experiment ではなく、既存の skill 昇格・held-out validation・retention/utility probes と重複する。AMV-L utility probe も Phase 4a 向けに pending lease 済みであり、新規追加は library inflation と maintenance 負荷を増やす"
+  existing_probes:
+    - probe-20260604-skill-lifecycle-promotion-gate
+    - probe-20260620-skillopt-skill-doc-validation
+    - probe-20260626-skillopt-instruction-edit-validation-gate
+    - probe-20260625-amvl-retention-utility-lifecycle
+  change:
+    summary: "reviewed/source_ts と重複による reject 理由のみ state に記録。probe・metric・lease・directive・恒久ルールは追加していない"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

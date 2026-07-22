@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T15:47:21+09:00",
+  "updated_at": "2026-07-22T17:41:48+09:00",
   "reviewed_source_ts": [
+    "1784702535.676319",
     "1784695338.787189",
     "1784686331.634319",
     "1781094676.020529",
@@ -12022,6 +12023,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存 probe との重複および具体的な consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-22T17:41:48+09:00",
+      "selected": {
+        "id": "sr-1784702535-ee9abe1a48",
+        "source_ts": "1784702535.676319",
+        "title": "Dynamic Agent Skills — skill library を lifecycle transition として評価する survey",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・skills・harness・agent・operation・evaluation を含む10タグを持つ。skill の Add だけでなく admission、retrieval、repair、Prune、rollback までを一つの lifecycle として測る知見が、Codex の probe／skill／memory 運用に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は124論文を six-sense taxonomy、eight-stage lifecycle、ten operators で整理し、proposal と admission の分離、retrieved／executed／outcome_improved の分離、maintenance-off ablation、provenance と rollback を具体化している。一方、103本が2026年の arXiv-heavy survey で、異種 model・task・artifact を束ねた統一 controlled experiment ではないため evidence=2 とした。行動面は skill-lifecycle-promotion-gate が候補から evaluated skill／retire までを、skillopt-skill-doc-validation と skillopt-instruction-edit-validation-gate が最小 validation・add/delete/replace・held-out・退役条件を、amvl-retention-utility-lifecycle が保存宣言と観測 utility の分離をすでに要求している。さらに AMV-L probe はこのサイクルの Phase 4a に向けて pending lease 済みであり、320件ある active probe 群へ同義の lifecycle schema を追加すると、survey 自身が警告する library inflation と maintenance 負荷を再現する。既存 probe の receipt を先に観測し、本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260604-skill-lifecycle-promotion-gate",
+        "probe-20260620-skillopt-skill-doc-validation",
+        "probe-20260626-skillopt-instruction-edit-validation-gate",
+        "probe-20260625-amvl-retention-utility-lifecycle"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 skill lifecycle／validation／utility probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
