@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/1907.02288"
 collected_at: "2026-07-22T20:00:34+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-research, player-experience, affect-modeling, gameplay-video, evaluation]
+evaluated_at: "2026-07-22T20:03:01+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T20:03:01+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T20:03:01+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: >-
+  問題設定、データ収集、モデル比較、leave-one-video-out 評価、結果、HUD 交絡と制約まで抽出でき、
+  CoopEval 水準の概要を構成できる。playtest 映像評価では代理変数を見抜く ablation と検証単位の設計へ具体的に適用できる。
+suggested_post_outline:
+  overview_angle: gameplay pixel だけで体験を推定できた結果と、HUD・経過時間を学習した可能性を一体で説明する
+  analysis_axis: 精度の高さではなく、動画単位交差検証、曖昧ラベル除外、Grad-CAM が示す識別信号の妥当性を検討する
+  application_target: playtest 録画から体験変化を補助推定する評価器の dataset 分割、HUD 除去 ablation、未知作品への外部妥当性確認
+  pros_cons: 映像だけで低コストに反復評価できる一方、単一ゲーム、自己注釈、時間・score の代理変数により体験そのものを測っていない恐れがある
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
