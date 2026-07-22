@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T02:54:29+09:00",
+  "updated_at": "2026-07-23T05:01:37+09:00",
   "reviewed_source_ts": [
+    "1780932516.537239",
     "1780975880.419269",
     "1780935964.958299",
     "1781040608.593239",
@@ -471,6 +472,48 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T05:01:37+09:00",
+      "selected": {
+        "id": "sr-1780932516-fdf121ae41",
+        "source_ts": "1780932516.537239",
+        "title": "SLM × agentic networks 投稿後半 — scope narrowing と feedback richness の接続",
+        "reason": "未レビュー条件を満たす score 12 atom で、game-design・agent・operation・evaluation を含む10タグを持つ。scope narrowing を verify.js、agentic PCG、offline game、local quality assessment へ接続する後半部が、既存レビューとは別の次回行動を生むか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 11
+      },
+      "decision": "reject",
+      "decision_reason": "合計11で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。この atom は独立した投稿ではなく、Slack 文字数上限で分割された source_ts 1780932516.509039 の後半である。前半 sibling はすでに narrow subtask boundary、constrained output structure、generator と judge の受入条件分離、local quality 未確認時の candidate 維持を問う3問へ変換済みで、後半の verify.js 理論補強、narrative agent 内部の SLM 分業、offline runtime、PEARSON_BLOCKER 接続を追加しても現在の Codex 行動に固有の判断差はない。原文自身も N=2・具体 benchmark 不足・査読／replication 未了・judge は依然 LLM と記し、恒久ルール化を見送っている。さらに narrow scope を一般化すると、作業の過分割や局所 judge pass の品質証明化を招くため risk_control=1 とし、state-only review に留める。",
+      "existing_reviews": [
+        "source_ts 1780932516.509039: SLM x agentic networks for dynamic game content generation"
+      ],
+      "existing_checks": [
+        "narrow subtask boundary and constrained output structure",
+        "generator / judge acceptance-condition split",
+        "local quality uncertainty remains candidate-only"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既レビュー済み sibling との完全重複および過分割リスクによる reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T02:54:29+09:00",
       "selected": {
