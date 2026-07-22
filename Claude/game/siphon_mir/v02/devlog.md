@@ -271,3 +271,20 @@ Phase 2 で「6サイクル連続 0 行」と書いたのは記憶誤り（実�
 ### 今回崩したもの（五味太郎 Seed-R 試行 #N）
 - **崩したもの**: Phase 2 が「6サイクル0行」と誤認した自己評価を、git log で物証取りして訂正した。Phase 内記述を後段で覆すことへの抵抗が薄かった——記憶の整合より事実の優先
 - **崩していない**: 1サイクル1 ship、commit prefix 分離、popups 既存配列との整合性、p.absorbed>=6 分岐の再利用
+
+## 2026-07-22 (Mir C279, 手動再開) combo popup サイズ3段階 — 快感軸 観測13
+
+### 実装内容
+- L270 popups.push に `size:p.absorbed>=6?16:(p.absorbed>=3?14:13)` を追加
+- L659 描画側を `ctx.font='bold '+(p.size||13)+'px system-ui'` に変更し per-popup サイズ対応（size 未指定の既存 popup — BOMB READY / kill points — は従来 13 を維持）
+- +1/-1 行相当、index.html 1ファイル変更のみ
+
+### 中心 vs 周辺判断
+- **中心**: C278 申し送りの筆頭候補「SIPHON tier 中間段 visual cue 階層化」。combo popup の tier 階層は C247 ラベル・C247 色・C252 life（時間軸 50/60/75）の3チャネルにあり、**空間軸（フォントサイズ）だけが全 tier 固定 13px** だった。C252 の時間階層に直交する空間階層 13/14/16 を追加し、combo popup の 時間×空間 grid を完成させる。BOMB feedback 3×2 grid（C250-C278）と同じ手法の適用
+- **周辺**: 効果音／新パーティクル／閾値変更（siphonGain / tier 境界）——いずれも触らない
+- 中間段 14 は basic+1px の最小可視差。FEAST 16 への +2px 跳躍を温存し、tier 間の序列（漸増→跳躍）をサイズでも保つ
+
+### 状態メモ
+- 2026-06-04 C278 以降サイクル休止、本エントリは Nao_u のセッション起動による手動再開
+- `feedback_won_playtest_is_kusoge` 順守: node --check 構文OKのみ確認、実プレイ判定は次サイクルに送る
+- 次候補は C278 申し送りの残り: ごっこ軸補強、brick_log v09 休眠（C177 から長期）の再訪判定
