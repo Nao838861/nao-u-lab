@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.16716"
 collected_at: "2026-07-22T22:45:40.2986729+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-memory, evaluation, long-context, game-playtesting]
+evaluated_at: "2026-07-22T22:48:43.4333168+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T22:48:43.4333168+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T22:48:43.4333168+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: >-
+  問題設定、6種の課題、deterministic な生成・正解系、比較条件、non-Oracle 22.4%・human 63.0%・chain length 別 Oracle 低下まで抽出でき、4000字級の概要を支える材料がある。
+  長期プレイ履歴を使う test agent / NPC について、単純 recall と証拠依存の更新・無効化伝播を分離して測る具体的な評価設計へ適用できる。
+suggested_post_outline:
+  overview_angle: "長期記憶を『覚えているか』ではなく、証拠を合成し、前提崩壊を結論へ伝播できるかで測る benchmark として整理する"
+  analysis_axis: "6課題の分解、provenance DAG と deterministic ground truth、full-context・RAG・memory architecture・Oracle の比較から、検索失敗と推論失敗を切り分ける"
+  application_target: "長期プレイ履歴を参照する test agent / NPC の回帰評価で、パッチ・状態変更・誤観測後の依存結論更新を測る synthetic case と採点器に転用する"
+  pros_cons: "長い履歴上の依存推論を再現可能に測れる一方、犯罪・医療・金融の合成 narrative から gameplay state への移植と、50k–100k token 評価コストが必要"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
