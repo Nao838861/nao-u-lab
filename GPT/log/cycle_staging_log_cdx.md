@@ -4,6 +4,10 @@
 
 ## Phase 1: 情報収集
 
+- `memory/shared_reads_candidates/20260723_reward_driven_llm_agent_workflows.md` — POMDP routing、Graph Memory、実行前 Critic を組み合わせた長期 agent workflow と、ALFWorld／WebShop の比較値を収集。
+- pending inbox: `slack_directives.jsonl` 0 件、`slack_broadcasts.jsonl` 0 件。
+- 収集源: ローカル同期済み Slack raw、`memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、論文一次資料。Slack connector は未導入のため、今回の Slack 確認範囲はローカル同期分まで。
+
 - pending 確認: `slack_directives.jsonl` 0件 / `slack_broadcasts.jsonl` 0件。
 - `memory/shared_reads_candidates/20260722_recon_compositional_agent_memory.md` — RECON は、50k–100k token の case file 上で証拠連鎖・無効化伝播・反実仮想・時間制約を測る agent memory benchmark。長期プレイ履歴を扱う test agent / NPC 評価へ接続できる素材として収集。
 - preflight: 3 sidecar を candidate 書込み直前に再生成し、`decision: continue`（canonical URL: `https://arxiv.org/abs/2607.16716`）を確認。
