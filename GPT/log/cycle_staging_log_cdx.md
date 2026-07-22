@@ -9,7 +9,27 @@
 - 重複 preflight: title `Godot Wild Jam #94` / URL `https://itch.io/devlog/1567962/godot-wild-jam-94` は `continue`（2026-07-23T02:46:00+09:00）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260723_mutagen_godot_wild_jam_94_postmortem.md
+    reason: 評価手順・比較結果・再現可能な判断基準が薄く、約4000字へ展開すると一般論が支配的になる
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
