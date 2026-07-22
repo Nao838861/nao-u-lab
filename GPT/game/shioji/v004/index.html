@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.7.2-stock-target">
+  <link rel="stylesheet" href="./style.css?v=v004.8.0-ui-flow">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -40,7 +40,6 @@
     <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
     <div class="tutorial-actions">
       <button id="tutorial-action" type="button" hidden>次の操作</button>
-      <button id="skip-tutorial" type="button">案内を終える<small>島はそのまま</small></button>
     </div>
   </aside>
 
@@ -113,23 +112,33 @@
     </div>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
+    <section id="building-company-stock" class="building-detail company-stock-detail" hidden></section>
     <section id="building-conversion" class="building-detail"></section>
   </aside>
 
   <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
     <header>
-      <div><small>現物と最近の流れ</small><h2>島況</h2></div>
+      <div><small>会社の収支・市場・現物</small><h2>島の流れ</h2></div>
       <button type="button" data-close-sheet="island-sheet" aria-label="島況を閉じる">×</button>
     </header>
-    <section>
-      <h3>島にある現物</h3>
-      <p class="sheet-note">建物の区分棚、世帯の食料庫、市場の屋台を二重計上せず、所在ごとに示します。</p>
-      <div id="island-manifest" class="island-manifest"></div>
+    <section class="island-finance-section">
+      <h3>直近30日の会社収支</h3>
+      <div id="island-finance" class="island-finance" aria-label="直近30日の会社収支">
+        <span><small>現在資金</small><b id="island-funds">—</b></span>
+        <span><small>入金</small><b id="island-income" class="plus">—</b></span>
+        <span><small>支出</small><b id="island-expense" class="minus">—</b></span>
+        <span><small>差引</small><b id="island-net">—</b></span>
+      </div>
     </section>
-    <section>
+    <section class="island-market-section">
       <h3>市場相場と最近の流れ</h3>
-      <p class="sheet-note">相場はEMAをデナリ/荷、輸入・生産・消費は最近の一日あたりEMAで表示します。因果の断定ではなく観測値です。</p>
+      <p class="sheet-note">相場はデナリ/荷、仕入・生産・消費は直近30日の平均（荷/日）です。</p>
       <div id="market-overview" class="market-overview"></div>
+    </section>
+    <section class="island-manifest-section">
+      <h3>現物の所在</h3>
+      <p class="sheet-note">建物の棚、世帯の食料庫、市場の屋台を二重計上せず示します。所在を押すと地図へ移動します。</p>
+      <div id="island-manifest" class="island-manifest"></div>
     </section>
   </aside>
 
@@ -209,6 +218,6 @@
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.7.2-stock-target-r1"></script>
+  <script type="module" src="./src/main.js?v=v004.8.0-ui-flow"></script>
 </body>
 </html>

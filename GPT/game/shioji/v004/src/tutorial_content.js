@@ -221,6 +221,34 @@ export const ORDER_JUDGMENT_FALLBACK_OFFERS = 3;
 export const TOOLS_PRICE_RISE_RATIO = 0.05;
 export const TOOLS_PRICE_RISE_DELTA = 0.05;
 export const CONVERSION_SURVIVAL_DAYS = 90;
+export const TUTORIAL_LETTER_ATTENTION = Object.freeze({
+  'tutorial-starvation-consequence': 'critical',
+  'tutorial-bankruptcy-consequence': 'critical',
+  'first-import-food': 'notice',
+  'first-company-procurement': 'notice',
+  'first-order-handling': 'notice',
+  'first-order-complete': 'notice',
+  'chapter-one-close': 'notice',
+  'logger-road-recovered': 'notice',
+  'logger-road-already-good': 'notice',
+  'food-dependence-report': 'notice',
+  'island-food-change': 'notice',
+  'food-import-target-reached': 'notice',
+  'chapter-two-close': 'notice',
+  'seasonal-stock-target-set': 'notice',
+  'seasonal-reserve-filled': 'notice',
+  'seasonal-release-dispatched': 'notice',
+  'chapter-three-close': 'notice',
+  'profitable-order-accepted': 'notice',
+  'profitable-order-complete': 'notice',
+  'chapter-four-close': 'notice',
+  'conversion-workshops-placed': 'notice',
+  'conversion-cost-chain': 'notice',
+  'household-level-up': 'notice',
+  'chapter-five-close': 'notice',
+  'tutorial-graduation': 'notice',
+  'first-log-trade': 'notice',
+});
 const LOGGER_MULTIPLIER_RECOVERY = 0.1;
 const FOOD_PRODUCTION_EMA_MIN = 0.25;
 const FOOD_PRICE_CHANGE_MIN = 0.01;
@@ -845,20 +873,26 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'order-procurement-target',
     chapter: '第一章・最初の一荷',
-    title: '買上げ目標を定め、調達を命じる',
-    evaluate({ model }) {
+    title: '注文量以上の買上げ目標を確認する',
+    evaluate({ model, events, state }) {
       const order = model.activeOrder;
-      const target = order ? (model.stockTargets?.[order.g] ?? 0) : 0;
-      const done = Boolean(order) && target === order.qty;
+      const facts = firstOrderFacts(state);
+      const goods = order?.g ?? facts?.goods ?? null;
+      const required = order?.qty ?? facts?.qty ?? 0;
+      const target = goods ? (model.stockTargets?.[goods] ?? 0) : 0;
+      const shipped = Boolean(orderCompletedEvent(events));
+      const done = shipped || (Boolean(order) && target >= required);
       return {
         complete: done,
         progress: { done: Number(done), total: 1 },
-        detail: order
+        detail: shipped
+          ? '注文は納品済みです。買上げ目標の確認も完了しました'
+          : order
           ? (done
-            ? `${goodsLabel(order.g)}の買上げ目標を注文と同じ ${target}荷へ調整済み`
-            : `事前目標${target}荷を、注文の${order.qty}荷へ合わせてください`)
-          : '注文の受諾が先です',
-        evidence: { target },
+            ? `${goodsLabel(order.g)}の買上げ目標 ${target}荷 / 注文 ${required}荷。備えは足りています`
+            : `${goodsLabel(order.g)}の買上げ目標を${required}荷以上にしてください（現在${target}荷）`)
+          : '注文状は15日ごとの判定日に届きます。受諾後に備えを確認します',
+        evidence: { goods, target, required, shipped },
       };
     },
   }),
@@ -1699,17 +1733,17 @@ export const TUTORIAL_LETTERS = Object.freeze([
     when({ model }) {
       const order = model.activeOrder;
       return Boolean(order) && Boolean(warehouseBuilding(model)) && warehouseConnected(model)
-        && (model.stockTargets?.[order.g] ?? 0) !== order.qty;
+        && (model.stockTargets?.[order.g] ?? 0) < order.qty;
     },
     render({ model }) {
       const order = model.activeOrder;
       return {
         kicker: '会社の銀は総督のもの',
         title: '買付のご下命を',
-        summary: `${goodsLabel(order.g)}の買上げ目標を${order.qty}荷へ合わせます`,
+        summary: `${goodsLabel(order.g)}の買上げ目標を${order.qty}荷以上にします`,
         body: [
-          `${model.day}日目。注文前の備えとして道具を先に買い集めてあります。受けた注文は${goodsLabel(order.g)}${order.qty}荷です。`,
-          `会社の帳場で${goodsLabel(order.g)}の買上げ目標を${order.qty}荷へ合わせてください。既存在庫は失われず、余分な買付だけを止められます。`,
+          `${model.day}日目。受けた注文は${goodsLabel(order.g)}${order.qty}荷ですが、会社の買上げ目標は現在${model.stockTargets?.[order.g] ?? 0}荷です。`,
+          `会社の帳場で${goodsLabel(order.g)}の買上げ目標を${order.qty}荷以上にしてください。すでにそれ以上を備えている場合は、下げる必要はありません。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1886,13 +1920,15 @@ export const TUTORIAL_LETTERS = Object.freeze([
     render({ model }) {
       const facts = foodFlowMetrics(model);
       return {
+        attention: 'notice',
         kicker: '第二章・島の食卓',
-        title: '島の銀を、島の食卓へ',
-        summary: `食料輸入EMA ${facts.importEma.toFixed(3)}・本土仕入累計 ${facts.outflow.toFixed(1)}`,
+        title: '食料をまだ本土から買い続けています',
+        summary: `本土から買う食料 1日あたり${facts.importEma.toFixed(2)}荷・支払い累計 ${facts.outflow.toFixed(1)}デナリ`,
         facts,
         body: [
-          `${model.day}日目。食料の輸入量EMAは${facts.importEma.toFixed(3)}、会社の実台帳に残る本土仕入は累計${facts.outflow.toFixed(1)}です。輸入の代金は、島の銀が本土へ出てゆく流れでもあります。`,
-          '第一章で置いた漁家と菜園は、いまも市場へ食料を運んでいます。ここからは建物を増やさず、島内生産が値と輸入の流れをどう変えるかを同じ帳面で追います。',
+          `${model.day}日目。島はいま、食料を1日あたりおよそ${facts.importEma.toFixed(2)}荷、本土から買っています（直近30日のならし）。この支払いで、これまでに合計${facts.outflow.toFixed(1)}デナリが島の外へ出ていきました。`,
+          '第一章で置いた漁家と菜園が育てば、本土から買う量は自然に減っていきます。第二章では、その変化を見届けます。',
+          'やること: 新しい操作はありません。この書状はご報告だけです。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1908,13 +1944,15 @@ export const TUTORIAL_LETTERS = Object.freeze([
     render({ model, state }) {
       const change = islandFoodChange(model, state);
       return {
+        attention: 'notice',
         kicker: '島内生産の報告',
-        title: '魚と野菜が、市場の数字を動かしました',
-        summary: `食料生産EMA ${change.current.productionEma.toFixed(2)}・輸入EMA ${change.before.importEma.toFixed(3)}→${change.current.importEma.toFixed(3)}`,
+        title: '島の魚と野菜が市場に出回りはじめました',
+        summary: `島で作る食料 1日あたり${change.current.productionEma.toFixed(1)}荷`,
         facts: change,
         body: [
-          `${model.day}日目。島内の食料生産EMAは${change.current.productionEma.toFixed(2)}へ立ち上がりました。魚の値は1荷あたり${(change.before.fishPrice * 10).toFixed(1)}から${(change.current.fishPrice * 10).toFixed(1)}デナリへ、野菜は${(change.before.vegPrice * 10).toFixed(1)}から${(change.current.vegPrice * 10).toFixed(1)}デナリへ動いています。`,
-          `食料輸入EMAも${change.before.importEma.toFixed(3)}から${change.current.importEma.toFixed(3)}へ変わりました。まだ上下はしますが、島の食卓を島の手で満たす流れは、実際の価格と荷の動きに現れています。`,
+          `${model.day}日目。島の中で作る食料が1日あたりおよそ${change.current.productionEma.toFixed(1)}荷になりました（直近30日のならし）。市場では魚が1荷${(change.before.fishPrice * 10).toFixed(1)}デナリから${(change.current.fishPrice * 10).toFixed(1)}デナリへ、野菜が1荷${(change.before.vegPrice * 10).toFixed(1)}デナリから${(change.current.vegPrice * 10).toFixed(1)}デナリへ動いています。`,
+          `本土から買う食料は、1日あたり${change.before.importEma.toFixed(2)}荷から${change.current.importEma.toFixed(2)}荷へ${change.current.importEma <= change.before.importEma ? '減りました' : '増えています。島の生産が皆の食べる量に追いつくまで、しばらく上下します'}。`,
+          'やること: 新しい操作はありません。この書状はご報告だけです。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1933,13 +1971,14 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const before = foodDependenceFacts(state);
       const current = foodFlowMetrics(model);
       return {
+        attention: 'notice',
         kicker: '自給の節目',
-        title: '本土から買う食料の流れが細りました',
-        summary: `輸入EMA ${before.importEma.toFixed(3)}→${current.importEma.toFixed(3)}（目標 < ${FOOD_IMPORT_EMA_TARGET.toFixed(2)}）`,
+        title: '本土から買う食料が、目標より少なくなりました',
+        summary: `本土から買う食料 1日あたり${current.importEma.toFixed(2)}荷（目標の${FOOD_IMPORT_EMA_TARGET.toFixed(2)}荷未満を達成）`,
         facts: { before, current, target: FOOD_IMPORT_EMA_TARGET },
         body: [
-          `${model.day}日目。食料輸入EMAは${current.importEma.toFixed(3)}となり、実測から定めた節目${FOOD_IMPORT_EMA_TARGET.toFixed(2)}を下回りました。第二章の開始時は${before.importEma.toFixed(3)}でした。`,
-          `島内の食料生産EMAは${current.productionEma.toFixed(2)}。本土仕入の累計は${current.outflow.toFixed(1)}ですが、いま流れ込む速さそのものは細っています。累計と現在の速さは、分けてご覧ください。`,
+          `${model.day}日目。本土から買う食料は1日あたり${current.importEma.toFixed(2)}荷になり、目標の${FOOD_IMPORT_EMA_TARGET.toFixed(2)}荷を下回りました。${current.importEma <= before.importEma ? `第二章の始め（1日あたり${before.importEma.toFixed(2)}荷）から減っています。` : `日々の上下で第二章の始め（1日あたり${before.importEma.toFixed(2)}荷）より多い日もありますが、目標の範囲に収まっています。`}いま島で作る食料は1日あたりおよそ${current.productionEma.toFixed(1)}荷で、島の食卓はほぼ島の生産で賄えています。`,
+          'やること: 新しい操作はありません。この書状はご報告だけです。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1956,13 +1995,15 @@ export const TUTORIAL_LETTERS = Object.freeze([
       const before = foodDependenceFacts(state);
       const current = foodFlowMetrics(model);
       return {
+        attention: 'notice',
         kicker: '第二章・収支報告',
-        title: '島の食卓は、島の営みになりました',
-        summary: `食料生産EMA ${current.productionEma.toFixed(2)}・輸入EMA ${current.importEma.toFixed(3)}`,
+        title: '第二章が終わりました — 食料は島で作れています',
+        summary: `島で作る食料 1日あたり${current.productionEma.toFixed(1)}荷・本土から買う食料 1日あたり${current.importEma.toFixed(2)}荷`,
         facts: { before, current, reached: Boolean(reached) },
         body: [
-          `${model.day}日目。魚と野菜を作る営みが根付き、食料生産EMAは${current.productionEma.toFixed(2)}。食料輸入EMAは第二章開始時の${before.importEma.toFixed(3)}から${current.importEma.toFixed(3)}へ下がりました。`,
-          `本土仕入の累計${current.outflow.toFixed(1)}は消えません——過去に出た銀の記録です。けれど、これから出てゆく速さは変えられました。ここから先も同じ島、同じ帳簿のまま、総督のお考えでお続けください。`,
+          `${model.day}日目。魚と野菜を作る暮らしが根付き、島で作る食料は1日あたりおよそ${current.productionEma.toFixed(1)}荷になりました。本土から買う食料は1日あたり${current.importEma.toFixed(2)}荷です${current.importEma <= before.importEma ? `（第二章の始めは${before.importEma.toFixed(2)}荷でした）` : '（日々上下しますが、目標の範囲内です）'}。`,
+          `本土への食料の支払いは、これまでに合計${current.outflow.toFixed(1)}デナリでした。島で作る量が増えたぶん、この出費はこれから増えにくくなります。`,
+          'やること: 第二章はこれで終わりです。次の書状が届くまで、島づくりを自由にお続けください。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };

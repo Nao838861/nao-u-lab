@@ -1,4 +1,4 @@
-export const VERSION = 'v004.7.2-stock-target';
+export const VERSION = 'v004.8.0-ui-flow';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -125,4 +125,5 @@ export const GOODS_LABELS = Object.freeze({
 export const SECTION_LABELS = Object.freeze({
   input: '入', output: '出', storage: '蔵', construction: '工',
   inbound: '輸入', outbound: '輸出', pickup: '返', pantry: '家', stall: '市',
+  companyStock: '会社蔵',
 });
