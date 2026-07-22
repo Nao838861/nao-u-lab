@@ -8,7 +8,33 @@
 - `memory/shared_reads_candidates/20260722_avr_agent_audio_visual_game_generation.md` — 生成ゲームの映像・音声録画を相対評価し、coding agent の反復改善へ戻す AVR-Eval / AVR-Agent の研究。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260722_avr_agent_audio_visual_game_generation.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260722_avr_agent_audio_visual_game_generation.md
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2508.00632
+  title_key: multi agent game generation and evaluation via audio visual recordings
+evaluation_note: >-
+  AVR-Eval / AVR-Agent の問題設定・中核手法・game/animation 評価・成功と限界が揃い、
+  playable diff の録画 A/B 比較へ具体適用できるため pass。約4000字の投稿構成を支えられる。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
