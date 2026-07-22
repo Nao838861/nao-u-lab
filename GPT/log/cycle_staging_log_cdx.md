@@ -93,7 +93,126 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - >-
+    memory/MEMORY.md を UTF-8 明示読みで監査。index 上の atom 参照 50 件は
+    memory/atoms/index.jsonl 2720 件にすべて存在し、broken local link は 0 件だった。
+    代表語は「記憶」「ゲーム設計」「敵パターン」を取得でき、「評価軸」は現行本文に文字列自体がないが、
+    source 全体の UTF-8 decode error や表示経路だけの mojibake は認めなかった。
+  - >-
+    atoms.jsonl / per-file md / index.jsonl は各 2720 件で mirror drift、parse error、content conflict は 0 件。
+    duplicate cluster index は 45 群で current。memory_health の exact-content duplicate は raw 40 群、
+    recall-visible 3 群で既存 overlay により fold され、矛盾は検出しなかった。
+  - >-
+    memory/raw/ の 2026-06-22 より前に更新が止まったファイル 95 件
+    （web_research 87、headless_eval 6、slack_archive 1、sync_state 1）を確認。
+    raw provenance として startup / recall index から分離済みのため、この cycle では archive 移動 0 件。
+  - >-
+    shared-reads candidate 1051 件を dry-run audit。posted 454、ready_to_post 9、postponed 326、
+    failed 243、needs_review 18、skipped_unreviewed 1。status / candidate_status conflict は 0 件、
+    missing stale_after 4 件は unreviewed 経路を含むため自動補完しなかった。
+  - >-
+    stale / open-duplicate / group-action sidecar を 2026-07-22 基準で再生成し、
+    all-open の RDA 1 群を Phase 2 用 inbox gha-508ee747e655a8f7 に enqueue した。
+  - >-
+    slack_directives.jsonl / slack_broadcasts.jsonl は pending 0 件。完了根拠のない handled 更新は 0 件。
+  - >-
+    probe lifecycle は due-only 0 件。期限 2026-07-22T23:00:00+09:00 の pending lease は期限前なので
+    receipt を作らず status を維持した。memory_health の gr-1777083728-44d444ab7a mojibake suspect は、
+    UTF-8 source 内の意図的な「???」を拾った tooling 側 false positive と確認した。
+issues:
+  - id: ISS-ENC-001
+    description: >-
+      shared-reads archive の 1 投稿で「AIエージェント」が「AIエ��ジェント」と source 段階から壊れ、
+      atom title / trigger / excerpt と per-file mirror に伝播している。
+    severity: low
+    evidence: >-
+      memory/raw/slack_archive/shared-reads.jsonl ts=1776127289.990919;
+      memory/atoms/2026-04/sr-1776127289-4d9239b255.md;
+      memory/atoms.jsonl id=sr-1776127289-4d9239b255
+    source_file_status: >-
+      UTF-8 明示読みでも U+FFFD が 2 文字残る。raw archive の同一 ts 行にも存在するため source corruption。
+    display_or_tooling_status: >-
+      PowerShell UTF-8 読み、atoms.jsonl、per-file md の表示は一致しており、display-only mojibake ではない。
+    why_blocks_game_memory: >-
+      1 atom に限定されるが、正規語「AIエージェント」での title / trigger 検索を弱める。
+      raw source に正字 evidence がないため Phase 4a では推測修復しない。
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 1
+    resolved: 0
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 1  # enqueue 選定時
+  actionable_group_count_after_enqueue: 0  # live lease を合成して再生成後
+  backlog_high_water: false
+  backlog_high_water_reason: >-
+    overdue_open_total > stale_triage_queue_rows は true だが actionable group >= 3 は false。
+  group_handoff_budget: 1
+  handed_off_group_count: 1
+  handoff_inbox_pending_count: 1
+  handoff_inbox_ids:
+    - gha-508ee747e655a8f7
+group_action_handoff:
+  - inbox_id: gha-508ee747e655a8f7
+    group_key: reflection at design actualization rda a tool and process for research through game design
+    group_kind: all_open
+    representative: memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+    open_siblings:
+      - memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+      - memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md
+    terminal_siblings: []
+    latest_evidence:
+      path: memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+      stale_after: "2026-07-11"
+      reason: >-
+        age_days=11。playtest 直後の granular reflection と recording は有用だが、
+        tool の具体機能、記録粒度、評価 protocol の根拠が薄く、同一 work の sibling 判定が必要。
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: >-
+      Zork による探索・計画限界は headless playtest に有用だが、評価条件、失敗分類、モデル比較の本文確認が必要。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: >-
+      検証可能な遷移モデルを持つ短い puzzle benchmark は転用しやすいが、実験設計、比較対象、結果の補強が必要。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: >-
+      social deduction の推論 style 追跡は有用だが、評価指標、失敗例、既存投稿との重複関係を確認する必要がある。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: >-
+      memory / validation / Unity demo の接続は強いが、empirical study、ablation、失敗例の本文根拠が不足する。
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: >-
+      accessibility を player / developer / engine / launcher / retailer 間の基盤として扱う着想を、
+      prototype の初回設定・入力補助・難度・字幕へ転用できるか本文で再評価する。
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
