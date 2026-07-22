@@ -42,7 +42,35 @@ reason: Phase 2 の gate_decision が pass の candidate は 0 件だったた�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780975880-2d1c56836e
+    source_ts: "1780975880.419269"
+    title: "§6 fixation 観察と意味論的新規性の双方向化"
+    reason: "未レビュー条件を満たす最新の score 11 atom。外部検索 novelty の write admission 再利用が新しい判断差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "採用条件の合計14に届かず、risk_control も2未満。同一 Slack cluster の直前 sibling ですでに5因子 admission probe が定義され、active な base-camp-saturation-novelty-gate と automem-memory-action-audit が検索 novelty、write 前検索、no_write を扱う。検索 corpus 上の新規性と既存 memory に対する意味論的新規性は母集団と目的が異なり、同一 score の再利用は未校正。原投稿自身も N=1 として起票を見送り、原論文比較や実測 artifact もないため新規 gate は追加しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみを state に記録。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

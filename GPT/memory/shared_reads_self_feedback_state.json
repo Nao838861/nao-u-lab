@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T00:55:32+09:00",
+  "updated_at": "2026-07-23T02:54:29+09:00",
   "reviewed_source_ts": [
+    "1780975880.419269",
     "1780935964.958299",
     "1781040608.593239",
     "1784718435.577389",
@@ -470,6 +471,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T02:54:29+09:00",
+      "selected": {
+        "id": "sr-1780975880-2d1c56836e",
+        "source_ts": "1780975880.419269",
+        "title": "§6 fixation 観察と意味論的新規性の双方向化",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・operation・evaluation を含む7タグを持つ。外部検索時の novelty を memory write admission に再利用する提案が、現在の収集・記憶運用に新しい判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。atom は外部摂取時の既出件数／true-new 判定を write admission の semantic novelty に再利用する具体案を持つが、同一 Slack cluster の直前 sibling source_ts 1780975880.393309 ですでに future utility・factual reliability・semantic novelty・recency・content-type prior の admission probe が定義されている。さらに active な base-camp-saturation-novelty-gate は検索結果を true-new／known-but-new-angle／repeat に分け、automem-memory-action-audit は write 前の既存検索と no_write を扱う。検索 corpus 上の新規性と、既存 memory に対する意味論的新規性は母集団と目的が異なり、同じ score の再利用は誤った admission を生みうる。原投稿自身も N=1 観察として起票を見送り、原論文の比較実測や score 校正を示していないため evidence=1 とした。既存の検索 novelty と write admission を接続する新しい artifact／consumer も今サイクルにはなく、320件の active_probes へ同義 gate を足すより state-only review に留める。",
+      "existing_probes": [
+        "probe-20260609-base-camp-saturation-novelty-gate",
+        "probe-20260710-automem-memory-action-audit",
+        "legacy review source_ts 1780975880.393309: Adaptive Memory Admission Control for LLM Agents"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、検索 novelty／write admission の非同型性および既存 gate との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T00:55:32+09:00",
       "selected": {
