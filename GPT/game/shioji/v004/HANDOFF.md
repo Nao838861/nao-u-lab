@@ -2,7 +2,7 @@
 
 ## 現在地
 
-**Nao_u 実プレイ申し送り（2026-07-22〜23）**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md) に A〜K の11項目。優先度高: K（蔵の会社在庫が建物sheet・島況に出ず「何のためにあるかわからない」）、D（第一章 order-procurement-target 完全一致判定の詰まり）、C（チュートリアル終了ボタン誤操作）、J（master で tests/run.mjs:1094 段17 が失敗する回帰）。書状の平易化は第二章分を PR #3 (shioji-letters-v2) で実施済み、残章は B/E/I 項の基準で展開する。
+**Nao_u 実プレイ申し送り（2026-07-22〜23）**: [PLAYTEST_FEEDBACK_20260723.md](PLAYTEST_FEEDBACK_20260723.md) に A〜K の11項目 + Nao_u 直接指示 L〜Q（性能最適化の徹底・ヘッドレス実行の高速化・描画の無駄な更新排除=クリック不反応の根治・「エンジンの世界」廃止・トースト見直し・目標設定押し忘れ）。優先度高: K（蔵の会社在庫が建物sheet・島況に出ず「何のためにあるかわからない」）、D（第一章 order-procurement-target 完全一致判定の詰まり）、C（チュートリアル終了ボタン誤操作）、J（master で tests/run.mjs:1094 段17 が失敗する回帰）。書状の平易化は第二章分を PR #3 (shioji-letters-v2) で実施済み、残章は B/E/I 項の基準で展開する。
 
 
 `STEPBOOK.md`の全18段は2026-07-20に完了した。続く`TUTORIAL_STEPBOOK.md`も2026-07-21に24/24を完了した。`UI_POLISH_STEPBOOK.md`も2026-07-22に12/12を完了し、現在は第一章の待機・食料・注文導線と会社入力を修復した`v004.7.2-stock-target`。
