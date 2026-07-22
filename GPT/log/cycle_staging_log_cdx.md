@@ -9,7 +9,35 @@
 - duplicate preflight: AutoBG（arXiv:2606.01976）は実投稿済み work 一致のため skip。RevengeBench は sidecar の既存 posted / open group を確認し候補化せず。保存候補は preflight `continue` を確認済み。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260722_its_ok_try_again_rewind_postmortem.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260722_its_ok_try_again_rewind_postmortem.md
+  decision: continue
+  title_key: "it s ok try again postmortem behind the scenes of my game jam entry"
+  sidecars_rebuilt: true
+evaluation_note: >-
+  rewind の完全状態復元、締切下の scope gate、進行率を共通信号にした音画同期を、
+  採用案と撤回案の両方から具体化できる。定量評価の不足は限界として明示でき、
+  Log_cdx の短期 game prototype へ移す設計判断として約4000字の分析に耐えるため pass。
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

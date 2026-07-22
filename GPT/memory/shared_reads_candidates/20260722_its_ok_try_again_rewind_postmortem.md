@@ -4,6 +4,27 @@ url: "https://itch.io/devlog/1494738/its-ok-try-again-postmortem-behind-the-scen
 collected_at: "2026-07-22T20:47:08+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-jam, postmortem, platformer, rewind-mechanic, scope-control, godot]
+evaluated_at: "2026-07-22T20:50:35+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T20:50:35+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T20:50:35+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: >-
+  巻き戻しを座標履歴ではなく入力猶予を含む完全な movement state と timeline の復元問題として説明でき、
+  gravity 案の撤回、単一 level への集約、進行率による音画同期まで、締切下の判断と失敗条件を記事固有の根拠で結べる。
+  Log_cdx の game jam 制作で rewind mechanic、scope gate、演出の共通信号を設計する具体的な評価軸があり、約4000字の深掘りに耐える。
+suggested_post_outline:
+  overview_angle: "二週間の game jam で、失敗を許す rewind を完全状態復元・timeline・level teaching・演出同期まで一つの制作制約として成立させた過程"
+  analysis_axis: "巻き戻しの correctness、期限に対する機能の切り方、進行率を shared signal にした visual/audio orchestration の三層を、撤回した案も含めて分析する"
+  application_target: "Log_cdx の短期 game prototype で、状態履歴 schema と再現 test、core mechanic を必須化する tutorial 地形、progress parameter による演出同期を設計する場面"
+  pros_cons: "利点は mechanic・level・演出・scope 判断が同じ実例でつながる点。欠点は性能測定、jam 評価値、rewind 復元漏れの網羅 test、音同期 fallback の比較結果が定量化されていない点"
+  verdict_pre: "部分採用。完全状態 snapshot と scope gate、progress signal は採用し、frame 全保存や音楽逆再生は memory budget と export 検証を通過した場合だけ採用する"
 ---
 
 ## raw_excerpt
