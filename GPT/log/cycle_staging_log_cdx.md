@@ -10,7 +10,33 @@
 - duplicate preflight: sidecar 3種を再生成後、arXiv:2607.12254 は `continue`。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260723_governed_recursive_self_improving_agents.md
+    reason: "現行 v2 の題名・追加構成要素が未反映で、position paper のため実験・実装による評価結果もない。出典整合性と評価の中身を補うまで保留"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260723_governed_recursive_self_improving_agents.md
+  decision: continue
+  canonical_url: https://arxiv.org/abs/2607.12254
+  sidecars_fresh: true
+evaluation_note: "ゲーム制作 agent の短い実行 loop と、playtest evidence を用いる遅い改善 loop の分離には具体性がある。一方、現行 source は v2 へ改題・拡張されており、候補 snapshot は不完全。実証結果のない概念設計である点を明示した再整理が必要"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
