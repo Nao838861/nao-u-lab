@@ -40,7 +40,17 @@ evaluation_note: >-
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260722_its_ok_try_again_rewind_postmortem.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784721405169679
+    char_count: 4428
+skipped: []
+```
+
+- 最終判定: 投稿。rewind の完全状態復元、scope gate、進行率による音画同期を記事固有の判断と失敗条件まで展開し、定量評価・memory cost・分岐 level への一般化不足を限界として明記した。
+- 投稿前 review: 必須6項目・順序・冒頭/末尾・禁止語・文字数・重複 preflight を通過。1 candidate を1回の `chat.postMessage` で投稿し、スレッド返信は使用していない。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
