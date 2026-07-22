@@ -52,6 +52,7 @@ const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
 let companyMouseInteraction = false;
 let companyInteractionReleasePending = false;
+let companyEditingInput = null;
 const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
@@ -545,6 +546,7 @@ window.addEventListener('blur', () => {
   companyInteractionPointers.clear();
   companyMouseInteraction = false;
   companyInteractionReleasePending = false;
+  companyEditingInput = null;
 });
 document.addEventListener('visibilitychange', () => pressedMovementKeys.clear());
 
@@ -1044,12 +1046,24 @@ $('#secretary').addEventListener('click', followSecretaryRoute);
 
 const companySheet = $('#company-sheet');
 companySheet.addEventListener('pointerdown', event => {
-  if (!event.target.closest('button, input, select, textarea')) return;
+  const control = event.target.closest('button, input, select, textarea');
+  if (!control) return;
+  companyEditingInput = isEditableTarget(control) ? control : null;
   companyInteractionPointers.add(event.pointerId);
 });
 companySheet.addEventListener('mousedown', event => {
-  if (!event.target.closest('button, input, select, textarea')) return;
+  const control = event.target.closest('button, input, select, textarea');
+  if (!control) return;
+  companyEditingInput = isEditableTarget(control) ? control : null;
   companyMouseInteraction = true;
+});
+companySheet.addEventListener('focusin', event => {
+  if (isEditableTarget(event.target)) companyEditingInput = event.target;
+});
+companySheet.addEventListener('focusout', event => {
+  if (companyEditingInput !== event.target) return;
+  companyEditingInput = null;
+  queueCompanyInteractionRelease();
 });
 
 function queueCompanyInteractionRelease() {
@@ -1062,7 +1076,8 @@ function queueCompanyInteractionRelease() {
       return;
     }
     companyInteractionReleasePending = false;
-    if (!companySheet.hidden) renderCompanySheet();
+    if (!companySheet.hidden
+      && !companyEditingInput && !isEditableTarget(document.activeElement)) renderCompanySheet();
   });
 }
 

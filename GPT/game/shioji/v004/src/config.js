@@ -1,4 +1,4 @@
-export const VERSION = 'v004.7.1-company-input';
+export const VERSION = 'v004.7.2-stock-target';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

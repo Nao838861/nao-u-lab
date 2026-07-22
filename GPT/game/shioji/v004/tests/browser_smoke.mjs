@@ -149,6 +149,65 @@ async function checkTutorialCompanyPointerStability() {
   })()`);
   assert.equal(result.journal.length, 1, JSON.stringify(result));
   assert.match(result.status, /停止|支援/);
+
+  const targetSetup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const row = document.querySelector('.goods-row[data-goods="tools"]');
+    const input = row.querySelector('input');
+    const button = row.querySelector('[data-company-action="set-target"]');
+    input.scrollIntoView({ block: 'center' });
+    const inputBox = input.getBoundingClientRect();
+    const buttonBox = button.getBoundingClientRect();
+    window.__tutorialToolsTargetInput = input;
+    return {
+      inputPoint: { x: inputBox.x + inputBox.width / 2, y: inputBox.y + inputBox.height / 2 },
+      buttonPoint: { x: buttonBox.x + buttonBox.width / 2, y: buttonBox.y + buttonBox.height / 2 },
+      journalLength: game.controller.inputJournal().length,
+    };
+  })()`);
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: targetSetup.inputPoint.x, y: targetSetup.inputPoint.y,
+    button: 'left', buttons: 1, clickCount: 1,
+  });
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: targetSetup.inputPoint.x, y: targetSetup.inputPoint.y,
+    button: 'left', buttons: 0, clickCount: 1,
+  });
+  await page.send('Input.insertText', { text: '80' });
+  await page.evaluate('window.__SHIOJI_V004__.setSpeed(3)');
+  await wait(180);
+  const targetHeld = await page.evaluate(`({
+    connected: document.contains(window.__tutorialToolsTargetInput),
+    same: document.querySelector('.goods-row[data-goods="tools"] input')
+      === window.__tutorialToolsTargetInput,
+    focused: document.activeElement === window.__tutorialToolsTargetInput,
+    value: window.__tutorialToolsTargetInput.value,
+  })`);
+  assert.equal(targetHeld.connected, true, JSON.stringify(targetHeld));
+  assert.equal(targetHeld.same, true, JSON.stringify(targetHeld));
+  assert.equal(targetHeld.focused, true, JSON.stringify(targetHeld));
+  assert.equal(Number(targetHeld.value), 80, JSON.stringify(targetHeld));
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mousePressed', x: targetSetup.buttonPoint.x, y: targetSetup.buttonPoint.y,
+    button: 'left', buttons: 1, clickCount: 1,
+  });
+  await page.send('Input.dispatchMouseEvent', {
+    type: 'mouseReleased', x: targetSetup.buttonPoint.x, y: targetSetup.buttonPoint.y,
+    button: 'left', buttons: 0, clickCount: 1,
+  });
+  await wait(80);
+  const targetResult = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.setSpeed(0);
+    return {
+      target: game.model.stockTargets.tools,
+      operations: game.controller.inputJournal().slice(${targetSetup.journalLength})
+        .filter(row => row.op.type === 'set_stock_target'),
+    };
+  })()`);
+  assert.equal(targetResult.target, 80, JSON.stringify(targetResult));
+  assert.equal(targetResult.operations.length, 1, JSON.stringify(targetResult));
+  assert.equal(targetResult.operations[0].op.qty, 80, JSON.stringify(targetResult));
   assert.deepEqual(page.errors, []);
   await page.close();
 }
@@ -298,8 +357,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.1-company-input');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.1-company-input');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.2-stock-target');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.2-stock-target');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
