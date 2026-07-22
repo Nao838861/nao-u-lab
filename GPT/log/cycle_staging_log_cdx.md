@@ -10,7 +10,31 @@
 - duplicate preflight: `continue`（posted-source / closed canonical title / open duplicate group の一致なし）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260722_final_torpedo_jam_postmortem.md
+    reason: "core loop と後付け要素の対比は具体的だが、検証結果と改善後比較がなく、約4000字の概要を一次情報で支えるには材料不足"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  path: memory/shared_reads_candidates/20260722_final_torpedo_jam_postmortem.md
+  decision: continue
+  title_key: "jam release 0 2 0 postmortem"
+  sidecars_refreshed: true
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
