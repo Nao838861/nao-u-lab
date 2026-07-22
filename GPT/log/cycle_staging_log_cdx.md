@@ -39,7 +39,17 @@ evaluation_note: "ゲーム制作 agent の短い実行 loop と、playtest evid
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260723_governed_recursive_self_improving_agents.md
+    reason: "Phase 2 の gate_decision が postpone で pass 候補ではない。現行 v2 との出典整合性と、実証評価のない position paper である点を補って再評価するまで #shared-reads へ投稿しない"
+    action: candidate_revise
+eligible_pass_count: 0
+slack_posted: false
+reviewed_at: "2026-07-23T06:51:16+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
