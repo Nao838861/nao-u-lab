@@ -6,15 +6,20 @@ import { runPopulationDynamicsPhase } from '../../engine/src/econ.js';
 import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
-import { BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS } from '../src/config.js';
 import {
-  E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS, VERSION,
+} from '../src/config.js';
+import {
+  DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
+} from '../src/display_batch.js';
+import {
+  BUILD_COST_DENARI, E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS,
   buildBlankCity, createEngineController,
 } from '../src/engine_bridge.js';
-import { VERSION } from '../src/config.js';
 import {
   OBSERVED_EVENT_TYPES, hasEventPresentation, presentEvent,
 } from '../src/event_view.js';
+import { movementVector, panCameraFromKeys, shouldIgnoreShortcut } from '../src/keyboard.js';
 import {
   analyzeRoadConnections, previewBuildingPlacement, previewRoadPlacement,
 } from '../src/placement.js';
@@ -34,6 +39,7 @@ import {
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
+import { objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -1689,7 +1695,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.4.0-building-inspector');
+  assert.equal(VERSION, 'v004.6.0-ui-complete');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -1981,7 +1987,7 @@ test('段2: engine importをbridge一か所へ隔離しrendererへAPIを渡さ�
   const sources = Object.fromEntries([
     'camera.js', 'clock.js', 'config.js', 'controller.js', 'event_view.js', 'main.js',
     'placement.js', 'presentation.js', 'renderer.js', 'start_modes.js', 'tutorial_content.js',
-    'tutorial_director.js', 'view_model.js',
+    'tutorial_director.js', 'ui_guidance.js', 'view_model.js',
   ].map(file => [file, fs.readFileSync(new URL(`../src/${file}`, import.meta.url), 'utf8')]));
   for (const [file, source] of Object.entries(sources)) {
     assert.doesNotMatch(source, /engine\/src/, `${file}からengineを直接importしない`);
@@ -2249,7 +2255,14 @@ test('段9: tick間とdayEnd束イベントを表示時間へ展開しキャリ�
     { type: 'notice', x: 12, y: 9 },
     { type: 'inheritance', householdId: 7, x: 12, y: 9 },
   ];
-  assert.ok(transitionDuration(from, to, events, 0.02) >= 0.18, 'dayEnd束を最低表示時間へ展開');
+  // 平滑下限は速度に比例(min(0.18, base×2)・下限0.05)——高速時に表示が経済時間から遅延しないため
+  assert.ok(transitionDuration(from, to, events, 0.02) >= 0.05, 'dayEnd束を最低表示時間へ展開');
+  assert.ok(transitionDuration(from, to, events, 0.42) >= 0.42, '通常速度では基本時間が支配する');
+  assert.equal(transitionDuration(from, to, events, 0.09), 0.18, '束の平滑下限はbase×2(上限0.18)');
+  // 道路上の通常移動(1.67タイル/tick)は「飛び」扱いしない=速度設定に表示速度が追従する
+  const roadFrom = { carriers: [{ id: 'household:9', x: 0, y: 0 }], portCalls: [], buildings: [], portBerth: null };
+  const roadTo = { ...roadFrom, carriers: [{ id: 'household:9', x: 1.67, y: 0 }] };
+  assert.equal(transitionDuration(roadFrom, roadTo, [], 0.028), 0.028, '道路移動は基本時間のまま');
   const quarter = interpolateWorldModel(from, to, events, 0.25);
   assert.deepEqual(
     quarter.carriers.map(row => [row.id, row.x, row.y]),
@@ -2392,6 +2405,198 @@ test('UI向上段3/4: 建物sheet・クリック選択・地面先行の選択�
   assert.ok(selected.id !== null, '選択対象にはsnapshot由来のIDがある');
   assert.deepEqual(api.snapshot(), before, '表示上の選択はengine stateを変えない');
   assert.deepEqual(api.inputJournal(), journal, '表示上の選択はjournalを増やさない');
+});
+
+test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接パレットを備える', () => {
+  const categorized = BUILD_CATEGORIES.flatMap(category => category.jobs);
+  assert.deepEqual([...categorized].sort(), [...PLACEMENT_JOBS].sort());
+  assert.equal(new Set(categorized).size, PLACEMENT_JOBS.length);
+  assert.equal(BUILD_COST_DENARI, 2500);
+  assert.ok(PLACEMENT_JOBS.every(job => BUILDING_ART[job] && BUILDING_SIZES[job]));
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  for (const id of ['build-tabs', 'building-palette', 'ground-tools', 'cancel-tool']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(html, /id="building-kind" class="legacy-building-kind"/);
+  assert.match(main, /function activateBuildingJob/);
+  assert.match(main, /dataset\.buildingJob/);
+});
+
+test('UI向上段6: 教程の実目標だけが既存操作一つへ案内される', () => {
+  const model = buildings => ({ buildings: buildings.map(type => ({ type })) });
+  assert.deepEqual(objectiveActionFor({ id: 'first-road-and-logger', evidence: { forestRoads: 0 } }, model([])),
+    { kind: 'tool', tool: 'road', label: '森まで道を敷く' });
+  assert.equal(objectiveActionFor({ id: 'first-road-and-logger', evidence: { forestRoads: 1 } }, model([])).job, 'logger');
+  assert.equal(objectiveActionFor({ id: 'market-for-logs' }, model([])).job, 'market');
+  assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher'])).job, 'veg');
+  assert.equal(objectiveActionFor({ id: 'place-conversion-workshops' }, model(['woodshop'])).job, 'charburner');
+  assert.equal(objectiveActionFor({ id: 'observe-tools-price-rise' }, model([])).sheet, 'island-sheet');
+  assert.equal(objectiveActionFor(null, model([])), null, 'サンドボックスでは政策を推測しない');
+});
+
+test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一度ずつ合計する', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(60);
+  const model = snapshotToViewModel(api.snapshot());
+  const locationTotal = model.stockLocations.reduce((total, row) => total + row.amount, 0);
+  assert.ok(Math.abs(locationTotal - model.totalVisibleStock) < 1e-9);
+  assert.ok(model.stockLocations.length > 0);
+  assert.ok(model.stockLocations.every(row => row.amount > 0));
+  assert.deepEqual(new Set(model.stockLocations.map(row => row.source)), new Set(['building', 'pantry', 'stall']));
+  for (const goodsRow of model.goodsManifest) {
+    const locations = model.stockLocations.filter(row => row.goods === goodsRow.goods);
+    const total = locations.reduce((sum, row) => sum + row.amount, 0);
+    assert.ok(Math.abs(total - goodsRow.totalAmount) < 1e-9, goodsRow.goods);
+    assert.deepEqual(goodsRow.locations, locations);
+  }
+  assert.equal(Object.isFrozen(model.stockLocations), true);
+  assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
+});
+
+test('UI向上段8: 島況はsnapshotの市場相場と輸入・生産・消費EMAを補完せず表示する', () => {
+  const api = createEngineApi(buildBaseCity(13));
+  api.advanceDays(30);
+  const snapshot = api.snapshot();
+  const model = snapshotToViewModel(snapshot);
+  assert.deepEqual(model.marketPrices, snapshot.economy.px);
+  assert.deepEqual(model.flowEma, snapshot.economy.f30);
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  for (const id of ['island-sheet', 'island-manifest', 'market-overview', 'open-island']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(html, /EMAをデナリ\/荷/);
+  assert.match(main, /flowCell\('imp'\).*flowCell\('prod'\).*flowCell\('cons'\)/s);
+  assert.match(main, /Number\.isFinite\(value\) \? formatQuantity\(value\) : '—'/);
+});
+
+test('UI向上段9: 常駐エレナは未読書状・現在目標・重要イベント・操作案内の順に実データを選ぶ', () => {
+  const letter = {
+    id: 'letter-1', unread: true, issuedDay: 7, title: '実測の書状', summary: '人口13人',
+  };
+  const objective = {
+    id: 'goal-1', chapter: '第一章', title: '市場を置く', detail: '丸太の売場を作ります', complete: false,
+  };
+  const objectiveAction = { kind: 'building', job: 'market', label: '市場を選ぶ' };
+  const events = [
+    { sequence: 1, day: 8, tick: 241, important: false, title: '通常', details: '通常イベント' },
+    { sequence: 2, day: 9, tick: 270, important: true, title: '実イベント', details: '麦4荷' },
+  ];
+  const fallback = {
+    priority: 'operation-guide', target: { kind: 'sheet', sheet: 'island-sheet' },
+    kicker: '観測の案内', title: '島況を見る', detail: '現物12荷',
+  };
+  const unread = secretaryRouteFor({ letters: [letter], objective, objectiveAction, events, fallback });
+  assert.equal(unread.priority, 'unread-letter');
+  assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1' });
+  assert.match(unread.detail, /7日目.*人口13人/);
+  const goal = secretaryRouteFor({
+    letters: [{ ...letter, unread: false }], objective, objectiveAction, events, fallback,
+  });
+  assert.equal(goal.priority, 'objective');
+  assert.equal(goal.title, objective.title);
+  assert.deepEqual(goal.target, objectiveAction);
+  const important = secretaryRouteFor({
+    letters: [], objective: { ...objective, complete: true }, events, fallback,
+  });
+  assert.equal(important.priority, 'important-event');
+  assert.deepEqual(important.target, { kind: 'event', sequence: 2 });
+  assert.equal(secretaryRouteFor({ events: events.slice(0, 1), fallback }), fallback);
+
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /id="secretary"/);
+  assert.match(html, /elena_vance\.png/);
+  assert.match(html, /secretary-kicker.*secretary-title.*secretary-detail/s);
+});
+
+test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {
+  assert.deepEqual(movementVector(new Set(['w'])), { x: 0, y: 1 });
+  const diagonal = movementVector(new Set(['w', 'd']));
+  assert.ok(Math.abs(Math.hypot(diagonal.x, diagonal.y) - 1) < 1e-12);
+  const camera = new IsometricCamera();
+  panCameraFromKeys(camera, new Set(['w', 'd']), 0.5);
+  assert.ok(Math.abs(Math.hypot(camera.panX, camera.panY) - 48) < 1e-9,
+    '背景復帰時もdelta上限0.1秒を超えて飛ばない');
+  const editable = { closest: selector => selector.includes('input') ? editable : null };
+  const plain = { closest: () => null };
+  assert.equal(shouldIgnoreShortcut({ target: editable, altKey: false, ctrlKey: false, metaKey: false, shiftKey: false }), true);
+  assert.equal(shouldIgnoreShortcut({ target: plain, altKey: false, ctrlKey: true, metaKey: false, shiftKey: false }), true);
+  assert.equal(shouldIgnoreShortcut({ target: plain, altKey: false, ctrlKey: false, metaKey: false, shiftKey: false }), false);
+
+  const clock = new SimulationClock({ speedIndex: 3 });
+  assert.equal(clock.consume(1, { maxTicks: 3 }), 3);
+  assert.equal(clock.consume(0, { maxTicks: 3 }), 3, '処理上限を超えた時間は次回へ保持する');
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /id="key-hints"[\s\S]*WASD[\s\S]*Space[\s\S]*1–4[\s\S]*Esc/);
+});
+
+function replayFixtureInEngineBatches(fixture, batchSize) {
+  const controller = createEngineController({ seed: 11, mode: 'tutorial' });
+  let tick = 0;
+  const advanceTo = targetTick => {
+    advanceInBatches(controller, targetTick - tick, { batchSize });
+    tick = targetTick;
+  };
+  for (const row of fixture.journal) {
+    advanceTo(row.tick);
+    controller.operate(row.op);
+  }
+  advanceTo(fixture.model.tick);
+  return controller;
+}
+
+test('UI向上段11: 固定3tickバッチは自由プレイ表示を3分の1にし、全章状態を保つ', () => {
+  assert.equal(displayBatchSizeFor({ speedIndex: 3 }), DISPLAY_BATCH_TICKS);
+  assert.equal(displayBatchSizeFor({ speedIndex: 3, tutorialActive: true }), 1,
+    '発行tickと証拠値を変えないため、進行中の教程directorは従来どおり1tick観測する');
+  assert.equal(displayBatchSizeFor({
+    speedIndex: 3, tutorialActive: true, tutorialComplete: true,
+  }), DISPLAY_BATCH_TICKS, '教程完了後の自由プレイは3tick表示へ移る');
+  assert.equal(displayBatchSizeFor({ speedIndex: 2 }), 1);
+  const unbatched = createEngineController({ seed: 13, mode: 'test' });
+  unbatched.resetMetrics();
+  for (let tick = 0; tick < 300; tick += 1) {
+    unbatched.advanceTicks(1);
+    unbatched.readModel();
+  }
+  const batched = createEngineController({ seed: 13, mode: 'test' });
+  batched.resetMetrics();
+  const result = advanceInBatches(batched, 300, {
+    batchSize: DISPLAY_BATCH_TICKS,
+    afterBatch: () => batched.readModel(),
+  });
+  assert.deepEqual(result, { ticks: 300, batches: 100 });
+  assert.deepEqual(batched.readModel(), unbatched.readModel());
+  assert.deepEqual(batched.events(0), unbatched.events(0));
+  assert.deepEqual(batched.inputJournal(), unbatched.inputJournal());
+  const oldCounts = unbatched.metrics();
+  const newCounts = batched.metrics();
+  assert.ok(newCounts.snapshotReads <= Math.ceil(oldCounts.snapshotReads / 3));
+  assert.ok(newCounts.viewModelBuilds <= Math.ceil(oldCounts.viewModelBuilds / 3));
+  assert.equal(newCounts.advanceCalls, 100);
+  assert.equal(newCounts.advancedTicks, 300);
+
+  const chapters = [
+    tutorialThroughPlay.firstChapter,
+    tutorialThroughPlay.secondChapter,
+    tutorialThroughPlay.thirdChapter,
+    tutorialThroughPlay.fourthChapter,
+    tutorialThroughPlay.fifthChapter,
+    tutorialThroughPlay.graduation,
+  ];
+  let graduationController = null;
+  for (const fixture of chapters) {
+    const replay = replayFixtureInEngineBatches(fixture, DISPLAY_BATCH_TICKS);
+    assert.deepEqual(replay.readModel(), fixture.model, '全6章の最終描画モデルが一致する');
+    assert.deepEqual(replay.inputJournal(), fixture.journal, '全6章の入力journalが一致する');
+    if (fixture === tutorialThroughPlay.graduation) graduationController = replay;
+  }
+  const rawGraduation = replayFixtureInEngineBatches(tutorialThroughPlay.graduation, 1);
+  assert.deepEqual(graduationController.readModel(), rawGraduation.readModel());
+  assert.deepEqual(graduationController.events(0), rawGraduation.events(0));
+  assert.deepEqual(graduationController.inputJournal(), rawGraduation.inputJournal());
+
 });
 
 function findPreview(model, job) {

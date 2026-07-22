@@ -3,6 +3,7 @@ export {
   companyStockReleasePrice,
   productionCost,
 } from '../../engine/src/econ.js';
+import { P } from '../../engine/src/econ.js';
 import { createEngineApi } from '../../engine/src/api.js';
 import {
   E_STABLE_JOBS,
@@ -17,6 +18,7 @@ import { createViewController } from './controller.js';
 import { START_MODES } from './start_modes.js';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
+export const BUILD_COST_DENARI = P.BUILD_COST * 10;
 
 export function buildBlankCity(seed = 11) {
   const plan = makeStableCityPlan();

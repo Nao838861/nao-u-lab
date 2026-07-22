@@ -1,4 +1,4 @@
-export const VERSION = 'v004.4.0-building-inspector';
+export const VERSION = 'v004.6.0-ui-complete';
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -21,7 +21,7 @@ export const TERRAIN_COLORS = Object.freeze({
 
 export const JOB_LABELS = Object.freeze({
   market: '市場', warehouse: '蔵', port: '港',
-  fisher: '漁家', fisher2: '漁家', logger: '木こり', woodshop: '木工房',
+  fisher: '漁家', fisher2: '魚粉屋', logger: '木こり', woodshop: '木工房',
   charburner: '炭焼', saltworks: '製塩所', quarryman: '採石場',
   miner: '鉱山', collier: '炭鉱', smelter: '製鉄所', smith: '鍛冶屋',
   wheat: '麦農家', veg: '菜園', shepherd: '牧場', rapeseed: '菜種農家',
@@ -82,6 +82,17 @@ export const PLACEMENT_JOBS = Object.freeze([
   'market', 'warehouse',
   'fisher', 'fisher2', 'logger', 'woodshop', 'charburner', 'saltworks', 'quarryman',
   'miner', 'collier', 'smelter', 'smith', 'wheat', 'veg', 'shepherd', 'rapeseed',
+]);
+
+export const BUILD_CATEGORIES = Object.freeze([
+  Object.freeze({ id: 'infrastructure', label: '整備', jobs: Object.freeze([]) }),
+  Object.freeze({ id: 'logistics', label: '流通', jobs: Object.freeze(['market', 'warehouse']) }),
+  Object.freeze({ id: 'food', label: '食料', jobs: Object.freeze(['fisher', 'wheat', 'veg', 'shepherd']) }),
+  Object.freeze({ id: 'gathering', label: '採取', jobs: Object.freeze(['logger', 'quarryman', 'miner', 'collier']) }),
+  Object.freeze({
+    id: 'processing', label: '加工',
+    jobs: Object.freeze(['fisher2', 'woodshop', 'charburner', 'saltworks', 'smelter', 'smith', 'rapeseed']),
+  }),
 ]);
 
 export const GOODS_ART = Object.freeze({

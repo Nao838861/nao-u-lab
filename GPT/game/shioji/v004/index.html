@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="潮路の島の経済エンジンを眺めるクォータービュー都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.4.0">
+  <link rel="stylesheet" href="./style.css?v=v004.6.0">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -31,19 +31,30 @@
     <button id="step-day" class="step-day" type="button" data-testid="step-day">1日進める</button>
   </header>
 
-  <aside id="tutorial-objective" class="panel tutorial-objective" hidden data-testid="tutorial-objective">
+  <aside id="tutorial-objective" class="panel tutorial-objective" hidden tabindex="-1" data-testid="tutorial-objective">
     <div>
       <small id="tutorial-chapter">—</small>
       <b id="tutorial-goal">—</b>
       <span id="tutorial-detail">—</span>
     </div>
     <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
-    <button id="skip-tutorial" type="button">案内を終える<small>島はそのまま</small></button>
+    <div class="tutorial-actions">
+      <button id="tutorial-action" type="button" hidden>次の操作</button>
+      <button id="skip-tutorial" type="button">案内を終える<small>島はそのまま</small></button>
+    </div>
   </aside>
 
   <aside id="observer" class="panel observer" data-testid="observer">
     <small>島の観測</small>
     <h1>エンジンの世界</h1>
+    <button id="secretary" class="secretary" type="button" data-testid="secretary">
+      <img src="../v002/assets/elena_vance.png" alt="会社秘書エレナ・ヴァンス">
+      <span>
+        <small id="secretary-kicker">観測の案内</small>
+        <b id="secretary-title">—</b>
+        <em id="secretary-detail">—</em>
+      </span>
+    </button>
     <dl>
       <div><dt>盤面</dt><dd id="world-size">—</dd></div>
       <div><dt>建物</dt><dd id="building-count">—</dd></div>
@@ -55,23 +66,27 @@
     </dl>
     <div class="observer-actions">
       <button id="open-company" type="button">会社</button>
+      <button id="open-island" type="button">島況</button>
       <button id="open-events" type="button">出来事</button>
       <button id="open-tutorial-letters" type="button" hidden>書状 <b id="tutorial-unread" class="unread-badge" hidden>0</b></button>
       <button id="choose-start" type="button">最初から</button>
     </div>
-    <p>ドラッグ／スワイプで移動、ホイール／ピンチで拡大縮小。</p>
+    <p id="key-hints" class="key-hints"><kbd>WASD</kbd> 移動　<kbd>Space</kbd> 停止／復帰　<kbd>1–4</kbd> 速度　<kbd>Esc</kbd> 戻る</p>
     <small id="build-version" data-testid="build-version">Build —</small>
   </aside>
 
   <nav id="build-dock" class="panel build-dock" aria-label="建築と道路" data-testid="build-dock">
-    <label>建物
-      <select id="building-kind" aria-label="配置する建物"></select>
-    </label>
-    <button type="button" data-tool="building">入口を指定</button>
-    <button type="button" data-tool="road">道を敷く</button>
-    <button type="button" data-tool="remove-building">建物撤去</button>
-    <button type="button" data-tool="remove-road">道撤去</button>
-    <button id="cancel-tool" type="button" hidden>中止</button>
+    <select id="building-kind" class="legacy-building-kind" aria-label="配置する建物" tabindex="-1"></select>
+    <div id="build-tabs" class="build-tabs" role="tablist" aria-label="建築カテゴリ"></div>
+    <div class="build-dock-row">
+      <div id="building-palette" class="building-palette" aria-label="建物を直接選択"></div>
+      <div id="ground-tools" class="ground-tools" hidden>
+        <button type="button" data-tool="road">道を敷く<small>始点からドラッグ</small></button>
+        <button type="button" data-tool="remove-building">建物撤去<small>空き区画のみ</small></button>
+        <button type="button" data-tool="remove-road">道撤去<small>1区画ずつ</small></button>
+      </div>
+      <button id="cancel-tool" type="button" hidden>中止</button>
+    </div>
   </nav>
 
   <div id="tool-hint" class="panel tool-hint" hidden role="status"></div>
@@ -92,10 +107,30 @@
       <button type="button" data-close-sheet="building-sheet" aria-label="建物情報を閉じる">×</button>
     </header>
     <div id="building-summary" class="building-summary"></div>
-    <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
+    <div class="building-sheet-actions">
+      <button id="focus-selected-building" class="focus-building" type="button">この建物を画面中央へ</button>
+      <button id="open-island-from-building" class="focus-building" type="button">島全体の現物を見る</button>
+    </div>
     <section id="building-household" class="building-detail"></section>
     <section id="building-shelves" class="building-detail"></section>
     <section id="building-conversion" class="building-detail"></section>
+  </aside>
+
+  <aside id="island-sheet" class="panel sheet island-sheet" hidden data-testid="island-sheet">
+    <header>
+      <div><small>現物と最近の流れ</small><h2>島況</h2></div>
+      <button type="button" data-close-sheet="island-sheet" aria-label="島況を閉じる">×</button>
+    </header>
+    <section>
+      <h3>島にある現物</h3>
+      <p class="sheet-note">建物の区分棚、世帯の食料庫、市場の屋台を二重計上せず、所在ごとに示します。</p>
+      <div id="island-manifest" class="island-manifest"></div>
+    </section>
+    <section>
+      <h3>市場相場と最近の流れ</h3>
+      <p class="sheet-note">相場はEMAをデナリ/荷、輸入・生産・消費は最近の一日あたりEMAで表示します。因果の断定ではなく観測値です。</p>
+      <div id="market-overview" class="market-overview"></div>
+    </section>
   </aside>
 
   <aside id="company-sheet" class="panel sheet" hidden data-testid="company-sheet">
@@ -174,6 +209,6 @@
   </div>
 
   <noscript>このゲームにはJavaScriptが必要です。</noscript>
-  <script type="module" src="./src/main.js?v=v004.4.0"></script>
+  <script type="module" src="./src/main.js?v=v004.6.0"></script>
 </body>
 </html>

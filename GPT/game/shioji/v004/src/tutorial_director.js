@@ -94,6 +94,10 @@ export class TutorialDirector {
       && this.goals.every(goal => this.state.completedGoals.includes(goal.id));
   }
 
+  isActive() {
+    return this.state.active;
+  }
+
   letters() {
     return clone(this.state.letters);
   }

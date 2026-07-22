@@ -82,16 +82,23 @@ function portVisualRows(from, to, events, alpha) {
   return rows;
 }
 
+// 道路上のキャリアは仕様どおり最大約1.7タイル/tick進む(コスト1.0/tick・道0.6)。
+// 「飛び」の判定閾値はその上に置く——通常の道路移動を飛び扱いすると、
+// 高速時に平滑下限が毎tick掛かり、表示速度が速度設定に追従しなくなる。
+const TELEPORT_DISTANCE = 2.6;
+
 export function transitionDuration(from, to, events, baseSeconds = 0.12) {
   const fromById = new Map((from.carriers ?? []).map(row => [row.id, row]));
   const largeMove = (to.carriers ?? []).some(row => {
     const previous = fromById.get(row.id);
-    return previous && Math.hypot(row.x - previous.x, row.y - previous.y) > 1.05;
+    return previous && Math.hypot(row.x - previous.x, row.y - previous.y) > TELEPORT_DISTANCE;
   });
   const bundled = events.length >= 3 || events.some(event => (
     ['birth', 'death', 'inheritance', 'job_move', 'docking'].includes(event.type)
   ));
-  return Math.max(0.02, baseSeconds, largeMove || bundled ? 0.18 : 0);
+  // 平滑下限は速度(baseSeconds)に比例させ、生成レートを恒常的に超えないよう抑える
+  const smoothFloor = Math.min(0.18, Math.max(baseSeconds * 2, 0.05));
+  return Math.max(0.02, baseSeconds, largeMove || bundled ? smoothFloor : 0);
 }
 
 export function interpolateWorldModel(from, to, events = [], alpha = 1) {
@@ -113,6 +120,8 @@ function stableWorldModel(model) {
     presentationProgress: 1,
   };
 }
+
+const MAX_PENDING_TRANSITIONS = 12;
 
 export class WorldPresentation {
   constructor(initialModel) {
@@ -147,6 +156,13 @@ export class WorldPresentation {
   advance(elapsedSeconds = 0) {
     if (!Number.isFinite(elapsedSeconds) || elapsedSeconds < 0) {
       throw new TypeError('presentation elapsed time must be finite and non-negative');
+    }
+    // 表示キューが経済時間を支配しない: 溜まりすぎた遷移は古い順に即確定して追いつく
+    while (this.queue.length > MAX_PENDING_TRANSITIONS) {
+      const skipped = this.queue.shift();
+      this.display = stableWorldModel(skipped.to);
+      this.active = null;
+      this.elapsed = 0;
     }
     let remaining = elapsedSeconds;
     while (remaining >= 0) {

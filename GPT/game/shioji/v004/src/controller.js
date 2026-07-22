@@ -4,11 +4,23 @@ export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {
     throw new TypeError('public engine API is required');
   }
+  const counts = {
+    advanceCalls: 0,
+    advancedTicks: 0,
+    snapshotReads: 0,
+    viewModelBuilds: 0,
+    eventReads: 0,
+  };
   return Object.freeze({
     readModel() {
-      return snapshotToViewModel(api.snapshot({ scope: 'full' }));
+      counts.snapshotReads += 1;
+      const snapshot = api.snapshot({ scope: 'full' });
+      counts.viewModelBuilds += 1;
+      return snapshotToViewModel(snapshot);
     },
     advanceTicks(count = 1) {
+      counts.advanceCalls += 1;
+      counts.advancedTicks += count;
       api.advanceTicks(count);
     },
     advanceOneDay() {
@@ -18,10 +30,17 @@ export function createViewController(api) {
       return api.applyOperation(operation);
     },
     events(afterSequence = 0) {
+      counts.eventReads += 1;
       return api.events({ afterSequence });
     },
     inputJournal() {
       return api.inputJournal();
+    },
+    metrics() {
+      return Object.freeze({ ...counts });
+    },
+    resetMetrics() {
+      for (const key of Object.keys(counts)) counts[key] = 0;
     },
   });
 }

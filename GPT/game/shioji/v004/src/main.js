@@ -1,15 +1,23 @@
 import { IsometricCamera } from './camera.js';
 import { SimulationClock } from './clock.js';
 import {
-  GOODS_LABELS, JOB_LABELS, PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_LABELS,
+  PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION,
 } from './config.js';
-import { createEngineController } from './engine_bridge.js';
+import {
+  DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
+} from './display_batch.js';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js';
 import { presentEvent } from './event_view.js';
+import {
+  isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
+} from './keyboard.js';
 import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js';
 import { WorldPresentation } from './presentation.js';
 import { Renderer } from './renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
 import { createTutorialDirectorForMode } from './tutorial_director.js';
+import { objectiveActionFor, secretaryRouteFor } from './ui_guidance.js';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -29,11 +37,19 @@ let visibleEventCount = 0;
 let selectedCarrierId = null;
 let selectedBuildingId = null;
 let activeTool = null;
+let activeBuildCategory = 'logistics';
+let recommendedBuildingJob = null;
+let currentTutorialAction = null;
 let toolDragStart = null;
 let dismissedOfferKey = null;
 const eventLog = [];
 let openTutorialLetterId = null;
 let speedBeforeLetter = null;
+let lastRunningSpeed = clock.speedIndex || 1;
+let currentSecretaryRoute = null;
+let highSpeedPendingTicks = 0;
+const pressedMovementKeys = new Set();
+const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
 
@@ -100,6 +116,7 @@ function refreshModel({ animate = false, baseSeconds = 0.12 } = {}) {
 }
 
 function renderHud() {
+  uiMetrics.domUpdates += 1;
   syncSelectedBuilding();
   $('#build-version').textContent = `Build ${VERSION}`;
   $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
@@ -116,13 +133,18 @@ function renderHud() {
   document.querySelectorAll('[data-speed]').forEach(button => {
     button.classList.toggle('on', Number(button.dataset.speed) === clock.speedIndex);
   });
-  if (!$('#company-sheet').hidden) renderCompanySheet();
+  renderBuildDock();
+  if (!$('#company-sheet').hidden && !isEditableTarget(document.activeElement)) renderCompanySheet();
   if (!$('#building-sheet').hidden) renderBuildingSheet();
+  if (!$('#island-sheet').hidden) renderIslandSheet();
   renderTutorial();
+  renderSecretary();
 }
 
 function setSpeed(index) {
+  if (clock.speedIndex === 3 && index !== 3) flushHighSpeedPending();
   const speed = clock.setSpeed(index);
+  if (index > 0) lastRunningSpeed = index;
   $('#status span').textContent = speed.ticksPerSecond === 0
     ? '時間を停止しました'
     : `${speed.label}で観測中`;
@@ -135,7 +157,11 @@ function tickPresentationSeconds() {
   return Math.max(0.025, Math.min(0.42, 0.84 / ticksPerSecond));
 }
 
-function advanceTicks(count, { animate = true, baseSeconds = tickPresentationSeconds() } = {}) {
+function advanceTicks(count, {
+  animate = true,
+  baseSeconds = tickPresentationSeconds(),
+  batchSize = 1,
+} = {}) {
   if (!Number.isSafeInteger(count) || count < 0) throw new TypeError('tick count must be non-negative');
   if (!animate) {
     controller.advanceTicks(count);
@@ -143,16 +169,39 @@ function advanceTicks(count, { animate = true, baseSeconds = tickPresentationSec
     renderHud();
     return model;
   }
-  for (let index = 0; index < count; index += 1) {
-    controller.advanceTicks(1);
-    refreshModel({ animate: true, baseSeconds });
-  }
+  const effectiveBatchSize = tutorialDirector?.isActive() && !tutorialDirector.isComplete()
+    ? 1
+    : batchSize;
+  advanceInBatches(controller, count, {
+    batchSize: effectiveBatchSize,
+    afterBatch(ticks) {
+      uiMetrics.displayBatches += 1;
+      uiMetrics.batchedTicks += ticks;
+      refreshModel({ animate: true, baseSeconds: baseSeconds * ticks });
+    },
+  });
   renderHud();
   return model;
 }
 
+function flushHighSpeedPending() {
+  if (highSpeedPendingTicks <= 0) return model;
+  const ticks = highSpeedPendingTicks;
+  highSpeedPendingTicks = 0;
+  return advanceTicks(ticks, { batchSize: DISPLAY_BATCH_TICKS });
+}
+
+function currentDisplayBatchSize() {
+  return displayBatchSizeFor({
+    speedIndex: clock.speedIndex,
+    tutorialActive: Boolean(tutorialDirector?.isActive()),
+    tutorialComplete: Boolean(tutorialDirector?.isComplete()),
+  });
+}
+
 function stepOneDay() {
-  advanceTicks(30, { animate: true, baseSeconds: 0.028 });
+  flushHighSpeedPending();
+  advanceTicks(30, { animate: true, baseSeconds: 0.028, batchSize: currentDisplayBatchSize() });
   $('#status span').textContent = '1日進めました';
 }
 
@@ -163,12 +212,68 @@ $('#speed-controls').addEventListener('click', event => {
 
 $('#step-day').addEventListener('click', stepOneDay);
 
-for (const job of PLACEMENT_JOBS) {
-  const option = document.createElement('option');
-  option.value = job;
-  option.textContent = JOB_LABELS[job] ?? job;
-  $('#building-kind').append(option);
+function categoryForJob(job) {
+  return BUILD_CATEGORIES.find(category => category.jobs.includes(job)) ?? null;
 }
+
+function initializeBuildDock() {
+  for (const job of PLACEMENT_JOBS) {
+    const option = document.createElement('option');
+    option.value = job;
+    option.textContent = JOB_LABELS[job] ?? job;
+    $('#building-kind').append(option);
+  }
+  for (const category of BUILD_CATEGORIES) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.setAttribute('role', 'tab');
+    button.dataset.buildCategory = category.id;
+    button.textContent = category.label;
+    $('#build-tabs').append(button);
+  }
+}
+
+function renderBuildDock() {
+  const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory) ?? BUILD_CATEGORIES[1];
+  document.querySelectorAll('[data-build-category]').forEach(button => {
+    const selected = button.dataset.buildCategory === category.id;
+    button.classList.toggle('on', selected);
+    button.classList.toggle('recommended', Boolean(
+      recommendedBuildingJob && categoryForJob(recommendedBuildingJob)?.id === button.dataset.buildCategory,
+    ));
+    button.setAttribute('aria-selected', String(selected));
+  });
+  const palette = $('#building-palette');
+  const groundTools = $('#ground-tools');
+  const infrastructure = category.id === 'infrastructure';
+  palette.hidden = infrastructure;
+  groundTools.hidden = !infrastructure;
+  if (infrastructure) return;
+  palette.replaceChildren();
+  for (const job of category.jobs) {
+    const art = BUILDING_ART[job] ?? BUILDING_ART.market;
+    const size = BUILDING_SIZES[job];
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'building-choice';
+    button.dataset.buildingJob = job;
+    button.classList.toggle('on', activeTool === 'building' && $('#building-kind').value === job);
+    button.classList.toggle('recommended', recommendedBuildingJob === job);
+    button.setAttribute('aria-pressed', String(activeTool === 'building' && $('#building-kind').value === job));
+    const icon = document.createElement('i');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.style.setProperty('--roof', art.roof);
+    icon.style.setProperty('--wall', art.wall);
+    const name = document.createElement('b');
+    name.textContent = JOB_LABELS[job] ?? job;
+    const facts = document.createElement('small');
+    facts.textContent = `${BUILD_COST_DENARI.toLocaleString('ja-JP')}D・${size.width}×${size.height}`;
+    button.append(icon, name, facts);
+    palette.append(button);
+  }
+}
+
+initializeBuildDock();
 
 function worldTile(screenPoint) {
   const point = camera.unproject(screenPoint.x, screenPoint.y);
@@ -183,7 +288,7 @@ function setToolHint(message, tone = '') {
 }
 
 function toolInstruction(tool) {
-  return tool === 'building' ? '建物の入口にする区画を押してください。実寸敷地も同時に表示します。'
+  return tool === 'building' ? `${JOB_LABELS[$('#building-kind').value] ?? '建物'}の入口にする区画を押してください。実寸敷地も同時に表示します。`
     : tool === 'road' ? '始点から終点へドラッグしてください。'
       : tool === 'remove-building' ? '空き建物を押してください。'
         : tool === 'remove-road' ? '撤去する完成道路を押してください。' : '';
@@ -244,10 +349,32 @@ function selectTool(tool) {
   $('#cancel-tool').hidden = !activeTool;
   canvas.classList.toggle('tool-active', Boolean(activeTool));
   setToolHint(toolInstruction(activeTool));
+  renderBuildDock();
+}
+
+function activateBuildingJob(job) {
+  if (!PLACEMENT_JOBS.includes(job)) return null;
+  const same = activeTool === 'building' && $('#building-kind').value === job;
+  $('#building-kind').value = job;
+  activeBuildCategory = categoryForJob(job)?.id ?? activeBuildCategory;
+  if (same) selectTool('building');
+  else {
+    if (activeTool === 'building') activeTool = null;
+    selectTool('building');
+  }
+  return activeTool;
+}
+
+function activateGroundTool(tool) {
+  activeBuildCategory = 'infrastructure';
+  if (activeTool !== tool) selectTool(tool);
+  else renderBuildDock();
+  return activeTool;
 }
 
 function applyEngineOperation(operation, successMessage, failureMessage) {
   try {
+    flushHighSpeedPending();
     const result = controller.operate(operation);
     refreshModel({ animate: false });
     renderHud();
@@ -297,6 +424,18 @@ function commitTool(tile) {
 document.querySelectorAll('[data-tool]').forEach(button => {
   button.addEventListener('click', () => selectTool(button.dataset.tool));
 });
+$('#build-tabs').addEventListener('click', event => {
+  const button = event.target.closest('[data-build-category]');
+  if (!button) return;
+  activeBuildCategory = button.dataset.buildCategory;
+  const category = BUILD_CATEGORIES.find(row => row.id === activeBuildCategory);
+  if (activeTool === 'building' && !category?.jobs.includes($('#building-kind').value)) selectTool('building');
+  else renderBuildDock();
+});
+$('#building-palette').addEventListener('click', event => {
+  const button = event.target.closest('[data-building-job]');
+  if (button) activateBuildingJob(button.dataset.buildingJob);
+});
 $('#cancel-tool').addEventListener('click', () => selectTool(activeTool));
 $('#building-kind').addEventListener('change', () => {
   if (activeTool === 'building') setToolHint('建物の入口にする区画を押してください。実寸敷地も同時に表示します。');
@@ -323,6 +462,7 @@ function clearPointers() {
 }
 
 canvas.addEventListener('pointerdown', event => {
+  pressedMovementKeys.clear();
   const point = localPoint(event);
   pointers.set(event.pointerId, point);
   canvas.setPointerCapture(event.pointerId);
@@ -396,7 +536,11 @@ canvas.addEventListener('pointercancel', () => {
   toolDragStart = null;
   clearPointers();
 });
-window.addEventListener('blur', clearPointers);
+window.addEventListener('blur', () => {
+  clearPointers();
+  pressedMovementKeys.clear();
+});
+document.addEventListener('visibilitychange', () => pressedMovementKeys.clear());
 
 canvas.addEventListener('wheel', event => {
   event.preventDefault();
@@ -405,19 +549,33 @@ canvas.addEventListener('wheel', event => {
 }, { passive: false });
 
 window.addEventListener('keydown', event => {
+  if (shouldIgnoreShortcut(event)) return;
+  const movement = movementKey(event.key);
+  if (movement) {
+    event.preventDefault();
+    pressedMovementKeys.add(movement);
+    return;
+  }
   if (event.key === 'Escape' && !$('#tutorial-letter-modal').hidden) {
+    event.preventDefault();
     closeTutorialLetter();
   } else if (event.key === 'Escape') {
+    event.preventDefault();
     const sheet = [...document.querySelectorAll('.sheet')].find(candidate => !candidate.hidden);
     if (sheet) closeSheet(sheet.id);
     else if (activeTool) selectTool(activeTool);
     else if (selectedBuildingId !== null) selectBuilding(null);
   } else if (event.key === ' ') {
     event.preventDefault();
-    setSpeed(clock.speedIndex === 0 ? 1 : 0);
+    if (!event.repeat) setSpeed(clock.speedIndex === 0 ? lastRunningSpeed : 0);
   } else if (['1', '2', '3', '4'].includes(event.key)) {
+    event.preventDefault();
     setSpeed(Number(event.key) - 1);
   }
+});
+window.addEventListener('keyup', event => {
+  const movement = movementKey(event.key);
+  if (movement) pressedMovementKeys.delete(movement);
 });
 
 window.addEventListener('resize', () => renderer.resize());
@@ -497,6 +655,13 @@ function renderTutorial() {
   objectivePanel.hidden = !objective || Boolean(tutorialDirector?.isComplete());
   objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
   letterButton.hidden = !available || Boolean(state?.skipped);
+  currentTutorialAction = objectiveActionFor(objective, model);
+  recommendedBuildingJob = currentTutorialAction?.kind === 'building'
+    ? currentTutorialAction.job : null;
+  const actionButton = $('#tutorial-action');
+  actionButton.hidden = !currentTutorialAction;
+  actionButton.textContent = currentTutorialAction?.label ?? '次の操作';
+  renderBuildDock();
   if (state?.skipped) $('#start-mode-label').textContent = '自由プレイ（案内終了）';
   else if (tutorialDirector?.isComplete()) $('#start-mode-label').textContent = '自由プレイ（教程完了）';
   if (objective) {
@@ -513,6 +678,73 @@ function renderTutorial() {
   $('#tutorial-unread').hidden = unread === 0 || Boolean(state?.skipped);
   $('#tutorial-unread').textContent = String(unread);
   if (!$('#tutorial-letter-sheet').hidden) renderTutorialLetterSheet();
+}
+
+function secretaryFallback() {
+  const selected = selectedBuildingId === null
+    ? null : model.buildings.find(building => building.id === selectedBuildingId);
+  if (selected) {
+    return {
+      priority: 'operation-guide',
+      target: { kind: 'sheet', sheet: 'building-sheet' },
+      kicker: '盤面の選択',
+      title: JOB_LABELS[selected.type] ?? selected.type,
+      detail: `座標 ${selected.x}, ${selected.y}・建物情報を開きます`,
+    };
+  }
+  return {
+    priority: 'operation-guide',
+    target: { kind: 'sheet', sheet: 'island-sheet' },
+    kicker: '観測の案内',
+    title: '島況で現物と相場を見る',
+    detail: `所在を確認できる現物 ${formatQuantity(model.totalVisibleStock)}荷`,
+  };
+}
+
+function renderSecretary() {
+  const objective = tutorialDirector?.currentObjective() ?? null;
+  currentSecretaryRoute = secretaryRouteFor({
+    letters: tutorialDirector?.letters() ?? [],
+    objective: tutorialDirector?.isComplete() ? null : objective,
+    objectiveAction: currentTutorialAction,
+    events: eventLog,
+    fallback: secretaryFallback(),
+  });
+  const button = $('#secretary');
+  button.dataset.secretaryPriority = currentSecretaryRoute.priority;
+  $('#secretary-kicker').textContent = currentSecretaryRoute.kicker;
+  $('#secretary-title').textContent = currentSecretaryRoute.title;
+  $('#secretary-detail').textContent = currentSecretaryRoute.detail;
+}
+
+function performGuidanceAction(action) {
+  if (!action) return false;
+  if (action.kind === 'building') activateBuildingJob(action.job);
+  else if (action.kind === 'tool') activateGroundTool(action.tool);
+  else if (action.kind === 'sheet') openSheet(action.sheet);
+  else if (action.kind === 'objective') {
+    $('#tutorial-objective').focus();
+    $('#status span').textContent = '現在目標を表示しています';
+  } else return false;
+  return true;
+}
+
+function focusEvent(row) {
+  if (!row) return false;
+  camera.focus(row.x + 0.5, row.y + 0.5);
+  closeSheet('event-sheet');
+  $('#status span').textContent = `${row.title}の場所へ移動しました`;
+  return true;
+}
+
+function followSecretaryRoute() {
+  const target = currentSecretaryRoute?.target;
+  if (!target) return false;
+  if (target.kind === 'letter') return openTutorialLetter(target.id);
+  if (target.kind === 'event') {
+    return focusEvent(eventLog.find(row => row.sequence === target.sequence));
+  }
+  return performGuidanceAction(target);
 }
 
 function renderTutorialLetterSheet() {
@@ -613,6 +845,63 @@ function renderBuildingSheet() {
   return true;
 }
 
+function renderIslandSheet() {
+  const manifest = $('#island-manifest');
+  manifest.replaceChildren();
+  if (!model.goodsManifest.length) {
+    const empty = document.createElement('p');
+    empty.className = 'sheet-note';
+    empty.textContent = '島内で所在を確認できる現物はありません。';
+    manifest.append(empty);
+  }
+  for (const goodsRow of model.goodsManifest) {
+    const row = document.createElement('article');
+    row.className = 'manifest-row';
+    const heading = document.createElement('b');
+    const name = document.createElement('span');
+    name.textContent = GOODS_LABELS[goodsRow.goods] ?? goodsRow.goods;
+    const total = document.createElement('span');
+    total.textContent = `${formatQuantity(goodsRow.totalAmount)}荷`;
+    heading.append(name, total);
+    const locations = document.createElement('div');
+    locations.className = 'manifest-locations';
+    for (const location of goodsRow.locations) {
+      const locationIndex = model.stockLocations.indexOf(location);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.stockLocation = String(locationIndex);
+      const source = document.createElement('span');
+      source.textContent = location.sourceLabel;
+      const amount = document.createElement('b');
+      amount.textContent = `${formatQuantity(location.amount)}荷`;
+      button.append(source, amount);
+      locations.append(button);
+    }
+    row.append(heading, locations);
+    manifest.append(row);
+  }
+
+  const formatObserved = value => Number.isFinite(value) ? formatQuantity(value) : '—';
+  const rows = Object.keys(GOODS_LABELS).map(goods => {
+    const stock = model.goodsManifest.find(row => row.goods === goods)?.totalAmount ?? 0;
+    const flow = model.flowEma[goods] ?? null;
+    const flowCell = (key) => {
+      const value = flow?.[key];
+      const className = Number.isFinite(value) && value > 0.005 ? ' class="active-flow"' : '';
+      return `<span${className}>${formatObserved(value)}</span>`;
+    };
+    return `<div class="market-flow-row">
+      <span>${escapeHtml(GOODS_LABELS[goods])}</span>
+      <span>${Number.isFinite(model.marketPrices[goods]) ? `${formatQuantity(model.marketPrices[goods] * 10)}D` : '—'}</span>
+      <span>${formatQuantity(stock)}</span>
+      ${flowCell('imp')}${flowCell('prod')}${flowCell('cons')}
+    </div>`;
+  }).join('');
+  $('#market-overview').innerHTML = `
+    <div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>輸入</span><span>生産</span><span>消費</span></div>
+    ${rows}`;
+}
+
 function openTutorialLetter(id) {
   const letter = tutorialDirector?.letters().find(row => row.id === id);
   if (!letter) return false;
@@ -636,6 +925,7 @@ function openTutorialLetter(id) {
   $('#tutorial-letter-modal').hidden = false;
   document.body.classList.add('letter-open');
   renderTutorial();
+  renderSecretary();
   $('#close-tutorial-letter').focus();
   return true;
 }
@@ -654,6 +944,7 @@ function skipTutorial() {
   if (!tutorialDirector) return null;
   const state = tutorialDirector.skip();
   renderTutorial();
+  renderSecretary();
   $('#status span').textContent = '案内を終了しました。島はそのまま自由に遊べます';
   return state;
 }
@@ -669,6 +960,7 @@ function openSheet(id) {
   if (id === 'company-sheet') renderCompanySheet();
   if (id === 'event-sheet') renderEventSheet();
   if (id === 'tutorial-letter-sheet') renderTutorialLetterSheet();
+  if (id === 'island-sheet') renderIslandSheet();
 }
 
 function closeSheet(id) {
@@ -680,6 +972,7 @@ function closeSheet(id) {
 }
 
 $('#open-company').addEventListener('click', () => openSheet('company-sheet'));
+$('#open-island').addEventListener('click', () => openSheet('island-sheet'));
 $('#open-events').addEventListener('click', () => openSheet('event-sheet'));
 $('#open-tutorial-letters').addEventListener('click', () => openSheet('tutorial-letter-sheet'));
 document.querySelectorAll('[data-close-sheet]').forEach(button => {
@@ -721,12 +1014,25 @@ $('#focus-selected-building').addEventListener('click', () => {
   $('#status span').textContent = `${JOB_LABELS[building.type] ?? building.type}を画面中央へ移しました`;
 });
 
+$('#open-island-from-building').addEventListener('click', () => openSheet('island-sheet'));
+$('#island-manifest').addEventListener('click', event => {
+  const button = event.target.closest('[data-stock-location]');
+  if (!button) return;
+  const location = model.stockLocations[Number(button.dataset.stockLocation)];
+  if (!location) return;
+  camera.focus(location.x + 0.5, location.y + 0.5);
+  closeSheet('island-sheet');
+  $('#status span').textContent = `${location.sourceLabel}の場所へ移動しました`;
+});
+
 $('#tutorial-letter-list').addEventListener('click', event => {
   const button = event.target.closest('[data-tutorial-letter]');
   if (button) openTutorialLetter(button.dataset.tutorialLetter);
 });
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#skip-tutorial').addEventListener('click', skipTutorial);
+$('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
+$('#secretary').addEventListener('click', followSecretaryRoute);
 
 function rejectOrderOffer() {
   dismissedOfferKey = orderKey(model.orderOffer);
@@ -776,11 +1082,7 @@ $('#event-log').addEventListener('click', event => {
   const button = event.target.closest('[data-event-sequence]');
   if (!button) return;
   const row = eventLog.find(item => item.sequence === Number(button.dataset.eventSequence));
-  if (!row) return;
-  camera.focus(row.x + 0.5, row.y + 0.5);
-  $('#event-sheet').hidden = true;
-  document.body.classList.remove('sheet-open');
-  $('#status span').textContent = `${row.title}の場所へ移動しました`;
+  focusEvent(row);
 });
 
 function stopTracking(message = '追跡を終了しました') {
@@ -843,16 +1145,41 @@ $('#choose-start').addEventListener('click', showStartScreen);
 
 let lastFrame = performance.now();
 function frame(now) {
-  const elapsedSeconds = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000));
+  const elapsedSeconds = Math.max(0, (now - lastFrame) / 1000);
+  const visualSeconds = Math.min(0.1, elapsedSeconds);
   lastFrame = now;
-  const ticks = clock.consume(elapsedSeconds);
-  if (ticks > 0) {
-    advanceTicks(ticks);
+  panCameraFromKeys(camera, pressedMovementKeys, visualSeconds);
+  const ticks = clock.consume(elapsedSeconds, { maxTicks: clock.speedIndex === 3 ? 3 : 6 });
+  const batchSize = currentDisplayBatchSize();
+  if (clock.speedIndex === 3 && batchSize === DISPLAY_BATCH_TICKS) {
+    highSpeedPendingTicks += ticks;
+    const ready = Math.floor(highSpeedPendingTicks / DISPLAY_BATCH_TICKS) * DISPLAY_BATCH_TICKS;
+    if (ready > 0) {
+      highSpeedPendingTicks -= ready;
+      advanceTicks(ready, { batchSize });
+    }
+  } else if (ticks > 0) {
+    advanceTicks(ticks, { batchSize });
   }
-  displayModel = presentation.advance(elapsedSeconds);
+  displayModel = presentation.advance(visualSeconds);
   updateTracking(displayModel);
-  renderer.render(displayModel, elapsedSeconds);
+  renderer.render(displayModel, visualSeconds);
   requestAnimationFrame(frame);
+}
+
+function performanceMetrics() {
+  return Object.freeze({
+    ...controller.metrics(),
+    ...uiMetrics,
+    pendingHighSpeedTicks: highSpeedPendingTicks,
+  });
+}
+
+function resetPerformanceMetrics() {
+  controller.resetMetrics();
+  uiMetrics.domUpdates = 0;
+  uiMetrics.displayBatches = 0;
+  uiMetrics.batchedTicks = 0;
 }
 
 window.__SHIOJI_V004__ = Object.freeze({
@@ -867,8 +1194,12 @@ window.__SHIOJI_V004__ = Object.freeze({
   get selectedCarrierId() { return selectedCarrierId; },
   get selectedBuildingId() { return selectedBuildingId; },
   get activeTool() { return activeTool; },
+  get secretaryRoute() { return structuredClone(currentSecretaryRoute); },
+  get pressedMovementKeys() { return [...pressedMovementKeys]; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
   presentation,
+  performanceMetrics,
+  resetPerformanceMetrics,
   setSpeed,
   stepOneDay,
   advanceTicks,

@@ -64,6 +64,56 @@ function groupedStock(rows) {
   });
 }
 
+function stockManifest(buildings, households, stalls, marketBuilding) {
+  const rows = [];
+  for (const building of buildings) {
+    for (const shelf of building.shelves) {
+      if (shelf.amount <= 1e-9) continue;
+      rows.push({
+        source: 'building', sourceId: building.id,
+        sourceLabel: `${JOB_LABELS[building.type] ?? building.type} #${building.id}・${SECTION_LABELS[shelf.section] ?? shelf.section}`,
+        x: building.x, y: building.y,
+        section: shelf.section, goods: shelf.goods, amount: shelf.amount,
+      });
+    }
+  }
+  for (const household of households) {
+    for (const pantry of household.pantry) {
+      if (pantry.amount <= 1e-9) continue;
+      const family = household.familyName ? `${household.familyName}家` : `世帯#${household.id}`;
+      rows.push({
+        source: 'pantry', sourceId: household.id,
+        sourceLabel: `${family} #${household.id}（${JOB_LABELS[household.job] ?? household.job}）`,
+        x: household.homeX, y: household.homeY,
+        section: 'pantry', goods: pantry.goods, amount: pantry.amount,
+      });
+    }
+  }
+  const householdById = new Map(households.map(household => [household.id, household]));
+  for (const stall of stalls) {
+    if (stall.qty <= 1e-9) continue;
+    const household = householdById.get(stall.householdId);
+    const family = household?.familyName ? `${household.familyName}家` : `世帯#${stall.householdId}`;
+    rows.push({
+      source: 'stall', sourceId: stall.householdId,
+      sourceLabel: `市場の${family} #${stall.householdId}屋台`,
+      x: marketBuilding?.x ?? 0, y: marketBuilding?.y ?? 0,
+      section: 'stall', goods: stall.goods, amount: stall.qty,
+    });
+  }
+  const grouped = new Map();
+  for (const row of rows) {
+    if (!grouped.has(row.goods)) grouped.set(row.goods, []);
+    grouped.get(row.goods).push(row);
+  }
+  const goods = [...grouped.entries()].map(([goodsId, locations]) => ({
+    goods: goodsId,
+    totalAmount: locations.reduce((total, location) => total + location.amount, 0),
+    locations,
+  })).sort((left, right) => right.totalAmount - left.totalAmount || left.goods.localeCompare(right.goods));
+  return { rows, goods };
+}
+
 function buildingEndpoint(buildingById, endpoint) {
   const building = buildingById.get(endpoint?.buildingId);
   if (!building) return endpoint ? { ...endpoint, label: endpoint.buildingId } : null;
@@ -232,6 +282,7 @@ export function snapshotToViewModel(snapshot) {
     y: marketBuilding ? marketBuilding.y + 0.8 + (Math.floor(index / 4) % 4) * 1.0 : snapshot.economy.market.y,
     totalAmount: items.reduce((total, item) => total + item.visual.amount, 0),
   }));
+  const manifest = stockManifest(buildings, households, stalls, marketBuilding);
   const traffic = new Map(Object.entries(snapshot.economy.traffic ?? {}));
   for (const [key, value] of Object.entries(snapshot.physical.trails ?? {})) {
     if (value) traffic.set(key, Math.max(traffic.get(key) ?? 0, value === true ? 1 : value));
@@ -310,6 +361,8 @@ export function snapshotToViewModel(snapshot) {
     households,
     stalls,
     marketStalls,
+    stockLocations: manifest.rows,
+    goodsManifest: manifest.goods,
     totalVisibleStock: buildings.reduce((total, building) => total + building.shelfAmount, 0)
       + households.reduce((total, household) => (
         total + household.pantry.reduce((sum, row) => sum + row.visual.amount, 0)

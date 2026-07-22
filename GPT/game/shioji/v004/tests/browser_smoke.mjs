@@ -14,8 +14,9 @@ const GAME = gameForMode('test');
 const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 class Page {
-  constructor(webSocketUrl) {
+  constructor(webSocketUrl, targetId) {
     this.socket = new WebSocket(webSocketUrl);
+    this.targetId = targetId;
     this.nextId = 1;
     this.pending = new Map();
     this.errors = [];
@@ -66,8 +67,9 @@ class Page {
     fs.writeFileSync(path, Buffer.from(result.data, 'base64'));
   }
 
-  close() {
+  async close() {
     this.socket.close();
+    await fetch(`${CDP}/json/close/${this.targetId}`).catch(() => null);
   }
 }
 
@@ -75,7 +77,7 @@ async function newPage(width, height, mobile, url = GAME) {
   const target = await fetch(`${CDP}/json/new?${encodeURIComponent('about:blank')}`, {
     method: 'PUT',
   }).then(response => response.json());
-  const page = new Page(target.webSocketDebuggerUrl);
+  const page = new Page(target.webSocketDebuggerUrl, target.id);
   await page.connect();
   await page.send('Network.enable');
   await page.send('Network.setCacheDisabled', { cacheDisabled: true });
@@ -97,6 +99,11 @@ async function newPage(width, height, mobile, url = GAME) {
   throw new Error(`v004 did not load: ${page.errors.join(' | ') || 'no runtime error reported'}`);
 }
 
+async function pressKey(page, key, code, modifiers = 0) {
+  await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, modifiers });
+  await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, modifiers });
+}
+
 async function checkStartChoice(width, height, mobile, mode) {
   const page = await newPage(width, height, mobile, START_GAME);
   const launcher = await page.evaluate(`(() => {
@@ -113,6 +120,8 @@ async function checkStartChoice(width, height, mobile, mode) {
       buildingOptions: [...document.querySelectorAll('#building-kind option')].map(option => option.value),
       households: window.__SHIOJI_V004__.model.households.length,
       roads: window.__SHIOJI_V004__.model.roadKeys.length,
+      buildCategories: [...document.querySelectorAll('[data-build-category]')].map(button => button.textContent),
+      buildingPalette: [...document.querySelectorAll('[data-building-job]')].map(button => button.textContent),
     };
   })()`);
   assert.equal(launcher.hidden, false, JSON.stringify(launcher));
@@ -121,6 +130,9 @@ async function checkStartChoice(width, height, mobile, mode) {
   assert.equal(launcher.startMode, 'sandbox');
   assert.deepEqual(launcher.buildings, ['port']);
   assert.deepEqual(launcher.buildingOptions.slice(0, 2), ['market', 'warehouse']);
+  assert.deepEqual(launcher.buildCategories, ['整備', '流通', '食料', '採取', '加工']);
+  assert.equal(launcher.buildingPalette.length, 2);
+  assert.match(launcher.buildingPalette[0], /市場.*2,500D.*5×5/s);
   assert.equal(launcher.households, 0);
   assert.equal(launcher.roads, 0);
   assert.ok(launcher.dialog.left >= 0 && launcher.dialog.right <= width, JSON.stringify(launcher));
@@ -142,6 +154,10 @@ async function checkStartChoice(width, height, mobile, mode) {
     roads: window.__SHIOJI_V004__.model.roadKeys.length,
     tutorialState: window.__SHIOJI_V004__.tutorialState,
     objectiveVisible: !document.querySelector('#tutorial-objective').hidden,
+    tutorialActionHidden: document.querySelector('#tutorial-action').hidden,
+    tutorialActionText: document.querySelector('#tutorial-action').textContent,
+    secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
+    secretaryTitle: document.querySelector('#secretary-title').textContent,
     letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
     letterText: document.querySelector('#tutorial-letter-modal').textContent,
     objectiveBounds: ((box) => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom }))(
@@ -164,6 +180,10 @@ async function checkStartChoice(width, height, mobile, mode) {
   if (mode === 'tutorial') {
     assert.equal(started.tutorialState.active, true, JSON.stringify(started));
     assert.equal(started.objectiveVisible, true, JSON.stringify(started));
+    assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
+    assert.match(started.tutorialActionText, /森まで道/);
+    assert.equal(started.secretaryPriority, 'objective', JSON.stringify(started));
+    assert.match(started.secretaryTitle, /道.*木こり/);
     assert.equal(started.letterVisible, true, JSON.stringify(started));
     assert.equal(started.speed, 0, JSON.stringify(started));
     assert.match(started.letterText, /0日目/);
@@ -181,6 +201,17 @@ async function checkStartChoice(width, height, mobile, mode) {
       return speed;
     })()`);
     assert.equal(restoredSpeed, 1);
+    const guidedAction = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      document.querySelector('#tutorial-action').click();
+      const result = {
+        activeTool: game.activeTool,
+        category: document.querySelector('[data-build-category].on')?.dataset.buildCategory,
+      };
+      game.selectTool('road');
+      return result;
+    })()`);
+    assert.deepEqual(guidedAction, { activeTool: 'road', category: 'infrastructure' });
     await page.screenshot(`/tmp/shioji_v004_tutorial_goal_${mobile ? 'mobile' : 'desktop'}.png`);
     const skip = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -208,17 +239,18 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialState, null, JSON.stringify(started));
     assert.equal(started.objectiveVisible, false, JSON.stringify(started));
     assert.equal(started.letterVisible, false, JSON.stringify(started));
+    assert.equal(started.secretaryPriority, 'operation-guide', JSON.stringify(started));
   }
   await page.screenshot(`/tmp/shioji_v004_started_${mode}_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
-  page.close();
+  await page.close();
 }
 
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.4.0-building-inspector');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.4.0-building-inspector');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.6.0-ui-complete');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.6.0-ui-complete');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -238,22 +270,101 @@ async function checkViewport(width, height, mobile) {
       buttons: [...document.querySelectorAll('#speed-controls button')].map(rect),
       dock: rect(document.querySelector('#build-dock')),
       observer: rect(document.querySelector('#observer')),
+      secretary: rect(document.querySelector('#secretary')),
       observerActions: [...document.querySelectorAll('.observer-actions button')].map(rect),
+      categories: [...document.querySelectorAll('[data-build-category]')].map(button => button.textContent),
+      palette: [...document.querySelectorAll('[data-building-job]')].map(button => button.textContent),
+      secretaryPriority: document.querySelector('#secretary').dataset.secretaryPriority,
+      secretaryText: document.querySelector('#secretary').textContent,
+      secretaryAlt: document.querySelector('#secretary img').alt,
+      keyHints: document.querySelector('#key-hints').textContent,
     };
   })()`);
   for (const bounds of [
-    controlBounds.hud, controlBounds.speed, controlBounds.dock, controlBounds.observer,
+    controlBounds.hud, controlBounds.speed, controlBounds.dock, controlBounds.observer, controlBounds.secretary,
     ...controlBounds.buttons, ...controlBounds.observerActions,
   ]) {
     assert.ok(bounds.left >= 0 && bounds.right <= controlBounds.viewport.width, JSON.stringify(controlBounds));
     assert.ok(bounds.top >= 0 && bounds.bottom <= controlBounds.viewport.height, JSON.stringify(controlBounds));
   }
+  assert.deepEqual(controlBounds.categories, ['整備', '流通', '食料', '採取', '加工']);
+  assert.equal(controlBounds.palette.length, 2);
+  assert.match(controlBounds.palette.join(' '), /市場.*2,500D.*5×5.*蔵.*2,500D.*4×4/s);
+  assert.equal(controlBounds.secretaryPriority, 'operation-guide');
+  assert.match(controlBounds.secretaryAlt, /エレナ/);
+  assert.match(controlBounds.secretaryText, /島況.*現物/s);
+  assert.match(controlBounds.keyHints, /WASD.*Space.*1–4.*Esc/s);
+
+  const secretaryTarget = await page.evaluate(`(() => {
+    document.querySelector('#secretary').click();
+    const opened = !document.querySelector('#island-sheet').hidden;
+    document.querySelector('[data-close-sheet="island-sheet"]').click();
+    return opened;
+  })()`);
+  assert.equal(secretaryTarget, true, '操作案内を押すと同じ規則の島況sheetを開く');
 
   const cameraBefore = await page.evaluate(`({
     x: window.__SHIOJI_V004__.camera.panX,
     y: window.__SHIOJI_V004__.camera.panY,
     zoom: window.__SHIOJI_V004__.camera.zoom,
   })`);
+  if (!mobile) {
+    await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'w', code: 'KeyW' });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'd', code: 'KeyD' });
+    await wait(140);
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'w', code: 'KeyW' });
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'd', code: 'KeyD' });
+    const keyboardPan = await page.evaluate(`({
+      x: window.__SHIOJI_V004__.camera.panX,
+      y: window.__SHIOJI_V004__.camera.panY,
+      pressed: window.__SHIOJI_V004__.pressedMovementKeys,
+    })`);
+    assert.notDeepEqual({ x: keyboardPan.x, y: keyboardPan.y }, { x: cameraBefore.x, y: cameraBefore.y });
+    assert.deepEqual(keyboardPan.pressed, []);
+
+    await page.evaluate('window.__SHIOJI_V004__.setSpeed(2)');
+    await pressKey(page, ' ', 'Space');
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 0);
+    await pressKey(page, ' ', 'Space');
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 2,
+      'Spaceは直前速度へ復帰する');
+    await pressKey(page, '4', 'Digit4');
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 3);
+
+    await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      game.setSpeed(1);
+      game.openSheet('company-sheet');
+      document.querySelector('#company-goods input').focus();
+    })()`);
+    await pressKey(page, '4', 'Digit4');
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 1,
+      '入力欄の数字は速度を変えない');
+    await page.evaluate(`(() => {
+      const editor = document.createElement('div');
+      editor.id = 'shortcut-editor';
+      editor.contentEditable = 'true';
+      document.body.append(editor);
+      editor.focus();
+    })()`);
+    await pressKey(page, '4', 'Digit4');
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 1,
+      'contenteditableの数字は速度を変えない');
+    await page.evaluate(`(() => {
+      document.querySelector('#shortcut-editor').remove();
+      document.activeElement?.blur();
+    })()`);
+    await pressKey(page, '4', 'Digit4', 2);
+    assert.equal(await page.evaluate('window.__SHIOJI_V004__.clock.speedIndex'), 1,
+      'modifier付き数字は速度を変えない');
+    await pressKey(page, 'Escape', 'Escape');
+    assert.equal(await page.evaluate('document.querySelector("#company-sheet").hidden'), true);
+    await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'w', code: 'KeyW' });
+    assert.deepEqual(await page.evaluate('window.__SHIOJI_V004__.pressedMovementKeys'), ['w']);
+    await page.evaluate('window.dispatchEvent(new Event("blur"))');
+    assert.deepEqual(await page.evaluate('window.__SHIOJI_V004__.pressedMovementKeys'), []);
+    await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'w', code: 'KeyW' });
+  }
   await page.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: width / 2, y: height / 2, button: 'left', clickCount: 1 });
   await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: width / 2 + 45, y: height / 2 + 22, button: 'left', buttons: 1 });
   await page.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: width / 2 + 45, y: height / 2 + 22, button: 'left', clickCount: 1 });
@@ -268,6 +379,18 @@ async function checkViewport(width, height, mobile) {
   assert.notEqual(await page.evaluate('window.__SHIOJI_V004__.camera.zoom'), cameraBefore.zoom);
 
   await page.evaluate('window.__SHIOJI_V004__.setSpeed(0)');
+  const batchMetrics = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.resetPerformanceMetrics();
+    const before = game.model.tick;
+    game.advanceTicks(90, { batchSize: 3 });
+    return { before, after: game.model.tick, metrics: game.performanceMetrics() };
+  })()`);
+  assert.equal(batchMetrics.after - batchMetrics.before, 90);
+  assert.equal(batchMetrics.metrics.snapshotReads, 30, JSON.stringify(batchMetrics));
+  assert.equal(batchMetrics.metrics.viewModelBuilds, 30, JSON.stringify(batchMetrics));
+  assert.equal(batchMetrics.metrics.displayBatches, 30, JSON.stringify(batchMetrics));
+  assert.equal(batchMetrics.metrics.domUpdates, 1, JSON.stringify(batchMetrics));
   const timeBefore = await page.evaluate(`({
     day: window.__SHIOJI_V004__.model.day,
     tick: window.__SHIOJI_V004__.model.tick,
@@ -329,6 +452,7 @@ async function checkViewport(width, height, mobile) {
     const carrierPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
       const carrier = game.displayModel.carriers.find(row => row.kind === 'cart');
+      game.camera.focus(carrier.x + 0.5, carrier.y + 0.5);
       const point = game.camera.project(carrier.x + 0.5, carrier.y + 0.5, 4);
       return { id: carrier.id, x: point.x, y: point.y - 8 * game.camera.zoom };
     })()`);
@@ -374,6 +498,39 @@ async function checkViewport(width, height, mobile) {
     assert.ok(worldVisuals.stalls > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.stock > 0, JSON.stringify(worldVisuals));
     assert.ok(worldVisuals.familyRows > 0, JSON.stringify(worldVisuals));
+
+    const island = await page.evaluate(`(() => {
+      document.querySelector('#open-island').click();
+      const sheet = document.querySelector('#island-sheet');
+      const box = sheet.getBoundingClientRect();
+      return {
+        hidden: sheet.hidden,
+        manifestRows: document.querySelectorAll('.manifest-row').length,
+        locationRows: document.querySelectorAll('[data-stock-location]').length,
+        marketRows: document.querySelectorAll('.market-flow-row').length,
+        marketText: document.querySelector('#market-overview').textContent,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(island.hidden, false, JSON.stringify(island));
+    assert.ok(island.manifestRows > 0 && island.locationRows > 0, JSON.stringify(island));
+    assert.ok(island.marketRows > 10, JSON.stringify(island));
+    assert.match(island.marketText, /品目.*相場.*現物.*輸入.*生産.*消費/s);
+    assert.ok(island.box.left >= 0 && island.box.right <= width, JSON.stringify(island));
+    assert.ok(island.box.top >= 0 && island.box.bottom <= height, JSON.stringify(island));
+    await page.screenshot('/tmp/shioji_v004_island_sheet.png');
+    const locationFocus = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const before = { x: game.camera.panX, y: game.camera.panY };
+      document.querySelector('[data-stock-location]').click();
+      return {
+        before,
+        after: { x: game.camera.panX, y: game.camera.panY },
+        hidden: document.querySelector('#island-sheet').hidden,
+      };
+    })()`);
+    assert.equal(locationFocus.hidden, true, JSON.stringify(locationFocus));
+    assert.notDeepEqual(locationFocus.after, locationFocus.before, JSON.stringify(locationFocus));
 
     const buildingPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -453,8 +610,8 @@ async function checkViewport(width, height, mobile) {
       const water = game.model.terrain.flatMap((row, y) => row.map((tile, x) => ({ ...tile, x, y })))
         .find(tile => tile.kind === 'water');
       const invalid = game.previewBuilding('woodshop', water.x, water.y);
-      document.querySelector('#building-kind').value = 'woodshop';
-      document.querySelector('[data-tool="building"]').click();
+      document.querySelector('[data-build-category="processing"]').click();
+      document.querySelector('[data-building-job="woodshop"]').click();
       game.camera.focus(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
       const point = game.camera.project(preview.entrance.x + 0.5, preview.entrance.y + 0.5);
       return {
@@ -592,6 +749,7 @@ async function checkViewport(width, height, mobile) {
   } else {
     const mobileBuilding = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
+      game.advanceTicks(60 * 30 - game.model.tick, { animate: false });
       game.selectBuilding(game.model.buildings.find(building => building.occupied) ?? game.model.buildings[0]);
       const buildingBox = document.querySelector('#building-sheet').getBoundingClientRect();
       const buildingText = document.querySelector('#building-sheet').textContent;
@@ -604,8 +762,25 @@ async function checkViewport(width, height, mobile) {
     assert.ok(mobileBuilding.box.top >= 0 && mobileBuilding.box.bottom <= height, JSON.stringify(mobileBuilding));
     assert.match(mobileBuilding.text, /状態.*道路.*敷地.*座標/s);
     await page.screenshot('/tmp/shioji_v004_building_sheet_mobile.png');
+    const mobileIsland = await page.evaluate(`(() => {
+      document.querySelector('#open-island-from-building').click();
+      const sheet = document.querySelector('#island-sheet');
+      const box = sheet.getBoundingClientRect();
+      return {
+        hidden: sheet.hidden,
+        locations: document.querySelectorAll('[data-stock-location]').length,
+        marketRows: document.querySelectorAll('.market-flow-row').length,
+        box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
+      };
+    })()`);
+    assert.equal(mobileIsland.hidden, false, JSON.stringify(mobileIsland));
+    assert.ok(mobileIsland.locations > 0 && mobileIsland.marketRows > 10, JSON.stringify(mobileIsland));
+    assert.ok(mobileIsland.box.left >= 0 && mobileIsland.box.right <= width, JSON.stringify(mobileIsland));
+    assert.ok(mobileIsland.box.top >= 0 && mobileIsland.box.bottom <= height, JSON.stringify(mobileIsland));
+    await page.screenshot('/tmp/shioji_v004_island_sheet_mobile.png');
     const mobileCompany = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
+      document.querySelector('[data-close-sheet="island-sheet"]').click();
       game.selectBuilding(null);
       game.openSheet('company-sheet');
       const companyBox = document.querySelector('#company-sheet').getBoundingClientRect();
@@ -617,7 +792,7 @@ async function checkViewport(width, height, mobile) {
   }
   await page.screenshot(`/tmp/shioji_v004_browser_${mobile ? 'mobile' : 'desktop'}.png`);
   assert.deepEqual(page.errors, []);
-  page.close();
+  await page.close();
 }
 
 await checkStartChoice(1440, 900, false, 'tutorial');

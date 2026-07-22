@@ -15,12 +15,16 @@ export class SimulationClock {
     return SPEEDS[index];
   }
 
-  consume(elapsedSeconds) {
+  consume(elapsedSeconds, { maxTicks = Number.MAX_SAFE_INTEGER } = {}) {
     if (!Number.isFinite(elapsedSeconds) || elapsedSeconds < 0) {
       throw new TypeError('elapsed time must be finite and non-negative');
     }
+    if (!Number.isSafeInteger(maxTicks) || maxTicks < 0) {
+      throw new TypeError('maxTicks must be a non-negative safe integer');
+    }
     this.remainder += elapsedSeconds * SPEEDS[this.speedIndex].ticksPerSecond;
-    const ticks = Math.floor(this.remainder + 1e-9);
+    if (SPEEDS[this.speedIndex].ticksPerSecond === 0) return 0;
+    const ticks = Math.min(maxTicks, Math.floor(this.remainder + 1e-9));
     this.remainder -= ticks;
     return ticks;
   }
