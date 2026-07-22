@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T23:01:04+09:00",
+  "updated_at": "2026-07-23T00:55:32+09:00",
   "reviewed_source_ts": [
+    "1780935964.958299",
     "1781040608.593239",
     "1784718435.577389",
     "1780943233.150639",
@@ -469,6 +470,43 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T00:55:32+09:00",
+      "selected": {
+        "id": "sr-1780935964-02ff1ec5a0",
+        "source_ts": "1780935964.958299",
+        "title": "Engagement-Oriented Dynamic Difficulty Adjustment — challenge 時間を用いた churn proxy と介入境界",
+        "reason": "未レビューの score 11 atom で、harness・game-design・operation・evaluation の4優先タグを持つ。challenge 境界、sleep／active window、gameplay time の変化、player-fixed を避けた介入を、短期 prototype の難度調整へ小さく反映できるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計が14未満で、risk_control も必須閾値2を下回るため採用しない。shared-reads 本文は monitoring と intervention を分け、challenge 内外の gameplay time、sleep／active window、100名・7 genre・3条件の比較、gameplay time と GEQ の結果、player-fixed を避ける common parameter set まで具体化しており、次回行動へ変換可能なので evidence=3 とした。一方、既存の dda-proxy-rule-trace は、難度変更前に観測 proxy を固定し、proxy と推定 player state を分け、調整規則と期待 trace を先に書き、可能なら challenge／environment 側へ介入することを既に問う。EDDA 固有語で新規 probe や metric を追加しても判断差はなく、320件ある active probe 群へ重複負荷を加えるため、reviewed state だけを更新する。",
+      "existing_probes": [
+        "probe-20260609-dda-proxy-rule-trace"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 DDA proxy／介入 probe との重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルール・lease は追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-22T21:02:43+09:00",
       "selected": {

@@ -57,7 +57,47 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780935964-02ff1ec5a0
+    source_ts: "1780935964.958299"
+    title: "Engagement-Oriented Dynamic Difficulty Adjustment — challenge 時間を用いた churn proxy と介入境界"
+    reason: >-
+      未レビューの score 11 atom で、harness・game-design・operation・evaluation
+      の4優先タグを持つ。challenge 境界、sleep／active window、gameplay time
+      の変化、player-fixed を避けた介入を、短期 prototype の難度調整へ
+      小さく反映できるか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  decision_reason: >-
+    合計が14未満で、risk_control も必須閾値2を下回るため採用しない。
+    shared-reads 本文は monitoring／intervention、challenge 内外の gameplay time、
+    sleep／active window、100名・7 genre・3条件の比較、GEQ、player-fixed を避ける
+    common parameter set まで示す。ただし既存の probe-20260609-dda-proxy-rule-trace が、
+    観測 proxy の先行固定、proxy と推定 player state の分離、調整規則と期待 trace、
+    challenge／environment 側への介入をすでに問うため、新規 probe は判断差を増やさない。
+  change:
+    summary: >-
+      reviewed_source_ts と重複による reject 理由だけを state に追加。
+      probe・評価表・directive・恒久ルール・lease は追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
