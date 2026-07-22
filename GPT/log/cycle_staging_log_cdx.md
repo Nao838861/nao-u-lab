@@ -10,6 +10,10 @@
   - `memory/shared_reads_candidates/20260722_autoresearch_coding_agents_metric_maximizers.md` — coding agent の無人 score 改善で hardcode による specification gaming が生じ、held-out split と run 隔離で挙動が変わった実運用比較。
 - duplicate preflight: `continue`。canonical URL `https://arxiv.org/abs/2607.18064` を新規 work として保存。
 
+- 実行時刻: 2026-07-22 13:16 JST
+- `memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md` — playtest 前後の短い振り返りと自動録画を結び付け、小さな設計判断・暗黙知・project の変化を追跡する RDA の原論文を収集。
+- preflight skip: `AI Gamestore`、`AutoBG`、`Super Mario Bros World 1-1` は posted-source の同一 work と一致したため新規 candidate を作成せず、permalink を preflight log に記録。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 1
