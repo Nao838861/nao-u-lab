@@ -59,7 +59,35 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784695338-47ea71eafb
+    source_ts: "1784695338.787189"
+    title: "AVR-Eval / AVR-Agent — Audio-Visual Recording による生成ゲームの相対評価"
+    reason: "未レビューの score 15 atom で優先6タグを持つ。静止画や最終 score では落ちる時間変化・入力反応・音を比較 evidence にし、A/B 提示順反転と初期 best-of-k が次の playable diff の選定判断を変えるか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 2
+    reversibility: 3
+    total: 16
+  decision: defer
+  decision_reason: "採用閾値は満たすが、今サイクルには比較対象となる複数 playable diff、実際に判断へ使う consumer phase、before/after trigger artifact がないため、lease 契約を満たせない。既存5 probe が時系列 trace・入力から結果までの因果列・同期 stream・再現 fixture を覆う一方、新しい差は固定録画条件での A/B 順序反転、capture sensitivity 対照、人間 blind choice、初期 best-of-k に限られる。対象 artifact が具体化するまで state-only review とする。"
+  change:
+    summary: "reviewed_source_ts と defer 理由のみ更新。probe、metric、lease、directive、恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

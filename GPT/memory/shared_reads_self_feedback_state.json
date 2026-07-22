@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T13:47:32+09:00",
+  "updated_at": "2026-07-22T15:47:21+09:00",
   "reviewed_source_ts": [
+    "1784695338.787189",
     "1784686331.634319",
     "1781094676.020529",
     "1781127460.642669",
@@ -11986,6 +11987,47 @@
           "log/cycle_staging_log_cdx.md"
         ]
       },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-22T15:47:21+09:00",
+      "selected": {
+        "id": "sr-1784695338-47ea71eafb",
+        "source_ts": "1784695338.787189",
+        "title": "AVR-Eval / AVR-Agent — Audio-Visual Recording による生成ゲームの相対評価",
+        "reason": "未レビュー条件を満たす最新の score 15 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ。静止画や最終 score では落ちる時間変化・入力反応・音を比較 evidence にし、A/B 提示順反転と初期 best-of-k が次の playable diff の選定判断を変えるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 16
+      },
+      "decision": "defer",
+      "decision_reason": "合計16で数値上の採用条件は満たすが、probe lease 契約を満たす具体的な playable diff、consumer phase、before／after trigger artifact が今サイクルにないため state-only review に留める。shared-reads 本文は正常 animation と故障版120比較、誤ラベル版92比較、生成／人間制作 platformer 90比較、構成 ablation、5 animation・5 game・9 coding model、最終版対初期版 win rate 0.647という定量根拠を持つため evidence=3 とした。一方、人間選好の直接検証はなく、single-file web content と短い録画窓に限定され、同系 evaluator を生成 loop と最終比較に使う循環も残る。既存の video-glitch-temporal-grounding、fly-fail-fix-metric-visual-repair、egocs-causal-gameplay-log、d2e-synchronized-playtest-stream、commonroad-human-operation-regression-fixture は temporal span、定量＋視覚 trace、入力→状態→結果、同期 stream、再現 fixture をすでに扱う。新しい差は固定録画条件での A/B 順序反転、capture sensitivity 対照、人間 blind choice、初期 best-of-k だが、320件の active_probes と既存 pending lease がある状態で対象 artifact なしに追加すると確認負荷だけが増える。次の同一仕様から複数 playable diff を作る作業が具体化した時に、順序反転で勝者が変わるか、deterministic gate 後の選定が human blind choice と一致するかが修正判断を変えるか再評価する。",
+      "existing_probes": [
+        "probe-20260620-video-glitch-temporal-grounding",
+        "probe-20260621-fly-fail-fix-metric-visual-repair",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260708-commonroad-human-operation-regression-fixture"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 probe との重複および具体的な consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
       "anti_bloat_check": {
         "adds_permanent_rule": false,
         "replaces_or_simplifies_existing": false,
