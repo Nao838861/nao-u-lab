@@ -83,7 +83,119 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の entry index を validate_memory_index.py で検証し、unknown atom・missing per-file path・重複 entry がないことを確認した。"
+  - "memory/atoms.jsonl と per-file/index mirror 2726件を監査し、欠落・parse error・index error・content conflict・atom id 重複がないことを確認した。normalized content 重複は既存 overlay で fold されている。"
+  - "memory/raw/ の最終更新が30日超の95ファイルを確認した。Slack archive / web research の一次資料または取込 state であり、provenance と再現性のため現行 raw retention 対象として archive 移動は0件とした。"
+  - "shared-reads candidate lifecycle 1060件を dry-run 監査し、status / candidate_status の修復対象が0件であることを確認した。terminal candidate は再評価 queue から除外した。"
+  - "open duplicate group / stale triage / group action sidecar を順に再生成した。既存内容と一致し、actionable group は0件だった。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending は各0件で、handled 更新は0件だった。"
+  - "group handoff を source cycle 2026-07-23 06:43 / budget 1 で冪等 enqueue し、追加0件・pending 0件を確認した。"
+issues:
+  - id: ISS-ATOM-MOJIBAKE-001
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に『AIエ��ジェント』という U+FFFD 置換文字が残り、atoms.jsonl・per-file・index の全 mirror に伝播している。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl#id=sr-1776127289-4d9239b255; memory/atoms/index.jsonl#id=sr-1776127289-4d9239b255"
+    source_file_status: "UTF-8 明示読みでも U+FFFD を確認したため source file 自体の局所破損。memory/MEMORY.md は UTF-8 として正常に読めた。"
+    display_or_tooling_status: "memory_health.py の当該 atom 警告は true positive。gr-1777083728-44d444ab7a の警告は意図的な『???』による false positive。"
+    why_blocks_game_memory: "この1件では『AIエージェント』の完全一致検索と表示品質が落ちるが、他 atom と game task entry point への導線は維持されている。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  memory_md_utf8: valid
+  representative_terms:
+    記憶: present
+    ゲーム設計: present
+    敵パターン: present
+    評価軸: absent_but_no_mojibake
+  source_file_status: "UTF-8 本文は正常。『評価軸』の不在は現 index 内容によるもので、文字化けや再生成対象ではない。"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2726
+  mirror_counts:
+    atoms_jsonl: 2726
+    per_file_md: 2726
+    index_jsonl: 2726
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  canonical_overlay_duplicate_groups: 45
+  duplicate_handling: "normalized_content_hash / canonical overlay で fold 済み。矛盾は検出されず、新規設計 issue にはしない。"
+raw_archive_audit:
+  older_than_30_days: 95
+  archived: 0
+  decision: "Slack archive、web research 一次資料、headless evaluation 原文であり provenance として現行 memory/raw retention 対象。archive_last_run は 2026-07-23T06:37:53 で新しく、年齢だけを根拠に移動しない。"
+candidate_lifecycle:
+  total_files: 1060
+  status_counts:
+    posted: 459
+    ready_to_post: 9
+    postponed: 329
+    failed: 244
+    needs_review: 18
+    skipped_unreviewed: 1
+  dry_run_changes: 0
+  missing_stale_after: 4
+  missing_stale_after_detail: "posted 3件と status 未設定の未追跡 candidate 1件で、postponed / needs_review の stale queue 欠落ではない。"
+  overdue_open_total: 185
+  anomaly_counts:
+    stale_after_differs_from_30d_default: 14
+  anomaly_assessment: "明示レビュー後の stale_after 延長を含む既知の差で、current status conflict は0件。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 1
+    dormant: 1
+  receipt: null
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  stale_review_batch_count: 5
+  remaining_overdue_after_batch: 180
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > queue rows は真だが、live lease 適用後の actionable group >= 3 が偽。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "39日 overdue。Zork 上の探索・計画限界は headless playtest に有用だが、評価条件・失敗分類・モデル比較を本文で補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日 overdue。検証可能な短い計画 benchmark として有用だが、実験設計・比較対象・結果の詳細が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日 overdue。social deduction の個別推論 style 追跡は有用だが、既存投稿との重複関係と本文レベルの評価詳細を確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "38日 overdue。LLM NPC の validation 構成は具体的だが、empirical study / ablation の評価指標と失敗例が不足している。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "37日 overdue。Access Profiles の横断基盤はゲーム制作への移転価値が高いが、一次資料の設計・評価詳細を補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
