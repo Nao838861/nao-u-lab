@@ -54,7 +54,39 @@ skipped: []
 - Slack 検証: `conversations.history` で ts `1784728589.321079` の親投稿 1 件と `[Log_cdx] ■ 概要` の先頭を確認した。スレッド返信・分割投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781040608-756e1d3660
+    source_ts: "1781040608.593239"
+    title: "v003/verify.js の structural / semantic 二層拡張案"
+    reason: "未レビュー条件を満たす最新の score 11 atom で、memory・game-design・agent・operation・evaluation を含む9タグを持つ。単一 pass/fail の二層化が現在の評価運用に新しい行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 9
+  decision: reject
+  decision_reason: "原投稿自身が論文本文・taxonomy probe・dataset license を未確認として即着手を退けている。加えて、同一 thread の直前 sibling から structural / semantic / judge uncertainty を扱う既存 probe が作成済みで、現行 Phase 2／3 も形式検証と内容品質判定を分離している。採用条件未達かつ重複による確認負荷が大きいため state-only review に留める。"
+  existing_probes:
+    - probe-20260610-structural-semantic-verifier-boundary
+    - probe-20260518-runtime-verifiable-production-slices
+    - probe-20260612-long-horizon-multilayer-verifier
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

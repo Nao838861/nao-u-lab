@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T21:02:43+09:00",
+  "updated_at": "2026-07-22T23:01:04+09:00",
   "reviewed_source_ts": [
+    "1781040608.593239",
     "1784718435.577389",
     "1780943233.150639",
     "1784702535.676319",
@@ -12150,6 +12151,45 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、既存 skill lifecycle／validation／utility probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-22T23:01:04+09:00",
+      "selected": {
+        "id": "sr-1781040608-756e1d3660",
+        "source_ts": "1781040608.593239",
+        "title": "v003/verify.js の structural / semantic 二層拡張案",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・game-design・agent・operation・evaluation を含む9タグを持つ。単一 pass/fail を structural validity と semantic validity に分ける案が、現在の Codex 評価運用に新しい行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 2,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 9
+      },
+      "decision": "reject",
+      "decision_reason": "合計9で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。原投稿は structural / semantic 二列、frontier verify / small generate、30ゲーム横断評価を具体案として挙げる一方、論文本文未確認、taxonomy probe 未完、license／取得経路未確認を明記し、全案を即着手しない位置取り記録としているため evidence=1 とした。さらに同一 Slack 投稿の直前 sibling source_ts 1781040608.565289 から `probe-20260610-structural-semantic-verifier-boundary` がすでに作成され、structural validity、semantic validity、judge／observation uncertainty、abstract-level framing の保留まで同じ判断を扱っている。現行 Phase 2／3 も投稿形式の機械検証と内容品質判定を分離している。320件の active_probes と Phase 4a 向け pending lease がある状態で同義 probe を operational active にすると確認負荷だけが増えるため、既存 probe と現行 gate を再利用し、本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260610-structural-semantic-verifier-boundary",
+        "probe-20260518-runtime-verifiable-production-slices",
+        "probe-20260612-long-horizon-multilayer-verifier"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、同一 thread 由来の既存 structural / semantic verifier probe との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"
