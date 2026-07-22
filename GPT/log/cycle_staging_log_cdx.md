@@ -46,7 +46,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1781094676-480f75e053
+    source_ts: "1781094676.020529"
+    title: "PROXIMA 投稿の後半断片 — probe-c（外れ最初信号）の書式化"
+    reason: "最新の未レビュー score 10 atom で優先タグを持つが、直前の PROXIMA 投稿本体から約26.8ms後に分割取り込みされた後半断片なので、既存レビューと probe への重複を確認するため選んだ。"
+  scores:
+    relevance: 2
+    actionability: 1
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 3
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "actionability が2未満、合計が14未満で採用条件を満たさない。原典・問題設定・3軸評価の全体を欠く分割断片であり、投稿本体は 2026-06-16 にレビュー済み。同じ segment fragility 判断は probe-20260616-proxy-segment-fragility に実装済みなので、別 probe を足すと確認負荷だけが増える。"
+  change:
+    summary: "reviewed_source_ts と分割重複による reject 理由だけを更新した。probe・評価表・directive・恒久ルール・lease は追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
