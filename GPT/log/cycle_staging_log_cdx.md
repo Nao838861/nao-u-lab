@@ -7,7 +7,46 @@
 - `memory/shared_reads_candidates/20260722_dynamic_agent_skills_lifecycle_survey.md` — 124論文を横断し、agent の再利用手順を evidence 収集から検証・検索・修復・governance までの eight-stage lifecycle として整理する survey。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260722_dynamic_agent_skills_lifecycle_survey.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions:
+  - group_key: reflection at design actualization rda a tool and process for research through game design
+    representative: memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+    action: defer
+    target_paths:
+      - memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+      - memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md
+    reason: canonical URL が同一の同一 work だが terminal sibling がなく、close_siblings では ready_to_post の充実した代表まで failed になるため、Phase 3 が canonical を確定できるまで保留する。
+    terminal_evidence:
+      - path: memory/shared_reads_candidates/20260611_reflection_design_actualization.md
+        evidence: "status: postponed; source: https://arxiv.org/abs/2602.12887; raw detail thin"
+      - path: memory/shared_reads_candidates/20260722_reflection_at_design_actualization.md
+        evidence: "status: ready_to_post; source: https://arxiv.org/abs/2602.12887; richer four-stage loop and evaluation evidence"
+    representative_decision: postpone
+    analysis_time_minutes: 4
+group_handoff_audit:
+  pending_before: 1
+  read_ids:
+    - gha-508ee747e655a8f7
+  resolved_ids: []
+  deferred_ids:
+    - gha-508ee747e655a8f7
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  builders_fresh: true
+  candidate_decision: continue
+  candidate_title_key: dynamic agent skills a lifecycle survey and taxonomy of evolving skill libraries
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
