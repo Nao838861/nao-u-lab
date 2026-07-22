@@ -321,28 +321,22 @@ async function checkStartChoice(width, height, mobile, mode) {
     })()`);
     assert.deepEqual(guidedAction, { activeTool: 'road', category: 'infrastructure' });
     await page.screenshot(`/tmp/shioji_v004_tutorial_goal_${mobile ? 'mobile' : 'desktop'}.png`);
-    const skip = await page.evaluate(`(() => {
+    const tutorialExit = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
-      const before = { model: game.model, journal: game.controller.inputJournal() };
-      document.querySelector('#skip-tutorial').click();
       return {
-        before,
-        after: { model: game.model, journal: game.controller.inputJournal() },
+        exitButton: document.querySelector('#skip-tutorial'),
         state: game.tutorialState,
         objectiveHidden: document.querySelector('#tutorial-objective').hidden,
         lettersHidden: document.querySelector('#open-tutorial-letters').hidden,
         label: document.querySelector('#start-mode-label').textContent,
-        save: game.tutorialSave(),
       };
     })()`);
-    assert.deepEqual(skip.after, skip.before, JSON.stringify(skip));
-    assert.equal(skip.state.active, false, JSON.stringify(skip));
-    assert.equal(skip.state.skipped, true, JSON.stringify(skip));
-    assert.equal(skip.objectiveHidden, true, JSON.stringify(skip));
-    assert.equal(skip.lettersHidden, true, JSON.stringify(skip));
-    assert.match(skip.label, /自由プレイ/);
-    assert.deepEqual(skip.save.engineJournal, skip.before.journal);
-    assert.deepEqual(skip.save.tutorialState, skip.state);
+    assert.equal(tutorialExit.exitButton, null, JSON.stringify(tutorialExit));
+    assert.equal(tutorialExit.state.active, true, JSON.stringify(tutorialExit));
+    assert.equal(tutorialExit.state.skipped, false, JSON.stringify(tutorialExit));
+    assert.equal(tutorialExit.objectiveHidden, false, JSON.stringify(tutorialExit));
+    assert.equal(tutorialExit.lettersHidden, false, JSON.stringify(tutorialExit));
+    assert.match(tutorialExit.label, /チュートリアル/);
   } else {
     assert.equal(started.tutorialState, null, JSON.stringify(started));
     assert.equal(started.objectiveVisible, false, JSON.stringify(started));
@@ -357,8 +351,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.2-stock-target');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.2-stock-target');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.8.1-denari-units');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.8.1-denari-units');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -615,15 +609,22 @@ async function checkViewport(width, height, mobile) {
         hidden: sheet.hidden,
         manifestRows: document.querySelectorAll('.manifest-row').length,
         locationRows: document.querySelectorAll('[data-stock-location]').length,
+        companyLocations: [...document.querySelectorAll('[data-stock-location]')]
+          .filter(button => button.textContent.includes('会社の蔵')).length,
+        companyStock: Object.values(window.__SHIOJI_V004__.model.companyStock)
+          .reduce((total, amount) => total + amount, 0),
         marketRows: document.querySelectorAll('.market-flow-row').length,
         marketText: document.querySelector('#market-overview').textContent,
+        financeText: document.querySelector('#island-finance').textContent,
         box: { left: box.left, right: box.right, top: box.top, bottom: box.bottom },
       };
     })()`);
     assert.equal(island.hidden, false, JSON.stringify(island));
     assert.ok(island.manifestRows > 0 && island.locationRows > 0, JSON.stringify(island));
+    assert.equal(island.companyLocations > 0, island.companyStock > 0, JSON.stringify(island));
     assert.ok(island.marketRows > 10, JSON.stringify(island));
-    assert.match(island.marketText, /品目.*相場.*現物.*輸入.*生産.*消費/s);
+    assert.match(island.marketText, /品目.*相場.*現物.*仕入\/日.*生産\/日.*消費\/日/s);
+    assert.match(island.financeText, /現在資金.*入金.*支出.*差引/s);
     assert.ok(island.box.left >= 0 && island.box.right <= width, JSON.stringify(island));
     assert.ok(island.box.top >= 0 && island.box.bottom <= height, JSON.stringify(island));
     await page.screenshot('/tmp/shioji_v004_island_sheet.png');
@@ -639,6 +640,20 @@ async function checkViewport(width, height, mobile) {
     })()`);
     assert.equal(locationFocus.hidden, true, JSON.stringify(locationFocus));
     assert.notDeepEqual(locationFocus.after, locationFocus.before, JSON.stringify(locationFocus));
+
+    const warehouseDetail = await page.evaluate(`(() => {
+      const game = window.__SHIOJI_V004__;
+      const warehouse = game.model.buildings.find(building => building.roles.includes('warehouse'));
+      game.selectBuilding(warehouse);
+      return {
+        text: document.querySelector('#building-company-stock').textContent,
+        hidden: document.querySelector('#building-company-stock').hidden,
+        status: document.querySelector('#building-summary').textContent,
+      };
+    })()`);
+    assert.equal(warehouseDetail.hidden, false, JSON.stringify(warehouseDetail));
+    assert.match(warehouseDetail.text, /会社の蔵にある品.*本国注文.*蔵出し/s);
+    assert.match(warehouseDetail.status, /会社の物流施設/);
 
     const buildingPoint = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -805,9 +820,14 @@ async function checkViewport(width, height, mobile) {
       const aidText = document.querySelector('#aid-panel').textContent;
       document.querySelector('[data-company-action="request-aid"]').click();
       let targetRow = document.querySelector('.goods-row[data-goods="tools"]');
-      targetRow.querySelector('input').value = '12';
+      targetRow.querySelector('input').value = '80';
+      targetRow.querySelector('input').dispatchEvent(new Event('input', { bubbles: true }));
+      game.advanceTicks(1, { animate: false });
+      targetRow = document.querySelector('.goods-row[data-goods="tools"]');
+      const draftAfterRender = targetRow.querySelector('input').value;
       targetRow.querySelector('[data-company-action="set-target"]').click();
       targetRow = document.querySelector('.goods-row[data-goods="tools"]');
+      const targetAfterCommit = targetRow.querySelector('input').value;
       targetRow.querySelector('[data-company-action="release-stock"]').click();
       const beforeReject = game.controller.inputJournal().length;
       document.querySelector('[data-company-action="reject-order"]').click();
@@ -820,7 +840,8 @@ async function checkViewport(width, height, mobile) {
       window.__companyHeldButton = acceptButton;
       return {
         sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
-        offer, orderText, aidText, beforeReject, afterReject, stillOffered,
+        offer, orderText, aidText, draftAfterRender, targetAfterCommit,
+        modelTarget: game.model.stockTargets.tools, beforeReject, afterReject, stillOffered,
         acceptPoint: { x: acceptBox.x + acceptBox.width / 2, y: acceptBox.y + acceptBox.height / 2 },
         domUpdates: game.performanceMetrics().domUpdates,
       };
@@ -831,6 +852,9 @@ async function checkViewport(width, height, mobile) {
     assert.match(company.orderText, /完遂決済単価/);
     assert.match(company.orderText, /市場最安/);
     assert.match(company.aidText, /次の支援は麦240荷/);
+    assert.equal(company.draftAfterRender, '80', JSON.stringify(company));
+    assert.equal(company.targetAfterCommit, '80', JSON.stringify(company));
+    assert.equal(company.modelTarget, 80, JSON.stringify(company));
     assert.equal(company.afterReject, company.beforeReject, JSON.stringify(company));
     assert.deepEqual(company.stillOffered, company.offer);
     await page.send('Input.dispatchMouseEvent', {

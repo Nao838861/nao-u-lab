@@ -7,7 +7,8 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS, VERSION,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT,
+  PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -34,12 +35,13 @@ import {
   ORDER_JUDGMENT_FALLBACK_OFFERS, SEASONAL_RESERVE_TARGET,
   SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
   TOOLS_PRICE_RISE_RATIO,
-  TUTORIAL_GOALS, TUTORIAL_LETTERS, estimateWalkLen,
+  TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
 } from '../src/tutorial_director.js';
 import { objectiveActionFor, secretaryRouteFor } from '../src/ui_guidance.js';
+import { recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
   MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
@@ -48,10 +50,14 @@ import {
 let passed = 0;
 let tutorialThroughPlay = null;
 const matchIndex = process.argv.indexOf('--match');
-const testMatch = matchIndex >= 0 ? new RegExp(process.argv[matchIndex + 1]) : null;
+const testMatchSource = matchIndex >= 0 ? process.argv[matchIndex + 1] : null;
+const testMatch = testMatchSource ? new RegExp(testMatchSource) : null;
+const tutorialStage17Requested = testMatchSource?.includes('チュートリアル段17') ?? false;
+const tutorialStage17Dependency = /^チュートリアル段(?:7〜9|1[0-7])(?::|実測:)/;
 
 function test(name, body) {
-  if (testMatch && !testMatch.test(name)) return;
+  if (testMatch && !testMatch.test(name)
+    && !(tutorialStage17Requested && tutorialStage17Dependency.test(name))) return;
   body();
   passed += 1;
   console.log(`ok - ${name}`);
@@ -78,9 +84,10 @@ test('チュートリアル段1: v003の旧Worldを持ち込まず観測ディ�
   assert.match(html, /潮路の島 v004/);
   assert.equal(fs.existsSync(new URL('../src/world.js', import.meta.url)), false);
   for (const id of [
-    'tutorial-objective', 'tutorial-progress-bar', 'skip-tutorial',
+    'tutorial-objective', 'tutorial-progress-bar',
     'open-tutorial-letters', 'tutorial-letter-sheet', 'tutorial-letter-modal',
   ]) assert.match(html, new RegExp(`id=["']${id}["']`));
+  assert.doesNotMatch(html, /id=["']skip-tutorial["']/, '復帰不能な案内終了ボタンを常設しない');
 });
 
 test('チュートリアル段1: ディレクター有無で操作なしの世界JSONと入力journalが完全一致する', () => {
@@ -121,6 +128,9 @@ test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し
   assert.match(letter.body, /人口は13人/);
   assert.match(letter.body, /完成道路は5区画/);
   assert.match(letter.summary, /港 1棟・人口 13人・道路 5区画/);
+  assert.equal(letter.attention, 'action');
+  assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-starvation-consequence'], 'critical');
+  assert.equal(TUTORIAL_LETTER_ATTENTION['chapter-two-close'], 'notice');
   assert.equal(TUTORIAL_LETTERS.every(definition => typeof definition.render === 'function'), true);
 });
 
@@ -619,11 +629,10 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
   assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
   observe();
   assert.equal(director.currentObjective().id, 'order-procurement-target');
-  assert.equal(hasLetter('order-needs-target'), true, '事前目標を実注文量へ合わせる書状が出る');
-  assert.equal(controller.operate({
-    type: 'set_stock_target', goods: offer.g, qty: offer.qty,
-  }).ok, true);
+  assert.equal(hasLetter('order-needs-target'), false, '80荷の事前備蓄を注文量へ下げさせない');
   observe();
+  assert.equal(director.readState().completedGoals.includes('order-procurement-target'), true);
+  assert.equal(controller.readModel().stockTargets.tools, 80, '入力した80荷を維持する');
   observe();
   assert.equal(director.readState().completedGoals.includes('first-order-procurement'), true);
   assert.equal(hasLetter('first-company-procurement'), true, '注文前の実調達在庫を確認する');
@@ -769,7 +778,7 @@ test('チュートリアル段11: 第一章で置いた漁家と菜園の実価�
     letter.facts.current.fishPrice !== letter.facts.before.fishPrice
       || letter.facts.current.vegPrice !== letter.facts.before.vegPrice,
   );
-  assert.match(letter.body, new RegExp(`食料輸入EMAも${letter.facts.before.importEma.toFixed(3)}から${letter.facts.current.importEma.toFixed(3)}`));
+  assert.match(letter.body, new RegExp(`1日あたり${letter.facts.before.importEma.toFixed(2)}荷から${letter.facts.current.importEma.toFixed(2)}荷へ`));
   tutorialThroughPlay.foodStartTick = foodStartTick;
   tutorialThroughPlay.foodBaseline = baseline;
 });
@@ -788,7 +797,7 @@ test('チュートリアル段12: 3シード実測の食料輸入EMA 0.60未満�
   assert.ok(final.productionEma >= 0.25);
   const reached = director.letters().find(letter => letter.id === 'food-import-target-reached');
   assert.equal(reached.facts.target, FOOD_IMPORT_EMA_TARGET);
-  assert.match(reached.body, new RegExp(`食料輸入EMAは${final.importEma.toFixed(3)}`));
+  assert.match(reached.body, new RegExp(`1日あたり${reached.facts.current.importEma.toFixed(2)}荷になり`));
 
   const journal = controller.inputJournal();
   const seedRows = [{ seed: 11, baseline: foodBaseline, final }];
@@ -836,7 +845,7 @@ test('チュートリアル段13: 第二章を実数で締め、同じ世界で�
   assert.equal(director.currentObjective().id, 'observe-seasonal-food-valley');
   const closing = director.letters().find(letter => letter.id === 'chapter-two-close');
   assert.ok(closing.facts.current.importEma < FOOD_IMPORT_EMA_TARGET);
-  assert.match(closing.body, new RegExp(`${closing.facts.before.importEma.toFixed(3)}から${closing.facts.current.importEma.toFixed(3)}`));
+  assert.match(closing.body, new RegExp(`1日あたり${closing.facts.current.importEma.toFixed(2)}荷です`));
 
   const beforeJournal = controller.inputJournal().length;
   const beforeTick = controller.readModel().tick;
@@ -1222,7 +1231,7 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   assert.ok(completed.facts.revenue > 0);
   assert.ok(completed.facts.orderCost >= 0);
   assert.ok(completed.facts.realizedMargin > 0);
-  assert.match(completed.body, new RegExp(`粗利は${completed.facts.realizedMargin.toFixed(1)}`));
+  assert.match(completed.body, new RegExp(`粗利は${toDenari(completed.facts.realizedMargin).toFixed(1)}デナリ`));
   tutorialThroughPlay.profitableOrder = completed.facts;
 });
 
@@ -1692,7 +1701,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.7.2-stock-target');
+  assert.equal(VERSION, 'v004.8.1-denari-units');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2164,8 +2173,8 @@ test('段6: 全建物種をsnapshotの正位置・正サイズ・入口のまま
   }
   assert.deepEqual(new Set(Object.keys(BUILDING_ART)), new Set(entries.map(([type]) => type)));
   const warehouse = model.buildings.find(building => building.type === 'warehouse');
-  assert.equal(warehouse.vacant, true, '独立配置の空き蔵を空き建物として表示する');
-  assert.match(warehouse.appearance.key, /vacant$/);
+  assert.equal(warehouse.vacant, false, '会社物流の蔵を空き世帯建物として扱わない');
+  assert.match(warehouse.appearance.key, /active$/);
 });
 
 test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段階へ反映される', () => {
@@ -2437,12 +2446,27 @@ test('UI向上段6: 教程の実目標だけが既存操作一つへ案内され
 test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一度ずつ合計する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(60);
-  const model = snapshotToViewModel(api.snapshot());
+  const snapshot = api.snapshot();
+  snapshot.economy.stock.tools = 12;
+  snapshot.economy.stockCost.tools = 6;
+  const model = snapshotToViewModel(snapshot);
   const locationTotal = model.stockLocations.reduce((total, row) => total + row.amount, 0);
   assert.ok(Math.abs(locationTotal - model.totalVisibleStock) < 1e-9);
   assert.ok(model.stockLocations.length > 0);
   assert.ok(model.stockLocations.every(row => row.amount > 0));
-  assert.deepEqual(new Set(model.stockLocations.map(row => row.source)), new Set(['building', 'pantry', 'stall']));
+  const companyTotal = Object.values(model.companyStock).reduce((total, amount) => total + amount, 0);
+  const companyLocations = model.stockLocations.filter(row => row.source === 'company');
+  assert.ok(Math.abs(companyLocations.reduce((total, row) => total + row.amount, 0) - companyTotal) < 1e-9);
+  if (companyTotal > 0) {
+    assert.ok(companyLocations.every(row => row.sourceLabel.includes('会社の蔵')));
+    assert.ok(companyLocations.every(row => row.averageCost >= 0));
+    assert.equal(companyLocations.find(row => row.goods === 'tools').averageCost, 0.5);
+    const warehouse = model.buildings.find(building => building.roles.includes('warehouse'));
+    assert.ok(warehouse.shelfGroups.some(row => row.section === 'companyStock'));
+  }
+  assert.ok(['building', 'pantry', 'stall'].every(
+    source => model.stockLocations.some(row => row.source === source),
+  ));
   for (const goodsRow of model.goodsManifest) {
     const locations = model.stockLocations.filter(row => row.goods === goodsRow.goods);
     const total = locations.reduce((sum, row) => sum + row.amount, 0);
@@ -2453,24 +2477,70 @@ test('UI向上段7: 島況の現物は棚・食料庫・屋台を所在別に一
   assert.equal(Object.isFrozen(model.goodsManifest[0].locations), true);
 });
 
-test('UI向上段8: 島況はsnapshotの市場相場と輸入・生産・消費EMAを補完せず表示する', () => {
+test('UI向上段8: 島況は直近30日収支→市場→現物を固定順で表示する', () => {
   const api = createEngineApi(buildBaseCity(13));
   api.advanceDays(30);
   const snapshot = api.snapshot();
   const model = snapshotToViewModel(snapshot);
   assert.deepEqual(model.marketPrices, snapshot.economy.px);
   assert.deepEqual(model.flowEma, snapshot.economy.f30);
+  const summary = recentCompanySummary(model);
+  const recent = model.companyLedger.filter(row => row.day >= model.day - 29);
+  assert.equal(summary.income, recent.filter(row => row.amount > 0)
+    .reduce((total, row) => total + row.amount, 0));
+  assert.equal(summary.expense, recent.filter(row => row.amount < 0)
+    .reduce((total, row) => total - row.amount, 0));
+  assert.equal(summary.net, summary.income - summary.expense);
+  assert.equal(DENARI_PER_MONEY_UNIT, 10);
+  assert.equal(toDenari(summary.funds), model.companyMoney * 10);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-  for (const id of ['island-sheet', 'island-manifest', 'market-overview', 'open-island']) {
+  for (const id of ['island-sheet', 'island-finance', 'island-manifest', 'market-overview', 'open-island']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
-  assert.match(html, /EMAをデナリ\/荷/);
+  assert.ok(html.indexOf('id="island-finance"') < html.indexOf('id="market-overview"'));
+  assert.ok(html.indexOf('id="market-overview"') < html.indexOf('id="island-manifest"'));
+  assert.match(html, /直近30日の平均（荷\/日）/);
   assert.match(main, /flowCell\('imp'\).*flowCell\('prod'\).*flowCell\('cons'\)/s);
   assert.match(main, /Number\.isFinite\(value\) \? formatQuantity\(value\) : '—'/);
+  assert.match(main, /会社の蔵にある品/);
+  assert.match(main, /平均仕入/);
+  assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
+  assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
 });
 
-test('UI向上段9: 常駐エレナは未読書状・現在目標・重要イベント・操作案内の順に実データを選ぶ', () => {
+test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
+  const foodLetter = TUTORIAL_LETTERS.find(row => row.id === 'food-dependence-report').render({
+    model: {
+      day: 12,
+      flowEma: {},
+      marketPrices: {},
+      companyLedger: [{ day: 12, reason: 'fishの本土仕入', amount: -2.5 }],
+    },
+  });
+  assert.equal(foodLetter.facts.outflow, 2.5, '書状factsはengine内部値を保つ');
+  assert.match(foodLetter.body, /合計25\.0デナリ/);
+
+  const graduation = TUTORIAL_LETTERS.find(row => row.id === 'tutorial-graduation').render({
+    model: {
+      day: 90,
+      population: 0,
+      households: [],
+      flowEma: {},
+      marketPrices: {},
+      companyLedger: [
+        { day: 1, reason: '本国注文売上', amount: 3 },
+        { day: 2, reason: 'fishの本土仕入', amount: -2 },
+      ],
+      companyMoney: 4,
+      companyBankruptcyDay: null,
+    },
+  });
+  assert.equal(graduation.facts.companyNet, 1, '卒業factsもengine内部値を保つ');
+  assert.match(graduation.body, /収入30\.0デナリ、支出20\.0デナリ、差引\+10\.0デナリ、残高40\.0デナリ/);
+});
+
+test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけなら現在目標を隠さない', () => {
   const letter = {
     id: 'letter-1', unread: true, issuedDay: 7, title: '実測の書状', summary: '人口13人',
   };
@@ -2490,6 +2560,17 @@ test('UI向上段9: 常駐エレナは未読書状・現在目標・重要イベ
   assert.equal(unread.priority, 'unread-letter');
   assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1' });
   assert.match(unread.detail, /7日目.*人口13人/);
+  const goalBeforeReport = secretaryRouteFor({
+    letters: [{ ...letter, attention: 'notice' }], objective, objectiveAction, events, fallback,
+  });
+  assert.equal(goalBeforeReport.priority, 'objective');
+  assert.deepEqual(goalBeforeReport.target, objectiveAction);
+  const report = secretaryRouteFor({
+    letters: [{ ...letter, attention: 'notice' }],
+    objective: { ...objective, complete: true }, events: [], fallback,
+  });
+  assert.equal(report.priority, 'unread-report');
+  assert.deepEqual(report.target, { kind: 'letter', id: 'letter-1' });
   const goal = secretaryRouteFor({
     letters: [{ ...letter, unread: false }], objective, objectiveAction, events, fallback,
   });

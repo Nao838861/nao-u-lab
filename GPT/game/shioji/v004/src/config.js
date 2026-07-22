@@ -1,4 +1,11 @@
-export const VERSION = 'v004.7.2-stock-target';
+export const VERSION = 'v004.8.1-denari-units';
+
+// 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
+export const DENARI_PER_MONEY_UNIT = 10;
+
+export function toDenari(value) {
+  return value * DENARI_PER_MONEY_UNIT;
+}
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 
@@ -125,4 +132,5 @@ export const GOODS_LABELS = Object.freeze({
 export const SECTION_LABELS = Object.freeze({
   input: '入', output: '出', storage: '蔵', construction: '工',
   inbound: '輸入', outbound: '輸出', pickup: '返', pantry: '家', stall: '市',
+  companyStock: '会社蔵',
 });

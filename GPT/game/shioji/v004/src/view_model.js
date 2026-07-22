@@ -64,7 +64,9 @@ function groupedStock(rows) {
   });
 }
 
-function stockManifest(buildings, households, stalls, marketBuilding) {
+function stockManifest(
+  buildings, households, stalls, marketBuilding, companyStock = {}, companyStockCost = {},
+) {
   const rows = [];
   for (const building of buildings) {
     for (const shelf of building.shelves) {
@@ -100,6 +102,19 @@ function stockManifest(buildings, households, stalls, marketBuilding) {
       x: marketBuilding?.x ?? 0, y: marketBuilding?.y ?? 0,
       section: 'stall', goods: stall.goods, amount: stall.qty,
     });
+  }
+  const warehouse = buildings.find(building => building.roles?.includes('warehouse'));
+  if (warehouse) {
+    for (const [goods, amount] of Object.entries(companyStock)) {
+      if (amount <= 1e-9) continue;
+      rows.push({
+        source: 'company', sourceId: warehouse.id,
+        sourceLabel: `会社の蔵 #${warehouse.id}・保管`,
+        x: warehouse.x, y: warehouse.y,
+        section: 'companyStock', goods, amount,
+        averageCost: (companyStockCost[goods] ?? 0) / amount,
+      });
+    }
   }
   const grouped = new Map();
   for (const row of rows) {
@@ -204,11 +219,18 @@ export function snapshotToViewModel(snapshot) {
   const buildings = snapshot.physical.buildings.map(building => {
     const shelves = shelfRows(building);
     const owner = householdById.get(building.ownerHouseholdId);
+    const roles = [...(building.roles ?? [])];
+    const companyLogistics = roles.some(role => role === 'market' || role === 'warehouse');
+    const companyStockShelves = roles.includes('warehouse')
+      ? Object.entries(snapshot.economy.stock).flatMap(([goods, amount]) => amount > 1e-9 ? [{
+        section: 'companyStock', goods, amount, capacity: null, visual: pileVisual(amount, goods),
+      }] : [])
+      : [];
     const row = {
       id: building.id,
       type: building.type,
       role: building.role,
-      roles: [...(building.roles ?? [])],
+      roles,
       x: building.x,
       y: building.y,
       width: building.w,
@@ -218,10 +240,10 @@ export function snapshotToViewModel(snapshot) {
       fixed: Boolean(building.fixed),
       ownerHouseholdId: building.ownerHouseholdId,
       occupied: building.ownerHouseholdId !== null,
-      vacant: !building.fixed && building.ownerHouseholdId === null,
+      vacant: !building.fixed && !companyLogistics && building.ownerHouseholdId === null,
       cultureLevel: owner?.lv ?? 0,
       shelves,
-      shelfGroups: groupedStock(shelves),
+      shelfGroups: groupedStock([...shelves, ...companyStockShelves]),
       shelfAmount: shelves.reduce((total, row) => total + row.amount, 0),
     };
     return { ...row, appearance: buildingAppearance(row) };
@@ -282,7 +304,10 @@ export function snapshotToViewModel(snapshot) {
     y: marketBuilding ? marketBuilding.y + 0.8 + (Math.floor(index / 4) % 4) * 1.0 : snapshot.economy.market.y,
     totalAmount: items.reduce((total, item) => total + item.visual.amount, 0),
   }));
-  const manifest = stockManifest(buildings, households, stalls, marketBuilding);
+  const manifest = stockManifest(
+    buildings, households, stalls, marketBuilding,
+    snapshot.economy.stock, snapshot.economy.stockCost,
+  );
   const traffic = new Map(Object.entries(snapshot.economy.traffic ?? {}));
   for (const [key, value] of Object.entries(snapshot.physical.trails ?? {})) {
     if (value) traffic.set(key, Math.max(traffic.get(key) ?? 0, value === true ? 1 : value));
@@ -367,7 +392,8 @@ export function snapshotToViewModel(snapshot) {
       + households.reduce((total, household) => (
         total + household.pantry.reduce((sum, row) => sum + row.visual.amount, 0)
       ), 0)
-      + stalls.reduce((total, stall) => total + stall.visual.amount, 0),
+      + stalls.reduce((total, stall) => total + stall.visual.amount, 0)
+      + Object.values(snapshot.economy.stock).reduce((total, amount) => total + amount, 0),
     portCalls,
     portBerth: portBuilding
       ? portBerth(portBuilding, snapshot.physical.terrain, snapshot.physical.width, snapshot.physical.height)

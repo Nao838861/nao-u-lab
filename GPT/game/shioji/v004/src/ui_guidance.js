@@ -72,14 +72,16 @@ export function objectiveActionFor(objective, model) {
 export function secretaryRouteFor({
   letters = [], objective = null, objectiveAction = null, events = [], fallback = null,
 } = {}) {
-  const unread = [...letters].reverse().find(letter => letter.unread);
-  if (unread) {
+  const unreadAction = [...letters].reverse().find(letter => (
+    letter.unread && letter.attention !== 'notice' && letter.attention !== 'silent'
+  ));
+  if (unreadAction) {
     return {
       priority: 'unread-letter',
-      target: { kind: 'letter', id: unread.id },
+      target: { kind: 'letter', id: unreadAction.id },
       kicker: '未読書状',
-      title: unread.title,
-      detail: `${unread.issuedDay}日目・${unread.summary}`,
+      title: unreadAction.title,
+      detail: `${unreadAction.issuedDay}日目・${unreadAction.summary}`,
     };
   }
   if (objective && !objective.complete) {
@@ -89,6 +91,18 @@ export function secretaryRouteFor({
       kicker: objective.chapter,
       title: objective.title,
       detail: objective.detail,
+    };
+  }
+  const unreadNotice = [...letters].reverse().find(letter => (
+    letter.unread && letter.attention === 'notice'
+  ));
+  if (unreadNotice) {
+    return {
+      priority: 'unread-report',
+      target: { kind: 'letter', id: unreadNotice.id },
+      kicker: '未読の報告',
+      title: unreadNotice.title,
+      detail: `${unreadNotice.issuedDay}日目・${unreadNotice.summary}`,
     };
   }
   const important = [...events].reverse().find(event => event.important);

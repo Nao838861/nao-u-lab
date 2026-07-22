@@ -2,7 +2,7 @@ import { IsometricCamera } from './camera.js';
 import { SimulationClock } from './clock.js';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_LABELS,
-  PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION,
+  PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
 } from './config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -18,6 +18,7 @@ import { Renderer } from './renderer.js';
 import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js';
 import { createTutorialDirectorForMode } from './tutorial_director.js';
 import { objectiveActionFor, secretaryRouteFor } from './ui_guidance.js';
+import { recentCompanySummary } from './ui_summary.js';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -53,6 +54,7 @@ const companyInteractionPointers = new Set();
 let companyMouseInteraction = false;
 let companyInteractionReleasePending = false;
 let companyEditingInput = null;
+const stockTargetDrafts = new Map();
 const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
 camera.setWorldSize(model.width, model.height);
 if (START_MODES[startMode].blank) camera.focus(model.economyMarket.x + 0.5, model.economyMarket.y + 0.5);
@@ -124,7 +126,7 @@ function renderHud() {
   syncSelectedBuilding();
   $('#build-version').textContent = `Build ${VERSION}`;
   $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
-  $('#funds-value').textContent = formatNumber(model.companyMoney);
+  $('#funds-value').textContent = formatNumber(toDenari(model.companyMoney));
   $('#day-value').textContent = `${model.day}日目`;
   $('#tick-value').textContent = `tick ${model.tick}`;
   $('#population-value').textContent = `${formatNumber(model.population)}人`;
@@ -604,7 +606,7 @@ function renderAidPanel() {
 function renderCompanySheet() {
   if (companyInteractionPointers.size > 0
     || companyMouseInteraction || companyInteractionReleasePending) return;
-  $('#company-balance').textContent = formatNumber(model.companyMoney);
+  $('#company-balance').textContent = formatNumber(toDenari(model.companyMoney));
   renderAidPanel();
   const offer = model.orderOffer;
   const active = model.activeOrder;
@@ -635,16 +637,20 @@ function renderCompanySheet() {
     $('#order-panel').innerHTML = '<h3>本国注文</h3><p>現在届いている注文状はありません。</p>';
   }
 
-  $('#company-goods').innerHTML = Object.keys(GOODS_LABELS).map(goods => `
-    <div class="goods-row" data-goods="${goods}">
-      <span>${GOODS_LABELS[goods]}<small> 在庫${formatQuantity(model.companyStock[goods] ?? 0)}</small></span>
-      <input type="number" min="0" step="1" value="${Math.round(model.stockTargets[goods] ?? 0)}" aria-label="${GOODS_LABELS[goods]}の買上げ目標">
-      <button type="button" data-company-action="set-target" data-goods="${goods}">目標設定</button>
-      <button type="button" data-company-action="release-stock" data-goods="${goods}">16蔵出し</button>
-    </div>`).join('');
+  $('#company-goods').innerHTML = Object.keys(GOODS_LABELS).map(goods => {
+    const targetValue = stockTargetDrafts.has(goods)
+      ? stockTargetDrafts.get(goods) : Math.round(model.stockTargets[goods] ?? 0);
+    return `
+      <div class="goods-row" data-goods="${goods}">
+        <span>${GOODS_LABELS[goods]}<small> 在庫${formatQuantity(model.companyStock[goods] ?? 0)}</small></span>
+        <input type="number" min="0" step="1" value="${escapeHtml(targetValue)}" aria-label="${GOODS_LABELS[goods]}の買上げ目標">
+        <button type="button" data-company-action="set-target" data-goods="${goods}">目標設定</button>
+        <button type="button" data-company-action="release-stock" data-goods="${goods}">16蔵出し</button>
+      </div>`;
+  }).join('');
   const ledger = model.companyLedger.slice(-24).reverse();
   $('#company-ledger').innerHTML = ledger.length ? ledger.map(row => `
-    <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(row.amount)}</b></div>`).join('')
+    <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(toDenari(row.amount))}</b></div>`).join('')
     : '<p class="sheet-note">まだ記帳はありません。</p>';
 }
 
@@ -684,10 +690,12 @@ function renderTutorial() {
   }
   if (!available) return;
   const letters = tutorialDirector.letters();
-  const unread = letters.filter(letter => letter.unread).length;
+  const unread = letters.filter(letter => letter.unread && letter.attention !== 'silent').length;
   $('#tutorial-unread').hidden = unread === 0 || Boolean(state?.skipped);
   $('#tutorial-unread').textContent = String(unread);
   if (!$('#tutorial-letter-sheet').hidden) renderTutorialLetterSheet();
+  const critical = letters.find(letter => letter.unread && letter.attention === 'critical');
+  if (critical && openTutorialLetterId === null) openTutorialLetter(critical.id);
 }
 
 function secretaryFallback() {
@@ -769,15 +777,20 @@ function renderTutorialLetterSheet() {
     return;
   }
   for (const letter of [...letters].reverse()) {
+    if (letter.attention === 'silent') continue;
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = `tutorial-letter-row${letter.unread ? ' unread' : ''}`;
+    button.className = `tutorial-letter-row ${letter.attention ?? 'action'}${letter.unread ? ' unread' : ''}`;
     button.dataset.tutorialLetter = letter.id;
+    const kind = document.createElement('span');
+    kind.className = 'tutorial-letter-kind';
+    kind.textContent = letter.attention === 'critical' ? '最重要'
+      : letter.attention === 'notice' ? '報告' : '要対応';
     const heading = document.createElement('b');
     heading.textContent = letter.title;
     const summary = document.createElement('small');
     summary.textContent = `${letter.issuedDay}日目・${letter.summary}`;
-    button.append(heading, summary);
+    button.append(kind, heading, summary);
     list.append(button);
   }
 }
@@ -788,7 +801,9 @@ function renderBuildingSheet() {
   const household = model.households.find(row => row.id === building.ownerHouseholdId) ?? null;
   const connection = model.roadConnection?.buildings?.find(row => row.id === building.id);
   const hasMarket = model.buildings.some(row => row.roles?.includes('market'));
-  const status = building.fixed ? '会社の固定施設' : building.occupied ? '世帯が稼働中' : '空き区画';
+  const companyLogistics = building.roles?.some(role => role === 'market' || role === 'warehouse');
+  const status = building.fixed ? '会社の固定施設'
+    : companyLogistics ? '会社の物流施設' : building.occupied ? '世帯が稼働中' : '空き区画';
   const road = !hasMarket ? '市場未設置' : connection?.connected ? '市場へ接続' : '市場へ未接続';
   $('#building-sheet-kicker').textContent = building.roles?.includes('port') ? '港湾物流'
     : building.roles?.includes('market') ? '市場物流'
@@ -839,6 +854,25 @@ function renderBuildingSheet() {
     return `<div class="shelf-row"><small>${escapeHtml(SECTION_LABELS[row.section] ?? row.section)}</small><span>${escapeHtml(GOODS_LABELS[row.goods] ?? row.goods)}${meter}</span><b>${formatQuantity(row.amount)}${capacity}</b></div>`;
   }).join('')}</div>` : '<p>棚に割り当てられた現物はありません。</p>'}`;
 
+  const companyStockPanel = $('#building-company-stock');
+  const isWarehouse = building.roles?.includes('warehouse');
+  companyStockPanel.hidden = !isWarehouse;
+  if (isWarehouse) {
+    const companyRows = Object.entries(model.companyStock)
+      .filter(([, amount]) => amount > 1e-9)
+      .sort((left, right) => right[1] - left[1]);
+    companyStockPanel.innerHTML = `
+      <h3>会社の蔵にある品</h3>
+      <p>会社が市場で買い上げた品です。本国注文の船積みと、品薄時の蔵出しはここから運びます。</p>
+      ${companyRows.length ? `<div class="shelf-list">${companyRows.map(([goods, amount]) => {
+        const averageCost = model.companyStockAverageCosts[goods];
+        const cost = Number.isFinite(averageCost)
+          ? `平均仕入 ${formatQuantity(averageCost * 10)}デナリ/荷` : '平均仕入 —';
+        return `<div class="company-stock-row"><span><b>${escapeHtml(GOODS_LABELS[goods] ?? goods)}</b><small>${cost}</small></span><b>${formatQuantity(amount)}荷</b></div>`;
+      }).join('')}</div>` : '<p>会社在庫はありません。買上げ目標を定めると、市場から届いた品がここに保管されます。</p>'}
+      <button class="focus-building" type="button" data-open-company-stock>買上げ目標・蔵出しを開く</button>`;
+  }
+
   const conversion = model.conversionEconomics.find(row => row.buildingId === building.id) ?? null;
   const conversionPanel = $('#building-conversion');
   conversionPanel.hidden = !conversion;
@@ -857,6 +891,17 @@ function renderBuildingSheet() {
 
 function renderIslandSheet() {
   const manifest = $('#island-manifest');
+  const marketOverview = $('#market-overview');
+  const manifestScroll = manifest.scrollTop;
+  const marketScroll = marketOverview.scrollTop;
+  const finance = recentCompanySummary(model);
+  $('#island-funds').textContent = `${formatNumber(toDenari(finance.funds))} D`;
+  $('#island-income').textContent = `+${formatQuantity(toDenari(finance.income))} D`;
+  $('#island-expense').textContent = `−${formatQuantity(toDenari(finance.expense))} D`;
+  const net = $('#island-net');
+  net.textContent = `${finance.net >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(finance.net)))} D`;
+  net.classList.toggle('plus', finance.net >= 0);
+  net.classList.toggle('minus', finance.net < 0);
   manifest.replaceChildren();
   if (!model.goodsManifest.length) {
     const empty = document.createElement('p');
@@ -907,20 +952,23 @@ function renderIslandSheet() {
       ${flowCell('imp')}${flowCell('prod')}${flowCell('cons')}
     </div>`;
   }).join('');
-  $('#market-overview').innerHTML = `
-    <div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>輸入</span><span>生産</span><span>消費</span></div>
+  marketOverview.innerHTML = `
+    <div class="market-flow-row header"><span>品目</span><span>相場</span><span>現物</span><span>仕入/日</span><span>生産/日</span><span>消費/日</span></div>
     ${rows}`;
+  manifest.scrollTop = manifestScroll;
+  marketOverview.scrollTop = marketScroll;
 }
 
 function openTutorialLetter(id) {
   const letter = tutorialDirector?.letters().find(row => row.id === id);
   if (!letter) return false;
-  if (openTutorialLetterId === null) {
+  const opening = openTutorialLetterId === null;
+  if (opening) {
     speedBeforeLetter = clock.speedIndex;
-    setSpeed(0);
   }
   openTutorialLetterId = id;
   tutorialDirector.markLetterRead(id);
+  if (opening) setSpeed(0);
   $('#tutorial-letter-kicker').textContent = letter.kicker;
   $('#tutorial-letter-title').textContent = letter.title;
   $('#tutorial-letter-summary').textContent = letter.summary;
@@ -930,6 +978,16 @@ function openTutorialLetter(id) {
     const node = document.createElement('p');
     node.textContent = paragraph;
     body.append(node);
+  }
+  if (!/やること[:：]/.test(letter.body)) {
+    const action = document.createElement('p');
+    action.className = 'paper-action';
+    action.textContent = letter.attention === 'notice'
+      ? 'やること: 操作はありません。この書状は報告です。'
+      : letter.attention === 'critical'
+        ? 'やること: 最重要の知らせです。内容を確認し、現在目標から対応してください。'
+        : 'やること: 書状を閉じ、画面上部の現在目標から次の操作へ進んでください。';
+    body.append(action);
   }
   $('#tutorial-letter-signature').textContent = letter.signature;
   $('#tutorial-letter-modal').hidden = false;
@@ -1025,6 +1083,9 @@ $('#focus-selected-building').addEventListener('click', () => {
 });
 
 $('#open-island-from-building').addEventListener('click', () => openSheet('island-sheet'));
+$('#building-company-stock').addEventListener('click', event => {
+  if (event.target.closest('[data-open-company-stock]')) openSheet('company-sheet');
+});
 $('#island-manifest').addEventListener('click', event => {
   const button = event.target.closest('[data-stock-location]');
   if (!button) return;
@@ -1040,11 +1101,16 @@ $('#tutorial-letter-list').addEventListener('click', event => {
   if (button) openTutorialLetter(button.dataset.tutorialLetter);
 });
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
-$('#skip-tutorial').addEventListener('click', skipTutorial);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
 $('#secretary').addEventListener('click', followSecretaryRoute);
 
 const companySheet = $('#company-sheet');
+companySheet.addEventListener('input', event => {
+  if (!(event.target instanceof HTMLInputElement)) return;
+  const row = event.target.closest('.goods-row');
+  if (!row?.dataset.goods) return;
+  stockTargetDrafts.set(row.dataset.goods, event.target.value);
+});
 companySheet.addEventListener('pointerdown', event => {
   const control = event.target.closest('button, input, select, textarea');
   if (!control) return;
@@ -1133,8 +1199,9 @@ companySheet.addEventListener('click', event => {
   if (action === 'set-target') {
     const input = button.closest('.goods-row').querySelector('input');
     const qty = Math.max(0, Math.round(Number(input.value) || 0));
-    applyEngineOperation({ type: 'set_stock_target', goods, qty },
+    const result = applyEngineOperation({ type: 'set_stock_target', goods, qty },
       `${GOODS_LABELS[goods]}の買上げ目標を${qty}にしました`, '目標を設定できません');
+    if (result?.ok !== false) stockTargetDrafts.delete(goods);
   } else if (action === 'release-stock') {
     applyEngineOperation({ type: 'release_stock', goods, qty: 16 },
       `${GOODS_LABELS[goods]}を蔵から市場へ出します`, '蔵出しできる在庫または経路がありません');

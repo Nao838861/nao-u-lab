@@ -1,4 +1,6 @@
-import { TUTORIAL_GOALS, TUTORIAL_LETTERS } from './tutorial_content.js';
+import {
+  TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
+} from './tutorial_content.js';
 
 const SAVE_VERSION = 1;
 
@@ -52,6 +54,8 @@ export class TutorialDirector {
       this.state.letters.push({
         id: definition.id,
         source: definition.source ?? 'event',
+        attention: rendered.attention ?? definition.attention
+          ?? TUTORIAL_LETTER_ATTENTION[definition.id] ?? 'action',
         issuedDay: model.day,
         issuedTick: model.tick,
         unread: true,
