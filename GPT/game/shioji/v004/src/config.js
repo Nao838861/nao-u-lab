@@ -1,4 +1,11 @@
-export const VERSION = 'v004.8.0-ui-flow';
+export const VERSION = 'v004.8.1-denari-units';
+
+// 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
+export const DENARI_PER_MONEY_UNIT = 10;
+
+export function toDenari(value) {
+  return value * DENARI_PER_MONEY_UNIT;
+}
 
 export const TILE = Object.freeze({ width: 68, height: 34 });
 

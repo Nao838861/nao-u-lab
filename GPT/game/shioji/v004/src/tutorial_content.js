@@ -3,6 +3,7 @@ import {
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
 } from './engine_bridge.js';
+import { toDenari } from './config.js';
 
 function tileKind(model, x, y) {
   return model.terrain[y]?.[x]?.kind ?? null;
@@ -1206,7 +1207,7 @@ export const TUTORIAL_GOALS = Object.freeze([
         complete,
         progress: { done: Number(complete), total: 1 },
         detail: economics?.completed
-          ? `実売上 ${economics.revenue.toFixed(1)} / 出荷原価 ${economics.orderCost.toFixed(1)} / 粗利 ${economics.realizedMargin.toFixed(1)}`
+          ? `実売上 ${toDenari(economics.revenue).toFixed(1)}デナリ / 出荷原価 ${toDenari(economics.orderCost).toFixed(1)}デナリ / 粗利 ${toDenari(economics.realizedMargin).toFixed(1)}デナリ`
           : '市場→蔵→港→船の実物流で注文を納めています',
         evidence: economics ?? { completed: false },
       };
@@ -1438,15 +1439,16 @@ export const TUTORIAL_LETTERS = Object.freeze([
     render({ model, events, state }) {
       const report = bankruptcyReport(events);
       const currentGoal = pendingTutorialGoal(state);
-      const debtText = report.debt === null ? '—' : report.debt.toFixed(0);
-      const limitText = report.limit === null ? '—' : report.limit.toFixed(0);
+      const debtText = report.debt === null ? '—' : toDenari(report.debt).toFixed(0);
+      const limitText = report.limit === null ? '—' : toDenari(report.limit).toFixed(0);
+      const balanceText = toDenari(model.companyMoney).toFixed(1);
       return {
         kicker: '会社・最終通告',
         title: '帳簿は、教程の外でも閉じません',
-        summary: `債務 ${debtText}・信用限度 ${limitText}・会社残高 ${model.companyMoney.toFixed(1)}`,
+        summary: `債務 ${debtText}デナリ・信用限度 ${limitText}デナリ・会社残高 ${balanceText}デナリ`,
         facts: { ...report, companyMoney: model.companyMoney, currentGoal },
         body: [
-          `${model.day}日目。会社の実記録は「${report.message}」。会社残高は${model.companyMoney.toFixed(1)}、記録された債務は${debtText}、信用限度は${limitText}です。`,
+          `${model.day}日目。会社から最終通告が出ました。会社残高は${balanceText}デナリ、記録された債務は${debtText}デナリ、信用限度は${limitText}デナリです。`,
           `教程は支出を取り消さず、帳簿を巻き戻しません。${currentGoal ? `未完了の目標「${currentGoal.title}」も消えていません。` : ''}この島は同じ規則のまま続きます。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -1807,11 +1809,11 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '第一便の完遂報告',
         title: '注文の船が本国へ発ちました',
-        summary: `${completed.eventDay ?? completed.day}日目・売上 ${revenue.toFixed(1)}・達成上乗せ ${premium.toFixed(1)}`,
+        summary: `${completed.eventDay ?? completed.day}日目・売上 ${toDenari(revenue).toFixed(1)}デナリ・達成上乗せ ${toDenari(premium).toFixed(1)}デナリ`,
         facts: { goods: facts.goods, qty: facts.qty, revenue, premium },
         body: [
-          `${completed.eventDay ?? completed.day}日目。最後の一荷が船へ移り、${goodsLabel(facts.goods)}${facts.qty}荷の注文を納めました。会社の実台帳に、本国注文売上として${revenue.toFixed(1)}が記帳されています。`,
-          `このうち通常単価分は${base.toFixed(1)}、完遂による上乗せは${premium.toFixed(1)}です。市場で作り手へ銀を払い、道と蔵と港を経て、島の品が初めて本国の売上になりました。`,
+          `${completed.eventDay ?? completed.day}日目。最後の一荷が船へ移り、${goodsLabel(facts.goods)}${facts.qty}荷の注文を納めました。会社の実台帳に、本国注文売上として${toDenari(revenue).toFixed(1)}デナリが記帳されています。`,
+          `このうち通常単価分は${toDenari(base).toFixed(1)}デナリ、完遂による上乗せは${toDenari(premium).toFixed(1)}デナリです。市場で作り手へ銀を払い、道と蔵と港を経て、島の品が初めて本国の売上になりました。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
       };
@@ -1831,10 +1833,10 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '第一章・収支報告',
         title: '最初の一荷、その向こう側',
-        summary: `注文売上 ${revenue.toFixed(1)} / 食料の本土仕入 ${foodOutflow.toFixed(1)}`,
+        summary: `注文売上 ${toDenari(revenue).toFixed(1)}デナリ / 食料の本土仕入 ${toDenari(foodOutflow).toFixed(1)}デナリ`,
         facts: { revenue, foodOutflow, aidRequests },
         body: [
-          `最初の注文で、会社の実台帳には売上${revenue.toFixed(1)}が入りました。同じ時点までに、本土から買った食料の仕入は累計${foodOutflow.toFixed(1)}です。`,
+          `最初の注文で、会社の実台帳には売上${toDenari(revenue).toFixed(1)}デナリが入りました。同じ時点までに、本土から買った食料の仕入は累計${toDenari(foodOutflow).toFixed(1)}デナリです。`,
           `食料支援は${aidRequests}回要請しましたが、贈与なのでこの仕入額には含まれません。輸出で銀を得る道は通りました。次は、島の食卓を本土任せにせず、島の中で作る番です。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -1923,10 +1925,10 @@ export const TUTORIAL_LETTERS = Object.freeze([
         attention: 'notice',
         kicker: '第二章・島の食卓',
         title: '食料をまだ本土から買い続けています',
-        summary: `本土から買う食料 1日あたり${facts.importEma.toFixed(2)}荷・支払い累計 ${facts.outflow.toFixed(1)}デナリ`,
+        summary: `本土から買う食料 1日あたり${facts.importEma.toFixed(2)}荷・支払い累計 ${toDenari(facts.outflow).toFixed(1)}デナリ`,
         facts,
         body: [
-          `${model.day}日目。島はいま、食料を1日あたりおよそ${facts.importEma.toFixed(2)}荷、本土から買っています（直近30日のならし）。この支払いで、これまでに合計${facts.outflow.toFixed(1)}デナリが島の外へ出ていきました。`,
+          `${model.day}日目。島はいま、食料を1日あたりおよそ${facts.importEma.toFixed(2)}荷、本土から買っています（直近30日のならし）。この支払いで、これまでに合計${toDenari(facts.outflow).toFixed(1)}デナリが島の外へ出ていきました。`,
           '第一章で置いた漁家と菜園が育てば、本土から買う量は自然に減っていきます。第二章では、その変化を見届けます。',
           'やること: 新しい操作はありません。この書状はご報告だけです。',
         ].join('\n\n'),
@@ -2002,7 +2004,7 @@ export const TUTORIAL_LETTERS = Object.freeze([
         facts: { before, current, reached: Boolean(reached) },
         body: [
           `${model.day}日目。魚と野菜を作る暮らしが根付き、島で作る食料は1日あたりおよそ${current.productionEma.toFixed(1)}荷になりました。本土から買う食料は1日あたり${current.importEma.toFixed(2)}荷です${current.importEma <= before.importEma ? `（第二章の始めは${before.importEma.toFixed(2)}荷でした）` : '（日々上下しますが、目標の範囲内です）'}。`,
-          `本土への食料の支払いは、これまでに合計${current.outflow.toFixed(1)}デナリでした。島で作る量が増えたぶん、この出費はこれから増えにくくなります。`,
+          `本土への食料の支払いは、これまでに合計${toDenari(current.outflow).toFixed(1)}デナリでした。島で作る量が増えたぶん、この出費はこれから増えにくくなります。`,
           'やること: 第二章はこれで終わりです。次の書状が届くまで、島づくりを自由にお続けください。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2205,10 +2207,10 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '利益を得た注文',
         title: '見立てを、実帳簿で確かめました',
-        summary: `売上 ${facts.revenue.toFixed(1)} / 出荷原価 ${facts.orderCost.toFixed(1)} / 粗利 ${facts.realizedMargin.toFixed(1)}`,
+        summary: `売上 ${toDenari(facts.revenue).toFixed(1)}デナリ / 出荷原価 ${toDenari(facts.orderCost).toFixed(1)}デナリ / 粗利 ${toDenari(facts.realizedMargin).toFixed(1)}デナリ`,
         facts: { ...facts, quote },
         body: [
-          `${facts.completionDay}日目。${goodsLabel(facts.goods)}${facts.qty}荷を納め、実売上は${facts.revenue.toFixed(1)}、今回の出荷に対応する実在庫原価は${facts.orderCost.toFixed(1)}、差し引き粗利は${facts.realizedMargin.toFixed(1)}でした。`,
+          `${facts.completionDay}日目。${goodsLabel(facts.goods)}${facts.qty}荷を納め、実売上は${toDenari(facts.revenue).toFixed(1)}デナリ、今回の出荷に対応する実在庫原価は${toDenari(facts.orderCost).toFixed(1)}デナリ、差し引き粗利は${toDenari(facts.realizedMargin).toFixed(1)}デナリでした。`,
           `注文状を見た時の市場最安は1荷あたり${(quote.marketLowest * 10).toFixed(1)}デナリ、完遂決済は${(quote.settlementPrice * 10).toFixed(1)}デナリでした。最初の見立てと、最後の実帳簿を分けて確かめるのが商いです。`,
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2258,10 +2260,10 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '第四章・商い判断報告',
         title: '引き受けない自由も総督のものです',
-        summary: `利益注文の粗利 ${profit.realizedMargin.toFixed(1)} / 見送り ${goodsLabel(selected.goods)} ${selected.qty}荷`,
+        summary: `利益注文の粗利 ${toDenari(profit.realizedMargin).toFixed(1)}デナリ / 見送り ${goodsLabel(selected.goods)} ${selected.qty}荷`,
         facts: { profit, skipped },
         body: [
-          `ひとつの注文は、実売上${profit.revenue.toFixed(1)}から出荷原価${profit.orderCost.toFixed(1)}を引き、粗利${profit.realizedMargin.toFixed(1)}で完遂しました。もうひとつの${goodsLabel(selected.goods)}${selected.qty}荷は受諾せず、${skipped.expired.day}日目に実際に失効しました。`,
+          `ひとつの注文は、実売上${toDenari(profit.revenue).toFixed(1)}デナリから出荷原価${toDenari(profit.orderCost).toFixed(1)}デナリを引き、粗利${toDenari(profit.realizedMargin).toFixed(1)}デナリで完遂しました。もうひとつの${goodsLabel(selected.goods)}${selected.qty}荷は受諾せず、${skipped.expired.day}日目に実際に失効しました。`,
           '注文状は命令ではありません。決済と市場を比べ、会社の銀を使うか決めること。引き受けない自由も総督のものです。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',
@@ -2424,11 +2426,11 @@ export const TUTORIAL_LETTERS = Object.freeze([
       return {
         kicker: '終章・総督の島',
         title: 'あとは総督の思うままに',
-        summary: `人口${facts.population}人・存続${facts.survivingJobCount}職・食料輸入EMA ${facts.foodImportEma.toFixed(3)}・会社収支 ${netSign}${facts.companyNet.toFixed(1)}`,
+        summary: `人口${facts.population}人・存続${facts.survivingJobCount}職・食料輸入EMA ${facts.foodImportEma.toFixed(3)}・会社収支 ${netSign}${toDenari(facts.companyNet).toFixed(1)}デナリ`,
         facts,
         body: [
           `${facts.day}日目。総督が育てた町は人口${facts.population}人、現に世帯が働く職は${facts.survivingJobCount}種です。安定監査の中核${facts.stableJobsRequired}職のうち${facts.stableJobsPresent}職が存続しています。食料輸入EMAは${facts.foodImportEma.toFixed(3)}、島内食料生産EMAは${facts.foodProductionEma.toFixed(2)}です。`,
-          `会社の実台帳は収入${facts.companyIncome.toFixed(1)}、支出${facts.companyExpense.toFixed(1)}、差引${netSign}${facts.companyNet.toFixed(1)}、残高${facts.companyMoney.toFixed(1)}、${bankruptcy}。見本となるE-Stableは${facts.reference.years}年の各年に人口${facts.reference.populationBand[0]}〜${facts.reference.populationBand[1]}人、中核${facts.stableJobsRequired}職を各1以上、破産なしを確かめる参照帯です。食料自給の節目は、この島で較正した輸入EMA ${facts.reference.foodImportEmaMax.toFixed(2)}未満です。町の年齢も総督の選択も違うため、これは合否ではなく行く先を測る物差しとしてお読みください。`,
+          `会社の実台帳は収入${toDenari(facts.companyIncome).toFixed(1)}デナリ、支出${toDenari(facts.companyExpense).toFixed(1)}デナリ、差引${netSign}${toDenari(facts.companyNet).toFixed(1)}デナリ、残高${toDenari(facts.companyMoney).toFixed(1)}デナリ、${bankruptcy}。見本となるE-Stableは${facts.reference.years}年の各年に人口${facts.reference.populationBand[0]}〜${facts.reference.populationBand[1]}人、中核${facts.stableJobsRequired}職を各1以上、破産なしを確かめる参照帯です。食料自給の節目は、この島で較正した輸入EMA ${facts.reference.foodImportEmaMax.toFixed(2)}未満です。町の年齢も総督の選択も違うため、これは合否ではなく行く先を測る物差しとしてお読みください。`,
           '開始メニューの「テスト配置で観察」は、同じエンジンでこの安定帯を通った「見本の町」です。見比べることも、ここから別の産業を伸ばすこともできます。教程の目標はここで閉じますが、島も帳簿も作り直しません。エレナは重要な出来事だけをお届けします——あとは総督の思うままに。',
         ].join('\n\n'),
         signature: '会社秘書 エレナ',

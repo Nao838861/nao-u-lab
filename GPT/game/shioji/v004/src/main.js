@@ -2,7 +2,7 @@ import { IsometricCamera } from './camera.js';
 import { SimulationClock } from './clock.js';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_LABELS,
-  PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION,
+  PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
 } from './config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -126,7 +126,7 @@ function renderHud() {
   syncSelectedBuilding();
   $('#build-version').textContent = `Build ${VERSION}`;
   $('#start-mode-label').textContent = START_MODES[startMode].shortLabel;
-  $('#funds-value').textContent = formatNumber(model.companyMoney);
+  $('#funds-value').textContent = formatNumber(toDenari(model.companyMoney));
   $('#day-value').textContent = `${model.day}日目`;
   $('#tick-value').textContent = `tick ${model.tick}`;
   $('#population-value').textContent = `${formatNumber(model.population)}人`;
@@ -606,7 +606,7 @@ function renderAidPanel() {
 function renderCompanySheet() {
   if (companyInteractionPointers.size > 0
     || companyMouseInteraction || companyInteractionReleasePending) return;
-  $('#company-balance').textContent = formatNumber(model.companyMoney);
+  $('#company-balance').textContent = formatNumber(toDenari(model.companyMoney));
   renderAidPanel();
   const offer = model.orderOffer;
   const active = model.activeOrder;
@@ -650,7 +650,7 @@ function renderCompanySheet() {
   }).join('');
   const ledger = model.companyLedger.slice(-24).reverse();
   $('#company-ledger').innerHTML = ledger.length ? ledger.map(row => `
-    <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(row.amount)}</b></div>`).join('')
+    <div class="ledger-row"><small>${row.day}日</small><span>${row.reason}</span><b class="${row.amount >= 0 ? 'plus' : 'minus'}">${row.amount >= 0 ? '+' : ''}${formatQuantity(toDenari(row.amount))}</b></div>`).join('')
     : '<p class="sheet-note">まだ記帳はありません。</p>';
 }
 
@@ -895,11 +895,11 @@ function renderIslandSheet() {
   const manifestScroll = manifest.scrollTop;
   const marketScroll = marketOverview.scrollTop;
   const finance = recentCompanySummary(model);
-  $('#island-funds').textContent = `${formatNumber(finance.funds)} D`;
-  $('#island-income').textContent = `+${formatQuantity(finance.income)} D`;
-  $('#island-expense').textContent = `−${formatQuantity(finance.expense)} D`;
+  $('#island-funds').textContent = `${formatNumber(toDenari(finance.funds))} D`;
+  $('#island-income').textContent = `+${formatQuantity(toDenari(finance.income))} D`;
+  $('#island-expense').textContent = `−${formatQuantity(toDenari(finance.expense))} D`;
   const net = $('#island-net');
-  net.textContent = `${finance.net >= 0 ? '+' : '−'}${formatQuantity(Math.abs(finance.net))} D`;
+  net.textContent = `${finance.net >= 0 ? '+' : '−'}${formatQuantity(toDenari(Math.abs(finance.net)))} D`;
   net.classList.toggle('plus', finance.net >= 0);
   net.classList.toggle('minus', finance.net < 0);
   manifest.replaceChildren();

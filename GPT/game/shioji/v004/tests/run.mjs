@@ -7,7 +7,8 @@ import { ECONOMIC_BUILDINGS } from '../../engine/src/physical.js';
 import { IsometricCamera } from '../src/camera.js';
 import { SimulationClock } from '../src/clock.js';
 import {
-  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, PLACEMENT_JOBS, VERSION,
+  BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, DENARI_PER_MONEY_UNIT,
+  PLACEMENT_JOBS, VERSION, toDenari,
 } from '../src/config.js';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
@@ -1230,7 +1231,7 @@ test('チュートリアル段18: 実決済と市場最安を並べ、黒字注�
   assert.ok(completed.facts.revenue > 0);
   assert.ok(completed.facts.orderCost >= 0);
   assert.ok(completed.facts.realizedMargin > 0);
-  assert.match(completed.body, new RegExp(`粗利は${completed.facts.realizedMargin.toFixed(1)}`));
+  assert.match(completed.body, new RegExp(`粗利は${toDenari(completed.facts.realizedMargin).toFixed(1)}デナリ`));
   tutorialThroughPlay.profitableOrder = completed.facts;
 });
 
@@ -1700,7 +1701,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.8.0-ui-flow');
+  assert.equal(VERSION, 'v004.8.1-denari-units');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2490,6 +2491,8 @@ test('UI向上段8: 島況は直近30日収支→市場→現物を固定順で�
   assert.equal(summary.expense, recent.filter(row => row.amount < 0)
     .reduce((total, row) => total - row.amount, 0));
   assert.equal(summary.net, summary.income - summary.expense);
+  assert.equal(DENARI_PER_MONEY_UNIT, 10);
+  assert.equal(toDenari(summary.funds), model.companyMoney * 10);
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   for (const id of ['island-sheet', 'island-finance', 'island-manifest', 'market-overview', 'open-island']) {
@@ -2502,6 +2505,39 @@ test('UI向上段8: 島況は直近30日収支→市場→現物を固定順で�
   assert.match(main, /Number\.isFinite\(value\) \? formatQuantity\(value\) : '—'/);
   assert.match(main, /会社の蔵にある品/);
   assert.match(main, /平均仕入/);
+  assert.match(main, /formatNumber\(toDenari\(model\.companyMoney\)\)/);
+  assert.match(main, /formatQuantity\(toDenari\(row\.amount\)\)/);
+});
+
+test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示す', () => {
+  const foodLetter = TUTORIAL_LETTERS.find(row => row.id === 'food-dependence-report').render({
+    model: {
+      day: 12,
+      flowEma: {},
+      marketPrices: {},
+      companyLedger: [{ day: 12, reason: 'fishの本土仕入', amount: -2.5 }],
+    },
+  });
+  assert.equal(foodLetter.facts.outflow, 2.5, '書状factsはengine内部値を保つ');
+  assert.match(foodLetter.body, /合計25\.0デナリ/);
+
+  const graduation = TUTORIAL_LETTERS.find(row => row.id === 'tutorial-graduation').render({
+    model: {
+      day: 90,
+      population: 0,
+      households: [],
+      flowEma: {},
+      marketPrices: {},
+      companyLedger: [
+        { day: 1, reason: '本国注文売上', amount: 3 },
+        { day: 2, reason: 'fishの本土仕入', amount: -2 },
+      ],
+      companyMoney: 4,
+      companyBankruptcyDay: null,
+    },
+  });
+  assert.equal(graduation.facts.companyNet, 1, '卒業factsもengine内部値を保つ');
+  assert.match(graduation.body, /収入30\.0デナリ、支出20\.0デナリ、差引\+10\.0デナリ、残高40\.0デナリ/);
 });
 
 test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけなら現在目標を隠さない', () => {
