@@ -90,7 +90,94 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 で検証し、per-file atom index との不一致・broken index entry は 0 件だった。"
+  - "atoms 2,721件の JSONL / per-file Markdown / index mirror を監査し、欠落・parse error・内容競合は 0 件だった。raw normalized-content 重複40群は既存 lifecycle/content fold で recall 表示から畳まれていることを確認した。"
+  - "open duplicate group / stale triage / group-action sidecar を 2026-07-22 基準で再生成した。live lease 適用後の actionable group は 0 件だった。"
+  - "30日超更新のない memory/raw 原文95件を監査した。Slack archive、論文 PDF/text、headless 評価証跡で atom/candidate の provenance になっているため今回は明示保持し、移動は 0 件とした。"
+  - "Slack directives 23行、broadcasts 21行を確認し、pending は双方 0 件だったため status 更新は 0 件だった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+encoding_audit:
+  target: memory/MEMORY.md
+  source_file_status: "UTF-8 明示読みで日本語本文を正常取得。代表語は 記憶=22、ゲーム設計=8、敵パターン=1、評価軸=0（本文に該当語なし）。source file の文字化け根拠なし。"
+  display_or_tooling_status: none
+atom_audit:
+  atoms: 2721
+  mirror_counts:
+    atoms_jsonl: 2721
+    per_file_md: 2721
+    index_jsonl: 2721
+  content_conflicts: 0
+  raw_normalized_content_duplicate_groups: 40
+  recall_visible_normalized_content_duplicate_groups: 3
+  ungrouped_repeated_title_groups: 14
+  note: "重複は削除せず既存 fold / title quality audit で可視化済み。新たな構造設計を要する blocker とは判定しなかった。"
+candidate_lifecycle:
+  files: 1052
+  counts:
+    posted: 455
+    ready_to_post: 9
+    postponed: 326
+    failed: 243
+    needs_review: 18
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_open_total: 185
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: "due lease がなかったため receipt 更新なし。"
+  counts:
+    pending: 1
+    resolved: 0
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows だが actionable group が3件未満（0件）のため。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "game_transfer_value=high。Zork での探索・計画限界と headless playtest への注意点は有用だが、評価条件・失敗分類・モデル比較の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high。検証可能な遷移モデルを持つ短い puzzle benchmark は有用だが、実験設計・比較対象・結果の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high。social deduction の個別推論スタイル追跡は有用だが、既存 atom / 投稿との重複と本文評価詳細の確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "game_transfer_value=high。memory / validation / Unity demo の適用先は明確だが、empirical study・ablation・失敗例の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "game_transfer_value=high。accessibility を横断基盤として扱う着想は有用だが、player / developer study の評価詳細を本文で確認する必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
