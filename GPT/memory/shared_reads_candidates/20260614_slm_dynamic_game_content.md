@@ -7,12 +7,12 @@ genre_tags: [narrative-ai, small-language-models, npc, dynamic-content, evaluati
 evaluated_at: "2026-07-21T13:19:04+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
-status: postponed
-candidate_status: postponed
-last_reviewed_at: "2026-07-21T13:28:06+09:00"
-last_decision: postponed
-duplicate_reason: postponed_duplicate
-evidence: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780932516509039"
+status: failed
+candidate_status: failed
+last_reviewed_at: "2026-07-22T13:21:57+09:00"
+last_decision: failed
+duplicate_reason: failed_duplicate_of_terminal_sibling
+evidence: "group_handoff:gha-433ab74d694b9c4d; terminal:memory/raw/slack_api/shared-reads.jsonl: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1780932516509039 exact arXiv 2601.23206 posted; reason:同一 arXiv work 2601.23206 は raw Slack の 2026-06-09 投稿で canonical URL と HTML URL の詳細分析が既に実投稿済み。別 work の根拠がなく再投稿対象にしない"
 next_action: none
 stale_after: "2026-08-20"
 supersedes: []

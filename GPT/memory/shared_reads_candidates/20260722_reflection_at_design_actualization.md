@@ -4,6 +4,27 @@ url: "https://arxiv.org/abs/2602.12887"
 collected_at: "2026-07-22T13:16:55+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, research-through-design, playtesting, design-journal, tacit-knowledge, godot, unity]
+evaluated_at: "2026-07-22T13:22:06+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-22T13:22:06+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-22T13:22:06+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-21"
+supersedes: []
+gate_reason: |-
+  playtest 前後の意図・期待・実測映像・差分を結ぶ RDA loop が具体的で、version control から落ちる設計判断と tacit knowledge を残す問題設定に直接答えている。
+  3 designer-researcher・2〜4か月の自己使用から workflow friction、persona 切替、mirror effect と限界まで抽出でき、AI との反復ゲーム制作へ無理なく適用できる。
+  同一 work の旧 postponed candidate より tool 構成・四段階 loop・project 期間・運用上の失敗条件が補強されているため、本候補を投稿代表として pass にする。
+suggested_post_outline:
+  overview_angle: "設計を考えた時点ではなく、実装を playtest で触れる状態へ変える actualization の前後を記録単位にする研究手法として整理する。"
+  analysis_axis: "pre-test intention、automatic video、post-test discrepancy の三点セットが tacit knowledge をどう外在化するかを、継続負荷と選択的記録の tradeoff まで含めて見る。"
+  application_target: "Log_cdx の playable prototype 反復で、変更理由・期待・実測映像・次の一手を commit や評価ログへ結び、AI との制作で小さな設計判断が失われる箇所を補う。"
+  pros_cons: "利点は設計意図と実際の feel の差を動画付きで追え、後から判断経路を再利用できること。欠点は全 test 記録が flow を切り data を膨らませ、評価も開発者自身の3例に限られること。"
+  verdict_pre: "部分採用。全 playtest の義務化ではなく、仮説を置いた変更や feel が変わる節目だけに短い前後記録を導入する。"
 ---
 
 ## raw_excerpt
