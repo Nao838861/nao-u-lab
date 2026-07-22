@@ -2,7 +2,7 @@
 
 ## 現在地
 
-`STEPBOOK.md`の全18段は2026-07-20に完了した。続く`TUTORIAL_STEPBOOK.md`も2026-07-21に24/24を完了した。`UI_POLISH_STEPBOOK.md`も2026-07-22に12/12を完了し、現在は第一章の待機・食料・注文導線を修復した`v004.7.0-tutorial-flow`。
+`STEPBOOK.md`の全18段は2026-07-20に完了した。続く`TUTORIAL_STEPBOOK.md`も2026-07-21に24/24を完了した。`UI_POLISH_STEPBOOK.md`も2026-07-22に12/12を完了し、現在は第一章の待機・食料・注文導線と会社ボタンの押下安定性を修復した`v004.7.1-company-input`。
 
 - 公開URL: <https://nao838861.github.io/nao-u-lab/GPT/game/shioji/v004/>
 - v003の公開入口は変更していない。

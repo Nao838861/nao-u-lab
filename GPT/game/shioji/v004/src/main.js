@@ -50,6 +50,7 @@ let currentSecretaryRoute = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
+let companyMouseInteraction = false;
 let companyInteractionReleasePending = false;
 const uiMetrics = { domUpdates: 0, displayBatches: 0, batchedTicks: 0 };
 camera.setWorldSize(model.width, model.height);
@@ -542,6 +543,7 @@ window.addEventListener('blur', () => {
   clearPointers();
   pressedMovementKeys.clear();
   companyInteractionPointers.clear();
+  companyMouseInteraction = false;
   companyInteractionReleasePending = false;
 });
 document.addEventListener('visibilitychange', () => pressedMovementKeys.clear());
@@ -598,7 +600,8 @@ function renderAidPanel() {
        <div class="order-actions"><button type="button" data-company-action="request-aid">支援を要請する</button></div>`;
 }
 function renderCompanySheet() {
-  if (companyInteractionPointers.size > 0 || companyInteractionReleasePending) return;
+  if (companyInteractionPointers.size > 0
+    || companyMouseInteraction || companyInteractionReleasePending) return;
   $('#company-balance').textContent = formatNumber(model.companyMoney);
   renderAidPanel();
   const offer = model.orderOffer;
@@ -1044,13 +1047,17 @@ companySheet.addEventListener('pointerdown', event => {
   if (!event.target.closest('button, input, select, textarea')) return;
   companyInteractionPointers.add(event.pointerId);
 });
+companySheet.addEventListener('mousedown', event => {
+  if (!event.target.closest('button, input, select, textarea')) return;
+  companyMouseInteraction = true;
+});
 
-function releaseCompanyInteraction(event) {
-  if (!companyInteractionPointers.delete(event.pointerId)) return;
-  if (companyInteractionPointers.size > 0 || companyInteractionReleasePending) return;
+function queueCompanyInteractionRelease() {
+  if (companyInteractionPointers.size > 0
+    || companyMouseInteraction || companyInteractionReleasePending) return;
   companyInteractionReleasePending = true;
   requestAnimationFrame(() => {
-    if (companyInteractionPointers.size > 0) {
+    if (companyInteractionPointers.size > 0 || companyMouseInteraction) {
       companyInteractionReleasePending = false;
       return;
     }
@@ -1059,8 +1066,22 @@ function releaseCompanyInteraction(event) {
   });
 }
 
+function releaseCompanyInteraction(event) {
+  if (!companyInteractionPointers.delete(event.pointerId)) return;
+  queueCompanyInteractionRelease();
+}
+
 window.addEventListener('pointerup', releaseCompanyInteraction);
-window.addEventListener('pointercancel', releaseCompanyInteraction);
+window.addEventListener('pointercancel', event => {
+  companyInteractionPointers.delete(event.pointerId);
+  companyMouseInteraction = false;
+  queueCompanyInteractionRelease();
+});
+window.addEventListener('mouseup', () => {
+  if (!companyMouseInteraction) return;
+  companyMouseInteraction = false;
+  queueCompanyInteractionRelease();
+});
 
 function rejectOrderOffer() {
   dismissedOfferKey = orderKey(model.orderOffer);

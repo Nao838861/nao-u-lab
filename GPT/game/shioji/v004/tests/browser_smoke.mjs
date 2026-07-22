@@ -109,8 +109,8 @@ async function checkTutorialCompanyPointerStability() {
   const setup = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
     game.closeTutorialLetter();
+    game.setSpeed(0);
     game.openSheet('company-sheet');
-    game.setSpeed(3);
     const button = document.querySelector('[data-company-action="request-aid"]');
     const box = button.getBoundingClientRect();
     window.__tutorialHeldCompanyButton = button;
@@ -121,8 +121,9 @@ async function checkTutorialCompanyPointerStability() {
   })()`);
   await page.send('Input.dispatchMouseEvent', {
     type: 'mousePressed', x: setup.point.x, y: setup.point.y,
-    button: 'left', clickCount: 1,
+    button: 'left', buttons: 1, clickCount: 1,
   });
+  await page.evaluate('window.__SHIOJI_V004__.setSpeed(3)');
   await wait(180);
   const held = await page.evaluate(`({
     connected: document.contains(window.__tutorialHeldCompanyButton),
@@ -135,7 +136,7 @@ async function checkTutorialCompanyPointerStability() {
   assert.ok(held.domUpdates > setup.domUpdates, JSON.stringify(held));
   await page.send('Input.dispatchMouseEvent', {
     type: 'mouseReleased', x: setup.point.x, y: setup.point.y,
-    button: 'left', clickCount: 1,
+    button: 'left', buttons: 0, clickCount: 1,
   });
   await wait(80);
   const result = await page.evaluate(`(() => {
@@ -297,8 +298,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.0-tutorial-flow');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.0-tutorial-flow');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'Build v004.7.1-company-input');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.7.1-company-input');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -754,7 +755,7 @@ async function checkViewport(width, height, mobile) {
       const afterReject = game.controller.inputJournal().length;
       const stillOffered = game.model.orderOffer;
       document.querySelector('[data-company-action="reconsider"]').click();
-      game.setSpeed(3);
+      game.setSpeed(0);
       const acceptButton = document.querySelector('[data-company-action="accept-order"]');
       const acceptBox = acceptButton.getBoundingClientRect();
       window.__companyHeldButton = acceptButton;
@@ -775,8 +776,9 @@ async function checkViewport(width, height, mobile) {
     assert.deepEqual(company.stillOffered, company.offer);
     await page.send('Input.dispatchMouseEvent', {
       type: 'mousePressed', x: company.acceptPoint.x, y: company.acceptPoint.y,
-      button: 'left', clickCount: 1,
+      button: 'left', buttons: 1, clickCount: 1,
     });
+    await page.evaluate('window.__SHIOJI_V004__.setSpeed(3)');
     await wait(180);
     const heldOrderButton = await page.evaluate(`({
       connected: document.contains(window.__companyHeldButton),
@@ -788,7 +790,7 @@ async function checkViewport(width, height, mobile) {
     assert.ok(heldOrderButton.domUpdates > company.domUpdates, JSON.stringify(heldOrderButton));
     await page.send('Input.dispatchMouseEvent', {
       type: 'mouseReleased', x: company.acceptPoint.x, y: company.acceptPoint.y,
-      button: 'left', clickCount: 1,
+      button: 'left', buttons: 0, clickCount: 1,
     });
     await wait(80);
     const acceptedOrder = await page.evaluate(`(() => {
@@ -872,11 +874,16 @@ async function checkViewport(width, height, mobile) {
   await page.close();
 }
 
-await checkStartChoice(1440, 900, false, 'tutorial');
-await checkStartChoice(390, 844, true, 'tutorial');
-await checkStartChoice(390, 844, true, 'sandbox');
-await checkStartChoice(800, 700, false, 'test');
-await checkTutorialCompanyPointerStability();
-await checkViewport(1440, 900, false);
-await checkViewport(390, 844, true);
-console.log('CHARTER ISLE v004 browser smoke: PASS');
+if (process.argv.includes('--company-pointer-only')) {
+  await checkTutorialCompanyPointerStability();
+  console.log('CHARTER ISLE v004 company pointer smoke: PASS');
+} else {
+  await checkStartChoice(1440, 900, false, 'tutorial');
+  await checkStartChoice(390, 844, true, 'tutorial');
+  await checkStartChoice(390, 844, true, 'sandbox');
+  await checkStartChoice(800, 700, false, 'test');
+  await checkTutorialCompanyPointerStability();
+  await checkViewport(1440, 900, false);
+  await checkViewport(390, 844, true);
+  console.log('CHARTER ISLE v004 browser smoke: PASS');
+}
