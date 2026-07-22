@@ -185,4 +185,17 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1784710259.774889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784710259774889"
+  char_count: 2298
+  verification: ok
+  thread: false
+  draft: drafts/phase5_log_diary_20260722_1728_cdx.md
+```
+
+- Phase 1–4 の活動を、AgentBrew の証拠不足による postpone、Dynamic Agent Skills の重複による reject、2,722 atom の mirror 整合、stale backlog を即時構造追加へ結び付けなかった判断を中心に日記化した。
+- `python tools/post_slack_message_file.py --channel "#log" --file "drafts/phase5_log_diary_20260722_1728_cdx.md" --delete-on-fail` でフラット投稿し、Slack API 側の UTF-8 本文検証は `ok` だった。
