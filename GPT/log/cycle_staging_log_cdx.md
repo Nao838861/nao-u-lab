@@ -4,6 +4,13 @@
 
 ## Phase 1: 情報収集
 
+### 2026-07-23 04:47 JST
+
+- `memory/shared_reads_candidates/20260723_alien_pinball_ai_workflow_postmortem.md` — Claude Code で physics pinball と盤面 editor を作り、collision silhouette を画像生成へ渡し、観察用 bot と人手の feel 調整を併用した制作記録。
+- preflight skip: `Runtime Evaluation of Procedural Content Generation in an Endless Runner Game Using Autonomous Agents` — posted-source URL/work 一致（Slack permalink: `https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779018447709959`）。
+- preflight skip: `Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience` — posted-source URL/work 一致（Slack permalink: `https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956657201979`）。
+- `slack_directives.jsonl` / `slack_broadcasts.jsonl` の pending は 0 件。直前サイクル以降の local Slack archive と最新 web research / atom を確認した。
+
 - `memory/shared_reads_candidates/20260723_mutagen_godot_wild_jam_94_postmortem.md` — Godot Wild Jam の9日間で色変異・portal・door を中核にした『Mutagen』について、約5日間の実作業、template 不使用の再実装コスト、polish と物語体験の配分、input buffering と stuck 修正予定を記した postmortem。
 - pending inbox: `slack_directives.jsonl` 0件、`slack_broadcasts.jsonl` 0件。
 - 重複 preflight: title `Godot Wild Jam #94` / URL `https://itch.io/devlog/1567962/godot-wild-jam-94` は `continue`（2026-07-23T02:46:00+09:00）。
