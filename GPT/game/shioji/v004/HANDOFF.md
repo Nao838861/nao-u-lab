@@ -2,7 +2,7 @@
 
 ## 現在地
 
-`STEPBOOK.md`の全18段は2026-07-20に完了した。続く`TUTORIAL_STEPBOOK.md`も2026-07-21に24/24を完了した。現在は`UI_POLISH_STEPBOOK.md`の11/12まで完了し、現行版は`v004.6.0-ui-complete`。公開URLの最終監査だけが残る。
+`STEPBOOK.md`の全18段は2026-07-20に完了した。続く`TUTORIAL_STEPBOOK.md`も2026-07-21に24/24を完了した。`UI_POLISH_STEPBOOK.md`も2026-07-22に12/12を完了し、現行版は`v004.6.0-ui-complete`。
 
 - 公開URL: <https://nao838861.github.io/nao-u-lab/GPT/game/shioji/v004/>
 - v003の公開入口は変更していない。
@@ -38,12 +38,12 @@
 
 - `npm test`: v004 66件、第一章〜終章の6完走journal、全章・失敗経路の非干渉、公開8操作の150日ジャーナル再生受け入れ、エンジン112件が成功。
 - `npm run audit:stable --prefix ../engine`: 3シード×8年の全帯、保存則、物理不変条件、悪配置対照が成功。
-- ローカル実Chromeの1440×900と390×844で常駐エレナ、キー操作、入力安全性、固定3tick表示バッチ、viewport、runtime errorゼロ、スクリーンショット取得を確認。
+- ローカル／GitHub Pagesの実Chrome 1440×900と390×844で常駐エレナ、キー操作、入力安全性、固定3tick表示バッチ、viewport、runtime errorゼロ、スクリーンショット取得を確認。
 - 第一章完了時点のローカル実ChromeでPC・スマホsmokeを通し、支援要請の実クリックと240→180荷の表示更新、入力journalを確認した。
 
 ## 完成後の注意
 
-チュートリアル全24段とUI完成度向上の段1〜11は完了している。公開URLのPC／スマホ監査後に段12を閉じる。完成した全章journal・非干渉・失敗許容を回帰条件として維持し、engine配下を追加変更しない。
+チュートリアル全24段とUI完成度向上の全12段は完了している。完成した全章journal・非干渉・失敗許容を回帰条件として維持し、engine配下を追加変更しない。
 
 速度3の表示バッチは自由プレイ、テスト配置、教程完了後だけ固定3tickとし、300tickでcontrollerのsnapshot／view model更新を300回から100回へ減らす。進行中教程を同様に3tick化すると、世界・イベント・journalは一致しても書状の`issuedTick`と一部証拠値が変わるため、ここだけ1tick表示を維持する。未処理時間はclockへ残し、frame遅延でengine tickを捨てない。
 

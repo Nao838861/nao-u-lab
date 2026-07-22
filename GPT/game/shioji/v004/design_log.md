@@ -1,9 +1,9 @@
 # 潮路の島 v004 design_log
 
 現在地（チュートリアル）: 24/24（全章完成）
-現在地（UI完成度向上・同値最適化）: 11/12
+現在地（UI完成度向上・同値最適化）: 12/12（完了）
 
-## 2026-07-22 — UI完成度向上 段9〜11完了
+## 2026-07-22 — UI完成度向上 段9〜12完了
 
 ### 段9: 実データだけを選ぶ常駐エレナ
 
@@ -20,6 +20,11 @@
 - controllerへtick、snapshot、view model、イベント読取りの計測器を加えた。自由プレイ、テスト配置、教程完了後の速度3だけ、全engine tickを実行した後に3tick単位でsnapshot・view model・DOMを更新する。300tickの実ブラウザ計測は更新300回から100回となり、同じcontrollerによる旧1tick経路と生snapshot・イベント列・journalが完全一致した。
 - 進行中教程も3tickにした比較では、世界・イベント・journalは一致した一方、書状の`issuedTick`が1〜2tick動き、目標証拠`exportHandling`が1から3へ変わった。ユーザー指示の「挙動を全く変えず」を優先し、進行中教程だけは1tick表示を維持する境界を純粋関数とUI側の二重ガードにした。全6完走journalの最終モデル・journalと卒業時イベント列は旧経路と一致する。
 - clockは1frameの処理上限を超えた時間を捨てず次frameへ繰り越す。したがって描画遅延が起きてもengine tick総数は減らない。`v004.6.0-ui-complete`としてv004 66件、engine 112件、3seed×8年安定監査、ローカルPC／スマホChromeを通過した。公開URL監査は段12で行う。
+
+### 段12: 公開監査と完了
+
+- `v004.6.0-ui-complete`をorigin/masterへpushし、GitHub Pagesのbuild・deploy成功を確認した。デプロイ完了後、公開URLをPC 1440×900とスマホ390×844の実Chromeで開き、3開始モード、5建築カテゴリ、常駐エレナ、WASD・Space・1〜4・Esc、編集入力とmodifierの安全性、300tickの3tick表示バッチ、viewport、runtime errorゼロを再検査した。
+- 最初の公開smokeはデプロイ中の旧版を取得して5カテゴリが空となり失敗した。Pages runの完了を待って同じ試験を再実行し成功したため、キャッシュや実装でなく配信反映待ちだったことも切り分けた。`engine/`と`v003/`の差分はゼロで、UI完成度向上レーンを12/12で閉じる。
 
 ## 2026-07-21 — UI完成度向上 段5〜8完了
 

@@ -41,6 +41,7 @@
 | 常駐エレナ | 未読書状→現在目標→最新重要イベント→実データfallbackの純粋優先列と、表示対象と同一のクリック先を単体／実Chromeで検査 | UI向上段9確認済み |
 | キーボード操作 | WASD連続・斜め等速、Space停止復帰、1〜4速度、Esc階層、編集入力・modifier・blur安全性を単体／実Chromeで検査 | UI向上段10確認済み |
 | 状態同値の高速表示 | 自由プレイ系300tickでsnapshot／view model更新300→100回、生snapshot・イベント列・journal同値。6完走journal最終状態も一致 | UI向上段11確認済み |
+| UI完成版の公開 | GitHub Pages run成功後、公開URLのPC 1440×900・スマホ390×844で全開始モード、常駐エレナ、キー、入力安全性、3tick計測、viewport、runtime errorゼロ | UI向上段12確認済み |
 
 ## 完成判定
 
@@ -48,13 +49,13 @@
 
 チュートリアルは別正本`TUTORIAL_STEPBOOK.md`の24/24を完了した。第一章「最初の一荷」、第二章「島の食卓」、第三章「蔵の備え」、第四章「本国の注文」、第五章「島の手仕事」、終章「総督の島」を同じ世界で完走し、そのまま自由プレイへ移れる。`v004.3.0-tutorial-complete`を全章完成版とする。
 
-UI完成度向上は`UI_POLISH_STEPBOOK.md`の11/12まで完了した。`v004.6.0-ui-complete`のローカル版は常駐エレナ、入力安全なキー操作、自由プレイ系の固定3tick表示バッチを備え、全回帰・安定監査・PC／スマホChromeを通過した。公開URLの最終監査後に12/12を確定する。
+UI完成度向上は`UI_POLISH_STEPBOOK.md`の12/12を完了した。`v004.6.0-ui-complete`は常駐エレナ、入力安全なキー操作、自由プレイ系の固定3tick表示バッチを備え、全回帰・安定監査・ローカル／公開PC・スマホChromeを通過した。
 
-### v004.6.0 UI完成版のローカル検証
+### v004.6.0 UI完成版の検証
 
 - `npm test`: v004 66件、全章非干渉と6完走journal、150日UIジャーナル再生、エンジン112件が成功。
 - `npm run audit:stable --prefix ../engine`: seed11/13/14の各8年、全帯、物資保存、物理不変条件、悪配置対照が成功。帯変更なし。
-- ローカル実ChromeのPC 1440×900・スマホ390×844で常駐エレナ、WASD・Space・1〜4・Esc、入力安全性、固定3tick計測、viewport、runtime errorゼロを確認。
+- ローカル／GitHub Pagesの実Chrome PC 1440×900・スマホ390×844で常駐エレナ、WASD・Space・1〜4・Esc、入力安全性、固定3tick計測、viewport、runtime errorゼロを確認。
 
 ### v004.3.0 全章完成版の検証
 
