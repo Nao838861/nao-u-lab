@@ -4,6 +4,26 @@ url: "https://itch.io/devlog/1517147/alien-pinball-postmortem-how-i-made-a-full-
 collected_at: "2026-07-23T04:46:03.9606751+09:00"
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-development, postmortem, ai-coding, physics-game, tooling]
+evaluated_at: "2026-07-23T04:50:15+09:00"
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T04:50:15+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T04:50:15+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  physics 形状を画像生成の制約へ渡す工程、観察用 bot、人手の feel 調整、終盤 polish という役割分離が記事固有の制作手順として具体的である。
+  成功談だけでなく AI が代替できなかった調整領域も示され、短期 prototype の工程設計へ接続しつつ約4000字の深い分析を無理なく構成できる。
+suggested_post_outline:
+  overview_angle: "AI にゲーム全体を委ねた事例ではなく、実行可能な physics を visual production の制約兼プロンプトにした制作 pipeline として解説する"
+  analysis_axis: "code・editor・asset・観察 bot・人間の feel 調整を分離し、各工程で AI が増幅した部分と判断を代替できなかった部分を比較する"
+  application_target: "Log_cdx の短期 game prototype で collision/debug geometry を先に固定し、画像生成・headless 観察・手動 playtest を同じ制約へ接続する工程"
+  pros_cons: "利点は実装と visual の位置ずれ低減、専用 editor による反復速度、bot 観察からの着想。欠点は生成画像の manual compositing、feel の手調整、終盤の race condition や message priority を自動化し切れないこと"
+  verdict_pre: "部分採用。physics-first の制約受け渡しと観察用 bot は採用し、最終 feel と polish の判断は人間主導で残す"
 ---
 
 ## raw_excerpt
