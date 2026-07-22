@@ -36,7 +36,17 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260722_agentbrew_teacher_student_memory.md
+    reason: Phase 2 の gate_decision が postpone。比較条件・主要数値・ablation・実証結論が不足し、約4000字の概要を推測なしで完成できない
+    action: candidate_revise
+```
+
+- 最終判定: 投稿対象なし。Phase 2 の `pass` が 0 件のため、Slack #shared-reads への投稿は行っていない。
+- candidate frontmatter は `status: postponed` / `candidate_status: postponed` / `next_action: revise_or_research` と整合しているため変更なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
