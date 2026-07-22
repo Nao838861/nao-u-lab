@@ -76,7 +76,83 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md を UTF-8 明示読みし、entry section と per-file atom index の参照を検証した。broken link / unknown atom id / duplicate entry は 0 件。代表語は 記憶・ゲーム設計・敵パターンを取得でき、評価軸の完全一致は本文になかったが、validator 上の mojibake residue は 0 件。"
+  - "memory/atoms.jsonl と per-file atom の health check、および duplicate cluster sidecar を検証した。2719 atoms、exact duplicate cluster 45 群は canonical overlay に収載済みで、sidecar stale / duplicate id / JSON parse error は検出されなかった。明示的な contradicts link は 0 件。"
+  - "memory/raw/ の 2026-06-22 より前に更新が止まった原文を棚卸しした。95 files / 62,979,319 bytes を archive candidate としたが、一次 evidence の参照切れを避けるため Phase 4a では移動しなかった。"
+  - "shared-reads candidate lifecycle を dry-run audit した。1049 files、posted 453 / failed 241 / postponed 327 / needs_review 18 / ready_to_post 9 / skipped_unreviewed 1、current-state conflict 0、書換え 0。stale_after 欠損 4 件は posted 3 件と未評価 1 件で、open lifecycle の欠損ではなかった。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group-action sidecar を順に再生成した。terminal canonical 65 groups、open duplicate 56 groups、stale triage 50 rows、actionable group 0。candidate 本体は変更していない。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl は pending 0 件。完了根拠のない close は行わなかった。"
+issues:
+  - id: ISS-4A-20260722-01
+    description: "memory_health が、canonical duplicate cluster 外に generic な repeated-title pattern 14 種と title-quality audit 621 rows を報告している。exact duplicate sidecar 自体は正常だが、■ 概要などの低識別 title が recall 候補に残る。"
+    severity: low
+    evidence: "python tools/memory_health.py --compact; memory/atoms/title_quality_audit.jsonl; memory/atoms/duplicate_clusters.jsonl"
+    source_file_status: "UTF-8 読みで audit / sidecar は正常。source file 破損ではなく、atom title の識別性の問題。"
+    display_or_tooling_status: none
+    why_blocks_game_memory: "ゲーム制作時に手法名や失敗型で探しても generic title が候補を占有し、個別事例と一般化ノウハウの見分けを遅くする。ただし既存 audit で所在は追えるため緊急度は低い。"
+  - id: ISS-4A-20260722-02
+    description: "atom sr-1776127289-4d9239b255 の title / trigger / excerpt に U+FFFD が保存され、AIエージェントという検索語が分断されている。memory_health のもう1件 gr-1777083728-44d444ab7a は UTF-8 原文を確認した範囲で source corruption を再現せず、検出側の false positive と判断した。"
+    severity: low
+    evidence: "memory/atoms/2026-04/sr-1776127289-4d9239b255.md; memory/atoms.jsonl id=sr-1776127289-4d9239b255; memory/atoms/2026-04/gr-1777083728-44d444ab7a.md"
+    source_file_status: "sr-1776127289-4d9239b255 は UTF-8 明示読みでも置換文字が存在し source atom 自体が破損。gr-1777083728-44d444ab7a は正常。memory/MEMORY.md 自体は validator pass。"
+    display_or_tooling_status: "none; shell 表示だけの mojibake ではない。"
+    why_blocks_game_memory: "破損した基本語で完全一致検索できず、関連 candidate / atom の接続候補から漏れる可能性がある。単発データ修復で扱えるため新設計は不要。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  receipt: null
+  counts:
+    pending: 1
+    resolved: 0
+    dormant: 1
+    merged: 0
+    retired: 0
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "38日超過。Zork における探索・計画限界は headless playtest へ転用価値が高いが、評価条件とモデル比較の本文確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "37日超過。検証可能な遷移モデルを持つ planning benchmark は有用だが、比較対象と結果の厚みを補う必要がある。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "37日超過。個別推論スタイル追跡は social deduction 設計へ有用だが、既存投稿断片との重複と評価詳細の確認が必要。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "37日超過。LLM NPC の validation 構成はゲームへ直接移せるが、empirical study と failure case の証拠が不足。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "36日超過。accessibility を profile infrastructure として扱う転用価値が高く、本文ベースで設計・評価条件を再確認する価値がある。"
+    recommended_review_action: reevaluate_in_phase2
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
