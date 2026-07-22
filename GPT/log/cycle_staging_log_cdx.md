@@ -40,7 +40,18 @@ duplicate_preflight:
 - 判定理由: 6種の課題、provenance DAG と deterministic ground truth、比較条件、定量結果が揃い、CoopEval 水準の概要を構成できる。ゲーム制作では長期プレイ履歴を使う test agent / NPC の recall と依存推論を分離し、パッチや状態変更後の cascading invalidation を測る評価へ具体化できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260722_recon_compositional_agent_memory.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784728589321079
+    char_count: 4453
+skipped: []
+```
+
+- 最終判定: 投稿。RECON の 6 課題、deterministic skeleton / provenance DAG / proof trace、1,414 問の比較条件、retrieval hit 後にも残る reasoning failure、human baseline の入力非対称、synthetic data / schema leakage の限界まで一次 PDF と照合した。
+- 投稿前レビュー: `tools/shared_reads_policy.py` 合格。必須 6 セクション、冒頭 `■ 概要`、末尾 `■ URL`、URL 1 件、禁止表現なし、4,453 字、duplicate preflight `continue` を確認した。
+- Slack 検証: `conversations.history` で ts `1784728589.321079` の親投稿 1 件と `[Log_cdx] ■ 概要` の先頭を確認した。スレッド返信・分割投稿なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
