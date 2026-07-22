@@ -1,0 +1,35 @@
+■ 概要
+Makantasis、Liapis、Yannakakis による2019年の研究。プレイヤーの顔、声、姿勢、生理情報、操作logを使わず、画面に映ったgameplayのpixelだけから、その時のarousal（覚醒度）が高いか低いかを推定できるかを検証した。対象はUnity製の3D survival shooterで、25人が各2回、最大60秒playした。play後に各自がRankTraceのdialを使い、録画を見ながらarousalを連続的に自己注釈した。50動画から15秒未満を除き、45動画、8,093 datapointを実験に用いた。
+
+映像は30 Hz、注釈は4 Hz。frameをgrayscaleの72×128へ縮小し、8 frame、267 msの非重複区間へ分ける。各動画の注釈traceを0〜1にmin-max正規化し、その動画内の平均より上をhigh、下をlowとする二値分類に変換した。平均付近の曖昧な値を除くため、平均から±epsilon以内を捨てる条件も比較した。modelは、区間末尾の1 frameだけを見る2DFrameCNN、8 frame列へ2D filterを適用する2DSeqCNN、時間方向も含む3D filterを使う3DSeqCNNの3種。いずれも3 convolution layerと1 fully connected layerからなる小規模CNNで、44動画を学習、残る1動画をtestとするleave-one-video-outを45回繰り返した。
+
+曖昧領域を除かないepsilon=0では、最多classを常に答えるbaseline 51%に対し、2DFrameCNN 70%、2DSeqCNN 74%、3DSeqCNN 73%。±0.20を除くとdataは44%減って4,534点になるが、各々77%、78%、77%へ上がった。単一test runでは2DFrameCNNが98%に達した例もある。ただし、時間列を明示的に扱うmodelが単一frameを大きく上回らず、Grad-CAMではhigh判定が画面上部の累積scoreへ強く反応した。注釈変化も上昇807回、下降297回と時間経過に偏る。著者の結論は「gameplay画面だけでもarousal分類は可能」だが、同時に、modelが体験そのものではなく経過時間やscoreを近道として使った可能性を自ら示している。
+
+■ 内容分析
+この論文の価値は、pixelから主観状態を当てた精度より、「何を当てれば正解扱いになるか」と「modelが何を手掛かりにしたか」のずれが露出している点にある。labelは絶対的なarousalではない。各動画の全traceを個別に0〜1へ正規化し、その動画固有の平均で二分しているため、「この人が一般に興奮しているか」ではなく「このrunの中で本人の相対的な高低を当てる」課題である。異なるrunの0.8同士が同じ強さとは限らず、play途中だけを入力して絶対水準を出す用途にもそのまま使えない。
+
+leave-one-video-outはframe単位のrandom splitより厳しく、同一runの隣接frameがtrainとtestへ混ざる漏洩を防いでいる。一方、各playerは2動画を持つため、test動画のplayerによる別runがtrainに残り得る。したがって論文が述べるuser-agnostic性を、未知playerへの汎化として確定する評価ではない。さらにtrain内のearly stopping用90/10 splitはdatapointをshuffleしており、validation値には同一動画由来の近接状態が跨る可能性がある。test accuracy自体とは分けて考える必要があるが、model選択の独立性は弱い。
+
+epsilonを0.20へ広げると精度が上がる結果も、単純な改善ではない。境界付近という難しい44%を評価から外した条件なので、accuracyと同時にcoverageが56%へ落ちている。98%は45 fold平均ではなく一つのrunの最高値で、平均77%かつ95% confidence intervalが約±5.7%というばらつきを代表しない。難例を棄却できるclassifierとしては有用だが、全play時間を評価する器械の精度と読んではいけない。
+
+もっとも重要な反証材料は、2DFrameCNNと時系列modelの差が小さいことと、Grad-CAMがscore HUDへ反応したことだ。scoreは撃破の累積、残り時間もgame進行の単調な変数であり、注釈自体も上昇へ偏る。modelは敵配置や被弾、照準、回避といったarousalの原因を読む代わりに、「後半ほどscoreも自己注釈も高い」というdataset固有の相関を使える。Grad-CAMは一例の可視化であって因果的なablationではなく、HUD masking、time-only baseline、scoreを揃えたframe比較がないため、pixelが体験を直接捉えたとはまだ言えない。単一game、短い267 ms窓、brightnessのみという制約以上に、この代理変数問題が外部妥当性の中心である。
+
+■ 自分達の環境への適用
+我々がplaytest録画から「緊張」「理解」「退屈」などを補助推定する場合、この手法は自動判定器ではなく、人間が見る区間を絞るtriageとして部分採用する。まずcapture時にvideoだけでなく、frame時刻、score、HP、敵数、入力、死亡・被弾などのcausal stateを同じclockで記録する。映像modelの出力を正解とせず、headless replayのstate変化と人間注釈が一致・不一致になる地点を抽出し、「評価器が何を見て判定したか」を調べる入口にする。
+
+最小probeは同じ録画に対する五条件比較でよい。(1)全画面、(2)HUDをmask、(3)game worldをmaskしてHUDだけ、(4)frame順をshuffle、(5)経過時間・scoreだけの小さなbaselineを作る。全画面CNNがHUD-onlyやtime-onlyをほとんど上回らなければ、体験ではなく進行度を測っている。さらに同じ時間帯・近いscoreのframeを組にして、被弾、敵接近、弾切れなどeventの有無だけが違うsliceで評価する。時系列modelの価値は全体accuracyではなく、単一frameでは区別できないevent前後で増分があるかを見る。
+
+dataset splitは動画単位に加え、player単位を必須にする。同じ人の2 runを同一foldへ束ね、余裕があればgame version、level、UI themeごとのholdoutも置く。新しいgameへ持ち出す前にはHUD位置や色を変えたcounterfactual captureを作り、予測が反転しないか確かめる。labelもrun平均のhigh/lowだけでなく、直前窓からの上昇・下降、pairwiseな「どちらが強いか」、注釈者間の一致を比較する。曖昧区間を捨てるならaccuracyだけでなくcoverage、棄却されたevent種、playerごとの棄却率を必ず残す。
+
+制作cycleへの組込みは、prototypeごとに大modelを育てる形では重い。まずrule-basedなtime/score baselineとHUD ablationを先に走らせ、それを越える信号が確認できた時だけ映像modelへ進む。評価記録にはmodel名だけでなく、split単位、利用可能な代理変数、mask条件、coverage、失敗sliceを一組で保存する。これは記憶systemにも重要で、「精度78%」という結論だけをatom化せず、「単一game・動画相対label・player未holdout・HUD交絡」という適用境界を同じ記憶単位へ固定する。将来recallした時に、数値だけが万能評価器として再利用されるのを防げる。
+
+■ メリット・デメリット
+メリットは、顔撮影や生理sensorを追加せず、既存のplay動画から低costで時系列の候補区間を抽出できること。video単位holdout、曖昧labelの明示、単純なframe modelと時系列modelの比較、Grad-CAMによる手掛かり点検は、小規模datasetで評価器を作る時の良い出発点になる。単一frameが強いという結果も、複雑なmodelを入れる前に安いbaselineを置く価値を示す。
+
+デメリットは、相対labelを絶対的な感情測定と誤読しやすく、時間・score・HUDの相関を体験理解と取り違えやすいこと。25人・1 gameでは未知player、未知作品、UI変更への汎化を示せず、同一playerの別runがtrainに残り得る。難例除外でaccuracyが上がる一方coverageは落ち、最高98%という数字は代表性能ではない。Grad-CAMだけでは代理変数の因果確認にならないため、mask、matched slice、group holdoutを省く移植は危険である。
+
+■ 判定
+部分採用。録画から人間review区間を絞る発想、動画単位split、単純baseline、可視化は採る。ただしarousalの自動scoreとしては採らず、player単位holdout、HUD・時間・score ablation、coverage併記を通過した場合だけ補助評価器として使う。
+
+■ URL
+https://arxiv.org/abs/1907.02288
