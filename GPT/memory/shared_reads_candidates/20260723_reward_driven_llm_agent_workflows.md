@@ -6,18 +6,21 @@ collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, agent, evaluation, pomdp, self-correction, structured-memory]
 evaluated_at: "2026-07-23T00:49:17+09:00"
 evaluated_by: log_cdx (Phase 2)
-gate_decision: pass
-status: ready_to_post
-candidate_status: ready_to_post
-last_reviewed_at: "2026-07-23T00:49:17+09:00"
-last_decision: pass
-evidence: "gate_decision:pass; evaluated_at:2026-07-23T00:49:17+09:00"
-next_action: post_to_shared_reads
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-23T00:52:38+09:00"
+last_decision: postponed
+evidence: "Phase 3 source audit: arXiv:2607.17038v1 and public repository commit 8d3408c; published benchmark numbers are not reproduced by the repository evaluation path"
+next_action: revise_or_research
 stale_after: "2026-08-22"
 supersedes: []
 gate_reason: >-
-  POMDP routing、Graph Memory、実行前 Critic の役割と接続が明確で、比較実験、ablation、遅延コストまで記事固有の重要要素を説明できる。
-  自動 test player の観測圧縮、危険・無効 action の実行前遮断、成功率と latency の分離計測へ具体的に適用でき、約4000字の独立した分析に展開可能である。
+  POMDP routing、Graph Memory、実行前 Critic という設計案は、自動 test player の観測圧縮と不可逆 action の実行前 gate に接続できる。
+  しかし Phase 3 で公開実装を監査したところ、論文の ALFWorld / WebShop 各 500 episode を再現する評価経路はなく、公開 evaluate.py は手書きの mock actor・mock critic・3 task 環境だけを実行する。
+  論文表の 78.6%、65.8%、2.15 秒などは実測から計算されず README とスクリプトの固定文字列として再掲され、50,000 critique trace と記載された公開 dataset も約 2 KB に留まる。
+  分散、信頼区間、seed、統計検定、hallucination 判定注釈の再現手順も示されないため、主結果を検証済み事実として #shared-reads に残せない。
+  再現可能な benchmark artifact が公開されるか、数値を未検証 claim と明示して方法アイデア中心に全面改稿できるまで postponed とする。
 suggested_post_outline:
   overview_angle: "部分観測・疎な報酬・誤り累積を、構造化 belief state と実行前 self-correction で扱う三段階 workflow"
   analysis_axis: "Graph Memory と Critic の寄与を ablation で分離し、成功率向上と推論時間増加の交換条件、Critic 誤判定と再生成 loop の失敗条件を検討する"

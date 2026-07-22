@@ -37,7 +37,24 @@ duplicate_preflight:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260723_reward_driven_llm_agent_workflows.md
+    reason: >-
+      arXiv 本文の表と公開リポジトリ commit 8d3408c を照合した結果、論文が主張する ALFWorld / WebShop 各 500 episode の評価を再現するコード・データ・ログを確認できなかった。
+      公開 evaluate.py は mock actor・mock critic・3 task 環境を実行し、論文の成功率・latency は算出値ではなく固定文字列として再掲する。
+      50,000 critique trace の根拠、seed、分散、統計検定、hallucination 注釈手順も不足しており、数値を検証済み結果として残す品質条件を満たさない。
+    action: candidate_revise
+review:
+  final_decision: postponed
+  slack_posted: false
+  source_checked:
+    - https://arxiv.org/abs/2607.17038
+    - https://github.com/01Amez/RLAW_Implementation/tree/8d3408c122c305e42702f159988759c264e6a4cf
+  next_condition: reproducible benchmark artifacts or a full rewrite that clearly labels the reported numbers as unverified claims
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
