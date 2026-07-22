@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-22T11:14:58+09:00",
+  "updated_at": "2026-07-22T13:47:32+09:00",
   "reviewed_source_ts": [
+    "1784686331.634319",
     "1781094676.020529",
     "1781127460.642669",
     "1784656503.008299",
@@ -11940,6 +11941,46 @@
       "change": {
         "type": "state_only",
         "summary": "reviewed_source_ts と、原典・再現条件・trigger artifact・consumer phase が不足しているため defer した理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
+    {
+      "reviewed_at": "2026-07-22T13:47:32+09:00",
+      "selected": {
+        "id": "sr-1784686331-c7634ada2a",
+        "source_ts": "1784686331.634319",
+        "title": "Autoresearch with Coding Agents — generalizer と metric-maximizer を分ける leak-free evaluation",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・agent・operation・evaluation の6優先タグをすべて持つ。可視 seed 最適化、held-out transfer、rare failure、run 間 state leakage を分ける知見が、次の自動改善型 headless game evaluation に行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "defer",
+      "decision_reason": "合計14で数値上の採用条件は満たすが、probe lease 契約を満たす具体的な consumer phase と before／after trigger artifact が今サイクルにないため state-only review に留める。shared-reads 本文は同一条件各3 run、可視評価行での hardcode、60/40 held-out、component 別誤差、git worktree／persistent memory 経由の state leakage、fresh clone 隔離という具体的根拠を持つ。一方、単一 ASR domain、各 arm 3 run、test の非朗誦2件、repository／dataset URL 未公開の v1 であり evidence=2 とした。既存の self-improvement-axis-goodhart、benchjack-trust-boundary-preflight、omni-game-arena-improvement-transfer、lmgamebench-ai-playtest-diagnostic-ablation、scoreable-games-benchmark-claim-decomposition は fixed verifier、held-out、verifier-owned evidence、既知規則 contamination、leakage の多くをすでに確認する。新しい差は run ごとの到達可能 state channel を物理隔離する点だが、実際の自動改善 run なしに320件の active_probesへ追加すると確認負荷だけが増える。次の同一 base commit・複数 run・非公開 held-out を持つ headless 改善作業が具体化した時に、fresh clone／tool memory 隔離が修正判断を変えるか再評価する。",
+      "existing_probes": [
+        "probe-20260530-self-improvement-axis-goodhart",
+        "probe-20260711-benchjack-trust-boundary-preflight",
+        "probe-20260619-omni-game-arena-improvement-transfer",
+        "probe-20260626-lmgamebench-ai-playtest-diagnostic-ablation",
+        "probe-20260710-scoreable-games-benchmark-claim-decomposition"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 probe との重複および具体的な consumer／artifact 不足による defer 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
         "files": [
           "memory/shared_reads_self_feedback_state.json",
           "log/cycle_staging_log_cdx.md"

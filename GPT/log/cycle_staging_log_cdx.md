@@ -53,7 +53,44 @@ review:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784686331-c7634ada2a
+    source_ts: "1784686331.634319"
+    title: "Autoresearch with Coding Agents — generalizer と metric-maximizer を分ける leak-free evaluation"
+    reason: >-
+      未レビュー条件を満たす最新の score 11 atom で、memory・harness・game-design・agent・operation・evaluation
+      の6優先タグをすべて持つ。可視 seed 最適化、held-out transfer、rare failure、run 間 state leakage を分ける知見が、
+      次の自動改善型 headless game evaluation に行動差を作るか確認するため選んだ。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 14
+  decision: defer
+  decision_reason: >-
+    合計14で数値上の採用条件は満たすが、probe lease 契約を満たす具体的な consumer phase と before/after
+    trigger artifact が今サイクルにないため state-only review に留めた。本文には各3 run、60/40 held-out、
+    component 別誤差、worktree/persistent-memory leakage、fresh-clone 隔離の具体例がある一方、単一 ASR domain、
+    小標本、rare negative 2件、再現資材未公開という限界がある。既存の Goodhart、verifier trust、held-out transfer、
+    contamination、single-score 分解 probes と大きく重なるため、実際の自動改善 run がない状態で active probe を増やさない。
+  change:
+    summary: >-
+      reviewed_source_ts と、既存 probe との重複および具体的な consumer/artifact 不足による defer 理由だけを更新した。
+      probe・metric・lease・directive・恒久ルールは追加していない。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
