@@ -174,6 +174,16 @@ function measureSeed(seed) {
   let firstOfferGoods = null;
   let firstCompletionDay = null;
   let firstOrderDue = null;
+  let prematureGoalsAtFirstOffer = [];
+  let prematureNotificationsAtFirstOffer = [];
+  const futureGoalIds = new Set([
+    'observe-seasonal-food-valley', 'assess-profitable-order',
+    'observe-skippable-order', 'observe-tools-price-rise',
+  ]);
+  const futureNotificationIds = new Set([
+    'seasonal-food-valley-report', 'profitable-order-assessment',
+    'skippable-order-assessment', 'tools-price-rise',
+  ]);
   while (controller.readModel().day < 240 && firstCompletionDay === null) {
     advanceDay();
     model = controller.readModel();
@@ -182,8 +192,14 @@ function measureSeed(seed) {
       firstOfferGoods = model.orderOffer.g;
       const offer = { ...model.orderOffer };
       firstOrderDue = offer.due;
+      prematureGoalsAtFirstOffer = director.readState().completedGoals.filter(
+        id => futureGoalIds.has(id),
+      );
       assert.equal(controller.operate({ type: 'accept_order' }).ok, true);
       collect();
+      prematureNotificationsAtFirstOffer = director.letters()
+        .filter(letter => futureNotificationIds.has(letter.id))
+        .map(letter => letter.id);
       assert.equal(director.currentObjective().id, 'order-procurement-target');
       assert.equal(controller.operate({
         type: 'set_stock_target', goods: offer.g, qty: offer.qty,
@@ -211,6 +227,8 @@ function measureSeed(seed) {
     firstOfferDay,
     firstOfferGoods,
     firstCompletionDay,
+    prematureGoalsAtFirstOffer,
+    prematureNotificationsAtFirstOffer,
     deathEvents: deaths.length,
     deathEventsUntilFirstOrder,
     deathDays: deaths.map(event => event.eventDay ?? event.day ?? null),
@@ -251,6 +269,10 @@ assert.equal(rows.every(row => row.aidRequests === AID_REQUESTS), true, '指定�
 assert.equal(rows.every(row => row.firstOfferDay !== null), true, '全seedで最初の注文状が届く');
 assert.equal(rows.every(row => row.firstOfferGoods === 'tools'), true, '最初の生産適格注文は道具になる');
 assert.equal(rows.every(row => row.firstCompletionDay !== null), true, '全seedで最初の注文を完遂する');
+assert.equal(rows.every(row => row.prematureGoalsAtFirstOffer.length === 0), true,
+  '最初の注文中に未来章の観察目標を先回り完了しない');
+assert.equal(rows.every(row => row.prematureNotificationsAtFirstOffer.length === 0), true,
+  '最初の注文中に未来章の報告を先回り発行しない');
 if (AUDIT_DAY > 0) {
   assert.equal(rows.every(row => row.finalDay >= AUDIT_DAY), true, `${AUDIT_DAY}日まで同じ島を監査する`);
   assert.equal(rows.every(row => row.duplicateLetterIds === 0), true, '書状は同一IDを重複発行しない');

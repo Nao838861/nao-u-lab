@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.17.0-guidance-steps';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.17.0-guidance-steps';
+} from './engine_bridge.js?v=v004.18.0-elena-letters';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.18.0-elena-letters';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -233,13 +233,15 @@ export const TOOLS_PRICE_RISE_RATIO = 0.05;
 export const TOOLS_PRICE_RISE_DELTA = 0.05;
 export const CONVERSION_SURVIVAL_DAYS = 90;
 export const TUTORIAL_LETTER_ATTENTION = Object.freeze({
-  'tutorial-starvation-consequence': 'silent',
+  'tutorial-starvation-consequence': 'critical',
   'tutorial-bankruptcy-consequence': 'critical',
+  'arrival-report': 'critical',
+  'first-order-offer': 'critical',
   'first-import-food': 'notice',
   'first-company-procurement': 'notice',
   'first-order-handling': 'notice',
   'first-order-complete': 'action',
-  'accepted-order-expired': 'action',
+  'accepted-order-expired': 'critical',
   'chapter-one-close': 'notice',
   'logger-road-recovered': 'notice',
   'logger-road-already-good': 'notice',
@@ -258,9 +260,33 @@ export const TUTORIAL_LETTER_ATTENTION = Object.freeze({
   'conversion-cost-chain': 'notice',
   'household-level-up': 'notice',
   'chapter-five-close': 'notice',
-  'tutorial-graduation': 'notice',
+  'tutorial-graduation': 'critical',
   'first-log-trade': 'notice',
 });
+
+// 書状は「後から読む必然性」があるものだけを一覧へ残す。
+// forced: エレナの予告後に自動開封 / letter: エレナから任意開封
+// message: エレナの一言だけで伝え、書状一覧や未読数へ残さない。
+export const TUTORIAL_LETTER_DELIVERY = Object.freeze({
+  'tutorial-starvation-consequence': 'forced',
+  'tutorial-bankruptcy-consequence': 'forced',
+  'arrival-report': 'forced',
+  'first-order-offer': 'forced',
+  'accepted-order-expired': 'forced',
+  'chapter-one-close': 'letter',
+  'chapter-two-close': 'letter',
+  'chapter-three-close': 'letter',
+  'profitable-order-assessment': 'letter',
+  'skippable-order-assessment': 'letter',
+  'chapter-four-close': 'letter',
+  'conversion-cost-chain': 'letter',
+  'chapter-five-close': 'letter',
+  'tutorial-graduation': 'forced',
+});
+
+export function tutorialLetterDelivery(id) {
+  return TUTORIAL_LETTER_DELIVERY[id] ?? 'message';
+}
 const LOGGER_MULTIPLIER_RECOVERY = 0.1;
 const FOOD_PRODUCTION_EMA_MIN = 0.25;
 const FOOD_PRICE_CHANGE_MIN = 0.01;
@@ -420,30 +446,30 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
   'first-order-handling': '港で船積みが始まりました。人足たちが注文の品を、一荷ずつ船へ運んでいます。',
   'accepted-order-expired': '受けた注文を、期限までに納め切れませんでした。何が足りなかったか、書状で振り返りましょう。',
   'first-order-complete': '最後の一荷を積んで、船が出ました。はじめての注文を、無事に届けられます。',
-  'chapter-one-close': '丸太を切り、道具に変え、注文として送り出しました。最初の取引の結果を、書状にまとめています。',
+  'chapter-one-close': '最初の取引の収支を、書状にまとめました。この欄から直接開けます。',
   'logger-trip-warning': '木こりが市場まで歩く時間が長く、丸太を切る時間が減っています。もっと短い道に直しましょう。',
   'logger-road-recovered': '木こりから市場までの道が短くなりました。歩く時間が減り、丸太を切る時間が戻っています。',
   'logger-road-already-good': '森から市場まで、すでに短い道が通っています。木こりは十分な時間を伐採に使えています。',
   'food-dependence-report': '食料をまだ本国から買い続けています。漁家と菜園を増やし、市場への道を整えましょう。',
   'island-food-change': '島で作った魚と野菜が、市場へ届き始めました。本国から買う食料が減るか、しばらく見守りましょう。',
   'food-import-target-reached': '本国から買う食料が、十分に少なくなりました。島の家族が作る食料で、食卓を支えられています。',
-  'chapter-two-close': '魚と野菜を島で作った結果を、書状にまとめました。本国へ払うお金の変化も確かめられます。',
+  'chapter-two-close': '島の食料づくりと支出をまとめました。この欄から直接開けます。',
   'seasonal-food-valley-report': '市場の食料が、季節の変わり目に少なくなりました。多い時に蔵へ備える理由を、書状で確かめましょう。',
   'seasonal-stock-target-set': '食料を蔵へ買い集めるよう定めました。市場に余っている間に、荷車が備えを運びます。',
   'seasonal-reserve-filled': '買い上げた食料が、蔵へそろいました。市場が品薄になった時、この備えを戻せます。',
   'seasonal-release-dispatched': '蔵の食料を、市場へ送り出しました。荷車が着けば、家族がまた食料を買えるようになります。',
-  'chapter-three-close': '多い季節の食料を、少ない季節へ渡せました。蔵の備えがどう役立ったか、書状で振り返りましょう。',
-  'profitable-order-assessment': '本国が払う代金と、市場で買う値段を比べました。利益が残る見込みを、書状にまとめています。',
+  'chapter-three-close': '蔵の備えがどう役立つかをまとめました。この欄から直接開けます。',
+  'profitable-order-assessment': '代金と仕入れ値を比べました。詳しい見込みは、この欄から開けます。',
   'profitable-order-accepted': '利益を見込める注文を引き受けました。次は、注文数に足りるだけ品を買い集めましょう。',
   'profitable-order-complete': '注文を納め、売上と仕入れが帳簿へ残りました。見込みどおり利益が出たか、書状で確かめましょう。',
-  'skippable-order-assessment': 'この注文は、受けない方が会社を守れます。代金と仕入れを比べた理由を、書状にまとめています。',
-  'chapter-four-close': '引き受けた注文と、見送った注文を比べました。どちらの判断が何を守ったか、書状で振り返りましょう。',
+  'skippable-order-assessment': '受けない方がよい理由をまとめました。この欄から直接開けます。',
+  'chapter-four-close': '受けた注文と見送った注文を比べました。この欄から直接開けます。',
   'tools-price-rise': '道具の値段が上がっています。町で道具を求める家が増えたことが、相場にも表れています。',
   'conversion-workshops-placed': '木工房、炭焼、製塩所がそろいました。家族と原料が届けば、三つの手仕事が動き始めます。',
-  'conversion-cost-chain': '三つの仕事場で生産が始まりました。原料の値段が作った品の原価へ残る様子を、書状で確かめましょう。',
+  'conversion-cost-chain': '原料の値段が原価へ渡る様子をまとめました。この欄から直接開けます。',
   'household-level-up': 'お見事です。暮らしに必要な品が届き続け、家と仕事場が一段育ちました。',
   'no-vacancy-job-change': '仕事を替えたい家族がいますが、移り住める空き家がありません。育てたい仕事の建物を、一棟空けておきましょう。',
-  'chapter-five-close': '三つの手仕事が、家族の暮らしへ届くところまで確かめました。結果を最後の章の書状にまとめています。',
+  'chapter-five-close': '手仕事と家族の暮らしをまとめました。この欄から直接開けます。',
   'tutorial-graduation': 'ここまでの島の姿を、最後の書状にまとめました。読み終えた後も、同じ島をそのまま育てていけます。',
   'first-log-trade': '木こりの丸太が、市場で初めて売れました。売れたお金は、木こりの家の財布に入っています。',
 });
@@ -1706,6 +1732,32 @@ export function isRequiredTutorialGoal(goal) {
   return Boolean(goal) && !TUTORIAL_OPTIONAL_GOAL_IDS.includes(goal.id);
 }
 
+// 非必須の観察課題も、対応する章へ入るまでは評価しない。
+// 必須/任意と開始時期を分離し、未来章の出来事が教程を先回りするのを防ぐ。
+export const TUTORIAL_GOAL_START_AFTER = Object.freeze({
+  'observe-island-food-change': 'close-first-chapter',
+  'reduce-food-imports': 'close-first-chapter',
+  'observe-seasonal-food-valley': 'close-second-chapter',
+  'fill-seasonal-reserve': 'set-seasonal-stock-target',
+  'release-seasonal-reserve': 'fill-seasonal-reserve',
+  'assess-profitable-order': 'close-third-chapter',
+  'accept-profitable-order': 'assess-profitable-order',
+  'target-profitable-order': 'accept-profitable-order',
+  'complete-profitable-order': 'target-profitable-order',
+  'observe-skippable-order': 'complete-profitable-order',
+  'let-skippable-order-expire': 'observe-skippable-order',
+  'observe-tools-price-rise': 'close-fourth-chapter',
+  'observe-conversion-cost-chain': 'place-conversion-workshops',
+  'sustain-conversion-workshops': 'place-conversion-workshops',
+  'observe-household-level-up': 'place-conversion-workshops',
+});
+
+export function isTutorialGoalUnlocked(goal, state) {
+  if (!goal) return false;
+  const prerequisite = TUTORIAL_GOAL_START_AFTER[goal.id];
+  return !prerequisite || Boolean(state?.completedGoals?.includes(prerequisite));
+}
+
 function adviceEventSequence(event) {
   return event?.sequence ?? `${event?.day ?? 0}:${event?.message ?? ''}`;
 }
@@ -1714,6 +1766,7 @@ export const TUTORIAL_ADVICE = Object.freeze([
   Object.freeze({
     id: 'seasonal-release-opportunity',
     channel: 'advice',
+    startAfter: 'set-seasonal-stock-target',
     repeatAfterDays: 5,
     evaluate({ model, events, state, previous = {} }) {
       const reserve = seasonalReserveFacts(model, state);

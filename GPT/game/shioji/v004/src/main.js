@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.17.0-guidance-steps';
-import { SimulationClock } from './clock.js?v=v004.17.0-guidance-steps';
+import { IsometricCamera } from './camera.js?v=v004.18.0-elena-letters';
+import { SimulationClock } from './clock.js?v=v004.18.0-elena-letters';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.17.0-guidance-steps';
+} from './config.js?v=v004.18.0-elena-letters';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.17.0-guidance-steps';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.17.0-guidance-steps';
-import { presentEvent } from './event_view.js?v=v004.17.0-guidance-steps';
+} from './display_batch.js?v=v004.18.0-elena-letters';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.18.0-elena-letters';
+import { presentEvent } from './event_view.js?v=v004.18.0-elena-letters';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.17.0-guidance-steps';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.17.0-guidance-steps';
-import { WorldPresentation } from './presentation.js?v=v004.17.0-guidance-steps';
-import { Renderer } from './renderer.js?v=v004.17.0-guidance-steps';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.17.0-guidance-steps';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.17.0-guidance-steps';
+} from './keyboard.js?v=v004.18.0-elena-letters';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.18.0-elena-letters';
+import { WorldPresentation } from './presentation.js?v=v004.18.0-elena-letters';
+import { Renderer } from './renderer.js?v=v004.18.0-elena-letters';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.18.0-elena-letters';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.18.0-elena-letters';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.17.0-guidance-steps';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.17.0-guidance-steps';
+} from './ui_guidance.js?v=v004.18.0-elena-letters';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.18.0-elena-letters';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -56,9 +56,12 @@ let currentTutorialHandoff = null;
 let tutorialHandoffTimer = null;
 let tutorialHandoffGapTimer = null;
 let tutorialTransitionPending = false;
+let tutorialInterludeSpeed = null;
 let visibleTutorialObjectiveId = null;
 let tutorialObjectiveEnterTimer = null;
 let secretaryEnterTimer = null;
+let secretaryDeliveryTimer = null;
+let secretaryDeliveryKey = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
@@ -75,6 +78,9 @@ const HISTORY_DAYS = 180;
 const TUTORIAL_HANDOFF_HOLD_MS = 2600;
 const TUTORIAL_HANDOFF_GAP_MS = 240;
 const GUIDANCE_ENTER_MS = 420;
+const FORCED_LETTER_DELAY_MS = 1800;
+const OPTIONAL_LETTER_NOTICE_MS = 3400;
+const TUTORIAL_MESSAGE_NOTICE_MS = 2600;
 const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
 const uiMetrics = {
   domUpdates: 0,
@@ -893,6 +899,7 @@ function holdTutorialHandoff(handoff) {
     tutorialHandoffGapTimer = null;
   }
   tutorialTransitionPending = false;
+  pauseForTutorialInterlude();
   $('#secretary').classList.remove('guidance-switching');
   currentTutorialHandoff = handoff;
   if (tutorialHandoffTimer !== null) clearTimeout(tutorialHandoffTimer);
@@ -940,6 +947,7 @@ function renderTutorial() {
     }
   }
   const visibleObjectiveId = objective && !objectivePanel.hidden ? objective.id : null;
+  document.body.classList.toggle('tutorial-objective-visible', Boolean(visibleObjectiveId));
   if (visibleObjectiveId && visibleObjectiveId !== visibleTutorialObjectiveId) {
     if (tutorialObjectiveEnterTimer !== null) clearTimeout(tutorialObjectiveEnterTimer);
     objectivePanel.classList.remove('guidance-entering');
@@ -952,13 +960,11 @@ function renderTutorial() {
   }
   visibleTutorialObjectiveId = visibleObjectiveId;
   if (!available) return;
-  const letters = tutorialDirector.letters();
+  const letters = tutorialDirector.visibleLetters();
   const unread = letters.filter(letter => letter.unread && letter.attention !== 'silent').length;
   setHiddenIfChanged('#tutorial-unread', unread === 0 || Boolean(state?.skipped));
   setTextIfChanged('#tutorial-unread', String(unread));
   if (!$('#tutorial-letter-sheet').hidden) renderTutorialLetterSheet();
-  const critical = letters.find(letter => letter.unread && letter.attention === 'critical');
-  if (critical && openTutorialLetterId === null) openTutorialLetter(critical.id);
 }
 
 function secretaryFallback() {
@@ -989,7 +995,8 @@ function secretaryFallback() {
 function renderSecretary() {
   const objective = tutorialDirector?.currentObjective() ?? null;
   currentSecretaryRoute = secretaryRouteFor({
-    letters: tutorialDirector?.letters() ?? [],
+    letters: tutorialDirector?.visibleLetters() ?? [],
+    messages: tutorialDirector?.messages() ?? [],
     advice: guidanceDirector.advice(),
     handoff: currentTutorialHandoff,
     objective: tutorialDirector?.isComplete() ? null : objective,
@@ -1000,10 +1007,17 @@ function renderSecretary() {
   const signature = JSON.stringify(currentSecretaryRoute);
   renderIfChanged('secretary', signature, () => {
     const panel = $('#secretary');
+    const letterAction = $('#secretary-letter-action');
+    const canOpenLetter = currentSecretaryRoute.target?.kind === 'letter'
+      && currentSecretaryRoute.target.delivery === 'letter';
     panel.dataset.secretaryPriority = currentSecretaryRoute.priority;
     panel.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
+    panel.classList.toggle('has-letter-action', canOpenLetter);
     setTextIfChanged('#secretary-speech',
       currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
+    setHiddenIfChanged(letterAction, !canOpenLetter);
+    setTextIfChanged(letterAction, currentSecretaryRoute.action ?? '書状を開く');
+    letterAction.dataset.letterId = canOpenLetter ? currentSecretaryRoute.target.id : '';
     if (!tutorialTransitionPending) {
       if (secretaryEnterTimer !== null) clearTimeout(secretaryEnterTimer);
       panel.classList.remove('guidance-entering');
@@ -1015,6 +1029,66 @@ function renderSecretary() {
       }, GUIDANCE_ENTER_MS);
     }
   });
+  scheduleSecretaryDelivery(currentSecretaryRoute);
+}
+
+function scheduleSecretaryDelivery(route) {
+  const target = route?.target ?? null;
+  const delivery = target?.kind === 'letter' ? target.delivery : target?.kind;
+  const delay = delivery === 'forced' ? FORCED_LETTER_DELAY_MS
+    : delivery === 'letter' ? OPTIONAL_LETTER_NOTICE_MS
+      : delivery === 'message' ? TUTORIAL_MESSAGE_NOTICE_MS : null;
+  const key = delay === null ? null : `${delivery}:${target.id}`;
+  if (delivery === 'forced' || delivery === 'letter') pauseForTutorialInterlude();
+  else if (delivery === 'message') resumeTutorialInterludeIfReady();
+  if (key === secretaryDeliveryKey) return;
+  if (secretaryDeliveryTimer !== null) clearTimeout(secretaryDeliveryTimer);
+  secretaryDeliveryTimer = null;
+  secretaryDeliveryKey = key;
+  if (key === null) {
+    resumeTutorialInterludeIfReady();
+    return;
+  }
+  secretaryDeliveryTimer = setTimeout(() => {
+    secretaryDeliveryTimer = null;
+    if (secretaryDeliveryKey !== key) return;
+    const currentTarget = currentSecretaryRoute?.target;
+    if (currentTarget?.id !== target.id) return;
+    secretaryDeliveryKey = null;
+    if (delivery === 'forced') {
+      if (openTutorialLetterId === null) openTutorialLetter(target.id);
+      return;
+    }
+    if (delivery === 'letter') tutorialDirector?.markLetterAnnounced(target.id);
+    else tutorialDirector?.markLetterRead(target.id);
+    renderTutorial();
+    renderSecretary();
+  }, delay);
+}
+
+function pauseForTutorialInterlude() {
+  if (tutorialInterludeSpeed === null && clock.speedIndex > 0) {
+    tutorialInterludeSpeed = clock.speedIndex;
+  }
+  if (clock.speedIndex === 0) return;
+  clock.setSpeed(0);
+  renderSignatures.delete('hud-speed');
+  document.querySelectorAll('[data-speed]').forEach(button => {
+    button.classList.toggle('on', Number(button.dataset.speed) === 0);
+  });
+  $('#status span').textContent = 'エレナの案内を表示しています';
+}
+
+function resumeTutorialInterludeIfReady() {
+  const target = currentSecretaryRoute?.target ?? null;
+  const deliveryPending = target.kind === 'letter'
+    && (target.delivery === 'forced' || target.delivery === 'letter');
+  if (openTutorialLetterId !== null || currentTutorialHandoff || deliveryPending) return false;
+  if (tutorialInterludeSpeed === null) return false;
+  const restore = tutorialInterludeSpeed;
+  tutorialInterludeSpeed = null;
+  if (clock.speedIndex === 0) setSpeed(restore);
+  return true;
 }
 
 function performGuidanceAction(action) {
@@ -1049,7 +1123,7 @@ function focusEvent(row) {
 }
 
 function renderTutorialLetterSheet() {
-  const letters = tutorialDirector?.letters() ?? [];
+  const letters = tutorialDirector?.visibleLetters() ?? [];
   const signature = JSON.stringify(letters.map(letter => [
     letter.id, letter.unread, letter.attention, letter.title, letter.summary,
   ]));
@@ -1349,7 +1423,7 @@ function renderIslandSheet() {
 }
 
 function openTutorialLetter(id) {
-  const letter = tutorialDirector?.letters().find(row => row.id === id);
+  const letter = tutorialDirector?.visibleLetters().find(row => row.id === id);
   if (!letter) return false;
   const opening = openTutorialLetterId === null;
   if (opening) {
@@ -1385,6 +1459,7 @@ function closeTutorialLetter() {
   const restore = speedBeforeLetter;
   speedBeforeLetter = null;
   if (restore !== null) setSpeed(restore);
+  resumeTutorialInterludeIfReady();
 }
 
 function skipTutorial() {
@@ -1497,6 +1572,10 @@ $('#tutorial-letter-list').addEventListener('click', event => {
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
+$('#secretary-letter-action').addEventListener('click', event => {
+  const id = event.currentTarget.dataset.letterId;
+  if (id) openTutorialLetter(id);
+});
 
 const companySheet = $('#company-sheet');
 companySheet.addEventListener('input', event => {
@@ -1816,10 +1895,6 @@ if (requestedStartMode) {
   $('#status span').textContent = startMode === 'tutorial'
     ? 'エレナの案内で未開拓島から開始しました'
     : `${START_MODES[startMode].shortLabel}で開始しました`;
-  if (tutorialDirector) {
-    const firstUnread = tutorialDirector.letters().find(letter => letter.unread);
-    if (firstUnread) openTutorialLetter(firstUnread.id);
-  }
 } else {
   showStartScreen();
 }

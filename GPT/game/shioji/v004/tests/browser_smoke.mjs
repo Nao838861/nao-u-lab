@@ -141,6 +141,7 @@ async function checkTutorialCompanyPointerStability() {
   const page = await newPage(800, 700, false, gameForMode('tutorial'));
   const setup = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
+    game.openTutorialLetter('arrival-report');
     game.closeTutorialLetter();
     game.setSpeed(0);
     game.openSheet('company-sheet');
@@ -239,6 +240,7 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
   const page = await newPage(width, height, mobile, gameForMode('tutorial'));
   const transition = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
+    game.openTutorialLetter('arrival-report');
     game.closeTutorialLetter();
     game.setSpeed(0);
     const model = game.model;
@@ -472,19 +474,32 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.objectiveVisible, true, JSON.stringify(started));
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
     assert.equal(started.tutorialActionText, '道を敷く道具を選ぶ');
-    assert.equal(started.secretaryPriority, 'objective', JSON.stringify(started));
-    assert.match(started.secretarySpeech, /まずは.*港から森のそばまで道を敷きましょう/s);
+    assert.equal(started.secretaryPriority, 'forced-letter', JSON.stringify(started));
+    assert.match(started.secretarySpeech, /いま島にあるのは港だけ.*このあと自動で開きます/s);
     assert.equal(started.secretaryTag, 'DIV');
     assert.equal(started.secretaryActionPresent, false);
     assert.equal(started.objectiveInstruction, '港から森の隣まで道を引く');
-    assert.equal(started.letterVisible, true, JSON.stringify(started));
+    assert.equal(started.letterVisible, false, JSON.stringify(started));
     assert.equal(started.speed, 0, JSON.stringify(started));
-    assert.match(started.letterText, /0日目/);
-    assert.match(started.letterText, /港 1棟・人口 0人・道路 0区画/);
-    for (const bounds of [started.objectiveBounds, started.paperBounds]) {
+    for (const bounds of [started.objectiveBounds]) {
       assert.ok(bounds.left >= 0 && bounds.right <= width, JSON.stringify(started));
       assert.ok(bounds.top >= 0 && bounds.bottom <= height, JSON.stringify(started));
     }
+    await wait(2050);
+    const opened = await page.evaluate(`({
+      letterVisible: !document.querySelector('#tutorial-letter-modal').hidden,
+      letterText: document.querySelector('#tutorial-letter-modal').textContent,
+      speed: window.__SHIOJI_V004__.clock.speedIndex,
+      paperBounds: ((box) => ({
+        left: box.left, right: box.right, top: box.top, bottom: box.bottom,
+      }))(document.querySelector('.tutorial-paper').getBoundingClientRect()),
+    })`);
+    assert.equal(opened.letterVisible, true, JSON.stringify(opened));
+    assert.equal(opened.speed, 0, JSON.stringify(opened));
+    assert.match(opened.letterText, /0日目/);
+    assert.match(opened.letterText, /港 1棟・人口 0人・道路 0区画/);
+    assert.ok(opened.paperBounds.left >= 0 && opened.paperBounds.right <= width, JSON.stringify(opened));
+    assert.ok(opened.paperBounds.top >= 0 && opened.paperBounds.bottom <= height, JSON.stringify(opened));
     await page.screenshot(`/tmp/shioji_v004_tutorial_letter_${mobile ? 'mobile' : 'desktop'}.png`);
     const restoredSpeed = await page.evaluate(`(() => {
       const game = window.__SHIOJI_V004__;
@@ -533,11 +548,179 @@ async function checkStartChoice(width, height, mobile, mode) {
   await page.close();
 }
 
+async function checkTutorialLetterDelivery() {
+  const width = 390;
+  const height = 844;
+  const page = await newPage(width, height, true, gameForMode('tutorial'));
+  const preview = await page.evaluate(`({
+    priority: document.querySelector('#secretary').dataset.secretaryPriority,
+    speech: document.querySelector('#secretary-speech').textContent,
+    modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    actionHidden: document.querySelector('#secretary-letter-action').hidden,
+    speed: window.__SHIOJI_V004__.clock.speedIndex,
+  })`);
+  assert.equal(preview.priority, 'forced-letter', JSON.stringify(preview));
+  assert.match(preview.speech, /このあと自動で開きます/);
+  assert.equal(preview.modalHidden, true, JSON.stringify(preview));
+  assert.equal(preview.actionHidden, true, JSON.stringify(preview));
+  assert.equal(preview.speed, 0, JSON.stringify(preview));
+
+  await wait(2050);
+  const forced = await page.evaluate(`({
+    modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    text: document.querySelector('#tutorial-letter-modal').textContent,
+    speed: window.__SHIOJI_V004__.clock.speedIndex,
+  })`);
+  assert.equal(forced.modalHidden, false, JSON.stringify(forced));
+  assert.match(forced.text, /島の現況を報告します/);
+  assert.equal(forced.speed, 0, JSON.stringify(forced));
+
+  const overlap = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.closeTutorialLetter();
+    game.setSpeed(0);
+    game.openSheet('company-sheet');
+    const objective = document.querySelector('#tutorial-objective').getBoundingClientRect();
+    const sheet = document.querySelector('#company-sheet').getBoundingClientRect();
+    document.querySelector('[data-close-sheet="company-sheet"]').click();
+    return {
+      objective: { top: objective.top, bottom: objective.bottom },
+      sheet: { top: sheet.top, bottom: sheet.bottom },
+    };
+  })()`);
+  assert.ok(overlap.objective.bottom <= overlap.sheet.top, JSON.stringify(overlap));
+
+  const setup = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const refresh = () => game.advanceTicks(0, { animate: false });
+    const requireOk = (result, label) => {
+      if (!result?.ok) throw new Error(label + ': ' + JSON.stringify(result));
+      return result;
+    };
+    const shortest = (job, origin) => {
+      let best = null;
+      for (let y = 0; y < game.model.height; y += 1) {
+        for (let x = 0; x < game.model.width; x += 1) {
+          const building = game.previewBuilding(job, x, y);
+          if (!building.ok) continue;
+          const road = game.previewRoad(origin, building.entrance);
+          if (!road.ok) continue;
+          if (!best || road.cells.length < best.road.cells.length) best = { building, road };
+        }
+      }
+      if (!best) throw new Error(job + 'の接続可能な場所がありません');
+      return best;
+    };
+    const place = (job, plan, roadFirst = false) => {
+      const buildingOp = {
+        type: 'place_building', job,
+        x: plan.building.entrance.x, y: plan.building.entrance.y,
+        buildingX: plan.building.x, buildingY: plan.building.y,
+      };
+      const roadOp = { type: 'add_road', start: plan.road.start, end: plan.road.end };
+      if (roadFirst) requireOk(game.controller.operate(roadOp), job + 'への道');
+      requireOk(game.controller.operate(buildingOp), job + 'の配置');
+      if (!roadFirst) requireOk(game.controller.operate(roadOp), job + 'への道');
+      refresh();
+    };
+
+    const port = game.model.buildings.find(building => building.roles.includes('port'));
+    place('logger', shortest('logger', port.entrance), true);
+    refresh();
+    const marketPlan = shortest('market', port.entrance);
+    place('market', marketPlan);
+    const market = game.model.buildings.find(building => building.roles.includes('market'));
+    requireOk(game.controller.operate({ type: 'request_aid' }), '最初の食料支援');
+    refresh();
+    game.advanceTicks(Math.max(0, 15 * 30 - game.model.tick), { animate: false });
+    for (const job of ['fisher', 'veg', 'woodshop', 'warehouse']) {
+      place(job, shortest(job, market.entrance));
+      refresh();
+    }
+    requireOk(game.controller.operate({
+      type: 'set_stock_target', goods: 'tools', qty: 80,
+    }), '道具の事前買上げ');
+    for (let pass = 0; pass < 3; pass += 1) refresh();
+    game.advanceTicks(Math.max(0, 75 * 30 - game.model.tick), { animate: false });
+    return {
+      day: game.model.day,
+      objective: game.tutorialState.completedGoals,
+      current: document.querySelector('#tutorial-goal').textContent,
+      offer: game.model.orderOffer,
+      futureGoals: game.tutorialState.completedGoals.filter(id => [
+        'observe-seasonal-food-valley', 'assess-profitable-order',
+        'observe-skippable-order', 'observe-tools-price-rise',
+      ].includes(id)),
+      futureLetters: game.tutorialState.letters.filter(letter => [
+        'seasonal-food-valley-report', 'profitable-order-assessment',
+        'skippable-order-assessment', 'tools-price-rise',
+      ].includes(letter.id)).map(letter => letter.id),
+    };
+  })()`);
+  assert.equal(setup.day, 75, JSON.stringify(setup));
+  assert.equal(setup.offer.g, 'tools', JSON.stringify(setup));
+  assert.deepEqual(setup.futureGoals, [], JSON.stringify(setup));
+  assert.deepEqual(setup.futureLetters, [], JSON.stringify(setup));
+  await wait(2050);
+  assert.equal(await page.evaluate('document.querySelector("#tutorial-letter-modal").hidden'), false);
+  assert.match(await page.evaluate('document.querySelector("#tutorial-letter-title").textContent'), /注文が届きました/);
+
+  const completion = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    game.closeTutorialLetter();
+    if (!game.controller.operate({ type: 'accept_order' }).ok) throw new Error('注文を受諾できません');
+    for (let pass = 0; pass < 3; pass += 1) game.advanceTicks(0, { animate: false });
+    for (let day = 0; day < 8 && game.model.activeOrder; day += 1) {
+      game.advanceTicks(30, { animate: false });
+    }
+    game.advanceTicks(0, { animate: false });
+    return {
+      day: game.model.day,
+      activeOrder: game.model.activeOrder,
+      chapterLetter: game.tutorialState.letters.find(letter => letter.id === 'chapter-one-close'),
+      current: game.tutorialState.completedGoals,
+      letterIds: game.tutorialState.letters.map(letter => letter.id),
+      instruction: document.querySelector('#tutorial-goal').textContent,
+      futureGoals: game.tutorialState.completedGoals.filter(id => [
+        'observe-seasonal-food-valley', 'assess-profitable-order',
+        'observe-skippable-order', 'observe-tools-price-rise',
+      ].includes(id)),
+    };
+  })()`);
+  assert.equal(completion.activeOrder, null, JSON.stringify(completion));
+  assert.ok(completion.chapterLetter, JSON.stringify(completion));
+  assert.deepEqual(completion.futureGoals, [], JSON.stringify(completion));
+
+  await wait(3000);
+  const optional = await page.evaluate(`({
+    priority: document.querySelector('#secretary').dataset.secretaryPriority,
+    speech: document.querySelector('#secretary-speech').textContent,
+    actionHidden: document.querySelector('#secretary-letter-action').hidden,
+    actionText: document.querySelector('#secretary-letter-action').textContent,
+  })`);
+  assert.equal(optional.priority, 'optional-letter', JSON.stringify(optional));
+  assert.match(optional.speech, /この欄から直接開けます/);
+  assert.equal(optional.actionHidden, false, JSON.stringify(optional));
+  assert.equal(optional.actionText.trim(), '書状を開く');
+  await page.screenshot('/tmp/shioji_v004_tutorial_optional_letter_mobile.png');
+  await page.evaluate('document.querySelector("#secretary-letter-action").click()');
+  const direct = await page.evaluate(`({
+    modalHidden: document.querySelector('#tutorial-letter-modal').hidden,
+    title: document.querySelector('#tutorial-letter-title').textContent,
+    unread: document.querySelector('#tutorial-unread').textContent,
+  })`);
+  assert.equal(direct.modalHidden, false, JSON.stringify(direct));
+  assert.match(direct.title, /最初の一荷|期限切れ/);
+  await page.screenshot('/tmp/shioji_v004_tutorial_letter_delivery_mobile.png');
+  assert.deepEqual(page.errors, []);
+  await page.close();
+}
+
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.17.0-guidance-steps');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.17.0-guidance-steps');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.18.0-elena-letters');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.18.0-elena-letters');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -1197,6 +1380,9 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialGoalHandoff();
   await checkTutorialGoalHandoff(390, 844, true);
   console.log('CHARTER ISLE v004 tutorial handoff smoke: PASS');
+} else if (process.argv.includes('--tutorial-letters-only')) {
+  await checkTutorialLetterDelivery();
+  console.log('CHARTER ISLE v004 tutorial letter delivery smoke: PASS');
 } else {
   await checkBootFailureRecovery();
   await checkStartChoice(1440, 900, false, 'tutorial');
@@ -1206,6 +1392,7 @@ if (process.argv.includes('--company-pointer-only')) {
   await checkTutorialCompanyPointerStability();
   await checkTutorialGoalHandoff();
   await checkTutorialGoalHandoff(390, 844, true);
+  await checkTutorialLetterDelivery();
   await checkViewport(1440, 900, false);
   await checkViewport(390, 844, true);
   console.log('CHARTER ISLE v004 browser smoke: PASS');

@@ -2,8 +2,8 @@ import {
   TUTORIAL_ADVICE, TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
-  isRequiredTutorialGoal,
-} from './tutorial_content.js?v=v004.17.0-guidance-steps';
+  isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery,
+} from './tutorial_content.js?v=v004.18.0-elena-letters';
 
 const SAVE_VERSION = 1;
 
@@ -54,6 +54,8 @@ function restoredState(state) {
     ...clone(state),
     letters: clone(state.letters ?? []).map(letter => ({
       ...letter,
+      delivery: letter.delivery ?? tutorialLetterDelivery(letter.id),
+      announced: Boolean(letter.announced),
       elenaMessage: playerFacingText(
         letter.elenaMessage ?? TUTORIAL_LETTER_MESSAGES[letter.id] ?? '',
       ),
@@ -92,9 +94,16 @@ export class TutorialDirector {
       if (this.state.letters.some(letter => letter.id === definition.id)) continue;
       if (!definition.when({ model, events, state: this.readState() })) continue;
       const rendered = definition.render({ model, events, state: this.readState() });
+      const delivery = rendered.delivery ?? definition.delivery
+        ?? tutorialLetterDelivery(definition.id);
+      for (const letter of this.state.letters) {
+        if (letter.delivery === 'message') letter.unread = false;
+      }
       this.state.letters.push({
         id: definition.id,
         source: definition.source ?? 'event',
+        delivery,
+        announced: false,
         attention: rendered.attention ?? definition.attention
           ?? TUTORIAL_LETTER_ATTENTION[definition.id] ?? 'action',
         issuedDay: model.day,
@@ -122,10 +131,13 @@ export class TutorialDirector {
     }
     for (const goal of this.goals) {
       if (isRequiredTutorialGoal(goal) || this.state.completedGoals.includes(goal.id)) continue;
+      if (!isTutorialGoalUnlocked(goal, this.state)) continue;
       evaluateGoal(goal);
     }
 
     for (const definition of this.adviceDefinitions) {
+      if (definition.startAfter
+        && !this.state.completedGoals.includes(definition.startAfter)) continue;
       const previous = this.state.adviceState[definition.id] ?? {};
       const result = definition.evaluate({
         model, events, state: this.readState(), previous: clone(previous),
@@ -206,6 +218,14 @@ export class TutorialDirector {
     return clone(this.state.letters);
   }
 
+  visibleLetters() {
+    return clone(this.state.letters.filter(letter => letter.delivery !== 'message'));
+  }
+
+  messages() {
+    return clone(this.state.letters.filter(letter => letter.delivery === 'message'));
+  }
+
   advice() {
     return clone(this.state.advice);
   }
@@ -214,6 +234,13 @@ export class TutorialDirector {
     const letter = this.state.letters.find(candidate => candidate.id === id);
     if (!letter) return false;
     letter.unread = false;
+    return true;
+  }
+
+  markLetterAnnounced(id) {
+    const letter = this.state.letters.find(candidate => candidate.id === id);
+    if (!letter) return false;
+    letter.announced = true;
     return true;
   }
 

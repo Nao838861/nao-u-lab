@@ -102,22 +102,24 @@ export function objectiveActionFor(objective, model) {
 }
 
 export function secretaryRouteFor({
-  letters = [], advice = [], handoff = null, objective = null, objectiveAction = null,
+  letters = [], messages = [], advice = [], handoff = null, objective = null, objectiveAction = null,
   events = [], fallback = null,
 } = {}) {
-  const unreadAction = [...letters].reverse().find(letter => (
-    letter.unread && letter.attention !== 'notice' && letter.attention !== 'silent'
+  const deliveryOf = letter => letter.delivery
+    ?? (letter.attention === 'critical' ? 'forced' : 'letter');
+  const forcedLetter = [...letters].reverse().find(letter => (
+    letter.unread && deliveryOf(letter) === 'forced'
       && String(letter.elenaMessage ?? '').trim()
   ));
-  if (unreadAction) {
+  if (forcedLetter) {
     return {
-      priority: 'unread-letter',
-      tier: unreadAction.attention === 'critical' ? 'stop' : 'action',
-      target: { kind: 'letter', id: unreadAction.id },
-      speech: unreadAction.elenaMessage,
-      kicker: '未読書状',
-      title: unreadAction.title,
-      detail: `${unreadAction.issuedDay}日目・${unreadAction.summary}`,
+      priority: 'forced-letter',
+      tier: 'stop',
+      target: { kind: 'letter', id: forcedLetter.id, delivery: 'forced' },
+      speech: `${forcedLetter.elenaMessage} 大切な書状です。このあと自動で開きます。`,
+      kicker: '重要書状',
+      title: forcedLetter.title,
+      detail: `${forcedLetter.issuedDay}日目・${forcedLetter.summary}`,
     };
   }
   const actionAdvice = [...advice].reverse().find(row => (
@@ -145,6 +147,36 @@ export function secretaryRouteFor({
       speech: handoff.speech,
     };
   }
+  const optionalLetter = [...letters].reverse().find(letter => (
+    letter.unread && !letter.announced && deliveryOf(letter) === 'letter'
+      && String(letter.elenaMessage ?? '').trim()
+  ));
+  if (optionalLetter) {
+    return {
+      priority: 'optional-letter',
+      tier: 'action',
+      target: { kind: 'letter', id: optionalLetter.id, delivery: 'letter' },
+      speech: optionalLetter.elenaMessage,
+      kicker: 'エレナからの書状',
+      title: optionalLetter.title,
+      detail: `${optionalLetter.issuedDay}日目・${optionalLetter.summary}`,
+      action: '書状を開く',
+    };
+  }
+  const unreadMessage = [...messages].reverse().find(message => (
+    message.unread && String(message.elenaMessage ?? '').trim()
+  ));
+  if (unreadMessage) {
+    return {
+      priority: 'tutorial-message',
+      tier: 'notice',
+      target: { kind: 'message', id: unreadMessage.id },
+      speech: unreadMessage.elenaMessage,
+      kicker: 'エレナからの報告',
+      title: unreadMessage.title,
+      detail: `${unreadMessage.issuedDay}日目・${unreadMessage.summary}`,
+    };
+  }
   if (objective && !objective.complete && String(objective.elenaMessage ?? '').trim()) {
     return {
       priority: 'objective',
@@ -170,21 +202,6 @@ export function secretaryRouteFor({
       kicker: infoAdvice.kicker,
       title: infoAdvice.title,
       detail: infoAdvice.detail,
-    };
-  }
-  const unreadNotice = [...letters].reverse().find(letter => (
-    letter.unread && letter.attention === 'notice'
-      && String(letter.elenaMessage ?? '').trim()
-  ));
-  if (unreadNotice) {
-    return {
-      priority: 'unread-report',
-      tier: 'notice',
-      target: { kind: 'letter', id: unreadNotice.id },
-      speech: unreadNotice.elenaMessage,
-      kicker: '未読の報告',
-      title: unreadNotice.title,
-      detail: `${unreadNotice.issuedDay}日目・${unreadNotice.summary}`,
     };
   }
   const important = [...events].reverse().find(event => (

@@ -37,10 +37,11 @@ import {
   SEASONAL_SURPLUS_MIN, SEASONAL_VALLEY_RATIO, TOOLS_PRICE_RISE_DELTA,
   TOOLS_PRICE_RISE_RATIO,
   TUTORIAL_GOALS, TUTORIAL_LETTERS, TUTORIAL_LETTER_ATTENTION,
+  TUTORIAL_GOAL_START_AFTER, TUTORIAL_LETTER_DELIVERY,
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_OPTIONAL_GOAL_IDS,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
-  isRequiredTutorialGoal, estimateWalkLen,
+  isRequiredTutorialGoal, isTutorialGoalUnlocked, tutorialLetterDelivery, estimateWalkLen,
 } from '../src/tutorial_content.js';
 import {
   TutorialDirector, createTutorialDirector, createTutorialDirectorForMode,
@@ -210,7 +211,8 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
   const seasonal = new TutorialDirector({
     goals: [], letters: [],
     state: {
-      version: 1, active: true, skipped: false, completedGoals: [], letters: [],
+      version: 1, active: true, skipped: false,
+      completedGoals: ['set-seasonal-stock-target'], letters: [],
       goalResults: { 'set-seasonal-stock-target': { evidence: { goods: 'wheat' } } },
     },
   });
@@ -230,6 +232,81 @@ test('教程V〜Y: 創発待ちは進行を止めず、注文残量と適時ア�
     { type: 'departure', carrier: 'cart', goods: 'wheat', qty: 8, haulJobId: 4 },
   ]);
   assert.equal(seasonal.advice()[0].completed, true, '実蔵出しで助言完了');
+});
+
+test('教程AA: 未来章をロックし、重要度に応じて強制書状・任意書状・一言を分ける', () => {
+  assert.equal(Object.keys(TUTORIAL_GOAL_START_AFTER).length, TUTORIAL_OPTIONAL_GOAL_IDS.length);
+  for (const [id, prerequisite] of Object.entries(TUTORIAL_GOAL_START_AFTER)) {
+    const goal = { id };
+    assert.equal(isTutorialGoalUnlocked(goal, { completedGoals: [] }), false, `${id}は先回りしない`);
+    assert.equal(isTutorialGoalUnlocked(goal, { completedGoals: [prerequisite] }), true,
+      `${id}は${prerequisite}後に始まる`);
+  }
+
+  const gatedGoal = {
+    id: 'observe-skippable-order',
+    evaluate: () => ({ complete: true, progress: { done: 1, total: 1 }, evidence: {} }),
+  };
+  const locked = new TutorialDirector({ goals: [gatedGoal], letters: [], advice: [] });
+  locked.observe({ day: 1, tick: 30 }, []);
+  assert.equal(locked.readState().completedGoals.includes(gatedGoal.id), false);
+  const unlocked = new TutorialDirector({
+    goals: [gatedGoal], letters: [], advice: [],
+    state: {
+      version: 1, active: true, skipped: false,
+      completedGoals: ['complete-profitable-order'], letters: [],
+    },
+  });
+  unlocked.observe({ day: 2, tick: 60 }, []);
+  assert.equal(unlocked.readState().completedGoals.includes(gatedGoal.id), true);
+
+  assert.equal(tutorialLetterDelivery('arrival-report'), 'forced');
+  assert.equal(tutorialLetterDelivery('chapter-one-close'), 'letter');
+  assert.equal(tutorialLetterDelivery('first-order-complete'), 'message');
+  assert.equal(Object.values(TUTORIAL_LETTER_DELIVERY).filter(value => value === 'forced').length, 6);
+  assert.equal(Object.values(TUTORIAL_LETTER_DELIVERY).filter(value => value === 'letter').length, 8);
+
+  const minimalLetter = id => Object.freeze({
+    id,
+    when: () => true,
+    render: () => ({
+      title: id, summary: '要約', body: '本文', signature: 'エレナ',
+      elenaMessage: TUTORIAL_LETTER_MESSAGES[id] ?? `${id}のお知らせです。`,
+    }),
+  });
+  const delivery = new TutorialDirector({
+    goals: [],
+    advice: [],
+    letters: [
+      minimalLetter('arrival-report'),
+      minimalLetter('chapter-one-close'),
+      minimalLetter('logs-pile-no-market'),
+    ],
+  });
+  delivery.observe({ day: 3, tick: 90 }, []);
+  assert.deepEqual(delivery.visibleLetters().map(letter => letter.id),
+    ['arrival-report', 'chapter-one-close']);
+  assert.deepEqual(delivery.messages().map(message => message.id), ['logs-pile-no-market']);
+  let route = secretaryRouteFor({
+    letters: delivery.visibleLetters(), messages: delivery.messages(),
+  });
+  assert.equal(route.priority, 'forced-letter');
+  assert.match(route.speech, /このあと自動で開きます/);
+  delivery.markLetterRead('arrival-report');
+  route = secretaryRouteFor({
+    letters: delivery.visibleLetters(), messages: delivery.messages(),
+  });
+  assert.equal(route.priority, 'optional-letter');
+  assert.deepEqual(route.target, {
+    kind: 'letter', id: 'chapter-one-close', delivery: 'letter',
+  });
+  assert.match(route.speech, /この欄から直接開けます/);
+  delivery.markLetterAnnounced('chapter-one-close');
+  route = secretaryRouteFor({
+    letters: delivery.visibleLetters(), messages: delivery.messages(),
+  });
+  assert.equal(route.priority, 'tutorial-message');
+  assert.equal(route.target.kind, 'message');
 });
 
 test('教程Z: 季節・島の基調・飢餓予告・建物成長の因果をplayer-facing表示へ出す', () => {
@@ -760,6 +837,7 @@ test('チュートリアル段7〜9: 支援1回・早期食料・事前備蓄で
     x: setup.logger.entrance.x, y: setup.logger.entrance.y,
     buildingX: setup.logger.x, buildingY: setup.logger.y,
   }).ok, true);
+  observe();
   observe();
 
   const port = controller.readModel().buildings.find(building => building.roles.includes('port'));
@@ -1933,7 +2011,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.17.0-guidance-steps');
+  assert.equal(VERSION, 'v004.18.0-elena-letters');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2989,9 +3067,10 @@ test('通貨表示: engine内部値はfactsを変えず10倍のデナリで示�
   assert.match(graduation.body, /収入30\.0デナリ、支出20\.0デナリ、差引\+10\.0デナリ、残高40\.0デナリ/);
 });
 
-test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけなら現在目標を隠さない', () => {
+test('UI向上段9: 常駐エレナは強制書状を予告し、任意書状を直接開ける', () => {
   const letter = {
-    id: 'letter-1', unread: true, issuedDay: 7, title: '実測の書状', summary: '人口13人',
+    id: 'letter-1', unread: true, announced: false, delivery: 'letter',
+    issuedDay: 7, title: '実測の書状', summary: '人口13人',
     elenaMessage: '人口の変化を、書状にまとめました。食料と仕事を確かめましょう。',
   };
   const objective = {
@@ -3010,15 +3089,15 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     kicker: '観測の案内', title: '島況を見る', detail: '現物12荷',
   };
   const unread = secretaryRouteFor({ letters: [letter], objective, objectiveAction, events, fallback });
-  assert.equal(unread.priority, 'unread-letter');
-  assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1' });
+  assert.equal(unread.priority, 'optional-letter');
+  assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1', delivery: 'letter' });
   assert.match(unread.detail, /7日目.*人口13人/);
   assert.equal(unread.speech, letter.elenaMessage);
   const goalBeforeReport = secretaryRouteFor({
-    letters: [{ ...letter, attention: 'notice' }], objective, objectiveAction, events, fallback,
+    messages: [{ ...letter, delivery: 'message' }], objective, objectiveAction, events, fallback,
   });
-  assert.equal(goalBeforeReport.priority, 'objective');
-  assert.equal(goalBeforeReport.tier, 'guidance');
+  assert.equal(goalBeforeReport.priority, 'tutorial-message');
+  assert.equal(goalBeforeReport.tier, 'notice');
   assert.deepEqual(Object.keys(GUIDANCE_TIERS), ['stop', 'action', 'guidance', 'notice']);
   const goalBeforeInfo = secretaryRouteFor({
     advice: [{
@@ -3029,14 +3108,14 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     objective, objectiveAction, events, fallback,
   });
   assert.equal(goalBeforeInfo.priority, 'objective', '止めない報告は現在目標を奪わない');
-  assert.deepEqual(goalBeforeReport.target, objectiveAction);
+  assert.deepEqual(goalBeforeReport.target, { kind: 'message', id: 'letter-1' });
   const report = secretaryRouteFor({
-    letters: [{ ...letter, attention: 'notice' }],
+    messages: [{ ...letter, delivery: 'message' }],
     objective: { ...objective, complete: true }, events: [], fallback,
   });
-  assert.equal(report.priority, 'unread-report');
+  assert.equal(report.priority, 'tutorial-message');
   assert.equal(report.tier, 'notice');
-  assert.deepEqual(report.target, { kind: 'letter', id: 'letter-1' });
+  assert.deepEqual(report.target, { kind: 'message', id: 'letter-1' });
   const goal = secretaryRouteFor({
     letters: [{ ...letter, unread: false }], objective, objectiveAction, events, fallback,
   });
@@ -3062,9 +3141,14 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(handoffRoute.speech, handoff.speech);
   assert.deepEqual(handoffRoute.target, { kind: 'tutorial-handoff' });
   const urgentBeforeHandoff = secretaryRouteFor({
+    letters: [{ ...letter, delivery: 'forced', attention: 'critical' }],
+    handoff, objective: nextObjective, objectiveAction, events, fallback,
+  });
+  assert.equal(urgentBeforeHandoff.priority, 'forced-letter', '重要書状は達成案内より先に予告する');
+  const optionalAfterHandoff = secretaryRouteFor({
     letters: [letter], handoff, objective: nextObjective, objectiveAction, events, fallback,
   });
-  assert.equal(urgentBeforeHandoff.priority, 'unread-letter', '要対応書状は達成案内より先に読む');
+  assert.equal(optionalAfterHandoff.priority, 'goal-complete', '任意書状より達成の切替を先に伝える');
   assert.equal(tutorialHandoffFor(nextObjective, nextObjective), null, '同じ目標の再描画では達成を再発行しない');
   assert.deepEqual(objectiveActionFor({ id: 'first-settlers-arrive' }, { buildings: [] }), {
     kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ',
@@ -3088,7 +3172,8 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
   assert.match(html, /<div id="secretary"[^>]*>[\s\S]*secretary-name[\s\S]*secretary-speech/);
-  assert.doesNotMatch(html, /secretary-action|もう一度言って/);
+  assert.match(html, /id="secretary-letter-action"[^>]*>[\s\S]*書状を開く/);
+  assert.doesNotMatch(html, /id="secretary-action"|もう一度言って/);
   assert.doesNotMatch(css, /secretary-repeat|secretary\.repeating/);
   assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
   assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
@@ -3098,6 +3183,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*50%/s);
   assert.match(css, /\.secretary\s*\{[^}]*rgba\(255,250,226[^}]*rgba\(235,220,181[^}]*color:\s*#392d20/s);
   assert.match(css, /\.sheet\s*\{[^}]*top:\s*var\(--primary-panel-top\)/s);
+  assert.match(css, /\.tutorial-objective-visible \.sheet\s*\{[^}]*top:/s);
 });
 
 test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {

@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.17.0-guidance-steps';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.18.0-elena-letters';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

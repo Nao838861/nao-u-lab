@@ -1,12 +1,12 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.17.0-guidance-steps';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.18.0-elena-letters';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.17.0-guidance-steps';
-import { analyzeRoadConnections } from './placement.js?v=v004.17.0-guidance-steps';
-import { compileRenderScene } from './render_scene.js?v=v004.17.0-guidance-steps';
+} from './engine_bridge.js?v=v004.18.0-elena-letters';
+import { analyzeRoadConnections } from './placement.js?v=v004.18.0-elena-letters';
+import { compileRenderScene } from './render_scene.js?v=v004.18.0-elena-letters';
 import {
   buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
-} from './visuals.js?v=v004.17.0-guidance-steps';
+} from './visuals.js?v=v004.18.0-elena-letters';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',

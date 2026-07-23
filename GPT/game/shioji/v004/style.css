@@ -181,10 +181,16 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .secretary > span { min-width: 0; display: grid; align-content: center; gap: 7px; padding: 11px 15px 11px 0; }
 .secretary-name { color: #76552d; font: 700 11px Georgia, "Yu Mincho", serif; letter-spacing: .03em; }
 .secretary p { display: -webkit-box; min-width: 0; margin: 0; overflow: hidden; color: #392d20; font: 600 14px/1.65 Georgia, "Yu Mincho", serif; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.secretary-letter-action { justify-self: start; min-height: 34px; border: 1px solid rgba(114,76,31,.7); border-radius: 7px; padding: 5px 13px; background: linear-gradient(#fff6d8,#e8ce91); box-shadow: 0 2px 5px rgba(75,49,20,.18); color: #4c351d; font: 700 11px Georgia, "Yu Mincho", serif; cursor: pointer; }
+.secretary-letter-action:hover { background: linear-gradient(#fffbe7,#efd9a4); }
+.secretary-letter-action:focus-visible { outline: 2px solid #8d5d28; outline-offset: 2px; }
+.secretary-letter-action[hidden] { display: none; }
+.secretary.has-letter-action p { -webkit-line-clamp: 2; }
 .secretary[data-secretary-tier="stop"] { border-color: rgba(157,66,52,.96); box-shadow: 0 0 0 3px rgba(157,66,52,.15), 0 16px 38px rgba(0,0,0,.36); }
 .secretary[data-secretary-tier="action"] { border-color: rgba(151,106,35,.96); box-shadow: 0 0 0 3px rgba(151,106,35,.13), 0 16px 38px rgba(0,0,0,.36); }
 .secretary[data-secretary-tier="notice"] { border-color: rgba(76,112,107,.72); }
-.secretary[data-secretary-priority="unread-letter"] { border-color: rgba(151,106,35,.94); box-shadow: inset 0 0 0 2px rgba(151,106,35,.15), 0 16px 38px rgba(0,0,0,.36); }
+.secretary[data-secretary-priority="forced-letter"] { border-color: rgba(157,66,52,.96); box-shadow: inset 0 0 0 2px rgba(157,66,52,.16), 0 16px 38px rgba(0,0,0,.36); }
+.secretary[data-secretary-priority="optional-letter"] { border-color: rgba(151,106,35,.94); box-shadow: inset 0 0 0 2px rgba(151,106,35,.15), 0 16px 38px rgba(0,0,0,.36); }
 .secretary[data-secretary-priority="timely-advice"] { border-color: rgba(151,106,35,.96); box-shadow: 0 0 0 2px rgba(151,106,35,.14), 0 16px 38px rgba(0,0,0,.36); }
 .secretary[data-secretary-priority="timely-message"] { border-color: rgba(67,105,100,.82); }
 .secretary[data-secretary-priority="important-event"] { border-color: rgba(157,76,61,.86); }
@@ -559,6 +565,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .secretary > span { gap: 3px; padding: 6px 8px 6px 0; }
   .secretary-name { font-size: 9px; }
   .secretary p { font-size: 11px; line-height: 1.45; }
+  .secretary-letter-action { min-height: 34px; padding: 4px 11px; font-size: 10px; }
   .top-menu { order: 5; position: fixed; left: 6px; right: 6px; top: 68px; height: 34px; justify-content: center; border: 0; padding: 0; background: rgba(15,42,45,.91); border-radius: 6px; }
   .top-menu button { flex: 1; height: 30px; min-width: 0; padding: 0 2px; font-size: 8px; }
   .top-menu .top-menu-subtle { display: none; }
@@ -582,6 +589,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   #toast-stack { left: 7px; width: min(270px, calc(100vw - 14px)); }
   .sheet-open #toast-stack { display: none; }
   .sheet { right: 5px; left: 5px; bottom: 111px; width: auto; }
+  .tutorial-objective-visible .sheet { top: calc(var(--primary-panel-top) + 94px); }
   .market-overview { min-width: 0; }
   .market-flow-row { grid-template-columns: minmax(54px,1.15fr) repeat(5, minmax(38px,.75fr)); gap: 3px; font-size: 9px; }
   .market-flow-row.header { font-size: 8px; }

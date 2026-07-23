@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.17.0-guidance-steps';
+import { snapshotToViewModel } from './view_model.js?v=v004.18.0-elena-letters';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

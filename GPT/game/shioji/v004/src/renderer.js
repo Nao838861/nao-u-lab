@@ -1,11 +1,11 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.17.0-guidance-steps';
-import { islandCalendar } from './ui_summary.js?v=v004.17.0-guidance-steps';
-import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.17.0-guidance-steps';
+} from './config.js?v=v004.18.0-elena-letters';
+import { islandCalendar } from './ui_summary.js?v=v004.18.0-elena-letters';
+import { compileRenderScene, mergeDrawables } from './render_scene.js?v=v004.18.0-elena-letters';
 import {
   buildingStructureLayout, pileVisual,
-} from './visuals.js?v=v004.17.0-guidance-steps';
+} from './visuals.js?v=v004.18.0-elena-letters';
 
 const MAX_TERRAIN_CACHE_PIXELS = 12_000_000;
 
