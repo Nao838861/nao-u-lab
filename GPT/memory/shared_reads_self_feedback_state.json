@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T02:27:36+09:00",
+  "updated_at": "2026-07-24T04:31:11+09:00",
   "reviewed_source_ts": [
+    "1780759560.252029",
     "1780802949.440169",
     "1784812374.972069",
     "1780837923.934419",
@@ -482,6 +483,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T04:31:11+09:00",
+      "selected": {
+        "id": "sr-1780759560-c4b349b0be",
+        "source_ts": "1780759560.252029",
+        "title": "Guerilla Prototyping — HOARD の忠実度別 prototype と theme/mechanic 検証",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・operation・evaluation を含む7タグを持つ。paper／low-fi／in-engine の忠実度を証明したい問いに合わせること、theme-fit と mechanic-fit を分けること、core fun の検証を polish／identity の完成度評価と混同しないことが、次の game-start 行動を変える独立 probe になるか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 2,
+        "reversibility": 3,
+        "total": 15
+      },
+      "decision": "defer",
+      "decision_reason": "合計15で採用条件の必須閾値は満たす。GDC Vault の講演とスライドを伴う詳細な shared-reads 本文は、忠実度ごとの検証目的、theme と mechanic の分離、low-fi が polish／identity／audience support を見落とす限界まで示しており、具体的な3問 probeへ変換できる。一方、既存の probe-20260621-q0-five-second-legibility は theme-mechanics mismatch、probe-20260602-game-scope-brief-cut-gate は first playable の問いと最小リスク検証、probe-20260706-paperclaw-prototype-hypothesis-contract は事前の observable verdict、probe-20260621-ai-readable-playtest-acceptance-surface は code／playtest／manual feel の証拠分離を既に扱う。HOARD 固有の『問いに合う忠実度を先に選ぶ』差分は残るが、現在のサイクル後半には game-start consumer と具体的な design_log artifact がなく、consumer／artifact／期待判断差を比較可能な形で lease できない。さらに Phase 4a 向け pending lease が既に1件あるため、active_probesへ先行追加せず、次の具体的なゲーム制作指示で既存4 probeだけでは忠実度選択を誤る evidence が出た時に再評価する。",
+      "existing_probes": [
+        "probe-20260621-q0-five-second-legibility",
+        "probe-20260602-game-scope-brief-cut-gate",
+        "probe-20260706-paperclaw-prototype-hypothesis-contract",
+        "probe-20260621-ai-readable-playtest-acceptance-surface"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、採用閾値は満たすが具体的な game-start consumer／artifact がないため defer する理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T02:27:36+09:00",
       "selected": {

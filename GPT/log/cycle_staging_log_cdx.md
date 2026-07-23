@@ -51,7 +51,34 @@ skipped: []
 - Slack 検証: `chat.postMessage` 1回、thread なし。ts `1784834821.252529`。投稿後の保存本文を再取得し、文字化けなしを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780759560-c4b349b0be
+    source_ts: "1780759560.252029"
+    title: "Guerilla Prototyping — HOARD の忠実度別 prototype と theme/mechanic 検証"
+    reason: "未レビューの最新 score 10 atom。paper／low-fi／in-engine の忠実度を問いに合わせ、theme-fit・mechanic-fit・polish/identity を分ける観点が、既存 game-start probes と異なる次回行動を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 2
+    reversibility: 3
+    total: 15
+  decision: defer
+  change:
+    summary: "採用閾値は満たすが、今サイクル後半に比較可能な game-start consumer／design_log artifact がなく、既存の Q0・scope brief・hypothesis contract・playtest acceptance probes と大半が重なるため state-only review とした。新規 probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
