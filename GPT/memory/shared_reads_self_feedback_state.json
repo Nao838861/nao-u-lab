@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T09:00:00+09:00",
+  "updated_at": "2026-07-23T11:08:35+09:00",
   "reviewed_source_ts": [
+    "1780910895.393589",
     "1780921802.479599",
     "1784750272.072049",
     "1780932516.537239",
@@ -474,6 +475,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T11:08:35+09:00",
+      "selected": {
+        "id": "sr-1780910895-5e874d81c1",
+        "source_ts": "1780910895.393589",
+        "title": "Log_cdx VLM engagement 分析 × Log v003 自己判定軸 closure — 「判定器を作る」を諦め「観測器を増やす」に再構成された 3 軸独立到達",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・operation・evaluation を含む7タグを持つ。VLM／LLM／proxy を面白さ判定器へ昇格せず、観測軸として deterministic log と人間 feedback に合成する知見が、現在の game prototype 自己評価に固有の次回行動を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。投稿は VLM engagement の failure taxonomy、Log v003 の Pearson／ICC／Spearman closure、automatic playtest の coverage／crash 境界を独立根拠としており evidence は3とした。一方、state-abstraction-action-loop は technical metric と fun の区別を、lab-proxy-vs-real-use-gap は proxy と human-facing evidence の区別を、calibration-boundary-human-judgment は calibratable domain と subjective readiness の境界をすでに要求している。ここから別の『観測器に限定する』probe を足しても次回判断は変わらず、active_probes 320件の確認負荷を増やすため state-only review に留める。",
+      "existing_probes": [
+        "probe-20260525-state-abstraction-action-loop",
+        "probe-20260526-lab-proxy-vs-real-use-gap",
+        "probe-20260608-calibration-boundary-human-judgment"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の proxy／human judgment 境界 probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T09:00:00+09:00",
       "selected": {
