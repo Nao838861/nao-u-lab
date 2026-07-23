@@ -1,9 +1,11 @@
-import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.11.0-elena-guidance';
+import { JOB_LABELS, SECTION_LABELS } from './config.js?v=v004.13.0-elena-voice';
 import {
   LADDER, MAINLAND_AID, P, companyStockReleasePrice, householdClass, productionCost,
-} from './engine_bridge.js?v=v004.11.0-elena-guidance';
-import { analyzeRoadConnections } from './placement.js?v=v004.11.0-elena-guidance';
-import { buildingAppearance, pileVisual, trailVisual } from './visuals.js?v=v004.11.0-elena-guidance';
+} from './engine_bridge.js?v=v004.13.0-elena-voice';
+import { analyzeRoadConnections } from './placement.js?v=v004.13.0-elena-voice';
+import {
+  buildingAppearance, buildingStructureLayout, pileVisual, trailVisual, yardSlots, yardStockRows,
+} from './visuals.js?v=v004.13.0-elena-voice';
 
 const INVENTORY_SECTIONS = Object.freeze([
   'input', 'output', 'storage', 'construction', 'inbound', 'outbound', 'pickup',
@@ -165,6 +167,14 @@ function buildingEndpoint(buildingById, endpoint) {
 
 function carrierRows(snapshot, buildings) {
   const buildingById = new Map(buildings.map(building => [building.id, building]));
+  const marketBuilding = buildings.find(building => building.type === 'market');
+  const marketEndpoint = marketBuilding
+    ? {
+      label: '市場',
+      x: marketBuilding.entrance?.x ?? marketBuilding.x + marketBuilding.width / 2,
+      y: marketBuilding.entrance?.y ?? marketBuilding.y + marketBuilding.height / 2,
+    }
+    : { label: '市場', x: snapshot.economy.market.x, y: snapshot.economy.market.y };
   const hauls = snapshot.physical.haulJobs
     .filter(job => job.status !== 'completed' && job.carrier?.position)
     .map(job => ({
@@ -181,21 +191,38 @@ function carrierRows(snapshot, buildings) {
       from: buildingEndpoint(buildingById, job.from),
       to: buildingEndpoint(buildingById, job.to),
     }));
-  const households = snapshot.economy.households.map(household => ({
-    id: `household:${household.id}`,
-    householdId: household.id,
-    kind: 'household',
-    x: household.px ?? household.x,
-    y: household.py ?? household.y,
-    state: household.state,
-    job: household.job,
-    members: household.members?.length ?? 0,
-    goods: household.marketCarrier?.cargo?.goods ?? null,
-    amount: household.marketCarrier?.cargo?.qty ?? 0,
-    path: (household.marketCarrier?.path ?? []).map(point => ({ ...point })),
-    from: { label: JOB_LABELS[household.job] ?? household.job, x: household.x, y: household.y },
-    to: { label: household.state === 'toMarket' ? '市場' : '家', x: household.x, y: household.y },
-  }));
+  const households = snapshot.economy.households.map(household => {
+    const home = {
+      label: `${JOB_LABELS[household.job] ?? household.job}の家`,
+      x: household.x,
+      y: household.y,
+    };
+    const work = Number.isFinite(household.wx) && Number.isFinite(household.wy)
+      ? { label: '仕事場', x: household.wx, y: household.wy }
+      : home;
+    const from = household.state === 'toHome'
+      ? (household.marketCarrier ? marketEndpoint : work)
+      : home;
+    const to = ['toMarket', 'atMarket'].includes(household.state)
+      ? marketEndpoint
+      : household.state === 'toWork' ? work : home;
+    return {
+      id: `household:${household.id}`,
+      householdId: household.id,
+      kind: 'household',
+      x: household.px ?? household.x,
+      y: household.py ?? household.y,
+      state: household.state,
+      job: household.job,
+      members: household.members?.length ?? 0,
+      productionMultiplier: household.productionMultiplier ?? 0,
+      goods: household.marketCarrier?.cargo?.goods ?? null,
+      amount: household.marketCarrier?.cargo?.qty ?? 0,
+      path: (household.marketCarrier?.path ?? []).map(point => ({ ...point })),
+      from,
+      to,
+    };
+  });
   return [...hauls, ...households];
 }
 
@@ -309,6 +336,14 @@ export function snapshotToViewModel(snapshot) {
       pantryStock: pantryGroups[0] ?? null,
     };
   });
+  const pantryByBuilding = new Map(households.map(household => [
+    household.buildingId, household.pantry,
+  ]));
+  for (const building of buildings) {
+    building.structure = buildingStructureLayout(building);
+    building.yardStock = yardStockRows(building, pantryByBuilding.get(building.id) ?? []);
+    building.yardSlots = yardSlots(building, building.yardStock);
+  }
   const stalls = Object.entries(snapshot.economy.stalls).flatMap(([goods, rows]) => (
     rows.map(stall => ({ goods, ...stall, visual: pileVisual(stall.qty, goods) }))
   ));

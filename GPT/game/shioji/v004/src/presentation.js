@@ -15,6 +15,13 @@ function eventPoint(events, carrierId, type) {
     : null;
 }
 
+function carrierEndpoint(carrier, endpoint) {
+  const point = carrier?.[endpoint];
+  return point && Number.isFinite(point.x) && Number.isFinite(point.y)
+    ? { x: point.x, y: point.y }
+    : null;
+}
+
 function interpolateCarrier(from, to, alpha) {
   return {
     ...to,
@@ -27,13 +34,18 @@ function interpolateCarriers(fromRows, toRows, events, alpha) {
   const fromById = new Map(fromRows.map(row => [row.id, row]));
   const toIds = new Set(toRows.map(row => row.id));
   const rows = toRows.map(to => {
-    const from = fromById.get(to.id) ?? eventPoint(events, to.id, 'departure') ?? to;
+    const from = fromById.get(to.id)
+      ?? eventPoint(events, to.id, 'departure')
+      ?? carrierEndpoint(to, 'from')
+      ?? to;
     return interpolateCarrier(from, to, alpha);
   });
   if (alpha < 1) {
     for (const from of fromRows) {
       if (toIds.has(from.id)) continue;
-      const destination = eventPoint(events, from.id, 'arrival') ?? from;
+      const destination = eventPoint(events, from.id, 'arrival')
+        ?? carrierEndpoint(from, 'to')
+        ?? from;
       rows.push(interpolateCarrier(from, { ...from, ...destination }, alpha));
     }
   }

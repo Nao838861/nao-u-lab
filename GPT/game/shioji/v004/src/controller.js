@@ -1,4 +1,4 @@
-import { snapshotToViewModel } from './view_model.js?v=v004.11.0-elena-guidance';
+import { snapshotToViewModel } from './view_model.js?v=v004.13.0-elena-voice';
 
 export function createViewController(api) {
   if (!api?.snapshot || !api?.advanceTicks || !api?.applyOperation) {

@@ -1,7 +1,10 @@
 import {
   BUILDING_COLORS, GOODS_ART, GOODS_LABELS, JOB_ICONS, JOB_LABELS, SECTION_LABELS, TERRAIN_COLORS,
-} from './config.js?v=v004.11.0-elena-guidance';
-import { islandCalendar } from './ui_summary.js?v=v004.11.0-elena-guidance';
+} from './config.js?v=v004.13.0-elena-voice';
+import { islandCalendar } from './ui_summary.js?v=v004.13.0-elena-voice';
+import {
+  buildingStructureLayout, pileVisual,
+} from './visuals.js?v=v004.13.0-elena-voice';
 
 function keyOf(x, y) {
   return `${x},${y}`;
@@ -191,6 +194,26 @@ export class Renderer {
         building.x, building.y, building.width, building.height,
         fill, '#455344', 0.9,
       );
+      const structure = building.structure ?? buildingStructureLayout(building);
+      if (structure.openYard) {
+        const yardFill = building.type === 'port' ? '#aa9472'
+          : building.type === 'market' ? '#c2a873' : '#9a855c';
+        this.footprint(
+          building.x + building.width * 0.66,
+          building.y + building.height * 0.12,
+          building.width * 0.22,
+          building.height * 0.7,
+          yardFill, '#665943', 0.54,
+        );
+        this.footprint(
+          building.x + building.width * 0.12,
+          building.y + building.height * 0.66,
+          building.width * 0.76,
+          building.height * 0.22,
+          yardFill, '#665943', 0.54,
+        );
+      }
+      for (const slot of building.yardSlots ?? []) this.drawYardMarker(slot);
     }
     const selected = model.buildings.find(building => building.id === this.selectedBuildingId);
     if (selected) {
@@ -199,6 +222,37 @@ export class Renderer {
         '#f2c45d', '#ffe39a', 0.34,
       );
     }
+  }
+
+  drawYardMarker({ row, x, y }) {
+    const point = this.camera.project(x, y, 1);
+    const scale = this.camera.zoom;
+    const ctx = this.ctx;
+    const inward = ['input', 'inbound', 'pickup'].includes(row.section);
+    const outward = ['output', 'outbound'].includes(row.section);
+    ctx.save();
+    ctx.globalAlpha = 0.6;
+    ctx.strokeStyle = inward ? '#b9d8c8' : outward ? '#f0bd61' : '#d6c58f';
+    ctx.lineWidth = Math.max(1, 1.4 * scale);
+    if (inward || outward) {
+      const direction = outward ? 1 : -1;
+      ctx.beginPath();
+      ctx.moveTo(point.x - direction * 8 * scale, point.y + 5 * scale);
+      ctx.lineTo(point.x + direction * 8 * scale, point.y + 5 * scale);
+      ctx.lineTo(point.x + direction * 4 * scale, point.y + 2 * scale);
+      ctx.moveTo(point.x + direction * 8 * scale, point.y + 5 * scale);
+      ctx.lineTo(point.x + direction * 4 * scale, point.y + 8 * scale);
+      ctx.stroke();
+    } else {
+      ctx.strokeRect(point.x - 8 * scale, point.y, 16 * scale, 9 * scale);
+      ctx.beginPath();
+      ctx.moveTo(point.x - 4 * scale, point.y);
+      ctx.lineTo(point.x - 4 * scale, point.y + 9 * scale);
+      ctx.moveTo(point.x + 4 * scale, point.y);
+      ctx.lineTo(point.x + 4 * scale, point.y + 9 * scale);
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
   drawRoads(model) {
@@ -372,32 +426,17 @@ export class Renderer {
         kind: 'building', data: building,
         depth: buildingDepth,
       });
-      building.shelfGroups.slice(0, 3).forEach((row, index) => {
-        const column = index % 3;
+      (building.yardSlots ?? []).forEach(({ row, x, y }, index) => {
         drawables.push({
           kind: 'inventory',
           data: {
             row,
             ownerId: building.id,
-            x: building.x + building.width - 0.42 - column * 0.62,
-            y: building.y + building.height - 0.34,
+            x,
+            y,
           },
           depth: buildingDepth + 0.1 + index * 0.001,
         });
-      });
-    }
-    for (const household of model.households) {
-      const home = model.buildings.find(building => building.id === household.buildingId);
-      if (!home) continue;
-      if (household.pantryStock) drawables.push({
-        kind: 'inventory',
-        data: {
-          row: household.pantryStock,
-          ownerId: home.id,
-          x: home.x + 0.48,
-          y: home.y + home.height - 0.35,
-        },
-        depth: home.x + home.width + home.y + home.height + 0.2,
       });
     }
     const market = model.buildings.find(building => building.type === 'market');
@@ -534,16 +573,11 @@ export class Renderer {
     const colors = BUILDING_COLORS[building.type] ?? BUILDING_COLORS.default;
     const appearance = building.appearance;
     const farm = ['farm', 'pasture'].includes(appearance.archetype);
-    const market = appearance.archetype === 'market';
-    const inset = market ? 1.55 : farm ? 0.45 : Math.min(0.4, Math.min(building.width, building.height) * 0.1);
-    const bodyWidth = market ? Math.max(1.2, building.width - inset * 2)
-      : farm ? Math.min(1.55 + appearance.tier * 0.12, building.width - 0.8)
-        : building.width - inset * 2;
-    const bodyHeight = market ? Math.max(1.2, building.height - inset * 2)
-      : farm ? Math.min(1.45 + appearance.tier * 0.12, building.height - 0.8)
-        : building.height - inset * 2;
-    const bodyX = building.x + inset;
-    const bodyY = building.y + inset;
+    const structure = building.structure ?? buildingStructureLayout(building);
+    const bodyWidth = structure.width;
+    const bodyHeight = structure.height;
+    const bodyX = structure.x;
+    const bodyY = structure.y;
     const elevation = appearance.elevation;
     const ctx = this.ctx;
     ctx.save();
@@ -677,12 +711,13 @@ export class Renderer {
     const { archetype, accent } = building.appearance;
     const ctx = this.ctx;
     const scale = this.camera.zoom;
+    const structure = building.structure ?? buildingStructureLayout(building);
     const point = this.camera.project(
-      building.x + building.width * 0.23,
-      building.y + building.height * 0.76,
+      structure.x + structure.width * 0.28,
+      structure.y + structure.height * 0.78,
       5,
     );
-    if (['workshop', 'warehouse'].includes(archetype)) {
+    if (archetype === 'workshop') {
       ctx.strokeStyle = '#4f3525';
       ctx.lineWidth = Math.max(2, 4 * scale);
       for (let row = 0; row < 3; row += 1) {
@@ -735,13 +770,25 @@ export class Renderer {
     const point = this.camera.project(x, y, 5);
     const scale = this.camera.zoom;
     const ctx = this.ctx;
+    const count = row.visual.spriteCount;
+    const columns = count <= 6 ? 3 : count <= 12 ? 4 : 6;
+    const spriteScale = count <= 6 ? 0.68 : count <= 12 ? 0.56 : 0.46;
     ctx.save();
-    for (let index = 0; index < row.visual.spriteCount; index += 1) {
-      const spriteX = point.x + (index % 3) * 5 * scale - 5 * scale;
-      const spriteY = point.y - Math.floor(index / 3) * 5 * scale - index * 1.4 * scale;
-      this.drawGoodsSprite(row.visual.art, spriteX, spriteY, scale * 0.72);
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = '#5c432c';
+    ctx.fillRect(point.x - 10 * scale, point.y + 2 * scale, 20 * scale, 3 * scale);
+    ctx.globalAlpha = 1;
+    const positions = [];
+    for (let index = 0; index < count; index += 1) {
+      const column = index % columns;
+      const layer = Math.floor(index / columns);
+      positions.push({
+        x: point.x + (column - (columns - 1) / 2) * 4.6 * scale,
+        y: point.y - layer * 4.4 * scale - (column % 2) * 1.1 * scale,
+      });
     }
-    if (scale >= 1.02 || ownerId === this.selectedBuildingId) {
+    this.drawGoodsPileSprites(row.visual.art, positions, scale * spriteScale, count <= 12);
+    if (scale >= 1.16 || ownerId === this.selectedBuildingId) {
       const text = `${SECTION_LABELS[row.section] ?? row.section}${row.visual.label}`;
       ctx.font = `700 ${Math.max(7, 8 * scale)}px ui-sans-serif`;
       ctx.textAlign = 'center';
@@ -754,9 +801,52 @@ export class Renderer {
     ctx.restore();
   }
 
-  drawGoodsSprite(art, x, y, scale) {
+  drawGoodsPileSprites(art, positions, scale, outlined) {
+    if (!positions.length) return;
     const ctx = this.ctx;
-    ctx.save();
+    ctx.fillStyle = art.color;
+    ctx.strokeStyle = art.dark;
+    ctx.lineWidth = Math.max(1, scale);
+    ctx.beginPath();
+    for (const { x, y } of positions) {
+      if (art.shape === 'round') {
+        ctx.moveTo(x + 6 * scale, y);
+        ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
+      } else if (art.shape === 'rock') {
+        ctx.moveTo(x - 5 * scale, y + 2 * scale);
+        ctx.lineTo(x - 2 * scale, y - 4 * scale);
+        ctx.lineTo(x + 4 * scale, y - 3 * scale);
+        ctx.lineTo(x + 6 * scale, y + 2 * scale);
+        ctx.closePath();
+      } else if (art.shape === 'sack') {
+        ctx.moveTo(x + 4.5 * scale, y);
+        ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
+      } else {
+        ctx.rect(
+          x - 5 * scale,
+          y - 4 * scale,
+          10 * scale,
+          art.shape === 'bar' ? 3 * scale : 8 * scale,
+        );
+      }
+    }
+    ctx.fill();
+    if (outlined) {
+      ctx.stroke();
+      if (art.shape === 'round') {
+        ctx.beginPath();
+        for (const { x, y } of positions) {
+          ctx.moveTo(x + 6 * scale, y - 0.8 * scale);
+          ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+
+  drawGoodsSprite(art, x, y, scale, isolated = true, outlined = true) {
+    const ctx = this.ctx;
+    if (isolated) ctx.save();
     ctx.fillStyle = art.color;
     ctx.strokeStyle = art.dark;
     ctx.lineWidth = Math.max(1, scale);
@@ -764,10 +854,12 @@ export class Renderer {
       ctx.beginPath();
       ctx.ellipse(x, y, 6 * scale, 2.7 * scale, -0.2, 0, Math.PI * 2);
       ctx.fill();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
-      ctx.stroke();
+      if (outlined) {
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x + 4.5 * scale, y - 0.8 * scale, 1.5 * scale, 0, Math.PI * 2);
+        ctx.stroke();
+      }
     } else if (art.shape === 'rock') {
       ctx.beginPath();
       ctx.moveTo(x - 5 * scale, y + 2 * scale);
@@ -776,17 +868,19 @@ export class Renderer {
       ctx.lineTo(x + 6 * scale, y + 2 * scale);
       ctx.closePath();
       ctx.fill();
-      ctx.stroke();
+      if (outlined) ctx.stroke();
     } else if (art.shape === 'sack') {
       ctx.beginPath();
       ctx.ellipse(x, y, 4.5 * scale, 5 * scale, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.stroke();
+      if (outlined) ctx.stroke();
     } else {
       ctx.fillRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
-      ctx.strokeRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
+      if (outlined) {
+        ctx.strokeRect(x - 5 * scale, y - 4 * scale, 10 * scale, art.shape === 'bar' ? 3 * scale : 8 * scale);
+      }
     }
-    ctx.restore();
+    if (isolated) ctx.restore();
   }
 
   drawMarketStall(stall) {
@@ -957,20 +1051,51 @@ export class Renderer {
       ctx.fill();
       if (carrier.goods) {
         const art = GOODS_ART[carrier.goods] ?? GOODS_ART.tools;
-        this.drawGoodsSprite(art, point.x, point.y - 13 * scale, scale * 0.62);
+        const cargoCount = Math.min(3, pileVisual(carrier.amount, carrier.goods).spriteCount);
+        for (let index = 0; index < cargoCount; index += 1) {
+          this.drawGoodsSprite(
+            art,
+            point.x + (index - (cargoCount - 1) / 2) * 4 * scale,
+            point.y - 13 * scale - (index % 2) * 2 * scale,
+            scale * 0.52,
+            false,
+          );
+        }
       }
     } else {
-      const count = Math.max(1, Math.min(5, carrier.members ?? carrier.people ?? 1));
+      const count = Math.max(1, Math.min(8, carrier.members ?? carrier.people ?? 1));
+      const shopping = ['toMarket', 'atMarket'].includes(carrier.state)
+        || (carrier.state === 'toHome' && Boolean(carrier.goods));
+      const working = carrier.state === 'toWork'
+        || (carrier.state === 'home' && carrier.productionMultiplier > 0);
+      const moving = ['arriving', 'toMarket', 'toHome', 'toWork'].includes(carrier.state);
+      const bodyColor = shopping ? '#b78349'
+        : working ? '#4f746d'
+          : carrier.state === 'building' ? '#9a6b43' : '#6a7660';
       for (let index = count - 1; index >= 0; index -= 1) {
         const offsetX = index * 5 * scale;
         const offsetY = index * 3 * scale;
-        const bob = Math.sin(this.pulse * 7 + carrier.x + index) * scale;
+        const bob = moving ? Math.sin(this.pulse * 7 + carrier.x + index) * scale : 0;
         ctx.fillStyle = '#d6b087';
         ctx.beginPath();
         ctx.arc(point.x + offsetX, point.y - 13 * scale + offsetY + bob, 3.2 * scale, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = index === 0 ? '#426b64' : '#6a7660';
+        ctx.fillStyle = index === 0 ? bodyColor : '#70775f';
         ctx.fillRect(point.x - 3 * scale + offsetX, point.y - 10 * scale + offsetY + bob, 6 * scale, 10 * scale);
+      }
+      if (shopping) {
+        ctx.strokeStyle = '#e1c17b';
+        ctx.lineWidth = Math.max(1, 1.2 * scale);
+        ctx.strokeRect(point.x - 7 * scale, point.y - 5 * scale, 9 * scale, 6 * scale);
+      } else if (working) {
+        ctx.strokeStyle = '#d9c69a';
+        ctx.lineWidth = Math.max(1, 1.4 * scale);
+        ctx.beginPath();
+        ctx.moveTo(point.x - 7 * scale, point.y - 13 * scale);
+        ctx.lineTo(point.x + 2 * scale, point.y - 3 * scale);
+        ctx.moveTo(point.x - 3 * scale, point.y - 12 * scale);
+        ctx.lineTo(point.x - 8 * scale, point.y - 7 * scale);
+        ctx.stroke();
       }
     }
     ctx.restore();

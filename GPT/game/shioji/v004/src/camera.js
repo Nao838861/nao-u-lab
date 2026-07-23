@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.11.0-elena-guidance';
+import { TILE } from './config.js?v=v004.13.0-elena-voice';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

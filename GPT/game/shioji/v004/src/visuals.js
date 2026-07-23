@@ -1,6 +1,12 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.11.0-elena-guidance';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.13.0-elena-voice';
 
-export const MAX_PILE_SPRITES = 5;
+export const MAX_PILE_SPRITES = 24;
+export const MAX_YARD_GOODS = 6;
+
+const SECTION_ORDER = Object.freeze([
+  'input', 'inbound', 'pickup', 'output', 'outbound',
+  'storage', 'companyStock', 'construction', 'pantry',
+]);
 
 function finiteAmount(value) {
   return Number.isFinite(value) ? Math.max(0, value) : 0;
@@ -14,16 +20,91 @@ export function amountLabel(value) {
 
 export function pileVisual(amount, goods) {
   const safeAmount = finiteAmount(amount);
-  const spriteCount = safeAmount <= 1e-9
-    ? 0
-    : Math.min(MAX_PILE_SPRITES, Math.max(1, Math.ceil(Math.log2(safeAmount + 1))));
+  let spriteCount = 0;
+  if (safeAmount > 1e-9) {
+    if (safeAmount <= 12) {
+      spriteCount = Math.ceil(safeAmount);
+    } else if (safeAmount <= 48) {
+      spriteCount = 12 + Math.ceil((safeAmount - 12) / 6);
+    } else if (safeAmount <= 240) {
+      spriteCount = 18 + Math.ceil((safeAmount - 48) / 48);
+    } else {
+      spriteCount = Math.min(
+        MAX_PILE_SPRITES,
+        22 + Math.ceil(Math.log2(safeAmount / 240)),
+      );
+    }
+  }
   return Object.freeze({
     amount: safeAmount,
     label: amountLabel(safeAmount),
     spriteCount,
-    clipped: spriteCount === MAX_PILE_SPRITES && safeAmount > (2 ** (MAX_PILE_SPRITES - 1)),
+    clipped: spriteCount === MAX_PILE_SPRITES && safeAmount > 480,
+    amountPerSprite: spriteCount ? safeAmount / spriteCount : 0,
     art: GOODS_ART[goods] ?? Object.freeze({ color: '#bd9a63', dark: '#6f593c', shape: 'crate' }),
   });
+}
+
+export function buildingStructureLayout(building) {
+  const archetype = building.appearance?.archetype ?? 'workshop';
+  if (archetype === 'market') {
+    const inset = 1.55;
+    return Object.freeze({
+      x: building.x + inset,
+      y: building.y + inset,
+      width: Math.max(1.2, building.width - inset * 2),
+      height: Math.max(1.2, building.height - inset * 2),
+      openYard: true,
+    });
+  }
+  if (['farm', 'pasture'].includes(archetype)) {
+    return Object.freeze({
+      x: building.x + 0.45,
+      y: building.y + 0.45,
+      width: Math.min(1.55 + (building.appearance?.tier ?? 0) * 0.12, building.width - 0.8),
+      height: Math.min(1.45 + (building.appearance?.tier ?? 0) * 0.12, building.height - 0.8),
+      openYard: false,
+    });
+  }
+  return Object.freeze({
+    x: building.x + 0.28,
+    y: building.y + 0.28,
+    width: Math.max(1.25, Math.min(building.width - 0.9, building.width * 0.58)),
+    height: Math.max(1.2, Math.min(building.height - 0.9, building.height * 0.58)),
+    openYard: true,
+  });
+}
+
+export function yardStockRows(building, pantryRows = []) {
+  const sectionRank = new Map(SECTION_ORDER.map((section, index) => [section, index]));
+  return [
+    ...(building.shelfGroups ?? []).flatMap(group => group.items ?? []),
+    ...pantryRows,
+  ]
+    .filter(row => row?.visual?.amount > 1e-9)
+    .sort((left, right) => (
+      (sectionRank.get(left.section) ?? SECTION_ORDER.length)
+      - (sectionRank.get(right.section) ?? SECTION_ORDER.length)
+      || right.visual.amount - left.visual.amount
+      || String(left.goods).localeCompare(String(right.goods))
+    ))
+    .slice(0, MAX_YARD_GOODS);
+}
+
+export function yardSlots(building, rows) {
+  const candidates = [
+    [0.78, 0.30],
+    [0.80, 0.55],
+    [0.78, 0.80],
+    [0.53, 0.80],
+    [0.28, 0.80],
+    [0.58, 0.62],
+  ];
+  return rows.slice(0, MAX_YARD_GOODS).map((row, index) => Object.freeze({
+    row,
+    x: building.x + building.width * candidates[index][0],
+    y: building.y + building.height * candidates[index][1],
+  }));
 }
 
 export function trailVisual(tread) {

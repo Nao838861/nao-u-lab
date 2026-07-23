@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.11.0-elena-guidance';
+import { SPEEDS } from './config.js?v=v004.13.0-elena-voice';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

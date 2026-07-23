@@ -49,7 +49,8 @@ import {
 import { islandCalendar, islandHealthSummary, recentCompanySummary } from '../src/ui_summary.js';
 import { snapshotToViewModel } from '../src/view_model.js';
 import {
-  MAX_PILE_SPRITES, buildingAppearance, pileVisual, trailVisual,
+  MAX_PILE_SPRITES, MAX_YARD_GOODS, buildingAppearance, buildingStructureLayout,
+  pileVisual, trailVisual, yardSlots, yardStockRows,
 } from '../src/visuals.js';
 
 let passed = 0;
@@ -307,6 +308,22 @@ test('チュートリアル段2: 書状はsnapshotの実数値を本文へ差し
   assert.equal(TUTORIAL_LETTER_ATTENTION['tutorial-bankruptcy-consequence'], 'critical');
   assert.equal(TUTORIAL_LETTER_ATTENTION['chapter-two-close'], 'notice');
   assert.equal(TUTORIAL_LETTERS.every(definition => typeof definition.render === 'function'), true);
+});
+
+test('第四章回帰: 利益・見送り・失効が未確定でも締め書状を安全に描画する', () => {
+  const definition = TUTORIAL_LETTERS.find(letter => letter.id === 'chapter-four-close');
+  const state = {
+    goalResults: {
+      'complete-profitable-order': { evidence: { completed: false } },
+      'let-skippable-order-expire': {
+        evidence: { selected: null, expired: null },
+      },
+    },
+  };
+  const letter = definition.render({ state });
+  assert.match(letter.summary, /採算を比べる準備/);
+  assert.equal(letter.facts.skipped.expired, null);
+  assert.doesNotMatch(letter.body, /日目に実際に失効/);
 });
 
 test('チュートリアル段2: 実ロット数と実帳簿値を書状へ渡してもworldを変えない', () => {
@@ -1876,7 +1893,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.11.0-elena-guidance');
+  assert.equal(VERSION, 'v004.13.0-elena-voice');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2125,6 +2142,27 @@ test('段2: full snapshotを地形・建物・キャリア・棚の不変描画�
   assert.throws(() => { model.terrain[0][0].kind = 'coal'; }, TypeError);
 });
 
+test('可視物流AC: 家族列は実人数・実活動状態・実仕事先を描画モデルへ渡す', () => {
+  const api = createEngineApi(buildBaseCity(11));
+  api.advanceDays(30);
+  const snapshot = api.snapshot({ scope: 'full' });
+  const household = snapshot.economy.households[0];
+  assert.ok(household);
+  household.state = 'toWork';
+  household.wx = household.x + 3;
+  household.wy = household.y + 2;
+  household.productionMultiplier = 0.75;
+  const model = snapshotToViewModel(snapshot);
+  const carrier = model.carriers.find(row => row.id === `household:${household.id}`);
+  assert.equal(carrier.state, 'toWork');
+  assert.equal(carrier.members, household.members.length);
+  assert.equal(carrier.productionMultiplier, 0.75);
+  assert.deepEqual(
+    { x: carrier.to.x, y: carrier.to.y },
+    { x: household.wx, y: household.wy },
+  );
+});
+
 test('UI向上段2: 世帯の財布・家族・充足・空腹と加工棚を不変モデルで公開する', () => {
   const api = createEngineApi(buildBaseCity(11));
   api.advanceDays(30);
@@ -2316,7 +2354,8 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
   for (const id of ['food-flow-chart', 'food-stock-chart', 'population-chart', 'finance-chart', 'price-chart']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
-  assert.match(html, /id="tutorial-system"/);
+  assert.match(html, /id="tutorial-goal"/);
+  assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
   assert.match(main, /data-stock-target/);
   assert.match(main, /event\.key !== 'Enter'/);
   assert.match(main, /focusout[\s\S]*applyStockTargetInput/);
@@ -2417,7 +2456,7 @@ test('段7: Lvイベント後の世帯文化Lvが職建物の外観キーと段�
   assert.equal(buildingAppearance({ type: 'future-job', cultureLevel: 2, vacant: false }).fallback, true);
 });
 
-test('段8: 在庫量を代表スプライト上限と正確な数字へ変換しゼロも保持する', () => {
+test('可視物流AB: 少量は一荷ずつ、大量も単調に増える荷姿と正確な数字へ変換する', () => {
   const zero = pileVisual(0, 'log');
   const fraction = pileVisual(0.55, 'fish');
   const large = pileVisual(500, 'iron');
@@ -2427,6 +2466,57 @@ test('段8: 在庫量を代表スプライト上限と正確な数字へ変換�
   assert.equal(large.spriteCount, MAX_PILE_SPRITES);
   assert.equal(large.clipped, true);
   assert.equal(large.label, '500');
+  const amounts = [0, 0.5, 1, 2, 6, 12, 13, 48, 49, 240, 241, 500, 2000];
+  const counts = amounts.map(amount => pileVisual(amount, 'log').spriteCount);
+  assert.ok(counts.every((count, index) => index === 0 || count >= counts[index - 1]),
+    `在庫が増えた時に荷姿が減らない: ${counts.join(',')}`);
+  assert.equal(pileVisual(12, 'log').spriteCount, 12, '12荷までは一荷一記号');
+  assert.ok(pileVisual(48, 'log').spriteCount > pileVisual(12, 'log').spriteCount);
+});
+
+test('可視物流AB: 3×3敷地の建屋を奥へ寄せ、各品目を最大6つのヤード内slotへ置く', () => {
+  const building = {
+    id: 'yard-fixture',
+    x: 10,
+    y: 20,
+    width: 3,
+    height: 3,
+    appearance: { archetype: 'workshop', tier: 0 },
+    shelfGroups: [{
+      section: 'input',
+      items: [
+        { section: 'input', goods: 'log', visual: pileVisual(8, 'log') },
+        { section: 'input', goods: 'coal', visual: pileVisual(4, 'coal') },
+      ],
+    }, {
+      section: 'output',
+      items: [
+        { section: 'output', goods: 'tools', visual: pileVisual(3, 'tools') },
+        { section: 'output', goods: 'iron', visual: pileVisual(2, 'iron') },
+      ],
+    }],
+  };
+  const pantry = [
+    { section: 'pantry', goods: 'fish', visual: pileVisual(5, 'fish') },
+    { section: 'pantry', goods: 'wheat', visual: pileVisual(6, 'wheat') },
+    { section: 'pantry', goods: 'veg', visual: pileVisual(7, 'veg') },
+  ];
+  const rows = yardStockRows(building, pantry);
+  assert.equal(rows.length, MAX_YARD_GOODS);
+  assert.deepEqual(rows.slice(0, 2).map(row => row.goods), ['log', 'coal']);
+  assert.ok(rows.some(row => row.goods === 'tools') && rows.some(row => row.goods === 'veg'),
+    '代表一品へ潰さず施設棚とpantryの各品目を残す');
+  const slots = yardSlots(building, rows);
+  assert.equal(slots.length, MAX_YARD_GOODS);
+  assert.ok(slots.every(slot => (
+    slot.x >= building.x && slot.x <= building.x + building.width
+    && slot.y >= building.y && slot.y <= building.y + building.height
+  )));
+  const structure = buildingStructureLayout(building);
+  assert.ok(structure.width <= building.width * 0.6);
+  assert.ok(structure.height <= building.height * 0.6);
+  assert.ok(structure.x + structure.width < building.x + building.width);
+  assert.ok(structure.y + structure.height < building.y + building.height);
 });
 
 test('段8: 区分棚・pantry・市場屋台をsnapshotと同量で世帯単位に表示する', () => {
@@ -2508,6 +2598,33 @@ test('段9: tick間とdayEnd束イベントを表示時間へ展開しキャリ�
   assert.deepEqual(
     arrived.carriers.find(row => row.id === 'haul:h1'),
     { ...from.carriers[0], x: 2.5, y: 3 },
+  );
+  const lifecycleFrom = {
+    carriers: [{
+      id: 'haul:old', kind: 'cart', x: 6, y: 4,
+      from: { x: 2, y: 4 }, to: { x: 10, y: 4 },
+    }],
+    portCalls: [], buildings: [], portBerth: null,
+  };
+  const lifecycleTo = {
+    carriers: [{
+      id: 'haul:new', kind: 'cart', x: 4, y: 8,
+      from: { x: 1, y: 8 }, to: { x: 12, y: 8 },
+    }],
+    portCalls: [], buildings: [], portBerth: null,
+  };
+  const lifecycleStart = interpolateWorldModel(lifecycleFrom, lifecycleTo, [], 0);
+  assert.deepEqual(
+    lifecycleStart.carriers.find(row => row.id === 'haul:new'),
+    { ...lifecycleTo.carriers[0], x: 1, y: 8 },
+    'departure event欠落時も実from端点から現れる',
+  );
+  const lifecycleHalf = interpolateWorldModel(lifecycleFrom, lifecycleTo, [], 0.5);
+  assert.deepEqual(
+    { x: lifecycleHalf.carriers.find(row => row.id === 'haul:old').x,
+      y: lifecycleHalf.carriers.find(row => row.id === 'haul:old').y },
+    { x: 8, y: 4 },
+    'arrival event欠落時も実to端点まで連続してから消える',
   );
   const presentation = new WorldPresentation(from);
   presentation.enqueue(to, events, 0.02);
@@ -2785,6 +2902,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(unread.priority, 'unread-letter');
   assert.deepEqual(unread.target, { kind: 'letter', id: 'letter-1' });
   assert.match(unread.detail, /7日目.*人口13人/);
+  assert.match(unread.speech, /詳しくは書状/);
   const goalBeforeReport = secretaryRouteFor({
     letters: [{ ...letter, attention: 'notice' }], objective, objectiveAction, events, fallback,
   });
@@ -2812,6 +2930,7 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   });
   assert.equal(goal.priority, 'objective');
   assert.equal(goal.title, objective.title);
+  assert.equal(goal.speech, '丸太の売場を作ります。');
   assert.deepEqual(goal.target, objectiveAction);
   const nextObjective = {
     id: 'goal-2', chapter: '第一章', title: '港へつなぐ',
@@ -2822,15 +2941,13 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
     { completedId: handoff.completedId, nextId: handoff.nextId },
     { completedId: 'goal-1', nextId: 'goal-2' },
   );
-  assert.match(handoff.title, /できました.*市場を置く/);
-  assert.equal(handoff.detail, nextObjective.elenaMessage);
+  assert.match(handoff.speech, /できました。.*少しだけお待ちください/);
   const handoffRoute = secretaryRouteFor({
     letters: [{ ...letter, unread: false }],
     handoff, objective: nextObjective, objectiveAction, events, fallback,
   });
   assert.equal(handoffRoute.priority, 'goal-complete');
-  assert.equal(handoffRoute.badge, '達成');
-  assert.equal(handoffRoute.action, '次の案内へ');
+  assert.equal(handoffRoute.speech, handoff.speech);
   assert.deepEqual(handoffRoute.target, { kind: 'tutorial-handoff' });
   const urgentBeforeHandoff = secretaryRouteFor({
     letters: [letter], handoff, objective: nextObjective, objectiveAction, events, fallback,
@@ -2853,7 +2970,10 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
-  assert.match(html, /secretary-name.*secretary-kicker.*secretary-title.*secretary-detail/s);
+  assert.match(html, /secretary-name.*secretary-speech.*もう一度言って/s);
+  assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
+  assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
+  assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
 });
 
 test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {

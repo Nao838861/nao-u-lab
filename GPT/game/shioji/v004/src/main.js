@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.11.0-elena-guidance';
-import { SimulationClock } from './clock.js?v=v004.11.0-elena-guidance';
+import { IsometricCamera } from './camera.js?v=v004.13.0-elena-voice';
+import { SimulationClock } from './clock.js?v=v004.13.0-elena-voice';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.11.0-elena-guidance';
+} from './config.js?v=v004.13.0-elena-voice';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.11.0-elena-guidance';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.11.0-elena-guidance';
-import { presentEvent } from './event_view.js?v=v004.11.0-elena-guidance';
+} from './display_batch.js?v=v004.13.0-elena-voice';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.13.0-elena-voice';
+import { presentEvent } from './event_view.js?v=v004.13.0-elena-voice';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.11.0-elena-guidance';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.11.0-elena-guidance';
-import { WorldPresentation } from './presentation.js?v=v004.11.0-elena-guidance';
-import { Renderer } from './renderer.js?v=v004.11.0-elena-guidance';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.11.0-elena-guidance';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.11.0-elena-guidance';
+} from './keyboard.js?v=v004.13.0-elena-voice';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.13.0-elena-voice';
+import { WorldPresentation } from './presentation.js?v=v004.13.0-elena-voice';
+import { Renderer } from './renderer.js?v=v004.13.0-elena-voice';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.13.0-elena-voice';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.13.0-elena-voice';
 import {
-  GUIDANCE_TIERS, objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.11.0-elena-guidance';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.11.0-elena-guidance';
+  objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
+} from './ui_guidance.js?v=v004.13.0-elena-voice';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.13.0-elena-voice';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -53,6 +53,7 @@ let lastRunningSpeed = clock.speedIndex || 1;
 let currentSecretaryRoute = null;
 let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
 let currentTutorialHandoff = null;
+let tutorialHandoffTimer = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
@@ -66,6 +67,7 @@ const renderSignatures = new Map();
 const economyHistory = [];
 const stockReleaseDays = [];
 const HISTORY_DAYS = 180;
+const TUTORIAL_HANDOFF_HOLD_MS = 3200;
 const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
 const uiMetrics = {
   domUpdates: 0,
@@ -858,43 +860,55 @@ function renderEventSheet() {
   });
 }
 
+function finishTutorialHandoff() {
+  if (!currentTutorialHandoff) return false;
+  currentTutorialHandoff = null;
+  if (tutorialHandoffTimer !== null) {
+    clearTimeout(tutorialHandoffTimer);
+    tutorialHandoffTimer = null;
+  }
+  renderTutorial();
+  renderSecretary();
+  return true;
+}
+
+function holdTutorialHandoff(handoff) {
+  currentTutorialHandoff = handoff;
+  if (tutorialHandoffTimer !== null) clearTimeout(tutorialHandoffTimer);
+  tutorialHandoffTimer = setTimeout(() => {
+    if (currentTutorialHandoff === handoff) finishTutorialHandoff();
+  }, TUTORIAL_HANDOFF_HOLD_MS);
+}
+
 function renderTutorial() {
   const available = Boolean(tutorialDirector);
   const state = tutorialDirector?.readState() ?? null;
   const objective = tutorialDirector?.currentObjective() ?? null;
   const handoff = tutorialHandoffFor(lastTutorialObjective, objective);
-  if (handoff) currentTutorialHandoff = handoff;
+  if (handoff) holdTutorialHandoff(handoff);
   lastTutorialObjective = objective;
   const objectivePanel = $('#tutorial-objective');
   const letterButton = $('#open-tutorial-letters');
-  setHiddenIfChanged(objectivePanel, !objective || Boolean(tutorialDirector?.isComplete()));
-  renderIfChanged('tutorial-complete-class', String(Boolean(objective?.complete)), () => {
-    objectivePanel.classList.toggle('complete', Boolean(objective?.complete));
-    uiMetrics.domWrites += 1;
-  });
-  renderIfChanged('tutorial-handoff-class', String(Boolean(currentTutorialHandoff)), () => {
-    objectivePanel.classList.toggle('handoff-pending', Boolean(currentTutorialHandoff));
-    uiMetrics.domWrites += 1;
-  });
+  const handoffPending = Boolean(currentTutorialHandoff);
+  setHiddenIfChanged(objectivePanel,
+    !objective || Boolean(tutorialDirector?.isComplete()) || handoffPending);
   setHiddenIfChanged(letterButton, !available || Boolean(state?.skipped));
   currentTutorialAction = objectiveActionFor(objective, model);
-  recommendedBuildingJob = currentTutorialAction?.kind === 'building'
+  recommendedBuildingJob = !handoffPending && currentTutorialAction?.kind === 'building'
     ? currentTutorialAction.job : null;
   const actionButton = $('#tutorial-action');
-  setHiddenIfChanged(actionButton, !currentTutorialAction);
-  setTextIfChanged(actionButton, currentTutorialAction?.label ?? '次の操作');
+  setHiddenIfChanged(actionButton, !currentTutorialAction || handoffPending);
+  actionButton.title = currentTutorialAction?.label ?? '';
+  actionButton.setAttribute('aria-label',
+    currentTutorialAction ? `案内: ${currentTutorialAction.label}` : '現在目標の操作を案内する');
   renderBuildDock();
   if (state?.skipped) setTextIfChanged('#start-mode-label', '自由プレイ（案内終了）');
   else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（教程完了）');
   if (objective) {
-    setTextIfChanged('#tutorial-chapter',
-      `${currentTutorialHandoff ? '次の操作' : '操作メモ'}・${objective.chapter}`);
-    setTextIfChanged('#tutorial-goal', currentTutorialAction?.label ?? objective.title);
-    setTextIfChanged('#tutorial-detail', objective.detail);
-    const systemInstruction = objective.systemInstruction
-      || currentTutorialAction?.label || objective.title;
-    setTextIfChanged($('#tutorial-system strong'), systemInstruction);
-    setHiddenIfChanged('#tutorial-system', !systemInstruction);
+    const systemInstruction = currentTutorialAction?.label
+      || objective.systemInstruction || objective.title;
+    setTextIfChanged('#tutorial-chapter', objective.chapter);
+    setTextIfChanged('#tutorial-goal', systemInstruction);
     setTextIfChanged('#tutorial-progress', `${objective.progress.done} / ${objective.progress.total}`);
     const progress = $('#tutorial-progress-bar');
     if (progress.max !== objective.progress.total || progress.value !== objective.progress.done) {
@@ -921,6 +935,7 @@ function secretaryFallback() {
       priority: 'operation-guide',
       tier: 'guidance',
       target: { kind: 'sheet', sheet: 'building-sheet' },
+      speech: `${JOB_LABELS[selected.type] ?? selected.type}を選んでいます。建物情報で、働き手と在庫を確かめられます。`,
       kicker: '盤面の選択',
       title: JOB_LABELS[selected.type] ?? selected.type,
       detail: `座標 ${selected.x}, ${selected.y}・建物情報を開きます`,
@@ -930,6 +945,7 @@ function secretaryFallback() {
     priority: 'operation-guide',
     tier: 'guidance',
     target: { kind: 'sheet', sheet: 'island-sheet' },
+    speech: '島は今日も動いています。品物の流れは、島況と盤面の両方から確かめられます。',
     kicker: '観測の案内',
     title: '島況で現物と相場を見る',
     detail: `所在を確認できる現物 ${formatQuantity(model.totalVisibleStock)}荷`,
@@ -952,12 +968,9 @@ function renderSecretary() {
     const button = $('#secretary');
     button.dataset.secretaryPriority = currentSecretaryRoute.priority;
     button.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
-    const tier = GUIDANCE_TIERS[currentSecretaryRoute.tier] ?? GUIDANCE_TIERS.notice;
-    setTextIfChanged('#secretary-tier', currentSecretaryRoute.badge ?? tier.label);
-    setTextIfChanged('#secretary-kicker', currentSecretaryRoute.kicker);
-    setTextIfChanged('#secretary-title', currentSecretaryRoute.title);
-    setTextIfChanged('#secretary-detail', currentSecretaryRoute.detail);
-    setTextIfChanged('#secretary-action', `${currentSecretaryRoute.action ?? tier.action} →`);
+    setTextIfChanged('#secretary-speech',
+      currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
+    setTextIfChanged('#secretary-action', 'もう一度言って');
   });
 }
 
@@ -992,31 +1005,17 @@ function focusEvent(row) {
   return true;
 }
 
-function followSecretaryRoute() {
-  const target = currentSecretaryRoute?.target;
-  if (!target) return false;
-  if (target.kind === 'tutorial-handoff') {
-    currentTutorialHandoff = null;
-    renderTutorial();
-    renderSecretary();
-    $('#status span').textContent = tutorialDirector?.isComplete()
-      ? 'エレナの案内を終え、同じ島で自由プレイを続けます'
-      : '次の操作メモへ進みました';
-    return true;
-  }
-  if (target.kind === 'letter') return openTutorialLetter(target.id);
-  if (target.kind === 'advice') {
-    guidanceDirector.markAdviceRead(target.id);
-    const handled = target.route?.kind === 'event'
-      ? focusEvent(eventLog.find(row => row.sequence === target.route.sequence))
-      : target.route ? performGuidanceAction(target.route) : true;
-    renderSecretary();
-    return handled;
-  }
-  if (target.kind === 'event') {
-    return focusEvent(eventLog.find(row => row.sequence === target.sequence));
-  }
-  return performGuidanceAction(target);
+function repeatSecretarySpeech() {
+  const spoken = currentSecretaryRoute?.speech;
+  if (!spoken) return false;
+  const button = $('#secretary');
+  button.classList.remove('repeating');
+  void button.offsetWidth;
+  button.classList.add('repeating');
+  setTimeout(() => button.classList.remove('repeating'), 360);
+  if (currentTutorialHandoff) holdTutorialHandoff(currentTutorialHandoff);
+  $('#status span').textContent = `エレナ「${spoken}」`;
+  return true;
 }
 
 function renderTutorialLetterSheet() {
@@ -1468,7 +1467,7 @@ $('#tutorial-letter-list').addEventListener('click', event => {
 $('#close-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#continue-tutorial-letter').addEventListener('click', closeTutorialLetter);
 $('#tutorial-action').addEventListener('click', () => performGuidanceAction(currentTutorialAction));
-$('#secretary').addEventListener('click', followSecretaryRoute);
+$('#secretary').addEventListener('click', repeatSecretarySpeech);
 
 const companySheet = $('#company-sheet');
 companySheet.addEventListener('input', event => {

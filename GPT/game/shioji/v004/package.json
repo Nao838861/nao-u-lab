@@ -9,6 +9,7 @@
     "test:tutorial-early": "node tests/tutorial_early_flow.mjs",
     "test:acceptance": "node tests/acceptance.mjs",
     "test:browser": "node tests/browser_smoke.mjs",
-    "test:browser-company": "node tests/browser_smoke.mjs --company-pointer-only"
+    "test:browser-company": "node tests/browser_smoke.mjs --company-pointer-only",
+    "benchmark:render": "node tests/render_benchmark.mjs"
   }
 }
