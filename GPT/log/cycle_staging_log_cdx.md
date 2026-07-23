@@ -82,7 +82,92 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の High Signal / Recent entry を per-file atom index と照合し、broken entry 0件を確認した。"
+  - "memory/atoms.jsonl と per-file .md / index.jsonl の mirror を監査し、欠損・parse error・content conflict 0件を確認した。normalized content 重複40群は既存 overlay で fold 済みで、recall-visible 重複3群も表示時 fold が効いているため本文は変更しなかった。"
+  - "memory/raw/ の30日超未更新ファイル95件を確認した。いずれも原文・PDF・抽出テキスト等の evidence path であり、移動による参照切れを避けるため今 cycle は archive 移動しなかった。"
+  - "candidate lifecycle 1065件を dry-run 監査し、現在状態の不一致0件を確認した。open stale 185件は candidate 本体を変更せず、live lease 適用済み stale triage queue へ畳んだ。"
+  - "title canonical / mixed duplicate / open duplicate / stale triage / group action の各 sidecar を再生成した。group action queue は0件で、永続 handoff inbox への enqueue は0件だった。"
+  - "slack_directives.jsonl と slack_broadcasts.jsonl を監査し、pending 0件を確認したため handled 更新は行わなかった。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+candidate_lifecycle:
+  total_files: 1065
+  counts:
+    posted: 462
+    ready_to_post: 9
+    postponed: 331
+    failed: 244
+    needs_review: 18
+    skipped_unreviewed: 1
+  missing_stale_after: 4
+  overdue_open_total: 185
+  current_state_conflicts: 0
+atom_audit:
+  total_atoms: 2728
+  mirror_content_conflicts: 0
+  raw_normalized_duplicate_groups: 40
+  recall_visible_duplicate_groups: 3
+  duplicate_handling: "canonical overlay / lifecycle fold 済み。raw atom は削除しない。"
+encoding_audit:
+  source_file_status: "memory/MEMORY.md は UTF-8 明示読みで正常。代表語『記憶』『ゲーム設計』『敵パターン』を取得し、『評価軸』は exact token 自体が現行 index にないが、decode error や置換文字による本文破損ではない。"
+  display_or_tooling_status: "none"
+  note: "memory_health の mojibake suspect atom 2件は source atom 側にも疑義がある既知の局所データ品質警告だが、mirror conflict や recall smoke failure はなく、今 cycle の構造設計 issue には昇格しない。"
+probe_lifecycle:
+  inspected_due_count: 0
+  inspected_probe_id: null
+  outcome: none
+  counts:
+    pending: 0
+    resolved: 1
+    dormant: 1
+stale_backlog:
+  overdue_open_total: 185
+  stale_triage_queue_rows: 50
+  open_duplicate_group_count: 56
+  mixed_group_count: 49
+  all_open_group_count: 7
+  actionable_group_count: 0
+  backlog_high_water: false
+  high_water_reason: "overdue_open_total > stale_triage_queue_rows は成立するが、actionable group が3件未満のため高水位条件を満たさない。"
+  group_handoff_budget: 1
+  handed_off_group_count: 0
+  handoff_inbox_pending_count: 0
+  handoff_inbox_ids: []
+group_action_handoff: []
+stale_review_batch:
+  - path: memory/shared_reads_candidates/20260515_zork_llm_reasoning_limits.md
+    status: postponed
+    stale_after: "2026-06-14"
+    priority_reason: "Zorkを使った探索・計画限界はheadless playtestへ直接移せるが、評価条件・失敗分類・モデル比較を本文で補う必要がある。duplicate groupには属さない。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "検証可能な遷移モデルを持つ短いplanning benchmarkはゲーム評価へ移しやすいが、実験設計・比較対象・結果の本文確認が必要。duplicate groupには属さない。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "social deductionの個別推論style追跡は有用だが、評価指標・失敗例と過去shared-reads断片との重複関係を確認する必要がある。duplicate groupには属さない。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    status: postponed
+    stale_after: "2026-06-15"
+    priority_reason: "memory・validation・Unity demoまで適用先は明確だが、empirical study / ablationの指標と失敗例を本文で補う必要がある。duplicate groupには属さない。"
+    recommended_review_action: reevaluate_in_phase2
+  - path: memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+    status: postponed
+    stale_after: "2026-06-16"
+    priority_reason: "accessibilityをplayer/developer/engine/launcher/retailer間の基盤として扱う着想は制作に直結するが、調査方法・参加者・限界の本文確認が必要。duplicate groupには属さない。"
+    recommended_review_action: reevaluate_in_phase2
+```
+
+- 判定: Phase 4b は起動しない。検出した重複・stale backlog・局所mojibake警告は既存のfold / queue / auditで観測可能であり、今回新たに設計すべき構造的 blocker はない。
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
