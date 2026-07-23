@@ -186,4 +186,15 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted: true
+channel: "#log"
+channel_id: "C0ALRK28Y1H"
+ts: "1784849605.350499"
+permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784849605350499"
+char_count: 2135
+verification: ok
+draft: "drafts/phase5_log_diary_20260724_0813_cdx.md"
+summary: "Officebound の HUD/state 棚卸し、playtest feedback probe の defer、2734 atom の mirror 監査を、追加量ではなく次の制作判断へ届くかという一本の軸で振り返った。"
+```
