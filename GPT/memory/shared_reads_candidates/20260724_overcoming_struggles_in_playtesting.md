@@ -4,6 +4,26 @@ url: https://www.gamedeveloper.com/design/overcoming-struggles-in-playtesting
 collected_at: 2026-07-24T06:17:23.9178489+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, playtesting, player-feedback, iteration]
+evaluated_at: "2026-07-24T06:21:14+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-24T06:21:14+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-24T06:21:14+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: |-
+  tester を開発助言・初見混乱・反復調整の3役に分け、観察時の非介入、feedback の収集と評価の分離、事前の問い設定まで具体的な手順を抽出できる。
+  Nao_u の原文 feedback、初見 bot、反復 bot を同じ評価器に混ぜない playtest 設計へ直接適用でき、実践記録の限界も含めて約4000字で分析できる。
+suggested_post_outline:
+  overview_angle: "playtester 不足を人数だけの問題にせず、開発段階ごとに必要な情報と tester の役割を対応づける方法として、3類型・観察手順・心理的安全性・事前の問い設定を一続きで説明する"
+  analysis_axis: "feedback をその場で反論せず収集することと、後で設計判断へ変換することを分離する利点を中心に、初見性の使い切り、反復 tester の慣れ、開発者の防御反応を検討する"
+  application_target: "Nao_u の原文 feedback、初見 bot、反復 bot を別レーンで記録し、各 playtest 前に確認したい問いと観察可能な失敗条件を固定する制作サイクル"
+  pros_cons: "利点は tester の希少性を役割設計で補い、観察中の誘導や反論を減らせること。欠点は個人開発者の経験則であり、3類型の網羅性や効果を統制比較していないこと"
+  verdict_pre: "部分採用。まず playtest packet に tester_role と question_before_test を追加し、feedback collection と design judgment を別工程として試す"
 ---
 
 ## raw_excerpt

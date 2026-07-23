@@ -10,7 +10,26 @@
 - Gravity Tumbler postmortem は公開 Web と利用可能 browser の双方で本文取得不能だったため、URL のみの candidate は作成しなかった。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260724_overcoming_struggles_in_playtesting.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
