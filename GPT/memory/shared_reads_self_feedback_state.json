@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T15:16:23+09:00",
+  "updated_at": "2026-07-23T17:25:30+09:00",
   "reviewed_source_ts": [
+    "1780860682.962599",
     "1780867666.850759",
     "1784772269.706609",
     "1780910895.393589",
@@ -477,6 +478,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T17:25:30+09:00",
+      "selected": {
+        "id": "sr-1780860682-0be9192f64",
+        "source_ts": "1780860682.962599",
+        "title": "A state-aware, hierarchical deep learning framework for automated visual glitch detection in games",
+        "reason": "未レビュー条件を満たす最新の score 11 atom で、memory・game-design・operation・evaluation の4優先タグを持つ。screenshot 単体ではなく game state と結び付けた visual regression が、次の playable diff や QA 記録に既存 probe と異なる判断差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 12
+      },
+      "decision": "reject",
+      "decision_reason": "合計12で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は high-fidelity synthetic data、state-conditioned detector、automated anomaly identification、human-in-the-loop、commercial game 3作での評価を説明し、scene／mode／seed／frame と screenshot を束ねる適用案まで具体化しているため actionability は3とした。一方、確認できた根拠は公開 abstract と投稿本文に限られ、タイトル別の定量値、異常種別ごとの precision／recall、synthetic-to-real gap は未確認なので evidence は2に留める。video-glitch-temporal-grounding は不具合の時間区間、expected／observed state、正常演出の対立仮説を、egocs-causal-gameplay-log は input／view／state／event／outcome と直接記録・推論・欠損の区別を、d2e-synchronized-playtest-stream は run／frame／input／state／outcome の同期 schema をすでに要求している。state-aware visual regression を別名で追加しても次回判断は変わらず、active_probes 320件の確認負荷を増やすため、既存 probe を再利用し、本 atom は重複を確認した参照としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260620-video-glitch-temporal-grounding",
+        "probe-20260622-egocs-causal-gameplay-log",
+        "probe-20260622-d2e-synchronized-playtest-stream",
+        "probe-20260626-mindstudio-executable-branch-preview"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の temporal grounding／causal log／synchronized stream／branch preview probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T15:16:23+09:00",
       "selected": {

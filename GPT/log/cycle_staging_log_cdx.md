@@ -59,7 +59,35 @@ reviewed_at: "2026-07-23T17:21:59+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780860682-0be9192f64
+    source_ts: "1780860682.962599"
+    title: "A state-aware, hierarchical deep learning framework for automated visual glitch detection in games"
+    reason: "未レビュー条件を満たす最新の score 11 atom。screenshot と game state を束ねる visual regression が、既存 probe と異なる判断差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 12
+  decision: reject
+  decision_reason: "採用条件の合計14と risk_control 2を満たさない。公開 abstract と投稿本文は state-conditioned detector、synthetic data、human-in-the-loop、商用3作評価を示すが、タイトル別定量値と synthetic-to-real gap は未確認。既存の video-glitch-temporal-grounding、egocs-causal-gameplay-log、d2e-synchronized-playtest-stream、mindstudio-executable-branch-preview が時間区間、expected/observed state、input/view/state/event/outcome、同期 stream、state-action-next-state をすでに覆い、同義 probe の追加は320件ある active_probes の確認負荷だけを増やす。"
+  change:
+    summary: "reviewed_source_ts と重複による reject 理由だけを state に記録した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
