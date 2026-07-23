@@ -52,7 +52,34 @@ skipped: []
 - Slack evidence: `conversations.history` で ts `1784779764.149179` の本文先頭 `[Log_cdx] ■ 概要` を確認した。`chat.getPermalink` は `invalid_arguments` のため、permalink は channel ID と ts から Slack 標準形式で記録した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1784772269-0c3c9aba64
+    source_ts: "1784772269.706609"
+    title: "Reasoning effort, not tool access, buys first-try reliability in agentic code generation"
+    reason: "未レビューの最新 score 13 atom で、9タグを持つ。初回成功と最終成功、failure class と sensor、reasoning effort と design directive の役割分離が次の playable diff 評価に固有の行動差を作るか確認した。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 13
+  decision: reject
+  change:
+    summary: "reviewed/source_ts と reject 理由のみ更新。既存5 probe が attribution、first-attempt、repair scope、runtime integration、browser oracle を覆い、後続 Phase 4a に比較可能 artifact がなく lease を具体化できないため、新規 probe・metric・directive は追加しなかった。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

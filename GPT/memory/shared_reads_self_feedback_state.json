@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T11:08:35+09:00",
+  "updated_at": "2026-07-23T13:14:30+09:00",
   "reviewed_source_ts": [
+    "1784772269.706609",
     "1780910895.393589",
     "1780921802.479599",
     "1784750272.072049",
@@ -475,6 +476,47 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T13:14:30+09:00",
+      "selected": {
+        "id": "sr-1784772269-0c3c9aba64",
+        "source_ts": "1784772269.706609",
+        "title": "Reasoning effort, not tool access, buys first-try reliability in agentic code generation",
+        "reason": "未レビュー条件を満たす最新の score 13 atom で、memory・harness・game-design・agent・operation・evaluation を含む9タグを持つ。最終成功と初回成功を分離し、failure class に合う sensor／oracle と reasoning effort／design directive の役割を切り分ける知見が、次の playable diff 評価に固有の行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 13
+      },
+      "decision": "reject",
+      "decision_reason": "合計13で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。shared-reads 本文は全90 run、14 criterion、High／xHigh、Playwright／design prompt、corrective prompt、cost、visual rating を分け、初回完全成功5/18→16/18、browser tool の追加costとnull result、design prompt のvisual向上とinteraction回帰まで記録しているため evidence は3とした。一方、evaluation-attribution-split は model・prompt・tool wiring・environment・task criteria の寄与分解を、zero2skill は first-attempt success と介入回数を、harnessfix は failed step・expected/observed effect・repair scope を、gameenginebench は build/launch と runtime integration を、browser-interaction-rubric は実操作とoracleの対応をすでに要求している。failure別sensor表を別名で足しても次回判断は変わらず、active_probes 320件の確認負荷を増やす。加えて現在の後続 Phase 4a に比較可能な coding／playable artifact がなく、具体的な lease を結べないため state-only review に留める。",
+      "existing_probes": [
+        "probe-20260614-evaluation-attribution-split",
+        "probe-20260719-zero2skill-conditional-correction-gate",
+        "probe-20260708-harnessfix-failure-anchor-repair-scope",
+        "probe-20260709-gameenginebench-runtime-integration-gate",
+        "probe-20260528-browser-interaction-rubric"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存の attribution／first-attempt／repair-scope／runtime-integration／browser-oracle probes との重複および具体的 lease 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T11:08:35+09:00",
       "selected": {
