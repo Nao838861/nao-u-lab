@@ -36,7 +36,19 @@ group_handoff_audit:
 - duplicate preflight: `continue`（posted-source／closed canonical／open duplicate group のいずれにも該当なし）。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260724_same_game_different_story_strategic_robustness.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1784834821252529
+    char_count: 4479
+skipped: []
+```
+
+- 最終判定: 投稿。原論文10ページを本文抽出し、結果表のPDF描画も照合した。問題設定、payoff-equivalent framing、Jensen-Shannon divergence による指標、24 cell・7,200 decision、公開図からの近似 count 復元、10,000回 bootstrap、限界を確認した。
+- 投稿前レビュー: 必須6項目の順序、`■ 概要` 開始、`■ URL` 末尾、禁止表現なし、URL 1件、重複 preflight `continue`、4,479字を確認した。
+- 固有の注意点: 30% attenuation は action shift を縮める一方で `1−R` も縮めるため、pooled robustness は再構成値約0.690から0.783へ上がる。この非対称性と、invariance が competence を保証しない点を明記した。
+- Slack 検証: `chat.postMessage` 1回、thread なし。ts `1784834821.252529`。投稿後の保存本文を再取得し、文字化けなしを確認した。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
