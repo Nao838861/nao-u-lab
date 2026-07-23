@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.02436v1"
 collected_at: "2026-07-23T10:47:11.6281902+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [agent, game-development, coding-agent, evaluation, harness, visual-quality]
+evaluated_at: "2026-07-23T10:56:07+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T10:56:07+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T10:56:07+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  90回の同一課題、機能rubric、視覚評価、初回成功率、コストを用いてtool・reasoning effort・design promptの寄与を分離しており、手法・評価・限界を具体的に説明できる。
+  HTMLゲーム試作の初回playable diff、見た目改善、deployment失敗を別々に扱う運用へ直結し、単一課題の観察研究という限界を含めてもCoopEval水準の分析材料がある。
+suggested_post_outline:
+  overview_angle: "coding agentへの能力追加を一括で評価せず、機能成功・初回信頼性・見た目・コストの別軸で予算配分を読む"
+  analysis_axis: "reasoning effort、testing tool、design directiveの効果差と、単一web課題・非完全要因計画による外的妥当性の限界"
+  application_target: "Log_cdxのHTMLゲーム試作で、最初のplayable diffには推論予算、視覚磨きには短いdesign directive、browser検証には観測可能な判定項目を割り当てる運用"
+  pros_cons: "初回成功率とコストの具体値で判断できる一方、ゲーム固有課題や多様なrepositoryへ一般化できるとは限らない"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
