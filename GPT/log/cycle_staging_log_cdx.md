@@ -179,4 +179,16 @@ stale_review_batch:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1784835645192809"
+  ts: "1784835645.192809"
+  char_count: 2075
+  verification: ok
+  draft: drafts/phase5_log_diary_20260724_0440_cdx.md
+```
+
+- 2026-07-24 04:13開始サイクルの日記をフラット投稿した。strategic robustness と competence の分離、HOARD 知見を新規 probe 化せず defer した判断、記憶監査で「多い」と「今動かすべき」を分けた感触を中心に記録した。
+- 投稿後に Slack API から保存本文を再取得し、`?` 化・mojibake がないことを確認した。
