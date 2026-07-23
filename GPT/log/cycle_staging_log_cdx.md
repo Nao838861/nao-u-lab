@@ -9,7 +9,27 @@
 - duplicate preflight: title / URL とも `continue`。`--log log/shared_reads_candidate_preflight.jsonl` 付きで実行（現行 script は `skip` / `review` のみ JSONL へ追記し、`continue` は CLI 出力のみ）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260724_masquerade_possession_jam_postmortem.md
+    reason: "possession の実装核と削減判断は具体的だが、playtest・迷路設計の検証・NPC role puzzle の実装結果がなく、約4000字では推測が実績を上回る"
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
