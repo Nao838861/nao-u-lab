@@ -4,6 +4,21 @@ url: "https://tunditur-unda.itch.io/rpg21/devlog/1543236/authors-notes"
 collected_at: "2026-07-24T02:30:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rpg, rapid-prototyping, postmortem, production-constraints]
+evaluated_at: "2026-07-24T02:22:45.7117968+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-24T02:22:45.7117968+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-24T02:22:45.7117968+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-23"
+supersedes: []
+gate_reason: >-
+  duplicate preflight は continue だが、取得できたのは冒頭の制作時間制約と
+  作者ページのシリーズ説明に限られる。手法の中核・評価内容・結論を確定できず、
+  CoopEval 水準の約4000字概要を一次資料に基づいて構成できないため保留する。
 ---
 
 ## raw_excerpt

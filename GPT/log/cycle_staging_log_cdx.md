@@ -10,7 +10,27 @@
 - 取得注記: 作者ノート本文は itch.io の 429 と検索 cache miss、接続可能ブラウザ 0 件のため、検索 cache と作者ページで確認できた範囲だけを採録し、未取得部分は補完していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260724_rpg_sketch_21_authors_notes.md
+    reason: "本文取得が不完全で、手法の中核・評価・結論と約4000字概要を根拠付きで構成できない"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
