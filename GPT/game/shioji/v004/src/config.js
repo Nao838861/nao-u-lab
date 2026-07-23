@@ -1,4 +1,4 @@
-export const VERSION = 'v004.14.0-render-scene';
+export const VERSION = 'v004.15.0-elena-first-seat';
 
 // 経済エンジンの貨幣値は表示単位の1/10。UIへ出す時だけデナリへ直す。
 export const DENARI_PER_MONEY_UNIT = 10;

@@ -486,8 +486,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.14.0-render-scene');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.14.0-render-scene');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.15.0-elena-first-seat');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.15.0-elena-first-seat');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
@@ -964,6 +964,8 @@ async function checkViewport(width, height, mobile) {
       const game = window.__SHIOJI_V004__;
       game.openSheet('company-sheet');
       const sheet = document.querySelector('#company-sheet').getBoundingClientRect();
+      const observer = document.querySelector('#observer').getBoundingClientRect();
+      const secretaryStyle = getComputedStyle(document.querySelector('#secretary'));
       const offer = game.model.orderOffer;
       const orderText = document.querySelector('#order-panel').textContent;
       const aidText = document.querySelector('#aid-panel').textContent;
@@ -997,6 +999,13 @@ async function checkViewport(width, height, mobile) {
       window.__companyHeldButton = acceptButton;
       return {
         sheet: { left: sheet.left, right: sheet.right, top: sheet.top, bottom: sheet.bottom },
+        observer: {
+          left: observer.left, right: observer.right, top: observer.top, bottom: observer.bottom,
+        },
+        secretaryTheme: {
+          backgroundImage: secretaryStyle.backgroundImage,
+          color: secretaryStyle.color,
+        },
         offer, orderText, aidText, draftAfterRender, targetAfterCommit, targetFeedback, releaseGoods, releaseText,
         modelTarget: game.model.stockTargets.tools, beforeReject, afterReject, stillOffered,
         acceptPoint: { x: acceptBox.x + acceptBox.width / 2, y: acceptBox.y + acceptBox.height / 2 },
@@ -1005,6 +1014,11 @@ async function checkViewport(width, height, mobile) {
     })()`);
     assert.ok(company.sheet.left >= 0 && company.sheet.right <= width, JSON.stringify(company));
     assert.ok(company.sheet.top >= 0 && company.sheet.bottom <= height, JSON.stringify(company));
+    assert.ok(company.observer.bottom < company.sheet.top, JSON.stringify(company));
+    assert.ok(Math.abs((company.observer.left + company.observer.right) / 2 - width / 2) < 1,
+      JSON.stringify(company));
+    assert.match(company.secretaryTheme.backgroundImage, /linear-gradient/);
+    assert.equal(company.secretaryTheme.color, 'rgb(57, 45, 32)');
     assert.ok(company.offer, JSON.stringify(company));
     assert.match(company.orderText, /完遂決済単価/);
     assert.match(company.orderText, /市場最安/);
@@ -1074,14 +1088,29 @@ async function checkViewport(width, height, mobile) {
       game.advanceTicks(60 * 30 - game.model.tick, { animate: false });
       game.selectBuilding(game.model.buildings.find(building => building.occupied) ?? game.model.buildings[0]);
       const buildingBox = document.querySelector('#building-sheet').getBoundingClientRect();
+      const observerBox = document.querySelector('#observer').getBoundingClientRect();
+      const secretaryStyle = getComputedStyle(document.querySelector('#secretary'));
       const buildingText = document.querySelector('#building-sheet').textContent;
       return {
         box: { left: buildingBox.left, right: buildingBox.right, top: buildingBox.top, bottom: buildingBox.bottom },
+        observer: {
+          left: observerBox.left, right: observerBox.right,
+          top: observerBox.top, bottom: observerBox.bottom,
+        },
+        secretaryTheme: {
+          backgroundImage: secretaryStyle.backgroundImage,
+          color: secretaryStyle.color,
+        },
         text: buildingText,
       };
     })()`);
     assert.ok(mobileBuilding.box.left >= 0 && mobileBuilding.box.right <= width, JSON.stringify(mobileBuilding));
     assert.ok(mobileBuilding.box.top >= 0 && mobileBuilding.box.bottom <= height, JSON.stringify(mobileBuilding));
+    assert.ok(mobileBuilding.observer.bottom < mobileBuilding.box.top, JSON.stringify(mobileBuilding));
+    assert.ok(mobileBuilding.observer.left <= 8 && mobileBuilding.observer.right >= width - 8,
+      JSON.stringify(mobileBuilding));
+    assert.match(mobileBuilding.secretaryTheme.backgroundImage, /linear-gradient/);
+    assert.equal(mobileBuilding.secretaryTheme.color, 'rgb(57, 45, 32)');
     assert.match(mobileBuilding.text, /状態.*道路.*敷地.*座標/s);
     await page.screenshot('/tmp/shioji_v004_building_sheet_mobile.png');
     const mobileIsland = await page.evaluate(`(() => {

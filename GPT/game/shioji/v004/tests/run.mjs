@@ -1894,7 +1894,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.14.0-render-scene');
+  assert.equal(VERSION, 'v004.15.0-elena-first-seat');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -3034,12 +3034,16 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(secretaryRouteFor({ events: events.slice(0, 1), fallback }), fallback);
 
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const css = fs.readFileSync(new URL('../style.css', import.meta.url), 'utf8');
   assert.match(html, /id="secretary"/);
   assert.match(html, /elena_vance\.png/);
   assert.match(html, /secretary-name.*secretary-speech.*もう一度言って/s);
   assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
   assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
+  assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*50%/s);
+  assert.match(css, /\.secretary\s*\{[^}]*rgba\(255,250,226[^}]*rgba\(235,220,181[^}]*color:\s*#392d20/s);
+  assert.match(css, /\.sheet\s*\{[^}]*top:\s*var\(--primary-panel-top\)/s);
 });
 
 test('UI向上段10: WASDは連続・斜め等速で、編集入力とmodifierを奪わず速度キーを案内する', () => {

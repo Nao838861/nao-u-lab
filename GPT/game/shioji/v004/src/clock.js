@@ -1,4 +1,4 @@
-import { SPEEDS } from './config.js?v=v004.14.0-render-scene';
+import { SPEEDS } from './config.js?v=v004.15.0-elena-first-seat';
 
 export class SimulationClock {
   constructor({ speedIndex = 1 } = {}) {

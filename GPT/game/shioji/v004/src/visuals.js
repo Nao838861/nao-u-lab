@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.14.0-render-scene';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.15.0-elena-first-seat';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

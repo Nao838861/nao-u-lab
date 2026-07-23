@@ -1,4 +1,4 @@
-import { TILE } from './config.js?v=v004.14.0-render-scene';
+import { TILE } from './config.js?v=v004.15.0-elena-first-seat';
 
 function clamp(value, minimum, maximum) {
   return Math.max(minimum, Math.min(maximum, value));

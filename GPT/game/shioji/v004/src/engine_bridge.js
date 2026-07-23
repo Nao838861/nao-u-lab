@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.14.0-render-scene';
-import { P } from '../../engine/src/econ.js?v=v004.14.0-render-scene';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.14.0-render-scene';
+} from '../../engine/src/econ.js?v=v004.15.0-elena-first-seat';
+import { P } from '../../engine/src/econ.js?v=v004.15.0-elena-first-seat';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.15.0-elena-first-seat';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.14.0-render-scene';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.14.0-render-scene';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.14.0-render-scene';
-import { createViewController } from './controller.js?v=v004.14.0-render-scene';
-import { START_MODES } from './start_modes.js?v=v004.14.0-render-scene';
+} from '../../engine/src/audit.js?v=v004.15.0-elena-first-seat';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.15.0-elena-first-seat';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.15.0-elena-first-seat';
+import { createViewController } from './controller.js?v=v004.15.0-elena-first-seat';
+import { START_MODES } from './start_modes.js?v=v004.15.0-elena-first-seat';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;

@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.14.0-render-scene';
-import { SimulationClock } from './clock.js?v=v004.14.0-render-scene';
+import { IsometricCamera } from './camera.js?v=v004.15.0-elena-first-seat';
+import { SimulationClock } from './clock.js?v=v004.15.0-elena-first-seat';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.14.0-render-scene';
+} from './config.js?v=v004.15.0-elena-first-seat';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.14.0-render-scene';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.14.0-render-scene';
-import { presentEvent } from './event_view.js?v=v004.14.0-render-scene';
+} from './display_batch.js?v=v004.15.0-elena-first-seat';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.15.0-elena-first-seat';
+import { presentEvent } from './event_view.js?v=v004.15.0-elena-first-seat';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.14.0-render-scene';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.14.0-render-scene';
-import { WorldPresentation } from './presentation.js?v=v004.14.0-render-scene';
-import { Renderer } from './renderer.js?v=v004.14.0-render-scene';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.14.0-render-scene';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.14.0-render-scene';
+} from './keyboard.js?v=v004.15.0-elena-first-seat';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.15.0-elena-first-seat';
+import { WorldPresentation } from './presentation.js?v=v004.15.0-elena-first-seat';
+import { Renderer } from './renderer.js?v=v004.15.0-elena-first-seat';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.15.0-elena-first-seat';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.15.0-elena-first-seat';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.14.0-render-scene';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.14.0-render-scene';
+} from './ui_guidance.js?v=v004.15.0-elena-first-seat';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.15.0-elena-first-seat';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');

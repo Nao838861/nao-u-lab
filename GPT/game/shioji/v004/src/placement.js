@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.14.0-render-scene';
+import { BUILDING_SIZES } from './config.js?v=v004.15.0-elena-first-seat';
 
 export const tileKey = (x, y) => `${x},${y}`;
 
