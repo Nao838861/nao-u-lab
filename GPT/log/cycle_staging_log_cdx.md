@@ -52,7 +52,35 @@ skipped: []
 - 投稿後 verification: Slack `ts=1784804241.345429` を `conversations.history` で再取得し、文字化けなしを確認。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780853278-40748c7117
+    source_ts: "1780853278.343919"
+    title: "PCG in the Wild — 120人 survey が示す control / transparency / workflow integration"
+    reason: "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・operation・evaluation を含む7タグを持つ。PCG の生成性能ではなく、creative control、process transparency、workflow integration、editability を実務採用条件として見る知見が、次の game tool／level generator 評価に既存 probe と異なる行動差を作るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 1
+    risk_control: 1
+    reversibility: 3
+    total: 14
+  decision: reject
+  decision_reason: "合計14だが risk_control=1 で必須閾値2を満たさない。実務者120人・21設問・職種差・16年分の研究語彙比較・公開 dataset は強い根拠だが、survey の因果・studio size・職種分類には限界がある。既存の pcg-tool-loop-evidence、plg-evaluation-claim-fit、pcgml-representation-repair-critique、snappable-layout-pcg-responsibility が control／transparency／repair／評価 claim の主要部分を覆う。workflow integration／learning cost には部分的新規性があるが、現在は比較可能な PCG artifact、consumer phase、before／after 判断がなく lease を結べず、active_probes 320件へ広い4軸 metric を追加する確認負荷が便益を上回るため state-only review とした。"
+  change:
+    summary: "reviewed_source_ts と reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

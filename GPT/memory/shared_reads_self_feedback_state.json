@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-23T17:25:30+09:00",
+  "updated_at": "2026-07-23T20:02:24+09:00",
   "reviewed_source_ts": [
+    "1780853278.343919",
     "1780860682.962599",
     "1780867666.850759",
     "1784772269.706609",
@@ -478,6 +479,46 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-23T20:02:24+09:00",
+      "selected": {
+        "id": "sr-1780853278-40748c7117",
+        "source_ts": "1780853278.343919",
+        "title": "PCG in the Wild — 120人 survey が示す control / transparency / workflow integration",
+        "reason": "未レビュー条件を満たす最新の score 10 atom で、memory・game-design・operation・evaluation を含む7タグを持つ。PCG の生成性能ではなく、creative control、process transparency、workflow integration、editability を実務採用条件として見る知見が、次の game tool／level generator 評価に既存 probe と異なる行動差を作るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 1,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 14
+      },
+      "decision": "reject",
+      "decision_reason": "合計14で数値上の下限には届くが、risk_control=1で必須閾値2を満たさないため、新規 probe・metric・directive は追加しない。shared-reads 本文は実務者120人、21設問、職種別採用差、16年分152本中level generation 59本との語彙比較、公開 dataset／interactive analysis tool を根拠にし、control／transparency／integration／accessibility の摩擦を具体化しているため evidence=3 とした。一方、survey なので採用要因の因果は確定せず、studio size を取得せず、職種分類と回答経路にも偏りがある。行動面は pcg-tool-loop-evidence が observation／generator／repair／verifier と rejected output を、plg-evaluation-claim-fit が controllability を含む評価 claim と evidence の対応を、pcgml-representation-repair-critique が mixed-initiative draft と repair／critique を、snappable-layout-pcg-responsibility が seed／decision log と fault classification をすでに要求している。新しい差は workflow integration／learning cost の明示だが、現在は比較可能な PCG artifact、consumer phase、before／after 判断がなく lease を結べない。active_probes 320件へ広い4軸 metric を増やすと確認負荷が便益を上回るため、既存 probes を再利用し、本 atom は実務者 survey の参照根拠としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260528-pcg-tool-loop-evidence",
+        "probe-20260615-plg-evaluation-claim-fit",
+        "probe-20260608-pcgml-representation-repair-critique",
+        "probe-20260618-snappable-layout-pcg-responsibility"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、既存 PCG control／transparency／repair／evaluation probes との重複および具体的 lease 不在による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-23T17:25:30+09:00",
       "selected": {
