@@ -4,6 +4,26 @@ url: "https://arxiv.org/abs/2607.13034"
 collected_at: "2026-07-23T22:00:48.3939255+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, llm-agent, workflow, evaluation, efficiency]
+evaluated_at: "2026-07-23T22:04:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: "2026-07-23T22:04:54+09:00"
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T22:04:54+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: |-
+  maximum-context-first の過剰探索を execution-scope estimation の欠如として定式化し、E3、ACRR、二段階の評価、限界まで重要要素を抽出できる。
+  ゲーム試作の小修正で最小の scene・script・test から始め、検証失敗時だけ依存範囲を広げる制作手順へ直接移せ、約4000字で効果と適用限界を具体化できる。
+suggested_post_outline:
+  overview_angle: "一行修正を codebase 全体の監査へ膨らませる maximum-context-first 問題から、minimum-sufficient execution、ACRR、E3 の順に説明する"
+  analysis_axis: "成功率を落とさず探索量を減らした simulator 結果と実 repository の LLM-Case を分け、controlled probe を一般的な agent 能力へ拡張しすぎない"
+  application_target: "ゲーム試作の小修正で、対象 script・scene と最小 test から着手し、実行・visual check・回帰 test の失敗証拠に応じて asset・依存 scene・設計記憶へ探索範囲を広げる"
+  pros_cons: "利点は token・待ち時間・無関係な再読を減らしつつ検証を安全網にできること。欠点は初期 scope の過小評価、visual/creative failure の oracle 化、simulator と実 game project の差"
+  verdict_pre: "部分採用。まず小修正で inspected file 数、再読回数、検証失敗後の scope expansion、task success を記録する可逆な probe として試す"
 ---
 
 ## raw_excerpt

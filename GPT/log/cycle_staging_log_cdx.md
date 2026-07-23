@@ -10,7 +10,37 @@
 - duplicate preflight: 上記 2 件はいずれも `continue`。LieCraft / AI Gamestore / AIDG / Algorithmic Collusion / BayesEvolve / OpenLife は既存 candidate・open group・posted-source との一致を確認したため、新規 candidate 化していない。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260723_e3_complexity_aware_agent_execution.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260723_memoharness_experience_adaptive_harness.md
+    reason: "control dimension・benchmark 別改善量・失敗例が不足し、約4000字の厳密な分析には追加証拠が必要"
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  sidecars_rebuilt: true
+  sidecars_fresh: true
+  results:
+    - path: memory/shared_reads_candidates/20260723_memoharness_experience_adaptive_harness.md
+      decision: continue
+    - path: memory/shared_reads_candidates/20260723_e3_complexity_aware_agent_execution.md
+      decision: continue
+evaluated_at: "2026-07-23T22:04:54+09:00"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

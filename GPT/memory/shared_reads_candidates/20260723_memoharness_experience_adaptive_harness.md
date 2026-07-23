@@ -4,6 +4,20 @@ url: "https://arxiv.org/abs/2607.14159"
 collected_at: "2026-07-23T22:00:22.4070239+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-development, llm-agent, harness, memory, evaluation]
+evaluated_at: "2026-07-23T22:04:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+status: postponed
+candidate_status: postponed
+last_reviewed_at: "2026-07-23T22:04:54+09:00"
+last_decision: postpone
+evidence: "gate_decision:postpone; evaluated_at:2026-07-23T22:04:54+09:00"
+next_action: revise_or_research
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: |-
+  case diagnosis と global pattern を分ける着想はゲーム制作 harness に適用できるが、現 candidate では六つの control dimension、benchmark 別の改善量、失敗例の具体が不足している。
+  component 寄与と統計的 robustness も未検証であり、CoopEval 水準の約4000字で「何が効いたか」を過大解釈せず説明できる証拠が揃うまで保留する。
 ---
 
 ## raw_excerpt
