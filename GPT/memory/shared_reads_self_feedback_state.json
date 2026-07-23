@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-07-24T00:23:59+09:00",
+  "updated_at": "2026-07-24T02:27:36+09:00",
   "reviewed_source_ts": [
+    "1780802949.440169",
     "1784812374.972069",
     "1780837923.934419",
     "1780853278.343919",
@@ -481,6 +482,45 @@
     "1784664639.140919"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-07-24T02:27:36+09:00",
+      "selected": {
+        "id": "sr-1780802949-d3f837388c",
+        "source_ts": "1780802949.440169",
+        "title": "shared-reads 詳細分析: MemForest — LLM エージェントの長期記憶を 13.7倍高速化、wrong-time retrieval 問題を LSM ツリー発想で解いた論文 (arxiv:2605.23986)",
+        "reason": "未レビュー条件を満たす最新の score 13 atom で、memory・agent・operation・evaluation を含む8タグを持つ。wrong-time retrieval、書き込み直列化、time-window rerank、Phase 内並列化が現在の記憶運用に直結する一方、投稿時点の未取得箇所と後続の統合済み probe を照合し、新規行動へ反映するだけの独立根拠が残るか確認するため選んだ。"
+      },
+      "scores": {
+        "relevance": 3,
+        "actionability": 2,
+        "evidence": 1,
+        "non_redundancy": 0,
+        "risk_control": 1,
+        "reversibility": 3,
+        "total": 10
+      },
+      "decision": "reject",
+      "decision_reason": "合計10で採用条件の14に届かず、risk_control も必須閾値2を下回るため、新規 probe・metric・directive は追加しない。投稿は time_window 制約、Phase 内並列化、LSM 型 atom 階層という具体案を示すため actionability=2 としたが、著者と arXiv ID を未確認と明記し、MemForest の第2機構も未取得で、13.7倍の評価条件・baseline・正確性 trade-off を検証していないため evidence=1 に留める。その後の triad atom 1780835360.327889 は MemForest を SkillOpt・RAISE と統合して既に review 済みで、probe-20260608-external-state-validation-gate が外部 memory／retrieval surface と事前 validation target を扱う。probe-20260602-memory-governance-gate-separation は search ranking 変更前の temporal／staleness evidence を、probe-20260613-egostream-episodic-recall-failure-split は Temporal-window mismatch の診断を既に要求する。未検証の初期投稿から time-window rerank、scheduler 並列化、LSM 階層を追加すると既存責務を重ね、active_probes 321件と Phase 4a 向け pending lease 1件の確認負荷も増やすため、本 atom は初期探索記録としてのみ保持する。",
+      "existing_probes": [
+        "probe-20260608-external-state-validation-gate",
+        "probe-20260602-memory-governance-gate-separation",
+        "probe-20260613-egostream-episodic-recall-failure-split"
+      ],
+      "change": {
+        "type": "state_only",
+        "summary": "reviewed_source_ts と、投稿時点の根拠不足および後続統合 atom／既存 temporal-memory probes との重複による reject 理由だけを更新した。probe・metric・lease・directive・恒久ルールは追加していない。",
+        "files": [
+          "memory/shared_reads_self_feedback_state.json",
+          "log/cycle_staging_log_cdx.md"
+        ]
+      },
+      "lease": null,
+      "anti_bloat_check": {
+        "adds_permanent_rule": false,
+        "replaces_or_simplifies_existing": false,
+        "conflict_checked": true
+      }
+    },
     {
       "reviewed_at": "2026-07-24T00:23:59+09:00",
       "selected": {

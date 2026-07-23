@@ -42,7 +42,35 @@ reason: "Phase 2 の pass が空で、唯一の candidate は本文取得不足�
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1780802949-d3f837388c
+    source_ts: "1780802949.440169"
+    title: "shared-reads 詳細分析: MemForest — LLM エージェントの長期記憶を 13.7倍高速化、wrong-time retrieval 問題を LSM ツリー発想で解いた論文 (arxiv:2605.23986)"
+    reason: "未レビューの最新 score 13 atom。wrong-time retrieval と書き込み直列化は現在の記憶運用に関係するが、投稿時点の未取得箇所と後続の統合済み probe を照合し、独立した行動差が残るか確認するため選んだ。"
+  scores:
+    relevance: 3
+    actionability: 2
+    evidence: 1
+    non_redundancy: 0
+    risk_control: 1
+    reversibility: 3
+    total: 10
+  decision: reject
+  decision_reason: "投稿自身が著者・arXiv ID・第2機構を未確認とし、13.7倍の評価条件も未検証。後続の triad atom 1780835360.327889 は既に review 済みで、external-state-validation、memory-governance-gate-separation、egostream temporal-window failure split が memory／retrieval surface の検証と時間窓診断を扱う。未検証案から time-window rerank、Phase 内並列化、LSM 階層を追加しても独立した判断差がなく、active_probes 321件と既存 pending lease の確認負荷を増やすため採用しない。"
+  change:
+    summary: "reviewed_source_ts と reject 理由のみ更新。probe・metric・lease・directive・恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  lease: null
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
