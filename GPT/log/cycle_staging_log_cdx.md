@@ -9,7 +9,30 @@
 - preflight skip: AutoBG / One Policy, Infinite NPCs / From Player to Master は posted-source の同一 work と一致したため未保存（permalink と一致根拠は `log/shared_reads_candidate_preflight.jsonl` に記録）。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+
+```yaml
+total_candidates: 1
+pass:
+  - memory/shared_reads_candidates/20260723_game_criticism_developer_feedback.md
+fail: []
+postpone: []
+stale_reviewed: []
+group_actions: []
+group_handoff_audit:
+  pending_before: 0
+  read_ids: []
+  resolved_ids: []
+  deferred_ids: []
+  partial_ids: []
+  apply_counts:
+    candidates_updated: 0
+    already_terminal: 0
+  pending_after: 0
+duplicate_preflight:
+  - path: memory/shared_reads_candidates/20260723_game_criticism_developer_feedback.md
+    decision: continue
+    title_key: what developers can learn from this generation of game criticism
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

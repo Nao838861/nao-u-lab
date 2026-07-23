@@ -4,6 +4,27 @@ url: https://www.gamedeveloper.com/design/what-developers-can-learn-from-this-ge
 collected_at: 2026-07-23T15:01:32.6732594+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, criticism, player-experience, feedback, playtesting]
+evaluated_at: 2026-07-23T15:04:50.5300890+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+status: ready_to_post
+candidate_status: ready_to_post
+last_reviewed_at: 2026-07-23T15:04:50.5300890+09:00
+last_decision: pass
+evidence: "gate_decision:pass; evaluated_at:2026-07-23T15:04:50.5300890+09:00"
+next_action: post_to_shared_reads
+stale_after: "2026-08-22"
+supersedes: []
+gate_reason: >-
+  50人超の開発者取材から、長編批評をプレイテストや製品レビューとは異なる
+  「設計判断とプレイヤー感情の関係を言語化するフィードバック」として具体化できる。
+  定量的な因果検証がない限界を明記しても、次作 discovery への適用まで含む約4000字の分析が成立する。
+suggested_post_outline:
+  overview_angle: 長編ゲーム批評が観測・採点ではなく、体験の感情と設計判断を結び直す知識源になる仕組み
+  analysis_axis: プレイテスト・製品レビュー・開発者解説・消費者視点の批評を、時期・粒度・得られる知識・限界で比較する
+  application_target: cross_review と過去作分析の所見を、現行版の微修正用と次作 discovery の design nest 用に分けて蓄積する
+  pros_cons: 感情の理由と長期的な設計文脈を拾える一方、発売後にしか得にくく、批評家の選択や解釈に偏り、因果検証にはならない
+  verdict_pre: 部分採用
 ---
 
 ## raw_excerpt
