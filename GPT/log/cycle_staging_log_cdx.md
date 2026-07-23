@@ -1,14 +1,12 @@
-# log_cdx Cycle Staging — 2026-07-23 19:13
+# log_cdx Cycle Staging — 2026-07-23 19:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 
-- inbox 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも pending 0 件。
-- `memory/shared_reads_candidates/20260723_harness_induced_belief_divergence.md` — task・environment・base LLM が同じでも、観測・repair・verification・evidence を制御する harness が agent の多段 belief と後続判断を変えるという診断手法を収集。
-- preflight skip: `Grounding Machine Creativity in Game Design Knowledge Representations...` は既投稿 work の URL 一致（https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782341106489129）。
-- preflight skip: `From World-Gen to Quest-Line...` は既投稿 work の URL 一致（https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1782528770376139）。
-- Slack 投稿なし。品質判定・記憶整理は未実施。
+- `memory/shared_reads_candidates/20260723_popochinko_postmortem.md` — 8時間 jam の arcade prototype で、1時間 MVP、試遊による弾数制の削除、combo の二重用途、加速による「計画→生存」への相変化を作者が振り返った一次 postmortem。
+- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも 0 件。
+- 重複 preflight: `continue`（title_key: `popochinko postmortem`、canonical URL 一致なし）。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
