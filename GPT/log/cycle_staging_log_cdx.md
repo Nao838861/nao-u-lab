@@ -4,9 +4,13 @@
 
 ## Phase 1: 情報収集
 
-- `memory/shared_reads_candidates/20260723_liquid_swarm_crazygames_metrics_postmortem.md` — 極小 prototype の早期公開後、tutorial・telemetry・A/B test・WebGL 互換性を CrazyGames の conversion / retention / revenue と結びつけた一次 postmortem。
-- pending 確認: `slack_directives.jsonl` / `slack_broadcasts.jsonl` とも 0 件。
-- Slack 外部 URL: 直前 cycle 成功時刻（2026-07-23 07:02）以降の新規 URL なし。04:57 の Alien Pinball 投稿は既投稿のため候補化対象外。
+- 実行時刻: 2026-07-23 10:47 JST
+- Slack inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` ともに pending なし。
+- 直前サイクル以降の確認: `memory/raw/web_research/results.jsonl` の 2026-07-23 09:36 / 09:51 取得分、最近の `memory/atoms.jsonl`、ローカル保存済み Slack raw を確認。
+- `memory/shared_reads_candidates/20260723_your_turn_extended_cut_rework.md` — 1週間で公開した短編ホラーを、触覚的フィードバック、選択の振り返り、ランダム化、4エンディングを持つ拡張版へ2週間で再構築した記録。
+- `memory/shared_reads_candidates/20260723_reasoning_effort_agentic_code_reliability.md` — 90回の同一実装課題で testing tool、reasoning effort、design prompt を分離し、機能・初回成功・見た目・コストの差を記録した観察研究。
+- duplicate preflight: 2件とも `continue`。各書込み直前と最終保存後に3 sidecarを再生成済み。
+- Slack 投稿: なし（Phase 1のため）。
 
 ## Phase 2: 分析
 
