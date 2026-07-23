@@ -1,4 +1,4 @@
-import { BUILDING_SIZES } from './config.js?v=v004.16.0-elena-written-voice';
+import { BUILDING_SIZES } from './config.js?v=v004.17.0-guidance-steps';
 
 export const tileKey = (x, y) => `${x},${y}`;
 

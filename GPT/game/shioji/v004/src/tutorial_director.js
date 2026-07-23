@@ -3,7 +3,7 @@ import {
   TUTORIAL_ELENA_COMPLETIONS, TUTORIAL_ELENA_MESSAGES, TUTORIAL_LETTER_MESSAGES,
   TUTORIAL_PLAYER_TITLES, TUTORIAL_SYSTEM_INSTRUCTIONS,
   isRequiredTutorialGoal,
-} from './tutorial_content.js?v=v004.16.0-elena-written-voice';
+} from './tutorial_content.js?v=v004.17.0-guidance-steps';
 
 const SAVE_VERSION = 1;
 

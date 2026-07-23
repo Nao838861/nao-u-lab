@@ -47,15 +47,16 @@ function buildingCount(model, job) {
 export function objectiveActionFor(objective, model) {
   if (!objective || !model) return null;
   if (objective.id === 'first-road-and-logger') {
-    return (objective.evidence?.forestRoads ?? 0) <= 0
-      ? { kind: 'tool', tool: 'road', label: '森まで道を敷く' }
-      : { kind: 'building', job: 'logger', label: '木こりを選ぶ' };
+    return { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' };
+  }
+  if (objective.id === 'first-logger') {
+    return { kind: 'building', job: 'logger', label: '木こりを選ぶ' };
   }
   if (objective.id === 'market-for-logs') {
     return { kind: 'building', job: 'market', label: '市場を選ぶ' };
   }
   if (objective.id === 'connect-market-to-port' || objective.id === 'improve-logger-route') {
-    return { kind: 'tool', tool: 'road', label: '道を敷く' };
+    return { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' };
   }
   if (objective.id === 'first-woodshop') {
     return { kind: 'building', job: 'woodshop', label: '木工房を選ぶ' };
@@ -72,13 +73,13 @@ export function objectiveActionFor(objective, model) {
     return { kind: 'building', job: 'veg', label: '菜園を選ぶ' };
   }
   if (objective.id === 'first-settlers-arrive') {
-    return { kind: 'speed', speed: 3, label: '一日毎秒で入植を待つ' };
+    return { kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ' };
   }
   if (objective.id === 'accept-first-order' && !model.orderOffer) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒で注文を待つ' };
+    return { kind: 'speed', speed: 3, label: '一日毎秒にして注文を待つ' };
   }
   if (['first-order-procurement', 'complete-first-order'].includes(objective.id)) {
-    return { kind: 'speed', speed: 3, label: '一日毎秒で荷車を待つ' };
+    return { kind: 'speed', speed: 3, label: '一日毎秒にして荷車を待つ' };
   }
   if (objective.id === 'place-conversion-workshops') {
     for (const job of ['woodshop', 'charburner', 'saltworks']) {

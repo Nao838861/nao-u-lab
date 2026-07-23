@@ -2,8 +2,8 @@ import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
-} from './engine_bridge.js?v=v004.16.0-elena-written-voice';
-import { JOB_LABELS, toDenari } from './config.js?v=v004.16.0-elena-written-voice';
+} from './engine_bridge.js?v=v004.17.0-guidance-steps';
+import { JOB_LABELS, toDenari } from './config.js?v=v004.17.0-guidance-steps';
 
 const LIVING_REQUIREMENT_LABELS = Object.freeze({
   food1: '食料1種', food2: '食料2種', food3: '食料3種', grain: '穀物',
@@ -275,7 +275,8 @@ const CONVERSION_JOB_DEFINITIONS = Object.freeze([
 // エレナは意味を伝え、こちらは押す場所・置く場所だけを伝える。
 // 内部の判定語を goal 本体へ混ぜず、初見プレイヤーが見る文面を一か所で監査する。
 export const TUTORIAL_PLAYER_TITLES = Object.freeze({
-  'first-road-and-logger': '森の丸太を港へ運べる道をつくる',
+  'first-road-and-logger': '港から森のそばまで道を敷く',
+  'first-logger': '森と道のそばに木こりを建てる',
   'market-for-logs': '丸太を売買できる市場を用意する',
   'connect-market-to-port': '本土からの荷が市場へ届く道をつくる',
   'request-first-aid': '食料づくりが始まるまでの一便を頼む',
@@ -317,7 +318,8 @@ export const TUTORIAL_PLAYER_TITLES = Object.freeze({
 // エレナの言葉だけでも「何をするか」と「なぜするか」が分かるようにする。
 // ボタン名・入力手順は TUTORIAL_SYSTEM_INSTRUCTIONS が備忘録として補う。
 export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
-  'first-road-and-logger': '港から森のそばまで道を敷き、その道沿いに木こりを建てましょう。丸太を町へ運び出す最初の道になります。',
+  'first-road-and-logger': 'まずは、港から森のそばまで道を敷きましょう。あとで木こりを建て、切った丸太を運ぶ道になります。',
+  'first-logger': '今度は、道沿いの森のそばに木こりを建てましょう。木こりは森から丸太を切り出します。',
   'market-for-logs': '木こりが丸太を売れるよう、道沿いに市場を開きましょう。売れたお金で、家族は食料を買えるようになります。',
   'connect-market-to-port': '港と市場の入口を道でつなぎましょう。本土から届く食料も、島から出す荷も、この道を通ります。',
   'request-first-aid': '漁家と菜園が働き始めるまでの食料を、本国から一便だけ送ってもらいましょう。',
@@ -357,7 +359,8 @@ export const TUTORIAL_ELENA_MESSAGES = Object.freeze({
 });
 
 export const TUTORIAL_ELENA_COMPLETIONS = Object.freeze({
-  'first-road-and-logger': '森へ続く道と木こりが整いました。これで丸太を切り出せますが、まだ売る場所がありません。',
+  'first-road-and-logger': '森まで道が届きました。次は、その道沿いの森のそばに木こりを建てましょう。',
+  'first-logger': '木こりが建ちました。丸太を切り出せますが、まだ売る場所がありません。',
   'market-for-logs': '市場が開きました。木こりの丸太を売り、家族が食料を買える場所ができました。',
   'connect-market-to-port': '港と市場が道でつながりました。本国の食料を、市場まで運べるようになりました。',
   'request-first-aid': '本国へ食料支援を頼みました。この一便が届く間に、島で食料を作る支度を進められます。',
@@ -446,7 +449,8 @@ export const TUTORIAL_LETTER_MESSAGES = Object.freeze({
 });
 
 export const TUTORIAL_SYSTEM_INSTRUCTIONS = Object.freeze({
-  'first-road-and-logger': '下の［整備］で［道を敷く］を選び、港から森の隣まで引く。続けて［採取］の［木こり］を森と道の隣に置く。',
+  'first-road-and-logger': '港から森の隣まで道を引く',
+  'first-logger': '森と道の両方に接する場所へ木こりを建てる',
   'market-for-logs': '下の［流通］から［市場］を選び、木こりへ続く道の隣に置く。',
   'connect-market-to-port': '［整備］の［道を敷く］で、港の入口と市場の入口をつなぐ。',
   'request-first-aid': '上の［会社］を開き、［支援を要請する］を1回押す。',
@@ -949,17 +953,29 @@ export const TUTORIAL_GOALS = Object.freeze([
   Object.freeze({
     id: 'first-road-and-logger',
     chapter: '第一章・最初の一荷',
-    title: '森の際へ道を敷き、木こりを置く',
+    title: '森の際まで道を敷く',
     evaluate({ model }) {
       const portRoads = portRoadComponent(model);
       const forestRoads = [...portRoads].filter(key => roadTouchesForest(model, key)).length;
-      const loggers = model.buildings.filter(building => building.type === 'logger').length;
-      const done = Number(forestRoads > 0) + Number(loggers > 0);
       return {
-        complete: done === 2,
-        progress: { done, total: 2 },
-        detail: `港から森の際へ届いた道 ${forestRoads}区画 / 木こり ${loggers}棟`,
-        evidence: { connectedRoads: portRoads.size, forestRoads, loggers },
+        complete: forestRoads > 0,
+        progress: { done: Number(forestRoads > 0), total: 1 },
+        detail: `港から森の際へ届いた道 ${forestRoads}区画`,
+        evidence: { connectedRoads: portRoads.size, forestRoads },
+      };
+    },
+  }),
+  Object.freeze({
+    id: 'first-logger',
+    chapter: '第一章・最初の一荷',
+    title: '森と道のそばに木こりを置く',
+    evaluate({ model }) {
+      const loggers = model.buildings.filter(building => building.type === 'logger').length;
+      return {
+        complete: loggers > 0,
+        progress: { done: Number(loggers > 0), total: 1 },
+        detail: `木こり ${loggers}棟`,
+        evidence: { loggers },
       };
     },
   }),

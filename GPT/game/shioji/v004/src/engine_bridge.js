@@ -5,20 +5,20 @@ export {
   companyStockReleasePrice,
   householdClass,
   productionCost,
-} from '../../engine/src/econ.js?v=v004.16.0-elena-written-voice';
-import { P } from '../../engine/src/econ.js?v=v004.16.0-elena-written-voice';
-import { createEngineApi } from '../../engine/src/api.js?v=v004.16.0-elena-written-voice';
+} from '../../engine/src/econ.js?v=v004.17.0-guidance-steps';
+import { P } from '../../engine/src/econ.js?v=v004.17.0-guidance-steps';
+import { createEngineApi } from '../../engine/src/api.js?v=v004.17.0-guidance-steps';
 import {
   E_STABLE_JOBS,
   E_STABLE_POPULATION_BAND,
   E_STABLE_YEARS,
   buildBaseCity,
   makeStableCityPlan,
-} from '../../engine/src/audit.js?v=v004.16.0-elena-written-voice';
-import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.16.0-elena-written-voice';
-import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.16.0-elena-written-voice';
-import { createViewController } from './controller.js?v=v004.16.0-elena-written-voice';
-import { START_MODES } from './start_modes.js?v=v004.16.0-elena-written-voice';
+} from '../../engine/src/audit.js?v=v004.17.0-guidance-steps';
+import { createPhysicalState, makeFlowIslandTerrain } from '../../engine/src/physical.js?v=v004.17.0-guidance-steps';
+import { createWorld, ensureCompanyLogisticsSites } from '../../engine/src/world.js?v=v004.17.0-guidance-steps';
+import { createViewController } from './controller.js?v=v004.17.0-guidance-steps';
+import { START_MODES } from './start_modes.js?v=v004.17.0-guidance-steps';
 
 export { E_STABLE_JOBS, E_STABLE_POPULATION_BAND, E_STABLE_YEARS };
 export const BUILD_COST_DENARI = P.BUILD_COST * 10;

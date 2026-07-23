@@ -189,8 +189,14 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .secretary[data-secretary-priority="timely-message"] { border-color: rgba(67,105,100,.82); }
 .secretary[data-secretary-priority="important-event"] { border-color: rgba(157,76,61,.86); }
 .secretary[data-secretary-priority="goal-complete"] { border-color: rgba(87,119,61,.96); box-shadow: 0 0 0 3px rgba(87,119,61,.15), 0 16px 38px rgba(0,0,0,.4); animation: secretary-handoff-in .28s ease-out; }
+.secretary.guidance-switching { opacity: .46; transform: translateY(-3px); transition: opacity .24s ease, transform .24s ease; }
+.secretary.guidance-entering { animation: guidance-enter .38s ease-out; }
 @keyframes secretary-handoff-in {
   from { opacity: .72; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes guidance-enter {
+  from { opacity: .32; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .unread-badge { display: inline-grid; min-width: 16px; height: 16px; place-items: center; margin-left: 3px; border-radius: 999px; background: #b84f43; color: #fff6dc; font-size: 9px; }
@@ -198,13 +204,14 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .tutorial-objective { position: fixed; z-index: 25; top: var(--primary-panel-top); left: max(14px, env(safe-area-inset-left)); width: min(400px, calc(100vw - 28px)); min-width: 0; transform: none; display: grid; grid-template-columns: minmax(0,1fr) 68px; gap: 7px 10px; align-items: center; padding: 9px 10px; border-color: rgba(126,183,189,.28); border-radius: 9px; background: rgba(10,34,37,.9); box-shadow: 0 8px 22px rgba(0,0,0,.22); }
 .tutorial-objective[hidden] { display: none; }
+.tutorial-objective.guidance-entering { animation: guidance-enter .38s ease-out; }
 .tutorial-objective div { min-width: 0; display: grid; gap: 3px; }
 .tutorial-objective div > small { color: #9dcbd0; font-size: 9px; letter-spacing: .04em; }
 .tutorial-objective div > b { display: -webkit-box; overflow: hidden; color: #e8e5cf; font: 700 12px/1.45 Georgia, "Yu Mincho", serif; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .tutorial-objective label { display: grid; gap: 3px; text-align: right; color: var(--muted); font-size: 9px; }
 .tutorial-objective progress { width: 68px; height: 5px; accent-color: #7eb7bd; }
 .tutorial-actions { grid-column: 1 / -1; display: flex; gap: 5px; }
-.tutorial-actions button { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.035); padding: 6px 9px; cursor: pointer; font-size: 9px; white-space: nowrap; }
+.tutorial-actions button { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.035); padding: 6px 9px; cursor: pointer; font-size: 10px; white-space: normal; }
 .tutorial-actions #tutorial-action { border-color: rgba(126,183,189,.52); color: #d4eff0; font-weight: 700; }
 .tutorial-actions button[hidden] { display: none; }
 .tutorial-actions button small { display: block; color: var(--muted); font-size: 8px; }
@@ -608,5 +615,7 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .secretary[data-secretary-priority="goal-complete"] { animation: none; }
+  .secretary[data-secretary-priority="goal-complete"], .secretary.guidance-entering,
+  .tutorial-objective.guidance-entering { animation: none; }
+  .secretary.guidance-switching { transition: none; }
 }

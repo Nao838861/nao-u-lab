@@ -117,6 +117,7 @@ function measureSeed(seed) {
     type: 'add_road', start: setup.road.start, end: setup.road.end,
   }).ok, true);
   collect();
+  assert.equal(director.currentObjective().id, 'first-logger');
   place(controller, 'logger', setup.logger);
   collect();
   assert.equal(director.currentObjective().id, 'market-for-logs');

@@ -108,6 +108,11 @@ test('教程T/U: 全目標をエレナ概要と一意なsystem操作へ分け、
     'close-first-chapter', 'close-second-chapter', 'close-third-chapter',
     'close-fourth-chapter', 'close-fifth-chapter', 'graduate-governor',
   ]);
+  assert.deepEqual(
+    TUTORIAL_GOALS.slice(0, 2).map(goal => goal.id),
+    ['first-road-and-logger', 'first-logger'],
+    '最初は森への道と木こりを別々の目標として案内する',
+  );
   const forbidden = /適格日|EMA|snapshot|\btick\b|haulJobId|productionCost|\bengine\b|\bjournal\b|E-Stable/;
   const forbiddenElena = /画面|ボタン|クリック|押して|できました。次の仕事|少しだけお待ち|銀が海を渡る|帳場|口銭/;
   for (const goal of TUTORIAL_GOALS) {
@@ -452,6 +457,8 @@ test('チュートリアル段5: 木こりの後に市場・食料便を先に�
     type: 'add_road', start: setup.road.start, end: setup.road.end,
   }).ok, true);
   observe();
+  assert.equal(director.readState().completedGoals.includes('first-road-and-logger'), true);
+  assert.equal(director.currentObjective().id, 'first-logger');
   assert.equal(controller.currentObjective, undefined, '世界controllerへチュートリアル能力を混ぜない');
   assert.equal(controller.operate({
     type: 'place_building', job: 'logger',
@@ -459,7 +466,7 @@ test('チュートリアル段5: 木こりの後に市場・食料便を先に�
     buildingX: setup.logger.x, buildingY: setup.logger.y,
   }).ok, true);
   observe();
-  assert.equal(director.readState().completedGoals.includes('first-road-and-logger'), true);
+  assert.equal(director.readState().completedGoals.includes('first-logger'), true);
   assert.equal(director.currentObjective().id, 'market-for-logs');
 
   const port = controller.readModel().buildings.find(building => building.roles.includes('port'));
@@ -1202,8 +1209,12 @@ test('チュートリアル段14: 目標を無視した飢餓・破産を実数�
     type: 'add_road', start: failureSetup.road.start, end: failureSetup.road.end,
   }).ok, true);
   observe();
+  assert.equal(director.currentObjective().id, 'first-logger');
+  observe();
   assert.equal(director.readState().completedGoals.includes('first-road-and-logger'), true,
     '飢餓・破産後も実snapshotで目標列が進む');
+  assert.equal(director.readState().completedGoals.includes('first-logger'), true,
+    '先に建ててあった木こりも、次の独立目標として確認される');
 
   const finalModel = controller.readModel();
   const journal = controller.inputJournal();
@@ -1922,7 +1933,7 @@ test('チュートリアル段24: 全章完走journalと卒業セーブを恒久
   });
   assert.equal(restored.isComplete(), true);
   assert.equal(restored.letters().at(-1).id, 'tutorial-graduation');
-  assert.equal(VERSION, 'v004.16.0-elena-written-voice');
+  assert.equal(VERSION, 'v004.17.0-guidance-steps');
   const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
   assert.match(readme, /第一章.*第二章.*第三章.*第四章.*第五章.*終章/s);
   assert.match(readme, /見本の町/);
@@ -2449,7 +2460,8 @@ test('UI O〜R: 上部メニュー・非重複通知・自動適用在庫・時�
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(html, /id="tutorial-goal"/);
-  assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
+  assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
+  assert.match(main, /setTextIfChanged\(actionButton, currentTutorialAction\?\.label/);
   assert.match(main, /data-stock-target/);
   assert.match(main, /event\.key !== 'Enter'/);
   assert.match(main, /focusout[\s\S]*applyStockTargetInput/);
@@ -2868,8 +2880,9 @@ test('UI向上段5: 全建物を重複なく分類し費用・寸法付き直接
 test('UI向上段6: 教程の実目標だけが既存操作一つへ案内される', () => {
   const model = buildings => ({ buildings: buildings.map(type => ({ type })) });
   assert.deepEqual(objectiveActionFor({ id: 'first-road-and-logger', evidence: { forestRoads: 0 } }, model([])),
-    { kind: 'tool', tool: 'road', label: '森まで道を敷く' });
-  assert.equal(objectiveActionFor({ id: 'first-road-and-logger', evidence: { forestRoads: 1 } }, model([])).job, 'logger');
+    { kind: 'tool', tool: 'road', label: '道を敷く道具を選ぶ' });
+  assert.deepEqual(objectiveActionFor({ id: 'first-logger' }, model([])),
+    { kind: 'building', job: 'logger', label: '木こりを選ぶ' });
   assert.equal(objectiveActionFor({ id: 'market-for-logs' }, model([])).job, 'market');
   assert.equal(objectiveActionFor({ id: 'place-island-food' }, model(['fisher'])).job, 'veg');
   assert.equal(objectiveActionFor({ id: 'request-first-aid' }, model([])).sheet, 'company-sheet');
@@ -3054,11 +3067,11 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.equal(urgentBeforeHandoff.priority, 'unread-letter', '要対応書状は達成案内より先に読む');
   assert.equal(tutorialHandoffFor(nextObjective, nextObjective), null, '同じ目標の再描画では達成を再発行しない');
   assert.deepEqual(objectiveActionFor({ id: 'first-settlers-arrive' }, { buildings: [] }), {
-    kind: 'speed', speed: 3, label: '一日毎秒で入植を待つ',
+    kind: 'speed', speed: 3, label: '一日毎秒にして入植を待つ',
   });
   assert.deepEqual(objectiveActionFor({ id: 'accept-first-order' }, {
     buildings: [], orderOffer: null,
-  }), { kind: 'speed', speed: 3, label: '一日毎秒で注文を待つ' });
+  }), { kind: 'speed', speed: 3, label: '一日毎秒にして注文を待つ' });
   const important = secretaryRouteFor({
     letters: [], objective: { ...objective, complete: true },
     events: events.map(event => event.important
@@ -3078,7 +3091,9 @@ test('UI向上段9: 常駐エレナは要対応書状を優先し、報告だけ
   assert.doesNotMatch(html, /secretary-action|もう一度言って/);
   assert.doesNotMatch(css, /secretary-repeat|secretary\.repeating/);
   assert.doesNotMatch(html, /id="secretary-(?:tier|kicker|title|detail)"/);
-  assert.match(html, /id="tutorial-action"[^>]*>［案内］/);
+  assert.match(html, /id="tutorial-action"[^>]*>操作を始める/);
+  assert.match(css, /\.secretary\.guidance-switching/);
+  assert.match(css, /\.tutorial-objective\.guidance-entering/);
   assert.doesNotMatch(html, /id="tutorial-(?:system|detail)"/);
   assert.match(css, /\.observer\s*\{[^}]*z-index:\s*45[^}]*top:\s*var\(--elena-top\)[^}]*left:\s*50%/s);
   assert.match(css, /\.secretary\s*\{[^}]*rgba\(255,250,226[^}]*rgba\(235,220,181[^}]*color:\s*#392d20/s);

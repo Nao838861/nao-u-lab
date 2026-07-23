@@ -1,4 +1,4 @@
-import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.16.0-elena-written-voice';
+import { BUILDING_ART, GOODS_ART } from './config.js?v=v004.17.0-guidance-steps';
 
 export const MAX_PILE_SPRITES = 24;
 export const MAX_YARD_GOODS = 6;

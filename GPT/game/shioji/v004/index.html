@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#143d42">
   <meta name="description" content="道と建物と買上げで島の暮らしが変わる様子を眺める都市ゲーム">
   <title>CHARTER ISLE — 潮路の島 v004</title>
-  <link rel="stylesheet" href="./style.css?v=v004.16.0-elena-written-voice">
+  <link rel="stylesheet" href="./style.css?v=v004.17.0-guidance-steps">
 </head>
 <body>
   <canvas id="world" aria-label="潮路の島の地形、建物、住民と物流" data-testid="world"></canvas>
@@ -45,7 +45,7 @@
     </div>
     <label><span id="tutorial-progress">0 / 0</span><progress id="tutorial-progress-bar" max="1" value="0"></progress></label>
     <div class="tutorial-actions">
-      <button id="tutorial-action" type="button" hidden aria-label="現在目標の操作を案内する">［案内］</button>
+      <button id="tutorial-action" type="button" hidden aria-label="現在目標の操作を始める">操作を始める</button>
     </div>
   </aside>
 
@@ -277,7 +277,7 @@
       });
     })();
   </script>
-  <script id="game-module" type="module" src="./src/main.js?v=v004.16.0-elena-written-voice"
+  <script id="game-module" type="module" src="./src/main.js?v=v004.17.0-guidance-steps"
     onerror="window.__SHIOJI_BOOT__?.failed()"></script>
 </body>
 </html>

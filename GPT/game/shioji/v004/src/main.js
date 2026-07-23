@@ -1,26 +1,26 @@
-import { IsometricCamera } from './camera.js?v=v004.16.0-elena-written-voice';
-import { SimulationClock } from './clock.js?v=v004.16.0-elena-written-voice';
+import { IsometricCamera } from './camera.js?v=v004.17.0-guidance-steps';
+import { SimulationClock } from './clock.js?v=v004.17.0-guidance-steps';
 import {
   BUILD_CATEGORIES, BUILDING_ART, BUILDING_SIZES, GOODS_LABELS, JOB_ICONS, JOB_LABELS,
   PLACEMENT_JOBS, SECTION_LABELS, SPEEDS, VERSION, toDenari,
-} from './config.js?v=v004.16.0-elena-written-voice';
+} from './config.js?v=v004.17.0-guidance-steps';
 import {
   DISPLAY_BATCH_TICKS, advanceInBatches, displayBatchSizeFor,
-} from './display_batch.js?v=v004.16.0-elena-written-voice';
-import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.16.0-elena-written-voice';
-import { presentEvent } from './event_view.js?v=v004.16.0-elena-written-voice';
+} from './display_batch.js?v=v004.17.0-guidance-steps';
+import { BUILD_COST_DENARI, createEngineController } from './engine_bridge.js?v=v004.17.0-guidance-steps';
+import { presentEvent } from './event_view.js?v=v004.17.0-guidance-steps';
 import {
   isEditableTarget, movementKey, panCameraFromKeys, shouldIgnoreShortcut,
-} from './keyboard.js?v=v004.16.0-elena-written-voice';
-import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.16.0-elena-written-voice';
-import { WorldPresentation } from './presentation.js?v=v004.16.0-elena-written-voice';
-import { Renderer } from './renderer.js?v=v004.16.0-elena-written-voice';
-import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.16.0-elena-written-voice';
-import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.16.0-elena-written-voice';
+} from './keyboard.js?v=v004.17.0-guidance-steps';
+import { previewBuildingPlacement, previewRoadPlacement, tileKey } from './placement.js?v=v004.17.0-guidance-steps';
+import { WorldPresentation } from './presentation.js?v=v004.17.0-guidance-steps';
+import { Renderer } from './renderer.js?v=v004.17.0-guidance-steps';
+import { START_MODES, parseStartMode, urlForStartMode } from './start_modes.js?v=v004.17.0-guidance-steps';
+import { createTutorialDirector, createTutorialDirectorForMode } from './tutorial_director.js?v=v004.17.0-guidance-steps';
 import {
   objectiveActionFor, secretaryRouteFor, tutorialHandoffFor,
-} from './ui_guidance.js?v=v004.16.0-elena-written-voice';
-import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.16.0-elena-written-voice';
+} from './ui_guidance.js?v=v004.17.0-guidance-steps';
+import { islandCalendar, islandHealthSummary, recentCompanySummary } from './ui_summary.js?v=v004.17.0-guidance-steps';
 
 const $ = selector => document.querySelector(selector);
 const canvas = $('#world');
@@ -54,6 +54,11 @@ let currentSecretaryRoute = null;
 let lastTutorialObjective = tutorialDirector?.currentObjective() ?? null;
 let currentTutorialHandoff = null;
 let tutorialHandoffTimer = null;
+let tutorialHandoffGapTimer = null;
+let tutorialTransitionPending = false;
+let visibleTutorialObjectiveId = null;
+let tutorialObjectiveEnterTimer = null;
+let secretaryEnterTimer = null;
 let highSpeedPendingTicks = 0;
 const pressedMovementKeys = new Set();
 const companyInteractionPointers = new Set();
@@ -67,7 +72,9 @@ const renderSignatures = new Map();
 const economyHistory = [];
 const stockReleaseDays = [];
 const HISTORY_DAYS = 180;
-const TUTORIAL_HANDOFF_HOLD_MS = 3200;
+const TUTORIAL_HANDOFF_HOLD_MS = 2600;
+const TUTORIAL_HANDOFF_GAP_MS = 240;
+const GUIDANCE_ENTER_MS = 420;
 const CHART_FOOD_GOODS = new Set(['fish', 'veg', 'wheat', 'pres', 'pick', 'meat']);
 const uiMetrics = {
   domUpdates: 0,
@@ -861,18 +868,32 @@ function renderEventSheet() {
 }
 
 function finishTutorialHandoff() {
-  if (!currentTutorialHandoff) return false;
-  currentTutorialHandoff = null;
+  if (!currentTutorialHandoff || tutorialTransitionPending) return false;
   if (tutorialHandoffTimer !== null) {
     clearTimeout(tutorialHandoffTimer);
     tutorialHandoffTimer = null;
   }
-  renderTutorial();
-  renderSecretary();
+  tutorialTransitionPending = true;
+  $('#secretary').classList.add('guidance-switching');
+  if (tutorialHandoffGapTimer !== null) clearTimeout(tutorialHandoffGapTimer);
+  tutorialHandoffGapTimer = setTimeout(() => {
+    currentTutorialHandoff = null;
+    tutorialTransitionPending = false;
+    tutorialHandoffGapTimer = null;
+    $('#secretary').classList.remove('guidance-switching');
+    renderTutorial();
+    renderSecretary();
+  }, TUTORIAL_HANDOFF_GAP_MS);
   return true;
 }
 
 function holdTutorialHandoff(handoff) {
+  if (tutorialHandoffGapTimer !== null) {
+    clearTimeout(tutorialHandoffGapTimer);
+    tutorialHandoffGapTimer = null;
+  }
+  tutorialTransitionPending = false;
+  $('#secretary').classList.remove('guidance-switching');
   currentTutorialHandoff = handoff;
   if (tutorialHandoffTimer !== null) clearTimeout(tutorialHandoffTimer);
   tutorialHandoffTimer = setTimeout(() => {
@@ -898,15 +919,16 @@ function renderTutorial() {
     ? currentTutorialAction.job : null;
   const actionButton = $('#tutorial-action');
   setHiddenIfChanged(actionButton, !currentTutorialAction || handoffPending);
-  actionButton.title = currentTutorialAction?.label ?? '';
+  setTextIfChanged(actionButton, currentTutorialAction?.label ?? '操作を始める');
+  actionButton.title = currentTutorialAction
+    ? `押すと「${currentTutorialAction.label}」を実行します` : '';
   actionButton.setAttribute('aria-label',
-    currentTutorialAction ? `案内: ${currentTutorialAction.label}` : '現在目標の操作を案内する');
+    currentTutorialAction ? `押すと${currentTutorialAction.label}` : '現在目標の操作を始める');
   renderBuildDock();
   if (state?.skipped) setTextIfChanged('#start-mode-label', '自由プレイ（案内終了）');
   else if (tutorialDirector?.isComplete()) setTextIfChanged('#start-mode-label', '自由プレイ（教程完了）');
   if (objective) {
-    const systemInstruction = currentTutorialAction?.label
-      || objective.systemInstruction || objective.title;
+    const systemInstruction = objective.systemInstruction || objective.title;
     setTextIfChanged('#tutorial-chapter', objective.chapter);
     setTextIfChanged('#tutorial-goal', systemInstruction);
     setTextIfChanged('#tutorial-progress', `${objective.progress.done} / ${objective.progress.total}`);
@@ -917,6 +939,18 @@ function renderTutorial() {
       uiMetrics.domWrites += 1;
     }
   }
+  const visibleObjectiveId = objective && !objectivePanel.hidden ? objective.id : null;
+  if (visibleObjectiveId && visibleObjectiveId !== visibleTutorialObjectiveId) {
+    if (tutorialObjectiveEnterTimer !== null) clearTimeout(tutorialObjectiveEnterTimer);
+    objectivePanel.classList.remove('guidance-entering');
+    void objectivePanel.offsetWidth;
+    objectivePanel.classList.add('guidance-entering');
+    tutorialObjectiveEnterTimer = setTimeout(() => {
+      objectivePanel.classList.remove('guidance-entering');
+      tutorialObjectiveEnterTimer = null;
+    }, GUIDANCE_ENTER_MS);
+  }
+  visibleTutorialObjectiveId = visibleObjectiveId;
   if (!available) return;
   const letters = tutorialDirector.letters();
   const unread = letters.filter(letter => letter.unread && letter.attention !== 'silent').length;
@@ -970,6 +1004,16 @@ function renderSecretary() {
     panel.dataset.secretaryTier = currentSecretaryRoute.tier ?? 'notice';
     setTextIfChanged('#secretary-speech',
       currentSecretaryRoute.speech ?? '島の様子を、引き続き見ていきましょう。');
+    if (!tutorialTransitionPending) {
+      if (secretaryEnterTimer !== null) clearTimeout(secretaryEnterTimer);
+      panel.classList.remove('guidance-entering');
+      void panel.offsetWidth;
+      panel.classList.add('guidance-entering');
+      secretaryEnterTimer = setTimeout(() => {
+        panel.classList.remove('guidance-entering');
+        secretaryEnterTimer = null;
+      }, GUIDANCE_ENTER_MS);
+    }
   });
 }
 
@@ -1737,6 +1781,7 @@ window.__SHIOJI_V004__ = Object.freeze({
   get activeTool() { return activeTool; },
   get secretaryRoute() { return structuredClone(currentSecretaryRoute); },
   get tutorialHandoff() { return structuredClone(currentTutorialHandoff); },
+  get tutorialTransitionPending() { return tutorialTransitionPending; },
   get pressedMovementKeys() { return [...pressedMovementKeys]; },
   get eventLog() { return eventLog.map(row => ({ ...row })); },
   get economyHistory() { return structuredClone(economyHistory); },

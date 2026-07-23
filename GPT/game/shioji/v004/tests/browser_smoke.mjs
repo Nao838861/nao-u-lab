@@ -266,14 +266,9 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
     }
     const setup = candidates.sort((left, right) => left.road.cells.length - right.road.cells.length)[0];
     if (!setup) throw new Error('tutorial handoff用の木こり配置が見つかりません');
+    window.__tutorialFirstLoggerSetup = setup;
     game.controller.operate({
       type: 'add_road', start: setup.road.start, end: setup.road.end,
-    });
-    game.advanceTicks(0, { animate: false });
-    game.controller.operate({
-      type: 'place_building', job: 'logger',
-      x: setup.logger.entrance.x, y: setup.logger.entrance.y,
-      buildingX: setup.logger.x, buildingY: setup.logger.y,
     });
     game.advanceTicks(0, { animate: false });
     const observer = document.querySelector('#observer').getBoundingClientRect();
@@ -291,33 +286,101 @@ async function checkTutorialGoalHandoff(width = 1000, height = 760, mobile = fal
     };
   })()`);
   assert.equal(transition.handoff.completedId, 'first-road-and-logger', JSON.stringify(transition));
-  assert.equal(transition.handoff.nextId, 'market-for-logs', JSON.stringify(transition));
+  assert.equal(transition.handoff.nextId, 'first-logger', JSON.stringify(transition));
   assert.ok(transition.objective.includes('first-road-and-logger'), JSON.stringify(transition));
   assert.equal(transition.priority, 'goal-complete', JSON.stringify(transition));
-  assert.match(transition.speech, /森へ続く道と木こりが整いました.*まだ売る場所がありません/s);
+  assert.match(transition.speech, /森まで道が届きました.*木こりを建てましょう/s);
   assert.equal(transition.objectiveHidden, true, '達成中は次の現在目標を見せない');
   assert.ok(transition.observer.width >= (mobile ? width - 20 : 480), JSON.stringify(transition));
   assert.ok(transition.observer.bottom < transition.dock.top, JSON.stringify(transition));
-  await page.screenshot(`/tmp/shioji_v004_tutorial_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
+  await page.screenshot(`/tmp/shioji_v004_tutorial_road_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
 
-  await wait(3400);
-  const continued = await page.evaluate(`(() => {
+  await wait(1800);
+  let switching = null;
+  for (let attempt = 0; attempt < 60; attempt += 1) {
+    switching = await page.evaluate(`({
+      pending: window.__SHIOJI_V004__.tutorialTransitionPending,
+      handoff: window.__SHIOJI_V004__.tutorialHandoff,
+      objectiveHidden: document.querySelector('#tutorial-objective').hidden,
+      secretarySwitching: document.querySelector('#secretary').classList.contains('guidance-switching'),
+    })`);
+    if (switching.pending) break;
+    await wait(20);
+  }
+  assert.equal(switching.pending, true, JSON.stringify(switching));
+  assert.equal(switching.handoff.completedId, 'first-road-and-logger', JSON.stringify(switching));
+  assert.equal(switching.objectiveHidden, true, JSON.stringify(switching));
+  assert.equal(switching.secretarySwitching, true, JSON.stringify(switching));
+
+  await wait(280);
+  const loggerObjective = await page.evaluate(`(() => {
     const game = window.__SHIOJI_V004__;
     return {
       handoff: game.tutorialHandoff,
+      transitionPending: game.tutorialTransitionPending,
       priority: document.querySelector('#secretary').dataset.secretaryPriority,
       speech: document.querySelector('#secretary-speech').textContent,
       objectiveHidden: document.querySelector('#tutorial-objective').hidden,
       memoChapter: document.querySelector('#tutorial-chapter').textContent,
       memoTitle: document.querySelector('#tutorial-goal').textContent,
+      action: document.querySelector('#tutorial-action').textContent,
+      secretaryEntering: document.querySelector('#secretary').classList.contains('guidance-entering'),
+      objectiveEntering: document.querySelector('#tutorial-objective').classList.contains('guidance-entering'),
     };
   })()`);
-  assert.equal(continued.handoff, null, '約3.2秒後に自動で次へ移る');
+  assert.equal(loggerObjective.handoff, null, JSON.stringify(loggerObjective));
+  assert.equal(loggerObjective.transitionPending, false, JSON.stringify(loggerObjective));
+  assert.equal(loggerObjective.priority, 'objective', JSON.stringify(loggerObjective));
+  assert.match(loggerObjective.speech, /今度は.*木こりを建てましょう/s);
+  assert.equal(loggerObjective.objectiveHidden, false);
+  assert.match(loggerObjective.memoChapter, /第一章/);
+  assert.equal(loggerObjective.memoTitle, '森と道の両方に接する場所へ木こりを建てる');
+  assert.equal(loggerObjective.action, '木こりを選ぶ');
+  assert.equal(loggerObjective.secretaryEntering, true, JSON.stringify(loggerObjective));
+  assert.equal(loggerObjective.objectiveEntering, true, JSON.stringify(loggerObjective));
+  await page.screenshot(`/tmp/shioji_v004_tutorial_logger_goal_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  const loggerTransition = await page.evaluate(`(() => {
+    const game = window.__SHIOJI_V004__;
+    const setup = window.__tutorialFirstLoggerSetup;
+    game.controller.operate({
+      type: 'place_building', job: 'logger',
+      x: setup.logger.entrance.x, y: setup.logger.entrance.y,
+      buildingX: setup.logger.x, buildingY: setup.logger.y,
+    });
+    game.advanceTicks(0, { animate: false });
+    return {
+      handoff: game.tutorialHandoff,
+      objectives: game.tutorialState.completedGoals,
+      priority: document.querySelector('#secretary').dataset.secretaryPriority,
+      speech: document.querySelector('#secretary-speech').textContent,
+      objectiveHidden: document.querySelector('#tutorial-objective').hidden,
+    };
+  })()`);
+  assert.equal(loggerTransition.handoff.completedId, 'first-logger', JSON.stringify(loggerTransition));
+  assert.equal(loggerTransition.handoff.nextId, 'market-for-logs', JSON.stringify(loggerTransition));
+  assert.ok(loggerTransition.objectives.includes('first-road-and-logger'), JSON.stringify(loggerTransition));
+  assert.ok(loggerTransition.objectives.includes('first-logger'), JSON.stringify(loggerTransition));
+  assert.equal(loggerTransition.priority, 'goal-complete', JSON.stringify(loggerTransition));
+  assert.match(loggerTransition.speech, /木こりが建ちました.*まだ売る場所がありません/s);
+  assert.equal(loggerTransition.objectiveHidden, true);
+  await page.screenshot(`/tmp/shioji_v004_tutorial_logger_handoff_${mobile ? 'mobile' : 'desktop'}.png`);
+
+  await wait(3100);
+  const continued = await page.evaluate(`(() => ({
+    handoff: window.__SHIOJI_V004__.tutorialHandoff,
+    priority: document.querySelector('#secretary').dataset.secretaryPriority,
+    speech: document.querySelector('#secretary-speech').textContent,
+    objectiveHidden: document.querySelector('#tutorial-objective').hidden,
+    memoTitle: document.querySelector('#tutorial-goal').textContent,
+    action: document.querySelector('#tutorial-action').textContent,
+  }))()`);
+  assert.equal(continued.handoff, null, JSON.stringify(continued));
   assert.equal(continued.priority, 'objective', JSON.stringify(continued));
   assert.match(continued.speech, /木こりが丸太を売れるよう.*市場を開きましょう/s);
   assert.equal(continued.objectiveHidden, false);
-  assert.match(continued.memoChapter, /第一章/);
   assert.match(continued.memoTitle, /市場/);
+  assert.equal(continued.action, '市場を選ぶ');
   assert.deepEqual(page.errors, []);
   await page.close();
 }
@@ -408,12 +471,12 @@ async function checkStartChoice(width, height, mobile, mode) {
     assert.equal(started.tutorialState.active, true, JSON.stringify(started));
     assert.equal(started.objectiveVisible, true, JSON.stringify(started));
     assert.equal(started.tutorialActionHidden, false, JSON.stringify(started));
-    assert.equal(started.tutorialActionText, '［案内］');
+    assert.equal(started.tutorialActionText, '道を敷く道具を選ぶ');
     assert.equal(started.secretaryPriority, 'objective', JSON.stringify(started));
-    assert.match(started.secretarySpeech, /港から森のそばまで道を敷き.*木こりを建てましょう/s);
+    assert.match(started.secretarySpeech, /まずは.*港から森のそばまで道を敷きましょう/s);
     assert.equal(started.secretaryTag, 'DIV');
     assert.equal(started.secretaryActionPresent, false);
-    assert.match(started.objectiveInstruction, /森まで道を敷く/);
+    assert.equal(started.objectiveInstruction, '港から森の隣まで道を引く');
     assert.equal(started.letterVisible, true, JSON.stringify(started));
     assert.equal(started.speed, 0, JSON.stringify(started));
     assert.match(started.letterText, /0日目/);
@@ -473,8 +536,8 @@ async function checkStartChoice(width, height, mobile, mode) {
 async function checkViewport(width, height, mobile) {
   const page = await newPage(width, height, mobile);
   assert.equal(await page.evaluate('document.title'), 'CHARTER ISLE — 潮路の島 v004');
-  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.16.0-elena-written-voice');
-  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.16.0-elena-written-voice');
+  assert.equal(await page.evaluate("document.querySelector('[data-testid=build-version]').textContent"), 'v004.17.0-guidance-steps');
+  assert.equal(await page.evaluate('window.__SHIOJI_V004__.version'), 'v004.17.0-guidance-steps');
   assert.equal(await page.evaluate('window.__SHIOJI_V004__.startMode'), 'test');
   assert.equal(await page.evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
   assert.deepEqual(await page.evaluate(`({
